@@ -1,0 +1,26 @@
+HKCR
+{
+	ForceRemove GFLLibraryBuilder.Builder.1 = s 'GFL Library Builder'
+	{
+		CLSID = s '{6C9E61BE-E58F-4AE1-A304-6FF1D183804C}'
+	}
+	ForceRemove GFLLibraryBuilder.Builder = s 'GFL Library Builder'
+	{
+		CLSID = s '{6C9E61BE-E58F-4AE1-A304-6FF1D183804C}'
+		CurVer = s 'GFLLibraryBuilder.Builder.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6C9E61BE-E58F-4AE1-A304-6FF1D183804C} = s 'GFL Library Builder'
+		{
+			ProgID = s 'GFLLibraryBuilder.Builder.1'
+			VersionIndependentProgID = s 'GFLLibraryBuilder.Builder'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{7B8046FF-0D3A-4D85-9424-7DFCCD1BCA45}'
+		}
+	}
+}

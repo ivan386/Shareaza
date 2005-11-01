@@ -1,0 +1,204 @@
+//
+// Builder.cpp : Implementation of CBuilder
+//
+// Copyright (c) Nikolay Raspopov, 2005.
+// This file is part of SHAREAZA (www.shareaza.com)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
+#include "stdafx.h"
+#include "Builder.h"
+
+HRESULT CBuilder::FinalConstruct () throw()
+{
+	return CoCreateFreeThreadedMarshaler (GetControllingUnknown(), &m_pUnkMarshaler.p);
+}
+
+void CBuilder::FinalRelease () throw()
+{
+	m_pUnkMarshaler.Release ();
+}
+
+STDMETHODIMP CBuilder::Process (
+	/* [in] */ HANDLE /* hFile */,
+	/* [in] */ BSTR sFile,
+	/* [in] */ ISXMLElement* pXML)
+{
+	if (!pXML)
+		return E_POINTER;
+
+	CComPtr <ISXMLElements> pISXMLRootElements;
+	HRESULT hr = pXML->get_Elements(&pISXMLRootElements);
+	if (FAILED (hr))
+		return hr;
+	CComPtr <ISXMLElement> pXMLRootElement;
+	hr = pISXMLRootElements->Create (CComBSTR ("videos"), &pXMLRootElement);
+	if (FAILED (hr))
+		return hr;
+	CComPtr <ISXMLAttributes> pISXMLRootAttributes;
+	hr = pXMLRootElement->get_Attributes(&pISXMLRootAttributes);
+	if (FAILED (hr))
+		return hr;
+	pISXMLRootAttributes->Add (CComBSTR ("xmlns:xsi"),
+		CComBSTR ("http://www.w3.org/2001/XMLSchema-instance"));
+	pISXMLRootAttributes->Add (CComBSTR ("xsi:noNamespaceSchemaLocation"),
+		CComBSTR ("http://www.limewire.com/schemas/video.xsd"));
+
+	CComPtr <ISXMLElements> pISXMLElements;
+	hr = pXMLRootElement->get_Elements(&pISXMLElements);
+	if (FAILED (hr))
+		return hr;
+	CComPtr <ISXMLElement> pXMLElement;
+	hr = pISXMLElements->Create (CComBSTR ("video"), &pXMLElement);
+	if (FAILED (hr))
+		return hr;
+	CComPtr <ISXMLAttributes> pISXMLAttributes;
+	hr = pXMLElement->get_Attributes(&pISXMLAttributes);
+	if (FAILED (hr))
+		return hr;
+
+	IMediaDet* pDet = NULL;
+	hr = CoCreateInstance (CLSID_MediaDet, NULL, CLSCTX_ALL,
+		IID_IMediaDet, (void**) &pDet);
+	if (SUCCEEDED (hr)) {
+		hr = pDet->put_Filename (sFile);
+		if (SUCCEEDED (hr)) {
+			long lStreams = 0;
+			bool bFound = false;
+			hr = pDet->get_OutputStreams (&lStreams);
+			if (SUCCEEDED (hr)) {
+				for (long i = 0; i < lStreams; i++) {
+					GUID major_type;
+					hr = pDet->put_CurrentStream (i);
+					if (SUCCEEDED (hr)) {
+						hr = pDet->get_StreamType (&major_type);
+						if (major_type == MEDIATYPE_Video) {
+							bFound = true;
+							break;
+						}
+					}
+				}
+				if (bFound) {
+					AM_MEDIA_TYPE mt;
+					hr = pDet->get_StreamMediaType (&mt);
+					if (SUCCEEDED (hr)) {
+						if (mt.formattype == FORMAT_VideoInfo) {
+							if (mt.cbFormat >= sizeof(VIDEOINFOHEADER) &&
+								mt.pbFormat != NULL) {
+								VIDEOINFOHEADER *pVih = (VIDEOINFOHEADER*) mt.pbFormat;
+								CString codec;
+								if (mt.subtype == MEDIASUBTYPE_Y41P) {
+									codec = _T("MPEG");
+								} else
+								if (mt.subtype.Data2 == 0x0000 &&
+									mt.subtype.Data3 == 0x0010 &&
+									mt.subtype.Data4[0] == 0x80 &&
+									mt.subtype.Data4[1] == 0x00 &&
+									mt.subtype.Data4[2] == 0x00 &&
+									mt.subtype.Data4[3] == 0xAA &&
+									mt.subtype.Data4[4] == 0x00 &&
+									mt.subtype.Data4[5] == 0x38 &&
+									mt.subtype.Data4[6] == 0x9B &&
+									mt.subtype.Data4[7] == 0x71) {
+									codec.Format(_T("%c%c%c%c"),
+										LOBYTE (LOWORD (mt.subtype.Data1)),
+										HIBYTE (LOWORD (mt.subtype.Data1)),
+										LOBYTE (HIWORD (mt.subtype.Data1)),
+										HIBYTE (HIWORD (mt.subtype.Data1)));
+								} else
+								if (mt.subtype == MEDIASUBTYPE_RGB1) {
+									codec = _T("RGB1");
+								} else
+								if (mt.subtype == MEDIASUBTYPE_RGB4) {
+									codec = _T("RGB4");
+								} else
+								if (mt.subtype == MEDIASUBTYPE_RGB8) {
+									codec = _T("RGB8");
+								} else
+								if (mt.subtype == MEDIASUBTYPE_RGB565) {
+									codec = _T("RGB565");
+								} else
+								if (mt.subtype == MEDIASUBTYPE_RGB555) {
+									codec = _T("RGB555");
+								} else
+								if (mt.subtype == MEDIASUBTYPE_RGB24) {
+									codec = _T("RGB24");
+								} else
+								if (mt.subtype == MEDIASUBTYPE_RGB32) {
+									codec = _T("RGB32");
+								} else
+								{
+#ifdef _DEBUG
+									LPWSTR clsid = NULL;
+									if (SUCCEEDED (StringFromCLSID (mt.subtype, &clsid))) {
+										ATLTRACE ("Video format: %ls\n", clsid);
+										CoTaskMemFree (clsid);
+									}
+#endif // _DEBUG
+									codec = _T("Unknown");
+								}
+								pISXMLAttributes->Add (CComBSTR ("codec"), CComBSTR (codec));
+								
+								int nWidth = pVih->bmiHeader.biWidth;
+								int nHeight = pVih->bmiHeader.biHeight;				    
+								if (nHeight < 0)
+									nHeight = -nHeight;
+								CString tmp;
+								tmp.Format (_T("%lu"), nWidth);
+								pISXMLAttributes->Add (CComBSTR ("width"), CComBSTR (tmp));
+								tmp.Format (_T("%lu"), nHeight);
+								pISXMLAttributes->Add (CComBSTR ("height"), CComBSTR (tmp));
+							}
+
+							double total_time = 0.0;
+							hr = pDet->get_StreamLength (&total_time);
+							if (SUCCEEDED (hr)) {
+								TCHAR tmp [32];
+								_sntprintf (tmp, 32, _T("%.3f"), total_time / 60.0);
+								pISXMLAttributes->Add (CComBSTR ("minutes"), CComBSTR (tmp));
+							}
+
+							double fps = 0.0;
+							hr = pDet->get_FrameRate (&fps);
+							if (SUCCEEDED (hr)) {
+								TCHAR tmp [32];
+								_sntprintf (tmp, 32, _T("%.2f"), fps);
+								pISXMLAttributes->Add (CComBSTR ("frameRate"), CComBSTR (tmp));						
+							}
+						} else {
+							hr = E_FAIL;
+							ATLTRACE ("Stream type is not a video (corrupted file?).\n");
+						}
+						if (mt.cbFormat != 0)
+							CoTaskMemFree (mt.pbFormat);
+						if (mt.pUnk != NULL)
+							mt.pUnk->Release();
+					} else
+						ATLTRACE ("Cannot get stream media type\n");
+				} else {
+					hr = E_FAIL;
+					ATLTRACE ("Cannot found video stream\n");
+				}
+			} else
+				ATLTRACE ("Cannot get streams: 0x%08x\n", hr);
+		} else
+			ATLTRACE ("Cannot open file: 0x%08x\n", hr);
+		pDet->Release ();
+	} else
+		ATLTRACE ("Cannot instante MediaDet object: 0x%08x\n", hr);
+
+	return hr;
+}

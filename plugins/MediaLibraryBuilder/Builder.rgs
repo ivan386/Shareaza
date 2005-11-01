@@ -1,0 +1,61 @@
+HKCR
+{
+	ForceRemove MediaLibraryBuilder.Builder.1 = s 'Media Library Builder'
+	{
+		CLSID = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+	}
+	ForceRemove MediaLibraryBuilder.Builder = s 'Media Library Builder'
+	{
+		CLSID = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+		CurVer = s 'MediaLibraryBuilder.Builder.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {570C197C-FE9C-4D1F-B6E0-EFA44D36399F} = s 'Media Library Builder'
+		{
+			ProgID = s 'MediaLibraryBuilder.Builder.1'
+			VersionIndependentProgID = s 'MediaLibraryBuilder.Builder'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6B3F5CE8-238C-4285-BE4B-EF7A9F71D1C2}'
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove LibraryBuilder
+					{
+						ForceRemove val '.asf' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.asx' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.avi' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.divx' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.m2v' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.m2p' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.mkv' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.mov' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.mpeg' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.mpg' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.ogm' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.qt' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.ram' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.rm' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.vob' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.wmv' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.xvid' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+					}
+				}
+			}
+		}
+	}
+}

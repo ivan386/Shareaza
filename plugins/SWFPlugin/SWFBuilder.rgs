@@ -1,0 +1,45 @@
+HKCR
+{
+	SWFPlugin.SWFBuilder.1 = s 'SWF Library Builder'
+	{
+		CLSID = s '{B978F591-5137-4612-873A-DC2081BAD6CD}'
+	}
+	SWFPlugin.SWFBuilder = s 'SWF Library Builder'
+	{
+		CLSID = s '{B978F591-5137-4612-873A-DC2081BAD6CD}'
+		CurVer = s 'SWFPlugin.SWFBuilder.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B978F591-5137-4612-873A-DC2081BAD6CD} = s 'SWF Library Builder'
+		{
+			ProgID = s 'SWFPlugin.SWFBuilder.1'
+			VersionIndependentProgID = s 'SWFPlugin.SWFBuilder'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6820AC10-8EE8-439B-9CB6-B17029025978}'
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove LibraryBuilder
+					{
+						ForceRemove val '.swf' = s '{B978F591-5137-4612-873A-DC2081BAD6CD}'
+					}
+				}
+			}
+		}
+	}
+}

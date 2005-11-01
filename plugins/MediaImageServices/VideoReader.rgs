@@ -1,0 +1,61 @@
+HKCR
+{
+	ForceRemove MediaImageServices.VideoReader.1 = s 'Media Image Services'
+	{
+		CLSID = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+	}
+	ForceRemove MediaImageServices.VideoReader = s 'Media Image Services'
+	{
+		CLSID = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+		CurVer = s 'MediaImageServices.VideoReader.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {04CC76C7-1ED7-4CAE-9762-B8664ED008ED} = s 'Media Image Services'
+		{
+			ProgID = s 'MediaImageServices.VideoReader.1'
+			VersionIndependentProgID = s 'MediaImageServices.VideoReader'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{FD6EB3A2-CE8A-4A12-A065-0490816DF11F}'
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove ImageService
+					{
+						ForceRemove val '.asf' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.asx' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.avi' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.divx' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.m2v' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.m2p' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.mkv' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.mov' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.mpeg' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.mpg' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.ogm' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.qt' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.ram' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.rm' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.vob' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.wmv' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+						ForceRemove val '.xvid' = s '{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}'
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'MediaLibraryBuilder'
+		'MediaLibraryBuilder.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

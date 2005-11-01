@@ -1,0 +1,45 @@
+HKCR
+{
+	SWFPlugin.SWFReader.1 = s 'SWF Image Services'
+	{
+		CLSID = s '{FC4D8F69-0B18-49BB-8AB7-87EB77AA1A9D}'
+	}
+	SWFPlugin.SWFReader = s 'SWF Image Services'
+	{
+		CLSID = s '{FC4D8F69-0B18-49BB-8AB7-87EB77AA1A9D}'
+		CurVer = s 'SWFPlugin.SWFReader.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {FC4D8F69-0B18-49BB-8AB7-87EB77AA1A9D} = s 'SWF Image Services'
+		{
+			ProgID = s 'SWFPlugin.SWFReader.1'
+			VersionIndependentProgID = s 'SWFPlugin.SWFReader'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6820AC10-8EE8-439B-9CB6-B17029025978}'
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove ImageService
+					{
+						ForceRemove val '.swf' = s '{FC4D8F69-0B18-49BB-8AB7-87EB77AA1A9D}'
+					}
+				}
+			}
+		}
+	}
+}
