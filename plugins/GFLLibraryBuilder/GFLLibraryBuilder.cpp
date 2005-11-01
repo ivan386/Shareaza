@@ -72,7 +72,7 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID lpRe
 			case DLL_PROCESS_ATTACH:
 				_hModuleInstance = hInstance;
 				__try {
-					// Инициализация библиотеки
+					// Library initialization
 					GFL_ERROR err = gflLibraryInit ();
 					if (err != GFL_NO_ERROR) {
 						ATLTRACE (_T("gflLibraryInit failed\n"));
@@ -118,7 +118,7 @@ STDAPI DllRegisterServer(void)
 {
     HRESULT hr = _AtlModule.DllRegisterServer ();
 
-	// Регистрация расширений через GFL
+	// Registering extensions using GFL
 	CString ext, tmp;
 	POSITION pos = _ExtMap.GetStartPosition ();
 	while (pos) {
@@ -137,7 +137,7 @@ STDAPI DllUnregisterServer(void)
 {
 	HRESULT hr = _AtlModule.DllUnregisterServer ();
 
-	// Дерегистрация расширений через GFL
+	// Unregistering extensions using GFL
 	CString ext, tmp;
 	POSITION pos = _ExtMap.GetStartPosition ();
 	while (pos) {
