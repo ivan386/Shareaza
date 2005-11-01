@@ -201,6 +201,12 @@
 						Name="VCMIDLTool"
 						AdditionalIncludeDirectories="..\..\shareaza"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						AdditionalIncludeDirectories="..\..\shareaza"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\SWFReader.cpp">
