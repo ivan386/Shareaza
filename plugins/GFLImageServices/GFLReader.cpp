@@ -84,17 +84,27 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 	GFL_BITMAP* hGflBitmap = NULL;
 
 	HRESULT hr = S_OK;
-	GFL_FILE_INFORMATION inf;
-	ZeroMemory (&inf, sizeof (inf));
-	GFL_ERROR err = gflGetFileInformation (CW2A (sFile), -1, &inf);
-	if (err == GFL_NO_ERROR) {
+	GFL_FILE_INFORMATION inf = { 0 };
+	WCHAR pszPath[MAX_PATH] = { 0 };
+
+	GFL_ERROR err = gflGetFileInformation (CW2A(sFile), -1, &inf);
+
+	if ( err != GFL_NO_ERROR )
+	{
+		if ( GetShortPathNameW( sFile, pszPath, MAX_PATH ) )
+			err = gflGetFileInformation (CW2A(pszPath), -1, &inf);
+		else err = GFL_ERROR_FILE_OPEN;
+	}
+	if (err == GFL_NO_ERROR)
+	{
 		pParams->nHeight = inf.Height;
 		pParams->nWidth = inf.Width;
 		pParams->nComponents = (inf.ComponentsPerPixel == 4) ? 4 : 3;
-		if (pParams->nFlags & IMAGESERVICE_SCANONLY) {
-			// Нужны только данные об изображении
+		if (pParams->nFlags & IMAGESERVICE_SCANONLY)
+		{
+			// We need only image info
 		} else {
-			// Копирование изображения
+			// Copy image
 			GFL_LOAD_PARAMS prm;
 			ZeroMemory (&prm, sizeof (prm));
 			gflGetDefaultLoadParams (&prm);
@@ -102,7 +112,8 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 				GFL_LOAD_FORCE_COLOR_MODEL;
 			prm.ColorModel = (inf.ComponentsPerPixel == 4) ? GFL_RGBA : GFL_RGB;
 			prm.FormatIndex = inf.FormatIndex;
-			hr = SAFEgflLoadBitmap (CW2A (sFile), &hGflBitmap, &prm, &inf);
+			hr = SAFEgflLoadBitmap ( wcslen(pszPath) ? pszPath : CW2A (sFile), &hGflBitmap, &prm, &inf);
+
 			if (SUCCEEDED (hr))
 				hr = BitmapToSafeArray (ppImage, pParams, hGflBitmap);
 		}
@@ -114,7 +125,8 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 	if (hGflBitmap)
 		gflFreeBitmap (hGflBitmap);
 
-	if (FAILED (hr) && *ppImage) {
+	if (FAILED (hr) && *ppImage)
+	{
 		SafeArrayDestroy (*ppImage);
 		*ppImage = NULL;
 	}
@@ -150,7 +162,7 @@ STDMETHODIMP CGFLReader::LoadFromMemory (
 		BYTE* pSource = NULL;
 		hr = SafeArrayAccessData (pMemory, (void**) &pSource);
 		if (SUCCEEDED (hr)) {
-			// Загрузка изображения
+			// Loading image
 			GFL_FILE_INFORMATION inf;
 			ZeroMemory (&inf, sizeof (inf));
 			GFL_ERROR err = gflGetFileInformationFromMemory (pSource, nSource, -1, &inf);
@@ -159,9 +171,9 @@ STDMETHODIMP CGFLReader::LoadFromMemory (
 				pParams->nWidth = inf.Width;
 				pParams->nComponents = (inf.ComponentsPerPixel == 4) ? 4 : 3;
 				if (pParams->nFlags & IMAGESERVICE_SCANONLY) {
-					// Нужны только данные об изображении
+					// We need only image info
 				} else {
-					// Копирование изображения
+					// Copy image
 					GFL_LOAD_PARAMS prm;
 					ZeroMemory (&prm, sizeof (prm));
 					gflGetDefaultLoadParams (&prm);
