@@ -1,8 +1,8 @@
 //
 // SkinInfoExtractor.cpp
 //
-//	Date:			"$Date: 2005/10/06 23:07:36 $"
-//	Revision:		"$Revision: 1.2 $"
+//	Date:			"$Date: 2005/11/02 04:08:28 $"
+//	Revision:		"$Revision: 1.3 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -64,7 +64,16 @@ HRESULT STDMETHODCALLTYPE CSkinInfoExtractor::Process(HANDLE hFile, BSTR sFile, 
 	//
 
 	LPTSTR pszFile = GetSysString( sFile );
-	unzFile pFile = unzOpen( pszFile );
+	unzFile pFile = unzOpen( CW2A(pszFile) );
+
+	if ( ! pFile )
+	{
+		// Probably unicode path...
+		// Try to find a short name, since UNZIP can not handle them
+		if ( GetShortPathNameW( sFile, pszFile, MAX_PATH ) )
+			pFile = unzOpen( CW2A(pszFile) );
+	}
+
 	delete [] pszFile;
 
 	//
@@ -214,13 +223,27 @@ LPTSTR CSkinInfoExtractor::GetSysString(BSTR bstr)
 BOOL CSkinInfoExtractor::ScanFile(LPCSTR pszXML, ISXMLElement* pOutput)
 {
 	ISXMLElement* pFile = NULL;
-	CComBSTR str, strVal;
+	CComBSTR strVal;
+	BOOL bBOMPresent = FALSE;
 	
 	//
 	// Put the XML string in a BSTR
 	//
+	if ( strlen(pszXML) > 3 && (UCHAR)pszXML[0] == 0xEF && 
+		 (UCHAR)pszXML[1] == 0xBB && (UCHAR)pszXML[2] == 0xBF )
+	{
+		bBOMPresent = TRUE;
+		pszXML += 3;
+	}
 
-	str = pszXML;
+	int nLength = MultiByteToWideChar(CP_UTF8, 0, pszXML, strlen(pszXML), NULL, 0);
+	WCHAR* pszUnicode = new WCHAR[ nLength + 1 ];
+	MultiByteToWideChar(CP_UTF8, 0, pszXML, strlen(pszXML), pszUnicode, nLength);
+	pszUnicode[ nLength ] = 0;
+
+	CComBSTR str( pszUnicode );
+	delete [] pszUnicode;
+	if ( bBOMPresent ) pszXML -= 3;
 
 	//
 	// Use the FromString() method in ISXMLElement to decode an XML document

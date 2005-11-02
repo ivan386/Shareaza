@@ -23,7 +23,7 @@ HKCR
 	}
 }
 
-HKCU
+HKLM
 {
 	NoRemove Software
 	{
