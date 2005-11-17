@@ -23,23 +23,15 @@
 ;
 ; Tiger_asm - Implementation of Tiger for x86 - use together with TigerTree.cppmp86p
 ;
-; created              7.7.2004         by Camper
-;
-; modified             20.7.2004        by Camper
-;
-; The integration into other projects than Shareaza is expressivly encouraged. Feel free to contact me about it.
-;
 ; #####################################################################################################################
 
                         .586p
-                        .model      flat, C 
+                        .model      flat, stdcall
                         option      casemap:none                    ; case sensitive
                         option      prologue:none                   ; we generate our own entry/exit code
                         option      epilogue:none
 
 ; #####################################################################################################################
-
-USEMMX                  equ         0                               ; include MMX code path ? - slower than normal p5 - not fixed
 
 m_nState0               equ         0
 m_nState1               equ         8
@@ -1414,285 +1406,13 @@ count                   =           count + 1
 
                         add         esp, 96
                         popa
-                        ret
+                        ret 8
 
 TigerTree_Tiger_p5      ENDP
 
 ; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
 ; end of pure p5 code
 ; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-
-                        IF          USEMMX eq 1
-
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-; start of MMX code
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-
-                        .mmx
-
-reg_accu                textequ     <eax>
-reg_temp1               textequ     <esi>
-reg_temp2               textequ     <edi>
-reg_temp3               textequ     <ebx>
-reg_temp4               textequ     <ecx>
-
-mmx_a                   textequ     <mm0>                                               ; use this registers in RND
-mmx_b                   textequ     <mm1>
-mmx_c                   textequ     <mm2>
-mmx_temp1               textequ     <mm3>
-mmx_temp2               textequ     <mm4>
-mmx_temp3               textequ     <mm5>
-
-mmx_0                   textequ     <mm0>                                               ; keyschedule
-mmx_1                   textequ     <mm1>
-mmx_2                   textequ     <mm2>
-mmx_3                   textequ     <mm3>
-mmx_4                   textequ     <mm4>
-mmx_5                   textequ     <mm5>
-mmx_6                   textequ     <mm6>
-mmx_7                   textequ     <mm7>
-
-ADD64MMX                MACRO       reg1:REQ, reg2:REQ, temp:REQ                        ; add   reg1, reg2
-                        xor         reg_accu, reg_accu
-                        movd        reg_temp3, reg1                                     ; get the lower dword
-                        movd        reg_temp4, reg2
-                        paddd       reg1, reg2
-                        add         reg_temp3, reg_temp4                                ; now the carry-flag signals overflow
-                        adc         reg_accu, reg_accu                                  ; reg_accu = CF
-                        movd        temp, reg_accu
-                        psllq       temp, 32                                            ; move carry to high order dword
-                        paddd       reg1, temp
-                        ENDM
-
-SUB64MMX                MACRO       reg1:REQ, reg2:REQ, temp:REQ                        ; sub   reg1, reg2
-                        xor         reg_accu, reg_accu
-                        movd        reg_temp3, reg1                                     ; get lower dword
-                        movd        reg_temp4, reg2
-                        psubd       reg1, reg2
-                        sub         reg_temp3, reg_temp4
-                        adc         reg_accu, reg_accu                                  ; reg_accu = CF
-                        movd        temp, reg_accu
-                        psllq       temp, 32
-                        psubd       reg1, temp
-                        ENDM
-
-TIGERRNDMMX             MACRO       count:REQ,mulval:REQ
-; c = c ^ _x[count]
-; a = a - (T1[( c_l    &0ffh)*8]^T2[((c_l>>16)&0ffh)*8)^T3[( c_h    &0ffh)*8]^T4[((c_h>>16)&0ffh)*8]
-; b = b + (T4[((c_l>>8)&0ffh)*8]^T3[((c_l>>24)&0ffh)*8)^T2[((c_h>>8)&0ffh)*8]^T1[((c_h>>24)&0ffh)*8]
-; b = b * mul
-                        pxor        mmx_c, qword ptr [_x+count*8]
-
-                        movd        reg_temp1, mmx_c
-                        movq        mmx_temp1, mmx_c
-                        mov         reg_temp2, reg_temp1
-                        and         reg_temp1, 0ffh
-                        psrlq       mmx_temp1, 32
-                        and         reg_temp2, 0ff0000h
-                        movd        reg_temp3, mmx_temp1
-                        movq        mmx_temp2, qword ptr [T1+reg_temp1*8]
-                        shr         reg_temp2, 16
-                        mov         reg_temp4, reg_temp3
-                        pxor        mmx_temp2, qword ptr [T2+reg_temp2*8]
-                        and         reg_temp3, 0ffh
-                        and         reg_temp4, 0ff0000h
-                        pxor        mmx_temp2, qword ptr [T3+reg_temp3*8]
-                        shr         reg_temp4, 16
-                        pxor        mmx_temp2, qword ptr [T4+reg_temp4*8]
-                        SUB64MMX    mmx_a, mmx_temp2, mmx_temp3
-                        
-                        movd        reg_temp1, mmx_c
-                        mov         reg_temp2, reg_temp1
-                        and         reg_temp1, 0ff00h
-                        movd        reg_temp3, mmx_temp1
-                        and         reg_temp2, 0ff000000h
-                        shr         reg_temp1, 8
-                        movq        mmx_temp2, qword ptr [T4+reg_temp1*8]
-                        shr         reg_temp2, 24
-                        mov         reg_temp4, reg_temp3
-                        pxor        mmx_temp2, qword ptr [T3+reg_temp2*8]
-                        and         reg_temp3, 0ff00h
-                        and         reg_temp4, 0ff000000h
-                        shr         reg_temp3, 8
-                        pxor        mmx_temp2, qword ptr [T2+reg_temp3*8]
-                        shr         reg_temp4, 24
-                        pxor        mmx_temp2, qword ptr [T1+reg_temp4*8]
-                        ADD64MMX    mmx_b, mmx_temp2, mmx_temp3
-
-                        movq        mmx_temp1, mmx_b
-                        IF          mulval eq 5
-                        psllq       mmx_b, 2
-                        ADD64MMX    mmx_b, mmx_temp1, mmx_temp3
-                        ELSEIF      mulval eq 7
-                        psllq       mmx_b, 3
-                        SUB64MMX    mmx_b, mmx_temp1, mmx_temp3
-                        ELSEIF      mulval eq 9
-                        psllq       mmx_b, 3
-                        ADD64MMX    mmx_b, mmx_temp1, mmx_temp3
-                        ELSE
-                        .ERR        'invalid mul value in TIGERRNDMMX'
-                        ENDIF
-
-                        ENDM
-
-ROTATEVARSMMX           MACRO
-;tempa=a;a=b;b=c;c=tempa
-reg_t                   textequ     mmx_a
-mmx_a                   textequ     mmx_b
-mmx_b                   textequ     mmx_c
-mmx_c                   textequ     reg_t
-                        ENDM
-
-TIGERROUNDMMX           MACRO       mulval:REQ
-count                   =           0
-                        REPEAT      8
-                        TIGERRNDMMX count, mulval
-count                   =           count + 1
-                        ROTATEVARSMMX
-                        ENDM
-                        ENDM
-
-TIGERSAVEVARSMMX        MACRO
-                        movq        _aa, mmx_a
-                        movq        _bb, mmx_b
-                        movq        _cc, mmx_c
-                        ENDM
-
-TIGERRESTOREVARSMMX     MACRO
-                        movq        mmx_a, _aa
-                        movq        mmx_b, _bb
-                        movq        mmx_c, _cc
-                        ENDM
-
-LOADXMMX                MACRO       reg:REQ, count:REQ
-                        movq        reg, qword ptr [_x+count*8]
-                        ENDM
-
-STOREXMMX               MACRO       reg:REQ, count:REQ
-                        movq        qword ptr [_x+count*8], reg
-                        ENDM
-
-TIGERKEYSCHEDULEMMX     MACRO
-
-                        TIGERSAVEVARSMMX
-
-                        LOADXMMX    mmx_7, 7
-                        LOADXMMX    mmx_0, 0
-                        pxor        mmx_7, const_A5A5A5A5A5A5A5A5
-                        LOADXMMX    mmx_1, 1
-                        SUB64MMX    mmx_0, mmx_7, mmx_6
-                        pxor        mmx_1, mmx_0
-                        LOADXMMX    mmx_2, 2
-                        ADD64MMX    mmx_2, mmx_1, mmx_6
-                        STOREXMMX   mmx_1, 1
-                        pxor        mmx_1, const_FFFFFFFFFFFFFFFF                       ; not
-                        LOADXMMX    mmx_3, 3
-                        psllq       mmx_1, 19
-                        pxor        mmx_1, mmx_2
-                        LOADXMMX    mmx_4, 4
-                        SUB64MMX    mmx_3, mmx_1, mmx_6
-                        pxor        mmx_4, mmx_3
-                        LOADXMMX    mmx_5, 5
-                        ADD64MMX    mmx_5, mmx_4, mmx_6
-                        STOREXMMX   mmx_4, 4
-                        pxor        mmx_4, const_FFFFFFFFFFFFFFFF                       ; not
-                        LOADXMMX    mmx_6, 6
-                        psrlq       mmx_4, 23
-                        pxor        mmx_4, mmx_5
-                        LOADXMMX    mmx_7, 7
-                        SUB64MMX    mmx_6, mmx_4, mmx_1
-                        pxor        mmx_7, mmx_6
-                        ADD64MMX    mmx_0, mmx_7, mmx_1
-                        STOREXMMX   mmx_7, 7
-                        pxor        mmx_7, const_FFFFFFFFFFFFFFFF                       ; not
-                        psllq       mmx_7, 19
-                        STOREXMMX   mmx_0, 0                                            ; we start to save results
-                        pxor        mmx_0, mmx_7
-                        LOADXMMX    mmx_1, 1
-                        SUB64MMX    mmx_1, mmx_0, mmx_7
-                        STOREXMMX   mmx_1, 1
-                        pxor        mmx_2, mmx_1
-                        ADD64MMX    mmx_3, mmx_2, mmx_1
-                        STOREXMMX   mmx_2, 2
-                        pxor        mmx_2, const_FFFFFFFFFFFFFFFF                       ; not
-                        LOADXMMX    mmx_4, 4
-                        psrlq       mmx_2, 23
-                        STOREXMMX   mmx_3, 3
-                        pxor        mmx_3, mmx_2
-                        SUB64MMX    mmx_4, mmx_3, mmx_1
-                        pxor        mmx_5, mmx_4
-                        STOREXMMX   mmx_4, 4
-                        ADD64MMX    mmx_6, mmx_5, mmx_1
-                        STOREXMMX   mmx_6, 6
-                        pxor        mmx_6, const_0123456789ABCDEF
-                        LOADXMMX    mmx_7, 7
-                        STOREXMMX   mmx_5, 5
-                        SUB64MMX    mmx_7, mmx_6, mmx_1
-                        STOREXMMX   mmx_7, 7
-
-                        TIGERRESTOREVARSMMX
-                        
-                        ENDM
-
-                        ALIGN       16
-
-TigerTree_Tiger_MMX     PROC        PUBLIC  _Data:DWORD, _State:DWORD
-; Compiles a Block of 8 64-bit words that can be found at _Data
-                        pusha
-
-__Data                  textequ     <[esp+36]>
-__State                 textequ     <[esp+40]>
-
-                        mov         reg_temp1, __Data
-                        movq        mmx_0, qword ptr [reg_temp1+0*8]
-                        movq        mmx_1, qword ptr [reg_temp1+1*8]
-                        movq        mmx_2, qword ptr [reg_temp1+2*8]
-                        movq        mmx_3, qword ptr [reg_temp1+3*8]
-                        movq        mmx_4, qword ptr [reg_temp1+4*8]
-                        movq        mmx_5, qword ptr [reg_temp1+5*8]
-                        movq        mmx_6, qword ptr [reg_temp1+6*8]
-                        movq        mmx_7, qword ptr [reg_temp1+7*8]
-                        STOREXMMX   mmx_0, 0
-                        STOREXMMX   mmx_1, 1
-                        STOREXMMX   mmx_2, 2
-                        STOREXMMX   mmx_3, 3
-                        STOREXMMX   mmx_4, 4
-                        STOREXMMX   mmx_5, 5
-                        STOREXMMX   mmx_6, 6
-                        STOREXMMX   mmx_7, 7
-
-                        mov         reg_temp1, __State
-                        movq        mmx_a, qword ptr [reg_temp1+m_nState0]
-                        movq        mmx_b, qword ptr [reg_temp1+m_nState1]
-                        movq        mmx_c, qword ptr [reg_temp1+m_nState2]
- 
-                        TIGERROUNDMMX 5
-                        TIGERKEYSCHEDULEMMX
-                        TIGERROUNDMMX 7
-                        TIGERKEYSCHEDULEMMX
-                        TIGERROUNDMMX 9
-
-                        mov         reg_temp1, __State
-                        pxor        mmx_a, qword ptr [reg_temp1+m_nState0]
-                        movq        qword ptr [reg_temp1+m_nState0], mmx_a
-                        movq        mmx_temp1, qword ptr [reg_temp1+m_nState1]
-                        SUB64MMX    mmx_b, mmx_temp1, mmx_temp2
-                        movq        qword ptr [reg_temp1+m_nState1], mmx_b
-                        movq        mmx_temp1, qword ptr [reg_temp1+m_nState2]
-                        ADD64MMX    mmx_c, mmx_temp1, mmx_temp2
-                        movq        qword ptr [reg_temp1+m_nState2], mmx_c
-
-                        emms                                                    ; clear FPU state
-                        popa
-                        ret
-
-TigerTree_Tiger_MMX     ENDP
-
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-; end of MMX code
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-
-                        ENDIF
 
 ; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
 ; start of SSE2 code
@@ -1826,13 +1546,13 @@ count                   =           count + 1
 TIGERKEYSCHEDULESSE2    MACRO
 
                         movdq2q     mmx_temp1, xmm7
-                        pxor        xmm7, const_A5A5A5A5A5A5A5A5
+                        pxor        xmm7, oword ptr const_A5A5A5A5A5A5A5A5
                         psubq       xmm0, xmm7
                         movq2dq     xmm7, mmx_temp1
                         pxor        xmm1, xmm0
                         movdq2q     mmx_temp2, xmm1
                         paddq       xmm2, xmm1
-                        pxor        xmm1, const_FFFFFFFFFFFFFFFF            ; not
+                        pxor        xmm1, oword ptr const_FFFFFFFFFFFFFFFF            ; not
                         psllq       xmm1, 19
                         pxor        xmm1, xmm2
                         psubq       xmm3, xmm1
@@ -1840,7 +1560,7 @@ TIGERKEYSCHEDULESSE2    MACRO
                         pxor        xmm4, xmm3
                         movdq2q     mmx_temp3, xmm4
                         paddq       xmm5, xmm4
-                        pxor        xmm4, const_FFFFFFFFFFFFFFFF            ; not
+                        pxor        xmm4, oword ptr const_FFFFFFFFFFFFFFFF            ; not
                         psrlq       xmm4, 23
                         pxor        xmm4, xmm5
                         psubq       xmm6, xmm4
@@ -1848,7 +1568,7 @@ TIGERKEYSCHEDULESSE2    MACRO
                         pxor        xmm7, xmm6
                         movdq2q     mmx_temp4, xmm7
                         paddq       xmm0, xmm7
-                        pxor        xmm7, const_FFFFFFFFFFFFFFFF            ; not
+                        pxor        xmm7, oword ptr const_FFFFFFFFFFFFFFFF            ; not
                         psllq       xmm7, 19
                         pxor        xmm7, xmm0
                         psubq       xmm1, xmm7
@@ -1856,7 +1576,7 @@ TIGERKEYSCHEDULESSE2    MACRO
                         pxor        xmm2, xmm1
                         movdq2q     mmx_temp5, xmm2
                         paddq       xmm3, xmm2
-                        pxor        xmm2, const_FFFFFFFFFFFFFFFF            ; not
+                        pxor        xmm2, oword ptr const_FFFFFFFFFFFFFFFF            ; not
                         psrlq       xmm2, 23
                         pxor        xmm2, xmm3
                         psubq       xmm4, xmm2
@@ -1864,7 +1584,7 @@ TIGERKEYSCHEDULESSE2    MACRO
                         pxor        xmm5, xmm4
                         paddq       xmm6, xmm5
                         movdq2q     mmx_temp1, xmm6
-                        pxor        xmm6, const_0123456789ABCDEF
+                        pxor        xmm6, oword ptr const_0123456789ABCDEF
                         psubq       xmm7, xmm6
                         movq2dq     xmm6, mmx_temp1
 
@@ -1910,7 +1630,7 @@ __State                 textequ     <[esp+40]>
                         emms
 
                         popa
-                        ret
+                        ret 8
 
 TigerTree_Tiger_SSE2    ENDP
 

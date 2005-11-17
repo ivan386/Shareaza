@@ -1,8 +1,8 @@
 //
 // DownloadTransferFTP.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:10:48 $"
-//	Revision:		"$Revision: 1.9 $"
+//	Date:			"$Date: 2005/11/17 21:34:55 $"
+//	Revision:		"$Revision: 1.10 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Nikolay Raspopov, 2004-2005.

@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:10:47 $"
-//	Revision:		"$Revision: 1.28 $"
+//	Date:			"$Date: 2005/11/17 21:34:55 $"
+//	Revision:		"$Revision: 1.29 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.

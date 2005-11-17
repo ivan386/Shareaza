@@ -1,5 +1,5 @@
 //
-// FileFragments/List.hpp
+// Filefragments/List.hpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -22,495 +22,312 @@
 #ifndef FILEFRAGMENTS_LIST_HPP_INCLUDED
 #define FILEFRAGMENTS_LIST_HPP_INCLUDED
 
-namespace detail
+namespace Ranges
 {
-
-template< class FragmentT, class ContainerT >
-class List
+template< class RangeT, template< class, class > class TraitsT, class ContainerT = std::set
+	<
+		RangeT,
+		RangeCompare< RangeT::size_type, RangeT::payload_type >
+	> >
+class List : public TraitsT< RangeT, ContainerT >
 {
 // Interface
 public:
-    // Typedefs
-    typedef FragmentT FragmentType;
-    typedef ContainerT ContainerType;
-    typedef typename FragmentType::SizeType FSizeType;
-    typedef typename FragmentType::PayloadType PayloadType;
-    typedef typename FragmentType::Traits Traits;
-    typedef BadRange< FragmentType > BadRangeException;
-    typedef typename ContainerType::value_type ValueType;
-    typedef typename ContainerType::pointer Pointer;
-    typedef typename ContainerType::const_pointer ConstPointer;
-    typedef typename ContainerType::reference Reference;
-    typedef typename ContainerType::const_reference ConstReference;
-    typedef typename ContainerType::iterator Iterator;
-    typedef typename ContainerType::const_iterator ConstIterator;
-    typedef typename ContainerType::reverse_iterator ReverseIterator;
-    typedef typename ContainerType::const_reverse_iterator ConstReverseIterator;
-    typedef typename ContainerType::size_type SizeType;
-    typedef typename ContainerType::difference_type DifferenceType;
-    typedef ValueType value_type;
-    typedef Pointer pointer;
-    typedef ConstPointer const_pointer;
-    typedef Reference reference;
-    typedef ConstReference const_reference;
-    typedef Iterator iterator;
-    typedef ConstIterator const_iterator;
-    typedef ReverseIterator reverse_iterator;
-    typedef ConstReverseIterator const_reverse_iterator;
-    typedef SizeType size_type;
-    typedef DifferenceType difference_type;
-    typedef ::std::pair< Iterator, Iterator > IteratorPair;
-    typedef ::std::pair< ConstIterator, ConstIterator > ConstIteratorPair;
-    // Constructor
-    // Creates new list, that accepts fragments in the range 0..limit
-    explicit List(FSizeType limit)
-    : s_(), sumLength_( 0 ), upperLimit_( limit )
-    { }
-    // Copy constructor
-        // Use implicit version
-    // Destructor
-        // Use implicit version        // We don't inherit from this class
-    // Assignment
-        // Use implicit version
+	// Typedefs
+	typedef RangeT range_type;
+	typedef ContainerT container_type;
+	typedef TraitsT< RangeT, ContainerT > Traits;
+	typedef typename range_type::size_type range_size_type;
+	typedef typename range_type::payload_type payload_type;
+	typedef RangeCompare< payload_type, range_size_type > compare_type;
+	typedef ListError< range_type > ListException;
+	typedef typename container_type::value_type value_Type;
+	typedef typename container_type::pointer pointer;
+	typedef typename container_type::const_pointer const_pointer;
+	typedef typename container_type::reference reference;
+	typedef typename container_type::const_reference const_reference;
+	typedef typename container_type::iterator iterator;
+	typedef typename container_type::const_iterator const_iterator;
+	typedef typename container_type::reverse_iterator reverse_iterator;
+	typedef typename container_type::const_reverse_iterator const_reverse_iterator;
+	typedef typename container_type::size_type size_type;
+	typedef typename container_type::difference_type difference_type;
+	typedef std::pair< iterator, iterator > iterator_pair;
+	typedef std::pair< const_iterator, const_iterator > const_iterator_pair;
+	// Constructor
+	explicit List() : Traits(), m_set() { }
+	explicit List(typename Traits::ctor_arg_type arg) : Traits( arg ), m_set() { }
 
-    // Iterators
-    Iterator begin() { return s_.begin(); }
-    ConstIterator begin() const { return s_.begin(); }
-    Iterator end() { return s_.end(); }
-    ConstIterator end() const { return s_.end(); }
-    ReverseIterator rbegin() { return s_.rbegin(); }
-    ConstReverseIterator rbegin() const { return s_.rbegin(); }
-    ReverseIterator rend() { return s_.rend(); }
-    ConstReverseIterator rend() const { return s_.rend(); }
+	// Iterators
+	iterator               begin()        { return m_set.begin(); }
+	const_iterator         begin()  const { return m_set.begin(); }
+	iterator               end()          { return m_set.end(); }
+	const_iterator         end()    const { return m_set.end(); }
+	reverse_iterator       rbegin()       { return m_set.rbegin(); }
+	const_reverse_iterator rbegin() const { return m_set.rbegin(); }
+	reverse_iterator       rend()         { return m_set.rend(); }
+	const_reverse_iterator rend()   const { return m_set.rend(); }
 
-    // Accessors
-    SizeType size() const { return s_.size(); }
-    FSizeType limit() const { return upperLimit_; }
-    FSizeType sumLength() const { return sumLength_; }
-    FSizeType missing() const { return limit() - sumLength(); }
-    bool empty() const { return s_.size() == 0; }
-    // Operations
-    void clear()
-    {
-        s_.clear();
-        sumLength_ = 0;
-    }
-    // @insert  Inserts a fragment into the container. Because of the automatic
-    //          sorting and merging guarantied by the container, this might
-    //          not insert the full range indicated by the fragment in cases
-    //          when parts of the range of the fragment are already present.
-    //          Attempting to insert an empty fragment ( Length() == 0 ) is
-    //          possible ( if the fragment is constructible in the first place )
-    //          but does nothing.
-    // @return  Returns the length of the range that has been inserted.
-    //          Effectively it reflects the change of sumLength().
-    // @complexity   ~O( log( n ) )
-    FSizeType insert(const FragmentType& insertFragment);
-    // @insert  Inserts a sequence of fragments. An optimized version should be
-    //          written if 2 large containers have to be merged often.
-    //          It is an error to insert a sequence which is part of the
-    //          list. Doing so results in undefined behaviour.
-    // @complexity   ~O( n_insert * log( n ) )
-	template< typename InputIterator >            
-    FSizeType insert(InputIterator first, InputIterator last)
-    {
-        FSizeType oldSum = sumLength();
-        for( ; first != last; ) insert( *first++ );
-        return sumLength() - oldSum;
-    }
-    // @insert  Inserts a fragment using an iterator as hint. Insertion is done
-    //          in constant time, if no merging occurs and the element can be
-    //          inserted before the hint. Otherwise normal insertion occurs.
-    // @complexity   ~O( 1 ) or ~O( log( n ) )
-    FSizeType insert(Iterator where, const FragmentType& insertFragment);
-    // @erase   Deletes a fragment from the container. Because of the automatic
-    //          sorting and merging guarantied by the container, this might
-    //          not delete the full range indicated by the fragment, in cases
-    //          when parts of the range of the fragment are not present.
-    //          Attempting to delete an empty fragment ( Length() == 0 ) is
-    //          possible but does nothing.
-    // @return  Returns the length of the range that has been deleted.
-    //          Effectively it reflects the change of sumLength().
-    //          Note that this differs from the standard containers interface
-    //          which usually returns a size_type for this kind of funtion,
-    //          which indictaes the number of elements being erased.
-    FSizeType erase(const FragmentType& eraseFragment);
-    // @erase   Deletes a sequence of fragments from the container. That
-    //          sequence need not be part of the list. If it is, use a loop
-    //          over the next function instead, if speed is important.
-    template< typename InputIterator >
-    FSizeType erase(InputIterator first, InputIterator last)
-    {
-        FSizeType oldSum = sumLength();
-        for( ; first != last; ) erase( *first++ );
-        return oldSum - sumLength();
-    }
-    // @erase   This deletes the fragment the argument points to.
-    //          Iterators that point to other fragments remain valid.
-    // @return  Returns iterator that points to the next fragment after the one
-    //          pointed to by the argument.
-    // @complexity   ~O( log( n ) )
-    void erase(Iterator where)
-    {
-        sumLength_ -= where->length();
-        s_.erase( where );
-    }
-    // @swap    Swaps two lists.
-    // @complexity   ~O( 1 )
-    void swap(List& rhs)                    // throw ()
-    {
-        s_.swap( rhs.s_ );
-        ::std::swap( sumLength_, rhs.sumLength_ );
-        ::std::swap( upperLimit_, rhs.upperLimit_ );
-    }
+	// Accessors
+	bool empty() const { return m_set.empty(); }
+	size_type size()  const { return m_set.size(); }
+	// Operations
+	void clear()
+	{
+		m_set.clear();
+		Traits::clear();
+	}
+	// @insert  Inserts a fragment into the container. Because of the automatic
+	//          sorting and merging guarantied by the container, this might
+	//          not insert the full range indicated by the fragment in cases
+	//          when parts of the range of the fragment are already present.
+	//          Attempting to insert an empty fragment ( Length() == 0 ) is
+	//          possible ( if the fragment is constructible in the first place )
+	//          but does nothing.
+	// @return  Returns the length of the range that has been inserted.
+	//          Effectively it reflects the change of sumLength().
+	// @complexity   ~O( log( n ) )
+	range_size_type insert(const range_type& value);
+	// @insert  Inserts a sequence of fragments. An optimized version should be
+	//          written if 2 large containers have to be merged often.
+	// @complexity   ~O( n_insert * log( n ) )
+	template< typename input_iterator >            
+	range_size_type insert(input_iterator first, input_iterator last)
+	{
+		range_size_type sum = 0;
+		for ( ; first != last; ) sum += insert( *first++ );
+		return sum;
+	}
+	// @insert  Inserts a fragment using an iterator as hint. Insertion is done
+	//          in constant time, if no merging occurs and the element can be
+	//          inserted before the hint. Otherwise normal insertion occurs.
+	// @complexity   ~O( 1 ) or ~O( log( n ) )
+	range_size_type insert(const iterator where, const range_type& value);
+	// @erase   Deletes a fragment from the container. Because of the automatic
+	//          sorting and merging guarantied by the container, this might
+	//          not delete the full range indicated by the fragment, in cases
+	//          when parts of the range of the fragment are not present.
+	//          Attempting to delete an empty fragment ( Length() == 0 ) is
+	//          possible but does nothing.
+	// @return  Returns the length of the range that has been deleted.
+	//          Effectively it reflects the change of sumLength().
+	//          Note that this differs from the standard containers interface
+	//          which usually returns a size_type for this kind of funtion,
+	//          which indictaes the number of elements being erased.
+	range_size_type erase(const range_type& value);
+	// @erase   Deletes a sequence of fragments from the container. That
+	//          sequence need not be part of the list. If it is, use a loop
+	//          over the next function instead, if speed is important.
+	template< typename input_iterator >
+	range_size_type erase(input_iterator first, input_iterator last)
+	{
+		range_size_type sum = 0;
+		for ( ; first != last; ) sum += erase( *first++ );
+		return sum;
+	}
+	// @erase   This deletes the fragment the argument points to.
+	//          Iterators that point to other fragments remain valid.
+	// @return  Returns iterator that points to the next fragment after the one
+	//          pointed to by the argument.
+	// @complexity   ~O( log( n ) )
+	range_size_type erase(const iterator where)
+	{
+		range_size_type result = Traits::erase( where );
+		m_set.erase( where );
+		return result;
+	}
+	// @swap    Swaps two lists.
+	// @complexity   ~O( 1 )
+	void swap(List& rhs)                    // throw ()
+	{
+		Traits::swap( rhs );
+		m_set.swap( rhs.m_set );
+	}
 
-    Iterator lowerBound(const FragmentType& match)
-    {
-        return s_.lower_bound( match );
-    }
-    ConstIterator lowerBound(const FragmentType& match) const
-    {
-        return s_.lower_bound( match );
-    }
-    Iterator upperBound(const FragmentType& match)
-    {
-        return s_.upper_bound( match );
-    }
-    ConstIterator upperBound(const FragmentType& match) const
-    {
-        return s_.upper_bound( match );
-    }
-    IteratorPair equalRange(const FragmentType& match)
-    {
-        return s_.equal_range( match );
-    }
-    ConstIteratorPair equalRange(const FragmentType& match) const
-    {
-        return s_.equal_range( match );
-    }
+	iterator            lower_bound(const range_type& key)       { return m_set.lower_bound( key ); }
+	const_iterator      lower_bound(const range_type& key) const { return m_set.lower_bound( key ); }
+	iterator            upper_bound(const range_type& key)       { return m_set.upper_bound( key ); }
+	const_iterator      upper_bound(const range_type& key) const { return m_set.upper_bound( key ); }
+	iterator_pair       equal_range(const range_type& key)       { return m_set.equal_range( key ); }
+	const_iterator_pair equal_range(const range_type& key) const { return m_set.equal_range( key ); }
+	iterator_pair       merge_range(const range_type& key)
+	{
+		iterator_pair sequence( equal_range( key ) );
+		if ( sequence.first != m_set.begin() && ( --sequence.first )->end() < key.begin() )
+			++sequence.first;
+		if ( sequence.second != m_set.end() && sequence.second->begin() == key.end() )
+			++sequence.second;
+		return sequence;
+	}
+	const_iterator_pair merge_range(const range_type& key) const
+	{
+		const_iterator_pair sequence( equal_range( key ) );
+		if ( sequence.first != m_set.begin() && ( --sequence.first )->end() < key.begin() )
+			++sequence.first;
+		if ( sequence.second != m_set.end() && sequence.second->begin() == key.end() )
+			++sequence.second;
+		return sequence;
+	}
 
-    Iterator lower_bound(const FragmentType& match)
-    {
-        return lowerBound( match );
-    }
-    ConstIterator lower_bound(const FragmentType& match) const
-    {
-        return lowerBound( match );
-    }
-    Iterator upper_bound(const FragmentType& match)
-    {
-        return upperBound( match );
-    }
-    ConstIterator upper_bound(const FragmentType& match) const
-    {
-        return upperBound( match );
-    }
-    IteratorPair equal_range(const FragmentType& match)
-    {
-        return equalRange( match );
-    }
-    ConstIteratorPair equal_range(const FragmentType& match) const
-    {
-        return equalRange( match );
-    }
+	iterator largest_range() { return std::max_element( begin(), end(), cmp_size() ); }
+	const_iterator largest_range() const { return std::max_element( begin(), end(), cmp_size() ); }
 
-    // same as equalRange, except that fragments that are adjacent
-    // to the argument are not part of the result
-    IteratorPair overlappingRange(const FragmentType& match)
-    {
-        IteratorPair result( equalRange( match ) );
-        if( result.first != result.second )
-        {
-            if( result.first->end() == match.begin() ) ++result.first;
-            if( ( --result.second )->begin() != match.end() ) ++result.second;
-        }
-        return result;
-    }
-    ConstIteratorPair overlappingRange(const FragmentType& match) const
-    {
-        ConstIteratorPair result( equalRange( match ) );
-        if( result.first != result.second )
-        {
-            if( result.first->end() == match.begin() ) ++result.first;
-            if( ( --result.second )->begin() != match.end() ) ++result.second;
-        }
-        return result;
-    }
+	iterator random_range()
+	{
+		iterator result = begin();
+		if ( !empty() ) std::advance( result, std::rand() % size() );
+		return result;
+	}
+	const_iterator random_range() const
+	{
+		const_iterator result = begin();
+		if ( !empty() ) std::advance( result, std::rand() % size() );
+		return result;
+	}
+
+	bool overlaps(const range_type& key) const { return m_set.find( key ) != end(); }
+	bool overlaps(const List& rhs) const
+	{
+		return size() < rhs.size()
+			? std::find_if( begin(), end(), overlaps_helper( rhs ) ) != end()
+			: std::find_if( rhs.begin(), rhs.end(), overlaps_helper( *this ) ) != rhs.end();
+	}
+	range_size_type overlapping_sum(const range_type& key) const
+	{
+		const_iterator_pair sequence( equal_range( key ) );
+		range_size_type sum = 0;
+		for ( ; sequence.first != sequence.second; ++sequence.first )
+		{
+			sum += min( sequence.first->end(), key.end() )
+				- max( sequence.first->begin(), key.begin() );
+		}
+		return sum;
+	}
+	bool has_position(range_size_type where) const { return overlaps( range_type( where, where + 1 ) ); }
+
 // Implementation
 private:
-    ContainerType s_;
-    FSizeType sumLength_;
-    FSizeType upperLimit_;
+	container_type m_set;
+	struct cmp_size : public std::binary_function< RangeT, RangeT, bool >
+	{
+		result_type operator()(first_argument_type lhs, second_argument_type rhs) const
+		{
+			return lhs.size() < rhs.size();
+		}
+	};
+	struct overlaps_helper : public std::unary_function< RangeT, bool >
+	{
+		overlaps_helper(const List& list) : m_list( list ) { }
+		result_type operator()(argument_type arg) const
+		{
+			return m_list.overlaps( arg );
+		}
+		const List& m_list;
+	};
 };
 
 // @inverse returns a list containing each range out of the base range 0..limit
 //          that is not part of the sourcelist
 // @complexity   ~O( n * log( n ) )
-template< class ListType >
-ListType inverse(const ListType& src);
+template< class list_type >
+list_type inverse(const list_type& src);
 
-// @largestFragment
-//          Returns iterator to the first largest fragment in a list, or
-//          end() iterator if list is empty.
-// @complexity   ~O( n )
-template< class ListType >
-typename ListType::Iterator largestFragment(ListType& src);
-template< class ListType >
-typename ListType::ConstIterator largestFragment(const ListType& src);
-
-// @randomFragment
-//          Returns iterator to the random fragment in a list, or
-//          end() iterator if list is empty.
-// @complexity   ~O( n )
-template< class ListType >
-typename ListType::Iterator randomFragment(ListType& src);
-template< class ListType >
-typename ListType::ConstIterator randomFragment(const ListType& src);
-
-template< class ListType >
-bool hasPosition(const ListType& src, typename ListType::FSizeType pos);
-
-// returns if argument overlaps with any fragment in the list
-template< class ListType >
-bool overlaps(const ListType& src,
-    const typename ListType::FragmentType& match);
-
-template< class ListType >
-bool overlaps(const ListType& src, const ListType& match);
-
-template< class ListType >
-typename ListType::FSizeType
-overlappingSum(const ListType& src,
-    const typename ListType::FragmentType& match);
-
-} // namespace detail
+} // namespace Ranges
 
 ////////////////////////////////////////////////////////////////////////////////
 // Implementation
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace detail
+namespace Ranges
 {
 
-template< class FragmentT, class ContainerT >
-inline typename List< FragmentT, ContainerT >::FSizeType
-List< FragmentT, ContainerT >::insert(
-    const typename List< FragmentT, ContainerT >::FragmentType& insertFragment)
+template< class RangeT, template< class, class > class TraitsT, class ContainerT >
+typename RangeT::size_type List< RangeT, TraitsT, ContainerT >::insert(const RangeT& value)
 {
-    if( insertFragment.end() > limit() )
-    {
-//        throw BadRangeException( insertFragment, limit() );
-        CString errorMsg;
-        errorMsg.Format(
-            _T( "FF::SimpleFragmentList - invalid arg for insert - " )
-            _T( "List - size: %u - limit: %I64u - sum: %I64u - " )
-            _T( "Fragment - begin: %I64u - end: %I64u" ), size(), limit(), sumLength(),
-            insertFragment.begin(), insertFragment.end() );
-        theApp.Message( MSG_ERROR, errorMsg );
-        return 0;
-    }
-    if( insertFragment.length() == 0 ) return 0;
-    ::std::pair< Iterator, Iterator > insertRange =
-        equalRange( insertFragment );
-    if( insertRange.first != insertRange.second )
-    {
-        FSizeType chgSum =
-            Traits::mergeAndReplace( s_, insertRange, insertFragment );
-        sumLength_ += chgSum;
-        return chgSum;
-    }
-    else
-    {
-        s_.insert( insertRange.second, insertFragment );
-        sumLength_ += insertFragment.length();
-        return insertFragment.length();
-    }
+	if ( value.end() > limit() )
+	{
+//		throw ListException( value, limit() );
+		CString msg;
+		msg.Format( _T( "ListError - insert - size: %u - limit: %I64u - sum: %I64u - " )
+			_T( "Range - begin: %I64u - end: %I64u" ),
+			size(), limit(), Traits::length_sum(), value.begin(), value.end() );
+		theApp.Message( MSG_ERROR, msg );
+		return 0;
+	}
+	if ( value.size() == 0 ) return 0;
+	iterator_pair sequence( merge_range( value ) );
+	return sequence.first != sequence.second
+		? Traits::merge_and_replace( m_set, sequence, value )
+		: Traits::simple_merge( m_set, sequence.first, value );
 }
 
-template< class FragmentT, class ContainerT >
-inline typename List< FragmentT, ContainerT >::FSizeType
-List< FragmentT, ContainerT >::insert(
-    typename List< FragmentT, ContainerT >::Iterator where,
-    const typename List< FragmentT, ContainerT >::FragmentType& insertFragment)
+template< class RangeT, template< class, class > class TraitsT, class ContainerT >
+typename RangeT::size_type List< RangeT, TraitsT, ContainerT >::insert(
+	typename List< RangeT, TraitsT, ContainerT >::iterator where, const RangeT& value)
 {
-    Iterator tmp = where;
-    CompareFragments< FragmentType > cmp;
-    if( ( where == begin() || cmp( *--tmp, insertFragment ) )
-        && ( where == end() || cmp( insertFragment, *where ) ) )
-    {
-        s_.insert( where, insertFragment );
-        sumLength_ += insertFragment.length();
-        return insertFragment.length();
-    }
-    else
-    {
-        return insert( insertFragment );
-    }
+	if ( value.end() > limit() )
+	{
+//		throw ListException( value, limit() );
+		CString msg;
+		msg.Format( _T( "ListError - insert(h) - size: %u - limit: %I64u - sum: %I64u - " )
+			_T( "Range - begin: %I64u - end: %I64u" ),
+			size(), limit(), Traits::length_sum(), value.begin(), value.end() );
+		theApp.Message( MSG_ERROR, msg );
+		return 0;
+	}
+	if ( value.size() == 0 ) return 0;
+	iterator tmp( where );
+	return ( where == begin() || ( --tmp )->end() < value.begin() )
+			&& ( where == end() || value.end() < where->begin() )
+		? Traits::simple_merge( m_set, where, value )
+		: insert( value );
 }
 
-template< class FragmentT, class ContainerT >
-inline typename List< FragmentT, ContainerT >::FSizeType
-List< FragmentT, ContainerT >::erase(
-    const typename List< FragmentT, ContainerT >::FragmentType& eraseFragment)
+template< class RangeT, template< class, class > class TraitsT, class ContainerT >
+typename RangeT::size_type List< RangeT, TraitsT, ContainerT >::erase(const RangeT& value)
 {
-    if( eraseFragment.end() > limit() )
-    {
-//        throw BadRangeException( eraseFragment, limit() );
-        CString errorMsg;
-        errorMsg.Format(
-            _T( "FF::SimpleFragmentList - invalid arg for erase - " )
-            _T( "List - size: %u - limit: %I64u - sum: %I64u - " )
-            _T( "Fragment - begin: %I64i - end: %I64u" ), size(), limit(), sumLength(),
-            eraseFragment.begin(), eraseFragment.end() );
-        theApp.Message( MSG_ERROR, errorMsg );
-        return 0;
-    }
-    if( eraseFragment.length() == 0 ) return 0;
-    ::std::pair< Iterator, Iterator > eraseRange =
-        overlappingRange( eraseFragment );
-    if( eraseRange.first == eraseRange.second ) return 0;
-    const FragmentType& frontFragment
-        = eraseRange.first->begin() < eraseFragment.begin()
-            ? FragmentType( *eraseRange.first,
-                 eraseRange.first->begin(), eraseFragment.begin() )
-            : FragmentType( *eraseRange.first, 0,
-                ::std::numeric_limits< FSizeType >::max() );
-    --eraseRange.second;
-    const FragmentType& backFragment
-        = eraseRange.second->end() > eraseFragment.end()
-        ? FragmentType( *eraseRange.second,
-                eraseFragment.end(), eraseRange.second->end() )
-        : FragmentType( *eraseRange.second, 0,
-                ::std::numeric_limits< FSizeType >::max() );
-    const FSizeType oldSum = sumLength();
-    ++eraseRange.second;
-    for( ; eraseRange.first != eraseRange.second; )
-    {
-        sumLength_ -= eraseRange.first->length();
-        s_.erase( eraseRange.first++ );
-    }
-    if( frontFragment.end() < ::std::numeric_limits< FSizeType >::max() )
-    {
-        s_.insert( eraseRange.second, frontFragment );
-        sumLength_ += frontFragment.length();
-    }
-    if( backFragment.end() < ::std::numeric_limits< FSizeType >::max() )
-    {
-        s_.insert( eraseRange.second, backFragment );
-        sumLength_ += backFragment.length();
-    }
-    return oldSum - sumLength();
+	if ( value.end() > limit() )
+	{
+//		throw ListException( value, limit() );
+		CString msg;
+		msg.Format( _T( "ListError - erase - size: %u - limit: %I64u - sum: %I64u - " )
+			_T( "Range - begin: %I64i - end: %I64u" ),
+			size(), limit(), Traits::length_sum(), value.begin(), value.end() );
+		theApp.Message( MSG_ERROR, msg );
+		return 0;
+	}
+	if ( value.size() == 0 ) return 0;
+	iterator_pair sequence( equal_range( value ) );
+	if ( sequence.first == sequence.second ) return 0;
+	const range_type front( min( sequence.first->begin(), value.begin() ),
+		value.begin(), value.value() );
+	const range_type back( value.end(),
+		max( ( --sequence.second )->end(), value.end() ), value.value() );
+	range_size_type sum = 0;
+	for ( ++sequence.second; sequence.first != sequence.second; ) sum += erase( sequence.first++ );
+	sum -= insert( sequence.second, front );
+	sum -= insert( sequence.second, back );
+	return sum;
 }
 
-template< class ListType >
-inline ListType inverse(const ListType& src)
+template< class list_type >
+list_type inverse(const list_type& src)
 {
-    typedef typename ListType::FragmentType FragmentType;
-    typedef typename ListType::PayloadType PayloadType;
-    ListType result( src.limit() );
-    typename ListType::FSizeType last = 0;
-    for( typename ListType::ConstIterator i = src.begin(); i != src.end();
-        ++i )
-    {
-        if( last < i->begin() )
-        {
-            result.insert( FragmentType( last, i->begin(),
-                PayloadType() ) );
-        }
-        last = i->end();
-    }
-    if( last < src.limit() )
-    {
-        result.insert( FragmentType( last, src.limit(), PayloadType() ) );
-    }
-    return result;
+	typedef typename list_type::range_type range_type;
+	typedef typename list_type::payload_type payload_type;
+	typedef typename list_type::range_size_type range_size_type;
+	typedef typename list_type::const_iterator const_iterator;
+	list_type result( src.limit() );
+	range_size_type last = 0;
+	for ( const_iterator i = src.begin(); i != src.end(); ++i )
+	{
+		result.insert( range_type( last, i->begin() ) );
+		last = i->end();
+	}
+	result.insert( range_type( last, src.limit() ) );
+	return result;
 }
 
-template< class ListType >
-inline typename ListType::Iterator largestFragment(ListType& src)
-{
-    typedef typename ListType::Iterator Iterator;
-    Iterator result = src.begin();
-    for( Iterator i = result; i != src.end(); ++i )
-        if( result->length() < i->length() ) result = i;
-    return result;
-}
-template< class ListType >
-inline typename ListType::ConstIterator largestFragment(const ListType& src)
-{
-    typedef typename ListType::ConstIterator ConstIterator;
-    ConstIterator result = src.begin();
-    for( ConstIterator i = result; i != src.end(); ++i )
-        if( result->length() < i->length() ) result = i;
-    return result;
-}
-
-template< class ListType >
-inline typename ListType::Iterator randomFragment(ListType& src)
-{
-    if( src.empty() ) return src.end();
-    typename ListType::Iterator result = src.begin();
-    ::std::advance( result, ::std::rand() % src.size() );
-    return result;
-}
-template< class ListType >
-inline typename ListType::Iterator randomFragment(const ListType& src)
-{
-    if( src.empty() ) return src.end();
-    typename ListType::ConstIterator result = src.begin();
-    ::std::advance( result, ::std::rand() % src.size() );
-    return result;
-}
-
-template< class ListType >
-bool hasPosition(const ListType& src, typename ListType::FSizeType pos)
-{
-    typename ListType::ConstIteratorPair match = src.overlappingRange(
-        typename ListType::FragmentType( pos, pos + 1,
-        typename ListType::PayloadType() ) );
-    return match.first != match.second;
-}
-
-template< class ListType >
-bool overlaps(const ListType& src,
-    const typename ListType::FragmentType& match)
-{
-    typename ListType::ConstIteratorPair matchPair
-        = src.overlappingRange( match );
-    return matchPair.first != matchPair.second;
-}    
-
-// ToDo: tweak for src.size() < match.size() and src.size ~== match.size()
-template< class ListType >
-bool overlaps(const ListType& src, const ListType& match)
-{
-    for( typename ListType::ConstIterator matchIterator = match.begin();
-        matchIterator != match.end(); ++matchIterator )
-    {
-        typename ListType::ConstIteratorPair matchPair
-            = src.overlappingRange( *matchIterator );
-        if( matchPair.first != matchPair.second ) return true;
-    }
-    return false;
-}
-
-template< class ListType >
-typename ListType::FSizeType
-overlappingSum(const ListType& src,
-    const typename ListType::FragmentType& match)
-{
-    typename ListType::ConstIteratorPair matchIterators
-        = src.overlappingRange( match );
-    typename ListType::FSizeType result = 0;
-    for( ; matchIterators.first != matchIterators.second;
-        ++matchIterators.first )
-    {
-        result += ::std::min( matchIterators.first->end(), match.end() )
-            -  ::std::max( matchIterators.first->begin(), match.begin() );
-    }
-    return result;
-}    
-
-} // namespace detail
+} // namespace Ranges
 
 #endif // #ifndef FILEFRAGMENTS_LIST_HPP_INCLUDED

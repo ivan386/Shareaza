@@ -1,5 +1,5 @@
 //
-// FileFragments/Queue.hpp
+// Filefragments/Queue.hpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -22,163 +22,130 @@
 #ifndef FILEFRAGMENTS_QUEUE_HPP_INCLUDED
 #define FILEFRAGMENTS_QUEUE_HPP_INCLUDED
 
-namespace detail
+namespace Ranges
 {
 
+	template< class RangeT, class ContainerT = std::list< RangeT > >
 class Queue
 {
 // Interface
 public:
-    // Typedefs
-    typedef Fragment< EmptyType, u64 > FragmentType;
-    typedef std::list< FragmentType > ContainerType;
-    typedef FragmentType::SizeType FSizeType;
-    typedef FragmentType::PayloadType PayloadType;
-    typedef FragmentType::Traits Traits;
-    typedef ContainerType::value_type ValueType;
-    typedef ContainerType::pointer Pointer;
-    typedef ContainerType::const_pointer ConstPointer;
-    typedef ContainerType::reference Reference;
-    typedef ContainerType::const_reference ConstReference;
-    typedef ContainerType::iterator Iterator;
-    typedef ContainerType::const_iterator ConstIterator;
-    typedef ContainerType::reverse_iterator ReverseIterator;
-    typedef ContainerType::const_reverse_iterator ConstReverseIterator;
-    typedef ContainerType::size_type SizeType;
-    typedef ContainerType::difference_type DifferenceType;
-    typedef ValueType value_type;
-    typedef Pointer pointer;
-    typedef ConstPointer const_pointer;
-    typedef Reference reference;
-    typedef ConstReference const_reference;
-    typedef Iterator iterator;
-    typedef ConstIterator const_iterator;
-    typedef ReverseIterator reverse_iterator;
-    typedef ConstReverseIterator const_reverse_iterator;
-    typedef SizeType size_type;
-    typedef DifferenceType difference_type;
-    // Constructor
-        // Use implicit version
-    // Copy constructor
-        // Use implicit version
-    // Destructor
-        // Use implicit version        // We don't inherit from this class
-    // Assignment
-        // Use implicit version
+	// Typedefs
+	typedef RangeT range_type;
+	typedef ContainerT container_type;
+	typedef typename range_type::size_type range_size_type;
+	typedef typename range_type::payload_type payload_type;
+	typedef typename container_type::value_type value_Type;
+	typedef typename container_type::pointer pointer;
+	typedef typename container_type::const_pointer const_pointer;
+	typedef typename container_type::reference reference;
+	typedef typename container_type::const_reference const_reference;
+	typedef typename container_type::iterator iterator;
+	typedef typename container_type::const_iterator const_iterator;
+	typedef typename container_type::reverse_iterator reverse_iterator;
+	typedef typename container_type::const_reverse_iterator const_reverse_iterator;
+	typedef typename container_type::size_type size_type;
+	typedef typename container_type::difference_type difference_type;
 
-    // Iterators
-    Iterator begin() { return s_.begin(); }
-    ConstIterator begin() const { return s_.begin(); }
-    Iterator end() { return s_.end(); }
-    ConstIterator end() const { return s_.end(); }
-    ReverseIterator rbegin() { return s_.rbegin(); }
-    ConstReverseIterator rbegin() const { return s_.rbegin(); }
-    ReverseIterator rend() { return s_.rend(); }
-    ConstReverseIterator rend() const { return s_.rend(); }
+	// Iterators
+	iterator               begin()        { return m_set.begin(); }
+	const_iterator         begin()  const { return m_set.begin(); }
+	iterator               end()          { return m_set.end(); }
+	const_iterator         end()    const { return m_set.end(); }
+	reverse_iterator       rbegin()       { return m_set.rbegin(); }
+	const_reverse_iterator rbegin() const { return m_set.rbegin(); }
+	reverse_iterator       rend()         { return m_set.rend(); }
+	const_reverse_iterator rend()   const { return m_set.rend(); }
 
-    // Accessors
-    SizeType size() const { return s_.size(); }
-    // @empty   Returns true, if list does not contain any fragments.
-    bool empty() const { return s_.size() == 0; }
-    // Operations
-    void clear()
-    {
-        s_.clear();
-    }
-    void pushBack(const FragmentType& insertFragment)
-    {
-        s_.push_back( insertFragment );
-    }
-    void push_back(const FragmentType& insertFragment)
-    {
-        pushBack( insertFragment );
-    }
-	template< typename InputIterator >            
-    void insert(InputIterator first, InputIterator last)
-    {
-        for( ; first != last; ) s_.insert( *first++ );
-    }
-    void erase(const FragmentType& eraseFragment)
-    {
-        for( Iterator it = begin(); it != end(); )
-        {
-            if( eraseFragment.begin() < it->end()
-                && eraseFragment.end() > it->begin() )
-            {
-                if( eraseFragment.begin() <= it->begin() )
-                {
-                    if( eraseFragment.end() >= it->end() )
-                    {
-                        it = s_.erase( it );
-                    }
-                    else
-                    {
-                        *it = FragmentType( eraseFragment.end(), it->end() );
-                        ++it;
-                    }
-                }
-                else
-                {
-                    if( eraseFragment.end() >= it->end() )
-                    {
-                        *it = FragmentType( it->begin(),
-                            eraseFragment.begin() );
-                        ++it;
-                    }
-                    else
-                    {
-                        s_.push_back(
-                            FragmentType( eraseFragment.end(), it->end() ) );
-                        *it = FragmentType(
-                            it->begin(), eraseFragment.begin() );
-                        ++it;
-                    }
-                }
-            }
-            else
-            {
-                ++it;
-            }
-        }
-    }
-    template< typename InputIterator >
-    void erase(InputIterator first, InputIterator last)
-    {
-        for( ; first != last; ) erase( *first++ );
-    }
-    Iterator erase(Iterator where)
-    {
-        return s_.erase( where );
-    }
-    void popFront() { s_.pop_front(); }
-    void pop_front() { popFront(); }
-    // @swap    Swaps two lists.
-    // @complexity   ~O( 1 )
-    void swap(Queue& rhs)                    // throw ()
-    {
-        s_.swap( rhs.s_ );
-    }
+	// Accessors
+	bool      empty() const { return m_set.empty(); }
+	size_type size()  const { return m_set.size(); }
+
+	void clear() { m_set.clear(); }
+	void push_back(const range_type& value) { m_set.push_back( value ); }
+
+	template< typename input_iterator >            
+	void insert(input_iterator first, input_iterator last)
+	{
+		for ( ; first != last; ) insert( *first++ );
+	}
+	void erase(const range_type& value)
+	{
+		for ( iterator i = begin(); i != end(); )
+		{
+			if ( value.begin() < i->end() && value.end() > i->begin() )
+			{
+				if ( value.begin() <= i->begin() )
+				{
+					if ( value.end() >= i->end() )
+					{
+						i = m_set.erase( i );
+					}
+					else
+					{
+						*i = range_type( value.end(), i->end(), i->value() );
+						++i;
+					}
+				}
+				else
+				{
+					if ( value.end() >= i->end() )
+					{
+						*i = range_type( i->begin(), value.begin(), i->value() );
+						++i;
+					}
+					else
+					{
+						m_set.push_back( range_type( value.end(), i->end(), i->value() ) );
+						*i = range_type( i->begin(), value.begin(), i->value() );
+						++i;
+					}
+				}
+			}
+			else
+			{
+				++i;
+			}
+		}
+	}
+	template< typename input_iterator >
+	void erase(input_iterator first, input_iterator last)
+	{
+		for ( ; first != last; ) erase( *first++ );
+	}
+	iterator erase(iterator where) { return m_set.erase( where ); }
+
+	void pop_front() { m_set.pop_front(); }
+	// @swap    Swaps two lists.
+	// @complexity   ~O( 1 )
+	void swap(Queue& rhs)                    // throw ()
+	{
+		m_set.swap( rhs.m_set );
+	}
 // Implementation
 private:
-    ContainerType s_;
+	container_type m_set;
 };
 
-inline Queue extractRange(Queue& src, const Queue::FragmentType& match)
+template< class RangeT, class ContainerT  >
+Queue< RangeT, ContainerT > extract_range(Queue< RangeT, ContainerT >& src, const RangeT& key)
 {
-    Queue result;
-    for( Queue::Iterator it = src.begin(); it != src.end(); )
-    {
-        if( it->begin() < match.end() && it->end() > match.begin() )
-        {
-            result.pushBack( *it );
-            it = src.erase( it );
-        }
-        else
-        {
-            ++it;
-        }
-    }
-    return result;
+	typedef Queue< RangeT, ContainerT > queue_type;
+	typedef typename queue_type::iterator iterator;
+	queue_type result;
+	for ( iterator i = src.begin(); i != src.end(); )
+	{
+		if ( i->begin() < key.end() && i->end() > key.begin() )
+		{
+			result.push_back( *i );
+			i = src.erase( i );
+		}
+		else
+		{
+			++i;
+		}
+	}
+	return result;
 }
 
 } // namespace types

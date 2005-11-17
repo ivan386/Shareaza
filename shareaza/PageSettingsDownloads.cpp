@@ -1,8 +1,8 @@
 //
 // PageSettingsDownloads.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:10:48 $"
-//	Revision:		"$Revision: 1.21 $"
+//	Date:			"$Date: 2005/11/17 21:34:55 $"
+//	Revision:		"$Revision: 1.22 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.

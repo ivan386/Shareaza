@@ -23,31 +23,25 @@
 ;
 ; MD4_asm - Implementation of MD4 for x86 - use together with MD4.cpp and MD4.h
 ;
-; created              7.7.2004         by Camper
-;
-; last modified        20.7.2004        by Camper
-;
-; The integration into other projects than Shareaza is expressivly encouraged. Feel free to contact me about it.
-;
 ; #####################################################################################################################
 
                         .586p
-                        .model      flat, C 
+                        .model      flat, stdcall
                         option      casemap:none                    ; case sensitive
                         option      prologue:none                   ; we generate our own entry/exit code
                         option      epilogue:none
 
 ; #####################################################################################################################
 
-m_nState0               equ         4                              ; offsets as found in MD4.h
-m_nState1               equ         8
-m_nState2               equ         12
-m_nState3               equ         16
+m_nCount0               equ         0
+m_nCount1               equ         4
 
-m_nCount0               equ         20
-m_nCount1               equ         24
+m_nState0               equ         8                              ; offsets as found in MD4.h
+m_nState1               equ         12
+m_nState2               equ         16
+m_nState3               equ         20
 
-m_pBuffer               equ         28
+m_pBuffer               equ         24
 
 ; Some magic numbers for Transform...
 MD4_S11                 equ         3
@@ -63,53 +57,62 @@ MD4_S32                 equ         9
 MD4_S33                 equ         11
 MD4_S34                 equ         15
 
-MD4FF                   MACRO       a:REQ,b:REQ,c:REQ,d:REQ,count:REQ,s:REQ
-; a = (a+x[count]+((b&c)|(~b&d))) rol s
-                        mov         reg_temp1, b
-                        mov         reg_temp2, b
-                        add         a, [reg_base+count*4]
-reg_t                   textequ     reg_temp1
-reg_temp1               textequ     b                                   ; an attempt to improve instruction pairing
-b                       textequ     reg_t
-                        not         reg_temp1
-                        and         reg_temp2, c
-                        and         reg_temp1, d
-                        or          reg_temp1, reg_temp2
-                        add         a, reg_temp1
-                        rol         a, s
+                        .data
+
+MD4FF                   MACRO       count:REQ,s:REQ
+; a = (a+x[count]+((b&c)|(~b&d)))rol s
+; a = (a+x[count]+(d^(b&(c^d))))rol s
+                        mov         reg_temp1, reg_c
+                        xor         reg_c, reg_d
+                        add         reg_a, [ebp+count*4]
+                        and         reg_c, reg_b
+                        xor         reg_c, reg_d
+                        add         reg_a, reg_c
+                        rol         reg_a, s
+reg_t                   textequ     reg_d
+reg_d                   textequ     reg_temp1
+reg_temp1               textequ     reg_c
+reg_c                   textequ     reg_b
+reg_b                   textequ     reg_a
+reg_a                   textequ     reg_t
                         ENDM
 
-MD4GG                   MACRO       a:REQ,b:REQ,c:REQ,d:REQ,count:REQ,s:REQ
+MD4GG                   MACRO       count:REQ,s:REQ
 ; a = (a+x[count]+((b&c)|(b&d)|(c&d))+5A827999H) rol s
-                        mov         reg_temp1, b
-                        mov         reg_temp2, b
-                        add         a, [reg_base+count*4]
-reg_t                   textequ     reg_temp1
-reg_temp1               textequ     b                                   ; an attempt to improve instruction pairing
-b                       textequ     reg_t
-                        and         reg_temp1, c
-                        and         reg_temp2, d
-                        add         a, 5A827999H
-                        or          reg_temp1, reg_temp2
-                        mov         reg_temp2, c
-                        and         reg_temp2, d
-                        or          reg_temp1, reg_temp2
-                        add         a, reg_temp1
-                        rol         a, s
+; a = (a+x[count]+((b&c)|(d&(b|c)))+5A827999H)rol s
+                        mov         reg_temp2, reg_b
+                        mov         reg_temp1, reg_b
+                        add         reg_a, [ebp+count*4]
+                        or          reg_b, reg_c
+                        and         reg_temp2, reg_c
+                        and         reg_b, reg_d
+                        add         reg_a, 5A827999H
+                        or          reg_b, reg_temp2
+                        add         reg_a, reg_b
+                        rol         reg_a, s
+reg_t                   textequ     reg_d
+reg_d                   textequ     reg_c
+reg_c                   textequ     reg_temp1
+reg_temp1               textequ     reg_b
+reg_b                   textequ     reg_a
+reg_a                   textequ     reg_t
                         ENDM
 
-MD4HH                   MACRO       a:REQ,b:REQ,c:REQ,d:REQ,count:REQ,s:REQ
-; a = (a+x[count]+(b^c^d)+6ED9EBA1H) rol s
-                        mov         reg_temp1, b
-                        add         a, [reg_base+count*4]
-reg_t                   textequ     reg_temp1
-reg_temp1               textequ     b                                   ; an attempt to improve instruction pairing
-b                       textequ     reg_t
-                        xor         reg_temp1, c
-                        add         a, 6ED9EBA1H
-                        xor         reg_temp1, d
-                        add         a, reg_temp1
-                        rol         a, s
+MD4HH                   MACRO       count:REQ,s:REQ
+; a = (a+x[count]+(b^c^d)+6ED9EBA1H)rol s
+                        add         reg_a, [ebp+count*4]
+                        mov         reg_temp1, reg_b
+                        xor         reg_b, reg_c
+                        add         reg_a, 6ED9EBA1H
+                        xor         reg_b, reg_d
+                        add         reg_a, reg_b
+                        rol         reg_a, s
+reg_t                   textequ     reg_d
+reg_d                   textequ     reg_c
+reg_c                   textequ     reg_temp1
+reg_temp1               textequ     reg_b
+reg_b                   textequ     reg_a
+reg_a                   textequ     reg_t
                         ENDM
 
                         .code
@@ -117,7 +120,6 @@ b                       textequ     reg_t
 MD4_Transform_p5        PROC                                            ; we expect ebp to point to the Data stream
                                                                         ; all other registers (eax,ebx,ecx,edx,esi,edi) will be destroyed
 __this                  textequ     <[esp+32+2*4]>                      ; 1*pusha+2*call
-
 ; set alias for registers
 reg_a                   textequ     <eax>
 reg_b                   textequ     <ebx>
@@ -125,87 +127,68 @@ reg_c                   textequ     <ecx>
 reg_d                   textequ     <edx>
 reg_temp1               textequ     <esi>
 reg_temp2               textequ     <edi>
-reg_base                textequ     <ebp>
-
                         mov         reg_temp1, __this
                         mov         reg_a, [reg_temp1+m_nState0]
                         mov         reg_b, [reg_temp1+m_nState1]
                         mov         reg_c, [reg_temp1+m_nState2]
                         mov         reg_d, [reg_temp1+m_nState3]
-
 ; round 1
-                        MD4FF       reg_a, reg_b, reg_c, reg_d,  0, MD4_S11
-                        MD4FF       reg_d, reg_a, reg_b, reg_c,  1, MD4_S12
-                        MD4FF       reg_c, reg_d, reg_a, reg_b,  2, MD4_S13
-                        MD4FF       reg_b, reg_c, reg_d, reg_a,  3, MD4_S14
-
-                        MD4FF       reg_a, reg_b, reg_c, reg_d,  4, MD4_S11
-                        MD4FF       reg_d, reg_a, reg_b, reg_c,  5, MD4_S12
-                        MD4FF       reg_c, reg_d, reg_a, reg_b,  6, MD4_S13
-                        MD4FF       reg_b, reg_c, reg_d, reg_a,  7, MD4_S14
-
-                        MD4FF       reg_a, reg_b, reg_c, reg_d,  8, MD4_S11
-                        MD4FF       reg_d, reg_a, reg_b, reg_c,  9, MD4_S12
-                        MD4FF       reg_c, reg_d, reg_a, reg_b, 10, MD4_S13
-                        MD4FF       reg_b, reg_c, reg_d, reg_a, 11, MD4_S14
-
-                        MD4FF       reg_a, reg_b, reg_c, reg_d, 12, MD4_S11
-                        MD4FF       reg_d, reg_a, reg_b, reg_c, 13, MD4_S12
-                        MD4FF       reg_c, reg_d, reg_a, reg_b, 14, MD4_S13
-                        MD4FF       reg_b, reg_c, reg_d, reg_a, 15, MD4_S14
-
+                        MD4FF        0, MD4_S11
+                        MD4FF        1, MD4_S12
+                        MD4FF        2, MD4_S13
+                        MD4FF        3, MD4_S14
+                        MD4FF        4, MD4_S11
+                        MD4FF        5, MD4_S12
+                        MD4FF        6, MD4_S13
+                        MD4FF        7, MD4_S14
+                        MD4FF        8, MD4_S11
+                        MD4FF        9, MD4_S12
+                        MD4FF       10, MD4_S13
+                        MD4FF       11, MD4_S14
+                        MD4FF       12, MD4_S11
+                        MD4FF       13, MD4_S12
+                        MD4FF       14, MD4_S13
+                        MD4FF       15, MD4_S14
 ; round 2
-
-                        MD4GG       reg_a, reg_b, reg_c, reg_d,  0, MD4_S21
-                        MD4GG       reg_d, reg_a, reg_b, reg_c,  4, MD4_S22
-                        MD4GG       reg_c, reg_d, reg_a, reg_b,  8, MD4_S23
-                        MD4GG       reg_b, reg_c, reg_d, reg_a, 12, MD4_S24
-
-                        MD4GG       reg_a, reg_b, reg_c, reg_d,  1, MD4_S21
-                        MD4GG       reg_d, reg_a, reg_b, reg_c,  5, MD4_S22
-                        MD4GG       reg_c, reg_d, reg_a, reg_b,  9, MD4_S23
-                        MD4GG       reg_b, reg_c, reg_d, reg_a, 13, MD4_S24
-
-                        MD4GG       reg_a, reg_b, reg_c, reg_d,  2, MD4_S21
-                        MD4GG       reg_d, reg_a, reg_b, reg_c,  6, MD4_S22
-                        MD4GG       reg_c, reg_d, reg_a, reg_b, 10, MD4_S23
-                        MD4GG       reg_b, reg_c, reg_d, reg_a, 14, MD4_S24
-
-                        MD4GG       reg_a, reg_b, reg_c, reg_d,  3, MD4_S21
-                        MD4GG       reg_d, reg_a, reg_b, reg_c,  7, MD4_S22
-                        MD4GG       reg_c, reg_d, reg_a, reg_b, 11, MD4_S23
-                        MD4GG       reg_b, reg_c, reg_d, reg_a, 15, MD4_S24
-
+                        MD4GG        0, MD4_S21
+                        MD4GG        4, MD4_S22
+                        MD4GG        8, MD4_S23
+                        MD4GG       12, MD4_S24
+                        MD4GG        1, MD4_S21
+                        MD4GG        5, MD4_S22
+                        MD4GG        9, MD4_S23
+                        MD4GG       13, MD4_S24
+                        MD4GG        2, MD4_S21
+                        MD4GG        6, MD4_S22
+                        MD4GG       10, MD4_S23
+                        MD4GG       14, MD4_S24
+                        MD4GG        3, MD4_S21
+                        MD4GG        7, MD4_S22
+                        MD4GG       11, MD4_S23
+                        MD4GG       15, MD4_S24
 ; round 3
-
-                        MD4HH       reg_a, reg_b, reg_c, reg_d,  0, MD4_S31
-                        MD4HH       reg_d, reg_a, reg_b, reg_c,  8, MD4_S32
-                        MD4HH       reg_c, reg_d, reg_a, reg_b,  4, MD4_S33
-                        MD4HH       reg_b, reg_c, reg_d, reg_a, 12, MD4_S34
-
-                        MD4HH       reg_a, reg_b, reg_c, reg_d,  2, MD4_S31
-                        MD4HH       reg_d, reg_a, reg_b, reg_c, 10, MD4_S32
-                        MD4HH       reg_c, reg_d, reg_a, reg_b,  6, MD4_S33
-                        MD4HH       reg_b, reg_c, reg_d, reg_a, 14, MD4_S34
-
-                        MD4HH       reg_a, reg_b, reg_c, reg_d,  1, MD4_S31
-                        MD4HH       reg_d, reg_a, reg_b, reg_c,  9, MD4_S32
-                        MD4HH       reg_c, reg_d, reg_a, reg_b,  5, MD4_S33
-                        MD4HH       reg_b, reg_c, reg_d, reg_a, 13, MD4_S34
-
-                        MD4HH       reg_a, reg_b, reg_c, reg_d,  3, MD4_S31
-                        MD4HH       reg_d, reg_a, reg_b, reg_c, 11, MD4_S32
-                        MD4HH       reg_c, reg_d, reg_a, reg_b,  7, MD4_S33
-                        MD4HH       reg_b, reg_c, reg_d, reg_a, 15, MD4_S34
-
+                        MD4HH        0, MD4_S31
+                        MD4HH        8, MD4_S32
+                        MD4HH        4, MD4_S33
+                        MD4HH       12, MD4_S34
+                        MD4HH        2, MD4_S31
+                        MD4HH       10, MD4_S32
+                        MD4HH        6, MD4_S33
+                        MD4HH       14, MD4_S34
+                        MD4HH        1, MD4_S31
+                        MD4HH        9, MD4_S32
+                        MD4HH        5, MD4_S33
+                        MD4HH       13, MD4_S34
+                        MD4HH        3, MD4_S31
+                        MD4HH       11, MD4_S32
+                        MD4HH        7, MD4_S33
+                        MD4HH       15, MD4_S34
                         mov         reg_temp1, __this
                         add         [reg_temp1+m_nState0], reg_a
                         add         [reg_temp1+m_nState1], reg_b
                         add         [reg_temp1+m_nState2], reg_c
                         add         [reg_temp1+m_nState3], reg_d
-
                         ret
-
 MD4_Transform_p5        ENDP
 
 MD4_Add_p5              PROC        PUBLIC, _this:DWORD, _Data:DWORD, _nLength:DWORD
@@ -269,7 +252,7 @@ short_stream:           sub         ecx, eax                                ;  -
                         rep movsb
 
 get_out:                popa
-                        ret
+                        ret 12
 
 MD4_Add_p5              ENDP
 
