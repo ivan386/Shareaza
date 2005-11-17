@@ -47,12 +47,9 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 {
 	if ( pFile != NULL )
 	{
-		m_bSHA1		= pFile->m_bSHA1;
-		m_pSHA1		= pFile->m_pSHA1;
-		m_bTiger	= pFile->m_bTiger;
-		m_pTiger	= pFile->m_pTiger;
-		m_bED2K		= pFile->m_bED2K;
-		m_pED2K		= pFile->m_pED2K;
+		m_oSHA1		= pFile->m_oSHA1;
+		m_oTiger	= pFile->m_oTiger;
+		m_oED2K		= pFile->m_oED2K;
 		m_sName		= pFile->m_pBest->m_sName;
 
 		m_pSchema	= SchemaCache.Get( pFile->m_pBest->m_sSchemaURI );
@@ -79,7 +76,10 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 	}
 	else
 	{
-		m_bSHA1 = m_bTiger = m_bED2K = m_bXML = FALSE;
+		m_bXML = FALSE;
+        m_oSHA1.clear();
+        m_oTiger.clear();
+        m_oED2K.clear();
 		m_pSchema = NULL;
 		m_pXML = NULL;
 	}
@@ -89,12 +89,9 @@ CRelatedSearch::CRelatedSearch(CLibraryFile* pFile)
 {
 	if ( pFile != NULL )
 	{
-		m_bSHA1		= pFile->m_bSHA1;
-		m_pSHA1		= pFile->m_pSHA1;
-		m_bTiger	= pFile->m_bTiger;
-		m_pTiger	= pFile->m_pTiger;
-		m_bED2K		= pFile->m_bED2K;
-		m_pED2K		= pFile->m_pED2K;
+		m_oSHA1		= pFile->m_oSHA1;
+		m_oTiger	= pFile->m_oTiger;
+		m_oED2K		= pFile->m_oED2K;
 		m_sName		= pFile->m_sName;
 		m_pSchema	= pFile->m_pSchema;
 		m_bXML		= ( pFile->m_pMetadata != NULL );
@@ -102,7 +99,10 @@ CRelatedSearch::CRelatedSearch(CLibraryFile* pFile)
 	}
 	else
 	{
-		m_bSHA1 = m_bTiger = m_bED2K = m_bXML = FALSE;
+		m_bXML = FALSE;
+        m_oSHA1.clear();
+        m_oTiger.clear();
+        m_oED2K.clear();
 		m_pSchema = NULL;
 		m_pXML = NULL;
 	}
@@ -118,20 +118,17 @@ CRelatedSearch::~CRelatedSearch()
 
 BOOL CRelatedSearch::CanSearchForThis()
 {
-	return m_bSHA1 || m_bTiger || m_bED2K;
+	return m_oSHA1 || m_oTiger || m_oED2K;
 }
 
 BOOL CRelatedSearch::RunSearchForThis()
 {
 	if ( ! CanSearchForThis() ) return FALSE;
-	CQuerySearch* pSearch = new CQuerySearch();
-	pSearch->m_bSHA1	= m_bSHA1;
-	pSearch->m_pSHA1	= m_pSHA1;
-	pSearch->m_bTiger	= m_bTiger;
-	pSearch->m_pTiger	= m_pTiger;
-	pSearch->m_bED2K	= m_bED2K;
-	pSearch->m_pED2K	= m_pED2K;
-	return pSearch->OpenWindow() != NULL;
+	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	pSearch->m_oSHA1	= m_oSHA1;
+	pSearch->m_oTiger	= m_oTiger;
+	pSearch->m_oED2K	= m_oED2K;
+	return CQuerySearch::OpenWindow( pSearch ) != NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -145,17 +142,13 @@ BOOL CRelatedSearch::CanSearchForSimilar()
 BOOL CRelatedSearch::RunSearchForSimilar()
 {
 	if ( ! CanSearchForSimilar() ) return FALSE;
-	CQuerySearch* pSearch = new CQuerySearch();
+	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	pSearch->m_sSearch = Tokenise( m_sName );
 
 	// Support "Related Search" in ed2k
-	if ( m_bED2K )
-	{
-		pSearch->m_bSimilarSearch = TRUE;
-		pSearch->m_pSimilarED2K	= m_pED2K;
-	}
+	pSearch->m_oSimilarED2K	= m_oED2K;
 
-	return pSearch->OpenWindow() != NULL;
+	return CQuerySearch::OpenWindow( pSearch ) != NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -171,12 +164,12 @@ BOOL CRelatedSearch::CanSearchForArtist()
 BOOL CRelatedSearch::RunSearchForArtist()
 {
 	if ( ! CanSearchForArtist() ) return FALSE;
-	CQuerySearch* pSearch = new CQuerySearch();
+	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	pSearch->m_pSchema	= m_pSchema ? m_pSchema : SchemaCache.Get( CSchema::uriAudio );
 	pSearch->m_pXML		= pSearch->m_pSchema->Instantiate();
 	CXMLElement* pXML	= pSearch->m_pXML->AddElement( pSearch->m_pSchema->m_sSingular );
 	pXML->AddAttribute( _T("artist"), Tokenise( m_pXML->GetAttributeValue( _T("artist") ) ) );
-	return pSearch->OpenWindow() != NULL;
+	return CQuerySearch::OpenWindow( pSearch ) != NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -192,12 +185,12 @@ BOOL CRelatedSearch::CanSearchForAlbum()
 BOOL CRelatedSearch::RunSearchForAlbum()
 {
 	if ( ! CanSearchForAlbum() ) return FALSE;
-	CQuerySearch* pSearch = new CQuerySearch();
+	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	pSearch->m_pSchema	= m_pSchema ? m_pSchema : SchemaCache.Get( CSchema::uriAudio );
 	pSearch->m_pXML		= pSearch->m_pSchema->Instantiate();
 	CXMLElement* pXML	= pSearch->m_pXML->AddElement( pSearch->m_pSchema->m_sSingular );
 	pXML->AddAttribute( _T("album"), Tokenise( m_pXML->GetAttributeValue( _T("album") ) ) );
-	return pSearch->OpenWindow() != NULL;
+	return CQuerySearch::OpenWindow( pSearch ) != NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -213,12 +206,12 @@ BOOL CRelatedSearch::CanSearchForSeries()
 BOOL CRelatedSearch::RunSearchForSeries()
 {
 	if ( ! CanSearchForSeries() ) return FALSE;
-	CQuerySearch* pSearch = new CQuerySearch();
+	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	pSearch->m_pSchema	= m_pSchema ? m_pSchema : SchemaCache.Get( CSchema::uriVideo );
 	pSearch->m_pXML		= pSearch->m_pSchema->Instantiate();
 	CXMLElement* pXML	= pSearch->m_pXML->AddElement( pSearch->m_pSchema->m_sSingular );
 	pXML->AddAttribute( _T("series"), Tokenise( m_pXML->GetAttributeValue( _T("series") ) ) );
-	return pSearch->OpenWindow() != NULL;
+	return CQuerySearch::OpenWindow( pSearch ) != NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -244,7 +237,7 @@ CString CRelatedSearch::Tokenise(LPCTSTR psz)
 
 	for ( ; *psz ; psz++ )
 	{
-		if ( *psz == '.' && _tcslen( psz ) == nLastPoint )
+		if ( *psz == '.' && int( _tcslen( psz ) ) == nLastPoint )
 		{
 			break;
 		}

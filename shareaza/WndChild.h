@@ -74,9 +74,9 @@ public:
 	virtual void	OnSkinChange();
 	virtual void	OnQuerySearch(CQuerySearch* pSearch);
 	virtual BOOL	OnQueryHits(CQueryHit* pHits);
-	virtual BOOL	OnPush(GGUID* pClientID, CConnection* pConnection);
+	virtual BOOL	OnPush(const Hashes::Guid& pClientID, CConnection* pConnection);
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
-	virtual BOOL	OnDropFiles(CStringList& pFiles, const CPoint& ptScreen, BOOL bDrop);
+	virtual BOOL	OnDropFiles(CList< CString >& pFiles, const CPoint& ptScreen, BOOL bDrop);
 
 // Overrides
 public:
@@ -97,7 +97,7 @@ protected:
 	afx_msg void OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd);
 	afx_msg void OnNcRButtonUp(UINT nHitTest, CPoint point);
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
-	afx_msg UINT OnNcHitTest(CPoint point);
+	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
 	afx_msg void OnNcPaint();
 	afx_msg BOOL OnNcActivate(BOOL bActive);
 	afx_msg void OnNcLButtonDown(UINT nHitTest, CPoint point);
@@ -105,7 +105,7 @@ protected:
 	afx_msg void OnNcMouseMove(UINT nHitTest, CPoint point);
 	afx_msg void OnNcLButtonDblClk(UINT nHitTest, CPoint point);
 	//}}AFX_MSG
-	afx_msg LONG OnSetText(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 
 };

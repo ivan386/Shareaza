@@ -56,21 +56,21 @@ protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	BOOL		ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* pnBuffer);
-	void		OnPreviewLoaded(SHA1* pSHA1, CImageFile* pImage);
-	BOOL		CachePreviewImage(SHA1* pSHA1, LPBYTE pBuffer, DWORD nBuffer);
-
+    void		OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFile* pImage);
+    BOOL		CachePreviewImage(const Hashes::Sha1Hash& oSHA1, LPBYTE pBuffer, DWORD nBuffer);
+	
 // Item
 protected:
 	class Review
 	{
 	public:
-		Review(GGUID* pGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments);
+		Review(const Hashes::Guid& oGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments);
 		virtual ~Review();
 		void			Layout(CSearchDetailPanel* pParent, CRect* pRect);
 		void			Reposition(int nScroll);
 		void			Paint(CDC* pDC, int nScroll);
 	public:
-		GGUID			m_pGUID;
+		Hashes::Guid	m_oGUID;
 		CString			m_sNick;
 		int				m_nRating;
 		CRichDocument	m_pComments;
@@ -84,7 +84,7 @@ protected:
 	CMatchList*			m_pMatches;
 	BOOL				m_bValid;
 	CMatchFile*			m_pFile;
-	SHA1				m_pSHA1;
+	Hashes::Sha1Hash    m_oSHA1;
 	CString				m_sName;
 	CString				m_sStatus;
 	CRect				m_rcStatus;
@@ -94,7 +94,7 @@ protected:
 	int					m_nRating;
 	CSchema*			m_pSchema;
 	CMetaPanel			m_pMetadata;
-	CPtrList			m_pReviews;
+	CList< Review* >	m_pReviews;
 	int					m_nScrollWheelLines;
 protected:
 	CCriticalSection	m_pSection;
@@ -105,7 +105,7 @@ protected:
 	HANDLE				m_hThread;
 	BOOL				m_bThread;
 	CHttpRequest		m_pRequest;
-	CStringList			m_pPreviewURLs;
+	CList< CString >			m_pPreviewURLs;
 protected:
 	CBitmap				m_bmThumb;
 	CSize				m_szThumb;

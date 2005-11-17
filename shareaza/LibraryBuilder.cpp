@@ -83,8 +83,8 @@ void CLibraryBuilder::Add(CLibraryFile* pFile)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	POSITION pos = m_pFiles.Find( (LPVOID)pFile->m_nIndex );
-	if ( pos == NULL ) m_pFiles.AddHead( (LPVOID)pFile->m_nIndex );
+	POSITION pos = m_pFiles.Find( pFile->m_nIndex );
+	if ( pos == NULL ) m_pFiles.AddHead( pFile->m_nIndex );
 
 	if ( ! m_bThread ) StartThread();
 }
@@ -93,7 +93,7 @@ void CLibraryBuilder::Remove(CLibraryFile* pFile)
 {
 	m_pSection.Lock();
 
-	if ( POSITION pos = m_pFiles.Find( (LPVOID)pFile->m_nIndex ) )
+	if ( POSITION pos = m_pFiles.Find( pFile->m_nIndex ) )
 	{
 		m_pFiles.RemoveAt( pos );
 
@@ -106,10 +106,10 @@ void CLibraryBuilder::Remove(CLibraryFile* pFile)
 	m_pSection.Unlock();
 }
 
-int CLibraryBuilder::GetRemaining()
+INT_PTR CLibraryBuilder::GetRemaining()
 {
 	m_pSection.Lock();
-	int nCount = m_pFiles.GetCount();
+	INT_PTR nCount = m_pFiles.GetCount();
 	if ( m_bThread ) nCount ++;
 	m_pSection.Unlock();
 	return nCount;
@@ -130,7 +130,7 @@ void CLibraryBuilder::UpdateStatus(CString* pStr, int* pRemaining )
 		
 	if ( pRemaining != NULL )
 	{
-		*pRemaining = m_pFiles.GetCount();
+		*pRemaining = static_cast< int >( m_pFiles.GetCount() );
 		if ( m_bThread ) *pRemaining ++;
 	}
 
@@ -170,7 +170,7 @@ BOOL CLibraryBuilder::StartThread()
 	if ( m_hThread != NULL && m_bThread ) return TRUE;
 
 	m_pSection.Lock();
-	BOOL bWorkToDo = m_pFiles.GetCount() > 0;
+	BOOL bWorkToDo = !m_pFiles.IsEmpty();
 	m_pSection.Unlock();
 
 	if ( ! bWorkToDo ) return FALSE;
@@ -282,7 +282,7 @@ void CLibraryBuilder::OnRun()
 				break;
 			}
 
-			m_nIndex = (DWORD)m_pFiles.RemoveHead();
+			m_nIndex = m_pFiles.RemoveHead();
 
 			m_pSection.Unlock();
 		}
@@ -326,17 +326,17 @@ void CLibraryBuilder::OnRun()
 		if ( hFile == INVALID_HANDLE_VALUE )
 		{
 			m_pSection.Lock();
-			if ( m_pFiles.Find( NULL ) == NULL ) m_pFiles.AddTail( (LPVOID)0 );
-			m_pFiles.AddTail( (LPVOID)m_nIndex );
+			if ( m_pFiles.Find( NULL ) == NULL ) m_pFiles.AddTail( 0ul );
+			m_pFiles.AddTail( m_nIndex );
 			m_pSection.Unlock();
 			continue;
 		}
 
 		theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)m_sPath );
-
-		SHA1 pSHA1;
-
-		if ( HashFile( hFile, bPriority, &pSHA1 ) )
+		
+        Hashes::Sha1Hash oSHA1;
+		
+		if ( HashFile( hFile, bPriority, oSHA1 ) )
 		{
 			SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 			m_tActive = GetTickCount();
@@ -345,13 +345,14 @@ void CLibraryBuilder::OnRun()
 			{
 				// Plugin got it
 			}
-			else if ( m_pInternals->ExtractMetadata( m_sPath, hFile, &pSHA1 ) )
+			else if ( m_pInternals->ExtractMetadata( m_sPath, hFile, oSHA1 ) )
 			{
 				// Internal got it
 			}
 		}
 
 		CloseHandle( hFile );
+		m_sPath.Empty();
 	}
 
 	m_pPlugins->Cleanup();
@@ -362,7 +363,6 @@ void CLibraryBuilder::OnRun()
 	m_nIndex	= 0;
 	m_tActive	= 0;
 	m_bThread	= FALSE;
-	m_sPath.Empty();
 
 	theApp.Message( MSG_DEBUG, _T("CLibraryBuilder shutting down.") );
 }
@@ -370,7 +370,7 @@ void CLibraryBuilder::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder file hashing (threaded)
 
-BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, SHA1* pOutSHA1)
+BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& oOutSHA1)
 {
 	DWORD nSizeHigh	= 0;
 	DWORD nSizeLow	= GetFileSize( hFile, &nSizeHigh );
@@ -396,7 +396,7 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, SHA1* pOutSHA1)
 
 	for ( QWORD nLength = nFileSize ; nLength > 0 ; )
 	{
-		DWORD nBlock	= (DWORD)min( nLength, QWORD(20480) );
+		DWORD nBlock	= min( nLength, 20480ul );
 		DWORD nTime		= GetTickCount();
 
 		ReadFile( hFile, m_pBuffer, nBlock, &nBlock, NULL );
@@ -411,7 +411,7 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, SHA1* pOutSHA1)
 		if ( ! m_bPriority && ! bPriority )
 		{
 			if ( nBlock == 20480 ) m_nHashSleep = ( GetTickCount() - nTime ) * 2;
-			m_nHashSleep = max( m_nHashSleep, DWORD(20) );
+			m_nHashSleep = max( m_nHashSleep, 20u );
 			Sleep( m_nHashSleep );
 		}
 
@@ -433,20 +433,13 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, SHA1* pOutSHA1)
 		pFile->m_bBogus			= FALSE;
 		pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
 		pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
-
-		pFile->m_bSHA1 = TRUE;
-		pSHA1.GetHash( &pFile->m_pSHA1 );
-		if ( pOutSHA1 != NULL ) *pOutSHA1 = pFile->m_pSHA1;
-
-		pFile->m_bMD5 = TRUE;
-		pMD5.GetHash( &pFile->m_pMD5 );
-
-		pFile->m_bTiger = TRUE;
-		pTiger.GetRoot( &pFile->m_pTiger );
-
-		pFile->m_bED2K = TRUE;
-		pED2K.GetRoot( &pFile->m_pED2K );
-
+		
+		pSHA1.GetHash( pFile->m_oSHA1 );
+		oOutSHA1 = pFile->m_oSHA1;
+		pMD5.GetHash( pFile->m_oMD5 );
+		pTiger.GetRoot( pFile->m_oTiger );
+		pED2K.GetRoot( pFile->m_oED2K );
+		
 		LibraryMaps.CullDeletedFiles( pFile );
 		Library.AddFile( pFile );
 		Library.Update();

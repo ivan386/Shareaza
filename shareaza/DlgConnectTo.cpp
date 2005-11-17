@@ -49,7 +49,7 @@ CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) : CSkinDialog(CCon
 	m_sHost = _T("");
 	m_bNoUltraPeer = FALSE;
 	m_nPort = 0;
-	m_nProtocol = -1;
+	m_nProtocol = PROTOCOL_ANY;
 	//}}AFX_DATA_INIT
 	m_bBrowseHost = bBrowseHost;
 }
@@ -57,6 +57,7 @@ CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) : CSkinDialog(CCon
 void CConnectToDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
+	int nProtocol = m_nProtocol;
 	//{{AFX_DATA_MAP(CConnectToDlg)
 	DDX_Control(pDX, IDC_CONNECT_ADVANCED, m_wndAdvanced);
 	DDX_Control(pDX, IDC_CONNECT_PROTOCOL, m_wndProtocol);
@@ -67,8 +68,10 @@ void CConnectToDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_CONNECT_HOST, m_sHost);
 	DDX_Check(pDX, IDC_CONNECT_ULTRAPEER, m_bNoUltraPeer);
 	DDX_Text(pDX, IDC_CONNECT_PORT, m_nPort);
-	DDX_CBIndex(pDX, IDC_CONNECT_PROTOCOL, m_nProtocol);
+	DDX_CBIndex(pDX, IDC_CONNECT_PROTOCOL, nProtocol);
 	//}}AFX_DATA_MAP
+	ASSERT( nProtocol >= PROTOCOL_ANY && nProtocol <= PROTOCOL_BT );
+	m_nProtocol = PROTOCOLID( nProtocol );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -107,11 +110,11 @@ BOOL CConnectToDlg::OnInitDialog()
 	}
 
 	m_nPort		= Settings.Connection.InPort;
-	m_nProtocol	= 1;
+	m_nProtocol	= PROTOCOL_G1;
 
 	UpdateData( FALSE );
 
-	if ( nItem = theApp.GetProfileInt( _T("ConnectTo"), _T("Last.Index"), 0 ) )
+	if ( ( nItem = theApp.GetProfileInt( _T("ConnectTo"), _T("Last.Index"), 0 ) ) != 0 )
 	{
 		LoadItem( nItem );
 	}
@@ -119,15 +122,17 @@ BOOL CConnectToDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CConnectToDlg::LoadItem(int nItem)
+void CConnectToDlg::LoadItem(INT_PTR nItem)
 {
 	CString strItem, strHost;
-	strItem.Format( _T("%.3i.Host"), nItem );
+	strItem.Format( _T("%.3Ii.Host"), nItem );
 	m_sHost = theApp.GetProfileString( _T("ConnectTo"), strItem, _T("") );
-	strItem.Format( _T("%.3i.Port"), nItem );
+	strItem.Format( _T("%.3Ii.Port"), nItem );
 	m_nPort = theApp.GetProfileInt( _T("ConnectTo"), strItem, GNUTELLA_DEFAULT_PORT );
-	strItem.Format( _T("%.3i.Protocol"), nItem );
-	m_nProtocol = theApp.GetProfileInt( _T("ConnectTo"), strItem, PROTOCOL_G2 );
+	strItem.Format( _T("%.3Ii.Protocol"), nItem );
+	int nProtocol = theApp.GetProfileInt( _T("ConnectTo"), strItem, PROTOCOL_G2 );
+	ASSERT( nProtocol >= PROTOCOL_ANY && nProtocol <= PROTOCOL_BT );
+	m_nProtocol = PROTOCOLID( nProtocol );
 	UpdateData( FALSE );
 }
 
@@ -138,13 +143,13 @@ void CConnectToDlg::OnSelChangeConnectHost()
 	LoadItem( m_wndHost.GetItemData( nSel ) );
 }
 
-void CConnectToDlg::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+void CConnectToDlg::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	lpMeasureItemStruct->itemWidth	= 256;
 	lpMeasureItemStruct->itemHeight	= 18;
 }
 
-void CConnectToDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+void CConnectToDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( lpDrawItemStruct->itemID == (UINT)-1 ) return;
 	if ( ( lpDrawItemStruct->itemAction & ODA_SELECT ) == 0 &&

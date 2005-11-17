@@ -30,7 +30,7 @@ class CSchema;
 class CSchemaMember;
 class CSchemaChild;
 class CXMLElement;
-
+class CSchemaBitzi;
 
 class CSchema  
 {
@@ -50,12 +50,12 @@ public:
 	BOOL		m_bPrivate;
 	CString		m_sDonkeyType;
 public:
-	CPtrList	m_pMembers;
-	CStringList	m_pExtends;
-	CPtrList	m_pContains;
+	CList< CSchemaMember* >	m_pMembers;
+	CList< CString >	m_pExtends;
+	CList< CSchemaChild* >	m_pContains;
 	CString		m_sDefaultColumns;
 	CString		m_sTypeFilter;
-	CPtrList	m_pBitziMap;
+	CList< CSchemaBitzi* >	m_pBitziMap;
 	CString		m_sBitziTest;
 	CString		m_sLibraryView;
 	CString		m_sHeaderTitle;
@@ -76,7 +76,7 @@ public:
 	POSITION		GetMemberIterator() const;
 	CSchemaMember*	GetNextMember(POSITION& pos) const;
 	CSchemaMember*	GetMember(LPCTSTR pszName) const;
-	int				GetMemberCount() const;
+	INT_PTR			GetMemberCount() const;
 	CString			GetFirstMemberName() const;
 	void			Clear();
 	BOOL			Load(LPCTSTR pszName);
@@ -191,7 +191,8 @@ public:
 	static LPCTSTR	uriVideoMusicCollection;
 	static LPCTSTR	uriDocumentRoot;
 	static LPCTSTR	uriDocumentAll;
-	
+	static LPCTSTR	uriGhostFolder;
+
 	friend class CSchemaMember;
 };
 

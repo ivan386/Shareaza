@@ -192,9 +192,9 @@ LRESULT CSchemaCombo::OnCtlColorListBox(WPARAM wParam, LPARAM lParam)
 		{
 			m_hListBox = (HWND)lParam;
 
-			m_pWndProc = (WNDPROC)GetWindowLong( m_hListBox, GWL_WNDPROC );
-			SetWindowLong( m_hListBox, GWL_USERDATA, (LONG)this );
-			SetWindowLong( m_hListBox, GWL_WNDPROC, (LONG)ListWndProc );
+			m_pWndProc = (WNDPROC)(LONG_PTR)GetWindowLongPtr( m_hListBox, GWLP_WNDPROC );
+			SetWindowLongPtr( m_hListBox, GWLP_USERDATA, (LONG_PTR_ARG)(LONG_PTR)this );
+			SetWindowLongPtr( m_hListBox, GWLP_WNDPROC, (LONG_PTR_ARG)(LONG_PTR)&ListWndProc );
 
 			::InvalidateRect( m_hListBox, NULL, TRUE );
 		}
@@ -259,7 +259,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 			if ( pszLeft && nRight >= 0 )
 			{
-				int nLeft = pszLeft - (LPCTSTR)strURI;
+				int nLeft = static_cast< int >( pszLeft - (LPCTSTR)strURI );  // !!! (TODO)
 				strURI = strURI.Left( nLeft ) + _T("/\x2026") + strURI.Mid( nRight );
 			}
 		}
@@ -337,7 +337,7 @@ void CSchemaCombo::OnDropDown()
 
 LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
-	CSchemaCombo* pThis = (CSchemaCombo*)GetWindowLong( hWnd, GWL_USERDATA );
+	CSchemaCombo* pThis = (CSchemaCombo*)(LONG_PTR)GetWindowLongPtr( hWnd, GWLP_USERDATA );
 	
 	if ( pThis->m_nAvailability < CSchema::saMax &&
 		 ( nMsg == WM_LBUTTONDOWN || nMsg == WM_LBUTTONUP ) )
@@ -350,12 +350,12 @@ LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LP
 		
 		if ( rcClient.PtInRect( pt ) )
 		{
-			int nItemHeight = ::SendMessage( hWnd, LB_GETITEMHEIGHT, 0, 0 );
-			int nTopIndex   = ::SendMessage( hWnd, LB_GETTOPINDEX, 0, 0 );
-			int nIndex		= nTopIndex + pt.y / nItemHeight;
+			LRESULT nItemHeight = ::SendMessage( hWnd, LB_GETITEMHEIGHT, 0, 0 );
+			LRESULT nTopIndex   = ::SendMessage( hWnd, LB_GETTOPINDEX, 0, 0 );
+			int nIndex		= static_cast< int >( nTopIndex + pt.y / nItemHeight );
 			
 			CRect rcItem;
-			::SendMessage( hWnd, LB_GETITEMRECT, nIndex, (LONG)(VOID *)&rcItem );
+			::SendMessage( hWnd, LB_GETITEMRECT, nIndex, (LPARAM)&rcItem );
 
 			if ( rcItem.PtInRect( pt ) )
 			{
@@ -367,12 +367,12 @@ LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LP
 					if ( nIndex >= 0 ) CallWindowProc( pThis->m_pWndProc, hWnd, LB_SETCURSEL, nIndex, 0 );
 					
 					::GetWindowRect( hWnd, &rcClient );
-					int nHeight = pThis->GetCount() * nItemHeight + 2;
+					LRESULT nHeight = pThis->GetCount() * nItemHeight + 2;
 					
 					if ( rcClient.Height() < nHeight )
 					{
-						rcClient.bottom = min( LONG(GetSystemMetrics( SM_CYSCREEN ) - 1),
-							LONG(rcClient.top + nHeight) );
+						rcClient.bottom = (LONG)min( GetSystemMetrics( SM_CYSCREEN ) - 1,
+							rcClient.top + nHeight );
 						
 						::MoveWindow( hWnd, rcClient.left, rcClient.top,
 							rcClient.Width(), rcClient.Height(), TRUE );
@@ -387,8 +387,8 @@ LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LP
 	{
 		if ( wParam == VK_RETURN || wParam == VK_SPACE )
 		{
-			int nIndex = CallWindowProc(	pThis->m_pWndProc, hWnd,
-											LB_GETCURSEL, 0, 0 );
+			int nIndex = static_cast< int >( CallWindowProc(	pThis->m_pWndProc, hWnd,
+															LB_GETCURSEL, 0, 0 ) );
 			
 			if ( pThis->OnClickItem( nIndex, FALSE ) ) return 0;
 		}

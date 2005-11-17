@@ -190,7 +190,7 @@ void CFilePropertiesPage::PaintStaticHeader(CDC* pDC, CRect* prc, LPCTSTR psz)
 	rc.right	= rc.left + sz.cx + 10;
 
 	pDC->ExtTextOut( rc.left + 4, rc.top + 1, ETO_CLIPPED|ETO_OPAQUE,
-		&rc, psz, _tcslen( psz ), NULL );
+		&rc, psz, static_cast< UINT >( _tcslen( psz ) ), NULL );
 
 	rc.SetRect( rc.right, rc.top, prc->right, rc.top + 1 );
 	pDC->ExtTextOut( rc.left, rc.top, ETO_OPAQUE, &rc, NULL, 0, NULL );

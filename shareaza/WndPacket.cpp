@@ -131,7 +131,7 @@ void CPacketWnd::OnDestroy()
 
 	for ( POSITION pos = m_pQueue.GetHeadPosition() ; pos ; )
 	{
-		delete (CLiveItem*)m_pQueue.GetNext( pos );
+		delete m_pQueue.GetNext( pos );
 	}
 	m_pQueue.RemoveAll();
 
@@ -240,7 +240,7 @@ void CPacketWnd::Process(const CNeighbour* pNeighbour, const IN_ADDR* pUDP, BOOL
 	m_pQueue.AddTail( pItem );
 }
 
-void CPacketWnd::OnTimer(UINT nIDEvent) 
+void CPacketWnd::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( nIDEvent != 2 ) return;
 
@@ -254,7 +254,7 @@ void CPacketWnd::OnTimer(UINT nIDEvent)
 		pLock.Lock();
 
 		if ( m_pQueue.GetCount() == 0 ) break;
-		CLiveItem* pItem = (CLiveItem*)m_pQueue.RemoveHead();
+		CLiveItem* pItem = m_pQueue.RemoveHead();
 
 		pLock.Unlock();
 
@@ -269,7 +269,7 @@ void CPacketWnd::OnTimer(UINT nIDEvent)
 			m_wndList.DeleteItem( 0 );
 		}
 
-		int nItem = pItem->Add( &m_wndList, -1, 7 );
+		/*int nItem =*/ pItem->Add( &m_wndList, -1, 7 );
 
 		delete pItem;
 	}
@@ -312,7 +312,7 @@ void CPacketWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-void CPacketWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 
@@ -360,10 +360,10 @@ void CPacketWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 
 	pMenu.CreatePopupMenu();
-	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT)pHosts[0].GetSafeHmenu(), _T("Incoming") );
-	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT)pHosts[1].GetSafeHmenu(), _T("Outgoing") );
-	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT)pTypes1.GetSafeHmenu(), _T("G1 Types") );
-	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT)pTypes2.GetSafeHmenu(), _T("G2 Types") );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pHosts[0].GetSafeHmenu(), _T("Incoming") );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pHosts[1].GetSafeHmenu(), _T("Outgoing") );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypes1.GetSafeHmenu(), _T("G1 Types") );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypes2.GetSafeHmenu(), _T("G2 Types") );
 	pMenu.AppendMenu( MF_SEPARATOR, ID_SEPARATOR );
 	pMenu.AppendMenu( MF_STRING | ( m_bPaused ? MF_CHECKED : 0 ), 1, _T("&Pause Display") );
 	pMenu.AppendMenu( MF_STRING, ID_SYSTEM_CLEAR, _T("&Clear Buffer") );
@@ -479,12 +479,12 @@ void CPacketWnd::AddNeighbour(CMenu* pMenus, int nGroup, UINT nID, DWORD nTarget
 	pMenus[nGroup].AppendMenu( MF_STRING|nChecked, nID, pszText );
 }
 
-void CPacketWnd::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CPacketWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnMeasureItem( lpMeasureItemStruct );
 }
 
-void CPacketWnd::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CPacketWnd::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnDrawItem( lpDrawItemStruct );
 }

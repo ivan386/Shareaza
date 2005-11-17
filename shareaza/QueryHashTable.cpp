@@ -79,7 +79,7 @@ void CQueryHashTable::Create()
 	m_bLive		= TRUE;
 	m_nCookie	= GetTickCount();
 	m_nBits		= Settings.Library.QueryRouteSize;
-	m_nHash		= (int)pow( 2, m_nBits );
+	m_nHash		= 1u << m_nBits;
 	m_pHash		= new BYTE[ ( m_nHash >> 3 ) + 1 ];
 	m_nCount	= 0;
 
@@ -363,7 +363,7 @@ BOOL CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
 	BYTE* pBuffer	= new BYTE[ ( m_nHash + 31 ) / ( 8 / nBits ) ];
 	BYTE* pHashT	= pTarget->m_pHash;
 	BYTE* pHashS	= m_pHash;
-	BYTE  nMask		= 1;
+//	BYTE  nMask		= 1;
 
 	if ( nBits == 4 )
 	{
@@ -441,10 +441,10 @@ BOOL CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
         const DWORD nEnd = ( m_nHash + 7 ) / 8;
 		for ( DWORD nPosition = 0 ; nPosition < nEnd ; ++nPosition )
 		{
-            if ( pDwordBuffer[ nPosition ] = changeFlag[ pHashS[ nPosition ] ]
-                & changed[ pHashT[ nPosition ] ^ pHashS[ nPosition ] ] ) bChanged = TRUE;
+            if ( ( pDwordBuffer[ nPosition ] = changeFlag[ pHashS[ nPosition ] ]
+                & changed[ pHashT[ nPosition ] ^ pHashS[ nPosition ] ] ) != 0 ) bChanged = TRUE;
 		}
-        if ( bChanged ) memcpy( pHashS, pHashT, nEnd );
+        if ( bChanged ) std::memcpy( pHashS, pHashT, nEnd );
 	}
 	else
 	{
@@ -454,10 +454,10 @@ BOOL CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
         const DWORD* const pDwordHashT = reinterpret_cast< DWORD* >( pHashT );
         for ( DWORD nPosition = 0; nPosition < nEnd; ++nPosition )
         {
-            if ( pDwordBuffer[ nPosition ]
-                = pDwordHashS[ nPosition ] ^ pDwordHashT[ nPosition ] ) bChanged = TRUE;
+            if ( ( pDwordBuffer[ nPosition ]
+                = pDwordHashS[ nPosition ] ^ pDwordHashT[ nPosition ] ) != 0 ) bChanged = TRUE;
         }
-        if ( bChanged ) memcpy( pHashS, pHashT, ( m_nHash + 31 ) / 8 );
+        if ( bChanged ) std::memcpy( pHashS, pHashT, ( m_nHash + 31 ) / 8 );
 	}
 
 	if ( bChanged == FALSE && m_bLive )
@@ -858,7 +858,7 @@ int CQueryHashTable::AddString(LPCTSTR pszString)
 	return Add( pszString, 0, _tcslen( pszString ) );
 }
 
-int CQueryHashTable::Add(LPCTSTR pszString, int nStart, int nLength)
+int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
 	if ( ! nLength || ! IsWord( pszString, nStart, nLength ) ) return 0;
 
@@ -866,7 +866,7 @@ int CQueryHashTable::Add(LPCTSTR pszString, int nStart, int nLength)
 
 	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
-	BYTE nMask	= 1 << ( nHash & 7 );
+	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
 
 	if ( *pHash & nMask )
 	{
@@ -878,7 +878,7 @@ int CQueryHashTable::Add(LPCTSTR pszString, int nStart, int nLength)
 	{
 		nHash	= HashWord( pszString, nStart, nLength - 1, m_nBits );
 		pHash	= m_pHash + ( nHash >> 3 );
-		nMask	= 1 << ( nHash & 7 );
+		nMask	= BYTE( 1 << ( nHash & 7 ) );
 
 		if ( *pHash & nMask )
 		{
@@ -888,7 +888,7 @@ int CQueryHashTable::Add(LPCTSTR pszString, int nStart, int nLength)
 
 		nHash	= HashWord( pszString, nStart, nLength - 2, m_nBits );
 		pHash	= m_pHash + ( nHash >> 3 );
-		nMask	= 1 << ( nHash & 7 );
+		nMask	= BYTE( 1 << ( nHash & 7 ) );
 
 		if ( *pHash & nMask )
 		{
@@ -930,7 +930,7 @@ BOOL CQueryHashTable::CheckPhrase(LPCTSTR pszPhrase)
 				nWordCount++;
 				DWORD nHash	= HashWord( pszPhrase, nStart, nPos - nStart, m_nBits );
 				BYTE* pHash	= m_pHash + ( nHash >> 3 );
-				BYTE nMask	= 1 << ( nHash & 7 );
+				BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
 				if ( ! ( *pHash & nMask ) ) nWordHits++;
 			}
 
@@ -945,7 +945,7 @@ BOOL CQueryHashTable::CheckPhrase(LPCTSTR pszPhrase)
 		nWordCount++;
 		DWORD nHash	= HashWord( pszPhrase, nStart, nPos - nStart, m_nBits );
 		BYTE* pHash	= m_pHash + ( nHash >> 3 );
-		BYTE nMask	= 1 << ( nHash & 7 );
+		BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
 		if ( ! ( *pHash & nMask ) ) nWordHits++;
 	}
 
@@ -958,7 +958,7 @@ BOOL CQueryHashTable::CheckString(LPCTSTR pszString)
 
 	DWORD nHash	= HashWord( pszString, 0, _tcslen( pszString ), m_nBits );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
-	BYTE nMask	= 1 << ( nHash & 7 );
+	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
 
 	return ! ( *pHash & nMask );
 }
@@ -969,55 +969,55 @@ BOOL CQueryHashTable::CheckString(LPCTSTR pszString)
 BOOL CQueryHashTable::Check(CQuerySearch* pSearch)
 {
 	if ( ! m_bLive || m_pHash == NULL ) return TRUE;
-
-	if ( pSearch->m_bSHA1 || pSearch->m_bED2K || pSearch->m_bBTH )
+	
+	if ( pSearch->m_oSHA1 || pSearch->m_oED2K || pSearch->m_oBTH )
 	{
-		if ( pSearch->m_bSHA1 )
+		if ( pSearch->m_oSHA1 )
 		{
-			if ( CheckString( CSHA::HashToString( &pSearch->m_pSHA1, TRUE ) ) ) return TRUE;
+			if ( CheckString( pSearch->m_oSHA1.toUrn() ) ) return TRUE;
 		}
-
-		if ( pSearch->m_bED2K )
+		
+		if ( pSearch->m_oED2K )
 		{
-			if ( CheckString( CED2K::HashToString( &pSearch->m_pED2K, TRUE ) ) ) return TRUE;
+            if ( CheckString( pSearch->m_oED2K.toUrn() ) ) return TRUE;
 		}
-
-		if ( pSearch->m_bBTH )
+		
+		if ( pSearch->m_oBTH )
 		{
-			if ( CheckString( _T("urn:btih:") + CSHA::HashToString( &pSearch->m_pBTH, FALSE ) ) ) return TRUE;
+			if ( CheckString( pSearch->m_oBTH.toUrn() ) ) return TRUE;
 		}
 
 		return FALSE;
 	}
 
-	LPCTSTR* pWordPtr	= pSearch->m_pWordPtr;
-	DWORD* pWordLen		= pSearch->m_pWordLen;
 	DWORD nWordHits		= 0;
 
-	for ( int nWord = pSearch->m_nWords ; nWord > 0 ; nWord--, pWordPtr++, pWordLen++ )
+	for ( CQuerySearch::const_iterator pWord = pSearch->begin(); pWord != pSearch->end(); ++pWord )
 	{
-		if ( **pWordPtr == '-' ) continue;
+		if ( pWord->first[ 0 ] == '-' ) continue;
 
-		DWORD nHash	= HashWord( *pWordPtr, 0, *pWordLen, m_nBits );
+		DWORD nHash	= HashWord( pWord->first, 0, pWord->second, m_nBits );
 		BYTE* pHash	= m_pHash + ( nHash >> 3 );
-		BYTE nMask	= 1 << ( nHash & 7 );
+		BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
 		if ( ! ( *pHash & nMask ) ) nWordHits++;
 	}
 
-	return ( pSearch->m_nWords >= 3 ) ? ( nWordHits * 3 / pSearch->m_nWords >= 2 ) : ( nWordHits == pSearch->m_nWords );
+	return ( pSearch->tableSize() >= 3 )
+		? nWordHits * 3 / pSearch->tableSize() >= 2 // at least 2/3 matches
+		: nWordHits == pSearch->tableSize();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable hash functions
 
-DWORD CQueryHashTable::HashWord(LPCTSTR pszString, int nStart, int nLength, int nBits)
+DWORD CQueryHashTable::HashWord(LPCTSTR pszString, size_t nStart, size_t nLength, DWORD nBits)
 {
 	DWORD nNumber	= 0;
 	int nByte		= 0;
 
 	pszString += nStart;
 
-	for ( int nChar = 0 ; nChar < nLength ; nChar++, pszString++ )
+	for ( size_t nChar = 0 ; nChar < nLength ; nChar++, pszString++ )
 	{
 		int nValue = tolower( *pszString ) & 0xFF;
 

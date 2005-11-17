@@ -56,7 +56,7 @@ private:
 	DWORD			m_nBuffer;
 	BYTE*			m_pBuffer;
 protected:
-	CPtrList		m_pList;
+	CList< CTransfer* > m_pList;
 	HANDLE			m_hThread;
 	volatile BOOL	m_bThread;
 	CEvent			m_pWakeup;
@@ -64,7 +64,7 @@ protected:
 
 // Operations
 public:
-	int			GetActiveCount() const;
+	INT_PTR		GetActiveCount() const;
 	BOOL		IsConnectedTo(IN_ADDR* pAddress);
 	BOOL		StartThread();
 	void		StopThread();
@@ -86,10 +86,10 @@ public:
 
 	inline CTransfer* GetNext(POSITION& pos) const
 	{
-		return (CTransfer*)m_pList.GetNext( pos );
+		return m_pList.GetNext( pos );
 	}
 
-	inline int GetCount() const
+	inline INT_PTR GetCount() const
 	{
 		return m_pList.GetCount();
 	}

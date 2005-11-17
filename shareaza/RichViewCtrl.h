@@ -51,7 +51,7 @@ protected:
 protected:
 	CRichDocument*	m_pDocument;
 	DWORD			m_nCookie;
-	CPtrArray		m_pFragments;
+	CArray< CRichFragment* > m_pFragments;
 	int				m_nLength;
 	int				m_nScrollWheelLines;
 protected:
@@ -80,7 +80,7 @@ public:
 protected:
 	void			ClearFragments();
 	void			Layout(CDC* pDC, CRect* pRect);
-	void			WrapLineHelper(CPtrList& pLine, CPoint& pt, int& nLineHeight, int nWidth, int nAlign);
+	void			WrapLineHelper(CList< CRichFragment* >& pLine, CPoint& pt, int& nLineHeight, int nWidth, int nAlign);
 	CRichFragment*	PointToFrag(CPoint& pt);
 	RICHPOSITION	PointToPosition(CPoint& pt);
 	CPoint			PositionToPoint(RICHPOSITION& pt);
@@ -88,8 +88,8 @@ protected:
 	void			CopySelection();
 protected:
 	virtual void	OnLayoutComplete() {};
-	virtual void	OnPaintBegin(CDC* pDC) {};
-	virtual void	OnPaintComplete(CDC* pDC) {};
+	virtual void	OnPaintBegin(CDC* /*pDC*/) {};
+	virtual void	OnPaintComplete(CDC* /*pDC*/) {};
 	virtual void	OnVScrolled() {};
 
 // Overrides
@@ -112,7 +112,7 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

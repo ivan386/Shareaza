@@ -167,8 +167,7 @@ STDMETHODIMP CComMenu::XSMenu::put_CommandID(LONG nCommandID)
 	METHOD_PROLOGUE( CComMenu, SMenu )
 	if ( pThis->m_hMenu != NULL ) return E_FAIL;
 
-	MENUITEMINFO pItem;
-	ZeroMemory( &pItem, sizeof(pItem) );
+	MENUITEMINFO pItem = {};
 	pItem.cbSize	= sizeof(pItem);
 	pItem.fMask		= MIIM_ID;
 	pItem.wID		= (WORD)nCommandID;
@@ -198,9 +197,8 @@ STDMETHODIMP CComMenu::XSMenu::put_Text(BSTR sText)
 	if ( pThis->m_hParent == NULL ) return E_FAIL;
 
 	CString strText( sText );
-	MENUITEMINFO pItem;
 
-	ZeroMemory( &pItem, sizeof(pItem) );
+	MENUITEMINFO pItem = {};
 	pItem.cbSize		= sizeof(pItem);
 	pItem.fMask			= MIIM_TYPE;
 	pItem.fType			= MFT_STRING;
@@ -211,13 +209,13 @@ STDMETHODIMP CComMenu::XSMenu::put_Text(BSTR sText)
 	return S_OK;
 }
 
-STDMETHODIMP CComMenu::XSMenu::get_HotKey(BSTR FAR* psText)
+STDMETHODIMP CComMenu::XSMenu::get_HotKey(BSTR FAR* /*psText*/)
 {
 	METHOD_PROLOGUE( CComMenu, SMenu )
 	return E_NOTIMPL;
 }
 
-STDMETHODIMP CComMenu::XSMenu::put_HotKey(BSTR sText)
+STDMETHODIMP CComMenu::XSMenu::put_HotKey(BSTR /*sText*/)
 {
 	METHOD_PROLOGUE( CComMenu, SMenu )
 	return E_NOTIMPL;
@@ -252,7 +250,7 @@ STDMETHODIMP CComMenu::XSMenu::InsertMenu(LONG nPosition, BSTR sText, ISMenu FAR
 	if ( nPosition == -1 ) nPosition = GetMenuItemCount( pThis->m_hMenu );
 
 	::InsertMenu( pThis->m_hMenu, (UINT)nPosition, MF_BYPOSITION|MF_POPUP,
-		(UINT)CreatePopupMenu(), CString( sText ) );
+		(UINT_PTR)CreatePopupMenu(), CString( sText ) );
 
 	if ( ppMenu ) *ppMenu = CComMenu::Wrap( pThis->m_hMenu, nPosition );
 
@@ -317,7 +315,7 @@ STDMETHODIMP CComMenu::XEnumVARIANT::Reset()
     return S_OK;
 }
 
-STDMETHODIMP CComMenu::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum)
+STDMETHODIMP CComMenu::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* /*ppenum*/)
 {
     METHOD_PROLOGUE( CComMenu, EnumVARIANT )
     return E_NOTIMPL;

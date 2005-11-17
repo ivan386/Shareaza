@@ -1,9 +1,9 @@
 //
 // CtrlMediaFrame.h
 //
-//	Date:			"$Date: 2005/10/25 18:30:37 $"
-//	Revision:		"$Revision: 1.7 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/11/17 21:10:48 $"
+//	Revision:		"$Revision: 1.8 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -67,7 +67,7 @@ protected:
 	void	UpdateState();
 	void	DisableScreenSaver();
 	void	EnableScreenSaver();
-	HRESULT PluginPlay( BSTR bsFileName );
+	HRESULT PluginPlay(BSTR bsFileName);
 public:
 	inline IMediaPlayer* GetPlayer() { return m_pPlayer; }
 	inline MediaState GetState() { return m_pPlayer != NULL ? m_nState : smsNull; }
@@ -136,7 +136,7 @@ protected:
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnClose();
 
 	afx_msg void OnUpdateMediaClose(CCmdUI* pCmdUI);
@@ -179,7 +179,7 @@ protected:
 	afx_msg void OnMediaMute();
 
 	afx_msg void OnNewCurrent(NMHDR* pNotify, LRESULT* pResult);
-	afx_msg LONG OnMediaKey(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnMediaKey(WPARAM wParam, LPARAM lParam);
 
 };
 

@@ -36,7 +36,7 @@ static char THIS_FILE[]=__FILE__;
 CQueryKeys::CQueryKeys()
 {
 	m_nBits		= 12;
-	m_nTable	= (DWORD)pow( 2, m_nBits );
+	m_nTable	= 1u << m_nBits;
 	m_pTable	= new DWORD[ m_nTable ];
 	m_pMap		= new DWORD[ m_nBits * 2 ];
 

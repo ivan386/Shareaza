@@ -37,14 +37,14 @@ public:
 // Attributes
 protected:
 	int			m_nColumns;
-	CMap<DWORD, DWORD, CLiveItem*, CLiveItem*&>	m_pItems;
+	CMap< DWORD_PTR, DWORD_PTR, CLiveItem*, CLiveItem*& > m_pItems;
 protected:
 	static CBitmap m_bmSortAsc;
 	static CBitmap m_bmSortDesc;
 
 // Operations
 public:
-	CLiveItem*	Add(DWORD nParam);
+	CLiveItem*	Add(DWORD_PTR nParam);
 	CLiveItem*	Add(LPVOID pParam);
 	void		Apply(CListCtrl* pCtrl, BOOL bSort = FALSE);
 protected:
@@ -69,12 +69,12 @@ class CLiveItem
 {
 // Construction
 public:
-	CLiveItem(int nColumns, DWORD nParam);
+	CLiveItem(int nColumns, DWORD_PTR nParam);
 	virtual ~CLiveItem();
 
 // Attributes
 public:
-	DWORD		m_nParam;
+	DWORD_PTR	m_nParam;
 	int			m_nImage;
 	UINT		m_nMaskOverlay;
 	UINT		m_nMaskState;

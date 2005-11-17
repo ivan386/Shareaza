@@ -21,3 +21,4 @@
 
 #include "StdAfx.h"
 
+const CLowerCaseTable ToLower;

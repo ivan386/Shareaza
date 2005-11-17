@@ -27,6 +27,7 @@
 
 class CIconButtonCtrl : public CWnd
 {
+	DECLARE_DYNAMIC(CIconButtonCtrl)
 // Construction
 public:
 	CIconButtonCtrl();

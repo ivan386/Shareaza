@@ -38,7 +38,7 @@ public:
 
 // Attributes
 protected:
-	CPtrList			m_pFiles;
+	CList< DWORD, DWORD > m_pFiles;
 	CCriticalSection	m_pSection;
 	CBitziDownloadDlg*	m_pDlg;
 protected:
@@ -52,7 +52,8 @@ protected:
 protected:
 	DWORD				m_nFileIndex;
 	CString				m_sFileName;
-	CString				m_sFileHash;
+	CString				m_sFileSHA1;
+	CString				m_sFileTiger;
 	CString				m_sURL;
 	CString				m_sResponse;
 	CXMLElement*		m_pXML;
@@ -60,7 +61,7 @@ protected:
 // Operations
 public:
 	void		AddFile(DWORD nIndex);
-	int			GetFileCount();
+	INT_PTR		GetFileCount();
 	BOOL		Start(CBitziDownloadDlg* pDlg = NULL);
 	void		Stop();
 	BOOL		IsWorking();

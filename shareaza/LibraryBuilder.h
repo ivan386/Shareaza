@@ -40,8 +40,8 @@ public:
 // Attributes
 protected:
 	CCriticalSection	m_pSection;
-	CPtrList			m_pFiles;
-	CStringList			m_pPriority;
+	CList< DWORD >		m_pFiles;
+	CList< CString >	m_pPriority;
 	HANDLE				m_hThread;
 	BOOL				m_bThread;
 	BOOL				m_bPriority;
@@ -58,7 +58,7 @@ protected:
 public:
 	void		Add(CLibraryFile* pFile);
 	void		Remove(CLibraryFile* pFile);
-	int			GetRemaining();
+	INT_PTR		GetRemaining();
 	CString		GetCurrentFile();
 	void		RequestPriority(LPCTSTR pszPath);
 	void		Clear();
@@ -71,7 +71,7 @@ public:
 protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
-	BOOL		HashFile(HANDLE hFile, BOOL bPriority, SHA1* pSHA1);
+    BOOL		HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& oSHA1);
 	BOOL		SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML);
 	BOOL		SubmitCorrupted();
 	BOOL		DetectVirtualFile(HANDLE hFile, QWORD& nOffset, QWORD& nLength);

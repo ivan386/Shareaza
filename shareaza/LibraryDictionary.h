@@ -41,7 +41,7 @@ public:
 public:
 	CQueryHashTable*	m_pTable;
 protected:
-	CMapStringToPtr		m_pWords;
+	CMap< CString, const CString&, CLibraryWord*, CLibraryWord* > m_pWords;
 	BOOL				m_bTable;
 	DWORD				m_nSearchCookie;
 
@@ -53,7 +53,7 @@ public:
 	void				RebuildHashTable();					//Force hash table to re-build
 	CQueryHashTable*	GetHashTable();
 	void				Clear();
-	CPtrList*			Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE);
+	CList< CLibraryFile* >*	Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE);
 protected:
 	void				ProcessFile(CLibraryFile* pFile, BOOL bAdd);
 	int					ProcessPhrase(CLibraryFile* pFile, const CString& strPhrase, BOOL bAdd, BOOL bLowercase = TRUE);

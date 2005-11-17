@@ -71,7 +71,7 @@ protected:
 	CString				m_sStatusString;
 	CBuffer*			m_pPost;
 	CBuffer*			m_pResponse;
-	CMapStringToString m_pResponseHeaders;
+	CMap< CString, const CString&, CString, CString& > m_pResponseHeaders;
 protected:
 	HWND				m_hNotifyWnd;
 	UINT				m_nNotifyMsg;

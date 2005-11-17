@@ -154,7 +154,7 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 
 	m_bPartial = m_pQueue->m_bPartial;
 
-	if ( m_bMinSize = ( m_pQueue->m_nMinSize > 0 ) )
+	if ( ( m_bMinSize = ( m_pQueue->m_nMinSize > 0 ) ) != FALSE )
 	{
 		m_sMinSize = Settings.SmartVolume( m_pQueue->m_nMinSize, FALSE );
 	}
@@ -163,7 +163,7 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 		m_sMinSize = Settings.SmartVolume( 0, FALSE );
 	}
 
-	if ( m_bMaxSize = ( m_pQueue->m_nMaxSize < SIZE_UNKNOWN ) )
+	if ( ( m_bMaxSize = ( m_pQueue->m_nMaxSize < SIZE_UNKNOWN ) ) != FALSE )
 	{
 		m_sMaxSize = Settings.SmartVolume( m_pQueue->m_nMaxSize, FALSE );
 	}
@@ -216,7 +216,7 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 	m_wndProtocols.EnableWindow( m_bProtocols );
 	m_wndRotateTime.EnableWindow( m_bRotate );
 	m_wndRotateTimeSpin.EnableWindow( m_bRotate );
-	m_wndCapacity.SetRange32( m_nTransfersMax, 4096 );
+	m_wndCapacity.SetRange32( static_cast< int >( m_nTransfersMax ), 4096 );
 	OnHScroll( 0, 0, NULL );
 
 
@@ -276,7 +276,7 @@ void CQueuePropertiesDlg::OnChangeTransfersMax()
 	{
 		UpdateData();
 		m_nCapacity = max( m_nCapacity, m_nTransfersMax );
-		m_wndCapacity.SetRange( m_nTransfersMax, 1024 );
+		m_wndCapacity.SetRange( short( m_nTransfersMax ), 1024 );
 		UpdateData( FALSE );
 	}
 }
@@ -288,7 +288,7 @@ void CQueuePropertiesDlg::OnRotateEnable()
 	m_wndRotateTimeSpin.EnableWindow( m_bRotate );
 }
 
-void CQueuePropertiesDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CQueuePropertiesDlg::OnHScroll(UINT /*nSBCode*/, UINT /*nPos*/, CScrollBar* /*pScrollBar*/)
 {
 	DWORD nTotal = Settings.Connection.OutSpeed * 1024 / 8;
 	DWORD nLimit = Settings.Bandwidth.Uploads;
@@ -378,16 +378,16 @@ void CQueuePropertiesDlg::OnOK()
 	}
 
 	if ( ( m_pQueue->m_nProtocols & (1<<PROTOCOL_ED2K) ) )
-		m_pQueue->m_nCapacity		= min( m_nCapacity, 4096 );
+		m_pQueue->m_nCapacity		= min( (int)m_nCapacity, 4096 );
 	else
-		m_pQueue->m_nCapacity		= min( m_nCapacity, 64 );
+		m_pQueue->m_nCapacity		= min( (int)m_nCapacity, 64 );
 
 	m_pQueue->m_bEnable			= m_bEnable;
-	m_pQueue->m_nMinTransfers	= max( 1, m_nTransfersMin );
-	m_pQueue->m_nMaxTransfers	= max( m_nTransfersMin, m_nTransfersMax );
+	m_pQueue->m_nMinTransfers	= max( 1, (int)m_nTransfersMin );
+	m_pQueue->m_nMaxTransfers	= (int)max( m_nTransfersMin, m_nTransfersMax );
 
 	m_pQueue->m_bRotate			= m_bRotate;
-	m_pQueue->m_nRotateTime		= max(30, m_nRotateTime );
+	m_pQueue->m_nRotateTime		= max( 30, m_nRotateTime );
 
 	m_pQueue->m_nBandwidthPoints = m_wndBandwidthSlider.GetPos();
 

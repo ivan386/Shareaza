@@ -1,9 +1,9 @@
 //
 // DlgDecodeMetadata.h
 //
-//	Date:			"$Date: 2005/03/11 02:20:01 $"
-//	Revision:		"$Revision: 1.1 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/11/17 21:10:48 $"
+//	Revision:		"$Revision: 1.2 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -42,7 +42,7 @@ public:
 	CComboBox	m_wndCodepages;
 	//}}AFX_DATA
 
-	CPtrList	m_pFiles;
+	CList< DWORD >	m_pFiles;
 	void		AddFile(CLibraryFile* pFile);
 
 // Overrides

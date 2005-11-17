@@ -58,7 +58,7 @@ void CCrawlSession::Clear()
 {
 	for ( POSITION pos = m_pNodes.GetHeadPosition() ; pos ; )
 	{
-		delete (CCrawlNode*)m_pNodes.GetNext( pos );
+		delete m_pNodes.GetNext( pos );
 	}
 
 	m_pNodes.RemoveAll();
@@ -105,7 +105,7 @@ int CCrawlSession::GetHubCount()
 
 	for ( POSITION pos = m_pNodes.GetHeadPosition() ; pos ; )
 	{
-		CCrawlNode* pNode = (CCrawlNode*)m_pNodes.GetNext( pos );
+		CCrawlNode* pNode = m_pNodes.GetNext( pos );
 		if ( pNode->m_nType == CCrawlNode::ntHub ) nCount ++;
 	}
 
@@ -118,7 +118,7 @@ int CCrawlSession::GetLeafCount()
 
 	for ( POSITION pos = m_pNodes.GetHeadPosition() ; pos ; )
 	{
-		CCrawlNode* pNode = (CCrawlNode*)m_pNodes.GetNext( pos );
+		CCrawlNode* pNode = m_pNodes.GetNext( pos );
 		if ( pNode->m_nType == CCrawlNode::ntLeaf ) nCount ++;
 	}
 
@@ -132,11 +132,11 @@ void CCrawlSession::OnRun()
 {
 	if ( ! m_bActive ) return;
 
-	DWORD tNow = time( NULL );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	for ( POSITION pos = m_pNodes.GetTailPosition() ; pos ; )
 	{
-		CCrawlNode* pNode = (CCrawlNode*)m_pNodes.GetPrev( pos );
+		CCrawlNode* pNode = m_pNodes.GetPrev( pos );
 
 		if ( pNode->m_nType == CCrawlNode::ntHub &&
 			 pNode->m_tResponse == 0 &&
@@ -173,7 +173,7 @@ CCrawlNode* CCrawlSession::Find(IN_ADDR* pAddress, BOOL bCreate)
 {
 	for ( POSITION pos = m_pNodes.GetTailPosition() ; pos ; )
 	{
-		CCrawlNode* pNode = (CCrawlNode*)m_pNodes.GetPrev( pos );
+		CCrawlNode* pNode = m_pNodes.GetPrev( pos );
 
 		if ( pNode->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
 		{
@@ -184,7 +184,7 @@ CCrawlNode* CCrawlSession::Find(IN_ADDR* pAddress, BOOL bCreate)
 	if ( ! bCreate ) return NULL;
 
 	CCrawlNode* pNode = new CCrawlNode();
-	pNode->m_nUnique = (DWORD)m_pNodes.AddTail( pNode );
+	pNode->m_nUnique = m_pNodes.AddTail( pNode );
 
 	return pNode;
 }
@@ -202,7 +202,7 @@ CCrawlNode::CCrawlNode()
 	m_nLatitude		= 0;
 	m_nLongitude	= 0;
 
-	m_tDiscovered	= time( NULL );
+	m_tDiscovered	= static_cast< DWORD >( time( NULL ) );
 	m_tCrawled		= 0;
 	m_tResponse		= 0;
 }
@@ -220,7 +220,7 @@ void CCrawlNode::OnCrawl(CCrawlSession* pSession, CG2Packet* pPacket)
 	CHAR szType[9];
 	DWORD nLength;
 
-	m_tResponse = time( NULL );
+	m_tResponse = static_cast< DWORD >( time( NULL ) );
 	if ( m_tCrawled == 0 ) m_tCrawled = m_tResponse;
 
 	while ( pPacket->ReadPacket( szType, nLength, &bCompound ) )
@@ -247,9 +247,9 @@ void CCrawlNode::OnCrawl(CCrawlSession* pSession, CG2Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CCrawlNode process a crawl reply node
 
-void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD nPacket, int nType)
+void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD /*nPacket*/, int nType)
 {
-	SOCKADDR_IN pHost;
+	SOCKADDR_IN pHost = { 0 };
 	pHost.sin_family = PF_INET + 1;
 
 	BOOL bHub = FALSE;

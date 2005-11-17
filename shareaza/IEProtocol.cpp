@@ -123,8 +123,8 @@ void CIEProtocol::Close()
 
 		m_pSession = NULL;
 	}
-
-	SetCollection( NULL, NULL );
+	
+    SetCollection( Hashes::Sha1Hash(), NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -136,13 +136,13 @@ CIEProtocolRequest* CIEProtocol::CreateRequest()
 	return new CIEProtocolRequest( this );
 }
 
-void CIEProtocol::OnRequestConstruct(CIEProtocolRequest* pRequest)
+void CIEProtocol::OnRequestConstruct(CIEProtocolRequest* /*pRequest*/)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	m_nRequests ++;
 }
 
-void CIEProtocol::OnRequestDestruct(CIEProtocolRequest* pRequest)
+void CIEProtocol::OnRequestDestruct(CIEProtocolRequest* /*pRequest*/)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -210,7 +210,7 @@ CIEProtocolRequest::~CIEProtocolRequest()
 /////////////////////////////////////////////////////////////////////////////
 // CIEProtocolRequest transfer handler
 
-HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink, IInternetBindInfo* pBindInfo, DWORD dwFlags)
+HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink, IInternetBindInfo* /*pBindInfo*/, DWORD dwFlags)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CString strMimeType;
@@ -279,13 +279,13 @@ HRESULT CIEProtocolRequest::OnTerminate()
 
 IMPLEMENT_UNKNOWN(CIEProtocolRequest, InternetProtocol)
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Abort(HRESULT hrReason, DWORD dwOptions)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Abort(HRESULT /*hrReason*/, DWORD /*dwOptions*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
 	return S_OK;
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Continue(PROTOCOLDATA *pProtocolData)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Continue(PROTOCOLDATA* /*pProtocolData*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
 	return S_OK;
@@ -297,7 +297,7 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Resume()
 	return E_NOTIMPL;
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Start(LPCWSTR szUrl, IInternetProtocolSink *pOIProtSink, IInternetBindInfo *pOIBindInfo, DWORD grfPI, HANDLE_PTR dwReserved)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Start(LPCWSTR szUrl, IInternetProtocolSink *pOIProtSink, IInternetBindInfo *pOIBindInfo, DWORD grfPI, HANDLE_PTR /*dwReserved*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
 	return pThis->OnStart( CString( szUrl ), pOIProtSink, pOIBindInfo, grfPI );
@@ -309,13 +309,13 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Suspend()
 	return E_NOTIMPL;
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Terminate(DWORD dwOptions)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Terminate(DWORD /*dwOptions*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
 	return pThis->OnTerminate();
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocol::LockRequest(DWORD dwOptions)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocol::LockRequest(DWORD /*dwOptions*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
 	return S_OK;
@@ -327,7 +327,7 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Read(void *pv, ULONG cb, ULO
 	return pThis->OnRead( pv, cb, pcbRead );
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Seek(LARGE_INTEGER dlibMove, DWORD dwOrigin, ULARGE_INTEGER *plibNewPosition)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Seek(LARGE_INTEGER /*dlibMove*/, DWORD /*dwOrigin*/, ULARGE_INTEGER* /*plibNewPosition*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
 	return E_FAIL;
@@ -344,26 +344,26 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocol::UnlockRequest()
 
 IMPLEMENT_UNKNOWN(CIEProtocolRequest, InternetProtocolInfo)
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::CombineUrl(LPCWSTR pwzBaseUrl, LPCWSTR pwzRelativeUrl, DWORD dwCombineFlags, LPWSTR pwzResult, DWORD cchResult, DWORD *pcchResult, DWORD dwReserved)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::CombineUrl(LPCWSTR /*pwzBaseUrl*/, LPCWSTR /*pwzRelativeUrl*/, DWORD /*dwCombineFlags*/, LPWSTR /*pwzResult*/, DWORD /*cchResult*/, DWORD* /*pcchResult*/, DWORD /*dwReserved*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocolInfo)
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::CompareUrl(LPCWSTR pwzUrl1, LPCWSTR pwzUrl2, DWORD dwCompareFlags)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::CompareUrl(LPCWSTR /*pwzUrl1*/, LPCWSTR /*pwzUrl2*/, DWORD /*dwCompareFlags*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocolInfo)
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::ParseUrl(LPCWSTR pwzUrl, PARSEACTION ParseAction, DWORD dwParseFlags, LPWSTR pwzResult, DWORD cchResult, DWORD *pcchResult, DWORD dwReserved)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::ParseUrl(LPCWSTR /*pwzUrl*/, PARSEACTION ParseAction, DWORD /*dwParseFlags*/, LPWSTR pwzResult, DWORD cchResult, DWORD *pcchResult, DWORD /*dwReserved*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocolInfo)
 	switch ( ParseAction )
 	{
 	case PARSE_SECURITY_URL:
 		// Substitute a known remote URL, to class this as an offsite/high-security zone
-		*pcchResult = _tcslen( _T("http://p2p-col.shareaza.com/") ) + 1;
+		*pcchResult = static_cast< DWORD >( _tcslen( _T("http://p2p-col.shareaza.com/") ) + 1 );
 		if ( cchResult < *pcchResult ) return S_FALSE;
 		wcscpy( pwzResult, L"http://p2p-col.shareaza.com/" );
 		return S_OK;
@@ -372,7 +372,7 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::ParseUrl(LPCWSTR pwzUrl,
 	}
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::QueryInfo(LPCWSTR pwzUrl, QUERYOPTION OueryOption, DWORD dwQueryFlags, LPVOID pBuffer, DWORD cbBuffer, DWORD *pcbBuf, DWORD dwReserved)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::QueryInfo(LPCWSTR /*pwzUrl*/, QUERYOPTION OueryOption, DWORD /*dwQueryFlags*/, LPVOID pBuffer, DWORD cbBuffer, DWORD *pcbBuf, DWORD /*dwReserved*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocolInfo)
 	switch ( OueryOption )
@@ -410,17 +410,17 @@ HRESULT CIEProtocol::OnRequest(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMime
 /////////////////////////////////////////////////////////////////////////////
 // CIEProtocol request handler - "p2p-col"
 
-HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly)
+HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL /*bParseOnly*/)
 {
 	if ( _tcslen( pszURL ) < 32 + 1 ) return INET_E_INVALID_URL;
 	if ( pszURL[32] != '/' ) return INET_E_INVALID_URL;
-
-	SHA1 pSHA1;
-	if ( ! CSHA::HashFromString( pszURL, &pSHA1 ) ) return INET_E_INVALID_URL;
-
+	
+    Hashes::Sha1Hash oSHA1;
+	if ( !oSHA1.fromString( pszURL ) ) return INET_E_INVALID_URL;
+	
 	if ( m_pCollZIP == NULL || ! m_pCollZIP->IsOpen() ) return INET_E_OBJECT_NOT_FOUND;
-	if ( m_pCollSHA1 != pSHA1 ) return INET_E_OBJECT_NOT_FOUND;
-
+	if ( validAndUnequal( m_oCollSHA1, oSHA1 ) ) return INET_E_OBJECT_NOT_FOUND;
+	
 	CString strPath( pszURL + 32 );
 	strPath = CConnection::URLDecode( strPath );
 	if ( strPath.Right( 1 ) == _T("/") ) strPath += _T("index.htm");
@@ -442,7 +442,7 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString*
 /////////////////////////////////////////////////////////////////////////////
 // CIEProtocol collection
 
-BOOL CIEProtocol::SetCollection(SHA1* pSHA1, LPCTSTR pszPath, CString* psIndex)
+BOOL CIEProtocol::SetCollection(const Hashes::Sha1Hash& oSHA1, LPCTSTR pszPath, CString* psIndex)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -451,12 +451,12 @@ BOOL CIEProtocol::SetCollection(SHA1* pSHA1, LPCTSTR pszPath, CString* psIndex)
 		delete m_pCollZIP;
 		m_pCollZIP = NULL;
 	}
-
-	if ( pSHA1 == NULL || pszPath == NULL ) return TRUE;
-
+	
+	if ( !oSHA1 || pszPath == NULL ) return TRUE;
+	
 	m_pCollZIP	= new CZIPFile();
-	m_pCollSHA1	= *pSHA1;
-
+	m_oCollSHA1	= oSHA1;
+	
 	if ( m_pCollZIP->Open( pszPath ) )
 	{
 		if ( CZIPFile::File* pFile = m_pCollZIP->GetFile( _T("index.htm"), TRUE ) )

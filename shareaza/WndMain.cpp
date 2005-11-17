@@ -1,9 +1,9 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2005/09/01 18:00:14 $"
-//	Revision:		"$Revision: 1.42 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/11/17 21:10:48 $"
+//	Revision:		"$Revision: 1.43 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -291,9 +291,8 @@ CMainWnd::~CMainWnd()
 
 BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs) 
 {
-	WNDCLASS wndcls;
+	WNDCLASS wndcls = {};
 	
-	ZeroMemory( &wndcls, sizeof(WNDCLASS) );
 	wndcls.style			= CS_DBLCLKS;
 	wndcls.lpfnWndProc		= AfxWndProc;
 	wndcls.hInstance		= AfxGetInstanceHandle();
@@ -315,7 +314,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( theApp.m_bRTL )
 	{
 		lpCreateStruct->dwExStyle |= WS_EX_LAYOUTRTL;
-		SetWindowLong( GetSafeHwnd(), GWL_EXSTYLE, lpCreateStruct->dwExStyle );
+		SetWindowLongPtr( GetSafeHwnd(), GWL_EXSTYLE, lpCreateStruct->dwExStyle );
 	}
 
 	if ( CMDIFrameWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
@@ -425,7 +424,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	SetGUIMode( Settings.General.GUIMode, FALSE );
 	
 	// Boot
-
+	
 	if ( theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
 	{
 		PostMessage( WM_COMMAND, ID_TOOLS_WIZARD );
@@ -616,12 +615,12 @@ void CMainWnd::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 	if ( nID != SC_RESTORE ) CoolMenu.AddMenu( pPopupMenu, TRUE );
 }
 
-void CMainWnd::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CMainWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
 {
 	CoolMenu.OnMeasureItem( lpMeasureItemStruct );
 }
 
-void CMainWnd::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CMainWnd::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	CoolMenu.OnDrawItem( lpDrawItemStruct );
 }
@@ -632,7 +631,7 @@ void CMainWnd::OnSysColorChange()
 	CoolInterface.OnSysColourChange();
 }
 
-void CMainWnd::OnUpdateFrameTitle(BOOL bAddToTitle)
+void CMainWnd::OnUpdateFrameTitle(BOOL /*bAddToTitle*/)
 {
 	m_wndTabBar.OnUpdateCmdUI( this, FALSE );
 	m_wndNavBar.OnUpdateCmdUI( this, FALSE );
@@ -656,8 +655,7 @@ void CMainWnd::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 	
 	if ( theApp.m_pfnGetMonitorInfoA != NULL ) //If GetMonitorInfo() is available
 	{
-		MONITORINFO oMonitor;
-		ZeroMemory( &oMonitor, sizeof(oMonitor) );
+		MONITORINFO oMonitor = {};
 		oMonitor.cbSize = sizeof(oMonitor);
 		
 		theApp.m_pfnGetMonitorInfoA( theApp.m_pfnMonitorFromWindow( GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
@@ -701,7 +699,7 @@ void CMainWnd::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd common timer
 
-void CMainWnd::OnTimer(UINT nIDEvent) 
+void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/) 
 {
 	// Fix resource handle
 	
@@ -810,7 +808,7 @@ void CMainWnd::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 	if ( m_pSkin ) m_pSkin->OnGetMinMaxInfo( lpMMI );
 }
 
-LONG CMainWnd::OnLog(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnLog(WPARAM wParam, LPARAM lParam)
 {
 	LPTSTR pszLog = (LPTSTR)lParam;
 	
@@ -844,7 +842,7 @@ void CMainWnd::OpenFromTray(int nShowCmd)
 	m_bTrayHide = FALSE;
 }
 
-LONG CMainWnd::OnTray(UINT wParam, LONG lParam)
+LRESULT CMainWnd::OnTray(WPARAM /*wParam*/, LPARAM lParam)
 {
 	if ( LOWORD(lParam) == WM_LBUTTONDBLCLK )
 	{
@@ -904,7 +902,7 @@ void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam)
 		if ( lParam != ' ' && lParam != '-' )
 		{
 			if ( lParam )
-				m_wndMenuBar.OpenMenuChar( lParam );
+				m_wndMenuBar.OpenMenuChar( static_cast< UINT >( lParam ) );
 			else
 				m_wndMenuBar.OpenMenuBar();
 				
@@ -967,7 +965,7 @@ void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam)
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd custom message handlers
 
-LONG CMainWnd::OnSkinChanged(UINT wParam, LONG lParam)
+LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	CWaitCursor pCursor;
 	
@@ -996,10 +994,10 @@ LONG CMainWnd::OnSkinChanged(UINT wParam, LONG lParam)
 	
 	if ( CWnd* pDockBar = GetDlgItem( AFX_IDW_DOCKBAR_TOP ) )
 	{
-		DWORD nBrush = GetClassLong( pDockBar->GetSafeHwnd(), GCL_HBRBACKGROUND );
+		LONG_PTR nBrush = GetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND );
 		if ( nBrush > 64 ) DeleteObject( (HBRUSH)nBrush );
-		nBrush = (DWORD)CreateSolidBrush( CoolInterface.m_crMidtone );
-		SetClassLong( pDockBar->GetSafeHwnd(), GCL_HBRBACKGROUND, (LONG)nBrush );
+		nBrush = (LONG_PTR)CreateSolidBrush( CoolInterface.m_crMidtone );
+		SetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND, (ULONG_PTR_ARG)nBrush );
 	}
 	
 	m_pSkin = Skin.GetWindowSkin( this );
@@ -1043,13 +1041,13 @@ LONG CMainWnd::OnSkinChanged(UINT wParam, LONG lParam)
 	return 0;
 }
 
-LONG CMainWnd::OnWinsock(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnWinsock(WPARAM wParam, LPARAM lParam)
 {
 	Network.OnWinsock( wParam, lParam );
 	return 0;
 }
 
-LONG CMainWnd::OnHandleURL(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnHandleURL(WPARAM wParam, LPARAM /*lParam*/)
 {
 	CShareazaURL* pURL = (CShareazaURL*)wParam;
 	
@@ -1080,7 +1078,7 @@ LONG CMainWnd::OnHandleURL(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-LONG CMainWnd::OnHandleCollection(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnHandleCollection(WPARAM wParam, LPARAM /*lParam*/)
 {
 	LPTSTR pszPath = (LPTSTR)wParam;
 	CString strPath( pszPath );
@@ -1094,7 +1092,7 @@ LONG CMainWnd::OnHandleCollection(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-LONG CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 {
 	if ( wParam == 0 && VersionChecker.m_sMessage.GetLength() )
 	{
@@ -1125,7 +1123,7 @@ LONG CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-LONG CMainWnd::OnOpenChat(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnOpenChat(WPARAM wParam, LPARAM /*lParam*/)
 {
 	CSingleLock pLock( &ChatCore.m_pSection, TRUE );
 	CChatSession* pSession = (CChatSession*)wParam;
@@ -1133,14 +1131,13 @@ LONG CMainWnd::OnOpenChat(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-LONG CMainWnd::OnOpenSearch(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnOpenSearch(WPARAM wParam, LPARAM /*lParam*/)
 {
-	CQuerySearch* pSearch = (CQuerySearch*)wParam;
-	if ( pSearch->OpenWindow() == NULL ) delete pSearch;
+	CQuerySearch::OpenWindow( std::auto_ptr< CQuerySearch >( (CQuerySearch*)wParam ) );
 	return 0;
 }
 
-LONG CMainWnd::OnMediaKey(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnMediaKey(WPARAM /*wParam*/, LPARAM lParam)
 {
 	if ( CMediaWnd* pWnd = (CMediaWnd*)m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) )
 	{
@@ -1149,7 +1146,7 @@ LONG CMainWnd::OnMediaKey(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-LONG CMainWnd::OnDevModeChange(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnDevModeChange(WPARAM wParam, LPARAM lParam)
 {
 	if ( CMediaWnd* pWnd = (CMediaWnd*)m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) )
 	{
@@ -1158,7 +1155,7 @@ LONG CMainWnd::OnDevModeChange(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-LONG CMainWnd::OnDisplayChange(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnDisplayChange(WPARAM wParam, LPARAM lParam)
 {
 	if ( CMediaWnd* pWnd = (CMediaWnd*)m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) )
 	{
@@ -1170,14 +1167,14 @@ LONG CMainWnd::OnDisplayChange(WPARAM wParam, LPARAM lParam)
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd status message functionality
 
-LONG CMainWnd::OnSetMessageString(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnSetMessageString(WPARAM wParam, LPARAM lParam)
 {
 	if ( wParam == AFX_IDS_IDLEMESSAGE )
 	{
 		CString strOld;
 		m_wndStatusBar.GetWindowText( strOld );
 		if ( strOld != m_sMsgStatus ) m_wndStatusBar.SetWindowText( m_sMsgStatus );
-		m_nIDLastMessage = m_nIDTracking = wParam;
+		m_nIDLastMessage = m_nIDTracking = static_cast< UINT >( wParam );
 		return 0;
 	}
 	else
@@ -1206,7 +1203,7 @@ void CMainWnd::UpdateMessages()
 		QWORD nLocalVolume;
 		LibraryMaps.GetStatistics( NULL, &nLocalVolume );
 
-		if( Settings.General.GUIMode == GUI_BASIC )
+		if ( Settings.General.GUIMode == GUI_BASIC )
 		{	//In the basic GUI, don't bother with mode details or neighbour count.
 			LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_SIMPLE );
 			strMessage.Format( strFormat, (LPCTSTR)Settings.SmartVolume( nLocalVolume, TRUE ) );
@@ -1497,7 +1494,7 @@ void CMainWnd::OnNetworkConnectTo()
 {
 	CConnectToDlg dlg;
 	if ( dlg.DoModal() != IDOK ) return;
-	Network.ConnectTo( dlg.m_sHost, dlg.m_nPort, dlg.m_nProtocol + 1, dlg.m_bNoUltraPeer );
+	Network.ConnectTo( dlg.m_sHost, dlg.m_nPort, PROTOCOLID( dlg.m_nProtocol + 1 ), dlg.m_bNoUltraPeer );
 }
 
 void CMainWnd::OnNetworkBrowseTo() 
@@ -1834,7 +1831,7 @@ void CMainWnd::OnViewHelp()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd tab menu
 
-void CMainWnd::OnUpdateTabConnect(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateTabConnect(CCmdUI* /*pCmdUI*/) 
 {
 	CCoolBarItem* pItem = m_wndToolBar.GetID( ID_TAB_CONNECT );
 	
@@ -1935,7 +1932,7 @@ void CMainWnd::OnUpdateTabMedia(CCmdUI* pCmdUI)
 
 	if ( CCoolBarItem* pItem = m_wndToolBar.GetID( ID_TAB_MEDIA ) )
 	{
-		if ( pChild = (CMediaWnd*)m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) )
+		if ( ( pChild = (CMediaWnd*)m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) ) != NULL )
 		{
 			pItem->SetTextColour( pChild->IsPlaying() ? RGB( 0, 0x80, 0 ) : CoolInterface.m_crCmdText );
 		}
@@ -2074,7 +2071,6 @@ void CMainWnd::OnToolsLanguage()
 		SetGUIMode( Settings.General.GUIMode );
 	}
 }
-
 
 void CMainWnd::OnToolsSeedTorrent()
 {
@@ -2403,7 +2399,7 @@ void CMainWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
 		CMDIFrameWnd::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-UINT CMainWnd::OnNcHitTest(CPoint point) 
+ONNCHITTESTRESULT CMainWnd::OnNcHitTest(CPoint point) 
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, TRUE );
@@ -2456,13 +2452,13 @@ void CMainWnd::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
 	CMDIFrameWnd::OnNcLButtonDblClk( nHitTest, point );
 }
 
-LONG CMainWnd::OnSetText(WPARAM wParam, LPARAM lParam)
+LRESULT CMainWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	if ( m_pSkin )
 	{
 		BOOL bVisible = IsWindowVisible();
 		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
-		LONG lResult = Default();
+		LRESULT lResult = Default();
 		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
 		if ( m_pSkin ) m_pSkin->OnSetText( this );
 		return lResult;
@@ -2478,7 +2474,7 @@ LONG CMainWnd::OnSetText(WPARAM wParam, LPARAM lParam)
 
 IMPLEMENT_UNKNOWN(CMainWnd, DropTarget)
 
-STDMETHODIMP CMainWnd::XDropTarget::DragEnter(IDataObject FAR* pDataObj, DWORD grfKeyState, POINTL pt, DWORD FAR* pdwEffect)
+STDMETHODIMP CMainWnd::XDropTarget::DragEnter(IDataObject FAR* pDataObj, DWORD /*grfKeyState*/, POINTL /*pt*/, DWORD FAR* pdwEffect)
 {
 	METHOD_PROLOGUE( CMainWnd, DropTarget )
 	
@@ -2499,7 +2495,7 @@ STDMETHODIMP CMainWnd::XDropTarget::DragEnter(IDataObject FAR* pDataObj, DWORD g
 	}
 }
 
-STDMETHODIMP CMainWnd::XDropTarget::DragOver(DWORD grfKeyState, POINTL pt, DWORD FAR* pdwEffect)
+STDMETHODIMP CMainWnd::XDropTarget::DragOver(DWORD /*grfKeyState*/, POINTL pt, DWORD FAR* pdwEffect)
 {
 	METHOD_PROLOGUE( CMainWnd, DropTarget )
 	
@@ -2535,7 +2531,7 @@ STDMETHODIMP CMainWnd::XDropTarget::DragLeave()
 	return S_OK;
 }
 
-STDMETHODIMP CMainWnd::XDropTarget::Drop(IDataObject FAR* pDataObj, DWORD grfKeyState, POINTL pt, DWORD FAR* pdwEffect)
+STDMETHODIMP CMainWnd::XDropTarget::Drop(IDataObject FAR* pDataObj, DWORD /*grfKeyState*/, POINTL pt, DWORD FAR* /*pdwEffect*/)
 {
 	METHOD_PROLOGUE( CMainWnd, DropTarget )
 	
@@ -2587,7 +2583,7 @@ CString CMainWnd::XDropTarget::ObjectToURL(IDataObject* pObject)
 	STGMEDIUM pMedium;
 	CString str;
 	
-	pFormat.cfFormat = RegisterClipboardFormat( _T("UniformResourceLocator") );
+	pFormat.cfFormat = BYTE( RegisterClipboardFormat( _T("UniformResourceLocator") ) );
 	
 	if ( SUCCEEDED( pObject->GetData( &pFormat, &pMedium ) ) && pMedium.hGlobal != NULL )
 	{

@@ -1,4 +1,4 @@
-//
+﻿//
 // CtrlWndTabBar.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -69,7 +69,7 @@ CWndTabBar::~CWndTabBar()
 {
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		delete (TabItem*)m_pItems.GetNext( pos );
+		delete m_pItems.GetNext( pos );
 	}
 	m_pItems.RemoveAll();
 }
@@ -88,7 +88,7 @@ void CWndTabBar::SetMessage(UINT nMessageID)
 {
 	if ( m_nMessage == nMessageID ) return;
 
-	if ( m_nMessage = nMessageID )
+	if ( ( m_nMessage = nMessageID ) != 0 )
 		Skin.LoadString( m_sMessage, m_nMessage );
 	else
 		m_sMessage.Empty();
@@ -118,7 +118,7 @@ void CWndTabBar::SetWatermark(HBITMAP hBitmap)
 
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+		TabItem* pItem = m_pItems.GetNext( pos );
 		pItem->m_nImage = -1;
 	}
 
@@ -144,7 +144,7 @@ int CWndTabBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-CSize CWndTabBar::CalcFixedLayout(BOOL bStretch, BOOL bHorz)
+CSize CWndTabBar::CalcFixedLayout(BOOL /*bStretch*/, BOOL /*bHorz*/)
 {
 	CSize size( 32767, 26 );
 
@@ -158,7 +158,7 @@ CSize CWndTabBar::CalcFixedLayout(BOOL bStretch, BOOL bHorz)
 	return size;
 }
 
-void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
+void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL /*bDisableIfNoHndler*/)
 {
 	if ( ! IsWindow( m_hWnd ) ) return;
 	if ( ! pTarget->IsKindOf( RUNTIME_CLASS(CMainWnd) ) ) return;
@@ -195,7 +195,7 @@ void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 
 		for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 		{
-			TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+			TabItem* pItem = m_pItems.GetNext( pos );
 
 			if ( pItem->m_hWnd == pChild->GetSafeHwnd() )
 			{
@@ -253,7 +253,7 @@ void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		POSITION posOld = pos;
-		TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+		TabItem* pItem = m_pItems.GetNext( pos );
 
 		if ( pItem->m_nCookie != m_nCookie )
 		{
@@ -270,23 +270,23 @@ void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 int CWndTabBar::ImageIndexForWindow(CWnd* pChild)
 {
 	CRuntimeClass* pClass = pChild->GetRuntimeClass();
-	WORD nImage;
+	int nImage = 0;
 
 	if ( pClass != RUNTIME_CLASS(CPluginWnd) )
 	{
-		if ( m_pIcons.Lookup( pClass, nImage ) ) return (int)nImage;
-		nImage = m_pImages.Add( pChild->GetIcon( FALSE ) );
+		if ( m_pIcons.Lookup( pClass, nImage ) ) return nImage;
+		nImage = WORD( m_pImages.Add( pChild->GetIcon( FALSE ) ) );
 		m_pIcons.SetAt( pClass, nImage );
 	}
 	else
 	{
 		HICON hIcon = pChild->GetIcon( FALSE );
-		if ( m_pIcons.Lookup( (LPVOID)hIcon, nImage ) ) return (int)nImage;
-		nImage = m_pImages.Add( hIcon );
-		m_pIcons.SetAt( (LPVOID)hIcon, nImage );
+		if ( m_pIcons.Lookup( hIcon, nImage ) ) return nImage;
+		nImage = WORD( m_pImages.Add( hIcon ) );
+		m_pIcons.SetAt( hIcon, nImage );
 	}
 
-	return (int)nImage;
+	return nImage;
 }
 
 CWndTabBar::TabItem* CWndTabBar::HitTest(const CPoint& point, CRect* pItemRect) const
@@ -303,12 +303,12 @@ CWndTabBar::TabItem* CWndTabBar::HitTest(const CPoint& point, CRect* pItemRect) 
 	rc.bottom += m_cxRightBorder;
 
 	CRect rcItem( rc.left + 3, rc.top + 1, 0, rc.bottom - 1 );
-	rcItem.right = ( rc.Width() - 3 * m_pItems.GetCount() ) / m_pItems.GetCount() + 3;
-	rcItem.right = min( rcItem.right, LONG(m_nMaximumWidth) );
+	rcItem.right = static_cast< LONG >( ( rc.Width() - 3 * m_pItems.GetCount() ) / m_pItems.GetCount() + 3 );
+	rcItem.right = min( rcItem.right, m_nMaximumWidth );
 
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+		TabItem* pItem = m_pItems.GetNext( pos );
 		if ( rcItem.PtInRect( point ) )
 		{
 			if ( pItemRect ) *pItemRect = rcItem;
@@ -320,7 +320,7 @@ CWndTabBar::TabItem* CWndTabBar::HitTest(const CPoint& point, CRect* pItemRect) 
 	return NULL;
 }
 
-int CWndTabBar::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
+INT_PTR CWndTabBar::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 {
 	CRect rcItem;
 	TabItem* pItem = HitTest( point, &rcItem );
@@ -330,7 +330,7 @@ int CWndTabBar::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 
 	pTI->uFlags		= 0;
 	pTI->hwnd		= GetSafeHwnd();
-	pTI->uId		= (UINT)pItem->m_hWnd;
+	pTI->uId		= (UINT_PTR)pItem->m_hWnd;
 	pTI->rect		= rcItem;
 	pTI->lpszText	= _tcsdup( pItem->m_sCaption );
 
@@ -349,7 +349,8 @@ void CWndTabBar::DoPaint(CDC* pDC)
 
 	if ( m_bmImage.m_hObject != NULL )
 	{
-		pDC = CoolInterface.GetBuffer( *pDC, rc.Size() );
+		CSize size = rc.Size();
+		pDC = CoolInterface.GetBuffer( *pDC, size );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmImage );
 	}
 
@@ -362,12 +363,12 @@ void CWndTabBar::DoPaint(CDC* pDC)
 		m_nCloseImage = CoolInterface.ImageForID( ID_CHILD_CLOSE );
 
 		CRect rcItem( rc.left + 3, rc.top + 1, 0, rc.bottom - 1 );
-		rcItem.right = ( rc.Width() - 3 * m_pItems.GetCount() ) / m_pItems.GetCount() + 3;
-		rcItem.right = min( rcItem.right, LONG(m_nMaximumWidth) );
+		rcItem.right = static_cast< LONG >( ( rc.Width() - 3 * m_pItems.GetCount() ) / m_pItems.GetCount() + 3 );
+		rcItem.right = min( rcItem.right, m_nMaximumWidth );
 
 		for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 		{
-			TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+			TabItem* pItem = m_pItems.GetNext( pos );
 
 			pItem->Paint( this, pDC, &rcItem, m_pSelected == pItem, m_pHot == pItem,
 				pDC != pOutDC );
@@ -435,7 +436,7 @@ void CWndTabBar::OnMouseMove(UINT nFlags, CPoint point)
 	CControlBar::OnMouseMove( nFlags, point );
 }
 
-void CWndTabBar::OnTimer(UINT nIDEvent)
+void CWndTabBar::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( nIDEvent == 1 )
 	{
@@ -635,12 +636,12 @@ void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 	CControlBar::OnRButtonUp( nFlags, point );
 }
 
-void CWndTabBar::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+void CWndTabBar::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	CoolMenu.OnMeasureItem( lpMeasureItemStruct );
 }
 
-void CWndTabBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+void CWndTabBar::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	CoolMenu.OnDrawItem( lpDrawItemStruct );
 }

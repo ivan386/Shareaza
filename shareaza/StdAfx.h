@@ -1,40 +1,88 @@
-//
-// StdAfx.h
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
-// This file is part of SHAREAZA (www.shareaza.com)
-//
-// Shareaza is free software; you can redistribute it
-// and/or modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2 of
-// the License, or (at your option) any later version.
-//
-// Shareaza is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Shareaza; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+// Utility.hpp                                                                //
+//                                                                            //
+// Copyright (C) 2002-2005 Shareaza Development Team.                         //
+// This file is part of SHAREAZA (www.shareaza.com).                          //
+//                                                                            //
+// Shareaza is free software; you can redistribute it                         //
+// and/or modify it under the terms of the GNU General Public License         //
+// as published by the Free Software Foundation; either version 2 of          //
+// the License, or (at your option) any later version.                        //
+//                                                                            //
+// Shareaza is distributed in the hope that it will be useful,                //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of             //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       //
+// See the GNU General Public License for more details.                       //
+//                                                                            //
+// You should have received a copy of the GNU General Public License          //
+// along with Shareaza; if not, write to the                                  //
+// Free Software Foundation, Inc,                                             //
+// 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                    //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
+//! \file       StdAfx.h
+//! \brief      Standard header for prcompiled header feature.
+//!
+//! Includes MFC header files. Contains several global definitions.
 
 #pragma once
 
 //
 // Configuration
 //
+#if 1
+#if _MSC_VER > 1310
+// 64bit related - need to be fixed
+#pragma warning ( disable : 4302 4311 4312 )
+// general - fix where feasable then move to useless
+#pragma warning ( disable : 4061 4127 4191 4244 4263 4264 4265 4266 4296 4365 4555 4571 4640 4668 4686 4946 )
+#pragma warning ( disable : 4548 )
+// copy/asignment-related
+#pragma warning ( disable : 4512 4625 4626 )
+// behaviour change - check for regression
+#pragma warning ( disable : 4347 4350 4351 )
+// padding
+#pragma warning ( disable : 4820 )
+// useless
+#pragma warning ( disable : 4514 4710 4711 )
 
-#define WINVER			0x0500		// Windows Version
-#define _WIN32_WINDOWS	0x0500		// Windows Version
-#define _WIN32_WINNT	0x0500		// NT Version
-#define _WIN32_IE		0x0500		// IE Version
-#define _WIN32_DCOM					// DCOM
-#define _AFX_NO_RICHEDIT_SUPPORT	// No RichEdit
+#define _SCL_SECURE_NO_DEPRECATE
+#define _CRT_SECURE_NO_DEPRECATE
+#define _CRT_NON_CONFORMING_SWPRINTFS
+#else
+// 64bit related - need to be fixed
+#pragma warning ( disable : 4302 4311 4312 )
+// general - fix where feasable then move to useless
+#pragma warning ( disable : 4061 4127 4191 4244 4263 4264 4265 4296 4529 4548 4555 4640 4668 4686 4946 )
+// copy/asignment-related
+#pragma warning ( disable : 4511 4512 4625 4626 )
+// behaviour change - check for regression
+#pragma warning ( disable : 4347 )
+// padding
+#pragma warning ( disable : 4820 )
+// useless
+#pragma warning ( disable : 4217 4514 4619 4702 4710 4711 )
+#endif
+#endif
+
+const bool SHAREAZA_RESTRICT_WP64 = true;
+// allow min to return the smaller type if called with unsigned arguments ?
+const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
+
+#define WINVER			0x0500		//!< Windows Version
+#define _WIN32_WINDOWS	0x0500		//!< Windows Version
+#define _WIN32_WINNT	0x0500		//!< NT Version
+#define _WIN32_IE		0x0500		//!< IE Version
+#define _WIN32_DCOM					//!< DCOM
+#define _AFX_NO_RICHEDIT_SUPPORT	//!< No RichEdit
 
 //
 // MFC
 //
+
+#pragma warning( push, 0 )
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
@@ -58,6 +106,21 @@
 
 #undef IDC_HAND
 
+#include <afxpriv.h>
+#include <..\src\mfc\afximpl.h>
+#include <shlwapi.h>
+#include <shlobj.h>
+#include <exdispid.h>
+#include <mmsystem.h>
+#include <winioctl.h>
+#include <zlib.h>
+#include <atltime.h>
+
+#include <netfw.h>   // Change the settings of the Windows Firewall
+#include <natupnp.h> // Talk UPnP to the NAT router to forward ports
+
+#pragma warning( pop )
+
 //
 // Missing constants
 //
@@ -65,20 +128,20 @@
 #define BIF_NEWDIALOGSTYLE	0x0040
 #define OFN_ENABLESIZING	0x00800000
 
-#undef NULL
-#undef min
-#undef max
+// MFC changed resulttype of CWnd::OnNcHitTest method
+#if _MSC_VER <= 1310
+typedef UINT ONNCHITTESTRESULT;
+// broken standard auto_ptr fix
+#pragma warning ( disable : 4239 )
+#else
+typedef LRESULT ONNCHITTESTRESULT;
+#endif
 
 //
 // Standard headers
 //
 
-#include <algorithm>
-#undef NULL
-
-const int NULL = 0;
-using std::min;
-using std::max;
+#include "CommonInclude.hpp"
 
 //
 // 64-bit type
@@ -92,86 +155,74 @@ typedef unsigned __int64 QWORD;
 
 typedef int TRISTATE;
 
-#define TS_UNKNOWN	0
-#define TS_FALSE	1
-#define TS_TRUE		2
+const TRISTATE TS_UNKNOWN = 0;
+const TRISTATE TS_FALSE   = 1;
+const TRISTATE TS_TRUE    = 2;
 
-//
-// GUID
-//
-
-typedef union
+// CArchive operators to help replacing TRISTATE with safer and more convenient tribools
+inline CArchive& operator<<(CArchive& ar, const boost::logic::tribool& rhs)
 {
-	BYTE	n[16];
-	BYTE	b[16];
-	DWORD	w[4];
-} GGUID;
-
-inline bool operator==(const GGUID& guidOne, const GGUID& guidTwo)
+	TRISTATE value = rhs ? TS_TRUE : !rhs ? TS_FALSE : TS_UNKNOWN;
+	return ar << value;
+};
+inline CArchive& operator>>(CArchive& ar, boost::logic::tribool& rhs)
 {
-   return (
-      ((PLONG)&guidOne)[0] == ((PLONG)&guidTwo)[0] &&
-      ((PLONG)&guidOne)[1] == ((PLONG)&guidTwo)[1] &&
-      ((PLONG)&guidOne)[2] == ((PLONG)&guidTwo)[2] &&
-      ((PLONG)&guidOne)[3] == ((PLONG)&guidTwo)[3] );
-}
+	using boost::logic::tribool;
+	TRISTATE value;
+	ar >> value;
+	rhs = value == TS_TRUE
+		? tribool( true )
+		: value == TS_FALSE
+			? tribool( false )
+			: boost::logic::indeterminate;
+	return ar;
+};
 
-inline bool operator!=(const GGUID& guidOne, const GGUID& guidTwo)
-{
-   return (
-      ( (PLONG)&guidOne)[0] != ((PLONG)&guidTwo)[0] ||
-      ( (PLONG)&guidOne)[1] != ((PLONG)&guidTwo)[1] ||
-      ( (PLONG)&guidOne)[2] != ((PLONG)&guidTwo)[2] ||
-      ( (PLONG)&guidOne)[3] != ((PLONG)&guidTwo)[3] );
-}
-
-#define SIZE_UNKNOWN	0xFFFFFFFFFFFFFFFF
-
-//
-// Hash values
-//
-
-typedef union
-{
-	BYTE	n[20];
-	BYTE	b[20];
-} SHA1;
-
-typedef union
-{
-	BYTE	n[24];
-	BYTE	b[24];
-	QWORD	w[3];
-} TIGEROOT;
-
-typedef union
-{
-	BYTE	n[16];
-	BYTE	b[16];
-	DWORD	w[4];
-} MD4, MD5;
-
-#define HASH_NULL		0
-#define HASH_SHA1		1
-#define HASH_MD5		2
-#define HASH_TIGERTREE	3
-#define HASH_ED2K		4
-#define HASH_TORRENT	5
+const uint64 SIZE_UNKNOWN = ~0ull;
 
 //
 // Protocol IDs
 //
 
-typedef int PROTOCOLID;
+enum PROTOCOLID
+{
+	PROTOCOL_ANY  = -1,
+	PROTOCOL_NULL = 0,
+	PROTOCOL_G1   = 1,
+	PROTOCOL_G2   = 2,
+	PROTOCOL_ED2K = 3,
+	PROTOCOL_HTTP = 4,
+	PROTOCOL_FTP  = 5,
+	PROTOCOL_BT   = 6
+};
+inline PROTOCOLID& operator++(PROTOCOLID& arg)
+{
+	ASSERT( arg < PROTOCOL_BT );
+	arg = PROTOCOLID( arg + 1 );
+	return arg;
+}
+inline PROTOCOLID& operator--(PROTOCOLID& arg)
+{
+	ASSERT( arg > PROTOCOL_ANY );
+	arg = PROTOCOLID( arg - 1 );
+	return arg;
+}
+inline CArchive& operator<<(CArchive& ar, const PROTOCOLID& rhs)
+{
+	int value = rhs;
+	return ar << value;
+};
+inline CArchive& operator>>(CArchive& ar, PROTOCOLID& rhs)
+{
+	int value;
+	ar >> value;
+	ASSERT( value >= PROTOCOL_ANY && value <= PROTOCOL_BT && "invalid protocol id" );
+	rhs = value >= PROTOCOL_ANY && value <= PROTOCOL_BT
+		? PROTOCOLID( value )
+		: PROTOCOL_NULL;
+	return ar;
+};
 
-#define PROTOCOL_NULL	0
-#define PROTOCOL_G1		1
-#define PROTOCOL_G2		2
-#define PROTOCOL_ED2K	3
-
-#define PROTOCOL_HTTP	4
-#define PROTOCOL_FTP	5
-#define PROTOCOL_BT		6
 
 class CQuickLock
 {
@@ -186,7 +237,7 @@ private:
 	static void* operator new[](std::size_t);
 	static void operator delete(void*);
 	static void operator delete[](void*);
-	CQuickLock* operator&();
+	CQuickLock* operator&() const;
 };
 
 template< class T >
@@ -210,7 +261,7 @@ public:
 private:
 	mutable CCriticalSection m_oSection;
 	T m_oValue;
-	CGuarded* operator&(); // too unsafe
+	CGuarded* operator&() const; // too unsafe
 };
 
 class CLowerCaseTable
@@ -218,19 +269,29 @@ class CLowerCaseTable
 public:
 	explicit CLowerCaseTable()
 	{
-		for ( size_t i = 0 ; i < 65536 ; ++i ) cTable[ i ] = i;
+		for ( size_t i = 0; i < 65536; ++i ) cTable[ i ] = TCHAR( i );
 		cTable[ 65536 ] = 0;
 		CharLower( &cTable[ 1 ] );
 		cTable[ 304 ] = 105; // turkish capital I with dot is converted to "i"
 		// convert fullwidth characters to halfwidth
-		for ( size_t i = 65281 ; i < 65313 ; ++i ) cTable[ i ] = i - 65248;
-		for ( size_t i = 65313 ; i < 65339 ; ++i ) cTable[ i ] = i - 65216;
-		for ( size_t i = 65339 ; i < 65375 ; ++i ) cTable[ i ] = i - 65248;
+		for ( size_t i = 65281 ; i < 65313 ; ++i ) cTable[ i ] = TCHAR( i - 65248 );
+		for ( size_t i = 65313 ; i < 65339 ; ++i ) cTable[ i ] = TCHAR( i - 65216 );
+		for ( size_t i = 65339 ; i < 65375 ; ++i ) cTable[ i ] = TCHAR( i - 65248 );
 	};
 	const TCHAR& operator()(const TCHAR cLookup) const { return cTable[ cLookup ]; }
+	CString& operator()(CString& strSource) const
+	{
+		const int nLength = strSource.GetLength();
+		const LPTSTR str = strSource.GetBuffer() + nLength;
+		for ( int i = -nLength; i; ++i ) str[ i ] = ( *this )( str[ i ] );
+		if ( str[ -1 ] == 0x3c3 ) str[ -1 ] = 0x3c2; // last greek sigma fix
+		strSource.ReleaseBuffer( nLength );
+		return strSource;
+	}
 	const TCHAR& operator[](const TCHAR cLookup) const { return ( *this )( cLookup ); }
 private:
-	TCHAR CLowerCaseTable::cTable[ 65537 ];
+	TCHAR cTable[ 65537 ];
 };
 
-const CLowerCaseTable ToLowerCase;
+extern const CLowerCaseTable ToLower;
+

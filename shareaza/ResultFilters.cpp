@@ -1,9 +1,9 @@
 //
 // ResultFilters.cpp
 //
-//	Date:			"$Date: 2005/10/03 17:21:43 $"
-//	Revision:		"$Revision: 1.7 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/11/17 21:10:48 $"
+//	Revision:		"$Revision: 1.8 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -55,7 +55,7 @@ CResultFilters::~CResultFilters(void)
 
 void CResultFilters::Serialize(CArchive & ar)
 {
-	int nVersion = 1;
+	int nVersion = 2;
 
 	if ( ar.IsStoring() )
 	{
@@ -66,7 +66,7 @@ void CResultFilters::Serialize(CArchive & ar)
 		for (DWORD i = 0; i < m_nFilters; i++)
 		{
 			CFilterOptions* pFilter = m_pFilters[ i ];
-			pFilter->Serialize( ar );
+			pFilter->Serialize( ar, nVersion );
 		}
 
 		ar << m_nDefault;
@@ -75,7 +75,7 @@ void CResultFilters::Serialize(CArchive & ar)
 	{
 		ar >> nVersion;
 
-		m_nFilters = ar.ReadCount();
+		m_nFilters = static_cast< DWORD >( ar.ReadCount() );
 
 		m_pFilters = new CFilterOptions *[ m_nFilters ];
 		ZeroMemory( m_pFilters, sizeof(CFilterOptions*) * m_nFilters );
@@ -84,7 +84,7 @@ void CResultFilters::Serialize(CArchive & ar)
 		{
 			CFilterOptions* pFilter = new CFilterOptions();
 			m_pFilters[ i ] = pFilter;
-			pFilter->Serialize( ar );
+			pFilter->Serialize( ar, nVersion);
 		}
 
 		ar >> m_nDefault;
@@ -186,12 +186,13 @@ CFilterOptions::CFilterOptions()
 	m_bFilterBogus		= ( Settings.Search.FilterMask & ( 1 << 5 ) ) > 0;
 	m_bFilterDRM		= ( Settings.Search.FilterMask & ( 1 << 6 ) ) > 0;
 	m_bFilterAdult		= ( Settings.Search.FilterMask & ( 1 << 7 ) ) > 0;
+	m_bFilterSuspicious = ( Settings.Search.FilterMask & ( 1 << 8 ) ) > 0;
 	m_nFilterMinSize	= 1;
 	m_nFilterMaxSize	= 0;
 	m_nFilterSources	= 1;
 }
 
-void CFilterOptions::Serialize(CArchive & ar)
+void CFilterOptions::Serialize(CArchive & ar, int nVersion)
 {
 	if ( ar.IsStoring() ) // saving
 	{
@@ -203,6 +204,10 @@ void CFilterOptions::Serialize(CArchive & ar)
 		ar << m_bFilterReject;
 		ar << m_bFilterLocal;
 		ar << m_bFilterBogus;
+		ar << m_bFilterDRM;
+		ar << m_bFilterAdult;
+		ar << m_bFilterSuspicious;
+		ar << FALSE;	// Temp Placeholder
 		ar << m_nFilterMinSize;
 		ar << m_nFilterMaxSize;
 		ar << m_nFilterSources;
@@ -217,6 +222,16 @@ void CFilterOptions::Serialize(CArchive & ar)
 		ar >> m_bFilterReject;
 		ar >> m_bFilterLocal;
 		ar >> m_bFilterBogus;
+
+		if ( nVersion >= 2 )
+		{
+			BOOL bTemp; // Temp Placeholder
+			ar >> m_bFilterDRM;
+			ar >> m_bFilterAdult;
+			ar >> m_bFilterSuspicious;
+			ar >> bTemp;
+		}
+
 		ar >> m_nFilterMinSize;
 		ar >> m_nFilterMaxSize;
 		ar >> m_nFilterSources;

@@ -22,132 +22,94 @@
 #ifndef FILEFRAGMENTS_HPP_INCLUDED
 #define FILEFRAGMENTS_HPP_INCLUDED
 
-#include <utility>
-#include <stdexcept>
-#include <algorithm>
-#include <functional>
-#include <deque>
-#include <list>
-#include <set>
-#include <limits>
-
-#ifdef _MSC_VER                 // ToDo: use boost/cstdint.hpp instead
-typedef unsigned __int64 u64;   // http://sourceforge.net/projects/boost/
-typedef unsigned __int32 u32;
-typedef unsigned __int16 u16;
-typedef unsigned __int8 u8;
-typedef __int64 i64;
-typedef __int32 i32;
-typedef __int16 i16;
-typedef __int8 i8;
-#else
-typedef unsigned long long u64;
-typedef unsigned int u32;
-typedef unsigned short u16;
-typedef unsigned char u8;
-typedef long long i64;
-typedef int i32;
-typedef short i16;
-typedef signed char i8;
-#endif
-
 #include "Shareaza.h"
 
-namespace FF    // FileFragments
+#include "FileFragments/Ranges.hpp"
+
+namespace Fragments
 {
 
-namespace detail
+template< class RangeT, class ContainerT >
+class ListTraits
 {
+public:
+	typedef RangeT range_type;
+	typedef ContainerT container_type;
+	typedef typename range_type::size_type range_size_type;
+	typedef typename range_type::payload_type payload_type;
+	typedef Ranges::RangeCompare< payload_type, range_size_type > compare_type;
+	typedef typename container_type::iterator iterator;
+	typedef std::pair< iterator, iterator > iterator_pair;
 
-// Forward declarations
+public:
+	range_size_type limit() const { return m_limit; }
+	range_size_type length_sum() const { return m_length_sum; }
+	range_size_type missing() const { return limit() - length_sum(); }
 
-// @ Exception      The general exception class
-//                  All exceptions thrown here will be of that type or
-//                  derived from it, except for std::bad_alloc and
-//                  exceptions thrown by the Payload class
-class Exception;
-// @BadFragment     Will be thrown when trying to create a fragment with
-//                  negative size ( or zero size if that's forbidden by traits )
-template< class FragmentT > class BadFragment;
-// @BadRange        Thrown by List when trying to insert or erase a fragment
-//                  which excceds the limits of the list
-template< class FragmentT > class BadRange;
+// the following functions have to be declared
+protected:
+	typedef range_size_type ctor_arg_type;
+	explicit ListTraits(ctor_arg_type limit) : m_limit( limit ), m_length_sum( 0 ) { }
+	void clear() { m_length_sum = 0; }
+	void swap(ListTraits& other)
+	{
+		std::swap( m_limit, other.m_limit );
+		std::swap( m_length_sum, other.m_length_sum );
+	}
+	range_size_type erase(const iterator where)
+	{
+		m_length_sum -= where->size();
+		return where->size();
+	}
+	template< class container_type >
+	range_size_type merge_and_replace(container_type& set,
+		iterator_pair sequence, const range_type& new_range)
+	{
+		ASSERT( sequence.first != sequence.second );
+		if ( sequence.first->begin() <= new_range.begin()
+			&& sequence.first->end() >= new_range.end() ) return 0;
+		range_size_type old_sum = m_length_sum;
+		range_size_type low = min( sequence.first->begin(), new_range.begin() );
+		range_size_type high = max( ( --sequence.second )->end(), new_range.end() );
+		for ( ++sequence.second; sequence.first != sequence.second; )
+		{
+			range_size_type length = sequence.first->size();
+			set.erase( sequence.first++ );
+			m_length_sum -= length;
+		}
+		set.insert( sequence.second, range_type( low, high ) );
+		m_length_sum += high - low;
+		return m_length_sum - old_sum;
+	}
+	template< class container_type >
+	range_size_type simple_merge(container_type& set, iterator where, const range_type& new_range)
+	{
+		set.insert( where, new_range );
+		m_length_sum += new_range.size();
+		return new_range.size();
+	}
 
-// @Payload         defines traits for any Payload type which serves as value
-//                  type for a fragment, currently used:
-//                      whether empty Fragments are allowed and
-//                      the strategy used for merging fragments
-template< class Payload > struct PayloadTraits;
+private:
+	range_size_type m_limit;
+	range_size_type m_length_sum;
+};
 
-// @Fragment        defines Fragments, takes the Payload type to be used and the
-//                  integral type used to represent offsets
-//                  Payload type must be of class type and have accessible default,
-//                  and copy-constructors, assignment and destructor.
-//                  Its Copy-c'tor and assignment are not allowed to throw.
-//                  This allows a fragment to transport more information aside
-//                  from the range it represents, for example a download source
-//                  (to improve bad source detection and alike) or a counter
-//                  that will be increased when merging occurs in a list.
-//                  No function aside from contructors throw.
-template
-<
-    class Payload = EmptyType,
-    typename OffsetType = u64
->
-class Fragment;
-template< class FragmentT > struct CompareFragments;
+using Ranges::Exception;
 
-// @List            Defines a near container that stores fragments and provides
-//                  automatic sorting and merging (according to traits).
-//                  Searching, insertion and deletion are generally done in
-//                  logarithmic time.
-//                  Iterators may not be used to change a fragment, but are needed
-//                  in conjunction with insert and erase operations.
-//                  Insert and erase always invalidate all iterators into the
-//                  container except for the erase that takes a single iterators;
-//                  that method only invalidates the argument.
-//                  All methods are safe and transparant in the presence of
-//                  exceptions, mutating operations will leave the list in a
-//                  valid if unpredictable state. Swap never throws. Non-mutating
-//                  standard-algorithms can be used.
-template
-<
-    class FragmentT,
-    class ContainerT = ::std::set< FragmentT, CompareFragments< FragmentT > >
->
-class List;
+typedef Ranges::Range< uint64 > Fragment;
+typedef Ranges::RangeError< Fragment > FragmentError;
+typedef Ranges::ListError< Fragment > ListError;
+typedef Ranges::List< Fragment, ListTraits > List;
+typedef Ranges::Queue< Fragment > Queue;
 
-// @Queue           A queue for simple fragments (without Payload), but
-//                  without access restrictions, provides methods to erase
-//                  fragments directly.
-class Queue;
+//template Fragment;
+//template FragmentError;
+//template ListError;
+//template List;
+//template Queue;
 
-} // namespace detail
-
-class EmptyType { };
-
-#include "FileFragments/Exception.hpp"
-#include "FileFragments/PayloadTraits.hpp"
-#include "FileFragments/Fragment.hpp"
-#include "FileFragments/List.hpp"
-#include "FileFragments/Queue.hpp"
-
-using detail::Exception;
-
-typedef detail::Fragment< EmptyType, u64 > SimpleFragment;
-typedef detail::BadFragment< SimpleFragment > SimpleBadFragment;
-typedef detail::BadRange< SimpleFragment > SimpleBadRange;
-typedef detail::List< SimpleFragment > SimpleFragmentList;
-typedef detail::Queue SimpleFragmentQueue;
-
-// explicit instances to force errors and improve compilation speed
-template SimpleFragment;
-template SimpleBadFragment;
-template SimpleBadRange;
-template SimpleFragmentList;
+} // namespace Fragments
 
 #include "FileFragments/Compatibility.hpp"
-
-} // namespace FF
 
 #endif // #ifndef FILEFRAGMENTS_HPP_INCLUDED

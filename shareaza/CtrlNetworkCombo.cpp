@@ -51,7 +51,7 @@ BOOL CNetworkCombo::Create(DWORD dwStyle, CWnd* pParentWnd, UINT nID)
 	return CComboBox::Create( dwStyle, rect, pParentWnd, nID );
 }
 
-int CNetworkCombo::GetNetwork()
+DWORD_PTR CNetworkCombo::GetNetwork()
 {
 	int nSel = GetCurSel();
 	return nSel >= 0 ? GetItemData( nSel ) : PROTOCOL_NULL;
@@ -61,7 +61,7 @@ void CNetworkCombo::SetNetwork(int nProtocol)
 {
 	for ( int nItem = 0 ; nItem < GetCount() ; nItem ++ )
 	{
-		if ( GetItemData( nItem ) == nProtocol )
+		if ( GetItemData( nItem ) == DWORD( nProtocol ) )
 		{
 			SetCurSel( nItem );
 			break;

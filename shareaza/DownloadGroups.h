@@ -39,7 +39,7 @@ public:
 public:
 	CCriticalSection	m_pSection;
 protected:
-	CPtrList			m_pList;
+	CList< CDownloadGroup* > m_pList;
 	CDownloadGroup*		m_pSuper;
 	int					m_nBaseCookie;
 	int					m_nSaveCookie;
@@ -70,10 +70,10 @@ public:
 
 	inline CDownloadGroup* GetNext(POSITION& pos) const
 	{
-		return (CDownloadGroup*)m_pList.GetNext( pos );
+		return m_pList.GetNext( pos );
 	}
 
-	inline int GetCount() const
+	inline INT_PTR GetCount() const
 	{
 		return m_pList.GetCount();
 	}

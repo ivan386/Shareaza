@@ -37,8 +37,8 @@ class CDownloadSource
 public:
 	CDownloadSource(CDownload* pDownload);
 	CDownloadSource(CDownload* pDownload, CQueryHit* pHit);
-	CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, GGUID* pGUID = NULL);
-	CDownloadSource(CDownload* pDownload, SHA1* pGUID, IN_ADDR* pAddress, WORD nPort);
+	CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
+    CDownloadSource(CDownload* pDownload, const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
 	CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA1 = FALSE, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL);
 	virtual ~CDownloadSource();
 private:
@@ -54,8 +54,7 @@ public:
 public:
 	CString				m_sURL;
 	PROTOCOLID			m_nProtocol;
-	BOOL				m_bGUID;
-	GGUID				m_pGUID;
+	Hashes::Guid		m_oGUID;
 	IN_ADDR				m_pAddress;
 	WORD				m_nPort;
 	IN_ADDR				m_pServerAddress;
@@ -82,8 +81,8 @@ public:
 	int					m_nColour;
 	DWORD				m_tAttempt;
 	int					m_nFailures;
-    FF::SimpleFragmentList m_oAvailable;
-    FF::SimpleFragmentList m_oPastFragments;
+	Fragments::List m_oAvailable;
+	Fragments::List m_oPastFragments;
 
 // Operations
 public:
@@ -98,12 +97,12 @@ public:
 	void		SetValid();
 	void		SetLastSeen();
 	void		SetGnutella(int nGnutella);
-	BOOL		CheckHash(const SHA1* pSHA1);
-	BOOL		CheckHash(const TIGEROOT* pTiger);
-	BOOL		CheckHash(const MD4* pED2K);
+    BOOL		CheckHash(const Hashes::Sha1Hash& oSHA1);
+    BOOL		CheckHash(const Hashes::TigerHash& oTiger);
+    BOOL		CheckHash(const Hashes::Ed2kHash& oED2K);
 public:
 	BOOL		PushRequest();
-	BOOL		CheckPush(GGUID* pClientID);
+	BOOL		CheckPush(const Hashes::Guid& oClientID);
 	BOOL		CheckDonkey(CEDClient* pClient);
 public:
 	void		AddFragment(QWORD nOffset, QWORD nLength, BOOL bMerge = FALSE);
@@ -116,10 +115,11 @@ public:
 
 // Inlines
 public:
-	inline BOOL CDownloadSource::Equals(CDownloadSource* pSource) const
+	inline bool CDownloadSource::Equals(CDownloadSource* pSource) const
 	{
-		if ( m_bGUID && pSource->m_bGUID ) return m_pGUID == pSource->m_pGUID;
-
+		if ( m_oGUID.isValid() && pSource->m_oGUID.isValid() )
+			return m_oGUID == pSource->m_oGUID;
+		
 		if ( m_nServerPort != pSource->m_nServerPort )
 		{
 			return FALSE;

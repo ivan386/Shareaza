@@ -35,7 +35,6 @@
 #include "Neighbours.h"
 #include "Statistics.h"
 #include "Remote.h"
-#include "SHA.h"
 
 #include "WndMain.h"
 #include "WndMedia.h"
@@ -82,11 +81,11 @@ void CUploads::Clear(BOOL bMessage)
 //////////////////////////////////////////////////////////////////////
 // CUploads counting
 
-int CUploads::GetCount(CUploadTransfer* pExcept, int nState) const
+INT_PTR CUploads::GetCount(CUploadTransfer* pExcept, int nState) const
 {
 	if ( pExcept == NULL && nState == -1 ) return m_pList.GetCount();
 	
-	int nCount = 0;
+	INT_PTR nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -186,7 +185,7 @@ BOOL CUploads::AllowMoreTo(IN_ADDR* pAddress) const
 	return ( nCount <= Settings.Uploads.MaxPerHost );
 }
 
-BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const SHA1* pSHA1) const
+BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const Hashes::Sha1Hash& oSHA1) const
 {
 	int nCount = 0;
 	
@@ -202,7 +201,7 @@ BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const SHA1* pSHA1) const
 				nCount++;
 
 				// If we're already uploading this file to this client
-				if ( ( pUpload->m_bSHA1 ) && ( pSHA1 ) && ( pUpload->m_pSHA1 == *pSHA1 ) )
+				if ( ( pUpload->m_oSHA1 ) && ( oSHA1 ) && validAndEqual( pUpload->m_oSHA1, oSHA1 ) )
 					return FALSE;
 			}
 		}

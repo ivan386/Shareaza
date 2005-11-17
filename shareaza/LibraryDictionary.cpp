@@ -72,15 +72,15 @@ void CLibraryDictionary::Add(CLibraryFile* pFile)
 {
 	ProcessFile( pFile, TRUE );
 	
-	if ( ( pFile->m_bSHA1 || pFile->m_bED2K ) && ! BuildHashTable() )
+	if ( ( pFile->m_oSHA1 || pFile->m_oED2K ) && ! BuildHashTable() )
 	{
-		if ( pFile->m_bSHA1 )
+		if ( pFile->m_oSHA1 )
 		{
-			m_pTable->AddString( CSHA::HashToString( &pFile->m_pSHA1, TRUE ) );
+			m_pTable->AddString( pFile->m_oSHA1.toUrn() );
 		}
-		if ( pFile->m_bED2K )
+		if ( pFile->m_oED2K )
 		{
-			m_pTable->AddString( CED2K::HashToString( &pFile->m_pED2K, TRUE ) );
+			m_pTable->AddString( pFile->m_oED2K.toUrn() );
 		}
 	}
 }
@@ -92,7 +92,7 @@ void CLibraryDictionary::Remove(CLibraryFile* pFile)
 	// TODO: Always invalidate the table when removing a hashed
 	// file... is this wise???  It will happen all the time.
 	
-	if ( pFile->m_bSHA1 || pFile->m_bED2K ) m_bTable = FALSE;
+	if ( pFile->m_oSHA1 || pFile->m_oED2K ) m_bTable = FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -203,7 +203,7 @@ void CLibraryDictionary::ProcessWord(CLibraryFile* pFile, const CString& strWord
 {
 	CLibraryWord* pWord;
 	
-	if ( m_pWords.Lookup( strWord, (void*&)pWord ) )
+	if ( m_pWords.Lookup( strWord, pWord ) )
 	{
 		if ( bAdd )
 		{
@@ -250,7 +250,7 @@ BOOL CLibraryDictionary::BuildHashTable()
 		CLibraryWord* pWord;
 		CString strWord;
 		
-		m_pWords.GetNextAssoc( pos, strWord, (void*&)pWord );
+		m_pWords.GetNextAssoc( pos, strWord, pWord );
 		
 		CLibraryFile* pFileTemp = *(pWord->m_pList); 
 
@@ -285,13 +285,13 @@ BOOL CLibraryDictionary::BuildHashTable()
 			if ( ( pFile->IsGhost() ) || ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFile, FALSE ) ) ) // Check if a queue exists
 			{
 				//Add the hashes to the table
-				if ( pFile->m_bSHA1 )
+				if ( pFile->m_oSHA1 )
 				{
-					m_pTable->AddString( CSHA::HashToString( &pFile->m_pSHA1, TRUE ) );
+					m_pTable->AddString( pFile->m_oSHA1.toUrn() );
 				}
-				if ( pFile->m_bED2K )
+				if ( pFile->m_oED2K )
 				{
-					m_pTable->AddString( CED2K::HashToString( &pFile->m_pED2K, TRUE ) );
+					m_pTable->AddString( pFile->m_oED2K.toUrn() );
 				}
 /*
 				CString str;
@@ -342,7 +342,7 @@ void CLibraryDictionary::Clear()
 		CLibraryWord* pWord;
 		CString strWord;
 		
-		m_pWords.GetNextAssoc( pos, strWord, (void*&)pWord );
+		m_pWords.GetNextAssoc( pos, strWord, pWord );
 		delete pWord;
 	}
 	
@@ -358,31 +358,26 @@ void CLibraryDictionary::Clear()
 //////////////////////////////////////////////////////////////////////
 // CLibraryDictionary search
 
-CPtrList* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
+CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 {
 	BuildHashTable();
-	
+
 	// Only check the hash when a search comes from other client. 
 	if ( ! bLocal && ! m_pTable->Check( pSearch ) ) return NULL;
-	
+
 	DWORD nCookie = m_nSearchCookie++;
-	
+
 	CLibraryFile* pHit = NULL;
-	
-	LPCTSTR* pWordPtr	= pSearch->m_pWordPtr;
-	DWORD* pWordLen		= pSearch->m_pWordLen;
-	
-	for ( int nWord = pSearch->m_nWords ; nWord > 0 ; nWord--, pWordPtr++, pWordLen++ )
+
+	for ( CQuerySearch::const_iterator pWordEntry = pSearch->begin(); pWordEntry != pSearch->end(); ++pWordEntry )
 	{
-		if ( **pWordPtr == '-' ) continue;
-		
-		LPTSTR pszNull = (LPTSTR)(*pWordPtr) + *pWordLen;
-		TCHAR cNull = *pszNull;
-		*pszNull = 0;
-		
+		if ( pWordEntry->first[ 0 ] == '-' ) continue;
+
+		CString sWord( pWordEntry->first, (int)pWordEntry->second );
+
 		CLibraryWord* pWord;
-		
-		if ( m_pWords.Lookup( *pWordPtr, (void*&)pWord ) )
+
+		if ( m_pWords.Lookup( sWord, pWord ) )
 		{
 			CLibraryFile** pFiles	= pWord->m_pList;
 			CLibraryFile* pLastFile	= NULL;
@@ -409,15 +404,16 @@ CPtrList* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL b
 				}
 			}
 		}
-		
-		*pszNull = cNull;
+
 	}
-	
-	DWORD nLowerBound = pSearch->m_nWords >= 3 ? pSearch->m_nWords * 2 / 3 : pSearch->m_nWords;
-	
-	CPtrList* pHits = NULL;
+
+	size_t nLowerBound = pSearch->tableSize() >= 3
+		? pSearch->tableSize() * 2 / 3
+		: pSearch->tableSize();
+
+	CList< CLibraryFile* >* pHits = NULL;
 	int nCount = 0;
-	
+
 	for ( ; pHit ; pHit = pHit->m_pNextHit )
 	{
 		if ( pHit->m_nSearchCookie == nCookie && pHit->m_nSearchWords >= nLowerBound )
@@ -425,19 +421,19 @@ CPtrList* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL b
 			if ( pSearch->Match( pHit->GetSearchName(), pHit->m_nSize,
 					pHit->m_pSchema ? (LPCTSTR)pHit->m_pSchema->m_sURI : NULL,
 					pHit->m_pMetadata,
-					pHit->m_bSHA1 ? &pHit->m_pSHA1 : NULL,
-					pHit->m_bTiger ? &pHit->m_pTiger : NULL,
-					pHit->m_bED2K ? &pHit->m_pED2K : NULL ) )
+					pHit->m_oSHA1,
+					pHit->m_oTiger,
+					pHit->m_oED2K ) )
 			{
-				if ( ! pHits ) pHits = new CPtrList();
+				if ( ! pHits ) pHits = new CList< CLibraryFile* >;
 				pHits->AddTail( pHit );
-				
+
 				if ( ! bLocal )
 				{
 					pHit->m_nHitsToday++;
 					pHit->m_nHitsTotal++;
 				}
-				
+
 				if ( pHit->m_nCollIndex )
 				{
 					if ( CLibraryFile* pCollection = LibraryMaps.LookupFile( pHit->m_nCollIndex, ! bLocal, TRUE ) )
@@ -453,12 +449,12 @@ CPtrList* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL b
 						pHit->m_nCollIndex = 0;
 					}
 				}
-				
+
 				if ( nMaximum && ++nCount >= nMaximum ) break;
 			}
 		}
 	}
-	
+
 	return pHits;
 }
 

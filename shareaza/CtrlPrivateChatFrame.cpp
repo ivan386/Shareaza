@@ -72,12 +72,12 @@ CPrivateChatFrame::~CPrivateChatFrame()
 /////////////////////////////////////////////////////////////////////////////
 // CPrivateChatFrame operations
 
-void CPrivateChatFrame::Initiate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
+void CPrivateChatFrame::Initiate(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
 {
 	ASSERT( m_pSession == NULL );
 
 	m_pSession = new CChatSession( this );
-	m_pSession->Setup( pGUID, pHost, bMustPush );
+	m_pSession->Setup( oGUID, pHost, bMustPush );
 }
 
 BOOL CPrivateChatFrame::Accept(CChatSession* pSession)
@@ -141,7 +141,7 @@ void CPrivateChatFrame::OnPaint()
 	GetClientRect( &rc );
 }
 
-void CPrivateChatFrame::OnContextMenu(CWnd* pWnd, CPoint point)
+void CPrivateChatFrame::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	Skin.TrackPopupMenu( _T("CPrivateChatFrame"), point );
 }
@@ -229,8 +229,7 @@ void CPrivateChatFrame::OnChatBrowse()
 {
 	if ( m_pSession != NULL )
 	{
-		new CBrowseHostWnd( &m_pSession->m_pHost,
-			m_pSession->m_bGUID ? &m_pSession->m_pGUID : NULL );
+		new CBrowseHostWnd( &m_pSession->m_pHost, m_pSession->m_oGUID );
 	}
 }
 

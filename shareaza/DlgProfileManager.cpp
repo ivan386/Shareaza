@@ -73,7 +73,7 @@ BOOL CProfileManagerDlg::Run(LPCTSTR pszWindow)
 	return bResult;
 }
 
-int CProfileManagerDlg::DoModal(LPCTSTR pszWindow)
+INT_PTR CProfileManagerDlg::DoModal(LPCTSTR pszWindow)
 {
 	CIdentityProfilePage	pIdentity;
 	CContactProfilePage		pContact;
@@ -95,7 +95,7 @@ int CProfileManagerDlg::DoModal(LPCTSTR pszWindow)
 
 	if ( pszWindow ) SetActivePage( GetPage( pszWindow ) );
 
-	int nReturn = CSettingsSheet::DoModal();
+	INT_PTR nReturn = CSettingsSheet::DoModal();
 
 	return nReturn;
 }

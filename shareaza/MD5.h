@@ -19,41 +19,50 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_MD5_H__0C3A876B_CD09_4415_A661_35167D882CFD__INCLUDED_)
-#define AFX_MD5_H__0C3A876B_CD09_4415_A661_35167D882CFD__INCLUDED_
+#ifndef MD5_H_INCLUDED
+#define MD5_H_INCLUDED
 
 #pragma once
 
+struct MD5State
+{
+	static const std::size_t blockSize = 64;
+	uint64	m_nCount;
+	uint32	m_nState[ 4 ];
+	uchar m_oBuffer[ blockSize ];
+};
+
+#ifdef SHAREAZA_USE_ASM
+extern "C" void __stdcall MD5_Add_p5(MD5State*, const void* pData, std::size_t nLength);
+#endif
 
 class CMD5
 {
 // Construction
 public:
-	CMD5();
-	virtual ~CMD5();
+	CMD5() { Reset(); }
 
 // Attributes
-public:
-	DWORD	m_nCount[2];
-	DWORD	m_nState[4];
-	BYTE	m_nBuffer[64];
+private:
+	MD5State m_State;
 
 // Operations
 public:
-	void			Reset();
-	void			Add(LPCVOID pData, DWORD nLength);
-	void			Finish();
-	void			GetHash(MD5* pHash);
-public:
-	static CString	HashToString(const MD5* pHash, BOOL bURN = FALSE);
-	static BOOL		HashFromString(LPCTSTR pszHash, MD5* pMD5);
-	static BOOL		HashFromURN(LPCTSTR pszHash, MD5* pMD5);
-
-// Implementation
-protected:
-	void			Transform(BYTE* pBlock);
-	void			Encode(BYTE* pOutput, DWORD* pInput, DWORD nLength);
-	void			Decode(DWORD* pOutput, BYTE* pInput, DWORD nLength);
+	void	GetHash(Hashes::Md5Hash& oHash) const;
+	void	Reset();
+	void	Finish();
+// MD5 block update operation. Continues an MD5 message-digest operation,
+// processing another message block, and updating the context
+#ifdef SHAREAZA_USE_ASM
+	void	Add(const void* pData, std::size_t nLength)
+	{
+		MD5_Add_p5( &m_State, pData, nLength );
+	}
+#else
+	void	Add(const void* pData, std::size_t nLength);
+private:
+	void	Transform(const uint32* data);
+#endif
 };
 
-#endif // !defined(AFX_MD5_H__0C3A876B_CD09_4415_A661_35167D882CFD__INCLUDED_)
+#endif // #ifndef MD5_H_INCLUDED

@@ -60,8 +60,6 @@ CEDClient::CEDClient()
 	m_pEdPrev		= NULL;
 	m_pEdNext		= NULL;
 	
-	m_bGUID			= FALSE;
-	m_pGUID			= (GGUID&)GUID_NULL;
 	m_nClientID		= 0;
 	m_nUDP			= 0;
 	
@@ -87,7 +85,7 @@ CEDClient::CEDClient()
 	
 	// Misc stuff
 	m_bLogin		= FALSE;
-	m_bUpMD4		= FALSE;
+//	m_bUpMD4		= FALSE;
 	
 	m_pDownload		= NULL;
 	m_pUpload		= NULL;
@@ -115,12 +113,12 @@ CEDClient::~CEDClient()
 //////////////////////////////////////////////////////////////////////
 // CEDClient outbound connection
 
-BOOL CEDClient::ConnectTo(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, GGUID* pGUID)
+BOOL CEDClient::ConnectTo(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID)
 {
 	ASSERT( m_nClientID == 0 );
 	
 	m_nClientID = nClientID;
-	if ( m_bGUID = ( pGUID != NULL ) ) m_pGUID = *pGUID;
+	m_oGUID = oGUID;
 	
 	m_pHost.sin_family		= AF_INET;
 	m_pHost.sin_addr		= (IN_ADDR&)nClientID;
@@ -148,7 +146,7 @@ BOOL CEDClient::Equals(CEDClient* pClient)
 	ASSERT( this != NULL );
 	ASSERT( pClient != NULL );
 
-	if ( m_bGUID && pClient->m_bGUID ) return m_pGUID == pClient->m_pGUID;
+	if ( m_oGUID && pClient->m_oGUID ) return m_oGUID == pClient->m_oGUID;
 	
 	if ( CEDPacket::IsLowID( m_nClientID ) &&
 		 CEDPacket::IsLowID( pClient->m_nClientID ) )
@@ -200,7 +198,6 @@ void CEDClient::Remove()
 {
 	ASSERT( this != NULL );
 	
-	m_bGUID = TRUE;
 	Close();
 	
 	DetachUpload();
@@ -225,6 +222,8 @@ void CEDClient::Merge(CEDClient* pClient)
 		DetachDownload();
 		m_pDownload = pClient->m_pDownload;
 		m_pDownload->m_pClient = this;
+
+		m_mInput.pLimit = &m_pDownload->m_nBandwidth;
 		pClient->m_pDownload = NULL;
 	}
 	
@@ -233,28 +232,8 @@ void CEDClient::Merge(CEDClient* pClient)
 		DetachUpload();
 		m_pUpload = pClient->m_pUpload;
 		m_pUpload->m_pClient = this;
+		m_mOutput.pLimit = &m_pUpload->m_nBandwidth;
 		pClient->m_pUpload = NULL;
-	}
-
-	// Make sure connection stuff is copied over
-	if ( ( pClient->m_mInput.pLimit = &Downloads.m_nLimitDonkey ) ||
-		 ( m_mInput.pLimit = &Downloads.m_nLimitDonkey ) )
-	{
-		m_mInput.pLimit = &Downloads.m_nLimitDonkey;
-	}
-	else
-	{
-		m_mInput.pLimit = &Settings.Bandwidth.Request;
-	}
-
-	if ( ( pClient->m_mOutput.pLimit != &Settings.Bandwidth.Request ) &&
-		 ( pClient->m_mOutput.pLimit != NULL ) )
-	{
-		m_mOutput.pLimit = pClient->m_mOutput.pLimit;
-	}
-	else if ( m_mOutput.pLimit == NULL )
-	{
-		m_mOutput.pLimit = &Settings.Bandwidth.Request;
 	}
 
 	// Make sure chat/comments values are carried over
@@ -355,17 +334,17 @@ void CEDClient::OnDownloadClose()
 	SeekNewDownload( pExcept );
 }
 
-BOOL CEDClient::SeekNewDownload(CDownloadSource* pExcept)
+BOOL CEDClient::SeekNewDownload(CDownloadSource* /*pExcept*/)
 {
 	// Removed for a while
 	return FALSE;
 	
-	if ( m_pDownload != NULL ) return FALSE;
-	if ( m_bSeeking ) return FALSE;
-	m_bSeeking = TRUE;
-	BOOL bSeek = Downloads.OnDonkeyCallback( this, pExcept );
-	m_bSeeking = FALSE;
-	return bSeek;
+//	if ( m_pDownload != NULL ) return FALSE;
+//	if ( m_bSeeking ) return FALSE;
+//	m_bSeeking = TRUE;
+//	BOOL bSeek = Downloads.OnDonkeyCallback( this, pExcept );
+//	m_bSeeking = FALSE;
+//	return bSeek;
 }
 
 void CEDClient::DetachDownload()
@@ -510,11 +489,10 @@ BOOL CEDClient::OnWrite()
 BOOL CEDClient::OnRead()
 {
 	BOOL bSuccess = TRUE;
-	CEDPacket* pPacket;
 	
 	CTransfer::OnRead();
 	
-	while ( pPacket = CEDPacket::ReadBuffer( m_pInput, ED2K_PROTOCOL_EMULE ) )
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( m_pInput, ED2K_PROTOCOL_EMULE ) )
 	{
 		try
 		{
@@ -523,7 +501,7 @@ BOOL CEDClient::OnRead()
 		catch ( CException* pException )
 		{
 			pException->Delete();
-			if ( ! m_bGUID ) bSuccess = FALSE;
+			if ( ! m_oGUID ) bSuccess = FALSE;
 		}
 		
 		pPacket->Release();
@@ -709,10 +687,10 @@ void CEDClient::SendHello(BYTE nType)
 	
 	CEDNeighbour* pServer = Neighbours.GetDonkeyServer();
 	
-	GGUID pGUID	= MyProfile.GUID;
-	pGUID.n[5]	= 14;
-	pGUID.n[14]	= 111;
-	pPacket->Write( &pGUID, 16 );
+	Hashes::Guid oGUID = MyProfile.oGUID;
+	oGUID[5] = 14;
+	oGUID[14] = 111;
+	pPacket->Write( oGUID );
 	
 	pPacket->WriteLongLE( pServer ? pServer->m_nClientID : Network.m_pHost.sin_addr.S_un.S_addr );
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
@@ -799,23 +777,8 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		return FALSE;
 	}
 	
-	GGUID pGUID;
-	pPacket->Read( &pGUID, sizeof(GUID) );
+	pPacket->Read( m_oGUID );
 	
-	/*
-	if ( m_bGUID )
-	{
-		if ( pGUID != m_pGUID )
-		{
-			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_WRONG_GUID, (LPCTSTR)m_sAddress );
-			Close();
-			return FALSE;
-		}
-	}
-	*/
-	
-	m_bGUID				= TRUE;
-	m_pGUID				= pGUID;
 	m_nClientID			= pPacket->ReadLongLE();
 	m_pHost.sin_port	= htons( pPacket->ReadShortLE() );
 	
@@ -1093,7 +1056,8 @@ void CEDClient::DeriveSoftwareVersion()
 				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		case 4:
-			//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
+			// This is a Shareaza beta build. Note that the 2nd last number (Beta build #) may be 
+			// truncated, since it's only 3 bits.
 			m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
 				( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
 				( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
@@ -1143,17 +1107,17 @@ void CEDClient::DeriveVersion()
 {
 	if ( m_nSoftwareVersion ) return;
 
-	if ( m_pGUID.n[5] == 13 && m_pGUID.n[14] == 110 )
+	if ( m_oGUID[5] == 13 && m_oGUID[14] == 110 )
 	{
 		m_bEmule = TRUE;
 		m_sUserAgent.Format( _T("eMule v%i"), m_nVersion );
 	}
-	else if ( m_pGUID.n[5] == 14 && m_pGUID.n[14] == 111 )
+	else if ( m_oGUID[5] == 14 && m_oGUID[14] == 111 )
 	{
 		m_bEmule = TRUE;
 		m_sUserAgent.Format( _T("eMule v%i"), m_nVersion );
 	}
-	else if ( m_pGUID.n[5] == 'M' && m_pGUID.n[14] == 'L' )
+	else if ( m_oGUID[5] == 'M' && m_oGUID[14] == 'L' )
 	{
 		m_sUserAgent.Format( _T("mlDonkey v%i"), m_nVersion );
 	}
@@ -1222,7 +1186,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	int nRating;
 	CString strComments;
 
-	if ( pPacket->GetRemaining() < sizeof(MD4) )
+    if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		return TRUE;
@@ -1230,9 +1194,8 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	
 	CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILEREQANSWER );
 	
-	pPacket->Read( &m_pUpMD4, sizeof(MD4) );
-	pReply->Write( &m_pUpMD4, sizeof(MD4) );
-
+    pPacket->Read( m_oUpED2K );
+	pReply->Write( m_oUpED2K );
 
 	// Extra security check (Shouldn't be needed, but there have been reports of glitches)
 	if ( Security.IsDenied( &m_pHost.sin_addr ) )
@@ -1242,11 +1205,9 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 		theApp.Message( MSG_ERROR, _T("ED2K upload to %s blocked by security rules."), m_sAddress);
 		return TRUE;
 	}
-
-	m_bUpMD4 = TRUE;
 	
 	CSingleLock oLock( &Library.m_pSection,TRUE );
-	CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE );
+	CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( m_oUpED2K, TRUE, TRUE );
 	if ( ( pFile ) && ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, TRUE ) ) )
 	{
 		// Create the reply packet
@@ -1266,7 +1227,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	}
 	oLock.Unlock();
 
-	if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )
+	if ( CDownload* pDownload = Downloads.FindByED2K( m_oUpED2K, TRUE ) )
 	{
 		pReply->WriteEDString( pDownload->m_sDisplayName, m_bEmUnicode );
 		Send( pReply );
@@ -1277,7 +1238,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	Send( pReply );
 	
 	theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress,
-		(LPCTSTR)CED2K::HashToString( &m_pUpMD4, TRUE ) );
+        (LPCTSTR)m_oUpED2K.toUrn() );
 	
 	return TRUE;
 }
@@ -1287,7 +1248,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 
 BOOL CEDClient::OnFileStatusRequest(CEDPacket* pPacket)
 {
-	if ( pPacket->GetRemaining() < sizeof(MD4) )
+    if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		return TRUE;
@@ -1295,12 +1256,11 @@ BOOL CEDClient::OnFileStatusRequest(CEDPacket* pPacket)
 	
 	CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILESTATUS );
 	
-	pPacket->Read( &m_pUpMD4, sizeof(MD4) );
-	pReply->Write( &m_pUpMD4, sizeof(MD4) );
-	m_bUpMD4 = TRUE;
+	pPacket->Read( m_oUpED2K );
+	pReply->Write( m_oUpED2K );
 	
 	CSingleLock oLock( &Library.m_pSection, TRUE );
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE ) )
+	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( m_oUpED2K, TRUE, TRUE ) )
 	{
 		pReply->WriteShortLE( 0 );
 		pReply->WriteByte( 0 );
@@ -1314,26 +1274,26 @@ BOOL CEDClient::OnFileStatusRequest(CEDPacket* pPacket)
 		return TRUE;
 	}
 	oLock.Unlock();
-	if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )
+	if ( CDownload* pDownload = Downloads.FindByED2K( m_oUpED2K, TRUE ) )
 	{
 		WritePartStatus( pReply, pDownload );
 		m_nUpSize = pDownload->m_nSize;
 		
 		if ( ! pDownload->IsMoving() )
 			pDownload->AddSourceED2K( m_nClientID, htons( m_pHost.sin_port ), 
-			m_pServer.sin_addr.S_un.S_addr, htons( m_pServer.sin_port ), &m_pGUID );
+			m_pServer.sin_addr.S_un.S_addr, htons( m_pServer.sin_port ), m_oGUID );
 		
 		Send( pReply );
 		return TRUE;
 	}
 	
-	m_bUpMD4 = FALSE;
-	
 	pReply->m_nType = ED2K_C2C_FILENOTFOUND;
 	Send( pReply );
 	
 	theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress,
-		(LPCTSTR)CED2K::HashToString( &m_pUpMD4, TRUE ) );	
+		(LPCTSTR)m_oUpED2K.toUrn() );	
+
+    m_oUpED2K.clear();
 	
 	return TRUE;
 }
@@ -1343,21 +1303,21 @@ BOOL CEDClient::OnFileStatusRequest(CEDPacket* pPacket)
 
 BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 {
-	if ( pPacket->GetRemaining() < sizeof(MD4) )
+    if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		return TRUE;
 	}
 	
-	MD4 pHash;
-	pPacket->Read( &pHash, sizeof(MD4) );
+    Hashes::Ed2kHash oHash;
+	pPacket->Read( oHash );
 	
 	CED2K* pHashset	= NULL;
 	BOOL bDelete = FALSE;
 	CString strName;
-
+	
 	CSingleLock oLock( &Library.m_pSection, TRUE );
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &pHash, TRUE, TRUE ) )
+	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( oHash, TRUE, TRUE ) )
 	{
 		strName		= pFile->m_sName;
 		pHashset	= pFile->GetED2K();
@@ -1367,9 +1327,9 @@ BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 	else
 	{
 		oLock.Unlock();
-		if ( CDownload* pDownload = Downloads.FindByED2K( &pHash, TRUE ) )
+		if ( CDownload* pDownload = Downloads.FindByED2K( oHash, TRUE ) )
 		{
-			if ( pHashset = pDownload->GetHashset() )
+			if ( ( pHashset = pDownload->GetHashset() ) != NULL )
 			{
 				strName		= pDownload->m_sDisplayName;
 				bDelete		= FALSE;
@@ -1380,11 +1340,12 @@ BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 	if ( pHashset != NULL )
 	{
 		CEDPacket* pReply = CEDPacket::New( ED2K_C2C_HASHSETANSWER );
-		pReply->Write( &pHash, sizeof(MD4) );
+		pReply->Write( oHash );
 		int nBlocks = pHashset->GetBlockCount();
 		if ( nBlocks <= 1 ) nBlocks = 0;
 		pReply->WriteShortLE( (WORD)nBlocks );
-		pReply->Write( pHashset->GetRawPtr(), sizeof(MD4) * nBlocks );
+        // ToDo: make this nicer
+        pReply->Write( pHashset->GetRawPtr(), Hashes::Ed2kHash::byteCount * nBlocks );
 		if ( bDelete ) delete pHashset;
 		Send( pReply );
 		
@@ -1394,11 +1355,11 @@ BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 	else
 	{
 		CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
-		pReply->Write( &pHash, sizeof(MD4) );
+        pReply->Write( oHash );
 		Send( pReply );
 		
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress,
-			(LPCTSTR)CED2K::HashToString( &pHash, TRUE ) );	
+			(LPCTSTR)oHash.toUrn() );
 	}
 	
 	return TRUE;
@@ -1407,21 +1368,21 @@ BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CEDClient queue request
 
-BOOL CEDClient::OnQueueRequest(CEDPacket* pPacket)
+BOOL CEDClient::OnQueueRequest(CEDPacket* /*pPacket*/)
 {
-	if ( m_bUpMD4 == FALSE )
+	if ( !m_oUpED2K  )
 	{
 		// MESSAGE: File not requested yet
 		return TRUE;
 	}
 	
-	if ( m_pUpload != NULL && m_pUpload->m_pED2K != m_pUpMD4 )
+	if ( m_pUpload != NULL && validAndUnequal( m_pUpload->m_oED2K, m_oUpED2K ) )
 		DetachUpload();
 	
 	if ( m_pUpload == NULL )
 		m_pUpload = new CUploadTransferED2K( this );
 	
-	m_pUpload->Request( &m_pUpMD4 );
+	m_pUpload->Request( m_oUpED2K );
 	
 	return TRUE;
 }
@@ -1445,7 +1406,7 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	nMessageLength = pPacket->ReadShortLE();
 
 	// Validate message length
-	if ( ( nMessageLength < 1 ) || ( nMessageLength > ED2K_MESSAGE_MAX ) || ( nMessageLength != pPacket->GetRemaining() ) )
+	if ( ( nMessageLength < 1 ) || ( nMessageLength > ED2K_MESSAGE_MAX ) || ( nMessageLength != DWORD( pPacket->GetRemaining() ) ) )
 	{
 		theApp.Message( MSG_ERROR, _T("Invalid message packet received from %s"), (LPCTSTR)m_sAddress );
 		return TRUE;
@@ -1487,19 +1448,19 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 
 BOOL CEDClient::OnSourceRequest(CEDPacket* pPacket)
 {
-	if ( pPacket->GetRemaining() < sizeof(MD4) )
+    if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		return TRUE;
 	}
 	
-	MD4 pHash;
-	pPacket->Read( &pHash, sizeof(MD4) );
+    Hashes::Ed2kHash oHash;
+	pPacket->Read( oHash );
 	
 	CEDPacket* pReply = CEDPacket::New( ED2K_C2C_ANSWERSOURCES, ED2K_PROTOCOL_EMULE );
 	int nCount = 0;
 	
-	if ( CDownload* pDownload = Downloads.FindByED2K( &pHash, TRUE ))
+	if ( CDownload* pDownload = Downloads.FindByED2K( oHash, TRUE ))
 	{
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 		{
@@ -1509,7 +1470,7 @@ BOOL CEDClient::OnSourceRequest(CEDPacket* pPacket)
 				pReply->WriteShortLE( pSource->m_nPort );
 				pReply->WriteLongLE( pSource->m_pServerAddress.S_un.S_addr );
 				pReply->WriteShortLE( (WORD)pSource->m_nServerPort );
-				if ( m_bEmSources >= 2 ) pReply->Write( &pSource->m_pGUID, sizeof(GGUID) );
+				if ( m_bEmSources >= 2 ) pReply->Write( pSource->m_oGUID );
 				nCount++;
 			}
 		}
@@ -1517,10 +1478,11 @@ BOOL CEDClient::OnSourceRequest(CEDPacket* pPacket)
 	
 	if ( pReply->m_nLength > 0 )
 	{
-		BYTE* pStart = pReply->WriteGetPointer( sizeof(MD4) + 2, 0 );
-		CopyMemory( pStart, &pHash, sizeof(MD4) );
-		pStart += sizeof(MD4);
-		*(WORD*)pStart = nCount;
+        BYTE* pStart = pReply->WriteGetPointer( Hashes::Ed2kHash::byteCount + 2, 0 );
+		*reinterpret_cast< Hashes::Ed2kHash::RawStorage* >( pStart )
+			= oHash.storage();
+		pStart += Hashes::Ed2kHash::byteCount;
+		*(WORD*)pStart = WORD( nCount );
 		Send( pReply, FALSE );
 	}
 	
@@ -1536,14 +1498,14 @@ BOOL CEDClient::OnSourceAnswer(CEDPacket* pPacket)
 {
 	if ( Settings.Library.SourceMesh == FALSE ) return TRUE;
 	
-	if ( pPacket->GetRemaining() < sizeof(MD4) + 2 )
+	if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount + 2 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		return TRUE;
 	}
-	
-	MD4 pHash;
-	pPacket->Read( &pHash, sizeof(MD4) );
+
+    Hashes::Ed2kHash oHash;
+	pPacket->Read( oHash );
 	int nCount = pPacket->ReadShortLE();
 	
 	if ( pPacket->GetRemaining() < nCount * ( m_bEmSources >= 2 ? 12+16 : 12 ) )
@@ -1552,29 +1514,21 @@ BOOL CEDClient::OnSourceAnswer(CEDPacket* pPacket)
 		return TRUE;
 	}
 	
-	if ( CDownload* pDownload = Downloads.FindByED2K( &pHash ))
+	if ( CDownload* pDownload = Downloads.FindByED2K( oHash ))
 	{
 		// Don't bother adding sources if this download has finished
 		if ( pDownload->IsMoving() ) return TRUE;
 
 		while ( nCount-- > 0 )
 		{
-			GGUID pGUID;
-			
 			DWORD nClientID		= pPacket->ReadLongLE();
 			WORD nClientPort	= pPacket->ReadShortLE();
 			DWORD nServerIP		= pPacket->ReadLongLE();
 			WORD nServerPort	= pPacket->ReadShortLE();
 			
-			if ( m_bEmSources >= 2 )
-			{
-				pPacket->Read( &pGUID, sizeof(GGUID) );
-				pDownload->AddSourceED2K( nClientID, nClientPort, nServerIP, nServerPort, &pGUID );
-			}
-			else
-			{
-				pDownload->AddSourceED2K( nClientID, nClientPort, nServerIP, nServerPort );
-			}
+			Hashes::Guid oGUID;
+			if ( m_bEmSources >= 2 ) pPacket->Read( oGUID );
+			pDownload->AddSourceED2K( nClientID, nClientPort, nServerIP, nServerPort, oGUID );
 		}
 	}	
 	
@@ -1586,8 +1540,8 @@ BOOL CEDClient::OnSourceAnswer(CEDPacket* pPacket)
 
 CString CEDClient::GetSourceURL()
 {
-	ASSERT( m_bGUID );
-	ASSERT( m_bUpMD4 );
+	ASSERT( bool( m_oGUID ) );
+	ASSERT( m_oUpED2K );
 	
 	CString str;
 
@@ -1597,14 +1551,14 @@ CString CEDClient::GetSourceURL()
 			m_nClientID,
 			(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ),
 			htons( m_pHost.sin_port ),
-			(LPCTSTR)CED2K::HashToString( &m_pUpMD4 ), m_nUpSize );
+			(LPCTSTR)m_oUpED2K.toString(), m_nUpSize );
 	}
 	else
 	{
 		str.Format( _T("ed2kftp://%s:%lu/%s/%I64i/"),
 			(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ),
 			htons( m_pHost.sin_port ),
-			(LPCTSTR)CED2K::HashToString( &m_pUpMD4 ), m_nUpSize );
+			(LPCTSTR)m_oUpED2K.toString(), m_nUpSize );
 	}
 	
 	return str;
@@ -1644,7 +1598,7 @@ void CEDClient::WritePartStatus(CEDPacket* pPacket, CDownload* pDownload)
 			for ( DWORD nBit = 0 ; nBit < 8 && nPart < nParts ; nBit++, nPart++ )
 			{
 				QWORD nOffset = nPart * ED2K_PART_SIZE;
-				QWORD nLength = min( QWORD(ED2K_PART_SIZE), pDownload->m_nSize - nOffset );
+				QWORD nLength = min( ED2K_PART_SIZE, pDownload->m_nSize - nOffset );
 				
 				if ( pDownload->IsRangeUseful( nOffset, nLength ) == FALSE )
 				{
@@ -1662,12 +1616,12 @@ void CEDClient::WritePartStatus(CEDPacket* pPacket, CDownload* pDownload)
 
 BOOL CEDClient::OnUdpReask(CEDPacket* pPacket)
 {
-	if ( pPacket->GetRemaining() < sizeof(MD4) ) return FALSE;
-	if ( m_bUpMD4 == FALSE || m_pUpload == NULL ) return FALSE;
-	
-	MD4 pMD4;
-	pPacket->Read( &pMD4, sizeof(MD4) );
-	if ( pMD4 != m_pUpMD4 ) return FALSE;
+	if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount ) return FALSE;
+	if ( !m_oUpED2K || m_pUpload == NULL ) return FALSE;
+
+	Hashes::Ed2kHash oED2K;
+	pPacket->Read( oED2K );
+	if ( validAndUnequal( oED2K, m_oUpED2K ) ) return FALSE;
 	
 	return m_pUpload->OnReask();
 }
@@ -1683,7 +1637,7 @@ BOOL CEDClient::OnUdpReaskAck(CEDPacket* pPacket)
 	return TRUE;
 }
 
-BOOL CEDClient::OnUdpQueueFull(CEDPacket* pPacket)
+BOOL CEDClient::OnUdpQueueFull(CEDPacket* /*pPacket*/)
 {
 	if ( m_pDownload != NULL )
 	{
@@ -1694,7 +1648,7 @@ BOOL CEDClient::OnUdpQueueFull(CEDPacket* pPacket)
 	return TRUE;
 }
 
-BOOL CEDClient::OnUdpFileNotFound(CEDPacket* pPacket)
+BOOL CEDClient::OnUdpFileNotFound(CEDPacket* /*pPacket*/)
 {
 	if ( m_pDownload != NULL ) m_pDownload->Close( TS_FALSE );
 	return TRUE;

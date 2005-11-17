@@ -154,7 +154,7 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 
 	m_sz.cy += TIP_TEXTHEIGHT * 6;
 
-	m_sz.cx = max( m_sz.cx, LONG(128 + 160) );
+	m_sz.cx = max( m_sz.cx, 128 + 160 );
 	m_sz.cy += 40;
 }
 
@@ -340,7 +340,7 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 /////////////////////////////////////////////////////////////////////////////
 // CNeighbourTipCtrl message handlers
 
-void CNeighbourTipCtrl::OnTimer(UINT nIDEvent)
+void CNeighbourTipCtrl::OnTimer(UINT_PTR nIDEvent)
 {
 	CCoolTipCtrl::OnTimer( nIDEvent );
 

@@ -126,7 +126,7 @@ BOOL CMediaWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* 
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-LONG CMediaWnd::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
+LRESULT CMediaWnd::OnIdleUpdateCmdUI(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	if ( m_wndFrame.m_hWnd != NULL && m_wndFrame.GetParent() != this )
 	{
@@ -181,22 +181,22 @@ void CMediaWnd::OnPaint()
 	}
 }
 
-LONG CMediaWnd::OnMediaKey(WPARAM wParam, LPARAM lParam)
+LRESULT CMediaWnd::OnMediaKey(WPARAM wParam, LPARAM lParam)
 {
 	return m_wndFrame.SendMessage( 0x0319, wParam, lParam );
 }
 
-LONG CMediaWnd::OnDevModeChange(WPARAM wParam, LPARAM lParam)
+LRESULT CMediaWnd::OnDevModeChange(WPARAM wParam, LPARAM lParam)
 {
 	return m_wndFrame.SendMessage( WM_DEVMODECHANGE, wParam, lParam );
 }
 
-LONG CMediaWnd::OnDisplayChange(WPARAM wParam, LPARAM lParam)
+LRESULT CMediaWnd::OnDisplayChange(WPARAM wParam, LPARAM lParam)
 {
 	return m_wndFrame.SendMessage( WM_DISPLAYCHANGE, wParam, lParam );
 }
 
-BOOL CMediaWnd::OnDropFiles(CStringList& pFiles, const CPoint& ptScreen, BOOL bDrop)
+BOOL CMediaWnd::OnDropFiles(CList< CString >& pFiles, const CPoint& ptScreen, BOOL bDrop)
 {
 	if ( bDrop == FALSE ) return TRUE;
 
@@ -228,14 +228,13 @@ void CMediaWnd::OnDropFiles(HDROP hDropInfo)
 {
 	if ( hDropInfo != NULL )
 	{
-		CStringList oFileList;
-		TCHAR szFileName[MAX_PATH + 1];
+		CList< CString > oFileList;
 		UINT nFiles = DragQueryFile( hDropInfo, (UINT)-1, NULL, 0 );
 		for( UINT nNames = 0; nNames < nFiles; nNames++ )
 		{
-			ZeroMemory( szFileName, MAX_PATH + 1 );
+			TCHAR szFileName[MAX_PATH + 1] = {};
 			DragQueryFile( hDropInfo, nNames, (LPTSTR)szFileName, MAX_PATH + 1 );
-	        oFileList.AddTail( szFileName ); 
+			oFileList.AddTail( szFileName ); 
 		}
 		CPoint oPoint;
 		POINT pt;

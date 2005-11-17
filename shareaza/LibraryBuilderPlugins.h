@@ -37,7 +37,7 @@ public:
 
 // Attributes
 public:
-	CMapStringToPtr		m_pMap;
+	CMap< CString, const CString&, ILibraryBuilderPlugin*, ILibraryBuilderPlugin* > m_pMap;
 	CLibraryBuilder*	m_pBuilder;
 	BOOL				m_bCOM;
 

@@ -225,13 +225,13 @@ BOOL CMediaVisDlg::EnumerateWrapped(LPCTSTR pszName, REFCLSID pCLSID, LPCTSTR ps
 	return TRUE;
 }
 
-void CMediaVisDlg::OnDblClkPlugins(NMHDR* pNMHDR, LRESULT* pResult)
+void CMediaVisDlg::OnDblClkPlugins(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
 	PostMessage( WM_COMMAND, IDOK );
 	*pResult = 0;
 }
 
-void CMediaVisDlg::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult)
+void CMediaVisDlg::OnItemChangedPlugins(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
 	m_wndSetup.EnableWindow( m_wndList.GetSelectedCount() == 1 );
 	*pResult = 0;

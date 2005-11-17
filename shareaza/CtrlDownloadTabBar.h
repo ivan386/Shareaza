@@ -58,7 +58,7 @@ public:
 
 // Attributes
 protected:
-	CPtrList		m_pItems;
+	CList< TabItem* > m_pItems;
 	TabItem*		m_pHot;
 	BOOL			m_bTimer;
 	BOOL			m_bMenuGray;
@@ -73,8 +73,8 @@ protected:
 public:
 	void			SetWatermark(HBITMAP hBitmap);
 	void			Update(int nCookie);
-	BOOL			DropShowTarget(CPtrList* pList, const CPoint& ptScreen);
-	BOOL			DropObjects(CPtrList* pList, const CPoint& ptScreen);
+	BOOL			DropShowTarget(CList< CDownload* >* pList, const CPoint& ptScreen);
+	BOOL			DropObjects(CList< CDownload* >* pList, const CPoint& ptScreen);
 protected:
 	void			UpdateGroups(int nCookie);
 	void			UpdateStates(int nCookie);
@@ -83,16 +83,16 @@ protected:
 	int				GetSelectedCount(BOOL bDownloads = FALSE);
 	TabItem*		GetSelectedItem();
 	CDownloadGroup*	GetSelectedGroup();
-	void			GetSelectedDownloads(CPtrList* pDownloads);
+	void			GetSelectedDownloads(CList< CDownload* >* pDownloads);
 	void			NotifySelection();
 
 // Overrides
 public:
 	virtual BOOL	Create(CWnd* pParentWnd, DWORD dwStyle = WS_CHILD|WS_VISIBLE|CBRS_BOTTOM, UINT nID = AFX_IDW_STATUS_BAR);
 	virtual CSize	CalcFixedLayout(BOOL bStretch, BOOL bHorz);
-	virtual int		OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
+	virtual INT_PTR	OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 	virtual void	DoPaint(CDC* pDC);
-	virtual void	OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler) {};
+	virtual void	OnUpdateCmdUI(CFrameWnd* /*pTarget*/, BOOL /*bDisableIfNoHndler*/) {};
 
 // Implementation
 protected:
@@ -101,7 +101,7 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);

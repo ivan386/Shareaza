@@ -187,7 +187,25 @@ void CSearchPanel::ShowSearch(CManagedSearch* pSearch)
 		return;
 	}
 	
-	m_boxSearch.m_wndSearch.SetWindowText( pSearch->m_pSearch->m_sSearch );
+	CString strURN;
+	if ( pSearch->m_pSearch->m_oTiger )
+	{
+		strURN = pSearch->m_pSearch->m_oTiger.toUrn();
+	}
+	if ( pSearch->m_pSearch->m_oED2K )
+	{
+		strURN = pSearch->m_pSearch->m_oED2K.toUrn();
+	}
+	if ( pSearch->m_pSearch->m_oSHA1 )
+	{
+		strURN = pSearch->m_pSearch->m_oSHA1.toUrn();
+	}
+
+	if ( ! strURN.IsEmpty() )
+		m_boxSearch.m_wndSearch.SetWindowText( strURN + _T(" ") + pSearch->m_pSearch->m_sSearch );
+	else
+		m_boxSearch.m_wndSearch.SetWindowText( pSearch->m_pSearch->m_sSearch );
+
 	m_boxSearch.m_wndSchemas.Select( pSearch->m_pSearch->m_pSchema );
 
 	if ( m_bAdvanced )
@@ -276,9 +294,9 @@ void CSearchPanel::OnSchemaChange()
 	}
 }
 
-CManagedSearch* CSearchPanel::GetSearch()
+std::auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 {
-	CManagedSearch* pSearch = new CManagedSearch();
+	std::auto_ptr< CManagedSearch > pSearch( new CManagedSearch() );
 	
 	m_boxSearch.m_wndSearch.GetWindowText( pSearch->m_pSearch->m_sSearch );
 
@@ -352,11 +370,16 @@ CManagedSearch* CSearchPanel::GetSearch()
 	
 	if ( ! pSearch->m_pSearch->CheckValid() )
 	{
-		delete pSearch;
-		return NULL;
+		pSearch.reset();
 	}
 	
 	return pSearch;
+}
+
+std::auto_ptr< CManagedSearch > CSearchPanel::GetSearch(LPCTSTR pszHash)
+{
+	m_boxSearch.m_wndSearch.SetWindowText( pszHash );
+	return GetSearch();
 }
 
 void CSearchPanel::ExecuteSearch()
@@ -523,7 +546,8 @@ void CSearchInputBox::OnPaint()
 	
 	if ( m_bmWatermark.m_hObject != NULL )
 	{
-		pDC = CoolInterface.GetBuffer( dc, rc.Size() );
+		CSize size = rc.Size();
+		pDC = CoolInterface.GetBuffer( dc, size );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmWatermark );
 		pDC->SetBkMode( TRANSPARENT );
 	}
@@ -691,7 +715,8 @@ void CSearchAdvancedBox::OnPaint()
 	
 	if ( m_bmWatermark.m_hObject != NULL )
 	{
-		pDC = CoolInterface.GetBuffer( dc, rc.Size() );
+		CSize size = rc.Size();
+		pDC = CoolInterface.GetBuffer( dc, size );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmWatermark );
 		pDC->SetBkMode( TRANSPARENT );
 	}
@@ -823,7 +848,8 @@ void CSearchResultsBox::OnPaint()
 	
 	if ( m_bmWatermark.m_hObject )
 	{
-		pDC = CoolInterface.GetBuffer( dc, rc.Size() );
+		CSize size = rc.Size();
+		pDC = CoolInterface.GetBuffer( dc, size );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmWatermark );
 		pDC->SetBkMode( TRANSPARENT );
 	}
@@ -902,10 +928,10 @@ void CSearchResultsBox::OnPaint()
 
 void CSearchResultsBox::DrawText(CDC* pDC, int nX, int nY, UINT nFlags, LPCTSTR pszText)
 {
-	CSize cz = pDC->GetTextExtent( pszText, _tcslen( pszText ) );
+	CSize cz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
 	CRect rc( nX, nY, nX + cz.cx, nY + cz.cy );
 	
-	pDC->ExtTextOut( nX, nY, nFlags, &rc, pszText, _tcslen( pszText ), NULL );
+	pDC->ExtTextOut( nX, nY, nFlags, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
 	pDC->ExcludeClipRect( nX, nY, nX + cz.cx, nY + cz.cy );
 }
 

@@ -65,7 +65,7 @@ CDownload::CDownload()
 	m_tCompleted	= 0;
 	m_tSaved		= 0;
 	m_tBegan		= 0;
-
+	
 	m_bDownloading	= FALSE;
 	
 	DownloadGroups.Link( this );
@@ -129,7 +129,7 @@ void CDownload::Resume()
 	m_bTorrentTrackerError	= FALSE;
 	m_nTorrentTrackerErrors = 0;
 
-	if( m_bBTH )
+	if ( m_oBTH )
 	{
 		if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents ) 
 			SetStartTimer();
@@ -223,10 +223,10 @@ BOOL CDownload::Rename(LPCTSTR pszName)
 void CDownload::StopTrying()
 {
 	if ( m_bComplete ) return;
-	m_tBegan		= 0;
+	m_tBegan = 0;
 	m_bDownloading	= FALSE;
 
-	if ( m_bBTH ) CloseTorrent();
+	if ( m_oBTH ) CloseTorrent();
 	CloseTransfers();
 	CloseFile();
 	StopSearch();
@@ -290,7 +290,7 @@ BOOL CDownload::IsTrying() const
 
 BOOL CDownload::IsShared() const
 {
-	return m_bShared || m_bBTH || Settings.eDonkey.EnableToday;
+	return m_bShared || m_oBTH || Settings.eDonkey.EnableToday;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -316,9 +316,9 @@ void CDownload::OnRun()
 				if (  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 ) )
 				{	//And have had no new data for 5-14 hours	
 
-					if( m_bBTH )	//If it's a torrent
+					if ( m_oBTH )	//If it's a torrent
 					{
-						if( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )
+						if ( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )
 						{	//If there are other torrents that could start
 							StopTrying();		//Give up for now, try again later
 							return;
@@ -326,7 +326,7 @@ void CDownload::OnRun()
 					}
 					else			//It's a regular download
 					{
-						if( Downloads.GetTryingCount( FALSE ) >= ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+						if ( Downloads.GetTryingCount( FALSE ) >= ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
 						{	//If there are other downloads that could try
 							StopTrying();		//Give up for now, try again later
 							return;
@@ -369,20 +369,24 @@ void CDownload::OnRun()
 		}
 		else if ( ! m_bComplete )
 		{	//If this download isn't trying to download, see if it can try
-			if( m_bBTH )
+			if ( IsDownloading() )
+			{	// This download was probably started by a push/etc
+				SetStartTimer();
+			}
+			if ( m_oBTH )
 			{	//Torrents only try when 'ready to go'. (Reduce tracker load)
-				if( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
+				if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
 					SetStartTimer();
 			}
 			else
 			{	//We have extra regular downloads 'trying' so when a new slot is ready, a download
 				//has sources and is ready to go.	
-				if( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+				if ( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
 					SetStartTimer();
 			}
 		}
 	}
-
+	
 	// Set the currently downloading state (Used to optimise display in Ctrl/Wnd functions)
 	m_bDownloading = bDownloading;
 	
@@ -493,14 +497,14 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	
 	LibraryBuilder.RequestPriority( m_sDiskName );
 	
-	if ( m_bSHA1 || m_bED2K )
+    if ( m_oSHA1 || m_oED2K )
 	{
-		LibraryHistory.Add( m_sDiskName, m_bSHA1 ? &m_pSHA1 : NULL,
-			m_bED2K ? &m_pED2K : NULL, GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) );
+		LibraryHistory.Add( m_sDiskName, m_oSHA1,
+			m_oED2K, GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) );
 	}
 	else
 	{
-		LibraryHistory.Add( m_sDiskName, NULL, NULL, NULL );
+        LibraryHistory.Add( m_sDiskName, Hashes::Sha1Hash(), m_oED2K, NULL );
 	}
 	
 	ClearSources();
@@ -683,8 +687,10 @@ void CDownload::SerializeOld(CArchive& ar, int nVersion)
 	ar >> nSize;
 	m_nSize = nSize;
 	
-	ar >> m_bSHA1;
-	if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
+    Hashes::Sha1Hash oSHA1;
+    SerializeIn( ar, oSHA1, nVersion );
+    m_oSHA1 = oSHA1;
+    m_oSHA1.signalTrusted();
 	
 	ar >> m_bPaused;
 	ar >> m_bExpanded;
@@ -693,7 +699,7 @@ void CDownload::SerializeOld(CArchive& ar, int nVersion)
 	m_pFile->Serialize( ar, nVersion );
 	GenerateDiskName();
 	
-	for ( int nSources = ar.ReadCount() ; nSources ; nSources-- )
+	for ( DWORD_PTR nSources = ar.ReadCount() ; nSources ; nSources-- )
 	{
 		CDownloadSource* pSource = new CDownloadSource( this );
 		pSource->Serialize( ar, nVersion );

@@ -79,5 +79,5 @@ protected:
 	afx_msg void OnSeed();
 	virtual void OnCancel();
 	afx_msg void OnDestroy();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };

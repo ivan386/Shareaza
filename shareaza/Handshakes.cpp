@@ -116,7 +116,7 @@ BOOL CHandshakes::Listen()
 		{
 			// Choose a port number randomly, and store it it Network and saListen
 			int nPort = Network.RandomPort();
-			Network.m_pHost.sin_port = saListen.sin_port = htons( nPort );
+			Network.m_pHost.sin_port = saListen.sin_port = htons( u_short( nPort ) );
 		}
 		else // This is still our first time here in this loop
 		{
@@ -414,7 +414,8 @@ BOOL CHandshakes::AcceptConnection()
 		(SOCKADDR*)&pHost,	// Have WSAAccept tell us what it thinks the IP address and port number of the remote computer is
 		&nHost,				// The number of bytes it has to write there
 		AcceptCheck,		// Call this function, and it will tell you if we wish to accept this connection or not
-		(DWORD)this );		// Give the AcceptCheck function a pointer to this CHandshakes object as its parameter
+		0 ); // Note: as of now this parameter is unused - it's not safe to pass this here in a 64bit environment
+			// if we should need this in the future, a LUT needs to be used instead
 	if ( hSocket == INVALID_SOCKET ) return FALSE; // AcceptCheck refused the connection, or it didn't work, leave now
 
 	// We've listened for and accepted one more stable connection
@@ -463,7 +464,14 @@ void CHandshakes::CreateHandshake(SOCKET hSocket, SOCKADDR_IN* pHost)
 // This is the WSAAccept condition function, that's why it has so many weird parameters
 // Makes sure we know the remote IP address, and it's not on the security watch list
 // Returns CF_ACCEPT or CF_REJECT to tell WSAAccept what to do
-int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCallerData, IN OUT LPQOS lpSQOS, IN OUT LPQOS lpGQOS, IN LPWSABUF lpCalleeId, OUT LPWSABUF lpCalleeData, OUT GROUP FAR * g, IN DWORD dwCallbackData)
+int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId,
+									  IN LPWSABUF /*lpCallerData*/,
+									  IN OUT LPQOS /*lpSQOS*/,
+									  IN OUT LPQOS /*lpGQOS*/,
+									  IN LPWSABUF /*lpCalleeId*/,
+									  IN LPWSABUF /*lpCalleeData*/,
+									  OUT GROUP FAR * /*g*/,
+									  IN DWORD_PTR /*dwCallbackData*/)
 {
 	// If the address of the remote computer is unknown or too short, reject the connection
 	if ( lpCallerId == NULL )                    return CF_REJECT; // WSAAccept didn't get the remote computer's IP and port

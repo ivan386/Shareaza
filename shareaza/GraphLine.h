@@ -51,7 +51,7 @@ public:
 	DWORD		m_nUpdates;
 	DWORD		m_tLastScale;
 protected:
-	CPtrList	m_pItems;
+	CList< CGraphItem* > m_pItems;
 	CPen		m_pGridPen;
 
 // Operations
@@ -59,7 +59,7 @@ public:
 	void		AddItem(CGraphItem* pItem);
 	POSITION	GetItemIterator() const;
 	CGraphItem*	GetNextItem(POSITION& pos) const;
-	int			GetItemCount() const;
+	INT_PTR		GetItemCount() const { return m_pItems.GetCount(); }
 	void		RemoveItem(CGraphItem* pItem);
 	void		ClearItems();
 	void		ResetMaximum(BOOL bForce = TRUE);

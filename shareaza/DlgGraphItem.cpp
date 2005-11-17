@@ -97,13 +97,13 @@ BOOL CGraphItemDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CGraphItemDlg::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+void CGraphItemDlg::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	lpMeasureItemStruct->itemWidth	= 1024;
 	lpMeasureItemStruct->itemHeight	= 18;
 }
 
-void CGraphItemDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+void CGraphItemDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( lpDrawItemStruct->itemID == (UINT)-1 ) return;
 	if ( ( lpDrawItemStruct->itemAction & ODA_SELECT ) == 0 &&

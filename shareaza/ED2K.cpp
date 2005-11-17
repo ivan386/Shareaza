@@ -49,7 +49,7 @@ CED2K::~CED2K()
 
 void CED2K::Clear()
 {
-	ZeroMemory( &m_pRoot, sizeof(MD4) );
+    std::fill_n( &m_pRoot[ 0 ], 4, 0 );
 	if ( m_pList != NULL ) delete [] m_pList;
 	m_pList = NULL;
 	m_nList = 0;
@@ -64,9 +64,9 @@ void CED2K::Serialize(CArchive& ar)
 	{
 		ar << m_nList;
 		if ( m_nList == 0 ) return;
-
-		ar.Write( &m_pRoot, sizeof(MD4) );
-		if ( m_nList > 1 ) ar.Write( m_pList, sizeof(MD4) * m_nList );
+		
+		ar.Write( &m_pRoot[ 0 ], sizeof( m_pRoot ) );
+        if ( m_nList > 1 ) ar.Write( m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
 	}
 	else
 	{
@@ -75,17 +75,17 @@ void CED2K::Serialize(CArchive& ar)
 		ar >> m_nList;
 		if ( m_nList == 0 ) return;
 
-		ar.Read( &m_pRoot, sizeof(MD4) );
-
-		m_pList = new MD4[ m_nList ];
+		ar.Read( &m_pRoot[ 0 ], sizeof( m_pRoot ) );
+		
+		m_pList = new CMD4::MD4Digest[ m_nList ];
 
 		if ( m_nList > 1 )
 		{
-			ar.Read( m_pList, sizeof(MD4) * m_nList );
+			ar.Read( m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
 		}
 		else if ( m_nList == 1 )
 		{
-			*m_pList = m_pRoot;
+			std::copy( &m_pRoot[ 0 ], &m_pRoot[ 4 ], &m_pList[ 0 ][ 0 ] );
 		}
 	}
 }
@@ -93,18 +93,19 @@ void CED2K::Serialize(CArchive& ar)
 DWORD CED2K::GetSerialSize() const
 {
 	DWORD nSize = 4;
-	if ( m_nList > 0 ) nSize += sizeof(MD4);
-	if ( m_nList > 1 ) nSize += sizeof(MD4) * m_nList;
+    if ( m_nList > 0 ) nSize += sizeof( CMD4::MD4Digest );
+    if ( m_nList > 1 ) nSize += sizeof( CMD4::MD4Digest ) * m_nList;
 	return nSize;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CED2K root value
 
-BOOL CED2K::GetRoot(MD4* pHash) const
+BOOL CED2K::GetRoot(Hashes::Ed2kHash& oHash) const
 {
 	// if ( m_nList == 0 ) return FALSE;
-	*pHash = m_pRoot;
+	oHash = reinterpret_cast< const Hashes::Ed2kHash::RawStorage& >(
+			m_pRoot[ 0 ] );
 	return TRUE;
 }
 
@@ -116,8 +117,8 @@ void CED2K::BeginFile(QWORD nLength)
 	ASSERT( ! IsAvailable() );
 
 	m_nList	= (DWORD)( ( nLength + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE );
-	m_pList	= new MD4[ m_nList ];
-
+    m_pList	= new CMD4::MD4Digest[ m_nList ];
+	
 	m_pSegment.Reset();
 	m_nCurHash = 0;
 	m_nCurByte = 0;
@@ -151,7 +152,7 @@ void CED2K::AddToFile(LPCVOID pInput, DWORD nLength)
 		{
 			ASSERT( m_nCurHash < m_nList );
 			m_pSegment.Finish();
-			m_pSegment.GetHash( &m_pList[ m_nCurHash ] );
+			m_pSegment.GetHash( m_pList[ m_nCurHash ] );
 			m_pSegment.Reset();
 			m_nCurHash++;
 			m_nCurByte = 0;
@@ -171,7 +172,7 @@ BOOL CED2K::FinishFile()
 	if ( m_nCurHash < m_nList )
 	{
 		m_pSegment.Finish();
-		m_pSegment.GetHash( &m_pList[ m_nCurHash++ ] );
+		m_pSegment.GetHash( m_pList[ m_nCurHash++ ] );
 		m_pSegment.Reset();
 	}
 
@@ -179,19 +180,19 @@ BOOL CED2K::FinishFile()
 
 	if ( m_nList == 1 )
 	{
-		m_pRoot = *m_pList;
+        std::copy( &m_pList[ 0 ][ 0 ], &m_pList[ 0 ][ 4 ], &m_pRoot[ 0 ] );
 	}
 	else if ( m_nList == 0)
 	{
 		m_pSegment.Finish();
-		m_pSegment.GetHash( &m_pRoot );
+		m_pSegment.GetHash( m_pRoot );
 	}
 	else
 	{
 		CMD4 pOverall;
-		pOverall.Add( m_pList, sizeof(MD4) * m_nList );
+        pOverall.Add( m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
 		pOverall.Finish();
-		pOverall.GetHash( &m_pRoot );
+		pOverall.GetHash( m_pRoot );
 	}
 
 	return TRUE;
@@ -230,12 +231,12 @@ BOOL CED2K::FinishBlockTest(DWORD nBlock)
 	ASSERT( IsAvailable() );
 
 	if ( nBlock >= m_nList ) return FALSE;
-
-	MD4 pMD4;
+	
+    CMD4::MD4Digest pMD4;
 	m_pSegment.Finish();
-	m_pSegment.GetHash( &pMD4 );
-
-	return pMD4 == m_pList[ nBlock ];
+	m_pSegment.GetHash( pMD4 );
+	
+    return std::equal( &pMD4[ 0 ], &pMD4[ 4 ], &m_pList[ nBlock ][ 0 ] );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -245,7 +246,7 @@ BOOL CED2K::ToBytes(BYTE** ppOutput, DWORD* pnOutput)
 {
 	if ( m_nList == 0 ) return FALSE;
 
-	*pnOutput = sizeof(MD4) * m_nList;
+    *pnOutput = sizeof( CMD4::MD4Digest ) * m_nList;
 	*ppOutput = new BYTE[ *pnOutput ];
 	CopyMemory( *ppOutput, m_pList, *pnOutput );
 
@@ -263,18 +264,18 @@ LPCVOID CED2K::GetRawPtr() const
 BOOL CED2K::FromBytes(BYTE* pOutput, DWORD nOutput, QWORD nSize)
 {
 	Clear();
-
-	if ( pOutput == NULL || nOutput == 0 || ( nOutput % sizeof(MD4) ) != 0 ) return FALSE;
-
+	
+    if ( pOutput == NULL || nOutput == 0 || ( nOutput % sizeof( CMD4::MD4Digest ) ) != 0 ) return FALSE;
+	
 	if ( nSize > 0 )
 	{
-		if ( nOutput / sizeof(MD4) != ( nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE )
+        if ( nOutput / sizeof( CMD4::MD4Digest ) != ( nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE )
 			return FALSE;
 	}
-
-	m_nList	= nOutput / sizeof(MD4);
-	m_pList = new MD4[ m_nList ];
-
+	
+    m_nList	= nOutput / sizeof( CMD4::MD4Digest );
+    m_pList = new CMD4::MD4Digest[ m_nList ];
+	
 	CopyMemory( m_pList, pOutput, nOutput );
 
 	if ( m_nList == 1 )
@@ -284,23 +285,24 @@ BOOL CED2K::FromBytes(BYTE* pOutput, DWORD nOutput, QWORD nSize)
 	else
 	{
 		CMD4 pOverall;
-		pOverall.Add( m_pList, sizeof(MD4) * m_nList );
+        pOverall.Add( m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
 		pOverall.Finish();
-		pOverall.GetHash( &m_pRoot );
+		pOverall.GetHash( m_pRoot );
 	}
 
 	return TRUE;
 }
 
-BOOL CED2K::FromRoot(MD4* pHash)
+BOOL CED2K::FromRoot(const Hashes::Ed2kHash& oHash)
 {
 	Clear();
 
 	m_nList = 1;
-	m_pList = new MD4[ m_nList ];
-
-	m_pRoot = *m_pList = *pHash;
-
+    m_pList = new CMD4::MD4Digest[ m_nList ];
+	
+    std::copy( oHash.begin(), oHash.end(), &m_pRoot[ 0 ] );
+    std::copy( oHash.begin(), oHash.end(), &m_pList[ 0 ][ 0 ] );
+	
 	return TRUE;
 }
 
@@ -313,93 +315,17 @@ BOOL CED2K::CheckIntegrity()
 
 	if ( m_nList == 1 )
 	{
-		return *m_pList == m_pRoot;
+        return std::equal( &m_pRoot[ 0 ], &m_pRoot[ 4 ], &m_pList[ 0 ][ 0 ] );
 	}
 	else
 	{
 		CMD4 pOverall;
-		MD4 pRoot;
-
-		pOverall.Add( m_pList, sizeof(MD4) * m_nList );
+        CMD4::MD4Digest pRoot;
+		
+        pOverall.Add( m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
 		pOverall.Finish();
-		pOverall.GetHash( &pRoot );
-
-		return pRoot == m_pRoot;
+		pOverall.GetHash( pRoot );
+		
+		return std::equal( &m_pRoot[ 0 ], &m_pRoot[ 4 ], &pRoot[ 0 ] );
 	}
 }
-
-
-//////////////////////////////////////////////////////////////////////
-// CED2K convert to string
-
-CString CED2K::HashToString(const MD4* pHash, BOOL bURN)
-{
-	CString str;
-
-	str.Format( bURN ?
-		_T("urn:ed2khash:%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x") :
-		_T("%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"),
-		pHash->n[0], pHash->n[1], pHash->n[2], pHash->n[3],
-		pHash->n[4], pHash->n[5], pHash->n[6], pHash->n[7],
-		pHash->n[8], pHash->n[9], pHash->n[10], pHash->n[11],
-		pHash->n[12], pHash->n[13], pHash->n[14], pHash->n[15] );
-
-	return str;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CED2K parse from a string
-
-BOOL CED2K::HashFromString(LPCTSTR pszHash, MD4* pHash)
-{
-	if ( _tcslen( pszHash ) < 32 ) return FALSE;
-
-	BYTE* pOut = (BYTE*)pHash;
-
-	for ( int nPos = 16 ; nPos ; nPos--, pOut++ )
-	{
-		if ( *pszHash >= '0' && *pszHash <= '9' )
-			*pOut = ( *pszHash - '0' ) << 4;
-		else if ( *pszHash >= 'A' && *pszHash <= 'F' )
-			*pOut = ( *pszHash - 'A' + 10 ) << 4;
-		else if ( *pszHash >= 'a' && *pszHash <= 'f' )
-			*pOut = ( *pszHash - 'a' + 10 ) << 4;
-		pszHash++;
-		if ( *pszHash >= '0' && *pszHash <= '9' )
-			*pOut |= ( *pszHash - '0' );
-		else if ( *pszHash >= 'A' && *pszHash <= 'F' )
-			*pOut |= ( *pszHash - 'A' + 10 );
-		else if ( *pszHash >= 'a' && *pszHash <= 'f' )
-			*pOut |= ( *pszHash - 'a' + 10 );
-		pszHash++;
-	}
-
-	return TRUE;
-}
-
-BOOL CED2K::HashFromURN(LPCTSTR pszHash, MD4* pHash)
-{
-	if ( pszHash == NULL ) return FALSE;
-
-	int nLen = _tcslen( pszHash );
-
-	if ( nLen >= 9 + 32 && _tcsnicmp( pszHash, _T("urn:ed2k:"), 9 ) == 0 )
-	{
-		return HashFromString( pszHash + 9, pHash );
-	}
-	else if ( nLen >= 5 + 32 && _tcsnicmp( pszHash, _T("ed2k:"), 5 ) == 0 )
-	{
-		return HashFromString( pszHash + 5, pHash );
-	}
-	else if ( nLen >= 13 + 32 && _tcsnicmp( pszHash, _T("urn:ed2khash:"), 13 ) == 0 )
-	{
-		return HashFromString( pszHash + 13, pHash );
-	}
-	else if ( nLen >= 9 + 32 && _tcsnicmp( pszHash, _T("ed2khash:"), 9 ) == 0 )
-	{
-		return HashFromString( pszHash + 9, pHash );
-	}
-
-	return FALSE;
-}
-

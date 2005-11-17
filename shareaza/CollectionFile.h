@@ -46,14 +46,10 @@ public:
 	// Attributes
 	public:
 		CCollectionFile*	m_pParent;
-		BOOL				m_bSHA1;
-		SHA1				m_pSHA1;
-		BOOL				m_bMD5;
-		MD5					m_pMD5;
-		BOOL				m_bTiger;
-		TIGEROOT			m_pTiger;
-		BOOL				m_bED2K;
-		MD4					m_pED2K;
+        Hashes::Sha1Hash    m_oSHA1;
+        Hashes::Md5Hash     m_oMD5;
+        Hashes::TigerHash   m_oTiger;
+        Hashes::Ed2kHash    m_oED2K;
 	public:
 		CString				m_sName;
 		QWORD				m_nSize;
@@ -85,7 +81,7 @@ protected:
 
 // Attributes
 protected:
-	CPtrList		m_pFiles;
+	CList< File* >	m_pFiles;
 	CString			m_sTitle;
 	CString			m_sThisURI;
 	CString			m_sParentURI;
@@ -105,10 +101,10 @@ public:
 
 	inline File* GetNextFile(POSITION& pos) const
 	{
-		return (File*)m_pFiles.GetNext( pos );
+		return m_pFiles.GetNext( pos );
 	}
 
-	inline int GetFileCount() const
+	inline INT_PTR GetFileCount() const
 	{
 		return m_pFiles.GetCount();
 	}

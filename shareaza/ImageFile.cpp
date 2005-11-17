@@ -81,23 +81,14 @@ BOOL CImageFile::LoadFromMemory(LPCTSTR pszType, LPCVOID pData, DWORD nLength, B
 	return m_pService->LoadFromMemory( this, pszType, pData, nLength, bScanOnly, bPartialOk );
 }
 
-BOOL CImageFile::LoadFromFile(LPCTSTR pszType, HANDLE hFile, DWORD nLength, BOOL bScanOnly, BOOL bPartialOk)
+/*BOOL CImageFile::LoadFromFile(LPCTSTR pszType, HANDLE hFile, DWORD nLength, BOOL bScanOnly, BOOL bPartialOk)
 {
 	return m_pService->LoadFromFile( this, pszType, hFile, nLength, bScanOnly, bPartialOk );
-}
+}*/
 
 BOOL CImageFile::LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly, BOOL bPartialOk)
 {
-	HANDLE hFile = CreateFile( pszFile, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE,
-		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-
-	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
-
-	BOOL bResult = m_pService->LoadFromFile( this, pszFile, hFile, GetFileSize( hFile, NULL ), bScanOnly, bPartialOk );
-
-	CloseHandle( hFile );
-
-	return bResult;
+	return m_pService->LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
 }
 
 BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly, BOOL bPartialOk)
@@ -141,7 +132,7 @@ BOOL CImageFile::SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, D
 	return m_pService->SaveToMemory( this, pszType, nQuality, ppBuffer, pnLength );
 }
 
-BOOL CImageFile::SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength)
+/*BOOL CImageFile::SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength)
 {
 	return m_pService->SaveToFile( this, pszType, nQuality, hFile, pnLength );
 }
@@ -160,20 +151,15 @@ BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality)
 	if ( ! bResult ) DeleteFile( pszFile );
 
 	return bResult;
-}
+}*/
 
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile serialization
 
 DWORD CImageFile::GetSerialSize() const
 {
-	/*if ( ! m_bLoaded ) return 4;
-	int nPitch = m_nWidth * m_nComponents;
-	while ( nPitch & 3 ) nPitch++;
-	return 12 + nPitch * m_nHeight;*/
-
 	if ( ! m_bLoaded ) return 4;
-	return 12 + ( ( ( ( m_nWidth * m_nComponents ) + 3 ) & (-4) ) * m_nHeight );
+	return 12 + ( ( m_nWidth * m_nComponents + 3 ) & ~3 ) * m_nHeight;
 }
 
 void CImageFile::Serialize(CArchive& ar)
@@ -190,12 +176,7 @@ void CImageFile::Serialize(CArchive& ar)
 		ar << m_nHeight;
 		ar << m_nComponents;
 
-		/*int nPitch = m_nWidth * m_nComponents;
-		while ( nPitch & 3 ) nPitch++;
-
-		ar.Write( m_pImage, nPitch * m_nHeight );*/
-
-		ar.Write( m_pImage, ( ( ( m_nWidth * m_nComponents ) + 3) & (-4) ) * m_nHeight );
+		ar.Write( m_pImage, ( ( m_nWidth * m_nComponents + 3) & ~3 ) * m_nHeight );
 	}
 	else
 	{
@@ -206,13 +187,7 @@ void CImageFile::Serialize(CArchive& ar)
 		ar >> m_nHeight;
 		ar >> m_nComponents;
 
-		/*int nPitch = m_nWidth * m_nComponents;
-		while ( nPitch & 3 ) nPitch++;
-
-		m_pImage = new BYTE[ nPitch * m_nHeight ];
-		ar.Read( m_pImage, nPitch * m_nHeight );*/
-
-		int nPitch = ( ( ( m_nWidth * m_nComponents )+ 3 ) & (-4) ) * m_nHeight;
+		int nPitch = ( ( m_nWidth * m_nComponents+ 3 ) & ~3 ) * m_nHeight;
 
 		m_pImage = new BYTE[ nPitch  ];
 		ar.Read( m_pImage, nPitch );
@@ -229,8 +204,7 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 	if ( ! m_bLoaded ) return NULL;
 	if ( m_nComponents != 3 ) return NULL;
 
-	BITMAPINFO pInfo;
-	ZeroMemory( &pInfo, sizeof(pInfo) );
+	BITMAPINFO pInfo = {};
 
 	pInfo.bmiHeader.biSize			= sizeof(BITMAPINFOHEADER);
 	pInfo.bmiHeader.biWidth			= (LONG)m_nWidth;
@@ -246,63 +220,25 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 
 	if ( hBitmap )
 	{
-		DWORD nPitch	= m_nWidth * 3;
+		DWORD nPitch	= ( m_nWidth * 3 + 3 ) & ~3u;
 		BYTE* pLine		= m_pImage;
 
-		//while ( nPitch & 3 ) nPitch++;
-		nPitch = ( nPitch + 3) & (-4);
-
-		for ( int nY = m_nHeight ; nY ; nY-- )
+		for ( int nY = m_nHeight; nY--; )
 		{
-			/*
-			BYTE bSwap, *pSwap = pLine;
-
-			for ( int nX = m_nWidth ; nX ; nX--, pSwap += 3 )
+			struct SwapRGB
 			{
-				bSwap = *pSwap;
-				*pSwap = pSwap[2];
-				pSwap[2] = bSwap;
-			}*/
+				void operator()(BYTE* pBegin, BYTE* pEnd)
+				{
+					for ( ; pBegin != pEnd; pBegin += 3 )
+						std::swap( pBegin[ 0 ], pBegin[ 2 ] );
+				}
+			};
 
-			__asm
-			{
-				mov edi, this
-				mov esi, pLine
-				mov ecx, [edi+asm_m_nWidth]
-				loop1: mov eax, [esi]
-				bswap eax
-				ror eax, 8
-				mov [esi], eax
-				add esi, 3
-				dec ecx
-				jnz loop1
-			}
+			SwapRGB()( pLine, pLine + m_nWidth * 3 );
 
-			SetDIBits( hDC, hBitmap, nY - 1, 1, pLine, &pInfo, DIB_RGB_COLORS );
+			SetDIBits( hDC, hBitmap, nY, 1, pLine, &pInfo, DIB_RGB_COLORS );
 
-			/*
-			pSwap = pLine;
-
-			for ( nX = m_nWidth ; nX ; nX--, pSwap += 3 )
-			{
-				bSwap = *pSwap;
-				*pSwap = pSwap[2];
-				pSwap[2] = bSwap;
-			}*/
-
-			__asm
-			{
-				mov edi, this
-				mov esi, pLine
-				mov ecx, [edi+asm_m_nWidth]
-				loop2: mov eax, [esi]
-				bswap eax
-				ror eax, 8
-				mov [esi], eax
-				add esi, 3
-				dec ecx
-				jnz loop2
-			}
+			SwapRGB()( pLine, pLine + m_nWidth * 3 );
 
 			pLine += nPitch;
 		}
@@ -322,13 +258,8 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 	if ( m_nComponents != 3 ) return FALSE;
 	if ( nNewWidth == m_nWidth && nNewHeight == m_nHeight ) return TRUE;
 
-	DWORD nInPitch	= m_nWidth * 3;
-	DWORD nOutPitch	= nNewWidth * 3;
-
-	//while ( nOutPitch & 3 ) nOutPitch++;
-	//while ( nInPitch & 3 ) nInPitch++;
-	nOutPitch = ( nOutPitch + 3) & (-4);
-	nInPitch =  ( nInPitch +  3) & (-4);
+	DWORD nInPitch	= ( m_nWidth * 3 + 3 ) & ~3u;
+	DWORD nOutPitch	= ( nNewWidth * 3 + 3 ) & ~3u;
 
 	BYTE* pNew = new BYTE[ nOutPitch * nNewHeight ];
 	BYTE* pOut = pNew;
@@ -348,7 +279,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 	for ( int nY = 0 ; nY < nNewHeight ; nY++ )
 	{
 		int nFirst = ( nY * m_nHeight / nNewHeight );
-		int nCount = ( (nY+1) * m_nHeight / nNewHeight ) - nFirst + 1;
+		int nCount = ( ( nY + 1 ) * m_nHeight / nNewHeight ) - nFirst + 1;
 
 		if ( nFirst + nCount >= m_nHeight ) nCount = 1;
 
@@ -358,7 +289,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 		for ( int nX = 0 ; nX < nNewWidth ; nX++, pColPtr++ )
 		{
 			BYTE* pIn = pRow + *pColPtr++;
-/*
+
 			DWORD nRed = 0, nGreen = 0, nBlue = 0, nPixels = 0;
 
 			for ( int nYY = nCount ; nYY ; nYY-- )
@@ -377,50 +308,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 			*pOut++ = (BYTE)( nRed / nPixels );
 			*pOut++ = (BYTE)( nGreen / nPixels );
 			*pOut++ = (BYTE)( nBlue / nPixels );
-*/
-			DWORD nPixels = *pColPtr * nCount;
-			int nYY = nCount;
-			__asm
-			{
-				mov esi, pIn
-				xor eax, eax ;red
-				xor ebx, ebx ;Green
-				xor ecx, ecx
-				xor edi, edi ;Blue
-				loopYY: mov edx, pColPtr
-				mov edx, [edx]
-				loopXX: mov cl, [esi]
-				add eax, ecx
-				mov cl, [esi+1]
-				add ebx, ecx
-				mov cl, [esi+2]
-				add edi, ecx
-				add esi, 3
-				dec edx
-				jnz loopXX
-				mov edx, pColPtr
-				mov edx, [edx]
-				lea edx, [edx+edx*2]
-				add esi, nInPitch
-				sub esi, edx
-				dec nYY
-				jnz loopYY
-				xor edx, edx
-				mov ecx, nPixels
-				mov esi, pOut
-				div ecx
-				mov [esi], al
-				xor edx, edx
-				mov eax, ebx
-				div ecx
-				mov [esi+1], al
-				xor edx, edx
-				mov eax, edi
-				div ecx
-				mov [esi+2], al
-				add esi, 3
-				mov pOut, esi
-			}
+
 		}
 		pOut += ( nOutPitch - nNewWidth * 3 );
 	}
@@ -441,13 +329,8 @@ BOOL CImageFile::FastResample(int nNewWidth, int nNewHeight)
 	if ( m_nComponents != 3 ) return FALSE;
 	if ( nNewWidth == m_nWidth && nNewHeight == m_nHeight ) return TRUE;
 
-	DWORD nInPitch	= m_nWidth * 3;
-	DWORD nOutPitch	= nNewWidth * 3;
-
-	//while ( nOutPitch & 3 ) nOutPitch++;
-	//while ( nInPitch & 3 ) nInPitch++;
-	nOutPitch = ( nOutPitch + 3) & (-4);
-	nInPitch  = ( nInPitch  + 3) & (-4);
+	DWORD nInPitch	= ( m_nWidth * 3 + 3 ) & ~3u;
+	DWORD nOutPitch	= ( nNewWidth * 3 + 3 ) & ~3u;
 
 	BYTE *pNew, *pRow, *pIn, *pOut;
 
@@ -510,13 +393,8 @@ BOOL CImageFile::MonoToRGB()
 	if ( m_nComponents == 3 ) return TRUE;
 	if ( m_nComponents != 1 ) return FALSE;
 
-	DWORD nInPitch	= m_nWidth * 1;
-	DWORD nOutPitch	= m_nWidth * 3;
-
-	//while ( nInPitch & 3 ) nInPitch++;
-	//while ( nOutPitch & 3 ) nOutPitch++;
-	nInPitch  = ( nInPitch  + 3) & (-4);
-	nOutPitch = ( nOutPitch + 3) & (-4);
+	DWORD nInPitch	= ( m_nWidth + 3 ) & ~3u;
+	DWORD nOutPitch	= ( m_nWidth * 3 + 3 ) & ~3u;
 
 	BYTE* pNew		= new BYTE[ nOutPitch * m_nHeight ];
 	BYTE* pInRow	= m_pImage;
@@ -552,13 +430,8 @@ BOOL CImageFile::AlphaToRGB(COLORREF crBack)
 	if ( m_nComponents == 3 ) return TRUE;
 	if ( m_nComponents != 4 ) return FALSE;
 
-	DWORD nInPitch	= m_nWidth * 4;
-	DWORD nOutPitch	= m_nWidth * 3;
-
-	//while ( nInPitch & 3 ) nInPitch++;
-	//while ( nOutPitch & 3 ) nOutPitch++;
-	nInPitch =  ( nInPitch +  3) & (-4);
-	nOutPitch = ( nOutPitch + 3) & (-4);
+	DWORD nInPitch	= ( m_nWidth * 4 + 3 ) & ~3u;
+	DWORD nOutPitch	= ( m_nWidth * 3 + 3 ) & ~3u;
 
 	BYTE* pNew		= new BYTE[ nOutPitch * m_nHeight ];
 	BYTE* pInRow	= m_pImage;
@@ -613,9 +486,7 @@ BOOL CImageFile::SwapRGB()
 	if ( ! m_bLoaded ) return FALSE;
 	if ( m_nComponents != 3 ) return FALSE;
 
-	//DWORD nPitch = m_nWidth * 3;
-	//while ( nPitch & 3 ) nPitch++;
-	DWORD nPitch = ( ( m_nWidth * 3 ) + 3) & (-4);
+	DWORD nPitch = ( m_nWidth * 3 + 3) & ~3u;
 
 	BYTE* pImage = m_pImage;
 	BYTE nTemp;

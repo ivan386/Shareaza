@@ -26,8 +26,38 @@
 
 #include "CtrlLibraryView.h"
 
-class CLibraryTileItem;
 class CAlbumFolder;
+
+class CLibraryTileItem
+{
+// Construction
+public:
+	CLibraryTileItem(CAlbumFolder* pFolder)
+	: m_pFolder( pFolder ), m_nCookie( ~0ul ), m_bSelected()
+	{
+		Update();
+	}
+
+// Attributes
+public:
+	CAlbumFolder* const m_pFolder;
+	DWORD			m_nCookie;
+	CString			m_sTitle;
+	CString			m_sSubtitle1;
+	CString			m_sSubtitle2;
+	int				m_nIcon32;
+	int				m_nIcon48;
+	bool			m_bSelected;
+	bool			m_bCollection;
+
+// Operations
+public:
+	bool	Update();
+	void	Paint(CDC* pDC, const CRect& rcBlock, CDC* pMemDC);
+private:
+	void	DrawText(CDC* pDC, const CRect* prcClip, int nX, int nY, LPCTSTR pszText, CRect* prcUnion = NULL);
+
+};
 
 
 class CLibraryTileView : public CLibraryView
@@ -35,23 +65,39 @@ class CLibraryTileView : public CLibraryView
 // Construction
 public:
 	CLibraryTileView();
-	virtual ~CLibraryTileView();
 
 // Attributes
-protected:
+private:
+	typedef boost::ptr_list< CLibraryTileItem > Container;
+	typedef Container::iterator iterator;
+	typedef Container::const_iterator const_iterator;
+	typedef Container::reverse_iterator reverse_iterator;
+	typedef Container::const_reverse_iterator const_reverse_iterator;
+
+	iterator               begin()        { return m_oList.begin(); }
+	const_iterator         begin()  const { return m_oList.begin(); }
+	iterator               end()          { return m_oList.end(); }
+	const_iterator         end()    const { return m_oList.end(); }
+	reverse_iterator       rbegin()       { return m_oList.rbegin(); }
+	const_reverse_iterator rbegin() const { return m_oList.rbegin(); }
+	reverse_iterator       rend()         { return m_oList.rend(); }
+	const_reverse_iterator rend()   const { return m_oList.rend(); }
+
+	size_t size() const { return m_oList.size(); }
+	bool empty() const { return m_oList.empty(); }
+	iterator erase(iterator item) { return m_oList.erase( item ); }
+
 	CSize				m_szBlock;
 	int					m_nColumns;
 	int					m_nRows;
-protected:
-	CLibraryTileItem**	m_pList;
-	int					m_nCount;
-	int					m_nBuffer;
+private:
+	Container m_oList;
 	int					m_nScroll;
-protected:
+private:
 	int					m_nSelected;
-	CLibraryTileItem*	m_pFocus;
-	CLibraryTileItem*	m_pFirst;
-	CPtrList			m_pSelTile;
+	iterator			m_pFocus;
+	iterator			m_pFirst;
+	std::list< iterator > m_oSelTile;
 	BOOL				m_bDrag;
 	CPoint				m_ptDrag;
 
@@ -60,28 +106,35 @@ public:
 	virtual BOOL	CheckAvailable(CLibraryTreeItem* pSel);
 	virtual void	Update();
 	virtual BOOL	Select(DWORD nObject);
-protected:
-	void			Clear();
-	int				GetTileIndex(CLibraryTileItem* pTile) const;
-	BOOL			Select(CLibraryTileItem* pTile, TRISTATE bSelect = TS_TRUE);
-	BOOL			DeselectAll(CLibraryTileItem* pTile = NULL);
-	BOOL			SelectTo(CLibraryTileItem* pTile);
+private:
+	void			clear();
+//	int				GetTileIndex(CLibraryTileItem* pTile) const;
+	bool			Select(iterator pTile, TRISTATE bSelect = TS_TRUE);
+	bool			DeselectAll(iterator pTile);
+	bool			DeselectAll();
+	bool			SelectTo(iterator pTile);
 	void			SelectTo(int nDelta);
-	void			Highlight(CLibraryTileItem* pTile);
-protected:
-	static int			SortList(LPCVOID pA, LPCVOID pB);
+	void			Highlight(iterator pTile);
+private:
+	struct SortList : public std::binary_function<CLibraryTileItem, CLibraryTileItem, bool >
+	{
+		bool operator()(const CLibraryTileItem& lhs, const CLibraryTileItem& rhs) const
+		{
+			return _tcsicoll( lhs.m_sTitle, rhs.m_sTitle ) < 0;
+		}
+	};
 	void				UpdateScroll();
 	void				ScrollBy(int nDelta);
 	void				ScrollTo(int nDelta);
-	CLibraryTileItem*	HitTest(const CPoint& point) const;
-	BOOL				GetItemRect(CLibraryTileItem* pTile, CRect* pRect);
+	iterator			HitTest(const CPoint& point);
+	bool				GetItemRect(iterator pTile, CRect* pRect);
 	void				StartDragging(CPoint& ptMouse);
 	CImageList*			CreateDragImage(const CPoint& ptMouse);
 
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CLibraryTileView)
-	protected:
+protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
 
@@ -111,35 +164,6 @@ protected:
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
-};
-
-
-class CLibraryTileItem
-{
-// Construction
-public:
-	CLibraryTileItem(CAlbumFolder* pFolder);
-	virtual ~CLibraryTileItem();
-
-// Attributes
-public:
-	CAlbumFolder*	m_pFolder;
-	DWORD			m_nCookie;
-	BOOL			m_bSelected;
-	CString			m_sTitle;
-	CString			m_sSubtitle1;
-	CString			m_sSubtitle2;
-	int				m_nIcon32;
-	int				m_nIcon48;
-	BOOL			m_bCollection;
-
-// Operations
-public:
-	BOOL	Update();
-	void	Paint(CDC* pDC, const CRect& rcBlock, CDC* pMemDC);
-protected:
-	void	DrawText(CDC* pDC, const CRect* prcClip, int nX, int nY, LPCTSTR pszText, CRect* prcUnion = NULL);
 
 };
 

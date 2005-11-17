@@ -82,9 +82,9 @@ protected:
 	CImageList		m_i32;
 	CImageList		m_i48;
 protected:
-	CMapStringToPtr	m_m16;
-	CMapStringToPtr	m_m32;
-	CMapStringToPtr	m_m48;
+	CMap< CString, const CString&, int, int > m_m16;
+	CMap< CString, const CString&, int, int > m_m32;
+	CMap< CString, const CString&, int, int > m_m48;
 
 	HINSTANCE m_hUser;
 	UINT (WINAPI *m_pfnPrivate)(LPCTSTR, int, int, int, HICON*, UINT*, UINT, UINT);

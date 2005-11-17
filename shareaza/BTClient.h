@@ -38,7 +38,7 @@ public:
 
 // Attributes
 public:
-	SHA1					m_pGUID;
+    Hashes::BtGuid          m_oGUID;
 	BOOL					m_bExtended;		// Send extended details (User name, exact version, etc. For G2 capable clients)
 	BOOL					m_bExchange;		// Exchange sources/other info (with extended client)
 public:

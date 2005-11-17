@@ -109,13 +109,13 @@ BOOL CFileCommentsPage::OnInitDialog()
 	return TRUE;
 }
 
-void CFileCommentsPage::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+void CFileCommentsPage::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	lpMeasureItemStruct->itemWidth	= 1024;
 	lpMeasureItemStruct->itemHeight	= 18;
 }
 
-void CFileCommentsPage::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+void CFileCommentsPage::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( lpDrawItemStruct->itemID == (UINT)-1 ) return;
 	if ( ( lpDrawItemStruct->itemAction & ODA_SELECT ) == 0 &&

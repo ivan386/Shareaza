@@ -63,11 +63,11 @@ CVendor* CVendorCache::GetNext(POSITION& pos) const
 {
 	CVendor* pItem = NULL;
 	CString strCode;
-	m_pMap.GetNextAssoc( pos, strCode, (void*&)pItem );
+	m_pMap.GetNextAssoc( pos, strCode, pItem );
 	return pItem;
 }
 
-int CVendorCache::GetCount() const
+INT_PTR CVendorCache::GetCount() const
 {
 	return m_pMap.GetCount();
 }
@@ -86,7 +86,7 @@ CVendor* CVendorCache::Lookup(LPCWSTR pszCode, BOOL bCreate)
 {
 	CVendor* pVendor = NULL;
 
-	if ( m_pMap.Lookup( pszCode, (void*&)pVendor ) ) return pVendor;
+	if ( m_pMap.Lookup( pszCode, pVendor ) ) return pVendor;
 	if ( ! bCreate ) return NULL;
 
 	if ( ! pszCode[0] || ! pszCode[1] || ! pszCode[2] || ! pszCode[3] ) return m_pNull;
@@ -161,7 +161,7 @@ BOOL CVendorCache::LoadFrom(CXMLElement* pXML)
 			{
 				CVendor* pOld = NULL;
 				
-				if ( m_pMap.Lookup( pVendor->m_sCode, (void*&)pOld ) )
+				if ( m_pMap.Lookup( pVendor->m_sCode, pOld ) )
 				{
 					theApp.Message( MSG_ERROR, _T("Duplicate Vendors.xml key for \"%s\"."),
 						(LPCTSTR)pVendor->m_sCode );
@@ -189,7 +189,7 @@ BOOL CVendorCache::LoadFrom(CXMLElement* pXML)
 
 CVendor::CVendor(LPCTSTR pszCode)
 {
-	if ( m_bAuto = ( pszCode != NULL ) )
+	if ( ( m_bAuto = ( pszCode != NULL ) ) != FALSE )
 	{
 		m_sCode = m_sName = pszCode;
 		while ( m_sCode.GetLength() < 4 ) m_sCode += ' ';

@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/10/29 21:41:59 $"
-//	Revision:		"$Revision: 1.40 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/11/17 21:10:47 $"
+//	Revision:		"$Revision: 1.41 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -178,9 +178,7 @@ void CDownloadsCtrl::OnDestroy()
 
 void CDownloadsCtrl::InsertColumn(int nColumn, LPCTSTR pszCaption, int nFormat, int nWidth)
 {
-	HDITEM pColumn;
-	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
+	HDITEM pColumn = {};
 	
 	pColumn.mask	= HDI_FORMAT | HDI_LPARAM | HDI_TEXT | HDI_WIDTH;
 	pColumn.cxy		= nWidth;
@@ -283,8 +281,6 @@ BOOL CDownloadsCtrl::IsFiltered(CDownload* pDownload)
 	{
 		return ( ( nFilterMask & DLF_SOURCES ) == 0 );
 	}
-	
-	return FALSE;
 }
 
 BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
@@ -392,7 +388,7 @@ void CDownloadsCtrl::SelectTo(int nIndex)
 	}
 }
 
-void CDownloadsCtrl::SelectAll(CDownload* pDownload, CDownloadSource* pSource)
+void CDownloadsCtrl::SelectAll(CDownload* /*pDownload*/, CDownloadSource* /*pSource*/)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
@@ -567,7 +563,7 @@ BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownl
 
 BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource** ppSource)
 {
-	int nScroll = GetScrollPos( SB_VERT );
+	/*int nScroll =*/ GetScrollPos( SB_VERT );
 	int nIndex = 0;
 	
 	if ( ppDownload != NULL ) *ppDownload = NULL;
@@ -677,7 +673,7 @@ void CDownloadsCtrl::MoveSelected(int nDelta)
 	Update();
 }
 
-BOOL CDownloadsCtrl::DropShowTarget(CPtrList* pSel, const CPoint& ptScreen)
+BOOL CDownloadsCtrl::DropShowTarget(CList< CDownload* >* /*pSel*/, const CPoint& ptScreen)
 {
 	CPoint ptLocal( ptScreen );
 	CRect rcClient;
@@ -701,7 +697,7 @@ BOOL CDownloadsCtrl::DropShowTarget(CPtrList* pSel, const CPoint& ptScreen)
 	return bLocal;
 }
 
-BOOL CDownloadsCtrl::DropObjects(CPtrList* pSel, const CPoint& ptScreen)
+BOOL CDownloadsCtrl::DropObjects(CList< CDownload* >* pSel, const CPoint& ptScreen)
 {
 	CPoint ptLocal( ptScreen );
 	CRect rcClient;
@@ -738,20 +734,18 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 {
 	int nWidth = 0, nHeight = 0;
 	CRect rcClient;
-	HDITEM pColumn;
 	
 	if ( nType != 1982 ) CWnd::OnSize( nType, cx, cy );
 	
 	GetClientRect( &rcClient );
 	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
+	HDITEM pColumn = {};
 	pColumn.mask = HDI_WIDTH;
 	
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn ++ )
 		nWidth += pColumn.cxy;
 	
-	SCROLLINFO pScroll;
-	ZeroMemory( &pScroll, sizeof(pScroll) );
+	SCROLLINFO pScroll = {};
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE;
 	pScroll.nMin	= 0;
@@ -915,7 +909,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		dc.SetTextColor( CoolInterface.m_crText );
 	else if ( pDownload->m_bVerify == TS_TRUE )
 	{
-		if( pDownload->m_bBTH && ( pDownload->m_nTorrentUploaded < pDownload->m_nTorrentDownloaded ) )
+		if ( pDownload->m_oBTH && ( pDownload->m_nTorrentUploaded < pDownload->m_nTorrentDownloaded ) )
 			dc.SetTextColor( CoolInterface.m_crText );
 		else
 			dc.SetTextColor( RGB( 0, 127, 0 ) );
@@ -924,12 +918,11 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		dc.SetTextColor( CoolInterface.m_crText );
 	
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
-	HDITEM pColumn;
+	HDITEM pColumn = {};
 	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
 	
-	int nTransfers		= pDownload->GetTransferCount();
+	/*int nTransfers		=*/ pDownload->GetTransferCount();
 	int nSources		= pDownload->GetSourceCount();
 	int nRating			= pDownload->GetReviewAverage();
 
@@ -1132,9 +1125,8 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		dc.SetTextColor( CoolInterface.m_crText );
 	
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
-	HDITEM pColumn;
+	HDITEM pColumn = {};
 	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
 	
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn++ )
@@ -1173,7 +1165,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 					strText = pSource->m_sNick + _T(" (") + inet_ntoa( pSource->m_pAddress ) + _T(")");
 				else
 				{
-					if( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
+					if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
 					{
 						strText.Format( _T("%lu@%s"), pSource->m_pAddress.S_un.S_addr, 
 							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ) );
@@ -1184,7 +1176,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 					}
 				}
 			}
-			if( pSource->m_bPushOnly )
+			if ( pSource->m_bPushOnly )
 			{
 				strText += _T(" (push)");
 			}
@@ -1298,7 +1290,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 //////////////////////////////////////////////////////////////////////////////
 // CDownloadsCtrl interaction message handlers
 
-void CDownloadsCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CDownloadsCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
 	SCROLLINFO pInfo;
 	
@@ -1341,7 +1333,7 @@ void CDownloadsCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	Invalidate();
 }
 
-void CDownloadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CDownloadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
 	SCROLLINFO pInfo;
 	
@@ -1391,13 +1383,13 @@ void CDownloadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 }
 
-BOOL CDownloadsCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+BOOL CDownloadsCtrl::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
 	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines ), NULL );
 	return TRUE;
 }
 
-void CDownloadsCtrl::OnChangeHeader(NMHDR* pNotifyStruct, LRESULT* pResult)
+void CDownloadsCtrl::OnChangeHeader(NMHDR* /*pNotifyStruct*/, LRESULT* /*pResult*/)
 {
 	Update();
 }
@@ -1408,7 +1400,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 	int nSources = pDownload->GetSourceCount();
 
 	if ( pDownload->IsCompleted() )
-		if( pDownload->IsSeeding() )
+		if ( pDownload->IsSeeding() )
 		{
 			if ( pDownload->m_bTorrentTrackerError )
 				LoadString( strText, IDS_STATUS_TRACKERDOWN );
@@ -1420,7 +1412,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 	else if ( pDownload->IsPaused() )
 	{
 		if ( pDownload->m_bDiskFull )
-			if( pDownload->IsMoving() )
+			if ( pDownload->IsMoving() )
 				LoadString( strText, IDS_STATUS_CANTMOVE );
 			else
 				LoadString( strText, IDS_STATUS_FILEERROR );
@@ -1449,7 +1441,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 		LoadString( strText, IDS_STATUS_QUEUED );
 	else if ( nSources > 0 )
 		LoadString( strText, IDS_STATUS_PENDING );
-	else if ( pDownload->m_bBTH )
+	else if ( pDownload->m_oBTH )
 	{
 		if ( pDownload->IsTasking() )
 			LoadString( strText, IDS_STATUS_CREATING );
@@ -1470,18 +1462,14 @@ int CDownloadsCtrl::GetClientStatus(CDownload *pDownload)
 			
 	if ( pDownload->IsCompleted() )
 		return -1;
-	else if ( nSources >= 1 )
-		return nSources;
 	else
 		return nSources;
-
-	return nSources;
 }
 
 void CDownloadsCtrl::BubbleSortDownloads(int nColumn)
 {
 	POSITION pos;
-	int nTransfers, j, pass;
+	int j, pass;
 	CDownload *x, *y;
 	BOOL bSwitch=TRUE,  bSort, bOK;
 	CString s, t;	
@@ -1491,7 +1479,7 @@ void CDownloadsCtrl::BubbleSortDownloads(int nColumn)
 	//	m_pbSortAscending[j]=FALSE;
 	m_pbSortAscending[nColumn]= !bSort;
 
-	nTransfers = Downloads.GetCount();
+	INT_PTR nTransfers = Downloads.GetCount();
 	for (pass=0; (pass < nTransfers-1) && (bSwitch == TRUE); pass++)
 	{
 		bSwitch=FALSE;
@@ -1597,7 +1585,7 @@ void CDownloadsCtrl::BubbleSortDownloads(int nColumn)
 	}
 }
 
-void CDownloadsCtrl::OnSortPanelItems(NMHDR* pNotifyStruct, LRESULT* pResult)
+void CDownloadsCtrl::OnSortPanelItems(NMHDR* pNotifyStruct, LRESULT* /*pResult*/)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	NMLISTVIEW *pLV = (NMLISTVIEW *) pNotifyStruct;
@@ -1721,7 +1709,7 @@ void CDownloadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	
 	SetFocus();
 	m_wndTip.Hide();
-
+	
 	if ( HitTest( point, &pDownload, &pSource, &nIndex, &rcItem ) )
 	{
 		int nTitleStarts = GetExpandableColumnX();
@@ -1918,7 +1906,7 @@ void CDownloadsCtrl::OnBeginDrag(CPoint ptAction)
 	m_pDeselect1 = NULL;
 	m_pDeselect2 = NULL;
 	
-	CPtrList* pSel = new CPtrList();
+	CList< CDownload* >* pSel = new CList< CDownload* >;
 	
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
@@ -1926,7 +1914,7 @@ void CDownloadsCtrl::OnBeginDrag(CPoint ptAction)
 		if ( pDownload->m_bSelected ) pSel->AddTail( pDownload );
 	}
 	
-	if ( pSel->GetCount() == 0 )
+	if ( pSel->IsEmpty() )
 	{
 		delete pSel;
 		return;
@@ -1955,7 +1943,7 @@ void CDownloadsCtrl::OnBeginDrag(CPoint ptAction)
 #define MAX_DRAG_SIZE	128
 #define MAX_DRAG_SIZE_2	(MAX_DRAG_SIZE/2)
 
-CImageList* CDownloadsCtrl::CreateDragImage(CPtrList* pSel, const CPoint& ptMouse)
+CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPoint& ptMouse)
 {
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 	
@@ -2043,10 +2031,9 @@ CImageList* CDownloadsCtrl::CreateDragImage(CPtrList* pSel, const CPoint& ptMous
 
 int CDownloadsCtrl::GetExpandableColumnX() const
 {
-	HDITEM pColumn;
+	HDITEM pColumn = {};
 	int nTitleStarts = 0;
 	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
 	pColumn.mask = HDI_LPARAM | HDI_WIDTH;
 
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( m_wndHeader.OrderToIndex( nColumn ), &pColumn ) ; nColumn++ )

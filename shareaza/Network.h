@@ -57,7 +57,19 @@ public:
 protected:
 	HANDLE			m_hThread;
 	DWORD			m_nSequence;
-	CMapPtrToPtr	m_pLookups;
+	struct ResolveStruct
+	{
+		CString* m_sAddress;
+		PROTOCOLID m_nProtocol;
+		WORD m_nPort;
+		BYTE m_nCommand;
+		union
+		{
+			char m_pBuffer[ MAXGETHOSTSTRUCT ];
+			HOSTENT m_pHost;
+		};
+	};
+	CMap< HANDLE, HANDLE, ResolveStruct*, ResolveStruct* > m_pLookups;
 
 // Operations
 public:
@@ -77,12 +89,12 @@ public:
 	BOOL		Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE) const;
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	WORD		RandomPort() const;
-	void		CreateID(GGUID& oID);
+	void		CreateID(Hashes::Guid& oID);
 	BOOL		IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf = FALSE);
 public:
-	BOOL		GetNodeRoute(GGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);
+	BOOL		GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);
 	BOOL		RoutePacket(CG2Packet* pPacket);
-	BOOL		SendPush(GGUID* pGUID, DWORD nIndex = 0);
+	BOOL		SendPush(const Hashes::Guid& oGUID, DWORD nIndex = 0);
 	BOOL		RouteHits(CQueryHit* pHits, CPacket* pPacket);
 	void		OnWinsock(WPARAM wParam, LPARAM lParam);
 	void		OnQuerySearch(CQuerySearch* pSearch);

@@ -43,8 +43,7 @@ public:
 
 // Attributes
 public:
-	BOOL			m_bGUID;
-	GGUID			m_pGUID;
+	Hashes::Guid	m_oGUID;
 public:
 	int				m_nState;
 	PROTOCOLID		m_nProtocol;
@@ -63,13 +62,13 @@ public:
 
 // Operations
 public:
-	void			Setup(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
+	void			Setup(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
 	BOOL			Connect();
 	TRISTATE		GetConnectedState() const;
 	void			OnED2KMessage(CEDPacket* pPacket);
 	virtual void	AttachTo(CConnection* pConnection);
 	BOOL			SendPush(BOOL bAutomatic);
-	BOOL			OnPush(GGUID* pGUID, CConnection* pConnection);
+	BOOL			OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
 	virtual void	Close();
 public:
 	void		Print(LPCTSTR pszString);

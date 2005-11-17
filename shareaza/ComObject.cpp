@@ -56,7 +56,7 @@ BOOL CComObject::EnableDispatch(REFIID pIID)
 
 	if ( !pUnknown ) return FALSE;
 
-	m_pDispatchMap.SetAt( pUnknown, (LPVOID)&pIID );
+	m_pDispatchMap.SetAt( pUnknown, &pIID );
 
 	return TRUE;
 }
@@ -69,8 +69,8 @@ LPUNKNOWN CComObject::GetInterface(REFIID pIID, BOOL bAddRef)
 	{
 		if ( POSITION pos = m_pDispatchMap.GetStartPosition() )
 		{
-			IID* pDispIID;
-			m_pDispatchMap.GetNextAssoc( pos, (void*&)pInterface, (void*&)pDispIID );
+			const IID* pDispIID;
+			m_pDispatchMap.GetNextAssoc( pos, pInterface, pDispIID );
 		}
 	}
 
@@ -86,12 +86,12 @@ LPDISPATCH CComObject::GetDispatch(BOOL bAddRef)
 /////////////////////////////////////////////////////////////////////////////
 // CComObject IUnknown implementation
 
-STDMETHODIMP_(ULONG) CComObject::ComAddRef(LPUNKNOWN pUnk)
+STDMETHODIMP_(ULONG) CComObject::ComAddRef(LPUNKNOWN /*pUnk*/)
 {
 	return ExternalAddRef();
 }
 
-STDMETHODIMP_(ULONG) CComObject::ComRelease(LPUNKNOWN pUnk)
+STDMETHODIMP_(ULONG) CComObject::ComRelease(LPUNKNOWN /*pUnk*/)
 {
 	return ExternalRelease();
 }
@@ -100,8 +100,8 @@ STDMETHODIMP CComObject::ComQueryInterface(LPUNKNOWN pUnk, REFIID iid, LPVOID* p
 {
 	if ( iid == IID_IDispatch )
 	{
-		IID* pIID;
-		if ( m_pDispatchMap.Lookup( pUnk, (void*&)pIID ) )
+		const IID* pIID;
+		if ( m_pDispatchMap.Lookup( pUnk, pIID ) )
 		{
 			*ppvObj = pUnk;
 			ComAddRef( pUnk );
@@ -115,7 +115,7 @@ STDMETHODIMP CComObject::ComQueryInterface(LPUNKNOWN pUnk, REFIID iid, LPVOID* p
 /////////////////////////////////////////////////////////////////////////////
 // CComObject IDispatch implementation
 
-STDMETHODIMP CComObject::ComGetTypeInfoCount(LPUNKNOWN pUnk, UINT FAR* pctinfo)
+STDMETHODIMP CComObject::ComGetTypeInfoCount(LPUNKNOWN /*pUnk*/, UINT FAR* pctinfo)
 {
 	if ( !pctinfo ) return E_INVALIDARG;
 	*pctinfo = GetTypeInfoCount();
@@ -128,8 +128,8 @@ STDMETHODIMP CComObject::ComGetTypeInfo(LPUNKNOWN pUnk, UINT itinfo, LCID lcid,
 	if ( !pptinfo ) return E_INVALIDARG;
 	if ( itinfo != 0 ) return DISP_E_BADINDEX;
 
-	IID* pIID;
-	if ( !m_pDispatchMap.Lookup( pUnk, (void*&)pIID ) ) return E_INVALIDARG;
+	const IID* pIID;
+	if ( !m_pDispatchMap.Lookup( pUnk, pIID ) ) return E_INVALIDARG;
 
 	return GetTypeInfoOfGuid( lcid, *pIID, pptinfo );
 }
@@ -239,11 +239,11 @@ bool GUIDX::Unhex(LPCTSTR psz, LPBYTE pOut)
 {
 	register TCHAR c = *psz++;
 	if ( c >= '0' && c <= '9' )
-		*pOut = ( c - '0' ) << 4;
+		*pOut = BYTE( ( c - '0' ) << 4 );
 	else if ( c >= 'A' && c <= 'F' )
-		*pOut = ( c - 'A' + 10 ) << 4;
+		*pOut = BYTE( ( c - 'A' + 10 ) << 4 );
 	else if ( c >= 'a' && c <= 'f' )
-		*pOut = ( c - 'a' + 10 ) << 4;
+		*pOut = BYTE( ( c - 'a' + 10 ) << 4 );
 	else
 		return false;
 	c = *psz;

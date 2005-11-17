@@ -55,7 +55,7 @@ public:
 	CString				m_sTarget;
 protected:
 	BOOL				m_bMove;
-	CPtrList			m_pFiles;
+	CList< DWORD >		m_pFiles;
 	CLibraryFolderCtrl	m_wndTree;
 	DWORD				m_nCookie;
 protected:
@@ -93,7 +93,7 @@ protected:
 	//{{AFX_MSG(CFileCopyDlg)
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	virtual void OnCancel();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

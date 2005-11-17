@@ -60,24 +60,6 @@ CDownloadWithTransfers::~CDownloadWithTransfers()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers counting
 
-int CDownloadWithTransfers::GetTransferCount() const
-{
-	int nCount = 0;
-
-	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
-    {
-		if ( ( pTransfer->m_nProtocol != PROTOCOL_ED2K ) ||
-		( static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient &&
-		static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
-		{
-			
-			++nCount;
-		}
-	}
-	return nCount;
-}
-
-
 // This macro is used to clean up the function below and make it more readable. It's the first 
 // condition in any IF statement that checks if the current transfer should be counted
 #define VALID_TRANSFER ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&	\
@@ -204,7 +186,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	if ( ! CanStartTransfers( tNow ) ) return FALSE;
 	
 	//BitTorrent limiting
-	if ( m_bBTH )
+	if ( m_oBTH )
 	{
 		// Max connections
 		if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > Settings.BitTorrent.DownloadConnections ) return FALSE;	
@@ -216,15 +198,21 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 		 ( ! Settings.Downloads.StaggardStart ||
 		 nTransfers == GetTransferCount( dtsCountAll ) ) )
 	{
+		// If we can start new downloads, or this download is already running
 		if ( Downloads.m_bAllowMoreDownloads || m_pTransferFirst != NULL )
 		{
+			// If we can start new trasnfers
 			if ( Downloads.m_bAllowMoreTransfers )
 			{
-				// Start a new download
-				if ( StartNewTransfer( tNow ) )
+				// If download bandwidth isn't at max
+				if ( ( ( tNow - Downloads.m_tBandwidthAtMax ) > 5000 ) ) 
 				{
-					Downloads.UpdateAllows( TRUE );
-					return TRUE;
+					// Start a new download
+					if ( StartNewTransfer( tNow ) )
+					{
+						Downloads.UpdateAllows( TRUE );
+						return TRUE;
+					}
 				}
 			}
 		}
@@ -297,7 +285,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 	CDownloadSource* pPushHead = NULL;
 
 	// If BT preferencing is on, check them first
-	if ( ( m_bBTH ) && ( Settings.BitTorrent.PreferenceBTSources ) )
+	if ( ( m_oBTH ) && ( Settings.BitTorrent.PreferenceBTSources ) )
 	{
 		for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
 		{
@@ -325,6 +313,10 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		if ( pSource->m_pTransfer != NULL )
 		{
 			// Already has a transfer
+		}
+		else if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( ( tNow - Downloads.m_tBandwidthAtMaxED2K ) < 5000 ) ) 
+		{
+			// ED2K use (Ratio) is maxxed out, no point in starting new transfers
 		}
 		else if ( pSource->m_bPushOnly == FALSE )
 		{
@@ -367,7 +359,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 	
 	if ( pPushHead != NULL )
 	{
-		if( Network.GetStableTime() < 15 ) return FALSE;
+		if ( Network.GetStableTime() < 15 ) return FALSE;
 		if ( pPushHead->PushRequest() ) return FALSE;
 		if ( ! Settings.Downloads.NeverDrop ) pPushHead->Remove( TRUE, TRUE );
 	}
@@ -429,7 +421,7 @@ DWORD CDownloadWithTransfers::GetMeasuredSpeed() const
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers push handler
 
-BOOL CDownloadWithTransfers::OnAcceptPush(GGUID* pClientID, CConnection* pConnection)
+BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnection* pConnection)
 {
 	CDownload* pDownload = (CDownload*)this;
 	if ( pDownload->IsMoving() || pDownload->IsPaused() ) return FALSE;
@@ -438,7 +430,7 @@ BOOL CDownloadWithTransfers::OnAcceptPush(GGUID* pClientID, CConnection* pConnec
 	
 	for ( pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 	{
-		if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->CheckPush( pClientID ) ) break;
+		if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->CheckPush( oClientID ) ) break;
 	}
 	
 	if ( pSource == NULL ) return FALSE;
@@ -465,7 +457,7 @@ BOOL CDownloadWithTransfers::OnDonkeyCallback(CEDClient* pClient, CDownloadSourc
 	if ( pDownload->IsMoving() || pDownload->IsPaused() ) return FALSE;
 	
 	CDownloadSource* pSource = NULL;
-	DWORD tNow = GetTickCount();
+//	DWORD tNow = GetTickCount();
 	
 	for ( pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 	{

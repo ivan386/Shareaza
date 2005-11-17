@@ -228,12 +228,12 @@ void CGnutellaSettingsPage::OnOK()
 {
 	UpdateData();
 
-	// Check if G2 hub mode is forced now, and wasn't forced before.
+	//Check if G2 hub mode is forced now, and wasn't forced before.
 	if ( ( m_wndG2ClientMode.GetCurSel() == MODE_HUB ) && ( Settings.Gnutella2.ClientMode != MODE_HUB ) )	
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_NETWORK_FORCE_HUB );
-		// Warn the user, give them a chance to reset it.
+		//Warn the user, give them a chance to reset it.
 		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
 		{
 			m_wndG2ClientMode.SetCurSel( MODE_AUTO );
@@ -247,7 +247,7 @@ void CGnutellaSettingsPage::OnOK()
 	{
 		m_bG1Today = m_bG1Always = FALSE;
 	}
-
+	
 	// Verify good setting to prevent user killing their connection
 	m_nG1Hubs	= min( m_nG1Hubs, 2 );
 	m_nG1Leafs	= min( m_nG1Leafs, 1024 );
@@ -256,7 +256,7 @@ void CGnutellaSettingsPage::OnOK()
 	m_nG2Leafs	= min( m_nG2Leafs, 1024 );
 	m_nG2Peers	= min( m_nG2Peers, 64 );
 	
-	// Load values into the settings variables
+	//Load values into the settings variables
 	Settings.Gnutella2.EnableToday		= m_bG2Today;
 	Settings.Gnutella1.EnableToday		= m_bG1Today || m_bG1Always;
 	Settings.Gnutella1.EnableAlways		= m_bG1Always;

@@ -36,7 +36,7 @@ public:
 
 // Attributes
 protected:
-	CStringList	m_pFolders;
+	CList< CString >	m_pFolders;
 	CEdit	*	m_pTextCtrl;
 	int			m_nCount;
 

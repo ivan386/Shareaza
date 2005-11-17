@@ -25,10 +25,6 @@
 #include "WndSettingsSheet.h"
 #include "WndSettingsPage.h"
 
-#include <afxpriv.h>
-#include <..\src\mfc\afximpl.h>
-//#include "C:\Development\VisualStudio2003\Vc7\atlmfc\src\mfc\afximpl.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -50,7 +46,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSettingsSheet construction
 
-CSettingsSheet::CSettingsSheet(CWnd* pParent, UINT nCaptionID)
+CSettingsSheet::CSettingsSheet(CWnd* /*pParent*/, UINT nCaptionID)
 {
 	m_pPage			= NULL;
 	m_pFirst		= NULL;
@@ -91,9 +87,9 @@ void CSettingsSheet::AddGroup(CSettingsPage* pPage, LPCTSTR pszCaption)
 	m_pPages.Add( pPage );
 }
 
-CSettingsPage* CSettingsSheet::GetPage(int nPage) const
+CSettingsPage* CSettingsSheet::GetPage(INT_PTR nPage) const
 {
-	return (CSettingsPage*)m_pPages.GetAt( nPage );
+	return m_pPages.GetAt( nPage );
 }
 
 CSettingsPage* CSettingsSheet::GetPage(CRuntimeClass* pClass) const
@@ -116,16 +112,16 @@ CSettingsPage* CSettingsSheet::GetPage(LPCTSTR pszClass) const
 	return NULL;
 }
 
-int CSettingsSheet::GetPageIndex(CSettingsPage* pPage) const
+INT_PTR CSettingsSheet::GetPageIndex(CSettingsPage* pPage) const
 {
-	for ( int nPage = 0 ; nPage < GetPageCount() ; nPage++ )
+	for ( INT_PTR nPage = 0 ; nPage < GetPageCount() ; nPage++ )
 	{
 		if ( pPage == GetPage( nPage ) ) return nPage;
 	}
 	return -1;
 }
 
-int CSettingsSheet::GetPageCount() const
+INT_PTR CSettingsSheet::GetPageCount() const
 {
 	return m_pPages.GetSize();
 }
@@ -161,7 +157,7 @@ BOOL CSettingsSheet::SetActivePage(CSettingsPage* pPage)
 
 	for ( HTREEITEM hGroup = m_wndTree.GetRootItem() ; hGroup ; hGroup = m_wndTree.GetNextItem( hGroup, TVGN_NEXT ) )
 	{
-		if ( m_wndTree.GetItemData( hGroup ) == (DWORD)m_pPage )
+		if ( m_wndTree.GetItemData( hGroup ) == (DWORD_PTR)m_pPage )
 		{
 			if ( ( m_wndTree.GetItemState( hGroup, TVIS_SELECTED ) & TVIS_SELECTED ) == 0 )
 			{
@@ -170,7 +166,7 @@ BOOL CSettingsSheet::SetActivePage(CSettingsPage* pPage)
 		}
 		for ( HTREEITEM hItem = m_wndTree.GetChildItem( hGroup ) ; hItem ; hItem = m_wndTree.GetNextItem( hItem, TVGN_NEXT ) )
 		{
-			if ( m_wndTree.GetItemData( hItem ) == (DWORD)m_pPage )
+			if ( m_wndTree.GetItemData( hItem ) == (DWORD_PTR)m_pPage )
 			{
 				if ( ( m_wndTree.GetItemState( hItem, TVIS_SELECTED ) & TVIS_SELECTED ) == 0 )
 				{
@@ -202,7 +198,7 @@ void CSettingsSheet::SetModified(BOOL bChanged)
 /////////////////////////////////////////////////////////////////////////////
 // CSettingsSheet message handlers
 
-int CSettingsSheet::DoModal()
+INT_PTR CSettingsSheet::DoModal()
 {
 	m_pTemplate = (DLGTEMPLATE *)malloc( sizeof(DLGTEMPLATE) + 6 );
 	ZeroMemory( m_pTemplate, sizeof(DLGTEMPLATE) + 6 );
@@ -224,7 +220,7 @@ int CSettingsSheet::DoModal()
 
 	CSkinDialog::InitModalIndirect( m_pTemplate, m_pParentWnd );
 
-	int nResult = CSkinDialog::DoModal();
+	INT_PTR nResult = CSkinDialog::DoModal();
 
 	free( m_pTemplate );
 
@@ -256,7 +252,7 @@ BOOL CSettingsSheet::OnInitDialog()
 	Layout();
 	CenterWindow();
 
-	if ( m_pFirst == NULL ) m_pFirst = GetPage( 0 );
+	if ( m_pFirst == NULL ) m_pFirst = GetPage( INT_PTR(0) );
 	SetActivePage( m_pFirst );
 
 	BuildTree();
@@ -350,7 +346,7 @@ BOOL CSettingsSheet::CreatePage(CSettingsPage* pPage)
 	return pPage->Create( rc, this );
 }
 
-void CSettingsSheet::OnTreeExpanding(NM_TREEVIEW* pNotify, LRESULT *pResult)
+void CSettingsSheet::OnTreeExpanding(NM_TREEVIEW* /*pNotify*/, LRESULT *pResult)
 {
 	*pResult = TRUE;
 }

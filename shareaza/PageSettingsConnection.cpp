@@ -252,7 +252,7 @@ void CConnectionSettingsPage::OnOK()
 	if ( ( ! Settings.Live.UploadLimitWarning ) &&
 		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface || Settings.BitTorrent.AdvancedInterfaceSet ) ) 
 	{
-		DWORD nDownload = max( Settings.Bandwidth.Downloads, ( ( Settings.Connection.InSpeed  / 8 ) * 1024 ) );
+		DWORD nDownload = max ( Settings.Bandwidth.Downloads, ( ( Settings.Connection.InSpeed  / 8 ) * 1024 ) );
 		DWORD nUpload = ( ( Settings.Connection.OutSpeed / 8 ) * 1024 );
 		if ( Settings.Bandwidth.Uploads > 0 ) nUpload =  min( Settings.Bandwidth.Uploads, nUpload );
 		

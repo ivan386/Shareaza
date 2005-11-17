@@ -20,7 +20,6 @@
 //
 
 #include "StdAfx.h"
-#include <algorithm>
 #include "Shareaza.h"
 #include "Settings.h"
 #include "BTClient.h"
@@ -155,14 +154,14 @@ BOOL CUploadTransferBT::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferBT interest flag
 
-BOOL CUploadTransferBT::OnInterested(CBTPacket* pPacket)
+BOOL CUploadTransferBT::OnInterested(CBTPacket* /*pPacket*/)
 {
 	if ( m_bInterested ) return TRUE;
 	m_bInterested = TRUE;
 	return TRUE;
 }
 
-BOOL CUploadTransferBT::OnUninterested(CBTPacket* pPacket)
+BOOL CUploadTransferBT::OnUninterested(CBTPacket* /*pPacket*/)
 {
 	if ( ! m_bInterested ) return TRUE;
 	m_bInterested = FALSE;
@@ -200,10 +199,10 @@ BOOL CUploadTransferBT::OnRequest(CBTPacket* pPacket)
 		return FALSE;
 	}
 	
-    if ( ::std::find_first_of( m_oRequested.begin(), m_oRequested.end(), m_oServed.begin(), m_oServed.end() )
-        != m_oRequested.end() ) return TRUE;
-	
-    m_oRequested.pushBack( FF::SimpleFragment( nOffset, nOffset + nLength ) );
+	if ( std::find_first_of( m_oRequested.begin(), m_oRequested.end(), m_oServed.begin(), m_oServed.end() )
+		!= m_oRequested.end() ) return TRUE;
+
+	m_oRequested.push_back( Fragments::Fragment( nOffset, nOffset + nLength ) );
 	
 	if ( m_nState == upsReady )
 	{
@@ -226,7 +225,7 @@ BOOL CUploadTransferBT::OnCancel(CBTPacket* pPacket)
 	
 	nOffset += nIndex * m_pDownload->m_pTorrent.m_nBlockSize;
 	
-    m_oRequested.erase( FF::SimpleFragment( nOffset, nOffset + nLength ) );
+	m_oRequested.erase( Fragments::Fragment( nOffset, nOffset + nLength ) );
 	
 	return TRUE;
 }
@@ -263,17 +262,16 @@ BOOL CUploadTransferBT::ServeRequests()
 	
 	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{
-        if ( ::std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() )
-            == m_oServed.end()
-            // This should be redundant (Camper)
-            && m_oRequested.begin()->begin() < m_nFileSize
-            && m_oRequested.begin()->end() <= m_nFileSize )
-        {
-            m_nOffset = m_oRequested.begin()->begin();
-            m_nLength = m_oRequested.begin()->length();
-            m_nPosition = 0;
-        }
-        m_oRequested.popFront();
+		if ( std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() ) == m_oServed.end()
+			// This should be redundant
+			&& m_oRequested.begin()->begin() < m_nFileSize
+			&& m_oRequested.begin()->end() <= m_nFileSize )
+		{
+			m_nOffset = m_oRequested.begin()->begin();
+			m_nLength = m_oRequested.begin()->size();
+			m_nPosition = 0;
+		}
+		m_oRequested.pop_front();
 	}
 	
 	if ( m_nLength < SIZE_UNKNOWN )
@@ -304,9 +302,10 @@ BOOL CUploadTransferBT::ServeRequests()
 		m_nPosition += m_nLength;
 		m_nUploaded += m_nLength;
 		m_pDownload->m_nTorrentUploaded += m_nLength;
+		m_pDownload->m_pTorrent.m_nTotalUpload += m_nLength;
 		Statistics.Current.Uploads.Volume += ( m_nLength / 1024 );
 		
-        m_oServed.pushBack( FF::SimpleFragment( m_nOffset, m_nOffset + m_nLength ) );
+		m_oServed.push_back( Fragments::Fragment( m_nOffset, m_nOffset + m_nLength ) );
 		m_pBaseFile->AddFragment( m_nOffset, m_nLength );
 
 		m_nState	= upsUploading;

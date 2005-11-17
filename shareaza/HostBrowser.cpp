@@ -35,7 +35,6 @@
 #include "VendorCache.h"
 #include "WndBrowseHost.h"
 #include "XML.h"
-#include <zlib.h>
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -47,7 +46,7 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CHostBrowser construction
 
-CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, GGUID* pClientID)
+CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, const Hashes::Guid& oClientID)
 {
 	m_nState		= hbsNull;
 	m_pNotify		= pNotify;
@@ -57,14 +56,8 @@ CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPor
 	m_pAddress		= *pAddress;
 	m_nPort			= nPort;
 	m_bMustPush		= bMustPush;
-	m_bCanPush		= FALSE;
-
-	if ( pClientID != NULL )
-	{
-		m_bCanPush = TRUE;
-		m_pClientID = *pClientID;
-	}
-
+	m_bCanPush = bool( m_oClientID = oClientID );
+	
 	m_tPushed		= 0;
 	m_bConnect		= FALSE;
 	m_nHits			= 0;
@@ -127,7 +120,7 @@ BOOL CHostBrowser::Browse()
 	return TRUE;
 }
 
-void CHostBrowser::Stop(BOOL bCompleted)
+void CHostBrowser::Stop(BOOL /*bCompleted*/)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
@@ -202,7 +195,7 @@ BOOL CHostBrowser::OnRead()
 	return TRUE;
 }
 
-void CHostBrowser::OnDropped(BOOL bError)
+void CHostBrowser::OnDropped(BOOL /*bError*/)
 {
 	if ( m_hSocket == INVALID_SOCKET ) return;
 
@@ -268,8 +261,8 @@ BOOL CHostBrowser::OnRun()
 BOOL CHostBrowser::SendPush(BOOL bMessage)
 {
 	if ( ! m_bCanPush ) return FALSE;
-
-	if ( Network.SendPush( &m_pClientID, 0 ) )
+	
+	if ( Network.SendPush( m_oClientID, 0 ) )
 	{
 		CTransfer::Close();
 		m_tPushed = GetTickCount();
@@ -285,13 +278,13 @@ BOOL CHostBrowser::SendPush(BOOL bMessage)
 	}
 }
 
-BOOL CHostBrowser::OnPush(GGUID* pClientID, CConnection* pConnection)
+BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnection)
 {
 	if ( m_tPushed == 0 ) return FALSE;
 	if ( m_hSocket != INVALID_SOCKET ) return FALSE;
-
-	if ( m_pClientID != *pClientID ) return FALSE;
-
+	
+	if ( !validAndEqual( m_oClientID, oClientID ) ) return FALSE;
+	
 	AttachTo( pConnection );
 
 	m_pAddress	= m_pHost.sin_addr;
@@ -336,7 +329,7 @@ void CHostBrowser::SendRequest()
 	CTransfer::OnWrite();
 
 	m_nState	= hbsRequesting;
-	m_nProtocol	= -1;
+	m_nProtocol	= PROTOCOL_ANY;
 	m_bDeflate	= FALSE;
 	m_nLength	= 0xFFFFFFFF;
 	m_bConnect	= TRUE;
@@ -423,7 +416,7 @@ BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 		else if ( strValue.CompareNoCase( _T("application/x-shareaza") ) == 0 )
 			m_nProtocol = PROTOCOL_G2;
 		else if ( strValue.CompareNoCase( _T("text/html") ) == 0 )
-			m_nProtocol = 0;
+			m_nProtocol = PROTOCOL_NULL;
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Encoding") ) == 0 )
 	{
@@ -439,7 +432,7 @@ BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 
 BOOL CHostBrowser::OnHeadersComplete()
 {
-	if ( m_nProtocol < 0 || m_nLength == 0 )
+	if ( m_nProtocol == PROTOCOL_ANY || m_nLength == 0 )
 	{
 		theApp.Message( MSG_ERROR, IDS_BROWSE_BAD_RESPONSE, (LPCTSTR)m_sAddress );
 		Stop();
@@ -468,7 +461,7 @@ BOOL CHostBrowser::OnHeadersComplete()
 
 	switch ( m_nProtocol )
 	{
-	case 0:
+	case PROTOCOL_NULL:
 		theApp.Message( MSG_DEFAULT, IDS_BROWSE_DOWNLOADING_FROM,
 			(LPCTSTR)m_sAddress, _T("HTML") );
 		break;
@@ -480,6 +473,8 @@ BOOL CHostBrowser::OnHeadersComplete()
 		theApp.Message( MSG_DEFAULT, IDS_BROWSE_DOWNLOADING_FROM,
 			(LPCTSTR)m_sAddress, _T("Gnutella-2") );
 		break;
+	default:
+		ASSERT( 0 );
 	}
 
 	return TRUE;
@@ -526,7 +521,7 @@ BOOL CHostBrowser::ReadContent()
 
 	switch ( m_nProtocol )
 	{
-	case 0:
+	case PROTOCOL_NULL:
 		if ( ! StreamHTML() ) return FALSE;
 		break;
 	case PROTOCOL_G1:
@@ -535,6 +530,8 @@ BOOL CHostBrowser::ReadContent()
 	case PROTOCOL_G2:
 		if ( ! StreamPacketsG2() ) return FALSE;
 		break;
+	default:
+		ASSERT( 0 );
 	}
 
 	if ( m_nReceived < m_nLength ) return TRUE;
@@ -593,9 +590,7 @@ BOOL CHostBrowser::StreamPacketsG1()
 
 BOOL CHostBrowser::StreamPacketsG2()
 {
-	CG2Packet* pPacket;
-
-	while ( pPacket = CG2Packet::ReadBuffer( m_pBuffer ) )
+	while ( CG2Packet* pPacket = CG2Packet::ReadBuffer( m_pBuffer ) )
 	{
 		BOOL bSuccess = FALSE;
 
@@ -637,8 +632,8 @@ BOOL CHostBrowser::OnPacket(CG1Packet* pPacket)
 	}
 
 	m_bCanPush	= TRUE;
-	m_pClientID	= pHits->m_pClientID;
-
+	m_oClientID	= pHits->m_oClientID;
+	
 	for ( CQueryHit* pCount = pHits ; pCount ; pCount = pCount->m_pNext ) m_nHits++;
 
 	Downloads.OnQueryHits( pHits );
@@ -666,8 +661,8 @@ BOOL CHostBrowser::OnPacket(CG2Packet* pPacket)
 		}
 
 		m_bCanPush	= TRUE;
-		m_pClientID	= pHits->m_pClientID;
-
+		m_oClientID	= pHits->m_oClientID;
+		
 		for ( CQueryHit* pCount = pHits ; pCount ; pCount = pCount->m_pNext )
 		{
 			m_nHits++;
@@ -798,7 +793,7 @@ BOOL CHostBrowser::StreamHTML()
 				strName = URLDecode( strURI.Mid( nPosName + 1 ) );
 			}
 
-			CQueryHit* pHit = new CQueryHit( PROTOCOL_NULL, NULL );
+			CQueryHit* pHit = new CQueryHit( PROTOCOL_NULL );
 
 			pHit->m_pAddress	= m_pHost.sin_addr;
 			pHit->m_nPort		= htons( m_pHost.sin_port );
@@ -808,9 +803,9 @@ BOOL CHostBrowser::StreamHTML()
 			pHit->m_nSize		= nSize;
 			pHit->m_sName		= strName;
 			pHit->m_sURL		= strURI;
-
-			if ( m_bCanPush ) pHit->m_pClientID = m_pClientID;
-
+			
+			if ( m_bCanPush ) pHit->m_oClientID = m_oClientID;
+			
 			pHit->m_pNext = pHits;
 			pHits = pHit;
 

@@ -58,6 +58,8 @@ CDownloadTransfer::CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProto
 	m_nQueuePos		= 0;
 	m_nQueueLen		= 0;
 
+	m_nBandwidth	= 0;
+
 	m_nOffset		= SIZE_UNKNOWN;
 	m_nLength		= 0;
 	m_nPosition		= 0;
@@ -217,12 +219,12 @@ void CDownloadTransfer::SetState(int nState)
 			if ( m_pSource->m_nSortOrder >= 13 )
 			{	//Don't bother wasting CPU sorting 'dead' sources- Simply send to bottom.
 				m_pDownload->SortSource( m_pSource, FALSE );
-				m_pSource->m_nSortOrder = -1;
+				m_pSource->m_nSortOrder = ~0u;
 			}
 			else
 			{	//All other sources should be properly sorted
 
-				if( ( nState == dtsTorrent ) && ( m_pSource->m_pTransfer ) )    //Torrent states
+				if ( ( nState == dtsTorrent ) && ( m_pSource->m_pTransfer ) )    //Torrent states
 				{       //Choked torrents after queued, requesting = requesting, uninterested near end
 					CDownloadTransferBT* pBT = (CDownloadTransferBT*)m_pSource->m_pTransfer;
 					if ( ! pBT->m_bInterested ) m_pSource->m_nSortOrder = 11;
@@ -270,7 +272,7 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD 
 
 	if ( m_pSource->m_bCloseConn ) return;
 
-	nChunk = min( nChunk, (QWORD)Settings.Downloads.ChunkSize );
+	nChunk = min( nChunk, Settings.Downloads.ChunkSize );
 
 	if ( bVerifyLock )
 	{

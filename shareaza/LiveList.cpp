@@ -52,7 +52,7 @@ void CLiveList::Clear()
 	for ( POSITION pos = m_pItems.GetStartPosition() ; pos ; )
 	{
 		CLiveItem* pItem;
-		DWORD nParam;
+		DWORD_PTR nParam;
 
 		m_pItems.GetNextAssoc( pos, nParam, pItem );
 		delete pItem;
@@ -63,7 +63,7 @@ void CLiveList::Clear()
 //////////////////////////////////////////////////////////////////////
 // CLiveList add
 
-CLiveItem* CLiveList::Add(DWORD nParam)
+CLiveItem* CLiveList::Add(DWORD_PTR nParam)
 {
 	CLiveItem* pItem = new CLiveItem( m_nColumns, nParam );
 	m_pItems.SetAt( nParam, pItem );
@@ -72,7 +72,7 @@ CLiveItem* CLiveList::Add(DWORD nParam)
 
 CLiveItem* CLiveList::Add(LPVOID pParam)
 {
-	return Add( (DWORD)pParam );
+	return Add( (DWORD_PTR)pParam );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -106,7 +106,7 @@ void CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
 	for ( POSITION pos = m_pItems.GetStartPosition() ; pos ; )
 	{
 		CLiveItem* pItem;
-		DWORD nParam;
+		DWORD_PTR nParam;
 
 		m_pItems.GetNextAssoc( pos, nParam, pItem );
 
@@ -124,7 +124,7 @@ void CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
 //////////////////////////////////////////////////////////////////////
 // CLiveItem construction
 
-CLiveItem::CLiveItem(int nColumns, DWORD nParam)
+CLiveItem::CLiveItem(int nColumns, DWORD_PTR nParam)
 {
 	m_pColumn		= new CString[ nColumns ];
 	m_nParam		= nParam;
@@ -167,9 +167,7 @@ void CLiveItem::Format(int nColumn, LPCTSTR pszFormat, ...)
 
 int CLiveItem::Add(CListCtrl* pCtrl, int nItem, int nColumns)
 {
-	LV_ITEM pItem;
-
-	ZeroMemory( &pItem, sizeof(pItem) );
+	LV_ITEM pItem = {};
 	pItem.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE|LVIF_STATE;
 	pItem.iItem		= nItem >= 0 ? nItem : pCtrl->GetItemCount();
 	pItem.lParam	= (LPARAM)m_nParam;
@@ -195,9 +193,8 @@ int CLiveItem::Add(CListCtrl* pCtrl, int nItem, int nColumns)
 BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 {
 	BOOL bModified = FALSE;
-	LV_ITEM pItem;
 
-	ZeroMemory( &pItem, sizeof(pItem) );
+	LV_ITEM pItem = {};
 	pItem.mask		= LVIF_PARAM|LVIF_IMAGE|LVIF_STATE;
 	pItem.iItem		= nItem;
 	pItem.stateMask	= LVIS_OVERLAYMASK|LVIS_STATEIMAGEMASK;
@@ -240,7 +237,7 @@ CBitmap CLiveList::m_bmSortDesc;
 
 void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 {
-	int nOldColumn	= GetWindowLong( pCtrl->GetSafeHwnd(), GWL_USERDATA );
+	int nOldColumn	= (int)GetWindowLongPtr( pCtrl->GetSafeHwnd(), GWLP_USERDATA );
 	BOOL bWaiting	= FALSE;
 
 	if ( nColumn == -1 )
@@ -261,7 +258,7 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 			nColumn++;
 		}
 
-		SetWindowLong( pCtrl->GetSafeHwnd(), GWL_USERDATA, nColumn );
+		SetWindowLongPtr( pCtrl->GetSafeHwnd(), GWLP_USERDATA, nColumn );
 
 		bWaiting = TRUE;
 		theApp.BeginWaitCursor();
@@ -280,9 +277,7 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 
 		for ( int nCol = 0 ; ; nCol++ )
 		{
-			HDITEM pColumn;
-
-			ZeroMemory( &pColumn, sizeof(pColumn) );
+			HDITEM pColumn = {};
 			pColumn.mask = HDI_BITMAP|HDI_FORMAT;
 
 			if ( !pHeader->GetItem( nCol, &pColumn ) ) break;
@@ -314,7 +309,7 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 int CALLBACK CLiveList::SortCallback(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
 	CListCtrl* pList	= (CListCtrl*)lParamSort;
-	int nColumn			= (int)GetWindowLong( pList->GetSafeHwnd(), GWL_USERDATA );
+	int nColumn			= (int)GetWindowLongPtr( pList->GetSafeHwnd(), GWLP_USERDATA );
 	LV_FINDINFO pFind;
 	int nA, nB;
 

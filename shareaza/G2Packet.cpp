@@ -111,8 +111,8 @@ CG2Packet* CG2Packet::New(LPCSTR pszType, CG1Packet* pWrap, int nMinTTL)
 	CG2Packet* pPacket = New( pszType, FALSE );
 
 	GNUTELLAPACKET pHeader;
-
-	pHeader.m_pGUID		= pWrap->m_pGUID;
+	
+	pHeader.m_oGUID		= pWrap->m_oGUID.storage();
 	pHeader.m_nType		= pWrap->m_nType;
 	pHeader.m_nTTL		= min( pWrap->m_nTTL, BYTE(nMinTTL) );
 	pHeader.m_nHops		= pWrap->m_nHops;
@@ -257,7 +257,7 @@ BOOL CG2Packet::SkipCompound(DWORD& nLength, DWORD nRemaining)
 
 		BYTE nLenLen	= ( nInput & 0xC0 ) >> 6;
 		BYTE nTypeLen	= ( nInput & 0x38 ) >> 3;
-		BYTE nFlags		= ( nInput & 0x07 );
+//		BYTE nFlags		= ( nInput & 0x07 );
 
 		if ( m_nPosition + nTypeLen + nLenLen + 1 > nEnd ) AfxThrowUserException();
 
@@ -291,7 +291,7 @@ BOOL CG2Packet::SkipCompound(DWORD& nLength, DWORD nRemaining)
 //////////////////////////////////////////////////////////////////////
 // CG2Packet read a TO block
 
-BOOL CG2Packet::GetTo(GGUID* pGUID)
+BOOL CG2Packet::GetTo(Hashes::Guid& oGUID)
 {
 	if ( m_bCompound == FALSE ) return FALSE;
 	if ( GetRemaining() < 4 + 16 ) return FALSE;
@@ -302,9 +302,9 @@ BOOL CG2Packet::GetTo(GGUID* pGUID)
 	if ( pTest[1] != 0x10 ) return FALSE;
 	if ( pTest[2] != 'T' ) return FALSE;
 	if ( pTest[3] != 'O' ) return FALSE;
-
-	CopyMemory( pGUID, pTest + 4, 16 );
-
+	
+	CopyMemory( &oGUID[ 0 ], pTest + 4, oGUID.byteCount );
+	
 	return TRUE;
 }
 
@@ -334,7 +334,7 @@ CString CG2Packet::ReadString(DWORD nMaximum)
 
 	LPCSTR pszInput	= (LPCSTR)m_pBuffer + m_nPosition;
 	LPCSTR pszScan	= pszInput;
-	BOOL bEncoded	= FALSE;
+//	BOOL bEncoded	= FALSE;
 
     DWORD nLength = 0;
 	for ( ; nLength < nMaximum ; nLength++ )
@@ -359,7 +359,7 @@ void CG2Packet::WriteString(LPCTSTR pszString, BOOL bNull)
 		return;
 	}
 
-	int nWide		= _tcslen(pszString);
+	int nWide		= static_cast< int >( _tcslen(pszString) );
 	int nByte		= WideCharToMultiByte( CP_UTF8, 0, pszString, nWide, NULL, 0, NULL, NULL );
 	LPSTR pszByte	= ( nByte <= PACKET_BUF_SCHAR ) ? m_szSCHAR : new CHAR[ nByte + 1 ];
 
@@ -384,7 +384,7 @@ void CG2Packet::WriteString(LPCSTR pszString, BOOL bNull)
 		return;
 	}
 
-	Write( pszString, strlen(pszString) + ( bNull ? 1 : 0 ) );
+	Write( pszString, static_cast< int >( strlen(pszString) + ( bNull ? 1 : 0 ) ) );
 }
 
 int CG2Packet::GetStringLen(LPCTSTR pszString) const
@@ -508,7 +508,7 @@ void CG2Packet::Debug(LPCTSTR pszReason) const
 	CString strOutput;
 	strOutput.Format( L"[G2]: '%s' %s %s", pszReason, GetType(), (LPCTSTR)ToASCII() );
 	CPacket::Debug( strOutput );
-
+#else
+	pszReason;
 #endif
 }
-

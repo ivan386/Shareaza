@@ -118,7 +118,7 @@ void CDonkeyServersDlg::OnCancel()
 	CSkinDialog::OnCancel();
 }
 
-void CDonkeyServersDlg::OnTimer(UINT nIDEvent)
+void CDonkeyServersDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( m_hInternet != NULL )
 	{
@@ -196,7 +196,7 @@ void CDonkeyServersDlg::OnRun()
 
 		while ( nRemaining > 0 )
 		{
-			DWORD nBuffer = min( nRemaining, DWORD(1024) );
+			DWORD nBuffer = min( nRemaining, 1024u );
 			InternetReadFile( hRequest, pBuffer, nBuffer, &nBuffer );
 			pFile.Write( pBuffer, nBuffer );
 			nRemaining -= nBuffer;

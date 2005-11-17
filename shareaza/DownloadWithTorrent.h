@@ -36,7 +36,7 @@ class CBTPacket;
 class CDownloadWithTorrent : public CDownloadWithFile
 {
 // Construction
-public:
+protected:
 	CDownloadWithTorrent();
 	virtual ~CDownloadWithTorrent();
 
@@ -48,60 +48,59 @@ public:
 	DWORD		m_tTorrentTracker;
 	QWORD		m_nTorrentUploaded;
 	QWORD		m_nTorrentDownloaded;
-	BOOL		m_bTorrentEndgame;
 	BOOL		m_bTorrentTrackerError;
 	CString		m_sTorrentTrackerError;
 	int			m_nTorrentTrackerErrors;
-	SHA1		m_pPeerID;
+    Hashes::BtGuid m_pPeerID;
 	CString		m_sKey;
 	int			m_nStartTorrentDownloads;
+    BOOL		m_bTorrentEndgame;
 protected:
-	BYTE*		m_pTorrentBlock;
-	DWORD		m_nTorrentBlock;
-	DWORD		m_nTorrentSize;
-	DWORD		m_nTorrentSuccess;
 	BOOL		m_bSeeding;
+	DWORD		m_nTorrentBlock;
+	DWORD		m_nTorrentSuccess;
+	DWORD		m_nTorrentSize;
+	BYTE*		m_pTorrentBlock;
 private:
-	CPtrList	m_pTorrentUploads;
+	CList< CUploadTransferBT* > m_pTorrentUploads;
 	DWORD		m_tTorrentChoke;
 	DWORD		m_tTorrentSources;
 
 // Operations
 public:
-	virtual void	Serialize(CArchive& ar, int nVersion);
-	BOOL			SetTorrent(CBTInfo* pTorrent);
 	void			AddUpload(CUploadTransferBT* pUpload);
 	void			RemoveUpload(CUploadTransferBT* pUpload);
-	void			ChokeTorrent(DWORD tNow = 0);
-	void			OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason = NULL);
-	virtual BOOL	FindMoreSources();
 	BOOL			SeedTorrent(LPCTSTR pszTarget);
-	void			CloseTorrent();
 	inline BOOL		IsSeeding() const { return m_bSeeding; }
 	float			GetRatio() const;
-	BOOL 			CheckTorrentRatio() const;
 	BOOL			UploadExists(in_addr* pIP) const;
-	BOOL			UploadExists(SHA1* pGUID) const;
-public:
+	BOOL			UploadExists(const Hashes::BtGuid& oGUID) const;
+	void			OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason = NULL);
+	void			ChokeTorrent(DWORD tNow = 0);
 	CDownloadTransferBT*	CreateTorrentTransfer(CBTClient* pClient);
-	CBTPacket*				CreateBitfieldPacket();
+	CBTPacket*		CreateBitfieldPacket();
+	BOOL			SetTorrent(CBTInfo* pTorrent);
 protected:
-	BOOL			GenerateTorrentDownloadID();	//Generate Peer ID
 	BOOL			RunTorrent(DWORD tNow);
-	void			OnFinishedTorrentBlock(DWORD nBlock);
+	void			CloseTorrent();
 	void			CloseTorrentUploads();
+	BOOL 			CheckTorrentRatio() const;
+	virtual BOOL	FindMoreSources();
+	void			OnFinishedTorrentBlock(DWORD nBlock);
+	virtual void	Serialize(CArchive& ar, int nVersion);
+private:
+	BOOL			GenerateTorrentDownloadID();	//Generate Peer ID
 
-	inline TCHAR GenerateCharacter() const
+	TCHAR GenerateCharacter() const
 	{
 		switch (rand() % 3)
 		{
-		case 0 : return( 'a' + ( rand() % 26 ) );
-		case 1 : return( 'A' + ( rand() % 26 ) );
-		default: return( '0' + ( rand() % 10 ) );
+		case 0 : return TCHAR( 'a' + ( rand() % 26 ) );
+		case 1 : return TCHAR( 'A' + ( rand() % 26 ) );
+		default: return TCHAR( '0' + ( rand() % 10 ) );
 		}
 	}
-
-	friend class CDownloadTransferBT;
+	
 };
 
 enum

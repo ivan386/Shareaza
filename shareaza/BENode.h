@@ -45,10 +45,10 @@ public:
 // Operations
 public:
 	void		Clear();
-	CBENode*	Add(const LPBYTE pKey, int nKey);
+	CBENode*	Add(const LPBYTE pKey, size_t nKey);
 	CBENode*	GetNode(LPCSTR pszKey) const;
 	CBENode*	GetNode(const LPBYTE pKey, int nKey) const;
-	void		GetSHA1(SHA1* pSHA1) const;
+    void		GetBth(Hashes::BtHash& oBTH) const;
 	CString		GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEncodingError);
 	CString		GetStringFromSubNode(int nItem, UINT nEncoding, BOOL* pEncodingError);
 	void		Encode(CBuffer* pBuffer) const;
@@ -174,7 +174,7 @@ public:
 		SetString( pszASCII, strlen(pszASCII), TRUE );
 	}
 	
-	inline void SetString(LPCVOID pString, DWORD nLength, BOOL bNull = FALSE)
+	inline void SetString(LPCVOID pString, size_t nLength, BOOL bNull = FALSE)
 	{
 		Clear();
 		m_nType		= beString;

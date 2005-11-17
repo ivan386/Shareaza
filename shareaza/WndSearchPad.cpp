@@ -226,14 +226,14 @@ void CSearchPadWnd::OnPaint()
 /////////////////////////////////////////////////////////////////////////////
 // CSearchPadWnd search interface
 
-CQuerySearch* CSearchPadWnd::GetSearch()
+std::auto_ptr< CQuerySearch > CSearchPadWnd::GetSearch()
 {
-	CQuerySearch* pSearch = new CQuerySearch();
+	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	
 	m_wndText.GetWindowText( pSearch->m_sSearch );
 	pSearch->m_sSearch.TrimLeft();
 	pSearch->m_sSearch.TrimRight();
-	
+
 	if ( CSchema* pSchema = m_wndSchema.GetSelected() )
 	{
 		pSearch->m_pSchema	= pSchema;
@@ -248,13 +248,12 @@ CQuerySearch* CSearchPadWnd::GetSearch()
 	{
 		Settings.Search.LastSchemaURI.Empty();
 	}
-	
+
 	if ( ! pSearch->CheckValid() )
 	{
-		delete pSearch;
-		return NULL;
+		pSearch.reset();
 	}
-	
+
 	return pSearch;
 }
 
@@ -280,14 +279,15 @@ void CSearchPadWnd::OnSearchCreate()
 {
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 	
-	CQuerySearch* pSearch = GetSearch();
-	if ( NULL == pSearch ) return;
-	
-	ClearSearch();
-	
-	new CSearchWnd( pSearch );
-	
-	PostMessage( WM_CLOSE );
+	std::auto_ptr< CQuerySearch > pSearch( GetSearch() );
+	if ( pSearch.get() )
+	{
+		ClearSearch();
+		
+		new CSearchWnd( pSearch );
+		
+		PostMessage( WM_CLOSE );
+	}
 }
 
 void CSearchPadWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) 

@@ -74,8 +74,8 @@ BOOL CAlbumTipCtrl::OnPrepare()
 
 	m_nIcon32 = SHI_FOLDER_OPEN;
 	m_nIcon48 = SHI_FOLDER_OPEN;
-	m_bCollection = pFolder->m_bCollSHA1;
-
+	m_bCollection = bool( pFolder->m_oCollSHA1 );
+	
 	// Metadata
 
 	m_pMetadata.Clear();
@@ -121,14 +121,14 @@ void CAlbumTipCtrl::OnCalcSize(CDC* pDC)
 
 	m_sz.cy += TIP_RULE;
 
-	int nMetaHeight = m_pMetadata.GetCount() * TIP_TEXTHEIGHT;
+	int nMetaHeight = static_cast< int >( m_pMetadata.GetCount() * TIP_TEXTHEIGHT );
 	int nValueWidth = 0;
 	m_nKeyWidth = 0;
 
 	m_pMetadata.ComputeWidth( pDC, m_nKeyWidth, nValueWidth );
 
 	if ( m_nKeyWidth ) m_nKeyWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, LONG(m_nKeyWidth + nValueWidth + 102) );
+	m_sz.cx = max( m_sz.cx, m_nKeyWidth + nValueWidth + 102 );
 	m_sz.cy += max( nMetaHeight, 96 );
 }
 

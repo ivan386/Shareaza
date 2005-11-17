@@ -163,17 +163,17 @@ BOOL CHandshake::OnConnected()
 	CConnection::OnConnected();
 
 	// copy Profile's GUID
-	GGUID oID( MyProfile.GUID );
+	Hashes::Guid oID( MyProfile.oGUID );
 
 	// Compose the GIV string, which is like "GIV index:guid/" with two newlines at the end (do)
 	CString strGIV;
 	strGIV.Format( // MFC's CString::Format is like sprintf, "%.2X" formats a byte into 2 hexidecimal characters like "ff"
 		_T("GIV %u:%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X/\n\n"),
 		m_nIndex,											// Our index on the Gnutella network (do)
-		int( oID.n[0] ),  int( oID.n[1] ),  int( oID.n[2] ),  int( oID.n[3] ),		// Our GUID
-		int( oID.n[4] ),  int( oID.n[5] ),  int( oID.n[6] ),  int( oID.n[7] ),
-		int( oID.n[8] ),  int( oID.n[9] ),  int( oID.n[10] ), int( oID.n[11] ),
-		int( oID.n[12] ), int( oID.n[13] ), int( oID.n[14] ), int( oID.n[15] ) );
+		int( oID[0] ),  int( oID[1] ),  int( oID[2] ),  int( oID[3] ),		// Our GUID
+		int( oID[4] ),  int( oID[5] ),  int( oID[6] ),  int( oID[7] ),
+		int( oID[8] ),  int( oID[9] ),  int( oID[10] ), int( oID[11] ),
+		int( oID[12] ), int( oID[13] ), int( oID[14] ), int( oID[15] ) );
 
 	// Print the string into the output buffer, and write the output buffer to the remote computer
 	m_pOutput->Print( strGIV );
@@ -185,7 +185,7 @@ BOOL CHandshake::OnConnected()
 }
 
 // If we connected to the remote computer as part of a push, record that we couldn't connect to do the upload
-void CHandshake::OnDropped(BOOL bError)
+void CHandshake::OnDropped(BOOL /*bError*/)
 {
 	// If we connected to the remote computer as part of a push
 	if ( m_bPushing )
@@ -293,7 +293,7 @@ BOOL CHandshake::OnAcceptPush()
 {
 	// Make a string for the header line, and variables to hold the GUID in string and binary forms
 	CString strLine, strGUID;
-	GGUID pGUID;
+	Hashes::Guid oGUID;
 
 	// Read the first line from the input buffer, this doesn't remove it so we can call it over and over again
 	if ( ! m_pInput->ReadLine( strLine ) ) return FALSE;
@@ -311,11 +311,11 @@ BOOL CHandshake::OnAcceptPush()
 	{
 		int nValue;
 		_stscanf( strLine.Mid( 10 + nByte * 2, 2 ), _T("%X"), &nValue );
-		pGUID.n[ nByte ] = (BYTE)nValue;
+		oGUID[ nByte ] = (BYTE)nValue;
 	}
 
 	// If a child window recongizes the GUID, accept the push
-	if ( OnPush( &pGUID ) ) return TRUE;
+	if ( OnPush( oGUID ) ) return TRUE;
 
 	// Record the fact that we got a push we knew nothing about, and return false to not accept it
 	theApp.Message( MSG_ERROR, IDS_DOWNLOAD_UNKNOWN_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), _T("Gnutella2") );
@@ -333,7 +333,7 @@ BOOL CHandshake::OnAcceptGive()
 	// Local variables for the searching and parsing
 	CString strLine, strClient, strFile;	// Strings for the whole line, the client guid hexidecimal characters, and the file name within it
 	DWORD nFileIndex = 0xFFFFFFFF;			// Start out the file index as -1 to detect if we were able to read it
-	GGUID pClientID;						// We will translate the GUID into binary here
+	Hashes::Guid oClientID;					// We will translate the GUID into binary here
 	int nPos;								// The distance from the start of the string to a colon or slash we will look for
 
 	// The first line should be like "GIV 124:d51dff817f895598ff0065537c09d503/my%20song.mp3"
@@ -369,11 +369,11 @@ BOOL CHandshake::OnAcceptGive()
 	{
 		// Convert one set of characters like "00" or "ff" into that byte in pClientID
 		_stscanf( strClient.Mid( nByte * 2, 2 ), _T("%X"), &nPos );
-		pClientID.n[ nByte ] = (BYTE)nPos;
+		oClientID[ nByte ] = (BYTE)nPos;
 	}
 
 	// If a child window recognizes this guid, return true
-	if ( OnPush( &pClientID ) ) return TRUE;
+	if ( OnPush( oClientID ) ) return TRUE;
 
 	// If the file name is longer than 256 characters, change it to the text "Invalid Filename"
 	if ( strFile.GetLength() > 256 ) strFile = _T("Invalid Filename");
@@ -389,14 +389,14 @@ BOOL CHandshake::OnAcceptGive()
 // Takes the GUID of a remote computer which has sent us a Gnutella2-style PUSH handshake
 // Sees if any child windows recognize the GUID
 // Returns true or false
-BOOL CHandshake::OnPush(GGUID* pGUID)
+BOOL CHandshake::OnPush(const Hashes::Guid& oGUID)
 {
 	// Make sure the socket is valid
 	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
 
 	// Look for the remote computer's GUID in our list of downloads and the chat interface
-	if ( Downloads.OnPush( pGUID, this ) ) return TRUE; // Return true if it's found
-	if ( ChatCore.OnPush( pGUID, this ) ) return TRUE;
+	if ( Downloads.OnPush( oGUID, this ) ) return TRUE; // Return true if it's found
+	if ( ChatCore.OnPush( oGUID, this ) ) return TRUE;
 
 	// Make sure this is the only thread doing this right now
 	CSingleLock pWindowLock( &theApp.m_pSection );
@@ -410,10 +410,10 @@ BOOL CHandshake::OnPush(GGUID* pGUID)
 			CChildWnd* pChildWnd		= NULL;
 
 			// Loop through all of Shareaza's child windows
-			while ( pChildWnd = pWindows->Find( NULL, pChildWnd ) )
+			while ( ( pChildWnd = pWindows->Find( NULL, pChildWnd ) ) != NULL )
 			{
 				// If a child window recognizes this push request, return true
-				if ( pChildWnd->OnPush( pGUID, this ) ) return TRUE;
+				if ( pChildWnd->OnPush( oGUID, this ) ) return TRUE;
 			}
 		}
 

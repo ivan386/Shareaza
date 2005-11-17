@@ -40,8 +40,8 @@ public:
 public:
 	BOOL		Create();
 	void		Close();
-	BOOL		SetCollection(SHA1* pSHA1, LPCTSTR pszPath, CString* psIndex = NULL);
-
+    BOOL		SetCollection(const Hashes::Sha1Hash& oSHA1, LPCTSTR pszPath, CString* psIndex = NULL);
+	
 // Attributes
 protected:
 	CCriticalSection			m_pSection;
@@ -49,7 +49,7 @@ protected:
 	CEvent*						m_pShutdown;
 	LONG						m_nRequests;
 protected:
-	SHA1						m_pCollSHA1;
+    Hashes::Sha1Hash            m_oCollSHA1;
 	CZIPFile*					m_pCollZIP;
 public:
 	static CLSID				clsidProtocol;

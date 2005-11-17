@@ -116,9 +116,9 @@ void CShellIcons::Clear()
 	m_m32.RemoveAll();
 	m_m48.RemoveAll();
 	
-	m_m16.SetAt( _T(".exe"), (LPVOID)SHI_EXECUTABLE );
-	m_m32.SetAt( _T(".exe"), (LPVOID)1 );
-	m_m48.SetAt( _T(".exe"), (LPVOID)1 );
+	m_m16.SetAt( _T(".exe"), SHI_EXECUTABLE );
+	m_m32.SetAt( _T(".exe"), 1 );
+	m_m48.SetAt( _T(".exe"), 1 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -136,27 +136,27 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	strType.ReleaseBuffer();
 
 	HICON hIcon = NULL;
-	int nIndex;
+	int nIndex = 0;
 
 	switch ( nSize )
 	{
 	case 16:
-		if ( m_m16.Lookup( strType, (void*&)nIndex ) ) return nIndex;
+		if ( m_m16.Lookup( strType, nIndex ) ) return nIndex;
 		Lookup( pszType, &hIcon, NULL, NULL, NULL );
 		nIndex = hIcon ? m_i16.Add( hIcon ) : 0;
-		m_m16.SetAt( strType, (LPVOID)nIndex );
+		m_m16.SetAt( strType, nIndex );
 		break;
 	case 32:
-		if ( m_m32.Lookup( strType, (void*&)nIndex ) ) return nIndex;
+		if ( m_m32.Lookup( strType, nIndex ) ) return nIndex;
 		Lookup( pszType, NULL, &hIcon, NULL, NULL );
 		nIndex = hIcon ? m_i32.Add( hIcon ) : 0;
-		m_m32.SetAt( strType, (LPVOID)nIndex );
+		m_m32.SetAt( strType, nIndex );
 		break;
 	case 48:
-		if ( m_m48.Lookup( strType, (void*&)nIndex ) ) return nIndex;
+		if ( m_m48.Lookup( strType, nIndex ) ) return nIndex;
 		Lookup( pszType, NULL, NULL, NULL, NULL, &hIcon );
 		nIndex = hIcon ? m_i48.Add( hIcon ) : 0;
-		m_m48.SetAt( strType, (LPVOID)nIndex );
+		m_m48.SetAt( strType, nIndex );
 		break;
 	}
 	
@@ -293,7 +293,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 			RegCloseKey( hKey );
 			return FALSE;
 		}
-		nResult = sizeof(TCHAR) * 128; nType = REG_SZ;
+		nResult = sizeof(TCHAR) * 128;
 		if ( RegQueryValueEx( hSub, _T(""), NULL, &nType, (LPBYTE)szResult, &nResult ) != ERROR_SUCCESS )
 		{
 			RegCloseKey( hSub );

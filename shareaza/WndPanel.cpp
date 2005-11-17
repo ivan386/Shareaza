@@ -109,7 +109,7 @@ void CPanelWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp
 	CChildWnd::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-UINT CPanelWnd::OnNcHitTest(CPoint point)
+ONNCHITTESTRESULT CPanelWnd::OnNcHitTest(CPoint point)
 {
 	if ( m_bPanelMode && ! m_pSkin )
 	{
@@ -147,13 +147,13 @@ BOOL CPanelWnd::OnNcActivate(BOOL bActive)
 	return CChildWnd::OnNcActivate( bActive );
 }
 
-LONG CPanelWnd::OnSetText(WPARAM wParam, LPARAM lParam)
+LRESULT CPanelWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	if ( m_pSkin )
 	{
 		BOOL bVisible = IsWindowVisible();
 		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
-		LONG lResult = Default();
+		LONG lResult = static_cast< DWORD >( Default() );
 		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
 
 		if ( m_pSkin ) m_pSkin->OnSetText( this );
@@ -164,7 +164,7 @@ LONG CPanelWnd::OnSetText(WPARAM wParam, LPARAM lParam)
 	{
 		BOOL bVisible = IsWindowVisible();
 		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
-		LONG lResult = Default();
+		LONG lResult = static_cast< DWORD >( Default() );
 		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
 
 		CWindowDC dc( this );
@@ -174,7 +174,7 @@ LONG CPanelWnd::OnSetText(WPARAM wParam, LPARAM lParam)
 	}
 	else
 	{
-		return Default();
+		return static_cast< DWORD >( Default() );
 	}
 }
 
@@ -187,7 +187,8 @@ void CPanelWnd::PaintCaption(CDC& dc)
 	rc.SetRect( 0, 0, rcWnd.Width(), CAPTION_HEIGHT );
 	GetWindowText( strCaption );
 
-	CDC* pBuffer = CoolInterface.GetBuffer( dc, rc.Size() );
+	CSize size = rc.Size();
+	CDC* pBuffer = CoolInterface.GetBuffer( dc, size );
 
 	if ( ! CoolInterface.DrawWatermark( pBuffer, &rc, &Skin.m_bmPanelMark, 0, 0 ) )
 	{

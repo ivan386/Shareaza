@@ -55,10 +55,10 @@ protected:
 public:
 	void			Clear();
 	BOOL			PushTo(DWORD nClientID, WORD nClientPort);
-	CEDClient*		Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, GGUID* pGUID = NULL);
+	CEDClient*		Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID);
 	CEDClient*		GetByIP(IN_ADDR* pAddress);
-	CEDClient*		GetByID(DWORD nClientID, IN_ADDR* pServer = NULL, GGUID* pGUID = NULL);
-	CEDClient*		GetByGUID(GGUID* pHash);
+	CEDClient*		GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::Guid& oGUID);
+	CEDClient*		GetByGUID(const Hashes::Guid& oGUID);
 	BOOL			Merge(CEDClient* pClient);
 	BOOL			IsFull(CEDClient* pCheckThis = NULL);
 	BOOL			IsOverloaded();

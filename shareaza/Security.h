@@ -39,7 +39,7 @@ public:
 public:
 	BOOL		m_bDenyPolicy;
 protected:
-	CPtrList	m_pRules;
+	CList< CSecureRule* >	m_pRules;
 public:
 	static LPCTSTR xmlns;
 
@@ -47,9 +47,10 @@ public:
 public:
 	POSITION		GetIterator() const;
 	CSecureRule*	GetNext(POSITION& pos) const;
-	int				GetCount();
+	INT_PTR			GetCount();
 	BOOL			Check(CSecureRule* pRule) const;
-	CSecureRule*	GetGUID(const GUID& pGUID) const;
+private:
+	CSecureRule*	GetGUID(const GUID& oGUID) const;
 public:
 	void			Add(CSecureRule* pRule);
 	void			Remove(CSecureRule* pRule);

@@ -38,7 +38,7 @@ public:
 // Attributes
 public:
 	CCriticalSection	m_pSection;
-	CPtrList			m_pElements;
+	CList< CRichElement* > m_pElements;
 	DWORD				m_nCookie;
 public:
 	CSize			m_szMargin;
@@ -60,7 +60,7 @@ public:
 	POSITION		GetIterator() const;
 	CRichElement*	GetNext(POSITION& pos) const;
 	CRichElement*	GetPrev(POSITION& pos) const;
-	int				GetCount() const;
+	INT_PTR			GetCount() const;
 	POSITION		Find(CRichElement* pElement) const;
 public:
 	CRichElement*	Add(CRichElement* pElement, POSITION posBefore = NULL);
@@ -71,7 +71,7 @@ public:
 	void			SetModified();
 	void			Clear();
 public:
-	BOOL			LoadXML(CXMLElement* pBase, CMapStringToPtr* pMap = NULL, int nGroup = 0);
+	BOOL			LoadXML(CXMLElement* pBase, CMap< CString, const CString&, CRichElement*, CRichElement* >* pMap = NULL, int nGroup = 0);
 	void			CreateFonts(LPCTSTR pszFaceName = theApp.m_sDefaultFont, int nSize = 12);
 protected:
 	BOOL			LoadXMLStyles(CXMLElement* pParent);

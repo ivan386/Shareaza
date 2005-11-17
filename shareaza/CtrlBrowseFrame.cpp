@@ -329,7 +329,7 @@ BOOL CBrowseFrameCtrl::DoSizeTree()
 		nSplit += nOffset;
 
 		nSplit = max( nSplit, 0 );
-		nSplit = min( nSplit, int(rcClient.right - SPLIT_SIZE) );
+		nSplit = min( nSplit, rcClient.right - SPLIT_SIZE );
 
 		if ( nSplit < 8 )
 			nSplit = 0;
@@ -437,7 +437,7 @@ void CBrowseFrameCtrl::OnVirtualTree(CG2Packet* pPacket)
 	}
 }
 
-void CBrowseFrameCtrl::OnTreeSelection(NMHDR* pNotify, LRESULT* pResult)
+void CBrowseFrameCtrl::OnTreeSelection(NMHDR* /*pNotify*/, LRESULT* pResult)
 {
 	CSingleLock lMatches( &m_wndList->m_pMatches->m_pSection, TRUE );
 	CSingleLock lTree( m_wndTree.SyncRoot(), TRUE );
@@ -451,7 +451,7 @@ void CBrowseFrameCtrl::OnTreeSelection(NMHDR* pNotify, LRESULT* pResult)
 
 		for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
 		{
-			if ( pHit->m_bMatched = bGlobal ) continue;
+			if ( ( pHit->m_bMatched = bGlobal ) != FALSE ) continue;
 
 			for (	CBrowseTreeItem* pSel = m_wndTree.GetFirstSelected() ; pSel ;
 					pSel = pSel->m_pSelNext )
@@ -472,7 +472,7 @@ void CBrowseFrameCtrl::OnTreeSelection(NMHDR* pNotify, LRESULT* pResult)
 		{
 			if ( CSchema* pSchema = SchemaCache.Get( strURI ) )
 			{
-				CPtrList pColumns;
+				CList< CSchemaMember* > pColumns;
 				CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 				m_wndList->SelectSchema( pSchema, &pColumns );
 			}

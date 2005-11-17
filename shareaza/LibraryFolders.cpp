@@ -34,7 +34,6 @@
 #include "XML.h"
 #include "Schema.h"
 #include "SchemaCache.h"
-#include <shlobj.h>
 
 IMPLEMENT_DYNAMIC(CLibraryFolders, CComObject)
 
@@ -71,12 +70,7 @@ POSITION CLibraryFolders::GetFolderIterator() const
 
 CLibraryFolder* CLibraryFolders::GetNextFolder(POSITION& pos) const
 {
-	return (CLibraryFolder*)m_pFolders.GetNext( pos );
-}
-
-int CLibraryFolders::GetFolderCount() const
-{
-	return m_pFolders.GetCount();
+	return m_pFolders.GetNext( pos );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -295,8 +289,6 @@ BOOL CLibraryFolders::IsShareable(LPCTSTR pszPath)
 	CharLower( strUserPathLC.GetBuffer() );
 	strUserPathLC.ReleaseBuffer();
 
-	BOOL bTest = pszPath == strWindowsLC;
-
 	return !( strPathLC == _T( "" ) ||
 		 strPathLC == strWindowsLC.Left( 3 ) ||
 		 strPathLC == strProgramsLC ||
@@ -361,15 +353,15 @@ CAlbumFolder* CLibraryFolders::GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszM
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders virtual album collection search
 
-CAlbumFolder* CLibraryFolders::GetCollection(SHA1* pSHA1)
+CAlbumFolder* CLibraryFolders::GetCollection(const Hashes::Sha1Hash& oSHA1)
 {
-	return GetAlbumRoot()->FindCollection( pSHA1 );
+	return GetAlbumRoot()->FindCollection( oSHA1 );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders mount a collection
 
-BOOL CLibraryFolders::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection)
+BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	BOOL bSuccess = FALSE;
@@ -378,14 +370,14 @@ BOOL CLibraryFolders::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection)
 	
 	if ( pCollection->GetThisURI().GetLength() )
 	{
-		bSuccess |= GetAlbumRoot()->MountCollection( pSHA1, pCollection );
+		bSuccess |= GetAlbumRoot()->MountCollection( oSHA1, pCollection );
 	}
 	
 	if ( pCollection->GetParentURI().GetLength() )
 	{
 		if ( CAlbumFolder* pFolder = GetAlbumTarget( pCollection->GetParentURI(), NULL, NULL ) )
 		{
-			bSuccess |= pFolder->MountCollection( pSHA1, pCollection, TRUE );
+			bSuccess |= pFolder->MountCollection( oSHA1, pCollection, TRUE );
 		}
 	}
 	
@@ -397,63 +389,68 @@ BOOL CLibraryFolders::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection)
 
 void CLibraryFolders::CreateAlbumTree()
 {
-	int nCount = GetAlbumRoot()->GetFolderCount();
+	INT_PTR nCount = GetAlbumRoot()->GetFolderCount();
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriAllFiles ) == NULL )
 	{
-		CAlbumFolder* pAllFiles		= m_pAlbumRoot->AddFolder( CSchema::uriAllFiles );
+		/*CAlbumFolder* pAllFiles		=*/ m_pAlbumRoot->AddFolder( CSchema::uriAllFiles );
 	}
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriApplicationRoot ) == NULL )
 	{
 		CAlbumFolder* pAppRoot		= m_pAlbumRoot->AddFolder( CSchema::uriApplicationRoot );
-		CAlbumFolder* pAppAll		= pAppRoot->AddFolder( CSchema::uriApplicationAll );
+		/*CAlbumFolder* pAppAll		=*/ pAppRoot->AddFolder( CSchema::uriApplicationAll );
 	}
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriBookRoot ) == NULL )
 	{
 		CAlbumFolder* pBookRoot		= m_pAlbumRoot->AddFolder( CSchema::uriBookRoot );
-		CAlbumFolder* pBookAll		= pBookRoot->AddFolder( CSchema::uriBookAll );
+		/*CAlbumFolder* pBookAll		=*/ pBookRoot->AddFolder( CSchema::uriBookAll );
 	}
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriImageRoot ) == NULL )
 	{
 		CAlbumFolder* pImageRoot	= m_pAlbumRoot->AddFolder( CSchema::uriImageRoot );
-		CAlbumFolder* pImageAll		= pImageRoot->AddFolder( CSchema::uriImageAll );
+		/*CAlbumFolder* pImageAll		=*/ pImageRoot->AddFolder( CSchema::uriImageAll );
 	}
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriMusicRoot ) == NULL )
 	{
 		CAlbumFolder* pMusicRoot	= m_pAlbumRoot->AddFolder( CSchema::uriMusicRoot );
-		CAlbumFolder* pMusicAll		= pMusicRoot->AddFolder( CSchema::uriMusicAll );
-		CAlbumFolder* pMusicAlbum	= pMusicRoot->AddFolder( CSchema::uriMusicAlbumCollection );
-		CAlbumFolder* pMusicArtist	= pMusicRoot->AddFolder( CSchema::uriMusicArtistCollection );
-		CAlbumFolder* pMusicGenre	= pMusicRoot->AddFolder( CSchema::uriMusicGenreCollection );
+		/*CAlbumFolder* pMusicAll		=*/ pMusicRoot->AddFolder( CSchema::uriMusicAll );
+		/*CAlbumFolder* pMusicAlbum	=*/ pMusicRoot->AddFolder( CSchema::uriMusicAlbumCollection );
+		/*CAlbumFolder* pMusicArtist	=*/ pMusicRoot->AddFolder( CSchema::uriMusicArtistCollection );
+		/*CAlbumFolder* pMusicGenre	=*/ pMusicRoot->AddFolder( CSchema::uriMusicGenreCollection );
 	}
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriVideoRoot ) == NULL )
 	{
 		CAlbumFolder* pVideoRoot	= m_pAlbumRoot->AddFolder( CSchema::uriVideoRoot );
-		CAlbumFolder* pVideoAll		= pVideoRoot->AddFolder( CSchema::uriVideoAll );
-		CAlbumFolder* pVideoSeries	= pVideoRoot->AddFolder( CSchema::uriVideoSeriesCollection );
-		CAlbumFolder* pVideoFilm	= pVideoRoot->AddFolder( CSchema::uriVideoFilmCollection );
-		CAlbumFolder* pVideoMusic	= pVideoRoot->AddFolder( CSchema::uriVideoMusicCollection );
+		/*CAlbumFolder* pVideoAll		=*/ pVideoRoot->AddFolder( CSchema::uriVideoAll );
+		/*CAlbumFolder* pVideoSeries	=*/ pVideoRoot->AddFolder( CSchema::uriVideoSeriesCollection );
+		/*CAlbumFolder* pVideoFilm	=*/ pVideoRoot->AddFolder( CSchema::uriVideoFilmCollection );
+		/*CAlbumFolder* pVideoMusic	=*/ pVideoRoot->AddFolder( CSchema::uriVideoMusicCollection );
 	}
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriFavouritesFolder ) == NULL )
 	{
-		CAlbumFolder* pFavourites	= m_pAlbumRoot->AddFolder( CSchema::uriFavouritesFolder );
+		/*CAlbumFolder* pFavourites	=*/ m_pAlbumRoot->AddFolder( CSchema::uriFavouritesFolder );
 	}
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriCollectionsFolder ) == NULL )
 	{
-		CAlbumFolder* pCollections	= m_pAlbumRoot->AddFolder( CSchema::uriCollectionsFolder );
+		/*CAlbumFolder* pCollections	=*/ m_pAlbumRoot->AddFolder( CSchema::uriCollectionsFolder );
 	}
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriDocumentRoot ) == NULL )
 	{
 		CAlbumFolder* pDocumentRoot		= m_pAlbumRoot->AddFolder( CSchema::uriDocumentRoot );
-		CAlbumFolder* pDocumentAll		= pDocumentRoot->AddFolder( CSchema::uriDocumentAll );
+		/*CAlbumFolder* pDocumentAll		=*/ pDocumentRoot->AddFolder( CSchema::uriDocumentAll );
+	}
+
+	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriGhostFolder ) == NULL )
+	{
+		/*CAlbumFolder* pGhostFolder	=*/ m_pAlbumRoot->AddFolder( CSchema::uriGhostFolder );
 	}
 
 	if ( m_pAlbumRoot->GetFolderCount() != nCount )
@@ -469,9 +466,9 @@ void CLibraryFolders::CreateAlbumTree()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders file delete handler
 
-void CLibraryFolders::OnFileDelete(CLibraryFile* pFile)
+void CLibraryFolders::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 {
-	if ( m_pAlbumRoot != NULL ) m_pAlbumRoot->OnFileDelete( pFile );
+	if ( m_pAlbumRoot != NULL ) m_pAlbumRoot->OnFileDelete( pFile, bDeleteGhost );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -541,7 +538,7 @@ void CLibraryFolders::Serialize(CArchive& ar, int nVersion)
 	}
 	else
 	{
-		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CLibraryFolder* pFolder = new CLibraryFolder( NULL );
 			pFolder->Serialize( ar, nVersion );
@@ -571,7 +568,7 @@ STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Library(ILibrary FAR* FAR* pp
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryFolders::XLibraryFolders::get__NewEnum(IUnknown FAR* FAR* ppEnum)
+STDMETHODIMP CLibraryFolders::XLibraryFolders::get__NewEnum(IUnknown FAR* FAR* /*ppEnum*/)
 {
 	METHOD_PROLOGUE( CLibraryFolders, LibraryFolders )
 	return E_NOTIMPL;
@@ -615,6 +612,6 @@ STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Item(VARIANT vIndex, ILibrary
 STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CLibraryFolders, LibraryFolders )
-	*pnCount = pThis->GetFolderCount();
+	*pnCount = static_cast< LONG >( pThis->GetFolderCount() );
 	return S_OK;
 }

@@ -38,7 +38,7 @@ public:
 
 // Attributes
 protected:
-	CPtrList	m_pBoxes;
+	CList< CTaskBox* >	m_pBoxes;
 	CTaskBox*	m_pStretch;
 	int			m_nMargin;
 	int			m_nCurve;
@@ -51,7 +51,7 @@ public:
 	CTaskBox*	AddBox(CTaskBox* pBox, POSITION posBefore = NULL);
 	POSITION	GetBoxIterator() const;
 	CTaskBox*	GetNextBox(POSITION& pos) const;
-	int			GetBoxCount() const;
+	INT_PTR		GetBoxCount() const;
 	void		RemoveBox(CTaskBox* pBox);
 	void		ClearBoxes(BOOL bDelete);
 public:
@@ -137,13 +137,13 @@ protected:
 	//{{AFX_MSG(CTaskBox)
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
 	afx_msg void OnNcPaint();
-	afx_msg UINT OnNcHitTest(CPoint point);
+	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
 	afx_msg BOOL OnNcActivate(BOOL bActive);
 	afx_msg void OnPaint();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnNcLButtonUp(UINT nHitTest, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnNcLButtonDown(UINT nHitTest, CPoint point);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

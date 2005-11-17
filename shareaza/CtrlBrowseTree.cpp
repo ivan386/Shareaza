@@ -354,7 +354,7 @@ BOOL CBrowseTreeCtrl::CleanItems(CBrowseTreeItem* pItem, DWORD nCookie, BOOL bVi
 			}
 
 			delete *pChild;
-			MoveMemory( pChild, pChild + 1, 4 * ( pItem->m_nCount - nChild ) );
+			MoveMemory( pChild, pChild + 1, ( pItem->m_nCount - nChild ) * sizeof( CBrowseTreeItem* ) );
 			pItem->m_nCount--;
 		}
 	}
@@ -450,7 +450,7 @@ void CBrowseTreeCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 	CWnd::OnLButtonUp( nFlags, point );
 }
 
-void CBrowseTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+void CBrowseTreeCtrl::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
 {
 	CSingleLock lRoot( &m_csRoot, TRUE );
 	CBrowseTreeItem* pTo = NULL;
@@ -509,7 +509,7 @@ void CBrowseTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			bChanged |= Expand( m_pFocus, TS_TRUE );
 		}
 	}
-	else if ( _istalnum( nChar ) )
+	else if ( _istalnum( TCHAR( nChar ) ) )
 	{
 		CBrowseTreeItem* pStart	= m_pFocus;
 		CBrowseTreeItem* pBase	= pStart ? pStart->m_pParent : m_pRoot;
@@ -577,7 +577,7 @@ void CBrowseTreeCtrl::UpdateScroll()
 	SetScrollInfo( SB_VERT, &pInfo, IsWindowVisible() );
 }
 
-void CBrowseTreeCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CBrowseTreeCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
 	switch ( nSBCode )
 	{
@@ -606,7 +606,7 @@ void CBrowseTreeCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	}
 }
 
-BOOL CBrowseTreeCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+BOOL CBrowseTreeCtrl::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
 	ScrollBy( zDelta * 3 * -ITEM_HEIGHT / WHEEL_DELTA );
 	return TRUE;
@@ -634,7 +634,7 @@ void CBrowseTreeCtrl::ScrollTo(int nPosition)
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseTreeCtrl painting
 
-BOOL CBrowseTreeCtrl::OnEraseBkgnd(CDC* pDC)
+BOOL CBrowseTreeCtrl::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	return TRUE;
 }
@@ -941,7 +941,7 @@ CBrowseTreeItem* CBrowseTreeItem::Add(LPCTSTR pszName)
 
 		CBrowseTreeItem** pList = new CBrowseTreeItem*[ m_nBuffer ];
 
-		if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * 4 );
+		if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
 		if ( m_pList ) delete [] m_pList;
 
 		m_pList = pList;
@@ -966,7 +966,7 @@ CBrowseTreeItem* CBrowseTreeItem::Add(LPCTSTR pszName)
 		}
 	}
 
-	MoveMemory( m_pList + nFirst + 1, m_pList + nFirst, ( m_nCount - nFirst ) << 2 );
+	MoveMemory( m_pList + nFirst + 1, m_pList + nFirst, ( m_nCount - nFirst ) * sizeof( CBrowseTreeItem* ) );
 	m_nCount++;
 
 	return m_pList[ nFirst ] = new CBrowseTreeItem( this );
@@ -980,7 +980,7 @@ CBrowseTreeItem* CBrowseTreeItem::Add(CBrowseTreeItem* pNewItem)
 
 		CBrowseTreeItem** pList = new CBrowseTreeItem*[ m_nBuffer ];
 
-		if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * 4 );
+		if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CBrowseTreeItem* ) );
 		if ( m_pList ) delete [] m_pList;
 
 		m_pList = pList;
@@ -1005,7 +1005,7 @@ CBrowseTreeItem* CBrowseTreeItem::Add(CBrowseTreeItem* pNewItem)
 		}
 	}
 
-	MoveMemory( m_pList + nFirst + 1, m_pList + nFirst, ( m_nCount - nFirst ) << 2 );
+	MoveMemory( m_pList + nFirst + 1, m_pList + nFirst, ( m_nCount - nFirst ) * sizeof( CBrowseTreeItem* ) );
 	m_nCount++;
 
 	return m_pList[ nFirst ] = pNewItem;
@@ -1029,7 +1029,7 @@ void CBrowseTreeItem::Delete(CBrowseTreeItem* pItem)
 	{
 		if ( *pChild == pItem )
 		{
-			MoveMemory( pChild, pChild + 1, 4 * ( nChild - 1 ) );
+			MoveMemory( pChild, pChild + 1, ( nChild - 1 ) * sizeof( CBrowseTreeItem* ) );
 			m_nCount--;
 			break;
 		}
@@ -1044,7 +1044,7 @@ void CBrowseTreeItem::Delete(int nItem)
 
 	ASSERT( m_pList[ nItem ]->m_bSelected == FALSE );
 	delete m_pList[ nItem ];
-	MoveMemory( m_pList + nItem, m_pList + nItem + 1, 4 * ( m_nCount - nItem - 1 ) );
+	MoveMemory( m_pList + nItem, m_pList + nItem + 1, ( m_nCount - nItem - 1 ) * sizeof( CBrowseTreeItem* ) );
 	m_nCount--;
 }
 
@@ -1139,7 +1139,7 @@ void CBrowseTreeItem::AddXML(CXMLElement* pXML)
 {
 	CString strURI = pXML->GetAttributeValue( CXMLAttribute::schemaName );
 
-	if ( m_pSchema = SchemaCache.Get( strURI ) )
+	if ( ( m_pSchema = SchemaCache.Get( strURI ) ) != NULL )
 	{
 		m_bBold		= strURI == CSchema::uriFavouritesFolder;
 		m_nIcon16	= m_pSchema->m_nIcon16;

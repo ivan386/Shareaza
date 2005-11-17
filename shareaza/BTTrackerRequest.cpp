@@ -59,8 +59,8 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	// Create the basic URL
 	strURL.Format( _T("%s?info_hash=%s&peer_id=%s&port=%i&uploaded=%I64i&downloaded=%I64i&left=%I64i&compact=1"),
 		(LPCTSTR)pDownload->m_pTorrent.m_sTracker,
-		(LPCTSTR)Escape( &pDownload->m_pBTH ),
-		(LPCTSTR)Escape( &m_pDownload->m_pPeerID ),
+		(LPCTSTR)Escape( pDownload->m_oBTH ),
+		(LPCTSTR)Escape( m_pDownload->m_pPeerID ),
 		Network.m_pHost.sin_port ? (int)htons( Network.m_pHost.sin_port ) : (int)Settings.Connection.InPort,
 		(QWORD)pDownload->m_nTorrentUploaded,
 		(QWORD)pDownload->m_nTorrentDownloaded,
@@ -155,16 +155,47 @@ void CBTTrackerRequest::SendStopped(CDownloadBase* pDownload)
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest escaper
 
-CString CBTTrackerRequest::Escape(SHA1* pSHA1)
+CString CBTTrackerRequest::Escape(const Hashes::BtHash& oBTH)
 {
 	static LPCTSTR pszHex = _T("0123456789ABCDEF");
 	
 	CString str;
-	LPTSTR psz = str.GetBuffer( sizeof(SHA1) * 3 + 1 );
+    LPTSTR psz = str.GetBuffer( Hashes::BtHash::byteCount * 3 + 1 );
 	
-	for ( int nByte = 0 ; nByte < sizeof(SHA1) ; nByte++ )
+	for ( int nByte = 0 ; nByte < Hashes::BtHash::byteCount ; nByte++ )
 	{
-		int nValue = (int)(unsigned char)pSHA1->n[ nByte ];
+		int nValue = oBTH[ nByte ];
+		
+		if (	( nValue >= '0' && nValue <= '9' ) ||
+				( nValue >= 'a' && nValue <= 'z' ) ||
+				( nValue >= 'A' && nValue <= 'Z' ) )
+		{
+			*psz++ = (TCHAR)nValue;
+		}
+		else
+		{
+			*psz++ = '%';
+			*psz++ = pszHex[ ( nValue >> 4 ) & 15 ];
+			*psz++ = pszHex[ nValue & 15 ];
+		}
+	}
+	
+	*psz = 0;
+	str.ReleaseBuffer();
+	
+	return str;
+}
+
+CString CBTTrackerRequest::Escape(const Hashes::BtGuid& oGUID)
+{
+	static LPCTSTR pszHex = _T("0123456789ABCDEF");
+	
+	CString str;
+    LPTSTR psz = str.GetBuffer( Hashes::BtGuid::byteCount * 3 + 1 );
+	
+	for ( int nByte = 0 ; nByte < Hashes::BtGuid::byteCount ; nByte++ )
+	{
+		int nValue = oGUID[ nByte ];
 		
 		if (	( nValue >= '0' && nValue <= '9' ) ||
 				( nValue >= 'a' && nValue <= 'z' ) ||
@@ -288,7 +319,8 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	CBENode* pPeers = pRoot->GetNode( "peers" );
 	int nCount = 0;
 	
-	if ( pPeers->IsType( CBENode::beList )  && ( ( ! m_pDownload->IsMoving() ) || ( Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED ) ) )
+	if ( pPeers->IsType( CBENode::beList )
+		&& ( !m_pDownload->IsMoving() || Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED ) )
 	{
 		for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
 		{
@@ -309,19 +341,22 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 			theApp.Message( MSG_DEBUG, _T("Tracker: %s:%i"),
 				(LPCTSTR)CString( inet_ntoa( saPeer.sin_addr ) ), htons( saPeer.sin_port ) );
 			
-			if ( pID->IsType( CBENode::beString ) && pID->m_nValue == sizeof(SHA1) )
+			if ( pID->IsType( CBENode::beString ) && pID->m_nValue == Hashes::BtGuid::byteCount )
 			{
-				nCount += m_pDownload->AddSourceBT( (SHA1*)pID->m_pValue,
+				Hashes::BtGuid tmp( *static_cast< Hashes::BtGuid::RawStorage* >(
+					pID->m_pValue ) );
+				nCount += m_pDownload->AddSourceBT( tmp,
 					&saPeer.sin_addr, ntohs( saPeer.sin_port ) );
 			}
 			else
 			{
-				nCount += m_pDownload->AddSourceBT( NULL,
+				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(),
 					&saPeer.sin_addr, ntohs( saPeer.sin_port ) );
 			}
 		}
 	}
-	else if ( pPeers->IsType( CBENode::beString ) && ( ( ! m_pDownload->IsMoving() ) || ( Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED  ) ) )
+	else if ( pPeers->IsType( CBENode::beString )
+		&& ( !m_pDownload->IsMoving() || Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED  ) )
 	{
 		if ( 0 == ( pPeers->m_nValue % 6 ) )
 		{
@@ -332,7 +367,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 				IN_ADDR* pAddress = (IN_ADDR*)pPointer;
 				WORD nPort = *(WORD*)( pPointer + 4 );
 				
-				nCount += m_pDownload->AddSourceBT( NULL, pAddress, ntohs( nPort ) );
+                nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
 			}
 		}
 	}

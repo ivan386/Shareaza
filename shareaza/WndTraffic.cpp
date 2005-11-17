@@ -103,10 +103,10 @@ void CTrafficWnd::FindFreeUnique()
 
 	for ( m_nUnique = 1 ; m_nUnique < 1000 ; m_nUnique++ )
 	{
-		CTrafficWnd* pChild = NULL;
 		BOOL bAvailable		= TRUE;
-
-		while ( pChild = (CTrafficWnd*)pWindows->Find( RUNTIME_CLASS(CTrafficWnd), pChild ) )
+		CTrafficWnd* pChild = NULL;
+		
+		while ( ( pChild = (CTrafficWnd*)pWindows->Find( RUNTIME_CLASS(CTrafficWnd), pChild ) ) != NULL )
 		{
 			if ( pChild != this && pChild->m_nUnique == m_nUnique )
 			{
@@ -145,12 +145,12 @@ void CTrafficWnd::OnPaint()
 	m_pGraph->BufferedPaint( &dc, &rc );
 }
 
-void CTrafficWnd::OnTimer(UINT nIDEvent)
+void CTrafficWnd::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( nIDEvent == 2 && m_pGraph->Update() ) Invalidate();
 }
 
-void CTrafficWnd::OnContextMenu(CWnd* pWnd, CPoint point)
+void CTrafficWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	TrackPopupMenu( _T("CTrafficWnd"), point, ID_TRAFFIC_SETUP );
 }
@@ -215,7 +215,7 @@ void CTrafficWnd::OnTrafficClear()
 	m_pGraph->Clear();
 }
 
-void CTrafficWnd::OnLButtonDblClk(UINT nFlags, CPoint point)
+void CTrafficWnd::OnLButtonDblClk(UINT /*nFlags*/, CPoint /*point*/)
 {
 	PostMessage( WM_COMMAND, ID_TRAFFIC_SETUP );
 }

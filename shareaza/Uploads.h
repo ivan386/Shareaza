@@ -42,16 +42,16 @@ public:
 	BOOL		m_bStable;			// Stable flag
 	DWORD		m_nBestSpeed;		// Best speed
 protected:
-	CPtrList	m_pList;
+	CList< CUploadTransfer* >	m_pList;
 
 // Operations
 public:
 	void		Clear(BOOL bMessage = TRUE);
-	int			GetCount(CUploadTransfer* pExcept, int nState = -1) const;
+	INT_PTR		GetCount(CUploadTransfer* pExcept, int nState = -1) const;
 	int			GetTorrentCount(int nState) const;
 public:
 	BOOL		AllowMoreTo(IN_ADDR* pAddress) const;
-	BOOL		CanUploadFileTo(IN_ADDR* pAddress, const SHA1* pSHA1 = NULL) const;
+	BOOL		CanUploadFileTo(IN_ADDR* pAddress, const Hashes::Sha1Hash& oSHA1) const;
 	BOOL		EnforcePerHostLimit(CUploadTransfer* pUpload, BOOL bRequest = FALSE);
 public:
 	void		SetStable(DWORD nSpeed);
@@ -72,7 +72,7 @@ public:
 	
 	inline CUploadTransfer* GetNext(POSITION& pos) const
 	{
-		return (CUploadTransfer*)m_pList.GetNext( pos );
+		return m_pList.GetNext( pos );
 	}
 	
 	inline BOOL Check(CUploadTransfer* pUpload) const
@@ -80,7 +80,7 @@ public:
 		return m_pList.Find( pUpload ) != NULL;
 	}
 	
-	inline int GetTransferCount() const
+	inline INT_PTR GetTransferCount() const
 	{
 		return GetCount( NULL, -2 );
 	}

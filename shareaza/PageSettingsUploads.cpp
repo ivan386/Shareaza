@@ -144,7 +144,7 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	m_wndQueueDelete.EnableWindow( m_wndQueues.GetSelectedCount() > 0 );
 
 	m_bQueuesChanged = FALSE;
-
+	
 	// Update value in limit combo box
 	if ( Settings.Bandwidth.Uploads )
 	{
@@ -194,12 +194,12 @@ void CUploadsSettingsPage::UpdateQueues()
 		}
 
 		// If the queue is inactive and we're in basic GUI mode
-		if( ( bDonkeyOnlyDisabled ) && (Settings.General.GUIMode == GUI_BASIC) )
+		if ( ( bDonkeyOnlyDisabled ) && (Settings.General.GUIMode == GUI_BASIC) )
 			continue;	// Skip drawing this queue
 
 		CLiveItem* pItem = pQueues.Add( pQueue );
 		
-		if( ( pQueue->m_bEnable ) && ( ! bDonkeyOnlyDisabled ) )
+		if ( ( pQueue->m_bEnable ) && ( ! bDonkeyOnlyDisabled ) )
 		{
 			DWORD nBandwidth = nLimit * pQueue->m_nBandwidthPoints / max( 1, UploadQueues.GetTotalBandwidthPoints( TRUE ) );
 			pItem->Set( 2, Settings.SmartVolume( nBandwidth * 8, FALSE, TRUE ) + '+' );
@@ -259,15 +259,15 @@ void CUploadsSettingsPage::OnAgentRemove()
 	m_wndAgentRemove.EnableWindow( FALSE );
 }
 
-void CUploadsSettingsPage::OnItemChangedQueues(NMHDR* pNMHDR, LRESULT* pResult) 
+void CUploadsSettingsPage::OnItemChangedQueues(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	m_wndQueueEdit.EnableWindow( m_wndQueues.GetSelectedCount() == 1 );
 	m_wndQueueDelete.EnableWindow( m_wndQueues.GetSelectedCount() > 0 );
 	*pResult = 0;
 }
 
-void CUploadsSettingsPage::OnDblClkQueues(NMHDR* pNMHDR, LRESULT* pResult) 
+void CUploadsSettingsPage::OnDblClkQueues(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
 {
 	PostMessage( WM_COMMAND, MAKELONG( IDC_QUEUE_EDIT, BN_CLICKED ) );
 	*pResult = 0;
@@ -363,9 +363,9 @@ BOOL CUploadsSettingsPage::OnKillActive()
 void CUploadsSettingsPage::OnOK()
 {
 	UpdateData();
-
-	DWORD nOldLimit = Settings.Bandwidth.Uploads;
 	
+	DWORD nOldLimit = Settings.Bandwidth.Uploads;
+
 	Settings.Uploads.MaxPerHost			= m_nMaxPerHost;
 	Settings.Uploads.SharePartials		= m_bSharePartials;
 	Settings.Uploads.SharePreviews		= m_bSharePreviews;
@@ -380,7 +380,7 @@ void CUploadsSettingsPage::OnOK()
 		Settings.Bandwidth.Uploads = min ( Settings.Bandwidth.Uploads, ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
 	}
 	*/
-
+	
 	// Warn the user about the effects of upload limiting
 	if ( ( ! Settings.Live.UploadLimitWarning ) && ( Settings.Bandwidth.Uploads > 0 ) && ( Settings.Bandwidth.Uploads != nOldLimit ) )
 	{
@@ -393,7 +393,7 @@ void CUploadsSettingsPage::OnOK()
 			Settings.Live.UploadLimitWarning = TRUE;
 		}
 	}
-	
+
 	// Set blocked user agents/strings
 	Settings.Uploads.BlockAgents.Empty();
 	
@@ -418,7 +418,7 @@ void CUploadsSettingsPage::OnOK()
 		m_bQueuesChanged = TRUE;
 	}
 
-	UploadQueues.Validate();
+		UploadQueues.Validate();
 
 	if ( m_bQueuesChanged )
 	{

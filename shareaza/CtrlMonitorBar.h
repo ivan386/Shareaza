@@ -53,8 +53,8 @@ protected:
 // Overrides
 protected:
 	virtual CSize	CalcFixedLayout(BOOL bStretch, BOOL bHorz);
-	virtual void	OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHandler) {};
-	virtual int		OnToolHitTest(CPoint point, TOOLINFO* pTI) const { return -1; }
+	virtual void	OnUpdateCmdUI(CFrameWnd* /*pTarget*/, BOOL /*bDisableIfNoHandler*/) {};
+	virtual INT_PTR	OnToolHitTest(CPoint /*point*/, TOOLINFO* /*pTI*/) const { return -1; }
 	virtual void	DoPaint(CDC* pDC);
 protected:
 	void			PaintHistory(CDC* pDC, CRect* prc);
@@ -67,7 +67,7 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };

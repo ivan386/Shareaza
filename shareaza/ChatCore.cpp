@@ -60,12 +60,7 @@ POSITION CChatCore::GetIterator() const
 
 CChatSession* CChatCore::GetNext(POSITION& pos) const
 {
-	return (CChatSession*)m_pSessions.GetNext( pos );
-}
-
-int CChatCore::GetCount() const
-{
-	return m_pSessions.GetCount();
+	return m_pSessions.GetNext( pos );
 }
 
 BOOL CChatCore::Check(CChatSession* pSession) const
@@ -88,7 +83,7 @@ void CChatCore::OnAccept(CConnection* pConnection, PROTOCOLID nProtocol)
 	pSession->AttachTo( pConnection );
 }
 
-BOOL CChatCore::OnPush(GGUID* pGUID, CConnection* pConnection)
+BOOL CChatCore::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)
 {
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
@@ -96,7 +91,7 @@ BOOL CChatCore::OnPush(GGUID* pGUID, CConnection* pConnection)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CChatSession* pSession = GetNext( pos );
-		if ( pSession->OnPush( pGUID, pConnection ) ) return TRUE;
+		if ( pSession->OnPush( oGUID, pConnection ) ) return TRUE;
 	}
 	
 	return FALSE;
@@ -128,13 +123,12 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 		pSession = GetNext( pos );
 
 		// If we already have a session
-		if ( ( ( ! pSession->m_bGUID ) || ( pSession->m_pGUID == pClient->m_pGUID ) ) &&
+		if ( ( ( ! pSession->m_oGUID ) || validAndEqual( pSession->m_oGUID, pClient->m_oGUID ) ) &&
 			 ( pSession->m_pHost.sin_addr.S_un.S_addr == pClient->m_pHost.sin_addr.S_un.S_addr ) &&
 			 ( pSession->m_nProtocol == PROTOCOL_ED2K ) )
 		{
 			// Update details
-			pSession->m_bGUID		= pClient->m_bGUID;
-			pSession->m_pGUID		= pClient->m_pGUID;
+			pSession->m_oGUID		= pClient->m_oGUID;
 			pSession->m_pHost		= pClient->m_pHost;
 			pSession->m_sAddress	= pClient->m_sAddress;
 			pSession->m_sUserNick	= pClient->m_sNick;
@@ -160,8 +154,7 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 	pSession->m_tConnected	= GetTickCount();
 
 	// Set details
-	pSession->m_bGUID		= pClient->m_bGUID;
-	pSession->m_pGUID		= pClient->m_pGUID;
+	pSession->m_oGUID		= pClient->m_oGUID;
 	pSession->m_pHost		= pClient->m_pHost;
 	pSession->m_sAddress	= pClient->m_sAddress;
 	pSession->m_sUserNick	= pClient->m_sNick;

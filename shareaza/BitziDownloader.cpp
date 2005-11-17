@@ -25,6 +25,7 @@
 #include "Library.h"
 #include "SharedFile.h"
 #include "SHA.h"
+#include "TigerTree.h"
 #include "XML.h"
 #include "Schema.h"
 #include "SchemaCache.h"
@@ -68,10 +69,10 @@ CBitziDownloader::~CBitziDownloader()
 void CBitziDownloader::AddFile(DWORD nIndex)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	m_pFiles.AddTail( (LPVOID)nIndex );
+	m_pFiles.AddTail( nIndex );
 }
 
-int CBitziDownloader::GetFileCount()
+INT_PTR CBitziDownloader::GetFileCount()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	return m_pFiles.GetCount();
@@ -169,7 +170,7 @@ void CBitziDownloader::OnRun()
 			break;
 		}
 
-		m_nFileIndex = (DWORD)m_pFiles.RemoveHead();
+		m_nFileIndex = m_pFiles.RemoveHead();
 
 		m_pSection.Unlock();
 
@@ -220,7 +221,7 @@ void CBitziDownloader::OnRun()
 		if ( m_pXML ) delete m_pXML;
 		m_pXML = NULL;
 
-		Sleep( min( m_nDelay, DWORD(500) ) );
+		Sleep( min( m_nDelay, 500u ) );
 	}
 
 	if ( m_hSession != NULL && ! m_bFinished ) InternetCloseHandle( m_hSession );
@@ -241,16 +242,15 @@ BOOL CBitziDownloader::BuildRequest()
 		if ( ! pFile ) return FALSE;
 
 		m_sFileName = pFile->m_sName;
-		m_sFileHash.Empty();
-
-		if ( pFile->m_bSHA1 ) m_sFileHash = CSHA::HashToString( &pFile->m_pSHA1 );
-
+		m_sFileSHA1 = pFile->m_oSHA1.toString();
+		m_sFileTiger = pFile->m_oTiger.toString();
 	}
 
-	if ( m_sFileHash.IsEmpty() ) return FALSE;
+	if ( m_sFileSHA1.IsEmpty() || m_sFileTiger.IsEmpty() ) return FALSE;
 
 	m_sURL = Settings.Library.BitziXML;
-	Replace( m_sURL, _T("(SHA1)"), m_sFileHash );
+	Replace( m_sURL, _T("(SHA1)"), m_sFileSHA1 );
+	Replace( m_sURL, _T("(TTH)"), m_sFileTiger );
 
 	return TRUE;
 }
@@ -283,8 +283,8 @@ BOOL CBitziDownloader::ExecuteRequest()
 
 	if ( m_hSession == NULL )
 	{
-		m_hSession = InternetConnect( m_hInternet, strHost, nPort,
-			NULL, NULL, INTERNET_SERVICE_HTTP , 0, 0 );
+		m_hSession = InternetConnect( m_hInternet, strHost, INTERNET_PORT( nPort ),
+			NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0 );
 		if ( m_hSession == NULL ) return FALSE;
 	}
 
@@ -295,7 +295,7 @@ BOOL CBitziDownloader::ExecuteRequest()
 	{
 		if ( m_hSession != NULL ) InternetCloseHandle( m_hSession );
 
-		m_hSession = InternetConnect( m_hInternet, strHost, nPort,
+		m_hSession = InternetConnect( m_hInternet, strHost, INTERNET_PORT( nPort ),
 			NULL, NULL, INTERNET_SERVICE_HTTP , 0, 0 );
 
 		if ( m_hSession == NULL ) return FALSE;

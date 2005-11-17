@@ -46,11 +46,6 @@ protected:
 	CRichElement*	m_pdDownloadsMany;
 	CString			m_sDownloadsMany;
 protected:
-	CPtrArray			m_pList;
-	CFont				m_pFont;
-	HCURSOR				m_hHand;
-	CDownloadTipCtrl	m_wndTip;
-
 	struct Item
 	{
 		CDownload*	m_pDownload;
@@ -60,6 +55,11 @@ protected:
 		QWORD		m_nComplete;
 		BOOL		m_bPaused;
 	};
+
+	CArray< Item* >		m_pList;
+	CFont				m_pFont;
+	HCURSOR				m_hHand;
+	CDownloadTipCtrl	m_wndTip;
 
 	Item*		m_pHover;
 
@@ -83,7 +83,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
@@ -104,10 +104,6 @@ protected:
 	CRichElement*	m_pdLibraryVolume;
 	CRichElement*	m_pdLibraryHashRemaining;
 protected:
-	CPtrArray		m_pList;
-	CFont			m_pFont;
-	HCURSOR			m_hHand;
-
 	struct Item
 	{
 		CLibraryRecent*	m_pRecent;
@@ -115,6 +111,10 @@ protected:
 		CString			m_sText;
 		int				m_nIcon16;
 	};
+
+	CArray< Item* >	m_pList;
+	CFont			m_pFont;
+	HCURSOR			m_hHand;
 
 	Item*		m_pHover;
 
@@ -137,7 +137,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

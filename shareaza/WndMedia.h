@@ -44,7 +44,7 @@ protected:
 // Operations
 public:
 	virtual void OnSkinChange();
-	virtual BOOL OnDropFiles(CStringList& pFiles, const CPoint& ptScreen, BOOL bDrop);
+	virtual BOOL OnDropFiles(CList< CString >& pFiles, const CPoint& ptScreen, BOOL bDrop);
 public:
 	virtual BOOL PlayFile(LPCTSTR pszFile);
 	virtual BOOL EnqueueFile(LPCTSTR pszFile);
@@ -70,10 +70,10 @@ protected:
 	afx_msg BOOL OnNcActivate(BOOL bActive);
 	//}}AFX_MSG
 
-	afx_msg LONG OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnMediaKey(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnDevModeChange(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnDisplayChange(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnMediaKey(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnDevModeChange(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnDisplayChange(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 
 	DECLARE_MESSAGE_MAP()

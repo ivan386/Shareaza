@@ -38,7 +38,7 @@ static char THIS_FILE[]=__FILE__;
 
 CQueryHashGroup::CQueryHashGroup(DWORD nHash)
 {
-	m_nHash = nHash ? nHash : (DWORD)pow( 2, Settings.Library.QueryRouteSize );
+	m_nHash = nHash ? nHash : 1u << Settings.Library.QueryRouteSize;
 	m_pHash = new BYTE[ m_nHash ];
 	ZeroMemory( m_pHash, m_nHash );
 	m_nCount = 0;

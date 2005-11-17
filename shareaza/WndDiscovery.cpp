@@ -258,12 +258,12 @@ void CDiscoveryWnd::OnSize(UINT nType, int cx, int cy)
 	m_wndList.SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOZORDER );
 }
 
-void CDiscoveryWnd::OnTimer(UINT nIDEvent) 
+void CDiscoveryWnd::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( ( nIDEvent == 1 ) && ( IsPartiallyVisible() ) ) Update();
 }
 
-void CDiscoveryWnd::OnDblClkList(NMHDR* pNMHDR, LRESULT* pResult)
+void CDiscoveryWnd::OnDblClkList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
 	OnDiscoveryEdit();
 	*pResult = 0;
@@ -276,7 +276,7 @@ void CDiscoveryWnd::OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CDiscoveryWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CDiscoveryWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
 	TrackPopupMenu( _T("CDiscoveryWnd"), point, ID_DISCOVERY_EDIT );
 }

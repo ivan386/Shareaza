@@ -53,14 +53,14 @@ public:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
-	afx_msg UINT OnNcHitTest(CPoint point);
+	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
 	afx_msg BOOL OnNcActivate(BOOL bActive);
 	afx_msg void OnNcPaint();
 	afx_msg void OnNcLButtonDown(UINT nHitTest, CPoint point);
 	afx_msg void OnNcLButtonUp(UINT nHitTest, CPoint point);
 	afx_msg void OnNcLButtonDblClk(UINT nHitTest, CPoint point);
 	afx_msg void OnNcMouseMove(UINT nHitTest, CPoint point);
-	afx_msg LONG OnSetText(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);
 
 };
 

@@ -176,7 +176,7 @@ void CChatFrame::SetDesktopMode(BOOL bDesktop)
 	}
 }
 
-void CChatFrame::SetAlert(BOOL bAlert)
+void CChatFrame::SetAlert(BOOL /*bAlert*/)
 {
 	PostMessage( WM_TIMER, 1 );
 }
@@ -200,7 +200,7 @@ BOOL CChatFrame::PreTranslateMessage(MSG* pMsg)
 			
 			m_pHistory.Add( m_sCurrent );
 			if ( m_pHistory.GetSize() > EDIT_HISTORY ) m_pHistory.RemoveAt( 0 );
-			m_nHistory = m_pHistory.GetSize();
+			m_nHistory = static_cast< int >( m_pHistory.GetSize() );
 			
 			m_sCurrent.Empty();
 			m_wndEdit.SetWindowText( m_sCurrent );
@@ -209,7 +209,7 @@ BOOL CChatFrame::PreTranslateMessage(MSG* pMsg)
 		else if ( pMsg->wParam == VK_ESCAPE )
 		{
 			m_wndEdit.SetWindowText( _T("") );
-			m_nHistory = m_pHistory.GetSize();
+			m_nHistory = static_cast< int >( m_pHistory.GetSize() );
 			m_sCurrent.Empty();
 			return TRUE;
 		}
@@ -276,7 +276,7 @@ void CChatFrame::MoveHistory(int nDelta)
 	}
 	
 	m_nHistory += nDelta;
-	m_nHistory = max( 0, min( m_pHistory.GetSize(), m_nHistory ) );
+	m_nHistory = (int)max( 0, min( m_pHistory.GetSize(), m_nHistory ) );
 	
 	if ( m_nHistory == m_pHistory.GetSize() )
 	{
@@ -408,11 +408,11 @@ void CChatFrame::OnLocalText(LPCTSTR pszText)
 	}
 }
 
-void CChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
+void CChatFrame::OnLocalMessage(BOOL /*bAction*/, LPCTSTR /*pszText*/)
 {
 }
 
-void CChatFrame::OnLocalCommand(LPCTSTR pszCommand, LPCTSTR pszMessage)
+void CChatFrame::OnLocalCommand(LPCTSTR pszCommand, LPCTSTR /*pszMessage*/)
 {
 	if ( _tcscmp( pszCommand, _T("/clear") ) == 0 )
 	{
@@ -569,7 +569,7 @@ void CChatFrame::OnChatDisconnect()
 /////////////////////////////////////////////////////////////////////////////
 // CChatFrame message handlers
 
-void CChatFrame::OnTimer(UINT nIDEvent) 
+void CChatFrame::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( nIDEvent == 1 )
 	{
@@ -586,7 +586,8 @@ void CChatFrame::OnTimer(UINT nIDEvent)
 			{
 				BOOL (WINAPI *pfnFlashWindowEx)(PFLASHWINFO pfwi);
 				
-				if ( (FARPROC&)pfnFlashWindowEx = GetProcAddress( hUser, "FlashWindowEx" ) )
+				(FARPROC&)pfnFlashWindowEx = GetProcAddress( hUser, "FlashWindowEx" );
+				if ( pfnFlashWindowEx )
 				{
 					FLASHWINFO pFWX;
 					
@@ -611,13 +612,13 @@ void CChatFrame::OnSetFocus(CWnd* pOldWnd)
 	m_wndEdit.SetFocus();
 }
 
-void CChatFrame::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CChatFrame::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
 {
 	lpMeasureItemStruct->itemWidth	= 20;
 	lpMeasureItemStruct->itemHeight	= 22;
 }
 
-void CChatFrame::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CChatFrame::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	CDC* pDC = CDC::FromHandle( lpDrawItemStruct->hDC );
 	CRect rc( &lpDrawItemStruct->rcItem );
@@ -638,7 +639,7 @@ void CChatFrame::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 	}
 }
 
-void CChatFrame::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult)
+void CChatFrame::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
 {
 	if ( CRichElement* pElement = pNotify->pElement )
 	{

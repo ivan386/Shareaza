@@ -38,7 +38,7 @@ public:
 
 // Attributes
 protected:
-	CObArray		m_pPages;
+	CArray< CSettingsPage* > m_pPages;
 	CSettingsPage*	m_pPage;
 	CSettingsPage*	m_pFirst;
 	CSize			m_szPages;
@@ -61,17 +61,17 @@ protected:
 public:
 	void			AddPage(CSettingsPage* pPage, LPCTSTR pszCaption = NULL);
 	void			AddGroup(CSettingsPage* pPage, LPCTSTR pszCaption = NULL);
-	CSettingsPage*	GetPage(int nPage) const;
+	CSettingsPage*	GetPage(INT_PTR nPage) const;
 	CSettingsPage*	GetPage(CRuntimeClass* pClass) const;
 	CSettingsPage*	GetPage(LPCTSTR pszClass) const;
-	int				GetPageIndex(CSettingsPage* pPage) const;
-	int				GetPageCount() const;
+	INT_PTR			GetPageIndex(CSettingsPage* pPage) const;
+	INT_PTR			GetPageCount() const;
 	CSettingsPage*	GetActivePage() const;
 	BOOL			SetActivePage(CSettingsPage* pPage);
 	BOOL			SetActivePage(int nPage);
 	BOOL			IsModified() const;
 	void			SetModified(BOOL bChanged = TRUE);
-	int				DoModal();
+	INT_PTR			DoModal();
 protected:
 	void			BuildTree();
 	void			Layout();

@@ -33,7 +33,7 @@ class CRouteCacheItem
 public:
 	CRouteCacheItem*	m_pNext;
 	DWORD				m_tAdded;
-	GGUID				m_pGUID;
+	Hashes::Guid		m_oGUID;
 	const CNeighbour*	m_pNeighbour;
 	SOCKADDR_IN			m_pEndpoint;
 };
@@ -58,8 +58,8 @@ protected:
 
 // Operations
 public:
-	CRouteCacheItem*	Find(const GGUID* pGUID);
-	CRouteCacheItem*	Add(const GGUID* pGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD nTime = 0);
+	CRouteCacheItem*	Find(const Hashes::Guid& oGUID);
+	CRouteCacheItem*	Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD nTime = 0);
 	void				Remove(CNeighbour* pNeighbour);
 	void				Resize(DWORD nSize);
 	DWORD				GetNextSize(DWORD nDesired);
@@ -89,13 +89,13 @@ protected:
 // Operations
 public:
 	void		SetDuration(DWORD nSeconds);
-	BOOL		Add(const GGUID* pGUID, const CNeighbour* pNeighbour);
-	BOOL		Add(const GGUID* pGUID, const SOCKADDR_IN* pEndpoint);
+	BOOL		Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour);
+	BOOL		Add(const Hashes::Guid& oGUID, const SOCKADDR_IN* pEndpoint);
 	void		Remove(CNeighbour* pNeighbour);
 	void		Clear();
 public:
-	CRouteCacheItem*	Add(const GGUID* pGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD tAdded);
-	CRouteCacheItem*	Lookup(const GGUID* pGUID, CNeighbour** ppNeighbour = NULL, SOCKADDR_IN* pEndpoint = NULL);
+	CRouteCacheItem*	Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD tAdded);
+	CRouteCacheItem*	Lookup(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour = NULL, SOCKADDR_IN* pEndpoint = NULL);
 
 };
 

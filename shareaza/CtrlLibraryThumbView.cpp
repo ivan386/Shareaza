@@ -155,7 +155,7 @@ void CLibraryThumbView::Update()
 			if ( pThumb == m_pFirst ) m_pFirst = NULL;
 
 			delete pThumb;
-			MoveMemory( pList, pList + 1, 4 * ( m_nCount - nItem ) );
+			MoveMemory( pList, pList + 1, ( m_nCount - nItem ) * sizeof *pList );
 			m_nCount--;
 
 			bChanged = TRUE;
@@ -185,7 +185,7 @@ void CLibraryThumbView::Update()
 			{
 				m_nBuffer += 64;
 				CLibraryThumbItem** pList = new CLibraryThumbItem*[ m_nBuffer ];
-				if ( m_nCount ) CopyMemory( pList, m_pList, 4 * m_nCount );
+				if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CLibraryThumbItem* ) );
 				if ( m_pList ) delete [] m_pList;
 				m_pList = pList;
 			}
@@ -239,7 +239,7 @@ BOOL CLibraryThumbView::Select(DWORD nObject)
 	return TRUE;
 }
 
-DWORD CLibraryThumbView::HitTestIndex(const CPoint& point) const
+DWORD_PTR CLibraryThumbView::HitTestIndex(const CPoint& point) const
 {
 	CLibraryThumbItem* pThumb = HitTest( point );
 	return ( pThumb ) ? pThumb->m_nIndex : 0;
@@ -465,7 +465,7 @@ void CLibraryThumbView::UpdateScroll()
 	Invalidate();
 }
 
-void CLibraryThumbView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CLibraryThumbView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
 	CRect rc;
 	GetClientRect( &rc );
@@ -499,7 +499,7 @@ void CLibraryThumbView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBa
 	}
 }
 
-BOOL CLibraryThumbView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+BOOL CLibraryThumbView::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
 	ScrollBy( zDelta * -m_szBlock.cy / WHEEL_DELTA / 2 );
 	return TRUE;
@@ -519,7 +519,7 @@ void CLibraryThumbView::ScrollTo(int nPosition)
 	RedrawWindow( NULL, NULL, RDW_INVALIDATE );
 }
 
-void CLibraryThumbView::OnTimer(UINT nIDEvent)
+void CLibraryThumbView::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -676,7 +676,7 @@ void CLibraryThumbView::OnMouseMove(UINT nFlags, CPoint point)
 	CLibraryFileView::OnMouseMove( nFlags, point );
 }
 
-void CLibraryThumbView::OnLButtonUp(UINT nFlags, CPoint point)
+void CLibraryThumbView::OnLButtonUp(UINT nFlags, CPoint /*point*/)
 {
 	ReleaseCapture();
 	m_bDrag = FALSE;
@@ -687,7 +687,7 @@ void CLibraryThumbView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 }
 
-void CLibraryThumbView::OnLButtonDblClk(UINT nFlags, CPoint point)
+void CLibraryThumbView::OnLButtonDblClk(UINT /*nFlags*/, CPoint /*point*/)
 {
 	SendMessage( WM_COMMAND, ID_LIBRARY_LAUNCH );
 }
@@ -757,7 +757,7 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 
 	for ( POSITION pos = m_pSelThumb.GetHeadPosition() ; pos ; )
 	{
-		CLibraryThumbItem* pThumb = (CLibraryThumbItem*)m_pSelThumb.GetNext( pos );
+		CLibraryThumbItem* pThumb = m_pSelThumb.GetNext( pos );
 		GetItemRect( pThumb, &rcOne );
 
 		if ( rcOne.IntersectRect( &rcClient, &rcOne ) )
@@ -811,7 +811,7 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 
 	for ( POSITION pos = m_pSelThumb.GetHeadPosition() ; pos ; )
 	{
-		CLibraryThumbItem* pThumb = (CLibraryThumbItem*)m_pSelThumb.GetNext( pos );
+		CLibraryThumbItem* pThumb = m_pSelThumb.GetNext( pos );
 		GetItemRect( pThumb, &rcOne );
 		CRect rcDummy;
 
@@ -925,7 +925,7 @@ void CLibraryThumbView::OnRun()
 		CLibraryThumbItem* pThumb = NULL;
 		DWORD nIndex = 0;
 		CString strPath;
-		BOOL bCache;
+		BOOL bCache = FALSE;
 
 		pLock.Lock();
 
@@ -951,7 +951,7 @@ void CLibraryThumbView::OnRun()
 		if ( pThumb == NULL ) break;
 		pThumb = NULL;
 
-		DWORD tNow = GetTickCount();
+//		DWORD tNow = GetTickCount();
 
 		CImageFile pFile( &pServices );
 		BOOL bSuccess = FALSE;
@@ -1059,7 +1059,7 @@ void CLibraryThumbView::OnRun()
 
 			//while ( tDelay && m_bThread )
 			//{
-			//	DWORD tNow = min( tDelay, DWORD(50) );
+			//	DWORD tNow = min( tDelay, 50u );
 			//	tDelay -= tNow;
 			//	Sleep( tNow );
 			//}
@@ -1194,7 +1194,7 @@ void CLibraryThumbItem::Paint(CDC* pDC, const CRect& rcBlock, const CSize& szThu
 		int nSaveX		= rcThumb.right;
 		int nSaveY		= rcThumb.bottom;
 		int nHeight		= pDC->DrawText( m_sText, &rcThumb, DT_CENTER|DT_WORDBREAK|DT_CALCRECT|DT_NOPREFIX );
-		rcThumb.bottom	= min( LONG(nSaveY), rcThumb.top + nHeight + 2 );
+		rcThumb.bottom	= min( nSaveY, rcThumb.top + nHeight + 2 );
 		rcThumb.right	= nSaveX;
 		pDC->FillSolidRect( &rcThumb, pDC->GetBkColor() );
 		pDC->DrawText( m_sText, &rcThumb, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX );

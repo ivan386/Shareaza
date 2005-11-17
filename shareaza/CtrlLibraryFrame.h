@@ -69,9 +69,9 @@ public:
 	CLibraryTipCtrl		m_wndViewTip;
 	CEdit				m_wndSearch;
 protected:
-	CPtrList			m_pViews;
+	CList< CLibraryView* >	m_pViews;
 	CLibraryView*		m_pView;
-	CPtrList			m_pPanels;
+	CList< CLibraryPanel* >	m_pPanels;
 	CLibraryPanel*		m_pPanel;
 protected:
 	int					m_nTreeSize;
@@ -100,7 +100,7 @@ protected:
 	void		SetView(CLibraryView* pView, BOOL bUpdate = TRUE, BOOL bUser = TRUE);
 	void		SetPanel(CLibraryPanel* pPanel);
 	void		CancelDrag();
-	void		RunLocalSearch(CQuerySearch* pSearch);
+	void		RunLocalSearch(std::auto_ptr< CQuerySearch > pSearch);
 
 // Overrides
 public:
@@ -130,7 +130,7 @@ protected:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnUpdateLibraryPanel(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryPanel();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);

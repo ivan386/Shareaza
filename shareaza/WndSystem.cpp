@@ -104,7 +104,7 @@ void CSystemWnd::ShowStartupText()
 	CString strBody;
 	Skin.LoadString( strBody, IDS_SYSTEM_MESSAGE );
 
-	Replace( strBody, _T("(version)"), (LPCTSTR)theApp.m_sVersion );
+	Replace( strBody, _T("(version)"), (LPCTSTR)(theApp.m_sVersion + _T(" (") + theApp.m_sBuildDate + _T(")")) );
 
 	for ( strBody += '\n' ; strBody.GetLength() ; )
 	{
@@ -153,7 +153,7 @@ void CSystemWnd::OnSize(UINT nType, int cx, int cy)
 	m_wndText.SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOZORDER );
 }
 
-void CSystemWnd::OnContextMenu(CWnd* pWnd, CPoint point)
+void CSystemWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	TrackPopupMenu( _T("CSystemWnd"), point );
 }

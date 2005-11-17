@@ -165,7 +165,7 @@ void CUploadsWnd::OnSkinChange()
 	Skin.CreateToolBar( _T("CUploadsWnd"), &m_wndToolBar );
 }
 
-void CUploadsWnd::OnTimer(UINT nIDEvent)
+void CUploadsWnd::OnTimer(UINT_PTR nIDEvent)
 {
 	// Reset Selection Timer event (posted by ctrluploads)
 	if ( nIDEvent == 5 ) m_tSel	= 0;
@@ -208,7 +208,7 @@ void CUploadsWnd::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CUploadsWnd::OnContextMenu(CWnd* pWnd, CPoint point)
+void CUploadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CUploadQueue* pQueue;
@@ -227,8 +227,8 @@ void CUploadsWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 			return;
 		}
 	}
-
-	if( ( pQueue == NULL ) || ( Settings.General.GUIMode == GUI_BASIC ) ||		//If we're not pointing at a queue, or in basic mode
+	
+	if ( ( pQueue == NULL ) || ( Settings.General.GUIMode == GUI_BASIC ) ||		//If we're not pointing at a queue, or in basic mode
 		( pQueue == UploadQueues.m_pHistoryQueue ) || ( pQueue == UploadQueues.m_pTorrentQueue ) )	//Or pointing at a pre-defined queue
 		TrackPopupMenu( _T("CUploadsWnd.Nothing"), point, ID_UPLOADS_HELP );
 	else
@@ -495,11 +495,11 @@ void CUploadsWnd::OnUploadsChat()
 		if ( IsSelected( pFile ) && pFile->GetActive() != NULL )
 		{
 			if ( pFile->GetActive()->m_nProtocol == PROTOCOL_HTTP )		// HTTP chat. (G2, G1)
-				ChatWindows.OpenPrivate( NULL, &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_HTTP );
+				ChatWindows.OpenPrivate( Hashes::Guid(), &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_HTTP );
 			else if ( pFile->GetActive()->m_bClientExtended )			// Client accepts G2 chat
-				ChatWindows.OpenPrivate( NULL, &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_G2 );
+				ChatWindows.OpenPrivate( Hashes::Guid(), &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_G2 );
 			else if ( pFile->GetActive()->m_nProtocol == PROTOCOL_ED2K )// ED2K chat.
-				ChatWindows.OpenPrivate( NULL, &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_ED2K );
+				ChatWindows.OpenPrivate( Hashes::Guid(), &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_ED2K );
 			else		// Should never be called
 				theApp.Message( MSG_ERROR, _T("Error while initiating chat- Unable to select protocol") );
 		}

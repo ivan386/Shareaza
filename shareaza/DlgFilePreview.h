@@ -50,7 +50,7 @@ public:
 	DWORD			m_nOldScaled;
 	CString			m_sStatus;
 	CString			m_sOldStatus;
-	CDWordArray		m_pRanges;
+	CArray< DWORD >	m_pRanges;
 protected:
 	BOOL			m_bThread;
 	HANDLE			m_hThread;
@@ -58,7 +58,7 @@ protected:
 	CString			m_sExecute;
 protected:
 	IDownloadPreviewPlugin*	m_pPlugin;
-	static CPtrList			m_pWindows;
+	static CList< CFilePreviewDlg* > m_pWindows;
 
 // Operations
 public:
@@ -100,7 +100,7 @@ protected:
 	//{{AFX_MSG(CFilePreviewDlg)
 	virtual BOOL OnInitDialog();
 	virtual void OnCancel();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnDestroy();
 	//}}AFX_MSG
 

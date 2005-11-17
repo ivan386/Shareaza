@@ -69,7 +69,7 @@ protected:
 	//{{AFX_MSG(CNeighboursWnd)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult);
 	afx_msg void OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);

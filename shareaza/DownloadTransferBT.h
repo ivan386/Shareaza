@@ -44,7 +44,7 @@ public:
 	BOOL			m_bInterested;
 public:
 	BYTE*			m_pAvailable;
-    FF::SimpleFragmentQueue m_oRequested;
+	Fragments::Queue m_oRequested;
 	DWORD			m_tRunThrottle;
 	DWORD			m_tSourceRequest;
 
@@ -58,7 +58,7 @@ public:
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
-    virtual BOOL	SubtractRequested(FF::SimpleFragmentList& ppFragments);
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
 	virtual BOOL	UnrequestRange(QWORD nOffset, QWORD nLength);
 public:
 	BOOL	OnBitfield(CBTPacket* pPacket);
@@ -72,7 +72,7 @@ protected:
 	void	Send(CBTPacket* pPacket, BOOL bRelease = TRUE);
 	void	ShowInterest();
 	BOOL	SendRequests();
-    BOOL	SelectFragment(const FF::SimpleFragmentList& oPossible, QWORD& nOffset, QWORD& nLength);
+	BOOL	SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength);
 };
 
 #endif // !defined(AFX_DOWNLOADTRANSFERBT_H__80A2A47F_DE35_4DB3_ACF7_8B6BC023AD44__INCLUDED_)

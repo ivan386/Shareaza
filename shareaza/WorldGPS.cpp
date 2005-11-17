@@ -103,7 +103,7 @@ void CWorldGPS::Serialize(CArchive& ar)
 	}
 	else
 	{
-		m_nCountry = ar.ReadCount();
+		m_nCountry = static_cast< DWORD >( ar.ReadCount() );
 		m_pCountry = new CWorldCountry[ m_nCountry ];
 	}
 
@@ -180,7 +180,7 @@ void CWorldCountry::Serialize(CArchive& ar)
 		ar >> m_szID[1];
 		ar >> m_sName;
 
-		m_nCity = ar.ReadCount();
+		m_nCity = static_cast< DWORD >( ar.ReadCount() );
 		m_pCity = new CWorldCity[ m_nCity ];
 	}
 

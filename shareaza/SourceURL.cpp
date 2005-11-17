@@ -56,10 +56,10 @@ void CSourceURL::Clear()
 	m_pServerAddress.S_un.S_addr = 0;
 	m_nServerPort = 0;
 	m_sPath.Empty();
-	m_bSHA1	= FALSE;
-	m_bED2K	= FALSE;
-	m_bBTH	= FALSE;
-	m_bBTC	= FALSE;
+    m_oSHA1.clear();
+	m_oED2K.clear();
+    m_oBTH.clear();
+    m_oBTC.clear();
 	m_bSize	= FALSE;
 	m_sLogin.Empty ();
 	m_sPassword.Empty ();
@@ -111,11 +111,11 @@ BOOL CSourceURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 	
 	if ( _tcsnicmp( m_sPath, _T("/uri-res/N2R?urn:sha1:"), 22 ) == 0 )
 	{
-		m_bSHA1 = CSHA::HashFromURN( m_sPath.Mid( 13 ), &m_pSHA1 );
+        m_oSHA1.fromUrn( m_sPath.Mid( 13 ) );
 	}
 	else if ( _tcsnicmp( m_sPath, _T("/uri-res/N2R?urn:bitprint:"), 26 ) == 0 )
 	{
-		m_bSHA1 = CSHA::HashFromURN( m_sPath.Mid( 13 ), &m_pSHA1 );
+		m_oSHA1.fromUrn( m_sPath.Mid( 13 ) );
 	}
 	
 	SOCKADDR_IN saHost;
@@ -213,7 +213,7 @@ BOOL CSourceURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 	CString strHash	= strURL.Left( 32 );
 	strURL			= strURL.Mid( 33 );
 	
-	if ( ! CED2K::HashFromString( strHash, &m_pED2K ) ) return FALSE;
+	if ( !m_oED2K.fromString( strHash ) ) return FALSE;
 	
 	m_bSize = _stscanf( strURL, _T("%I64i"), &m_nSize ) == 1;
 	if ( ! m_bSize ) return FALSE;
@@ -257,7 +257,7 @@ BOOL CSourceURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 	if ( _tcsnicmp( pszURL, _T("btc://"), 6 ) != 0 ) return FALSE;
 	
 	CString strURL = pszURL + 6;
-	BOOL bPush = FALSE;
+//	BOOL bPush = FALSE;
 	
 	int nSlash = strURL.Find( _T('/') );
 	if ( nSlash < 7 ) return FALSE;
@@ -266,18 +266,18 @@ BOOL CSourceURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 	strURL		= strURL.Mid( nSlash + 1 );
 	
 	nSlash = strURL.Find( _T('/') );
-	m_bBTC = FALSE;
+    m_oBTC.clear();
 	
 	if ( nSlash == 32 )
 	{
 		CString strGUID	= strURL.Left( 32 );
-		m_bBTC = CSHA::HashFromString( strGUID, &m_pBTC );
+        m_oBTC.fromString( strGUID );
 	}
 	else if ( nSlash < 0 ) return FALSE;
 	
 	strURL = strURL.Mid( nSlash + 1 );
 	
-	if ( ! CSHA::HashFromString( strURL, &m_pBTH ) ) return FALSE;
+    if ( !m_oBTH.fromString( strURL ) ) return FALSE;
 	
 	SOCKADDR_IN saHost;
 	BOOL bResult = Network.Resolve( m_sAddress, ED2K_DEFAULT_PORT, &saHost, bResolve );

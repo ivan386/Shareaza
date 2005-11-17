@@ -42,7 +42,7 @@ public:
 	int			m_nType;
 	CString		m_sURI;
 public:
-	CPtrList	m_pMap;
+	CList< CSchemaChildMap* >	m_pMap;
 
 // Operations
 public:

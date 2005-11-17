@@ -97,13 +97,13 @@ STDMETHODIMP CLibraryList::XGenericView::get_Name(BSTR FAR* psName)
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryList::XGenericView::get_Unknown(IUnknown FAR* FAR* ppUnknown)
+STDMETHODIMP CLibraryList::XGenericView::get_Unknown(IUnknown FAR* FAR* /*ppUnknown*/)
 {
 	METHOD_PROLOGUE( CLibraryList, GenericView )
 	return E_NOTIMPL;
 }
 
-STDMETHODIMP CLibraryList::XGenericView::get_Param(LONG FAR* pnParam)
+STDMETHODIMP CLibraryList::XGenericView::get_Param(LONG FAR* /*pnParam*/)
 {
 	METHOD_PROLOGUE( CLibraryList, GenericView )
 	return E_NOTIMPL;
@@ -148,7 +148,7 @@ STDMETHODIMP CLibraryList::XGenericView::get_Item(VARIANT vIndex, VARIANT FAR* p
 STDMETHODIMP CLibraryList::XGenericView::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CLibraryList, GenericView )
-	*pnCount = pThis->GetCount();
+	*pnCount = static_cast< LONG >( pThis->GetCount() );
 	return S_OK;
 }
 
@@ -191,7 +191,7 @@ STDMETHODIMP CLibraryList::XEnumVARIANT::Reset()
     return S_OK;
 }
 
-STDMETHODIMP CLibraryList::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum)
+STDMETHODIMP CLibraryList::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* /*ppenum*/)
 {
     return E_NOTIMPL;
 }

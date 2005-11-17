@@ -47,14 +47,14 @@ public:
 // Attributes
 public:
 	CSchema*	m_pSchema;
-	CPtrList	m_pColumns;
+	CList< CSchemaMember* >	m_pColumns;
 
 // Operations
 public:
-	static BOOL		LoadColumns(CSchema* pSchema, CPtrList* pColumns);
-	static BOOL		SaveColumns(CSchema* pSchema, CPtrList* pColumns);
-	static CMenu*	BuildColumnMenu(CSchema* pSchema, CPtrList* pColumns = NULL);
-	static BOOL		ToggleColumnHelper(CSchema* pSchema, CPtrList* pSource, CPtrList* pTarget, UINT nToggleID, BOOL bSave = FALSE);
+	static BOOL		LoadColumns(CSchema* pSchema, CList< CSchemaMember* >* pColumns);
+	static BOOL		SaveColumns(CSchema* pSchema, CList< CSchemaMember* >* pColumns);
+	static CMenu*	BuildColumnMenu(CSchema* pSchema, CList< CSchemaMember* >* pColumns = NULL);
+	static BOOL		ToggleColumnHelper(CSchema* pSchema, CList< CSchemaMember* >* pSource, CList< CSchemaMember* >* pTarget, UINT nToggleID, BOOL bSave = FALSE);
 
 // Overrides
 public:

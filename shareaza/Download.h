@@ -44,7 +44,7 @@ public:
 	int			m_nRunCookie;
 	int			m_nSaveCookie;
 	int			m_nGroupCookie;
-protected:
+private:
 	BOOL		m_bPaused;
 	BOOL		m_bBoosted;
 	BOOL		m_bShared;
@@ -56,41 +56,37 @@ protected:
 								// You should count the transfers if you need a 100% current answer.
 // Operations
 public:
-	virtual void	Pause();
-	virtual void	Resume();
-	virtual void	Remove(BOOL bDelete = FALSE);
-	virtual void	Boost();
-	virtual void	Share(BOOL bShared);
-	virtual BOOL	Rename(LPCTSTR pszName);
-	virtual void	StopTrying();
-	virtual void	SetStartTimer();
-	virtual DWORD	GetStartTimer() const;
-public:
-	virtual BOOL	IsStarted() const;		//Has the download actually downloaded anything?
+	void        	Pause();
+	void        	Resume();
+	void        	Remove(BOOL bDelete = FALSE);
+	void        	Boost();
+	void        	Share(BOOL bShared);
+	BOOL        	Rename(LPCTSTR pszName);
+	void        	SetStartTimer();
+	BOOL        	IsStarted() const;		//Has the download actually downloaded anything?
 	virtual BOOL	IsPaused() const;
 	virtual BOOL	IsDownloading() const;	//Is the download receiving data?
 	virtual BOOL	IsMoving() const;
 	virtual BOOL	IsCompleted() const;
-	virtual BOOL	IsBoosted() const;
-	virtual BOOL	IsShared() const;
+	BOOL        	IsBoosted() const;
+	BOOL        	IsShared() const;
 	virtual BOOL	IsTrying() const;		//Is the download currently trying to download?
-public:
 	BOOL			Load(LPCTSTR pszPath);
 	BOOL			Save(BOOL bFlush = FALSE);
 	virtual void	Serialize(CArchive& ar, int nVersion);
-public:
 	void			OnRun();
-	void			OnTaskComplete(CDownloadTask* pTask);
 	BOOL			OnVerify(LPCTSTR pszPath, BOOL bVerified);
-protected:
+private:
+	void        	StopTrying();
+	DWORD       	GetStartTimer() const;
+	void			OnTaskComplete(CDownloadTask* pTask);
 	void			OnDownloaded();
 	void			OnMoved(CDownloadTask* pTask);
 	void			SerializeOld(CArchive& ar, int nVersion);
-
-	friend class CDownloadTask;
-	friend class CDownloadTransfer;
-	friend class CDownloadWithTorrent;
+	
+	friend class CDownloadTask; // m_pTask && OnTaskComplete
+	friend class CDownloadTransfer; // GetVerifyLength
+	friend class CDownloadWithTorrent; // m_bComplete
 };
-
 
 #endif // !defined(AFX_DOWNLOAD_H__156689EC_D090_4285_BB8C_9AD058024BB5__INCLUDED_)

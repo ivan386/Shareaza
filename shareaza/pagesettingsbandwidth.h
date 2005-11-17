@@ -91,7 +91,7 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()
 	virtual BOOL OnInitDialog();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 
 };

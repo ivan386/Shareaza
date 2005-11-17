@@ -55,7 +55,7 @@ CMainTabBarCtrl::~CMainTabBarCtrl()
 {
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		delete (TabItem*)m_pItems.GetNext( pos );
+		delete m_pItems.GetNext( pos );
 	}
 
 	if ( m_dcSkin.m_hDC != NULL )
@@ -123,7 +123,7 @@ void CMainTabBarCtrl::OnSkinChange()
 #ifndef _DEBUG
         for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 		{
-			TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+			TabItem* pItem = m_pItems.GetNext( pos );
 			pItem->Skin( m_pSkin, &m_dcSkin, &m_bmSkin );
 		}
 
@@ -150,20 +150,20 @@ int CMainTabBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CMainTabBarCtrl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
+void CMainTabBarCtrl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL /*bDisableIfNoHndler*/)
 {
 	BOOL bChanged = FALSE;
 
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+		TabItem* pItem = m_pItems.GetNext( pos );
 		bChanged |= pItem->Update( pTarget );
 	}
 
 	if ( bChanged ) Invalidate();
 }
 
-CSize CMainTabBarCtrl::CalcFixedLayout(BOOL bStretch, BOOL bHorz)
+CSize CMainTabBarCtrl::CalcFixedLayout(BOOL bStretch, BOOL /*bHorz*/)
 {
 	CRect rcBackground;
 	CSize size( 0, 28 );
@@ -204,14 +204,14 @@ CMainTabBarCtrl::TabItem* CMainTabBarCtrl::HitTest(const CPoint& point) const
 
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+		TabItem* pItem = m_pItems.GetNext( pos );
 		if ( pItem->HitTest( ptLocal ) ) return pItem;
 	}
 
 	return NULL;
 }
 
-int CMainTabBarCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
+INT_PTR CMainTabBarCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 {
 	TabItem* pItem = HitTest( point );
 
@@ -226,7 +226,7 @@ int CMainTabBarCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 
 	CString strTip;
 
-	if ( LoadString( strTip, pTI->uId ) )
+	if ( LoadString( strTip, static_cast< UINT >( pTI->uId ) ) )
 	{
 		if ( LPCTSTR pszBreak = _tcschr( strTip, '\n' ) )
 		{
@@ -239,7 +239,7 @@ int CMainTabBarCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 		}
 	}
 
-	return pTI->uId;
+	return static_cast< int >( pTI->uId );
 }
 
 void CMainTabBarCtrl::DoPaint(CDC* pDC)
@@ -260,14 +260,15 @@ void CMainTabBarCtrl::DoPaint(CDC* pDC)
 	{
         for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 		{
-			TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+			TabItem* pItem = m_pItems.GetNext( pos );
 			pItem->Skin( m_pSkin, &m_dcSkin, &m_bmSkin );
 		}
 
 		m_hOldSkin = (HBITMAP)m_dcSkin.SelectObject( &m_bmSkin )->GetSafeHandle();
 	}
 
-	CDC* pBuffer = CoolInterface.GetBuffer( *pDC, rc.Size() );
+	CSize size = rc.Size();
+	CDC* pBuffer = CoolInterface.GetBuffer( *pDC, size );
 
 	DrawBorders( pBuffer, rc );
 
@@ -280,7 +281,7 @@ void CMainTabBarCtrl::DoPaint(CDC* pDC)
 
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
+		TabItem* pItem = m_pItems.GetNext( pos );
 		pItem->Paint( pBuffer, &m_dcSkin, ptOffset,
 			( m_pHover == pItem && m_pDown == NULL ) || ( m_pDown == pItem ),
 			( m_pDown == pItem ) && ( m_pHover == pItem ) );
@@ -312,7 +313,7 @@ BOOL CMainTabBarCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CControlBar::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CMainTabBarCtrl::OnMouseMove(UINT nFlags, CPoint point)
+void CMainTabBarCtrl::OnMouseMove(UINT /*nFlags*/, CPoint point)
 {
 	TabItem* pItem = HitTest( point );
 
@@ -375,7 +376,7 @@ void CMainTabBarCtrl::OnRButtonDown(UINT nFlags, CPoint point)
 	CControlBar::OnRButtonDown( nFlags, point );
 }
 
-void CMainTabBarCtrl::OnTimer(UINT nIDEvent)
+void CMainTabBarCtrl::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	if ( m_pHover != NULL && m_pDown == NULL )
 	{

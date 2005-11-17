@@ -43,7 +43,6 @@
 #include "QueryHit.h"
 #include "GProfile.h"
 #include "Statistics.h"
-#include <zlib.h>
 
 // If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
@@ -68,7 +67,6 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 	// Set null and default values for connection state, software vendor, guid, and user profile
 	m_nState   = nrsNull; // No state now, soon we'll connect and do the handshake
 	m_pVendor  = NULL;    // We don't know what brand software the remote computer is running yet
-	m_bGUID    = FALSE;   // There is no GUID stored here yet
 	m_pProfile = NULL;    // No profile on the person running the remote computer yet
 
 	// Set handshake values to defaults
@@ -107,35 +105,52 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 	m_pZSOutput = NULL;
 	m_bZFlush   = FALSE;
 	m_tZOutput  = 0;
-
-	// This guid of the last search will be used to get more results, but we don't have one at the start
-	m_pMoreResultsGUID = NULL;
 }
 
 // Make a new CNeighbour object, copying values from a base one
 // Takes a protocol ID and a base neighbour to copy information from
 CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
-{
-	// Calls CConection::AttachTo, treating CNeighbour* pBase as class* CConnection
-	AttachTo( pBase );
-
-	// Copy the values from pBase into this CNeighbour object
-	CopyMemory( &m_zStart, &pBase->m_zStart, (LPBYTE)&m_zEnd - (LPBYTE)&m_zStart );
-
-	// Set some custom values for the new CNeighbour object
-	m_nState		= nrsConnected;		// Set the state of this neighbour to connected
-	m_nProtocol		= nProtocol;		// Store the given protocol in the object
-	m_tConnected	= GetTickCount();	// Set Connected and LastPacket with the current time
-	m_tLastPacket	= m_tConnected;
-
+	: CConnection( *pBase )
+	, m_nRunCookie()
+	, m_nUnique(           pBase->m_nUnique )
+	, m_nProtocol( nProtocol )
+	, m_nState( nrsConnected )
+	, m_pVendor(           pBase->m_pVendor )
+	, m_oGUID(             pBase->m_oGUID )
+	, m_pProfile()
+	, m_oMoreResultsGUID()
+	, m_bAutomatic(        pBase->m_bAutomatic )
+	, m_bShareaza(         pBase->m_bShareaza )
+	, m_nNodeType(         pBase->m_nNodeType )
+	, m_bQueryRouting(     pBase->m_bQueryRouting )
+	, m_bPongCaching(      pBase->m_bPongCaching )
+	, m_bVendorMsg(        pBase->m_bVendorMsg )
+	, m_bGGEP(             pBase->m_bGGEP )
+	, m_tLastQuery(        pBase->m_tLastQuery )
+	, m_bObsoleteClient(   pBase->m_bObsoleteClient )
+	, m_nInputCount(       pBase->m_nInputCount )
+	, m_nOutputCount(      pBase->m_nOutputCount )
+	, m_nDropCount(        pBase->m_nDropCount )
+	, m_nLostCount(        pBase->m_nLostCount )
+	, m_nOutbound(         pBase->m_nOutbound )
+	, m_nFileCount(        pBase->m_nFileCount )
+	, m_nFileVolume(       pBase->m_nFileVolume )
 	// If this connected computer is sending and receiving Gnutella2 packets, it will also support query routing
-	if ( m_bQueryRouting )
-	{
-		// Make two new QueryHashTable objects, one for the local table, and one for the remote one for
-		m_pQueryTableLocal	= new CQueryHashTable();
-		m_pQueryTableRemote	= new CQueryHashTable();
-	}
-
+	, m_pQueryTableRemote( m_bQueryRouting ? new CQueryHashTable : NULL )
+	, m_pQueryTableLocal( m_bQueryRouting ? new CQueryHashTable : NULL )
+	, m_tLastPacket( GetTickCount() )
+	, m_pZInput(           pBase->m_pZInput )	// transfer of ownership
+	, m_pZOutput(          pBase->m_pZOutput )
+	, m_nZInput(           pBase->m_nZInput )
+	, m_nZOutput(          pBase->m_nZOutput )
+	, m_pZSInput()
+	, m_pZSOutput()
+	, m_bZFlush(           pBase->m_bZFlush )
+	, m_tZOutput(          pBase->m_tZOutput )
+{
+	m_tConnected = m_tLastPacket;
+	pBase->m_pZInput  = NULL;
+	pBase->m_pZOutput = NULL;
 	// Call CNeighboursBase::Add to keep track of this newly created CNeighbours object
 	Neighbours.Add( this, FALSE );
 }
@@ -216,7 +231,7 @@ void CNeighbour::DelayClose(UINT nError)
 
 // Send a packet to the remote computer (do)
 // Takes the packet, bRelease to release it, and bBuffered
-BOOL CNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
+BOOL CNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 {
 	// If we should release the packet, call its release method (do)
 	if ( bRelease ) pPacket->Release();
@@ -226,7 +241,7 @@ BOOL CNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
 }
 
 // CG1Neighbour, which inherits from CNeighbour, overrides this method with its own version that does something
-BOOL CNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
+BOOL CNeighbour::SendQuery(CQuerySearch* /*pSearch*/, CPacket* /*pPacket*/, BOOL /*bLocal*/)
 {
 	// Always return false (do)
 	return FALSE;
@@ -282,7 +297,7 @@ BOOL CNeighbour::OnRun()
 
 // Call when the connection has been dropped
 // Logs the error with some statistics about how long it was quiet
-void CNeighbour::OnDropped(BOOL bError)
+void CNeighbour::OnDropped(BOOL /*bError*/)
 {
 	// Find out how many seconds it's been since this neighbour connected, and since it received the last packet
 	DWORD nTime1 = ( GetTickCount() - m_tConnected ) / 1000;	// Time since connected in seconds
@@ -505,7 +520,7 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 		return TRUE;
 	}
 	
-	Network.NodeRoute->Add( &pHits->m_pClientID, this );
+	Network.NodeRoute->Add( pHits->m_oClientID, this );
 	
 	if ( SearchManager.OnQueryHits( pHits ) )
 	{

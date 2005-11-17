@@ -162,11 +162,11 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 		nvOffset += nvLength;
 	}
 		
-	for ( FF::SimpleFragmentList::ConstIterator pFragment = pDownload->GetEmptyFragmentList().begin();
+	for ( Fragments::List::const_iterator pFragment = pDownload->GetEmptyFragmentList().begin();
 		pFragment != pDownload->GetEmptyFragmentList().end(); ++pFragment )
 	{
 		DrawFragment( pDC, prcBar, pDownload->m_nSize,
-			pFragment->begin(), pFragment->length(), crNatural, FALSE );
+			pFragment->begin(), pFragment->size(), crNatural, FALSE );
 	}
 		
 	for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
@@ -196,50 +196,51 @@ void CFragmentBar::DrawDownloadSimple(CDC* pDC, CRect* prcBar, CDownload* pDownl
 void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource, COLORREF crNatural)
 {
 	if ( pSource->m_pTransfer != NULL )
-    {
-        if ( pSource->m_pTransfer->m_nLength < SIZE_UNKNOWN )
-	    {
-		    DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-			    pSource->m_pTransfer->m_nOffset, pSource->m_pTransfer->m_nLength,
-			    RGB( 255, 255, 0 ), TRUE );
-	    }
+	{
+		if ( pSource->m_pTransfer->m_nLength < SIZE_UNKNOWN )
+		{
+			DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
+				pSource->m_pTransfer->m_nOffset, pSource->m_pTransfer->m_nLength,
+				RGB( 255, 255, 0 ), TRUE );
+		}
 
-        switch( pSource->m_pTransfer->m_nProtocol )
-        {
-        case PROTOCOL_ED2K:
-            for ( FF::SimpleFragmentQueue::ConstIterator pRequested
-                = static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer )->m_oRequested.begin();
-                pRequested
-                != static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer )->m_oRequested.end();
-                ++pRequested )
-	        {
-		        DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-			        pRequested->begin(), pRequested->length(), RGB( 255, 255, 0 ), TRUE );
-	        }
-            break;
-        case PROTOCOL_BT:
-            for ( FF::SimpleFragmentQueue::ConstIterator pRequested
-                = static_cast< CDownloadTransferBT* >( pSource->m_pTransfer )->m_oRequested.begin();
-                pRequested
-                != static_cast< CDownloadTransferBT* >( pSource->m_pTransfer )->m_oRequested.end();
-                ++pRequested )
-	        {
-		        DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-			        pRequested->begin(), pRequested->length(), RGB( 255, 255, 0 ), TRUE );
-	        }
-        }
-    }
-	
+		switch( pSource->m_pTransfer->m_nProtocol )
+		{
+		case PROTOCOL_ED2K:
+			for ( Fragments::Queue::const_iterator pRequested
+				= static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer )->m_oRequested.begin();
+				pRequested
+				!= static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer )->m_oRequested.end();
+				++pRequested )
+			{
+				DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
+					pRequested->begin(), pRequested->size(), RGB( 255, 255, 0 ), TRUE );
+			}
+			break;
+		case PROTOCOL_BT:
+			for ( Fragments::Queue::const_iterator pRequested
+				= static_cast< CDownloadTransferBT* >( pSource->m_pTransfer )->m_oRequested.begin();
+				pRequested
+				!= static_cast< CDownloadTransferBT* >( pSource->m_pTransfer )->m_oRequested.end();
+				++pRequested )
+			{
+				DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
+					pRequested->begin(), pRequested->size(), RGB( 255, 255, 0 ), TRUE );
+			}
+		default:
+			ASSERT( 0 );
+		}
+	}
+
 	DrawSourceImpl( pDC, prcBar, pSource );
-	
+
 	if ( !pSource->m_oAvailable.empty() )
 	{
-        for ( FF::SimpleFragmentList::ConstIterator pFragment
-            = pSource->m_oAvailable.begin();
-            pFragment != pSource->m_oAvailable.end(); ++pFragment )
+		for ( Fragments::List::const_iterator pFragment = pSource->m_oAvailable.begin();
+			pFragment != pSource->m_oAvailable.end(); ++pFragment )
 		{
 			DrawFragment( pDC, prcBar, pSource->m_pDownload->m_nSize,
-				pFragment->begin(), pFragment->length(), crNatural, FALSE );
+				pFragment->begin(), pFragment->size(), crNatural, FALSE );
 		}
 		
 		pDC->FillSolidRect( prcBar, GetSysColor( COLOR_BTNFACE ) );
@@ -291,12 +292,11 @@ void CFragmentBar::DrawSourceImpl(CDC* pDC, CRect* prcBar, CDownloadSource* pSou
 		}
 	}
 	
-    for ( FF::SimpleFragmentList::ConstIterator pFragment
-        = pSource->m_oPastFragments.begin();
-        pFragment != pSource->m_oPastFragments.end(); ++pFragment )
+	for ( Fragments::List::const_iterator pFragment = pSource->m_oPastFragments.begin();
+		pFragment != pSource->m_oPastFragments.end(); ++pFragment )
 	{
 		DrawFragment( pDC, prcBar, pSource->m_pDownload->m_nSize,
-			pFragment->begin(), pFragment->length(), crTransfer, TRUE );
+			pFragment->begin(), pFragment->size(), crTransfer, TRUE );
 	}
 }
 
@@ -308,12 +308,11 @@ void CFragmentBar::DrawUpload(CDC* pDC, CRect* prcBar, CUploadFile* pFile, COLOR
 	CUploadTransfer* pUpload = pFile->GetActive();
 	if ( pUpload == NULL ) return;
 	
-    for ( FF::SimpleFragmentList::ConstIterator pFragment
-        = pFile->m_oFragments.begin();
-        pFragment != pFile->m_oFragments.end(); ++pFragment  )
+	for ( Fragments::List::const_iterator pFragment = pFile->m_oFragments.begin();
+		pFragment != pFile->m_oFragments.end(); ++pFragment  )
 	{
 		DrawFragment( pDC, prcBar, pFile->m_nSize, pFragment->begin(),
-			pFragment->length(), GetSysColor( COLOR_ACTIVECAPTION ), TRUE );
+			pFragment->size(), GetSysColor( COLOR_ACTIVECAPTION ), TRUE );
 	}
 	
 	if ( pFile == pUpload->m_pBaseFile )

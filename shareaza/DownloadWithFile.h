@@ -32,15 +32,15 @@ class CFragmentedFile;
 class CDownloadWithFile : public CDownloadWithTransfers
 {
 // Construction
-public:
+protected:
 	CDownloadWithFile();
 	virtual ~CDownloadWithFile();
 
 // Attributes
 public:
 	CFragmentedFile*	m_pFile;
-	DWORD				m_tReceived;
 	BOOL				m_bDiskFull;
+	DWORD				m_tReceived;
 
 // Operations
 public:
@@ -50,32 +50,31 @@ public:
 	DWORD			GetTimeRemaining() const;
 	CString			GetDisplayName() const;
 public:
-    const FF::SimpleFragmentList& GetEmptyFragmentList() const;
-    FF::SimpleFragmentList GetPossibleFragments(const FF::SimpleFragmentList& oAvailable, FF::SimpleFragment& oLargest);
+	const Fragments::List& GetEmptyFragmentList() const;
 	BOOL			GetFragment(CDownloadTransfer* pTransfer);
 	BOOL			IsPositionEmpty(QWORD nOffset);
-    BOOL            AreRangesUseful(const FF::SimpleFragmentList& oAvailable);
+	BOOL			AreRangesUseful(const Fragments::List& oAvailable);
 	BOOL			IsRangeUseful(QWORD nOffset, QWORD nLength);
 	BOOL			IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD nOffset, QWORD nLength);
-	virtual CString	GetAvailableRanges() const;
 	BOOL			ClipUploadRange(QWORD nOffset, QWORD& nLength) const;
-	BOOL			GetRandomRange(QWORD& nOffset, QWORD& nLength) const;
 	BOOL			PrepareFile();
+	BOOL			GetRandomRange(QWORD& nOffset, QWORD& nLength) const;
 	BOOL			SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 	QWORD			EraseRange(QWORD nOffset, QWORD nLength);
 	BOOL			MakeComplete();
 protected:
+	virtual CString	GetAvailableRanges() const;
 	BOOL			OpenFile();
 	void			CloseFile();
 	void			DeleteFile(BOOL bForce = FALSE);
 	BOOL			RunFile(DWORD tNow);
 	BOOL			WriteMetadata(LPCTSTR pszPath);
 	BOOL			AppendMetadata();
-	BOOL			AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML);
-protected:
 	virtual void	Serialize(CArchive& ar, int nVersion);
-
-	friend class CDownloadTransfer;
+private:
+	Fragments::List	GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest);
+	BOOL			AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML);
+	
 };
 
 #endif // !defined(AFX_DOWNLOADWITHFILE_H__79FE6B65_04DF_4CD5_A1BC_9AF8429664DC__INCLUDED_)

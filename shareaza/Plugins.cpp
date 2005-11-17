@@ -262,7 +262,7 @@ BOOL CPlugins::OnCommand(CChildWnd* pActiveWnd, UINT nCommandID)
 //////////////////////////////////////////////////////////////////////
 // CPlugins file execution events
 
-BOOL CPlugins::OnExecuteFile(LPCTSTR pszFile)
+BOOL CPlugins::OnExecuteFile(LPCTSTR pszFile, BOOL bHasThumbnail)
 {
 	COleVariant vFile( pszFile );
 	vFile.ChangeType( VT_BSTR );
@@ -273,6 +273,8 @@ BOOL CPlugins::OnExecuteFile(LPCTSTR pszFile)
 
 		if ( pPlugin->m_pExecute )
 		{
+			if ( pPlugin->m_sName == _T("Shareaza Image Viewer") && ! bHasThumbnail )
+				continue;
 			if ( pPlugin->m_pExecute->OnExecute( vFile.bstrVal ) == S_OK )
 				return TRUE;
 		}

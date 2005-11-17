@@ -75,7 +75,7 @@ void CFileCopyDlg::DoDataExchange(CDataExchange* pDX)
 
 void CFileCopyDlg::AddFile(CLibraryFile* pFile)
 {
-	m_pFiles.AddTail( (LPVOID)pFile->m_nIndex );
+	m_pFiles.AddTail( pFile->m_nIndex );
 }
 
 BOOL CFileCopyDlg::OnInitDialog()
@@ -127,7 +127,7 @@ BOOL CFileCopyDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CFileCopyDlg::OnTimer(UINT nIDEvent)
+void CFileCopyDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	if ( m_hThread != NULL )
 	{
@@ -209,7 +209,7 @@ void CFileCopyDlg::StartOperation()
 	m_wndTree.EnableWindow( FALSE );
 	m_wndOK.EnableWindow( FALSE );
 
-	m_wndProgress.SetRange( 0, m_pFiles.GetCount() );
+	m_wndProgress.SetRange( 0, short( m_pFiles.GetCount() ) );
 	m_wndProgress.SetPos( 0 );
 
 	m_bThread = TRUE;
@@ -267,7 +267,7 @@ void CFileCopyDlg::OnRun()
 	while ( m_bThread )
 	{
 		CString strName, strPath;
-		BOOL bMetaData;
+		BOOL bMetaData = FALSE;
 
 		CLibraryFile* pFile;
 		{
@@ -275,7 +275,7 @@ void CFileCopyDlg::OnRun()
 
 			if ( m_pFiles.IsEmpty() ) break;
 
-			DWORD nIndex = (DWORD)m_pFiles.RemoveHead();
+			DWORD nIndex = m_pFiles.RemoveHead();
 
 			pFile = Library.LookupFile( nIndex );
 
@@ -497,7 +497,7 @@ BOOL CFileCopyDlg::ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget)
 	return CopyFile( pszSource, pszTarget, TRUE );
 }
 
-DWORD WINAPI CFileCopyDlg::CopyCallback(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize, LARGE_INTEGER StreamBytesTransferred, DWORD dwStreamNumber, DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile, LPVOID lpData)
+DWORD WINAPI CFileCopyDlg::CopyCallback(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER /*StreamSize*/, LARGE_INTEGER /*StreamBytesTransferred*/, DWORD /*dwStreamNumber*/, DWORD /*dwCallbackReason*/, HANDLE /*hSourceFile*/, HANDLE /*hDestinationFile*/, LPVOID lpData)
 {
 	CFileCopyDlg* pDlg = (CFileCopyDlg*)lpData;
 

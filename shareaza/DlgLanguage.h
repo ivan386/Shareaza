@@ -39,11 +39,11 @@ public:
 	enum { IDD = IDD_LANGUAGE };
 	//}}AFX_DATA
 protected:
-	CStringArray	m_pPaths;
-	CStringArray	m_pTitles;
-	CStringArray	m_pPrompts;
-	CStringArray	m_pGUIDirs;
-	CStringArray	m_pLangCodes;
+	CArray< CString >	m_pPaths;
+	CArray< CString >	m_pTitles;
+	CArray< CString >	m_pPrompts;
+	CArray< CString >	m_pGUIDirs;
+	CArray< CString >	m_pLangCodes;
 	CImageList		m_pImages;
 	int				m_nHover;
 	int				m_nDown;
@@ -83,7 +83,7 @@ protected:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnDestroy();

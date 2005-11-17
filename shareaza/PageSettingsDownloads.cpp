@@ -1,9 +1,9 @@
 //
 // PageSettingsDownloads.cpp
 //
-//	Date:			"$Date: 2005/10/09 16:34:00 $"
-//	Revision:		"$Revision: 1.20 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/11/17 21:10:48 $"
+//	Revision:		"$Revision: 1.21 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -158,9 +158,8 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-	BROWSEINFO pBI;
 		
-	ZeroMemory( &pBI, sizeof(pBI) );
+	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder for downloads:");
@@ -204,9 +203,8 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-	BROWSEINFO pBI;
 		
-	ZeroMemory( &pBI, sizeof(pBI) );
+	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder for incomplete files:");
@@ -298,7 +296,7 @@ void CDownloadsSettingsPage::OnOK()
 
 	// Check the queue limit value is okay
 	if ( ( nQueueLimit > 0 ) && ( nQueueLimit < 2000 ) && ( ! Settings.Live.QueueLimitWarning ) &&
-		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways ) && ( Settings.Downloads.QueueLimit != nQueueLimit ) )
+		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways ) && ( Settings.Downloads.QueueLimit != (int)nQueueLimit ) )
 	{
 		// Warn the user about setting the max queue wait limit too low
 		CString strMessage;

@@ -51,6 +51,7 @@ public:
 	BOOL			m_bFilterBogus;
 	BOOL			m_bFilterDRM;
 	BOOL			m_bFilterAdult;
+	BOOL			m_bFilterSuspicious;
 	QWORD			m_nFilterMinSize;
 	QWORD			m_nFilterMaxSize;
 	DWORD			m_nFilterSources;
@@ -70,8 +71,8 @@ public:
 	BOOL			m_bUpdated;
 	DWORD			m_nUpdateMin;
 	DWORD			m_nUpdateMax;
-	CPtrList		m_pSelectedFiles;
-	CPtrList		m_pSelectedHits;
+	CList< CMatchFile* > m_pSelectedFiles;
+	CList< CQueryHit* > m_pSelectedHits;
 protected:
 	DWORD			m_nBuffer;
 	CMatchFile**	m_pSizeMap;
@@ -90,10 +91,10 @@ public:
 	BOOL		Select(CMatchFile* pFile, CQueryHit* pHit, BOOL bSelected = TRUE);
 	CMatchFile*	GetSelectedFile(BOOL bFromHit = FALSE) const;
 	CQueryHit*	GetSelectedHit() const;
-	int			GetSelectedCount() const;
+	INT_PTR		GetSelectedCount() const;
 	BOOL		ClearSelection();
 	void		Filter();
-	void		SelectSchema(CSchema* pSchema, CPtrList* pColumns);
+	void		SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns);
 	void		SetSortColumn(int nColumn = -1, BOOL bDirection = FALSE);
 	void		UpdateRange(DWORD nMin = 0, DWORD nMax = 0xFFFFFFFF);
 	void		ClearUpdated();
@@ -128,12 +129,9 @@ public:
 	CMatchFile*	m_pNextTiger;
 	CMatchFile*	m_pNextED2K;
 public:
-	BOOL		m_bSHA1;
-	SHA1		m_pSHA1;
-	BOOL		m_bTiger;
-	TIGEROOT	m_pTiger;
-	BOOL		m_bED2K;
-	MD4			m_pED2K;
+    Hashes::Sha1Hash m_oSHA1;
+    Hashes::TigerHash m_oTiger;
+    Hashes::Ed2kHash m_oED2K;
 	QWORD		m_nSize;
 	CString		m_sSize;
 public:
@@ -143,10 +141,13 @@ public:
 	BOOL		m_bPreview;
 	DWORD		m_nSpeed;
 	CString		m_sSpeed;
-	int			m_nRating;
-	int			m_nRated;
-	BOOL		m_bDRM;
-	BOOL		m_bCollection;
+	int			m_nRating;				// Total value of all ratings
+	int			m_nRated;				// Number of ratings recieved
+	BOOL		m_bDRM;					// Appears to have DRM
+	BOOL		m_bSuspicious;			// Appears to be a suspicious file (small exe, vbs, etc)
+	BOOL		m_bCollection;			// Appears to be a collection
+	BOOL		m_bTorrent;				// Appears to be a torrent
+
 public:
 	BOOL		m_bExpanded;
 	BOOL		m_bSelected;
@@ -178,6 +179,8 @@ public:
 	inline DWORD GetFilteredCount() const
 	{
 		if ( m_pList->m_bFilterLocal && m_bExisting ) return 0;
+		if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
+		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
 		if ( m_pBest == NULL ) return 0;
 
@@ -186,7 +189,9 @@ public:
 	
 	inline DWORD GetItemCount() const
 	{
-		if ( m_pList->m_bFilterLocal && m_bExisting ) return 0;
+		if ( m_pList->m_bFilterLocal && m_bExisting )return 0;
+			if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
+		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
 		if ( m_pBest == NULL ) return 0;
 

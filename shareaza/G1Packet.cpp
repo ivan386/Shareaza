@@ -70,7 +70,7 @@ CG1Packet::~CG1Packet()
 // Takes a packet type like ping, a TTL number, and a GUID for the packet
 // Makes a new packet with these values
 // Returns a pointer to it
-CG1Packet* CG1Packet::New(int nType, DWORD nTTL, GGUID* pGUID)
+CG1Packet* CG1Packet::New(int nType, DWORD nTTL, const Hashes::Guid& oGUID)
 {
 	// Get a pointer to a packet in the single global Gnutella packet pool
 	CG1Packet* pPacket = (CG1Packet*)POOL.New(); // Calls CPacketPool::New, defined in Packet.h
@@ -87,16 +87,16 @@ CG1Packet* CG1Packet::New(int nType, DWORD nTTL, GGUID* pGUID)
 	pPacket->m_nHash = 0;
 
 	// If the caller has given us a GUID to use in the packet
-	if ( pGUID )
+	if ( oGUID )
 	{
 		// Copy the GUID into the packet
-		pPacket->m_pGUID = *pGUID;
+		pPacket->m_oGUID = oGUID;
 
 	} // If the caller didn't give us a GUID to use
 	else
 	{
 		// Create a GUID for this packet
-		Network.CreateID( pPacket->m_pGUID );
+		Network.CreateID( pPacket->m_oGUID );
 	}
 
 	// Return a pointer to the packet
@@ -170,7 +170,7 @@ void CG1Packet::CacheHash()
 // Takes the number of bytes in the packet to hash, or leave that blank to hash all of them
 // Computes the SHA hash of the packet
 // Returns true and writes the hash under pHash, or returns false on error
-BOOL CG1Packet::GetRazaHash(SHA1* pHash, DWORD nLength) const
+BOOL CG1Packet::GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength) const
 {
 	// If the caller didn't specify a length, use the length of the packet
 	if ( nLength == 0xFFFFFFFF ) nLength = m_nLength;
@@ -178,11 +178,11 @@ BOOL CG1Packet::GetRazaHash(SHA1* pHash, DWORD nLength) const
 
 	// Hash the data, writing the hash under pHash, and report success
 	CSHA pSHA;                             // Make a local CSHA object which will compute the hash
-	pSHA.Add( &m_pGUID, sizeof(m_pGUID) ); // Start by hashing the GUID of the packet
+	pSHA.Add( &m_oGUID[ 0 ], Hashes::Guid::byteCount ); // Start by hashing the GUID of the packet
 	pSHA.Add( &m_nType, sizeof(m_nType) ); // Then throw in the type byte
 	pSHA.Add( m_pBuffer, nLength );        // After that, hash the bytes of the packet
 	pSHA.Finish();                         // Tell the object that is all
-	pSHA.GetHash( pHash );                 // Have the object write the hash under pHash
+	pSHA.GetHash( oHash );                 // Have the object write the hash under pHash
 	return TRUE;                           // Report success
 }
 
@@ -209,15 +209,7 @@ LPCTSTR CG1Packet::GetType() const
 CString CG1Packet::GetGUID() const
 {
 	// Compose a string like "0001020304050607080910111213141516" with two characters to describe each of the 16 bytes of the GUID
-	CString strOut;
-	strOut.Format( _T("%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X"),
-		m_pGUID.n[0],  m_pGUID.n[1],  m_pGUID.n[2],  m_pGUID.n[3],
-		m_pGUID.n[4],  m_pGUID.n[5],  m_pGUID.n[6],  m_pGUID.n[7],
-		m_pGUID.n[8],  m_pGUID.n[9],  m_pGUID.n[10], m_pGUID.n[11],
-		m_pGUID.n[12], m_pGUID.n[13], m_pGUID.n[14], m_pGUID.n[15] );
-
-	// Return it
-	return strOut;
+	return m_oGUID.toString< Hashes::base16Encoding >();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -229,7 +221,7 @@ void CG1Packet::ToBuffer(CBuffer* pBuffer) const
 {
 	// Compose a Gnutella packet header with values from this CG1Packet object
 	GNUTELLAPACKET pHeader;              // Make a local GNUTELLAPACKET structure called pHeader
-	pHeader.m_pGUID   = m_pGUID;         // Copy in the GUID
+	pHeader.m_oGUID   = m_oGUID.storage();         // Copy in the GUID
 	pHeader.m_nType   = m_nType;         // Copy in the type byte
 	pHeader.m_nTTL    = m_nTTL;          // Copy in the TTL and hops counts
 	pHeader.m_nHops   = m_nHops;
@@ -255,7 +247,8 @@ void CG1Packet::Debug(LPCTSTR pszReason) const
 	CString strOutput; // We'll compose text that describes what happened here
 	strOutput.Format( L"[G1]: '%s' %s [%i/%i] %s", pszReason, GetType(), m_nTTL, m_nHops, (LPCTSTR)ToASCII() );
 	CPacket::Debug( strOutput );
-
+#else
+	pszReason;
 // Go back to including all the lines in the program
 #endif
 

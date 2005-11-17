@@ -139,7 +139,7 @@ void CGraphListDlg::OnCustomDrawItems(NMHDR* pNMHDR, LRESULT* pResult)
 		CDC* pDC = CDC::FromHandle( pDraw->nmcd.hdc );
 
 		CRect rc;
-		m_wndList.GetItemRect( pDraw->nmcd.dwItemSpec, &rc, LVIR_ICON );
+		m_wndList.GetItemRect( static_cast< int >( pDraw->nmcd.dwItemSpec ), &rc, LVIR_ICON );
 
 		pDC->SetTextColor( pItem->m_nColour );
 		m_gdiImageList.Draw( pDC, 1, rc.TopLeft(), ILD_NORMAL );
@@ -149,16 +149,16 @@ void CGraphListDlg::OnCustomDrawItems(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-void CGraphListDlg::OnItemChangedGraphItems(NMHDR* pNMHDR, LRESULT* pResult)
+void CGraphListDlg::OnItemChangedGraphItems(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	if ( pResult ) *pResult = 0;
 	int nSelected = m_wndList.GetSelectedCount();
 	m_wndEdit.EnableWindow( nSelected == 1 );
 	m_wndRemove.EnableWindow( nSelected > 0 );
 }
 
-void CGraphListDlg::OnDblClkGraphItems(NMHDR* pNMHDR, LRESULT* pResult)
+void CGraphListDlg::OnDblClkGraphItems(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
 	OnGraphEdit();
 	*pResult = 0;

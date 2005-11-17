@@ -113,7 +113,7 @@ BOOL CSecureRuleDlg::OnInitDialog()
 	m_nType		= m_pRule->m_nType;
 	m_sComment	= m_pRule->m_sComment;
 	m_nAction	= m_pRule->m_nAction;
-	m_nExpire	= min( m_pRule->m_nExpire, DWORD(2) );
+	m_nExpire	= min( m_pRule->m_nExpire, 2u );
 	m_nMatch	= 0;
 
 	if ( m_pRule->m_nType == CSecureRule::srAddress )
@@ -147,7 +147,7 @@ BOOL CSecureRuleDlg::OnInitDialog()
 
 	if ( m_nExpire == 2 )
 	{
-		DWORD nTime = m_pRule->m_nExpire - time( NULL );
+		DWORD nTime = m_pRule->m_nExpire - static_cast< DWORD >( time( NULL ) );
 		m_nExpireD = nTime / 86400;
 		m_nExpireH = ( nTime % 86400 ) / 3600;
 		m_nExpireM = ( nTime % 3600 ) / 60;
@@ -265,12 +265,12 @@ void CSecureRuleDlg::OnOK()
 
 	m_pRule->m_nType	= m_nType;
 	m_pRule->m_sComment	= m_sComment;
-	m_pRule->m_nAction	= m_nAction;
+	m_pRule->m_nAction	= BYTE( m_nAction );
 	m_pRule->m_nExpire	= m_nExpire;
 
 	if ( m_nExpire == 2 )
 	{
-		m_pRule->m_nExpire	= time( NULL ) + m_nExpireD * 86400
+		m_pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) ) + m_nExpireD * 86400
 							+ m_nExpireH * 3600 + m_nExpireM * 60;
 	}
 
@@ -282,21 +282,21 @@ void CSecureRuleDlg::OnOK()
 		for ( int nByte = 0 ; nByte < 4 ; nByte++ )
 		{
 			CString strItem;
-			int nValue = 0;
+			DWORD nValue = 0;
 
 			pwIP[ nByte ]->GetWindowText( strItem );
 			if ( _stscanf( strItem, _T("%lu"), &nValue ) != 1 ) nValue = 0;
-			m_pRule->m_nIP[ nByte ] = (BYTE)max( 0, min( 255, nValue ) );
+			m_pRule->m_nIP[ nByte ] = min( uchar( 255u ), nValue );
 
 			pwMask[ nByte ]->GetWindowText( strItem );
 			if ( _stscanf( strItem, _T("%lu"), &nValue ) != 1 ) nValue = 0;
-			m_pRule->m_nMask[ nByte ] = (BYTE)max( 0, min( 255, nValue ) );
+			m_pRule->m_nMask[ nByte ] = min( uchar( 255u ), nValue );
 		}
 	}
 	else if ( m_pRule->m_nType == CSecureRule::srContent )
 	{
 		m_pRule->SetContentWords( m_sContent );
-		m_pRule->m_nIP[0] = m_nMatch;
+		m_pRule->m_nIP[0] = BYTE( m_nMatch );
 	}
 
 	Security.Add( m_pRule );

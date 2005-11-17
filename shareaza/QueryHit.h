@@ -37,50 +37,46 @@ class CQueryHit
 {
 // Construction
 public:
-	CQueryHit(PROTOCOLID nProtocol, GGUID* pSearchID = NULL);
+	CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID = Hashes::Guid());
 	virtual ~CQueryHit();
 
 // Attributes
 public:
-	CQueryHit*	m_pNext;
-	GGUID		m_pSearchID;
+	CQueryHit*		m_pNext;
+	Hashes::Guid	m_oSearchID;
 public:
-	PROTOCOLID	m_nProtocol;
-	GGUID		m_pClientID;
-	IN_ADDR		m_pAddress;
-	WORD		m_nPort;
-	DWORD		m_nSpeed;
-	CString		m_sSpeed;
-	CVendor*	m_pVendor;
-	TRISTATE	m_bPush;
-	TRISTATE	m_bBusy;
-	TRISTATE	m_bStable;
-	TRISTATE	m_bMeasured;
-	BOOL		m_bChat;
-	BOOL		m_bBrowseHost;
-	CString		m_sNick;
+	PROTOCOLID		m_nProtocol;
+	Hashes::Guid	m_oClientID;
+	IN_ADDR			m_pAddress;
+	WORD			m_nPort;
+	DWORD			m_nSpeed;
+	CString			m_sSpeed;
+	CVendor*		m_pVendor;
+	TRISTATE		m_bPush;
+	TRISTATE		m_bBusy;
+	TRISTATE		m_bStable;
+	TRISTATE		m_bMeasured;
+	BOOL			m_bChat;
+	BOOL			m_bBrowseHost;
+	CString			m_sNick;
 public:
-	int			m_nGroup;
-	BOOL		m_bSHA1;
-	SHA1		m_pSHA1;
-	BOOL		m_bTiger;
-	TIGEROOT	m_pTiger;
-	BOOL		m_bED2K;
-	MD4			m_pED2K;
-	BOOL		m_bBTH;
-	SHA1		m_pBTH;
-	CString		m_sURL;
-	CString		m_sName;
-	DWORD		m_nIndex;
-	BOOL		m_bSize;
-	QWORD		m_nSize;
-	DWORD		m_nSources;
-	DWORD		m_nPartial;
-	BOOL		m_bPreview;
-	CString		m_sPreview;
-	int			m_nUpSlots;
-	int			m_nUpQueue;
-	BOOL		m_bCollection;
+	int				m_nGroup;
+    Hashes::Sha1Hash m_oSHA1;
+    Hashes::TigerHash m_oTiger;
+    Hashes::Ed2kHash m_oED2K;
+    Hashes::BtHash m_oBTH;
+	CString			m_sURL;
+	CString			m_sName;
+	DWORD			m_nIndex;
+	BOOL			m_bSize;
+	QWORD			m_nSize;
+	DWORD			m_nSources;
+	DWORD			m_nPartial;
+	BOOL			m_bPreview;
+	CString			m_sPreview;
+	int				m_nUpSlots;
+	int				m_nUpQueue;
+	BOOL			m_bCollection;
 public:
 	CString			m_sSchemaURI;
 	CString			m_sSchemaPlural;
@@ -88,20 +84,21 @@ public:
 	int				m_nRating;
 	CString			m_sComments;
 public:
-	BOOL		m_bBogus;
-	BOOL		m_bMatched;
-	BOOL		m_bFiltered;
-	BOOL		m_bDownload;
-	BOOL		m_bNew;
-	BOOL		m_bSelected;
+	BOOL			m_bBogus;
+	BOOL			m_bMatched;
+	BOOL			m_bExactMatch;
+	BOOL			m_bFiltered;
+	BOOL			m_bDownload;
+	BOOL			m_bNew;
+	BOOL			m_bSelected;
 protected:
-	BOOL		m_bResolveURL;
+	BOOL			m_bResolveURL;
 
 // Static Decode Operations
 public:
 	static CQueryHit*	FromPacket(CG1Packet* pPacket, int* pnHops = NULL);
 	static CQueryHit*	FromPacket(CG2Packet* pPacket, int* pnHops = NULL);
-	static CQueryHit*	FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, GGUID* pSearchID = NULL );
+	static CQueryHit*	FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, const Hashes::Guid& pSearchID = Hashes::Guid());
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);
@@ -115,7 +112,7 @@ public:
 	void		Serialize(CArchive& ar, int nVersion);
 protected:
 	void		ReadG1Packet(CG1Packet* pPacket);
-	void		ParseAttributes(GGUID* pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
+	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
 	BOOL		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0);
 	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer);

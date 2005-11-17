@@ -116,7 +116,7 @@ POSITION CWindowManager::GetIterator() const
 
 CChildWnd* CWindowManager::GetNext(POSITION& pos) const
 {
-	return (CChildWnd*)m_pWindows.GetNext( pos );
+	return m_pWindows.GetNext( pos );
 }
 
 BOOL CWindowManager::Check(CChildWnd* pChild) const
@@ -195,7 +195,7 @@ CChildWnd* CWindowManager::FindFromPoint(const CPoint& point) const
 void CWindowManager::Close()
 {
 	CSingleLock pLock( &theApp.m_pSection, TRUE );
-	CPtrList pClose;
+	CList< CChildWnd* > pClose;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -204,7 +204,7 @@ void CWindowManager::Close()
 
 	for ( POSITION pos = pClose.GetHeadPosition() ; pos ; )
 	{
-		CChildWnd* pChild = (CChildWnd*)pClose.GetNext( pos );
+		CChildWnd* pChild = pClose.GetNext( pos );
 		pChild->DestroyWindow();
 	}
 }
@@ -370,7 +370,7 @@ void CWindowManager::CreateTabbedWindows()
 		pSystem->m_pGroupParent = pNeighbours;
 	}
 
-	CHomeWnd* pHome = new CHomeWnd();
+	/*CHomeWnd* pHome =*/ new CHomeWnd();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -540,8 +540,7 @@ void CWindowManager::PostSkinChange()
 		//CMenu* pTabMenu = Skin.GetMenu( _T("Child") );
 		//CMenu pTabMenu = pTabBar->m_mnuChild;
 
-		MENUITEMINFO pInfo;
-		ZeroMemory( &pInfo, sizeof( pInfo ) );
+		MENUITEMINFO pInfo = {};
 		pInfo.cbSize = sizeof( MENUITEMINFO );
 		pInfo.fMask = MIIM_DATA;
 		pMenu->DestroyMenu();

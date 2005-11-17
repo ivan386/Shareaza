@@ -150,7 +150,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 
 	Security.Expire();
 
-	DWORD nNow = time( NULL );
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
 	int nCount = 1;
 
 	for ( POSITION pos = Security.GetIterator() ; pos ; nCount++ )
@@ -218,7 +218,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 
 	if ( nColumn >= 0 )
 	{
-		SetWindowLong( m_wndList.GetSafeHwnd(), GWL_USERDATA, 0 - nColumn - 1 );
+		SetWindowLongPtr( m_wndList.GetSafeHwnd(), GWLP_USERDATA, 0 - nColumn - 1 );
 	}
 
 	pLiveList.Apply( &m_wndList, bSort );
@@ -247,12 +247,12 @@ void CSecurityWnd::OnSize(UINT nType, int cx, int cy)
 	m_wndList.SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOZORDER );
 }
 
-void CSecurityWnd::OnTimer(UINT nIDEvent) 
+void CSecurityWnd::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( ( nIDEvent == 1 ) && ( IsPartiallyVisible() ) )
 	{
 		DWORD tTicks = GetTickCount();
-		DWORD tDelay = max( ( 2 * Security.GetCount() ), 1000 );// Delay based on size of list
+		DWORD tDelay = max( ( 2 * (DWORD)Security.GetCount() ), 1000ul );// Delay based on size of list
 
 		if ( ( tTicks - tLastUpdate ) > tDelay )
 		{
@@ -274,7 +274,7 @@ void CSecurityWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		LV_ITEM pItem;
 		pItem.mask		= LVIF_IMAGE;
-		pItem.iItem		= pDraw->nmcd.dwItemSpec;
+		pItem.iItem		= static_cast< int >( pDraw->nmcd.dwItemSpec );
 		pItem.iSubItem	= 0;
 		m_wndList.GetItem( &pItem );
 
@@ -292,7 +292,7 @@ void CSecurityWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-void CSecurityWnd::OnDblClkList(NMHDR* pNMHDR, LRESULT* pResult)
+void CSecurityWnd::OnDblClkList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
 	OnSecurityEdit();
 	*pResult = 0;
@@ -305,7 +305,7 @@ void CSecurityWnd::OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CSecurityWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CSecurityWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
 	TrackPopupMenu( _T("CSecurityWnd"), point, ID_SECURITY_EDIT );
 }
@@ -404,7 +404,7 @@ void CSecurityWnd::OnUpdateSecurityMoveDown(CCmdUI* pCmdUI)
 void CSecurityWnd::OnSecurityMoveDown() 
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
-	CPtrList pList;
+	CList< CSecureRule* > pList;
 
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
@@ -413,7 +413,7 @@ void CSecurityWnd::OnSecurityMoveDown()
 
 	while ( pList.GetCount() )
 	{
-		CSecureRule* pRule = (CSecureRule*)pList.RemoveHead();
+		CSecureRule* pRule = pList.RemoveHead();
 		if ( pRule ) Security.MoveDown( pRule );
 	}
 

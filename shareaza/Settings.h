@@ -93,6 +93,7 @@ public:
 		CString		SafeExecute;
 		CString		PrivateTypes;
 		DWORD		ThumbSize;
+		CString		BitziAgent;
 		CString		BitziWebView;
 		CString		BitziWebSubmit;
 		CString		BitziXML;
@@ -478,8 +479,6 @@ public:
 	} Live;
 
 // Attributes : Item List
-protected:
-	CPtrList	m_pItems;
 public:
 	class Item
 	{
@@ -493,6 +492,8 @@ public:
 		DOUBLE*		m_pFloat;
 		CString*	m_pString;
 	};
+protected:
+	CList< Item* >	m_pItems;
 
 // Operations
 public:

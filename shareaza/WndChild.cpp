@@ -280,7 +280,7 @@ BOOL CChildWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* 
 	return bResult;
 }
 
-BOOL CChildWnd::OnEraseBkgnd(CDC* pDC)
+BOOL CChildWnd::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	return TRUE;
 }
@@ -394,7 +394,7 @@ void CChildWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp
 		CMDIChildWnd::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-UINT CChildWnd::OnNcHitTest(CPoint point)
+ONNCHITTESTRESULT CChildWnd::OnNcHitTest(CPoint point)
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, ! m_bPanelMode );
@@ -453,13 +453,13 @@ void CChildWnd::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
 	CMDIChildWnd::OnNcLButtonDblClk( nHitTest, point );
 }
 
-LONG CChildWnd::OnSetText(WPARAM wParam, LPARAM lParam)
+LRESULT CChildWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	if ( m_pSkin != NULL )
 	{
 		BOOL bVisible = IsWindowVisible();
 		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
-		LONG lResult = Default();
+		LRESULT lResult = Default();
 		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
 		if ( m_pSkin ) m_pSkin->OnSetText( this );
 		return lResult;
@@ -505,16 +505,16 @@ void CChildWnd::OnSkinChange()
 	}
 }
 
-void CChildWnd::OnQuerySearch(CQuerySearch* pSearch)
+void CChildWnd::OnQuerySearch(CQuerySearch* /*pSearch*/)
 {
 }
 
-BOOL CChildWnd::OnQueryHits(CQueryHit* pHits)
+BOOL CChildWnd::OnQueryHits(CQueryHit* /*pHits*/)
 {
 	return FALSE;
 }
 
-BOOL CChildWnd::OnPush(GGUID* pClientID, CConnection* pConnection)
+BOOL CChildWnd::OnPush(const Hashes::Guid& /*oClientID*/, CConnection* /*pConnection*/)
 {
 	return FALSE;
 }
@@ -525,7 +525,7 @@ HRESULT CChildWnd::GetGenericView(IGenericView** ppView)
 	return S_FALSE;
 }
 
-BOOL CChildWnd::OnDropFiles(CStringList& pFiles, const CPoint& ptScreen, BOOL bDrop)
+BOOL CChildWnd::OnDropFiles(CList< CString >& /*pFiles*/, const CPoint& /*ptScreen*/, BOOL /*bDrop*/)
 {
 	return FALSE;
 }

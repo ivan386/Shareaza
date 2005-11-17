@@ -75,7 +75,7 @@ CFilePropertiesSheet::~CFilePropertiesSheet()
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesSheet operations
 
-void CFilePropertiesSheet::Add(UINT nIndex)
+void CFilePropertiesSheet::Add(DWORD nIndex)
 {
 	m_pList.CheckAndAdd( nIndex );
 }
@@ -85,7 +85,7 @@ void CFilePropertiesSheet::Add(CLibraryList* pList)
 	m_pList.Merge( pList );
 }
 
-int CFilePropertiesSheet::DoModal(int nPage)
+INT_PTR CFilePropertiesSheet::DoModal(int nPage)
 {
 	//TODO: Get page title from defined caption in resources (Rolandas)
 	CFileGeneralPage	pGeneral;
@@ -198,7 +198,7 @@ void CFilePropertiesSheet::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS 
 		CPropertySheet::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-UINT CFilePropertiesSheet::OnNcHitTest(CPoint point)
+ONNCHITTESTRESULT CFilePropertiesSheet::OnNcHitTest(CPoint point)
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, ( GetStyle() & WS_THICKFRAME ) ? TRUE : FALSE );
@@ -262,13 +262,13 @@ void CFilePropertiesSheet::OnSize(UINT nType, int cx, int cy)
 	if ( nType != 1982 ) CPropertySheet::OnSize( nType, cx, cy );
 }
 
-LONG CFilePropertiesSheet::OnSetText(WPARAM wParam, LPARAM lParam)
+LRESULT CFilePropertiesSheet::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	if ( m_pSkin )
 	{
 		BOOL bVisible = IsWindowVisible();
 		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
-		LONG lResult = Default();
+		LRESULT lResult = Default();
 		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
 		if ( m_pSkin ) m_pSkin->OnSetText( this );
 		return lResult;

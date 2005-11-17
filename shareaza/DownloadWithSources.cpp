@@ -172,24 +172,24 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 	
 	if ( ! bForce )
 	{
-		if ( m_bSHA1 && pHit->m_bSHA1 )
+		if ( m_oSHA1 && pHit->m_oSHA1 )
 		{
-			if ( m_pSHA1 != pHit->m_pSHA1 ) return FALSE;
+			if ( m_oSHA1 != pHit->m_oSHA1 ) return FALSE;
 			bHash = TRUE;
 		}
-		else if ( m_bTiger && pHit->m_bTiger )
+        else if ( m_oTiger && pHit->m_oTiger )
 		{
-			if ( m_pTiger != pHit->m_pTiger ) return FALSE;
+			if ( m_oTiger != pHit->m_oTiger ) return FALSE;
 			bHash = TRUE;
 		}
-		if ( m_bED2K && pHit->m_bED2K )
+        if ( m_oED2K && pHit->m_oED2K )
 		{
-			if ( m_pED2K != pHit->m_pED2K ) return FALSE;
+			if ( m_oED2K != pHit->m_oED2K ) return FALSE;
 			bHash = TRUE;
 		}
-		if ( m_bBTH && pHit->m_bBTH )
+		if ( m_oBTH && pHit->m_oBTH )
 		{
-			if ( m_pBTH != pHit->m_pBTH ) return FALSE;
+			if ( m_oBTH != pHit->m_oBTH ) return FALSE;
 			bHash = TRUE;
 		}
 	}
@@ -205,20 +205,17 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 		if ( m_sDisplayName.CompareNoCase( pHit->m_sName ) ) return FALSE;
 	}
 	
-	if ( ! m_bSHA1 && pHit->m_bSHA1 )
+	if ( !m_oSHA1 && pHit->m_oSHA1 )
 	{
-		m_bSHA1 = TRUE;
-		m_pSHA1 = pHit->m_pSHA1;
+		m_oSHA1 = pHit->m_oSHA1;
 	}
-	if ( ! m_bTiger && pHit->m_bTiger )
+    if ( !m_oTiger && pHit->m_oTiger )
 	{
-		m_bTiger = TRUE;
-		m_pTiger = pHit->m_pTiger;
+		m_oTiger = pHit->m_oTiger;
 	}
-	if ( ! m_bED2K && pHit->m_bED2K )
+    if ( !m_oED2K && pHit->m_oED2K )
 	{
-		m_bED2K = TRUE;
-		m_pED2K = pHit->m_pED2K;
+		m_oED2K = pHit->m_oED2K;
 	}
 	
 	if ( m_nSize == SIZE_UNKNOWN && pHit->m_bSize )
@@ -250,8 +247,8 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 	/*
 	if ( pHit->m_nProtocol == PROTOCOL_ED2K )
 	{
-		Neighbours.FindDonkeySources( &pHit->m_pED2K,
-			(IN_ADDR*)pHit->m_pClientID.w, (WORD)pHit->m_pClientID.w[1] );
+		Neighbours.FindDonkeySources( pHit->m_oED2K,
+			(IN_ADDR*)pHit->m_oClientID.begin(), (WORD)pHit->m_oClientID.begin()[1] );
 	}
 	*/
 
@@ -264,12 +261,12 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add miscellaneous sources
 
-BOOL CDownloadWithSources::AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, GGUID* pGUID)
+BOOL CDownloadWithSources::AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID)
 {
-	return AddSourceInternal( new CDownloadSource( (CDownload*)this, nClientID, nClientPort, nServerIP, nServerPort, pGUID ) );
+	return AddSourceInternal( new CDownloadSource( (CDownload*)this, nClientID, nClientPort, nServerIP, nServerPort, oGUID ) );
 }
 
-BOOL CDownloadWithSources::AddSourceBT(SHA1* pGUID, IN_ADDR* pAddress, WORD nPort)
+BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort)
 {
 	// Unreachable (Push) BT sources should never be added.
 	if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP ) )
@@ -279,7 +276,7 @@ BOOL CDownloadWithSources::AddSourceBT(SHA1* pGUID, IN_ADDR* pAddress, WORD nPor
 	if ( ( Settings.Connection.IgnoreOwnIP ) && ( pAddress->S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) ) 
 		return FALSE;
 
-	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pGUID, pAddress, nPort ) );
+	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -309,9 +306,9 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 	
 	if ( m_pFailedSources.Find( pszURL ) != NULL ) return FALSE;
 	
-	if ( pURL.m_bSHA1 && m_bSHA1 )
+	if ( pURL.m_oSHA1 && m_oSHA1 )
 	{
-		if ( m_pSHA1 != pURL.m_pSHA1 ) return FALSE;
+		if ( m_oSHA1 != pURL.m_oSHA1 ) return FALSE;
 	}
 	
 	if ( m_sDisplayName.IsEmpty() && _tcslen( pszURL ) > 9 )
@@ -403,11 +400,11 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 			
 			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && nPort != 0 && nAddress != INADDR_NONE )
 			{
-				if ( m_bSHA1 )
+				if ( m_oSHA1 )
 				{
 					strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
 						(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ),
-						nPort, (LPCTSTR)CSHA::HashToString( &m_pSHA1, TRUE ) );
+						nPort, (LPCTSTR)m_oSHA1.toUrn() );
 				}
 			}
 		}
@@ -423,17 +420,17 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 
 BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 {
-	// Check/Reject if source is invalid
+	//Check/Reject if source is invalid
 	if ( ! pSource->m_bPushOnly )
 	{
-		// Reject invalid IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
+		//Reject invalid IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
 		if ( pSource->m_pAddress.S_un.S_un_b.s_b1 == 0 )
 		{
 			delete pSource;
 			return FALSE;
 		}
 
-		// Reject if source is the local IP/port
+		//Reject if source is the local IP/port
 		if ( Network.m_pHost.sin_addr.S_un.S_addr == pSource->m_pAddress.S_un.S_addr )
 		{
 			if ( ( ( pSource->m_nServerPort == 0 ) && (Settings.Connection.InPort == pSource->m_nPort ) )
@@ -446,22 +443,11 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	}
 	else if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 	{
-		// Reject invalid server IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
+		//Reject invalid server IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
 		if ( pSource->m_pServerAddress.S_un.S_un_b.s_b1 == 0 )
 		{
 			delete pSource;
 			return FALSE;
-		}
-	}
-
-	// Check if GUID is valid (MLDonkey source exchange bug)
-	if ( pSource->m_bGUID )
-	{
-		if ( ( pSource->m_pGUID.w[0] == 0 ) && ( pSource->m_pGUID.w[1] == 0 ) && 
-			 ( pSource->m_pGUID.w[2] == 0 ) && ( pSource->m_pGUID.w[3] == 0 ) )
-		{
-			// GUID appear to be null, so invalidate it to prevent duplicate sources
-			pSource->m_bGUID = FALSE;
 		}
 	}
 
@@ -507,7 +493,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources query for URLs
 
-CString CDownloadWithSources::GetSourceURLs(CStringList* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept)
+CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept)
 {
 	CString strSources, strURL;
 	
@@ -720,8 +706,7 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 
 int CDownloadWithSources::GetSourceColour()
 {
-	BOOL bTaken[SRC_COLOURS];
-	ZeroMemory( bTaken, sizeof(BOOL) * SRC_COLOURS );
+	BOOL bTaken[SRC_COLOURS] = {};
 	int nFree = SRC_COLOURS;
 	
 	for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
@@ -735,8 +720,6 @@ int CDownloadWithSources::GetSourceColour()
 			}
 		}
 	}
-	
-	srand( GetTickCount() + (DWORD)this );
 	
 	if ( nFree == 0 ) return rand() % SRC_COLOURS;
 	
@@ -774,7 +757,7 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 	}
 	else
 	{
-		for ( int nSources = ar.ReadCount() ; nSources ; nSources-- )
+		for ( DWORD_PTR nSources = ar.ReadCount() ; nSources ; nSources-- )
 		{
 			// Create new source
 			CDownloadSource* pSource = new CDownloadSource( (CDownload*)this );

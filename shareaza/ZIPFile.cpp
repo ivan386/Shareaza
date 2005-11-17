@@ -22,7 +22,6 @@
 #include "StdAfx.h"
 #include "ZIPFile.h"
 #include "Buffer.h"
-#include <zlib.h>
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -409,8 +408,8 @@ CBuffer* CZIPFile::File::Decompress()
 /////////////////////////////////////////////////////////////////////////////
 // CZIPFile::File decompress to disk
 
-#define BUFFER_IN_SIZE		(64*1024)
-#define BUFFER_OUT_SIZE		(128*1024)
+const DWORD BUFFER_IN_SIZE = 64 * 1024u;
+const DWORD BUFFER_OUT_SIZE = 128 * 1024u;
 
 BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 {
@@ -434,7 +433,7 @@ BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 		{
 			if ( pStream.avail_in == 0 )
 			{
-				pStream.avail_in	= (DWORD)min( m_nCompressedSize - nCompressed, QWORD(BUFFER_IN_SIZE) );
+				pStream.avail_in	= (DWORD)min( m_nCompressedSize - nCompressed, BUFFER_IN_SIZE );
 				pStream.next_in		= pBufferIn;
 
 				DWORD nRead = 0;
@@ -446,7 +445,7 @@ BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 			pStream.avail_out	= BUFFER_OUT_SIZE;
 			pStream.next_out	= pBufferOut;
 
-			int nInflate = inflate( &pStream, Z_SYNC_FLUSH );
+			/*int nInflate =*/ inflate( &pStream, Z_SYNC_FLUSH );
 
 			if ( pStream.avail_out < BUFFER_OUT_SIZE )
 			{
@@ -468,7 +467,7 @@ BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 
 		while ( nUncompressed < m_nSize )
 		{
-			DWORD nChunk = (DWORD)min( m_nSize - nUncompressed, QWORD(BUFFER_OUT_SIZE) );
+			DWORD nChunk = min( m_nSize - nUncompressed, BUFFER_OUT_SIZE );
 			DWORD nProcess = 0;
 
 			ReadFile( m_pZIP->m_hFile, pBufferOut, nChunk, &nProcess, NULL );

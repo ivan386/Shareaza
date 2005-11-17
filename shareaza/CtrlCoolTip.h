@@ -39,7 +39,7 @@ public:
 // Attributes
 protected:
 	BOOL*	m_pbEnable;
-	LPVOID	m_pContext;
+	void*	m_pContext;
 	HWND	m_hAltWnd;
 	BOOL	m_bTimer;
 	BOOL	m_bVisible;
@@ -51,7 +51,7 @@ protected:
 
 // Operations
 public:
-	virtual void Show(LPVOID pContext, HWND hAltWnd = NULL);
+	virtual void Show(void* pContext, HWND hAltWnd = NULL);
 	virtual void Hide();
 protected:
 	virtual void ShowImpl();
@@ -85,7 +85,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

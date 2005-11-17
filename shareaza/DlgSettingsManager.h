@@ -52,7 +52,7 @@ public:
 
 // Operations
 public:
-	int		DoModal(LPCTSTR pszWindow = NULL);
+	INT_PTR	DoModal(LPCTSTR pszWindow = NULL);
 protected:
 	void			AddPage(CSettingsPage* pPage);
 	void			AddGroup(CSettingsPage* pPage);

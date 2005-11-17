@@ -106,13 +106,13 @@ void CPacket::Seek(DWORD nPosition, int nRelative)
 	if ( nRelative == seekStart )
 	{
 		// Move the position in the object to the given position, making sure it's in the data
-		m_nPosition = max( DWORD(0), min( m_nLength, nPosition ) );
+		m_nPosition = min( m_nLength, nPosition );
 
 	} // Set the position backwards from the end
 	else
 	{
 		// Move the position in the object to m_nLength - nPosition from the start, which is nPosition from the end
-		m_nPosition = max( DWORD(0), min( m_nLength, m_nLength - nPosition ) );
+		m_nPosition = min( m_nLength, m_nLength - nPosition );
 	}
 }
 
@@ -223,7 +223,7 @@ int CPacket::GetStringLen(LPCTSTR pszString) const
 	if ( *pszString == 0 ) return 0;
 
 	// Find the number of characters in the text
-	int nLength = _tcslen( pszString ); // Same as lstrlen, doesn't include null terminator
+	int nLength = static_cast< int >( _tcslen( pszString ) ); // Same as lstrlen, doesn't include null terminator
 
 	// Find out how many ASCII bytes the text would convert into, and return that number
 	nLength = WideCharToMultiByte( CP_ACP, 0, pszString, nLength, NULL, 0, NULL, NULL );
@@ -328,7 +328,7 @@ int CPacket::GetStringLenUTF8(LPCTSTR pszString) const
 	if ( *pszString == 0 ) return 0;
 
 	// Find the number of characters in the text
-	int nLength = _tcslen( pszString ); // Same as lstrlen, doesn't include null terminator
+	int nLength = static_cast< int >( _tcslen( pszString ) ); // Same as lstrlen, doesn't include null terminator
 
 	// Find out how many ASCII bytes the text would convert into using the UTF8 code page, and return that number
 	nLength = WideCharToMultiByte( CP_UTF8, 0, pszString, nLength, NULL, 0, NULL, NULL );
@@ -394,7 +394,7 @@ BYTE* CPacket::WriteGetPointer(DWORD nLength, DWORD nOffset)
 	if ( m_nLength + nLength > m_nBuffer )
 	{
 		// Increase the size of the buffer by the needed length, or 128 bytes, whichever is bigger
-		m_nBuffer += max( nLength, DWORD(PACKET_GROW) ); // Packet grow is 128 bytes
+		m_nBuffer += max( nLength, PACKET_GROW ); // Packet grow is 128 bytes
 		LPBYTE pNew = new BYTE[ m_nBuffer ];             // Allocate a new buffer of that size
 		CopyMemory( pNew, m_pBuffer, m_nLength );        // Copy all the memory of the old buffer into the new bigger one
 		if ( m_pBuffer ) delete [] m_pBuffer;            // Free the old buffer
@@ -475,7 +475,7 @@ CString CPacket::ToASCII() const
 		int nChar = m_pBuffer[i];
 
 		// If the byte is 32 or greater, read it as an ASCII character and copy that character into the string
-		*pszDump++ = ( nChar >= 32 ? nChar : '.' ); // If it's 0-31, copy in a period instead
+		*pszDump++ = WCHAR( nChar >= 32 ? nChar : '.' ); // If it's 0-31, copy in a period instead
 	}
 
 	// Write a null terminator beyond the characters we wrote, close direct memory access to the string, and return it
@@ -512,6 +512,8 @@ void CPacket::Debug(LPCTSTR pszReason) const
 
 	theApp.Message( MSG_DEBUG, LPCTSTR( strOutput ) );
 
+#else
+	pszReason;
 // Go back to including all the lines in the program
 #endif
 }
@@ -535,7 +537,7 @@ void CPacket::SmartDump(CNeighbour* pNeighbour, IN_ADDR* pUDP, BOOL bOutgoing) c
 			CPacketWnd*     pWnd     = NULL;
 
 			// Loop through all the windows, pointing pWnd at each one
-			while ( pWnd = (CPacketWnd*)pWindows->Find( RUNTIME_CLASS(CPacketWnd), pWnd ) )
+			while ( ( pWnd = (CPacketWnd*)pWindows->Find( RUNTIME_CLASS(CPacketWnd), pWnd ) ) != NULL )
 			{
 				// Give each window this packet to process, along with the related CNeighbour object, IP address, and travel direction
 				pWnd->Process( pNeighbour, pUDP, bOutgoing, this );
@@ -550,7 +552,7 @@ void CPacket::SmartDump(CNeighbour* pNeighbour, IN_ADDR* pUDP, BOOL bOutgoing) c
 // Takes the number of bytes in this packet to hash
 // Computs the SHA hash of those bytes
 // Writes the hash under the given pointer and returns true, or false on error
-BOOL CPacket::GetRazaHash(SHA1* pHash, DWORD nLength) const
+BOOL CPacket::GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength) const
 {
 	// If the caller didn't specify a length, we'll hash all the bytes in the packet
 	if ( nLength == 0xFFFFFFFF ) nLength = m_nLength;
@@ -562,7 +564,7 @@ BOOL CPacket::GetRazaHash(SHA1* pHash, DWORD nLength) const
 	CSHA pSHA;
 	pSHA.Add( m_pBuffer, nLength ); // Add the bytes of the packet to those it needs to hash
 	pSHA.Finish();                  // Tell it that's all we have
-	pSHA.GetHash( pHash );          // Ask it to write the hash under the pHash pointer
+	pSHA.GetHash( oHash );          // Ask it to write the hash under the pHash pointer
 	return TRUE;                    // Report success
 }
 
@@ -605,12 +607,12 @@ void CPacketPool::Clear()
 {
 	// Loop from the end of the pointer array back to the start
 	for (
-		int nIndex = m_pPools.GetSize() - 1; // GetSize returns the number of pointers in the array, start nIndex on the last one
+		INT_PTR nIndex = m_pPools.GetSize() - 1; // GetSize returns the number of pointers in the array, start nIndex on the last one
 		nIndex >= 0;                         // If nIndex reaches 0, loop one more time, when it's -1, don't do the loop anymore
 		nIndex-- )                           // Move back one index in the pointer array
 	{
 		// Point pPool at the packet pool at that position in the array
-		CPacket* pPool = (CPacket*)m_pPools.GetAt( nIndex );
+		CPacket* pPool = m_pPools.GetAt( nIndex );
 
 		// Delete the packet pool, freeing the memory of the 256 packets in it
 		FreePoolImpl( pPool ); // Calls up higher on the inheritance tree

@@ -51,7 +51,6 @@ CAlbumFolder::CAlbumFolder(CAlbumFolder* pParent, LPCTSTR pszSchemaURI, LPCTSTR 
 	m_sSchemaURI	= pszSchemaURI ? pszSchemaURI : NULL;
 	m_pSchema		= pszSchemaURI ? SchemaCache.Get( pszSchemaURI ) : NULL;
 	m_pXML			= NULL;
-	m_bCollSHA1		= FALSE;
 
 	if ( pszName > (LPCTSTR)1 )
 	{
@@ -108,7 +107,7 @@ POSITION CAlbumFolder::GetFolderIterator() const
 
 CAlbumFolder* CAlbumFolder::GetNextFolder(POSITION& pos) const
 {
-	return (CAlbumFolder*)m_pFolders.GetNext( pos );
+	return m_pFolders.GetNext( pos );
 }
 
 CAlbumFolder* CAlbumFolder::GetFolder(LPCTSTR pszName) const
@@ -132,11 +131,6 @@ CAlbumFolder* CAlbumFolder::GetFolderByURI(LPCTSTR pszURI) const
 	}
 
 	return NULL;
-}
-
-int CAlbumFolder::GetFolderCount() const
-{
-	return m_pFolders.GetCount();
 }
 
 BOOL CAlbumFolder::CheckFolder(CAlbumFolder* pFolder, BOOL bRecursive) const
@@ -180,14 +174,14 @@ CAlbumFolder* CAlbumFolder::GetTarget(CSchemaMember* pMember, LPCTSTR pszValue) 
 	return NULL;
 }
 
-CAlbumFolder* CAlbumFolder::FindCollection(SHA1* pSHA1)
+CAlbumFolder* CAlbumFolder::FindCollection(const Hashes::Sha1Hash& oSHA1)
 {
-	if ( m_bCollSHA1 && *pSHA1 == m_pCollSHA1 ) return this;
+	if ( validAndEqual( m_oCollSHA1, oSHA1 ) ) return this;
 
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CAlbumFolder* pFolder = GetNextFolder( pos );
-		if ( CAlbumFolder* pFind = pFolder->FindCollection( pSHA1 ) ) return pFind;
+		if ( CAlbumFolder* pFind = pFolder->FindCollection( oSHA1 ) ) return pFind;
 	}
 
 	return NULL;
@@ -216,15 +210,15 @@ void CAlbumFolder::AddFile(CLibraryFile* pFile)
 
 	m_pFiles.AddTail( pFile );
 
-	if ( m_bCollSHA1 )
+	if ( m_oCollSHA1 )
 	{
-		if ( CLibraryFile* pCollection = LibraryMaps.LookupFileBySHA1( &m_pCollSHA1, FALSE, TRUE ) )
+		if ( CLibraryFile* pCollection = LibraryMaps.LookupFileBySHA1( m_oCollSHA1, FALSE, TRUE ) )
 		{
 			pFile->m_nCollIndex = pCollection->m_nIndex;
 		}
 		else
 		{
-			m_bCollSHA1 = FALSE;
+			m_oCollSHA1.clear();
 		}
 	}
 
@@ -239,12 +233,7 @@ POSITION CAlbumFolder::GetFileIterator() const
 
 CLibraryFile* CAlbumFolder::GetNextFile(POSITION& pos) const
 {
-	return (CLibraryFile*)m_pFiles.GetNext( pos );
-}
-
-int CAlbumFolder::GetFileCount() const
-{
-	return m_pFiles.GetCount();
+	return m_pFiles.GetNext( pos );
 }
 
 int CAlbumFolder::GetSharedCount() const
@@ -276,25 +265,32 @@ void CAlbumFolder::RemoveFile(CLibraryFile* pFile)
 	}
 }
 
-void CAlbumFolder::OnFileDelete(CLibraryFile* pFile)
+void CAlbumFolder::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 {
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
-		GetNextFolder( pos )->OnFileDelete( pFile );
+		GetNextFolder( pos )->OnFileDelete( pFile, bDeleteGhost );
+	}
+
+	if ( ! bDeleteGhost && m_sSchemaURI == CSchema::uriGhostFolder )
+	{
+		m_nUpdateCookie++;
+		Library.m_nUpdateCookie++;
+		return;
 	}
 
 	if ( POSITION pos = m_pFiles.Find( pFile ) )
 	{
 		m_pFiles.RemoveAt( pos );
+		Delete( TRUE );
 		m_nUpdateCookie++;
 		Library.m_nUpdateCookie++;
-		Delete( TRUE );
 	}
 }
 
-CAlbumFolder* CAlbumFolder::FindFile(CLibraryFile* pFile) const
+CAlbumFolder* CAlbumFolder::FindFile(CLibraryFile* pFile)
 {
-	if ( m_pFiles.Find( pFile ) != NULL ) return (CAlbumFolder*)this;
+	if ( m_pFiles.Find( pFile ) != NULL ) return this;
 
 	POSITION pos = GetFolderIterator();
 	CAlbumFolder* pFirst = pos ? GetNextFolder( pos ) : NULL;
@@ -350,7 +346,7 @@ void CAlbumFolder::Delete(BOOL bIfEmpty)
 	if ( bIfEmpty )
 	{
 		if ( ! m_bAutoDelete ) return;
-		if ( m_bCollSHA1 ) return;
+		if ( m_oCollSHA1 ) return;
 		if ( GetFolderCount() ) return;
 		if ( GetFileCount() ) return;
 	}
@@ -453,7 +449,7 @@ CString CAlbumFolder::GetBestView() const
 {
 	if ( m_sBestView.GetLength() > 0 ) return m_sBestView;
 
-	if ( m_bCollSHA1 ) return _T("CLibraryCollectionView");
+	if ( m_oCollSHA1 ) return _T("CLibraryCollectionView");
 
 	if ( m_pSchema != NULL && m_pSchema->m_sLibraryView.GetLength() > 0 )
 		return m_pSchema->m_sLibraryView;
@@ -464,7 +460,7 @@ CString CAlbumFolder::GetBestView() const
 //////////////////////////////////////////////////////////////////////
 // CAlbumFolder mount a collection
 
-BOOL CAlbumFolder::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection, BOOL bForce)
+BOOL CAlbumFolder::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection, BOOL bForce)
 {
 	if ( ! bForce )
 	{
@@ -472,7 +468,7 @@ BOOL CAlbumFolder::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection, BO
 
 		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
-			bResult |= GetNextFolder( pos )->MountCollection( pSHA1, pCollection, bForce );
+			bResult |= GetNextFolder( pos )->MountCollection( oSHA1, pCollection, bForce );
 		}
 
 		if ( m_pSchema == NULL ) return bResult;
@@ -486,7 +482,7 @@ BOOL CAlbumFolder::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection, BO
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		pFolder = GetNextFolder( pos );
-		if ( pFolder->m_bCollSHA1 && *pSHA1 == pFolder->m_pCollSHA1 ) break;
+		if ( validAndEqual( pFolder->m_oCollSHA1, oSHA1 ) ) break;
 		pFolder = NULL;
 	}
 
@@ -495,7 +491,7 @@ BOOL CAlbumFolder::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection, BO
 		pFolder = AddFolder( pCollection->GetThisURI(), pCollection->GetTitle() );
 	}
 
-	pFolder->SetCollection( pSHA1, pCollection );
+	pFolder->SetCollection( oSHA1, pCollection );
 
 	m_nUpdateCookie++;
 	Library.m_nUpdateCookie++;
@@ -503,10 +499,9 @@ BOOL CAlbumFolder::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection, BO
 	return TRUE;
 }
 
-void CAlbumFolder::SetCollection(SHA1* pSHA1, CCollectionFile* pCollection)
+void CAlbumFolder::SetCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection)
 {
-	m_bCollSHA1 = TRUE;
-	m_pCollSHA1 = *pSHA1;
+	m_oCollSHA1 = oSHA1;
 	m_sBestView.Empty();
 
 	if ( m_pCollection != NULL )
@@ -528,7 +523,7 @@ void CAlbumFolder::SetCollection(SHA1* pSHA1, CCollectionFile* pCollection)
 
 		if ( pFile->IsAvailable() )
 		{
-			if ( m_pCollSHA1 == pFile->m_pSHA1 ||
+			if ( validAndEqual( m_oCollSHA1, pFile->m_oSHA1 ) ||
 				 pCollection->FindFile( pFile, TRUE ) ) AddFile( pFile );
 		}
 	}
@@ -542,10 +537,10 @@ void CAlbumFolder::SetCollection(SHA1* pSHA1, CCollectionFile* pCollection)
 
 CCollectionFile* CAlbumFolder::GetCollection()
 {
-	if ( ! m_bCollSHA1 ) return NULL;
+	if ( ! m_oCollSHA1 ) return NULL;
 	if ( m_pCollection != NULL ) return m_pCollection;
 
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( &m_pCollSHA1, FALSE, TRUE ) )
+	if ( CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( m_oCollSHA1, FALSE, TRUE ) )
 	{
 		m_pCollection = new CCollectionFile();
 
@@ -560,7 +555,7 @@ CCollectionFile* CAlbumFolder::GetCollection()
 		}
 	}
 
-	m_bCollSHA1 = FALSE;
+    m_oCollSHA1.clear();
 	m_nUpdateCookie++;
 	Library.m_nUpdateCookie++;
 
@@ -580,9 +575,9 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 		return TRUE;
 	}
 
-	if ( m_bCollSHA1 && ( m_pCollection != NULL || GetCollection() ) )
+	if ( m_oCollSHA1 && ( m_pCollection != NULL || GetCollection() ) )
 	{
-		if ( m_pCollSHA1 == pFile->m_pSHA1 ||
+		if ( validAndEqual( m_oCollSHA1, pFile->m_oSHA1 ) ||
 			 m_pCollection->FindFile( pFile, TRUE ) )
 		{
 			AddFile( pFile );
@@ -594,7 +589,8 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 		}
 	}
 
-	if ( pFile->m_pMetadata == NULL && m_pParent != NULL ) return FALSE;
+	if ( pFile->m_pMetadata == NULL && m_pParent != NULL && 
+		 m_sSchemaURI != CSchema::uriGhostFolder ) return FALSE;
 
 	if ( m_sSchemaURI == CSchema::uriMusicRoot )
 	{
@@ -907,6 +903,15 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 		AddFile( pFile );
 		return TRUE;
 	}
+	else if ( m_sSchemaURI == CSchema::uriGhostFolder )
+	{
+		if ( ! pFile->IsGhost() )
+		{
+			return FALSE;
+		}
+		AddFile( pFile );
+		return TRUE;
+	}
 
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
@@ -929,9 +934,7 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 		ar.WriteCount( m_pXML != NULL ? 1 : 0 );
 		if ( m_pXML ) m_pXML->Serialize( ar );
-
-		ar << m_bCollSHA1;
-		if ( m_bCollSHA1 ) ar.Write( &m_pCollSHA1, sizeof(SHA1) );
+        SerializeOut( ar, m_oCollSHA1 );
 
 		ar << m_sName;
 		ar << m_bExpanded;
@@ -978,14 +981,9 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 		if ( nVersion >= 19 )
 		{
-			ar >> m_bCollSHA1;
-
-			if ( m_bCollSHA1 )
-			{
-				ar.Read( &m_pCollSHA1, sizeof(SHA1) );
-				pCollection = LibraryMaps.LookupFileBySHA1( &m_pCollSHA1, FALSE, TRUE );
-				if ( pCollection == NULL ) m_bCollSHA1 = FALSE;
-			}
+            SerializeIn( ar, m_oCollSHA1, nVersion );
+            pCollection = LibraryMaps.LookupFileBySHA1( m_oCollSHA1, FALSE, TRUE );
+            if ( !pCollection ) m_oCollSHA1.clear();
 		}
 
 		ar >> m_sName;
@@ -994,7 +992,7 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 		if ( nVersion >= 9 ) ar >> m_sBestView;
 
-		int nCount = ar.ReadCount();
+		DWORD_PTR nCount = ar.ReadCount();
 
 		while ( nCount-- > 0 )
 		{

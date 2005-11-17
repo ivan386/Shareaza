@@ -75,7 +75,8 @@ BOOL CSchemaColumnsDlg::OnInitDialog()
 
 	for ( int nMember = 0 ; nMember < m_wndColumns.GetItemCount() ; nMember++ )
 	{
-		BOOL bChecked = m_pColumns.Find( (LPVOID)m_wndColumns.GetItemData( nMember ) ) != NULL;
+		BOOL bChecked = m_pColumns.Find(
+			reinterpret_cast< CSchemaMember* >( m_wndColumns.GetItemData( nMember ) ) ) != NULL;
 		m_wndColumns.SetItemState( nMember, INDEXTOSTATEIMAGEMASK( bChecked + 1 ), LVIS_STATEIMAGEMASK );
 	}
 
@@ -98,9 +99,7 @@ void CSchemaColumnsDlg::OnSelChangeSchemas()
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
 
-		LV_ITEM pItem;
-		ZeroMemory( &pItem, sizeof( pItem ) );
-
+		LV_ITEM pItem = {};
 		pItem.mask		= LVIF_TEXT|LVIF_PARAM;
 		pItem.iItem		= m_wndColumns.GetItemCount();
 		pItem.lParam	= (LPARAM)pMember;
@@ -145,7 +144,7 @@ void CSchemaColumnsDlg::OnOK()
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg load columns utility
 
-BOOL CSchemaColumnsDlg::LoadColumns(CSchema* pSchema, CPtrList* pColumns)
+BOOL CSchemaColumnsDlg::LoadColumns(CSchema* pSchema, CList< CSchemaMember* >* pColumns)
 {
 	if ( ! pSchema || ! pColumns ) return FALSE;
 	pColumns->RemoveAll();
@@ -168,7 +167,7 @@ BOOL CSchemaColumnsDlg::LoadColumns(CSchema* pSchema, CPtrList* pColumns)
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg save columns utility
 
-BOOL CSchemaColumnsDlg::SaveColumns(CSchema* pSchema, CPtrList* pColumns)
+BOOL CSchemaColumnsDlg::SaveColumns(CSchema* pSchema, CList< CSchemaMember* >* pColumns)
 {
 	if ( ! pSchema || ! pColumns ) return FALSE;
 
@@ -191,7 +190,7 @@ BOOL CSchemaColumnsDlg::SaveColumns(CSchema* pSchema, CPtrList* pColumns)
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg menu builder utility
 
-CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchema* pSchema, CPtrList* pColumns)
+CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchema* pSchema, CList< CSchemaMember* >* pColumns)
 {
 	if ( ! pSchema ) return NULL;
 
@@ -218,7 +217,7 @@ CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchema* pSchema, CPtrList* pColumns)
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg column toggle utility
 
-BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchema* pSchema, CPtrList* pSource, CPtrList* pTarget, UINT nToggleID, BOOL bSave)
+BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchema* pSchema, CList< CSchemaMember* >* pSource, CList< CSchemaMember* >* pTarget, UINT nToggleID, BOOL bSave)
 {
 	if ( ! pSchema ) return FALSE;
 
@@ -233,7 +232,7 @@ BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchema* pSchema, CPtrList* pSource, 
 
 		if ( nID == nToggleID )
 		{
-			if ( pos = pTarget->Find( pMember ) )
+			if ( ( pos = pTarget->Find( pMember ) ) != 0 )
 			{
 				pTarget->RemoveAt( pos );
 			}

@@ -42,8 +42,8 @@ public:
 	BOOL			m_bShowBorder;
 protected:
 	CSchema*		m_pSchema;
-	CObArray		m_pControls;
-	CStringArray	m_pCaptions;
+	CArray< CWnd* >	m_pControls;
+	CArray< CString >	m_pCaptions;
 	int				m_nScroll;
 	int				m_nScrollWheelLines;
 	CString			strMultipleString;

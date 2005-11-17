@@ -139,7 +139,7 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! Settings.Interface.LowResMode ) 
 	{
 		AddBox( &m_boxUploads );
-		if( Settings.BitTorrent.AdvancedInterface ) AddBox( &m_boxTorrents );
+		if ( Settings.BitTorrent.AdvancedInterface ) AddBox( &m_boxTorrents );
 	}
 	
 	// SetStretchBox( &m_boxLibrary );
@@ -184,7 +184,7 @@ CHomeDownloadsBox::~CHomeDownloadsBox()
 {
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
-		delete (Item*)m_pList.GetAt( nItem );
+		delete m_pList.GetAt( nItem );
 	}
 }
 
@@ -221,12 +221,12 @@ void CHomeDownloadsBox::Setup()
 	
 	m_pDocument = new CRichDocument();
 	
-	CMapStringToPtr pMap;
+	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
-	pMap.Lookup( _T("DownloadsNone"), (void*&)m_pdDownloadsNone );
-	pMap.Lookup( _T("DownloadsOne"), (void*&)m_pdDownloadsOne );
-	pMap.Lookup( _T("DownloadsMany"), (void*&)m_pdDownloadsMany );
+	pMap.Lookup( _T("DownloadsNone"), m_pdDownloadsNone );
+	pMap.Lookup( _T("DownloadsOne"), m_pdDownloadsOne );
+	pMap.Lookup( _T("DownloadsMany"), m_pdDownloadsMany );
 	
 	if ( m_pdDownloadsMany ) m_sDownloadsMany = m_pdDownloadsMany->m_sText;
 	
@@ -244,9 +244,9 @@ void CHomeDownloadsBox::Update()
 	BOOL bChanged = FALSE;
 	CString str;
 	
-	for ( int nItem = m_pList.GetSize() - 1 ; nItem >= 0 ; nItem-- )
+	for ( INT_PTR nItem = m_pList.GetSize() - 1 ; nItem >= 0 ; nItem-- )
 	{
-		Item* pItem = (Item*)m_pList.GetAt( nItem );
+		Item* pItem = m_pList.GetAt( nItem );
 		
 		if ( ! Downloads.CheckActive( pItem->m_pDownload, 6 ) )
 		{
@@ -271,7 +271,7 @@ void CHomeDownloadsBox::Update()
 		
 		for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 		{
-			pItem = (Item*)m_pList.GetAt( nItem );
+			pItem = m_pList.GetAt( nItem );
 			if ( pItem->m_pDownload == pDownload ) break;
 			pItem = NULL;
 		}
@@ -304,7 +304,7 @@ void CHomeDownloadsBox::Update()
 		nCount++;
 	}
 	
-	nCount = m_pList.GetSize() * 18;
+	nCount = static_cast< int >( m_pList.GetSize() * 18 );
 	if ( nCount ) nCount += 6;
 	
 	m_pDocument->ShowGroup( 1, m_pList.GetSize() == 0 );
@@ -374,7 +374,7 @@ void CHomeDownloadsBox::OnSize(UINT nType, int cx, int cy)
 	if ( m_nWidth != cx )
 	{
 		m_nWidth = cx;
-		int nCount = m_pList.GetSize() * 18;
+		int nCount = static_cast< int >( m_pList.GetSize() * 18 );
 		if ( nCount ) nCount += 6;
 		nCount += m_wndView.FullHeightMove( 0, nCount, m_nWidth );
 		SetSize( nCount );
@@ -405,7 +405,7 @@ void CHomeDownloadsBox::OnPaint()
 	
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
-		Item* pItem = (Item*)m_pList.GetAt( nItem );
+		Item* pItem = m_pList.GetAt( nItem );
 		
 		if ( pItem->m_nComplete == 0 || pItem->m_nSize == SIZE_UNKNOWN )
 		{
@@ -463,7 +463,7 @@ CHomeDownloadsBox::Item* CHomeDownloadsBox::HitTest(const CPoint& point) const
 	
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
-		Item* pItem = (Item*)m_pList.GetAt( nItem );
+		Item* pItem = m_pList.GetAt( nItem );
 		
 		if ( rcIcon.PtInRect( point ) || rcText.PtInRect( point ) ) return pItem;
 		
@@ -521,7 +521,7 @@ void CHomeDownloadsBox::OnLButtonUp(UINT nFlags, CPoint point)
 	CTaskBox::OnLButtonUp( nFlags, point );
 }
 
-void CHomeDownloadsBox::OnTimer(UINT nIDEvent)
+void CHomeDownloadsBox::OnTimer(UINT_PTR nIDEvent)
 {
 	CTaskBox::OnTimer( nIDEvent );
 	
@@ -612,7 +612,7 @@ CHomeLibraryBox::~CHomeLibraryBox()
 {
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
-		delete (Item*)m_pList.GetAt( nItem );
+		delete m_pList.GetAt( nItem );
 	}
 }
 
@@ -647,12 +647,12 @@ void CHomeLibraryBox::Setup()
 	
 	m_pDocument = new CRichDocument();
 	
-	CMapStringToPtr pMap;
+	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
-	pMap.Lookup( _T("LibraryFiles"), (void*&)m_pdLibraryFiles );
-	pMap.Lookup( _T("LibraryVolume"), (void*&)m_pdLibraryVolume );
-	pMap.Lookup( _T("LibraryHashRemaining"), (void*&)m_pdLibraryHashRemaining );
+	pMap.Lookup( _T("LibraryFiles"), m_pdLibraryFiles );
+	pMap.Lookup( _T("LibraryVolume"), m_pdLibraryVolume );
+	pMap.Lookup( _T("LibraryHashRemaining"), m_pdLibraryHashRemaining );
 	
 	SetDocument( m_pDocument );
 	
@@ -670,9 +670,9 @@ void CHomeLibraryBox::Update()
 	int nCount = 0;
 	CString str;
 	
-	for ( int nItem = m_pList.GetSize() - 1 ; nItem >= 0 ; nItem-- )
+	for ( INT_PTR nItem = m_pList.GetSize() - 1 ; nItem >= 0 ; nItem-- )
 	{
-		Item* pItem = (Item*)m_pList.GetAt( nItem );
+		Item* pItem = m_pList.GetAt( nItem );
 		
 		if ( ! LibraryHistory.Check( pItem->m_pRecent, 6 ) ||
 			NULL == pItem->m_pRecent->m_pFile )
@@ -688,10 +688,10 @@ void CHomeLibraryBox::Update()
 		CLibraryRecent* pRecent = LibraryHistory.GetNext( pos );
 		if ( pRecent->m_pFile == NULL ) continue;
 		
-        int nItem = m_pList.GetSize() - 1;
+        INT_PTR nItem = m_pList.GetSize() - 1;
 		for ( ; nItem >= 0 ; nItem-- )
 		{
-			Item* pItem = (Item*)m_pList.GetAt( nItem );
+			Item* pItem = m_pList.GetAt( nItem );
 			if ( pItem->m_pRecent == pRecent ) break;
 		}
 		
@@ -710,7 +710,7 @@ void CHomeLibraryBox::Update()
 		nCount++;
 	}
 	
-	nCount = m_pList.GetSize() * 18;
+	nCount = static_cast< int >( m_pList.GetSize() * 18 );
 	if ( nCount ) nCount += 6;
 	
 	m_pDocument->ShowGroup( 2, m_pList.GetSize() == 0 );
@@ -740,7 +740,7 @@ void CHomeLibraryBox::Update()
 		}
 	}
 	
-	int nHashing = LibraryBuilder.GetRemaining();
+	INT_PTR nHashing = LibraryBuilder.GetRemaining();
 	
 	if ( nHashing > 0 )
 	{
@@ -808,7 +808,7 @@ void CHomeLibraryBox::OnSize(UINT nType, int cx, int cy)
 	if ( m_nWidth != cx )
 	{
 		m_nWidth = cx;
-		int nCount = m_pList.GetSize() * 18;
+		int nCount = static_cast< int >( m_pList.GetSize() * 18 );
 		if ( nCount ) nCount += 6;
 		nCount += m_wndView.FullHeightMove( 0, nCount, m_nWidth );
 		SetSize( nCount );
@@ -836,7 +836,7 @@ void CHomeLibraryBox::OnPaint()
 	
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
-		Item* pItem = (Item*)m_pList.GetAt( nItem );
+		Item* pItem = m_pList.GetAt( nItem );
 		
 		ShellIcons.Draw( &dc, pItem->m_nIcon16, 16, rcIcon.left, rcIcon.top,
 			CoolInterface.m_crWindow );
@@ -880,7 +880,7 @@ CHomeLibraryBox::Item* CHomeLibraryBox::HitTest(const CPoint& point) const
 	
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
-		Item* pItem = (Item*)m_pList.GetAt( nItem );
+		Item* pItem = m_pList.GetAt( nItem );
 		
 		if ( rcIcon.PtInRect( point ) || rcText.PtInRect( point ) ) return pItem;
 		
@@ -945,7 +945,7 @@ void CHomeLibraryBox::OnLButtonUp(UINT nFlags, CPoint point)
 	CTaskBox::OnLButtonUp( nFlags, point );
 }
 
-void CHomeLibraryBox::OnTimer(UINT nIDEvent)
+void CHomeLibraryBox::OnTimer(UINT_PTR nIDEvent)
 {
 	CTaskBox::OnTimer( nIDEvent );
 	
@@ -997,15 +997,15 @@ void CHomeUploadsBox::Setup()
 	
 	m_pDocument = new CRichDocument();
 	
-	CMapStringToPtr pMap;
+	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
-	pMap.Lookup( _T("UploadsNone"), (void*&)m_pdUploadsNone );
-	pMap.Lookup( _T("UploadsOne"), (void*&)m_pdUploadsOne );
-	pMap.Lookup( _T("UploadsMany"), (void*&)m_pdUploadsMany );
-	pMap.Lookup( _T("UploadedNone"), (void*&)m_pdUploadedNone );
-	pMap.Lookup( _T("UploadedOne"), (void*&)m_pdUploadedOne );
-	pMap.Lookup( _T("UploadedMany"), (void*&)m_pdUploadedMany );
+	pMap.Lookup( _T("UploadsNone"), m_pdUploadsNone );
+	pMap.Lookup( _T("UploadsOne"), m_pdUploadsOne );
+	pMap.Lookup( _T("UploadsMany"), m_pdUploadsMany );
+	pMap.Lookup( _T("UploadedNone"), m_pdUploadedNone );
+	pMap.Lookup( _T("UploadedOne"), m_pdUploadedOne );
+	pMap.Lookup( _T("UploadedMany"), m_pdUploadedMany );
 	
 	if ( m_pdUploadedOne ) m_sUploadedOne = m_pdUploadedOne->m_sText;
 	if ( m_pdUploadedMany ) m_sUploadedMany = m_pdUploadedMany->m_sText;
@@ -1125,21 +1125,21 @@ void CHomeConnectionBox::Setup()
 	
 	m_pDocument = new CRichDocument();
 	
-	CMapStringToPtr pMap;
+	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
-	pMap.Lookup( _T("ConnectedHours"), (void*&)m_pdConnectedHours );
-	pMap.Lookup( _T("ConnectedMinutes"), (void*&)m_pdConnectedMinutes );
+	pMap.Lookup( _T("ConnectedHours"), m_pdConnectedHours );
+	pMap.Lookup( _T("ConnectedMinutes"), m_pdConnectedMinutes );
 	
-	pMap.Lookup( _T("G1Peers"), (void*&)m_pdCount[PROTOCOL_G1][ntNode] );
-	pMap.Lookup( _T("G1Hubs"), (void*&)m_pdCount[PROTOCOL_G1][ntHub] );
-	pMap.Lookup( _T("G1Leaves"), (void*&)m_pdCount[PROTOCOL_G1][ntLeaf] );
+	pMap.Lookup( _T("G1Peers"), m_pdCount[PROTOCOL_G1][ntNode] );
+	pMap.Lookup( _T("G1Hubs"), m_pdCount[PROTOCOL_G1][ntHub] );
+	pMap.Lookup( _T("G1Leaves"), m_pdCount[PROTOCOL_G1][ntLeaf] );
 	
-	pMap.Lookup( _T("G2Peers"), (void*&)m_pdCount[PROTOCOL_G2][ntNode] );
-	pMap.Lookup( _T("G2Hubs"), (void*&)m_pdCount[PROTOCOL_G2][ntHub] );
-	pMap.Lookup( _T("G2Leaves"), (void*&)m_pdCount[PROTOCOL_G2][ntLeaf] );
+	pMap.Lookup( _T("G2Peers"), m_pdCount[PROTOCOL_G2][ntNode] );
+	pMap.Lookup( _T("G2Hubs"), m_pdCount[PROTOCOL_G2][ntHub] );
+	pMap.Lookup( _T("G2Leaves"), m_pdCount[PROTOCOL_G2][ntLeaf] );
 	
-	pMap.Lookup( _T("EDServers"), (void*&)m_pdCount[PROTOCOL_ED2K][ntHub] );
+	pMap.Lookup( _T("EDServers"), m_pdCount[PROTOCOL_ED2K][ntHub] );
 	
 	for ( int nP = 0 ; nP < 4 ; nP++ )
 	{
@@ -1164,10 +1164,9 @@ void CHomeConnectionBox::Update()
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return;
 	
-	int nCount[4][4], nTotal = 0;
+	int nCount[4][4] = {};
+	int nTotal = 0;
 	CString str;
-	
-	ZeroMemory( nCount, sizeof(int) * 4 * 4 );
 	
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
@@ -1313,16 +1312,16 @@ void CHomeTorrentsBox::Setup()
 	
 	m_pDocument = new CRichDocument();
 	
-	CMapStringToPtr pMap;
+	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
 	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 	
-	pMap.Lookup( _T("TorrentsNone"), (void*&)m_pdTorrentsNone );
-	pMap.Lookup( _T("TorrentsOne"), (void*&)m_pdTorrentsOne );
-	pMap.Lookup( _T("TorrentsMany"), (void*&)m_pdTorrentsMany );
+	pMap.Lookup( _T("TorrentsNone"), m_pdTorrentsNone );
+	pMap.Lookup( _T("TorrentsOne"), m_pdTorrentsOne );
+	pMap.Lookup( _T("TorrentsMany"), m_pdTorrentsMany );
 	
 	if ( m_pdTorrentsMany ) m_sTorrentsMany = m_pdTorrentsMany->m_sText;
 
-	pMap.Lookup( _T("ReseedTorrent"), (void*&)m_pdReseedTorrent );
+	pMap.Lookup( _T("ReseedTorrent"), m_pdReseedTorrent );
 	if ( m_pdReseedTorrent ) m_sReseedTorrent = m_pdReseedTorrent->m_sText;
 
 	GetView().SetDocument( m_pDocument );
@@ -1371,7 +1370,7 @@ void CHomeTorrentsBox::Update()
 	{
 		if ( ( LibraryHistory.LastSeededTorrent.m_sName.IsEmpty() ) ||
 			 ( LibraryHistory.LastSeededTorrent.m_sPath.IsEmpty() ) ||
-			 ( Downloads.FindByBTH( &LibraryHistory.LastSeededTorrent.m_pBTH ) != NULL ) )
+			 ( Downloads.FindByBTH( LibraryHistory.LastSeededTorrent.m_oBTH ) != NULL ) )
 		{
 			// No 'Last seeded' torrent, or it's already seeding
 			m_pdReseedTorrent->Show( FALSE );

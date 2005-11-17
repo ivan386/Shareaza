@@ -78,14 +78,15 @@ CUploadTransferED2K::~CUploadTransferED2K()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferED2K request
 
-BOOL CUploadTransferED2K::Request(MD4* pMD4)
+BOOL CUploadTransferED2K::Request(const Hashes::Ed2kHash& oED2K)
 {
-	BOOL bSame = ( m_bED2K && m_pED2K == *pMD4 );
+	ASSERT( oED2K );
+	BOOL bSame = validAndEqual( m_oED2K, oED2K );
 	
 	Cleanup( ! bSame );
 	
 	CSingleLock oLock( &Library.m_pSection, TRUE );
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( pMD4, TRUE, TRUE ) )
+	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( oED2K, TRUE, TRUE ) )
 	{
 		// Send comments if necessary
 		if ( m_pClient ) m_pClient->SendCommentsPacket( pFile->m_nRating, pFile->m_sComments );
@@ -96,7 +97,7 @@ BOOL CUploadTransferED2K::Request(MD4* pMD4)
 	else
 	{
 		oLock.Unlock();
-		if ( CDownload* pFile = Downloads.FindByED2K( pMD4, TRUE ) )
+		if ( CDownload* pFile = Downloads.FindByED2K( oED2K, TRUE ) )
 		{
 			RequestPartial( pFile );
 		}
@@ -105,10 +106,10 @@ BOOL CUploadTransferED2K::Request(MD4* pMD4)
 			UploadQueues.Dequeue( this );
 			
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress,
-				(LPCTSTR)CED2K::HashToString( pMD4, TRUE ) );	
+				(LPCTSTR)oED2K.toUrn() );	
 			
 			CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
-			pReply->Write( pMD4, sizeof(MD4) );
+			pReply->Write( oED2K );
 			Send( pReply );
 			
 			Close();
@@ -122,7 +123,7 @@ BOOL CUploadTransferED2K::Request(MD4* pMD4)
 			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress, _T("ED2K") );	
 		
 		CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
-		pReply->Write( pMD4, sizeof(MD4) );
+		pReply->Write( oED2K );
 		Send( pReply );
 		
 		Close();
@@ -158,7 +159,7 @@ void CUploadTransferED2K::Close(BOOL bMessage)
 		}
 		
 		CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
-		pPacket->Write( &m_pED2K, sizeof(MD4) );
+		pPacket->Write( m_oED2K );
 		Send( pPacket );
 	}
 	
@@ -184,7 +185,6 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 	// Limit per-source packet rate
 	if ( tNow - m_tLastRun < Settings.eDonkey.SourceThrottle ) return FALSE;
 	m_tLastRun = tNow;
-
 
 	if ( m_nState == upsQueued )
 	{
@@ -262,7 +262,7 @@ BOOL CUploadTransferED2K::OnConnected()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferED2K connection lost
 
-void CUploadTransferED2K::OnDropped(BOOL bError)
+void CUploadTransferED2K::OnDropped(BOOL /*bError*/)
 {
 	if ( m_nState == upsQueued )
 	{
@@ -318,7 +318,7 @@ DWORD CUploadTransferED2K::GetMeasuredSpeed()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferED2K queue release
 
-BOOL CUploadTransferED2K::OnQueueRelease(CEDPacket* pPacket)
+BOOL CUploadTransferED2K::OnQueueRelease(CEDPacket* /*pPacket*/)
 {
 	Cleanup();
 	Close( TRUE );
@@ -330,19 +330,19 @@ BOOL CUploadTransferED2K::OnQueueRelease(CEDPacket* pPacket)
 
 BOOL CUploadTransferED2K::OnRequestParts(CEDPacket* pPacket)
 {
-	if ( pPacket->GetRemaining() < sizeof(MD4) + 4 * 3 * 2 )
+	if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount + 4 * 3 * 2 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		Close();
 		return FALSE;
 	}
+
+	Hashes::Ed2kHash oED2K;
+	pPacket->Read( oED2K );
 	
-	MD4 pMD4;
-	pPacket->Read( &pMD4, sizeof(MD4) );
-	
-	if ( pMD4 != m_pED2K )
+	if ( validAndUnequal( oED2K, m_oED2K ) )
 	{
-		if ( ! Request( &pMD4 ) ) return FALSE;
+		if ( ! Request( oED2K ) ) return FALSE;
 	}
 	
 	if ( m_nState != upsQueued && m_nState != upsRequest && m_nState != upsUploading )
@@ -425,12 +425,12 @@ void CUploadTransferED2K::AddRequest(QWORD nOffset, QWORD nLength)
 {
 	ASSERT( m_pBaseFile != NULL );
 	
-    FF::SimpleFragment oRequest( nOffset, nOffset + nLength );
+	Fragments::Fragment oRequest( nOffset, nOffset + nLength );
 
-    if ( ::std::find( m_oRequested.begin(), m_oRequested.end(), oRequest ) == m_oRequested.end() )
-    {
-        m_oRequested.pushBack( oRequest );
-    }
+	if ( std::find( m_oRequested.begin(), m_oRequested.end(), oRequest ) == m_oRequested.end() )
+	{
+		m_oRequested.push_back( oRequest );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -521,7 +521,7 @@ BOOL CUploadTransferED2K::OpenFile()
 	theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );	
 	
 	CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
-	pReply->Write( &m_pED2K, sizeof(MD4) );
+	pReply->Write( m_oED2K );
 	Send( pReply );
 	
 	Cleanup();
@@ -540,17 +540,16 @@ BOOL CUploadTransferED2K::StartNextRequest()
 	
 	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{
-        if ( ::std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() )
-            == m_oServed.end()
-            // This should be redundant (Camper)
-            && m_oRequested.begin()->begin() < m_nFileSize
-            && m_oRequested.begin()->end() <= m_nFileSize )
-        {
-            m_nOffset = m_oRequested.begin()->begin();
-            m_nLength = m_oRequested.begin()->length();
-            m_nPosition = 0;
-        }
-        m_oRequested.popFront();
+		if ( std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() ) == m_oServed.end()
+			// This should be redundant (Camper)
+			&& m_oRequested.begin()->begin() < m_nFileSize
+			&& m_oRequested.begin()->end() <= m_nFileSize )
+		{
+			m_nOffset = m_oRequested.begin()->begin();
+			m_nLength = m_oRequested.begin()->size();
+			m_nPosition = 0;
+		}
+		m_oRequested.pop_front();
 	}
 
 	if ( m_nLength < SIZE_UNKNOWN )
@@ -585,7 +584,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 	ASSERT( m_nPosition < m_nLength );
 	
 	QWORD nChunk = m_nLength - m_nPosition;
-	nChunk = min( nChunk, QWORD(Settings.eDonkey.FrameSize) );
+	nChunk = min( nChunk, Settings.eDonkey.FrameSize );
 	
 #if 0
 	// Use packet form
@@ -624,8 +623,8 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 	
 	pHeader->nProtocol	= ED2K_PROTOCOL_EDONKEY;
 	pHeader->nType		= ED2K_C2C_SENDINGPART;
-	pHeader->nLength	= 1 + sizeof(MD4) + 8 + (DWORD)nChunk;
-	pHeader->pMD4		= m_pED2K;
+    pHeader->nLength	= 1 + Hashes::Ed2kHash::byteCount + 8 + (DWORD)nChunk;
+    std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, &pHeader->pMD4[ 0 ] );
 	pHeader->nOffset1	= (DWORD)( m_nOffset + m_nPosition );
 	pHeader->nOffset2	= (DWORD)( m_nOffset + m_nPosition + nChunk );
 	
@@ -653,7 +652,7 @@ BOOL CUploadTransferED2K::CheckFinishedRequest()
 	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_FINISHED,
 		(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	
-    m_oServed.pushBack( FF::SimpleFragment( m_nOffset, m_nOffset + m_nLength ) );
+	m_oServed.push_back( Fragments::Fragment( m_nOffset, m_nOffset + m_nLength ) );
 	m_pBaseFile->AddFragment( m_nOffset, m_nLength );
 	m_nLength = SIZE_UNKNOWN;
 	
@@ -735,7 +734,7 @@ BOOL CUploadTransferED2K::CheckRanking()
 			if ( m_pClient->m_bEmule )
 			{	//eMule queue ranking
 				CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_QUEUERANKING, ED2K_PROTOCOL_EMULE );
-				pPacket->WriteShortLE( nPosition );
+				pPacket->WriteShortLE( WORD( nPosition ) );
 				pPacket->WriteShortLE( 0 );
 				pPacket->WriteLongLE( 0 );
 				pPacket->WriteLongLE( 0 );
@@ -768,7 +767,7 @@ BOOL CUploadTransferED2K::OnReask()
 	if ( nPosition < 0 ) return FALSE;
 	
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_UDP_REASKACK, ED2K_PROTOCOL_EMULE );
-	pPacket->WriteShortLE( nPosition );
+	pPacket->WriteShortLE( WORD( nPosition ) );
 	Datagrams.Send( &m_pClient->m_pHost.sin_addr, m_pClient->m_nUDP, pPacket );
 	
 	m_tRequest = GetTickCount();

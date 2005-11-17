@@ -150,7 +150,7 @@ void CDownloadWithSearch::StartAutomaticSearch()
 
 BOOL CDownloadWithSearch::CanSearch() const
 {
-	return ( ( m_pFile != NULL ) && ( m_bSHA1 || m_bTiger || m_bED2K || m_bBTH ) );
+	return m_pFile != NULL && ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -159,38 +159,34 @@ BOOL CDownloadWithSearch::CanSearch() const
 void CDownloadWithSearch::PrepareSearch()
 {
 	if ( m_pSearch == NULL ) m_pSearch = new CManagedSearch();
-	CQuerySearch* pSearch = m_pSearch->m_pSearch;
+	CQuerySearch* pSearch = m_pSearch->m_pSearch.get();
 	
 	if ( pSearch->m_bAndG1 )
 	{
 		pSearch->m_sSearch = m_sDisplayName;
 		pSearch->BuildWordList();
 	}
-	
-	if ( m_bSHA1 )
+
+	if ( m_oSHA1 )
 	{
-		pSearch->m_bSHA1 = TRUE;
-		pSearch->m_pSHA1 = m_pSHA1;
+		pSearch->m_oSHA1 = m_oSHA1;
 	}
-	if ( m_bTiger )
+	if ( m_oTiger )
 	{
-		pSearch->m_bTiger = TRUE;
-		pSearch->m_pTiger = m_pTiger;
+		pSearch->m_oTiger = m_oTiger;
 	}
-	if ( m_bED2K )
+	if ( m_oED2K )
 	{
-		pSearch->m_bED2K = TRUE;
-		pSearch->m_pED2K = m_pED2K;
+		pSearch->m_oED2K = m_oED2K;
 		m_pSearch->m_bAllowED2K = TRUE;
 	}
 	else
 	{
 		m_pSearch->m_bAllowED2K = FALSE;
 	}
-	if ( m_bBTH )
+	if ( m_oBTH )
 	{
-		pSearch->m_bBTH = TRUE;
-		pSearch->m_pBTH = m_pBTH;
+		pSearch->m_oBTH = m_oBTH;
 	}
 	
 	pSearch->m_bWantURL	= TRUE;

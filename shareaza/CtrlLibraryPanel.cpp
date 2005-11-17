@@ -61,7 +61,7 @@ BOOL CLibraryPanel::Create(CWnd* pParentWnd)
 	return CWnd::Create( NULL, NULL, WS_CHILD, rect, pParentWnd, IDC_LIBRARY_PANEL, NULL );
 }
 
-BOOL CLibraryPanel::CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* pObjects)
+BOOL CLibraryPanel::CheckAvailable(CLibraryTreeItem* /*pFolders*/, CLibraryList* /*pObjects*/)
 {
 	return ( m_bAvailable = FALSE );
 }

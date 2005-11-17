@@ -99,7 +99,7 @@ void CHomeViewCtrl::Setup()
 	Skin.GetWatermark( &m_bmHeader2, _T("CHomeViewCtrl.Header2") );
 
 	CXMLElement* pXML = Skin.GetDocument( _T("CHomeViewCtrl") );
-	CMapStringToPtr pMap;
+	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
 
 	if ( pXML == NULL || ! m_pDocument.LoadXML( pXML, &pMap ) )
 	{
@@ -108,11 +108,11 @@ void CHomeViewCtrl::Setup()
 		return;
 	}
 
-	pMap.Lookup( _T("Header"), (void*&)m_peHeader );
-	pMap.Lookup( _T("SearchBox"), (void*&)m_peSearch );
-	pMap.Lookup( _T("Upgrade"), (void*&)m_peUpgrade );
-	pMap.Lookup( _T("RemoteAccessURL1"), (void*&)m_peRemote1 );
-	pMap.Lookup( _T("RemoteAccessURL2"), (void*&)m_peRemote2 );
+	pMap.Lookup( _T("Header"), m_peHeader );
+	pMap.Lookup( _T("SearchBox"), m_peSearch );
+	pMap.Lookup( _T("Upgrade"), m_peUpgrade );
+	pMap.Lookup( _T("RemoteAccessURL1"), m_peRemote1 );
+	pMap.Lookup( _T("RemoteAccessURL2"), m_peRemote2 );
 
 	m_wndSearch.Setup( m_pDocument.m_crBackground );
 
@@ -220,8 +220,8 @@ void CHomeViewCtrl::OnPaintBegin(CDC* pDC)
 		BITMAP pHeader1;
 		m_bmHeader1.GetBitmap( &pHeader1 );
 
-		pDC->BitBlt( rcAnchor.left, rcAnchor.top, min( rcAnchor.Width(), int(pHeader1.bmWidth) ),
-			min( rcAnchor.Height(), int(pHeader1.bmHeight) ), &dcHeader, 0, 0, SRCCOPY );
+		pDC->BitBlt( rcAnchor.left, rcAnchor.top, min( rcAnchor.Width(), pHeader1.bmWidth ),
+			min( rcAnchor.Height(), pHeader1.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
 
 		CRect rcMark( &rcAnchor );
 		rcMark.left += pHeader1.bmWidth;
@@ -234,8 +234,8 @@ void CHomeViewCtrl::OnPaintBegin(CDC* pDC)
 
 			while ( rcMark.left < rcMark.right )
 			{
-				pDC->BitBlt( rcMark.left, rcMark.top, min( rcMark.Width(), int(pHeader2.bmWidth) ),
-					min( rcMark.Height(), int(pHeader2.bmHeight) ), &dcHeader, 0, 0, SRCCOPY );
+				pDC->BitBlt( rcMark.left, rcMark.top, min( rcMark.Width(), pHeader2.bmWidth ),
+					min( rcMark.Height(), pHeader2.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
 				rcMark.left += pHeader2.bmWidth;
 			}
 		}

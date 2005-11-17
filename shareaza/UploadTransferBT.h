@@ -48,9 +48,9 @@ public:
 	int				m_nRandomUnchoke;
 	DWORD			m_tRandomUnchoke;
 private:
-    FF::SimpleFragmentQueue m_oRequested;
-    FF::SimpleFragmentQueue m_oServed;
-
+	Fragments::Queue m_oRequested;
+	Fragments::Queue m_oServed;
+	
 // Operations
 public:
 	void			SetChoke(BOOL bChoke);

@@ -91,7 +91,7 @@ CLibraryFolder* CLibraryFolder::GetNextFolder(POSITION& pos) const
 {
 	CLibraryFolder* pOutput = NULL;
 	CString strName;
-	m_pFolders.GetNextAssoc( pos, strName, (CObject*&)pOutput );
+	m_pFolders.GetNextAssoc( pos, strName, pOutput );
 	return pOutput;
 }
 
@@ -101,7 +101,7 @@ CLibraryFolder* CLibraryFolder::GetFolderByName(LPCTSTR pszName) const
 	CString strName( pszName );
 	CharLower( strName.GetBuffer() );
 	strName.ReleaseBuffer();
-	return ( m_pFolders.Lookup( strName, (CObject*&)pOutput ) ) ? pOutput : NULL;
+	return ( m_pFolders.Lookup( strName, pOutput ) ) ? pOutput : NULL;
 }
 
 CLibraryFolder* CLibraryFolder::GetFolderByPath(LPCTSTR pszPath) const
@@ -129,7 +129,7 @@ BOOL CLibraryFolder::CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive) const
 	return FALSE;
 }
 
-int CLibraryFolder::GetFolderCount() const
+INT_PTR CLibraryFolder::GetFolderCount() const
 {
 	return m_pFolders.GetCount();
 }
@@ -146,7 +146,7 @@ CLibraryFile* CLibraryFolder::GetNextFile(POSITION& pos) const
 {
 	CLibraryFile* pOutput = NULL;
 	CString strName;
-	m_pFiles.GetNextAssoc( pos, strName, (CObject*&)pOutput );
+	m_pFiles.GetNextAssoc( pos, strName, pOutput );
 	return pOutput;
 }
 
@@ -156,10 +156,10 @@ CLibraryFile* CLibraryFolder::GetFile(LPCTSTR pszName) const
 	CString strName( pszName );
 	CharLower( strName.GetBuffer() );
 	strName.ReleaseBuffer();
-	return ( m_pFiles.Lookup( strName, (CObject*&)pOutput ) ) ? pOutput : NULL;
+	return ( m_pFiles.Lookup( strName, pOutput ) ) ? pOutput : NULL;
 }
 
-int CLibraryFolder::GetFileCount() const
+INT_PTR CLibraryFolder::GetFileCount() const
 {
 	return m_pFiles.GetCount();
 }
@@ -271,7 +271,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 
 		PathToName();
 
-		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CLibraryFolder* pFolder = new CLibraryFolder( this );
 			pFolder->Serialize( ar, nVersion );
@@ -282,7 +282,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 			m_nVolume	+= pFolder->m_nVolume;
 		}
 
-		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CLibraryFile* pFile = new CLibraryFile( this );
 			pFile->Serialize( ar, nVersion );
@@ -582,7 +582,7 @@ void CLibraryFolder::OnFileRename(CLibraryFile* pFile)
 		CLibraryFile* pOld = NULL;
 		CString strName;
 
-		m_pFiles.GetNextAssoc( pos, strName, (CObject*&)pOld );
+		m_pFiles.GetNextAssoc( pos, strName, pOld );
 
 		if ( pFile == pOld )
 		{
@@ -690,7 +690,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Library(ILibrary FAR* FAR* ppL
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryFolder::XLibraryFolders::get__NewEnum(IUnknown FAR* FAR* ppEnum)
+STDMETHODIMP CLibraryFolder::XLibraryFolders::get__NewEnum(IUnknown FAR* FAR* /*ppEnum*/)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolders )
 	return E_NOTIMPL;
@@ -737,7 +737,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Item(VARIANT vIndex, ILibraryF
 STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolders )
-	*pnCount = pThis->GetFolderCount();
+	*pnCount = static_cast< LONG >( pThis->GetFolderCount() );
 	return S_OK;
 }
 
@@ -760,7 +760,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Library(ILibrary FAR* FAR* ppLib
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryFolder::XLibraryFiles::get__NewEnum(IUnknown FAR* FAR* ppEnum)
+STDMETHODIMP CLibraryFolder::XLibraryFiles::get__NewEnum(IUnknown FAR* FAR* /*ppEnum*/)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFiles )
 	return E_NOTIMPL;
@@ -804,7 +804,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFil
 STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFiles )
-	*pnCount = pThis->GetFileCount();
+	*pnCount = static_cast< LONG >( pThis->GetFileCount() );
 	return S_OK;
 }
 

@@ -34,8 +34,8 @@ public:
 
 // Attributes
 public:
-	CMapStringToPtr	m_pNameMap;
-	CMapPtrToPtr	m_pImageMap;
+	CMap< CString, const CString&, UINT, UINT > m_pNameMap;
+	CMap< UINT, UINT, int, int > m_pImageMap;
 	CImageList		m_pImages;
 public:
 	CFont		m_fntNormal;

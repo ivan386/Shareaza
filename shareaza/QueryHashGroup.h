@@ -40,7 +40,7 @@ public:
 	DWORD		m_nHash;
 	DWORD		m_nCount;
 protected:
-	CPtrList	m_pTables;
+	CList< CQueryHashTable* > m_pTables;
 
 // Operations
 public:
@@ -58,10 +58,10 @@ public:
 
 	inline CQueryHashTable* GetNext(POSITION& pos) const
 	{
-		return (CQueryHashTable*)m_pTables.GetNext( pos );
+		return m_pTables.GetNext( pos );
 	}
 
-	inline int GetCount() const
+	inline INT_PTR GetCount() const
 	{
 		return m_pTables.GetCount();
 	}

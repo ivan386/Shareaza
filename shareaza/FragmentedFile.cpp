@@ -33,8 +33,6 @@ static char THIS_FILE[]=__FILE__;
 
 #undef _WIN32_WINNT
 #define _WIN32_WINNT 0x0500
-#include <winioctl.h>
-
 
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile construction
@@ -59,9 +57,12 @@ BOOL CFragmentedFile::Create(LPCTSTR pszFile, QWORD nLength)
 	m_pFile = TransferFiles.Open( pszFile, TRUE, TRUE );
 	if ( m_pFile == NULL ) return FALSE;
 
-    m_oFList.swap( FF::SimpleFragmentList( nLength ) );
+	{
+		Fragments::List oNewList( nLength );
+		m_oFList.swap( oNewList );
+	}
 
-    m_oFList.insert( FF::SimpleFragment( 0, nLength ) );
+	m_oFList.insert( Fragments::Fragment( 0, nLength ) );
 	
 	if ( Settings.Downloads.SparseThreshold > 0 && theApp.m_bNT &&
 		 nLength >= Settings.Downloads.SparseThreshold * 1024 )
@@ -125,8 +126,8 @@ void CFragmentedFile::Clear()
 {
 	Close();
 
-    m_oFList.swap( FF::SimpleFragmentList( 0 ) );
-
+	Fragments::List oNewList( 0 );
+	m_oFList.swap( oNewList );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -176,17 +177,17 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 
 BOOL CFragmentedFile::IsPositionRemaining(QWORD nOffset) const
 {
-    return hasPosition( m_oFList, nOffset );
+	return m_oFList.has_position( nOffset );
 }
 
 BOOL CFragmentedFile::DoesRangeOverlap(QWORD nOffset, QWORD nLength) const
 {
-    return overlaps( m_oFList, FF::SimpleFragment( nOffset, nOffset + nLength ) );
+	return m_oFList.overlaps( Fragments::Fragment( nOffset, nOffset + nLength ) );
 }
 
 QWORD CFragmentedFile::GetRangeOverlap(QWORD nOffset, QWORD nLength) const
 {
-    return overlappingSum( m_oFList, FF::SimpleFragment( nOffset, nOffset + nLength ) );
+	return m_oFList.overlapping_sum( Fragments::Fragment( nOffset, nOffset + nLength ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -197,28 +198,27 @@ BOOL CFragmentedFile::WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength)
 	if ( m_pFile == NULL ) return FALSE;
 	if ( nLength == 0 ) return TRUE;
 
-    FF::SimpleFragment oMatch( nOffset, nOffset + nLength );
-    FF::SimpleFragmentList::ConstIteratorPair
-        pMatches = m_oFList.overlappingRange( oMatch );
-    if ( pMatches.first == pMatches.second ) return FALSE;
+	Fragments::Fragment oMatch( nOffset, nOffset + nLength );
+	Fragments::List::const_iterator_pair pMatches = m_oFList.equal_range( oMatch );
+	if ( pMatches.first == pMatches.second ) return FALSE;
 
 	QWORD nResult, nProcessed = 0;
 
-    for ( ; pMatches.first != pMatches.second; ++pMatches.first )
-    {
-        QWORD nStart = std::max( pMatches.first->begin(), oMatch.begin() );
-        nResult = std::min( pMatches.first->end(), oMatch.end() ) - nStart;
+	for ( ; pMatches.first != pMatches.second; ++pMatches.first )
+	{
+		QWORD nStart = max( pMatches.first->begin(), oMatch.begin() );
+		nResult = min( pMatches.first->end(), oMatch.end() ) - nStart;
 
-        const char* pSource
-            = static_cast< const char* >( pData ) + nStart - oMatch.begin();
+		const char* pSource
+			= static_cast< const char* >( pData ) + nStart - oMatch.begin();
 
-        if ( !m_pFile->Write( nStart, pSource, nResult, &nResult ) ) return FALSE;
+		if ( !m_pFile->Write( nStart, pSource, nResult, &nResult ) ) return FALSE;
 
-        nProcessed += nResult;
+		nProcessed += nResult;
 	}
-	
+
 	m_nUnflushed += nProcessed;
-    m_oFList.erase( oMatch );
+	m_oFList.erase( oMatch );
 	return nProcessed > 0;
 }
 
@@ -243,5 +243,5 @@ BOOL CFragmentedFile::ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength)
 
 QWORD CFragmentedFile::InvalidateRange(QWORD nOffset, QWORD nLength)
 {
-    return m_oFList.insert( FF::SimpleFragment( nOffset, nOffset + nLength ) );
+	return m_oFList.insert( Fragments::Fragment( nOffset, nOffset + nLength ) );
 }

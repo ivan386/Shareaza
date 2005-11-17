@@ -37,13 +37,13 @@ public:
 
 // Attributes
 protected:
-	CMapPtrToPtr		m_pIndexMap;
-	CMapStringToOb		m_pNameMap;
-	CMapStringToOb		m_pPathMap;
+	CMap< DWORD, DWORD, CLibraryFile*, CLibraryFile* > m_pIndexMap;
+	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > m_pNameMap;
+	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > m_pPathMap;
 	CLibraryFile**		m_pSHA1Map;
 	CLibraryFile**		m_pTigerMap;
 	CLibraryFile**		m_pED2KMap;
-	CPtrList			m_pDeleted;
+	CList< CLibraryFile* >	m_pDeleted;
 protected:
 	DWORD				m_nNextIndex;
 	DWORD				m_nFiles;
@@ -53,23 +53,23 @@ protected:
 public:
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
-	int				GetFileCount() const;
+	INT_PTR			GetFileCount() const { return m_pIndexMap.GetCount(); }
 	void			GetStatistics(DWORD* pnFiles, QWORD* pnVolume);
 public:
 	CLibraryFile*	LookupFile(DWORD nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByName(LPCTSTR pszName, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByPath(LPCTSTR pszPath, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileBySHA1(const SHA1* pSHA1, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileByTiger(const TIGEROOT* pTiger, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileByED2K(const MD4* pED2K, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileBySHA1(const Hashes::Sha1Hash& oSHA1, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByTiger(const Hashes::TigerHash& oTiger, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByED2K(const Hashes::Ed2kHash& oED2K, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 protected:
 	void			Clear();
 	DWORD			AllocateIndex();
 	void			OnFileAdd(CLibraryFile* pFile);
 	void			OnFileRemove(CLibraryFile* pFile);
 	void			CullDeletedFiles(CLibraryFile* pMatch);
-	CPtrList*		Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal);
+	CList< CLibraryFile* >* Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal);
 	void			Serialize1(CArchive& ar, int nVersion);
 	void			Serialize2(CArchive& ar, int nVersion);
 

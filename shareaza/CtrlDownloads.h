@@ -41,8 +41,8 @@ public:
 	BOOL		Create(CWnd* pParentWnd, UINT nID);
 	BOOL		Update();
 	BOOL		Update(int nGroupCookie);
-	BOOL		DropShowTarget(CPtrList* pSel, const CPoint& ptScreen);
-	BOOL		DropObjects(CPtrList* pSel, const CPoint& ptScreen);
+	BOOL		DropShowTarget(CList< CDownload* >* pSel, const CPoint& ptScreen);
+	BOOL		DropObjects(CList< CDownload* >* pSel, const CPoint& ptScreen);
 	int			GetExpandableColumnX() const;
 protected:
 	void		InsertColumn(int nColumn, LPCTSTR pszCaption, int nFormat, int nWidth);
@@ -62,7 +62,7 @@ protected:
 	void		PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDownload, BOOL bFocus, BOOL bDrop);
 	void		PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus);
 	void		OnBeginDrag(CPoint ptAction);
-	CImageList*	CreateDragImage(CPtrList* pSel, const CPoint& ptMouse);
+	CImageList*	CreateDragImage(CList< CDownload* >* pSel, const CPoint& ptMouse);
 public:
 	static BOOL	IsFiltered(CDownload* pDownload);
 	static BOOL	IsExpandable(CDownload* pDownload);

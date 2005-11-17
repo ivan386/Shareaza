@@ -71,7 +71,7 @@ void CLibraryBuilderInternals::LoadSettings()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals extract metadata (threaded)
 
-BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, SHA1* pSHA1)
+BOOL CLibraryBuilderInternals::ExtractMetadata(CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1)
 {
 	CString strType;
 	
@@ -146,7 +146,7 @@ BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, 
 	}
 	else if ( strType == _T(".co") || strType == _T(".collection") )
 	{
-		return ReadCollection( hFile, pSHA1 );
+		return ReadCollection( hFile, oSHA1 );
 	}
 	else if ( strType == _T(".chm") )
 	{
@@ -323,7 +323,8 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 	}
 	
 	CXMLElement* pXML = new CXMLElement( NULL, _T("audio") );
-	
+	BOOL bBugInFrameSize = FALSE;
+
 	while ( TRUE )
 	{
 		DWORD nFrameSize = 0;
@@ -344,7 +345,15 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 			szFrameTag[4] = 0;
 			
 			nFrameSize = SWAP_LONG( pFrame->nSize );
-			if ( pHeader.nMajorVersion >= 4 ) ID3_DESYNC_SIZE( nFrameSize );
+//			DWORD nOldFramesize = nFrameSize;
+			if ( pHeader.nMajorVersion >= 4 && ! bBugInFrameSize )
+			{
+				ID3_DESYNC_SIZE( nFrameSize );
+				if ( nBuffer < nFrameSize ) break;
+				// iTunes uses old style of size for v.2.4 when converting.
+				// TODO: Add a code here to find the correct frame size?
+				// Report and solution: http://www.sacredchao.net/quodlibet/ticket/180
+			}
 			if ( pFrame->nFlags2 & ~ID3V2_KNOWNFRAME ) szFrameTag[0] = 0;
 		}
 		else
@@ -368,19 +377,28 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 		{
 			CopyID3v2Field( pXML, _T("title"), pBuffer, nFrameSize );
 		}
-		else if ( strcmp( szFrameTag, "TOPE" ) == 0 || strcmp( szFrameTag, "TOA" ) == 0 || strcmp( szFrameTag, "TPE1" ) == 0 || strcmp( szFrameTag, "TPE2" ) == 0 )
+		else if ( strcmp( szFrameTag, "TPE1" ) == 0 || strcmp( szFrameTag, "TP1" ) == 0 || strcmp( szFrameTag, "TPE2" ) == 0 || strcmp( szFrameTag, "TP2" ) == 0 )
 		{
 			CopyID3v2Field( pXML, _T("artist"), pBuffer, nFrameSize );
 		}
-		else if ( strcmp( szFrameTag, "TALB" ) == 0 || strcmp( szFrameTag, "TOT" ) == 0 )
+		else if ( strcmp( szFrameTag, "TOPE" ) == 0 || strcmp( szFrameTag, "TOA" ) == 0 )
+		{
+			CopyID3v2Field( pXML, _T("origArtist"), pBuffer, nFrameSize );
+		}
+		else if ( strcmp( szFrameTag, "TALB" ) == 0 || strcmp( szFrameTag, "TAL" ) == 0 )
 		{
 			CopyID3v2Field( pXML, _T("album"), pBuffer, nFrameSize );
+		}
+		else if ( strcmp( szFrameTag, "TOAL" ) == 0 || strcmp( szFrameTag, "TOT" ) == 0 )
+		{
+			CopyID3v2Field( pXML, _T("origAlbum"), pBuffer, nFrameSize );
 		}
 		else if ( strcmp( szFrameTag, "TRCK" ) == 0 || strcmp( szFrameTag, "TRK" ) == 0 )
 		{
 			CopyID3v2Field( pXML, _T("track"), pBuffer, nFrameSize );
 		}
-		else if ( strcmp( szFrameTag, "TYER" ) == 0 || strcmp( szFrameTag, "TYE" ) == 0 )
+		else if ( pHeader.nMajorVersion < 4 && 
+			( strcmp( szFrameTag, "TYER" ) == 0 || strcmp( szFrameTag, "TYE" ) == 0 ) )
 		{
 			CopyID3v2Field( pXML, _T("year"), pBuffer, nFrameSize );
 		}
@@ -451,6 +469,33 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 				
 				pXML->AddAttribute( _T("genre"), strGenre );
 			}
+		}
+		else if ( strcmp( szFrameTag, "TENC" ) == 0 || strcmp( szFrameTag, "TEN" ) == 0 )
+		{
+			CopyID3v2Field( pXML, _T("releasegroup"), pBuffer, nFrameSize );
+		}
+		else if ( strcmp( szFrameTag, "TSSE" ) == 0 || strcmp( szFrameTag, "TSS" ) == 0 )
+		{
+			CopyID3v2Field( pXML, _T("encoder"), pBuffer, nFrameSize );
+		}
+		else if ( strcmp( szFrameTag, "TCOM" ) == 0 || strcmp( szFrameTag, "TCM" ) == 0 )
+		{
+			CopyID3v2Field( pXML, _T("composer"), pBuffer, nFrameSize );
+		}
+		else if ( strcmp( szFrameTag, "WXXX" ) == 0 || strcmp( szFrameTag, "WXX" ) == 0 )
+		{
+			CopyID3v2Field( pXML, _T("link"), pBuffer, nFrameSize );
+		}
+		else if ( pHeader.nMajorVersion == 4 && strcmp( szFrameTag, "TDRC" ) == 0 )
+		{
+			BYTE* pScan = pBuffer;
+			DWORD nLength = nFrameSize;
+			for ( ; *pScan != '-' && nLength > 0 ; nLength-- ) pScan++;
+			nLength = nFrameSize - nLength;
+			BYTE* pszYear = new BYTE[ nLength + 1 ];
+			memcpy( pszYear, pBuffer, nLength );
+			CopyID3v2Field( pXML, _T("year"), pszYear, nLength );
+			delete [] pszYear;
 		}
 		
 		pBuffer += nFrameSize;
@@ -602,14 +647,19 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 		{ 0, 0, 0, 0 }
 	};
 
-	BYTE nLayer				= 0;
-	BOOL bVariable			= FALSE;
-	__int64 nTotalBitrate	= 0;
-	DWORD nBaseBitrate		= 0;
-	DWORD nBaseFrequency	= 0;
-	DWORD nFrameCount		= 0;
-	DWORD nFrameSize		= 0;
-	DWORD nHeader			= 0;
+	static int nChannelTable[4]		= { 2, 2, 2, 1 };
+	static CString strSoundType[4]	= { "Stereo", "Joint Stereo", "Dual Channel", "Single Channel" };
+
+	BYTE nLayer					= 0;
+	BOOL bVariable				= FALSE;
+	__int64 nTotalBitrate		= 0;
+	DWORD nBaseBitrate			= 0;
+	DWORD nBaseFrequency		= 0;
+	int nBaseChannel			= 0;
+	CString strBaseSoundType;
+	DWORD nFrameCount			= 0;
+	DWORD nFrameSize			= 0;
+	DWORD nHeader				= 0;
 
 	DWORD nRead;
 	ReadFile( hFile, &nHeader, 4, &nRead, NULL );
@@ -657,7 +707,10 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 				nBaseBitrate	= nBitrate;
 				nBaseFrequency	= nFrequency;
 			}
-			
+
+			nBaseChannel = nChannelTable[nChannels];
+			strBaseSoundType = strSoundType[nChannels];
+
 			nFrameSize = ( nLayer == 3 ) ? ( 12 * nBitrate / nFrequency + bPadding ) * 4
 				: ( 144 * nBitrate / nFrequency + bPadding );
 			
@@ -714,6 +767,11 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 	
 	strValue.Format( _T("%lu"), nBaseFrequency );
 	pXML->AddAttribute( _T("sampleRate"), strValue );
+
+	strValue.Format( _T("%lu"), nBaseChannel );
+	pXML->AddAttribute( _T("channels"), strValue );
+	
+	pXML->AddAttribute( _T("soundType"), strBaseSoundType );
 	
 	return TRUE;
 }
@@ -1415,7 +1473,7 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 	
 	if ( ! pOGG ) return FALSE;
 	
-	BYTE nChannels		= pOGG[ 11 ];
+	BYTE  nChannels		= pOGG[ 11 ];
 	DWORD nFrequency	= *(DWORD*)&pOGG[12];
 	DWORD nBitrate		= *(DWORD*)&pOGG[20];
 	
@@ -1460,7 +1518,7 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 		CHAR* pszDest = new CHAR[ nLength + 1 ];
 
 		_tcscpy( pszSource, strValue.GetBuffer() );
-		for ( unsigned int nLen = 0; nLen < _tcslen( pszSource ); nLen++ )
+		for ( UINT nLen = 0 ; nLen < _tcslen( pszSource ) ; nLen++ )
 			pszDest[ nLen ] = (CHAR) pszSource[ nLen ];
 		delete pszSource;
 
@@ -1485,6 +1543,10 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 		{
 			pXML->AddAttribute( _T("album"), strValue );
 		}
+		else if ( strKey == _T("ORIGINALALBUM") )
+		{
+			pXML->AddAttribute( _T("origAlbum"), strValue );
+		}
 		else if ( strKey == _T("TRACKNUMBER") )
 		{
 			pXML->AddAttribute( _T("track"), strValue );
@@ -1493,7 +1555,11 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 		{
 			pXML->AddAttribute( _T("artist"), strValue );
 		}
-		else if ( strKey == _T("DESCRIPTION") )
+		else if ( strKey == _T("ORIGINALARTIST") )
+		{
+			pXML->AddAttribute( _T("origArtist"), strValue );
+		}
+		else if ( strKey == _T("DESCRIPTION") || strKey == _T("COMMENT") )
 		{
 			pXML->AddAttribute( _T("description"), strValue );
 		}
@@ -1505,9 +1571,25 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 		{
 			pXML->AddAttribute( _T("year"), strValue );
 		}
-		else if ( strKey == _T("LICENSE") )
+		else if ( strKey == _T("COPYRIGHT") )
 		{
 			pXML->AddAttribute( _T("copyright"), strValue );
+		}
+		else if ( strKey == _T("ENCODED-BY") || strKey == _T("ENCODEDBY") || strKey == _T("ENCODED BY") )
+		{
+			pXML->AddAttribute( _T("releasegroup"), strValue );
+		}
+		else if ( strKey == _T("COMPOSER") )
+		{
+			pXML->AddAttribute( _T("composer"), strValue );
+		}
+		else if ( strKey == _T("ENCODERSETTINGS") || strKey == _T("ENCODER") || strKey == _T("ENCODING") )
+		{
+			pXML->AddAttribute( _T("encoder"), strValue );
+		}
+		else if ( strKey == _T("USERURL") || strKey == _T("USER DEFINED URL LINK") )
+		{
+			pXML->AddAttribute( _T("link"), strValue );
 		}
 	}
 	
@@ -1550,6 +1632,9 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 	
 	strComment.Format( _T("%lu"), nFrequency );
 	pXML->AddAttribute( _T("sampleRate"), strComment );
+	
+	strComment.Format( _T("%lu"), nChannels );
+	pXML->AddAttribute( _T("channels"), strComment );
 	
 	return SubmitMetadata( CSchema::uriAudio, pXML );
 }
@@ -1648,6 +1733,7 @@ BOOL CLibraryBuilderInternals::ReadAPE( HANDLE hFile)
 	if ( nRead != sizeof(pAPE) ) return SubmitCorrupted();
 	if ( pAPE.cID[0] != 'M' || pAPE.cID[1] != 'A' || pAPE.cID[2] != 'C' ) return SubmitCorrupted();
 	if ( pAPE.nSampleRate == 0 ) return SubmitCorrupted();
+	if ( pAPE.nChannels == 0 ) return SubmitCorrupted();
 	
 	DWORD nBlocksPerFrame = ( pAPE.nVersion >= 3900 || ( pAPE.nVersion >= 3800 &&
 		pAPE.nCompressionLevel == 4000 ) ) ? 73728 : 9216;
@@ -1670,6 +1756,9 @@ BOOL CLibraryBuilderInternals::ReadAPE( HANDLE hFile)
 	
 	strItem.Format( _T("%lu"), pAPE.nSampleRate );
 	pXML->AddAttribute( _T("sampleRate"), strItem );
+	
+	strItem.Format( _T("%lu"), pAPE.nChannels );
+	pXML->AddAttribute( _T("channels"), strItem );
 	
 	if ( ReadID3v1( hFile, pXML ) )
 	{
@@ -1784,43 +1873,77 @@ BOOL CLibraryBuilderInternals::ReadAVI( HANDLE hFile)
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 	
 	CHAR szID[5] = { 0, 0, 0, 0, 0 };
-	DWORD nRead;
+	DWORD nRead, nNextOffset, nPos;
+	CString strCodec;
 	
 	ReadFile( hFile, szID, 4, &nRead, NULL );
 	if ( nRead != 4 || strncmp( szID, "RIFF", 4 ) ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 ) return FALSE;
+	if ( nRead != 4 ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
 	if ( nRead != 4 || strncmp( szID, "AVI ", 4 ) ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "LIST", 4 ) ) return FALSE;
+	
+	// AVI files include two mandatory LIST chunks ('hdrl' and 'movi')
+	// So, treat file as corrupted if they are missing
+	if ( nRead != 4 || strncmp( szID, "LIST", 4 ) ) return SubmitCorrupted();
+	// Get next outer LIST offset
+	ReadFile( hFile, &nNextOffset, sizeof(DWORD), &nRead, NULL );
+	if ( nRead != 4 ) return SubmitCorrupted();	
+	
+	// Remember position
+	nPos = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
+
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 ) return FALSE;
+	if ( nRead != 4 || strncmp( szID, "hdrl", 4 ) ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "hdrl", 4 ) ) return FALSE;
+	if ( nRead != 4 || strncmp( szID, "avih", 4 ) ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "avih", 4 ) ) return FALSE;
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 ) return FALSE;
+	if ( nRead != 4 ) return SubmitCorrupted();
 	
 	AVI_HEADER pHeader;
 	ReadFile( hFile, &pHeader, sizeof(pHeader), &nRead, NULL );
-	if ( nRead != sizeof(pHeader) ) return FALSE;
+	if ( nRead != sizeof(pHeader) ) return SubmitCorrupted();
 	
+	// One or more 'strl' chunks must follow the main header
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "LIST", 4 ) ) return FALSE;
+	if ( nRead != 4 || strncmp( szID, "LIST", 4 ) ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 ) return FALSE;
+	if ( nRead != 4 ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "strl", 4 ) ) return FALSE;
+	if ( nRead != 4 || strncmp( szID, "strl", 4 ) ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "strh", 4 ) ) return FALSE;
+	if ( nRead != 4 || strncmp( szID, "strh", 4 ) ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 ) return FALSE;
+	if ( nRead != 4 ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "vids", 4 ) ) return FALSE;
+	if ( nRead != 4 || strncmp( szID, "vids", 4 ) ) return SubmitCorrupted();
 	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 ) return FALSE;
+	if ( nRead != 4 ) return SubmitCorrupted();
+	strCodec = CString( szID );
+
+	BOOL bMoviFound = FALSE;
+	do
+	{
+		nPos += nNextOffset;
+		if ( SetFilePointer( hFile, nPos, NULL, FILE_BEGIN ) == INVALID_SET_FILE_POINTER )
+			return SubmitCorrupted();
+		ReadFile( hFile, szID, 4, &nRead, NULL );
+		if ( nRead != 4 ) return SubmitCorrupted();
+		nNextOffset = 0;
+		ReadFile( hFile, &nNextOffset, 4, &nRead, NULL );
+		if ( nRead != 4 ) return SubmitCorrupted();
+		nPos = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
+		if ( strncmp( szID, "LIST", 4 ) == 0 )
+		{
+			ReadFile( hFile, szID, 4, &nRead, NULL );
+			if ( nRead != 4 ) return SubmitCorrupted();
+			if ( strncmp( szID, "movi", 4 ) == 0 ) bMoviFound = TRUE;
+		}
+	}
+	while ( ! bMoviFound && nNextOffset );
+
+	if ( ! bMoviFound ) return SubmitCorrupted();
 	
 	CXMLElement* pXML = new CXMLElement( NULL, _T("video") );
 	CString strItem;
@@ -1839,7 +1962,7 @@ BOOL CLibraryBuilderInternals::ReadAVI( HANDLE hFile)
 	pXML->AddAttribute( _T("minutes"), strItem );
 	strItem.Format( _T("%.2f"), nRate );
 	pXML->AddAttribute( _T("frameRate"), strItem );
-	pXML->AddAttribute( _T("codec"), CString( szID ) );
+	pXML->AddAttribute( _T("codec"), strCodec );
 	
 	return SubmitMetadata( CSchema::uriVideo, pXML );
 }
@@ -1974,7 +2097,7 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 		}
 		else if ( _tcsnicmp( pszName, _T("(ebook"), 6 ) == 0 )
 		{
-			if ( pszName = _tcschr( pszName, ')' ) )
+			if ( ( pszName = _tcschr( pszName, ')' ) ) != NULL )
 			{
 				if ( _tcsncmp( pszName, _T(") - "), 4 ) == 0 )
 					strLine = pszName + 4;
@@ -2069,10 +2192,9 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 CString CLibraryBuilderInternals::ReadLine(HANDLE hFile)
 {
 	DWORD nRead, nLength;
-	TCHAR cChar;
 	CString str;
 	
-	ZeroMemory( &cChar, sizeof(cChar) );
+	TCHAR cChar = 0;
 	for ( nLength = 0 ; ReadFile( hFile, &cChar, 1, &nRead, NULL ) && nRead == 1 && nLength++ < 4096 ; )
 	{
 		if ( cChar == '\r' ) break;
@@ -2088,10 +2210,9 @@ CString CLibraryBuilderInternals::ReadLine(HANDLE hFile)
 CString CLibraryBuilderInternals::ReadLineReverse(HANDLE hFile)
 {
 	DWORD nRead, nLength;
-	TCHAR cChar;
 	CString str;
 	
-	ZeroMemory( &cChar, sizeof(cChar) );
+	TCHAR cChar = 0;
 	for ( nLength = 0 ; ReadFile( hFile, &cChar, 1, &nRead, NULL ) && nRead == 1 && nLength++ < 4096 ; )
 	{
 		if ( SetFilePointer( hFile, -2, NULL, FILE_CURRENT ) == 0 ) break;
@@ -2108,12 +2229,12 @@ CString CLibraryBuilderInternals::ReadLineReverse(HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals Collection (threaded)
 
-BOOL CLibraryBuilderInternals::ReadCollection( HANDLE hFile, SHA1* pSHA1)
+BOOL CLibraryBuilderInternals::ReadCollection(HANDLE hFile, const Hashes::Sha1Hash& oSHA1)
 {
 	CCollectionFile pCollection;
 	if ( ! pCollection.Attach( hFile ) ) return FALSE;
 	
-	LibraryFolders.MountCollection( pSHA1, &pCollection );
+	LibraryFolders.MountCollection( oSHA1, &pCollection );
 	
 	if ( CXMLElement* pMetadata = pCollection.GetMetadata() )
 	{
@@ -2183,12 +2304,10 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 
 	// Read no more than 8192 bytes to find "HHA Version" string
 	CHAR szByte[1];
-	CHAR* szFragment = new CHAR[10];
+	CHAR szFragment[10] = {}; // // "HA Version" string
 	BOOL bCorrupted = FALSE;
 	BOOL bHFound = FALSE;
 	int nFragmentPos = 0;
-
-	ZeroMemory( szFragment, sizeof(CHAR) * 10 ); // "HA Version" string length
 
 	for ( nPos = 0; ReadFile( hFile, &szByte, 1, &nRead, NULL ) && nPos++ < MAX_LENGTH_ALLOWED ; )
 	{
@@ -2232,15 +2351,12 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 	}
 	if ( bCorrupted ) 
 	{
-		delete [] szFragment;
 		return SubmitCorrupted();
 	}
 	if ( strncmp( szFragment, "HA Version", 10 ) && nPos == MAX_LENGTH_ALLOWED + 1 )
 	{
-		delete [] szFragment;
 		return FALSE;
 	}
-	delete [] szFragment;
 
 	// Collect author, title if file name contains "book" keyword
 	CString strLine;
@@ -2262,7 +2378,7 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 		}
 		else if ( _tcsnicmp( pszName, _T("(ebook"), 6 ) == 0 )
 		{
-			if ( pszName = _tcschr( pszName, ')' ) )
+			if ( ( pszName = _tcschr( pszName, ')' ) ) != NULL )
 			{
 				if ( _tcsncmp( pszName, _T(") - "), 4 ) == 0 )
 					strLine = pszName + 4;
@@ -2283,7 +2399,7 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 	TCHAR *pszBuffer = NULL;
 	UINT nCodePage = CP_ACP;
 	DWORD nCwc;
-	UINT charSet = DEFAULT_CHARSET;
+	DWORD_PTR charSet = DEFAULT_CHARSET;
 	BOOL bHasTitle = FALSE;
 
 	// Find default ANSI codepage for given LCID

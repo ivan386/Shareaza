@@ -300,12 +300,12 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 
 	m_pOutputFirst = pDG;
 
-	BYTE nHash	= pHost->sin_addr.S_un.S_un_b.s_b1
+	BYTE nHash	= BYTE( pHost->sin_addr.S_un.S_un_b.s_b1
 				+ pHost->sin_addr.S_un.S_un_b.s_b2
 				+ pHost->sin_addr.S_un.S_un_b.s_b3
 				+ pHost->sin_addr.S_un.S_un_b.s_b4
 				+ pHost->sin_port
-				+ pDG->m_nSequence;
+				+ pDG->m_nSequence );
 
 	CDatagramOut** pHash = m_pOutputHash + ( nHash & HASH_MASK );
 
@@ -672,12 +672,12 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 			(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
 	}
 
-	BYTE nHash	= pHost->sin_addr.S_un.S_un_b.s_b1
+	BYTE nHash	= BYTE( pHost->sin_addr.S_un.S_un_b.s_b1
 				+ pHost->sin_addr.S_un.S_un_b.s_b2
 				+ pHost->sin_addr.S_un.S_un_b.s_b3
 				+ pHost->sin_addr.S_un.S_un_b.s_b4
 				+ pHost->sin_port
-				+ pHeader->nSequence;
+				+ pHeader->nSequence );
 
 	CDatagramIn** pHash = m_pInputHash + ( nHash & HASH_MASK );
 
@@ -776,19 +776,19 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 //////////////////////////////////////////////////////////////////////
 // CDatagrams SGP acknowledgement handler
 
-BOOL CDatagrams::OnAcknowledgeSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLength)
+BOOL CDatagrams::OnAcknowledgeSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD /*nLength*/)
 {
 #ifdef DEBUG_UDP
 	theApp.Message( MSG_DEBUG, _T("UDP: Received ack (#%i) %i from %s"),
 		pHeader->nSequence, pHeader->nPart, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 #endif
 
-	BYTE nHash	= pHost->sin_addr.S_un.S_un_b.s_b1
+	BYTE nHash	= BYTE( pHost->sin_addr.S_un.S_un_b.s_b1
 				+ pHost->sin_addr.S_un.S_un_b.s_b2
 				+ pHost->sin_addr.S_un.S_un_b.s_b3
 				+ pHost->sin_addr.S_un.S_un_b.s_b4
 				+ pHost->sin_port
-				+ pHeader->nSequence;
+				+ pHeader->nSequence );
 
 	CDatagramOut** pHash = m_pOutputHash + ( nHash & HASH_MASK );
 
@@ -924,7 +924,7 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams PING packet handler
 
-BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG2Packet* pPacket)
+BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG2Packet* /*pPacket*/)
 {
 	Send( pHost, CG2Packet::New( G2_PACKET_PONG ) );
 	return TRUE;
@@ -952,10 +952,8 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 	if ( ! Network.IsConnectedTo( &pHost->sin_addr ) ) m_bStable = TRUE;
 
-	/*
-	CString str = inet_ntoa( pHost->sin_addr );
-	theApp.Message( MSG_ERROR, _T("Relayed Pong from %s:%u"), str, pHost->sin_port );
-	*/
+	//CString str = inet_ntoa( pHost->sin_addr );
+	//theApp.Message( MSG_ERROR, _T("Relayed Pong from %s:%u"), str, pHost->sin_port );
 
 	return TRUE;
 }
@@ -1006,8 +1004,8 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		delete pSearch;
 		return TRUE;
 	}
-
-	if ( ! Network.QueryRoute->Add( &pSearch->m_pGUID, &pSearch->m_pEndpoint ) )
+	
+	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, &pSearch->m_pEndpoint ) )
 	{
 		CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_ACK, TRUE );
 		pAnswer->WritePacket( "D", 8 );
@@ -1015,7 +1013,7 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		pAnswer->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 		pAnswer->WriteShortBE( 0 );
 		pAnswer->WriteByte( 0 );
-		pAnswer->Write( &pSearch->m_pGUID, sizeof(GGUID) );
+		pAnswer->Write( pSearch->m_oGUID );
 		Send( &pSearch->m_pEndpoint, pAnswer, TRUE );
 
 		delete pSearch;
@@ -1029,9 +1027,9 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 	CLocalSearch pLocal( pSearch, &pSearch->m_pEndpoint );
 	pLocal.Execute();
-
-	Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( &pSearch->m_pGUID ), TRUE );
-
+	
+	Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID ), TRUE );
+	
 	delete pSearch;
 
 	return TRUE;
@@ -1044,15 +1042,15 @@ BOOL CDatagrams::OnQueryAck(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
 	CHostCacheHost* pCache = HostCache.Gnutella2.Add( &pHost->sin_addr, htons( pHost->sin_port ) );
 	if ( pCache ) pCache->m_tAck = pCache->m_nFailures = 0;
-
-	GGUID pGUID;
-
-	if ( SearchManager.OnQueryAck( pPacket, pHost, &pGUID ) )
+	
+	Hashes::Guid oGUID;
+	
+	if ( SearchManager.OnQueryAck( pPacket, pHost, oGUID ) )
 	{
 		CNeighbour* pNeighbour = NULL;
 		SOCKADDR_IN pEndpoint;
 
-		if ( Network.QueryRoute->Lookup( &pGUID, &pNeighbour, &pEndpoint ) )
+		if ( Network.QueryRoute->Lookup( oGUID, &pNeighbour, &pEndpoint ) )
 		{
 			// TODO: Add a "FR" from tag
 
@@ -1093,9 +1091,9 @@ BOOL CDatagrams::OnHit(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
 	}
-
-	Network.NodeRoute->Add( &pHits->m_pClientID, pHost );
-
+	
+	Network.NodeRoute->Add( pHits->m_oClientID, pHost );
+	
 	if ( SearchManager.OnQueryHits( pHits ) )
 	{
 		Network.RouteHits( pHits, pPacket );
@@ -1237,7 +1235,7 @@ BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams PUSH packet handler
 
-BOOL CDatagrams::OnPush(SOCKADDR_IN* pHost, CG2Packet* pPacket)
+BOOL CDatagrams::OnPush(SOCKADDR_IN* /*pHost*/, CG2Packet* pPacket)
 {
 	DWORD nLength = pPacket->GetRemaining();
 
@@ -1335,7 +1333,7 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 
 	pPacket->WritePacket( "HS", 2 );
-	pPacket->WriteShortBE( Neighbours.GetCount( PROTOCOL_G2, -1, ntLeaf ) );
+	pPacket->WriteShortBE( WORD( Neighbours.GetCount( PROTOCOL_G2, -1, ntLeaf ) ) );
 
 	if ( strNick.GetLength() )
 	{

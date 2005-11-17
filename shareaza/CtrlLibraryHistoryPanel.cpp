@@ -68,14 +68,14 @@ CLibraryHistoryPanel::~CLibraryHistoryPanel()
 {
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
-		delete (Item*)m_pList.GetAt( nItem );
+		delete m_pList.GetAt( nItem );
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryHistoryPanel operations
 
-BOOL CLibraryHistoryPanel::CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* pObjects)
+BOOL CLibraryHistoryPanel::CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* /*pObjects*/)
 {
 	m_bAvailable = ( pFolders == NULL );
 	return m_bAvailable;
@@ -86,9 +86,9 @@ void CLibraryHistoryPanel::Update()
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	BOOL bChanged = FALSE;
 	
-	for ( int nItem = m_pList.GetSize() - 1 ; nItem >= 0 ; nItem-- )
+	for ( INT_PTR nItem = m_pList.GetSize() - 1 ; nItem >= 0 ; nItem-- )
 	{
-		Item* pItem = (Item*)m_pList.GetAt( nItem );
+		Item* pItem = m_pList.GetAt( nItem );
 		
 		if ( ! LibraryHistory.Check( pItem->m_pRecent ) ||
 			 ! pItem->m_pRecent->m_pFile )
@@ -106,10 +106,10 @@ void CLibraryHistoryPanel::Update()
 		CLibraryRecent* pRecent = LibraryHistory.GetNext( pos );
 		if ( ! pRecent->m_pFile ) continue;
 		
-        int nItem = m_pList.GetSize() - 1;
+        INT_PTR nItem = m_pList.GetSize() - 1;
 		for ( ; nItem >= 0 ; nItem-- )
 		{
-			Item* pItem = (Item*)m_pList.GetAt( nItem );
+			Item* pItem = m_pList.GetAt( nItem );
 			if ( pItem->m_pRecent == pRecent ) break;
 		}
 		
@@ -138,7 +138,7 @@ void CLibraryHistoryPanel::Update()
 	GetClientRect( &rc );
 	
 	m_nColumns		= ( rc.Width() > 500 ) ? 2 : 1;
-	int nHeight		= ( m_pList.GetSize() + m_nColumns - 1 ) / m_nColumns * 24 + 2;
+	int nHeight		= static_cast< int >( ( m_pList.GetSize() + m_nColumns - 1 ) / m_nColumns * 24 + 2 );
 	
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
@@ -202,7 +202,7 @@ void CLibraryHistoryPanel::OnPaint()
 		
 		for ( int nColumn = 0 ; nColumn < m_nColumns ; nColumn++ )
 		{
-			Item* pItem = ( nItem < m_pList.GetSize() ) ? (Item*)m_pList.GetAt( nItem++ ) : NULL;
+			Item* pItem = ( nItem < m_pList.GetSize() ) ? m_pList.GetAt( nItem++ ) : NULL;
 			
 			rcItem.SetRect( rcWork.left, rcWork.top, rcWork.left, rcWork.top + 22 );
 			
@@ -272,11 +272,10 @@ void CLibraryHistoryPanel::OnPaint()
 	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
 }
 
-void CLibraryHistoryPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void CLibraryHistoryPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/) 
 {
-	SCROLLINFO pScroll;
+	SCROLLINFO pScroll = {};
 
-	ZeroMemory( &pScroll, sizeof(pScroll) );
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_ALL;
 
@@ -325,7 +324,7 @@ BOOL CLibraryHistoryPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
-		Item* pItem = (Item*)m_pList.GetAt( nItem );
+		Item* pItem = m_pList.GetAt( nItem );
 
 		if ( pItem->m_rect.PtInRect( point ) )
 		{
@@ -343,7 +342,7 @@ void CLibraryHistoryPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
-		Item* pItem = (Item*)m_pList.GetAt( nItem );
+		Item* pItem = m_pList.GetAt( nItem );
 		
 		if ( pItem->m_rect.PtInRect( point ) )
 		{
@@ -357,14 +356,15 @@ void CLibraryHistoryPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	CLibraryPanel::OnLButtonUp( nFlags, point );
 }
 
-void CLibraryHistoryPanel::OnLButtonDown(UINT nFlags, CPoint point)
+void CLibraryHistoryPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
 	SetFocus();
 }
 
-BOOL CLibraryHistoryPanel::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+BOOL CLibraryHistoryPanel::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
-	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - 
+		zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
 	return TRUE;
 }
 

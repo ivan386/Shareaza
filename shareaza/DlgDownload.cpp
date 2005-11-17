@@ -76,11 +76,11 @@ BOOL CDownloadDlg::OnInitDialog()
 			// These OSes can handle unicode file names
 			if ( HGLOBAL hData = GetClipboardData( CF_UNICODETEXT ) )
 			{
-				DWORD nData = GlobalSize( hData );
+				size_t nData = GlobalSize( hData );
 				LPVOID pData = GlobalLock( hData );
 				
 				LPTSTR pszData = new TCHAR[ nData + 1 ];
-				CopyMemory( pszData, pData, nData );
+				CopyMemory( pszData, pData, nData * sizeof( TCHAR ) );
 				pszData[ nData ] = 0;
 				strClipboard = pszData;
 				delete [] pszData;
@@ -92,11 +92,11 @@ BOOL CDownloadDlg::OnInitDialog()
 			// We need to have the file "%" encoded to display the names. 
 			if ( HGLOBAL hData = GetClipboardData( CF_TEXT ) )
 			{
-				DWORD nData = GlobalSize( hData );
+				size_t nData = GlobalSize( hData );
 				LPVOID pData = GlobalLock( hData );
 				
 				LPSTR pszData = new CHAR[ nData + 1 ];
-				CopyMemory( pszData, pData, nData );
+				CopyMemory( pszData, pData, nData * sizeof( CHAR ) );
 				pszData[ nData ] = 0;
 				strClipboard = pszData;
 				delete [] pszData;
@@ -110,7 +110,7 @@ BOOL CDownloadDlg::OnInitDialog()
 			strClipboard.Trim( _T(" \t\r\n") );
 					
 			CShareazaURL pURL;
-			if( pURL.Parse( strClipboard ) )
+			if ( pURL.Parse( strClipboard ) )
 			{
 				m_sURL = strClipboard;
 				UpdateData( FALSE );

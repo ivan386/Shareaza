@@ -44,14 +44,13 @@ public:
 // Attributes
 public:
 	CAlbumFolder*	m_pParent;
-	CObList			m_pFolders;
-	CObList			m_pFiles;
+	CList< CAlbumFolder* > m_pFolders;
+	CList< CLibraryFile* > m_pFiles;
 public:
 	CString			m_sSchemaURI;
 	CSchema*		m_pSchema;
 	CXMLElement*	m_pXML;
-	BOOL			m_bCollSHA1;
-	SHA1			m_pCollSHA1;
+    Hashes::Sha1Hash m_oCollSHA1;
 public:
 	CString			m_sName;
 	BOOL			m_bExpanded;
@@ -70,18 +69,18 @@ public:
 	CAlbumFolder*	GetNextFolder(POSITION& pos) const;
 	CAlbumFolder*	GetFolder(LPCTSTR pszName) const;
 	CAlbumFolder*	GetFolderByURI(LPCTSTR pszURI) const;
-	int				GetFolderCount() const;
+	INT_PTR			GetFolderCount() const { return m_pFolders.GetCount(); }
 	BOOL			CheckFolder(CAlbumFolder* pFolder, BOOL bRecursive = FALSE) const;
 	CAlbumFolder*	GetTarget(CSchemaMember* pMember, LPCTSTR pszValue) const;
-	CAlbumFolder*	FindCollection(SHA1* pSHA1);
+    CAlbumFolder*	FindCollection(const Hashes::Sha1Hash& oSHA1);
 public:
 	void			AddFile(CLibraryFile* pFile);
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
-	int				GetFileCount() const;
+	INT_PTR			GetFileCount() const { return m_pFiles.GetCount(); }
 	int				GetSharedCount() const;
 	void			RemoveFile(CLibraryFile* pFile);
-	CAlbumFolder*	FindFile(CLibraryFile* pFile) const;
+	CAlbumFolder*	FindFile(CLibraryFile* pFile);
 	int				GetFileList(CLibraryList* pList, BOOL bRecursive) const;
 public:
 	void			Delete(BOOL bIfEmpty = FALSE);
@@ -89,13 +88,13 @@ public:
 	BOOL			MetaFromFile(CLibraryFile* pFile);
 	BOOL			MetaToFiles(BOOL bAggressive = FALSE);
 	BOOL			OrganiseFile(CLibraryFile* pFile);
-	BOOL			MountCollection(SHA1* pSHA1, CCollectionFile* pCollection, BOOL bForce = FALSE);
+    BOOL			MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection, BOOL bForce = FALSE);
 	CCollectionFile*GetCollection();
 	CString			GetBestView() const;
 protected:
-	void			SetCollection(SHA1* pSHA1, CCollectionFile* pCollection);
+    void			SetCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
 	void			OnFolderDelete(CAlbumFolder* pFolder);
-	void			OnFileDelete(CLibraryFile* pFile);
+	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 	void			Serialize(CArchive& ar, int nVersion);
 	void			Clear();
 

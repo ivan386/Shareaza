@@ -58,13 +58,13 @@ public:
 	CString		m_sLinkURI;
 	CString		m_sLinkName;
 public:
-	CStringList	m_pItems;
+	CList< CString >	m_pItems;
 
 // Operations
 public:
 	POSITION	GetItemIterator() const;
 	CString		GetNextItem(POSITION& pos) const;
-	int			GetItemCount() const;
+	INT_PTR		GetItemCount() const { return m_pItems.GetCount(); }
 	CString		GetValueFrom(CXMLElement* pElement, LPCTSTR pszDefault = NULL, BOOL bFormat = FALSE) const;
 	void		SetValueTo(CXMLElement* pBase, LPCTSTR pszValue);
 protected:

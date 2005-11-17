@@ -71,7 +71,7 @@ BOOL CBitziDownloadDlg::OnInitDialog()
 	SkinMe( _T("CBitziDownloadDlg"), IDR_MAINFRAME );
 
 	if ( theApp.m_bRTL ) m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
-	m_wndProgress.SetRange( 0, m_pDownloader.GetFileCount() * 2 );
+	m_wndProgress.SetRange( 0, short( m_pDownloader.GetFileCount() * 2 ) );
 	m_wndFiles.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, 190, -1 );
 	m_wndFiles.InsertColumn( 1, _T("Status"), LVCFMT_LEFT, 100, 0 );
@@ -89,7 +89,7 @@ void CBitziDownloadDlg::AddFile(DWORD nIndex)
 	m_pDownloader.AddFile( nIndex );
 }
 
-void CBitziDownloadDlg::OnNextFile(DWORD nIndex)
+void CBitziDownloadDlg::OnNextFile(DWORD /*nIndex*/)
 {
 	m_wndProgress.OffsetPos( 1 );
 }
@@ -107,7 +107,7 @@ void CBitziDownloadDlg::OnRequesting(DWORD nIndex, LPCTSTR pszName)
 	m_wndFiles.SetItemText( nItem, 1, strMessage );
 }
 
-void CBitziDownloadDlg::OnSuccess(DWORD nIndex)
+void CBitziDownloadDlg::OnSuccess(DWORD /*nIndex*/)
 {
 	CString strMessage;
 
@@ -115,19 +115,19 @@ void CBitziDownloadDlg::OnSuccess(DWORD nIndex)
 	m_wndFiles.SetItemText( m_wndFiles.GetItemCount() - 1, 1, strMessage );
 }
 
-void CBitziDownloadDlg::OnFailure(DWORD nIndex, LPCTSTR pszMessage)
+void CBitziDownloadDlg::OnFailure(DWORD /*nIndex*/, LPCTSTR pszMessage)
 {
 	m_wndFiles.SetItemText( m_wndFiles.GetItemCount() - 1, 1,
 		pszMessage );
 	m_nFailures++;
 }
 
-void CBitziDownloadDlg::OnFinishedFile(DWORD nIndex)
+void CBitziDownloadDlg::OnFinishedFile(DWORD /*nIndex*/)
 {
 	m_wndProgress.OffsetPos( 1 );
 }
 
-void CBitziDownloadDlg::OnTimer(UINT nIDEvent)
+void CBitziDownloadDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	CString strMessage;
 
@@ -183,7 +183,7 @@ BOOL CBitziDownloadDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CSkinDialog::OnSetCursor(pWnd, nHitTest, message);
 }
 
-void CBitziDownloadDlg::OnLButtonDown(UINT nFlags, CPoint point)
+void CBitziDownloadDlg::OnLButtonDown(UINT /*nFlags*/, CPoint point)
 {
 	CRect rc;
 

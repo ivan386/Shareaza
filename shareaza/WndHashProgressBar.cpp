@@ -80,7 +80,7 @@ void CHashProgressBar::Run()
 	if ( Settings.Library.HashWindow )
 	{
 		// Update current hashing status
-		m_nTotal = LibraryMaps.GetFileCount();
+		m_nTotal = static_cast< int >( LibraryMaps.GetFileCount() );
 		LibraryBuilder.UpdateStatus( &m_sCurrent, &m_nRemaining );
 
 		int nPos = m_sCurrent.ReverseFind( '\\' );
@@ -178,7 +178,7 @@ int CHashProgressBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-BOOL CHashProgressBar::OnEraseBkgnd(CDC* pDC)
+BOOL CHashProgressBar::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	return TRUE;
 }
@@ -237,7 +237,7 @@ void CHashProgressBar::OnPaint()
 	dc.Draw3dRect( &rcProgress, m_crText, m_crText );
 }
 
-void CHashProgressBar::OnLButtonDown(UINT nFlags, CPoint point)
+void CHashProgressBar::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
 	Settings.Library.HashWindow = FALSE;
 	ShowWindow( SW_HIDE );

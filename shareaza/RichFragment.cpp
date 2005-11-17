@@ -67,7 +67,7 @@ void CRichFragment::Add(int nLength, CSize* pSize)
 {
 	ASSERT( m_pElement->m_nType >= retText );
 
-	m_nLength	= nLength;
+	m_nLength	= WORD( nLength );
 	m_sz		= *pSize;
 }
 
@@ -191,7 +191,7 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 	}
 	else if ( m_pElement->m_nType == retEmoticon )
 	{
-		Emoticons.Draw( pDC, (int)m_pElement->m_hImage, m_pt.x, m_pt.y,
+		Emoticons.Draw( pDC, m_pElement->m_nImageIndex, m_pt.x, m_pt.y,
 			pDC->GetBkColor() );
 
 		if ( bSelect )
@@ -204,7 +204,7 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 	}
 	else if ( m_pElement->m_nType == retCmdIcon )
 	{
-		ImageList_DrawEx( CoolInterface.m_pImages, (int)m_pElement->m_hImage,
+		ImageList_DrawEx( CoolInterface.m_pImages, m_pElement->m_nImageIndex,
 			*pDC, m_pt.x, m_pt.y, 16, 16, pDC->GetBkColor(), CLR_NONE, ILD_NORMAL );
 
 		if ( bSelect )

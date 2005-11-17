@@ -41,7 +41,7 @@ protected:
 	CString				m_sHeader;
 	CString				m_sResponse;
 	CBuffer				m_pResponse;
-	CMapStringToString	m_pKeys;
+	CMap< CString, const CString&, CString, const CString& >	m_pKeys;
 	static CList<int>	m_pCookies;
 
 // Operations

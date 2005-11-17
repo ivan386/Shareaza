@@ -38,7 +38,8 @@ class CHostBrowser : public CTransfer
 {
 // Construction
 public:
-	CHostBrowser(CBrowseHostWnd* pNotify = NULL, IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, GGUID* pClientID = NULL);
+	CHostBrowser(CBrowseHostWnd* pNotify = NULL, IN_ADDR* pAddress = NULL, WORD nPort = 0,
+		BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid());
 	virtual ~CHostBrowser();
 
 // Attributes
@@ -52,8 +53,8 @@ public:
 	WORD			m_nPort;
 	BOOL			m_bMustPush;
 	BOOL			m_bCanPush;
-	GGUID			m_pPushID;
-	GGUID			m_pClientID;
+	Hashes::Guid	m_oPushID;
+	Hashes::Guid	m_oClientID;
 	DWORD			m_tPushed;
 	BOOL			m_bConnect;
 	int				m_nHits;
@@ -61,7 +62,7 @@ public:
 	BOOL			m_bCanChat;
 public:
 	CString			m_sServer;
-	DWORD			m_nProtocol;
+	PROTOCOLID		m_nProtocol;
 	BOOL			m_bDeflate;
 	DWORD			m_nLength;
 	DWORD			m_nReceived;
@@ -96,7 +97,7 @@ protected:
 	virtual BOOL	OnHeadersComplete();
 	virtual BOOL	OnRun();
 public:
-	virtual BOOL	OnPush(GGUID* pClientID, CConnection* pConnection);
+	virtual BOOL	OnPush(const Hashes::Guid& oClientID, CConnection* pConnection);
 
 };
 

@@ -85,7 +85,7 @@ BOOL CFileSharingPage::OnInitDialog()
 
 	if ( UploadQueues.m_pSection.Lock() )
 	{
-		CStringList pAdded;
+		CList< CString > pAdded;
 
 		for ( POSITION pos = UploadQueues.GetIterator() ; pos ; )
 		{

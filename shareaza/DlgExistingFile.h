@@ -25,7 +25,6 @@
 #pragma once
 
 #include "DlgSkinDialog.h"
-#include "afxwin.h"
 
 class CLibraryFile;
 

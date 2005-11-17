@@ -39,7 +39,7 @@ public:
 
 // Attributes
 public:
-	PROTOCOLID			m_nProtocol;
+	PROTOCOLID			m_nProtocol;	// Protocol of this transfer
 	CDownload*			m_pDownload;
 	CDownloadTransfer*	m_pDlPrev;
 	CDownloadTransfer*	m_pDlNext;
@@ -49,6 +49,7 @@ public:
 	int			m_nQueuePos;
 	int			m_nQueueLen;
 	CString		m_sQueueName;
+	DWORD		m_nBandwidth;			// Bandwidth allocated
 public:
 	QWORD		m_nOffset;
 	QWORD		m_nLength;
@@ -65,8 +66,8 @@ public:
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
-    virtual BOOL	SubtractRequested(FF::SimpleFragmentList& ppFragments) = 0;
-	virtual BOOL	UnrequestRange(QWORD nOffset, QWORD nLength) { return FALSE; }
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) = 0;
+	virtual BOOL	UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/) { return FALSE; }
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();
 	void	SetState(int nState);

@@ -52,7 +52,7 @@ CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate)
 	CSingleLock pLock( &m_pSection, TRUE );
 	CTransferFile* pFile = NULL;
 
-	if ( m_pMap.Lookup( pszFile, (void*&)pFile ) )
+	if ( m_pMap.Lookup( pszFile, pFile ) )
 	{
 		if ( bWrite && ! pFile->EnsureWrite() ) return NULL;
 	}
@@ -86,7 +86,7 @@ void CTransferFiles::Close()
 		CTransferFile* pFile;
 		CString strPath;
 
-		m_pMap.GetNextAssoc( pos, strPath, (void*&)pFile );
+		m_pMap.GetNextAssoc( pos, strPath, pFile );
 		delete pFile;
 	}
 
@@ -103,7 +103,7 @@ void CTransferFiles::CommitDeferred()
 
 	for ( POSITION pos = m_pDeferred.GetHeadPosition() ; pos ; )
 	{
-		CTransferFile* pFile = (CTransferFile*)m_pDeferred.GetNext( pos );
+		CTransferFile* pFile = m_pDeferred.GetNext( pos );
 		pFile->DeferredWrite( TRUE );
 	}
 
@@ -316,7 +316,7 @@ BOOL CTransferFile::Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* 
 //////////////////////////////////////////////////////////////////////
 // CTransferFile deferred writes
 
-void CTransferFile::DeferredWrite(BOOL bOffline)
+void CTransferFile::DeferredWrite(BOOL /*bOffline*/)
 {
 	if ( m_nDeferred == 0 ) return;
 	if ( m_hFile == INVALID_HANDLE_VALUE ) return;

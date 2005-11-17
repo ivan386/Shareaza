@@ -46,9 +46,13 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CManagedSearch construction
 
-CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority)
+CManagedSearch::CManagedSearch(std::auto_ptr< CQuerySearch > pSearch, int nPriority)
+: m_pSearch( pSearch )
 {
-	m_pSearch		= pSearch ? pSearch : new CQuerySearch();
+	if ( !m_pSearch.get() )
+	{
+		m_pSearch.reset( new CQuerySearch() );
+	}
 	m_nPriority		= nPriority;
 	m_bAllowG2		= TRUE;
 	m_bAllowG1		= TRUE;
@@ -69,12 +73,6 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority)
 	m_nEDServers	= 0;
 	m_nEDClients	= 0;
 
-}
-
-CManagedSearch::~CManagedSearch()
-{
-	Stop();
-	if ( m_pSearch ) delete m_pSearch;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -101,8 +99,7 @@ void CManagedSearch::Serialize(CArchive& ar)
 		ar >> nVersion;
 		if ( nVersion < 2 ) AfxThrowUserException();
 		
-		if ( m_pSearch ) delete m_pSearch;
-		m_pSearch = new CQuerySearch();
+		m_pSearch.reset( new CQuerySearch() );
 		m_pSearch->Serialize( ar );
 		
 		ar >> m_nPriority;
@@ -131,7 +128,7 @@ void CManagedSearch::Start()
 	CSingleLock pLock( &SearchManager.m_pSection );
 	pLock.Lock( 1000 );
 	
-	m_tStarted		= time( NULL );
+	m_tStarted		= static_cast< DWORD >( time( NULL ) );
 	m_tExecute		= 0;
 	m_tLastED2K		= 0;
 	m_tMoreResults	= 0;
@@ -163,10 +160,10 @@ BOOL CManagedSearch::Execute()
 	if ( ! m_bActive || ! m_pSearch ) return FALSE;
 	
 	DWORD tTicks	= GetTickCount();
-	DWORD tSecs		= time( NULL );
+	DWORD tSecs		= static_cast< DWORD >( time( NULL ) );
 	
 	// Throttle this individual search (so it doesn't take up too many resources)
-	DWORD nThrottle = max( Settings.Search.GeneralThrottle, (DWORD)200 );
+	DWORD nThrottle = max( Settings.Search.GeneralThrottle, 200u );
 	if ( m_nPriority == spLowest ) nThrottle += 30000;
 	else if ( m_nPriority == spMedium ) nThrottle += 800;
 
@@ -189,7 +186,7 @@ BOOL CManagedSearch::Execute()
 	// ED2K global search. (UDP)
 	if ( Settings.eDonkey.EnableToday && Settings.eDonkey.ServerWalk && m_bAllowED2K && Network.IsListening() )
 	{
-		if ( ( m_pSearch->m_bED2K ) || ( IsLastED2KSearch() ) )
+		if ( ( m_pSearch->m_oED2K ) || ( IsLastED2KSearch() ) )
 		{
 			if ( tTicks > m_tLastED2K && tTicks - m_tLastED2K >= Settings.eDonkey.QueryGlobalThrottle )
 			{
@@ -235,6 +232,8 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		case PROTOCOL_ED2K:
 			if ( ! m_bAllowED2K ) continue;
 			break;
+		default:
+			ASSERT( 0 );
 		}
 		
 		// Must be stable for 15 seconds, or longer for G1 low priority searches
@@ -264,7 +263,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		
 		DWORD nAddress = pNeighbour->m_pHost.sin_addr.S_un.S_addr;
 		
-		if ( m_pNodes.Lookup( (LPVOID)nAddress, (LPVOID&)nPeriod ) )
+		if ( m_pNodes.Lookup( nAddress, nPeriod ) )
 		{
 			DWORD nFrequency = 0;
 			
@@ -284,16 +283,16 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			if ( tSecs - nPeriod < nFrequency ) // If we've queried this neighbour 'recently'
 			{
 				// Request more ed2k results (if appropriate)
-				if ( ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && ( pNeighbour->m_pMoreResultsGUID != NULL ) ) // If it's an ed2k server and has more results
+				if ( ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && pNeighbour->m_oMoreResultsGUID ) // If it's an ed2k server and has more results
 				{	
-					if ( ( m_pSearch->m_pGUID == *pNeighbour->m_pMoreResultsGUID ) && // and this search is the one with results waiting
+					if ( validAndEqual( m_pSearch->m_oGUID, pNeighbour->m_oMoreResultsGUID ) && // and this search is the one with results waiting
 						( m_tMoreResults + 10000 < tTicks ) )		// and we've waited a little while (to ensure the search is still active)
 					{
 						// Request more results
 						pNeighbour->Send( CEDPacket::New(  ED2K_C2S_MORERESULTS ) );
-						((CEDNeighbour*)pNeighbour)->m_pQueries.AddTail( pNeighbour->m_pMoreResultsGUID );
+						((CEDNeighbour*)pNeighbour)->m_pQueries.AddTail( pNeighbour->m_oMoreResultsGUID );
 						// Reset "more results" indicator
-						pNeighbour->m_pMoreResultsGUID = NULL;
+						pNeighbour->m_oMoreResultsGUID.clear();
 						// Set timer
 						m_tMoreResults = tTicks;
 						// Display message in system window
@@ -308,7 +307,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		
 		// Set the last query time for this host for this search
 		
-		m_pNodes.SetAt( (LPVOID)nAddress, (LPVOID)tSecs );
+		m_pNodes.SetAt( nAddress, tSecs );
 		
 		// Create the appropriate packet type
 		
@@ -334,14 +333,10 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		
 		// Try to send the search
 		
-		if ( pPacket != NULL && pNeighbour->SendQuery( m_pSearch, pPacket, TRUE ) )
+		if ( pPacket != NULL && pNeighbour->SendQuery( m_pSearch.get(), pPacket, TRUE ) )
 		{
 			// Reset the last "search more" sent to this neighbour (if applicable)
-			if ( pNeighbour->m_pMoreResultsGUID != NULL )
-			{
-				delete pNeighbour->m_pMoreResultsGUID;
-				pNeighbour->m_pMoreResultsGUID = NULL;
-			}
+			pNeighbour->m_oMoreResultsGUID.clear();
 			m_tMoreResults = 0;
 
 			//Display message in system window
@@ -356,9 +351,9 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 				m_nEDClients += ((CEDNeighbour*)pNeighbour)->m_nUserCount;
 
 				// Set the "last ED2K search" value if we sent a text search (to find the search later).
-				if ( ! m_pSearch->m_bED2K )
+				if ( ! m_pSearch->m_oED2K )
 				{
-					SearchManager.m_pLastED2KSearch = m_pSearch->m_pGUID;
+					SearchManager.m_oLastED2KSearch = m_pSearch->m_oGUID;
 				}
 			}
 		}
@@ -373,7 +368,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 //////////////////////////////////////////////////////////////////////
 // CManagedSearch execute the search on the G2 mesh
 
-BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
+BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 {
 	// Look at all known Gnutella2 hubs, newest first
 	
@@ -418,7 +413,8 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
 			
 			if ( CNeighbour* pNeighbour = Neighbours.Get( (IN_ADDR*)&pHost->m_nKeyHost ) )
 			{
-				if ( m_pNodes.Lookup( (LPVOID)pHost->m_nKeyHost, (LPVOID&)pReceiver ) )
+				DWORD nTemp;
+				if ( m_pNodes.Lookup( pHost->m_nKeyHost, nTemp ) )
 					pReceiver = &pNeighbour->m_pHost;
 				else
 					continue;
@@ -438,7 +434,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
 			
 			// Lookup the host
 			
-			if ( m_pNodes.Lookup( (LPVOID)nAddress, (LPVOID&)tLastQuery ) )
+			if ( m_pNodes.Lookup( nAddress, tLastQuery ) )
 			{
 				// Check per-hub requery time
 				DWORD nFrequency;
@@ -446,7 +442,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
 				if ( m_nPriority >=  spLowest )
 				{
 					// Low priority "auto find" sources
-					if ( m_pSearch->m_bSHA1 )		// Has SHA1- probably exists on G2
+					if ( m_pSearch->m_oSHA1 )		// Has SHA1- probably exists on G2
 						nFrequency = 16 * 60 * 60;
 					else							// Reduce frequency if no SHA1.
 						nFrequency = 32 * 60 * 60;
@@ -458,7 +454,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
 			
 			// Set the last query time for this host for this search
 			
-			m_pNodes.SetAt( (LPVOID)nAddress, (LPVOID)tSecs );
+			m_pNodes.SetAt( nAddress, tSecs );
 			
 			// Record the query time on the host, for all searches
 			
@@ -482,7 +478,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
 				return TRUE;
 			}
 		}
-		else if ( tSecs - pHost->m_tKeyTime >= max( Settings.Gnutella2.QueryHostThrottle * 5, DWORD(5*60) ) )
+		else if ( tSecs - pHost->m_tKeyTime >= max( Settings.Gnutella2.QueryHostThrottle * 5, 5*60u ) )
 		{
 			// Timing wise, we can request a query key now -- but first we must figure
 			// out who should be the receiver
@@ -503,9 +499,9 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
 				for ( POSITION pos = Neighbours.GetIterator() ; pos ; pCacheHub = NULL )
 				{
 					pCacheHub = Neighbours.GetNext( pos );
-					LPVOID pTemp;
+					DWORD nTemp;
 					
-					if ( m_pNodes.Lookup( (LPVOID)pCacheHub->m_pHost.sin_addr.S_un.S_addr, pTemp ) )
+					if ( m_pNodes.Lookup( pCacheHub->m_pHost.sin_addr.S_un.S_addr, nTemp ) )
 					{
 						if ( pCacheHub->m_nProtocol == PROTOCOL_G2 &&
 							 pCacheHub->m_nNodeType == ntHub )
@@ -585,7 +581,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
 //////////////////////////////////////////////////////////////////////
 // CManagedSearch execute the search on eDonkey2000 servers
 
-BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD tTicks, DWORD tSecs)
+BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD /*tTicks*/, DWORD tSecs)
 {
 	for ( CHostCacheHost* pHost = HostCache.eDonkey.GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
 	{
@@ -604,11 +600,11 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD tTicks, DWORD tSecs)
 			
 			// Never requery eDonkey2000 servers
 			
-			if ( m_pNodes.Lookup( (LPVOID)nAddress, (LPVOID&)tLastQuery ) ) continue;
+			if ( m_pNodes.Lookup( nAddress, tLastQuery ) ) continue;
 			
 			// Set the last query time for this host for this search
 			
-			m_pNodes.SetAt( (LPVOID)nAddress, (LPVOID)tSecs );
+			m_pNodes.SetAt( nAddress, tSecs );
 			
 			// Record the query time on the host, for all searches
 			
@@ -657,8 +653,8 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD tTicks, DWORD tSecs)
 
 void CManagedSearch::OnHostAcknowledge(DWORD nAddress)
 {
-	DWORD tSecs = time( NULL );
-	m_pNodes.SetAt( (LPVOID)nAddress, (LPVOID)tSecs );
+	DWORD tSecs = static_cast< DWORD >( time( NULL ) );
+	m_pNodes.SetAt( nAddress, tSecs );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -666,6 +662,6 @@ void CManagedSearch::OnHostAcknowledge(DWORD nAddress)
 
 BOOL CManagedSearch::IsLastED2KSearch()
 {
-	return ( m_pSearch->m_pGUID == SearchManager.m_pLastED2KSearch );
+	return validAndEqual( m_pSearch->m_oGUID, SearchManager.m_oLastED2KSearch );
 }
 

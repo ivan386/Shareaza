@@ -52,7 +52,7 @@ void CPongCache::Clear()
 {
 	for ( POSITION pos = m_pCache.GetHeadPosition() ; pos ; )
 	{
-		CPongItem* pItem = (CPongItem*)m_pCache.GetNext( pos );
+		CPongItem* pItem = m_pCache.GetNext( pos );
 		delete pItem;
 	}
 
@@ -79,7 +79,7 @@ CPongItem* CPongCache::Add(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort
 {
 	for ( POSITION pos = m_pCache.GetHeadPosition() ; pos ; )
 	{
-		CPongItem* pItem = (CPongItem*)m_pCache.GetNext( pos );
+		CPongItem* pItem = m_pCache.GetNext( pos );
 
 		if ( pItem->m_nPort != nPort ) continue;
 		if ( pItem->m_nHops != nHops ) continue;
@@ -102,11 +102,11 @@ CPongItem* CPongCache::Add(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort
 //////////////////////////////////////////////////////////////////////
 // CPongCache lookup
 
-CPongItem* CPongCache::Lookup(CNeighbour* pNotFrom, BYTE nHops, CPtrList* pIgnore)
+CPongItem* CPongCache::Lookup(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem* >* pIgnore)
 {
 	for ( POSITION pos = m_pCache.GetHeadPosition() ; pos ; )
 	{
-		CPongItem* pItem = (CPongItem*)m_pCache.GetNext( pos );
+		CPongItem* pItem = m_pCache.GetNext( pos );
 
 		if ( pItem->m_nHops != nHops ) continue;
 		if ( pItem->m_pNeighbour == pNotFrom ) continue;
@@ -129,7 +129,7 @@ POSITION CPongCache::GetIterator() const
 
 CPongItem* CPongCache::GetNext(POSITION& pos) const
 {
-	return (CPongItem*)m_pCache.GetNext( pos );
+	return m_pCache.GetNext( pos );
 }
 
 
@@ -153,9 +153,9 @@ CPongItem::~CPongItem()
 //////////////////////////////////////////////////////////////////////
 // CPongItem packet conversion
 
-CG1Packet* CPongItem::ToPacket(int nTTL, GGUID* pGUID)
+CG1Packet* CPongItem::ToPacket(int nTTL, const Hashes::Guid& oGUID)
 {
-	CG1Packet* pPong = CG1Packet::New( G1_PACKET_PONG, nTTL, pGUID );
+	CG1Packet* pPong = CG1Packet::New( G1_PACKET_PONG, nTTL, oGUID );
 
 	pPong->m_nHops = m_nHops;
 

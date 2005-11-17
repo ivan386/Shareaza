@@ -138,22 +138,21 @@ void CLibraryTreeView::UpdatePhysical(DWORD nSelectCookie)
 	{
 		CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
 
-		CLibraryTreeItem** pChild = m_pRoot->m_pList;
+		CLibraryTreeItem::iterator pChild = m_pRoot->begin();
 
-        int nChild = m_pRoot->m_nCount;
-		for ( ; nChild ; nChild--, pChild++ )
+		for ( ; pChild != m_pRoot->end() ; ++pChild )
 		{
-			CLibraryFolder* pOld = (*pChild)->m_pPhysical;
+			CLibraryFolder* pOld = pChild->m_pPhysical;
 
 			if ( pOld == pFolder )
 			{
-				bChanged |= Update( pFolder, *pChild, m_pRoot, TRUE, TRUE,
+				bChanged |= Update( pFolder, &*pChild, m_pRoot, TRUE, TRUE,
 					nCleanCookie, nSelectCookie, FALSE );
 				break;
 			}
 		}
 
-		if ( nChild == 0 )
+		if ( pChild == m_pRoot->end() )
 		{
 			bChanged |= Update( pFolder, NULL, m_pRoot, TRUE, TRUE,
 				nCleanCookie, nSelectCookie, FALSE );
@@ -179,12 +178,11 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 
 	if ( pItem == NULL )
 	{
-		pItem = pParent->Add( pFolder->m_sName );
+		pItem = pParent->addItem( pFolder->m_sName );
 		if ( bVisible ) m_nTotal++;
 
 		pItem->m_bExpanded	= pFolder->m_bExpanded;
 		pItem->m_pPhysical	= pFolder;
-		pItem->m_sText		= pFolder->m_sName;
 		pItem->m_bShared	= bShared;
 		pItem->m_bBold		= ( pFolder->m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) == 0 );
 
@@ -237,7 +235,7 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 
 			for ( POSITION pos = pFolder->m_pFiles.GetStartPosition() ; pos ; )
 			{
-				pFolder->m_pFiles.GetNextAssoc( pos, strTemp, (CObject*&)pFile );
+				pFolder->m_pFiles.GetNextAssoc( pos, strTemp, pFile );
 				pFile->m_nSelectCookie = nSelectCookie;
 			}
 
@@ -252,22 +250,21 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 	{
 		CLibraryFolder* pSub = pFolder->GetNextFolder( pos );
 
-		CLibraryTreeItem** pChild = pItem->m_pList;
+		CLibraryTreeItem::iterator pChild = pItem->begin();
 
-        int nChild = pItem->m_nCount;
-		for ( ; nChild ; nChild--, pChild++ )
+		for ( ; pChild != pItem->end(); ++pChild )
 		{
-			CLibraryFolder* pOld = (*pChild)->m_pPhysical;
+			CLibraryFolder* pOld = pChild->m_pPhysical;
 
 			if ( pOld == pSub )
 			{
-				bChanged |= Update( pSub, *pChild, pItem, bVisible, bShared,
+				bChanged |= Update( pSub, &*pChild, pItem, bVisible, bShared,
 					nCleanCookie, nSelectCookie, bRecurse );
 				break;
 			}
 		}
 
-		if ( nChild == 0 )
+		if ( pChild == pItem->end() )
 		{
 			bChanged |= Update( pSub, NULL, pItem, bVisible, bShared,
 				nCleanCookie, nSelectCookie, bRecurse );
@@ -308,14 +305,13 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 
 	if ( pItem == NULL )
 	{
-		pItem = pParent->Add( pFolder->m_sName );
+		pItem = pParent->addItem( pFolder->m_sName );
 		if ( bVisible ) m_nTotal++;
 
 		pItem->m_bExpanded	= pFolder->m_bExpanded;
 		pItem->m_pVirtual	= pFolder;
-		pItem->m_sText		= pFolder->m_sName;
 		pItem->m_nIcon16	= pFolder->m_pSchema ? pFolder->m_pSchema->m_nIcon16 : -1;
-		pItem->m_bBold		= pItem->m_bCollection = pFolder->m_bCollSHA1;
+		pItem->m_bBold		= pItem->m_bCollection = bool( pFolder->m_oCollSHA1 );
 
 		bChanged = bVisible;
 	}
@@ -327,9 +323,9 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 			bChanged = bVisible;
 		}
 
-		if ( pItem->m_bCollection != pFolder->m_bCollSHA1 )
+		if ( pItem->m_bCollection != static_cast< BOOL >( bool( pFolder->m_oCollSHA1 ) ) )
 		{
-			pItem->m_bBold = pItem->m_bCollection = pFolder->m_bCollSHA1;
+			pItem->m_bBold = pItem->m_bCollection = bool( pFolder->m_oCollSHA1 );
 			bChanged = bVisible;
 		}
 	}
@@ -355,22 +351,21 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 	{
 		CAlbumFolder* pSub = pFolder->GetNextFolder( pos );
 
-		CLibraryTreeItem** pChild = pItem->m_pList;
+		CLibraryTreeItem::iterator pChild = pItem->begin();
 
-        int nChild = pItem->m_nCount;
-		for ( ; nChild ; nChild--, pChild++ )
+		for ( ; pChild != pItem->end(); ++pChild )
 		{
-			CAlbumFolder* pOld = (*pChild)->m_pVirtual;
+			CAlbumFolder* pOld = pChild->m_pVirtual;
 
 			if ( pOld == pSub )
 			{
-				bChanged |= Update( pSub, *pChild, pItem, bVisible,
+				bChanged |= Update( pSub, &*pChild, pItem, bVisible,
 					nCleanCookie, nSelectCookie );
 				break;
 			}
 		}
 
-		if ( nChild == 0 )
+		if ( pChild == pItem->end() )
 		{
 			bChanged |= Update( pSub, NULL, pItem, bVisible,
 				nCleanCookie, nSelectCookie );
@@ -409,7 +404,7 @@ BOOL CLibraryTreeView::SelectFolder(LPVOID pSearch)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView drag drop
 
-BOOL CLibraryTreeView::DropShowTarget(CLibraryList* pList, const CPoint& point)
+BOOL CLibraryTreeView::DropShowTarget(CLibraryList* /*pList*/, const CPoint& point)
 {
 	CPoint ptLocal( point );
 	ScreenToClient( &ptLocal );
@@ -488,13 +483,14 @@ BOOL CLibraryTreeView::DropObjects(CLibraryList* pList, BOOL bCopy, CSingleLock&
 			dlg.DoModal();
 		}
 	}
-	else if ( m_pDropItem->m_pVirtual != NULL )
+	else if ( m_pDropItem->m_pVirtual != NULL && 
+			  m_pDropItem->m_pVirtual->m_sSchemaURI != CSchema::uriGhostFolder )
 	{
 		for ( POSITION pos = pList->GetHeadPosition() ; pos ; )
 		{
 			DWORD nObject = pList->GetNext( pos );
 
-			if ( CLibraryFile* pFile = Library.LookupFile( nObject ) )
+			if ( CLibraryFile* pFile = Library.LookupFile( nObject, FALSE, TRUE ) )
 			{
 				m_pDropItem->m_pVirtual->AddFile( pFile );
 
@@ -516,7 +512,10 @@ BOOL CLibraryTreeView::DropObjects(CLibraryList* pList, BOOL bCopy, CSingleLock&
 
 				if ( pFolder != m_pDropItem->m_pVirtual &&
 					 pFolder->m_pParent != m_pDropItem->m_pVirtual &&
-					 pFolder->CheckFolder( m_pDropItem->m_pVirtual, TRUE ) == FALSE )
+					 pFolder->CheckFolder( m_pDropItem->m_pVirtual, TRUE ) == FALSE &&
+					 pFolder->m_sSchemaURI != CSchema::uriGhostFolder &&
+					 pFolder->m_sSchemaURI != CSchema::uriSearchFolder &&
+					 m_pDropItem->m_pVirtual->m_sSchemaURI != CSchema::uriSearchFolder )
 				{
 					pFolder->m_pParent->OnFolderDelete( pFolder );
 					pFolder->m_pParent = m_pDropItem->m_pVirtual;
@@ -574,7 +573,7 @@ BOOL CLibraryTreeView::PreTranslateMessage(MSG* pMsg)
 	return CLibraryTreeCtrl::PreTranslateMessage( pMsg );
 }
 
-void CLibraryTreeView::OnContextMenu(CWnd* pWnd, CPoint point)
+void CLibraryTreeView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	if ( m_bVirtual )
 	{
@@ -615,9 +614,9 @@ void CLibraryTreeView::OnLibraryParent()
 {
 	CLibraryTreeItem* pNew = NULL;
 
-	if ( m_nSelected == 1 && m_pSelFirst->m_pParent != m_pRoot )
+	if ( m_nSelected == 1 && m_pSelFirst->parent() != m_pRoot )
 	{
-		pNew = m_pSelFirst->m_pParent;
+		pNew = m_pSelFirst->parent();
 	}
 
 	DeselectAll( pNew );
@@ -763,9 +762,8 @@ void CLibraryTreeView::OnLibraryAdd()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-	BROWSEINFO pBI;
+	BROWSEINFO pBI = {};
 
-	ZeroMemory( &pBI, sizeof(pBI) );
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder to share:");
@@ -808,7 +806,7 @@ void CLibraryTreeView::OnUpdateLibraryFolderEnqueue(CCmdUI* pCmdUI)
 
 void CLibraryTreeView::OnLibraryFolderEnqueue()
 {
-	CStringList pList;
+	CList< CString > pList;
 
 	{
 		CSingleLock oLock( &Library.m_pSection );

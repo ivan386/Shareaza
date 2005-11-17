@@ -78,9 +78,8 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 	for ( int i = 0 ; i < (int)pMenu->GetMenuItemCount() ; i++ )
 	{
 		TCHAR szBuffer[128];
-		MENUITEMINFO mii;
 
-		ZeroMemory( &mii, sizeof(mii) );
+		MENUITEMINFO mii = {};
 		mii.cbSize		= sizeof(mii);
 		mii.fMask		= MIIM_DATA|MIIM_ID|MIIM_TYPE|MIIM_SUBMENU;
 		mii.dwTypeData	= szBuffer;
@@ -97,7 +96,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 		}
 
 		mii.fType		|= MF_OWNERDRAW;
-		mii.dwItemData	= ( (DWORD)pMenu->GetSafeHmenu() << 16 ) | ( mii.wID & 0xFFFF );
+		mii.dwItemData	= ( (DWORD_PTR)pMenu->GetSafeHmenu() << 16 ) | ( mii.wID & 0xFFFF );
 
 		CString strText = szBuffer;
 		m_pStrings.SetAt( mii.dwItemData, strText );
@@ -209,7 +208,8 @@ void CCoolMenu::OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	rcText.left += 32;
 	rcText.right -= 2;
 
-	CDC* pDC = CoolInterface.GetBuffer( dc, rcItem.Size() );
+	CSize size = rcItem.Size();
+	CDC* pDC = CoolInterface.GetBuffer( dc, size );
 
 	if ( m_bmWatermark.m_hObject != NULL )
 	{
@@ -424,13 +424,13 @@ LRESULT CALLBACK CCoolMenu::MsgHook(int nCode, WPARAM wParam, LPARAM lParam)
 		HWND hWndFore = GetForegroundWindow();
 		if ( hWndFore != NULL && CWnd::FromHandlePermanent( hWndFore ) == NULL ) break;
 
-		WNDPROC pWndProc = (WNDPROC)(LONG_PTR)::GetWindowLong( pCWP->hwnd, GWL_WNDPROC );
+		WNDPROC pWndProc = (WNDPROC)(LONG_PTR)::GetWindowLongPtr( pCWP->hwnd, GWLP_WNDPROC );
 		if ( pWndProc == NULL ) break;
 		ASSERT( pWndProc != MenuProc );
 
 		if ( ! SetProp( pCWP->hwnd, wpnOldProc, pWndProc ) ) break;
 
-		if ( ! SetWindowLong( pCWP->hwnd, GWL_WNDPROC, (DWORD)(DWORD_PTR)MenuProc ) )
+		if ( ! SetWindowLongPtr( pCWP->hwnd, GWLP_WNDPROC, (DWORD)(DWORD_PTR)MenuProc ) )
 		{
 			::RemoveProp( pCWP->hwnd, wpnOldProc );
 			break;
@@ -461,8 +461,8 @@ LRESULT CALLBACK CCoolMenu::MenuProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 	case WM_WINDOWPOSCHANGING:
 		if ( WINDOWPOS* pWndPos = (WINDOWPOS*)lParam )
 		{
-			DWORD nStyle	= GetWindowLong( hWnd, GWL_STYLE );
-			DWORD nExStyle	= GetWindowLong( hWnd, GWL_EXSTYLE );
+			DWORD nStyle	= (DWORD)GetWindowLongPtr( hWnd, GWL_STYLE );
+			DWORD nExStyle	= (DWORD)GetWindowLongPtr( hWnd, GWL_EXSTYLE );
 			CRect rc( 0, 0, 32, 32 );
 
 			AdjustWindowRectEx( &rc, nStyle, FALSE, nExStyle );

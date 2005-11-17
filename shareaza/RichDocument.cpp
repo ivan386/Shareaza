@@ -60,15 +60,15 @@ POSITION CRichDocument::GetIterator() const
 
 CRichElement* CRichDocument::GetNext(POSITION& pos) const
 {
-	return (CRichElement*)m_pElements.GetNext( pos );
+	return m_pElements.GetNext( pos );
 }
 
 CRichElement* CRichDocument::GetPrev(POSITION& pos) const
 {
-	return (CRichElement*)m_pElements.GetPrev( pos );
+	return m_pElements.GetPrev( pos );
 }
 
-int CRichDocument::GetCount() const
+INT_PTR CRichDocument::GetCount() const
 {
 	return m_pElements.GetCount();
 }
@@ -202,7 +202,7 @@ void CRichDocument::CreateFonts(LPCTSTR pszFaceName, int nSize)
 //////////////////////////////////////////////////////////////////////
 // CRichDocument XML Load
 
-BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMapStringToPtr* pMap, int nGroup)
+BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, CRichElement*, CRichElement* >* pMap, int nGroup)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	
@@ -376,7 +376,7 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMapStringToPtr* pMap, int nGrou
 			strTemp = pXML->GetAttributeValue( _T("id") );
 			if ( strTemp.GetLength() ) pMap->SetAt( strTemp, pElement );
 		}
-		
+
 		Add( pElement );
 	}
 	

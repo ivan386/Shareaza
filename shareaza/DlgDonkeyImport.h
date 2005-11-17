@@ -60,7 +60,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnImport();
 	virtual void OnCancel();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnClose();
 	//}}AFX_MSG
 

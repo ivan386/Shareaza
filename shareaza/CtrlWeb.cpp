@@ -26,8 +26,6 @@
 #include "CoolMenu.h"
 #include "Skin.h"
 
-#include <exdispid.h>
-
 IMPLEMENT_DYNAMIC(CWebCtrl, CWnd)
 
 BEGIN_INTERFACE_MAP(CWebCtrl::DocSite, COleControlSite)
@@ -174,7 +172,7 @@ BOOL CWebCtrl::PreTranslateMessage(MSG* pMsg)
 {
 	if ( m_pBrowser )
 	{
-		CComQIPtr<IOleInPlaceActiveObject> pInPlace = m_pBrowser;
+		CComQIPtr<IOleInPlaceActiveObject> pInPlace( m_pBrowser );
 		if ( pInPlace )
 			return pInPlace->TranslateAccelerator( pMsg ) == S_OK;
 	}
@@ -190,7 +188,7 @@ void CWebCtrl::OnSize(UINT nType, int cx, int cy)
 	{
 		CRect rect;
 		GetClientRect( rect );
-		::AdjustWindowRectEx( rect, ::GetWindowLong( m_wndBrowser, GWL_STYLE ), FALSE, WS_EX_CLIENTEDGE );
+		::AdjustWindowRectEx( rect, (DWORD)::GetWindowLongPtr( m_wndBrowser, GWL_STYLE ), FALSE, WS_EX_CLIENTEDGE );
 		m_wndBrowser.SetWindowPos( NULL, rect.left, rect.top,
 			rect.Width(), rect.Height(), SWP_NOACTIVATE|SWP_NOZORDER );
 	}
@@ -220,7 +218,7 @@ void CWebCtrl::EnterMenu(POINT* pPoint)
 {
 	if ( m_pThis != NULL )
 	{
-		SetWindowLong( m_pThis->m_hWndThis, GWL_WNDPROC, (LONG)m_pThis->m_pWndProc );
+		SetWindowLongPtr( m_pThis->m_hWndThis, GWLP_WNDPROC, (LONG_PTR_ARG)(LONG_PTR)m_pThis->m_pWndProc );
 		m_pThis = NULL;
 	}
 
@@ -245,8 +243,8 @@ void CWebCtrl::EnterMenu(POINT* pPoint)
 
 	m_pThis = this;
 	m_hWndThis = pChild->GetSafeHwnd();
-	m_pWndProc = (WNDPROC)GetWindowLong( m_hWndThis, GWL_WNDPROC );
-	SetWindowLong( m_hWndThis, GWL_WNDPROC, (LONG)WebWndProc );
+	m_pWndProc = (WNDPROC)(LONG_PTR)GetWindowLongPtr( m_hWndThis, GWLP_WNDPROC );
+	SetWindowLongPtr( m_hWndThis, GWLP_WNDPROC, (LONG_PTR_ARG)(LONG_PTR)&WebWndProc );
 }
 
 LRESULT PASCAL CWebCtrl::WebWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
@@ -259,7 +257,7 @@ LRESULT PASCAL CWebCtrl::WebWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM 
 	{
 	case WM_DESTROY:
 	case WM_EXITMENULOOP:
-		SetWindowLong( hWnd, GWL_WNDPROC, (LONG)pWndProc );
+		SetWindowLongPtr( hWnd, GWLP_WNDPROC, (LONG_PTR_ARG)(LONG_PTR)pWndProc );
 		m_pThis = NULL;
 		break;
 	case WM_INITMENUPOPUP:
@@ -279,7 +277,7 @@ LRESULT PASCAL CWebCtrl::WebWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM 
 /////////////////////////////////////////////////////////////////////////////
 // CWebCtrl browser event handlers
 
-void CWebCtrl::BeforeNavigate2(LPDISPATCH pDispatch, VARIANT* pvURL, VARIANT* pvFlags, VARIANT* pvTargetFrameName, VARIANT* pvPostData, VARIANT* pvHeaders, VARIANT_BOOL* pvCancel)
+void CWebCtrl::BeforeNavigate2(LPDISPATCH /*pDispatch*/, VARIANT* pvURL, VARIANT* pvFlags, VARIANT* pvTargetFrameName, VARIANT* pvPostData, VARIANT* pvHeaders, VARIANT_BOOL* pvCancel)
 {
 	ASSERT(V_VT(pvURL) == VT_BSTR);
 	ASSERT(V_VT(pvTargetFrameName) == VT_BSTR);
@@ -300,7 +298,7 @@ void CWebCtrl::BeforeNavigate2(LPDISPATCH pDispatch, VARIANT* pvURL, VARIANT* pv
 	}
 }
 
-void CWebCtrl::OnNewWindow2(LPDISPATCH* ppDisp, VARIANT_BOOL* pbCancel)
+void CWebCtrl::OnNewWindow2(LPDISPATCH* /*ppDisp*/, VARIANT_BOOL* pbCancel)
 {
 	*pbCancel = VARIANT_FALSE;
 
@@ -313,7 +311,7 @@ void CWebCtrl::OnNewWindow2(LPDISPATCH* ppDisp, VARIANT_BOOL* pbCancel)
 /////////////////////////////////////////////////////////////////////////////
 // CWebCtrl::DocSite control site implementation
 
-BOOL CWebCtrl::CreateControlSite(COleControlContainer* pContainer, COleControlSite** ppSite, UINT nID, REFCLSID clsid)
+BOOL CWebCtrl::CreateControlSite(COleControlContainer* pContainer, COleControlSite** ppSite, UINT /*nID*/, REFCLSID /*clsid*/)
 {
 	ASSERT( ppSite != NULL );
 	*ppSite = new DocSite( this, pContainer );
@@ -364,94 +362,94 @@ STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::ShowContextMenu(DWORD dwID, L
 	return S_FALSE;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::GetHostInfo(DOCHOSTUIINFO *pInfo)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::GetHostInfo(DOCHOSTUIINFO* /*pInfo*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_OK;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::ShowUI(DWORD dwID, LPOLEINPLACEACTIVEOBJECT pActiveObject, LPOLECOMMANDTARGET pCommandTarget, LPOLEINPLACEFRAME pFrame, LPOLEINPLACEUIWINDOW pDoc)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::ShowUI(DWORD /*dwID*/, LPOLEINPLACEACTIVEOBJECT /*pActiveObject*/, LPOLECOMMANDTARGET /*pCommandTarget*/, LPOLEINPLACEFRAME /*pFrame*/, LPOLEINPLACEUIWINDOW /*pDoc*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_FALSE;
 }
 
 STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::HideUI()
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_OK;
 }
 
 STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::UpdateUI(void)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_OK;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::EnableModeless(BOOL fEnable)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::EnableModeless(BOOL /*fEnable*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_OK;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::OnDocWindowActivate(BOOL fActivate)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::OnDocWindowActivate(BOOL /*fActivate*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_OK;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::OnFrameWindowActivate(BOOL fActivate)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::OnFrameWindowActivate(BOOL /*fActivate*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_OK;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::ResizeBorder(LPCRECT prcBorder, LPOLEINPLACEUIWINDOW pUIWindow, BOOL fFrameWindow)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::ResizeBorder(LPCRECT /*prcBorder*/, LPOLEINPLACEUIWINDOW /*pUIWindow*/, BOOL /*fFrameWindow*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_OK;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::TranslateAccelerator(LPMSG lpMsg, const GUID* pguidCmdGroup, DWORD nCmdID)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::TranslateAccelerator(LPMSG /*lpMsg*/, const GUID* /*pguidCmdGroup*/, DWORD /*nCmdID*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_FALSE;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::GetOptionKeyPath(LPOLESTR* pchKey, DWORD dwReserved)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::GetOptionKeyPath(LPOLESTR* /*pchKey*/, DWORD /*dwReserved*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_FALSE;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::GetDropTarget(LPDROPTARGET pDropTarget, LPDROPTARGET* ppDropTarget)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::GetDropTarget(LPDROPTARGET /*pDropTarget*/, LPDROPTARGET* /*ppDropTarget*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_FALSE;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::TranslateUrl(DWORD dwTranslate, OLECHAR* pchURLIn, OLECHAR** ppchURLOut)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::TranslateUrl(DWORD /*dwTranslate*/, OLECHAR* /*pchURLIn*/, OLECHAR** /*ppchURLOut*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_FALSE;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::FilterDataObject(LPDATAOBJECT pDataObject, LPDATAOBJECT* ppDataObject)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::FilterDataObject(LPDATAOBJECT /*pDataObject*/, LPDATAOBJECT* /*ppDataObject*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_FALSE;
 }
 
@@ -460,14 +458,14 @@ STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::FilterDataObject(LPDATAOBJECT
 
 IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, DocHostShowUI);
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostShowUI::ShowHelp(HWND hwnd, LPOLESTR pszHelpFile, UINT uCommand, DWORD dwData, POINT ptMouse, IDispatch *pDispatchObjectHit)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostShowUI::ShowHelp(HWND /*hwnd*/, LPOLESTR /*pszHelpFile*/, UINT /*uCommand*/, DWORD /*dwData*/, POINT /*ptMouse*/, IDispatch* /*pDispatchObjectHit*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostShowUI)
-	CWebCtrl* pCtrl = pThis->GetCtrl();
+	/*CWebCtrl* pCtrl =*/ pThis->GetCtrl();
 	return S_FALSE;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XDocHostShowUI::ShowMessage(HWND hwnd, LPOLESTR lpstrText, LPOLESTR lpstrCaption, DWORD dwType, LPOLESTR lpstrHelpFile, DWORD dwHelpContext, LRESULT *plResult)
+STDMETHODIMP CWebCtrl::DocSite::XDocHostShowUI::ShowMessage(HWND /*hwnd*/, LPOLESTR /*lpstrText*/, LPOLESTR /*lpstrCaption*/, DWORD /*dwType*/, LPOLESTR /*lpstrHelpFile*/, DWORD /*dwHelpContext*/, LRESULT* /*plResult*/)
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostShowUI)
 	CWebCtrl* pCtrl = pThis->GetCtrl();
@@ -507,27 +505,27 @@ STDMETHODIMP CWebCtrl::DocSite::XServiceProvider::QueryService(REFGUID guidServi
 
 IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, InternetSecurityManager);
 
-STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::GetSecurityId(LPCWSTR pwszUrl, BYTE *pbSecurityId, DWORD *pcbSecurityId, DWORD_PTR dwReserved)
+STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::GetSecurityId(LPCWSTR /*pwszUrl*/, BYTE* /*pbSecurityId*/, DWORD* /*pcbSecurityId*/, DWORD_PTR /*dwReserved*/)
 {
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::GetSecuritySite(IInternetSecurityMgrSite **ppSite)
+STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::GetSecuritySite(IInternetSecurityMgrSite** /*ppSite*/)
 {
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::GetZoneMappings(DWORD dwZone, IEnumString **ppenumString, DWORD dwFlags)
+STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::GetZoneMappings(DWORD /*dwZone*/, IEnumString** /*ppenumString*/, DWORD /*dwFlags*/)
 {
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::MapUrlToZone(LPCWSTR pwszUrl, DWORD *pdwZone, DWORD dwFlags)
+STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::MapUrlToZone(LPCWSTR /*pwszUrl*/, DWORD* /*pdwZone*/, DWORD /*dwFlags*/)
 {
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::ProcessUrlAction(LPCWSTR pwszUrl, DWORD dwAction, BYTE *pPolicy, DWORD cbPolicy, BYTE *pContext, DWORD cbContext, DWORD dwFlags, DWORD dwReserved)
+STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::ProcessUrlAction(LPCWSTR pwszUrl, DWORD dwAction, BYTE *pPolicy, DWORD cbPolicy, BYTE* /*pContext*/, DWORD /*cbContext*/, DWORD /*dwFlags*/, DWORD /*dwReserved*/)
 {
 	if ( cbPolicy != 4 ) return INET_E_DEFAULT_ACTION;
 	PBOOL pBool = (PBOOL)pPolicy;
@@ -558,17 +556,17 @@ STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::ProcessUrlAction(LPCWS
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::QueryCustomPolicy(LPCWSTR pwszUrl, REFGUID guidKey, BYTE **ppPolicy, DWORD *pcbPolicy, BYTE *pContext, DWORD cbContext, DWORD dwReserved)
+STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::QueryCustomPolicy(LPCWSTR /*pwszUrl*/, REFGUID /*guidKey*/, BYTE** /*ppPolicy*/, DWORD* /*pcbPolicy*/, BYTE* /*pContext*/, DWORD /*cbContext*/, DWORD /*dwReserved*/)
 {
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::SetSecuritySite(IInternetSecurityMgrSite *pSite)
+STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::SetSecuritySite(IInternetSecurityMgrSite* /*pSite*/)
 {
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::SetZoneMapping(DWORD dwZone, LPCWSTR lpszPattern, DWORD dwFlags)
+STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::SetZoneMapping(DWORD /*dwZone*/, LPCWSTR /*lpszPattern*/, DWORD /*dwFlags*/)
 {
 	return INET_E_DEFAULT_ACTION;
 }

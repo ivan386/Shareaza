@@ -37,7 +37,7 @@ public:
 // Attributes
 public:
 	CMDIFrameWnd*		m_pParent;
-	CPtrList			m_pWindows;
+	CList< CChildWnd* >	m_pWindows;
 	CRect				m_rcSize;
 	BOOL				m_bIgnoreActivate;
 	BOOL				m_bClosing;

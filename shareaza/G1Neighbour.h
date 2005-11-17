@@ -61,7 +61,7 @@ protected:
 	BYTE m_nPongNeeded[PONG_NEEDED_BUFFER]; // This is just an array of 32 bytes
 
 	// Information about the most recent ping packet the remote computer has sent us
-	GGUID m_pLastPingID;   // The GUID of the most recent ping packet the remote computer has sent us
+	Hashes::Guid m_pLastPingID;   // The GUID of the most recent ping packet the remote computer has sent us
 	BYTE  m_nLastPingHops; // The number of hops that packet has travelled, adding 1 (do)
 
 	// A hops flow byte specific to BearShare (do)
@@ -78,14 +78,14 @@ public:
 	virtual BOOL Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 
 	// Ping and Pong packets
-	BOOL SendPing(DWORD dwNow = 0, GGUID* pGUID = NULL);
+	BOOL SendPing(DWORD dwNow = 0, const Hashes::Guid& oGUID = Hashes::Guid());
 	void OnNewPong(CPongItem* pPong);
 
 	// Query packet
 	virtual BOOL SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
 
 	// Push packet
-	void SendG2Push(GGUID* pGUID, CPacket* pPacket);
+	void SendG2Push(const Hashes::Guid& oGUID, CPacket* pPacket);
 
 protected:
 

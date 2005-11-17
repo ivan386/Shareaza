@@ -46,7 +46,7 @@ protected:
 // Operations
 protected:
 	virtual BOOL	CheckAvailable(CLibraryTreeItem* pSel);
-	virtual DWORD	HitTestIndex(const CPoint& point) const = 0;
+	virtual DWORD_PTR	HitTestIndex(const CPoint& point) const = 0;
 protected:
 	void			StartSelectedFileLoop();
 	CLibraryFile*	GetNextSelectedFile();

@@ -89,7 +89,7 @@ void CLibraryFolderCtrl::SetSaveExpand(BOOL bSaveExpand)
 
 void CLibraryFolderCtrl::Update(DWORD nUpdateCookie)
 {
-	CPtrList pAlready;
+	CList< CLibraryFolder* > pAlready;
 
 	for ( HTREEITEM hItem = GetChildItem( m_hRoot ) ; hItem ; )
 	{
@@ -171,7 +171,7 @@ void CLibraryFolderCtrl::Update(CLibraryFolder* pFolder, HTREEITEM hFolder, HTRE
 		}
 	}
 
-	CPtrList pAlready;
+	CList< CLibraryFolder* > pAlready;
 
 	for ( HTREEITEM hItem = GetChildItem( hFolder ) ; hItem ; )
 	{
@@ -249,11 +249,11 @@ CLibraryFolder* CLibraryFolderCtrl::GetNextSelectedFolder(POSITION& pos) const
 
 		if ( hItem == m_hRoot ) continue;
 
-		CPtrList pTree;
+		CList< HTREEITEM > pTree;
 
 		while ( hItem != m_hRoot )
 		{
-			pTree.AddHead( (LPVOID)hItem );
+			pTree.AddHead( hItem );
 			hItem = GetParentItem( hItem );
 		}
 
@@ -261,7 +261,7 @@ CLibraryFolder* CLibraryFolderCtrl::GetNextSelectedFolder(POSITION& pos) const
 
 		for ( POSITION posTree = pTree.GetHeadPosition() ; posTree ; pLastFolder = pFolder )
 		{
-			hItem = (HTREEITEM)pTree.GetNext( posTree );
+			hItem = pTree.GetNext( posTree );
 			pFolder = (CLibraryFolder*)GetItemData( hItem );
 
 			if ( pLastFolder )
@@ -366,10 +366,10 @@ void CLibraryFolderCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	SetFocus();
 }
 
-void CLibraryFolderCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
+void CLibraryFolderCtrl::OnLButtonDblClk(UINT /*nFlags*/, CPoint point)
 {
 	UINT nItemFlags = 0;
-	HTREEITEM hItem = HitTest( point, &nItemFlags );
+	/*HTREEITEM hItem =*/ HitTest( point, &nItemFlags );
 
 	if ( ( nItemFlags & (TVHT_ONITEMINDENT|TVHT_ONITEMRIGHT|TVHT_NOWHERE) ) && m_bMultiSelect )
 	{
@@ -382,7 +382,7 @@ void CLibraryFolderCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 	}
 }
 
-void CLibraryFolderCtrl::OnLButtonUp(UINT nFlags, CPoint point)
+void CLibraryFolderCtrl::OnLButtonUp(UINT /*nFlags*/, CPoint /*point*/)
 {
 }
 
@@ -505,7 +505,7 @@ BOOL CLibraryFolderCtrl::SelectItems(HTREEITEM hItemFrom, HTREEITEM hItemTo)
 	while ( hItem )
 	{
 		SetItemState( hItem, bSelect ? TVIS_SELECTED : 0, TVIS_SELECTED );
-		if( hItem == hItemTo ) bSelect = FALSE;
+		if ( hItem == hItemTo ) bSelect = FALSE;
 		hItem = GetNextVisibleItem( hItem );
 	}
 
@@ -551,7 +551,7 @@ HTREEITEM CLibraryFolderCtrl::GetNextSelectedItem(HTREEITEM hItem) const
 	return NULL;
 }
 
-void CLibraryFolderCtrl::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult)
+void CLibraryFolderCtrl::OnItemExpanded(NMHDR* pNMHDR, LRESULT* /*pResult*/)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 
@@ -573,9 +573,9 @@ void CLibraryFolderCtrl::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-void CLibraryFolderCtrl::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
+void CLibraryFolderCtrl::OnSelChanged(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
-	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
+//	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 	NotifySelectionChanged();
 	*pResult = 0;
 }

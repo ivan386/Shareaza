@@ -94,7 +94,7 @@ void CDDEServer::Close()
 //////////////////////////////////////////////////////////////////////
 // CDDEServer static callback
 
-HDDEDATA CALLBACK CDDEServer::DDECallback(UINT wType, UINT wFmt, HCONV hConv, HSZ hsz1, HSZ hsz2, HDDEDATA hData, DWORD dwData1, DWORD dwData2)
+HDDEDATA CALLBACK CDDEServer::DDECallback(UINT wType, UINT /*wFmt*/, HCONV /*hConv*/, HSZ hsz1, HSZ /*hsz2*/, HDDEDATA hData, ULONG_PTR /*dwData1*/, ULONG_PTR /*dwData2*/)
 {
 	HDDEDATA hResult = NULL;
 
@@ -210,7 +210,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, HDDEDATA hData, HDDEDATA* phResult)
 
 	DdeUnaccessData( hData );
 
-	*phResult = (HDDEDATA)( bResult ? DDE_FACK : DDE_FNOTPROCESSED );
+	*phResult = (HDDEDATA)static_cast< DWORD_PTR >( bResult ? DDE_FACK : DDE_FNOTPROCESSED );
 
 	return bResult;
 }
@@ -226,7 +226,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength)
 	{
 		// Copy data info a buffer
 		LPWSTR pszData = new WCHAR[ nLength + 1 ];
-		CopyMemory( pszData, pData, nLength );
+		CopyMemory( pszData, pData, nLength * sizeof( WCHAR ) );
 		// Ensure it has a null terminator
 		pszData[ nLength ] = 0;
 		// Assign it to the Cstring and remove buffer

@@ -74,7 +74,7 @@ CLibrary::CLibrary()
 	m_pfnGFAEW		= NULL;
 	m_pfnGFAEA		= NULL;
 
-	if ( m_hKernel = LoadLibrary( _T("kernel32") ) )
+	if ( ( m_hKernel = LoadLibrary( _T("kernel32") ) ) != 0 )
 	{
 		(FARPROC&)m_pfnGFAEW = GetProcAddress( m_hKernel, "GetFileAttributesExW" );
 		(FARPROC&)m_pfnGFAEA = GetProcAddress( m_hKernel, "GetFileAttributesExA" );
@@ -114,23 +114,27 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 {
 	LibraryMaps.OnFileAdd( pFile );
 
-	if ( pFile->m_bSHA1 )
+	if ( pFile->m_oSHA1 )
 	{
 		LibraryDictionary.Add( pFile );
 	}
 
 	if ( pFile->IsAvailable() )
 	{
-		if ( pFile->m_bSHA1 || pFile->m_bTiger || pFile->m_bMD5 || pFile->m_bED2K )
+        if ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oMD5 || pFile->m_oED2K )
 		{
 			LibraryHistory.Submit( pFile );
 			GetAlbumRoot()->OrganiseFile( pFile );
 		}
 
-		if ( ! pFile->m_bSHA1 || ! pFile->m_bTiger || ! pFile->m_bMD5 || ! pFile->m_bED2K )
+        if ( !pFile->m_oSHA1 || !pFile->m_oTiger || !pFile->m_oMD5 || !pFile->m_oED2K )
 		{
 			LibraryBuilder.Add( pFile );
 		}
+	}
+	else
+	{
+		GetAlbumRoot()->OrganiseFile( pFile );
 	}
 }
 
@@ -145,11 +149,11 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 	}
 }
 
-void CLibrary::OnFileDelete(CLibraryFile* pFile)
+void CLibrary::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 {
 	ASSERT( pFile != NULL );
 	
-	LibraryFolders.OnFileDelete( pFile );
+	LibraryFolders.OnFileDelete( pFile, bDeleteGhost );
 	LibraryHistory.OnFileDelete( pFile );
 	LibraryHashDB.DeleteAll( pFile->m_nIndex );
 }
@@ -157,13 +161,13 @@ void CLibrary::OnFileDelete(CLibraryFile* pFile)
 //////////////////////////////////////////////////////////////////////
 // CLibrary search
 
-CPtrList* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
+CList< CLibraryFile* >* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 {
 	CSingleLock oLock( &m_pSection );
 
 	if ( !oLock.Lock( 50 ) ) return NULL;
 
-	CPtrList* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal );
+	CList< CLibraryFile* >* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal );
 
 	if ( pHits == NULL && pSearch != NULL )
 	{

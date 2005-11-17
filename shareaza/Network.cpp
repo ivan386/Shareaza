@@ -283,11 +283,12 @@ void CNetwork::Disconnect()
 	{
 		for ( POSITION pos = m_pLookups.GetStartPosition() ; pos ; )
 		{
-			LPBYTE pAsync, pBuffer;
-			m_pLookups.GetNextAssoc( pos, (VOID*&)pAsync, (VOID*&)pBuffer );
-			WSACancelAsyncRequest( (HANDLE)pAsync );
-			delete *(CString**)pBuffer;
-			free( pBuffer );
+			HANDLE pAsync;
+			ResolveStruct* pBuffer;
+			m_pLookups.GetNextAssoc( pos, pAsync, pBuffer );
+			WSACancelAsyncRequest( pAsync );
+			delete pBuffer->m_sAddress;
+			delete pBuffer;
 		}
 		
 		m_pLookups.RemoveAll();
@@ -346,13 +347,14 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 //////////////////////////////////////////////////////////////////////
 // CNetwork GGUID generation
 
-void CNetwork::CreateID(GGUID& oID)
+void CNetwork::CreateID(Hashes::Guid& oID)
 {
-	oID = MyProfile.GUID;
-	oID.w[0] += GetTickCount();
-	oID.w[1] += m_nSequence++;
-	oID.w[2] += rand() * ( RAND_MAX + 1 ) * ( RAND_MAX + 1 ) + rand() * ( RAND_MAX + 1 ) + rand();
-	oID.w[3] += rand() * ( RAND_MAX + 1 ) * ( RAND_MAX + 1 ) + rand() * ( RAND_MAX + 1 ) + rand();
+	oID = MyProfile.oGUID;
+	Hashes::Guid::iterator i = oID.begin();
+	*i++ += GetTickCount();
+	*i++ += m_nSequence++;
+	*i++ += rand() * ( RAND_MAX + 1 ) * ( RAND_MAX + 1 ) + rand() * ( RAND_MAX + 1 ) + rand();
+	*i   += rand() * ( RAND_MAX + 1 ) * ( RAND_MAX + 1 ) + rand() * ( RAND_MAX + 1 ) + rand();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -383,7 +385,7 @@ BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNam
 {
 	ZeroMemory( pHost, sizeof(*pHost) );
 	pHost->sin_family	= PF_INET;
-	pHost->sin_port		= htons( nPort );
+	pHost->sin_port		= htons( u_short( nPort ) );
 	
 	if ( pszHost == NULL || *pszHost == 0 ) return FALSE;
 	
@@ -395,7 +397,7 @@ BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNam
 	{
 		if ( _stscanf( strHost.Mid( nColon + 1 ), _T("%i"), &nPort ) == 1 )
 		{
-			pHost->sin_port = htons( nPort );
+			pHost->sin_port = htons( u_short( nPort ) );
 		}
 		
 		strHost = strHost.Left( nColon );
@@ -414,11 +416,11 @@ BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNam
 		
 		if ( pLookup == NULL ) return FALSE;
 		
-		CopyMemory( &pHost->sin_addr, pLookup->h_addr, 4 );
+		CopyMemory( &pHost->sin_addr, pLookup->h_addr, sizeof pHost->sin_addr );
 	}
 	else
 	{
-		CopyMemory( &pHost->sin_addr, &dwIP, 4 );
+		CopyMemory( &pHost->sin_addr, &dwIP, sizeof pHost->sin_addr );
 	}
 	
 	return TRUE;
@@ -429,33 +431,33 @@ BOOL CNetwork::AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 	
-	BYTE* pResolve = (BYTE*)malloc( MAXGETHOSTSTRUCT + 8 );
+	ResolveStruct* pResolve = new ResolveStruct;
 	
 	USES_CONVERSION;
 	
 	HANDLE hAsync = WSAAsyncGetHostByName( AfxGetMainWnd()->GetSafeHwnd(), WM_WINSOCK,
-		T2CA(pszAddress), (LPSTR)pResolve + 8, MAXGETHOSTSTRUCT );
+		T2CA(pszAddress), pResolve->m_pBuffer, MAXGETHOSTSTRUCT );
 	
 	if ( hAsync != NULL )
 	{
-		*((CString**)&pResolve[0])	= new CString( pszAddress );
-		*((WORD*)&pResolve[4])		= nPort;
-		*((BYTE*)&pResolve[6])		= nProtocol;
-		*((BYTE*)&pResolve[7])		= nCommand;
-		
-		m_pLookups.SetAt( (LPVOID)hAsync, (LPVOID)pResolve );
+		pResolve->m_sAddress = new CString( pszAddress );
+		pResolve->m_nProtocol = nProtocol;
+		pResolve->m_nPort = nPort;
+		pResolve->m_nCommand = nCommand;
+
+		m_pLookups.SetAt( hAsync, pResolve );
 		return TRUE;
 	}
 	else
 	{
-		free( pResolve );
+		delete pResolve;
 		return FALSE;
 	}
 }
 
 WORD CNetwork::RandomPort() const
 {
-	return 10000 + ( rand() % 50000 );
+	return WORD( 10000 + ( rand() % 50000 ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -497,51 +499,45 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	LPBYTE pBuffer = NULL;
-	if ( ! m_pLookups.Lookup( (LPVOID)wParam, (LPVOID&)pBuffer ) ) return;
-	m_pLookups.RemoveKey( (LPVOID)wParam );
-
-	CString* psHost	= *(CString**)pBuffer;
-	WORD nPort		= *(WORD*)(pBuffer + 4);
-	BYTE nProtocol	= *(BYTE*)(pBuffer + 6);
-	BYTE nCommand	= *(BYTE*)(pBuffer + 7);
-	HOSTENT* pHost	= (HOSTENT*)(pBuffer + 8);
+	ResolveStruct* pResolve = NULL;
+	if ( ! m_pLookups.Lookup( (HANDLE)wParam, pResolve ) ) return;
+	m_pLookups.RemoveKey( (HANDLE)wParam );
 
 	if ( WSAGETASYNCERROR(lParam) == 0 )
 	{
-		if ( nCommand == 0 )
+		if ( pResolve->m_nCommand == 0 )
 		{
-			HostCache.ForProtocol( nProtocol )->Add( (IN_ADDR*)pHost->h_addr, nPort );
+			HostCache.ForProtocol( pResolve->m_nProtocol )->Add( (IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort );
 		}
 		else
 		{
-			Neighbours.ConnectTo( (IN_ADDR*)pHost->h_addr, nPort, nProtocol, FALSE, nCommand == 2 );
+			Neighbours.ConnectTo( (IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort, pResolve->m_nProtocol, FALSE, pResolve->m_nCommand );
 		}
 	}
-	else if ( nCommand > 0 )
+	else if ( pResolve->m_nCommand > 0 )
 	{
-		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, (LPCTSTR)*psHost );
+		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, LPCTSTR( *pResolve->m_sAddress ) );
 	}
 	
-	delete psHost;
-	free( pBuffer );
+	delete pResolve->m_sAddress;
+	delete pResolve;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CNetwork get node route
 
-BOOL CNetwork::GetNodeRoute(GGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint)
+BOOL CNetwork::GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint)
 {
-	if ( *pGUID == MyProfile.GUID ) return FALSE;
+	if ( validAndEqual( oGUID, Hashes::Guid( MyProfile.oGUID ) ) ) return FALSE;
 	
-	if ( Network.NodeRoute->Lookup( pGUID, ppNeighbour, pEndpoint ) ) return TRUE;
+	if ( Network.NodeRoute->Lookup( oGUID, ppNeighbour, pEndpoint ) ) return TRUE;
 	if ( ppNeighbour == NULL ) return FALSE;
 	
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
 		
-		if ( pNeighbour->m_bGUID && pNeighbour->m_pGUID == *pGUID )
+		if ( validAndEqual( pNeighbour->m_oGUID, oGUID ) )
 		{
 			*ppNeighbour = pNeighbour;
 			return TRUE;
@@ -556,14 +552,14 @@ BOOL CNetwork::GetNodeRoute(GGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN*
 
 BOOL CNetwork::RoutePacket(CG2Packet* pPacket)
 {
-	GGUID pGUID;
+	Hashes::Guid oGUID;
 	
-	if ( ! pPacket->GetTo( &pGUID ) || pGUID == MyProfile.GUID ) return FALSE;
+	if ( ! pPacket->GetTo( oGUID ) || validAndEqual( oGUID, Hashes::Guid( MyProfile.oGUID ) ) ) return FALSE;
 	
 	CNeighbour* pOrigin = NULL;
 	SOCKADDR_IN pEndpoint;
 	
-	if ( GetNodeRoute( &pGUID, &pOrigin, &pEndpoint ) )
+	if ( GetNodeRoute( oGUID, &pOrigin, &pEndpoint ) )
 	{
 		if ( pOrigin != NULL )
 		{
@@ -572,7 +568,7 @@ BOOL CNetwork::RoutePacket(CG2Packet* pPacket)
 			{
 				CG1Neighbour* pG1 = (CG1Neighbour*)pOrigin;
 				pPacket->SkipCompound();
-				pG1->SendG2Push( &pGUID, pPacket );
+				pG1->SendG2Push( oGUID, pPacket );
 			}
 			else
 			{
@@ -593,26 +589,26 @@ BOOL CNetwork::RoutePacket(CG2Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CNetwork send a push request
 
-BOOL CNetwork::SendPush(GGUID* pGUID, DWORD nIndex)
+BOOL CNetwork::SendPush(const Hashes::Guid& oGUID, DWORD nIndex)
 {
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return TRUE;
 
 	if ( ! IsListening() ) return FALSE;
 	
-	GGUID pGUID2 = *pGUID;
+	Hashes::Guid oGUID2 = oGUID;
 	SOCKADDR_IN pEndpoint;
 	CNeighbour* pOrigin;
 	int nCount = 0;
 	
-	while ( GetNodeRoute( &pGUID2, &pOrigin, &pEndpoint ) )
+	while ( GetNodeRoute( oGUID2, &pOrigin, &pEndpoint ) )
 	{
 		if ( pOrigin != NULL && pOrigin->m_nProtocol == PROTOCOL_G1 )
 		{
 			CG1Packet* pPacket = CG1Packet::New( G1_PACKET_PUSH,
 				Settings.Gnutella1.MaximumTTL - 1 );
 			
-			pPacket->Write( pGUID, 16 );
+			pPacket->Write( oGUID );
 			pPacket->WriteLongLE( nIndex );
 			pPacket->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
 			pPacket->WriteShortLE( htons( m_pHost.sin_port ) );
@@ -624,7 +620,7 @@ BOOL CNetwork::SendPush(GGUID* pGUID, DWORD nIndex)
 			CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PUSH, TRUE );
 			
 			pPacket->WritePacket( G2_PACKET_TO, 16 );
-			pPacket->Write( pGUID, 16 );
+			pPacket->Write( oGUID );
 			
 			pPacket->WriteByte( 0 );
 			pPacket->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
@@ -640,7 +636,7 @@ BOOL CNetwork::SendPush(GGUID* pGUID, DWORD nIndex)
 			}
 		}
 		
-		pGUID2.n[15] ++;
+		oGUID2[15] ++;
 		nCount++;
 	}
 	
@@ -655,7 +651,7 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 	SOCKADDR_IN pEndpoint;
 	CNeighbour* pOrigin;
 	
-	if ( ! QueryRoute->Lookup( &pHits->m_pSearchID, &pOrigin, &pEndpoint ) ) return FALSE;
+	if ( ! QueryRoute->Lookup( pHits->m_oSearchID, &pOrigin, &pEndpoint ) ) return FALSE;
 	
 	BOOL bWrapped = FALSE;
 	
@@ -740,10 +736,10 @@ void CNetwork::OnQuerySearch(CQuerySearch* pSearch)
 		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
 		{
 			CWindowManager* pWindows	= &pMainWnd->m_pWindows;
-			CChildWnd* pChildWnd		= NULL;
 			CRuntimeClass* pClass		= RUNTIME_CLASS(CSearchMonitorWnd);
+			CChildWnd* pChildWnd		= NULL;
 
-			while ( pChildWnd = pWindows->Find( pClass, pChildWnd ) )
+			while ( ( pChildWnd = pWindows->Find( pClass, pChildWnd ) ) != NULL )
 			{
 				pChildWnd->OnQuerySearch( pSearch );
 			}
@@ -764,11 +760,11 @@ void CNetwork::OnQueryHits(CQueryHit* pHits)
 		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
 		{
 			CWindowManager* pWindows	= &pMainWnd->m_pWindows;
-			CChildWnd* pChildWnd		= NULL;
 			CChildWnd* pMonitorWnd		= NULL;
 			CRuntimeClass* pMonitorType	= RUNTIME_CLASS(CHitMonitorWnd);
+			CChildWnd* pChildWnd		= NULL;
 
-			while ( pChildWnd = pWindows->Find( NULL, pChildWnd ) )
+			while ( ( pChildWnd = pWindows->Find( NULL, pChildWnd ) ) != NULL )
 			{
 				if ( pChildWnd->GetRuntimeClass() == pMonitorType )
 				{

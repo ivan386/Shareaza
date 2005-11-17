@@ -137,7 +137,7 @@ BOOL CWizardProfilePage::OnSetActive()
 
 		for ( int nAgeItem = 0 ; nAgeItem < m_wndAge.GetCount() ; nAgeItem ++ )
 		{
-			if ( m_wndAge.GetItemData( nAgeItem ) == nAge )
+			if ( m_wndAge.GetItemData( nAgeItem ) == DWORD( nAge ) )
 			{
 				m_nAge = nAgeItem;
 				break;
@@ -319,5 +319,5 @@ LRESULT CWizardProfilePage::OnWizardNext()
 
 	MyProfile.Save();
 
-	return 0;
+		return 0;
 }

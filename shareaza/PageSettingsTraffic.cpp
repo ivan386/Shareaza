@@ -297,10 +297,8 @@ void CAdvancedSettingsPage::AddSetting(LPVOID pValue, DWORD nScale, DWORD nMin, 
 	
 	EditItem* pEdit = new EditItem( pItem, nScale, nMin, nMax, pszSuffix );
 	
-	LV_ITEM pList;
+	LV_ITEM pList = {};
 	
-	ZeroMemory( &pList, sizeof(pList) );
-
 	pList.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE;
 	pList.iItem		= m_wndList.GetItemCount();
 	pList.lParam	= (LPARAM)pEdit;
@@ -332,9 +330,9 @@ void CAdvancedSettingsPage::UpdateItem(int nItem)
 	m_wndList.SetItemText( nItem, 1, strValue );
 }
 
-void CAdvancedSettingsPage::OnItemChangedProperties(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAdvancedSettingsPage::OnItemChangedProperties(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	

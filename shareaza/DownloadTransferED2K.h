@@ -44,7 +44,7 @@ public:
 	DWORD			m_tSources;				//When source request was last sent
 	DWORD			m_tRanking;				//When queue ranking was last received
 	BYTE*			m_pAvailable;
-    FF::SimpleFragmentQueue m_oRequested;
+	Fragments::Queue m_oRequested;
 	BOOL			m_bUDP;
 protected:
 	LPVOID			m_pInflatePtr;
@@ -61,7 +61,7 @@ public:
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
-    virtual BOOL	SubtractRequested(FF::SimpleFragmentList& ppFragments);
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped(BOOL bError);
@@ -85,7 +85,7 @@ protected:
 	BOOL	SendSecondaryRequest();
 	BOOL	SendFragmentRequests();
 	void	ClearRequests();
-    BOOL	SelectFragment(const FF::SimpleFragmentList& oPossible, QWORD& nOffset, QWORD& nLength);
+	BOOL	SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength);
 	BOOL	RunQueued(DWORD tNow);
 
 };

@@ -272,7 +272,7 @@ void CDownloadsWnd::OnSize(UINT nType, int cx, int cy)
 	EndDeferWindowPos( hPos );
 }
 
-void CDownloadsWnd::OnTimer(UINT nIDEvent) 
+void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent) 
 {
 	// Reset Selection Timer event (posted by ctrldownloads)
 	if ( nIDEvent == 5 ) m_tSel = 0;
@@ -366,7 +366,7 @@ void CDownloadsWnd::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 	AfxGetMainWnd()->SendMessage( WM_DRAWITEM, nIDCtl, (LPARAM)lpDrawItemStruct );
 }
 
-void CDownloadsWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownloadSource* pSource;
@@ -458,13 +458,13 @@ void CDownloadsWnd::Prepare()
 	m_bSelAny = m_bSelDownload = m_bSelSource = m_bSelTrying = m_bSelPaused = FALSE;
 	m_bSelNotPausedOrMoving = m_bSelNoPreview = m_bSelNotCompleteAndNoPreview = FALSE;
 	m_bSelCompletedAndNoPreview = m_bSelStartedAndNotMoving = m_bSelCompleted = FALSE;
-	m_bSelNotMoving = m_bSelBoostable = m_bSelSHA1orED2K = FALSE;
+	m_bSelNotMoving = m_bSelBoostable = m_bSelSHA1orTTHorED2KorName = FALSE;
 	m_bSelTorrent = m_bSelIdleSource = m_bSelActiveSource = FALSE;
 	m_bSelHttpSource = m_bSelDonkeySource = m_bSelShareState = FALSE;
 	m_bSelShareConsistent = TRUE;
 	m_bSelMoreSourcesOK = FALSE;
 	m_bSelSourceAcceptConnections = m_bSelSourceExtended = m_bSelHasReviews = FALSE;
-
+	
 	m_bConnectOkay = FALSE;
 	
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
@@ -484,8 +484,8 @@ void CDownloadsWnd::Prepare()
 				m_bSelNotMoving = TRUE;
 			if ( ! pDownload->IsBoosted() )
 				m_bSelBoostable = TRUE;
-			if ( pDownload->m_bSHA1 || pDownload->m_bED2K )
-				m_bSelSHA1orED2K = TRUE;
+            if ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_sDisplayName.GetLength() )
+				m_bSelSHA1orTTHorED2KorName = TRUE;
 			if ( pDownload->m_pTorrent.IsAvailable() )
 				m_bSelTorrent = TRUE;
 			if ( pDownload->IsTrying() )
@@ -1066,7 +1066,7 @@ void CDownloadsWnd::OnDownloadsBoost()
 void CDownloadsWnd::OnUpdateDownloadsCopy(CCmdUI* pCmdUI) 
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelSHA1orED2K );
+	pCmdUI->Enable( m_bSelSHA1orTTHorED2KorName );
 }
 
 void CDownloadsWnd::OnDownloadsCopy() 
@@ -1084,16 +1084,13 @@ void CDownloadsWnd::OnDownloadsCopy()
 	{
 		CDownload* pDownload = pList.RemoveHead();
 		
-		if ( Downloads.Check( pDownload ) && ( pDownload->m_bSHA1 || pDownload->m_bED2K ) )
+        if ( Downloads.Check( pDownload ) && ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_sDisplayName.GetLength() ) )
 		{
 			CURLCopyDlg dlg;
 			dlg.m_sName		= pDownload->m_sDisplayName;
-			dlg.m_bSHA1		= pDownload->m_bSHA1;
-			dlg.m_pSHA1		= pDownload->m_pSHA1;
-			dlg.m_bTiger	= pDownload->m_bTiger;
-			dlg.m_pTiger	= pDownload->m_pTiger;
-			dlg.m_bED2K		= pDownload->m_bED2K;
-			dlg.m_pED2K		= pDownload->m_pED2K;
+			dlg.m_oSHA1		= pDownload->m_oSHA1;
+			dlg.m_oTiger	= pDownload->m_oTiger;
+			dlg.m_oED2K		= pDownload->m_oED2K;
 			dlg.m_bSize		= pDownload->m_nSize != SIZE_UNKNOWN;
 			dlg.m_nSize		= pDownload->m_nSize;
 			dlg.DoModal();
@@ -1377,11 +1374,11 @@ void CDownloadsWnd::OnTransfersChat()
 			if ( pSource->m_bSelected ) 
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_HTTP )						// HTTP chat
-					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol, &pSource->m_pServerAddress, pSource->m_nServerPort );
+					ChatWindows.OpenPrivate( Hashes::Guid(), &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol, &pSource->m_pServerAddress, pSource->m_nServerPort );
 				else if ( pSource->m_bClientExtended && ! pSource->m_bPushOnly )	// Client accepts G2 chat connections
-					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, FALSE, PROTOCOL_G2 );
+					ChatWindows.OpenPrivate( Hashes::Guid(), &pSource->m_pAddress, pSource->m_nPort, FALSE, PROTOCOL_G2 );
 				else if ( pSource->m_nProtocol == PROTOCOL_ED2K )					// ED2K chat
-					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol, &pSource->m_pServerAddress, pSource->m_nServerPort );
+					ChatWindows.OpenPrivate( Hashes::Guid(), &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol, &pSource->m_pServerAddress, pSource->m_nServerPort );
 				else		// Should never be called
 					theApp.Message( MSG_ERROR, _T("Error while initiating chat- Unable to select protocol") );
 			}
@@ -1408,9 +1405,9 @@ void CDownloadsWnd::OnBrowseLaunch()
 			if ( pSource->m_bSelected )
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_HTTP )	// Many HTTP clients support this
-					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, &pSource->m_pGUID );
+					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_oGUID );
 				else if ( pSource->m_bClientExtended )			// Over other protocols, you can only contact non-push G2 clients
-					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, FALSE, NULL );
+					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, FALSE, Hashes::Guid() );
 			}
 		}
 	}
@@ -1484,7 +1481,7 @@ void CDownloadsWnd::OnDownloadsRate()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CFilePropertiesSheet dlg;
-	CStringList pList;
+	CList< CString > pList;
 	
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
@@ -1673,7 +1670,7 @@ void CDownloadsWnd::OnDownloadsHelp()
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Searching") );
 	}
-	else if ( pDownload->m_bBTH && pDownload->IsTasking() )
+	else if ( pDownload->m_oBTH && pDownload->IsTasking() )
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Creating") );
 	}
@@ -1690,7 +1687,7 @@ void CDownloadsWnd::OnDownloadsHelp()
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadsWnd drag and drop
 
-void CDownloadsWnd::DragDownloads(CPtrList* pList, CImageList* pImage, const CPoint& ptScreen)
+void CDownloadsWnd::DragDownloads(CList< CDownload* >* pList, CImageList* pImage, const CPoint& ptScreen)
 {
 	ASSERT( m_pDragList == NULL );
 	

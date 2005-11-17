@@ -38,7 +38,7 @@ public:
 
 // Attributes
 protected:
-	CPtrList	m_pGroups;
+	CList< CQueryHashGroup* > m_pGroups;
 	int			m_nPerGroup;
 	BOOL		m_bValid;
 
@@ -58,10 +58,10 @@ public:
 
 	inline CQueryHashGroup* GetNext(POSITION& pos) const
 	{
-		return (CQueryHashGroup*)m_pGroups.GetNext( pos );
+		return m_pGroups.GetNext( pos );
 	}
 
-	inline int GetCount() const
+	inline INT_PTR GetCount() const
 	{
 		return m_pGroups.GetCount();
 	}

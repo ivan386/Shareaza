@@ -50,13 +50,13 @@ public:
 	void	Clear();
 public:
 	BOOL	LoadFromMemory(LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
-	BOOL	LoadFromFile(LPCTSTR pszType, HANDLE hFile, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
+//	BOOL	LoadFromFile(LPCTSTR pszType, HANDLE hFile, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL	LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL	LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 public:
 	BOOL	SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
-	BOOL	SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
-	BOOL	SaveToFile(LPCTSTR pszFile, int nQuality);
+//	BOOL	SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
+//	BOOL	SaveToFile(LPCTSTR pszFile, int nQuality);
 public:
 	DWORD	GetSerialSize() const;
 	void	Serialize(CArchive& ar);

@@ -40,12 +40,12 @@ public:
 protected:
 	CString			m_sName;
 	CMatchList*		m_pList;
-	CPtrList		m_pSelection;
+	CList< void* > m_pSelection;
 
 // Operations
 public:
 	POSITION	GetIterator() const;
-	int			GetCount() const;
+	INT_PTR		GetCount() const { return m_pSelection.GetCount(); }
 	void		GetNext(POSITION& pos, CMatchFile** ppFile, CQueryHit** ppHit) const;
 	void		GetNext(POSITION& pos, VARIANT* pVar) const;
 public:

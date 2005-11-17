@@ -52,7 +52,7 @@ public:
 	CComboBox	m_wndMarked;
 	CSpinButtonCtrl	m_wndCapacity;
 	CSliderCtrl	m_wndBandwidthSlider;
-	int		m_nCapacity;
+	INT_PTR	m_nCapacity;
 	BOOL	m_bMaxSize;
 	CString	m_sMaxSize;
 	BOOL	m_bMinSize;
@@ -64,8 +64,8 @@ public:
 	BOOL	m_bRotate;
 	BOOL	m_bReward;
 	int		m_nRotateTime;
-	int		m_nTransfersMax;
-	int		m_nTransfersMin;
+	INT_PTR	m_nTransfersMax;
+	INT_PTR	m_nTransfersMin;
 	BOOL	m_bMatch;
 	CString	m_sMatch;
 	BOOL	m_bEnable;

@@ -91,23 +91,23 @@ void CBrowseProfileCtrl::OnSkinChange()
 
 	if ( CXMLElement* pXML = Skin.GetDocument( _T("CBrowseHostProfile.1") ) )
 	{
-		CMapStringToPtr pMap;
+		CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
 		m_pDocument1->LoadXML( pXML, &pMap );
 
-		pMap.Lookup( _T("Nick"), (void*&)m_pdNick );
-		pMap.Lookup( _T("FullName"), (void*&)m_pdFullName );
-		pMap.Lookup( _T("FullLocation"), (void*&)m_pdFullLocation );
-		pMap.Lookup( _T("GenderMale"), (void*&)m_pdGenderMale );
-		pMap.Lookup( _T("GenderFemale"), (void*&)m_pdGenderFemale );
-		pMap.Lookup( _T("Age"), (void*&)m_pdAge );
-		pMap.Lookup( _T("ContactEmail"), (void*&)m_pdContactEmail );
-		pMap.Lookup( _T("ContactMSN"), (void*&)m_pdContactMSN );
-		pMap.Lookup( _T("ContactYahoo"), (void*&)m_pdContactYahoo );
-		pMap.Lookup( _T("ContactICQ"), (void*&)m_pdContactICQ );
-		pMap.Lookup( _T("ContactAOL"), (void*&)m_pdContactAOL );
-		pMap.Lookup( _T("ContactJabber"), (void*&)m_pdContactJabber );
-		pMap.Lookup( _T("Interests"), (void*&)m_pdInterests );
-		pMap.Lookup( _T("BioText"), (void*&)m_pdBioText );
+		pMap.Lookup( _T("Nick"), m_pdNick );
+		pMap.Lookup( _T("FullName"), m_pdFullName );
+		pMap.Lookup( _T("FullLocation"), m_pdFullLocation );
+		pMap.Lookup( _T("GenderMale"), m_pdGenderMale );
+		pMap.Lookup( _T("GenderFemale"), m_pdGenderFemale );
+		pMap.Lookup( _T("Age"), m_pdAge );
+		pMap.Lookup( _T("ContactEmail"), m_pdContactEmail );
+		pMap.Lookup( _T("ContactMSN"), m_pdContactMSN );
+		pMap.Lookup( _T("ContactYahoo"), m_pdContactYahoo );
+		pMap.Lookup( _T("ContactICQ"), m_pdContactICQ );
+		pMap.Lookup( _T("ContactAOL"), m_pdContactAOL );
+		pMap.Lookup( _T("ContactJabber"), m_pdContactJabber );
+		pMap.Lookup( _T("Interests"), m_pdInterests );
+		pMap.Lookup( _T("BioText"), m_pdBioText );
 	}
 
 	if ( m_pDocument2 != NULL )
@@ -119,10 +119,10 @@ void CBrowseProfileCtrl::OnSkinChange()
 
 	if ( CXMLElement* pXML = Skin.GetDocument( _T("CBrowseHostProfile.2") ) )
 	{
-		CMapStringToPtr pMap;
+		CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
 		m_pDocument2->LoadXML( pXML, &pMap );
 
-		pMap.Lookup( _T("Bookmarks"), (void*&)m_pdBookmarks );
+		pMap.Lookup( _T("Bookmarks"), m_pdBookmarks );
 	}
 
 	m_wndDoc1.SetDocument( m_pDocument1 );
@@ -342,7 +342,6 @@ void CBrowseProfileCtrl::UpdateDocument2(CHostBrowser* pBrowser)
 		}
 	}
 
-
 	if ( nBookmarks )
 		m_pDocument2->ShowGroup( 3, TRUE );
 	else
@@ -476,7 +475,7 @@ void CBrowseProfileCtrl::OnPaint()
 	dc.FillSolidRect( &rcPanel, CoolInterface.m_crWindow );
 }
 
-void CBrowseProfileCtrl::OnTimer(UINT nIDEvent)
+void CBrowseProfileCtrl::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( nIDEvent == 1 )
 	{
@@ -484,7 +483,7 @@ void CBrowseProfileCtrl::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CBrowseProfileCtrl::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult)
+void CBrowseProfileCtrl::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
 {
 	if ( CRichElement* pElement = pNotify->pElement )
 	{

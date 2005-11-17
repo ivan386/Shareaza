@@ -215,13 +215,13 @@ library Shareaza
 		IMAGESERVICE_PARTIAL_OUT	= 0x04
 	} IMAGESERVICEFLAGS;
 
-	[ uuid(AD49786E-09C1-4069-B48A-15AD42D6CED1) ]
+	[ uuid(AB0A7BF2-94C0-4daa-8256-2BB6C3648050) ]
 	interface IImageServicePlugin : IUnknown
 	{
-		HRESULT LoadFromFile( [in] HANDLE hFile, [in] DWORD nLength, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
-		HRESULT LoadFromMemory( [in] SAFEARRAY* pMemory, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
-		HRESULT SaveToFile( [in] HANDLE hFile, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY* pImage);
-		HRESULT SaveToMemory( [out] SAFEARRAY** ppMemory, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY* pImage);
+		HRESULT LoadFromFile( [in] BSTR sFile, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
+		HRESULT LoadFromMemory( [in] BSTR sType, [in] SAFEARRAY* pMemory, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
+		HRESULT SaveToFile( [in] BSTR sFile, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY* pImage);
+		HRESULT SaveToMemory( [in] BSTR sType, [out] SAFEARRAY** ppMemory, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY* pImage);
 	};
 
 	//

@@ -37,14 +37,14 @@ public:
 
 // Attributes
 protected:
-	CPtrList	m_pList;
+	CList< CLibraryRecent* > m_pList;
 
 public:
 	struct sTorrentDetails
 	{
 		CString			m_sName;
 		CString			m_sPath;
-		SHA1			m_pBTH;
+		Hashes::BtHash  m_oBTH;
 		DWORD			m_tLastSeeded;
 		QWORD			m_nUploaded;
 		QWORD			m_nDownloaded;
@@ -58,12 +58,12 @@ public:
 public:
 	POSITION		GetIterator() const;
 	CLibraryRecent*	GetNext(POSITION& pos) const;
-	int				GetCount() const;
+	INT_PTR			GetCount() const { return m_pList.GetCount(); }
 	void			Clear();
 public:
 	BOOL			Check(CLibraryRecent* pRecent, int nScope = 0) const;
 	CLibraryRecent*	GetByPath(LPCTSTR pszPath) const;
-	CLibraryRecent*	Add(LPCTSTR pszPath, const SHA1* pSHA1, const MD4* pED2K, LPCTSTR pszSources);
+    CLibraryRecent*	Add(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, LPCTSTR pszSources);
 	BOOL			Submit(CLibraryFile* pFile);
 	void			OnFileDelete(CLibraryFile* pFile);
 	void			ClearTodays();
@@ -78,7 +78,7 @@ class CLibraryRecent
 // Construction
 public:
 	CLibraryRecent();
-	CLibraryRecent(LPCTSTR pszPath, const SHA1* pSHA1, const MD4* pED2K, LPCTSTR pszSources);
+    CLibraryRecent(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, LPCTSTR pszSources);
 	virtual ~CLibraryRecent();
 
 // Attributes
@@ -88,10 +88,8 @@ public:
 public:
 	CLibraryFile*	m_pFile;
 public:
-	BOOL			m_bSHA1;
-	SHA1			m_pSHA1;
-	BOOL			m_bED2K;
-	MD4				m_pED2K;
+    Hashes::Sha1Hash m_oSHA1;
+    Hashes::Ed2kHash m_oED2K;
 	CString			m_sPath;
 	CString			m_sSources;
 

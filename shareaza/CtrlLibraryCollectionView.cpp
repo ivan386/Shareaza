@@ -88,16 +88,16 @@ BOOL CLibraryCollectionView::CheckAvailable(CLibraryTreeItem* pSel)
 
 	if ( CAlbumFolder* pFolder = GetSelectedAlbum( pSel ) )
 	{
-		if ( pFolder->m_bCollSHA1 )
+		if ( pFolder->m_oCollSHA1 )
 		{
-			if ( LibraryMaps.LookupFileBySHA1( &pFolder->m_pCollSHA1, FALSE, TRUE ) )
+			if ( LibraryMaps.LookupFileBySHA1( pFolder->m_oCollSHA1, FALSE, TRUE ) )
 			{
 				bAvailable = TRUE;
 			}
 			else
 			{
 				CQuickLock oLock( Library.m_pSection );
-				pFolder->m_bCollSHA1 = FALSE;
+				pFolder->m_oCollSHA1.clear();
 				Library.Update();
 			}
 		}
@@ -116,9 +116,9 @@ void CLibraryCollectionView::Update()
 {
 	if ( CAlbumFolder* pFolder = GetSelectedAlbum() )
 	{
-		if ( pFolder->m_bCollSHA1 && m_pWebCtrl != NULL )
+		if ( pFolder->m_oCollSHA1 && m_pWebCtrl != NULL )
 		{
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( &pFolder->m_pCollSHA1, FALSE, TRUE ) )
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( pFolder->m_oCollSHA1, FALSE, TRUE ) )
 			{
 				ShowCollection( pFile );
 				return;
@@ -133,19 +133,19 @@ BOOL CLibraryCollectionView::ShowCollection(CLibraryFile* pFile)
 {
 	if ( pFile != NULL )
 	{
-		if ( m_pCollection->IsOpen() && m_pSHA1 == pFile->m_pSHA1 ) return TRUE;
-
+		if ( m_pCollection->IsOpen() && validAndEqual( m_oSHA1, pFile->m_oSHA1 ) ) return TRUE;
+		
 		if ( m_pCollection->Open( pFile->GetPath() ) )
 		{
 			CString strIndex, strURL;
-			IEProtocol.SetCollection( &pFile->m_pSHA1, pFile->GetPath(), &strIndex );
-
+			IEProtocol.SetCollection( pFile->m_oSHA1, pFile->GetPath(), &strIndex );
+			
 			strURL.Format( _T("p2p-col://%s/%s"),
-				(LPCTSTR)CSHA::HashToString( &pFile->m_pSHA1 ),
+				(LPCTSTR)pFile->m_oSHA1.toString(),
 				(LPCTSTR)strIndex );
 			m_pWebCtrl->Navigate( strURL );
-
-			m_pSHA1 = pFile->m_pSHA1;
+			
+			m_oSHA1 = pFile->m_oSHA1;
 			return TRUE;
 		}
 	}
@@ -193,8 +193,8 @@ void CLibraryCollectionView::OnDestroy()
 		delete m_pWebCtrl;
 		m_pWebCtrl = NULL;
 	}
-
-	IEProtocol.SetCollection( NULL, NULL );
+	
+    IEProtocol.SetCollection( Hashes::Sha1Hash(), NULL );
 	m_pCollection->Close();
 
 	CLibraryFileView::OnDestroy();
@@ -333,7 +333,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Hover(BSTR sURN)
 	if ( pView->m_nWebIndex != 0 )
 	{
 		HWND hWnd = pView->m_pWebCtrl->GetSafeHwnd();
-		pView->GetToolTip()->Show( (LPVOID)pView->m_nWebIndex, hWnd );
+		pView->GetToolTip()->Show( reinterpret_cast<void*>(&pView->m_nWebIndex), hWnd );
 	}
 	else
 	{

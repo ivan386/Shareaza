@@ -59,7 +59,7 @@ CTransfers::~CTransfers()
 //////////////////////////////////////////////////////////////////////
 // CTransfers list tests
 
-int CTransfers::GetActiveCount() const
+INT_PTR CTransfers::GetActiveCount() const
 {
 	return Downloads.GetCount( TRUE ) + Uploads.GetTransferCount();
 }
@@ -194,9 +194,9 @@ void CTransfers::OnRunTransfers()
 	++m_nRunCookie;
 
 	while ( !m_pList.IsEmpty()
-		&& static_cast< CTransfer* >( m_pList.GetHead() )->m_nRunCookie != m_nRunCookie )
+		&& m_pList.GetHead()->m_nRunCookie != m_nRunCookie )
 	{
-		CTransfer* pTransfer = static_cast< CTransfer* >( m_pList.RemoveHead() );
+		CTransfer* pTransfer = m_pList.RemoveHead();
 		m_pList.AddTail( pTransfer );
 		pTransfer->m_nRunCookie = m_nRunCookie;
 		pTransfer->DoRun();

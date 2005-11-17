@@ -61,10 +61,10 @@ POSITION CSecurity::GetIterator() const
 
 CSecureRule* CSecurity::GetNext(POSITION& pos) const
 {
-	return (CSecureRule*)m_pRules.GetNext( pos );
+	return m_pRules.GetNext( pos );
 }
 
-int CSecurity::GetCount()
+INT_PTR CSecurity::GetCount()
 {
 	return m_pRules.GetCount();
 }
@@ -78,7 +78,7 @@ CSecureRule* CSecurity::GetGUID(const GUID& pGUID) const
 {
 	for ( POSITION pos = m_pRules.GetHeadPosition() ; pos ; )
 	{
-		CSecureRule* pRule = (CSecureRule*)m_pRules.GetNext( pos );
+		CSecureRule* pRule = m_pRules.GetNext( pos );
 		if ( pRule->m_pGUID == pGUID ) return pRule;
 	}
 
@@ -150,7 +150,7 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return;
 
-	DWORD tNow = time( NULL );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	CString strAddress = inet_ntoa( *pAddress );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -163,7 +163,7 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 			{
 				if ( ( nBanLength == banWeek ) && ( pRule->m_nExpire < tNow + 604000 ) )
 				{
-					pRule->m_nExpire = time( NULL ) + 604800;
+					pRule->m_nExpire = static_cast< DWORD >( time( NULL ) + 604800 );
 				}
 				else if ( ( nBanLength == banForever ) && ( pRule->m_nExpire != CSecureRule::srIndefinite ) )
 				{
@@ -190,19 +190,19 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 		pRule->m_sComment	= _T("Quick Ban");
 		break;
 	case ban5Mins:
-		pRule->m_nExpire	= time( NULL ) + 300;
+		pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 300 );
 		pRule->m_sComment	= _T("Temp Ignore");
 		break;
 	case ban30Mins:
-		pRule->m_nExpire	= time( NULL ) + 1800;
+		pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 1800 );
 		pRule->m_sComment	= _T("Temp Ignore");
 		break;
 	case ban2Hours:
-		pRule->m_nExpire	= time( NULL ) + 7200;
+		pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 7200 );
 		pRule->m_sComment	= _T("Temp Ignore");
 		break;
 	case banWeek:
-		pRule->m_nExpire	= time( NULL ) + 604800;
+		pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 604800 );
 		pRule->m_sComment	= _T("Client Block");
 		break;		
 	case banForever:
@@ -214,7 +214,7 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 		pRule->m_sComment	= _T("Quick Ban");
 	}
 
-	CopyMemory( pRule->m_nIP, pAddress, 4 );
+	CopyMemory( pRule->m_nIP, pAddress, sizeof pRule->m_nIP );
 	Add( pRule );
 
 	if ( bMessage )
@@ -257,7 +257,7 @@ void CSecurity::SessionBan(IN_ADDR* pAddress, BOOL bMessage)
 	pRule->m_nAction	= CSecureRule::srDeny;
 	pRule->m_nExpire	= CSecureRule::srSession;
 	pRule->m_sComment	= _T("Quick Ban");
-	CopyMemory( pRule->m_nIP, pAddress, 4 );
+	CopyMemory( pRule->m_nIP, pAddress, sizeof pRule->m_nIP );
 	Add( pRule );
 
 	if ( bMessage )
@@ -294,7 +294,7 @@ void CSecurity::TempBlock(IN_ADDR* pAddress)
 	pRule->m_nAction	= CSecureRule::srDeny;
 	pRule->m_nExpire	= time( NULL ) + 300;
 	pRule->m_sComment	= _T("Temp Block");
-	CopyMemory( pRule->m_nIP, pAddress, 4 );
+	CopyMemory( pRule->m_nIP, pAddress, sizeof pRule->m_nIP );
 	Add( pRule );
 }
 */
@@ -306,7 +306,7 @@ BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return FALSE;
 
-	DWORD nNow = time( NULL );
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -341,7 +341,7 @@ BOOL CSecurity::IsAccepted(IN_ADDR* pAddress, LPCTSTR pszContent)
 
 void CSecurity::Expire()
 {
-	DWORD nNow = time( NULL );
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -430,9 +430,9 @@ void CSecurity::Serialize(CArchive& ar)
 		ar >> nVersion;
 		ar >> m_bDenyPolicy;
 
-		DWORD nNow = time( NULL );
+		DWORD nNow = static_cast< DWORD >( time( NULL ) );
 
-		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CSecureRule* pRule = new CSecureRule( FALSE );
 			pRule->Serialize( ar, nVersion );
@@ -485,7 +485,7 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 			
 			if ( GUIDX::Decode( strGUID, &pGUID ) )
 			{
-				if ( pRule = GetGUID( pGUID ) ) bExisting = TRUE;
+				if ( ( pRule = GetGUID( pGUID ) ) != NULL ) bExisting = TRUE;
 				
 				if ( pRule == NULL )
 				{
@@ -573,7 +573,7 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 CSecureRule::CSecureRule(BOOL bCreate)
 {
 	m_nType		= srAddress;
-	m_nAction	= ( Security.m_bDenyPolicy ? srAccept : srDeny );
+	m_nAction	= BYTE( Security.m_bDenyPolicy ? srAccept : srDeny );
 	m_nExpire	= srIndefinite;
 	m_nToday	= 0;
 	m_nEver		= 0;
@@ -666,7 +666,7 @@ void CSecureRule::SetContentWords(const CString& strContent)
 {
 	LPTSTR pszContent	= (LPTSTR)(LPCTSTR)strContent;
 	int nTotalLength	= 3;
-	CStringList pWords;
+	CList< CString > pWords;
 
     int nStart = 0, nPos = 0;
 	for ( ; *pszContent ; nPos++, pszContent++ )
@@ -785,7 +785,7 @@ void CSecureRule::Serialize(CArchive& ar, int nVersion)
 
 			if ( nVersion < 3 )
 			{
-				for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+				for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 				{
 					CString strWord;
 					ar >> strWord;
@@ -1041,14 +1041,14 @@ void  CSecureRule::MaskFix()
 		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
 		{
 			nNetwork <<= 1;
-			if( nNetByte & 0x80 )
+			if ( nNetByte & 0x80 )
 			{
 				nNetwork |= 1;
 			}
 			nNetByte <<= 1;
 
 			nOldMask <<= 1;
-			if( nMaskByte & 0x80 )
+			if ( nMaskByte & 0x80 )
 			{
 				nOldMask |= 1;
 			}
@@ -1060,7 +1060,7 @@ void  CSecureRule::MaskFix()
 
 	for ( int nBits = 0 ; nBits < 32 ; nBits++ )	// get upper contiguous bits from subnet mask
 	{
-		if( nTempMask & 0x80000000 )					// check the high bit
+		if ( nTempMask & 0x80000000 )					// check the high bit
 		{
 			nNewMask >>= 1;							// shift mask down
 			nNewMask |= 0x80000000;					// put the bit on
@@ -1086,7 +1086,7 @@ void  CSecureRule::MaskFix()
 		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
 		{
 			nNetByte <<= 1;
-			if( nNetwork & 0x80000000 )
+			if ( nNetwork & 0x80000000 )
 			{
 				nNetByte |= 1;
 			}
@@ -1152,16 +1152,18 @@ void CAdultFilter::Load()
 
 	// Insert some defaults if the load failed
 	if ( strBlockedWords.IsEmpty() )
-		strBlockedWords = _T("xxx porn fuck cock cunt vagina pussy nude naked hentai lesbian whore shit rape preteen hardcore lolita playboy penthouse dildo upskirt beastiality bestiality pedofil necrofil");
+		strBlockedWords = L"xxx porn fuck cock cunt vagina pussy nude naked hentai lesbian "
+						  L"whore shit rape preteen hardcore lolita playboy penthouse dildo "
+						  L"upskirt beastiality bestiality pedofil necrofil ";
 	if ( strDubiousWords.IsEmpty() )
-		strDubiousWords = _T("ass sex anal gay teen thong babe bikini viagra dick");
+		strDubiousWords = L"ass sex anal gay teen thong babe bikini viagra dick";
 
 	// Load the blocked words into the Adult Filter
 	if ( strBlockedWords.GetLength() > 3 )
 	{
 		LPCTSTR pszPtr = strBlockedWords;
 		int nWordLen = 3;
-		CStringList pWords;
+		CList< CString > pWords;
 			
         int nStart = 0, nPos = 0;
 		for ( ; *pszPtr ; nPos++, pszPtr++ )
@@ -1205,7 +1207,7 @@ void CAdultFilter::Load()
 	{
 		LPCTSTR pszPtr = strDubiousWords;
 		int nWordLen = 3;
-		CStringList pWords;
+		CList< CString > pWords;
 			
         int nStart = 0, nPos = 0;
 		for ( ; *pszPtr ; nPos++, pszPtr++ )
@@ -1325,7 +1327,7 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 		// Check dubious words
 		if ( m_pszDubiousWords )
 		{
-			int nDubiousWords = 0, nWordsPermitted = min( (_tcslen( pszText ) / 8 ), size_t(4) );
+			size_t nDubiousWords = 0, nWordsPermitted = min( _tcslen( pszText ) / 8, 4u );
 
 			for ( pszWord = m_pszDubiousWords ; *pszWord ; )
 			{
@@ -1405,7 +1407,7 @@ void CMessageFilter::Load()
 	{
 		LPCTSTR pszPtr = strED2KSpamPhrases;
 		int nWordLen = 3;
-		CStringList pWords;
+		CList< CString > pWords;
 			
         int nStart = 0, nPos = 0;
 		for ( ; *pszPtr ; nPos++, pszPtr++ )
@@ -1448,7 +1450,7 @@ void CMessageFilter::Load()
 	{
 		LPCTSTR pszPtr = strFilteredPhrases;
 		int nWordLen = 3;
-		CStringList pWords;
+		CList< CString > pWords;
 			
         int nStart = 0, nPos = 0;
 		for ( ; *pszPtr ; nPos++, pszPtr++ )

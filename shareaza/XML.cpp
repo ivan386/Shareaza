@@ -74,7 +74,7 @@ BOOL CXMLNode::ParseIdentifier(LPCTSTR& pszBase, CString& strIdentifier)
 	if ( ! *pszXML ) return FALSE;
 
 	int nIdentifier = 0;
-	for ( ; *pszXML && ( _istalnum( *pszXML ) || *pszXML == ':' || *pszXML == '_' ) ; pszXML++, nIdentifier++ );
+	for ( ; *pszXML && ( _istalnum( *pszXML ) || *pszXML == ':' || *pszXML == '_' || *pszXML == '-' ) ; pszXML++, nIdentifier++ );
 	if ( ! nIdentifier ) return FALSE;
 
 	pszBase += nParse;
@@ -232,7 +232,7 @@ void CXMLNode::ValueToString(LPCTSTR pszValue, CString& strXML)
 			}
 			else if ( nOut > 0 )
 			{
-				*pszOut++ = nChar;
+				*pszOut++ = WCHAR( nChar );
 				nOut--;
 				nLen++;
 			}
@@ -241,7 +241,7 @@ void CXMLNode::ValueToString(LPCTSTR pszValue, CString& strXML)
 				strXML.ReleaseBuffer( nLen + nOut );
 				nOut += 16;
 				pszOut = strXML.GetBuffer( nLen + nOut ) + nLen;
-				*pszOut++ = nChar;
+				*pszOut++ = WCHAR( nChar );
 				nOut--;
 				nLen++;
 			}
@@ -307,7 +307,7 @@ void CXMLNode::UniformString(CString& str)
 				bSpace = TRUE;
 			}
 		}
-		else if ( ! _istalnum( nChar ) && nChar < 0xC0 && _tcschr( pszOK, nChar ) == NULL )
+		else if ( ! _istalnum( TCHAR( nChar ) ) && nChar < 0xC0 && _tcschr( pszOK, TCHAR( nChar ) ) == NULL )
 		{
 			str = str.Left( nPos ) + str.Mid( nPos + 1 );
 			nPos--;
@@ -369,7 +369,7 @@ void CXMLElement::DeleteAllElements()
 {
 	for ( POSITION pos = m_pElements.GetHeadPosition() ; pos ; )
 	{
-		delete (CXMLElement*)m_pElements.GetNext( pos );
+		delete m_pElements.GetNext( pos );
 	}
 	m_pElements.RemoveAll();
 }
@@ -381,7 +381,7 @@ void CXMLElement::DeleteAllAttributes()
 		CXMLAttribute* pAttribute = NULL;
 		CString strName;
 
-		m_pAttributes.GetNextAssoc( pos, strName, XMLVOID(pAttribute) );
+		m_pAttributes.GetNextAssoc( pos, strName, pAttribute );
 		delete pAttribute;
 	}
 	m_pAttributes.RemoveAll();
@@ -396,7 +396,7 @@ CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline)
 	if ( bHeader ) strXML = _T("<?xml version=\"1.0\"?>");
 	if ( bNewline ) strXML += _T("\r\n");
 	ToString( strXML, bNewline );
-	ASSERT( strXML.GetLength() == _tcslen(strXML) );
+	ASSERT( strXML.GetLength() == int( _tcslen(strXML) ) );
 	return strXML;
 }
 
@@ -522,7 +522,7 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 			CXMLAttribute* pExisting;
 			CharLower( strName.GetBuffer() );
 			strName.ReleaseBuffer();
-			if ( m_pAttributes.Lookup( strName, XMLVOID(pExisting) ) ) delete pExisting;
+			if ( m_pAttributes.Lookup( strName, pExisting ) ) delete pExisting;
 			m_pAttributes.SetAt( strName, pAttribute );
 		}
 		else

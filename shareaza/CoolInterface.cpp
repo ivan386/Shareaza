@@ -76,13 +76,13 @@ void CCoolInterface::Clear()
 
 void CCoolInterface::NameCommand(UINT nID, LPCTSTR pszName)
 {
-	m_pNameMap.SetAt( pszName, (LPVOID)nID );
+	m_pNameMap.SetAt( pszName, nID );
 }
 
 UINT CCoolInterface::NameToID(LPCTSTR pszName)
 {
 	UINT nID = 0;
-	if ( m_pNameMap.Lookup( pszName, (void*&)nID ) ) return nID;
+	if ( m_pNameMap.Lookup( pszName, nID ) ) return nID;
 	if ( _stscanf( pszName, _T("%u"), &nID ) == 1 ) return nID;
 	return 0;
 }
@@ -93,7 +93,7 @@ UINT CCoolInterface::NameToID(LPCTSTR pszName)
 int CCoolInterface::ImageForID(UINT nID)
 {
 	int nImage;
-	if ( m_pImageMap.Lookup( (LPVOID)nID, (void*&)nImage ) ) return nImage;
+	if ( m_pImageMap.Lookup( nID, nImage ) ) return nImage;
 	return -1;
 }
 
@@ -101,14 +101,14 @@ void CCoolInterface::AddIcon(UINT nID, HICON hIcon)
 {
 	ConfirmImageList();
 	int nImage = m_pImages.Add( hIcon );
-	m_pImageMap.SetAt( (LPVOID)nID, (LPVOID)nImage );
+	m_pImageMap.SetAt( nID, nImage );
 }
 
 void CCoolInterface::CopyIcon(UINT nFromID, UINT nToID)
 {
 	int nImage;
-	if ( m_pImageMap.Lookup( (LPVOID)nFromID, (void*&)nImage ) )
-		m_pImageMap.SetAt( (LPVOID)nToID, (LPVOID)nImage );
+	if ( m_pImageMap.Lookup( nFromID, nImage ) )
+		m_pImageMap.SetAt( nToID, nImage );
 }
 
 HICON CCoolInterface::ExtractIcon(UINT nID)
@@ -147,8 +147,7 @@ BOOL CCoolInterface::AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack)
 	{
 		if ( pData->items()[ nItem ] != ID_SEPARATOR )
 		{
-			m_pImageMap.SetAt( (LPVOID)(DWORD)pData->items()[ nItem ],
-				(LPVOID)nBase );
+			m_pImageMap.SetAt( pData->items()[ nItem ], nBase );
 			nBase++;
 		}
 	}
@@ -274,7 +273,7 @@ void CCoolInterface::CreateFonts(LPCTSTR pszFace, int nSize)
 
 void CCoolInterface::CalculateColours(BOOL bCustom)
 {
-	if ( ! ( m_bCustom = bCustom ) )
+	if ( ( m_bCustom = bCustom ) == FALSE )
 	{
 		m_crWindow		= GetSysColor( COLOR_WINDOW );
 		m_crMidtone		= GetSysColor( COLOR_BTNFACE );

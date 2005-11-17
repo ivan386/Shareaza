@@ -1,9 +1,9 @@
 //
 // HostCache.cpp
 //
-//	Date:			"$Date: 2005/07/16 14:43:11 $"
-//	Revision:		"$Revision: 1.16 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/11/17 21:10:48 $"
+//	Revision:		"$Revision: 1.17 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -63,7 +63,7 @@ void CHostCache::Clear()
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CHostCacheList* pCache = (CHostCacheList*)m_pList.GetNext( pos );
+		CHostCacheList* pCache = m_pList.GetNext( pos );
 		pCache->Clear();
 	}
 }
@@ -76,7 +76,7 @@ BOOL CHostCache::Load()
 	
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CHostCacheList* pCache = (CHostCacheList*)m_pList.GetNext( pos );
+		CHostCacheList* pCache = m_pList.GetNext( pos );
 		pCache->Clear();
 	}
 	
@@ -127,7 +127,7 @@ void CHostCache::Serialize(CArchive& ar)
 		
 		for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 		{
-			CHostCacheList* pCache = (CHostCacheList*)m_pList.GetNext( pos );
+			CHostCacheList* pCache = m_pList.GetNext( pos );
 			ar << pCache->m_nProtocol;
 			pCache->Serialize( ar, nVersion );
 		}
@@ -137,14 +137,14 @@ void CHostCache::Serialize(CArchive& ar)
 		ar >> nVersion;
 		if ( nVersion < 6 ) return;
 		
-		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			PROTOCOLID nProtocol;
 			ar >> nProtocol;
 			
 			for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 			{
-				CHostCacheList* pCache = (CHostCacheList*)m_pList.GetNext( pos );
+				CHostCacheList* pCache = m_pList.GetNext( pos );
 				if ( pCache->m_nProtocol == nProtocol )
 				{
 					pCache->Serialize( ar, nVersion );
@@ -162,7 +162,7 @@ CHostCacheHost* CHostCache::Find(IN_ADDR* pAddress) const
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CHostCacheList* pCache = (CHostCacheList*)m_pList.GetNext( pos );
+		CHostCacheList* pCache = m_pList.GetNext( pos );
 		if ( CHostCacheHost* pHost = pCache->Find( pAddress ) ) return pHost;
 	}
 	return NULL;
@@ -172,7 +172,7 @@ BOOL CHostCache::Check(CHostCacheHost* pHost) const
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CHostCacheList* pCache = (CHostCacheList*)m_pList.GetNext( pos );
+		CHostCacheList* pCache = m_pList.GetNext( pos );
 		if ( pCache->Check( pHost ) ) return TRUE;
 	}
 	return FALSE;
@@ -182,7 +182,7 @@ void CHostCache::Remove(CHostCacheHost* pHost)
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CHostCacheList* pCache = (CHostCacheList*)m_pList.GetNext( pos );
+		CHostCacheList* pCache = m_pList.GetNext( pos );
 		pCache->Remove( pHost );
 	}
 }
@@ -191,7 +191,7 @@ void CHostCache::OnFailure(IN_ADDR* pAddress, WORD nPort)
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CHostCacheList* pCache = (CHostCacheList*)m_pList.GetNext( pos );
+		CHostCacheList* pCache = m_pList.GetNext( pos );
 		pCache->OnFailure( pAddress, nPort );
 	}
 }
@@ -551,7 +551,7 @@ DWORD CHostCacheList::CountHosts() const
 
 void CHostCacheList::PruneByQueryAck()
 {
-	DWORD tNow = time( NULL );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	
 	for ( CHostCacheHost* pHost = m_pNewest ; pHost ; )
 	{
@@ -570,13 +570,12 @@ void CHostCacheList::PruneByQueryAck()
 	}
 }
 
-
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList prune old hosts (To remove old hosts when trying to connect to G1)
 
 void CHostCacheList::PruneOldHosts()
 {
-	DWORD tNow = time( NULL );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	
 	for ( CHostCacheHost* pHost = m_pNewest ; pHost ; )
 	{
@@ -617,7 +616,7 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 	}
 	else
 	{
-		int nItem, nCount = ar.ReadCount();
+		DWORD_PTR nItem, nCount = ar.ReadCount();
 		
 		for ( nItem = 0 ; nItem < nCount && m_pFree ; nItem++ )
 		{
@@ -772,12 +771,12 @@ int CHostCacheList::LoadDefaultED2KServers()
 					if ( _stscanf( strServer, _T("%i.%i.%i.%i:%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3],	&nPort ) == 5 )
 					{
 						IN_ADDR pAddress;
-						pAddress.S_un.S_un_b.s_b1 = nIP[0];
-						pAddress.S_un.S_un_b.s_b2 = nIP[1];
-						pAddress.S_un.S_un_b.s_b3 = nIP[2];
-						pAddress.S_un.S_un_b.s_b4 = nIP[3];
+						pAddress.S_un.S_un_b.s_b1 = (BYTE)nIP[0];
+						pAddress.S_un.S_un_b.s_b2 = (BYTE)nIP[1];
+						pAddress.S_un.S_un_b.s_b3 = (BYTE)nIP[2];
+						pAddress.S_un.S_un_b.s_b4 = (BYTE)nIP[3];
 
-						CHostCacheHost* pServer = Add( &pAddress, nPort );
+						CHostCacheHost* pServer = Add( &pAddress, (WORD)nPort );
 
 						if ( cType == 'P' )
 							pServer->m_bPriority = TRUE;
@@ -954,7 +953,7 @@ void CHostCacheHost::Reset(IN_ADDR* pAddress)
 void CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor)
 {
 	m_nPort		= nPort;
-	m_tSeen		= tSeen > 1 ? tSeen : time( NULL );
+	m_tSeen		= tSeen > 1 ? tSeen : static_cast< DWORD >( time( NULL ) );
 	
 	if ( pszVendor != NULL )
 	{
@@ -970,7 +969,7 @@ void CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor)
 
 CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 {
-	m_tConnect = time( NULL );
+	m_tConnect = static_cast< DWORD >( time( NULL ) );
 	if ( bAutomatic && Network.IsFirewalledAddress( &m_pAddress, TRUE ) ) return NULL;
 	return Neighbours.ConnectTo( &m_pAddress, m_nPort, m_nProtocol, bAutomatic );
 }
@@ -978,9 +977,9 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost packet conversion
 
-CG1Packet* CHostCacheHost::ToG1Ping(int nTTL, GGUID* pGUID)
+CG1Packet* CHostCacheHost::ToG1Ping(int nTTL, const Hashes::Guid& oGUID)
 {
-	CG1Packet* pPong = CG1Packet::New( G1_PACKET_PONG, nTTL, pGUID );
+	CG1Packet* pPong = CG1Packet::New( G1_PACKET_PONG, nTTL, oGUID );
 	
 	pPong->WriteShortLE( m_nPort );
 	pPong->WriteLongLE( *(DWORD*)&m_pAddress );
@@ -995,14 +994,15 @@ CG1Packet* CHostCacheHost::ToG1Ping(int nTTL, GGUID* pGUID)
 
 CString CHostCacheHost::ToString() const
 {
-	struct tm* pTime = gmtime( (time_t*)&m_tSeen );
-	CString str; // 2002-04-30T08:30Z
-	
+	time_t tSeen = m_tSeen;
+	tm* pTime = gmtime( &tSeen );
+
+	CString str;
 	str.Format( _T("%s:%i %.4i-%.2i-%.2iT%.2i:%.2iZ"),
 		(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
 		pTime->tm_year + 1900, pTime->tm_mon + 1, pTime->tm_mday,
-		pTime->tm_hour, pTime->tm_min );
-	
+		pTime->tm_hour, pTime->tm_min ); // 2002-04-30T08:30Z
+
 	return str;
 }
 
@@ -1013,7 +1013,7 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 {
 	if ( ! m_tConnect ) return TRUE;
 	if ( m_pAddress.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) return FALSE;
-	if ( ! tNow ) tNow = time( NULL );
+	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
 	return tNow - m_tConnect >= Settings.Gnutella.ConnectThrottle;
 }
 
@@ -1022,7 +1022,7 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 
 BOOL CHostCacheHost::CanQuote(DWORD tNow) const
 {
-	if ( ! tNow ) tNow = time( NULL );
+	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
 	return tNow - m_tSeen < Settings.Gnutella2.HostCurrent;
 }
 
@@ -1040,7 +1040,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( ! Settings.eDonkey.ServerWalk ) return FALSE;
 		
 		// Get the time if not supplied
-		if ( 0 == tNow ) tNow = time( NULL );
+		if ( 0 == tNow ) tNow = static_cast< DWORD >( time( NULL ) );
 		
 		// Retry After
 		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return FALSE;
@@ -1049,7 +1049,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( 0 == m_tQuery ) return TRUE;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= max( Settings.eDonkey.QueryServerThrottle, DWORD(60) );
+		return ( tNow - m_tQuery ) >= max( Settings.eDonkey.QueryServerThrottle, 60u );
 	}
 	else if ( m_nProtocol == PROTOCOL_G2 )
 	{
@@ -1060,7 +1060,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( 0 != m_tAck ) return FALSE;
 		
 		// Get the time if not supplied
-		if ( 0 == tNow ) tNow = time( NULL );
+		if ( 0 == tNow ) tNow = static_cast< DWORD >( time( NULL ) );
 		
 		// Must be a recently seen (current) host
 		if ( ( tNow - m_tSeen ) > Settings.Gnutella2.HostCurrent ) return FALSE;
@@ -1072,7 +1072,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( 0 == m_tQuery ) return TRUE;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= max( Settings.Gnutella2.QueryHostThrottle, DWORD(90) );
+		return ( tNow - m_tQuery ) >= max( Settings.Gnutella2.QueryHostThrottle, 90u );
 	}
 	
 	return FALSE;
@@ -1085,7 +1085,7 @@ void CHostCacheHost::SetKey(DWORD nKey, IN_ADDR* pHost)
 {
 	m_tAck		= 0;
 	m_nFailures	= 0;
-	m_tKeyTime	= nKey ? time( NULL ) : 0;
+	m_tKeyTime	= nKey ? static_cast< DWORD >( time( NULL ) ) : 0;
 	m_nKeyValue	= nKey;
 	m_nKeyHost	= pHost && nKey ? pHost->S_un.S_addr : Network.m_pHost.sin_addr.S_un.S_addr;
 }

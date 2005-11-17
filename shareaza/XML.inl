@@ -124,15 +124,15 @@ CXMLElement* CXMLElement::AddElement(CXMLElement* pElement)
 	return pElement;
 }
 
-int CXMLElement::GetElementCount() const
+INT_PTR CXMLElement::GetElementCount() const
 {
-	return (int)m_pElements.GetCount();
+	return m_pElements.GetCount();
 }
 
 CXMLElement* CXMLElement::GetFirstElement() const
 {
 	if ( this == NULL ) return NULL;
-	return m_pElements.GetCount() ? (CXMLElement*)m_pElements.GetHead() : NULL;
+	return m_pElements.GetCount() ? m_pElements.GetHead() : NULL;
 }
 
 POSITION CXMLElement::GetElementIterator() const
@@ -142,7 +142,7 @@ POSITION CXMLElement::GetElementIterator() const
 
 CXMLElement* CXMLElement::GetNextElement(POSITION& pos) const
 {
-	return (CXMLElement*)m_pElements.GetNext( pos );
+	return m_pElements.GetNext( pos );
 }
 
 CXMLElement* CXMLElement::GetElementByName(LPCTSTR pszName) const
@@ -216,7 +216,7 @@ CXMLAttribute* CXMLElement::GetNextAttribute(POSITION& pos) const
 {
 	CXMLAttribute* pAttribute = NULL;
 	CString strName;
-	m_pAttributes.GetNextAssoc( pos, strName, XMLVOID(pAttribute) );
+	m_pAttributes.GetNextAssoc( pos, strName, pAttribute );
 	return pAttribute;
 }
 
@@ -225,7 +225,7 @@ CXMLAttribute* CXMLElement::GetAttribute(LPCTSTR pszName) const
 	CXMLAttribute* pAttribute = NULL;
 	CString strName( pszName );
 	strName.MakeLower();
-	return m_pAttributes.Lookup( strName, XMLVOID(pAttribute) ) ? pAttribute : NULL;
+	return m_pAttributes.Lookup( strName, pAttribute ) ? pAttribute : NULL;
 }
 
 CString CXMLElement::GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefault) const

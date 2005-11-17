@@ -116,7 +116,7 @@ void CHelpDlg::OnSize(UINT nType, int cx, int cy)
 	}
 }
 
-void CHelpDlg::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult)
+void CHelpDlg::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
 {
 	if ( CRichElement* pElement = pNotify->pElement )
 	{

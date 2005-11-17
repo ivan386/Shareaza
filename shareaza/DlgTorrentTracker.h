@@ -81,7 +81,7 @@ protected:
 	virtual BOOL	OnInitDialog();
 	afx_msg void	OnSelChangeTorrentView();
 	afx_msg void	OnTorrentRefresh();
-	afx_msg void	OnTimer(UINT nIDEvent);
+	afx_msg void	OnTimer(UINT_PTR nIDEvent);
 	virtual void	OnOK();
 	afx_msg void	OnDestroy();
 	//}}AFX_MSG

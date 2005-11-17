@@ -192,7 +192,7 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 			pByte += 2;
 		}
 
-		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * 2 );
+		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * sizeof( TCHAR ) );
 		strXML.ReleaseBuffer( nByte );
 	}
 	else
@@ -327,9 +327,9 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	return TRUE;
 }
 
-void CSkinsSettingsPage::OnItemChangedSkins(NMHDR* pNMHDR, LRESULT* pResult)
+void CSkinsSettingsPage::OnItemChangedSkins(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	*pResult = 0;
 
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
@@ -413,7 +413,7 @@ BOOL CSkinsSettingsPage::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CSettingsPage::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CSkinsSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
+void CSkinsSettingsPage::OnLButtonUp(UINT /*nFlags*/, CPoint point)
 {
 	CRect rc;
 

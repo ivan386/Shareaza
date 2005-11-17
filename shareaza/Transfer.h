@@ -37,9 +37,9 @@ public:
 public:
 	DWORD			m_nRunCookie;
 public:
-	CStringList		m_pSourcesSent;
-	CStringArray	m_pHeaderName;
-	CStringArray	m_pHeaderValue;
+	CList< CString >		m_pSourcesSent;
+	CArray< CString >	m_pHeaderName;
+	CArray< CString >	m_pHeaderValue;
 
 // Operations
 public:

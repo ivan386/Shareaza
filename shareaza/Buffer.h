@@ -46,9 +46,21 @@ public:
 public:
 
 	// Add and remove data from the memory block in the CBuffer object
-	void  Add(const void* pData, DWORD nLength);                   // Add data to the end of the block already in this object
-	void  Insert(DWORD nOffset, const void* pData, DWORD nLength); // Insert the data in the middle somewhere
-	void  Remove(DWORD nLength);                                   // Delete the first nLength bytes from the memory block
+	void  Add(const void* pData, size_t nLength);                   // Add data to the end of the block already in this object
+	template
+	<
+		typename Descriptor,
+		template< typename > class StoragePolicy,
+		template< typename > class CheckingPolicy,
+		template< typename > class ValidationPolicy
+	>
+	void Add(const Hashes::Hash< Descriptor, StoragePolicy,
+			CheckingPolicy, ValidationPolicy >& oHash)
+	{
+		Add( &oHash[ 0 ], oHash.byteCount );
+	};
+	void  Insert(DWORD nOffset, const void* pData, size_t nLength); // Insert the data in the middle somewhere
+	void  Remove(size_t nLength);                                   // Delete the first nLength bytes from the memory block
 	void  Clear();                                                 // Mark the entire buffer empty, not changing the size of the allocated block
 
 	// Add text to the buffer, does not add a null terminator
@@ -56,15 +68,16 @@ public:
 	void  Print(LPCWSTR pszText, UINT nCodePage = CP_ACP); // Convert Unicode text to ASCII and add it to the buffer
 
 	// Copy all or part of the data in another CBuffer object into this one
-	DWORD AddBuffer(CBuffer* pBuffer, DWORD nLength = 0xFFFFFFFF); // Length is -1 by default to copy the whole thing
-	void  AddReversed(const void* pData, DWORD nLength);           // Add data to this buffer, but with the bytes in reverse order
-	void  Prefix(LPCSTR pszText);                                  // Add ASCII text to the start of this buffer, shifting everything else forward
-	void  EnsureBuffer(DWORD nLength);                             // Tell the buffer to prepare to recieve this number of additional bytes
+	DWORD AddBuffer(CBuffer* pBuffer, size_t nLength);
+	DWORD AddBuffer(CBuffer* pBuffer) { return AddBuffer( pBuffer, pBuffer->m_nLength ); }
+	void  AddReversed(const void* pData, size_t nLength);           // Add data to this buffer, but with the bytes in reverse order
+	void  Prefix(LPCSTR pszText);                                   // Add ASCII text to the start of this buffer, shifting everything else forward
+	void  EnsureBuffer(size_t nLength);                             // Tell the buffer to prepare to recieve this number of additional bytes
 
 public:
 
 	// Read the data in the buffer as text
-	CString ReadString(DWORD nBytes, UINT nCodePage = CP_ACP);                       // Reads nBytes of ASCII characters as a string
+	CString ReadString(size_t nBytes, UINT nCodePage = CP_ACP);                      // Reads nBytes of ASCII characters as a string
 	BOOL    ReadLine(CString& strLine, BOOL bPeek = FALSE, UINT nCodePage = CP_ACP); // Reads until "\r\n"
 	BOOL    StartsWith(LPCSTR pszString, BOOL bRemove = FALSE);                      // Returns true if the buffer starts with this text
 
@@ -78,11 +91,11 @@ public:
 	BOOL Ungzip();                         // Delete the gzip header and then remove the compression
 
 	// Read and write a DIME message in the buffer
-	void WriteDIME(DWORD nFlags, LPCSTR pszID, LPCSTR pszType, LPCVOID pBody, DWORD nBody);
+	void WriteDIME(DWORD nFlags, LPCSTR pszID, LPCSTR pszType, LPCVOID pBody, size_t nBody);
 	BOOL ReadDIME(DWORD* pnFlags, CString* psID, CString* psType, DWORD* pnBody);
 
 public:
 
 	// Static means you can call CBuffer::ReverseBuffer without having a CBuffer object at all
-	static void ReverseBuffer(const void* pInput, void* pOutput, DWORD nLength);
+	static void ReverseBuffer(const void* pInput, void* pOutput, size_t nLength);
 };

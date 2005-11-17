@@ -50,7 +50,7 @@ public:
 	BOOL	ReadPacket(LPSTR pszType, DWORD& nLength, BOOL* pbCompound = NULL);
 	BOOL	SkipCompound();
 	BOOL	SkipCompound(DWORD& nLength, DWORD nRemaining = 0);
-	BOOL	GetTo(GGUID* pGUID);
+	BOOL	GetTo(Hashes::Guid& oGUID);
 	BOOL	SeekToWrapped();
 public:
 	virtual void	Reset();

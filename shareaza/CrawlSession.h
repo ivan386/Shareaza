@@ -38,7 +38,7 @@ public:
 // Attributes
 public:
 	BOOL		m_bActive;
-	CPtrList	m_pNodes;
+	CList< CCrawlNode*, CCrawlNode* > m_pNodes;
 
 // Operations
 public:
@@ -73,9 +73,9 @@ public:
 	float			m_nLatitude;
 	float			m_nLongitude;
 public:
-	CPtrList		m_pNeighbours;
+	CList< CCrawlNode* > m_pNeighbours;
 public:
-	DWORD			m_nUnique;
+	POSITION		m_nUnique;
 	DWORD			m_tDiscovered;
 	DWORD			m_tCrawled;
 	DWORD			m_tResponse;

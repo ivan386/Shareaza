@@ -214,7 +214,7 @@ void CBaseMatchWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 		}
 		else if ( nCmd )
 		{
-			CPtrList pColumns;
+			CList< CSchemaMember* > pColumns;
 			CSchemaColumnsDlg::ToggleColumnHelper( m_wndList.m_pSchema, 
 				&m_wndList.m_pColumns, &pColumns, nCmd, TRUE );
 			m_wndList.SelectSchema( m_wndList.m_pSchema, &pColumns );
@@ -235,12 +235,12 @@ void CBaseMatchWnd::OnUpdateBlocker(CCmdUI* pCmdUI)
 	else pCmdUI->ContinueRouting();
 }
 
-void CBaseMatchWnd::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CBaseMatchWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnMeasureItem( lpMeasureItemStruct );
 }
 
-void CBaseMatchWnd::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CBaseMatchWnd::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnDrawItem( lpDrawItemStruct );
 }
@@ -253,16 +253,17 @@ void CBaseMatchWnd::OnUpdateSearchDownload(CCmdUI* pCmdUI)
 void CBaseMatchWnd::OnSearchDownload() 
 {
 	CSingleLock pSingleLock( &m_pMatches->m_pSection, TRUE );
-	CPtrList pFiles, pHits;
+	CList< CMatchFile* > pFiles;
+	CList< CQueryHit* > pHits;
 	POSITION pos;
 	
 	for ( pos = m_pMatches->m_pSelectedFiles.GetHeadPosition() ; pos ; )
 	{
-		CMatchFile* pFile = (CMatchFile*)m_pMatches->m_pSelectedFiles.GetNext( pos );
+		CMatchFile* pFile = m_pMatches->m_pSelectedFiles.GetNext( pos );
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pFile->m_bSHA1, &pFile->m_pSHA1, pFile->m_bTiger, &pFile->m_pTiger, pFile->m_bED2K, &pFile->m_pED2K ) )
+		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K ) )
 		{
 		case 1:
 			pFiles.AddTail( pFile );
@@ -276,11 +277,11 @@ void CBaseMatchWnd::OnSearchDownload()
 	
 	for ( pos = m_pMatches->m_pSelectedHits.GetHeadPosition() ; pos ; )
 	{
-		CQueryHit* pHit = (CQueryHit*)m_pMatches->m_pSelectedHits.GetNext( pos );
+		CQueryHit* pHit = m_pMatches->m_pSelectedHits.GetNext( pos );
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pHit->m_bSHA1, &pHit->m_pSHA1, pHit->m_bTiger, &pHit->m_pTiger, pHit->m_bED2K, &pHit->m_pED2K ) )
+		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K ) )
 		{
 		case 1:
 			pHits.AddTail( pHit );
@@ -301,14 +302,14 @@ void CBaseMatchWnd::OnSearchDownload()
 	
 	for ( pos = pFiles.GetHeadPosition() ; pos ; )
 	{
-		CMatchFile* pFile = (CMatchFile*)pFiles.GetNext( pos );
+		CMatchFile* pFile = pFiles.GetNext( pos );
 		if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL ) Downloads.Add( pFile );
 
 	}
 	
 	for ( pos = pHits.GetHeadPosition() ; pos ; )
 	{
-		CQueryHit* pHit = (CQueryHit*)pHits.GetNext( pos );
+		CQueryHit* pHit = pHits.GetNext( pos );
 		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) 
 		{
 			CDownload *pDownload = Downloads.Add( pHit );
@@ -338,16 +339,17 @@ void CBaseMatchWnd::OnUpdateSearchDownloadNow(CCmdUI* pCmdUI)
 void CBaseMatchWnd::OnSearchDownloadNow() 
 {
 	CSingleLock pSingleLock( &m_pMatches->m_pSection, TRUE );
-	CPtrList pFiles, pHits;
+	CList< CMatchFile* > pFiles;
+	CList< CQueryHit* > pHits;
 	POSITION pos;
 	
 	for ( pos = m_pMatches->m_pSelectedFiles.GetHeadPosition() ; pos ; )
 	{
-		CMatchFile* pFile = (CMatchFile*)m_pMatches->m_pSelectedFiles.GetNext( pos );
+		CMatchFile* pFile = m_pMatches->m_pSelectedFiles.GetNext( pos );
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pFile->m_bSHA1, &pFile->m_pSHA1, pFile->m_bTiger, &pFile->m_pTiger, pFile->m_bED2K, &pFile->m_pED2K ) )
+		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K ) )
 		{
 		case 1:
 			pFiles.AddTail( pFile );
@@ -361,11 +363,11 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 	
 	for ( pos = m_pMatches->m_pSelectedHits.GetHeadPosition() ; pos ; )
 	{
-		CQueryHit* pHit = (CQueryHit*)m_pMatches->m_pSelectedHits.GetNext( pos );
+		CQueryHit* pHit = m_pMatches->m_pSelectedHits.GetNext( pos );
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pHit->m_bSHA1, &pHit->m_pSHA1, pHit->m_bTiger, &pHit->m_pTiger, pHit->m_bED2K, &pHit->m_pED2K ) )
+		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K ) )
 		{
 		case 1:
 			pHits.AddTail( pHit );
@@ -386,13 +388,13 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 	
 	for ( pos = pFiles.GetHeadPosition() ; pos ; )
 	{
-		CMatchFile* pFile = (CMatchFile*)pFiles.GetNext( pos );
+		CMatchFile* pFile = pFiles.GetNext( pos );
 		if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL ) Downloads.Add( pFile, TRUE );
 	}
 	
 	for ( pos = pHits.GetHeadPosition() ; pos ; )
 	{
-		CQueryHit* pHit = (CQueryHit*)pHits.GetNext( pos );
+		CQueryHit* pHit = pHits.GetNext( pos );
 		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) Downloads.Add( pHit, TRUE );
 	}
 	
@@ -406,19 +408,19 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 	}
 }
 
-int CBaseMatchWnd::CheckExisting(BOOL bSHA1, SHA1* pSHA1, BOOL bTiger, TIGEROOT* pTiger, BOOL bED2K, MD4* pED2K)
+int CBaseMatchWnd::CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 500 ) ) return 1;
 	
 	CLibraryFile* pFile = NULL;
 	
-	if ( pFile == NULL && bSHA1 )
-		pFile = LibraryMaps.LookupFileBySHA1( pSHA1 );
-	if ( pFile == NULL && bTiger )
-		pFile = LibraryMaps.LookupFileByTiger( pTiger );
-	if ( pFile == NULL && bED2K )
-		pFile = LibraryMaps.LookupFileByED2K( pED2K );
+	if ( pFile == NULL && oSHA1 )
+		pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
+	if ( pFile == NULL && oTiger )
+		pFile = LibraryMaps.LookupFileByTiger( oTiger );
+	if ( pFile == NULL && oED2K )
+		pFile = LibraryMaps.LookupFileByED2K( oED2K );
 	
 	if ( pFile == NULL ) return 1;
 	
@@ -435,7 +437,7 @@ int CBaseMatchWnd::CheckExisting(BOOL bSHA1, SHA1* pSHA1, BOOL bTiger, TIGEROOT*
 		if ( CLibraryWnd* pLibrary = (CLibraryWnd*)GetManager()->Open( RUNTIME_CLASS(CLibraryWnd) ) )
 		{
 			CQuickLock oLock( Library.m_pSection );
-			if ( pFile = Library.LookupFile( nIndex ) )
+			if ( ( pFile = Library.LookupFile( nIndex ) ) != NULL )
 			{
 				pLibrary->Display( pFile );
 			}
@@ -460,12 +462,9 @@ void CBaseMatchWnd::OnSearchCopy()
 		dlg.m_sName = pFile->m_pHits->m_sName;
 		dlg.m_bSize	= TRUE;
 		dlg.m_nSize	= pFile->m_nSize;
-		dlg.m_bSHA1 = pFile->m_bSHA1;
-		if ( pFile->m_bSHA1 ) dlg.m_pSHA1 = pFile->m_pSHA1;
-		dlg.m_bTiger = pFile->m_bTiger;
-		if ( pFile->m_bTiger ) dlg.m_pTiger = pFile->m_pTiger;
-		dlg.m_bED2K = pFile->m_bED2K;
-		if ( pFile->m_bED2K ) dlg.m_pED2K = pFile->m_pED2K;
+		dlg.m_oSHA1 = pFile->m_oSHA1;
+		dlg.m_oTiger = pFile->m_oTiger;
+		dlg.m_oED2K = pFile->m_oED2K;
 
 		if ( pFile->GetFilteredCount() == 1 )
 			dlg.m_sHost = pFile->m_pHits->m_sURL;
@@ -476,12 +475,9 @@ void CBaseMatchWnd::OnSearchCopy()
 		dlg.m_sName = pHit->m_sName;
 		dlg.m_bSize = TRUE;
 		dlg.m_nSize = pHit->m_nSize;
-		dlg.m_bSHA1 = pHit->m_bSHA1;
-		if ( pHit->m_bSHA1 ) dlg.m_pSHA1 = pHit->m_pSHA1;
-		dlg.m_bTiger = pHit->m_bTiger;
-		if ( pHit->m_bTiger ) dlg.m_pTiger = pHit->m_pTiger;
-		dlg.m_bED2K = pHit->m_bED2K;
-		if ( pHit->m_bED2K ) dlg.m_pED2K = pHit->m_pED2K;
+		dlg.m_oSHA1 = pHit->m_oSHA1;
+		dlg.m_oTiger = pHit->m_oTiger;
+		dlg.m_oED2K = pHit->m_oED2K;
 	}
 
 	pLock.Unlock();
@@ -500,8 +496,9 @@ void CBaseMatchWnd::OnSearchChat()
 
 	if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
-		ChatWindows.OpenPrivate( &pHit->m_pClientID,
-			&pHit->m_pAddress, pHit->m_nPort, pHit->m_bPush == TS_TRUE, pHit->m_nProtocol, (IN_ADDR*)pHit->m_pClientID.w, (WORD)pHit->m_pClientID.w[1] );
+		ChatWindows.OpenPrivate( pHit->m_oClientID,
+			&pHit->m_pAddress, pHit->m_nPort, pHit->m_bPush == TS_TRUE,
+			pHit->m_nProtocol, (IN_ADDR*)pHit->m_oClientID.begin(), (WORD)pHit->m_oClientID.begin()[1] );
 	}
 }
 
@@ -525,7 +522,7 @@ void CBaseMatchWnd::OnHitMonitorSearch()
 
 	if ( strFile.IsEmpty() ) return;
 
-	CQuerySearch* pSearch = new CQuerySearch();
+	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	pSearch->m_sSearch = strFile;
 	
 	CNewSearchDlg dlg( NULL, pSearch );
@@ -563,7 +560,7 @@ void CBaseMatchWnd::OnBrowseLaunch()
 	if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
 		new CBrowseHostWnd( &pHit->m_pAddress, pHit->m_nPort,
-			pHit->m_bPush == TS_TRUE, &pHit->m_pClientID );
+			pHit->m_bPush == TS_TRUE, pHit->m_oClientID );
 	}
 }
 
@@ -575,11 +572,11 @@ void CBaseMatchWnd::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
 	}
 	else if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
 	{
-		pCmdUI->Enable( pFile->m_bSHA1 );
+		pCmdUI->Enable( TRUE );
 	}
 	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
-		pCmdUI->Enable( pHit->m_bSHA1 );
+		pCmdUI->Enable( TRUE );
 	}
 }
 
@@ -596,23 +593,49 @@ void CBaseMatchWnd::OnLibraryBitziWeb()
 
 	if ( m_pMatches->GetSelectedCount() != 1 ) return;
 
-	CString strSHA1;
+	CString strURN;
 
 	if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
 	{
-		if ( pFile->m_bSHA1 )
-			strSHA1 = CSHA::HashToString( &pFile->m_pSHA1 );
+		if ( pFile->m_oSHA1 )
+			strURN = pFile->m_oSHA1.toString();
+
+		if ( pFile->m_oTiger )
+		{
+			if ( strURN.GetLength() )
+				strURN	+= _T(".");
+			else
+				strURN	= _T("tree:tiger:");
+
+			strURN += pFile->m_oTiger.toString();
+		}
+
+		if ( pFile->m_oED2K && ! strURN.GetLength() )
+			strURN = _T("ed2k:") + pFile->m_oED2K.toString();
 	}
 	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
-		if ( pHit->m_bSHA1 )
-			strSHA1 = CSHA::HashToString( &pHit->m_pSHA1 );
+		if ( pHit->m_oSHA1 )
+			strURN = pHit->m_oSHA1.toString();
+
+		if ( pHit->m_oTiger )
+		{
+			if ( strURN.GetLength() )
+				strURN	+= _T(".");
+			else
+				strURN	= _T("tree:tiger:");
+
+			strURN += pHit->m_oTiger.toString();
+		}
+
+		if ( pHit->m_oED2K && ! strURN.GetLength() )
+			strURN = _T("ed2k:") + pHit->m_oED2K.toString();
 	}
 
-	if ( strSHA1.IsEmpty() ) return;
+	if ( strURN.IsEmpty() ) return;
 
 	CString strURL = Settings.Library.BitziWebView;
-	Replace( strURL, _T("(SHA1)"), strSHA1 );
+	Replace( strURL, _T("(URN)"), strURN );
 	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -870,11 +893,11 @@ void CBaseMatchWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDea
 	CPanelWnd::OnMDIActivate( bActivate, pActivateWnd, pDeactivateWnd );
 }
 
-void CBaseMatchWnd::OnTimer(UINT nIDEvent) 
+void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( m_wndFilter.m_hWnd == NULL ) return;
 	
-	DWORD nNow = GetTickCount();
+//	DWORD nNow = GetTickCount();
 	
 	if ( nIDEvent == 1 )
 	{
@@ -938,7 +961,7 @@ void CBaseMatchWnd::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CBaseMatchWnd::UpdateMessages(BOOL bActive)
+void CBaseMatchWnd::UpdateMessages(BOOL /*bActive*/)
 {
 }
 

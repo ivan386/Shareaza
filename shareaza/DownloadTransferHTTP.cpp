@@ -82,7 +82,7 @@ BOOL CDownloadTransferHTTP::Initiate()
 		SetState( dtsConnecting );
 		
 		if ( ! m_pDownload->IsBoosted() )
-			m_mInput.pLimit = m_mOutput.pLimit = &Downloads.m_nLimitGeneric;
+			m_mInput.pLimit = m_mOutput.pLimit = &m_nBandwidth;
 		
 		return TRUE;
 	}
@@ -105,7 +105,7 @@ BOOL CDownloadTransferHTTP::AcceptPush(CConnection* pConnection)
 		(LPCTSTR)m_pDownload->GetDisplayName() );
 	
 	if ( ! m_pDownload->IsBoosted() )
-		m_mInput.pLimit = m_mOutput.pLimit = &Downloads.m_nLimitGeneric;
+		m_mInput.pLimit = m_mOutput.pLimit = &m_nBandwidth;
 	
 	if ( StartNextFragment() ) return TRUE;
 	
@@ -166,15 +166,6 @@ BOOL CDownloadTransferHTTP::OnConnected()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP fragment allocation
 
-bool VerifySelection(CDownloadTransferHTTP* pTransfer)
-{
-	FF::SimpleFragment oFragment( pTransfer->m_nOffset, pTransfer->m_nOffset + pTransfer->m_nLength );
-	FF::SimpleFragmentList::IteratorPair p = pTransfer->m_pSource->m_oAvailable.overlappingRange( oFragment );
-	return pTransfer->m_pSource->m_oAvailable.empty()
-		|| p.first != p.second && p.first->begin() <= pTransfer->m_nOffset
-			&& p.first->end() >= pTransfer->m_nOffset + pTransfer->m_nLength;
-}
-
 BOOL CDownloadTransferHTTP::StartNextFragment()
 {
 	ASSERT( this != NULL );
@@ -230,9 +221,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	}
 	else if ( m_pDownload->GetFragment( this ) )
 	{
-		ASSERT( VerifySelection( this ) );
 		ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
-		ASSERT( VerifySelection( this ) );
 		
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 			m_nOffset, m_nOffset + m_nLength - 1,
@@ -254,13 +243,13 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP subtract pending requests
 
-BOOL CDownloadTransferHTTP::SubtractRequested(FF::SimpleFragmentList& ppFragments)
+BOOL CDownloadTransferHTTP::SubtractRequested(Fragments::List& ppFragments)
 {
 	if ( m_nOffset < SIZE_UNKNOWN && m_nLength < SIZE_UNKNOWN )
 	{
 		if ( m_nState == dtsRequesting || m_nState == dtsDownloading )
 		{
-            ppFragments.erase( FF::SimpleFragment( m_nOffset, m_nOffset + m_nLength ) );
+			ppFragments.erase( Fragments::Fragment( m_nOffset, m_nOffset + m_nLength ) );
 			return TRUE;
 		}
 	}
@@ -375,7 +364,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	
 	if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh && ! m_bTigerFetch && ! m_bMetaFetch )
 	{
-		CString strURN = CSHA::HashToString( &m_pDownload->m_pSHA1, TRUE );
+		CString strURN = m_pDownload->m_oSHA1.toUrn();
 		
 		m_pOutput->Print( "X-Content-URN: " );
 		m_pOutput->Print( strURN + _T("\r\n") );
@@ -397,7 +386,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 				(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 				htons( Network.m_pHost.sin_port ),
 				(LPCTSTR)strURN );
-			strLine += TimeToString( time( NULL ) - 180 );
+			strLine += TimeToString( static_cast< DWORD >( time( NULL ) - 180 ) );
 			m_pOutput->Print( "Alt-Location: " );
 			m_pOutput->Print( strLine + _T("\r\n") );
 		}
@@ -718,10 +707,10 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			strURNs		= strURNs.Mid( nPos + 1 );
 			strValue.TrimLeft();
 			
-			SHA1 pSHA1;
-			if ( CSHA::HashFromURN( strValue, &pSHA1 ) )
+            Hashes::Sha1Hash oSHA1;
+            if ( oSHA1.fromUrn( strValue ) )
 			{
-				if ( m_pSource->CheckHash( &pSHA1 ) )
+				if ( m_pSource->CheckHash( oSHA1 ) )
 				{
 					m_bHashMatch = TRUE;
 				}
@@ -736,10 +725,10 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			
 			// TODO: Remove " ! m_bHashMatch "
 			
-			TIGEROOT pTiger;
-			if ( ! m_bHashMatch && CTigerNode::HashFromURN( strValue, &pTiger ) )
+            Hashes::TigerHash oTiger;
+			if ( ! m_bHashMatch && oTiger.fromUrn( strValue ) )
 			{
-				if ( m_pSource->CheckHash( &pTiger ) )
+				if ( m_pSource->CheckHash( oTiger ) )
 				{
 					m_bHashMatch = TRUE;
 				}
@@ -751,11 +740,11 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 					return FALSE;
 				}
 			}
-			
-			MD4 pED2K;
-			if ( CED2K::HashFromURN( strValue, &pED2K ) )
+
+            Hashes::Ed2kHash oED2K;
+			if ( ! m_bHashMatch && oED2K.fromUrn( strValue ) )
 			{
-				if ( m_pSource->CheckHash( &pED2K ) )
+				if ( m_pSource->CheckHash( oED2K ) )
 				{
 					m_bHashMatch = TRUE;
 				}
@@ -766,7 +755,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 					Close( TS_FALSE );
 					return FALSE;
 				}
-			}
+            }
 		}
 		m_pSource->SetGnutella( 1 );
 	}
@@ -836,7 +825,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		nPos = strValue.Find( _T("length=") );
 		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 7 ), _T("%i"), &m_nQueueLen );
 		
-		DWORD nLimit;
+		DWORD nLimit = 0;
 		
 		nPos = strValue.Find( _T("pollmin=") );
 		if ( nPos >= 0 && _stscanf( strValue.Mid( nPos + 8 ), _T("%u"), &nLimit ) == 1 )
@@ -1063,6 +1052,8 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		(LPCTSTR)m_pSource->m_sServer );
 	
 	SetState( dtsDownloading );
+	if ( ! m_pDownload->IsBoosted() )
+		m_mInput.pLimit = m_mOutput.pLimit = &m_nBandwidth;
 	m_nPosition = 0;
 	m_tContent = m_mInput.tLast = GetTickCount();
 	
@@ -1078,7 +1069,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 	{
 		m_pSource->SetValid();
 		
-		DWORD nLength	= (DWORD)min( (QWORD)m_pInput->m_nLength, m_nLength - m_nPosition );
+		DWORD nLength	= min( m_pInput->m_nLength, m_nLength - m_nPosition );
 		BOOL bSubmit	= FALSE;
 		
 		if ( m_bRecvBackwards )
@@ -1235,7 +1226,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 {
 	if ( m_nContentLength == SIZE_UNKNOWN ) m_nContentLength = 0;
 	
-	DWORD nRemove = min( m_pInput->m_nLength, (DWORD)m_nContentLength );
+	DWORD nRemove = min( m_pInput->m_nLength, m_nContentLength );
 	m_nContentLength -= nRemove;
 	
 	m_pInput->Remove( nRemove );
@@ -1245,6 +1236,8 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 		if ( m_bQueueFlag )
 		{
 			SetState( dtsQueued );
+			if ( ! m_pDownload->IsBoosted() )
+				m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 			m_tRequest = GetTickCount() + m_nRetryDelay;
 
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_QUEUED,
@@ -1280,7 +1273,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP dropped connection handler
 
-void CDownloadTransferHTTP::OnDropped(BOOL bError)
+void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 {
 	if ( m_nState == dtsConnecting )
 	{

@@ -90,7 +90,7 @@ CG2Neighbour::~CG2Neighbour()
 
 	for ( POSITION pos = m_pOutbound.GetHeadPosition() ; pos ; )
 	{
-		CG2Packet* pOutbound = (CG2Packet*)m_pOutbound.GetNext( pos );
+		CG2Packet* pOutbound = m_pOutbound.GetNext( pos );
 		pOutbound->Release();
 	}
 }
@@ -110,7 +110,7 @@ BOOL CG2Neighbour::OnWrite()
 
 	while ( pOutput->m_nLength == 0 && m_nOutbound > 0 )
 	{
-		CG2Packet* pPacket = (CG2Packet*)m_pOutbound.RemoveHead();
+		CG2Packet* pPacket = m_pOutbound.RemoveHead();
 		m_nOutbound--;
 
 		pPacket->ToBuffer( pOutput );
@@ -202,14 +202,14 @@ BOOL CG2Neighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
 		{
 			if ( m_nOutbound >= Settings.Gnutella1.PacketBufferSize )
 			{
-				CG2Packet* pRemove = (CG2Packet*)m_pOutbound.RemoveTail();
+				CG2Packet* pRemove = m_pOutbound.RemoveTail();
 				pRemove->Release();
 				m_nOutbound--;
 				Statistics.Current.Gnutella2.Lost++;
 			}
 
 			pPacket->AddRef();
-			m_pOutbound.AddHead( pPacket );
+			m_pOutbound.AddHead( static_cast< CG2Packet* >( pPacket ) );
 			m_nOutbound++;
 		}
 		else
@@ -456,29 +456,29 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket)
 		*pRelay++ = 'R'; *pRelay++ = 'E'; *pRelay++ = 'L';
 		*pRelay++ = 'A'; *pRelay++ = 'Y';
 
-		CPtrArray pG2Nodes;
+		CArray< CG2Neighbour* > pG2Nodes;
 
 		for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 		{
-			CG2Neighbour* pNeighbour = (CG2Neighbour*)Neighbours.GetNext( pos );
+			CNeighbour* pNeighbour = Neighbours.GetNext( pos );
 
 			if (	pNeighbour->m_nState == nrsConnected &&
 					pNeighbour->m_nProtocol == PROTOCOL_G2 &&
 					pNeighbour != this)
 			{
-				pG2Nodes.Add( pNeighbour );
+				pG2Nodes.Add( static_cast< CG2Neighbour* >( pNeighbour ) );
  			}
 		}
 
 		int nRelayTo = Settings.Gnutella2.PingRelayLimit;
 
-		int nCount = pG2Nodes.GetCount();
+		INT_PTR nCount = pG2Nodes.GetCount();
 
-		for ( int nCur = 0; (nCur < nCount && nCur < nRelayTo); nCur++ )
+		for ( INT_PTR nCur = 0; (nCur < nCount && nCur < nRelayTo); nCur++ )
 		{
-			int nRand = rand() % pG2Nodes.GetCount();
+			INT_PTR nRand = rand() % pG2Nodes.GetCount();
 
-			CG2Neighbour* pNeighbour = (CG2Neighbour*)pG2Nodes.GetAt( nRand );
+			CG2Neighbour* pNeighbour = pG2Nodes.GetAt( nRand );
 			// Remove this debug message later
 			theApp.Message( MSG_DEBUG, _T("Ping Relay iteration %i picked random index %i as %s"),
 			nCur, nRand, (LPCTSTR)pNeighbour->m_sAddress  );
@@ -523,8 +523,7 @@ void CG2Neighbour::SendLNI()
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 
 	pPacket->WritePacket( "GU", 16 );
-	GGUID tmp( MyProfile.GUID );
-	pPacket->Write( &tmp, 16 );
+	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
 
 	pPacket->WritePacket( "V", 4 );
 	pPacket->WriteString( SHAREAZA_VENDOR_A, FALSE );
@@ -537,7 +536,7 @@ void CG2Neighbour::SendLNI()
 	{
 		pPacket->WritePacket( "HS", 4 );
 		pPacket->WriteShortBE( nLeafs );
-		pPacket->WriteShortBE( Settings.Gnutella2.NumLeafs );
+		pPacket->WriteShortBE( WORD( Settings.Gnutella2.NumLeafs ) );
 
 		pPacket->WritePacket( "QK", 0 );
 	}
@@ -552,7 +551,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 {
 	if ( ! pPacket->m_bCompound ) return TRUE;
 
-	DWORD tNow = time( NULL );
+//	DWORD tNow = time( NULL );
 	CHAR szType[9];
 	DWORD nLength;
 
@@ -569,8 +568,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 		}
 		else if ( strcmp( szType, "GU" ) == 0 && nLength >= 16 )
 		{
-			pPacket->Read( &m_pGUID, sizeof(GGUID) );
-			m_bGUID = TRUE;
+			pPacket->Read( m_oGUID );
 		}
 		else if ( strcmp( szType, "V" ) == 0 && nLength >= 4 )
 		{
@@ -615,7 +613,7 @@ void CG2Neighbour::SendKHL()
 {
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_KHL, TRUE );
 
-	DWORD nBase = pPacket->m_nPosition;
+//	DWORD nBase = pPacket->m_nPosition;
 
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
@@ -649,10 +647,10 @@ void CG2Neighbour::SendKHL()
 	}
 
 	int nCount = Settings.Gnutella2.KHLHubCount;
-	DWORD tNow = time( NULL );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	pPacket->WritePacket( "TS", 4 );
-	pPacket->WriteLongBE( time( NULL ) );
+	pPacket->WriteLongBE( static_cast< DWORD >( time( NULL ) ) );
 
 	for ( CHostCacheHost* pHost = HostCache.Gnutella2.GetNewest() ; pHost && nCount > 0 ; pHost = pHost->m_pPrevTime )
 	{
@@ -709,7 +707,7 @@ BOOL CG2Neighbour::OnKHL(CG2Packet* pPacket)
 	DWORD nLength, nInner;
 	BOOL bCompound;
 
-	DWORD tNow = time( NULL );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	m_pHubGroup->Clear();
 
@@ -721,7 +719,7 @@ BOOL CG2Neighbour::OnKHL(CG2Packet* pPacket)
 				strcmp( szType, "CH" ) == 0 )
 		{
 			DWORD nAddress = 0, nKey = 0, tSeen = tNow;
-			WORD nPort = 0, nLeafs = 0;
+			WORD nPort = 0;//, nLeafs = 0;
 			CString strVendor;
 
 			if ( bCompound || 0 == strcmp( szType, "NH" ) )
@@ -805,10 +803,10 @@ void CG2Neighbour::SendHAW()
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_HAW, TRUE );
 
 	WORD nLeafs = 0;
-	GGUID pGUID;
-
-	Network.CreateID( pGUID );
-
+	Hashes::Guid oGUID;
+	
+	Network.CreateID( oGUID );
+	
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
@@ -833,11 +831,11 @@ void CG2Neighbour::SendHAW()
 
 	pPacket->WriteByte( 100 );
 	pPacket->WriteByte( 0 );
-	pPacket->Write( &pGUID, sizeof(GGUID) );
-
+	pPacket->Write( oGUID );
+	
 	Send( pPacket, TRUE, TRUE );
-
-	m_pGUIDCache->Add( &pGUID, this );
+	
+	m_pGUIDCache->Add( oGUID, this );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -879,19 +877,19 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 	BYTE nTTL	= pPacket->ReadByte();
 	BYTE nHops	= pPacket->ReadByte();
 
-	GGUID pGUID;
-	pPacket->Read( &pGUID, sizeof(GGUID) );
+	Hashes::Guid oGUID;
+	pPacket->Read( oGUID );
 
 	HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, 0, strVendor );
 
 	if ( nTTL > 0 && nHops < 255 )
 	{
-		m_pGUIDCache->Add( &pGUID, this );
+		m_pGUIDCache->Add( oGUID, this );
 
 		pPtr[0] = nTTL  - 1;
 		pPtr[1] = nHops + 1;
 
-		if ( CG2Neighbour* pNeighbour = Neighbours.GetRandomHub( this, &pGUID ) )
+		if ( CG2Neighbour* pNeighbour = Neighbours.GetRandomHub( this, oGUID ) )
 		{
 			pNeighbour->Send( pPacket, FALSE, TRUE );
 		}
@@ -945,7 +943,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	}
 
 	// Check for excessive source searching
-	if ( ( pSearch->m_bSHA1 ) || ( pSearch->m_bBTH ) || ( pSearch->m_bED2K ) )
+	if ( pSearch->m_oSHA1 || pSearch->m_oBTH || pSearch->m_oED2K )
 	{
 
 		// Update allowed query operations, check for bad client
@@ -994,7 +992,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		return TRUE;
 	}
 
-	if ( ! Network.QueryRoute->Add( &pSearch->m_pGUID, this ) )
+	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, this ) )
 	{
 		delete pSearch;
 		Statistics.Current.Gnutella2.Dropped++;
@@ -1047,9 +1045,9 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		CLocalSearch pLocal( pSearch, this, FALSE );
 		pLocal.Execute();
 	}
-
-	if ( m_nNodeType == ntLeaf ) Send( Neighbours.CreateQueryWeb( &pSearch->m_pGUID, this ), TRUE, FALSE );
-
+	
+	if ( m_nNodeType == ntLeaf ) Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, this ), TRUE, FALSE );
+	
 	delete pSearch;
 	Statistics.Current.Gnutella2.Queries++;
 
@@ -1059,7 +1057,8 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 BOOL CG2Neighbour::OnQueryAck(CG2Packet* pPacket)
 {
 	HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
-	SearchManager.OnQueryAck( pPacket, &m_pHost, NULL );
+	Hashes::Guid oGuid;
+	SearchManager.OnQueryAck( pPacket, &m_pHost, oGuid );
 	return TRUE;
 }
 
@@ -1207,7 +1206,7 @@ BOOL CG2Neighbour::OnPush(CG2Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CG2Neighbour USER PROFILE CHALLENGE packet handler
 
-BOOL CG2Neighbour::OnProfileChallenge(CG2Packet* pPacket)
+BOOL CG2Neighbour::OnProfileChallenge(CG2Packet* /*pPacket*/)
 {
 	if ( ! MyProfile.IsValid() ) return TRUE;
 

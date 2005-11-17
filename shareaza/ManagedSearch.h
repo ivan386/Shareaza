@@ -24,23 +24,25 @@
 
 #pragma once
 
+#include "QuerySearch.h"
+
 class CPacket;
-class CQuerySearch;
 class CNeighbour;
 
 
-class CManagedSearch
+class CManagedSearch : private boost::noncopyable
 {
 // Construction
 public:
-	CManagedSearch(CQuerySearch* pSearch = NULL, int nPriority = 0);
-	virtual ~CManagedSearch();
+	CManagedSearch(std::auto_ptr< CQuerySearch > pSearch = std::auto_ptr< CQuerySearch >( new CQuerySearch() ),
+			int nPriority = 0);
+	~CManagedSearch() { Stop(); }
 	
 	enum { spHighest, spMedium, spLowest, spMax };
 
 // Attributes
 public:
-	CQuerySearch*	m_pSearch;
+	boost::scoped_ptr< CQuerySearch > m_pSearch;
 	int				m_nPriority;
 	BOOL			m_bAllowG2;
 	BOOL			m_bAllowG1;
@@ -60,7 +62,7 @@ public:
 	DWORD			m_nEDServers;				// Number of EDonkey servers searched
 	DWORD			m_nEDClients;				// Number of ED2K clients searched (Guess)
 protected:
-	CMapPtrToPtr	m_pNodes;
+	CMap< DWORD, DWORD, DWORD, DWORD > m_pNodes;
 	DWORD			m_tExecute;
 
 // Operations
@@ -79,7 +81,7 @@ protected:
 // Inlines
 public:
 
-	inline CQuerySearch* GetSearch() const { return m_pSearch; }
+	inline CQuerySearch* GetSearch() const { return m_pSearch.get(); }
 	inline BOOL IsActive() const { return m_bActive; }
 	inline int GetPriority() const { return m_nPriority; }
 	inline void SetPriority(int nPriority) { m_nPriority = nPriority; }

@@ -40,6 +40,7 @@ public:
 	CMutex				m_pSection;
 	WORD				m_nVersion[4];
 	CString				m_sVersion;
+	CString				m_sBuildDate;
 	CFont				m_gdiFont;
 	CFont				m_gdiFontBold;
 	CFont				m_gdiFontLine;
@@ -106,14 +107,13 @@ CRuntimeClass* AfxClassForName(LPCTSTR pszClass);
 
 BOOL LoadString(CString& str, UINT nID);
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern);
-LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, DWORD plen);
-void ToLower(CString& strSource);
+LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen);
 void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace);
-void Split(CString strSource, LPCTSTR strDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty);
+void Split(CString strSource, LPCTSTR strDelimiter, CArray< CString >& pAddIt, BOOL bAddFirstEmpty);
 BOOL LoadSourcesString(CString& str, DWORD num);
 
 DWORD	TimeFromString(LPCTSTR psz);
-CString	TimeToString(DWORD tVal);
+CString	TimeToString(time_t tVal);
 BOOL	TimeFromString(LPCTSTR psz, FILETIME* pTime);
 CString	TimeToString(FILETIME* pTime);
 
@@ -127,7 +127,7 @@ HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 #define MLOG(x)
 #endif
 
-static inline bool IsCharacter(TCHAR nChar)
+inline bool IsCharacter(TCHAR nChar)
 {
 	if ( nChar >= 0 && nChar <= 255 )
 	{
@@ -139,7 +139,7 @@ static inline bool IsCharacter(TCHAR nChar)
 	}
 }
 
-static inline bool IsWord(LPCTSTR pszString, int nStart, int nLength)
+inline bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
 	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
 	{

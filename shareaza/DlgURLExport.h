@@ -49,7 +49,7 @@ public:
 	CString	m_sFormat;
 	//}}AFX_DATA
 
-	CPtrList	m_pFiles;
+	CList< DWORD > m_pFiles;
 	void		AddFile(CLibraryFile* pFile);
 
 // Overrides

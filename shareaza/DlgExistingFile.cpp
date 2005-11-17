@@ -58,19 +58,19 @@ CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent) : CSkinDi
 	//}}AFX_DATA_INIT
 
 	m_sName = pFile->m_sName;
-
-	if ( pFile->m_bSHA1 && pFile->m_bTiger )
+	
+	if ( pFile->m_oSHA1 && pFile->m_oTiger )
 	{
-		m_sURN	= _T("bitprint:") + CSHA::HashToString( &pFile->m_pSHA1 )
-				+ '.' + CTigerNode::HashToString( &pFile->m_pTiger );
+		m_sURN	= _T("bitprint:") + pFile->m_oSHA1.toString()
+            + '.' + pFile->m_oTiger.toString();
 	}
-	else if ( pFile->m_bSHA1 )
+	else if ( pFile->m_oSHA1 )
 	{
-		m_sURN = CSHA::HashToString( &pFile->m_pSHA1, TRUE );
+		m_sURN = pFile->m_oSHA1.toString();
 	}
-	else if ( pFile->m_bTiger )
+	else if ( pFile->m_oTiger )
 	{
-		m_sURN = CTigerNode::HashToString( &pFile->m_pTiger, TRUE );
+		m_sURN = pFile->m_oTiger.toUrn();
 	}
 
 	m_bAvailable	= pFile->IsAvailable();

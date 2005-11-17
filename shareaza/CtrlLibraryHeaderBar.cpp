@@ -81,7 +81,7 @@ void CLibraryHeaderBar::Update(CLibraryView* pView)
 		if (m_hWnd) Invalidate();
 	}
 
-	if ( pView != m_pLastView && ( m_pLastView = pView ) )
+	if ( pView != m_pLastView && ( m_pLastView = pView ) != NULL )
 	{
 		if ( CCoolBarItem* pItem = GetID( ID_LIBRARY_VIEW ) )
 		{
@@ -196,7 +196,7 @@ void CLibraryHeaderBar::OnLibraryView()
 	pMenu.CreatePopupMenu();
 
 	CLibraryFrame* pFrame	= (CLibraryFrame*)GetParent();
-	CPtrList* pViews		= &pFrame->m_pViews;
+	CList< CLibraryView* >* pViews		= &pFrame->m_pViews;
 
 	for ( POSITION pos = pViews->GetHeadPosition() ; pos ; )
 	{
@@ -233,12 +233,12 @@ void CLibraryHeaderBar::OnLibraryView()
 	m_pCoolMenu = NULL;
 }
 
-void CLibraryHeaderBar::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+void CLibraryHeaderBar::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnMeasureItem( lpMeasureItemStruct );
 }
 
-void CLibraryHeaderBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+void CLibraryHeaderBar::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnDrawItem( lpDrawItemStruct );
 }

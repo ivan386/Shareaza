@@ -40,7 +40,7 @@ public:
 	virtual void	OnSkinChange();
 	BOOL			Select(CDownload* pDownload);
 	void			Update();
-	void			DragDownloads(CPtrList* pList, CImageList* pImage, const CPoint& ptScreen);
+	void			DragDownloads(CList< CDownload* >* pList, CImageList* pImage, const CPoint& ptScreen);
 protected:
 	void			Prepare();
 	void			CancelDrag();
@@ -51,7 +51,7 @@ protected:
 	CDownloadTabBar	m_wndTabBar;
 	CCoolBarCtrl	m_wndToolBar;
 protected:
-	CPtrList*		m_pDragList;
+	CList< CDownload* >* m_pDragList;
 	CImageList*		m_pDragImage;
 	CPoint			m_pDragOffs;
 	HCURSOR			m_hCursMove;
@@ -75,7 +75,7 @@ protected:
 	BOOL			m_bSelCompleted;
 	BOOL			m_bSelNotMoving;
 	BOOL			m_bSelBoostable;
-	BOOL			m_bSelSHA1orED2K;
+	BOOL			m_bSelSHA1orTTHorED2KorName;
 	BOOL			m_bSelShareState;
 	BOOL			m_bSelTorrent;
 	BOOL			m_bSelIdleSource;
@@ -101,7 +101,7 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnUpdateDownloadsResume(CCmdUI* pCmdUI);

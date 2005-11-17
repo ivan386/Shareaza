@@ -91,12 +91,12 @@ protected:
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnSysColorChange();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnWindowPosChanging(WINDOWPOS* lpwndpos);
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
-	afx_msg UINT OnNcHitTest(CPoint point);
+	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
 	afx_msg void OnNcPaint();
 	afx_msg BOOL OnNcActivate(BOOL bActive);
 	afx_msg void OnNcMouseMove(UINT nHitTest, CPoint point);
@@ -104,20 +104,20 @@ protected:
 	afx_msg void OnNcLButtonUp(UINT nHitTest, CPoint point);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnEndSession(BOOL bEnding);
-	afx_msg LONG OnWinsock(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnHandleURL(UINT wParam, LONG lParam);
-	afx_msg LONG OnHandleCollection(UINT wParam, LONG lParam);
-	afx_msg LONG OnVersionCheck(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnOpenChat(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnOpenSearch(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnTray(UINT wParam, LONG lParam);
-	afx_msg LONG OnLog(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnSkinChanged(UINT wParam, LONG lParam);
-	afx_msg LONG OnSetMessageString(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnSetText(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnMediaKey(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnDevModeChange(WPARAM wParam, LPARAM lParam);
-	afx_msg LONG OnDisplayChange(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnWinsock(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnHandleURL(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnHandleCollection(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnVersionCheck(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnOpenChat(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnOpenSearch(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnTray(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnLog(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnSkinChanged(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnSetMessageString(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnMediaKey(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnDevModeChange(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnDisplayChange(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnUpdatePluginRange(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewSystem(CCmdUI* pCmdUI);
 	afx_msg void OnViewSystem();
@@ -256,7 +256,7 @@ protected:
 		BOOL	ObjectToFiles(IDataObject* pObject);
 		BOOL	IsTorrentFile() const;
 	protected:
-		CStringList	m_pFiles;
+		CList< CString >	m_pFiles;
 	END_INTERFACE_PART(DropTarget)
 	
 	DECLARE_INTERFACE_MAP()

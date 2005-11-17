@@ -92,9 +92,10 @@ void CSettings::Setup()
 	Add( _T("Library.SafeExecute"), &Library.SafeExecute, _T("|ace|ape|asf|avi|bmp|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|mp2|mp3|mpa|mpe|mpg|mpeg|ogg|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|") );
 	Add( _T("Library.PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|dat|part|partial|getright|pif|lnk|sd|url|") );
 	Add( _T("Library.ThumbSize"), &Library.ThumbSize, 96 );
-	Add( _T("Library.BitziWebView"), &Library.BitziWebView, _T("http://bitzi.com/lookup/(SHA1)?detail&ref=shareaza") );
-	Add( _T("Library.BitziWebSubmit"), &Library.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&a=(AGENT)&v=Q0.4&ref=shareaza") );
-	Add( _T("Library.BitziXML"), &Library.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1)") );
+	Add( _T("Library.BitziAgent"), &Library.BitziAgent, _T(".") );
+	Add( _T("Library.BitziWebView"), &Library.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
+	Add( _T("Library.BitziWebSubmit"), &Library.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
+	Add( _T("Library.BitziXML"), &Library.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)") );
 	Add( _T("Library.BitziOkay"), &Library.BitziOkay, FALSE );
 	Add( _T("Library.HighPriorityHash"), &Library.HighPriorityHash, FALSE );
 	Add( _T("Library.HashWindow"), &Library.HashWindow, FALSE );
@@ -447,7 +448,7 @@ CSettings::~CSettings()
 {
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		delete (Item*)m_pItems.GetNext( pos );
+		delete m_pItems.GetNext( pos );
 	}
 }
 
@@ -481,7 +482,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	31
+#define SMART_VERSION	32
 
 void CSettings::Load()
 {
@@ -489,7 +490,7 @@ void CSettings::Load()
 	
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		Item* pItem = (Item*)m_pItems.GetNext( pos );
+		Item* pItem = m_pItems.GetNext( pos );
 		pItem->Load();
 	}
 	
@@ -536,11 +537,11 @@ void CSettings::Load()
 	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, (int)( ( GetOutgoingBandwidth() / 2 ) + 2 ) );
 
 	// Enforce a few sensible values to avoid being banned/dropped/etc (in case of registry fiddling)
-	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, DWORD(4*60*1000) );
-	Downloads.StarveTimeout		= max( Downloads.StarveTimeout, DWORD(45*60) );
-	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, DWORD(1000) );
-	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, DWORD(45*60) );
-	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, DWORD(60*60) );
+	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, 4*60*1000u );
+	Downloads.StarveTimeout		= max( Downloads.StarveTimeout, 45*60u );
+	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000u );
+	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, 45*60u );
+	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, 60*60u );
 	Downloads.ConnectThrottle	= max( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
 	Downloads.MaxFiles			= min( Downloads.MaxFiles, 100 );
 
@@ -570,7 +571,7 @@ void CSettings::Save(BOOL bShutdown)
 	
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		Item* pItem = (Item*)m_pItems.GetNext( pos );
+		Item* pItem = m_pItems.GetNext( pos );
 		if ( pItem->m_sName != _T(".Path") ) pItem->Save();
 	}
 	
@@ -585,8 +586,8 @@ void CSettings::SmartUpgrade()
 {	//This function resets certain values when upgrading, depending on version.
 	CRegistry pRegistry;
 	int nVersion = pRegistry.GetInt( _T("Settings"), _T("SmartVersion"), SMART_VERSION );
-
-	// Set next update check
+	
+/*	// Set next update check
 	if ( nVersion < SMART_VERSION )
 	{
 		// Don't check for a week if we've just upgraded
@@ -594,7 +595,7 @@ void CSettings::SmartUpgrade()
 		CTime tNextCheck = CTime::GetCurrentTime() + tPeriod;
 		theApp.WriteProfileInt( _T("VersionCheck"), _T("NextCheck"), (DWORD)tNextCheck.GetTime() );
 	}
-	
+*/	
 	// Add OGG handling if needed
 	if ( ( nVersion < SMART_VERSION || Live.FirstRun ) &&
 		_tcsistr( MediaPlayer.FileTypes, _T("|ogg|") ) == NULL )
@@ -616,13 +617,15 @@ void CSettings::SmartUpgrade()
 		Gnutella2.UdpOutResend			= 6000;
 		Gnutella2.UdpOutExpire			= 26000;
 		Library.TigerHeight		= 9;
-		Library.BitziWebSubmit	= _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&a=(AGENT)&v=Q0.4&ref=shareaza");
+		
 		Downloads.MaxFiles				= max( Downloads.MaxFiles, 8 );
 		Downloads.MaxFileTransfers		= max( Downloads.MaxFileTransfers, 16 );
 		Downloads.AutoExpand			= FALSE;
+		
 		Uploads.SharePartials			= TRUE;
 		Uploads.MaxPerHost				= 2;
 		Uploads.ShareTiger				= TRUE;
+		
 		Replace( Library.PrivateTypes, _T("|nfo|"), _T("|") );
 		Replace( Library.SafeExecute, _T("|."), _T("|") );
 	}
@@ -631,21 +634,26 @@ void CSettings::SmartUpgrade()
 	{
 		Library.ThumbSize				= 96;
 		Library.SourceExpire			= 86400;
+		
 		Gnutella1.TranslateTTL			= 2;
 	}
 	
 	if ( nVersion < 24 )
 	{
 		General.CloseMode				= 0;
+		
 		Connection.TimeoutConnect		= 16000;
 		Connection.TimeoutHandshake		= 45000;
+		
 		Downloads.RetryDelay			= 10*60000;
+		
 		Uploads.FilterMask				= 0xFFFFFFFD;
 	}
 	
 	if ( nVersion < 25 )
 	{
 		Connection.TimeoutTraffic		= 140000;
+		
 		Gnutella2.NumHubs				= 2;
 		Gnutella2.NumLeafs				= 300;
 		Gnutella2.NumPeers				= 6;
@@ -653,13 +661,14 @@ void CSettings::SmartUpgrade()
 	
 	if ( nVersion < 26 )
 	{
-		Downloads.ConnectThrottle		= max( Downloads.ConnectThrottle, DWORD(200) );
+		Downloads.ConnectThrottle		= max( Downloads.ConnectThrottle, 200u );
 		Downloads.MaxTransfers			= min( Downloads.MaxTransfers, 128 );
 	}
 	
 	if ( nVersion < 28 )
 	{
-		Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on	
+		Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on
+		
 		BitTorrent.Endgame		= TRUE;		// Endgame on
 	}
 
@@ -667,7 +676,9 @@ void CSettings::SmartUpgrade()
 	{
 		Downloads.MinSources	= 1;		// Lower Max value- should reset it in case  
 		Downloads.StarveTimeout = 2700;		// Increased due to ed2k queues (Tripping too often)
+		
 		Gnutella.MaxResults		= 100;		// No longer includes ed2k max files
+		
 		Gnutella2.RequeryDelay	= 4*3600;	// Longer delay between sending same search to G2 hub
 	}
 
@@ -678,12 +689,24 @@ void CSettings::SmartUpgrade()
 
 	if ( nVersion < 31 )
 	{
-		Downloads.SearchPeriod	= 120000;
-		Gnutella1.MaximumTTL	= 10;
-		Gnutella2.QueryGlobalThrottle = 125;
+		Downloads.SearchPeriod			= 120000;
+		
+		Gnutella1.MaximumTTL			= 10;
+		
+		Gnutella2.QueryGlobalThrottle	= 125;
+		
 		Uploads.QueuePollMin	= 45000;	// Lower values for re-ask times- a dynamic multiplier
-		Uploads.QueuePollMax	= 120000;	// Is now applied based on Q# (from 1x to 5x)
+		Uploads.QueuePollMax	= 120000;	//  Is now applied based on Q# (from 1x to 5x)
 		eDonkey.PacketThrottle	= 500;		// Second throttle added for finer control
+	}
+
+	if ( nVersion < 32 )
+	{
+		Library.BitziWebView	= _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza");
+		Library.BitziWebSubmit	= _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza");
+		Library.BitziXML		= _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)");
+		
+		theApp.WriteProfileString( _T("Interface"), _T("SchemaColumns.audio"), _T("(EMPTY)") );
 	}
 
 }
@@ -695,7 +718,7 @@ CSettings::Item* CSettings::GetSetting(LPCTSTR pszName) const
 {
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		Item* pItem = (Item*)m_pItems.GetNext( pos );
+		Item* pItem = m_pItems.GetNext( pos );
 		if ( pItem->m_sName.CompareNoCase( pszName ) == 0 ) return pItem;
 	}
 	
@@ -706,7 +729,7 @@ CSettings::Item* CSettings::GetSetting(LPVOID pValue) const
 {
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
-		Item* pItem = (Item*)m_pItems.GetNext( pos );
+		Item* pItem = m_pItems.GetNext( pos );
 		if ( pItem->m_pDword == pValue ||
 			 pItem->m_pFloat == pValue ||
 			 pItem->m_pString == pValue ) return pItem;
@@ -720,7 +743,6 @@ CSettings::Item* CSettings::GetSetting(LPVOID pValue) const
 
 BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)
 {
-	WINDOWPLACEMENT pPos;
 	CRegistry pRegistry;
 	CString strEntry;
 	
@@ -732,7 +754,7 @@ BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)
 	int nShowCmd = pRegistry.GetInt( _T("Windows"), strEntry + _T(".ShowCmd"), -1 );
 	if ( nShowCmd == -1 ) return FALSE;
 	
-	ZeroMemory( &pPos, sizeof(pPos) );
+	WINDOWPLACEMENT pPos = {};
 	pPos.length = sizeof(pPos);
 
 	pPos.rcNormalPosition.left		= pRegistry.GetInt( _T("Windows"), strEntry + _T(".Left"), 0 );
@@ -821,7 +843,7 @@ BOOL CSettings::LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort)
 		bSuccess = TRUE;
 	}
 
-	SetWindowLong( pCtrl->GetSafeHwnd(), GWL_USERDATA, nSort );
+	SetWindowLongPtr( pCtrl->GetSafeHwnd(), GWLP_USERDATA, nSort );
 
 	CHeaderCtrl* pHeader = (CHeaderCtrl*)pCtrl->GetWindow( GW_CHILD );
 	if ( pHeader ) Skin.Translate( pszName, pHeader );
@@ -854,7 +876,7 @@ void CSettings::SaveList(LPCTSTR pszName, CListCtrl* pCtrl)
 	
 	delete [] pOrdering;
 	
-	int nSort = GetWindowLong( pCtrl->GetSafeHwnd(), GWL_USERDATA );
+	int nSort = (int)GetWindowLongPtr( pCtrl->GetSafeHwnd(), GWLP_USERDATA );
 	
 	strItem.Format( _T("%s.Ordering"), pszName );
 	pRegistry.SetString( _T("ListStates"), strItem, strOrdering);
@@ -918,7 +940,7 @@ CString CSettings::SmartAgent()
 	CString strAgent = _T( CLIENT_NAME ); 
 	strAgent += _T(" ");
 	strAgent += theApp.m_sVersion;
-		
+
 	return strAgent;
 }
 

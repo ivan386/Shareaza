@@ -120,9 +120,9 @@ void CPluginsSettingsPage::OnItemChangingPlugins(NMHDR *pNMHDR, LRESULT *pResult
 	}
 }
 
-void CPluginsSettingsPage::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult)
+void CPluginsSettingsPage::OnItemChangedPlugins(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
-	NMLISTVIEW* pNMListView = reinterpret_cast<NMLISTVIEW*>(pNMHDR);
+//	NMLISTVIEW* pNMListView = reinterpret_cast<NMLISTVIEW*>(pNMHDR);
 	*pResult = 0;
 
 	if ( m_wndList.GetSelectedCount() == 1 )
@@ -223,6 +223,7 @@ void CPluginsSettingsPage::InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName, int n
 
 		if ( pPlugin != NULL && pExisting == NULL ) break;
 		if ( pPlugin == NULL && pExisting != NULL ) continue;
+		if ( strExisting.Compare( pszName ) == 0 ) return;
 		if ( strExisting.Compare( pszName ) > 0 ) break;
 	}
 
@@ -288,7 +289,7 @@ void CPluginsSettingsPage::EnumerateMiscPlugins()
 
 void CPluginsSettingsPage::EnumerateMiscPlugins(LPCTSTR pszType, HKEY hRoot)
 {
-	CStringList pCLSIDs;
+	CList< CString > pCLSIDs;
 
 	for ( DWORD nIndex = 0 ; ; nIndex++ )
 	{
@@ -309,7 +310,7 @@ void CPluginsSettingsPage::EnumerateMiscPlugins(LPCTSTR pszType, HKEY hRoot)
 	}
 }
 
-void CPluginsSettingsPage::AddMiscPlugin(LPCTSTR pszType, LPCTSTR pszCLSID)
+void CPluginsSettingsPage::AddMiscPlugin(LPCTSTR /*pszType*/, LPCTSTR pszCLSID)
 {
 	HKEY hClass = NULL;
 	CString strClass;

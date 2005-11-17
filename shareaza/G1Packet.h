@@ -39,7 +39,7 @@
 typedef struct
 {
 	// These are the parts of a Gnutella packet header, in the right order, with each part the right size
-	GGUID m_pGUID;   // At  0, length 16, the globally unique identifier of this packet
+	Hashes::Guid::RawStorage m_oGUID; // At  0, length 16, the globally unique identifier of this packet
 	BYTE  m_nType;   // At 16, the byte that identifies what kind of packet this is, like ping or pong
 	BYTE  m_nTTL;    // At 17, the number of hops this packet can travel across the Internet from here
 	BYTE  m_nHops;   // At 18, the number of hops this packet has traveled across the Internet to get here
@@ -60,7 +60,7 @@ protected:
 public:
 
 	// Data in the packet
-	GGUID m_pGUID; // The globally unique identifier of this packet
+	Hashes::Guid m_oGUID; // The globally unique identifier of this packet
 	BYTE  m_nType; // The type of this packet, like ping or pong
 	BYTE  m_nTTL;  // The number of hops this packet can travel across the Internet from here
 	BYTE  m_nHops; // The number of hops this packet has travelled across the Internet to get here
@@ -76,7 +76,8 @@ public:
 
 	// Hash the packet
 	void         CacheHash();                                       // Calculate a simple hash of the packet payload in m_nHash
-	virtual BOOL GetRazaHash(SHA1* pHash, DWORD nLength = 0) const; // Compute the SHA hash of the packet GUID, type byte, and payload
+    // ????????????????????????????????? redefinition of default Parameter!!!
+	virtual BOOL GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength = 0) const; // Compute the SHA hash of the packet GUID, type byte, and payload
 
 	// Get the packet's type, GUID, and all its bytes
 	virtual LPCTSTR GetType()                  const; // Returns a pointer to a text literal like "Ping" or "Pong"
@@ -116,7 +117,7 @@ protected:
 public:
 
 	// Get a new packet from the global packet pool called POOL, fill it with these values, and return a pointer to it
-	static CG1Packet* New(int nType = 0, DWORD nTTL = 0, GGUID* pGUID = NULL);
+	static CG1Packet* New(int nType = 0, DWORD nTTL = 0, const Hashes::Guid& oGUID = Hashes::Guid());
 
 	// Takes a Gnutella packet header structure
 	// Gets a new packet from the pool and fills it with values from the header structure
@@ -127,7 +128,7 @@ public:
 		CG1Packet* pPacket = (CG1Packet*)POOL.New();
 
 		// Fill it with information from the given Gnutella packet header structure
-		pPacket->m_pGUID = pSource->m_pGUID;
+		pPacket->m_oGUID = pSource->m_oGUID;
 		pPacket->m_nType = pSource->m_nType;
 		pPacket->m_nTTL  = pSource->m_nTTL;
 		pPacket->m_nHops = pSource->m_nHops;

@@ -153,7 +153,7 @@ void CBTClients::ShutdownRequests()
 	{
 		pLock.Lock();
 		if ( m_pRequests.GetCount() == 0 ) break;
-		CBTTrackerRequest* pRequest = (CBTTrackerRequest*)m_pRequests.RemoveHead();
+		CBTTrackerRequest* pRequest = m_pRequests.RemoveHead();
 		HANDLE hThread = pRequest->m_hThread;
 		pLock.Unlock();
 		CHttpRequest::CloseThread( &hThread, _T("CBTTrackerRequest") );

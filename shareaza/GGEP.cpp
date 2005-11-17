@@ -125,7 +125,7 @@ BOOL CGGEPBlock::ReadFromPacket(CPacket* pPacket)
 BOOL CGGEPBlock::ReadFromString(LPCTSTR pszData)
 {
 	m_pInput = (BYTE*)pszData;
-	m_nInput = _tcslen( pszData );
+	m_nInput = static_cast< DWORD >( _tcslen( pszData ) );
 
 	return ReadInternal();
 }
@@ -349,7 +349,7 @@ BOOL CGGEPItem::ReadFrom(CGGEPBlock* pBlock, BYTE nFlags)
 
 void CGGEPItem::WriteTo(CPacket* pPacket)
 {
-	BYTE nFlags = ( m_sID.GetLength() & GGEP_HDR_IDLEN );
+	BYTE nFlags = BYTE( m_sID.GetLength() & GGEP_HDR_IDLEN );
 
 	if ( Deflate( TRUE ) ) nFlags |= GGEP_HDR_DEFLATE;
 	if ( Encode( TRUE ) ) nFlags |= GGEP_HDR_COBS;
@@ -379,7 +379,7 @@ void CGGEPItem::WriteTo(CPacket* pPacket)
 
 void CGGEPItem::WriteTo(CString& str)
 {
-	BYTE nFlags = ( m_sID.GetLength() & GGEP_HDR_IDLEN );
+	BYTE nFlags = BYTE( m_sID.GetLength() & GGEP_HDR_IDLEN );
 
 	if ( Deflate( TRUE ) ) nFlags |= GGEP_HDR_DEFLATE;
 	if ( Encode() ) nFlags |= GGEP_HDR_COBS;
@@ -478,7 +478,7 @@ BOOL CGGEPItem::Encode(BOOL bIfZeros)
 	delete [] m_pBuffer;
 
 	m_pBuffer = pOutput;
-	m_nLength = pOut - pOutput;
+	m_nLength = static_cast< DWORD >( pOut - pOutput );
 
 	return TRUE;
 }
@@ -507,7 +507,7 @@ BOOL CGGEPItem::Decode()
 		BYTE nSize = *pIn++ - 1;
 		nLength--;
 
-		nSize = (BYTE)min( (DWORD)nSize, nLength );
+		nSize = min( nSize, nLength );
 
 		while ( nSize-- )
 		{
@@ -524,7 +524,7 @@ BOOL CGGEPItem::Decode()
 	delete [] m_pBuffer;
 
 	m_pBuffer = pOutput;
-	m_nLength = pOut - pOutput;
+	m_nLength = static_cast< DWORD >( pOut - pOutput );
 
 	return TRUE;
 }

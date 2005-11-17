@@ -48,7 +48,7 @@ public:
 	NOTIFYICONDATA	m_pTray;
 	BOOL			m_bCompleted;
 public:
-	static CPtrList	m_pWindows;
+	static CList< CDownloadMonitorDlg* >	m_pWindows;
 
 // Operatons
 protected:
@@ -100,7 +100,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg void OnDownloadCancel();
 	afx_msg void OnDestroy();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnDownloadLaunch();
 	afx_msg void OnDownloadLibrary();
 	afx_msg void OnDownloadStop();
@@ -109,7 +109,7 @@ protected:
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
-	afx_msg LONG OnTray(UINT wParam, LONG lParam);
+	afx_msg LRESULT OnTray(WPARAM wParam, LPARAM lParam);
 	afx_msg BOOL OnNeedText(UINT nID, NMHDR* pTTT, LRESULT* pResult);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG

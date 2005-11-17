@@ -179,24 +179,24 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		switch ( m_wndHomeSelect.GetCurSel() )
 		{
 		case 0:
-			Settings.Connection.FirewallStatus	= CONNECTION_OPEN;
-			if ( Settings.Connection.InPort	== 6346 )
+			Settings.Connection.FirewallStatus = CONNECTION_OPEN;
+			if ( Settings.Connection.InPort == 6346 )
 				Settings.Connection.InPort	= Network.RandomPort();
 			break;
 		case 1:
-			Settings.Connection.FirewallStatus	= CONNECTION_OPEN;
+			Settings.Connection.FirewallStatus = CONNECTION_OPEN;
 			// Settings.Connection.InPort		= 6346;
 			LoadString( strFormat, IDS_WIZARD_PORT_FORWARD );
 			strMessage.Format( strFormat, Settings.Connection.InPort );
 			AfxMessageBox( strMessage, MB_ICONINFORMATION );
 			break;
 		case 2:
-			Settings.Connection.FirewallStatus	= CONNECTION_FIREWALLED;
-			Settings.Connection.InPort			= 6346;
+			Settings.Connection.FirewallStatus = CONNECTION_FIREWALLED;
+			Settings.Connection.InPort		= 6346;
 			break;
 		case 3:
-			Settings.Connection.FirewallStatus	= CONNECTION_AUTO;
-			Settings.Connection.InPort			= 6346;
+			Settings.Connection.FirewallStatus = CONNECTION_AUTO;
+			Settings.Connection.InPort		= 6346;
 			break;
 		}
 	}
@@ -205,27 +205,27 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		switch ( m_wndLanSelect.GetCurSel() )
 		{
 		case 0:
-			Settings.Connection.FirewallStatus	= CONNECTION_OPEN;
+			Settings.Connection.FirewallStatus = CONNECTION_OPEN;
 			if ( Settings.Connection.InPort == 6346 )
 				Settings.Connection.InPort	= Network.RandomPort();
 			break;
 		case 1:
-			Settings.Connection.FirewallStatus	= CONNECTION_FIREWALLED;
-			Settings.Connection.InPort			= 6346;
+			Settings.Connection.FirewallStatus = CONNECTION_FIREWALLED;
+			Settings.Connection.InPort		= 6346;
 			break;
 		case 2:
-			Settings.Connection.FirewallStatus	= CONNECTION_AUTO;
-			Settings.Connection.InPort			= 6346;
+			Settings.Connection.FirewallStatus = CONNECTION_AUTO;
+			Settings.Connection.InPort		= 6346;
 			break;
 		}
 	}
 	
 	int nIndex	= m_wndType.GetCurSel();
-	int nSpeed	= 0;
+	DWORD nSpeed	= 0;
 	
 	if ( nIndex > 0 )
 	{
-		nSpeed = m_wndType.GetItemData( nIndex );
+		nSpeed = static_cast< DWORD >( m_wndType.GetItemData( nIndex ) );
 	}
 	else
 	{
@@ -332,9 +332,9 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	if ( ( theApp.m_bLimitedConnections ) && ( ! Settings.General.IgnoreXPsp2 ) ) 
 	{	// Window XP Service Pack 2
 		theApp.Message( MSG_ERROR, _T("Warning  - Windows XP Service Pack 2 detected. Performance may be reduced.") );
-		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, DWORD(800) );
-		Settings.Connection.ConnectThrottle		= max( Settings.Connection.ConnectThrottle, DWORD(250) );
-		Settings.Gnutella.ConnectFactor			= min( Settings.Gnutella.ConnectFactor, DWORD(3) );
+		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, 800u );
+		Settings.Connection.ConnectThrottle		= max( Settings.Connection.ConnectThrottle, 250u );
+		Settings.Gnutella.ConnectFactor			= min( Settings.Gnutella.ConnectFactor, 3u );
 		Settings.Gnutella2.NumHubs				= min( Settings.Gnutella2.NumHubs, 2 );
 		Settings.Gnutella1.EnableAlways			= FALSE;
 		Settings.Gnutella1.EnableToday			= FALSE;

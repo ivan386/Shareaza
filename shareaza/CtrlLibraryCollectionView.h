@@ -42,14 +42,14 @@ protected:
 	CWebCtrl*			m_pWebCtrl;
 	DWORD				m_nWebIndex;
 	CCollectionFile*	m_pCollection;
-	SHA1				m_pSHA1;
-
+    Hashes::Sha1Hash    m_oSHA1;
+	
 // Operations
 public:
 	virtual BOOL	CheckAvailable(CLibraryTreeItem* pSel);
 	virtual void	Update();
 protected:
-	virtual DWORD	HitTestIndex(const CPoint& point) const { return 0; };
+	virtual DWORD_PTR HitTestIndex(const CPoint& /*point*/) const { return 0; };
 	BOOL			ShowCollection(CLibraryFile* pFile);
 
 // Implementation

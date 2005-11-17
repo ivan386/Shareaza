@@ -52,7 +52,7 @@ protected:
 	int						m_nScroll;
 	CImageList				m_pStars;
 protected:
-	CPtrList				m_pSelTrack;
+	CList< CLibraryAlbumTrack* > m_pSelTrack;
 	int						m_nSelected;
 	CLibraryAlbumTrack*		m_pFocus;
 	CLibraryAlbumTrack*		m_pFirst;
@@ -66,7 +66,7 @@ public:
 public:
 	virtual void		Update();
 	virtual BOOL		Select(DWORD nObject);
-	virtual DWORD		HitTestIndex(const CPoint& point) const;
+	virtual DWORD_PTR 	HitTestIndex(const CPoint& point) const;
 protected:
 	void				Clear();
 	BOOL				Select(CLibraryAlbumTrack* pItem, TRISTATE bSelect = TS_TRUE);
@@ -124,9 +124,9 @@ public:
 // Attributes
 public:
 	DWORD	m_nIndex;
-	DWORD	m_nCookie;
-	BOOL	m_bShared;
-	BOOL	m_bSelected;
+	DWORD		m_nCookie;
+	BOOL		m_bShared;
+	BOOL		m_bSelected;
 public:
 	int		m_nShell;
 	int		m_nTrack;

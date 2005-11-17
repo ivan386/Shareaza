@@ -88,7 +88,7 @@ void CPromoteDlg::OnPaint()
 
 HBRUSH CPromoteDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-	HBRUSH hbr = (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
+	/*HBRUSH hbr =*/ (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
 
 	pDC->SetBkColor( m_crWhite );
 

@@ -99,7 +99,7 @@ BOOL CRichSettingsPage::OnInitDialog()
 	return TRUE;
 }
 
-void CRichSettingsPage::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult)
+void CRichSettingsPage::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
 {
 	CRichElement* pElement = pNotify->pElement;
 	if ( ! pElement ) return;

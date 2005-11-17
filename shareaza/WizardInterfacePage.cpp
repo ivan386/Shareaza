@@ -83,7 +83,7 @@ BOOL CWizardInterfacePage::OnInitDialog()
 
 	Skin.Apply( _T("CWizardInterfacePage"), this );
 
-	m_bExpert				= Settings.General.GUIMode != GUI_BASIC;
+	m_bExpert = Settings.General.GUIMode != GUI_BASIC;
 	m_bSimpleDownloadBars	= Settings.Downloads.SimpleBar;
 	m_bTorrentInterface		= Settings.BitTorrent.AdvancedInterface;
 	m_bHandleTorrents		= Settings.Web.Torrent;
@@ -144,7 +144,7 @@ LRESULT CWizardInterfacePage::OnWizardNext()
 	if ( m_bExpert ) Settings.General.GUIMode = GUI_TABBED;
 	else Settings.General.GUIMode = GUI_BASIC;
 	pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
-	
+
 	Settings.Save();
 
 	// If this system is capable of handling multiple networks, go to the network settings wizard.

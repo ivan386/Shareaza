@@ -171,7 +171,8 @@ void CBandwidthSettingsPage::Calculate(BOOL bForeward)
 	Calculate( m_sPInLimit, nNumPeers, m_sPInMax, m_sPInTotal, bForeward );
 	// Calculate( m_sDLLimit, nDownloads, m_sDLMax, m_sDLTotal, bForeward );
 
-	m_sInTotal = ToString( AddString( m_sUPInTotal + ';' + m_sLInTotal + ';' + m_sPInTotal + ';' + m_sDLTotal ), TRUE, TRUE );
+	CString str = m_sUPInTotal + ';' + m_sLInTotal + ';' + m_sPInTotal + ';' + m_sDLTotal;
+	m_sInTotal = ToString( AddString( str ), TRUE, TRUE );
 
 	Calculate( m_sUPOutLimit, nNumHubs, m_sUPOutMax, m_sUPOutTotal, bForeward );
 	Calculate( m_sLOutLimit, nNumLeafs, m_sLOutMax, m_sLOutTotal, bForeward );
@@ -181,7 +182,8 @@ void CBandwidthSettingsPage::Calculate(BOOL bForeward)
 	// CString strDummy;
 	// Calculate( m_sUDPLimit, 1, strDummy, m_sUDPTotal, bForeward );
 
-	m_sOutTotal = ToString( AddString( m_sUPOutTotal + ';' + m_sLOutTotal + ';' + m_sPOutTotal + ';' + m_sULTotal + ';' + m_sUDPTotal ), TRUE, TRUE );
+	str = m_sUPOutTotal + ';' + m_sLOutTotal + ';' + m_sPOutTotal + ';' + m_sULTotal + ';' + m_sUDPTotal;
+	m_sOutTotal = ToString( AddString( str ), TRUE, TRUE );
 
 	m_bActive = FALSE;
 	UpdateData( FALSE );
@@ -322,7 +324,7 @@ BOOL CBandwidthSettingsPage::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pRe
 	return CSettingsPage::OnNotify( wParam, lParam, pResult );
 }
 
-void CBandwidthSettingsPage::OnTimer(UINT nIDEvent)
+void CBandwidthSettingsPage::OnTimer(UINT_PTR nIDEvent)
 {
 	UpdateData( TRUE );
 	Calculate( nIDEvent == 1 );

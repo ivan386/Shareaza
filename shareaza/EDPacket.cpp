@@ -64,13 +64,13 @@ void CEDPacket::WriteEDString(LPCTSTR psz, DWORD ServerFlags)
 	if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 	{
 		nLen = GetStringLenUTF8( psz );
-		WriteShortLE( nLen );
+		WriteShortLE( WORD( nLen ) );
 		WriteStringUTF8( psz, FALSE );
 	}
 	else
 	{
 		nLen = GetStringLen( psz );
-		WriteShortLE( nLen );
+		WriteShortLE( WORD( nLen ) );
 		WriteString( psz, FALSE );
 	}
 	ASSERT( nLen <= 0xFFFF );
@@ -91,13 +91,13 @@ void CEDPacket::WriteEDString(LPCTSTR psz, BOOL bUnicode)
 	if ( bUnicode )
 	{
 		nLen = GetStringLenUTF8( psz );
-		WriteShortLE( nLen );
+		WriteShortLE( WORD( nLen ) );
 		WriteStringUTF8( psz, FALSE );
 	}
 	else
 	{
 		nLen = GetStringLen( psz );
-		WriteShortLE( nLen );
+		WriteShortLE( WORD( nLen ) );
 		WriteString( psz, FALSE );
 	}
 	ASSERT( nLen <= 0xFFFF );
@@ -264,7 +264,8 @@ void CEDPacket::Debug(LPCTSTR pszReason) const
 	CString strOutput;
 	strOutput.Format( L"[ED2K]: '%s' %s %s", pszReason, GetType(), (LPCTSTR)ToASCII() );
 	CPacket::Debug( strOutput );
-
+#else
+	pszReason;
 #endif
 }
 
@@ -366,7 +367,7 @@ void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 			{
 				// We should use a 'short' string tag
 				// Correct the packet type
-				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ( ( ED2K_TAG_SHORTSTRING - 1 ) + nLength ) ;
+				pPacket->m_pBuffer[nPos] = BYTE( 0x80 | ( ( ED2K_TAG_SHORTSTRING - 1 ) + nLength ) );
 
 				// Write the string
 				if ( bUnicode ) pPacket->WriteStringUTF8( m_sValue, FALSE );
@@ -375,7 +376,7 @@ void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 			else
 			{	// We should use a normal string tag
 				// Correct the packet type
-				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_STRING ;
+				pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_STRING ;
 
 				// Write the string
 				pPacket->WriteEDString( m_sValue, ServerFlags );
@@ -393,19 +394,19 @@ void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 		{	// Use a short tag
 			if ( m_nValue <= 0xFF)
 			{	// Correct type - to byte
-				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_UINT8;
+				pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_UINT8;
 				// Write a byte
 				pPacket->WriteByte( (BYTE)m_nValue );
 			}
 			else if ( m_nValue <= 0xFFFF)
 			{	// Correct type - to word
-				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_UINT16;
+				pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_UINT16;
 				// Write a word
 				pPacket->WriteShortLE( (WORD)m_nValue );
 			}
 			else
 			{	// Use a normal int
-				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_INT;
+				pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_INT;
 				// Write a DWORD
 				pPacket->WriteLongLE( m_nValue );
 			}
@@ -555,14 +556,10 @@ BOOL CEDTag::Read(CFile* pFile)
 
 		if ( pFile->Read( psz, nLen ) == nLen )
 		{
-
 			int nWide = MultiByteToWideChar( CP_UTF8, 0, psz, nLen, NULL, 0 );
 			MultiByteToWideChar( CP_UTF8, 0, psz, nLen, m_sValue.GetBuffer( nWide ), nWide );
 			m_sValue.ReleaseBuffer( nWide );
 
-/*
-			psz[ nLen ] = 0;
-			m_sValue = psz;*/
 			delete [] psz;
 		}
 		else

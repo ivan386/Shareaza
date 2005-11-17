@@ -255,9 +255,8 @@ void CDownloadGroupDlg::OnBrowse()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-	BROWSEINFO pBI;
 
-	ZeroMemory( &pBI, sizeof(pBI) );
+	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder for downloads:");
@@ -271,7 +270,6 @@ void CDownloadGroupDlg::OnBrowse()
 	SHGetMalloc( &pMalloc );
 	pMalloc->Free( pPath );
 	pMalloc->Release();
-
 
 	// Make sure download/incomplete folders aren't the same
 	if ( _tcsicmp( szPath, Settings.Downloads.IncompletePath ) == 0 )

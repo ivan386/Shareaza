@@ -1,9 +1,9 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/10/25 18:30:37 $"
-//	Revision:		"$Revision: 1.31 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/11/17 21:10:48 $"
+//	Revision:		"$Revision: 1.32 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -300,15 +300,14 @@ void CMediaFrame::SetFullScreen(BOOL bFullScreen)
 	ShowWindow( SW_HIDE );
 	m_tBarTime = GetTickCount();
 	
-	if ( m_bFullScreen = bFullScreen )
+	if ( ( m_bFullScreen = bFullScreen ) != FALSE )
 	{
 		ModifyStyle( WS_CHILD, 0 );
 		SetParent( NULL );
 		
 		if ( theApp.m_pfnGetMonitorInfoA != NULL ) //If GetMonitorInfo() is available
 		{
-			MONITORINFO oMonitor;
-			ZeroMemory( &oMonitor, sizeof(oMonitor) );
+			MONITORINFO oMonitor = {};
 			oMonitor.cbSize = sizeof(oMonitor);
 			theApp.m_pfnGetMonitorInfoA( theApp.m_pfnMonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
 			
@@ -498,7 +497,7 @@ void CMediaFrame::OnPaint()
 	dc.SelectObject( pOldFont );
 }
 
-void CMediaFrame::PaintSplash(CDC& dc, CRect& rcBar)
+void CMediaFrame::PaintSplash(CDC& dc, CRect& /*rcBar*/)
 {
 	if ( m_bmLogo.m_hObject == NULL )
 	{
@@ -645,7 +644,8 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 	CRect rcPart( &rcBar );
 	CString str;
 	CSize sz;
-	CDC* pMemDC = CoolInterface.GetBuffer( dc, rcBar.Size() );
+	CSize size = rcBar.Size();
+	CDC* pMemDC = CoolInterface.GetBuffer( dc, size );
 
 	DWORD dwOptions = theApp.m_bRTL ? DT_RTLREADING : 0;
 	if ( m_nState >= smsOpen )
@@ -704,13 +704,13 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 /////////////////////////////////////////////////////////////////////////////
 // CMediaFrame interaction message handlers
 
-void CMediaFrame::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CMediaFrame::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
 	Skin.TrackPopupMenu( _T("CMediaFrame"), point,
 		m_nState == smsPlaying ? ID_MEDIA_PAUSE : ID_MEDIA_PLAY );
 }
 
-void CMediaFrame::OnTimer(UINT nIDEvent) 
+void CMediaFrame::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( nIDEvent == 1 )
 	{
@@ -878,7 +878,7 @@ BOOL CMediaFrame::DoSizeList()
 		nSplit += nOffset;
 
 		nSplit = max( nSplit, 0 );
-		nSplit = min( nSplit, int(rcClient.right - SPLIT_SIZE) );
+		nSplit = min( nSplit, rcClient.right - SPLIT_SIZE );
 
 		if ( nSplit < 8 )
 			nSplit = 0;
@@ -899,7 +899,7 @@ BOOL CMediaFrame::DoSizeList()
 	return TRUE;
 }
 
-LONG CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
+LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 {
 	if ( wParam != 1 ) return 0;
 	
@@ -1621,7 +1621,7 @@ void CMediaFrame::UpdateState()
 	}
 }
 
-void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
+void CMediaFrame::OnNewCurrent(NMHDR* /*pNotify*/, LRESULT* pResult)
 {
 	int nCurrent = m_wndList.GetCurrent();
 	m_wndList.UpdateWindow();
@@ -1666,19 +1666,19 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 		}
 
 		if ( bPlayIt && ! bCorrupted )
-		{
-			m_pPlayer->Play();
+			{
+				m_pPlayer->Play();
 			if ( m_bScreenSaverEnabled ) DisableScreenSaver();
 			// check if the last was not played; flag only when we are playing the file before it
 			if ( ! m_bLastNotPlayed )
 				m_bLastNotPlayed = ( nCurrent == m_wndList.GetItemCount() - 2 );
-			UpdateState();
-		}
+				UpdateState();
+			}
 		else if ( bCorrupted ) // file was corrupted, move to the next file
 		{
 			nCurrent = m_wndList.GetNext( FALSE );
 			if ( m_wndList.GetItemCount() != 1 ) 
-				m_wndList.SetCurrent( nCurrent );
+			m_wndList.SetCurrent( nCurrent );
 			else if ( m_pPlayer ) 
 				Cleanup(); //cleanup when no exception happened but the file couldn't be opened (png files)
 		}
@@ -1699,7 +1699,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 		{
 			if ( ! m_bRepeat ) 
 				m_bStopFlag = TRUE;
-			else
+	else
 				nCurrent = m_wndList.GetNext( FALSE );
 			if ( ! m_bEnqueue ) 
 				m_wndList.SetCurrent( nCurrent );

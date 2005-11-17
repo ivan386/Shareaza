@@ -42,7 +42,7 @@ public:
 // Attributes
 protected:
 	CLibraryTreeItem*	m_pRoot;
-	int					m_nTotal;
+	size_t				m_nTotal;
 	int					m_nVisible;
 	int					m_nScroll;
 protected:
@@ -72,7 +72,7 @@ public:
 	CLibraryTreeItem*	GetLastSelected() const;
 	CLibraryTreeItem*	HitTest(const POINT& point, RECT* pRect = NULL) const;
 	BOOL				GetRect(CLibraryTreeItem* pItem, RECT* pRect);
-	CLibraryTreeItem*	GetFolderItem(LPVOID pSearch, CLibraryTreeItem* pParent = NULL);
+	CLibraryTreeItem*	GetFolderItem(void* pSearch, CLibraryTreeItem* pParent = NULL);
 protected:
 	void				UpdateScroll();
 	void				ScrollBy(int nDelta);
@@ -118,15 +118,46 @@ class CLibraryTreeItem
 {
 // Construction
 public:
-	CLibraryTreeItem(CLibraryTreeItem* pParent = NULL);
-	virtual ~CLibraryTreeItem();
+	CLibraryTreeItem(CLibraryTreeItem* pParent = NULL, const CString& name = CString());
 
 // Attributes
+private:
+	CLibraryTreeItem* const m_pParent;
+	typedef boost::ptr_list< CLibraryTreeItem > Container;
+	Container m_oList;
 public:
-	CLibraryTreeItem*	m_pParent;
-	CLibraryTreeItem**	m_pList;
-	int					m_nCount;
-	int					m_nBuffer;
+	typedef Container::iterator iterator;
+	typedef Container::const_iterator const_iterator;
+	typedef Container::reverse_iterator reverse_iterator;
+	typedef Container::const_reverse_iterator const_reverse_iterator;
+
+	CLibraryTreeItem*       parent()       { return m_pParent; }
+	const CLibraryTreeItem* parent() const { return m_pParent; }
+
+	iterator               begin()        { return m_oList.begin(); }
+	const_iterator         begin()  const { return m_oList.begin(); }
+	iterator               end()          { return m_oList.end(); }
+	const_iterator         end()    const { return m_oList.end(); }
+	reverse_iterator       rbegin()       { return m_oList.rbegin(); }
+	const_reverse_iterator rbegin() const { return m_oList.rbegin(); }
+	reverse_iterator       rend()         { return m_oList.rend(); }
+	const_reverse_iterator rend()   const { return m_oList.rend(); }
+
+	size_t size() const { return m_oList.size(); }
+	size_t treeSize() const
+	{
+		size_t result = size();
+		for ( const_iterator i = begin(); i != end(); ++i )
+		{
+			result += i->treeSize();
+		}
+		return result;
+	}
+	bool empty() const { return m_oList.empty(); }
+	void clear() { m_oList.clear(); }
+	iterator erase(iterator item) { return m_oList.erase( item ); }
+	CLibraryTreeItem* addItem(const CString& name);
+public:
 	CLibraryTreeItem*	m_pSelPrev;
 	CLibraryTreeItem*	m_pSelNext;
 	DWORD				m_nCleanCookie;
@@ -147,13 +178,7 @@ public:
 
 // Operations
 public:
-	CLibraryTreeItem*	Add(LPCTSTR pszName);
-	void				Delete();
-	void				Delete(CLibraryTreeItem* pItem);
-	void				Delete(int nItem);
-	void				Clear();
 	BOOL				IsVisible() const;
-	int					GetChildCount() const;
 	void				Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack = CLR_NONE) const;
 	int					GetFileList(CLibraryList* pList, BOOL bRecursive = FALSE) const;
 

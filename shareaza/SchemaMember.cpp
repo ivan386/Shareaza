@@ -69,11 +69,6 @@ CString CSchemaMember::GetNextItem(POSITION& pos) const
 	return m_pItems.GetNext( pos );
 }
 
-int CSchemaMember::GetItemCount() const
-{
-	return m_pItems.GetCount();
-}
-
 //////////////////////////////////////////////////////////////////////
 // CSchemaMember value lookup
 
@@ -97,7 +92,7 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 	{
 		strValue = pszDefault;
 	}
-
+	
 	// validate numeric value, empty if invalid
 	if ( m_bNumeric )
 	{
@@ -111,20 +106,16 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 	
 	if ( bFormat && m_bNumeric )
 	{
-		BOOL bInvalid = FALSE;
-
 		if ( m_nFormat == smfTimeMMSS )
 		{
 			DWORD nSeconds = 0;
 			_stscanf( strValue, _T("%lu"), &nSeconds );
-			bInvalid = ( nSeconds < (DWORD)m_nMinOccurs || nSeconds > (DWORD)m_nMaxOccurs );
 			strValue.Format( _T("%.2u:%.2u"), nSeconds / 60, nSeconds % 60 );
 		}
 		else if ( m_nFormat == smfTimeHHMMSSdec )
 		{
 			float nMinutes = 0;
 			_stscanf( strValue, _T("%f"), &nMinutes );
-			bInvalid = ( nMinutes < (DWORD)m_nMinOccurs || nMinutes > (DWORD)m_nMaxOccurs );
 			strValue.Format( _T("%.2u:%.2u:%.2u"), (int)nMinutes / 60,
 				(int)nMinutes % 60, (int)( ( nMinutes - (int)nMinutes ) * 60 ) );
 		}
@@ -132,7 +123,6 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 		{
 			DWORD nRate = 0;
 			_stscanf( strValue, _T("%lu"), &nRate );
-			bInvalid = ( nRate < (DWORD)m_nMinOccurs || nRate > (DWORD)m_nMaxOccurs );
 			strValue.Format( _T("%.1f kHz"), nRate / 1000.0 );
 		}
 		else if ( m_nFormat == smfBitrate )
@@ -140,12 +130,10 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 			BOOL bVariable = _tcschr( strValue, '~' ) != NULL;
 			DWORD nBitrate = 0;
 			_stscanf( strValue, _T("%lu"), &nBitrate );
-			bInvalid = ( nBitrate < (DWORD)m_nMinOccurs || nBitrate > (DWORD)m_nMaxOccurs );
 			strValue.Format( bVariable ? _T("%luk~") : _T("%luk"), nBitrate );
 		}
-		if ( bInvalid ) strValue.Empty();
 	}
-
+	
 	return strValue;
 }
 
@@ -191,7 +179,7 @@ BOOL CSchemaMember::LoadSchema(CXMLElement* pRoot, CXMLElement* pElement)
 	if ( m_sName.IsEmpty() ) return FALSE;
 
 	m_sTitle = m_sName;
-	m_sTitle.SetAt( 0, toupper( m_sTitle.GetAt( 0 ) ) );
+	m_sTitle.SetAt( 0, TCHAR( toupper( m_sTitle.GetAt( 0 ) ) ) );
 
 	m_sType = pElement->GetAttributeValue( _T("type"), _T("") );
 	CharLower( m_sType.GetBuffer() );// Lowercase'd

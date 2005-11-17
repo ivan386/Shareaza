@@ -172,6 +172,7 @@
 #define IDB_SHELL_BASE_RTL              272
 #define IDB_NAVBAR_IMAGE_RTL            273
 #define IDB_NAVBAR_ALPHA_RTL            274
+#define IDI_COLORS                      275
 #define IDC_CONNECT_HOST                1000
 #define IDC_CONNECT_PORT                1001
 #define IDC_SCHEMAS                     1002
@@ -309,7 +310,9 @@
 #define IDC_SOURCES                     1101
 #define IDC_SCAN_VOLUME                 1102
 #define IDC_URL                         1102
+#define IDC_FILTER_DRM                  1102
 #define IDC_CAPTION                     1103
+#define IDC_FILTER_SUS                  1103
 #define IDC_PROGRESS                    1104
 #define IDC_PROGRESS_FILE               1105
 #define IDC_DOWNLOAD_GRAPH              1105
@@ -353,6 +356,7 @@
 #define IDC_WIZARD_AUTO                 1134
 #define IDC_URL_MAGNET                  1135
 #define IDC_WIZARD_STARTUP              1135
+#define IDC_URL_GNUTELLA                1136
 #define IDC_URL_HOST                    1137
 #define IDC_URL_ED2K                    1138
 #define IDC_ADDRESS                     1140
@@ -636,6 +640,7 @@
 #define IDC_ERASE_FROM                  1370
 #define IDC_ERASE_TO                    1371
 #define IDC_ERASE                       1372
+#define IDC_MERGE_AND_VERIFY            1373
 #define IDC_THROTTLE_MODE               1374
 #define IDC_REMOTE_ENABLE               1377
 #define IDC_REMOTE_USERNAME             1378
@@ -670,16 +675,34 @@
 #define IDC_SCHEDULER_ALLOWHUB          1404
 #define IDC_SCHEDULER_DISPLAY           1405
 #define IDC_G2_ALWAYS                   1409
+#define IDC_DISKNAME                    1418
+#define IDC_TRUST_SHA1                  1420
+#define IDC_FILESIZE                    1421
+#define IDC_TRUST_TIGER                 1422
+#define IDC_TRUST_ED2K                  1423
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502
 #define IDC_DELETE_FILTER               1503
+#define IDC_TEMPLATES_EXPLAIN           1520
+#define IDC_TEMPLATES_DELETE            1521
+#define IDC_TEMPLATES                   1522
+#define IDC_STATIC_GROUPBOX             1523
+#define IDC_STATIC_NAME                 1524
+#define IDC_TEMPLATE_NAME               1525
+#define IDC_STATIC_AUTHOR               1526
+#define IDC_TEMPLATE_AUTHOR             1527
+#define IDC_STATIC_DESC                 1528
+#define IDC_TEMPLATE_DESC               1529
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
 #define IDS_MULTIPLE                    7003
 #define IDS_FILTER_REPLACE              7004
 #define IDS_FILTER_NO_NAME              7005
+#define IDS_COLLECTION_WIZARD_NOTVALID  7100
+#define IDS_COLLECTION_WIZARD_NOCUSTOM  7101
+#define IDS_TEMPLATE_DELETE             7102
 #define IDS_SETTINGS                    8000
 #define IDS_WIZARD                      8001
 #define IDS_FILE_PROPERTIES             8002
@@ -817,6 +840,12 @@
 #define IDS_TIP_FILE_BUSY               8334
 #define IDS_TIP_FILE_FIREWALLED         8335
 #define IDS_TIP_FILE_UNSTABLE           8336
+#define IDS_PROPERTY_PAGE_GENERAL       9000
+#define IDS_PROPERTY_PAGE_METADATA      9001
+#define IDS_PROPERTY_PAGE_REVIEW        9002
+#define IDS_PROPERTY_PAGE_COMMENTS      9002
+#define IDS_PROPERTY_PAGE_SHARING       9003
+#define IDS_PROPERTY_PAGE_SOURCES       9004
 #define IDR_HTML_ABOUT                  12001
 #define IDR_HTML_FILENOTFOUND           12002
 #define IDR_HTML_HASHMISMATCH           12003
@@ -1279,6 +1308,8 @@
 #define IDS_DOWNLOAD_QUEUE_HUGE         18508
 #define IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH 18509
 #define IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY 18510
+#define IDS_DOWNLAOD_EDIT_CHANGE_SIZE   18511
+#define IDS_DOWNLOAD_EDIT_CHANGE_SIZE   18511
 #define IDS_REMOTE_DISABLED             19000
 #define IDS_REMOTE_ENABLED              19001
 #define IDS_REMOTE_UNAVAILABLE          19002
@@ -1661,7 +1692,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        275
 #define _APS_NEXT_COMMAND_VALUE         33135
-#define _APS_NEXT_CONTROL_VALUE         1418
+#define _APS_NEXT_CONTROL_VALUE         1425
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

@@ -153,9 +153,8 @@ void CDonkeySettingsPage::OnImportDownloads()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-	BROWSEINFO pBI;
 
-	ZeroMemory( &pBI, sizeof(pBI) );
+	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select your temp (download) folder:");

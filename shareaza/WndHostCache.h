@@ -70,7 +70,7 @@ protected:
 	afx_msg void OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblClkList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnNcMouseMove(UINT nHitTest, CPoint point);
 	afx_msg void OnUpdateHostCacheConnect(CCmdUI* pCmdUI);

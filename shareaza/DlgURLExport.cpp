@@ -93,7 +93,7 @@ BOOL CURLExportDlg::OnInitDialog()
 	m_sFormat = theApp.GetProfileString( _T("Library"), _T("URLExportFormat"), _T("") );
 
 	if ( m_sFormat.IsEmpty() )
-		m_sFormat = _T("<a href=\"magnet:?xt=[URN]&dn=[NameURI]\">[Name]</a><br>");
+		m_sFormat = _T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&dn=[NameURI]&xl=[ByteSize]\">[Name]</a><br>");
 
 	UpdateData( FALSE );
 
@@ -102,7 +102,7 @@ BOOL CURLExportDlg::OnInitDialog()
 
 void CURLExportDlg::AddFile(CLibraryFile* pFile)
 {
-	if ( pFile->m_bSHA1 ) m_pFiles.AddTail( (LPVOID)pFile->m_nIndex );
+	if ( pFile->m_oSHA1 ) m_pFiles.AddTail( pFile->m_nIndex );
 }
 
 void CURLExportDlg::OnCloseUpUrlToken()
@@ -131,10 +131,10 @@ void CURLExportDlg::OnCloseUpUrlPreset()
 
 	LPCTSTR pszPresets[] =
 	{
-		_T("magnet:?xt=urn:bitprint:[SHA1].[TIGER]&dn=[NameURI]"),
+		_T("magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&dn=[NameURI]&xl=[ByteSize]"),
 		_T("gnutella://urn:sha1:[SHA1]/[NameURI]/"),
 		_T("ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/"),
-		_T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&dn=[NameURI]\">[Name]</a><br>"),
+		_T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&dn=[NameURI]&xl=[ByteSize]\">[Name]</a><br>"),
 		_T("<a href=\"gnutella://urn:sha1:[SHA1]/[NameURI]/\">[Name]</a><br>"),
 		_T("<a href=\"ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/\">[Name]</a>"),
 	};
@@ -168,7 +168,7 @@ void CURLExportDlg::OnSave()
 
 	CWaitCursor pCursor;
 
-	m_wndProgress.SetRange( 0, m_pFiles.GetCount() );
+	m_wndProgress.SetRange( 0, short( m_pFiles.GetCount() ) );
 	m_wndCopy.EnableWindow( FALSE );
 	m_wndSave.EnableWindow( FALSE );
 
@@ -176,7 +176,7 @@ void CURLExportDlg::OnSave()
 	{
 		m_wndProgress.OffsetPos( 1 );
 
-		DWORD nIndex = (DWORD)m_pFiles.GetNext( pos );
+		DWORD nIndex = m_pFiles.GetNext( pos );
 
 		CString strLine = m_sFormat;
 		{
@@ -193,14 +193,14 @@ void CURLExportDlg::OnSave()
 
 			strItem.Format( _T("%I64i"), pFile->m_nSize );
 			Replace( strLine, _T("[ByteSize]"), strItem );
-
-			strItem = CTigerNode::HashToString( &pFile->m_pTiger );
+			
+			strItem = pFile->m_oTiger.toString();
 			Replace( strLine, _T("[TIGER]"), strItem );
-			strItem = CSHA::HashToString( &pFile->m_pSHA1 );
+			strItem = pFile->m_oSHA1.toString();
 			Replace( strLine, _T("[SHA1]"), strItem );
-			strItem = CMD5::HashToString( &pFile->m_pMD5 );
+			strItem = pFile->m_oMD5.toString();
 			Replace( strLine, _T("[MD5]"), strItem );
-			strItem = CED2K::HashToString( &pFile->m_pED2K );
+			strItem = pFile->m_oED2K.toString();
 			Replace( strLine, _T("[ED2K]"), strItem );
 
 			int nDot = pFile->m_sName.ReverseFind( '.' );
@@ -250,7 +250,7 @@ void CURLExportDlg::OnCopy()
 	CWaitCursor pCursor;
 	CString strOutput;
 
-	m_wndProgress.SetRange( 0, m_pFiles.GetCount() );
+	m_wndProgress.SetRange( 0, short( m_pFiles.GetCount() ) );
 	m_wndCopy.EnableWindow( FALSE );
 	m_wndSave.EnableWindow( FALSE );
 
@@ -258,7 +258,7 @@ void CURLExportDlg::OnCopy()
 	{
 		m_wndProgress.OffsetPos( 1 );
 
-		DWORD nIndex = (DWORD)m_pFiles.GetNext( pos );
+		DWORD nIndex = m_pFiles.GetNext( pos );
 
 		CString strLine = m_sFormat;
 		{
@@ -275,14 +275,14 @@ void CURLExportDlg::OnCopy()
 
 			strItem.Format( _T("%I64i"), pFile->m_nSize );
 			Replace( strLine, _T("[ByteSize]"), strItem );
-
-			strItem = CTigerNode::HashToString( &pFile->m_pTiger );
+			
+			strItem = pFile->m_oTiger.toString();
 			Replace( strLine, _T("[TIGER]"), strItem );
-			strItem = CSHA::HashToString( &pFile->m_pSHA1 );
+			strItem = pFile->m_oSHA1.toString();
 			Replace( strLine, _T("[SHA1]"), strItem );
-			strItem = CMD5::HashToString( &pFile->m_pMD5 );
+			strItem = pFile->m_oMD5.toString();
 			Replace( strLine, _T("[MD5]"), strItem );
-			strItem = CED2K::HashToString( &pFile->m_pED2K );
+			strItem = pFile->m_oED2K.toString();
 			Replace( strLine, _T("[ED2K]"), strItem );
 
 			int nDot = pFile->m_sName.ReverseFind( '.' );

@@ -95,7 +95,7 @@ void CDonkeyImportDlg::OnCancel()
 	CSkinDialog::OnCancel();
 }
 
-void CDonkeyImportDlg::OnTimer(UINT nIDEvent)
+void CDonkeyImportDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	if ( ! m_pImporter.IsRunning() )
 	{

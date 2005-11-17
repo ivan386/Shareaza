@@ -68,7 +68,7 @@ protected:
 	virtual void OnOK();
 	virtual void OnCancel();
 	afx_msg void OnChangeURL();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

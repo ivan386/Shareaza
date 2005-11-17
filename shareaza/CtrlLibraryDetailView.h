@@ -44,9 +44,9 @@ public:
 	virtual void			Update();
 	virtual BOOL			Select(DWORD nObject);
 	virtual void			CacheSelection();
-	virtual DWORD			HitTestIndex(const CPoint& point) const;
+	virtual DWORD_PTR		HitTestIndex(const CPoint& point) const;
 public:
-	void	SetViewSchema(CSchema* pSchema, CPtrList* pColumns, BOOL bSave, BOOL bUpdate);
+	void	SetViewSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns, BOOL bSave, BOOL bUpdate);
 protected:
 	void	CacheItem(int nItem);
 	void	SortItems(int nColumn = -1);
@@ -56,7 +56,7 @@ protected:
 	UINT		m_nStyle;
 protected:
 	CSchema*	m_pSchema;
-	CPtrList	m_pColumns;
+	CList< CSchemaMember* >	m_pColumns;
 	CCoolMenu*	m_pCoolMenu;
 	BOOL		m_bCreateDragImage;
 
@@ -66,7 +66,7 @@ protected:
 		DWORD			nCookie;
 		DWORD			nState;
 		int				nIcon;
-		CStringArray*	pText;
+		CArray< CString >*	pText;
 	};
 
 // List

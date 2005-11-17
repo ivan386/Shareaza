@@ -112,7 +112,7 @@ void CSearchMonitorWnd::OnDestroy()
 
 	for ( POSITION pos = m_pQueue.GetHeadPosition() ; pos ; )
 	{
-		delete (CLiveItem*)m_pQueue.GetNext( pos );
+		delete m_pQueue.GetNext( pos );
 	}
 	m_pQueue.RemoveAll();
 
@@ -137,7 +137,7 @@ void CSearchMonitorWnd::OnSize(UINT nType, int cx, int cy)
 	m_wndList.SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOZORDER );
 }
 
-void CSearchMonitorWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CSearchMonitorWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
 	TrackPopupMenu( _T("CSearchMonitorWnd"), point, ID_HITMONITOR_SEARCH );
 }
@@ -153,9 +153,9 @@ void CSearchMonitorWnd::OnSearchMonitorSearch()
 
 	if ( nItem >= 0 )
 	{
-		CQuerySearch* pSearch = new CQuerySearch();
+		std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 		pSearch->m_sSearch = m_wndList.GetItemText( nItem, 0 );
-		if ( pSearch->OpenWindow() == NULL ) delete pSearch;
+		CQuerySearch::OpenWindow( pSearch );
 	}
 }
 
@@ -174,7 +174,7 @@ void CSearchMonitorWnd::OnSearchMonitorClear()
 	m_wndList.DeleteAllItems();
 }
 
-void CSearchMonitorWnd::OnDblClkList(NMHDR* pNotifyStruct, LRESULT *pResult)
+void CSearchMonitorWnd::OnDblClkList(NMHDR* /*pNotifyStruct*/, LRESULT *pResult)
 {
 	OnSearchMonitorSearch();
 	*pResult = 0;
@@ -197,28 +197,28 @@ void CSearchMonitorWnd::OnQuerySearch(CQuerySearch* pSearch)
 	CString strSchema	= _T("None");
 	CString strURN		= _T("None");
 
-	if ( pSearch->m_bSHA1 && pSearch->m_bTiger )
+	if ( pSearch->m_oSHA1 && pSearch->m_oTiger )
 	{
 		strURN	= _T("bitprint:")
-				+ CSHA::HashToString( &pSearch->m_pSHA1 )
+				+ pSearch->m_oSHA1.toString()
 				+ '.'
-				+ CTigerNode::HashToString( &pSearch->m_pTiger );
+				+ pSearch->m_oTiger.toString();
 	}
-	else if ( pSearch->m_bTiger )
+	else if ( pSearch->m_oTiger )
 	{
-		strURN = _T("tree:tiger/:") + CTigerNode::HashToString( &pSearch->m_pTiger );
+		strURN = pSearch->m_oTiger.toShortUrn();
 	}
-	else if ( pSearch->m_bSHA1 )
+	else if ( pSearch->m_oSHA1 )
 	{
-		strURN = _T("sha1:") + CSHA::HashToString( &pSearch->m_pSHA1 );
+		strURN = pSearch->m_oSHA1.toShortUrn();
 	}
-	else if ( pSearch->m_bED2K )
+	else if ( pSearch->m_oED2K )
 	{
-		strURN = _T("ed2k:") + CED2K::HashToString( &pSearch->m_pED2K );
+		strURN = pSearch->m_oED2K.toShortUrn();
 	}
-	else if ( pSearch->m_bBTH )
+	else if ( pSearch->m_oBTH )
 	{
-		strURN = _T("btih:") + CSHA::HashToString( &pSearch->m_pBTH );
+		strURN = pSearch->m_oBTH.toShortUrn();
 	}
 
 	if ( pSearch->m_pXML )
@@ -239,7 +239,7 @@ void CSearchMonitorWnd::OnQuerySearch(CQuerySearch* pSearch)
 	m_pQueue.AddTail( pItem );
 }
 
-void CSearchMonitorWnd::OnTimer(UINT nIDEvent) 
+void CSearchMonitorWnd::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( nIDEvent != 2 ) return;
 
@@ -252,7 +252,7 @@ void CSearchMonitorWnd::OnTimer(UINT nIDEvent)
 		pLock.Lock();
 
 		if ( m_pQueue.GetCount() == 0 ) break;
-		CLiveItem* pItem = (CLiveItem*)m_pQueue.RemoveHead();
+		CLiveItem* pItem = m_pQueue.RemoveHead();
 
 		pLock.Unlock();
 
@@ -261,7 +261,7 @@ void CSearchMonitorWnd::OnTimer(UINT nIDEvent)
 			m_wndList.DeleteItem( 0 );
 		}
 
-		int nItem = pItem->Add( &m_wndList, -1, 3 );
+		/*int nItem =*/ pItem->Add( &m_wndList, -1, 3 );
 
 		delete pItem;
 	}

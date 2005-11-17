@@ -39,7 +39,7 @@ public:
 	void	Clear();
 	void	Serialize(CArchive& ar);
 	DWORD	GetSerialSize() const;
-	BOOL	GetRoot(MD4* pHash) const;
+    BOOL	GetRoot(Hashes::Ed2kHash& oHash) const;
 public:
 	void	BeginFile(QWORD nLength);
 	void	AddToFile(LPCVOID pInput, DWORD nLength);
@@ -52,12 +52,8 @@ public:
 	LPCVOID	GetRawPtr() const;
 	BOOL	ToBytes(BYTE** pOutput, DWORD* pnOutput);
 	BOOL	FromBytes(BYTE* pOutput, DWORD nOutput, QWORD nSize = 0);
-	BOOL	FromRoot(MD4* pHash);
+    BOOL	FromRoot(const Hashes::Ed2kHash& oHash);
 	BOOL	CheckIntegrity();
-public:
-	static CString	HashToString(const MD4* pHash, BOOL bURN = FALSE);
-	static BOOL		HashFromString(LPCTSTR pszHash, MD4* pHash);
-	static BOOL		HashFromURN(LPCTSTR pszHash, MD4* pHash);
 
 // Inlines
 public:
@@ -66,8 +62,8 @@ public:
 
 // Attributes
 protected:
-	MD4		m_pRoot;
-	MD4*	m_pList;
+    CMD4::MD4Digest m_pRoot;
+    CMD4::MD4Digest* m_pList;
 	DWORD	m_nList;
 protected:
 	CMD4	m_pSegment;
@@ -76,6 +72,6 @@ protected:
 
 };
 
-#define ED2K_PART_SIZE	9728000	// 1024*9500
+const size_t ED2K_PART_SIZE	= 9500 * 1024u;
 
 #endif // !defined(AFX_ED2K_H__0ED688AE_E4F5_49C6_8EC8_5C80EFA6EF6C__INCLUDED_)

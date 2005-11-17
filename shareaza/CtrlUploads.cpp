@@ -152,9 +152,7 @@ void CUploadsCtrl::OnDestroy()
 
 void CUploadsCtrl::InsertColumn(int nColumn, LPCTSTR pszCaption, int nFormat, int nWidth)
 {
-	HDITEM pColumn;
-	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
+	HDITEM pColumn = {};
 	
 	pColumn.mask	= HDI_FORMAT | HDI_LPARAM | HDI_TEXT | HDI_WIDTH;
 	pColumn.cxy		= nWidth;
@@ -303,7 +301,7 @@ void CUploadsCtrl::SelectTo(int nIndex)
 	}
 }
 
-void CUploadsCtrl::DeselectAll(CUploadFile* pExcept)
+void CUploadsCtrl::DeselectAll(CUploadFile* /*pExcept*/)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	POSITION pos;
@@ -399,7 +397,7 @@ BOOL CUploadsCtrl::HitTest(const CPoint& point, CUploadQueue** ppQueue, CUploadF
 
 BOOL CUploadsCtrl::GetAt(int nSelect, CUploadQueue** ppQueue, CUploadFile** ppFile)
 {
-	int nScroll = GetScrollPos( SB_VERT );
+	/*int nScroll =*/ GetScrollPos( SB_VERT );
 	int nIndex = 0;
 	
 	if ( ppQueue != NULL ) *ppQueue = NULL;
@@ -601,7 +599,7 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 		
 		return pReturn;
 	}
-	else if ( (int)pos > pQueue->m_pQueued.GetSize() )
+	else if ( (INT_PTR)pos > pQueue->m_pQueued.GetSize() )
 	{
 		CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pActive.GetNext( pos );
 		
@@ -621,10 +619,12 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 	}
 	else
 	{
-		CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pQueued.GetAt( (int)pos - 1 );
-		if ( pnPosition != NULL ) *pnPosition = (int)pos;
-		pos = (POSITION)( (int)pos + 1 );
-		if ( (int)pos > pQueue->m_pQueued.GetSize() ) pos = NULL;
+		INT_PTR nPos = (INT_PTR)pos;
+		CUploadTransfer* pTransfer = pQueue->m_pQueued.GetAt( nPos - 1 );
+		if ( pnPosition != NULL ) *pnPosition = static_cast< int >( nPos );
+		++nPos;
+		if ( nPos > pQueue->m_pQueued.GetSize() ) nPos = 0;
+		pos = (POSITION)nPos;
 		return pTransfer->m_pBaseFile;
 	}
 }
@@ -636,20 +636,18 @@ void CUploadsCtrl::OnSize(UINT nType, int cx, int cy)
 {
 	int nWidth = 0, nHeight = 0;
 	CRect rcClient;
-	HDITEM pColumn;
 	
 	if ( nType != 1982 ) CWnd::OnSize( nType, cx, cy );
 	
 	GetClientRect( &rcClient );
 	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
+	HDITEM pColumn ={};
 	pColumn.mask = HDI_WIDTH;
 	
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn ++ )
 		nWidth += pColumn.cxy;
 	
-	SCROLLINFO pScroll;
-	ZeroMemory( &pScroll, sizeof(pScroll) );
+	SCROLLINFO pScroll = {};
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE;
 	pScroll.nMin	= 0;
@@ -784,9 +782,8 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 		dc.SetTextColor( CoolInterface.m_crText );
 	
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
-	HDITEM pColumn;
+	HDITEM pColumn = {};
 	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
 	
 	dc.SelectObject( &theApp.m_gdiFontBold );
@@ -849,8 +846,8 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 			break;
 		}
 		
-		nTextLeft	= min( nTextLeft, int(rcCell.left) );
-		nTextRight	= max( nTextRight, int(rcCell.right) );
+		nTextLeft	= min( nTextLeft, rcCell.left );
+		nTextRight	= max( nTextRight, rcCell.right );
 		
 		if ( rcCell.Width() < 8 ) strText.Empty();
 		
@@ -895,12 +892,12 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 	
 	if ( bFocus )
 	{
-		CRect rcFocus( nTextLeft, rcRow.top, max( int(rcRow.right), nTextRight ), rcRow.bottom );
+		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
 		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
 	}
 }
 
-void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, CUploadFile* pFile, int nPosition, BOOL bFocus)
+void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue*/, CUploadFile* pFile, int nPosition, BOOL bFocus)
 {
 	CUploadTransfer* pTransfer = pFile->GetActive();
 	
@@ -918,9 +915,8 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, 
 		dc.SetTextColor( CoolInterface.m_crText );
 	
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
-	HDITEM pColumn;
+	HDITEM pColumn = {};
 	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
 
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn++ )
@@ -1005,8 +1001,8 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, 
 			break;
 		}
 		
-		nTextLeft	= min( nTextLeft, int(rcCell.left) );
-		nTextRight	= max( nTextRight, int(rcCell.right) );
+		nTextLeft	= min( nTextLeft, rcCell.left );
+		nTextRight	= max( nTextRight, rcCell.right );
 		
 		if ( pColumn.lParam == UPLOAD_COLUMN_PROGRESS ) continue;
 		
@@ -1051,7 +1047,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, 
 	
 	if ( bFocus )
 	{
-		CRect rcFocus( nTextLeft, rcRow.top, max( int(rcRow.right), nTextRight ), rcRow.bottom );
+		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
 		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
 	}
 }
@@ -1059,7 +1055,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, 
 //////////////////////////////////////////////////////////////////////////////
 // CUploadsCtrl interaction message handlers
 
-void CUploadsCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CUploadsCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
 	SCROLLINFO pInfo;
 	
@@ -1102,7 +1098,7 @@ void CUploadsCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	Invalidate();
 }
 
-void CUploadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CUploadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
 	SCROLLINFO pInfo;
 	
@@ -1152,13 +1148,13 @@ void CUploadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 }
 
-BOOL CUploadsCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+BOOL CUploadsCtrl::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
 	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines ), NULL );
 	return TRUE;
 }
 
-void CUploadsCtrl::OnChangeHeader(NMHDR* pNotifyStruct, LRESULT* pResult)
+void CUploadsCtrl::OnChangeHeader(NMHDR* /*pNotifyStruct*/, LRESULT* /*pResult*/)
 {
 	Update();
 }
@@ -1396,10 +1392,9 @@ void CUploadsCtrl::OnKillFocus(CWnd* pNewWnd)
 
 int CUploadsCtrl::GetExpandableColumnX() const
 {
-	HDITEM pColumn;
 	int nTitleStarts = 0;
 	
-	ZeroMemory( &pColumn, sizeof(pColumn) );
+	HDITEM pColumn = {};
 	pColumn.mask = HDI_LPARAM | HDI_WIDTH;
 
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( m_wndHeader.OrderToIndex( nColumn ), &pColumn ) ; nColumn++ )

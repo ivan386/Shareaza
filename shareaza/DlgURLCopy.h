@@ -43,18 +43,16 @@ public:
 	CStatic	m_wndMessage;
 	CString	m_sHost;
 	CString	m_sMagnet;
+	CString	m_sGnutella;
 	CString	m_sED2K;
 	//}}AFX_DATA
 
 // Attributes
 public:
 	CString		m_sName;
-	BOOL		m_bSHA1;
-	SHA1		m_pSHA1;
-	BOOL		m_bTiger;
-	TIGEROOT	m_pTiger;
-	BOOL		m_bED2K;
-	MD4			m_pED2K;
+    Hashes::Sha1Hash m_oSHA1;
+    Hashes::TigerHash m_oTiger;
+    Hashes::Ed2kHash m_oED2K;
 	BOOL		m_bSize;
 	QWORD		m_nSize;
 

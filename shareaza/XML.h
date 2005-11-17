@@ -86,8 +86,8 @@ public:
 // Attributes
 protected:
 #ifdef _AFX
-	CPtrList m_pElements;
-	CMapStringToPtr m_pAttributes;
+	CList< CXMLElement* > m_pElements;
+	CMap< CString, const CString&, CXMLAttribute*, CXMLAttribute* > m_pAttributes;
 #else
 	CAtlList<CXMLElement*> m_pElements;
 	CAtlMap<CString, CXMLAttribute*, CStringElementTraits<CString> > m_pAttributes;
@@ -100,7 +100,7 @@ public:
 public:
 	inline CXMLElement*		AddElement(LPCTSTR pszName);
 	inline CXMLElement*		AddElement(CXMLElement* pElement);
-	inline int				GetElementCount() const;
+	inline INT_PTR			GetElementCount() const;
 	inline CXMLElement*		GetFirstElement() const;
 	inline POSITION			GetElementIterator() const;
 	inline CXMLElement*		GetNextElement(POSITION& pos) const;

@@ -1,9 +1,9 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2005/10/04 02:44:01 $"
-//	Revision:		"$Revision: 1.38 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/11/17 21:10:48 $"
+//	Revision:		"$Revision: 1.39 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -76,7 +76,7 @@ POSITION CDiscoveryServices::GetIterator() const
 
 CDiscoveryService* CDiscoveryServices::GetNext(POSITION& pos) const
 {
-	return (CDiscoveryService*)m_pList.GetNext( pos );
+	return m_pList.GetNext( pos );
 }
 
 BOOL CDiscoveryServices::Check(CDiscoveryService* pService, int nType) const
@@ -447,7 +447,7 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 		ar >> nVersion;
 		if ( nVersion < 6 ) return;
 		
-		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CDiscoveryService* pService = new CDiscoveryService();
 			pService->Serialize( ar, nVersion );
@@ -630,7 +630,7 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 {
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
-	DWORD tNow = time( NULL );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	if ( bSecondary )
 	{
@@ -705,7 +705,7 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 
 int CDiscoveryServices::ExecuteBootstraps(int nCount)
 {
-	CPtrArray pRandom;
+	CArray< CDiscoveryService* > pRandom;
 	int nSuccess;
 
 	if ( nCount < 1 ) return 0;
@@ -721,8 +721,8 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount)
 
 	for ( nSuccess = 0 ; nCount > 0 && pRandom.GetSize() > 0 ; )
 	{
-		int nRandom = rand() % pRandom.GetSize();
-		CDiscoveryService* pService = (CDiscoveryService*)pRandom.GetAt( nRandom );
+		INT_PTR nRandom = rand() % pRandom.GetSize();
+		CDiscoveryService* pService = pRandom.GetAt( nRandom );
 		pRandom.RemoveAt( nRandom );
 
 		if ( pService->ResolveGnutella() )
@@ -735,12 +735,12 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount)
 	return nSuccess;
 }
 
-void CDiscoveryServices::OnGnutellaAdded(IN_ADDR* pAddress, int nCount)
+void CDiscoveryServices::OnGnutellaAdded(IN_ADDR* /*pAddress*/, int /*nCount*/)
 {
 	// Find this host somehow and add to m_nHosts
 }
 
-void CDiscoveryServices::OnGnutellaFailed(IN_ADDR* pAddress)
+void CDiscoveryServices::OnGnutellaFailed(IN_ADDR* /*pAddress*/)
 {
 	// Find this host and add to m_nFailures, and delete if excessive
 }
@@ -781,8 +781,8 @@ BOOL CDiscoveryServices::RequestRandomService(PROTOCOLID nProtocol)
 
 CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 {
-	CPtrArray pServices;
-	DWORD tNow = time( NULL );
+	CArray< CDiscoveryService* > pServices;
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	// Loops through all services
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -818,7 +818,7 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 	{
 		// return a random service
 		srand( GetTickCount() );
-		return (CDiscoveryService*)pServices.GetAt( rand() % pServices.GetSize() );
+		return pServices.GetAt( rand() % pServices.GetSize() );
 	}
 	else							// else (No services available)
 	{
@@ -832,8 +832,8 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 
 CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude, BOOL bForUpdate)
 {	// Select a random webcache (G1/G2 only)
-	CPtrArray pWebCaches;
-	DWORD tNow = time( NULL );
+	CArray< CDiscoveryService* > pWebCaches;
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -873,7 +873,7 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 	{
 		// Select a random one
 		srand( GetTickCount() );
-		return (CDiscoveryService*)pWebCaches.GetAt( rand() % pWebCaches.GetSize() );
+		return pWebCaches.GetAt( rand() % pWebCaches.GetSize() );
 	}
 	else
 	{
@@ -1154,7 +1154,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 				_stscanf( strLine.Mid( nBreak + 1 ), _T("%i"), &nSeconds );
 				nSeconds = max( 0, min( 18000, nSeconds ) );
 				strLine = strLine.Left( nBreak );
-				tSeen = time( NULL ) - nSeconds;
+				tSeen = static_cast< DWORD >( time( NULL ) ) - nSeconds;
 			}
 			
 			if ( m_nLastQueryProtocol == PROTOCOL_G2 )
@@ -1252,7 +1252,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 	if ( bSuccess )
 	{
 		m_pWebCache->OnSuccess();
-		if ( HostCache.Gnutella2.GetNewest() != NULL && nIPs > 0 ) m_tQueried = time( NULL );
+		if ( HostCache.Gnutella2.GetNewest() != NULL && nIPs > 0 ) m_tQueried = static_cast< DWORD >( time( NULL ) );
 		return TRUE;
 	}
 	
@@ -1278,7 +1278,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 			(LPCTSTR)m_pWebCache->m_sAddress,
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 			htons( Network.m_pHost.sin_port ),
-			Neighbours.GetCount( -1, -1, ntLeaf ) );		//ToDo: Check this
+			Neighbours.GetCount( PROTOCOL_ANY, -1, ntLeaf ) );		//ToDo: Check this
 	}
 	
 	if ( m_pSubmit != NULL && Check( m_pSubmit, CDiscoveryService::dsWebCache ) &&
@@ -1373,7 +1373,7 @@ BOOL CDiscoveryServices::SendWebCacheRequest(CString strURL, CString& strOutput)
 	
 	if ( m_hRequest ) InternetCloseHandle( m_hRequest );
 	
-	m_hRequest = InternetOpenUrl( m_hInternet, strURL, _T("Connection: close"), -1,
+	m_hRequest = InternetOpenUrl( m_hInternet, strURL, _T("Connection: close"), ~0u,
 		INTERNET_FLAG_RELOAD|INTERNET_FLAG_DONT_CACHE|INTERNET_FLAG_NO_COOKIES, 0 );
 	if ( m_hRequest == NULL ) return FALSE;
 	
@@ -1442,7 +1442,7 @@ BOOL CDiscoveryServices::RunServerMet()
 	{
 		while ( nRemaining > 0 )
 		{
-			DWORD nBuffer = min( nRemaining, DWORD(1024) );
+			DWORD nBuffer = min( nRemaining, 1024ul );
 			InternetReadFile( m_hRequest, pBuffer, nBuffer, &nBuffer );
 			pFile.Write( pBuffer, nBuffer );
 			nRemaining -= nBuffer;
@@ -1482,7 +1482,7 @@ CDiscoveryService::CDiscoveryService(int nType, LPCTSTR pszAddress)
 	m_nUpdates		= 0;
 	m_nFailures		= 0;
 	m_nHosts		= 0;
-	m_nAccessPeriod	= max( Settings.Discovery.UpdatePeriod, DWORD(1800) );
+	m_nAccessPeriod	= max( Settings.Discovery.UpdatePeriod, 1800u );
 	m_nUpdatePeriod	= Settings.Discovery.DefaultUpdate;
 	
 	if ( pszAddress != NULL ) m_sAddress = pszAddress;
@@ -1503,7 +1503,7 @@ void CDiscoveryService::Remove(BOOL bCheck)
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryService serialize
 
-void CDiscoveryService::Serialize(CArchive& ar, int nVersion)
+void CDiscoveryService::Serialize(CArchive& ar, int /*nVersion*/)
 {
 
 	if ( ar.IsStoring() )

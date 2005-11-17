@@ -195,7 +195,7 @@ BOOL CShakeNeighbour::OnConnected()
 
 // CConnection::DoRun calls this when a socket connection has been refused or lost
 // Documents what happened, and puts everything away
-void CShakeNeighbour::OnDropped(BOOL bError)
+void CShakeNeighbour::OnDropped(BOOL /*bError*/)
 {
 	// We tried to connect the socket, but are still waiting for the socket connection to be made
 	if ( m_nState == nrsConnecting )
@@ -290,6 +290,8 @@ BOOL CShakeNeighbour::OnRun()
 		return FALSE;
 
 		break;
+	default:
+		ASSERT( 0 );
 	}
 
 	// Have CConnection::DoRun keep talking to this remote computer
@@ -467,7 +469,7 @@ void CShakeNeighbour::SendPrivateHeaders()
 void CShakeNeighbour::SendHostHeaders(LPCTSTR pszMessage)
 {
 	// Local variables
-	DWORD nTime = time( NULL );	// The number of seconds since midnight on January 1, 1970
+	DWORD nTime = static_cast< DWORD >( time( NULL ) );	// The number of seconds since midnight on January 1, 1970
 	CString strHosts, strHost;	// Text to describe other computers and just one
 	CHostCacheHost* pHost;		// We'll use this to loop through host objects in the host cache
 
@@ -688,7 +690,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			if (_stscanf( strValue.Mid( nColon + 1 ), _T("%lu"), &nPort ) == 1 && nPort != 0 )
 			{
 				// Save the remote computer port number in the connection object's m_pHost member variable
-				m_pHost.sin_port = htons( nPort ); // Call htons to go from PC little-endian to Internet big-endian byte order
+				m_pHost.sin_port = htons( u_short( nPort ) ); // Call htons to go from PC little-endian to Internet big-endian byte order
 			}
 		}
 
@@ -1436,10 +1438,6 @@ void CShakeNeighbour::OnHandshakeComplete()
 		theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_GOTLEAF, (LPCTSTR)m_sAddress );
 	}
 
-	// When we copied the object, the pointers to buffers were also copied, null them here so deleting this doesn't delete them
-	m_pZInput  = NULL;
-	m_pZOutput = NULL;
-
 	// Delete this CShakeNeighbour object now that it has been turned into a CG1Neighbour or CG2Neighbour object
 	delete this;
 }
@@ -1465,7 +1463,8 @@ BOOL CShakeNeighbour::IsClientObsolete()
 
 		// Check for old version and betas
 		if (( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||	// Old versions
-			( _tcsistr( m_sUserAgent, _T("Shareaza 2.0." ) ) ) )
+			( _tcsistr( m_sUserAgent, _T("Shareaza 2.0"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("Shareaza 2.1." ) ) ) )
 			return TRUE;
 
 		// Assumed to be reasonably current
@@ -1510,10 +1509,18 @@ BOOL CShakeNeighbour::IsClientBad()
 	if ( _tcsistr( m_sUserAgent, _T("gnucdna") ) )		return FALSE;
 
 	if ( _tcsistr( m_sUserAgent, _T("adagio") ) )		return FALSE;
-
-	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )		return FALSE;
 	
 	if ( _tcsistr( m_sUserAgent, _T("trustyfiles") ) )	return FALSE;
+	
+	// Really obsolete versions of Shareaza should be blocked. (they may have bad settings)
+	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )	
+	{
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 1.") ) )	return TRUE;
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 6.") ) )	return TRUE;
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 7.") ) )	return TRUE;
+		// Current versions okay
+		return FALSE;
+	}
 
 	// GPL breakers- Clients violating the GPL
 	// See http://www.gnu.org/copyleft/gpl.html
@@ -1529,6 +1536,8 @@ BOOL CShakeNeighbour::IsClientBad()
 
 	// Clients that over-query or otherwise cause problems
 	//if ( _tcsistr( m_sUserAgent, _T("") ) )			return TRUE;
+
+
 
 
 	// Unknown- Assume OK

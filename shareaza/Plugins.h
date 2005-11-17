@@ -37,7 +37,7 @@ public:
 
 // Attributes
 public:
-	CPtrList	m_pList;
+	CList< CPlugin* > m_pList;
 	UINT		m_nCommandID;
 
 // Operations
@@ -52,7 +52,7 @@ public:
 	UINT		GetCommandID();
 	BOOL		OnUpdate(CChildWnd* pActiveWnd, CCmdUI* pCmdUI);
 	BOOL		OnCommand(CChildWnd* pActiveWnd, UINT nCommandID);
-	BOOL		OnExecuteFile(LPCTSTR pszFile);
+	BOOL		OnExecuteFile(LPCTSTR pszFile, BOOL bHasThumbnail = FALSE);
 	BOOL		OnEnqueueFile(LPCTSTR pszFile);
 
 // Inlines
@@ -64,10 +64,10 @@ public:
 
 	inline CPlugin* GetNext(POSITION& pos) const
 	{
-		return (CPlugin*)m_pList.GetNext( pos );
+		return m_pList.GetNext( pos );
 	}
 
-	inline int GetCount() const
+	inline INT_PTR GetCount() const
 	{
 		return m_pList.GetCount();
 	}

@@ -298,7 +298,7 @@ void CDownloadGroups::Serialize(CArchive& ar)
 		ar >> nVersion;
 		if ( nVersion <= 1 || nVersion > GROUPS_SER_VERSION ) AfxThrowUserException();
 
-		int nCount = ar.ReadCount();
+		DWORD_PTR nCount = ar.ReadCount();
 
 		for ( ; nCount > 0 ; nCount-- )
 		{
@@ -308,7 +308,7 @@ void CDownloadGroups::Serialize(CArchive& ar)
 				Downloads.Reorder( pDownload, NULL );
 		}
 
-		if ( nCount = ar.ReadCount() ) Clear();
+		if ( ( nCount = ar.ReadCount() ) != 0 ) Clear();
 
 		for ( ; nCount > 0 ; nCount-- )
 		{

@@ -47,6 +47,9 @@ public:
 	BOOL	m_bHideReject;
 	BOOL	m_bHideUnstable;
 	BOOL	m_bHideBogus;
+	BOOL	m_bHideDRM;
+	BOOL	m_bHideAdult;
+	BOOL	m_bHideSuspicious;
 	int		m_nSources;
 	CString	m_sMaxSize;
 	CString	m_sMinSize;

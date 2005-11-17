@@ -64,6 +64,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
-	afx_msg LONG OnPrintClient(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnPrintClient(WPARAM wParam, LPARAM lParam);
 
 };

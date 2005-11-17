@@ -129,7 +129,7 @@ void CEDClients::Clear()
 
 BOOL CEDClients::PushTo(DWORD nClientID, WORD nClientPort)
 {
-	CEDClient* pClient = Connect( nClientID, nClientPort, NULL, 0, NULL );
+	CEDClient* pClient = Connect( nClientID, nClientPort, NULL, 0, Hashes::Guid() );
 	if ( pClient == NULL ) return FALSE;
 	return pClient->Connect();
 }
@@ -137,11 +137,11 @@ BOOL CEDClients::PushTo(DWORD nClientID, WORD nClientPort)
 //////////////////////////////////////////////////////////////////////
 // CEDClients connection setup
 
-CEDClient* CEDClients::Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, GGUID* pGUID)
+CEDClient* CEDClients::Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID)
 {
-	if ( pGUID != NULL )
+	if ( oGUID )
 	{
-		if ( CEDClient* pClient = GetByGUID( pGUID ) ) return pClient;
+		if ( CEDClient* pClient = GetByGUID( oGUID ) ) return pClient;
 	}
 	
 	if ( IsFull() ) return NULL;
@@ -151,18 +151,18 @@ CEDClient* CEDClients::Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServ
 	if ( CEDPacket::IsLowID( nClientID ) )
 	{
 		if ( pServerAddress == NULL || nServerPort == 0 ) return NULL;
-		pClient = GetByID( nClientID, pServerAddress, pGUID );
+		pClient = GetByID( nClientID, pServerAddress, oGUID );
 	}
 	else
 	{
 		if ( Security.IsDenied( (IN_ADDR*)&nClientID ) ) return NULL;
-		pClient = GetByID( nClientID, NULL, pGUID );
+		pClient = GetByID( nClientID, NULL, oGUID );
 	}
 	
 	if ( pClient == NULL )
 	{
 		pClient = new CEDClient();
-		pClient->ConnectTo( nClientID, nClientPort, pServerAddress, nServerPort, pGUID );
+		pClient->ConnectTo( nClientID, nClientPort, pServerAddress, nServerPort, oGUID );
 	}
 	
 	return pClient;
@@ -182,7 +182,7 @@ CEDClient* CEDClients::GetByIP(IN_ADDR* pAddress)
 	return NULL;
 }
 
-CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, GGUID* pGUID)
+CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::Guid& oGUID)
 {
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
@@ -190,18 +190,18 @@ CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, GGUID* pGUID)
 		
 		if ( pClient->m_nClientID == nClientID )
 		{
-			if ( pGUID == NULL || pClient->m_pGUID == *pGUID ) return pClient;
+			if ( !oGUID || validAndEqual( pClient->m_oGUID, oGUID ) ) return pClient;
 		}
 	}
 	
 	return NULL;
 }
 
-CEDClient* CEDClients::GetByGUID(GGUID* pGUID)
+CEDClient* CEDClients::GetByGUID(const Hashes::Guid& oGUID)
 {
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
-		if ( pClient->m_bGUID && pClient->m_pGUID == *pGUID ) return pClient;
+		if ( validAndEqual( pClient->m_oGUID, oGUID ) ) return pClient;
 	}
 	
 	return NULL;
@@ -438,7 +438,7 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 }
 
 // Server status packet received
-void CEDClients::OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+void CEDClients::OnServerStatus(SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
 {
 	DWORD nLen, nKey;
 	DWORD nUsers = 0, nFiles = 0, nMaxUsers = 0, nFileLimit = 1000, nUDPFlags = 0;
@@ -575,7 +575,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 		if ( ! pLock.Lock( 250 ) ) return;
 
 		// Get the current time (in seconds)
-		DWORD tSecs	= time( NULL );
+		DWORD tSecs	= static_cast< DWORD >( time( NULL ) );
 
 		// Loop through servers in the host cache
 		for ( pHost = HostCache.eDonkey.GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )

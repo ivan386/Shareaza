@@ -38,11 +38,11 @@ public:
 	void					Cleanup();
 protected:
 	BOOL					LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
-	BOOL					LoadFromFile(CImageFile* pFile, LPCTSTR pszType, HANDLE hFile, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
+	BOOL					LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL					PostLoad(CImageFile* pFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pArray, BOOL bSuccess);
 protected:
 	BOOL					SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
-	BOOL					SaveToFile(CImageFile* pFile, LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
+//	BOOL					SaveToFile(CImageFile* pFile, LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
 	SAFEARRAY*				ImageToArray(CImageFile* pFile);
 protected:
 	IImageServicePlugin*	GetService(LPCTSTR pszFile, CLSID** ppCLSID = NULL);
@@ -54,8 +54,8 @@ public:
 
 // Attributes
 protected:
-	CMapStringToPtr			m_pService;
-	CMapStringToPtr			m_pCLSID;
+	CMap< CString, const CString&, IImageServicePlugin*, IImageServicePlugin* > m_pService;
+	CMap< CString, const CString&, CLSID*, CLSID* > m_pCLSID;
 	BOOL					m_bCOM;
 
 	friend class CImageFile;

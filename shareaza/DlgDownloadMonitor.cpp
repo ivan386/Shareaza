@@ -65,7 +65,7 @@ BEGIN_MESSAGE_MAP(CDownloadMonitorDlg, CSkinDialog)
 	ON_NOTIFY_EX(TTN_NEEDTEXT, 0, OnNeedText)
 END_MESSAGE_MAP()
 
-CPtrList CDownloadMonitorDlg::m_pWindows;
+CList< CDownloadMonitorDlg* > CDownloadMonitorDlg::m_pWindows;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -139,7 +139,7 @@ void CDownloadMonitorDlg::OnSkinChange(BOOL bSet)
 {
 	for ( POSITION pos = m_pWindows.GetHeadPosition() ; pos ; )
 	{
-		CDownloadMonitorDlg* pDlg = (CDownloadMonitorDlg*)m_pWindows.GetNext( pos );
+		CDownloadMonitorDlg* pDlg = m_pWindows.GetNext( pos );
 
 		if ( bSet )
 		{
@@ -157,7 +157,7 @@ void CDownloadMonitorDlg::CloseAll()
 {
 	for ( POSITION pos = m_pWindows.GetHeadPosition() ; pos ; )
 	{
-		delete (CDownloadMonitorDlg*)m_pWindows.GetNext( pos );
+		delete m_pWindows.GetNext( pos );
 	}
 	m_pWindows.RemoveAll();
 }
@@ -251,7 +251,7 @@ void CDownloadMonitorDlg::PostNcDestroy()
 	delete this;
 }
 
-void CDownloadMonitorDlg::OnTimer(UINT nIDEvent) 
+void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/) 
 {
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return;
@@ -628,7 +628,7 @@ void CDownloadMonitorDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	CSkinDialog::OnSysCommand( nID, lParam );
 }
 
-LONG CDownloadMonitorDlg::OnTray(UINT wParam, LONG lParam)
+LRESULT CDownloadMonitorDlg::OnTray(WPARAM /*wParam*/, LPARAM lParam)
 {
 	if ( LOWORD(lParam) == WM_LBUTTONDBLCLK && m_bTray )
 	{
@@ -653,7 +653,7 @@ HBRUSH CDownloadMonitorDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-void CDownloadMonitorDlg::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CDownloadMonitorDlg::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
 	CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
 	if ( ! pMainWnd || ! IsWindow( pMainWnd->m_hWnd ) ) return;
@@ -684,7 +684,7 @@ void CDownloadMonitorDlg::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 }
 
-BOOL CDownloadMonitorDlg::OnNeedText(UINT nID, NMHDR* pTTTH, LRESULT* pResult)
+BOOL CDownloadMonitorDlg::OnNeedText(UINT /*nID*/, NMHDR* pTTTH, LRESULT* /*pResult*/)
 {
 	if ( pTTTH->idFrom == IDC_DOWNLOAD_FILE )
 	{

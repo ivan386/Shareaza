@@ -95,7 +95,7 @@ void CSchemaChild::Clear()
 {
 	for ( POSITION pos = m_pMap.GetHeadPosition() ; pos ; )
 	{
-		delete (CSchemaChildMap*)m_pMap.GetNext( pos );
+		delete m_pMap.GetNext( pos );
 	}
 	m_pMap.RemoveAll();
 }
@@ -111,7 +111,7 @@ BOOL CSchemaChild::MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bT
 
 	for ( POSITION pos = m_pMap.GetHeadPosition() ; pos ; )
 	{
-		CSchemaChildMap* pMap		= (CSchemaChildMap*)m_pMap.GetNext( pos );
+		CSchemaChildMap* pMap		= m_pMap.GetNext( pos );
 		CXMLAttribute* pAttribute1	= NULL;
 		CXMLAttribute* pAttribute2	= NULL;
 

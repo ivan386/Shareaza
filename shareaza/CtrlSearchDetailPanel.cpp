@@ -122,7 +122,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	m_pMatches	= pFile->m_pList;
 	m_bValid	= TRUE;
 	m_pFile		= pFile;
-	m_pSHA1		= pFile->m_pSHA1;
+	m_oSHA1		= pFile->m_oSHA1;
 	m_sName		= pFile->m_pBest->m_sName;
 	m_sSize		= pFile->m_sSize;
 	m_nIcon32	= ShellIcons.Get( pFile->m_pBest->m_sName, 32 );
@@ -139,7 +139,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 		if ( m_pSchema == NULL ) m_pSchema = SchemaCache.Get( pHit->m_sSchemaURI );
 		nSpeed += pHit->m_nSpeed;
 		
-		if ( pHit->m_bSHA1 && pHit->m_bPush == TS_FALSE )
+		if ( pHit->m_oSHA1 && pHit->m_bPush == TS_FALSE )
 		{
 			if ( pHit->m_bPreview )
 			{
@@ -156,7 +156,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 				CString strURL;
 				strURL.Format( _T("http://%s:%i/gnutella/preview/v1?%s"),
 					(LPCTSTR)CString( inet_ntoa( pHit->m_pAddress ) ), pHit->m_nPort,
-					(LPCTSTR)CSHA::HashToString( &pHit->m_pSHA1, TRUE ) );
+					(LPCTSTR)pHit->m_oSHA1.toUrn() );
 				m_pPreviewURLs.AddTail( strURL );
 				m_bCanPreview = TRUE;
 			}
@@ -165,7 +165,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 		
 		if ( pHit->m_nRating > 0 || pHit->m_sComments.GetLength() > 0 )
 		{
-			m_pReviews.AddTail( new Review( &pHit->m_pClientID,
+			m_pReviews.AddTail( new Review( pHit->m_oClientID,
 				&pHit->m_pAddress, pHit->m_sNick, pHit->m_nRating, pHit->m_sComments ) );
 		}
 	}
@@ -226,7 +226,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 			if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pFile->m_pPreview, pFile->m_nPreview, FALSE, TRUE ) )
 			{
 				pLock.Unlock();
-				OnPreviewLoaded( &m_pSHA1, &pImage );
+				OnPreviewLoaded( m_oSHA1, &pImage );
 			}
 		}
 		
@@ -238,7 +238,7 @@ void CSearchDetailPanel::ClearReviews()
 {
 	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
 	{
-		delete (Review*)m_pReviews.GetNext( pos );
+		delete m_pReviews.GetNext( pos );
 	}
 	
 	m_pReviews.RemoveAll();
@@ -308,7 +308,7 @@ void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy)
 	
 	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
 	{
-		Review* pReview = (Review*)m_pReviews.GetNext( pos );
+		Review* pReview = m_pReviews.GetNext( pos );
 		CRect rcReview( rc.left, nHeight, rc.right, nHeight );
 		pReview->Layout( this, &rcReview );
 		nHeight += rcReview.Height();
@@ -329,11 +329,10 @@ void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy)
 	Invalidate();
 }
 
-void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/) 
 {
-	SCROLLINFO pScroll;
+	SCROLLINFO pScroll = {};
 	
-	ZeroMemory( &pScroll, sizeof(pScroll) );
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_ALL;
 	
@@ -372,25 +371,25 @@ void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollB
 
 	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
 	{
-		Review* pReview = (Review*)m_pReviews.GetNext( pos );
+		Review* pReview = m_pReviews.GetNext( pos );
 		pReview->Reposition( pScroll.nPos );
 	}
 	
 	Invalidate();
 }
 
-void CSearchDetailPanel::OnLButtonDown(UINT nFlags, CPoint point)
+void CSearchDetailPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
 	SetFocus();
 }
 
-BOOL CSearchDetailPanel::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+BOOL CSearchDetailPanel::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
 	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
 	return TRUE;
 }
 
-BOOL CSearchDetailPanel::OnEraseBkgnd(CDC* pDC) 
+BOOL CSearchDetailPanel::OnEraseBkgnd(CDC* /*pDC*/) 
 {
 	return TRUE;
 }
@@ -477,7 +476,7 @@ void CSearchDetailPanel::OnPaint()
 	
 	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
 	{
-		Review* pReview = (Review*)m_pReviews.GetNext( pos );
+		Review* pReview = m_pReviews.GetNext( pos );
 		pReview->Paint( &dc, GetScrollPos( SB_VERT ) );
 	}
 	
@@ -487,10 +486,10 @@ void CSearchDetailPanel::OnPaint()
 
 void CSearchDetailPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect)
 {
-	CSize sz = pDC->GetTextExtent( pszText, _tcslen( pszText ) );
+	CSize sz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
 	CRect rc( nX - 2, nY - 2, nX + sz.cx + 2, nY + sz.cy + 2 );
 	
-	pDC->ExtTextOut( nX, nY, ETO_CLIPPED|ETO_OPAQUE, &rc, pszText, _tcslen( pszText ), NULL );
+	pDC->ExtTextOut( nX, nY, ETO_CLIPPED|ETO_OPAQUE, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
 	pDC->ExcludeClipRect( &rc );
 	
 	if ( pRect != NULL ) CopyMemory( pRect, &rc, sizeof(RECT) );
@@ -537,7 +536,7 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 				if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)m_pFile->m_pPreview, m_pFile->m_nPreview, FALSE, TRUE ) )
 				{
 					pLock.Unlock();
-					OnPreviewLoaded( &m_pSHA1, &pImage );
+					OnPreviewLoaded( m_oSHA1, &pImage );
 				}
 			}
 		}
@@ -690,9 +689,9 @@ void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point)
 /////////////////////////////////////////////////////////////////////////////
 // CSearchDetailPanel::Review construction
 
-CSearchDetailPanel::Review::Review(GGUID* pGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments)
+CSearchDetailPanel::Review::Review(const Hashes::Guid& oGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments)
 {
-	m_pGUID		= *pGUID;
+	m_oGUID		= oGUID;
 	m_nRating	= nRating;
 	
 	if ( pszNick != NULL && *pszNick != 0 )
@@ -786,7 +785,7 @@ void CSearchDetailPanel::Review::Paint(CDC* pDC, int nScroll)
 	rc.top += 20;
 }
 
-void CSearchDetailPanel::OnClickReview(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult)
+void CSearchDetailPanel::OnClickReview(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
 {
 	if ( CRichElement* pElement = pNotify->pElement )
 	{
@@ -872,7 +871,7 @@ void CSearchDetailPanel::OnRun()
 		}
 		
 		CString strURL	= m_pPreviewURLs.RemoveHead();
-		SHA1 pSHA1		= m_pSHA1;
+        Hashes::Sha1Hash oSHA1( m_oSHA1 );
 		
 		if ( ! m_bIsPreviewing )
 		{
@@ -891,8 +890,8 @@ void CSearchDetailPanel::OnRun()
 			
 			if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pBuffer, nBuffer, FALSE, TRUE ) )
 			{
-				OnPreviewLoaded( &pSHA1, &pImage );
-				CachePreviewImage( &pSHA1, pBuffer, nBuffer );
+				OnPreviewLoaded( oSHA1, &pImage );
+				CachePreviewImage( oSHA1, pBuffer, nBuffer );
 			}
 			else
 			{
@@ -921,7 +920,7 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 		return FALSE;
 	}
 	
-	int nCode = m_pRequest.GetStatusCode();
+	/*int nCode =*/ m_pRequest.GetStatusCode();
 	
 	if ( m_pRequest.GetStatusSuccess() == FALSE )
 	{
@@ -934,9 +933,9 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 	
 	if ( strURN.GetLength() )
 	{
-		SHA1 pSHA1;
-		
-		if ( CSHA::HashFromURN( strURN, &pSHA1 ) && pSHA1 != m_pSHA1 )
+		Hashes::Sha1Hash oSHA1;
+
+		if ( oSHA1.fromUrn( strURN ) && validAndUnequal( oSHA1, m_oSHA1 ) )
 		{
 			theApp.Message( MSG_DEBUG, _T("Preview failed: wrong URN.") );
 			return FALSE;
@@ -961,7 +960,7 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 	return TRUE;
 }
 
-void CSearchDetailPanel::OnPreviewLoaded(SHA1* pSHA1, CImageFile* pImage)
+void CSearchDetailPanel::OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFile* pImage)
 {
 	if ( m_nThumbSize == 0 ) return;
 	
@@ -979,7 +978,7 @@ void CSearchDetailPanel::OnPreviewLoaded(SHA1* pSHA1, CImageFile* pImage)
 	
 	CSingleLock pLock( &m_pSection, TRUE );
 	
-	if ( m_pSHA1 != *pSHA1 ) return;
+	if ( validAndUnequal( m_oSHA1, oSHA1 ) ) return;
 	
 	m_bCanPreview = m_bRunPreview = m_bIsPreviewing = FALSE;
 	
@@ -993,7 +992,7 @@ void CSearchDetailPanel::OnPreviewLoaded(SHA1* pSHA1, CImageFile* pImage)
 	Invalidate();
 }
 
-BOOL CSearchDetailPanel::CachePreviewImage(SHA1* pSHA1, LPBYTE pBuffer, DWORD nBuffer)
+BOOL CSearchDetailPanel::CachePreviewImage(const Hashes::Sha1Hash& /*oSHA1*/, LPBYTE pBuffer, DWORD nBuffer)
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	

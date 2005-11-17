@@ -73,7 +73,7 @@ protected:
 	// Receive push requests
 	BOOL OnAcceptGive();       // The remote computer said GIV, see if we were expecting it
 	BOOL OnAcceptPush();       // The remote computer said PUSH, see if we were expecting it
-	BOOL OnPush(GGUID* pGUID); // See if a child window recognizes the guid
+	BOOL OnPush(const Hashes::Guid& oGUID); // See if a child window recognizes the guid
 };
 
 // End the group of lines to only include once, pragma once doesn't require an endif at the bottom

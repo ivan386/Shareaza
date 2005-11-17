@@ -36,8 +36,8 @@ public:
 
 // Attributes
 protected:
-	CMapStringToPtr	m_pURIs;
-	CMapStringToPtr	m_pNames;
+	CMap< CString, const CString&, CSchema*, CSchema* > m_pURIs;
+	CMap< CString, const CString&, CSchema*, CSchema* >	m_pNames;
 
 // Operations
 public:
@@ -55,7 +55,7 @@ public:
 	{
 		CSchema* pSchema = NULL;
 		CString strURI;
-		m_pURIs.GetNextAssoc( pos, strURI, (void*&)pSchema );
+		m_pURIs.GetNextAssoc( pos, strURI, pSchema );
 		return pSchema;
 	}
 	
@@ -66,7 +66,7 @@ public:
 		CharLower( strURI.GetBuffer() );
 		strURI.ReleaseBuffer();
 		CSchema* pSchema = NULL;
-		return ( m_pURIs.Lookup( strURI, (void*&)pSchema ) ) ? pSchema : NULL;
+		return ( m_pURIs.Lookup( strURI, pSchema ) ) ? pSchema : NULL;
 	}
 	
 	CSchema* Guess(LPCTSTR pszName) const
@@ -76,7 +76,7 @@ public:
 		CharLower( strName.GetBuffer() );
 		strName.ReleaseBuffer();
 		CSchema* pSchema = NULL;
-		return m_pNames.Lookup( strName, (void*&)pSchema ) ? pSchema : NULL;
+		return m_pNames.Lookup( strName, pSchema ) ? pSchema : NULL;
 	}
 
 };

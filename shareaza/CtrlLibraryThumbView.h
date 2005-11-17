@@ -60,7 +60,7 @@ protected:
 	int					m_nSelected;
 	CLibraryThumbItem*	m_pFocus;
 	CLibraryThumbItem*	m_pFirst;
-	CPtrList			m_pSelThumb;
+	CList< CLibraryThumbItem* > m_pSelThumb;
 	BOOL				m_bDrag;
 	CPoint				m_ptDrag;
 
@@ -68,7 +68,7 @@ protected:
 public:
 	virtual void		Update();
 	virtual BOOL		Select(DWORD nObject);
-	virtual DWORD		HitTestIndex(const CPoint& point) const;
+	virtual DWORD_PTR	HitTestIndex(const CPoint& point) const;
 protected:
 	void				Clear();
 	int					GetThumbIndex(CLibraryThumbItem* pThumb) const;
@@ -115,7 +115,7 @@ protected:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

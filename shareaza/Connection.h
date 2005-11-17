@@ -37,20 +37,19 @@ class CConnection;
 typedef struct
 {
 	// Options to limit bandwidth
-	DWORD* pLimit;    // Points to a DWORD that holds the limit for this bandwidth meter
-	BOOL   bUnscaled; // Set to true to worry about bandwidth even if the program settings don't
+	DWORD* pLimit;			// Points to a DWORD that holds the limit for this bandwidth meter
 
 	// Transfer statistics
-	DWORD nTotal;   // The total number of bytes read or written
-	DWORD tLast;    // The time the last read or write happened
-	DWORD nMeasure; // The average speed in bytes per second over the last 2 seconds
+	DWORD	nTotal;			// The total number of bytes read or written
+	DWORD	tLast;			// The time the last read or write happened
+	DWORD	nMeasure;		// The average speed in bytes per second over the last 2 seconds
 
 	// The arrays of byte counts and times
-	DWORD pHistory[64]; // 64 records of a number of bytes transferred
-	DWORD pTimes[64];   // The times each of these transfers happened
-	DWORD nPosition;    // The next spot in the array to use
-	DWORD tLastAdd;     // When we last recorded a transfer of some bytesThe last time something was recorded into pHistory and pTimes
-	DWORD tLastSlot;    // When we started using this time slot
+	DWORD	pHistory[64];	// 64 records of a number of bytes transferred
+	DWORD	pTimes[64];		// The times each of these transfers happened
+	DWORD	nPosition;		// The next spot in the array to use
+	DWORD	tLastAdd;		// When we last recorded a transfer of some bytesThe last time something was recorded into pHistory and pTimes
+	DWORD	tLastSlot;		// When we started using this time slot
 
 } TCPBandwidthMeter;
 
@@ -62,6 +61,7 @@ public:
 
 	// Make a new CConnection object, and delete one
 	CConnection();
+	CConnection(CConnection& other);
 	virtual ~CConnection();
 
 public:
@@ -71,7 +71,7 @@ public:
 	CString     m_sAddress;   // The same IP address in a string like "1.2.3.4"
 	BOOL        m_bInitiated; // True if we initiated the connection, false if the remote computer connected to us
 	BOOL        m_bConnected; // True when the socket is connected
-	DWORD       m_tConnected; // The tick count when the connection was made
+	DWORD       m_tConnected; // The tick count when the socket connection was made
 
 public:
 
@@ -107,7 +107,7 @@ public:
 	BOOL ReadHeaders();    // Read text headers sitting in the input buffer
 	BOOL SendMyAddress();  // If we are listening on a port, tell the other computer our IP address and port number
 	BOOL IsAgentBlocked(); // Check the other computer's software title against our list of programs not to talk to
-
+	
 protected:
 
 	// Read and write data through the socket, and look at headers

@@ -63,7 +63,7 @@ BOOL CLibraryBuilderPlugins::ExtractMetadata(CString& strPath, HANDLE hFile)
 	
 	ILibraryBuilderPlugin* pPlugin = NULL;
 	
-	if ( m_pMap.Lookup( strType, (void*&)pPlugin ) )
+	if ( m_pMap.Lookup( strType, pPlugin ) )
 	{
 		if ( pPlugin == NULL ) return FALSE;
 	}
@@ -120,7 +120,7 @@ void CLibraryBuilderPlugins::Cleanup()
 		ILibraryBuilderPlugin* pPlugin = NULL;
 		CString strType;
 		
-		m_pMap.GetNextAssoc( pos, strType, (void*&)pPlugin );
+		m_pMap.GetNextAssoc( pos, strType, pPlugin );
 		if ( pPlugin ) pPlugin->Release();
 	}
 	
@@ -159,7 +159,7 @@ ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 	
 	ILibraryBuilderPlugin* pPlugin;
 	
-	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER,
+	/*HRESULT hResult =*/ CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER,
 		IID_ILibraryBuilderPlugin, (void**)&pPlugin );
 	
 	m_pMap.SetAt( pszType, pPlugin );

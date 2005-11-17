@@ -58,7 +58,7 @@ CTorrentTrackerDlg::CTorrentTrackerDlg(CBTInfo* pInfo, int* pStart, CWnd* pParen
 	//}}AFX_DATA_INIT
 
 	m_pInfo.Copy( pInfo );
-	m_pInfo.m_bValid = FALSE;
+    m_pInfo.m_oInfoBTH.clear();
 
 	m_pStartTorrentDownloads = pStart;
 }
@@ -115,9 +115,8 @@ BOOL CTorrentTrackerDlg::OnInitDialog()
 	for ( int nFile = 0 ; nFile < m_pInfo.m_nFiles ; nFile++ )
 	{
 		CBTInfo::CBTFile* pFile = m_pInfo.m_pFiles + nFile;
-		LV_ITEM pItem;
 		
-		ZeroMemory( &pItem, sizeof(pItem) );
+		LV_ITEM pItem = {};
 		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
 		pItem.iItem		= m_wndFiles.GetItemCount();
 		pItem.lParam	= (LPARAM)nFile;
@@ -171,7 +170,7 @@ void CTorrentTrackerDlg::OnTorrentRefresh()
 	m_hThread = AfxBeginThread( ThreadStart, this )->m_hThread;
 }
 
-void CTorrentTrackerDlg::OnTimer(UINT nIDEvent) 
+void CTorrentTrackerDlg::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( nIDEvent == 1 )
 	{
@@ -208,7 +207,8 @@ void CTorrentTrackerDlg::OnOK()
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
 			m_pInfo.m_sTracker = m_sTracker;
-			m_pInfo.m_bValid = TRUE;
+// ???????????????????????
+			m_pInfo.m_oInfoBTH.validate();
 		}
 	}
 
@@ -267,9 +267,7 @@ BOOL CTorrentTrackerDlg::OnTree(CBENode* pNode)
 	CBENode* pFiles = pNode->GetNode( "files" );
 	if ( ! pFiles->IsType( CBENode::beDict ) ) return FALSE;
 	
-	SHA1* pSHA1 = &m_pInfo.m_pInfoSHA1;
-	
-	CBENode* pFile = pFiles->GetNode( (LPBYTE)pSHA1, sizeof(SHA1) );
+    CBENode* pFile = pFiles->GetNode( &m_pInfo.m_oInfoBTH[ 0 ], Hashes::BtHash::byteCount );
 	if ( ! pFile->IsType( CBENode::beDict ) ) return FALSE;	
 	
 	m_nComplete		= 0;

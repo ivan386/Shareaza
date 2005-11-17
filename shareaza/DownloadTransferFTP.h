@@ -35,7 +35,7 @@ public:
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
-    virtual BOOL	SubtractRequested(FF::SimpleFragmentList& ppFragments);
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnRead();
 	virtual BOOL	OnConnected();
@@ -88,13 +88,13 @@ protected:
 		{
 			TRACE( _T("Extracting file size from:\n%ls\n"), m_sData );
 			CString in( m_sData ), out;
-			for( int n = 0; Split( in, _T(' '), out ); ++n )
+			for ( int n = 0; Split( in, _T(' '), out ); ++n )
 			{
                 int i = 0;
-				for( ; i < out.GetLength(); ++i )
+				for ( ; i < out.GetLength(); ++i )
 					if ( !isdigit( out [i] ) )
 						break;
-				if( i == out.GetLength() && out [0] != _T('0') && n != 2 )
+				if ( i == out.GetLength() && out [0] != _T('0') && n != 2 )
 				{
 					QWORD size = _tstoi64( out );
 					TRACE( _T("File size: %ld bytes\n"), size );
@@ -168,7 +168,7 @@ protected:
 			{
 				if ( m_pOwner && m_pInput->m_nLength > 0 )
 				{
-					DWORD nLength = (DWORD) min( (QWORD) m_pInput->m_nLength,
+					DWORD nLength = min( m_pInput->m_nLength,
 						m_pOwner->m_nLength - m_pOwner->m_nPosition );
 					m_pOwner->m_pDownload->SubmitData(
 						m_pOwner->m_nOffset + m_pOwner->m_nPosition,

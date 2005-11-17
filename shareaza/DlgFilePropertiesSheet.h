@@ -47,14 +47,14 @@ protected:
 
 // Operations
 public:
-	void	Add(UINT nIndex);
+	void	Add(DWORD nIndex);
 	void	Add(CLibraryList* pList);
 
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CFilePropertiesSheet)
 	public:
-	virtual int DoModal(int nPage = -1);
+	virtual INT_PTR DoModal(int nPage = -1);
 	virtual BOOL OnInitDialog();
 	//}}AFX_VIRTUAL
 
@@ -62,7 +62,7 @@ public:
 protected:
 	//{{AFX_MSG(CFilePropertiesSheet)
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
-	afx_msg UINT OnNcHitTest(CPoint point);
+	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
 	afx_msg BOOL OnNcActivate(BOOL bActive);
 	afx_msg void OnNcPaint();
 	afx_msg void OnNcLButtonDown(UINT nHitTest, CPoint point);
@@ -72,7 +72,7 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	//}}AFX_MSG
-	afx_msg LONG OnSetText(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 
 	DECLARE_MESSAGE_MAP()

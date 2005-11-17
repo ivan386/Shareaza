@@ -291,8 +291,8 @@ BOOL CMetaItem::Combine(CXMLElement* pXML)
 	}
 	
 	int nVote = 1;
-	if ( m_pVote.Lookup( strValue, (void*&)nVote ) ) nVote ++;
-	m_pVote.SetAt( strValue, (void*)nVote );
+	if ( m_pVote.Lookup( strValue, nVote ) ) nVote ++;
+	m_pVote.SetAt( strValue, nVote );
 	
 	return TRUE;
 }
@@ -311,7 +311,7 @@ void CMetaItem::Vote()
 		CString strValue;
 		int nVote;
 		
-		m_pVote.GetNextAssoc( pos, strValue, (void*&)nVote );
+		m_pVote.GetNextAssoc( pos, strValue, nVote );
 		
 		if ( nVote > nBest )
 		{

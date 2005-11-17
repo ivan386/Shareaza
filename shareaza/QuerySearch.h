@@ -33,17 +33,20 @@ class CG2Packet;
 class CEDPacket;
 
 
-class CQuerySearch
+class CQuerySearch : private boost::noncopyable
 {
 // Construction
 public:
 	CQuerySearch(BOOL bGUID = TRUE);
-	CQuerySearch(CQuerySearch* pCopy);
-	virtual ~CQuerySearch();
+	~CQuerySearch();
+private:
+	CQuerySearch(const CQuerySearch* pOrigin);
+public:
+	std::auto_ptr< CQuerySearch > clone() const;
 
 // Attributes
 public:
-	GGUID			m_pGUID;
+	Hashes::Guid	m_oGUID;
 public:
 	CString			m_sSearch;
 	CSchema*		m_pSchema;
@@ -51,17 +54,11 @@ public:
 	QWORD			m_nMinSize;
 	QWORD			m_nMaxSize;
 public:
-	BOOL			m_bSHA1;
-	SHA1			m_pSHA1;
-	BOOL			m_bTiger;
-	TIGEROOT		m_pTiger;
-	BOOL			m_bED2K;
-	MD4				m_pED2K;
-	BOOL			m_bBTH;
-	SHA1			m_pBTH;
-public:
-	BOOL			m_bSimilarSearch;
-	MD4				m_pSimilarED2K;
+	Hashes::Sha1Hash	m_oSHA1;
+	Hashes::TigerHash	m_oTiger;
+	Hashes::Ed2kHash	m_oED2K;
+	Hashes::BtHash		m_oBTH;
+	Hashes::Ed2kHash	m_oSimilarED2K;
 public:
 	BOOL			m_bWantURL;
 	BOOL			m_bWantDN;
@@ -74,10 +71,36 @@ public:
 	SOCKADDR_IN		m_pEndpoint;
 	DWORD			m_nKey;
 	BOOL			m_bFirewall;
+private:
+	typedef std::pair< LPCTSTR, size_t > WordEntry;
+	struct CompareWordEntries
+	{
+		bool operator()(const WordEntry& lhs, const WordEntry& rhs) const
+		{
+			int cmp = _tcsnicmp( lhs.first, rhs.first, min( lhs.second, rhs.second ) );
+			return cmp < 0 || cmp == 0 && lhs.second < rhs.second;
+		}
+	};
+	struct FindStr
+	{
+		const WordEntry& m_entry;
+		FindStr(const WordEntry& entry) : m_entry( entry ) {}
+		bool operator()(const LPCTSTR& arg) const
+		{
+			//! \todo verify this - this will succeed for every arg that starts withthe search string
+			//!                     it doesn't have to be an exact match
+			return _tcsnicmp( arg, m_entry.first, m_entry.second ) == 0;
+		}
+	};
 public:
-	DWORD			m_nWords;
-	LPCTSTR*		m_pWordPtr;
-	DWORD*			m_pWordLen;
+	typedef std::set< WordEntry, CompareWordEntries > WordTable;
+	typedef WordTable::iterator iterator;
+	typedef WordTable::const_iterator const_iterator;
+	const_iterator begin() const { return m_oWords.begin(); }
+	const_iterator end()   const { return m_oWords.end(); }
+	size_t tableSize() const { return m_oWords.size(); }
+private:
+	WordTable m_oWords;
 
 // Packet Operations
 public:
@@ -85,20 +108,20 @@ public:
 	CG2Packet*				ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey);
 	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0);
 	static CQuerySearch*	FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint = NULL);
-protected:
+private:
 	BOOL					ReadG1Packet(CPacket* pPacket);
 	BOOL					ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint = NULL);
 
 // Operations
 public:
-	BOOL		Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, SHA1* pSHA1 = NULL, TIGEROOT* pTiger = NULL, MD4* pED2K = NULL);
+	BOOL		Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K);
 	TRISTATE	MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	BOOL		MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	void		BuildWordList();
 	void		Serialize(CArchive& ar);
-	CSearchWnd*	OpenWindow();
+	static CSearchWnd* OpenWindow(std::auto_ptr< CQuerySearch > pSearch);
 	BOOL		CheckValid();
-protected:
+private:
 	void		AddStringToWordList(LPCTSTR pszString);
 	BOOL		WriteHashesToEDPacket( CEDPacket* pPacket, BOOL bUDP );
 
@@ -106,7 +129,6 @@ protected:
 public:
 	static BOOL	WordMatch(LPCTSTR pszString, LPCTSTR pszFind);
 	static BOOL	NumberMatch(const CString& strValue, const CString& strRange);
-
 };
 
 #endif // !defined(AFX_QUERYSEARCH_H__2141B926_3F6B_4A5D_9FBD_C67FD0A5C46C__INCLUDED_)

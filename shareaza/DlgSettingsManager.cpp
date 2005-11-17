@@ -101,7 +101,7 @@ void CSettingsManagerDlg::OnSkinChange(BOOL bSet)
 	}
 }
 
-int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
+INT_PTR CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 {
 	BOOL bAdvanced			= Settings.General.GUIMode != GUI_BASIC;
 
@@ -160,7 +160,7 @@ int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 			theApp.GetProfileString( _T("Settings"), _T("LastSettingsPage"), _T("") ) ) );
 	}
 
-	int nReturn = CSettingsSheet::DoModal();
+	INT_PTR nReturn = CSettingsSheet::DoModal();
 
 	if ( m_pFirst )
 	{

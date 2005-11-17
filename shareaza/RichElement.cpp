@@ -46,6 +46,7 @@ CRichElement::CRichElement(int nType, LPCTSTR pszText, LPCTSTR pszLink, DWORD nF
 	m_nFlags	= nFlags;
 	m_nGroup	= nGroup;
 	m_hImage	= NULL;
+	m_nImageIndex = NULL;
 
 	if ( m_nType == retHeading )
 	{
@@ -57,7 +58,7 @@ CRichElement::CRichElement(int nType, LPCTSTR pszText, LPCTSTR pszLink, DWORD nF
 	{
 		if ( ( m_nType == retBitmap || m_nType == retIcon ) && HIWORD(pszText) == 0 )
 		{
-			m_sText.Format( _T("%lu"), (DWORD)pszText );
+			m_sText.Format( _T("%Iu"), (size_t)pszText );
 		}
 		else
 		{
@@ -161,13 +162,15 @@ void CRichElement::PrePaint(CDC* pDC, BOOL bHover)
 		pFont = NULL;
 		break;
 	case retEmoticon:
-		_stscanf( m_sText, _T("%i"), &m_hImage );
+		_stscanf( m_sText, _T("%i"), &m_nImageIndex );		// (TODO)
+		m_hImage = NULL;
 		pFont = NULL;
 		break;
 	case retCmdIcon:
 		if ( UINT nID = CoolInterface.NameToID( m_sText ) )
 		{
-			m_hImage = CoolInterface.ImageForID( nID );
+			m_nImageIndex = CoolInterface.ImageForID( nID );	// (TODO)
+			m_hImage = NULL;
 		}
 		break;
 	default:
@@ -197,7 +200,7 @@ void CRichElement::PrePaint(CDC* pDC, BOOL bHover)
 	if ( pFont ) pDC->SelectObject( pFont );
 }
 
-void CRichElement::PrePaintBitmap(CDC* pDC)
+void CRichElement::PrePaintBitmap(CDC* /*pDC*/)
 {
 	if ( m_hImage != NULL ) return;
 
@@ -211,7 +214,7 @@ void CRichElement::PrePaintBitmap(CDC* pDC)
 
 		if ( CImageServices::LoadBitmap( &pBitmap, nID, pszDot + 1 ) )
 		{
-			m_hImage = (DWORD)pBitmap.Detach();
+			m_hImage = pBitmap.Detach();
 		}
 	}
 	else
@@ -219,11 +222,11 @@ void CRichElement::PrePaintBitmap(CDC* pDC)
 		CString strFile = Settings.General.Path + '\\' + m_sText;
 		HBITMAP hBitmap = (HBITMAP)LoadImage( AfxGetResourceHandle(),
 			strFile, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );
-		m_hImage = theApp.m_bRTL ? (DWORD)CreateMirroredBitmap( hBitmap ) : (DWORD)hBitmap;
+		m_hImage = theApp.m_bRTL ? CreateMirroredBitmap( hBitmap ) : hBitmap;
 	}
 }
 
-void CRichElement::PrePaintIcon(CDC* pDC)
+void CRichElement::PrePaintIcon(CDC* /*pDC*/)
 {
 	if ( m_hImage != NULL || m_sText.IsEmpty() ) return;
 
@@ -231,13 +234,13 @@ void CRichElement::PrePaintIcon(CDC* pDC)
 	_stscanf( m_sText, _T("%lu.%i.%i"), &nID, &nWidth, &nHeight );
 
 	HICON hIcon = CoolInterface.ExtractIcon( nID );
-	m_hImage = theApp.m_bRTL ? (DWORD)CreateMirroredIcon( hIcon ) : (DWORD)hIcon;
+	m_hImage = theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon;
 
 	if ( m_hImage == NULL )
 	{
 		hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
 			MAKEINTRESOURCE( nID ), IMAGE_ICON, nWidth, nHeight, 0 );
-		m_hImage = theApp.m_bRTL ? (DWORD)CreateMirroredIcon( hIcon ) : (DWORD)hIcon;
+		m_hImage = theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon;
 	}
 }
 

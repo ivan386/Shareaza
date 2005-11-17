@@ -288,11 +288,11 @@ void CVersionChecker::SetNextCheck(int nDays)
 //////////////////////////////////////////////////////////////////////
 // CVersionChecker check if a download is an upgrade
 
-BOOL CVersionChecker::CheckUpgradeHash(const SHA1* pHash, LPCTSTR pszPath)
+BOOL CVersionChecker::CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR pszPath)
 {
 	if ( ! m_bUpgrade ) return FALSE;
 
-	if ( CSHA::HashToString( pHash ) != m_sUpgradeSHA1 ) return FALSE;
+    if ( oHash.toString() != m_sUpgradeSHA1 ) return FALSE;
 
 	if ( _tcsstr( pszPath, _T(".exe") ) == NULL ) return FALSE;
 

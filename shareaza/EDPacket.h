@@ -43,7 +43,7 @@ typedef struct
 	BYTE	nProtocol;
 	DWORD	nLength;
 	BYTE	nType;
-	MD4		pMD4;
+	Hashes::Ed2kHash::RawStorage pMD4;
 	DWORD	nOffset1;
 	DWORD	nOffset2;
 } ED2K_PART_HEADER;

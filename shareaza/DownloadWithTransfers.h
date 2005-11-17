@@ -34,12 +34,12 @@ class CEDClient;
 class CDownloadWithTransfers : public CDownloadWithSources
 {
 // Construction
-public:
+protected:
 	CDownloadWithTransfers();
 	virtual ~CDownloadWithTransfers();
 	
 // Attributes
-protected:
+private:
 	CDownloadTransfer*	m_pTransferFirst;
 	CDownloadTransfer*	m_pTransferLast;
 	int					m_nTransferCount;
@@ -47,29 +47,29 @@ protected:
 
 // Operations
 public:
-	int			GetTransferCount() const;
-	int			GetTransferCount(int nState, IN_ADDR* pAddress = NULL) const;
+	int			GetTransferCount(int nState = -1, IN_ADDR* pAddress = NULL) const;
 	QWORD		GetAmountDownloadedFrom(IN_ADDR* pAddress) const;
-	BOOL		CanStartTransfers(DWORD tNow = 0);
-	BOOL		StartTransfersIfNeeded(DWORD tNow = 0);
-	BOOL		StartNewTransfer(DWORD tNow = 0);
 	void		CloseTransfers();
-public:
 	DWORD		GetAverageSpeed() const;
 	DWORD		GetMeasuredSpeed() const;
-	BOOL		OnAcceptPush(GGUID* pClientID, CConnection* pConnection);
+	BOOL		OnAcceptPush(const Hashes::Guid& oClientID, CConnection* pConnection);
 	BOOL		OnDonkeyCallback(CEDClient* pClient, CDownloadSource* pExcept = NULL);
+	BOOL		StartNewTransfer(DWORD tNow = 0);
+	BOOL		CanStartTransfers(DWORD tNow);
+protected:
+	BOOL		StartTransfersIfNeeded(DWORD tNow = 0);
+private:
 	void		AddTransfer(CDownloadTransfer* pTransfer);
 	void		RemoveTransfer(CDownloadTransfer* pTransfer);
 
 // Inlines
 public:
-	inline CDownloadTransfer* GetFirstTransfer() const
+	CDownloadTransfer* GetFirstTransfer() const
 	{
 		return m_pTransferFirst;
 	}
 	
-	friend class CDownloadTransfer;
+	friend class CDownloadTransfer; // AddTransfer && RemoveTransfer
 };
 
 #endif // !defined(AFX_DOWNLOADWITHTRANSFERS_H__B2CEC922_899C_412E_93B6_953073B992DB__INCLUDED_)

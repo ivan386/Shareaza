@@ -49,8 +49,8 @@ public:
 	CRect*			m_rcPart;
 	BOOL*			m_bAnchor;
 	CRect*			m_rcAnchor;
-	CMapStringToPtr	m_pPartList;
-	CMapStringToPtr	m_pAnchorList;
+	CMap< CString, const CString&, CRect*, CRect* > m_pPartList;
+	CMap< CString, const CString&, CRect*, CRect* > m_pAnchorList;
 public:
 	CSize			m_szMinSize;
 	CRect			m_rcMaximise;

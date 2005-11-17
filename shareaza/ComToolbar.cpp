@@ -143,11 +143,11 @@ STDMETHODIMP CComToolbar::XSToolbar::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CComToolbar, SToolbar )
 	if ( pThis->m_pBar == NULL ) return E_UNEXPECTED;
-	*pnCount = pThis->m_pBar->GetCount();
+	*pnCount = static_cast< LONG >( pThis->m_pBar->GetCount() );
 	return S_OK;
 }
 
-STDMETHODIMP CComToolbar::XSToolbar::InsertSeparator(LONG nPosition)
+STDMETHODIMP CComToolbar::XSToolbar::InsertSeparator(LONG /*nPosition*/)
 {
 	METHOD_PROLOGUE( CComToolbar, SToolbar )
 	if ( pThis->m_pBar == NULL ) return E_UNEXPECTED;
@@ -278,9 +278,9 @@ STDMETHODIMP CComToolbar::XEnumVARIANT::Skip(ULONG celt)
 {
     METHOD_PROLOGUE( CComToolbar, EnumVARIANT )
 
-	int nCount = pThis->m_pBar->GetCount();
+	UINT nCount = static_cast< UINT >( pThis->m_pBar->GetCount() );
 
-	while ( celt-- && m_nIndex++ < (UINT)nCount );
+	while ( celt-- && m_nIndex++ < nCount );
 
     return ( celt == 0 ? S_OK : S_FALSE );
 }
@@ -292,7 +292,7 @@ STDMETHODIMP CComToolbar::XEnumVARIANT::Reset()
     return S_OK;
 }
 
-STDMETHODIMP CComToolbar::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum)
+STDMETHODIMP CComToolbar::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* /*ppenum*/)
 {
     METHOD_PROLOGUE( CComToolbar, EnumVARIANT )
     return E_NOTIMPL;

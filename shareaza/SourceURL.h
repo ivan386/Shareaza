@@ -43,14 +43,10 @@ public:
 	WORD		m_nServerPort;
 	CString		m_sPath;
 public:
-	BOOL		m_bSHA1;
-	SHA1		m_pSHA1;
-	BOOL		m_bED2K;
-	MD4			m_pED2K;
-	BOOL		m_bBTH;
-	SHA1		m_pBTH;
-	BOOL		m_bBTC;
-	SHA1		m_pBTC;
+    Hashes::Sha1Hash m_oSHA1;
+    Hashes::Ed2kHash m_oED2K;
+    Hashes::BtHash m_oBTH;
+    Hashes::BtGuid m_oBTC;
 	BOOL		m_bSize;
 	QWORD		m_nSize;
 	CString		m_sLogin;

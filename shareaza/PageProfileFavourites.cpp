@@ -134,7 +134,7 @@ void CFavouritesProfilePage::OnChangeWebUrl()
 	m_wndAdd.EnableWindow( m_sTitle.GetLength() && m_sURL.Find( _T("http://") ) == 0 );
 }
 
-void CFavouritesProfilePage::OnItemChangedWebList(NMHDR* pNMHDR, LRESULT* pResult)
+void CFavouritesProfilePage::OnItemChangedWebList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
 	*pResult = 0;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );

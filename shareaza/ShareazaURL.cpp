@@ -55,14 +55,10 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	Clear();
 	m_nAction	= uriDownload;
 	m_pTorrent	= pTorrent;
-	m_bBTH		= TRUE;
-	m_pBTH		= pTorrent->m_pInfoSHA1;
-	m_bSHA1		= pTorrent->m_bDataSHA1;
-	m_pSHA1		= pTorrent->m_pDataSHA1;
-	m_bED2K		= pTorrent->m_bDataED2K;
-	m_pED2K		= pTorrent->m_pDataED2K;
-	m_bTiger	= pTorrent->m_bDataTiger;
-	m_pTiger	= pTorrent->m_pDataTiger;
+	m_oBTH		= pTorrent->m_oInfoBTH;
+	m_oSHA1     = pTorrent->m_oDataSHA1;
+	m_oED2K		= pTorrent->m_oDataED2K;
+	m_oTiger	= pTorrent->m_oDataTiger;
 	m_sName		= pTorrent->m_sName;
 	m_bSize		= TRUE;
 	m_nSize		= pTorrent->m_nTotalSize;
@@ -79,11 +75,11 @@ CShareazaURL::~CShareazaURL()
 void CShareazaURL::Clear()
 {
 	m_nAction	= uriNull;
-	m_bSHA1		= FALSE;
-	m_bTiger	= FALSE;
-	m_bMD5		= FALSE;
-	m_bED2K		= FALSE;
-	m_bBTH		= FALSE;
+	m_oSHA1.clear();
+	m_oTiger.clear();
+    m_oMD5.clear();
+	m_oED2K.clear();
+    m_oBTH.clear();
 	m_bSize		= FALSE;
 	m_nPort		= GNUTELLA_DEFAULT_PORT;
 	
@@ -176,10 +172,10 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 					_tcsnicmp( strValue, _T("md5:"), 4 ) == 0 ||
 					_tcsnicmp( strValue, _T("ed2k:"), 5 ) == 0 )
 			{
-				m_bSHA1		|= CSHA::HashFromURN( strValue, &m_pSHA1 );
-				m_bTiger	|= CTigerNode::HashFromURN( strValue, &m_pTiger );
-				m_bMD5		|= CMD5::HashFromURN( strValue, &m_pMD5 );
-				m_bED2K		|= CED2K::HashFromURN( strValue, &m_pED2K );
+				if ( !m_oSHA1 ) m_oSHA1.fromUrn( strValue );
+				if ( !m_oTiger ) m_oTiger.fromUrn( strValue );
+                if ( !m_oMD5 ) m_oMD5.fromUrn( strValue );
+				if ( !m_oED2K ) m_oED2K.fromUrn( strValue );
 			}
 			else if (	_tcsnicmp( strValue, _T("http://"), 7 ) == 0 ||
 						_tcsnicmp( strValue, _T("http%3A//"), 9 ) == 0 ||
@@ -212,7 +208,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		else if ( _tcsicmp( strKey, _T("kt") ) == 0 )
 		{
 			m_sName = strValue;
-			m_bSHA1 = FALSE;
+			m_oSHA1.clear();
 		}
 		else if ( _tcsicmp( strKey, _T("xl") ) == 0 )
 		{
@@ -236,7 +232,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		*/
 	}
 	
-	if ( m_bSHA1 || m_bTiger || m_bMD5 || m_bED2K || m_sURL.GetLength() )
+    if ( m_oSHA1 || m_oTiger || m_oMD5 || m_oED2K || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;
@@ -343,10 +339,10 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 				_tcsnicmp( strPart, _T("md5:"), 4 ) == 0 ||
 				_tcsnicmp( strPart, _T("ed2k:"), 5 ) == 0 )
 		{
-			m_bSHA1		|= CSHA::HashFromURN( strPart, &m_pSHA1 );
-			m_bTiger	|= CTigerNode::HashFromURN( strPart, &m_pTiger );
-			m_bMD5		|= CMD5::HashFromURN( strPart, &m_pMD5 );
-			m_bED2K		|= CED2K::HashFromURN( strPart, &m_pED2K );
+			if ( !m_oSHA1 ) m_oSHA1.fromUrn( strPart );
+			if ( !m_oTiger ) m_oTiger.fromUrn( strPart );
+            if ( !m_oMD5 ) m_oMD5.fromUrn( strPart );
+			if ( !m_oED2K ) m_oED2K.fromUrn( strPart );
 		}
 		else if ( _tcsnicmp( strPart, _T("source:"), 7 ) == 0 )
 		{
@@ -384,7 +380,7 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 		}
 	}
 	
-	if ( m_bSHA1 || m_bTiger || m_bMD5 || m_bED2K || m_sURL.GetLength() )
+    if ( m_oSHA1 || m_oTiger || m_oMD5 || m_oED2K || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;
@@ -453,9 +449,9 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	if ( nSep < 0 ) return FALSE;
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
-
-	m_bED2K = CED2K::HashFromString( strPart, &m_pED2K );
-
+	
+	m_oED2K.fromString( strPart );
+	
 	// URL is valid
 	m_nAction = uriDownload;
 
@@ -514,7 +510,7 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 
 	// Now we have the source in x.x.x.x:port format.
 	CString strEDFTP;
-	strEDFTP.Format( _T("ed2kftp://%s/%s/%I64i/"), strPart, (LPCTSTR)CED2K::HashToString( &m_pED2K ), m_nSize );
+	strEDFTP.Format( _T("ed2kftp://%s/%s/%I64i/"), strPart, (LPCTSTR)m_oED2K.toString(), m_nSize );
 	SafeString( strEDFTP );
 	if ( m_sURL.GetLength() ) m_sURL += _T(", ");
 	m_sURL += strEDFTP;
@@ -536,7 +532,7 @@ BOOL CShareazaURL::ParseDonkeyServer(LPCTSTR pszURL)
 	if ( _stscanf( pszPort + 1, _T("%i"), &m_nPort ) != 1 ) return FALSE;
 	
 	m_sName = pszURL;
-	m_sName = m_sName.Left( pszPort - pszURL );
+	m_sName = m_sName.Left( static_cast< int >( pszPort - pszURL ) );
 	
 	m_sName.TrimLeft();
 	m_sName.TrimRight();
@@ -594,7 +590,7 @@ BOOL CShareazaURL::ParsePioletFile(LPCTSTR pszURL)
 	m_bSize = TRUE;
 	
 	strPart = strURL.SpanExcluding( _T(" |/") );
-	m_bSHA1 = CSHA::HashFromString( strPart, &m_pSHA1 );
+	m_oSHA1.fromString( strPart );
 	
 	m_nAction = uriDownload;
 	
@@ -642,27 +638,26 @@ void CShareazaURL::SafeString(CString& strInput)
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaURL query constructor
 
-CQuerySearch* CShareazaURL::ToQuery()
+std::auto_ptr< CQuerySearch > CShareazaURL::ToQuery()
 {
-	if ( m_nAction != uriDownload && m_nAction != uriSearch ) return FALSE;
+	if ( m_nAction != uriDownload && m_nAction != uriSearch )
+		return std::auto_ptr< CQuerySearch >();
 	
-	CQuerySearch* pSearch = new CQuerySearch();
+	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	
 	if ( m_sName.GetLength() )
 	{
 		pSearch->m_sSearch = m_sName;
 	}
 	
-	if ( m_bSHA1 )
+	if ( m_oSHA1 )
 	{
-		pSearch->m_bSHA1 = TRUE;
-		pSearch->m_pSHA1 = m_pSHA1;
+		pSearch->m_oSHA1 = m_oSHA1;
 	}
 	
-	if ( m_bED2K )
+	if ( m_oED2K )
 	{
-		pSearch->m_bED2K = TRUE;
-		pSearch->m_pED2K = m_pED2K;
+		pSearch->m_oED2K = m_oED2K;
 	}
 	
 	return pSearch;
@@ -757,7 +752,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 	GetModuleFileName( NULL, szPath, 128 );
 	strProgram = szPath;
 	
-	RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszName, sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) );
+	RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszName, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) ) );
 	
 	if ( bProtocol )
 	{
@@ -789,14 +784,14 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 				if ( ! RegCreateKey( hSub3, _T("Application"), &hSub4 ) )
 				{
 					RegSetValueEx( hSub4, NULL, 0, REG_SZ, (LPBYTE)pszApplication,
-						sizeof(TCHAR) * ( _tcslen( pszApplication ) + 1 ) );
+						static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszApplication ) + 1 ) ) );
 					RegCloseKey( hSub4 );
 				}
 				
 				if ( ! RegCreateKey( hSub3, _T("Topic"), &hSub4 ) )
 				{
 					RegSetValueEx( hSub4, NULL, 0, REG_SZ, (LPBYTE)pszTopic,
-						sizeof(TCHAR) * ( _tcslen( pszTopic ) + 1 ) );
+						static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszTopic ) + 1 ) ) );
 					RegCloseKey( hSub4 );
 				}
 				
@@ -823,7 +818,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 				KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) )
 		{
 			RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszProtocol,
-				sizeof(TCHAR) * ( _tcslen( pszProtocol ) + 1 ) );
+				static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszProtocol ) + 1 ) ) );
 			RegCloseKey( hKey );
 		}
 	}
@@ -877,7 +872,7 @@ BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszProtocol)
 
 void CShareazaURL::DeleteKey(HKEY hParent, LPCTSTR pszKey)
 {
-	CStringArray pList;
+	CArray< CString > pList;
 	HKEY hKey;
 	
 	if ( RegOpenKeyEx( hParent, pszKey, 0, KEY_ALL_ACCESS, &hKey ) ) return;
@@ -956,9 +951,9 @@ BOOL CShareazaURL::RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR
 	strIcon.Format( _T("\"%s\",-%u"), (LPCTSTR)strAppPath, nIDIcon );
 	strCommand.Format( _T("\"%s\" \"%%URL\""), (LPCTSTR)strAppPath );
 	
-	RegSetValueEx( hHandler, _T(""), 0, REG_SZ, (LPBYTE)pszName, sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) );
+	RegSetValueEx( hHandler, _T(""), 0, REG_SZ, (LPBYTE)pszName, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) ) );
 	RegSetValueEx( hHandler, _T("Description"), 0, REG_SZ,
-		(LPBYTE)pszDescription, sizeof(TCHAR) * ( _tcslen( pszDescription ) + 1 ) );
+		(LPBYTE)pszDescription, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszDescription ) + 1 ) ) );
 	
 	RegSetValueEx( hHandler, _T("DefaultIcon"), 0, REG_SZ,
 		(LPBYTE)(LPCTSTR)strIcon, sizeof(TCHAR) * ( strIcon.GetLength() + 1 ) );
@@ -967,7 +962,7 @@ BOOL CShareazaURL::RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR
 		(LPBYTE)(LPCTSTR)strCommand, sizeof(TCHAR) * ( strCommand.GetLength() + 1 ) );
 	
 	RegSetValueEx( hHandler, _T("DdeApplication"), 0, REG_SZ,
-		(LPBYTE)pszApplication, sizeof(TCHAR) * ( _tcslen( pszApplication ) + 1 ) );
+		(LPBYTE)pszApplication, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszApplication ) + 1 ) ) );
 	
 	RegSetValueEx( hHandler, _T("DdeTopic"), 0, REG_SZ, (LPBYTE)_T("URL"), sizeof(TCHAR) * 4 );
 	

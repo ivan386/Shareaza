@@ -44,36 +44,33 @@ public:
 
 // Attributes
 public:
-	PROTOCOLID		m_nProtocol;		// Protocol ID
-	int				m_nState;			// Common state code
-	CUploadQueue*	m_pQueue;			// Queue reference
-	CUploadFile*	m_pBaseFile;		// Reference file
-	CTransferFile*	m_pDiskFile;		// Disk file
-	DWORD			m_nBandwidth;		// Bandwidth
-	CString			m_sNick;			// User Nick
-	DWORD			m_nUserRating;		// Has the downloader uploaded anything?
-	BOOL			m_bClientExtended;	// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
+	PROTOCOLID		m_nProtocol;	// Protocol ID
+	int				m_nState;		// Common state code
+	CUploadQueue*	m_pQueue;		// Queue reference
+	CUploadFile*	m_pBaseFile;	// Reference file
+	CTransferFile*	m_pDiskFile;	// Disk file
+	DWORD			m_nBandwidth;	// Bandwidth
+	CString			m_sNick;		// User Nick
+	DWORD			m_nUserRating;	// Has the downloader uploaded anything?
+	BOOL			m_bClientExtended;// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
 public:
-	BOOL			m_bSHA1;			// Hash of requested file
-	SHA1			m_pSHA1;			// ..
-	BOOL			m_bTiger;			// ..
-	TIGEROOT		m_pTiger;			// ..
-	BOOL			m_bED2K;			// ..
-	MD4				m_pED2K;			// ..
-	CString			m_sFileName;		// Name of requested file
-	CString			m_sFilePath;		// Path of requested file
-	QWORD			m_nFileBase;		// Base offset in requested file
-	QWORD			m_nFileSize;		// Size of requested file
-	BOOL			m_bFilePartial;		// Partial file flag
-	CString			m_sFileTags;		// File sharing tags
+	Hashes::Sha1Hash m_oSHA1;		// Hash of requested file
+    Hashes::TigerHash m_oTiger;     // ..
+    Hashes::Ed2kHash m_oED2K;       // ..
+	CString			m_sFileName;	// Name of requested file
+	CString			m_sFilePath;	// Path of requested file
+	QWORD			m_nFileBase;	// Base offset in requested file
+	QWORD			m_nFileSize;	// Size of requested file
+	BOOL			m_bFilePartial;	// Partial file flag
+	CString			m_sFileTags;	// File sharing tags
 public:
-	BOOL			m_bLive;			// Live connection tag
-	DWORD			m_nRequests;		// Request count
-	QWORD			m_nUploaded;		// Bytes uploaded
-	DWORD			m_tContent;			// Send start timestamp
-	QWORD			m_nOffset;			// Fragment offset
-	QWORD			m_nLength;			// Fragment length
-	QWORD			m_nPosition;		// Send position
+	BOOL			m_bLive;		// Live connection tag
+	DWORD			m_nRequests;	// Request count
+	QWORD			m_nUploaded;	// Bytes uploaded
+	DWORD			m_tContent;		// Send start timestamp
+	QWORD			m_nOffset;		// Fragment offset
+	QWORD			m_nLength;		// Fragment length
+	QWORD			m_nPosition;	// Send position
 protected:
 	BOOL			m_bStopTransfer;	// Should this transfer stop? (to allow queue rotation, etc)
 	DWORD			m_tRotateTime;

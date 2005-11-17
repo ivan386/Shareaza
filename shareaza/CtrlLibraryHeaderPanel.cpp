@@ -124,7 +124,7 @@ int CLibraryHeaderPanel::Update()
 
 	if (m_hWnd) Invalidate();
 
-	int nHeight = m_pMetadata.GetCount() * 12 + 8;
+	int nHeight = static_cast< int >( m_pMetadata.GetCount() * 12 + 8 );
 
 	if ( pFolder->m_pParent != NULL )
 	{
@@ -287,12 +287,12 @@ void CLibraryHeaderPanel::DoPaint(CDC* pDC, CRect& rcClient)
 
 void CLibraryHeaderPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText)
 {
-	CSize sz = pDC->GetTextExtent( pszText, _tcslen( pszText ) );
+	CSize sz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
 
 	CRect rc( nX - 2, nY - 2, nX + sz.cx + 2, nY + sz.cy + 2 );
 
 	UINT nOptions = ETO_CLIPPED | ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
-	pDC->ExtTextOut( nX, nY, nOptions, &rc, pszText, _tcslen( pszText ), NULL );
+	pDC->ExtTextOut( nX, nY, nOptions, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
 }
 
 BOOL CLibraryHeaderPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)

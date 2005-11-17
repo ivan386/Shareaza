@@ -168,9 +168,9 @@ void CWizardSharePage::AddRegistryFolder(HKEY hRoot, LPCTSTR pszKey, LPCTSTR psz
 	AddPhysicalFolder( szFolder );
 }
 
-void CWizardSharePage::OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult)
+void CWizardSharePage::OnItemChangedShareFolders(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
 	*pResult = 0;
 }
@@ -181,9 +181,8 @@ void CWizardSharePage::OnShareAdd()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-	BROWSEINFO pBI;
 
-	ZeroMemory( &pBI, sizeof(pBI) );
+	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder to share:");
@@ -310,11 +309,11 @@ void CWizardSharePage::OnShareAdd()
 		else
 		{
 			CString strFormat, strMessage;
-			Skin.LoadString( strFormat, IDS_WIZARD_SHARE_ALREADY );
-			strMessage.Format( strFormat, (LPCTSTR)strOldLC );
-			AfxMessageBox( strMessage, MB_ICONINFORMATION );
-			//CHelpDlg::Show(  _T( "ShareHelp.AlreadyShared" ) );
-			return;
+		Skin.LoadString( strFormat, IDS_WIZARD_SHARE_ALREADY );
+		strMessage.Format( strFormat, (LPCTSTR)strOldLC );
+		AfxMessageBox( strMessage, MB_ICONINFORMATION );
+		//CHelpDlg::Show(  _T( "ShareHelp.AlreadyShared" ) );
+		return;
 		}
 	}
 

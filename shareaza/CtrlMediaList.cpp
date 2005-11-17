@@ -229,12 +229,11 @@ int CMediaListCtrl::Add(LPCTSTR pszPath, int nItem)
 		}
 	}
 	
-	LV_ITEM pItem;
 	CString strTemp = (LPTSTR)pszFile;
 	int nDotPos = strTemp.ReverseFind( '.' );
 	if ( nDotPos != -1 ) strTemp = strTemp.Left( nDotPos );
 	LPTSTR pszFileTmp = strTemp.GetBuffer( strTemp.GetLength() );
-	ZeroMemory( &pItem, sizeof(pItem) );
+	LV_ITEM pItem = {};
 	pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
 	pItem.iItem		= nItem >= 0 ? nItem : GetItemCount();
 	pItem.iImage	= ShellIcons.Get( pszFile, 16 );
@@ -391,8 +390,8 @@ void CMediaListCtrl::OnCustomDraw(NMLVCUSTOMDRAW* pNotify, LRESULT* pResult)
 	}
 	else if ( pNotify->nmcd.dwDrawStage == CDDS_ITEMPREPAINT )
 	{
-		if (	GetItemState( pNotify->nmcd.dwItemSpec, LVIS_SELECTED ) == 0 &&
-				GetItemState( pNotify->nmcd.dwItemSpec, STATE_CURRENT ) != 0 )
+		if (	GetItemState( static_cast< int >( pNotify->nmcd.dwItemSpec ), LVIS_SELECTED ) == 0 &&
+				GetItemState( static_cast< int >( pNotify->nmcd.dwItemSpec ), STATE_CURRENT ) != 0 )
 		{
 			pNotify->clrText	= RGB( 255, 255, 255 );
 			pNotify->clrTextBk	= RGB( 128, 0, 0 );
@@ -413,13 +412,13 @@ void CMediaListCtrl::OnCustomDraw(NMLVCUSTOMDRAW* pNotify, LRESULT* pResult)
 	}
 }
 
-void CMediaListCtrl::OnDoubleClick(NMHDR* pNMHDR, LRESULT* pResult) 
+void CMediaListCtrl::OnDoubleClick(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
 {
 	OnMediaSelect();
 	*pResult = 0;
 }
 
-void CMediaListCtrl::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CMediaListCtrl::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
 	Skin.TrackPopupMenu( _T("CMediaList"), point, ID_MEDIA_SELECT );
 }
@@ -499,13 +498,13 @@ void CMediaListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	else
 	{
-		DWORD nFile = nHit >= 0 ? GetItemData( nHit ) : 0;
+		DWORD_PTR nFile = nHit >= 0 ? GetItemData( nHit ) : 0;
 
-		if ( nFile > 0 && ! Library.LookupFile( nFile ) ) nFile = 0;
+		if ( nFile > 0 && ! Library.LookupFile( static_cast< DWORD >( nFile ) ) ) nFile = 0;
 
 		if ( nFile > 0 )
 		{
-			m_wndTip.Show( (LPVOID)nFile );
+			m_wndTip.Show( (void*)nFile );
 		}
 		else
 		{
@@ -537,8 +536,8 @@ void CMediaListCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 	else
 		m_nDragDrop = GetItemCount();
 
-	CStringArray pPaths;
-	CPtrArray pStates;
+	CArray< CString > pPaths;
+	CArray< UINT > pStates;
 
 	while ( TRUE )
 	{
@@ -546,7 +545,7 @@ void CMediaListCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 		if ( nItem < 0 ) break;
 
 		pPaths.Add( GetItemText( nItem, 1 ) );
-		pStates.Add( (LPVOID)GetItemState( nItem, 0xFFFFFFFF ) );
+		pStates.Add( GetItemState( nItem, 0xFFFFFFFF ) );
 
 		DeleteItem( nItem );
 
@@ -556,7 +555,7 @@ void CMediaListCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 	for ( int nItem = 0 ; nItem < pPaths.GetSize() ; nItem++ )
 	{
 		int nIndex = Add( pPaths.GetAt( nItem ), m_nDragDrop++ );
-		SetItemState( nIndex, (DWORD)pStates.GetAt( nItem ), 0xFFFFFFFF );
+		SetItemState( nIndex, pStates.GetAt( nItem ), 0xFFFFFFFF );
 	}
 }
 
@@ -625,9 +624,8 @@ void CMediaListCtrl::OnMediaAddFolder()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-	BROWSEINFO pBI;
+	BROWSEINFO pBI = {};
 		
-	ZeroMemory( &pBI, sizeof(pBI) );
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder to add to playlist:");
@@ -715,7 +713,7 @@ void CMediaListCtrl::OnMediaSave()
 	USES_CONVERSION;
 	LPCSTR pszFile = T2CA( (LPCTSTR)strFile );
 	
-	pFile.Write( pszFile, strlen(pszFile) );
+	pFile.Write( pszFile, static_cast< UINT >( strlen(pszFile) ) );
 	pFile.Close();
 }
 

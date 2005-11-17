@@ -49,15 +49,14 @@ public:
 		void		Copy(CBTFile* pSource);
 		void		Serialize(CArchive& ar, int nVersion);
 	public:
-		CString		m_sPath;
-		QWORD		m_nSize;
-		BOOL		m_bSHA1;
-		SHA1		m_pSHA1;
-		BOOL		m_bED2K;
-		MD4			m_pED2K;
-		BOOL		m_bTiger;
-		TIGEROOT	m_pTiger;
+		CString	m_sPath;
+		QWORD	m_nSize;
+        Hashes::Sha1Hash m_oSHA1;
+		Hashes::Ed2kHash m_oED2K;
+		Hashes::TigerHash m_oTiger;
+		int		nFilePriority;
 	};
+	enum { prNotWanted, prLow, prNormal, prHigh };
 
 // Subclass
 public:
@@ -80,20 +79,17 @@ public:
 	
 // Attributes
 public:
-	BOOL		m_bValid;
 	BOOL		m_bEncodingError;
-	SHA1		m_pInfoSHA1;
-	BOOL		m_bDataSHA1;
-	SHA1		m_pDataSHA1;
-	BOOL		m_bDataED2K;
-	MD4			m_pDataED2K;
-	BOOL		m_bDataTiger;
-	TIGEROOT	m_pDataTiger;
+    Hashes::BtHash m_oInfoBTH;
+    Hashes::Sha1Hash m_oDataSHA1;
+	Hashes::Ed2kHash m_oDataED2K;
+	Hashes::TigerHash m_oDataTiger;
 public:
 	QWORD		m_nTotalSize;
 	DWORD		m_nBlockSize;
 	DWORD		m_nBlockCount;
-	SHA1*		m_pBlockSHA1;
+    Hashes::BtPureHash* m_pBlockBTH;
+	QWORD		m_nTotalUpload;					// Total amount uploaded
 public:
 	CString		m_sName;						// Name of the torrent
 	int			m_nFiles;						// Number of files
@@ -102,8 +98,9 @@ public:
 	CString		m_sTracker;						// Address of tracker we are using
 
 	CBTTracker*	m_pAnnounceTracker;				// Tracker in the announce key
-	CPtrArray	m_pTrackerList;					// Multi-tracker list
+	CArray< CBTTracker* > m_pTrackerList;		// Multi-tracker list
 	int			m_nTrackerIndex;				// The tracker we are currently using
+	int			m_nTrackerType;					// The current tracker situation
 public:
 	UINT		m_nEncoding;
 	CString		m_sComment;
@@ -133,8 +130,8 @@ protected:
 
 // Inlines
 public:
-	inline BOOL IsAvailable() const { return m_bValid; }
-	inline BOOL HasEncodingError() const { return m_bEncodingError; }
+	bool        IsAvailable() const { return m_oInfoBTH; }
+	BOOL		HasEncodingError() const { return m_bEncodingError; }
 
 	// Check if a string is a valid path/file name.
 	inline BOOL IsValid(LPCTSTR psz) const
@@ -146,7 +143,11 @@ public:
 		return TRUE;
 	}
 
+	BOOL		IsMultiTracker() const { return (m_pTrackerList.GetCount() > 0 ); }
 };
+
+enum { tNull, tCustom, tSingle, tMultiFinding, tMultiFound };
+// No tracker, User set tracker, normal torrent, multitracker searching, multitracker that's found a tracker
 
 
 #endif // !defined(AFX_BTINFO_H__AA44CA36_464F_4FB8_9D79_884D8092ADA0__INCLUDED_)

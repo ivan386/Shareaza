@@ -170,13 +170,13 @@ BOOL CWizardSheet::OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRE
 
 	if ( pWnd != NULL )
 	{
-		if ( GetWindowLong( pWnd->GetSafeHwnd(), GWL_USERDATA ) == TRUE )
+		if ( GetWindowLongPtr( pWnd->GetSafeHwnd(), GWLP_USERDATA ) == TRUE )
 		{
 			pWnd = NULL;
 		}
 		else
 		{
-			SetWindowLong( pWnd->GetSafeHwnd(), GWL_USERDATA, TRUE );
+			SetWindowLongPtr( pWnd->GetSafeHwnd(), GWLP_USERDATA, TRUE );
 			pWnd->SetFont( &theApp.m_gdiFont, FALSE );
 			pWnd = pWnd->GetWindow( GW_CHILD );
 		}
@@ -222,7 +222,7 @@ void CWizardSheet::OnSize(UINT nType, int cx, int cy)
 	}
 }
 
-BOOL CWizardSheet::OnEraseBkgnd(CDC* pDC)
+BOOL CWizardSheet::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	return TRUE;
 }
@@ -261,7 +261,7 @@ void CWizardSheet::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpn
 		CPropertySheet::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-UINT CWizardSheet::OnNcHitTest(CPoint point)
+ONNCHITTESTRESULT CWizardSheet::OnNcHitTest(CPoint point)
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, FALSE );
@@ -318,13 +318,13 @@ void CWizardSheet::OnNcMouseMove(UINT nHitTest, CPoint point)
 	CPropertySheet::OnNcMouseMove( nHitTest, point );
 }
 
-LONG CWizardSheet::OnSetText(WPARAM wParam, LPARAM lParam)
+LRESULT CWizardSheet::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	if ( m_pSkin )
 	{
 		BOOL bVisible = IsWindowVisible();
 		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
-		LONG lResult = Default();
+		LRESULT lResult = Default();
 		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
 		if ( m_pSkin ) m_pSkin->OnSetText( this );
 		return lResult;
@@ -365,7 +365,7 @@ CWizardPage::~CWizardPage()
 /////////////////////////////////////////////////////////////////////////////
 // CWizardPage message handlers
 
-HBRUSH CWizardPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+HBRUSH CWizardPage::OnCtlColor(CDC* pDC, CWnd* /*pWnd*/, UINT /*nCtlColor*/)
 {
 	pDC->SetBkColor( m_crWhite );
 	return (HBRUSH)m_brWhite.GetSafeHandle();
@@ -413,7 +413,7 @@ void CWizardPage::StaticReplace(LPCTSTR pszSearch, LPCTSTR pszReplace)
 			int nPos = strText.Find( pszSearch );
 			if ( nPos < 0 ) break;
 			strText	= strText.Left( nPos ) + CString( pszReplace )
-					+ strText.Mid( nPos + _tcslen( pszSearch ) );
+					+ strText.Mid( nPos + static_cast< int >( _tcslen( pszSearch ) ) );
 		}
 
 		pChild->SetWindowText( strText );

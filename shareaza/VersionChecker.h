@@ -51,7 +51,7 @@ public:
 protected:
 	HANDLE				m_hThread;
 	CHttpRequest		m_pRequest;
-	CMapStringToString	m_pResponse;
+	CMap< CString, const CString&, CString, CString& >	m_pResponse;
 	HWND				m_hWndNotify;
 
 // Operations
@@ -60,7 +60,7 @@ public:
 	BOOL		Start(HWND hWndNotify);
 	void		Stop();
 	void		SetNextCheck(int nDays);
-	BOOL		CheckUpgradeHash(const SHA1* pHash, LPCTSTR pszPath);
+    BOOL		CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR pszPath);
 protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();

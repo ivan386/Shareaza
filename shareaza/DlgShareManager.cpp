@@ -102,7 +102,7 @@ BOOL CShareManagerDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CShareManagerDlg::OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult)
+void CShareManagerDlg::OnItemChangedShareFolders(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
 	*pResult = 0;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
@@ -114,9 +114,8 @@ void CShareManagerDlg::OnShareAdd()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-	BROWSEINFO pBI;
 
-	ZeroMemory( &pBI, sizeof(pBI) );
+	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder to share:");

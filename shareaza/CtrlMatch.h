@@ -48,7 +48,7 @@ public:
 	CMatchList*		m_pMatches;
 	LPCTSTR			m_sType;
 	CSchema*		m_pSchema;
-	CPtrList		m_pColumns;
+	CList< CSchemaMember* > m_pColumns;
 protected:
 	CHeaderCtrl		m_wndHeader;
 	CMatchTipCtrl	m_wndTip;
@@ -74,7 +74,7 @@ protected:
 public:
 	void	Update();
 	void	DestructiveUpdate();
-	void	SelectSchema(CSchema* pSchema, CPtrList* pColumns);
+	void	SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns);
 	void	SetBrowseMode();
 	BOOL	HitTestHeader(const CPoint& point);
 	void	SetSortColumn(int nColumn = -1, BOOL bDirection = FALSE);
@@ -126,7 +126,7 @@ public:
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnChangeHeader(NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnClickHeader(NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);

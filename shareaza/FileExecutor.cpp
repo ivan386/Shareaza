@@ -26,10 +26,15 @@
 #include "Plugins.h"
 #include "Skin.h"
 
+#include "XML.h"
+#include "Schema.h"
+
 #include "Library.h"
 #include "SharedFile.h"
 #include "SHA.h"
 #include "TigerTree.h"
+#include "ED2K.h"
+#include "MD5.h"
 #include "Connection.h"
 
 #include "WindowManager.h"
@@ -76,7 +81,7 @@ CLibraryWnd* CFileExecutor::GetLibraryWindow()
 //////////////////////////////////////////////////////////////////////
 // CFileExecutor execute
 
-BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce)
+BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail)
 {
 	CString strPath, strType;
 	CWaitCursor pCursor;
@@ -108,7 +113,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce)
 	}
 
 	BOOL bShiftKey = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
-
+	
 	if ( Settings.MediaPlayer.EnablePlay && strType.GetLength() && ! bShiftKey )
 	{
 		if ( _tcsistr( Settings.MediaPlayer.FileTypes, strType ) != NULL )
@@ -124,7 +129,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce)
 	}
 
 	if ( ! bShiftKey )
-		if ( Plugins.OnExecuteFile( pszFile ) ) return TRUE;
+		if ( Plugins.OnExecuteFile( pszFile, bHasThumbnail ) ) return TRUE;
 
 	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(),
 		NULL, pszFile, NULL, strPath, SW_SHOWNORMAL );
@@ -135,7 +140,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce)
 //////////////////////////////////////////////////////////////////////
 // CFileExecutor enqueue
 
-BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL bForce)
+BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/)
 {
 	CString strPath, strType;
 	CWaitCursor pCursor;
@@ -182,8 +187,8 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 
 	CLibraryFile* pFile = Library.LookupFile( nIndex );
 	if ( pFile == NULL ) return FALSE;
-
-	if ( pFile->m_bSHA1 == FALSE || pFile->m_bTiger == FALSE )
+	
+	if ( !pFile->m_oSHA1 || !pFile->m_oTiger || !pFile->m_oED2K )
 	{
 		CString strFormat;
 		Skin.LoadString( strFormat, IDS_LIBRARY_BITZI_HASHED );
@@ -196,31 +201,370 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	CString strURL = Settings.Library.BitziWebView;
 	CFile hFile;
 
-	if ( hFile.Open( pFile->GetPath(), CFile::modeRead|CFile::shareDenyNone ) && hFile.GetLength() > 0 )
+	if ( hFile.Open( pFile->GetPath(), CFile::modeRead|CFile::shareDenyNone ) )
 	{
-		static LPCTSTR pszHex = _T("0123456789ABCDEF");
-		BYTE nBuffer[20];
-		int nPeek = hFile.Read( nBuffer, 20 );
-		hFile.Close();
-		str.Empty();
-
-		for ( int nByte = 0 ; nByte < nPeek ; nByte++ )
-		{
-			str += pszHex[ (BYTE)nBuffer[ nByte ] >> 4 ];
-			str += pszHex[ (BYTE)nBuffer[ nByte ] & 15 ];
-		}
-
 		strURL = Settings.Library.BitziWebSubmit;
-		Replace( strURL, _T("(FIRST20)"), str );
-	}
 
-	Replace( strURL, _T("(NAME)"), CConnection::URLEncode( pFile->m_sName ) );
-	Replace( strURL, _T("(SHA1)"), CSHA::HashToString( &pFile->m_pSHA1 ) );
-	Replace( strURL, _T("(TTH)"), CTigerNode::HashToString( &pFile->m_pTiger ) );
+		if ( hFile.GetLength() > 0 )
+		{
+			static LPCTSTR pszHex = _T("0123456789ABCDEF");
+			BYTE nBuffer[20];
+			int nPeek = hFile.Read( nBuffer, 20 );
+			hFile.Close();
+			str.Empty();
+
+			for ( int nByte = 0 ; nByte < nPeek ; nByte++ )
+			{
+				str += pszHex[ (BYTE)nBuffer[ nByte ] >> 4 ];
+				str += pszHex[ (BYTE)nBuffer[ nByte ] & 15 ];
+			}
+
+			Replace( strURL, _T("(FIRST20)"), str );
+		}
+		else 
+			Replace( strURL, _T("(FIRST20)"), _T("0") );
+	}
+	else
+		Replace( strURL, _T("(URN)"), pFile->m_oSHA1.toString() + _T(".") + pFile->m_oTiger.toString() );
+
+	CString strName = pFile->m_sName;
+	LPCTSTR pszExt = _tcsrchr( strName, '.' );
+	int nExtLen = pszExt ? static_cast< int >( _tcslen( pszExt ) - 1 ) : 0;
+	CString strExt = strName.Right( nExtLen );
+	strExt.Trim().MakeUpper();
+
+	Replace( strURL, _T("(NAME)"), CConnection::URLEncode( strName ) );
+	Replace( strURL, _T("(SHA1)"), pFile->m_oSHA1.toString() );
+	Replace( strURL, _T("(TTH)"), pFile->m_oTiger.toString() );
+	Replace( strURL, _T("(ED2K)"), pFile->m_oED2K.toString() );
 	Replace( strURL, _T("(AGENT)"), CConnection::URLEncode( Settings.SmartAgent() ) );
 
 	str.Format( _T("%I64i"), pFile->GetSize() );
 	Replace( strURL, _T("(SIZE)"), str );
+
+
+	CString strINFO = _T("&tag.tiger.tree=") + pFile->m_oTiger.toString();
+	if ( pFile->m_oMD5 )
+		strINFO += _T("&tag.md5.md5=") + pFile->m_oMD5.toString();
+	if ( pFile->m_sComments.Trim().GetLength() )
+		strINFO += _T("&tag.subjective.comment=") + CConnection::URLEncode( pFile->m_sComments );
+
+	if ( pFile->m_pMetadata != NULL && pFile->m_pSchema != NULL )
+	{
+		CXMLElement* pMetadata = pFile->m_pMetadata;
+		int nTemp, nMP3orOGGorWAVTag = 0, nImageTag = 0;
+		CString strDescription, strTitle, strMP3orOGGorWAVTag, strImageTag;
+
+		for ( POSITION pos = pMetadata->GetAttributeIterator() ; pos ; )
+		{
+			CString strReplace;
+			CXMLNode* pNode = pMetadata->GetNextAttribute( pos );
+			str = pNode->GetName();
+			strReplace = pNode->GetValue();
+
+			if ( str == "link" )
+				strINFO += _T("&tag.url.url=") + CConnection::URLEncode( strReplace );
+			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriAudio ) == 0 )
+			{
+				if ( str == "description" )
+					strINFO += _T("&tag.objective.description=") + CConnection::URLEncode( strReplace.Trim() );
+				else if ( str == "title" )
+					strINFO += _T("&tag.audiotrack.title=") + CConnection::URLEncode( strReplace.Trim() );
+				else if ( str == "artist" )
+					strINFO += _T("&tag.audiotrack.artist=") + CConnection::URLEncode( strReplace.Trim() );
+				else if ( str == "album" )
+					strINFO += _T("&tag.audiotrack.album=") + CConnection::URLEncode( strReplace.Trim() );
+				else if ( str == "track" )
+				{
+					nTemp = _ttoi( strReplace );
+					strReplace.Format( _T("%d"), nTemp );
+
+					strINFO += _T("&tag.audiotrack.tracknumber=") + strReplace;
+				}
+				else if ( str == "year" )
+				{
+					nTemp = _ttoi( strReplace );
+					strReplace.Format( _T("%d"), nTemp );
+
+					strINFO += _T("&tag.audiotrack.year=") + strReplace;
+				}
+				// ToDO: Read WAV information in FileExecutor.cpp, bitzi submit is already ready
+				else if ( strExt == "MP3" || strExt == "OGG" || strExt == "WAV" )
+				{
+					if ( str == "bitrate" )
+					{
+						if ( strExt == "MP3" )
+						{
+							strMP3orOGGorWAVTag += _T("&tag.mp3.vbr=");
+
+							if( _tcsstr( strReplace, _T("~") ) )
+								strMP3orOGGorWAVTag += _T("y");
+							else
+								strMP3orOGGorWAVTag += _T("n");
+						}
+
+						nTemp = _ttoi( strReplace );
+						strReplace.Format( _T("%d"), nTemp );
+
+						if ( strExt == "MP3" )
+							strMP3orOGGorWAVTag += _T("&tag.mp3.bitrate=");
+						else if ( strExt == "OGG" )
+							strMP3orOGGorWAVTag += _T("&tag.vorbis.bitrate=");
+						else
+							strReplace.Empty();
+
+						if ( strReplace.GetLength() )
+						{
+							strMP3orOGGorWAVTag += strReplace;
+							nMP3orOGGorWAVTag++;
+						}
+					}
+					// ToDO: Read sampleSize of WAV in FileExecutor.cpp, bitzi submit is already ready
+					else if ( str == "sampleSize" )
+					{
+						nTemp = _ttoi( strReplace );
+						strReplace.Format( _T("%d"), nTemp );
+
+						if ( strExt == "WAV" )
+						{
+							strMP3orOGGorWAVTag += _T("&tag.wav.samplesize=") + strReplace;
+							nMP3orOGGorWAVTag++;
+						}
+					}
+					else if ( str == "seconds" )
+					{
+						nTemp = (int)( _wtof( strReplace ) * 1000 );
+						strReplace.Format( _T("%d"), nTemp );
+
+						if ( strExt == "MP3" )
+							strMP3orOGGorWAVTag += _T("&tag.mp3.duration=");
+						else if ( strExt == "OGG" )
+							strMP3orOGGorWAVTag += _T("&tag.vorbis.duration=");
+						else if ( strExt == "WAV" )
+							strMP3orOGGorWAVTag += _T("&tag.wav.duration=");
+						else
+							strReplace.Empty();
+
+						if ( strReplace.GetLength() )
+						{
+							strMP3orOGGorWAVTag += strReplace;
+							nMP3orOGGorWAVTag++;
+						}
+					}
+					else if ( str == "sampleRate" )
+					{
+						nTemp = _ttoi( strReplace );
+						strReplace.Format( _T("%d"), nTemp );
+
+						if ( strExt == "MP3" )
+							strMP3orOGGorWAVTag += _T("&tag.mp3.samplerate=");
+						else if ( strExt == "OGG" )
+							strMP3orOGGorWAVTag += _T("&tag.vorbis.samplerate=");
+						else if ( strExt == "WAV" )
+							strMP3orOGGorWAVTag += _T("&tag.wav.samplerate=");
+						else
+							strReplace.Empty();
+
+						if ( strReplace.GetLength() )
+						{
+							strMP3orOGGorWAVTag += strReplace;
+							nMP3orOGGorWAVTag++;
+						}
+					}
+					else if ( str == "channels" )
+					{
+						nTemp = _ttoi( strReplace );
+						strReplace.Format( _T("%d"), nTemp );
+
+						if ( strExt == "OGG" )
+							strMP3orOGGorWAVTag += _T("&tag.vorbis.channels=");
+						else if ( strExt == "WAV" )
+							strMP3orOGGorWAVTag += _T("&tag.wav.channels=");
+						else
+							strReplace.Empty();
+
+						if ( strReplace.GetLength() )
+						{
+							strMP3orOGGorWAVTag += strReplace;
+							nMP3orOGGorWAVTag++;
+						}
+					}
+					else if ( str == "soundType" )
+					{
+						if ( strExt == "MP3" )
+							if ( ( strReplace == "Stereo" ) || ( strReplace == "Joint Stereo" ) )
+								strMP3orOGGorWAVTag += _T("&tag.mp3.stereo=y");
+							else if ( ( strReplace == "Dual Channel" ) || ( strReplace == "Single Channel" ) )
+								strMP3orOGGorWAVTag += _T("&tag.mp3.stereo=n");
+							else
+								strReplace.Empty();
+
+						if ( strReplace.GetLength() )
+							nMP3orOGGorWAVTag++;
+					}
+					else if ( str == "encoder" )
+					{
+						if ( strExt == "MP3" )
+							strMP3orOGGorWAVTag += _T("&tag.mp3.encoder=");
+						else if ( strExt == "OGG" )
+							strMP3orOGGorWAVTag += _T("&tag.vorbis.encoder=");
+						else
+							strReplace.Empty();
+
+						if ( strReplace.GetLength() )
+							strMP3orOGGorWAVTag += CConnection::URLEncode( strReplace );
+					}
+				}
+			}
+			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriImage ) == 0 )
+			{
+				if ( str == "description" )
+					strINFO += _T("&tag.objective.description=") + CConnection::URLEncode( strReplace.Trim() );
+				else if ( str == "width" )
+				{
+					nTemp = _ttoi( strReplace );
+					strReplace.Format( _T("%d"), nTemp );
+
+					strImageTag += _T("&tag.image.width=") + strReplace;
+					nImageTag++;
+				}
+				else if ( str == "height" )
+				{
+					nTemp = _ttoi( strReplace );
+					strReplace.Format( _T("%d"), nTemp );
+
+					strImageTag += _T("&tag.image.height=") + strReplace;
+					nImageTag++;
+				}
+				else if ( str == "colors" )
+				{
+					if ( strReplace == "2" ) strReplace = "1";
+					else if ( strReplace == "16" ) strReplace = "4";
+					else if ( strReplace == "256" || strReplace == "Greyscale" ) strReplace = "8";
+					else if ( strReplace == "64K" ) strReplace = "16";
+					else if ( strReplace == "16.7M" ) strReplace = "24";
+					else strReplace = "";
+
+					if ( strReplace.GetLength() )
+					{
+						strImageTag += _T("&tag.image.bpp=") + strReplace;
+						nImageTag++;
+					}
+				}
+			}
+			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriVideo ) == 0 )
+			{
+				if ( str == "realdescription" )
+					strINFO += _T("&tag.objective.description=") + CConnection::URLEncode( strReplace.Trim() );
+				else if ( str == "width" )
+				{
+					nTemp = _ttoi( strReplace );
+					strReplace.Format( _T("%d"), nTemp );
+
+					strINFO += _T("&tag.video.width=") + strReplace;
+				}
+				else if ( str == "height" )
+				{
+					nTemp = _ttoi( strReplace );
+					strReplace.Format( _T("%d"), nTemp );
+
+					strINFO += _T("&tag.video.height=") + strReplace;
+				}
+				else if ( str == "frameRate" )
+				{
+					nTemp = _ttoi( strReplace );
+					strReplace.Format( _T("%d"), nTemp );
+
+					strINFO += _T("&tag.video.fps=") + strReplace;
+				}
+				else if ( str == "minutes" )
+				{
+					nTemp = (int)( _wtof( strReplace ) * 60 * 1000 );
+					strReplace.Format( _T("%d"), nTemp );
+
+					strINFO += _T("&tag.video.duration=") + strReplace;
+				}
+				// ToDO: Read video's bitrate in FileExecutor.cpp, bitzi submit is already ready
+				else if ( str == "bitrate" )
+				{
+					nTemp = _ttoi( strReplace );
+					strReplace.Format( _T("%d"), nTemp );
+
+					strINFO += _T("&tag.video.bitrate=") + strReplace;
+				}
+				else if ( str == "codec" )
+				{
+					strReplace.MakeUpper();
+					strINFO += _T("&tag.video.codec=") + CConnection::URLEncode( strReplace );
+				}
+			}
+			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriApplication ) == 0 )
+			{
+				if ( str == "fileDescription" )
+					strDescription = CConnection::URLEncode( strReplace.Trim() );
+				else if ( str == "title" )
+					strTitle = CConnection::URLEncode( strReplace.Trim() );
+			}
+			else
+			{
+				if ( str == "description" )
+					strINFO += _T("&tag.objective.description=") + CConnection::URLEncode( strReplace.Trim() );
+			}
+		}
+
+		if ( nMP3orOGGorWAVTag == 4 )
+			strINFO += strMP3orOGGorWAVTag;
+
+		if ( nImageTag == 3 )
+		{
+			strINFO += strImageTag;
+
+			if ( strExt == "BMP" || strExt == "GIF" || strExt == "PNG" )
+				strINFO += _T("&tag.image.format=") + strExt;
+			else if ( strExt == "JPG" || strExt == "JPEG" || strExt == "JPE" || strExt == "JFIF" )
+				strINFO += _T("&tag.image.format=JPEG");
+		}
+
+		if ( strDescription.GetLength() )
+			strINFO += _T("&tag.objective.description=") + strDescription;
+		else if ( strTitle.GetLength() )
+			strINFO += _T("&tag.objective.description=") + strTitle;
+	}
+
+	if ( strExt == "AVI" )
+		strINFO += _T("&tag.video.format=AVI");
+	else if ( strExt == "DIVX" || strExt == "DIV" || strExt == "TIX" )
+		strINFO += _T("&tag.video.format=DivX");
+	else if ( strExt == "XVID" )
+		strINFO += _T("&tag.video.format=XviD");
+	else if ( strExt == "MKV" )
+		strINFO += _T("&tag.video.format=Matroska");
+	else if ( strExt == "MOV" || strExt == "QT" )
+		strINFO += _T("&tag.video.format=QuickTime");
+	else if ( strExt == "RM" || strExt == "RMVB" || strExt == "RAM" || strExt == "RPM" || strExt == "RV" )
+		strINFO += _T("&tag.video.format=Real");
+	else if ( strExt == "MPG" || strExt == "MPEG" || strExt == "MPE" )
+		strINFO += _T("&tag.video.format=MPEG");
+	else if ( strExt == "M1V" )
+		strINFO += _T("&tag.video.format=MPEG-1");
+	else if ( strExt == "MPV2" || strExt == "MP2" || strExt == "M2V" )
+		strINFO += _T("&tag.video.format=MPEG-2");
+	else if ( strExt == "MP4" || strExt == "M4V" )
+		strINFO += _T("&tag.video.format=MPEG-4");
+	else if ( strExt == "WM" || strExt == "WMV" || strExt == "WMD" || strExt == "ASF" )
+		strINFO += _T("&tag.video.format=Windows Media");
+	else if ( strExt == "OGM" )
+		strINFO += _T("&tag.video.format=Ogg Media File");
+	else if ( strExt == "VP6" )
+		strINFO += _T("&tag.video.format=VP6");
+	else if ( strExt == "VOB" )
+		strINFO += _T("&tag.video.format=DVD");
+	else if ( strExt == "IVF" )
+		strINFO += _T("&tag.video.format=Indeo Video");
+	else if ( pFile->m_pSchema != NULL && pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriVideo ) == 0 && strExt.GetLength() )
+		strINFO += _T("&tag.video.format=") + CConnection::URLEncode( strExt );
+
+	Replace( strURL, _T("&(INFO)"), strINFO );
 
 	pLock.Unlock();
 
@@ -271,7 +615,7 @@ BOOL CFileExecutor::DisplayURL(LPCTSTR pszURL)
 #endif
 }
 
-HDDEDATA CALLBACK CFileExecutor::DDECallback(UINT wType, UINT wFmt, HCONV hConv, HSZ hsz1, HSZ hsz2, HDDEDATA hData, DWORD dwData1, DWORD dwData2)
+HDDEDATA CALLBACK CFileExecutor::DDECallback(UINT /*wType*/, UINT /*wFmt*/, HCONV /*hConv*/, HSZ /*hsz1*/, HSZ /*hsz2*/, HDDEDATA /*hData*/, DWORD /*dwData1*/, DWORD /*dwData2*/)
 {
 	return (HDDEDATA)NULL;
 }

@@ -36,16 +36,16 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CUploadFile construction
 
-CUploadFile::CUploadFile(CUploadTransfer* pUpload, SHA1* pSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize)
+CUploadFile::CUploadFile(CUploadTransfer* pUpload, const Hashes::Sha1Hash& oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize)
 : m_oFragments( nSize )
 {
 	m_pAddress	= pUpload->m_pHost.sin_addr;
 	m_sName		= pszName;
 	m_sPath		= pszPath;
 	m_nSize		= nSize;
-
-	if ( m_bSHA1 = ( pSHA1 != NULL ) ) m_pSHA1 = *pSHA1;
-
+	
+    m_oSHA1 = oSHA1;
+	
 	m_nRequests		= 0;
 
 	m_bSelected		= FALSE;
@@ -81,18 +81,18 @@ CUploadTransfer* CUploadFile::GetActive() const
 
 	for ( POSITION pos = m_pTransfers.GetHeadPosition() ; pos ; )
 	{
-		CUploadTransfer* pUpload = (CUploadTransfer*)m_pTransfers.GetNext( pos );
+		CUploadTransfer* pUpload = m_pTransfers.GetNext( pos );
 		if ( pUpload->m_nState != upsNull ) return pUpload;
 	}
 
-	return (CUploadTransfer*)m_pTransfers.GetTail();
+	return m_pTransfers.GetTail();
 }
 
 void CUploadFile::Remove()
 {
 	for ( POSITION pos = m_pTransfers.GetHeadPosition() ; pos ; )
 	{
-		CUploadTransfer* pUpload = (CUploadTransfer*)m_pTransfers.GetNext( pos );
+		CUploadTransfer* pUpload = m_pTransfers.GetNext( pos );
 		pUpload->Remove();
 	}
 }
@@ -106,7 +106,7 @@ void CUploadFile::AddFragment(QWORD nOffset, QWORD nLength)
 	{
 		Statistics.Current.Uploads.Files++;
 	}
-
-    m_oFragments.insert( FF::SimpleFragment( nOffset, nOffset + nLength ) );
+	
+	m_oFragments.insert( Fragments::Fragment( nOffset, nOffset + nLength ) );
 }
 

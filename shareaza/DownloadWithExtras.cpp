@@ -392,7 +392,7 @@ void CDownloadWithExtras::Serialize(CArchive& ar, int nVersion)
 	}
 	else
 	{
-		for ( int nCount = ar.ReadCount() ; nCount ; nCount-- )
+		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount ; nCount-- )
 		{
 			CString str;
 			ar >> str;
@@ -402,7 +402,7 @@ void CDownloadWithExtras::Serialize(CArchive& ar, int nVersion)
 		if ( nVersion >= 32 )
 		{
 
-			for ( int nCount = ar.ReadCount() ; nCount ; nCount-- )
+			for ( DWORD_PTR nCount = ar.ReadCount() ; nCount ; nCount-- )
 			{
 				CDownloadReview *pReview = new CDownloadReview;
 				pReview->Serialize( ar, nVersion );
@@ -456,7 +456,7 @@ CDownloadReview::~CDownloadReview()
 //////////////////////////////////////////////////////////////////////
 // CDownloadReview serialize
 
-void CDownloadReview::Serialize(CArchive& ar, int nVersion)
+void CDownloadReview::Serialize(CArchive& ar, int /*nVersion*/)
 {
 	if ( ar.IsStoring() )
 	{

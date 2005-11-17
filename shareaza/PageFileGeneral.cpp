@@ -103,40 +103,14 @@ BOOL CFileGeneralPage::OnInitDialog()
 		m_sType = ShellIcons.GetTypeString( pFile->m_sName );
 		m_sIndex.Format( _T("# %lu"), pFile->m_nIndex );
 
-		if ( pFile->m_bSHA1 )
-		{
-			m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
-		}
-		else
+		m_sSHA1 = pFile->m_oSHA1.toShortUrn();		
+		m_sTiger = pFile->m_oTiger.toShortUrn();
+		m_sMD5 = pFile->m_oMD5.toShortUrn();
+		m_sED2K = pFile->m_oED2K.toShortUrn();
+		
+		if ( m_sSHA1.IsEmpty() && m_sED2K.IsEmpty() && m_sTiger.IsEmpty() && m_sMD5.IsEmpty() )
 		{
 			LoadString(m_sSHA1, IDS_GENERAL_NOURNAVAILABLE );
-		}
-
-		if ( pFile->m_bTiger )
-		{
-			m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
-		}
-		else
-		{
-			m_sTiger.Empty();
-		}
-
-		if ( pFile->m_bMD5 )
-		{
-			m_sMD5 = _T("md5:") + CMD5::HashToString( &pFile->m_pMD5 );
-		}
-		else
-		{
-			m_sMD5.Empty();
-		}
-
-		if ( pFile->m_bED2K )
-		{
-			m_sED2K = _T("ed2k:") + CED2K::HashToString( &pFile->m_pED2K );
-		}
-		else
-		{
-			m_sED2K.Empty();
 		}
 
 		CString strDate, strTime;

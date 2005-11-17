@@ -102,7 +102,7 @@ void CCoolMenuBarCtrl::OpenMenuBar()
 {
 	if ( m_pDown == NULL )
 	{
-		if ( m_pSelect = GetIndex( 0 ) ) PostMessage( WM_TIMER, 5 );
+		if ( ( m_pSelect = GetIndex( 0 ) ) != NULL ) PostMessage( WM_TIMER, 5 );
 	}
 }
 
@@ -122,7 +122,7 @@ BOOL CCoolMenuBarCtrl::OpenMenuChar(UINT nChar)
 		if ( toupper( *pszChar ) == toupper( nChar ) )
 		{
 			pMenu.Detach();
-			if ( m_pSelect = GetIndex( nItem ) ) PostMessage( WM_TIMER, 5 );
+			if ( ( m_pSelect = GetIndex( nItem ) ) != NULL ) PostMessage( WM_TIMER, 5 );
 			return TRUE;
 		}
 	}
@@ -262,22 +262,22 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 
 void CCoolMenuBarCtrl::ShiftMenu(int nOffset)
 {
-	int nIndex = 0;
+	INT_PTR nIndex = 0;
 
 	if ( m_pDown )
 	{
-		nIndex = (int)m_pDown->m_nID - 1 + nOffset;
+		nIndex = m_pDown->m_nID - 1 + nOffset;
 		if ( nIndex < 0 ) nIndex = GetCount() - 1;
 		if ( nIndex >= GetCount() ) nIndex = 0;
 	}
 
 	SendMessage( WM_CANCELMODE, 0, 0 );
-	m_pSelect = GetIndex( nIndex );
+	m_pSelect = GetIndex( static_cast< int >( nIndex ) );
 	m_pHot = m_pDown = NULL;
 	PostMessage( WM_TIMER, 5 );
 }
 
-void CCoolMenuBarCtrl::OnTimer(UINT nIDEvent)
+void CCoolMenuBarCtrl::OnTimer(UINT_PTR nIDEvent)
 {
 	switch ( nIDEvent )
 	{
@@ -308,7 +308,7 @@ void CCoolMenuBarCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 /////////////////////////////////////////////////////////////////////////////
 // CCoolMenuBarCtrl menu message forwarding
 
-void CCoolMenuBarCtrl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
+void CCoolMenuBarCtrl::OnUpdateCmdUI(CFrameWnd* /*pTarget*/, BOOL /*bDisableIfNoHndler*/)
 {
 }
 

@@ -19,52 +19,55 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_SHA_H__9CC84DD7_E62A_410F_BFE4_B6190C509ACE__INCLUDED_)
-#define AFX_SHA_H__9CC84DD7_E62A_410F_BFE4_B6190C509ACE__INCLUDED_
+#ifndef SHA_H_INCLUDED
+#define SHA_H_INCLUDED
 
 #pragma once
+
+struct SHA1State
+{
+	static const size_t blockSize = 64;
+	uint64	m_nCount;
+	uint32	m_nState[ 5 ];
+	uchar m_oBuffer[ blockSize ];
+};
+
+#ifdef SHAREAZA_USE_ASM
+extern "C" void __stdcall SHA1_Add_p5(SHA1State*, const void* pData, std::size_t nLength);
+#endif
 
 class CSHA
 {
 // Construction
 public:
-	CSHA();
-	~CSHA();
+	CSHA() { Reset(); }
 
 // Attributes
- public:
-	DWORD	m_nCount[2];
-	DWORD	m_nHash[5];
-	DWORD	m_nBuffer[16];						// if you change this modify the offsets sha_asm.asm accordingly
+private:
+	SHA1State m_State;
 
 // Operations
 public:
-	void			Reset();
-	void			Add(LPCVOID pData, DWORD nLength);
-	void			Finish();
-	void			GetHash(SHA1* pHash);
-	CString			GetHashString(BOOL bURN = FALSE);
-public:
-	static CString	HashToString(const SHA1* pHash, BOOL bURN = FALSE);
-	static CString	HashToHexString(const SHA1* pHash, BOOL bURN = FALSE);
-	static BOOL		HashFromString(LPCTSTR pszHash, SHA1* pHash);
-	static BOOL		HashFromURN(LPCTSTR pszHash, SHA1* pHash);
-	static BOOL		IsNull(SHA1* pHash);
-protected:
-//	void			Compile();			we don't need this anymore
+	void	GetHash(Hashes::Sha1Hash& oHash) const;
+	void	GetHash(Hashes::BtHash& oHash) const;
+	void	Reset();
+	void	Finish();
+#ifdef SHAREAZA_USE_ASM
+	void	Add(const void* pData, std::size_t nLength)
+	{
+		SHA1_Add_p5( &m_State, pData, nLength );
+	}
+#else
+	void	Add(const void* pData, std::size_t nLength);
+	struct TransformArray
+	{
+		TransformArray(const uint32* const buffer);
+		uint32 operator[](uint32 index) const { return m_buffer[ index ]; }
+		uint32 m_buffer[ 80 ];
+	};
+private:
+	void	Transform(const TransformArray w);
+#endif
 };
 
-#define SHA1_BLOCK_SIZE		64
-#define SHA1_DIGEST_SIZE	20
-
-inline bool operator==(const SHA1& sha1a, const SHA1& sha1b)
-{
-    return memcmp( &sha1a, &sha1b, 20 ) == 0;
-}
-
-inline bool operator!=(const SHA1& sha1a, const SHA1& sha1b)
-{
-    return memcmp( &sha1a, &sha1b, 20 ) != 0;
-}
-
-#endif // !defined(AFX_SHA_H__9CC84DD7_E62A_410F_BFE4_B6190C509ACE__INCLUDED_)
+#endif // #ifndef SHA_H_INCLUDED

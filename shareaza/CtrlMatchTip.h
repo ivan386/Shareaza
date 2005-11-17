@@ -100,7 +100,7 @@ public:
 // Implementation
 protected:
 	//{{AFX_MSG(CMatchTipCtrl)
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnPaint();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

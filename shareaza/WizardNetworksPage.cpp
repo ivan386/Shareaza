@@ -28,7 +28,6 @@
 #include "DlgDonkeyImport.h"
 #include "Skin.h"
 #include "DlgHelp.h"
-#include <shlobj.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -106,14 +105,12 @@ LRESULT CWizardNetworksPage::OnWizardNext()
 	
 	DoDonkeyImport();
 
-	/*
-	if ( m_bEDEnable ) 
-	{
-		CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
-		Settings.Live.UploadLimitWarning = TRUE;
-	}
-	*/
-	
+	//if ( m_bEDEnable ) 
+	//{
+	//	CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
+	//	Settings.Live.UploadLimitWarning = TRUE;
+	//}
+
 	return 0;
 }
 

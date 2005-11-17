@@ -78,6 +78,7 @@ BOOL CAboutDlg::OnInitDialog()
 
 	m_wndTitle.GetWindowText( strCaption );
 	strCaption += theApp.m_sVersion;
+	strCaption += _T(" (") + theApp.m_sBuildDate + _T(")");
 	m_wndTitle.SetWindowText( strCaption );
 
 	m_crWhite = CCoolInterface::GetDialogBkColor();
@@ -101,7 +102,7 @@ void CAboutDlg::OnPaint()
 
 HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-	HBRUSH hbr = (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
+	/*HBRUSH hbr =*/ (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
 
 	pDC->SetBkColor( m_crWhite );
 
@@ -151,7 +152,7 @@ void CAboutDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 }
 
-void CAboutDlg::OnRButtonDown(UINT nFlags, CPoint point)
+void CAboutDlg::OnRButtonDown(UINT /*nFlags*/, CPoint point)
 {
 	CRect rc;
 

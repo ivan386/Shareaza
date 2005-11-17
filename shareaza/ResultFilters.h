@@ -29,7 +29,7 @@ class CFilterOptions
 {
 public:
 	CFilterOptions();
-	void Serialize(CArchive& ar);
+	void Serialize(CArchive& ar, int nVersion);
 public:
 	CString m_sName; // the options set name
 	CString	m_sFilter;
@@ -41,12 +41,13 @@ public:
 	BOOL	m_bFilterBogus;
 	BOOL	m_bFilterDRM;
 	BOOL	m_bFilterAdult;
+	BOOL	m_bFilterSuspicious;
 	DWORD	m_nFilterSources;
 	QWORD	m_nFilterMinSize;
 	QWORD	m_nFilterMaxSize;
 };
 
-#define NONE -1
+const DWORD NONE = ~0u;
 
 class CResultFilters
 {

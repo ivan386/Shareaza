@@ -84,9 +84,8 @@ typedef struct
 #define ID3V2_KNOWNFRAME	0x4F
 
 #define ID3_DESYNC_SIZE(x)	{	\
-	x = ( x & 0x7F ) | ( ( x & ~0xFF ) >> 1 );	\
-	x = ( x & 0x03FFF ) | ( ( x & ~0x03FFF ) >> 1 );	\
-	x = ( x & 0x01FFFFF ) | ( ( x & ~0x01FFFFF ) >> 1 ); }
+	x = ( ( x & 0xFF000000 ) >> 3 ) + ( ( x & 0x00FF0000 ) >> 2 ) + \
+	    ( ( x & 0x0000FF00 ) >> 1 ) + ( x & 0x000000FF ); }
 
 typedef struct
 {

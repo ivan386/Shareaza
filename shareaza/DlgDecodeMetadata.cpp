@@ -1,8 +1,8 @@
 //
 // DlgDecodeMetadata.cpp
 //
-//	Date:			"$Date: 2005/03/11 16:28:40 $"
-//	Revision:		"$Revision: 1.2 $"
+//	Date:			"$Date: 2005/11/17 21:10:48 $"
+//	Revision:		"$Revision: 1.3 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -69,7 +69,7 @@ BOOL CDecodeMetadataDlg::OnInitDialog()
 
 void CDecodeMetadataDlg::AddFile(CLibraryFile* pFile)
 {
-	m_pFiles.AddTail( (LPVOID)pFile->m_nIndex );
+	m_pFiles.AddTail( pFile->m_nIndex );
 }
 
 // TODO: Allow to restore initial metadata from backup 
@@ -93,7 +93,7 @@ void CDecodeMetadataDlg::OnOK()
 
 	for ( POSITION pos = m_pFiles.GetHeadPosition() ; pos ; )
 	{
-		DWORD nIndex = (DWORD)m_pFiles.GetNext( pos );
+		DWORD nIndex = m_pFiles.GetNext( pos );
 		
 		CXMLElement* pXML;
 		CLibraryFile* pFile;
@@ -114,9 +114,13 @@ void CDecodeMetadataDlg::OnOK()
 			CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
 			// decode only these attributes
 			if ( !pAttribute->IsNamed( _T("artist") ) && 
+				 !pAttribute->IsNamed( _T("origArtist") ) &&
 				 !pAttribute->IsNamed( _T("album") ) &&
+				 !pAttribute->IsNamed( _T("origAlbum") ) &&
 				 !pAttribute->IsNamed( _T("title") ) &&
-				 !pAttribute->IsNamed( _T("description") ) ) continue;
+				 !pAttribute->IsNamed( _T("description") ) &&
+				 !pAttribute->IsNamed( _T("copyright") ) &&
+				 !pAttribute->IsNamed( _T("composer") ) ) continue;
 			CString strAttribute = pAttribute->GetValue();
 
 			int nLength = strAttribute.GetLength();
@@ -146,7 +150,7 @@ void CDecodeMetadataDlg::OnOK()
 		if ( pContainer )
 		{
 			// append modified metadata
-			CXMLElement* pMetadata	= pContainer->AddElement( pXML );
+			/*CXMLElement* pMetadata	=*/ pContainer->AddElement( pXML );
 			// save metadata by creating XML file
 			pFile->SetMetadata( pContainer );
 			delete pContainer;

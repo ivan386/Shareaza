@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/09/26 00:09:36 $"
-//	Revision:		"$Revision: 1.27 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/11/17 21:10:47 $"
+//	Revision:		"$Revision: 1.28 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -44,7 +44,7 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 // Hard-coded settings for socket data transfer
-#define TEMP_BUFFER 10240 // Transfer data between the socket and a local 10 KB buffer of space
+#define TEMP_BUFFER 10240u // Transfer data between the socket and a local 10 KB buffer of space
 
 // Hard-coded settings for the bandwidth transfer meter
 #define METER_SECOND  1000  // Used by the bandwidth transfer meter, 1000 milliseconds is 1 second
@@ -70,6 +70,36 @@ CConnection::CConnection()
 	// Zero the memory of the input and output TCPBandwidthMeter objects
 	ZeroMemory( &m_mInput, sizeof(m_mInput) );
 	ZeroMemory( &m_mOutput, sizeof(m_mOutput) );
+}
+
+// make a destructive copy (similar to AttachTo)
+CConnection::CConnection(CConnection& other)
+	: m_pHost(      other.m_pHost )
+	, m_sAddress(   other.m_sAddress )
+	, m_bInitiated( other.m_bInitiated )
+	, m_bConnected( other.m_bConnected )
+	, m_tConnected( other.m_tConnected )
+	, m_hSocket(    other.m_hSocket )
+	, m_pInput(     other.m_pInput )		// transfered
+	, m_pOutput(    other.m_pOutput )		// transfered
+	, m_sUserAgent( other.m_sUserAgent )
+	, m_sLastHeader()
+	, m_mInput()
+	, m_mOutput()
+	, m_nQueuedRun( 0 )
+{
+	// Make sure the socket isn't valid yet
+	ASSERT( m_hSocket != INVALID_SOCKET );				// Make sure the socket exists
+
+	// Record the current time in the input and output TCP bandwidth meters
+	m_mInput.tLast = m_mOutput.tLast = GetTickCount();
+
+	// Invalidate the socket in the given connection object so it's just here now
+	other.m_hSocket	= INVALID_SOCKET;
+
+	// Null the input and output pointers
+	other.m_pInput	= NULL;
+	other.m_pOutput	= NULL;
 }
 
 // Delete this CConnection object
@@ -338,14 +368,6 @@ BOOL CConnection::DoRun()
 	// If the close event happened
 	if ( bClosed )
 	{
-		/*
-		if ( pEvents.iErrorCode[ FD_CLOSE_BIT ] != 0 )
-		{
-			CString strError;
-			strError.Format( _T("Close Error: %i "),  pEvents.iErrorCode[ FD_CLOSE_BIT ] );
-			theApp.Message(MSG_ERROR, strError );
-		}
-		*/
 		// Call OnDropped, telling it true if there is a close error
 		OnDropped( pEvents.iErrorCode[ FD_CLOSE_BIT ] != 0 ); // True if there is an nonzero error code for the close bit
 		return FALSE;
@@ -381,7 +403,7 @@ BOOL CConnection::OnConnected()
 }
 
 // Objects that inherit from CConnection have OnDropped methods that do things, unlike this one
-void CConnection::OnDropped(BOOL bError)
+void CConnection::OnDropped(BOOL) // Changed from BOOL bError (do)
 {
 	// Do nothing
 }
@@ -411,25 +433,14 @@ BOOL CConnection::OnRead()
 	// If we need to worry about throttling bandwidth, calculate nLimit, the number of bytes we are allowed to read now
 	if ( m_mInput.pLimit							// If the input bandwidth memter points to a limit
 		&& *m_mInput.pLimit							// And that limit isn't 0
-		&& ( Settings.Live.BandwidthScale <= 100	// And either the bandwidth meter in program settings is (do)
-		|| m_mInput.bUnscaled ) )					// Or the input bandwidth meter in this object is unscaled (do)
+		&& ( Settings.Live.BandwidthScale <= 100 ) )// And either the bandwidth meter in program settings is (do)
 	{
 		// tCutoff is the tick count 1 second ago
 		DWORD tCutoff = tNow - METER_SECOND; // METER_SECOND is 1 second
 
 		// nLimit is the number of bytes we've read in the last second
 		// This part of the code has been translated into assembly language to make it faster
-/*
-		// Loop across the first 24 times and histories stored in the input bandwidth meter
-		DWORD* pHistory	= m_mInput.pHistory;	// Start the pointers at the beginning of the arrays
-		DWORD* pTime	= m_mInput.pTimes;
-		nLimit			= 0;					// Count up the limit from 0
-		for ( int nSeek = METER_LENGTH ; nSeek ; nSeek--, pHistory++, pTime++ )
-		{
-			// If this time is within the last second, add its bytes to the limit
-		    if ( *pTime >= tCutoff ) nLimit += *pHistory;
-		}
-*/
+#ifdef SHAREAZA_USE_ASM
 		// Here is the assembly language which does the same thing
 		__asm
 		{
@@ -444,10 +455,19 @@ _ignore:	inc		ebx
 			jnz		_loop
 			mov		nLimit, eax
 		}
-
+#else
+		// Loop across the first 24 times and histories stored in the input bandwidth meter
+		nLimit = 0;					// Count up the limit from 0
+		for ( std::ptrdiff_t slot = -METER_LENGTH; slot; ++slot )
+		{
+			// If this time is within the last second, add its bytes to the limit
+			if ( m_mInput.pTimes[ METER_LENGTH + slot ] >= tCutoff )
+				nLimit += m_mInput.pHistory[ METER_LENGTH + slot ];
+		}
+#endif
 		// nActual is the speed limit, set by the input bandwidth meter and the bandwidth scale in settings
 		DWORD nActual = *m_mInput.pLimit; // Get the speed limit from the input bandwidth meter
-		if ( Settings.Live.BandwidthScale < 100 && ! m_mInput.bUnscaled ) // The scale is turned down and we should use it
+		if ( Settings.Live.BandwidthScale < 100 ) // The scale is turned down and we should use it
 		{
 			// Adjust actual based on the scale
 			nActual = nActual * Settings.Live.BandwidthScale / 100; // If the settings scale is 50, this cuts actual in half
@@ -473,7 +493,7 @@ _ignore:	inc		ebx
 	while ( nLimit )
 	{
 		// Set nLength to nLimit or 4 KB, whichever is smaller
-		int nLength = min( ( nLimit & 0xFFFFF ), DWORD(TEMP_BUFFER) );
+		int nLength = min( ( nLimit & 0xFFFFF ), TEMP_BUFFER );
 
 		// Read the bytes from the socket
 		nLength = recv(		// nLength is the number of bytes we received from the socket
@@ -543,26 +563,15 @@ BOOL CConnection::OnWrite()
 	// If we need to worry about throttling bandwidth, calculate nLimit, the number of bytes we are allowed to write now
 	if ( m_mOutput.pLimit							// If the output bandwidth meter points to a limit
 		&& *m_mOutput.pLimit						// And that limit isn't 0
-		&& ( Settings.Live.BandwidthScale <= 100	// And either the bandwidth meter in program settings is (do)
-		|| m_mOutput.bUnscaled ) )					// Or the input bandwidth meter in this object is unscaled (do)
+		&& ( Settings.Live.BandwidthScale <= 100 ) )// And either the bandwidth meter in program settings is (do)
 	{
 		// tCutoff is the tick count 1 second ago
 		DWORD tCutoff = tNow - METER_SECOND; // METER_SECOND is 1 second
 
 		// nUsed is the number of bytes we've written in the last second
 		// This part of the code has been translated into assembly language to make it faster
-/*
-		// Loop across the first 24 times and histories stored in the output bandwidth meter
-		DWORD* pHistory	= m_mOutput.pHistory;	// Start the pointers at the beginning of the arrays
-		DWORD* pTime	= m_mOutput.pTimes;
-		DWORD nUsed		= 0;					// Count up used from 0
-		for ( int nSeek = METER_LENGTH ; nSeek ; nSeek--, pHistory++, pTime++ )
-		{
-			// If this time is within the last second, add its bytes to used
-			if ( *pTime >= tCutoff ) nUsed += *pHistory;
-		}
-*/
 		// Here is the assembly language which does the same thing
+#ifdef SHAREAZA_USE_ASM
 		DWORD nUsed;
 		__asm
 		{
@@ -577,10 +586,17 @@ _ignore:	inc		ebx
 			jnz		_loop
 			mov		nUsed, eax
 		}
-
+#else
+		DWORD nUsed = 0;
+		for ( std::ptrdiff_t slot = -METER_LENGTH; slot; ++slot )
+		{
+			if ( m_mOutput.pTimes[ METER_LENGTH + slot ] >= tCutoff )
+				nUsed += m_mOutput.pHistory[ METER_LENGTH + slot ];
+		}
+#endif
 		// nLimit is the speed limit, set by the output bandwidth meter and the bandwidth scale in settings
 		nLimit = *m_mOutput.pLimit; // Get the speed limit from the output bandwidth meter
-		if ( Settings.Live.BandwidthScale < 100 && ! m_mOutput.bUnscaled ) // The scale is turned down and we should use it
+		if ( Settings.Live.BandwidthScale < 100 ) // The scale is turned down and we should use it
 		{
 			// Adjust the limit lower based on the scale
 			nLimit = nLimit * Settings.Live.BandwidthScale / 100;
@@ -678,38 +694,8 @@ _ignore:	inc		ebx
 // Calculate the input and output speeds for this connection
 void CConnection::Measure()
 {
-	// Set tCutoff to the tick count exactly 2 seconds ago
-	DWORD tCutoff = GetTickCount() - METER_PERIOD; // METER_PERIOD is 6 seconds
-
-	// This part of the code has been translated into assembly language to make it faster
-/*
-	// Point to the start of the input and output history and time arrays
-	DWORD* pInHistory	= m_mInput.pHistory;
-	DWORD* pInTime		= m_mInput.pTimes;
-	DWORD* pOutHistory	= m_mOutput.pHistory;
-	DWORD* pOutTime		= m_mOutput.pTimes;
-
-	// Start counts at zero
-	DWORD nInput	= 0;
-	DWORD nOutput	= 0;
-
-	// Loop down the arrays
-	for ( int tNow = METER_LENGTH ; tNow ; tNow-- )
-	{
-		// If this record is from the last 2 seconds, add it to the input or output total
-		if ( *pInTime >= tCutoff ) nInput += *pInHistory;
-		if ( *pOutTime >= tCutoff ) nOutput += *pOutHistory;
-
-		// Move pointers forward to the next spot in the array
-		pInHistory++, pInTime++;
-		pOutHistory++, pOutTime++;
-	}
-
-	// Set nMeasure for input and output as the average bytes read and written per second over the last 2 seconds
-	m_mInput.nMeasure  = nInput  * 1000 / METER_PERIOD;
-	m_mOutput.nMeasure = nOutput * 1000 / METER_PERIOD;
-*/
-	// Here is the assembly language which does the same thing
+	DWORD tCutoff = GetTickCount() - METER_PERIOD;
+#if defined SHAREAZA_USE_ASM && !defined _WIN64
 	__asm
 	{
 		mov		ebx, this
@@ -734,6 +720,24 @@ _ignoreOut:inc	ecx
 		div		ecx
 		mov		[ ebx ]CConnection.m_mOutput.nMeasure, eax
 	}
+#else
+	// Start counts at zero
+	DWORD nInput  = 0;
+	DWORD nOutput = 0;
+
+	// Loop down the arrays
+	for ( std::ptrdiff_t slot = -METER_LENGTH; slot; ++slot )
+	{
+		// If this record is from the last 2 seconds, add it to the input or output total
+		if ( m_mInput.pTimes[ METER_LENGTH + slot ] >= tCutoff )
+			nInput += m_mInput.pHistory[ METER_LENGTH + slot ];
+		if ( m_mOutput.pTimes[ METER_LENGTH + slot ] >= tCutoff )
+			nOutput += m_mOutput.pHistory[ METER_LENGTH + slot ];
+	}
+	// Set nMeasure for input and output as the average bytes read and written per second over the last METER_PERIOD seconds
+	m_mInput.nMeasure  = nInput  * 1000 / METER_PERIOD;
+	m_mOutput.nMeasure = nOutput * 1000 / METER_PERIOD;
+#endif
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -816,10 +820,10 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 		Network.AcquireLocalAddress( strValue );
 	
 	} // It's the x my address, listen IP, or node header, like "X-My-Address: 10.254.0.16:6349"
-	else if (	strHeader.CompareNoCase( _T("X-My-Address") ) == 0 ||
-				strHeader.CompareNoCase( _T("Listen-IP") ) == 0 ||
-				strHeader.CompareNoCase( _T("X-Node") ) == 0 ||
-				strHeader.CompareNoCase( _T("Node") ) == 0 )
+	else if (  strHeader.CompareNoCase( _T("X-My-Address") ) == 0
+			|| strHeader.CompareNoCase( _T("Listen-IP") ) == 0
+			|| strHeader.CompareNoCase( _T("X-Node") ) == 0
+			|| strHeader.CompareNoCase( _T("Node") ) == 0 )
 	{
 		// Find another colon in the value
 		int nColon = strValue.Find( ':' );
@@ -833,7 +837,7 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 				&& nPort != 0 ) // Make sure the found number isn't 0
 			{
 				// Save the found port number in m_pHost
-				m_pHost.sin_port = htons( nPort ); // Convert Windows little endian to big for the Internet with htons
+				m_pHost.sin_port = htons( u_short( nPort ) ); // Convert Windows little endian to big for the Internet with htons
 			}
 		}
 	}
@@ -967,7 +971,7 @@ CString CConnection::URLEncode(LPCTSTR pszInputT)
 	LPCSTR pszInput = pszUTF8;
 
 	// Get the character buffer inside the output string, specifying how much larger to make it
-	LPTSTR pszOutput = strOutput.GetBuffer( strlen( pszInput ) * 3 + 1 ); // Times 3 in case every character gets encoded
+	LPTSTR pszOutput = strOutput.GetBuffer( static_cast< int >( strlen( pszInput ) * 3 + 1 ) ); // Times 3 in case every character gets encoded
 
 	// Loop for each character of input text
 	for ( ; *pszInput ; pszInput++ )
@@ -1041,15 +1045,15 @@ CString CConnection::URLDecodeANSI(LPCTSTR pszInput)
 		if ( *pszInput == '%' )
 		{
 			// Copy characters like "20" into szHex, making sure neither are null
-			if ( ! ( szHex[0] = pszInput[1] ) ) break;
-			if ( ! ( szHex[1] = pszInput[2] ) ) break;
+			if ( ( szHex[0] = pszInput[1] ) == 0 ) break;
+			if ( ( szHex[1] = pszInput[2] ) == 0 ) break;
 
 			// Read the text like "20" as a number, and store it in nHex
 			if ( _stscanf( szHex, _T("%x"), &nHex ) != 1 ) break;
 			if ( nHex < 1 ) break; // Make sure the number isn't 0 or negative
 
 			// That number is the code of a character, copy it into the output string
-			*pszOutput++ = nHex; // And then move the output pointer to the next spot
+			*pszOutput++ = CHAR( nHex ); // And then move the output pointer to the next spot
 
 			// Move the input pointer past the two characters of the "20"
 			pszInput += 2;
@@ -1085,7 +1089,6 @@ CString CConnection::URLDecodeANSI(LPCTSTR pszInput)
 	return strOutput;
 }
 
-
 // Decodes encoded characters in a unicode string
 CString CConnection::URLDecodeUnicode(LPCTSTR pszInput)
 {
@@ -1095,7 +1098,7 @@ CString CConnection::URLDecodeUnicode(LPCTSTR pszInput)
 	int nHex;						// The hex code of the character we found
 	
 	// Allocate a new CHAR array big enough to hold the input characters and a null terminator
-	LPTSTR pszBytes = strOutput.GetBuffer( _tcslen( pszInput ) );
+	LPTSTR pszBytes = strOutput.GetBuffer( static_cast< int >( _tcslen( pszInput ) ) );
 
 	// Point the output string pointer at this array
 	LPTSTR pszOutput = pszBytes;
@@ -1107,15 +1110,15 @@ CString CConnection::URLDecodeUnicode(LPCTSTR pszInput)
 		if ( *pszInput == '%' )
 		{
 			// Copy characters like "20" into szHex, making sure neither are null
-			if ( ! ( szHex[0] = pszInput[1] ) ) break;
-			if ( ! ( szHex[1] = pszInput[2] ) ) break;
+			if ( ( szHex[0] = pszInput[1] ) == 0 ) break;
+			if ( ( szHex[1] = pszInput[2] ) == 0 ) break;
 
 			// Read the text like "20" as a number, and store it in nHex
 			if ( _stscanf( szHex, _T("%x"), &nHex ) != 1 ) break;
 			if ( nHex < 1 ) break; // Make sure the number isn't 0 or negative
 
 			// That number is the code of a character, copy it into the output string
-			*pszOutput++ = nHex; // And then move the output pointer to the next spot
+			*pszOutput++ = WCHAR( nHex ); // And then move the output pointer to the next spot
 
 			// Move the input pointer past the two characters of the "20"
 			pszInput += 2;
@@ -1134,12 +1137,10 @@ CString CConnection::URLDecodeUnicode(LPCTSTR pszInput)
 		}
 	}
 
-	// End the output text with a null terminator
-	*pszOutput = 0;
-	// Put the output into a CString
-	strOutput.ReleaseBuffer();
-	// Return the output string
-	return strOutput;
+	// Close and return the string
+	*pszOutput = 0;            // End the output text with a null terminator
+	strOutput.ReleaseBuffer(); // Release direct access to the buffer of the CString object
+	return strOutput;          // Return the string
 }
 
 // Takes some input text like "hello world" and a text tag like "hello"

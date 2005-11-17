@@ -94,7 +94,7 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( Settings.Gnutella.HostCacheView < PROTOCOL_NULL || Settings.Gnutella.HostCacheView > PROTOCOL_ED2K )
 		Settings.Gnutella.HostCacheView = PROTOCOL_G2;
 
-	m_nMode = Settings.Gnutella.HostCacheView;
+	m_nMode = PROTOCOLID( Settings.Gnutella.HostCacheView );
 
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
@@ -238,7 +238,7 @@ void CHostCacheWnd::OnSkinChange()
 	Skin.CreateToolBar( _T("CHostCacheWnd"), &m_wndToolBar );
 	if ( Settings.General.GUIMode == GUI_BASIC)
 	{
-		m_nMode = Settings.Gnutella.HostCacheView = PROTOCOL_G2;
+		Settings.Gnutella.HostCacheView = m_nMode = PROTOCOL_G2;
 	}
 
 }
@@ -253,7 +253,7 @@ void CHostCacheWnd::OnSize(UINT nType, int cx, int cy)
 	SizeListAndBar( &m_wndList, &m_wndToolBar );
 }
 
-void CHostCacheWnd::OnTimer(UINT nIDEvent) 
+void CHostCacheWnd::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( nIDEvent == 1 && IsPartiallyVisible() )
 	{
@@ -280,7 +280,7 @@ void CHostCacheWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if ( pDraw->nmcd.dwDrawStage == CDDS_ITEMPREPAINT )
 	{
-		LV_ITEM pItem = { LVIF_STATE, pDraw->nmcd.dwItemSpec, 0, 0, LVIS_OVERLAYMASK };
+		LV_ITEM pItem = { LVIF_STATE, static_cast< int >( pDraw->nmcd.dwItemSpec ), 0, 0, LVIS_OVERLAYMASK };
 		m_wndList.GetItem( &pItem );
 		
 		if ( pItem.state & LVIS_OVERLAYMASK )
@@ -290,7 +290,7 @@ void CHostCacheWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-void CHostCacheWnd::OnDblClkList(NMHDR* pNMHDR, LRESULT* pResult)
+void CHostCacheWnd::OnDblClkList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
 	OnHostCacheConnect();
 	*pResult = 0;
@@ -303,7 +303,7 @@ void CHostCacheWnd::OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CHostCacheWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CHostCacheWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
 	// do not update the list while user navigates through context menu
 	m_bAllowUpdates = FALSE;
@@ -311,7 +311,7 @@ void CHostCacheWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 	m_bAllowUpdates = TRUE;
 }
 
-void CHostCacheWnd::OnNcMouseMove(UINT nHitTest, CPoint point) 
+void CHostCacheWnd::OnNcMouseMove(UINT /*nHitTest*/, CPoint /*point*/) 
 {
 	// do not update for at least 5 sec while mouse is moving ouside host cache window
 	m_bAllowUpdates = FALSE;
@@ -328,7 +328,7 @@ void CHostCacheWnd::OnHostCacheConnect()
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 
 	POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
-	while( pos )
+	while ( pos )
 	{
 		int nItem = m_wndList.GetNextSelectedItem( pos );
 		if ( CHostCacheHost* pHost = GetItem( nItem ) )
@@ -345,7 +345,7 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 	if ( pLock.Lock( 50 ) )
 	{
 		POSITION pos = m_wndList.GetFirstSelectedItemPosition();
-		while( pos )
+		while ( pos )
 		{
 			int nItem = m_wndList.GetNextSelectedItem( pos );
 			if ( CHostCacheHost* pHost = GetItem( nItem ) )
@@ -368,7 +368,7 @@ void CHostCacheWnd::OnHostCacheDisconnect()
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 
 	POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
-	while( pos )
+	while ( pos )
 	{
 		int nItem = m_wndList.GetNextSelectedItem( pos );
 		if ( CHostCacheHost* pHost = GetItem( nItem ) )
@@ -392,7 +392,7 @@ void CHostCacheWnd::OnUpdateHostcachePriority(CCmdUI* pCmdUI)
 	pCmdUI->Enable( TRUE );
 	
 	POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
-	while( pos )
+	while ( pos )
 	{
 		int nItem = m_wndList.GetNextSelectedItem( pos );
 		if ( CHostCacheHost* pHost = GetItem( nItem ) )
@@ -415,7 +415,7 @@ void CHostCacheWnd::OnHostcachePriority()
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 	
 	POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
-	while( pos )
+	while ( pos )
 	{
 		int nItem = m_wndList.GetNextSelectedItem( pos );
 		if ( CHostCacheHost* pHost = GetItem( nItem ) )
@@ -437,7 +437,7 @@ void CHostCacheWnd::OnHostCacheRemove()
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 
 	POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
-	while( pos )
+	while ( pos )
 	{
 		int nItem = m_wndList.GetNextSelectedItem( pos );
 		if ( CHostCacheHost* pHost = GetItem( nItem ) )

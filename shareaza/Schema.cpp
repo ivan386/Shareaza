@@ -63,7 +63,7 @@ POSITION CSchema::GetMemberIterator() const
 
 CSchemaMember* CSchema::GetNextMember(POSITION& pos) const
 {
-	return (CSchemaMember*)m_pMembers.GetNext( pos );
+	return m_pMembers.GetNext( pos );
 }
 
 CSchemaMember* CSchema::GetMember(LPCTSTR pszName) const
@@ -78,7 +78,7 @@ CSchemaMember* CSchema::GetMember(LPCTSTR pszName) const
 	return NULL;
 }
 
-int CSchema::GetMemberCount() const
+INT_PTR CSchema::GetMemberCount() const
 {
 	return m_pMembers.GetCount();
 }
@@ -87,7 +87,7 @@ CString CSchema::GetFirstMemberName() const
 {
 	if ( m_pMembers.GetCount() )
 	{
-		CSchemaMember* pMember = (CSchemaMember*)m_pMembers.GetHead();
+		CSchemaMember* pMember = m_pMembers.GetHead();
 		return pMember->m_sName;
 	}
 
@@ -107,12 +107,12 @@ void CSchema::Clear()
 
 	for ( POSITION pos = m_pContains.GetHeadPosition() ; pos ; )
 	{
-		delete (CSchemaChild*)m_pContains.GetNext( pos );
+		delete m_pContains.GetNext( pos );
 	}
 
 	for ( POSITION pos = m_pBitziMap.GetHeadPosition() ; pos ; )
 	{
-		delete (CSchemaBitzi*)m_pBitziMap.GetNext( pos );
+		delete m_pBitziMap.GetNext( pos );
 	}
 
 	m_pMembers.RemoveAll();
@@ -151,7 +151,7 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 	if ( m_sTitle.IsEmpty() )
 	{
 		m_sTitle = m_sSingular;
-		m_sTitle.SetAt( 0, toupper( m_sTitle.GetAt( 0 ) ) );
+		m_sTitle.SetAt( 0, TCHAR( toupper( m_sTitle.GetAt( 0 ) ) ) );
 	}
 
 	
@@ -641,7 +641,7 @@ CSchemaChild* CSchema::GetContained(LPCTSTR pszURI) const
 {
 	for ( POSITION pos = m_pContains.GetHeadPosition() ; pos ; )
 	{
-		CSchemaChild* pChild = (CSchemaChild*)m_pContains.GetNext( pos );
+		CSchemaChild* pChild = m_pContains.GetNext( pos );
 		if ( pChild->m_sURI.CompareNoCase( pszURI ) == 0 ) return pChild;
 	}
 	return NULL;
@@ -651,7 +651,7 @@ CString CSchema::GetContainedURI(int nType) const
 {
 	for ( POSITION pos = m_pContains.GetHeadPosition() ; pos ; )
 	{
-		CSchemaChild* pChild = (CSchemaChild*)m_pContains.GetNext( pos );
+		CSchemaChild* pChild = m_pContains.GetNext( pos );
 
 		if ( pChild->m_nType == nType ) return pChild->m_sURI;
 	}
@@ -694,7 +694,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix)
 		
 		if ( pMember->m_bNumeric )
 		{
-			float nNumber;
+			float nNumber = 0.0f;
 			if ( str.GetLength() && _stscanf( str, _T("%f"), &nNumber ) != 1 ) return FALSE;
 			if ( nNumber < pMember->m_nMinOccurs || nNumber > pMember->m_nMaxOccurs ) return FALSE;
 		}
@@ -833,3 +833,5 @@ LPCTSTR	CSchema::uriVideoMusicCollection	= _T("http://www.shareaza.com/schemas/v
 
 LPCTSTR	CSchema::uriDocumentRoot			= _T("http://www.shareaza.com/schemas/documentRoot.xsd");
 LPCTSTR	CSchema::uriDocumentAll				= _T("http://www.shareaza.com/schemas/documentAll.xsd");
+
+LPCTSTR	CSchema::uriGhostFolder				= _T("http://www.shareaza.com/schemas/ghostFolder.xsd");

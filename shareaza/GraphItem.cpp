@@ -214,7 +214,7 @@ void CGraphItem::MakeGradient(COLORREF crBack)
 //////////////////////////////////////////////////////////////////////
 // CGraphItem value retreival
 
-QWORD CGraphItem::GetValue(DWORD nCode, DWORD nParam)
+QWORD CGraphItem::GetValue(DWORD nCode, DWORD /*nParam*/)
 {
 	QWORD nValue = 0;
 
@@ -245,12 +245,12 @@ QWORD CGraphItem::GetValue(DWORD nCode, DWORD nParam)
 
 	case GRC_GNUTELLA_CONNECTIONS:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
-		nValue = Neighbours.GetCount( -1, nrsConnected, -1 );
+		nValue = Neighbours.GetCount( PROTOCOL_ANY, nrsConnected, -1 );
 		Network.m_pSection.Unlock();
 		break;
 	case GRC_GNUTELLA_CONNECTIONS_ALL:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
-		nValue = Neighbours.GetCount( -1, -1, -1 );
+		nValue = Neighbours.GetCount( PROTOCOL_ANY, -1, -1 );
 		Network.m_pSection.Unlock();
 		break;
 	case GRC_GNUTELLA_BANDWIDTH_IN:

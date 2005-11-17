@@ -39,7 +39,7 @@
 #define SWAP_64(x) ( ( SWAP_LONG( (x) & 0xFFFFFFFF ) << 32 ) | SWAP_LONG( (x) >> 32 ) )
 
 // When the allocated block of memory needs to be bigger, make it 128 bytes bigger
-#define PACKET_GROW 128
+const uchar PACKET_GROW = 128u;
 
 // Sizes of buffers that hold 128 ASCII and 128 wide characters so MultiByteToWideChar can convert short text quickly
 #define PACKET_BUF_SCHAR 127
@@ -143,11 +143,11 @@ public:
 public:
 
 	// Compute the SHA hash of the bytes of the packet
-	virtual BOOL GetRazaHash(SHA1* pHash, DWORD nLength = 0xFFFFFFFF) const;
+    virtual BOOL	GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength = 0xFFFFFFFF) const;
 
 	// Does nothing (do)
-	void RazaSign();
-	BOOL RazaVerify() const;
+	void			RazaSign();
+	BOOL			RazaVerify() const;
 
 public:
 
@@ -160,7 +160,7 @@ public:
 
 	// Takes a pointer to a buffer, and the number of bytes we want written there
 	// Copies this number of bytes from the packet, and moves the packet's position beyond them
-	inline void Read(LPVOID pData, int nLength)
+    inline void Read(LPVOID pData, int nLength)
 	{
 		// Make sure the requested length doesn't poke beyond the end of the packet
 		if ( m_nPosition + nLength > m_nLength ) AfxThrowUserException();
@@ -184,6 +184,21 @@ public:
 
 		// Read one byte, return it, and move our position in this packet beyond it
 		return m_pBuffer[ m_nPosition++ ];
+	}
+	
+	// Read any Hash directly from a packet
+	template
+	<
+		typename Descriptor,
+		template< typename > class StoragePolicy,
+		template< typename > class CheckingPolicy,
+		template< typename > class ValidationPolicy
+	>
+	void Read(Hashes::Hash< Descriptor, StoragePolicy,
+			CheckingPolicy, ValidationPolicy >& oHash)
+	{
+		Read( &oHash[ 0 ], oHash.byteCount );
+		oHash.validate();
 	}
 
 	// Get the next byte in the packet, not moving the position beyond it
@@ -274,7 +289,7 @@ public:
 
 	// Takes a length of bytes we would like to add to the packet
 	// Ensures the allocated block of memory is big enough for them, making it bigger if necessary
-	inline void Ensure(int nLength)
+	inline void Ensure(DWORD nLength)
 	{
 		// If the buffer isn't big enough to hold that many more new bytes
 		if ( m_nLength + nLength > m_nBuffer )
@@ -290,7 +305,7 @@ public:
 
 	// Takes a pointer to data and the number of bytes there
 	// Adds them to the end of the buffer
-	inline void Write(LPCVOID pData, int nLength)
+	inline void Write(LPCVOID pData, DWORD nLength)
 	{
 		// If the allocated block of memory doesn't have enough extra space to hold the new data
 		if ( m_nLength + nLength > m_nBuffer )
@@ -306,6 +321,21 @@ public:
 		// Add the given data to the end of the packet
 		CopyMemory( m_pBuffer + m_nLength, pData, nLength ); // Copy the data into the end
 		m_nLength += nLength;                                // Record that the new bytes are stored here
+	}
+	
+	// Write any Hash directly into a packet ( just the raw data )
+	template
+	<
+		typename Descriptor,
+		template< typename > class StoragePolicy,
+		template< typename > class CheckingPolicy,
+		template< typename > class ValidationPolicy
+	>
+	void Write(const Hashes::Hash< Descriptor, StoragePolicy,
+			CheckingPolicy, ValidationPolicy >& oHash)
+	{
+		if ( !oHash.isValid() ) AfxThrowUserException();
+		Write( &oHash[ 0 ], oHash.byteCount );
 	}
 
 	// Takes a byte
@@ -439,7 +469,7 @@ protected:
 	CCriticalSection m_pSection;
 
 	// An array of pointers, each of which points to an array of 256 packets
-	CPtrArray m_pPools;
+	CArray< CPacket* > m_pPools;
 
 protected:
 

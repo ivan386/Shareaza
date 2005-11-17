@@ -85,12 +85,12 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC)
 	if ( Downloads.Check( (CDownload*)m_pContext ) )
 	{
 		OnCalcSize( pDC, (CDownload*)m_pContext );
-		m_sz.cx = max( m_sz.cx, LONG(400) );
+		m_sz.cx = max( m_sz.cx, 400 );
 	}
 	else if ( Downloads.Check( (CDownloadSource*)m_pContext ) )
 	{
 		OnCalcSize( pDC, (CDownloadSource*)m_pContext );
-		m_sz.cx = max( m_sz.cx, LONG(400) );
+		m_sz.cx = max( m_sz.cx, 400 );
 	}
 }
 
@@ -178,7 +178,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		m_bDrawError = FALSE;
 
 
-	if ( pDownload->m_bBTH )
+	if ( pDownload->m_oBTH )
 	{	//Torrent ratio
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
@@ -228,53 +228,43 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 {
 	CPoint pt( 0, 0 );
-	CString str, strOf;
+	CString str, strOf, strAnother;
 	LoadString( strOf, IDS_GENERAL_OF );
 
 	DrawText( pDC, &pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;
 
-	if ( m_sSHA1.GetLength() )
+	// If verbose mode is enabled, untrusted hashes are in italics
+	if ( !m_sSHA1.IsEmpty() )
 	{
-		// If verbose mode is enabled, untrusted hashes are in italics
-		if ( ( ! Settings.General.VerboseMode ) || ( pDownload->m_bSHA1Trusted ) )
-			pDC->SelectObject( &CoolInterface.m_fntNormal );
-		else 
-			pDC->SelectObject( &CoolInterface.m_fntItalic );
-
+		if ( pDownload->m_oSHA1.isTrusted() )
+		pDC->SelectObject( !Settings.General.VerboseMode || pDownload->m_oSHA1.isTrusted()
+			? &CoolInterface.m_fntNormal
+			: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sSHA1 );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	if ( m_sTiger.GetLength() )
+	if ( !m_sTiger.IsEmpty() )
 	{
-		// If verbose mode is enabled, untrusted hashes are in italics
-		if ( ( ! Settings.General.VerboseMode ) || ( pDownload->m_bTigerTrusted ) )
-			pDC->SelectObject( &CoolInterface.m_fntNormal );
-		else 
-			pDC->SelectObject( &CoolInterface.m_fntItalic );
-
+		pDC->SelectObject( !Settings.General.VerboseMode || pDownload->m_oTiger.isTrusted()
+			? &CoolInterface.m_fntNormal
+			: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sTiger );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	if ( m_sED2K.GetLength() )
+	if ( !m_sED2K.IsEmpty() )
 	{
-		// If verbose mode is enabled, untrusted hashes are in italics
-		if ( ( ! Settings.General.VerboseMode ) || ( pDownload->m_bED2KTrusted ) )
-			pDC->SelectObject( &CoolInterface.m_fntNormal );
-		else 
-			pDC->SelectObject( &CoolInterface.m_fntItalic );
-
+		pDC->SelectObject( !Settings.General.VerboseMode || pDownload->m_oED2K.isTrusted()
+			? &CoolInterface.m_fntNormal
+			: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sED2K );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	if ( m_sBTH.GetLength() )
+	if ( !m_sBTH.IsEmpty() )
 	{
-		// If verbose mode is enabled, untrusted hashes are in italics
-		if ( ( ! Settings.General.VerboseMode ) || ( pDownload->m_bBTHTrusted ) )
-			pDC->SelectObject( &CoolInterface.m_fntNormal );
-		else 
-			pDC->SelectObject( &CoolInterface.m_fntItalic );
-
+		pDC->SelectObject( !Settings.General.VerboseMode || pDownload->m_oBTH.isTrusted()
+			? &CoolInterface.m_fntNormal
+			: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sBTH );
 		pt.y += TIP_TEXTHEIGHT;
 	}
@@ -288,15 +278,25 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 
 	pt.y += 2;
-	pt.x += 40;
 	LoadString( str, IDS_TIP_SIZE );
-	DrawText( pDC, &pt, str + ':' );
-	DrawText( pDC, &pt, m_sSize, 40 );
+	str.Append( _T(": ") );
+	pt.x += 40;
+	DrawText( pDC, &pt, str );
+	CSize sz1 = pDC->GetTextExtent( str );
+	LoadString( strAnother, IDS_TIP_TYPE );
+	strAnother.Append( _T(": ") );
+	CSize sz2 = pDC->GetTextExtent( strAnother );
+
+	sz1.cx = max( sz1.cx, sz2.cx );
+
+	pt.x += sz1.cx + 2;
+	DrawText( pDC, &pt, m_sSize );
 	pt.y += TIP_TEXTHEIGHT;
-	LoadString( str, IDS_TIP_TYPE );
-	DrawText( pDC, &pt, str + ':' );
-	DrawText( pDC, &pt, m_sType, 40 );
-	pt.x -= 40;
+	pt.x -= sz1.cx + 2;
+	DrawText( pDC, &pt, strAnother );
+	pt.x += sz1.cx + 2;
+	DrawText( pDC, &pt, m_sType );
+	pt.x -= 40 + sz1.cx + 2;
 	pt.y -= TIP_TEXTHEIGHT + 2;
 	pt.y += 34;
 
@@ -451,7 +451,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		DrawText( pDC, &pt, strVolume, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	if ( pDownload->m_bBTH )
+	if ( pDownload->m_oBTH )
 	{	//Upload- only for torrents
 		LoadString( strFormat, IDS_DLM_VOLUME_UPLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
@@ -503,38 +503,28 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 	m_sED2K.Empty();
 	m_sBTH.Empty();
 	m_sURL.Empty();
-
-	// Include hashes if we aren't in basic mode
+	
 	if ( Settings.General.GUIMode != GUI_BASIC )
 	{
 		// We also report on if we have a hashset if verbose mode is enabled
 		CString strNoHashset;
 		LoadString( strNoHashset, IDS_TIP_NOHASHSET );
 
-		if ( pDownload->m_bSHA1 )
-		{
-			m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pDownload->m_pSHA1 );
-		}
-		if ( pDownload->m_bTiger )
-		{
-			m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pDownload->m_pTiger );
-			if ( ( Settings.General.VerboseMode ) && ( ! pDownload->m_pTigerBlock ) ) 
-				m_sTiger += strNoHashset;
-		}
-		if ( pDownload->m_bED2K )
-		{
-			m_sED2K = _T("ed2k:") + CED2K::HashToString( &pDownload->m_pED2K );
-			if ( ( Settings.General.VerboseMode ) && ( ! pDownload->m_pHashsetBlock ) ) 
-				m_sED2K += strNoHashset;
-		}
-		if ( pDownload->m_bBTH )
-		{
-			m_sBTH = _T("btih:") + CSHA::HashToString( &pDownload->m_pBTH );
-			if ( ( Settings.General.VerboseMode ) && ( ! pDownload->m_pTorrentBlock ) ) 
-				m_sBTH += strNoHashset;
-
+		m_sSHA1 = pDownload->m_oSHA1.toShortUrn();
+		m_sTiger = pDownload->m_oTiger.toShortUrn()
+			+ ( pDownload->m_oTiger && Settings.General.VerboseMode && !pDownload->m_pTigerBlock
+				? strNoHashset
+				: CString() );
+		m_sED2K = pDownload->m_oED2K.toShortUrn()
+			+ ( pDownload->m_oED2K && Settings.General.VerboseMode && !pDownload->m_pHashsetBlock
+				? strNoHashset
+				: CString() );
+		m_sBTH = pDownload->m_oBTH.toShortUrn()
+			+ ( pDownload->m_oBTH && Settings.General.VerboseMode && !pDownload->m_pTorrentBlock
+				? strNoHashset
+				: CString() );
+		if ( pDownload->m_oBTH )
 			m_sURL = pDownload->m_pTorrent.m_sTracker;
-		}
 	}
 
 	int nPeriod = m_sName.ReverseFind( '.' );
@@ -569,13 +559,13 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 
 void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 {
-	CDownload* pDownload = pSource->m_pDownload;
+//	CDownload* pDownload = pSource->m_pDownload;
 
 	if ( pSource->m_sNick.GetLength() > 0 )
 		m_sName = pSource->m_sNick + _T(" (") + inet_ntoa( pSource->m_pAddress ) + ')';
 	else
 	{
-		if( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
+		if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
 		{
 			m_sName.Format( _T("%lu@%s"), (DWORD)pSource->m_pAddress.S_un.S_addr,
 				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ) );
@@ -586,7 +576,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 		}
 	}
 
-	if( pSource->m_bPushOnly )
+	if ( pSource->m_bPushOnly )
 	{
 		m_sName += _T(" (push)");
 	}
@@ -598,7 +588,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	{
 		if ( LPCTSTR pszSlash = _tcschr( (LPCTSTR)m_sURL + 7, '/' ) )
 		{
-			int nFirst = pszSlash - (LPCTSTR)m_sSize;
+			int nFirst = static_cast< int >( pszSlash - (LPCTSTR)m_sSize );
 			m_sURL = m_sURL.Left( nFirst + 1 ) + _T("...") + m_sURL.Right( 10 );
 		}
 	}
@@ -650,12 +640,12 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	}
 
 	if ( m_nHeaderWidth ) m_nHeaderWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, LONG(m_nHeaderWidth + nValueWidth) );
+	m_sz.cx = max( m_sz.cx, m_nHeaderWidth + nValueWidth );
 }
 
 void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 {
-	CDownload* pDownload = pSource->m_pDownload;
+//	CDownload* pDownload = pSource->m_pDownload;
 	CPoint pt( 0, 0 );
 
 	DrawText( pDC, &pt, m_sName );
@@ -771,7 +761,7 @@ void CDownloadTipCtrl::DrawProgressBar(CDC* pDC, CPoint* pPoint, CDownloadSource
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTipCtrl timer
 
-void CDownloadTipCtrl::OnTimer(UINT nIDEvent)
+void CDownloadTipCtrl::OnTimer(UINT_PTR nIDEvent)
 {
 	CCoolTipCtrl::OnTimer( nIDEvent );
 

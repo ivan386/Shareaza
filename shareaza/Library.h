@@ -74,11 +74,11 @@ public:
 protected:
 	void			AddFile(CLibraryFile* pFile);
 	void			RemoveFile(CLibraryFile* pFile);
-	void			OnFileDelete(CLibraryFile* pFile);
+	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 
 // General Operations
 public:
-	CPtrList*		Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE);
+	CList< CLibraryFile* >*	Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE);
 	void			Clear();
 	BOOL			Load();
 	void			Save();

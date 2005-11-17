@@ -66,7 +66,7 @@ typedef enum NeighbourNodeEnum
 } NrsNode;
 
 // Make the m_nPongNeeded buffer an array of 32 bytes
-#define PONG_NEEDED_BUFFER 32
+const uchar PONG_NEEDED_BUFFER = 32;
 
 // Define the CNeighbour class to inherit from CConnection, picking up a socket and methods to connect it and read data through it
 class CNeighbour : public CConnection
@@ -82,28 +82,27 @@ public:
 // Attributes: State
 public:
 
-	DWORD      m_nRunCookie;
-	DWORD      m_zStart;
-	DWORD      m_nUnique;
-	PROTOCOLID m_nProtocol;
-	NrsState   m_nState;           // Neighbour state, like connecting, handshake 1, 2, or 3, or rejected
-	CVendor*   m_pVendor;
-	BOOL       m_bGUID;
-	GGUID      m_pGUID;
-	CGProfile* m_pProfile;
-	GGUID*     m_pMoreResultsGUID; //Last search GUID- used to get more results
+	// Used by the list of neighbour objects in CNeighbours
+	DWORD      m_nRunCookie; // The number of times this neighbour has been run, CNeighboursBase::OnRun uses this to run each neighbour in the list once
+	DWORD      m_nUnique;    // A number, like 2, 3, 4 and so on, which is the unique key for this CNeighbour object in CNeighbour's m_pUniques map 
+	PROTOCOLID    m_nProtocol;
+	NrsState      m_nState;           // Neighbour state, like connecting, handshake 1, 2, or 3, or rejected
+	CVendor*      m_pVendor;
+	Hashes::Guid  m_oGUID;
+	CGProfile*    m_pProfile;
+	Hashes::Guid  m_oMoreResultsGUID; // GUID of the last search, used to get more results (do)
 
 // Attributes: Capabilities
 public:
 
 	BOOL    m_bAutomatic;
-	BOOL    m_bShareaza;		// True if the remote computer is running Shareaza also
-	NrsNode m_nNodeType;		// This connection is to a hub above us, ntHub, a leaf below us, ntLeaf, or a hub just like us, ntNode
+	BOOL    m_bShareaza;       // True if the remote computer is running Shareaza also
+	NrsNode m_nNodeType;       // This connection is to a hub above us, ntHub, a leaf below us, ntLeaf, or a hub just like us, ntNode
 	BOOL    m_bQueryRouting;
 	BOOL    m_bPongCaching;
-	BOOL    m_bVendorMsg;		// True if the remote computer told us it supports vendor-specific messages
+	BOOL    m_bVendorMsg;      // True if the remote computer told us it supports vendor-specific messages
 	BOOL    m_bGGEP;
-	DWORD   m_tLastQuery;		// The time we last got a query packet, recorded as the number of seconds since 1970
+	DWORD   m_tLastQuery;      // The time we last got a query packet, recorded as the number of seconds since 1970
 	BOOL    m_bObsoleteClient;	// Is the remote client running an 'old' version of software. (An old beta, etc)
 	BOOL    m_bBadClient;		// Is the remote client running a 'bad' client- GPL rip, buggy, etc. (not banned, though)
 
@@ -139,10 +138,6 @@ protected:
 	BOOL     m_bZFlush;     // True to flush the compressed output buffer to the remote computer
 	DWORD    m_tZOutput;    // The time that Zlib last compressed something
 
-protected:
-
-	DWORD m_zEnd;
-	
 // Operations
 public:
 

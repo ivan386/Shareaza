@@ -85,7 +85,7 @@ void CBENode::Clear()
 //////////////////////////////////////////////////////////////////////
 // CBENode add a child node
 
-CBENode* CBENode::Add(const LPBYTE pKey, int nKey)
+CBENode* CBENode::Add(const LPBYTE pKey, size_t nKey)
 {
 	switch ( m_nType )
 	{
@@ -113,7 +113,7 @@ CBENode* CBENode::Add(const LPBYTE pKey, int nKey)
 		
 		if ( m_pValue != NULL )
 		{
-			CopyMemory( pList, m_pValue, 4 * (DWORD)m_nValue );
+			CopyMemory( pList, m_pValue, (DWORD)m_nValue * sizeof( CBENode* ) );
 			delete [] (CBENode**)m_pValue;
 		}
 		
@@ -126,7 +126,7 @@ CBENode* CBENode::Add(const LPBYTE pKey, int nKey)
 		
 		if ( m_pValue != NULL )
 		{
-			CopyMemory( pList, m_pValue, 8 * (DWORD)m_nValue );
+			CopyMemory( pList, m_pValue, 2 * (DWORD)m_nValue * sizeof( CBENode* ) );
 			delete [] (CBENode**)m_pValue;
 		}
 		
@@ -188,7 +188,7 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 	{
 		// check for undocumented nodes
 		char*	pszUTF8Key;
-		UINT	nUTF8Len = strlen( pszKey ) + 8;
+		size_t	nUTF8Len = strlen( pszKey ) + 8;
 
 		pszUTF8Key = new char[ nUTF8Len ];
 		strncpy( pszUTF8Key, pszKey, nUTF8Len );
@@ -275,7 +275,7 @@ CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding, BOOL* pEncoding
 //////////////////////////////////////////////////////////////////////
 // CBENode SHA1 computation
 
-void CBENode::GetSHA1(SHA1* pSHA1) const
+void CBENode::GetBth(Hashes::BtHash& oBTH) const
 {
 	ASSERT( this != NULL );
 	
@@ -285,7 +285,7 @@ void CBENode::GetSHA1(SHA1* pSHA1) const
 	CSHA pSHA;
 	pSHA.Add( pBuffer.m_pBuffer, pBuffer.m_nLength );
 	pSHA.Finish();
-	pSHA.GetHash( pSHA1 );
+	pSHA.GetHash( oBTH );
 }
 
 //////////////////////////////////////////////////////////////////////

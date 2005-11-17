@@ -55,7 +55,7 @@ protected:
 	CEvent m_pWakeup; // Fire this event when a remote computer calls our listening socket
 
 	// The list of CHandshake objects
-	CPtrList         m_pList;    // The list of pointers to CHandshake objects
+	CList< CHandshake* > m_pList;    // The list of pointers to CHandshake objects
 	CCriticalSection m_pSection; // Use to make sure only one thread accesses the list at a time
 
 public:
@@ -85,7 +85,7 @@ protected:
 	void RunStableUpdate();                 // Update the discovery services (do)
 
 	// Tell WSAAccept if we want to accept a connection from a computer that just called us
-	static int CALLBACK AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCallerData, IN OUT LPQOS lpSQOS, IN OUT LPQOS lpGQOS, IN LPWSABUF lpCalleeId, OUT LPWSABUF lpCalleeData, OUT GROUP FAR * g, IN DWORD dwCallbackData);
+	static int CALLBACK AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCallerData, IN OUT LPQOS lpSQOS, IN OUT LPQOS lpGQOS, IN LPWSABUF lpCalleeId, IN LPWSABUF lpCalleeData, OUT GROUP FAR * g, IN DWORD_PTR dwCallbackData);
 
 public:
 
@@ -100,7 +100,7 @@ public:
 	inline CHandshake* GetNext(POSITION& pos) const
 	{
 		// Returns the CHandshake object at the current position, and then moves the position iterator to the next one
-		return (CHandshake*)m_pList.GetNext( pos ); // Does two things
+		return m_pList.GetNext( pos ); // Does two things
 	}
 
 	// True if the socket is valid, false if its closed

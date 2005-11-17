@@ -63,7 +63,7 @@ public:
 
 // Attributes
 protected:
-	CPtrList		m_pItems;
+	CList< TabItem* > m_pItems;
 	TabItem*		m_pSelected;
 	TabItem*		m_pHot;
 	DWORD			m_nCookie;
@@ -71,7 +71,7 @@ protected:
 	BOOL			m_bMenuGray;
 protected:
 	CImageList		m_pImages;
-	CMapPtrToWord	m_pIcons;
+	CMap< void*, void*, int, int > m_pIcons;
 	int				m_nCloseImage;
 	CMenu			m_mnuChild;
 protected:
@@ -96,7 +96,7 @@ public:
 	//{{AFX_VIRTUAL(CWndTabBar)
 	virtual BOOL Create(CWnd* pParentWnd, DWORD dwStyle = WS_CHILD|WS_VISIBLE|CBRS_BOTTOM, UINT nID = AFX_IDW_STATUS_BAR);
 	virtual CSize CalcFixedLayout(BOOL bStretch, BOOL bHorz);
-	virtual int OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
+	virtual INT_PTR OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 	virtual void OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler);
 	virtual void DoPaint(CDC* pDC);
 	//}}AFX_VIRTUAL
@@ -108,7 +108,7 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);

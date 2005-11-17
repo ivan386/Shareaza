@@ -52,8 +52,8 @@ public:
 	DWORD			m_nFiles;
 	QWORD			m_nVolume;
 public:
-	CMapStringToOb	m_pFolders;
-	CMapStringToOb	m_pFiles;
+	CMap< CString, const CString&, CLibraryFolder*, CLibraryFolder* >	m_pFolders;
+	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* >	m_pFiles;
 	HANDLE			m_hMonitor;
 	BOOL			m_bMonitor;
 
@@ -64,12 +64,12 @@ public:
 	CLibraryFolder*	GetFolderByName(LPCTSTR pszName) const;
 	CLibraryFolder*	GetFolderByPath(LPCTSTR pszPath) const;
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
-	int				GetFolderCount() const;
+	INT_PTR			GetFolderCount() const;
 public:
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
 	CLibraryFile*	GetFile(LPCTSTR pszName) const;
-	int				GetFileCount() const;
+	INT_PTR			GetFileCount() const;
 	int				GetFileList(CLibraryList* pList, BOOL bRecursive) const;
 	int				GetSharedCount() const;
 public:

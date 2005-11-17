@@ -22,7 +22,6 @@
 #pragma once
 
 #include "DlgSkinDialog.h"
-#include "afxwin.h"
 
 class CDownload;
 
@@ -41,15 +40,21 @@ public:
 public:
 	CDownload*	m_pDownload;
 	CString m_sName;
+	CString m_sDiskName;
+	CString m_sFileSize;
 	CString m_sSHA1;
 	CString m_sTiger;
 	CString m_sED2K;
+	BOOL m_bSHA1Trusted;
+	BOOL m_bTigerTrusted;
+	BOOL m_bED2KTrusted;
 	CStatic m_wndForgetVerify;
 	CStatic m_wndForgetSources;
 	CString m_sEraseFrom;
 	CString m_sEraseTo;
 	CButton m_wndTorrent;
 	CStatic m_wndCompleteVerify;
+	CStatic m_wndMergeVerify;
 
 // Operations
 public:
@@ -65,5 +70,6 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnTorrentInfo();
 	afx_msg void OnErase();
+	afx_msg void OnMergeAndVerify();
 	virtual void OnOK();
 };

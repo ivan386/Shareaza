@@ -51,7 +51,7 @@ protected:
 	CEdit			m_wndEdit;
 	CMenu*			m_pIconMenu;
 protected:
-	CStringArray	m_pHistory;
+	CArray< CString >	m_pHistory;
 	int				m_nHistory;
 	CString			m_sCurrent;
 protected:
@@ -102,7 +102,7 @@ protected:
 	afx_msg void OnChatEmoticons();
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
 	afx_msg void OnUpdateChatTimestamp(CCmdUI* pCmdUI);

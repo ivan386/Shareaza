@@ -38,7 +38,7 @@ public:
 
 // Attributes
 protected:
-	CPtrList		m_pItems;
+	CList< CCoolBarItem* >	m_pItems;
 protected:
 	int				m_nHeight;
 	BOOL			m_bStretch;
@@ -72,7 +72,7 @@ public:
 	CCoolBarItem*	GetIndex(int nIndex) const;
 	CCoolBarItem*	GetID(UINT nID) const;
 	int				GetIndexForID(UINT nID) const;
-	int				GetCount() const;
+	INT_PTR			GetCount() const { return m_pItems.GetCount(); }
 	BOOL			LoadToolBar(UINT nIDToolBar);
 	void			Clear();
 	void			Copy(CCoolBarCtrl* pOther);
@@ -91,7 +91,7 @@ public:
 	public:
 	virtual BOOL Create(CWnd* pParentWnd, DWORD dwStyle = WS_CHILD|WS_VISIBLE|CBRS_TOP, UINT nID = AFX_IDW_TOOLBAR);
 	virtual CSize CalcFixedLayout(BOOL bStretch, BOOL bHorz);
-	virtual int OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
+	virtual INT_PTR OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 	virtual void DoPaint(CDC* pDC);
 	virtual void OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
@@ -103,7 +103,7 @@ public:
 protected:
 	//{{AFX_MSG(CCoolBarCtrl)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);

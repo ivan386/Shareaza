@@ -113,11 +113,10 @@ BOOL CFileSourcesPage::OnInitDialog()
 
 void CFileSourcesPage::AddSource(CSharedSource* pSource)
 {
-	LV_ITEM pItem;
 	CString strURL = pSource->m_sURL;
 	if ( theApp.m_bRTL ) strURL = _T("\x202A") + strURL;
 
-	ZeroMemory( &pItem, sizeof(pItem) );
+	LV_ITEM pItem = {};
 	pItem.mask		= LVIF_TEXT|LVIF_PARAM|LVIF_IMAGE;
 	pItem.pszText	= (LPTSTR)(LPCTSTR)strURL;
 	pItem.iImage	= 0;
@@ -143,9 +142,9 @@ void CFileSourcesPage::AddSource(CSharedSource* pSource)
 	m_wndList.SetItemText( pItem.iItem, 1, strDate );
 }
 
-void CFileSourcesPage::OnItemChangedFileSources(NMHDR* pNMHDR, LRESULT* pResult)
+void CFileSourcesPage::OnItemChangedFileSources(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
 	*pResult = 0;
 }

@@ -124,7 +124,7 @@ void CLibraryWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
 	}
 }
 
-void CLibraryWnd::OnTimer(UINT nIDEvent)
+void CLibraryWnd::OnTimer(UINT_PTR nIDEvent)
 {
 	DWORD tNow = GetTickCount();
 
@@ -177,15 +177,15 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 		pLibFolder = LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
 		//Force a scan of it (in case watch library folders is disabled)
 		pLibFolder =  LibraryFolders.GetFolder( Settings.Downloads.CollectionPath );
-		if( pLibFolder != NULL ) pLibFolder->Scan();
+		if ( pLibFolder != NULL ) pLibFolder->Scan();
 
 		CSingleLock oLock( &Library.m_pSection, TRUE );
 		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath, FALSE, TRUE ) )
 		{	//Collection IS already in the library
 
 			//Re-mount the collection
-			LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
-			pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+			LibraryFolders.MountCollection( pFile->m_oSHA1, &pCollection );
+			pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
 			oLock.Unlock();
 		}
 		else
@@ -206,8 +206,8 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 			{	//Collection is already in the collection folder
 
 				//Re-mount the collection
-				LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
-				pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+				LibraryFolders.MountCollection( pFile->m_oSHA1, &pCollection );
+				pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
 				oLock.Unlock();
 			}
 			else
@@ -218,7 +218,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 				{	//Collection was copied into the collection folder
 
 					//Force a scan of collection folder (in case watch library folders is disabled)
-					if( pLibFolder != NULL ) pLibFolder->Scan();
+					if ( pLibFolder != NULL ) pLibFolder->Scan();
 
 					LoadString( strFormat, IDS_LIBRARY_COLLECTION_INSTALLED );
 					strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle() );
@@ -226,13 +226,13 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 					oLock.Lock();
 					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 					{
-						pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+						pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
 					}
 					oLock.Unlock();
 				}
 				else
 				{	//Was not able to copy collection to the collection folder
-					if( GetLastError() == ERROR_FILE_EXISTS )
+					if ( GetLastError() == ERROR_FILE_EXISTS )
 					{	//File of this name already exists
 
 						//We cannot copy the collection because it's already there.
@@ -249,8 +249,8 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 						{	//Collection was already there.
 							//Re-mount the collection
-							LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
-							pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+							LibraryFolders.MountCollection( pFile->m_oSHA1, &pCollection );
+							pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
 							oLock.Unlock();
 						}
 						else

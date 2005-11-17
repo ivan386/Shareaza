@@ -32,7 +32,7 @@ class CFileExecutor
 {
 // Operations
 public:
-	static BOOL		Execute(LPCTSTR pszFile, BOOL bForce = FALSE);
+	static BOOL		Execute(LPCTSTR pszFile, BOOL bForce = FALSE, BOOL bHasThumbnail = FALSE);
 	static BOOL		Enqueue(LPCTSTR pszFiles, BOOL bForce = FALSE);
 	static BOOL		ShowBitziTicket(DWORD nFile);
 	static BOOL		DisplayURL(LPCTSTR pszURL);

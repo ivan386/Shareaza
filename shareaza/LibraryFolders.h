@@ -39,7 +39,7 @@ public:
 
 // Attributes
 protected:
-	CObList			m_pFolders;
+	CList< CLibraryFolder* > m_pFolders;
 	CAlbumFolder*	m_pAlbumRoot;
 	BOOL			m_bRemoveMask;
 
@@ -47,7 +47,7 @@ protected:
 public:
 	POSITION		GetFolderIterator() const;
 	CLibraryFolder*	GetNextFolder(POSITION& pos) const;
-	int				GetFolderCount() const;
+	INT_PTR			GetFolderCount() const { return m_pFolders.GetCount(); }
 	CLibraryFolder*	GetFolder(LPCTSTR pszPath) const;
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
 public:
@@ -63,11 +63,11 @@ public:
 	CAlbumFolder*	GetAlbumRoot();
 	BOOL			CheckAlbum(CAlbumFolder* pFolder) const;
 	CAlbumFolder*	GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszMember, LPCTSTR pszValue) const;
-	CAlbumFolder*	GetCollection(SHA1* pSHA1);
-	BOOL			MountCollection(SHA1* pSHA1, CCollectionFile* pCollection);
+    CAlbumFolder*	GetCollection(const Hashes::Sha1Hash& oSHA1);
+    BOOL			MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
 protected:
 	void			CreateAlbumTree();
-	void			OnFileDelete(CLibraryFile* pFile);
+	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 
 // Core
 protected:

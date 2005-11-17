@@ -62,12 +62,7 @@ POSITION CChatWindows::GetIterator() const
 
 CChatFrame* CChatWindows::GetNext(POSITION& pos) const
 {
-	return (CChatFrame*)m_pList.GetNext( pos );
-}
-
-int CChatWindows::GetCount() const
-{
-	return m_pList.GetCount();
+	return m_pList.GetNext( pos );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -86,7 +81,7 @@ void CChatWindows::Close()
 //////////////////////////////////////////////////////////////////////
 // CChatWindows private chat windows
 
-CPrivateChatFrame* CChatWindows::FindPrivate(GGUID* pGUID)
+CPrivateChatFrame* CChatWindows::FindPrivate(const Hashes::Guid& oGUID)
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -95,8 +90,7 @@ CPrivateChatFrame* CChatWindows::FindPrivate(GGUID* pGUID)
 		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
 		{
 			if ( pFrame->m_pSession != NULL &&
-				 pFrame->m_pSession->m_bGUID &&
-				 pFrame->m_pSession->m_pGUID == *pGUID ) return pFrame;
+				validAndEqual( pFrame->m_pSession->m_oGUID, oGUID ) ) return pFrame;
 		}
 	}
 	
@@ -178,7 +172,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pSe
 	return NULL;
 }
 
-CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, PROTOCOLID nProtocol, IN_ADDR* pServerAddress, WORD nServerPort)
+CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, PROTOCOLID nProtocol, IN_ADDR* pServerAddress, WORD nServerPort)
 {
 	SOCKADDR_IN pHost;
 	
@@ -187,7 +181,7 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WO
 	pHost.sin_port		= htons( nPort );
 
 	if ( pServerAddress == NULL )
-		return OpenPrivate( pGUID, &pHost, bMustPush, nProtocol, NULL );
+		return OpenPrivate( oGUID, &pHost, bMustPush, nProtocol, NULL );
 
 	SOCKADDR_IN pServer;
 
@@ -195,10 +189,10 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WO
 	pServer.sin_addr	= *pServerAddress;
 	pServer.sin_port	= htons( nServerPort );
 	
-	return OpenPrivate( pGUID, &pHost, bMustPush, nProtocol, &pServer );
+	return OpenPrivate( oGUID, &pHost, bMustPush, nProtocol, &pServer );
 }
 
-CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush, PROTOCOLID nProtocol, SOCKADDR_IN* pServer)
+CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush, PROTOCOLID nProtocol, SOCKADDR_IN* pServer)
 {
 	CPrivateChatFrame* pFrame = NULL;
 
@@ -241,9 +235,9 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 
 		// We need to connect to them, so either find or create an EDClient
 		if ( pServer )
-			pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, pHost->sin_port, &pServer->sin_addr, pServer->sin_port, pGUID );
+			pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, pHost->sin_port, &pServer->sin_addr, pServer->sin_port, oGUID );
 		else
-			pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, pHost->sin_port, NULL, 0, pGUID );
+			pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, pHost->sin_port, NULL, 0, oGUID );
 		// If we weren't able to create a client (Low-id and no server), then exit.
 		if ( ! pClient ) return NULL;
 		// Have it connect (if it isn't)
@@ -300,13 +294,13 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 		return pFrame;
 	}
 
-	if ( pGUID != NULL ) pFrame = FindPrivate( pGUID );
+	if ( oGUID ) pFrame = FindPrivate( oGUID );
 	if ( pFrame == NULL ) pFrame = FindPrivate( &pHost->sin_addr );
 	
 	if ( pFrame == NULL )
 	{
 		pFrame = new CPrivateChatFrame();
-		pFrame->Initiate( pGUID, pHost, bMustPush );	
+		pFrame->Initiate( oGUID, pHost, bMustPush );	
 	}
 
 	pFrame->PostMessage( WM_COMMAND, ID_CHAT_CONNECT );

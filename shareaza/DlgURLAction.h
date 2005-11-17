@@ -64,7 +64,7 @@ protected:
 
 // Attributes
 protected:
-	CPtrList	m_pURLs;
+	CList< CShareazaURL* >	m_pURLs;
 	BOOL		m_bMultiple;
 
 // Overrides

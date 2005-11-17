@@ -144,16 +144,16 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC)
 		CSize szKey			= pDC->GetTextExtent( strName + ':' );
 		CSize szValue		= pDC->GetTextExtent( strValue );
 
-		m_nHeaderWidth		= max( m_nHeaderWidth, int(szKey.cx) );
-		nValueWidth			= max( nValueWidth, int(szValue.cx) );
+		m_nHeaderWidth		= max( m_nHeaderWidth, szKey.cx );
+		nValueWidth			= max( nValueWidth, szValue.cx );
 
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 
 	if ( m_nHeaderWidth ) m_nHeaderWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, LONG(m_nHeaderWidth + nValueWidth) );
+	m_sz.cx = max( m_sz.cx, m_nHeaderWidth + nValueWidth );
 
-	m_sz.cx = max( m_sz.cx, LONG(320) );
+	m_sz.cx = max( m_sz.cx, 320 );
 }
 
 void CUploadTipCtrl::OnPaint(CDC* pDC)
@@ -269,7 +269,7 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 
 void CUploadTipCtrl::DrawProgressBar(CDC* pDC, CPoint* pPoint, CUploadFile* pFile)
 {
-	CUploadTransfer* pUpload = pFile->GetActive();
+	/*CUploadTransfer* pUpload =*/ pFile->GetActive();
 
 	CRect rcCell( pPoint->x, pPoint->y, m_sz.cx, pPoint->y + TIP_TEXTHEIGHT );
 	pPoint->y += TIP_TEXTHEIGHT;
@@ -286,7 +286,7 @@ void CUploadTipCtrl::DrawProgressBar(CDC* pDC, CPoint* pPoint, CUploadFile* pFil
 /////////////////////////////////////////////////////////////////////////////
 // CUploadTipCtrl message handlers
 
-void CUploadTipCtrl::OnTimer(UINT nIDEvent)
+void CUploadTipCtrl::OnTimer(UINT_PTR nIDEvent)
 {
 	CCoolTipCtrl::OnTimer( nIDEvent );
 

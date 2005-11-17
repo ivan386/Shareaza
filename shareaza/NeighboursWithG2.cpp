@@ -19,6 +19,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// Adds 2 methods helpful for Gnutella2 that look at the list of neighbours
+// http://wiki.shareaza.com/static/Developers.Code.CNeighboursWithG2
+
+// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -30,20 +34,22 @@
 #include "RouteCache.h"
 #include "HostCache.h"
 
+// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithG2 construction
 
+// Nothing that CNeighboursWithG2 adds to CNeighbours needs to be setup
 CNeighboursWithG2::CNeighboursWithG2()
 {
 }
 
+// Nothing that CNeighboursWithG2 adds to CNeighbours needs to be put away
 CNeighboursWithG2::~CNeighboursWithG2()
 {
 }
@@ -51,106 +57,135 @@ CNeighboursWithG2::~CNeighboursWithG2()
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithG2 connect
 
+// Set the ping route cache duration from Gnutella settings, and setup the Gnutella2 hub horizon pool
 void CNeighboursWithG2::Connect()
 {
+	// Set the ping route cache duration from the program settings for Gnutella
 	CNeighboursWithG1::Connect();
+
+	// Setup the Gnutella 2 hub horizon pool
 	HubHorizonPool.Setup();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithG2 create query web packet
 
-CG2Packet* CNeighboursWithG2::CreateQueryWeb(GGUID* pGUID, CNeighbour* pExcept)
+// Takes a GUID, and a neighbour to except from the packet we will make
+// Makes a Gnutella2 query web packet, containing the IP addresses of the computers we are connected to and from the Gnutella2 host cache
+// Returns the packet
+CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, CNeighbour* pExcept)
 {
+	// Make a new Gnutella2 Query Ack packet
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY_ACK, TRUE );
 
-	DWORD tNow = time( NULL );
-
+	// Start it with the text "TS" and the time now
+	DWORD tNow = static_cast< DWORD >( time( NULL ) ); // Number of seconds since 1970
 	pPacket->WritePacket( "TS", 4 );
 	pPacket->WriteLongBE( tNow );
 
+	// Record that we are making this packet
 	theApp.Message( MSG_DEBUG, _T("Creating a query acknowledgement:") );
 
+	// Write in header information about us
 	pPacket->WritePacket( "D", 8 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
-	pPacket->WriteShortBE( GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) );
+	pPacket->WriteShortBE( WORD( GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) ) );
 
+	// Loop through the connected computers
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
+		// Get the neighbour object at this position, and move pos to the next one
 		CG2Neighbour* pNeighbour = (CG2Neighbour*)GetNext( pos );
 
-		if (	pNeighbour->m_nProtocol == PROTOCOL_G2 &&
-				pNeighbour->m_nNodeType != ntLeaf &&
-				pNeighbour->m_nState >= nrsConnected &&
-				pNeighbour != pExcept )
+		// If this neighbour is running Gnutella2 software
+		if ( pNeighbour->m_nProtocol == PROTOCOL_G2 && // The remote computer is running Gnutella2 software, and
+			 pNeighbour->m_nNodeType != ntLeaf      && // Our connection to it is not down to a leaf, and
+			 pNeighbour->m_nState >= nrsConnected   && // We've finished the handshake with it, and
+			 pNeighbour != pExcept )                   // This isn't the computer the caller warned us to except
 		{
+			// Write information about this connected computer into the packet
 			pPacket->WritePacket( "D", 8 );
 			pPacket->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );
 			pPacket->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );
 			pPacket->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );
 
-			theApp.Message( MSG_DEBUG, _T("  Done neighbour %s"),
-				(LPCTSTR)pNeighbour->m_sAddress );
+			// Record that you wrote information about this computer into the packet
+			theApp.Message( MSG_DEBUG, _T("  Done neighbour %s"), (LPCTSTR)pNeighbour->m_sAddress );
 		}
 	}
 
-	int nCount = ( pExcept == NULL ) ? 3 : 25;
+	// If the caller didn't give us a computer to ignore, make nCount 3, if it did give us an except, make nCount 25
+	int nCount = ( pExcept == NULL ) ? 3 : 25; // Will put up to 3 or 25 IP addresses in the packet
 
+	// Loop, starting with the newest entry in the Gnutella2 host cache, then stepping to the one before that
 	for ( CHostCacheHost* pHost = HostCache.Gnutella2.GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
 	{
-		if ( pHost->CanQuote( tNow ) &&
-			 Get( &pHost->m_pAddress ) == NULL &&
-			 HubHorizonPool.Find( &pHost->m_pAddress ) == NULL )
+		// If this host cache entry is good
+		if ( pHost->CanQuote( tNow )                             && // If this host cache entry hasn't expired, and
+			 Get( &pHost->m_pAddress ) == NULL                   && // We're connected to that IP address right now, and
+			 HubHorizonPool.Find( &pHost->m_pAddress ) == NULL )    // The IP address is also in the hub horizon pool
 		{
+			// Add the IP address to the packet we're making
 			pPacket->WritePacket( "S", 10 );
 			pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
 			pPacket->WriteShortBE( pHost->m_nPort );
 			pPacket->WriteLongBE( pHost->m_tSeen );
 
-			theApp.Message( MSG_DEBUG, _T("  Try cached hub %s"),
-				(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
+			// Report that the packet will encourage the recipient to try this IP address
+			theApp.Message( MSG_DEBUG, _T("  Try cached hub %s"), (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 
+			// Lower the count, if it is then 0, leave the loop
 			if ( ! --nCount ) break;
 		}
 	}
 
+	// Give the packet we're making to our own hub horizon pool
 	HubHorizonPool.AddHorizonHubs( pPacket );
 
+	// Finish the packet with a 0 byte and the guid the caller gave us, and return it
 	pPacket->WriteByte( 0 );
-	pPacket->Write( pGUID, sizeof(GGUID) );
-
+	pPacket->Write( oGUID );
 	return pPacket;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithG2 random hub selector
 
-CG2Neighbour* CNeighboursWithG2::GetRandomHub(CG2Neighbour* pExcept, GGUID* pGUID)
+// Takes a connected computer to ignore, and a GUID (do)
+// Randomly chooses a neighbour from amongst those that are connected, running Gnutella2, hubs, and don't know about the GUID
+// Returns a pointer to that randomly selected neighbour
+CG2Neighbour* CNeighboursWithG2::GetRandomHub(CG2Neighbour* pExcept, const Hashes::Guid& oGUID)
 {
-	CPtrArray pRandom;
+	// Make a new local empty list that will hold pointers to neighbours
+	CArray< CG2Neighbour* > pRandom;
 
+	// Loop through each computer we're connected to
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CG2Neighbour* pNeighbour = (CG2Neighbour*)GetNext( pos );
+		// Get the neighbour under the current position, and move to the next one in the list
+		CNeighbour* pNeighbour = GetNext( pos );
 
-		if (	pNeighbour->m_nState == nrsConnected &&
-				pNeighbour->m_nProtocol == PROTOCOL_G2 &&
-				pNeighbour->m_nNodeType != ntLeaf &&
-				pNeighbour != pExcept )
+		// If this is a Gnutella2 hub
+		if ( pNeighbour->m_nState == nrsConnected   && // We've finished the handshake with this computer, and
+			 pNeighbour->m_nProtocol == PROTOCOL_G2 && // It's running Gnutella2 software, and
+			 pNeighbour->m_nNodeType != ntLeaf      && // Our connection to it isn't down to a leaf, and
+			 pNeighbour != pExcept )                   // It's not the one the caller told us to avoid
 		{
-			if ( pNeighbour->m_pGUIDCache->Lookup( pGUID ) == NULL )
+			// And, it doesn't know about the given GUID
+			if ( static_cast< CG2Neighbour* >( pNeighbour )->m_pGUIDCache->Lookup( oGUID ) == NULL )
 			{
-				pRandom.Add( pNeighbour );
+				// Add it to the random list
+				pRandom.Add( static_cast< CG2Neighbour* >( pNeighbour ) );
 			}
 		}
 	}
 
-	int nSize = pRandom.GetSize();
+	// If we didn't find any neighbours to put in the list, return null
+	INT_PTR nSize = pRandom.GetSize();
 	if ( ! nSize ) return NULL;
 
-	nSize = rand() % nSize;
-
-	return (CG2Neighbour*)pRandom.GetAt( nSize );
+	// Choose a random number between 0 and nSize - 1, use it as an index, and return the neighbour at it
+	nSize = rand() % nSize; // The C runtime function rand() returns a random number up to RAND_MAX, 32767
+	return pRandom.GetAt( nSize );
 }
-

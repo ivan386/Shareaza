@@ -38,7 +38,7 @@ public:
 
 // Attributes
 protected:
-	CPtrList	m_pCache;
+	CList< CPongItem* >	m_pCache;
 	DWORD		m_nTime;
 
 // Operations
@@ -46,7 +46,7 @@ public:
 	void		Clear();
 	BOOL		ClearIfOld();
 	CPongItem*	Add(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume);
-	CPongItem*	Lookup(CNeighbour* pNotFrom, BYTE nHops, CPtrList* pIgnore);
+	CPongItem*	Lookup(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem* >* pIgnore);
 public:
 	POSITION	GetIterator() const;
 	CPongItem*	GetNext(POSITION& pos) const;
@@ -72,7 +72,7 @@ public:
 
 // Operations
 public:
-	CG1Packet*		ToPacket(int nTTL = 0, GGUID* pGUID = NULL);
+	CG1Packet*		ToPacket(int nTTL, const Hashes::Guid& oGUID);
 
 };
 

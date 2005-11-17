@@ -61,7 +61,7 @@ void CGraphBase::CreateDefaults()
 //////////////////////////////////////////////////////////////////////
 // CGraphBase serialize
 
-void CGraphBase::Serialize(CArchive& ar)
+void CGraphBase::Serialize(CArchive& /*ar*/)
 {
 }
 
@@ -83,7 +83,7 @@ void CGraphBase::Clear()
 //////////////////////////////////////////////////////////////////////
 // CGraphBase paint
 
-void CGraphBase::Paint(CDC* pDC, CRect* pRect)
+void CGraphBase::Paint(CDC* /*pDC*/, CRect* /*pRect*/)
 {
 }
 

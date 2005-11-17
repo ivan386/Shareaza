@@ -53,7 +53,7 @@ BEGIN_INTERFACE_MAP(CFilePreviewDlg, CSkinDialog)
 	INTERFACE_PART(CFilePreviewDlg, IID_IDownloadPreviewSite, DownloadPreviewSite)
 END_INTERFACE_MAP()
 
-CPtrList CFilePreviewDlg::m_pWindows;
+CList< CFilePreviewDlg* > CFilePreviewDlg::m_pWindows;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -132,22 +132,22 @@ void CFilePreviewDlg::SetDownload(CDownload* pDownload)
 	if ( ! pszExt1 && pszExt2 || pszExt1 && pszExt2 && _tcsicmp( pszExt1, pszExt2 ) != 0 ) 
 		m_sTargetName += pszExt2;
 
-    if ( !m_pDownload->GetEmptyFragmentList().empty() )
-    {
-        FF::SimpleFragmentList oRanges = inverse( m_pDownload->GetEmptyFragmentList() );
+	if ( !m_pDownload->GetEmptyFragmentList().empty() )
+	{
+		Fragments::List oRanges = inverse( m_pDownload->GetEmptyFragmentList() );
 
-        for ( FF::SimpleFragmentList::ConstIterator pFragment
-            = oRanges.begin(); pFragment != oRanges.end(); ++pFragment )
-	    {
-		    m_pRanges.Add( DWORD( pFragment->begin() ) );
-		    m_pRanges.Add( DWORD( pFragment->length() ) );
-	    }
-    		
-	    if ( ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0x8000 )
-	    {
-		    while ( m_pRanges.GetSize() > 2 ) m_pRanges.RemoveAt( 2 );
-	    }
-    }
+		for ( Fragments::List::const_iterator pFragment = oRanges.begin();
+			pFragment != oRanges.end(); ++pFragment )
+		{
+			m_pRanges.Add( DWORD( pFragment->begin() ) );
+			m_pRanges.Add( DWORD( pFragment->size() ) );
+		}
+
+		if ( ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0x8000 )
+		{
+			while ( m_pRanges.GetSize() > 2 ) m_pRanges.RemoveAt( 2 );
+		}
+	}
 }
 
 BOOL CFilePreviewDlg::Create()
@@ -175,7 +175,7 @@ void CFilePreviewDlg::OnSkinChange(BOOL bSet)
 {
 	for ( POSITION pos = m_pWindows.GetHeadPosition() ; pos ; )
 	{
-		CFilePreviewDlg* pDlg = (CFilePreviewDlg*)m_pWindows.GetNext( pos );
+		CFilePreviewDlg* pDlg = m_pWindows.GetNext( pos );
 		
 		if ( bSet )
 		{
@@ -193,7 +193,7 @@ void CFilePreviewDlg::CloseAll()
 {
 	for ( POSITION pos = m_pWindows.GetHeadPosition() ; pos ; )
 	{
-		delete (CFilePreviewDlg*)m_pWindows.GetNext( pos );
+		delete m_pWindows.GetNext( pos );
 	}
 	m_pWindows.RemoveAll();
 }
@@ -244,7 +244,7 @@ void CFilePreviewDlg::OnCancel()
 	}
 }
 
-void CFilePreviewDlg::OnTimer(UINT nIDEvent) 
+void CFilePreviewDlg::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( nIDEvent == 3 )
 	{
@@ -411,7 +411,7 @@ BOOL CFilePreviewDlg::LoadPlugin(LPCTSTR pszType)
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg manual execution
 
-#define BUFFER_SIZE 40960
+const DWORD BUFFER_SIZE = 40960u;
 
 BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 {
@@ -441,7 +441,7 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 		
 		while ( nLength )
 		{
-			DWORD nChunk = min( DWORD(BUFFER_SIZE), nLength );
+			DWORD nChunk = min( BUFFER_SIZE, nLength );
 			
 			ReadFile( hFile, pData, nChunk, &nChunk, NULL );
 			
@@ -542,7 +542,7 @@ STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::GetAvailableRanges(SAFEARRAY
 {
 	METHOD_PROLOGUE( CFilePreviewDlg, DownloadPreviewSite )
 	
-	SAFEARRAYBOUND pBound[2] = { { pThis->m_pRanges.GetSize() / 2, 0 }, { 2, 0 } };
+	SAFEARRAYBOUND pBound[2] = { { static_cast< ULONG >( pThis->m_pRanges.GetSize() / 2 ), 0 }, { 2, 0 } };
 	*pArray = SafeArrayCreate( VT_I4, 2, pBound );
 	
 	DWORD* pTarget;

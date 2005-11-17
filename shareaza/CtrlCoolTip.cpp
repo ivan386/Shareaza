@@ -94,7 +94,7 @@ BOOL CCoolTipCtrl::Create(CWnd* pParentWnd, BOOL* pbEnable)
 	return TRUE;
 }
 
-void CCoolTipCtrl::Show(LPVOID pContext, HWND hAltWnd)
+void CCoolTipCtrl::Show(void* pContext, HWND hAltWnd)
 {
 	if ( pContext == NULL ) return;
 	if ( AfxGetMainWnd() != GetForegroundWindow() ) return;
@@ -263,7 +263,7 @@ void CCoolTipCtrl::CalcSizeHelper()
 
 void CCoolTipCtrl::AddSize(CDC* pDC, LPCTSTR pszText, int nBase)
 {
-	CSize szText = pDC->GetTextExtent( pszText, _tcslen( pszText ) );
+	CSize szText = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
 	szText.cx += nBase;
 	m_sz.cx = max( m_sz.cx, szText.cx );
 }
@@ -279,13 +279,13 @@ void CCoolTipCtrl::GetPaintRect(RECT* pRect)
 void CCoolTipCtrl::DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, int nBase)
 {
 	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
-	CSize sz = pDC->GetTextExtent( pszText, _tcslen( pszText ) );
+	CSize sz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
 
 	if ( nBase ) pPoint->x += nBase;
 	CRect rc( pPoint->x - 2, pPoint->y - 2, pPoint->x + sz.cx + 2, pPoint->y + sz.cy + 2 );
 
 	pDC->SetBkColor( CoolInterface.m_crTipBack );
-	pDC->ExtTextOut( pPoint->x, pPoint->y, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, pszText, _tcslen( pszText ), NULL );
+	pDC->ExtTextOut( pPoint->x, pPoint->y, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
 	pDC->ExcludeClipRect( &rc );
 
 	if ( nBase ) pPoint->x -= nBase;
@@ -366,7 +366,7 @@ void CCoolTipCtrl::OnDestroy()
 	CWnd::OnDestroy();
 }
 
-BOOL CCoolTipCtrl::OnEraseBkgnd(CDC* pDC)
+BOOL CCoolTipCtrl::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	return TRUE;
 }
@@ -393,7 +393,7 @@ void CCoolTipCtrl::OnPaint()
 	dc.SelectObject( pOldFont );
 }
 
-void CCoolTipCtrl::OnMouseMove(UINT nFlags, CPoint point)
+void CCoolTipCtrl::OnMouseMove(UINT /*nFlags*/, CPoint /*point*/)
 {
 	Hide();
 }
@@ -404,7 +404,7 @@ void CCoolTipCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CWnd::OnKeyDown( nChar, nRepCnt, nFlags );
 }
 
-void CCoolTipCtrl::OnTimer(UINT nIDEvent)
+void CCoolTipCtrl::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	CPoint point;
 	GetCursorPos( &point );
@@ -440,7 +440,7 @@ BOOL CCoolTipCtrl::OnPrepare()
 	return FALSE;
 }
 
-void CCoolTipCtrl::OnCalcSize(CDC* pDC)
+void CCoolTipCtrl::OnCalcSize(CDC* /*pDC*/)
 {
 }
 
@@ -452,6 +452,6 @@ void CCoolTipCtrl::OnHide()
 {
 }
 
-void CCoolTipCtrl::OnPaint(CDC* pDC)
+void CCoolTipCtrl::OnPaint(CDC* /*pDC*/)
 {
 }

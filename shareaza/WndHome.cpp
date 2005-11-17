@@ -108,12 +108,12 @@ void CHomeWnd::OnSize(UINT nType, int cx, int cy)
 	m_wndView.SetWindowPos( NULL, PANEL_WIDTH + 1, 0, cx - PANEL_WIDTH - 1, cy, SWP_NOZORDER|SWP_SHOWWINDOW );
 }
 
-void CHomeWnd::OnContextMenu(CWnd* pWnd, CPoint point)
+void CHomeWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	TrackPopupMenu( _T("CHomeWnd"), point );
 }
 
-void CHomeWnd::OnTimer(UINT nIDEvent)
+void CHomeWnd::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( nIDEvent == 2 || ( nIDEvent == 1 && IsActive() ) )
 	{
@@ -146,7 +146,7 @@ void CHomeWnd::OnPaint()
 	dc.LineTo( rc.right, rc.bottom + 1 );
 }
 
-void CHomeWnd::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult)
+void CHomeWnd::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
 {
 	if ( CRichElement* pElement = pNotify->pElement )
 	{

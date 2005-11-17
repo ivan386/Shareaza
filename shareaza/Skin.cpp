@@ -75,34 +75,34 @@ void CSkin::Clear()
 	for ( pos = m_pMenus.GetStartPosition() ; pos ; )
 	{
 		CMenu* pMenu;
-		m_pMenus.GetNextAssoc( pos, strName, (void*&)pMenu );
+		m_pMenus.GetNextAssoc( pos, strName, pMenu );
 		delete pMenu;
 	}
 	
 	for ( pos = m_pToolbars.GetStartPosition() ; pos ; )
 	{
 		CCoolBarCtrl* pBar;
-		m_pToolbars.GetNextAssoc( pos, strName, (void*&)pBar );
+		m_pToolbars.GetNextAssoc( pos, strName, pBar );
 		delete pBar;
 	}
 	
 	for ( pos = m_pDialogs.GetStartPosition() ; pos ; )
 	{
 		CXMLElement* pXML;
-		m_pDialogs.GetNextAssoc( pos, strName, (void*&)pXML );
+		m_pDialogs.GetNextAssoc( pos, strName, pXML );
 		delete pXML;
 	}
 	
 	for ( pos = m_pDocuments.GetStartPosition() ; pos ; )
 	{
 		CXMLElement* pXML;
-		m_pDocuments.GetNextAssoc( pos, strName, (void*&)pXML );
+		m_pDocuments.GetNextAssoc( pos, strName, pXML );
 		delete pXML;
 	}
 	
 	for ( pos = m_pSkins.GetHeadPosition() ; pos ; )
 	{
-		delete (CSkinWindow*)m_pSkins.GetNext( pos );
+		delete m_pSkins.GetNext( pos );
 	}
 	
 	for ( pos = m_pFontPaths.GetHeadPosition() ; pos ; )
@@ -407,7 +407,7 @@ CMenu* CSkin::GetMenu(LPCTSTR pszName)
 	
 	for ( int nModeTry = 0 ; pszModeSuffix[ nModeTry ] ; nModeTry++ )
 	{
-		if ( m_pMenus.Lookup( strName + pszModeSuffix[ nModeTry ], (void*&)pMenu ) )
+		if ( m_pMenus.Lookup( strName + pszModeSuffix[ nModeTry ], pMenu ) )
 			return pMenu;
 		
 		for ( UINT nItem = 0 ; nItem < m_mnuDefault.GetMenuItemCount() ; nItem++ )
@@ -444,7 +444,7 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 	
 	CMenu* pMenu = NULL;
 	
-	if ( m_pMenus.Lookup( strName, (void*&)pMenu ) )
+	if ( m_pMenus.Lookup( strName, pMenu ) )
 	{
 		delete pMenu;
 		m_pMenus.RemoveKey( strName );
@@ -504,7 +504,7 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 				return FALSE;
 			}
 			
-			AppendMenu( hMenu, MF_STRING|MF_POPUP, (UINT)hSubMenu, strText );
+			AppendMenu( hMenu, MF_STRING|MF_POPUP, (UINT_PTR)hSubMenu, strText );
 		}
 		else if ( pXML->IsNamed( _T("separator") ) )
 		{
@@ -549,7 +549,7 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 	
 	for ( int nModeTry = 0 ; pszModeSuffix[ nModeTry ] ; nModeTry++ )
 	{
-		if ( m_pToolbars.Lookup( strName + pszModeSuffix[ nModeTry ], (void*&)pBase ) ) break;
+		if ( m_pToolbars.Lookup( strName + pszModeSuffix[ nModeTry ], pBase ) ) break;
 	}
 	
 	if ( pBase != NULL )
@@ -611,7 +611,7 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 		}
 		else if ( pXML->IsNamed( _T("rightalign") ) )
 		{
-			pBar->Add( ID_RIGHTALIGN );
+			pBar->Add( UINT( ID_RIGHTALIGN ) );
 		}
 		else if ( pXML->IsNamed( _T("control") ) )
 		{
@@ -642,7 +642,7 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 	CString strName = pBase->GetAttributeValue( _T("name") );
 	
 	CCoolBarCtrl* pOld = NULL;
-	if ( m_pToolbars.Lookup( strName, (void*&)pOld ) && pOld ) delete pOld;
+	if ( m_pToolbars.Lookup( strName, pOld ) && pOld ) delete pOld;
 	
 	m_pToolbars.SetAt( strName, pBar );
 	
@@ -662,7 +662,7 @@ BOOL CSkin::LoadDocuments(CXMLElement* pBase)
 		CString strName = pDoc->GetAttributeValue( _T("name") );
 		
 		CXMLElement* pOld = NULL;
-		if ( m_pDocuments.Lookup( strName, (void*&)pOld ) ) delete pOld;
+		if ( m_pDocuments.Lookup( strName, pOld ) ) delete pOld;
 		
 		m_pDocuments.SetAt( strName, pDoc->Detach() );
 	}
@@ -674,7 +674,7 @@ CXMLElement* CSkin::GetDocument(LPCTSTR pszName)
 {
 	CXMLElement* pXML = NULL;
 
-	if ( m_pDocuments.Lookup( pszName, (void*&)pXML ) ) return pXML;
+	if ( m_pDocuments.Lookup( pszName, pXML ) ) return pXML;
 	
 	return NULL;
 }
@@ -928,7 +928,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 	}
 	
 	CXMLElement* pBase = NULL;
-	if ( ! m_pDialogs.Lookup( strName, (void*&)pBase ) ) return FALSE;
+	if ( ! m_pDialogs.Lookup( strName, pBase ) ) return FALSE;
 	
 	if ( strCaption != pBase->GetAttributeValue( _T("cookie") ) ) return FALSE;
 	
@@ -963,7 +963,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 				}
 				else
 				{
-					CStringArray pItems;
+					CArray< CString > pItems;
 					CString strTemp;
 					int nNum;
 
@@ -994,7 +994,7 @@ CString CSkin::GetDialogCaption(LPCTSTR pszName)
 	CXMLElement* pBase = NULL;
 	CString strCaption;
 	
-	if ( m_pDialogs.Lookup( pszName, (void*&)pBase ) )
+	if ( m_pDialogs.Lookup( pszName, pBase ) )
 	{
 		strCaption = pBase->GetAttributeValue( _T("caption") );
 	}
@@ -1013,7 +1013,7 @@ BOOL CSkin::LoadDialogs(CXMLElement* pBase)
 			CString strName = pXML->GetAttributeValue( _T("name") );
 			CXMLElement* pOld;
 
-			if ( m_pDialogs.Lookup( strName, (void*&)pOld ) ) delete pOld;
+			if ( m_pDialogs.Lookup( strName, pOld ) ) delete pOld;
 
 			pXML->Detach();
 			m_pDialogs.SetAt( strName, pXML );
@@ -1033,7 +1033,7 @@ CSkinWindow* CSkin::GetWindowSkin(LPCTSTR pszWindow, LPCTSTR pszAppend)
 	
 	for ( POSITION pos = m_pSkins.GetHeadPosition() ; pos ; )
 	{
-		CSkinWindow* pSkin = (CSkinWindow*)m_pSkins.GetNext( pos );
+		CSkinWindow* pSkin = m_pSkins.GetNext( pos );
 		if ( pSkin->m_sTargets.Find( strWindow ) >= 0 ) return pSkin;
 	}
 	
@@ -1417,8 +1417,8 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 		for ( int nName = 0 ; pszNames[ nName ] ; nName++ )
 		{
 			UINT nID = LookupCommandID( pXML, pszNames[ nName ] );
-			if ( nID ) CoolInterface.m_pImageMap.SetAt( (LPVOID)nID, 
-				theApp.m_bRTL ? (LPVOID)nIndexRev : (LPVOID)nIndex );
+			if ( nID ) CoolInterface.m_pImageMap.SetAt( nID, 
+				theApp.m_bRTL ? nIndexRev : nIndex );
 			if ( nName && ! nID ) break;
 		}
 		nIndexRev--;	
@@ -1545,7 +1545,6 @@ int CSkin::GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL)
 {
 	TRISTATE bTextIsRTL = TS_UNKNOWN;
 	BOOL bChangeFound   = FALSE;
-	unsigned short nLength = _tcslen( pszText );
 	LPCTSTR pszWord = pszText;
 	LPCTSTR pszScan = pszText;
 
@@ -1557,7 +1556,7 @@ int CSkin::GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL)
 
 		if ( pszWord < pszScan )
 		{
-			int nLen = pszScan - pszWord;
+			int nLen = static_cast< int >( pszScan - pszWord );
 			WORD* nCharType = new WORD[ nLen + 1 ];
 
 			TCHAR* pszTestWord = new TCHAR[ nLen + 1 ];
@@ -1617,7 +1616,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 	UINT nAlignOptionsOld = pDC->GetTextAlign(); // backup settings
 	UINT nFlags = ETO_CLIPPED | ( bExclude ? ETO_OPAQUE : 0 );
 
-	unsigned short nLenFull = _tcslen( pszText );
+	unsigned short nLenFull = static_cast< unsigned short >( _tcslen( pszText ) );
 
 	// Collect stats about the text from the start
 	BOOL bIsRTLStart, bNormalFlow;
@@ -1653,7 +1652,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 			}
 			_tcsncpy( pszSource, str.GetBuffer( nTestStart ), nTestStart );
 		}
-		nLenFull = nTestStart;
+		nLenFull = static_cast< unsigned short >( nTestStart );
 		pszText += nTestStart;
 	}
 	else 
@@ -1662,7 +1661,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 	pszWord = pszSource;
 	pszScan = pszSource;
 
-	if ( ! bNormalFlow ) 
+	if ( !bNormalFlow ) 
 	{
 		if ( bIsRTLStart != theApp.m_bRTL ) pDC->SetTextAlign( TA_RTLREADING );
 		pszScan += nLenFull - 1;
@@ -1674,7 +1673,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 
 			if ( pszWord >= pszScan )
 			{
-				int nLen = pszWord - pszScan;
+				int nLen = static_cast< int >( pszWord - pszScan );
 				CSize sz;
 				GetTextExtentPoint32( pDC->m_hAttribDC, pszScan, nLen, &sz );
 
@@ -1707,7 +1706,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 			
 			if ( pszWord <= pszScan )
 			{
-				int nLen = pszScan - pszWord + ( *pszScan ? 1 : 0 );
+				int nLen = static_cast< int >( pszScan - pszWord + ( *pszScan ? 1 : 0 ) );
 				CSize sz = pDC->GetTextExtent( pszWord, nLen );
 
 				if ( ptStart.x > pBox->left && ptStart.x + sz.cx > pBox->right )

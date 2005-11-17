@@ -59,13 +59,13 @@ public:
 class CDownloadWithExtras : public CDownloadWithSearch
 {
 // Construction
-public:
+protected:
 	CDownloadWithExtras();
 	virtual ~CDownloadWithExtras();
 	
 // Attributes
-protected:
-	CStringList				m_pPreviews;
+private:
+	CList< CString >				m_pPreviews;
 	CDownloadMonitorDlg*	m_pMonitorWnd;
 	CFilePreviewDlg*		m_pPreviewWnd;
 
@@ -79,26 +79,27 @@ public:
 	BOOL		Preview(CSingleLock* pLock = NULL);
 	BOOL		IsPreviewVisible() const;
 	BOOL		CanPreview();
+	void		ShowMonitor(CSingleLock* pLock = NULL);
 	void		AddPreviewName(LPCTSTR pszFile);
 	void		DeletePreviews();
 	BOOL		AddReview(IN_ADDR* pIP, int nUserPicture, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment);
 	BOOL		AddReview(CDownloadReview* pReview);
 	void		DeleteReviews();
 	void		DeleteReview(CDownloadReview* pReview);
-	inline int	GetReviewCount() const { return m_nReviewCount; }
-	inline CDownloadReview* GetFirstReview() const { return m_pReviewFirst; }
+	int	GetReviewCount() const { return m_nReviewCount; }
+	int			GetReviewAverage() const;
+protected:
+	virtual void Serialize(CArchive& ar, int nVersion);
+public:
+	CDownloadReview* GetFirstReview() const { return m_pReviewFirst; }
+private:
 	CDownloadReview* FindReview(IN_ADDR* pIP) const;
 	CDownloadReview* FindReview(LPCTSTR pszUserName) const;
 	CDownloadReview* FindReview(int nRating, LPCTSTR pszName, LPCTSTR pszComment) const;
-	int			GetReviewAverage() const;
 
 public:
-	void		ShowMonitor(CSingleLock* pLock = NULL);
 	BOOL		IsMonitorVisible() const;
 
-public:
-	virtual void Serialize(CArchive& ar, int nVersion);
-	
 	friend class CDownloadMonitorDlg;
 	friend class CFilePreviewDlg;
 
