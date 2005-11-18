@@ -79,11 +79,10 @@ BOOL CDownloadDlg::OnInitDialog()
 				size_t nData = GlobalSize( hData );
 				LPVOID pData = GlobalLock( hData );
 				
-				LPTSTR pszData = new TCHAR[ nData + 1 ];
-				CopyMemory( pszData, pData, nData * sizeof( TCHAR ) );
-				pszData[ nData ] = 0;
-				strClipboard = pszData;
-				delete [] pszData;
+				LPTSTR pszData = strClipboard.GetBuffer( (int)( nData + 1 ) / 2 + 1 );
+				CopyMemory( pszData, pData, nData );
+				pszData[ ( nData + 1 ) / 2 ] = 0;
+				strClipboard.ReleaseBuffer();
 				GlobalUnlock( hData );
 			}
 		}
