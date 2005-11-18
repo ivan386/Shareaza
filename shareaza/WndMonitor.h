@@ -157,5 +157,6 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnNcLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	virtual INT_PTR OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 };

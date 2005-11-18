@@ -97,10 +97,17 @@ BOOL CLibraryMetaPanel::CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList*
 		
 		if ( pFolders->m_pSelNext == NULL && pFolders->m_pVirtual != NULL )
 		{
+			// Do not display meta panel for the collection folder
 			if ( pFolders->m_pVirtual->m_oCollSHA1 &&
-				 pFolders->m_pVirtual->GetBestView().Find( _T("Collection") ) > 0 )
+				 pFolders->m_pVirtual->GetBestView().Find( _T("Collection") ) > 0 ||
+				 pFolders->m_pVirtual->m_sSchemaURI == CSchema::uriCollectionsFolder )
+			{
 				 m_bAvailable = FALSE;
-			if ( pFolders->m_pVirtual->GetFolderCount() > 0 ) m_bAvailable = FALSE;
+				 return FALSE;
+			}
+
+			INT_PTR nFileCount = pFolders->m_pVirtual->GetFileCount();
+			m_bAvailable = ( nFileCount != 0 );
 		}
 	}
 	

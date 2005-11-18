@@ -57,8 +57,9 @@ BEGIN_MESSAGE_MAP(CWizardSheet, CPropertySheet)
 	ON_WM_NCLBUTTONUP()
 	ON_WM_NCLBUTTONDBLCLK()
 	ON_WM_NCMOUSEMOVE()
-	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_SETTEXT, OnSetText)
+	ON_WM_HELPINFO()
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -418,4 +419,9 @@ void CWizardPage::StaticReplace(LPCTSTR pszSearch, LPCTSTR pszReplace)
 
 		pChild->SetWindowText( strText );
 	}
+}
+
+BOOL CWizardSheet::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
+{
+	return FALSE;
 }

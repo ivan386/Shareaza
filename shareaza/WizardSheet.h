@@ -61,7 +61,7 @@ public:
 	afx_msg void OnNcLButtonDblClk(UINT nHitTest, CPoint point);
 	afx_msg void OnNcMouseMove(UINT nHitTest, CPoint point);
 	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);
-
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 };
 
 

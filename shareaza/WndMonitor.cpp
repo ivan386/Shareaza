@@ -51,6 +51,7 @@ BEGIN_MESSAGE_MAP(CRemoteWnd, CWnd)
 	ON_WM_LBUTTONUP()
 	ON_WM_NCLBUTTONDBLCLK()
 	ON_WM_RBUTTONDOWN()
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 LPCTSTR CRemoteWnd::m_hClass = NULL;
@@ -1074,4 +1075,9 @@ void CRemoteWnd::CmdButton::Paint(CDC* pdcWindow, CRect& rcWindow, CSkinWindow* 
 	{
 		pSkin->PaintPartOnAnchor( pdcWindow, rcWindow, m_sName + _T(".Up"), m_sName );
 	}
+}
+
+BOOL CRemoteWnd::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
+{
+	return FALSE;
 }

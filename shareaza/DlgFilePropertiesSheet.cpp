@@ -53,6 +53,7 @@ BEGIN_MESSAGE_MAP(CFilePropertiesSheet, CPropertySheet)
 	ON_WM_SIZE()
 	ON_WM_ERASEBKGND()
 	ON_WM_CTLCOLOR()
+	ON_WM_HELPINFO()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -293,4 +294,9 @@ HBRUSH CFilePropertiesSheet::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	// if ( m_brDialog.m_hObject ) return m_brDialog;
 	return CPropertySheet::OnCtlColor( pDC, pWnd, nCtlColor );
+}
+
+BOOL CFilePropertiesSheet::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
+{
+	return FALSE;
 }

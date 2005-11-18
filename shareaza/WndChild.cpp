@@ -53,8 +53,9 @@ BEGIN_MESSAGE_MAP(CChildWnd, CMDIChildWnd)
 	ON_WM_NCLBUTTONUP()
 	ON_WM_NCMOUSEMOVE()
 	ON_WM_NCLBUTTONDBLCLK()
-	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_SETTEXT, OnSetText)
+	ON_WM_HELPINFO()
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 CChildWnd* CChildWnd::m_pCmdMsg = NULL;
@@ -526,6 +527,11 @@ HRESULT CChildWnd::GetGenericView(IGenericView** ppView)
 }
 
 BOOL CChildWnd::OnDropFiles(CList< CString >& /*pFiles*/, const CPoint& /*ptScreen*/, BOOL /*bDrop*/)
+{
+	return FALSE;
+}
+
+BOOL CChildWnd::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
 {
 	return FALSE;
 }

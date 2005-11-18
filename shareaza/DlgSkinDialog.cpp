@@ -50,6 +50,7 @@ BEGIN_MESSAGE_MAP(CSkinDialog, CDialog)
 	ON_WM_CTLCOLOR()
 	ON_WM_WINDOWPOSCHANGING()
 	ON_WM_CREATE()
+	ON_WM_HELPINFO()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -328,4 +329,9 @@ BOOL CSkinDialog::OnInitDialog()
 		}
 	}
 	return TRUE; 
+}
+
+BOOL CSkinDialog::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
+{
+	return FALSE;
 }
