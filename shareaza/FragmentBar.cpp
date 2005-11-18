@@ -206,6 +206,11 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 
 		switch( pSource->m_pTransfer->m_nProtocol )
 		{
+		case PROTOCOL_G1:
+		case PROTOCOL_G2:
+		case PROTOCOL_HTTP:
+			// Do nothing more
+			break;
 		case PROTOCOL_ED2K:
 			for ( Fragments::Queue::const_iterator pRequested
 				= static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer )->m_oRequested.begin();
@@ -227,8 +232,8 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 				DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
 					pRequested->begin(), pRequested->size(), RGB( 255, 255, 0 ), TRUE );
 			}
-		default:
-			ASSERT( 0 );
+		default: 
+			ASSERT ( 0 );
 		}
 	}
 
