@@ -1,8 +1,8 @@
 //
 // CoreUtils.cpp
 //
-//	Date:			"$Date: 2005/10/29 03:54:57 $"
-//	Revision:		"$Revision: 1.4 $"
+//	Date:			"$Date: 2005/11/18 20:10:33 $"
+//	Revision:		"$Revision: 1.5 $"
 //  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
@@ -829,7 +829,7 @@ STDAPI_(UINT) CompareStrings(LPCWSTR pwsz1, LPCWSTR pwsz2)
 //
 STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *pcPathIdx)
 {
-    DWORD dwRet;
+    DWORD dwRet = 0;
 
 	if ( v_fRunningOnNT )  // Windows NT/2000/XP
 	{

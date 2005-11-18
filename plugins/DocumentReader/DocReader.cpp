@@ -1,8 +1,8 @@
 //
 // DocReader.cpp
 //
-//	Date:			"$Date: 2005/10/31 16:46:04 $"
-//	Revision:		"$Revision: 1.8 $"
+//	Date:			"$Date: 2005/11/18 20:10:33 $"
+//	Revision:		"$Revision: 1.9 $"
 //  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
@@ -78,7 +78,7 @@ STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 	EnterCritical();
 	DllAddRef();
 
-	HRESULT hr;
+	HRESULT hr = E_FAIL;
 	LPCWSTR pszExt = wcslwr( wcsrchr( sFile, '.') );
 	LPCWSTR pszSchema = GetSchema( sFile, pszExt );
 	LPCWSTR pszFormat = GetDocumentFormat( pszExt );
@@ -578,7 +578,8 @@ STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 {
 	ODS("CDocReader::GetMSThumbnail\n");
 	VARIANT va;
-	LONG nWidth, nHeight;
+	LONG nWidth = 0;
+	LONG nHeight = 0;
 	LPBYTE pData;
 
 	HRESULT hr = m_pDocProps->Open( bsFile, VARIANT_TRUE, dsoOptionOpenReadOnlyIfNoWriteAccess );
@@ -603,9 +604,9 @@ STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 	BYTE* pclp = NULL;
 	LONG nSize = 0;
 	PICTDESC pds;
-	HBITMAP hBitmap;
+	HBITMAP hBitmap = NULL;
 	RGBQUAD pPalette[256];
-	BITMAPINFO* pBI;
+	BITMAPINFO* pBI = NULL;
 
 	hr = SafeArrayGetUBound( va.parray, 1, &nSize );
 	hr = SafeArrayAccessData( va.parray, (void**)&pclp );
@@ -1034,7 +1035,7 @@ HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, WORD wB
 
 	SaveDC( tempDC );
 
-	int nPrevMode = SetMapMode( tempDC, MM_ANISOTROPIC );
+	SetMapMode( tempDC, MM_ANISOTROPIC );
 	SetWindowOrgEx( tempDC, 0, 0, NULL );
 	SetWindowExtEx( tempDC, nWidth, nHeight, NULL );
 	SetViewportExtEx( tempDC, nDotsWidth, nDotsHeight, NULL );
@@ -1133,7 +1134,7 @@ HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, WORD
 
 	SaveDC( tempDC );
 
-	int nPrevMode = SetMapMode( tempDC, MM_ANISOTROPIC );
+	SetMapMode( tempDC, MM_ANISOTROPIC );
 	SetWindowOrgEx( tempDC, 0, 0, NULL );
 	SetWindowExtEx( tempDC, nWidth, nHeight, NULL );
 	SetViewportExtEx( tempDC, nDotsWidth, nDotsHeight, NULL );
@@ -1482,7 +1483,7 @@ HRESULT CDocReader::
 HRESULT CDocReader::
 	CDocumentProperties::get_SummaryProperties(CSummaryProperties** ppSummaryProperties)
 {
-    HRESULT hr;
+    HRESULT hr = E_FAIL;
 
  	ODS("CDocReader::CDocumentProperties::get_SummaryProperties\n");
     CHECK_NULL_RETURN(ppSummaryProperties,  E_POINTER);
