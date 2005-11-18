@@ -538,14 +538,6 @@ void CBTClient::DetermineUserAgent()
 			// If we don't want the version, etc.
 			m_sUserAgent.Format( _T("BitTorrent (%c%c)"), m_oGUID[1], m_oGUID[2] );
 		}
-		else
-		{
-			// Add the version to the name
-			strVer.Format( _T(" %i.%i.%i.%i"),
-				( m_oGUID[3] - '0' ), ( m_oGUID[4] - '0' ),
-				( m_oGUID[5] - '0' ), ( m_oGUID[6] - '0' ) );
-			m_sUserAgent += strVer;
-		}
 	}
 	else if ( m_oGUID[4] == '-' && m_oGUID[5] == '-' && m_oGUID[6] == '-' && m_oGUID[7] == '-' )
 	{	// Shadow style
