@@ -404,7 +404,8 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 			// Load the error message string
 			CString strErrorMessage;
 			LoadString( strErrorMessage, IDS_BT_TRACKER_MULTI );
-			m_sTorrentTrackerError.Format( strErrorMessage, m_nTorrentTrackerErrors, Settings.BitTorrent.MaxTrackerRetry );
+			m_sTorrentTrackerError.Format( strErrorMessage, m_pTorrent.m_nTrackerIndex + 1, m_pTorrent.m_pTrackerList.GetCount() );
+			theApp.Message( MSG_ERROR, m_sTorrentTrackerError );
 		}
 	}
 }
