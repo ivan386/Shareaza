@@ -491,8 +491,6 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	m_sCreatedBy = pRoot->GetStringFromSubNode( "created by", m_nEncoding, &m_bEncodingError );
 
 	// Get announce-list (if present)	
-	// ******************************************************************
-	// Note: This isn't supported yet! (This section does nothing but read data.)
 	CBENode* pAnnounceList = pRoot->GetNode( "announce-list" );
 	if ( ( pAnnounceList ) && ( pAnnounceList->IsType( CBENode::beList ) ) )
 	{
@@ -523,7 +521,6 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 
 				if ( ! pTrackers.IsEmpty() )
 				{
-					m_nTrackerType = tMultiFinding;
 					// Randomise the tracker order in this tier
 					if ( pTrackers.GetCount() > 1 )
 					{
@@ -547,13 +544,19 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 					// Store the trackers
 					for ( POSITION pos = pTrackers.GetHeadPosition() ; pos ; )
 					{
+						// Create the tracker and add it to the list
 						CBTTracker* pTracker	= new CBTTracker;
 						pTracker->m_sAddress	= pTrackers.GetNext( pos );
 						pTracker->m_nTier		= nTier;
-
 						m_pTrackerList.Add( pTracker );
-
-						m_sTracker = pTracker->m_sAddress; // In case of malformed torrent.
+	
+						if ( m_nTrackerType == tNull )
+						{
+							// Set the torrent to be a multi-tracker torrent
+							m_nTrackerType = tMultiFinding;
+							m_sTracker = pTracker->m_sAddress;
+							m_nTrackerIndex = 0;
+						}
 					}
 					// Delete temporary storage
 					pTrackers.RemoveAll();
@@ -561,7 +564,6 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			}
 		}
 	}
-	//******************************************************************
 
 	// Get announce
 	CBENode* pAnnounce = pRoot->GetNode( "announce" );
@@ -573,9 +575,13 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		// Store it if it's valid. (Some torrents have invalid trackers)
 		if ( strTracker.Find( _T("http") ) == 0 ) 
 		{
-			//
-			if ( m_nTrackerType == tNull ) m_nTrackerType = tSingle;
-			m_sTracker = strTracker;
+			if ( m_nTrackerType == tNull ) 
+			{
+				// Set the torrent to be a single-tracker torrent
+				m_nTrackerType = tSingle;
+				m_sTracker = strTracker;
+				m_nTrackerIndex = -1;
+			}
 			// Create the announce tracker object
 			m_pAnnounceTracker = new CBTTracker;
 			m_pAnnounceTracker->m_sAddress = strTracker;
@@ -885,6 +891,154 @@ BOOL CBTInfo::FinishBlockTest(DWORD nBlock)
 	m_pTestSHA1.GetHash( oBTH );
 	
 	return m_pBlockBTH[ nBlock ] == oBTH;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CBTInfo tracker handling
+
+void CBTInfo::SetTrackerAccess(DWORD tNow)
+{
+	if ( m_nTrackerType == tNull )
+	{
+		// Shouldn't happen
+		ASSERT ( 0 );
+	}
+	else if ( m_nTrackerType == tCustom )
+	{
+		// Can't do anything with user-entered trackers
+	}
+	else if ( m_nTrackerType == tSingle )
+	{
+		ASSERT ( m_pAnnounceTracker );
+
+		m_pAnnounceTracker->m_tLastAccess = tNow;
+	}
+	else
+	{
+		ASSERT ( IsMultiTracker() );
+
+		CBTTracker* pTracker;
+
+		pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+		ASSERT ( pTracker );
+
+		pTracker->m_tLastAccess = tNow;
+	}
+
+	return;
+}
+
+void CBTInfo::SetTrackerSucceeded(DWORD tNow)
+{
+	if ( m_nTrackerType == tNull )
+	{
+		// Shouldn't happen
+		ASSERT ( 0 );
+	}
+	else if ( m_nTrackerType == tCustom )
+	{
+		// Can't do anything with user-entered trackers
+	}
+	else if ( m_nTrackerType == tSingle )
+	{
+		ASSERT ( m_pAnnounceTracker );
+
+		m_pAnnounceTracker->m_tLastSuccess = tNow;
+	}
+	else
+	{
+		ASSERT ( IsMultiTracker() );
+
+		CBTTracker* pTracker;
+
+		pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+		ASSERT ( pTracker );
+
+		pTracker->m_tLastSuccess = tNow;
+	}
+
+	return;
+}
+
+void CBTInfo::SetTrackerFailed(DWORD tNow)
+{
+	if ( m_nTrackerType == tNull )
+	{
+		// Shouldn't happen
+		ASSERT ( 0 );
+	}
+	else if ( m_nTrackerType == tCustom )
+	{
+		// Can't do anything with user-entered trackers
+	}
+	else if ( m_nTrackerType == tSingle )
+	{
+		ASSERT ( m_pAnnounceTracker );
+
+		m_pAnnounceTracker->m_tLastFail = tNow;
+		m_pAnnounceTracker->m_nFailures ++;
+	}
+	else
+	{
+		ASSERT ( IsMultiTracker() );
+
+		CBTTracker* pTracker;
+
+		pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+		ASSERT ( pTracker );
+
+		pTracker->m_nFailures++;
+		pTracker->m_tLastFail = tNow;
+	}
+
+	return;
+}
+
+void CBTInfo::SetTrackerNext()
+{
+	// Make sure this is a multitracker torrent
+	if ( ! IsMultiTracker() ) return;
+
+	// Set us as searching for a new one
+	m_nTrackerType = tMultiFinding;
+
+	// Get the next tracker to try
+	CBTTracker* pTracker;
+	m_nTrackerIndex ++;
+
+	if ( m_nTrackerIndex >= m_pTrackerList.GetCount() )
+		m_nTrackerIndex = 0;
+
+	pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+	ASSERT ( pTracker );
+
+	// Set the tracker address as the one we are using
+	m_sTracker = pTracker->m_sAddress;
+
+	return;
+}
+
+DWORD CBTInfo::GetTrackerFailures()
+{
+	if ( m_nTrackerType == tNull )
+		return 0;
+	else if ( m_nTrackerType == tCustom )
+		return 0;
+	else if ( m_nTrackerType == tSingle )
+	{
+		ASSERT ( m_pAnnounceTracker );
+		return m_pAnnounceTracker->m_nFailures;
+	}
+	else
+	{
+		ASSERT ( IsMultiTracker() );
+		CBTTracker* pTracker;
+		pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+		ASSERT ( pTracker );
+
+		return pTracker->m_nFailures;
+
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -125,6 +125,12 @@ public:
 	void		BeginBlockTest();
 	void		AddToTest(LPCVOID pInput, DWORD nLength);
 	BOOL		FinishBlockTest(DWORD nBlock);
+public:
+	void		SetTrackerAccess(DWORD tNow);
+	void		SetTrackerSucceeded(DWORD tNow);
+	void		SetTrackerFailed(DWORD tNow);
+	void		SetTrackerNext();
+	DWORD		GetTrackerFailures();
 protected:
 	BOOL		CheckFiles();
 
