@@ -45,7 +45,7 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				Outputs="$(OutDir)\regsvr32.trg"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib zlibwapi.lib libcmt.lib"
+				AdditionalDependencies="unicows.lib zlibwapi.lib libcmt.lib"
 				OutputFile=".\ReleaseMinSize\SkinScanSKS.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -53,6 +53,7 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				ModuleDefinitionFile=".\SkinScanSKS.def"
 				ProgramDatabaseFile=".\ReleaseMinSize\SkinScanSKS.pdb"
 				SubSystem="2"
+				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				ImportLibrary=".\ReleaseMinSize\SkinScanSKS.lib"
@@ -127,6 +128,7 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug\SkinScanSKS.pdb"
 				SubSystem="2"
+				OptimizeForWindows98="0"
 				ImportLibrary=".\Debug\SkinScanSKS.lib"
 				TargetMachine="1"/>
 			<Tool
@@ -194,7 +196,7 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				Outputs="$(OutDir)\regsvr32.trg"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib zlibwapi.lib libcmt.lib"
+				AdditionalDependencies="Unicows.lib zlibwapi.lib libcmt.lib"
 				OutputFile=".\ReleaseMinDependency\SkinScanSKS.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -202,6 +204,7 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				ModuleDefinitionFile=".\SkinScanSKS.def"
 				ProgramDatabaseFile=".\ReleaseMinDependency\SkinScanSKS.pdb"
 				SubSystem="2"
+				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				ImportLibrary=".\ReleaseMinDependency\SkinScanSKS.lib"
