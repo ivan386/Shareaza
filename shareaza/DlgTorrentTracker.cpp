@@ -197,22 +197,22 @@ void CTorrentTrackerDlg::OnOK()
 {
 	UpdateData();
 	
-	//Check if tracker has been changed
-	if ( m_pInfo.m_sTracker != m_sTracker )
+	// Check if tracker has been changed, and the new value could be valid
+	if ( ( m_pInfo.m_sTracker != m_sTracker ) && ( m_sTracker.Find( _T("http") ) == 0 ) )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_BT_TRACK_CHANGE );
 		
-		//Display warning
+		// Display warning
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
 			m_pInfo.m_sTracker = m_sTracker;
-// ???????????????????????
+			m_pInfo.m_nTrackerType = tCustom;
 			m_pInfo.m_oInfoBTH.validate();
 		}
 	}
 
-	//Update the starting of torrent transfers
+	// Update the starting of torrent transfers
 	*m_pStartTorrentDownloads = m_wndStartDownloads.GetCurSel();
 	
 	CSkinDialog::OnOK();

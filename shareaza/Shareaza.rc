@@ -5303,6 +5303,7 @@ BEGIN
     IDS_BT_SEED_VERIFY_FAIL "An error was detected in the file ""%s""."
     IDS_BT_TRACKER_RETRY    "Tracker did not respond- Retrying announce (%i of %i)"
     IDS_BT_TRACKER_DOWN     "Unable to communicate with tracker"
+    IDS_BT_TRACKER_MULTI    "Tracker failed- Trying next tracker (%i of %i)"
 END
 
 STRINGTABLE 

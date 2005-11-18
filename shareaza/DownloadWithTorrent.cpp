@@ -314,30 +314,46 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 {
 	if ( bSuccess )
 	{
-		// Success! Reset and error conditions and continue
+		// Success! Reset and error conditions
 		m_bTorrentTrackerError = FALSE;
 		m_sTorrentTrackerError.Empty();
 		m_nTorrentTrackerErrors = 0;
+
+		// Lock on this tracker if we were searching for one
+		if ( m_pTorrent.m_nTrackerType == tMultiFinding ) 
+			m_pTorrent.m_nTrackerType = tMultiFound;
 	}
 	else
 	{
-		// There was a problem with the tracker
+		DWORD tNow = GetTickCount();
 
+		// There was a problem with the tracker
 		m_bTorrentTrackerError = TRUE;
 		m_sTorrentTrackerError.Empty();
 		m_nTorrentTrackerErrors ++;
 		
+		
+		if ( m_pTorrent.m_nTrackerType == tMultiFinding )
+		{
+			// We're still finding a tracker
+		}
 		if ( pszReason != NULL )
 		{
-			// If the tracker responded with an error, accept it and continue
-			m_sTorrentTrackerError = pszReason;
-			m_tTorrentTracker = GetTickCount() + 60 * 60 * 1000;
+			// If the tracker responded with an error, don't bother retrying
+			if ( m_pTorrent.m_nTrackerType == tMultiFound )
+			{
+				// Start looking for another tracker
+				m_pTorrent.m_nTrackerType = tMultiFinding;
+			}
+			else
+			{
+				// Display reason, and back off for an hour
+				m_sTorrentTrackerError = pszReason;
+				m_tTorrentTracker = tNow + 60 * 60 * 1000;
+			}
 		}
-		else if ( m_bTorrentTrackerError )
+		else
 		{
-			// ToDo: Multitracker: switch trackers here
-
-
 			// If we couldn't contact the tracker, check if we should re-try
 			if ( m_nTorrentTrackerErrors <= Settings.BitTorrent.MaxTrackerRetry )
 			{
@@ -351,7 +367,7 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 					tRetryTime = m_nTorrentTrackerErrors * 2 * 60 * 1000;	// nErrors * 2 minutes
 				else
 					tRetryTime = 30 * 60 * 1000;							// 30 minutes
-				m_tTorrentTracker = GetTickCount() + tRetryTime;
+				m_tTorrentTracker = tNow + tRetryTime;
 
 				// Load the error message string
 				CString strErrorMessage;
@@ -361,9 +377,34 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 			else
 			{
 				// This tracker is probably down. Don't hammer it.
-				m_tTorrentTracker = GetTickCount() + 30 * 60 * 1000;
-				LoadString( m_sTorrentTrackerError, IDS_BT_TRACKER_DOWN );
+				if ( m_pTorrent.m_nTrackerType == tMultiFound )
+				{
+					// Start looking for another tracker if we can
+					m_pTorrent.m_nTrackerType = tMultiFinding;
+				}
+				else
+				{
+					// Otherwise, back off for an hour
+					m_tTorrentTracker = tNow + 60 * 60 * 1000;
+					LoadString( m_sTorrentTrackerError, IDS_BT_TRACKER_DOWN );
+				}
 			}
+		}
+
+		if ( m_pTorrent.m_nTrackerType == tMultiFinding )
+		{
+			ASSERT ( m_pTorrent.IsMultiTracker() );
+
+			// This is a multitracker torrent and we're finding, then try the next one.
+			m_pTorrent.SetTrackerFailed(tNow);
+			m_pTorrent.SetTrackerNext();
+
+			m_tTorrentTracker = ( tNow + ( m_pTorrent.GetTrackerFailures() * 2 * 1000 ) ) + 2000;
+			
+			// Load the error message string
+			CString strErrorMessage;
+			LoadString( strErrorMessage, IDS_BT_TRACKER_MULTI );
+			m_sTorrentTrackerError.Format( strErrorMessage, m_nTorrentTrackerErrors, Settings.BitTorrent.MaxTrackerRetry );
 		}
 	}
 }
