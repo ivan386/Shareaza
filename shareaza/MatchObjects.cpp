@@ -1,8 +1,8 @@
 //
 // MatchObjects.cpp
 //
-//	Date:			"$Date: 2005/11/18 22:49:10 $"
-//	Revision:		"$Revision: 1.22 $"
+//	Date:			"$Date: 2005/11/18 22:52:33 $"
+//	Revision:		"$Revision: 1.23 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -362,7 +362,8 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 					m_nED2KHits -= nHadFiltered;
 					break;
 				default:
-//					ASSERT( 0 );
+//					ASSERT( 0 )
+					;
 				}
 			}
 		}
@@ -437,7 +438,8 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 				m_nED2KHits += pFile->m_nFiltered;
 				break;
 			default:
-//				ASSERT( 0 );
+//				ASSERT( 0 )
+				;
 			}
 
 		}

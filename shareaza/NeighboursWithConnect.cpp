@@ -142,7 +142,8 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 			CloseDonkeys();
 			break;
 		default:
-//			ASSERT( 0 );
+//			ASSERT( 0 )
+			;
 		}
 	}
 

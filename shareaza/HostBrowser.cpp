@@ -474,7 +474,8 @@ BOOL CHostBrowser::OnHeadersComplete()
 			(LPCTSTR)m_sAddress, _T("Gnutella-2") );
 		break;
 	default:
-//		ASSERT( 0 );
+//		ASSERT( 0 )
+		;
 	}
 
 	return TRUE;
@@ -531,7 +532,8 @@ BOOL CHostBrowser::ReadContent()
 		if ( ! StreamPacketsG2() ) return FALSE;
 		break;
 	default:
-//		ASSERT( 0 );
+//		ASSERT( 0 )
+		;
 	}
 
 	if ( m_nReceived < m_nLength ) return TRUE;

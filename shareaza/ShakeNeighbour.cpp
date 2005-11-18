@@ -291,7 +291,8 @@ BOOL CShakeNeighbour::OnRun()
 
 		break;
 	default:
-//		ASSERT( 0 );
+//		ASSERT( 0 )
+		;
 	}
 
 	// Have CConnection::DoRun keep talking to this remote computer

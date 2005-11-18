@@ -233,7 +233,8 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 					pRequested->begin(), pRequested->size(), RGB( 255, 255, 0 ), TRUE );
 			}
 		default: 
-			ASSERT ( 0 );
+//			ASSERT ( 0 )
+			;
 		}
 	}
 
