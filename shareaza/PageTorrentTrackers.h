@@ -46,6 +46,8 @@ public:
 	CButton			m_wndRefresh;
 	CEdit			m_wndComplete;
 	CEdit			m_wndIncomplete;
+
+	CListCtrl		m_wndTrackers;
 	//}}AFX_DATA
 
 // Attributes

@@ -27,6 +27,7 @@
 #include "BTInfo.h"
 #include "BENode.h"
 #include "PageTorrentTrackers.h"
+#include "CoolInterface.h"
 
 
 #ifdef _DEBUG
@@ -69,6 +70,7 @@ void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Text(pDX, IDC_TORRENT_TRACKER, m_sTracker);
 	DDX_Control(pDX, IDC_TORRENT_REFRESH, m_wndRefresh);
+	DDX_Control(pDX, IDC_TORRENT_TRACKERS, m_wndTrackers);
 	//}}AFX_DATA_MAP
 }
 
@@ -77,11 +79,56 @@ void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CTorrentTrackersPage::OnInitDialog()
 {
-	CBTInfo *pInfo = GetTorrentInfo();
 	CTorrentInfoPage::OnInitDialog();
-
+	CBTInfo *pInfo = GetTorrentInfo();
+	
 	m_sName			= pInfo->m_sName;
 	m_sTracker		= pInfo->m_sTracker;
+
+	CRect rc;
+	m_wndTrackers.GetClientRect( &rc );
+	rc.right -= GetSystemMetrics( SM_CXVSCROLL );
+	m_wndTrackers.SetImageList( &CoolInterface.m_pImages, LVSIL_SMALL );
+	m_wndTrackers.InsertColumn( 0, _T("Tracker"), LVCFMT_LEFT, rc.right - 80, -1 );
+	m_wndTrackers.InsertColumn( 1, _T("Type"), LVCFMT_RIGHT, 80, 0 );
+
+	int nTracker = 0;
+	for ( nTracker = 0 ; nTracker < pInfo->m_pTrackerList.GetCount() ; nTracker++ )
+	{
+		CBTInfo::CBTTracker* pTrack = pInfo->m_pTrackerList.GetAt(nTracker);
+		
+		LV_ITEM pItem = {};
+		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
+		pItem.iItem		= m_wndTrackers.GetItemCount();
+		pItem.lParam	= (LPARAM)nTracker;
+
+		if ( pInfo->m_nTrackerIndex == nTracker )
+			pItem.iImage = CoolInterface.ImageForID( ID_MEDIA_SELECT );
+		else
+			pItem.iImage = CoolInterface.ImageForID( ID_DOWNLOADS_COPY );
+
+		pItem.pszText	= (LPTSTR)(LPCTSTR)pTrack->m_sAddress;
+		pItem.iItem		= m_wndTrackers.InsertItem( &pItem );
+
+		CString sType;
+		sType.Format(_T("Tier: %i"), pTrack->m_nTier );
+		m_wndTrackers.SetItemText( pItem.iItem, 1, sType );
+	}
+
+	if ( pInfo->m_pAnnounceTracker )
+	{
+		nTracker ++;
+
+		LV_ITEM pItem = {};
+		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
+		pItem.iItem		= m_wndTrackers.GetItemCount();
+		pItem.lParam	= (LPARAM)nTracker;
+		pItem.iImage = CoolInterface.ImageForID( ID_TOOLS_LANGUAGE );
+		pItem.pszText	= (LPTSTR)(LPCTSTR)pInfo->m_pAnnounceTracker->m_sAddress;
+		pItem.iItem		= m_wndTrackers.InsertItem( &pItem );
+		
+		m_wndTrackers.SetItemText( pItem.iItem, 1, _T("Announce") );
+	}
 	
 	UpdateData( FALSE );
 	m_hThread = NULL;

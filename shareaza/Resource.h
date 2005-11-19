@@ -619,7 +619,7 @@
 #define IDC_TORRENT_COMMENTS            1343
 #define IDC_TORRENT_CREATEDBY           1344
 #define IDC_TORRENT_CREATIONDATE        1345
-#define IDC_TORRENT_NAME2               1345
+#define IDC_TORRENT_TRACKERS            1345
 #define IDC_RATE_COMMENTS               1346
 #define IDC_MESSAGE_AVAILABLE           1347
 #define IDC_MESSAGE_DELETED             1348
