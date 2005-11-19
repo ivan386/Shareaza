@@ -610,6 +610,7 @@
 #define IDC_ICON_LIST                   1334
 #define IDC_TORRENT_NAME                1335
 #define IDC_TORRENT_TRACKER             1336
+#define IDC_TORRENT_UPLOADTOTAL         1336
 #define IDC_TORRENT_FILES               1337
 #define IDC_TORRENT_COMPLETED           1338
 #define IDC_TORRENT_INCOMPLETE          1339

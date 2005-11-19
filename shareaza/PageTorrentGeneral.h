@@ -44,6 +44,7 @@ public:
 	CString			m_sCreatedBy;
 	CString			m_sCreationDate;
 	CComboBox		m_wndStartDownloads;
+	CString			m_sUploadTotal;
 	//}}AFX_DATA
 
 // Overrides

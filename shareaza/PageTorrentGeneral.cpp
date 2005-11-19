@@ -69,6 +69,7 @@ void CTorrentGeneralPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_TORRENT_CREATEDBY, m_sCreatedBy );
 	DDX_Text(pDX, IDC_TORRENT_CREATIONDATE, m_sCreationDate );
 	DDX_Control(pDX, IDC_TORRENT_STARTDOWNLOADS, m_wndStartDownloads);
+	DDX_Text(pDX, IDC_TORRENT_UPLOADTOTAL, m_sUploadTotal );
 	//}}AFX_DATA_MAP
 }
 
@@ -94,6 +95,8 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 	m_wndStartDownloads.SetItemData( 2, dtNever );
 
 	m_wndStartDownloads.SetCurSel( pInfo->m_nStartDownloads );
+
+	m_sUploadTotal.Format( _T(" %s"), (LPCTSTR)Settings.SmartVolume( pInfo->m_nTotalUpload, FALSE ) );
 
 	UpdateData( FALSE );
 	
