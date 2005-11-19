@@ -1239,6 +1239,12 @@
 					RelativePath="..\shareaza\DlgSplash.cpp">
 				</File>
 				<File
+					RelativePath="..\shareaza\DlgTorrentInfoPage.cpp">
+				</File>
+				<File
+					RelativePath="..\shareaza\DlgTorrentInfoSheet.cpp">
+				</File>
+				<File
 					RelativePath="..\shareaza\DlgTorrentSeed.cpp">
 				</File>
 				<File
@@ -1572,6 +1578,15 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\PageSettingsWeb.cpp">
+				</File>
+				<File
+					RelativePath="..\shareaza\PageTorrentFiles.cpp">
+				</File>
+				<File
+					RelativePath="..\shareaza\PageTorrentGeneral.cpp">
+				</File>
+				<File
+					RelativePath="..\shareaza\PageTorrentTrackers.cpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -2497,6 +2512,12 @@
 					RelativePath="..\shareaza\DlgSplash.h">
 				</File>
 				<File
+					RelativePath="..\shareaza\DlgTorrentInfoPage.h">
+				</File>
+				<File
+					RelativePath="..\shareaza\DlgTorrentInfoSheet.h">
+				</File>
+				<File
 					RelativePath="..\shareaza\DlgTorrentSeed.h">
 				</File>
 				<File
@@ -2706,6 +2727,15 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\PageSettingsWeb.h">
+				</File>
+				<File
+					RelativePath="..\shareaza\PageTorrentFiles.h">
+				</File>
+				<File
+					RelativePath="..\shareaza\PageTorrentGeneral.h">
+				</File>
+				<File
+					RelativePath="..\shareaza\PageTorrentTrackers.h">
 				</File>
 			</Filter>
 			<Filter
@@ -3053,6 +3083,22 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\debug\shareaza\Shareaza_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4668;4820"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\release\shareaza\Shareaza_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -3068,22 +3114,6 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\shareaza\Shareaza_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
