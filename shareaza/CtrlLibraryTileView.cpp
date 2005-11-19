@@ -210,7 +210,22 @@ void CLibraryTileView::Update()
 
 	if ( bChanged )
 	{
+		// crude work around broken std::list::sort (vc++7.1):
+		//     sort may invalidate at least the end iterator perhaps others as well,
+		// this is forbidden - no iterator becomes invalid except when the elemnt it points to is erased
+		// since end never points to anything it must be constant through the lifetime of a list
+		CLibraryTileItem* pFocus = m_pFocus == m_oList.end() ? NULL : &*m_pFocus;
+		CLibraryTileItem* pFirst = m_pFirst == m_oList.end() ? NULL : &*m_pFirst;
 		m_oList.sort( SortList() );
+		m_pFocus = end();
+		m_pFirst = end();
+		for ( iterator it = begin(); it != end(); ++it )
+		{
+			if ( pFocus == &*it )
+				m_pFocus = it;
+			if ( pFirst == &*it )
+				m_pFirst = it;
+		}
 		UpdateScroll();
 	}
 }
