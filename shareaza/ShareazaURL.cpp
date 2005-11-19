@@ -494,26 +494,28 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 
 	}
 
-	// Source (Starts with |/|sources,
-	nSep = strURL.Find( ',' );
-	if ( nSep < 0 ) return TRUE;
-	strPart	= strURL.Left( nSep );
-	strURL	= strURL.Mid( nSep + 1 );
+	while ( strURL.GetLength() > 8 )
+	{
+		// Source (Starts with |/|sources,
+		nSep = strURL.Find( ',' );
+		if ( nSep < 0 ) return TRUE;
+		strPart	= strURL.Left( nSep );
+		strURL	= strURL.Mid( nSep + 1 );
 
-	if ( _tcsncmp( strPart, _T("sources"), 7 ) != 0 ) return TRUE;
+		if ( _tcsncmp( strPart, _T("sources"), 7 ) != 0 ) return TRUE;
 
-	nSep = strURL.Find( ',' );
-	if ( nSep < 0 ) nSep = strURL.Find( '|' );
-	if ( nSep < 0 ) return TRUE;
-	strPart	= strURL.Left( nSep );
-	strURL	= strURL.Mid( nSep + 1 );
+		nSep = strURL.Find( '|' );
+		if ( nSep < 0 ) return TRUE;
+		strPart	= strURL.Left( nSep );
+		strURL	= strURL.Mid( nSep + 1 );
 
-	// Now we have the source in x.x.x.x:port format.
-	CString strEDFTP;
-	strEDFTP.Format( _T("ed2kftp://%s/%s/%I64i/"), strPart, (LPCTSTR)m_oED2K.toString(), m_nSize );
-	SafeString( strEDFTP );
-	if ( m_sURL.GetLength() ) m_sURL += _T(", ");
-	m_sURL += strEDFTP;
+		// Now we have the source in x.x.x.x:port format.
+		CString strEDFTP;
+		strEDFTP.Format( _T("ed2kftp://%s/%s/%I64i/"), strPart, (LPCTSTR)m_oED2K.toString(), m_nSize );
+		SafeString( strEDFTP );
+		if ( m_sURL.GetLength() ) m_sURL += _T(", ");
+		m_sURL += strEDFTP;
+	}
 	
 	return TRUE;
 }
