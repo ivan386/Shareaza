@@ -78,8 +78,6 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 	{
 		m_sKey += GenerateCharacter();
 	}
-
-	m_nStartTorrentDownloads= dtAlways;
 }
 
 CDownloadWithTorrent::~CDownloadWithTorrent()
@@ -321,7 +319,10 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 
 		// Lock on this tracker if we were searching for one
 		if ( m_pTorrent.m_nTrackerType == tMultiFinding ) 
+		{
+			theApp.Message( MSG_DEBUG , _T("Locked on to tracker %s"), m_pTorrent.m_sTracker );
 			m_pTorrent.m_nTrackerType = tMultiFound;
+		}
 	}
 	else
 	{
@@ -742,14 +743,14 @@ float CDownloadWithTorrent::GetRatio() const
 
 BOOL CDownloadWithTorrent::CheckTorrentRatio() const
 {
-	if ( !m_oBTH ) return TRUE;						//Not a torrent
+	if ( !m_oBTH ) return TRUE;									// Not a torrent
 	
-	if ( m_nStartTorrentDownloads == dtAlways ) return TRUE;	//Torrent is set to download as needed
+	if ( m_pTorrent.m_nStartDownloads == dtAlways ) return TRUE;// Torrent is set to download as needed
 
-	if ( m_nStartTorrentDownloads == dtWhenRatio )				//Torrent is set to download only when ratio is okay
+	if ( m_pTorrent.m_nStartDownloads == dtWhenRatio )			// Torrent is set to download only when ratio is okay
 	{
-		if ( m_nTorrentUploaded > m_nTorrentDownloaded ) return TRUE;	//Ratio OK
-		if ( GetVolumeComplete() < 5 * 1024 * 1024 ) return TRUE;		//Always get at least 5 MB so you have something to upload	
+		if ( m_nTorrentUploaded > m_nTorrentDownloaded ) return TRUE;	// Ratio OK
+		if ( GetVolumeComplete() < 5 * 1024 * 1024 ) return TRUE;		// Always get at least 5 MB so you have something to upload	
 	}
 
 	return FALSE;

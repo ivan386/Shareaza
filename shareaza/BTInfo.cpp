@@ -50,12 +50,14 @@ CBTInfo::CBTInfo()
 	m_nFiles			= 0;
 	m_pFiles			= NULL;
 
-	m_nEncoding			= Settings.BitTorrent.TorrentCodePage;
-	m_tCreationDate		= 0;
-
 	m_pAnnounceTracker	= NULL;
 	m_nTrackerIndex		= -1;
 	m_nTrackerType		= tNull;
+
+	m_nEncoding			= Settings.BitTorrent.TorrentCodePage;
+	m_tCreationDate		= 0;
+
+	m_nStartDownloads	= dtAlways;
 }
 
 CBTInfo::~CBTInfo()

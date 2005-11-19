@@ -167,6 +167,9 @@
 #define IDR_BITTORRENT_ICON             263
 #define IDI_MAIL                        265
 #define IDD_CODEPAGES                   266
+#define IDD_TORRENT_GENERAL             267
+#define IDD_TORRENT_FILES               268
+#define IDD_TORRENT_TRACKERS            269
 #define IDB_SCHEDULER_HEADER            270
 #define IDB_SCHEDULER_TIMESLICES        271
 #define IDB_SHELL_BASE_RTL              272

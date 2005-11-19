@@ -53,7 +53,6 @@ public:
 	int			m_nTorrentTrackerErrors;
     Hashes::BtGuid m_pPeerID;
 	CString		m_sKey;
-	int			m_nStartTorrentDownloads;
     BOOL		m_bTorrentEndgame;
 protected:
 	BOOL		m_bSeeding;
@@ -101,11 +100,6 @@ private:
 		}
 	}
 	
-};
-
-enum
-{
-	dtAlways, dtWhenRatio, dtWhenRequested, dtNever
 };
 
 #endif // !defined(AFX_DOWNLOADWITHTORRENT_H__0F93FE22_BFCF_4B6E_8416_7C896432E65A__INCLUDED_)

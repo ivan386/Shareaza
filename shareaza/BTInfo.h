@@ -106,6 +106,8 @@ public:
 	CString		m_sComment;
 	DWORD		m_tCreationDate;
 	CString		m_sCreatedBy;
+
+	int			m_nStartDownloads;				// When do we start downloads for this torrent
 private:
 	CSHA		m_pTestSHA1;
 	DWORD		m_nTestByte;
@@ -152,8 +154,12 @@ public:
 	BOOL		IsMultiTracker() const { return (m_pTrackerList.GetCount() > 0 ); }
 };
 
+// Tracker status/types
 enum { tNull, tCustom, tSingle, tMultiFinding, tMultiFound };
 // No tracker, User set tracker, normal torrent, multitracker searching, multitracker that's found a tracker
 
+// When to initiate new torrent transfers
+enum { dtAlways, dtWhenRatio, dtWhenRequested, dtNever };
+// Whenever wanted, when download ratio > 100%, only when another client requests, never
 
 #endif // !defined(AFX_BTINFO_H__AA44CA36_464F_4FB8_9D79_884D8092ADA0__INCLUDED_)

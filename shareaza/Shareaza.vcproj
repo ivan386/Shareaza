@@ -1772,6 +1772,12 @@
 					RelativePath="DlgSplash.cpp">
 				</File>
 				<File
+					RelativePath=".\DlgTorrentInfoPage.cpp">
+				</File>
+				<File
+					RelativePath=".\DlgTorrentInfoSheet.cpp">
+				</File>
+				<File
 					RelativePath="DlgTorrentSeed.cpp">
 				</File>
 				<File
@@ -2105,6 +2111,15 @@
 				</File>
 				<File
 					RelativePath="PageSettingsWeb.cpp">
+				</File>
+				<File
+					RelativePath=".\PageTorrentFiles.cpp">
+				</File>
+				<File
+					RelativePath=".\PageTorrentGeneral.cpp">
+				</File>
+				<File
+					RelativePath=".\PageTorrentTrackers.cpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -3030,6 +3045,12 @@
 					RelativePath="DlgSplash.h">
 				</File>
 				<File
+					RelativePath=".\DlgTorrentInfoPage.h">
+				</File>
+				<File
+					RelativePath=".\DlgTorrentInfoSheet.h">
+				</File>
+				<File
 					RelativePath="DlgTorrentSeed.h">
 				</File>
 				<File
@@ -3239,6 +3260,15 @@
 				</File>
 				<File
 					RelativePath="PageSettingsWeb.h">
+				</File>
+				<File
+					RelativePath=".\PageTorrentFiles.h">
+				</File>
+				<File
+					RelativePath=".\PageTorrentGeneral.h">
+				</File>
+				<File
+					RelativePath=".\PageTorrentTrackers.h">
 				</File>
 			</Filter>
 			<Filter
