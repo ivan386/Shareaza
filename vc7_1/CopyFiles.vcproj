@@ -80,7 +80,8 @@
 		<File
 			RelativePath=".\CopyFiles.bat">
 			<FileConfiguration
-				Name="Debug|Win32">
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Copying Files..."
@@ -89,7 +90,8 @@
 					Outputs="&quot;$(ConfigurationName)/data/DefaultServices.dat&quot;"/>
 			</FileConfiguration>
 			<FileConfiguration
-				Name="Release|Win32">
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Copying Files..."
