@@ -1,9 +1,9 @@
 //
 // CoreUtils.cpp
 //
-//	Date:			"$Date: 2005/11/18 20:10:33 $"
-//	Revision:		"$Revision: 1.5 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/11/19 19:47:12 $"
+//	Revision:		"$Revision: 1.6 $"
+//  Last change by:	"$Author: thetruecamper $"
 //	Created by:		Rolandas Rudomanskis
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -624,10 +624,10 @@ STDAPI_(void) MemFree(LPVOID ptr)
     if ((v_hPrivateHeap) && (ptr))
         HeapFree(v_hPrivateHeap, 0, ptr);
 }
-
+/*
 void * _cdecl operator new(size_t size){ return MemAlloc(size);}
 void  _cdecl operator delete(void *ptr){ MemFree(ptr); }
-
+*/
 ////////////////////////////////////////////////////////////////////////
 // String Manipulation Functions
 //
