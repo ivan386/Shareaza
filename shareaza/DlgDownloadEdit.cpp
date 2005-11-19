@@ -246,8 +246,8 @@ void CDownloadEditDlg::OnTorrentInfo()
 			if ( dlg.m_pInfo.IsAvailable() )
 			{
 				m_pDownload->m_pTorrent.m_sTracker = dlg.m_pInfo.m_sTracker;
-				m_pDownload->m_pTorrent.m_nStartDownloads = dlg.m_pInfo.m_nStartDownloads;
 			}
+			m_pDownload->m_pTorrent.m_nStartDownloads = dlg.m_pInfo.m_nStartDownloads;
 		}
 	}
 }

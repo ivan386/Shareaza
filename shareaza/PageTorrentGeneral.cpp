@@ -25,7 +25,6 @@
 
 #include "ShellIcons.h"
 #include "BTInfo.h"
-#include "Download.h"
 #include "PageTorrentGeneral.h"
 
 
@@ -51,7 +50,6 @@ CTorrentGeneralPage::CTorrentGeneralPage() : CTorrentInfoPage( CTorrentGeneralPa
 {
 	//{{AFX_DATA_INIT(CTorrentGeneralPage)
 	m_sName = _T("");
-	m_sTracker = _T("");
 	m_sComment = _T("");
 	m_sCreationDate = _T("");
 	m_sCreatedBy = _T("");
@@ -67,7 +65,6 @@ void CTorrentGeneralPage::DoDataExchange(CDataExchange* pDX)
 	CTorrentInfoPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTorrentGeneralPage)
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
-	DDX_Text(pDX, IDC_TORRENT_TRACKER, m_sTracker);
 	DDX_Text(pDX, IDC_TORRENT_COMMENTS, m_sComment);
 	DDX_Text(pDX, IDC_TORRENT_CREATEDBY, m_sCreatedBy );
 	DDX_Text(pDX, IDC_TORRENT_CREATIONDATE, m_sCreationDate );
@@ -84,7 +81,6 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 	CTorrentInfoPage::OnInitDialog();
 
 	m_sName			= pInfo->m_sName;
-	m_sTracker		= pInfo->m_sTracker;
 	m_sComment		= pInfo->m_sComment;
 	m_sCreatedBy	= pInfo->m_sCreatedBy;
 	if ( pInfo->m_tCreationDate > 0 )
@@ -100,7 +96,7 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 	m_wndStartDownloads.SetCurSel( pInfo->m_nStartDownloads );
 
 	UpdateData( FALSE );
-
+	
 	return TRUE;
 }
 
@@ -109,21 +105,6 @@ void CTorrentGeneralPage::OnOK()
 	UpdateData();
 	CBTInfo *pInfo = GetTorrentInfo();
 
-	// Check if tracker has been changed, and the new value could be valid
-	if ( ( pInfo->m_sTracker != m_sTracker ) && ( m_sTracker.Find( _T("http") ) == 0 ) )
-	{
-		CString strMessage;
-		LoadString( strMessage, IDS_BT_TRACK_CHANGE );
-		
-		// Display warning
-		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
-		{
-			pInfo->m_sTracker = m_sTracker;
-			pInfo->m_nTrackerType = tCustom;
-			pInfo->m_oInfoBTH.validate();
-		}
-	}
-
 	// Update the starting of torrent transfers
 	pInfo->m_nStartDownloads = m_wndStartDownloads.GetCurSel();
 	if ( pInfo->m_nStartDownloads > dtNever ) pInfo->m_nStartDownloads = dtAlways;
@@ -131,4 +112,5 @@ void CTorrentGeneralPage::OnOK()
 
 	CTorrentInfoPage::OnOK();
 }
+
 

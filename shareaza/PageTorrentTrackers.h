@@ -25,7 +25,7 @@
 #pragma once
 
 #include "DlgTorrentInfoPage.h"
-
+#include "HttpRequest.h"
 
 class CTorrentTrackersPage : public CTorrentInfoPage
 {
@@ -42,7 +42,24 @@ public:
 	enum { IDD = IDD_TORRENT_TRACKERS };
 	CString			m_sName;
 	CString			m_sTracker;
+
+	CButton			m_wndRefresh;
+	CEdit			m_wndComplete;
+	CEdit			m_wndIncomplete;
 	//}}AFX_DATA
+
+// Attributes
+public:
+	CHttpRequest	m_pRequest;
+	HANDLE			m_hThread;
+	int				m_nComplete;
+	int				m_nIncomplete;
+
+// Thread
+protected:
+	static UINT		ThreadStart(LPVOID pParam);
+	void			OnRun();
+	BOOL			OnTree(CBENode* pNode);
 
 // Overrides
 public:
@@ -56,7 +73,10 @@ public:
 // Implementation
 protected:
 	//{{AFX_MSG(CTorrentTrackersPage)
-	virtual BOOL OnInitDialog();
+	virtual BOOL	OnInitDialog();
+	afx_msg void	OnTorrentRefresh();
+	afx_msg void	OnTimer(UINT_PTR nIDEvent);
+	afx_msg void	OnDestroy();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

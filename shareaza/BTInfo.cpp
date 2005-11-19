@@ -111,28 +111,30 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	ASSERT( pSource != NULL );
 	Clear();
 	
-	m_bEncodingError= pSource->m_bEncodingError;
-	m_oInfoBTH		= pSource->m_oInfoBTH;
-	m_oDataSHA1		= pSource->m_oDataSHA1;
-	m_oDataED2K		= pSource->m_oDataED2K;
-	m_oDataTiger	= pSource->m_oDataTiger;
-	m_nTotalSize	= pSource->m_nTotalSize;
-	m_nBlockSize	= pSource->m_nBlockSize;
-	m_nBlockCount	= pSource->m_nBlockCount;
-	m_nTotalUpload	= pSource->m_nTotalUpload;
+	m_bEncodingError	= pSource->m_bEncodingError;
+	m_oInfoBTH			= pSource->m_oInfoBTH;
+	m_oDataSHA1			= pSource->m_oDataSHA1;
+	m_oDataED2K			= pSource->m_oDataED2K;
+	m_oDataTiger		= pSource->m_oDataTiger;
+	m_nTotalSize		= pSource->m_nTotalSize;
+	m_nBlockSize		= pSource->m_nBlockSize;
+	m_nBlockCount		= pSource->m_nBlockCount;
+	m_nTotalUpload		= pSource->m_nTotalUpload;
 
-	m_sName			= pSource->m_sName;
-	m_nFiles		= pSource->m_nFiles;
+	m_sName				= pSource->m_sName;
+	m_nFiles			= pSource->m_nFiles;
 
-	m_sTracker		= pSource->m_sTracker;
-	m_nTrackerIndex	= pSource->m_nTrackerIndex;
-	m_nTrackerType	= pSource->m_nTrackerType;
+	m_sTracker			= pSource->m_sTracker;
+	m_nTrackerIndex		= pSource->m_nTrackerIndex;
+	m_nTrackerType		= pSource->m_nTrackerType;
 	
 
-	m_nEncoding		= pSource->m_nEncoding;
-	m_sComment		= pSource->m_sComment;
-	m_tCreationDate	= pSource->m_tCreationDate;
-	m_sCreatedBy	= pSource->m_sCreatedBy;
+	m_nEncoding			= pSource->m_nEncoding;
+	m_sComment			= pSource->m_sComment;
+	m_tCreationDate		= pSource->m_tCreationDate;
+	m_sCreatedBy		= pSource->m_sCreatedBy;
+
+	m_nStartDownloads	= pSource->m_nStartDownloads;
 	
 	if ( pSource->m_pBlockBTH != NULL )
 	{
@@ -140,6 +142,7 @@ void CBTInfo::Copy(CBTInfo* pSource)
 		std::copy( pSource->m_pBlockBTH, pSource->m_pBlockBTH + m_nBlockCount, m_pBlockBTH );
 	}
 	
+	// Copy files
 	if ( pSource->m_pFiles != NULL )
 	{
 		m_pFiles = new CBTFile[ m_nFiles ];
@@ -147,13 +150,14 @@ void CBTInfo::Copy(CBTInfo* pSource)
 			m_pFiles[ nFile ].Copy( &pSource->m_pFiles[ nFile ] );
 	}
 
-	// Copy trackers
+	// Copy announce tracker
 	if ( pSource->m_pAnnounceTracker != NULL ) 
 	{
 		m_pAnnounceTracker = new CBTTracker;
 		m_pAnnounceTracker->Copy( pSource->m_pAnnounceTracker );
 	}
 
+	// Copy trackers (multitracker)
 	for ( int nCount = 0 ; nCount < pSource->m_pTrackerList.GetCount() ; nCount++ )
 	{
 		CBTTracker* pTracker = new CBTTracker;

@@ -45,7 +45,6 @@
 #include "DlgDownloadReviews.h"
 #include "DlgDownloadEdit.h"
 #include "DlgSettingsManager.h"
-#include "DlgTorrentTracker.h"
 #include "DlgDeleteFile.h"
 #include "DlgFilePropertiesSheet.h"
 #include "DlgTorrentInfoSheet.h"
@@ -1180,12 +1179,7 @@ void CDownloadsWnd::OnDownloadsTorrentInfo()
 		
 		if ( pDownload->m_bSelected && pDownload->m_pTorrent.IsAvailable() )
 		{
-			//int nStart = pDownload->m_nStartTorrentDownloads;
-
-
 			CTorrentInfoSheet dlg( &pDownload->m_pTorrent );
-			//CTorrentTrackerDlg dlg( &pDownload->m_pTorrent, &nStart );
-
 			
 			pLock.Unlock();
 			dlg.DoModal();
@@ -1193,15 +1187,12 @@ void CDownloadsWnd::OnDownloadsTorrentInfo()
 
 			if ( Downloads.Check( pDownload ) )
 			{
-				//pDownload->m_nStartTorrentDownloads = nStart;
-
 				if ( dlg.m_pInfo.IsAvailable() )
 				{
 					pDownload->m_pTorrent.m_sTracker = dlg.m_pInfo.m_sTracker;
-					pDownload->m_pTorrent.m_nStartDownloads = dlg.m_pInfo.m_nStartDownloads;
 				}
+				pDownload->m_pTorrent.m_nStartDownloads = dlg.m_pInfo.m_nStartDownloads;
 			}
-			
 			break;
 		}
 	}

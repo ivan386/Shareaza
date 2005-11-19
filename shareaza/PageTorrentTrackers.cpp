@@ -25,7 +25,7 @@
 
 #include "ShellIcons.h"
 #include "BTInfo.h"
-#include "Download.h"
+#include "BENode.h"
 #include "PageTorrentTrackers.h"
 
 
@@ -40,6 +40,9 @@ IMPLEMENT_DYNCREATE(CTorrentTrackersPage, CTorrentInfoPage)
 BEGIN_MESSAGE_MAP(CTorrentTrackersPage, CTorrentInfoPage)
 	//{{AFX_MSG_MAP(CTorrentTrackersPage)
 	ON_WM_PAINT()
+	ON_BN_CLICKED(IDC_TORRENT_REFRESH, OnTorrentRefresh)
+	ON_WM_TIMER()
+	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -65,6 +68,7 @@ void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CTorrentTrackersPage)
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Text(pDX, IDC_TORRENT_TRACKER, m_sTracker);
+	DDX_Control(pDX, IDC_TORRENT_REFRESH, m_wndRefresh);
 	//}}AFX_DATA_MAP
 }
 
@@ -80,8 +84,60 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	m_sTracker		= pInfo->m_sTracker;
 	
 	UpdateData( FALSE );
+	m_hThread = NULL;
+
+	//PostMessage( WM_COMMAND, MAKELONG( IDC_TORRENT_REFRESH, BN_CLICKED ), (LPARAM)m_wndRefresh.GetSafeHwnd() );
 
 	return TRUE;
+}
+
+
+void CTorrentTrackersPage::OnDestroy() 
+{
+	if ( m_hThread != NULL ) 
+	{
+		m_pRequest.Cancel();
+		CHttpRequest::CloseThread( &m_hThread, _T("CTorrentTrackersPage") );
+	}
+	
+	CTorrentInfoPage::OnDestroy();
+}
+
+void CTorrentTrackersPage::OnTorrentRefresh() 
+{
+	if ( m_wndRefresh.IsWindowEnabled() == FALSE ) return;
+	
+	if ( m_hThread != NULL ) 
+	{
+		m_pRequest.Cancel();
+		CHttpRequest::CloseThread( &m_hThread, _T("CTorrentTrackersPage") );
+	}
+	
+	m_wndRefresh.EnableWindow( FALSE );
+	m_hThread = AfxBeginThread( ThreadStart, this )->m_hThread;
+}
+
+void CTorrentTrackersPage::OnTimer(UINT_PTR nIDEvent) 
+{
+	if ( nIDEvent == 1 )
+	{
+		m_wndRefresh.EnableWindow( TRUE );
+		KillTimer( 1 );
+	}
+	else
+	{
+		CHttpRequest::CloseThread( &m_hThread, _T("CTorrentTrackersPage") );
+		SetTimer( 1, 60000, NULL );
+		
+		if ( nIDEvent == 3 )
+		{
+			CString str;
+			str.Format( _T("%i"), m_nComplete );
+			m_wndComplete.SetWindowText( str );
+			str.Format( _T("%i"), m_nIncomplete );
+			m_wndIncomplete.SetWindowText( str );
+		}
+	}
 }
 
 void CTorrentTrackersPage::OnOK()
@@ -105,4 +161,80 @@ void CTorrentTrackersPage::OnOK()
 	}
 	
 	CTorrentInfoPage::OnOK();
+}
+
+UINT CTorrentTrackersPage::ThreadStart(LPVOID pParam)
+{
+	CTorrentTrackersPage* pObject = (CTorrentTrackersPage*)pParam;
+	pObject->OnRun();
+	return 0;
+}
+
+void CTorrentTrackersPage::OnRun()
+{
+	m_pRequest.Clear();
+	m_pRequest.AddHeader( _T("Accept-Encoding"), _T("deflate, gzip") );
+	
+	CString strURL = m_sTracker;
+	Replace( strURL, _T("/announce"), _T("/scrape") );
+
+	if ( ( strURL.Find( _T("http") ) == 0 ) && ( strURL.Find( _T("/scrape") ) != -1 ) )
+	{
+		// Skip obviously invalid trackers
+		if ( strURL.GetLength() > 7 ) 
+		{
+			m_pRequest.SetURL( strURL );
+
+			theApp.Message( MSG_DEBUG, _T("Sending scrape to %s"), strURL );
+			
+			if ( m_pRequest.Execute( FALSE ) && m_pRequest.InflateResponse() )
+			{
+				CBuffer* pResponse = m_pRequest.GetResponseBuffer();
+				
+				if ( CBENode* pNode = CBENode::Decode( pResponse ) )
+				{
+					if ( OnTree( pNode ) )
+					{
+						delete pNode;
+						PostMessage( WM_TIMER, 3 );
+						return;
+					}
+					
+					delete pNode;
+				}
+			}
+		}
+	}
+	
+	m_pRequest.Clear();
+	PostMessage( WM_TIMER, 2 );
+}
+
+BOOL CTorrentTrackersPage::OnTree(CBENode* pNode)
+{
+	CBTInfo *pInfo = GetTorrentInfo();
+	if ( ! pNode->IsType( CBENode::beDict ) ) return FALSE;
+	
+	CBENode* pFiles = pNode->GetNode( "files" );
+	if ( ! pFiles->IsType( CBENode::beDict ) ) return FALSE;
+	
+    CBENode* pFile = pFiles->GetNode( &pInfo->m_oInfoBTH[ 0 ], Hashes::BtHash::byteCount );
+	if ( ! pFile->IsType( CBENode::beDict ) ) return FALSE;	
+	
+	m_nComplete		= 0;
+	m_nIncomplete	= 0;
+	
+	if ( CBENode* pComplete = pFile->GetNode( "complete" ) )
+	{
+		if ( ! pComplete->IsType( CBENode::beInt ) ) return FALSE;	
+		m_nComplete = (int)pComplete->GetInt();
+	}
+	
+	if ( CBENode* pIncomplete = pFile->GetNode( "incomplete" ) )
+	{
+		if ( ! pIncomplete->IsType( CBENode::beInt ) ) return FALSE;	
+		m_nIncomplete = (int)pIncomplete->GetInt();
+	}
+	
+	return TRUE;
 }

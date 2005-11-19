@@ -26,7 +26,6 @@
 
 #include "DlgTorrentInfoPage.h"
 
-
 class CTorrentGeneralPage : public CTorrentInfoPage
 {
 // Construction
@@ -41,7 +40,6 @@ public:
 	//{{AFX_DATA(CTorrentGeneralPage)
 	enum { IDD = IDD_TORRENT_GENERAL };
 	CString			m_sName;
-	CString			m_sTracker;
 	CString			m_sComment;
 	CString			m_sCreatedBy;
 	CString			m_sCreationDate;
@@ -60,7 +58,7 @@ public:
 // Implementation
 protected:
 	//{{AFX_MSG(CTorrentGeneralPage)
-	virtual BOOL OnInitDialog();
+	virtual BOOL	OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
