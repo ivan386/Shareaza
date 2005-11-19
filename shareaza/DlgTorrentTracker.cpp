@@ -207,7 +207,7 @@ void CTorrentTrackerDlg::OnOK()
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
 			m_pInfo.m_sTracker = m_sTracker;
-			m_pInfo.m_nTrackerType = tCustom;
+			m_pInfo.m_nTrackerMode = tCustom;
 			m_pInfo.m_oInfoBTH.validate();
 		}
 	}

@@ -28,6 +28,7 @@
 #include "BENode.h"
 #include "PageTorrentTrackers.h"
 #include "CoolInterface.h"
+#include "Network.h"
 
 
 #ifdef _DEBUG
@@ -71,6 +72,7 @@ void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_TORRENT_TRACKER, m_sTracker);
 	DDX_Control(pDX, IDC_TORRENT_REFRESH, m_wndRefresh);
 	DDX_Control(pDX, IDC_TORRENT_TRACKERS, m_wndTrackers);
+	DDX_Control(pDX, IDC_TORRENT_TRACKERMODE, m_wndTrackerMode);
 	//}}AFX_DATA_MAP
 }
 
@@ -85,12 +87,20 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	m_sName			= pInfo->m_sName;
 	m_sTracker		= pInfo->m_sTracker;
 
+	m_wndTrackerMode.SetItemData( 0, tNull );
+	m_wndTrackerMode.SetItemData( 1, tCustom );
+	m_wndTrackerMode.SetItemData( 2, tSingle );
+	m_wndTrackerMode.SetItemData( 3, tMultiFinding );
+	m_wndTrackerMode.SetItemData( 4, tMultiFound );
+
+	m_wndTrackerMode.SetCurSel( pInfo->m_nTrackerMode );
+
 	CRect rc;
 	m_wndTrackers.GetClientRect( &rc );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL );
 	m_wndTrackers.SetImageList( &CoolInterface.m_pImages, LVSIL_SMALL );
 	m_wndTrackers.InsertColumn( 0, _T("Tracker"), LVCFMT_LEFT, rc.right - 80, -1 );
-	m_wndTrackers.InsertColumn( 1, _T("Type"), LVCFMT_RIGHT, 80, 0 );
+	m_wndTrackers.InsertColumn( 1, _T("Status"), LVCFMT_RIGHT, 80, 0 );
 
 	int nTracker = 0;
 	for ( nTracker = 0 ; nTracker < pInfo->m_pTrackerList.GetCount() ; nTracker++ )
@@ -111,7 +121,13 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		pItem.iItem		= m_wndTrackers.InsertItem( &pItem );
 
 		CString sType;
-		sType.Format(_T("Tier: %i"), pTrack->m_nTier );
+		if ( ( pTrack->m_tLastFail == 0 ) && ( pTrack->m_tLastSuccess == 0 ) )
+			LoadString( sType, IDS_STATUS_UNKNOWN );
+		else if ( pTrack->m_tLastFail > pTrack->m_tLastSuccess )
+			LoadString( sType, IDS_STATUS_TRACKERDOWN );
+		else
+			LoadString( sType, IDS_STATUS_ACTIVE );
+
 		m_wndTrackers.SetItemText( pItem.iItem, 1, sType );
 	}
 
@@ -127,13 +143,22 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		pItem.pszText	= (LPTSTR)(LPCTSTR)pInfo->m_pAnnounceTracker->m_sAddress;
 		pItem.iItem		= m_wndTrackers.InsertItem( &pItem );
 		
-		m_wndTrackers.SetItemText( pItem.iItem, 1, _T("Announce") );
+		CString sType;
+		if ( ( pInfo->m_pAnnounceTracker->m_tLastFail == 0 ) && ( pInfo->m_pAnnounceTracker->m_tLastSuccess == 0 ) )
+			LoadString( sType, IDS_STATUS_UNKNOWN );
+		else if ( pInfo->m_pAnnounceTracker->m_tLastFail > pInfo->m_pAnnounceTracker->m_tLastSuccess )
+			LoadString( sType, IDS_STATUS_TRACKERDOWN );
+		else
+			LoadString( sType, IDS_STATUS_ACTIVE );
+
+		m_wndTrackers.SetItemText( pItem.iItem, 1, sType );
 	}
 	
 	UpdateData( FALSE );
 	m_hThread = NULL;
 
-	//PostMessage( WM_COMMAND, MAKELONG( IDC_TORRENT_REFRESH, BN_CLICKED ), (LPARAM)m_wndRefresh.GetSafeHwnd() );
+	if ( Network.IsConnected() )
+		PostMessage( WM_COMMAND, MAKELONG( IDC_TORRENT_REFRESH, BN_CLICKED ), (LPARAM)m_wndRefresh.GetSafeHwnd() );
 
 	return TRUE;
 }
@@ -202,8 +227,27 @@ void CTorrentTrackersPage::OnOK()
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
 			pInfo->m_sTracker = m_sTracker;
-			pInfo->m_nTrackerType = tCustom;
+			pInfo->m_nTrackerMode = tCustom;
 			pInfo->m_oInfoBTH.validate();
+		}
+	}
+	else
+	{
+		int nTrackerMode = m_wndTrackerMode.GetCurSel();
+		if ( pInfo->m_nTrackerMode != nTrackerMode )
+		{
+			// Check it's valid
+			if ( ( ( nTrackerMode == tMultiFound )		&& ( pInfo->IsMultiTracker() ) ) ||
+				 ( ( nTrackerMode == tMultiFinding )	&& ( pInfo->IsMultiTracker() ) ) ||
+				 ( ( nTrackerMode == tSingle )			&& ( pInfo->m_pAnnounceTracker ) ) ||
+				 ( ( nTrackerMode == tCustom )			&& ( pInfo->m_sTracker.GetLength() > 7 ) ) )
+			{
+				CString strMessage;
+				LoadString( strMessage, IDS_BT_TRACK_CHANGE );
+				// Display warning
+				if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+					pInfo->m_nTrackerMode = nTrackerMode;
+			}
 		}
 	}
 	

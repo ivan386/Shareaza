@@ -248,6 +248,7 @@ void CDownloadEditDlg::OnTorrentInfo()
 				m_pDownload->m_pTorrent.m_sTracker = dlg.m_pInfo.m_sTracker;
 			}
 			m_pDownload->m_pTorrent.m_nStartDownloads = dlg.m_pInfo.m_nStartDownloads;
+			m_pDownload->m_pTorrent.m_nTrackerMode = dlg.m_pInfo.m_nTrackerMode;
 		}
 	}
 }

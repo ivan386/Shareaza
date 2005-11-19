@@ -52,7 +52,7 @@ CBTInfo::CBTInfo()
 
 	m_pAnnounceTracker	= NULL;
 	m_nTrackerIndex		= -1;
-	m_nTrackerType		= tNull;
+	m_nTrackerMode		= tNull;
 
 	m_nEncoding			= Settings.BitTorrent.TorrentCodePage;
 	m_tCreationDate		= 0;
@@ -126,7 +126,7 @@ void CBTInfo::Copy(CBTInfo* pSource)
 
 	m_sTracker			= pSource->m_sTracker;
 	m_nTrackerIndex		= pSource->m_nTrackerIndex;
-	m_nTrackerType		= pSource->m_nTrackerType;
+	m_nTrackerMode		= pSource->m_nTrackerMode;
 	
 
 	m_nEncoding			= pSource->m_nEncoding;
@@ -204,7 +204,7 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar << m_sTracker;
 
 		ar << m_nTrackerIndex;
-		ar << m_nTrackerType;
+		ar << m_nTrackerMode;
 
 
 		if ( m_pAnnounceTracker ) 
@@ -275,7 +275,7 @@ void CBTInfo::Serialize(CArchive& ar)
 		{
 			int nTrackers;
 			ar >> m_nTrackerIndex;
-			ar >> m_nTrackerType;
+			ar >> m_nTrackerMode;
 
 			nTrackers = (int)ar.ReadCount();
 			if ( nTrackers )
@@ -556,10 +556,10 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 						pTracker->m_nTier		= nTier;
 						m_pTrackerList.Add( pTracker );
 	
-						if ( m_nTrackerType == tNull )
+						if ( m_nTrackerMode == tNull )
 						{
 							// Set the torrent to be a multi-tracker torrent
-							m_nTrackerType = tMultiFinding;
+							m_nTrackerMode = tMultiFinding;
 							m_sTracker = pTracker->m_sAddress;
 							m_nTrackerIndex = 0;
 						}
@@ -581,10 +581,10 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		// Store it if it's valid. (Some torrents have invalid trackers)
 		if ( strTracker.Find( _T("http") ) == 0 ) 
 		{
-			if ( m_nTrackerType == tNull ) 
+			if ( m_nTrackerMode == tNull ) 
 			{
 				// Set the torrent to be a single-tracker torrent
-				m_nTrackerType = tSingle;
+				m_nTrackerMode = tSingle;
 				m_sTracker = strTracker;
 				m_nTrackerIndex = -1;
 			}
@@ -904,16 +904,16 @@ BOOL CBTInfo::FinishBlockTest(DWORD nBlock)
 
 void CBTInfo::SetTrackerAccess(DWORD tNow)
 {
-	if ( m_nTrackerType == tNull )
+	if ( m_nTrackerMode == tNull )
 	{
 		// Shouldn't happen
 		ASSERT ( 0 );
 	}
-	else if ( m_nTrackerType == tCustom )
+	else if ( m_nTrackerMode == tCustom )
 	{
 		// Can't do anything with user-entered trackers
 	}
-	else if ( m_nTrackerType == tSingle )
+	else if ( m_nTrackerMode == tSingle )
 	{
 		ASSERT ( m_pAnnounceTracker );
 
@@ -936,16 +936,16 @@ void CBTInfo::SetTrackerAccess(DWORD tNow)
 
 void CBTInfo::SetTrackerSucceeded(DWORD tNow)
 {
-	if ( m_nTrackerType == tNull )
+	if ( m_nTrackerMode == tNull )
 	{
 		// Shouldn't happen
 		ASSERT ( 0 );
 	}
-	else if ( m_nTrackerType == tCustom )
+	else if ( m_nTrackerMode == tCustom )
 	{
 		// Can't do anything with user-entered trackers
 	}
-	else if ( m_nTrackerType == tSingle )
+	else if ( m_nTrackerMode == tSingle )
 	{
 		ASSERT ( m_pAnnounceTracker );
 
@@ -968,16 +968,16 @@ void CBTInfo::SetTrackerSucceeded(DWORD tNow)
 
 void CBTInfo::SetTrackerFailed(DWORD tNow)
 {
-	if ( m_nTrackerType == tNull )
+	if ( m_nTrackerMode == tNull )
 	{
 		// Shouldn't happen
 		ASSERT ( 0 );
 	}
-	else if ( m_nTrackerType == tCustom )
+	else if ( m_nTrackerMode == tCustom )
 	{
 		// Can't do anything with user-entered trackers
 	}
-	else if ( m_nTrackerType == tSingle )
+	else if ( m_nTrackerMode == tSingle )
 	{
 		ASSERT ( m_pAnnounceTracker );
 
@@ -1006,7 +1006,7 @@ void CBTInfo::SetTrackerNext()
 	if ( ! IsMultiTracker() ) return;
 
 	// Set us as searching for a new one
-	m_nTrackerType = tMultiFinding;
+	m_nTrackerMode = tMultiFinding;
 
 	// Get the next tracker to try
 	CBTTracker* pTracker;
@@ -1026,11 +1026,11 @@ void CBTInfo::SetTrackerNext()
 
 DWORD CBTInfo::GetTrackerFailures()
 {
-	if ( m_nTrackerType == tNull )
+	if ( m_nTrackerMode == tNull )
 		return 0;
-	else if ( m_nTrackerType == tCustom )
+	else if ( m_nTrackerMode == tCustom )
 		return 0;
-	else if ( m_nTrackerType == tSingle )
+	else if ( m_nTrackerMode == tSingle )
 	{
 		ASSERT ( m_pAnnounceTracker );
 		return m_pAnnounceTracker->m_nFailures;

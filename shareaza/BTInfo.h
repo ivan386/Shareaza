@@ -100,7 +100,7 @@ public:
 	CBTTracker*	m_pAnnounceTracker;				// Tracker in the announce key
 	CArray< CBTTracker* > m_pTrackerList;		// Multi-tracker list
 	int			m_nTrackerIndex;				// The tracker we are currently using
-	int			m_nTrackerType;					// The current tracker situation
+	int			m_nTrackerMode;					// The current tracker situation
 public:
 	UINT		m_nEncoding;
 	CString		m_sComment;

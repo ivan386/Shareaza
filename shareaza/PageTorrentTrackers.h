@@ -46,6 +46,7 @@ public:
 	CButton			m_wndRefresh;
 	CEdit			m_wndComplete;
 	CEdit			m_wndIncomplete;
+	CComboBox		m_wndTrackerMode;
 
 	CListCtrl		m_wndTrackers;
 	//}}AFX_DATA

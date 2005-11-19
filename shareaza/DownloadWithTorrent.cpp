@@ -318,10 +318,10 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 		m_nTorrentTrackerErrors = 0;
 
 		// Lock on this tracker if we were searching for one
-		if ( m_pTorrent.m_nTrackerType == tMultiFinding ) 
+		if ( m_pTorrent.m_nTrackerMode == tMultiFinding ) 
 		{
 			theApp.Message( MSG_DEBUG , _T("Locked on to tracker %s"), m_pTorrent.m_sTracker );
-			m_pTorrent.m_nTrackerType = tMultiFound;
+			m_pTorrent.m_nTrackerMode = tMultiFound;
 		}
 	}
 	else
@@ -334,17 +334,17 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 		m_nTorrentTrackerErrors ++;
 		
 		
-		if ( m_pTorrent.m_nTrackerType == tMultiFinding )
+		if ( m_pTorrent.m_nTrackerMode == tMultiFinding )
 		{
 			// We're still finding a tracker
 		}
 		if ( pszReason != NULL )
 		{
 			// If the tracker responded with an error, don't bother retrying
-			if ( m_pTorrent.m_nTrackerType == tMultiFound )
+			if ( m_pTorrent.m_nTrackerMode == tMultiFound )
 			{
 				// Start looking for another tracker
-				m_pTorrent.m_nTrackerType = tMultiFinding;
+				m_pTorrent.m_nTrackerMode = tMultiFinding;
 			}
 			else
 			{
@@ -378,10 +378,10 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 			else
 			{
 				// This tracker is probably down. Don't hammer it.
-				if ( m_pTorrent.m_nTrackerType == tMultiFound )
+				if ( m_pTorrent.m_nTrackerMode == tMultiFound )
 				{
 					// Start looking for another tracker if we can
-					m_pTorrent.m_nTrackerType = tMultiFinding;
+					m_pTorrent.m_nTrackerMode = tMultiFinding;
 				}
 				else
 				{
@@ -392,7 +392,7 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 			}
 		}
 
-		if ( m_pTorrent.m_nTrackerType == tMultiFinding )
+		if ( m_pTorrent.m_nTrackerMode == tMultiFinding )
 		{
 			ASSERT ( m_pTorrent.IsMultiTracker() );
 

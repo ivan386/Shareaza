@@ -683,6 +683,7 @@
 #define IDC_FILESIZE                    1421
 #define IDC_TRUST_TIGER                 1422
 #define IDC_TRUST_ED2K                  1423
+#define IDC_TORRENT_TRACKERMODE         1425
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502
@@ -718,7 +719,7 @@
 #define IDS_SKIN_DELETE                 8009
 #define IDS_BETA_EXPIRED                8010
 #define IDS_VIEW_MODE_CONFIRM           8011
-#define IDS_TORRENT_INFO				8012
+#define IDS_TORRENT_INFO                8012
 #define IDS_STATUS_BAR_CONNECTED_HUB_UP 8060
 #define IDS_STATUS_BAR_CONNECTED_UP     8061
 #define IDS_STATUS_BAR_CONNECTED_HUB    8062
@@ -1695,9 +1696,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        275
+#define _APS_NEXT_RESOURCE_VALUE        276
 #define _APS_NEXT_COMMAND_VALUE         33135
-#define _APS_NEXT_CONTROL_VALUE         1425
+#define _APS_NEXT_CONTROL_VALUE         1426
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif
