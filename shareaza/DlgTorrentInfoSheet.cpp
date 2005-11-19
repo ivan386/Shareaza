@@ -115,7 +115,7 @@ BOOL CTorrentInfoSheet::OnInitDialog()
 	SetIcon( theApp.LoadIcon( IDI_PROPERTIES ), TRUE );
 
 	CString strCaption;
-	LoadString( strCaption, IDS_FILE_PROPERTIES );
+	LoadString( strCaption, IDS_TORRENT_INFO );
 	SetWindowText( strCaption );
 
 	m_pSkin = Skin.GetWindowSkin( _T("CTorrentSheet") );
