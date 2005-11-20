@@ -70,6 +70,8 @@ void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CTorrentTrackersPage)
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Text(pDX, IDC_TORRENT_TRACKER, m_sTracker);
+	DDX_Control(pDX, IDC_TORRENT_COMPLETED, m_wndComplete);
+	DDX_Control(pDX, IDC_TORRENT_INCOMPLETE, m_wndIncomplete);
 	DDX_Control(pDX, IDC_TORRENT_REFRESH, m_wndRefresh);
 	DDX_Control(pDX, IDC_TORRENT_TRACKERS, m_wndTrackers);
 	DDX_Control(pDX, IDC_TORRENT_TRACKERMODE, m_wndTrackerMode);
@@ -82,10 +84,9 @@ void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 BOOL CTorrentTrackersPage::OnInitDialog()
 {
 	CTorrentInfoPage::OnInitDialog();
-	CBTInfo *pInfo = GetTorrentInfo();
 	
-	m_sName			= pInfo->m_sName;
-	m_sTracker		= pInfo->m_sTracker;
+	m_sName			= m_pInfo->m_sName;
+	m_sTracker		= m_pInfo->m_sTracker;
 
 	m_wndTrackerMode.SetItemData( 0, tNull );
 	m_wndTrackerMode.SetItemData( 1, tCustom );
@@ -93,7 +94,7 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	m_wndTrackerMode.SetItemData( 3, tMultiFinding );
 	m_wndTrackerMode.SetItemData( 4, tMultiFound );
 
-	m_wndTrackerMode.SetCurSel( pInfo->m_nTrackerMode );
+	m_wndTrackerMode.SetCurSel( m_pInfo->m_nTrackerMode );
 
 	CRect rc;
 	m_wndTrackers.GetClientRect( &rc );
@@ -103,16 +104,16 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	m_wndTrackers.InsertColumn( 1, _T("Status"), LVCFMT_RIGHT, 80, 0 );
 
 	int nTracker = 0;
-	for ( nTracker = 0 ; nTracker < pInfo->m_pTrackerList.GetCount() ; nTracker++ )
+	for ( nTracker = 0 ; nTracker < m_pInfo->m_pTrackerList.GetCount() ; nTracker++ )
 	{
-		CBTInfo::CBTTracker* pTrack = pInfo->m_pTrackerList.GetAt(nTracker);
+		CBTInfo::CBTTracker* pTrack = m_pInfo->m_pTrackerList.GetAt(nTracker);
 		
 		LV_ITEM pItem = {};
 		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
 		pItem.iItem		= m_wndTrackers.GetItemCount();
 		pItem.lParam	= (LPARAM)nTracker;
 
-		if ( pInfo->m_nTrackerIndex == nTracker )
+		if ( m_pInfo->m_nTrackerIndex == nTracker )
 			pItem.iImage = CoolInterface.ImageForID( ID_MEDIA_SELECT );
 		else
 			pItem.iImage = CoolInterface.ImageForID( ID_DOWNLOADS_COPY );
@@ -131,7 +132,7 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		m_wndTrackers.SetItemText( pItem.iItem, 1, sType );
 	}
 
-	if ( pInfo->m_pAnnounceTracker )
+	if ( m_pInfo->m_pAnnounceTracker )
 	{
 		nTracker ++;
 
@@ -140,13 +141,13 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		pItem.iItem		= m_wndTrackers.GetItemCount();
 		pItem.lParam	= (LPARAM)nTracker;
 		pItem.iImage = CoolInterface.ImageForID( ID_TOOLS_LANGUAGE );
-		pItem.pszText	= (LPTSTR)(LPCTSTR)pInfo->m_pAnnounceTracker->m_sAddress;
+		pItem.pszText	= (LPTSTR)(LPCTSTR)m_pInfo->m_pAnnounceTracker->m_sAddress;
 		pItem.iItem		= m_wndTrackers.InsertItem( &pItem );
 		
 		CString sType;
-		if ( ( pInfo->m_pAnnounceTracker->m_tLastFail == 0 ) && ( pInfo->m_pAnnounceTracker->m_tLastSuccess == 0 ) )
+		if ( ( m_pInfo->m_pAnnounceTracker->m_tLastFail == 0 ) && ( m_pInfo->m_pAnnounceTracker->m_tLastSuccess == 0 ) )
 			LoadString( sType, IDS_STATUS_UNKNOWN );
-		else if ( pInfo->m_pAnnounceTracker->m_tLastFail > pInfo->m_pAnnounceTracker->m_tLastSuccess )
+		else if ( m_pInfo->m_pAnnounceTracker->m_tLastFail > m_pInfo->m_pAnnounceTracker->m_tLastSuccess )
 			LoadString( sType, IDS_STATUS_TRACKERDOWN );
 		else
 			LoadString( sType, IDS_STATUS_ACTIVE );
@@ -193,16 +194,20 @@ void CTorrentTrackersPage::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( nIDEvent == 1 )
 	{
+		// Re-enable the refresh button
 		m_wndRefresh.EnableWindow( TRUE );
 		KillTimer( 1 );
 	}
 	else
 	{
+		// Close the scrape thread
 		CHttpRequest::CloseThread( &m_hThread, _T("CTorrentTrackersPage") );
+		// Re-enable the refresh button in one minute
 		SetTimer( 1, 60000, NULL );
 		
 		if ( nIDEvent == 3 )
 		{
+			// Update the display
 			CString str;
 			str.Format( _T("%i"), m_nComplete );
 			m_wndComplete.SetWindowText( str );
@@ -215,10 +220,9 @@ void CTorrentTrackersPage::OnTimer(UINT_PTR nIDEvent)
 void CTorrentTrackersPage::OnOK()
 {
 	UpdateData();
-	CBTInfo *pInfo = GetTorrentInfo();
 
 	// Check if tracker has been changed, and the new value could be valid
-	if ( ( pInfo->m_sTracker != m_sTracker ) && ( m_sTracker.Find( _T("http") ) == 0 ) )
+	if ( ( m_pInfo->m_sTracker != m_sTracker ) && ( m_sTracker.Find( _T("http") ) == 0 ) )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_BT_TRACK_CHANGE );
@@ -226,27 +230,27 @@ void CTorrentTrackersPage::OnOK()
 		// Display warning
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
-			pInfo->m_sTracker = m_sTracker;
-			pInfo->m_nTrackerMode = tCustom;
-			pInfo->m_oInfoBTH.validate();
+			m_pInfo->m_sTracker = m_sTracker;
+			m_pInfo->m_nTrackerMode = tCustom;
+			m_pInfo->m_oInfoBTH.validate();
 		}
 	}
 	else
 	{
 		int nTrackerMode = m_wndTrackerMode.GetCurSel();
-		if ( pInfo->m_nTrackerMode != nTrackerMode )
+		if ( m_pInfo->m_nTrackerMode != nTrackerMode )
 		{
 			// Check it's valid
-			if ( ( ( nTrackerMode == tMultiFound )		&& ( pInfo->IsMultiTracker() ) ) ||
-				 ( ( nTrackerMode == tMultiFinding )	&& ( pInfo->IsMultiTracker() ) ) ||
-				 ( ( nTrackerMode == tSingle )			&& ( pInfo->m_pAnnounceTracker ) ) ||
-				 ( ( nTrackerMode == tCustom )			&& ( pInfo->m_sTracker.GetLength() > 7 ) ) )
+			if ( ( ( nTrackerMode == tMultiFound )		&& ( m_pInfo->IsMultiTracker() ) ) ||
+				 ( ( nTrackerMode == tMultiFinding )	&& ( m_pInfo->IsMultiTracker() ) ) ||
+				 ( ( nTrackerMode == tSingle )			&& ( m_pInfo->m_pAnnounceTracker ) ) ||
+				 ( ( nTrackerMode == tCustom )			&& ( m_pInfo->m_sTracker.GetLength() > 7 ) ) )
 			{
 				CString strMessage;
 				LoadString( strMessage, IDS_BT_TRACK_CHANGE );
 				// Display warning
 				if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
-					pInfo->m_nTrackerMode = nTrackerMode;
+					m_pInfo->m_nTrackerMode = nTrackerMode;
 			}
 		}
 	}
@@ -303,13 +307,12 @@ void CTorrentTrackersPage::OnRun()
 
 BOOL CTorrentTrackersPage::OnTree(CBENode* pNode)
 {
-	CBTInfo *pInfo = GetTorrentInfo();
 	if ( ! pNode->IsType( CBENode::beDict ) ) return FALSE;
 	
 	CBENode* pFiles = pNode->GetNode( "files" );
 	if ( ! pFiles->IsType( CBENode::beDict ) ) return FALSE;
 	
-    CBENode* pFile = pFiles->GetNode( &pInfo->m_oInfoBTH[ 0 ], Hashes::BtHash::byteCount );
+    CBENode* pFile = pFiles->GetNode( &m_pInfo->m_oInfoBTH[ 0 ], Hashes::BtHash::byteCount );
 	if ( ! pFile->IsType( CBENode::beDict ) ) return FALSE;	
 	
 	m_nComplete		= 0;

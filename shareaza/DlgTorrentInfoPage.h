@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "BTInfo.h"
+
 
 class CTorrentInfoPage : public CPropertyPage
 {
@@ -44,9 +46,8 @@ private:
 public:
 	//{{AFX_DATA(CTorrentInfoPage)
 	//}}AFX_DATA
-
-	int	m_nIcon;
-
+	int				m_nIcon;
+	CBTInfo*		m_pInfo;
 	
 // Operations
 public:

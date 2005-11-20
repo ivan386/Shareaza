@@ -631,22 +631,19 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	if ( CBENode* pSHA1 = pInfo->GetNode( "sha1" ) )
 	{
 		if ( ! pSHA1->IsType( CBENode::beString ) || pSHA1->m_nValue != Hashes::Sha1Hash::byteCount ) return FALSE;
-		m_oDataSHA1 = *static_cast< const Hashes::BtHash::RawStorage* >(
-			pSHA1->m_pValue );
+		m_oDataSHA1 = *static_cast< const Hashes::BtHash::RawStorage* >( pSHA1->m_pValue );
 	}
 	
 	if ( CBENode* pED2K = pInfo->GetNode( "ed2k" ) )
 	{
 		if ( ! pED2K->IsType( CBENode::beString ) || pED2K->m_nValue != Hashes::Ed2kHash::byteCount ) return FALSE;
-		m_oDataED2K = *static_cast< const Hashes::Ed2kHash::RawStorage* >(
-			pED2K->m_pValue );
+		m_oDataED2K = *static_cast< const Hashes::Ed2kHash::RawStorage* >( pED2K->m_pValue );
 	}
 
 	if ( CBENode* pTiger = pInfo->GetNode( "tiger" ) )
 	{
 		if ( ! pTiger->IsType( CBENode::beString ) || pTiger->m_nValue != Hashes::TigerHash::byteCount ) return FALSE;
-		m_oDataTiger = *static_cast< const Hashes::TigerHash::RawStorage* >(
-			pTiger->m_pValue );
+		m_oDataTiger = *static_cast< const Hashes::TigerHash::RawStorage* >( pTiger->m_pValue );
 	}
 	
 	// Details on file (or files).

@@ -72,10 +72,9 @@ void CTorrentFilesPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CTorrentFilesPage::OnInitDialog()
 {
-	CBTInfo *pInfo = GetTorrentInfo();
 	CTorrentInfoPage::OnInitDialog();
 
-	m_sName			= pInfo->m_sName;
+	m_sName			= m_pInfo->m_sName;
 
 	CRect rc;
 	m_wndFiles.GetClientRect( &rc );
@@ -85,9 +84,9 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	m_wndFiles.InsertColumn( 1, _T("Size"), LVCFMT_RIGHT, 80, 0 );
 	//Skin.Translate( _T("CTorrentFileList"), m_wndFiles.GetHeaderCtrl() );
 
-	for ( int nFile = 0 ; nFile < pInfo->m_nFiles ; nFile++ )
+	for ( int nFile = 0 ; nFile < m_pInfo->m_nFiles ; nFile++ )
 	{
-		CBTInfo::CBTFile* pFile = pInfo->m_pFiles + nFile;
+		CBTInfo::CBTFile* pFile = m_pInfo->m_pFiles + nFile;
 		
 		LV_ITEM pItem = {};
 		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
@@ -108,7 +107,6 @@ BOOL CTorrentFilesPage::OnInitDialog()
 void CTorrentFilesPage::OnOK()
 {
 	UpdateData();
-	//CBTInfo *pInfo = GetTorrentInfo();
 
 	CTorrentInfoPage::OnOK();
 }

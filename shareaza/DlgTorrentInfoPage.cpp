@@ -79,6 +79,7 @@ BOOL CTorrentInfoPage::OnInitDialog()
 
 	Skin.Apply( NULL, this );
 
+	m_pInfo = GetTorrentInfo();
 	
 	return TRUE;
 }

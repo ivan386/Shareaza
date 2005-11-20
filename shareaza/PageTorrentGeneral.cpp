@@ -78,15 +78,14 @@ void CTorrentGeneralPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CTorrentGeneralPage::OnInitDialog()
 {
-	CBTInfo *pInfo = GetTorrentInfo();
 	CTorrentInfoPage::OnInitDialog();
 
-	m_sName			= pInfo->m_sName;
-	m_sComment		= pInfo->m_sComment;
-	m_sCreatedBy	= pInfo->m_sCreatedBy;
-	if ( pInfo->m_tCreationDate > 0 )
+	m_sName			= m_pInfo->m_sName;
+	m_sComment		= m_pInfo->m_sComment;
+	m_sCreatedBy	= m_pInfo->m_sCreatedBy;
+	if ( m_pInfo->m_tCreationDate > 0 )
 	{
-		CTime pTime( (time_t)pInfo->m_tCreationDate );
+		CTime pTime( (time_t)m_pInfo->m_tCreationDate );
 		m_sCreationDate = pTime.Format( _T("%Y-%m-%d  %H:%M") );
 	}
 
@@ -94,9 +93,9 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 	m_wndStartDownloads.SetItemData( 1, dtWhenRatio );
 	m_wndStartDownloads.SetItemData( 2, dtNever );
 
-	m_wndStartDownloads.SetCurSel( pInfo->m_nStartDownloads );
+	m_wndStartDownloads.SetCurSel( m_pInfo->m_nStartDownloads );
 
-	m_sUploadTotal.Format( _T(" %s"), (LPCTSTR)Settings.SmartVolume( pInfo->m_nTotalUpload, FALSE ) );
+	m_sUploadTotal.Format( _T(" %s"), (LPCTSTR)Settings.SmartVolume( m_pInfo->m_nTotalUpload, FALSE ) );
 
 	UpdateData( FALSE );
 	
@@ -106,13 +105,11 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 void CTorrentGeneralPage::OnOK()
 {
 	UpdateData();
-	CBTInfo *pInfo = GetTorrentInfo();
 
 	// Update the starting of torrent transfers
-	pInfo->m_nStartDownloads = m_wndStartDownloads.GetCurSel();
-	if ( pInfo->m_nStartDownloads > dtNever ) pInfo->m_nStartDownloads = dtAlways;
+	m_pInfo->m_nStartDownloads = m_wndStartDownloads.GetCurSel();
+	if ( m_pInfo->m_nStartDownloads > dtNever ) m_pInfo->m_nStartDownloads = dtAlways;
 	
-
 	CTorrentInfoPage::OnOK();
 }
 

@@ -66,7 +66,9 @@ CTorrentInfoSheet::CTorrentInfoSheet(CBTInfo* pInfo ) : CPropertySheet( _T("") )
 	m_psh.dwFlags &= ~PSP_HASHELP;
 
 	m_pInfo.Copy( pInfo );
-    m_pInfo.m_oInfoBTH.clear();
+    //m_pInfo.m_oInfoBTH.clear();
+
+
 }
 
 CTorrentInfoSheet::~CTorrentInfoSheet()
