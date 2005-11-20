@@ -20,6 +20,7 @@
 //
 
 #include "stdafx.h"
+#include <algorithm>
 #include "VideoReader.h"
 
 HRESULT CVideoReader::FinalConstruct() throw()
@@ -37,10 +38,11 @@ void CopyBitmap (char* pDestination, const char* pSource,
 	int width, int height, int line_size)
 {
 	// Down-up bitmap copying
-	char* dst = pDestination;
-	const char* src = pSource + sizeof (BITMAPINFOHEADER) +
-		line_size * (height - 1);
-	for (LONG j = 0; j < height;
+	//char* dst = pDestination;
+	const char* src = pSource + sizeof (BITMAPINFOHEADER);// +
+		//line_size * (height - 1);
+	std::reverse_copy( src, src + height * line_size, pDestination );
+/*	for (LONG j = 0; j < height;
 		++j, dst += line_size, src -= line_size) {
 		__asm {
 			mov edi, dst
@@ -57,7 +59,7 @@ void CopyBitmap (char* pDestination, const char* pSource,
 			dec ecx
 			jnz loop1
 		}
-	}
+	}*/
 }
 
 STDMETHODIMP CVideoReader::LoadFromFile (
