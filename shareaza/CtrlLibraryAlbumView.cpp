@@ -217,7 +217,7 @@ void CLibraryAlbumView::Update()
 	if ( bChanged )
 	{
 		m_pStaticStyle = m_pStyle;
-		qsort( m_pList, m_nCount, 4, SortList );
+		qsort( m_pList, m_nCount, sizeof *m_pList, SortList );
 		UpdateScroll();
 	}
 }

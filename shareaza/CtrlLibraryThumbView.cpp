@@ -198,7 +198,7 @@ void CLibraryThumbView::Update()
 
 	if ( bChanged )
 	{
-		qsort( m_pList, m_nCount, 4, SortList );
+		qsort( m_pList, m_nCount, sizeof *m_pList, SortList );
 		UpdateScroll();
 		StartThread();
 	}
