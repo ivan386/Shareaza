@@ -1,9 +1,9 @@
 //
 // ClassFactory.cpp
 //
-//	Date:			"$Date: 2005/10/29 03:54:57 $"
-//	Revision:		"$Revision: 1.6 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/11/20 18:03:53 $"
+//	Revision:		"$Revision: 1.7 $"
+//  Last change by:	"$Author: thetruecamper $"
 //	Created by:		Rolandas Rudomanskis
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -88,7 +88,7 @@ STDMETHODIMP_(ULONG) CDocumentClassFactory::Release(void)
 STDMETHODIMP CDocumentClassFactory::CreateInstance(LPUNKNOWN punk, REFIID riid, void** ppv)
 {
 	HRESULT hr;
-	CComObject<CDocReader>*pDocReader = NULL;
+//	CComObject<CDocReader>*pDocReader = NULL;
 
 	ODS("CFileClassFactory::CreateInstance\n");
 	CHECK_NULL_RETURN(ppv, E_POINTER);	*ppv = NULL;

@@ -1,9 +1,9 @@
 //
 // DocReader.cpp
 //
-//	Date:			"$Date: 2005/11/18 20:10:33 $"
-//	Revision:		"$Revision: 1.9 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/11/20 18:03:53 $"
+//	Revision:		"$Revision: 1.10 $"
+//  Last change by:	"$Author: thetruecamper $"
 //	Created by:		Rolandas Rudomanskis
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -79,7 +79,7 @@ STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 	DllAddRef();
 
 	HRESULT hr = E_FAIL;
-	LPCWSTR pszExt = wcslwr( wcsrchr( sFile, '.') );
+	LPCWSTR pszExt = _wcslwr( wcsrchr( sFile, '.') );
 	LPCWSTR pszSchema = GetSchema( sFile, pszExt );
 	LPCWSTR pszFormat = GetDocumentFormat( pszExt );
 
@@ -213,7 +213,7 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 		hr = m_pDocProps->m_pSummProps->get_Version( &bsValue );
 		if ( SUCCEEDED(hr) )
 		{
-			if ( wcsnicmp( bsValue, L"0.0", 3 ) != 0 ) 
+			if ( _wcsnicmp( bsValue, L"0.0", 3 ) != 0 ) 
 				pAttributes->Add( L"version", bsValue );
 		}
 
@@ -552,7 +552,7 @@ STDMETHODIMP CDocReader::LoadFromFile(BSTR sFile, IMAGESERVICEDATA* pParams, SAF
 	
 	HRESULT hr = E_FAIL;
 
-	LPCWSTR pszExt = wcslwr( wcsrchr( sFile, '.') );
+	LPCWSTR pszExt = _wcslwr( wcsrchr( sFile, '.') );
 	LPCWSTR pszFormat = GetDocumentFormat( pszExt );
 
 	if ( ! pszFormat )
@@ -1228,8 +1228,8 @@ LPWSTR CDocReader::GetSchema(BSTR sFile, LPCWSTR pszExt)
 	{
 		pszName++;
 		
-		if ( wcsnicmp( pszName, L"ebook - ", 8 ) == 0 ||
-			 wcsnicmp( pszName, L"(ebook", 6 ) == 0 )
+		if ( _wcsnicmp( pszName, L"ebook - ", 8 ) == 0 ||
+			 _wcsnicmp( pszName, L"(ebook", 6 ) == 0 )
 		{
 			return (LPWSTR)CDocReader::uriBook;
 		}
