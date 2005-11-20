@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,2,5
- PRODUCTVERSION 2,2,2,5
+ FILEVERSION 2,2,2,6
+ PRODUCTVERSION 2,2,2,6
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 5"
+            VALUE "FileVersion", "2, 2, 2, 6"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 5"
+            VALUE "ProductVersion", "2, 2, 2, 6"
         END
     END
     BLOCK "VarFileInfo"
@@ -2843,48 +2843,6 @@ BEGIN
     PUSHBUTTON      "",IDC_DOWNLOADS_BROWSE,155,112,23,20
 END
 
-IDD_TORRENT_TRACKER DIALOGEX 0, 0, 292, 246
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "BitTorrent Advanced Information"
-FONT 8, "Tahoma", 0, 0, 0x1
-BEGIN
-    GROUPBOX        "Torrent &Information:",IDC_STATIC,5,3,280,80
-    LTEXT           "Name:",IDC_STATIC,14,13,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_NAME,60,13,215,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    LTEXT           "Created:",IDC_STATIC,14,27,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_CREATIONDATE,60,27,74,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    LTEXT           "By:",IDC_STATIC,136,27,35,12,SS_CENTERIMAGE,WS_EX_RIGHT
-    EDITTEXT        IDC_TORRENT_CREATEDBY,173,27,102,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    LTEXT           "Comments:",IDC_STATIC,14,42,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_COMMENTS,60,41,215,22,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    LTEXT           "Tracker:",IDC_STATIC,14,67,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_TRACKER,60,65,215,12,ES_AUTOHSCROLL
-    GROUPBOX        "&Downloaders:",IDC_STATIC,5,85,280,24
-    LTEXT           "Completed (Seeds):",IDC_STATIC,15,93,80,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_COMPLETED,100,93,40,12,ES_CENTER | 
-                    ES_AUTOHSCROLL | ES_READONLY
-    RTEXT           "Incomplete:",IDC_STATIC,145,93,80,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_INCOMPLETE,235,93,40,12,ES_CENTER | 
-                    ES_AUTOHSCROLL | ES_READONLY
-    GROUPBOX        "Transfers:",IDC_STATIC,5,110,280,24
-    RTEXT           "Start new download transfers:",IDC_STATIC,15,120,116,9
-    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,146,118,129,66,
-                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "&Files:",IDC_STATIC,5,134,280,88
-    CONTROL         "List1",IDC_TORRENT_FILES,"SysListView32",LVS_REPORT | 
-                    LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,15,144,260,
-                    75
-    PUSHBUTTON      "&Refresh",IDC_TORRENT_REFRESH,5,225,50,14
-    COMBOBOX        IDC_TORRENT_VIEW,60,227,65,40,CBS_DROPDOWNLIST | NOT 
-                    WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
-    DEFPUSHBUTTON   "Close",IDOK,235,225,50,14
-END
-
 IDD_HELP DIALOG  0, 0, 292, 159
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza Help"
@@ -3831,14 +3789,6 @@ BEGIN
         BOTTOMMARGIN, 157
     END
 
-    IDD_TORRENT_TRACKER, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 285
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 239
-    END
-
     IDD_HELP, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -4329,25 +4279,6 @@ BEGIN
 0x6552, 0x656c, 0x7361, 0x0065, 
     IDC_MARKED_LIST, 0x403, 8, 0
 0x6f50, 0x7570, 0x616c, 0x0072, 
-    0
-END
-
-IDD_TORRENT_TRACKER DLGINIT
-BEGIN
-    IDC_TORRENT_STARTDOWNLOADS, 0x403, 10, 0
-0x7341, 0x6e20, 0x6565, 0x6564, 0x0064, 
-    IDC_TORRENT_STARTDOWNLOADS, 0x403, 21, 0
-0x6857, 0x6e65, 0x7220, 0x7461, 0x6f69, 0x6f20, 0x6576, 0x2072, 0x3031, 
-0x2530, "\000" 
-    IDC_TORRENT_STARTDOWNLOADS, 0x403, 20, 0
-0x6e4f, 0x796c, 0x7720, 0x6568, 0x206e, 0x6572, 0x7571, 0x7365, 0x6574, 
-0x0064, 
-    IDC_TORRENT_STARTDOWNLOADS, 0x403, 6, 0
-0x654e, 0x6576, 0x0072, 
-    IDC_TORRENT_VIEW, 0x403, 11, 0
-0x6956, 0x7765, 0x4620, 0x6c69, 0x7365, "\000" 
-    IDC_TORRENT_VIEW, 0x403, 10, 0
-0x6956, 0x7765, 0x4420, 0x7461, 0x0061, 
     0
 END
 

@@ -142,7 +142,6 @@
 #define IDI_CLIPBOARD                   236
 #define IDD_DOWNLOAD_GROUP              236
 #define IDI_PAINTBRUSHES                237
-#define IDD_TORRENT_TRACKER             238
 #define IDR_TORRENT_ICON                239
 #define IDD_HELP                        240
 #define IDB_NAVBAR_IMAGE                241

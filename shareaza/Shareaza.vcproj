@@ -1781,9 +1781,6 @@
 					RelativePath="DlgTorrentSeed.cpp">
 				</File>
 				<File
-					RelativePath="DlgTorrentTracker.cpp">
-				</File>
-				<File
 					RelativePath="DlgUpgrade.cpp">
 				</File>
 				<File
@@ -3052,9 +3049,6 @@
 				</File>
 				<File
 					RelativePath="DlgTorrentSeed.h">
-				</File>
-				<File
-					RelativePath="DlgTorrentTracker.h">
 				</File>
 				<File
 					RelativePath="DlgUpgrade.h">
