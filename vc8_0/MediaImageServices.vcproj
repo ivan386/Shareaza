@@ -21,6 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -113,6 +114,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -207,6 +209,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -302,6 +305,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -536,50 +540,6 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\debugx64\plugins\mediaimageservices\MediaImageServices_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\releasex64\plugins\mediaimageservices\MediaImageServices_i.c"
 				>
 				<FileConfiguration
@@ -705,63 +665,51 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\debugx64\plugins\mediaimageservices\MediaImageServices_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\d3d9.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\d3dx9.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\d3dx9d.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\d3dxof.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\ddraw.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\dinput.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\dinput8.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\dplayx.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\dsound.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\DxErr8.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\DxErr9.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\dxguid.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\dxtrans.lib"
-			>
-		</File>
-		<File
-			RelativePath="C:\Program Files (x86)\Microsoft DirectX 9.0 SDK (October 2005)\Lib\x64\XInput.lib"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

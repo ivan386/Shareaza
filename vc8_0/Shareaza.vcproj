@@ -4275,6 +4275,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="FileSystem"
+				>
+				<File
+					RelativePath="..\shareaza\FileSystem\FileSystem.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\FileSystem\FileSystem.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
