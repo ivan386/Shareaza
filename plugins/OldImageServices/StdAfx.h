@@ -19,7 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#pragma once
+#ifndef STDAFX_H_INCLUDED
+#define STDAFX_H_INCLUDED
+
+//#define _CRT_SECURE_NO_DEPRECATE
+//#pragma warning ( disable : 4100 4127 )
 
 #ifndef STRICT
 #define STRICT
@@ -33,10 +37,20 @@
 #define _ATL_NO_AUTOMATIC_NAMESPACE
 
 #include <atlbase.h>
-//extern CComModule _Module; 
 #include <atlcom.h>
 
-#include <setjmp.h>
 #include "resource.h"
 
+#include <boost/smart_ptr.hpp>
+
 using namespace ATL;
+
+// Simple Wrapper for RAII to make exception handling simpler
+struct HandleWrapper
+{
+	HANDLE file_;
+	explicit HandleWrapper(HANDLE file) : file_( file ) {}
+	~HandleWrapper() { if ( file_ != INVALID_HANDLE_VALUE ) CloseHandle( file_ ); }
+};
+
+#endif // #ifndef STDAFX_H_INCLUDED

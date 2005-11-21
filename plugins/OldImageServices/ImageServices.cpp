@@ -26,7 +26,7 @@
 #include "JPEGReader.h"
 #include "PNGReader.h"
 //#include "GIFReader.h"
-#include "AVIThumb.h"
+//#include "AVIThumb.h"
 
 CComModule _Module;
 
@@ -34,7 +34,7 @@ BEGIN_OBJECT_MAP(ObjectMap)
 	OBJECT_ENTRY(CLSID_JPEGReader, CJPEGReader)
 	OBJECT_ENTRY(CLSID_PNGReader, CPNGReader)
 //	OBJECT_ENTRY(CLSID_GIFReader, CGIFReader)
-	OBJECT_ENTRY(CLSID_AVIThumb, CAVIThumb)
+//	OBJECT_ENTRY(CLSID_AVIThumb, CAVIThumb)
 END_OBJECT_MAP()
 
 

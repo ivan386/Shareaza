@@ -35,22 +35,20 @@ library ImageServicesLib
 	{
 		[default] interface IUnknown;
 	};
-	[
+/*	[
 		uuid(DD99484A-33B7-46C2-8387-2FBED7A25A54),
 		helpstring("GIF Image Serivice")
 	]
 	coclass GIFReader
 	{
 		[default] interface IUnknown;
-	};
-	[
+	};*/
+/*	[
 		uuid(4956C5F5-D9A8-4CBB-8994-F53CF55CFDF5),
 		helpstring("AVI Thumbnailing Service")
 	]
 	coclass AVIThumb
 	{
 		[default] interface IUnknown;
-	};
+	};*/
 };
-
-

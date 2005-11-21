@@ -26,6 +26,7 @@
 // libpng
 //
 
+#include "pngusr.h"
 #include <png.h>
 
 class ATL_NO_VTABLE CPNGReader : 
@@ -34,9 +35,6 @@ class ATL_NO_VTABLE CPNGReader :
 	public IImageServicePlugin
 {
 public:
-	CPNGReader();
-	virtual ~CPNGReader();
-
 DECLARE_REGISTRY_RESOURCEID(IDR_PNGREADER)
 
 BEGIN_COM_MAP(CPNGReader)
@@ -45,29 +43,29 @@ END_COM_MAP()
 
 // IImageServicePlugin
 public:
-    virtual HRESULT STDMETHODCALLTYPE LoadFromFile( 
-        /* [in] */ HANDLE hFile,
-        /* [in] */ DWORD nLength,
-        /* [out][in] */ IMAGESERVICEDATA __RPC_FAR *pParams,
-        /* [out] */ SAFEARRAY __RPC_FAR *__RPC_FAR *ppImage);
-    
-    virtual HRESULT STDMETHODCALLTYPE LoadFromMemory( 
-        /* [in] */ SAFEARRAY __RPC_FAR *pMemory,
-        /* [out][in] */ IMAGESERVICEDATA __RPC_FAR *pParams,
-        /* [out] */ SAFEARRAY __RPC_FAR *__RPC_FAR *ppImage);
-
-    virtual HRESULT STDMETHODCALLTYPE SaveToFile( 
-        /* [in] */ HANDLE hFile,
-        /* [out][in] */ IMAGESERVICEDATA __RPC_FAR *pParams,
-        /* [in] */ SAFEARRAY __RPC_FAR *pImage);
-    
-    virtual HRESULT STDMETHODCALLTYPE SaveToMemory( 
-        /* [out] */ SAFEARRAY __RPC_FAR *__RPC_FAR *ppMemory,
-        /* [out][in] */ IMAGESERVICEDATA __RPC_FAR *pParams,
-        /* [in] */ SAFEARRAY __RPC_FAR *pImage);
+	STDMETHOD(LoadFromFile)(
+		/* [in] */ BSTR sFile,
+		/* [in,out] */ IMAGESERVICEDATA* pParams,
+		/* [out] */ SAFEARRAY** ppImage );
+	STDMETHOD(LoadFromMemory)(
+		/* [in] */ BSTR sType,
+		/* [in] */ SAFEARRAY* pMemory,
+		/* [in,out] */ IMAGESERVICEDATA* pParams,
+		/* [out] */ SAFEARRAY** ppImage );
+	STDMETHOD(SaveToFile)(
+		/* [in] */ BSTR sFile,
+		/* [in,out] */ IMAGESERVICEDATA* pParams,
+		/* [in] */ SAFEARRAY* pImage)
+	{ 	ATLTRACENOTIMPL ("SaveToFile"); }
+	STDMETHOD(SaveToMemory)(
+		/* [in] */ BSTR sType,
+		/* [out] */ SAFEARRAY** ppMemory,
+		/* [in,out] */ IMAGESERVICEDATA* pParams,
+		/* [in] */ SAFEARRAY* pImage)
+	{ ATLTRACENOTIMPL ("SaveToMemory"); }
 
 // Handlers
-protected:
+private:
 	static void OnFileRead(png_structp png_ptr, png_bytep data, png_size_t length);
 	static void OnMemRead(png_structp png_ptr, png_bytep data, png_size_t length);
 

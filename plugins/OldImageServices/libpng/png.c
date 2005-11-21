@@ -52,16 +52,16 @@ PNG_zTXt;
 /* arrays to facilitate easy interlacing - use pass (0 - 6) as index */
 
 /* start of interlace block */
-const int FARDATA png_pass_start[] = {0, 4, 0, 2, 0, 1, 0};
+extern const int FARDATA png_pass_start[] = {0, 4, 0, 2, 0, 1, 0};
 
 /* offset to next interlace block */
-const int FARDATA png_pass_inc[] = {8, 8, 4, 4, 2, 2, 1};
+extern const int FARDATA png_pass_inc[] = {8, 8, 4, 4, 2, 2, 1};
 
 /* start of interlace block in the y direction */
-const int FARDATA png_pass_ystart[] = {0, 0, 4, 0, 2, 0, 1};
+extern const int FARDATA png_pass_ystart[] = {0, 0, 4, 0, 2, 0, 1};
 
 /* offset to next interlace block in the y direction */
-const int FARDATA png_pass_yinc[] = {8, 8, 8, 4, 4, 2, 2};
+extern const int FARDATA png_pass_yinc[] = {8, 8, 8, 4, 4, 2, 2};
 
 /* width of interlace block (used in assembler routines only) */
 #ifdef PNG_HAVE_ASSEMBLER_COMBINE_ROW
@@ -143,13 +143,13 @@ voidpf /* private */
 png_zalloc(voidpf png_ptr, uInt items, uInt size)
 {
    png_voidp ptr;
-   png_structp p=png_ptr;
+   png_structp p=(png_structp)png_ptr;
    png_uint_32 save_flags=p->flags;
    png_uint_32 num_bytes;
 
    if (items > PNG_UINT_32_MAX/size)
    {
-     png_warning (png_ptr, "Potential overflow in png_zalloc()");
+     png_warning ((png_structp)png_ptr, "Potential overflow in png_zalloc()");
      return (NULL);
    }
    num_bytes = (png_uint_32)items * size;
