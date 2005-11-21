@@ -11,7 +11,7 @@ The Unzip library is Copyright (C) 1998-2003 Gilles Vollant.
 // EXPORT BEGIN
 BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 	static HBITMAP hBannerBmp = NULL;
-	static char *szFile = NULL;
+	static TCHAR* szFile = NULL;
 	static int maxPos = 1;
 
     switch (msg) {
@@ -21,24 +21,24 @@ BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) 
 			
 			EnableWindow(GetDlgItem(hwndDlg,IDC_CONFIG), FALSE);
 
-			szFile = (char*)lParam;
-			maxPos = GetSkinFileCount(szFile);
+			szFile = (TCHAR*)lParam;
+			maxPos = GetSkinFileCount( szFile );
 			if (!maxPos) maxPos = 1;
 			SendMessage(hwndDlg, WM_SETICON, ICON_BIG, (LPARAM) LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_SHAREAZA)));
 			hBannerBmp = (HBITMAP)LoadImage(GetModuleHandle(NULL),MAKEINTRESOURCE(IDB_BANNER),IMAGE_BITMAP,0,0,LR_LOADMAP3DCOLORS);
-			hBanner = CreateWindow("STATIC", NULL, WS_VISIBLE|WS_CHILD|SS_BITMAP, 0, 0, 293, 172, hwndDlg, NULL, GetModuleHandle(NULL), NULL);
+			hBanner = CreateWindow(L"STATIC", NULL, WS_VISIBLE|WS_CHILD|SS_BITMAP, 0, 0, 293, 172, hwndDlg, NULL, GetModuleHandle(NULL), NULL);
 			SendMessage(hBanner, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)hBannerBmp);
 			SendDlgItemMessage(hwndDlg, IDC_PROGRESS, PBM_SETRANGE, 0, MAKELPARAM(0,maxPos));
 			SendDlgItemMessage(hwndDlg, IDC_PROGRESS, PBM_SETSTEP, 1, 0);
 			if (!ValidateSkin(szFile, hwndDlg)) {
 				SendDlgItemMessage(hwndDlg, IDC_PROGRESS, PBM_SETPOS, maxPos, 0);
-				SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), "Please verify the skin is a valid Shareaza Skin and try again.");
+				SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), L"Please verify the skin is a valid Shareaza Skin and try again.");
 				EnableWindow(GetDlgItem(hwndDlg, IDOK), TRUE);
 				EnableWindow(GetDlgItem(hwndDlg, IDC_INSTALL), FALSE);
 			}
 			if (skinType==1) {
 				SetWindowText(hwndDlg, SKIN_LANG_TITLE);
-				SetWindowText(GetDlgItem(hwndDlg, IDC_CONFIG), "Configure &Language...");
+				SetWindowText(GetDlgItem(hwndDlg, IDC_CONFIG), L"Configure &Language...");
 			}
 			else {
 				SetWindowText(hwndDlg, SKIN_SKIN_TITLE);
@@ -52,15 +52,15 @@ BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) 
 				SendDlgItemMessage(hwndDlg,IDC_NAME,WM_SETFONT,(WPARAM)hFont,0);
 			}
 			if (szName) {
-				char buf[256], tbuf[256];
-				_snprintf(buf, sizeof(buf), "%s %s", szName, szVersion?szVersion:"");
-				_snprintf(tbuf, sizeof(tbuf), "%s - %s", buf, skinType? SKIN_LANG_TITLE : SKIN_SKIN_TITLE);
+				TCHAR buf[256], tbuf[256];
+				_snwprintf(buf, sizeof(buf), L"%s %s", szName, szVersion?szVersion:L"");
+				_snwprintf(tbuf, sizeof(tbuf), L"%s - %s", buf, skinType? SKIN_LANG_TITLE : SKIN_SKIN_TITLE);
 				SetDlgItemText(hwndDlg, IDC_NAME, buf);
 				SetWindowText(hwndDlg, tbuf);
 			}
 			if (szAuthor) {
-				char buf[256];
-				_snprintf(buf, sizeof(buf), "By %s", szAuthor);
+				TCHAR buf[256];
+				_snwprintf(buf, sizeof(buf), L"By %s", szAuthor);
 				SetDlgItemText(hwndDlg, IDC_AUTH, buf);
 			}
 			break;
@@ -88,29 +88,29 @@ BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) 
 					break;
 				case IDC_INSTALL:
 				{
-					char modDir[MAX_PATH], *tmp;
+					TCHAR modDir[MAX_PATH], *tmp;
 					
 					EnableWindow(GetDlgItem(hwndDlg,IDOK), FALSE);
-					GetModuleFileName(NULL,modDir,sizeof(modDir));
-					tmp=strrchr(modDir,'\\');
+					GetModuleFileName(NULL, modDir, sizeof(modDir));
+					tmp=wcsrchr(modDir, L'\\');
 					if (tmp) *tmp=0;
 					SetCurrentDirectory(modDir);
 					if (!GetInstallDirectory()) {
 					    SendDlgItemMessage(hwndDlg, IDC_PROGRESS, PBM_SETPOS, maxPos, 0);
-					    SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), "Could not determine install directory. Please re-install Shareaza");
+					    SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), L"Could not determine install directory. Please re-install Shareaza");
 					    EnableWindow(GetDlgItem(hwndDlg, IDOK), TRUE);
 					    break;
 					}
 					if (!ExtractSkin(szFile, hwndDlg)) { 
 						SendDlgItemMessage(hwndDlg, IDC_PROGRESS, PBM_SETPOS, maxPos, 0);
-						SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), "An error occured extracting the skin.  Please try again.");
+						SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), L"An error occured extracting the skin.  Please try again.");
 						EnableWindow(GetDlgItem(hwndDlg, IDOK), TRUE);
 						break;
 					}
 					SendDlgItemMessage(hwndDlg, IDC_PROGRESS, PBM_SETPOS, maxPos, 0);
 					if (skinType==1) 
-						SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), "Language successfully installed.");
-					else SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), "Skin successfully installed.");
+						SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), L"Language successfully installed.");
+					else SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), L"Skin successfully installed.");
 					EnableWindow(GetDlgItem(hwndDlg, IDOK), TRUE);
 					EnableWindow(GetDlgItem(hwndDlg, IDC_INSTALL), FALSE);
 					if (FindWindow(SKIN_RAZA_HWND,NULL)) EnableWindow(GetDlgItem(hwndDlg, IDC_CONFIG), TRUE);

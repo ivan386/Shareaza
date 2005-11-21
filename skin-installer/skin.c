@@ -10,13 +10,14 @@ The Unzip library is Copyright (C) 1998-2003 Gilles Vollant.
 
 // globals
 int   skinType;
-char* szName;
-char* szVersion;
-char* szAuthor;
-char* szXML;
-char  prefix[MAX_PATH];
+TCHAR* szName;
+TCHAR* szVersion;
+TCHAR* szAuthor;
+TCHAR* szXML;
+TCHAR* prefix[MAX_PATH];
+BOOL  bRunningOnNT;
 
-int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, char *cmdParam, int cmdShow) {
+int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPCTSTR cmdParam, int cmdShow) {
 	InitCommonControls();
 
 	// globals
@@ -25,10 +26,11 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, char *cmdParam, int cmd
 	szVersion = NULL;
 	szAuthor  = NULL;
 	szXML     = NULL;
+	bRunningOnNT = ( ( GetVersion() & 0x80000000 ) != 0x80000000 );
     
-	if (strlen(cmdParam)==0) MessageBox(NULL,"Shareaza Skin Installer " VERSION "\n\nDouble-click on a Shareaza Skin File to use the Shareaza Skin Installer.","Shareaza Skin Installer",MB_OK | MB_ICONINFORMATION);
-	else if (!strcmp(cmdParam, "/install") || !strcmp(cmdParam, "/installsilent")) CreateSkinKeys();
-	else if (!strcmp(cmdParam, "/uninstall") || !strcmp(cmdParam, "/uninstallsilent")) DeleteSkinKeys();
+	if (wcslen(cmdParam)==0) MessageBox(NULL,L"Shareaza Skin Installer " VERSION L"\n\nDouble-click on a Shareaza Skin File to use the Shareaza Skin Installer.",L"Shareaza Skin Installer",MB_OK | MB_ICONINFORMATION);
+	else if (!wcscmp(cmdParam, L"/install") || !wcscmp(cmdParam, L"/installsilent")) CreateSkinKeys();
+	else if (!wcscmp(cmdParam, L"/uninstall") || !wcscmp(cmdParam, L"/uninstallsilent")) DeleteSkinKeys();
 	else ExtractSkinFile(cmdParam);
 	
 	// free up memory from globals

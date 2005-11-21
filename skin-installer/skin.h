@@ -15,36 +15,38 @@ The Unzip library is Copyright (C) 1998-2003 Gilles Vollant.
 #include <unzip.h>
 #include <errno.h>
 #include "resource.h"
+#include <tchar.h>
 
-#define SKIN_RAZA_HWND	"ShareazaMainWnd"
-#define SKIN_SKIN_TITLE	"Shareaza Skin Installer"
-#define SKIN_LANG_TITLE "Shareaza Language Installer"
-#define VERSION         "1.0.11"
+#define SKIN_RAZA_HWND	L"ShareazaMainWnd"
+#define SKIN_SKIN_TITLE	L"Shareaza Skin Installer"
+#define SKIN_LANG_TITLE L"Shareaza Language Installer"
+#define VERSION         L"1.0.12"
 
 // globals
 extern int   skinType;
-extern char* szName;
-extern char* szVersion;
-extern char* szAuthor;
-extern char* szXML;
-extern char prefix[MAX_PATH];
+extern TCHAR* szName;
+extern TCHAR* szVersion;
+extern TCHAR* szAuthor;
+extern TCHAR* szXML;
+extern TCHAR* prefix[MAX_PATH];
+extern BOOL bRunningOnNT;
 
 // extract.c
-void ExtractSkinFile(char *szFile);
+void ExtractSkinFile(LPCTSTR pszFile);
 int GetInstallDirectory();
-int GetSkinFileCount(char *szFile);
-int ValidateSkin(char *szFile, HWND hwndDlg);
-int ExtractSkin(char *szFile, HWND hwndDlg);
+int GetSkinFileCount(LPCTSTR pszFile);
+int ValidateSkin(LPCTSTR pszFile, HWND hwndDlg);
+int ExtractSkin(LPCTSTR pszFile, HWND hwndDlg);
+LPCTSTR GetUnicodeString(char* pszString);
 
 // registry.c
 void CreateSkinKeys();
 void DeleteSkinKeys();
 
 // utils.c
-void XMLDecode(char *str);
 void LoadManifestInfo(char *buf);
 int SetSkinAsDefault();
-int MakeDirectory(char *newdir);
+int MakeDirectory(LPCTSTR newdir);
 
 // window.c
 BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam);

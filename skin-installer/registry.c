@@ -13,31 +13,31 @@ static int DeleteHKCRKey(LPCTSTR lpSubKey, LPTSTR lpClass);
 
 // EXPORT BEGIN
 void CreateSkinKeys() {
-	char filename[MAX_PATH];
-	char fullpath[MAX_PATH];
-	char imagpath[MAX_PATH];
+	TCHAR filename[MAX_PATH];
+	TCHAR fullpath[MAX_PATH];
+	TCHAR imagpath[MAX_PATH];
 
 	GetModuleFileName(NULL,filename,sizeof(filename));
-	_snprintf(fullpath, sizeof(fullpath), "\"%s\" \"%%1\"", filename);
-	_snprintf(imagpath, sizeof(imagpath), "%s,0", filename);
-	CreateHKCRKey(".sks", "", "Shareaza.SkinFile");
-	CreateHKCRKey("Shareaza.SkinFile", "", "Shareaza Skin File");
-	CreateHKCRKey("Shareaza.SkinFile\\DefaultIcon", "", imagpath);
-	CreateHKCRKey("Shareaza.SkinFile\\shell", "", "open");
-	CreateHKCRKey("Shareaza.SkinFile\\shell\\open\\command", "", fullpath);
-	CreateHKCRKey("Shareaza.SkinFile\\shell\\skininstall", "", "Install Shareaza Skin");
-	CreateHKCRKey("Shareaza.SkinFile\\shell\\skininstall\\command", "", fullpath);
+	_snwprintf(fullpath, sizeof(fullpath), L"\"%s\" L\"%%1\"", filename);
+	_snwprintf(imagpath, sizeof(imagpath), L"%s,0", filename);
+	CreateHKCRKey(L".sks", L"", L"Shareaza.SkinFile");
+	CreateHKCRKey(L"Shareaza.SkinFile", L"", L"Shareaza Skin File");
+	CreateHKCRKey(L"Shareaza.SkinFile\\DefaultIcon", L"", imagpath);
+	CreateHKCRKey(L"Shareaza.SkinFile\\shell", L"", L"open");
+	CreateHKCRKey(L"Shareaza.SkinFile\\shell\\open\\command", L"", fullpath);
+	CreateHKCRKey(L"Shareaza.SkinFile\\shell\\skininstall", L"", L"Install Shareaza Skin");
+	CreateHKCRKey(L"Shareaza.SkinFile\\shell\\skininstall\\command", L"", fullpath);
 }
 
 void DeleteSkinKeys() {
-	DeleteHKCRKey(".sks", "");
-	DeleteHKCRKey("Shareaza.SkinFile\\shell\\open\\command", "");
-	DeleteHKCRKey("Shareaza.SkinFile\\shell\\open", "");
-	DeleteHKCRKey("Shareaza.SkinFile\\shell\\skininstall\\command", "");
-	DeleteHKCRKey("Shareaza.SkinFile\\shell\\skininstall", "");
-	DeleteHKCRKey("Shareaza.SkinFile\\shell", "");
-	DeleteHKCRKey("Shareaza.SkinFile\\DefaultIcon", "");
-	DeleteHKCRKey("Shareaza.SkinFile", "");
+	DeleteHKCRKey(L".sks", L"");
+	DeleteHKCRKey(L"Shareaza.SkinFile\\shell\\open\\command", L"");
+	DeleteHKCRKey(L"Shareaza.SkinFile\\shell\\open", L"");
+	DeleteHKCRKey(L"Shareaza.SkinFile\\shell\\skininstall\\command", L"");
+	DeleteHKCRKey(L"Shareaza.SkinFile\\shell\\skininstall", L"");
+	DeleteHKCRKey(L"Shareaza.SkinFile\\shell", L"");
+	DeleteHKCRKey(L"Shareaza.SkinFile\\DefaultIcon", L"");
+	DeleteHKCRKey(L"Shareaza.SkinFile", L"");
 }
 //EXPORT END
 
@@ -47,7 +47,7 @@ static int CreateHKCRKey(LPCTSTR lpSubKey, LPTSTR lpClass, LPTSTR lpData) {
     DWORD lpdw;
     int aLen;
 
-    aLen = strlen(lpData) + 1;
+    aLen = wcslen(lpData) + 1;
     rtn = RegCreateKeyEx(HKEY_CLASSES_ROOT,lpSubKey,0,NULL,REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS,0,&keyHandle,&lpdw);
     if(rtn == ERROR_SUCCESS) {
 		RegSetValueEx(keyHandle,lpClass,0,REG_SZ,(LPBYTE)lpData,aLen);
