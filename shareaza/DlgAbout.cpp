@@ -78,7 +78,11 @@ BOOL CAboutDlg::OnInitDialog()
 
 	m_wndTitle.GetWindowText( strCaption );
 	strCaption += theApp.m_sVersion;
+#ifndef _WIN64
 	strCaption += _T(" (") + theApp.m_sBuildDate + _T(")");
+#else
+	strCaption += L" x64 Edition (" + theApp.m_sBuildDate + _T(")");
+#endif
 	m_wndTitle.SetWindowText( strCaption );
 
 	m_crWhite = CCoolInterface::GetDialogBkColor();
