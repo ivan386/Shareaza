@@ -55,8 +55,8 @@ HRESULT STDMETHODCALLTYPE CJPEGReader::LoadFromFile(BSTR sFile, IMAGESERVICEDATA
 		DWORD nLength = GetFileSize( file.file_, NULL );
 
 		cinfo.err				= jpeg_std_error( &jerr );
-		jerr.error_exit	= OnErrorExit;
-		jerr.emit_message	= OnEmitMessage;
+		jerr.error_exit			= OnErrorExit;
+		jerr.emit_message		= OnEmitMessage;
 		jerr.bPartial			= false;
 
 		jpeg_create_decompress( &cinfo );
@@ -69,6 +69,7 @@ HRESULT STDMETHODCALLTYPE CJPEGReader::LoadFromFile(BSTR sFile, IMAGESERVICEDATA
 		jsrc.term_source		= OnNull;
 		jsrc.next_input_byte	= NULL;
 		jsrc.bytes_in_buffer	= 0;
+		jsrc.hFile				= file.file_;
 		jsrc.dwOffset			= SetFilePointer( jsrc.hFile, 0, NULL, FILE_CURRENT );
 		jsrc.dwLength			= nLength;
 		jsrc.dwBuffer			= 4096;
@@ -129,25 +130,6 @@ HRESULT STDMETHODCALLTYPE CJPEGReader::LoadFromFile(BSTR sFile, IMAGESERVICEDATA
 			
 			pParams->nFlags |= IMAGESERVICE_PARTIAL_OUT;
 		}
-	}
-	catch ( JPEGException& )
-	{
-		jpeg_destroy_decompress( &cinfo );
-		if ( *ppImage )
-		{
-			SafeArrayUnaccessData( *ppImage );
-			
-			if ( pParams->nFlags & IMAGESERVICE_PARTIAL_IN )
-			{
-				pParams->nFlags |= IMAGESERVICE_PARTIAL_OUT;
-				return S_OK;
-			}
-			
-			SafeArrayDestroy( *ppImage );
-			*ppImage = NULL;
-		}
-		
-		return E_FAIL;
 	}
 	catch ( ... )
 	{

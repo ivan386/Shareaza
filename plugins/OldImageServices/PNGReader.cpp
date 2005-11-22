@@ -144,45 +144,6 @@ HRESULT STDMETHODCALLTYPE CPNGReader::LoadFromFile(BSTR sFile, IMAGESERVICEDATA*
 
 		SafeArrayUnaccessData( *ppImage );
 	}
-	catch ( PngException& )
-	{
-		png_destroy_read_struct( &png_ptr, &info_ptr, png_infopp_NULL );
-
-		if ( *ppImage )
-		{
-			SafeArrayUnaccessData( *ppImage );
-			
-			if ( pParams->nFlags & IMAGESERVICE_PARTIAL_IN )
-			{
-				pParams->nFlags |= IMAGESERVICE_PARTIAL_OUT;
-				return S_OK;
-			}
-			
-			SafeArrayDestroy( *ppImage );
-			*ppImage = NULL;
-		}
-
-		return E_FAIL;
-	}
-	catch ( std::bad_alloc& )
-	{
-		png_destroy_read_struct( &png_ptr, &info_ptr, png_infopp_NULL );
-
-		if ( *ppImage )
-		{
-			SafeArrayUnaccessData( *ppImage );
-			
-			if ( pParams->nFlags & IMAGESERVICE_PARTIAL_IN )
-			{
-				pParams->nFlags |= IMAGESERVICE_PARTIAL_OUT;
-				return S_OK;
-			}
-			
-			SafeArrayDestroy( *ppImage );
-			*ppImage = NULL;
-		}
-		return E_FAIL;
-	}
 	catch ( ... )
 	{
 		// oops
