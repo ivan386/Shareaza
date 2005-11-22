@@ -60,11 +60,11 @@ CAPTION "Shareaza Skin Installer"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     LTEXT           "",IDC_WHITERECT,0,31,293,75
-    LTEXT           "Unknown Skin",IDC_NAME,10,40,265,14
-    LTEXT           "Unknown Author",IDC_AUTH,10,55,265,14
+    LTEXT           "Unknown Skin",IDC_NAME,10,38,265,14
+    LTEXT           "Unknown Author",IDC_AUTH,10,52,265,19
     CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    10,70,273,10
-    LTEXT           "Ready to install",IDC_STATUS,10,85,273,8
+                    10,74,273,10
+    LTEXT           "Ready to install",IDC_STATUS,10,91,273,8
     CONTROL         "",-1,"Static",SS_ETCHEDHORZ,0,106,293,1
     PUSHBUTTON      "Select &Skin",IDC_CONFIG,9,114,83,15
     DEFPUSHBUTTON   "&Install",IDC_INSTALL,190,114,45,15
@@ -78,7 +78,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,12,0
+ FILEVERSION 1,0,12,1
  PRODUCTVERSION 0,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -96,7 +96,7 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Shareaza"
             VALUE "FileDescription", "Shareaza Skin Installer"
-            VALUE "FileVersion", "1, 0, 12, 0"
+            VALUE "FileVersion", "1, 0, 12, 1"
             VALUE "OriginalFilename", "skin.exe"
             VALUE "ProductName", "Shareaza Skin Installer"
             VALUE "ProductVersion", "0, 0, 0, 0"

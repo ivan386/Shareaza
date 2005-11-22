@@ -13,6 +13,7 @@ int   skinType;
 TCHAR* szName;
 TCHAR* szVersion;
 TCHAR* szAuthor;
+TCHAR* szUpdates;
 TCHAR* szXML;
 TCHAR* prefix[MAX_PATH];
 BOOL  bRunningOnNT;
@@ -25,6 +26,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPCTSTR cmdParam, int 
 	szName    = NULL;
 	szVersion = NULL;
 	szAuthor  = NULL;
+	szUpdates = NULL;
 	szXML     = NULL;
 	bRunningOnNT = ( ( GetVersion() & 0x80000000 ) != 0x80000000 );
     
@@ -37,6 +39,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPCTSTR cmdParam, int 
 	if (szName) free(szName);
 	if (szVersion) free(szVersion);
 	if (szAuthor) free(szAuthor);
+	if (szUpdates) free(szUpdates);
 	if (szXML) free(szXML);
 	return 0;
 }

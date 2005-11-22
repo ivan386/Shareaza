@@ -63,6 +63,17 @@ BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) 
 				_snwprintf(buf, sizeof(buf), L"By %s", szAuthor);
 				SetDlgItemText(hwndDlg, IDC_AUTH, buf);
 			}
+			if ( szUpdates && wcscmp( szAuthor, szUpdates ) != 0 ) {
+				TCHAR updbuf[256], buf[256];
+				if (szAuthor) {
+					_snwprintf(updbuf, sizeof(updbuf), L"; Updated by %s", szUpdates);
+					GetDlgItemText(hwndDlg, IDC_AUTH, buf, 256 );
+					wcsncat( buf, updbuf, 256 - wcslen(buf) );
+				}
+				else
+					_snwprintf(buf, sizeof(buf), L"Updated by %s", szUpdates);
+				SetDlgItemText(hwndDlg, IDC_AUTH, buf);
+			}
 			break;
 		}
 		case WM_CLOSE:

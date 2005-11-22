@@ -44,6 +44,10 @@ void LoadManifestInfo(char *buf)
 		szAuthor = _wcsdup(p);
 		free(p);
 	}
+	if (p=(TCHAR*)GetManifestValue(pszBuf, L"updatedby")) {
+		szUpdates = _wcsdup(p);
+		free(p);
+	}
 }
 
 int SetSkinAsDefault() {

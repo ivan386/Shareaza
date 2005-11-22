@@ -27,6 +27,7 @@ extern int   skinType;
 extern TCHAR* szName;
 extern TCHAR* szVersion;
 extern TCHAR* szAuthor;
+extern TCHAR* szUpdates;
 extern TCHAR* szXML;
 extern TCHAR* prefix[MAX_PATH];
 extern BOOL bRunningOnNT;
