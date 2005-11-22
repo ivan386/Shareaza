@@ -127,16 +127,14 @@ HRESULT STDMETHODCALLTYPE CPNGReader::LoadFromFile(BSTR sFile, IMAGESERVICEDATA*
 			return E_FAIL;
 		}
 
-		BYTE** pRows = new BYTE*[ nHeight ];
+		boost::scoped_array< BYTE* > pRows( new BYTE*[ nHeight ] );
 
 		for ( UINT nY = 0 ; nY < nHeight ; nY++ )
 		{
 			pRows[ nY ] = pOutput + nY * nPitch;
 		}
 
-		png_read_image( png_ptr, pRows );
-
-		delete [] pRows;
+		png_read_image( png_ptr, pRows.get() );
 
 		png_read_end( png_ptr, NULL );
 
