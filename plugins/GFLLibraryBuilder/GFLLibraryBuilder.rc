@@ -27,7 +27,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,3
+ FILEVERSION 1,0,0,4
  PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -44,7 +44,7 @@ BEGIN
         BLOCK "000004b0"
         BEGIN
             VALUE "FileDescription", "GFL Library Builder plugin"
-            VALUE "FileVersion", "1, 0, 0, 3"
+            VALUE "FileVersion", "1, 0, 0, 4"
             VALUE "InternalName", "GFLLibraryBuilder.dll"
             VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005"
             VALUE "OriginalFilename", "GFLLibraryBuilder.dll"
