@@ -111,11 +111,13 @@ BOOL CIdentityProfilePage::OnInitDialog()
 			{
 				int nIndex = pGender->SelectString( 1, (LPCTSTR) strGenderMale );
 				ASSERT(nIndex != CB_ERR);
+				UNUSED_ALWAYS(nIndex);
 			}
 			else if ( m_sGender.CompareNoCase( _T("female") ) == 0 )
 			{
 				int nIndex = pGender->SelectString( 2, (LPCTSTR) strGenderFemale );
 				ASSERT(nIndex != CB_ERR);
+				UNUSED_ALWAYS(nIndex);
 			}
 			else
 				m_sGender.Empty();

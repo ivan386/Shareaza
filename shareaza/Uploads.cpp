@@ -448,6 +448,7 @@ void CUploads::Add(CUploadTransfer* pUpload)
 	POSITION pos = m_pList.Find( pUpload );
 	ASSERT( pos == NULL );
 	m_pList.AddHead( pUpload );
+	UNUSED_ALWAYS( pos );
 }
 
 void CUploads::Remove(CUploadTransfer* pUpload)
@@ -455,5 +456,6 @@ void CUploads::Remove(CUploadTransfer* pUpload)
 	POSITION pos = m_pList.Find( pUpload );
 	ASSERT( pos != NULL );
 	m_pList.RemoveAt( pos );
+	UNUSED_ALWAYS( pos );
 }
 
