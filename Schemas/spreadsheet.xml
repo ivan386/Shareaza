@@ -339,14 +339,19 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="dif"/>
                <type extension="htm"/>
                <type extension="html"/>
+               <type extension="ods"/>
+               <type extension="ots"/>
                <type extension="pdf"/>
                <type extension="pln"/>
                <type extension="rtf"/>
+               <type extension="sdc"/>
+               <type extension="stc"/>
                <type extension="sxc"/>
                <type extension="txt"/>
                <type extension="wb1"/>
                <type extension="wb2"/>
                <type extension="wb3"/>
                <type extension="xls"/>
+               <type extension="xlt"/>
        </typeFilter>
 </schemaDescriptor>

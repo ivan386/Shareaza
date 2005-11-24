@@ -348,6 +348,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="db"/>
                <type extension="dif"/>
                <type extension="doc"/>
+               <type extension="dot"/>
                <type extension="dox"/>
                <type extension="emr"/>
                <type extension="fft"/>
@@ -356,6 +357,8 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="lit"/>
                <type extension="lwp"/>
                <type extension="mif"/>
+               <type extension="odt"/>
+               <type extension="ott"/>
                <type extension="pdb"/>
                <type extension="pdf"/>
                <type extension="ps"/>
@@ -363,6 +366,8 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="rft"/>
                <type extension="rtf"/>
                <type extension="sam"/>
+               <type extension="sdw"/>
+               <type extension="stw"/>
                <type extension="sxw"/>
                <type extension="txt"/>
                <type extension="wkb"/>

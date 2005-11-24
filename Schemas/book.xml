@@ -510,12 +510,15 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="html"/>
                <type extension="kml"/>
                <type extension="lit"/>
+               <type extension="odt"/>
                <type extension="pdb"/>
                <type extension="pdf"/>
                <type extension="prc"/>
                <type extension="ps"/>
                <type extension="rb"/>
                <type extension="rtf"/>
+               <type extension="sdw"/>
+               <type extension="sxw"/>
                <type extension="tcr"/>
                <type extension="txt"/>
                <type extension="wpd"/>

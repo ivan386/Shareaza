@@ -403,6 +403,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="gz"/>
                <type extension="gzip"/>
                <type extension="msi"/>
+               <type extension="ppa"/>
                <type extension="rar"/>
                <type extension="sit"/>
                <type extension="t"/>
@@ -411,6 +412,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="tar.gzip"/>
                <type extension="tar.z"/>
                <type extension="tgz"/>
+               <type extension="xla"/>
                <type extension="zip"/>
        </typeFilter>
 </schemaDescriptor>
