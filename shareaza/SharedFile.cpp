@@ -295,7 +295,7 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 {
 	if ( m_pFolder != NULL )
 	{
-		Uploads.OnRename( GetPath(), NULL );
+		Uploads.OnRename( GetPath(), NULL, TRUE );
 		
 		LPTSTR pszPath = new TCHAR[ GetPath().GetLength() + 2 ];
 		_tcscpy( pszPath, GetPath() );

@@ -407,8 +407,9 @@ BOOL CUploads::OnAccept(CConnection* pConnection, LPCTSTR pszHandshake)
 //////////////////////////////////////////////////////////////////////
 // CUploads rename handler
 
-void CUploads::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
+void CUploads::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget, BOOL bRemoving)
 {
+	if ( pszSource == NULL ) return;
 	CSingleLock pLock( &Transfers.m_pSection );
 	
 	if ( pLock.Lock( 500 ) )
@@ -421,6 +422,8 @@ void CUploads::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 		pLock.Unlock();
 	}
 	
+	if ( ! bRemoving ) return;
+
 	CSingleLock pLock2( &theApp.m_pSection );
 	
 	if ( pLock2.Lock( 500 ) )

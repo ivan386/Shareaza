@@ -58,7 +58,7 @@ public:
 	DWORD		GetBandwidth() const;
 	void		OnRun();
 	BOOL		OnAccept(CConnection* pConnection, LPCTSTR pszHandshake);
-	void		OnRename(LPCTSTR pszSource, LPCTSTR pszTarget = (LPCTSTR)1);
+	void		OnRename(LPCTSTR pszSource, LPCTSTR pszTarget = (LPCTSTR)1, BOOL bRemoving = FALSE);
 public:
 	void		Add(CUploadTransfer* pUpload);
 	void		Remove(CUploadTransfer* pUpload);

@@ -141,7 +141,7 @@ void CDownloadWithFile::DeleteFile(BOOL bForce)
 {
 	if ( m_pFile != NULL && m_pFile->IsValid() == FALSE ) return;
 	
-	Uploads.OnRename( m_sDiskName, NULL );
+	Uploads.OnRename( m_sDiskName, NULL, bForce );
 	
 	int nPos = m_sDiskName.ReverseFind( '\\' );
 	CString strMetadata;
