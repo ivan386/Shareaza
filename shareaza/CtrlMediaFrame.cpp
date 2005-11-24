@@ -1,9 +1,9 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.33 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/11/24 18:06:06 $"
+//	Revision:		"$Revision: 1.34 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1297,7 +1297,8 @@ void CMediaFrame::OnFileDelete(LPCTSTR pszFile)
 {
 	if ( m_sFile.CompareNoCase( pszFile ) == 0 )
 	{
-		if ( m_pPlayer ) m_pPlayer->Close();
+		// Only remove from the list, the player cleans up itself
+		m_wndList.Remove( pszFile );
 	}
 }
 
@@ -1666,14 +1667,14 @@ void CMediaFrame::OnNewCurrent(NMHDR* /*pNotify*/, LRESULT* pResult)
 		}
 
 		if ( bPlayIt && ! bCorrupted )
-			{
-				m_pPlayer->Play();
+		{
+			m_pPlayer->Play();
 			if ( m_bScreenSaverEnabled ) DisableScreenSaver();
 			// check if the last was not played; flag only when we are playing the file before it
 			if ( ! m_bLastNotPlayed )
 				m_bLastNotPlayed = ( nCurrent == m_wndList.GetItemCount() - 2 );
-				UpdateState();
-			}
+			UpdateState();
+		}
 		else if ( bCorrupted ) // file was corrupted, move to the next file
 		{
 			nCurrent = m_wndList.GetNext( FALSE );
