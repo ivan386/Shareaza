@@ -642,7 +642,8 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 
 	if ( m_pFolderSelection != NULL && pView != NULL )
 	{
-		if ( Settings.Library.ShowVirtual && m_pView )
+		if ( Settings.Library.ShowVirtual && m_pView &&
+			 m_pFolderSelection->m_pVirtual->m_pSchema )
 			pView->m_bGhostFolder = 
 				( m_pFolderSelection->m_pVirtual->m_pSchema->m_sURI == CSchema::uriGhostFolder );
 		else 
