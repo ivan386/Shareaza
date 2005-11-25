@@ -495,10 +495,11 @@ void CLibraryDetailView::OnGetDispInfoW(NMLVDISPINFO* pNotify, LRESULT* pResult)
 	
 	if ( pNotify->item.mask & LVIF_STATE )
 	{
-		pNotify->item.state &= ~LVIS_SELECTED;
-		if ( pItem->nState & LDVI_SELECTED ) pNotify->item.state |= LVIS_SELECTED;
+		pNotify->item.state &= (~LVIS_SELECTED & ~LVIS_FOCUSED);
+		if ( pItem->nState & LDVI_SELECTED ) 
+			pNotify->item.state |= (LVIS_SELECTED | LVIS_FOCUSED);
 	}
-	
+
 	if ( pItem->nCookie != m_nListCookie )
 	{
 		{
@@ -531,8 +532,8 @@ void CLibraryDetailView::OnGetDispInfoA(NMLVDISPINFO* pNotify, LRESULT* pResult)
 	
 	if ( pNotify->item.mask & LVIF_STATE )
 	{
-		pNotify->item.state &= ~LVIS_SELECTED;
-		if ( pItem->nState & LDVI_SELECTED ) pNotify->item.state |= LVIS_SELECTED;
+		pNotify->item.state &= (~LVIS_SELECTED & ~LVIS_FOCUSED);
+		if ( pItem->nState & LDVI_SELECTED ) pNotify->item.state |= (LVIS_SELECTED | LVIS_FOCUSED);
 	}
 	
 	if ( pItem->nCookie != m_nListCookie )
@@ -716,6 +717,7 @@ void CLibraryDetailView::OnItemChanged(NM_LISTVIEW* pNotify, LRESULT* pResult)
 
 		LDVITEM* pItem = m_pList;
 		for ( DWORD nCount = m_nList ; nCount ; nCount--, pItem++ ) pItem->nState &= ~LDVI_SELECTED;
+		SendMessage( LVM_REDRAWITEMS, 0, m_nList );
 	}
 }
 
