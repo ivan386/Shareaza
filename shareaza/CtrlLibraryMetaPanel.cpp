@@ -132,9 +132,12 @@ void CLibraryMetaPanel::Update()
 		m_nIndex	= pFirst->m_nIndex;
 		m_sName		= pFirst->m_sName;
 		CString strNewFile( pFirst->GetPath() );
-		m_bNewFile = ( m_sPath != strNewFile );
+		m_bNewFile = ( m_sPath != strNewFile || pFirst->IsGhost() );
 		if ( m_bNewFile ) m_sPath = strNewFile;
-		if ( pFirst->m_pFolder != NULL ) m_sFolder = pFirst->m_pFolder->m_sPath;
+		if ( pFirst->m_pFolder != NULL )
+			m_sFolder = pFirst->m_pFolder->m_sPath;
+		else
+			m_sFolder.Empty();
 		m_sSize		= Settings.SmartVolume( pFirst->GetSize(), FALSE );
 		m_sType		= ShellIcons.GetTypeString( m_sName );
 		m_nIcon32	= ShellIcons.Get( m_sName, 32 );
