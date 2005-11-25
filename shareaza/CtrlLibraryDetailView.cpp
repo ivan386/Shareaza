@@ -160,7 +160,7 @@ int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		pList->SetImageList( ShellIcons.GetObject( 32 ), LVSIL_NORMAL );
 	}
 	
-	pList->SetCallbackMask( LVIS_SELECTED );
+	pList->SetCallbackMask( LVIS_SELECTED | LVIS_FOCUSED );
 	
 	m_pList	= NULL;
 	m_nList	= m_nBuffer = 0;
