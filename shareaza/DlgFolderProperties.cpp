@@ -46,6 +46,7 @@ BEGIN_MESSAGE_MAP(CFolderPropertiesDlg, CSkinDialog)
 	ON_WM_SIZE()
 	ON_CBN_SELCHANGE(IDC_SCHEMAS, OnSelChangeSchemas)
 	ON_CBN_CLOSEUP(IDC_SCHEMAS, OnCloseUpSchemas)
+	ON_BN_CLICKED(IDCANCEL, OnCancel)
 	ON_WM_PAINT()
 	ON_EN_CHANGE(IDC_TITLE, OnChangeTitle)
 	ON_WM_CTLCOLOR()
@@ -371,4 +372,15 @@ void CFolderPropertiesDlg::DoApply(BOOL bMetaToFiles)
 
 		Library.Update();
 	}
+}
+
+void CFolderPropertiesDlg::OnCancel()
+{
+	if ( m_pFolder->m_sSchemaURI && m_pFolder->m_sSchemaURI.IsEmpty() )
+	{ 
+		// "New Folder" created and Cancel button was pressed
+		// By default only OK button asigns schema
+		m_pFolder->Delete();
+	}
+	return CSkinDialog::OnCancel();
 }
