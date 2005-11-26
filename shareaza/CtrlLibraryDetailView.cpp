@@ -717,7 +717,7 @@ void CLibraryDetailView::OnItemChanged(NM_LISTVIEW* pNotify, LRESULT* pResult)
 
 		LDVITEM* pItem = m_pList;
 		for ( DWORD nCount = m_nList ; nCount ; nCount--, pItem++ ) pItem->nState &= ~LDVI_SELECTED;
-		SendMessage( LVM_REDRAWITEMS, 0, m_nList );
+		this->SendMessage( LVM_REDRAWITEMS, 0, m_nList );
 	}
 }
 
