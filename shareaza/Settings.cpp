@@ -482,7 +482,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	32
+#define SMART_VERSION	33
 
 void CSettings::Load()
 {
@@ -709,6 +709,10 @@ void CSettings::SmartUpgrade()
 		theApp.WriteProfileString( _T("Interface"), _T("SchemaColumns.audio"), _T("(EMPTY)") );
 	}
 
+	if ( nVersion < 33 )
+	{
+		RegDeleteKey( HKEY_CURRENT_USER, _T("Software\\Shareaza\\Shareaza\\Plugins\\LibraryBuilder") );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
