@@ -999,7 +999,10 @@ void CLibraryTreeView::OnLibraryExportCollection()
 {
 	if ( m_pSelFirst == NULL || m_pSelFirst->m_pSelNext != NULL ) return;
 	if ( m_pSelFirst->m_pVirtual == NULL ) return;
-	if ( m_pSelFirst->m_pVirtual->m_pXML == NULL ) return;
+	
+	// Allow max 200 files to parse
+	if ( m_pSelFirst->m_pVirtual->GetFileCount() == 0 ||
+		 m_pSelFirst->m_pVirtual->GetFileCount() > 200 ) return;
 
 	CCollectionExportDlg dlg( m_pSelFirst->m_pVirtual );
 	dlg.DoModal();
