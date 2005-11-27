@@ -53,6 +53,7 @@ public:
 	CString				GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept);
 	int					GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;
 	int					GetBTSourceCount(BOOL bNoPush = FALSE) const;
+	int					GetED2KCompleteSourceCount() const;
 	BOOL				CheckSource(CDownloadSource* pSource) const;
 	void				ClearSources();
 public:
@@ -69,7 +70,6 @@ protected:
 	void            RemoveOverlappingSources(QWORD nOffset, QWORD nLength);
 	BOOL		    AddSourceInternal(CDownloadSource* pSource);
 private:
-	int				GetED2KCompleteSourceCount() const;
 	void		    RemoveSource(CDownloadSource* pSource, BOOL bBan);
 	void		    SortSource(CDownloadSource* pSource, BOOL bTop);
 	void		    SortSource(CDownloadSource* pSource);

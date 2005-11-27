@@ -294,7 +294,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.ReAskTime"), &eDonkey.ReAskTime, 1740 );
 	Add( _T("eDonkey.DequeueTime"), &eDonkey.DequeueTime, 3610 );
 	Add( _T("eDonkey.TagNames"), &eDonkey.TagNames, TRUE );
-	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, TRUE );
+	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, 1 );
 	Add( _T("eDonkey.MagnetSearch"), &eDonkey.MagnetSearch, TRUE );
 	Add( _T("eDonkey.MinServerFileSize"), &eDonkey.MinServerFileSize, 0 );
 	Add( _T("eDonkey.DefaultServerFlags"), &eDonkey.DefaultServerFlags, 0xFFFFFFFF );	

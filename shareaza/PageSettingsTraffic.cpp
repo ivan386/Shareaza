@@ -177,7 +177,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.eDonkey.FrameSize, 1024, 1, 500, _T(" KB") );
 	AddSetting( &Settings.eDonkey.ReAskTime, 60, 20, 360, _T(" m") );
 	AddSetting( &Settings.eDonkey.DequeueTime, 60, 2, 512, _T(" m") );
-	AddSetting( &Settings.eDonkey.ExtendedRequest, 1, 0, 1 );
+	AddSetting( &Settings.eDonkey.ExtendedRequest, 1, 0, 2 );
 	AddSetting( &Settings.eDonkey.MagnetSearch, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.MinServerFileSize, 1, 0, 50, _T(" MB") );
 	AddSetting( &Settings.eDonkey.TagNames, 1, 0, 1 );

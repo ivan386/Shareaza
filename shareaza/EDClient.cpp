@@ -727,7 +727,7 @@ void CEDClient::SendHello(BYTE nType)
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
 
 	// 4 - Feature Versions. 
-	BYTE nExtendedRequests = ( Settings.eDonkey.ExtendedRequest ) ? ED2K_VERSION_EXTENDEDREQUEST : 0 ;
+	BYTE nExtendedRequests = min ( Settings.eDonkey.ExtendedRequest, ED2K_VERSION_EXTENDEDREQUEST );
 	nVersion = ( ( ED2K_VERSION_AICH << 29) |			// AICH
 				 ( TRUE << 28) |						// Unicode
 				 ( ED2K_VERSION_UDP << 24) |			// UDP version
@@ -927,7 +927,7 @@ void CEDClient::SendEmuleInfo(BYTE nType)
 	CEDTag( ED2K_ET_UDPVER, ED2K_VERSION_UDP ).Write( pPacket );
 	CEDTag( ED2K_ET_UDPPORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
 	CEDTag( ED2K_ET_COMMENTS, ED2K_VERSION_COMMENTS ).Write( pPacket );	
-	if ( Settings.eDonkey.ExtendedRequest ) CEDTag( ED2K_ET_EXTENDEDREQUEST, ED2K_VERSION_EXTENDEDREQUEST ).Write( pPacket );
+	if ( Settings.eDonkey.ExtendedRequest ) CEDTag( ED2K_ET_EXTENDEDREQUEST, Settings.eDonkey.ExtendedRequest ).Write( pPacket );
 	Send( pPacket );
 }
 

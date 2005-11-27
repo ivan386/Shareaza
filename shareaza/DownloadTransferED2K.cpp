@@ -684,22 +684,23 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_FILEREQUEST );
 	pPacket->Write( m_pDownload->m_oED2K );
 
-	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 1 )
+	if ( Settings.eDonkey.ExtendedRequest >= 1 && m_pClient->m_bEmRequest >= 1 )
 	{
 		m_pClient->WritePartStatus( pPacket, m_pDownload );
 	}
-	/*
-	//We don't have any need to do this- it's not very useful (or accurate). Raza only offers extended request V1
-	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 2 ) 
+
+	//We don't have any need to do this- it's not very useful (or accurate). 
+	// Raza only offers extended request V1 by default
+	if ( Settings.eDonkey.ExtendedRequest >= 2 && m_pClient->m_bEmRequest >= 2 ) 
 	{
-		pPacket->WriteShortLE( m_pDownload->GetED2KCompleteSourceCount() );
+		pPacket->WriteShortLE( (WORD) m_pDownload->GetED2KCompleteSourceCount() );
 	}
-	*/
+
 	Send( pPacket );
 	
 	if ( m_pDownload->m_nSize <= ED2K_PART_SIZE )
 	{
-		// Don't ask for status - if the client answers we know the file is complete anyway
+		// Don't ask for status - if the client answers, we know the file is complete anyway
 	}
 	else
 	{
@@ -709,13 +710,13 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 		Send( pPacket );
 	}
 	
-	if ( ( m_pDownload->GetSourceCount() < Settings.Downloads.SourcesWanted ) &&//We want more sources
-		 ( tNow > m_tSources ) && ( tNow - m_tSources > 30 * 60 * 1000 ) &&		//We have not asked for at least 30 minutes
-		 ( m_pClient->m_bEmule ) && ( Network.IsListening() ) )					//Remote client is eMule compatible and we are accepting packets
+	if ( ( m_pDownload->GetSourceCount() < Settings.Downloads.SourcesWanted ) &&// We want more sources
+		 ( tNow > m_tSources ) && ( tNow - m_tSources > 30 * 60 * 1000 ) &&		// We have not asked for at least 30 minutes
+		 ( m_pClient->m_bEmule ) && ( Network.IsListening() ) )					// Remote client is eMule compatible and we are accepting packets
 	{
-		//Set 'last asked for sources' time
+		// Set 'last asked for sources' time
 		m_tSources = tNow;
-		//Send ed2k request for sources packet
+		// Send ed2k request for sources packet
 		pPacket = CEDPacket::New( ED2K_C2C_REQUESTSOURCES, ED2K_PROTOCOL_EMULE );
 		pPacket->Write( m_pDownload->m_oED2K );
 		Send( pPacket );

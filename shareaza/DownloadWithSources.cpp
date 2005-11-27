@@ -106,7 +106,8 @@ int CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 	/*
 	CString strT;
 	strT.Format(_T("BT sources: %i"), nCount);
-	theApp.Message( MSG_ERROR, strT );*/
+	theApp.Message( MSG_DEBUG, strT );
+	*/
 	return nCount;
 }
 
@@ -118,10 +119,10 @@ int CDownloadWithSources::GetED2KCompleteSourceCount() const
 	
 	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 	{
-		if ( ( ! pSource->m_bPushOnly ) && // Push sources can't be counted since you often cannot reach them
-			 ( pSource->m_tAttempt < tNow || pSource->m_tAttempt - tNow <= 900000 ) &&	// This source is probably dead
-			 ( pSource->m_nProtocol == PROTOCOL_ED2K ) && // Only counting ed2k sources
-             ( pSource->m_oAvailable.empty() ) ) // Only counting complete sources
+		if ( ( ! pSource->m_bPushOnly ) &&						// Push sources shouldn't be counted since you often cannot reach them
+			 ( pSource->m_tAttempt < tNow || pSource->m_tAttempt - tNow <= 900000 ) &&	// Only count sources that are probably active
+			 ( pSource->m_nProtocol == PROTOCOL_ED2K ) &&		// Only count ed2k sources
+             ( pSource->m_oAvailable.empty() ) )				// Only count complete sources
 			
 		{
 			nCount++;
@@ -131,7 +132,8 @@ int CDownloadWithSources::GetED2KCompleteSourceCount() const
 	/*
 	CString strT;
 	strT.Format(_T("Complete ed2k sources: %i"), nCount);
-	theApp.Message( MSG_ERROR, strT );*/
+	theApp.Message( MSG_DEBUG, strT );
+	*/
 	return nCount;
 }
 
