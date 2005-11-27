@@ -343,16 +343,20 @@ void CCollectionExportDlg::OnOK()
 			int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 			CString strXML = Settings.General.Path + _T("\\Templates\\") 
 							+ m_wndList.GetItemText( nItem, 3 );
-			if ( ! m_wndWizard ) 
+			if ( ! m_wndWizard )
+			{
+				CWaitCursor pCursor;
 				m_wndWizard.Create( WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP, 
 					rcNew, this, IDC_WIZARD, strXML, m_pFolder );
+				pCursor.Restore();
+			}
 			else
 				m_wndWizard.ShowWindow( TRUE );
 			if ( ! m_wndWizard.m_bValid ) m_wndOK.EnableWindow( FALSE );
 		}
 		break;
 		case 2: // the second wizard screen
-	CString strPath = BrowseForFolder();
+			CString strPath = BrowseForFolder();
 			if ( strPath.IsEmpty() ) 
 			{
 				m_nStep--; // do not increment at the end of case
