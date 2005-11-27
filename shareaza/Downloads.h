@@ -44,8 +44,8 @@ public:
 // Attributes
 public:
 	DWORD			m_tBandwidthLastCalc;		// The last time the bandwidth was calculated
-	BOOL			m_tBandwidthAtMax;			// The last time download bandwidth was all in use
-	BOOL			m_tBandwidthAtMaxED2K;		// The last time all ed2k bandwidth was used
+	DWORD			m_tBandwidthAtMax;			// The last time download bandwidth was all in use
+	DWORD			m_tBandwidthAtMaxED2K;		// The last time all ed2k bandwidth was used
 
 	DWORD			m_nLimitNew;				// Bandwidth assigned to new transfers
 
