@@ -73,6 +73,12 @@ CGGEPItem* CGGEPBlock::Add(LPCTSTR pszID)
 
 	CGGEPItem* pItem = new CGGEPItem( pszID );
 
+	if ( pItem == NULL )
+	{
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CGGEPBlock::Add()") );
+		return NULL;
+	}
+
 	if ( ! m_pFirst ) m_pFirst = pItem;
 	if ( m_pLast ) m_pLast->m_pNext = pItem;
 	m_pLast = pItem;
@@ -329,6 +335,12 @@ BOOL CGGEPItem::ReadFrom(CGGEPBlock* pBlock, BYTE nFlags)
 	if ( pBlock->m_nInput < m_nLength ) return FALSE;
 
 	m_pBuffer = new BYTE[ m_nLength ];
+	if ( m_pBuffer == NULL )
+	{
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CGGEPItem::ReadFrom()") );
+		theApp.Message( MSG_DEBUG, _T("Requested length: %i"), m_nLength );
+		return FALSE;
+	}
 
 	CopyMemory( m_pBuffer, pBlock->m_pInput, m_nLength );
 	pBlock->m_pInput += m_nLength;
@@ -436,6 +448,13 @@ BOOL CGGEPItem::Encode(BOOL bIfZeros)
 	BYTE* pRange	= NULL;
 	DWORD nRange	= 0;
 
+	if ( pOutput == NULL )
+	{
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CGGEPItem::Encode()") );
+		theApp.Message( MSG_DEBUG, _T("Requested length: %i"), m_nLength * 2 );
+		return FALSE;
+	}
+
 	for ( pIn = m_pBuffer, nLength = m_nLength ; nLength > 0 ; nLength--, pIn++ )
 	{
 		if ( *pIn == 0 )
@@ -497,6 +516,13 @@ BOOL CGGEPItem::Decode()
 	BYTE* pOutput	= new BYTE[ m_nLength * 2 ];
 	BYTE* pOut		= pOutput;
 	BYTE* pIn		= m_pBuffer;
+
+	if ( pOutput == NULL )
+	{
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CGGEPItem::Decode()") );
+		theApp.Message( MSG_DEBUG, _T("Requested length: %i"), m_nLength * 2 );
+		return FALSE;
+	}
 
 	for ( DWORD nLength = m_nLength ; nLength > 0 ; nLength--, pIn++ )
 	{

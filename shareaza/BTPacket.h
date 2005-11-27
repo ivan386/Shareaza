@@ -82,6 +82,10 @@ inline void CBTPacket::CBTPacketPool::NewPoolImpl(int nSize, CPacket*& pPool, in
 {
 	nPitch	= sizeof(CBTPacket);
 	pPool	= new CBTPacket[ nSize ];
+	if ( pPool == NULL )
+	{
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CBTPacket::CBTPacketPool::NewPoolImpl()") );
+	}
 }
 
 inline void CBTPacket::CBTPacketPool::FreePoolImpl(CPacket* pPacket)
