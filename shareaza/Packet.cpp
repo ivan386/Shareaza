@@ -396,6 +396,7 @@ BYTE* CPacket::WriteGetPointer(DWORD nLength, DWORD nOffset)
 		// Increase the size of the buffer by the needed length, or 128 bytes, whichever is bigger
 		m_nBuffer += max( nLength, PACKET_GROW ); // Packet grow is 128 bytes
 		LPBYTE pNew = new BYTE[ m_nBuffer ];             // Allocate a new buffer of that size
+		if ( pNew == NULL ) return NULL;
 		CopyMemory( pNew, m_pBuffer, m_nLength );        // Copy all the memory of the old buffer into the new bigger one
 		if ( m_pBuffer ) delete [] m_pBuffer;            // Free the old buffer
 		m_pBuffer = pNew;                                // Point this packet object at its new, bigger buffer

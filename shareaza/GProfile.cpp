@@ -302,7 +302,14 @@ CG2Packet* CGProfile::CreateAvatar()
 	pPacket->WritePacket( "BODY", (DWORD)pFile.GetLength() );
 	LPBYTE pBody = pPacket->WriteGetPointer( (DWORD)pFile.GetLength() );
 
-	pFile.Read( pBody, (DWORD)pFile.GetLength() );
+	if ( pBody == NULL )
+	{
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CGProfile::CreateAvatar()") );
+	}
+	else
+	{
+		pFile.Read( pBody, (DWORD)pFile.GetLength() );
+	}
 	pFile.Close();
 
 	return pPacket;

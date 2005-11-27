@@ -1204,6 +1204,12 @@ BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		{
 			BYTE* pOut = pPacket->WriteGetPointer( 11, 0 );
 
+			if ( pOut == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CDatagrams::OnQueryKeyAnswer()") );
+				return TRUE;
+			}
+
 			*pOut++ = 0x50;
 			*pOut++ = 6;
 			*pOut++ = 'Q';

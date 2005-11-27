@@ -297,6 +297,11 @@ public:
 			// Switch to a new bigger one
 			m_nBuffer += max( nLength, PACKET_GROW ); // Size the buffer larger by the requested amount, or the packet grow size of 128 bytes
 			LPBYTE pNew = new BYTE[ m_nBuffer ];      // Allocate a new block of memory of that size
+			if ( pNew == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CPacket::Ensure()") );
+				return;
+			}
 			CopyMemory( pNew, m_pBuffer, m_nLength ); // Copy the packet data from the old buffer to the new one
 			if ( m_pBuffer ) delete [] m_pBuffer;     // If there is an old buffer, free it
 			m_pBuffer = pNew;                         // Point the packet object's member variable pointer at the new buffer
@@ -313,6 +318,11 @@ public:
 			// Make it bigger
 			m_nBuffer += max( nLength, PACKET_GROW ); // Calculate the new size to be nLength or 128 bytes bigger
 			LPBYTE pNew = new BYTE[ m_nBuffer ];      // Allocate a new buffer of that size
+			if ( pNew == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CPacket::Write()") );
+				return;
+			}
 			CopyMemory( pNew, m_pBuffer, m_nLength ); // Copy the data from the old buffer to the new one
 			if ( m_pBuffer ) delete [] m_pBuffer;     // Delete the old buffer
 			m_pBuffer = pNew;                         // Point m_pBuffer at the new, bigger buffer

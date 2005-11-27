@@ -1479,6 +1479,14 @@ BOOL CEDClient::OnSourceRequest(CEDPacket* pPacket)
 	if ( pReply->m_nLength > 0 )
 	{
         BYTE* pStart = pReply->WriteGetPointer( Hashes::Ed2kHash::byteCount + 2, 0 );
+
+		if ( pStart == NULL )
+		{
+			theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDClient::OnSourceRequest()") );
+			pReply->Release();
+			return TRUE;
+		}
+
 		*reinterpret_cast< Hashes::Ed2kHash::RawStorage* >( pStart )
 			= oHash.storage();
 		pStart += Hashes::Ed2kHash::byteCount;

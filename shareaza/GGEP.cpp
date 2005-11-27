@@ -255,6 +255,13 @@ void CGGEPItem::Write(LPCVOID pData, int nLength)
 {
 	BYTE* pNew = new BYTE[ m_nLength + (DWORD)nLength ];
 
+	if ( pNew == NULL )
+	{
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CGGEPItem::Write()") );
+		theApp.Message( MSG_DEBUG, _T("Requested length: %i"), nLength );
+		return;
+	}
+
 	if ( m_pBuffer )
 	{
 		CopyMemory( pNew, m_pBuffer, m_nLength );

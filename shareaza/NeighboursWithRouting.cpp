@@ -211,6 +211,13 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 			pG2Q2 = pG2;
 
 			BYTE* pPtr = pG2->WriteGetPointer( 5 + 6, 0 );
+
+			if ( pPtr == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CNeighboursWithRouting::RouteQuery()") );
+				return 0;
+			}
+
 			*pPtr++ = 0x50;
 			*pPtr++ = 6;
 			*pPtr++ = 'U';
