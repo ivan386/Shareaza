@@ -129,7 +129,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copying libgfl240.dll"
-				CommandLine="copy ..\setup\plugins\libgfl240.dll $(SolutionDir)$(ConfigurationName)\plugins\ /y &gt; nul"/>
+				CommandLine="copy ..\setup\plugins\libgfl240.dll &quot;$(SolutionDir)$(ConfigurationName)\plugins\&quot; /y &gt; nul"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
