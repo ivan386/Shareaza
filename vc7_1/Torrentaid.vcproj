@@ -36,7 +36,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)/$(ProjectName).exe"
+				OutputFile="$(SolutionDir)$(ConfigurationName)/TorrentWizard.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				GenerateDebugInformation="TRUE"/>
@@ -93,7 +93,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)/$(ProjectName).exe"
+				OutputFile="$(SolutionDir)$(ConfigurationName)/TorrentWizard.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				OptimizeReferences="2"/>
