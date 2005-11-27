@@ -95,7 +95,8 @@ BOOL CDownloadEditDlg::OnInitDialog()
 
 	m_sName = m_pDownload->m_sDisplayName;
 	m_sDiskName = m_pDownload->m_sDiskName;
-	m_sFileSize.Format( _T("%I64i"), m_pDownload->m_nSize );
+	if ( m_pDownload->m_nSize != SIZE_UNKNOWN )
+		m_sFileSize.Format( _T("%I64i"), m_pDownload->m_nSize );
 
 	if ( m_pDownload->m_oSHA1 )
 		m_sSHA1 = m_pDownload->m_oSHA1.toString();
@@ -431,17 +432,17 @@ BOOL CDownloadEditDlg::Commit()
 		m_pDownload->Rename( m_sName );
 	}
 
-	CString strSize;
-	strSize.Format( _T("%I64i"), m_pDownload->m_nSize );
-    if ( strSize != m_sFileSize )
+    QWORD m_nFileSize = SIZE_UNKNOWN;
+	if ( ! m_sFileSize.IsEmpty() )
+		_stscanf( m_sFileSize, _T("%I64i"), &m_nFileSize );
+	if ( m_pDownload->m_nSize != m_nFileSize )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CHANGE_SIZE );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
 		pLock.Lock();
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
-		
-		_stscanf( m_sFileSize, _T("%I64i"), &(m_pDownload->m_nSize) );
+        m_pDownload->m_nSize = m_nFileSize;
 	}
 	
 	if ( m_pDownload->m_oSHA1.isValid() != oSHA1.isValid()
