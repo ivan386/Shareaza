@@ -432,7 +432,7 @@ BOOL CDownloadEditDlg::Commit()
 	}
 
 	CString strSize;
-	strSize.Format( _T("%i"), m_pDownload->m_nSize );
+	strSize.Format( _T("%I64i"), m_pDownload->m_nSize );
     if ( strSize != m_sFileSize )
 	{
 		pLock.Unlock();
