@@ -992,7 +992,16 @@ void CLibraryTreeView::OnLibraryFolderFileProperties()
 
 void CLibraryTreeView::OnUpdateLibraryExportCollection(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable( m_bVirtual && m_nSelected == 1 );
+	BOOL bAllowExport = TRUE;
+
+	// Allow max 200 files to be parse and do not export from Ghost or Collection folder
+	if ( ! m_pSelFirst->m_pVirtual || m_pSelFirst->m_pVirtual->GetFileCount() == 0 ||
+		 m_pSelFirst->m_pVirtual->GetFileCount() > 200 ||
+		 m_pSelFirst->m_pVirtual->m_sSchemaURI == CSchema::uriGhostFolder ||
+		 m_pSelFirst->m_pVirtual->m_oCollSHA1 ) 
+		 bAllowExport = FALSE;
+
+	pCmdUI->Enable( m_nSelected == 1 && bAllowExport );
 }
 
 void CLibraryTreeView::OnLibraryExportCollection()
@@ -1000,14 +1009,6 @@ void CLibraryTreeView::OnLibraryExportCollection()
 	if ( m_pSelFirst == NULL || m_pSelFirst->m_pSelNext != NULL ) return;
 	if ( m_pSelFirst->m_pVirtual == NULL ) return;
 	
-	// Allow max 200 files to parse
-	if ( m_pSelFirst->m_pVirtual->GetFileCount() == 0 ||
-		 m_pSelFirst->m_pVirtual->GetFileCount() > 200 ) return;
-
-	// Do not allow to export ghost files
-	if ( m_pSelFirst->m_pVirtual->m_sSchemaURI == CSchema::uriGhostFolder ||
-		 m_pSelFirst->m_pVirtual->m_oCollSHA1 ) return;
-
 	CCollectionExportDlg dlg( m_pSelFirst->m_pVirtual );
 	dlg.DoModal();
 }
