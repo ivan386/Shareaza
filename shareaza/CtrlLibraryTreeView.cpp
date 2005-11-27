@@ -1004,6 +1004,9 @@ void CLibraryTreeView::OnLibraryExportCollection()
 	if ( m_pSelFirst->m_pVirtual->GetFileCount() == 0 ||
 		 m_pSelFirst->m_pVirtual->GetFileCount() > 200 ) return;
 
+	// Do not allow to export ghost files
+	if ( m_pSelFirst->m_pVirtual->m_sSchemaURI == CSchema::uriGhostFolder ) return;
+
 	CCollectionExportDlg dlg( m_pSelFirst->m_pVirtual );
 	dlg.DoModal();
 }
