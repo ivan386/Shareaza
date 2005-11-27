@@ -289,48 +289,50 @@ public:
 
 	// Takes a length of bytes we would like to add to the packet
 	// Ensures the allocated block of memory is big enough for them, making it bigger if necessary
-	inline void Ensure(DWORD nLength)
+	inline BOOL Ensure(DWORD nLength)
 	{
 		// If the buffer isn't big enough to hold that many more new bytes
 		if ( m_nLength + nLength > m_nBuffer )
 		{
 			// Switch to a new bigger one
-			m_nBuffer += max( nLength, PACKET_GROW ); // Size the buffer larger by the requested amount, or the packet grow size of 128 bytes
-			LPBYTE pNew = new BYTE[ m_nBuffer ];      // Allocate a new block of memory of that size
-			if ( pNew == NULL )
+			m_nBuffer += max( nLength, PACKET_GROW );	// Size the buffer larger by the requested amount, or the packet grow size of 128 bytes
+			LPBYTE pNew = new BYTE[ m_nBuffer ];		// Allocate a new block of memory of that size
+			if ( pNew == NULL )							// Check for out of memory error
 			{
 				theApp.Message( MSG_ERROR, _T("Memory allocation error in CPacket::Ensure()") );
-				return;
+				return FALSE;
 			}
-			CopyMemory( pNew, m_pBuffer, m_nLength ); // Copy the packet data from the old buffer to the new one
-			if ( m_pBuffer ) delete [] m_pBuffer;     // If there is an old buffer, free it
-			m_pBuffer = pNew;                         // Point the packet object's member variable pointer at the new buffer
+			CopyMemory( pNew, m_pBuffer, m_nLength );	// Copy the packet data from the old buffer to the new one
+			if ( m_pBuffer ) delete [] m_pBuffer;		// If there is an old buffer, free it
+			m_pBuffer = pNew;							// Point the packet object's member variable pointer at the new buffer
 		}
+		return TRUE;
 	}
 
 	// Takes a pointer to data and the number of bytes there
 	// Adds them to the end of the buffer
-	inline void Write(LPCVOID pData, DWORD nLength)
+	inline BOOL Write(LPCVOID pData, DWORD nLength)
 	{
 		// If the allocated block of memory doesn't have enough extra space to hold the new data
 		if ( m_nLength + nLength > m_nBuffer )
 		{
 			// Make it bigger
-			m_nBuffer += max( nLength, PACKET_GROW ); // Calculate the new size to be nLength or 128 bytes bigger
-			LPBYTE pNew = new BYTE[ m_nBuffer ];      // Allocate a new buffer of that size
-			if ( pNew == NULL )
+			m_nBuffer += max( nLength, PACKET_GROW );	// Calculate the new size to be nLength or 128 bytes bigger
+			LPBYTE pNew = new BYTE[ m_nBuffer ];		// Allocate a new buffer of that size
+			if ( pNew == NULL )							// Check for out of memory error
 			{
 				theApp.Message( MSG_ERROR, _T("Memory allocation error in CPacket::Write()") );
-				return;
+				return FALSE;
 			}
-			CopyMemory( pNew, m_pBuffer, m_nLength ); // Copy the data from the old buffer to the new one
-			if ( m_pBuffer ) delete [] m_pBuffer;     // Delete the old buffer
-			m_pBuffer = pNew;                         // Point m_pBuffer at the new, bigger buffer
+			CopyMemory( pNew, m_pBuffer, m_nLength );	// Copy the data from the old buffer to the new one
+			if ( m_pBuffer ) delete [] m_pBuffer;		// Delete the old buffer
+			m_pBuffer = pNew;							// Point m_pBuffer at the new, bigger buffer
 		}
 
 		// Add the given data to the end of the packet
 		CopyMemory( m_pBuffer + m_nLength, pData, nLength ); // Copy the data into the end
 		m_nLength += nLength;                                // Record that the new bytes are stored here
+		return TRUE;
 	}
 	
 	// Write any Hash directly into a packet ( just the raw data )
@@ -353,7 +355,10 @@ public:
 	inline void WriteByte(BYTE nValue)
 	{
 		// Make sure there is room for the byte
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
+		if ( m_nLength + sizeof( nValue ) > m_nBuffer ) 
+		{
+			if ( ! Ensure( sizeof( nValue ) ) ) return;
+		}
 
 		// Write it at the end of the packet, and record that it is there
 		m_pBuffer[ m_nLength++ ] = nValue;
@@ -364,7 +369,10 @@ public:
 	inline void WriteShortLE(WORD nValue)
 	{
 		// Make sure there is room for the 2 bytes
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
+		if ( m_nLength + sizeof(nValue) > m_nBuffer ) 		
+		{
+			if ( ! Ensure( sizeof( nValue ) ) ) return;
+		}
 
 		// Write the two bytes as a word at the end of the packet, and record that it is there
 		*(WORD*)( m_pBuffer + m_nLength ) = nValue;
@@ -376,7 +384,10 @@ public:
 	inline void WriteShortBE(WORD nValue)
 	{
 		// Make sure there is room for the 2 bytes
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
+		if ( m_nLength + sizeof(nValue) > m_nBuffer ) 
+		{
+			if ( ! Ensure( sizeof( nValue ) ) ) return;
+		}
 
 		// Write the 2 bytes as a word at the end of the packet, and record that it is there
 		*(WORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? SWAP_SHORT( nValue ) : nValue; // Reverse their order if necessary
@@ -388,7 +399,10 @@ public:
 	inline void WriteLongLE(DWORD nValue)
 	{
 		// Make sure there is room for the 4 bytes
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
+		if ( m_nLength + sizeof(nValue) > m_nBuffer ) 
+		{
+			if ( ! Ensure( sizeof( nValue ) ) ) return;
+		}
 
 		// Write the 4 bytes as a DWORD at the end of the packet, and record that it is there
 		*(DWORD*)( m_pBuffer + m_nLength ) = nValue;
@@ -400,7 +414,10 @@ public:
 	inline void WriteLongBE(DWORD nValue)
 	{
 		// Make sure there is room for the 4 bytes
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
+		if ( m_nLength + sizeof(nValue) > m_nBuffer ) 
+		{
+			if ( ! Ensure( sizeof( nValue ) ) ) return;
+		}
 
 		// Write the 4 bytes as a DWORD at the end of the packet, and record that it is there
 		*(DWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? SWAP_LONG( nValue ) : nValue; // Reverse their order if necessary
@@ -412,7 +429,10 @@ public:
 	inline void WriteInt64(QWORD nValue)
 	{
 		// Make sure there is room for the 8 bytes
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
+		if ( m_nLength + sizeof(nValue) > m_nBuffer )
+		{
+			if ( ! Ensure( sizeof( nValue ) ) ) return;
+		}
 
 		// Write the 8 bytes as a QWORD at the end of the packet, and record that it is there
 		*(QWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? SWAP_64( nValue ) : nValue; // Reverse their order if necessary
