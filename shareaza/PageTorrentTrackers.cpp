@@ -102,6 +102,7 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	m_wndTrackers.SetImageList( &CoolInterface.m_pImages, LVSIL_SMALL );
 	m_wndTrackers.InsertColumn( 0, _T("Tracker"), LVCFMT_LEFT, rc.right - 80, -1 );
 	m_wndTrackers.InsertColumn( 1, _T("Status"), LVCFMT_RIGHT, 80, 0 );
+	m_wndTrackers.InsertColumn( 2, _T("Type"), LVCFMT_LEFT, 0, 0 );
 
 	int nTracker = 0;
 	for ( nTracker = 0 ; nTracker < m_pInfo->m_pTrackerList.GetCount() ; nTracker++ )
@@ -121,15 +122,21 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		pItem.pszText	= (LPTSTR)(LPCTSTR)pTrack->m_sAddress;
 		pItem.iItem		= m_wndTrackers.InsertItem( &pItem );
 
-		CString sType;
+		// Display status
+		CString sStatus;
 		if ( ( pTrack->m_tLastFail == 0 ) && ( pTrack->m_tLastSuccess == 0 ) )
-			LoadString( sType, IDS_STATUS_UNKNOWN );
+			LoadString( sStatus, IDS_STATUS_UNKNOWN );
 		else if ( pTrack->m_tLastFail > pTrack->m_tLastSuccess )
-			LoadString( sType, IDS_STATUS_TRACKERDOWN );
+			LoadString( sStatus, IDS_STATUS_TRACKERDOWN );
 		else
-			LoadString( sType, IDS_STATUS_ACTIVE );
+			LoadString( sStatus, IDS_STATUS_ACTIVE );
 
-		m_wndTrackers.SetItemText( pItem.iItem, 1, sType );
+		m_wndTrackers.SetItemText( pItem.iItem, 1, sStatus );
+
+		// Display type
+		CString sType;
+		sType.Format( _T("Tier %i"), pTrack->m_nTier );
+		m_wndTrackers.SetItemText( pItem.iItem, 2, sType );
 	}
 
 	if ( m_pInfo->m_pAnnounceTracker )
@@ -144,15 +151,21 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		pItem.pszText	= (LPTSTR)(LPCTSTR)m_pInfo->m_pAnnounceTracker->m_sAddress;
 		pItem.iItem		= m_wndTrackers.InsertItem( &pItem );
 		
-		CString sType;
+		// Display status
+		CString sStatus;
 		if ( ( m_pInfo->m_pAnnounceTracker->m_tLastFail == 0 ) && ( m_pInfo->m_pAnnounceTracker->m_tLastSuccess == 0 ) )
-			LoadString( sType, IDS_STATUS_UNKNOWN );
+			LoadString( sStatus, IDS_STATUS_UNKNOWN );
 		else if ( m_pInfo->m_pAnnounceTracker->m_tLastFail > m_pInfo->m_pAnnounceTracker->m_tLastSuccess )
-			LoadString( sType, IDS_STATUS_TRACKERDOWN );
+			LoadString( sStatus, IDS_STATUS_TRACKERDOWN );
 		else
-			LoadString( sType, IDS_STATUS_ACTIVE );
+			LoadString( sStatus, IDS_STATUS_ACTIVE );
 
-		m_wndTrackers.SetItemText( pItem.iItem, 1, sType );
+		m_wndTrackers.SetItemText( pItem.iItem, 1, sStatus );
+
+		// Display type
+		CString sType;
+		sType.Format( _T("Announce") );
+		m_wndTrackers.SetItemText( pItem.iItem, 2, sType );
 	}
 	
 	UpdateData( FALSE );
