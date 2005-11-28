@@ -17,6 +17,7 @@
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/Wall"
 				Optimization="0"
 				AdditionalIncludeDirectories="../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;_DEBUG;ZLIB_DLL;ZLIB_WINAPI;NOCRYPT"
@@ -24,9 +25,13 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				BufferSecurityCheck="TRUE"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="skin.h"
 				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="3"
-				DebugInformationFormat="3"/>
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"
+				DebugInformationFormat="3"
+				DisableSpecificWarnings="4100;4201;4255;4668;4820"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -71,6 +76,7 @@
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/Wall"
 				Optimization="3"
 				GlobalOptimizations="TRUE"
 				InlineFunctionExpansion="2"
@@ -82,8 +88,12 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;ZLIB_DLL;ZLIB_WINAPI;NOCRYPT"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="skin.h"
 				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="3"/>
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"
+				DisableSpecificWarnings="4100;4201;4255;4668;4820"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -137,6 +147,18 @@
 			</File>
 			<File
 				RelativePath="..\skin-installer\skin.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\skin-installer\utils.c">
