@@ -233,43 +233,28 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 	DrawText( pDC, &pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;
+	pDC->SelectObject( &CoolInterface.m_fntNormal );
 
-	// If verbose mode is enabled, untrusted hashes are in italics
 	if ( !m_sSHA1.IsEmpty() )
 	{
-		if ( pDownload->m_oSHA1.isTrusted() )
-		pDC->SelectObject( !Settings.General.VerboseMode || pDownload->m_oSHA1.isTrusted()
-			? &CoolInterface.m_fntNormal
-			: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sSHA1 );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( !m_sTiger.IsEmpty() )
 	{
-		pDC->SelectObject( !Settings.General.VerboseMode || pDownload->m_oTiger.isTrusted()
-			? &CoolInterface.m_fntNormal
-			: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sTiger );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( !m_sED2K.IsEmpty() )
 	{
-		pDC->SelectObject( !Settings.General.VerboseMode || pDownload->m_oED2K.isTrusted()
-			? &CoolInterface.m_fntNormal
-			: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sED2K );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( !m_sBTH.IsEmpty() )
 	{
-		pDC->SelectObject( !Settings.General.VerboseMode || pDownload->m_oBTH.isTrusted()
-			? &CoolInterface.m_fntNormal
-			: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sBTH );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-
-	pDC->SelectObject( &CoolInterface.m_fntNormal );
 
 	DrawRule( pDC, &pt );
 
@@ -506,23 +491,80 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 	
 	if ( Settings.General.GUIMode != GUI_BASIC )
 	{
-		// We also report on if we have a hashset if verbose mode is enabled
-		CString strNoHashset;
+		// We also report on if we have a hashset, and if hash is trusted (Debug mode only)
+		CString strNoHashset, strUntrusted;
 		LoadString( strNoHashset, IDS_TIP_NOHASHSET );
+		LoadString( strUntrusted, IDS_TIP_UNTRUSTED );
 
 		m_sSHA1 = pDownload->m_oSHA1.toShortUrn();
-		m_sTiger = pDownload->m_oTiger.toShortUrn()
-			+ ( pDownload->m_oTiger && Settings.General.VerboseMode && !pDownload->m_pTigerBlock
-				? strNoHashset
-				: CString() );
-		m_sED2K = pDownload->m_oED2K.toShortUrn()
-			+ ( pDownload->m_oED2K && Settings.General.VerboseMode && !pDownload->m_pHashsetBlock
-				? strNoHashset
-				: CString() );
-		m_sBTH = pDownload->m_oBTH.toShortUrn()
-			+ ( pDownload->m_oBTH && Settings.General.VerboseMode && !pDownload->m_pTorrentBlock
-				? strNoHashset
-				: CString() );
+		if ( m_sSHA1.GetLength() && Settings.General.Debug )
+		{
+			if ( ! pDownload->m_oSHA1.isTrusted() )
+			{
+				m_sSHA1 += _T(" (") + strUntrusted + _T(")");
+			}
+		}
+
+		m_sTiger = pDownload->m_oTiger.toShortUrn();
+		if ( m_sTiger.GetLength() && Settings.General.Debug )
+		{
+			if ( ! pDownload->m_pTigerBlock )
+			{
+				if ( pDownload->m_oTiger.isTrusted() )
+				{
+					m_sTiger += _T(" (") + strNoHashset + _T(")");
+				}
+				else
+				{
+					m_sTiger += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
+				}
+			}
+			else if ( ! pDownload->m_oTiger.isTrusted() )
+			{
+				m_sTiger += _T(" (") + strUntrusted + _T(")");
+			}
+		}
+
+		m_sED2K = pDownload->m_oED2K.toShortUrn();
+		if ( m_sED2K.GetLength() && Settings.General.Debug )
+		{
+			if ( ! pDownload->m_pHashsetBlock )
+			{
+				if ( pDownload->m_oED2K.isTrusted() )
+				{
+					m_sED2K += _T(" (") + strNoHashset + _T(")");
+				}
+				else
+				{
+					m_sED2K += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
+				}
+			}
+			else if ( ! pDownload->m_oED2K.isTrusted() )
+			{
+				m_sED2K += _T(" (") + strUntrusted + _T(")");
+			}
+		}
+
+		m_sBTH = pDownload->m_oBTH.toShortUrn();
+		if ( m_sBTH.GetLength() && Settings.General.Debug )
+		{
+			if ( ! pDownload->m_pTorrentBlock )
+			{
+				if ( pDownload->m_oBTH.isTrusted() )
+				{
+					m_sBTH += _T(" (") + strNoHashset + _T(")");
+				}
+				else
+				{
+					m_sBTH += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
+				}
+			}
+			else if ( ! pDownload->m_oBTH.isTrusted() )
+			{
+				m_sBTH += _T(" (") + strUntrusted + _T(")");
+			}
+		}
+
 		if ( pDownload->m_oBTH )
 			m_sURL = pDownload->m_pTorrent.m_sTracker;
 	}

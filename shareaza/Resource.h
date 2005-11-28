@@ -845,6 +845,8 @@
 #define IDS_TIP_FILE_BUSY               8334
 #define IDS_TIP_FILE_FIREWALLED         8335
 #define IDS_TIP_FILE_UNSTABLE           8336
+#define IDS_TIP_FILE_UNTRUSTED          8337
+#define IDS_TIP_UNTRUSTED               8337
 #define IDS_PROPERTY_PAGE_GENERAL       9000
 #define IDS_PROPERTY_PAGE_METADATA      9001
 #define IDS_PROPERTY_PAGE_REVIEW        9002

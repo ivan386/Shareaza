@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,2,7
- PRODUCTVERSION 2,2,2,7
+ FILEVERSION 2,2,2,8
+ PRODUCTVERSION 2,2,2,8
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 7"
+            VALUE "FileVersion", "2, 2, 2, 8"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 7"
+            VALUE "ProductVersion", "2, 2, 2, 8"
         END
     END
     BLOCK "VarFileInfo"
@@ -4636,7 +4636,7 @@ BEGIN
     IDS_TIP_HITS            "Hits"
     IDS_TIP_UPLOADS         "Uploads"
     IDS_TIP_TODAYTOTAL      "%lu today, %lu total"
-    IDS_TIP_NOHASHSET       " (No Hashset)"
+    IDS_TIP_NOHASHSET       "No Hashset"
 END
 
 STRINGTABLE 
@@ -4662,6 +4662,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_TIP_FILE_UNSTABLE   "Sources for this file may be unstable"
+    IDS_TIP_UNTRUSTED       "Untrusted"
 END
 
 STRINGTABLE 
