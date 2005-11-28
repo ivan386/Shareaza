@@ -1,9 +1,9 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.23 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/11/28 09:18:06 $"
+//	Revision:		"$Revision: 1.24 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -953,7 +953,12 @@ BOOL CChatSession::OnProfileDelivery(CG2Packet* pPacket)
 			{
 				m_pProfile = new CGProfile();
 				
-				if ( ! m_pProfile->FromXML( pXML ) || ! m_pProfile->IsValid() )
+				if ( m_pProfile == NULL )
+				{
+					theApp.Message( MSG_ERROR, _T("Memory allocation error in CChatSession::OnProfileDelivery()") );
+					delete pXML;
+				}
+				else if ( ! m_pProfile->FromXML( pXML ) || ! m_pProfile->IsValid() )
 				{
 					delete pXML;
 					delete m_pProfile;
