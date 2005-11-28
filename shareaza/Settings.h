@@ -331,7 +331,7 @@ public:
 		DWORD		FrameSize;
 		DWORD		ReAskTime;
 		DWORD		DequeueTime;
-		BOOL		ExtendedRequest;
+		DWORD		ExtendedRequest;
 		BOOL		MagnetSearch;				// Search for magnets over ed2k (lower server load)
 		DWORD		MinServerFileSize;			// Minimum size a file in the library must be in order to be included in the server file list. (In KB)
 		BOOL		TagNames;					// Add (Shareaza.com) to user name over ed2k
