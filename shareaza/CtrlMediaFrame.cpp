@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/11/24 19:29:09 $"
-//	Revision:		"$Revision: 1.35 $"
+//	Date:			"$Date: 2005/11/28 14:42:35 $"
+//	Revision:		"$Revision: 1.36 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1541,7 +1541,6 @@ void CMediaFrame::Cleanup()
 	if ( m_pPlayer != NULL )
 	{
 		HINSTANCE hRes = AfxGetResourceHandle();
-		if ( m_nState == smsPlaying ) m_pPlayer->Stop();
 		m_pPlayer->Close();
 		m_pPlayer->Destroy();
 		m_pPlayer->Release();
