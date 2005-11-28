@@ -365,7 +365,7 @@ void CCollectionExportDlg::OnOK()
 
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
-	if ( LibraryFolders.CheckAlbum( m_pFolder ) )
+	if ( m_pFolder && ! m_pFolder->m_pFiles.IsEmpty() )
 	{
 		CXMLElement* pXML = CreateXML( TRUE );
 		CString strXML = pXML->ToString( TRUE, TRUE );
@@ -576,12 +576,14 @@ void CCollectionExportDlg::OnOK()
 		{
 			pLock.Unlock();
 			AfxMessageBox( _T("TODO: Can't write to ") + strFile );
+			m_nStep--;
 		}
 	}
 	else
 	{
 		pLock.Unlock();
 		AfxMessageBox( _T("TODO: Folder disappeared.") );
+		m_nStep--;
 	}
 		break;
 	}
@@ -621,13 +623,26 @@ CXMLElement* CCollectionExportDlg::CreateXML(BOOL bMetadataAll)
 
 	CXMLElement* pProperties = pRoot->AddElement( _T("properties") );
 
-	pProperties->AddElement( _T("title") )->SetValue( m_pFolder->m_sName );
+	if ( ! m_pFolder->m_sName.IsEmpty() )
+		pProperties->AddElement( _T("title") )->SetValue( m_pFolder->m_sName );
+	else
+	{
+		pProperties->AddElement( _T("title") )->SetValue( _T("Shareaza Collection") );
+	}
 
 	if ( m_pFolder->m_pXML != NULL && m_pFolder->m_sSchemaURI.GetLength() > 0 )
 	{
 		CXMLElement* pMeta = pProperties->AddElement( _T("metadata") );
 		pMeta->AddAttribute( _T("xmlns:s"), m_pFolder->m_sSchemaURI );
 		pMeta->AddElement( CopyMetadata( m_pFolder->m_pXML ) );
+	}
+	else
+	{
+		CXMLElement* pMounting = pProperties->AddElement( _T("mounting") );
+		CXMLElement* pElement = pMounting->AddElement( _T("parent") );
+		pElement->AddAttribute( _T("uri"), CSchema::uriCollectionsFolder );
+		pElement = pMounting->AddElement( _T("this") );
+		pElement->AddAttribute( _T("uri"), CSchema::uriFolder );
 	}
 
 	CXMLElement* pContents = pRoot->AddElement( _T("contents") );
