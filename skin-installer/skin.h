@@ -9,6 +9,7 @@ The Unzip library is Copyright (C) 1998-2003 Gilles Vollant.
 #ifndef SKIN_H
 #define SKIN_H
 
+#include <stddef.h>
 #include <windows.h>
 #include <stdio.h>
 #include <commctrl.h>
@@ -29,15 +30,15 @@ extern TCHAR* szVersion;
 extern TCHAR* szAuthor;
 extern TCHAR* szUpdates;
 extern TCHAR* szXML;
-extern TCHAR* prefix[MAX_PATH];
+extern TCHAR prefix[MAX_PATH];
 extern BOOL bRunningOnNT;
 
 // extract.c
 void ExtractSkinFile(LPCTSTR pszFile);
 int GetInstallDirectory();
-int GetSkinFileCount(LPCTSTR pszFile);
-int ValidateSkin(LPCTSTR pszFile, HWND hwndDlg);
-int ExtractSkin(LPCTSTR pszFile, HWND hwndDlg);
+int GetSkinFileCount(LPTSTR pszFile);
+int ValidateSkin(LPTSTR pszFile, HWND hwndDlg);
+int ExtractSkin(LPTSTR pszFile, HWND hwndDlg);
 LPCTSTR GetUnicodeString(char* pszString);
 
 // registry.c
@@ -50,6 +51,6 @@ int SetSkinAsDefault();
 int MakeDirectory(LPCTSTR newdir);
 
 // window.c
-BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 #endif

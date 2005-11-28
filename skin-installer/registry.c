@@ -45,9 +45,9 @@ static int CreateHKCRKey(LPCTSTR lpSubKey, LPTSTR lpClass, LPTSTR lpData) {
     HKEY keyHandle;
     long rtn =0;
     DWORD lpdw;
-    int aLen;
+    DWORD aLen;
 
-    aLen = wcslen(lpData) + 1;
+    aLen = (DWORD)wcslen(lpData) + 1;
     rtn = RegCreateKeyEx(HKEY_CLASSES_ROOT,lpSubKey,0,NULL,REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS,0,&keyHandle,&lpdw);
     if(rtn == ERROR_SUCCESS) {
 		RegSetValueEx(keyHandle,lpClass,0,REG_SZ,(LPBYTE)lpData,aLen);

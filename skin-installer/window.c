@@ -9,7 +9,7 @@ The Unzip library is Copyright (C) 1998-2003 Gilles Vollant.
 #include "skin.h"
 
 // EXPORT BEGIN
-BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
+INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
 	static HBITMAP hBannerBmp = NULL;
 	static TCHAR* szFile = NULL;
 	static int maxPos = 1;
@@ -21,7 +21,7 @@ BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) 
 			
 			EnableWindow(GetDlgItem(hwndDlg,IDC_CONFIG), FALSE);
 
-			szFile = (TCHAR*)lParam;
+			szFile = (LPTSTR)lParam;
 			maxPos = GetSkinFileCount( szFile );
 			if (!maxPos) maxPos = 1;
 			SendMessage(hwndDlg, WM_SETICON, ICON_BIG, (LPARAM) LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_SHAREAZA)));
@@ -88,7 +88,7 @@ BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) 
 					|| (HWND) lParam == GetDlgItem(hwndDlg, IDC_AUTH)
 					|| (HWND) lParam == GetDlgItem(hwndDlg, IDC_STATUS)) {
 				SetBkColor((HDC) wParam, RGB(255, 255, 255));
-				return (BOOL) GetStockObject(WHITE_BRUSH);
+				return GetStockObject(WHITE_BRUSH) != NULL;
 			}
 			break;
 		case WM_COMMAND:

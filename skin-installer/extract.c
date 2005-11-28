@@ -64,11 +64,11 @@ int GetInstallDirectory() {
             }
         RegCloseKey( hKey ); 
     }
-    wcscat((LPTSTR)prefix, L"\\Skins\\");
+    wcscat(prefix, L"\\Skins\\");
     return 1;
 }
 
-int GetSkinFileCount(LPCTSTR pszFile) 
+int GetSkinFileCount(LPTSTR pszFile) 
 {
 	unz_global_info gi;
 	int err;
@@ -76,7 +76,7 @@ int GetSkinFileCount(LPCTSTR pszFile)
 
 	char* pszDest = (char*)malloc( wcslen( pszFile ) + 1 );
 	char* tmp = pszDest;
-	LPCTSTR pszScanName = pszFile;
+	LPTSTR pszScanName = pszFile;
 
 	for ( ; *pszScanName ; pszScanName++, pszDest++ ) *pszDest = (char)*pszScanName;
 	*pszDest = '\0';
@@ -87,7 +87,7 @@ int GetSkinFileCount(LPCTSTR pszFile)
 	{
 		pszScanName = pszFile;
 		pszDest = tmp;
-		if ( GetShortPathNameW( pszFile, (LPTSTR)pszScanName, wcslen( pszFile ) + 1 ) )
+		if ( GetShortPathNameW( pszFile, pszScanName, (DWORD)wcslen( pszFile ) + 1 ) )
 		{
 			for ( ; *pszScanName ; pszScanName++, pszDest++ ) *pszDest = (char)*pszScanName;
 			*pszDest = '\0';
@@ -102,7 +102,7 @@ int GetSkinFileCount(LPCTSTR pszFile)
 	return gi.number_entry;
 }
 
-int ValidateSkin(LPCTSTR pszFile, HWND hwndDlg) {
+int ValidateSkin(LPTSTR pszFile, HWND hwndDlg) {
 	unz_global_info gi;
 	UINT i = 0;
 	int err, xmlFile = 0;
@@ -111,7 +111,7 @@ int ValidateSkin(LPCTSTR pszFile, HWND hwndDlg) {
 
 	char* pszDest = (char*)malloc( wcslen( pszFile ) + 1 );
 	char* tmpName = pszDest;
-	LPTSTR pszScanName = (LPTSTR)pszFile;
+	LPTSTR pszScanName = pszFile;
 
 	for ( ; *pszScanName ; pszScanName++, pszDest++ ) *pszDest = (char)*pszScanName;
 	*pszDest = '\0';
@@ -120,9 +120,9 @@ int ValidateSkin(LPCTSTR pszFile, HWND hwndDlg) {
 
 	if ( !ufile )
 	{
-		pszScanName = (LPTSTR)pszFile;
+		pszScanName = pszFile;
 		pszDest = tmpName;
-		if ( GetShortPathNameW( pszFile, pszScanName, wcslen( pszFile ) + 1 ) )
+		if ( GetShortPathNameW( pszFile, pszScanName, (DWORD)wcslen( pszFile ) + 1 ) )
 		{
 			for ( ; *pszScanName ; pszScanName++, pszDest++ ) *pszDest = (char)*pszScanName;
 			*pszDest = '\0';
@@ -165,7 +165,7 @@ int ValidateSkin(LPCTSTR pszFile, HWND hwndDlg) {
 						return 0;
 					}
 					else {
-						if (tmp=strstr(buf, "<manifest")) {
+						if ((tmp=strstr(buf, "<manifest"))!=NULL) {
 							LoadManifestInfo(tmp);
 						}
 					}
@@ -197,13 +197,13 @@ int ValidateSkin(LPCTSTR pszFile, HWND hwndDlg) {
 	return 1;
 }
 
-int ExtractSkin(LPCTSTR pszFile, HWND hwndDlg) {
+int ExtractSkin(LPTSTR pszFile, HWND hwndDlg) {
 	unz_global_info gi;
 	UINT i = 0;
-	int err, xmlFile = 0;
+	int err; /* xmlFile = 0; */
 	unzFile ufile;
 	DWORD nBytesWritten = 0;
-	HANDLE hFile;
+	HANDLE hFile = INVALID_HANDLE_VALUE;
 	unz_file_info fi;
 	char fn_zip[MAX_PATH], buf[256];
 	TCHAR *p, *filename_withoutpath, *zippedName;
@@ -211,7 +211,7 @@ int ExtractSkin(LPCTSTR pszFile, HWND hwndDlg) {
 
 	char* pszDest = (char*)malloc( wcslen( pszFile ) + 1 );
 	char* tmp = pszDest;
-	LPTSTR pszScanName = (LPTSTR)pszFile;
+	LPTSTR pszScanName = pszFile;
 
 	for ( ; *pszScanName ; pszScanName++, pszDest++ ) *pszDest = (char)*pszScanName;
 	*pszDest = '\0';
@@ -220,9 +220,9 @@ int ExtractSkin(LPCTSTR pszFile, HWND hwndDlg) {
 
 	if ( !ufile )
 	{
-		pszScanName = (LPTSTR)pszFile;
+		pszScanName = pszFile;
 		pszDest = tmp;
-		if ( GetShortPathNameW( pszFile, pszScanName, wcslen( pszFile ) + 1 ) )
+		if ( GetShortPathNameW( pszFile, pszScanName, (DWORD)wcslen( pszFile ) + 1 ) )
 		{
 			for ( ; *pszScanName ; pszScanName++, pszDest++ ) *pszDest = (char)*pszScanName;
 			*pszDest = '\0';
@@ -236,7 +236,7 @@ int ExtractSkin(LPCTSTR pszFile, HWND hwndDlg) {
 	if (err!=UNZ_OK) return 0;
     
     if (skinType == 0) {
-        wcscat((LPTSTR)prefix, szName);
+        wcscat(prefix, szName);
         //Create Directory for the new skin  
         if (!MakeDirectory((LPCTSTR)prefix)) {
     		unzClose(ufile);
@@ -244,7 +244,7 @@ int ExtractSkin(LPCTSTR pszFile, HWND hwndDlg) {
 		}
 	}
     else {
-    	wcscat((LPTSTR)prefix, L"Languages\\");
+    	wcscat(prefix, L"Languages\\");
     }
     
 	for (i=0;i<gi.number_entry;i++) {
@@ -333,14 +333,14 @@ int ExtractSkin(LPCTSTR pszFile, HWND hwndDlg) {
 	return 1;
 }
 
-static LPCTSTR GetUnicodeString(char* pszString)
+LPCTSTR GetUnicodeString(char* pszString)
 {
 	TCHAR* ret;
 	int nLen = 0;
-	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pszString, strlen(pszString), NULL, 0 );
+	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pszString, (DWORD)strlen(pszString), NULL, 0 );
 	if ( nLen == 0 ) return NULL;
 	ret = (TCHAR*)malloc( ( nLen + 1) * sizeof(TCHAR) );
-	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pszString, strlen(pszString), ret, nLen * sizeof(TCHAR) );
+	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pszString, (DWORD)strlen(pszString), ret, nLen * sizeof(TCHAR) );
 	ret[nLen] = '\0';
 	return ret;
 }

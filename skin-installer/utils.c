@@ -22,29 +22,29 @@ void LoadManifestInfo(char *buf)
 	if ( strlen(buf) > 3 && (UCHAR)(*tmp) == 0xEF && (UCHAR)*(tmp+1) == 0xBB && (UCHAR)*(tmp+2) == 0xBF )
 		buf += 3;
 
-	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, strlen(buf) , NULL, 0 );
+	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, (DWORD)strlen(buf) , NULL, 0 );
 	pszBuf = (TCHAR*)malloc( nLen * sizeof(TCHAR) );
-	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, strlen(buf), pszBuf, nLen * sizeof(TCHAR) );
+	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, (DWORD)strlen(buf), pszBuf, nLen * sizeof(TCHAR) );
 
-	if (p=(TCHAR*)GetManifestValue(pszBuf, L"type")) {
+	if ((p=(TCHAR*)GetManifestValue(pszBuf, L"type"))!=NULL) {
 		if (!_wcsicmp(p, L"language")) {
 			skinType = 1;
 		}
 		free(p);
 	}
-	if (p=(TCHAR*)GetManifestValue(pszBuf, L"name")) {
+	if ((p=(TCHAR*)GetManifestValue(pszBuf, L"name"))!=NULL) {
 		szName = _wcsdup(p);
 		free(p);
 	}
-	if (p=(TCHAR*)GetManifestValue(pszBuf, L"version")) {
+	if ((p=(TCHAR*)GetManifestValue(pszBuf, L"version"))!=NULL) {
 		szVersion = _wcsdup(p);
 		free(p);
 	}
-	if (p=(TCHAR*)GetManifestValue(pszBuf, L"author")) {
+	if ((p=(TCHAR*)GetManifestValue(pszBuf, L"author"))!=NULL) {
 		szAuthor = _wcsdup(p);
 		free(p);
 	}
-	if (p=(TCHAR*)GetManifestValue(pszBuf, L"updatedby")) {
+	if ((p=(TCHAR*)GetManifestValue(pszBuf, L"updatedby"))!=NULL) {
 		szUpdates = _wcsdup(p);
 		free(p);
 	}
@@ -97,7 +97,7 @@ int SetSkinAsDefault() {
 int MakeDirectory(LPCTSTR newdir) {
 	TCHAR* buffer;
 	TCHAR* p;
-	int len = wcslen(newdir);
+	size_t len = wcslen(newdir);
 
 	if (len<=0) return 0;
 	buffer = (TCHAR*)malloc((len+1)*sizeof(TCHAR));
@@ -110,7 +110,7 @@ int MakeDirectory(LPCTSTR newdir) {
 		return 1;
     }
 	p = buffer+1;
-	while(1) {
+	for ( ;; ) {
 		TCHAR hold;
 		while(*p&&*p!='\\'&&*p!='/') p++;
 		hold = *p;
@@ -131,13 +131,13 @@ int MakeDirectory(LPCTSTR newdir) {
 static LPCTSTR GetManifestValue(LPCTSTR manifest, LPCTSTR searchKey) {
 	TCHAR* p;
 	LPTSTR kstart, vstart;
-	int klen, vlen;
+	ptrdiff_t klen, vlen;
 	TCHAR* key;
 	TCHAR* val;
 	TCHAR* info = _wcsdup(manifest);
 	TCHAR* ret;
 
-	if (p = wcsstr(info, L"/>")) {
+	if ((p = wcsstr(info, L"/>"))!=NULL) {
 		info += 10;
 		*p = '\0';
 		for (p=info;;) {
@@ -221,13 +221,13 @@ static int CheckManifestForSkin(LPCTSTR pszFile) {
 		buffer += 3;
 	}
 
-	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buffer, strlen(buffer) , NULL, 0 );
+	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buffer, (DWORD)strlen(buffer) , NULL, 0 );
 	pszBuf = (TCHAR*)malloc( nLen * sizeof(TCHAR) );
-	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buffer, strlen(buffer), pszBuf, nLen * sizeof(TCHAR) );
+	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buffer, (DWORD)strlen(buffer), pszBuf, nLen * sizeof(TCHAR) );
 	if ( bBOM ) buffer -= 3;
 	free(buffer);
 
-	if (!(tt = wcsstr(pszBuf, L"<manifest"))) {
+	if ((tt = wcsstr(pszBuf, L"<manifest"))==NULL) {
 		fclose(pFile);
 		free(pszBuf);
 		return 1;

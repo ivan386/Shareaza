@@ -15,7 +15,7 @@ TCHAR* szVersion;
 TCHAR* szAuthor;
 TCHAR* szUpdates;
 TCHAR* szXML;
-TCHAR* prefix[MAX_PATH];
+TCHAR prefix[MAX_PATH];
 BOOL  bRunningOnNT;
 
 int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPCTSTR cmdParam, int cmdShow) {
