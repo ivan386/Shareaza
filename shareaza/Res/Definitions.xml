@@ -238,6 +238,7 @@
 	<command code="33023" id="ID_MEDIA_REMOVE"/>
 	<command code="33024" id="ID_MEDIA_CLEAR"/>
 	<command code="33025" id="ID_MEDIA_SAVE"/>
+	<command code="33026" id="ID_MEDIA_EXPORT_COLLECTION"/>
 	<command code="33027" id="ID_MEDIA_PLAYLIST"/>
 	<command code="33028" id="ID_LIBRARY_VIEW_TILE"/>
 	<command code="33029" id="ID_LIBRARY_ALBUM_OPEN"/>

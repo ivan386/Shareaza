@@ -806,6 +806,7 @@ BEGIN
         MENUITEM "&Clear",                      ID_MEDIA_CLEAR
         MENUITEM "&Open...",                    ID_MEDIA_OPEN
         MENUITEM "Sa&ve...",                    ID_MEDIA_SAVE
+        MENUITEM "E&xport Collection..",        ID_MEDIA_EXPORT_COLLECTION
         MENUITEM SEPARATOR
         MENUITEM "Ra&ndom",                     ID_MEDIA_RANDOM
         MENUITEM "R&epeat",                     ID_MEDIA_REPEAT
@@ -5784,6 +5785,7 @@ STRINGTABLE
 BEGIN
     ID_MEDIA_CLEAR          "Clear (empty) the playlist."
     ID_MEDIA_SAVE           "Save the current playlist to a file..."
+    ID_MEDIA_EXPORT_COLLECTION "Save the playlist as a collection file..."
     ID_MEDIA_PLAYLIST       "Show or hide the playlist editor."
     ID_LIBRARY_VIEW_TILE    "Show a list of album folders.\nTile View"
     ID_LIBRARY_ALBUM_OPEN   "Open the selected album folder."

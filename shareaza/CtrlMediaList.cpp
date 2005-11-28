@@ -23,12 +23,14 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Library.h"
+#include "AlbumFolder.h"
 #include "SharedFile.h"
 #include "ShellIcons.h"
 #include "LiveList.h"
 #include "Skin.h"
 #include "Buffer.h"
 #include "CtrlMediaList.h"
+#include "DlgCollectionExport.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -41,8 +43,16 @@ IMPLEMENT_DYNAMIC(CMediaListCtrl, CListCtrl)
 BEGIN_MESSAGE_MAP(CMediaListCtrl, CListCtrl)
 	//{{AFX_MSG_MAP(CMediaListCtrl)
 	ON_WM_CREATE()
-	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDoubleClick)
+	ON_WM_SIZE()
 	ON_WM_CONTEXTMENU()
+	ON_WM_MOUSEMOVE()
+	ON_WM_LBUTTONUP()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
+	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeyDown)
+	ON_NOTIFY_REFLECT(LVN_BEGINDRAG, OnBeginDrag)
+	ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
+	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDoubleClick)
 	ON_COMMAND(ID_MEDIA_ADD, OnMediaAdd)
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_REMOVE, OnUpdateMediaRemove)
 	ON_COMMAND(ID_MEDIA_REMOVE, OnMediaRemove)
@@ -57,20 +67,14 @@ BEGIN_MESSAGE_MAP(CMediaListCtrl, CListCtrl)
 	ON_COMMAND(ID_MEDIA_PREVIOUS, OnMediaPrevious)
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_NEXT, OnUpdateMediaNext)
 	ON_COMMAND(ID_MEDIA_NEXT, OnMediaNext)
-	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeyDown)
-	ON_WM_SIZE()
-	ON_NOTIFY_REFLECT(LVN_BEGINDRAG, OnBeginDrag)
-	ON_WM_MOUSEMOVE()
-	ON_WM_LBUTTONUP()
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_REPEAT, OnUpdateMediaRepeat)
 	ON_COMMAND(ID_MEDIA_REPEAT, OnMediaRepeat)
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_RANDOM, OnUpdateMediaRandom)
 	ON_COMMAND(ID_MEDIA_RANDOM, OnMediaRandom)
-	ON_WM_LBUTTONDOWN()
-	ON_WM_RBUTTONDOWN()
 	ON_COMMAND(ID_MEDIA_ADD_FOLDER, OnMediaAddFolder)
+	ON_UPDATE_COMMAND_UI(ID_MEDIA_EXPORT_COLLECTION, OnUpdateMediaCollection)
+	ON_COMMAND(ID_MEDIA_EXPORT_COLLECTION, OnMediaCollection)
 	//}}AFX_MSG_MAP
-	ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
 END_MESSAGE_MAP()
 
 #define STATE_CURRENT	(1<<12)
@@ -756,4 +760,32 @@ void CMediaListCtrl::OnUpdateMediaRandom(CCmdUI* pCmdUI)
 void CMediaListCtrl::OnMediaRandom() 
 {
 	Settings.MediaPlayer.Random = ! Settings.MediaPlayer.Random;
+}
+
+void CMediaListCtrl::OnUpdateMediaCollection(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( GetItemCount() > 0 && GetItemCount() <= 200 );
+}
+void CMediaListCtrl::OnMediaCollection()
+{
+	// The album title name is a collection folder name
+	// We leave it empty to have the collection mounted under collections folder
+
+	CAlbumFolder* pCollection = new CAlbumFolder( NULL, NULL, _T(""), TRUE );
+
+	{
+		CQuickLock oLock( Library.m_pSection );
+		for ( int nItem = GetItemCount() - 1 ; nItem >= 0 ; nItem-- )
+		{
+			CString strPath = GetPath( nItem );
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath, FALSE, TRUE ) )
+			{
+				pCollection->AddFile( pFile );
+			}
+		}
+	}
+
+	CCollectionExportDlg dlg( pCollection );
+	dlg.DoModal();
+	delete pCollection;
 }
