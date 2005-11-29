@@ -102,6 +102,12 @@ BOOL CThumbCache::Prepare(LPCTSTR pszPath, CSize* pszThumb, BOOL bCreate)
 			for ( m_nBuffer = m_nIndex ; m_nBuffer & 63 ; m_nBuffer++ );
 			m_pIndex = new THUMB_INDEX[ m_nBuffer ];
 
+			if ( m_pIndex == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CThumbCache::Prepare") );
+				return FALSE;
+			}
+
 			m_pFile.Seek( m_nOffset, 0 );
 			m_pFile.Read( m_pIndex, sizeof(THUMB_INDEX) * m_nIndex );
 

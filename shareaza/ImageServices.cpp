@@ -324,6 +324,11 @@ IImageServicePlugin* CImageServices::GetService(LPCTSTR pszFile, CLSID** ppCLSID
 		if ( pService != NULL )
 		{
 			CLSID* pCopy = new CLSID;
+			if ( pCopy == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CImageServices::GetService") );
+				return NULL;				
+			}
 			*pCopy = pCLSID;
 			delete m_pCLSID[ strType ];
 			m_pCLSID[ strType ] = pCopy;

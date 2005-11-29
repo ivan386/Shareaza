@@ -274,6 +274,11 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CLibraryFolder* pFolder = new CLibraryFolder( this );
+			if ( pFolder == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CLibraryFolder::Serialize") );
+				break;
+			}
 			pFolder->Serialize( ar, nVersion );
 
 			m_pFolders.SetAt( pFolder->m_sNameLC, pFolder );
@@ -285,6 +290,11 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CLibraryFile* pFile = new CLibraryFile( this );
+			if ( pFile == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CLibraryFolder::Serialize") );
+				break;
+			}
 			pFile->Serialize( ar, nVersion );
 
 			m_pFiles.SetAt( pFile->GetNameLC(), pFile );
