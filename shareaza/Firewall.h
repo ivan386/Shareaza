@@ -122,6 +122,7 @@ public:
 	BOOL IsProgramListed( CString path, BOOL* listed );                  // Determine if a program is on the exceptions list
 	BOOL IsServiceEnabled( NET_FW_SERVICE_TYPE service, BOOL* enabled ); // Determine if a service is checked
 	BOOL IsProgramEnabled( CString path, BOOL* enabled );                // Determine if a listed program is checked
+	BOOL AreExceptionsAllowed();										 // Find out if the system is in no-exceptions mode
 	BOOL AddProgram( CString path, CString name );                       // Add a program to the list with a checked box
 	BOOL EnableService( NET_FW_SERVICE_TYPE service );                   // Check the box for a service
 	BOOL EnableProgram( CString path );                                  // Check the box for a program

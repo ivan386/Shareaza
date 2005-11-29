@@ -240,6 +240,20 @@ BOOL CFirewall::IsProgramEnabled( CString path, BOOL* enabled )
 	}
 }
 
+// This means that all the exceptions such as GloballyOpenPorts, Applications, or Services, 
+// which are specified in the profile, are ignored and only locally initiated traffic is allowed
+
+BOOL CFirewall::AreExceptionsAllowed()
+{
+    VARIANT_BOOL	vbNotAllowed = VARIANT_FALSE;
+    HRESULT			hr = S_OK;
+
+    hr = Profile->get_ExceptionsNotAllowed( &vbNotAllowed );
+    if ( SUCCEEDED(hr) && vbNotAllowed != VARIANT_FALSE ) return FALSE;
+    
+    return TRUE;
+}
+
 // Takes a path and file name like "C:\Folder\Program.exe" and a name like "My Program"
 // Lists and checks the program on Windows Firewall, so now it can listed on a socket without a warning popping up
 // Returns false on error
