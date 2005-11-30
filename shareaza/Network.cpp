@@ -476,7 +476,9 @@ void CNetwork::OnRun()
 	{
 		Sleep( 50 );
 		WaitForSingleObject( m_pWakeup, 100 );
-		
+	
+		if ( ! theApp.m_bLive ) continue;
+
 		if ( m_bEnabled && m_pSection.Lock() )
 		{
 			Datagrams.OnRun();
