@@ -412,6 +412,9 @@ void CLibrary::OnRun()
 
 BOOL CLibrary::ThreadScan()
 {
+	// Do not start scanning until app is loaded
+	if ( ! theApp.m_bLive ) return FALSE;
+
 	BOOL bChanged = LibraryFolders.ThreadScan( &m_bThread, FALSE );
 
 	CSingleLock pLock( &m_pSection, TRUE );
