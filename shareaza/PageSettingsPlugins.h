@@ -50,11 +50,12 @@ protected:
 	CImageList	m_gdiImageList;
 	BOOL		m_bRunning;
 protected:
-	void		InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName, int nImage, TRISTATE bEnabled, LPVOID pPlugin = NULL);
+	void		InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName, int nImage, TRISTATE bEnabled, 
+							 LPVOID pPlugin = NULL, LPCTSTR pszExtension = NULL);
 	void		EnumerateGenericPlugins();
 	void		EnumerateMiscPlugins();
 	void		EnumerateMiscPlugins(LPCTSTR pszType, HKEY hRoot);
-	void		AddMiscPlugin(LPCTSTR pszType, LPCTSTR pszCLSID);
+	void		AddMiscPlugin(LPCTSTR pszType, LPCTSTR pszCLSID, LPCTSTR pszExtension = NULL);
 
 // Overrides
 public:

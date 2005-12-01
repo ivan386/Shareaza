@@ -175,6 +175,7 @@
 #define IDB_NAVBAR_IMAGE_RTL            273
 #define IDB_NAVBAR_ALPHA_RTL            274
 #define IDI_COLORS                      275
+#define IDD_PLUGIN_EXT_SETUP            276
 #define IDC_CONNECT_HOST                1000
 #define IDC_CONNECT_PORT                1001
 #define IDC_SCHEMAS                     1002
@@ -684,6 +685,7 @@
 #define IDC_TRUST_TIGER                 1422
 #define IDC_TRUST_ED2K                  1423
 #define IDC_TORRENT_TRACKERMODE         1425
+#define IDC_ASSOCIATIONS                1426
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502

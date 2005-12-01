@@ -1745,6 +1745,9 @@
 					RelativePath="DlgNewSearch.cpp">
 				</File>
 				<File
+					RelativePath="DlgPluginExtSetup.cpp">
+				</File>
+				<File
 					RelativePath="DlgProfileManager.cpp">
 				</File>
 				<File
@@ -3013,6 +3016,9 @@
 				</File>
 				<File
 					RelativePath="DlgNewSearch.h">
+				</File>
+				<File
+					RelativePath="DlgPluginExtSetup.h">
 				</File>
 				<File
 					RelativePath="DlgProfileManager.h">

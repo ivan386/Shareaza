@@ -133,17 +133,69 @@ BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL
 			szCLSID[ 38 ] = 0;
 
 			return	GUIDX::Decode( szCLSID, &pCLSID ) &&
-					LookupEnable( pCLSID, bEnableDefault );
+					LookupEnable( pCLSID, bEnableDefault, pszKey );
 		}
 	}
 
 	return FALSE;
 }
 
-BOOL CPlugins::LookupEnable(REFCLSID pCLSID, BOOL bDefault)
+BOOL CPlugins::LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt)
 {
+	HKEY hPlugins = NULL;
+
 	CString strCLSID = GUIDX::Encode( &pCLSID );
-	return theApp.GetProfileInt( _T("Plugins"), strCLSID, bDefault );
+
+	if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_CURRENT_USER,
+		_T("Software\\Shareaza\\Shareaza\\Plugins"), 0, KEY_ALL_ACCESS, &hPlugins ) )
+	{
+		DWORD nType = REG_SZ, nValue = 0;
+		if ( ERROR_SUCCESS == RegQueryValueEx( hPlugins, strCLSID, NULL, &nType, NULL, &nValue ) )
+		{
+			// Upgrade here; Smart upgrade doesn't work
+			if ( nType == REG_DWORD )
+			{
+				BOOL bEnabled = theApp.GetProfileInt( _T("Plugins"), strCLSID, bDefault );
+				RegCloseKey( hPlugins );
+				theApp.WriteProfileString( _T("Plugins"), strCLSID, bEnabled ? _T("") : _T("-") );
+				return bEnabled;
+			}
+		}
+		RegCloseKey( hPlugins );
+	}
+
+	CString strExtensions = theApp.GetProfileString( _T("Plugins"), strCLSID, _T("") );
+
+	if ( strExtensions.IsEmpty() )
+		return TRUE;
+	else if ( strExtensions == _T("-") ) // for plugins without associations
+		return FALSE;
+	else if ( strExtensions.Left( 1 ) == _T("-") && strExtensions.GetLength() > 1 )
+		strExtensions = strExtensions.Mid( 1 );
+
+	if ( pszExt ) // Checking only a certain extension
+	{
+		CString strToFind;
+		strToFind.Format( _T("|%s|"), pszExt );
+		return strExtensions.Find( strToFind ) != -1;
+	}
+
+	// For Settings page
+	CArray< CString > oTokens;
+
+	Split( strExtensions, _T("|"), oTokens, FALSE );
+	INT_PTR nTotal = oTokens.GetCount();
+	INT_PTR nChecked = 0;
+
+	for ( INT_PTR nToken = 0 ; nToken < nTotal ; nToken++ )
+	{
+		CString strToken = oTokens.GetAt( nToken );
+		if ( strToken.Left( 1 ) != _T("-") ) nChecked++;
+	}
+
+	if ( nChecked == 0 ) return FALSE;
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

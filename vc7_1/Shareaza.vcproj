@@ -1212,6 +1212,9 @@
 					RelativePath="..\shareaza\DlgNewSearch.cpp">
 				</File>
 				<File
+					RelativePath="..\shareaza\DlgPluginExtSetup.cpp">
+				</File>
+				<File
 					RelativePath="..\shareaza\DlgProfileManager.cpp">
 				</File>
 				<File
@@ -2482,6 +2485,9 @@
 					RelativePath="..\shareaza\DlgNewSearch.h">
 				</File>
 				<File
+					RelativePath="..\shareaza\DlgPluginExtSetup.h">
+				</File>
+				<File
 					RelativePath="..\shareaza\DlgProfileManager.h">
 				</File>
 				<File
@@ -3077,6 +3083,22 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\debug\shareaza\Shareaza_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4668;4820"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\release\shareaza\Shareaza_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -3092,22 +3114,6 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\shareaza\Shareaza_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
