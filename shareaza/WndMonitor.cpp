@@ -220,6 +220,8 @@ CRemoteWnd::CmdButton* CRemoteWnd::HitTestButtons(const CPoint& ptIn, BOOL bAll)
 
 void CRemoteWnd::UpdateCmdButtons()
 {
+	if ( m_hWnd == NULL ) return;
+
 	BOOL bChanged = FALSE;
 
 	for ( POSITION pos = m_pButtons.GetHeadPosition() ; pos ; )
