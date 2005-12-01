@@ -1,9 +1,9 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.44 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/12/01 08:40:49 $"
+//	Revision:		"$Revision: 1.45 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -472,13 +472,10 @@ void CMainWnd::OnClose()
 		m_bTrayIcon = FALSE;
 	}
 	
-	if ( ! m_bTrayHide )
-	{
-		if ( ! IsIconic() ) SaveBarState( _T("Toolbars\\CoolBar") );
-		theApp.WriteProfileInt( _T("Toolbars"), _T("CRemoteWnd"), m_wndRemoteWnd.IsVisible() );
-		Settings.SaveWindow( _T("CMainWnd"), this );
-		m_pWindows.SaveWindowStates();
-	}
+	if ( ! IsIconic() ) SaveBarState( _T("Toolbars\\CoolBar") );
+	theApp.WriteProfileInt( _T("Toolbars"), _T("CRemoteWnd"), m_wndRemoteWnd.IsVisible() );
+	Settings.SaveWindow( _T("CMainWnd"), this );
+	m_pWindows.SaveWindowStates();
 	
 	m_pWindows.SaveSearchWindows();
 	m_pWindows.Close();	
