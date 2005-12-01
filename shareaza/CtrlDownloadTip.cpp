@@ -167,7 +167,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 	m_sz.cy += 36;
 	m_sz.cy += TIP_RULE;
 
-	//Torrent Tracker error
+	// Torrent Tracker error
 	if ( pDownload->m_bTorrentTrackerError && ( pDownload->m_sTorrentTrackerError ) )
 	{
 		m_bDrawError = TRUE;
@@ -184,18 +184,22 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 	}
 
 	if ( ! pDownload->IsSeeding() )
-	{	//Seeding torrent display none of this
+	{	// Seeding torrent display none of this
 		if ( pDownload->IsCompleted() )
-		{	//ETA and downloaded
+		{	// ETA and downloaded
 			m_sz.cy += TIP_TEXTHEIGHT * 2;
 		}
 		else
-		{	//Speed, ETA, Downloaded, No. Sources
+		{	// Speed, ETA, Downloaded, No. Sources
 			m_sz.cy += TIP_TEXTHEIGHT * 4;
 		}
 	}
 
-	//URL
+	// Number of reviews
+	if ( pDownload->GetReviewCount() > 0 )
+		m_sz.cy += TIP_TEXTHEIGHT;
+
+	// URL
 	if ( m_sURL.GetLength() )
 	{
 		m_sz.cy += TIP_RULE;
@@ -203,14 +207,14 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 
-	//Progress bar (not applicable for seeding torrents)
+	// Progress bar (not applicable for seeding torrents)
 	if ( ! pDownload->IsSeeding() )
 	{
 		m_sz.cy += 2;
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 
-	//Graph (Only for files in progress)
+	// Graph (Only for files in progress)
 	if ( pDownload->IsCompleted() )
 		m_bDrawGraph = FALSE;
 	else
@@ -287,10 +291,11 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 	DrawRule( pDC, &pt );
 
-	CString strFormat, strETA, strSpeed, strVolume, strSources, strTorrentUpload;
+	CString strFormat, strETA, strSpeed, strVolume, strSources, strReviews, strTorrentUpload;
 
 	int nSourceCount	= pDownload->GetSourceCount();
 	int nTransferCount	= pDownload->GetTransferCount();
+	int nReviewCount	= pDownload->GetReviewCount();
 
 	LoadString( strFormat, IDS_TIP_NA );
 
@@ -352,6 +357,11 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		LoadString( strSources, IDS_DLM_NO_SOURCES );
 	}
 
+	if ( nReviewCount > 0 )
+	{
+		strReviews.Format( _T("%i"), nReviewCount );
+	}
+
 	if ( pDownload->IsStarted() )
 	{
 		if ( theApp.m_bRTL )
@@ -407,65 +417,72 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		}
 	}
 
-	//Draw the pop-up box
+	// Draw the pop-up box
 	if ( m_bDrawError )
-	{	//Tracker error
+	{	// Tracker error
 		DrawText( pDC, &pt, pDownload->m_sTorrentTrackerError, 3 );
 		pt.y += TIP_TEXTHEIGHT;
 		DrawRule( pDC, &pt );
 	}
 
 	if ( ! pDownload->IsCompleted() )
-	{	//Speed. Not for completed files
+	{	// Speed. Not for completed files
 		LoadString( strFormat, IDS_DLM_TOTAL_SPEED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strSpeed, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( ! pDownload->IsSeeding() )
-	{	//ETA. Not applicable for seeding torrents.
+	{	// ETA. Not applicable for seeding torrents.
 		LoadString( strFormat, IDS_DLM_ESTIMATED_TIME );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strETA, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( ! pDownload->IsSeeding() )
-	{	//Volume downloaded. Not for seeding torrents
+	{	// Volume downloaded. Not for seeding torrents
 		LoadString( strFormat, IDS_DLM_VOLUME_DOWNLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strVolume, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( pDownload->m_oBTH )
-	{	//Upload- only for torrents
+	{	// Upload ratio- only for torrents
 		LoadString( strFormat, IDS_DLM_VOLUME_UPLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strTorrentUpload, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( ! pDownload->IsCompleted() )
-	{	//No. Sources- Not applicable for completed files.
+	{	// No. Sources- Not applicable for completed files.
 		LoadString( strFormat, IDS_DLM_NUMBER_OF_SOURCES );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strSources, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
+	if ( nReviewCount > 0 )
+	{	// No. Reviews
+		LoadString( strFormat, IDS_DLM_NUMBER_OF_REVIEWS );
+		DrawText( pDC, &pt, strFormat, 3 );
+		DrawText( pDC, &pt, strReviews, m_nStatWidth );
+		pt.y += TIP_TEXTHEIGHT;
+	}
 	if ( m_sURL.GetLength() )
-	{	//Draw URL if present
+	{	// Draw URL if present
 		DrawRule( pDC, &pt );
 		DrawText( pDC, &pt, m_sURL );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 
 	if ( ! pDownload->IsSeeding() )
-	{	//Not applicable for seeding torrents.
+	{	// Not applicable for seeding torrents.
 		pt.y += 2;
 		DrawProgressBar( pDC, &pt, pDownload );
 		pt.y += TIP_GAP;
 	}
 
 	if ( m_bDrawGraph )
-	{	//Don't draw empty graph.
+	{	// Don't draw empty graph.
 		CRect rc( pt.x, pt.y, m_sz.cx, pt.y + 40 );
 		pDC->Draw3dRect( &rc, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
 		rc.DeflateRect( 1, 1 );

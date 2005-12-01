@@ -4606,6 +4606,7 @@ BEGIN
     IDS_DLM_MOVING          "Shareaza is moving the download:"
     IDS_DLM_VERIFY          "Shareaza is checking the download for errors:"
     IDS_DLM_VOLUME_UPLOADED "Upload ratio:"
+    IDS_DLM_NUMBER_OF_REVIEWS "Number of reviews:"
 END
 
 STRINGTABLE 

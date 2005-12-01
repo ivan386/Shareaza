@@ -805,6 +805,7 @@
 #define IDS_DLM_MOVING                  8240
 #define IDS_DLM_VERIFY                  8241
 #define IDS_DLM_VOLUME_UPLOADED         8243
+#define IDS_DLM_NUMBER_OF_REVIEWS       8244
 #define IDS_LIBHEAD_HOME                8288
 #define IDS_LIBHEAD_EXPLORE_FOLDER      8289
 #define IDS_LIBHEAD_EXPLORE_MANY        8290
@@ -845,7 +846,6 @@
 #define IDS_TIP_FILE_BUSY               8334
 #define IDS_TIP_FILE_FIREWALLED         8335
 #define IDS_TIP_FILE_UNSTABLE           8336
-#define IDS_TIP_FILE_UNTRUSTED          8337
 #define IDS_TIP_UNTRUSTED               8337
 #define IDS_PROPERTY_PAGE_GENERAL       9000
 #define IDS_PROPERTY_PAGE_METADATA      9001
