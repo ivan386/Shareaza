@@ -483,48 +483,61 @@ void CShakeNeighbour::SendHostHeaders(LPCTSTR pszMessage)
 		SendMinimalHeaders(); // Say we are Shareaza, and understand Gnutella2 packets
 	}
 
-	// Compose text with IP address and online time information to help the remote computer find more Gnutella computers
-	int nCount = Settings.Gnutella1.PongCount;		// The list can't be longer than the pong count
-	if ( m_bG2Accept || m_bG2Send || m_bShareaza )	// The remote computer accepts Gnutella2 packets, sends them, or is Shareaza too
+	// Compose text with IP address and online time information to help the remote computer find hosts
+	
+	if ( m_bG2Accept || m_bG2Send || m_bShareaza )
 	{
+		// The remote computer accepts Gnutella2 packets, sends them, or is Shareaza too
+
+		int nCount = Settings.Gnutella1.PongCount;		// Set max length of list
+
 		// Loop through the Gnutella2 host cache from newest to oldest
 		for ( pHost = HostCache.Gnutella2.GetNewest() ; pHost && nCount > 0 ; pHost = pHost->m_pPrevTime )
 		{
-			// This host is still recent enough to tell another computer about
-			if ( pHost->CanQuote( nTime ) )
+			
+			if ( pHost->CanQuote( nTime ) )		// if host is still recent enough
 			{
-				// Compose text for one computer and add it to the string
+				// Add it to the string
 				strHost = pHost->ToString();						// The host object composes text about itself
 				if ( strHosts.GetLength() ) strHosts += _T(",");	// Separate each computer's info with a comma
-				strHosts += strHost;								// Add this computer's info to the big string
-				nCount--;											// Record that we documented another computer
+				strHosts += strHost;								// Add this computer's info to the string
+				nCount--;											// Decrement counter
 			}
 		}
+
+		// If we have any G2 hosts to tell the remote computer about
+		if ( strHosts.GetLength() )
+		{
+			m_pOutput->Print( "X-Try-Hubs: " );
+			m_pOutput->Print( strHosts );
+			m_pOutput->Print( "\r\n" );
+		}
 	}
-	else // The remote computer is running Gnutella
+	else
 	{
+		int nCount = Settings.Gnutella1.PongCount;		// Set max length of list
+
 		// Loop through the Gnutella host cache from newest to oldest
 		for ( pHost = HostCache.Gnutella1.GetNewest() ; pHost && nCount > 0 ; pHost = pHost->m_pPrevTime )
 		{
-			// This host is still recent enough to tell another computer about
-			if ( pHost->CanQuote( nTime ) )
+			if ( pHost->CanQuote( nTime ) )		// if host is still recent enough
 			{
-				// Compose text for one computer and add it to the string
+				// Add it to the string
 				strHost = pHost->ToString();						// Like "24.98.97.155:6348 2004-12-18T23:47Z"
 				if ( strHosts.GetLength() ) strHosts += _T(",");	// Separate each computer's info with a comma
-				strHosts += strHost;								// Add this computer's info to the big string
-				nCount--;											// Record that we documented another computer
+				strHosts += strHost;								// Add this computer's info to the string
+				nCount--;											// Decrement counter
 			}
 		}
-	}
 
-	// If we have any computers to tell the remote computer about
-	if ( strHosts.GetLength() )
-	{
-		// Send the information in a header like "X-Try-Ultrapeers: 24.98.97.155:6348 2004-12-18T23:47Z," and so on
-		m_pOutput->Print( "X-Try-Ultrapeers: " );
-		m_pOutput->Print( strHosts );
-		m_pOutput->Print( "\r\n" );
+		// If we have any G1 hosts to tell the remote computer about
+		if ( strHosts.GetLength() )
+		{
+			// Send the information in a header like "X-Try-Ultrapeers: 24.98.97.155:6348 2004-12-18T23:47Z," and so on
+			m_pOutput->Print( "X-Try-Ultrapeers: " );
+			m_pOutput->Print( strHosts );
+			m_pOutput->Print( "\r\n" );
+		}
 	}
 
 	// If this method started the handshake with a message line, end it with the blank line
@@ -1465,7 +1478,8 @@ BOOL CShakeNeighbour::IsClientObsolete()
 		// Check for old version and betas
 		if (( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||	// Old versions
 			( _tcsistr( m_sUserAgent, _T("Shareaza 2.0"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 2.1." ) ) ) )
+			( _tcsistr( m_sUserAgent, _T("Shareaza 2.1"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("Shareaza 2.2.0") ) ) )
 			return TRUE;
 
 		// Assumed to be reasonably current
@@ -1490,7 +1504,7 @@ BOOL CShakeNeighbour::IsClientObsolete()
 	}
 	else if ( _tcsistr( m_sUserAgent, _T("eTomi") ) )
 	{
-		// GPL violating rip- Uses outdated code
+		// Uses outdated Shareaza code
 		return TRUE;
 	}
 
