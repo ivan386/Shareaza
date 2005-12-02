@@ -135,6 +135,7 @@ void CPluginsSettingsPage::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult)
 		CString str = m_wndList.GetItemText( nItem, 2 );
 		CPlugin* pPlugin = (CPlugin*)m_wndList.GetItemData( nItem );
 		m_wndName.SetWindowText( m_wndList.GetItemText( nItem, 0 ).Trim() );
+		m_wndDesc.SetWindowText( GetPluginComments( m_wndList.GetItemText( nItem, 1 ) ) );
 		m_wndSetup.EnableWindow( pPlugin != NULL && pPlugin->m_pPlugin != NULL ||
 			( ! str.IsEmpty() && str != _T("-") ) );
 	}
@@ -150,7 +151,6 @@ void CPluginsSettingsPage::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult)
 	if ( ( ( pNMListView->uOldState >> 12 ) & LVIS_SELECTED ) == 0 &&
 		 ( ( pNMListView->uNewState >> 12 ) & LVIS_SELECTED ) != 0 ) 
 	{
-		CString strCLSID = m_wndList.GetItemText( nItem, 1 );
 		CString strExt = m_wndList.GetItemText( nItem, 2 );
 		strExt.Replace( _T("-"), _T("") );
 		m_wndList.SetItemText( nItem, 2, strExt );
@@ -158,7 +158,6 @@ void CPluginsSettingsPage::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult)
 	else if ( ( ( pNMListView->uOldState >> 12 ) & LVIS_SELECTED ) != 0 &&
 			( ( pNMListView->uNewState >> 12 ) & LVIS_SELECTED ) == 0 )
 	{
-		CString strCLSID = m_wndList.GetItemText( nItem, 1 );
 		CString strExt = m_wndList.GetItemText( nItem, 2 );
 		if ( ! strExt.IsEmpty() ) 
 			strExt.Replace( _T("-"), _T("") );
@@ -460,4 +459,66 @@ void CPluginsSettingsPage::AddMiscPlugin(LPCTSTR /*pszType*/, LPCTSTR pszCLSID, 
 
 		RegCloseKey( hClass );
 	}
+}
+
+// Plugin description have to be put to Comments in its code resources.
+// Authors can put any information here.
+CString CPluginsSettingsPage::GetPluginComments(LPCTSTR pszCLSID) const
+{
+	CString strPath;
+	HKEY hClassServer = NULL;
+
+	strPath.Format( _T("CLSID\\%s\\InProcServer32"), pszCLSID );
+
+	if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_CLASSES_ROOT, strPath, 0, KEY_READ, &hClassServer ) )
+	{
+		DWORD nValue = MAX_PATH * sizeof(TCHAR), nType = REG_SZ;
+		TCHAR szPluginPath[ MAX_PATH ];
+
+		if ( ERROR_SUCCESS == RegQueryValueEx( hClassServer, NULL, NULL, &nType,
+			(LPBYTE)szPluginPath, &nValue ) && nType == REG_SZ )
+		{
+			strPath.SetString( szPluginPath );
+		}
+		else return CString();
+	}
+	else return CString();
+
+	DWORD nSize = GetFileVersionInfoSize( strPath, &nSize );
+	BYTE* pBuffer = new BYTE[ nSize ];
+
+	if ( ! GetFileVersionInfo( strPath, NULL, nSize, pBuffer ) )
+	{
+		delete [] pBuffer;
+		return CString();
+	}
+
+	WCHAR* pLanguage = (WCHAR*)pBuffer + 20 + 26 + 18 + 3;
+	
+	if ( wcslen( pLanguage ) != 8 )
+	{
+		delete [] pBuffer;
+		return CString();
+	}
+
+	CString strKey, strValue;
+
+	strKey = _T("\\StringFileInfo\\");
+	strKey.Append( pLanguage );
+	strKey.Append( _T("\\Comments") );
+
+	BYTE* pValue = NULL;
+	nSize = 0;
+
+	if ( VerQueryValue( pBuffer, (LPTSTR)(LPCTSTR)strKey, (void**)&pValue, (UINT*)&nSize ) )
+	{
+		if ( pValue[1] )
+			strValue = (LPCSTR)pValue;
+		else
+			strValue = (LPCTSTR)pValue;
+	}
+
+	delete [] pBuffer;
+
+	return strValue;
 }

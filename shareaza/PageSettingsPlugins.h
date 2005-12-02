@@ -56,6 +56,7 @@ protected:
 	void		EnumerateMiscPlugins();
 	void		EnumerateMiscPlugins(LPCTSTR pszType, HKEY hRoot);
 	void		AddMiscPlugin(LPCTSTR pszType, LPCTSTR pszCLSID, LPCTSTR pszExtension = NULL);
+	CString		GetPluginComments(LPCTSTR pszCLSID) const;
 
 // Overrides
 public:
