@@ -153,7 +153,6 @@ void CPluginsSettingsPage::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult)
 		CString strCLSID = m_wndList.GetItemText( nItem, 1 );
 		CString strExt = m_wndList.GetItemText( nItem, 2 );
 		strExt.Replace( _T("-"), _T("") );
-		theApp.WriteProfileString( _T("Plugins"), strCLSID, strExt );
 		m_wndList.SetItemText( nItem, 2, strExt );
 	}
 	else if ( ( ( pNMListView->uOldState >> 12 ) & LVIS_SELECTED ) != 0 &&
