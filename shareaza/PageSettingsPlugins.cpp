@@ -268,7 +268,7 @@ void CPluginsSettingsPage::InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName, int n
 										LPVOID pPlugin, LPCTSTR pszExtension)
 {
     int nItem = 0;
-	CString strCurrAssoc, strCurrType, strAssocAdd, strTypeAdd;
+	CString strCurrAssoc, strAssocAdd;
 
 	for ( ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
