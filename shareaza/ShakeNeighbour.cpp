@@ -782,43 +782,78 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		// Look for the text "deflate", and make m_bDeflateSend true if it's found
 		m_bDeflateSend |= ( strValue.Find( _T("deflate") ) >= 0 );
-
-	} // The remote computer is giving us a list of IP addreses we can try to contact more ultrapeers
-	else if (	strHeader.CompareNoCase( _T("X-Try-Ultrapeers") ) == 0 ||
-				strHeader.CompareNoCase( _T("X-Try-Hubs") ) == 0 )
+	} 
+	else if ( m_bBadClient )
 	{
-		// Some clients send bad data here- ignore it.
-		if ( ! m_bBadClient )
+		// We don't want to accept Hubs or UltraPeers from clients that have bugs that pollute 
+		// the host cache, so stop here.
+	}
+	else if ( strHeader.CompareNoCase( _T("X-Try-DNA-Hubs") ) == 0 )
+	{	// The remote computer is giving us a list GnucDNA G2 hubs
+		int nCount = 0;
+		for ( strValue += ',' ; ; ) 
 		{
-			int nCount = 0;
-			// Append a comma onto the end of the value text once, and then loop forever
-			for ( strValue += ',' ; ; ) // for (;;) is the same thing as forever
-			{
-				// Find the first comma in the value text
-				int nPos = strValue.Find( ',' ); // Set nPos to the distance in characters from the start to the comma
-				if ( nPos < 0 ) break;           // If no comma was found, leave the loop
+			int nPos = strValue.Find( ',' );		// Set nPos to the distance in characters from the start to the comma
+			if ( nPos < 0 ) break;					// If no comma was found, leave the loop
+			CString strHost = strValue.Left( nPos );// Copy the text up to the comma into strHost
+			strValue = strValue.Mid( nPos + 1 );    // Clip that text and the comma off the start of strValue
 
-				// Move the text before the comma from the value string to a new string for the host
-				CString strHost = strValue.Left( nPos ); // Copy the text up to the comma into strHost
-				strValue = strValue.Mid( nPos + 1 );     // Clip that text and the comma off the start of strValue
-
-				// The remote computer accepts Gnutella2 packets, is sending them, or is Shareaza
-				if ( m_bG2Accept || m_bG2Send || m_bShareaza )
-				{
-					// Add the host to the Gnutella2 host cache, sending the text "RAZA" along if the remote computer is Shareaza
-					if ( HostCache.Gnutella2.Add( strHost, 0, m_bShareaza ? SHAREAZA_VENDOR_T : NULL ) ) nCount++; // Count it
-
-				} // This is a Gnutella connection, not Gnutella2
-				else
-				{
-					// Add the host to the Gnutella2 host cache, sending the text "RAZA" along if the remote computer is Shareaza
-					if ( HostCache.Gnutella1.Add( strHost, 0, m_bShareaza ? SHAREAZA_VENDOR_T : NULL ) ) nCount++; // Count it
-				}
-			}
-
-			// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
-			DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
+			// Add the host to the Gnutella2 host cache, noting it's a DNA hub
+			if ( HostCache.Gnutella2.Add( strHost, 0, _T("DNA") ) ) nCount++;
 		}
+		// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
+		DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
+	}
+	else if ( strHeader.CompareNoCase( _T("X-Try-Hubs") ) == 0 )
+	{	// The remote computer is giving us a list G2 hubs
+		int nCount = 0;
+		for ( strValue += ',' ; ; ) 
+		{
+			int nPos = strValue.Find( ',' );		// Set nPos to the distance in characters from the start to the comma
+			if ( nPos < 0 ) break;					// If no comma was found, leave the loop
+			CString strHost = strValue.Left( nPos );// Copy the text up to the comma into strHost
+			strValue = strValue.Mid( nPos + 1 );    // Clip that text and the comma off the start of strValue
+
+			// Add the host to the Gnutella2 host cache, sending the text "RAZA" along if the remote computer is Shareaza
+			if ( HostCache.Gnutella2.Add( strHost, 0, m_bShareaza ? SHAREAZA_VENDOR_T : NULL ) ) nCount++; // Count it
+		}
+		// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
+		DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
+	} 
+	else if (	strHeader.CompareNoCase( _T("X-Try-Ultrapeers") ) == 0 )
+	{	// This header has been used for several things. In general, it's giving us a list of
+		// Gnutella Ultrapeers, however some older versions of Shareaza can send G2 hubs in it,
+		// if the client advertises G2 capability
+
+		// Todo: Clean this up once there are very few of the older clients around
+
+		int nCount = 0;
+		// Append a comma onto the end of the value text once, and then loop forever
+		for ( strValue += ',' ; ; ) // for (;;) is the same thing as forever
+		{
+			// Find the first comma in the value text
+			int nPos = strValue.Find( ',' ); // Set nPos to the distance in characters from the start to the comma
+			if ( nPos < 0 ) break;           // If no comma was found, leave the loop
+
+			// Move the text before the comma from the value string to a new string for the host
+			CString strHost = strValue.Left( nPos ); // Copy the text up to the comma into strHost
+			strValue = strValue.Mid( nPos + 1 );     // Clip that text and the comma off the start of strValue
+
+			// The remote computer accepts Gnutella2 packets, is sending them, or is Shareaza
+			if ( m_bG2Accept || m_bG2Send || m_bShareaza )
+			{
+				// Add the host to the Gnutella2 host cache, sending the text "RAZA" along if the remote computer is Shareaza
+				if ( HostCache.Gnutella2.Add( strHost, 0, m_bShareaza ? SHAREAZA_VENDOR_T : NULL ) ) nCount++; // Count it
+
+			} 
+			else	// This is a Gnutella connection, not Gnutella2
+			{
+				// Add the host to the Gnutella host cache
+				if ( HostCache.Gnutella1.Add( strHost, 0, NULL ) ) nCount++;
+			}
+		}
+		// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
+		DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
 	}
 
 	// Report success
