@@ -814,9 +814,11 @@ void CDownloadsWnd::OnDownloadsLaunch()
 					pLock.Lock();
 					if ( nResponse == IDNO ) continue;
 				}
-				
+
+				int nDot = pDownload->m_sDisplayName.ReverseFind( '.' );
+				CString strExt = pDownload->m_sDisplayName.Mid( nDot + 1 );
 				pLock.Unlock();
-				if ( ! CFileExecutor::Execute( strName, FALSE ) ) break;
+				if ( ! CFileExecutor::Execute( strName, FALSE, FALSE, strExt ) ) break;
 				pLock.Lock();
 				
 				if ( ++nCount >= 5 ) break;
@@ -829,8 +831,10 @@ void CDownloadsWnd::OnDownloadsLaunch()
 				}
 				else
 				{
+					int nDot = pDownload->m_sDisplayName.ReverseFind( '.' );
+					CString strExt = pDownload->m_sDisplayName.Mid( nDot + 1 );
 					pLock.Unlock();
-					if ( ! CFileExecutor::Execute( strName, FALSE ) ) break;
+					if ( ! CFileExecutor::Execute( strName, FALSE, FALSE, strExt ) ) break;
 					pLock.Lock();
 				}
 				
@@ -939,8 +943,11 @@ void CDownloadsWnd::OnDownloadsEnqueue()
 			if ( pDownload->IsStarted() )
 			{
 				CString strPath = pDownload->m_sDiskName;
+				int nDot = pDownload->m_sDisplayName.ReverseFind( '.' );
+				CString strExt = pDownload->m_sDisplayName.Mid( nDot + 1 );
+
 				pLock.Unlock();
-				CFileExecutor::Enqueue( strPath );
+				CFileExecutor::Enqueue( strPath, FALSE, strExt );
 				pLock.Lock();
 			}
 		}

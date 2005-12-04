@@ -58,6 +58,9 @@ protected:
 	void		AddMiscPlugin(LPCTSTR pszType, LPCTSTR pszCLSID, LPCTSTR pszExtension = NULL);
 	CString		GetPluginComments(LPCTSTR pszCLSID) const;
 
+public:
+	void		UpdateList();
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CPluginsSettingsPage)

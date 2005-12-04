@@ -22,7 +22,10 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "WndSettingsPage.h"
+#include "WndSettingsSheet.h"
 #include "PageSettingsMedia.h"
+#include "PageSettingsPlugins.h"
 #include "DlgMediaVis.h"
 
 #ifdef _DEBUG
@@ -39,6 +42,7 @@ BEGIN_MESSAGE_MAP(CMediaSettingsPage, CSettingsPage)
 	ON_BN_CLICKED(IDC_MEDIA_ENQUEUE, OnMediaEnqueue)
 	ON_CBN_SELCHANGE(IDC_MEDIA_TYPES, OnSelChangeMediaTypes)
 	ON_CBN_EDITCHANGE(IDC_MEDIA_TYPES, OnEditChangeMediaTypes)
+	ON_CBN_CLOSEUP(IDC_MEDIA_SERVICE, OnCloseupMediaService)
 	ON_BN_CLICKED(IDC_MEDIA_ADD, OnMediaAdd)
 	ON_BN_CLICKED(IDC_MEDIA_REMOVE, OnMediaRemove)
 	ON_BN_CLICKED(IDC_MEDIA_VIS, OnMediaVis)
@@ -72,7 +76,9 @@ void CMediaSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_MEDIA_TYPES, m_sType);
 	DDX_Check(pDX, IDC_MEDIA_PLAY, m_bEnablePlay);
 	DDX_Check(pDX, IDC_MEDIA_ENQUEUE, m_bEnableEnqueue);
+	DDX_Control(pDX, IDC_MEDIA_SERVICE, m_wndServices);
 	//}}AFX_DATA_MAP
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -93,12 +99,33 @@ BOOL CMediaSettingsPage::OnInitDialog()
 		strType.TrimRight();
 		if ( strType.GetLength() ) m_wndList.AddString( strType );
 	}
+	
+	CString str;
+	LoadString( str, IDS_GENERAL_DEFAULT );
+	m_wndServices.AddString( str );
+	LoadString( str, IDS_GENERAL_CUSTOM );
+	str.Insert( 0, '(' );
+	str.Append( _T("\x2026)") );
+	m_wndServices.AddString( str );
+
+	if ( Settings.MediaPlayer.ServicePath.IsEmpty() )
+		m_wndServices.SetCurSel( 0 );
+	else
+	{
+		m_sServicePath = Settings.MediaPlayer.ServicePath;
+		int nBackSlash = m_sServicePath.ReverseFind( '\\' );
+		str = m_sServicePath.Mid( nBackSlash + 1 );
+		m_wndServices.InsertString( 0, str );
+		m_wndServices.SetCurSel( 0 );
+		GetDlgItem( IDC_MEDIA_PLAY )->EnableWindow( FALSE );
+		GetDlgItem( IDC_MEDIA_ENQUEUE )->EnableWindow( FALSE );
+		GetDlgItem( IDC_MEDIA_VIS )->EnableWindow( FALSE );
+	}
 
 	UpdateData( FALSE );
 
-	m_wndList.EnableWindow( m_bEnablePlay || m_bEnableEnqueue );
-	m_wndAdd.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetWindowTextLength() > 0 );
-	m_wndRemove.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetCurSel() >= 0 );
+	m_wndAdd.EnableWindow( m_wndList.GetWindowTextLength() > 0 );
+	m_wndRemove.EnableWindow( m_wndList.GetCurSel() >= 0 );
 
 	return TRUE;
 }
@@ -121,12 +148,12 @@ void CMediaSettingsPage::OnMediaEnqueue()
 
 void CMediaSettingsPage::OnSelChangeMediaTypes()
 {
-	m_wndRemove.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetCurSel() >= 0 );
+	m_wndRemove.EnableWindow( m_wndList.GetCurSel() >= 0 );
 }
 
 void CMediaSettingsPage::OnEditChangeMediaTypes()
 {
-	m_wndAdd.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetWindowTextLength() > 0 );
+	m_wndAdd.EnableWindow( m_wndList.GetWindowTextLength() > 0 );
 }
 
 void CMediaSettingsPage::OnMediaAdd()
@@ -165,6 +192,44 @@ void CMediaSettingsPage::OnOK()
 
 	Settings.MediaPlayer.EnablePlay		= m_bEnablePlay;
 	Settings.MediaPlayer.EnableEnqueue	= m_bEnableEnqueue;
+	Settings.MediaPlayer.ServicePath	= m_sServicePath;
+
+	CString strRegData;
+
+	if ( m_sServicePath.IsEmpty() )
+		Settings.MediaPlayer.ShortPaths = FALSE;
+	else
+	{	
+		strRegData = _T("-");
+		// Todo: Remove this code when VLC player gets ready to read unicode paths
+		CString strExecutable;
+		m_wndServices.GetWindowText( strExecutable );
+		Settings.MediaPlayer.ShortPaths = strExecutable.MakeLower() == _T("vlc.exe");
+	}
+
+	theApp.WriteProfileString( _T("Plugins"), Settings.MediaPlayer.AviPreviewCLSID, strRegData );
+	theApp.WriteProfileString( _T("Plugins"), Settings.MediaPlayer.MediaServicesCLSID, strRegData );
+	theApp.WriteProfileString( _T("Plugins"), Settings.MediaPlayer.Mp3PreviewCLSID, strRegData );
+	theApp.WriteProfileString( _T("Plugins"), Settings.MediaPlayer.Mpeg1PreviewCLSID, strRegData );
+	theApp.WriteProfileString( _T("Plugins"), Settings.MediaPlayer.VisCLSID, strRegData );
+	theApp.WriteProfileString( _T("Plugins"), Settings.MediaPlayer.VisSoniqueCLSID, strRegData );
+	theApp.WriteProfileString( _T("Plugins"), Settings.MediaPlayer.VisWrapperCLSID, strRegData );
+
+	CSettingsSheet* pSheet = GetSheet();
+	for ( INT_PTR nPage = 0 ; nPage < pSheet->GetPageCount() ; nPage++ )
+	{
+		CSettingsPage* pPage = pSheet->GetPage( nPage );
+		if ( pPage )
+		{
+			CString strClass = pPage->GetRuntimeClass()->m_lpszClassName;
+			if ( strClass == _T("CPluginsSettingsPage") )
+			{
+				CPluginsSettingsPage* pPluginPage = reinterpret_cast< CPluginsSettingsPage* >( pPage );
+				pPluginPage->UpdateList();
+				break;
+			}
+		}
+	}
 
 	Settings.MediaPlayer.FileTypes.Empty();
 
@@ -183,4 +248,47 @@ void CMediaSettingsPage::OnOK()
 	}
 
 	CSettingsPage::OnOK();
+}
+
+void CMediaSettingsPage::OnCloseupMediaService()
+{
+	int nCustomIndex = ( m_wndServices.GetCount() == 2 ) ? 1 : 2;
+	int nSelected = m_wndServices.GetCurSel();
+
+	if ( nSelected == nCustomIndex )
+	{
+		CFileDialog dlg( TRUE, _T("exe"), _T("") , OFN_HIDEREADONLY|OFN_FILEMUSTEXIST,
+			_T("Executable Files|*.exe;*.com|All Files|*.*||"), this );
+		
+		if ( dlg.DoModal() != IDOK )
+		{
+			m_wndServices.SetCurSel( 0 );
+			return;
+		}
+		
+		// Delete old file name first
+		if ( nCustomIndex == 2 ) m_wndServices.DeleteString( 0 );
+		m_wndServices.InsertString( 0, dlg.GetFileName() );
+		m_wndServices.SetCurSel( 0 );
+		m_sServicePath = dlg.GetPathName();
+
+		m_bEnablePlay = m_bEnableEnqueue = FALSE;
+		UpdateData( FALSE );
+
+		GetDlgItem( IDC_MEDIA_PLAY )->EnableWindow( FALSE );
+		GetDlgItem( IDC_MEDIA_ENQUEUE )->EnableWindow( FALSE );
+		GetDlgItem( IDC_MEDIA_VIS )->EnableWindow( FALSE );
+	}
+	else if ( nSelected == 1 )
+	{
+		if ( nCustomIndex == 2 ) m_wndServices.DeleteString( 0 );
+		m_sServicePath.Empty();
+
+		m_bEnablePlay = m_bEnableEnqueue = TRUE;
+		UpdateData( FALSE );
+
+		GetDlgItem( IDC_MEDIA_PLAY )->EnableWindow( TRUE );
+		GetDlgItem( IDC_MEDIA_ENQUEUE )->EnableWindow( TRUE );
+		GetDlgItem( IDC_MEDIA_VIS )->EnableWindow( TRUE );
+	}
 }

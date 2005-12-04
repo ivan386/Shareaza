@@ -145,9 +145,17 @@ public:
 		BOOL		ListVisible;
 		DWORD		ListSize;
 		BOOL		StatusVisible;
+		CString		MediaServicesCLSID;
+		CString		Mpeg1PreviewCLSID;
+		CString		Mp3PreviewCLSID;
+		CString		AviPreviewCLSID;
+		CString		VisWrapperCLSID;
+		CString		VisSoniqueCLSID;
 		CString		VisCLSID;
 		CString		VisPath;
 		INT			VisSize;
+		CString		ServicePath;
+		BOOL		ShortPaths;		// Some players differently handle unicode paths but they can launch files using 8.3 paths
 	} MediaPlayer;
 	
 	struct sWeb

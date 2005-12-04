@@ -32,14 +32,14 @@ class CFileExecutor
 {
 // Operations
 public:
-	static BOOL		Execute(LPCTSTR pszFile, BOOL bForce = FALSE, BOOL bHasThumbnail = FALSE);
-	static BOOL		Enqueue(LPCTSTR pszFiles, BOOL bForce = FALSE);
+	static BOOL		Execute(LPCTSTR pszFile, BOOL bForce = FALSE, BOOL bHasThumbnail = FALSE, LPCTSTR pszExt = NULL);
+	static BOOL		Enqueue(LPCTSTR pszFiles, BOOL bForce = FALSE, LPCTSTR pszExt = NULL);
 	static BOOL		ShowBitziTicket(DWORD nFile);
 	static BOOL		DisplayURL(LPCTSTR pszURL);
 
 // Implementation
 protected:
-	static void			GetFileComponents(LPCTSTR pszFile, CString& strPath, CString& strType);
+	static void			GetFileComponents(LPCTSTR pszFile, CString& strPath, CString& strType, CString& strShortPath );
 	static CMediaWnd*	GetMediaWindow(BOOL bFocus);
 	static CLibraryWnd*	GetLibraryWindow();
 	static HDDEDATA CALLBACK DDECallback(UINT wType, UINT wFmt, HCONV hConv, HSZ hsz1, HSZ hsz2, HDDEDATA hData, DWORD dwData1, DWORD dwData2);

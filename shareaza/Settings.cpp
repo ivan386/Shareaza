@@ -136,9 +136,17 @@ void CSettings::Setup()
 	Add( _T("MediaPlayer.ListVisible"), &MediaPlayer.ListVisible, TRUE );
 	Add( _T("MediaPlayer.ListSize"), &MediaPlayer.ListSize, 240 );
 	Add( _T("MediaPlayer.StatusVisible"), &MediaPlayer.StatusVisible, TRUE );
+	Add( _T("MediaPlayer.MediaServicesCLSID"), &MediaPlayer.MediaServicesCLSID, _T("{3DC28AA6-A597-4E03-96DF-ADA19155B0BE}") );
+	Add( _T("MediaPlayer.Mpeg1PreviewCLSID"), &MediaPlayer.Mpeg1PreviewCLSID, _T("{9AA8DF47-B8FE-47da-AB1A-2DAA0DA0B646}") );
+	Add( _T("MediaPlayer.Mp3PreviewCLSID"), &MediaPlayer.Mp3PreviewCLSID, _T("{BF00DBCC-90A2-4f46-8171-7D4F929D035F}") );
+	Add( _T("MediaPlayer.AviPreviewCLSID"), &MediaPlayer.AviPreviewCLSID, _T("{394011F0-6D5C-42a3-96C6-24B9AD6B010C}") );
+	Add( _T("MediaPlayer.VisWrapperCLSID"), &MediaPlayer.VisWrapperCLSID, _T("{C3B7B25C-6B8B-481A-BC48-59F9A6F7B69A}") );
+	Add( _T("MediaPlayer.VisSoniqueCLSID"), &MediaPlayer.VisSoniqueCLSID, _T("{D07E630D-A850-4f11-AD29-3D3848B67EFE}") );
 	Add( _T("MediaPlayer.VisCLSID"), &MediaPlayer.VisCLSID, _T("{591A5CFF-3172-4020-A067-238542DDE9C2}") );
 	Add( _T("MediaPlayer.VisPath"), &MediaPlayer.VisPath, _T("") );
 	Add( _T("MediaPlayer.VisSize"), &MediaPlayer.VisSize, 1 );
+	Add( _T("MediaPlayer.ServicePath"), &MediaPlayer.ServicePath, _T("") );
+	Add( _T("MediaPlayer.ShortPaths"), &MediaPlayer.ShortPaths, FALSE );
 	
 	Add( _T("Web.Magnet"), &Web.Magnet, TRUE );
 	Add( _T("Web.Gnutella"), &Web.Gnutella, TRUE );

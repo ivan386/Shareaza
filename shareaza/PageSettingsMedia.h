@@ -40,12 +40,14 @@ public:
 public:
 	//{{AFX_DATA(CMediaSettingsPage)
 	enum { IDD = IDD_SETTINGS_MEDIA };
-	CButton	m_wndRemove;
-	CButton	m_wndAdd;
+	CButton		m_wndRemove;
+	CButton		m_wndAdd;
 	CComboBox	m_wndList;
-	CString	m_sType;
-	BOOL	m_bEnablePlay;
-	BOOL	m_bEnableEnqueue;
+	CComboBox	m_wndServices;
+	CString		m_sServicePath;
+	CString		m_sType;
+	BOOL		m_bEnablePlay;
+	BOOL		m_bEnableEnqueue;
 	//}}AFX_DATA
 
 // Overrides
@@ -65,6 +67,7 @@ protected:
 	afx_msg void OnMediaEnqueue();
 	afx_msg void OnSelChangeMediaTypes();
 	afx_msg void OnEditChangeMediaTypes();
+	afx_msg void OnCloseupMediaService();
 	afx_msg void OnMediaAdd();
 	afx_msg void OnMediaRemove();
 	afx_msg void OnMediaVis();

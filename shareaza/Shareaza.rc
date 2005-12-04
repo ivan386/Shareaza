@@ -2044,28 +2044,27 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,181,179,50,14
 END
 
-IDD_SETTINGS_MEDIA DIALOG  0, 0, 282, 220
+IDD_SETTINGS_MEDIA DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Media Player"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&Options:",IDC_STATIC,5,5,270,50,WS_GROUP
+    GROUPBOX        "&Media Services:",IDC_STATIC,5,5,270,65,WS_GROUP
+    COMBOBOX        IDC_MEDIA_SERVICE,15,18,115,60,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
     CONTROL         "Use the Shareaza Media Player to PLAY the file types listed below",
                     IDC_MEDIA_PLAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,
-                    20,250,10
+                    37,250,10
     CONTROL         "Use the Shareaza Media Player to ENQUEUE the file types listed below",
                     IDC_MEDIA_ENQUEUE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    15,35,250,10
-    GROUPBOX        "File &Types:",IDC_STATIC,5,60,125,155,WS_GROUP
-    COMBOBOX        IDC_MEDIA_TYPES,15,75,60,135,CBS_SIMPLE | CBS_SORT | 
+                    15,52,250,10
+    GROUPBOX        "File &Types:",IDC_STATIC,5,77,125,138,WS_GROUP
+    COMBOBOX        IDC_MEDIA_TYPES,15,92,60,118,CBS_SIMPLE | CBS_SORT | 
                     WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "&Add",IDC_MEDIA_ADD,80,75,40,15
-    PUSHBUTTON      "&Remove",IDC_MEDIA_REMOVE,80,95,40,15
-    GROUPBOX        "Audio &Visualisation Plugin:",IDC_STATIC,140,60,135,50
-    PUSHBUTTON      "&Select Plugin...",IDC_MEDIA_VIS,160,80,95,15
-    GROUPBOX        "Media Services &Plugin:",IDC_STATIC,140,120,135,45
-    COMBOBOX        IDC_MEDIA_SERVICE,150,140,115,60,CBS_DROPDOWNLIST | 
-                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add",IDC_MEDIA_ADD,80,92,40,15
+    PUSHBUTTON      "&Remove",IDC_MEDIA_REMOVE,80,112,40,15
+    GROUPBOX        "Audio &Visualisation Plugin:",IDC_STATIC,140,76,135,50
+    PUSHBUTTON      "&Select Plugin...",IDC_MEDIA_VIS,160,96,95,15
 END
 
 IDD_SETTINGS_INTERFACE DIALOG  0, 0, 282, 220
@@ -4237,13 +4236,6 @@ BEGIN
     0
 END
 
-IDD_SETTINGS_MEDIA DLGINIT
-BEGIN
-    IDC_MEDIA_SERVICE, 0x403, 8, 0
-0x6544, 0x6166, 0x6c75, 0x0074, 
-    0
-END
-
 IDD_MEDIA_VIS DLGINIT
 BEGIN
     IDC_VIS_SIZE, 0x403, 15, 0
@@ -5450,6 +5442,8 @@ BEGIN
     IDS_GENERAL_NO          "No"
     IDS_GENERAL_YES         "Yes"
     IDS_GENERAL_AUTO        "Auto"
+    IDS_GENERAL_DEFAULT     "Default"
+    IDS_GENERAL_CUSTOM      "Custom"
 END
 
 STRINGTABLE 

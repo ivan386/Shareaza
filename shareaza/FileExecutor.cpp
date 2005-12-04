@@ -52,9 +52,15 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CFileExecutor utilities
 
-void CFileExecutor::GetFileComponents(LPCTSTR pszFile, CString& strPath, CString& strType)
+void CFileExecutor::GetFileComponents(LPCTSTR pszFile, CString& strPath, CString& strType, CString& strShortPath)
 {
+	TCHAR pszShortPath[ MAX_PATH ];
 	CString strFile = pszFile;
+
+	if ( GetShortPathNameW( strFile, pszShortPath, MAX_PATH ) ) 
+		strShortPath.SetString( pszShortPath );
+	else strShortPath.Empty();
+
 	int nPos = strFile.ReverseFind( '\\' );
 	if ( nPos >= 0 ) strPath = strFile.Left( nPos );
 	nPos = strFile.ReverseFind( '.' );
@@ -81,12 +87,12 @@ CLibraryWnd* CFileExecutor::GetLibraryWindow()
 //////////////////////////////////////////////////////////////////////
 // CFileExecutor execute
 
-BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail)
+BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LPCTSTR pszExt)
 {
-	CString strPath, strType;
+	CString strPath, strShortPath, strType;
 	CWaitCursor pCursor;
 
-	GetFileComponents( pszFile, strPath, strType );
+	GetFileComponents( pszFile, strPath, strType, strShortPath );
 
 	if ( strType.GetLength() > 0 && _tcsistr( _T("|co|collection|"), strType ) != NULL )
 	{
@@ -95,6 +101,13 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail)
 			pWnd->OnCollection( pszFile );
 			return TRUE;
 		}
+	}
+
+	if ( _tcsistr( _T("|partial|"), strType ) != NULL && pszExt )
+	{
+		strType.SetString( _T("|") );
+		strType.Append( pszExt );
+		strType.Append( _T("|") );
 	}
 
 	if ( bForce == NULL && strType.GetLength() &&
@@ -128,11 +141,32 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail)
 		}
 	}
 
-	if ( ! bShiftKey )
-		if ( Plugins.OnExecuteFile( pszFile, bHasThumbnail ) ) return TRUE;
+	CString strFile;
+	if ( Settings.MediaPlayer.ShortPaths && ! strShortPath.IsEmpty() )
+		strFile = strShortPath;
+	else
+		strFile.Format( _T("\"%s\""), pszFile );
 
+	if ( ! bShiftKey )
+	{
+		if ( _tcsistr( Settings.MediaPlayer.FileTypes, strType ) != NULL && 
+			 ! Settings.MediaPlayer.ServicePath.IsEmpty() )
+		{
+			CString strExecPath;
+			int nBackSlash = Settings.MediaPlayer.ServicePath.ReverseFind( '\\' );
+			strExecPath = Settings.MediaPlayer.ServicePath.Left( nBackSlash );
+			ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"), Settings.MediaPlayer.ServicePath, 
+				strFile, strExecPath, SW_SHOWNORMAL );
+			return TRUE;
+		}
+		
+		if ( Plugins.OnExecuteFile( pszFile, bHasThumbnail ) )
+			return TRUE;
+	}
+	
+	// Todo: Doesn't work for now with partial files
 	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(),
-		NULL, pszFile, NULL, strPath, SW_SHOWNORMAL );
+			NULL, strFile, NULL, strPath, SW_SHOWNORMAL );
 
 	return TRUE;
 }
@@ -140,30 +174,80 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail)
 //////////////////////////////////////////////////////////////////////
 // CFileExecutor enqueue
 
-BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/)
+BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 {
-	CString strPath, strType;
+	CString strPath, strShortPath, strType;
 	CWaitCursor pCursor;
 
-	GetFileComponents( pszFile, strPath, strType );
+	GetFileComponents( pszFile, strPath, strType, strShortPath );
 
 	if ( Plugins.OnEnqueueFile( pszFile ) ) return TRUE;
 
-	if ( Settings.MediaPlayer.EnableEnqueue && strType.GetLength() &&
-		 ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
+	CString strFile = Settings.MediaPlayer.ShortPaths ? strShortPath : pszFile;
+	if ( pszExt && _tcsistr( _T("|partial|"), strType ) != NULL ) 
+	{
+		strType.SetString( _T("|") );
+		strType.Append( pszExt );
+		strType.Append( _T("|") );
+	}
+
+	BOOL bShiftKey = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
+	if ( Settings.MediaPlayer.EnableEnqueue && strType.GetLength() && ! bShiftKey )
 	{
 		if ( _tcsistr( Settings.MediaPlayer.FileTypes, strType ) != NULL )
 		{
 			if ( CMediaWnd* pWnd = GetMediaWindow( FALSE ) )
 			{
-				pWnd->EnqueueFile( pszFile );
+				pWnd->EnqueueFile( strFile );
 				return TRUE;
 			}
 		}
 	}
 
+	if ( _tcsistr( Settings.MediaPlayer.FileTypes, strType ) != NULL && 
+		 ! Settings.MediaPlayer.ServicePath.IsEmpty() && ! bShiftKey )
+	{
+		CString strCommand;
+		DWORD nBufferSize = MAX_PATH;
+
+		// Sometimes ShellExecute doesn't work, so we find the verb stuff manually
+		HRESULT hr = AssocQueryString( ASSOCF_OPEN_BYEXENAME, ASSOCSTR_COMMAND, 
+			Settings.MediaPlayer.ServicePath, _T("Enqueue"), 
+			strCommand.GetBuffer( MAX_PATH ), &nBufferSize );
+		strCommand.ReleaseBuffer();
+		
+		if ( SUCCEEDED( hr ) )
+		{
+			int nFind = strCommand.Find( _T("%1") );
+			if ( nFind != -1 )
+			{
+				strCommand.SetString( strCommand.Left( nFind ) + strFile + strCommand.Mid( nFind + 2 ) );
+				CharLower( strCommand.GetBuffer() );
+				strCommand.ReleaseBuffer();
+				
+				CString strServiceLC = Settings.MediaPlayer.ServicePath;
+				CharLower( strServiceLC.GetBuffer() );
+				strServiceLC.ReleaseBuffer();
+				
+				nFind = strCommand.Find( strServiceLC );
+				strCommand.SetString( strCommand.Mid( strServiceLC.GetLength() + nFind ) );
+				if ( strCommand.Left( 1 ) == _T("\"") ) 
+					strCommand.SetString( strCommand.Mid( 1 ).Trim() );
+
+				CString strExecPath;
+				int nBackSlash = Settings.MediaPlayer.ServicePath.ReverseFind( '\\' );
+				strExecPath = Settings.MediaPlayer.ServicePath.Left( nBackSlash );
+				ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL, Settings.MediaPlayer.ServicePath, 
+					strCommand, strExecPath, SW_SHOWNORMAL );
+				return TRUE;
+			}
+		}
+	}
+
+	// Todo: Doesn't work for now with partial files
 	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(),
-		_T("Enqueue"), pszFile, NULL, strPath, SW_SHOWNORMAL );
+		_T("Enqueue"), strFile, NULL, strPath, SW_SHOWNORMAL );
 
 	return TRUE;
 }

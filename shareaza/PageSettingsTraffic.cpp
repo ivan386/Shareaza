@@ -272,6 +272,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Library.ThumbSize, 1, 16, 256 );
 	AddSetting( &Settings.Library.VirtualFiles, 1, 0, 1);
 	AddSetting( &Settings.Library.HashWindow, 1, 0, 1);
+
+	AddSetting( &Settings.MediaPlayer.ShortPaths, 1, 0, 1 );
 	
 	AddSetting( &Settings.Bandwidth.Request, 128, 0, 8192, _T(" Kb/s") );
 	AddSetting( &Settings.Bandwidth.HubIn, 128, 0, 8192, _T(" Kb/s") );

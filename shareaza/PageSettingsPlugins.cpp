@@ -99,13 +99,8 @@ BOOL CPluginsSettingsPage::OnInitDialog()
 	m_wndList.InsertGroup( 0, &pGroup );
 	*/
 
-	m_bRunning = FALSE;
-
-	EnumerateGenericPlugins();
-	EnumerateMiscPlugins();
-
+	UpdateList();
 	m_wndSetup.EnableWindow( FALSE );
-	m_bRunning = TRUE;
 
 	return TRUE;
 }
@@ -238,7 +233,7 @@ void CPluginsSettingsPage::OnOK()
 
 		TRISTATE bEnabled = m_wndList.GetItemState( nItem, LVIS_STATEIMAGEMASK ) >> 12;
 
-		if ( bEnabled != TS_UNKNOWN )
+		if ( bEnabled != TS_UNKNOWN && IsWindowVisible() )
 		{
 			theApp.WriteProfileString( _T("Plugins"), strCLSID, m_wndList.GetItemText( nItem, 2 ) );
 		}
@@ -521,4 +516,19 @@ CString CPluginsSettingsPage::GetPluginComments(LPCTSTR pszCLSID) const
 	delete [] pBuffer;
 
 	return strValue;
+}
+
+void CPluginsSettingsPage::UpdateList()
+{
+	if ( m_hWnd == NULL ) return;
+
+	CWaitCursor pCursor;
+	m_bRunning = FALSE;
+
+	m_wndList.DeleteAllItems();
+	EnumerateGenericPlugins();
+	EnumerateMiscPlugins();
+
+	m_bRunning = TRUE;
+	pCursor.Restore();
 }
