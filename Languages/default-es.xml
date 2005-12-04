@@ -4,15 +4,15 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <!-- Manifest -->
-<manifest name="Español"
-		author="dague12"
-		updatedBy="help"
-		description="Traducción de Shareaza al Español Internacional"
-		link="http://www.shareaza.com/"
-		email="luis.help@gmail.com"
-		version="2.2.0.2"
-		type="Language"
-		language="es"
+<manifest name="Español" 
+		author="dague12" 
+		updatedBy="help" 
+		description="Traducción de Shareaza al Español Internacional" 
+		link="http://www.shareaza.com/" 
+		email="luis.help@gmail.com" 
+		version="2.2.0.2" 
+		type="Language" 
+		language="es" 
 		prompt="Seleccione aquí para usar Shareaza en Español Internacional"
 />
 
@@ -525,7 +525,7 @@
 			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo/Torrent..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Elegir _Skin..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Elegir un _Lenguaje..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Elegir un _Idioma..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editar Mi _Perfil..."/>
 			<item id="ID_TOOLS_WIZARD" text="Configuración _Rápida..."/>
@@ -608,7 +608,7 @@
 			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo/Torrent..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Elegir _Skin..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Elegir un _Lenguaje..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Elegir un _Idioma..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editar Mi _Perfil..."/>
 			<separator/>
@@ -1105,7 +1105,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Mover Archivo..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copiar Archivo..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localizar Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propiedades"/>
 	</menu>
@@ -1137,7 +1137,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Mover Archivos..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copiar Archivos..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localizar Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Elegir _Columnas..."/>
 		<separator/>
@@ -1173,7 +1173,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Mover Archivos..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copiar Archivos..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localizar Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propiedades"/>
 	</menu>
@@ -1207,7 +1207,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Mover Archivos..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copiar Archivos..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localizar Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Elegir _Columnas..."/>
 		<separator/>
@@ -1788,7 +1788,7 @@
 			<newline gap="8" indent="0"/>
 			<text format="b">Ubicación</text>
 			<newline gap="2" indent="8"/>
-			<text id="FullLocation"/>
+			<text id="Ubicación Completa"/>
 		</group>
 
 		<group id="3">
@@ -2017,7 +2017,7 @@
 		<newline gap="8"/>
 		<text>Un disco de red puede estar desconectado, o tu no tienes permiso de escribir
 		a un directorio seleccionado. Por favor revisa los directorios y los permisos, o cambiar la
-		locación de archivos temporales.</text>
+		ubicación de archivos temporales.</text>
 	</document>
 
 	<document name="GeneralHelp.ConnectionFail">
@@ -2159,7 +2159,7 @@
 		recomendado, porque la mayoria de los archivos que estan aqui no son usados por otras personas.</text>
 		<newline gap="8"/>
 		<text>Carpetas como la carpeta de Windows, Archivos del Programa, y carpetas similares
-		no continen archivos suitables para compartir. Cualquier archivo de interés deberia estar localizado en un
+		no continen archivos suitables para compartir. Cualquier archivo de interés deberia estar ubicado en un
 		sub-folder</text><text format="i"> adentro </text>
 		<text> estas carpetas. Por favor comparte estos en vez de los otros.</text>
 		<newline gap="8"/>
@@ -2407,7 +2407,7 @@
 	<tip id="ID_TAB_CONNECT" message="Conectar o desconectar."/>
 	<tip id="ID_TAB_HELP" message="Ayuda sobre el uso de Shareaza."/>
 	<tip id="ID_TAB_HOME" message="Ir a la página de inicio"/>
-	<tip id="ID_TAB_LIBRARY" message="Ver Mi Colección local."/>
+	<tip id="ID_TAB_LIBRARY" message="Ver Mi Colección Local."/>
 	<tip id="ID_TAB_MEDIA" message="Mostrar archivos de media."/>
 	<tip id="ID_TAB_NETWORK" message="Ver detalles de conexión."/>
 	<tip id="ID_TAB_SEARCH" message="Buscar archivos en la red."/>
@@ -2606,7 +2606,7 @@
 	<string id="8294" value="Adicciones Recientes"/>
 	<string id="8295" value="Dar rating a archivo"/>
 	<string id="8304" value="N/A"/>
-	<string id="8306" value="Locación"/>
+	<string id="8306" value="Ubicación"/>
 	<string id="8307" value="Tipo"/>
 	<string id="8308" value="Tamaño"/>
 	<string id="8309" value="Fuente Parcial (%.2f%% disponible)"/>
@@ -2826,7 +2826,7 @@
 	<string id="16373" value="Archivos Parciales"/>
 	<string id="16374" value="Nueva Cola"/>
 	<string id="16375" value="Parciales"/>
-	<string id="16376" value="Todos Los Archivos" />
+	<string id="16376" value="Todos Los Archivos"/>
 	<string id="16377" value="HTTP Guard"/>
     <string id="16384" value="Estás seguro(a) que quieres ejecutar el archivo %s?{n}nAlgunos archivos pueden ser peligrosos para la computadora, y es recomendado tener el antivirus funcionando y actualizado."/>
 	<string id="16385" value="Estas a punto de modificar la metadata de %i archivos. ¿Estás seguro(a) en continuar?"/>
@@ -3969,7 +3969,7 @@
 		<control caption="Ha seleccionado %lu archivos para exportar como referencias de URI para Shareaza.  Por favor seleccione el formato, y haz click en Guardar:"/>
 		<control/>
 		<control caption="Insertar campo:"/>
-        <control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
+        <control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Nombre de Archivo|Archivo (URI)|Nombre de Archivo Base|Extensión de Archivo|Tamaño de Archivo|Tamaño de Archivo (bytes)|Ruta de carpeta|Host Local|Puerto Local"/>
 		<control caption="Predefinidos:"/>
         <control/>
         <control caption="Cancelar"/>
@@ -4035,7 +4035,7 @@
 	<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBu" caption="El archivo ya existe">
 		<control/><control/><control/><control/>
 		<control caption="Este archivo ya está en Mi Colección.  ¿Qué quiere hacer?"/>
-		<control caption="Localizarlo en Mi Colección"/>
+		<control caption="Ubicarlo en Mi Colección"/>
 		<control caption="Descargarlo de nuevo"/>
 		<control caption="Nada, dejar el archivo original"/>
 		<control caption="Continuar"/>
@@ -4190,7 +4190,7 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localizar Metadata">
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Ubicar Metadata">
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
 		<control caption="Por favor selecciona un metodo de codificación"/>
