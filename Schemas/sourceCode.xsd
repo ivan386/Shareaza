@@ -3,6 +3,10 @@
 
 <schema targetNamespace="http://www.shareaza.com/schemas/sourceCode.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
 
+	<mapping>
+		<network name="ed2k" value="Doc"/>
+	</mapping>
+
 	<element name="sourcecodes">
 		<complexType>
 			<element name="sourcecode" type="sourcecodeType" minOccurs="1" maxOccurs="unbounded"/>

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <schema targetNamespace="http://www.limewire.com/schemas/video.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
-	
+
+	<mapping>
+		<network name="ed2k" value="Video"/>
+	</mapping>
+
 	<element name="videos">
 		<complexType>
 			<element name="video" type="videoType" minOccurs="1" maxOccurs="unbounded"/>
 		</complexType>
 	</element>
-	
+
 	<complexType name="videoType">
 		<all>
 			<attribute name="title" type="string"/>

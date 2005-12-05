@@ -4,6 +4,10 @@
 
 <schema targetNamespace="http://www.shareaza.com/schemas/wordProcessing.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
 
+	<mapping>
+		<network name="ed2k" value="Doc"/>
+	</mapping>
+
 	<element name="wordprocessings">
 		<complexType>
 			<element name="wordprocessing" type="wordprocessingType" minOccurs="1" maxOccurs="unbounded"/>

@@ -2,6 +2,10 @@
 
 <schema targetNamespace="http://www.shareaza.com/schemas/application.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
 
+	<mapping>
+		<network name="ed2k" value="Pro"/>
+	</mapping>
+
 	<element name="applications">
 		<complexType>
 			<element name="application" type="applicationType" minOccurs="1" maxOccurs="unbounded"/>

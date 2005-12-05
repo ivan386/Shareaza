@@ -3,6 +3,10 @@
 
 <schema targetNamespace="http://www.shareaza.com/schemas/rom.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
 
+	<mapping>
+		<network name="ed2k" value="Pro"/>
+	</mapping>
+
 	<element name="roms">
 		<complexType>
 			<element name="rom" type="romType" minOccurs="1" maxOccurs="unbounded"/>

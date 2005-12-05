@@ -2,6 +2,10 @@
 
 <schema targetNamespace="http://www.limewire.com/schemas/audio.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
 
+<mapping>
+	<network name="ed2k" value="Audio"/>
+</mapping>
+
 <element name="audios">
   <complexType>
       <element name="audio" type="audioType" minOccurs="1" maxOccurs="unbounded"/>

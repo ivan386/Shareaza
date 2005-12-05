@@ -2,6 +2,10 @@
 
 <schema targetNamespace="http://www.shareaza.com/schemas/image.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
 
+	<mapping>
+		<network name="ed2k" value="Image"/>
+	</mapping>
+	
 	<element name="images">
 		<complexType>
 			<element name="image" type="imageType" minOccurs="1" maxOccurs="unbounded"/>
