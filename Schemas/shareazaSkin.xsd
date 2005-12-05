@@ -9,21 +9,23 @@
 	</element>
 	
 	<complexType name="skinType">
-		<attribute name="name" type="string"/>
-		<attribute name="author" type="string"/>
-		<attribute name="link" type="uriReference"/>
-		<attribute name="email" type="string"/>
-		<attribute name="version" type="decimal"/>
-		<attribute name="type">
-			<simpleType base="string">
-				<enumeration value="Skin"/>
-				<enumeration value="Language"/>
-			</simpleType>
-		</attribute>
-		<attribute name="language" type="string"/>
-		<attribute name="description" type="string"/>
-		<attribute name="comments" type="string"/>
-		<attribute name="SHA1" type="string"/>
+		<all>
+			<attribute name="name" type="string"/>
+			<attribute name="author" type="string"/>
+			<attribute name="link" type="uriReference"/>
+			<attribute name="email" type="string"/>
+			<attribute name="version" type="decimal"/>
+			<attribute name="type">
+				<simpleType base="string">
+					<enumeration value="Skin"/>
+					<enumeration value="Language"/>
+				</simpleType>
+			</attribute>
+			<attribute name="language" type="string"/>
+			<attribute name="description" type="string"/>
+			<attribute name="comments" type="string"/>
+			<attribute name="SHA1" type="string"/>
+		</all>
 	</complexType>
 
 </schema>
