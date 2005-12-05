@@ -522,13 +522,16 @@ void CPluginsSettingsPage::UpdateList()
 {
 	if ( m_hWnd == NULL ) return;
 
-	CWaitCursor pCursor;
-	m_bRunning = FALSE;
+	if ( ! IsWindowVisible() || m_wndList.GetItemCount() == 0 )
+	{
+		CWaitCursor pCursor;
+		m_bRunning = FALSE;
 
-	m_wndList.DeleteAllItems();
-	EnumerateGenericPlugins();
-	EnumerateMiscPlugins();
+		m_wndList.DeleteAllItems();
+		EnumerateGenericPlugins();
+		EnumerateMiscPlugins();
 
-	m_bRunning = TRUE;
-	pCursor.Restore();
+		m_bRunning = TRUE;
+		pCursor.Restore();
+	}
 }
