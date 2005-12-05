@@ -8,7 +8,14 @@
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
 	</vendor>
-	
+
+	<vendor code="RAZB">
+		<title>SBeta</title>
+		<link>http://www.shareaza.com/beta/</link>
+		<capability name="htmlHostBrowse"/>
+		<capability name="chatFlag"/>
+	</vendor>
+
 	<vendor code="ACQL">
 		<title>Acqlite</title>
 		<link>http://acqlite.sourceforge.net/</link>
