@@ -154,48 +154,6 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 		m_sTitle.SetAt( 0, TCHAR( toupper( m_sTitle.GetAt( 0 ) ) ) );
 	}
 
-	
-	if( m_nType == stFile )
-	{
-		//Bit of a hack - Should probably save this info as part of schema. Do that in 2.2
-		if ( m_sURI == CSchema::uriAudio )
-			m_sDonkeyType = _T("Audio");
-		else if ( m_sURI == CSchema::uriVideo)
-			m_sDonkeyType = _T("Video");
-		else if ( m_sURI == CSchema::uriImage )
-			m_sDonkeyType = _T("Image");
-		else if ( m_sURI == CSchema::uriApplication )
-			m_sDonkeyType = _T("Pro");
-		else if ( m_sURI == CSchema::uriBook )
-			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == CSchema::uriPresentation )
-			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == CSchema::uriSpreadsheet )
-			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == CSchema::uriDocument )
-			m_sDonkeyType = _T("Doc");
-		/*
-		//Bit of a hack - Should probably save this info as part of schema. Do that in 2.2
-		if ( m_sURI == _T("http://www.limewire.com/schemas/audio.xsd") )
-			m_sDonkeyType = _T("Audio");
-		else if ( m_sURI == _T("http://www.limewire.com/schemas/video.xsd") )
-			m_sDonkeyType = _T("Video");
-		else if ( m_sURI == _T("http://www.shareaza.com/schemas/image.xsd") )
-			m_sDonkeyType = _T("Image");
-		else if ( m_sURI == _T("http://www.shareaza.com/schemas/application.xsd") )
-			m_sDonkeyType = _T("Pro");
-		else if ( m_sURI == _T("http://www.limewire.com/schemas/book.xsd") )
-			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == _T("http://www.shareaza.com/schemas/presentation.xsd") )
-			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == _T("http://www.shareaza.com/schemas/spreadsheet.xsd") )
-			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == CSchema::uriDocument )
-			m_sDonkeyType = _T("Doc");
-		*/
-
-	}
-
 	return TRUE;
 }
 
@@ -213,7 +171,7 @@ BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 
 	m_sURI = pRoot->GetAttributeValue( _T("targetNamespace"), _T("") );
 
-	CXMLElement* pPlural = pRoot->GetFirstElement();
+	CXMLElement* pPlural = pRoot->GetElementByName( _T("element") );
 
 	if ( pPlural && m_sURI.GetLength() )
 	{
@@ -240,6 +198,28 @@ BOOL CSchema::LoadSchema(LPCTSTR pszFile)
 				}
 
 				if ( m_sSingular.IsEmpty() ) bResult = FALSE;
+			}
+		}
+	}
+	
+	CXMLElement* pMapping = pRoot->GetElementByName( _T("mapping") );
+	if ( pMapping )
+	{
+		for ( POSITION pos = pMapping->GetElementIterator() ; pos ; )
+		{
+			CXMLElement* pNetwork = pMapping->GetNextElement( pos );
+			if ( pNetwork )
+			{
+				BOOL bFound = pNetwork->IsNamed( _T("network") );
+
+				CString strName = pNetwork->GetAttributeValue( _T("name") );
+				if ( ! bFound || strName != _T("ed2k") )
+					continue;
+				else
+				{
+					m_sDonkeyType = pNetwork->GetAttributeValue( _T("value") );
+					break;
+				}
 			}
 		}
 	}
