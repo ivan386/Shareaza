@@ -110,8 +110,19 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 		strType.Append( _T("|") );
 	}
 
+	BOOL bShiftKey = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
+	// If thumbnailing and Image Viewer are enabled, do not warn about safety
+	CLSID clsid;
+	CString strPureExtension( strType ); 
+	strPureExtension.Replace( _T("|"), _T("") );
+	strPureExtension.Insert( 0, '.' );
+	BOOL bPreviewEnabled = Plugins.LookupCLSID( _T("ImageService"), strPureExtension, clsid );
+	GUIDX::Decode( _T("{2EE9D739-7726-41cf-8F18-4B1B8763BC63}"), &clsid );
+	bPreviewEnabled &= bHasThumbnail && Plugins.LookupEnable( clsid, FALSE, strPureExtension );
+
 	if ( bForce == NULL && strType.GetLength() &&
-		_tcsistr( Settings.Library.SafeExecute, strType ) == NULL )
+		_tcsistr( Settings.Library.SafeExecute, strType ) == NULL && ! bPreviewEnabled )
 	{
 		CString strFormat, strPrompt;
 
@@ -125,8 +136,6 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 		else if ( nResult == IDNO ) return TRUE;
 	}
 
-	BOOL bShiftKey = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
-	
 	if ( Settings.MediaPlayer.EnablePlay && strType.GetLength() && ! bShiftKey )
 	{
 		if ( _tcsistr( Settings.MediaPlayer.FileTypes, strType ) != NULL )
