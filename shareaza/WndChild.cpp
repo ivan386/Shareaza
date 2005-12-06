@@ -142,7 +142,7 @@ BOOL CChildWnd::TestPoint(const CPoint& ptScreen)
 	if ( pHit == NULL ) return FALSE;
 	if ( pHit == this ) return TRUE;
 
-	if ( pHit->GetTopLevelParent() != GetTopLevelParent() ) return FALSE;
+	if ( pHit->GetAncestor( GA_ROOT ) != GetAncestor( GA_ROOT ) ) return FALSE;
 
 	CPoint ptChild( ptScreen );
 	pHit->ScreenToClient( &ptChild );
