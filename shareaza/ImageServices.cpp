@@ -33,29 +33,15 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CImageServices, CComObject)
 
-LPCTSTR RT_JPEG = _T("JPEG");
-LPCTSTR RT_PNG = _T("PNG");
-
-
-/////////////////////////////////////////////////////////////////////////////
-// CImageServices construction
-
-CImageServices::CImageServices()
-{
-	m_bCOM = GetCurrentThreadId() == AfxGetApp()->m_nThreadID;
-}
-
-CImageServices::~CImageServices()
-{
-	Cleanup();
-}
+const LPCTSTR RT_JPEG = _T("JPEG");
+const LPCTSTR RT_PNG = _T("PNG");
 
 /////////////////////////////////////////////////////////////////////////////
 // CImageServices load operations
 
 BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly, BOOL bPartialOk)
 {
-	IImageServicePlugin* pService = GetService( pszType );
+	IImageServicePlugin* pService = GetService( pszType ).first;
 	if ( pService == NULL ) return FALSE;
 	
 	IMAGESERVICEDATA pParams = {};
@@ -92,19 +78,19 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 
 BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly, BOOL bPartialOk)
 {
-	CLSID* pCLSID = NULL;
-	IImageServicePlugin* pService = GetService( szFilename, &pCLSID );
-	if ( pService == NULL ) return FALSE;
-	
+	PluginInfo service = GetService( szFilename );
+	if ( !service.first )
+		return FALSE;
+
 	IMAGESERVICEDATA pParams = {};
 	pParams.cbSize		= sizeof(pParams);
 	if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
 	if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
-	
+
 	SAFEARRAY* pArray	= NULL;
 	HINSTANCE hRes		= AfxGetResourceHandle();
 	BSTR sFile			= SysAllocString (CT2CW (szFilename));
-	HRESULT hr			= pService->LoadFromFile( sFile, &pParams, &pArray );
+	HRESULT hr			= service.first->LoadFromFile( sFile, &pParams, &pArray );
 	SysFreeString (sFile);
 	AfxSetResourceHandle( hRes );
 	
@@ -189,13 +175,14 @@ BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuali
 {
 	*ppBuffer = NULL;
 	*pnLength = 0;
-	
-	IImageServicePlugin* pService = GetService( pszType );
-	if ( pService == NULL ) return FALSE;
-	
+
+	PluginInfo service = GetService( pszType );
+	if ( !service.first )
+		return FALSE;
+
 	SAFEARRAY* pSource = ImageToArray( pFile );
 	if ( pSource == NULL ) return FALSE;
-	
+
 	IMAGESERVICEDATA pParams = {};
 	pParams.cbSize		= sizeof(pParams);
 	pParams.nWidth		= pFile->m_nWidth;
@@ -206,7 +193,7 @@ BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuali
 	SAFEARRAY* pOutput = NULL;
 	HINSTANCE hRes = AfxGetResourceHandle();
 	BSTR bstrType = SysAllocString ( CT2CW (pszType));
-	/*BOOL bSuccess =*/ SUCCEEDED( pService->SaveToMemory( bstrType, &pOutput, &pParams, pSource ) );
+	service.first->SaveToMemory( bstrType, &pOutput, &pParams, pSource );
 	SysFreeString (bstrType);
 	AfxSetResourceHandle( hRes );
 	
@@ -295,85 +282,58 @@ SAFEARRAY* CImageServices::ImageToArray(CImageFile* pFile)
 /////////////////////////////////////////////////////////////////////////////
 // CImageServices service discovery and control
 
-IImageServicePlugin* CImageServices::GetService(LPCTSTR pszFile, CLSID** ppCLSID)
+CImageServices::PluginInfo CImageServices::GetService(const CString& strFile)
 {
-	LPCTSTR pszType = _tcsrchr( pszFile, '.' );
-	if ( pszType == NULL ) return NULL;
-	
-	IImageServicePlugin* pService = NULL;
-	CString strType( pszType );
-	CharLower( strType.GetBuffer() );
-	strType.ReleaseBuffer();
-	
-	if ( m_pService.Lookup( strType, pService ) )
+	int dotPos = strFile.ReverseFind( '.' );
+	if ( dotPos < 0 )
+		return PluginInfo();
+	CString strType( strFile.Mid( dotPos ).MakeLower() );
+
 	{
-		if ( pService != NULL && ppCLSID != NULL )
-		{
-			m_pCLSID.Lookup( strType, *ppCLSID );
-		}
-		
-		return pService;
+		const_iterator pService = m_services.find( strType );
+		if ( pService != m_services.end() )
+			return pService->second;
 	}
-	else
-	{
-		CLSID pCLSID = { 0 };
-		
-		pService = LoadService( strType, &pCLSID );
-		m_pService.SetAt( strType, pService );
-		
-		if ( pService != NULL )
-		{
-			CLSID* pCopy = new CLSID;
-			if ( pCopy == NULL )
-			{
-				theApp.Message( MSG_ERROR, _T("Memory allocation error in CImageServices::GetService") );
-				return NULL;				
-			}
-			*pCopy = pCLSID;
-			delete m_pCLSID[ strType ];
-			m_pCLSID[ strType ] = pCopy;
-			if ( ppCLSID != NULL ) *ppCLSID = pCopy;
-		}
-		
-		return pService;
-	}
+
+	PluginInfo service = LoadService( strType );
+	m_services.insert( services_map::value_type( strType, service ) );
+
+	return service;
 }
 
-IImageServicePlugin* CImageServices::LoadService(LPCTSTR pszType, CLSID* ppCLSID)
+CImageServices::PluginInfo CImageServices::LoadService(const CString& strType)
 {
-	IImageServicePlugin* pService = NULL;
-	
 	DWORD dwContext = 0;
 	// Add here all problematic extensions
-	if ( _tcscmp( pszType, _T(".asf") ) == 0 )
-	{
+	if ( strType.Find( L".asf" ) >= 0 )
 		dwContext = CLSCTX_NO_CUSTOM_MARSHAL;
-	}
-	
-	CLSID pCLSID;
-	
-	if ( ! Plugins.LookupCLSID( _T("ImageService"), pszType, pCLSID ) ) return NULL;
-	
-	if ( ppCLSID != NULL ) *ppCLSID = pCLSID;
-	
-	if ( ! m_bCOM )
+
+	CLSID oCLSID;
+
+	if ( !Plugins.LookupCLSID( L"ImageService", strType, oCLSID ) )
+		return PluginInfo();
+
+	if ( !m_COM )
 	{
-		if ( FAILED( CoInitializeEx( NULL, COINIT_MULTITHREADED ) ) ) return NULL;
-		m_bCOM = TRUE;
+		if ( FAILED( CoInitializeEx( NULL, COINIT_MULTITHREADED ) ) )
+			return PluginInfo();
+		m_COM = true;
 	}
-	
+
 	HINSTANCE hRes = AfxGetResourceHandle();
-	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL|dwContext,
-		IID_IImageServicePlugin, (void**)&pService );
 	AfxSetResourceHandle( hRes );
-	
-	if ( FAILED( hResult ) )
+
+	void* pService = NULL;
+	if ( FAILED( CoCreateInstance( oCLSID, NULL, CLSCTX_ALL|dwContext,
+		IID_IImageServicePlugin, &pService ) ) )
 	{
 		//theApp.Message( MSG_DEBUG, _T("CImageServices::CoCreateInstance() -> %lu"), hResult );
-		return NULL;
+		return PluginInfo();
 	}
-	
-	return pService;
+
+	return PluginInfo(
+			CComQIPtr< IImageServicePlugin >( static_cast< IImageServicePlugin* >( pService ) ),
+			oCLSID );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -381,30 +341,9 @@ IImageServicePlugin* CImageServices::LoadService(LPCTSTR pszType, CLSID* ppCLSID
 
 void CImageServices::Cleanup()
 {
-	CString strType;
-	POSITION pos;
-	
-	for ( pos = m_pService.GetStartPosition() ; pos ; )
+	if ( m_COM && ( GetCurrentThreadId() != AfxGetApp()->m_nThreadID ) )
 	{
-		IImageServicePlugin* pService = NULL;
-		m_pService.GetNextAssoc( pos, strType, pService );
-		if ( pService != NULL ) pService->Release();
-	}
-	
-	m_pService.RemoveAll();
-	
-	for ( pos = m_pCLSID.GetStartPosition() ; pos ; )
-	{
-		CLSID* pCLSID = NULL;
-		m_pCLSID.GetNextAssoc( pos, strType, pCLSID );
-		if ( pCLSID != NULL ) delete pCLSID;
-	}
-	
-	m_pCLSID.RemoveAll();
-	
-	if ( m_bCOM && ( GetCurrentThreadId() != AfxGetApp()->m_nThreadID ) )
-	{
-		m_bCOM = FALSE;
+		m_COM = false;
 		CoUninitialize();
 	}
 }
