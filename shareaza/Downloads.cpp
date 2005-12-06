@@ -1049,8 +1049,14 @@ void CDownloads::OnRun()
 		m_bAllowMoreTransfers = nTotalTransfers < (DWORD)Settings.Downloads.MaxTransfers;
 
 		// Set "bandwidth use is near maximum" timers
-		if ( ( nTotalBandwidth * 1.1 ) >= nBandwidthAvailable ) m_tBandwidthAtMax = tNow;
-		if ( ( nTotalBandwidthED2K * 1.1 ) >= nBandwidthAvailableED2K ) m_tBandwidthAtMaxED2K = tNow;
+		// beware that the MAX setting uses a limit of 0 internally, so we need to catch that case first
+		if ( nBandwidthAvailable != 0 )
+		{
+			if ( ( nTotalBandwidth * 1.1 ) >= nBandwidthAvailable )
+				m_tBandwidthAtMax = tNow;
+			if ( ( nTotalBandwidthED2K * 1.1 ) >= nBandwidthAvailableED2K )
+				m_tBandwidthAtMaxED2K = tNow;
+		}
 
 		DownloadGroups.Save( FALSE );
 	}
