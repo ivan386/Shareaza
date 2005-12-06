@@ -105,43 +105,44 @@ CBENode* CBENode::Add(const LPBYTE pKey, size_t nKey)
 		break;
 	}
 	
-	CBENode* pNew = new CBENode();					// Possible memory leak while running
+	std::auto_ptr< CBENode > pNew( new CBENode );
+	CBENode* pNew_ = pNew.get();
 	
 	if ( m_nType == beList )
 	{
-		CBENode** pList = new CBENode*[ (DWORD)m_nValue + 1 ];
+		auto_array< CBENode* > pList( new CBENode*[ (size_t)m_nValue + 1 ] );
 		
 		if ( m_pValue != NULL )
 		{
-			CopyMemory( pList, m_pValue, (DWORD)m_nValue * sizeof( CBENode* ) );
+			memcpy( pList.get(), m_pValue, (size_t)m_nValue * sizeof( CBENode* ) );
 			delete [] (CBENode**)m_pValue;
 		}
 		
-		pList[ m_nValue++ ] = pNew;
-		m_pValue = pList;
+		pList[ m_nValue++ ] = pNew.release();
+		m_pValue = pList.release();
 	}
 	else
 	{
-		CBENode** pList = new CBENode*[ (DWORD)m_nValue * 2 + 2 ];
+		auto_array< CBENode* > pList( new CBENode*[ (size_t)m_nValue * 2 + 2 ] );
 		
 		if ( m_pValue != NULL )
 		{
-			CopyMemory( pList, m_pValue, 2 * (DWORD)m_nValue * sizeof( CBENode* ) );
+			memcpy( pList.get(), m_pValue, 2 * (size_t)m_nValue * sizeof( CBENode* ) );
 			delete [] (CBENode**)m_pValue;
 		}
 		
-		BYTE* pxKey = new BYTE[ nKey + 1 ];					// Possible memory leak while running
-		CopyMemory( pxKey, pKey, nKey );
+		auto_array< BYTE > pxKey( new BYTE[ nKey + 1 ] );
+		memcpy( pxKey.get(), pKey, nKey );
 		pxKey[ nKey ] = 0;
 		
-		pList[ m_nValue * 2 ]		= pNew;
-		pList[ m_nValue * 2 + 1 ]	= (CBENode*)pxKey;
+		pList[ m_nValue * 2 ]		= pNew.release();
+		pList[ m_nValue * 2 + 1 ]	= (CBENode*)pxKey.release();
 		
-		m_pValue = pList;
+		m_pValue = pList.release();
 		m_nValue ++;
 	}
 	
-	return pNew;
+	return pNew_;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -187,15 +188,14 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 	if ( Settings.BitTorrent.TorrentExtraKeys )
 	{
 		// check for undocumented nodes
-		char*	pszUTF8Key;
 		size_t	nUTF8Len = strlen( pszKey ) + 8;
 
-		pszUTF8Key = new char[ nUTF8Len ];
-		strncpy( pszUTF8Key, pszKey, nUTF8Len );
-		strncat( pszUTF8Key, ".utf-8", nUTF8Len );
+		auto_array< char > pszUTF8Key( new char[ nUTF8Len ] );
+		strncpy( pszUTF8Key.get(), pszKey, nUTF8Len );
+		strncat( pszUTF8Key.get(), ".utf-8", nUTF8Len );
 
 		// Open the supplied node + .utf-8
-		pSubNode = GetNode( pszUTF8Key );
+		pSubNode = GetNode( pszUTF8Key.get() );
 		// We found a back-up node
 		// If it exists and is a string, try reading it
 		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
@@ -203,7 +203,6 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 			// Assumed to be UTF-8
 			strValue = pSubNode->GetString();
 		}
-		delete [] pszUTF8Key;
 	}
 
 	// Open the supplied sub-node
@@ -353,22 +352,20 @@ CBENode* CBENode::Decode(CBuffer* pBuffer)
 {
 	ASSERT( pBuffer != NULL );
 	
-	CBENode* pNode	= new CBENode();
-	LPBYTE pInput	= pBuffer->m_pBuffer;
-	DWORD nInput	= pBuffer->m_nLength;
-	
 	try
 	{
+		std::auto_ptr< CBENode > pNode( new CBENode() );
+		LPBYTE pInput	= pBuffer->m_pBuffer;
+		DWORD nInput	= pBuffer->m_nLength;
+	
 		pNode->Decode( pInput, nInput );
+		return pNode.release();
 	}
 	catch ( CException* pException )
 	{
 		pException->Delete();
-		delete pNode;
-		pNode = NULL;
+		return NULL;
 	}
-	
-	return pNode;
 }
 
 #define INC(x) { pInput += (x); nInput -= (x); }

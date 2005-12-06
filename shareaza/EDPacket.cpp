@@ -176,29 +176,20 @@ BOOL CEDPacket::Deflate()
 		 m_nEdProtocol != ED2K_PROTOCOL_EMULE ) return FALSE;
 
 	DWORD nOutput = 0;
-	BYTE* pOutput = CZLib::Compress( m_pBuffer, m_nLength, &nOutput );
+	auto_array< BYTE > pOutput( CZLib::Compress( m_pBuffer, m_nLength, &nOutput ) );
 
-	if ( pOutput != NULL )
-	{
-		if ( nOutput >= m_nLength )
-		{
-			delete [] pOutput;
-			return FALSE;
-		}
-
-		m_nEdProtocol = ED2K_PROTOCOL_PACKED;
-
-		CopyMemory( m_pBuffer, pOutput, nOutput );
-		m_nLength = nOutput;
-
-		delete [] pOutput;
-
-		return TRUE;
-	}
-	else
-	{
+	if ( pOutput.get() == NULL )
 		return FALSE;
-	}
+
+	if ( nOutput >= m_nLength )
+		return FALSE;
+
+	m_nEdProtocol = ED2K_PROTOCOL_PACKED;
+
+	memcpy( m_pBuffer, pOutput.get(), nOutput );
+	m_nLength = nOutput;
+
+	return TRUE;
 }
 
 BOOL CEDPacket::InflateOrRelease(BYTE nEdProtocol)
@@ -206,22 +197,21 @@ BOOL CEDPacket::InflateOrRelease(BYTE nEdProtocol)
 	if ( m_nEdProtocol != ED2K_PROTOCOL_PACKED ) return FALSE;
 
 	DWORD nOutput = 0;
-	BYTE* pOutput = CZLib::Decompress( m_pBuffer, m_nLength, &nOutput );
+	auto_array< BYTE > pOutput( CZLib::Decompress( m_pBuffer, m_nLength, &nOutput ) );
 
-	if ( pOutput != NULL )
+	if ( pOutput.get() != NULL )
 	{
 		m_nEdProtocol = nEdProtocol;
 
 		if ( m_nBuffer >= nOutput )
 		{
-			CopyMemory( m_pBuffer, pOutput, nOutput );
+			CopyMemory( m_pBuffer, pOutput.get(), nOutput );
 			m_nLength = nOutput;
-			delete [] pOutput;
 		}
 		else
 		{
 			delete [] m_pBuffer;
-			m_pBuffer = pOutput;
+			m_pBuffer = pOutput.release();
 			m_nLength = nOutput;
 			m_nBuffer = nOutput;
 		}

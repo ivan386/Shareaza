@@ -200,7 +200,9 @@ void CTorrentTrackersPage::OnTorrentRefresh()
 	}
 	
 	m_wndRefresh.EnableWindow( FALSE );
-	m_hThread = AfxBeginThread( ThreadStart, this )->m_hThread;
+	CWinThread* pThread = AfxBeginThread( ThreadStart, this );
+	m_hThread = pThread->m_hThread;
+	SetThreadName( pThread->m_nThreadID, "PageTorrentTrackers" );
 }
 
 void CTorrentTrackersPage::OnTimer(UINT_PTR nIDEvent) 

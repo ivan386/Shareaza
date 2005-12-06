@@ -81,6 +81,7 @@
 #include <boost/lambda/lambda.hpp>
 #include <boost/lambda/bind.hpp>
 #include <boost/ptr_container/ptr_container.hpp>
+#include <boost/checked_delete.hpp>
 
 #if _MSC_VER > 1310
 #include <intrin.h>

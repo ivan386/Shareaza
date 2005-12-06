@@ -875,6 +875,7 @@ void CLibraryThumbView::StartThread()
 
 	m_bThread	= TRUE;
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
+	SetThreadName( pThread->m_nThreadID, "CtrlLibraryThumbView" );
 	m_hThread	= pThread->m_hThread;
 }
 

@@ -155,12 +155,13 @@ BOOL CHandshakes::Listen()
 		256 );		// Maximum length of the queue of pending connections, let 256 computers try to call us at once (do)
 
 	// Create a new thread to run the ThreadStart method, passing it a pointer to this C
-	m_hThread =			// Save the new thread handle
+	CWinThread* pThread = // Save the new thread handle
 		AfxBeginThread(	// Create a new thread
 		ThreadStart,	// Have it start running the ThreadStart method
 		this			// ThreadStart gets one parameter passed to it, a pointer to this CHandshakes object
-		)->m_hThread;	// AfxBeginThread returns a pointer to the new thread object, copy the thread handle from within it
-
+		);	// AfxBeginThread returns a pointer to the new thread object, copy the thread handle from within it
+	m_hThread = pThread->m_hThread;
+	SetThreadName( pThread->m_nThreadID, "Handshakes" );
 	// Report success
 	return TRUE;
 }

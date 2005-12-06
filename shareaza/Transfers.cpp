@@ -89,6 +89,7 @@ BOOL CTransfers::StartThread()
 	m_bThread	= TRUE;
 
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
+	SetThreadName( pThread->m_nThreadID, "Transfers" );
 	m_hThread = pThread->m_hThread;
 
 	return TRUE;

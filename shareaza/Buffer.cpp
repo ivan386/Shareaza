@@ -484,26 +484,24 @@ DWORD CBuffer::Send(SOCKET hSocket)
 BOOL CBuffer::Deflate(BOOL bIfSmaller)
 {
 	// If the caller requested we check for small buffers, and this one contains less than 45 bytes, return false
-	if ( bIfSmaller && m_nLength < 45 ) return FALSE; // This buffer is too small for compression to work
+	if ( bIfSmaller && m_nLength < 45 )
+		return FALSE; // This buffer is too small for compression to work
 
 	// Compress this buffer
 	DWORD nCompress = 0; // Compress will write the size of the buffer it allocates and returns in this variable
-	BYTE* pCompress = CZLib::Compress( m_pBuffer, static_cast< DWORD >( m_nLength ), &nCompress ); // Returns a buffer we must free
-	if ( ! pCompress ) return FALSE; // Compress had an error
+	auto_array< BYTE > pCompress( CZLib::Compress( m_pBuffer, static_cast< DWORD >( m_nLength ), &nCompress ) );
+			// Returns a buffer we must free
+	if ( !pCompress.get() )
+		return FALSE; // Compress had an error
 
 	// If compressing the data actually made it bigger, and we were told to watch for this happening
 	if ( bIfSmaller && nCompress >= m_nLength )
-	{
-		// Delete the buffer that Compress allocated, and report error
-		delete [] pCompress;
 		return FALSE;
-	}
 
 	// Move the compressed data from the buffer Compress returned to this one
-	m_nLength = 0;               // Record that there is no memory stored in this buffer
-	Add( pCompress, nCompress ); // Copy the compressed data into this buffer
-	delete [] pCompress;         // Free the memory that Compress allocated
-	return TRUE;                 // Report success
+	m_nLength = 0;                     // Record that there is no memory stored in this buffer
+	Add( pCompress.get(), nCompress ); // Copy the compressed data into this buffer
+	return TRUE;                       // Report success
 }
 
 // Takes the size we think the data will be when decompressed, or 0 if we don't know
@@ -513,14 +511,14 @@ BOOL CBuffer::Inflate(DWORD nSuggest)
 {
 	// The bytes in this buffer are compressed, decompress them
 	DWORD nCompress = 0; // Decompress will write the size of the buffer it allocates and returns in this variable
-	BYTE* pCompress = CZLib::Decompress( m_pBuffer, static_cast< DWORD >( m_nLength ), &nCompress, nSuggest ); // Returns a buffer we must free
-	if ( pCompress == NULL ) return FALSE; // Decompress had an error
+	auto_array< BYTE > pCompress( CZLib::Decompress( m_pBuffer, static_cast< DWORD >( m_nLength ), &nCompress, nSuggest ) );
+	if ( !pCompress.get() )
+		return FALSE; // Decompress had an error
 
 	// Move the decompressed data from the buffer Decompress returned to this one
-	m_nLength = 0;               // Record that there is no memory stored in this buffer
-	Add( pCompress, nCompress ); // Copy the decompressed data into this buffer
-	delete [] pCompress;         // Free the memory that Decompress allocated
-	return TRUE;                 // Report success
+	m_nLength = 0;                     // Record that there is no memory stored in this buffer
+	Add( pCompress.get(), nCompress ); // Copy the decompressed data into this buffer
+	return TRUE;                       // Report success
 }
 
 // If the contents of this buffer are between headers and compressed with gzip, this method can remove all that
@@ -790,23 +788,13 @@ BOOL CBuffer::ReadDIME(
 
 	// Read psID, a GUID in hexadecimal encoding
 	ASSERT( psID != NULL );            // Make sure the caller gave us access to a string to write the guid in hexadecimal encoding
-	LPSTR pszID = new CHAR[ nID + 1 ]; // Make a new buffer for the text
-	CopyMemory( pszID, pIn, nID );     // Copy the text into the buffer
-	pszID[ nID ] = 0;                  // Set a null terminator
-	*psID = pszID;                     // Copy the text into the string
-	delete [] pszID;                   // Delete our temporary buffer
-	pIn += nID;                        // Move pIn forward beyond the psID text
-	while ( nID++ & 3 ) pIn++;         // Move pIn forward to the next boundary of 4 bytes
+	*psID = CString( reinterpret_cast< char* >( pIn ), nID );
+	pIn += ( nID + 3 ) & ~3;           // Move pIn forward beyond the psID text and align at 4 bytes
 
 	// Read psType, a GUID in hexadecimal encoding
-	ASSERT( psType != NULL ); // Make sure the caller gave us access to a string to write the message body
-	LPSTR pszType = new CHAR[ nType + 1 ]; // Make a new buffer for the text
-	CopyMemory( pszType, pIn, nType );     // Copy the text into the buffer
-	pszType[ nType ] = 0;                  // Set a null terminator
-	*psType = pszType;                     // Copy the text into the string
-	delete [] pszType;                     // Delete our temporary buffer
-	pIn += nType;                          // Move pIn forward beyond the pszType text
-	while ( nType++ & 3 ) pIn++;           // Move pIn forward to the next boundary of 4 bytes
+	ASSERT( psType != NULL );			// Make sure the caller gave us access to a string to write the message body
+	*psType = CString( reinterpret_cast< char* >( pIn ), nType );
+	pIn += ( nType + 3 ) & ~3;           // Move pIn forward beyond the pszType text and align at 4 bytes
 
 	// Remove the first part of the DIME message from the buffer, and report success
 	Remove( nSkip );

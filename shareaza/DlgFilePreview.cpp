@@ -224,6 +224,7 @@ BOOL CFilePreviewDlg::OnInitDialog()
 	m_bCancel = FALSE;
 	
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
+	SetThreadName( pThread->m_nThreadID, "DlgFilePreview" );
 	m_hThread = pThread->m_hThread;
 	
 	return TRUE;

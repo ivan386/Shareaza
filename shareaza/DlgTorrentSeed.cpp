@@ -208,8 +208,10 @@ void CTorrentSeedDlg::OnSeed()
 			}
 
 			// Start the torrent seed process
-			m_hThread = AfxBeginThread( ThreadStart, this,
-				THREAD_PRIORITY_NORMAL )->m_hThread;
+			CWinThread* pThread = AfxBeginThread( ThreadStart, this,
+				THREAD_PRIORITY_NORMAL );
+			m_hThread = pThread->m_hThread;
+			SetThreadName( pThread->m_nThreadID, "DlgTorrentSeed" );
 		}
 		else	// We are already seeding the torrent
 		{

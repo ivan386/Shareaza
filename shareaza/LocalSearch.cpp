@@ -873,7 +873,7 @@ void CLocalSearch::WriteTrailerG1()
 
 	CString strXML		= GetXMLString();
 	DWORD nCompressed	= 0;
-	BYTE* pCompressed	= NULL;
+	auto_array< BYTE > pCompressed;
 
 	m_pPacket->WriteByte( strXML.IsEmpty() ? 2 : 4 );
 	m_pPacket->WriteByte( nFlags[0] );
@@ -891,15 +891,14 @@ void CLocalSearch::WriteTrailerG1()
 
 		pCompressed = CZLib::Compress( pszXML, nXML, &nCompressed );
 
-		if ( nCompressed + 9 < (DWORD)nXML + 11 && pCompressed != NULL )
+		if ( nCompressed + 9 < (DWORD)nXML + 11 && pCompressed.get() != NULL )
 		{
 			m_pPacket->WriteShortLE( (WORD)( nCompressed + 9 + 1 ) );
 		}
 		else
 		{
 			m_pPacket->WriteShortLE( WORD( nXML + 11 + 1 ) );
-			if ( pCompressed != NULL ) delete [] pCompressed;
-			pCompressed = NULL;
+			pCompressed.reset();
 		}
 	}
 
@@ -914,12 +913,11 @@ void CLocalSearch::WriteTrailerG1()
 		m_pPacket->WriteByte( GGEP_LEN_LAST );
 	}
 
-	if ( pCompressed != NULL )
+	if ( pCompressed.get() != NULL )
 	{
 		m_pPacket->Write( "{deflate}", 9 );
-		m_pPacket->Write( pCompressed, nCompressed );
+		m_pPacket->Write( pCompressed.get(), nCompressed );
 		m_pPacket->WriteByte( 0 );
-		delete [] pCompressed;
 	}
 	else if ( pszXML != NULL )
 	{

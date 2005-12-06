@@ -996,9 +996,9 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 		while ( nCount-- > 0 )
 		{
-			CAlbumFolder* pFolder = new CAlbumFolder( this, NULL, (LPCTSTR)1 );
+			std::auto_ptr< CAlbumFolder > pFolder( new CAlbumFolder( this, NULL, (LPCTSTR)1 ) );
 			pFolder->Serialize( ar, nVersion );
-			m_pFolders.AddTail( pFolder );
+			m_pFolders.AddTail( pFolder.release() );
 		}
 
 		nCount = ar.ReadCount();

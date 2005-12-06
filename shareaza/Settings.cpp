@@ -500,6 +500,9 @@ void CSettings::Load()
 	{
 		Item* pItem = m_pItems.GetNext( pos );
 		pItem->Load();
+		ASSERT( pItem->m_pDword && !pItem->m_pFloat && !pItem->m_pString \
+			|| !pItem->m_pDword && pItem->m_pFloat && !pItem->m_pString \
+			|| !pItem->m_pDword && !pItem->m_pFloat && pItem->m_pString );
 	}
 	
 	if ( pRegistry.GetInt( _T("Settings"), _T("FirstRun"), TRUE ) )

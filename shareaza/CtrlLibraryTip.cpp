@@ -283,6 +283,7 @@ void CLibraryTipCtrl::OnShow()
 	{
 		m_bThread = TRUE;
 		CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
+		SetThreadName( pThread->m_nThreadID, "CtrlLibraryTip" );
 		m_hThread = pThread->m_hThread;
 	}
 

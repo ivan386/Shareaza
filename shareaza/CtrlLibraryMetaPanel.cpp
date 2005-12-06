@@ -244,6 +244,7 @@ void CLibraryMetaPanel::Update()
 		{
 			m_bThread = TRUE;
 			CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
+			SetThreadName( pThread->m_nThreadID, "CtrlLibraryMetaPanel" );
 			m_hThread = pThread->m_hThread;
 		}
 		

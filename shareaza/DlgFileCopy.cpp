@@ -215,6 +215,7 @@ void CFileCopyDlg::StartOperation()
 	m_bThread = TRUE;
 	m_bCancel = FALSE;
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
+	SetThreadName( pThread->m_nThreadID, "DlgFileCopy" );
 	m_hThread = pThread->m_hThread;
 }
 

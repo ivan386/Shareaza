@@ -1,8 +1,8 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.40 $"
+//	Date:			"$Date: 2005/12/06 10:57:27 $"
+//	Revision:		"$Revision: 1.41 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -980,6 +980,7 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 	if ( ! m_hInternet ) return FALSE;
 	
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
+	SetThreadName( pThread->m_nThreadID, "Discovery" );
 	m_hThread = pThread->m_hThread;
 	
 	return TRUE;

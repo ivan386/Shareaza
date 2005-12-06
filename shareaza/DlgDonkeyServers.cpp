@@ -106,6 +106,7 @@ void CDonkeyServersDlg::OnOK()
 	if ( m_hInternet == NULL ) return;
 
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
+	SetThreadName( pThread->m_nThreadID, "DlgDonkeyServices" );
 	m_hThread = pThread->m_hThread;
 
 	m_wndOK.EnableWindow( FALSE );

@@ -216,6 +216,7 @@ void CChatCore::StartThread()
 	
 	m_bThread = TRUE;
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
+	SetThreadName( pThread->m_nThreadID, "ChatCore" );
 	m_hThread = pThread->m_hThread;
 }
 

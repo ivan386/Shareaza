@@ -571,18 +571,16 @@ BOOL CGGEPItem::Deflate(BOOL bIfSmaller)
 	if ( bIfSmaller && m_nLength < 45 ) return FALSE;
 
 	DWORD nCompressed = 0;
-	BYTE* pCompressed = CZLib::Compress( m_pBuffer, m_nLength, &nCompressed );
+	auto_array< BYTE > pCompressed( CZLib::Compress( m_pBuffer, m_nLength, &nCompressed ) );
 
-	if ( ! pCompressed ) return FALSE;
+	if ( !pCompressed.get() )
+		return FALSE;
 
 	if ( bIfSmaller && nCompressed >= m_nLength )
-	{
-		delete [] pCompressed;
 		return FALSE;
-	}
 
 	delete [] m_pBuffer;
-	m_pBuffer = pCompressed;
+	m_pBuffer = pCompressed.release();
 	m_nLength = nCompressed;
 
 	return TRUE;
@@ -593,12 +591,13 @@ BOOL CGGEPItem::Inflate()
 	if ( ! m_pBuffer ) return FALSE;
 
 	DWORD nCompressed = 0;
-	BYTE* pCompressed = CZLib::Decompress( m_pBuffer, m_nLength, &nCompressed );
+	auto_array< BYTE > pCompressed( CZLib::Decompress( m_pBuffer, m_nLength, &nCompressed ) );
 
-	if ( ! pCompressed ) return FALSE;
+	if ( !pCompressed.get() )
+		return FALSE;
 
 	delete [] m_pBuffer;
-	m_pBuffer = pCompressed;
+	m_pBuffer = pCompressed.release();
 	m_nLength = nCompressed;
 
 	return TRUE;

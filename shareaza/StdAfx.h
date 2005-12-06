@@ -298,3 +298,92 @@ private:
 
 extern const CLowerCaseTable ToLower;
 
+template<typename T>
+class auto_array
+{
+public:
+	typedef T element_type;
+private:
+	struct auto_array_ref
+	{
+		explicit auto_array_ref(element_type** ref)
+			: ref_( ref )
+		{}
+		element_type* release()
+		{
+			element_type* ptr = *ref_;
+			*ref_ = NULL;
+			return ptr;
+		}
+		element_type** ref_;
+	};
+public:
+	explicit auto_array(element_type* ptr = NULL) : ptr_( ptr ) {}
+	auto_array(auto_array& other) : ptr_( other.release() ) {}
+	auto_array(auto_array_ref other)
+		: ptr_( other.release() )
+	{}
+	~auto_array()
+	{
+		if ( get() != NULL )
+			boost::checked_array_delete( get() );
+	};
+
+	auto_array& operator=(auto_array& other)
+	{
+		ptr_ = other.release();
+		return *this;
+	}
+	auto_array& operator=(auto_array_ref other)
+	{
+		ptr_ = other.release();
+		return *this;
+	}
+
+	element_type* get() const { return ptr_; }
+	element_type& operator[](std::size_t index) const { return ptr_[ index ]; }
+	element_type* release()
+	{
+		element_type* ptr = get();
+		ptr_ = NULL;
+		return ptr;
+	}
+	void reset(element_type* ptr = NULL)
+	{
+		if ( ptr != get() && get() != NULL )
+			boost::checked_array_delete( get() );
+		ptr_ = ptr;
+	}
+
+	operator auto_array_ref() { return auto_array_ref( &ptr_ ); }
+private:
+	element_type* ptr_;
+};
+
+inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
+{
+#ifndef NDEBUG
+	struct
+	{
+		DWORD dwType;		// must be 0x1000
+		LPCSTR szName;		// pointer to name (in user addr space)
+		DWORD dwThreadID;	// thread ID (-1=caller thread)
+		DWORD dwFlags;		// reserved for future use, must be zero
+	} info =
+	{
+		0x1000,
+		szThreadName,
+		dwThreadID,
+		0
+	};
+
+
+	__try
+	{
+		RaiseException( 0x406D1388, 0, sizeof info / sizeof( DWORD ), (DWORD*)&info );
+	}
+	__except( EXCEPTION_CONTINUE_EXECUTION )
+	{
+	}
+#endif
+}

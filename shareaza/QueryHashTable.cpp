@@ -467,17 +467,18 @@ BOOL CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
 	}
 
 	DWORD nCompress = 0;
-	BYTE* pCompress = CZLib::Compress( pBuffer, m_nHash / ( 8 / nBits ), &nCompress );
+	auto_array< BYTE > pCompress( CZLib::Compress( pBuffer, m_nHash / ( 8 / nBits ), &nCompress ) );
 
 	delete [] pBuffer;
 
-	if ( pCompress == NULL ) return FALSE;
+	if ( pCompress.get() )
+		return FALSE;
 
 	DWORD nPacketSize	= 1024;
 	BYTE nSequenceMax	= (BYTE)( nCompress / nPacketSize );
 	if ( nCompress % nPacketSize ) nSequenceMax++;
 
-	pBuffer = pCompress;
+	pBuffer = pCompress.get();
 
 	for ( BYTE nSequence = 1 ; nSequence <= nSequenceMax ; nSequence++ )
 	{
@@ -504,7 +505,6 @@ BOOL CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
 		pNeighbour->Send( pPatch );
 	}
 
-	delete [] pCompress;
 	m_bLive = TRUE;
 
 	return TRUE;

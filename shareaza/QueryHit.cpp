@@ -655,14 +655,14 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 	
 	if ( nSize >= 9 && strncmp( (LPCSTR)pRaw, "{deflate}", 9 ) == 0 )
 	{
-		BYTE* pText = (BYTE*)CZLib::Decompress( pRaw + 9, nSize - 10, (DWORD*)&nSize );
+		auto_array< BYTE > pText( CZLib::Decompress( pRaw + 9, nSize - 10, (DWORD*)&nSize ) );
 		
-		if ( pText != NULL )
+		if ( pText.get() != NULL )
 		{
 			LPTSTR pOut = strXML.GetBuffer( nSize );
-			for ( int nPos = 0 ; nPos < nSize ; nPos++ ) pOut[ nPos ] = (TCHAR)pText[ nPos ];
+			for ( int nPos = 0 ; nPos < nSize ; nPos++ )
+				pOut[ nPos ] = (TCHAR)pText[ nPos ];
 			strXML.ReleaseBuffer( nSize );
-			delete [] pText;
 		}
 	}
 	else if ( nSize >= 11 && strncmp( (LPCSTR)pRaw, "{plaintext}", 11 ) == 0 )

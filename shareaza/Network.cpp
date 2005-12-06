@@ -220,7 +220,9 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	
 	m_bEnabled				= TRUE;
 	m_tStartedConnecting	= GetTickCount();
-	m_hThread				= AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL )->m_hThread;
+	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
+	m_hThread				= pThread->m_hThread;
+	SetThreadName( pThread->m_nThreadID, "Network" );
 	
 	// if ( m_bAutoConnect && bAutoConnect ) DiscoveryServices.Execute();
 	

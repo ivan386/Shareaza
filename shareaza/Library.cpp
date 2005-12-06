@@ -353,6 +353,7 @@ void CLibrary::StartThread()
 	{
 		m_bThread = TRUE;
 		CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_BELOW_NORMAL );
+		SetThreadName( pThread->m_nThreadID, "Library" );
 		m_hThread = pThread->m_hThread;
 	}
 

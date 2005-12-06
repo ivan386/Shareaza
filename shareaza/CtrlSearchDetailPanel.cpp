@@ -806,6 +806,7 @@ BOOL CSearchDetailPanel::RequestPreview()
 	{
 		m_bThread = TRUE;
 		CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
+		SetThreadName( pThread->m_nThreadID, "CtrlSearchDetailPanel" );
 		m_hThread = pThread->m_hThread;
 	}
 	

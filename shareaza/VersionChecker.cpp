@@ -108,6 +108,7 @@ BOOL CVersionChecker::Start(HWND hWndNotify)
 	m_bUpgrade		= FALSE;
 	
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
+	SetThreadName( pThread->m_nThreadID, "VersionChecker" );
 	m_hThread = pThread->m_hThread;
 	
 	return TRUE;

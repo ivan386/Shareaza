@@ -182,6 +182,7 @@ BOOL CLibraryBuilder::StartThread()
 
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, m_bPriority ?
 		THREAD_PRIORITY_NORMAL : THREAD_PRIORITY_BELOW_NORMAL );
+	SetThreadName( pThread->m_nThreadID, "LibraryBuilder" );
 
 	m_hThread = pThread->m_hThread;
 
