@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "CoolInterface.h"
 #include "Network.h"
+#include "Firewall.h"
 #include "Security.h"
 #include "HostCache.h"
 #include "DiscoveryServices.h"
@@ -144,13 +145,25 @@ BOOL CShareazaApp::InitInstance()
 		AfxEnableControlContainer();
 	
 	CSplashDlg* dlgSplash = new CSplashDlg( 18, bSilentTray );
-	
+
 	dlgSplash->Step( _T("Winsock") );
 		WSADATA wsaData;
 		if ( WSAStartup( 0x0101, &wsaData ) ) return FALSE;
 	
 	dlgSplash->Step( _T("Settings Database") );
 		Settings.Load();
+	dlgSplash->Step( _T("Firewall/Router") );
+	{
+		CFirewall oFirewall;
+		if ( oFirewall.AccessWindowsFirewall() && oFirewall.AreExceptionsAllowed() )
+		{
+			// Add to firewall exception list if necessary
+			CString strBinaryPath;
+			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
+			strBinaryPath.ReleaseBuffer( MAX_PATH );
+			oFirewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
+		}
+	}
 	dlgSplash->Step( _T("P2P URIs") );
 		CShareazaURL::Register( TRUE );
 	dlgSplash->Step( _T("Shell Icons") );
@@ -234,7 +247,19 @@ int CShareazaApp::ExitInstance()
 	Uploads.Clear( FALSE );
 	EDClients.Clear();
 	BTClients.Clear();
-	
+
+	{
+		CFirewall oFirewall;
+		if ( oFirewall.AccessWindowsFirewall() )
+		{
+			// Remove application from the firewall exception list
+			CString strBinaryPath;
+			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
+			strBinaryPath.ReleaseBuffer( MAX_PATH );
+			oFirewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
+		}
+	}
+
 	if ( m_bLive )
 	{
 		Downloads.Save();

@@ -68,7 +68,7 @@ public:
 		Clear();
 
 		// Allocate a BSTR of wide characters with the ASCII or Unicode text in the given CString s
-		B = s.AllocSysString();
+		B = SysAllocString( s );
 	}
 
 	// Clears the BSTR, freeing its memory
@@ -101,6 +101,7 @@ public:
 	IUPnPNAT*                     Nat;
 	IStaticPortMappingCollection* Collection;
 	IStaticPortMapping*           Mapping;
+	BOOL						  m_bInitialized;
 
 	// Constructor and destructor
 	CFirewall();
@@ -117,13 +118,14 @@ public:
 
 	// Windows Firewall Methods
 	BOOL SetupService( NET_FW_SERVICE_TYPE service );                    // Check a box for a service on the Windows Firewall exceptions list
-	BOOL SetupProgram( CString path, CString name );                     // List a program and check its box
+	BOOL SetupProgram( CString path, CString name, BOOL bRemove = FALSE);// List a program and check its box
 	BOOL AccessWindowsFirewall();                                        // Access the Windows Firewall COM objects, call before calling the methods below
 	BOOL IsProgramListed( CString path, BOOL* listed );                  // Determine if a program is on the exceptions list
 	BOOL IsServiceEnabled( NET_FW_SERVICE_TYPE service, BOOL* enabled ); // Determine if a service is checked
 	BOOL IsProgramEnabled( CString path, BOOL* enabled );                // Determine if a listed program is checked
 	BOOL AreExceptionsAllowed();										 // Find out if the system is in no-exceptions mode
 	BOOL AddProgram( CString path, CString name );                       // Add a program to the list with a checked box
+	BOOL RemoveProgram( CString path );									 // Add a program to the list with a checked box
 	BOOL EnableService( NET_FW_SERVICE_TYPE service );                   // Check the box for a service
 	BOOL EnableProgram( CString path );                                  // Check the box for a program
 

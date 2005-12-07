@@ -44,6 +44,7 @@ CFirewall::CFirewall()
 	Nat         = NULL;
 	Collection  = NULL;
 	Mapping     = NULL;
+	m_bInitialized = FALSE;
 }
 
 // Delete the WindowsFirewall object
@@ -70,7 +71,7 @@ CFirewall::~CFirewall()
 BOOL CFirewall::SetupService( NET_FW_SERVICE_TYPE service )
 {
 	// Make sure the COM interfaces have been accessed
-	if ( ! Manager ) if ( ! AccessWindowsFirewall() ) return FALSE;
+	if ( ! Manager ) if ( ! m_bInitialized ) return FALSE;
 
 	// If the service isn't enabled on the Windows Firewall exceptions list
 	BOOL enabled;
@@ -88,18 +89,24 @@ BOOL CFirewall::SetupService( NET_FW_SERVICE_TYPE service )
 // Takes a path and file name like "C:\Folder\Program.exe" and a name like "My Program"
 // Makes sure the program is listed in Windows Firewall and its listing is checked, adding and checking it as necessary
 // Returns true if the program is listed and checked, false if we weren't able to do it
-BOOL CFirewall::SetupProgram( CString path, CString name )
+// When bRemove is TRUE, it removes the application from the exception list
+BOOL CFirewall::SetupProgram( CString path, CString name, BOOL bRemove )
 {
 	// Make sure the COM interfaces have been accessed
-	if ( ! Manager ) if ( ! AccessWindowsFirewall() ) return FALSE;
+	if ( ! Manager ) if ( ! m_bInitialized ) return FALSE;
 
 	// If the program isn't on the Windows Firewall exceptions list
 	BOOL listed, enabled;
 	if ( ! IsProgramListed( path, &listed ) ) return FALSE;
-	if ( ! listed )
+	if ( ! listed && ! bRemove )
 	{
 		// Add it to the list with a checked checkbox
 		if ( ! AddProgram( path, name ) ) return FALSE;
+	}
+	else if ( listed && bRemove )
+	{
+		if ( ! RemoveProgram( path ) ) return FALSE;
+		return TRUE;
 	}
 
 	// If the program is on the list, but its checkbox isn't checked
@@ -147,6 +154,7 @@ BOOL CFirewall::AccessWindowsFirewall()
 	if ( FAILED( result ) || ! PortList ) return FALSE;
 
 	// Everything worked
+	m_bInitialized = TRUE;
 	return TRUE;
 }
 
@@ -275,6 +283,17 @@ BOOL CFirewall::AddProgram( CString path, CString name )
 
 	// Get the program on the Windows Firewall accept list
 	result = ProgramList->Add( Program ); // Add the application to the collection
+	if ( FAILED( result ) ) return FALSE;
+	return TRUE;
+}
+
+BOOL CFirewall::RemoveProgram( CString path )
+{
+	if ( ! ProgramList || ! m_bInitialized ) return FALSE;
+
+	CBstr p( path );
+
+	HRESULT result = ProgramList->Remove( p.B ); // Remove the application to the collection
 	if ( FAILED( result ) ) return FALSE;
 	return TRUE;
 }
