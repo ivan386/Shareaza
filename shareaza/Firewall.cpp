@@ -108,6 +108,7 @@ BOOL CFirewall::SetupProgram( CString path, CString name, BOOL bRemove )
 		if ( ! RemoveProgram( path ) ) return FALSE;
 		return TRUE;
 	}
+	else return FALSE;
 
 	// If the program is on the list, but its checkbox isn't checked
 	if ( ! IsProgramEnabled( path, &enabled ) ) return FALSE;
