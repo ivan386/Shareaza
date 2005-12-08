@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-// Utility.hpp                                                                //
+// StdAfx.h                                                                   //
 //                                                                            //
 // Copyright (C) 2002-2005 Shareaza Development Team.                         //
 // This file is part of SHAREAZA (www.shareaza.com).                          //
