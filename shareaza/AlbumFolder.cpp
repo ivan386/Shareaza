@@ -282,9 +282,9 @@ void CAlbumFolder::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 	if ( POSITION pos = m_pFiles.Find( pFile ) )
 	{
 		m_pFiles.RemoveAt( pos );
-		Delete( TRUE );
 		m_nUpdateCookie++;
 		Library.m_nUpdateCookie++;
+		Delete( TRUE );
 	}
 }
 
