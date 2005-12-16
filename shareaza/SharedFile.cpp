@@ -342,7 +342,7 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 
 BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
 {
-	if ( m_pFolder == NULL ) return FALSE;
+	// if ( m_pFolder == NULL ) return FALSE;
 	if ( m_pMetadata == NULL && pXML == NULL ) return TRUE;
 	
 	CSchema* pSchema = NULL;

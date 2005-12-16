@@ -1,9 +1,9 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.24 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/12/16 11:42:36 $"
+//	Revision:		"$Revision: 1.25 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -725,10 +725,7 @@ void CLibraryFileView::OnUpdateLibraryShared(CCmdUI* pCmdUI)
 			}
 		}
 	}
-	if ( m_bGhostFolder )
-		pCmdUI->Enable( FALSE );
-	else	
-		pCmdUI->Enable( GetSelectedCount() > 0 );
+	pCmdUI->Enable( GetSelectedCount() > 0 );
 	pCmdUI->SetCheck( bShared == TS_TRUE );
 }
 
@@ -738,13 +735,16 @@ void CLibraryFileView::OnLibraryShared()
 
 	StartSelectedFileLoop();
 
-	for ( CLibraryFile* pFile = GetNextSelectedFile(); pFile; pFile = GetNextSelectedFile() )
+	while ( m_posSel )
 	{
-		if ( pFile->IsShared() )
-			pFile->m_bShared = pFile->m_pFolder->IsShared() ? TS_FALSE : TS_UNKNOWN;
-		else
-			pFile->m_bShared = pFile->m_pFolder->IsShared() ? TS_UNKNOWN : TS_TRUE;
-		pFile->m_nUpdateCookie++;
+		if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) ) )
+		{
+			if ( pFile->IsShared() )
+				pFile->m_bShared = pFile->m_pFolder->IsShared() ? TS_FALSE : TS_UNKNOWN;
+			else
+				pFile->m_bShared = pFile->m_pFolder->IsShared() ? TS_UNKNOWN : TS_TRUE;
+			pFile->m_nUpdateCookie++;
+		}
 	}
 
 	Library.Update();
