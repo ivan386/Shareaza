@@ -87,7 +87,11 @@ BOOL CLibraryTipCtrl::OnPrepare()
 		m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
 		m_nIcon = 0;
 
-		if ( pFile->m_pFolder != NULL ) m_sFolder = pFile->m_pFolder->m_sPath;
+		if ( pFile->m_pFolder != NULL ) 
+			m_sFolder = pFile->m_pFolder->m_sPath;
+		else
+			m_sFolder.Empty(); // Ghost files have no location
+
 		m_sType.Empty();
 		m_sSHA1.Empty();
 		m_sTTH.Empty();
