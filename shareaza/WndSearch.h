@@ -32,7 +32,7 @@ class CManagedSearch;
 class CSearchWnd : public CBaseMatchWnd
 {
 public:
-	CSearchWnd(std::auto_ptr< CQuerySearch > pSearch = std::auto_ptr< CQuerySearch >());
+	CSearchWnd(auto_ptr< CQuerySearch > pSearch = auto_ptr< CQuerySearch >());
 	virtual ~CSearchWnd();
 
 	DECLARE_DYNCREATE(CSearchWnd)

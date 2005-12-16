@@ -42,7 +42,7 @@ public:
 private:
 	CQuerySearch(const CQuerySearch* pOrigin);
 public:
-	std::auto_ptr< CQuerySearch > clone() const;
+	auto_ptr< CQuerySearch > clone() const;
 
 // Attributes
 public:
@@ -119,7 +119,7 @@ public:
 	BOOL		MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	void		BuildWordList();
 	void		Serialize(CArchive& ar);
-	static CSearchWnd* OpenWindow(std::auto_ptr< CQuerySearch > pSearch);
+	static CSearchWnd* OpenWindow(auto_ptr< CQuerySearch > pSearch);
 	BOOL		CheckValid();
 private:
 	void		AddStringToWordList(LPCTSTR pszString);

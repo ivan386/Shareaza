@@ -996,7 +996,7 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 		while ( nCount-- > 0 )
 		{
-			std::auto_ptr< CAlbumFolder > pFolder( new CAlbumFolder( this, NULL, (LPCTSTR)1 ) );
+			auto_ptr< CAlbumFolder > pFolder( new CAlbumFolder( this, NULL, (LPCTSTR)1 ) );
 			pFolder->Serialize( ar, nVersion );
 			m_pFolders.AddTail( pFolder.release() );
 		}

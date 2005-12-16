@@ -290,7 +290,7 @@ void CHomeSearchCtrl::OnSearchCreate()
 		m_wndText.SetItemData( m_wndText.InsertString( 0, strText ), (DWORD_PTR)pSchema );
 	}
 
-	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	pSearch->m_sSearch		= strText;
 	pSearch->m_pSchema		= pSchema;
 

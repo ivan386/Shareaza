@@ -87,7 +87,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSearchWnd construction
 
-CSearchWnd::CSearchWnd(std::auto_ptr< CQuerySearch > pSearch)
+CSearchWnd::CSearchWnd(auto_ptr< CQuerySearch > pSearch)
 {
 	if ( pSearch.get() ) 
 	{
@@ -484,7 +484,7 @@ void CSearchWnd::OnSearchSearch()
 	}
 	//End of 'Search More'
 
-	std::auto_ptr< CManagedSearch > pSearch;
+	auto_ptr< CManagedSearch > pSearch;
 
 	if ( m_pMatches->m_nFiles > 0 )
 	{
@@ -551,9 +551,9 @@ void CSearchWnd::OnSearchSearch()
 	}
 	else
 	{
-		std::auto_ptr< CQuerySearch > pCriteria = GetLastSearch()
+		auto_ptr< CQuerySearch > pCriteria = GetLastSearch()
 			? GetLastSearch()->clone()
-			: std::auto_ptr< CQuerySearch >();
+			: auto_ptr< CQuerySearch >();
 		
 		if ( pCriteria.get() )
 		{
@@ -999,7 +999,7 @@ void CSearchWnd::Serialize(CArchive& ar)
 		
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
-			std::auto_ptr< CManagedSearch > pSearch( new CManagedSearch() );
+			auto_ptr< CManagedSearch > pSearch( new CManagedSearch() );
 			pSearch->Serialize( ar );
 			m_oSearches.push_back( pSearch.release() );
 		}

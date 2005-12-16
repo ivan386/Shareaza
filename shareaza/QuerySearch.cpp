@@ -114,9 +114,9 @@ CQuerySearch::~CQuerySearch()
 	if ( m_pXML ) delete m_pXML;
 }
 
-std::auto_ptr< CQuerySearch > CQuerySearch::clone() const
+auto_ptr< CQuerySearch > CQuerySearch::clone() const
 {
-	return std::auto_ptr< CQuerySearch >( new CQuerySearch( this ) );
+	return auto_ptr< CQuerySearch >( new CQuerySearch( this ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1281,7 +1281,7 @@ void CQuerySearch::Serialize(CArchive& ar)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch open window
 
-CSearchWnd* CQuerySearch::OpenWindow(std::auto_ptr< CQuerySearch > pSearch)
+CSearchWnd* CQuerySearch::OpenWindow(auto_ptr< CQuerySearch > pSearch)
 {
 	if ( pSearch.get() && pSearch->CheckValid() )
 	{

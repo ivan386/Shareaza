@@ -36,7 +36,7 @@ class CNewSearchDlg : public CSkinDialog
 // Construction
 public:
 	CNewSearchDlg(CWnd* pParent = NULL,
-			std::auto_ptr< CQuerySearch > pSearch = std::auto_ptr< CQuerySearch >(),
+			auto_ptr< CQuerySearch > pSearch = auto_ptr< CQuerySearch >(),
 			BOOL bLocal = FALSE, BOOL bAgain = FALSE);
 
 // Dialog Data
@@ -54,11 +54,11 @@ private:
 	CSchemaCtrl		m_wndSchema;
 	BOOL			m_bLocal;
 	BOOL			m_bAgain;
-	std::auto_ptr< CQuerySearch > m_pSearch;
+	auto_ptr< CQuerySearch > m_pSearch;
 
 // Operations
 public:
-	std::auto_ptr< CQuerySearch > GetSearch() { return m_pSearch; }
+	auto_ptr< CQuerySearch > GetSearch() { return m_pSearch; }
 
 // Overrides
 public:

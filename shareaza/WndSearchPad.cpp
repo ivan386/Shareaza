@@ -226,9 +226,9 @@ void CSearchPadWnd::OnPaint()
 /////////////////////////////////////////////////////////////////////////////
 // CSearchPadWnd search interface
 
-std::auto_ptr< CQuerySearch > CSearchPadWnd::GetSearch()
+auto_ptr< CQuerySearch > CSearchPadWnd::GetSearch()
 {
-	std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	
 	m_wndText.GetWindowText( pSearch->m_sSearch );
 	pSearch->m_sSearch.TrimLeft();
@@ -279,7 +279,7 @@ void CSearchPadWnd::OnSearchCreate()
 {
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 	
-	std::auto_ptr< CQuerySearch > pSearch( GetSearch() );
+	auto_ptr< CQuerySearch > pSearch( GetSearch() );
 	if ( pSearch.get() )
 	{
 		ClearSearch();

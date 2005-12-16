@@ -105,7 +105,7 @@ CBENode* CBENode::Add(const LPBYTE pKey, size_t nKey)
 		break;
 	}
 	
-	std::auto_ptr< CBENode > pNew( new CBENode );
+	auto_ptr< CBENode > pNew( new CBENode );
 	CBENode* pNew_ = pNew.get();
 	
 	if ( m_nType == beList )
@@ -354,7 +354,7 @@ CBENode* CBENode::Decode(CBuffer* pBuffer)
 	
 	try
 	{
-		std::auto_ptr< CBENode > pNode( new CBENode() );
+		auto_ptr< CBENode > pNode( new CBENode() );
 		LPBYTE pInput	= pBuffer->m_pBuffer;
 		DWORD nInput	= pBuffer->m_nLength;
 	

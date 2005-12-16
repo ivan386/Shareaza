@@ -100,7 +100,7 @@ protected:
 	void		SetView(CLibraryView* pView, BOOL bUpdate = TRUE, BOOL bUser = TRUE);
 	void		SetPanel(CLibraryPanel* pPanel);
 	void		CancelDrag();
-	void		RunLocalSearch(std::auto_ptr< CQuerySearch > pSearch);
+	void		RunLocalSearch(auto_ptr< CQuerySearch > pSearch);
 
 // Overrides
 public:

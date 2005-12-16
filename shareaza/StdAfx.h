@@ -298,68 +298,6 @@ private:
 
 extern const CLowerCaseTable ToLower;
 
-template<typename T>
-class auto_array
-{
-public:
-	typedef T element_type;
-private:
-	struct auto_array_ref
-	{
-		explicit auto_array_ref(element_type** ref)
-			: ref_( ref )
-		{}
-		element_type* release()
-		{
-			element_type* ptr = *ref_;
-			*ref_ = NULL;
-			return ptr;
-		}
-		element_type** ref_;
-	};
-public:
-	explicit auto_array(element_type* ptr = NULL) : ptr_( ptr ) {}
-	auto_array(auto_array& other) : ptr_( other.release() ) {}
-	auto_array(auto_array_ref other)
-		: ptr_( other.release() )
-	{}
-	~auto_array()
-	{
-		if ( get() != NULL )
-			boost::checked_array_delete( get() );
-	};
-
-	auto_array& operator=(auto_array& other)
-	{
-		ptr_ = other.release();
-		return *this;
-	}
-	auto_array& operator=(auto_array_ref other)
-	{
-		ptr_ = other.release();
-		return *this;
-	}
-
-	element_type* get() const { return ptr_; }
-	element_type& operator[](std::size_t index) const { return ptr_[ index ]; }
-	element_type* release()
-	{
-		element_type* ptr = get();
-		ptr_ = NULL;
-		return ptr;
-	}
-	void reset(element_type* ptr = NULL)
-	{
-		if ( ptr != get() && get() != NULL )
-			boost::checked_array_delete( get() );
-		ptr_ = ptr;
-	}
-
-	operator auto_array_ref() { return auto_array_ref( &ptr_ ); }
-private:
-	element_type* ptr_;
-};
-
 inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
 {
 #ifndef NDEBUG

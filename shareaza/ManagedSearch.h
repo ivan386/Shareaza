@@ -34,7 +34,7 @@ class CManagedSearch : private boost::noncopyable
 {
 // Construction
 public:
-	CManagedSearch(std::auto_ptr< CQuerySearch > pSearch = std::auto_ptr< CQuerySearch >( new CQuerySearch() ),
+	CManagedSearch(auto_ptr< CQuerySearch > pSearch = auto_ptr< CQuerySearch >( new CQuerySearch() ),
 			int nPriority = 0);
 	~CManagedSearch() { Stop(); }
 	

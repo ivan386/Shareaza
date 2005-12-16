@@ -46,8 +46,8 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CManagedSearch construction
 
-CManagedSearch::CManagedSearch(std::auto_ptr< CQuerySearch > pSearch, int nPriority)
-: m_pSearch( pSearch )
+CManagedSearch::CManagedSearch(auto_ptr< CQuerySearch > pSearch, int nPriority)
+: m_pSearch( pSearch.release() )
 {
 	if ( !m_pSearch.get() )
 	{

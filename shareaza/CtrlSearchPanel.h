@@ -201,8 +201,8 @@ public:
 	void			ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWORD nHits, DWORD nHubs, DWORD nLeaves);
 	void			OnSchemaChange();
 	void			ExecuteSearch();
-	std::auto_ptr< CManagedSearch > GetSearch();
-	std::auto_ptr< CManagedSearch >	GetSearch(LPCTSTR pszHash);
+	auto_ptr< CManagedSearch > GetSearch();
+	auto_ptr< CManagedSearch >	GetSearch(LPCTSTR pszHash);
 	void			OnSkinChange();
 	void			Disable();
 	void			Enable();

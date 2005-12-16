@@ -53,7 +53,7 @@ protected:
 public:
 	virtual void OnSkinChange();
 private:
-	std::auto_ptr< CQuerySearch > GetSearch();
+	auto_ptr< CQuerySearch > GetSearch();
 	void			ClearSearch();
 
 // Overrides

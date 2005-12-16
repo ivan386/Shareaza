@@ -153,7 +153,7 @@ void CSearchMonitorWnd::OnSearchMonitorSearch()
 
 	if ( nItem >= 0 )
 	{
-		std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+		auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 		pSearch->m_sSearch = m_wndList.GetItemText( nItem, 0 );
 		CQuerySearch::OpenWindow( pSearch );
 	}

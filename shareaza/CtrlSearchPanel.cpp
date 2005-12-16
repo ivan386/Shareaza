@@ -294,9 +294,9 @@ void CSearchPanel::OnSchemaChange()
 	}
 }
 
-std::auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
+auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 {
-	std::auto_ptr< CManagedSearch > pSearch( new CManagedSearch() );
+	auto_ptr< CManagedSearch > pSearch( new CManagedSearch() );
 	
 	m_boxSearch.m_wndSearch.GetWindowText( pSearch->m_pSearch->m_sSearch );
 
@@ -376,7 +376,7 @@ std::auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 	return pSearch;
 }
 
-std::auto_ptr< CManagedSearch > CSearchPanel::GetSearch(LPCTSTR pszHash)
+auto_ptr< CManagedSearch > CSearchPanel::GetSearch(LPCTSTR pszHash)
 {
 	m_boxSearch.m_wndSearch.SetWindowText( pszHash );
 	return GetSearch();

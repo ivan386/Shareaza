@@ -63,7 +63,7 @@ public:
 public:
 	void			Clear();
 	BOOL			Parse(LPCTSTR pszURL);
-	std::auto_ptr< CQuerySearch > ToQuery();
+	auto_ptr< CQuerySearch > ToQuery();
 protected:
 	BOOL	ParseMagnet(LPCTSTR pszURL);
 	BOOL	ParseShareaza(LPCTSTR pszURL);

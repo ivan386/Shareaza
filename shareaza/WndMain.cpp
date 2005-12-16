@@ -1,9 +1,9 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2005/12/01 08:40:49 $"
-//	Revision:		"$Revision: 1.45 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/12/16 16:02:27 $"
+//	Revision:		"$Revision: 1.46 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1130,7 +1130,7 @@ LRESULT CMainWnd::OnOpenChat(WPARAM wParam, LPARAM /*lParam*/)
 
 LRESULT CMainWnd::OnOpenSearch(WPARAM wParam, LPARAM /*lParam*/)
 {
-	CQuerySearch::OpenWindow( std::auto_ptr< CQuerySearch >( (CQuerySearch*)wParam ) );
+	CQuerySearch::OpenWindow( auto_ptr< CQuerySearch >( (CQuerySearch*)wParam ) );
 	return 0;
 }
 

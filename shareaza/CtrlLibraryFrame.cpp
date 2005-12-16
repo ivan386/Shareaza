@@ -1090,7 +1090,7 @@ void CLibraryFrame::OnLibraryPanel()
 
 void CLibraryFrame::OnLibrarySearch()
 {
-	CNewSearchDlg dlg( NULL, std::auto_ptr< CQuerySearch >(), TRUE );
+	CNewSearchDlg dlg( NULL, auto_ptr< CQuerySearch >(), TRUE );
 
 	if ( dlg.DoModal() == IDOK )
 	{
@@ -1105,7 +1105,7 @@ void CLibraryFrame::OnLibrarySearchQuick()
 
 	if ( str.GetLength() > 0 )
 	{
-		std::auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+		auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 		pSearch->m_sSearch = str;
 		RunLocalSearch( pSearch );
 		m_wndSearch.SetWindowText( _T("") );
@@ -1136,7 +1136,7 @@ void CLibraryFrame::OnToolbarEscape()
 	}
 }
 
-void CLibraryFrame::RunLocalSearch(std::auto_ptr< CQuerySearch > pSearch)
+void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 {
 	CWaitCursor pCursor;
 

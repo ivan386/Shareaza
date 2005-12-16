@@ -87,6 +87,11 @@
 #include <intrin.h>
 #endif
 
+#include "augment/augment.hpp"
+using augment::implicit_cast;
+using augment::auto_ptr;
+using augment::auto_array;
+using augment::com_ptr;
 #include "Utility.hpp"
 #include "MinMax.hpp"
 #include "Hashes.hpp"
