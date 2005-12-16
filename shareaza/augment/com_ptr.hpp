@@ -70,7 +70,7 @@ namespace augment
 		template<typename source_interface_type>
 		com_ptr(const com_ptr< source_interface_type >& p, typename boost::enable_if_c<
 				!boost::is_convertible< source_interface_type*, interface_type* >::value >::type* = NULL)
-			: p_( queryInterface( p.get() ) )
+			: p_( queryInterface( p.get() ), false )
 		{}
 		// implicit copy-constructor here
 
