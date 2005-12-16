@@ -3142,7 +3142,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Torrent Information"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Torrent &Information:",-1,5,3,280,80
+    GROUPBOX        "Torrent &Information:",-1,5,3,280,92
     LTEXT           "Name:",-1,14,13,44,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_NAME,60,13,215,12,ES_AUTOHSCROLL | 
                     ES_READONLY
@@ -3155,13 +3155,16 @@ BEGIN
     LTEXT           "Comments:",-1,14,42,44,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_COMMENTS,60,41,215,36,ES_AUTOHSCROLL | 
                     ES_READONLY
-    GROUPBOX        "Transfers:",-1,5,85,280,43
-    RTEXT           "Start new download transfers:",-1,15,96,138,9
-    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,161,94,114,66,
+    GROUPBOX        "Transfers:",-1,5,104,280,43
+    RTEXT           "Start new download transfers:",-1,15,115,138,9
+    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,161,113,114,66,
                     CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,161,109,114,12,ES_AUTOHSCROLL | 
+    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,161,128,114,12,ES_AUTOHSCROLL | 
                     ES_READONLY | NOT WS_TABSTOP
-    RTEXT           "Total Uploaded:",-1,15,111,138,9,SS_CENTERIMAGE
+    RTEXT           "Total Uploaded:",-1,15,130,138,9,SS_CENTERIMAGE
+    LTEXT           "Notes:",-1,14,80,44,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TORRENT_OTHER,60,80,215,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
 END
 
 IDD_TORRENT_TRACKERS DIALOGEX 0, 0, 292, 230
@@ -5388,6 +5391,8 @@ BEGIN
     IDS_BT_CLIENT_DUPLICATE "BitTorrent coupling with %s not accepted, a connection to this client already exists."
     IDS_BT_CLIENT_MAX_CONNECTIONS 
                             "BitTorrent coupling with %s not accepted, maximum connections reached."
+    IDS_BT_PRIVATE          "Private torrent"
+    IDS_BT_ENCODING         "Encoding error"
 END
 
 STRINGTABLE 

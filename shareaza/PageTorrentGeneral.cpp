@@ -53,6 +53,7 @@ CTorrentGeneralPage::CTorrentGeneralPage() : CTorrentInfoPage( CTorrentGeneralPa
 	m_sComment = _T("");
 	m_sCreationDate = _T("");
 	m_sCreatedBy = _T("");
+	m_sTorrentOther = _T("");
 	//}}AFX_DATA_INIT
 }
 
@@ -68,6 +69,7 @@ void CTorrentGeneralPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_TORRENT_COMMENTS, m_sComment);
 	DDX_Text(pDX, IDC_TORRENT_CREATEDBY, m_sCreatedBy );
 	DDX_Text(pDX, IDC_TORRENT_CREATIONDATE, m_sCreationDate );
+	DDX_Text(pDX, IDC_TORRENT_OTHER, m_sTorrentOther );
 	DDX_Control(pDX, IDC_TORRENT_STARTDOWNLOADS, m_wndStartDownloads);
 	DDX_Text(pDX, IDC_TORRENT_UPLOADTOTAL, m_sUploadTotal );
 	//}}AFX_DATA_MAP
@@ -88,6 +90,26 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 		CTime pTime( (time_t)m_pInfo->m_tCreationDate );
 		m_sCreationDate = pTime.Format( _T("%Y-%m-%d  %H:%M") );
 	}
+
+	// Assember 'other' string
+	if ( m_pInfo->m_bPrivate )
+	{
+		CString str;
+		LoadString( str, IDS_BT_PRIVATE );
+		m_sTorrentOther += str;
+		m_sTorrentOther += _T(", ");
+	}
+	if ( m_pInfo->m_bEncodingError )
+	{
+		CString str;
+		LoadString( str, IDS_BT_ENCODING );
+		m_sTorrentOther += str;
+		m_sTorrentOther += _T(", ");
+	}
+
+	// Cut off last comma
+	if ( m_sTorrentOther.GetLength() )
+		m_sTorrentOther = m_sTorrentOther.Left( m_sTorrentOther.GetLength() - 2 );
 
 	m_wndStartDownloads.SetItemData( 0, dtAlways );
 	m_wndStartDownloads.SetItemData( 1, dtWhenRatio );
@@ -112,5 +134,3 @@ void CTorrentGeneralPage::OnOK()
 	
 	CTorrentInfoPage::OnOK();
 }
-
-

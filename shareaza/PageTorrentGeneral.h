@@ -43,6 +43,7 @@ public:
 	CString			m_sComment;
 	CString			m_sCreatedBy;
 	CString			m_sCreationDate;
+	CString			m_sTorrentOther;
 	CComboBox		m_wndStartDownloads;
 	CString			m_sUploadTotal;
 	//}}AFX_DATA
@@ -62,7 +63,6 @@ protected:
 	virtual BOOL	OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

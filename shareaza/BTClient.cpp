@@ -412,8 +412,7 @@ BOOL CBTClient::OnHandshake1()
 
 BOOL CBTClient::OnHandshake2()
 {	// Second part of the handshake - Peer ID
-	m_oGUID = reinterpret_cast< const Hashes::BtGuid::RawStorage& >( 
-		*m_pInput->m_pBuffer );
+	m_oGUID = reinterpret_cast< const Hashes::BtGuid::RawStorage& >( *m_pInput->m_pBuffer );
 	m_pInput->Remove( Hashes::BtGuid::byteCount );
 	
 	m_bExtended = isExtendedBtGuid( m_oGUID );
@@ -747,8 +746,11 @@ void CBTClient::SendBeHandshake()
 	CString strNick = MyProfile.GetNick().Left( 255 ); // Truncate to 255 characters
 	if ( strNick.GetLength() ) pRoot.Add( "nickname" )->SetString( strNick );
 
+	if ( ( m_pDownload ) && ( m_pDownload->m_pTorrent.m_bPrivate ) )
+		pRoot.Add( "source-exchange" )->SetInt( 0 );
+	else
+		pRoot.Add( "source-exchange" )->SetInt( 2 );
 	
-	pRoot.Add( "source-exchange" )->SetInt( 2 );
 	pRoot.Add( "user-agent" )->SetString( Settings.SmartAgent() );
 	
 	CBuffer pOutput;
@@ -806,10 +808,17 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 	{
 		if ( pExchange->GetInt() >= 2 )
 		{
-			m_bExchange = TRUE;
-			
-			if ( m_pDownloadTransfer != NULL )
-				Send( CBTPacket::New( BT_PACKET_SOURCE_REQUEST ) );
+			if ( ( m_pDownload ) && ( m_pDownload->m_pTorrent.m_bPrivate ) )
+			{
+				m_bExchange = FALSE;
+			}
+			else
+			{
+				m_bExchange = TRUE;
+				
+				if ( m_pDownloadTransfer != NULL )
+					Send( CBTPacket::New( BT_PACKET_SOURCE_REQUEST ) );
+			}
 		}
 	}
 	
@@ -825,7 +834,7 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 
 BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 {
-	if ( m_pDownload == NULL ) return TRUE;
+	if ( ( m_pDownload == NULL ) || ( m_pDownload->m_pTorrent.m_bPrivate ) ) return TRUE;
 	
 	CBENode pRoot;
 	CBENode* pPeers = pRoot.Add( "peers" );

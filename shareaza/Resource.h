@@ -621,6 +621,7 @@
 #define IDC_TORRENT_CREATEDBY           1344
 #define IDC_TORRENT_CREATIONDATE        1345
 #define IDC_TORRENT_TRACKERS            1345
+#define IDC_TORRENT_OTHER               1346
 #define IDC_RATE_COMMENTS               1346
 #define IDC_MESSAGE_AVAILABLE           1347
 #define IDC_MESSAGE_DELETED             1348
@@ -1303,6 +1304,8 @@
 #define IDS_BT_CLIENT_DROP_CONNECTED    17507
 #define IDS_BT_CLIENT_DUPLICATE         17510
 #define IDS_BT_CLIENT_MAX_CONNECTIONS   17511
+#define IDS_BT_PRIVATE                  17512
+#define IDS_BT_ENCODING                 17513
 #define IDS_DOWNLOAD_EDIT_RENAME        18496
 #define IDS_DOWNLOAD_EDIT_BAD_SHA1      18497
 #define IDS_DOWNLOAD_EDIT_BAD_TIGER     18498
@@ -1705,7 +1708,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        277
 #define _APS_NEXT_COMMAND_VALUE         33136
-#define _APS_NEXT_CONTROL_VALUE         1427
+#define _APS_NEXT_CONTROL_VALUE         1428
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

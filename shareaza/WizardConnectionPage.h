@@ -41,9 +41,9 @@ public:
 	//{{AFX_DATA(CWizardConnectionPage)
 	enum { IDD = IDD_WIZARD_CONNECTION };
 	CComboBox	m_wndLanSelect;
-	CStatic	m_wndLanLabel;
+	CStatic		m_wndLanLabel;
 	CComboBox	m_wndHomeSelect;
-	CStatic	m_wndHomeLabel;
+	CStatic		m_wndHomeLabel;
 	CComboBox	m_wndGroup;
 	CComboBox	m_wndSpeed;
 	CComboBox	m_wndType;

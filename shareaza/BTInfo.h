@@ -106,6 +106,7 @@ public:
 	CString		m_sComment;
 	DWORD		m_tCreationDate;
 	CString		m_sCreatedBy;
+	BOOL		m_bPrivate;
 
 	int			m_nStartDownloads;				// When do we start downloads for this torrent
 private:

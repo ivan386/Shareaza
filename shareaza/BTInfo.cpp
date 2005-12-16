@@ -56,6 +56,7 @@ CBTInfo::CBTInfo()
 
 	m_nEncoding			= Settings.BitTorrent.TorrentCodePage;
 	m_tCreationDate		= 0;
+	m_bPrivate			= FALSE;
 
 	m_nStartDownloads	= dtAlways;
 }
@@ -133,6 +134,7 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	m_sComment			= pSource->m_sComment;
 	m_tCreationDate		= pSource->m_tCreationDate;
 	m_sCreatedBy		= pSource->m_sCreatedBy;
+	m_bPrivate			= pSource->m_bPrivate;
 
 	m_nStartDownloads	= pSource->m_nStartDownloads;
 	
@@ -196,6 +198,7 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar << m_sComment;
 		ar << m_tCreationDate;
 		ar << m_sCreatedBy;
+		ar << m_bPrivate;
 		
 		ar.WriteCount( m_nFiles );
 		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
@@ -263,6 +266,8 @@ void CBTInfo::Serialize(CArchive& ar)
 			ar >> m_tCreationDate;
 			ar >> m_sCreatedBy;
 		}
+
+		if ( nVersion >= 4 ) ar >> m_bPrivate;
 		
 		m_nFiles = (int)ar.ReadCount();
 		m_pFiles = new CBTFile[ m_nFiles ];
@@ -603,6 +608,11 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	// Get the info node
 	CBENode* pInfo = pRoot->GetNode( "info" );
 	if ( ! pInfo->IsType( CBENode::beDict ) ) return FALSE;
+
+	// Get the private flag (if present)
+	CBENode* pPrivate = pInfo->GetNode( "private" );
+	if ( ( pPrivate ) &&  ( pPrivate->IsType( CBENode::beInt )  ) )
+		m_bPrivate = (BOOL)pPrivate->GetInt();
 	
 	// Get the name
 	m_sName = pInfo->GetStringFromSubNode( "name", m_nEncoding, &m_bEncodingError );
