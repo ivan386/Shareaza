@@ -165,8 +165,9 @@ BOOL CFirewall::IsProgramListed( CString path, BOOL* listed )
 {
 	// Look for the program in the list
 	if ( Program ) { Program->Release(); Program = NULL; }
-	CBstr p( path ); // Express the name as a BSTR
-	HRESULT result = ProgramList->Item( p.B, &Program ); // Try to get the interface for the program with the given name
+
+	// Try to get the interface for the program with the given name
+	HRESULT result = ProgramList->Item( CComBSTR( path ), &Program );
 	if ( SUCCEEDED( result ) )
 	{
 		// The program is in the list
@@ -273,12 +274,10 @@ BOOL CFirewall::AddProgram( CString path, CString name )
 		__uuidof( INetFwAuthorizedApplication ), ( void** )&Program );
 	if ( FAILED( result ) ) return FALSE;
 
-	// Set the text
-	CBstr p( path );                                // Express the text as BSTRs
-	result = Program->put_ProcessImageFileName( p.B ); // Set the process image file name
+	result = Program->put_ProcessImageFileName( CComBSTR( path ) ); // Set the process image file name
 	if ( FAILED( result ) ) return FALSE;
-	CBstr n( name );
-	result = Program->put_Name( n.B );                 // Set the program name
+
+	result = Program->put_Name( CComBSTR( name ) );					// Set the program name
 	if ( FAILED( result ) ) return FALSE;
 
 	// Get the program on the Windows Firewall accept list
@@ -291,9 +290,7 @@ BOOL CFirewall::RemoveProgram( CString path )
 {
 	if ( ! ProgramList || ! m_bInitialized ) return FALSE;
 
-	CBstr p( path );
-
-	HRESULT result = ProgramList->Remove( p.B ); // Remove the application to the collection
+	HRESULT result = ProgramList->Remove( CComBSTR( path ) ); // Remove the application to the collection
 	if ( FAILED( result ) ) return FALSE;
 	return TRUE;
 }
@@ -329,93 +326,5 @@ BOOL CFirewall::EnableProgram( CString path )
 	VARIANT_BOOL v = TRUE;
 	HRESULT result = Program->put_Enabled( v );
 	if ( FAILED( result ) ) return FALSE;
-	return TRUE;
-}
-
-// Takes a protocol 't' for TCP or 'u' for UDP
-// Takes the external port number the NAT router will listen for on the Internet
-// Takes the internal port number this computer is listening for on the LAN, the external and internal ports are usually the same
-// Takes the IP address of this computer on the LAN as a string, like "192.168.1.103"
-// Takes the program name that will show up in the router's Web configuration page
-// Removes any listing for the given protocol and port, and then sets up a new one with all the given information
-// Returns false on error
-BOOL CFirewall::SetupForward( char protocol, int externalport, int internalport, CString ipaddress, CString name )
-{
-	// Connect to the COM object, and have it begin talking UPnP to the router
-	if ( ! Nat ) if ( ! AccessUPnP() ) return FALSE;
-
-	// Remove any forward the router has for the given protocol and port
-	Remove( protocol, externalport ); // Even if remove fails, we still want to try to add
-
-	// Add a fresh port mapping with the right name and a checked box
-	if ( ! Add( protocol, externalport, internalport, ipaddress, name ) ) return FALSE;
-
-	// Everything worked
-	return TRUE;
-}
-
-// Get access to the COM objects
-// Returns true if it works, false if there was an error
-BOOL CFirewall::AccessUPnP()
-{
-	// Initialize COM itself so this thread can use it
-	HRESULT result = CoInitialize( NULL ); // Must be NULL
-	if ( FAILED( result ) ) return FALSE;
-
-	// Access the IUPnPNAT COM interface, has Windows send UPnP messages to the NAT router
-	result = CoCreateInstance( __uuidof( UPnPNAT ), NULL, CLSCTX_ALL, __uuidof( IUPnPNAT ), ( void** )&Nat );
-	if ( FAILED( result ) || ! Nat ) return FALSE;
-
-	// Get the collection of forwarded ports from it, has Windows send UPnP messages to the NAT router
-	result = Nat->get_StaticPortMappingCollection( &Collection ); // Won't work if the NAT has UPnP turned off
-	if ( FAILED( result ) || ! Collection ) return FALSE; // Frequently, result is S_OK but Collection is null
-
-	// Everything worked
-	return TRUE;
-}
-
-// Takes a protocol 't' for TCP or 'u' for UDP, the port to forward, the computer's LAN IP address like "192.168.1.103", and the program name
-// Talks UPnP to the router to setup port forwarding
-// Returns false if there was an error
-BOOL CFirewall::Add( char protocol, int externalport, int internalport, CString ipaddress, CString name )
-{
-	// Make a local BSTR with the protocol described in text
-	CBstr p;
-	if ( protocol == 't' ) p.Set( "TCP" );
-	else                   p.Set( "UDP" );
-
-	// Express the name and description as BSTRs
-	CBstr i( ipaddress );
-	CBstr n( name );
-
-	// Have Windows send UPnP messages to the NAT router to get it to forward a port
-	if ( Mapping ) { Mapping->Release(); Mapping = NULL; } // Reuse the mapping interface pointer
-	HRESULT result = Collection->Add(  // Create a new port mapping, and add it to the collection
-		externalport, // The port to forward
-		p.B,          // The protocol as the text "TCP" or "UDP" in a BSTR
-		internalport, // This computer's internal LAN port to forward to, like 192.168.1.100:internalport
-		i.B,          // Internal IP address to forward to, like "192.168.1.100"
-		true,         // True to start forwarding now
-		n.B,          // Description text the router can show in its Web configuration interface
-		&Mapping );   // Access to the IStaticPortMapping interface, if this works
-	if ( FAILED( result ) || ! Mapping ) return FALSE;
-	return TRUE;
-}
-
-// Takes a protocol 't' for TCP or 'u' for UDP, and a port being forwarded
-// Talks UPnP to the router to remove the forwarding
-// Returns false if there was an error
-BOOL CFirewall::Remove( char protocol, int externalport )
-{
-	// Make a local BSTR with the protocol described in text
-	CBstr b;
-	if ( protocol == 't' ) b.Set( "TCP" );
-	else                   b.Set( "UDP" );
-
-	// Have Windows send UPnP messages to the NAT router to get it to stop forwarding a port
-	HRESULT result = Collection->Remove(  // Remove the specified port mapping from the collection
-		externalport,                     // The port being forwarded
-		b.B );                            // The protocol as the text "TCP" or "UDP" in a BSTR
-	if ( FAILED( result ) ) return FALSE; // Returns S_OK even if there was nothing there to remove
 	return TRUE;
 }
