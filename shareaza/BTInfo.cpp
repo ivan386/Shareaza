@@ -267,7 +267,7 @@ void CBTInfo::Serialize(CArchive& ar)
 			ar >> m_sCreatedBy;
 		}
 
-		if ( nVersion >= 4 ) ar >> m_bPrivate;
+		if ( nVersion >= 5 ) ar >> m_bPrivate;
 		
 		m_nFiles = (int)ar.ReadCount();
 		m_pFiles = new CBTFile[ m_nFiles ];
