@@ -119,8 +119,10 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 // If this header is not found, you'll need to install the Windows XP SP2 Platform SDK (or later)
 // from http://www.microsoft.com/msdownload/platformsdk/sdkupdate/
 
-#include <netfw.h>   // Change the settings of the Windows Firewall
-#include <natupnp.h> // Talk UPnP to the NAT router to forward ports
+#include <netfw.h>
+#include <upnp.h>
+#include <natupnp.h>
+#include <iphlpapi.h>
 
 #pragma warning( pop )
 
