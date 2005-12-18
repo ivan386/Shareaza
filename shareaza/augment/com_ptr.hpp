@@ -153,6 +153,37 @@ namespace augment
 		boost::intrusive_ptr< interface_type > p_;
 	};
 
+	template<typename Lhs, typename Rhs>
+    bool operator<(const com_ptr< Lhs >& lhs, const com_ptr< Rhs >& rhs)
+	{
+		return std::less< IUnknown* >()( lhs.get(), rhs.get() );
+	}
+	template<typename Lhs, typename Rhs>
+    bool operator>(const com_ptr< Lhs >& lhs, const com_ptr< Rhs >& rhs)
+	{
+		return rhs < lhs;
+	}
+	template<typename Lhs, typename Rhs>
+    bool operator<=(const com_ptr< Lhs >& lhs, const com_ptr< Rhs >& rhs)
+	{
+		return !( rhs < lhs );
+	}
+	template<typename Lhs, typename Rhs>
+    bool operator>=(const com_ptr< Lhs >& lhs, const com_ptr< Rhs >& rhs)
+	{
+		return !( lhs < ths );
+	}
+	template<typename Lhs, typename Rhs>
+    bool operator==(const com_ptr< Lhs >& lhs, const com_ptr< Rhs >& rhs)
+	{
+		return std::equal_to< IUnknown* >()( lhs.get(), rhs.get() );
+	}
+	template<typename Lhs, typename Rhs>
+    bool operator!=(const com_ptr< Lhs >& lhs, const com_ptr< Rhs >& rhs)
+	{
+		return !( lhs == rhs );
+	}
+
 } // namespace augment
 
 #endif // #ifndef AUGMENT_COM_PTR_HPP_INCLUDED
