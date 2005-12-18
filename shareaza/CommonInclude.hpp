@@ -63,8 +63,12 @@
 #include <new>
 #include <typeinfo>
 
+#define BOOST_BIND_ENABLE_STDCALL 1
+#define BOOST_MEM_FN_ENABLE_STDCALL 1
 #include <boost/static_assert.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/bind.hpp>
+#include <boost/bind/placeholders.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/logic/tribool.hpp>
 #include <boost/smart_ptr.hpp>
@@ -92,6 +96,7 @@ using augment::implicit_cast;
 using augment::auto_ptr;
 using augment::auto_array;
 using augment::com_ptr;
+using augment::IUnknownImplementation;
 #include "Utility.hpp"
 #include "MinMax.hpp"
 #include "Hashes.hpp"
