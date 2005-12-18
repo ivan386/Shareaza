@@ -173,7 +173,7 @@ void CBTInfo::Copy(CBTInfo* pSource)
 
 void CBTInfo::Serialize(CArchive& ar)
 {
-	int nVersion = 4;
+	int nVersion = 5;
 	
 	if ( ar.IsStoring() )
 	{
