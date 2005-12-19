@@ -12,6 +12,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -34,6 +35,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">ROM Image</title>
                <title language="hu">ROM kép</title>
                <title language="it">Immagine della ROM</title>
+               <title language="jp">ROM イメージ</title>
                <title language="lt">ROM atvaizdis</title>
                <title language="nl">ROM Afbeelding</title>
                <title language="no">ROM image</title>
@@ -55,6 +57,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -75,6 +78,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Proizvođač</title>
                        <title language="hu">Cég</title>
                        <title language="it">Società</title>
+                       <title language="jp">会社名</title>
                        <title language="lt">Kompanija</title>
                        <title language="nl">Bedrijf</title>
                        <title language="no">Firma</title>
@@ -95,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Sistem</title>
                        <title language="hu">Rendszer</title>
                        <title language="it">Sistema</title>
+                       <title language="jp">システム</title>
                        <title language="lt">Sistema</title>
                        <title language="nl">Systeem</title>
                        <title language="no">System</title>
@@ -114,6 +119,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Godina</title>
                        <title language="hu">Év</title>
                        <title language="it">Anno</title>
+                       <title language="jp">年</title>
                        <title language="lt">Metai</title>
                        <title language="nl">Jaar</title>
                        <title language="no">År</title>
@@ -133,6 +139,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Vrsta</title>
                        <title language="hu">Típus</title>
                        <title language="it">Tipo</title>
+                       <title language="jp">種類</title>
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
@@ -152,6 +159,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Jezik</title>
                        <title language="hu">Nyelv</title>
                        <title language="it">Lingua</title>
+                       <title language="jp">言語</title>
                        <title language="lt">Kalba</title>
                        <title language="nl">Taal</title>
                        <title language="no">Språk</title>
@@ -171,6 +179,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Ocjena</title>
                        <title language="hu">Jegy</title>
                        <title language="it">Valutazione</title>
+                       <title language="jp">年齢指定</title>
                        <title language="lt">Vertinimas</title>
                        <title language="nl">Beoordeling</title>
                        <title language="no">Vurdering</title>
@@ -190,6 +199,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Cijena</title>
                        <title language="hu">Ár</title>
                        <title language="it">Prezzo</title>
+                       <title language="jp">価格</title>
                        <title language="lt">Kaina</title>
                        <title language="nl">Prijs</title>
                        <title language="no">Pris</title>
@@ -209,6 +219,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Link</title>
                        <title language="hu">Link</title>
                        <title language="it">Link</title>
+                       <title language="jp">リンク</title>
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>
@@ -228,6 +239,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Komentari</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="it">Commenti</title>
+                       <title language="jp">コメント</title>
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>

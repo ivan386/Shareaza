@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Program:Svi Programi</title>
                <title language="hu">Program: saját programok</title>
                <title language="it">Applicazione:Applicazioni</title>
+               <title language="jp">&#160;アプリケーション: マイ･アプリケーション</title>
                <title language="lt">Programa:Mano programos</title>
                <title language="nl">Programma:Mijn Programma's</title>
                <title language="no">Program: mine programmer</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -80,6 +83,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Dobrodošli Među Vaše Programe!</title>
                <title language="hu">Üdvözöllek a Saját programokban!</title>
                <title language="it">Benvenuto nelle Applicazioni!</title>
+               <title language="jp">マイ･アプリケーションへようこそ</title>
                <title language="lt">Sveiki apsilankę „Mano programose“!</title>
                <title language="nl">Welkom bij Mijn Programma's!</title>
                <title language="no">Velkommen til mine programmer</title>
@@ -97,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ove mape sadrže sve vaše programe.</subtitle>
                <subtitle language="hu">Ez a mappa a programokat tartalmazza.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutte le tue applicazioni.</subtitle>
+               <subtitle language="jp">これらのフォルダーにはライブラリー内に所有している全てのアプリケーションが収録されています</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų programų bylos.</subtitle>
                <subtitle language="nl">Deze mappen bevatten al je programmabestanden.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine programmer</subtitle>

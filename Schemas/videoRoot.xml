@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Film:Moji Filmovi</title>
                <title language="hu">Videó: saját videó</title>
                <title language="it">Video:Video</title>
+               <title language="jp">&#160;動画: マイ･ビデオ</title>
                <title language="lt">Video:Mano vaizdo įrašai</title>
                <title language="nl">Video:Mijn Video's</title>
                <title language="no">Video: mine videoer</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -82,6 +85,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Dobrodošli Među Vaše Filmove</title>
                <title language="hu">Üdvözöllek a Saját videókban!</title>
                <title language="it">Benvenuto nei Video!</title>
+               <title language="jp">マイ･ビデオへようこそ</title>
                <title language="lt">Sveiki apsilankę „Mano vaizdo įrašuose“!</title>
                <title language="nl">Welkom bij Mijn Video's!</title>
                <title language="no">Velkommen til mine videoer</title>
@@ -99,6 +103,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ove mape sadrže sve video zapise iz vaše kolekcije posložene kao cjelovečernji filmovi, Tv emisije i spotovi.</subtitle>
                <subtitle language="hu">Ez a mappa az összes videót tartalmazza, filmekre, TV műsorokra és klipekre bontva.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutti i video della tua libreria, divisi in film, show TV e video musicali.  Apri una cartella qui sotto per continuare.</subtitle>
+               <subtitle language="jp">これらのフォルダーにはライブラリー内に所有している全てのビデオファイルを映画、テレビ番組及び音楽ビデオに分類して収録しています</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų kolekcijos vaizdo bylos, suskirstytos į filmus, TV pasirodymus ir muzikinius klipus. Tęskite atverdami žemiau esantį katalogą.</subtitle>
                <subtitle language="nl">Deze mappen bevatten alle video-bestanden uit je bibliotheek, verdeeld onder films, TV-shows en muziekvideo's.  Open een map hieronder om verder te gaan.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine videofiler, delt inn i film, TV-show, og musikkvideo. Åpne en mappe for å forsette.</subtitle>

@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Favoriti:Favoriti</title>
                <title language="hu">Kedvencek: kedvencek</title>
                <title language="it">Preferiti:Preferiti</title>
+               <title language="jp">&#160;お気に入り: お気に入り</title>
                <title language="lt">Mėgiamybės:Mėgiamybės</title>
                <title language="nl">Favorieten:Favorieten</title>
                <title language="no">Favoritter: favoritter</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -76,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Opis</title>
                        <title language="hu">Leírás</title>
                        <title language="it">Descrizione</title>
+                       <title language="jp">詳細</title>
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
@@ -96,6 +100,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Moje Omiljene Datateke</title>
                <title language="hu">Kedvenc fájlok</title>
                <title language="it">I miei file preferiti</title>
+               <title language="jp">お気に入り</title>
                <title language="lt">Mano mėgiamos bylos</title>
                <title language="nl">Mijn Favoriete Bestanden</title>
                <title language="no">Mine favorittfiler</title>
@@ -113,6 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži vaše favorite koje preporučate ostalima.</subtitle>
                <subtitle language="hu">Ez a mappa a kedvenc fájljaidat tartalmazza, amit a Shareaza ajánlani fog a fájllistádat lekérőknek.</subtitle>
                <subtitle language="it">Questa cartella contiene i file preferiti che Shareaza raccomanderà agli utenti che esamineranno la tua collezione.</subtitle>
+               <subtitle language="jp">このフォルダーにはライブラリー内にある映画の一覧があります</subtitle>
                <subtitle language="lt">Šiame kataloge yra bylos, kurias „Shareaza“ rekomenduos kitiems vartotojams, naršantiems Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat favoriete bestanden die Shareaza zal aanbevelen aan andere gebruikers die je verzameling doorzoeken.</subtitle>
                <subtitle language="no">Denne mappen inneholder dine favoritter, som Shareaza vil anbefale til andre brukere som utforsker mine samlinger</subtitle>

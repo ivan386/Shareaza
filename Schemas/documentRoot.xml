@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Dokument:Moji Dokumenti</title>
                <title language="hu">Dokumentum: saját okumentumok</title>
                <title language="it">Documento:Documenti</title>
+               <title language="jp">&#160;文章: マイ･ドキュメント</title>
                <title language="lt">Dokumentas:Mano dokumentai</title>
                <title language="nl">Document:Mijn Documenten</title>
                <title language="no">Dokument: Mine dokumenter</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -80,6 +83,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Dobrodošli Među Vaše Dokumente!</title>
                <title language="hu">Üdvözöllek a Saját dokumentumokban!</title>
                <title language="it">Benvenuto nei Documenti!</title>
+               <title language="jp">マイ･ドキュメントへようこそ</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano dokumentuose“!</title>
                <title language="nl">Welkom in Mijn Documenten!</title>
                <title language="no">Velkommen til Mine dokumenter!</title>
@@ -97,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ove mape sadrže sve vaše dokumente.</subtitle>
                <subtitle language="hu">Ez a mappa tartalmazza a dokumentumaidat.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutti i tuoi documenti.</subtitle>
+               <subtitle language="jp">これらのフォルダーにはライブラリー内に所有している文章が収録されています</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos dokumentai.</subtitle>
                <subtitle language="nl">In deze mappen bevinden zich al je documenten.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine dokumenter.</subtitle>

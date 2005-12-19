@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Dokument:Svi Dokumenti</title>
                <title language="hu">Dokumentum: Minden dokumentum</title>
                <title language="it">Documento:Tutti i documenti</title>
+               <title language="jp">&#160;文章: 全ての文章</title>
                <title language="lt">Dokumentas:Visi documentai</title>
                <title language="nl">Documenten:Alle Documenten</title>
                <title language="no">Dokument: Alle dokumenter</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -82,6 +85,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Svi Dokumenti</title>
                <title language="hu">Minden dokumentum</title>
                <title language="it">Tutti i documenti</title>
+               <title language="jp">文章</title>
                <title language="lt">Visi dokumentai</title>
                <title language="nl">Alle documenten</title>
                <title language="no">Alle dokumenter</title>
@@ -99,6 +103,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži sve vaše dokumente u kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa az összes dokumentumodat tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene tutti i documenti della tua libreria.</subtitle>
+               <subtitle language="jp">このフォルダーにはライブラリー内ーにある全ての文章が収録されています</subtitle>
                <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos dokumentai.</subtitle>
                <subtitle language="nl">In deze map bevindt zich elk document uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle dokumentene i biblioteket ditt.</subtitle>

@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="hr">Kolekcija:Moja Kolekcija</title>
               <title language="hu">Gyűjtemény: saját gyűjtemény</title>
               <title language="it">Collezioni:Collezioni</title>
+              <title language="jp">&#160;コレクション: マイ･コレクション</title>
               <title language="lt">Rinkiniai:Mano rinkiniai</title>
               <title language="nl">Verzameling:Mijn Verzamelingen</title>
               <title language="no">Samlinger: mine samlinger</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -77,6 +80,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Moja Kolekcija</title>
                <title language="hu">Saját gyűjtemény</title>
                <title language="it">Collezioni</title>
+               <title language="jp">マイ･コレクション</title>
                <title language="lt">Mano rinkiniai</title>
                <title language="nl">Mijn Verzamelingen</title>
                <title language="no">Mine samlinger</title>
@@ -94,6 +98,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ove mapa sadrži sve vaše rich File datoteke u vašoj kolekciji</subtitle>
                <subtitle language="hu">Ez a mappa gyűjteményfájlokat tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutte le collezioni di file della tua libreria.</subtitle>
+               <subtitle language="jp">このフォルダーにはライブラリー内にあるリッチファイルコレクションが収録されています</subtitle>
                <subtitle language="lt">Šiame kataloge yra patalpinti  raiškiojo formato rinkiniai, esantys Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat alle Rich File Collections uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholde en hvilken som helst filsamling i mine filer.</subtitle>

@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Slike:Sve Slike</title>
                <title language="hu">Kép: minden kép</title>
                <title language="it">Immagine:Tutte le immagini</title>
+               <title language="jp">&#160;静止画像: 全ての静止画像</title>
                <title language="lt">Paveikslėlis:Visi paveikslėliai</title>
                <title language="nl">Afbeelding:Alle Afbeeldingen</title>
                <title language="no">Bilde: alle bilder</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -80,6 +83,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Sve Slike</title>
                <title language="hu">Minden kép</title>
                <title language="it">Tutte le immagini</title>
+               <title language="jp">静止画像</title>
                <title language="lt">Visi paveikslėliai</title>
                <title language="nl">Alle Afbeeldingen</title>
                <title language="no">Alle bilder</title>
@@ -97,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži sve slike u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden képfájlt tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutte le immagini della tua libreria.</subtitle>
+               <subtitle language="jp">このフォルダーにはライブラリー内ーにある全ての静止画像が収録されます</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos paveikslėlių bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elke afbeelding uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle bildene i mine filer</subtitle>

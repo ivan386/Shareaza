@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Slike:Moje Slike</title>
                <title language="hu">Kép: saját képek</title>
                <title language="it">Immagine:Immagini</title>
+               <title language="jp">&#160;静止画像: マイ･イメージ</title>
                <title language="lt">Paveikslėlis:Mano paveikslėliai</title>
                <title language="nl">Afbeelding:Mijn Afbeeldingen</title>
                <title language="no">Bilde: mine bilder</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -80,6 +83,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Dobrodošli Među Vaše Slike!</title>
                <title language="hu">Üdvözöllek a Saját Képekben!</title>
                <title language="it">Benvenuto nelle Immagini!</title>
+               <title language="jp">マイ･イメージへようこそ</title>
                <title language="lt">Sveiki apsilankę „Mano paveikslėliuose“!</title>
                <title language="nl">Welkom bij Mijn Afbeeldingen!</title>
                <title language="no">Velkommen til mine bilder</title>
@@ -97,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ove mape sadrže sve slike iz vaše kolekcije posložene u albume. Otvorite željenu mapu.</subtitle>
                <subtitle language="hu">Ez a mappa az összes képet tartalmazza, albumokra bontva.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutte le immagini della tua libreria, organizzate per album.  Apri una cartella qui sotto per continuare.</subtitle>
+               <subtitle language="jp">これらのフォルダーにはライブラリー内に所有している全ての静止画像をアルバムごとに整理して収録しています</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos paveikslėliai, surūšiuoti pagal albumus. Tęskite atverdami žemiau esantį katalogą.</subtitle>
                <subtitle language="nl">Deze mappen bevatten alle afbeeldingen uit je bibliotheek, georganiseerd per album.  Open een map hieronder om verder te gaan.</subtitle>
                <subtitle language="no">Disse mappene inneholde alle bildene i mine filer, organisert i album. Åpne en mappe for å fortsette.</subtitle>

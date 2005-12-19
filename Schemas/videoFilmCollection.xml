@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Film:Dugometražni</title>
                <title language="hu">Videó: filmek</title>
                <title language="it">Video:Film</title>
+               <title language="jp">&#160;動画: 映画</title>
                <title language="lt">Video:Filmai</title>
                <title language="nl">Video:Films</title>
                <title language="no">Video: filmer</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -80,6 +83,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Film</title>
                <title language="hu">Filmek</title>
                <title language="it">Film</title>
+               <title language="jp">映画</title>
                <title language="lt">Filmai</title>
                <title language="nl">Films</title>
                <title language="no">Filmer</title>
@@ -97,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži popis filmova koje imate u kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa a filmeket tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene la lista dei film che hai nella libreria.</subtitle>
+               <subtitle language="jp">このフォルダーにはライブラリー内にある映画の一覧があります</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos filmų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst van films die je in je bibliotheek hebt.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine filmer</subtitle>

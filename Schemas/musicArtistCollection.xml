@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Muzika:Po Izvođaču</title>
                <title language="hu">Zene: előadó szerint</title>
                <title language="it">Musica:Per artista</title>
+               <title language="jp">&#160;音楽: アーティスト別</title>
                <title language="lt">Muzika:Pagal atlikėjus</title>
                <title language="nl">Muziek:Per Artiest</title>
                <title language="no">Musikk: per artist</title>
@@ -54,6 +56,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -80,6 +83,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Muzika Po Izvođaču</title>
                <title language="hu">Zene előadó szerint</title>
                <title language="it">Musica per artista</title>
+               <title language="jp">&#160;音楽: アーティスト別</title>
                <title language="lt">Muzika pagal atlikėjus</title>
                <title language="nl">Muziek Per Artiest</title>
                <title language="no">Musikk per artist</title>
@@ -97,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži popis izvođača koje imate u muzičkoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa a művészeket tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene la lista degli artisti nella tua libreria.</subtitle>
+               <subtitle language="jp">このフォルダーにはライブラリー内にあるアーティストの一覧があります</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų muzikinės kolekcijos atlikėjų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met artiesten uit je muziekbibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste over artister i mine filer</subtitle>

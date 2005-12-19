@@ -11,6 +11,7 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -33,6 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Općenito:Moja Kolekcija</title>
                <title language="hu">Általános: saját Shareaza könyvtár</title>
                <title language="it">Generale:Libreria di Shareaza</title>
+               <title language="jp">&#160;一般: Shareaza ライブラリ</title>
                <title language="lt">Bendra:Mano „Shareaza“ kolekcija</title>
                <title language="nl">Algemeen:Mijn Shareaza Bibliotheek</title>
                <title language="no">Generelt: mine filer</title>
@@ -54,6 +56,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
+                       <title language="jp">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -73,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Vlasnik</title>
                        <title language="hu">Tulajdonos</title>
                        <title language="it">Proprietario</title>
+                       <title language="jp">所有者</title>
                        <title language="lt">Savininkas</title>
                        <title language="nl">Eigenaar</title>
                        <title language="no">Eier</title>
@@ -92,6 +96,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Komentari</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="it">Commenti</title>
+                       <title language="jp">コメント</title>
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
@@ -115,6 +120,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Dobrodošli U Vašu Kolekciju!</title>
                <title language="hu">Üdvözöllek a Saját könyvtárban!</title>
                <title language="it">Benvenuto nella tua libreria!</title>
+               <title language="jp">Shareaza ライブラリへようこそ!</title>
                <title language="lt">Sveiki apsilankę savo kolekcijoje!</title>
                <title language="nl">Welkom in Jouw Bibliotheek!</title>
                <title language="no">Velkommen til mine filer</title>
@@ -132,6 +138,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Imate {totalFiles} datoteka Tj {totalVolume} koje djelite sa svijetom.</subtitle>
                <subtitle language="hu">Jelenleg {totoalFiles} fájl van a könyvtárban. Méret: {totalVolume}.</subtitle>
                <subtitle language="it">Tu hai {totalFiles} file che ammontano a {totalVolume} nella tua libreria.</subtitle>
+               <subtitle language="jp">あなたのライブラリ内には {totalFiles} ファイルあり、総容量は {totalVolume} です</subtitle>
                <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}.</subtitle>
                <subtitle language="nl">Je hebt {totalFiles} bestanden met een totaal van {totalVolume} in je bibliotheek.</subtitle>
                <subtitle language="no">Du har {totalFiles} filer totalt {totalVolume} i mine filer.</subtitle>
