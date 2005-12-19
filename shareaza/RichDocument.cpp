@@ -164,37 +164,37 @@ void CRichDocument::CreateFonts(LPCTSTR pszFaceName, int nSize)
 	
 	if ( m_fntNormal.m_hObject ) m_fntNormal.DeleteObject();
 	
-	m_fntNormal.CreateFont( -nSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+	m_fntNormal.CreateFontW( -nSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
 	
 	if ( m_fntBold.m_hObject ) m_fntBold.DeleteObject();
 	
-	m_fntBold.CreateFont( -nSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+	m_fntBold.CreateFontW( -nSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
 	
 	if ( m_fntItalic.m_hObject ) m_fntItalic.DeleteObject();
 	
-	m_fntItalic.CreateFont( -nSize, 0, 0, 0, FW_NORMAL, TRUE, FALSE, FALSE,
+	m_fntItalic.CreateFontW( -nSize, 0, 0, 0, FW_NORMAL, TRUE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
 	
 	if ( m_fntUnder.m_hObject ) m_fntUnder.DeleteObject();
 	
-	m_fntUnder.CreateFont( -nSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
+	m_fntUnder.CreateFontW( -nSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
 	
 	if ( m_fntBoldUnder.m_hObject ) m_fntBoldUnder.DeleteObject();
 	
-	m_fntBoldUnder.CreateFont( -nSize, 0, 0, 0, FW_BOLD, FALSE, TRUE, FALSE,
+	m_fntBoldUnder.CreateFontW( -nSize, 0, 0, 0, FW_BOLD, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
 	
 	if ( m_fntHeading.m_hObject ) m_fntHeading.DeleteObject();
 	
-	m_fntHeading.CreateFont( -( nSize + 6 ), 0, 0, 0, FW_EXTRABOLD, FALSE, FALSE, FALSE,
+	m_fntHeading.CreateFontW( -( nSize + 6 ), 0, 0, 0, FW_EXTRABOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
 }
@@ -422,7 +422,7 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 			LoadXMLColour( pColours, _T("text"), &m_crHeading );
 			
 			if ( m_fntHeading.m_hObject ) m_fntHeading.DeleteObject();
-			m_fntHeading.CreateFont( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
+			m_fntHeading.CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 				DEFAULT_PITCH|FF_DONTCARE, strFontFace );
 		}

@@ -1274,15 +1274,15 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 
 			if ( strWeight.CompareNoCase( _T("bold") ) == 0 )
 				strWeight = _T("700");
-			else if ( strWeight.CompareNoCase( _T("normal") ) == 0 )
+			else
 				strWeight = _T("400");
 
-			int nFontSize = 11, nFontWeight = FW_NORMAL;
+			int nFontSize = theApp.m_nDefaultFontSize, nFontWeight = FW_NORMAL;
 
 			_stscanf( strSize, _T("%i"), &nFontSize );
 			_stscanf( strWeight, _T("%i"), &nFontWeight );
 
-			pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
+			pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 				DEFAULT_PITCH|FF_DONTCARE, strFace );
 		}
