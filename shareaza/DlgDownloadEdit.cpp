@@ -302,19 +302,33 @@ void CDownloadEditDlg::OnMergeAndVerify()
 	if ( ! Commit() ) return;
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() )
+	if ( ! Downloads.Check( m_pDownload ) ||
+		m_pDownload->IsCompleted() ||
+		m_pDownload->IsMoving() ||
+		! m_pDownload->PrepareFile() )
 	{
+		// Download almost completed
 		pLock.Unlock();
 		return;
 	}
-	if ( m_pDownload->NeedTigerTree() && m_pDownload->NeedHashset() && !m_pDownload->m_oBTH )
+	if ( m_pDownload->NeedTigerTree() &&
+		 m_pDownload->NeedHashset() &&
+		! m_pDownload->m_oBTH )
 	{
+		// No hashsets
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return;
 	}
-
+	const Fragments::List oList( m_pDownload->GetEmptyFragmentList() );
+	if ( ! oList.size() )
+	{
+		// No available fragments
+		pLock.Unlock();
+		return;
+	}
+	// Select file
 	CString strExt( PathFindExtension( m_pDownload->m_sDisplayName ) );
 	if ( ! strExt.IsEmpty() ) strExt = strExt.Mid( 1 );
 	CFileDialog dlgSelectFile( TRUE, strExt, m_pDownload->m_sDisplayName,
@@ -322,51 +336,51 @@ void CDownloadEditDlg::OnMergeAndVerify()
 		NULL, this );
 	if ( dlgSelectFile.DoModal() == IDOK )
 	{
-		UpdateWindow ();
-		CWaitCursor wc;
+		CSkinDialog::OnOK();
+
+		// Open selected file in very compatible sharing mode
 		HANDLE hSelectedFile = CreateFile( dlgSelectFile.GetPathName(), GENERIC_READ,
             FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
 			FILE_ATTRIBUTE_NORMAL, NULL);
 		if ( hSelectedFile != INVALID_HANDLE_VALUE ) 
 		{
-			m_pDownload->CloseTransfers();
-			const Fragments::List oList ( m_pDownload->GetEmptyFragmentList() );
-			if ( oList.size() != 0  )
+			// Read missing file fragments from selected file
+			BYTE Buf [65536];
+			DWORD dwToRead, dwReaded;
+			for ( Fragments::List::const_iterator pFragment = oList.begin();
+				pFragment != oList.end(); ++pFragment )
 			{
-				BYTE Buf [65536];
-				DWORD dwToRead, dwReaded;
-				for ( Fragments::List::const_iterator pFragment = oList.begin();
-					pFragment != oList.end(); ++pFragment )
+				QWORD qwLength = pFragment->end() - pFragment->begin();
+				QWORD qwOffset = pFragment->begin();
+				LONG nOffsetHigh = (LONG)( qwOffset >> 32 );
+				LONG nOffsetLow = (LONG)( qwOffset & 0xFFFFFFFF );
+				SetFilePointer( hSelectedFile, nOffsetLow, &nOffsetHigh, FILE_BEGIN );
+				if ( GetLastError() == NO_ERROR )
 				{
-					QWORD qwLength = pFragment->end() - 1 - pFragment->begin() + 1;
-					QWORD qwOffset = pFragment->begin();
-					LONG nOffsetHigh = (LONG)( qwOffset >> 32 );
-					LONG nOffsetLow = (LONG)( qwOffset & 0xFFFFFFFF );
-					SetFilePointer( hSelectedFile, nOffsetLow, &nOffsetHigh, FILE_BEGIN );
-					if ( GetLastError() == NO_ERROR )
-						while ( ( dwToRead = (DWORD) min( qwLength, sizeof( Buf ) ) ) != 0 )
-							if ( ReadFile( hSelectedFile, Buf, dwToRead, &dwReaded, NULL ) &&
-								dwReaded != 0 )
+					while ( ( dwToRead = (DWORD)min( qwLength, (QWORD)sizeof( Buf ) ) ) != 0 )
+					{
+						if ( ReadFile( hSelectedFile, Buf, dwToRead, &dwReaded, NULL ) && dwReaded != 0 )
+						{
+							// "Multithreading" :-)
+							MSG msg;
+							while ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
 							{
+								TranslateMessage( &msg );
+								DispatchMessage( &msg );
+							}
+							Sleep( 0 );
 								m_pDownload->SubmitData( qwOffset, Buf, (QWORD) dwReaded );
 								qwOffset += (QWORD) dwReaded;
 								qwLength -= (QWORD) dwReaded;
-							}
-							else
-							{
-								// File error or end of file. Not Fatal
-								break;
-							}
+						}
+						else
+							// File error or end of file. Not Fatal
+							break;
+					}
 				}
 			}
-			else
-			{
-				// No available fragments
-				LoadString( strFormat, IDS_DOWNLOAD_FRAGMENT_END );
-				strMessage.Format( strFormat, dlgSelectFile.GetPathName() );
-				AfxMessageBox( strMessage, MB_ICONINFORMATION );		
-			}
 			CloseHandle( hSelectedFile );
+			m_pDownload->Resume();
 		}
 		else
 		{
@@ -432,17 +446,15 @@ BOOL CDownloadEditDlg::Commit()
 		m_pDownload->Rename( m_sName );
 	}
 
-    QWORD m_nFileSize = SIZE_UNKNOWN;
-	if ( ! m_sFileSize.IsEmpty() )
-		_stscanf( m_sFileSize, _T("%I64i"), &m_nFileSize );
-	if ( m_pDownload->m_nSize != m_nFileSize )
+	QWORD nNewSize = 0;
+    if ( _stscanf( m_sFileSize, _T("%I64i"), &nNewSize ) == 1 && nNewSize != m_pDownload->m_nSize )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CHANGE_SIZE );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
 		pLock.Lock();
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
-        m_pDownload->m_nSize = m_nFileSize;
+		m_pDownload->m_nSize = nNewSize;
 	}
 	
 	if ( m_pDownload->m_oSHA1.isValid() != oSHA1.isValid()
