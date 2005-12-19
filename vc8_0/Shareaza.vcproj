@@ -110,100 +110,6 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			ConfigurationType="1"
-			UseOfMFC="1"
-			CharacterSet="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/Wall"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;SHAREAZA_USE_ASM"
-				StringPooling="true"
-				RuntimeLibrary="0"
-				DefaultCharIsUnsigned="true"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
-				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib winmm.lib wininet.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				OptimizeReferences="2"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
 			Name="Debug|x64"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
@@ -272,6 +178,100 @@
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			ConfigurationType="1"
+			UseOfMFC="1"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				OutputDirectory="$(IntDir)"
+				HeaderFileName="$(IntDir)/$(InputName).h"
+				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
+				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Wall"
+				Optimization="3"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="true"
+				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;SHAREAZA_USE_ASM"
+				StringPooling="true"
+				RuntimeLibrary="0"
+				DefaultCharIsUnsigned="true"
+				TreatWChar_tAsBuiltInType="true"
+				ForceConformanceInForLoopScope="true"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				ProgramDataBaseFileName="$(IntDir)/"
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="true"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib winmm.lib wininet.lib"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				OptimizeReferences="2"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -934,7 +934,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCMIDLTool"
@@ -942,7 +942,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|x64"
+					Name="Release|Win32"
 					>
 					<Tool
 						Name="VCMIDLTool"
@@ -1006,7 +1006,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -1014,7 +1014,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|x64"
+					Name="Release|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -1135,20 +1135,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1160,6 +1146,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1195,20 +1195,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1220,6 +1206,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1255,20 +1255,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1280,6 +1266,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1315,20 +1315,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1340,6 +1326,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1375,20 +1375,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1400,6 +1386,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1435,20 +1435,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1460,6 +1446,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1495,20 +1495,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1520,6 +1506,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1555,20 +1555,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1580,6 +1566,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1615,20 +1615,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1640,6 +1626,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1675,20 +1675,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1700,6 +1686,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1735,20 +1735,6 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1760,6 +1746,20 @@
 							WarningLevel="3"
 							Detect64BitPortabilityProblems="false"
 							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							DefaultCharIsUnsigned="false"
+							TreatWChar_tAsBuiltInType="false"
+							ForceConformanceInForLoopScope="false"
+							UsePrecompiledHeader="0"
+							WarningLevel="3"
+							Detect64BitPortabilityProblems="false"
+							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -2142,6 +2142,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\shareaza\DlgPluginExtSetup.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\shareaza\DlgProfileManager.cpp"
 					>
 				</File>
@@ -2382,7 +2386,8 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
+						Name="Debug|x64"
+						ExcludedFromBuild="true"
 						>
 						<Tool
 							Name="VCCustomBuildTool"
@@ -2391,8 +2396,7 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCustomBuildTool"
@@ -2428,7 +2432,8 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
+						Name="Debug|x64"
+						ExcludedFromBuild="true"
 						>
 						<Tool
 							Name="VCCustomBuildTool"
@@ -2437,8 +2442,7 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCustomBuildTool"
@@ -2474,7 +2478,8 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
+						Name="Debug|x64"
+						ExcludedFromBuild="true"
 						>
 						<Tool
 							Name="VCCustomBuildTool"
@@ -2483,8 +2488,7 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCustomBuildTool"
@@ -2516,7 +2520,8 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
+						Name="Debug|x64"
+						ExcludedFromBuild="true"
 						>
 						<Tool
 							Name="VCCustomBuildTool"
@@ -2525,8 +2530,7 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCustomBuildTool"
@@ -3891,6 +3895,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\shareaza\DlgPluginExtSetup.h"
+					>
+				</File>
+				<File
 					RelativePath="..\shareaza\DlgProfileManager.h"
 					>
 				</File>
@@ -4272,6 +4280,30 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\RegExp\syntax2.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="augment"
+				>
+				<File
+					RelativePath="..\shareaza\augment\augment.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\augment\auto_array.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\augment\auto_ptr.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\augment\com_ptr.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\augment\IUnknownImplementation.hpp"
 					>
 				</File>
 			</Filter>
@@ -4680,47 +4712,6 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\debugwin32\shareaza\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\debugx64\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
@@ -4735,22 +4726,22 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
+					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)2.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|x64"
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)2.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
@@ -4783,7 +4774,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|x64"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -4794,7 +4785,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|x64"
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -4831,22 +4822,22 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
+					Name="Release|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
@@ -4861,6 +4852,47 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debugwin32\shareaza\Shareaza_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
