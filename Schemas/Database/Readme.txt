@@ -16,3 +16,5 @@ About using Access. It is very simple. Just open Shareaza_schemas.mdb file and y
 12. Go to the folder where you saved Shareaza_schemas.mdb file and you will find Shareaza subfolder. Here you will find all files that you need to copy to Schemas folder.
 
 There is one caveat for advanced users. The database changes the default alphabet sorting order to "General" (i.e. English). This is needed to correctly sort english words ("Y" at the end and not after "I"). If you want to compact the database then do not change this value from Tools->Options->General->New Database Sort Order when you compact it. When the sorting order is English you can paste to/from Excel from/to Datasheet view. Otherwise, you will have a mess.
+
+Note: In East Asian Windows you may need to disable some languages to test schemas, otherwise auto-generation of XML files may not work. The required texts are always english and your translation, nothing else is mandatory.
