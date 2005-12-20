@@ -1,0 +1,24 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p style="font-size: 7pt;">
+					このネットワークは<b>無効</b>です -
+					<a href="?connect=<%= network_id %>"><b><%= network_caption %>へ接続する</b></a>
+					</p>
+<%?%><%? network_connected %>
+					<p style="font-size: 7pt;">
+					このネットワークは有効です -
+					<a href="?disconnect=<%= network_id %>"><b><%= network_caption %>から切断する</b></a>
+					</p>
+					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+						<tr>
+							<td class="viewheader">アドレス</td>
+							<td class="viewheader" align="center">時間</td>
+							<td class="viewheader" align="center">パケット</td>
+							<td class="viewheader" align="center">帯域幅</td>
+							<td class="viewheader" align="center">合計</td>
+							<td class="viewheader" align="center">モード</td>
+							<td class="viewheader" align="center">リーフ</td>
+							<td class="viewheader">ユーザーエージェント</td>
+							<td class="viewheader"></td>
+						</tr>
+<%?%>
