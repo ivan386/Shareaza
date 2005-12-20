@@ -16,8 +16,8 @@ LanguageID=$0411
 LanguageCodePage=932
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
-DialogFontName=MS mincho
-;DialogFontSize=8
+DialogFontName=MS UI Gothic
+DialogFontSize=10
 WelcomeFontName=MS mincho
 ;WelcomeFontSize=12
 TitleFontName=MS mincho
