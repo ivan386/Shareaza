@@ -46,11 +46,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentInfoPage property page
 
-CTorrentInfoPage::CTorrentInfoPage(UINT nIDD) : CPropertyPage( nIDD )
+CTorrentInfoPage::CTorrentInfoPage(UINT nIDD) : 
+	CPropertyPage( nIDD ), m_nIcon( -1 )
 {
-	//{{AFX_DATA_INIT(CTorrentInfoPage)
-	//}}AFX_DATA_INIT
-	m_nIcon = -1;
 }
 
 CTorrentInfoPage::~CTorrentInfoPage()

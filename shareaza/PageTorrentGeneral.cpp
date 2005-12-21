@@ -46,15 +46,12 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentGeneralPage property page
 
-CTorrentGeneralPage::CTorrentGeneralPage() : CTorrentInfoPage( CTorrentGeneralPage::IDD )
+CTorrentGeneralPage::CTorrentGeneralPage() : 
+	CTorrentInfoPage( CTorrentGeneralPage::IDD ),
+	m_sName(), m_sComment(), m_sCreationDate(),
+	m_sCreatedBy(), m_sTorrentOther()
 {
-	//{{AFX_DATA_INIT(CTorrentGeneralPage)
-	m_sName = _T("");
-	m_sComment = _T("");
-	m_sCreationDate = _T("");
-	m_sCreatedBy = _T("");
-	m_sTorrentOther = _T("");
-	//}}AFX_DATA_INIT
+	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CTorrentGeneralPage::~CTorrentGeneralPage()

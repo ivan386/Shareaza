@@ -60,15 +60,15 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentInfoSheet
 
-CTorrentInfoSheet::CTorrentInfoSheet(CBTInfo* pInfo ) : CPropertySheet( _T("") )
+CTorrentInfoSheet::CTorrentInfoSheet(CBTInfo* pInfo ) : 
+	CPropertySheet( L"" ), m_sGeneralTitle( L"General" ),
+	m_sFilesTitle( L"Files" ), m_sTrackersTitle( L"Trackers" ),
+	m_pSkin( NULL )
 {
-	m_pSkin = NULL;
 	m_psh.dwFlags &= ~PSP_HASHELP;
 
 	m_pInfo.Copy( pInfo );
     //m_pInfo.m_oInfoBTH.clear();
-
-
 }
 
 CTorrentInfoSheet::~CTorrentInfoSheet()
@@ -84,26 +84,27 @@ INT_PTR CTorrentInfoSheet::DoModal(int nPage)
 	CTorrentFilesPage		pFiles;
 	CTorrentTrackersPage	pTrackers;
 
-	CString strTabLabel;
-
-	strTabLabel = Skin.GetDialogCaption( _T("CTorrentGeneralPage") );
-	pGeneral.m_psp.dwFlags |= PSP_USETITLE;
-	pGeneral.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("General") : strTabLabel;
+	SetTabTitle( &pGeneral, m_sGeneralTitle );
 	AddPage( &pGeneral );
 
-	strTabLabel = Skin.GetDialogCaption( _T("CTorrentFilesPage") );
-	pFiles.m_psp.dwFlags |= PSP_USETITLE;
-	pFiles.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Files") : strTabLabel;
+	SetTabTitle( &pFiles, m_sFilesTitle );
 	AddPage( &pFiles );
 
-	strTabLabel = Skin.GetDialogCaption( _T("CTorrentTrackersPage") );
-	pTrackers.m_psp.dwFlags |= PSP_USETITLE;
-	pTrackers.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Trackers") : strTabLabel;
+	SetTabTitle( &pTrackers, m_sTrackersTitle );
 	AddPage( &pTrackers );
 
 
 	m_psh.nStartPage = nPage;
 	return CPropertySheet::DoModal();
+}
+
+void CTorrentInfoSheet::SetTabTitle(CPropertyPage* pPage, CString& strTitle)
+{
+	CString strClass = pPage->GetRuntimeClass()->m_lpszClassName;
+	CString strTabLabel = Skin.GetDialogCaption( strClass );
+	if ( ! strTabLabel.IsEmpty() )
+		strTitle = strTabLabel;
+	pPage->m_psp.pszTitle = strTitle.GetBuffer();
 }
 
 /////////////////////////////////////////////////////////////////////////////

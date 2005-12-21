@@ -29,6 +29,7 @@
 #include "PageTorrentTrackers.h"
 #include "CoolInterface.h"
 #include "Network.h"
+#include "Skin.h"
 
 
 #ifdef _DEBUG
@@ -52,12 +53,11 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentTrackersPage property page
 
-CTorrentTrackersPage::CTorrentTrackersPage() : CTorrentInfoPage( CTorrentTrackersPage::IDD )
+CTorrentTrackersPage::CTorrentTrackersPage() : 
+	CTorrentInfoPage( CTorrentTrackersPage::IDD ),
+	m_sName(), m_sTracker()
 {
-	//{{AFX_DATA_INIT(CTorrentTrackersPage)
-	m_sName = _T("");
-	m_sTracker = _T("");
-	//}}AFX_DATA_INIT
+	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CTorrentTrackersPage::~CTorrentTrackersPage()
@@ -103,6 +103,7 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	m_wndTrackers.InsertColumn( 0, _T("Tracker"), LVCFMT_LEFT, rc.right - 80, -1 );
 	m_wndTrackers.InsertColumn( 1, _T("Status"), LVCFMT_RIGHT, 80, 0 );
 	m_wndTrackers.InsertColumn( 2, _T("Type"), LVCFMT_LEFT, 0, 0 );
+	Skin.Translate( _T("CTorrentTrackerList"), m_wndTrackers.GetHeaderCtrl() );
 
 	int nTracker = 0;
 	for ( nTracker = 0 ; nTracker < m_pInfo->m_pTrackerList.GetCount() ; nTracker++ )

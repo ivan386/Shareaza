@@ -27,7 +27,7 @@
 #include "BTInfo.h"
 #include "Download.h"
 #include "PageTorrentFiles.h"
-
+#include "Skin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -47,11 +47,11 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentFilesPage property page
 
-CTorrentFilesPage::CTorrentFilesPage() : CTorrentInfoPage( CTorrentFilesPage::IDD )
+CTorrentFilesPage::CTorrentFilesPage() : 
+	CTorrentInfoPage( CTorrentFilesPage::IDD ),
+	m_sName()
 {
-	//{{AFX_DATA_INIT(CTorrentFilesPage)
-	m_sName = _T("");
-	//}}AFX_DATA_INIT
+	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CTorrentFilesPage::~CTorrentFilesPage()
@@ -82,7 +82,7 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	m_wndFiles.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, rc.right - 80, -1 );
 	m_wndFiles.InsertColumn( 1, _T("Size"), LVCFMT_RIGHT, 80, 0 );
-	//Skin.Translate( _T("CTorrentFileList"), m_wndFiles.GetHeaderCtrl() );
+	Skin.Translate( _T("CTorrentFileList"), m_wndFiles.GetHeaderCtrl() );
 
 	for ( int nFile = 0 ; nFile < m_pInfo->m_nFiles ; nFile++ )
 	{
