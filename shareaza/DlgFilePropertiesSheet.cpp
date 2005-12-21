@@ -94,7 +94,6 @@ void CFilePropertiesSheet::Add(CLibraryList* pList)
 
 INT_PTR CFilePropertiesSheet::DoModal(int nPage)
 {
-	//TODO: Get page title from defined caption in resources (Rolandas)
 	CFileGeneralPage	pGeneral;
 	CFileMetadataPage	pMetadata;
 	CFileCommentsPage	pComments;
