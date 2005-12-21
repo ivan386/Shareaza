@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.1.1"
+		version="2.2.2.8"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -292,7 +292,7 @@
 	</toolbar>
 	<!-- MEDIA WINDOW -->
 	<toolbar name="CMediaFrame.Basic">
-		<button id="ID_MEDIA_PLAY" text="Play"/>
+		<button id="ID_MEDIA_PLAY" text="Play&#160;&#160;&#160;"/>
 		<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
@@ -309,7 +309,7 @@
 		<button id="ID_MEDIA_PLAYLIST" text="Playlist"/>
 	</toolbar>
 	<toolbar name="CMediaFrame">
-		<button id="ID_MEDIA_PLAY" text="Play"/>
+		<button id="ID_MEDIA_PLAY" text="Play&#160;&#160;&#160;"/>
 		<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
@@ -1319,6 +1319,7 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Open Playlist..."/>
 		<item id="ID_MEDIA_SAVE" text="_Save Playlist..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="E_xport Collection..."/>
 		<item id="ID_MEDIA_CLEAR" text="_Clear Playlist"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAYLIST" text="Show Pla_ylist"/>
@@ -1916,7 +1917,7 @@
 		<text format="b">This Download is Paused</text>
 		<newline gap="8"/>
 		<text>You have paused this download.  If you want it to resume downloading, you
-		can click the</text><text format="b"> Resume Download</text><text> command.</text>
+		can click the '</text><text format="b">Resume Download</text><text>' command.</text>
 	</document>
 
 	<document name="DownloadHelp.DiskFull">
@@ -1941,8 +1942,8 @@
 		<text format="b">This Download is Active!</text>
 		<newline gap="8"/>
 		<text>This download is currently in progress.  If it is downloading too slowly,
-		you could try searching the network for more sources with the</text>
-		<text format="b"> Find More Sources</text><text> command.  If the speed does not
+		you could try searching the network for more sources with the '</text>
+		<text format="b">Find More Sources</text><text>' command. If the speed does not
 		improve it may be due to limited upload speeds of the users you are downloading
 		from.  Download speed usually increases over time.</text>
 	</document>
@@ -1953,7 +1954,7 @@
 		<text>This download is waiting for someone to start uploading.
 		Shareaza is ready to start downloading this file, but no-one is sending it at
 		the moment. You are probably waiting in other user's queues, and the download
-		may start transfering at any time. You can examine the individual sources to 
+		may start transfering at any time. You can examine the individual sources to
 		see each queue you are waiting in. If you are sharing files yourself, it may
 		improve the chances of a download transfer starting quickly.</text>
 	</document>
@@ -1999,7 +2000,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">Uploads Area</text>
 		<newline gap="8"/>
@@ -2025,7 +2026,7 @@
 		<newline gap="8"/>
 		<text>A disk or directory Shareaza needs cannot be written to.</text>
 		<newline gap="8"/>
-		<text>A network drive may have been disconnected, or you may not have write permission 
+		<text>A network drive may have been disconnected, or you may not have write permission
 		to a selected directory. Please check directories and permissions, or change the
 		temporary files location.</text>
 	</document>
@@ -2040,15 +2041,15 @@
 		<newline gap="8"/>
 		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Half open connection limit detected</text>
 		<newline gap="8"/>
-		<text>Shareaza has detected Windows XP Service Pack 2 (or a similar environment). This 
+		<text>Shareaza has detected Windows XP Service Pack 2 (or a similar environment). This
 		restricts the number of connections that applications can attempt at once.</text>
 		<newline gap="8"/>
-		<text>Shareaza has limited network connections and set appropriate default values to 
-		ensure proper operation, however performance may be slightly reduced. Please visit the 
+		<text>Shareaza has limited network connections and set appropriate default values to
+		ensure proper operation, however performance may be slightly reduced. Please visit the
 		Shareaza forums for further information, and up to date news.</text>
 	</document>
 
@@ -2056,7 +2057,7 @@
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>
 		<text>Please note that (as with any automated filter) it may not be 100% effective at
-		screening content. It is designed simply to filter out excess unwanted results, rather than 
+		screening content. It is designed simply to filter out excess unwanted results, rather than
 		as a 100% safe block.</text>
 		<newline gap="8"/>
 		<text>Children's Internet use (including P2P file sharing)  should always be under parental supervision.</text>
@@ -2083,7 +2084,7 @@
 		up to date server list (met file) to connect to ED2K.</text>
 		<newline gap="8"/>
 		<text>You can download a server list from the ed2k setting page, or the discovery
-		services window. (Press F9 to open the discovery services window)</text> 
+		services window. (Press F9 to open the discovery services window)</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
@@ -2093,11 +2094,11 @@
 		clients that do not share, or simply preference uploading to known sharers.</text>
 		<newline/>
 		<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
-		separate allocations for upload and download. If your client is properly configured, 
+		separate allocations for upload and download. If your client is properly configured,
 		you should be able to upload at a good rate while retaining full download capacity.</text>
 		<newline gap="8"/>
 		<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
-		while downloads are unlimited. That configuration should give you the fastest possible 
+		while downloads are unlimited. That configuration should give you the fastest possible
 		downloads that are available.</text>
 	</document>
 
@@ -2111,7 +2112,7 @@
 		(file type). Furthermore, searches must not be limited to numbers or negative
 		terms only, and you should avoid overly general queries.</text>
 		<newline gap="8"/>
-		<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+		<text>Most clients on the network will ignore a search for all MP3 files, for example,
 		because it is not specific enough, and would generate too many results.</text>
 	</document>
 
@@ -2125,7 +2126,7 @@
 		other terms as well when creating the search. Punctuation and wildcards are not used
 		in searches, just the text you enter.</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
@@ -2340,6 +2341,7 @@
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Use the video's default aspect ratio."/>
 	<tip id="ID_MEDIA_CLEAR" message="Clear (empty) the playlist."/>
 	<tip id="ID_MEDIA_CLOSE" message="Close the current media file, freeing up memory."/>
+	<tip id="ID_MEDIA_EXPORT_COLLECTION" message="Save the playlist as a collection file..."/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="Toggle full-screen video mode."/>
 	<tip id="ID_MEDIA_MUTE" message="Mute audio playback"/>
 	<tip id="ID_MEDIA_NEXT" message="Skip ahead to the next file in the current playlist." tip="Next File"/>
@@ -2526,6 +2528,7 @@
 	<string id="8009" value="Are you sure you want to delete the &quot;%s&quot; skin?  This cannot be undone."/>
 	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."/>
 	<string id="8011" value="Changing view will close any windows you have open.  Would you like to change now?"/>
+	<string id="8012" value="Torrent Information"/>
 	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
 	<string id="8061" value="Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
 	<string id="8062" value="Hub mode with %lu neighbour(s).  %s in local library."/>
@@ -2611,6 +2614,7 @@
 	<string id="8240" value="Shareaza is moving the download:"/>
 	<string id="8241" value="Shareaza is checking the download for errors:"/>
 	<string id="8243" value="Volume uploaded:"/>
+	<string id="8244" value="Number of reviews:"/>
 	<string id="8288" value="Exploring Your Shareaza Library"/>
 	<string id="8289" value="Exploring"/>
 	<string id="8290" value="Exploring the contents of %i folders"/>
@@ -2633,7 +2637,7 @@
 	<string id="8316" value="Hits"/>
 	<string id="8317" value="Uploads"/>
 	<string id="8318" value="%lu today, %lu total"/>
-	<string id="8319" value="&#160;(No Hashset)"/>
+	<string id="8319" value="No Hashset"/>
 	<string id="8320" value="Status:"/>
 	<string id="8321" value="Speed:"/>
 	<string id="8322" value="URL:"/>
@@ -2651,6 +2655,7 @@
 	<string id="8334" value="Sources for this file are currently busy"/>
 	<string id="8335" value="Sources for this file are firewalled"/>
 	<string id="8336" value="Sources for this file may be unstable"/>
+	<string id="8337" value="Untrusted"/>
 	<string id="16064" value="Starting Shareaza network core..."/>
 	<string id="16065" value="Can't bind to %s port %i for incoming connections.  Incoming connections will not be supported."/>
 	<string id="16066" value="Shutting down Shareaza network core..."/>
@@ -3094,6 +3099,9 @@
 	<string id="18508" value="Dropping download source %s for &quot;%s&quot; because queue position %i is too high."/>
 	<string id="18509" value="You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.  Without verification information the download cannot be reverified."/>
 	<string id="18510" value="Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."/>
+	<string id="18511" value="BitTorrent coupling with %s not accepted, maximum connections reached."/>
+	<string id="18512" value="Private torrent"/>
+	<string id="18513" value="Encoding error"/>
 	<string id="19000" value="Remote access is disabled."/>
 	<string id="19001" value="You must choose a username and password."/>
 	<string id="19002" value="Unable to accept connections, URL unavailable."/>
@@ -3105,6 +3113,8 @@
 	<string id="20005" value="No"/>
 	<string id="20006" value="Yes"/>
 	<string id="20007" value="Auto"/>
+	<string id="20008" value="Default"/>
+	<string id="20009" value="Custom"/>
 	<string id="20100" value="Connecting"/>
 	<string id="20101" value="Requesting"/>
 	<string id="20102" value="Response"/>
@@ -3224,8 +3234,9 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">
-		<control caption="_Options:"/>
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="Media Player">
+		<control caption="_Media Services:"/>
+		<control/>
 		<control caption="Use the Shareaza Media Player to PLAY the file types listed below"/>
 		<control caption="Use the Shareaza Media Player to ENQUEUE the file types listed below"/>
 		<control caption="File _Types:"/>
@@ -3234,8 +3245,6 @@
 		<control caption="_Remove"/>
 		<control caption="Audio _Visualisation Plugin:"/>
 		<control caption="_Select Plugin..."/>
-		<control caption="Media Services _Plugin:"/>
-		<control/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Community">
@@ -4112,23 +4121,28 @@
 		<control caption="_Cancel"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Advanced)">
+	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Edit Download">
 		<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
-		<control caption="File_name:"/>
+		<control caption="Filename and Si_ze:"/>
+		<control caption="Filename:"/>
+		<control/><control/>
+		<control caption="Filesize (Byte):"/>
 		<control/>
 		<control caption="_URNs:"/>
+		<control caption="Trusted"/>
 		<control caption="SHA1:"/>
-		<control/>
+		<control/><control/>
 		<control caption="Tiger-Root:"/>
-		<control/>
+		<control/><control/>
 		<control caption="ED2K:"/>
-		<control/>
+		<control/><control/>
 		<control caption="_Actions:"/>
-		<control caption="Forget current verification status (and reverify)"/>
+		<control caption="Forget current verification status and reverify"/>
 		<control caption="Assume file is 100% complete and reverify"/>
 		<control caption="Forget all known sources"/>
+		<control caption="Merge with local file and verify"/>
 		<control caption="Data _Eraser:"/>
-		<control caption="Erase bytes:"/>
+		<control caption="Byte range:"/>
 		<control/>
 		<control caption="to"/>
 		<control/>
@@ -4148,7 +4162,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent Advanced Information">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="General">
 		<control caption="Torrent _Information:"/>
 		<control caption="Name:"/>
 		<control/>
@@ -4158,21 +4172,39 @@
 		<control/>
 		<control caption="Comments:"/>
 		<control/>
+		<control caption="Transfers:"/>
+		<control caption="Start new download transfers:"/>
+		<control caption="&#160;As needed| When ratio over 100%| Only when requested| Never"/>
+		<control/>
+		<control caption="Total Uploaded:"/>
+		<control caption="Notes:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Files">
+		<control caption="Torrent _Information:"/>
+		<control caption="Name:"/>
+		<control/>
+		<control caption="_Files:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
+		<control caption="Torrent _Information:"/>
+		<control caption="Name:"/>
+		<control/>
 		<control caption="Tracker:"/>
 		<control/>
-		<control caption="_Downloaders:"/>
+		<control caption="_Current Tracker:"/>
 		<control caption="Completed (Seeds):"/>
 		<control/>
 		<control caption="Incomplete:"/>
 		<control/>
-		<control caption="Transfers:"/>
-		<control caption="Start new download transfers:"/>
-		<control caption="As needed|When ratio over 100%|Only when requested|Never"/>
-		<control caption="_Files:"/>
-		<control/>
 		<control caption="_Refresh"/>
+		<control caption="_Trackers:"/>
 		<control/>
-		<control caption="Close"/>
+		<control caption="Tracker Mode:"/>
+		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Properties">
@@ -4334,9 +4366,14 @@
 		<column from="URL" to=""/>
 		<column from="Expires" to=""/>
 	</list>
-	<list name="CTorrentTrackerList">
+	<list name="CTorrentFileList">
 		<column from="Filename" to=""/>
 		<column from="Size" to=""/>
+	</list>
+	<list name="CTorrentTrackerList">
+		<column from="Tracker" to=""/>
+		<column from="Status" to=""/>
+		<column from="Type" to=""/>
 	</list>
 	<list name="CReviewList">
 		<column from="User" to=""/>
