@@ -44,6 +44,11 @@ public:
 protected:
 	CSkinWindow*	m_pSkin;
 	CBrush			m_brDialog;
+	CString			m_sGeneralTitle;
+	CString			m_sMetadataTitle;
+	CString			m_sCommentsTitle;
+	CString			m_sSharingTitle;
+	CString			m_sSourcesTitle;
 
 // Operations
 public:
@@ -60,6 +65,8 @@ public:
 
 // Implementation
 protected:
+	void SetTabTitle(CPropertyPage* pPage, CString& strTitle);
+
 	//{{AFX_MSG(CFilePropertiesSheet)
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
 	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);

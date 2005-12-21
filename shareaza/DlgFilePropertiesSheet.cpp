@@ -61,11 +61,17 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesSheet
 
-CFilePropertiesSheet::CFilePropertiesSheet(UINT nIndex) : CPropertySheet( _T("") )
+CFilePropertiesSheet::CFilePropertiesSheet(UINT nIndex) : 
+	CPropertySheet( L"" ),
+	m_sGeneralTitle( L"General" ),
+	m_sMetadataTitle( L"Metadata" ),
+	m_sCommentsTitle( L"My Review" ),
+	m_sSharingTitle( L"Sharing" ),
+	m_sSourcesTitle( L"Sources" ),
+	m_pSkin( NULL )
 {
 	if ( nIndex > 0 ) m_pList.AddTail( nIndex );
 
-	m_pSkin = NULL;
 	m_psh.dwFlags &= ~PSP_HASHELP;
 }
 
@@ -102,39 +108,23 @@ INT_PTR CFilePropertiesSheet::DoModal(int nPage)
 	case 0:
 		return IDCANCEL;
 	case 1:
-		strTabLabel = Skin.GetDialogCaption( _T("CFileGeneralPage") );
-		pGeneral.m_psp.dwFlags |= PSP_USETITLE;
-		pGeneral.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("General") : strTabLabel;
+		SetTabTitle( &pGeneral, m_sGeneralTitle );
 		AddPage( &pGeneral );
-		strTabLabel = Skin.GetDialogCaption( _T("CFileMetadataPage") );
-		pMetadata.m_psp.dwFlags |= PSP_USETITLE;
-		pMetadata.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Metadata") : strTabLabel;
+		SetTabTitle( &pMetadata, m_sMetadataTitle );
 		AddPage( &pMetadata );
-		strTabLabel = Skin.GetDialogCaption( _T("CFileCommentsPage") );
-		pComments.m_psp.dwFlags |= PSP_USETITLE;
-		pComments.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("My Review") : strTabLabel;
+		SetTabTitle( &pComments, m_sCommentsTitle );
 		AddPage( &pComments );
-		strTabLabel = Skin.GetDialogCaption( _T("CFileSharingPage") );
-		pSharing.m_psp.dwFlags |= PSP_USETITLE;
-		pSharing.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Sharing") : strTabLabel;
+		SetTabTitle( &pSharing, m_sSharingTitle );
 		AddPage( &pSharing );
-		strTabLabel = Skin.GetDialogCaption( _T("CFileSourcesPage") );
-		pSources.m_psp.dwFlags |= PSP_USETITLE;
-		pSources.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Sources") : strTabLabel;
+		SetTabTitle( &pSources, m_sSourcesTitle );
 		AddPage( &pSources );
 		break;
 	default:
-		strTabLabel = Skin.GetDialogCaption( _T("CFileMetadataPage") );
-		pMetadata.m_psp.dwFlags |= PSP_USETITLE;
-		pMetadata.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Metadata") : strTabLabel;
+		SetTabTitle( &pMetadata, m_sMetadataTitle );
 		AddPage( &pMetadata );
-		strTabLabel = Skin.GetDialogCaption( _T("CFileCommentsPage") );
-		pComments.m_psp.dwFlags |= PSP_USETITLE;
-		pComments.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("My Review") : strTabLabel;
+		SetTabTitle( &pComments, m_sCommentsTitle );
 		AddPage( &pComments );
-		strTabLabel = Skin.GetDialogCaption( _T("CFileSharingPage") );
-		pSharing.m_psp.dwFlags |= PSP_USETITLE;
-		pSharing.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Sharing") : strTabLabel;
+		SetTabTitle( &pSharing, m_sSharingTitle );
 		AddPage( &pSharing );
 		if ( nPage == 1 ) nPage = 0;
 		else if ( nPage == 2 ) nPage = 1;
@@ -143,6 +133,15 @@ INT_PTR CFilePropertiesSheet::DoModal(int nPage)
 
 	m_psh.nStartPage = nPage;
 	return CPropertySheet::DoModal();
+}
+
+void CFilePropertiesSheet::SetTabTitle(CPropertyPage* pPage, CString& strTitle)
+{
+	CString strClass = pPage->GetRuntimeClass()->m_lpszClassName;
+	CString strTabLabel = Skin.GetDialogCaption( strClass );
+	if ( ! strTabLabel.IsEmpty() )
+		strTitle = strTabLabel;
+	pPage->m_psp.pszTitle = strTitle.GetBuffer();
 }
 
 /////////////////////////////////////////////////////////////////////////////

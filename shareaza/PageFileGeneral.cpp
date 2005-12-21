@@ -51,19 +51,12 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFileGeneralPage property page
 
-CFileGeneralPage::CFileGeneralPage() : CFilePropertiesPage( CFileGeneralPage::IDD )
+CFileGeneralPage::CFileGeneralPage() : 
+	CFilePropertiesPage( CFileGeneralPage::IDD ),
+	m_sSHA1(), m_sTiger(), m_sType(), m_sSize(), m_sPath(),
+	m_sModified(), m_sIndex(), m_sMD5(), m_sED2K()
 {
-	//{{AFX_DATA_INIT(CFileGeneralPage)
-	m_sSHA1 = _T("");
-	m_sTiger = _T("");
-	m_sType = _T("");
-	m_sSize = _T("");
-	m_sPath = _T("");
-	m_sModified = _T("");
-	m_sIndex = _T("");
-	m_sMD5 = _T("");
-	m_sED2K = _T("");
-	//}}AFX_DATA_INIT
+	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CFileGeneralPage::~CFileGeneralPage()

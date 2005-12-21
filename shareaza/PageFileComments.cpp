@@ -46,12 +46,11 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFileCommentsPage property page
 
-CFileCommentsPage::CFileCommentsPage() : CFilePropertiesPage( CFileCommentsPage::IDD )
+CFileCommentsPage::CFileCommentsPage() :
+	CFilePropertiesPage( CFileCommentsPage::IDD ),
+	m_sComments(), m_nRating( -1 )
 {
-	//{{AFX_DATA_INIT(CFileCommentsPage)
-	m_sComments = _T("");
-	m_nRating = -1;
-	//}}AFX_DATA_INIT
+	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CFileCommentsPage::~CFileCommentsPage()

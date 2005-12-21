@@ -48,11 +48,10 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFileSourcesPage property page
 
-CFileSourcesPage::CFileSourcesPage() : CFilePropertiesPage(CFileSourcesPage::IDD)
+CFileSourcesPage::CFileSourcesPage() : 
+	CFilePropertiesPage(CFileSourcesPage::IDD), m_sSource()
 {
-	//{{AFX_DATA_INIT(CFileSourcesPage)
-	m_sSource = _T("");
-	//}}AFX_DATA_INIT
+	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CFileSourcesPage::~CFileSourcesPage()

@@ -50,8 +50,7 @@ END_MESSAGE_MAP()
 
 CFileMetadataPage::CFileMetadataPage() : CFilePropertiesPage(CFileMetadataPage::IDD)
 {
-	//{{AFX_DATA_INIT(CFileMetadataPage)
-	//}}AFX_DATA_INIT
+	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CFileMetadataPage::~CFileMetadataPage()

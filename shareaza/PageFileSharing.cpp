@@ -48,13 +48,11 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFileSharingPage property page
 
-CFileSharingPage::CFileSharingPage() : CFilePropertiesPage(CFileSharingPage::IDD)
+CFileSharingPage::CFileSharingPage() : 
+	CFilePropertiesPage(CFileSharingPage::IDD), m_bOverride( -1 ), 
+	m_bShare( FALSE ), m_sTags()
 {
-	//{{AFX_DATA_INIT(CFileSharingPage)
-	m_bOverride = -1;
-	m_bShare = FALSE;
-	m_sTags = _T("");
-	//}}AFX_DATA_INIT
+	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CFileSharingPage::~CFileSharingPage()
