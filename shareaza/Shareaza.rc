@@ -2887,10 +2887,10 @@ END
 IDD_COLLECTION_EXPORT DIALOGEX 0, 0, 355, 249
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
     WS_SYSMENU
-CAPTION "Export Folder"
+CAPTION "Collection Export"
 FONT 8, "Tahoma", 400, 0, 0x1
 BEGIN
-    LTEXT           "This feature is used to export the contents of an album folder as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data bellow.",
+    LTEXT           "This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data bellow.",
                     IDC_TEMPLATES_EXPLAIN,7,6,341,24
     CONTROL         "",IDC_TEMPLATES,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | 
@@ -2898,11 +2898,11 @@ BEGIN
                     31,193,186
     GROUPBOX        "Template Information:",IDC_STATIC_GROUPBOX,209,27,139,
                     190,WS_GROUP
-    LTEXT           "Name:",IDC_STATIC_NAME,219,42,37,10,0,WS_EX_TRANSPARENT
-    LTEXT           "...",IDC_TEMPLATE_NAME,261,42,79,10,0,WS_EX_TRANSPARENT
-    LTEXT           "Author:",IDC_STATIC_AUTHOR,219,61,37,10,0,
+    LTEXT           "Name:",IDC_STATIC_NAME,219,42,42,10,0,WS_EX_TRANSPARENT
+    LTEXT           "...",IDC_TEMPLATE_NAME,264,42,78,10,0,WS_EX_TRANSPARENT
+    LTEXT           "Author:",IDC_STATIC_AUTHOR,219,61,41,10,0,
                     WS_EX_TRANSPARENT
-    LTEXT           "...",IDC_TEMPLATE_AUTHOR,261,61,80,10,0,
+    LTEXT           "...",IDC_TEMPLATE_AUTHOR,264,61,78,10,0,
                     WS_EX_TRANSPARENT
     LTEXT           "Description:",IDC_STATIC_DESC,219,80,113,10,0,
                     WS_EX_TRANSPARENT
@@ -2940,11 +2940,11 @@ BEGIN
     LTEXT           "WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption.",
                     IDC_STATIC,6,6,258,18
     GROUPBOX        "Filename and Si&ze:",IDC_STATIC,6,28,258,50,WS_GROUP
-    LTEXT           "Filename:",IDC_STATIC,14,42,32,10
-    EDITTEXT        IDC_NAME,53,40,202,12,ES_AUTOHSCROLL
+    LTEXT           "Filename:",IDC_STATIC,14,42,50,10
+    EDITTEXT        IDC_NAME,69,40,186,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_DISKNAME,14,58,110,12,ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Filesize (Byte):",IDC_STATIC,129,60,54,11
-    EDITTEXT        IDC_FILESIZE,182,58,73,12,ES_RIGHT | ES_AUTOHSCROLL
+    RTEXT           "Filesize (Byte):",IDC_STATIC,128,59,60,11
+    EDITTEXT        IDC_FILESIZE,191,58,64,12,ES_RIGHT | ES_AUTOHSCROLL
     GROUPBOX        "&URNs:",IDC_STATIC,6,80,258,74,WS_GROUP
     LTEXT           "Trusted",IDC_STATIC,236,87,26,11
     LTEXT           "SHA1:",IDC_STATIC,14,96,36,12,SS_CENTERIMAGE
