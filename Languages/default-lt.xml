@@ -3242,7 +3242,7 @@ right quote	&#147;
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="Grotuvas">
-		<control caption="_Media paslaugos:"/>
+		<control caption="_Medija paslaugos:"/>
 		<control/>
 		<control caption="Naudoti „Shareaza“ grotuvą žemiau pateiktų bylų tipams GROTI"/>
 		<control caption="... taip pat ĮTRAUKIANT į grojaraščio eilę"/>
