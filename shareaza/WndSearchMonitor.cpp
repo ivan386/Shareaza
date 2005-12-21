@@ -155,7 +155,21 @@ void CSearchMonitorWnd::OnSearchMonitorSearch()
 	{
 		auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 		pSearch->m_sSearch = m_wndList.GetItemText( nItem, 0 );
-		CQuerySearch::OpenWindow( pSearch );
+
+		if ( pSearch->m_sSearch.GetLength() == 0 || 
+			 _tcscmp( pSearch->m_sSearch, _T("\\") ) == 0 )
+		{
+			pSearch->m_sSearch = m_wndList.GetItemText( nItem, 1 );
+			
+			if ( _tcsicmp( pSearch->m_sSearch, _T("None") ) != 0 && 
+				 _tcsncmp( pSearch->m_sSearch, _T("btih:"), 5 ) != 0 )
+				pSearch->m_sSearch = _T("urn:") + m_wndList.GetItemText( nItem, 1 );
+			else
+				pSearch->m_sSearch.Empty();
+		}
+
+		if ( ! pSearch->m_sSearch.IsEmpty() )
+			CQuerySearch::OpenWindow( pSearch );
 	}
 }
 
