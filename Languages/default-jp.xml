@@ -3230,8 +3230,9 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="メディアプレーヤー">
-		<control caption="オプション(_O):"/>
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="メディアプレーヤー">
+		<control caption="メディアサービス(_M):"/>
+		<control/>
 		<control caption="下のﾘｽﾄ内のﾌｧｲﾙﾀｲﾌﾟの再生にShareazaﾒﾃﾞｨｱﾌﾟﾚｰﾔｰを使用"/>
 		<control caption="下のﾘｽﾄ内のﾌｧｲﾙﾀｲﾌﾟのShareazaﾒﾃﾞｨｱﾌﾟﾚｰﾔｰ再生ﾘｽﾄへの追加を許可"/>
 		<control caption="ファイルタイプ(_T):"/>
@@ -3240,7 +3241,6 @@
 		<control caption="削除(_R)"/>
 		<control caption="オーディオ視覚プラグイン(_V):"/>
 		<control caption="プラグインを選択(_S)..."/>
-		<control caption="メディアサービスプラグイン(_P):"/>
 		<control/>
 	</dialog>
 
@@ -4118,21 +4118,30 @@
 		<control caption="キャンセル(_C)"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="ダウンロードを編集 (高度)">
+	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="ダウンロードを編集 (高度)">
 		<control caption="警告: このダイアログは熟練したユーザーに対して高度なダウンロード編集機能を提供します。 これが不当に使用された場合、恐らくそのダウンロードは不正になります。"/>
-		<control caption="ファイル名(_N):"/>
+		<control caption="ファイル名とサイズ(_z):"/>
+		<control caption="ファイル名:"/>
+		<control/>
+		<control/>
+		<control caption="サイズ(バイト):"/>
 		<control/>
 		<control caption="URN(_U):"/>
+		<control caption="信頼"/>
 		<control caption="SHA1:"/>
+		<control/>
 		<control/>
 		<control caption="Tiger-Root:"/>
 		<control/>
+		<control/>
 		<control caption="ED2K:"/>
+		<control/>
 		<control/>
 		<control caption="操作(_A):"/>
 		<control caption="現在の検証情報を廃棄 (そして再検証)"/>
 		<control caption="ファイルが100%完全であるとみなして再検証する"/>
 		<control caption="既知ソースを全て廃棄"/>
+		<control caption="所有ファイルと連結して再検証"/>
 		<control caption="データ消去(_E):"/>
 		<control caption="消去するバイト:"/>
 		<control/>
@@ -4154,7 +4163,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent拡張情報">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="全般">
 		<control caption="Torrent情報(_I):"/>
 		<control caption="名前:"/>
 		<control/>
@@ -4164,22 +4173,42 @@
 		<control/>
 		<control caption="コメント:"/>
 		<control/>
+		<control caption="転送:"/>
+		<control caption="新しくダウンロード転送を開始:"/>
+	　　　<control caption="必要に応じて行う|割合が100%を超えた時|要求された場合のみ|決して行わない"/>
+		<control/>
+		<control caption="総アップロード:"/>
+		<control caption="備考:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="ファイル">
+		<control caption="Torrent情報(_I):"/>
+		<control caption="名前:"/>
+		<control/>
+		<control caption="ファイル(_F):"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="トラッカー">
+		<control caption="Torrent情報(_I):"/>
+		<control caption="名前:"/>
+		<control/>
 		<control caption="トラッカー:"/>
 		<control/>
-		<control caption="ダウンローダ(_D):"/>
+		<control caption="現在のトラッカー(_C):"/>
 		<control caption="完了済み (シード):"/>
 		<control/>
 		<control caption="未完了:"/>
 		<control/>
-		<control caption="転送:"/>
-		<control caption="新しくダウンロード転送を開始:"/>
-		<control caption="必要に応じて行う|割合が100%を超えた時|要求された場合のみ|決して行わない"/>
-		<control caption="ファイル(_F):"/>
-		<control/>
 		<control caption="更新(_R)"/>
+		<control caption="トラッカー(_T):"/>
 		<control/>
-		<control caption="閉じる"/>
+		<control caption="トラッカーモード:"/>
+		<control caption="無効|指定|単一|複数|複数(固定)"/>
+		<control/>
 	</dialog>
+
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="ダウンロードグループプロパティ">
 		<control caption="名前(_N):"/>
