@@ -23,7 +23,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.2.0.2(EN1.88)"
+		version="2.2.2.8 (EN1.90)"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -122,8 +122,8 @@
 		<button id="ID_BROWSE_FILES" text="共享的文件"/>
 	</toolbar>
 	<toolbar name="CBrowseTree.Top">
-		<button id="ID_LIBRARY_TREE_PHYSICAL" text="文件夹"/>
-		<button id="ID_LIBRARY_TREE_VIRTUAL" text="组类"/>
+		<button id="ID_LIBRARY_TREE_PHYSICAL" text="目录"/>
+		<button id="ID_LIBRARY_TREE_VIRTUAL" text="类别"/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="下载文件"/>
@@ -205,8 +205,8 @@
 	</toolbar>
 	<!-- LIBRARY FRAME -->
 	<toolbar name="CLibraryTree.Top">
-		<button id="ID_LIBRARY_TREE_PHYSICAL" text="文件夹"/>
-		<button id="ID_LIBRARY_TREE_VIRTUAL" text="组类"/>
+		<button id="ID_LIBRARY_TREE_PHYSICAL" text="目录"/>
+		<button id="ID_LIBRARY_TREE_VIRTUAL" text="类别"/>
 	</toolbar>
 	<toolbar name="CLibraryTree.Virtual">
 		<button id="ID_LIBRARY_FOLDERS" text="共享文件..."/>
@@ -298,7 +298,7 @@
 	</toolbar>
 	<!-- MEDIA WINDOW -->
 	<toolbar name="CMediaFrame.Basic">
-		<button id="ID_MEDIA_PLAY" text="播放"/>
+		<button id="ID_MEDIA_PLAY" text="播放&#160;&#160;&#160;"/>
 		<button id="ID_MEDIA_PAUSE" text="暂停" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="停止"/>
 		<separator/>
@@ -315,7 +315,7 @@
 		<button id="ID_MEDIA_PLAYLIST" text="播放列表"/>
 	</toolbar>
 	<toolbar name="CMediaFrame">
-		<button id="ID_MEDIA_PLAY" text="播放"/>
+		<button id="ID_MEDIA_PLAY" text="播放&#160;&#160;&#160;"/>
 		<button id="ID_MEDIA_PAUSE" text="暂停" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="停止"/>
 		<separator/>
@@ -1008,7 +1008,7 @@
 		<item id="ID_DOWNLOADS_FILTER_ALL" text="显示全部(_A)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="显示活动的(_C)"/>
-		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="显示挂起的(_E)"/>
+		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="显示等待的(_E)"/>
 		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="显示无资源的(_N)"/>
 		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="显示暂停的(_P)"/>
 		<separator/>
@@ -1113,7 +1113,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
-		<menu text="组类(_R)">
+		<menu text="类别(_R)">
 			<item id="ID_LIBRARY_RENAME" text="重命名(_R)"/>
 			<item id="ID_LIBRARY_MOVE" text="移动文件(_M)..."/>
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
@@ -1145,7 +1145,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="创建 .torrent 文件"/>
 		</menu>
-		<menu text="组类(_R)">
+		<menu text="类别(_R)">
 			<item id="ID_LIBRARY_RENAME" text="重命名(_R)"/>
 			<item id="ID_LIBRARY_MOVE" text="移动文件(_M)..."/>
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
@@ -1179,7 +1179,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
-		<menu text="组类(_R)">
+		<menu text="类别(_R)">
 			<item id="ID_LIBRARY_RENAME" text="重命名(_R)"/>
 			<item id="ID_LIBRARY_UNLINK" text="移除文件(_F)"/>
 			<separator/>
@@ -1213,7 +1213,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="创建 .torrent 文件"/>
 		</menu>
-		<menu text="组类(_R)">
+		<menu text="类别(_R)">
 			<item id="ID_LIBRARY_UNLINK" text="移除文件(_F)..."/>
 			<separator/>
 			<item id="ID_LIBRARY_RENAME" text="重命名(_R)"/>
@@ -1325,6 +1325,7 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="打开播放列表(_O)..."/>
 		<item id="ID_MEDIA_SAVE" text="保存播放列表(_S)..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="导出收集(_X)..."/>
 		<item id="ID_MEDIA_CLEAR" text="清除播放列表(_C)"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAYLIST" text="显示播放列表(_Y)"/>
@@ -1920,7 +1921,7 @@
 		<text format="b">此下载已暂停</text>
 		<newline gap="8"/>
 		<text>您已经暂停了此下载。如果您想进行续传，
-		您可以单击</text><text format="b">续传下载</text><text>命令。</text>
+		您可以单击 '</text><text format="b">续传下载</text><text>' 命令。</text>
 	</document>
 
 	<document name="DownloadHelp.DiskFull">
@@ -1943,12 +1944,12 @@
 		<text format="b">此下载活动中！</text>
 		<newline gap="8"/>
 		<text>此下载当前正在进行中。如果它下载太慢，您可以试着搜索网络以获取
-		更多资源，请使用</text><text format="b">查找更多资源</text><text>命令。如果速度未得到提升，
+		更多资源，请使用 '</text><text format="b">查找更多资源</text><text>' 命令。如果速度未得到提升，
 		其可能是因为您下载的用户限制了上传速度。下载速度通常会随着时间而增快。</text>
 	</document>
 
 	<document name="DownloadHelp.Pending">
-		<text format="b">此下载挂起中</text>
+		<text format="b">此下载等待中</text>
 		<newline gap="8"/>
 		<text>此下载正在等待别人开始上传。
 		Shareaza 正准备开始下载此文件，但此刻没有人向您发送
@@ -2325,6 +2326,7 @@
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="使用视频的默认比例。"/>
 	<tip id="ID_MEDIA_CLEAR" message="清空播放列表。"/>
 	<tip id="ID_MEDIA_CLOSE" message="关闭当前媒体文件以便释放内存。"/>
+	<tip id="ID_MEDIA_EXPORT_COLLECTION" message="将此播放列表保存为收集文件..."/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="全屏模式。"/>
 	<tip id="ID_MEDIA_MUTE" message="音频播放静音"/>
 	<tip id="ID_MEDIA_NEXT" message="跳到播放列表中的后个文件" tip="下一个文件"/>
@@ -2496,6 +2498,9 @@
 	<string id="7003" value="多重"/>
 	<string id="7004" value="已经存在一个名为 &quot;%s&quot; 的过滤，您希望替换吗？"/>
 	<string id="7005" value="请命名您设置的过滤。"/>
+	<string id="7100" value="此模板无效。"/>
+	<string id="7101" value="此模板无任何自定义设置。"/>
+	<string id="7102" value="您确定要删除 &quot;%s&quot; 模板？\n此操作无法恢复。"/>
 	<string id="8000" value="Shareaza 设置"/>
 	<string id="8001" value="欢迎来到 Shareaza"/>
 	<string id="8002" value="文件属性"/>
@@ -2508,6 +2513,7 @@
 	<string id="8009" value="您确定要删除 &quot;%s&quot; 皮肤吗？ 此操作不可逆。"/>
 	<string id="8010" value="这是 Shareaza 的内部测试版本， beta 测试期已经结束。请下载 www.shareaza.com 完整的官方版本。"/>
 	<string id="8011" value="更改显示模式将关闭您已经打开的窗口。您要立即更改吗？"/>
+	<string id="8012" value="Torrent 信息"/>
 	<string id="8060" value="集端/超对等模式有 %lu 个邻居。%s 处于本地收藏中。"/>
 	<string id="8061" value="超对等模式有 %lu 个邻居。%s 处于本地收藏中。"/>
 	<string id="8062" value="集端模式有 %lu 个邻居。%s 处于本地收藏中。"/>
@@ -2593,6 +2599,7 @@
 	<string id="8240" value="Shareaza 正在移动下载:"/>
 	<string id="8241" value="Shareaza 正在检测下载的错误:"/>
 	<string id="8243" value="已经上传数量:"/>
+	<string id="8244" value="评价数目:"/>
 	<string id="8288" value="正在浏览您的 Shareaza 收藏"/>
 	<string id="8289" value="浏览"/>
 	<string id="8290" value="正在浏览 %i 个文件夹的内容"/>
@@ -2615,7 +2622,7 @@
 	<string id="8316" value="命中"/>
 	<string id="8317" value="上传"/>
 	<string id="8318" value="%lu 今天，%lu 总计"/>
-	<string id="8319" value="&#160;(无 Hashset)"/>
+	<string id="8319" value="无 Hashset"/>
 	<string id="8320" value="状态:"/>
 	<string id="8321" value="速度:"/>
 	<string id="8322" value="链接:"/>
@@ -2633,6 +2640,7 @@
 	<string id="8334" value="此文件来源正忙"/>
 	<string id="8335" value="此文件来源有防火墙"/>
 	<string id="8336" value="此文件来源可能不稳定"/>
+	<string id="8337" value="未受信任"/>
 	<string id="16064" value="启动 Shareaza 网络内核..."/>
 	<string id="16065" value="不能绑定正进入连接的主机 %s 的 %i 端口。不支持进入的连接。"/>
 	<string id="16066" value="关闭 Shareaza 网络内核..."/>
@@ -3076,6 +3084,9 @@
 	<string id="18508" value="丢失下载资源 %s 为 &quot;%s&quot;，因为队列位置 %i 太高。"/>
 	<string id="18509" value="您不能假设此下载已完成并验证，因为您还未拥有任何部分验证数据，例如 tiger-tree 卷，eDonkey Hashset 或 BitTorrent Hashset。没有验证信息，此下载不能被验证。"/>
 	<string id="18510" value="您确定要假设此下载已完成并验证？ 整个文件将会被考虑，并且 Shareaza 将会接受已通过验证的部分并重新下载未通过验证的部分。"/>
+	<string id="18511" value="BitTorrent 与 %s 的连合未被接受，达到最大连接数。"/>
+	<string id="18512" value="私用 Torrent"/>
+	<string id="18513" value="编码错误"/>
 	<string id="19000" value="远程访问已禁用。"/>
 	<string id="19001" value="您必须选择一个用户名和密码。"/>
 	<string id="19002" value="未能接受连接，链接不可用。"/>
@@ -3087,6 +3098,8 @@
 	<string id="20005" value="否"/>
 	<string id="20006" value="是"/>
 	<string id="20007" value="自动"/>
+	<string id="20008" value="默认"/>
+	<string id="20009" value="自定义"/>
 	<string id="20100" value="连接中"/>
 	<string id="20101" value="请求中"/>
 	<string id="20102" value="回应"/>
@@ -3106,7 +3119,7 @@
 	<string id="20116" value="不能移动"/>
 	<string id="20117" value="校验中"/>
 	<string id="20118" value="活动"/>
-	<string id="20119" value="挂起"/>
+	<string id="20119" value="等待"/>
 	<string id="20120" value="搜索中"/>
 	<string id="20121" value="创建中"/>
 	<string id="20122" value="Torrent"/>
@@ -3206,8 +3219,9 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="媒体">
-		<control caption="选项(_O):"/>
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="媒体">
+		<control caption="媒体服务(_M):"/>
+		<control/>
 		<control caption="使用 Shareaza 媒体播放器播放下列文件类型"/>
 		<control caption="使用 Shareaza 媒体播放器排队下列文件类型"/>
 		<control caption="文件类型(_T):"/>
@@ -3216,8 +3230,6 @@
 		<control caption="移除(_R)"/>
 		<control caption="可视化音频插件(_V):"/>
 		<control caption="选择插件(_S)..."/>
-		<control caption="媒体服务插件(_P):"/>
-		<control/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="社区">
@@ -4079,29 +4091,43 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="导出文件夹">
-		<control caption="此功能用于导出专辑文件夹中的内容为丰富搜集文件。"/>
-		<control caption="导出..."/>
-		<control caption="取消"/>
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="导出文件夹">
+		<control caption="此功能用于导出专辑文件夹中的内容为丰富搜集文件。请选择一个模板并单击“下一页”继续。|通过输入下列数据自定义您的收集。"/>
+		<control/>
+		<control caption="模板信息:"/>
+		<control caption="名称:"/>
+		<control/>
+		<control caption="作者:"/>
+		<control/>
+		<control caption="描述:"/>
+		<control/>
+		<control caption="删除|上一页(_B)"/>
+		<control caption="下一页(_N)|导出"/>
+		<control caption="取消(_C)"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="编辑下载(高级)">
+	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="编辑下载">
 		<control caption="警告: 此对话框为高级用户提供下载编辑功能，如果使用不当可能会使软件停止工作。"/>
-		<control caption="文件名称(_N):"/>
+		<control caption="文件名称和大小(_Z):"/>
+		<control caption="文件名称:"/>
+		<control/><control/>
+		<control caption="文件大小(字节):"/>
 		<control/>
 		<control caption="URN(_U):"/>
+		<control caption="信任"/>
 		<control caption="SHA1:"/>
-		<control/>
+		<control/><control/>
 		<control caption="Tiger-Root:"/>
-		<control/>
+		<control/><control/>
 		<control caption="ED2K:"/>
-		<control/>
+		<control/><control/>
 		<control caption="操作(_A):"/>
 		<control caption="忽略当前验证状态和重检"/>
 		<control caption="假设文件 100％ 完整并重检"/>
 		<control caption="忽略所有已知资源"/>
+		<control caption="与本地文件合并且校验"/>
 		<control caption="数据擦除(_E):"/>
-		<control caption="擦除字节:"/>
+		<control caption="字节范围:"/>
 		<control/>
 		<control caption="到"/>
 		<control/>
@@ -4121,7 +4147,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent 高级信息">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="常规">
 		<control caption="Torrent 信息(_I):"/>
 		<control caption="名称:"/>
 		<control/>
@@ -4131,21 +4157,39 @@
 		<control/>
 		<control caption="备注:"/>
 		<control/>
+		<control caption="传送:"/>
+		<control caption="启动新的下载传输:"/>
+		<control caption="&#160;需要时| 当比率大于 100% 时| 被请求时| 从不"/>
+		<control/>
+		<control caption="上传总计:"/>
+		<control caption="注释:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="文件">
+		<control caption="Torrent 信息(_I):"/>
+		<control caption="名称:"/>
+		<control/>
+		<control caption="文件(_F):"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
+		<control caption="Torrent 信息(_I):"/>
+		<control caption="名称:"/>
+		<control/>
 		<control caption="Tracker:"/>
 		<control/>
-		<control caption="下载者(_D):"/>
+		<control caption="当前 Tracker(_C):"/>
 		<control caption="已完成(种子):"/>
 		<control/>
 		<control caption="未完成:"/>
 		<control/>
-		<control caption="传送:"/>
-		<control caption="启动新的下载传输:"/>
-		<control caption="需要时|当比率大于 100% 时|被请求时|从不"/>
-		<control caption="文件(_F):"/>
-		<control/>
 		<control caption="刷新(_R)"/>
+		<control caption="Trackers(_T):"/>
 		<control/>
-		<control caption="关闭"/>
+		<control caption="Tracker 模式:"/>
+		<control caption="已禁用|自定义|单一 Tracker|多重 Tracker|多重 Tracker(已锁定)"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="下载组属性">
@@ -4307,9 +4351,14 @@
 		<column from="URL" to="链接"/>
 		<column from="Expires" to="过期"/>
 	</list>
-	<list name="CTorrentTrackerList">
+	<list name="CTorrentFileList">
 		<column from="Filename" to="文件名"/>
 		<column from="Size" to="大小"/>
+	</list>
+	<list name="CTorrentTrackerList">
+		<column from="Tracker" to="Tracker"/>
+		<column from="Status" to="状态"/>
+		<column from="Type" to="类型"/>
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="用户"/>
