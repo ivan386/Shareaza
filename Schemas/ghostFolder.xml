@@ -26,7 +26,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
               <title language="en">General:Ghost Files</title>
               <title language="af">General:Ghost Files</title>
-              <title language="chs">General:Ghost Files</title>
+              <title language="chs">常规:回收文件</title>
               <title language="de">General:Ghost Files</title>
               <title language="es">General:Ghost Files</title>
               <title language="fr">General:Ghost Files</title>
@@ -72,7 +72,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <headerContent version="1.0">
                <title language="en">Ghost Files</title>
                <title language="af">Ghost Files</title>
-               <title language="chs">Ghost Files</title>
+               <title language="chs">回收文件</title>
                <title language="de">Ghost Files</title>
                <title language="es">Ghost Files</title>
                <title language="fr">Ghost Files</title>
@@ -90,7 +90,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Niteliksiz Dosyalar</title>
                <subtitle language="en">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="af">This folder contains every file which you've deleted from the Library.</subtitle>
-               <subtitle language="chs">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="chs">此文件夹包含了所有您从收藏夹删除的文件。</subtitle>
                <subtitle language="de">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="es">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="fr">This folder contains every file which you've deleted from the Library.</subtitle>
