@@ -11,7 +11,7 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <fonts>
-	<font name="System.Plain" face="MS UI Gothic" size="12"/>
+	<font name="System.Plain" face="MS UI Gothic" size="11"/>
 	<font name="System.Bold" face="MS UI Gothic" size="12"/>
 	<font name="Panel.Caption" face="MS UI Gothic" size="12" weight="bold" />
 </fonts>
