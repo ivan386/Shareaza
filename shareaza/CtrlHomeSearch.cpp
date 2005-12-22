@@ -104,7 +104,7 @@ int CHomeSearchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CRect rc( 0, 0, 0, 0 );
 
-	if ( ! m_wndText.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_GROUP|CBS_AUTOHSCROLL|CBS_DROPDOWN,
+	if ( ! m_wndText.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_GROUP|WS_VSCROLL|CBS_AUTOHSCROLL|CBS_DROPDOWN,
 		rc, this, IDC_SEARCH_TEXT ) ) return -1;
 
 	m_wndText.SetFont( &theApp.m_gdiFont );
