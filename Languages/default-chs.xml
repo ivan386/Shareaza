@@ -23,7 +23,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.2.2.8 (EN1.90)"
+		version="2.2.2.8 (EN1.91)"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -3835,7 +3835,7 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="我的评价">
+	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="评价">
 		<control caption="我的评级"/>
 		<control caption="我对此文件的评级:"/>
 		<control caption="(未评级)|假的/损坏/误导|差的|一般|不错|很好|极棒"/>
@@ -4091,8 +4091,8 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="导出文件夹">
-		<control caption="此功能用于导出专辑文件夹中的内容为丰富搜集文件。请选择一个模板并单击“下一页”继续。|通过输入下列数据自定义您的收集。"/>
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="收集导出">
+		<control caption="此功能用于将文件夹或播放列表中的内容导出为多格式的搜集文件。请选择一个模板并单击“下一页”继续。|通过输入下列数据自定义您的收集。"/>
 		<control/>
 		<control caption="模板信息:"/>
 		<control caption="名称:"/>
