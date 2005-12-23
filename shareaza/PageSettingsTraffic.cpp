@@ -160,6 +160,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.QueryLimit, 1, 0, 10000 );
 
 	AddSetting( &Settings.eDonkey.FastConnect, 1, 0, 1 );
+	AddSetting( &Settings.eDonkey.ForceHighID, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.MaxShareCount, 1, 0, 20000 );
 	AddSetting( &Settings.eDonkey.StatsGlobalThrottle, 60*1000, 30, 120, _T(" m") );
 	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 1000, 20000, _T(" ms") );
@@ -178,6 +179,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.eDonkey.ReAskTime, 60, 20, 360, _T(" m") );
 	AddSetting( &Settings.eDonkey.DequeueTime, 60, 2, 512, _T(" m") );
 	AddSetting( &Settings.eDonkey.ExtendedRequest, 1, 0, 2 );
+	AddSetting( &Settings.eDonkey.SendPortServer, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.MagnetSearch, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.MinServerFileSize, 1, 0, 50, _T(" MB") );
 	AddSetting( &Settings.eDonkey.TagNames, 1, 0, 1 );

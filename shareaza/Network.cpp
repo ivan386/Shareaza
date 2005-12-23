@@ -75,6 +75,7 @@ CNetwork::CNetwork()
 	m_bAutoConnect			= FALSE;
 	m_tStartedConnecting	= 0;
 	m_tLastConnect			= 0;
+	m_tLastED2KServerHop	= 0;
 
 	m_nSequence				= 0;
 	m_hThread				= NULL;

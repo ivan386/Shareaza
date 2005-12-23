@@ -364,6 +364,28 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 			Network.m_pHost.sin_addr.S_un.S_addr = m_nClientID;
 		}
 	}
+	else
+	{
+		if ( ( Settings.eDonkey.ForceHighID ) && ( Network.IsStable() ) && 
+			 ( Settings.Connection.FirewallStatus != CONNECTION_FIREWALLED ) )
+		{	
+			// We got a low ID when we should have gotten a high ID.
+			// Most likely, the user's router needs to get a few UDP packets before it opens up.
+			DWORD tNow = GetTickCount();
+
+			if ( Network.m_tLastED2KServerHop > tNow ) Network.m_tLastED2KServerHop = tNow;
+
+			if ( ( Network.m_tLastED2KServerHop + ( 8 * 60 * 60 * 1000 ) ) < tNow  )
+			{
+				// Try another server, but not more than once every 8 hours to avoid wasting server bandwidth
+				// If the user has messed up their settings somewhere.
+				Network.m_tLastED2KServerHop = tNow;
+				theApp.Message( MSG_ERROR, _T("ED2K server gave a low-id when we were expecting a high-id.") );
+				Close( IDS_CONNECTION_CLOSED );
+				return FALSE;
+			}
+		}
+	}
 
 	CString strServerFlags;
 	strServerFlags.Format(
