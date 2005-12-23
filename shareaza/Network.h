@@ -53,7 +53,7 @@ public:
 	BOOL			m_bEnabled;				// If the network "enabled" (Connected or trying)
 	BOOL			m_bAutoConnect;
 	DWORD			m_tStartedConnecting;	// The time Shareaza started trying to connect
-	DWORD			m_tLastConnect;			// The last time a neighbout connection attempt was made
+	DWORD			m_tLastConnect;			// The last time a neighbour connection attempt was made
 protected:
 	HANDLE			m_hThread;
 	DWORD			m_nSequence;

@@ -73,10 +73,11 @@ CNetwork::CNetwork()
 	
 	m_bEnabled				= FALSE;
 	m_bAutoConnect			= FALSE;
+	m_tStartedConnecting	= 0;
+	m_tLastConnect			= 0;
+
 	m_nSequence				= 0;
 	m_hThread				= NULL;
-	m_tLastConnect			= 0;
-	m_tStartedConnecting	= 0;
 }
 
 CNetwork::~CNetwork()

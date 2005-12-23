@@ -991,15 +991,14 @@ void CNeighboursWithConnect::Maintain()
 	// Make 4-by-3 arrays that count how many connections of each network and role we have and need
 	int nCount[4][3], nLimit[4][3];
 
-	// Get the time now
-	DWORD tTimer = GetTickCount(); // The tick count now, number of milliseconds since the user turned the computer on
-	DWORD tNow   = static_cast< DWORD >( time( NULL ) );   // The time now, number of seconds since the start of January 1, 1970
+	// Get the time
+	DWORD tTimer = GetTickCount();							// The tick count (milliseconds)
+	DWORD tNow   = static_cast< DWORD >( time( NULL ) );	// The time (in seconds) 
 
-	// Don't run this method until more than 150 milliseconds have passed since the network has made the last connection (do)
-	if ( Settings.Connection.ConnectThrottle != 0 )
+	// Don't initiate neighbour connections too quickly if connections are limited
+	if ( ( Settings.Connection.ConnectThrottle != 0 ) && ( tTimer >= Network.m_tLastConnect ) )
 	{
-		// If the last connection was made less than 150 milliseconds ago, we don't have to maintain anything, leave now
-		if ( tTimer < Network.m_tLastConnect ) return; // Make sure the value in Network.m_tLastConnect is valid for the next comparison
+		// If we've started a new connection recently, wait a little before starting another
 		if ( tTimer - Network.m_tLastConnect < Settings.Connection.ConnectThrottle ) return;
 	}
 
@@ -1125,21 +1124,19 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_G1 ][ ntLeaf ] = Settings.Gnutella1.NumLeafs; // 0 by default
 	}
 
-	// We're not supposed to be connected to Gnutella2 at all
 	if ( Settings.Gnutella2.EnableToday == FALSE )
 	{
 		// Set the limit as no Gnutella2 hub or leaf connections allowed at all
 		nLimit[ PROTOCOL_G2 ][ ntHub ] = nLimit[ PROTOCOL_G2 ][ ntLeaf ] = 0;
-
-	} // We're a leaf on the Gnutella2 network
+	} 
 	else if ( m_bG2Leaf )
-	{
+	{	// We're a leaf on the Gnutella2 network
 		// Set the limit for Gnutella2 hub connections as whichever is smaller, the number from settings, or 3
 		nLimit[ PROTOCOL_G2 ][ ntHub ] = min( Settings.Gnutella2.NumHubs, 3 ); // NumHubs is 2 by default
 
-	} // We're a hub on the Gnutella2 network
+	} 
 	else
-	{
+	{	// We're a hub on the Gnutella2 network
 		// Set the limit for Gnutella2 hub connections as whichever number from settings is bigger, peers or hubs
 		nLimit[ PROTOCOL_G2 ][ ntHub ] = max( Settings.Gnutella2.NumPeers, Settings.Gnutella2.NumHubs ); // Defaults are 6 and 2
 
@@ -1147,7 +1144,6 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_G2 ][ ntLeaf ] = Settings.Gnutella2.NumLeafs; // 1024 by default
 	}
 
-	// We're not supposed to be connected to eDonkey2000 at all
 	if ( Settings.eDonkey.EnableToday )
 	{
 		// Set the limit for eDonkey2000 hub connections as whichever is smaller, 1, or the number from settings
@@ -1184,8 +1180,7 @@ void CNeighboursWithConnect::Maintain()
 				// For Gnutella and Gnutella2, try connection to the number of free slots multiplied by the connect factor from settings
 				nAttempt = ( nLimit[ nProtocol ][ ntHub ] - nCount[ nProtocol ][ ntHub ] );
 				nAttempt *=  Settings.Gnutella.ConnectFactor;
-
-			} // We are going to try to connect to an eDonkey2000 computer
+			}
 			else
 			{
 				// For ed2k we try one attempt at a time to begin with, but we can step up to 
@@ -1197,7 +1192,7 @@ void CNeighboursWithConnect::Maintain()
 			}
 
 			// Lower the needed hub number to avoid hitting Windows XP Service Pack 2's half open connection limit
-			nAttempt = min(nAttempt, ( Settings.Downloads.MaxConnectingSources - 2 ) ); // On my SP2 machine here, MaxConnectingSources is 28 (do)
+			nAttempt = min(nAttempt, ( Settings.Downloads.MaxConnectingSources - 2 ) );
 
 			// In the loop for eDonkey2000, handle priority eDonkey2000 servers
 			if ( nProtocol == PROTOCOL_ED2K )
@@ -1299,20 +1294,18 @@ void CNeighboursWithConnect::Maintain()
 
 				// If this is a hub connection that connected to us recently
 				if (
-
 					// If this connection isn't down to a leaf, and
-					pNeighbour->m_nNodeType != ntLeaf &&
-
+					( pNeighbour->m_nNodeType != ntLeaf ) &&
 					// This connection is for the protocol we're looping on right now, and
-					pNeighbour->m_nProtocol == nProtocol &&
-
+					( pNeighbour->m_nProtocol == nProtocol ) &&
 					// If the neighbour connected to us
-					( pNeighbour->m_bAutomatic              || // The neighbour is automatic (do), or
+					( pNeighbour->m_bAutomatic              || // The neighbour is automatic, or
 					  !pNeighbour->m_bInitiated             || // The neighbour connected to us, or
-					  nLimit[ nProtocol ][ ntHub ] == 0 ) )    // We're really not supposed to be connected to this network at all, anyway
+					  nLimit[ nProtocol ][ ntHub ] == 0 ) )    // We're not supposed to be connected to this network at all
 				{
-					// If we haven't found a winner yet, or this one connected after the current winner, this one is it
-					if ( pNewest == NULL || pNeighbour->m_tConnected > pNewest->m_tConnected ) pNewest = pNeighbour;
+					// If this is the newest hub, remember it.
+					if ( pNewest == NULL || pNeighbour->m_tConnected > pNewest->m_tConnected ) 
+						pNewest = pNeighbour;
 				}
 			}
 
