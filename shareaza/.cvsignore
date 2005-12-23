@@ -1,3 +1,7 @@
 *.ncb
 *.aps
 *.suo
+Debug
+Shareaza_i.c
+ShareazaOM.h
+Release
