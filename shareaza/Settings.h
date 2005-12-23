@@ -316,6 +316,7 @@ public:
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
 		BOOL		FastConnect;				// Try connecting to 2 servers to get online faster
+		BOOL		ForceHighID;				// Reconnect if low-id. (once only)
 		DWORD		NumServers;					// 1
 		int			MaxLinks;					// Max ed2k client links
 		int			MaxResults;
@@ -340,6 +341,7 @@ public:
 		DWORD		ReAskTime;
 		DWORD		DequeueTime;
 		DWORD		ExtendedRequest;
+		BOOL		SendPortServer;				// Send port in tag to ed2k servers. (not needed for newer servers)
 		BOOL		MagnetSearch;				// Search for magnets over ed2k (lower server load)
 		DWORD		MinServerFileSize;			// Minimum size a file in the library must be in order to be included in the server file list. (In KB)
 		BOOL		TagNames;					// Add (Shareaza.com) to user name over ed2k

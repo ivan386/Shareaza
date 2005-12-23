@@ -278,6 +278,7 @@ void CSettings::Setup()
 	
 	Add( _T("eDonkey.EnableAlways"), &eDonkey.EnableAlways, FALSE );
 	Add( _T("eDonkey.FastConnect"), &eDonkey.FastConnect, TRUE );
+	Add( _T("eDonkey.ForceHighID"), &eDonkey.ForceHighID, FALSE );
 	Add( _T("eDonkey.NumServers"), &eDonkey.NumServers, 1 );
 	Add( _T("eDonkey.MaxLinks"), &eDonkey.MaxLinks, 200 );
 	Add( _T("eDonkey.MaxResults"), &eDonkey.MaxResults, 100 );
@@ -303,6 +304,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.DequeueTime"), &eDonkey.DequeueTime, 3610 );
 	Add( _T("eDonkey.TagNames"), &eDonkey.TagNames, TRUE );
 	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, 1 );
+	Add( _T("eDonkey.SendPortServer"), &eDonkey.SendPortServer, TRUE );
 	Add( _T("eDonkey.MagnetSearch"), &eDonkey.MagnetSearch, TRUE );
 	Add( _T("eDonkey.MinServerFileSize"), &eDonkey.MinServerFileSize, 0 );
 	Add( _T("eDonkey.DefaultServerFlags"), &eDonkey.DefaultServerFlags, 0xFFFFFFFF );	

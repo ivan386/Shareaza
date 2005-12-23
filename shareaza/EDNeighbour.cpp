@@ -181,7 +181,11 @@ BOOL CEDNeighbour::OnConnected()
 	pPacket->WriteLongLE( m_nClientID );
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 
-	pPacket->WriteLongLE( 5 );	// Number of tags
+	// Number of tags
+	if ( Settings.eDonkey.SendPortServer )
+		pPacket->WriteLongLE( 5 );	
+	else		
+		pPacket->WriteLongLE( 4 );
 	
 	// Tags sent to the server
 
@@ -190,7 +194,8 @@ BOOL CEDNeighbour::OnConnected()
 	// Version ('ed2k version')
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket, 0 );
 	// Port
-	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket, 0 );
+	if ( Settings.eDonkey.SendPortServer )
+		CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket, 0 );
 	// Software Version ('Client Version').	
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket, 0 );
 	// Flags indicating capability
