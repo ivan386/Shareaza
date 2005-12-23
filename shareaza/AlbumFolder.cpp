@@ -592,6 +592,20 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 	if ( pFile->m_pMetadata == NULL && m_pParent != NULL && 
 		 m_sSchemaURI != CSchema::uriGhostFolder ) return FALSE;
 
+	if ( pFile->IsGhost() )
+	{
+		if ( m_sSchemaURI == CSchema::uriGhostFolder )
+		{
+			AddFile( pFile );
+			return TRUE;
+		}
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
+		{
+			bResult |= GetNextFolder( pos )->OrganiseFile( pFile );
+		}
+		return bResult;
+	}
+
 	if ( m_sSchemaURI == CSchema::uriMusicRoot )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriAudio ) ) return FALSE;
@@ -900,15 +914,6 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 		if ( ! pFile->IsSchemaURI( CSchema::uriDocument ) &&
 			 ! pFile->IsSchemaURI( CSchema::uriSpreadsheet ) &&
 			 ! pFile->IsSchemaURI( CSchema::uriPresentation ) ) return FALSE;
-		AddFile( pFile );
-		return TRUE;
-	}
-	else if ( m_sSchemaURI == CSchema::uriGhostFolder )
-	{
-		if ( ! pFile->IsGhost() )
-		{
-			return FALSE;
-		}
 		AddFile( pFile );
 		return TRUE;
 	}
