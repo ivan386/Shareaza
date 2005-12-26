@@ -13,7 +13,6 @@
 <fonts>
 	<font name="System.Plain" face="Tahoma" size="11" />
 	<font name="System.Bold" face="Tahoma" size="11" weight="bold" />
-	<font name="Panel.Caption" face="Tahoma" size="12" weight="bold" />
 </fonts>
 
 <!-- Manifest -->

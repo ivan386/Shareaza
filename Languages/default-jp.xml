@@ -13,7 +13,6 @@
 <fonts>
 	<font name="System.Plain" face="MS UI Gothic" size="11"/>
 	<font name="System.Bold" face="MS UI Gothic" size="12"/>
-	<font name="Panel.Caption" face="MS UI Gothic" size="12" weight="bold" />
 </fonts>
 
 <!-- Manifest -->
@@ -1325,6 +1324,7 @@
 		<item id="ID_MEDIA_OPEN" text="再生リストを開く(_O)..."/>
 		<item id="ID_MEDIA_SAVE" text="再生リストを保存(_S)..."/>
 		<item id="ID_MEDIA_CLEAR" text="再生リストをクリア(_C)..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="コレクションをエクスポート(_x)..."/>
 		<separator/>
 		<item id="ID_MEDIA_PLAYLIST" text="再生リストを表示(_Y)..."/>
 	</menu>
@@ -3111,6 +3111,8 @@
 	<string id="20005" value="無効"/>
  	<string id="20006" value="有効"/>
 	<string id="20007" value="自動"/>
+	<string id="20008" value="標準"/>
+	<string id="20009" value="指定"/>
 	<string id="20100" value="接続中"/>
 	<string id="20101" value="要求中"/>
 	<string id="20102" value="応答"/>
