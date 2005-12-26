@@ -11,11 +11,12 @@
 		author="RocketX"
 		link="http://www.shareaza.com/"
 		Description="Skin based on the Shareaza Website"
-		version="1.34"
-		type="Skin"
-		language="en" />
+		version="1.35"
+		type="Skin"/>
     <fonts> 
       <font name="Panel.Caption" face="Arial" size="12" weight="plain"/>
+      <font name="Panel.Caption" language="jp" face="MS UI Gothic" size="12" weight="normal"/>
+      <font name="Panel.Caption" language="chs" face="Tahoma" size="12" weight="bold"/>
     </fonts>
     <!-- Manifest -->
     <colourScheme> 
