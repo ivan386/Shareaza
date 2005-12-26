@@ -1247,44 +1247,49 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 		if ( pXML->IsNamed( _T("font") ) )
 		{
 			CString strName		= pXML->GetAttributeValue( _T("name") );
+			CString strLanguage	= pXML->GetAttributeValue( _T("language") );
 			CString strFace		= pXML->GetAttributeValue( _T("face") );
 			CString strSize		= pXML->GetAttributeValue( _T("size") );
 			CString strWeight	= pXML->GetAttributeValue( _T("weight") );
 			
-			CFont* pFont = NULL;
-
-			if ( strName.CompareNoCase( _T("system.plain") ) == 0 )
+			if ( ( Settings.General.Language.CompareNoCase( strLanguage ) == 0 ) ||
+				 strLanguage.IsEmpty() )
 			{
-				pFont = &CoolInterface.m_fntNormal;
-			}
-			else if ( strName.CompareNoCase( _T("system.bold") ) == 0 )
-			{
-				pFont = &CoolInterface.m_fntBold;
-			}
-			else if ( strName.CompareNoCase( _T("panel.caption") ) == 0 )
-			{
-				pFont = &CoolInterface.m_fntCaption;
-			}
-			else
-			{
-				continue;
-			}
-			
-			if ( pFont->m_hObject ) pFont->DeleteObject();
+				CFont* pFont = NULL;
 
-			if ( strWeight.CompareNoCase( _T("bold") ) == 0 )
-				strWeight = _T("700");
-			else
-				strWeight = _T("400");
+				if ( strName.CompareNoCase( _T("system.plain") ) == 0 )
+				{
+					pFont = &CoolInterface.m_fntNormal;
+				}
+				else if ( strName.CompareNoCase( _T("system.bold") ) == 0 )
+				{
+					pFont = &CoolInterface.m_fntBold;
+				}
+				else if ( strName.CompareNoCase( _T("panel.caption") ) == 0 )
+				{
+					pFont = &CoolInterface.m_fntCaption;
+				}
+				else
+				{
+					continue;
+				}
+				
+				if ( pFont->m_hObject ) pFont->DeleteObject();
 
-			int nFontSize = theApp.m_nDefaultFontSize, nFontWeight = FW_NORMAL;
+				if ( strWeight.CompareNoCase( _T("bold") ) == 0 )
+					strWeight = _T("700");
+				else
+					strWeight = _T("400");
 
-			_stscanf( strSize, _T("%i"), &nFontSize );
-			_stscanf( strWeight, _T("%i"), &nFontWeight );
+				int nFontSize = theApp.m_nDefaultFontSize, nFontWeight = FW_NORMAL;
 
-			pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
-				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-				DEFAULT_PITCH|FF_DONTCARE, strFace );
+				_stscanf( strSize, _T("%i"), &nFontSize );
+				_stscanf( strWeight, _T("%i"), &nFontWeight );
+
+				pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
+					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+					DEFAULT_PITCH|FF_DONTCARE, strFace );
+			}
 		}
 		else if ( pXML->IsNamed( _T("import") ) )
 		{
