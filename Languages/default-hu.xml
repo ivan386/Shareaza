@@ -18,7 +18,7 @@ updatedBy="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.2.0.2"
+version="2.2.2.8"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -293,7 +293,7 @@ prompt="Kattints ide a magyar nyelvhez."
        </toolbar>
        <!-- MEDIA WINDOW -->
        <toolbar name="CMediaFrame.Basic">
-               <button id="ID_MEDIA_PLAY" text="Lejátszás"/>
+               <button id="ID_MEDIA_PLAY" text="Lejátszás&#160;&#160;&#160;"/>
                <button id="ID_MEDIA_PAUSE" text="Szünet" visible="false"/>
                <button id="ID_MEDIA_STOP" text="Stop"/>
                <separator/>
@@ -310,7 +310,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <button id="ID_MEDIA_PLAYLIST" text="Lejátszólista"/>
        </toolbar>
        <toolbar name="CMediaFrame">
-               <button id="ID_MEDIA_PLAY" text="Lejátszás"/>
+               <button id="ID_MEDIA_PLAY" text="Lejátszás&#160;&#160;&#160;"/>
                <button id="ID_MEDIA_PAUSE" text="Szünet" visible="false"/>
                <button id="ID_MEDIA_STOP" text="Stop"/>
                <separator/>
@@ -1316,6 +1316,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <separator/>
                <item id="ID_MEDIA_OPEN" text="Lejátszólista megnyitása..."/>
                <item id="ID_MEDIA_SAVE" text="Lejátszólista mentése..."/>
+               <item id="ID_MEDIA_EXPORT_COLLECTION" text="Gyűjtemény exportálása..."/>
                <item id="ID_MEDIA_CLEAR" text="Lejátszólista törlése..."/>
                <separator/>
                <item id="ID_MEDIA_PLAYLIST" text="Lejátszólista mutatása"/>
@@ -2338,6 +2339,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_MEDIA_ASPECT_DEFAULT" message="A videó eredeti kéaránya."/>
        <tip id="ID_MEDIA_CLEAR" message="Lejátszólista törlése (ürítése)."/>
        <tip id="ID_MEDIA_CLOSE" message="Zárd be a médiafájlt memóriaspórolás céljából."/>
+       <tip id="ID_MEDIA_EXPORT_COLLECTION" message="Lejátszólista mentése, mint gyűjtemény..."/>
        <tip id="ID_MEDIA_FULLSCREEN" message="Teljes képernyős mód."/>
        <tip id="ID_MEDIA_MUTE" message="Némítás."/>
        <tip id="ID_MEDIA_NEXT" message="Előremegy a következő fájlra." tip="Következő"/>
@@ -2509,18 +2511,22 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="7003" value="Több"/>
        <string id="7004" value="Már van ilyen nevű szűrő: &quot;%s&quot; Ki akarod ezzel cserélni?"/>
        <string id="7005" value="Adj a szűrőnek egy nevet."/>
+       <string id="7100" value="Ez a sablon érvénytelen."/>
+       <string id="7101" value="Ez a sablon semmi egyedi beállítást nem tartalmaz."/>
+       <string id="7102" value="Biztos törölni akarod a(z) &quot;%s&quot; sablont?\nKésőbb már nem lehet visszavonni."/>
        <string id="8000" value="Beállítások"/>
        <string id="8001" value="Üdvözöllek a Shareazában"/>
        <string id="8002" value="Fájl tulajdonságai"/>
        <string id="8003" value="Saját profil szerkesztése"/>
        <string id="8004" value="!Üdvözöllek a Shareazában! Verziószám: (version) \n.\nA Shareaza teljesen ingyenes.\nKérlek, használd felelősséggel és tiszteld mások jogait.\n."/>
        <string id="8005" value="(forgalom után bezárás)"/>
-       <string id="8006" value="Nem vagy kapcsolódva. Kattints a Kapcsolódás gombra a kezdéshez."/>
+       <string id="8006" value="Nincs kapcsolat. Kattints a Kapcsolódás gombra a kezdéshez."/>
        <string id="8007" value="Nincsen aktív keresés. Kattints ide a fájlok kereséséhez."/>
        <string id="8008" value="A Shareaza letöltötte a legújabb, Shareaza (%s) verziót. Szeretnéd most frissíteni a proramot?\n\nHa igen, a Shareaza bezárja magát a telepítés idejére."/>
        <string id="8009" value="Biztos, hogy törölni akarod a &quot;%s&quot; kinézetet? Ezt már nem lehet később visszavonni."/>
        <string id="8010" value="Ez a Shareaza béta verziója. Töltsd le a legújabb stabil verziót a www.shareaza.com -ról."/>
        <string id="8011" value="A kinézet megváltoztatása bezár minden nyitott ablakot. Most akarod megvátoztatni?"/>
+       <string id="8012" value="Torrent adatok"/>
        <string id="8060" value="Hub/Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>
        <string id="8061" value="Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>
        <string id="8062" value="Hub mód %lu szomszéddal.  %s a helyi könyvtárban."/>
@@ -2606,6 +2612,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8240" value="Letöltés áthelyezése:"/>
        <string id="8241" value="Hibaellenőrzés:"/>
        <string id="8243" value="Feltöltve:"/>
+       <string id="8244" value="Megjegyzések száma:"/>
        <string id="8288" value="Tallózás a könyvtárban"/>
        <string id="8289" value="Tallózás "/>
        <string id="8290" value="%i mappa tartalmának a tallózása"/>
@@ -2628,7 +2635,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8316" value="Találatok"/>
        <string id="8317" value="Feltöltések"/>
        <string id="8318" value="%lu ma, %lu teljes"/>
-          <string id="8319" value="&#160;(Nincs Hash)"/>
+       <string id="8319" value="&#160;(Nincs Hash)"/>
        <string id="8320" value="Státusz:"/>
        <string id="8321" value="Sebesség:"/>
        <string id="8322" value="URL:"/>
@@ -2646,6 +2653,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8334" value="A források ehhez a fájlhoz elfoglaltak"/>
        <string id="8335" value="A források ehhez a fájlhoz passzívak"/>
        <string id="8336" value="A források ehhez a fájlhoz bizonytalanok"/>
+       <string id="8337" value="Megbízhatatlan"/>
        <string id="16064" value="Shareaza hálózati mag indítása..."/>
        <string id="16065" value="Nem tudok kacsolódni: %s port %i A bejövő kacsolatok nem támogatottak."/>
        <string id="16066" value="Shareaza hálózati mag leállítása..."/>
@@ -2844,7 +2852,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16388" value="Ez az opció a Bitzi.com fájlinformációs szolgáltatásait használja.\n\nA Shareaza a fájl SHA1 hash kódját elküldi a Bitzi adatbázisába. Ha nem bízol meg a Bitziben, akkor olvasd el a Bitzi.com adatvédelmi szabályzatát.\n\nTovább akarsz menni?"/>
        <string id="16389" value="Biztos, hogy törölni akarod a %i fájlt?\n\nA fájl(ok) a &quot;Lomtárba&quot; kerülnek, ha be van kapcsolva."/>
        <string id="16390" value="Nincs médialejátszó kiválasztva, mint a Nullsoft WinAmp, ami fel tudná venni a fájlokat egy lejátszólistába.  Most akarod kiválasztani?\n\nA Shareaza az &quot;/ADD&quot; paranccsal küldi át a fájlokat a listába."/>
-       <string id="16391" value="Nem vagy kapcsolódva a hálózathoz."/>
+       <string id="16391" value="Nincs kapcsolat a hálózatokkal."/>
        <string id="16392" value="Kattints a Kapcsolódás gombra a kezdéshez."/>
        <string id="16393" value="A(z) ;%s&quot; fájl megbukott a hash ellenőrzésen és valószínűleg nem az a fájl, amit te szeretnél. Biztos meg akarod nyitni?"/>
        <string id="16394" value="El akarod távolítani a &quot;potenciálisan veszélyes&quot; tulajdonságát a fájlnak?"/>
@@ -2864,7 +2872,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16408" value="URL másolása"/>
        <string id="16409" value="URL exportálása..."/>
        <string id="16410" value="A kész és a félkész fájlok ne legyenek azonos mappában!"/>
-       <string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
+       <string id="16411" value="Nem tudom mozgatni: %s. Talán egy másik program használja.\n\nInkább másolni akarod?"/>
        <string id="16448" value="Kapcsolódva: %s, viszontválaszra várva..."/>
        <string id="16449" value="Jelenleg vele beszélgetsz: %s (%s)."/>
        <string id="16450" value="Kapcsolat bezárva: %s."/>
@@ -2876,7 +2884,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16456" value="Nem lehet kapcsolódni: %s."/>
        <string id="16457" value="Kapcsolódás nem sikerült az érvénytelen adat miatt."/>
        <string id="16458" value="Ismeretlen választ kaptam: %s"/>
-       <string id="16459" value="Nem vagy kapcsolódva."/>
+       <string id="16459" value="Nincs kapcsolat."/>
        <string id="16512" value="Teljes letöltési sávszél"/>
        <string id="16513" value="Teljes feltöltési sávszél"/>
        <string id="16514" value="Gnutella kapcsolatok (minden)"/>
@@ -3089,16 +3097,22 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="18508" value="Forrás %s a(z) &quot;%s&quot;, mert a %i. hely a sorban túl magas."/>
        <string id="18509" value="Nem tudod a letöltést késznek tekinteni és ellenőrizni, mert nincs hash értéked hozzá."/>
        <string id="18510" value="Késznek veszed a letöltést és úgy ellenőrzöd?  A fájl újra lesz hashelve,  jó és rossz részek is elfogadásra kerülnek."/>
+       <string id="18511" value="BitTorrent kapcsolódás nincs elfogadva: %s, a több kapcsolat már nem hozható létre."/>
+       <string id="18512" value="Privát torrent"/>
+       <string id="18513" value="Kódolási hiba"/>
        <string id="19000" value="Távoli használat kikapcsolva."/>
        <string id="19001" value="Egy felhasználónevet és egy jelszót kell választanod."/>
        <string id="19002" value="Nem tudom fogadni a kapcsolatokat, URL érvénytelen."/>
        <string id="20000" value="Nincs elérhető URN"/>
+       <string id="20001" value="Close"/>
        <string id="20002" value="/"/><!-- e.g. 1 of 10 -->
        <string id="20003" value="A szövegirány megváltoztatásához újra kell indítani a programot. \nKézzel kell újra elindítanod a Shareazát. Kilépés most?"/>
        <string id="20004" value="A jobbról balra írást nem támogatja az operációs rendszered."/>
        <string id="20005" value="Nem"/>
        <string id="20006" value="Igen"/>
        <string id="20007" value="Auto"/>
+       <string id="20008" value="Alapértelmezett"/>
+       <string id="20009" value="Saját"/>
        <string id="20100" value="Kapcsolódás"/>
        <string id="20101" value="Kérés"/>
        <string id="20102" value="Válasz"/>
@@ -3218,8 +3232,9 @@ prompt="Kattints ide a magyar nyelvhez."
                <control/><control/>
        </dialog>
 
-       <dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Médialejátszó">
+       <dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="Medialejátszó">
                <control caption="Opciók:"/>
+               <control/>
                <control caption="A listában lévő fájltípusok lejátszása"/>
                <control caption="A listában lévő fájltípusok lejátszólistába való helyezése"/>
                <control caption="Fájltípusok:"/>
@@ -3228,8 +3243,6 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Eltávolít"/>
                <control caption="Képi megjelenítés plugin:"/>
                <control caption="Plugin kiválasztása..."/>
-               <control caption="Médiaszolgáltatások plugin:"/>
-               <control/>
        </dialog>
 
        <dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Közösség">
@@ -3441,7 +3454,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <control caption="torrent letöltése egyszerre"/>
        <control/><control/>
        <control caption="kliens kapcsolódhat hozzám egyszerre"/>
-       <control caption="&#160;Letöltött torrentek törlése,&#160;&#160;&#160;&#160;&#160;&#160;ha a megosztási arány ezt eléri:"/>
+       <control caption="&#160;Letöltött torrentek törlése, ha a megosztási arány ezt eléri:"/>
        <control/><control/><control/>
        <control caption="&#160;Előbb a torrentforrásokat használja"/>
        <control caption="EndGame:"/>
@@ -4091,27 +4104,41 @@ prompt="Kattints ide a magyar nyelvhez."
                <control/>
        </dialog>
 
-       <dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Mappa exportálása">
-               <control caption="Exportálja az albummappákat egy gyűjteményfájlba."/>
-               <control caption="Exportálás..."/>
+       <dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Gyűjtemény exportálása">
+               <control caption="Ezzel a szolgáltatással a mappáid tartalmát egy gyűjteményfájlba tudod összegyűjteni. Válassz a sablonok közül.|Állítsd be a gyűjteményfájlodat az alábbi lehetőségekkel."/>
+               <control/>
+               <control caption="Sablon adatai:"/>
+               <control caption="Név:"/>
+               <control/>
+               <control caption="Készítő:"/>
+               <control/>
+               <control caption="Leírás:"/>
+               <control/>
+               <control caption="Törlés|Vissza"/>
+               <control caption="Következő|Export"/>
                <control caption="Mégse"/>
        </dialog>
 
-       <dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Letöltés szerkesztése">
+       <dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Letöltés szerkesztése">
                <control caption="FIGYELEM: Ez az ablak különleges beállításokat tartalmaz. A helytelen beállítások az adatok meghibásodását okozhatják!"/>
+               <control caption="Fájlnév és méret:"/>
                <control caption="Fájlnév:"/>
+               <control/><control/>
+               <control caption="Méret (Bájt):"/>
                <control/>
                <control caption="URN-ek:"/>
+               <control caption="Megbízható"/>
                <control caption="SHA1:"/>
-               <control/>
+               <control/><control/>
                <control caption="Tiger-Root:"/>
-               <control/>
+               <control/><control/>
                <control caption="ED2K:"/>
-               <control/>
+               <control/><control/>
                <control caption="Eszközök:"/>
-               <control caption="Újraellenőrzés (TTH vagy eD2k hash)"/>
-                <control caption="Az adat 100%-osnak vétele és így újraellenőrzése"/>
-               <control caption="Minden forrás elfelejtése"/>
+               <control caption="Újraellenőrzés"/>
+               <control caption="Adat 100%-osnak vétele és így újraellenőrzése"/>
+               <control caption="Minden ismert forrás elfelejtése"/>
+               <control caption="Helyi fájllal való egyesítés és újraellenőrzés"/>
                <control caption="Adattörlő:"/>
                <control caption="Törlés (tól-ig):"/>
                <control/>
@@ -4133,31 +4160,49 @@ prompt="Kattints ide a magyar nyelvhez."
            <control/>
        </dialog>
 
-       <dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent információk">
-           <control caption="Torrent adatok:"/>
-           <control caption="Név:"/>
-           <control/>
-           <control caption="Készült:"/>
-           <control/>
-           <control caption="Készítő:"/>
-           <control/>
-           <control caption="Megjegyzés:"/>
-           <control/>
-           <control caption="Tracker:"/>
-           <control/>
-           <control caption="Letöltők:"/>
-           <control caption="Kész (terjesztők):"/>
-           <control/>
-           <control caption="Félkész:"/>
-           <control/>
-           <control caption="Forgalom:"/>
-           <control caption="Új letöltés indítása:"/>
-           <control caption="Ha szükséges|Ha az arány több, mint 100%|Csak ha felajánlják|Soha"/>
-           <control caption="Fájlok:"/>
-           <control/>
-           <control caption="Frissítés"/>
-           <control/>
-           <control caption="Bezár"/>
+       <dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Általános">
+               <control caption="Torrent adatai:"/>
+               <control caption="Név:"/>
+               <control/>
+               <control caption="Készült:"/>
+               <control/>
+               <control caption="Készítő:"/>
+               <control/>
+               <control caption="Megjegyzés:"/>
+               <control/>
+               <control caption="Forgalom:"/>
+               <control caption="Új letöltés indítása:"/>
+               <control caption="&#160;Ha szükséges| Ha az arány több, mint 100%| Legvégső esetben| Soha"/>
+               <control/>
+               <control caption="Teljes feltöltés:"/>
+               <control caption="Megjegyzés:"/>
+               <control/>
+       </dialog>
+
+       <dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Fájlok">
+               <control caption="Torrent adatai:"/>
+               <control caption="Név:"/>
+               <control/>
+               <control caption="Fájlok:"/>
+               <control/>
+       </dialog>
+
+       <dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackerek">
+               <control caption="Torrent adatai:"/>
+               <control caption="Név:"/>
+               <control/>
+               <control caption="Tracker:"/>
+               <control/>
+               <control caption="Jelenlegi trackerek:"/>
+               <control caption="Kész (Seedek):"/>
+               <control/>
+               <control caption="Félkész:"/>
+               <control/>
+               <control caption="Frissít"/>
+               <control caption="Trackerek:"/>
+               <control/>
+               <control caption="Tracker fajtája:"/>
+               <control caption="Letiltva|Saját|Egy tracker|Multi-tracker|Multi-tracker (lezárva)"/>
        </dialog>
 
        <dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Letöltési csoportok tulajdonságai">
@@ -4319,9 +4364,14 @@ prompt="Kattints ide a magyar nyelvhez."
          <column from="URL" to=""/>
          <column from="Expires" to="Lejárat"/>
        </list>
-       <list name="CTorrentTrackerList">
+       <list name="CTorrentFileList">
                <column from="Filename" to="Fájlnév"/>
                <column from="Size" to="Méret"/>
+       </list>
+       <list name="CTorrentTrackerList">
+               <column from="Tracker" to="Tracker"/>
+               <column from="Status" to="Helyzet"/>
+               <column from="Type" to="Típus"/>
        </list>
        <list name="CReviewList">
                <column from="User" to="Felhasználó"/>
