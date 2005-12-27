@@ -155,7 +155,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="fr">Ce dossier contient tous les fichiers correspondants à votre recherche de "{content}"</subtitle>
                <subtitle language="heb">ספרייה זו מכילה קבצים שהתאימו לחיפוש עבור "{content}"</subtitle>
                <subtitle language="hr">Ova mapa sadrži nađene datoteke po izrazu "{content}"</subtitle>
-               <subtitle language="hu">Ezek a mappák egyeznek a keresési feltétellel, ami {content} volt.</subtitle>
+               <subtitle language="hu">Ebben a mappában lévő fájlok egyeznek a keresési feltétellel, ami {content} volt.</subtitle>
                <subtitle language="it">Questa cartella contiene i file che corrispondono alla tua ricerca di "{content}"</subtitle>
                <subtitle language="jp">このフォルダーには "{content}" に当てはまるサーチ結果が収録されています</subtitle>
                <subtitle language="lt">Šiame kataloge yra bylos, surastos pagal ieškinį „{content}“.</subtitle>
