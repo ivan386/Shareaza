@@ -127,7 +127,7 @@
 		<button id="ID_SEARCH_CHAT" text="Platicar con Usuario"/>
 		<separator/>
 		<button id="ID_BROWSE_STOP" text="Detener"/>
-		<button id="ID_BROWSE_REFRESH" text="Refrescar"/>
+		<button id="ID_BROWSE_REFRESH" text="Actualizar"/>
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Detalles"/>
 		<rightAlign/>
@@ -408,7 +408,7 @@
 		<menu text="_Red">
 			<item id="ID_NETWORK_CONNECT" text="_Conectar" shortcut="Ctrl+G"/>
 			<separator/>
-			<menu text="Escoger _Redes">
+			<menu text="Seleccionar _Redes">
 				<item id="ID_NETWORK_G2" text="Conectar a_Gnutella2"/>
 				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Conectar a _Gnutella 1"/>
@@ -475,7 +475,7 @@
 			<item id="ID_NETWORK_CONNECT" text="_Conectar" shortcut="Ctrl+G"/>
 			<item id="ID_NETWORK_DISCONNECT" text="_Desconectar"/>
 			<separator/>
-			<menu text="Escoger Redes">
+			<menu text="Seleccionar Redes">
 				<item id="ID_NETWORK_G2" text="Conectar a _Gnutella2"/>
 				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Conectar a _Gnutella 1"/>
@@ -513,7 +513,7 @@
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="_Monitor de paquetes" shortcut="Ctrl+F1"/>
 				<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de Búsqueda" shortcut="Ctrl+F2"/>
-				<item id="ID_VIEW_RESULTS_MONITOR" text="_Hit Monitor" shortcut="Ctrl+F3"/>
+				<item id="ID_VIEW_RESULTS_MONITOR" text="_Monitor de resultados" shortcut="Ctrl+F3"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="_Modo Normal"/>
@@ -524,8 +524,8 @@
 			<item id="ID_LIBRARY_FOLDERS" text="Compartir _Archivos..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo/Torrent..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Elegir _Skin..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Elegir un _Idioma..."/>
+			<item id="ID_TOOLS_SKIN" text="Seleccionar _Skin..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Seleccionar un _Idioma..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editar Mi _Perfil..."/>
 			<item id="ID_TOOLS_WIZARD" text="Configuración _Rápida..."/>
@@ -548,7 +548,7 @@
 			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
 			<item id="ID_HELP_ROUTER" text="_Ayuda de Router"/>
 			<item id="ID_HELP_SECURITY" text="_Ayuda de Seguridad"/>
-			<item id="ID_HELP_CODEC" text="_Ayuda con Codec"/>
+			<item id="ID_HELP_CODEC" text="_Ayuda con Codecs"/>
 			</menu>
 			<separator/>
 	            <menu text="_Sitios">
@@ -597,7 +597,7 @@
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Monitor de paquetes" shortcut="Ctrl+F1"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de Búsqueda" shortcut="Ctrl+F2"/>
-			<item id="ID_VIEW_RESULTS_MONITOR" text="_Hit Monitor" shortcut="Ctrl+F3"/>
+			<item id="ID_VIEW_RESULTS_MONITOR" text="_Monitor de Resultados" shortcut="Ctrl+F3"/>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Modo Normal"/>
 			<item id="ID_VIEW_TABBED" text="Modo Avanzado"/>
@@ -607,8 +607,8 @@
 			<item id="ID_LIBRARY_FOLDERS" text="Compartir _Archivos..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo/Torrent..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Elegir _Skin..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Elegir un _Idioma..."/>
+			<item id="ID_TOOLS_SKIN" text="Seleccionar _Skin..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Seleccionar un _Idioma..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editar Mi _Perfil..."/>
 			<separator/>
@@ -634,7 +634,7 @@
 			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
 			<item id="ID_HELP_ROUTER" text="_Ayuda de Router"/>
 			<item id="ID_HELP_SECURITY" text="_Ayuda de Seguridad"/>
-			<item id="ID_HELP_CODEC" text="_Ayuda con Codec"/>
+			<item id="ID_HELP_CODEC" text="_Ayuda con Codecs"/>
 			</menu>
 			<separator/>
 	            <menu text="_Sitios">
@@ -764,7 +764,7 @@
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="_Monitor de paquetes"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de Búsqueda"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="_Hit Monitor"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="_Monitor de Resultados"/>
 	</menu>
 	<!-- HOST CACHE WINDOW -->
 	<menu name="CHostCacheWnd">
@@ -1139,7 +1139,7 @@
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Elegir _Columnas..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Seleccionar _Columnas..."/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propiedades"/>
 	</menu>
@@ -1209,7 +1209,7 @@
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Elegir _Columnas..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Seleccionar _Columnas..."/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propiedades"/>
 	</menu>
@@ -1243,7 +1243,7 @@
 			<item id="ID_MEDIA_FULLSCREEN" text="_Pantalla Completa"/>
 		</menu>
 		<menu text="Configuración">
-			<item id="ID_MEDIA_VIS" text="Escoger _Visualización..."/>
+			<item id="ID_MEDIA_VIS" text="Seleccionar _Visualización..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _lista de reproducción"/>
 			<item id="ID_MEDIA_STATUS" text="Mostrar _Estado de archivo multimedia"/>
@@ -1281,7 +1281,7 @@
 			<item id="ID_MEDIA_FULLSCREEN" text="_Pantalla Completa"/>
 		</menu>
 		<menu text="Configuración">
-			<item id="ID_MEDIA_VIS" text="Escoger _Visualización..."/>
+			<item id="ID_MEDIA_VIS" text="Seleccionar _Visualización..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _lista de reproducción"/>
 			<item id="ID_MEDIA_STATUS" text="Mostrar _Estado de archivo multimedia"/>
@@ -2174,7 +2174,7 @@
 	<tip id="ID_BROWSE_FILES" message="Ver los archivos compartidos"/>
 	<tip id="ID_BROWSE_LAUNCH" message="Explorar usuario."/>
 	<tip id="ID_BROWSE_PROFILE" message="Explorar el perfil del usuario."/>
-	<tip id="ID_BROWSE_REFRESH" message="Refrescar la lista de usuarios."/>
+	<tip id="ID_BROWSE_REFRESH" message="Actualizar la lista de usuarios."/>
 	<tip id="ID_BROWSE_STOP" message="Parar la exploración del usuario."/>
 	<tip id="ID_CHAT_BOLD" message="Aplicar negrita (Ctrl+B)"/>
 	<tip id="ID_CHAT_BROWSE" message="Explorar usuario."/>
@@ -2499,7 +2499,7 @@
     <string id="7002" value="Valores Multiple"/>
 	<string id="7003" value="Múltiple"/>
     <string id="7004" value="Ya hay un filtro llamado &quot;%s&quot;, deseas remplazarlo?"/>
-	<string id="7005" value="Por favor ponle al filtro un nombre."/>
+	<string id="7005" value="Por favor dale un nombre al filtro."/>
     <string id="8000" value="Configuración de Shareaza"/>
 	<string id="8001" value="Bienvenido a Shareaza"/>
 	<string id="8002" value="Propiedades del Archivo"/>
@@ -2693,7 +2693,7 @@
 	<string id="16194" value="Neighbour %s remitio un paquete con excesivo TTL, tirando paquete (TTL=%i, Hops=%i)."/>
 	<string id="16195" value="Neighbour %s remitio un paquete de ping con tama o invalido, ignorando."/>
 	<string id="16196" value="Neighbour %s remitio un paquete de pong con tamao invalido, ignorando."/>
-	<string id="16197" value="%s -> %s [%i/%i] %s %s"/>
+	<string id="16197" value="%s -&gt; %s [%i/%i] %s %s"/>
 	<string id="16198" value="El vecino en mode Leaf %s esta reenviando b squedas. Conexión cerrada."/>
 	<string id="16199" value="%s envió un paquete desconocido (0x%.2x)."/>
 	<string id="16200" value="%s envió un pong inválido."/>
@@ -2839,7 +2839,7 @@
 	<string id="16392" value="Haz click en Conectar, para empezar."/>
 	<string id="16393" value="El archivo %s falló la verificación, y puede no ser el correcto.  ¿Estás seguro(a) de abrirlo?"/>
 	<string id="16394" value="¿Quieres quitar el atributo de potencialmente inseguro de este archivo?"/>
-	<string id="16395" value="Tu carpeta de archivos descargados &quot;%s&quot; todavia no se encuentra en Mi Colección.\n\nIncluyendo tu carpeta de archivos descargados en Mi Colección hace más fácil ver y organizar tus nuevas descargas, y hay que tomar las ventajas de las avanzadas características de Shareaza como verificación de descarga y actualización automatica.  Poniendo los archivos descargados en Mi Colección no necesariamente requiere que los compartas: puedes elegir si deseas o no compartir los archivos independientemente.\n\n¿Deseas agregar tu carpeta de descargas a Mi Colección ahora?"/>
+	<string id="16395" value="Tu carpeta de archivos descargados &quot;%s&quot; todavia no se encuentra en Mi Colección.\n\nIncluyendo tu carpeta de archivos descargados en Mi Colección hace más fácil ver y organizar tus nuevas descargas, y hay que tomar las ventajas de las avanzadas características de Shareaza como verificación de descarga y actualización automatica.  Poniendo los archivos descargados en Mi Colección no necesariamente requiere que los compartas: puedes Seleccionar si deseas o no compartir los archivos independientemente.\n\n¿Deseas agregar tu carpeta de descargas a Mi Colección ahora?"/>
 	<string id="16396" value="La carpeta de archivos descargados fué agregada a Mi Colección.  ¿Quieres compartirla también?"/>
 	<string id="16397" value="¿Estás seguro(a) de eliminar %i carpetas(s) virtuales con información sobre albums?\n\nEsto no elimina los archivos fisicamente del disco duro, solo elimina la carpeta seleccionada de Mi Colección."/>
 	<string id="16398" value="Shareaza no pudo renombrar:\n\n%s\na\n%s"/>
@@ -3081,7 +3081,7 @@
 	<string id="18509" value="Esta descarga no se puede asumir completa, porque falta información sobre el hash, que es necesaria para verificarla."/>
 	<string id="18510" value="¿Estás seguro de asumir esta descara como completa y reverificarla? Shareaza reverificará el archivo, y aceptará las partes correctas, y descarga de nuevo aquellas incorrectas."/>
 	<string id="19000" value="El Acceso Remoto esta deshabilitado."/>
-	<string id="19001" value="Debes elegir un nombre de usuario y contraseña."/>
+	<string id="19001" value="Debes Seleccionar un nombre de usuario y contraseña."/>
 	<string id="19002" value="No se puede aceptar conexiones, URL no disponible."/>
 	<string id="20000" value="No hay URN disponible"/>
 	<string id="20001" value="Cerrar"/>
@@ -3212,7 +3212,7 @@
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Reproductor">
 		<control caption="_Opciones:"/>
-		<control caption="Usar el reproductor de Shareaza para Reproducir"/>
+		<control caption="Usar el reproductor de Shareaza para reproducir los archivos"/>
 		<control caption="Usar el reproductor de Shareaza para poner con cola"/>
 		<control caption="_Tipos de archivos:"/>
 		<control/>
@@ -4055,7 +4055,7 @@
 
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Descargar el archivo Server.met">
 		<control/>
-		<control caption="Descargar el Server.met para eDonkey2000 de la web para refrescar el cache local."/>
+		<control caption="Descargar el Server.met para eDonkey2000 de la web para actualizar el cache local."/>
 		<control/><control/>
 		<control caption="Aceptar"/>
 		<control caption="Cancelar"/>
