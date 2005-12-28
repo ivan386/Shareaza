@@ -1,9 +1,9 @@
 //
 // DownloadTask.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.23 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/12/28 09:17:52 $"
+//	Revision:		"$Revision: 1.24 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -386,6 +386,9 @@ void CDownloadTask::RunCopyTorrent()
 		strPath.Format( _T("%s\\%s"), (LPCTSTR)m_sPath, (LPCTSTR)rFile.m_sPath );
 		CreatePathForFile( m_sPath, rFile.m_sPath );
 		
+		// Do nothing if it was an empty folder
+		if ( rFile.m_sPath.Right( 1 ) == L"\\" ) continue;
+
 		theApp.Message( MSG_DEBUG, _T("Extracting %s..."), (LPCTSTR)strPath );
 		
 		if ( !CopyFile( hSource, strPath, rFile.m_nSize ) )
