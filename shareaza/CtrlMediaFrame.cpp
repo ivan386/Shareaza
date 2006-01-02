@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/11/28 14:42:35 $"
-//	Revision:		"$Revision: 1.36 $"
+//	Date:			"$Date: 2006/01/02 10:24:19 $"
+//	Revision:		"$Revision: 1.37 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -901,8 +901,11 @@ BOOL CMediaFrame::DoSizeList()
 
 LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 {
-	if ( wParam != 1 ) return 0;
+	if ( wParam != 1 && !IsTopParentActive() ) return 0;
 	
+	int nVolumeTick = 0;
+	int nVolumeDir = ( lParam == 0x90000 ? -1 : 1 );
+
 	switch ( lParam )
 	{
 	case 0xB0000:
@@ -913,6 +916,23 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		return 1;
 	case 0xD0000:
 		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_STOP );
+		return 1;
+	case 0x80000:
+		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_MUTE );
+		return 1;
+	case 0x90000:
+	case 0xA0000:
+		m_bMute = TRUE;
+		nVolumeTick = m_wndVolume.GetPos() + nVolumeDir;
+		if ( nVolumeDir == -1 && nVolumeTick >= 0 ||
+			 nVolumeDir == 1 && nVolumeTick <= 100 )
+			 m_wndVolume.SetPos( nVolumeTick );
+		else
+			nVolumeTick = nVolumeDir == -1 ? 0 : 100;
+		Settings.MediaPlayer.Volume = (double)nVolumeTick / 100.0f;
+		if ( m_pPlayer != NULL )
+			m_pPlayer->SetVolume( Settings.MediaPlayer.Volume );
+		m_bMute = FALSE;
 		return 1;
 	case 0xE0000:
 		GetOwner()->PostMessage( WM_COMMAND, m_nState == smsPlaying ? ID_MEDIA_PAUSE : ID_MEDIA_PLAY );
