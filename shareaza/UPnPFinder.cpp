@@ -30,7 +30,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-CUPnPFinder::CUPnPFinder(): 
+CUPnPFinder::CUPnPFinder()
+:	m_pDevices(),
+	m_pServices(),
 	m_bCOM( CoInitialize( NULL ) == S_OK ),
 	m_pDeviceFinder( CreateFinderInstance() ),
 	m_nAsyncFindHandle( 0 ),
