@@ -25,6 +25,7 @@
 #include "ComObject.h"
 #include "ShareazaOM.h"
 
+class CUPnPFinder;
 class CMainWnd;
 
 
@@ -58,6 +59,11 @@ public:
 	CString				m_sDefaultFont;				// Main font. (Tahoma)
 	CString				m_sPacketDumpFont;			// Packet Window. (Lucida Console)
 	CString				m_sSystemLogFont;			// System Window. (Courier New)
+
+	CUPnPFinder*		m_pUPnPFinder;
+	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
+	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
+	CString				m_sUPnPExternalIP;
 
 	HINSTANCE m_hUser32;
 	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
