@@ -863,12 +863,12 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 	if ( FAILED( hr = VariantChangeType( &varValue, &varValue, VARIANT_ALPHABOOL, VT_BSTR ) ) )
 		return UPnPMessage( hr );
 
-			CString strValue( varValue.bstrVal );
+	CString strValue( varValue.bstrVal );
 
-			// Re-examine state variable change only when discovery was finished
-			// We are not interested in the initial values; we will request them explicitly
-			if ( !m_instance.IsAsyncFindRunning() )
-			{
+	// Re-examine state variable change only when discovery was finished
+	// We are not interested in the initial values; we will request them explicitly
+	if ( !m_instance.IsAsyncFindRunning() )
+	{
 		if ( wcsicmp( pszStateVarName, L"ConnectionStatus" ) == 0 )
 		{
 			theApp.m_bUPnPDeviceConnected = strValue.CompareNoCase( L"Disconnected" ) == 0
@@ -879,7 +879,7 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 		}
 		else if ( wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
 					theApp.m_sUPnPExternalIP = strValue.Trim();
-			}
+	}
 
 	theApp.Message( MSG_DEBUG, L"UPnP device state variable %s changed to %s in %s",
 		pszStateVarName, strValue.IsEmpty()? L"NULL" : strValue.GetString(), bsServiceId.m_str );
@@ -896,8 +896,8 @@ HRESULT CServiceCallback::ServiceInstanceDied(IUPnPService* pService)
 	if ( SUCCEEDED( hr ) )
 	{
 		theApp.Message( MSG_ERROR, L"UPnP service %s died", bsServiceId );
-	return hr;
-}
+		return hr;
+	}
 
 	return UPnPMessage( hr );
 }
