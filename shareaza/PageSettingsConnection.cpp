@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "PageSettingsConnection.h"
 #include "DlgHelp.h"
+#include "UPnPFinder.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -228,7 +229,14 @@ void CConnectionSettingsPage::OnOK()
 
 	Settings.Connection.FirewallStatus		= m_wndCanAccept.GetCurSel();
 	Settings.Connection.InHost				= m_sInHost;
-	Settings.Connection.InPort				= m_nInPort;
+	if ( Settings.Connection.EnableUPnP && (DWORD)m_nInPort != Settings.Connection.InPort )
+	{
+		Settings.Connection.InPort = m_nInPort;
+		theApp.m_pUPnPFinder->StartDiscovery();
+	}
+	else
+		Settings.Connection.InPort = m_nInPort;
+
 	Settings.Connection.InBind				= m_bInBind;
 	Settings.Connection.OutHost				= m_sOutHost;
 	Settings.Connection.InSpeed				= ParseSpeed( m_sInSpeed );

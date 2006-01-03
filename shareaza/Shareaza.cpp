@@ -25,6 +25,7 @@
 #include "CoolInterface.h"
 #include "Network.h"
 #include "Firewall.h"
+#include "UPnPFinder.h"
 #include "Security.h"
 #include "HostCache.h"
 #include "DiscoveryServices.h"
@@ -77,6 +78,8 @@ CShareazaApp::CShareazaApp() : m_pMutex( FALSE, _T("Shareaza") )
 {
 	m_pSafeWnd	= NULL;
 	m_bLive		= FALSE;
+	m_bUPnPPortsForwarded = TS_UNKNOWN;
+	m_bUPnPDeviceConnected = TS_UNKNOWN;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -121,7 +124,7 @@ BOOL CShareazaApp::InitInstance()
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( AfxMessageBox( 
 		L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
-		L"It it NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
+		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
 		L"environment. It will frequently stop running, or display debug information to assist testing.\n\n"
 		L"If you wish to actually use this software, you should download "
 		L"the current stable release from www.shareaza.com\n"
@@ -152,18 +155,28 @@ BOOL CShareazaApp::InitInstance()
 	
 	dlgSplash->Step( _T("Settings Database") );
 		Settings.Load();
-	dlgSplash->Step( _T("Firewall/Router") );
+	dlgSplash->Step( _T("Firewall/Router Setup") );
 	{
-		CFirewall oFirewall;
-		if ( oFirewall.AccessWindowsFirewall() && oFirewall.AreExceptionsAllowed() )
+		CFirewall firewall;
+		if ( firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
 		{
 			// Add to firewall exception list if necessary
+			// and enable UPnP Framework if disabled
 			CString strBinaryPath;
 			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
 			strBinaryPath.ReleaseBuffer( MAX_PATH );
-			oFirewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
+			firewall.SetupService( NET_FW_SERVICE_UPNP );
+			firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
 		}
 	}
+	if ( Settings.Connection.EnableUPnP )
+	{
+		// Todo: UPnP is supported in WinME
+		// Add a detection here?
+		m_pUPnPFinder = new CUPnPFinder;
+		m_pUPnPFinder->StartDiscovery();
+	}
+
 	dlgSplash->Step( _T("P2P URIs") );
 		CShareazaURL::Register( TRUE );
 	dlgSplash->Step( _T("Shell Icons") );
@@ -249,15 +262,20 @@ int CShareazaApp::ExitInstance()
 	BTClients.Clear();
 
 	{
-		CFirewall oFirewall;
-		if ( oFirewall.AccessWindowsFirewall() )
+		CFirewall firewall;
+		if ( firewall.AccessWindowsFirewall() )
 		{
 			// Remove application from the firewall exception list
 			CString strBinaryPath;
 			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
 			strBinaryPath.ReleaseBuffer( MAX_PATH );
-			oFirewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
+			firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
 		}
+	}
+	if ( m_pUPnPFinder )
+	{
+		m_pUPnPFinder->StopAsyncFind();
+		delete m_pUPnPFinder;
 	}
 
 	if ( m_bLive )

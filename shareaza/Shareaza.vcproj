@@ -50,12 +50,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib vfw32.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib vfw32.lib Iphlpapi.lib"
 				OutputFile="Debug/Shareaza.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				IgnoreAllDefaultLibraries="FALSE"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="Debug/Shareaza.pdb"
 				SubSystem="2"
@@ -139,11 +139,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBC"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib"
 				OutputFile="Release/Shareaza.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;Iphlpapi.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="Release/Shareaza.pdb"
 				GenerateMapFile="TRUE"
@@ -924,6 +924,9 @@
 			</File>
 			<File
 				RelativePath="UploadTransferHTTP.cpp">
+			</File>
+			<File
+				RelativePath="UPnPFinder.cpp">
 			</File>
 			<File
 				RelativePath="VendorCache.cpp">
@@ -2593,6 +2596,9 @@
 			</File>
 			<File
 				RelativePath="UploadTransferHTTP.h">
+			</File>
+			<File
+				RelativePath="UPnPFinder.h">
 			</File>
 			<File
 				RelativePath="Utility.hpp">
