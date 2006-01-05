@@ -135,14 +135,13 @@ HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 
 inline bool IsCharacter(TCHAR nChar)
 {
-	if ( nChar >= 0 && nChar <= 255 )
-	{
-		return ( _istalnum( nChar ) ) != 0;
-	}
-	else
-	{
-		return ( _istspace( nChar ) ) == 0;
-	}
+    WORD nCharType = 0;
+	
+	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE1, &nChar, 1, &nCharType ) )
+		return ( ( nCharType & C1_ALPHA ) == C1_ALPHA ||
+				 ( nCharType & C1_DIGIT ) == C1_DIGIT );
+
+	return false;
 }
 
 inline bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
