@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Shareaza Default Lithuanian Skin File
-aA ogonek	&#261;&#260;
-cC caron	&#269;&#268;
-eE ogonek	&#281;&#280;
-eE dot		&#279;&#278;
-iI ogonek	&#303;&#302;
-sS caron	&#353;&#352;
-uU ogonek	&#371;&#370;
-uU macron	&#363;&#362;
-zZ caron	&#382;&#381;
-lower quote	&#132;
-right quote	&#147;
--->
+<!-- Shareaza Default Lithuanian Skin File -->
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
@@ -22,7 +10,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.2.8"
+		version="2.2.2.9"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -3776,7 +3764,7 @@ right quote	&#147;
 		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filtruoti atitikimus">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtruoti atitikimus">
 		<control caption="Rodyti tik atitikimus, kuriuose yra ž_odžiai:"/>
 		<control/>
 		<control caption="( Jūs galite išbraukti iš radinių žodžius su -žodis )"/>
@@ -3802,6 +3790,9 @@ right quote	&#147;
 		<control caption="_Išsaugoti kaip"/>
 		<control caption="_Trinti"/>
 		<control caption="Filtrai:"/>
+		<control caption="DRM bylas"/>
+		<control caption="Įtartinas bylas"/>
+		<control caption="Turinį suaugusiems"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Išsaugoti filtrą kaip">
