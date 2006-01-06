@@ -40,10 +40,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Version.lib Winmm.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)/$(ProjectName).exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib"
 				GenerateDebugInformation="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -108,10 +109,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Version.lib Winmm.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)/$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib"
 				OptimizeReferences="2"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -633,6 +635,9 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\UploadTransferHTTP.cpp">
+			</File>
+			<File
+				RelativePath="..\shareaza\UPnPFinder.cpp">
 			</File>
 			<File
 				RelativePath="..\shareaza\VendorCache.cpp">
@@ -2060,6 +2065,9 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\UploadTransferHTTP.h">
+			</File>
+			<File
+				RelativePath="..\shareaza\UPnPFinder.h">
 			</File>
 			<File
 				RelativePath="..\shareaza\Utility.hpp">
