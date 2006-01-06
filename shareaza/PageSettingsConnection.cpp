@@ -232,7 +232,12 @@ void CConnectionSettingsPage::OnOK()
 	if ( Settings.Connection.EnableUPnP && (DWORD)m_nInPort != Settings.Connection.InPort )
 	{
 		Settings.Connection.InPort = m_nInPort;
-		theApp.m_pUPnPFinder->StartDiscovery();
+		try
+		{
+			theApp.m_pUPnPFinder->StartDiscovery();
+		}
+		catch ( CUPnPFinder::UPnPError& ) {}
+		catch ( CException* e ) { e->Delete(); }
 	}
 	else
 		Settings.Connection.InPort = m_nInPort;
