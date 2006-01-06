@@ -60,7 +60,7 @@ public:
 	CString				m_sPacketDumpFont;			// Packet Window. (Lucida Console)
 	CString				m_sSystemLogFont;			// System Window. (Courier New)
 
-	CUPnPFinder*		m_pUPnPFinder;
+	boost::scoped_ptr< CUPnPFinder > m_pUPnPFinder;
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
 	CString				m_sUPnPExternalIP;
@@ -80,8 +80,8 @@ protected:
 // Operations
 public:
 	static CMainWnd* SafeMainWnd();
-	void		Message(int nType, UINT nID, ...);
-	void		Message(int nType, LPCTSTR pszFormat, ...);
+	void		Message(int nType, UINT nID, ...) throw();
+	void		Message(int nType, LPCTSTR pszFormat, ...) throw();
 	CString		GetErrorString();
 	BOOL		InternalURI(LPCTSTR pszURI);
 protected:

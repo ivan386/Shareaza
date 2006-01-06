@@ -171,10 +171,15 @@ BOOL CShareazaApp::InitInstance()
 	}
 	if ( Settings.Connection.EnableUPnP )
 	{
-		// Todo: UPnP is supported in WinME
-		// Add a detection here?
-		m_pUPnPFinder = new CUPnPFinder;
-		m_pUPnPFinder->StartDiscovery();
+		try
+		{
+			// Todo: UPnP is supported in WinME
+			// Add a detection here?
+			m_pUPnPFinder.reset( new CUPnPFinder );
+			m_pUPnPFinder->StartDiscovery();
+		}
+		catch ( CUPnPFinder::UPnPError& ) {}
+		catch ( CException* e ) { e->Delete(); }
 	}
 
 	dlgSplash->Step( _T("P2P URIs") );
@@ -275,7 +280,7 @@ int CShareazaApp::ExitInstance()
 	if ( m_pUPnPFinder )
 	{
 		m_pUPnPFinder->StopAsyncFind();
-		delete m_pUPnPFinder;
+		m_pUPnPFinder.reset();
 	}
 
 	if ( m_bLive )
@@ -479,7 +484,7 @@ CMainWnd* CShareazaApp::SafeMainWnd()
 
 TCHAR CShareazaApp::szMessageBuffer[16384];
 
-void CShareazaApp::Message(int nType, UINT nID, ...)
+void CShareazaApp::Message(int nType, UINT nID, ...) throw()
 {
 	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
 	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
@@ -512,7 +517,7 @@ void CShareazaApp::Message(int nType, UINT nID, ...)
 	va_end( pArgs );
 }
 
-void CShareazaApp::Message(int nType, LPCTSTR pszFormat, ...)
+void CShareazaApp::Message(int nType, LPCTSTR pszFormat, ...) throw()
 {
 	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
 	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
