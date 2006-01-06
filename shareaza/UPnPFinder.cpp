@@ -191,10 +191,6 @@ void CUPnPFinder::OnSearchComplete()
 	if ( m_pDevices.empty() )
 		theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices" );
 
-	// Cancel search, otherwise it will try searching for ~15 min
-	// and won't stop receiving callbacks even if we cancel it from other place
-	StopAsyncFind();
-	
 	m_bAsyncFindRunning = false;
 }
 
@@ -840,7 +836,12 @@ HRESULT CDeviceFinderCallback::DeviceRemoved(LONG /*nFindData*/, BSTR bsUDN)
 // Called when the search is complete; nFindData--AsyncFindHandle
 HRESULT CDeviceFinderCallback::SearchComplete(LONG /*nFindData*/)
 {
+	// StopAsyncFind must be here, do not move to OnSearchComplete
+	// Otherwise, "Service died" message is shown, and it means
+	// that the service still was active.
+	m_instance.StopAsyncFind();
 	m_instance.OnSearchComplete();
+	
 	return S_OK;
 }
 
