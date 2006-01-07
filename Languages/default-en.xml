@@ -3083,7 +3083,15 @@
 	<string id="17497" value="An unknown error occurred while trying to seed &quot;%s&quot;."/>
 	<string id="17498" value="An error was detected in the file &quot;%s&quot;."/>
 	<string id="17500" value="Tracker did not respond- Retrying announce (%i of %i)"/>
-	<string id="17501" value="Unable to communicate with tracker"/>
+	<string id="17501" value="Unable to communicate with tracker"/>	
+	<string id="17503" value="Tracker failed- Trying next tracker (%i of %i)"/>
+	<string id="17505" value="BitTorrent connection to %s was dropped."/>
+	<string id="17506" value="BitTorrent handshake with %s was dropped."/>
+	<string id="17507" value="BitTorrent coupling with %s was dropped."/>
+	<string id="175010" value="BitTorrent coupling with %s not accepted, a connection to this client already exists."/>
+	<string id="175011" value="BitTorrent coupling with %s not accepted, maximum connections reached."/>
+	<string id="175012" value="Private torrent"/>
+	<string id="175013" value="Encoding error"/>
 	<string id="18496" value="You have made changes to the name field.  Are you sure you want to rename this download?"/>
 	<string id="18497" value="You have typed a SHA1 value, however it is invalid.  Please check it and try again."/>
 	<string id="18498" value="You have typed a root tiger-tree value, however it is invalid.  Please check it and try again."/>
