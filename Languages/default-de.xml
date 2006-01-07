@@ -16,11 +16,11 @@ Other:
 	<manifest 
 		name="Deutsch"
 		author="Jann Röder"
-		updatedBy="zero9999" 
+		updatedBy="zero9999 & Jann Röder" 
 		description="Shareaza 2.2 German Skin File"
 		link="http://www.shareaza.com/"
 		email="spooky23 at arcor dot de"
-		version="2.2.2.8"
+		version="2.2.2.9"
 		type="Language"
 		language="de"
 		prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
@@ -1928,10 +1928,10 @@ Other:
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Die Festplatte ist voll</text>
 			<newline gap="8"/>
-			<text>Shareaza hat diesen Download automatisch angehalten, weil Festplatte voll zu sein scheint,
-               oder in die Downloaddatei kann nicht geschrieben werden.  Wenn Sie den Download fortsetzen möchten,
-               machen Sie bitte etwas platz auf ihrer Festplatte und / oder prüfen Sie, ob auf das Verzeichnis für unvollständige Dateien
-               zugegriffen werden kann und nehmen Sie den Download wieder auf.</text>
+			<text>Shareaza hat diesen Download automatisch angehalten, weil die Festplatte voll zu sein scheint,
+               oder die Datei nicht geschrieben werden kann.  Wenn Sie den Download fortsetzen möchten,
+               machen Sie bitte etwas Platz auf ihrer Festplatte und / oder prüfen Sie, ob auf das Verzeichnis für unvollständige Dateien
+               zugegriffen werden kann und nehmen Sie dann den Download wieder auf.</text>
 		</document>
 
 		<document name="DownloadHelp.Verifying">
@@ -2868,7 +2868,7 @@ Other:
 		<string id="16408" value="&amp;URI kopieren"/>
 		<string id="16409" value="&amp;URIs exportieren..."/>
 		<string id="16410" value="Ein Unterordner des ausgewählten Ordners &quot;%s&quot; befindet sich schon in ihrer Bibliothek.\nDas Hinzufügen dieses Ordners hat zur Folge, dass einige Dateien neu gehasht werden müssen.\n\nMöchten Sie fortfahren?"/>
-		<string id="16411" value="Kann Datei %s nicht verschieben. Es ist möglich, dass eine andere Anwendung Datei gerade verwendet.\n\nMöchten Sie stattdessen versuchen die Datei zu kopieren?"/>
+		<string id="16411" value="Kann Datei %s nicht verschieben. Es ist möglich, dass eine andere Anwendung die Datei gerade verwendet.\n\nMöchten Sie stattdessen versuchen die Datei zu kopieren?"/>
 		<string id="16448" value="Verbunden mit %s, handshaking..."/>
 		<string id="16449" value="Chatten mit %s (%s)."/>
 		<string id="16450" value="Verbindung zu %s beendet."/>
@@ -3079,11 +3079,13 @@ Other:
 		<string id="17498" value="In der Datei &quot;%s&quot; wurde ein Fehler gefunden."/>
 		<string id="17500" value="Tracker hat nicht geantwortet - Announce erneut versuchen (%i von %i)"/>
 		<string id="17501" value="Kommunikation mit dem Tracker nicht möglich"/>
-		<string id="17505" value="BitTorrent-Verbindung mit %s wurde verworfen."/>
-		<string id="17506" value="BitTorrent-Handshake mit %s wurde verworfen."/>		
-		<string id="17507" value="BitTorrent-Kopplung mit %s wurde verworfen."/>
+		<string id="17505" value="BitTorrent-Verbindung mit %s wurde unterbrochen."/>
+		<string id="17506" value="BitTorrent-Handshake mit %s wurde unterbrochen."/>		
+		<string id="17507" value="BitTorrent-Kopplung mit %s wurde unterbrochen."/>
 		<string id="17510" value="BitTorrent-Kopplung mit %s wurde nicht akzeptiert, da bereits eine Verbindung mit diesem Client besteht."/>
 		<string id="17511" value="BitTorrent-Kopplung mit %s wurde nicht akzeptiert, da die maximale Anzahl an Verbindungen erreicht ist."/>
+		<string id="175012" value="Privater Torrent"/>
+		<string id="175013" value="Enkodierungsfehler"/>
 		<string id="18496" value="Sie haben das Namensfeld geändert.  Sind Sie sicher, dass Sie diesen Download umbenennen wollen?"/>
 		<string id="18497" value="Sie haben einen ungültigen SHA1 Hash angegeben.  Bitte überprüfen Sie ihre Eingabe und versuchen Sie es erneut."/>
 		<string id="18498" value="Sie haben einen ungültigen tiger-tree root Hash angegeben.  Bitte überprüfen Sie ihre Eingabe und versuchen Sie es erneut."/>
