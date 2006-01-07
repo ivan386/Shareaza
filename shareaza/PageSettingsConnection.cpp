@@ -90,6 +90,7 @@ void CConnectionSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_OUTBOUND_SPEED, m_sOutSpeed);
 	DDX_CBString(pDX, IDC_INBOUND_SPEED, m_sInSpeed);
 	DDX_Check(pDX, IDC_INBOUND_RANDOM, m_bInRandom);
+	DDX_Check(pDX, IDC_ENABLE_UPNP, m_bEnableUPnP);
 	//}}AFX_DATA_MAP
 }
 
@@ -126,6 +127,7 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	m_bInBind				= Settings.Connection.InBind;
 	m_sOutHost				= Settings.Connection.OutHost;
 	m_bIgnoreLocalIP		= Settings.Connection.IgnoreLocalIP;
+	m_bEnableUPnP			= Settings.Connection.EnableUPnP;
 	m_nTimeoutConnection	= Settings.Connection.TimeoutConnect / 1000;
 	m_nTimeoutHandshake		= Settings.Connection.TimeoutHandshake / 1000;
 
@@ -229,7 +231,9 @@ void CConnectionSettingsPage::OnOK()
 
 	Settings.Connection.FirewallStatus		= m_wndCanAccept.GetCurSel();
 	Settings.Connection.InHost				= m_sInHost;
-	if ( Settings.Connection.EnableUPnP && (DWORD)m_nInPort != Settings.Connection.InPort )
+	Settings.Connection.EnableUPnP			= m_bEnableUPnP;
+
+	if ( m_bEnableUPnP && (DWORD)m_nInPort != Settings.Connection.InPort )
 	{
 		Settings.Connection.InPort = m_nInPort;
 		try

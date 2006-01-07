@@ -1136,21 +1136,24 @@ BEGIN
                     WS_TABSTOP,100,42,50,12
     CONTROL         "Force binding to this address",IDC_INBOUND_BIND,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,160,42,105,12
-    GROUPBOX        "&Outbound Address:",IDC_STATIC,7,72,268,44
-    LTEXT           "Address:",IDC_STATIC,14,92,30,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_OUTBOUND_HOST,56,92,99,70,CBS_DROPDOWN | CBS_SORT | 
+    GROUPBOX        "&Outbound Address:",IDC_STATIC,7,67,268,44
+    LTEXT           "Address:",IDC_STATIC,14,87,30,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_OUTBOUND_HOST,56,87,99,70,CBS_DROPDOWN | CBS_SORT | 
                     WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Speed:",IDC_STATIC,166,92,35,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_OUTBOUND_SPEED,206,92,60,80,CBS_DROPDOWN | 
+    LTEXT           "Speed:",IDC_STATIC,166,87,35,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_OUTBOUND_SPEED,206,87,60,80,CBS_DROPDOWN | 
                     WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "O&ptions:",IDC_STATIC,7,122,268,51
-    RTEXT           "Can accept incoming connections",IDC_STATIC,14,137,147,
+    GROUPBOX        "O&ptions:",IDC_STATIC,7,114,268,62
+    RTEXT           "Can accept incoming connections",IDC_STATIC,14,125,147,
                     12
-    COMBOBOX        IDC_CAN_ACCEPT,165,135,47,52,CBS_DROPDOWN | WS_VSCROLL | 
+    COMBOBOX        IDC_CAN_ACCEPT,166,123,47,52,CBS_DROPDOWN | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "Ignore private/local IP addresses ",IDC_IGNORE_LOCAL,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,154,161,12,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,140,161,12,
                     WS_EX_RIGHT
+    CONTROL         "Enable UPnP connection devices setup",IDC_ENABLE_UPNP,
+                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,36,
+                    158,139,10
     GROUPBOX        "&Timeouts:",IDC_STATIC,7,179,268,34
     LTEXT           "Connection:",IDC_STATIC,21,193,45,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TIMEOUT_CONNECTION,69,193,35,12,ES_AUTOHSCROLL | 

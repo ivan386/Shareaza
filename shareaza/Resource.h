@@ -687,6 +687,8 @@
 #define IDC_TRUST_ED2K                  1423
 #define IDC_TORRENT_TRACKERMODE         1425
 #define IDC_ASSOCIATIONS                1426
+#define IDC_CHECK1                      1428
+#define IDC_ENABLE_UPNP                 1428
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502
@@ -1708,7 +1710,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        277
 #define _APS_NEXT_COMMAND_VALUE         33136
-#define _APS_NEXT_CONTROL_VALUE         1428
+#define _APS_NEXT_CONTROL_VALUE         1429
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

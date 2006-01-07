@@ -53,6 +53,7 @@ public:
 	CString	m_sOutHost;
 	CComboBox	m_wndCanAccept;
 	BOOL	m_bIgnoreLocalIP;
+	BOOL	m_bEnableUPnP;
 	DWORD	m_nTimeoutConnection;
 	DWORD	m_nTimeoutHandshake;
 	CString	m_sOutSpeed;
@@ -85,7 +86,6 @@ protected:
 	//}}AFX_MSG
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}
