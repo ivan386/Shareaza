@@ -326,4 +326,6 @@ inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
 	{
 	}
 #endif
+	UNUSED_ALWAYS(dwThreadID);
+	UNUSED_ALWAYS(szThreadName);
 }
