@@ -1467,12 +1467,12 @@ BEGIN
     COMBOBOX        IDC_CONNECTION_GROUP,26,35,190,102,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "Is your network or campus protected by a firewall or NAT router?",
-                    IDC_CONNECTION_LAN_LABEL,10,60,265,15,NOT WS_VISIBLE
-    COMBOBOX        IDC_CONNECTION_LAN_SELECT,26,76,239,72,CBS_DROPDOWNLIST | 
+                    IDC_CONNECTION_LAN_LABEL,10,57,265,18,NOT WS_VISIBLE
+    COMBOBOX        IDC_CONNECTION_LAN_SELECT,26,79,239,72,CBS_DROPDOWNLIST | 
                     NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Do you have a firewall or NAT router on your home Internet connection?",
-                    IDC_CONNECTION_HOME_LABEL,10,60,265,15,NOT WS_VISIBLE
-    COMBOBOX        IDC_CONNECTION_HOME_SELECT,26,76,239,72,CBS_DROPDOWNLIST | 
+                    IDC_CONNECTION_HOME_LABEL,10,57,265,18,NOT WS_VISIBLE
+    COMBOBOX        IDC_CONNECTION_HOME_SELECT,26,79,239,72,CBS_DROPDOWNLIST | 
                     NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
     LTEXT           "If you know how fast your Internet connection is able to operate, select the best option below:",
                     IDC_STATIC,10,100,265,20
