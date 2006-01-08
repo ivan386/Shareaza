@@ -68,7 +68,6 @@ CUPnPFinder::~CUPnPFinder()
 // Helper function for processing the AsyncFind search
 void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 {
-
 	// We have to start the AsyncFind.
 	if ( !m_pDeviceFinderCallback )
 		return theApp.Message( MSG_ERROR, L"DeviceFinderCallback object is not available." );
@@ -76,6 +75,8 @@ void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 	if ( FAILED( m_pDeviceFinder->CreateAsyncFind( bsSearchType, NULL,
 				m_pDeviceFinderCallback.get(), &m_nAsyncFindHandle ) ) )
 		return theApp.Message( MSG_ERROR, L"CreateAsyncFind failed in UPnP finder." );
+
+	m_bAsyncFindRunning = true;
 
 	if ( FAILED( m_pDeviceFinder->StartAsyncFind( m_nAsyncFindHandle ) ) )
 	{
@@ -87,7 +88,6 @@ void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 		return;
 	} 
 
-	m_bAsyncFindRunning = true;
 	// Remove this loop to get results displayed in the system log
 	// The loop allows to do discovery while the splash screen is displayed
 	if ( !theApp.m_bLive )
@@ -95,20 +95,22 @@ void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 		MSG Message;
 		while ( IsAsyncFindRunning() && GetMessage( &Message, NULL, 0, 0 ) == TRUE )
 			DispatchMessage( &Message );
-  	}
+	}
 }
 
 // Helper function for stopping the async find if proceeding
 void CUPnPFinder::StopAsyncFind()
 {
 	// This will stop the async find if it is in progress
-	if ( IsAsyncFindRunning() )
+	// ToDo: Locks up in WinME, cancelling is required <- critical
+
+	if ( !theApp.m_bWinME && IsAsyncFindRunning() )
 	{
 		if ( FAILED( m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle ) ) )
 			theApp.Message( MSG_ERROR, L"Cancel AsyncFind failed in UPnP finder." );
-
-		m_bAsyncFindRunning = false;
 	}
+	
+	m_bAsyncFindRunning = false;
 }
 
 // Start the discovery of the UPnP gateway devices
@@ -148,22 +150,13 @@ void CUPnPFinder::AddDevice(DevicePointer device)
 		return (void)UPnPMessage( hr );
 
 	// Add the item at the end of the device list if not found
-	std::set< DevicePointer >::iterator deviceSet
+	std::vector< DevicePointer >::iterator deviceSet
 		= std::find_if( m_pDevices.begin(), m_pDevices.end(), FindDevice( bsUniqueName ) );
 
 	if ( deviceSet == m_pDevices.end() )
 	{
-		if ( !m_pDevices.insert( device ).second ) return;
+		m_pDevices.push_back( device );
 		theApp.Message( MSG_DEBUG, L"Found UPnP device: %s", bsFriendlyName );
-	}
-
-	GetDeviceServices( device );
-	StartPortMapping();
-	if ( IsAsyncFindRunning() && ! m_bPortIsFree ) // warn only once
-	{
-		// Add more descriptive explanation!!!
-		AfxMessageBox( _T("UPnP port mapping failed after 10 attempts."), MB_OK|MB_ICONEXCLAMATION );
-		StopAsyncFind();
 	}
 }
 
@@ -171,10 +164,9 @@ void CUPnPFinder::AddDevice(DevicePointer device)
 // This is called by the devicefinder callback object (DeviceRemoved func)
 void CUPnPFinder::RemoveDevice(CComBSTR bsUDN)
 {
-	
 	theApp.Message( MSG_DEBUG, L"Finder asked to remove: %s", bsUDN );
 
-	std::set< DevicePointer >::iterator device
+	std::vector< DevicePointer >::iterator device
 		= std::find_if( m_pDevices.begin(), m_pDevices.end(), FindDevice( bsUDN ) );
 
 	if ( device != m_pDevices.end() )
@@ -189,9 +181,23 @@ void CUPnPFinder::OnSearchComplete()
     ATLTRACE2( atlTraceCOM, 1, L"CUPnPFinder(%p)->OnSearchComplete\n", this );
 	
 	if ( m_pDevices.empty() )
+	{
 		theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices" );
+		return;
+	}
+	
+	for ( std::size_t pos = 0; pos != m_pDevices.size(); ++pos )
+	{
+		GetDeviceServices( m_pDevices[ pos ] );
+		StartPortMapping();
 
-	m_bAsyncFindRunning = false;
+		if ( ! m_bPortIsFree ) // warn only once
+		{
+			// Add more descriptive explanation!!!
+			AfxMessageBox( _T("UPnP port mapping failed after 10 attempts."), MB_OK|MB_ICONEXCLAMATION );
+			break;
+		}
+	}
 }
 
 // Function to populate the service list for the device
@@ -273,7 +279,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 	if ( FAILED( hr ) )
 		return UPnPMessage( hr );
 
-		CString strServiceId( bsServiceId );
+	CString strServiceId( bsServiceId );
 
 	if ( strServiceId.Find( L"urn:upnp-org:serviceId:WANPPPConn" ) == -1 &&
 		strServiceId.Find( L"urn:upnp-org:serviceId:WANIPConn" ) == -1 )
@@ -839,9 +845,9 @@ HRESULT CDeviceFinderCallback::SearchComplete(LONG /*nFindData*/)
 	// StopAsyncFind must be here, do not move to OnSearchComplete
 	// Otherwise, "Service died" message is shown, and it means
 	// that the service still was active.
-	m_instance.StopAsyncFind();
 	m_instance.OnSearchComplete();
-	
+	m_instance.StopAsyncFind();
+
 	return S_OK;
 }
 
@@ -950,6 +956,8 @@ CString translateUPnPResult(HRESULT hr)
 
 HRESULT UPnPMessage(HRESULT hr)
 {
-	theApp.Message( MSG_DEBUG, L"upnp: " + translateUPnPResult( hr ) + '\n' );
+	CString strError = translateUPnPResult( hr );
+	if ( ! strError.IsEmpty() )
+		theApp.Message( MSG_DEBUG, L"upnp: " + strError );
 	return hr;
 }

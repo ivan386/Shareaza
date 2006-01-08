@@ -173,8 +173,6 @@ BOOL CShareazaApp::InitInstance()
 	{
 		try
 		{
-			// Todo: UPnP is supported in WinME
-			// Add a detection here?
 			m_pUPnPFinder.reset( new CUPnPFinder );
 			m_pUPnPFinder->StartDiscovery();
 		}
@@ -358,18 +356,24 @@ void CShareazaApp::GetVersionNumber()
 void CShareazaApp::InitResources()
 {
 	//Determine the version of Windows
-	OSVERSIONINFO pVersion;
-	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	GetVersionEx( &pVersion );
+	OSVERSIONINFOEX pVersion;
+	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	GetVersionEx( (OSVERSIONINFO*)&pVersion );
 	
 	//Networking is poor under Win9x based operating systems. (95/98/Me)
 	m_bNT = ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT );
 
+	// Determine if it's a server
+	m_bServer = m_bNT && pVersion.wProductType != VER_NT_WORKSTATION;
+
 	//Win 95/98/Me/NT (<5) do not support some functions
-	m_dwWindowsVersion = pVersion.dwMajorVersion; 
+	m_dwWindowsVersion = pVersion.dwMajorVersion;
 
 	//Win2000 = 0 WinXP = 1
 	m_dwWindowsVersionMinor = pVersion.dwMinorVersion; 
+
+	// Detect Windows ME
+	m_bWinME = ( m_dwWindowsVersion == 4 && m_dwWindowsVersionMinor == 90 );
 
 	m_bLimitedConnections = FALSE;
 	VER_PLATFORM_WIN32s;

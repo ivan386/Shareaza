@@ -142,7 +142,12 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	UpdateData( FALSE );
 
 	m_wndInBind.EnableWindow( m_sInHost != strAutomatic);
-
+	
+	if ( theApp.m_bServer || theApp.m_dwWindowsVersion < 5 && !theApp.m_bWinME )
+	{
+		CButton* pWnd = (CButton*)GetDlgItem( IDC_ENABLE_UPNP );
+		pWnd->EnableWindow( FALSE );
+	}
 	return TRUE;
 }
 
@@ -231,13 +236,15 @@ void CConnectionSettingsPage::OnOK()
 
 	Settings.Connection.FirewallStatus		= m_wndCanAccept.GetCurSel();
 	Settings.Connection.InHost				= m_sInHost;
-	Settings.Connection.EnableUPnP			= m_bEnableUPnP;
 
-	if ( m_bEnableUPnP && (DWORD)m_nInPort != Settings.Connection.InPort )
+	if ( m_bEnableUPnP && ( (DWORD)m_nInPort != Settings.Connection.InPort ||
+		 !Settings.Connection.EnableUPnP ) )
 	{
 		Settings.Connection.InPort = m_nInPort;
 		try
 		{
+			if ( !theApp.m_pUPnPFinder ) 
+				theApp.m_pUPnPFinder.reset( new CUPnPFinder );
 			theApp.m_pUPnPFinder->StartDiscovery();
 		}
 		catch ( CUPnPFinder::UPnPError& ) {}
@@ -246,6 +253,7 @@ void CConnectionSettingsPage::OnOK()
 	else
 		Settings.Connection.InPort = m_nInPort;
 
+	Settings.Connection.EnableUPnP			= m_bEnableUPnP;
 	Settings.Connection.InBind				= m_bInBind;
 	Settings.Connection.OutHost				= m_sOutHost;
 	Settings.Connection.InSpeed				= ParseSpeed( m_sInSpeed );

@@ -89,7 +89,7 @@ private:
 
 //Private variables
 private:
-	std::set< DevicePointer >     m_pDevices;
+	std::vector< DevicePointer >  m_pDevices;
 	std::vector< ServicePointer > m_pServices;
 	FinderPointer m_pDeviceFinder;
 

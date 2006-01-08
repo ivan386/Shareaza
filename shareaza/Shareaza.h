@@ -48,6 +48,8 @@ public:
 	CWnd*				m_pSafeWnd;
 	BOOL				m_bLive;
 	BOOL				m_bNT;						// NT based core. (NT, 2000, XP, etc)
+	BOOL				m_bServer;					// Server version
+	BOOL				m_bWinME;					// Windows Millennium
 	BOOL				m_bLimitedConnections;		// Networking is limited (XP SP2)
 	DWORD				m_dwWindowsVersion;			// Windows version
 	DWORD				m_dwWindowsVersionMinor;	// Windows minor version

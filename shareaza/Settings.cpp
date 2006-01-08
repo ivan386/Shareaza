@@ -574,7 +574,11 @@ void CSettings::Load()
 	}
 
 	//Temporary- until G1 ultrapeer has been updated
-	Gnutella1.ClientMode		= MODE_LEAF; 
+	Gnutella1.ClientMode		= MODE_LEAF;
+
+	// UPnP is not supported in servers and Win9x
+	if ( theApp.m_bServer || theApp.m_dwWindowsVersion < 5 && !theApp.m_bWinME )
+		Connection.EnableUPnP = FALSE;
 }
 
 void CSettings::Save(BOOL bShutdown)
