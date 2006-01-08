@@ -221,7 +221,8 @@ inline CArchive& operator>>(CArchive& ar, PROTOCOLID& rhs)
 {
 	int value;
 	ar >> value;
-	ASSERT( value >= PROTOCOL_ANY && value <= PROTOCOL_BT && "invalid protocol id" );
+	if ( !( value >= PROTOCOL_ANY && value <= PROTOCOL_BT ) )
+		AfxThrowUserException();
 	rhs = value >= PROTOCOL_ANY && value <= PROTOCOL_BT
 		? PROTOCOLID( value )
 		: PROTOCOL_NULL;
