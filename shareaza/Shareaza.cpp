@@ -155,6 +155,17 @@ BOOL CShareazaApp::InitInstance()
 	
 	dlgSplash->Step( _T("Settings Database") );
 		Settings.Load();
+
+	if ( m_lpCmdLine )
+	{
+		if ( _tcsistr( m_lpCmdLine, _T("-basic") ) != NULL )
+			Settings.General.GUIMode = GUI_BASIC;
+		else if ( _tcsistr( m_lpCmdLine, _T("-tabbed") ) != NULL )
+			Settings.General.GUIMode = GUI_TABBED;
+		else if ( _tcsistr( m_lpCmdLine, _T("-windowed") ) != NULL )
+			Settings.General.GUIMode = GUI_WINDOWED;
+	}
+
 	dlgSplash->Step( _T("Firewall/Router Setup") );
 	{
 		CFirewall firewall;
