@@ -701,56 +701,30 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		Hashes::Sha1Hash oSHA1;
 		Hashes::TigerHash oTiger;
 		Hashes::Ed2kHash oED2K;
-		for ( CString strURNs = strValue + ',' ; ; )
+		CString strURNs = strValue + ',';
+		for ( int nPos = strURNs.Find( ',' ); nPos >= 0; nPos = strURNs.Find( ',' ) )
 		{
-			int nPos = strURNs.Find( ',' );
-			if ( nPos < 0 ) break;
+			strValue = strURNs.Left( nPos ).TrimLeft();
+			strURNs = strURNs.Mid( nPos + 1 );
 			
-			strValue	= strURNs.Left( nPos );
-			strURNs		= strURNs.Mid( nPos + 1 );
-			strValue.TrimLeft();
-			
-			if ( oTiger.fromUrn( strValue ) )
+			if (   ( !oSHA1 .fromUrn( strValue ) || m_pSource->CheckHash( oSHA1  ) )
+				&& ( !oTiger.fromUrn( strValue ) || m_pSource->CheckHash( oTiger ) )
+				&& ( !oED2K .fromUrn( strValue ) || m_pSource->CheckHash( oED2K  ) ) )
 			{
-				if ( m_pSource->CheckHash( oTiger ) )
+				if ( oTiger && Settings.Downloads.VerifyTiger && !m_bTigerIgnore && m_sTigerTree.IsEmpty()
+					&& (   _tcsistr( m_sUserAgent, L"shareaza 2.1.4" ) != NULL
+						|| _tcsistr( m_sUserAgent, L"shareaza 2.2.0" ) != NULL ) )
 				{
-					if ( !oSHA1.fromUrn( strValue ) || m_pSource->CheckHash( oSHA1 ) )
-					{
-						if ( Settings.Downloads.VerifyTiger && !m_bTigerIgnore && m_sTigerTree.IsEmpty() )
-						{
-							// Converting "urn:bitprint:{SHA1}.{TIGER_ROOT}" to
-							// "/gnutella/thex/v1?urn:tree:tiger/:{TIGER_ROOT}&depth={TIGER_HEIGHT}&ed2k={0/1}"
-							// in case if "X-Thex-URI" and "X-TigerTree-Path" headers
-							// will be absent (perfect workaround for "silent" Sareaza 2.2.0.0)
-							m_sTigerTree.Format( L"/gnutella/thex/v1?%s&depth=%d&ed2k=%d",
-								oTiger.toUrn(),
-								Settings.Library.TigerHeight,
-								Settings.Downloads.VerifyED2K );
-						}
-						m_bHashMatch = TRUE;
-						continue;
-					}
+					// Converting urn containing tiger tree root to
+					// "/gnutella/thex/v1?urn:tree:tiger/:{TIGER_ROOT}&depth={TIGER_HEIGHT}&ed2k={0/1}"
+					// in case if "X-Thex-URI" and "X-TigerTree-Path" headers
+					// will be absent (perfect workaround for "silent" Sareaza 2.2.0.0)
+					m_sTigerTree.Format( L"/gnutella/thex/v1?%s&depth=%d&ed2k=%d",
+						oTiger.toUrn(),
+						Settings.Library.TigerHeight,
+						Settings.Downloads.VerifyED2K );
 				}
-			}
-			else if ( oSHA1.fromUrn( strValue ) )
-			{
-				if ( m_pSource->CheckHash( oSHA1 ) )
-				{
-					m_bHashMatch = TRUE;
-					continue;
-				}
-			}
-			else if ( oED2K.fromUrn( strValue ) )
-			{
-				if ( m_pSource->CheckHash( oED2K ) )
-				{
-					m_bHashMatch = TRUE;
-					continue;
-				}
-			}
-			else
-			{
-				// ignore unknown urn
+				m_bHashMatch = m_bHashMatch || oSHA1 || oTiger || oED2K;
 				continue;
 			}
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH, (LPCTSTR)m_sAddress,
