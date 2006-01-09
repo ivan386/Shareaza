@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.2.2.8 (EN1.91)"
+		version="2.2.2.9 (EN1.93)"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -3058,16 +3058,24 @@
 	<string id="17488" value="您已经更改此 Torrent 的 Tracker 的链接。您确定您希望保存此更改吗？\n\n一个无效的 Tracker 链接可能会妨碍进一步下载。"/>
 	<string id="17489" value="BitTorrent 与 %s 的联结是扩展的协议，识别为 &quot;%s&quot;。"/>
 	<string id="17490" value="接收到 %i 个新的 BitTorrent 资源从 %s。"/>
-	<string id="17491" value="此 torrent &quot;%s&quot; 已经存在于您的下载列表中，并且不能被做成种子。"/>
-	<string id="17492" value="载入 torrent 文件 &quot;%s&quot; 错误。这可能不是一个有效的 torrent。"/>
+	<string id="17491" value="此 Torrent &quot;%s&quot; 已经存在于您的下载列表中，并且不能被做成种子。"/>
+	<string id="17492" value="载入 Torrent 文件 &quot;%s&quot; 错误。这可能不是一个有效的 Torrent。"/>
 	<string id="17493" value="不能创建 BitTorrent 共享文件 &quot;%s&quot;。"/>
-	<string id="17494" value="此 torrent 包含文件 &quot;%s&quot;，但 Shareaza 不能在您的收藏夹中找到这个文件。如果可能，移动此文件到与 torrent 相同的文件中并重试。"/>
-	<string id="17495" value="此 torrent 包含文件 &quot;%s&quot; 应该是 %s，但您的文件版本是 %s。"/>
+	<string id="17494" value="此 Torrent 包含文件 &quot;%s&quot;，但 Shareaza 不能在您的收藏夹中找到这个文件。如果可能，移动此文件到与 Torrent 相同的文件中并重试。"/>
+	<string id="17495" value="此 Torrent 包含文件 &quot;%s&quot; 应该是 %s，但您的文件版本是 %s。"/>
 	<string id="17496" value="在从 &quot;%s&quot; 复制文件到 BitTorrent 共享文件时发生错误。"/>
 	<string id="17497" value="在尝试做种 &quot;%s&quot; 时发生未知错误。"/>
 	<string id="17498" value="在文件 &quot;%s&quot; 中检测到错误。"/>
 	<string id="17500" value="Tracker 未回应 - 重试宣告 (%i 于 %i)"/>
 	<string id="17501" value="未能与 Tracker 进行通讯"/>
+	<string id="17503" value="Tracker 通讯失败 - 尝试下一个 Tracker (%i 于 %i)"/>
+	<string id="17505" value="BitTorrent 连接到 %s 已丢失。"/>
+	<string id="17506" value="BitTorrent 与 %s 的握手已丢失。"/>
+	<string id="17507" value="BitTorrent 与 %s 的连合已丢失。"/>
+	<string id="17510" value="BitTorrent 与 %s 的连合未被接受，与此客户端的连接已存在。"/>
+	<string id="17511" value="BitTorrent 与 %s 的连合未被接受，已达到最大连接数。"/>
+	<string id="17512" value="私人 Torrent"/>
+	<string id="17513" value="编码错误"/>
 	<string id="18496" value="您在名称区域进行了变动。您确定要重命名下载吗？"/>
 	<string id="18497" value="您已经输入了一个 SHA1 值，但它是无效的。请检查并重试。"/>
 	<string id="18498" value="您已经输入了一个根 tiger-tree 值，但它是无效的。请检查并重试。"/>
@@ -3753,7 +3761,7 @@
 		<control caption="取消"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="过滤匹配项">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="过滤匹配项">
 		<control caption="只显示包含此词组的匹配项(_W):"/>
 		<control/>
 		<control caption="( 您也可以通过 - 来排除字词 )"/>
@@ -3779,6 +3787,9 @@
 		<control caption="另存为(_S)"/>
 		<control caption="删除(_D)"/>
 		<control caption="过滤:"/>
+		<control caption="数字版权管理文件"/> 
+		<control caption="可疑文件"/> 
+		<control caption="成人结果"/> 
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="保存过滤为">
@@ -3792,7 +3803,7 @@
 		<control caption="服务地址(_A):"/>
 		<control/>
 		<control caption="探索服务类型:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met 链接"/>
 		<control caption="确定"/>
 		<control caption="取消"/>
 	</dialog>
@@ -4138,7 +4149,7 @@
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="打开 Torrent 文件">
 		<control/>
-		<control caption="您已经打开了一个 BitTorrent torrent 文件。您希望下载它的内容，还是重新做种？"/>
+		<control caption="您已经打开了一个 BitTorrent Torrent 文件。您希望下载它的内容，还是重新做种？"/>
 		<control caption="下载"/>
 		<control caption="做种"/>
 		<control caption="取消"/>
