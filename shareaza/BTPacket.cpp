@@ -72,23 +72,26 @@ void CBTPacket::ToBuffer(CBuffer* pBuffer) const
 CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 {
 	ASSERT( pBuffer != NULL );
-	if ( pBuffer->m_nLength < 4 ) return NULL;
 
-	DWORD nLength = *(DWORD*)pBuffer->m_pBuffer;
-	nLength = SWAP_LONG( nLength );
-	if ( pBuffer->m_nLength < 4 + nLength ) return NULL;
-
-	if ( nLength == 0 )
+	for ( ;; )
 	{
+		if ( pBuffer->m_nLength < sizeof( DWORD ) )
+			return NULL;
+
+		DWORD nLength = transformFromBE( pBuffer->ReadDWORD() );
+		if ( nLength == 0 || pBuffer->m_nLength < 4 + nLength )
+			return NULL;
+
 		pBuffer->Remove( 4 );
-		return CBTPacket::New( BT_PACKET_KEEPALIVE );
+		if ( nLength == 0 )
+			continue;
+
+		CBTPacket* pPacket = CBTPacket::New( pBuffer->m_pBuffer[0] );
+		pPacket->Write( pBuffer->m_pBuffer + 1, nLength - 1 );
+
+		pBuffer->Remove( nLength );
+		return pPacket;
 	}
-
-	CBTPacket* pPacket = CBTPacket::New( pBuffer->m_pBuffer[4] );
-	pPacket->Write( pBuffer->m_pBuffer + 5, nLength - 1 );
-
-	pBuffer->Remove( 4 + nLength );
-	return pPacket;
 }
 
 //////////////////////////////////////////////////////////////////////

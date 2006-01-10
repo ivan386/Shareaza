@@ -76,6 +76,7 @@ public:
 
 public:
 
+	DWORD	ReadDWORD() const { return *reinterpret_cast< DWORD* >( m_pBuffer ); }
 	// Read the data in the buffer as text
 	CString ReadString(size_t nBytes, UINT nCodePage = CP_ACP);                      // Reads nBytes of ASCII characters as a string
 	BOOL    ReadLine(CString& strLine, BOOL bPeek = FALSE, UINT nCodePage = CP_ACP); // Reads until "\r\n"

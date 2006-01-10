@@ -49,6 +49,8 @@ protected:
 	BOOL					m_bShake;
 	BOOL					m_bOnline;
 	BOOL					m_bClosing;
+private:
+	DWORD					m_tLastKeepAlive;
 
 // Operations
 public:

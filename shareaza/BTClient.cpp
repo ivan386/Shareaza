@@ -62,6 +62,8 @@ CBTClient::CBTClient()
 	
 	m_sUserAgent = _T("BitTorrent");
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
+	m_tLastKeepAlive = GetTickCount();
+
 	
 	BTClients.Add( this );
 }
@@ -189,13 +191,17 @@ BOOL CBTClient::OnRun()
 			Close();
 			return FALSE;
 		}
-		else if ( tNow - m_mOutput.tLast > Settings.BitTorrent.LinkPing / 2 && m_pOutput->m_nLength == 0 )
+/*		else if ( tNow - m_mOutput.tLast > Settings.BitTorrent.LinkPing / 2 && m_pOutput->m_nLength == 0 )
 		{
 			DWORD dwZero = 0;
-			m_pOutput->Add( &dwZero, 4 );
+			m_pOutput->Add( &dwZero, 4 );			// wtf???
 			OnWrite();
+		}*/
+		else if ( tNow - m_tLastKeepAlive > Settings.BitTorrent.LinkPing / 2 )
+		{
+			Send( CBTPacket::New( BT_PACKET_KEEPALIVE ) );
+			m_tLastKeepAlive = tNow;
 		}
-		
 
 		ASSERT ( m_pUpload != NULL );
 
