@@ -2675,7 +2675,7 @@ Other:
 		<string id="16079" value="Sind Sie sicher, dass Sie die Verbindung trennen möchten?"/>
 		<string id="16081" value="Suchanfrage für &quot;%s&quot; an %s senden."/>
 		<string id="16083" value="Das Erzwingen des HUB Modus kann negative Auswirkungen auf das Netzwerk und die Ausführgeschwindigkeit von Shareaza haben. Es ist generell besser Shareaza diese Entscheidung selbst treffen zu lassen.\n\nDer Hub Modus führt NICHT zu besseren Suchergebnissen, und hat auch keine anderen Vorteile für Sie.\n\nWollen Sie wirklich Fortfahren?"/>
-		<string id="16084" value="Die Deaktivierung des Gnutella-1 Protokolls kann ihre Suchergebnisse begrenzen. Wenn Sie ein Hub sind trifft dies auch für andere Benutzer zu. Sind Sie sicher, dass Sie das tun wollen?"/>
+		<string id="16084" value="Die Deaktivierung des Gnutella1-Protokolls kann ihre Suchergebnisse begrenzen. Wenn Sie ein Hub sind trifft dies auch für andere Benutzer zu. Sind Sie sicher, dass Sie das tun wollen?"/>
 		<string id="16085" value="Gnutella2 ist Shareazas Hauptnetzwerk.  Wenn sie die Unterstützung für Gnutella2 deaktivieren könnten sich die Anzahl und die Qualität ihrer Suchergebnisse stark verschlechtern.  Sind Sie SICHER, dass Sie das wollen?"/>
 		<string id="16087" value="Ihre ausgehende Bandbreite reicht nicht aus, um dieses Netzwerk zu aktivieren"/>
 		<string id="16128" value="Eingehende Verbindung von %s Port %i akzeptiert."/>
@@ -2697,7 +2697,6 @@ Other:
 		<string id="16146" value="Handshake mit %s fehlgeschlagen (ungültige Daten in der Leitung)."/>
 		<string id="16147" value="Überflüssige Verbindung mit %s geschlossen, Host Liste übertragen (%s Port %i)."/>
 		<string id="16148" value="Verbindung zu %s zurückgewiesen (%s)."/>
-		<string id="16149" value="Gnutella 0.6 Handshake mit %s fehlgeschlagen, erneut versuchen mit 0.4."/>
 		<string id="16150" value="Überflüssige Verbindung mit %s geschlossen."/>
 		<string id="16151" value="Verbindung von %s verweigert weil Shareaza im shielded leaf Modus läuft."/>
 		<string id="16152" value="Das Hub %s akzeptiert uns nicht als Hub, beendet."/>
@@ -2967,6 +2966,7 @@ Other:
 		<string id="16942" value="&quot;Durchsuchen&quot; Verbindung zu %s wird beendet."/>
 		<string id="16943" value="%s durchsuchen"/>
 		<string id="16944" value="%i freigegebene Dateien in %s's Bibliothek gefunden."/>
+		<string id="16991" value="Shareaza Media Player"/>
 		<string id="16992" value="Shareaza konnte das MediaServices Plugin nicht laden.  Bitte installieren Sie Shareaza erneut und stellen Sie sicher, dass Sie die nötigen Codecs und Ausgabetreiber installiert haben."/>
 		<string id="16993" value="Alle Multimedia Dateien|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Wiedergabelisten|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Dateien|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;|Video Dateien|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.ogm;*.wmv|CD Audio Tracks|*.cda|MIDI Dateien|*.mid;*.rmi;*.midi|Alle Dateien|*.*||"/>
 		<string id="16994" value="Fehler beim Laden von &quot;%s&quot;"/>
@@ -3061,14 +3061,14 @@ Other:
 		<string id="17472" value="Einkommende Verbindung von %s ist eine BitTorrent Kopplung, Protokollverhandlung..."/>
 		<string id="17473" value="Zeitüberschreitung beim Verbinden zu BitTorrent Client %s."/>
 		<string id="17474" value="Zeitüberschreitung beim Handshake mit BitTorrent Client %s."/>
-		<string id="17475" value="BitTorrent Kopplung mit %s mangels Aktivität geschlossen."/>
-		<string id="17476" value="BitTorrent Kopplung mit %s fehlgeschlagen. Remote-Client hat andere PeerID."/>
-		<string id="17477" value="BitTorrent Kopplung mit %s hat mit der falschen Datei geantwortet."/>
-		<string id="17478" value="BitTorrent Kopplung mit %s hat eine unbekannte Datei angefordert."/>
-		<string id="17479" value="BitTorrent Kopplung %s hergestellt für &quot;%s&quot;."/>
-		<string id="17480" value="BitTorrent Kopplung mit %s hat eine inaktive Datei angefordert."/>
-		<string id="17481" value="BitTorrent Datei (Descriptor): &quot;%s&quot; empfangen"/>
-		<string id="17482" value="Auswertung der vorgeladenen BitTorrent Datei &quot;%s&quot; nicht möglich."/>
+		<string id="17475" value="BitTorrent-Kopplung mit %s mangels Aktivität geschlossen."/>
+		<string id="17476" value="BitTorrent-Kopplung mit %s fehlgeschlagen. Remote-Client hat andere PeerID."/>
+		<string id="17477" value="BitTorrent-Kopplung mit %s hat mit der falschen Datei geantwortet."/>
+		<string id="17478" value="BitTorrent-Kopplung mit %s hat eine unbekannte Datei angefordert."/>
+		<string id="17479" value="BitTorrent-Kopplung %s hergestellt für &quot;%s&quot;."/>
+		<string id="17480" value="BitTorrent-Kopplung mit %s hat eine inaktive Datei angefordert."/>
+		<string id="17481" value="BitTorrent-Datei (Descriptor): &quot;%s&quot; empfangen"/>
+		<string id="17482" value="Auswertung der vorgeladenen BitTorrent-Datei &quot;%s&quot; nicht möglich."/>
 		<string id="17483" value="Fehler von BitTorrent Tracker für &quot;%s&quot; : &quot;%s&quot;."/>
 		<string id="17484" value="Fehler beim auswerten der BitTorrent tracker Antwort."/>
 		<string id="17485" value="BitTorrent Tracker Antwort für &quot;%s&quot; erhalten, %i neue Quellen."/>
@@ -3093,8 +3093,8 @@ Other:
 		<string id="17507" value="BitTorrent-Kopplung mit %s wurde unterbrochen."/>
 		<string id="17510" value="BitTorrent-Kopplung mit %s wurde nicht akzeptiert, da bereits eine Verbindung mit diesem Client besteht."/>
 		<string id="17511" value="BitTorrent-Kopplung mit %s wurde nicht akzeptiert, da die maximale Anzahl an Verbindungen erreicht ist."/>
-		<string id="175012" value="Privater Torrent"/>
-		<string id="175013" value="Enkodierungsfehler"/>
+		<string id="17512" value="Privater Torrent"/>
+		<string id="17513" value="Enkodierungsfehler"/>
 		<string id="18496" value="Sie haben das Namensfeld geändert.  Sind Sie sicher, dass Sie diesen Download umbenennen wollen?"/>
 		<string id="18497" value="Sie haben einen ungültigen SHA1 Hash angegeben.  Bitte überprüfen Sie ihre Eingabe und versuchen Sie es erneut."/>
 		<string id="18498" value="Sie haben einen ungültigen tiger-tree root Hash angegeben.  Bitte überprüfen Sie ihre Eingabe und versuchen Sie es erneut."/>
@@ -3110,9 +3110,7 @@ Other:
 		<string id="18508" value="Downloadquelle %s für &quot;%s&quot; entfernt, weil die Warteschlangenposition %i zu hoch ist."/>
 		<string id="18509" value="Sie können diesen Download nicht als komplett annehemen und verifizieren, weil Sie keine Verifizierungsdaten (tiger-tree Volumen, ed2k hashset oder BitTorrent hashset) haben. Ohne Verifizierungsinformationen kann der Download nicht erneut verifiziert werden."/>
 		<string id="18510" value="Sind Sie sicher, dass Sie diesen Download als komplett annehemen und neu verifizieren wollen?  Die ganze Datei wird untersucht und Shareaza wird die Teile akzeptieren, die die Verifizierung bestehen und die die sie nicht bestehen neu herunterladen."/>
-		<string id="18511" value="BitTorrent-Kopplung mit %s qurde nicht akzeptiert, Maximum an Verbindungen erreicht."/>
-  	    <string id="18512" value="Privater Torrent"/>
-  	    <string id="18513" value="Enkodierungsfilter"/>
+		<string id="18511" value="Sie haben Änderungen an der Dateigröße vorgenommen. Sind Sie sicher, dass Sie die Dateigröße dieses Downloads ändern wollen?"/>
 		<string id="19000" value="Remote Access ist deaktiviert."/>
 		<string id="19001" value="Sie müssen Benutzername und Passwort angeben."/>
 		<string id="19002" value="Kann keine Verbindungen akzeptieren, URL nicht verfügbar."/>
@@ -3243,17 +3241,20 @@ Other:
 			<control /><control />
 		</dialog>
 
-		<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">
-			<control caption="_Optionen:"/>
+		<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
+		    <control caption="_Optionen:"/>
+		    <control/>
 			<control caption="D_en Media Player benutzen um folgende Dateitypen wiederzugeben"/>
-			<control caption="_Die Shareaza Wiedergabeliste für folgende Dateitypen benutzen."/>
+			<control caption="_Die Shareaza Wiedergabeliste für folgende Dateitypen benutzen"/>
 			<control caption="Datei_typen:"/>
 			<control />
 			<control caption="_Hinzufügen"/>
 			<control caption="_Entfernen"/>
 			<control caption="_Visualisierungs Plugin:"/>
 			<control caption="Plugin _wählen..."/>
-			<control caption="Media Services _Plugin:"/>
+			<control caption="_Medienverwaltung"/>
+			<control caption="Media Player wählen:"/>
+			<control caption="Warnung: Wenn Sie ihre Medien durch einen externen Player verwalten lassen, deaktiviert dies automatisch alle Medien- und Visualisierungsplugins!"/>
 			<control />
 		</dialog>
 
@@ -3286,8 +3287,8 @@ Other:
 
 		<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-		<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Verbindung">
-			<control caption="_Inbound Adresse:"/>
+		<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Verbindung">
+			<control caption="_Inbound-Adresse:"/>
 			<control caption="Adresse:"/>
 			<control caption="Automatisch"/>
 			<control caption="Geschw.:"/>
@@ -3296,7 +3297,7 @@ Other:
 			<control />
 			<control caption="Zufällig"/>
 			<control caption="Diese Adresse erzwingen"/>
-			<control caption="_Outbound Adresse:"/>
+			<control caption="_Outbound-Adresse:"/>
 			<control caption="Adresse:"/>
 			<control caption="Automatisch"/>
 			<control caption="Geschw.:"/>
@@ -3305,6 +3306,7 @@ Other:
 			<control caption="Eingehende Verbindungen möglich"/>
 			<control />
 			<control caption="_Private Netzwerk IPs ignorieren"/>
+			<control caption="UPnP-Geräte automatisch einstellen"/>
 			<control caption="_Wartezeiten:"/>
 			<control caption="Verbindung:"/>
 			<control /><control />
@@ -4176,7 +4178,7 @@ Other:
 		</dialog>
 
 		<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Übersicht">
-			<control caption="Torrent _Informationen:"/>
+			<control caption="Torrent-_Informationen:"/>
 			<control caption="Name:"/>
 			<control/>
 			<control caption="Erstellt:"/>
@@ -4186,13 +4188,13 @@ Other:
 			<control caption="Kommentare:"/>
 			<control />
 			<control caption="Übertragungen:"/>
-  	                 <control caption="Neue Download-Übertragungen starten:"/>
-  	                 <control caption="&#160;Wenn nötig| Wenn U/D Verhältnis über 100%| Nur wenn angefordert| Nie"/>
-  	                 <control/>
-  	                 <control caption="Gesamt hochgeladen:"/>
-  	                 <control caption="Kommentar:"/>
-  	                 <control/>
-  	         </dialog>
+  	        <control caption="Neue Download-Übertragungen starten:"/>
+  	        <control caption="&#160;Wenn nötig| Wenn U/D Verhältnis über 100%| Nur wenn angefordert| Nie"/>
+  	        <control/>
+  	        <control caption="Gesamt hochgeladen:"/>
+  	        <control caption="Notizen:"/>
+  	        <control/>
+  	    </dialog>
   	 
   	         <dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Dateien">
   	                 <control caption="Torrent-_Informationen:"/>
@@ -4202,10 +4204,10 @@ Other:
   	                 <control/>
   	         </dialog>
   	 
-  	         <dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Tracker">
-  	                 <control caption="Torrent._Informationen:"/>
-  	                 <control caption="Name:"/>
-  	                 <control/>
+  	    <dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Tracker">
+  	        <control caption="Torrent-_Informationen:"/>
+  	        <control caption="Name:"/>
+  	        <control/>
 			<control caption="Tracker:"/>
 			<control />
 			<control caption="Aktueller Tra_cker:"/>
@@ -4380,7 +4382,7 @@ Other:
 			<column from="User" to="Benutzer"/>
 			<column from="Rating" to="Bewertung"/>
 			<column from="Comments" to="Kommentare"/>
-			<column from="Order" to=""/>
+			<column from="Order" to="Reihenfolge"/>
 		</list>
 	</listColumns>
 </skin>
