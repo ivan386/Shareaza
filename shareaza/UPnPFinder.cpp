@@ -183,6 +183,7 @@ void CUPnPFinder::OnSearchComplete()
 	if ( m_pDevices.empty() )
 	{
 		theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices" );
+		Settings.Connection.EnableUPnP = FALSE;
 		return;
 	}
 	
@@ -515,6 +516,11 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 
 	theApp.m_bUPnPPortsForwarded = TS_TRUE;
 	theApp.Message( MSG_DEFAULT, L"Ports successfully forwarded using UPnP service." );
+	
+	// Leave the message loop, since events may take more time.
+	// Assuming that the user doesn't use several devices
+	
+	m_bAsyncFindRunning = false;
 }
 
 // Invoke the action for the selected service.
