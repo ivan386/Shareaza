@@ -197,7 +197,7 @@ BOOL CBTClient::OnRun()
 			m_pOutput->Add( &dwZero, 4 );			// wtf???
 			OnWrite();
 		}*/
-		else if ( tNow - m_tLastKeepAlive > Settings.BitTorrent.LinkPing / 2 )
+		else if ( tNow - m_tLastKeepAlive > Settings.BitTorrent.LinkPing )
 		{
 			Send( CBTPacket::New( BT_PACKET_KEEPALIVE ) );
 			m_tLastKeepAlive = tNow;

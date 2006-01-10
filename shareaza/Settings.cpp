@@ -321,7 +321,7 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.TorrentExtraKeys"), &BitTorrent.TorrentExtraKeys, TRUE );
 	Add( _T("BitTorrent.TorrentIgnoreErrors"), &BitTorrent.TorrentIgnoreErrors, FALSE );
 	Add( _T("BitTorrent.LinkTimeout"), &BitTorrent.LinkTimeout, 180000 );
-	Add( _T("BitTorrent.LinkPing"), &BitTorrent.LinkPing, 45000 );
+	Add( _T("BitTorrent.LinkPing"), &BitTorrent.LinkPing, 120000 );
 	Add( _T("BitTorrent.RequestPipe"), &BitTorrent.RequestPipe, 4 );
 	Add( _T("BitTorrent.RequestSize"), &BitTorrent.RequestSize, 16384 );
 	Add( _T("BitTorrent.RequestLimit"), &BitTorrent.RequestLimit, 131072 );
@@ -493,7 +493,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	33
+#define SMART_VERSION	34
 
 void CSettings::Load()
 {
@@ -628,6 +628,9 @@ void CSettings::SmartUpgrade()
 		}
 	}
 	
+	if ( nVersion < 34 )
+		BitTorrent.LinkPing				= 120 * 1000;
+
 	// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
 	if ( nVersion < 20 )
 	{
