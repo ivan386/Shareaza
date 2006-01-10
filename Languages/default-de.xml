@@ -1322,6 +1322,7 @@ Other:
 			<separator />
 			<item id="ID_MEDIA_OPEN" text="Wiedergabeliste _öffnen..."/>
 			<item id="ID_MEDIA_SAVE" text="Wiedergabeliste _Speichern..."/>
+			<item id="ID_MEDIA_EXPORT_COLLECTION" text="Kollektion e_xportieren..."/>
 			<item id="ID_MEDIA_CLEAR" text="Wiedergabeliste _löschen"/>
 			<separator />
 			<item id="ID_MEDIA_PLAYLIST" text="Wiedergabeliste _anzeigen"/>
@@ -2341,6 +2342,7 @@ Other:
 		<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Das Originalseitenverhältnis benutzen."/>
 		<tip id="ID_MEDIA_CLEAR" message="Die Wiedergabeliste löschen."/>
 		<tip id="ID_MEDIA_CLOSE" message="Die aktuelle Datei schließen um Speicher freizugeben."/>
+		<tip id="ID_MEDIA_EXPORT_COLLECTION" message="Die Playlist als Rich-Collection-Datei speichern..."/>
 		<tip id="ID_MEDIA_FULLSCREEN" message="In den Vollbild Modus wechseln."/>
 		<tip id="ID_MEDIA_MUTE" message="Audiowiedergabe stummschalten"/>
 		<tip id="ID_MEDIA_NEXT" message="Die nächste Datei in der Wiedergabeliste wiedergeben." tip="Nächste Datei"/>
@@ -2512,6 +2514,9 @@ Other:
 		<string id="7003" value="Multiple"/>
 		<string id="7004" value="Es existiert bereits ein Filter mit dem Namen &quot;%s&quot;, möchten Sie ihn ersetzen?"/>
 		<string id="7005" value="Bitte geben Sie dem Filter einen Namen."/>
+		<string id="7100" value="Diese Vorlage ist ungültig."/>
+  	    <string id="7101" value="Diese Vorlage kann nicht angepasst werden."/>
+  	    <string id="7102" value="Sind Sie sicher, dass Sie die &quot;%s&quot;-Vorlage löschen wollen?\nDieser Schritt kann nicht rückgängig gemacht werden."/>
 		<string id="8000" value="Einstellungen"/>
 		<string id="8001" value="Willkommen bei Shareaza"/>
 		<string id="8002" value="Datei Eigenschaften"/>
@@ -2524,6 +2529,7 @@ Other:
 		<string id="8009" value="Wollen Sie den Skin &quot;%s&quot; wirklich löschen?  Dies kann nicht rückgängig gemacht werden."/>
 		<string id="8010" value="Das ist eine pre-release Version von Shareaza. Die beta-Test Periode ist abgelaufen.  Bitte laden Sie die offizielle Version www.shareaza.com herunter."/>
 		<string id="8011" value="Das Wechseln der Ansicht schließt alle offenen Fenster.  Wollen Sie die Ansicht jetzt wechseln?"/>
+		<string id="8012" value="Torrent-Informationen"/>
 		<string id="8060" value="Hub/Ultrapeer Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
 		<string id="8061" value="Ultrapeer Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
 		<string id="8062" value="Hub Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
@@ -2609,6 +2615,7 @@ Other:
 		<string id="8240" value="Shareaza verschiebt den Download:"/>
 		<string id="8241" value="Shareaza überprüft den Download auf Fehler:"/>
 		<string id="8243" value="Hochgeladen: "/>
+		<string id="8244" value="Anzahl der Rezensionen:"/>
 		<string id="8288" value="Bibliothek durchsuchen"/>
 		<string id="8289" value=" "/>
 		<string id="8290" value="Inhalt von %i Ordnern anzeigen"/>
@@ -2649,6 +2656,7 @@ Other:
 		<string id="8334" value="Quellen für diese Datei haben zur Zeit keine freien Uploadslots"/>
 		<string id="8335" value="Quellen für diese Datei sind hinter einer Firewall"/>
 		<string id="8336" value="Quellen für diese Datei könnten instabil sein"/>
+		<string id="8337" value="nicht vertraut"/>
 		<string id="16064" value="Der Shareaza Netzwerkkern wird gestartet..."/>
 		<string id="16065" value="Kann nicht an %s Port %i für eingehende Verbindungen binden.  Eingehende Verbindungen werden nicht unterstützt"/>
 		<string id="16066" value="Der Shareaza Netzwerkkern wird heruntergefahren..."/>
@@ -3079,6 +3087,7 @@ Other:
 		<string id="17498" value="In der Datei &quot;%s&quot; wurde ein Fehler gefunden."/>
 		<string id="17500" value="Tracker hat nicht geantwortet - Announce erneut versuchen (%i von %i)"/>
 		<string id="17501" value="Kommunikation mit dem Tracker nicht möglich"/>
+	    <string id="17503" value="Verbindung mit Tracker fehlgeschlagen- Verbinde mit nächstem Tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent-Verbindung mit %s wurde unterbrochen."/>
 		<string id="17506" value="BitTorrent-Handshake mit %s wurde unterbrochen."/>		
 		<string id="17507" value="BitTorrent-Kopplung mit %s wurde unterbrochen."/>
@@ -3101,6 +3110,9 @@ Other:
 		<string id="18508" value="Downloadquelle %s für &quot;%s&quot; entfernt, weil die Warteschlangenposition %i zu hoch ist."/>
 		<string id="18509" value="Sie können diesen Download nicht als komplett annehemen und verifizieren, weil Sie keine Verifizierungsdaten (tiger-tree Volumen, ed2k hashset oder BitTorrent hashset) haben. Ohne Verifizierungsinformationen kann der Download nicht erneut verifiziert werden."/>
 		<string id="18510" value="Sind Sie sicher, dass Sie diesen Download als komplett annehemen und neu verifizieren wollen?  Die ganze Datei wird untersucht und Shareaza wird die Teile akzeptieren, die die Verifizierung bestehen und die die sie nicht bestehen neu herunterladen."/>
+		<string id="18511" value="BitTorrent-Kopplung mit %s qurde nicht akzeptiert, Maximum an Verbindungen erreicht."/>
+  	    <string id="18512" value="Privater Torrent"/>
+  	    <string id="18513" value="Enkodierungsfilter"/>
 		<string id="19000" value="Remote Access ist deaktiviert."/>
 		<string id="19001" value="Sie müssen Benutzername und Passwort angeben."/>
 		<string id="19002" value="Kann keine Verbindungen akzeptieren, URL nicht verfügbar."/>
@@ -3110,6 +3122,8 @@ Other:
 		<string id="20005" value="Nein"/>
 		<string id="20006" value="Ja"/>
 		<string id="20007" value="Auto"/>
+		<string id="20008" value="Vorgabe"/>
+		<string id="20009" value="Benutzerdefiniert"/>
 		<string id="20100" value="Verbinden"/>
 		<string id="20101" value="Anfordern"/>
 		<string id="20102" value="Antwort"/>
@@ -3765,7 +3779,7 @@ Other:
 			<control caption="Abbrechen"/>
 		</dialog>
 
-		<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Ergebnisse filtern">
+		<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Ergebnisse filtern">
 			<control caption="Nur Ergebnisse die folgende _Wörter enthalten:"/>
 			<control />
 			<control caption="( Sie können Wörter mit &quot;-Wort&quot; ausschließen )"/>
@@ -3791,6 +3805,9 @@ Other:
 			<control caption="_Speichern als"/>
 			<control caption="_Löschen"/>
 			<control caption="Filter:"/>
+			<control caption="DRM-Dateien"/>
+  	        <control caption="Verdächtige Dateien"/>
+  	        <control caption="Erotikfilter"/>
 		</dialog>
 
 		<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filter speichern als">
@@ -3804,7 +3821,7 @@ Other:
 			<control caption="Service _Adresse:"/>
 			<control />
 			<control caption="Service Typ:"/>
-			<control />
+			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
 			<control caption="OK"/>
 			<control caption="Abbrechen"/>
 		</dialog>
@@ -4102,27 +4119,41 @@ Other:
 			<control />
 		</dialog>
 
-		<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Kollektion exportieren">
-			<control caption="Diese Funktion exportiert den Inhalt eines Albumordners als Rich Collection XML Datei."/>
-			<control caption="Exportieren..."/>
-			<control caption="Abbrechen"/>
+		<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Kollektion exportieren">
+			<control caption="Diese Funktion exportiert den Inhalt eines Albumordners oder einer Playlist als eine Rich-Collection-Datei. Bitte wählen Sie eine Vorlage und klicken auf weiter um fortzufahren.|Um ihre Kollektion anzupassen, geben Sie bitte folgende Daten an:"/>
+			<control/>
+			<control caption="Infos:"/>
+  	        <control caption="Name:"/>
+  	        <control/>
+  	        <control caption="Autor:"/>
+  	        <control/>
+  	        <control caption="Beschreibung:"/>
+  	        <control/>
+  	        <control caption="Löschen|_Zurück"/>
+  	        <control caption="W_eiter|Exportieren"/>
+  	        <control caption="Abbre_chen"/>
 		</dialog>
 
-		<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Download bearbeiten (erweitert)">
+		<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Download bearbeiten (erweitert)">
 			<control caption="ACHTUNG: Dieser Dialog stellt erweiterte Funktionen für PowerUser zur Verfügung. Diese Funktionen führen bei falscher Anwendung zu Dateikorruption."/>
-			<control caption="Datei_name:"/>
+			<control caption="Dateiname- und Größe:"/>
+  	        <control caption="Dateiname:"/>
+  	        <control/><control/>
+  	        <control caption="Dateigröße (Byte):"/>
 			<control />
 			<control caption="_URNs:"/>
+			<control caption="Vertraut"/>
 			<control caption="SHA1:"/>
-			<control />
+			<control/><control/>
 			<control caption="Tiger-Root:"/>
-			<control />
+			<control/><control/>
 			<control caption="ED2K:"/>
-			<control />
+			<control/><control/>
 			<control caption="_Aktionen:"/>
 			<control caption="Datei erneut verifizieren (TTH oder ed2k Hashset)"/>
 			<control caption="Datei als 100% komplett annehmen und erneut verifizieren"/>
 			<control caption="Alle Quellen vergessen"/>
+			<control caption="Mit lokal vorh. Datei zusammenführen und erneut verifizieren"/>
 			<control caption="Data _Eraser:"/>
 			<control caption="Bytes löschen:"/>
 			<control />
@@ -4144,7 +4175,7 @@ Other:
 			<control />
 		</dialog>
 
-		<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent Tracker Viewer">
+		<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Übersicht">
 			<control caption="Torrent _Informationen:"/>
 			<control caption="Name:"/>
 			<control/>
@@ -4154,21 +4185,39 @@ Other:
 			<control/>
 			<control caption="Kommentare:"/>
 			<control />
+			<control caption="Übertragungen:"/>
+  	                 <control caption="Neue Download-Übertragungen starten:"/>
+  	                 <control caption="&#160;Wenn nötig| Wenn U/D Verhältnis über 100%| Nur wenn angefordert| Nie"/>
+  	                 <control/>
+  	                 <control caption="Gesamt hochgeladen:"/>
+  	                 <control caption="Kommentar:"/>
+  	                 <control/>
+  	         </dialog>
+  	 
+  	         <dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Dateien">
+  	                 <control caption="Torrent-_Informationen:"/>
+  	                 <control caption="Name:"/>
+  	                 <control/>
+  	                 <control caption="_Dateien:"/>
+  	                 <control/>
+  	         </dialog>
+  	 
+  	         <dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Tracker">
+  	                 <control caption="Torrent._Informationen:"/>
+  	                 <control caption="Name:"/>
+  	                 <control/>
 			<control caption="Tracker:"/>
 			<control />
-			<control caption="_Quellen:"/>
+			<control caption="Aktueller Tra_cker:"/>
 			<control caption="Vollständig (Seeds):"/>
 			<control />
 			<control caption="Unvollständig:"/>
 			<control />
-			<control caption="Transfer:"/>
-			<control caption="Neue Downloadtransfer starten:"/>
-			<control caption="Wenn benötigt|Wenn U/D Verhältnis über 100%|Nur auf Anforderung|Nie"/>
-			<control caption="_Dateien:"/>
-			<control />
 			<control caption="_Aktualisieren"/>
+			<control caption="_Trackers:"/>
 			<control />
-			<control caption="Schließen"/>			
+			<control caption="Tracker-Modus:"/>
+  	        <control caption="Deaktiviert|Benutzerdefiniert|Einzel-Tracker|Multi-tracker|Multi-tracker (locked)"/>		
 		</dialog>
 
 		<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Gruppe Eigenschaften">
@@ -4318,10 +4367,15 @@ Other:
 			<column from="URL" to="URL"/>
 			<column from="Expires" to="Läuft ab"/>
 		</list>
-		<list name="CTorrentTrackerList">
+		<list name="CTorrentFileList">
 			<column from="Filename" to="Dateiname"/>
 			<column from="Size" to="Größe"/>
 		</list>
+		<list name="CTorrentTrackerList">
+  	        <column from="Tracker" to="Tracker"/>
+  	        <column from="Status" to="Status"/>
+  	        <column from="Type" to="Typ"/>
+  	         </list>
 		<list name="CReviewList">
 			<column from="User" to="Benutzer"/>
 			<column from="Rating" to="Bewertung"/>
