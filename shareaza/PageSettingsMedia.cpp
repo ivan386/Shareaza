@@ -101,7 +101,7 @@ BOOL CMediaSettingsPage::OnInitDialog()
 	}
 	
 	CString str;
-	LoadString( str, IDS_GENERAL_DEFAULT );
+	LoadString( str, IDS_MEDIA_SMPLAYER );
 	m_wndServices.AddString( str );
 	LoadString( str, IDS_GENERAL_CUSTOM );
 	str.Insert( 0, '(' );

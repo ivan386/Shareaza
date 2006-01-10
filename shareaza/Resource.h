@@ -687,7 +687,6 @@
 #define IDC_TRUST_ED2K                  1423
 #define IDC_TORRENT_TRACKERMODE         1425
 #define IDC_ASSOCIATIONS                1426
-#define IDC_CHECK1                      1428
 #define IDC_ENABLE_UPNP                 1428
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
@@ -1180,6 +1179,7 @@
 #define IDS_BROWSE_CLOSED               16942
 #define IDS_BROWSE_TITLE_FORMAT         16943
 #define IDS_BROWSE_INTRO_FORMAT         16944
+#define IDS_MEDIA_SMPLAYER              16991
 #define IDS_MEDIA_PLUGIN_CREATE         16992
 #define IDS_MEDIA_FILTER                16993
 #define IDS_MEDIA_LOAD_FAIL             16994
