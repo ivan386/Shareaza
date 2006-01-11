@@ -1,7 +1,11 @@
 //
 // DownloadWithSources.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+//	Date:			"$Date: 2006/01/11 20:32:05 $"
+//	Revision:		"$Revision: 1.10 $"
+//  Last change by:	"$Author: spooky23 $"
+//
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +47,7 @@ protected:
 	CDownloadSource*	m_pSourceFirst;
 private:
 	CDownloadSource*	m_pSourceLast;
-	CList< CString >			m_pFailedSources;
+	CList< CString >	m_pFailedSources;
 public:
 	CXMLElement*		m_pXML;
 	int					m_nSourceCount;
@@ -60,7 +64,7 @@ public:
 	BOOL				AddSourceHit(CQueryHit* pHit, BOOL bForce = FALSE);
 	BOOL				AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
     BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
-	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL);
+	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0);
 	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bURN = FALSE);
 	virtual BOOL		OnQueryHits(CQueryHit* pHits);
 	virtual void		Serialize(CArchive& ar, int nVersion);

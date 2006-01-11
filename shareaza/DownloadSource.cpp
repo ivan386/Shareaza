@@ -1,7 +1,11 @@
 //
 // DownloadSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+//	Date:			"$Date: 2006/01/11 20:32:05 $"
+//	Revision:		"$Revision: 1.15 $"
+//  Last change by:	"$Author: spooky23 $"
+//
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -88,6 +92,7 @@ void CDownloadSource::Construct(CDownload* pDownload)
 	m_nColour		= -1;
 	m_tAttempt		= 0;
 	m_nFailures		= 0;
+	m_nRedirectionCount = 0;
 
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
@@ -111,7 +116,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 	m_bPushOnly	= pHit->m_bPush == TS_TRUE ? TRUE : FALSE;
 	
 	m_sURL		= pHit->m_sURL;
-	m_pAddress	= pHit->m_pAddress;	// Not needed?
+	m_pAddress	= pHit->m_pAddress;	// Not needed? , m_pAddress is set in ResolveURL() again
 	m_nPort		= pHit->m_nPort;	// Not needed?
 	m_nSpeed	= pHit->m_bMeasured == TS_TRUE ? ( pHit->m_nSpeed * 128 ) : 0;
 	m_sServer	= pHit->m_pVendor->m_sName;
@@ -199,7 +204,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, const Hashes::BtGuid& oGU
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from URL
 
-CDownloadSource::CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL /*bSHA1*/, BOOL bHashAuth, FILETIME* pLastSeen)
+CDownloadSource::CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL /*bSHA1*/, BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
 : m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
@@ -218,6 +223,8 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL /*bS
 		(LONGLONG&)tNow += 10000000;
 		if ( CompareFileTime( pLastSeen, &tNow ) <= 0 ) m_tLastSeen = *pLastSeen;
 	}
+
+	m_nRedirectionCount = nRedirectionCount;
 }
 
 //////////////////////////////////////////////////////////////////////

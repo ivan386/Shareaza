@@ -1,7 +1,11 @@
 //
 // DownloadSource.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+//	Date:			"$Date: 2006/01/11 20:32:05 $"
+//	Revision:		"$Revision: 1.10 $"
+//  Last change by:	"$Author: spooky23 $"
+//
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,7 +43,7 @@ public:
 	CDownloadSource(CDownload* pDownload, CQueryHit* pHit);
 	CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
     CDownloadSource(CDownload* pDownload, const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
-	CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA1 = FALSE, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL);
+	CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA1 = FALSE, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0);
 	virtual ~CDownloadSource();
 private:
 	inline void Construct(CDownload* pDownload);
@@ -81,8 +85,9 @@ public:
 	int					m_nColour;
 	DWORD				m_tAttempt;
 	int					m_nFailures;
-	Fragments::List m_oAvailable;
-	Fragments::List m_oPastFragments;
+	int					m_nRedirectionCount;
+	Fragments::List		m_oAvailable;
+	Fragments::List		m_oPastFragments;
 
 // Operations
 public:

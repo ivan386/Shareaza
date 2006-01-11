@@ -1,7 +1,11 @@
 //
 // DownloadTransferHTTP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+//	Date:			"$Date: 2006/01/11 20:32:05 $"
+//	Revision:		"$Revision: 1.7 $"
+//  Last change by:	"$Author: spooky23 $"
+//
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,6 +60,8 @@ protected:
 	QWORD			m_nContentLength;
 	CString			m_sContentType;
 	DWORD			m_nRetryDelay;
+	BOOL			m_bRedirect;
+	CString			m_sRedirectionURL;
 
 // Operations
 public:

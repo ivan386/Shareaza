@@ -1,7 +1,11 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+//	Date:			"$Date: 2006/01/11 20:32:05 $"
+//	Revision:		"$Revision: 1.29 $"
+//  Last change by:	"$Author: spooky23 $"
+//
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -284,10 +288,11 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAd
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a single URL source
 
-BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLastSeen)
+BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLastSeen, int nRedirectionCount)
 {
 	if ( pszURL == NULL ) return FALSE;
 	if ( *pszURL == 0 ) return FALSE;
+	if ( nRedirectionCount > 5 ) return FALSE; // No more than 5 redirections
 	
 	BOOL bHashAuth = FALSE;
 	CSourceURL pURL;
@@ -332,7 +337,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 		if ( m_sDisplayName.IsEmpty() ) m_sDisplayName = _T("default.htm");
 	}
 	
-	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pszURL, bURN, bHashAuth, pLastSeen ) );
+	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pszURL, bURN, bHashAuth, pLastSeen, nRedirectionCount ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -452,22 +457,25 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			return FALSE;
 		}
 	}
-
-	for ( CDownloadSource* pExisting = m_pSourceFirst ; pExisting ; pExisting = pExisting->m_pNext )
-	{	
-		if ( pExisting->Equals( pSource ) )
-		{
-			if ( pExisting->m_pTransfer != NULL ||
-				 ( pExisting->m_nProtocol == PROTOCOL_HTTP && pSource->m_nProtocol != PROTOCOL_HTTP ) )
+	
+	if ( pSource->m_nRedirectionCount == 0 ) // Don't check for existing sources if source is a redirection
+	{
+		for ( CDownloadSource* pExisting = m_pSourceFirst ; pExisting ; pExisting = pExisting->m_pNext )
+		{	
+			if ( pExisting->Equals( pSource ) )
 			{
-				delete pSource;
-				return FALSE;
-			}
-			else
-			{
-				pSource->m_tAttempt = pExisting->m_tAttempt;
-				pExisting->Remove( TRUE, FALSE );
-				break;
+				if ( pExisting->m_pTransfer != NULL ||
+					( pExisting->m_nProtocol == PROTOCOL_HTTP && pSource->m_nProtocol != PROTOCOL_HTTP ) )
+				{
+					delete pSource;
+					return FALSE;
+				}
+				else
+				{
+					pSource->m_tAttempt = pExisting->m_tAttempt;
+					pExisting->Remove( TRUE, FALSE );
+					break;
+				}
 			}
 		}
 	}

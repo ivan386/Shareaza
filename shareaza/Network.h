@@ -1,7 +1,11 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+//	Date:			"$Date: 2006/01/11 20:32:05 $"
+//	Revision:		"$Revision: 1.12 $"
+//  Last change by:	"$Author: spooky23 $"
+//
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +53,7 @@ public:
 public:
 	CMutex			m_pSection;
 	CEvent			m_pWakeup;
-	SOCKADDR_IN		m_pHost;
+	SOCKADDR_IN		m_pHost;				// Structure (Windows Sockets) which holds address of the local machine
 	BOOL			m_bEnabled;				// If the network "enabled" (Connected or trying)
 	BOOL			m_bAutoConnect;
 	DWORD			m_tStartedConnecting;	// The time Shareaza started trying to connect

@@ -1,7 +1,11 @@
 //
 // DownloadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+//	Date:			"$Date: 2006/01/11 20:32:05 $"
+//	Revision:		"$Revision: 1.22 $"
+//  Last change by:	"$Author: spooky23 $"
+//
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,6 +64,7 @@ CDownloadTransferHTTP::CDownloadTransferHTTP(CDownloadSource* pSource) : CDownlo
 	m_bTigerIgnore	= FALSE;
 	m_bMetaFetch	= FALSE;
 	m_bMetaIgnore	= FALSE;
+	m_bRedirect		= FALSE;
 	
 	m_nRetryDelay	= Settings.Downloads.RetryDelay;
 }
@@ -572,9 +577,10 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 		m_bRangeFault = TRUE;
 		SetState( dtsHeaders );
 	}
-	else if ( FALSE && ( strCode == _T("301") || strCode == _T("302") ) )
+	else if ( strCode == _T("301") || strCode == _T("302") )
 	{
-		// TODO: Read "Location:" header and re-request
+		m_bRedirect = TRUE;
+		SetState( dtsHeaders );
 	}
 	else
 	{
@@ -858,6 +864,10 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		if ( _tcsistr( strValue, _T("gnutella2/") ) != NULL ) m_pSource->SetGnutella( 2 );
 		m_pSource->SetGnutella( 1 );
 	}
+	else if ( strHeader.CompareNoCase( _T("Location") ) == 0 )
+	{
+		m_sRedirectionURL = strValue;
+	}
 	
 	return CTransfer::OnHeaderLine( strHeader, strValue );
 }
@@ -869,6 +879,13 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 {
 	if ( m_bBadResponse )
 	{
+		Close( TS_FALSE );
+		return FALSE;
+	}
+	else if ( m_bRedirect )
+	{
+		int nRedirectionCount = m_pSource->m_nRedirectionCount;
+		m_pDownload->AddSourceURL( m_sRedirectionURL, m_bHashMatch, NULL, nRedirectionCount + 1 );
 		Close( TS_FALSE );
 		return FALSE;
 	}
