@@ -882,7 +882,7 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 	// We are not interested in the initial values; we will request them explicitly
 	if ( !m_instance.IsAsyncFindRunning() )
 	{
-		if ( wcsicmp( pszStateVarName, L"ConnectionStatus" ) == 0 )
+		if ( _wcsicmp( pszStateVarName, L"ConnectionStatus" ) == 0 )
 		{
 			theApp.m_bUPnPDeviceConnected = strValue.CompareNoCase( L"Disconnected" ) == 0
 					? TS_FALSE
@@ -890,7 +890,7 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 						? TS_TRUE
 						: TS_UNKNOWN;
 		}
-		else if ( wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
+		else if ( _wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
 					theApp.m_sUPnPExternalIP = strValue.Trim();
 	}
 
