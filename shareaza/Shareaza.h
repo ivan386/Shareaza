@@ -141,7 +141,8 @@ inline bool IsCharacter(TCHAR nChar)
 	
 	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE1, &nChar, 1, &nCharType ) )
 		return ( ( nCharType & C1_ALPHA ) == C1_ALPHA ||
-				 ( nCharType & C1_DIGIT ) == C1_DIGIT );
+				 ( nCharType & C1_DIGIT ) == C1_DIGIT ||
+				 nCharType == C1_DEFINED );
 
 	return false;
 }
