@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2006/01/12 11:57:10 $"
-//	Revision:		"$Revision: 1.38 $"
+//	Date:			"$Date: 2006/01/12 12:16:00 $"
+//	Revision:		"$Revision: 1.39 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1564,9 +1564,8 @@ void CMediaFrame::Cleanup()
 		HINSTANCE hRes = AfxGetResourceHandle();
 		m_pPlayer->Close();
 		m_pPlayer->Destroy();
-		m_pPlayer->Release();
-		m_pPlayer = NULL;
 		CoLockObjectExternal( m_pPlayer, FALSE, TRUE );
+		m_pPlayer = NULL;
 		AfxSetResourceHandle( hRes );
 	}
 	
