@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2006/01/02 10:24:19 $"
-//	Revision:		"$Revision: 1.37 $"
+//	Date:			"$Date: 2006/01/12 11:57:10 $"
+//	Revision:		"$Revision: 1.38 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1391,6 +1391,7 @@ BOOL CMediaFrame::Prepare()
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return FALSE;
 	}
+	CoLockObjectExternal( m_pPlayer, TRUE, TRUE );
 	ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_pPlayer->Create( GetSafeHwnd() );
 	if ( theApp.m_bRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
@@ -1565,6 +1566,7 @@ void CMediaFrame::Cleanup()
 		m_pPlayer->Destroy();
 		m_pPlayer->Release();
 		m_pPlayer = NULL;
+		CoLockObjectExternal( m_pPlayer, FALSE, TRUE );
 		AfxSetResourceHandle( hRes );
 	}
 	
