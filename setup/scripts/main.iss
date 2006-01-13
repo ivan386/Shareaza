@@ -342,6 +342,7 @@ const
   NET_FW_SCOPE_ALL = 0;
   NET_FW_IP_VERSION_ANY = 2;
 var
+  CurrentPath: string;
   Installed: Boolean;
   FirewallFailed: string;
 
@@ -353,6 +354,16 @@ End;
 Function NSISUsed(): boolean;
 Begin
     Result := RegKeyExists(HKEY_LOCAL_MACHINE, KeyLoc2);
+End;
+
+// check if the current install path exists
+Function DoesPathExist(): boolean;
+Begin
+    if RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Shareaza','', CurrentPath) then
+        Result := DirExists(CurrentPath)
+    else
+        Result := False;
+
 End;
 
 Function NextButtonClick(CurPageID: integer): Boolean;
@@ -379,7 +390,7 @@ end;
 Function InitializeSetup: Boolean;
 Begin
   Result := True;
-  Installed := RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc1, KeyName) or RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc2, KeyName);
+  Installed := (RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc1, KeyName) or RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc2, KeyName)) and DoesPathExist();
 End;
 
 Function EnableDeleteOldSetup: Boolean;
