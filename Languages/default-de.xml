@@ -4139,7 +4139,7 @@ Other:
 		<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Download bearbeiten (erweitert)">
 			<control caption="ACHTUNG: Dieser Dialog stellt erweiterte Funktionen für PowerUser zur Verfügung. Diese Funktionen führen bei falscher Anwendung zu Dateikorruption."/>
 			<control caption="Dateiname- und Größe:"/>
-  	        <control caption="Dateiname:"/>
+  	        <control caption="Datei_name:"/>
   	        <control/><control/>
   	        <control caption="Dateigröße (Byte):"/>
 			<control />
@@ -4155,7 +4155,7 @@ Other:
 			<control caption="Datei erneut verifizieren (TTH oder ed2k Hashset)"/>
 			<control caption="Datei als 100% komplett annehmen und erneut verifizieren"/>
 			<control caption="Alle Quellen vergessen"/>
-			<control caption="Mit lokal vorh. Datei zusammenführen und erneut verifizieren"/>
+			<control caption="Mit lokaler Datei zusammenführen und erneut verifizieren"/>
 			<control caption="Data _Eraser:"/>
 			<control caption="Bytes löschen:"/>
 			<control />
