@@ -57,6 +57,7 @@ public:
 protected:
 	void				ProcessFile(CLibraryFile* pFile, BOOL bAdd);
 	int					ProcessPhrase(CLibraryFile* pFile, const CString& strPhrase, BOOL bAdd, BOOL bLowercase = TRUE);
+	int					MakeKeywords(CLibraryFile* pFile, const CString& strWord, BOOL bAdd);
 	inline void			ProcessWord(CLibraryFile* pFile, const CString& strWord, BOOL bAdd);
 
 };

@@ -106,7 +106,7 @@ void CLibraryDictionary::ProcessFile(CLibraryFile* pFile, BOOL bAdd)
 	if ( pFile->m_pMetadata && pFile->m_pSchema )
 	{
 		ProcessWord( pFile, pFile->m_pSchema->m_sURI, bAdd );
-		ProcessPhrase( pFile, pFile->GetMetadataWords(), bAdd );
+		ProcessPhrase( pFile, pFile->GetMetadataWords(), bAdd, FALSE );
 	}
 }
 
@@ -115,84 +115,98 @@ void CLibraryDictionary::ProcessFile(CLibraryFile* pFile, BOOL bAdd)
 
 int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhrase, BOOL bAdd, BOOL bLowercase)
 {
-	LPCTSTR pszPtr = strPhrase;
+	CString strTransformed( strPhrase );
+	if ( bLowercase )
+		ToLower( strTransformed );
+
+	LPCTSTR pszPtr = strTransformed;
 	CString strWord;
 	int nCount = 0;
-	
-    int nStart = 0, nPos = 0;
+	ScriptType boundary[ 2 ] = { sNone, sNone };
+    int nPos = 0;
+	int nPrevWord = 0, nNextWord = 0;
+
 	for ( ; *pszPtr ; nPos++, pszPtr++ )
 	{
-		if ( ! IsCharacter( *pszPtr ) )
+		// boundary[ 0 ] -- previous character;
+		// boundary[ 1 ] -- current character;
+		boundary[ 0 ] = boundary[ 1 ];
+
+		if ( IsKanji( *pszPtr ) )
+			boundary[ 1 ] = sKanji;
+		else if ( IsKatakana( *pszPtr ) && IsHiragana( *pszPtr ) )
 		{
-			if ( nStart < nPos && IsWord( strPhrase, nStart, nPos - nStart ) )
+			if ( boundary[ 0 ] == sKatakana || boundary[ 0 ] == sHiragana )
+				boundary[ 1 ] = boundary[ 0 ];
+		}
+		else if ( IsKatakana( *pszPtr ) )
+			boundary[ 1 ] = sKatakana;
+		else if ( IsHiragana( *pszPtr ) )
+			boundary[ 1 ] = sHiragana;
+		else
+			boundary[ 1 ] = sRegular;
+
+		bool bCharacter = IsCharacter( *pszPtr );
+		int nDistance = !bCharacter ? 1 : 0;
+
+		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ] && nPos )
+		{
+			// Join two adjacent script phrases
+			// nNextWord == nPrevWord when previous word was regular
+			if ( nPos > nNextWord && nNextWord > nPrevWord )
 			{
-				strWord = strPhrase.Mid( nStart, nPos - nStart );
-				if ( bLowercase ) 
+				strWord = strTransformed.Mid( nPrevWord, nPos - nPrevWord );
+				nCount += MakeKeywords( pFile, strWord, bAdd );
+			}
+			if ( nPos > nNextWord )
+			{
+				strWord = strTransformed.Mid( nNextWord, nPos - nNextWord );
+				nCount += MakeKeywords( pFile, strWord, bAdd );
+				if ( nNextWord > nPrevWord )
 				{
-					CharLower( strWord.GetBuffer() );
-					strWord.GetBuffer();
-				}
-				ProcessWord( pFile, strWord, bAdd );
-				nCount++;
-				
-				if ( nPos - nStart >= 5 && Settings.Library.PartialMatch )
-				{
-					strWord = strPhrase.Mid( nStart, nPos - nStart - 1 );
-					if ( bLowercase ) 
-					{
-						CharLower( strWord.GetBuffer() );
-						strWord.GetBuffer();
-					}
-					ProcessWord( pFile, strWord, bAdd );
-					nCount++;
-					
-					strWord = strPhrase.Mid( nStart, nPos - nStart - 2 );
-					if ( bLowercase ) 
-					{
-						CharLower( strWord.GetBuffer() );
-						strWord.GetBuffer();
-					}
-					ProcessWord( pFile, strWord, bAdd );
-					nCount++;
+					strWord = strTransformed.Mid( nPrevWord, nNextWord - nPrevWord );
+					nCount += MakeKeywords( pFile, strWord, bAdd );
 				}
 			}
-			nStart = nPos + 1;
+			if ( nNextWord > nPrevWord )
+				nPrevWord = nNextWord;
+			nNextWord = nPos + nDistance;
+			if ( boundary[ 0 ] < sKanji && boundary[ 1 ] < sKanji || !bCharacter ||
+				 boundary[ 0 ] < sKanji && boundary[ 1 ] > sRegular ||
+				 boundary[ 0 ] > sRegular && boundary[ 1 ] < sKanji )
+				nPrevWord = nNextWord;
 		}
 	}
 	
-	if ( nStart < nPos && IsWord( strPhrase, nStart, nPos - nStart ) )
+	strWord = strTransformed.Mid( nPrevWord, nPos - nPrevWord );
+	nCount += MakeKeywords( pFile, strWord, bAdd );
+	return nCount;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryDictionary keyword maker
+int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord, BOOL bAdd)
+{
+	int nCount = 0;
+	int nLength = strWord.GetLength();
+	CString strKeyword( strWord );
+
+	if ( nLength && IsWord( strKeyword, 0, nLength ) )
 	{
-		strWord = strPhrase.Mid( nStart, nPos - nStart );
-		if ( bLowercase ) 
-		{
-			CharLower( strWord.GetBuffer() );
-			strWord.GetBuffer();
-		}
-		ProcessWord( pFile, strWord, bAdd );
+		ProcessWord( pFile, strKeyword, bAdd );
 		nCount++;
 		
-		if ( nPos - nStart >= 5 && Settings.Library.PartialMatch )
+		if ( nLength >= 5 && Settings.Library.PartialMatch )
 		{
-			strWord = strPhrase.Mid( nStart, nPos - nStart - 1 );
-			if ( bLowercase ) 
-			{
-				CharLower( strWord.GetBuffer() );
-				strWord.GetBuffer();
-			}
-			ProcessWord( pFile, strWord, bAdd );
+			strKeyword = strWord.Left( nLength - 1 );
+			ProcessWord( pFile, strKeyword, bAdd );
 			nCount++;
 			
-			strWord = strPhrase.Mid( nStart, nPos - nStart - 2 );
-			if ( bLowercase ) 
-			{
-				CharLower( strWord.GetBuffer() );
-				strWord.GetBuffer();
-			}
-			ProcessWord( pFile, strWord, bAdd );
+			strKeyword = strWord.Left( nLength - 2 );
+			ProcessWord( pFile, strKeyword, bAdd );
 			nCount++;
 		}
 	}
-	
 	return nCount;
 }
 

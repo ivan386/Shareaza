@@ -279,10 +279,26 @@ public:
 		cTable[ 65536 ] = 0;
 		CharLower( &cTable[ 1 ] );
 		cTable[ 304 ] = 105; // turkish capital I with dot is converted to "i"
-		// convert fullwidth characters to halfwidth
+		// convert fullwidth latin characters to halfwidth
 		for ( size_t i = 65281 ; i < 65313 ; ++i ) cTable[ i ] = TCHAR( i - 65248 );
 		for ( size_t i = 65313 ; i < 65339 ; ++i ) cTable[ i ] = TCHAR( i - 65216 );
 		for ( size_t i = 65339 ; i < 65375 ; ++i ) cTable[ i ] = TCHAR( i - 65248 );
+		// convert circled katakana to ordinary katakana
+		for ( size_t i = 13008 ; i < 13028 ; ++i ) cTable[ i ] = TCHAR( 2 * i - 13566 );
+		for ( size_t i = 13028 ; i < 13033 ; ++i ) cTable[ i ] = TCHAR( i - 538 );
+		for ( size_t i = 13033 ; i < 13038 ; ++i ) cTable[ i ] = TCHAR( 3 * i - 26604 );
+		for ( size_t i = 13038 ; i < 13043 ; ++i ) cTable[ i ] = TCHAR( i - 528 );
+		for ( size_t i = 13043 ; i < 13046 ; ++i ) cTable[ i ] = TCHAR( 2 * i - 13571 );
+		for ( size_t i = 13046 ; i < 13051 ; ++i ) cTable[ i ] = TCHAR( i - 525 );
+		cTable[ 13051 ] = TCHAR( 12527 );
+		for ( size_t i = 13052 ; i < 13055 ; ++i ) cTable[ i ] = TCHAR( i - 524 );
+		// map Katakana middle dot to space, since no API identifies it as a punctuation
+		cTable[ 12539 ] = cTable[ 65381 ] = L' ';
+		// convert japanese halfwidth sound marks to fullwidth
+		// all forms should be mapped; we need NFKD here
+		cTable[ 65392 ] = TCHAR( 12540 );
+		cTable[ 65438 ] = TCHAR( 12441 );
+		cTable[ 65439 ] = TCHAR( 12442 );
 	};
 	const TCHAR& operator()(const TCHAR cLookup) const { return cTable[ cLookup ]; }
 	CString& operator()(CString& strSource) const

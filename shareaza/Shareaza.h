@@ -135,15 +135,54 @@ HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 #define MLOG(x)
 #endif
 
+typedef enum
+{
+	sNone,
+	sRegular,
+	sKanji,
+	sHiragana,
+	sKatakana
+} ScriptType;
+
 inline bool IsCharacter(TCHAR nChar)
 {
     WORD nCharType = 0;
 	
-	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE1, &nChar, 1, &nCharType ) )
-		return ( ( nCharType & C1_ALPHA ) == C1_ALPHA ||
-				 ( nCharType & C1_DIGIT ) == C1_DIGIT ||
-				 nCharType == C1_DEFINED );
+	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
+		return ( ( nCharType & C3_ALPHA ) == C3_ALPHA ||
+				 ( ( nCharType & C3_KATAKANA ) == C3_KATAKANA ||
+				   ( nCharType & C3_HIRAGANA ) == C3_HIRAGANA ) && 
+				   !( ( nCharType & C3_SYMBOL ) == C3_SYMBOL )  ||
+				 ( nCharType & C3_IDEOGRAPH ) == C3_IDEOGRAPH ||
+				 _istdigit( nChar ) );
 
+	return false;
+}
+
+inline bool IsHiragana(TCHAR nChar)
+{
+	WORD nCharType = 0;
+	
+	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
+		return ( ( nCharType & C3_HIRAGANA ) == C3_HIRAGANA );
+	return false;
+}
+
+inline bool IsKatakana(TCHAR nChar)
+{
+	WORD nCharType = 0;
+	
+	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
+		return ( ( nCharType & C3_KATAKANA ) == C3_KATAKANA );
+	return false;
+}
+
+inline bool IsKanji(TCHAR nChar)
+{
+	WORD nCharType = 0;
+	
+	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
+		return ( ( nCharType & C3_IDEOGRAPH ) == C3_IDEOGRAPH );
 	return false;
 }
 

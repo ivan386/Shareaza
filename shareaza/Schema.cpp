@@ -717,7 +717,7 @@ CString CSchema::GetIndexedWords(CXMLElement* pXML) const
 			}
 		}
 	}
-	
+	ToLower( str );	
 	return str;
 }
 
