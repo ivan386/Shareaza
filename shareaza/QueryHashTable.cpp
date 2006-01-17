@@ -471,7 +471,7 @@ BOOL CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
 
 	delete [] pBuffer;
 
-	if ( pCompress.get() )
+	if ( !pCompress.get() )
 		return FALSE;
 
 	DWORD nPacketSize	= 1024;
