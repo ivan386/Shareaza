@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
@@ -28,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Musiek Album</title>
                <title language="chs">音乐专辑</title>
                <title language="de">Musikalbum</title>
+               <title language="ee">Muusika Album</title>
                <title language="es">Album de Música</title>
                <title language="fr">Album Musical</title>
                <title language="heb">&#160;אלבום מוזיקה</title>
@@ -53,6 +55,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
@@ -75,6 +78,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Kunstenaar</title>
                        <title language="chs">艺人</title>
                        <title language="de">Künstler</title>
+                       <title language="ee">Artist</title>
                        <title language="es">Artista</title>
                        <title language="fr">Artiste</title>
                        <title language="heb">אמן</title>
@@ -97,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Genre</title>
                        <title language="chs">流派</title>
                        <title language="de">Genre</title>
+                       <title language="ee">Zanr</title>
                        <title language="es">Género</title>
                        <title language="fr">Genre</title>
                        <title language="heb">ז'אנר</title>
@@ -117,6 +122,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Snitte</title>
                        <title language="chs">音轨</title>
                        <title language="de">Tracks</title>
+                       <title language="ee">Rajad</title>
                        <title language="es">Pista</title>
                        <title language="fr">Pistes</title>
                        <title language="heb">רצועות</title>
@@ -137,6 +143,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Skywe</title>
                        <title language="chs">碟片</title>
                        <title language="de">Disks</title>
+                       <title language="ee">Plaadid</title>
                        <title language="es">Disco</title>
                        <title language="fr">Disques</title>
                        <title language="heb">דיסקים</title>
@@ -157,6 +164,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">CD Maatskappy</title>
                        <title language="chs">标签</title>
                        <title language="de">Etikett</title>
+                       <title language="ee">Silt</title>
                        <title language="es">Etiqueta</title>
                        <title language="fr">Étiquette</title>
                        <title language="heb">לבל</title>
@@ -177,6 +185,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Bron</title>
                        <title language="chs">来源</title>
                        <title language="de">Source</title>
+                       <title language="ee">Allikas</title>
                        <title language="es">Fuente</title>
                        <title language="fr">Source</title>
                        <title language="heb">מקור</title>
@@ -197,6 +206,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Tipe</title>
                        <title language="chs">类型</title>
                        <title language="de">Art</title>
+                       <title language="ee">Tüüp</title>
                        <title language="es">Arte</title>
                        <title language="fr">Type</title>
                        <title language="heb">סוג</title>
@@ -217,6 +227,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Totale Tydsduur</title>
                        <title language="chs">总时间</title>
                        <title language="de">Gesamtdauer</title>
+                       <title language="ee">Aeg Kokku</title>
                        <title language="es">Tiempo Total</title>
                        <title language="fr">Durée totale</title>
                        <title language="heb">זמן כולל</title>
@@ -237,6 +248,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Taal</title>
                        <title language="chs">语言</title>
                        <title language="de">Sprache</title>
+                       <title language="ee">Keel</title>
                        <title language="es">Lenguaje</title>
                        <title language="fr">Langue</title>
                        <title language="heb">שפה</title>
@@ -257,6 +269,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Volledigheid</title>
                        <title language="chs">完全</title>
                        <title language="de">Vollständigkeit</title>
+                       <title language="ee">Täielikkus</title>
                        <title language="es">Lo completo</title>
                        <title language="fr">Complet</title>
                        <title language="heb">שלמות</title>
@@ -277,6 +290,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Enkodeerder Gebruik</title>
                        <title language="chs">使用编码</title>
                        <title language="de">Benutzter Encoder</title>
+                       <title language="ee">Kasutatud Kodeerija</title>
                        <title language="es">Encoder Usado</title>
                        <title language="fr">Encodeur utilisé</title>
                        <title language="heb">המקודד שנעשה בו שימוש</title>
@@ -297,6 +311,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Bistempo</title>
                        <title language="chs">比特率</title>
                        <title language="de">Bitrate</title>
+                       <title language="ee">Bitrate</title>
                        <title language="es">Bitrate</title>
                        <title language="fr">Fréquence</title>
                        <title language="heb">קצב סיביות</title>
@@ -317,6 +332,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Klanktempo</title>
                        <title language="chs">采样率</title>
                        <title language="de">Abtastrate</title>
+                       <title language="ee">Sagedus</title>
                        <title language="es">Sample Rate</title>
                        <title language="fr">Échantillonnage</title>
                        <title language="heb">קצב דגימה</title>
@@ -337,6 +353,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Beskrywing</title>
                        <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
+                       <title language="ee">Kirjeldus</title>
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="heb">תיאור</title>
@@ -357,6 +374,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Versamelaar</title>
                        <title language="chs">收集人</title>
                        <title language="de">Sammler</title>
+                       <title language="ee">Koguja</title>
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
                        <title language="heb">שם יוצר האוסף</title>
@@ -377,6 +395,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Kwaliteit Notas</title>
                        <title language="chs">质量备注</title>
                        <title language="de">Qualitätshinweise</title>
+                       <title language="ee">Kvaliteeid Märkmed</title>
                        <title language="es">Notas de Calidad</title>
                        <title language="fr">Notes sur la qualité</title>
                        <title language="heb">הערות לגבי איכות</title>
@@ -397,6 +416,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Verspreider</title>
                        <title language="chs">发行商</title>
                        <title language="de">Herausgeber</title>
+                       <title language="ee">Levitaja</title>
                        <title language="es">Distribuidor</title>
                        <title language="fr">Distributeur</title>
                        <title language="heb">מפיץ</title>
@@ -417,6 +437,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Verspreider Skakel</title>
                        <title language="chs">发行商链接</title>
                        <title language="de">Link zum Herausgeber</title>
+                       <title language="ee">Levitaja Link</title>
                        <title language="es">Link del Distribuidor</title>
                        <title language="fr">Lien du distributeur</title>
                        <title language="heb">קישור למפיץ</title>
@@ -437,6 +458,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Uitgewers Groep</title>
                        <title language="chs">发行组织</title>
                        <title language="de">Release Group</title>
+                       <title language="ee">Väljalaske Grupp</title>
                        <title language="es">Release Group</title>
                        <title language="fr">Groupe de diffusion</title>
                        <title language="heb">קבוצת שחרור</title>
@@ -457,6 +479,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Uitgewers Skakel</title>
                        <title language="chs">发行组织链接</title>
                        <title language="de">Release Group Link</title>
+                       <title language="ee">Väljalaske Grupi Link</title>
                        <title language="es">Release Group Link</title>
                        <title language="fr">Lien du gr. de diffusion</title>
                        <title language="heb">קישור לקבוצת שחרור</title>
@@ -477,6 +500,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Jaar</title>
                        <title language="chs">年份</title>
                        <title language="de">Jahr</title>
+                       <title language="ee">Aasta</title>
                        <title language="es">Año</title>
                        <title language="fr">Année</title>
                        <title language="heb">שנה</title>
@@ -497,6 +521,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Skakel</title>
                        <title language="chs">链接</title>
                        <title language="de">Link</title>
+                       <title language="ee">Link</title>
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>
                        <title language="heb">קישור</title>

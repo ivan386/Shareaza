@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
@@ -28,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Fotoalbum</title>
                <title language="chs">图片相册</title>
                <title language="de">Bilderalbum</title>
+               <title language="ee">Piltide Album</title>
                <title language="es">Album de Imágenes</title>
                <title language="fr">Album d'images</title>
                <title language="heb">&#160;תמונת אלבום</title>
@@ -53,6 +55,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
@@ -73,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Beskrywing</title>
                        <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
+                       <title language="ee">Kirjeldus</title>
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="heb">תיאור</title>
@@ -93,6 +97,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Tipe</title>
                        <title language="chs">类型</title>
                        <title language="de">Art</title>
+                       <title language="ee">Tüüp</title>
                        <title language="es">Arte</title>
                        <title language="fr">Type</title>
                        <title language="heb">סוג</title>
@@ -113,6 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Gradering</title>
                        <title language="chs">分级</title>
                        <title language="de">FSK</title>
+                       <title language="ee">Hinnang</title>
                        <title language="es">Rating</title>
                        <title language="fr">Estimation</title>
                        <title language="heb">דירוג</title>
@@ -133,6 +139,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Versamelaar</title>
                        <title language="chs">收集人</title>
                        <title language="de">Sammler</title>
+                       <title language="ee">Koguja</title>
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
                        <title language="heb">שם יוצר האוסף</title>
@@ -153,6 +160,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Verspreider</title>
                        <title language="chs">发行商</title>
                        <title language="de">Herausgeber</title>
+                       <title language="ee">Levitaja</title>
                        <title language="es">Distribuidor</title>
                        <title language="fr">Distributeur</title>
                        <title language="heb">מפיץ</title>
@@ -173,6 +181,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="af">Verspreider Skakel</title>
                       <title language="chs">发行商链接</title>
                       <title language="de">Link zum Herausgeber</title>
+                      <title language="ee">Levitaja Link</title>
                       <title language="es">Link del Distribuidor</title>
                       <title language="fr">Lien du distributeur</title>
                       <title language="heb">קישור למפיץ</title>
@@ -193,6 +202,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Uitgewers Groep</title>
                        <title language="chs">发行组织</title>
                        <title language="de">Release Group</title>
+                       <title language="ee">Väljalaske Grupp</title>
                        <title language="es">Release Group</title>
                        <title language="fr">Groupe de diffusion</title>
                        <title language="heb">קבוצת שחרור</title>
@@ -213,6 +223,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Uitgewers Skakel</title>
                        <title language="chs">发行组织链接</title>
                        <title language="de">Release Group Link</title>
+                       <title language="ee">Väljalaske Grupi Link</title>
                        <title language="es">Release Group Link</title>
                        <title language="fr">Lien du gr. de diffusion</title>
                        <title language="heb">קישור לקבוצת שחרור</title>
@@ -233,6 +244,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Sleutelwoorde</title>
                        <title language="chs">关键词</title>
                        <title language="de">Schlüsselwörter</title>
+                       <title language="ee">Võtmesõnad</title>
                        <title language="es">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
                        <title language="heb">מילים לזיהוי</title>

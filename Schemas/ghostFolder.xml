@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
@@ -28,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="af">General:Ghost Files</title>
               <title language="chs">常规:回收文件</title>
               <title language="de">General:Ghost Files</title>
+              <title language="ee">Üldine:Varifailid</title>
               <title language="es">General:Ghost Files</title>
               <title language="fr">General:Ghost Files</title>
               <title language="heb">General:Ghost Files</title>
@@ -53,6 +55,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
@@ -74,6 +77,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Ghost Files</title>
                <title language="chs">回收文件</title>
                <title language="de">Ghost Files</title>
+               <title language="ee">Varifailid</title>
                <title language="es">Ghost Files</title>
                <title language="fr">Ghost Files</title>
                <title language="heb">Ghost Files</title>
@@ -91,7 +95,8 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="en">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="af">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="chs">此文件夹包含了所有您从收藏夹删除的文件。</subtitle>
-               <subtitle language="de">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält Informationen über alle aus der Bibliothek gelöschten Dateien, die Sie kommentiert oder bewertet haben.</subtitle>
+               <subtitle language="ee">See kaust sisaldab kõiki faile, mis sa oled oma Raamatukogust ära kustutanud.</subtitle>
                <subtitle language="es">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="fr">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="heb">This folder contains every file which you've deleted from the Library.</subtitle>

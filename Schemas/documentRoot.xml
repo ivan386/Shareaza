@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
@@ -28,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Dokument:My Dokumente</title>
                <title language="chs">&#160;文档:我的文档</title>
                <title language="de">Dokumente:Meine Dokumente</title>
+               <title language="ee">Dokument:Minu Dokumendid</title>
                <title language="es">Documento:Mis Documentos</title>
                <title language="fr">Document:Mes Documents</title>
                <title language="heb">&#160;מסמך:המסמכים שלי</title>
@@ -53,6 +55,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
@@ -77,6 +80,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Welkom by My Dokumente!</title>
                <title language="chs">欢迎来到我的文档！</title>
                <title language="de">Willkommen zu Meine Dokumente!</title>
+               <title language="ee">Teretulemast   Minu Dokumentidesse!</title>
                <title language="es">¡Bienvenido a Mis documentos!</title>
                <title language="fr">Bienvenue dans Mes Documents!</title>
                <title language="heb">ברוך הבא למסמכים שלי!</title>
@@ -95,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="af">Hierdie gidse bevat al jou dokumente.</subtitle>
                <subtitle language="chs">这些文件夹包含您所有的文档。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Dokumente.</subtitle>
+               <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Dokumente</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
                <subtitle language="fr">Ces dossiers contiennent tous vos documents.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל המסמכים שלך</subtitle>

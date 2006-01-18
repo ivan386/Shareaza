@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
@@ -28,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Algemeen:My Shareaza Biblioteek</title>
                <title language="chs">&#160;常规:我的 Shareaza 收藏</title>
                <title language="de">Allgemein:Shareaza Bibliothek</title>
+               <title language="ee">Üldine:Minu Shareaza Raamatukogu</title>
                <title language="es">General: Mi Librería Shareaza de Archivos</title>
                <title language="fr">Général:Ma bibliothèque Shareaza</title>
                <title language="heb">&#160;כללי:ספריית שרזה שלי</title>
@@ -50,6 +52,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
@@ -70,6 +73,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Eienaar</title>
                        <title language="chs">所有人</title>
                        <title language="de">Besitzer</title>
+                       <title language="ee">Omanik</title>
                        <title language="es">Dueño</title>
                        <title language="fr">Propriétaire</title>
                        <title language="heb">בעל הזכויות</title>
@@ -90,6 +94,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Kommentaar</title>
                        <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
+                       <title language="ee">Arvamused</title>
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="heb">הערות</title>
@@ -114,6 +119,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Welkom by Jou Biblioteek!</title>
                <title language="chs">欢迎来到您的收藏！</title>
                <title language="de">Willkommen in ihrere Bibliothek!</title>
+               <title language="ee">Teretulemast  Minu Raamatukokku!</title>
                <title language="es">¡Bienvenido a Mi Librería!</title>
                <title language="fr">Bienvenue dans votre bibliothèque!</title>
                <title language="heb">ברוך הבא לספרייה שלי!</title>
@@ -132,6 +138,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
                <subtitle language="chs">您总计有 {totalFiles} 个文件，共计 {totalVolume} 位于您的收藏中。</subtitle>
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
+               <subtitle language="ee">Sul on {totalFiles} faili, kokku {totalVolume} sinu raamatukogus.</subtitle>
                <subtitle language="es">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
                <subtitle language="heb">יש לך בספרייה ‎{totalVolume} בתוך {totalFiles} קבצים</subtitle>

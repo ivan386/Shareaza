@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
@@ -28,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Video:My Video</title>
                <title language="chs">&#160;视频:我的视频</title>
                <title language="de">Video:Eigene Videos</title>
+               <title language="ee">Video:Minu Videod</title>
                <title language="es">Video:Mis Videos</title>
                <title language="fr">Vidéo:Mes vidéos</title>
                <title language="heb">&#160;וידאו:הסרטים שלי</title>
@@ -53,6 +55,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
@@ -79,6 +82,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Welkom by My Video's!</title>
                <title language="chs">欢迎来到我的视频！</title>
                <title language="de">Willkommen bei Eigene Videos!</title>
+               <title language="ee">Teretulemast  Minu Videotesse!</title>
                <title language="es">¡Bienvenido a Mis Videos!</title>
                <title language="fr">Bienvenue dans Mes vidéos!</title>
                <title language="heb">ברוך הבא לוידאו שלי!</title>
@@ -97,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="af">Hierdie gidse bevat al die videolêers in jou biblioteek, verdeel volgens films, TV programme en musiek video's. Open 'n gids hieronder om voort te gaan.</subtitle>
                <subtitle language="chs">这些文件夹包括您收藏中的所有视频，分成电影，电视演出和电视音乐。打开下面的文件夹可进行查看。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Videodateien in ihrer Bibliothek, aufgeteilt in Filme, Fernsehserien und Musikvideos. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
+               <subtitle language="ee">Need kaustad sisaldavad kõiki sinu raamatukogus asuvaid videofaile. Need on jagatud filmideks, tv šoudeks ja muusika videodeks. Jätkamiseks ava allolev kaust</subtitle>
                <subtitle language="es">Estas carpetas contienen todos los archivos de video de tu librería, dividido en filmes, Shows de TV y videos de música. Abra una carpeta para continuar</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les vidéos de votre bibliothèque, organisées dans les dossiers films, séries TV et clips vidéos.  Ouvrez un sous-dossier pour continuer.</subtitle>
                <subtitle language="heb">הספריות הללו מכילות כל הוידאו בספרייה שלך, מאורגנים לפי סרט, טלוויזיה וקליפים פתח ספרייה מתחת כדי להמשיך</subtitle>

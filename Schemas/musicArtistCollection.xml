@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
@@ -28,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Musiek:Volgens Kunstenaar</title>
                <title language="chs">&#160;音乐:按 - 艺人</title>
                <title language="de">Musik:Nach Künstler</title>
+               <title language="ee">Muusika:Artistid</title>
                <title language="es">Música: Por Artista</title>
                <title language="fr">Musique:Par artiste</title>
                <title language="heb">&#160;שירים:לפי אמן</title>
@@ -50,6 +52,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
@@ -77,6 +80,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="af">Musiek Volgens Kunstenaar</title>
                <title language="chs">音乐 按艺人</title>
                <title language="de">Musik nach Künstler</title>
+               <title language="ee">Muusika Artistid</title>
                <title language="es">Música por Artista</title>
                <title language="fr">Musique par artiste</title>
                <title language="heb">מוזיקה לפי אמן</title>
@@ -95,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="af">Hierdie gids bevat 'n lys van die kunstenaars wat jy in jou biblioteek het.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中艺人的清单。</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste der Künstler in ihrer Musikbibliothek.</subtitle>
+               <subtitle language="ee">See kaust sisaldab nimekirja Esitajatest sinu raamatukogus</subtitle>
                <subtitle language="es">Esta carpeta contiene una lista de artistas de tu librería de música.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les artistes de votre bibliothèque musicale.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה רשימה של האמנים שבספריית מוזיקה שלך</subtitle>
