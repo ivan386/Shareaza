@@ -161,8 +161,7 @@ void CDownloadWithSearch::PrepareSearch()
 	if ( m_pSearch == NULL ) m_pSearch = new CManagedSearch();
 	CQuerySearch* pSearch = m_pSearch->m_pSearch.get();
 	
-	if ( Settings.Gnutella1.EnableToday )
-		pSearch->m_bAndG1 = TRUE;
+	pSearch->m_bAndG1 = Settings.Gnutella1.EnableToday;
 
 	if ( pSearch->m_bAndG1 )
 	{
