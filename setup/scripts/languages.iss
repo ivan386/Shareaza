@@ -28,6 +28,7 @@ Name: "sr"; MessagesFile: "setup\isl\Serbian.isl"; LicenseFile: "setup/license/s
 Name: "tr"; MessagesFile: "setup\isl\turkish.isl"; LicenseFile: "setup/license/turkish.rtf"
 Name: "jp"; MessagesFile: "setup\isl\japanese.isl"; LicenseFile: "setup/license/japanese.rtf"
 Name: "ar"; MessagesFile: "setup\isl\arabic.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "ee"; MessagesFile: "setup\isl\estonian.isl"; LicenseFile: "setup/license/estonian.rtf"
 ;Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
 
 [Files]
@@ -83,6 +84,8 @@ Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 Source: "Remote\jp\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: jp; Components: language
 ; Arabic
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ar; Components: language
+; Estonian
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ee; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -135,6 +138,8 @@ Source: "setup\license\turkish.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\japanese.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: jp; Components: language
 ; Arabic
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ar; Components: language
+; Estonian
+Source: "setup\license\estonian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ee; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -187,6 +192,8 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: jp; Components: language
 ; Arabic
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ar; Components: language
+; Estonian
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ee; Components: language
 #endif
 
 [CustomMessages]
@@ -749,3 +756,29 @@ ar.page_viruswarning_title= Õ–Ì— „‰ «·›Ì—Ê”« 
 ar.page_viruswarning_subtitle=Â· ⁄‰œﬂ »—‰«„Ã ··›Ì—Ê”«  ø
 ar.CreateDesktopIcon=≈ŸÂ«— &√ÌﬁÊ‰… ”ÿÕ «·„ﬂ »
 ar.CreateQuickLaunchIcon=≈ŸÂ«— &√ÌﬁÊ‰… «· ‘€Ì· «·”—Ì⁄
+; estonian
+ee.components_plugins=Pluginad
+ee.components_skins=Nahad
+ee.components_languages=Keeled
+ee.tasks_allusers=Kıik kasutajad
+ee.tasks_selectusers=Installi %1 jaoks:
+ee.tasks_currentuser=%1 ainult
+ee.tasks_multisetup=Vıimalda mitmekasutaja tugi
+ee.tasks_firewall=Lisa erand Windowsi Tulem¸¸ri
+ee.tasks_deleteoldsetup=Kustuta vanad installerid
+ee.run_skinexe=K‰ivitan Naha installi...
+ee.reg_incomingchat=Sisse tulev vestlusteade
+ee.reg_apptitle=Shareaza ‹lim Failijagamine
+ee.icons_license=Litsents
+ee.icons_uninstall=Uninstalli
+ee.icons_downloads=Tımbamised
+ee.icons_basicmode=Tavaline Vaade
+ee.icons_tabbedmode=Sakiline Vaade
+ee.icons_windowedmode=Akendega Vaade
+ee.dialog_shutdown=%1 tˆˆtab hetkel. Kas tahad  %1 sulgeda, et saaksid installeerimist j‰tkata?
+ee.dialog_firewall=Installeril ebaınnestus Shareaza lisamine Windowsi Tulem¸¸ri.%Palun lisa Shareaza k‰sitsi erandite nimekirja.
+ee.page_viruswarning_text=Internetti kasutades peaksid kontrollima, et sul oleks uusim viirusetırje, et kaitsta ennast troojalaste, usside, viiruste ja teiste kahjulike programmide eest. Sa leiad nimekirja headest viirus sk‰nneritest ja teisi turva nıuandeid oma arvuti kaitseks sellelt lingilt:
+ee.page_viruswarning_title=Viiruse Hoiatus
+ee.page_viruswarning_subtitle=Kas sul on AntiVirus programm installeeeritud?
+ee.CreateDesktopIcon=Loo &Tˆˆlaua ikoon
+ee.CreateQuickLaunchIcon=Loo &Quick Launch ikoon
