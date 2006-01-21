@@ -37,6 +37,7 @@
 #include "Statistics.h"
 #include "DiscoveryServices.h"
 #include "HttpRequest.h"
+#include "UPnPFinder.h"
 
 #include "CrawlSession.h"
 #include "SearchManager.h"
@@ -482,6 +483,8 @@ void CNetwork::OnRun()
 		WaitForSingleObject( m_pWakeup, 100 );
 	
 		if ( ! theApp.m_bLive ) continue;
+		if ( theApp.m_pUPnPFinder && theApp.m_pUPnPFinder->IsAsyncFindRunning() )
+			continue;
 
 		if ( m_bEnabled && m_pSection.Lock() )
 		{

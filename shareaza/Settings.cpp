@@ -160,6 +160,7 @@ void CSettings::Setup()
 	Add( _T("Connection.InHost"), &Connection.InHost, NULL );
 	Add( _T("Connection.InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT );
 	Add( _T("Connection.InBind"), &Connection.InBind, FALSE );
+	Add( _T("Connection.RandomPort"), &Connection.RandomPort, FALSE );
 	Add( _T("Connection.InSpeed"), &Connection.InSpeed, 56 );
 	Add( _T("Connection.OutSpeed"), &Connection.OutSpeed, 56 );
 	Add( _T("Connection.IgnoreLocalIP"), &Connection.IgnoreLocalIP, TRUE );
@@ -579,6 +580,12 @@ void CSettings::Load()
 	// UPnP is not supported in servers and Win9x
 	if ( theApp.m_bServer || theApp.m_dwWindowsVersion < 5 && !theApp.m_bWinME )
 		Connection.EnableUPnP = FALSE;
+
+	// UPnP will setup a random port, so we need to reset values after it sets Connection.InPort
+	if ( Connection.RandomPort )
+		Connection.InPort = 0;
+	else if ( Connection.InPort == 0 )
+		Connection.RandomPort = TRUE;
 }
 
 void CSettings::Save(BOOL bShutdown)

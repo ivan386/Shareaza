@@ -90,12 +90,12 @@ void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 
 	// Remove this loop to get results displayed in the system log
 	// The loop allows to do discovery while the splash screen is displayed
-	if ( !theApp.m_bLive )
+	/*if ( !theApp.m_bLive )
 	{
 		MSG Message;
 		while ( IsAsyncFindRunning() && GetMessage( &Message, NULL, 0, 0 ) == TRUE )
 			DispatchMessage( &Message );
-	}
+	}*/
 }
 
 // Helper function for stopping the async find if proceeding
@@ -501,6 +501,10 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 	strFormatString = L"|VT_BSTR=|VT_UI2=%s|VT_BSTR=%s|VT_UI2=%s|VT_BSTR=%s|"
 		L"VT_BOOL=True|VT_BSTR=Shareaza %s|VT_UI4=0|";
 
+	if ( Settings.Connection.InPort == 0 ) // random port
+	{
+		Settings.Connection.InPort = 10000 + ( rand() % 50000 );
+	}
 	strPort.Format( L"%hu", Settings.Connection.InPort );
 
 	// First map UDP if some buggy router overwrites TCP on top

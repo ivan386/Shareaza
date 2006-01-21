@@ -123,7 +123,8 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 
 	//m_bCanAccept			= Settings.Connection.FirewallStatus == CONNECTION_OPEN;
 	m_sInHost				= Settings.Connection.InHost;
-	m_nInPort				= Settings.Connection.InPort;
+	m_bInRandom				= Settings.Connection.RandomPort;
+	m_nInPort				= m_bInRandom ? 0 : Settings.Connection.InPort;
 	m_bInBind				= Settings.Connection.InBind;
 	m_sOutHost				= Settings.Connection.OutHost;
 	m_bIgnoreLocalIP		= Settings.Connection.IgnoreLocalIP;
@@ -133,8 +134,6 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 
 	if ( m_sInHost.IsEmpty() ) m_sInHost = strAutomatic;
 	if ( m_sOutHost.IsEmpty() ) m_sOutHost = strAutomatic;
-
-	m_bInRandom = ( m_nInPort == 0 );
 
 	m_wndTimeoutConnection.SetRange( 1, 480 );
 	m_wndTimeoutHandshake.SetRange( 1, 480 );
@@ -237,22 +236,29 @@ void CConnectionSettingsPage::OnOK()
 	Settings.Connection.FirewallStatus		= m_wndCanAccept.GetCurSel();
 	Settings.Connection.InHost				= m_sInHost;
 
-	if ( m_bEnableUPnP && ( (DWORD)m_nInPort != Settings.Connection.InPort ||
-		 !Settings.Connection.EnableUPnP ) )
-	{
-		Settings.Connection.InPort = m_nInPort;
-		try
-		{
-			if ( !theApp.m_pUPnPFinder ) 
-				theApp.m_pUPnPFinder.reset( new CUPnPFinder );
-			theApp.m_pUPnPFinder->StartDiscovery();
-		}
-		catch ( CUPnPFinder::UPnPError& ) {}
-		catch ( CException* e ) { e->Delete(); }
-	}
-	else
-		Settings.Connection.InPort = m_nInPort;
+	bool bRandomForwarded = ( m_nInPort == 0 && 
+		theApp.m_bUPnPPortsForwarded == TS_TRUE );
 
+	if ( !bRandomForwarded || m_nInPort != 0 || !m_bInRandom )
+	{
+		if ( m_bEnableUPnP && ( (DWORD)m_nInPort != Settings.Connection.InPort ||
+			!Settings.Connection.EnableUPnP ) )
+		{
+			Settings.Connection.InPort = m_nInPort;
+			try
+			{
+				if ( !theApp.m_pUPnPFinder ) 
+					theApp.m_pUPnPFinder.reset( new CUPnPFinder );
+				theApp.m_pUPnPFinder->StartDiscovery();
+			}
+			catch ( CUPnPFinder::UPnPError& ) {}
+			catch ( CException* e ) { e->Delete(); }
+		}
+		else
+			Settings.Connection.InPort = m_nInPort;
+	}
+
+	Settings.Connection.RandomPort			= ( m_bInRandom && m_nInPort == 0 );
 	Settings.Connection.EnableUPnP			= m_bEnableUPnP;
 	Settings.Connection.InBind				= m_bInBind;
 	Settings.Connection.OutHost				= m_sOutHost;

@@ -175,6 +175,7 @@ public:
 		CString		InHost;
 		DWORD		InPort;
 		BOOL		InBind;
+		BOOL		RandomPort;
 		DWORD		InSpeed;
 		DWORD		OutSpeed;
 		BOOL		IgnoreLocalIP;				// Ingnore all 'local' (LAN) IPs

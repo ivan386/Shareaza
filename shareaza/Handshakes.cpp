@@ -114,9 +114,11 @@ BOOL CHandshakes::Listen()
 		// If this is not our first attempt
 		if ( nAttempt )
 		{
-			// Choose a port number randomly, and store it it Network and saListen
-			int nPort = Network.RandomPort();
-			Network.m_pHost.sin_port = saListen.sin_port = htons( u_short( nPort ) );
+			if ( theApp.m_bUPnPPortsForwarded != TS_TRUE )
+			{
+				int nPort = Network.RandomPort();
+				Network.m_pHost.sin_port = saListen.sin_port = htons( u_short( nPort ) );
+			}
 		}
 		else // This is still our first time here in this loop
 		{
