@@ -53,18 +53,16 @@ auto_array< BYTE > CZLib::Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput
 		pBuffer.get(),        // The output buffer where ZLib can write compressed data
 		pnOutput,             // Reads how much space it has there, writes how much space it used
 		(const BYTE *)pInput, // The source buffer with data to compress
-		nInput ) != 0)        // The number of bytes there
+		nInput ) != Z_OK )    // The number of bytes there
 	{
 		// The compress function reported error
 		return auto_array< BYTE >();
 	}
-	else
-	{
-		// The pBuffer buffer is too big, make a new one exactly the right size, copy the data, delete the first, and return the second
-		auto_array< BYTE > pOutput( new BYTE[ *pnOutput ] ); // Allocate a new buffer exactly big enough to hold the bytes compress wrote
-		memcpy( pOutput.get(), pBuffer.get(), *pnOutput );   // Copy the compressed bytes from the old buffer to the new one
-		return pOutput;                                      // Return the new one
-	}
+
+	// The pBuffer buffer is too big, make a new one exactly the right size, copy the data, delete the first, and return the second
+	auto_array< BYTE > pOutput( new BYTE[ *pnOutput ] ); // Allocate a new buffer exactly big enough to hold the bytes compress wrote
+	memcpy( pOutput.get(), pBuffer.get(), *pnOutput );   // Copy the compressed bytes from the old buffer to the new one
+	return pOutput;                                      // Return the new one
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -86,7 +84,7 @@ auto_array< BYTE > CZLib::Decompress(LPCVOID pInput, DWORD nInput, DWORD* pnOutp
 		pBuffer.get(),            // Destination buffer where uncompress can write uncompressed data
 		pnOutput,                 // Reads how much space it has there, and writes how much space it used
 		(const BYTE *)pInput,     // Source buffer of compressed data
-		nInput ) != 0 )           // Number of bytes there
+		nInput ) != Z_OK )        // Number of bytes there
 	{
 		// The uncompress function returned an error, delete the buffer we allocated and return error
 		return auto_array< BYTE >();
