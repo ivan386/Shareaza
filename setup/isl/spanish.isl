@@ -312,6 +312,6 @@ CreateDesktopIcon=Mostrar/Quitar icono de &Escritorio
 CreateQuickLaunchIcon=Mostrar/Quitar icono de &Inicio Rápido
 ProgramOnTheWeb=%1 en la web
 UninstallProgram=Desinstalar %1
-LaunchProgram=Lanzar %1
+LaunchProgram=Ejecutar %1
 AssocFileExtension=&Asociar %1 con %2 extensión de archivo
 AssocingFileExtension=Asociando %1 con %2 extensión de archivo...

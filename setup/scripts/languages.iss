@@ -438,7 +438,7 @@ fr.CreateQuickLaunchIcon=Afficher un raccouri dans la barre de &Lancement rapide
 ; Spanish
 es.components_plugins=Plugins
 es.components_skins=Skins
-es.components_languages=Lenguages
+es.components_languages=Idiomas
 es.tasks_allusers=Todos los usuarios
 es.tasks_selectusers=Instalar %1 para:
 es.tasks_currentuser=%1 solamente
