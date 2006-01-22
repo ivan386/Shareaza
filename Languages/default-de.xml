@@ -4187,8 +4187,8 @@ Other:
 			<control/>
 			<control caption="Kommentare:"/>
 			<control />
-			<control caption="Übertragungen:"/>
-  	        <control caption="Neue Download-Übertragungen starten:"/>
+			<control caption="Transfer:"/>
+  	        <control caption="Neue Download-Transfer starten:"/>
   	        <control caption="&#160;Wenn nötig| Wenn U/D Verhältnis über 100%| Nur wenn angefordert| Nie"/>
   	        <control/>
   	        <control caption="Gesamt hochgeladen:"/>
