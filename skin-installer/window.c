@@ -74,6 +74,10 @@ INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lPara
 					_snwprintf(buf, sizeof(buf), L"Updated by %s", szUpdates);
 				SetDlgItemText(hwndDlg, IDC_AUTH, buf);
 			}
+			SetWindowLongPtr( GetDlgItem(hwndDlg,IDC_WHITERECT), GWL_STYLE, WS_VISIBLE|WS_CHILD|SS_LEFT|SS_OWNERDRAW );
+			SetWindowLongPtr( GetDlgItem(hwndDlg,IDC_NAME), GWL_STYLE, WS_VISIBLE|WS_CHILD|SS_LEFT|SS_OWNERDRAW  );
+			SetWindowLongPtr( GetDlgItem(hwndDlg,IDC_AUTH), GWL_STYLE, WS_VISIBLE|WS_CHILD|SS_LEFT|SS_OWNERDRAW );
+			SetWindowLongPtr( GetDlgItem(hwndDlg,IDC_STATUS), GWL_STYLE, WS_VISIBLE|WS_CHILD|SS_LEFT|SS_OWNERDRAW );
 			break;
 		}
 		case WM_CLOSE:
@@ -82,13 +86,22 @@ INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lPara
 		case WM_DESTROY:
 			DeleteObject(hBannerBmp);
 			break;
-		case WM_CTLCOLORSTATIC:
-			if ((HWND) lParam == GetDlgItem(hwndDlg, IDC_WHITERECT) 
-					|| (HWND) lParam == GetDlgItem(hwndDlg, IDC_NAME)
-					|| (HWND) lParam == GetDlgItem(hwndDlg, IDC_AUTH)
-					|| (HWND) lParam == GetDlgItem(hwndDlg, IDC_STATUS)) {
-				SetBkColor((HDC) wParam, RGB(255, 255, 255));
-				return GetStockObject(WHITE_BRUSH) != NULL;
+		case WM_DRAWITEM:
+			if ( (UINT)wParam == IDC_WHITERECT ||
+				 (UINT)wParam == IDC_NAME ||
+				 (UINT)wParam == IDC_AUTH ||
+				 (UINT)wParam == IDC_STATUS )
+			{
+				TCHAR buf[256];
+				LPDRAWITEMSTRUCT lpDrawItemStruct;
+				lpDrawItemStruct = (LPDRAWITEMSTRUCT)lParam;
+				FillRect(lpDrawItemStruct->hDC, &lpDrawItemStruct->rcItem, (HBRUSH)(WHITE_BRUSH+1));
+				ExtFloodFill(lpDrawItemStruct->hDC, lpDrawItemStruct->rcItem.top,
+					lpDrawItemStruct->rcItem.left, RGB(0, 0, 0), FLOODFILLBORDER);
+				SetBkMode(lpDrawItemStruct->hDC, TRANSPARENT);
+				SetTextColor(lpDrawItemStruct->hDC, RGB(0, 0, 0));
+				GetDlgItemText(hwndDlg, (UINT)wParam, buf, 256);
+				DrawText(lpDrawItemStruct->hDC, buf, wcslen(buf), &lpDrawItemStruct->rcItem, DT_LEFT);
 			}
 			break;
 		case WM_COMMAND:
@@ -143,7 +156,6 @@ INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lPara
 							if (SetSkinAsDefault()) {
 								PostMessage(app,WM_COMMAND,32959,0);
 								PostMessage(app,WM_COMMAND,32965,0);								
-								//PostMessage(app,WM_COMMAND,32959,0);
 							}
 						}
 						EndDialog(hwndDlg, 0);
