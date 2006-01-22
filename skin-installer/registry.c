@@ -18,7 +18,7 @@ void CreateSkinKeys() {
 	TCHAR imagpath[MAX_PATH];
 
 	GetModuleFileName(NULL,filename,sizeof(filename));
-	_snwprintf(fullpath, sizeof(fullpath), L"\"%s\" L\"%%1\"", filename);
+	_snwprintf(fullpath, sizeof(fullpath), L"\"%s\" \"%%1\"", filename);
 	_snwprintf(imagpath, sizeof(imagpath), L"%s,0", filename);
 	CreateHKCRKey(L".sks", L"", L"Shareaza.SkinFile");
 	CreateHKCRKey(L"Shareaza.SkinFile", L"", L"Shareaza Skin File");
@@ -47,7 +47,7 @@ static int CreateHKCRKey(LPCTSTR lpSubKey, LPTSTR lpClass, LPTSTR lpData) {
     DWORD lpdw;
     DWORD aLen;
 
-    aLen = (DWORD)wcslen(lpData) + 1;
+    aLen = (DWORD)wcslen(lpData) * sizeof(TCHAR) + 1;
     rtn = RegCreateKeyEx(HKEY_CLASSES_ROOT,lpSubKey,0,NULL,REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS,0,&keyHandle,&lpdw);
     if(rtn == ERROR_SUCCESS) {
 		RegSetValueEx(keyHandle,lpClass,0,REG_SZ,(LPBYTE)lpData,aLen);
