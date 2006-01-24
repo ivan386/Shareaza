@@ -47,17 +47,26 @@ public:
 	CComboBox	m_wndGroup;
 	CComboBox	m_wndSpeed;
 	CComboBox	m_wndType;
+	CProgressCtrl m_wndProgress;
+	CStatic		m_wndStatus;
 	//}}AFX_DATA
+
+// Operations
+protected:
+	static UINT	ThreadStart(LPVOID pParam);
+	void		OnRun();
+
+public:
+	HANDLE	m_hThread;
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CWizardConnectionPage)
-	public:
 	virtual BOOL OnSetActive();
 	virtual LRESULT OnWizardNext();
-	protected:
+	virtual BOOL OnQueryCancel();
+
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
@@ -67,9 +76,14 @@ protected:
 	afx_msg void OnEditChangeConnectionSpeed();
 	afx_msg void OnSelChangeConnectionSpeed();
 	afx_msg void OnSelChangeConnectionGroup();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
+private:
+	bool	m_bQueryDiscoveries;
+	bool	m_bUpdateDonkeyServers;
+	short	m_nProgressSteps;
 };
 
 //{{AFX_INSERT_LOCATION}}

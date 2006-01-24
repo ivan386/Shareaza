@@ -688,6 +688,8 @@
 #define IDC_TORRENT_TRACKERMODE         1425
 #define IDC_ASSOCIATIONS                1426
 #define IDC_ENABLE_UPNP                 1428
+#define IDC_CONNECTION_PROGRESS         1429
+#define IDC_CONNECTION_STATUS           1430
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502
@@ -1151,6 +1153,9 @@
 #define IDS_WIZARD_EXIT                 16809
 #define IDS_WIZARD_YEARS_OLD            16810
 #define IDS_SETTINGS_AUTOMATIC_IP       16811
+#define IDS_WIZARD_UPNP_SETUP           16812
+#define IDS_WIZARD_DISCOVERY            16813
+#define IDS_WIZARD_ED2K                 16814
 #define IDS_SETTINGS_WARN_QUEUELIMIT    16816
 #define IDS_SETTINGS_FILEPATH_TOO_LONG  16817
 #define IDS_SETTINGS_FILEPATH_NOT_SAME  16818
@@ -1710,7 +1715,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        277
 #define _APS_NEXT_COMMAND_VALUE         33136
-#define _APS_NEXT_CONTROL_VALUE         1429
+#define _APS_NEXT_CONTROL_VALUE         1431
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

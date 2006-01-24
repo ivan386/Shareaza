@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,2,9
- PRODUCTVERSION 2,2,2,9
+ FILEVERSION 2,2,2,10
+ PRODUCTVERSION 2,2,2,10
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 9"
+            VALUE "FileVersion", "2, 2, 2, 10"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 9"
+            VALUE "ProductVersion", "2, 2, 2, 10"
         END
     END
     BLOCK "VarFileInfo"
@@ -1464,23 +1464,26 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "For optimum performance, Shareaza needs to know a little bit about your connection to the Internet.",
                     IDC_STATIC,10,10,265,20
-    COMBOBOX        IDC_CONNECTION_GROUP,26,35,190,102,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_CONNECTION_GROUP,26,31,190,102,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "Is your network or campus protected by a firewall or NAT router?",
-                    IDC_CONNECTION_LAN_LABEL,10,57,265,18,NOT WS_VISIBLE
-    COMBOBOX        IDC_CONNECTION_LAN_SELECT,26,79,239,72,CBS_DROPDOWNLIST | 
-                    NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+                    IDC_CONNECTION_LAN_LABEL,10,50,265,18,NOT WS_VISIBLE
     LTEXT           "Do you have a firewall or NAT router on your home Internet connection?",
-                    IDC_CONNECTION_HOME_LABEL,10,57,265,18,NOT WS_VISIBLE
-    COMBOBOX        IDC_CONNECTION_HOME_SELECT,26,79,239,72,CBS_DROPDOWNLIST | 
+                    IDC_CONNECTION_HOME_LABEL,10,50,265,18,NOT WS_VISIBLE
+    COMBOBOX        IDC_CONNECTION_HOME_SELECT,26,72,239,72,CBS_DROPDOWNLIST | 
+                    NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CONNECTION_LAN_SELECT,26,72,239,72,CBS_DROPDOWNLIST | 
                     NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
     LTEXT           "If you know how fast your Internet connection is able to operate, select the best option below:",
-                    IDC_STATIC,10,100,265,20
-    COMBOBOX        IDC_CONNECTION_TYPE,26,125,95,150,CBS_DROPDOWNLIST | 
+                    IDC_STATIC,10,90,265,20
+    COMBOBOX        IDC_CONNECTION_TYPE,26,113,95,150,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
-    CTEXT           "OR, choose:",IDC_STATIC,125,125,60,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_CONNECTION_SPEED,190,125,75,178,CBS_DROPDOWN | 
+    CTEXT           "OR, choose:",IDC_STATIC,125,113,60,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_CONNECTION_SPEED,190,113,75,178,CBS_DROPDOWN | 
                     WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Status:",IDC_CONNECTION_STATUS,9,132,261,8
+    CONTROL         "",IDC_CONNECTION_PROGRESS,"msctls_progress32",WS_BORDER,
+                    14,143,256,7
 END
 
 IDD_WIZARD_SHARING DIALOGEX 0, 0, 277, 174
@@ -4018,20 +4021,6 @@ BEGIN
 0x4920, 0x6120, 0x206d, 0x7375, 0x6e69, 0x2067, 0x6874, 0x2065, 0x6e49, 
 0x6574, 0x6e72, 0x7465, 0x6120, 0x2074, 0x2061, 0x6f68, 0x6574, 0x206c, 
 0x726f, 0x6120, 0x7269, 0x6f70, 0x7472, "\000" 
-    IDC_CONNECTION_LAN_SELECT, 0x403, 43, 0
-0x4e20, 0x2c6f, 0x4920, 0x4320, 0x4e41, 0x6120, 0x6363, 0x7065, 0x2074, 
-0x6c61, 0x206c, 0x6e69, 0x6f63, 0x696d, 0x676e, 0x6320, 0x6e6f, 0x656e, 
-0x7463, 0x6f69, 0x736e, "\000" 
-    IDC_CONNECTION_LAN_SELECT, 0x403, 64, 0
-0x5920, 0x7365, 0x202c, 0x6f73, 0x4920, 0x4320, 0x4e41, 0x4f4e, 0x2054, 
-0x6361, 0x6563, 0x7470, 0x6920, 0x636e, 0x6d6f, 0x6e69, 0x2067, 0x6f63, 
-0x6e6e, 0x6365, 0x6974, 0x6e6f, 0x2073, 0x7266, 0x6d6f, 0x7420, 0x6568, 
-0x4920, 0x746e, 0x7265, 0x656e, 0x0074, 
-    IDC_CONNECTION_LAN_SELECT, 0x403, 55, 0
-0x4920, 0x6420, 0x6e6f, 0x7427, 0x6b20, 0x6f6e, 0x2c77, 0x7020, 0x656c, 
-0x7361, 0x2065, 0x5541, 0x4f54, 0x442d, 0x5445, 0x4345, 0x2054, 0x6874, 
-0x2065, 0x6966, 0x6572, 0x6177, 0x6c6c, 0x6465, 0x7320, 0x6174, 0x6574, 
-"\000" 
     IDC_CONNECTION_HOME_SELECT, 0x403, 40, 0
 0x4e20, 0x2c6f, 0x4920, 0x6820, 0x7661, 0x2065, 0x5546, 0x4c4c, 0x4120, 
 0x4343, 0x5345, 0x2053, 0x6f74, 0x7420, 0x6568, 0x4920, 0x746e, 0x7265, 
@@ -4046,6 +4035,20 @@ BEGIN
 0x6e6e, 0x6365, 0x6974, 0x6e6f, 0x2073, 0x7266, 0x6d6f, 0x7420, 0x6568, 
 0x4920, 0x746e, 0x7265, 0x656e, 0x0074, 
     IDC_CONNECTION_HOME_SELECT, 0x403, 55, 0
+0x4920, 0x6420, 0x6e6f, 0x7427, 0x6b20, 0x6f6e, 0x2c77, 0x7020, 0x656c, 
+0x7361, 0x2065, 0x5541, 0x4f54, 0x442d, 0x5445, 0x4345, 0x2054, 0x6874, 
+0x2065, 0x6966, 0x6572, 0x6177, 0x6c6c, 0x6465, 0x7320, 0x6174, 0x6574, 
+"\000" 
+    IDC_CONNECTION_LAN_SELECT, 0x403, 43, 0
+0x4e20, 0x2c6f, 0x4920, 0x4320, 0x4e41, 0x6120, 0x6363, 0x7065, 0x2074, 
+0x6c61, 0x206c, 0x6e69, 0x6f63, 0x696d, 0x676e, 0x6320, 0x6e6f, 0x656e, 
+0x7463, 0x6f69, 0x736e, "\000" 
+    IDC_CONNECTION_LAN_SELECT, 0x403, 64, 0
+0x5920, 0x7365, 0x202c, 0x6f73, 0x4920, 0x4320, 0x4e41, 0x4f4e, 0x2054, 
+0x6361, 0x6563, 0x7470, 0x6920, 0x636e, 0x6d6f, 0x6e69, 0x2067, 0x6f63, 
+0x6e6e, 0x6365, 0x6974, 0x6e6f, 0x2073, 0x7266, 0x6d6f, 0x7420, 0x6568, 
+0x4920, 0x746e, 0x7265, 0x656e, 0x0074, 
+    IDC_CONNECTION_LAN_SELECT, 0x403, 55, 0
 0x4920, 0x6420, 0x6e6f, 0x7427, 0x6b20, 0x6f6e, 0x2c77, 0x7020, 0x656c, 
 0x7361, 0x2065, 0x5541, 0x4f54, 0x442d, 0x5445, 0x4345, 0x2054, 0x6874, 
 0x2065, 0x6966, 0x6572, 0x6177, 0x6c6c, 0x6465, 0x7320, 0x6174, 0x6574, 
@@ -5147,6 +5150,9 @@ BEGIN
     IDS_WIZARD_EXIT         "E&xit"
     IDS_WIZARD_YEARS_OLD    "year old"
     IDS_SETTINGS_AUTOMATIC_IP "Automatic"
+    IDS_WIZARD_UPNP_SETUP   "Please wait: Finding UPnP devices and setting them up..."
+    IDS_WIZARD_DISCOVERY    "Please wait: Updating discovery services..."
+    IDS_WIZARD_ED2K         "Please wait: Updating eDonkey2000 server list..."
 END
 
 STRINGTABLE 

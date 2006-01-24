@@ -30,6 +30,7 @@
 #include "DlgHelp.h"
 #include "HostCache.h"
 #include "DiscoveryServices.h"
+#include "UPnPFinder.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,6 +46,7 @@ BEGIN_MESSAGE_MAP(CWizardConnectionPage, CWizardPage)
 	ON_CBN_EDITCHANGE(IDC_CONNECTION_SPEED, OnEditChangeConnectionSpeed)
 	ON_CBN_SELCHANGE(IDC_CONNECTION_SPEED, OnSelChangeConnectionSpeed)
 	ON_CBN_SELCHANGE(IDC_CONNECTION_GROUP, OnSelChangeConnectionGroup)
+	ON_WM_TIMER()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -53,13 +55,16 @@ END_MESSAGE_MAP()
 // CWizardConnectionPage property page
 
 CWizardConnectionPage::CWizardConnectionPage() : CWizardPage(CWizardConnectionPage::IDD)
+, m_bQueryDiscoveries(false)
+, m_bUpdateDonkeyServers(false)
+, m_nProgressSteps(0)
+, m_hThread(NULL)
 {
-	//{{AFX_DATA_INIT(CWizardConnectionPage)
-	//}}AFX_DATA_INIT
 }
 
 CWizardConnectionPage::~CWizardConnectionPage()
 {
+	ASSERT( m_hThread == NULL );
 }
 
 void CWizardConnectionPage::DoDataExchange(CDataExchange* pDX)
@@ -73,6 +78,8 @@ void CWizardConnectionPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONNECTION_GROUP, m_wndGroup);
 	DDX_Control(pDX, IDC_CONNECTION_SPEED, m_wndSpeed);
 	DDX_Control(pDX, IDC_CONNECTION_TYPE, m_wndType);
+	DDX_Control(pDX, IDC_CONNECTION_PROGRESS, m_wndProgress);
+	DDX_Control(pDX, IDC_CONNECTION_STATUS, m_wndStatus);
 	//}}AFX_DATA_MAP
 }
 
@@ -110,13 +117,21 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	m_wndSpeed.SetWindowText( strSpeed );
 
 	//; 28.8 kbps; 33.6 kbps; 56.6 kbps; 64.0 kbps; 128 kbps; 256 kbps; 384 kbps; 512 kbps; 1024 kbps; 1536 kbps; 2048 kbps; 3072 kbps; 4096 kbps; 5120 kbps; 8192 kbps; 12288 kbps;
-	
+
+	// 3 steps max
+	m_wndProgress.SetRange( 0, 3 );
+	m_wndProgress.SetPos( 0 );
+
+	m_wndStatus.SetWindowText( L"" );
+
 	return TRUE;
 }
 
 BOOL CWizardConnectionPage::OnSetActive() 
 {
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
+	m_wndProgress.SetPos( 0 );
+	m_wndStatus.SetWindowText( L"" );
 	return CWizardPage::OnSetActive();
 }
 
@@ -162,7 +177,7 @@ void CWizardConnectionPage::OnSelChangeConnectionSpeed()
 LRESULT CWizardConnectionPage::OnWizardNext() 
 {
 	if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) return 0;
-	
+
 	int nGroup = m_wndGroup.GetCurSel();
 	
 	if ( nGroup <= 0 )
@@ -174,8 +189,6 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	}
 	else if ( nGroup == 1 )
 	{
-		CString strFormat, strMessage;
-		
 		switch ( m_wndHomeSelect.GetCurSel() )
 		{
 		case 0:
@@ -186,9 +199,6 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		case 1:
 			Settings.Connection.FirewallStatus = CONNECTION_OPEN;
 			// Settings.Connection.InPort		= 6346;
-			LoadString( strFormat, IDS_WIZARD_PORT_FORWARD );
-			strMessage.Format( strFormat, Settings.Connection.InPort );
-			AfxMessageBox( strMessage, MB_ICONINFORMATION );
 			break;
 		case 2:
 			Settings.Connection.FirewallStatus = CONNECTION_FIREWALLED;
@@ -341,18 +351,138 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxConnectingSources	= 8;
 		Settings.Connection.RequireForTransfers	= TRUE;
 		Settings.Connection.SlowConnect			= TRUE;
-		//Settings.Connection.TimeoutConnect	= 30000;
-		//Settings.Connection.TimeoutHandshake	= 60000;
+		// Settings.Connection.TimeoutConnect	= 30000;
+		// Settings.Connection.TimeoutHandshake	= 60000;
 
 		CHelpDlg::Show( _T("GeneralHelp.XPsp2") );
 	}
 
 	// Update the G2 host cache (if necessary)
-	if ( HostCache.Gnutella2.CountHosts() < 25 ) DiscoveryServices.QueryForHosts( PROTOCOL_G2 );
+	if ( HostCache.Gnutella2.CountHosts() < 25 )
+	{
+		m_bQueryDiscoveries = true;
+		m_nProgressSteps++;
+	}
 
 	// Load default ed2k server list (if necessary)
-	if ( HostCache.eDonkey.CountHosts() < 8 ) HostCache.eDonkey.LoadDefaultED2KServers();
+	if ( HostCache.eDonkey.CountHosts() < 8 )
+	{
+		m_bUpdateDonkeyServers = true;
+		m_nProgressSteps++;
+	}
+
+	CWaitCursor pCursor;
+	// Create UPnP finder object if it doesn't exist
+	try
+	{
+		if ( !theApp.m_pUPnPFinder )
+			theApp.m_pUPnPFinder.reset( new CUPnPFinder );
+		theApp.m_pUPnPFinder->StartDiscovery();
+	}
+	catch ( CUPnPFinder::UPnPError& ) {}
+	catch ( CException* e ) { e->Delete(); }
+
+	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
+	SetThreadName( pThread->m_nThreadID, "CWizardConnectionPage" );
+	m_hThread = pThread->m_hThread;
 	
+	return -1; // don't move to the next page; the thread will do this work
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CWizardConnectionPage thread
+
+UINT CWizardConnectionPage::ThreadStart(LPVOID pParam)
+{
+	CWizardConnectionPage* pDlg = (CWizardConnectionPage*)pParam;
+	pDlg->OnRun();
 	return 0;
 }
 
+void CWizardConnectionPage::OnRun()
+{
+	short nCurrentStep = 0;
+	CString strMessage;
+
+	m_nProgressSteps++; // UPnP device detection
+	m_wndProgress.PostMessage( PBM_SETRANGE32, 0, (LPARAM)m_nProgressSteps );
+
+	LoadString( strMessage, IDS_WIZARD_UPNP_SETUP );
+	m_wndStatus.SetWindowText( strMessage );
+
+	while ( theApp.m_pUPnPFinder && 
+			theApp.m_pUPnPFinder->IsAsyncFindRunning() )
+	{
+		Sleep( 50 );
+	}
+	nCurrentStep++;
+	m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
+
+	if ( m_bQueryDiscoveries )
+	{
+		LoadString( strMessage, IDS_WIZARD_DISCOVERY );
+		m_wndStatus.SetWindowText( strMessage );
+		nCurrentStep++;
+		DiscoveryServices.QueryForHosts( PROTOCOL_G2 );
+		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
+	}
+
+	if ( m_bUpdateDonkeyServers )
+	{
+		LoadString( strMessage, IDS_WIZARD_ED2K );
+		m_wndStatus.SetWindowText( strMessage );
+		nCurrentStep++;
+		HostCache.eDonkey.LoadDefaultED2KServers();
+		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
+	}
+
+	GetSheet()->SendMessage( PSM_SETCURSEL, 2, 0 ); // Go to the 3rd page
+	PostMessage( WM_TIMER, 1 ); // Terminate thread if necessarily
+}
+BOOL CWizardConnectionPage::OnQueryCancel()
+{
+	if ( m_hThread )
+		return FALSE;
+
+	return CWizardPage::OnQueryCancel();
+}
+
+void CWizardConnectionPage::OnTimer(UINT_PTR nIDEvent)
+{
+	if ( nIDEvent != 1 ) return;
+
+	if ( m_hThread != NULL )
+	{
+        int nAttempt = 5;
+		for ( ; nAttempt > 0 ; nAttempt-- )
+		{
+			DWORD nCode;
+
+			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
+			if ( nCode != STILL_ACTIVE ) break;
+			Sleep( 100 );
+		}
+
+		if ( nAttempt == 0 )
+		{
+			TerminateThread( m_hThread, 0 );
+			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CWizardConnectionPage thread.") );
+			Sleep( 100 );
+		}
+
+		m_hThread = NULL;
+	}
+
+	if ( theApp.m_bUPnPPortsForwarded == TS_TRUE )
+	{
+		Settings.Connection.FirewallStatus = CONNECTION_OPEN;
+	}
+	else if ( m_wndGroup.GetCurSel() == 1 && 
+			  m_wndHomeSelect.GetCurSel() == 1 )
+	{
+		CString strFormat, strMessage;
+		LoadString( strFormat, IDS_WIZARD_PORT_FORWARD );
+		strMessage.Format( strFormat, Settings.Connection.InPort );
+		AfxMessageBox( strMessage, MB_ICONINFORMATION );
+	}
+}
