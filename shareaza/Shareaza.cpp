@@ -180,7 +180,8 @@ BOOL CShareazaApp::InitInstance()
 			firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
 		}
 	}
-	if ( Settings.Connection.EnableUPnP )
+	// We will run the UPnP discovery in the QuickStart Wizard
+	if ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun )
 	{
 		try
 		{
