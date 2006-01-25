@@ -192,6 +192,7 @@ public:
 		BOOL		ForceConnectedState;		// Force WinINet into a connected state on startup. (Put IE into online mode)
 		BOOL		SlowConnect;				// Connect to one network at a time. Don't download while connecting. (XPsp2)
 		BOOL		EnableUPnP;
+		BOOL		DeleteUPnPPorts;			// Delete forwarded ports on shutdown
 	} Connection;
 
 	struct sBandwidth

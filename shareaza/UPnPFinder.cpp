@@ -330,6 +330,11 @@ void CUPnPFinder::StartPortMapping()
 	std::for_each( m_pServices.begin(), m_pServices.end(), boost::bind( &CUPnPFinder::MapPort, this, _1 ) );
 }
 
+void CUPnPFinder::DeletePorts()
+{
+	std::for_each( m_pServices.begin(), m_pServices.end(), boost::bind( &CUPnPFinder::DeleteExistingPortMappings, this, _1 ) );
+}
+
 // Finds a local IP address routable from UPnP device
 CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 {

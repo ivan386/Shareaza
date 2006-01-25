@@ -177,7 +177,8 @@ void CSettings::Setup()
 	Add( _T("Connection.ForceConnectedState"), &Connection.ForceConnectedState, TRUE );
 	Add( _T("Connection.SlowConnect"), &Connection.SlowConnect, FALSE );
 	Add( _T("Connection.EnableUPnP"), &Connection.EnableUPnP, TRUE );
-	
+	Add( _T("Connection.DeleteUPnPPorts"), &Connection.DeleteUPnPPorts, TRUE );
+
 	Add( _T("Bandwidth.Request"), &Bandwidth.Request, 4096 );
 	Add( _T("Bandwidth.HubIn"), &Bandwidth.HubIn, 0 );
 	Add( _T("Bandwidth.HubOut"), &Bandwidth.HubOut, 0 );

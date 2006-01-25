@@ -290,6 +290,8 @@ int CShareazaApp::ExitInstance()
 	if ( m_pUPnPFinder )
 	{
 		m_pUPnPFinder->StopAsyncFind();
+		if ( Settings.Connection.DeleteUPnPPorts )
+			m_pUPnPFinder->DeletePorts();
 		m_pUPnPFinder.reset();
 	}
 

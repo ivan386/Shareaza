@@ -44,6 +44,7 @@ public:
 
 	void StartDiscovery();
 	void StopAsyncFind();
+	void DeletePorts();
 	void AddDevice(DevicePointer pDevice);
 	void RemoveDevice(CComBSTR bsUDN);
 	void OnSearchComplete();
