@@ -85,6 +85,8 @@ void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 
 		if ( FAILED( m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle ) ) )
 			theApp.Message( MSG_ERROR, L"CancelAsyncFind failed in UPnP finder." );
+		
+		m_bAsyncFindRunning = false;
 		return;
 	} 
 
