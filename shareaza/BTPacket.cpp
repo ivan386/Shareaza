@@ -79,7 +79,7 @@ CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 			return NULL;
 
 		DWORD nLength = transformFromBE( pBuffer->ReadDWORD() );
-		if ( nLength == 0 || pBuffer->m_nLength < 4 + nLength )
+		if ( nLength == 0 || pBuffer->m_nLength - 4 < nLength )
 			return NULL;
 
 		pBuffer->Remove( 4 );

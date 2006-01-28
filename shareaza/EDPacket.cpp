@@ -155,12 +155,12 @@ void CEDPacket::ToBufferUDP(CBuffer* pBuffer) const
 
 CEDPacket* CEDPacket::ReadBuffer(CBuffer* pBuffer, BYTE nEdProtocol)
 {
+	if ( pBuffer->m_nLength < sizeof( ED2K_TCP_HEADER ) ) return NULL;
 	ED2K_TCP_HEADER* pHeader = reinterpret_cast<ED2K_TCP_HEADER*>(pBuffer->m_pBuffer);
-	if ( pBuffer->m_nLength < sizeof(*pHeader) ) return NULL;
 	if ( pHeader->nProtocol != ED2K_PROTOCOL_EDONKEY &&
 		 pHeader->nProtocol != ED2K_PROTOCOL_EMULE &&
 		 pHeader->nProtocol != ED2K_PROTOCOL_PACKED ) return NULL;
-	if ( pBuffer->m_nLength < sizeof(*pHeader) + pHeader->nLength - 1 ) return NULL;
+	if ( pBuffer->m_nLength - sizeof(*pHeader) + 1 < pHeader->nLength ) return NULL;
 	CEDPacket* pPacket = CEDPacket::New( pHeader );
 	pBuffer->Remove( sizeof(*pHeader) + pHeader->nLength - 1 );
 	if ( pPacket->InflateOrRelease( nEdProtocol ) ) return NULL;
