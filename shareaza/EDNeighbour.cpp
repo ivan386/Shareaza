@@ -199,7 +199,11 @@ BOOL CEDNeighbour::OnConnected()
 	// Software Version ('Client Version').	
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket, 0 );
 	// Flags indicating capability
-	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket, 0 );
+	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | 
+		    ED2K_SERVER_TCP_SMALLTAGS | 
+			ED2K_SERVER_TCP_UNICODE |
+			ED2K_SERVER_TCP_64BITSIZE
+			).Write( pPacket, 0 );
 
 	m_nState = nrsHandshake1;
 	Send( pPacket );
@@ -394,8 +398,8 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
         m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS,
         m_nTCPFlags & ED2K_SERVER_TCP_UNICODE,
         m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2,
-        m_nTCPFlags & 0x00000040,
-        m_nTCPFlags & 0x00000080 );
+        m_nTCPFlags & ED2K_SERVER_TCP_RELATEDSEARCH,
+        m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE );
 	theApp.Message( MSG_DEBUG, strServerFlags );
 	
 	
@@ -635,7 +639,8 @@ void CEDNeighbour::SendSharedFiles()
 		
 		//If the file has an ed2k hash, has started, has a known size and a hashset, etc...
 		if ( ( pDownload->m_oED2K ) && ( pDownload->IsStarted() ) && ( pDownload->m_nSize != SIZE_UNKNOWN ) &&
-			 ( pDownload->NeedHashset() == FALSE ) && ( ! pDownload->IsMoving() ) )	
+			 ( pDownload->NeedHashset() == FALSE ) && ( ! pDownload->IsMoving() ) &&
+			 ( ( pDownload->m_nSize < 0xFFFFFFFF ) || ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ) )	
 		{
 			//Send the file hash to the ed2k server
 			pPacket->Write( pDownload->m_oED2K );
@@ -662,12 +667,19 @@ void CEDNeighbour::SendSharedFiles()
 			}
 
 			//Send tags
-			pPacket->WriteLongLE( 2 ); //Number of Tags
+			if ( pDownload->m_nSize > 0xFFFFFFFF )
+				pPacket->WriteLongLE( 3 ); //Number of Tags
+			else
+				pPacket->WriteLongLE( 2 ); //Number of Tags
 
 			//Send the file name to the ed2k server
 			CEDTag( ED2K_FT_FILENAME, pDownload->m_sDisplayName ).Write( pPacket, m_nTCPFlags );
 			//Send the file size to the ed2k server
 			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
+			if ( pDownload->m_nSize > 0xFFFFFFFF )
+			{
+				CEDTag( ED2K_FT_FILESIZEUPPER, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, m_nTCPFlags );
+			}
 			//Send the file type to the ed2k server
 			//CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket ); // We don't know it for certain with
 			// incomplete files. Might be okay to assume from the extention, since they are usually correct.
@@ -690,7 +702,8 @@ void CEDNeighbour::SendSharedFiles()
 		
 		if ( pFile->IsShared() && pFile->m_oED2K )	//If file is shared and has an ed2k hash
 		{
-			if ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( pFile->GetSize() > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
+			if ( ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( pFile->GetSize() > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) && // If file is large enough to meet minimum requirement
+			     ( ( pFile->m_nSize < 0xFFFFFFFF ) || ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ) ) // and isn't too large for the server
 			{
 				if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile ) ) // Check if a queue exists
 				{
@@ -789,6 +802,9 @@ void CEDNeighbour::SendSharedFiles()
 
 					//// End of server metadata calculation
 
+					// Large files need an extra size tag
+					if ( pFile->m_nSize > 0xFFFFFFFF ) nTags++;
+
 					// Set the number of tags present
 					pPacket->WriteLongLE( nTags );
 	
@@ -796,6 +812,11 @@ void CEDNeighbour::SendSharedFiles()
 					CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket, m_nTCPFlags );
 					// Send the file size to the ed2k server
 					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->GetSize() ).Write( pPacket, m_nTCPFlags );
+					if ( pFile->m_nSize > 0xFFFFFFFF )
+					{
+						CEDTag( ED2K_FT_FILESIZEUPPER, (DWORD)(pFile->GetSize() >> 32 ) ).Write( pPacket, m_nTCPFlags );
+					}
+					
 					// Send the file type to the ed2k server
 					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, m_nTCPFlags );
 					// Send the bitrate to the ed2k server
@@ -831,6 +852,7 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 	if ( !pDownload->m_oED2K || pDownload->NeedHashset() ) return FALSE;
 	if ( pDownload->m_nSize == SIZE_UNKNOWN ) return FALSE;
 	if ( m_nFilesSent >= m_nFileLimit ) return FALSE;
+	if ( ( pDownload->m_nSize > 0xFFFFFFFF ) && ! ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ) return FALSE;
 
 	CEDPacket* pPacket = CEDPacket::New(  ED2K_C2S_OFFERFILES );
 	pPacket->WriteLongLE( 1 );		// Number of files that will be sent
@@ -860,12 +882,17 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 	}
 
 	//Send tags
-	pPacket->WriteLongLE( 2 ); // Number of Tags
+	if ( pDownload->m_nSize > 0xFFFFFFFF )
+		pPacket->WriteLongLE( 3 ); //Number of Tags
+	else
+		pPacket->WriteLongLE( 2 ); //Number of Tags
 
 	// Send the file name to the ed2k server
 	CEDTag( ED2K_FT_FILENAME, pDownload->m_sDisplayName ).Write( pPacket, m_nTCPFlags );
 	// Send the file size to the ed2k server
 	CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
+	if ( pDownload->m_nSize > 0xFFFFFFFF )
+		CEDTag( ED2K_FT_FILESIZEUPPER, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, m_nTCPFlags );
 
 	// Compress if the server supports it
 	if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) pPacket->Deflate();
