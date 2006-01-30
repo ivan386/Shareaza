@@ -457,9 +457,6 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 				if ( _tcsstr( oTokens[ 4 ], m_sLocalIP ) != NULL )
 				{
 					CString str;
-					CString x1 = oTokens[ 0 ].Mid( oTokens[ 0 ].Find( '=' ) + 1 );
-					CString x2 = oTokens[ 1 ].Mid( oTokens[ 1 ].Find( '=' ) + 1 );
-					CString x3 = oTokens[ 2 ].Mid( oTokens[ 2 ].Find( '=' ) + 1 );
 					hrDel = InvokeAction( pService, L"DeletePortMapping", 
 						strHost + strPort + strProtocol, str );
 					if ( FAILED( hrDel ) ) 
