@@ -1022,6 +1022,8 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 	ReadEDAddress( pPacket, pServer );
 	
 	DWORD nTags = pPacket->ReadLongLE();
+
+	QWORD nSize = 0;
 	
 	while ( nTags-- > 0 )
 	{
@@ -1040,8 +1042,11 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		}
 		else if ( pTag.m_nKey == ED2K_FT_FILESIZE )
 		{
-			m_bSize = TRUE;
-			m_nSize = pTag.m_nValue;
+			nSize += pTag.m_nValue;
+		}
+		else if ( pTag.m_nKey == ED2K_FT_FILESIZEUPPER )
+		{
+			nSize += ( (QWORD)pTag.m_nValue << 32 );
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LASTSEENCOMPLETE )
 		{
@@ -1148,6 +1153,12 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			theApp.Message( MSG_SYSTEM, s );
 			*/
 		}
+	}
+
+	if ( nSize )
+	{
+		m_bSize = TRUE;
+		m_nSize = nSize;
 	}
 
 	// Verify and set metadata
