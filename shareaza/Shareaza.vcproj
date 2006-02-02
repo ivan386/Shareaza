@@ -138,7 +138,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/NODEFAULTLIB:LIBC"
+				AdditionalOptions="/NODEFAULTLIB:LIBC /mapinfo:lines /mapinfo:exports"
 				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib"
 				OutputFile="Release/Shareaza.exe"
 				LinkIncremental="1"
@@ -150,6 +150,7 @@
 				MapFileName="Release/Shareaza.map"
 				SubSystem="2"
 				OptimizeReferences="2"
+				SetChecksum="TRUE"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"

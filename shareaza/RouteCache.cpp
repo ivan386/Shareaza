@@ -201,6 +201,7 @@ CRouteCacheItem* CRouteCacheTable::Add(const Hashes::Guid& oGUID, const CNeighbo
 {
 	if ( m_nUsed == m_nBuffer || ! m_pFree ) return NULL;
 
+	ASSERT( oGUID != NULL );
 	WORD nGUID = 0, *ppGUID = (WORD*)&oGUID[ 0 ];
 	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID = WORD( nGUID + *ppGUID++ );
 
