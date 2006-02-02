@@ -38,4 +38,4 @@ D http://www.emule-server.de/server.met/min/server.met
 #
 # If you make changes to this file that cause problems for you
 # Then just delete the file and Shareaza will use internal defaults
-# Or get the latest at http://cvs.sourceforge.net/viewcvs.py/shareaza/Data/DefaultServices.dat?view=markup
+# Or get the latest at http://cvs.sourceforge.net/viewcvs.py/*checkout*/shareaza/Data/DefaultServices.dat
