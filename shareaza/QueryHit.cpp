@@ -670,12 +670,17 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 		LPCSTR pszRaw = (LPCSTR)pRaw + 11;
 		if ( strlen( pszRaw ) == (DWORD)nSize - 12 ) strXML = pszRaw;
 	}
+	else if ( nSize >= 2 && strncmp( (LPCSTR)pRaw, "{}", 2 ) == 0 )
+	{
+		LPCSTR pszRaw = (LPCSTR)pRaw + 2;
+		if ( strlen( pszRaw ) == (DWORD)nSize - 3 ) strXML = pszRaw;
+	}
 	else
 	{
 		LPCSTR pszRaw = (LPCSTR)pRaw;
 		if ( strlen( pszRaw ) == (DWORD)nSize - 1 ) strXML = pszRaw;
 	}
-	
+
 	delete [] pRaw;
 	
 	CXMLElement* pRoot	= NULL;
