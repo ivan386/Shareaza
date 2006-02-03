@@ -25,7 +25,7 @@
 //! \file       Hashes/HashStringConversion.cpp
 //! \brief      Defines functions for conversion between hashes and strings.
 
-#include "StdAfx.h"
+#include "..\StdAfx.h"
 
 namespace Hashes
 {

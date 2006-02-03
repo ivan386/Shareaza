@@ -25,7 +25,7 @@
 //! \file       Hashes/HashDescriptors.cpp
 //! \brief      Defines urn prefixes for all hash types.
 
-#include "StdAfx.h"
+#include "..\StdAfx.h"
 
 namespace Hashes
 {

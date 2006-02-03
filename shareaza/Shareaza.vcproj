@@ -3145,12 +3145,24 @@
 					</File>
 					<File
 						RelativePath="Hashes\HashDescriptors.cpp">
+						<FileConfiguration
+							Name="Debug|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="Hashes\HashDescriptors.hpp">
 					</File>
 					<File
 						RelativePath="Hashes\HashStringConversion.cpp">
+						<FileConfiguration
+							Name="Debug|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="Hashes\HashStringConversion.hpp">
