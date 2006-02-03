@@ -70,8 +70,7 @@ static char THIS_FILE[]=__FILE__;
 CG1Neighbour::CG1Neighbour(CNeighbour* pBase)
 	: CNeighbour( PROTOCOL_G1, pBase ), // First, call the CNeighbour constructor
 	// The member variable m_nPongNeeded is just an array of 32 bytes, start them each out as 0
-	  m_nPongNeeded()
-{
+	ZeroMemory( m_nPongNeeded, PONG_NEEDED_BUFFER );
 	// Say we sent a ping packet when we last got any packet from the remote computer (do)
 	m_tLastOutPing = m_tLastPacket;
 
