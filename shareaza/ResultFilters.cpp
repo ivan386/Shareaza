@@ -1,9 +1,9 @@
 //
 // ResultFilters.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.9 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2006/02/03 18:43:23 $"
+//	Revision:		"$Revision: 1.10 $"
+//  Last change by:	"$Author: spooky23 $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
