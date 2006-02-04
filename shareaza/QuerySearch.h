@@ -48,7 +48,8 @@ public:
 public:
 	Hashes::Guid	m_oGUID;
 public:
-	CString			m_sSearch;
+	CString			m_sSearch;		// search string, transformed by lowercase table
+	CString			m_sKeywords;	// valid search keywords (stems, minus words, split asian phrase etc.)
 	CSchema*		m_pSchema;
 	CXMLElement*	m_pXML;
 	QWORD			m_nMinSize;
@@ -117,12 +118,13 @@ public:
 	BOOL		Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K);
 	TRISTATE	MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	BOOL		MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML);
-	void		BuildWordList();
+	void		BuildWordList(bool bExpression=true);
 	void		Serialize(CArchive& ar);
 	static CSearchWnd* OpenWindow(auto_ptr< CQuerySearch > pSearch);
-	BOOL		CheckValid();
+	BOOL		CheckValid(bool bExpression=true);
 private:
 	void		AddStringToWordList(LPCTSTR pszString);
+	void		MakeKeywords(CString& strPhrase, bool bExpression=true);
 	BOOL		WriteHashesToEDPacket( CEDPacket* pPacket, BOOL bUDP );
 
 // Utilities

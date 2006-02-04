@@ -1,9 +1,9 @@
 //
 // MatchObjects.cpp
 //
-//	Date:			"$Date: 2005/11/18 22:52:33 $"
-//	Revision:		"$Revision: 1.23 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2006/02/04 01:19:02 $"
+//	Revision:		"$Revision: 1.24 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -172,7 +172,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 		
 		if ( pFilter != NULL )
 		{
-			if ( BOOL bName = _tcsistr( pFilter->m_sSearch, pHit->m_sName ) == 0 )
+			if ( BOOL bName = _tcsistr( pFilter->m_sKeywords, pHit->m_sName ) == 0 )
 				pHit->m_bExactMatch = TRUE;
 
 			pHit->m_bMatched = pFilter->Match(

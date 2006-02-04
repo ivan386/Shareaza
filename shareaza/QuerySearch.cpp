@@ -84,6 +84,7 @@ CQuerySearch::CQuerySearch(BOOL bGUID)
 CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin)
 : m_oGUID( pOrigin->m_oGUID ),
   m_sSearch( pOrigin->m_sSearch ),
+  m_sKeywords( pOrigin->m_sKeywords ),
   m_pSchema( pOrigin->m_pSchema ),
   m_pXML( pOrigin->m_pXML ? pOrigin->m_pXML->Clone() : NULL ),
   m_nMinSize( pOrigin->m_nMinSize ),
@@ -134,20 +135,25 @@ CG1Packet* CQuerySearch::ToG1Packet()
 	
 	CString strExtra;
 	
-	if ( m_sSearch.GetLength() )
+	if ( m_sKeywords.GetLength() )
 	{
 		if ( Settings.Gnutella1.QuerySearchUTF8 ) //Support UTF-8 Query
 		{
-			pPacket->WriteStringUTF8( m_sSearch );
+			pPacket->WriteStringUTF8( m_sKeywords );
 		}
 		else
 		{
-			pPacket->WriteString( m_sSearch );
+			pPacket->WriteString( m_sKeywords );
+		}
+		if ( m_sKeywords != m_sSearch )
+		{
+			theApp.Message( MSG_SYSTEM, L"G1 keywords: %s->%s", m_sSearch, m_sKeywords );
 		}
 	}
 	else if ( m_pSchema != NULL && m_pXML != NULL )
 	{
 		strExtra = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
+		MakeKeywords( strExtra, false );
 		pPacket->WriteString( strExtra );
 		strExtra.Empty();
 	}
@@ -232,10 +238,20 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		pPacket->Write( m_oBTH );
 	}
 	
-	if ( m_sSearch.GetLength() )
+	if ( m_sKeywords.GetLength() )
 	{
-		pPacket->WritePacket( "DN", pPacket->GetStringLen( m_sSearch ) );
-		pPacket->WriteString( m_sSearch, FALSE );
+		if ( m_sKeywords != m_sSearch )
+		{
+			short bValue = (short)( 2 * rand() / ( RAND_MAX + 1.0 ) );
+			pPacket->WritePacket( "DN", pPacket->GetStringLen( bValue ? m_sSearch : m_sKeywords ) );
+			pPacket->WriteString( bValue ? m_sSearch : m_sKeywords, FALSE );
+			theApp.Message( MSG_SYSTEM, L"G2 keywords: %s->%s", m_sSearch, m_sKeywords );
+		}
+		else
+		{
+			pPacket->WritePacket( "DN", pPacket->GetStringLen( m_sKeywords ) );
+			pPacket->WriteString( m_sKeywords, FALSE );
+		}
 	}
 	
 	if ( m_pXML != NULL )
@@ -303,7 +319,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	CEDPacket* pPacket = NULL;
 	
 	CString strWords = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
-
+	MakeKeywords( strWords, false );
 
 	if ( bUDP )
 	{
@@ -355,7 +371,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	{
 		// BitTorrent searches prohibited unless they are GETSOURCES above
 	}
-	else if ( m_sSearch.GetLength() > 0 || strWords.GetLength() > 0 )
+	else if ( m_sKeywords.GetLength() > 0 || strWords.GetLength() > 0 )
 	{
 		pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_SEARCHREQUEST : ED2K_C2S_SEARCHREQUEST );
 		
@@ -397,7 +413,11 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 			else
 			{
 				// Regular search
-				pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords, bUTF8 );
+				pPacket->WriteEDString( m_sKeywords.GetLength() ? m_sKeywords : strWords, bUTF8 );
+				if ( m_sKeywords != m_sSearch )
+				{
+					theApp.Message( MSG_SYSTEM, L"ed2k keywords: %s->%s", m_sSearch, m_sKeywords );
+				}
 			}
 		}
 		else
@@ -408,7 +428,11 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 
 			// Name / Key Words
 			pPacket->WriteByte( 1 );		
-			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords, bUTF8 );
+			pPacket->WriteEDString( m_sKeywords.GetLength() ? m_sKeywords : strWords, bUTF8 );
+			if ( m_sKeywords != m_sSearch )
+			{
+				theApp.Message( MSG_SYSTEM, L"ed2k keywords: %s->%s", m_sSearch, m_sKeywords );
+			}
 
 			// Metadata (file type)
 			pPacket->WriteByte( 2 );		
@@ -593,7 +617,7 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 		LPCTSTR pszSep = _tcschr( pszData, 0x1C );
 		size_t nLength = ( pszSep && *pszSep == 0x1C ) ? pszSep - pszData : _tcslen( pszData );
 		
-		if ( ! _istalnum( *pszData ) ) nLength = 0;
+		if ( !IsCharacter( *pszData ) ) nLength = 0;
 		
 		if ( nLength >= 4 && _tcsncmp( pszData, _T("urn:"), 4 ) == 0 )
 		{
@@ -616,7 +640,7 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 	}
 	
 	m_bAndG1 = TRUE;
-	return CheckValid();
+	return CheckValid( false );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -765,29 +789,42 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch validity check
 
-BOOL CQuerySearch::CheckValid()
+BOOL CQuerySearch::CheckValid(bool bExpression)
 {
 	DWORD nValidWords = 0;
 	size_t nValidCharacters = 0;
 	BOOL bExtendedSearch = FALSE;
 
-	BuildWordList();
-
-	// Searches by hash are okay
-	if ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH ) return TRUE;
-
 	// Search without any terms and no hash is invalid
-	if ( m_oWords.empty() ) return FALSE;
+	if ( m_oWords.empty() )
+	{
+		// Searches by hash are okay
+		if ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH )
+		{
+			BuildWordList( false );
+			return TRUE;
+		}
+
+		BuildWordList( bExpression );
+		if ( m_oWords.empty() )
+			return FALSE;
+	}
 
 	// Check if it's an "extended search" (Using a character set with many symbols)
-	if ( !m_oWords.empty() )
+	iterator pLast = m_oWords.end();
+	--pLast;
+	if ( pLast->second >= 2 && 
+		 ( IsHiragana( pLast->first[ 0 ] ) || 
+		   IsKatakana( pLast->first[ 0 ] ) || 
+		   pLast->first[ 0 ] > 0x33FF 
+		 ) &&
+		 ( IsHiragana( pLast->first[ 1 ] ) || 
+		   IsKatakana( pLast->first[ 1 ] ) || 
+		   pLast->first[ 1 ] > 0x33FF 
+		 )
+	   )
 	{
-		iterator pLast = m_oWords.end();
-		--pLast;
-		if ( pLast->second >= 2 && pLast->first[ 0 ] > 20000 && pLast->first[ 1 ] > 20000 )
-		{
-			bExtendedSearch = TRUE;
-		}
+		bExtendedSearch = TRUE;
 	}
 
 	// Check we aren't just searching for broad terms - set counters, etc
@@ -861,30 +898,39 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 	{
 		TRISTATE bResult = MatchMetadata( pszSchemaURI, pXML );
 		if ( bResult != TS_UNKNOWN ) return ( bResult == TS_TRUE );
-		if ( m_sSearch.GetLength() > 0 )
+		if ( m_sKeywords.GetLength() > 0 )
 		{
+			if ( m_sKeywords != m_sSearch )
+			{
+				theApp.Message( MSG_SYSTEM, L"Received: %s", m_sSearch );
+				theApp.Message( MSG_SYSTEM, L"Keywords: %s", m_sKeywords );
+			}
 			if ( MatchMetadataShallow( pszSchemaURI, pXML ) )
 			{
 				// only return WordMatch when negative terms are used
 				// otherwise, prefer metadata over file name.
 				BOOL bNegative = FALSE;
-				if ( m_sSearch.GetLength() > 1 )
+				if ( m_sKeywords.GetLength() > 1 )
 				{
 					int nMinusPos = -1;
 					while ( !bNegative )
 					{
-						nMinusPos = m_sSearch.Find( '-', nMinusPos + 1 );
+						nMinusPos = m_sKeywords.Find( '-', nMinusPos + 1 );
 						if ( nMinusPos != -1 )
-							bNegative = ( _istalnum( m_sSearch.GetAt( nMinusPos + 1 ) ) != 0 );
+						{
+							bNegative = ( IsCharacter( m_sKeywords.GetAt( nMinusPos + 1 ) ) != 0 );
+							if ( nMinusPos > 0 )
+								bNegative &= ( IsCharacter( m_sKeywords.GetAt( nMinusPos - 1 ) ) == 0 );
+						}
 						else break;
 					}
 				}
-				return bNegative ? WordMatch( pszFilename, m_sSearch ) : TRUE;
+				return bNegative ? WordMatch( pszFilename, m_sKeywords ) : TRUE;
 			}
 		}
 	}
 	// If it's a search for similar files, the text doesn't have to match
-	return m_oSimilarED2K || m_sSearch.GetLength() && WordMatch( pszFilename, m_sSearch );
+	return m_oSimilarED2K || m_sKeywords.GetLength() && WordMatch( pszFilename, m_sKeywords );
 }
 
 TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML)
@@ -941,7 +987,7 @@ BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML)
 			if ( pMember->m_bSearched )
 			{
 				CString strTarget = pMember->GetValueFrom( pXML, _T(""), FALSE );
-				if ( WordMatch( strTarget, m_sSearch ) ) return TRUE;
+				if ( WordMatch( strTarget, m_sKeywords ) ) return TRUE;
 			}
 		}
 	}
@@ -953,7 +999,7 @@ BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML)
 
 			CString strTarget = pAttribute->GetValue();
 
-			if ( WordMatch( strTarget, m_sSearch ) ) return TRUE;
+			if ( WordMatch( strTarget, m_sKeywords ) ) return TRUE;
 		}
 	}
 	
@@ -1060,15 +1106,18 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch word list builder
 
-void CQuerySearch::BuildWordList()
+void CQuerySearch::BuildWordList(bool bExpression)
 {
 	m_oWords.clear();
 
 	m_sSearch.Trim();
 	ToLower( m_sSearch );
+
 	// temporarily solution for last greek sigma fix
 	// the phrase can contain punctuation marks and it won't work
 	Replace( m_sSearch, _T("\x03C3 "), _T("\x03C2 ") ); 
+
+	m_sKeywords = m_sSearch;
 
 	BOOL bHash = FALSE;
 	
@@ -1119,7 +1168,15 @@ void CQuerySearch::BuildWordList()
 		}
 	}
 
-	AddStringToWordList( m_sSearch );
+	if ( bHash )
+	{
+		AddStringToWordList( m_sSearch );
+	}
+	else
+	{
+		MakeKeywords( m_sKeywords, bExpression );
+		AddStringToWordList( m_sKeywords );
+	}
 
 	if ( m_pXML == NULL ) return;
 	
@@ -1135,8 +1192,8 @@ void CQuerySearch::BuildWordList()
 				{
 					if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
 					{
-						CharLower( pAttribute->m_sValue.GetBuffer() );
-						pAttribute->m_sValue.ReleaseBuffer();
+						ToLower( pAttribute->m_sValue );
+						MakeKeywords( pAttribute->m_sValue, bExpression );
 						AddStringToWordList( pAttribute->m_sValue );
 					}
 				}
@@ -1147,12 +1204,105 @@ void CQuerySearch::BuildWordList()
 			for ( POSITION pos = pXML->GetAttributeIterator() ; pos ; )
 			{
 				CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
-				CharLower( pAttribute->m_sValue.GetBuffer() );
-				pAttribute->m_sValue.ReleaseBuffer();
+				ToLower( pAttribute->m_sValue );
+				MakeKeywords( pAttribute->m_sValue, bExpression );
 				AddStringToWordList( pAttribute->m_sValue );
 			}
 		}
 	}
+}
+
+// Function is used to split a phrase in asian languages to separate keywords
+// to ease keyword matching, allowing user to type as in the natural language.
+// Spacebar key is not a convenient way to separate keywords with IME, and user
+// may not know how application is keywording their files.
+//
+// The function splits katakana, hiragana and CJK phrases out of the input string.
+// ToDo: "minus" words and quoted phrases for asian languages may not work correctly in all cases.
+void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
+{
+	CString str;
+	LPCTSTR pszPtr = strPhrase;
+	ScriptType boundary[ 2 ] = { sNone, sNone };
+    int nPos = 0;
+	int nPrevWord = 0;
+
+	for ( ; *pszPtr ; nPos++, pszPtr++ )
+	{
+		// boundary[ 0 ] -- previous character;
+		// boundary[ 1 ] -- current character;
+		boundary[ 0 ] = boundary[ 1 ];
+
+		if ( IsKanji( *pszPtr ) )
+			boundary[ 1 ] = sKanji;
+		else if ( IsKatakana( *pszPtr ) && IsHiragana( *pszPtr ) )
+		{
+			if ( boundary[ 0 ] == sKatakana || boundary[ 0 ] == sHiragana )
+				boundary[ 1 ] = boundary[ 0 ];
+		}
+		else if ( IsKatakana( *pszPtr ) )
+			boundary[ 1 ] = sKatakana;
+		else if ( IsHiragana( *pszPtr ) )
+			boundary[ 1 ] = sHiragana;
+		else
+			boundary[ 1 ] = sRegular;
+
+		bool bCharacter = IsCharacter( *pszPtr ) || 
+			bExpression && ( *pszPtr == '-' || *pszPtr == '"' );
+		int nDistance = !bCharacter ? 1 : 0;
+
+		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ] && nPos )
+		{
+			if ( nPos > nPrevWord )
+			{
+				TCHAR sz = TCHAR( str.Right( 2 ).GetAt( 0 ) );
+				if ( boundary[ 0 ] > sRegular && _tcschr( L" -\"", sz ) != NULL &&
+					!_istdigit( TCHAR( str.Right( nPos < 3 ? 1 : 3 ).GetAt( 0 ) ) ) )
+				{
+					// Join two phrases if the previous was a sigle characters word.
+				}
+				else if ( str.Right( 1 ) != ' ' )
+				{
+					if ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' || *pszPtr == '"' )
+						str.Append( L" " );
+				}
+
+				if ( _tcschr( L"-", strPhrase.GetAt( nPos - 1 ) ) != NULL )
+				{
+					if ( *pszPtr != ' ' && strPhrase.GetAt( nPos - 2 ) != ' ' )
+					{
+						nPrevWord += nDistance + 1;
+						continue;
+					}
+					else
+					{
+						str += strPhrase.Mid( nPrevWord, nPos - nDistance - nPrevWord );
+					}
+				}
+				else
+				{
+					str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
+				}
+			}
+			nPrevWord = nPos + nDistance;
+		}
+	}
+
+	TCHAR sz = TCHAR( str.Right( 2 ).GetAt( 0 ) );
+	if ( boundary[ 0 ] > sRegular && _tcschr( L" -\"", sz ) != NULL &&
+		 boundary[ 1 ] > sRegular )
+	{
+		// Join two phrases if the previous was a sigle characters word.
+	}
+	else if ( str.Right( 1 ) != ' ' )
+	{
+		if ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' )
+			str.Append( L" " );
+	}
+	str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
+
+	strPhrase = str.TrimLeft().TrimRight( L" -" );
+	return;
 }
 
 void CQuerySearch::AddStringToWordList(LPCTSTR pszString)
