@@ -205,7 +205,8 @@ void CEDClient::Remove()
 	
 	Close();
 	
-	if ( Settings.General.Debug && Settings.General.DebugLog ) theApp.Message( MSG_DEBUG, _T("CEDClient::Remove(): %x"), this );
+	//if ( Settings.General.Debug && Settings.General.DebugLog ) 
+	//	theApp.Message( MSG_DEBUG, _T("CEDClient::Remove(): %x"), this );
 	
 	delete this;
 }

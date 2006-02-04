@@ -1183,8 +1183,8 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 	if ( pSearch == NULL )
 	{
 		// The CQuerySearch class rejected the search, drop the packet
-		pPacket->Debug( _T("BadQuery") );
-		theApp.Message( MSG_DEBUG, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
+		// pPacket->Debug( _T("BadQuery") );
+		// theApp.Message( MSG_DEBUG, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella1.Dropped++;
 		m_nDropCount++;
 		return TRUE; // Stay connected to the remote computer

@@ -138,14 +138,16 @@ void CTransfers::Add(CTransfer* pTransfer)
 	ASSERT( pos == NULL );
 	if ( pos == NULL ) m_pList.AddHead( pTransfer );
 
-	if ( Settings.General.Debug && Settings.General.DebugLog ) theApp.Message( MSG_DEBUG, _T("CTransfers::Add(): %x"), pTransfer );
+	//if ( Settings.General.Debug && Settings.General.DebugLog ) 
+	//	theApp.Message( MSG_DEBUG, _T("CTransfers::Add(): %x"), pTransfer );
 
 	StartThread();
 }
 
 void CTransfers::Remove(CTransfer* pTransfer)
 {
-	if ( Settings.General.Debug && Settings.General.DebugLog ) theApp.Message( MSG_DEBUG, _T("CTransfers::Remove(): %x"), pTransfer );
+	//if ( Settings.General.Debug && Settings.General.DebugLog ) 
+	//	theApp.Message( MSG_DEBUG, _T("CTransfers::Remove(): %x"), pTransfer );
 
 	if ( pTransfer->m_hSocket != INVALID_SOCKET )
 		WSAEventSelect( pTransfer->m_hSocket, m_pWakeup, 0 );
