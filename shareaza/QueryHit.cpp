@@ -205,6 +205,8 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 		{
 			pPacket->Seek( 16 + nXMLSize, CG1Packet::seekEnd );
 			pXML = ReadXML( pPacket, nXMLSize );
+			if ( pXML == NULL && nXMLSize > 1 )
+				theApp.Message( MSG_DEBUG, L"Invalid compressed metadata. Vendor: %s", pVendor->m_sName );
 		}
 		
 		if ( ! nPort || Network.IsFirewalledAddress( &nAddress ) )
