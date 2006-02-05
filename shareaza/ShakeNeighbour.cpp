@@ -799,7 +799,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			strValue = strValue.Mid( nPos + 1 );    // Clip that text and the comma off the start of strValue
 
 			// Add the host to the Gnutella2 host cache, noting it's a DNA hub
-			if ( HostCache.Gnutella2.Add( strHost, 0, _T("DNA") ) ) nCount++;
+			if ( HostCache.Gnutella2.Add( strHost, 0, _T("GDNA") ) ) nCount++;
 		}
 		// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
 		DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
