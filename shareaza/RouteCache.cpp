@@ -200,13 +200,13 @@ CRouteCacheItem* CRouteCacheTable::Find(const Hashes::Guid& oGUID)
 CRouteCacheItem* CRouteCacheTable::Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD nTime)
 {
 	if ( m_nUsed == m_nBuffer || ! m_pFree ) return NULL;
-
+	
+	if ( oGUID == NULL ) // There seem to be packets with oGUID == NULL (on heavy load) -> return NULL
+		return NULL;
+	
 	WORD nGUID = 0;
-	if ( oGUID != NULL ) // There seem to be packets with oGUID == NULL, just leave nGUID set to 0 then
-	{
-		WORD *ppGUID = (WORD*)&oGUID[ 0 ];
-		for ( int nIt = 8 ; nIt ; nIt-- ) nGUID = WORD( nGUID + *ppGUID++ );
-	}
+	WORD *ppGUID = (WORD*)&oGUID[ 0 ];
+	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID = WORD( nGUID + *ppGUID++ );
 
 	CRouteCacheItem** pHash = m_pHash + ( nGUID & HASH_MASK );
 
