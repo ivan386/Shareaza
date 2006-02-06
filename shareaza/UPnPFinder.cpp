@@ -37,6 +37,7 @@ CUPnPFinder::CUPnPFinder()
 	m_pDeviceFinder( CreateFinderInstance() ),
 	m_nAsyncFindHandle( 0 ),
 	m_bAsyncFindRunning( false ),
+	m_bADSL( false ),
 	m_bPortIsFree( true ),
 	m_sLocalIP(),
 	m_sExternalIP(),
@@ -278,14 +279,41 @@ HRESULT CUPnPFinder::SaveServices(com_ptr< IEnumUnknown > pEU, const LONG nTotal
 HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 {
 	CComBSTR bsServiceId;
+	
 	HRESULT hr = service->get_Id( &bsServiceId );
 	if ( FAILED( hr ) )
 		return UPnPMessage( hr );
 
 	CString strServiceId( bsServiceId );
 
-	if ( strServiceId.Find( L"urn:upnp-org:serviceId:WANPPPConn" ) == -1 &&
-		strServiceId.Find( L"urn:upnp-org:serviceId:WANIPConn" ) == -1 )
+	if ( m_bADSL ) // not a very reliable way to detect ADSL, since WANEthLinkC* is optional
+	{
+		if ( theApp.m_bUPnPPortsForwarded ) // another physical device or was run again
+		{
+			// Reset settings and recheck ( is there better solution? )
+			Settings.Connection.SkipWANIPSetup  = FALSE;
+			Settings.Connection.SkipWANPPPSetup = FALSE;
+			m_bADSL = false;
+		}
+		else
+		{
+			theApp.Message( MSG_DEBUG, L"ADSL device detected. Disabling WANIPConn setup..." );
+			Settings.Connection.SkipWANIPSetup  = TRUE;
+			Settings.Connection.SkipWANPPPSetup = FALSE;
+		}
+	}
+	
+	if ( !m_bADSL )
+	{
+		m_bADSL = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANEthLinkC" ) == -1 );
+	}
+
+	bool bPPP = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANPPPConn" ) == -1 );
+	bool bIP  = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANIPConn" ) == -1 );
+
+	if ( Settings.Connection.SkipWANPPPSetup && bPPP ||
+		 Settings.Connection.SkipWANIPSetup && bIP ||
+		 !bPPP && !bIP )
 		return S_OK;
 
 	// For ICS we can query variables, for router devices we need to use

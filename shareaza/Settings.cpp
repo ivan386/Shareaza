@@ -178,6 +178,8 @@ void CSettings::Setup()
 	Add( _T("Connection.SlowConnect"), &Connection.SlowConnect, FALSE );
 	Add( _T("Connection.EnableUPnP"), &Connection.EnableUPnP, TRUE );
 	Add( _T("Connection.DeleteUPnPPorts"), &Connection.DeleteUPnPPorts, TRUE );
+	Add( _T("Connection.SkipWANPPPSetup"), &Connection.SkipWANPPPSetup, FALSE );
+	Add( _T("Connection.SkipWANIPSetup"), &Connection.SkipWANIPSetup, FALSE );
 
 	Add( _T("Bandwidth.Request"), &Bandwidth.Request, 4096 );
 	Add( _T("Bandwidth.HubIn"), &Bandwidth.HubIn, 0 );

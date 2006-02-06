@@ -107,7 +107,9 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Connection.ForceConnectedState, 1, 0, 1 );
 	AddSetting( &Settings.Connection.SlowConnect, 1, 0, 1 );
 	AddSetting( &Settings.Connection.DeleteUPnPPorts, 1, 0, 1 );
-	
+	AddSetting( &Settings.Connection.SkipWANPPPSetup, 1, 0, 1 );
+	AddSetting( &Settings.Connection.SkipWANIPSetup, 1, 0, 1 );
+
 	AddSetting( &Settings.Gnutella.ConnectFactor, 1, 1, 20, _T("x") );
 	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 1000 );
 	AddSetting( &Settings.Gnutella.MaxHits, 1, 0, 4096 );

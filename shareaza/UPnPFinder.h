@@ -100,6 +100,7 @@ private:
 	bool	m_bPortIsFree;
 	CString m_sLocalIP;
 	CString m_sExternalIP;
+	bool	m_bADSL;
 
 	com_ptr< IUPnPDeviceFinderCallback > m_pDeviceFinderCallback;
 	com_ptr< IUPnPServiceCallback >      m_pServiceCallback;
