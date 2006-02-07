@@ -134,9 +134,14 @@ static LPCTSTR GetManifestValue(LPCTSTR manifest, LPCTSTR searchKey) {
 	ptrdiff_t klen, vlen;
 	TCHAR* key;
 	TCHAR* val;
-	TCHAR* info = _wcsdup(manifest);
+	TCHAR* info;
 	TCHAR* ret;
+	TCHAR* start;
+	size_t len = wcslen(manifest);
 
+	info = (TCHAR*)malloc((len+1)*sizeof(TCHAR));
+	memcpy(info, manifest, len);
+	start = info;
 	if ((p = wcsstr(info, L"/>"))!=NULL) {
 		info += 10;
 		*p = '\0';
@@ -177,14 +182,14 @@ static LPCTSTR GetManifestValue(LPCTSTR manifest, LPCTSTR searchKey) {
 				ret = _wcsdup(val);
 				free(key);
 				free(val);
-				//free(info);
+				free(start);
 				return ret;
 			}
 			free(key);
 			free(val);
 		}
 	}
-	//free(info);
+	free(start);
 	return NULL;
 }
 
