@@ -314,6 +314,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.MinServerFileSize"), &eDonkey.MinServerFileSize, 0 );
 	Add( _T("eDonkey.DefaultServerFlags"), &eDonkey.DefaultServerFlags, 0xFFFFFFFF );	
 	Add( _T("eDonkey.Endgame"), &eDonkey.Endgame, TRUE );
+	Add( _T("eDonkey.LargeFileSupport"), &eDonkey.LargeFileSupport, FALSE );
 	
 	Add( _T("BitTorrent.AdvancedInterface"), &BitTorrent.AdvancedInterface, FALSE );
 	Add( _T("BitTorrent.AdvancedInterfaceSet"), &BitTorrent.AdvancedInterfaceSet, FALSE );

@@ -352,6 +352,7 @@ public:
 		BOOL		TagNames;					// Add (Shareaza.com) to user name over ed2k
 		DWORD		DefaultServerFlags;			// Default server flags (for UDP searches)
 		BOOL		Endgame;					// Allow endgame mode when completing downloads. (Download same chunk from multiple sources)
+		BOOL		LargeFileSupport;			// Allow 64 bit file sizes
 	} eDonkey;
 	
 	struct sBitTorrent

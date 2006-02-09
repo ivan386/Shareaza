@@ -188,6 +188,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_S2C_CALLBACKREQUESTED		0x35
 
 // Client - Server, Global (UDP)
+#define ED2K_C2SG_SEARCHREQUEST3		0x90
 #define ED2K_C2SG_SEARCHREQUEST2		0x92
 #define ED2K_C2SG_GETSOURCES2			0x94
 #define ED2K_C2SG_SERVERSTATUSREQUEST	0x96
@@ -246,6 +247,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define	ED2K_SERVER_UDP_GETFILES		0x00000002
 #define	ED2K_SERVER_UDP_UNICODE			0x00000010
 #define	ED2K_SERVER_UDP_GETSOURCES2		0x00000020
+#define	ED2K_SERVER_UDP_64BITSIZE		0x00000080
 
 
 class CEDTag
@@ -371,6 +373,8 @@ public:
 #define ED2K_MESSAGE_MAX			500
 // Max file comment length
 #define ED2K_COMMENT_MAX			250
+// Max file size in 32 bits
+#define MAX_SIZE_32BIT				0xFFFFFFFF
 
 // Client ID
 #define ED2K_COMPATIBLECLIENT_ID	ED2K_CLIENT_ID
