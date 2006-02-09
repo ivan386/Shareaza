@@ -94,6 +94,10 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		return NULL;
 	}
 
+	// Don't connect to self
+	if ( Settings.Connection.IgnoreOwnIP && pAddress->S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) 
+		return NULL;
+
 	// Don't connect to blocked addresses
 	if ( Security.IsDenied( pAddress ) )
 	{
@@ -106,7 +110,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 	}
 
 	// If automatic (do) and the network object knows this IP address is firewalled and can't receive connections, give up
-	if ( bAutomatic && Network.IsFirewalledAddress( &pAddress, TRUE ) ) return NULL;
+	if ( bAutomatic && Network.IsFirewalledAddress( pAddress, TRUE ) ) return NULL;
 
 	// Run network connect (do), and leave if it reports an error
 	if ( !Network.Connect() ) return NULL;
@@ -328,10 +332,10 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 	}
 
 	// The user says we can't have 50 or more connetions to leaves, as a hub, we would need more
-	if ( Settings.Gnutella2.NumLeafs < 50 )
+	if ( Settings.Gnutella2.NumLeafs < 30 )
 	{
 		// If debugging, log the reason we can't be a hub, and return no
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 50x G2 hub to leaf") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 30x G2 hub to leaf") );
 		return FALSE;
 	}
 
