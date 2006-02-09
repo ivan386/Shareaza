@@ -332,10 +332,10 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 	}
 
 	// The user says we can't have 50 or more connetions to leaves, as a hub, we would need more
-	if ( Settings.Gnutella2.NumLeafs < 30 )
+	if ( Settings.Gnutella2.NumLeafs < 50 )
 	{
 		// If debugging, log the reason we can't be a hub, and return no
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 30x G2 hub to leaf") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 50x G2 hub to leaf") );
 		return FALSE;
 	}
 
