@@ -1433,7 +1433,11 @@ void CQuerySearch::Serialize(CArchive& ar)
 
 CSearchWnd* CQuerySearch::OpenWindow(auto_ptr< CQuerySearch > pSearch)
 {
-	if ( pSearch.get() && pSearch->CheckValid() )
+	if ( !pSearch.get() ) 
+		return NULL;
+
+	pSearch->BuildWordList( false );
+	if ( pSearch->CheckValid( false ) )
 	{
 		return new CSearchWnd( pSearch );
 	}
