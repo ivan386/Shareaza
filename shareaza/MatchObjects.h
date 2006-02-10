@@ -178,7 +178,7 @@ public:
 	
 	inline DWORD GetFilteredCount() const
 	{
-		if ( m_pList->m_bFilterLocal && m_bExisting ) return 0;
+		if ( m_pList->m_bFilterLocal && m_bExisting == 1 ) return 0;
 		if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
 		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
@@ -189,7 +189,7 @@ public:
 	
 	inline DWORD GetItemCount() const
 	{
-		if ( m_pList->m_bFilterLocal && m_bExisting )return 0;
+		if ( m_pList->m_bFilterLocal && m_bExisting == 1 )return 0;
 			if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
 		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 		if ( m_nSources < m_pList->m_nFilterSources ) return 0;

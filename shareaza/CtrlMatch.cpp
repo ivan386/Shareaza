@@ -708,6 +708,10 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	{
 		crText = pHit ? RGB( 0, 64, 0 ) : RGB( 0, 127, 0 );
 	}
+	else if ( pFile->m_bExisting == 2 )
+	{
+		crText = RGB( 200, 90, 0 );
+	}
 	else if ( pFile->m_bDownload || ( pHit && pHit->m_bDownload ) )
 	{
 		crText = pHit ? RGB( 0, 0, 100 ) : RGB( 0, 0, 160 );
@@ -718,10 +722,10 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		crBack = CoolInterface.m_crBackSel;
 	}
 	else if ( ( pHit && ( pHit->m_bBogus || pHit->m_sURL.IsEmpty() || ! pHit->m_bMatched ) ) ||
-				pFile->m_bExisting == 2 || ( ! pHit && ! pFile->m_bOneValid ) ||
+			  ( ! pHit && ! pFile->m_bOneValid ) ||
 			  ( pHit && pHit->m_bPush == TS_TRUE && Network.IsStable() == FALSE ) )
 	{
-		crText = GetSysColor( COLOR_3DSHADOW );
+		crText = pFile->m_bExisting == 2 ? RGB( 150, 90, 0 ) : GetSysColor( COLOR_3DSHADOW );
 		bGrayed = TRUE;
 	}
 	

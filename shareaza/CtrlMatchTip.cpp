@@ -404,7 +404,7 @@ void CMatchTipCtrl::LoadFromFile()
 				LoadString( m_sStatus, IDS_TIP_EXISTS_DELETED );
 				m_crStatus = RGB( 255, 0, 0 );
 
-				if ( pExisting->m_sComments.GetLength() )
+				if ( pExisting->m_sComments.GetLength() && pExisting->m_nRating == 1 )
 				{
 					LoadString( m_sStatus, IDS_TIP_EXISTS_BLACKLISTED );
 					m_sStatus += pExisting->m_sComments;
@@ -539,7 +539,7 @@ void CMatchTipCtrl::LoadFromHit()
 
 	m_sStatus.Empty();
 
-	if ( m_pFile->m_bExisting )
+	if ( m_pFile->m_bExisting == 1 )
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_LIBRARY );
 		m_crStatus = RGB( 0, 128, 0 );
@@ -552,6 +552,13 @@ void CMatchTipCtrl::LoadFromHit()
 	else if ( m_pHit->m_bBogus )
 	{
 		LoadString( m_sStatus, IDS_TIP_BOGUS );
+		m_crStatus = RGB( 255, 0, 0 );
+	}
+	else if ( m_pHit->m_sComments.GetLength() )
+	{
+		if ( m_pHit->m_nRating == 1 ) 
+			LoadString( m_sStatus, IDS_TIP_EXISTS_BLACKLISTED );
+		m_sStatus += m_pHit->m_sComments;
 		m_crStatus = RGB( 255, 0, 0 );
 	}
 

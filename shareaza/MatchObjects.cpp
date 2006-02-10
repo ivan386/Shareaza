@@ -1,8 +1,8 @@
 //
 // MatchObjects.cpp
 //
-//	Date:			"$Date: 2006/02/04 01:19:02 $"
-//	Revision:		"$Revision: 1.24 $"
+//	Date:			"$Date: 2006/02/10 00:57:21 $"
+//	Revision:		"$Revision: 1.25 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1364,7 +1364,7 @@ DWORD CMatchFile::Filter()
 	}
 
 	if ( m_pBest == NULL ) return 0;	// If we filtered all hits, don't try to display
-	if ( m_pList->m_bFilterLocal && m_bExisting ) return 0;
+	if ( m_pList->m_bFilterLocal && m_bExisting == 1 ) return 0;
 	if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
 	if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 
