@@ -1221,7 +1221,9 @@ void CQuerySearch::BuildWordList(bool bExpression)
 // ToDo: "minus" words and quoted phrases for asian languages may not work correctly in all cases.
 void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 {
-	CString str;
+	if ( strPhrase.IsEmpty() ) return;
+
+	CString str( L" " );
 	LPCTSTR pszPtr = strPhrase;
 	ScriptType boundary[ 2 ] = { sNone, sNone };
     int nPos = 0;
