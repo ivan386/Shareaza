@@ -665,7 +665,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			m_nState = nrsRejected;
 			// Ban them and ignore anything else in the headers
 			theApp.Message( MSG_ERROR, _T("Banning hostile client %s"), (LPCTSTR)m_sUserAgent );
-			Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
+			Security.Ban( &m_pHost.sin_addr, banSession, FALSE );
 			m_bBadClient = TRUE;
 			return TRUE;
 		}
@@ -1603,6 +1603,9 @@ BOOL CShakeNeighbour::IsClientBanned()
 {
 	// No user agent- assume OK
 	if ( m_sUserAgent.IsEmpty() ) return FALSE;
+
+	// i2hub - leecher client. (Tested, does not upload)
+	if ( _tcsistr( m_sUserAgent, _T("i2hub 2.0") ) )	return TRUE;
 
 	// Unknown- Assume OK
 	return FALSE;
