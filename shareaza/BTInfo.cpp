@@ -366,7 +366,7 @@ BOOL CBTInfo::LoadTorrentFile(LPCTSTR pszFile)
 	{
 		DWORD nLength = (DWORD)pFile.GetLength();
 		
-		if ( nLength < 20 * 1024 * 1024 )
+		if ( nLength < 20 * 1024 * 1024 && nLength != 0 )
 		{
 			m_pSource.Clear();
 			m_pSource.EnsureBuffer( nLength );
