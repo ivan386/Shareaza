@@ -231,7 +231,6 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 		
 		CheckBogus( pFirstHit );
 		}
-	}
 	catch ( CException* pException )
 	{
 		pException->Delete();
