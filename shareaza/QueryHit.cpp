@@ -230,7 +230,7 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 		}
 		
 		CheckBogus( pFirstHit );
-		}
+	}
 	catch ( CException* pException )
 	{
 		pException->Delete();
@@ -280,7 +280,9 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 		BOOL bCompound;
 		CHAR szType[9];
 		DWORD nLength;
-		
+		bool bSpam = false;
+		DWORD nPrevHubAddress = 0;
+
 		while ( pPacket->ReadPacket( szType, nLength, &bCompound ) )
 		{
 			DWORD nSkip = pPacket->m_nPosition + nLength;
@@ -345,6 +347,13 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				pHub.sin_addr.S_un.S_addr	= pPacket->ReadLongLE();
 				pHub.sin_port				= htons( pPacket->ReadShortBE() );
 				
+				// ToDo: We should check if ALL hubs are unique
+				if ( nPrevHubAddress == pHub.sin_addr.S_un.S_addr )
+				{
+					bSpam = true;
+				}
+				nPrevHubAddress = pHub.sin_addr.S_un.S_addr;
+
 				oIncrID[15]++;
 				oIncrID.validate();
 				Network.NodeRoute->Add( oIncrID, &pHub );
@@ -384,13 +393,19 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			{
 				CHAR szInner[9];
 				DWORD nInner;
-				
+				DWORD ip;
+
 				while ( pPacket->m_nPosition < nSkip && pPacket->ReadPacket( szInner, nInner ) )
 				{
 					DWORD nSkipInner = pPacket->m_nPosition + nInner;
 					if ( strcmp( szInner, "NICK" ) == 0 )
 					{
 						strNick = pPacket->ReadString( nInner );
+						USES_CONVERSION;
+						LPCSTR pszIP = CT2CA( (LPCTSTR)strNick );
+						ip = inet_addr( pszIP );
+						if ( ip != INADDR_NONE && nAddress != ip )
+							bSpam = true;
 					}
 					pPacket->m_nPosition = nSkipInner;
 				}
@@ -481,7 +496,15 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			if ( pXML ) pLastHit->ParseXML( pXML, nIndex );
 		}
 		
-		CheckBogus( pFirstHit );
+		if ( bSpam == true && pFirstHit )
+		{
+			for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
+			{
+				pHit->m_bBogus = TRUE;
+			}			
+		}
+		else
+			CheckBogus( pFirstHit );
 	}
 	catch ( CException* pException )
 	{
@@ -565,7 +588,7 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD
 	// Enable chat for ed2k hits
 	//pFirstHit->m_bChat = TRUE;
 	
-	// CheckBogus( pFirstHit );
+	CheckBogus( pFirstHit );
 	
 	return pFirstHit;
 }
@@ -575,7 +598,6 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD
 
 BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 {
-	CString strBase, strTest;
 	int nBogus = 0;
 	
 	if ( pFirstHit == NULL ) return TRUE;
