@@ -230,6 +230,7 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 		}
 		
 		CheckBogus( pFirstHit );
+		}
 	}
 	catch ( CException* pException )
 	{
@@ -579,63 +580,16 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 	int nBogus = 0;
 	
 	if ( pFirstHit == NULL ) return TRUE;
-	
+
 	for ( CQueryHit* pHit = pFirstHit->m_pNext ; pHit ; pHit = pHit->m_pNext )
 	{
-		LPCTSTR pszBase = pFirstHit->m_sName;
-		LPCTSTR pszTest = pHit->m_sName;
-		
-		if ( *pszBase == 0 || *pszTest == 0 ) continue;
-		
-		BOOL bDots = FALSE;
-		BOOL bDiff = FALSE;
-		
-		while ( TRUE )
-		{
-			while ( *pszBase && ( *pszBase == '!' || *pszBase == '@' || ! _istgraph( *pszBase ) ) ) pszBase++;
-			while ( *pszTest && ( *pszTest == '!' || *pszTest == '@' || ! _istgraph( *pszTest ) ) ) pszTest++;
-			
-			if ( ! *pszBase || ! *pszTest ) break;
-			
-			if ( *pszBase == '.' || *pszTest == '.' )
-			{
-				bDots = TRUE;
-				
-				if ( *pszBase == '.' && *pszTest == '.' )
-				{
-					if ( bDiff )
-					{
-						bDiff = FALSE;
-						break;
-					}
-				}
-				else
-				{
-					bDiff = FALSE;
-					break;
-				}
-			}
-			
-			if ( !bDiff )
-			{
-				// replace the last greek sigma with an ordinary
-				const TCHAR cBaseChar = ToLower( *pszBase == 0x3c2 ? 0x3c3 : *pszBase );
-				const TCHAR cTestChar = ToLower( *pszTest == 0x3c2 ? 0x3c3 : *pszTest );
-
-				if ( cBaseChar != cTestChar ) bDiff = TRUE;
-			}
-			
-			pszBase++;
-			pszTest++;
-		}
-		
-		if ( bDots && bDiff )
-		{
-			if ( ++nBogus >= 2 ) break;
-		}
+		if ( validAndEqual( pFirstHit->m_oSHA1, pHit->m_oSHA1 ) )
+			nBogus++;
+		if ( validAndEqual( pFirstHit->m_oED2K, pHit->m_oED2K ) )
+			nBogus++;
 	}
 	
-	if ( nBogus < 2 ) return FALSE;
+	if ( nBogus < 3 ) return FALSE;
 	
 	for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
 	{
@@ -1383,7 +1337,8 @@ BOOL CQueryHit::ParseXML(CXMLElement* pMetaData, DWORD nRealIndex)
 				
 				if ( m_sSchemaPlural.GetLength() > 0 && m_sSchemaURI.GetLength() > 0 )
 				{
-					if ( m_pXML ) delete m_pXML;
+					if ( m_pXML )
+						delete m_pXML;
 					m_pXML = pHit->Detach();
 					pIndex->Delete();
 				}
