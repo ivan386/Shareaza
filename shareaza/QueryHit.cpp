@@ -798,7 +798,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		else break;
 	}
 	if ( !m_oSHA1 && !m_oTiger && !m_oED2K )
-		m_bBogus = TRUE;
+		AfxThrowUserException();
 }
 
 //////////////////////////////////////////////////////////////////////
