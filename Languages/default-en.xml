@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.2.9"
+		version="2.2.2.11"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -469,9 +469,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
@@ -560,9 +560,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
@@ -645,9 +645,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
@@ -2696,7 +2696,6 @@
 	<string id="16146" value="Handshake with %s failed due to invalid data on the wire."/>
 	<string id="16147" value="Closing surplus connection from %s with host hint (%s port %i)."/>
 	<string id="16148" value="Connection to %s rejected (%s)."/>
-	<string id="16149" value="Gnutella 0.6 handshake with %s failed, retrying with 0.4."/>
 	<string id="16150" value="Closing surplus connection from %s."/>
 	<string id="16151" value="Refusing connection from %s because this is a shielded leaf node."/>
 	<string id="16152" value="Hub neighbour %s won't accept us as a hub, closing connection."/>
