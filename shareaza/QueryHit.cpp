@@ -610,7 +610,7 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 			nBogus++;
 	}
 	
-	if ( nBogus < 3 ) return FALSE;
+	if ( nBogus < 2 ) return FALSE;
 	
 	for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
 	{
@@ -797,6 +797,8 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		if ( pszSep ) pszData = pszSep + 1;
 		else break;
 	}
+	if ( !m_oSHA1 && !m_oTiger && !m_oED2K)
+		m_bBogus = TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
