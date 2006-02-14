@@ -797,7 +797,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		if ( pszSep ) pszData = pszSep + 1;
 		else break;
 	}
-	if ( !m_oSHA1 && !m_oTiger && !m_oED2K)
+	if ( !m_oSHA1 && !m_oTiger && !m_oED2K )
 		m_bBogus = TRUE;
 }
 
