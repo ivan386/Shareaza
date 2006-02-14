@@ -3232,8 +3232,8 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="メディアプレーヤー">
-		<control caption="メディアサービス(_M):"/>
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="メディアプレーヤー">
+		<control caption="オプション(_O):"/>
 		<control/>
 		<control caption="下のﾘｽﾄ内のﾌｧｲﾙﾀｲﾌﾟの再生にShareazaﾒﾃﾞｨｱﾌﾟﾚｰﾔｰを使用"/>
 		<control caption="下のﾘｽﾄ内のﾌｧｲﾙﾀｲﾌﾟのShareazaﾒﾃﾞｨｱﾌﾟﾚｰﾔｰ再生ﾘｽﾄへの追加を許可"/>
@@ -3243,6 +3243,9 @@
 		<control caption="削除(_R)"/>
 		<control caption="オーディオ視覚プラグイン(_V):"/>
 		<control caption="プラグインを選択(_S)..."/>
+		<control caption="メディア･ハンドラー(_M)"/>
+		<control caption="メディア･プレーヤーの選択:"/>
+		<control caption="注意:外部のメディアプレーヤーを選択すると内臓のShareazaﾒﾃﾞｨｱﾌﾟﾚｰﾔｰ、オーディオ視覚プラグインは共に自動的に無効になります。"/>
 		<control/>
 	</dialog>
 
@@ -3275,7 +3278,7 @@
 
 	<dialog name="CInternetSettingsGroup" caption="インターネット"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="接続">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="接続">
 		<control caption="入力アドレス(_I):"/>
 		<control caption="アドレス:"/>
 		<control caption="自動"/>
@@ -3287,13 +3290,14 @@
 		<control caption="強制的にこのアドレスに割当"/>
 		<control caption="出力アドレス(_O):"/>
 		<control caption="アドレス:"/>
-		<control caption="自動"/>
+		<control/>
 		<control caption="速度:"/>
 		<control/>
 		<control caption="オプション(_P):"/>
 		<control caption="入力接続を受け付ける"/>
 		<control/>
 		<control caption="プライベート/ローカルIPアドレスを無視"/>
+		<control caption="UPnPを有効にする"/>
 		<control caption="タイムアウト(_T):"/>
 		<control caption="接続:"/>
 		<control/><control/>
