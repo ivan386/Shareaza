@@ -135,6 +135,9 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 		DWORD	nAddress	= pPacket->ReadLongLE();
 		DWORD	nSpeed		= pPacket->ReadLongLE();
 		
+		if ( Network.IsReserved( (IN_ADDR*)&nAddress ) )
+			AfxThrowUserException();
+
 		if ( ! nCount ) AfxThrowUserException();
 		
 		while ( nCount-- )
@@ -299,7 +302,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			
 			if ( strcmp( szType, "H" ) == 0 && bCompound )
 			{
-				CQueryHit* pHit = new CQueryHit( PROTOCOL_G2);
+				CQueryHit* pHit = new CQueryHit( PROTOCOL_G2 );
 				
 				if ( pFirstHit ) pLastHit->m_pNext = pHit;
 				else pFirstHit = pHit;
@@ -366,6 +369,8 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			else if ( ( strcmp( szType, "NA" ) == 0 || strcmp( szType, "NI" ) == 0 ) && nLength >= 6 )
 			{
 				nAddress	= pPacket->ReadLongLE();
+				if ( Network.IsReserved( (IN_ADDR*)&nAddress ) )
+					AfxThrowUserException();
 				nPort		= pPacket->ReadShortBE();
 			}
 			else if ( strcmp( szType, "V" ) == 0 && nLength >= 4 )
@@ -606,7 +611,7 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 	{
 		if ( validAndEqual( pFirstHit->m_oSHA1, pHit->m_oSHA1 ) )
 			nBogus++;
-		if ( validAndEqual( pFirstHit->m_oED2K, pHit->m_oED2K ) )
+		else if ( validAndEqual( pFirstHit->m_oED2K, pHit->m_oED2K ) )
 			nBogus++;
 	}
 	
@@ -1233,6 +1238,8 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 {
 	DWORD nAddress = m_pAddress.S_un.S_addr = pPacket->ReadLongLE();
+	if ( Network.IsReserved( (IN_ADDR*)&nAddress ) )
+		nAddress = 0;
 	m_nPort = pPacket->ReadShortLE();
 	
 	Hashes::Guid::iterator i = m_oClientID.begin();

@@ -460,6 +460,88 @@ BOOL CNetwork::AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol
 	}
 }
 
+// Returns TRUE if the IP address is reserved.
+// Private addresses are treated as reserved when Connection.IgnoreLocalIP = TRUE.
+// The code is based on nmap code and updated according to
+// http://www.cymru.com/Documents/bogon-bn-nonagg.txt
+// and http://www.iana.org/assignments/ipv4-address-space
+
+BOOL CNetwork::IsReserved(IN_ADDR* pAddress)
+{
+	char *ip = (char*)&(pAddress->s_addr);
+	unsigned char i1 = ip[ 0 ], i2 = ip[ 1 ], i3 = ip[ 2 ], i4 = ip[ 3 ];
+
+	switch ( i1 )
+	{
+		case 0:         // 000/8 is IANA reserved
+		case 1:         // 001/8 is IANA reserved       
+		case 2:         // 002/8 is IANA reserved       
+		case 5:         // 005/8 is IANA reserved       
+		case 6:         // USA Army ISC                 
+		case 7:         // used for BGP protocol        
+		case 23:        // 023/8 is IANA reserved       
+		case 27:        // 027/8 is IANA reserved       
+		case 31:        // 031/8 is IANA reserved       
+		case 36:        // 036/8 is IANA reserved       
+		case 37:        // 037/8 is IANA reserved       
+		case 39:        // 039/8 is IANA reserved       
+		case 42:        // 042/8 is IANA reserved       
+		case 49:        // 049/8 is IANA reserved       
+		case 50:        // 050/8 is IANA reserved       
+		case 55:        // misc. USA Armed forces    
+		case 127:       // 127/8 is reserved for loopback 
+		case 197:       // 197/8 is IANA reserved       
+		case 223:       // 223/8 is IANA reserved       
+			return TRUE;
+		case 10:        // Private addresses
+			return Settings.Connection.IgnoreLocalIP;
+		default:
+			break;
+	}
+
+	// 077-079/8 is IANA reserved 
+	if ( i1 >= 77 && i1 <= 79 ) return TRUE;
+
+	// 092-123/8 is IANA reserved 
+	if ( i1 >= 92 && i1 <= 120 ) return TRUE;
+
+	// 172.16.0.0/12 is reserved for private nets by RFC1819 
+	if ( i1 == 172 && i2 >= 16 && i2 <= 31 ) 
+		return Settings.Connection.IgnoreLocalIP;
+
+	// 173-187/8 is IANA reserved 
+	if ( i1 >= 173 && i1 <= 187 ) return TRUE;
+
+	// 192.168.0.0/16 is reserved for private nets by RFC1819 
+	// 192.0.2.0/24 is reserved for documentation and examples 
+	// 192.88.99.0/24 is used as 6to4 Relay anycast prefix by RFC3068 
+	if ( i1 == 192 )
+	{
+		if ( i2 == 168 ) return Settings.Connection.IgnoreLocalIP;
+		if ( i2 == 0 && i3 == 2 ) return TRUE;
+		if ( i2 == 88 && i3 == 99 ) return TRUE;
+	}
+
+	// 198.18.0.0/15 is used for benchmark tests by RFC2544 
+	if ( i1 == 198 && i2 == 18 && i3 >= 1 && i3 <= 64 ) return TRUE;
+
+	// reserved for DHCP clients seeking addresses, not routable outside LAN 
+	if ( i1 == 169 && i2 == 254 ) return TRUE;
+
+	// 204.152.64.0/23 is some Sun proprietary clustering thing 
+	if ( i1 == 204 && i2 == 152 && ( i3 == 64 || i3 == 65 ) )
+		return TRUE;
+
+	// 224-239/8 is all multicast stuff 
+	// 240-255/8 is IANA reserved 
+	if ( i1 >= 224 ) return TRUE;
+
+	// 255.255.255.255, we already tested for i1 
+	if ( i2 == 255 && i3 == 255 && i4 == 255 ) return TRUE;
+
+	return FALSE;
+}
+
 WORD CNetwork::RandomPort() const
 {
 	return WORD( 10000 + ( rand() % 50000 ) );
