@@ -954,46 +954,37 @@ HRESULT CServiceCallback::ServiceInstanceDied(IUPnPService* pService)
 ////////////////////////////////////////////////////////////////////////////////
 // Prints the appropriate UPnP error text
 
-struct UPNPTranslationRecord
-{
-	HRESULT id;
-	const char* msg;
-};
-static const UPNPTranslationRecord upnpTranslations[] =
-{
-	{ UPNP_E_ROOT_ELEMENT_EXPECTED,     "Root Element Expected" },
-	{ UPNP_E_DEVICE_ELEMENT_EXPECTED,   "Device Element Expected" },
-	{ UPNP_E_SERVICE_ELEMENT_EXPECTED,  "Service Element Expected" },
-	{ UPNP_E_SERVICE_NODE_INCOMPLETE,   "Service Node Incomplete" },
-	{ UPNP_E_DEVICE_NODE_INCOMPLETE,    "Device Node Incomplete" },
-	{ UPNP_E_ICON_ELEMENT_EXPECTED,     "Icon Element Expected" },
-	{ UPNP_E_ICON_NODE_INCOMPLETE,      "Icon Node Incomplete" },
-	{ UPNP_E_INVALID_ACTION,            "Invalid Action" },
-	{ UPNP_E_INVALID_ARGUMENTS,         "Invalid Arguments" },
-	{ UPNP_E_OUT_OF_SYNC,               "Out of Sync" },
-	{ UPNP_E_ACTION_REQUEST_FAILED,     "Action Request Failed" },
-	{ UPNP_E_TRANSPORT_ERROR,           "Transport Error" },
-	{ UPNP_E_VARIABLE_VALUE_UNKNOWN,    "Variable Value Unknown" },
-	{ UPNP_E_INVALID_VARIABLE,          "Invalid Variable" },
-	{ UPNP_E_DEVICE_ERROR,              "Device Error" },
-	{ UPNP_E_PROTOCOL_ERROR,            "Protocol Error" },
-	{ UPNP_E_ERROR_PROCESSING_RESPONSE, "Error Processing Response" },
-	{ UPNP_E_DEVICE_TIMEOUT,            "Device Timeout" },
-	{ UPNP_E_INVALID_DOCUMENT,          "Invalid Document" },
-	{ UPNP_E_EVENT_SUBSCRIPTION_FAILED, "Event Subscription Failed" },
-	{ E_FAIL,                           "Generic failure" },
-	{ 0,								"" }
-};
-
 CString translateUPnPResult(HRESULT hr)
 {
-	static const size_t records = sizeof upnpTranslations / sizeof upnpTranslations[ 0 ];
+	static std::map<HRESULT, std::string> messages;
 
 	if ( hr >= UPNP_E_ACTION_SPECIFIC_BASE && hr <= UPNP_E_ACTION_SPECIFIC_MAX )
 		return "Action Specific Error";
 
-	return std::find_if( upnpTranslations, upnpTranslations + records - 1,
-		boost::lambda::bind( &UPNPTranslationRecord::id, boost::lambda::_1 ) == hr )->msg;
+	messages[ 0 ] = "";
+	messages[ UPNP_E_ROOT_ELEMENT_EXPECTED ] =      "Root Element Expected";
+	messages[ UPNP_E_DEVICE_ELEMENT_EXPECTED ] =    "Device Element Expected";
+	messages[ UPNP_E_SERVICE_ELEMENT_EXPECTED ] =   "Service Element Expected";
+	messages[ UPNP_E_SERVICE_NODE_INCOMPLETE ] =    "Service Node Incomplete";
+	messages[ UPNP_E_DEVICE_NODE_INCOMPLETE ] =     "Device Node Incomplete";
+	messages[ UPNP_E_ICON_ELEMENT_EXPECTED ] =      "Icon Element Expected";
+	messages[ UPNP_E_ICON_NODE_INCOMPLETE ] =       "Icon Node Incomplete";
+	messages[ UPNP_E_INVALID_ACTION ] =             "Invalid Action";
+	messages[ UPNP_E_INVALID_ARGUMENTS ] =          "Invalid Arguments";
+	messages[ UPNP_E_OUT_OF_SYNC ] =                "Out of Sync";
+	messages[ UPNP_E_ACTION_REQUEST_FAILED ] =      "Action Request Failed";
+	messages[ UPNP_E_TRANSPORT_ERROR ] =            "Transport Error";
+	messages[ UPNP_E_VARIABLE_VALUE_UNKNOWN ] =     "Variable Value Unknown";
+	messages[ UPNP_E_INVALID_VARIABLE ] =           "Invalid Variable";
+	messages[ UPNP_E_DEVICE_ERROR ] =               "Device Error";
+	messages[ UPNP_E_PROTOCOL_ERROR ] =             "Protocol Error";
+	messages[ UPNP_E_ERROR_PROCESSING_RESPONSE ] =  "Error Processing Response";
+	messages[ UPNP_E_DEVICE_TIMEOUT ] =             "Device Timeout";
+	messages[ UPNP_E_INVALID_DOCUMENT ] =           "Invalid Document";
+	messages[ UPNP_E_EVENT_SUBSCRIPTION_FAILED ] =  "Event Subscription Failed";
+	messages[ E_FAIL ] =                            "Generic failure";
+
+	return messages[ hr ].c_str();
 }
 
 HRESULT UPnPMessage(HRESULT hr)
