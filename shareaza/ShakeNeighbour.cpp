@@ -484,8 +484,11 @@ void CShakeNeighbour::SendHostHeaders(LPCTSTR pszMessage)
 	}
 
 	// Compose text with IP address and online time information to help the remote computer find hosts
-	
-	if ( m_bG2Accept || m_bG2Send || m_bShareaza )
+	if ( m_bBadClient )
+	{
+		// Send nothing
+	}
+	else if ( m_bG2Accept || m_bG2Send || m_bShareaza )
 	{
 		// The remote computer accepts Gnutella2 packets, sends them, or is Shareaza too
 
@@ -515,12 +518,15 @@ void CShakeNeighbour::SendHostHeaders(LPCTSTR pszMessage)
 	}
 	else
 	{
+		// This computer is running Gnutella
+
 		int nCount = Settings.Gnutella1.PongCount;		// Set max length of list
 
 		// Loop through the Gnutella host cache from newest to oldest
 		for ( pHost = HostCache.Gnutella1.GetNewest() ; pHost && nCount > 0 ; pHost = pHost->m_pPrevTime )
 		{
-			if ( pHost->CanQuote( nTime ) )		// if host is still recent enough
+			// This host is still recent enough to tell another computer about
+			if ( pHost->CanQuote( nTime ) )
 			{
 				// Add it to the string
 				strHost = pHost->ToString();						// Like "24.98.97.155:6348 2004-12-18T23:47Z"
@@ -1550,6 +1556,7 @@ BOOL CShakeNeighbour::IsClientObsolete()
 // CShakeNeighbour IsClientBad
 
 // Checks the user agent to see if it's a GPL breaker, or other trouble-maker
+// We don't ban them, but also don't offer leaf slots to them.
 BOOL CShakeNeighbour::IsClientBad()
 {
 	// No user agent- assume OK
@@ -1599,6 +1606,7 @@ BOOL CShakeNeighbour::IsClientBad()
 // CShakeNeighbour IsClientBanned
 
 // Checks the user agent to see if it's a leecher client, or other banned client
+// Test new releases, and remove block if/when they are fixed.
 BOOL CShakeNeighbour::IsClientBanned()
 {
 	// No user agent- assume OK
