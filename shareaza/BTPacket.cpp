@@ -79,12 +79,13 @@ CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 			return NULL;
 
 		DWORD nLength = transformFromBE( pBuffer->ReadDWORD() );
-		if ( nLength == 0 || pBuffer->m_nLength - 4 < nLength )
+		pBuffer->Remove( sizeof( DWORD ) );
+
+		if ( pBuffer->m_nLength < nLength )
 			return NULL;
 
-		pBuffer->Remove( 4 );
 		if ( nLength == 0 )
-			continue;
+			return CBTPacket::New( BT_PACKET_KEEPALIVE );
 
 		CBTPacket* pPacket = CBTPacket::New( pBuffer->m_pBuffer[0] );
 		pPacket->Write( pBuffer->m_pBuffer + 1, nLength - 1 );
