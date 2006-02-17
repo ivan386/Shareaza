@@ -49,7 +49,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CExistingFileDlg dialog
 
-CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent) : CSkinDialog( CExistingFileDlg::IDD, pParent )
+CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent, bool bDuplicateSearch) : CSkinDialog( CExistingFileDlg::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CExistingFileDlg)
 	m_sName = _T("");
@@ -59,22 +59,30 @@ CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent) : CSkinDi
 
 	m_sName = pFile->m_sName;
 	
-	if ( pFile->m_oSHA1 && pFile->m_oTiger )
+	if ( !bDuplicateSearch )
 	{
-		m_sURN	= _T("bitprint:") + pFile->m_oSHA1.toString()
-            + '.' + pFile->m_oTiger.toString();
-	}
-	else if ( pFile->m_oSHA1 )
-	{
-		m_sURN = pFile->m_oSHA1.toString();
-	}
-	else if ( pFile->m_oTiger )
-	{
-		m_sURN = pFile->m_oTiger.toUrn();
-	}
+		if ( pFile->m_oSHA1 && pFile->m_oTiger )
+		{
+			m_sURN	= _T("bitprint:") + pFile->m_oSHA1.toString()
+				+ '.' + pFile->m_oTiger.toString();
+		}
+		else if ( pFile->m_oSHA1 )
+		{
+			m_sURN = pFile->m_oSHA1.toString();
+		}
+		else if ( pFile->m_oTiger )
+		{
+			m_sURN = pFile->m_oTiger.toUrn();
+		}
 
-	m_bAvailable	= pFile->IsAvailable();
-	m_sComments		= pFile->m_sComments;
+		m_sComments		= pFile->m_sComments;
+		m_bAvailable	= pFile->IsAvailable();
+	}
+	else if ( pFile->m_oED2K )
+	{
+		m_sURN = pFile->m_oED2K.toUrn();
+		m_bAvailable	= 2;
+	}
 }
 
 void CExistingFileDlg::DoDataExchange(CDataExchange* pDX)
@@ -90,7 +98,10 @@ void CExistingFileDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FILE_COMMENTS, m_wndComments);
 	DDX_Control(pDX, IDC_MESSAGE_AVAILABLE, m_wndMessageAvailable);
 	DDX_Control(pDX, IDC_MESSAGE_DELETED, m_wndMessageDeleted);
+	DDX_Control(pDX, IDC_MESSAGE_DUPLICATES, m_wndMessageDuplicates);
 	DDX_Control(pDX, IDC_ACTION_0, m_wndLocate);
+	DDX_Control(pDX, IDC_ACTION_1, m_wndDownload);
+	DDX_Control(pDX, IDC_ACTION_2, m_wndDontDownload);
 	DDX_Text(pDX, IDC_FILE_COMMENTS, m_sComments);
 }
 
@@ -103,12 +114,19 @@ BOOL CExistingFileDlg::OnInitDialog()
 
 	SkinMe( NULL, IDR_DOWNLOADSFRAME );
 
-	if ( ! m_bAvailable ) m_nAction = 1;
+	if ( m_bAvailable == 0 ) 
+		m_nAction = 1;
+	else if ( m_bAvailable == 2 )
+		m_nAction = 0;
+
 	UpdateData( FALSE );
 
 	m_wndComments.ShowWindow( m_sComments.GetLength() > 0 ? SW_SHOW : SW_HIDE );
-	m_wndMessageAvailable.ShowWindow( m_bAvailable ? SW_SHOW : SW_HIDE );
-	m_wndMessageDeleted.ShowWindow( m_bAvailable ? SW_HIDE : SW_SHOW );
+	m_wndMessageAvailable.ShowWindow( m_bAvailable == 1 ? SW_SHOW : SW_HIDE );
+	m_wndMessageDeleted.ShowWindow( m_bAvailable > 0 ? SW_HIDE : SW_SHOW );
+	m_wndMessageDuplicates.ShowWindow( m_bAvailable == 2 ? SW_SHOW : SW_HIDE );
+	m_wndDownload.ShowWindow( m_bAvailable == 2 ? SW_HIDE : SW_SHOW );
+	m_wndDontDownload.ShowWindow( m_bAvailable == 2 ? SW_HIDE : SW_SHOW );
 	m_wndLocate.EnableWindow( m_bAvailable );
 
 	return TRUE;
@@ -121,6 +139,8 @@ HBRUSH CExistingFileDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	if ( pWnd == &m_wndName || pWnd == &m_wndMessageAvailable || pWnd == &m_wndMessageDeleted )
 		pDC->SelectObject( &theApp.m_gdiFontBold );
 	if ( pWnd == &m_wndComments && ! m_bAvailable )
+		pDC->SetTextColor( RGB( 255, 0, 0 ) );
+	if ( pWnd == &m_wndMessageDuplicates )
 		pDC->SetTextColor( RGB( 255, 0, 0 ) );
 
 	return hbr;

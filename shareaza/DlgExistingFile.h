@@ -33,7 +33,7 @@ class CExistingFileDlg : public CSkinDialog
 {
 // Construction
 public:
-	CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent = NULL);
+	CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent = NULL, bool bDuplicateSearch = false);
 	DECLARE_DYNAMIC(CExistingFileDlg)
 
 // Dialog Data
@@ -48,10 +48,13 @@ public:
 	CStatic m_wndComments;
 	CStatic m_wndMessageAvailable;
 	CStatic m_wndMessageDeleted;
+	CStatic m_wndMessageDuplicates;
 	CButton m_wndLocate;
+	CButton m_wndDownload;
+	CButton m_wndDontDownload;
 	CString m_sComments;
 	//}}AFX_DATA
-	BOOL	m_bAvailable;
+	TRISTATE m_bAvailable;
 
 // Overrides
 public:

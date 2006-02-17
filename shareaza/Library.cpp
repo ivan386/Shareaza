@@ -32,6 +32,8 @@
 #include "SharedFolder.h"
 #include "SharedFile.h"
 #include "AlbumFolder.h"
+#include "DlgExistingFile.h"
+#include "WndMain.h"
 
 #include "QuerySearch.h"
 #include "Application.h"
@@ -129,7 +131,13 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 
         if ( !pFile->m_oSHA1 || !pFile->m_oTiger || !pFile->m_oMD5 || !pFile->m_oED2K )
 		{
-			LibraryBuilder.Add( pFile );
+			LibraryBuilder.Add( pFile ); // hash the file and add it again
+			Settings.Live.NewFile = TRUE;
+			return;
+		}
+		else if ( Settings.Live.NewFile ) // the new file was hashed
+		{
+			CheckDuplicates( pFile ); // check for duplicates
 		}
 	}
 	else
@@ -156,6 +164,75 @@ void CLibrary::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 	LibraryFolders.OnFileDelete( pFile, bDeleteGhost );
 	LibraryHistory.OnFileDelete( pFile );
 	LibraryHashDB.DeleteAll( pFile->m_nIndex );
+}
+
+void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
+{
+	long nCount = 0;
+
+	// malicious software are usually small, we won't search duplicates
+	if ( pFile->m_nSize > Settings.Library.MaxMaliciousFileSize ) return;
+
+	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
+	{
+		CLibraryFile* pExisting = LibraryMaps.GetNextFile( pos );
+		
+		if ( validAndEqual( pFile->m_oED2K, pExisting->m_oED2K ) )
+			nCount++;
+	}
+
+	if ( nCount >= 5 ) // if more than 4 the same files, it's suspicious
+	{
+		if ( Settings.Live.LastDuplicateHash == pFile->m_oED2K.toString() && !bForce )
+		{
+			// we already warned about the same file
+			Settings.Live.NewFile = FALSE;
+			return;
+		}
+		Settings.Live.LastDuplicateHash = pFile->m_oED2K.toString();
+		if ( !theApp.m_bLive ) return;
+
+		// warn the user
+		CExistingFileDlg dlg( pFile, NULL, true );
+		Settings.Live.MaliciousWarning = TRUE;
+
+		if ( dlg.DoModal() != IDOK )
+		{
+			Settings.Live.NewFile = FALSE;
+			Settings.Live.LastDuplicateHash.Empty();
+			dlg.m_nAction = 3;
+		}
+
+		if ( dlg.m_nAction == 0 )
+		{
+			CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
+			if ( pMainWnd )
+			{
+				CString strHash = L"urn:ed2k:" + Settings.Live.LastDuplicateHash;
+				int nLen = strHash.GetLength() + 1;
+				LPTSTR pszHash = new TCHAR[ nLen ];
+
+				CopyMemory( pszHash, strHash.GetBuffer(), sizeof(TCHAR) * nLen );
+				pMainWnd->PostMessage( WM_LIBRARYSEARCH, (WPARAM)pszHash );
+			}
+		}
+		Settings.Live.MaliciousWarning = FALSE;
+	}
+	else Settings.Live.LastDuplicateHash.Empty();
+}
+
+void CLibrary::CheckDuplicates(LPCTSTR pszED2KHash)
+{
+	Hashes::Ed2kHash oED2K;
+	oED2K.fromString( pszED2KHash );
+
+	if ( oED2K )
+	{
+		CSingleLock oLock( &m_pSection );
+		if ( !oLock.Lock( 50 ) ) return;
+		CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( oED2K, FALSE, TRUE );
+		CheckDuplicates( pFile, true );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

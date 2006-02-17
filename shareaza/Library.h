@@ -66,6 +66,7 @@ public:
 		m_nUpdateCookie = GetTickCount();
 	}
 	void			Inhibit(BOOL bInhibit);
+	void			CheckDuplicates(LPCTSTR pszEd2kHash);
 
 // File and Folder Operations
 public:
@@ -75,6 +76,7 @@ protected:
 	void			AddFile(CLibraryFile* pFile);
 	void			RemoveFile(CLibraryFile* pFile);
 	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
+	void			CheckDuplicates(CLibraryFile* pFile, bool bForce = false);
 
 // General Operations
 public:

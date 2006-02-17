@@ -211,6 +211,7 @@ inline bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
 #define WM_COLLECTION	(WM_USER+107)
 #define WM_OPENSEARCH	(WM_USER+108)
 #define WM_LOG			(WM_USER+109)
+#define WM_LIBRARYSEARCH (WM_USER+110)
 
 #define WM_AFX_SETMESSAGESTRING 0x0362
 #define WM_AFX_POPMESSAGESTRING 0x0375

@@ -103,6 +103,7 @@ void CSettings::Setup()
 	Add( _T("Library.BufferSize"), &Library.BufferSize, 0 );
 	Add( _T("Library.Parallel"), &Library.Parallel, 0 );
 	Add( _T("Library.LowPriorityHashing"), &Library.LowPriorityHashing, 5 );
+	Add( _T("Library.MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, 1024 );
 	
 	Add( _T("Search.LastSchemaURI"), &Search.LastSchemaURI, _T("") );
 	Add( _T("Search.BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );
@@ -455,6 +456,9 @@ CSettings::CSettings()
 	Live.LoadWindowState	= FALSE;
 	Live.AutoClose			= FALSE;
 	Live.FirstRun			= FALSE;
+	Live.LastDuplicateHash	= L"";
+	Live.NewFile			= FALSE;
+	Live.MaliciousWarning	= FALSE;
 
 	// Add all settings
 	Setup();

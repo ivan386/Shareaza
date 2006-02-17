@@ -118,6 +118,7 @@ protected:
 	afx_msg LRESULT OnMediaKey(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnDevModeChange(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnDisplayChange(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnLibrarySearch(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnUpdatePluginRange(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewSystem(CCmdUI* pCmdUI);
 	afx_msg void OnViewSystem();

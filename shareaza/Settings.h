@@ -106,6 +106,7 @@ public:
 												// if buffer allocation fails hashing will run with Parallel = 1
 		DWORD		Parallel;					// how many files to hash parallel: 1..6; 0 for autoselect
 		int			LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
+		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search
 	} Library;
 
 	struct sSearch
@@ -492,6 +493,9 @@ public:
 		BOOL		LoadWindowState;
 		BOOL		AutoClose;
 		BOOL		FirstRun;					// Is this the first time Shareaza is being run?
+		CString		LastDuplicateHash;			// Stores the hash of the file about which the warning was shown
+		BOOL		NewFile;					// TRUE if the new file was added to the Library
+		BOOL		MaliciousWarning;			// Is the warning dialog opened?
 	} Live;
 
 // Attributes : Item List

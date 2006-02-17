@@ -1,9 +1,9 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2005/12/16 16:02:27 $"
-//	Revision:		"$Revision: 1.46 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2006/02/17 12:42:42 $"
+//	Revision:		"$Revision: 1.47 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -136,6 +136,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_MESSAGE(0x0319, OnMediaKey)
 	ON_MESSAGE(WM_DEVMODECHANGE, OnDevModeChange)
 	ON_MESSAGE(WM_DISPLAYCHANGE, OnDisplayChange)
+	ON_MESSAGE(WM_LIBRARYSEARCH, OnLibrarySearch)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_PLUGIN_FIRST, ID_PLUGIN_LAST, OnUpdatePluginRange)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SYSTEM, OnUpdateViewSystem)
 	ON_COMMAND(ID_VIEW_SYSTEM, OnViewSystem)
@@ -1161,6 +1162,22 @@ LRESULT CMainWnd::OnDisplayChange(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+LRESULT CMainWnd::OnLibrarySearch(WPARAM wParam, LPARAM /*lParam*/)
+{
+	OnTabLibrary();
+
+	LRESULT result = 0;
+	LPCTSTR pszSearch = (LPCTSTR)wParam;
+
+	if ( CLibraryWnd* pWnd = (CLibraryWnd*)m_pWindows.Find( RUNTIME_CLASS(CLibraryWnd) ) )
+	{
+		pWnd->m_wndFrame.m_wndSearch.SetWindowText( pszSearch );
+		result = pWnd->m_wndFrame.SendMessage( WM_COMMAND, ID_LIBRARY_SEARCH_QUICK );
+	}
+	delete pszSearch;
+	return result;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd status message functionality
 
@@ -1410,6 +1427,13 @@ void CMainWnd::LocalSystemChecks()
 				PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );
 			}
 		}
+
+		// Check for duplicates if LibraryBuilder finished hashing during startup
+		// Happens when Library*.dat files are not saved and Shareaza crashed
+		// In this case all files are re-added and we can find malicious duplicates
+		if ( !Settings.Live.LastDuplicateHash.IsEmpty() &&
+			 !Settings.Live.MaliciousWarning )
+			Library.CheckDuplicates( Settings.Live.LastDuplicateHash );
 	}
 
 }

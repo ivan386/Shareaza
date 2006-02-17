@@ -355,7 +355,8 @@ void CLibraryBuilder::OnRun()
 		CloseHandle( hFile );
 		m_sPath.Empty();
 	}
-
+	
+	Settings.Live.NewFile = FALSE;
 	m_pPlugins->Cleanup();
 
 	delete [] m_pBuffer;
