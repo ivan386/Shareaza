@@ -176,7 +176,7 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 	int nDot = pFile->m_sName.ReverseFind( '.' );
 
 	if ( nDot == -1 ) return;
-	if ( _tcsistr( _T("|exe|com|zip|rar|ace|7z|cab|lzh|tar|tgz|bz2|"), 
+	if ( _tcsistr( _T("|exe|com|zip|rar|ace|7z|cab|lzh|tar|tgz|bz2|wmv|"), 
 		pFile->m_sName.Mid( nDot + 1 ) ) == NULL ) return;
 
 	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
