@@ -102,6 +102,9 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
+	DDEServer.Create();
+	IEProtocol.Create();
+
 	// Set Build Date
 	COleDateTime tCompileTime; 
 	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
@@ -120,7 +123,6 @@ BOOL CShareazaApp::InitInstance()
 		//return FALSE;
 	}
 
-
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( AfxMessageBox( 
 		L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
@@ -135,9 +137,6 @@ BOOL CShareazaApp::InitInstance()
 
 	// ***********
 
-
-
-	// Enable3dControls();
 	SetRegistryKey( _T("Shareaza") );
 	GetVersionNumber();
 	InitResources();
@@ -240,10 +239,6 @@ BOOL CShareazaApp::InitInstance()
 		Downloads.Load();
 	dlgSplash->Step( _T("Upload Manager") );
 		UploadQueues.Load();
-
-	dlgSplash->Step( _T("IPC") );
-		DDEServer.Create();
-		IEProtocol.Create();
 
 	dlgSplash->Step( _T("Upgrade Manager") );
 	if ( VersionChecker.NeedToCheck() ) VersionChecker.Start( m_pMainWnd->GetSafeHwnd() );
