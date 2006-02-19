@@ -2310,14 +2310,20 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 	// No page number in info, count manually
 	if ( nPages == 0 ) 
 	{
+		int nObjPos = 0;
 		for ( nOffset = 0 ; nOffset < nCount ; nOffset++ )
 		{
 			if ( pOffset[ nOffset ] == 0 ) continue;
 			SetFilePointer( hFile, pOffset[ nOffset ], NULL, FILE_BEGIN );
 			
 			strLine = ReadLine( hFile, (LPCTSTR)_T("<") );
-			if ( strLine.Find( _T("obj") ) < 0 ) break;
+			nObjPos = strLine.Find( _T("obj") );
+			if ( nObjPos < 0 ) break;
 		
+			// object after object, so we read more than one
+			if ( strLine.Find( _T("obj"), nObjPos + 1 ) != -1 )
+				continue;
+
 			if ( ReadLine( hFile, (LPCTSTR)_T("<") ).IsEmpty() && 
 				 ReadLine( hFile, (LPCTSTR)_T("/") ).IsEmpty() )
 			{
