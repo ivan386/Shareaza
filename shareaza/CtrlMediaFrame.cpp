@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2006/01/12 12:16:00 $"
-//	Revision:		"$Revision: 1.39 $"
+//	Date:			"$Date: 2006/02/19 14:12:47 $"
+//	Revision:		"$Revision: 1.40 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1545,7 +1545,7 @@ HRESULT CMediaFrame::PluginPlay(BSTR bsFilePath)
 		hr = m_pPlayer->Stop();
 		hr = m_pPlayer->Open( bsFilePath );
 	} 
-	__except( GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION )
+	__except( GetExceptionCode() != EXCEPTION_CONTINUE_EXECUTION )
 	{ 
 		theApp.Message( MSG_ERROR, _T("Media Player failed to open file: %s"), bsFilePath );
 		Cleanup(); 
