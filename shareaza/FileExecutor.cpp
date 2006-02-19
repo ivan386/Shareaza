@@ -65,7 +65,7 @@ void CFileExecutor::GetFileComponents(LPCTSTR pszFile, CString& strPath, CString
 	if ( nPos >= 0 ) strPath = strFile.Left( nPos );
 	nPos = strFile.ReverseFind( '.' );
 	if ( nPos >= 0 ) strType = strFile.Mid( nPos + 1 );
-	if ( strType.GetLength() ) strType = _T("|") + strType + _T("|");
+	if ( strType.GetLength() ) strType = _T("|") + strType.MakeLower() + _T("|");
 }
 
 CMediaWnd* CFileExecutor::GetMediaWindow(BOOL bFocus)
