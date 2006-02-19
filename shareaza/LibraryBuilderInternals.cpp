@@ -2391,6 +2391,13 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 					pXML->AddAttribute( _T("subject"), DecodePDFText( strLine ) );
 				else if ( strEntry == _T("keywords") ) 
 					pXML->AddAttribute( _T("keywords"), DecodePDFText( strLine ) );
+				else if ( strEntry == _T("company") )
+				{
+					if ( bBook )
+						pXML->AddAttribute( _T("publisher"), DecodePDFText( strLine ) );
+					else
+						pXML->AddAttribute( _T("copyright"), DecodePDFText( strLine ) );
+				}
 				// if meta data hex encoded read one line more (we skipped '\r\n's )
 				if ( bHex ) strLine = ReadLine( hFile, (LPCTSTR)_T("/") );
 				strLine = ReadLine( hFile, (LPCTSTR)_T("/>") );
