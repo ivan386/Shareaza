@@ -1,8 +1,8 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2006/02/17 12:42:42 $"
-//	Revision:		"$Revision: 1.47 $"
+//	Date:			"$Date: 2006/02/19 14:06:16 $"
+//	Revision:		"$Revision: 1.48 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -2088,7 +2088,6 @@ void CMainWnd::OnToolsLanguage()
 	if ( dlg.DoModal() == IDOK )
 	{
 		CWaitCursor pCursor;
-		OnSkinChanged( 0, 0 );
 		SetGUIMode( Settings.General.GUIMode );
 	}
 }
