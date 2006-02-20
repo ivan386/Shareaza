@@ -17,7 +17,7 @@
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.0.0"
+		version="2.2.1.0"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te selecteren."
@@ -1525,6 +1525,14 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Help</link>
 		<text align="middle">&#160;- Shareaza Gebruikerhandleiding en FAQ</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">M I J N &#160; D O W N L O A D S</heading>
+		<newline gap="8" indent="42"/>
+		<text>Om de map met je gedownloade bestanden te openen </text
+		<link target="raza:shell:downloads">klik hier</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
