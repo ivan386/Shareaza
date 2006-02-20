@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.2.11"
+		version="2.2.2.12"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -1526,6 +1526,14 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Quick Help</link>
 		<text align="middle">&#160;- Get some basic help using Shareaza</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">M Y &#160; D O W N L O A D S</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
