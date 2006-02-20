@@ -319,7 +319,6 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	CEDPacket* pPacket = NULL;
 	
 	CString strWords = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
-	MakeKeywords( strWords, false );
 
 	if ( bUDP )
 	{
@@ -371,7 +370,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	{
 		// BitTorrent searches prohibited unless they are GETSOURCES above
 	}
-	else if ( m_sKeywords.GetLength() > 0 || strWords.GetLength() > 0 )
+	else if ( m_sSearch.GetLength() > 0 || strWords.GetLength() > 0 )
 	{
 		pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_SEARCHREQUEST : ED2K_C2S_SEARCHREQUEST );
 		
@@ -413,11 +412,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 			else
 			{
 				// Regular search
-				pPacket->WriteEDString( m_sKeywords.GetLength() ? m_sKeywords : strWords, bUTF8 );
-				if ( m_sKeywords != m_sSearch )
-				{
-					theApp.Message( MSG_SYSTEM, L"ed2k keywords: %s->%s", m_sSearch, m_sKeywords );
-				}
+				pPacket->WriteEDString( m_sKeywords.GetLength() ? m_sSearch : strWords, bUTF8 );
 			}
 		}
 		else
@@ -428,11 +423,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 
 			// Name / Key Words
 			pPacket->WriteByte( 1 );		
-			pPacket->WriteEDString( m_sKeywords.GetLength() ? m_sKeywords : strWords, bUTF8 );
-			if ( m_sKeywords != m_sSearch )
-			{
-				theApp.Message( MSG_SYSTEM, L"ed2k keywords: %s->%s", m_sSearch, m_sKeywords );
-			}
+			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords, bUTF8 );
 
 			// Metadata (file type)
 			pPacket->WriteByte( 2 );		
@@ -1257,6 +1248,7 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 		{
 			if ( nPos > nPrevWord )
 			{
+				ASSERT( !str.IsEmpty() );
 				TCHAR sz = TCHAR( str.Right( 2 ).GetAt( 0 ) );
 				if ( boundary[ 0 ] > sRegular && _tcschr( L" -\"", sz ) != NULL &&
 					!_istdigit( TCHAR( str.Right( nPos < 3 ? 1 : 3 ).GetAt( 0 ) ) ) )
@@ -1268,9 +1260,10 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 					if ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' || *pszPtr == '"' )
 						str.Append( L" " );
 				}
-
+				ASSERT( strPhrase.GetLength() > nPos - 1 );
 				if ( _tcschr( L"-", strPhrase.GetAt( nPos - 1 ) ) != NULL )
 				{
+					ASSERT( strPhrase.GetLength() > nPos - 2 );
 					if ( *pszPtr != ' ' && strPhrase.GetAt( nPos - 2 ) != ' ' )
 					{
 						nPrevWord += nDistance + 1;
@@ -1290,6 +1283,7 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 		}
 	}
 
+	ASSERT( !str.IsEmpty() );
 	TCHAR sz = TCHAR( str.Right( 2 ).GetAt( 0 ) );
 	if ( boundary[ 0 ] > sRegular && _tcschr( L" -\"", sz ) != NULL &&
 		 boundary[ 1 ] > sRegular )
