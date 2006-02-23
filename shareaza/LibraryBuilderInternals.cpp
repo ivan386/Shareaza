@@ -2522,6 +2522,7 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString& strInput)
 					pByte[ nChar - nShift ].w = ')';
 				else
 				{
+					// Octal encoding tests
 					int nWChar = 0;
 					if ( nChar + 3 < nByte && 
 						_stscanf( strInput.Mid( nChar + 1, 3 ), _T("%o"), &nWChar ) )
@@ -2564,11 +2565,9 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString& strInput)
 
 	if ( nByte > 2 )
 	{
-		if ( ( pByte[0].c[0] == 0xFE && pByte[0].c[1] == 0xFF ) ||
-			 ( pByte[0].c[0] == 0xFF && pByte[0].c[1] == 0xFE ) )
+		if ( ( pByte[0].c[0] == 0xFE && pByte[0].c[1] == 0xFF ) )
 			bCharsToMove = 1;
-		else if ( ( pByte[0].w == 0xFE && pByte[1].w == 0xFF ) ||
-				  ( pByte[0].w == 0xFF && pByte[1].w == 0xFE ) )
+		else if ( ( pByte[0].w == 0xFE && pByte[1].w == 0xFF ) )
 			bCharsToMove = 2;
 	}
 
