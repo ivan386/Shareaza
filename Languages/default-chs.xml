@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.2.2.9 (EN1.93)"
+		version="2.2.2.12 (EN1.97)"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -474,9 +474,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
-				<item id="ID_HELP_UPDATE" text="最新消息"/>
+				<!-- <item id="ID_HELP_UPDATE" text="最新消息"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="关于 Shareaza(_A)..."/>
@@ -565,9 +565,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
-				<item id="ID_HELP_UPDATE" text="最新消息"/>
+				<!-- <item id="ID_HELP_UPDATE" text="最新消息"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="关于 Shareaza(_A)..."/>
@@ -650,9 +650,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
-				<item id="ID_HELP_UPDATE" text="最新消息"/>
+				<!-- <item id="ID_HELP_UPDATE" text="最新消息"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="关于 Shareaza(_A)..."/>
@@ -1533,6 +1533,14 @@
 		<text align="middle">&#160;- 获取使用 Shareaza 的基本帮助</text>
 		<newline gap="18" indent="0"/>
 
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">我 的 &#160; 下 载</heading>
+		<newline gap="8" indent="42"/>
+		<text>打开您的下载文件夹</text>
+		<link target="raza:shell:downloads">单击这里</link>
+		<newline gap="18" indent="0"/>
+
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">已 启 用 远 程 访 问</heading>
@@ -1994,7 +2002,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">上传区域</text>
 		<newline gap="8"/>
@@ -2055,12 +2063,12 @@
 		<text>儿童使用 Internet (包括 P2P 文件共享) 必须总是位于父母的监视之下进行。</text>
 	</document>
 
-	<document name="GeneralHelp.BadTorrentEncoding"> 
-		<text format="b">此 Torrent 文件可能存在编码错误</text> 
+	<document name="GeneralHelp.BadTorrentEncoding">
+		<text format="b">此 Torrent 文件可能存在编码错误</text>
 		<newline gap="8"/>
 		<text>系统在解码此 Torrent 文件中的文字时报告存在翻译错误。原因可能
 		是此 Torrent 文件已损坏，或可能是没有被正确编码。尽管文件的名称可能
-		无法正确显示，但文件仍可以正常下载。</text> 
+		无法正确显示，但文件仍可以正常下载。</text>
 		<newline gap="8"/>
 		<text>大多数 Torrent 制作程序允许您修复此 Torrent，以便保证其在所有的
 		BitTorrent 客户端中正常工作。</text> 
@@ -2680,7 +2688,6 @@
 	<string id="16146" value="因为传输中的错误数据导致和 %s 主机的握手失败。"/>
 	<string id="16147" value="按照主机意图，关闭到 %s 主机的剩余连接 (%s 主机的 %i 端口)。"/>
 	<string id="16148" value="到 %s 主机的连接被拒绝。"/>
-	<string id="16149" value="Gnutella 0.6 握手失败，尝试使用 0.4。"/>
 	<string id="16150" value="关闭到 %s 主机的剩余连接。"/>
 	<string id="16151" value="拒绝来自 %s 主机的连接，因为这是一个屏蔽的子端节点。"/>
 	<string id="16152" value="集端网络的 %s 主机不认可我们为集端，正在关闭连接。"/>
@@ -3074,7 +3081,7 @@
 	<string id="17507" value="BitTorrent 与 %s 的连合已丢失。"/>
 	<string id="17510" value="BitTorrent 与 %s 的连合未被接受，与此客户端的连接已存在。"/>
 	<string id="17511" value="BitTorrent 与 %s 的连合未被接受，已达到最大连接数。"/>
-	<string id="17512" value="私人 Torrent"/>
+	<string id="17512" value="私用 Torrent"/>
 	<string id="17513" value="编码错误"/>
 	<string id="18496" value="您在名称区域进行了变动。您确定要重命名下载吗？"/>
 	<string id="18497" value="您已经输入了一个 SHA1 值，但它是无效的。请检查并重试。"/>
@@ -3092,8 +3099,6 @@
 	<string id="18509" value="您不能假设此下载已完成并验证，因为您还未拥有任何部分验证数据，例如 tiger-tree 卷，eDonkey Hashset 或 BitTorrent Hashset。没有验证信息，此下载不能被验证。"/>
 	<string id="18510" value="您确定要假设此下载已完成并验证？ 整个文件将会被考虑，并且 Shareaza 将会接受已通过验证的部分并重新下载未通过验证的部分。"/>
 	<string id="18511" value="BitTorrent 与 %s 的连合未被接受，达到最大连接数。"/>
-	<string id="18512" value="私用 Torrent"/>
-	<string id="18513" value="编码错误"/>
 	<string id="19000" value="远程访问已禁用。"/>
 	<string id="19001" value="您必须选择一个用户名和密码。"/>
 	<string id="19002" value="未能接受连接，链接不可用。"/>
@@ -3286,7 +3291,7 @@
 		<control caption="选项(_O):"/>
 		<control caption="我可以接收传入连接"/>
 		<control/>
-		<control caption="忽略 私人/本地 IP 地址"/>
+		<control caption="忽略 私用/本地 IP 地址"/>
 		<control caption="超时(_T):"/>
 		<control caption="连接:"/>
 		<control/><control/>
