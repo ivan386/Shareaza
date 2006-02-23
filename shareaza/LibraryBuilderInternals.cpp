@@ -2264,7 +2264,9 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 		return FALSE;
 	}
 
-	// get matadata from catalog dictionary if available
+/*	// Get XMP metadata; Not implemented, we should prefer XMP if the file creation time was less
+	// than metadata timestamp
+	// Get matadata from catalog dictionary if available
 	DWORD nOffsetMeta = 0;
 	if ( nOffsetRoot != 0 ) 
 	{
@@ -2295,17 +2297,16 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 		}
 	}
 
-	// Get XMP metadata; Not implemented, we should prefer XMP if it was available
-	//if ( nOffsetMeta != 0 ) 
-	//{
-	//	SetFilePointer( hFile, pOffset[ nOffsetMeta ], NULL, FILE_BEGIN );
-	//	strLine = ReadLine( hFile ); //xxx 0 obj
-	//	strLine = ReadLine( hFile ); //<</Type /Matadata /Subtype /XML /Length xxx
-	//	strLine = ReadLine( hFile ); //stream
-	//	strLine = ReadLine( hFile ); //XML metadata 
-	//	strLine = ReadLine( hFile ); //endstream
-	//	strLine = ReadLine( hFile ); //endobj
-	//}
+	if ( nOffsetMeta != 0 ) 
+	{
+		SetFilePointer( hFile, pOffset[ nOffsetMeta ], NULL, FILE_BEGIN );
+		strLine = ReadLine( hFile ); //xxx 0 obj
+		strLine = ReadLine( hFile ); //<</Type /Matadata /Subtype /XML /Length xxx
+		strLine = ReadLine( hFile ); //stream
+		strLine = ReadLine( hFile ); //XML metadata 
+		strLine = ReadLine( hFile ); //endstream
+		strLine = ReadLine( hFile ); //endobj
+	}*/
 
 	// No page number in info, count manually
 	if ( nPages == 0 ) 
@@ -2435,9 +2436,19 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString& strInput)
 	BOOL bHex = FALSE;
 	CHAR nFactor = 1;
 
-	// ToDo: add hex decoding if 3 digits follow after the first escape symbol
 	if ( strInput.GetAt( 0 ) == '(' && strInput.Right( 1 ) == _T(")") )
+	{
 		strInput = strInput.Mid( 1, strInput.GetLength() - 2 );
+		// Acrobat Reader doesn't decode (<XX>) strings created 
+		// by Acrobat Distiller 6 but we do
+		if ( strInput.GetAt( 0 ) == '<' && strInput.Right( 1 ) == _T(">") )
+		{
+			bHex = TRUE; // hexadecimal encoding
+			nFactor = 2;
+			strInput = strInput.Mid( 1, strInput.GetLength() - 2 );
+			if ( strInput.GetLength() % 2 != 0 ) strInput.Append( _T("0") );
+		}
+	}
 	else if ( strInput.GetAt( 0 ) == '<' )
 	{
 		bHex = TRUE; // hexadecimal encoding
@@ -2450,133 +2461,155 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString& strInput)
 	
 	if ( strInput.IsEmpty() ) return strInput;
 
-	bool bRepeat = false;
 	CString strResult, strTemp;
-	do
+	union U_CHAR
 	{
-		DWORD nByte = strInput.GetLength() / nFactor; // string length in bytes
-		CHAR* pByte = new CHAR[ nByte + 1 ];
+		CHAR c[ sizeof(WCHAR) / sizeof(CHAR) ];
+		WCHAR w;
+	};
 
-		if ( bHex )
+	bool bWide = false;
+	DWORD nByte = strInput.GetLength() / nFactor; // string length in bytes
+
+	if ( bHex && strInput.Left( 4 ) == L"FEFF" )
+	{
+		bWide = true;
+	}
+
+	U_CHAR* pByte = new U_CHAR[ nByte + 1 ];
+
+	if ( bHex )
+	{
+		int nChar = 0;
+		for ( DWORD nHex = 0 ; nHex < nByte / ( bWide ? 2 : 1 ); nHex++ )
 		{
-			int nChar;
-			for ( DWORD nHex = 0 ; nHex < nByte ; nHex++ )
+			if ( bWide )
 			{
-				_stscanf( strInput.Mid( nHex * 2, 2 ), _T("%x"), &nChar );
-				pByte[ nHex ] = (CHAR)nChar;
-			}
-		}
-		else
-		{
-			DWORD nShift = 0;
-			for ( DWORD nChar = 0 ; nChar < nByte ; nChar++ )
-			{
-				register CHAR nTemp = strInput.GetAt( nChar );
-				if ( nTemp == '\\' && nChar < nByte - 1 )
-				{
-					nTemp = strInput.GetAt( nChar + 1 );
-					if ( nTemp == 't' || nTemp == 'n' || nTemp == 'r' )
-						pByte[ nChar - nShift ] = ' ';
-					else
-						pByte[ nChar - nShift ] = nTemp;
-					nShift++;
-					nChar++;
-				}
-				else
-					pByte[ nChar - nShift ] = nTemp;
-			}
-		}
-
-		// unicode decoding
-		if ( nByte >= 4 && ( ( pByte[0] == 0xFE && pByte[1] == 0xFF ) || 
-			( pByte[0] == 0xFF && pByte[1] == 0xFE ) || bRepeat ) )
-		{
-			nByte = nByte / 2 - ( bRepeat ? 0 : 1 );
-			DWORD nSwap = 0;
-			if ( pByte[0] == 0xFE && pByte[1] == 0xFF )
-			{
-				// if two 00 follows insert code 0x20 between them
-				pByte += 2;
-				for ( ; nSwap < nByte ; nSwap++ )
-				{
-					register CHAR nTemp = pByte[ ( nSwap << 1 ) + 0 ];
-					if ( nTemp == 0 && pByte[ ( nSwap << 1 ) + 1 ] == 0 )
-					{
-						bRepeat = true;
-						pByte[ ( nSwap << 1 ) + 0 ] = 0x20;
-						pByte[ ( nSwap << 1 ) + 1 ] = 0x0;
-						break;
-					}
-					pByte[ ( nSwap << 1 ) + 0 ] = pByte[ ( nSwap << 1 ) + 1 ];
-					pByte[ ( nSwap << 1 ) + 1 ] = nTemp;
-				}
-
-				CopyMemory( strTemp.GetBuffer( nSwap + ( nSwap < nByte ? 1 : 0 ) ), 
-						pByte, nSwap * 2 + ( nSwap < nByte ? 2 : 0 ) );
-				strTemp.ReleaseBuffer( nSwap + ( nSwap < nByte ? 1 : 0 ) );
-
-				strResult.Append( strTemp );
-				if ( bRepeat )
-				{
-					// bom + 1 space = 3
-					strInput = strInput.Mid( nSwap * 2 + 3 );
-				}
-				pByte -= 2;
-			}
-			else if ( !bRepeat )
-			{
-				// TODO: Not tested
-				pByte += 2;
-				CopyMemory( strTemp.GetBuffer( nByte ), pByte, nByte * 2 );
-				strTemp.ReleaseBuffer( nByte );
-				pByte -= 2;
+				_stscanf( strInput.Mid( nHex * 4, 4 ), _T("%x"), &nChar );
 			}
 			else
 			{
-				for ( ; nSwap < nByte ; nSwap++ )
-				{
-					register CHAR nTemp = pByte[ ( nSwap << 1 ) + 0 ];
-					if ( nTemp == 0 && pByte[ ( nSwap << 1 ) + 1 ] == 0 )
-					{
-						bRepeat = true;
-						pByte[ ( nSwap << 1 ) + 0 ] = 0x20;
-						pByte[ ( nSwap << 1 ) + 1 ] = 0x0;
-						break;
-					}
-					pByte[ ( nSwap << 1 ) + 0 ] = pByte[ ( nSwap << 1 ) + 1 ];
-					pByte[ ( nSwap << 1 ) + 1 ] = nTemp;
-				}
-
-				CopyMemory( strTemp.GetBuffer( nSwap + ( nSwap < nByte ? 1 : 0 ) ), 
-						pByte, nSwap * 2 + ( nSwap < nByte ? 2 : 0 ) );
-				strTemp.ReleaseBuffer( nSwap + ( nSwap < nByte ? 1 : 0 ) );
-
-				strResult.Append( strTemp );
-				if ( bRepeat )
-				{
-					// + 1 space
-					strInput = strInput.Mid( nSwap * 2 + 1 );
-				}
+				_stscanf( strInput.Mid( nHex * 2, 2 ), _T("%x"), &nChar );
 			}
+			pByte[ nHex ].w = (WCHAR)nChar;
 		}
-		else 
+		pByte[ nByte / ( bWide ? 2 : 1 ) ].w = 0;
+	}
+	else
+	{
+		DWORD nShift = 0;
+		for ( DWORD nChar = 0 ; nChar < nByte ; nChar++ )
 		{
-			bool bBOM = false;
-			if ( nByte >= 6 && pByte[0] == 0xEF && pByte[1] == 0xBB && pByte[2] == 0xBF )
+			register WCHAR nTemp = strInput.GetAt( nChar );
+			if ( nTemp == '\\' && nChar + 1 < nByte )
 			{
-				pByte += 3; nByte -= 3;
-				bBOM = true;
+				nTemp = strInput.GetAt( nChar + 1 );
+				if ( nTemp == 't' )
+					pByte[ nChar - nShift ].w = '\t';
+				else if ( nTemp == 'r' )
+					pByte[ nChar - nShift ].w = '\r';
+				else if ( nTemp == 'n' )
+					pByte[ nChar - nShift ].w = '\n';
+				else if ( nTemp == 'f' )
+					pByte[ nChar - nShift ].w = '\f';
+				else if ( nTemp == 'b' )
+					pByte[ nChar - nShift ].w = '\b';
+				else if ( nTemp == '\\' )
+					pByte[ nChar - nShift ].w = '\\';
+				else if ( nTemp == '(' )
+					pByte[ nChar - nShift ].w = '(';
+				else if ( nTemp == ')' )
+					pByte[ nChar - nShift ].w = ')';
+				else
+				{
+					int nWChar = 0;
+					if ( nChar + 3 < nByte && 
+						_stscanf( strInput.Mid( nChar + 1, 3 ), _T("%o"), &nWChar ) )
+					{
+						pByte[ nChar - nShift ].w = WCHAR(nWChar);
+						nShift += 2;
+						nChar += 2;
+					}
+					else if ( nChar + 2 < nByte && 
+						_stscanf( strInput.Mid( nChar + 1, 2 ), _T("%o"), &nWChar ) )
+					{
+						pByte[ nChar - nShift ].w = WCHAR(nWChar);
+						nShift++;
+						nChar++;
+					}
+					else if ( _stscanf( strInput.Mid( nChar + 1, 1 ), _T("%o"), &nWChar ) )
+					{
+						pByte[ nChar - nShift ].w = WCHAR(nWChar);
+					}
+					// backslash with a space is ignored--the backslash at the end just breaks a line
+					// (we replaced separators while reading a file)
+					else if ( strInput.Mid( nChar + 1, 1 ) != L" " )
+					{
+						// if everything else only backslash is ignored
+						nShift++;
+						continue;
+					}
+					else nShift++;
+				}
+				nShift++;
+				nChar++;
 			}
-			DWORD nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, NULL, 0 );
-			
-			MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, strResult.GetBuffer( nWide ), nWide );
-			strResult.ReleaseBuffer( nWide );
-			if ( bBOM ) pByte -= 3;
+			else
+				pByte[ nChar - nShift ].w = nTemp;
 		}
-		delete [] pByte;
-	} while ( bRepeat && !strInput.IsEmpty() );
+		nByte -= nShift;
+	}
 
-	return strResult;
+	short bCharsToMove = 0;
+
+	if ( nByte > 2 )
+	{
+		if ( ( pByte[0].c[0] == 0xFE && pByte[0].c[1] == 0xFF ) ||
+			 ( pByte[0].c[0] == 0xFF && pByte[0].c[1] == 0xFE ) )
+			bCharsToMove = 1;
+		else if ( ( pByte[0].w == 0xFE && pByte[1].w == 0xFF ) ||
+				  ( pByte[0].w == 0xFF && pByte[1].w == 0xFE ) )
+			bCharsToMove = 2;
+	}
+
+	// Unicode decoding -- only Big Endian encoding is available and no UTF-8 ?
+	// At least I couldn't find and it's not mentioned in specs (Rolandas)
+	if ( bCharsToMove )
+	{
+		pByte += bCharsToMove;
+
+		if ( bWide )
+		{
+			nByte = nByte - bCharsToMove;
+			CopyMemory( strResult.GetBuffer( nByte ), (LPCSTR)pByte, nByte * sizeof(TCHAR) );
+			strResult.ReleaseBuffer( nByte );
+		}
+		else
+		{
+			nByte = ( nByte - bCharsToMove ) / 2;
+			U_CHAR* pszDest = new U_CHAR[ nByte + 1 ];
+
+			for ( DWORD nPos = 0 ; nPos < nByte ; nPos++ )
+			{
+				pszDest[ nPos ].c[ 0 ] = pByte[ ( nPos << 1 ) + 1 ].c[ 0 ];
+				pszDest[ nPos ].c[ 1 ] = pByte[ ( nPos << 1 ) ].c[ 0 ];
+			}
+
+			CopyMemory( strResult.GetBuffer( nByte ), (LPCSTR)pszDest, nByte * sizeof(TCHAR) );
+			strResult.ReleaseBuffer( nByte );
+			delete [] pszDest;
+		}
+
+		pByte -= bCharsToMove;
+	}
+	else 
+	{
+		CopyMemory( strResult.GetBuffer( nByte ), (LPCSTR)pByte, nByte * 2 );
+		strResult.ReleaseBuffer( nByte );
+	}
+	if ( pByte ) delete [] pByte;
+
+	return strResult.Trim();
 }
 
 CString CLibraryBuilderInternals::ReadLine(HANDLE hFile, LPCTSTR pszSeparators)
@@ -2601,12 +2634,12 @@ CString CLibraryBuilderInternals::ReadLine(HANDLE hFile, LPCTSTR pszSeparators)
 		}
 		else
 		{
-			if ( _tcschr( pszSeparators, cChar ) != NULL ) break;
+			if ( cChar && _tcschr( pszSeparators, cChar ) != NULL ) break;
 			if ( cChar == '\n' || cChar == '\r' ) cChar = ' ';
 		}
 		str += cChar;
 	}
-	
+
 	str.Trim();
 	return str;
 }
@@ -2637,7 +2670,7 @@ CString CLibraryBuilderInternals::ReadLineReverse(HANDLE hFile, LPCTSTR pszSepar
 		}
 		else
 		{
-			if ( _tcschr( pszSeparators, cChar ) != NULL ) break;
+			if ( cChar && _tcschr( pszSeparators, cChar ) != NULL ) break;
 			if ( cChar == '\n' || cChar == '\r' ) cChar = ' ';
 		}
 		str = cChar + str;

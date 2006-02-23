@@ -1,9 +1,9 @@
 //
 // DlgDecodeMetadata.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.4 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2006/02/23 20:45:26 $"
+//	Revision:		"$Revision: 1.5 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -113,14 +113,6 @@ void CDecodeMetadataDlg::OnOK()
 		{
 			CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
 			// decode only these attributes
-			if ( !pAttribute->IsNamed( _T("artist") ) && 
-				 !pAttribute->IsNamed( _T("origArtist") ) &&
-				 !pAttribute->IsNamed( _T("album") ) &&
-				 !pAttribute->IsNamed( _T("origAlbum") ) &&
-				 !pAttribute->IsNamed( _T("title") ) &&
-				 !pAttribute->IsNamed( _T("description") ) &&
-				 !pAttribute->IsNamed( _T("copyright") ) &&
-				 !pAttribute->IsNamed( _T("composer") ) ) continue;
 			CString strAttribute = pAttribute->GetValue();
 
 			int nLength = strAttribute.GetLength();
