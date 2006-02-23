@@ -1,8 +1,8 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/12/16 11:42:36 $"
-//	Revision:		"$Revision: 1.25 $"
+//	Date:			"$Date: 2006/02/23 21:10:12 $"
+//	Revision:		"$Revision: 1.26 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -614,7 +614,8 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 					CloseHandle( hFile );
 				}
 			}
-			if ( ( strExtension != _T("mp3") ) || bXmlPossiblyModified )
+			if ( ( strExtension != _T("mp3") && strExtension != _T("pdf") ) 
+				 || bXmlPossiblyModified )
 				nSelected--;
 		}
 		else nSelected--;
@@ -636,7 +637,8 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 		CharLower( strExtension.GetBuffer() );
 		strExtension.ReleaseBuffer();
 
-		if ( strExtension == _T("mp3") ) dlg.AddFile( pFile );
+		if ( strExtension == _T("mp3") || strExtension == _T("pdf") )
+			dlg.AddFile( pFile );
 	}
 
 	pLock.Unlock();
