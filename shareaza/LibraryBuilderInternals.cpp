@@ -2243,7 +2243,7 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 		}
 		else if ( _tcsnicmp( pszName, _T("(ebook"), 6 ) == 0 )
 		{
-			if ( pszName == _tcschr( pszName, ')' ) )
+			if ( ( pszName = _tcschr( pszName, ')' ) ) != NULL )
 			{
 				if ( _tcsncmp( pszName, _T(") - "), 4 ) == 0 )
 					strLine = pszName + 4;
@@ -2374,10 +2374,10 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 				// and restore missing character
 				if ( strLine.GetAt( 0 ) == '(' && strLine.Right( 1 ) != ')' )
 				{
-					while ( TRUE )
+					DWORD nRead = 1;
+					while ( nRead )
 					{
 						CHAR cChar;
-						DWORD nRead;
 						SetFilePointer( hFile, -1, NULL, FILE_CURRENT );
 						ReadFile( hFile, &cChar, 1, &nRead, NULL );
 						strLine += cChar + ReadLine( hFile, (LPCTSTR)_T("/>") );
@@ -2445,6 +2445,7 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString& strInput)
 		{
 			bHex = TRUE; // hexadecimal encoding
 			nFactor = 2;
+			strInput.Replace( L"\\ ", L"" );
 			strInput = strInput.Mid( 1, strInput.GetLength() - 2 );
 			if ( strInput.GetLength() % 2 != 0 ) strInput.Append( _T("0") );
 		}
@@ -2453,6 +2454,7 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString& strInput)
 	{
 		bHex = TRUE; // hexadecimal encoding
 		nFactor = 2;
+		strInput.Replace( L"\\ ", L"" );
 		strInput = strInput.Mid( 1, strInput.GetLength() - 1 ); // closing > was not included
 		// the last zero can be omitted
 		if ( strInput.GetLength() % 2 != 0 ) strInput.Append( _T("0") );
@@ -2608,6 +2610,23 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString& strInput)
 	}
 	if ( pByte ) delete [] pByte;
 
+	// strip off language and country codes
+	// could be usefull in the future...
+	int nEscapeStart = 0;
+	do
+	{
+		nEscapeStart = strResult.Find( L"\x001B" );
+		if ( nEscapeStart != -1 )
+		{
+			int nEscapeEnd = strResult.Find( L"\x001B", nEscapeStart + 1 );
+			if ( nEscapeEnd != -1 )
+				strResult = strResult.Left( nEscapeStart - 1 ) + strResult.Mid( nEscapeEnd + 1 );
+			else
+				strResult = strResult.Mid( nEscapeStart + 1 );
+		}
+	}
+	while ( nEscapeStart != -1 );
+
 	return strResult.Trim();
 }
 
@@ -2639,7 +2658,16 @@ CString CLibraryBuilderInternals::ReadLine(HANDLE hFile, LPCTSTR pszSeparators)
 		str += cChar;
 	}
 
-	str.Trim();
+	str.TrimLeft();
+
+	// workaround to trim from right if zero bytes are present
+	// between the beginning and the end
+	nLength = str.GetLength();
+	while ( nLength && str.GetAt( nLength - 1 ) == ' ' )
+	{
+		str = str.Left( nLength - 1 );
+		nLength--;
+	}
 	return str;
 }
 
@@ -2675,7 +2703,16 @@ CString CLibraryBuilderInternals::ReadLineReverse(HANDLE hFile, LPCTSTR pszSepar
 		str = cChar + str;
 	}
 	
-	str.Trim();
+	str.TrimLeft();
+
+	// workaround to trim from right if zero bytes are present
+	// between the beginning and the end
+	nLength = str.GetLength();
+	while ( nLength && str.GetAt( nLength - 1 ) == ' ' )
+	{
+		str = str.Left( nLength - 1 );
+		nLength--;
+	}
 	return str;
 }
 
