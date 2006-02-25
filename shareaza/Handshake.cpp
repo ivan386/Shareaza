@@ -313,6 +313,7 @@ BOOL CHandshake::OnAcceptPush()
 		_stscanf( strLine.Mid( 10 + nByte * 2, 2 ), _T("%X"), &nValue );
 		oGUID[ nByte ] = (BYTE)nValue;
 	}
+	oGUID.validate();
 
 	// If a child window recongizes the GUID, accept the push
 	if ( OnPush( oGUID ) ) return TRUE;
@@ -371,6 +372,7 @@ BOOL CHandshake::OnAcceptGive()
 		_stscanf( strClient.Mid( nByte * 2, 2 ), _T("%X"), &nPos );
 		oClientID[ nByte ] = (BYTE)nPos;
 	}
+	oClientID.validate();
 
 	// If a child window recognizes this guid, return true
 	if ( OnPush( oClientID ) ) return TRUE;
