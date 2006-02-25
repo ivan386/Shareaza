@@ -305,7 +305,7 @@ BOOL CG2Packet::GetTo(Hashes::Guid& oGUID)
 	
 	CopyMemory( &oGUID[ 0 ], pTest + 4, oGUID.byteCount );
 	
-	return TRUE;
+	return BOOL( oGUID.validate() );
 }
 
 //////////////////////////////////////////////////////////////////////
