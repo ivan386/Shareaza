@@ -189,12 +189,45 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 {
 	int nCount = 0;
 	int nLength = strWord.GetLength();
+	size_t nWindow = 0;
 	CString strKeyword( strWord );
 
 	if ( nLength && IsWord( strKeyword, 0, nLength ) )
 	{
-		ProcessWord( pFile, strKeyword, bAdd );
-		nCount++;
+		// If start and end characters are from the same asian script, assign the window size
+		if ( nLength > 2 )
+		{
+			if ( IsKanji( strKeyword.GetAt( 0 ) ) && IsKanji( strKeyword.GetAt( nLength - 1 ) ) ||
+				 IsKatakana( strKeyword.GetAt( 0 ) ) && IsKatakana( strKeyword.GetAt( nLength - 1 ) ) ||
+				 IsHiragana( strKeyword.GetAt( 0 ) ) && IsHiragana( strKeyword.GetAt( nLength - 1 ) ) )
+			{
+				nWindow = 2;
+				// add original word
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+			}
+		}
+	
+		if ( nWindow == 0 )
+		{
+			ProcessWord( pFile, strKeyword, bAdd );
+			nCount++;
+		}
+		else // make keywords using a sliding window
+		{
+			LPCTSTR pszPhrase = strKeyword.GetBuffer();
+			TCHAR* pszToken = new TCHAR[ nWindow + 1 ];
+			while ( _tcslen( pszPhrase ) >= nWindow )
+			{
+				_tcsncpy( pszToken, pszPhrase, nWindow );
+				pszToken[ nWindow ] = 0;
+				ProcessWord( pFile, (LPCTSTR)pszToken, bAdd );
+				nCount++;
+				pszPhrase++;
+			}
+			delete [] pszToken;
+			return nCount; // we don't need to remove endings
+		}
 		
 		if ( nLength >= 5 && Settings.Library.PartialMatch )
 		{

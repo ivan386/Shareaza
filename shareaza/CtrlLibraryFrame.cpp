@@ -1140,7 +1140,7 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 {
 	CWaitCursor pCursor;
 
-	pSearch->BuildWordList();
+	pSearch->BuildWordList( true, true );
 
 	CAlbumFolder* pRoot		= Library.GetAlbumRoot();
 	CAlbumFolder* pFolder	= pRoot->GetFolderByURI( CSchema::uriSearchFolder );

@@ -558,7 +558,12 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 	{
 		m_sSearch = pPacket->ReadString();
 	}
-	
+
+	m_sKeywords = m_sSearch;
+	ToLower( m_sKeywords );
+	MakeKeywords( m_sKeywords, false );
+	SlideKeywords( m_sKeywords );
+
 	if ( pPacket->GetRemaining() >= 1 )
 	{
 		strData = pPacket->ReadString();
@@ -725,6 +730,10 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 		else if ( strcmp( szType, "DN" ) == 0 )
 		{
 			m_sSearch = pPacket->ReadString( nLength );
+			m_sKeywords = m_sSearch;
+			ToLower( m_sKeywords );
+			MakeKeywords( m_sKeywords, false );
+			SlideKeywords( m_sKeywords );
 		}
 		else if ( strcmp( szType, "MD" ) == 0 )
 		{
@@ -891,11 +900,6 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 		if ( bResult != TS_UNKNOWN ) return ( bResult == TS_TRUE );
 		if ( m_sKeywords.GetLength() > 0 )
 		{
-			if ( m_sKeywords != m_sSearch )
-			{
-				theApp.Message( MSG_SYSTEM, L"Received: %s", m_sSearch );
-				theApp.Message( MSG_SYSTEM, L"Keywords: %s", m_sKeywords );
-			}
 			if ( MatchMetadataShallow( pszSchemaURI, pXML ) )
 			{
 				// only return WordMatch when negative terms are used
@@ -1097,7 +1101,7 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch word list builder
 
-void CQuerySearch::BuildWordList(bool bExpression)
+void CQuerySearch::BuildWordList(bool bExpression, bool bLocal)
 {
 	m_oWords.clear();
 
@@ -1108,7 +1112,8 @@ void CQuerySearch::BuildWordList(bool bExpression)
 	// the phrase can contain punctuation marks and it won't work
 	Replace( m_sSearch, _T("\x03C3 "), _T("\x03C2 ") ); 
 
-	m_sKeywords = m_sSearch;
+	if ( m_sKeywords.IsEmpty() )
+		m_sKeywords = m_sSearch;
 
 	BOOL bHash = FALSE;
 	
@@ -1166,6 +1171,8 @@ void CQuerySearch::BuildWordList(bool bExpression)
 	else
 	{
 		MakeKeywords( m_sKeywords, bExpression );
+		if ( bLocal ) 
+			SlideKeywords( m_sKeywords );
 		AddStringToWordList( m_sKeywords );
 	}
 
@@ -1299,6 +1306,40 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 
 	strPhrase = str.TrimLeft().TrimRight( L" -" );
 	return;
+}
+
+// Function makes a set of keywords separated by space
+// using a sliding window algorithm to match asian words
+void CQuerySearch::SlideKeywords(CString& strPhrase)
+{
+	if ( strPhrase.GetLength() < 3 ) return;
+
+	CString strTemp;
+	LPCTSTR pszPhrase = strPhrase.GetBuffer();
+	TCHAR* pszToken = new TCHAR[ 3 ];
+
+	while ( _tcslen( pszPhrase ) )
+	{
+		_tcsncpy( pszToken, pszPhrase, 2 );
+		pszToken[ 2 ] = 0;
+		if ( IsKanji( pszToken[ 0 ] ) || 
+			 IsKatakana( pszToken[ 0 ] ) || 
+			 IsHiragana( pszToken[ 0 ] ) )
+		{
+			if ( pszToken[ 1 ] != ' ' && _tcslen( pszPhrase ) > 1 )
+			{
+				strTemp.Append( (LPCTSTR)pszToken );
+				strTemp.Append( L" " );
+			}
+		}
+		else
+		{
+			strTemp += *pszToken;
+		}
+		pszPhrase++;
+	}
+	delete [] pszToken;
+	strPhrase = strTemp.TrimRight( L" " );
 }
 
 void CQuerySearch::AddStringToWordList(LPCTSTR pszString)

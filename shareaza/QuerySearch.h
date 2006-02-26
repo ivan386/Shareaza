@@ -118,13 +118,14 @@ public:
 	BOOL		Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K);
 	TRISTATE	MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	BOOL		MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML);
-	void		BuildWordList(bool bExpression=true);
+	void		BuildWordList(bool bExpression=true, bool bLocal=false);
 	void		Serialize(CArchive& ar);
 	static CSearchWnd* OpenWindow(auto_ptr< CQuerySearch > pSearch);
 	BOOL		CheckValid(bool bExpression=true);
 private:
 	void		AddStringToWordList(LPCTSTR pszString);
 	void		MakeKeywords(CString& strPhrase, bool bExpression=true);
+	void		SlideKeywords(CString& strPhrase);
 	BOOL		WriteHashesToEDPacket( CEDPacket* pPacket, BOOL bUDP );
 
 // Utilities
