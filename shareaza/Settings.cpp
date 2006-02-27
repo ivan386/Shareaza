@@ -502,7 +502,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	34
+#define SMART_VERSION	35
 
 void CSettings::Load()
 {
@@ -748,6 +748,12 @@ void CSettings::SmartUpgrade()
 	if ( nVersion < 33 )
 	{
 		RegDeleteKey( HKEY_CURRENT_USER, _T("Software\\Shareaza\\Shareaza\\Plugins\\LibraryBuilder") );
+	}
+
+	if ( nVersion < 35 )
+	{
+		Gnutella1.QuerySearchUTF8 = TRUE;
+		Gnutella1.QueryHitUTF8 = TRUE;
 	}
 }
 
