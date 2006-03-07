@@ -135,7 +135,7 @@ CG1Packet* CQuerySearch::ToG1Packet()
 	
 	CString strExtra;
 	
-	if ( m_sKeywords.GetLength() )
+	if ( !m_sKeywords.IsEmpty() && !m_sSearch.IsEmpty() )
 	{
 		if ( Settings.Gnutella1.QuerySearchUTF8 ) //Support UTF-8 Query
 		{
@@ -238,7 +238,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		pPacket->Write( m_oBTH );
 	}
 	
-	if ( m_sKeywords.GetLength() )
+	if ( !m_sKeywords.IsEmpty() && !m_sSearch.IsEmpty() )
 	{
 		if ( m_sKeywords != m_sSearch )
 		{
@@ -370,7 +370,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	{
 		// BitTorrent searches prohibited unless they are GETSOURCES above
 	}
-	else if ( m_sSearch.GetLength() > 0 || strWords.GetLength() > 0 )
+	else if ( !m_sKeywords.IsEmpty() && !m_sSearch.IsEmpty() || strWords.GetLength() > 0 )
 	{
 		pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_SEARCHREQUEST : ED2K_C2S_SEARCHREQUEST );
 		
@@ -412,7 +412,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 			else
 			{
 				// Regular search
-				pPacket->WriteEDString( m_sKeywords.GetLength() ? m_sSearch : strWords, bUTF8 );
+				pPacket->WriteEDString( !m_sSearch.IsEmpty() ? m_sSearch : strWords, bUTF8 );
 			}
 		}
 		else
@@ -423,7 +423,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 
 			// Name / Key Words
 			pPacket->WriteByte( 1 );		
-			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords, bUTF8 );
+			pPacket->WriteEDString( !m_sSearch.IsEmpty() ? m_sSearch : strWords, bUTF8 );
 
 			// Metadata (file type)
 			pPacket->WriteByte( 2 );		
@@ -900,10 +900,15 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 		if ( bResult != TS_UNKNOWN ) return ( bResult == TS_TRUE );
 		if ( m_sKeywords.GetLength() > 0 )
 		{
-			if ( MatchMetadataShallow( pszSchemaURI, pXML ) )
+			bool bReject = false;
+			if ( MatchMetadataShallow( pszSchemaURI, pXML, &bReject ) )
 			{
-				// only return WordMatch when negative terms are used
-				// otherwise, prefer metadata over file name.
+				// If searching in Local library return true
+				if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oSimilarED2K )
+					return TRUE;
+
+				// Otherwise, only return WordMatch when negative terms are used
+				// to filter out filenames from the search window
 				BOOL bNegative = FALSE;
 				if ( m_sKeywords.GetLength() > 1 )
 				{
@@ -922,6 +927,8 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 				}
 				return bNegative ? WordMatch( pszFilename, m_sKeywords ) : TRUE;
 			}
+			else if ( bReject )
+				return FALSE;
 		}
 	}
 	// If it's a search for similar files, the text doesn't have to match
@@ -969,7 +976,7 @@ TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML)
 	return ( nCount > 0 ) ? TS_TRUE : TS_UNKNOWN;
 }
 
-BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML)
+BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML, bool* bReject)
 {
 	if ( ! pXML || m_sSearch.IsEmpty() ) return FALSE;
 	
@@ -982,7 +989,10 @@ BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML)
 			if ( pMember->m_bSearched )
 			{
 				CString strTarget = pMember->GetValueFrom( pXML, _T(""), FALSE );
-				if ( WordMatch( strTarget, m_sKeywords ) ) return TRUE;
+				if ( WordMatch( strTarget, m_sKeywords, bReject ) ) 
+					return TRUE;
+				else if ( bReject && *bReject )
+					return FALSE;
 			}
 		}
 	}
@@ -994,14 +1004,17 @@ BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML)
 
 			CString strTarget = pAttribute->GetValue();
 
-			if ( WordMatch( strTarget, m_sKeywords ) ) return TRUE;
+			if ( WordMatch( strTarget, m_sKeywords, bReject ) ) 
+				return TRUE;
+			else if ( bReject && *bReject )
+				return FALSE;
 		}
 	}
 	
 	return FALSE;
 }
 
-BOOL CQuerySearch::WordMatch(LPCTSTR pszString, LPCTSTR pszFind)
+BOOL CQuerySearch::WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject)
 {
 	LPCTSTR pszWord	= pszFind;
 	LPCTSTR pszPtr	= pszFind;
@@ -1018,7 +1031,12 @@ BOOL CQuerySearch::WordMatch(LPCTSTR pszString, LPCTSTR pszFind)
 			{
 				if ( bNegate )
 				{
-					if ( _tcsnistr( pszString, pszWord, pszPtr - pszWord ) ) return FALSE;
+					if ( _tcsnistr( pszString, pszWord, pszPtr - pszWord ) ) 
+					{
+						if ( bReject )
+							*bReject = true;
+						return FALSE;
+					}
 				}
 				else
 				{
@@ -1057,7 +1075,12 @@ BOOL CQuerySearch::WordMatch(LPCTSTR pszString, LPCTSTR pszFind)
 	{
 		if ( bNegate )
 		{
-			if ( _tcsnistr( pszString, pszWord, pszPtr - pszWord ) ) return FALSE;
+			if ( _tcsnistr( pszString, pszWord, pszPtr - pszWord ) ) 
+			{
+				if ( bReject )
+					*bReject = true;
+				return FALSE;
+			}
 		}
 		else
 		{
@@ -1115,7 +1138,7 @@ void CQuerySearch::BuildWordList(bool bExpression, bool bLocal)
 	if ( m_sKeywords.IsEmpty() )
 		m_sKeywords = m_sSearch;
 
-	BOOL bHash = FALSE;
+	BOOL bHash = ( m_oSHA1 || m_oTiger || m_oED2K ) && m_sSearch.IsEmpty();
 	
 	if ( 0 == _tcsncmp( m_sSearch, _T("magnet:?"), 8 ) )
 	{
@@ -1260,8 +1283,8 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 				if ( boundary[ 0 ] > sRegular && _tcschr( L" -\"", sz ) != NULL &&
 					!_istdigit( TCHAR( str.Right( nPos < 3 ? 1 : 3 ).GetAt( 0 ) ) ) )
 				{
-					// Join two phrases if the previous was a sigle characters word.
-				}
+						// Join two phrases if the previous was a sigle characters word.
+					}
 				else if ( str.Right( 1 ) != ' ' )
 				{
 					if ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' || *pszPtr == '"' )
@@ -1295,7 +1318,7 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 	if ( boundary[ 0 ] > sRegular && _tcschr( L" -\"", sz ) != NULL &&
 		 boundary[ 1 ] > sRegular )
 	{
-		// Join two phrases if the previous was a sigle characters word.
+			// Join two phrases if the previous was a sigle characters word.
 	}
 	else if ( str.Right( 1 ) != ' ' )
 	{
