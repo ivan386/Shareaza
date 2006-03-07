@@ -117,7 +117,7 @@ private:
 public:
 	BOOL		Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K);
 	TRISTATE	MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
-	BOOL		MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML);
+	BOOL		MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML, bool* bReject=NULL);
 	void		BuildWordList(bool bExpression=true, bool bLocal=false);
 	void		Serialize(CArchive& ar);
 	static CSearchWnd* OpenWindow(auto_ptr< CQuerySearch > pSearch);
@@ -130,7 +130,7 @@ private:
 
 // Utilities
 public:
-	static BOOL	WordMatch(LPCTSTR pszString, LPCTSTR pszFind);
+	static BOOL	WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject=NULL);
 	static BOOL	NumberMatch(const CString& strValue, const CString& strRange);
 };
 
