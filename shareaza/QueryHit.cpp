@@ -201,7 +201,7 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 		if ( ( nFlags[0] & G1_QHD_GGEP ) && ( nFlags[1] & G1_QHD_GGEP ) &&
 			 Settings.Gnutella1.EnableGGEP )
 		{
-			ReadGGEP( pPacket, &bBrowseHost );
+			ReadGGEP( pPacket, &bBrowseHost, &bChat );
 		}
 		
 		if ( nXMLSize > 0 )
@@ -685,13 +685,14 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit GGEP reader
 
-BOOL CQueryHit::ReadGGEP(CG1Packet* pPacket, BOOL* pbBrowseHost)
+BOOL CQueryHit::ReadGGEP(CG1Packet* pPacket, BOOL* pbBrowseHost, BOOL* pbChat)
 {
 	CGGEPBlock pGGEP;
 	
 	if ( ! pGGEP.ReadFromPacket( pPacket ) ) return FALSE;
 	
 	if ( pGGEP.Find( _T("BH") ) ) *pbBrowseHost = TRUE;
+	if ( pGGEP.Find( _T("CHAT") ) ) *pbChat = TRUE;
 	
 	return TRUE;
 }
