@@ -173,7 +173,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 			return TRUE;
 		}
 		
-		if ( Plugins.OnExecuteFile( pszFile, bHasThumbnail ) )
+		if ( bPreviewEnabled && Plugins.OnExecuteFile( pszFile, bHasThumbnail ) )
 			return TRUE;
 	}
 	
