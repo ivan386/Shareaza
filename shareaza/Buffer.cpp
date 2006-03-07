@@ -213,7 +213,7 @@ void CBuffer::Print(LPCSTR pszText)
 void CBuffer::Print(LPCWSTR pszText, UINT nCodePage)
 {
 	// If the text is blank or no memory, don't do anything
-	if ( !m_pBuffer || pszText == NULL ) return;
+	if ( pszText == NULL ) return;
 
 	// Find the number of wide characters in the Unicode text
 	size_t nLength = wcslen(pszText); // Length of "hello" is 5, does not include null terminator
@@ -231,6 +231,7 @@ void CBuffer::Print(LPCWSTR pszText, UINT nCodePage)
 
 	// Make sure the buffer is big enough for this, making it larger if necessary
 	EnsureBuffer( (DWORD)nBytes );
+	if ( m_nBuffer < (DWORD)nBytes ) return;
 
 	// Convert the Unicode string into ASCII characters in the buffer
 	WideCharToMultiByte( // Writes 5 bytes "hello", does not write a null terminator after that
