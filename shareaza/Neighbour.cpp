@@ -354,6 +354,7 @@ BOOL CNeighbour::OnRead()
 	{
 		// Make sure the zlib buffer holds at least 1 KB (do)
 		m_pZInput->EnsureBuffer( 1024 );
+		if ( m_pZInput->m_nBuffer < 1024 ) return FALSE;
 
 		// Tell zlib where the compressed data is, how much is there, where it can output bytes, and how much space it has there
 		pStream->next_in	= m_pInput->m_pBuffer;							// Point zlib at the start of the input buffer
@@ -434,6 +435,7 @@ BOOL CNeighbour::OnWrite()
 	{
 		// Make sure the output buffer is 1 KB (do)
 		m_pOutput->EnsureBuffer( 1024 );
+		if ( m_pOutput->m_nBuffer < 1024 ) return FALSE;
 
 		// Tell zlib where the data to compress is, and where it should put the compressed data
 		pStream->next_in	= m_pZOutput->m_pBuffer; // Start next_in and avail_in on the data in ZOutput

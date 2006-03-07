@@ -168,6 +168,7 @@ void CShakeNeighbour::Close(UINT nError)
 // Always returns true
 BOOL CShakeNeighbour::OnConnected()
 {
+	if ( !m_pOutput ) return FALSE;
 	// This call does nothing (do)
 	CConnection::OnConnected();
 

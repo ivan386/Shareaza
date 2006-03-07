@@ -80,7 +80,7 @@ void CDatagramOut::Create(SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence
 	DWORD nOffset = 0;
 	DWORD nPacket = m_nPacket + sizeof(SGP_HEADER);
 
-	for ( BYTE nPart = 0 ; nPart < m_nCount ; nPart++, nOffset += nPacket )
+	for ( BYTE nPart = 0 ; nPart < m_nCount && m_pBuffer ; nPart++, nOffset += nPacket )
 	{
 		pHeader.nPart = nPart + 1;
 		m_pBuffer->Insert( nOffset, &pHeader, sizeof(pHeader) );

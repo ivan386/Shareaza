@@ -63,6 +63,7 @@ CBuffer::~CBuffer()
 {
 	// If the member variable points to some memory, free it
 	if ( m_pBuffer ) free( m_pBuffer );
+	m_pBuffer = NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -95,9 +96,18 @@ void CBuffer::Add(const void * pData, size_t nLength_)
 		m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // This may move the block, returning a different pointer
 	}
 
-	// Copy the given memory into the end of the memory block
-	CopyMemory( m_pBuffer + m_nLength, pData, nLength );
-	m_nLength += nLength; // Add the length of the new memory to the total length in the buffer
+	if ( m_pBuffer )
+	{
+		// Copy the given memory into the end of the memory block
+		CopyMemory( m_pBuffer + m_nLength, pData, nLength );
+		m_nLength += nLength; // Add the length of the new memory to the total length in the buffer
+	}
+	else
+	{
+		m_nLength = 0;
+		m_nBuffer = 0;
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::Add()") );
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -130,20 +140,29 @@ void CBuffer::Insert(DWORD nOffset, const void * pData, size_t nLength_)
 		m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // This may move the block, returning a different pointer
 	}
 
-	// Cut the memory block sitting in the buffer in two, slicing it at offset and shifting that part forward nLength
-	MoveMemory(
-		m_pBuffer + nOffset + nLength, // Destination is the offset plus the length of the memory block to insert
-		m_pBuffer + nOffset,           // Source is at the offset
-		m_nLength - nOffset );         // Length is the size of the memory block beyond the offset
+	if ( m_pBuffer )
+	{
+		// Cut the memory block sitting in the buffer in two, slicing it at offset and shifting that part forward nLength
+		MoveMemory(
+			m_pBuffer + nOffset + nLength, // Destination is the offset plus the length of the memory block to insert
+			m_pBuffer + nOffset,           // Source is at the offset
+			m_nLength - nOffset );         // Length is the size of the memory block beyond the offset
 
-	// Now that there is nLength of free space in the buffer at nOffset, copy the given memory to fill it
-	CopyMemory(
-		m_pBuffer + nOffset, // Destination is at the offset in the buffer
-		pData,               // Source is the given pointer to the memory to insert
-		nLength );           // Length is the length of that memory
+		// Now that there is nLength of free space in the buffer at nOffset, copy the given memory to fill it
+		CopyMemory(
+			m_pBuffer + nOffset, // Destination is at the offset in the buffer
+			pData,               // Source is the given pointer to the memory to insert
+			nLength );           // Length is the length of that memory
 
-	// Add the length of the new memory to the total length in the buffer
-	m_nLength += nLength;
+		// Add the length of the new memory to the total length in the buffer
+		m_nLength += nLength;
+	}
+	else
+	{
+		m_nLength = 0;
+		m_nBuffer = 0;
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::Insert()") );
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -193,8 +212,8 @@ void CBuffer::Print(LPCSTR pszText)
 // Converts it to ASCII and prints each ASCII character into the buffer, not printing a null terminator
 void CBuffer::Print(LPCWSTR pszText, UINT nCodePage)
 {
-	// If the text is blank, don't do anything
-	if ( pszText == NULL ) return;
+	// If the text is blank or no memory, don't do anything
+	if ( !m_pBuffer || pszText == NULL ) return;
 
 	// Find the number of wide characters in the Unicode text
 	size_t nLength = wcslen(pszText); // Length of "hello" is 5, does not include null terminator
@@ -293,6 +312,13 @@ void CBuffer::EnsureBuffer(size_t nLength)
 
 	// Reallocate the memory block to this size
 	m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // May return a different pointer
+	
+	if ( !m_pBuffer )
+	{
+		m_nLength = 0;
+		m_nBuffer = 0;
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::EnsureBuffer()") );
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
