@@ -166,7 +166,8 @@ void CDownloadWithSearch::PrepareSearch()
 	if ( pSearch->m_bAndG1 )
 	{
 		pSearch->m_sSearch = m_sDisplayName;
-		pSearch->BuildWordList( false );
+		if ( pSearch->m_sKeywords.IsEmpty() )
+			pSearch->BuildWordList( false );
 	}
 
 	if ( m_oSHA1 )
