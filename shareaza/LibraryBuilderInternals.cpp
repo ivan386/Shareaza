@@ -232,8 +232,10 @@ BOOL CLibraryBuilderInternals::CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttr
 	pszOutput[ nWide ] = 0;
 	strValue.ReleaseBuffer();
 	
-	strValue.TrimLeft();
-	strValue.TrimRight();
+	strValue.Trim();
+	strValue.Replace( L"\r\n", L"; " ); // Windows style replacement
+	strValue.Replace( L"\n", L"; " ); // Unix style replacement
+	strValue.Replace( L"\r", L"; " ); // Mac style replacement
 	if ( strValue.IsEmpty() ) return FALSE;
 	
 	pXML->AddAttribute( pszAttribute, strValue );
@@ -597,8 +599,10 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		strValue.ReleaseBuffer();
 	}
 	
-	strValue.TrimLeft();
-	strValue.TrimRight();
+	strValue.Trim();
+	strValue.Replace( L"\r\n", L"; " ); // Windows style replacement
+	strValue.Replace( L"\n", L"; " ); // Unix style replacement
+	strValue.Replace( L"\r", L"; " ); // Mac style replacement
 	
 	if ( strValue.GetLength() == 0 || _tcslen( strValue ) == 0 ) return FALSE;
 	
