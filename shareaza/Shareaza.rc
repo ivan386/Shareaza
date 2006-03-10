@@ -4758,7 +4758,6 @@ BEGIN
     IDS_CONNECTION_ALREADY_ABORT 
                             "Already connected to %s, will not establish a second connection."
     IDS_CONNECTION_BYE      "Neighbour %s closed connection (%i : %s)."
-    IDS_CONNECTION_CRAWLER  "Neighbour %s is crawling connections."
     IDS_CONNECTION_PEERPRUNE 
                             "Closed connection with neighbour %s because it is not a hub."
 END

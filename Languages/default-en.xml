@@ -2697,7 +2697,6 @@
 	<string id="16137" value="Refusing duplicate connection from %s."/>
 	<string id="16138" value="Already connected to %s, will not establish a second connection."/>
 	<string id="16139" value="Neighbour %s closed connection (%i : %s)."/>
-	<string id="16140" value="Neighbour %s is crawling connections."/>
 	<string id="16141" value="Closed connection with neighbour %s because it is not a hub."/>
 	<string id="16144" value="Timed out handshaking with %s."/>
 	<string id="16145" value="Gnutella connection with neighbour %s established successfully (G%i.%i : %s)."/>
