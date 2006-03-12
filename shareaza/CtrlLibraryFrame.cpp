@@ -1155,7 +1155,30 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 		}
 	}
 	else
-		pFolder->Clear();
+	{
+		// Get translated name of the default search folder
+		// We will clear it, not others as user may want to keep several folders
+		CString strFolderName;
+		int nColon = pFolder->m_pSchema->m_sTitle.Find( ':' );
+		if ( nColon >= 0 ) 
+			strFolderName = pFolder->m_pSchema->m_sTitle.Mid( nColon + 1 );
+		if ( !strFolderName.IsEmpty() )
+		{
+			pFolder	= pRoot->GetFolder( strFolderName );
+		}
+
+		if ( pFolder == NULL )
+		{
+			pFolder = pRoot->AddFolder( CSchema::uriSearchFolder, _T("Search Results") );
+			if ( pFolder->m_pSchema != NULL )
+			{
+				if ( !strFolderName.IsEmpty() ) 
+					pFolder->m_sName = strFolderName;
+			}
+		}
+		else
+			pFolder->Clear();
+	}
 
 	if ( pFolder->m_pSchema != NULL )
 	{
