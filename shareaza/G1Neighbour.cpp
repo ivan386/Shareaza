@@ -74,6 +74,7 @@ CG1Neighbour::CG1Neighbour(CNeighbour* pBase)
 	ZeroMemory( m_nPongNeeded, PONG_NEEDED_BUFFER );
 	// Say we sent a ping packet when we last got any packet from the remote computer (do)
 	m_tLastOutPing = m_tLastPacket;
+	m_nLastPingHops = 0;
 
 	// Set the hops flow byte to be all 1s (do)
 	m_nHopsFlow = 0xFF;

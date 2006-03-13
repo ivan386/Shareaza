@@ -111,6 +111,8 @@ void CNeighboursWithG1::OnG1Ping()
 		Hashes::Guid oGUID;           // A new GUID for the packet (do)
 		Network.CreateID( oGUID );
 
+		CSingleLock pLock( &Network.m_pSection, TRUE );
+
 		// Loop for each neighbour we're connected to
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
@@ -138,6 +140,8 @@ void CNeighboursWithG1::OnG1Pong(CG1Neighbour* pFrom, IN_ADDR* pAddress, WORD nP
 	// Add the information from the pong packet to the pong cache (do)
 	CPongItem* pPongCache = m_pPongCache->Add( pFrom, pAddress, nPort, nHops, nFiles, nVolume );
 	if ( pPongCache == NULL ) return; // If Add didn't return a CPongItem, (do)
+
+	CSingleLock pLock( &Network.m_pSection, TRUE );
 
 	// Loop through each neighbour we're connected to
 	for ( POSITION pos = GetIterator() ; pos ; )
