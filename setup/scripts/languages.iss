@@ -29,6 +29,7 @@ Name: "tr"; MessagesFile: "setup\isl\turkish.isl"; LicenseFile: "setup/license/t
 Name: "jp"; MessagesFile: "setup\isl\japanese.isl"; LicenseFile: "setup/license/japanese.rtf"
 Name: "ar"; MessagesFile: "setup\isl\arabic.isl"; LicenseFile: "setup/license/default.rtf"
 Name: "ee"; MessagesFile: "setup\isl\estonian.isl"; LicenseFile: "setup/license/estonian.rtf"
+Name: "tw"; MessagesFile: "setup\isl\chinese-trad.isl"; LicenseFile: "setup/license/chinese-trad.rtf"
 ;Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
 
 [Files]
@@ -86,6 +87,8 @@ Source: "Remote\jp\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ar; Components: language
 ; Estonian
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ee; Components: language
+; Chinese Trad
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tw; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -140,6 +143,8 @@ Source: "setup\license\japanese.rtf"; DestDir: "{app}\Uninstall"; DestName: "lic
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ar; Components: language
 ; Estonian
 Source: "setup\license\estonian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ee; Components: language
+; Chinese Trad
+Source: "setup\license\chinese-trad.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tw; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -194,6 +199,8 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ar; Components: language
 ; Estonian
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ee; Components: language
+; Chinese Trad
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tw; Components: language
 #endif
 
 [CustomMessages]
@@ -782,3 +789,29 @@ ee.page_viruswarning_title=Viiruse Hoiatus
 ee.page_viruswarning_subtitle=Kas sul on AntiVirus programm installeeeritud?
 ee.CreateDesktopIcon=Loo &T礵laua ikoon
 ee.CreateQuickLaunchIcon=Loo &Quick Launch ikoon
+; Chinese Trad
+tw.components_plugins=外掛
+tw.components_skins=外觀
+tw.components_languages=語言
+tw.tasks_allusers=所有的使用者
+tw.tasks_selectusers=為這些使用者安裝 %1:
+tw.tasks_currentuser=只有 %1
+tw.tasks_multisetup=啟用多重使用者支援
+tw.tasks_firewall=增加例外至 Windows 防火牆 (XP)
+tw.tasks_deleteoldsetup=刪除舊的安裝程式
+tw.run_skinexe=正在安裝外觀...
+tw.reg_incomingchat=輸入的聊天訊息
+tw.reg_apptitle=Shareaza---最終的檔案分享軟體
+tw.icons_license=軟體授權協定
+tw.icons_uninstall=解除安裝
+tw.icons_downloads=下載
+tw.icons_basicmode=標準模式
+tw.icons_tabbedmode=標籤模式
+tw.icons_windowedmode=多重視窗模式
+tw.dialog_shutdown=%1 正在運作中. 您要關閉 %1 , 讓安裝程式得以繼續進行嗎?
+tw.dialog_firewall=安裝程式無法新增 Shareaza 至Windows 防火牆.%n請手動新增 Shareaza 至例外清單
+tw.page_viruswarning_text=使用網際網路時, 您應該總是確保防毒軟體為最新版本, 如此才能保護您避免受到木馬, 蠕蟲, 或是惡意程式的侵害. 您可以點選這個連結取得安全性秘訣與良好防毒軟體的清單:
+tw.page_viruswarning_title=病毒警告
+tw.page_viruswarning_subtitle=您是否已經安裝了一個防毒軟體?
+tw.CreateDesktopIcon=請新增一個&桌面圖示
+tw.CreateQuickLaunchIcon=請新增一個&快速啟動圖示
