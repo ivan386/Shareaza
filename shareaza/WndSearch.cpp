@@ -1046,7 +1046,7 @@ void CSearchWnd::OnUpdateFilters(CCmdUI* pCmdUI)
 void CSearchWnd::OnFilters(UINT nID)
 {
 	int nFilter = nID - 3000;
-	if ( nFilter < 0 ) return;
+	if ( nFilter < 0 || (DWORD)nFilter > m_pMatches->m_pResultFilters->m_nFilters - 1 ) return;
 
 	m_pMatches->m_bFilterBusy		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterBusy;
 	m_pMatches->m_bFilterPush		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterPush;
