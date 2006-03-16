@@ -37,6 +37,7 @@
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryMetaPanel.h"
 #include "CtrlLibraryTree.h"
+#include "FileExecutor.h"
 #include "DlgFilePropertiesSheet.h"
 
 #ifdef _DEBUG
@@ -582,11 +583,19 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	
 	if ( m_nSelected > 0 && m_rcFolder.PtInRect( point ) )
 	{
-		if ( CLibraryFolder* pFolder = LibraryFolders.GetFolder( m_sFolder ) )
+		CLibraryFolder* pFolder = LibraryFolders.GetFolder( m_sFolder );
+		if ( pFolder )
 		{
-			CLibraryFrame* pFrame = (CLibraryFrame*)GetOwner();
-			ASSERT_KINDOF(CLibraryFrame, pFrame );
-			pFrame->Display( pFolder );
+			if ( Settings.Library.ShowVirtual )
+			{
+				CLibraryFrame* pFrame = (CLibraryFrame*)GetOwner();
+				ASSERT_KINDOF(CLibraryFrame, pFrame );
+				pFrame->Display( pFolder );
+			}
+			else if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
+			{
+				CFileExecutor::Execute( m_sFolder, TRUE );
+			}
 		}
 	}
 	else if ( m_nSelected > 0 && m_rcRating.PtInRect( point ) )
