@@ -58,6 +58,8 @@ protected:
 protected:
 	BOOL		m_bEnable;
 	BOOL		m_bUnhook;
+	CString		m_sFilterString;
+	CString		m_sOldFilterString;
 
 // Border Hook
 public:

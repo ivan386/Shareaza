@@ -24,6 +24,7 @@
 #include "CoolInterface.h"
 #include "CoolMenu.h"
 #include "Skin.h"
+#include "ResultFilters.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -77,15 +78,65 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 
 	for ( int i = 0 ; i < (int)pMenu->GetMenuItemCount() ; i++ )
 	{
-		TCHAR szBuffer[128];
+		TCHAR szBuffer[128] = {};
 
 		MENUITEMINFO mii = {};
 		mii.cbSize		= sizeof(mii);
-		mii.fMask		= MIIM_DATA|MIIM_ID|MIIM_TYPE|MIIM_SUBMENU;
+		mii.fMask		= MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING|MIIM_SUBMENU;
 		mii.dwTypeData	= szBuffer;
 		mii.cch			= 128;
 
 		GetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+
+		int nItemID = pMenu->GetMenuItemID( i ); // ID_SEARCH_FILTER
+		if ( nItemID == ID_SEARCH_FILTER || 
+			 nItemID == -1 && !m_sFilterString.IsEmpty() && m_sFilterString == szBuffer )
+		{
+			CResultFilters* pResultFilters = new CResultFilters;
+			pResultFilters->Load();
+
+			if ( nItemID > 0 )
+			{
+				m_sOldFilterString = szBuffer;
+				m_sFilterString = szBuffer;
+				m_sFilterString.TrimRight( L".\x2026" );
+			}
+			else if ( pResultFilters->m_nFilters == 0 )
+			{
+				pMenu->GetSubMenu( i )->DestroyMenu();
+				mii.hSubMenu = NULL;
+				m_sFilterString = m_sOldFilterString;
+				SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+			}
+
+			if ( pResultFilters->m_nFilters )
+			{
+				HMENU pFilters = CreatePopupMenu();
+
+				DWORD nDefaultFilter = pResultFilters->m_nDefault;
+				for ( DWORD nFilter = 0 ; nFilter < pResultFilters->m_nFilters ; nFilter++ )
+				{
+					AppendMenu( pFilters, MF_STRING|( nFilter == nDefaultFilter ? MF_CHECKED : 0 ), 
+						3000 + nFilter, pResultFilters->m_pFilters[ nFilter ]->m_sName );
+				}
+				ModifyMenu( pMenu->GetSafeHmenu(), i, MF_BYPOSITION|MF_STRING|MF_POPUP, 
+					(UINT_PTR)pFilters, m_sFilterString );
+				_tcscpy( szBuffer, m_sFilterString.GetBuffer() );
+			}
+			else
+			{
+				ModifyMenu( pMenu->GetSafeHmenu(), i, MF_BYPOSITION|MF_STRING, 
+					ID_SEARCH_FILTER, m_sOldFilterString );
+				_tcscpy( szBuffer, m_sOldFilterString.GetBuffer() );
+			}
+
+			delete pResultFilters;
+			mii.dwTypeData = m_sFilterString.GetBuffer();
+			mii.cch = 128;
+			mii.fMask = MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING|MIIM_SUBMENU;
+
+			GetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+		}
 
 		if ( mii.fType & (MF_OWNERDRAW|MF_SEPARATOR) )
 		{
@@ -103,7 +154,8 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 
 		if ( bChild ) SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
 
-		if ( mii.hSubMenu != NULL ) AddMenu( pMenu->GetSubMenu( i ), TRUE );
+		if ( mii.hSubMenu != NULL ) 
+			AddMenu( pMenu->GetSubMenu( i ), TRUE );
 	}
 
 	return TRUE;

@@ -43,6 +43,7 @@
 #include "DlgHitColumns.h"
 #include "DlgHelp.h"
 #include "Security.h"
+#include "ResultFilters.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -75,6 +76,8 @@ BEGIN_MESSAGE_MAP(CSearchWnd, CBaseMatchWnd)
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_DETAILS, OnUpdateSearchDetails)
 	ON_COMMAND(ID_SEARCH_DETAILS, OnSearchDetails)
 	ON_WM_MDIACTIVATE()
+	ON_UPDATE_COMMAND_UI_RANGE(3000, 3100, OnUpdateFilters)
+	ON_COMMAND_RANGE(3000, 3100, OnFilters)
 END_MESSAGE_MAP()
 
 #define SIZE_INTERNAL	1982
@@ -1033,4 +1036,31 @@ void CSearchWnd::Serialize(CArchive& ar)
 		SendMessage( WM_TIMER, 2 );
 		SetAlert( FALSE );
 	}
+}
+
+void CSearchWnd::OnUpdateFilters(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( TRUE );
+}
+
+void CSearchWnd::OnFilters(UINT nID)
+{
+	int nFilter = nID - 3000;
+	if ( nFilter < 0 ) return;
+
+	m_pMatches->m_bFilterBusy		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterBusy;
+	m_pMatches->m_bFilterPush		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterPush;
+	m_pMatches->m_bFilterUnstable	= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterUnstable;
+	m_pMatches->m_bFilterReject		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterReject;
+	m_pMatches->m_bFilterLocal		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterLocal;
+	m_pMatches->m_bFilterBogus		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterBogus;
+	m_pMatches->m_bFilterDRM		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterDRM;
+	m_pMatches->m_bFilterAdult		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterAdult;
+	m_pMatches->m_bFilterSuspicious = m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterSuspicious;
+	m_pMatches->m_nFilterMinSize	= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_nFilterMinSize;
+	m_pMatches->m_nFilterMaxSize	= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_nFilterMaxSize;
+	m_pMatches->m_nFilterSources	= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_nFilterSources;
+
+	m_pMatches->Filter();
+	Invalidate();
 }
