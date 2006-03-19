@@ -116,6 +116,7 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	for ( int nType = 0 ; nType < G1_PACKTYPE_MAX ; nType++ ) m_bTypeG1[ nType ] = TRUE;
 	for ( int nType = 0 ; nType < 16 ; nType++ ) m_bTypeG2[ nType ] = TRUE;
+	m_bTypeED = TRUE;
 
 	SetTimer( 2, 500, NULL );
 
@@ -201,6 +202,7 @@ void CPacketWnd::Process(const CNeighbour* pNeighbour, const IN_ADDR* pUDP, BOOL
 	else if ( pPacketED )
 	{
 		// TODO: Filter ED2K packets
+		if ( !m_bTypeED ) return;
 	}
 	
 	CSingleLock pLock( &m_pSection, TRUE );
@@ -214,18 +216,23 @@ void CPacketWnd::Process(const CNeighbour* pNeighbour, const IN_ADDR* pUDP, BOOL
 	if ( pNeighbour )
 	{
 		pItem->Set( 0, pNeighbour->m_sAddress );
+		if ( pPacketG2 )
+			pItem->Set( 1, _T("G2 TCP") );
+		else if ( pPacketG1 )
+			pItem->Set( 1, _T("G1 TCP") );
+		else if ( pPacketED )
+			pItem->Set( 1, _T("ED2K TCP") );
 	}
 	else
 	{
 		pItem->Set( 0, _T("(") + CString( inet_ntoa( *pUDP ) ) + _T(")") );
+		if ( pPacketG2 )
+			pItem->Set( 1, _T("G2 UDP") );
+		else if ( pPacketG1 )
+			pItem->Set( 1, _T("G1 UDP") );
+		else if ( pPacketED )
+			pItem->Set( 1, _T("ED2K UDP") );
 	}
-	
-	if ( pPacketG2 )
-		pItem->Set( 1, _T("G2") );
-	else if ( pPacketG1 )
-		pItem->Set( 1, _T("G1") );
-	else if ( pPacketED )
-		pItem->Set( 1, _T("ED2K") );
 	
 	pItem->Set( 2, pPacket->GetType() );
 	pItem->Set( 4, pPacket->ToHex() );
@@ -316,7 +323,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 
-	CMenu pMenu, pHosts[2], pTypes1, pTypes2;
+	CMenu pMenu, pHosts[2], pTypes1, pTypes2, pTypes3;
 
 	for ( int nGroup = 0 ; nGroup < 2 ; nGroup++ )
 	{
@@ -359,11 +366,18 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 			pTypes2.AppendMenu( MF_STRING, 3100 + nType, CString( m_pszG2[ nType ] ) );
 	}
 
+	pTypes3.CreatePopupMenu();
+	if ( m_bTypeED )
+			pTypes3.AppendMenu( MF_STRING|MF_CHECKED, 3200, CString( "All" ) );
+		else
+			pTypes3.AppendMenu( MF_STRING, 3200, CString( "All" ) );
+
 	pMenu.CreatePopupMenu();
 	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pHosts[0].GetSafeHmenu(), _T("Incoming") );
 	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pHosts[1].GetSafeHmenu(), _T("Outgoing") );
 	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypes1.GetSafeHmenu(), _T("G1 Types") );
 	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypes2.GetSafeHmenu(), _T("G2 Types") );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypes3.GetSafeHmenu(), _T("ED2K Types") );
 	pMenu.AppendMenu( MF_SEPARATOR, ID_SEPARATOR );
 	pMenu.AppendMenu( MF_STRING | ( m_bPaused ? MF_CHECKED : 0 ), 1, _T("&Pause Display") );
 	pMenu.AppendMenu( MF_STRING, ID_SYSTEM_CLEAR, _T("&Clear Buffer") );
@@ -424,6 +438,21 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		else
 		{
 			m_bTypeG2[ nCmd ] = ! m_bTypeG2[ nCmd ];
+		}
+
+		return;
+	}
+	else if ( nCmd == 3200 )
+	{
+		nCmd -= 3200;
+
+		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
+		{
+			m_bTypeED = ( nCmd == nCmd ) ? TRUE : FALSE;
+		}
+		else
+		{
+			m_bTypeED = ! m_bTypeED;
 		}
 
 		return;

@@ -48,6 +48,7 @@ public:
 	DWORD			m_nOutputFilter;
 	BOOL			m_bTypeG1[16];
 	BOOL			m_bTypeG2[64];
+	BOOL			m_bTypeED;
 	BOOL			m_bPaused;
 protected:
 	CListCtrl			m_wndList;

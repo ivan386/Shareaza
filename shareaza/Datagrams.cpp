@@ -41,6 +41,7 @@
 #include "CrawlSession.h"
 
 #include "G2Neighbour.h"
+#include "G1Packet.h"
 #include "G2Packet.h"
 #include "EDClients.h"
 #include "EDPacket.h"
@@ -602,6 +603,20 @@ BOOL CDatagrams::TryRead()
 
 BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 {
+	GNUTELLAPACKET* pG1UDP = (GNUTELLAPACKET*)pBuffer;
+	
+	// if it is Gnutella UDP packet, packet size is 23 bytes or bigger.
+	if ( nLength >= sizeof(GNUTELLAPACKET)
+		// if it is Gnutella packet, packet header size + payload length written in length field = UDP packet size
+		&& ( sizeof(GNUTELLAPACKET) + pG1UDP->m_nLength ) == nLength )
+	{
+		CG1Packet* pG1Packet = CG1Packet::New( (GNUTELLAPACKET*)pG1UDP );
+		pG1Packet->SmartDump( NULL, &pHost->sin_addr, FALSE );
+		// OnPacket( pHost, pG1Packet );
+		pG1Packet->Release();
+		return TRUE;
+	}
+
 	ED2K_UDP_HEADER* pMULE = (ED2K_UDP_HEADER*)pBuffer;
 
 	if ( nLength > sizeof(*pMULE) && (
@@ -641,6 +656,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 
 		return TRUE;
 	}
+	theApp.Message( MSG_DEBUG, _T("Recieved unknown UDP packet type"));
 
 	return FALSE;
 }
