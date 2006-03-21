@@ -451,6 +451,7 @@ public:
 	// Tell this packet object that one less thing needs it
 	inline void Release()
 	{
+		ASSERT( m_nReference > 0 && this );
 		// Decrement the reference count, and if that makes it go to 0, delete the object
 		if ( this != NULL && ! --m_nReference ) Delete();
 	}

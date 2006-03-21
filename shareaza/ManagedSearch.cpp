@@ -358,7 +358,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 				}
 			}
 		}
-		pPacket->Release();
+		if ( pPacket ) pPacket->Release();
 		
 		nCount++;
 	}
