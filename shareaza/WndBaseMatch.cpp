@@ -53,6 +53,7 @@
 #include "DlgURLCopy.h"
 #include "DlgExistingFile.h"
 #include "CoolMenu.h"
+#include "ResultFilters.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -107,11 +108,14 @@ BEGIN_MESSAGE_MAP(CBaseMatchWnd, CPanelWnd)
 	ON_COMMAND(ID_SEARCH_FOR_ALBUM, OnSearchForAlbum)
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_FOR_SERIES, OnUpdateSearchForSeries)
 	ON_COMMAND(ID_SEARCH_FOR_SERIES, OnSearchForSeries)
-	//}}AFX_MSG_MAP
 	ON_EN_KILLFOCUS(IDC_FILTER_BOX, OnKillFocusFilter)
 	ON_BN_CLICKED(AFX_IDW_TOOLBAR, OnToolbarReturn)
 	ON_BN_DOUBLECLICKED(AFX_IDW_TOOLBAR, OnToolbarEscape)
 	ON_UPDATE_COMMAND_UI_RANGE(1000, 1100, OnUpdateBlocker)
+	ON_UPDATE_COMMAND_UI_RANGE(3000, 3100, OnUpdateFilters)
+	ON_COMMAND_RANGE(3000, 3100, OnFilters)
+	//}}AFX_MSG_MAP
+
 END_MESSAGE_MAP()
 
 
@@ -816,6 +820,34 @@ void CBaseMatchWnd::OnSearchFilterRemove()
 	m_pMatches->Filter();
 	m_bUpdate = TRUE;
 	PostMessage( WM_TIMER, 2 );
+}
+
+void CBaseMatchWnd::OnUpdateFilters(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( TRUE );
+}
+
+void CBaseMatchWnd::OnFilters(UINT nID)
+{
+	int nFilter = nID - 3000;
+	if ( nFilter < 0 || (DWORD)nFilter > m_pMatches->m_pResultFilters->m_nFilters - 1 ) return;
+
+	m_pMatches->m_bFilterBusy		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterBusy;
+	m_pMatches->m_bFilterPush		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterPush;
+	m_pMatches->m_bFilterUnstable	= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterUnstable;
+	m_pMatches->m_bFilterReject		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterReject;
+	m_pMatches->m_bFilterLocal		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterLocal;
+	m_pMatches->m_bFilterBogus		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterBogus;
+	m_pMatches->m_bFilterDRM		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterDRM;
+	m_pMatches->m_bFilterAdult		= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterAdult;
+	m_pMatches->m_bFilterSuspicious = m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_bFilterSuspicious;
+	m_pMatches->m_nFilterMinSize	= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_nFilterMinSize;
+	m_pMatches->m_nFilterMaxSize	= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_nFilterMaxSize;
+	m_pMatches->m_nFilterSources	= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_nFilterSources;
+	m_pMatches->m_sFilter			= m_pMatches->m_pResultFilters->m_pFilters[ nFilter ]->m_sFilter;
+
+	m_pMatches->Filter();
+	Invalidate();
 }
 
 void CBaseMatchWnd::OnKillFocusFilter()
