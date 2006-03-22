@@ -1,8 +1,8 @@
 //
 // Network.h
 //
-//	Date:			"$Date: 2006/02/15 10:02:57 $"
-//	Revision:		"$Revision: 1.13 $"
+//	Date:			"$Date: 2006/03/22 14:15:39 $"
+//	Revision:		"$Revision: 1.14 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.
@@ -93,7 +93,7 @@ public:
 	void		AcquireLocalAddress(LPCTSTR pszHeader);
 	BOOL		Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE) const;
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
-	BOOL		IsReserved(IN_ADDR* pAddress);
+	BOOL		IsReserved(IN_ADDR* pAddress, bool bCheckLocal=true);
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);
 	BOOL		IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf = FALSE);

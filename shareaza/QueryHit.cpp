@@ -135,10 +135,11 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 		DWORD	nAddress	= pPacket->ReadLongLE();
 		DWORD	nSpeed		= pPacket->ReadLongLE();
 		
-		if ( Network.IsReserved( (IN_ADDR*)&nAddress ) )
+		if ( Network.IsReserved( (IN_ADDR*)&nAddress ), false )
 			AfxThrowUserException();
 
-		if ( ! nCount ) AfxThrowUserException();
+		if ( ! nCount ) 
+			AfxThrowUserException();
 		
 		while ( nCount-- )
 		{
@@ -173,7 +174,8 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 		
 		if ( pVendor->m_bHTMLBrowse ) bBrowseHost = TRUE;
 		
-		if ( nPublicSize > pPacket->GetRemaining() - 16 ) AfxThrowUserException();
+		if ( nPublicSize > pPacket->GetRemaining() - 16 ) 
+			AfxThrowUserException();
 		
 		if ( nPublicSize >= 2 )
 		{
@@ -186,7 +188,8 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 		{
 			nXMLSize = pPacket->ReadShortLE();
 			nPublicSize -= 2;
-			if ( nPublicSize + nXMLSize > pPacket->GetRemaining() - 16 ) AfxThrowUserException();
+			if ( nPublicSize + nXMLSize > pPacket->GetRemaining() - 16 ) 
+				AfxThrowUserException();
 		}
 		
 		while ( nPublicSize-- ) pPacket->ReadByte();
@@ -369,7 +372,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			else if ( ( strcmp( szType, "NA" ) == 0 || strcmp( szType, "NI" ) == 0 ) && nLength >= 6 )
 			{
 				nAddress	= pPacket->ReadLongLE();
-				if ( Network.IsReserved( (IN_ADDR*)&nAddress ) )
+				if ( Network.IsReserved( (IN_ADDR*)&nAddress ), false )
 					AfxThrowUserException();
 				nPort		= pPacket->ReadShortBE();
 			}
@@ -593,7 +596,7 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD
 	// Enable chat for ed2k hits
 	//pFirstHit->m_bChat = TRUE;
 	
-	CheckBogus( pFirstHit );
+	//CheckBogus( pFirstHit );
 	
 	return pFirstHit;
 }
@@ -1239,7 +1242,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 {
 	DWORD nAddress = m_pAddress.S_un.S_addr = pPacket->ReadLongLE();
-	if ( Network.IsReserved( (IN_ADDR*)&nAddress ) )
+	if ( Network.IsReserved( (IN_ADDR*)&nAddress ), false )
 		nAddress = 0;
 	m_nPort = pPacket->ReadShortLE();
 	

@@ -466,7 +466,7 @@ BOOL CNetwork::AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol
 // http://www.cymru.com/Documents/bogon-bn-nonagg.txt
 // and http://www.iana.org/assignments/ipv4-address-space
 
-BOOL CNetwork::IsReserved(IN_ADDR* pAddress)
+BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 {
 	char *ip = (char*)&(pAddress->s_addr);
 	unsigned char i1 = ip[ 0 ], i2 = ip[ 1 ], i3 = ip[ 2 ], i4 = ip[ 3 ];
@@ -494,7 +494,7 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress)
 		case 223:       // 223/8 is IANA reserved       
 			return TRUE;
 		case 10:        // Private addresses
-			return Settings.Connection.IgnoreLocalIP;
+			return bCheckLocal && Settings.Connection.IgnoreLocalIP;
 		default:
 			break;
 	}
@@ -507,7 +507,7 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress)
 
 	// 172.16.0.0/12 is reserved for private nets by RFC1819 
 	if ( i1 == 172 && i2 >= 16 && i2 <= 31 ) 
-		return Settings.Connection.IgnoreLocalIP;
+		return bCheckLocal && Settings.Connection.IgnoreLocalIP;
 
 	// 173-187/8 is IANA reserved 
 	if ( i1 >= 173 && i1 <= 187 ) return TRUE;
@@ -517,7 +517,7 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress)
 	// 192.88.99.0/24 is used as 6to4 Relay anycast prefix by RFC3068 
 	if ( i1 == 192 )
 	{
-		if ( i2 == 168 ) return Settings.Connection.IgnoreLocalIP;
+		if ( i2 == 168 ) return bCheckLocal && Settings.Connection.IgnoreLocalIP;
 		if ( i2 == 0 && i3 == 2 ) return TRUE;
 		if ( i2 == 88 && i3 == 99 ) return TRUE;
 	}
