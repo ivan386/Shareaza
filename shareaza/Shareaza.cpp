@@ -559,7 +559,7 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog)
 {
 	CFile pFile;
 	
-	if ( pFile.Open( _T("\\Shareaza.log"), CFile::modeReadWrite ) )
+	if ( pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), CFile::modeReadWrite ) )
 	{
 		if ( ( Settings.General.MaxDebugLogSize ) &&					// If log rotation is on 
 			( pFile.GetLength() > Settings.General.MaxDebugLogSize ) )	// and file is too long...
@@ -567,10 +567,12 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog)
 			// Close the file
 			pFile.Close();				
 			// Rotate the logs 
-			DeleteFile(  _T("\\Shareaza.old.log") );
-			MoveFile( _T("\\Shareaza.log"), _T("\\Shareaza.old.log") );
+			DeleteFile( Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
+			MoveFile( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
+				Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
 			// Start a new log
-			if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) ) return;
+			if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
+				CFile::modeWrite|CFile::modeCreate ) ) return;
 			// Unicode marker
 			WORD nByteOrder = 0xFEFF;
 			pFile.Write( &nByteOrder, 2 );
@@ -582,7 +584,8 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog)
 	}
 	else
 	{
-		if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) ) return;
+		if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
+			CFile::modeWrite|CFile::modeCreate ) ) return;
 
 		// Unicode marker
 		WORD nByteOrder = 0xFEFF;
