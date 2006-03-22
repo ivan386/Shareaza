@@ -343,7 +343,6 @@ BOOL CGGEPItem::ReadFrom(CGGEPBlock* pBlock, BYTE nFlags)
 	}
 	CopyMemory( m_pBuffer, pBlock->m_pInput, m_nLength );
 	m_pBuffer[ m_nLength ] = 0;
-	theApp.Message( MSG_DEBUG, _T("Received GGEP item \"%s\": %s"), m_sID, (LPCTSTR)CString( m_pBuffer ) );
 	pBlock->m_pInput += m_nLength;
 	pBlock->m_nInput -= m_nLength;
 
