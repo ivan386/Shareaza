@@ -284,6 +284,7 @@ public:
 		int			HitQueueLimit;				// Protect G1 clients from badly configured queues
 		BOOL		QueryHitUTF8;				// Use UTF-8 encoding to read Gnutella1 QueryHit packets
 		BOOL		QuerySearchUTF8;			// Use UTF-8 encoding to create Gnutella1 Query packets
+		int			MaxHostsInPongs;			// The number of hosts included in the response of pings having SCP GGEP block
 	} Gnutella1;
 
 	struct sGnutella2

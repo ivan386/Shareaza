@@ -54,6 +54,7 @@
 #include "WndMain.h"
 #include "WndChild.h"
 #include "WndSearchMonitor.h"
+#include "GGEP.h"
 
 // If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
@@ -357,7 +358,9 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	if ( m_nNodeType == ntLeaf && bool( oGUID ) ) return FALSE;
 
 	// If the CNeighbours object says we need more Gnutella hubs or leaves, set bNeedPeers to true
-	BOOL bNeedPeers = Neighbours.NeedMoreHubs( PROTOCOL_G1 ) || Neighbours.NeedMoreLeafs( PROTOCOL_G1 );
+	bool bNeedHubs = Neighbours.NeedMoreHubs( PROTOCOL_G1 ) == TRUE;
+	bool bNeedLeafs = Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) == TRUE;
+	bool bNeedPeers = bNeedHubs || bNeedLeafs;
 
 	// If the caller didn't give us the time, get it now
 	if ( ! dwNow ) dwNow = GetTickCount();
@@ -369,8 +372,34 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	m_tLastOutPing = dwNow;
 
 	// Send the remote computer a new Gnutella ping packet
-	Send( CG1Packet::New( G1_PACKET_PING, ( bool( oGUID ) || bNeedPeers ) ? 0 : 1, oGUID ), TRUE, TRUE );
+	CG1Packet* pPacket = CG1Packet::New( G1_PACKET_PING, 
+		( bool( oGUID ) || bNeedPeers ) ? 0 : 1, oGUID );
+
+	// Send "Supports Cached Pongs" extension along with a packet, to receive G1 hosts for cache
+	if ( Settings.Gnutella1.EnableGGEP && bNeedPeers )
+	{
+		CGGEPBlock pBlock;
+		CGGEPItem* pItem = pBlock.Add( L"SCP" );
+		pItem->WriteByte( ! bNeedHubs );
+		pItem = pBlock.Add( L"DNA" );
+		pItem->WriteByte( ! bNeedHubs );
+		pBlock.Write( pPacket );
+	}
+	
+	Send( pPacket, TRUE, TRUE );
+
 	return TRUE;
+}
+
+namespace
+{
+struct CompareNums
+{
+	bool operator()(WORD lhs, WORD rhs) const
+	{
+		return lhs > rhs;
+	}
+};
 }
 
 // Takes a pointer to the bytes of a ping packet from the remote computer, sitting in the input buffer
@@ -419,28 +448,53 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		return TRUE;
 	}
 
+	bool bSCP = false;
+	bool bDNA = false;
+
 	// If this ping packet strangely has length, and the remote computer does GGEP blocks
 	if ( pPacket->m_nLength && m_bGGEP )
 	{
-		// Read the next byte from the packet and make sure it's 0xC3, the magic code for a GGEP block
-		if ( pPacket->ReadByte() != GGEP_MAGIC )
+		CGGEPBlock pGGEP;
+		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
+		if ( pGGEP.ReadFromPacket( pPacket ) )
+		{
+			// If the neigbour sent
+			if ( CGGEPItem* pItem = pGGEP.Find( _T("SCP") ) )
+			{
+				bSCP = true;
+			}
+			if ( CGGEPItem* pItem = pGGEP.Find( _T("DNA") ) )
+			{
+				bDNA = true;
+			}
+			if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
+			{
+				// Broadcast the packet to the computers we are connected to
+				if ( Neighbours.Broadcast( pPacket, this, TRUE ) ) Statistics.Current.Gnutella1.Routed++; // Record we routed one more packet
+
+				// Undo what calling Hop did, making the packet's TTL and hop counts are the same as before we called Hop
+				pPacket->m_nHops--;
+				pPacket->m_nTTL++;
+			}
+		}
+		else
 		{
 			// It's not, drop the packet, but stay connected
 			theApp.Message( MSG_ERROR, IDS_PROTOCOL_GGEP_REQUIRED, (LPCTSTR)m_sAddress );
 			Statistics.Current.Gnutella1.Dropped++;
 			m_nDropCount++;
 			return TRUE;
-
-		} // There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
-		else if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
-		{
-			// Broadcast the packet to the computers we are connected to
-			if ( Neighbours.Broadcast( pPacket, this, TRUE ) ) Statistics.Current.Gnutella1.Routed++; // Record we routed one more packet
-
-			// Undo what calling Hop did, making the packet's TTL and hop counts are the same as before we called Hop
-			pPacket->m_nHops--;
-			pPacket->m_nTTL++;
 		}
+	}
+
+	CGGEPBlock pGGEP;
+	if ( bSCP )
+	{
+		WriteRandomCache( pGGEP.Add( L"IPP" ) );
+	}
+	if ( bDNA )
+	{
+		WriteRandomCache( pGGEP.Add( L"DIP" ) );
 	}
 
 	// Save information from this ping packet in the CG1Neighbour object
@@ -464,11 +518,19 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 				m_nLastPingHops,               // Give it the same hops count and GUID as the ping
 				m_pLastPingID );
 
+			// Get statistics about how many files we are sharing
+			QWORD nMyVolume;
+			DWORD nMyFiles;
+			LibraryMaps.GetStatistics( &nMyFiles, &nMyVolume );
+
 			// Tell the remote computer it's IP address and port number in the payload bytes of the pong packet
 			pPong->WriteShortLE( htons( pConnection->m_pHost.sin_port ) );   // Port number, 2 bytes reversed
 			pPong->WriteLongLE( pConnection->m_pHost.sin_addr.S_un.S_addr ); // IP address, 4 bytes
-			pPong->WriteLongLE( 0 );                                         // 8 bytes of 0s
-			pPong->WriteLongLE( 0 );
+			// Then, write in the information about how many files we are sharing
+			pPong->WriteLongLE( nMyFiles );
+			pPong->WriteLongLE( (DWORD)nMyVolume );
+
+			if ( bSCP || bDNA ) pGGEP.Write( pPong ); // write GGEP stuff
 
 			// Send the pong packet to the remote computer we are currently looping on
 			Send( pPong );
@@ -500,6 +562,8 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		// Then, write in the information about how many files we are sharing
 		pPong->WriteLongLE( nMyFiles );
 		pPong->WriteLongLE( (DWORD)nMyVolume );
+
+		if ( bSCP || bDNA ) pGGEP.Write( pPong ); // write GGEP stuff
 
 		// Send the pong packet to the remote computer we are currently looping on
 		Send( pPong );
@@ -548,6 +612,53 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	return TRUE;
 }
 
+int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
+{
+	if ( !pItem ) return 0;
+
+	bool bIPP = false;
+	if ( pItem->IsNamed( L"IPP" ) )
+		bIPP = true;
+	else if ( !pItem->IsNamed( L"DIP" ) )
+	return 0;
+
+	DWORD nCount = min( DWORD(50), HostCache.Gnutella1.CountHosts() );
+	WORD nPos = 0;
+
+	// Create 5 random positions from 0 to 50 in the descending order
+	std::vector< WORD > pList;
+	pList.reserve( Settings.Gnutella1.MaxHostsInPongs );
+	for ( WORD nNo = 0 ; nNo < Settings.Gnutella1.MaxHostsInPongs ; nNo++ )
+	{
+		pList.push_back( (WORD)( ( nCount + 1 ) * rand() / ( RAND_MAX + (float)nCount ) ) );
+	}
+	std::sort( pList.begin(), pList.end(), CompareNums() );
+
+	nCount = Settings.Gnutella1.MaxHostsInPongs;
+	CHostCacheHost* pHost = HostCache.Gnutella1.GetNewest();
+	while ( pHost && nCount )
+	{
+		nPos = pList.back(); // take the smallest value;
+		pList.pop_back(); // remove it
+		for ( ; pHost && nPos-- ; pHost = pHost->m_pPrevTime );
+
+		// We won't provide Shareaza hosts for G1 cache, since users may disable
+		// G1 and it will polute the host caches ( ??? )
+		// ToDo: fetch GDNA hosts only to randomize between them
+		if ( pHost && 
+			 ( ( bIPP && ( !pHost->m_pVendor || pHost->m_pVendor->m_sCode != L"GDNA" ) ) || 
+			   ( !bIPP && pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) ) )
+		{
+			pItem->Write( (void*)&pHost->m_pAddress, 4 );
+			pItem->Write( (void*)&pHost->m_nPort, 2 );
+			theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s:%i)"), 
+				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort ); 
+			nCount--;
+		}
+	}
+	return Settings.Gnutella1.MaxHostsInPongs - nCount;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CG1Neighbour PONG packet handlers
 
@@ -584,32 +695,66 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 	// If the pong is bigger than 14 bytes, and the remote compuer told us in the handshake it supports GGEP blocks
 	if ( pPacket->m_nLength > 14 && m_bGGEP )
 	{
-		// Read the next byte from the packet and make sure it's 0xC3, the magic code for a GGEP block
-		if ( pPacket->ReadByte() != GGEP_MAGIC )
+		CGGEPBlock pGGEP;
+		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
+		if ( pGGEP.ReadFromPacket( pPacket ) )
+		{
+			CGGEPItem* pIPPs = pGGEP.Find( L"IPP", 6 );
+			CGGEPItem* pGDNAs = pGGEP.Find( L"DIP", 6 );
+			// We got a response to SCP extension, add hosts to cache if IPP extension exists
+			while ( pIPPs || pGDNAs )
+			{
+				CGGEPItem* pItem = pIPPs ? pIPPs : pGDNAs;
+				CString str = pGDNAs ? L"GDNA" : L"G1";
+				// The first four bytes represent the IP address and the last two represent the port
+				// The length of the number of bytes of IPP must be divisible by 6
+				if ( ( pItem->m_nLength - pItem->m_nPosition ) % 6 == 0 )
+				{
+					while ( pItem->m_nPosition != pItem->m_nLength )
+					{
+						DWORD nAddress = 0;
+						WORD nPort = 0;
+						pItem->Read( (void*)&nAddress, 4 );
+						pItem->Read( (void*)&nPort, 2 );
+						if ( ! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) && 
+							 ! Network.IsReserved( (IN_ADDR*)&nAddress ) && nPort != 0 )
+						{
+							theApp.Message( MSG_DEBUG, _T("Got %s host through pong (%s:%i)"), 
+								(LPCTSTR)str, (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
+							HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, pGDNAs ? (LPCTSTR)str : NULL );
+						}
+					}
+				}
+				if ( pIPPs ) 
+					pIPPs = NULL;
+				else if ( pGDNAs )
+					pGDNAs = NULL;
+			}
+			if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
+			{
+				// Find the CG1Neighbour object that created this pong packet (do)
+				CG1Neighbour* pOrigin;
+				Neighbours.m_pPingRoute->Lookup( pPacket->m_oGUID, (CNeighbour**)&pOrigin );
+
+				// If we're connected to that computer, and it supports GGEP extension blocks
+				if ( pOrigin && pOrigin->m_bGGEP )
+				{
+					// Send this pong to it
+					Statistics.Current.Gnutella1.Routed++; // Record one more packet was routed
+					pOrigin->Send( pPacket, FALSE, TRUE );
+				}
+
+				// Calling Hop above moved 1 from TTL to Hops, put the numbers back the way we got them
+				pPacket->m_nHops--;
+			}
+		}
+		else
 		{
 			// It's not, drop the packet, but stay connected
 			theApp.Message( MSG_ERROR, IDS_PROTOCOL_GGEP_REQUIRED, (LPCTSTR)m_sAddress );
 			Statistics.Current.Gnutella1.Dropped++;
 			m_nDropCount++;
 			return TRUE;
-
-		} // There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
-		else if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
-		{
-			// Find the CG1Neighbour object that created this pong packet (do)
-			CG1Neighbour* pOrigin;
-			Neighbours.m_pPingRoute->Lookup( pPacket->m_oGUID, (CNeighbour**)&pOrigin );
-
-			// If we're connected to that computer, and it supports GGEP extension blocks
-			if ( pOrigin && pOrigin->m_bGGEP )
-			{
-				// Send this pong to it
-				Statistics.Current.Gnutella1.Routed++; // Record one more packet was routed
-				pOrigin->Send( pPacket, FALSE, TRUE );
-			}
-
-			// Calling Hop above moved 1 from TTL to Hops, put the numbers back the way we got them
-			pPacket->m_nHops--;
 		}
 	}
 

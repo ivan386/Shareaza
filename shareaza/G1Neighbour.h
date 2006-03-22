@@ -36,6 +36,7 @@
 class CG1Packet;
 class CG1PacketBuffer;
 class CPongItem;
+class CGGEPItem;
 
 // A CG1Neighbour object represents a remote computer running Gnutella software with which we are exchanging Gnutella packets
 class CG1Neighbour : public CNeighbour // Inherit from CNeighbour and from that CConnection to get compression features and the connection socket
@@ -103,6 +104,7 @@ protected:
 	// Ping and pong packets
 	BOOL OnPing(CG1Packet* pPacket);
 	BOOL OnPong(CG1Packet* pPacket);
+	int WriteRandomCache(CGGEPItem* pItem);
 
 	// Bye packet
 	BOOL OnBye(CG1Packet* pPacket);

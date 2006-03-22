@@ -87,8 +87,8 @@ public:
 	CString	ToString();
 protected:
 	BOOL	ReadFrom(CGGEPBlock* pBlock, BYTE nFlags);
-	void	WriteTo(CPacket* pPacket);
-	void	WriteTo(CString& str);
+	void	WriteTo(CPacket* pPacket, bool bSmall=true, bool bNeedCOBS=true);
+	void	WriteTo(CString& str, bool bSmall=true, bool bNeedCOBS=true);
 protected:
 	BOOL	Encode(BOOL bIfZeros = FALSE);
 	BOOL	Decode();

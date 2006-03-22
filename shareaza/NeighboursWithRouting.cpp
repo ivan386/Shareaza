@@ -58,16 +58,20 @@ CNeighboursWithRouting::~CNeighboursWithRouting()
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithRouting packet broadcasting
 
-// Takes a packet, and neighbour to ignore, bGGEP unused (do)
+// Takes a packet, and neighbour to ignore (do)
 // Sends the packet to all the neighbours
 // Returns the number of neighbours that got the packet
-int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOOL /*bGGEP*/)
+int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOOL bGGEP)
 {
 	// Have this thread get exclusive access to the network object (do)
 	CSingleLock pLock( &Network.m_pSection, TRUE ); // When this method returns, pLock will go out of scope and release access
 
 	// Count how many neighbours we will send this packet to
 	int nCount = 0;
+	bool bSend = true;
+
+	if ( ! Settings.Gnutella1.EnableGGEP && bGGEP ) 
+		return 0;
 
 	// Loop through each neighbour in the list
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -75,8 +79,14 @@ int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOO
 		// Get the neighbour under pos, and move pos to the next one in the list
 		CNeighbour* pNeighbour = GetNext( pos );
 
+		if ( Settings.Gnutella1.EnableGGEP )
+		{
+			// Don't send GGEP packets if neighbour doesn't support them
+			bSend = bGGEP == TRUE ? pNeighbour->m_bGGEP == TRUE : true;
+		}
+
 		// If this isn't the neighbour the caller told us to avoid, and we've finished the handshake with it
-		if ( pNeighbour != pExcept && pNeighbour->m_nState == nrsConnected )
+		if ( pNeighbour != pExcept && pNeighbour->m_nState == nrsConnected && bSend )
 		{
 			// Send it the packet, and count one more packet was sent
 			if ( pNeighbour->Send( pPacket, FALSE, TRUE ) ) nCount++;
@@ -115,7 +125,7 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 	if ( pG2 )
 	{
 		// If it's a Q2 packet, point pG2Q2 at it, otherwise point pG2Q1 at it
-		if ( pG2->IsType( "Q2" ) ) pG2Q2 = pG2; else pG2Q1 = pG2;
+		if ( pG2->IsType( G2_PACKET_QUERY ) ) pG2Q2 = pG2; else pG2Q1 = pG2;
 	}
 
 	// Loop for each connected neighbour

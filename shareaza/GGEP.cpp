@@ -203,7 +203,7 @@ void CGGEPBlock::Write(CString& str)
 {
 	if ( ! m_pFirst ) return;
 
-	str += (TCHAR)GGEP_MAGIC;
+	str.Insert( 0, (TCHAR)GGEP_MAGIC );
 
 	for ( CGGEPItem* pItem = m_pFirst ; pItem ; pItem = pItem->m_pNext )
 	{
@@ -245,7 +245,7 @@ BOOL CGGEPItem::IsNamed(LPCTSTR pszID)
 
 void CGGEPItem::Read(LPVOID pData, int nLength)
 {
-	if ( m_nPosition + (DWORD)nLength >= m_nLength ) AfxThrowUserException();
+	if ( m_nPosition + (DWORD)nLength > m_nLength ) AfxThrowUserException();
 	CopyMemory( pData, m_pBuffer + m_nPosition, nLength );
 	m_nPosition += nLength;
 }
@@ -308,7 +308,7 @@ BOOL CGGEPItem::ReadFrom(CGGEPBlock* pBlock, BYTE nFlags)
 {
 	BYTE nLen = ( nFlags & GGEP_HDR_IDLEN );
 
-	if ( pBlock->m_nInput <= nLen ) return FALSE;
+	if ( pBlock->m_nInput <= nLen || ( nFlags & 0x10 ) != 0 ) return FALSE;
 
 	LPTSTR pszID = m_sID.GetBuffer( nLen );
 	for ( BYTE i = nLen ; i && pBlock->m_nInput ; i-- ) *pszID++ = pBlock->ReadByte();
@@ -334,15 +334,16 @@ BOOL CGGEPItem::ReadFrom(CGGEPBlock* pBlock, BYTE nFlags)
 
 	if ( pBlock->m_nInput < m_nLength ) return FALSE;
 
-	m_pBuffer = new BYTE[ m_nLength ];
+	m_pBuffer = new BYTE[ m_nLength + 1 ];
 	if ( m_pBuffer == NULL )
 	{
 		theApp.Message( MSG_ERROR, _T("Memory allocation error in CGGEPItem::ReadFrom()") );
 		theApp.Message( MSG_DEBUG, _T("Requested length: %i"), m_nLength );
 		return FALSE;
 	}
-
 	CopyMemory( m_pBuffer, pBlock->m_pInput, m_nLength );
+	m_pBuffer[ m_nLength ] = 0;
+	theApp.Message( MSG_DEBUG, _T("Received GGEP item \"%s\": %s"), m_sID, (LPCTSTR)CString( m_pBuffer ) );
 	pBlock->m_pInput += m_nLength;
 	pBlock->m_nInput -= m_nLength;
 
@@ -366,28 +367,34 @@ BOOL CGGEPItem::ReadFrom(CGGEPBlock* pBlock, BYTE nFlags)
 //////////////////////////////////////////////////////////////////////
 // CGGEPItem write to packet
 
-void CGGEPItem::WriteTo(CPacket* pPacket)
+void CGGEPItem::WriteTo(CPacket* pPacket, bool bSmall, bool bNeedCOBS)
 {
+	if (  m_sID.IsEmpty() ) return;
+
+	// Create GGEP Extension Header
 	BYTE nFlags = BYTE( m_sID.GetLength() & GGEP_HDR_IDLEN );
 
-	if ( Deflate( TRUE ) ) nFlags |= GGEP_HDR_DEFLATE;
-	if ( Encode( TRUE ) ) nFlags |= GGEP_HDR_COBS;
+	if ( bSmall && Deflate( bSmall ) ) nFlags |= GGEP_HDR_DEFLATE;
+	if ( bNeedCOBS && Encode( bNeedCOBS ) ) nFlags |= GGEP_HDR_COBS;
 
-	if ( m_pNext == NULL ) nFlags |= GGEP_HDR_LAST;
+	if ( m_pNext == NULL ) nFlags |= GGEP_HDR_LAST; // last extension in the block
 
+	// Flags -- 1 byte 
 	pPacket->WriteByte( nFlags );
 
+	// ID -- 1-15 byte
 	for ( BYTE i = 0 ; i < m_sID.GetLength() ; i++ )
 		pPacket->WriteByte( (BYTE)m_sID.GetAt( i ) );
 
+	// Length of the raw extension data -- 1-3 bytes
 	if ( m_nLength & 0x3F000 )
 		pPacket->WriteByte( (BYTE)( ( ( m_nLength >> 12 ) & GGEP_LEN_MASK ) | GGEP_LEN_MORE ) );
 
 	if ( m_nLength & 0xFC0 )
 		pPacket->WriteByte( (BYTE)( ( ( m_nLength >> 6 ) & GGEP_LEN_MASK ) | GGEP_LEN_MORE ) );
 
-	if ( m_nLength & 0x3F )
-		pPacket->WriteByte( (BYTE)( ( m_nLength & GGEP_LEN_MASK ) | GGEP_LEN_LAST ) );
+	// shut off everything except the last 6 bits
+	pPacket->WriteByte( (BYTE)( ( m_nLength & GGEP_LEN_MASK ) | GGEP_LEN_LAST ) );
 
 	if ( m_pBuffer && m_nLength )
 		pPacket->Write( m_pBuffer, m_nLength );
@@ -396,12 +403,12 @@ void CGGEPItem::WriteTo(CPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CGGEPItem write to string
 
-void CGGEPItem::WriteTo(CString& str)
+void CGGEPItem::WriteTo(CString& str, bool bSmall, bool bNeedCOBS)
 {
 	BYTE nFlags = BYTE( m_sID.GetLength() & GGEP_HDR_IDLEN );
 
-	if ( Deflate( TRUE ) ) nFlags |= GGEP_HDR_DEFLATE;
-	if ( Encode() ) nFlags |= GGEP_HDR_COBS;
+	if ( bSmall && Deflate( bSmall ) ) nFlags |= GGEP_HDR_DEFLATE;
+	if ( bNeedCOBS && Encode() ) nFlags |= GGEP_HDR_COBS;
 
 	if ( m_pNext == NULL ) nFlags |= GGEP_HDR_LAST;
 
