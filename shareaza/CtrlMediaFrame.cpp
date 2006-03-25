@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2006/02/19 14:12:47 $"
-//	Revision:		"$Revision: 1.40 $"
+//	Date:			"$Date: 2006/03/25 06:23:54 $"
+//	Revision:		"$Revision: 1.41 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -37,6 +37,21 @@
 #include "DlgSettingsManager.h"
 #include "DlgMediaVis.h"
 #include "CoolInterface.h"
+
+#ifndef WM_APPCOMMAND
+
+#define WM_APPCOMMAND					0x319
+#define APPCOMMAND_VOLUME_MUTE			8
+#define APPCOMMAND_VOLUME_DOWN			9
+#define APPCOMMAND_VOLUME_UP			10
+#define APPCOMMAND_MEDIA_NEXTTRACK		11
+#define APPCOMMAND_MEDIA_PREVIOUSTRACK	12
+#define APPCOMMAND_MEDIA_STOP			13
+#define APPCOMMAND_MEDIA_PLAY_PAUSE		14
+#define FAPPCOMMAND_MASK				0x8000
+#define GET_APPCOMMAND_LPARAM(lParam) ((short)(HIWORD(lParam) & ~FAPPCOMMAND_MASK))
+
+#endif
 
 IMPLEMENT_DYNAMIC(CMediaFrame, CWnd)
 
@@ -91,7 +106,7 @@ BEGIN_MESSAGE_MAP(CMediaFrame, CWnd)
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_MUTE, OnUpdateMediaMute)
 	ON_COMMAND(ID_MEDIA_MUTE, OnMediaMute)
 	ON_NOTIFY(MLN_NEWCURRENT, IDC_MEDIA_PLAYLIST, OnNewCurrent)
-	ON_MESSAGE(0x0319, OnMediaKey)
+	ON_MESSAGE(WM_APPCOMMAND, OnMediaKey)
 END_MESSAGE_MAP()
 
 #define SIZE_INTERNAL	1982
@@ -906,22 +921,22 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 	int nVolumeTick = 0;
 	int nVolumeDir = ( lParam == 0x90000 ? -1 : 1 );
 
-	switch ( lParam )
+	switch ( GET_APPCOMMAND_LPARAM( lParam ) )
 	{
-	case 0xB0000:
+	case APPCOMMAND_MEDIA_NEXTTRACK:
 		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_NEXT );
 		return 1;
-	case 0xC0000:
+	case APPCOMMAND_MEDIA_PREVIOUSTRACK:
 		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_PREVIOUS );
 		return 1;
-	case 0xD0000:
+	case APPCOMMAND_MEDIA_STOP:
 		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_STOP );
 		return 1;
-	case 0x80000:
+	case APPCOMMAND_VOLUME_MUTE:
 		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_MUTE );
 		return 1;
-	case 0x90000:
-	case 0xA0000:
+	case APPCOMMAND_VOLUME_DOWN:
+	case APPCOMMAND_VOLUME_UP:
 		m_bMute = TRUE;
 		nVolumeTick = m_wndVolume.GetPos() + nVolumeDir;
 		if ( nVolumeDir == -1 && nVolumeTick >= 0 ||
@@ -934,12 +949,10 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 			m_pPlayer->SetVolume( Settings.MediaPlayer.Volume );
 		m_bMute = FALSE;
 		return 1;
-	case 0xE0000:
+	case APPCOMMAND_MEDIA_PLAY_PAUSE:
 		GetOwner()->PostMessage( WM_COMMAND, m_nState == smsPlaying ? ID_MEDIA_PAUSE : ID_MEDIA_PLAY );
 		return 1;
 	}
-
-	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
