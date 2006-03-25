@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2006/03/25 11:40:56 $"
-//	Revision:		"$Revision: 1.43 $"
+//	Date:			"$Date: 2006/03/25 15:25:46 $"
+//	Revision:		"$Revision: 1.44 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -945,7 +945,7 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		MIXERLINE ml = {0};
 		ml.cbStruct = sizeof(MIXERLINE);
 		ml.dwComponentType = MIXERLINE_COMPONENTTYPE_DST_SPEAKERS;
-		result = mixerGetLineInfo( (HMIXEROBJ)hMixer, &ml, 
+		result = mixerGetLineInfo( reinterpret_cast<HMIXEROBJ>(hMixer), &ml, 
 			MIXER_GETLINEINFOF_COMPONENTTYPE );
 		if ( result != MMSYSERR_NOERROR ) return 0;
 
@@ -958,7 +958,7 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		mlc.cControls = 1;
 		mlc.pamxctrl = &mc;
 		mlc.cbmxctrl = sizeof(MIXERCONTROL);
-		result = mixerGetLineControls( (HMIXEROBJ)hMixer, &mlc, 
+		result = mixerGetLineControls( reinterpret_cast<HMIXEROBJ>(hMixer), &mlc, 
 			MIXER_GETLINECONTROLSF_ONEBYTYPE );
 		if ( result != MMSYSERR_NOERROR ) return 0;
 
@@ -975,7 +975,7 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		mcd.dwControlID = mc.dwControlID;
 		mcd.cbDetails = sizeof(MIXERCONTROLDETAILS_BOOLEAN) * ml.cChannels;
 		mcd.paDetails = pmcd_b;
-		result = mixerGetControlDetails( (HMIXEROBJ)hMixer, &mcd, 
+		result = mixerGetControlDetails( reinterpret_cast<HMIXEROBJ>(hMixer), &mcd, 
 			MIXER_GETCONTROLDETAILSF_VALUE );
 
 		if ( result == MMSYSERR_NOERROR )
@@ -986,7 +986,7 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 				pmcd_b[ ml.cChannels ].fValue = lNewValue; 
 
 			// set the mute status
-			result = mixerSetControlDetails( (HMIXEROBJ)hMixer, &mcd, 
+			result = mixerSetControlDetails( reinterpret_cast<HMIXEROBJ>(hMixer), &mcd, 
 				MIXER_SETCONTROLDETAILSF_VALUE );
 		}
 		delete [] pmcd_b;
@@ -997,7 +997,7 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 	}
 	case APPCOMMAND_VOLUME_DOWN:
 	case APPCOMMAND_VOLUME_UP:
-		m_bMute = TRUE;
+		KillTimer( 1 );
 		nVolumeTick = m_wndVolume.GetPos() + nVolumeDir;
 		if ( nVolumeDir == -1 && nVolumeTick >= 0 ||
 			 nVolumeDir == 1 && nVolumeTick <= 100 )
@@ -1007,7 +1007,8 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		Settings.MediaPlayer.Volume = (double)nVolumeTick / 100.0f;
 		if ( m_pPlayer != NULL )
 			m_pPlayer->SetVolume( Settings.MediaPlayer.Volume );
-		m_bMute = FALSE;
+		UpdateState();
+		SetTimer( 1, 200, NULL );
 		return 1;
 	case APPCOMMAND_MEDIA_PLAY_PAUSE:
 		GetOwner()->PostMessage( WM_COMMAND, m_nState == smsPlaying ? ID_MEDIA_PAUSE : ID_MEDIA_PLAY );
