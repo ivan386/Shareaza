@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2006/03/25 06:23:54 $"
-//	Revision:		"$Revision: 1.41 $"
+//	Date:			"$Date: 2006/03/25 06:26:23 $"
+//	Revision:		"$Revision: 1.42 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -953,6 +953,8 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		GetOwner()->PostMessage( WM_COMMAND, m_nState == smsPlaying ? ID_MEDIA_PAUSE : ID_MEDIA_PLAY );
 		return 1;
 	}
+
+	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
