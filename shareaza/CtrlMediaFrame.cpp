@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2006/03/25 06:26:23 $"
-//	Revision:		"$Revision: 1.42 $"
+//	Date:			"$Date: 2006/03/25 11:40:56 $"
+//	Revision:		"$Revision: 1.43 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -917,9 +917,10 @@ BOOL CMediaFrame::DoSizeList()
 LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 {
 	if ( wParam != 1 && !IsTopParentActive() ) return 0;
-	
+	if ( mixerGetNumDevs() < 1 ) return 0;
+
 	int nVolumeTick = 0;
-	int nVolumeDir = ( lParam == 0x90000 ? -1 : 1 );
+	int nVolumeDir = ( GET_APPCOMMAND_LPARAM( lParam ) == APPCOMMAND_VOLUME_DOWN ? -1 : 1 );
 
 	switch ( GET_APPCOMMAND_LPARAM( lParam ) )
 	{
@@ -933,8 +934,67 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_STOP );
 		return 1;
 	case APPCOMMAND_VOLUME_MUTE:
+	{
+		MMRESULT result;
+		HMIXER hMixer;
+		// obtain a handle to the mixer device
+		result = mixerOpen( &hMixer, MIXER_OBJECTF_MIXER, 0, 0, 0 );
+		if ( result != MMSYSERR_NOERROR ) return 0;
+
+		// get the speaker line of the mixer device
+		MIXERLINE ml = {0};
+		ml.cbStruct = sizeof(MIXERLINE);
+		ml.dwComponentType = MIXERLINE_COMPONENTTYPE_DST_SPEAKERS;
+		result = mixerGetLineInfo( (HMIXEROBJ)hMixer, &ml, 
+			MIXER_GETLINEINFOF_COMPONENTTYPE );
+		if ( result != MMSYSERR_NOERROR ) return 0;
+
+		// get the mute control of the speaker line
+		MIXERLINECONTROLS mlc = {0};
+		MIXERCONTROL mc = {0};
+		mlc.cbStruct = sizeof(MIXERLINECONTROLS);
+		mlc.dwLineID = ml.dwLineID;
+		mlc.dwControlType = MIXERCONTROL_CONTROLTYPE_MUTE;
+		mlc.cControls = 1;
+		mlc.pamxctrl = &mc;
+		mlc.cbmxctrl = sizeof(MIXERCONTROL);
+		result = mixerGetLineControls( (HMIXEROBJ)hMixer, &mlc, 
+			MIXER_GETLINECONTROLSF_ONEBYTYPE );
+		if ( result != MMSYSERR_NOERROR ) return 0;
+
+		// set 1 channel if it controls mute state for all channels
+		if ( MIXERCONTROL_CONTROLF_UNIFORM & mc.fdwControl )
+			ml.cChannels = 1;
+
+		// get the current mute values for all channels
+		MIXERCONTROLDETAILS mcd = {0};
+		MIXERCONTROLDETAILS_BOOLEAN* pmcd_b = new MIXERCONTROLDETAILS_BOOLEAN[ ml.cChannels ];
+		mcd.cbStruct = sizeof(mcd);
+		mcd.cChannels = ml.cChannels;
+		mcd.cMultipleItems = mc.cMultipleItems;
+		mcd.dwControlID = mc.dwControlID;
+		mcd.cbDetails = sizeof(MIXERCONTROLDETAILS_BOOLEAN) * ml.cChannels;
+		mcd.paDetails = pmcd_b;
+		result = mixerGetControlDetails( (HMIXEROBJ)hMixer, &mcd, 
+			MIXER_GETCONTROLDETAILSF_VALUE );
+
+		if ( result == MMSYSERR_NOERROR )
+		{
+			// change mute values for all channels
+			LONG lNewValue = LONG( pmcd_b->fValue == 0 );
+			while ( ml.cChannels-- )
+				pmcd_b[ ml.cChannels ].fValue = lNewValue; 
+
+			// set the mute status
+			result = mixerSetControlDetails( (HMIXEROBJ)hMixer, &mcd, 
+				MIXER_SETCONTROLDETAILSF_VALUE );
+		}
+		delete [] pmcd_b;
+
+		// now mute Shareaza player control ( probably, not needed )
 		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_MUTE );
 		return 1;
+	}
 	case APPCOMMAND_VOLUME_DOWN:
 	case APPCOMMAND_VOLUME_UP:
 		m_bMute = TRUE;
