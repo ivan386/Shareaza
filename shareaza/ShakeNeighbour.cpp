@@ -1592,6 +1592,8 @@ BOOL CShakeNeighbour::IsClientBad()
 
 	if ( _tcsistr( m_sUserAgent, _T("mxie") ) )			return TRUE;
 
+	if ( _tcsistr( m_sUserAgent, _T("BearShare MP3") ) ) return TRUE;
+
 	// Clients that over-query or otherwise cause problems
 	//if ( _tcsistr( m_sUserAgent, _T("") ) )			return TRUE;
 
