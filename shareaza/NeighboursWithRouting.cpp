@@ -82,7 +82,7 @@ int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOO
 		if ( Settings.Gnutella1.EnableGGEP )
 		{
 			// Don't send GGEP packets if neighbour doesn't support them
-			bSend = bGGEP == TRUE ? pNeighbour->m_bGGEP == TRUE : true;
+			bSend = ( bGGEP && pNeighbour->m_bGGEP );;
 		}
 
 		// If this isn't the neighbour the caller told us to avoid, and we've finished the handshake with it
