@@ -503,7 +503,8 @@ CSharedSource* CLibraryFile::AddAlternateSources(LPCTSTR pszURL)
 			DWORD nAddress = inet_addr( T2CA( strURL ) );
 			strURL.Empty();
 			
-			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && nPort != 0 && nAddress != INADDR_NONE )
+			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && 
+				 ! Network.IsReserved( (IN_ADDR*)&nAddress ) && nPort != 0 && nAddress != INADDR_NONE )
 			{
 				if ( m_oSHA1 )
 				{
@@ -551,7 +552,8 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, BOOL /*bForce*/)
 	if ( memcmp( &pURL.m_pAddress, &Network.m_pHost.sin_addr,
 		 sizeof(IN_ADDR) ) == 0 ) return NULL;
 	
-	if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) ) return FALSE;
+	if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) ||
+		 Network.IsReserved( (IN_ADDR*)&pURL.m_pAddress ) ) return FALSE;
 	
 	if ( validAndUnequal( pURL.m_oSHA1, m_oSHA1 ) ) return NULL;
 	
