@@ -436,7 +436,8 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket)
 		pPacket->m_nPosition = nNext;
 	}
 
-	if ( ! nPort || Network.IsFirewalledAddress( &nAddress ) ) return TRUE;
+	if ( ! nPort || Network.IsFirewalledAddress( &nAddress ) || 
+		 Network.IsReserved( (IN_ADDR*)&nAddress ) ) return TRUE;
 
 	if ( bRelay )
 	{
@@ -601,8 +602,9 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 		pPacket->m_nPosition = nNext;
 	}
 
-	if ( ! Network.IsFirewalledAddress( &m_pHost.sin_addr, TRUE ) &&
-		   m_pVendor != NULL && m_nNodeType != ntLeaf )
+	if ( ! Network.IsFirewalledAddress( &m_pHost.sin_addr, TRUE ) && 
+		 ! Network.IsReserved( &m_pHost.sin_addr ) &&
+		 m_pVendor != NULL && m_nNodeType != ntLeaf )
 	{
 		HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ),
 			0, m_pVendor->m_sCode );
@@ -767,7 +769,8 @@ BOOL CG2Neighbour::OnKHL(CG2Packet* pPacket)
 				if ( nLength >= 10 ) tSeen = pPacket->ReadLongBE() + m_tAdjust;
 			}
 
-			if ( FALSE == Network.IsFirewalledAddress( &nAddress, TRUE ) )
+			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && 
+				 ! Network.IsReserved( (IN_ADDR*)&nAddress ) )
 			{
 				CHostCacheHost* pCached = HostCache.Gnutella2.Add(
 					(IN_ADDR*)&nAddress, nPort, tSeen, strVendor );
@@ -878,7 +881,8 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 
 	if ( pPacket->GetRemaining() < 2 + 16 ) return TRUE;
 	if ( nAddress == 0 || nPort == 0 ) return TRUE;
-	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) ) return TRUE;
+	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) ||
+		 Network.IsReserved( (IN_ADDR*)&nAddress ) ) return TRUE;
 
 	BYTE* pPtr	= pPacket->m_pBuffer + pPacket->m_nPosition;
 	BYTE nTTL	= pPacket->ReadByte();
@@ -1099,7 +1103,8 @@ BOOL CG2Neighbour::OnQueryKeyReq(CG2Packet* pPacket)
 		pPacket->m_nPosition = nOffset;
 	}
 
-	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) || 0 == nPort ) return TRUE;
+	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) || 
+		 0 == nPort ||  Network.IsReserved( (IN_ADDR*)&nAddress ) ) return TRUE;
 
 	CHostCacheHost* pCached = bCacheOkay ? HostCache.Gnutella2.Find( (IN_ADDR*)&nAddress ) : NULL;
 
@@ -1164,7 +1169,8 @@ BOOL CG2Neighbour::OnQueryKeyAns(CG2Packet* pPacket)
 	theApp.Message( MSG_DEBUG, _T("Got a query key for %s:%i via neighbour %s: 0x%x"),
 		(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort, (LPCTSTR)m_sAddress, nKey );
 
-	if ( Network.IsFirewalledAddress( &nAddress ) || 0 == nPort ) return TRUE;
+	if ( Network.IsFirewalledAddress( &nAddress ) || 
+		 0 == nPort || Network.IsReserved( (IN_ADDR*)&nAddress ) ) return TRUE;
 
 	CHostCacheHost* pCache = HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort );
 	if ( pCache != NULL ) pCache->SetKey( nKey, &m_pHost.sin_addr );
@@ -1197,7 +1203,8 @@ BOOL CG2Neighbour::OnPush(CG2Packet* pPacket)
 		m_nDropCount++;
 		return TRUE;
 	}
-	else if ( ! nPort || Network.IsFirewalledAddress( &nAddress ) )
+	else if ( ! nPort || Network.IsFirewalledAddress( &nAddress ) ||
+		 Network.IsReserved( (IN_ADDR*)&nAddress ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_ZERO_PUSH, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
