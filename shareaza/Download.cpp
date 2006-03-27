@@ -484,6 +484,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 		}
 	}
 	
+	StopTrying();
 	m_bComplete		= TRUE;
 	m_tCompleted	= GetTickCount();
 	

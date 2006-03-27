@@ -1,9 +1,9 @@
 //
 // DownloadWithSources.cpp
 //
-//	Date:			"$Date: 2006/01/11 20:32:05 $"
-//	Revision:		"$Revision: 1.29 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2006/03/27 23:13:29 $"
+//	Revision:		"$Revision: 1.30 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -345,6 +345,14 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 
 int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 {
+	if ( IsCompleted() || IsMoving() )
+	{
+		ClearSources();
+		return 0;
+	}
+	else if ( IsPaused() )
+		return 0;
+			
 	CString strURLs( pszURLs );
 	BOOL bQuote = FALSE;
 	
