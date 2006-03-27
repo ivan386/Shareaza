@@ -77,6 +77,12 @@ CDownloadTransfer::~CDownloadTransfer()
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransfer close
+// bKeepSource parameter:
+// TS_FALSE   - the source will be added to m_pFailedSources in CDownloadWithSources,
+//			    removed from the sources and can be distributed in the Source Mesh as X-Nalt
+// TS_TRUE    - keeps the source and will be distributed as X-Alt
+// TS_UNKNOWN - keeps the source and will be dropped after several retries, will be
+//            - added to m_pFailedSources when removed
 
 void CDownloadTransfer::Close(TRISTATE bKeepSource)
 {

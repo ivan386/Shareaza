@@ -1,9 +1,9 @@
 //
 // DownloadSource.cpp
 //
-//	Date:			"$Date: 2006/01/11 20:32:05 $"
-//	Revision:		"$Revision: 1.15 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2006/03/27 01:36:17 $"
+//	Revision:		"$Revision: 1.16 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -459,6 +459,7 @@ void CDownloadSource::OnFailure(BOOL bNondestructive)
 		}
 		else
 		{
+			// Add to the bad sources list (X-NAlt)
 			m_pDownload->RemoveSource( this, TRUE );
 		}
 	}
