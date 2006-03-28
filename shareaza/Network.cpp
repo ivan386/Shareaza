@@ -241,9 +241,9 @@ void CNetwork::Disconnect()
 	
 	if ( ! m_bEnabled ) return;
 	
-	Settings.Gnutella1.EnableToday = FALSE;
-	Settings.Gnutella2.EnableToday = FALSE;
-	Settings.eDonkey.EnableToday = FALSE;
+	Settings.Gnutella1.EnableToday = !Settings.Connection.RequireForTransfers;
+	Settings.Gnutella2.EnableToday = !Settings.Connection.RequireForTransfers;
+	Settings.eDonkey.EnableToday = !Settings.Connection.RequireForTransfers;
 
 	theApp.Message( MSG_DEFAULT, _T("") );
 	theApp.Message( MSG_SYSTEM, IDS_NETWORK_DISCONNECTING );
