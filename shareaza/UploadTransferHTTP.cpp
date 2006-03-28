@@ -407,7 +407,8 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				{
 					if ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFile, TRUE ) )
 					{
-						// Have the file, but the network is disabled.
+						// Have the file, but the network is disabled (503 Service Unavailable response)
+						// We handle them in CDownloadTransferHTTP::ReadResponseLine
 						SendResponse( IDR_HTML_DISABLED );
 						theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 						Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE ); // Anti-hammer protection if client doesn't understand 403
@@ -603,18 +604,13 @@ BOOL CUploadTransferHTTP::IsNetworkDisabled()
 {
 	if ( Settings.Connection.RequireForTransfers == FALSE ) return FALSE;
 	
-	if ( m_nGnutella == 2 )
+	if ( m_nGnutella > 2 )
 	{
 		if ( ! Settings.Gnutella2.EnableToday ) return TRUE;
 	}
 	else if ( m_nGnutella == 1 )
 	{
 		if ( ! Settings.Gnutella1.EnableToday ) return TRUE;
-	}
-	else
-	{
-		if ( ! Settings.Gnutella1.EnableToday &&
-			 ! Settings.Gnutella2.EnableToday ) return TRUE;
 	}
 	
 	return FALSE;
@@ -910,13 +906,17 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 		m_pOutput->Print( strLine );
 	}
 	
-	if ( m_bKeepAlive )
+	if ( IsNetworkDisabled() )
+	{
+		// Ask to retry after some delay in seconds
+		strLine.Format( L"Retry-After: %lu", 
+			m_nGnutella == 1 ? Settings.Gnutella1.RequeryDelay * 60 
+							 : Settings.Gnutella2.RequeryDelay * 3600 );
+		m_pOutput->Print( strLine + _T("\r\n") );
+	}
+	else if ( m_bKeepAlive )
 	{
 		m_pOutput->Print( "Connection: Keep-Alive\r\n" );
-	}
-	else
-	{
-		m_pOutput->Print( "Connection: Close\r\n" );
 	}
 	
 	m_pOutput->Print( "Accept-Ranges: bytes\r\n" );
@@ -995,7 +995,7 @@ void CUploadTransferHTTP::SendFileHeaders()
 		strHeader = _T("X-Available-Ranges: ") + m_sRanges + _T("\r\n");
 		m_pOutput->Print( strHeader );
 	}
-	
+
 	if ( m_sLocations.GetLength() )
 	{
 		strHeader = _T("Alt-Location: ") + m_sLocations + _T("\r\n");

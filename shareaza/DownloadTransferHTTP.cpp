@@ -1,9 +1,9 @@
 //
 // DownloadTransferHTTP.cpp
 //
-//	Date:			"$Date: 2006/01/11 20:32:05 $"
-//	Revision:		"$Revision: 1.22 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2006/03/28 09:14:44 $"
+//	Revision:		"$Revision: 1.23 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -374,7 +374,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		m_pOutput->Print( "X-Content-URN: " );
 		m_pOutput->Print( strURN + _T("\r\n") );
 		
-		if ( m_pSource->m_nGnutella == 1 )
+		if ( m_pSource->m_nGnutella < 2 )
 			strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_G1, m_pSource );
 		else
 			strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_HTTP, m_pSource );
@@ -561,6 +561,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 	}
 	else if ( strCode == _T("503") )
 	{
+		// 503 response without an X-Available-Ranges header means the complete file is available
 		if ( _tcsistr( strMessage, _T("range") ) != NULL )
 		{
 			m_bRangeFault = TRUE;
@@ -877,6 +878,13 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 
 BOOL CDownloadTransferHTTP::OnHeadersComplete()
 {
+	// Close parameters:
+	// TS_FALSE   - the source will be added to m_pFailedSources in CDownloadWithSources,
+	//			    removed from the sources and can be distributed in the Source Mesh as X-Nalt
+	// TS_TRUE    - keeps the source and will be distributed as X-Alt
+	// TS_UNKNOWN - keeps the source and will be dropped after several retries, will be
+	//            - added to m_pFailedSources when removed
+
 	if ( m_bBadResponse )
 	{
 		Close( TS_FALSE );
