@@ -41,6 +41,7 @@ BEGIN_MESSAGE_MAP(CFileSourcesPage, CFilePropertiesPage)
 	ON_EN_CHANGE(IDC_FILE_SOURCE, OnChangeFileSource)
 	ON_BN_CLICKED(IDC_SOURCE_REMOVE, OnSourceRemove)
 	ON_BN_CLICKED(IDC_SOURCE_NEW, OnSourceNew)
+	ON_NOTIFY(NM_DBLCLK, IDC_FILE_SOURCES, OnDblClk)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -90,7 +91,7 @@ BOOL CFileSourcesPage::OnInitDialog()
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
-		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT );
+		LVS_EX_FULLROWSELECT | LVS_EX_LABELTIP, LVS_EX_FULLROWSELECT | LVS_EX_LABELTIP );
 
 	{
 		CQuickLock oLock( Library.m_pSection );
@@ -196,4 +197,17 @@ void CFileSourcesPage::OnSourceNew()
 			if ( pSource ) AddSource( pSource );
 		}
 	}
+}
+
+void CFileSourcesPage::OnDblClk(NMHDR* /*pNMHDR*/, LRESULT *pResult)
+{
+	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
+	if ( nItem >= 0 )
+	{
+		CSharedSource* pSource = (CSharedSource*)m_wndList.GetItemData( nItem );
+		m_sSource = pSource->m_sURL;
+	}
+	UpdateData( FALSE );
+
+	*pResult = 0;
 }

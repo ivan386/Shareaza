@@ -68,6 +68,7 @@ protected:
 	afx_msg void OnChangeFileSource();
 	afx_msg void OnSourceRemove();
 	afx_msg void OnSourceNew();
+	afx_msg void OnDblClk(NMHDR *pNMHDR, LRESULT *pResult);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
