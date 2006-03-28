@@ -631,6 +631,14 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 		return TRUE;
 	}
 
+	if ( IsNetworkDisabled() )
+	{
+		oLibraryLock.Unlock();
+		SendResponse( IDR_HTML_DISABLED );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		return TRUE;
+	}
+
 	if ( ! UploadQueues.CanUpload( PROTOCOL_HTTP, pFile ) )
 	{
 		// File is not uploadable. (No queue, is a ghost, etc)
