@@ -174,6 +174,12 @@ BOOL CDownloadTransferED2K::OnRun()
 
 BOOL CDownloadTransferED2K::OnRunEx(DWORD tNow)
 {
+	if (  !Settings.eDonkey.EnableToday && Settings.Connection.RequireForTransfers )
+	{
+		Close( TS_TRUE );
+		return FALSE;
+	}
+
 	switch ( m_nState )
 	{
 	case dtsConnecting:

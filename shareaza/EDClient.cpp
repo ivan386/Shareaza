@@ -1211,19 +1211,25 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( m_oUpED2K, TRUE, TRUE );
 	if ( ( pFile ) && ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, TRUE ) ) )
 	{
-		// Create the reply packet
-		pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
-		// Get the comments/rating data
-		nRating = pFile->m_nRating;
-		strComments = pFile->m_sComments;
-		oLock.Unlock();
+		if ( Settings.eDonkey.EnableToday || !Settings.Connection.RequireForTransfers )
+		{
+			// Create the reply packet
+			pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
+			// Get the comments/rating data
+			nRating = pFile->m_nRating;
+			strComments = pFile->m_sComments;
+			oLock.Unlock();
 
-		// Send reply
-		Send( pReply );
-		// Send comments / rating (if required)
-		SendCommentsPacket( nRating, strComments );
-
-
+			// Send reply
+			Send( pReply );
+			// Send comments / rating (if required)
+			SendCommentsPacket( nRating, strComments );
+		}
+		else
+		{
+			pReply->m_nType = ED2K_C2C_FILENOTFOUND;
+			Send( pReply );
+		}
 		return TRUE;
 	}
 	oLock.Unlock();

@@ -484,6 +484,14 @@ BOOL CUploadTransferED2K::ServeRequests()
 		if ( DispatchNextChunk() )
 		{
 			CheckFinishedRequest();
+				
+			if ( !Settings.eDonkey.EnableToday && Settings.Connection.RequireForTransfers )
+			{
+				Send( CEDPacket::New( ED2K_C2C_FINISHUPLOAD ) );
+				Cleanup();
+				Close();
+				return FALSE;
+			}
 		}
 		else
 		{
@@ -554,6 +562,14 @@ BOOL CUploadTransferED2K::StartNextRequest()
 
 	if ( m_nLength < SIZE_UNKNOWN )
 	{
+		if ( !Settings.eDonkey.EnableToday && Settings.Connection.RequireForTransfers )
+		{
+			Send( CEDPacket::New( ED2K_C2C_FILENOTFOUND ) );
+			Cleanup();
+			Close();
+			return FALSE;
+		}
+
 		m_nState	= upsUploading;
 		m_tContent	= m_pClient->m_mOutput.tLast = GetTickCount();
 		
@@ -647,7 +663,10 @@ BOOL CUploadTransferED2K::CheckFinishedRequest()
 {
 	ASSERT( m_nState == upsUploading );
 	
-	if ( m_nPosition < m_nLength ) return FALSE;
+	if ( m_nPosition < m_nLength && 
+		( Settings.eDonkey.EnableToday || 
+		!Settings.Connection.RequireForTransfers ) )
+		return FALSE; 
 	
 	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_FINISHED,
 		(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
