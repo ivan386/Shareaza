@@ -409,7 +409,9 @@ BOOL CG2Neighbour::OnPacket(CG2Packet* pPacket)
 
 BOOL CG2Neighbour::OnPing(CG2Packet* pPacket)
 {
+	Statistics.Current.Gnutella2.PingsReceived++;
 	Send( CG2Packet::New( G2_PACKET_PONG ) );
+	Statistics.Current.Gnutella2.PongsSent++;
 
 	if ( ! pPacket->m_bCompound ) return TRUE;
 
@@ -444,6 +446,7 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket)
 		CG2Packet* pPong = CG2Packet::New( G2_PACKET_PONG, TRUE );
 		pPong->WritePacket( "RELAY", 0 );
 		Datagrams.Send( (IN_ADDR*)&nAddress, nPort, pPong );
+		Statistics.Current.Gnutella2.PongsSent++;
 	}
 	else
 	{
@@ -492,6 +495,7 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket)
 			nCur, nRand, (LPCTSTR)pNeighbour->m_sAddress  );
 
 			pNeighbour->Send( pPacket, FALSE );
+			Statistics.Current.Gnutella2.PingsSent++;
 			pG2Nodes.RemoveAt( nRand );
 		}
 	}

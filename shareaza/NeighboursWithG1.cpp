@@ -26,6 +26,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Statistics.h"
 #include "Network.h"
 #include "NeighboursWithG1.h"
 #include "G1Neighbour.h"
@@ -124,6 +125,7 @@ void CNeighboursWithG1::OnG1Ping()
 			{
 				// Send a ping packet to it (do)
 				pNeighbour->SendPing( dwNow, oGUID );
+				Statistics.Current.Gnutella1.PingsSent++;
 			}
 		}
 	}

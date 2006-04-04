@@ -69,6 +69,10 @@ public:
 			QWORD	Dropped;
 			QWORD	Lost;
 			QWORD	Queries;
+			QWORD	PingsSent;
+			QWORD	PingsReceived;
+			QWORD	PongsSent;
+			QWORD	PongsReceived;
 		} Gnutella1, Gnutella2;
 
 		struct

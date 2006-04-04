@@ -316,6 +316,26 @@ QWORD CGraphItem::GetValue(DWORD nCode, DWORD /*nParam*/)
 		Network.m_pSection.Unlock();
 		break;
 
+	case GRC_GNUTELLA_PINGS:
+		if ( ! Network.m_pSection.Lock( 20 ) ) break;
+		Statistics.Update();
+		if ( Statistics.Last.Gnutella1.PingsSent + Statistics.Last.Gnutella2.PingsSent == 0 )
+			nValue = 100;
+		else
+			nValue = (float)( Statistics.Last.Gnutella1.PingsReceived + Statistics.Last.Gnutella2.PingsReceived ) /
+					 ( Statistics.Last.Gnutella1.PingsSent + Statistics.Last.Gnutella2.PingsSent ) * 100;
+		Network.m_pSection.Unlock();
+		break;
+	case GRC_GNUTELLA_PONGS:
+		if ( ! Network.m_pSection.Lock( 20 ) ) break;
+		Statistics.Update();
+		if ( Statistics.Last.Gnutella1.PongsSent + Statistics.Last.Gnutella2.PongsSent == 0 )
+			nValue = 100;
+		else
+			nValue = (float)( Statistics.Last.Gnutella1.PongsReceived + Statistics.Last.Gnutella2.PongsReceived ) /
+					 ( Statistics.Last.Gnutella1.PongsSent + Statistics.Last.Gnutella2.PongsSent ) * 100;
+		Network.m_pSection.Unlock();
+		break;
 	};
 
 	return nValue;
@@ -353,6 +373,9 @@ GRAPHITEM CGraphItem::m_pItemDesc[] =
 	{ GRC_GNUTELLA_DROPPED, IDS_GRAPH_GNUTELLA_DROPPED, 0 },
 	{ GRC_GNUTELLA_LOST, IDS_GRAPH_GNUTELLA_LOST, 0 },
 	{ GRC_GNUTELLA_QUERIES, IDS_GRAPH_GNUTELLA_QUERIES, 0 },
+
+	{ GRC_GNUTELLA_PINGS, IDS_GRAPH_GNUTELLA_PINGS, 0 },
+	{ GRC_GNUTELLA_PONGS, IDS_GRAPH_GNUTELLA_PONGS, 0 },
 
 	{ 0, 0, 0 }
 };
