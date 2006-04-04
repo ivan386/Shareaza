@@ -39,6 +39,8 @@ BEGIN_INTERFACE_MAP(CLibraryMaps, CComObject)
 	INTERFACE_PART(CLibraryMaps, IID_ILibraryFiles, LibraryFiles)
 END_INTERFACE_MAP()
 
+#undef HASH_SIZE
+#undef HASH_MASK
 #define HASH_SIZE	512
 #define HASH_MASK	0x1FF
 
