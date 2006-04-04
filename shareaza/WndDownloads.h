@@ -60,6 +60,7 @@ protected:
 	int				m_nMoreSourcesLimiter;
 	DWORD			m_tMoreSourcesTimer;
 	DWORD			m_tLastUpdate;
+	bool			m_bMouseCaptured;
 protected:
 	DWORD			m_tSel;
 	BOOL			m_bSelAny;
@@ -187,6 +188,8 @@ protected:
 	afx_msg void OnDownloadsClearComplete();
 	afx_msg void OnUpdateDownloadsEdit(CCmdUI *pCmdUI);
 	afx_msg void OnDownloadsEdit();	
+public:
+	afx_msg void OnCaptureChanged(CWnd *pWnd);
 };
 
 #define IDC_DOWNLOADS	100
