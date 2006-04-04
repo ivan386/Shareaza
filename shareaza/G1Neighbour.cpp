@@ -88,6 +88,7 @@ CG1Neighbour::CG1Neighbour(CNeighbour* pBase)
 
 	// Send the remote computer a new Gnutella ping packet
 	Send( CG1Packet::New( G1_PACKET_PING ) );
+	Statistics.Current.Gnutella1.PingsSent++;
 
 	// If the remote computer told us it supports vendor-spcific messages, and settings allow them
 	if ( Settings.Gnutella1.VendorMsg && m_bVendorMsg )
@@ -387,7 +388,7 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	}
 	
 	Send( pPacket, TRUE, TRUE );
-
+	Statistics.Current.Gnutella1.PingsSent++;
 	return TRUE;
 }
 
@@ -407,6 +408,7 @@ struct CompareNums
 // Always returns true
 BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 {
+	Statistics.Current.Gnutella1.PingsReceived++;
 	// Add the ping's GUID to the neighbours route cache, and if it returns false
 	if ( ! Neighbours.m_pPingRoute->Add( pPacket->m_oGUID, this ) )
 	{
@@ -470,7 +472,12 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 			if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
 			{
 				// Broadcast the packet to the computers we are connected to
-				if ( Neighbours.Broadcast( pPacket, this, TRUE ) ) Statistics.Current.Gnutella1.Routed++; // Record we routed one more packet
+				int nCount = Neighbours.Broadcast( pPacket, this, TRUE );
+				if ( nCount ) 
+				{
+					Statistics.Current.Gnutella1.Routed++; // Record we routed one more packet
+					Statistics.Current.Gnutella1.PingsSent += nCount;
+				}
 
 				// Undo what calling Hop did, making the packet's TTL and hop counts are the same as before we called Hop
 				pPacket->m_nHops--;
@@ -494,7 +501,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	}
 	if ( bDNA )
 	{
-		WriteRandomCache( pGGEP.Add( L"DIP" ) );
+		WriteRandomCache( pGGEP.Add( L"DIPP" ) );
 	}
 
 	// Save information from this ping packet in the CG1Neighbour object
@@ -534,6 +541,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 
 			// Send the pong packet to the remote computer we are currently looping on
 			Send( pPong );
+			Statistics.Current.Gnutella1.PongsSent++;
 		}
 
 		// We're done
@@ -601,6 +609,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		{
 			// Have the pong item prepare a packet, and send it to the remote computer
 			Send( pCache->ToPacket( m_nLastPingHops, m_pLastPingID ) );
+			Statistics.Current.Gnutella1.PongsSent++;
 
 			// Add this pong item to the ignore list, and adjust the value in the pong needed array (do)
 			pIgnore.AddTail( pCache ); // Add a pointer to this CPongItem to the local pointer list of them
@@ -619,10 +628,10 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 	bool bIPP = false;
 	if ( pItem->IsNamed( L"IPP" ) )
 		bIPP = true;
-	else if ( !pItem->IsNamed( L"DIP" ) )
+	else if ( !pItem->IsNamed( L"DIPP" ) && !pItem->IsNamed( L"DIP" ) )
 	return 0;
 
-	DWORD nCount = min( DWORD(50), HostCache.Gnutella1.CountHosts() );
+	DWORD nCount = min( DWORD(50), bIPP ? HostCache.Gnutella1.CountHosts() : HostCache.G1DNA.CountHosts() );
 	WORD nPos = 0;
 
 	// Create 5 random positions from 0 to 50 in the descending order
@@ -635,7 +644,13 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 	std::sort( pList.begin(), pList.end(), CompareNums() );
 
 	nCount = Settings.Gnutella1.MaxHostsInPongs;
-	CHostCacheHost* pHost = HostCache.Gnutella1.GetNewest();
+
+	CHostCacheHost* pHost = NULL;
+	if ( bIPP )
+		pHost = HostCache.Gnutella1.GetNewest() ;
+	else
+		pHost = HostCache.G1DNA.GetNewest();
+
 	while ( pHost && nCount )
 	{
 		nPos = pList.back(); // take the smallest value;
@@ -644,7 +659,6 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 
 		// We won't provide Shareaza hosts for G1 cache, since users may disable
 		// G1 and it will polute the host caches ( ??? )
-		// ToDo: fetch GDNA hosts only to randomize between them
 		if ( pHost && 
 			 ( ( bIPP && ( !pHost->m_pVendor || pHost->m_pVendor->m_sCode != L"GDNA" ) ) || 
 			   ( !bIPP && pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) ) )
@@ -667,6 +681,7 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 // Always returns true
 BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 {
+	Statistics.Current.Gnutella1.PongsReceived++;
 	// If the pong is too short, or the pong is too long and settings say we should watch that
 	if ( pPacket->m_nLength < 14 || ( pPacket->m_nLength > 14 && Settings.Gnutella1.StrictPackets ) )
 	{
@@ -700,7 +715,10 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
 			CGGEPItem* pIPPs = pGGEP.Find( L"IPP", 6 );
-			CGGEPItem* pGDNAs = pGGEP.Find( L"DIP", 6 );
+			// GDNA has a bug in their code; they send DIP but receive DIPP
+			CGGEPItem* pGDNAs = pGGEP.Find( L"DIPP", 6 );
+			if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
+
 			// We got a response to SCP extension, add hosts to cache if IPP extension exists
 			while ( pIPPs || pGDNAs )
 			{
@@ -722,10 +740,13 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 							theApp.Message( MSG_DEBUG, _T("Got %s host through pong (%s:%i)"), 
 								(LPCTSTR)str, (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
 							HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, pGDNAs ? (LPCTSTR)str : NULL );
+							// Add to separate cache to have a quick access only to GDNAs
+							if ( pGDNAs )
+								HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, (LPCTSTR)str );
 						}
 					}
 				}
-				if ( pIPPs ) 
+				if ( pIPPs )
 					pIPPs = NULL;
 				else if ( pGDNAs )
 					pGDNAs = NULL;
@@ -742,6 +763,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 					// Send this pong to it
 					Statistics.Current.Gnutella1.Routed++; // Record one more packet was routed
 					pOrigin->Send( pPacket, FALSE, TRUE );
+					Statistics.Current.Gnutella1.PongsSent++;
 				}
 
 				// Calling Hop above moved 1 from TTL to Hops, put the numbers back the way we got them
@@ -813,6 +835,7 @@ void CG1Neighbour::OnNewPong(CPongItem* pPong)
 	{
 		// Have the CPongItem object make a packet, and send it to the remote computer
 		Send( pPong->ToPacket( m_nLastPingHops, m_pLastPingID ) );
+		Statistics.Current.Gnutella1.PongsSent++;
 
 		// Record one less pong with that many hops is needed (do)
 		m_nPongNeeded[ pPong->m_nHops ]--;
