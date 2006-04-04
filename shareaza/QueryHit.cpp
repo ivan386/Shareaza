@@ -606,23 +606,75 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD
 
 BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 {
-	int nBogus = 0;
-	
+	typedef std::vector< std::wstring > StringList;
+	std::wstring strTemp;
+
 	if ( pFirstHit == NULL ) return TRUE;
 
-	for ( CQueryHit* pHit = pFirstHit->m_pNext ; pHit ; pHit = pHit->m_pNext )
+	StringList pList;
+	if ( pFirstHit->m_oSHA1 )
 	{
-		if ( validAndEqual( pFirstHit->m_oSHA1, pHit->m_oSHA1 ) )
-			nBogus++;
-		else if ( validAndEqual( pFirstHit->m_oED2K, pHit->m_oED2K ) )
-			nBogus++;
+		strTemp.assign( pFirstHit->m_oSHA1.toUrn() );
+		pList.push_back( strTemp );
+	}
+	if ( pFirstHit->m_oED2K )
+	{
+		strTemp.assign( pFirstHit->m_oED2K.toUrn() );
+		pList.push_back( strTemp );
 	}
 	
-	if ( nBogus < 2 ) return FALSE;
+	for ( CQueryHit* pHit = pFirstHit->m_pNext ; pHit ; pHit = pHit->m_pNext )
+	{
+		if ( pHit->m_oSHA1 )
+		{
+			strTemp.assign( pHit->m_oSHA1.toUrn() );
+			pList.push_back( strTemp );
+		}
+		if ( pHit->m_oED2K )
+		{
+			strTemp.assign( pHit->m_oED2K.toUrn() );
+			pList.push_back( strTemp );
+		}
+	}
+	
+	size_t nBogus = pList.size();
+
+	StringList::iterator it, it2;
+	bool bDuplicate = false;
+
+	for ( it = pList.begin() ; it != pList.end() && !it->empty() ; ++it )
+	{
+		for ( it2 = it + 1 ; it2 != pList.end() ; )
+		{
+			if ( *it2 == *it )
+			{
+				it2 = pList.erase( it2 ); // remove duplicates
+				bDuplicate = true;
+			}
+			else
+				++it2;
+		}
+		if ( bDuplicate )
+		{
+			it = pList.erase( it );
+			bDuplicate = false;
+		}
+	}
+	
+	nBogus -= pList.size();
+
+	if ( nBogus == 0 ) return FALSE;
 	
 	for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
 	{
-		pHit->m_bBogus = TRUE;
+		if ( pHit->m_oSHA1 )
+			strTemp.assign( pHit->m_oSHA1.toUrn() );
+		else if ( pHit->m_oED2K )
+			strTemp.assign( pHit->m_oED2K.toUrn() );
+		else continue;
+
+		if ( std::find( pList.begin(), pList.end(), strTemp ) == pList.end() )
+			pHit->m_bBogus = TRUE;
 	}
 	
 	return TRUE;
