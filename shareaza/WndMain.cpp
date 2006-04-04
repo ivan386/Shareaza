@@ -1,8 +1,8 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2006/03/28 20:23:21 $"
-//	Revision:		"$Revision: 1.49 $"
+//	Date:			"$Date: 2006/04/04 23:43:25 $"
+//	Revision:		"$Revision: 1.50 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1493,6 +1493,9 @@ void CMainWnd::OnUpdateNetworkConnect(CCmdUI* pCmdUI)
 
 void CMainWnd::OnNetworkConnect() 
 {
+	Settings.Gnutella1.EnableToday = Settings.Gnutella1.EnableAlways;
+	Settings.Gnutella2.EnableToday = Settings.Gnutella2.EnableAlways;
+	Settings.eDonkey.EnableToday = Settings.eDonkey.EnableAlways;
 	Network.Connect( TRUE );
 }
 

@@ -164,6 +164,13 @@ BOOL CNetwork::ReadyToTransfer(DWORD tNow) const
 
 BOOL CNetwork::Connect(BOOL bAutoConnect)
 {
+	if ( bAutoConnect && !m_bEnabled )
+	{
+		Settings.Gnutella1.EnableToday = Settings.Gnutella1.EnableAlways;
+		Settings.Gnutella2.EnableToday = Settings.Gnutella2.EnableAlways;
+		Settings.eDonkey.EnableToday = Settings.eDonkey.EnableAlways;
+	}
+
 	CSingleLock pLock( &m_pSection, TRUE );
 	
 	Settings.Live.AutoClose = FALSE;
