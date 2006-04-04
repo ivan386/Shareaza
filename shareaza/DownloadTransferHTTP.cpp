@@ -1,8 +1,8 @@
 //
 // DownloadTransferHTTP.cpp
 //
-//	Date:			"$Date: 2006/03/28 09:14:44 $"
-//	Revision:		"$Revision: 1.23 $"
+//	Date:			"$Date: 2006/04/04 23:33:36 $"
+//	Revision:		"$Revision: 1.24 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.
@@ -93,6 +93,9 @@ BOOL CDownloadTransferHTTP::Initiate()
 	}
 	else
 	{
+		// Couldn't connect, keep the source but add to the m_pFailedSources
+		// Mark it as an offline source, it might be good later...
+		m_pDownload->AddFailedSource( m_pSource, true, true );
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CONNECT_ERROR, (LPCTSTR)m_sAddress );
 		Close( TS_UNKNOWN );
 		return FALSE;
@@ -381,19 +384,41 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		
 		if ( strLine.GetLength() )
 		{
-			m_pOutput->Print( "Alt-Location: " );
+			if ( m_pSource->m_nGnutella < 2 )
+				m_pOutput->Print( "X-Alt: " );
+			else
+				m_pOutput->Print( "Alt-Location: " );
 			m_pOutput->Print( strLine + _T("\r\n") );
 		}
 		
 		if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
 		{
-			strLine.Format( _T("http://%s:%i/uri-res/N2R?%s "),
-				(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-				htons( Network.m_pHost.sin_port ),
-				(LPCTSTR)strURN );
-			strLine += TimeToString( static_cast< DWORD >( time( NULL ) - 180 ) );
-			m_pOutput->Print( "Alt-Location: " );
+			if ( m_pSource->m_nGnutella < 2 )
+			{
+				strLine.Format( _T("%s:%i"), (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+					htons( Network.m_pHost.sin_port ) );
+				m_pOutput->Print( "X-Alt: " );
+			}
+			else
+			{
+				strLine.Format( _T("http://%s:%i/uri-res/N2R?%s "),
+					(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+					htons( Network.m_pHost.sin_port ),
+					(LPCTSTR)strURN );
+				strLine += TimeToString( static_cast< DWORD >( time( NULL ) - 180 ) );
+				m_pOutput->Print( "Alt-Location: " );
+			}
 			m_pOutput->Print( strLine + _T("\r\n") );
+			
+			if ( m_pSource->m_nGnutella < 2 )
+			{
+				strLine = m_pDownload->GetTopFailedSources( 15, PROTOCOL_G1 );
+				if ( strLine.GetLength() )
+				{
+					m_pOutput->Print( "X-NAlt: " + strLine );
+					m_pOutput->Print( _T("\r\n") );
+				}
+			}
 		}
 	}
 	
@@ -869,6 +894,13 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		m_sRedirectionURL = strValue;
 	}
+	else if ( strHeader.CompareNoCase( _T("X-NAlt") ) == 0 ||
+			  strHeader.CompareNoCase( _T("X-PAlt") ) == 0 ||
+			  strHeader.CompareNoCase( _T("FP-1a") ) == 0 ||
+			  strHeader.CompareNoCase( _T("FP-Auth-Challenge") ) == 0 )
+	{
+		m_pSource->SetGnutella( 1 );
+	}
 	
 	return CTransfer::OnHeaderLine( strHeader, strValue );
 }
@@ -901,7 +933,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DISABLED,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-		Close( TS_FALSE );
+		Close( m_pSource->m_bED2K ? TS_FALSE : TS_UNKNOWN );
 		return FALSE;
 	}
 	else if ( m_bBusyFault )
@@ -943,7 +975,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	{
 		if ( m_pHost.sin_addr.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr )
 		{
-			Close( TS_FALSE );
+			Close( TS_TRUE );
 			return FALSE;
 		}
 		
@@ -953,7 +985,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		
 		return ReadFlush();
 	}
-	else if ( m_nContentLength == SIZE_UNKNOWN )
+	else if ( m_nContentLength == SIZE_UNKNOWN && m_bKeepAlive )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE, (LPCTSTR)m_sAddress,
 			(LPCTSTR)m_pDownload->GetDisplayName() );
@@ -962,6 +994,10 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	}
 	else if ( m_bTigerFetch )
 	{
+		if ( m_nContentLength == SIZE_UNKNOWN && !m_bKeepAlive )
+		{
+			m_nContentLength = m_pInput->m_nLength;
+		}
 		if ( ! m_bGotRange )
 		{
 			m_nOffset = 0;
@@ -975,10 +1011,11 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		}
 		
 		if (	m_sContentType.CompareNoCase( _T("application/tigertree-breadthfirst") ) &&
-				m_sContentType.CompareNoCase( _T("application/dime") ) )
+				m_sContentType.CompareNoCase( _T("application/dime") ) && 
+				m_sContentType.CompareNoCase( _T("application/binary") ) ) // Content Type used by Phex 
 		{
 			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_RANGE, (LPCTSTR)m_sAddress );
-			Close( TS_FALSE );
+			Close( TS_TRUE );
 			return FALSE;
 		}
 		
@@ -1036,6 +1073,21 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		
 		m_nOffset = 0;
 		m_nLength = m_nContentLength;
+	}
+	else if ( CFailedSource* pBadSource = m_pDownload->LookupFailedSource( m_pSource->m_sURL ) )
+	{
+		// We already have it added to the list but the source was offline
+		if ( pBadSource->m_bOffline )
+		{
+			pBadSource->m_bOffline = false;
+		}
+		else
+		{
+			// Extend the period of keeping it in the failed sources list
+			pBadSource->m_nTimeAdded = GetTickCount();
+			Close( TS_FALSE );
+			return FALSE;
+		}
 	}
 	
 	if ( m_nContentLength != m_nLength )
@@ -1152,7 +1204,8 @@ BOOL CDownloadTransferHTTP::ReadTiger()
 		m_pDownload->SetTigerTree( m_pInput->m_pBuffer, (DWORD)m_nLength );
 		m_pInput->Remove( (DWORD)m_nLength );
 	}
-	else if ( m_sContentType.CompareNoCase( _T("application/dime") ) == 0 )
+	else if ( m_sContentType.CompareNoCase( _T("application/dime") ) == 0 ||
+			  m_sContentType.CompareNoCase( _T("application/binary") ) == 0 )
 	{
 		CString strID, strType, strUUID = _T("x");
 		DWORD nFlags, nBody;
@@ -1200,7 +1253,7 @@ BOOL CDownloadTransferHTTP::ReadTiger()
 				
 				if ( ! bSize || ! bDigest || ! bEncoding ) break;
 			}
-			else if ( strID == strUUID && strType.CompareNoCase( _T("http://open-content.net/spec/thex/breadthfirst") ) == 0 )
+			else if ( ( strID == strUUID || strID.IsEmpty() ) && strType.CompareNoCase( _T("http://open-content.net/spec/thex/breadthfirst") ) == 0 )
 			{
 				m_pDownload->SetTigerTree( m_pInput->m_pBuffer, nBody );
 			}
