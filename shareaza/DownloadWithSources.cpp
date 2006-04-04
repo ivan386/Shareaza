@@ -1,8 +1,8 @@
 //
 // DownloadWithSources.cpp
 //
-//	Date:			"$Date: 2006/03/27 23:13:29 $"
-//	Revision:		"$Revision: 1.30 $"
+//	Date:			"$Date: 2006/04/04 23:48:54 $"
+//	Revision:		"$Revision: 1.31 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.
@@ -36,6 +36,8 @@
 #include "SourceURL.h"
 #include "Schema.h"
 #include "SchemaCache.h"
+#include "Library.h"
+#include "SharedFile.h"
 #include "XML.h"
 #include "SHA.h"
 #include "MD4.h"
@@ -63,6 +65,11 @@ CDownloadWithSources::~CDownloadWithSources()
 {
 	ClearSources();
 	if ( m_pXML != NULL ) delete m_pXML;
+	
+	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
+		delete m_pFailedSources.GetNext( pos );
+
+	m_pFailedSources.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -162,7 +169,7 @@ void CDownloadWithSources::ClearSources()
 		delete pSource;
 		pSource = pNext;
 	}
-	
+
 	m_pSourceFirst = m_pSourceLast = NULL;
 	m_nSourceCount = 0;
 	
@@ -288,7 +295,7 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAd
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a single URL source
 
-BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLastSeen, int nRedirectionCount)
+BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed)
 {
 	if ( pszURL == NULL ) return FALSE;
 	if ( *pszURL == 0 ) return FALSE;
@@ -308,10 +315,29 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 	if ( bURN )
 	{
 		if ( pURL.m_pAddress.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) return FALSE;
-		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) ) return FALSE;
+		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) || 
+			 Network.IsReserved( &pURL.m_pAddress ) ) return FALSE;
 	}
-	
-	if ( m_pFailedSources.Find( pszURL ) != NULL ) return FALSE;
+
+	if ( CFailedSource* pBadSource = LookupFailedSource( pszURL ) )
+	{
+		// Add a positive vote, add to the downloads if the negative votes compose
+		// less than 2/3 of total.
+		INT_PTR nTotal = pBadSource->m_nPositiveVotes + pBadSource->m_nNegativeVotes + 1;
+		if ( bFailed )
+			pBadSource->m_nNegativeVotes++;
+		else
+			pBadSource->m_nPositiveVotes++;
+
+		if ( nTotal > 30 && pBadSource->m_nNegativeVotes / nTotal > 2 / 3 )
+			return FALSE;
+	}
+	else if ( bFailed )
+	{
+		AddFailedSource( pszURL, false );
+		VoteSource( pszURL, false );
+		return TRUE;
+	}
 	
 	if ( pURL.m_oSHA1 && m_oSHA1 )
 	{
@@ -343,7 +369,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add several URL sources
 
-int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
+int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed)
 {
 	if ( IsCompleted() || IsMoving() )
 	{
@@ -413,7 +439,8 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 			DWORD nAddress = inet_addr( T2CA( strURL ) );
 			strURL.Empty();
 			
-			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && nPort != 0 && nAddress != INADDR_NONE )
+			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && 
+				 ! Network.IsReserved( (IN_ADDR*)&nAddress ) && nPort != 0 && nAddress != INADDR_NONE )
 			{
 				if ( m_oSHA1 )
 				{
@@ -424,7 +451,18 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 			}
 		}
 		
-		if ( AddSourceURL( strURL, bURN, bSeen ? &tSeen : NULL ) ) nCount++;
+		if ( AddSourceURL( strURL, bURN, bSeen ? &tSeen : NULL, 0, bFailed ) )
+		{
+			if ( bFailed )
+			{
+				theApp.Message( MSG_DEBUG, L"Adding X-NAlt: %s", (LPCTSTR)strURL );
+			}
+			else
+			{
+				theApp.Message( MSG_DEBUG, L"Adding X-Alt: %s", (LPCTSTR)strURL );
+			}
+			nCount++;
+		}
 	}
 	
 	return nCount;
@@ -531,6 +569,19 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 
 			//if ( bHTTP && pSource->m_nProtocol != PROTOCOL_HTTP ) continue;
 			
+			if ( nProtocol == PROTOCOL_G1 )
+			{
+				if ( strSources.GetLength() ) 
+					strSources += ',';
+				strSources += CString( inet_ntoa( pSource->m_pAddress ) );
+				if ( pSource->m_nPort != GNUTELLA_DEFAULT_PORT )
+				{
+					strURL.Format( _T("%hu"), pSource->m_nPort );
+					strSources += ':' + strURL;
+				}
+			}
+			else
+			{
 			strURL = pSource->m_sURL;
 			Replace( strURL, _T(","), _T("%2C") );
 			
@@ -538,6 +589,7 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 			strSources += strURL;
 			strSources += ' ';
 			strSources += TimeToString( &pSource->m_tLastSeen );
+			}
 			
 			if ( nMaximum == 1 ) break;
 			else if ( nMaximum > 1 ) nMaximum --;
@@ -546,6 +598,48 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 	
 	if ( strSources.Find( _T("Zhttp://") ) >= 0 ) strSources.Empty();
 	
+	return strSources;
+}
+
+// Returns a string containing the most recent failed sources
+CString	CDownloadWithSources::GetTopFailedSources(int nMaximum, PROTOCOLID nProtocol)
+{
+	// Currently we return only the string for G1, in X-NAlt format
+	if ( nProtocol != PROTOCOL_G1 ) return CString();
+
+	CString strSources, str;
+	CFailedSource* pResult = NULL;
+
+	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
+	{
+		pResult = m_pFailedSources.GetNext( pos );
+		// Only return sources which we detected as failed
+		if ( pResult && pResult->m_bLocal )
+		{
+			if ( _tcsistr( pResult->m_sURL, _T("http://") ) != NULL )
+			{
+				int nPos = pResult->m_sURL.Find( ':', 8 );
+				if ( nPos < 0 ) continue;
+				str = pResult->m_sURL.Mid( 7, nPos - 7 );
+				int nPosSlash = pResult->m_sURL.Find( '/', nPos );
+				if ( nPosSlash < 0 ) continue;
+
+				if ( strSources.GetLength() ) 
+					strSources += ',';
+
+				strSources += str;
+				str = pResult->m_sURL.Mid( nPos + 1, nPosSlash - nPos - 1 );
+				if ( str != _T("6346") )
+				{
+					strSources += ':';
+					strSources += str;
+				}
+
+				if ( nMaximum == 1 ) break;
+				else if ( nMaximum > 1 ) nMaximum--;
+			}
+		}
+	}
 	return strSources;
 }
 
@@ -584,6 +678,92 @@ void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength
 	}
 }
 
+// The function takes an URL and finds a failed source in the list;
+// If bReliable is true, it checks only localy checked failed sources
+// and those which have more than 30 votes from other users and negative
+// votes compose 2/3 of the total number of votes.
+CFailedSource* CDownloadWithSources::LookupFailedSource(LPCTSTR pszUrl, bool bReliable)
+{
+	CFailedSource* pResult = NULL;
+
+	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
+	{
+		pResult = m_pFailedSources.GetNext( pos );
+		if ( pResult && pResult->m_sURL.Compare( pszUrl ) == 0 )
+		{
+			theApp.Message( MSG_DEBUG, _T("Votes for file %s: negative - %i, positive - %i; offline status: %i"), 
+				pszUrl, pResult->m_nNegativeVotes, 
+				pResult->m_nPositiveVotes, 
+				pResult->m_bOffline );
+
+			if ( pResult->m_bLocal )
+				break;
+			
+			if ( bReliable )
+			{
+				INT_PTR nTotalVotes = pResult->m_nNegativeVotes + pResult->m_nPositiveVotes;
+				if ( nTotalVotes > 30 && pResult->m_nNegativeVotes / nTotalVotes > 2 / 3 )
+					break;
+			}
+		}
+		else
+			pResult = NULL;
+	}
+	return pResult;
+}
+
+void CDownloadWithSources::AddFailedSource(CDownloadSource* pSource, bool bLocal, bool bOffline)
+{
+	if ( LookupFailedSource( (LPCTSTR)pSource->m_sURL ) == NULL )
+	{
+		CFailedSource* pBadSource = new CFailedSource( pSource->m_sURL, bLocal, bOffline );
+		m_pFailedSources.AddTail( pBadSource );
+		theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i", m_sDisplayName, m_pFailedSources.GetCount() );
+	}
+}
+
+void CDownloadWithSources::AddFailedSource(LPCTSTR pszUrl, bool bLocal, bool bOffline)
+{
+	if ( LookupFailedSource( pszUrl ) == NULL )
+	{
+		CFailedSource* pBadSource = new CFailedSource( pszUrl, bLocal, bOffline );
+		m_pFailedSources.AddTail( pBadSource );
+		theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i", m_sDisplayName, m_pFailedSources.GetCount() );
+	}
+}
+
+void CDownloadWithSources::VoteSource(LPCTSTR pszUrl, bool bPositively)
+{
+	if ( CFailedSource* pBadSource = LookupFailedSource( pszUrl ) )
+	{
+		if ( bPositively )
+			pBadSource->m_nPositiveVotes++;
+		else
+			pBadSource->m_nNegativeVotes++;
+	}
+}
+
+void CDownloadWithSources::ExpireFailedSources()
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+	DWORD tNow = GetTickCount();
+	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
+	{
+		POSITION posThis = pos;
+		CFailedSource* pBadSource = m_pFailedSources.GetNext( pos );
+		if ( m_pFailedSources.GetAt( posThis ) == pBadSource )
+		{
+			// Expire bad sources added more than 2 hours ago
+			if ( tNow - pBadSource->m_nTimeAdded > 2 * 3600 * 1000 )
+			{
+				delete pBadSource;
+				m_pFailedSources.RemoveAt( posThis );
+			}
+			else break; // We appended to tail, so we do not need to move further
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources remove a source
 
@@ -591,7 +771,7 @@ void CDownloadWithSources::RemoveSource(CDownloadSource* pSource, BOOL bBan)
 {
 	if ( bBan && pSource->m_sURL.GetLength() )
 	{
-		m_pFailedSources.AddTail( pSource->m_sURL );
+		AddFailedSource( pSource );
 	}
 	
 	ASSERT( m_nSourceCount > 0 );
@@ -660,7 +840,6 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource, BOOL bTop)
 	}
 }
 
-
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources sort a source by state (Downloading, etc...)
 
@@ -692,8 +871,6 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 
 		while ( ( pCompare != NULL ) && (pCompare->m_nSortOrder < pSource->m_nSortOrder) )
 			pCompare = pCompare->m_pNext; //Run through the sources to the correct position
-
-		
 
 		if ( pCompare == NULL )
 		{	//Source is last on list

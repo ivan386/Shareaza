@@ -1,9 +1,9 @@
 //
 // DownloadWithSources.h
 //
-//	Date:			"$Date: 2006/01/11 20:32:05 $"
-//	Revision:		"$Revision: 1.10 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2006/04/04 23:54:15 $"
+//	Revision:		"$Revision: 1.11 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -34,6 +34,28 @@ class CDownloadSource;
 class CQueryHit;
 class CXMLElement;
 
+#pragma pack(1)
+class CFailedSource
+{
+public:
+	CFailedSource(LPCTSTR pszURL, bool bLocal=true, bool bOffline=false)
+		: m_nTimeAdded( GetTickCount() )
+		, m_nPositiveVotes( 0 )
+		, m_nNegativeVotes( 0 )
+		, m_sURL( pszURL )
+		, m_bLocal( bLocal )
+		, m_bOffline( bOffline ) { }
+
+	virtual ~CFailedSource() { };
+
+	DWORD_PTR	m_nTimeAdded;
+	INT_PTR		m_nPositiveVotes;
+	INT_PTR		m_nNegativeVotes;
+	CString		m_sURL;
+	bool		m_bLocal;
+	bool		m_bOffline;
+};
+#pragma pack()
 
 class CDownloadWithSources : public CDownloadBase
 {
@@ -45,9 +67,12 @@ protected:
 // Attributes
 protected:
 	CDownloadSource*	m_pSourceFirst;
+	CCriticalSection	m_pSection;
+	CList< CFailedSource* >	m_pFailedSources; // Failed source with a timestamp when added
+
 private:
 	CDownloadSource*	m_pSourceLast;
-	CList< CString >	m_pFailedSources;
+
 public:
 	CXMLElement*		m_pXML;
 	int					m_nSourceCount;
@@ -55,17 +80,23 @@ public:
 // Operations
 public:
 	CString				GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept);
+	CString				GetTopFailedSources(int nMaximum, PROTOCOLID nProtocol);
 	int					GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;
 	int					GetBTSourceCount(BOOL bNoPush = FALSE) const;
 	int					GetED2KCompleteSourceCount() const;
 	BOOL				CheckSource(CDownloadSource* pSource) const;
+	void				AddFailedSource(CDownloadSource* pSource, bool bLocal = true, bool bOffline = false);
+	void				AddFailedSource(LPCTSTR pszUrl, bool bLocal = true, bool bOffline = false);
+	CFailedSource*		LookupFailedSource(LPCTSTR pszUrl, bool bReliable = false);
+	void				ExpireFailedSources();
+	void				VoteSource(LPCTSTR pszUrl, bool bPositively);
 	void				ClearSources();
 public:
 	BOOL				AddSourceHit(CQueryHit* pHit, BOOL bForce = FALSE);
 	BOOL				AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
     BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
-	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0);
-	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bURN = FALSE);
+	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bFailed = FALSE);
+	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bURN = FALSE, BOOL bFailed = FALSE);
 	virtual BOOL		OnQueryHits(CQueryHit* pHits);
 	virtual void		Serialize(CArchive& ar, int nVersion);
 

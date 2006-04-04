@@ -257,13 +257,28 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		if ( Settings.Library.SourceMesh )
 		{
-			if ( strValue.Find( _T("Zhttp://") ) < 0 ) m_sLocations = strValue;
+			if ( strValue.Find( _T("Zhttp://") ) < 0 ) 
+				m_sLocations = strValue;
 		}
 		m_nGnutella |= 1;
 	}
 	else if ( strHeader.CompareNoCase( _T("X-NAlt") ) == 0 )
 	{
 		// Dead alt-sources
+		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 13;
+		CSingleLock oLock( &Library.m_pSection );
+
+		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
+		{
+			if ( Settings.Library.SourceMesh )
+			{
+				if ( strValue.Find( _T("://") ) < 0 )
+				{
+					pDownload->AddSourceURLs( strValue, TRUE, TRUE );
+				}
+			}
+		}
+		m_nGnutella |= 1;
 	}
 	else if ( strHeader.CompareNoCase( _T("X-Node") ) == 0 )
 	{
@@ -287,6 +302,12 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		if ( _tcsistr( strValue, _T("gnet2/") ) != NULL ) m_nGnutella |= 2;
 		if ( _tcsistr( strValue, _T("gnutella2/") ) != NULL ) m_nGnutella |= 2;
 		if ( m_nGnutella == 0 ) m_nGnutella = 1;
+	}
+	else if ( strHeader.CompareNoCase( _T("X-PAlt") ) == 0 ||
+			  strHeader.CompareNoCase( _T("FP-1a") ) == 0 ||
+			  strHeader.CompareNoCase( _T("FP-Auth-Challenge") ) == 0 )
+	{
+		m_nGnutella |= 1;
 	}
 	
 	return CUploadTransfer::OnHeaderLine( strHeader, strValue );
@@ -407,8 +428,9 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				{
 					if ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFile, TRUE ) )
 					{
-						// Have the file, but the network is disabled (503 Service Unavailable response)
-						// We handle them in CDownloadTransferHTTP::ReadResponseLine
+						// Have the file, but the network is disabled (503 Service Unavailable response).
+						// We handle them in CDownloadTransferHTTP::ReadResponseLine.
+						// Adjust Retry-After header in SendDefaultHeaders() if you change the ban period 
 						SendResponse( IDR_HTML_DISABLED );
 						theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 						Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE ); // Anti-hammer protection if client doesn't understand 403
@@ -666,8 +688,11 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	}
 	
 	CString strLocations;
-	if ( Settings.Library.SourceMesh ) strLocations = pFile->GetAlternateSources( &m_pSourcesSent, 15, PROTOCOL_HTTP );
-	if ( m_sLocations.GetLength() ) pFile->AddAlternateSources( m_sLocations );
+	if ( Settings.Library.SourceMesh ) 
+		strLocations = pFile->GetAlternateSources( &m_pSourcesSent, 15, 
+			m_nGnutella > 2 ? PROTOCOL_HTTP : PROTOCOL_G1 );
+	if ( m_sLocations.GetLength() )
+		pFile->AddAlternateSources( m_sLocations );
 	m_sLocations = strLocations;
 	
 	oLibraryLock.Unlock();
@@ -696,7 +721,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	m_bMetadata		= ( pDownload->m_pXML != NULL );
 	
 	if ( m_sLocations.GetLength() ) pDownload->AddSourceURLs( m_sLocations, TRUE );
-	// if ( Settings.Library.SourceMesh ) m_sLocations = pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_HTTP, NULL );
+
 	if ( Settings.Library.SourceMesh ) 
 	{
 		if ( m_nGnutella == 1 )
@@ -917,10 +942,7 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 	if ( IsNetworkDisabled() )
 	{
 		// Ask to retry after some delay in seconds
-		strLine.Format( L"Retry-After: %lu", 
-			m_nGnutella == 1 ? Settings.Gnutella1.RequeryDelay * 60 
-							 : Settings.Gnutella2.RequeryDelay * 3600 );
-		m_pOutput->Print( strLine + _T("\r\n") );
+		m_pOutput->Print( strLine + _T("Retry-After: 7200\r\n") );
 	}
 	else if ( m_bKeepAlive )
 	{
@@ -1006,8 +1028,24 @@ void CUploadTransferHTTP::SendFileHeaders()
 
 	if ( m_sLocations.GetLength() )
 	{
-		strHeader = _T("Alt-Location: ") + m_sLocations + _T("\r\n");
+		if ( m_sLocations.Find( _T("://") ) < 0 )
+			strHeader = _T("X-Alt: ") + m_sLocations + _T("\r\n");
+		else
+			strHeader = _T("Alt-Location: ") + m_sLocations + _T("\r\n");
 		m_pOutput->Print( strHeader );
+	}
+
+	if ( m_nGnutella < 2 )
+	{
+		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 13;
+		CSingleLock oLock( &Library.m_pSection );
+
+		// Send X-NAlt for partial transfers only
+		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
+		{
+			strHeader = _T("X-NAlt: ") + pDownload->GetTopFailedSources( 15, PROTOCOL_G1 ) + _T("\r\n");
+			m_pOutput->Print( strHeader );
+		}
 	}
 }
 
