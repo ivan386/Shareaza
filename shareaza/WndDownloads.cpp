@@ -151,13 +151,14 @@ BEGIN_MESSAGE_MAP(CDownloadsWnd, CPanelWnd)
 	ON_COMMAND(ID_DOWNLOADS_CLEAR_COMPLETE, OnDownloadsClearComplete)
 	ON_UPDATE_COMMAND_UI(ID_DOWNLOADS_EDIT, OnUpdateDownloadsEdit)
 	ON_COMMAND(ID_DOWNLOADS_EDIT, OnDownloadsEdit)
+	ON_WM_CAPTURECHANGED()
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadsWnd construction
 
-CDownloadsWnd::CDownloadsWnd() : CPanelWnd( TRUE, TRUE )
+CDownloadsWnd::CDownloadsWnd() : CPanelWnd( TRUE, TRUE ), m_bMouseCaptured(false)
 {
 	Create( IDR_DOWNLOADSFRAME );
 }
@@ -188,6 +189,8 @@ int CDownloadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	SetTimer( 4, 10000, NULL );
 	PostMessage( WM_TIMER, 4 );
+
+	SetTimer( 6, 2 * 3600 * 1000, NULL );
 	
 	m_pDragList		= NULL;
 	m_pDragImage	= NULL;
@@ -220,6 +223,13 @@ void CDownloadsWnd::OnSkinChange()
 
 void CDownloadsWnd::Update()
 {
+	if ( m_bMouseCaptured )
+	{
+		ClipCursor( NULL );
+		ReleaseCapture();
+		m_bMouseCaptured = false;
+	}
+
 	int nCookie = 0;
 	DWORD tNow = GetTickCount();
 
@@ -274,9 +284,19 @@ void CDownloadsWnd::OnSize(UINT nType, int cx, int cy)
 
 void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent) 
 {
+	 // Purge old failed sources ( X-NAlt mesh ) every 2 hours
+	if ( nIDEvent == 6 ) 
+	{
+		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+		{
+			CDownload* pDownload = Downloads.GetNext( pos );
+			pDownload->ExpireFailedSources();
+		}
+	}
+
 	// Reset Selection Timer event (posted by ctrldownloads)
 	if ( nIDEvent == 5 ) m_tSel = 0;
-	
+
 	// Clear Completed event (10 second timer)
 	if ( nIDEvent == 4 )
 	{
@@ -296,8 +316,6 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 			CSingleLock pLock( &Transfers.m_pSection );
 			if ( ! pLock.Lock( 10 ) ) return;
 
-			
-			
 			// Loop through all downloads
 			for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 			{
@@ -1693,7 +1711,11 @@ void CDownloadsWnd::OnDownloadsHelp()
 
 void CDownloadsWnd::DragDownloads(CList< CDownload* >* pList, CImageList* pImage, const CPoint& ptScreen)
 {
-	ASSERT( m_pDragList == NULL );
+	if ( m_pDragList )
+	{
+		CancelDrag();
+		return;
+	}
 	
 	m_pDragList		= pList;
 	m_pDragImage	= pImage;
@@ -1724,9 +1746,6 @@ void CDownloadsWnd::DragDownloads(CList< CDownload* >* pList, CImageList* pImage
 void CDownloadsWnd::CancelDrag()
 {
 	if ( m_pDragList == NULL ) return;
-	
-	ClipCursor( NULL );
-	ReleaseCapture();
 	
 	m_pDragImage->DragLeave( this );
 	m_pDragImage->EndDrag();
@@ -1816,4 +1835,11 @@ BOOL CDownloadsWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	}
 	
 	return CPanelWnd::OnSetCursor( pWnd, nHitTest, message );
+}
+
+void CDownloadsWnd::OnCaptureChanged(CWnd *pWnd)
+{
+	CPanelWnd::OnCaptureChanged(pWnd);
+	m_bMouseCaptured = true;
+	Update();
 }
