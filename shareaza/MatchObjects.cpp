@@ -1,8 +1,8 @@
 //
 // MatchObjects.cpp
 //
-//	Date:			"$Date: 2006/02/10 00:57:21 $"
-//	Revision:		"$Revision: 1.25 $"
+//	Date:			"$Date: 2006/04/04 23:30:59 $"
+//	Revision:		"$Revision: 1.26 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1194,7 +1194,17 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 			BOOL bName = _tcsicmp( pHit->m_sName, pOld->m_sName ) == 0;
 			
 			if ( ! bForce && bName ) bForce = TRUE;
-			
+
+			 // cross-packet checking
+			if ( pHit->m_bBogus && !pOld->m_bBogus || !pHit->m_bBogus && pOld->m_bBogus ||
+				 !bName && pHit->m_pAddress.S_un.S_addr == pOld->m_pAddress.S_un.S_addr &&
+				 pHit->m_nPort == pOld->m_nPort && validAndEqual( pOld->m_oClientID, pHit->m_oClientID ) )
+			{
+				pHit->m_bBogus = TRUE;
+				pOld->m_bBogus = TRUE;
+				m_bSuspicious = TRUE;
+			}
+
 			if ( bName && pHit->m_pAddress.S_un.S_addr == pOld->m_pAddress.S_un.S_addr &&
 				 pHit->m_nPort == pOld->m_nPort )
 			{
