@@ -1,9 +1,9 @@
 //
 // HostCache.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.18 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2006/04/04 23:36:57 $"
+//	Revision:		"$Revision: 1.19 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -49,11 +49,12 @@ CHostCache HostCache;
 
 CHostCache::CHostCache() :
 		Gnutella1( PROTOCOL_G1 ), Gnutella2( PROTOCOL_G2 ),
-		eDonkey( PROTOCOL_ED2K )
+		eDonkey( PROTOCOL_ED2K ), G1DNA( PROTOCOL_G1 ) 
 {
 	m_pList.AddTail( &Gnutella1 );
 	m_pList.AddTail( &Gnutella2 );
 	m_pList.AddTail( &eDonkey );
+	m_pList.AddTail( &G1DNA );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -976,7 +977,7 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost packet conversion
-
+/*
 CG1Packet* CHostCacheHost::ToG1Ping(int nTTL, const Hashes::Guid& oGUID)
 {
 	CG1Packet* pPong = CG1Packet::New( G1_PACKET_PONG, nTTL, oGUID );
@@ -988,6 +989,7 @@ CG1Packet* CHostCacheHost::ToG1Ping(int nTTL, const Hashes::Guid& oGUID)
 	
 	return pPong;
 }
+*/
 
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost string
