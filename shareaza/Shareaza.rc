@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,2,13
- PRODUCTVERSION 2,2,2,13
+ FILEVERSION 2,2,2,14
+ PRODUCTVERSION 2,2,2,14
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 13"
+            VALUE "FileVersion", "2, 2, 2, 14"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 13"
+            VALUE "ProductVersion", "2, 2, 2, 14"
         END
     END
     BLOCK "VarFileInfo"
@@ -5105,6 +5105,8 @@ BEGIN
     IDS_GRAPH_TOTAL_BANDWIDTH_TCP_OUT "Total TCP Transmit Bandwidth"
     IDS_GRAPH_TOTAL_BANDWIDTH_UDP_IN "Total UDP Receive Bandwidth"
     IDS_GRAPH_TOTAL_BANDWIDTH_UDP_OUT "Total UDP Transmit Bandwidth"
+    IDS_GRAPH_GNUTELLA_PINGS "Gnutella Ratio of Received/Sent Pings"
+    IDS_GRAPH_GNUTELLA_PONGS "Gnutella Ratio of Received/Sent Pongs"
 END
 
 STRINGTABLE 
