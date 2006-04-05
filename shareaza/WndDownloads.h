@@ -188,7 +188,6 @@ protected:
 	afx_msg void OnDownloadsClearComplete();
 	afx_msg void OnUpdateDownloadsEdit(CCmdUI *pCmdUI);
 	afx_msg void OnDownloadsEdit();	
-public:
 	afx_msg void OnCaptureChanged(CWnd *pWnd);
 };
 
