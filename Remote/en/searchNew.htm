@@ -1,35 +1,22 @@
-<td class="tabsel">New Search</td>
-<td class="tabedg">&nbsp;</td>
-</tr> </table> </td> </tr>
-<tr>
-	<td class="frame">
-		<div>
-			To start a new search, type your search term in the box below and click <b>Start 
-				Search</b>. If you want to restrict your search to a particular file type, 
-			select it from the list.
-		</div>
+										<li class="active"><a class="noline" href="?id=0">New Search</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+			<p>To start a new search, type your search term in the box below and click <strong>Start 
+				Search</strong>. If you want to restrict your search to a particular file type, 
+			select it from the list (recommended).</p>
+	
+	<div style="text-align:right; width: 30em;">		
 		<form method="get" action="newsearch">
-			<table align="center">
-				<tr>
-					<td>Search for:</td>
-					<td><input type="text" name="search" size="30"></td>
-				</tr>
-				<tr>
-					<td>File type:</td>
-					<td>
-						<select name="schema">
+
+			<label>Search for:</label>
+					<input type="text" name="search" class="regularinput" /><br />
+			<label>File type:</label>
+					
+						<select name="schema" class="regularinput">
 							<option value="">Any File Type</option>
 							<%= schema_option_list %>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
+				<br />
 						<input type="submit" value="Start Search">
-					</td>
-				</tr>
-			</table>
 		</form>
+	</div>
