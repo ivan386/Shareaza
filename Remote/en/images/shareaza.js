@@ -1,1 +1,0 @@
-//window.alert('external javascript loaded!');
