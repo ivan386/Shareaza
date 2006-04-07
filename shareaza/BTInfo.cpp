@@ -668,6 +668,19 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		m_pFiles[0].m_sPath = m_sName;
 		m_pFiles[0].m_nSize = m_nTotalSize;
 		m_pFiles[0].m_oSHA1 = m_oDataSHA1;
+
+		// Add sources from torrents - DWK
+		CBENode* pSources = pRoot->GetNode( "sources" );
+		if( pSources->IsType( CBENode::beList ) )
+		{
+			int m_nSources = pSources->GetCount();
+			for( int nSource = 0 ; nSource < m_nSources; nSource++)
+			{
+				CBENode* pSource = pSources->GetNode( nSource );
+				if( !pSource->IsType(CBENode::beString) ) continue;
+				m_sURLs.AddTail( pSource->GetString() );
+			}
+		}
 	}
 	else if ( CBENode* pFiles = pInfo->GetNode( "files" ) )
 	{

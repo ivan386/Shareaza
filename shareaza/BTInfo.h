@@ -84,6 +84,8 @@ public:
     Hashes::Sha1Hash m_oDataSHA1;
 	Hashes::Ed2kHash m_oDataED2K;
 	Hashes::TigerHash m_oDataTiger;
+	CList< CString >	m_sURLs;	// Add sources from torrents - DWK
+
 public:
 	QWORD		m_nTotalSize;
 	DWORD		m_nBlockSize;

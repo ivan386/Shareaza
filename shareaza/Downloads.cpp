@@ -302,7 +302,17 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 		}
 	}
 	
+	// Add sources from torrents - DWK
 	pDownload->SetTorrent( pURL->m_pTorrent );
+	if ( pURL->m_pTorrent && pURL->m_pTorrent->m_sURLs.GetCount() > 0 )
+	{
+		for ( POSITION pos = pURL->m_pTorrent->m_sURLs.GetHeadPosition() ; pos ; )
+		{
+			CString pCurrentUrl = pURL->m_pTorrent->m_sURLs.GetNext( pos );
+			pDownload->AddSourceURLs( (LPCTSTR)pCurrentUrl , FALSE  );
+		}
+		pURL->m_pTorrent->m_sURLs.RemoveAll();
+	}
 	
 	m_pList.AddTail( pDownload );
 	
