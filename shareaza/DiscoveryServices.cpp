@@ -1,9 +1,9 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2005/12/06 10:57:27 $"
-//	Revision:		"$Revision: 1.41 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2006/04/09 08:42:49 $"
+//	Revision:		"$Revision: 1.42 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -116,21 +116,10 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 	CString strAddress( pszAddress );
 
 	// Trim any excess whitespace.
+	// Trim garbage on the end- sometimes you get "//", "./", "./." etc. (Bad caches)
 	strAddress.TrimLeft();
 	strAddress.TrimRight();
-
-	// Trim garbage on the end- sometimes you get "//", "./", "./." etc. (Bad caches)
-	while ( strAddress.GetLength() >= 8 )
-	{
-		if ( strAddress.Right( 2 ) == _T("//") )
-			strAddress = strAddress.Left( strAddress.GetLength() - 1 );
-		else if ( strAddress.Right( 2 ) == _T("./") )
-			strAddress = strAddress.Left( strAddress.GetLength() - 2 );
-		else if ( strAddress.GetAt( strAddress.GetLength() - 1 ) == '.' )
-			strAddress = strAddress.Left( strAddress.GetLength() - 1 );
-		else break;
-
-	}
+	strAddress.TrimRight( L"./" );
 
 	/*
 	// Although this is part of the spec, it was removed at the request of the GDF.
@@ -326,7 +315,7 @@ CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 		CDiscoveryService* pService = GetNext( pos );
 		
 		int nLen = pService->m_sAddress.GetLength();
-		if ( nLen > 20 )
+		if ( nLen > 45 )
 		{
 			// If it's a long webcache address, ignore the last few characters when checking
 			if ( _tcsnicmp( pService->m_sAddress, pszAddress, nLen - 2 ) == 0 )
