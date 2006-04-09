@@ -1520,6 +1520,14 @@
 		<text align="middle">&#160;- Recibe ayuda rápida de como usar Shareaza</text>
 		<newline gap="18" indent="0"/>
 
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">M I S &#160; D E S C A R G A S</heading>
+		<newline gap="8" indent="42"/>
+		<text>Para abrir la carpeta con tus descargas </text>
+		<link target="raza:shell:downloads">haz click aquí</link>
+		<newline gap="18" indent="0"/>
+
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">A C C E S O &#160; R E M O T O &#160; A C C E S S &#160; E S T A &#160; H A B I L I T A D O</heading>
@@ -1534,7 +1542,7 @@
 
 	</document>
 
-	<document name="CHomeDownloadsBox" title="My Downloads" leftMargin="6" topMargin="6">
+	<document name="CHomeDownloadsBox" title="Mis Descargas" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="9"/>
@@ -3746,7 +3754,7 @@
 		<control caption="Cancelar"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filtro">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtro">
 		<control caption="Solo mostrar resultados que incluyan:"/>
 		<control/>
 		<control caption="( tambien puedes excluir palabras con -palabra )"/>
@@ -3772,6 +3780,9 @@
 		<control caption="_Guardar como"/>
 		<control caption="_Borrar"/>
 		<control caption="Filtros:"/>
+		<control caption="Archivos DRM"/>
+		<control caption="Archivos Sospechosos"/>
+		<control caption="Resultados para adultos"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Guardar filtro como">
