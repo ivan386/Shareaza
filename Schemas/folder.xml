@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
@@ -17,6 +18,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -28,6 +30,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">Folder</title>
                <title language="af">Gids</title>
                <title language="chs">文件夹</title>
+               <title language="cht">資料夾</title>
                <title language="de">Ordner</title>
                <title language="ee">Kaust</title>
                <title language="es">Carpeta</title>
@@ -42,6 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="no">Mappe</title>
                <title language="br">Pasta</title>
                <title language="ru">&#160;Папка</title>
+               <title language="sl-SI">Mapa</title>
                <title language="sr">Fascikla</title>
                <title language="tr">Klasörler</title>
        </titles>
@@ -53,6 +57,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
+                       <title language="cht">標題</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -67,6 +72,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
                </member>
@@ -74,6 +80,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
                        <title language="chs">描述</title>
+                       <title language="cht">描述</title>
                        <title language="de">Beschreibung</title>
                        <title language="ee">Kirjeldus</title>
                        <title language="es">Descripción</title>
@@ -88,6 +95,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Beskrivelse</title>
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
+                       <title language="sl-SI">Opis</title>
                        <title language="sr">Opis</title>
                        <title language="tr">Tanımlama</title>
                </member>
@@ -95,6 +103,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
                        <title language="chs">收集人</title>
+                       <title language="cht">美術品收藏者</title>
                        <title language="de">Sammler</title>
                        <title language="ee">Koguja</title>
                        <title language="es">Colector</title>
@@ -109,6 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Samler</title>
                        <title language="br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
+                       <title language="sl-SI">Kolektor</title>
                        <title language="sr">Sakupio</title>
                        <title language="tr">Koleksiyoncu</title>
                </member>
@@ -116,6 +126,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
                        <title language="chs">注释</title>
+                       <title language="cht">注釋</title>
                        <title language="de">Kommentar</title>
                        <title language="ee">Arvamused</title>
                        <title language="es">Comentarios</title>
@@ -130,6 +141,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Kommentar</title>
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
+                       <title language="sl-SI">Komentarji</title>
                        <title language="sr">Komentari</title>
                        <title language="tr">Yorumlar</title>
                </member>

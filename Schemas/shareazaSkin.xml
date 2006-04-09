@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
@@ -17,6 +18,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -27,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">Skin</title>
                <title language="af">Omslag</title>
                <title language="chs">皮肤</title>
+               <title language="cht">面板</title>
                <title language="de">Skin</title>
                <title language="ee">Nahk</title>
                <title language="es">Skin</title>
@@ -41,6 +44,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="no">Skin</title>
                <title language="br">Pele</title>
                <title language="ru">Шкурка</title>
+               <title language="sl-SI">Preobleka</title>
                <title language="sr">Skin</title>
                <title language="tr">Arayüz</title>
        </titles>
@@ -50,6 +54,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Name</title>
                        <title language="af">Naam</title>
                        <title language="chs">名称</title>
+                       <title language="cht">名稱</title>
                        <title language="de">Name</title>
                        <title language="ee">Nimi</title>
                        <title language="es">Nombre</title>
@@ -64,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Navn</title>
                        <title language="br">Nome</title>
                        <title language="ru">Название</title>
+                       <title language="sl-SI">Ime</title>
                        <title language="sr">Ime</title>
                        <title language="tr">İsim</title>
                </member>
@@ -71,6 +77,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Author</title>
                        <title language="af">Outeur</title>
                        <title language="chs">作者</title>
+                       <title language="cht">作者</title>
                        <title language="de">Autor</title>
                        <title language="ee">Autor</title>
                        <title language="es">Autor</title>
@@ -85,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Forfatter</title>
                        <title language="br">Autor</title>
                        <title language="ru">Автор</title>
+                       <title language="sl-SI">Avtor</title>
                        <title language="sr">Autor</title>
                        <title language="tr">Yazar</title>
                </member>
@@ -92,6 +100,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
                        <title language="chs">链接</title>
+                       <title language="cht">連結</title>
                        <title language="de">Link</title>
                        <title language="ee">Link</title>
                        <title language="es">Link</title>
@@ -106,6 +115,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Link</title>
                        <title language="br">Link</title>
                        <title language="ru">Ссылка</title>
+                       <title language="sl-SI">Povezava</title>
                        <title language="sr">Link</title>
                        <title language="tr">Bağlantı</title>
                </member>
@@ -113,6 +123,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Email</title>
                        <title language="af">E-pos</title>
                        <title language="chs">电子邮件</title>
+                       <title language="cht">電子郵件</title>
                        <title language="de">E-Mail</title>
                        <title language="ee">Email</title>
                        <title language="es">E-Mail</title>
@@ -127,6 +138,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">E-post</title>
                        <title language="br">Email</title>
                        <title language="ru">E-mail</title>
+                       <title language="sl-SI">E-naslov</title>
                        <title language="sr">Email</title>
                        <title language="tr">e-mail</title>
                </member>
@@ -134,6 +146,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Version</title>
                        <title language="af">Weergawe</title>
                        <title language="chs">版本</title>
+                       <title language="cht">版本</title>
                        <title language="de">Version</title>
                        <title language="ee">Versioon</title>
                        <title language="es">Versión</title>
@@ -148,6 +161,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Versjon</title>
                        <title language="br">Versão</title>
                        <title language="ru">Версия</title>
+                       <title language="sl-SI">Različica</title>
                        <title language="sr">Verzija</title>
                        <title language="tr">Versiyon</title>
                </member>
@@ -156,6 +170,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
                        <title language="chs">类型</title>
+                       <title language="cht">類型</title>
                        <title language="de">Art</title>
                        <title language="ee">Tüüp</title>
                        <title language="es">Arte</title>
@@ -170,6 +185,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Type</title>
                        <title language="br">Tipo</title>
                        <title language="ru">Тип</title>
+                       <title language="sl-SI">Tip</title>
                        <title language="sr">Vrsta</title>
                        <title language="tr">Tip</title>
                </member>
@@ -177,6 +193,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
                        <title language="chs">语言</title>
+                       <title language="cht">語言</title>
                        <title language="de">Sprache</title>
                        <title language="ee">Keel</title>
                        <title language="es">Lenguaje</title>
@@ -191,6 +208,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Språk</title>
                        <title language="br">Idioma</title>
                        <title language="ru">Язык</title>
+                       <title language="sl-SI">Jezik</title>
                        <title language="sr">Jezik</title>
                        <title language="tr">Dil</title>
                </member>
@@ -198,6 +216,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
                        <title language="chs">描述</title>
+                       <title language="cht">描述</title>
                        <title language="de">Beschreibung</title>
                        <title language="ee">Kirjeldus</title>
                        <title language="es">Descripción</title>
@@ -212,6 +231,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Beskrivelse</title>
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
+                       <title language="sl-SI">Opis</title>
                        <title language="sr">Opis</title>
                        <title language="tr">Tanımlama</title>
                </member>
@@ -219,6 +239,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
                        <title language="chs">注释</title>
+                       <title language="cht">注釋</title>
                        <title language="de">Kommentar</title>
                        <title language="ee">Arvamused</title>
                        <title language="es">Comentarios</title>
@@ -233,6 +254,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Kommentar</title>
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
+                       <title language="sl-SI">Komentarji</title>
                        <title language="sr">Komentari</title>
                        <title language="tr">Yorumlar</title>
                </member>

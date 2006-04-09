@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Help
@@ -17,6 +18,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -28,6 +30,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">Music:By Album</title>
                <title language="af">Musiek:Volgens Album</title>
                <title language="chs">&#160;音乐:按 - 专辑</title>
+               <title language="cht">音樂:由-專輯</title>
                <title language="de">Musik:Nach Album</title>
                <title language="ee">Muusika:Albumid</title>
                <title language="es">Música: Por Album</title>
@@ -42,6 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="no">Musikk: per album</title>
                <title language="br">Música:Por Álbum</title>
                <title language="ru">&#160;Музыка: По альбомам</title>
+               <title language="sl-SI">Glasba:Po albumu</title>
                <title language="sr">Muzika:Po Albumima</title>
                <title language="tr">Müzik: Albümden</title>
        </titles>
@@ -54,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
+                       <title language="cht">標題</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -68,6 +73,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
                </member>
@@ -79,6 +85,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">Music By Album</title>
                <title language="af">Musiek Volgens Album</title>
                <title language="chs">音乐 按专辑</title>
+               <title language="cht">音樂-由-專輯</title>
                <title language="de">Musik nach Album</title>
                <title language="ee">Muusika Albumid</title>
                <title language="es">Música por Album</title>
@@ -93,11 +100,13 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="no">Musikk per album</title>
                <title language="br">Música por Álbum</title>
                <title language="ru">Музыка по альбомам</title>
+               <title language="sl-SI">Glasba Po albumu</title>
                <title language="sr">Muzika Po Albumima</title>
                <title language="tr">Albümden Müzik</title>
                <subtitle language="en">This folder contains a list of albums you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die albums wat jy in jou bibioteek het.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中专辑的清单。</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中一個專輯清單.</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste aller Alben in ihrere Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab nimekirja albumitest sinu raamatukogus.</subtitle>
                <subtitle language="es">Esta carpeta contiene los albums que tienes en tu librería</subtitle>
@@ -112,6 +121,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="no">Denne mappen inneholder en liste over alle dine album</subtitle>
                <subtitle language="br">Esta pasta contém todos os álbuns presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает список музыкальных альбомов найденных в файлах Вашего хранилища.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje seznam albumov v vaši knjižnici.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži popis albuma koje imate u kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki albümlerin bir listesini içerir.</subtitle>
        </headerContent>
