@@ -30,7 +30,8 @@ Name: "jp"; MessagesFile: "setup\isl\japanese.isl"; LicenseFile: "setup/license/
 Name: "ar"; MessagesFile: "setup\isl\arabic.isl"; LicenseFile: "setup/license/default.rtf"
 Name: "ee"; MessagesFile: "setup\isl\estonian.isl"; LicenseFile: "setup/license/estonian.rtf"
 Name: "tw"; MessagesFile: "setup\isl\chinese-trad.isl"; LicenseFile: "setup/license/chinese-trad.rtf"
-;Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
+Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
+Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl"; LicenseFile: "setup/license/default.rtf"
 
 [Files]
 #ifndef debug
@@ -76,7 +77,7 @@ Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 ; Polish
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: pl; Components: language
 ; Czech
-;Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: cz; Components: language
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: cz; Components: language
 ; Serbian
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: sr; Components: language
 ; Turkish
@@ -89,6 +90,8 @@ Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: ee; Components: language
 ; Chinese Trad
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: tw; Components: language
+; Slovenian
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: sl; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -132,7 +135,7 @@ Source: "setup\license\hebrew.rtf"; DestDir: "{app}\Uninstall"; DestName: "licen
 ; Polish
 Source: "setup\license\polish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pl; Components: language
 ; Czech
-;Source: "setup\license\czech.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
+Source: "setup\license\czech.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
 ; Serbian
 Source: "setup\license\serbian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sr; Components: language
 ; Turkish
@@ -145,6 +148,8 @@ Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\estonian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ee; Components: language
 ; Chinese Trad
 Source: "setup\license\chinese-trad.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tw; Components: language
+; Slovenian
+Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sl; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -188,7 +193,7 @@ Source: "setup\filter\hebrew.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter
 ; Polish
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pl; Components: language
 ; Czech
-;Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
 ; Serbian
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sr; Components: language
 ; Turkish
@@ -201,6 +206,8 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ee; Components: language
 ; Chinese Trad
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tw; Components: language
+; Slovenian
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sl; Components: language
 #endif
 
 [CustomMessages]
@@ -695,28 +702,28 @@ tr.page_viruswarning_subtitle=Bir AntiVirus programý yükledin mi?
 tr.CreateDesktopIcon=Bir &Masaüstü ikonu görüntüle
 tr.CreateQuickLaunchIcon=Bir &Hýzlý Baþlat ikonu görüntüle
 ; Czech
-;cz.components_plugins=Plugins
-;cz.components_skins=Skins
-;cz.components_languages=Languages
-;cz.tasks_allusers=All users
-;cz.tasks_selectusers=Install %1 for:
-;cz.tasks_currentuser=%1 only
-;cz.tasks_multisetup=Enable multi-user support
-;cz.tasks_firewall=Add an exception to the Windows Firewall
-;cz.tasks_deleteoldsetup=Delete old installers
-;cz.run_skinexe=Running skin installation...
-;cz.reg_incomingchat=Incoming chat message
-;cz.reg_apptitle=Shareaza Ultimate File Sharing
-;cz.icons_license=License
-;cz.icons_uninstall=Uninstall
-;cz.icons_downloads=Downloads
-;cz.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
-;cz.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
-;cz.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-;cz.page_viruswarning_title=Virus Warning
-;cz.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
-;cz.CreateDesktopIcon=Display a &desktop icon
-;cz.CreateQuickLaunchIcon=Display a &Quick Launch icon
+cz.components_plugins=Plugins
+cz.components_skins=Skins
+cz.components_languages=Languages
+cz.tasks_allusers=All users
+cz.tasks_selectusers=Install %1 for:
+cz.tasks_currentuser=%1 only
+cz.tasks_multisetup=Enable multi-user support
+cz.tasks_firewall=Add an exception to the Windows Firewall
+cz.tasks_deleteoldsetup=Delete old installers
+cz.run_skinexe=Running skin installation...
+cz.reg_incomingchat=Incoming chat message
+cz.reg_apptitle=Shareaza Ultimate File Sharing
+cz.icons_license=License
+cz.icons_uninstall=Uninstall
+cz.icons_downloads=Downloads
+cz.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+cz.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+cz.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+cz.page_viruswarning_title=Virus Warning
+cz.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+cz.CreateDesktopIcon=Display a &desktop icon
+cz.CreateQuickLaunchIcon=Display a &Quick Launch icon
 ; japanese
 jp.components_plugins=ƒvƒ‰ƒOƒCƒ“
 jp.components_skins=ƒXƒLƒ“
@@ -815,3 +822,26 @@ tw.page_viruswarning_title=¯f¬rÄµ§i
 tw.page_viruswarning_subtitle=±z¬O§_¤w¸g¦w¸Ë¤F¤@­Ó¨¾¬r³nÅé?
 tw.CreateDesktopIcon=½Ð·s¼W¤@­Ó&®à­±¹Ï¥Ü
 tw.CreateQuickLaunchIcon=½Ð·s¼W¤@­Ó&§Ö³t±Ò°Ê¹Ï¥Ü
+; Slovenian
+sl.components_plugins=Plugins
+sl.components_skins=Skins
+sl.components_languages=Languages
+sl.tasks_allusers=All users
+sl.tasks_selectusers=Install %1 for:
+sl.tasks_currentuser=%1 only
+sl.tasks_multisetup=Enable multi-user support
+sl.tasks_firewall=Add an exception to the Windows Firewall
+sl.tasks_deleteoldsetup=Delete old installers
+sl.run_skinexe=Running skin installation...
+sl.reg_incomingchat=Incoming chat message
+sl.reg_apptitle=Shareaza Ultimate File Sharing
+sl.icons_license=License
+sl.icons_uninstall=Uninstall
+sl.icons_downloads=Downloads
+sl.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+sl.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+sl.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+sl.page_viruswarning_title=Virus Warning
+sl.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+sl.CreateDesktopIcon=Display a &desktop icon
+sl.CreateQuickLaunchIcon=Display a &Quick Launch icon
