@@ -1,8 +1,8 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2006/04/09 08:58:23 $"
-//	Revision:		"$Revision: 1.43 $"
+//	Date:			"$Date: 2006/04/09 09:38:02 $"
+//	Revision:		"$Revision: 1.44 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -881,28 +881,33 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 {
 	DWORD tNow = (DWORD)time( NULL );
 	StopWebRequest();
-	
-	if ( pService != NULL )
-	{
-		if ( time( NULL ) - pService->m_tAccessed < pService->m_nAccessPeriod ) return FALSE;
-	}
+	DWORD nHosts = 0;
 
 	switch ( nProtocol )
 	{
 	case PROTOCOL_G1:
 		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::RequestWebCache() seeking gnutella hosts") );
+		nHosts = HostCache.Gnutella1.m_nHosts;
 		break;
 	case PROTOCOL_G2:
 		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::RequestWebCache() seeking G2 hosts") );
+		nHosts = HostCache.Gnutella2.m_nHosts;
 		break;
 	case PROTOCOL_ED2K:
 		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::RequestWebCache() seeking ed2k hosts") );
+		nHosts = HostCache.eDonkey.m_nHosts;
 		break;
 	default:
 		theApp.Message( MSG_ERROR, _T("ERROR: CDiscoveryServices::RequestWebCache() was passed an invalid protocol") );
 		return FALSE;
 	}
 	
+	if ( pService != NULL )
+	{
+		if ( time( NULL ) - pService->m_tAccessed < pService->m_nAccessPeriod &&
+			 nHosts ) return FALSE;
+	}
+
 	m_pWebCache	= pService;
 	m_nWebCache	= nMode;
 	m_hRequest	= NULL;
