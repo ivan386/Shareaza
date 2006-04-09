@@ -1522,6 +1522,14 @@
 		<text align="middle">&#160;- קבל עזרה בסיסית בהפעלת שרזה</text>
 		<newline gap="18" indent="16"/>
 
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">ה ה ו ר ד ו ת &#160; ש ל י</heading>
+		<newline gap="8" indent="42"/>
+		<text>לפתיחת תיקיית ההורדות שלך </text>
+		<link target="raza:shell:downloads">לחץ כאן</link>
+		<newline gap="18" indent="16"/>
+
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">ג י ש ה &#160; מ ר ח ו ק &#160; ב מ צ ב &#160; מ א ו פ ש ר</heading>
@@ -3755,7 +3763,7 @@
 		<control caption="ביטול"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="...מסנן תוצאות">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="...מסנן תוצאות">
 		<control caption=":הראה רק תוצאות שמכילות את המילים"/>
 		<control/>
 		<control caption="‫( תוכל גם להשמיט מילים כך: 'מילה' )"/>
@@ -3781,6 +3789,9 @@
 		<control caption="שמור בשם"/>
 		<control caption="מחק"/>
 		<control caption="‪:...סינון"/>
+		<control caption="DRM קבצי"/>
+		<control caption="קבצים חשודים"/>
+		<control caption="תוצאות עם תוכן למבוגרים"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="...שמור מסנן בשם">
