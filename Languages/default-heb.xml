@@ -463,9 +463,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="‪_Shareaza.com אתר הבית"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="‪_פורומים"/>
-				<item id="ID_HELP_UPDATE" text="‪חדשות אחרונות"/>
+				<!-- <item id="ID_HELP_UPDATE" text="‪חדשות אחרונות"/>
 				<item id="ID_HELP_WEB_1" text="‪Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="‪P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="‪P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="‪...אודות שרזה"/>
@@ -554,9 +554,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="‪_Shareaza.com אתר הבית"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="‪_פורומים"/>
-				<item id="ID_HELP_UPDATE" text="‪חדשות אחרונות"/>
+				<!-- <item id="ID_HELP_UPDATE" text="‪חדשות אחרונות"/>
 				<item id="ID_HELP_WEB_1" text="‪Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="‪P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="‪P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="‪...אודות שרזה"/>
@@ -639,9 +639,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="‪_Shareaza.com אתר הבית"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="‪_פורומים"/>
-				<item id="ID_HELP_UPDATE" text="‪חדשות אחרונות"/>
+				<!-- <item id="ID_HELP_UPDATE" text="‪חדשות אחרונות"/>
 				<item id="ID_HELP_WEB_1" text="‪Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="‪P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="‪P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="‪...אודות שרזה"/>

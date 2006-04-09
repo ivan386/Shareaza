@@ -472,9 +472,9 @@ Other:
 					<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 					<separator />
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forum"/>
-					<item id="ID_HELP_UPDATE" text="Shareaza _News"/>
+					<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
 					<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
-					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 				</menu>
 				<separator />
 				<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
@@ -563,9 +563,9 @@ Other:
 					<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 					<separator />
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forum"/>
-					<item id="ID_HELP_UPDATE" text="Shareaza _News"/>
+					<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
 					<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
-					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 				</menu>
 				<separator />
 				<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
@@ -648,9 +648,9 @@ Other:
 					<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 					<separator />
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forum"/>
-					<item id="ID_HELP_UPDATE" text="Shareaza _News"/>
+					<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
 					<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
-					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 				</menu>
 				<separator />
 				<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
@@ -1531,6 +1531,14 @@ Other:
 			<gap size="8"/>
 			<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Hilfe</link>
 			<text align="middle">&#160;- Shareaza Anleitung und FAQ</text>
+			<newline gap="18" indent="0"/>
+
+			<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+			<gap size="8"/>
+			<heading align="middle">M E I N E &#160; D O W N L O A D S</heading>
+			<newline gap="8" indent="42"/>
+			<text>Um den Ordner mit den Downloads zu öffnen </text>
+			<link target="raza:shell:downloads">hier klicken!</link>
 			<newline gap="18" indent="0"/>
 
 			<group id="5">

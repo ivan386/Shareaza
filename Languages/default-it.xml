@@ -469,9 +469,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Ultime notizie"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Informazioni su Shareaza..."/>
@@ -560,9 +560,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Ultime notizie"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Informazioni su Shareaza..."/>
@@ -645,9 +645,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Ultime notizie"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Informazioni su Shareaza..."/>
@@ -1525,6 +1525,14 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Aiuto veloce</link>
 		<text align="middle">&#160;- Aiuti fondamentali per usare Shareaza</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">D O W N L O A D</heading>
+		<newline gap="8" indent="42"/>
+		<text>Per aprire la cartella con i tuoi download </text>
+		<link target="raza:shell:downloads">fai click qui</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -3756,7 +3764,7 @@
 		<control caption="Annulla"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Opzioni filtro">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Opzioni filtro">
 		<control caption="Mostra solo i risultati che includono le _parole:"/>
 		<control/>
 		<control caption="(puoi anche escludere parole con -parola)"/>
@@ -3782,6 +3790,9 @@
 		<control caption="_Salva come"/>
 		<control caption="_Cancella"/>
 		<control caption="Filtri:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Salva il filtro come">
@@ -3795,7 +3806,7 @@
 		<control caption="_Indirizzo servizio:"/>
 		<control/>
 		<control caption="Tipo servizio di ricerca:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>
 	</dialog>

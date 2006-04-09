@@ -465,9 +465,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Последние новости"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Последние новости"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
@@ -556,9 +556,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Последние новости"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Последние новости"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
@@ -641,9 +641,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Последние новости"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Последние новости"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
@@ -1488,6 +1488,14 @@
 			<newline gap="18" indent="0"/>
 		</group>
 
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">М О И &#160; З А Г Р У З К И</heading>
+		<newline gap="8" indent="42"/>
+		<text>Чтобы открыть папку с Вашими загрузками, </text>
+		<link target="raza:shell:downloads">щелкните здесь</link>
+		<newline gap="18" indent="0"/>
+
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">H A C T P O Й T E  &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
@@ -1520,7 +1528,7 @@
 		<gap size="8"/>
 		<link target="http://forum.ru-board.com/topic.cgi?forum=5&amp;topic=4232#1" format="bu" align="middle">Форум RU-BOARD</link>
 		<text align="middle">&#160;- Обсуждение программы и работы с ней</text>
-		<newline gap="8"/>		
+		<newline gap="18" indent="0"/>
 
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
@@ -3746,7 +3754,7 @@
 		<control caption="Отмена"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Фильтрование соответсвий">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Фильтрование соответсвий">
 		<control caption="Показывать только содержащие слова:"/>
 		<control/>
 		<control caption="( исключать слова можно ставя '-' перед ними )"/>
@@ -3765,13 +3773,16 @@
 		<control caption="Несоответствующие"/>
 		<control caption="Уже загружаемые"/>
 		<control caption="Подделки"/>
-		<control caption="Фильтр"/>
+		<control caption="Фильтровать"/>
 		<control caption="Отмена"/>
 		<control/>
 		<control caption="Использовать по умолчанию"/>
 		<control caption="_Сохранить как"/>
 		<control caption="_Удалить"/>
 		<control caption="Фильтры:"/>
+		<control caption="Файлы с DRM"/>
+		<control caption="Подозрительные"/>
+		<control caption="Содерж. для взрослых"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Сохранить фильтр как">

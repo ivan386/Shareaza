@@ -470,9 +470,9 @@ prompt="Kattints ide a magyar nyelvhez."
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
                                <separator/>
                                <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
-                               <item id="ID_HELP_UPDATE" text="Latest news"/>
+                               <!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
                                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-                               <item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+                               <item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
                        </menu>
                        <separator/>
                        <item id="ID_HELP_ABOUT" text="Névjegy..."/>
@@ -561,9 +561,9 @@ prompt="Kattints ide a magyar nyelvhez."
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
                                <separator/>
                                <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
-                               <item id="ID_HELP_UPDATE" text="Latest news"/>
+                               <!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
                                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-                               <item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+                               <item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
                        </menu>
                        <separator/>
                        <item id="ID_HELP_ABOUT" text="Névjegy..."/>
@@ -646,9 +646,9 @@ prompt="Kattints ide a magyar nyelvhez."
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
                                <separator/>
                                <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
-                               <item id="ID_HELP_UPDATE" text="Latest news"/>
+                               <!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
                                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-                               <item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+                               <item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
                        </menu>
                        <separator/>
                        <item id="ID_HELP_ABOUT" text="Névjegy..."/>
@@ -1523,6 +1523,14 @@ prompt="Kattints ide a magyar nyelvhez."
                <gap size="8"/>
                <link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Súgó</link>
                <text align="middle">&#160;- Segítség a program használatához.</text>
+               <newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">L E T Ö L T É S E K</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
                <newline gap="18" indent="0"/>
 
                <group id="5">
@@ -3767,7 +3775,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Mégse"/>
        </dialog>
 
-       <dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Találatok szűrése">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Találatok szűrése">
                <control caption="Csak azokat mutassa, amiben benne van ez:"/>
                <control/>
                <control caption="(- vonallal kizárhatsz szavakat)"/>
@@ -3793,6 +3801,9 @@ prompt="Kattints ide a magyar nyelvhez."
               <control caption="Mentés másként..."/>
               <control caption="Töröl"/>
               <control caption="Szűrők:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
        </dialog>
 
        <dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Szűrő mentése másként">

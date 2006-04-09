@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Shareaza Default Lithuanian Skin File -->
+<!-- Shareaza Default Lithuanian Skin File
+aA ogonek	&#261;&#260;
+cC caron	&#269;&#268;
+eE ogonek	&#281;&#280;
+eE dot		&#279;&#278;
+iI ogonek	&#303;&#302;
+sS caron	&#353;&#352;
+uU ogonek	&#371;&#370;
+uU macron	&#363;&#362;
+zZ caron	&#382;&#381;
+lower quote	&#132;
+right quote	&#147;
+-->
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
@@ -10,7 +22,7 @@
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.2.9"
+		version="2.2.0.2"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -462,9 +474,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
-				<item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Apie „Shareaza“..."/>
@@ -553,9 +565,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
-				<item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Apie „Shareaza“..."/>
@@ -638,9 +650,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
-				<item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Apie „Shareaza“..."/>
@@ -1312,7 +1324,6 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="Atverti gr_ojaraštį..."/>
 		<item id="ID_MEDIA_SAVE" text="Iš_saugoti grojaraštį..."/>
-		<item id="ID_MEDIA_EXPORT_COLLECTION" text="_Eksportuoti rinkinį..."/>
 		<item id="ID_MEDIA_CLEAR" text="_Valyti grojaraštį"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAYLIST" text="_Rodyti grojaraštį"/>
@@ -1527,6 +1538,14 @@
 		<text align="middle">&#160;- Nematote lietuviškų raidžių šiame puslapyje?</text>
 		<newline indent="82"/>
 		<text align="middle">Čia rasite taisyklingą „MS Trebuchet“ ir kitus šriftus.</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">M A N O &#160; A T S I S I U N T I M A I</heading>
+		<newline gap="8" indent="42"/>
+		<text>Atverkite aplanką su savo atsisiųstomis bylomis </text>
+		<link target="raza:shell:downloads">spūstelėję čia</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -2289,7 +2308,7 @@
 	<tip id="ID_LIBRARY_DELETE" message="Trinti pasirinktas bylas visam laikui."/>
 	<tip id="ID_LIBRARY_ENQUEUE" message="Įtraukti pasirinktą bylą(-as) į grojaraštį."/>
 	<tip id="ID_LIBRARY_EXPLORE" message="Atverti pasirinktą aplanką(-us)."/>
-	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką kaip rinkinio bylą..."/>
+	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į turimą rinkinio bylą..."/>
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Parsisiųsti visas bylas iš pasirinkto rinkinio."/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Įtraukti visas bylas iš pasirinkto albumo katalogo(-ų) į grojaraštį."/>
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Eksportuoti ir išsaugoti pasirinktą albumo aplanką kaip rinkinio bylą..."/>
@@ -2336,7 +2355,6 @@
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Naudoti numatytąjį vaizdo matmenų santykį."/>
 	<tip id="ID_MEDIA_CLEAR" message="Išvalyti (ištuštinti) grojaraštį."/>
 	<tip id="ID_MEDIA_CLOSE" message="Užverti veikiančią grotuvo bylą, tuo pačiu atlaisvinant atmintį."/>
-	<tip id="ID_MEDIA_EXPORT_COLLECTION" message="Išsaugoti grojaraštį kaip kolekcijos bylas..."/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="Į-/Išjungti visaekranę vaizdo veikseną."/>
 	<tip id="ID_MEDIA_MUTE" message="Nutildyti garsą"/>
 	<tip id="ID_MEDIA_NEXT" message="Pereiti prie sekančios bylos veikiančiame grojaraštyje."/>
@@ -2508,9 +2526,6 @@
 	<string id="7003" value="Skirtingi"/>
 	<string id="7004" value="Filtras vardu „%s“ jau egzistuoja. Ar norite jį pakeisti?"/>
 	<string id="7005" value="Suteikite filtrui vardą."/>
-	<string id="7100" value="Šis šablonas yra neteisingas."/>
-	<string id="7101" value="Šis šablonas neturi jokių parinkčių."/>
-	<string id="7102" value="Ar tikrai norite ištrinti šabloną „%s“?\nJūs negalėsite jo atstatyti."/>
 	<string id="8000" value="„Shareaza“ nuostatos"/>
 	<string id="8001" value="Sveiki! Čia „Shareaza“"/>
 	<string id="8002" value="Bylos ypatybės"/>
@@ -2523,7 +2538,6 @@
 	<string id="8009" value="Ar tikrai norite ištrinti „%s“ apvalkalą? Atstatyti vėliau bus neįmanoma."/>
 	<string id="8010" value="Tai priešišleidžiamoji „Shareaza“ versija, beta testavimo periodas baigėsi. Parsisiųskite pilną oficialią programos laidą iš www.shareaza.com."/>
 	<string id="8011" value="Pakeitus peržiūros būdą, visi atverti langai bus uždaryti. Ar norite keisti tuoj pat?"/>
-	<string id="8012" value="Informacija apie torrent bylą"/>
 	<string id="8060" value="Mazgas/Vedančiojo veiksena su %lu kaimynais(-ų). %s asmeninėje kolekcijoje."/>
 	<string id="8061" value="Vedančiojo veiksena su %lu kaimynais(-ų). %s asmeninėje kolekcijoje."/>
 	<string id="8062" value="Mazgo veiksena su %lu kaimynais(-ų). %s asmeninėje kolekcijoje."/>
@@ -2609,7 +2623,6 @@
 	<string id="8240" value="„Shareaza“ perkelia parsisiųstą bylą:"/>
 	<string id="8241" value="„Shareaza“ ieško klaidų parsisiųstoje byloje:"/>
 	<string id="8243" value="Išsiunt. santykis:"/>
-	<string id="8244" value="Įvertinimų skaičius:"/>
 	<string id="8288" value="Naršoma Jūsų „Shareaza“ kolekcija"/>
 	<string id="8289" value="Naršomas "/>
 	<string id="8290" value="Naršomas %i aplankų turinys"/>
@@ -2632,7 +2645,7 @@
 	<string id="8316" value="Kreipinių"/>
 	<string id="8317" value="Išsiųsta"/>
 	<string id="8318" value="%lu šiandien, %lu iš viso"/>
-	<string id="8319" value="Be maišos rinkinio"/>
+	<string id="8319" value="&#160;(Be maišos rinkinio)"/>
 	<string id="8320" value="Būklė:"/>
 	<string id="8321" value="Sparta:"/>
 	<string id="8322" value="URL adresas:"/>
@@ -2650,7 +2663,6 @@
 	<string id="8334" value="Šios bylos šaltiniai šiuo metu užimti"/>
 	<string id="8335" value="Šios bylos šaltiniai yra už užkardos"/>
 	<string id="8336" value="Šios bylos šaltiniai gali siųsti nestabiliai"/>
-	<string id="8337" value="Nepatikima"/>
 	<string id="16064" value="Startuojamas „Shareaza“ tinklo branduolys..."/>
 	<string id="16065" value="Neįmanoma susieti %s adreso %i prievado įeinantiems susijungimams. Įeinantys susijungimai nebus palaikomi."/>
 	<string id="16066" value="Stabdomas „Shareaza“ tinklo branduolys..."/>
@@ -3094,9 +3106,6 @@
 	<string id="18508" value="Šaltinis %s bylai „%s“ atmetamas, nes eilės numeris (%i) yra per didelis."/>
 	<string id="18509" value="Negalima nustatyti, kad šios bylos parsisiuntimas baigtas, ir atlikti patikrą iš naujo, nes kol kas nėra jokių dalinių patikros duomenų, tokių kaip dryžinės (tiger-tree) maišos apimtis, eDonkey ar BitTorrent maišos rinkiniai. Be patikros informacijos parsisiunčiamai bylai negali būti atlikta patikra."/>
 	<string id="18510" value="Ar tikrai norite nustatyti, kad šios bylos parsisiuntimas baigtas ir atlikti jos patikrą? Bus peržiūrima visa byla, ir „Shareaza“ priims tas dalis, kurios praeis patikrą, o tas dalis, kurios nepraeis patikros, atsiųs iš naujo."/>
-	<string id="18511" value="BitTorrent ryšys su klientu %s nebuvo leistas, pasiekta susijungimų riba."/>
-	<string id="18512" value="Privatus torrent"/>
-	<string id="18513" value="Koduotės klaida"/>
 	<string id="19000" value="Nuotolinė prieiga neįgalinta."/>
 	<string id="19001" value="Jūs privalote įrašyti vartotojo vardą ir slaptažodį."/>
 	<string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>
@@ -3108,8 +3117,6 @@
 	<string id="20005" value="Ne"/>
 	<string id="20006" value="Taip"/>
 	<string id="20007" value="Auto"/>
-	<string id="20008" value="Numatytoji"/>
-	<string id="20009" value="Pasirinktinė"/>
 	<string id="20100" value="Jungiamasi"/>
 	<string id="20101" value="Užklausiama"/>
 	<string id="20102" value="Atsakas"/>
@@ -3229,9 +3236,8 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="Grotuvas">
-		<control caption="_Medija paslaugos:"/>
-		<control/>
+	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Grotuvas">
+		<control caption="Pa_rinktys:"/>
 		<control caption="Naudoti „Shareaza“ grotuvą žemiau pateiktų bylų tipams GROTI"/>
 		<control caption="... taip pat ĮTRAUKIANT į grojaraščio eilę"/>
 		<control caption="_Bylų plėtiniai:"/>
@@ -3240,6 +3246,8 @@
 		<control caption="Š_alinti"/>
 		<control caption="Muzikos _vaizdo papildinys:"/>
 		<control caption="Pasirinkti _papildinį..."/>
+		<control caption="_Grotuvo paslaugų papildinys:"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Bendrija">
@@ -3764,7 +3772,7 @@
 		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtruoti atitikimus">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtruoti radinius">
 		<control caption="Rodyti tik atitikimus, kuriuose yra ž_odžiai:"/>
 		<control/>
 		<control caption="( Jūs galite išbraukti iš radinių žodžius su -žodis )"/>
@@ -4104,41 +4112,27 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Rinkinio eksportavimas">
-		<control caption="Ši funkcija leidžia eksportuoti aplanko ar grojaraščio turinį rinkinio pavidalu. Pasirinkite šabloną ir paspauskite „Toliau“, jei norite tęsti.|Derinkite savo kolekciją įvesdami duomenis į žemiau pateiktus laukelius."/>
-		<control/>
-		<control caption="Informacija apie šabloną:"/>
-		<control caption="Pavadinimas:"/>
-		<control/>
-		<control caption="Autorius:"/>
-		<control/>
-		<control caption="Aprašas:"/>
-		<control/>
-		<control caption="Šalinti|At_gal"/>
-		<control caption="_Toliau|Eksportuoti"/>
-		<control caption="_Atšaukti"/>
+	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Eksportuoti katalogą">
+		<control caption="Ši operacija naudojama albumo katalogo turiniui išsaugoti raiškiojo teksto bylos pavidalu."/>
+		<control caption="Eksportuoti..."/>
+		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Bylos taisa">
+	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Išplėstinė bylos taisa">
 		<control caption="DĖMESIO: Šiame dialogo lange patyrę vartotojai gali taisyti bylos informaciją, bet neteisingi pakeitimai gali sugadinti bylą."/>
-		<control caption="Bylos vardas ir _dydis:"/>
 		<control caption="_Bylos vardas:"/>
-		<control/><control/>
-		<control caption="Dydis (baitais):"/>
 		<control/>
 		<control caption="_Universalūs ištekliaus vardai (URNs):"/>
-		<control caption="Patikima"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
 		<control caption="Tiger-root:"/>
-		<control/><control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
 		<control caption="_Veiksmai:"/>
 		<control caption="Pamiršti esamą patikros būseną (ir atlikti patikrą iš naujo)"/>
 		<control caption="Tarti, kad byla 100% baigta siųstis, ir atlikti patikrą iš naujo"/>
 		<control caption="Pamiršti visus šaltinius"/>
-		<control caption="Sulieti su vietine byla ir atlikti patikrą"/>
 		<control caption="Duomenų _trynimas:"/>
 		<control caption="Ištrinti baitus:"/>
 		<control/>
@@ -4160,7 +4154,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Bendra">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent išsami informacija">
 		<control caption="Torrent _informacija:"/>
 		<control caption="Vardas:"/>
 		<control/>
@@ -4170,39 +4164,21 @@
 		<control/>
 		<control caption="Komentarai:"/>
 		<control/>
-		<control caption="Siuntimai:"/>
-		<control caption="Pradėti naujus atsisiuntimus:"/>
-		<control caption="&#160;Kada reikia| Kai santykis virš 100%| Tik kai prašoma| Niekada"/>
-		<control/>
-		<control caption="Viso išsiųsta:"/>
-		<control caption="Pastabos:"/>
-		<control/>
-	</dialog>
-
-	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Bylos">
-		<control caption="Torrent _informacija:"/>
-		<control caption="Vardas:"/>
-		<control/>
-		<control caption="_Bylos:"/>
-		<control/>
-	</dialog>
-
-	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Sekliai">
-		<control caption="Torrent _informacija:"/>
-		<control caption="Vardas:"/>
-		<control/>
 		<control caption="Seklys:"/>
 		<control/>
-		<control caption="_Naudojamas seklys:"/>
+		<control caption="_Siuntėjai:"/>
 		<control caption="Skleidėjų:"/>
 		<control/>
 		<control caption="Gavėjų:"/>
 		<control/>
-		<control caption="_Atnaujinti"/>
-		<control caption="_Sekliai:"/>
+		<control caption="Siuntimai:"/>
+		<control caption="Pradėti naujus atsisiuntimus:"/>
+		<control caption="Kada reikia|Kai santykis virš 100%|Tik kai prašoma|Niekada"/>
+		<control caption="_Bylos:"/>
 		<control/>
-		<control caption="Seklio veiksena:"/>
-		<control caption="Neįgalinta|Pasirinktinė|Vienas seklys|Daug seklių|Daug seklių (užrakinta)"/>
+		<control caption="_Atnaujinti"/>
+		<control/>
+		<control caption="Užverti"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Atsisiuntimų grupės ypatybės">
@@ -4361,14 +4337,9 @@
 		<column from="URL" to="Nuoroda"/>
 		<column from="Expires" to="Nustoja galioti"/>
 	</list>
-	<list name="CTorrentFileList">
+	<list name="CTorrentTrackerList">
 		<column from="Filename" to="Bylos vardas"/>
 		<column from="Size" to="Dydis"/>
-	</list>
-	<list name="CTorrentTrackerList">
-		<column from="Tracker" to="Seklys"/>
-		<column from="Status" to="Būklė"/>
-		<column from="Type" to="Tipas"/>
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="Vartotojas"/>

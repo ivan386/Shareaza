@@ -473,9 +473,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazaフォーラム(_F)"/>
-				<item id="ID_HELP_UPDATE" text="最新ニュース"/>
+				<!-- <item id="ID_HELP_UPDATE" text="最新ニュース"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Shareazaについて(_A)..."/>
@@ -564,9 +564,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazaフォーラム(_F)"/>
-				<item id="ID_HELP_UPDATE" text="最新ニュース"/>
+				<!-- <item id="ID_HELP_UPDATE" text="最新ニュース"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Shareazaについて(_A)..."/>
@@ -649,9 +649,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazaフォーラム(_F)"/>
-				<item id="ID_HELP_UPDATE" text="最新ニュース"/>
+				<!-- <item id="ID_HELP_UPDATE" text="最新ニュース"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Shareazaについて(_A)..."/>
@@ -1532,9 +1532,17 @@
 		<text align="middle">&#160;- Shareazaを使う上での基本的なヘルプを参照出来ます</text>
 		<newline gap="18" indent="0"/>
 
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">マ イ ・ ダ ウ ン ロ ー ド</heading>
+		<newline gap="8" indent="42"/>
+		<text>マイ・ダウンロード・フォルダーを開きます</text>
+		<link target="raza:shell:downloads">ここをクリックしてください</link>
+		<newline gap="18" indent="0"/>
+
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">リ モ ー ト ア ク セ ス 有 効</heading>
+			<heading align="middle">リ モ ー ト ・ ア ク セ ス</heading>
 			<newline gap="8" indent="42"/>
 			<text>Shareazaリモートアクセスが有効になっています。 次のアドレスでブラウザからShareazaをコントロールできます:</text>
 			<newline gap="6"/>
@@ -3772,7 +3780,7 @@
 		<control caption="キャンセル"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="フィルタ一致">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="フィルタ一致">
 		<control caption="フィルタに一致させようとする単語を入力して下さい(_W):"/>
 		<control/>
 		<control caption="( -単語 で除外設定を行うことが出来ます )"/>
@@ -3798,6 +3806,9 @@
 		<control caption="新規保存(_S)"/>
 		<control caption="削除(_D)"/>
 		<control caption="フィルタ:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="フィルタに名前を付けて保存">
@@ -3811,7 +3822,7 @@
 		<control caption="サービスのアドレス(_A):"/>
 		<control/>
 		<control caption="ディスカバリサービス種類:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
 		<control caption="OK"/>
 		<control caption="キャンセル"/>
 	</dialog>

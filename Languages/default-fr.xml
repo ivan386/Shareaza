@@ -481,9 +481,9 @@ Other:
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/> 
-                <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/> 
+                <!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/> 
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_A propos de Shareaza..."/>
@@ -572,9 +572,9 @@ Other:
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/> 
-                <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/> 
+                <!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/> 
                 <item id="ID_HELP_WEB_1" text="Zeropaid.com"/> 
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_A propos de Shareaza..."/>
@@ -657,9 +657,9 @@ Other:
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_A propos de Shareaza..."/>
@@ -1537,6 +1537,14 @@ Other:
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Aide Rapide</link>
 		<text align="middle">&#160;- Obtenez de l'aide dans l'utilisation de Shareaza.</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">M E S &#160; T É L É C H A R G E M E N T S</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -3708,7 +3716,7 @@ Other:
 		<control caption="Annuler"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Assortiments du filtre">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Assortiments du filtre">
 		<control caption="Montrer seulement les résultats qui contiennent les mots:"/>
 		<control/>
 		<control caption="vous pouvez exclure des mots avec -mot"/>
@@ -3734,6 +3742,9 @@ Other:
         <control caption="_Sauvegarder sous"/>
         <control caption="_Effacer"/>
         <control caption="Filtres:"/>		
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 	
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Sauvegarder le filtre sous">
@@ -3747,7 +3758,7 @@ Other:
 		<control caption="_Adresse du service:"/>
 		<control/>
 		<control caption="Type de service:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
 		<control caption="Valider"/>
 		<control caption="Annuler"/>
 	</dialog>

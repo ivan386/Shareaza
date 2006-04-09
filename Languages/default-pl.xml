@@ -469,9 +469,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Forum Shareazy"/>
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="O programie..."/>
@@ -560,9 +560,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Forum Shareazy"/>
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="O programie..."/>
@@ -645,9 +645,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Forum Shareazy"/>
-				<item id="ID_HELP_UPDATE" text="Najświeższe wiadomości"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Najświeższe wiadomości"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="O Shareazie..."/>
@@ -1525,6 +1525,14 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Szybka pomoc</link>
 		<text align="middle">&#160;- Podstawowa pomoc dotycząca używania Shareazy</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">M O J E &#160; P O B I E R A N I A</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -3743,7 +3751,7 @@
 		<control caption="Anuluj"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filtruj wyniki">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtruj wyniki">
 		<control caption="Pokaż tylko te wyniki, które zawierają słowa:"/>
 		<control/>
 		<control caption="( możesz także wykluczać wyrazy za pomocą -wyraz )"/>
@@ -3769,6 +3777,9 @@
 		<control caption="Zapisz jako"/>
 		<control caption="Usuń"/>
 		<control caption="Filtry:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Zapisz filtr jako">
@@ -3782,7 +3793,7 @@
 		<control caption="Adres serwisu:"/>
 		<control/>
 		<control caption="Typ serwisu Discovery:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
 		<control caption="OK"/>
 		<control caption="Anuluj"/>
 	</dialog>

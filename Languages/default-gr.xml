@@ -461,9 +461,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Σχετικά με το Shareaza..."/>
@@ -552,9 +552,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> 
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Σχετικά με το Shareaza..."/>
@@ -637,9 +637,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/> 
-				<item id="ID_HELP_UPDATE" text="Latest news"/> 
+				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/> 
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/> 
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>                                  
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->                                 
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Σχετικά με το Shareaza..."/>
@@ -1517,6 +1517,14 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Γρήγορη Βοήθεια</link>
 		<text align="middle">&#160;- Πάρτε μια βασική βοήθεια για το πως να χρησιμοποιήσετε το Shareaza</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">Τ Α &#160; Κ Α Τ Ε Β Α Σ Μ Έ Ν Α &#160; Α Ρ Χ Ε Ί Α</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -3745,7 +3753,7 @@
 		<control caption="Ακύρωση"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Φίλτραρε τα αποτελέσματα">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Φίλτραρε τα αποτελέσματα">
 		<control caption="Δείξε μόνο τα αποτελέσματα που περιέχουν τις _λέξεις:"/>
 		<control/>
 		<control caption="( you can also exclude words with -word )"/>
@@ -3771,6 +3779,9 @@
 		<control caption="_Αποθήκευση ως"/>
 		<control caption="_Διέγραψε"/>
 		<control caption="Φίλτρα:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Αποθήκευσε τα φίλτρα ως">

@@ -469,9 +469,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forumlar"/>
-				<item id="ID_HELP_UPDATE" text="Son Haberler"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Son Haberler"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Shareaza Hakkında..."/>
@@ -560,9 +560,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forumlar"/>
-				<item id="ID_HELP_UPDATE" text="Son Haberler"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Son Haberler"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Shareaza Hakkında..."/>
@@ -645,9 +645,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forumları"/>
-				<item id="ID_HELP_UPDATE" text="Son Haberler"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Son Haberler"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Shareaza Hakkında..."/>
@@ -1524,6 +1524,14 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Hızlı Yardım</link>
 		<text align="middle">&#160;- Shareaza'nın temel kullanımı ile ilgili yardım</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">D O W N L O A D - L A R I M</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -3723,7 +3731,7 @@
 		<control caption="İptal"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filtre Eşleştirmesi">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtre Eşleştirmesi">
 		<control caption="Sadece kelimeyi içeren eşleştirmeleri göster:"/>
 		<control/>
 		<control caption="( kelime ile ilgili kelimeleri dahi kabul etme)"/>
@@ -3749,6 +3757,9 @@
 		<control caption="_Farklı Kaydet"/>
 		<control caption="_Sil"/>
 		<control caption="Filtreler:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filtre Farklı Kaydet">

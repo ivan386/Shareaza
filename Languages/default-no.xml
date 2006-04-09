@@ -469,9 +469,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-				<item id="ID_HELP_UPDATE" text="Siste nytt"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Siste nytt"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
@@ -560,9 +560,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-				<item id="ID_HELP_UPDATE" text="Siste nytt"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Siste nytt"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
@@ -645,9 +645,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-				<item id="ID_HELP_UPDATE" text="Siste nytt"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Siste nytt"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
@@ -1525,6 +1525,14 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Hjelp</link>
 		<text align="middle">&#160;- Få grunnleggende hjelp til å bruke Shareaza</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">M I N E &#160; N E D L A S T I N G E R</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -3756,7 +3764,7 @@
 		<control caption="Avbryt"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filtrertreff">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtrertreff">
 		<control caption="Vis bare treff som inneholder _ordene:"/>
 		<control/>
 		<control caption="( du kan også fjerne ord, med -ord )"/>
@@ -3782,6 +3790,9 @@
 		<control caption="Lagre som"/>
 		<control caption="Slett"/>
 		<control caption="Filtere:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Lagre filter som">
@@ -3795,7 +3806,7 @@
 		<control caption="Tjenesteadresse:"/>
 		<control/>
 		<control caption="Oppdagelsestjeneste-type:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
 	</dialog>

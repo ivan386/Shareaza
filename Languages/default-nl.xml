@@ -469,9 +469,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
@@ -560,9 +560,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Laatste Nieuws"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Laatste Nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
@@ -645,9 +645,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Recentste versie"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Recentste versie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
@@ -1531,7 +1531,7 @@
 		<gap size="8"/>
 		<heading align="middle">M I J N &#160; D O W N L O A D S</heading>
 		<newline gap="8" indent="42"/>
-		<text>Om de map met je gedownloade bestanden te openen </text
+		<text>Om de map met je gedownloade bestanden te openen </text>
 		<link target="raza:shell:downloads">klik hier</link>
 		<newline gap="18" indent="0"/>
 
@@ -3764,7 +3764,7 @@
 		<control caption="Annuleren"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filter Resultaten">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filter Resultaten">
 		<control caption="Alleen resultaten tonen die deze _woorden bevatten:"/>
 		<control/>
 		<control caption="( je kunt ook woorden uitsluiten met &quot;-woord&quot; )"/>
@@ -3790,6 +3790,9 @@
 		<control caption="_Opslaan als"/>
 		<control caption="_Verwijder"/>
 		<control caption="Filters:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Save filter as">
@@ -3803,7 +3806,7 @@
 		<control caption="Service _Adres:"/>
 		<control/>
 		<control caption="Discovery Service Type:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
 		<control caption="OK"/>
 		<control caption="Annuleren"/>
 	</dialog>

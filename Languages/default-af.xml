@@ -464,9 +464,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Jongste nuus"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Jongste nuus"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Oor Shareaza..."/>
@@ -555,9 +555,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Jongste nuus"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Jongste nuus"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Oor Shareaza..."/>
@@ -640,9 +640,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Jongste nuus"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Jongste nuus"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Oor Shareaza..."/>
@@ -1522,6 +1522,14 @@
 		<text align="middle">&#160;- Kry basiese hulp met die gebruik van Shareaza</text>
 		<newline gap="18" indent="0"/>
         
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">M Y &#160; A F L A A I E</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
+		<newline gap="18" indent="0"/>
+        
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">W E B &#160; T O E G A N G &#160; I S &#160; A A N G E S K A K E L</heading>
@@ -2205,7 +2213,6 @@
 	<tip id="ID_CHILD_RESTORE" message="Open die geselekteerde venster."/>
 	<tip id="ID_DISCOVERY_ADD" message="Voeg 'n nuwe ontdekkingsdiens by..."/>
 	<tip id="ID_DISCOVERY_ADVERTISE" message="Adverteer die geselekteerde GWebCache diens aan 'n willekeurige bestaande GWebCache."/>
-	<!--<tip id="ID_DISCOVERY_BLOCKED" message="Vertoon geblokte dienste in die Ontdekkings venster."/>-->
 	<tip id="ID_DISCOVERY_BROWSE" message="Blaai deur statistieke van die geselekteerde GWebCache diens op die Web."/>
 	<tip id="ID_DISCOVERY_EDIT" message="Vertoon die eienskappe van die geselekteerde ontdekkingsdiens."/>
 	<tip id="ID_DISCOVERY_GNUTELLA" message="Vertoon bootstrap dienste in die Ontdekkings-venster."/>
@@ -3784,6 +3791,9 @@
 		<control caption="_Stoor as"/>
 		<control caption="_Skrap"/>
 		<control caption="Filters:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 	
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Stoor filter as">

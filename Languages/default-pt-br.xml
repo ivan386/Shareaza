@@ -469,9 +469,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fóruns do Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Notícias Recentes"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Notícias Recentes"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Sobre o Shareaza..."/>
@@ -561,9 +561,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fóruns do Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Notícias Recentes"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Notícias Recentes"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 	</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Sobre o Shareaza..."/>
@@ -646,9 +646,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fóruns do Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Notícias Recentes"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Notícias Recentes"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Sobre o Shareaza..."/>
@@ -1539,7 +1539,13 @@
 	<gap size="8"/>
        		<link target="http://www.orkut.com/Community.aspx?cmm=677615" format="bu" align="middle">Comunidade do Orkut  em Português do Shareaza</link>
        		<text align="middle">&#160;- Entre para a comunidade do Shareaza no Orkut! O link da versão anterior não funciona mais pois a comunidade foi apagada. Mas outra foi feita e agora o link funciona. participem!</text>
-	<newline gap="8" indent="42"/>
+	<newline gap="8" indent="0"/>
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">M E U S &#160; D O W N L O A D S</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
 	<newline gap="18" indent="0"/>
 
         <group id="5">
@@ -3767,7 +3773,7 @@
 		<control caption="Cancelar"/>
 	</dialog>
 	
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filtrar">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtrar">
 		<control caption="Apenas mostrar acertos que incluam as _palavras:"/>
 		<control/>
 		<control caption="( você também pode excluir palavras com -palavra )"/>
@@ -3793,6 +3799,9 @@
 		<control caption="_Salvar como"/>
 		<control caption="_Apagar"/>
 		<control caption="Filtros:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Salvar filtro como">

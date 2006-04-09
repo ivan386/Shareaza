@@ -462,9 +462,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Acerca de Shareaza..."/>
@@ -555,9 +555,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 <item id="ID_HELP_ABOUT" text="_Acerca de Shareaza..."/>
@@ -641,9 +641,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
-				<item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Acerca de Shareaza..."/>
@@ -1788,7 +1788,7 @@
 			<newline gap="8" indent="0"/>
 			<text format="b">Ubicación</text>
 			<newline gap="2" indent="8"/>
-			<text id="Ubicación Completa"/>
+			<text id="FullLocation"/>
 		</group>
 
 		<group id="3">

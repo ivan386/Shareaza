@@ -468,9 +468,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
-				<item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com (en)"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Tietoja Shareaza..."/>
@@ -559,9 +559,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
-				<item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com (en)"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Tietoja Shareazasta..."/>
@@ -644,9 +644,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
-				<item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com (en)"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Tietoja Shareazasta..."/>
@@ -1524,6 +1524,14 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Pika Apu</link>
 		<text align="middle">&#160;- Hanki joitain perus ohjeita Shareazan k&#228;ytt&#228;miseen</text>
+		<newline gap="18" indent="0"/>
+
+		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
+		<gap size="8"/>
+		<heading align="middle">O M A T &#160; L A T A U K S E T</heading>
+		<newline gap="8" indent="42"/>
+		<text>To open the folder with your downloads </text>
+		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -3755,7 +3763,7 @@
 		<control caption="Cancel"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filter Matches">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filter Matches">
 		<control caption="Only show matches which include the _words:"/>
 		<control/>
 		<control caption="( you can also exclude words with -word )"/>
@@ -3781,6 +3789,9 @@
 		<control caption="_Save as"/>
 		<control caption="_Delete"/>
 		<control caption="Filters:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Save filter as">
@@ -3794,7 +3805,7 @@
 		<control caption="Service _Address:"/>
 		<control/>
 		<control caption="Discovery Service Type:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
