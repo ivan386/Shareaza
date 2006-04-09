@@ -1,8 +1,8 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2006/04/09 08:42:49 $"
-//	Revision:		"$Revision: 1.42 $"
+//	Date:			"$Date: 2006/04/09 08:58:23 $"
+//	Revision:		"$Revision: 1.43 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -117,9 +117,12 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 
 	// Trim any excess whitespace.
 	// Trim garbage on the end- sometimes you get "//", "./", "./." etc. (Bad caches)
+	bool bEndSlash = strAddress.GetAt( strAddress.GetLength() - 1 ) == '/';
 	strAddress.TrimLeft();
 	strAddress.TrimRight();
 	strAddress.TrimRight( L"./" );
+
+	if ( bEndSlash ) strAddress.Append( L"/" );
 
 	/*
 	// Although this is part of the spec, it was removed at the request of the GDF.
