@@ -11,17 +11,18 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <fonts>
-	<font name="System.Plain" face="MS UI Gothic" size="11"/>
-	<font name="System.Bold" face="MS UI Gothic" size="12"/>
+      <font name="System.Plain" face="MS UI Gothic" size="12" weight="plain" /> 
+      <font name="System.Bold" face="MS UI Gothic" size="12" weight="bold" /> 
+      <font name="Panel.Caption" face="MS UI Gothic" size="12" weight="plain" /> 
 </fonts>
 
 <!-- Manifest -->
 <manifest	name="日本語"
-		author="ワン公(DukeDog)"
+		author="ワン公(DukeDog) and CyberBob"
 		description="Shareaza 日本語スキンファイル"
 		link="http://www.dukedog.flnet.org/"
 		email="countnyan@hotmail.com"
-		version="2.2.1.1"
+		version="2.2.2.13"
 		type="Language"
 		language="jp"
 		prompt="アプリケーションで日本語を使用したい場合はここをクリックして下さい"
