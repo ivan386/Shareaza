@@ -1523,10 +1523,10 @@
 
 		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
 		<gap size="8"/>
-		<heading align="middle">U P R A V O &#160; S K I D A M</heading>
+		<heading align="middle">M O J A &#160; S K I D A NJ A</heading>
 		<newline gap="8" indent="42"/>
-		<text>To open the folder with your downloads </text>
-		<link target="raza:shell:downloads">click here</link>
+		<text>Ako želite otvoriti mapu sa skinutim datotekama </text>
+		<link target="raza:shell:downloads">kliknite ovdje</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -3781,9 +3781,9 @@
 		<control caption="_Spremi kao"/>
 		<control caption="Obriši"/>
 		<control caption="Filteri:"/>
-		<control caption="DRM files"/>
-		<control caption="Suspicious files"/>
-		<control caption="Adult results"/>
+		<control caption="DMR Datoteke"/>
+		<control caption="Sumljive datoteke"/>
+		<control caption="Rezultati za odrasle"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Spremi filter kao">
