@@ -542,6 +542,16 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 		LPCTSTR pszElement = _tcschr( strXML, '<' );
 		if ( ! pszElement || *pszElement != '<' ) return FALSE;
 
+		if ( ParseMatch( strXML, _T("<![CDATA[") ) )
+		{
+			pszElement = _tcsstr( strXML, _T("]]>") );
+			if ( ! pszElement || *pszElement != ']' ) return FALSE;
+			if ( m_sValue.GetLength() && m_sValue.Right( 1 ) != ' ' ) m_sValue += ' ';
+			m_sValue += StringToValue( strXML, (int)( pszElement - strXML ) );
+			pszElement += 3;
+			strXML = pszElement;
+		}
+
 		if ( pszElement > strXML )
 		{
 			if ( m_sValue.GetLength() && m_sValue.Right( 1 ) != ' ' ) m_sValue += ' ';
