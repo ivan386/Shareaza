@@ -1529,8 +1529,8 @@ prompt="Kattints ide a magyar nyelvhez."
 		<gap size="8"/>
 		<heading align="middle">L E T Ö L T É S E K</heading>
 		<newline gap="8" indent="42"/>
-		<text>To open the folder with your downloads </text>
-		<link target="raza:shell:downloads">click here</link>
+		<text>A letöltések mappa megnyitásához </text>
+		<link target="raza:shell:downloads">kattints ide</link>
                <newline gap="18" indent="0"/>
 
                <group id="5">
