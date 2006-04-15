@@ -844,4 +844,4 @@ sl.page_viruswarning_text=Pri uporabi medmrežja imejte namešèeno vedno najnovejš
 sl.page_viruswarning_title=Virusno opozorilo
 sl.page_viruswarning_subtitle=Ali imate namešèen protivirusni program?
 sl.CreateDesktopIcon=Prikaži ikono &namizja
-sl.CreateQuickLaunchIcon=Prikaži ikono &hitrega zagona
+sl.CreateQuickLaunchIcon=Prikaži ikono &Hitrega zaganjalnika
