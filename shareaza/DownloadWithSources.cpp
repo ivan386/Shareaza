@@ -714,9 +714,19 @@ CFailedSource* CDownloadWithSources::LookupFailedSource(LPCTSTR pszUrl, bool bRe
 
 void CDownloadWithSources::AddFailedSource(CDownloadSource* pSource, bool bLocal, bool bOffline)
 {
-	if ( LookupFailedSource( (LPCTSTR)pSource->m_sURL ) == NULL )
+	CString strURL;
+	if ( pSource->m_nProtocol == PROTOCOL_BT && pSource->m_oGUID )
 	{
-		CFailedSource* pBadSource = new CFailedSource( pSource->m_sURL, bLocal, bOffline );
+		strURL.Format( _T("btc://%s/%s/"),
+            (LPCTSTR)pSource->m_oGUID.toString(),
+			(LPCTSTR)m_oBTH.toString() );
+	}
+	else
+		strURL = pSource->m_sURL;
+
+	if ( LookupFailedSource( (LPCTSTR)strURL ) == NULL )
+	{
+		CFailedSource* pBadSource = new CFailedSource( strURL, bLocal, bOffline );
 		m_pFailedSources.AddTail( pBadSource );
 		theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i", m_sDisplayName, m_pFailedSources.GetCount() );
 	}
