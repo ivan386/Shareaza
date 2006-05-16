@@ -180,11 +180,12 @@ STDMETHODIMP CBuilder::Process (
 					pISXMLAttributes->Add (CComBSTR ("height"), CComBSTR (tmp));
 				}
 
+				const int SZ  = 32 * sizeof(TCHAR);
 				double total_time = 0.0;
 				hr = pDet->get_StreamLength (&total_time);
 				if (SUCCEEDED (hr)) {
 					TCHAR tmp [32];
-					_sntprintf (tmp, 32, _T("%.3f"), total_time / 60.0);
+					StringCbPrintf( tmp, SZ, _T("%.3f"), total_time / 60.0 );
 					pISXMLAttributes->Add (CComBSTR ("minutes"), CComBSTR (tmp));
 				}
 
@@ -192,7 +193,7 @@ STDMETHODIMP CBuilder::Process (
 				hr = pDet->get_FrameRate (&fps);
 				if (SUCCEEDED (hr)) {
 					TCHAR tmp [32];
-					_sntprintf (tmp, 32, _T("%.2f"), fps);
+					StringCbPrintf( tmp, SZ, _T("%.2f"), fps );
 					pISXMLAttributes->Add (CComBSTR ("frameRate"), CComBSTR (tmp));						
 				}
 			} else
