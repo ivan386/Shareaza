@@ -31,8 +31,6 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#undef HASH_SIZE
-#undef HASH_MASK
 const unsigned HASH_SIZE = 1024u;
 const unsigned HASH_MASK = 0x3FF;
 
@@ -44,7 +42,7 @@ const unsigned BUFFER_BLOCK_SIZE = 1024u;
 //////////////////////////////////////////////////////////////////////
 // CRouteCache construction
 
-CRouteCache::CRouteCache() 
+CRouteCache::CRouteCache()
 	: m_nSeconds( 60 * 20 )
 	, m_pRecent( &m_pTable[0] )
 	, m_pHistory ( &m_pTable[1] )
@@ -72,10 +70,8 @@ BOOL CRouteCache::Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour)
 		return FALSE;
 	}
 
-	CSingleLock pLock1( &m_pRecent->m_pSection, TRUE );
 	if ( m_pRecent->IsFull() )
 	{
-		CSingleLock pLock2( &m_pHistory->m_pSection, TRUE );
 		CRouteCacheTable* pTemp = m_pRecent;
 		m_pRecent = m_pHistory;
 		m_pHistory = pTemp;
@@ -97,10 +93,8 @@ BOOL CRouteCache::Add(const Hashes::Guid& oGUID, const SOCKADDR_IN* pEndpoint)
 		return FALSE;
 	}
 
-	CSingleLock pLock1( &m_pRecent->m_pSection, TRUE );
 	if ( m_pRecent->IsFull() )
 	{
-		CSingleLock pLock2( &m_pHistory->m_pSection, TRUE );
 		CRouteCacheTable* pTemp = m_pRecent;
 		m_pRecent = m_pHistory;
 		m_pHistory = pTemp;
@@ -118,10 +112,8 @@ CRouteCacheItem* CRouteCache::Add(const Hashes::Guid& oGUID, const CNeighbour* p
 	SOCKADDR_IN cEndpoint;
 	if ( pEndpoint != NULL ) cEndpoint = *pEndpoint;
 
-	CSingleLock pLock1( &m_pRecent->m_pSection, TRUE );
 	if ( m_pRecent->IsFull() )
 	{
-		CSingleLock pLock2( &m_pHistory->m_pSection, TRUE );
 		CRouteCacheTable* pTemp = m_pRecent;
 		m_pRecent = m_pHistory;
 		m_pHistory = pTemp;
@@ -134,12 +126,10 @@ CRouteCacheItem* CRouteCache::Add(const Hashes::Guid& oGUID, const CNeighbour* p
 
 CRouteCacheItem* CRouteCache::Lookup(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint)
 {
-	CSingleLock pLock1( &m_pRecent->m_pSection, TRUE );
 	CRouteCacheItem* pItem = m_pRecent->Find( oGUID );
 
 	if ( pItem == NULL )
 	{
-		CSingleLock pLock2( &m_pHistory->m_pSection, TRUE );
 		pItem = m_pHistory->Find( oGUID );
 
 		if ( pItem == NULL )
@@ -162,16 +152,12 @@ CRouteCacheItem* CRouteCache::Lookup(const Hashes::Guid& oGUID, CNeighbour** ppN
 
 void CRouteCache::Remove(CNeighbour* pNeighbour)
 {
-	CSingleLock pLock1( &m_pRecent->m_pSection, TRUE );
-	CSingleLock pLock2( &m_pHistory->m_pSection, TRUE );
 	m_pTable[0].Remove( pNeighbour );
 	m_pTable[1].Remove( pNeighbour );
 }
 
 void CRouteCache::Clear()
 {
-	CSingleLock pLock1( &m_pRecent->m_pSection, TRUE );
-	CSingleLock pLock2( &m_pHistory->m_pSection, TRUE );
 	m_pTable[0].Clear();
 	m_pTable[1].Clear();
 }
@@ -214,6 +200,9 @@ CRouteCacheItem* CRouteCacheTable::Find(const Hashes::Guid& oGUID)
 CRouteCacheItem* CRouteCacheTable::Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD nTime)
 {
 	if ( m_nUsed == m_nBuffer || ! m_pFree ) return NULL;
+	
+	if ( oGUID == NULL ) // There seem to be packets with oGUID == NULL (on heavy load) -> return NULL
+		return NULL;
 	
 	WORD nGUID = 0;
 	WORD *ppGUID = (WORD*)&oGUID[ 0 ];

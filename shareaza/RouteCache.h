@@ -47,9 +47,6 @@ public:
 	virtual ~CRouteCacheTable();
 
 // Attributes
-public:
-	CMutex				m_pSection;
-
 protected:
 	CRouteCacheItem*	m_pHash[1024];
 	CRouteCacheItem*	m_pFree;
