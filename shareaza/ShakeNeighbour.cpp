@@ -392,13 +392,13 @@ void CShakeNeighbour::SendPublicHeaders()
 	}
 
 	// If we initiated the connection to the remote computer and it is not an ultrapeer
-	if ( m_bInitiated && m_bUltraPeerSet == TS_FALSE )
-	{
+	//if ( m_bInitiated && m_bUltraPeerSet == TS_FALSE )
+	//{
 		// Really, we don't know if it's an ultrapeer or not yet
 		m_bUltraPeerSet = TS_UNKNOWN;
 
-	} // The remote computer called us, or we called them and it's an ultrapeer or hasn't said yet
-	else
+	//} // The remote computer called us, or we called them and it's an ultrapeer or hasn't said yet
+	//else
 	{
 		if ( m_nProtocol == PROTOCOL_G1 )
 		{
@@ -429,6 +429,10 @@ void CShakeNeighbour::SendPublicHeaders()
 				// Tell the remote computer that we are a leaf
 				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 			}
+			if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
+				m_pOutput->Print( "X-Ultrapeer-Needed: True\r\n" );
+			else
+				m_pOutput->Print( "X-Ultrapeer-Needed: False\r\n" );
 		}
 	}
 }
