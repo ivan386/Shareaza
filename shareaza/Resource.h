@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by Shareaza.rc
 //
-#define IDR_MANIFEST                    1
 #define IDC_SETUP                       3
 #define IDD_SETTINGS_CONNECTION         107
 #define IDR_POPUPS                      126

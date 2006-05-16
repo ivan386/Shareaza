@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 14"
+            VALUE "FileVersion", "2, 2, 2, 15"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 14"
+            VALUE "ProductVersion", "2, 2, 2, 15"
         END
     END
     BLOCK "VarFileInfo"
@@ -973,7 +973,7 @@ IDB_NAVBAR_ALPHA_RTL    BITMAP                  "Res\\NavbarAlphaRTL.bmp"
 // RT_MANIFEST
 //
 
-IDR_MANIFEST            RT_MANIFEST             "Res\\Manifest.xml"
+CREATEPROCESS_MANIFEST_RESOURCE_ID           RT_MANIFEST             "Res\\Manifest.xml"
 
 /////////////////////////////////////////////////////////////////////////////
 //
