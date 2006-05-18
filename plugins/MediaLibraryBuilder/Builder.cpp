@@ -21,6 +21,7 @@
 
 #include "stdafx.h"
 #include "Builder.h"
+#include <strsafe.h>
 
 HRESULT CBuilder::FinalConstruct () throw()
 {
