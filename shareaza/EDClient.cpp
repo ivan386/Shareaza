@@ -1057,6 +1057,12 @@ void CEDClient::DeriveSoftwareVersion()
 				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		case 4:
+			if ( m_bEmAICH || m_bEmSecureID )
+			{
+				if ( m_sUserAgent.IsEmpty() ) 
+					m_sUserAgent.Format( _T("eMule mod v%i"), m_nVersion );
+				break;
+			}
 			// This is a Shareaza beta build. Note that the 2nd last number (Beta build #) may be 
 			// truncated, since it's only 3 bits.
 			m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
@@ -1081,6 +1087,12 @@ void CEDClient::DeriveSoftwareVersion()
 				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		case 40:
+			if ( m_bEmAICH || m_bEmSecureID )
+			{
+				if ( m_sUserAgent.IsEmpty() ) 
+					m_sUserAgent.Format( _T("eMule mod v%i"), m_nVersion );
+				break;
+			}
 			//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
 			m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
 				( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
@@ -1148,6 +1160,12 @@ void CEDClient::DeriveVersion()
 			m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 4:
+			if ( m_bEmAICH || m_bEmSecureID )
+			{
+				if ( m_sUserAgent.IsEmpty() )
+					m_sUserAgent.Format( _T("eMule mod v%i"), m_nVersion );
+				break;
+			}
 			m_sUserAgent.Format( _T("Shareaza") );
 			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
 			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
@@ -1159,6 +1177,12 @@ void CEDClient::DeriveVersion()
 			m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 40:
+			if ( m_bEmAICH || m_bEmSecureID )
+			{
+				if ( m_sUserAgent.IsEmpty() )
+					m_sUserAgent.Format( _T("eMule mod v%i"), m_nVersion );
+				break;
+			}
 			m_sUserAgent.Format( _T("Shareaza") );
 			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
 			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
