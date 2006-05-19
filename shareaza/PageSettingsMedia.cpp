@@ -201,10 +201,12 @@ void CMediaSettingsPage::OnOK()
 	else
 	{	
 		strRegData = _T("-");
-		// Todo: Remove this code when VLC player gets ready to read unicode paths
+		/*
+		// Starting from v.0.8.5 VLC player reads unicode paths
 		CString strExecutable;
 		m_wndServices.GetWindowText( strExecutable );
 		Settings.MediaPlayer.ShortPaths = strExecutable.MakeLower() == _T("vlc.exe");
+		*/
 	}
 
 	theApp.WriteProfileString( _T("Plugins"), Settings.MediaPlayer.AviPreviewCLSID, strRegData );
