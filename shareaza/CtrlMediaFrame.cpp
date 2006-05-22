@@ -149,6 +149,11 @@ CMediaFrame::CMediaFrame()
 	m_nListSize			= Settings.MediaPlayer.ListSize;
 	m_bStatusVisible	= Settings.MediaPlayer.StatusVisible;
 	m_bScreenSaverEnabled = TRUE;
+	m_nVidAC = m_nVidDC = 0;
+	m_nPowerSchemeId = 0;
+	m_nScreenSaverTime = 0;
+	ZeroMemory( &m_CurrentGP, sizeof(GLOBAL_POWER_POLICY) );
+	ZeroMemory( &m_CurrentPP, sizeof(POWER_POLICY) );
 }
 
 CMediaFrame::~CMediaFrame()
@@ -1810,34 +1815,34 @@ void CMediaFrame::OnNewCurrent(NMHDR* /*pNotify*/, LRESULT* pResult)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Screensaver Enable / Disable functions from
-// http://www.codeproject.com/system/disablescreensave.asp
-
-static UINT dss_GetList[] = {SPI_GETLOWPOWERTIMEOUT, 
-    SPI_GETPOWEROFFTIMEOUT, SPI_GETSCREENSAVETIMEOUT};
-static UINT dss_SetList[] = {SPI_SETLOWPOWERTIMEOUT, 
-    SPI_SETPOWEROFFTIMEOUT, SPI_SETSCREENSAVETIMEOUT};
-
-static const int dss_ListCount = sizeof( dss_GetList ) / sizeof( dss_GetList[0] );
+// Screen saver Enable / Disable functions
 
 void CMediaFrame::DisableScreenSaver()
 {
 	if ( m_bScreenSaverEnabled )
 	{
-		m_pScreenSaveValue = new int[dss_ListCount];
+		GetActivePwrScheme( &m_nPowerSchemeId );				// get ID of current power scheme
+		GetCurrentPowerPolicies( &m_CurrentGP, &m_CurrentPP );	// get active policies
 
-		for ( int x=0; x < dss_ListCount; x++ )
+		m_nVidAC = m_CurrentPP.user.VideoTimeoutAc;				// save current values
+		m_nVidDC = m_CurrentPP.user.VideoTimeoutDc;
+
+		m_CurrentPP.user.VideoTimeoutAc = 0;					// disallow display shutoff
+		m_CurrentPP.user.VideoTimeoutDc = 0;
+
+		// set new values
+		SetActivePwrScheme( m_nPowerSchemeId, &m_CurrentGP, &m_CurrentPP );
+
+		BOOL bParam = FALSE;
+		BOOL bRetVal = SystemParametersInfo( SPI_GETSCREENSAVEACTIVE, 0, &bParam, 0 );
+		if ( bRetVal && bParam )
 		{
-			// Get the current value
-			VERIFY( SystemParametersInfo( dss_GetList[x], 0, 
-				&m_pScreenSaveValue[x], 0 ) );
-
-			TRACE(_T("%d = %d\n"), dss_GetList[x], m_pScreenSaveValue[x]);
-
-			// Turn off the parameter
-			VERIFY( SystemParametersInfo( dss_SetList[x], 0, 
-				NULL, 0 ) );
+			// save current screen saver timeout value
+			SystemParametersInfo( SPI_GETSCREENSAVETIMEOUT, 0, &m_nScreenSaverTime, 0 );
+			// turn off screen saver
+			SystemParametersInfo( SPI_SETSCREENSAVETIMEOUT, 0, NULL, 0 );
 		}
+
 		m_bScreenSaverEnabled = FALSE;
 	}
 }
@@ -1846,14 +1851,21 @@ void CMediaFrame::EnableScreenSaver()
 {
     if ( ! m_bScreenSaverEnabled )
 	{
-		for ( int x=0; x < dss_ListCount; x++ )
+		// restore previous values
+		m_CurrentPP.user.VideoTimeoutAc = m_nVidAC;
+		m_CurrentPP.user.VideoTimeoutDc = m_nVidDC;
+
+		// set original values
+		SetActivePwrScheme( m_nPowerSchemeId, &m_CurrentGP, &m_CurrentPP );
+
+		// Restore screen saver timeout value if it's not zero.
+		// Otherwise, if the screen saver was inactive, 
+		// it toggles it to active state and shutoff stops working (MS bug?)
+        if ( m_nScreenSaverTime > 0 )
 		{
-			// Set the old value
-			VERIFY( SystemParametersInfo( dss_SetList[x], 
-				m_pScreenSaveValue[x], NULL, 0 ) );
+			SystemParametersInfo( SPI_SETSCREENSAVETIMEOUT, m_nScreenSaverTime, NULL, 0 );
 		}
 
-		delete[] m_pScreenSaveValue;
 		m_bScreenSaverEnabled = TRUE;
 	}
 }

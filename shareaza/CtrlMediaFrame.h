@@ -27,7 +27,7 @@
 
 #include "CtrlCoolBar.h"
 #include "CtrlMediaList.h"
-
+#include <powrprof.h>
 
 class CMediaFrame : public CWnd
 {
@@ -114,8 +114,11 @@ protected:
 	CFont			m_pFontKey;
 	CFont			m_pFontValue;
 protected:
-	int*			m_pScreenSaveValue;
 	BOOL			m_bScreenSaverEnabled;
+	ULONG			m_nVidAC, m_nVidDC;
+	UINT			m_nPowerSchemeId, m_nScreenSaverTime;
+	GLOBAL_POWER_POLICY m_CurrentGP;	// Current Global Power Policy
+	POWER_POLICY	m_CurrentPP;		// Current Power Policy
 public:
 	static CMediaFrame* g_pMediaFrame;
 
