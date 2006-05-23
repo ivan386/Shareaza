@@ -73,6 +73,7 @@ void CSettings::Setup()
 	Add( _T("Interface.LowResMode"), &Interface.LowResMode, FALSE );
 	
 	Add( _T("Library.WatchFolders"), &Library.WatchFolders, TRUE );
+	Add( _T("Library.WatchFoldersTimeout"), &Library.WatchFoldersTimeout, 5 );
 	Add( _T("Library.PartialMatch"), &Library.PartialMatch, TRUE );
 	Add( _T("Library.VirtualFiles"), &Library.VirtualFiles, TRUE );
 	Add( _T("Library.SourceMesh"), &Library.SourceMesh, TRUE );

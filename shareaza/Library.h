@@ -46,6 +46,7 @@ public:
 	DWORD			m_nScanCount;
 protected:
 	DWORD			m_nScanCookie;
+	DWORD			m_nScanTime;
 	DWORD			m_nUpdateSaved;
 	int				m_nFileSwitch;
 	DWORD			m_nInhibit;

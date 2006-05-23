@@ -73,6 +73,7 @@ public:
 	struct sLibrary
 	{
 		BOOL		WatchFolders;
+		DWORD		WatchFoldersTimeout;
 		BOOL		PartialMatch;
 		BOOL		VirtualFiles;
 		BOOL		SourceMesh;

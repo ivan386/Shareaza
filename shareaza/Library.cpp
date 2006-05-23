@@ -68,6 +68,7 @@ CLibrary::CLibrary()
 	m_hThread		= NULL;
 	m_bThread		= TRUE;
 	m_nScanCookie	= 1;
+	m_nScanTime		= 0;
 	m_nUpdateCookie	= 0;
 	m_nUpdateSaved	= 0;
 	m_nFileSwitch	= 0;
@@ -362,6 +363,7 @@ BOOL CLibrary::Load()
 	LibraryFolders.CreateAlbumTree();
 	LibraryHashDB.Create();
 	StartThread();
+	LibraryDictionary.BuildHashTable();
 
 	LibraryBuilder.BoostPriority( Settings.Library.HighPriorityHash );
 
@@ -499,7 +501,12 @@ BOOL CLibrary::ThreadScan()
 	// Do not start scanning until app is loaded
 	if ( ! theApp.m_bLive ) return FALSE;
 
-	BOOL bChanged = LibraryFolders.ThreadScan( &m_bThread, FALSE );
+	BOOL bChanged = FALSE;
+	if ( GetTickCount() - m_nScanTime > Settings.Library.WatchFoldersTimeout * 1000 )
+	{
+		bChanged = LibraryFolders.ThreadScan( &m_bThread, FALSE );
+		m_nScanTime = GetTickCount();
+	}
 
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -510,10 +517,13 @@ BOOL CLibrary::ThreadScan()
 	{
 		Save();
 		m_nUpdateSaved = m_nUpdateCookie = GetTickCount();
-	}
 
-	LibraryDictionary.BuildHashTable();
-	StartThread();
+		if ( bChanged )
+		{
+			LibraryDictionary.BuildHashTable();
+			StartThread();
+		}
+	}
 
 	return bChanged;
 }
