@@ -1787,8 +1787,15 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 	}
 	
 	int nBreak	= strBody.Find( _T("\r\n") );
-	strResponse	= strBody.Left( nBreak + 2 );
-	strBody		= strBody.Mid( nBreak + 2 );
+	bool bWindowsEOL = true;
+
+	if ( nBreak == -1 )
+	{
+		nBreak	= strBody.Find( _T("\n") );
+		bWindowsEOL = false;
+	}
+	strResponse	= strBody.Left( nBreak + ( bWindowsEOL ? 2 : 1 ) );
+	strBody		= strBody.Mid( nBreak + ( bWindowsEOL ? 2 : 1 ) );
 	
 	while ( TRUE )
 	{
