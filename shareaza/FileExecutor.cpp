@@ -269,17 +269,15 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 
 		if ( strExecutable == L"mplayerc.exe" )
 		{
-			strParam = L"\"";
-			strParam.Append( strFile + L"\" /add" );
-			ShellExecute( NULL, NULL, Settings.MediaPlayer.ServicePath, strParam, 
-				strExecPath, SW_SHOWNORMAL );
+			strParam.Format( _T("\"%s\" /add"), strFile );
 		} 
 		else if ( strExecutable == L"wmplayer.exe" )
 		{
 			strParam.Format( _T("/SHELLHLP_V9 Enqueue \"%s\""), strFile );
+		}
+		if ( strParam.GetLength() )
 			ShellExecute( NULL, NULL, Settings.MediaPlayer.ServicePath, strParam, 
 				strExecPath, SW_SHOWNORMAL );
-		}
 	}
 	
 
