@@ -177,7 +177,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 			return TRUE;
 	}
 	
-	// Todo: Doesn't work for now with partial files
+	// Todo: Doesn't work with partial files
 	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(),
 			NULL, strFile, NULL, strPath, SW_SHOWNORMAL );
 
@@ -218,6 +218,9 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 		}
 	}
 
+	CString strExecPath;
+	int nBackSlash = Settings.MediaPlayer.ServicePath.ReverseFind( '\\' );
+
 	if ( _tcsistr( Settings.MediaPlayer.FileTypes, strType ) != NULL && 
 		 ! Settings.MediaPlayer.ServicePath.IsEmpty() && ! bShiftKey )
 	{
@@ -248,19 +251,37 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 				if ( strCommand.Left( 1 ) == _T("\"") ) 
 					strCommand.SetString( strCommand.Mid( 1 ).Trim() );
 
-				CString strExecPath;
-				int nBackSlash = Settings.MediaPlayer.ServicePath.ReverseFind( '\\' );
 				strExecPath = Settings.MediaPlayer.ServicePath.Left( nBackSlash );
-				ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL, Settings.MediaPlayer.ServicePath, 
+				ShellExecute( NULL, NULL, Settings.MediaPlayer.ServicePath, 
 					strCommand, strExecPath, SW_SHOWNORMAL );
 				return TRUE;
 			}
 		}
 	}
 
-	// Todo: Doesn't work for now with partial files
-	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(),
-		_T("Enqueue"), strFile, NULL, strPath, SW_SHOWNORMAL );
+	// Todo: Doesn't work with partial files
+	int nError = (int)ShellExecute( NULL, _T("Enqueue"), strFile, NULL, strPath, SW_SHOWNORMAL );
+
+	if ( nError <= SE_ERR_DLLNOTFOUND )
+	{
+		CString strExecutable = Settings.MediaPlayer.ServicePath.Mid( nBackSlash + 1 ).MakeLower();
+		CString strParam;
+
+		if ( strExecutable == L"mplayerc.exe" )
+		{
+			strParam = L"\"";
+			strParam.Append( strFile + L"\" /add" );
+			ShellExecute( NULL, NULL, Settings.MediaPlayer.ServicePath, strParam, 
+				strExecPath, SW_SHOWNORMAL );
+		} 
+		else if ( strExecutable == L"wmplayer.exe" )
+		{
+			strParam.Format( _T("/SHELLHLP_V9 Enqueue \"%s\""), strFile );
+			ShellExecute( NULL, NULL, Settings.MediaPlayer.ServicePath, strParam, 
+				strExecPath, SW_SHOWNORMAL );
+		}
+	}
+	
 
 	return TRUE;
 }
