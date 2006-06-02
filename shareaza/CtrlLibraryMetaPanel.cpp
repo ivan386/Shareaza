@@ -144,6 +144,7 @@ void CLibraryMetaPanel::Update()
 		m_nIcon32	= ShellIcons.Get( m_sName, 32 );
 		m_nIcon48	= ShellIcons.Get( m_sName, 48 );
 		m_nRating	= pFirst->m_nRating;
+		pFirst->m_bCachedPreview = ( m_bmThumb.m_hObject != NULL );
 	}
 	else if ( m_nSelected > 1 )
 	{
