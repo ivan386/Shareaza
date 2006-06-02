@@ -502,10 +502,21 @@ BOOL CLibrary::ThreadScan()
 	if ( ! theApp.m_bLive ) return FALSE;
 
 	BOOL bChanged = FALSE;
-	if ( GetTickCount() - m_nScanTime > Settings.Library.WatchFoldersTimeout * 1000 )
+
+	// Determine if the call was due to Library::Update(), for e.g. when file was deleted
+	DWORD tTime = GetTickCount();
+	bool bForcedScan = ( m_nUpdateCookie > tTime - Settings.Library.WatchFoldersTimeout * 1000 );
+
+	if ( tTime - m_nScanTime > Settings.Library.WatchFoldersTimeout * 1000 || bForcedScan )
 	{
 		bChanged = LibraryFolders.ThreadScan( &m_bThread, FALSE );
 		m_nScanTime = GetTickCount();
+
+		// If it was the Library update we saved the file few lines below during the previous scan.
+		// So, reset m_nUpdateCookie and m_nUpdateSaved values to the previous scheduled scan time.
+		// The next time we won't get the bForcedScan set to "true"
+		if ( bForcedScan && !bChanged )
+			m_nUpdateCookie = m_nUpdateSaved = tTime - Settings.Library.WatchFoldersTimeout * 1000;
 	}
 
 	CSingleLock pLock( &m_pSection, TRUE );
