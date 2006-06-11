@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,2,15
- PRODUCTVERSION 2,2,2,15
+ FILEVERSION 2,2,2,16
+ PRODUCTVERSION 2,2,2,16
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 15"
+            VALUE "FileVersion", "2, 2, 2, 16"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 15"
+            VALUE "ProductVersion", "2, 2, 2, 16"
         END
     END
     BLOCK "VarFileInfo"
@@ -973,7 +973,7 @@ IDB_NAVBAR_ALPHA_RTL    BITMAP                  "Res\\NavbarAlphaRTL.bmp"
 // RT_MANIFEST
 //
 
-CREATEPROCESS_MANIFEST_RESOURCE_ID           RT_MANIFEST             "Res\\Manifest.xml"
+1                       RT_MANIFEST             "Res\\Manifest.xml"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -5220,6 +5220,10 @@ BEGIN
     IDS_MEDIA_EMPTY         "There is no file playing.  Double-click a media file in your library to play it."
     IDS_MEDIA_TITLE         "S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"
     IDS_MEDIA_PLAYLIST      "P L A Y L I S T"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_MEDIA_SMPLAYER      "Shareaza Media Player"
 END
 
