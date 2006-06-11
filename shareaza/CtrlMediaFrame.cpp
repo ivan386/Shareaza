@@ -1644,7 +1644,17 @@ void CMediaFrame::Cleanup()
 	{
 		HINSTANCE hRes = AfxGetResourceHandle();
 		m_pPlayer->Close();
-		m_pPlayer->Destroy();
+		__try
+		{
+			m_pPlayer->Destroy();
+		}
+		__except( GetExceptionCode() != EXCEPTION_CONTINUE_EXECUTION )
+		{
+			// Some buggy visualizations crash Shareaza.
+			// Restore screen saver and power settings before
+			EnableScreenSaver();
+			throw;
+		}
 		CoLockObjectExternal( m_pPlayer, FALSE, TRUE );
 		m_pPlayer = NULL;
 		AfxSetResourceHandle( hRes );
