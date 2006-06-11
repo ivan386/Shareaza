@@ -1,7 +1,7 @@
 //
 // PageSettingsTraffic.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -280,6 +280,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Library.VirtualFiles, 1, 0, 1);
 	AddSetting( &Settings.Library.HashWindow, 1, 0, 1);
 	AddSetting( &Settings.Library.MaxMaliciousFileSize, 1, 1024, 1024*5, _T(" B") );
+	AddSetting( &Settings.Library.HighPriorityHashing, 1, 1, 100, _T(" MB/s"));
+	AddSetting( &Settings.Library.LowPriorityHashing, 1, 1, 100, _T(" MB/s"));
 
 	AddSetting( &Settings.MediaPlayer.ShortPaths, 1, 0, 1 );
 	

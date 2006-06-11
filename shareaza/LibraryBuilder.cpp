@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,10 +60,13 @@ CLibraryBuilder::CLibraryBuilder()
 	m_hThread		= NULL;
 	m_bThread		= FALSE;
 	m_bPriority		= FALSE;
-	m_nHashSleep	= 100;
 	m_nIndex		= 0;
 	m_tActive		= 0;
-	m_pBuffer		= NULL;
+
+	m_nReaded		= 0;
+	m_nElapsed		= 0;
+	QueryPerformanceFrequency( &m_nFreq );
+	QueryPerformanceCounter( &m_nLastCall );
 }
 
 CLibraryBuilder::~CLibraryBuilder()
@@ -73,7 +76,6 @@ CLibraryBuilder::~CLibraryBuilder()
 
 	delete m_pPlugins;
 	delete m_pInternals;
-	if ( m_pBuffer ) delete [] m_pBuffer;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -255,6 +257,69 @@ BOOL CLibraryBuilder::SanityCheck()
 	return FALSE;
 }
 */
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilder rehash current file
+
+void CLibraryBuilder::ReHashCurrentFile()
+{
+	m_pSection.Lock();
+	if ( m_pFiles.Find( 0ul ) == NULL ) m_pFiles.AddTail( 0ul );
+	m_pFiles.AddTail( m_nIndex );
+	m_pSection.Unlock();
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilder read file with speed limits
+
+BOOL CLibraryBuilder::ReadFileWithPriority(
+	HANDLE hFile,
+	LPVOID lpBuffer,
+	DWORD nNumberOfBytesToRead,
+	LPDWORD lpNumberOfBytesRead,
+	BOOL bPriority /* = TRUE */ )
+{
+	BOOL ret = ::ReadFile ( hFile, lpBuffer, nNumberOfBytesToRead,
+		lpNumberOfBytesRead, NULL );
+
+	CQuickLock oLock( m_pDelaySection );
+
+	LARGE_INTEGER count;
+	QueryPerformanceCounter( &count );
+	m_nElapsed += ((( count.QuadPart - m_nLastCall.QuadPart ) * 1000000 ) /
+		m_nFreq.QuadPart);
+	m_nLastCall.QuadPart = count.QuadPart;
+
+	if ( ret ) m_nReaded += (QWORD) *lpNumberOfBytesRead;
+
+	// Check speed every...
+	if ( m_nElapsed > 0 && m_nReaded > 0 )
+	{
+		// Calculation of compensation delay
+		QWORD nSpeed = ( m_nReaded * 1000000 ) / m_nElapsed; // B/s
+		QWORD nMaxSpeed = 1024 * 1024 *
+			( bPriority ? Settings.Library.HighPriorityHashing : Settings.Library.LowPriorityHashing);
+		if ( nSpeed > nMaxSpeed )
+		{
+			QWORD nDelay = ( ( nSpeed * m_nElapsed ) / nMaxSpeed ) - m_nElapsed;
+			if ( nDelay > 500000 )
+				// Dont do overcompensation
+				nDelay = 500000;
+			if ( nDelay > 1000 )
+				// Compensation
+				Sleep( (DWORD) ( nDelay / 1000 ) );
+		}
+	}
+	if ( m_nElapsed > 10000000 ) // 10 s
+	{
+		// Reset statistics
+		m_nElapsed = 0;
+		m_nReaded = 0;
+	}
+
+	return ret;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder thread run (threaded)
 
@@ -267,8 +332,6 @@ UINT CLibraryBuilder::ThreadStart(LPVOID pParam)
 
 void CLibraryBuilder::OnRun()
 {
-	if ( m_pBuffer == NULL ) m_pBuffer = new BYTE[20480];
-
 	while ( m_bThread )
 	{
 		if ( m_pSection.Lock() )
@@ -324,45 +387,41 @@ void CLibraryBuilder::OnRun()
 			FILE_SHARE_READ, NULL, OPEN_EXISTING,
 			FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 
-		if ( hFile == INVALID_HANDLE_VALUE )
+		if ( hFile != INVALID_HANDLE_VALUE )
 		{
-			m_pSection.Lock();
-			if ( m_pFiles.Find( NULL ) == NULL ) m_pFiles.AddTail( 0ul );
-			m_pFiles.AddTail( m_nIndex );
-			m_pSection.Unlock();
-			continue;
-		}
+			theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)m_sPath );
 
-		theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)m_sPath );
-		
-        Hashes::Sha1Hash oSHA1;
-		
-		if ( HashFile( hFile, bPriority, oSHA1 ) )
-		{
-			SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-			m_tActive = GetTickCount();
+			Hashes::Sha1Hash oSHA1;
 
-			if ( m_pPlugins->ExtractMetadata( m_sPath, hFile ) )
+			if ( HashFile( hFile, bPriority, oSHA1 ) )
 			{
-				// Plugin got it
-			}
-			else if ( m_pInternals->ExtractMetadata( m_sPath, hFile, oSHA1 ) )
-			{
-				// Internal got it
-			}
-		}
+				SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+				m_tActive = GetTickCount();
 
-		CloseHandle( hFile );
+				if ( m_pPlugins->ExtractMetadata( m_sPath, hFile ) )
+				{
+					// Plugin got it
+				}
+				else if ( m_pInternals->ExtractMetadata( m_sPath, hFile, oSHA1 ) )
+				{
+					// Internal got it
+				}
+			}
+			else
+				ReHashCurrentFile();
+
+			CloseHandle( hFile );
+		}
+		else
+			ReHashCurrentFile();
+
+		m_nIndex	= 0;
 		m_sPath.Empty();
 	}
 	
 	Settings.Live.NewFile = FALSE;
 	m_pPlugins->Cleanup();
 
-	delete [] m_pBuffer;
-	m_pBuffer = NULL;
-
-	m_nIndex	= 0;
 	m_tActive	= 0;
 	m_bThread	= FALSE;
 
@@ -372,8 +431,12 @@ void CLibraryBuilder::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder file hashing (threaded)
 
+#define MAX_HASH_BUFFER_SIZE	20480ul	// 20 Kb
+
 BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& oOutSHA1)
 {
+	char pBuffer [MAX_HASH_BUFFER_SIZE];
+
 	DWORD nSizeHigh	= 0;
 	DWORD nSizeLow	= GetFileSize( hFile, &nSizeHigh );
 	QWORD nFileSize	= (QWORD)nSizeLow | ( (QWORD)nSizeHigh << 32 );
@@ -396,28 +459,21 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& o
 	pTiger.BeginFile( Settings.Library.TigerHeight, nFileSize );
 	pED2K.BeginFile( nFileSize );
 
-	for ( QWORD nLength = nFileSize ; nLength > 0 ; )
+	DWORD nBlock;
+	for ( QWORD nLength = nFileSize ; nLength > 0 ; nLength -= nBlock )
 	{
-		DWORD nBlock	= min( nLength, 20480ul );
-		DWORD nTime		= GetTickCount();
-
-		ReadFile( hFile, m_pBuffer, nBlock, &nBlock, NULL );
-
-		pSHA1.Add( m_pBuffer, nBlock );
-		pMD5.Add( m_pBuffer, nBlock );
-		pTiger.AddToFile( m_pBuffer, nBlock );
-		pED2K.AddToFile( m_pBuffer, nBlock );
-
-		nLength -= nBlock;
-
-		if ( ! m_bPriority && ! bPriority )
-		{
-			if ( nBlock == 20480 ) m_nHashSleep = ( GetTickCount() - nTime ) * 2;
-			m_nHashSleep = max( m_nHashSleep, 20u );
-			Sleep( m_nHashSleep );
-		}
+		nBlock	= min( nLength, MAX_HASH_BUFFER_SIZE );
 
 		if ( ! m_bThread ) return FALSE;
+
+		if ( ! ReadFileWithPriority( hFile, pBuffer, nBlock, &nBlock, m_bPriority || bPriority ) ) return FALSE;
+
+		if ( ! nBlock ) return FALSE;
+
+		pSHA1.Add( pBuffer, nBlock );
+		pMD5.Add( pBuffer, nBlock );
+		pTiger.AddToFile( pBuffer, nBlock );
+		pED2K.AddToFile( pBuffer, nBlock );
 	}
 
 	pSHA1.Finish();
@@ -544,8 +600,7 @@ BOOL CLibraryBuilder::DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	LONG nPosHigh	= (LONG)( ( nOffset + nLength - 128 ) >> 32 );
 	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
 
-	ReadFile( hFile, &pInfo, sizeof(pInfo), &nRead, NULL );
-
+	if ( ! ReadFile( hFile, &pInfo, sizeof(pInfo), &nRead, NULL ) ) return FALSE;
 	if ( nRead != sizeof(pInfo) ) return FALSE;
 	if ( memcmp( pInfo.szTag, ID3V1_TAG, 3 ) ) return FALSE;
 
@@ -563,7 +618,7 @@ BOOL CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	LONG nPosHigh	= (LONG)( ( nOffset ) >> 32 );
 	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
 
-	ReadFile( hFile, &pHeader, sizeof(pHeader), &nRead, NULL );
+	if ( ! ReadFile( hFile, &pHeader, sizeof(pHeader), &nRead, NULL ) ) return FALSE;
 	if ( nRead != sizeof(pHeader) ) return FALSE;
 
 	if ( strncmp( pHeader.szTag, ID3V2_TAG, 3 ) ) return FALSE;

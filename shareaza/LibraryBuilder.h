@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,7 +29,6 @@ class CXMLElement;
 class CLibraryBuilderInternals;
 class CLibraryBuilderPlugins;
 
-
 class CLibraryBuilder
 {
 // Construction
@@ -45,11 +44,16 @@ protected:
 	HANDLE				m_hThread;
 	BOOL				m_bThread;
 	BOOL				m_bPriority;
-	DWORD				m_nHashSleep;
 	DWORD				m_nIndex;
 	CString				m_sPath;
 	DWORD				m_tActive;
-	BYTE*				m_pBuffer;
+
+	CCriticalSection	m_pDelaySection;
+	LARGE_INTEGER		m_nLastCall;		// (ticks)
+	LARGE_INTEGER		m_nFreq;			// (Hz)
+	QWORD				m_nReaded;			// (bytes)
+	QWORD				m_nElapsed;			// (mks)
+
 protected:
 	CLibraryBuilderInternals*	m_pInternals;
 	CLibraryBuilderPlugins*		m_pPlugins;
@@ -68,7 +72,9 @@ public:
 	BOOL		GetBoostPriority();
 	//BOOL		SanityCheck();
 	void		UpdateStatus(CString* pStr, int* pRemaining );
+	BOOL		ReadFileWithPriority(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD lpNumberOfBytesRead, BOOL bPriority = TRUE);
 protected:
+	void		ReHashCurrentFile();
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
     BOOL		HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& oSHA1);

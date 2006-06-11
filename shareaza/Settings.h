@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -106,6 +106,7 @@ public:
 		DWORD		BufferSize;					// I/O buffer for hash operation in MB, ignored if Parallel = 1; 0 use 1/4 of phys ram
 												// if buffer allocation fails hashing will run with Parallel = 1
 		DWORD		Parallel;					// how many files to hash parallel: 1..6; 0 for autoselect
+		int			HighPriorityHashing;		// desired speed in MB/s when hashing with hi priority
 		int			LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search
 	} Library;

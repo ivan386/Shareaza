@@ -1,7 +1,7 @@
 //
 // Settings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -103,7 +103,8 @@ void CSettings::Setup()
 
 	Add( _T("Library.BufferSize"), &Library.BufferSize, 0 );
 	Add( _T("Library.Parallel"), &Library.Parallel, 0 );
-	Add( _T("Library.LowPriorityHashing"), &Library.LowPriorityHashing, 5 );
+	Add( _T("Library.HighPriorityHashing"), &Library.HighPriorityHashing, 20);
+	Add( _T("Library.LowPriorityHashing"), &Library.LowPriorityHashing, 2 );
 	Add( _T("Library.MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, 1024 );
 	
 	Add( _T("Search.LastSchemaURI"), &Search.LastSchemaURI, _T("") );
