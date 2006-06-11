@@ -1,7 +1,7 @@
 //
 // LiveList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -330,31 +330,89 @@ int CALLBACK CLiveList::SortCallback(LPARAM lParam1, LPARAM lParam2, LPARAM lPar
 	return bInv ? SortProc( sB, sA ) : SortProc( sA, sB );
 }
 
+//////////////////////////////////////////////////////////////////////
+// Parse IP addresses like "xxx.xxx.xxx.xxx\0" and "xxx.xxx.xxx.xxx/"
+// (IP stored in host byte order)
+
+inline BOOL atoip (LPCTSTR c, DWORD& addr)
+{
+	DWORD digit = 0;
+	DWORD num = 0;
+	addr = 0;
+	for ( ; ; c++ )
+	{
+		if ( *c >= _T('0') && *c <= _T('9') )
+		{
+			num = num * 10 + ( *c - _T('0') );
+			if ( num > 255 )
+				break;				// too big octet
+		}
+		else if ( *c == _T('.') || *c == _T('\0') || *c == _T('/') )
+		{
+			addr = ( addr << 8 ) | num;
+			num = 0;
+			digit++;
+			if ( digit == 4 )
+			{
+				if ( *c == _T('.') )
+					break;			// too long
+		else
+					return TRUE;	// it's IP!
+			}
+			if ( *c == _T('\0') || *c == _T('/') )
+				break;				// too short
+		}
+		else
+			break;
+	}
+	addr = 0xffffffff;
+	return FALSE;					// invalid symbol
+}
+
 int CLiveList::SortProc(LPCTSTR sA, LPCTSTR sB, BOOL bNumeric)
 {
-	if ( bNumeric || ( IsNumber( sA ) && IsNumber( sB ) ) )
+	DWORD ipA, ipB;
+	if ( atoip( sA, ipA ) && atoip( sB, ipB ) )
 	{
+		TCHAR* pA = _tcschr ( sA, _T('/') );
+		TCHAR* pB = _tcschr ( sB, _T('/') );
+		DWORD maskA = 0xffffffff, maskB = 0xffffffff;
+		if ( ( ! pA || atoip( pA + 1, maskA ) ) && 
+			 ( ! pB || atoip( pB + 1, maskB ) ) )
+		{
+			QWORD nA = ( ( (QWORD) ipA ) << 32 ) | maskA;
+			QWORD nB = ( ( (QWORD) ipB ) << 32 ) | maskB;
+			if ( nA < nB )
+				return -1;
+			else if ( nA > nB )
+				return 1;
+			else
+				return 0;
+		}
+	}
+	if ( bNumeric || ( IsNumber( sA ) && IsNumber( sB ) ) )
+		{
 		double nA = 0, nB = 0;
 
-		if ( *sA == '(' || *sA == 'Q' )
-			_stscanf( sA+1, _T("%lf"), &nA );
-		else
-			_stscanf( sA, _T("%lf (%lf)"), &nA, &nA );
+			if ( *sA == '(' || *sA == 'Q' )
+				_stscanf( sA+1, _T("%lf"), &nA );
+			else
+				_stscanf( sA, _T("%lf (%lf)"), &nA, &nA );
 
-		if ( *sB == '(' || *sB == 'Q' )
-			_stscanf( sB+1, _T("%lf"), &nB );
-		else
-			_stscanf( sB, _T("%lf (%lf)"), &nB, &nB );
+			if ( *sB == '(' || *sB == 'Q' )
+				_stscanf( sB+1, _T("%lf"), &nB );
+			else
+				_stscanf( sB, _T("%lf (%lf)"), &nB, &nB );
 
-		if ( _tcsstr( sA, _T(" K") ) ) nA *= 1024;
-		if ( _tcsstr( sA, _T(" M") ) ) nA *= 1024*1024;
-		if ( _tcsstr( sA, _T(" G") ) ) nA *= 1024*1024*1024;
-		if ( _tcsstr( sA, _T(" T") ) ) nA *= 1099511627776.0f;
+			if ( _tcsstr( sA, _T(" K") ) ) nA *= 1024;
+			if ( _tcsstr( sA, _T(" M") ) ) nA *= 1024*1024;
+			if ( _tcsstr( sA, _T(" G") ) ) nA *= 1024*1024*1024;
+			if ( _tcsstr( sA, _T(" T") ) ) nA *= 1099511627776.0f;
 
-		if ( _tcsstr( sB, _T(" K") ) ) nB *= 1024;
-		if ( _tcsstr( sB, _T(" M") ) ) nB *= 1024*1024;
-		if ( _tcsstr( sB, _T(" G") ) ) nB *= 1024*1024*1024;
-		if ( _tcsstr( sB, _T(" T") ) ) nB *= 1099511627776.0f;
+			if ( _tcsstr( sB, _T(" K") ) ) nB *= 1024;
+			if ( _tcsstr( sB, _T(" M") ) ) nB *= 1024*1024;
+			if ( _tcsstr( sB, _T(" G") ) ) nB *= 1024*1024*1024;
+			if ( _tcsstr( sB, _T(" T") ) ) nB *= 1099511627776.0f;
 
 		if ( nA < nB )
 			return -1;
