@@ -412,7 +412,8 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 						USES_CONVERSION;
 						LPCSTR pszIP = CT2CA( (LPCTSTR)strNick );
 						ip = inet_addr( pszIP );
-						if ( ip != INADDR_NONE && nAddress != ip )
+						if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), pszIP ) == 0 &&
+							 nAddress != ip )
 							bSpam = true;
 					}
 					pPacket->m_nPosition = nSkipInner;
