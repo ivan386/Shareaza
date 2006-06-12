@@ -352,7 +352,11 @@ private:
     union
     {
         stack_node  m_node;
-        byte_t      m_buf[ aligned_sizeof<stack_node::header>::no_rtti + StaticBlockSizeT ];
+#if defined(__INTEL_COMPILER) && defined(__ICC)
+		byte_t	m_buf[ aligned_sizeof<stack_node::header>::no_rtti + StaticBlockSizeT ];
+#else
+		byte_t	m_buf[ offsetof( stack_node, m_mem ) + StaticBlockSizeT ];
+#endif
     } m_first_node;
 
     stack_node * m_current_node;
