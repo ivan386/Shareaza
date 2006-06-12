@@ -374,8 +374,8 @@ int CLiveList::SortProc(LPCTSTR sA, LPCTSTR sB, BOOL bNumeric)
 	DWORD ipA, ipB;
 	if ( atoip( sA, ipA ) && atoip( sB, ipB ) )
 	{
-		TCHAR* pA = _tcschr ( sA, _T('/') );
-		TCHAR* pB = _tcschr ( sB, _T('/') );
+		TCHAR* pA = (TCHAR*)_tcschr( sA, '/' );
+		TCHAR* pB = (TCHAR*)_tcschr( sB, '/' );
 		DWORD maskA = 0xffffffff, maskB = 0xffffffff;
 		if ( ( ! pA || atoip( pA + 1, maskA ) ) && 
 			 ( ! pB || atoip( pB + 1, maskB ) ) )
