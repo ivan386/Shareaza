@@ -1,7 +1,7 @@
 //
 // ImageFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,14 +28,11 @@ class CImageFile : public CComObject
 {
 // Construction
 public:
-	CImageFile(CImageServices* pService);
+	CImageFile(CImageServices* pFoo = NULL);
 	virtual ~CImageFile();
 
 	DECLARE_DYNAMIC(CImageFile)
 
-// Attributes
-protected:
-	CImageServices*	m_pService;
 public:
 	BOOL	m_bScanned;
 	int		m_nWidth;
@@ -50,7 +47,6 @@ public:
 	void	Clear();
 public:
 	BOOL	LoadFromMemory(LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
-//	BOOL	LoadFromFile(LPCTSTR pszType, HANDLE hFile, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL	LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL	LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 public:

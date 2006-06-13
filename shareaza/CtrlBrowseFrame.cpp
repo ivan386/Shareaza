@@ -1,7 +1,7 @@
 //
 // CtrlBrowseFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -567,5 +567,62 @@ void CBrowseFrameCtrl::OnLibraryTreeVirtual()
 	{
 		m_nTree = 1;
 		m_wndTree.OnTreePacket( m_pTree[ m_nTree ] );
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CBrowseFrameCtrl serialize
+
+void CBrowseFrameCtrl::Serialize(CArchive& ar)
+{
+	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
+	DWORD nBuffer = 0;
+
+	if ( ar.IsStoring() )
+	{
+		if ( m_pTree[0] != NULL )
+		{
+			ar << m_pTree[0]->m_nBuffer;
+			ar << m_pTree[0]->m_nLength;
+			ar.Write( m_pTree[0]->m_pBuffer, m_pTree[0]->m_nBuffer );
+		}
+		else
+			ar << nBuffer;
+
+		if ( m_pTree[1] != NULL )
+		{
+			ar << m_pTree[1]->m_nBuffer;
+			ar << m_pTree[1]->m_nLength;
+			ar.Write( m_pTree[1]->m_pBuffer, m_pTree[1]->m_nBuffer );
+		}
+		else
+			ar << nBuffer;
+	}
+	else
+	{
+		ar >> nBuffer;
+		if ( nBuffer )
+		{
+			CG2Packet* pPacket = CG2Packet::New();
+			pPacket->Ensure( nBuffer );
+			ar >> pPacket->m_nLength;
+			ar.Read( pPacket->m_pBuffer, nBuffer );
+			m_nTree = 0;
+			OnPhysicalTree( pPacket );
+			pPacket->Release();
+		}
+
+		nBuffer = 0;
+		ar >> nBuffer;
+		if ( nBuffer )
+		{
+			CG2Packet* pPacket = CG2Packet::New();
+			pPacket->Ensure( nBuffer );
+			ar >> pPacket->m_nLength;
+			ar.Read( pPacket->m_pBuffer, nBuffer );
+			m_nTree = 1;
+			OnVirtualTree( pPacket );
+			pPacket->Release();
+		}
 	}
 }

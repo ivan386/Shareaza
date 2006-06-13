@@ -1,7 +1,7 @@
 //
 // HostBrowser.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,7 +53,10 @@ CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPor
 	m_pProfile		= NULL;
 
 	m_bNewBrowse	= FALSE;
-	m_pAddress		= *pAddress;
+	if (pAddress)
+		m_pAddress = *pAddress;
+	else
+		m_pAddress.S_un.S_addr = INADDR_NONE;
 	m_nPort			= nPort;
 	m_bMustPush		= bMustPush;
 	m_bCanPush = bool( m_oClientID = oClientID );
@@ -64,6 +67,10 @@ CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPor
 	m_pVendor		= NULL;
 	m_bCanChat		= FALSE;
 
+	m_nProtocol		= PROTOCOL_ANY;
+	m_bDeflate		= FALSE;
+	m_nLength		= 0xFFFFFFFF;
+	m_nReceived		= 0;
 	m_pBuffer		= NULL;
 	m_pInflate		= NULL;
 }
@@ -826,4 +833,58 @@ BOOL CHostBrowser::StreamHTML()
 	}
 
 	return TRUE;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CHostBrowser serialize
+
+void CHostBrowser::Serialize(CArchive& ar)
+{
+	BOOL bProfilePresent = FALSE;
+
+	if ( ar.IsStoring() )
+	{
+		ar << m_bNewBrowse;
+		ar << m_pAddress.S_un.S_addr;
+		ar << m_nPort;
+		ar << m_bMustPush;
+		ar << m_bCanPush;
+		SerializeOut( ar, m_oPushID );
+		SerializeOut( ar, m_oClientID );
+		ar << m_nHits;
+		ar << m_bCanChat;
+		ar << m_sServer;
+		ar << m_nProtocol;
+		ar << m_nLength;
+		ar << m_nReceived;
+
+		bProfilePresent = ( m_pProfile != NULL );
+		ar << bProfilePresent;
+	}
+	else
+	{
+		Stop();
+
+		ar >> m_bNewBrowse;
+		ar >> m_pAddress.S_un.S_addr;
+		ar >> m_nPort;
+		ar >> m_bMustPush;
+		ar >> m_bCanPush;
+		SerializeIn( ar, m_oPushID, 31 );
+		SerializeIn( ar, m_oClientID, 31 );
+		ar >> m_nHits;
+		ar >> m_bCanChat;
+		ar >> m_sServer;
+		ar >> m_nProtocol;
+		ar >> m_nLength;
+		ar >> m_nReceived;
+
+		m_pVendor = VendorCache.LookupByName( m_sServer );
+
+		ar >> bProfilePresent;
+		if ( m_pProfile ) delete m_pProfile;
+		m_pProfile = new CGProfile();
+	}
+	if ( m_pProfile && bProfilePresent )
+		m_pProfile->Serialize( ar );
 }

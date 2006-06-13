@@ -1,7 +1,7 @@
 //
 // CtrlBrowseProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,6 @@
 #include "RichElement.h"
 #include "RichDocument.h"
 #include "CoolInterface.h"
-#include "ImageServices.h"
 #include "CtrlBrowseProfile.h"
 #include "Skin.h"
 
@@ -138,8 +137,7 @@ void CBrowseProfileCtrl::Update(CHostBrowser* pBrowser)
 	if ( m_pDocument1 == NULL || m_pDocument2 == NULL ) return;
 	if ( pProfile == NULL || pProfile->IsValid() == FALSE ) return;
 
-	if ( pBrowser->IsBrowsing() == FALSE && pBrowser->m_nHits > 0 &&
-		 m_bmHead.m_hObject == NULL )
+	if ( ! pBrowser->IsBrowsing() && pBrowser->m_nHits > 0 && ! m_imgHead.m_bLoaded )
 	{
 		LoadDefaultHead();
 	}
@@ -367,16 +365,14 @@ void CBrowseProfileCtrl::OnHeadPacket(CG2Packet* pPacket)
 		}
 		else if ( strcmp( szType, "BODY" ) == 0 )
 		{
-			CImageServices pServices;
-			CImageFile pImage( &pServices );
+			m_imgHead.Clear();
 
-			if ( pImage.LoadFromMemory( strFile,
-				 (LPCVOID)( pPacket->m_pBuffer + pPacket->m_nPosition ), nLength )
-				 && pImage.EnsureRGB( CoolInterface.m_crWindow ) )
+			if ( m_imgHead.LoadFromMemory( strFile,
+				 (LPCVOID)( pPacket->m_pBuffer + pPacket->m_nPosition ), nLength ) &&
+				 m_imgHead.EnsureRGB( CoolInterface.m_crWindow ) &&
+				 m_imgHead.Resample( 128, 128 ) )
 			{
-				pImage.Resample( 128, 128 );
-				if ( m_bmHead.m_hObject ) m_bmHead.DeleteObject();
-				m_bmHead.Attach( pImage.CreateBitmap() );
+				// Ok
 			}
 		}
 
@@ -390,17 +386,12 @@ void CBrowseProfileCtrl::LoadDefaultHead()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	if ( m_bmHead.m_hObject != NULL ) return;
+	if ( m_imgHead.m_bLoaded ) return;
 
-	CImageServices pServices;
-	CImageFile pImage( &pServices );
-
-	if ( pImage.LoadFromFile( Settings.General.Path + _T("\\Data\\DefaultAvatar.png") )
-		 && pImage.EnsureRGB( CoolInterface.m_crWindow ) )
+	if ( m_imgHead.LoadFromFile( Settings.General.Path + _T("\\Data\\DefaultAvatar.png") ) &&
+		m_imgHead.EnsureRGB( CoolInterface.m_crWindow ) &&
+		m_imgHead.Resample( 128, 128 ) )
 	{
-		pImage.Resample( 128, 128 );
-		if ( m_bmHead.m_hObject ) m_bmHead.DeleteObject();
-		m_bmHead.Attach( pImage.CreateBitmap() );
 		Invalidate();
 	}
 }
@@ -454,17 +445,19 @@ void CBrowseProfileCtrl::OnPaint()
 
 	GetClientRect( &rcPanel );
 
-	if ( m_bmHead.m_hObject != NULL )
+	if ( m_imgHead.m_bLoaded )
 	{
 		CRect rcHead( 10, 10, 138, 138 );
 		CDC dcMem;
-
+		CBitmap bmHead;
+		bmHead.Attach( m_imgHead.CreateBitmap() );
 		dcMem.CreateCompatibleDC( &dc );
-		CBitmap* pOldBmp = (CBitmap*)dcMem.SelectObject( &m_bmHead );
+		CBitmap* pOldBmp = (CBitmap*)dcMem.SelectObject( &bmHead );
 		dc.BitBlt( rcHead.left, rcHead.top, rcHead.Width(), rcHead.Height(),
 			&dcMem, 0, 0, SRCCOPY );
 		dc.ExcludeClipRect( &rcHead );
 		dcMem.SelectObject( pOldBmp );
+		bmHead.DeleteObject();
 	}
 
 	if ( m_wndDoc1.IsWindowVisible() )
@@ -491,3 +484,15 @@ void CBrowseProfileCtrl::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResu
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// CBrowseProfileCtrl serialize
+
+void CBrowseProfileCtrl::Serialize(CArchive& ar)
+{
+	m_imgHead.Serialize( ar );
+
+	if ( ar.IsLoading() )
+	{
+		PostMessage( WM_TIMER, 1 );
+	}
+}

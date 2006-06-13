@@ -1,7 +1,7 @@
 //
 // CtrlBrowseFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,6 +56,7 @@ protected:
 
 // Operations
 public:
+	void			Serialize(CArchive& ar);
 	virtual BOOL	Create(CWnd* pParentWnd, CMatchCtrl* pMatch);
 	void			OnSkinChange();
 	void			OnPhysicalTree(CG2Packet* pPacket);

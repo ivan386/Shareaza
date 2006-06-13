@@ -1,7 +1,7 @@
 //
 // HostBrowser.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -73,6 +73,7 @@ public:
 
 // Operations
 public:
+	void		Serialize(CArchive& ar);
 	BOOL		Browse();
 	void		Stop(BOOL bCompleted = FALSE);
 	BOOL		IsBrowsing() const;

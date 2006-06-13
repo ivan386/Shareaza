@@ -1,7 +1,7 @@
 //
 // GProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -313,4 +313,25 @@ CG2Packet* CGProfile::CreateAvatar()
 	pFile.Close();
 
 	return pPacket;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CGProfile serialize
+
+void CGProfile::Serialize(CArchive& ar)
+{
+	BOOL bXMLPresent = FALSE;
+
+	if ( ar.IsStoring() )
+	{
+		bXMLPresent = ( m_pXML != NULL );
+		ar << bXMLPresent;
+	}
+	else
+	{
+		ar >> bXMLPresent;
+		Create();
+	}
+	if ( m_pXML && bXMLPresent )
+		m_pXML->Serialize( ar );
 }

@@ -1,7 +1,7 @@
 //
 // WndSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -969,8 +969,6 @@ void CSearchWnd::OnSelChangeMatches()
 
 void CSearchWnd::Serialize(CArchive& ar)
 {
-	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
-	CString strSchema;
 	int nVersion = 1;
 	
 	if ( ar.IsStoring() )
@@ -983,55 +981,26 @@ void CSearchWnd::Serialize(CArchive& ar)
 		{
 			pSearch->Serialize( ar );
 		}
-		
-		if ( m_pMatches->m_pSchema )
-		{
-			ar << m_pMatches->m_pSchema->m_sURI;
-		}
-		else
-		{
-			ar << strSchema;
-		}
 	}
 	else
 	{
 		ar >> nVersion;
 		if ( nVersion != 1 ) AfxThrowUserException();
 		
-		m_bPaused = TRUE;
-		
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			auto_ptr< CManagedSearch > pSearch( new CManagedSearch() );
 			pSearch->Serialize( ar );
 			m_oSearches.push_back( pSearch.release() );
-		}
-		
-		ar >> strSchema;
-		
-		if ( CSchema* pSchema = SchemaCache.Get( strSchema ) )
-		{
-			CList< CSchemaMember* > pColumns;
-			CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
-			m_wndList.SelectSchema( pSchema, &pColumns );
-		}
-		
-		if ( !empty() ) m_wndPanel.ShowSearch( GetLastManager() );
+		}		
 	}
-	
-	try
-	{
-		m_pMatches->Serialize( ar );
-	}
-	catch ( CException* pException )
-	{
-		pException->Delete();
-		m_pMatches->Clear();
-	}
+
+	CBaseMatchWnd::Serialize( ar );
 	
 	if ( ar.IsLoading() )
 	{
-		m_bUpdate = TRUE;
+		if ( !empty() ) m_wndPanel.ShowSearch( GetLastManager() );
+
 		PostMessage( WM_TIMER, 1 );
 		SendMessage( WM_TIMER, 2 );
 		SetAlert( FALSE );

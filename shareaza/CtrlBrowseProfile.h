@@ -1,7 +1,7 @@
 //
 // CtrlBrowseProfile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,7 @@
 #pragma once
 
 #include "RichViewCtrl.h"
+#include "ImageServices.h"
 
 class CHostBrowser;
 class CGProfile;
@@ -62,10 +63,11 @@ protected:
 	CRichDocument*		m_pDocument2;
 	CRichElement*		m_pdBookmarks;
 protected:
-	CBitmap				m_bmHead;
+	CImageFile			m_imgHead;
 
 // Operations
 public:
+	void	Serialize(CArchive& ar);
 	void	OnSkinChange();
 	void	Update(CHostBrowser* pBrowser);
 	void	OnHeadPacket(CG2Packet* pPacket);

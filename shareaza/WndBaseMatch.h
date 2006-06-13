@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,8 +56,9 @@ protected:
 	DWORD			m_nCacheFiles;
 
 // Operations
-protected:
-    int	CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K);
+public:
+	void			Serialize(CArchive& ar);
+    int				CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K);
 
 // Overrides
 public:

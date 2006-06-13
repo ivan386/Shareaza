@@ -1,7 +1,7 @@
 //
 // WindowManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,6 +34,7 @@
 
 #include "WndTraffic.h"
 #include "WndSearch.h"
+#include "WndBrowseHost.h"
 
 
 #ifdef _DEBUG
@@ -329,6 +330,7 @@ void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 	if ( bSaveState )
 	{
 		SaveSearchWindows();
+		SaveBrowseHostWindows();
 		if ( Settings.General.GUIMode == GUI_WINDOWED )
 			SaveWindowStates();
 	}
@@ -348,6 +350,7 @@ void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 	}
 
 	LoadSearchWindows();
+	LoadBrowseHostWindows();
 
 	AutoResize();
 	ShowWindow( SW_SHOW );
@@ -488,6 +491,68 @@ void CWindowManager::SaveSearchWindows()
 		CSearchWnd* pWnd = (CSearchWnd*)GetNext( pos );
 
 		if ( pWnd->IsKindOf( RUNTIME_CLASS(CSearchWnd) ) && pWnd->GetLastSearch() )
+		{
+			ar.WriteCount( 1 );
+			pWnd->Serialize( ar );
+			nCount++;
+		}
+	}
+
+	ar.WriteCount( 0 );
+	ar.Close();
+	pFile.Close();
+
+	if ( ! nCount ) DeleteFile( strFile );
+}
+
+//////////////////////////////////////////////////////////////////////
+// CWindowManager browse host load and save
+
+BOOL CWindowManager::LoadBrowseHostWindows()
+{
+	CString strFile = Settings.General.UserPath + _T("\\Data\\BrowseHosts.dat");
+	CFile pFile;
+
+	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
+
+	CArchive ar( &pFile, CArchive::load );
+	CWaitCursor pCursor;
+	BOOL bSuccess = TRUE;
+
+	try
+	{
+		while ( ar.ReadCount() == 1 )
+		{
+			CBrowseHostWnd* pWnd = new CBrowseHostWnd();
+			pWnd->Serialize( ar );
+		}
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
+		bSuccess = FALSE;
+	}
+
+	if ( Settings.General.GUIMode != GUI_WINDOWED ) Open( RUNTIME_CLASS(CHomeWnd) );
+
+	return bSuccess;
+}
+
+void CWindowManager::SaveBrowseHostWindows()
+{
+	CString strFile = Settings.General.UserPath + _T("\\Data\\BrowseHosts.dat");
+	CFile pFile;
+
+	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return;
+
+	CArchive ar( &pFile, CArchive::store );
+	int nCount = 0;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CBrowseHostWnd* pWnd = (CBrowseHostWnd*) GetNext( pos );
+
+		if ( pWnd->IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
 		{
 			ar.WriteCount( 1 );
 			pWnd->Serialize( ar );

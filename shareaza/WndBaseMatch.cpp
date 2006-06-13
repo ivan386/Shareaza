@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,6 +28,7 @@
 #include "Network.h"
 #include "Packet.h"
 #include "Schema.h"
+#include "SchemaCache.h"
 #include "Library.h"
 #include "SharedFile.h"
 #include "Downloads.h"
@@ -1006,4 +1007,50 @@ HRESULT CBaseMatchWnd::GetGenericView(IGenericView** ppView)
 	CRuntimeClass* pClass = GetRuntimeClass();
 	*ppView = CMatchListView::Attach( CString( pClass->m_lpszClassName ), m_pMatches );
 	return S_OK;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CBaseMatchWnd serialize
+
+void CBaseMatchWnd::Serialize(CArchive& ar)
+{
+	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
+	CString strSchema;
+
+	if ( ar.IsStoring() )
+	{
+		if ( m_pMatches->m_pSchema )
+		{
+			ar << m_pMatches->m_pSchema->m_sURI;
+		}
+		else
+		{
+			ar << strSchema;
+		}
+	}
+	else
+	{
+		m_bBMWActive = TRUE;
+		m_bPaused = TRUE;
+		m_bUpdate = TRUE;
+		m_nCacheFiles = 0;
+
+		ar >> strSchema;
+		if ( CSchema* pSchema = SchemaCache.Get( strSchema ) )
+		{
+			CList< CSchemaMember* > pColumns;
+			CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
+			m_wndList.SelectSchema( pSchema, &pColumns );
+		}
+	}
+
+	try
+	{
+		m_pMatches->Serialize( ar );
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
+		m_pMatches->Clear();
+	}
 }

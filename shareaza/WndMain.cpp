@@ -1,11 +1,7 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2006/04/04 23:43:25 $"
-//	Revision:		"$Revision: 1.50 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -479,6 +475,7 @@ void CMainWnd::OnClose()
 	m_pWindows.SaveWindowStates();
 	
 	m_pWindows.SaveSearchWindows();
+	m_pWindows.SaveBrowseHostWindows();
 	m_pWindows.Close();	
 	
 	CDownloadMonitorDlg::CloseAll();

@@ -1,7 +1,7 @@
 //
 // ImageFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,9 +42,8 @@ IMPLEMENT_DYNAMIC(CImageFile, CComObject)
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile construction
 
-CImageFile::CImageFile(CImageServices* pService)
+CImageFile::CImageFile(CImageServices* /* pFoo  = NULL */)
 {
-	m_pService		= pService;
 	m_bScanned		= FALSE;
 	m_nWidth		= 0;
 	m_nHeight		= 0;
@@ -78,21 +77,24 @@ void CImageFile::Clear()
 
 BOOL CImageFile::LoadFromMemory(LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly, BOOL bPartialOk)
 {
-	return m_pService->LoadFromMemory( this, pszType, pData, nLength, bScanOnly, bPartialOk );
-}
+	Clear();
 
-/*BOOL CImageFile::LoadFromFile(LPCTSTR pszType, HANDLE hFile, DWORD nLength, BOOL bScanOnly, BOOL bPartialOk)
-{
-	return m_pService->LoadFromFile( this, pszType, hFile, nLength, bScanOnly, bPartialOk );
-}*/
+	CImageServices srv;
+	return m_bLoaded = srv.LoadFromMemory( this, pszType, pData, nLength, bScanOnly, bPartialOk );
+}
 
 BOOL CImageFile::LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly, BOOL bPartialOk)
 {
-	return m_pService->LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
+	Clear();
+
+	CImageServices srv;
+	return m_bLoaded = srv.LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
 }
 
 BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly, BOOL bPartialOk)
 {
+	Clear();
+
 	HMODULE hModule = (HMODULE)hInstance;
 	HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nResourceID ), pszType );
 
@@ -121,7 +123,8 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 		pszType = strType;
 	}
 
-	return m_pService->LoadFromMemory( this, pszType, pMemory, nSize, bScanOnly, bPartialOk );
+	CImageServices srv;
+	return m_bLoaded = srv.LoadFromMemory( this, pszType, pMemory, nSize, bScanOnly, bPartialOk );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -129,22 +132,29 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 
 BOOL CImageFile::SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength)
 {
-	return m_pService->SaveToMemory( this, pszType, nQuality, ppBuffer, pnLength );
+	if ( ! m_bLoaded ) return FALSE;
+	CImageServices srv;
+	return srv.SaveToMemory( this, pszType, nQuality, ppBuffer, pnLength );
 }
 
 /*BOOL CImageFile::SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength)
 {
-	return m_pService->SaveToFile( this, pszType, nQuality, hFile, pnLength );
+	if ( ! m_bLoaded ) return FALSE;
+	CImageServices srv;
+	return srv.SaveToFile( this, pszType, nQuality, hFile, pnLength );
 }
 
 BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality)
 {
+	if ( ! m_bLoaded ) return FALSE;
+
 	HANDLE hFile = CreateFile( pszFile, GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE,
 		NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL );
 
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
 
-	BOOL bResult = m_pService->SaveToFile( this, pszFile, nQuality, hFile );
+	CImageServices srv;
+	BOOL bResult = srv.SaveToFile( this, pszFile, nQuality, hFile );
 
 	CloseHandle( hFile );
 
@@ -183,7 +193,7 @@ void CImageFile::Serialize(CArchive& ar)
 		Clear();
 
 		ar >> m_nWidth;
-		if ( m_nWidth == 0 ) return;
+		if ( ! m_nWidth ) return;
 		ar >> m_nHeight;
 		ar >> m_nComponents;
 

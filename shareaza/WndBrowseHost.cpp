@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -228,6 +228,7 @@ void CBrowseHostWnd::OnBrowseHostRefresh()
 	m_wndList.DestructiveUpdate();
 	m_pMatches->Clear();
 
+	m_bPaused = FALSE;
 	m_bUpdate = TRUE;
 	PostMessage( WM_TIMER, 2 );
 }
@@ -372,4 +373,41 @@ void CBrowseHostWnd::OnVirtualTree(CG2Packet* pPacket)
 BOOL CBrowseHostWnd::OnPush(const Hashes::Guid& oClientID, CConnection* pConnection)
 {
 	return m_pBrowser != NULL && m_pBrowser->OnPush( oClientID, pConnection );
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CBrowseHostWnd serialize
+
+void CBrowseHostWnd::Serialize(CArchive& ar)
+{
+	int nVersion = 1;
+
+	if ( ar.IsStoring() )
+	{
+		ar << nVersion;
+
+		ar << m_bOnFiles;
+	}
+	else
+	{
+		ar >> nVersion;
+		if ( nVersion != 1 ) AfxThrowUserException();
+
+		ar >> m_bOnFiles;
+	}
+
+	CBaseMatchWnd::Serialize(ar);
+
+	m_pBrowser->Serialize( ar );
+	m_wndProfile.Serialize( ar );
+	m_wndFrame.Serialize( ar );
+
+	if ( ar.IsLoading() )
+	{
+		m_wndProfile.Update( m_pBrowser );
+
+		PostMessage( WM_TIMER, 1 );
+		SendMessage( WM_TIMER, 2 );
+		SetAlert( FALSE );
+	}
 }
