@@ -23,9 +23,9 @@
 #define AFX_LIBRARYBUILDERINTERNALS_H__5CAE40BD_1963_4A30_A333_89DBB6899803__INCLUDED_
 
 #pragma once
+#include <MsiQuery.h>
 
 class CLibraryBuilder;
-
 
 class CLibraryBuilderInternals
 {
@@ -40,6 +40,7 @@ protected:
 protected:
 	BOOL		m_bEnableMP3;
 	BOOL		m_bEnableEXE;
+	BOOL		m_bEnableMSI;
 	BOOL		m_bEnableImage;
 	BOOL		m_bEnableASF;
 	BOOL		m_bEnableOGG;
@@ -55,38 +56,41 @@ public:
 // Operations
 public:
 	void		LoadSettings();
-    BOOL		ExtractMetadata( CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1);
+    BOOL		ExtractMetadata(CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1);
 protected:
-	BOOL		SubmitMetadata( LPCTSTR pszSchemaURI, CXMLElement* pXML);
+	BOOL		SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	BOOL		SubmitCorrupted();
 protected:		// ID3v1 and ID3v2 and MP3
-	BOOL		ReadID3v1( HANDLE hFile, CXMLElement* pXML = NULL);
+	BOOL		ReadID3v1(HANDLE hFile, CXMLElement* pXML = NULL);
 	BOOL		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, LPCSTR pszValue, int nLength);
-	BOOL		ReadID3v2( HANDLE hFile);
+	BOOL		ReadID3v2(HANDLE hFile);
 	BOOL		CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, BOOL bSkipLanguage = FALSE);
-	BOOL		ReadMP3Frames( HANDLE hFile);
+	BOOL		ReadMP3Frames(HANDLE hFile);
 	BOOL		ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore);
 protected:		// Module Version
-	BOOL		ReadVersion( LPCTSTR pszPath);
+	BOOL		ReadVersion(LPCTSTR pszPath);
 	BOOL		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, BOOL bCommaToDot = FALSE);
 	CString		GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey);
+protected:		// Windows Installer
+	BOOL		ReadMSI(LPCTSTR pszPath);
+	CString		GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);
 protected:		// Image Files
-	BOOL		ReadJPEG( HANDLE hFile);
-	BOOL		ReadGIF( HANDLE hFile);
-	BOOL		ReadPNG( HANDLE hFile);
-	BOOL		ReadBMP( HANDLE hFile);
+	BOOL		ReadJPEG(HANDLE hFile);
+	BOOL		ReadGIF(HANDLE hFile);
+	BOOL		ReadPNG(HANDLE hFile);
+	BOOL		ReadBMP(HANDLE hFile);
 protected:		// General Media
-	BOOL		ReadASF( HANDLE hFile);
-	BOOL		ReadAVI( HANDLE hFile);
-	BOOL		ReadMPEG( HANDLE hFile);
-	BOOL		ReadOGG( HANDLE hFile);
+	BOOL		ReadASF(HANDLE hFile);
+	BOOL		ReadAVI(HANDLE hFile);
+	BOOL		ReadMPEG(HANDLE hFile);
+	BOOL		ReadOGG(HANDLE hFile);
 	BYTE*		ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
 	BOOL		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
-	BOOL		ReadAPE( HANDLE hFile);
-	BOOL		ReadPDF( HANDLE hFile, LPCTSTR pszPath);
+	BOOL		ReadAPE(HANDLE hFile);
+	BOOL		ReadPDF(HANDLE hFile, LPCTSTR pszPath);
 	CString		ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
 	CString		ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
-    BOOL		ReadCollection( HANDLE hFile, const Hashes::Sha1Hash& oSHA1);
+    BOOL		ReadCollection(HANDLE hFile, const Hashes::Sha1Hash& oSHA1);
 	BOOL		ReadCHM(HANDLE hFile, LPCTSTR pszPath);
 	CString		DecodePDFText(CString& strInput);
 };

@@ -32,6 +32,7 @@
 #include "ID3.h"
 #include "Packet.h"
 #include "CollectionFile.h"
+#include <MsiDefs.h>
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -59,6 +60,18 @@ void CLibraryBuilderInternals::LoadSettings()
 {
 	m_bEnableMP3	= theApp.GetProfileInt( _T("Library"), _T("ScanMP3"), TRUE );
 	m_bEnableEXE	= theApp.GetProfileInt( _T("Library"), _T("ScanEXE"), TRUE );
+
+	// Check if Windows installer library is present
+	HINSTANCE hMSI = LoadLibrary( _T("Msi.dll") );
+
+	if ( !hMSI )
+		m_bEnableMSI = FALSE;
+	else
+	{
+		m_bEnableMSI	= theApp.GetProfileInt( _T("Library"), _T("ScanMSI"), TRUE );
+		FreeLibrary( hMSI );
+	}
+
 	m_bEnableImage	= theApp.GetProfileInt( _T("Library"), _T("ScanImage"), TRUE );
 	m_bEnableASF	= theApp.GetProfileInt( _T("Library"), _T("ScanASF"), TRUE );
 	m_bEnableOGG	= theApp.GetProfileInt( _T("Library"), _T("ScanOGG"), TRUE );
@@ -93,6 +106,11 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(CString& strPath, HANDLE hFile, H
 	{
 		if ( ! m_bEnableEXE ) return FALSE;
 		return ReadVersion( strPath );
+	}
+	else if ( strType == _T(".msi") )
+	{
+		if ( ! m_bEnableMSI ) return FALSE;
+		return ReadMSI( strPath );
 	}
 	else if ( strType == _T(".asf") || strType == _T(".wma") || strType == _T(".wmv") )
 	{
@@ -159,7 +177,7 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(CString& strPath, HANDLE hFile, H
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals submit metadata (threaded)
 
-BOOL CLibraryBuilderInternals::SubmitMetadata( LPCTSTR pszSchemaURI, CXMLElement* pXML)
+BOOL CLibraryBuilderInternals::SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML)
 {
 	// Ignoring return value from submission
 	m_pBuilder->SubmitMetadata( pszSchemaURI, pXML );
@@ -174,7 +192,7 @@ BOOL CLibraryBuilderInternals::SubmitCorrupted()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals ID3v1 (threaded)
 
-BOOL CLibraryBuilderInternals::ReadID3v1( HANDLE hFile, CXMLElement* pXML)
+BOOL CLibraryBuilderInternals::ReadID3v1(HANDLE hFile, CXMLElement* pXML)
 {
 	if ( GetFileSize( hFile, NULL ) < 128 ) return FALSE;
 	
@@ -246,7 +264,7 @@ BOOL CLibraryBuilderInternals::CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttr
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals ID3v2 (threaded)
 
-BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadID3v2(HANDLE hFile)
 {
 	ID3V2_HEADER pHeader;
 	DWORD nRead;
@@ -614,7 +632,7 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals MP3 scan (threaded)
 
-BOOL CLibraryBuilderInternals::ReadMP3Frames( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadMP3Frames(HANDLE hFile)
 {
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 	
@@ -783,7 +801,7 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals version information (threaded)
 
-BOOL CLibraryBuilderInternals::ReadVersion( LPCTSTR pszPath)
+BOOL CLibraryBuilderInternals::ReadVersion(LPCTSTR pszPath)
 {
 	DWORD dwSize = GetFileVersionInfoSize( (LPTSTR)pszPath, &dwSize );
 	if ( dwSize <= 152 ) return FALSE;
@@ -866,9 +884,80 @@ CString CLibraryBuilderInternals::GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey)
 }
 
 //////////////////////////////////////////////////////////////////////
+// CLibraryBuilderInternals MSI (threaded)
+
+BOOL CLibraryBuilderInternals::ReadMSI(LPCTSTR pszPath)
+{
+	MSIHANDLE hSummaryInfo;
+
+	int nError = MsiGetSummaryInformation( NULL, pszPath, 0, &hSummaryInfo );
+
+	if ( nError == ERROR_INSTALL_PACKAGE_INVALID ) 
+		return SubmitCorrupted();
+	else if ( nError != ERROR_SUCCESS )
+		return FALSE;
+
+	CXMLElement* pXML = new CXMLElement( NULL, _T("application") );
+	
+	pXML->AddAttribute( _T("os"), _T("Windows") );
+
+	CString strSubject;
+	CString str = GetSummaryField( hSummaryInfo, PID_TITLE );
+	if ( str.IsEmpty() || str == _T("Installation Database") )
+	{
+		str = GetSummaryField( hSummaryInfo, PID_SUBJECT );
+	}
+	else
+	{
+		strSubject = GetSummaryField( hSummaryInfo, PID_SUBJECT );
+		if ( strSubject != str )
+			pXML->AddAttribute( _T("fileDescription"), strSubject );
+	}
+
+	pXML->AddAttribute( _T("title"), str );
+	pXML->AddAttribute( _T("company"), GetSummaryField( hSummaryInfo, PID_AUTHOR ) );
+
+	str = GetSummaryField( hSummaryInfo, PID_KEYWORDS );
+	if ( str.Find( _T("Installer,MSI,Database") ) == -1  )
+	{
+		pXML->AddAttribute( _T("keywords"), str );
+	}
+
+	str = GetSummaryField( hSummaryInfo, PID_COMMENTS );
+	if ( str != strSubject )
+	{
+		pXML->AddAttribute( _T("releaseNotes"), str );
+	}
+	
+	return SubmitMetadata( CSchema::uriApplication, pXML );
+}
+
+CString CLibraryBuilderInternals::GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty)
+{
+	CString strValue;
+	UINT nPropType = VT_LPSTR;
+	DWORD dwSize = 0;
+
+	if ( MsiSummaryInfoGetProperty( hSummaryInfo, nProperty, &nPropType, 
+			0, NULL, L"", &dwSize ) == ERROR_MORE_DATA )
+	{
+		dwSize++;
+		LPTSTR pszValue = new TCHAR[ dwSize ];
+
+		if ( MsiSummaryInfoGetProperty( hSummaryInfo, nProperty, &nPropType, 
+						0, NULL, pszValue, &dwSize ) == 0 )
+			strValue = pszValue;
+
+		delete [] pszValue;
+	}
+
+	return strValue;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals JPEG (threaded)
 
-BOOL CLibraryBuilderInternals::ReadJPEG( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadJPEG(HANDLE hFile)
 {
 	DWORD nRead	= 0;
 	WORD wMagic	= 0;
@@ -963,7 +1052,7 @@ BOOL CLibraryBuilderInternals::ReadJPEG( HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals GIF (threaded)
 
-BOOL CLibraryBuilderInternals::ReadGIF( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadGIF(HANDLE hFile)
 {
 	CHAR szMagic[6];
 	DWORD nRead;
@@ -997,7 +1086,7 @@ BOOL CLibraryBuilderInternals::ReadGIF( HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals PNG (threaded)
 
-BOOL CLibraryBuilderInternals::ReadPNG( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadPNG(HANDLE hFile)
 {
 	BYTE nMagic[8];
 	DWORD nRead;
@@ -1073,7 +1162,7 @@ BOOL CLibraryBuilderInternals::ReadPNG( HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals BMP (threaded)
 
-BOOL CLibraryBuilderInternals::ReadBMP( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadBMP(HANDLE hFile)
 {
 	BITMAPFILEHEADER pBFH;
 	BITMAPINFOHEADER pBIH;
@@ -1169,7 +1258,7 @@ static const CLSID asfDRM1 =
 static const CLSID asfDRM2 =
 { 0x1EFB1A30, 0x0B62, 0x11D0, { 0xA3, 0x9B, 0x00, 0xA0, 0xC9, 0x03, 0x48, 0xF6 } };
 
-BOOL CLibraryBuilderInternals::ReadASF( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadASF(HANDLE hFile)
 {
 	QWORD nSize;
 	DWORD nRead;
@@ -1405,7 +1494,7 @@ BOOL CLibraryBuilderInternals::ReadASF( HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals MPEG (threaded)
 
-BOOL CLibraryBuilderInternals::ReadMPEG( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadMPEG(HANDLE hFile)
 {
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 	
@@ -1455,7 +1544,7 @@ BOOL CLibraryBuilderInternals::ReadMPEG( HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals OGG VORBIS (threaded)
 
-BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadOGG(HANDLE hFile)
 {
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 	
@@ -1725,7 +1814,7 @@ BOOL CLibraryBuilderInternals::ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals APE Monkey's Audio (threaded)
 
-BOOL CLibraryBuilderInternals::ReadAPE( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile)
 {
 	if ( GetFileSize( hFile, NULL ) < sizeof(APE_HEADER) ) return SubmitCorrupted();
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
@@ -1871,7 +1960,7 @@ BOOL CLibraryBuilderInternals::ReadAPE( HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals AVI (threaded)
 
-BOOL CLibraryBuilderInternals::ReadAVI( HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadAVI(HANDLE hFile)
 {
 	if ( GetFileSize( hFile, NULL ) < sizeof(AVI_HEADER) + 16 ) return SubmitCorrupted();
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
@@ -1974,7 +2063,7 @@ BOOL CLibraryBuilderInternals::ReadAVI( HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals PDF (threaded)
 
-BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
+BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 {
 	DWORD nOffset, nCount, nCountStart, nPages, nOffsetPrev, nFileLength, nVersion;
 	CString strLine, strSeek;
