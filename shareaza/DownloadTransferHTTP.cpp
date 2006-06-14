@@ -996,7 +996,12 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	{
 		if ( m_nContentLength == SIZE_UNKNOWN && !m_bKeepAlive )
 		{
-			m_nContentLength = m_pInput->m_nLength;
+            // This should fix the PHEX TTH problem with closed connection.
+            SetState( dtsTiger );
+            theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_RECV, (LPCTSTR)m_sAddress,
+                (LPCTSTR)m_pSource->m_sServer );
+
+            return ReadTiger(); // doesn't actually read but updates timings
 		}
 		if ( ! m_bGotRange )
 		{
@@ -1197,7 +1202,14 @@ BOOL CDownloadTransferHTTP::ReadMetadata()
 
 BOOL CDownloadTransferHTTP::ReadTiger()
 {
-	if ( m_pInput->m_nLength < m_nLength ) return TRUE;
+    // It is a fix for very slow DIME uploads, they get dropped while downloading (e.g. LimeWire).
+    m_tContent = m_mInput.tLast = GetTickCount();
+
+    // Fix for PHEX TTH which never tell content length for DIME block to get into DIME decoding 
+    // until the connection drops, if no content length specified and not keep-alive.
+    if ( !m_bKeepAlive && m_nContentLength == SIZE_UNKNOWN ) return TRUE;
+
+    if ( m_pInput->m_nLength < m_nLength ) return TRUE;
 	
 	if ( m_sContentType.CompareNoCase( _T("application/tigertree-breadthfirst") ) == 0 )
 	{
@@ -1268,7 +1280,14 @@ BOOL CDownloadTransferHTTP::ReadTiger()
 		
 		m_pInput->Clear();
 	}
-	
+
+    // m_bKeepAlive == FALSE means that it was not keep-alive, so should just get disconnected.
+    // after reading of DIME message
+    // This might be better with returning FALSE because it is not keep alive connection
+    // need to disconnect after the business
+    if ( !m_bKeepAlive ) return TRUE;
+
+
 	return StartNextFragment();
 }
 
@@ -1339,21 +1358,29 @@ void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
 		Close( TS_TRUE );
 	}
+	else if ( m_nState == dtsTiger )
+    {
+        // this is basically for PHEX DIME download
+        theApp.Message( MSG_DEBUG, _T("Reading THEX from the closed connection...") );
+		// It was closed connection with no content length, so assume the content length is equal to the 
+		// size of buffer when the connection gets cut. It is important to set it because the DIME decoding 
+		// code check if the content length is equals to size of buffer.
+		m_nContentLength = m_pInput->m_nLength;
+		m_nLength = m_pInput->m_nLength;
+		ReadTiger();
+		// CDownloadTransfer::Close will resume the closed connection
+        m_pSource->m_bCloseConn = TRUE;
+		Close( TS_TRUE );
+    }
+	else if ( m_bBusyFault || m_bQueueFlag )
+	{
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
+		Close( TS_TRUE );
+	}
 	else
 	{
-//		if ( m_nState == dtsDownloading && m_nLength && m_pSource )
-//			m_pSource->m_bCloseConn = TRUE;
-		
-		if ( m_bBusyFault || m_bQueueFlag )
-		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
-			Close( TS_TRUE );
-		}
-		else
-		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DROPPED, (LPCTSTR)m_sAddress );
-			Close( m_nState >= dtsDownloading ? TS_TRUE : TS_UNKNOWN );
-		}
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DROPPED, (LPCTSTR)m_sAddress );
+		Close( m_nState >= dtsDownloading ? TS_TRUE : TS_UNKNOWN );
 	}
 }
 
