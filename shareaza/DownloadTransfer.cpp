@@ -95,7 +95,14 @@ void CDownloadTransfer::Close(TRISTATE bKeepSource)
 		switch ( bKeepSource )
 		{
 		case TS_TRUE:
-			m_pSource->OnFailure( TRUE );
+			if ( m_pSource->m_bCloseConn && m_pSource->m_nGnutella )
+			{
+				m_pSource->OnResumeClosed();
+			}
+			else
+			{
+				m_pSource->OnFailure( TRUE );
+			}
 			break;
 		case TS_UNKNOWN:
 			m_pSource->OnFailure( FALSE );

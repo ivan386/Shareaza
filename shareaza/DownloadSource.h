@@ -98,6 +98,7 @@ public:
 	void		Remove(BOOL bCloseTransfer, BOOL bBan);
 	void		OnFailure(BOOL bNondestructive);
 	void		OnResume();
+	void		OnResumeClosed();
 public:
 	void		SetValid();
 	void		SetLastSeen();

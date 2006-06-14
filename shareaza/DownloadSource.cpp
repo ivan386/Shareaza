@@ -474,6 +474,22 @@ void CDownloadSource::OnResume()
 }
 
 //////////////////////////////////////////////////////////////////////
+// CDownloadSource closed connection resume handler
+
+void CDownloadSource::OnResumeClosed()
+{
+	if ( m_pTransfer != NULL )
+	{
+		m_pTransfer->SetState(dtsNull);
+		m_pTransfer->m_pSource = NULL;
+		m_pTransfer = NULL;
+	}
+
+	m_tAttempt = 0;	
+	m_pDownload->SetModified();
+}
+
+//////////////////////////////////////////////////////////////////////
 // CDownloadSource status
 
 void CDownloadSource::SetValid()
