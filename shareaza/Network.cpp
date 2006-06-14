@@ -80,6 +80,8 @@ CNetwork::CNetwork()
 
 	m_nSequence				= 0;
 	m_hThread				= NULL;
+	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
+	m_pHost.sin_family		= AF_INET;
 }
 
 CNetwork::~CNetwork()
