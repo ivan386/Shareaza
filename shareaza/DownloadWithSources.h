@@ -103,7 +103,7 @@ public:
 // Implementation
 protected:
 	void            RemoveOverlappingSources(QWORD nOffset, QWORD nLength);
-	BOOL		    AddSourceInternal(CDownloadSource* pSource);
+	BOOL		    AddSourceInternal(CDownloadSource* pSource, bool bDerivedG2 = false);
 private:
 	void		    RemoveSource(CDownloadSource* pSource, BOOL bBan);
 	void		    SortSource(CDownloadSource* pSource, BOOL bTop);
