@@ -28,6 +28,7 @@
 #include "Settings.h"
 #include "Downloads.h"
 #include "DownloadWithSources.h"
+#include "DownloadTransfer.h"
 #include "DownloadSource.h"
 #include "Network.h"
 #include "Neighbours.h"
@@ -471,7 +472,7 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources internal source adder
 
-BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
+BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource, bool bDerivedG2)
 {
 	//Check/Reject if source is invalid
 	if ( ! pSource->m_bPushOnly )
@@ -508,20 +509,55 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	{
 		for ( CDownloadSource* pExisting = m_pSourceFirst ; pExisting ; pExisting = pExisting->m_pNext )
 		{	
-			if ( pExisting->Equals( pSource ) )
+			if ( !bDerivedG2 && pExisting->m_sServer.Find( L"Shareaza" ) != -1 && 
+				 pExisting->m_nProtocol != PROTOCOL_HTTP && pExisting->m_nProtocol != PROTOCOL_G2 )
 			{
-				if ( pExisting->m_pTransfer != NULL ||
-					( pExisting->m_nProtocol == PROTOCOL_HTTP && pSource->m_nProtocol != PROTOCOL_HTTP ) )
+				if ( !Settings.Gnutella2.EnableToday )
 				{
 					delete pSource;
 					return FALSE;
 				}
-				else
+
+				CString strURL;
+				if ( m_oSHA1 )
 				{
-					pSource->m_tAttempt = pExisting->m_tAttempt;
-					pExisting->Remove( TRUE, FALSE );
-					break;
+					strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
+						(LPCTSTR)CString( inet_ntoa( pExisting->m_pAddress ) ),
+						pExisting->m_nPort, (LPCTSTR)m_oSHA1.toUrn() );
 				}
+				else if ( m_oED2K )
+				{
+					strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
+						(LPCTSTR)CString( inet_ntoa( pExisting->m_pAddress ) ),
+						pExisting->m_nPort, (LPCTSTR)m_oED2K.toUrn() );
+				}
+
+				if ( strURL.GetLength() )
+				{
+					CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL );
+					pG2Source->m_sServer = pExisting->m_sServer;
+					pG2Source->m_tAttempt = pExisting->m_tAttempt;
+					pG2Source->m_nProtocol = PROTOCOL_HTTP;
+
+					if ( AddSourceInternal( pG2Source, true ) )
+					{
+						if ( pG2Source->m_pTransfer == NULL )
+						{
+							if ( CDownloadTransfer* pTransfer = pG2Source->CreateTransfer() )
+								pTransfer->Initiate();
+						}
+						return TRUE;
+					}
+					return FALSE;
+				}
+			}
+			
+			bool bEqual = pExisting->Equals( pSource );
+
+			if ( bEqual && pExisting->m_nProtocol == pSource->m_nProtocol ) // IPs, ports and protocols are the same
+			{
+				delete pSource;
+				return FALSE;
 			}
 		}
 	}
