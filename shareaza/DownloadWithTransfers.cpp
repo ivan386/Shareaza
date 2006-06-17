@@ -284,6 +284,12 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished) const
 		}
 	}
 
+	if ( m_pDownload->LookupFailedSource( m_sURL ) != NULL && !Settings.Downloads.NeverDrop )
+	{
+		m_pDownload->RemoveSource( (CDownloadSource*)this, TRUE );
+		return FALSE;
+	}
+
 	if ( ( Settings.Connection.IgnoreOwnIP ) && ( m_pAddress.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) ) 
 		return FALSE;
 	
