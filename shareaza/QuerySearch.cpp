@@ -145,10 +145,6 @@ CG1Packet* CQuerySearch::ToG1Packet()
 		{
 			pPacket->WriteString( m_sKeywords );
 		}
-		if ( m_sKeywords != m_sSearch )
-		{
-			theApp.Message( MSG_SYSTEM, L"G1 keywords: %s->%s", m_sSearch, m_sKeywords );
-		}
 	}
 	else if ( m_pSchema != NULL && m_pXML != NULL )
 	{
@@ -245,7 +241,6 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 			short bValue = (short)( 2 * rand() / ( RAND_MAX + 1.0 ) );
 			pPacket->WritePacket( "DN", pPacket->GetStringLen( bValue ? m_sSearch : m_sKeywords ) );
 			pPacket->WriteString( bValue ? m_sSearch : m_sKeywords, FALSE );
-			theApp.Message( MSG_SYSTEM, L"G2 keywords: %s->%s", m_sSearch, m_sKeywords );
 		}
 		else
 		{
