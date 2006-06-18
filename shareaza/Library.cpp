@@ -170,7 +170,6 @@ void CLibrary::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 {
 	long nCount = 0;
-	CSingleLock pLock( &m_pSection, TRUE );
 
 	// malicious software are usually small, we won't search duplicates
 	if ( pFile->m_nSize > Settings.Library.MaxMaliciousFileSize ) return;
@@ -204,7 +203,7 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 		CExistingFileDlg dlg( pFile, NULL, true );
 		Settings.Live.MaliciousWarning = TRUE;
 
-		pLock.Unlock();
+		m_pSection.Unlock();
 		if ( dlg.DoModal() != IDOK )
 		{
 			Settings.Live.NewFile = FALSE;
