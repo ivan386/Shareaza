@@ -284,9 +284,10 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished) const
 		}
 	}
 
-	if ( m_pDownload->LookupFailedSource( m_sURL ) != NULL && !Settings.Downloads.NeverDrop )
+	if ( m_pDownload->LookupFailedSource( m_sURL, true ) != NULL )
 	{
-		m_pDownload->RemoveSource( (CDownloadSource*)this, TRUE );
+		// Don't try to connect to sources which we determined were bad
+		// We will check them later after 2 hours cleanup
 		return FALSE;
 	}
 
