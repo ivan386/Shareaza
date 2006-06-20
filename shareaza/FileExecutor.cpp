@@ -275,6 +275,10 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 		{
 			strParam.Format( _T("/SHELLHLP_V9 Enqueue \"%s\""), strFile );
 		}
+		else if ( strExecutable == L"vlc.exe" )
+		{
+			strParam.Format( _T("--one-instance --playlist-enqueue \"%s\""), strFile );
+		}
 		if ( strParam.GetLength() )
 			ShellExecute( NULL, NULL, Settings.MediaPlayer.ServicePath, strParam, 
 				strExecPath, SW_SHOWNORMAL );
