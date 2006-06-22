@@ -815,7 +815,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 			{
 				if ( pItem->m_pBuffer[0] > 0 && pItem->m_pBuffer[0] < 3 )
 				{
-                    std::copy( &pItem->m_pBuffer[21], &pItem->m_pBuffer[21] + 20, &m_oSHA1[ 0 ] );
+                    std::copy( &pItem->m_pBuffer[1], &pItem->m_pBuffer[1] + 20, &m_oSHA1[ 0 ] );
                     m_oSHA1.validate();
 				}
 				if ( pItem->m_pBuffer[0] == 2 && pItem->m_nLength >= 24 + 20 + 1 )
