@@ -472,7 +472,7 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources internal source adder
 
-BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource, bool bDerivedG2)
+BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 {
 	//Check/Reject if source is invalid
 	if ( ! pSource->m_bPushOnly )
@@ -505,64 +505,107 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource, bool bDer
 		}
 	}
 	
+	bool bG2Exists = false;
+	bool bExistingIsRaza = false;
+	bool bDeleteSource = false;
+	CDownloadSource* pCopy = NULL;
+
 	if ( pSource->m_nRedirectionCount == 0 ) // Don't check for existing sources if source is a redirection
 	{
 		for ( CDownloadSource* pExisting = m_pSourceFirst ; pExisting ; pExisting = pExisting->m_pNext )
 		{	
-			if ( !bDerivedG2 && pExisting->m_sServer.Find( L"Shareaza" ) != -1 && 
-				 pExisting->m_nProtocol != PROTOCOL_HTTP && pExisting->m_nProtocol != PROTOCOL_G2 )
-			{
-				if ( !Settings.Gnutella2.EnableToday )
+			if ( pExisting->Equals( pSource ) )
+			{	
+				if ( !bExistingIsRaza )
+					bExistingIsRaza = ( _tcsncmp( pExisting->m_sServer, _T("Shareaza"), 8 ) == 0 );
+
+				if ( !bG2Exists )
+					bG2Exists = ( pExisting->m_nProtocol == PROTOCOL_HTTP );
+
+				if ( bExistingIsRaza )
 				{
-					delete pSource;
-					return FALSE;
+					pCopy = bG2Exists ? NULL : pExisting;
 				}
 
-				CString strURL;
-				if ( m_oSHA1 )
-				{
-					strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-						(LPCTSTR)CString( inet_ntoa( pExisting->m_pAddress ) ),
-						pExisting->m_nPort, (LPCTSTR)m_oSHA1.toUrn() );
-				}
-				else if ( m_oED2K )
-				{
-					strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-						(LPCTSTR)CString( inet_ntoa( pExisting->m_pAddress ) ),
-						pExisting->m_nPort, (LPCTSTR)m_oED2K.toUrn() );
-				}
-
-				if ( strURL.GetLength() )
-				{
-					CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL );
-					pG2Source->m_sServer = pExisting->m_sServer;
-					pG2Source->m_tAttempt = pExisting->m_tAttempt;
-					pG2Source->m_nProtocol = PROTOCOL_HTTP;
-
-					if ( AddSourceInternal( pG2Source, true ) )
+				if ( pExisting->m_pTransfer != NULL ||
+					 ( pExisting->m_nProtocol == PROTOCOL_HTTP && pSource->m_nProtocol != PROTOCOL_HTTP ) )
+				{	
+					// Delete when protocols are equal only, many Shareaza users have 2 slots for downloads
+					// Otherwise, you won't be able to add HTTP source and forget the old one.
+					if ( pExisting->m_nProtocol == pSource->m_nProtocol )
 					{
-						if ( pG2Source->m_pTransfer == NULL )
-						{
-							if ( CDownloadTransfer* pTransfer = pG2Source->CreateTransfer() )
-								pTransfer->Initiate();
-						}
-						return TRUE;
+						bDeleteSource = true;
+						if ( !bExistingIsRaza || bG2Exists )
+							break;
 					}
-					return FALSE;
+				}
+				else
+				{
+					pSource->m_tAttempt = pExisting->m_tAttempt;
+					pExisting->Remove( TRUE, FALSE );
+					// ToDo: We should check the rest to find if we have a raza source
+					// but the list is screwed up after the remove (deletes but not nulls)
+					// if ( !bExistingIsRaza || bG2Exists )
+					pCopy = NULL;
+					break;
 				}
 			}
-			
-			bool bEqual = pExisting->Equals( pSource );
+		}
+	}
 
-			if ( bEqual && pExisting->m_nProtocol == pSource->m_nProtocol ) // IPs, ports and protocols are the same
+	if ( pCopy && Settings.Gnutella2.EnableToday )
+	{
+		CString strURL;
+		if ( m_oSHA1 )
+		{
+			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
+				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
+				pCopy->m_nPort, (LPCTSTR)m_oSHA1.toUrn() );
+		}
+		else if ( m_oED2K )
+		{
+			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
+				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
+				pCopy->m_nPort, (LPCTSTR)m_oED2K.toUrn() );
+		}
+
+		if ( strURL.GetLength() )
+		{
+			CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL );
+			pG2Source->m_sServer = pCopy->m_sServer;
+			pG2Source->m_tAttempt = pCopy->m_tAttempt;
+			pG2Source->m_nProtocol = PROTOCOL_HTTP;
+
+			m_nSourceCount++;
+
+			pG2Source->m_pPrev = m_pSourceLast;
+			pG2Source->m_pNext = NULL;
+				
+			if ( m_pSourceLast != NULL )
 			{
-				delete pSource;
-				return FALSE;
+				m_pSourceLast->m_pNext = pG2Source;
+				m_pSourceLast = pG2Source;
+			}
+			else
+			{
+				m_pSourceFirst = m_pSourceLast = pG2Source;
+			}
+
+			if ( pG2Source->m_pTransfer == NULL )
+			{
+				if ( CDownloadTransfer* pTransfer = pG2Source->CreateTransfer() )
+					pTransfer->Initiate();
 			}
 		}
 	}
 	
-	m_nSourceCount ++;
+	if ( bDeleteSource )
+	{
+		delete pSource;
+		return FALSE;
+	}
+
+	m_nSourceCount++;
 
 	pSource->m_pPrev = m_pSourceLast;
 	pSource->m_pNext = NULL;
