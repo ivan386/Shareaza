@@ -268,8 +268,6 @@
 	<command code="33055" id="ID_MEDIA_ADD_FOLDER"/>
 	<command code="33056" id="ID_LIBRARY_FOLDER_FILE_PROPERTIES"/>
 	<command code="33057" id="ID_LIBRARY_REBUILD"/>
-	<command code="33058" id="ID_VIEW_HELP"/>
-	<command code="33059" id="ID_TAB_HELP"/>
 	<command code="33060" id="ID_DOWNLOADS_COPY"/>
 	<command code="33061" id="ID_LIBRARY_VIEW_ALBUM"/>
 	<command code="33062" id="ID_SEARCH_DETAILS"/>
