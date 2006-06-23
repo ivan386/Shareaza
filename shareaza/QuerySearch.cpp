@@ -551,7 +551,7 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 	}
 	else
 	{
-		m_sSearch = pPacket->ReadString();
+		m_sSearch = pPacket->ReadStringASCII();
 	}
 
 	m_sKeywords = m_sSearch;
@@ -561,7 +561,7 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 
 	if ( pPacket->GetRemaining() >= 1 )
 	{
-		strData = pPacket->ReadString();
+		strData = pPacket->ReadStringASCII();
 		if ( strData.GetLength() > 1024 ) strData.Empty();
 	}
 	

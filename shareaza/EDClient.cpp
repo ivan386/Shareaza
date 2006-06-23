@@ -1447,7 +1447,7 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	if ( m_bEmUnicode )
 		sMessage = pPacket->ReadStringUTF8( nMessageLength );
 	else
-		sMessage = pPacket->ReadString( nMessageLength );
+		sMessage = pPacket->ReadStringASCII( nMessageLength );
 
 
 	// Check the message is not spam

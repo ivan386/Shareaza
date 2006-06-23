@@ -729,7 +729,7 @@ BOOL CChatSession::OnChatMessage(CEDPacket* pPacket)
 	if ( m_bUnicode )
 		sMessage = pPacket->ReadStringUTF8( nMessageLength );
 	else
-		sMessage = pPacket->ReadString( nMessageLength );
+		sMessage = pPacket->ReadStringASCII( nMessageLength );
 
 	// Display message
 	if ( m_pWndPrivate != NULL ) m_pWndPrivate->OnRemoteMessage( FALSE, sMessage.GetBuffer() );

@@ -55,7 +55,7 @@ CString CEDPacket::ReadEDString(DWORD ServerFlags)
 	if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 		return ReadStringUTF8( nLen );
 	else
-		return ReadString( nLen );
+		return ReadStringASCII( nLen );
 }
 
 void CEDPacket::WriteEDString(LPCTSTR psz, DWORD ServerFlags)
@@ -82,7 +82,7 @@ CString CEDPacket::ReadEDString(BOOL bUnicode)
 	if ( bUnicode )
 		return ReadStringUTF8( nLen );
 	else
-		return ReadString( nLen );
+		return ReadStringASCII( nLen );
 }
 
 void CEDPacket::WriteEDString(LPCTSTR psz, BOOL bUnicode)
@@ -110,7 +110,7 @@ CString CEDPacket::ReadLongEDString(BOOL bUnicode)
 	if ( bUnicode )
 		return ReadStringUTF8( nLen );
 	else
-		return ReadString( nLen );
+		return ReadStringASCII( nLen );
 }
 
 void CEDPacket::WriteLongEDString(LPCTSTR psz, BOOL bUnicode)
@@ -448,7 +448,7 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 		if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 			m_sKey = pPacket->ReadStringUTF8( nLen );
 		else
-			m_sKey = pPacket->ReadString( nLen );
+			m_sKey = pPacket->ReadStringASCII( nLen );
 	}
 
 	if ( m_nType == ED2K_TAG_STRING )					// Length prefixed string
@@ -459,7 +459,7 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 		if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 			m_sValue = pPacket->ReadStringUTF8( nLen );
 		else
-			m_sValue = pPacket->ReadString( nLen );
+			m_sValue = pPacket->ReadStringASCII( nLen );
 	}
 	else if ( m_nType == ED2K_TAG_INT )					// 32 bit integer
 	{
@@ -489,12 +489,12 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 		if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 			m_sValue = pPacket->ReadStringUTF8( nLen );
 		else
-			m_sValue = pPacket->ReadString( nLen );
+			m_sValue = pPacket->ReadStringASCII( nLen );
 	}
 	else if ( m_nType == ED2K_TAG_BLOB )				// ?
 	{
 		nLen = pPacket->ReadLongLE();
-		m_sValue = pPacket->ReadString( nLen );
+		m_sValue = pPacket->ReadStringASCII( nLen );
 	}
 	else
 	{

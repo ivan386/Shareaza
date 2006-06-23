@@ -455,7 +455,7 @@ BOOL CDownloadTransferED2K::OnFileComment(CEDPacket* pPacket)
 		if ( m_pClient && m_pClient->m_bEmUnicode )
 			sFileComment = pPacket->ReadStringUTF8( nLength );
 		else
-			sFileComment = pPacket->ReadString( nLength );
+			sFileComment = pPacket->ReadStringASCII( nLength );
 	}
 
 	if ( m_pDownload && m_pClient )

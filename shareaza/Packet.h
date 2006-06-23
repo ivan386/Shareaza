@@ -104,8 +104,10 @@ public:
 	void Seek(DWORD nPosition, int nRelative = seekStart); // Set the position the given distance from the given end
 	void Shorten(DWORD nLength);                           // Shorten the packet to the given number of bytes
 
+	virtual CString ReadString(UINT cp, DWORD nMaximum = 0xFFFFFFFF);
+
 	// Read and write ASCII text in the packet
-	virtual CString ReadString(DWORD nMaximum = 0xFFFFFFFF);           // Read null terminated ASCII text at our position in the packet
+	virtual CString ReadStringASCII(DWORD nMaximum = 0xFFFFFFFF);      // Read null terminated ASCII text at our position in the packet
 	virtual void    WriteString(LPCTSTR pszString, BOOL bNull = TRUE); // Write ASCII text and a null terminator into the end of the packet
 
 	// String utility, not at all related to the packet

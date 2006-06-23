@@ -859,7 +859,7 @@ BOOL CG1Neighbour::OnBye(CG1Packet* pPacket)
 	{
 		// Read the reason number, and then the reason text
 		nReason   = pPacket->ReadShortLE(); // 2 bytes
-		strReason = pPacket->ReadString();  // ASCII byte characters until a null terminating 0 byte
+		strReason = pPacket->ReadStringASCII();  // ASCII byte characters until a null terminating 0 byte
 	}
 
 	// Loop the index nChar for each character in the text

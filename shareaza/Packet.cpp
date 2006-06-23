@@ -131,7 +131,7 @@ void CPacket::Shorten(DWORD nLength)
 // Takes the number of bytes to look at from our position in the packet as ASCII text
 // Reads those up to the next null terminator as text
 // Returns a string
-CString CPacket::ReadString(DWORD nMaximum)
+CString CPacket::ReadString(UINT cp, DWORD nMaximum)
 {
 	// We'll convert the ASCII text in the packet into wide characters, and return them in this string
 	CString strString;
@@ -157,7 +157,7 @@ CString CPacket::ReadString(DWORD nMaximum)
 
 	// Find out how many wide characters the ASCII bytes will become when converted
 	int nWide = MultiByteToWideChar(
-		CP_ACP,   // Use the code page for ASCII
+		cp,   // Use the code page for ASCII
 		0,        // No character type options
 		pszInput, // Pointer to ASCII text in the packet
 		nLength,  // Number of bytes to read there, the number of bytes before we found the null terminator
@@ -166,7 +166,7 @@ CString CPacket::ReadString(DWORD nMaximum)
 
 	// Convert the ASCII bytes into wide characters
 	MultiByteToWideChar(
-		CP_ACP,                       // Use the UTF8 code page
+		cp,                       // Use the UTF8 code page
 		0,                            // No character type options
 		pszInput,                     // Pointer to ASCII text
 		nLength,                      // Number of bytes to read there, the number of bytes before we found the null terminator
@@ -176,6 +176,14 @@ CString CPacket::ReadString(DWORD nMaximum)
 	// Close the string and return it
 	strString.ReleaseBuffer( nWide );
 	return strString;
+}
+
+// Takes the number of bytes to look at from our position in the packet as ASCII text
+// Reads those up to the next null terminator as text
+// Returns a string
+CString CPacket::ReadStringASCII(DWORD nMaximum)
+{
+	return ReadString(CP_ACP, nMaximum);
 }
 
 // Takes text, and true to also write a null terminator
@@ -243,49 +251,7 @@ int CPacket::GetStringLen(LPCTSTR pszString) const
 // Returns the string of converted Unicode wide characters
 CString CPacket::ReadStringUTF8(DWORD nMaximum)
 {
-	// We'll convert the ASCII text in the packet into wide characters using the UTF8 code page, and return them in this string
-	CString strString;
-
-	// If maximum would have us read beyond the end of the packet, make it smaller to read to the end of the packet
-	nMaximum = min( nMaximum, m_nLength - m_nPosition );
-	if ( ! nMaximum ) return strString; // If that would have us read nothing, return the new blank string
-
-	// Setup pointers to look at bytes in the packet
-	LPCSTR pszInput	= (LPCSTR)m_pBuffer + m_nPosition; // Point pszInput at our position inside the buffer
-	LPCSTR pszScan	= pszInput;                        // Start out pszScan at the same spot, it will find the next null terminator
-
-	// Loop for each byte in the packet at and beyond our position in it, searching for a null terminator
-    DWORD nLength = 0; // When this loop is done, nLength will be the number of ASCII bytes we moved over before finding the null terminator
-	for ( ; nLength < nMaximum ; nLength++ )
-	{
-		// Move the position pointer in this CPacket object to the next byte
-		m_nPosition++;
-
-		// If pszScan points to a 0 byte, exit the loop, otherwise move the pointer forward and keep going
-		if ( ! *pszScan++ ) break;
-	}
-
-	// Find out how many wide characters the ASCII bytes will become when converted
-	int nWide = MultiByteToWideChar(
-		CP_UTF8,  // Use the UTF8 code page
-		0,        // No character type options
-		pszInput, // Pointer to ASCII text in the packet
-		nLength,  // Number of bytes to read there, the number of bytes before we found the null terminator
-		NULL,     // No output buffer, we just want to know how many wide characters one would need to hold
-		0 );
-
-	// Convert the ASCII bytes into wide characters
-	MultiByteToWideChar(
-		CP_UTF8,                      // Use the UTF8 code page
-		0,                            // No character type options
-		pszInput,                     // Pointer to ASCII text
-		nLength,                      // Number of bytes to read there, the number of bytes before we found the null terminator
-		strString.GetBuffer( nWide ), // Get access to the string's buffer, telling it we will write in nWide wide characters
-		nWide );                      // Tell MultiByteToWideChar it can write nWide characters in the buffer
-
-	// Close the string and return it
-	strString.ReleaseBuffer( nWide );
-	return strString;
+	return ReadString(CP_UTF8, nMaximum);
 }
 
 // Takes Unicode text, and true to also write a null terminator into the packet

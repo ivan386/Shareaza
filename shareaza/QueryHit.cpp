@@ -770,10 +770,10 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 	}
 	else
 	{
-		m_sName	= pPacket->ReadString();
+		m_sName	= pPacket->ReadStringASCII();
 	}
 
-	strData		= pPacket->ReadString();
+	strData		= pPacket->ReadStringASCII();
 
 	if ( m_sName.GetLength() > 160 )
 	{
