@@ -1828,9 +1828,6 @@
 					RelativePath="WndHashProgressBar.cpp">
 				</File>
 				<File
-					RelativePath="WndHelp.cpp">
-				</File>
-				<File
 					RelativePath="WndHitMonitor.cpp">
 				</File>
 				<File
@@ -2863,9 +2860,6 @@
 				</File>
 				<File
 					RelativePath="WndHashProgressBar.h">
-				</File>
-				<File
-					RelativePath="WndHelp.h">
 				</File>
 				<File
 					RelativePath="WndHitMonitor.h">
