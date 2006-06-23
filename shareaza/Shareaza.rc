@@ -207,8 +207,6 @@ BEGIN
         MENUITEM "&Normal Mode",                ID_VIEW_BASIC
         MENUITEM "&Tabbed Mode",                ID_VIEW_TABBED
         MENUITEM "&Windowed Mode",              ID_VIEW_WINDOWED
-        MENUITEM SEPARATOR
-        MENUITEM "&Help\tF1",                   ID_VIEW_HELP
     END
     POPUP "&Tools"
     BEGIN
@@ -273,8 +271,6 @@ BEGIN
         MENUITEM "Disco&very",                  ID_VIEW_DISCOVERY
         MENUITEM "&Graph",                      ID_VIEW_TRAFFIC
         MENUITEM SEPARATOR
-        MENUITEM "&Help",                       ID_VIEW_HELP
-        MENUITEM SEPARATOR
         MENUITEM "&Packet Dump",                ID_VIEW_PACKETS
         MENUITEM "Se&arch Monitor",             ID_VIEW_SEARCH_MONITOR
         MENUITEM "H&it Monitor",                ID_VIEW_RESULTS_MONITOR
@@ -296,8 +292,6 @@ BEGIN
         MENUITEM "&Packet Dump",                ID_VIEW_PACKETS
         MENUITEM "Se&arch Monitor",             ID_VIEW_SEARCH_MONITOR
         MENUITEM "H&it Monitor",                ID_VIEW_RESULTS_MONITOR
-        MENUITEM SEPARATOR
-        MENUITEM "H&elp",                       ID_TAB_HELP
     END
     POPUP "CMainWnd.Tray"
     BEGIN
@@ -904,7 +898,6 @@ BEGIN
         MENUITEM "Settings...",                 ID_NEIGHBOURS_SETTINGS
         MENUITEM SEPARATOR
         MENUITEM "Media Zoom",                  ID_MEDIA_ZOOM
-        MENUITEM "&Help Contents",              ID_TAB_HELP
         MENUITEM SEPARATOR
         MENUITEM "Show/Hide",                   ID_DOWNLOADS_FILTER_MENU
         MENUITEM "Show/Hide",                   ID_UPLOADS_FILTER_MENU
@@ -5868,8 +5861,6 @@ BEGIN
     ID_LIBRARY_FOLDER_FILE_PROPERTIES 
                             "View and edit the properties of all files in the selected folder(s)..."
     ID_LIBRARY_REBUILD      "Rebuild metadata and hashes for the selected folders or files."
-    ID_VIEW_HELP            "Show or hide the HELP window."
-    ID_TAB_HELP             "Get help using Shareaza."
     ID_DOWNLOADS_COPY       "Copy the URI of the selected file."
     ID_LIBRARY_VIEW_ALBUM   "Show an album view\nAlbum View"
     ID_SEARCH_DETAILS       "Display detailed information on the selected file."
