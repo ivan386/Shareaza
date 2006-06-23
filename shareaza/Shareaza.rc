@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,2,17
- PRODUCTVERSION 2,2,2,17
+ FILEVERSION 2,2,2,18
+ PRODUCTVERSION 2,2,2,18
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 17"
+            VALUE "FileVersion", "2, 2, 2, 18"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 17"
+            VALUE "ProductVersion", "2, 2, 2, 18"
         END
     END
     BLOCK "VarFileInfo"
@@ -1149,11 +1149,11 @@ BEGIN
     COMBOBOX        IDC_CAN_ACCEPT,166,123,47,52,CBS_DROPDOWN | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "Ignore private/local IP addresses ",IDC_IGNORE_LOCAL,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,140,161,12,
-                    WS_EX_RIGHT
+                    "Button",BS_AUTOCHECKBOX | BS_RIGHT | WS_TABSTOP,14,140,
+                    161,12,WS_EX_RIGHT
     CONTROL         "Enable UPnP connection devices setup",IDC_ENABLE_UPNP,
-                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,36,
-                    158,139,10
+                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | 
+                    WS_TABSTOP,14,158,161,10
     GROUPBOX        "&Timeouts:",IDC_STATIC,7,179,268,34
     LTEXT           "Connection:",IDC_STATIC,21,193,45,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TIMEOUT_CONNECTION,69,193,35,12,ES_AUTOHSCROLL | 
@@ -1468,11 +1468,11 @@ BEGIN
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "Is your network or campus protected by a firewall or NAT router?",
                     IDC_CONNECTION_LAN_LABEL,10,50,265,18,NOT WS_VISIBLE
+    COMBOBOX        IDC_CONNECTION_LAN_SELECT,26,72,239,72,CBS_DROPDOWNLIST | 
+                    NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Do you have a firewall or NAT router on your home Internet connection?",
                     IDC_CONNECTION_HOME_LABEL,10,50,265,18,NOT WS_VISIBLE
     COMBOBOX        IDC_CONNECTION_HOME_SELECT,26,72,239,72,CBS_DROPDOWNLIST | 
-                    NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_CONNECTION_LAN_SELECT,26,72,239,72,CBS_DROPDOWNLIST | 
                     NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
     LTEXT           "If you know how fast your Internet connection is able to operate, select the best option below:",
                     IDC_STATIC,10,90,265,20
