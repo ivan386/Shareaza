@@ -66,7 +66,6 @@ static char THIS_FILE[] = __FILE__;
 BEGIN_MESSAGE_MAP(CShareazaApp, CWinApp)
 	//{{AFX_MSG_MAP(CShareazaApp)
 	//}}AFX_MSG
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 CShareazaApp theApp;

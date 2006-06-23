@@ -220,10 +220,6 @@ protected:
 	afx_msg void OnUpdateTabSearch(CCmdUI* pCmdUI);
 	afx_msg void OnTabSearch();
 	afx_msg void OnToolsProfile();
-	afx_msg void OnUpdateViewHelp(CCmdUI* pCmdUI);
-	afx_msg void OnViewHelp();
-	afx_msg void OnUpdateTabHelp(CCmdUI* pCmdUI);
-	afx_msg void OnTabHelp();
 	afx_msg void OnLibraryFolders();
 	afx_msg void OnHelpWarnings();
 	afx_msg void OnHelpPromote();

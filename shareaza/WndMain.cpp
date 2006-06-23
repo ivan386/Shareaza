@@ -230,10 +230,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_TAB_SEARCH, OnUpdateTabSearch)
 	ON_COMMAND(ID_TAB_SEARCH, OnTabSearch)
 	ON_COMMAND(ID_TOOLS_PROFILE, OnToolsProfile)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_HELP, OnUpdateViewHelp)
-	ON_COMMAND(ID_VIEW_HELP, OnViewHelp)
-	ON_UPDATE_COMMAND_UI(ID_TAB_HELP, OnUpdateTabHelp)
-	ON_COMMAND(ID_TAB_HELP, OnTabHelp)
 	ON_COMMAND(ID_LIBRARY_FOLDERS, OnLibraryFolders)
 	ON_COMMAND(ID_HELP_WARNINGS, OnHelpWarnings)
 	ON_COMMAND(ID_HELP_PROMOTE, OnHelpPromote)
@@ -258,6 +254,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_MEDIA_PLAY, OnMediaCommand)
 	ON_COMMAND(ID_MEDIA_ADD, OnMediaCommand)
 	ON_COMMAND(ID_MEDIA_ADD_FOLDER, OnMediaCommand)
+	ON_COMMAND(ID_HELP, OnHelpFaq)
 END_MESSAGE_MAP()
 
 
@@ -1847,17 +1844,6 @@ void CMainWnd::OnViewSecurity()
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewHelp(CCmdUI* pCmdUI) 
-{
-	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CHelpWnd) ) != NULL );
-}
-
-void CMainWnd::OnViewHelp() 
-{
-	m_pWindows.Open( RUNTIME_CLASS(CHelpWnd), TRUE );
-	OpenFromTray();
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd tab menu
 
@@ -2036,18 +2022,6 @@ void CMainWnd::OnUpdateTabNetwork(CCmdUI* pCmdUI)
 void CMainWnd::OnTabNetwork() 
 {
 	m_pWindows.Open( RUNTIME_CLASS(CNeighboursWnd) );
-	OpenFromTray();
-}
-
-void CMainWnd::OnUpdateTabHelp(CCmdUI* pCmdUI) 
-{
-	CChildWnd* pChild = m_pWindows.GetActive();
-	pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CHelpWnd) ) );
-}
-
-void CMainWnd::OnTabHelp() 
-{
-	m_pWindows.Open( RUNTIME_CLASS(CHelpWnd) );
 	OpenFromTray();
 }
 
