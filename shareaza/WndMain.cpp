@@ -67,7 +67,6 @@
 #include "WndSearch.h"
 #include "WndBrowseHost.h"
 #include "WndHome.h"
-#include "WndHelp.h"
 #include "WizardSheet.h"
 
 #include "DlgSettingsManager.h"
@@ -2477,9 +2476,22 @@ LRESULT CMainWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 IMPLEMENT_UNKNOWN(CMainWnd, DropTarget)
 
-STDMETHODIMP CMainWnd::XDropTarget::DragEnter(IDataObject FAR* pDataObj, DWORD /*grfKeyState*/, POINTL /*pt*/, DWORD FAR* pdwEffect)
+CMainWnd::XDropTarget::XDropTarget ()
+{
+	CoCreateInstance( CLSID_DragDropHelper, NULL, CLSCTX_INPROC_SERVER,
+		IID_IDropTargetHelper, (LPVOID*) &m_spdth );
+}
+
+STDMETHODIMP CMainWnd::XDropTarget::DragEnter(IDataObject FAR* pDataObj, DWORD /*grfKeyState*/, POINTL pt, DWORD FAR* pdwEffect)
 {
 	METHOD_PROLOGUE( CMainWnd, DropTarget )
+	
+	if ( m_spdth )			// Use the helper if we have one
+    {
+        POINT ptl = { pt.x, pt.y };
+		m_spdth->DragEnter( pThis->GetSafeHwnd(), pDataObj, &ptl, *pdwEffect );
+    }
+    m_spdtoDragging = pDataObj;	// Remember what is being dragged
 	
 	if ( ObjectToFiles( pDataObj ) )
 	{
@@ -2501,6 +2513,12 @@ STDMETHODIMP CMainWnd::XDropTarget::DragEnter(IDataObject FAR* pDataObj, DWORD /
 STDMETHODIMP CMainWnd::XDropTarget::DragOver(DWORD /*grfKeyState*/, POINTL pt, DWORD FAR* pdwEffect)
 {
 	METHOD_PROLOGUE( CMainWnd, DropTarget )
+	
+	if ( m_spdth )			// Use the helper if we have one
+    {
+        POINT ptl = { pt.x, pt.y };
+        m_spdth->DragOver( &ptl, *pdwEffect );
+    }
 	
 	if ( m_pFiles.GetCount() > 0 )
 	{
@@ -2531,12 +2549,26 @@ STDMETHODIMP CMainWnd::XDropTarget::DragOver(DWORD /*grfKeyState*/, POINTL pt, D
 STDMETHODIMP CMainWnd::XDropTarget::DragLeave()
 {
 	METHOD_PROLOGUE( CMainWnd, DropTarget )
+   
+	if ( m_spdth )			// Use the helper if we have one
+	{
+		m_spdth->DragLeave();
+	}
+	m_spdtoDragging.Release();	// Nothing is being dragged any more
+
 	return S_OK;
 }
 
-STDMETHODIMP CMainWnd::XDropTarget::Drop(IDataObject FAR* pDataObj, DWORD /*grfKeyState*/, POINTL pt, DWORD FAR* /*pdwEffect*/)
+STDMETHODIMP CMainWnd::XDropTarget::Drop(IDataObject FAR* pDataObj, DWORD /*grfKeyState*/, POINTL pt, DWORD FAR* pdwEffect)
 {
 	METHOD_PROLOGUE( CMainWnd, DropTarget )
+	
+	if ( m_spdth )			// Use the helper if we have one
+    {
+        POINT ptl = { pt.x, pt.y };
+        m_spdth->Drop( pDataObj, &ptl, *pdwEffect );
+    }
+    m_spdtoDragging.Release();	// Nothing is being dragged any more
 	
 	if ( ObjectToFiles( pDataObj ) )
 	{

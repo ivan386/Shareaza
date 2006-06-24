@@ -244,6 +244,7 @@ protected:
 // COM
 protected:
 	BEGIN_INTERFACE_PART(DropTarget, IDropTarget)
+		XDropTarget();
 		STDMETHOD(DragEnter)(IDataObject FAR* pDataObj, DWORD grfKeyState, POINTL pt, DWORD FAR* pdwEffect);
 		STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, DWORD FAR* pdwEffect);
 		STDMETHOD(DragLeave)();
@@ -253,7 +254,9 @@ protected:
 		BOOL	ObjectToFiles(IDataObject* pObject);
 		BOOL	IsTorrentFile() const;
 	protected:
-		CList< CString >	m_pFiles;
+		CList< CString >				m_pFiles;			// The files being dragged
+		CComPtr< IDropTargetHelper >	m_spdth;			// Shell helper
+		CComPtr< IDataObject >			m_spdtoDragging;	// The object being dragged
 	END_INTERFACE_PART(DropTarget)
 	
 	DECLARE_INTERFACE_MAP()
