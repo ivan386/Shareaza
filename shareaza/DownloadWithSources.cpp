@@ -661,13 +661,13 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 			}
 			else
 			{
-			strURL = pSource->m_sURL;
-			Replace( strURL, _T(","), _T("%2C") );
-			
-			if ( strSources.GetLength() > 0 ) strSources += _T(", ");
-			strSources += strURL;
-			strSources += ' ';
-			strSources += TimeToString( &pSource->m_tLastSeen );
+				strURL = pSource->m_sURL;
+				Replace( strURL, _T(","), _T("%2C") );
+
+				if ( strSources.GetLength() > 0 ) strSources += _T(", ");
+				strSources += strURL;
+				strSources += ' ';
+				strSources += TimeToString( &pSource->m_tLastSeen );
 			}
 			
 			if ( nMaximum == 1 ) break;
