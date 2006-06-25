@@ -352,13 +352,8 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 							nBogusCount++;
 					}
 					
-					// Mark/unmark files as bogus depending on the percentage of the spam hits
-					BOOL bBogus = (float)nBogusCount / nTotal > Settings.Search.SpamFilterThreshold / 100.0f;
-					for ( CQueryHit* pFileHits = pFile->m_pHits; pFileHits ; 
-						  pFileHits = pFileHits->m_pNext )
-					{
-						pFileHits->m_bBogus = bBogus;
-					}
+					// Mark/unmark a file as suspicious depending on the percentage of the spam hits
+					pFile->m_bSuspicious = (float)nBogusCount / nTotal > Settings.Search.SpamFilterThreshold / 100.0f;
 
 					break;
 				}
