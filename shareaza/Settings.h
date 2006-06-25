@@ -132,6 +132,7 @@ public:
 		DWORD		MaxPreviewLength;
 		BOOL		AdultFilter;
 		BOOL		AdvancedPanel;
+		int			SpamFilterThreshold;		// Percentage of spam hits which triggers file sources to be treated as a spam
 		DWORD		GeneralThrottle;			// A general throttle for how often each indidivual search may run. Low values may cause source finding to get overlooked. 
 	} Search;
 	

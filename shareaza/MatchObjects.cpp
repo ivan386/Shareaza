@@ -322,7 +322,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			if ( ! pFile ) bHadSHA1 = bHadTiger = bHadED2K = FALSE;
 		}
 		
-		if ( pFile != NULL )
+		if ( pFile != NULL ) // New hit for the existing file
 		{
 			pMap = m_pFiles;
 			
@@ -341,7 +341,25 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 					{
 						UpdateRange( m_nFiles - nCount, m_nFiles - nCount );
 					}
+
+					// cross-packet spam filtering
+					DWORD nBogusCount = 0;
+					DWORD nTotal = 0;
+					for ( CQueryHit* pFileHits = pFile->m_pHits; pFileHits ; 
+						  pFileHits = pFileHits->m_pNext, nTotal++ )
+					{
+						if ( pFileHits->m_bBogus )
+							nBogusCount++;
+					}
 					
+					// Mark/unmark files as bogus depending on the percentage of the spam hits
+					BOOL bBogus = (float)nBogusCount / nTotal > Settings.Search.SpamFilterThreshold / 100.0f;
+					for ( CQueryHit* pFileHits = pFile->m_pHits; pFileHits ; 
+						  pFileHits = pFileHits->m_pNext )
+					{
+						pFileHits->m_bBogus = bBogus;
+					}
+
 					break;
 				}
 			}
@@ -367,7 +385,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 				}
 			}
 		}
-		else
+		else // New file hit
 		{
 			pFile = new CMatchFile( this, pHit );
 			pFile->m_bNew = m_bNew;
@@ -1194,16 +1212,6 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 			BOOL bName = _tcsicmp( pHit->m_sName, pOld->m_sName ) == 0;
 			
 			if ( ! bForce && bName ) bForce = TRUE;
-
-			 // cross-packet checking
-			if ( pHit->m_bBogus && !pOld->m_bBogus || !pHit->m_bBogus && pOld->m_bBogus ||
-				 !bName && pHit->m_pAddress.S_un.S_addr == pOld->m_pAddress.S_un.S_addr &&
-				 pHit->m_nPort == pOld->m_nPort && validAndEqual( pOld->m_oClientID, pHit->m_oClientID ) )
-			{
-				pHit->m_bBogus = TRUE;
-				pOld->m_bBogus = TRUE;
-				m_bSuspicious = TRUE;
-			}
 
 			if ( bName && pHit->m_pAddress.S_un.S_addr == pOld->m_pAddress.S_un.S_addr &&
 				 pHit->m_nPort == pOld->m_nPort )

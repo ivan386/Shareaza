@@ -127,6 +127,7 @@ void CSettings::Setup()
 	Add( _T("Search.AdultFilter"), &Search.AdultFilter, FALSE );
 	Add( _T("Search.AdvancedPanel"), &Search.AdvancedPanel, TRUE );
 	Add( _T("Search.GeneralThrottle"), &Search.GeneralThrottle, 200 );
+	Add( _T("Search.SpamFilterThreshold"), &Search.SpamFilterThreshold, 10 );
 
 	Add( _T("MediaPlayer.EnablePlay"), &MediaPlayer.EnablePlay, TRUE );
 	Add( _T("MediaPlayer.EnableEnqueue"), &MediaPlayer.EnableEnqueue, TRUE );

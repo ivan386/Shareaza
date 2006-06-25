@@ -222,7 +222,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Search.MaxPreviewLength, 1024, 1, 4096, _T(" KB") );
 	AddSetting( &Settings.Search.AdvancedPanel, 1, 0, 1 );
 	AddSetting( &Settings.Search.GeneralThrottle, 1, 200, 1000 );
-	
+	AddSetting( &Settings.Search.SpamFilterThreshold, 1, 0, 100, _T("%") );
+
 	AddSetting( &Settings.Downloads.BufferSize, 1024, 0, 512, _T(" KB") );
 	AddSetting( &Settings.Downloads.SparseThreshold, 1024, 0, 256, _T(" MB") );
 	AddSetting( &Settings.Downloads.MaxFileSearches, 1, 0, 5 );
