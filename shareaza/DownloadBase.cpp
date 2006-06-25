@@ -112,7 +112,6 @@ void CDownloadBase::GenerateDiskName()
 	}
 	else
 	{
-		srand( (unsigned)GetTickCount() );
 		m_sDiskName.Format( _T("rand_%2i%2i%2i%2i"), rand() % 100, rand() % 100, rand() % 100, rand() % 100 );
 	}
 

@@ -709,8 +709,6 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount)
 			pRandom.Add( pService );
 	}
 
-	srand( GetTickCount() );
-
 	for ( nSuccess = 0 ; nCount > 0 && pRandom.GetSize() > 0 ; )
 	{
 		INT_PTR nRandom = rand() % pRandom.GetSize();
@@ -809,7 +807,6 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 	if ( pServices.GetSize() > 0 )	// If the list of possible ones isn't empty
 	{
 		// return a random service
-		srand( GetTickCount() );
 		return pServices.GetAt( rand() % pServices.GetSize() );
 	}
 	else							// else (No services available)
@@ -864,7 +861,6 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 	if ( pWebCaches.GetSize() > 0 )
 	{
 		// Select a random one
-		srand( GetTickCount() );
 		return pWebCaches.GetAt( rand() % pWebCaches.GetSize() );
 	}
 	else

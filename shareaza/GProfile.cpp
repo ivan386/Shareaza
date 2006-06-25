@@ -86,7 +86,6 @@ void CGProfile::Create()
 	Clear();
 
 	Hashes::Guid tmp;
-	srand( GetTickCount() );
 	
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ ) tmp[ nByte ] = uchar( tmp[ nByte ] + rand() );
 	tmp.validate();

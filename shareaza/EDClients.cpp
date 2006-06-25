@@ -521,7 +521,6 @@ void CEDClients::RequestServerStatus(IN_ADDR* pHost, WORD nPort)
 {
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2SG_SERVERSTATUSREQUEST, ED2K_PROTOCOL_EDONKEY );
 
-	srand( GetTickCount() );
 	m_nLastServerKey = 0x55AA0000 + rand();
 	pPacket->WriteLongLE( m_nLastServerKey );
 	Datagrams.Send( pHost, nPort + 4, pPacket );

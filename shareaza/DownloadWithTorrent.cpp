@@ -73,7 +73,7 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 
 	// Generate random Key value
 	m_sKey = _T("");
-	srand( GetTickCount() );
+
 	for ( int nChar = 1 ; nChar < 6 ; nChar++ ) 
 	{
 		m_sKey += GenerateCharacter();
@@ -282,7 +282,6 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 		m_pPeerID[ 7 ] = '-';
 
 		// Random characters for ID
-		srand( GetTickCount() );
 		for ( nByte = 8 ; nByte < 16 ; nByte++ ) 
 		{
 			m_pPeerID[ nByte ] = uchar( m_pPeerID[ nByte ] + rand() );

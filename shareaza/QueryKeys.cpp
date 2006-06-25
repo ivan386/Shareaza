@@ -42,8 +42,6 @@ CQueryKeys::CQueryKeys()
 
 	DWORD* pMap = m_pMap;
 
-	srand( GetTickCount() );
-
 	for ( DWORD nCount = m_nBits ; nCount ; nCount-- )
 	{
 		*pMap++ = 1 << ( rand() % 32 );

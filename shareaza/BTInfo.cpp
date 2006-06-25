@@ -505,8 +505,6 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	CBENode* pAnnounceList = pRoot->GetNode( "announce-list" );
 	if ( ( pAnnounceList ) && ( pAnnounceList->IsType( CBENode::beList ) ) )
 	{
-		// Initialise random number generator
-		srand( GetTickCount() );
 		// Loop through all the tiers
 		for ( int nTier = 0 ; nTier < pAnnounceList->GetCount() ; nTier++ )
 		{
