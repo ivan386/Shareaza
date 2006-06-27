@@ -84,6 +84,7 @@ CDownload::~CDownload()
 		if ( ! ::DeleteFile( m_sDiskName ) )
 			theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
 	}
+	m_pPeerID.clear();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -495,7 +496,6 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	{
 		CBTTrackerRequest::SendCompleted( this );
 		m_bSeeding = TRUE;
-		m_tBegan = GetTickCount();
 	}
 	
 	LibraryBuilder.RequestPriority( m_sDiskName );

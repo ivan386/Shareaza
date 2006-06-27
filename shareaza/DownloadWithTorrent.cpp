@@ -724,7 +724,8 @@ void CDownloadWithTorrent::CloseTorrent()
 	m_bTorrentRequested		= FALSE;
 	m_bTorrentStarted		= FALSE;
 	CloseTorrentUploads();
-    m_pPeerID.clear();
+	// Don't clear PeerID since we are going to seed
+    // m_pPeerID.clear();
 }
 
 

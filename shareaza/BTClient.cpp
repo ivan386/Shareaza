@@ -379,7 +379,7 @@ BOOL CBTClient::OnHandshake1()
 			Close();
 			return FALSE;
 		}
-		else if ( ! m_pDownload->IsTrying() )	// If the file isn't active
+		else if ( ! m_pDownload->IsTrying() && ! m_pDownload->IsSeeding() )	// If the file isn't active
 		{	//Display and error and exit
 			m_pDownload = NULL;
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
