@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -494,6 +494,8 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	if ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock )
 	{
 		CBTTrackerRequest::SendCompleted( this );
+		m_bSeeding = TRUE;
+		m_tBegan = GetTickCount();
 	}
 	
 	LibraryBuilder.RequestPriority( m_sDiskName );
