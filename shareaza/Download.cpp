@@ -109,7 +109,7 @@ void CDownload::Resume()
 	if ( m_bComplete ) return;
 	if ( ! m_bPaused ) 
 	{
-		if ( ( m_tBegan == 0 ) && ( GetSourceCount() < 2 ) ) FindMoreSources();
+		if ( ( m_tBegan == 0 ) && ( GetSourceCount() < Settings.Downloads.MinSources ) ) FindMoreSources();
 		SetStartTimer();
 		return;
 	}
