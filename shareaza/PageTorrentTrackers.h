@@ -1,7 +1,7 @@
 //
 // PageTorrentTrackers.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,6 +42,7 @@ public:
 	enum { IDD = IDD_TORRENT_TRACKERS };
 	CString			m_sName;
 	CString			m_sTracker;
+	CString			m_sEscapedPeerID;
 
 	CButton			m_wndRefresh;
 	CEdit			m_wndComplete;
@@ -63,6 +64,10 @@ protected:
 	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
 	BOOL			OnTree(CBENode* pNode);
+
+// URL escaper
+protected:
+	CString			Escape(const CString& str);
 
 // Overrides
 public:

@@ -1,7 +1,7 @@
 //
 // DlgDownloadEdit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -236,7 +236,7 @@ void CDownloadEditDlg::OnTorrentInfo()
 	if ( ! Downloads.Check( m_pDownload ) ) return;
 	if ( ! m_pDownload->m_pTorrent.IsAvailable() ) return;
 
-	CTorrentInfoSheet dlg( &m_pDownload->m_pTorrent );
+	CTorrentInfoSheet dlg( &m_pDownload->m_pTorrent, m_pDownload->m_pPeerID );
 	pLock.Unlock();
 	dlg.DoModal();
 

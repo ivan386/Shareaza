@@ -1,7 +1,7 @@
 //
 // PageTorrentTrackers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,6 @@
 #include "Network.h"
 #include "Skin.h"
 
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -55,7 +54,7 @@ END_MESSAGE_MAP()
 
 CTorrentTrackersPage::CTorrentTrackersPage() : 
 	CTorrentInfoPage( CTorrentTrackersPage::IDD ),
-	m_sName(), m_sTracker()
+	m_sName(), m_sTracker(), m_sEscapedPeerID()
 {
 	m_psp.dwFlags |= PSP_USETITLE;
 }
@@ -87,6 +86,7 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	
 	m_sName			= m_pInfo->m_sName;
 	m_sTracker		= m_pInfo->m_sTracker;
+	m_sEscapedPeerID = Escape( GetPeerID().toString() );
 
 	m_wndTrackerMode.SetItemData( 0, tNull );
 	m_wndTrackerMode.SetItemData( 1, tCustom );
@@ -294,6 +294,19 @@ void CTorrentTrackersPage::OnRun()
 		// Skip obviously invalid trackers
 		if ( strURL.GetLength() > 7 ) 
 		{
+			// Fetch scrape only for the given info hash
+			CString strParam = Escape( m_pInfo->m_oInfoBTH.toString< Hashes::base16Encoding >() );
+
+			if ( strURL.Find( _T("/scrape?") ) != -1 )
+			{
+				strURL.Append( L"&info_hash=" + strParam );
+			}
+			else
+			{
+				strURL.Append( L"?info_hash=" + strParam );
+			}
+			strURL.Append( L"&peer_id=" + m_sEscapedPeerID );
+
 			m_pRequest.SetURL( strURL );
 
 			theApp.Message( MSG_DEBUG, _T("Sending scrape to %s"), strURL );
@@ -319,6 +332,41 @@ void CTorrentTrackersPage::OnRun()
 	
 	m_pRequest.Clear();
 	PostMessage( WM_TIMER, 2 );
+}
+
+CString	CTorrentTrackersPage::Escape(const CString& str)
+{
+	int nLen = str.GetLength();
+	if ( nLen == 0 ) 
+		return CString();
+
+	CString strResult, strToken;
+	
+	for ( int nPos = 0 ; nPos < nLen ; nPos++ )
+	{
+		int nValue = 0;
+		strToken = str.Mid( nPos, 2 );
+
+		if ( _stscanf( strToken.GetBuffer(), L"%2x", &nValue ) == 1 )
+		{
+			if ( ( nValue >= '0' && nValue <= '9' ) ||
+				 ( nValue >= 'a' && nValue <= 'z' ) ||
+				 ( nValue >= 'A' && nValue <= 'Z' ) )
+			{
+				strResult += (TCHAR)nValue;
+			}
+			else
+			{
+				strResult += '%';
+				strResult.Append( strToken );
+			}
+			nPos++;
+		}
+		else
+			strResult.Append( strToken );
+	}	
+	
+	return strResult;
 }
 
 BOOL CTorrentTrackersPage::OnTree(CBENode* pNode)

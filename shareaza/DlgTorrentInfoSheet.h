@@ -1,7 +1,7 @@
 //
 // DlgTorrentInfoSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ class CTorrentInfoSheet : public CPropertySheet
 {
 // Construction
 public:
-	CTorrentInfoSheet(CBTInfo* pInfo );
+	CTorrentInfoSheet(CBTInfo* pInfo, const Hashes::BtGuid& oPeerID);
 	virtual ~CTorrentInfoSheet();
 
 	DECLARE_DYNAMIC(CTorrentInfoSheet)
@@ -41,6 +41,7 @@ public:
 // Attributes
 public:
 	CBTInfo			m_pInfo;
+	Hashes::BtGuid	m_pPeerID;
 protected:
 	CSkinWindow*	m_pSkin;
 	CBrush			m_brDialog;

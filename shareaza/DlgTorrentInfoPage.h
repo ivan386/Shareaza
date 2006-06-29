@@ -1,7 +1,7 @@
 //
 // DlgTorrentInfoPage.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,10 +48,12 @@ public:
 	//}}AFX_DATA
 	int				m_nIcon;
 	CBTInfo*		m_pInfo;
+	Hashes::BtGuid	m_pPeerID;
 	
 // Operations
 public:
 	CBTInfo*		GetTorrentInfo();
+	Hashes::BtGuid	GetPeerID();
 
 // Overrides
 public:

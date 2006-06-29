@@ -1,7 +1,7 @@
 //
 // DlgTorrentInfoPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,6 +68,12 @@ CBTInfo* CTorrentInfoPage::GetTorrentInfo()
 	return &pSheet->m_pInfo;
 }
 
+Hashes::BtGuid CTorrentInfoPage::GetPeerID()
+{
+	CTorrentInfoSheet* pSheet = (CTorrentInfoSheet*)GetParent();
+	return pSheet->m_pPeerID;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentInfoPage message handlers
 
@@ -78,6 +84,7 @@ BOOL CTorrentInfoPage::OnInitDialog()
 	Skin.Apply( NULL, this );
 
 	m_pInfo = GetTorrentInfo();
+	m_pPeerID = GetPeerID();
 	
 	return TRUE;
 }

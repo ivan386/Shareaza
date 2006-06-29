@@ -1,7 +1,7 @@
 //
 // DlgTorrentInfoSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,10 +60,10 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentInfoSheet
 
-CTorrentInfoSheet::CTorrentInfoSheet(CBTInfo* pInfo ) : 
+CTorrentInfoSheet::CTorrentInfoSheet(CBTInfo* pInfo, const Hashes::BtGuid& oPeerID) : 
 	CPropertySheet( L"" ), m_sGeneralTitle( L"General" ),
 	m_sFilesTitle( L"Files" ), m_sTrackersTitle( L"Trackers" ),
-	m_pSkin( NULL )
+	m_pSkin( NULL ), m_pPeerID( oPeerID )
 {
 	m_psh.dwFlags &= ~PSP_HASHELP;
 

@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -1204,7 +1204,7 @@ void CDownloadsWnd::OnDownloadsTorrentInfo()
 		
 		if ( pDownload->m_bSelected && pDownload->m_pTorrent.IsAvailable() )
 		{
-			CTorrentInfoSheet dlg( &pDownload->m_pTorrent );
+			CTorrentInfoSheet dlg( &pDownload->m_pTorrent, pDownload->m_pPeerID );
 			
 			pLock.Unlock();
 			dlg.DoModal();
