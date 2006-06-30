@@ -305,7 +305,7 @@ void CDownload::OnRun()
 	if ( ! m_bPaused )
 	{
 		if ( m_bDiskFull  ) Pause();
-		else if ( IsTrying() )
+		else if ( IsTrying() || IsSeeding() )
 		{	//This download is trying to download
 
 			//'Dead download' check- if download appears dead, give up and allow another to start.
@@ -496,6 +496,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	{
 		CBTTrackerRequest::SendCompleted( this );
 		m_bSeeding = TRUE;
+		m_bTorrentStarted = TRUE;
 	}
 	
 	LibraryBuilder.RequestPriority( m_sDiskName );
