@@ -27,7 +27,9 @@
 
 #include "CtrlCoolBar.h"
 #include "CtrlMediaList.h"
+extern "C" {
 #include <powrprof.h>
+}
 
 class CMediaFrame : public CWnd
 {
