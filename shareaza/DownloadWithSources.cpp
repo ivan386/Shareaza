@@ -236,7 +236,12 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 	{
 		m_nSize = pHit->m_nSize;
 	}
-	
+	else if ( m_nSize != SIZE_UNKNOWN && pHit->m_bSize != SIZE_UNKNOWN 
+		&& m_nSize != pHit->m_nSize )
+	{
+		return FALSE;
+	}
+
 	if ( m_sDisplayName.IsEmpty() && pHit->m_sName.GetLength() )
 	{
 		m_sDisplayName = pHit->m_sName;
@@ -512,9 +517,11 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 
 	if ( pSource->m_nRedirectionCount == 0 ) // Don't check for existing sources if source is a redirection
 	{
-		for ( CDownloadSource* pExisting = m_pSourceFirst ; pExisting ; pExisting = pExisting->m_pNext )
+		for ( CDownloadSource* pExisting = m_pSourceFirst ; pExisting ; )
 		{	
-			if ( pExisting->Equals( pSource ) )
+			bool bSkip = false;
+
+			if ( pExisting->Equals( pSource ) ) // IPs and ports are equal
 			{	
 				if ( !bExistingIsRaza )
 					bExistingIsRaza = ( _tcsncmp( pExisting->m_sServer, _T("Shareaza"), 8 ) == 0 );
@@ -522,37 +529,53 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 				if ( !bG2Exists )
 					bG2Exists = ( pExisting->m_nProtocol == PROTOCOL_HTTP );
 
+				// Point to non-HTTP source which is Shareaza
 				if ( bExistingIsRaza )
-				{
 					pCopy = bG2Exists ? NULL : pExisting;
-				}
+				
+				if ( pExisting->m_nProtocol == pSource->m_nProtocol )
+					bDeleteSource = true;
 
-				if ( pExisting->m_pTransfer != NULL ||
-					 ( pExisting->m_nProtocol == PROTOCOL_HTTP && pSource->m_nProtocol != PROTOCOL_HTTP ) )
-				{	
-					// Delete when protocols are equal only, many Shareaza users have 2 slots for downloads
-					// Otherwise, you won't be able to add HTTP source and forget the old one.
-					if ( pExisting->m_nProtocol == pSource->m_nProtocol )
-					{
+				if ( pExisting->m_pTransfer != NULL ) // We already downloading
+				{
+					// Remove new source which is not HTTP and return
+					if ( pExisting->m_nProtocol == PROTOCOL_HTTP && pSource->m_nProtocol != PROTOCOL_HTTP )
 						bDeleteSource = true;
-						if ( !bExistingIsRaza || bG2Exists )
-							break;
+				}
+				else // We are not downloading
+				{
+					// Replace non-HTTP source with a new one (we will add it later)
+					if ( pExisting->m_nProtocol != PROTOCOL_HTTP && pSource->m_nProtocol == PROTOCOL_HTTP )
+					{
+						// Set connection delay the same as for the old source
+						pSource->m_tAttempt = pExisting->m_tAttempt;
+						pCopy = NULL;	// We are adding HTTP source, thus no need to make G2
+						bSkip = true;	// Don't go to the next source
+
+						if ( pExisting->m_pNext )
+						{
+							pExisting = pExisting->m_pNext;
+							pExisting->m_pPrev->Remove( TRUE, FALSE );
+						}
+						else
+						{
+							pExisting->Remove( TRUE, FALSE );
+							pExisting = NULL;
+						}
 					}
 				}
-				else
-				{
-					pSource->m_tAttempt = pExisting->m_tAttempt;
-					pExisting->Remove( TRUE, FALSE );
-					// ToDo: We should check the rest to find if we have a raza source
-					// but the list is screwed up after the remove (deletes but not nulls)
-					// if ( !bExistingIsRaza || bG2Exists )
-					pCopy = NULL;
-					break;
-				}
 			}
+
+			if ( !bSkip )
+				pExisting = pExisting->m_pNext;
 		}
 	}
 
+	// We don't need to make G2 source
+	if ( pCopy && bExistingIsRaza && bG2Exists )
+		pCopy = NULL;
+
+	// Make G2 source from the existing non-HTTP Shareaza source
 	if ( pCopy && Settings.Gnutella2.EnableToday )
 	{
 		CString strURL;
@@ -572,8 +595,8 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		if ( strURL.GetLength() )
 		{
 			CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL );
-			pG2Source->m_sServer = pCopy->m_sServer;
-			pG2Source->m_tAttempt = pCopy->m_tAttempt;
+			pG2Source->m_sServer = pCopy->m_sServer;	// Copy user-agent
+			pG2Source->m_tAttempt = pCopy->m_tAttempt;	// Set the same connection delay
 			pG2Source->m_nProtocol = PROTOCOL_HTTP;
 
 			m_nSourceCount++;
@@ -606,7 +629,6 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	}
 
 	m_nSourceCount++;
-
 	pSource->m_pPrev = m_pSourceLast;
 	pSource->m_pNext = NULL;
 		
