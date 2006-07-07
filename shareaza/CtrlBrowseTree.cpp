@@ -36,6 +36,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#define ITEM_HEIGHT	16
+#define WM_UPDATE	(WM_APP+80)
+
 IMPLEMENT_DYNAMIC(CBrowseTreeCtrl, CWnd)
 
 BEGIN_MESSAGE_MAP(CBrowseTreeCtrl, CWnd)
@@ -50,10 +53,8 @@ BEGIN_MESSAGE_MAP(CBrowseTreeCtrl, CWnd)
 	ON_WM_RBUTTONDOWN()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
+	ON_MESSAGE(WM_UPDATE,OnUpdate)
 END_MESSAGE_MAP()
-
-#define ITEM_HEIGHT	16
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseTreeCtrl construction
@@ -104,8 +105,7 @@ void CBrowseTreeCtrl::Clear(BOOL bGUI)
 
 	if ( bGUI )
 	{
-		UpdateScroll();
-		Invalidate();
+		PostMessage( WM_UPDATE );
 	}
 }
 
@@ -155,8 +155,7 @@ BOOL CBrowseTreeCtrl::Expand(CBrowseTreeItem* pItem, TRISTATE bExpand, BOOL bInv
 
 	if ( bInvalidate )
 	{
-		UpdateScroll();
-		Invalidate();
+		PostMessage( WM_UPDATE );
 	}
 
 	return TRUE;
@@ -322,8 +321,7 @@ BOOL CBrowseTreeCtrl::Highlight(CBrowseTreeItem* pItem)
 			ScrollBy( rcItem.bottom - rcClient.bottom );
 	}
 
-	UpdateScroll();
-	Invalidate();
+	PostMessage( WM_UPDATE );
 
 	return TRUE;
 }
@@ -841,7 +839,7 @@ void CBrowseTreeCtrl::OnTreePacket(CG2Packet* pPacket)
 	OnTreePacket( pPacket, pPacket->m_nLength, m_pRoot );
 	m_nTotal = m_pRoot->GetChildCount();
 
-	Invalidate();
+	PostMessage( WM_UPDATE );
 }
 
 void CBrowseTreeCtrl::OnTreePacket(CG2Packet* pPacket, DWORD nFinish, CBrowseTreeItem* pItem)
@@ -888,6 +886,12 @@ void CBrowseTreeCtrl::OnTreePacket(CG2Packet* pPacket, DWORD nFinish, CBrowseTre
 	}
 }
 
+LRESULT CBrowseTreeCtrl::OnUpdate(WPARAM, LPARAM)
+{
+	UpdateScroll();
+	Invalidate();
+	return 0;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseTreeItem construction

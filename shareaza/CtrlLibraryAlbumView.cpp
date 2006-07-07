@@ -502,6 +502,8 @@ void CLibraryAlbumView::OnSize(UINT nType, int cx, int cy)
 	m_szTrack.cx = cx;
 	m_szTrack.cy = 22;
 	m_nRows = cy / m_szTrack.cy;
+
+	UpdateScroll();
 }
 
 void CLibraryAlbumView::UpdateScroll()
