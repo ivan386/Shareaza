@@ -236,8 +236,7 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 	{
 		m_nSize = pHit->m_nSize;
 	}
-	else if ( m_nSize != SIZE_UNKNOWN && pHit->m_bSize != SIZE_UNKNOWN 
-		&& m_nSize != pHit->m_nSize )
+	else if ( m_nSize != SIZE_UNKNOWN && pHit->m_bSize && m_nSize != pHit->m_nSize )
 	{
 		return FALSE;
 	}
