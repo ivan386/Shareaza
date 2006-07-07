@@ -1,7 +1,7 @@
 //
 // CoolMenu.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,6 +35,7 @@ public:
 // Operations
 public:
 	BOOL		AddMenu(CMenu* pMenu, BOOL bChild = FALSE);
+	BOOL		ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* mii, const CString& strText);
 	void		SetWatermark(HBITMAP hBitmap);
 	void		OnMeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	void		OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
