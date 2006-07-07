@@ -389,6 +389,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Restore"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="_Network">
