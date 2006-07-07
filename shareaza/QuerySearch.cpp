@@ -220,7 +220,8 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		pPacket->WriteString( "ttr" );
 		pPacket->Write( m_oTiger );
 	}
-	else if ( m_oED2K )
+	// If the target source has only ed2k hash (w/o SHA1) it will allow to find such files
+	if ( m_oED2K )
 	{
         pPacket->WritePacket( "URN", Hashes::Ed2kHash::byteCount + 5 );
 		pPacket->WriteString( "ed2k" );
@@ -590,7 +591,7 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 				if ( pItem->m_pBuffer[0] == 2 && pItem->m_nLength >= 24 + 20 + 1 )
 				{
 					m_oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
-						pItem->m_pBuffer[ 1 ] );
+						pItem->m_pBuffer[ 21 ] );
 				}
 			}
 			else if ( CGGEPItem* pItem = pGGEP.Find( _T("u") ) )
