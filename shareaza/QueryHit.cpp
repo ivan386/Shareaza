@@ -77,7 +77,7 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID)
 //	m_bBTH			= FALSE;
 	m_nIndex		= 0;
 	m_bSize			= FALSE;
-	m_nSize			= 0;
+	m_nSize			= SIZE_UNKNOWN;
 	m_nSources		= 0;
 	m_nPartial		= 0;
 	m_bPreview		= FALSE;
@@ -1108,7 +1108,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		}
 		else if ( pTag.m_nKey == ED2K_FT_COMPLETESOURCES )
 		{
-			if ( ! pTag.m_nValue ) //If there are no complete sources
+			if ( ! pTag.m_nValue && m_bSize ) //If there are no complete sources
 			{
 				//Assume this file is 50% complete. (we can't tell yet, but at least this will warn the user)
 				m_nPartial = (DWORD)m_nSize >> 2;
@@ -1350,13 +1350,13 @@ void CQueryHit::Resolve()
 				m_oClientID.begin()[2],
 				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)m_oClientID.begin()[0] ) ),
 				m_oClientID.begin()[1],
-				(LPCTSTR)m_oED2K.toString(), m_nSize );
+				(LPCTSTR)m_oED2K.toString(), m_bSize ? m_nSize : 0 );
 		}
 		else
 		{
 			m_sURL.Format( _T("ed2kftp://%s:%i/%s/%I64i/"),
 				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
-				(LPCTSTR)m_oED2K.toString(), m_nSize );
+				(LPCTSTR)m_oED2K.toString(), m_bSize ? m_nSize : 0 );
 		}
 		return;
 	}
