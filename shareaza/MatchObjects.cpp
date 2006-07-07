@@ -192,11 +192,11 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			{
 				if ( pFilter->m_pSchema->CheckURI( pHit->m_sSchemaURI ) )
 				{
-					pHit->m_bBogus = FALSE;
+					pHit->m_bMatched = TRUE;
 				}
 				else
 				{
-					pHit->m_bBogus = ! pFilter->m_pSchema->FilterType( pHit->m_sName, TRUE );
+					pHit->m_bMatched = pFilter->m_pSchema->FilterType( pHit->m_sName, TRUE );
 				}
 			}
 		}
@@ -230,7 +230,11 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 					bHad[0] = bool( pSeek->m_oSHA1 );
                     bHad[1] = bool( pSeek->m_oTiger );
                     bHad[2] = bool( pSeek->m_oED2K );
-					
+
+					// ToDo: Fixme. 
+					// pSeek->Add( pHit ) returns pHit->m_pNext with a bad memory address sometimes
+					// Dangerous!!!		
+
 					if ( pSeek->Add( pHit, TRUE ) )
 					{
 						pFile		 = pSeek;
@@ -325,7 +329,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 		if ( pFile != NULL ) // New hit for the existing file
 		{
 			pMap = m_pFiles;
-			
+
 			for ( DWORD nCount = m_nFiles ; nCount ; nCount--, pMap++ )
 			{
 				if ( *pMap == pFile )
@@ -1134,7 +1138,8 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit)
 //	m_bSHA1		= FALSE;
 //	m_bTiger	= FALSE;
 //	m_bED2K		= FALSE;
-	m_nSize		= pHit ? pHit->m_nSize : 0;
+	// TODO: Change to SIZE_UNKNOWN without the size
+	m_nSize		= ( pHit && pHit->m_bSize ) ? pHit->m_nSize : 0;
 	m_sSize		= Settings.SmartVolume( m_nSize, FALSE );
 	
 	m_bBusy			= TS_UNKNOWN;
@@ -1182,7 +1187,14 @@ CMatchFile::~CMatchFile()
 
 BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 {
-	if ( pHit->m_nSize != m_nSize ) return FALSE;
+	if ( m_nSize == 0 && pHit->m_bSize )
+	{
+		m_nSize = pHit->m_nSize;
+	}
+	else if ( m_nSize != 0 && pHit->m_bSize && m_nSize != pHit->m_nSize )
+	{
+		return FALSE;
+	}
 	
 	if ( ! bForce )
 	{
