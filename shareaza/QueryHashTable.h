@@ -1,7 +1,7 @@
 //
 // QueryHashTable.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_QUERYHASHTABLE_H__4D0F77C8_D0BB_4AA5_97EA_3859BA3590B5__INCLUDED_)
-#define AFX_QUERYHASHTABLE_H__4D0F77C8_D0BB_4AA5_97EA_3859BA3590B5__INCLUDED_
+#ifndef QUERYHASHTABLE_H_INCLUDED
+#define QUERYHASHTABLE_H_INCLUDED
 
 #pragma once
 
@@ -41,41 +41,42 @@ public:
 
 // Attributes
 public:
-	BOOL		m_bLive;
-	DWORD		m_nCookie;
-public:
-	BYTE*		m_pHash;
-	DWORD		m_nHash;
-	DWORD		m_nBits;
-	DWORD		m_nInfinity;
-	DWORD		m_nCount;
-	CBuffer*	m_pBuffer;
-public:
+	BOOL				m_bLive;
+	DWORD				m_nCookie;
+	BYTE*				m_pHash;
+	DWORD				m_nHash;
+	DWORD				m_nBits;
+	DWORD				m_nInfinity;
+	DWORD				m_nCount;
+	CBuffer*			m_pBuffer;
 	CQueryHashGroup*	m_pGroup;
 
 // Operations
 public:
 	void	Create();
 	void	Clear();
-	BOOL	Merge(CQueryHashTable* pSource);
-	BOOL	Merge(CQueryHashGroup* pSource);
+	BOOL	Merge(const CQueryHashTable* pSource);
+	BOOL	Merge(const CQueryHashGroup* pSource);
 	BOOL	PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeighbour);
 	BOOL	OnPacket(CPacket* pPacket);
-	int		AddPhrase(LPCTSTR pszPhrase);
-	int		AddString(LPCTSTR pszString);
-	BOOL	CheckPhrase(LPCTSTR pszSearch);
-	BOOL	CheckString(LPCTSTR pszString);
-	BOOL	Check(CQuerySearch* pSearch);
-	int		GetPercent();
+//	int		AddPhrase(LPCTSTR pszPhrase);
+	int		AddString(const CString& strString);
+	int		AddExactString(const CString& strString);
+//	BOOL	CheckPhrase(LPCTSTR pszSearch) const;
+	BOOL	CheckString(const CString& strString) const;
+	BOOL	Check(const CQuerySearch* pSearch) const;
+	int		GetPercent() const;
+	void	Draw(HDC hDC, const RECT* pRC);
+
 protected:
 	BOOL	OnReset(CPacket* pPacket);
 	BOOL	OnPatch(CPacket* pPacket);
 	int		Add(LPCTSTR pszString, size_t nStart, size_t nLength);
+	int		AddExact(LPCTSTR pszString, size_t nStart, size_t nLength);
 	BOOL	PatchToOldShareaza(CQueryHashTable* pTarget, CNeighbour* pNeighbour);
-protected:
 	static inline DWORD	HashWord(LPCTSTR pszString, size_t nStart, size_t nLength, DWORD nBits);
 	static inline DWORD	HashNumber(DWORD nNumber, int nBits);
 
 };
 
-#endif // !defined(AFX_QUERYHASHTABLE_H__4D0F77C8_D0BB_4AA5_97EA_3859BA3590B5__INCLUDED_)
+#endif // #ifndef QUERYHASHTABLE_H_INCLUDED

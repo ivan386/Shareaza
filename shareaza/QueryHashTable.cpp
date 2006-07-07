@@ -1,7 +1,7 @@
 //
 // QueryHashTable.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -109,7 +109,7 @@ void CQueryHashTable::Clear()
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable merge tables
 
-BOOL CQueryHashTable::Merge(CQueryHashTable* pSource)
+BOOL CQueryHashTable::Merge(const CQueryHashTable* pSource)
 {
 	if ( m_pHash == NULL || pSource->m_pHash == NULL ) return FALSE;
 
@@ -206,7 +206,7 @@ BOOL CQueryHashTable::Merge(CQueryHashTable* pSource)
 	return TRUE;
 }
 
-BOOL CQueryHashTable::Merge(CQueryHashGroup* pSource)
+BOOL CQueryHashTable::Merge(const CQueryHashGroup* pSource)
 {
 	if ( m_pHash == NULL || pSource->m_pHash == NULL ) return FALSE;
 
@@ -822,7 +822,7 @@ BOOL CQueryHashTable::OnPatch(CPacket* pPacket)
 
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable add phrases and words
-
+/*
 int CQueryHashTable::AddPhrase(LPCTSTR pszPhrase)
 {
 	if ( m_pHash == NULL ) return 0;
@@ -850,17 +850,27 @@ int CQueryHashTable::AddPhrase(LPCTSTR pszPhrase)
 	}
 
 	return nCount;
-}
+}*/
 
-int CQueryHashTable::AddString(LPCTSTR pszString)
+int CQueryHashTable::AddString(const CString& strString)
 {
 	if ( m_pHash == NULL ) return 0;
-	return Add( pszString, 0, _tcslen( pszString ) );
+	return Add( strString, 0, strString.GetLength() );
+}
+
+int CQueryHashTable::AddExactString(const CString& strString)
+{
+	if ( m_pHash == NULL ) return 0;
+	return AddExact( strString, 0, strString.GetLength() );
 }
 
 int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
-	if ( ! nLength || ! IsWord( pszString, nStart, nLength ) ) return 0;
+	if ( ! nLength )
+		return 0;
+
+	if ( ! IsWord( pszString, nStart, nLength ) && nLength > 3 )
+		return AddExact( pszString, nStart, nLength );
 
 	m_nCookie = GetTickCount();
 
@@ -902,10 +912,29 @@ int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 	return 1;
 }
 
+int CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLength)
+{
+	if ( ! nLength )
+		return 0;
+
+	m_nCookie = GetTickCount();
+	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
+	BYTE* pHash	= m_pHash + ( nHash >> 3 );
+	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
+
+	if ( *pHash & nMask )
+	{
+		m_nCount++;
+		*pHash &= ~nMask;
+	}
+
+	return 1;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable check phrases and words
-
-BOOL CQueryHashTable::CheckPhrase(LPCTSTR pszPhrase)
+/*
+BOOL CQueryHashTable::CheckPhrase(LPCTSTR pszPhrase) const
 {
 	if ( ! m_bLive || m_pHash == NULL || ! *pszPhrase ) return TRUE;
 
@@ -950,13 +979,13 @@ BOOL CQueryHashTable::CheckPhrase(LPCTSTR pszPhrase)
 	}
 
 	return ( nWordCount >= 3 ) ? ( nWordHits * 3 / nWordCount >= 2 ) : ( nWordHits == nWordCount );
-}
+}*/
 
-BOOL CQueryHashTable::CheckString(LPCTSTR pszString)
+BOOL CQueryHashTable::CheckString(const CString& strString) const
 {
-	if ( ! m_bLive || m_pHash == NULL || ! *pszString ) return TRUE;
+	if ( ! m_bLive || m_pHash == NULL || strString.IsEmpty() ) return TRUE;
 
-	DWORD nHash	= HashWord( pszString, 0, _tcslen( pszString ), m_nBits );
+	DWORD nHash	= HashWord( strString, 0, strString.GetLength(), m_nBits );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
 	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
 
@@ -966,7 +995,7 @@ BOOL CQueryHashTable::CheckString(LPCTSTR pszString)
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable check query object
 
-BOOL CQueryHashTable::Check(CQuerySearch* pSearch)
+BOOL CQueryHashTable::Check(const CQuerySearch* pSearch) const
 {
 	if ( ! m_bLive || m_pHash == NULL ) return TRUE;
 	
@@ -1015,9 +1044,7 @@ DWORD CQueryHashTable::HashWord(LPCTSTR pszString, size_t nStart, size_t nLength
 	DWORD nNumber	= 0;
 	int nByte		= 0;
 
-	pszString += nStart;
-
-	for ( size_t nChar = 0 ; nChar < nLength ; nChar++, pszString++ )
+	for ( pszString += nStart; nLength ; nLength--, pszString++ )
 	{
 		int nValue = tolower( *pszString ) & 0xFF;
 
@@ -1041,9 +1068,23 @@ DWORD CQueryHashTable::HashNumber(DWORD nNumber, int nBits)
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable calculate percent full
 
-int CQueryHashTable::GetPercent()
+int CQueryHashTable::GetPercent() const
 {
 	if ( ! m_pHash || ! m_nHash ) return 0;
 	return m_nCount * 100 / m_nHash;
 }
 
+void CQueryHashTable::Draw(HDC hDC, const RECT* pRC)
+{
+	if ( ! m_pHash ) return;
+	SetStretchBltMode( hDC, HALFTONE );
+	BITMAP bm = { 0, 1024, 1024, 128, 1, 1, m_pHash }; 
+	HBITMAP hBmp = CreateBitmapIndirect( &bm );
+	HDC hMemDC = CreateCompatibleDC( hDC );
+	HBITMAP hOldBmp = (HBITMAP)SelectObject( hMemDC, hBmp );
+	StretchBlt( hDC, pRC->left, pRC->top, pRC->right - pRC->left, pRC->bottom - pRC->top,
+		hMemDC, 0, 0, bm.bmWidth, bm.bmHeight, SRCCOPY );
+	SelectObject( hMemDC, hOldBmp );
+	DeleteDC( hMemDC );
+	DeleteObject( hBmp );
+}
