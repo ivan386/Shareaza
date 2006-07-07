@@ -791,11 +791,12 @@ CFailedSource* CDownloadWithSources::LookupFailedSource(LPCTSTR pszUrl, bool bRe
 		pResult = m_pFailedSources.GetNext( pos );
 		if ( pResult && pResult->m_sURL.Compare( pszUrl ) == 0 )
 		{
+#ifndef NDEBUG
 			theApp.Message( MSG_DEBUG, _T("Votes for file %s: negative - %i, positive - %i; offline status: %i"), 
 				pszUrl, pResult->m_nNegativeVotes, 
 				pResult->m_nPositiveVotes, 
 				pResult->m_bOffline );
-
+#endif
 			if ( pResult->m_bLocal )
 				break;
 			
