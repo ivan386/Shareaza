@@ -862,6 +862,7 @@ void CSearchDetailPanel::OnRun()
 			if ( m_bIsPreviewing )
 			{
 				m_bIsPreviewing = FALSE;
+				m_bCanPreview = ! m_pPreviewURLs.IsEmpty();
 				Invalidate();
 			}
 			
