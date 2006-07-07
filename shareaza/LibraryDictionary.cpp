@@ -76,11 +76,11 @@ void CLibraryDictionary::Add(CLibraryFile* pFile)
 	{
 		if ( pFile->m_oSHA1 )
 		{
-			m_pTable->AddString( pFile->m_oSHA1.toUrn() );
+			m_pTable->AddExactString( pFile->m_oSHA1.toUrn() );
 		}
 		if ( pFile->m_oED2K )
 		{
-			m_pTable->AddString( pFile->m_oED2K.toUrn() );
+			m_pTable->AddExactString( pFile->m_oED2K.toUrn() );
 		}
 	}
 }
@@ -191,8 +191,10 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 	int nLength = strWord.GetLength();
 	size_t nWindow = 0;
 	CString strKeyword( strWord );
+	bool bWord = IsWord( strKeyword, 0, nLength );
+	bool bDigit = !bWord && nLength > 3 && _istdigit( strKeyword.GetAt( 0 ) );
 
-	if ( nLength && IsWord( strKeyword, 0, nLength ) )
+	if ( nLength && ( bWord || bDigit ) )
 	{
 		// If start and end characters are from the same asian script, assign the window size
 		if ( nLength > 2 )
@@ -212,6 +214,8 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 		{
 			ProcessWord( pFile, strKeyword, bAdd );
 			nCount++;
+			if ( bDigit ) 
+				return nCount;
 		}
 		else // make keywords using a sliding window
 		{
@@ -334,11 +338,11 @@ BOOL CLibraryDictionary::BuildHashTable()
 				//Add the hashes to the table
 				if ( pFile->m_oSHA1 )
 				{
-					m_pTable->AddString( pFile->m_oSHA1.toUrn() );
+					m_pTable->AddExactString( pFile->m_oSHA1.toUrn() );
 				}
 				if ( pFile->m_oED2K )
 				{
-					m_pTable->AddString( pFile->m_oED2K.toUrn() );
+					m_pTable->AddExactString( pFile->m_oED2K.toUrn() );
 				}
 /*
 				CString str;
