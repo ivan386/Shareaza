@@ -1,7 +1,7 @@
 //
 // Skin.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,7 @@ protected:
 
 // Menus
 public:
-	CMenu*	GetMenu(LPCTSTR pszName);
+	CMenu*	GetMenu(LPCTSTR pszName, bool bChild = false);
 	UINT	TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID = 0, UINT nFlags = 0);
 	CMap< CString, const CString&, CMenu*, CMenu* > m_pMenus;
 protected:
@@ -73,6 +73,7 @@ protected:
 	BOOL	LoadMenu(CXMLElement* pXML);
 	BOOL	CreateMenu(CXMLElement* pXML, HMENU hMenu);
 	CMenu	m_mnuDefault;
+	CMenu	m_mnuChild;
 
 // Toolbars
 public:

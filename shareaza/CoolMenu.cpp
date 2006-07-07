@@ -1,7 +1,7 @@
 //
 // CoolMenu.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -159,6 +159,7 @@ BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* m
 {
 	if ( !pMenu || mii == NULL )
 		return FALSE;
+	ASSERT( mii->dwTypeData );
 
 	int nItemID = pMenu->GetMenuItemID( nPosition );
 	
@@ -175,6 +176,10 @@ BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* m
 	// We modified menu, retrieve a new MII (validates and changes data)
 	if ( !GetMenuItemInfo( pMenu->GetSafeHmenu(), nPosition, MF_BYPOSITION, mii ) )
 		return FALSE;
+
+	// Replace the corresponding value in the collection
+	CString strNewText = szBuffer;
+	m_pStrings.SetAt( mii->dwItemData, strNewText );
 
 	return TRUE;
 }

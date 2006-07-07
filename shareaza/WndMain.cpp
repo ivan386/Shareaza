@@ -981,7 +981,7 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	m_wndNavBar.OnSkinChange();
 	
 	m_wndMenuBar.SetWatermark( Skin.GetWatermark( _T("CCoolMenuBar") ) );
-	m_wndTabBar.SetWatermark( Skin.GetWatermark( _T("CWndTabBar") ) );
+	m_wndTabBar.OnSkinChange();
 	
 	if ( CWnd* pDockBar = GetDlgItem( AFX_IDW_DOCKBAR_TOP ) )
 	{
@@ -992,7 +992,7 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	}
 	
 	m_pSkin = Skin.GetWindowSkin( this );
-	
+
 	if ( m_pSkin != NULL )
 	{
 		ModifyStyle( WS_CAPTION, 0 );

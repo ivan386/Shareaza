@@ -1,7 +1,7 @@
 ﻿//
 // CtrlWndTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -156,6 +156,57 @@ CSize CWndTabBar::CalcFixedLayout(BOOL /*bStretch*/, BOOL /*bHorz*/)
 	}
 
 	return size;
+}
+
+void CWndTabBar::OnSkinChange()
+{
+	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
+	{
+		TabItem* pItem = m_pItems.GetNext( pos );
+		CChildWnd* pChild = (CChildWnd*)CWnd::FromHandle( pItem->m_hWnd );
+
+		CMenu* pOldMenu = m_mnuChild.GetSubMenu( pChild->m_bPanelMode ? 1 : 0 );
+		CMenu* pNewMenu = Skin.GetMenu( pChild->m_bPanelMode ? L"Simple" : L"Child", true );
+
+		CString strText;
+		TCHAR szBuffer[128] = {};
+
+		for ( UINT i = 0 ; i < pOldMenu->GetMenuItemCount() ; i++ )
+		{
+			MENUITEMINFO mii = {};
+			mii.cbSize = sizeof(mii);
+			mii.fMask = MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING;
+			mii.dwTypeData = szBuffer;
+			mii.cch	= 128;
+
+			if ( GetMenuItemInfo( pOldMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii ) )
+			{
+				if ( !( mii.fType & MF_SEPARATOR ) )
+				{
+					// Copy CommandID
+					mii.wID = pNewMenu->GetMenuItemID( i );
+
+					// Replace item text with the translation
+					pNewMenu->GetMenuString( i, strText, MF_BYPOSITION );
+					CoolMenu.ReplaceMenuText( pOldMenu, i, &mii, strText );
+
+					// Ensure type and data integrity
+					mii.fType |= MF_OWNERDRAW;
+					mii.dwItemData = ( (DWORD_PTR)pOldMenu->GetSafeHmenu() << 16 ) | ( mii.wID & 0xFFFF );
+
+					// Set new data
+					mii.cch	= 128;
+					SetMenuItemInfo( pOldMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+				}
+			}
+		}
+		// We need to translate m_mnuChild only once.
+		// However, it might be needed in the future, if something changes.
+		// So, for now just break the loop.
+		break; 
+	}
+	
+	SetWatermark( Skin.GetWatermark( _T("CWndTabBar") ) );
 }
 
 void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL /*bDisableIfNoHndler*/)

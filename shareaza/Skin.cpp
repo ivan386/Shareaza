@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -399,26 +399,27 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 //////////////////////////////////////////////////////////////////////
 // CSkin menus
 
-CMenu* CSkin::GetMenu(LPCTSTR pszName)
+CMenu* CSkin::GetMenu(LPCTSTR pszName, bool bChild)
 {
 	LPCTSTR* pszModeSuffix = m_pszModeSuffix[ Settings.General.GUIMode ];
 	CString strName( pszName );
 	CMenu* pMenu = NULL;
-	
+	CMenu* pWorkingMenu = bChild ? &m_mnuChild : &m_mnuDefault;
+
 	for ( int nModeTry = 0 ; pszModeSuffix[ nModeTry ] ; nModeTry++ )
 	{
 		if ( m_pMenus.Lookup( strName + pszModeSuffix[ nModeTry ], pMenu ) )
 			return pMenu;
 		
-		for ( UINT nItem = 0 ; nItem < m_mnuDefault.GetMenuItemCount() ; nItem++ )
+		for ( UINT nItem = 0 ; nItem < pWorkingMenu->GetMenuItemCount() ; nItem++ )
 		{
 			CString strItem;
 			
-			m_mnuDefault.GetMenuString( nItem, strItem, MF_BYPOSITION );
+			pWorkingMenu->GetMenuString( nItem, strItem, MF_BYPOSITION );
 			
 			if ( strItem.CompareNoCase( strName + pszModeSuffix[ nModeTry ] ) == 0 )
 			{
-				return m_mnuDefault.GetSubMenu( nItem );
+				return pWorkingMenu->GetSubMenu( nItem );
 			}
 		}
 	}
@@ -1474,7 +1475,11 @@ void CSkin::CreateDefault()
 	CMenu* pMenuBar = new CMenu();
 	pMenuBar->LoadMenu( IDR_MAINFRAME );
 	m_pMenus.SetAt( _T("CMainWnd"), pMenuBar );
-	if ( m_mnuDefault.m_hMenu == NULL ) m_mnuDefault.LoadMenu( IDR_POPUPS );
+	if ( m_mnuDefault.m_hMenu == NULL )
+	{
+		m_mnuDefault.LoadMenu( IDR_POPUPS );
+		m_mnuChild.LoadMenu( IDR_CHILDFRAME );
+	}
 	
 	// Load Definitions
 	
