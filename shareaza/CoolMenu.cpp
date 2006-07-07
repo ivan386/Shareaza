@@ -75,6 +75,7 @@ BOOL CCoolMenu::IsModernVersion()
 BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 {
 	if ( ! m_bEnable ) return FALSE;
+	CString strText;
 
 	for ( int i = 0 ; i < (int)pMenu->GetMenuItemCount() ; i++ )
 	{
@@ -88,7 +89,8 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 
 		GetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
 
-		int nItemID = pMenu->GetMenuItemID( i ); // ID_SEARCH_FILTER
+		// Non-XML parsed menu items
+		int nItemID = pMenu->GetMenuItemID( i );
 		if ( nItemID == ID_SEARCH_FILTER || 
 			 nItemID == -1 && !m_sFilterString.IsEmpty() && m_sFilterString == szBuffer )
 		{
@@ -119,23 +121,15 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 					AppendMenu( pFilters, MF_STRING|( nFilter == nDefaultFilter ? MF_CHECKED : 0 ), 
 						3000 + nFilter, pResultFilters->m_pFilters[ nFilter ]->m_sName );
 				}
-				ModifyMenu( pMenu->GetSafeHmenu(), i, MF_BYPOSITION|MF_STRING|MF_POPUP, 
-					(UINT_PTR)pFilters, m_sFilterString );
-				_tcscpy( szBuffer, m_sFilterString.GetBuffer() );
+				ReplaceMenuText( pMenu, i, &mii, m_sFilterString );
 			}
 			else
 			{
-				ModifyMenu( pMenu->GetSafeHmenu(), i, MF_BYPOSITION|MF_STRING, 
-					ID_SEARCH_FILTER, m_sOldFilterString );
-				_tcscpy( szBuffer, m_sOldFilterString.GetBuffer() );
+				ReplaceMenuText( pMenu, i, &mii, m_sOldFilterString );
 			}
 
 			delete pResultFilters;
-			mii.dwTypeData = m_sFilterString.GetBuffer();
-			mii.cch = 128;
-			mii.fMask = MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING|MIIM_SUBMENU;
-
-			GetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+			mii.fMask |= MIIM_SUBMENU;
 		}
 
 		if ( mii.fType & (MF_OWNERDRAW|MF_SEPARATOR) )
@@ -157,6 +151,30 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 		if ( mii.hSubMenu != NULL ) 
 			AddMenu( pMenu->GetSubMenu( i ), TRUE );
 	}
+
+	return TRUE;
+}
+
+BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* mii, const CString& strText)
+{
+	if ( !pMenu || mii == NULL )
+		return FALSE;
+
+	int nItemID = pMenu->GetMenuItemID( nPosition );
+	
+	if ( ! ModifyMenu( pMenu->GetSafeHmenu(), nPosition, MF_BYPOSITION|MF_STRING, 
+					 nItemID, strText ) )
+		return FALSE;
+
+	TCHAR* szBuffer = mii->dwTypeData;
+	_tcscpy( szBuffer, strText );
+
+	mii->cch = 128;
+	mii->fMask = MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING;
+
+	// We modified menu, retrieve a new MII (validates and changes data)
+	if ( !GetMenuItemInfo( pMenu->GetSafeHmenu(), nPosition, MF_BYPOSITION, mii ) )
+		return FALSE;
 
 	return TRUE;
 }
