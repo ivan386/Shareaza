@@ -304,7 +304,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sr">Stranice</title>
                        <title language="tr">Sayfalar</title>
                </member>
-               <member name="year">
+               <member name="year" search="indexed">
                        <title language="en">Year</title>
                        <title language="af">Jaar</title>
                        <title language="chs">年份</title>
