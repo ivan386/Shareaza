@@ -1,7 +1,7 @@
 //
 // ShellIcons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -138,23 +138,39 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	HICON hIcon = NULL;
 	int nIndex = 0;
 
+	SHFILEINFO sfi = { 0 };
 	switch ( nSize )
 	{
 	case 16:
 		if ( m_m16.Lookup( strType, nIndex ) ) return nIndex;
 		Lookup( pszType, &hIcon, NULL, NULL, NULL );
+		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
+			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_SMALLICON ) )
+		{
+			hIcon = sfi.hIcon;
+		}
 		nIndex = hIcon ? m_i16.Add( hIcon ) : 0;
 		m_m16.SetAt( strType, nIndex );
 		break;
 	case 32:
 		if ( m_m32.Lookup( strType, nIndex ) ) return nIndex;
 		Lookup( pszType, NULL, &hIcon, NULL, NULL );
+		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
+			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON ) )
+		{
+			hIcon = sfi.hIcon;
+		}
 		nIndex = hIcon ? m_i32.Add( hIcon ) : 0;
 		m_m32.SetAt( strType, nIndex );
 		break;
 	case 48:
 		if ( m_m48.Lookup( strType, nIndex ) ) return nIndex;
 		Lookup( pszType, NULL, NULL, NULL, NULL, &hIcon );
+		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
+			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_LARGEICON ) )
+		{
+			hIcon = sfi.hIcon;
+		}
 		nIndex = hIcon ? m_i48.Add( hIcon ) : 0;
 		m_m48.SetAt( strType, nIndex );
 		break;

@@ -1448,8 +1448,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 	
 	if ( m_nShellIndex == -1 )
 	{
-		LPCTSTR pszExt = _tcsrchr( pHit->m_sName, '.' );
-		m_nShellIndex = pszExt ? ShellIcons.Get( pszExt, 16 ) : 0;
+		m_nShellIndex = ShellIcons.Get( pHit->m_sName, 16 );
 	}
 
 	BOOL bSchema;
