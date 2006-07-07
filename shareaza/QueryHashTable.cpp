@@ -866,10 +866,11 @@ int CQueryHashTable::AddExactString(const CString& strString)
 
 int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
-	if ( ! nLength )
+	bool bWord = IsWord( pszString, nStart, nLength );
+	if ( ! nLength || !bWord && nLength < 4 )
 		return 0;
 
-	if ( ! IsWord( pszString, nStart, nLength ) && nLength > 3 )
+	if ( !bWord )
 		return AddExact( pszString, nStart, nLength );
 
 	m_nCookie = GetTickCount();
