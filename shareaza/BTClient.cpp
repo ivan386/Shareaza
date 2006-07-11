@@ -521,6 +521,7 @@ void CBTClient::DetermineUserAgent()
 			{ 'S', '~', L"Sbeta" },
 			{ 'T', 'N', L"TorrentDOTnet" },
 			{ 'T', 'S', L"Torrentstorm" },
+			{ 'U', 'T', L"\x00B5Torrent" },
 			{ 'X', 'T', L"XanTorrent" },
 			{ 'Z', 'T', L"ZipTorrent" }
 		};
