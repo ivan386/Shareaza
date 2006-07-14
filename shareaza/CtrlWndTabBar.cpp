@@ -169,10 +169,10 @@ void CWndTabBar::OnSkinChange()
 		CMenu* pNewMenu = Skin.GetMenu( pChild->m_bPanelMode ? L"Simple" : L"Child", true );
 
 		CString strText;
-		TCHAR szBuffer[128] = {};
 
 		for ( UINT i = 0 ; i < pOldMenu->GetMenuItemCount() ; i++ )
 		{
+			TCHAR szBuffer[128] = {};
 			MENUITEMINFO mii = {};
 			mii.cbSize = sizeof(mii);
 			mii.fMask = MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING;

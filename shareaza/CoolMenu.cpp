@@ -167,8 +167,8 @@ BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* m
 					 nItemID, strText ) )
 		return FALSE;
 
-	TCHAR* szBuffer = mii->dwTypeData;
-	_tcscpy( szBuffer, strText );
+	LPTSTR szBuffer = (LPTSTR)(LPCTSTR)strText;
+	mii->dwTypeData = szBuffer;
 
 	mii->cch = 128;
 	mii->fMask = MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING;
