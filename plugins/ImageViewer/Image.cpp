@@ -323,7 +323,8 @@ BOOL CImage::Load(LPCTSTR pszPath)
 	// Ask the ImageService to load from file handle
 	
 	SAFEARRAY* pArray = NULL;
-	BSTR sFile = SysAllocString (CT2CW (pszPath));
+	USES_CONVERSION;
+	BSTR sFile = T2BSTR(pszPath);
 	HRESULT hr = pService->LoadFromFile( sFile, &pParams, &pArray );
 	SysFreeString (sFile);
 	
