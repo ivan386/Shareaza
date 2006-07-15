@@ -80,6 +80,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 	for ( int i = 0 ; i < (int)pMenu->GetMenuItemCount() ; i++ )
 	{
 		TCHAR szBuffer[128] = {};
+		strText.Empty();
 
 		MENUITEMINFO mii = {};
 		mii.cbSize		= sizeof(mii);
@@ -105,8 +106,13 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 			}
 			else if ( pResultFilters->m_nFilters == 0 )
 			{
-				pMenu->GetSubMenu( i )->DestroyMenu();
+				CMenu* pSubMenu = pMenu->GetSubMenu( i );
+				if ( pSubMenu )
+					pSubMenu->DestroyMenu();
+				
 				mii.hSubMenu = NULL;
+				mii.wID = ID_SEARCH_FILTER;
+
 				m_sFilterString = m_sOldFilterString;
 				SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
 			}
@@ -114,28 +120,35 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 			if ( pResultFilters->m_nFilters )
 			{
 				HMENU pFilters = CreatePopupMenu();
-
 				DWORD nDefaultFilter = pResultFilters->m_nDefault;
+
 				for ( DWORD nFilter = 0 ; nFilter < pResultFilters->m_nFilters ; nFilter++ )
 				{
 					AppendMenu( pFilters, MF_STRING|( nFilter == nDefaultFilter ? MF_CHECKED : 0 ), 
 						3000 + nFilter, pResultFilters->m_pFilters[ nFilter ]->m_sName );
 				}
 				ReplaceMenuText( pMenu, i, &mii, m_sFilterString );
+
+				mii.hSubMenu = pFilters;
+				mii.fMask |= MIIM_SUBMENU;
+				strText = m_sFilterString;
 			}
 			else
 			{
 				ReplaceMenuText( pMenu, i, &mii, m_sOldFilterString );
-			}
 
+				mii.hSubMenu = NULL;
+				mii.fMask ^= MIIM_SUBMENU;
+				strText = m_sOldFilterString;
+			}
+			
 			delete pResultFilters;
-			mii.fMask |= MIIM_SUBMENU;
 		}
 
-		if ( mii.fType & (MF_OWNERDRAW|MF_SEPARATOR) )
+		if ( mii.fType & MF_SEPARATOR )
 		{
 			mii.fType |= MF_OWNERDRAW;
-			if ( mii.fType & MF_SEPARATOR ) mii.dwItemData = 0;
+			mii.dwItemData = 0;
 			SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
 			continue;
 		}
@@ -143,7 +156,9 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 		mii.fType		|= MF_OWNERDRAW;
 		mii.dwItemData	= ( (DWORD_PTR)pMenu->GetSafeHmenu() << 16 ) | ( mii.wID & 0xFFFF );
 
-		CString strText = szBuffer;
+		if ( strText.IsEmpty() ) 
+			strText = szBuffer;
+
 		m_pStrings.SetAt( mii.dwItemData, strText );
 
 		if ( bChild ) SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
@@ -179,6 +194,7 @@ BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* m
 
 	// Replace the corresponding value in the collection
 	CString strNewText = szBuffer;
+	mii->dwItemData	= ( (DWORD_PTR)pMenu->GetSafeHmenu() << 16 ) | ( mii->wID & 0xFFFF );
 	m_pStrings.SetAt( mii->dwItemData, strNewText );
 
 	return TRUE;
