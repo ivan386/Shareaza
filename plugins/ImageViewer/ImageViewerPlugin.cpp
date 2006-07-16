@@ -75,7 +75,7 @@ HRESULT STDMETHODCALLTYPE CImageViewerPlugin::SetApplication(IApplication __RPC_
 	return S_OK;
 }
 
-HRESULT STDMETHODCALLTYPE CImageViewerPlugin::QueryCapabilities(DWORD __RPC_FAR *pnCaps)
+HRESULT STDMETHODCALLTYPE CImageViewerPlugin::QueryCapabilities(DWORD __RPC_FAR* /*pnCaps*/)
 {
 	// This method is not currently used, please return S_OK and do not modify pnCaps
 	return S_OK;
@@ -177,7 +177,7 @@ HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnExecute(BSTR sFilePath)
 	return S_OK;
 }
 
-HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnEnqueue(BSTR sFilePath)
+HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnEnqueue(BSTR /*sFilePath*/)
 {
 	// The OnEnqueue method is invoked whenever Shareaza needs to enqueue a file ("add to playlist").
 	// The path of the file is provided as an argument.  Return S_OK if you have handled the execution,
@@ -253,7 +253,7 @@ HRESULT STDMETHODCALLTYPE CImageViewerPlugin::InsertCommands()
 	return S_OK;
 }
 
-HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnUpdate(UINT nCommandID, STRISTATE __RPC_FAR *pbVisible, STRISTATE __RPC_FAR *pbEnabled, STRISTATE __RPC_FAR *pbChecked)
+HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnUpdate(UINT /*nCommandID*/, STRISTATE __RPC_FAR* /*pbVisible*/, STRISTATE __RPC_FAR* /*pbEnabled*/, STRISTATE __RPC_FAR* /*pbChecked*/)
 {
 	// The OnUpdate() method is invoked when Shareaza needs to update the state of a command in its
 	// user interface.  This provides an opportunity to show or hide, enable or disable, and check or
@@ -278,7 +278,7 @@ HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnUpdate(UINT nCommandID, STRISTAT
 	return S_FALSE;
 }
 
-HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnCommand(UINT nCommandID)
+HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnCommand(UINT /*nCommandID*/)
 {
 	// The OnCommand() method is invoked whenever the user invokes a command.  This applies to
 	// ANY command in the unified architecture, which could be a built-in command, a command you

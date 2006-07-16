@@ -341,7 +341,7 @@ BOOL CImageWindow::RescaleImage()
 //////////////////////////////////////////////////////////////////////
 // CImageWindow IPluginWindowOwner message dispatch
 
-HRESULT STDMETHODCALLTYPE CImageWindow::OnTranslate(MSG __RPC_FAR *pMessage)
+HRESULT STDMETHODCALLTYPE CImageWindow::OnTranslate(MSG __RPC_FAR* /*pMessage*/)
 {
 	// This IPluginWindowOwner method is called when translating a message while this
 	// window is active.  It gives the window the opportunity to translate a keyboard
@@ -373,14 +373,14 @@ HRESULT STDMETHODCALLTYPE CImageWindow::OnMessage(UINT nMessage, WPARAM wParam, 
 //////////////////////////////////////////////////////////////////////
 // CImageWindow message handlers
 
-LRESULT CImageWindow::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 {
 	KillTimer( 2 );
 	bHandled = FALSE;
 	return 0;
 }
 
-LRESULT CImageWindow::OnContextMenu(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnContextMenu(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
 	// Create a POINT structure with the screen coordinates of the mouse click
 	POINT pt = { LOWORD( lParam ), HIWORD( lParam ) };
@@ -389,7 +389,7 @@ LRESULT CImageWindow::OnContextMenu(UINT uMsg, WPARAM wParam, LPARAM lParam, BOO
 	return 0;
 }
 
-LRESULT CImageWindow::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 {
 	// Rescale the image to fit the window.  Making sure we have the hWnd first, as this
 	// can get called after the Create1() call but before the GetHwnd() call.
@@ -398,7 +398,7 @@ LRESULT CImageWindow::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHan
 	return 0;
 }
 
-LRESULT CImageWindow::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnPaint(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
 	RECT rcClient, rcImage;
 	PAINTSTRUCT ps;
@@ -489,14 +489,14 @@ LRESULT CImageWindow::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 	return 0;
 }
 
-LRESULT CImageWindow::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnKeyDown(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
 	// Close if ESCAPE is hit
 	if ( wParam == VK_ESCAPE ) PostMessage( WM_CLOSE );
 	return 0;
 }
 
-LRESULT CImageWindow::OnLButtonDblClk(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnLButtonDblClk(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
 	// Switch between full size and best fit modes
 	
@@ -508,7 +508,7 @@ LRESULT CImageWindow::OnLButtonDblClk(UINT uMsg, WPARAM wParam, LPARAM lParam, B
 	return 0;
 }
 
-LRESULT CImageWindow::OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnLButtonDown(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
 	// Start dragging in full size mode
 	
@@ -522,7 +522,7 @@ LRESULT CImageWindow::OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOO
 	return 0;
 }
 
-LRESULT CImageWindow::OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnMouseMove(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
 	// Update the drag and repaint if we are dragging
 	
@@ -541,7 +541,7 @@ LRESULT CImageWindow::OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL&
 	return 0;
 }
 
-LRESULT CImageWindow::OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnMouseWheel(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
 	if ( m_hBitmap != NULL )
 	{
@@ -581,7 +581,7 @@ LRESULT CImageWindow::OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL
 	return 0;
 }
 
-LRESULT CImageWindow::OnLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnLButtonUp(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
 	// Finish dragging
 	
@@ -594,7 +594,7 @@ LRESULT CImageWindow::OnLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL&
 	return 0;
 }
 
-LRESULT CImageWindow::OnSetCursor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnSetCursor(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& bHandled)
 {
 	if ( m_bFullSize && m_pPlugin != NULL && LOWORD(lParam) == HTCLIENT )
 	{
@@ -609,7 +609,7 @@ LRESULT CImageWindow::OnSetCursor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL&
 	return 0;
 }
 
-LRESULT CImageWindow::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+LRESULT CImageWindow::OnTimer(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& bHandled)
 {
 	// Do an automatic refresh on timer ID 2.  Shareaza sends a global heartbeat on timer ID1,
 	// so we set bHandled to false and pass the message back.
@@ -621,7 +621,7 @@ LRESULT CImageWindow::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 //////////////////////////////////////////////////////////////////////
 // CImageWindow IPluginWindowOwner command implementation
 
-HRESULT STDMETHODCALLTYPE CImageWindow::OnUpdate(UINT nCommandID, STRISTATE __RPC_FAR *pbVisible, STRISTATE __RPC_FAR *pbEnabled, STRISTATE __RPC_FAR *pbChecked)
+HRESULT STDMETHODCALLTYPE CImageWindow::OnUpdate(UINT nCommandID, STRISTATE __RPC_FAR* /*pbVisible*/, STRISTATE __RPC_FAR* /*pbEnabled*/, STRISTATE __RPC_FAR* pbChecked)
 {
 	// The OnUpdate() method is invoked when Shareaza needs to update the state of a command in its
 	// user interface.  This provides an opportunity to show or hide, enable or disable, and check or
