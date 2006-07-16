@@ -57,7 +57,7 @@
 // Return S_OK if successful, or an error code if not.
 // 
 
-HRESULT STDMETHODCALLTYPE CSkinInfoExtractor::Process(HANDLE hFile, BSTR sFile, ISXMLElement __RPC_FAR* pXML)
+HRESULT STDMETHODCALLTYPE CSkinInfoExtractor::Process(HANDLE /*hFile*/, BSTR sFile, ISXMLElement __RPC_FAR* pXML)
 {
 	//
 	// Open the file with the UNZIP library
