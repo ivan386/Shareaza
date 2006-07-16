@@ -599,17 +599,6 @@ void CWindowManager::PostSkinChange()
 	{
 		CChildWnd* pChildWnd = GetNext( pos );
 		pChildWnd->OnSkinChange();
-/*
-		CWndTabBar* pTabBar = (CWndTabBar*)pChildWnd;
-		CMenu* pMenu = &pTabBar->m_mnuChild;
-		//CMenu* pTabMenu = Skin.GetMenu( _T("Child") );
-		//CMenu pTabMenu = pTabBar->m_mnuChild;
-
-		MENUITEMINFO pInfo = {};
-		pInfo.cbSize = sizeof( MENUITEMINFO );
-		pInfo.fMask = MIIM_DATA;
-		pMenu->DestroyMenu();
-*/
 	}
 }
 
