@@ -373,7 +373,7 @@
 				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib;Powrprof.lib;msi.lib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib;Powrprof.lib;msi.lib"
 				OptimizeReferences="2"
 				TargetMachine="17"
 			/>
