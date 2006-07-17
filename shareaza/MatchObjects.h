@@ -31,6 +31,16 @@ class CQueryHit;
 class CMatchFile;
 class CResultFilters;
 
+typedef struct
+{
+	BOOL	bHadSHA1;
+	BOOL	bHadTiger;
+	BOOL	bHadED2K;
+	int		nHadCount;
+	int		nHadFiltered;
+	BOOL	bHad[3];
+} FILESTATS;
+
 class CMatchList
 {
 // Construction
@@ -82,6 +92,14 @@ protected:
 	LPTSTR			m_pszFilter;
 	CSchemaMember**	m_pColumns;
 	int				m_nColumns;
+
+	static enum findType
+	{
+		fSHA1	= 0,
+		fTiger	= 1,
+		fED2K	= 2,
+		fSize	= 3,
+	};
 	
 // Operations
 public:
@@ -101,6 +119,7 @@ public:
 	void		ClearNew();
 	void		Serialize(CArchive& ar);
 protected:
+	CMatchFile* FindFileAndAddHit(CQueryHit* pHit, findType nFindFlag, FILESTATS FAR* Stats);
 	void		InsertSorted(CMatchFile* pFile);
 	BOOL		FilterHit(CQueryHit* pHit);
 	

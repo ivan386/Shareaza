@@ -155,7 +155,7 @@ CMatchList::~CMatchList()
 void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	CMatchFile **pMap, *pSeek;
+	CMatchFile **pMap;
 	
 	while ( pHit )
 	{
@@ -208,122 +208,27 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 		FilterHit( pHit );
 		
 		CMatchFile* pFile	= NULL;
-		BOOL bHadSHA1		= FALSE;
-		BOOL bHadTiger		= FALSE;
-		BOOL bHadED2K		= FALSE;
-		int nHadCount		= 0;
-		int nHadFiltered	= 0;
-		BOOL bHad[3];
 		PROTOCOLID nProtocol= pHit->m_nProtocol;
-		
+		FILESTATS Stats = {};
+
 		if ( pHit->m_oSHA1 )
 		{
-			pMap = m_pMapSHA1 + pHit->m_oSHA1[ 0 ];
-			
-			for ( pSeek = *pMap ; pSeek ; pSeek = pSeek->m_pNextSHA1 )
-			{
-				if ( validAndEqual( pSeek->m_oSHA1, pHit->m_oSHA1 ) )
-				{
-					nHadCount		= pSeek->GetItemCount();
-					nHadFiltered	= pSeek->m_nFiltered;
-					
-					bHad[0] = bool( pSeek->m_oSHA1 );
-                    bHad[1] = bool( pSeek->m_oTiger );
-                    bHad[2] = bool( pSeek->m_oED2K );
-
-					// ToDo: Fixme. 
-					// pSeek->Add( pHit ) returns pHit->m_pNext with a bad memory address sometimes
-					// Dangerous!!!		
-
-					if ( pSeek->Add( pHit, TRUE ) )
-					{
-						pFile		 = pSeek;
-						bHadSHA1	|= bHad[0];
-						bHadTiger	|= bHad[1];
-						bHadED2K	|= bHad[2];
-						break;
-					}
-				}
-			}
+			pFile = FindFileAndAddHit( pHit, findType::fSHA1, &Stats );
 		}
 		if ( pFile == NULL && pHit->m_oTiger )
 		{
-			pMap = m_pMapTiger + pHit->m_oTiger[ 0 ];
-			
-			for ( pSeek = *pMap ; pSeek ; pSeek = pSeek->m_pNextTiger )
-			{
-				if ( validAndEqual( pSeek->m_oTiger, pHit->m_oTiger ) )
-				{
-					nHadCount		= pSeek->GetItemCount();
-					nHadFiltered	= pSeek->m_nFiltered;
-					
-					bHad[0] = bool( pSeek->m_oSHA1 );
-                    bHad[1] = bool( pSeek->m_oTiger );
-                    bHad[2] = bool( pSeek->m_oED2K );
-					
-					if ( pSeek->Add( pHit, TRUE ) )
-					{
-						pFile		 = pSeek;
-						bHadSHA1	|= bHad[0];
-						bHadTiger	|= bHad[1];
-						bHadED2K	|= bHad[2];
-						break;
-					}
-				}
-			}
+			pFile = FindFileAndAddHit( pHit, findType::fTiger, &Stats );
 		}
 		if ( pFile == NULL && pHit->m_oED2K )
 		{
-			pMap = m_pMapED2K + ( pHit->m_oED2K[ 0 ] );
-			
-			for ( pSeek = *pMap ; pSeek ; pSeek = pSeek->m_pNextED2K )
-			{
-				if ( validAndEqual( pSeek->m_oED2K, pHit->m_oED2K ) )
-				{
-					nHadCount		= pSeek->GetItemCount();
-					nHadFiltered	= pSeek->m_nFiltered;
-					
-					bHad[0] = bool( pSeek->m_oSHA1 );
-                    bHad[1] = bool( pSeek->m_oTiger );
-                    bHad[2] = bool( pSeek->m_oED2K );
-					
-					if ( pSeek->Add( pHit, TRUE ) )
-					{
-						pFile		 = pSeek;
-						bHadSHA1	|= bHad[0];
-						bHadTiger	|= bHad[1];
-						bHadED2K	|= bHad[2];
-
-						break;
-					}
-				}
-			}
+			pFile = FindFileAndAddHit( pHit, findType::fED2K, &Stats );
 		}
 		
 		if ( pFile == NULL
             && ( ( !pHit->m_oSHA1 && !pHit->m_oTiger && ! pHit->m_oED2K )
                 || !Settings.General.HashIntegrity ) )
 		{
-			pMap = m_pSizeMap + (DWORD)( pHit->m_nSize & 0xFF );
-
-			for ( pSeek = *pMap ; pSeek ; pSeek = pSeek->m_pNextSize )
-			{
-				if ( pSeek->m_nSize == pHit->m_nSize )
-				{
-					bHadSHA1		= bool( pSeek->m_oSHA1 );
-					bHadTiger		= bool( pSeek->m_oTiger );
-					bHadED2K		= bool( pSeek->m_oED2K );
-					nHadCount		= pSeek->GetItemCount();
-					nHadFiltered	= pSeek->m_nFiltered;
-
-					if ( pSeek->Add( pHit ) )
-					{
-						pFile = pSeek;
-						break;
-					}
-				}
-			}
-			if ( ! pFile ) bHadSHA1 = bHadTiger = bHadED2K = FALSE;
+			pFile = FindFileAndAddHit( pHit, findType::fSize, &Stats );
 		}
 		
 		if ( pFile != NULL ) // New hit for the existing file
@@ -346,37 +251,24 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 						UpdateRange( m_nFiles - nCount, m_nFiles - nCount );
 					}
 
-					// cross-packet spam filtering
-					DWORD nBogusCount = 0;
-					DWORD nTotal = 0;
-					for ( CQueryHit* pFileHits = pFile->m_pHits; pFileHits ; 
-						  pFileHits = pFileHits->m_pNext, nTotal++ )
-					{
-						if ( pFileHits->m_bBogus )
-							nBogusCount++;
-					}
-					
-					// Mark/unmark a file as suspicious depending on the percentage of the spam hits
-					pFile->m_bSuspicious = (float)nBogusCount / nTotal > Settings.Search.SpamFilterThreshold / 100.0f;
-
 					break;
 				}
 			}
 			
-			if ( nHadCount )
+			if ( Stats.nHadCount )
 			{
-				m_nItems -= nHadCount;
+				m_nItems -= Stats.nHadCount;
 				m_nFilteredFiles --;
-				m_nFilteredHits -= nHadFiltered;
+				m_nFilteredHits -= Stats.nHadFiltered;
 
 				switch ( nProtocol )
 				{
 				case PROTOCOL_G1:
 				case PROTOCOL_G2:
-					m_nGnutellaHits -= nHadFiltered;
+					m_nGnutellaHits -= Stats.nHadFiltered;
 					break;
 				case PROTOCOL_ED2K:
-					m_nED2KHits -= nHadFiltered;
+					m_nED2KHits -= Stats.nHadFiltered;
 					break;
 				default:
 //					ASSERT( 0 )
@@ -418,30 +310,30 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			}
 		}
 		
-		if ( ! bHadSHA1 && pFile->m_oSHA1 )
+		if ( ! Stats.bHadSHA1 && pFile->m_oSHA1 )
 		{
 			pMap = m_pMapSHA1 + pFile->m_oSHA1[ 0 ];
 			pFile->m_pNextSHA1 = *pMap;
 			*pMap = pFile;
 		}
-		if ( ! bHadTiger && pFile->m_oTiger )
+		if ( ! Stats.bHadTiger && pFile->m_oTiger )
 		{
 			pMap = m_pMapTiger + pFile->m_oTiger[ 0 ];
 			pFile->m_pNextTiger = *pMap;
 			*pMap = pFile;
 		}
-		if ( ! bHadED2K && pFile->m_oED2K )
+		if ( ! Stats.bHadED2K && pFile->m_oED2K )
 		{
 			pMap = m_pMapED2K + pFile->m_oED2K[ 0 ];
 			pFile->m_pNextED2K = *pMap;
 			*pMap = pFile;
 		}
 		
-		nHadCount = pFile->GetItemCount();
+		Stats.nHadCount = pFile->GetItemCount();
 		
-		if ( nHadCount )
+		if ( Stats.nHadCount )
 		{
-			m_nItems += nHadCount;
+			m_nItems += Stats.nHadCount;
 			m_nFilteredFiles ++;
 			m_nFilteredHits += pFile->m_nFiltered;
 
@@ -463,6 +355,97 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 		
 		pHit = pNext;
 	}
+}
+
+CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, findType nFindFlag, FILESTATS FAR* Stats)
+{
+	CMatchFile **pMap, *pSeek;
+	CMatchFile* pFile = NULL;
+
+	bool bSHA1	= nFindFlag == findType::fSHA1 && pHit->m_oSHA1;
+	bool bTiger	= nFindFlag == findType::fTiger && pHit->m_oTiger;
+	bool bED2K	= nFindFlag == findType::fED2K && pHit->m_oED2K;
+	bool bSize	= nFindFlag == findType::fSize;
+
+	if ( bSHA1 )
+		pMap = m_pMapSHA1 + pHit->m_oSHA1[ 0 ];
+	else if ( bTiger )
+		pMap = m_pMapTiger + pHit->m_oTiger[ 0 ];
+	else if ( bED2K )
+		pMap = m_pMapED2K + ( pHit->m_oED2K[ 0 ] );
+	else if ( bSize )
+		pMap = m_pSizeMap + (DWORD)( pHit->m_nSize & 0xFF );
+	else
+	{
+		ZeroMemory( Stats, sizeof(Stats) );
+		return NULL;
+	}
+
+	bool bValid = false;
+
+	for ( pSeek = *pMap ; pSeek ; )
+	{
+		if ( bSHA1 )
+			bValid = validAndEqual( pSeek->m_oSHA1, pHit->m_oSHA1 );
+		else if ( bTiger )
+			bValid = validAndEqual( pSeek->m_oTiger, pHit->m_oTiger );
+		else if ( bED2K )
+			bValid = validAndEqual( pSeek->m_oED2K, pHit->m_oED2K );
+		else if ( bSize )
+			bValid = pSeek->m_nSize == pHit->m_nSize;
+
+		if ( bValid )
+		{
+
+			Stats->nHadCount	= pSeek->GetItemCount();
+			Stats->nHadFiltered	= pSeek->m_nFiltered;
+
+			if ( bSize )
+			{
+				Stats->bHadSHA1		= bool( pSeek->m_oSHA1 );
+				Stats->bHadTiger	= bool( pSeek->m_oTiger );
+				Stats->bHadED2K		= bool( pSeek->m_oED2K );
+
+				// ToDo: Fixme. 
+				// pSeek->Add( pHit ) returns pHit->m_pNext with a bad memory address sometimes.
+				// Dangerous!!!
+				if ( pSeek->Add( pHit ) )
+				{
+					pFile = pSeek;
+					break;
+				}
+			}
+			else
+			{
+				Stats->bHad[0] = bool( pSeek->m_oSHA1 );
+				Stats->bHad[1] = bool( pSeek->m_oTiger );
+				Stats->bHad[2] = bool( pSeek->m_oED2K );
+
+				if ( pSeek->Add( pHit, TRUE ) )
+				{
+					pFile = pSeek;
+					Stats->bHadSHA1	 |= Stats->bHad[0];
+					Stats->bHadTiger |= Stats->bHad[1];
+					Stats->bHadED2K	 |= Stats->bHad[2];
+					break;
+				}
+			}
+		}
+
+		if ( bSize && !pFile ) 
+			Stats->bHadSHA1 = Stats->bHadTiger = Stats->bHadED2K = FALSE;
+
+		if ( bSHA1 )
+			pSeek = pSeek->m_pNextSHA1;
+		else if ( bTiger )
+			pSeek = pSeek->m_pNextTiger;
+		else if ( bED2K )
+			pSeek = pSeek->m_pNextED2K;
+		else if ( bSize )
+			pSeek = pSeek->m_pNextSize;
+	}
+
+	return pFile;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -790,10 +773,10 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	else
 		pHit->m_sSpeed.Empty();
 
-	if ( AdultFilter.IsHitAdult( pHit->m_sName ) )
+	// Global adult filter and Local adult filter
+	if ( Settings.Search.AdultFilter || m_bFilterAdult )
 	{
-		if ( Settings.Search.AdultFilter ) return FALSE;		// Global adult filter
-		if ( m_bFilterAdult ) return FALSE;						// Local adult filter
+		return !AdultFilter.IsHitAdult( pHit->m_sName );
 	}
 	
 	return ( pHit->m_bFiltered = TRUE );
@@ -1493,6 +1476,19 @@ void CMatchFile::Added(CQueryHit* pHit)
 		if ( pHit->m_pXML->GetAttributeValue( _T("DRM") ).GetLength() > 0 )
 			m_bDRM = TRUE;
 	}
+
+	// cross-packet spam filtering
+	DWORD nBogusCount = 0;
+	DWORD nTotal = 0;
+	for ( CQueryHit* pFileHits = m_pHits; pFileHits ; 
+			pFileHits = pFileHits->m_pNext, nTotal++ )
+	{
+		if ( pFileHits->m_bBogus )
+			nBogusCount++;
+	}
+	
+	// Mark/unmark a file as suspicious depending on the percentage of the spam hits
+	m_bSuspicious = (float)nBogusCount / nTotal > Settings.Search.SpamFilterThreshold / 100.0f;
 
 	// Get extention
 	if ( LPCTSTR pszExt = _tcsrchr( pHit->m_sName, '.' ) )
