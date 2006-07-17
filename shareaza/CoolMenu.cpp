@@ -127,7 +127,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 					AppendMenu( pFilters, MF_STRING|( nFilter == nDefaultFilter ? MF_CHECKED : 0 ), 
 						3000 + nFilter, pResultFilters->m_pFilters[ nFilter ]->m_sName );
 				}
-				ReplaceMenuText( pMenu, i, &mii, m_sFilterString );
+				ReplaceMenuText( pMenu, i, &mii, m_sFilterString.GetBuffer() );
 
 				mii.hSubMenu = pFilters;
 				mii.fMask |= MIIM_SUBMENU;
@@ -135,7 +135,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 			}
 			else
 			{
-				ReplaceMenuText( pMenu, i, &mii, m_sOldFilterString );
+				ReplaceMenuText( pMenu, i, &mii, m_sOldFilterString.GetBuffer() );
 
 				mii.hSubMenu = NULL;
 				mii.fMask ^= MIIM_SUBMENU;
@@ -170,7 +170,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 	return TRUE;
 }
 
-BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* mii, const CString& strText)
+BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* mii, LPCTSTR pszText)
 {
 	if ( !pMenu || mii == NULL )
 		return FALSE;
@@ -179,13 +179,12 @@ BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* m
 	int nItemID = pMenu->GetMenuItemID( nPosition );
 	
 	if ( ! ModifyMenu( pMenu->GetSafeHmenu(), nPosition, MF_BYPOSITION|MF_STRING, 
-					 nItemID, strText ) )
+					 nItemID, pszText ) )
 		return FALSE;
 
-	LPTSTR szBuffer = (LPTSTR)(LPCTSTR)strText;
-	mii->dwTypeData = szBuffer;
+	mii->dwTypeData = (LPTSTR)pszText;
 
-	mii->cch = 128;
+	mii->cch = CString( pszText ).GetLength() + 1;
 	mii->fMask = MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING;
 
 	// We modified menu, retrieve a new MII (validates and changes data)
@@ -193,9 +192,8 @@ BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* m
 		return FALSE;
 
 	// Replace the corresponding value in the collection
-	CString strNewText = szBuffer;
 	mii->dwItemData	= ( (DWORD_PTR)pMenu->GetSafeHmenu() << 16 ) | ( mii->wID & 0xFFFF );
-	m_pStrings.SetAt( mii->dwItemData, strNewText );
+	m_pStrings.SetAt( mii->dwItemData, CString(mii->dwTypeData) );
 
 	return TRUE;
 }

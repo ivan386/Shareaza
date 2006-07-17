@@ -35,7 +35,7 @@ public:
 // Operations
 public:
 	BOOL		AddMenu(CMenu* pMenu, BOOL bChild = FALSE);
-	BOOL		ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* mii, const CString& strText);
+	BOOL		ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* mii, LPCTSTR pszText);
 	void		SetWatermark(HBITMAP hBitmap);
 	void		OnMeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	void		OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
