@@ -78,7 +78,7 @@
        <tbody>
        <tr>
                <td align="left" valign="top" background="images/bg.png">
-               <img src="images/Top.png" width="647" height="80" /></td>
+               <img src="images/Top.png" width="650" height="84" /></td>
        </tr>
        <tr>
                <td align="left" valign="top" bgcolor="#EEEEEE">
