@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
+<manifest	name="Audio Collection"
+			author="Tom Higginson"
+			version="1.0"
+			link="http://www.shareaza.com/"
+			email="contact@shareaza.com"
+			description="Audio collection export template."
+			icon="audio.ico"
+/>
+<files>
+	<file type="main" path="audio.tpl"/>
+	<file type="evenfile" path="audioEven.tpl"/>
+	<file type="oddfile" path="audioOdd.tpl"/>
+</files>
+<images>
+	<image path="bar_on.gif"/>
+	<image path="bar_off.gif"/>
+</images>
+<wizardText>
+	<!-- It's better to place english translation at the end to exit data collection immediately when language specific data already loaded -->
+	<text language="en">
+		<item id="1" type="textbox" value="Collection title"/>
+		<item id="2" type="textbox" value="File opening action" default="Open File"/>
+		<item id="3" type="textbox" value="While downloading" default="Downloading"/>
+		<item id="4" type="textbox" value="Download action" default="Download Now"/>
+		<item id="5" type="textbox" value="Album description"/>
+		<item id="6" type="textbox" value="Description of Web Resource"/>
+		<item id="7" type="colorpicker" value="Color for even rows" default="#FFFFFF"/>
+		<item id="8" type="colorpicker" value="Color for odd rows" default="#E9EDEF"/>
+		<item id="9" type="textbox" value="About the release group"/>
+	</text>
+</wizardText>
+</template>
