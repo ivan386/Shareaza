@@ -663,21 +663,26 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 			CXMLNode* pNode = pMetadata->GetNextAttribute( pos );
 			str = pNode->GetName();
 			strReplace = pNode->GetValue();
-			if ( str == _T("seconds") )
+			if ( str == _T("seconds") || str == _T("minutes") )
 			{
-				int nHours = _ttoi( (LPCTSTR)strReplace ) / 3600;
+				double nTotalSecs = str == _T("minutes") ? 
+					_tstof( (LPCTSTR)strReplace ) * 60 : _tstof( (LPCTSTR)strReplace );
+				int nSecs = int( nTotalSecs );
+				int nHours = nSecs / 3600;
+				nSecs -= nHours * 3600;
+				int nMins = nSecs / 60;
+				nSecs -= nMins * 60;
+
 				str.Format( _T("%d"), nHours );
 				ReplaceNoCase( strDoc, _T("$meta:hours$"), str );
-				int nMins = ( _ttoi( (LPCTSTR)strReplace ) % 3600 ) / 60;
 				str.Format( _T("%d"), nMins );
 				ReplaceNoCase( strDoc, _T("$meta:minutes$"), str );
-				int nSecs = ( _ttoi( (LPCTSTR)strReplace ) % ( 3600*60 ) ) % 60;
 				str.Format( _T("%d"), nSecs );
 				ReplaceNoCase( strDoc, _T("$meta:seconds$"), str );
 
-				if ( nHours != NULL )
+				if ( nHours )
 					str.Format( _T("%d:%d:%.2d"), nHours, nMins, nSecs );
-				else 
+				else
 					str.Format( _T("%d:%.2d"), nMins, nSecs );
 				ReplaceNoCase( strDoc, _T("$meta:time$"), str );
 			}
