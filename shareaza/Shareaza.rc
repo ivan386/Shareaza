@@ -5170,7 +5170,7 @@ BEGIN
     IDS_DISCOVERY_FAILED    "Discovery service ""%s"" failed, fail count %i."
     IDS_DISCOVERY_FAIL_REMOVE 
                             "Discovery service ""%s"" has failed %i times, removing."
-    IDS_DISCOVERY_DEFAULTS  "http://gwc.fspn.cryptnet.net/gcache.cgi\nhttp://g2cache.theg2.net/gwcache/lynnx.asp\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://gwebcache.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://gwebcache2.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://homepage.ntlworld.com/marriott96/server.met\nhttp://bazooka1.servehttp.com/g2/bazooka.php\nhttp://g2.instantnetworks.net/g2/bazooka.php\nhttp://bazooka.stealthspy.net/g2/bazooka.php"
+    IDS_DISCOVERY_DEFAULTS  "http://loot.alumnigroup.org/\nhttp://g2cache.theg2.net/gwcache/lynnx.asp\nhttp://loot.alumnigroup.org/\nhttp://www.de-site.de/ed2k/koeln.met\nhttp://www.rob-knight.com/skullscache/\nhttp://portalemedia.shinranet.com/modules/AllMyGuests/gcache.php"
     IDS_DISCOVERY_UPDATING  "Sending GWebCache update to service ""%s""..."
     IDS_DISCOVERY_SUBMIT    "Submitting GWebCache ""%s"" to a random GWebCache..."
 END
