@@ -13,11 +13,11 @@
 <!-- Manifest -->
 <manifest	name="English (Default)"
 		author="Michael Stokes"
-		updateBy="Rolandas Rudomanskis"
+		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.2.12"
+		version="2.2.2.22"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -410,6 +410,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Restore"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="_Network">
@@ -2914,6 +2927,8 @@
 	<string id="16533" value="Total TCP Transmit Bandwidth"/>
 	<string id="16534" value="Total UDP Receive Bandwidth"/>
 	<string id="16535" value="Total UDP Transmit Bandwidth"/>
+	<string id="16536" value="Gnutella Ratio of Received/Sent Pings"/>
+	<string id="16537" value="Gnutella Ratio of Received/Sent Pongs"/>
 	<string id="16768" value="Received URL &quot;%s&quot;"/>
 	<string id="16769" value="Unable to parse URL: Shareaza does not understand this URL."/>
 	<string id="16770" value="Unable to display URL action dialog because Shareaza is busy."/>
@@ -2944,6 +2959,9 @@
 	<string id="16809" value="E&amp;xit"/>
 	<string id="16810" value="year old"/>
 	<string id="16811" value="Automatic"/>
+	<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
+	<string id="16813" value="Please wait: Updating discovery services..."/>
+	<string id="16814" value="Please wait: Updating eDonkey2000 server list..."/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windows doesn't support filepaths longer than 256 characters.\nPlease select a folder with a shorter path."/>
 	<string id="16818" value="The complete and incomplete folders should not be the same"/>
@@ -2971,6 +2989,7 @@
 	<string id="16942" value="Closing browse user connection to %s."/>
 	<string id="16943" value="Browsing %s"/>
 	<string id="16944" value="Found %i shared files in %s's library."/>
+	<string id="16991" value="Shareaza Media Player"/>
 	<string id="16992" value="Shareaza could not instantiate its MediaServices plugin.  Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."/>
 	<string id="16993" value="All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"/>
 	<string id="16994" value="Unable to load media file &quot;%s&quot;"/>
@@ -3246,8 +3265,8 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="Media Player">
-		<control caption="_Media Services:"/>
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
+		<control caption="_Options:"/>
 		<control/>
 		<control caption="Use the Shareaza Media Player to PLAY the file types listed below"/>
 		<control caption="Use the Shareaza Media Player to ENQUEUE the file types listed below"/>
@@ -3257,6 +3276,9 @@
 		<control caption="_Remove"/>
 		<control caption="Audio _Visualisation Plugin:"/>
 		<control caption="_Select Plugin..."/>
+		<control caption="_Media Handling"/>
+		<control caption="Choose Media Handler:"/>
+		<control caption="Warning: Choosing an external Media Handler will automatically disable all Media and Visualisation Plugins!"/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Community">
@@ -3288,7 +3310,7 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Connection">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connection">
 		<control caption="_Inbound Address:"/>
 		<control caption="Address:"/>
 		<control caption="Automatic"/>
@@ -3307,6 +3329,7 @@
 		<control caption="Can accept incoming connections"/>
 		<control/>
 		<control caption="Ignore private/local IP addresses "/>
+		<control caption="Enable UPnP connection devices setup"/>
 		<control caption="_Timeouts:"/>
 		<control caption="Connection:"/>
 		<control/><control/>
@@ -3582,7 +3605,7 @@
 		<control caption="Handle torrent links."/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welcome to Shareaza [3 of 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Welcome to Shareaza [3 of 7]">
 		<control caption="For optimum performance, Shareaza needs to know a little bit about your connection to the Internet."/>
 		<control caption="&#160;( please select )| I am using the Internet at home| I am using the Internet on a college LAN| I am using the Internet on a office LAN| I am using the Internet at a hotel or airport"/>
 		<control caption="Is your network or campus protected by a firewall or NAT router?"/>
@@ -3592,6 +3615,8 @@
 		<control caption="If you know how fast your Internet connection is able to operate, select the best option below:"/>
 		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="OR, choose:"/>
+		<control/>
+		<control caption="Status:"/>
 		<control/>
 	</dialog>
 
@@ -3994,10 +4019,10 @@
 		<control caption="Cancel"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copy URI">
+	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="Copy URI">
 		<control/>
 		<control caption="You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"/>
-		<control/><control/><control/>
+		<control/><control/><control/><control/>
 		<control caption="Include _myself as a fixed source in the URL"/>
 		<control caption="Cancel"/>
 	</dialog>
@@ -4070,7 +4095,7 @@
 		<control caption="OK"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Existing File">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Existing File">
 		<control/><control/><control/><control/>
 		<control caption="You already have this file in your file library.  What would you like to do?"/>
 		<control caption="Show me the file in my library"/>
@@ -4079,6 +4104,7 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 		<control caption="You have downloaded and deleted this file before.  What would you like to do?"/>
+		<control caption="Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."/>
 	</dialog>
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Close Button">
@@ -4132,7 +4158,7 @@
 		<control caption="Description:"/>
 		<control/>
 		<control caption="Delete|_Back"/>
-		<control caption="_Next|Export"/>
+		<control caption="_Next|Export..."/>
 		<control caption="_Cancel"/>
 	</dialog>
 
