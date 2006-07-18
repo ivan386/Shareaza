@@ -44,7 +44,7 @@ extern "C" {
 	#define GFLAPI
 #endif
 
-#define GFL_VERSION  "2.40"
+#define GFL_VERSION  "2.54"
 
 #define GFL_FALSE    0
 #define GFL_TRUE     1
@@ -254,6 +254,8 @@ typedef GFL_BOOL (GFLAPI *GFL_WANTCANCEL_CALLBACK)(void * user_params);
 #define GFL_LOAD_METADATA                 0x00000400 /* Read all metadata                                  */
 #define GFL_LOAD_COMMENT                  0x00000800 /* Read comment                                       */
 #define GFL_LOAD_HIGH_QUALITY_THUMBNAIL   0x00001000 /* gflLoadThumbnail                                   */
+#define GFL_LOAD_EMBEDDED_THUMBNAIL       0x00002000 /* gflLoadThumbnail                                   */
+#define GFL_LOAD_ORIENTED_THUMBNAIL       0x00004000 /* gflLoadThumbnail                                   */
 
 /*
  *  GFL_LOAD_CALLBACKS struct
@@ -291,7 +293,8 @@ typedef struct {
 		 *
 		 */
 		GFL_UINT8        PsdNoAlphaForNonLayer; 
-		GFL_UINT16       Reserved2; 
+		GFL_UINT8        PngComposeWithAlpha; 
+		GFL_UINT8        WMFHighResolution; 
 
 		/*
 		 * RAW/YUV only
@@ -326,7 +329,22 @@ typedef struct {
 		GFL_UINT16     * LutData; /* RRRR.../GGGG..../BBBB.....*/
 		const char     * LutFilename; 
     
+		/* 
+		 * Camera RAW only
+		 */
+		GFL_UINT8        CameraRawUseAutomaticBalance; 
+		GFL_UINT8        CameraRawUseCameraBalance; 
+		GFL_UINT16       Reserved4; 
+		float            CameraRawGamma; 
+		float            CameraRawBrightness; 
+		float            CameraRawRedScaling; 
+		float            CameraRawBlueScaling; 
+		float            CameraRawFilterDomain; 
+		float            CameraRawFilterRange; 
+		
 		GFL_LOAD_CALLBACKS Callbacks; 
+		
+		void           * UserParams; 
 		
 	} GFL_LOAD_PARAMS; 
 
@@ -376,6 +394,8 @@ typedef struct {
 				GFL_TELL_CALLBACK  Tell;  
 				GFL_SEEK_CALLBACK  Seek;  
 			} Callbacks; 
+
+		void           * UserParams; 
 
 	} GFL_SAVE_PARAMS; 
 
@@ -724,6 +744,7 @@ extern GFLEXTERN GFL_ERROR GFLAPI gflBitmapSetIPTC( GFL_BITMAP * bitmap, const G
  * ~~ 
  */
 
+#define GFL_EXIF_WANT_MAKERNOTES	0x0001
 extern GFLEXTERN GFL_EXIF_DATA * GFLAPI gflBitmapGetEXIF( GFL_BITMAP * bitmap, GFL_UINT32 flags ); 
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflBitmapGetEXIFValue( const GFL_BITMAP * bitmap, GFL_UINT32 tag, char * value, GFL_INT32 value_length ); 
@@ -736,23 +757,23 @@ extern GFLEXTERN void GFLAPI gflBitmapSetComment( GFL_BITMAP * bitmap, const cha
  * ~~ COMMENT function without loading bitmap
  */
 
-extern GFLEXTERN GFL_ERROR gflJPEGGetComment( const char * filename, char * comment, int max_size ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflJPEGGetComment( const char * filename, char * comment, int max_size ); 
 
-extern GFLEXTERN GFL_ERROR gflJPEGSetComment( const char * filename, const char * comment ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflJPEGSetComment( const char * filename, const char * comment ); 
 
-extern GFLEXTERN GFL_ERROR gflPNGGetComment( const char * filename, char * comment, int max_size ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflPNGGetComment( const char * filename, char * comment, int max_size ); 
 
-extern GFLEXTERN GFL_ERROR gflPNGSetComment( const char * filename, const char * comment ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflPNGSetComment( const char * filename, const char * comment ); 
 
 /*
  * ~~ For DPX LUT
  */
 
-extern GFLEXTERN GFL_BOOL gflIsLutFile( const char *filename ); 
+extern GFLEXTERN GFL_BOOL GFLAPI gflIsLutFile( const char *filename ); 
 
-extern GFLEXTERN GFL_BOOL gflIsCompatibleLutFile( const char *filename, const GFL_INT32 components_per_pixel, const GFL_INT32 bits_per_component, GFL_LUT_TYPE * lut_type ); 
+extern GFLEXTERN GFL_BOOL GFLAPI gflIsCompatibleLutFile( const char *filename, const GFL_INT32 components_per_pixel, const GFL_INT32 bits_per_component, GFL_LUT_TYPE * lut_type ); 
 
-extern GFLEXTERN GFL_ERROR gflApplyLutFile( GFL_BITMAP * bitmap_src, GFL_BITMAP ** bitmap_dst, const char * filename, GFL_LUT_TYPE lut_type ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflApplyLutFile( GFL_BITMAP * bitmap_src, GFL_BITMAP ** bitmap_dst, const char * filename, GFL_LUT_TYPE lut_type ); 
 
 /*
  * ~~
@@ -873,6 +894,7 @@ extern GFLEXTERN GFL_ERROR GFLAPI gflBitblt          ( const GFL_BITMAP *src, co
 extern GFLEXTERN GFL_ERROR GFLAPI gflBitbltEx        ( const GFL_BITMAP *src, const GFL_RECT *rect, GFL_BITMAP *dst, GFL_INT32 x_dest, GFL_INT32 y_dest ); 
 extern GFLEXTERN GFL_ERROR GFLAPI gflMerge           ( GFL_BITMAP const *src[], const GFL_POINT origin[], const GFL_UINT32 opacity[], GFL_INT32 num_bitmap, GFL_BITMAP **dst ); 
 extern GFLEXTERN GFL_ERROR GFLAPI gflCombineAlpha    ( GFL_BITMAP *src, GFL_BITMAP **dst, const GFL_COLOR * color ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflSetTransparentColor( GFL_BITMAP * src, GFL_BITMAP ** dst, const GFL_COLOR * mask_color, const GFL_COLOR * back_color ); 
 
 #if defined( WIN32 ) || defined ( __BORLANDC__ )
 	#ifdef __BORLANDC__
