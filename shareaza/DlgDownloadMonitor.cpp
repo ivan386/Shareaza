@@ -532,7 +532,7 @@ void CDownloadMonitorDlg::OnDownloadLaunch()
 	if ( bCompleted || ! Plugins.LookupCLSID( _T("DownloadPreview"), strType, pCLSID ) )
 	{
 		pLock.Unlock();
-		CFileExecutor::Execute( strName, FALSE ); // , IDS_DOWNLOAD_CONFIRM_EXECUTE );
+		CFileExecutor::Execute( strName, FALSE );
 	}
 	else
 	{
