@@ -172,7 +172,7 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 	long nCount = 0;
 
 	// malicious software are usually small, we won't search duplicates
-	if ( pFile->m_nSize > Settings.Library.MaxMaliciousFileSize ) return;
+	if ( pFile->m_nSize / 1024 > Settings.Library.MaxMaliciousFileSize ) return;
 
 	int nDot = pFile->m_sName.ReverseFind( '.' );
 

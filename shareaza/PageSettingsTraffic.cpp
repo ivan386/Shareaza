@@ -280,7 +280,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Library.ThumbSize, 1, 16, 256 );
 	AddSetting( &Settings.Library.VirtualFiles, 1, 0, 1);
 	AddSetting( &Settings.Library.HashWindow, 1, 0, 1);
-	AddSetting( &Settings.Library.MaxMaliciousFileSize, 1, 1024, 1024*5, _T(" B") );
+	AddSetting( &Settings.Library.MaxMaliciousFileSize, 1, 1024, 1024*5, _T(" KB") );
 	AddSetting( &Settings.Library.HighPriorityHashing, 1, 1, 100, _T(" MB/s"));
 	AddSetting( &Settings.Library.LowPriorityHashing, 1, 1, 100, _T(" MB/s"));
 
