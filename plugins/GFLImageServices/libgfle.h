@@ -86,6 +86,8 @@ extern GFLEXTERN GFL_ERROR GFLAPI gflEmbossMore      ( GFL_BITMAP *src, GFL_BITM
 extern GFLEXTERN GFL_ERROR GFLAPI gflSepia           ( GFL_BITMAP *src, GFL_BITMAP ** bdst, GFL_INT32 percent ); 
 extern GFLEXTERN GFL_ERROR GFLAPI gflSepiaEx         ( GFL_BITMAP *src, GFL_BITMAP ** bdst, GFL_INT32 percent, const GFL_COLOR * color ); 
 
+extern GFLEXTERN GFL_ERROR GFLAPI gflReduceNoise     ( GFL_BITMAP *src, GFL_BITMAP ** bdst ); 
+
 /*
  * ~~
  */
@@ -128,7 +130,7 @@ typedef GFL_UINT16 GFL_LOSSLESS_TRANSFORM;
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflJpegLosslessTransform( const char *filename, GFL_LOSSLESS_TRANSFORM transform ); 
 
-#ifdef WIN32
+#if defined( WIN32 ) || defined ( __BORLANDC__ )
 
 #include <windows.h>
 
@@ -144,6 +146,7 @@ extern GFLEXTERN GFL_ERROR GFLAPI gflLoadBitmapIntoDIBSection   ( const char *fi
 extern GFLEXTERN GFL_ERROR GFLAPI gflLoadBitmapIntoDDB          ( const char *filename, HBITMAP *hBitmap, GFL_LOAD_PARAMS *params, GFL_FILE_INFORMATION *info ); 
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflAddText             ( GFL_BITMAP *bitmap, const char *text, const char *font_name, GFL_INT32 x, GFL_INT32 y, GFL_INT32 font_size, GFL_INT32 orientation, GFL_BOOL italic, GFL_BOOL bold, GFL_BOOL strike_out, GFL_BOOL underline, GFL_BOOL antialias, const GFL_COLOR *color ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflAddTextW            ( GFL_BITMAP *bitmap, const wchar_t *text, const wchar_t *font_name, GFL_INT32 x, GFL_INT32 y, GFL_INT32 font_size, GFL_INT32 orientation, GFL_BOOL italic, GFL_BOOL bold, GFL_BOOL strike_out, GFL_BOOL underline, GFL_BOOL antialias, const GFL_COLOR *color ); 
 extern GFLEXTERN GFL_ERROR GFLAPI gflGetTextExtent       ( const char *text, const char *font_name, GFL_INT32 font_size, GFL_INT32 orientation, GFL_BOOL italic, GFL_BOOL bold, GFL_BOOL strike_out, GFL_BOOL underline, GFL_BOOL antialias, GFL_INT32 * text_width, GFL_INT32 * text_height ); 
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflImportFromClipboard ( GFL_BITMAP **bitmap ); 
