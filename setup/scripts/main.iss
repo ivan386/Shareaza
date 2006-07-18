@@ -96,12 +96,12 @@ Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonl
 
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl240.dll"; MinVersion: 0,4.0
-Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl240.dll"; MinVersion: 4.0,0
+Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl254.dll"; MinVersion: 0,4.0
+Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl254.dll"; MinVersion: 4.0,0
 Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 0,4.0
 Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
-Source: "setup\plugins\libgfl240.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 0,4.0
-Source: "setup\plugins\libgfl240.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
+Source: "setup\plugins\libgfl254.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 0,4.0
+Source: "setup\plugins\libgfl254.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
 
 ; Uninstall icon for software panel
 Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
@@ -308,6 +308,7 @@ Type: files; Name: "{app}\LICENSE.txt"
 Type: files; Name: "{app}\uninstall.exe"
 Type: files; Name: "{app}\Uninstall\repair.exe"
 Type: files; Name: "{app}\Plugins\DivFix.dll"
+Type: files; Name: "{app}\Plugins\libgfl240.dll"
 Type: files; Name: "{app}\Skins\skin.exe"
 Type: files; Name: "{app}\*.dat"
 Type: files; Name: "{app}\*.xml"
