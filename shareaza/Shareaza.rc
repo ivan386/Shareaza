@@ -4762,7 +4762,6 @@ BEGIN
     IDS_HANDSHAKE_FAIL      "Handshake with %s failed due to invalid data on the wire."
     IDS_HANDSHAKE_BOOTSTRAP "Closing surplus connection from %s with host hint (%s port %i)."
     IDS_HANDSHAKE_REJECTED  "Connection to %s rejected (%s)."
-    IDS_HANDSHAKE_RETRY     "Gnutella 0.6 handshake with %s failed, retrying with 0.4."
     IDS_HANDSHAKE_SURPLUS   "Closing surplus connection from %s."
     IDS_HANDSHAKE_IAMLEAF   "Refusing connection from %s because this is a shielded leaf node."
     IDS_HANDSHAKE_CANTBEPEER 
