@@ -24,8 +24,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl240.dll"
-				CommandLine="copy ..\setup\plugins\libgfl240.dll &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\&quot; /y &gt; nul"
+				Description="Copying libgfl254.dll"
+				CommandLine="copy ..\setup\plugins\libgfl254.dll &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\&quot; /y &gt; nul"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -123,8 +123,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl240.dll"
-				CommandLine="copy ..\setup\plugins\libgfl240.dll &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\&quot; /y &gt; nul"
+				Description="Copying libgfl254.dll"
+				CommandLine="copy ..\setup\plugins\libgfl254.dll &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\&quot; /y &gt; nul"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -329,26 +329,6 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\debugwin32\plugins\gflimageservices\GFLImageServices_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\releasewin32\plugins\gflimageservices\GFLImageServices_i.c"
 				>
 				<FileConfiguration
@@ -369,6 +349,26 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debugwin32\plugins\gflimageservices\GFLImageServices_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>
