@@ -39,7 +39,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Knjiga:Moje Knjige</title>
                <title language="hu">Könyv: Könyvek</title>
                <title language="it">Libro:Libri</title>
-               <title language="jp">&#160;書籍: マイ･ブック</title>
+               <title language="ja">&#160;書籍: マイ･ブック</title>
                <title language="lt">Knyga:Mano knygos</title>
                <title language="nl">Boek:Mijn Boeken</title>
                <title language="no">Bok: mine bøker</title>
@@ -67,7 +67,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
-                       <title language="jp">タイトル</title>
+                       <title language="ja">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -94,7 +94,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Dobrodošli Među Vaše Knjige!</title>
                <title language="hu">Üdvözöllek a Könyvek mappában!</title>
                <title language="it">Benvenuto nei Libri!</title>
-               <title language="jp">マイ･ブックへようこそ</title>
+               <title language="ja">マイ･ブックへようこそ</title>
                <title language="lt">Sveiki apsilankę „Mano knygose“!</title>
                <title language="nl">Welkom bij Mijn Boeken!</title>
                <title language="no">Velkommen til mine bøker</title>
@@ -115,7 +115,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ove mape sadrže sve vaše knjige.</subtitle>
                <subtitle language="hu">Ez a mappa a könyveket tartalmazza.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutti i tuoi libri.</subtitle>
-               <subtitle language="jp">これらのフォルダーにはライブラリー内に所有している全ての書籍が収録されています</subtitle>
+               <subtitle language="ja">これらのフォルダーにはライブラリー内に所有している全ての書籍が収録されています</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų knygos.</subtitle>
                <subtitle language="nl">Deze mappen bevatten al je boeken.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine bøker</subtitle>

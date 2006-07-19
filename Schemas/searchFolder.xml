@@ -39,7 +39,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Traži:Rezultati Potrage</title>
                <title language="hu">Keresési eredmények</title>
                <title language="it">Ricerca:Risultati della ricerca</title>
-               <title language="jp">サーチ: サーチ結果</title>
+               <title language="ja">サーチ: サーチ結果</title>
                <title language="lt">Paieška:Radiniai</title>
                <title language="nl">Zoeken:Zoekresultaten</title>
                <title language="no">Søk: søkeresultat</title>
@@ -63,7 +63,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
-                       <title language="jp">タイトル</title>
+                       <title language="ja">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -86,7 +86,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Vrijeme</title>
                        <title language="hu">Idő</title>
                        <title language="it">Ora</title>
-                       <title language="jp">時間</title>
+                       <title language="ja">時間</title>
                        <title language="lt">Laikas</title>
                        <title language="nl">Tijd</title>
                        <title language="no">Tid</title>
@@ -109,7 +109,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Datum</title>
                        <title language="hu">Dátom</title>
                        <title language="it">Data</title>
-                       <title language="jp">日付</title>
+                       <title language="ja">日付</title>
                        <title language="lt">Data</title>
                        <title language="nl">Datum</title>
                        <title language="no">Dato</title>
@@ -132,7 +132,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Sadržaj</title>
                        <title language="hu">Tartalom</title>
                        <title language="it">Contenuto</title>
-                       <title language="jp">内容</title>
+                       <title language="ja">内容</title>
                        <title language="lt">Turinys</title>
                        <title language="nl">Inhoud</title>
                        <title language="no">Innhold</title>
@@ -153,13 +153,13 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="cht">搜尋於 "{content}"</title>
                <title language="de">Suche nach "{content}"</title>
                <title language="ee">Otsi "{content}"</title>
-               <title language="es">Busca por "{contenido}</title>
+               <title language="es">Busca por "{contenido}"</title>
                <title language="fr">Recherche de "{content}"</title>
                <title language="heb">חפש תוכן "{content}"</title>
                <title language="hr">Traži "{content}"</title>
                <title language="hu">Keresés "{content}"</title>
                <title language="it">Ricerca di "{content}"</title>
-               <title language="jp">"{content}" のサーチ</title>
+               <title language="ja">"{content}" のサーチ</title>
                <title language="lt">„{content}“ radiniai</title>
                <title language="nl">Zoeken naar "{content}"</title>
                <title language="no">Søk etter "{content}"</title>
@@ -180,7 +180,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži nađene datoteke po izrazu "{content}"</subtitle>
                <subtitle language="hu">Ebben a mappában lévő fájlok egyeznek a keresési feltétellel, ami {content} volt.</subtitle>
                <subtitle language="it">Questa cartella contiene i file che corrispondono alla tua ricerca di "{content}"</subtitle>
-               <subtitle language="jp">このフォルダーには "{content}" に当てはまるサーチ結果が収録されています</subtitle>
+               <subtitle language="ja">このフォルダーには "{content}" に当てはまるサーチ結果が収録されています</subtitle>
                <subtitle language="lt">Šiame kataloge yra bylos, surastos pagal ieškinį „{content}“.</subtitle>
                <subtitle language="nl">Deze map bevat alle bestanden die resulteerden uit je zoekopdracht naar "{content}"</subtitle>
                <subtitle language="no">Denne mappen inneholder resultat som matcher søk etter "{content}"</subtitle>

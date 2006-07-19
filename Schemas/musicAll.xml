@@ -39,7 +39,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Muzika:Sva Muzika</title>
                <title language="hu">Zene: minden zene</title>
                <title language="it">Musica:Tutta la musica</title>
-               <title language="jp">&#160;音楽: 全ての音楽</title>
+               <title language="ja">&#160;音楽: 全ての音楽</title>
                <title language="lt">Muzika:Visa muzika</title>
                <title language="nl">Muziek:Alle Muziek</title>
                <title language="no">Musikk: all musikk</title>
@@ -67,7 +67,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
-                       <title language="jp">タイトル</title>
+                       <title language="ja">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -94,7 +94,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Sva Muzika</title>
                <title language="hu">Minden zene</title>
                <title language="it">Tutta la musica</title>
-               <title language="jp">音楽</title>
+               <title language="ja">音楽</title>
                <title language="lt">Visa muzika</title>
                <title language="nl">Alle Muziek</title>
                <title language="no">All musikk</title>
@@ -115,7 +115,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži sve pjesme u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden zenei fájlt tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutta la musica della tua libreria.</subtitle>
-               <subtitle language="jp">このフォルダーにはライブラリー内ーにある全ての音楽が収録されます</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内ーにある全ての音楽が収録されます</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos muzikinės bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elk muziekbestand uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle musikkfilene i mine filer</subtitle>

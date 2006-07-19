@@ -38,7 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="hr">Program</title>
               <title language="hu">Program</title>
               <title language="it">Applicazione</title>
-              <title language="jp">アプリケーション</title>
+              <title language="ja">アプリケーション</title>
               <title language="lt">Programa</title>
               <title language="nl">Programma</title>
               <title language="no">Program</title>
@@ -63,7 +63,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
-                       <title language="jp">タイトル</title>
+                       <title language="ja">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -87,7 +87,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Verzija</title>
                        <title language="hu">Verzió</title>
                        <title language="it">Versione</title>
-                       <title language="jp">バージョン</title>
+                       <title language="ja">バージョン</title>
                        <title language="lt">Versija</title>
                        <title language="nl">Versie</title>
                        <title language="no">Versjon</title>
@@ -110,7 +110,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Opis</title>
                        <title language="hu">Leírás</title>
                        <title language="it">Descrizione</title>
-                       <title language="jp">詳細</title>
+                       <title language="ja">詳細</title>
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
@@ -133,7 +133,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Obavjesti Izdavača</title>
                        <title language="hu">Kiadás megjegyzései</title>
                        <title language="it">Note di rilascio</title>
-                       <title language="jp">配布説明</title>
+                       <title language="ja">配布説明</title>
                        <title language="lt">Apie leidimą</title>
                        <title language="nl">Aantekeningen bij Vrijgave</title>
                        <title language="no">Releasenotat</title>
@@ -156,7 +156,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Verzije</title>
                        <title language="hu">Fájl verziója</title>
                        <title language="it">Versione file</title>
-                       <title language="jp">ファイルバージョン</title>
+                       <title language="ja">ファイルバージョン</title>
                        <title language="lt">Bylos versija</title>
                        <title language="nl">Bestandsversie</title>
                        <title language="no">Filversjon</title>
@@ -179,7 +179,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Originalno Ime Datoteke</title>
                        <title language="hu">Fájl eredeti neve</title>
                        <title language="it">Nome file originale</title>
-                       <title language="jp">元のファイル名</title>
+                       <title language="ja">元のファイル名</title>
                        <title language="lt">Pradinis vardas</title>
                        <title language="nl">Originele Bestandsnaam</title>
                        <title language="no">Originalnavn</title>
@@ -203,7 +203,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Proizvođač</title>
                        <title language="hu">Cég</title>
                        <title language="it">Società</title>
-                       <title language="jp">会社名</title>
+                       <title language="ja">会社名</title>
                        <title language="lt">Kompanija</title>
                        <title language="nl">Bedrijf</title>
                        <title language="no">Firma</title>
@@ -226,7 +226,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Prava</title>
                        <title language="hu">Copyright</title>
                        <title language="it">Diritti d'autore</title>
-                       <title language="jp">著作権</title>
+                       <title language="ja">著作権</title>
                        <title language="lt">Autorių teisės</title>
                        <title language="nl">Copyright</title>
                        <title language="no">Kopibeskyttelse</title>
@@ -250,7 +250,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Vrsta</title>
                        <title language="hu">Típus</title>
                        <title language="it">Tipo</title>
-                       <title language="jp">種類</title>
+                       <title language="ja">種類</title>
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
@@ -273,7 +273,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Vrsta Arhive</title>
                        <title language="hu">Archívum típusa</title>
                        <title language="it">Tipo di archivio</title>
-                       <title language="jp">圧縮種類</title>
+                       <title language="ja">圧縮種類</title>
                        <title language="lt">Archyvo tipas</title>
                        <title language="nl">Archief Types</title>
                        <title language="no">Arkivtype</title>
@@ -297,7 +297,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">OS</title>
                        <title language="hu">OS</title>
                        <title language="it">SO</title>
-                       <title language="jp">OS</title>
+                       <title language="ja">OS</title>
                        <title language="lt">OS</title>
                        <title language="nl">OS</title>
                        <title language="no">OS</title>
@@ -320,7 +320,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Ključne Riječi</title>
                        <title language="hu">Kulcsszavak</title>
                        <title language="it">Parole chiave</title>
-                       <title language="jp">キーワード</title>
+                       <title language="ja">キーワード</title>
                        <title language="lt">Raktažodžiai</title>
                        <title language="nl">Sleutelwoorden</title>
                        <title language="no">Nøkkelord</title>
@@ -343,7 +343,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Datum Objave na P2P</title>
                        <title language="hu">P2P kiadási dátum</title>
                        <title language="it">Data di rilascio P2P</title>
-                       <title language="jp">P2P配布日</title>
+                       <title language="ja">P2P配布日</title>
                        <title language="lt">P2P išleidimo data</title>
                        <title language="nl">Datum P2P Vrijgave</title>
                        <title language="no">P2P releasedato</title>
@@ -366,7 +366,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Distributer</title>
                        <title language="hu">Árusító</title>
                        <title language="it">Distributore</title>
-                       <title language="jp">配布者</title>
+                       <title language="ja">配布者</title>
                        <title language="lt">Distributorius</title>
                        <title language="nl">Verspreider</title>
                        <title language="no">Distributør</title>
@@ -389,7 +389,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Link na Distributera</title>
                        <title language="hu">Árusító linkje</title>
                        <title language="it">Link del distributore</title>
-                       <title language="jp">配布者リンク</title>
+                       <title language="ja">配布者リンク</title>
                        <title language="lt">Distrib. nuoroda</title>
                        <title language="nl">Link naar Verspreider</title>
                        <title language="no">Distributørlink</title>
@@ -412,7 +412,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Grupa Objavljivača</title>
                        <title language="hu">Kiadó csapat</title>
                        <title language="it">Gruppo di rilascio</title>
-                       <title language="jp">配布グループ</title>
+                       <title language="ja">配布グループ</title>
                        <title language="lt">Leidimo grupė</title>
                        <title language="nl">Vrijgave Groep</title>
                        <title language="no">Releasegruppe</title>
@@ -435,7 +435,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Link na Grupu Objavljivača</title>
                        <title language="hu">Kiadó csapat linkje</title>
                        <title language="it">Link gruppo di rilascio</title>
-                       <title language="jp">配布グループリンク</title>
+                       <title language="ja">配布グループリンク</title>
                        <title language="lt">Leid. gr. nuoroda</title>
                        <title language="nl">Link Vrijgave Groep</title>
                        <title language="no">Releasegruppe-link</title>
@@ -458,7 +458,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Link</title>
                        <title language="hu">Link</title>
                        <title language="it">Link</title>
-                       <title language="jp">リンク</title>
+                       <title language="ja">リンク</title>
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>

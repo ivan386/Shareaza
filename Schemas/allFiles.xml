@@ -39,7 +39,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Općenito:Sve Datoteke</title>
                <title language="hu">Általános: minden fájl</title>
                <title language="it">Generale:Tutti i file</title>
-               <title language="jp">&#160;一般: 全てのファイル</title>
+               <title language="ja">&#160;一般: 全てのファイル</title>
                <title language="lt">Bendra:Visos bylos</title>
                <title language="nl">Algemeen:Alle Bestanden</title>
                <title language="no">Generelt: alle filer</title>
@@ -67,7 +67,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
-                       <title language="jp">タイトル</title>
+                       <title language="ja">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -91,7 +91,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Sve Datoteke</title>
                <title language="hu">Minden fájl</title>
                <title language="it">Tutti i file</title>
-               <title language="jp">全てのファイル</title>
+               <title language="ja">全てのファイル</title>
                <title language="lt">Visos bylos</title>
                <title language="nl">Alle Bestanden</title>
                <title language="no">Alle filer</title>
@@ -112,7 +112,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži sve datoteke u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden  fájlt tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutti i file della tua libreria.</subtitle>
-               <subtitle language="jp">このフォルダーにはライブラリー内ーにある全てのファイルが収録されています</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内ーにある全てのファイルが収録されています</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elk bestand uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle filene i mine filer</subtitle>

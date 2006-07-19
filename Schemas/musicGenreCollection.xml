@@ -39,7 +39,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Muzika:Po Žanru</title>
                <title language="hu">Zene: műfaj szerint</title>
                <title language="it">Musica:Per genere</title>
-               <title language="jp">&#160;音楽: ジャンル別</title>
+               <title language="ja">&#160;音楽: ジャンル別</title>
                <title language="lt">Muzika:Pagal stilių</title>
                <title language="nl">Muziek:Per Genre</title>
                <title language="no">Musikk: per sjanger</title>
@@ -67,7 +67,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
-                       <title language="jp">タイトル</title>
+                       <title language="ja">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -94,7 +94,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Muzika Po Žanru</title>
                <title language="hu">Zene műfaj szerint</title>
                <title language="it">Musica per genere</title>
-               <title language="jp">&#160;音楽: ジャンル別</title>
+               <title language="ja">&#160;音楽: ジャンル別</title>
                <title language="lt">Muzika pagal stilių</title>
                <title language="nl">Muziek Per Genre</title>
                <title language="no">Musikk per sjanger</title>
@@ -115,7 +115,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži popis muzičkih žanrova u kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa a zenei műfajokat tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene la lista dei generi musicali trovati nella tua libreria.</subtitle>
-               <subtitle language="jp">このフォルダーにはライブラリー内にあるジャンルの一覧があります</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内にあるジャンルの一覧があります</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas muzikinių žanrų/stilių, aptiktų Jūsų kolekcijoje, sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met muziekgenres die in je bibliotheek zijn gevonden.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste over musikksjangrer som finnes i mine filer</subtitle>

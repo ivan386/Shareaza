@@ -39,7 +39,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Knjiga:Sve Knjige</title>
                <title language="hu">Könyv: minden könyv</title>
                <title language="it">Libro:Tutti i libri</title>
-               <title language="jp">&#160;書籍: 全ての書籍</title>
+               <title language="ja">&#160;書籍: 全ての書籍</title>
                <title language="lt">Knyga:Visos knygos</title>
                <title language="nl">Boek:Alle Boeken</title>
                <title language="no">Bok: alle bøker</title>
@@ -67,7 +67,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
-                       <title language="jp">タイトル</title>
+                       <title language="ja">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -94,7 +94,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Sve Knjige</title>
                <title language="hu">Minden könyv</title>
                <title language="it">Tutti i libri</title>
-               <title language="jp">書籍</title>
+               <title language="ja">書籍</title>
                <title language="lt">Visos knygos</title>
                <title language="nl">Alle Boeken</title>
                <title language="no">Alle bøker</title>
@@ -115,7 +115,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži sve vaše knjige u kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden könyvfájlt tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutti i libri della tua libreria.</subtitle>
-               <subtitle language="jp">このフォルダーにはライブラリー内にある全ての書籍が収録されています</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内にある全ての書籍が収録されています</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos knygos.</subtitle>
                <subtitle language="nl">Deze map bevat alle boeken uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle bøkene i mine filer</subtitle>

@@ -39,7 +39,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Film:TV Emisije</title>
                <title language="hu">Videó: TV műsorok</title>
                <title language="it">Video:Show TV</title>
-               <title language="jp">&#160;動画: テレビ放送</title>
+               <title language="ja">&#160;動画: テレビ放送</title>
                <title language="lt">Video:TV programos</title>
                <title language="nl">Video:TV-Series</title>
                <title language="no">Video: TV-show</title>
@@ -67,7 +67,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
-                       <title language="jp">タイトル</title>
+                       <title language="ja">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -94,7 +94,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">TV Emisija</title>
                <title language="hu">TV műsorok</title>
                <title language="it">Show TV</title>
-               <title language="jp">テレビ放送</title>
+               <title language="ja">テレビ放送</title>
                <title language="lt">TV programos</title>
                <title language="nl">TV-Series</title>
                <title language="no">TV-show</title>
@@ -115,7 +115,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži popis Tv serija koje imate u kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa a TV sorozatokat tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene la lista delle serie TV che hai nella libreria.</subtitle>
-               <subtitle language="jp">このフォルダーにはライブラリー内にあるテレビ･シリーズの一覧があります</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内にあるテレビ･シリーズの一覧があります</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos TV serialų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met de TV series die in je bibliotheek te vinden zijn.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste over TV-serier i mine filer</subtitle>

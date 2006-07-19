@@ -39,7 +39,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Program:Svi Programi</title>
                <title language="hu">Program: minden program</title>
                <title language="it">Applicazione:Tutte le applicazioni</title>
-               <title language="jp">&#160;アプリケーション: 全てのアプリケーション</title>
+               <title language="ja">&#160;アプリケーション: 全てのアプリケーション</title>
                <title language="lt">Programa:Visos programos</title>
                <title language="nl">Programma:Alle Programma's</title>
                <title language="no">Program: alle programmer</title>
@@ -67,7 +67,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
-                       <title language="jp">タイトル</title>
+                       <title language="ja">タイトル</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -94,7 +94,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hr">Svi Programi</title>
                <title language="hu">Minden program</title>
                <title language="it">Tutte le applicazioni</title>
-               <title language="jp">アプリケーション</title>
+               <title language="ja">アプリケーション</title>
                <title language="lt">Visos programos</title>
                <title language="nl">Alle Programma's</title>
                <title language="no">Alle programmer</title>
@@ -115,7 +115,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hr">Ova mapa sadrži sve programe u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden programfájlodat tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutte le applicazioni della tua libreria.</subtitle>
-               <subtitle language="jp">このフォルダーにはライブラリー内にある全てのファイルを含みます</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内にある全てのファイルを含みます</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos programos.</subtitle>
                <subtitle language="nl">Deze map bevat alle programmabestanden uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle programmene i mine filer</subtitle>
