@@ -47,11 +47,14 @@
 					<enumeration value="Windows 95/98/Me"/>
 					<enumeration value="Windows NT/2000/XP"/>
 					<enumeration value="Windows CE"/>
+					<enumeration value="Windows Mobile"/>
 					<enumeration value="MacOS"/>
 					<enumeration value="Linux/FreeBSD"/>
 					<enumeration value="UNIX"/>
 					<enumeration value="Palm OS"/>
+					<enumeration value="Symbian OS"/>
 					<enumeration value="EPOC"/>
+					<enumeration value="OSE"/>
 				</simpleType>
 			</attribute>
 
