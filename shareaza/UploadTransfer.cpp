@@ -138,17 +138,15 @@ BOOL CUploadTransfer::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 	if ( pszTarget == NULL )
 	{
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_DELETED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+		// Dequeue, close transfer and release a file
 		Close();
 		return TRUE;
 	}
 
+	// Just release a file
 	if ( pszTarget == (LPCTSTR)1 )
 	{
-		if ( m_pDiskFile != NULL )
-		{
-			m_pDiskFile->Release( FALSE );
-			m_pDiskFile = NULL;
-		}
+		CloseFile();
 	}
 	else if ( m_pDiskFile == NULL )
 	{
