@@ -297,20 +297,18 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 	{
 		Uploads.OnRename( GetPath(), NULL, TRUE );
 		
-		LPTSTR pszPath = new TCHAR[ GetPath().GetLength() + 2 ];
-		_tcscpy( pszPath, GetPath() );
-		pszPath[ GetPath().GetLength() + 1 ] = 0;
+		// Should be double zeroed path
+		TCHAR szPath[MAX_PATH] = { 0 };
+		_tcsncpy( szPath, GetPath(), MAX_PATH - 2 );
 		
-		SHFILEOPSTRUCT pOp = {};
+		SHFILEOPSTRUCT pOp = { 0 };
 		pOp.wFunc	= FO_DELETE;
-		pOp.pFrom	= pszPath;
+		pOp.pFrom	= szPath;
 		pOp.fFlags	= FOF_ALLOWUNDO|FOF_NOCONFIRMATION;
 		
 		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) pOp.fFlags &= ~FOF_ALLOWUNDO;
 		
 		int nReturn = SHFileOperation( &pOp );
-		
-		delete [] pszPath;
 
 		if ( nReturn != 0 )
 		{
