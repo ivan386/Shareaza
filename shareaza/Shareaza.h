@@ -37,7 +37,7 @@ public:
 
 // Attributes
 public:
-	CMutex				m_pMutex;
+	HANDLE				m_pMutex;
 	CMutex				m_pSection;
 	WORD				m_nVersion[4];
 	CString				m_sVersion;

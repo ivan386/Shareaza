@@ -73,8 +73,9 @@ CShareazaApp theApp;
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp construction
 
-CShareazaApp::CShareazaApp() : m_pMutex( FALSE, _T("Shareaza") )
+CShareazaApp::CShareazaApp()
 {
+	m_pMutex = NULL;
 	m_pSafeWnd	= NULL;
 	m_bLive		= FALSE;
 	m_bUPnPPortsForwarded = TS_UNKNOWN;
@@ -87,17 +88,44 @@ CShareazaApp::CShareazaApp() : m_pMutex( FALSE, _T("Shareaza") )
 BOOL CShareazaApp::InitInstance()
 {
 	CWaitCursor pCursor;
-	
-	if ( ! m_pMutex.Lock( 0 ) )
+
+	SetRegistryKey( _T("Shareaza") );
+	GetVersionNumber();
+	InitResources();
+
+	EnableShellOpen();
+
+	AfxOleInit();
+	AfxEnableControlContainer();
+
+	m_pMutex = CreateMutex( NULL, FALSE,
+		( m_dwWindowsVersion < 5 ) ? _T("Shareaza") : _T("Global\\Shareaza") );
+	if ( m_pMutex != NULL )
 	{
-		if ( CWnd* pWnd = CWnd::FindWindow( _T("ShareazaMainWnd"), NULL ) )
+		if ( GetLastError() == ERROR_ALREADY_EXISTS )
 		{
-			pWnd->SendMessage( WM_SYSCOMMAND, SC_RESTORE );
-			pWnd->ShowWindow( SW_SHOWNORMAL );
-			pWnd->BringWindowToTop();
-			pWnd->SetForegroundWindow();
+			CloseHandle( m_pMutex );
+			m_pMutex = NULL;
+
+			// Popup first instance
+			if ( CWnd* pWnd = CWnd::FindWindow( _T("ShareazaMainWnd"), NULL ) )
+			{
+				pWnd->SendMessage( WM_SYSCOMMAND, SC_RESTORE );
+				pWnd->ShowWindow( SW_SHOWNORMAL );
+				pWnd->BringWindowToTop();
+				pWnd->SetForegroundWindow();
+			}
+			else
+			{
+				// Probably window created in another user's session
+			}
+			return FALSE;
 		}
-		
+		// We are first!
+	}
+	else
+	{
+		// Probably mutex created in another user's session
 		return FALSE;
 	}
 
@@ -135,15 +163,8 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 
 	// ***********
-
-	SetRegistryKey( _T("Shareaza") );
-	GetVersionNumber();
-	InitResources();
 	
 	BOOL bSilentTray = ( m_lpCmdLine && _tcsistr( m_lpCmdLine, _T("-tray") ) != NULL );
-	
-		AfxOleInit();
-		AfxEnableControlContainer();
 	
 	CSplashDlg* dlgSplash = new CSplashDlg( 18, bSilentTray );
 
@@ -241,12 +262,12 @@ BOOL CShareazaApp::InitInstance()
 
 	dlgSplash->Step( _T("Upgrade Manager") );
 	if ( VersionChecker.NeedToCheck() ) VersionChecker.Start( m_pMainWnd->GetSafeHwnd() );
-	
+
 	pCursor.Restore();
-	
+
 	dlgSplash->Hide();
 	m_bLive = TRUE;
-	
+
 	return TRUE;
 }
 
@@ -307,9 +328,11 @@ int CShareazaApp::ExitInstance()
 	if ( m_bLive ) Settings.Save( TRUE );
 
 	if ( m_hUser32 != NULL ) FreeLibrary( m_hUser32 );
-	
+
 	WSACleanup();
-	
+
+	if ( m_pMutex != NULL ) CloseHandle( m_pMutex );
+
 	return CWinApp::ExitInstance();
 }
 
