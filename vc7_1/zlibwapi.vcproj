@@ -63,6 +63,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/$(ProjectName)"
 			ConfigurationType="2"
+			UseOfMFC="1"
 			CharacterSet="0"
 			ManagedExtensions="FALSE"
 			WholeProgramOptimization="TRUE">
@@ -77,7 +78,7 @@
 				OptimizeForProcessor="2"
 				PreprocessorDefinitions="WIN32;NDEBUG;WIN32;ZLIB_WINAPI;ASMV;ASMINF"
 				ExceptionHandling="FALSE"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				ProgramDataBaseFileName="$(IntDir)/"
 				WarningLevel="3"/>
 			<Tool
