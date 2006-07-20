@@ -39,6 +39,7 @@
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="..\shareaza\zlib"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
 				GenerateDebugInformation="TRUE"/>
 			<Tool
@@ -74,6 +75,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
+			UseOfMFC="0"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="1"
@@ -101,10 +103,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="TRUE"
-				AdditionalDependencies="Unicows.lib libcmt.lib"
+				AdditionalDependencies="unicows.lib zlibwapi.lib libcmt.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="..\shareaza\zlib"
+				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"

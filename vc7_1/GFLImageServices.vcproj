@@ -14,7 +14,7 @@
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="0"
-			CharacterSet="2"
+			CharacterSet="1"
 			ManagedExtensions="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
@@ -81,8 +81,9 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
+			UseOfMFC="0"
 			UseOfATL="0"
-			CharacterSet="2"
+			CharacterSet="1"
 			ManagedExtensions="FALSE"
 			WholeProgramOptimization="TRUE">
 			<Tool
@@ -98,7 +99,7 @@
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				TreatWChar_tAsBuiltInType="TRUE"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
@@ -111,11 +112,17 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="TRUE"
+				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				OptimizeReferences="2"/>
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
+				MergeSections=".rdata=.text"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
@@ -240,21 +247,6 @@
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath=".\debug\plugins\gflimageservices\GFLImageServices_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\release\plugins\gflimageservices\GFLImageServices_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -269,6 +261,21 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debug\plugins\gflimageservices\GFLImageServices_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
