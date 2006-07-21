@@ -156,18 +156,18 @@ void CQueryHashMaster::Build()
 			
 			if ( pDownload->m_oSHA1 )
 			{
-				AddString( pDownload->m_oSHA1.toUrn() );
+				AddExactString( pDownload->m_oSHA1.toUrn() );
 			}
 			
 			if ( pDownload->m_oED2K )
 			{
-                AddString( pDownload->m_oED2K.toUrn() );
+                AddExactString( pDownload->m_oED2K.toUrn() );
 			}
 			
 			if ( pDownload->m_oBTH )
 			{
-				AddString( _T("BTIH") );
-				AddString( pDownload->m_oBTH.toUrn() );
+				AddExactString( _T("BTIH") );
+				AddExactString( pDownload->m_oBTH.toUrn() );
 			}
 		}
 
