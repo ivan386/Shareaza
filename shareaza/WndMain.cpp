@@ -1122,9 +1122,11 @@ LRESULT CMainWnd::OnOpenChat(WPARAM wParam, LPARAM /*lParam*/)
 	return 0;
 }
 
+// Not used function ?
 LRESULT CMainWnd::OnOpenSearch(WPARAM wParam, LPARAM /*lParam*/)
 {
 	CQuerySearch::OpenWindow( auto_ptr< CQuerySearch >( (CQuerySearch*)wParam ) );
+	m_wndTabBar.OnSkinChange();
 	return 0;
 }
 
@@ -1978,6 +1980,7 @@ void CMainWnd::OnTabSearch()
 	{
 		// m_pWindows.Open( RUNTIME_CLASS(CSearchPadWnd) );
 		m_pWindows.OpenNewSearchWindow();
+		m_wndTabBar.OnSkinChange();
 		OpenFromTray();
 	}
 	else
