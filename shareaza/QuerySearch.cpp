@@ -1233,6 +1233,7 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 	ScriptType boundary[ 2 ] = { sNone, sNone };
     int nPos = 0;
 	int nPrevWord = 0;
+	BOOL bNegative = FALSE;
 
 	for ( ; *pszPtr ; nPos++, pszPtr++ )
 	{
@@ -1257,8 +1258,11 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 
 		bool bCharacter = ( boundary[ 1 ] & sRegular )||
 			bExpression && ( *pszPtr == '-' || *pszPtr == '"' );
-		int nDistance = !bCharacter ? 1 : 0;
+		if ( *pszPtr == '-' ) bNegative = TRUE;
+		else if ( *pszPtr == ' ' ) bNegative = FALSE;
 
+		int nDistance = !bCharacter ? 1 : 0;
+		
 		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ]  && nPos  )
 		{
 			if ( nPos > nPrevWord )
@@ -1275,7 +1279,8 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 				}
 				else if ( str.Right( 1 ) != ' ' && bCharacter )
 				{
-					if ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' || *pszPtr == '"' )
+					if ( ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' || *pszPtr == '"' ) && 
+						( !bNegative || !( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) ) )
 						str.Append( L" " );
 				}
 				ASSERT( strPhrase.GetLength() > nPos - 1 );
@@ -1295,7 +1300,7 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 				else
 				{
 					str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
-					if ( ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) || !bExpression )
+					if ( ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) && !bNegative ) || !bExpression )
 						str.Append( L" " );
 				}
 			}
@@ -1315,7 +1320,7 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 	}
 	else if ( str.Right( 1 ) != ' ' && boundary[ 1 ] )
 	{
-		if ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' )
+		if ( ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' ) && !bNegative )
 			str.Append( L" " );
 	}
 	str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
