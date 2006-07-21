@@ -827,11 +827,11 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 			{
 				// do nothing
 			} //after the char inspection
-			else if ( 0x00 <= szChar && 0x7f >= szChar) // check if the char is 1 byte length in UTF8 (non-char will not leech here)
+			else if ( 0x00 <= szChar && 0x7f >= szChar) // check if the char is 1 byte length in UTF8 (non-char will not reach here)
 			{
 				nValidCharacters++;
 			}
-			else if ( 0x80 <= szChar && 0x7ff >= szChar)  // check if the char is 2 byte length in UTF8 (non-char will not leech here)
+			else if ( 0x80 <= szChar && 0x7ff >= szChar)  // check if the char is 2 byte length in UTF8 (non-char will not reach here)
 			{
 				nValidCharacters += 2;
 			}
@@ -839,7 +839,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 			{
 				nValidCharacters += 2;
 			}
-			else if ( 0x800 <= szChar && 0xffff >= szChar)  // check if the char is 3 byte length in UTF8 (non-char will not leech here)
+			else if ( 0x800 <= szChar && 0xffff >= szChar)  // check if the char is 3 byte length in UTF8 (non-char will not reach here)
 			{
 				nValidCharacters += 3;
 			}
