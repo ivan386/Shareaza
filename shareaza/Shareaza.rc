@@ -189,7 +189,7 @@ BEGIN
     POPUP "&View"
     BEGIN
         MENUITEM "S&ystem\tF11",                ID_VIEW_SYSTEM
-        MENUITEM "N&eighbours\tF2",             ID_VIEW_NEIGHBOURS
+        MENUITEM "N&eighbours\tCtrl+F11",       ID_VIEW_NEIGHBOURS
         MENUITEM "&Downloads\tF3",              ID_VIEW_DOWNLOADS
         MENUITEM "&Uploads\tF4",                ID_VIEW_UPLOADS
         MENUITEM "&Library\tF5",                ID_VIEW_LIBRARY
@@ -3951,8 +3951,9 @@ BEGIN
     VK_F10,         ID_VIEW_TRAFFIC,        VIRTKEY, NOINVERT
     VK_F11,         ID_VIEW_SYSTEM,         VIRTKEY, NOINVERT
     VK_F12,         ID_NETWORK_SEARCH,      VIRTKEY, NOINVERT
-    VK_F2,          ID_VIEW_NEIGHBOURS,     VIRTKEY, NOINVERT
+    VK_F2,          ID_LIBRARY_RENAME,      VIRTKEY, NOINVERT
     VK_F2,          ID_VIEW_SEARCH_MONITOR, VIRTKEY, CONTROL, NOINVERT
+    VK_F11,         ID_VIEW_NEIGHBOURS,     VIRTKEY, CONTROL, NOINVERT
     VK_F3,          ID_VIEW_DOWNLOADS,      VIRTKEY, NOINVERT
     VK_F3,          ID_VIEW_RESULTS_MONITOR, VIRTKEY, CONTROL, NOINVERT
     VK_F4,          ID_VIEW_UPLOADS,        VIRTKEY, NOINVERT
