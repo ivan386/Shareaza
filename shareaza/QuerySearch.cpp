@@ -558,7 +558,6 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 	m_sKeywords = m_sSearch;
 	ToLower( m_sKeywords );
 	MakeKeywords( m_sKeywords, false );
-	SlideKeywords( m_sKeywords );
 
 	if ( pPacket->GetRemaining() >= 1 )
 	{
@@ -729,7 +728,6 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 			m_sKeywords = m_sSearch;
 			ToLower( m_sKeywords );
 			MakeKeywords( m_sKeywords, false );
-			SlideKeywords( m_sKeywords );
 		}
 		else if ( strcmp( szType, "MD" ) == 0 )
 		{
@@ -788,8 +786,8 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 BOOL CQuerySearch::CheckValid(bool bExpression)
 {
 	DWORD nValidWords = 0;
+	DWORD nCommonWords = 0;
 	size_t nValidCharacters = 0;
-	BOOL bExtendedSearch = FALSE;
 
 	// Search without any terms and no hash is invalid
 	if ( m_oWords.empty() )
@@ -806,26 +804,10 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 			return FALSE;
 	}
 
-	// Check if it's an "extended search" (Using a character set with many symbols)
-	iterator pLast = m_oWords.end();
-	--pLast;
-	if ( pLast->second >= 2 && 
-		 ( IsHiragana( pLast->first[ 0 ] ) || 
-		   IsKatakana( pLast->first[ 0 ] ) || 
-		   pLast->first[ 0 ] > 0x33FF 
-		 ) &&
-		 ( IsHiragana( pLast->first[ 1 ] ) || 
-		   IsKatakana( pLast->first[ 1 ] ) || 
-		   pLast->first[ 1 ] > 0x33FF 
-		 )
-	   )
-	{
-		bExtendedSearch = TRUE;
-	}
-
 	// Check we aren't just searching for broad terms - set counters, etc
-	for ( const_iterator pWord = begin(); pWord != end(); ++pWord )
+	for ( const_iterator pWord = begin(); pWord != end(); pWord++ )
 	{
+		nValidCharacters = 0;
 		static const LPCTSTR common[] =
 		{
 			L"mp3", L"ogg",
@@ -838,36 +820,48 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 		};
 		static const size_t commonWords = sizeof common / sizeof common[ 0 ];
 
+		for ( unsigned int index=0; index < (pWord->second) ; index++)
+		{
+			TCHAR szChar = pWord->first[ index ];
+			if ( !IsCharacter(szChar) ) // check if the char is valid
+			{
+				// do nothing
+			} //after the char inspection
+			else if ( 0x00 <= szChar && 0x7f >= szChar) // check if the char is 1 byte length in UTF8 (non-char will not leech here)
+			{
+				nValidCharacters++;
+			}
+			else if ( 0x80 <= szChar && 0x7ff >= szChar)  // check if the char is 2 byte length in UTF8 (non-char will not leech here)
+			{
+				nValidCharacters += 2;
+			}
+			else if ( 0x3041 <= szChar && 0x30fe >= szChar )
+			{
+				nValidCharacters += 2;
+			}
+			else if ( 0x800 <= szChar && 0xffff >= szChar)  // check if the char is 3 byte length in UTF8 (non-char will not leech here)
+			{
+				nValidCharacters += 3;
+			}
+
+		}
+
 		if ( std::find_if( common, common + commonWords, FindStr( *pWord ) ) != common + commonWords )
 		{
 			// Common term. Don't count it.
+			if (nValidCharacters >= 3) nCommonWords++;
 		}
 		else
 		{
 			// Valid search term.
-			nValidWords++;
-			nValidCharacters += pWord->second;
+			if (nValidCharacters >= 3) nValidWords++;
 		}
+	
 	}
 
-	// Check we have some valid terms to search on
-	if ( ( nValidWords == 0 ) || ( nValidCharacters == 0) ) return FALSE;
+	nValidWords += nCommonWords / 3; // make it accept query, if there are more than 3 different common words.
 
-	// Check we have a reasonable amount of characters to search on
-	if ( bExtendedSearch )										// Searching for Chinese characters (2)
-	{
-		if ( nValidCharacters < 2 ) return FALSE;
-	}
-	else if ( m_pSchema != NULL )								// Search has schema (3)
-	{
-		if ( nValidCharacters < 3 ) return FALSE;
-	}
-	else														// No schema (4)
-	{
-		if ( nValidCharacters < 4 ) return FALSE;
-	}
-
-	return TRUE;
+	return BOOL(nValidWords);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1120,7 +1114,7 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch word list builder
 
-void CQuerySearch::BuildWordList(bool bExpression, bool bLocal)
+void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 {
 	m_oWords.clear();
 
@@ -1183,15 +1177,9 @@ void CQuerySearch::BuildWordList(bool bExpression, bool bLocal)
 		}
 	}
 
-	if ( bHash )
-	{
-		AddStringToWordList( m_sSearch );
-	}
-	else
+	if ( !bHash )
 	{
 		MakeKeywords( m_sKeywords, bExpression );
-		if ( bLocal ) 
-			SlideKeywords( m_sKeywords );
 		AddStringToWordList( m_sKeywords );
 	}
 
@@ -1251,37 +1239,41 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 		// boundary[ 0 ] -- previous character;
 		// boundary[ 1 ] -- current character;
 		boundary[ 0 ] = boundary[ 1 ];
+		boundary[ 1 ] = sNone;
 
 		if ( IsKanji( *pszPtr ) )
-			boundary[ 1 ] = sKanji;
-		else if ( IsKatakana( *pszPtr ) && IsHiragana( *pszPtr ) )
-		{
-			if ( boundary[ 0 ] == sKatakana || boundary[ 0 ] == sHiragana )
-				boundary[ 1 ] = boundary[ 0 ];
-		}
-		else if ( IsKatakana( *pszPtr ) )
-			boundary[ 1 ] = sKatakana;
-		else if ( IsHiragana( *pszPtr ) )
-			boundary[ 1 ] = sHiragana;
-		else
-			boundary[ 1 ] = sRegular;
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKanji);
+		if ( IsKatakana( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKatakana);
+		if ( IsHiragana( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sHiragana);
+		if ( IsCharacter( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sRegular);
 
-		bool bCharacter = IsCharacter( *pszPtr ) || 
+		if ( ( boundary[ 1 ] & (sHiragana | sKatakana) ) == (sHiragana | sKatakana) )
+		{
+			boundary[ 1 ] = boundary[ 0 ];
+		}
+
+		bool bCharacter = ( boundary[ 1 ] & sRegular )||
 			bExpression && ( *pszPtr == '-' || *pszPtr == '"' );
 		int nDistance = !bCharacter ? 1 : 0;
 
-		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ] && nPos )
+		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ]  && nPos  )
 		{
 			if ( nPos > nPrevWord )
 			{
 				ASSERT( !str.IsEmpty() );
 				TCHAR sz = TCHAR( str.Right( 2 ).GetAt( 0 ) );
-				if ( boundary[ 0 ] > sRegular && _tcschr( L" -\"", sz ) != NULL &&
+				if ( boundary[ 0 ] && _tcschr( L" -\"", sz ) != NULL &&
 					!_istdigit( TCHAR( str.Right( nPos < 3 ? 1 : 3 ).GetAt( 0 ) ) ) )
 				{
-						// Join two phrases if the previous was a sigle characters word.
-					}
-				else if ( str.Right( 1 ) != ' ' )
+					// Join two phrases if the previous was a sigle characters word.
+					// idea of joining single characters breaks GDF compatibility completely,
+					// but because Shareaza 2.2 and above are not really following GDF about
+					// word length limit for ASIAN chars, merging is necessary to be done.
+				}
+				else if ( str.Right( 1 ) != ' ' && bCharacter )
 				{
 					if ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' || *pszPtr == '"' )
 						str.Append( L" " );
@@ -1303,6 +1295,8 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 				else
 				{
 					str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
+					if ( ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) || !bExpression )
+						str.Append( L" " );
 				}
 			}
 			nPrevWord = nPos + nDistance;
@@ -1311,12 +1305,15 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 
 	ASSERT( !str.IsEmpty() );
 	TCHAR sz = TCHAR( str.Right( 2 ).GetAt( 0 ) );
-	if ( boundary[ 0 ] > sRegular && _tcschr( L" -\"", sz ) != NULL &&
-		 boundary[ 1 ] > sRegular )
+	if ( boundary[ 0 ] && _tcschr( L" -\"", sz ) != NULL &&
+		 boundary[ 1 ] )
 	{
-			// Join two phrases if the previous was a sigle characters word.
+		// Join two phrases if the previous was a sigle characters word.
+		// idea of joining single characters breaks GDF compatibility completely,
+		// but because Shareaza 2.2 and above are not really following GDF about
+		// word length limit for ASIAN chars, merging is necessary to be done.
 	}
-	else if ( str.Right( 1 ) != ' ' )
+	else if ( str.Right( 1 ) != ' ' && boundary[ 1 ] )
 	{
 		if ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' )
 			str.Append( L" " );
@@ -1379,7 +1376,7 @@ void CQuerySearch::AddStringToWordList(LPCTSTR pszString)
 		}
 		else
 		{
-			if ( ! bNegate && pszWord + 1 < pszPtr && IsWord( pszWord, 0, pszPtr - pszWord ) )
+			if ( ! bNegate && pszWord < pszPtr && IsWord( pszWord, 0, pszPtr - pszWord ) )
 			{
 				m_oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
 			}
@@ -1405,7 +1402,7 @@ void CQuerySearch::AddStringToWordList(LPCTSTR pszString)
 		}
 	}
 	
-	if ( ! bNegate && pszWord + 1 < pszPtr && IsWord( pszWord, 0, pszPtr - pszWord ) )
+	if ( ! bNegate && pszWord < pszPtr && IsWord( pszWord, 0, pszPtr - pszWord ) )
 	{
 		m_oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
 	}

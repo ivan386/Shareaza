@@ -137,11 +137,11 @@ HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 
 typedef enum
 {
-	sNone,
-	sRegular,
-	sKanji,
-	sHiragana,
-	sKatakana
+	sNone = 0,
+	sRegular = 1,
+	sKanji = 2,
+	sHiragana = 4,
+	sKatakana = 8
 } ScriptType;
 
 inline bool IsCharacter(TCHAR nChar)

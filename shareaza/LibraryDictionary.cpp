@@ -131,27 +131,32 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 		// boundary[ 0 ] -- previous character;
 		// boundary[ 1 ] -- current character;
 		boundary[ 0 ] = boundary[ 1 ];
+		boundary[ 1 ] = sNone;
 
 		if ( IsKanji( *pszPtr ) )
-			boundary[ 1 ] = sKanji;
-		else if ( IsKatakana( *pszPtr ) && IsHiragana( *pszPtr ) )
-		{
-			if ( boundary[ 0 ] == sKatakana || boundary[ 0 ] == sHiragana )
-				boundary[ 1 ] = boundary[ 0 ];
-		}
-		else if ( IsKatakana( *pszPtr ) )
-			boundary[ 1 ] = sKatakana;
-		else if ( IsHiragana( *pszPtr ) )
-			boundary[ 1 ] = sHiragana;
-		else
-			boundary[ 1 ] = sRegular;
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKanji);
+		if ( IsKatakana( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKatakana);
+		if ( IsHiragana( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sHiragana);
+		if ( IsCharacter( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sRegular);
 
-		bool bCharacter = IsCharacter( *pszPtr );
+		if ( ( boundary[ 1 ] & (sHiragana | sKatakana) ) == (sHiragana | sKatakana) )
+		{
+			boundary[ 1 ] = boundary[ 0 ];
+		}
+
+		bool bCharacter = ( boundary[ 1 ] & sRegular );
 		int nDistance = !bCharacter ? 1 : 0;
 
 		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ] && nPos )
 		{
-			// Join two adjacent script phrases
+			// Join two phrases if the previous was a sigle characters word.
+			// idea of joining single characters breaks GDF compatibility completely,
+			// but because Shareaza 2.2 and above are not really following GDF about
+			// word length limit for ASIAN chars, merging is necessary to be done.
+
 			// nNextWord == nPrevWord when previous word was regular
 			if ( nPos > nNextWord && nNextWord > nPrevWord )
 			{
@@ -171,10 +176,6 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 			if ( nNextWord > nPrevWord )
 				nPrevWord = nNextWord;
 			nNextWord = nPos + nDistance;
-			if ( boundary[ 0 ] < sKanji && boundary[ 1 ] < sKanji || !bCharacter ||
-				 boundary[ 0 ] < sKanji && boundary[ 1 ] > sRegular ||
-				 boundary[ 0 ] > sRegular && boundary[ 1 ] < sKanji )
-				nPrevWord = nNextWord;
 		}
 	}
 	
@@ -189,51 +190,125 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 {
 	int nCount = 0;
 	int nLength = strWord.GetLength();
-	size_t nWindow = 0;
 	CString strKeyword( strWord );
+	LPCTSTR pszKeyword = strKeyword;
+	bool bDone = false;
 	bool bWord = IsWord( strKeyword, 0, nLength );
 	bool bDigit = !bWord && nLength > 3 && _istdigit( strKeyword.GetAt( 0 ) );
 
 	if ( nLength && ( bWord || bDigit ) )
 	{
-		// If start and end characters are from the same asian script, assign the window size
-		if ( nLength > 2 )
+		ProcessWord( pFile, strKeyword, bAdd );
+		nCount++;
+		
+		if ( IsHiragana( *pszKeyword ) )
 		{
-			if ( IsKanji( strKeyword.GetAt( 0 ) ) && IsKanji( strKeyword.GetAt( nLength - 1 ) ) ||
-				 IsKatakana( strKeyword.GetAt( 0 ) ) && IsKatakana( strKeyword.GetAt( nLength - 1 ) ) ||
-				 IsHiragana( strKeyword.GetAt( 0 ) ) && IsHiragana( strKeyword.GetAt( nLength - 1 ) ) )
+			// Continuous Hiragana string can be structured with a few prefix or postfix or both
+			// Assume Prefix/Postfix length is MAX 2 chars
+			// Note, according to GDF, minimum char length for Hiragana is 2 char
+			if ( nLength >= 3 )
 			{
-				nWindow = 2;
-				// add original word
+				// take of last 1 char
+				strKeyword = strWord.Left( nLength - 1 );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+				// take of first 1 char
+				strKeyword = strWord.Right( nLength - 1 );
 				ProcessWord( pFile, strKeyword, bAdd );
 				nCount++;
 			}
+
+			if ( nLength >= 4 )
+			{
+				// take of last 2 chars
+				strKeyword = strWord.Left( nLength - 2 );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+				// take of first 2 chars
+				strKeyword = strWord.Right( nLength - 2 );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+				// take of first & last chars
+				strKeyword = strWord.Left( nLength - 1 );
+				strKeyword = strKeyword.Right( nLength - 2 );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+			}
+
+			if ( nLength >= 5 )
+			{
+				// take of first 1 & last 2 chars
+				strKeyword = strWord.Left( nLength - 2 );   
+				strKeyword = strKeyword.Right( nLength - 3 );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+				// take of first 2 & last 1 chars
+				strKeyword = strWord.Right( nLength - 2 );
+				strKeyword = strKeyword.Left( nLength - 3 );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+			}
+			if ( nLength >= 6 )
+			{
+				// take of first 2 & last 2 chars
+				strKeyword = strWord.Left( nLength - 2 );   
+				strKeyword = strKeyword.Right( nLength - 4 );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+			}
+			bDone = true;
 		}
-	
-		if ( nWindow == 0 )
+
+		if ( IsKatakana( *pszKeyword ) )
 		{
-			ProcessWord( pFile, strKeyword, bAdd );
-			nCount++;
+			// Continuous Katakana string does not have Prefix or postfix with Katakana
+			// but can contain a few words in one continuous string
+			// Assume MAX number of Words contained in one continuous Katakana string as Two words
+			// Note, according to GDF, minimum char length for Katakana is 2 char
+			// moreover, it is not known how long the prefix/postfix
+			// not even the length of chars in one word.
+			if ( nLength >= 3 )
+			{
+				for (int nLen = 2; nLen < nLength ; nLen++)
+				{
+					strKeyword = strWord.Left( nLen );
+					ProcessWord( pFile, strKeyword, bAdd );
+					nCount++;
+					strKeyword = strWord.Right( nLen );
+					ProcessWord( pFile, strKeyword, bAdd );
+					nCount++;
+				}
+			}
+			bDone = true;
 			if ( bDigit ) 
 				return nCount;
 		}
-		else // make keywords using a sliding window
+
+		// Continuous Kanji string may have Prefix or postfix with Kanji
+		// moreover can contain a few words in one continuous string
+		// Assume MAX number of Words contained in one continuous Kanji string as Two words
+		// including prefix/postfix
+		// Note, according to GDF, minimum char length for Kanji is 1 char
+		// moreover, it is not known how long the prefix/postfix
+		// not even the length of chars in one word.
+		if ( IsKanji( *pszKeyword ) )
 		{
-			LPCTSTR pszPhrase = strKeyword.GetBuffer();
-			TCHAR* pszToken = new TCHAR[ nWindow + 1 ];
-			while ( _tcslen( pszPhrase ) >= nWindow )
+			if ( nLength >= 2 )
 			{
-				_tcsncpy( pszToken, pszPhrase, nWindow );
-				pszToken[ nWindow ] = 0;
-				ProcessWord( pFile, (LPCTSTR)pszToken, bAdd );
-				nCount++;
-				pszPhrase++;
+				for (int nLen = 1; nLen < nLength ; nLen++)
+				{
+					strKeyword = strWord.Left( nLen );
+					ProcessWord( pFile, strKeyword, bAdd );
+					nCount++;
+					strKeyword = strWord.Right( nLen );
+					ProcessWord( pFile, strKeyword, bAdd );
+					nCount++;
+				}
 			}
-			delete [] pszToken;
-			return nCount; // we don't need to remove endings
+			bDone = true;
 		}
-		
-		if ( nLength >= 5 && Settings.Library.PartialMatch )
+
+		if ( !bDone && nLength >= 5 && Settings.Library.PartialMatch )
 		{
 			strKeyword = strWord.Left( nLength - 1 );
 			ProcessWord( pFile, strKeyword, bAdd );
