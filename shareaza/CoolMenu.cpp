@@ -84,71 +84,80 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 
 		MENUITEMINFO mii = {};
 		mii.cbSize		= sizeof(mii);
-		mii.fMask		= MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING|MIIM_SUBMENU;
+		if ( theApp.m_bNT )
+			mii.fMask	= MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING|MIIM_SUBMENU;
+		else
+			mii.fMask	= MIIM_DATA|MIIM_ID|MIIM_TYPE|MIIM_SUBMENU;
 		mii.dwTypeData	= szBuffer;
 		mii.cch			= sizeof(szBuffer) / sizeof(TCHAR);
 
 		GetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
 
-		// Non-XML parsed menu items
-		int nItemID = pMenu->GetMenuItemID( i );
-		if ( nItemID == ID_SEARCH_FILTER || 
-			 nItemID == -1 && !m_sFilterString.IsEmpty() && m_sFilterString == szBuffer )
+		// In Win98 the custom filter string can not be read with the mask set above.
+		// In WinXP subsequent GetMenuItemInfo calls do not work.
+		// Thus, drop the support for Win98.
+		if ( theApp.m_bNT )
 		{
-			CResultFilters* pResultFilters = new CResultFilters;
-			pResultFilters->Load();
-
-			if ( nItemID > 0 )
+			// Non-XML parsed menu items
+			int nItemID = pMenu->GetMenuItemID( i );
+			if ( nItemID == ID_SEARCH_FILTER || 
+				nItemID == -1 && !m_sFilterString.IsEmpty() && m_sFilterString == szBuffer )
 			{
-				m_sOldFilterString = szBuffer;
-				m_sFilterString = szBuffer;
-				m_sFilterString.TrimRight( L".\x2026" );
-			}
-			else if ( pResultFilters->m_nFilters == 0 )
-			{
-				CMenu* pSubMenu = pMenu->GetSubMenu( i );
-				if ( pSubMenu )
-					pSubMenu->DestroyMenu();
-				
-				mii.hSubMenu = NULL;
-				mii.wID = ID_SEARCH_FILTER;
+				CResultFilters* pResultFilters = new CResultFilters;
+				pResultFilters->Load();
 
-				m_sFilterString = m_sOldFilterString;
-				SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
-			}
-
-			if ( pResultFilters->m_nFilters )
-			{
-				HMENU pFilters = CreatePopupMenu();
-				DWORD nDefaultFilter = pResultFilters->m_nDefault;
-
-				for ( DWORD nFilter = 0 ; nFilter < pResultFilters->m_nFilters ; nFilter++ )
+				if ( nItemID > 0 )
 				{
-					AppendMenu( pFilters, MF_STRING|( nFilter == nDefaultFilter ? MF_CHECKED : 0 ), 
-						3000 + nFilter, pResultFilters->m_pFilters[ nFilter ]->m_sName );
+					m_sOldFilterString = szBuffer;
+					m_sFilterString = szBuffer;
+					m_sFilterString.TrimRight( L".\x2026" );
 				}
-				ReplaceMenuText( pMenu, i, &mii, m_sFilterString.GetBuffer() );
+				else if ( pResultFilters->m_nFilters == 0 )
+				{
+					CMenu* pSubMenu = pMenu->GetSubMenu( i );
+					if ( pSubMenu )
+						pSubMenu->DestroyMenu();
+					
+					mii.hSubMenu = NULL;
+					mii.wID = ID_SEARCH_FILTER;
 
-				mii.hSubMenu = pFilters;
-				mii.fMask |= MIIM_SUBMENU;
-				strText = m_sFilterString;
-			}
-			else
-			{
-				ReplaceMenuText( pMenu, i, &mii, m_sOldFilterString.GetBuffer() );
+					m_sFilterString = m_sOldFilterString;
+					SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+				}
 
-				mii.hSubMenu = NULL;
-				mii.fMask ^= MIIM_SUBMENU;
-				strText = m_sOldFilterString;
+				if ( pResultFilters->m_nFilters )
+				{
+					HMENU pFilters = CreatePopupMenu();
+					DWORD nDefaultFilter = pResultFilters->m_nDefault;
+
+					for ( DWORD nFilter = 0 ; nFilter < pResultFilters->m_nFilters ; nFilter++ )
+					{
+						AppendMenu( pFilters, MF_STRING|( nFilter == nDefaultFilter ? MF_CHECKED : 0 ), 
+							3000 + nFilter, pResultFilters->m_pFilters[ nFilter ]->m_sName );
+					}
+					ReplaceMenuText( pMenu, i, &mii, m_sFilterString.GetBuffer() );
+
+					mii.hSubMenu = pFilters;
+					mii.fMask |= MIIM_SUBMENU;
+					strText = m_sFilterString;
+				}
+				else
+				{
+					ReplaceMenuText( pMenu, i, &mii, m_sOldFilterString.GetBuffer() );
+
+					mii.hSubMenu = NULL;
+					mii.fMask ^= MIIM_SUBMENU;
+					strText = m_sOldFilterString;
+				}
+				
+				delete pResultFilters;
 			}
-			
-			delete pResultFilters;
 		}
 
-		if ( mii.fType & MF_SEPARATOR )
+		if ( mii.fType & (MF_OWNERDRAW|MF_SEPARATOR) )
 		{
 			mii.fType |= MF_OWNERDRAW;
-			mii.dwItemData = 0;
+			if ( mii.fType & MF_SEPARATOR ) mii.dwItemData = 0;
 			SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
 			continue;
 		}
