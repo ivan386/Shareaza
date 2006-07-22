@@ -123,6 +123,7 @@ STDAPI DllRegisterServer(void)
 	POSITION pos = _ExtMap.GetStartPosition ();
 	while (pos) {
 		_ExtMap.GetNextAssoc (pos, ext, tmp);
+		if ( ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
 		ATLTRACE (_T("Add %s\n"), ext);
 		SHSetValue (HKEY_LOCAL_MACHINE, REG_IMAGESERVICE_KEY, ext, REG_SZ,
@@ -142,6 +143,7 @@ STDAPI DllUnregisterServer(void)
 	POSITION pos = _ExtMap.GetStartPosition ();
 	while (pos) {
 		_ExtMap.GetNextAssoc (pos, ext, tmp);
+		if ( ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
 		ATLTRACE (_T("Remove %s\n"), ext);
 		SHDeleteValue (HKEY_LOCAL_MACHINE, REG_IMAGESERVICE_KEY, ext);
