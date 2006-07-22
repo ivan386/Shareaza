@@ -558,12 +558,9 @@ void CSearchWnd::OnSearchSearch()
 			? GetLastSearch()->clone()
 			: auto_ptr< CQuerySearch >();
 		
-		if ( pCriteria.get() )
-		{
-			CNewSearchDlg dlg( NULL, pCriteria, FALSE, TRUE );
-			if ( dlg.DoModal() != IDOK ) return;
-			pCriteria = dlg.GetSearch();
-		}
+		CNewSearchDlg dlg( NULL, pCriteria, FALSE, TRUE );
+		if ( dlg.DoModal() != IDOK ) return;
+		pCriteria = dlg.GetSearch();
 
 		pSearch.reset( new CManagedSearch( pCriteria ) );
 	}
