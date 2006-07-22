@@ -776,7 +776,8 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	// Global adult filter and Local adult filter
 	if ( Settings.Search.AdultFilter || m_bFilterAdult )
 	{
-		return !AdultFilter.IsHitAdult( pHit->m_sName );
+		if ( AdultFilter.IsHitAdult( pHit->m_sName ) )
+			return FALSE;
 	}
 	
 	return ( pHit->m_bFiltered = TRUE );
