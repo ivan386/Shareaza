@@ -448,11 +448,12 @@ void CSearchWnd::OnUpdateSearchSearch(CCmdUI* pCmdUI)
 	// pCmdUI->Enable( Network.IsWellConnected() );
 	//pCmdUI->Enable( TRUE );
 
-	if ( (m_bPaused) || ( m_bWaitMore ) )
+	if ( m_bPaused || m_bWaitMore )
 		pCmdUI->Enable( TRUE );
-	else
+	else if ( m_pMatches->m_nFilteredHits )
 		pCmdUI->Enable( FALSE );
-
+	else
+		pCmdUI->Enable( TRUE );
 }
 
 void CSearchWnd::OnSearchSearch() 
@@ -698,6 +699,9 @@ void CSearchWnd::ExecuteSearch()
 	
 	if ( pManaged )
 	{
+		pManaged->m_pSearch->m_sKeywords.Empty();
+		pManaged->m_pSearch->BuildWordList();
+
 		if ( AdultFilter.IsSearchFiltered( pManaged->m_pSearch->m_sKeywords ) )
 		{
 			CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
