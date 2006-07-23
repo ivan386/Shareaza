@@ -2315,10 +2315,9 @@
 	<tip id="ID_LIBRARY_DELETE" message="Delete the selected files permenantly."/>
 	<tip id="ID_LIBRARY_ENQUEUE" message="Add the selected file(s) to your media playlist."/>
 	<tip id="ID_LIBRARY_EXPLORE" message="Open the selected folder(s)."/>
-	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to a collection file..."/>
+	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to collection files..."/>
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download all files in the selected collection."/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Add every file in the selected album folder(s) to your playlist."/>
-	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Export the selected album folder as a collection file..."/>
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="View and edit the properties of all files in the selected folder(s)..."/>
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Apply common metadata from the album folder to all of its files."/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="Create a new album folder here..."/>
