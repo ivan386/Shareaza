@@ -5924,10 +5924,8 @@ BEGIN
                             "Show the rich collection view\nCollection View"
     ID_LIBRARY_FOLDER_DOWNLOAD 
                             "Download all files in the selected collection."
-    ID_LIBRARY_FOLDER_EXPORT_COLLECTION 
-                            "Export the selected album folder as a collection file..."
     ID_LIBRARY_EXPORT_COLLECTION 
-                            "Export the selected album folder to a collection file..."
+                            "Export the selected album folder to collection files..."
     ID_LIBRARY_SEED_TORRENT "Seed the selected Torrent on BitTorrent."
     ID_LIBRARY_REBUILD_ANSI "Rebuild metadata using other language."
     ID_DOWNLOADS_EDIT       "Show the advanced edit download interface..."
