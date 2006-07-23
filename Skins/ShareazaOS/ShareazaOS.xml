@@ -2089,7 +2089,7 @@
 	<!-- end navbar language for hr -->
 	<!-- navbar language for ja -->
 	<windowSkin> 
-		 <image type="image" language="ja" path="sos_navbar_jp.bmp"/>
+		 <image type="image" language="ja" path="sos_navbar_ja.bmp"/>
         <image type="watermark" language="ja" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl.Basic"/>
         <parts> 
@@ -2124,7 +2124,7 @@
         </anchors>
 	</windowSkin>
 	<windowSkin>
-        <image type="image" language="ja" path="sos_navbar_jp.bmp"/>
+        <image type="image" language="ja" path="sos_navbar_ja.bmp"/>
         <image type="watermark" language="ja" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl"/>
         <target window="CMainTabBarCtrl.Windowed"/>
