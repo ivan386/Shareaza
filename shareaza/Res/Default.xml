@@ -1399,7 +1399,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="_Disconnect"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Browse User"/>
-		<item id="ID_CHAT_SEND_FILE" text="_Send File..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Grant _Priority"/>
 		<separator/>
 		<menu text="_Format">
