@@ -1,7 +1,7 @@
 //
 // ED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,11 +33,9 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CED2K construction
 
-CED2K::CED2K()
-{
-	m_pList	= NULL;
-	m_nList	= 0;
-}
+CED2K::CED2K() :
+m_pList( NULL ), m_nList( 0 ), m_bNullBlock( false )
+{ }
 
 CED2K::~CED2K()
 {
@@ -116,7 +114,9 @@ void CED2K::BeginFile(QWORD nLength)
 {
 	ASSERT( ! IsAvailable() );
 
-	m_nList	= (DWORD)( ( nLength + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE );
+	m_nList = nLength ? (DWORD)( ( nLength + ED2K_PART_SIZE ) / ED2K_PART_SIZE ) : 0;
+	if ( nLength % ED2K_PART_SIZE == 0 && nLength ) 
+		m_bNullBlock = true;
     m_pList	= new CMD4::MD4Digest[ m_nList ];
 	
 	m_pSegment.Reset();
@@ -169,20 +169,26 @@ BOOL CED2K::FinishFile()
 	ASSERT( m_nCurHash <= m_nList );
 	ASSERT( m_nCurByte < ED2K_PART_SIZE );
 
-	if ( m_nCurHash < m_nList )
+	if ( !m_bNullBlock && m_nCurHash < m_nList )
 	{
 		m_pSegment.Finish();
 		m_pSegment.GetHash( m_pList[ m_nCurHash++ ] );
-		m_pSegment.Reset();
 	}
 
-	ASSERT( m_nCurHash == m_nList );
+	if ( m_bNullBlock && m_nCurHash <= m_nList )
+	{
+		ASSERT( m_nCurByte == 0 );
+		m_pSegment.Finish();
+		m_pSegment.GetHash( m_pList[ m_nCurHash ] );
+	}
+
+	ASSERT( m_nCurHash <= m_nList );
 
 	if ( m_nList == 1 )
 	{
         std::copy( &m_pList[ 0 ][ 0 ], &m_pList[ 0 ][ 4 ], &m_pRoot[ 0 ] );
 	}
-	else if ( m_nList == 0)
+	else if ( m_nList == 0 )
 	{
 		m_pSegment.Finish();
 		m_pSegment.GetHash( m_pRoot );
@@ -233,6 +239,7 @@ BOOL CED2K::FinishBlockTest(DWORD nBlock)
 	if ( nBlock >= m_nList ) return FALSE;
 	
     CMD4::MD4Digest pMD4;
+
 	m_pSegment.Finish();
 	m_pSegment.GetHash( pMD4 );
 	
@@ -269,7 +276,14 @@ BOOL CED2K::FromBytes(BYTE* pOutput, DWORD nOutput, QWORD nSize)
 	
 	if ( nSize > 0 )
 	{
-        if ( nOutput / sizeof( CMD4::MD4Digest ) != ( nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE )
+        if ( nSize % ED2K_PART_SIZE == 0 && nSize ) 
+			m_bNullBlock = true;
+
+		DWORD nValidBlocks = ( nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE;
+		if ( m_bNullBlock )
+			nValidBlocks++;
+
+		if ( nOutput / sizeof( CMD4::MD4Digest ) != nValidBlocks )
 			return FALSE;
 	}
 	

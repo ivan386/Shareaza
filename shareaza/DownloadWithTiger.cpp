@@ -307,7 +307,11 @@ BOOL CDownloadWithTiger::ValidationCanFinish() const
 
 	if ( m_pHashsetBlock != NULL && Settings.Downloads.VerifyED2K )
 	{
-		if ( m_nHashsetSuccess >= m_nHashsetBlock ) return TRUE;
+		if ( m_nSize && m_nSize % ED2K_PART_SIZE == 0 &&
+			 m_nHashsetSuccess >= m_nHashsetBlock - 1 )
+			return TRUE;
+		else if ( m_nHashsetSuccess >= m_nHashsetBlock )
+			return TRUE;
 		bAvailable = TRUE;
 	}
 

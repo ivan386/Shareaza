@@ -79,7 +79,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hG1, _T("Name"), _T("Gnutella1") );
 	AddItem( hG1, _T("Type"), _T("Decentralised") );
 	AddItem( hG1, _T("PrimaryURN"), _T("sha1") );
-	AddItem( hG1, _T("NodeClass"), _T("Leaf, Ultrapeer, Peer") );
+	AddItem( hG1, _T("NodeClass"), _T("Leaf") );
 	AddItem( hG1, _T("ProtocolVersion"), _T("0.6") );
 	AddItem( hG1, _T("ComponentVersion"), _T("2.0.0.0") );
 	
@@ -88,8 +88,8 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hED, _T("Type"), _T("Server-Based") );
 	AddItem( hED, _T("PrimaryURN"), _T("ed2k (compound md4)") );
 	AddItem( hED, _T("NodeClass"), _T("Client") );
-	AddItem( hED, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hED, _T("ComponentVersion"), _T("2.2.0.0") );
+	AddItem( hED, _T("ProtocolVersion"), _T("1.1") );
+	AddItem( hED, _T("ComponentVersion"), _T("2.3.0.0") );
 	
 	HTREEITEM hTransfers = AddItem( NULL, _T("File Transfer Protocols") );
 	
@@ -118,8 +118,8 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hEFTP, _T("TransferMode"), _T("Block") );
 	AddItem( hEFTP, _T("Directions"), _T("Download, Upload") );
 	AddItem( hEFTP, _T("Capabilities"), _T("Hashset, SourceExchange, Deflate") );
-	AddItem( hEFTP, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hEFTP, _T("ComponentVersion"), _T("2.2.0.0") );
+	AddItem( hEFTP, _T("ProtocolVersion"), _T("1.1") );
+	AddItem( hEFTP, _T("ComponentVersion"), _T("2.3.0.0") );
 	
 	HTREEITEM hBT = AddItem( hTransfers, _T("BitTorrent Coupling (BT)") );
 	AddItem( hBT, _T("Name"), _T("BitTorrent Coupling (BT)") );

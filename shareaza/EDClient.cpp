@@ -1608,7 +1608,12 @@ CString CEDClient::GetSourceURL()
 
 void CEDClient::WritePartStatus(CEDPacket* pPacket, CDownload* pDownload)
 {
+	bool bNullBlock = ( pDownload->m_nSize % ED2K_PART_SIZE == 0 && pDownload->m_nSize );
 	QWORD nParts = ( pDownload->m_nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE;
+
+	if ( bNullBlock )
+		nParts++;
+
 	pPacket->WriteShortLE( (WORD)nParts );
 	
 	if ( pDownload->m_pHashsetBlock != NULL && pDownload->m_nHashsetBlock == nParts )

@@ -375,10 +375,15 @@ BOOL CDownloadTransferED2K::OnHashsetAnswer(CEDPacket* pPacket)
 	m_bHashset = TRUE;
 	
 	DWORD nBlocks = pPacket->ReadShortLE();
+	bool bNullBlock = ( m_pDownload->m_nSize % ED2K_PART_SIZE == 0 && m_pDownload->m_nSize );
+	DWORD nBlocksFromSize = ( m_pDownload->m_nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE;
+
+	if ( bNullBlock )
+		nBlocksFromSize++;
 	
 	if ( nBlocks == 0 ) nBlocks = 1;
 	
-	if ( nBlocks != (DWORD)( ( m_pDownload->m_nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE ) )
+	if ( nBlocks != nBlocksFromSize )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_HASHSET_ERROR, (LPCTSTR)m_sAddress );
 	}
