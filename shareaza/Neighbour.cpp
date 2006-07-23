@@ -266,25 +266,25 @@ BOOL CNeighbour::OnRun()
 	}
 
 	// If this connection is to a hub above us, or to a Gnutella2 hub like us
-	if ( m_nNodeType == ntHub || ( m_nNodeType == ntNode && m_nProtocol == PROTOCOL_G2 ) )
-	{
+	if ( ( m_nNodeType == ntHub || ( m_nNodeType == ntNode && m_nProtocol == PROTOCOL_G2 ) ) &&
 		// And if we have a local query table for this neighbour and its cookie isn't the master cookie (do)
-		if ( m_pQueryTableLocal != NULL && m_pQueryTableLocal->m_nCookie != QueryHashMaster.m_nCookie )
+	     ( m_pQueryTableLocal != NULL && m_pQueryTableLocal->m_nCookie != QueryHashMaster.m_nCookie ) &&
+		// And it's been more than 60 seconds since the last update (do)
+		 ( tNow - m_pQueryTableLocal->m_nCookie > 60000 ) &&
+		// And it's been more than 30 seconds since the master cookie (do)
+		 ( tNow - QueryHashMaster.m_nCookie > 30000 ||								
+		// Or, the master cookie is a minute older than the local one (do)
+			QueryHashMaster.m_nCookie - m_pQueryTableLocal->m_nCookie > 60000 ||
+		// Or, the local query table is not live (do)
+			! m_pQueryTableLocal->m_bLive ) )
+	{
+		// Then send the connected computer a query hash table patch
+		if ( m_pQueryTableLocal->PatchTo( &QueryHashMaster, this ) )
 		{
-			// And (do)
-			if ( tNow - QueryHashMaster.m_nCookie > 30000 ||							// It's been more than 3 seconds since the master cookie (do)
-				 QueryHashMaster.m_nCookie - m_pQueryTableLocal->m_nCookie > 60000 ||	// Or, the master cookie is a minute older than the local one (do)
-				 m_pQueryTableLocal->m_bLive == FALSE )									// Or, the local query table is not live (do)
-			{
-				// Then send the connected computer a query hash table patch
-				if ( m_pQueryTableLocal->PatchTo( &QueryHashMaster, this ) )
-				{
-					// There was an error, record it
-					theApp.Message( MSG_SYSTEM, IDS_PROTOCOL_QRP_SENT, (LPCTSTR)m_sAddress,
-						m_pQueryTableLocal->m_nBits, m_pQueryTableLocal->m_nHash,
-						m_pQueryTableLocal->m_nInfinity, m_pQueryTableLocal->GetPercent() );
-				}
-			}
+			// There was an error, record it
+			theApp.Message( MSG_SYSTEM, IDS_PROTOCOL_QRP_SENT, (LPCTSTR)m_sAddress,
+				m_pQueryTableLocal->m_nBits, m_pQueryTableLocal->m_nHash,
+				m_pQueryTableLocal->m_nInfinity, m_pQueryTableLocal->GetPercent() );
 		}
 	}
 
