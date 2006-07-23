@@ -24,10 +24,10 @@
 />
 
 <!--Font Section for Traditional Chinese-->
-<fonts>      
+<fonts>
 
-        <font name="System.Plain" face="新細明體"/>   
-        <font name="System.Bold"    face="新細明體" weight="bold"/>      
+        <font name="System.Plain" face="新細明體"/>
+        <font name="System.Bold"    face="新細明體" weight="bold"/>
         <font name="Panel.Caption"  face="新細明體" weight="bold"/>
 </fonts>
 
@@ -1541,7 +1541,7 @@
 		<heading align="middle">我的下載</heading>
 		<newline gap="8" indent="32"/>
 		<text>查看我的下載資料夾︰</text>
-		<link target="raza:shell:downloads">點這裡</link>	  
+		<link target="raza:shell:downloads">點這裡</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -1760,7 +1760,7 @@
 		<newline gap="16"/>
 
 		<text>
-		        Shareaza 設定管理員讓使用者完全地自訂 Shareaza 的運作方式.  
+		        Shareaza 設定管理員讓使用者完全地自訂 Shareaza 的運作方式.
                         這個設定讓您
 		</text>
 		<text format="b">網際網路 </text>
@@ -2043,7 +2043,7 @@
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">這個 torrent 可能編碼錯誤</text>
 		<newline gap="8"/>
-		<text>Windows 回報, 在解碼這個 torrent 的內含文字時發生轉譯錯誤. 這個 torrent 可能損壞, 或是錯誤地編碼了. 
+		<text>Windows 回報, 在解碼這個 torrent 的內含文字時發生轉譯錯誤. 這個 torrent 可能損壞, 或是錯誤地編碼了.
                 您仍然可以正確下載 torrent, 不過有些檔案名稱可能不正確.</text>
 		<newline gap="8"/>
 		<text>大部分的 torrent 製作程式允許您修復這個 torrent, 讓它能夠正確地在所有的 BT 程式運作.</text>
@@ -3031,7 +3031,7 @@
 	<string id="17497" value="嘗試做種 &quot;%s&quot; 時, 發生未知的錯誤."/>
 	<string id="17498" value="在這個檔案發現錯誤: &quot;%s&quot;."/>
 	<string id="17500" value="伺服器(Tracker)沒有回應- 重新嘗試取得用戶清單 (%i of %i)"/>
-	<string id="17501" value="無法與伺服器(Tracker)通訊"/>	
+	<string id="17501" value="無法與伺服器(Tracker)通訊"/>
 	<string id="17503" value="伺服器 (Tracker) 連線失敗- 正在嘗試下一個伺服器(Tracker) (%i of %i)"/>
 	<string id="17505" value="至 %s 的 BitTorrent 連線已忽略."/>
 	<string id="17506" value="與 %s 的 BitTorrent 信號交換已忽略."/>
@@ -4210,133 +4210,133 @@
 	</dialog>
 </dialogs>
 
-<!--  Columns Definitions--> 
+<!--  Columns Definitions-->
 <listColumns>
 	<list name="CLibraryWnd">
-  <column from="File" to="檔案" /> 
-  <column from="Extension" to="延伸" /> 
-  <column from="Size" to="大小" /> 
-  <column from="Folder" to="資料夾" /> 
-  <column from="Hits" to="搜尋次數" /> 
-  <column from="Uploads" to="上傳" /> 
-  <column from="Modified" to="最後修改" /> 
+  <column from="File" to="檔案" />
+  <column from="Extension" to="延伸" />
+  <column from="Size" to="大小" />
+  <column from="Folder" to="資料夾" />
+  <column from="Hits" to="搜尋次數" />
+  <column from="Uploads" to="上傳" />
+  <column from="Modified" to="最後修改" />
   </list>
 	<list name="CDownloadCtrl">
-  <column from="Downloaded File" to="已下載檔" /> 
-  <column from="Size" to="大小" /> 
-  <column from="Progress" to="進度" /> 
-  <column from="Speed" to="速度" /> 
-  <column from="Status" to="狀態" /> 
-  <column from="Client" to="客戶端" /> 
-  <column from="Downloaded" to="已下載" /> 
-  <column from="Complete" to="完成" /> 
+  <column from="Downloaded File" to="已下載檔" />
+  <column from="Size" to="大小" />
+  <column from="Progress" to="進度" />
+  <column from="Speed" to="速度" />
+  <column from="Status" to="狀態" />
+  <column from="Client" to="客戶端" />
+  <column from="Downloaded" to="已下載" />
+  <column from="Complete" to="完成" />
   </list>
 	<list name="CUploadCtrl">
-  <column from="Remote User" to="遠端用戶" /> 
-  <column from="Uploaded File" to="已上傳檔案" /> 
-  <column from="Size" to="ˇ大小" /> 
-  <column from="Progress" to="進度" /> 
-  <column from="Speed" to="速度" /> 
-  <column from="Client" to="客戶端" /> 
-  <column from="Rating" to="評分" /> 
+  <column from="Remote User" to="遠端用戶" />
+  <column from="Uploaded File" to="已上傳檔案" />
+  <column from="Size" to="ˇ大小" />
+  <column from="Progress" to="進度" />
+  <column from="Speed" to="速度" />
+  <column from="Client" to="客戶端" />
+  <column from="Rating" to="評分" />
   </list>
 	<list name="CNeighboursWnd">
-  <column from="Address" to="位址" /> 
-  <column from="Port" to="連接埠" /> 
-  <column from="Time" to="" /> 
-  <column from="Packets" to="封包" /> 
-  <column from="Bandwidth" to="頻寬" /> 
-  <column from="Total" to="總計" /> 
-  <column from="Flow" to="流量" /> 
-  <column from="Leaves" to="葉結點" /> 
-  <column from="Mode" to="模式" /> 
-  <column from="Client" to="客戶端" /> 
-  <column from="Name" to="名稱" /> 
+  <column from="Address" to="位址" />
+  <column from="Port" to="連接埠" />
+  <column from="Time" to="" />
+  <column from="Packets" to="封包" />
+  <column from="Bandwidth" to="頻寬" />
+  <column from="Total" to="總計" />
+  <column from="Flow" to="流量" />
+  <column from="Leaves" to="葉結點" />
+  <column from="Mode" to="模式" />
+  <column from="Client" to="客戶端" />
+  <column from="Name" to="名稱" />
   </list>
 	<list name="CSecurityWnd">
-  <column from="Address / Content" to="位址 / 內容" /> 
-  <column from="Action" to="動作" /> 
-  <column from="Expires" to="有效期限" /> 
-  <column from="Precedence" to="優先順序" /> 
-  <column from="Hits" to="" /> 
-  <column from="Comment" to="備註" /> 
+  <column from="Address / Content" to="位址 / 內容" />
+  <column from="Action" to="動作" />
+  <column from="Expires" to="有效期限" />
+  <column from="Precedence" to="優先順序" />
+  <column from="Hits" to="" />
+  <column from="Comment" to="備註" />
   </list>
 	<list name="CHostCacheWnd">
-  <column from="Address" to="位址" /> 
-  <column from="Port" to="連接埠" /> 
-  <column from="Client" to="客戶端" /> 
-  <column from="Last Seen" to="最後看見" /> 
-  <column from="Name" to="名稱" /> 
-  <column from="Description" to="敘述" /> 
-  <column from="CurUsers" to="目前用戶人數" /> 
-  <column from="MaxUsers" to="最大用戶人數" /> 
+  <column from="Address" to="位址" />
+  <column from="Port" to="連接埠" />
+  <column from="Client" to="客戶端" />
+  <column from="Last Seen" to="最後看見" />
+  <column from="Name" to="名稱" />
+  <column from="Description" to="敘述" />
+  <column from="CurUsers" to="目前用戶人數" />
+  <column from="MaxUsers" to="最大用戶人數" />
   </list>
 	<list name="CDiscoveryWnd">
-  <column from="Address" to="" /> 
-  <column from="Type" to="類型" /> 
-  <column from="Last Access" to="最後存取" /> 
-  <column from="Hosts" to="主機" /> 
-  <column from="Accesses" to="" /> 
-  <column from="Updates" to="更新" /> 
-  <column from="Failures" to="" /> 
+  <column from="Address" to="" />
+  <column from="Type" to="類型" />
+  <column from="Last Access" to="最後存取" />
+  <column from="Hosts" to="主機" />
+  <column from="Accesses" to="" />
+  <column from="Updates" to="更新" />
+  <column from="Failures" to="" />
   </list>
 	<list name="CPacketWnd">
-  <column from="Address" to="位址" /> 
-  <column from="Protocol" to="協定" /> 
-  <column from="Type" to="類型" /> 
-  <column from="T/H" to="" /> 
-  <column from="Hex" to="" /> 
-  <column from="ASCII" to="" /> 
-  <column from="G1-ID" to="" /> 
+  <column from="Address" to="位址" />
+  <column from="Protocol" to="協定" />
+  <column from="Type" to="類型" />
+  <column from="T/H" to="" />
+  <column from="Hex" to="" />
+  <column from="ASCII" to="" />
+  <column from="G1-ID" to="" />
   </list>
 	<list name="CSearchMonitorWnd">
-  <column from="Search" to="搜尋" /> 
-  <column from="URN" to="" /> 
-  <column from="Schema" to="" /> 
+  <column from="Search" to="搜尋" />
+  <column from="URN" to="" />
+  <column from="Schema" to="" />
   </list>
 	<list name="CMatchCtrl">
-  <column from="File" to="檔案" /> 
-  <column from="Extension" to="" /> 
-  <column from="Size" to="大小" /> 
-  <column from="Rating" to="評分" /> 
-  <column from="Status" to="狀態" /> 
-  <column from="Host/Count" to="主機/計數" /> 
-  <column from="Speed" to="速度" /> 
-  <column from="Client" to="客戶端" /> 
+  <column from="File" to="檔案" />
+  <column from="Extension" to="" />
+  <column from="Size" to="大小" />
+  <column from="Rating" to="評分" />
+  <column from="Status" to="狀態" />
+  <column from="Host/Count" to="主機/計數" />
+  <column from="Speed" to="速度" />
+  <column from="Client" to="客戶端" />
   </list>
 	<list name="CUploadQueueList">
-  <column from="Name" to="名稱" /> 
-  <column from="Criteria" to="條件" /> 
-  <column from="Bandwidth" to="頻寬" /> 
-  <column from="Transfers" to="傳輸" /> 
-  <column from="Order" to="順序" /> 
+  <column from="Name" to="名稱" />
+  <column from="Criteria" to="條件" />
+  <column from="Bandwidth" to="頻寬" />
+  <column from="Transfers" to="傳輸" />
+  <column from="Order" to="順序" />
   </list>
 	<list name="CAdvancedSettingsList">
-  <column from="Setting" to="設定" /> 
-  <column from="Value" to="值" /> 
+  <column from="Setting" to="設定" />
+  <column from="Value" to="值" />
   </list>
 	<list name="CFavouritesProfileList">
-  <column from="Name" to="名稱" /> 
-  <column from="URL" to="URL" /> 
+  <column from="Name" to="名稱" />
+  <column from="URL" to="URL" />
   </list>
 	<list name="CFileSourcesPageList">
-  <column from="URL" to="URL" /> 
-  <column from="Expires" to="有效期限" /> 
+  <column from="URL" to="URL" />
+  <column from="Expires" to="有效期限" />
   </list>
 	<list name="CTorrentFileList">
-  <column from="Filename" to="檔案名稱" /> 
-  <column from="Size" to="大小" /> 
+  <column from="Filename" to="檔案名稱" />
+  <column from="Size" to="大小" />
   </list>
 	<list name="CTorrentTrackerList">
-  <column from="Tracker" to="伺服器" /> 
-  <column from="Status" to="狀態" /> 
-  <column from="Type" to="類型" /> 
+  <column from="Tracker" to="伺服器" />
+  <column from="Status" to="狀態" />
+  <column from="Type" to="類型" />
   </list>
 	<list name="CReviewList">
-  <column from="User" to="用戶" /> 
-  <column from="Rating" to="評分" /> 
-  <column from="Comments" to="意見" /> 
-  <column from="Order" to="順序" /> 
+  <column from="User" to="用戶" />
+  <column from="Rating" to="評分" />
+  <column from="Comments" to="意見" />
+  <column from="Order" to="順序" />
   </list>
   </listColumns>
   </skin>

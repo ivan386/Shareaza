@@ -3059,7 +3059,7 @@
 	<string id="17473" value="Verbinden met BitTorrent cliënt %s is uitgeteld."/>
 	<string id="17474" value="Handen schudden met BitTorrent cliënt %s is uitgeteld."/>
 	<string id="17475" value="BitTorrent verbinding met %s wordt gesloten vanwege een gebrek aan verkeer."/>
-	<string id="17476" value="BitTorrent verbinding met %s is mislukt omdat de andere cliënt een andere Peer ID heeft."/> 
+	<string id="17476" value="BitTorrent verbinding met %s is mislukt omdat de andere cliënt een andere Peer ID heeft."/>
 	<string id="17477" value="BitTorrent verbinding met %s antwoordde met het verkeerde bestand."/>
 	<string id="17478" value="BitTorrent verbinding met %s vroeg een onbekend bestand aan."/>
 	<string id="17479" value="BitTorrent verbinding met %s tot stand gekomen voor &quot;%s&quot;."/>
@@ -3102,7 +3102,7 @@
 	<string id="19001" value="Je moet een gebruikersnaam en wachtwoord kiezen."/>
 	<string id="19002" value="Niet mogelijk om verbindingen te accepteren, de URL is niet beschikbaar."/>
 	<string id="20000" value="Geen URN beschikbaar"/>
-	<string id="20001" value="Sluiten"/> 
+	<string id="20001" value="Sluiten"/>
 	<string id="20002" value="van"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Veranderen van leesrichting vereist een herstart van Shareaza.\nje zal Shareaza zelf opnieuw moeten starten. Nu afsluiten?"/>
 	<string id="20004" value="Rechts-naar links talenworden niet ondersteund door dit besturingssysteem."/>

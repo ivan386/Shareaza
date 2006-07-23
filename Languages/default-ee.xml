@@ -1705,7 +1705,7 @@ Umlauts:
 		<newline gap="16"/>
 
 		<text>
-			Shareaza Seadehaldur lubab edasijõudnud kasutajal täielikult kohandada 
+			Shareaza Seadehaldur lubab edasijõudnud kasutajal täielikult kohandada
 			Shareaza töötamist.  Seaded
 		</text>
 		<text format="b">Üldine </text>
@@ -1901,7 +1901,7 @@ Umlauts:
 	<document name="DownloadHelp.Select">
 		<text format="b">Allalaadimised</text>
 		<newline gap="8"/>
-		<text>Siin kuvatakse hetkel allalaaditavad failid. Sa saad vaadata 
+		<text>Siin kuvatakse hetkel allalaaditavad failid. Sa saad vaadata
 		iga faili allikaid, vajutades vasakul oleval väikesel + märgil.</text>
 		<newline gap="8"/>
 		<text>Sa saad seda käsku kasutada ka iga laadimise kohta eraldi.
@@ -1934,7 +1934,7 @@ Umlauts:
 		<newline gap="8"/>
 		<text>Shareaza on peatanud automaatselt allalaadimise, sest kõvaketas tundub täis olevat,
 		või faili ei ole võimalik sellele kirjutada.  Kui sa soovid allalaadimist jätkata, palun
-		tee kõvakettale vaba ruumi juurde, ja/või kontrolli, et poolikute failide kaust on 
+		tee kõvakettale vaba ruumi juurde, ja/või kontrolli, et poolikute failide kaust on
 		ligipääsetav ja jätka allalaadimist.</text>
 	</document>
 
@@ -1952,7 +1952,7 @@ Umlauts:
 		<text>Sea allalaadimist parajasti töödeldakse.  Kui ta tõmbab liiga aeglaselt,
 		proovi otsida lisa allikaid '</text>
 		<text format="b">Leia Rohkem Kasutajaid</text><text>' käsuga. Kui kiirus ei parane
-		võib see olla põhjustatud üleslaadimis kiiruse piirangust, mille on määranud faili 
+		võib see olla põhjustatud üleslaadimis kiiruse piirangust, mille on määranud faili
 		kautaja, kellelt faili tõmbad.  Tavaliselt kiirused ajapikku tõusevad.</text>
 	</document>
 
@@ -1960,7 +1960,7 @@ Umlauts:
 		<text format="b">See allalaadimine on Ootel</text>
 		<newline gap="8"/>
 		<text>See fail ootab, et keegi hakkaks seda jagama.
-		Shareaza on valmis faili allalaadima, aga momendil ei jaga seda keegi. 
+		Shareaza on valmis faili allalaadima, aga momendil ei jaga seda keegi.
 		Tõenäoliselt ootad sa järjekorras ja allalaadimine võib iga hetk alata.
 		Sa saad uurida iga allika järjekordi eraldi ja mitmes sa järjekorras oled.
 		Kui sa ise ka faile jagad, võib see kiirendada allalaadimist.</text>
@@ -1986,7 +1986,7 @@ Umlauts:
 		<text format="b">Leia Rohkem Kasutajaid </text><text>käsklust.</text>
 		<newline gap="8"/>
 		<text>Mõnikord kahjuks ei ole ühtegi selle faili kasutajat võrgus.
-		Sellisel juhul on ainuke võimalus oodata, etkeegi selle faili kasutaja tuleb 
+		Sellisel juhul on ainuke võimalus oodata, etkeegi selle faili kasutaja tuleb
 		võrku, või tühistada allalaadimine ja leida sarnane fail, millel on rohkem
 		kasutajaid.</text>
 	</document>
@@ -2001,8 +2001,8 @@ Umlauts:
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrenti Jälitus ei vasta</text>
 		<newline gap="8"/>
-		<text>BitTorrenti server selle allalaadimiseks tundub olevat maas 
-		või ei vasta.  Shareazal ei ole võimalik saada selle faili 
+		<text>BitTorrenti server selle allalaadimiseks tundub olevat maas
+		või ei vasta.  Shareazal ei ole võimalik saada selle faili
 		jagajate kohta infot.</text>
 	</document>
 
@@ -2012,7 +2012,7 @@ Umlauts:
 		<text format="b">Üleslaadimine</text>
 		<newline gap="8"/>
 		<text>Siin kuvatakse üleslaadimised ja järjekorrad. Sa saad igat järjekrda laiendada
-		vasakul olevast + märgist, ja filtreerida kuvatavat infot, all paremas nurgas 
+		vasakul olevast + märgist, ja filtreerida kuvatavat infot, all paremas nurgas
 		asuvast nupust.</text>
 	</document>
 
@@ -2055,7 +2055,7 @@ Umlauts:
 		<text>Shareaza on avastanud Windows XP Service Pack 2 (või sarnase keskonna). See
 		piirab korraga tehtavate ühenduste arvu.</text>
 		<newline gap="8"/>
-		<text>Shareaza on piiranud ühendusi ja seadnud sobivad sätted, et kindlustada 
+		<text>Shareaza on piiranud ühendusi ja seadnud sobivad sätted, et kindlustada
 		korralik töö, sellegipoolest on programmi võimalused piiratud. Külastage
 		Shareaza forumit, et saada rohkem informatsiooni ja uuemaid uudiseid.</text>
 	</document>
@@ -2072,11 +2072,11 @@ Umlauts:
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">Sellel torrentil paistavad olema kodeerimisvead</text>
 		<newline gap="8"/>
-		<text>Windows teatel on selle torentil vigane kodeering. On võimalik, et torrent 
+		<text>Windows teatel on selle torentil vigane kodeering. On võimalik, et torrent
 		on vigane, või lihtsalt valesti kodeeritud. Torrent võib õigesti allalaaditud
 		olla aga nimes võivad erinevused olla.</text>
 		<newline gap="8"/>
-		<text>Enamus torrentitegemise programme peaksid olema suutelised seda torrentit 
+		<text>Enamus torrentitegemise programme peaksid olema suutelised seda torrentit
 		parandama, et kõik BitTorrenti programmid oleksid suutelised seda lugema.</text>
 		<newline gap="8"/>
 		<link target="http://www.shareaza.com/help/?torrentencoding">Kliki lisaabi saamiseks siia</link>
@@ -2096,15 +2096,15 @@ Umlauts:
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Piiratud üleslaadimine võib langetada allalaadimiskiirust</text>
 		<newline gap="8"/>
-		<text>Mitmed võrgud kuhu Shareaza ühendub, et kindlustada liikluse suhet, piiravad 
+		<text>Mitmed võrgud kuhu Shareaza ühendub, et kindlustada liikluse suhet, piiravad
 		üleslaadimisi klientidele kes ei jaga, või lihtsalt ei anna allalaadimis õigusi.</text>
 		<newline/>
-		<text>Õnneks, püsiühendusega DSL ühendused on nagu kahesuunalised kiirteed: siin on 
+		<text>Õnneks, püsiühendusega DSL ühendused on nagu kahesuunalised kiirteed: siin on
 		eraldi kanalid allalaadimiseks ja üleslaadimiseks. Kui klient on õigesti seadistatud,
 		saad head tulemused nii alla- kui üleslaadimisel.</text>
 		<newline gap="8"/>
 		<text>Vaikimisi on sinu üleslaadimise piirang seatud 85% võimalikust ülesalaadimisest,
-		samas allalaadimine on piiramatu. Selline konfiguratsioon peaks andma kiireima võimaliku 
+		samas allalaadimine on piiramatu. Selline konfiguratsioon peaks andma kiireima võimaliku
 		allalaadimis kiiruse.</text>
 	</document>
 
@@ -2125,11 +2125,11 @@ Umlauts:
 	<document name="SearchHelp.BadSearch2">
 		<text format="b">Palun sõnasta otsingusõna ümber</text>
 		<newline gap="8"/>
-		<text>Otsing ei sisalda piisavalt märksõnu, et anda korralikku vastust. Kõik otsingud 
+		<text>Otsing ei sisalda piisavalt märksõnu, et anda korralikku vastust. Kõik otsingud
 		vajavad minimaalset arvu sümboleid et, alustada.</text>
 		<newline gap="8"/>
-		<text>Kuigi on võimalik otsida levinud faililaiendeid (ja numbreid), siiski peab 
-		sisestama ka teisi märksõnu, et otsida. Otsingus ei kasutata kirjavahemärke, sisestatakse 
+		<text>Kuigi on võimalik otsida levinud faililaiendeid (ja numbreid), siiski peab
+		sisestama ka teisi märksõnu, et otsida. Otsingus ei kasutata kirjavahemärke, sisestatakse
 		ainult tekst.</text>
 	</document>
 
@@ -2138,11 +2138,11 @@ Umlauts:
 		<newline gap="8"/>
 		<text>Otsing sisaldab ainult faililaindit, või mitteotsitavat sõna.</text>
 		<newline gap="8"/>
-		<text>Kui sul on otsinguga raskusi, siis pea meeles, et see on sarnane 
-		weebiotsingule. Parimad on täpsed terminid ja sõnad- ainulaadsed sõnad, pealkirjad 
+		<text>Kui sul on otsinguga raskusi, siis pea meeles, et see on sarnane
+		weebiotsingule. Parimad on täpsed terminid ja sõnad- ainulaadsed sõnad, pealkirjad
 		ja võtmesõnad.</text>
 		<newline gap="8"/>
-		<text>Liiga üldsõnalisi termineid ei saa eriti efektiivselt otsida ja liiga palju vastuseid 
+		<text>Liiga üldsõnalisi termineid ei saa eriti efektiivselt otsida ja liiga palju vastuseid
 		langetavad otsingu kvaliteeti, samuti ka liiga suur ressursikasutus.</text>
 		<newline gap="8"/>
 		<text>Edasiseks abiks külastage Shareaza kodulehte.</text>
@@ -2151,11 +2151,11 @@ Umlauts:
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">Otsingut ei saa teha</text>
 		<newline gap="8"/>
-		<text>Antud otsing annab liiga palju täiskasvanutele orienteeritud vastuseid ja see 
-		on seadetest keelatud toiming. Sa peaksid kas otsingu ümbersõnastama või 
+		<text>Antud otsing annab liiga palju täiskasvanutele orienteeritud vastuseid ja see
+		on seadetest keelatud toiming. Sa peaksid kas otsingu ümbersõnastama või
 		filtri välja lülitama.</text>
 		<newline gap="8"/>
-		<text>Et filtrit välja lülitada, mine Tööriistad - Seaded - Üldiselt ja võta linnuke 
+		<text>Et filtrit välja lülitada, mine Tööriistad - Seaded - Üldiselt ja võta linnuke
 		täiskasvanu filtri eest.</text>
 	</document>
 
@@ -2175,12 +2175,12 @@ Umlauts:
 		<text>See kaust on (või sisaldab) süsteemi kaust. Selle kausta jagamine ei ole
 		soovitatav, kuna enamus failitest pole teistele mingit kasu.</text>
 		<newline gap="8"/>
-		<text>Kaustad nagu Windowsi kaustad, Program Files, ja teised sarnased kaustad 
+		<text>Kaustad nagu Windowsi kaustad, Program Files, ja teised sarnased kaustad
 		ei sisalda tavaliselt jagamiseks sobivaid faile. Failid, mida võiks jagada ja mis
 		asuvad </text><text format="i">nende</text>
 		<text> alamkaustades. Jagage siis alamkauste.</text>
 		<newline gap="8"/>
-		<text>Shareaza 'poolikute' kausta ei peaks samuti jagama läbi raamatukogu, kuna 
+		<text>Shareaza 'poolikute' kausta ei peaks samuti jagama läbi raamatukogu, kuna
 		nende hashimine võib need rikkuda.</text>
 	</document>
 
@@ -3087,7 +3087,7 @@ Umlauts:
 	<string id="17497" value="Ilmnes tundmatu viga, proovides jagada &quot;%s&quot;."/>
 	<string id="17498" value="Failis &quot;%s&quot; tuvastati viga."/>
 	<string id="17500" value="Jälitaja ei vastanud- Proovin uuesti (%i of %i)"/>
-	<string id="17501" value="Ei suuda jälitajaga suhelda"/>	
+	<string id="17501" value="Ei suuda jälitajaga suhelda"/>
 	<string id="17503" value="Jälitamine ebaõnnestus- Proovin järgmist (%i of %i)"/>
 	<string id="17505" value="BitTorrenti ühendus %s katkes."/>
 	<string id="17506" value="BitTorrent kinnitus %s katkes."/>

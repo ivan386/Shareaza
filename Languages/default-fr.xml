@@ -25,7 +25,7 @@ Other:
 <!-- Manifest -->
 <manifest	name="Français"
 		author="Antoine Martin-Lalande (Sensi)"
-		updateBy="Antoine Martin-Lalande (Sensi)"		
+		updateBy="Antoine Martin-Lalande (Sensi)"
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.fr(at)gmail.com"
@@ -111,7 +111,7 @@ Other:
 	<toolbar name="CSearchWnd.Full">
 		<button id="ID_SEARCH_SEARCH" text="Chercher encore..."/>
 		<button id="ID_SEARCH_STOP" text="Stopper la recherche"/>
-		<separator/>	
+		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Télécharger"/>
 		<button id="ID_BROWSE_LAUNCH" text="Parcourir l'utilisateur"/>
 		<separator/>
@@ -446,7 +446,7 @@ Other:
 			<menu text="A_vancé">
 				<item id="ID_VIEW_NEIGHBOURS" text="V_oisins"/>
 				<item id="ID_VIEW_UPLOADS" text="_Envois"/>
-			    <separator/>				
+			    <separator/>
 			    <item id="ID_VIEW_SECURITY" text="Sé_curité"/>
 			    <item id="ID_VIEW_HOSTS" text="_Hôtes en cache"/>
                 <item id="ID_VIEW_DISCOVERY" text="Décou_verte"/>
@@ -480,8 +480,8 @@ Other:
 			<menu text="Sites _Web">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
-				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/> 
-                <!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/> 
+				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
+                <!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
@@ -571,9 +571,9 @@ Other:
 			<menu text="Sites _Web">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
-				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/> 
-                <!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/> 
-                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/> 
+				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
+                <!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
+                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
@@ -1040,7 +1040,7 @@ Other:
   	    <item id="ID_UPLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
     </menu>
     <menu name="CUploadsWnd.Nothing">
-  	    <item id="ID_UPLOADS_HELP" text="Ai_de..."/>		
+  	    <item id="ID_UPLOADS_HELP" text="Ai_de..."/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Nettoyer terminés"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
 	</menu>
@@ -1893,7 +1893,7 @@ Other:
 			<gap size="5"/>
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Discuter avec l'utilisateur</link>
 		</group>
-		
+
 		<group id="3">
             <newline gap="16" indent="0"/>
             <text format="b">Liens web favoris</text>
@@ -1993,14 +1993,14 @@ Other:
 		<newline gap="8"/>
 		<text>Le serveur du traqueur BitTorrent de ce téléchargement semble être hors ligne ou rencontrer des difficultés techniques. Shareaza est dans l'incapacité de le contacter et de recevoir une liste de participants au téléchargement.</text>
 	</document>
-	
+
 	<!-- Upload help documents -->
-  	 
+
 	<document name="UploadHelp">
 		<text format="b">Zone des envois</text>
 		<newline gap="8"/>
 		<text>Ici sont affichés les files d'attentes et les envois. Vous pouvez expandre chaque file avec un petit + sur la gauche, et filtrer ce qui sera affiché avec le boutton sur la droite de la barre d'outil de la fenêtre.</text>
-	</document>	
+	</document>
 
 	<!-- General help documents -->
 
@@ -2012,7 +2012,7 @@ Other:
 		<text>Vous devriez essayer de garder une quantité raisonnable d'espace disque libre.
 		Les programmes peuvent devenir instables si les disques deviennent pleins, et les fichiers temporaires peuvent ête perdus. Vous devriez éxecuter un nettoyage du disque-dur, effacer des fichiers inutiles, ou désinstaller des programmes dont vous n'avez plus l'utilité.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.DiskWriteFail">
   	    <text format="b">Un dossier requis est ininscriptible</text>
   	    <newline gap="8"/>
@@ -2020,7 +2020,7 @@ Other:
   	    <newline gap="8"/>
   	    <text>Un disque réseau est peut-être déconnecté, ou vous n'avez peut-être pas la permission d'écrire dans le dossier sélectionné. Merci de vérifier les dossiers et permissions, ou de changer l'emplacement des fichiers temporaires.</text>
   	</document>
-  	 
+
   	<document name="GeneralHelp.ConnectionFail">
   	    <text format="b">La connexion Internet à été perdue</text>
   	    <newline gap="8"/>
@@ -2046,18 +2046,18 @@ Other:
 		<newline gap="8"/>
 		<text>L'utilisation d'Internet par des enfants (le partage de fichiers via le P2P inclus) devrait toujours se faire sous la surveillance parentale.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.BadTorrentEncoding">
   	    <text format="b">Ce torrent semble avoir une erreur de codage</text>
   	    <newline gap="8"/>
   	    <text>Windows a rapporté un défaut de traduction en décodant le texte dans ce torrent. Il est possible que le torrent soit corrompu, ou juste incorrectement codé. Le torrent peut peut-être télécharger correctement, bien que quelques noms de fichiers pourraient être incorrects.</text>
   	    <newline gap="8"/>
   	    <text>La plupart des programmes de création de torrent devraient vous permettre de réparer ce torrent, ce qui lui permettra de fonctionner correctement dans toutes les applications BitTorrent.</text>
-		<newline gap="8"/> 
-        <link target="http://www.shareaza.com/help/?torrentencoding">Cliquez ici pour une aide additionnelle</link> 
-        <text>, ou pour télécharger un logiciel pour réparer le torrent.</text> 
+		<newline gap="8"/>
+        <link target="http://www.shareaza.com/help/?torrentencoding">Cliquez ici pour une aide additionnelle</link>
+        <text>, ou pour télécharger un logiciel pour réparer le torrent.</text>
   	</document>
-		
+
 	<document name="GeneralHelp.DonkeyServerList">
         <text format="b">Votre liste de serveurs eDonkey est vide</text>
         <newline gap="8"/>
@@ -2066,16 +2066,16 @@ Other:
         <text>Vous pouvez télécharger une liste de serveurs depuis la page des réglages eDonkey, ou depuis la fenêtre du service découverte. (Pressez F9 pour ouvrir la fenêtre des services découverte)</text>
     </document>
 
-    <document name="GeneralHelp.UploadWarning"> 
-        <text format="b">Limiter les envois peut ralentir les téléchargements</text> 
-        <newline gap="8"/> 
-        <text>Shareaza se connecte à plusieurs réseaux qui imposent des ratios, limitent les envois aux clients qui ne partagent pas, ou simplement donnent la préférence de l'envoi aux partageurs connus.</text> 
-        <newline/> 
-        <text>Heureusement, les connexions DSL à large bande sont comme des autoroutes à deux voies: vous avez des attributions séparées pour l'envoi et le téléchargement. Si votre client est correctement configuré, vous devriez pouvoir envoyer à un bon taux tout en gardant une pleine capacité de téléchargement.</text> 
-        <newline gap="8"/> 
-        <text>Par défaut, votre limite d'envoi est mis à environ 85% de votre bande passante montante disponible, tandis que les téléchargements sont illimités. Cette configuration devrait vous donner les téléchargements disponibles les plus rapides possible.</text> 
+    <document name="GeneralHelp.UploadWarning">
+        <text format="b">Limiter les envois peut ralentir les téléchargements</text>
+        <newline gap="8"/>
+        <text>Shareaza se connecte à plusieurs réseaux qui imposent des ratios, limitent les envois aux clients qui ne partagent pas, ou simplement donnent la préférence de l'envoi aux partageurs connus.</text>
+        <newline/>
+        <text>Heureusement, les connexions DSL à large bande sont comme des autoroutes à deux voies: vous avez des attributions séparées pour l'envoi et le téléchargement. Si votre client est correctement configuré, vous devriez pouvoir envoyer à un bon taux tout en gardant une pleine capacité de téléchargement.</text>
+        <newline gap="8"/>
+        <text>Par défaut, votre limite d'envoi est mis à environ 85% de votre bande passante montante disponible, tandis que les téléchargements sont illimités. Cette configuration devrait vous donner les téléchargements disponibles les plus rapides possible.</text>
     </document>
-	
+
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
@@ -2086,7 +2086,7 @@ Other:
 		<newline gap="8"/>
 		<text>La plupart des clients sur le réseau ignoreront une recherche avec un seul terme, &quot;MP3&quot; par exemple, peut précise, elle génèrerait beaucoup trop de résultats.</text>
 	</document>
-  	 
+
   	<document name="SearchHelp.BadSearch2">
   	    <text format="b">Merci de reformuler votre recherche</text>
   	    <newline gap="8"/>
@@ -2094,7 +2094,7 @@ Other:
   	    <newline gap="8"/>
   	    <text>Bien que les extensions de fichier communes (et les nombres) peuvent être recherchés, vous devez aussi y ajouter d'autres termes en formulant la recherche. La ponctuation et les wildcards ne sont pas employés dans les recherches, juste le texte que vous écrivez.</text>
   	</document>
-  	 
+
   	<document name="SearchHelp.BadSearch3">
   	    <text format="b">Merci de reformuler votre recherche</text>
   	    <newline gap="8"/>
@@ -2468,8 +2468,8 @@ Other:
 	<string id="7001" value="&amp;Schemas"/>
   	<string id="7002" value="Valeurs multiples"/>
   	<string id="7003" value="Multiple"/>
-    <string id="7004" value="Il y a déjà un filtre nommé &quot;%s&quot;, voulez-vous le remplacer?"/> 
-    <string id="7005" value="Merci de donner un nom au filtre."/>	
+    <string id="7004" value="Il y a déjà un filtre nommé &quot;%s&quot;, voulez-vous le remplacer?"/>
+    <string id="7005" value="Merci de donner un nom au filtre."/>
 	<string id="8000" value="Réglages Shareaza"/>
 	<string id="8001" value="Shareaza vous souhaite la bienvenue!"/>
 	<string id="8002" value="Propriétés du fichier"/>
@@ -2892,7 +2892,7 @@ Other:
 	<string id="16816" value="Le réseau eDonkey utilise de larges files d'attente avec de longs temps d'attente. En acceptant de limiter trop strictement le nombre maximum de place dans la file d'attente, vous pourriez avoir des problèmes pour avoir des téléchargements qui commencent.\nEtes-vous certain de vouloir limiter le nombre de positions en file d'attente que vous acceptez?"/>
 	<string id="16817" value="Windows ne supporte pas les chemins d'accès au fichier de plus de 256 caractères.\nMerci de sélectionner un dossier avec un chemin plus court."/>
 	<string id="16818" value="Les dossiers complete et incomplete ne doivent pas être les mêmes"/>
-	<string id="16819" value="Le dossier des fichiers incomplets ne doit pas être dans la bibliothèque, car cela réduirait l'exécution. Les fichiers incomplets peuvent être directement partagés à partir de la fenêtre des transferts."/> 
+	<string id="16819" value="Le dossier des fichiers incomplets ne doit pas être dans la bibliothèque, car cela réduirait l'exécution. Les fichiers incomplets peuvent être directement partagés à partir de la fenêtre des transferts."/>
 	<string id="16864" value="Requiert le service Découverte de l'hôte..."/>
 	<string id="16865" value="Requiert le service Découverte &quot;%s&quot;..."/>
 	<string id="16866" value="Transaction GWebCache réussie (&quot;%s&quot;)."/>
@@ -3033,8 +3033,8 @@ Other:
 	<string id="17496" value="Erreur durant la copie de &quot;%s&quot; dans un fichier de partage BitTorrent."/>
 	<string id="17497" value="Erreur inconnue en essayant de seed &quot;%s&quot;."/>
 	<string id="17498" value="Erreur détectée dans le fichier &quot;%s&quot;."/>
-	<string id="17500" value="Le traqueur n'a pas répondu - Réessai l'annonce (%i de %i)"/> 
-    <string id="17501" value="Incapable de communiquer avec le traqueur"/> 
+	<string id="17500" value="Le traqueur n'a pas répondu - Réessai l'annonce (%i de %i)"/>
+    <string id="17501" value="Incapable de communiquer avec le traqueur"/>
 	<string id="18496" value="Vous avez fait des changements dans le champ &quot;nom&quot;.  Êtes-vous certain de vouloir renommer ce téléchargement?"/>
 	<string id="18497" value="Vous avez tapez une valeur SHA1, cependant elle est invalide.  Merci de vérifier et de recommencer."/>
 	<string id="18498" value="Vous avez tapez une valeur tiger-tree, cependant elle est invalide.  Merci de vérifier et de recommencer."/>
@@ -3055,11 +3055,11 @@ Other:
 	<string id="19002" value="Incapable d'accepter des connexions, URL indisponible."/>
 	<string id="20000" value="Pas d'URN disponible"/>
 	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
-	<string id="20003" value="Changer la direction de l'interface exige un redémarrage. \nVous aurez besoin de redémarrer manuellement. Sortir maintenant?"/> 
+	<string id="20003" value="Changer la direction de l'interface exige un redémarrage. \nVous aurez besoin de redémarrer manuellement. Sortir maintenant?"/>
     <string id="20004" value="Les langues écrites de droite vers la gauche ne sont pas supportées dans votre OS."/>
     <string id="20005" value="Non"/>
   	<string id="20006" value="Oui"/>
-  	<string id="20007" value="Auto"/>	
+  	<string id="20007" value="Auto"/>
 	<string id="20100" value="Se connecte"/>
 	<string id="20101" value="Requiert"/>
 	<string id="20102" value="Réponse"/>
@@ -3158,7 +3158,7 @@ Other:
 		<control caption="Mémoriser l'affich. des dossiers"/>
 		<control caption="Surveiller les dossiers"/>
 		<control caption="Hachage rapide (utilise + le CPU)"/>
-		<control caption="Autoriser l'affich. de mes partages"/>		
+		<control caption="Autoriser l'affich. de mes partages"/>
 		<control caption="Fichiers _récents:"/>
 		<control caption="Mémoriser:"/>
 		<control/><control/>
@@ -3741,12 +3741,12 @@ Other:
         <control caption="Régler par défaut"/>
         <control caption="_Sauvegarder sous"/>
         <control caption="_Effacer"/>
-        <control caption="Filtres:"/>		
+        <control caption="Filtres:"/>
 		<control caption="DRM files"/>
 		<control caption="Suspicious files"/>
 		<control caption="Adult results"/>
 	</dialog>
-	
+
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Sauvegarder le filtre sous">
   	    <control/>
   	    <control caption="Valider"/>
@@ -4103,12 +4103,12 @@ Other:
 		<control caption="_Information du Torrent:"/>
 		<control caption="Nom:"/>
 		<control/>
-		<control caption="Créé:"/> 
-        <control/> 
-        <control caption="Par:"/> 
-        <control/> 
-        <control caption="Commentaires:"/> 
-        <control/> 
+		<control caption="Créé:"/>
+        <control/>
+        <control caption="Par:"/>
+        <control/>
+        <control caption="Commentaires:"/>
+        <control/>
 
 		<control caption="Traqueur:"/>
 		<control/>
@@ -4117,9 +4117,9 @@ Other:
 		<control/>
 		<control caption="Incomplets:"/>
 		<control/>
-		<control caption="Transferts:"/> 
-        <control caption="Commencer les transferts:"/> 
-        <control caption="Selon le besoin|Si le ratio dépasse 100%|Seulement si requis|Jamais"/> 
+		<control caption="Transferts:"/>
+        <control caption="Commencer les transferts:"/>
+        <control caption="Selon le besoin|Si le ratio dépasse 100%|Seulement si requis|Jamais"/>
 		<control caption="_Fichiers:"/>
 		<control/>
 		<control caption="_Actualiser"/>
@@ -4157,20 +4157,20 @@ Other:
 		<control caption="_Mettre à Jour"/>
 		<control caption="Ne pas vérifier les MàJ"/>
 		<control caption="Ne pas MàJ"/>
-		
+
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Télécharger les Revues">
   	    <control/>
   	    <control caption="Valider"/>
   	    <control/><control/>
   	</dialog>
-  	 
+
   	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localisation des métadonnées">
   	    <control caption="Valider"/>
   	    <control caption="Annuler"/>
   	    <control caption="Merci de sélectionner la méthode de réencodage"/>
   	    <control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
   	</dialog>
-		
+
 	</dialog>
 </dialogs>
 

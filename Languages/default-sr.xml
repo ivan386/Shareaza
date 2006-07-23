@@ -1935,7 +1935,7 @@
 		<newline gap="8"/>
 		<text>Ova datoteka je skinuta, Shareaza proverava da li je ispravna.
 		ako se nađe koja greška ili oštećenje Shareaza će to automatski ispraviti.</text>
-		
+
 	</document>
 
 	<document name="DownloadHelp.Downloading">
@@ -2000,7 +2000,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">Praćenje Davanja</text>
 		<newline gap="8"/>
@@ -2040,14 +2040,14 @@
 		<newline gap="8"/>
 		<text>Shareaza se više ne pokušava spojiti da izbegne mogući gubitak svih hostova u cachu.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Otkriven je limit istovremenih veza</text>
 		<newline gap="8"/>
-		<text>Shareaza je pronašla Windows XP Service Pack 2 ili nešto slično. Broj istovremenih veza 
+		<text>Shareaza je pronašla Windows XP Service Pack 2 ili nešto slično. Broj istovremenih veza
 		na vašem računaru je ograničen.</text>
 		<newline gap="8"/>
-		<text>Shareaza je ograničila broj veza i podesila svoja podešavnja da osigura 
+		<text>Shareaza je ograničila broj veza i podesila svoja podešavnja da osigura
 	siguran rad, međutim može doći do pada brzine. Ukoliko imate problema sa Shareazom, želite
 		saznati više informacija ili pročitati novosti posetite naš forum.</text>
 	</document>
@@ -2083,7 +2083,7 @@
 		server listu (met file) da bi se mogli spojiti na ED2K.</text>
 		<newline gap="8"/>
 		<text>Možete skinuti server listu iz stranice podešavanja za ed2k,ili sa discovery services
-		prozora. (F9 otvara discovery services prozor)</text> 
+		prozora. (F9 otvara discovery services prozor)</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
@@ -2093,11 +2093,11 @@
 		clients that do not share, or simply preference uploading to known sharers.</text>
 		<newline/>
 		<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
-		separate allocations for upload and download. If your client is properly configured, 
+		separate allocations for upload and download. If your client is properly configured,
 		you should be able to upload at a good rate while retaining full download capacity.</text>
 		<newline gap="8"/>
 		<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
-		while downloads are unlimited. That configuration should give you the fastest possible 
+		while downloads are unlimited. That configuration should give you the fastest possible
 		downloads that are available.</text>
 	</document>
     <!-- Search help documents -->
@@ -2106,11 +2106,11 @@
 		<text format="b">Molim da promenite frazu za traženje</text>
 		<newline gap="8"/>
 		<text>Loše ste formulirali traženje, i možda neće dati željene rezultate.
-		Kad je moguće, potraga bi trebala sadržavati više reči, poželjno je da se odabere 
+		Kad je moguće, potraga bi trebala sadržavati više reči, poželjno je da se odabere
 		i vrsta datoteke. Nadalje, potraga nebi smela sadržavati samo brojeve ili previše
 		uopštene izraze.</text>
 		<newline gap="8"/>
-		<text>Većina klijenata na mreži ignoriše potragu za npr. svim mp3-ama, 
+		<text>Većina klijenata na mreži ignoriše potragu za npr. svim mp3-ama,
 		iz jednostavnog razloga što nije dovoljno određena, a i ima previše rezultata.</text>
 	</document>
 
@@ -2124,7 +2124,7 @@
 		other terms as well when creating the search. Punctuation and wildcards are not used
 		in searches, just the text you enter.</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Molim da promenite frazu za traženje</text>
 		<newline gap="8"/>
@@ -2931,7 +2931,7 @@
 	<string id="16811" value="Automatski"/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windows ne podržava putanju dužu od 256 znakova.\nMolim da odeberete fasciklu sa kraćim putem."/>
-	<string id="16818" value="Fascikle za skinute i delimično skinute datoteke moraju biti različite"/> 
+	<string id="16818" value="Fascikle za skinute i delimično skinute datoteke moraju biti različite"/>
 	<string id="16819" value="Fascikla sa nedovršenim datotekama ne bi smela biti u kolekciji jer uzrokuje usporavanje. Nedovršene datoteke se mogu deliti direktno iz prozora razmene."/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
@@ -3095,7 +3095,7 @@
 	<string id="19002" value="U nemogućnosti sam primati veze, URL je nedostupan."/>
 	<string id="20000" value="Nema dostupnog URN-a"/>
 	<string id="20001" value="Zatvori"/>
-	<string id="20002" value="od"/><!-- e.g. 1 of 10 --> 
+	<string id="20002" value="od"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
 	<string id="20004" value="Right-to-left languages are not supported in your OS."/>
 	<string id="20005" value="Ne"/>

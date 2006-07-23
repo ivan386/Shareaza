@@ -1927,7 +1927,7 @@ right quote	&#147;
 	<document name="DownloadHelp.Select">
 		<text format="b">Atsisiuntimų sritis</text>
 		<newline gap="8"/>
-		<text>Čia rodomos šiuo metu parsisiunčiamos bylos. Jūs galite peržiūrėti 
+		<text>Čia rodomos šiuo metu parsisiunčiamos bylos. Jūs galite peržiūrėti
 		atskirus šaltinius, išskleidę kiekvienos bylos medį (paspaudę ant „+“ ženklelio iš kairės).</text>
 		<newline gap="8"/>
 		<text>Naudokitės šia komanda, ir kai norėsite gauti daugiau informacijos apie parsisiunčiamą bylą. Tiesiog
@@ -1987,10 +1987,10 @@ right quote	&#147;
 		<text format="b">Laukiama veiksmo</text>
 		<newline gap="8"/>
 		<text>Laukiama, kol kas nors pradės siųsti.
-		„Shareaza“ pasiruošusi siųstis bylą, bet niekas šiuo metu jos nesiunčia. 
+		„Shareaza“ pasiruošusi siųstis bylą, bet niekas šiuo metu jos nesiunčia.
 		Jūs tikriausiai laukiate kitų vartotojų eilėse, taigi bylos siuntimas gali
-		prasidėti bet kuriuo metu. Galite panagrinėti atskirus šaltinius ir pažiūrėti,  
-		kokį numerį turite kiekvieno eilėje. Jei Jūs irgi dalinatės bylomis, tada šansai, 
+		prasidėti bet kuriuo metu. Galite panagrinėti atskirus šaltinius ir pažiūrėti,
+		kokį numerį turite kiekvieno eilėje. Jei Jūs irgi dalinatės bylomis, tada šansai,
 		kad bylos parsisiuntimas prasidės greičiau, bus didesni.</text>
 	</document>
 
@@ -2034,11 +2034,11 @@ right quote	&#147;
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">Išsiuntimų sritis</text>
 		<newline gap="8"/>
-		<text>Čia rodomos eilės ir išsiuntimai. Jūs galite išskleisti kiekvienos eilės medį, 
+		<text>Čia rodomos eilės ir išsiuntimai. Jūs galite išskleisti kiekvienos eilės medį,
 		paspaudę „+“ ženklelį iš kairės, ir galite filtruoti sąrašą, naudodamiesi įrankių juostos
 		mygtuku, esančiu dešinėje pusėje.</text>
 	</document>
@@ -2075,7 +2075,7 @@ right quote	&#147;
 		<newline gap="8"/>
 		<text>„Shareaza“ liovėsi bandžiusi jungtis, tam kad nebūtų prarasta adresatų talpykla.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Aptiktas susijungimų bandymų apribojimas</text>
 		<newline gap="8"/>
@@ -2126,8 +2126,8 @@ right quote	&#147;
 		<text>Kai kuriuose tinkluose, prie kurių jungiasi „Shareaza“, yra naudojami iš-/atsisiuntimų santykiai,
 		ribojamas išsiuntimas tiems, kurie nieko nebendrina arba, tiesiog, teikiama išsiuntimo pirmenybė tiems, kurie dalinasi bylomis.</text>
 		<newline/>
-		<text>Laimei, plačiajuostis DSL ryšys yra kaip dviejų juostų greitkelis: išsiuntimai ir 
-		atsisiuntimai turi atskirus kanalus. Jei Jūsų klientas yra deramai sukonfigūruotas, 
+		<text>Laimei, plačiajuostis DSL ryšys yra kaip dviejų juostų greitkelis: išsiuntimai ir
+		atsisiuntimai turi atskirus kanalus. Jei Jūsų klientas yra deramai sukonfigūruotas,
 		Jūs išlaikysite pilną atsisiuntimo spartą, nenukenčiant išsiuntimo spartai.</text>
 		<newline gap="8"/>
 		<text>Pagal nutylėjimą išsiuntimo limitas yra nustatomas 85-iems % esamos išeinančios greitaveikos,

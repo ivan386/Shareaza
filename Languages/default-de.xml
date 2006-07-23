@@ -13,10 +13,10 @@ Other:
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
-	<manifest 
+	<manifest
 		name="Deutsch"
 		author="Jann Röder"
-		updatedBy="zero9999 and Jann Röder" 
+		updatedBy="zero9999 and Jann Röder"
 		description="Shareaza 2.2 German Skin File"
 		link="http://www.shareaza.com/"
 		email="spooky23 at arcor dot de"
@@ -433,7 +433,7 @@ Other:
 				<item id="ID_TAB_MEDIA" text="_Medienwiedergabe"/>
 				<item id="ID_TAB_SEARCH" text="_Suchen"/>
 				<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
-				<separator />				
+				<separator />
 				<menu text="_Erweitert">
 					<item id="ID_VIEW_NEIGHBOURS" text="_Netzwerk"/>
 					<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
@@ -1970,7 +1970,7 @@ Other:
 			<text>Dieser Download wartet darauf, dass jemand anfängt die Datei zu übertragen.
 			Shareaza ist bereit diese Datei herunterzuladen, aber zur Zeit überträgt niemand diese Datei an Sie.
 			Sie befinden sich wahrscheinlich in der Warteschlange eines anderen Benutzers und der Download
-			kann jederzeit beginnen. Sie können die einzelnen Quellen untersuchen, um 
+			kann jederzeit beginnen. Sie können die einzelnen Quellen untersuchen, um
 			allen Warteschlangen zu sehen in denen Sie sich befinden. Wenn Sie selbst Dateien freigegeben haben,
 			kann das ihre Chancen auf einen schnellen Start des Downloads erhöhen.</text>
 		</document>
@@ -2012,9 +2012,9 @@ Other:
 			<text>Der BitTorrent Tracker für diesen Download ist nicht erreichbar oder funktioniert nicht richtig.
                Shareaza kann ihn nicht kontaktieren um eine Liste mit Downloadquellen zu erhalten.</text>
 		</document>
-		
+
 		<!-- Upload help documents -->
-	
+
 		<document name="UploadHelp">
 			<text format="b">Uploadfenster</text>
 			<newline gap="8"/>
@@ -2041,7 +2041,7 @@ Other:
 			<newline gap="8"/>
 			<text>In ein von Shareaza benötigtes Laufwerk oder Verzeichnis kann nicht geschrieben werden.</text>
 			<newline gap="8"/>
-			<text>Mögliche Gründe dafür sind, dass ein Netzlaufwerk nicht mehr verbunden ist, oder sie keine Schreibrechte 
+			<text>Mögliche Gründe dafür sind, dass ein Netzlaufwerk nicht mehr verbunden ist, oder sie keine Schreibrechte
 			in einem gewählten Verzeichnis haben. Bitte überprüfen Sie Verzeichnisse und Berechtigungen,
 			oder ändern Sie das Verzeichnis für unvollständige Dateien.</text>
 		</document>
@@ -2062,11 +2062,11 @@ Other:
 			<newline gap="8"/>
 			<text>Sie haben eine Windowsversion installiert, welche die Anzahl der Verbindungen beschränkt, die ein Programm gleichzeitig aufbauen kann.</text>
 			<newline gap="8"/>
-			<text>Um trotzdem richtig funktionieren zu können, hat Shareaza die Netzwerkverbindungen beschränkt und andere Parameter entsprechend eingestellt. 
-               Die Geschwindigkeit kann dadurch jedoch leicht reduziert sein. Bitte besuchen Sie das 
+			<text>Um trotzdem richtig funktionieren zu können, hat Shareaza die Netzwerkverbindungen beschränkt und andere Parameter entsprechend eingestellt.
+               Die Geschwindigkeit kann dadurch jedoch leicht reduziert sein. Bitte besuchen Sie das
                Shareaza Forum für weitere Informationen und aktuelle Neuigkeiten.</text>
 		</document>
-		
+
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Erotikfitler aktiviert</text>
 			<newline gap="8"/>
@@ -2088,7 +2088,7 @@ Other:
 			<newline gap="8"/>
 			<link target="http://www.shareaza.com/help/?torrentencoding">Klicken Sie hier für weitere Informationen.</link>
 		</document>
-		
+
 		<document name="GeneralHelp.DonkeyServerList">
 			<text format="b">Ihre eDonkey Serverliste ist leer</text>
 			<newline gap="8"/>
@@ -2098,7 +2098,7 @@ Other:
 			<text>Sie können eine Serverliste in den eDonkey Einstellungen oder im Service Provider Fenster
 			herunterladen.</text>
 		</document>
-		
+
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Das Begrenzen des Uploads kann das Herunterladen verlangsamen</text>
 			<newline gap="8"/>
@@ -2128,14 +2128,14 @@ Other:
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Bitte formulieren Sie die Suche neu!</text>
 			<newline gap="8"/>
-			<text>Diese Suche enthält nicht genügend Begriffe um ordnungsgemäß zu funktionieren. 
+			<text>Diese Suche enthält nicht genügend Begriffe um ordnungsgemäß zu funktionieren.
 			Alle Suchen benötigen eine Mindestanzahl an gültigen Buchstaben um gestartet werden zu können</text>
 			<newline gap="8"/>
-			<text>Nach bekannten Dateiendungen (und Zahlen) kann zwar gesucht werden, 
-			Sie müssen aber trotzdem weitere Begriffe eingeben, wenn Sie die Suche formulieren. 
+			<text>Nach bekannten Dateiendungen (und Zahlen) kann zwar gesucht werden,
+			Sie müssen aber trotzdem weitere Begriffe eingeben, wenn Sie die Suche formulieren.
 			Punktuation und Joker werden bei der Suche nicht beachtet, sondern nur der Text.</text>
 		</document>
-	  	 
+
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Bitte formulieren Sie die Suche neu!</text>
 			<newline gap="8"/>
@@ -3097,7 +3097,7 @@ Other:
 		<string id="17501" value="Kommunikation mit dem Tracker nicht möglich"/>
 	    <string id="17503" value="Verbindung mit Tracker fehlgeschlagen- Verbinde mit nächstem Tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent-Verbindung mit %s wurde unterbrochen."/>
-		<string id="17506" value="BitTorrent-Handshake mit %s wurde unterbrochen."/>		
+		<string id="17506" value="BitTorrent-Handshake mit %s wurde unterbrochen."/>
 		<string id="17507" value="BitTorrent-Kopplung mit %s wurde unterbrochen."/>
 		<string id="17510" value="BitTorrent-Kopplung mit %s wurde nicht akzeptiert, da bereits eine Verbindung mit diesem Client besteht."/>
 		<string id="17511" value="BitTorrent-Kopplung mit %s wurde nicht akzeptiert, da die maximale Anzahl an Verbindungen erreicht ist."/>
@@ -4203,7 +4203,7 @@ Other:
   	        <control caption="Notizen:"/>
   	        <control/>
   	    </dialog>
-  	 
+
   	         <dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Dateien">
   	                 <control caption="Torrent-_Informationen:"/>
   	                 <control caption="Name:"/>
@@ -4211,7 +4211,7 @@ Other:
   	                 <control caption="_Dateien:"/>
   	                 <control/>
   	         </dialog>
-  	 
+
   	    <dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Tracker">
   	        <control caption="Torrent-_Informationen:"/>
   	        <control caption="Name:"/>
@@ -4227,7 +4227,7 @@ Other:
 			<control caption="_Trackers:"/>
 			<control />
 			<control caption="Tracker-Modus:"/>
-  	        <control caption="Deaktiviert|Benutzerdefiniert|Einzel-Tracker|Multi-tracker|Multi-tracker (locked)"/>		
+  	        <control caption="Deaktiviert|Benutzerdefiniert|Einzel-Tracker|Multi-tracker|Multi-tracker (locked)"/>
 		</dialog>
 
 		<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Gruppe Eigenschaften">

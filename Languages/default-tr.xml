@@ -603,7 +603,7 @@
 			<item id="ID_VIEW_PACKETS" text="Çö_p Kutusu" shortcut="Ctrl+F1"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Ekra_n Ara" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="Sevi_len Ekranlar" shortcut="Ctrl+F3"/>
-			<separator/>			
+			<separator/>
 			<item id="ID_VIEW_BASIC" text="Normal Mod"/>
 			<item id="ID_VIEW_TABBED" text="Hesaplı Mod"/>
 			<item id="ID_VIEW_WINDOWED" text="Windowed Mode"/>
@@ -1896,16 +1896,16 @@
 		<text format="b">Download Alanı</text>
 		<newline gap="8"/>
 		<text>Dosyaların nereye download edildiğini gösterir. Kişisel kaynakları ayrıntılarıyla görüntüleyebilirsiniz.</text>
-	
+
 		<newline gap="8"/>
-		<text>Belirli bir Download sırasında yardım bilgisi almak için bu komutu kullanabilirsiniz. 
+		<text>Belirli bir Download sırasında yardım bilgisi almak için bu komutu kullanabilirsiniz.
 		Download-u seçmek ve karar vermek de bu komutla yapılır.</text>
 	</document>
 
 	<document name="DownloadHelp.Completed">
 		<text format="b">Download Tamamlandı</text>
 		<newline gap="8"/>
-		<text>Shareaza dosyanın download edilmesi tamamladı ve yanlışsız aktarımı doğruladı. Dosya download edenler klasörüne taşındı. 
+		<text>Shareaza dosyanın download edilmesi tamamladı ve yanlışsız aktarımı doğruladı. Dosya download edenler klasörüne taşındı.
 		</text>
 	</document>
 
@@ -1926,8 +1926,8 @@
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Disk Dolu</text>
 		<newline gap="8"/>
-		<text>Shareaza download-u otomatik olarak durdurdu çünkü harddiskiniz dolu olabilir ya da dosya yazılamıyor. 
-		Eğer download etmeye devam etmek istiyorsanız harddiskinizde boş alan oluşturun ya da dosyanın tam ulaşılabilir 
+		<text>Shareaza download-u otomatik olarak durdurdu çünkü harddiskiniz dolu olabilir ya da dosya yazılamıyor.
+		Eğer download etmeye devam etmek istiyorsanız harddiskinizde boş alan oluşturun ya da dosyanın tam ulaşılabilir
 		olduğuna emin olun ve download etmeye devam edin.</text>
 	</document>
 
@@ -1941,8 +1941,8 @@
 	<document name="DownloadHelp.Downloading">
 		<text format="b">Download Etkin!</text>
 		<newline gap="8"/>
-		<text>Download şuan devam ediyor. Eğer download çok yavaşsa, daha fazla kaynak için 
-		</text>		<text format="b"> Daha Fazla Kaynak Bul</text><text> butonunu tıklayın. Eğer hızınız artmıyorsa 
+		<text>Download şuan devam ediyor. Eğer download çok yavaşsa, daha fazla kaynak için
+		</text>		<text format="b"> Daha Fazla Kaynak Bul</text><text> butonunu tıklayın. Eğer hızınız artmıyorsa
 		download ettiğiniz kullanıcının aktarım hız limiti yeterli olmayabilir
 		download hızınız zamanla artacaktır.</text>
 	</document>
@@ -1960,7 +1960,7 @@
 		<text format="b">Download Sırada</text>
 		<newline gap="8"/>
 		<text>Bu Download başka bir download-unuzun tamamlanmasını bekliyor.
-		   Mevcut bant genişliğinizin iyi bir şekilde paylaşılmasını sağlamak için belirli 
+		   Mevcut bant genişliğinizin iyi bir şekilde paylaşılmasını sağlamak için belirli
 		   bir zaman da aktif olan Download limit sayınızı ayarlayın.
 		   Shareaza ayarlarını Araçlar aracılığıyla değiştirebilirsiniz.
 		   Alternatif olarak devam et komutuyla Download-u başlatabilirsiniz.</text>
@@ -1969,12 +1969,12 @@
 	<document name="DownloadHelp.Searching">
 		<text format="b">Download Arama</text>
 		<newline gap="8"/>
-		<text>Bu download için bilinmeyen kaynaklar var, Shareaza yeni kaynaklar için tüm bağlı P2P ağlarını arıyor. Kaynaklar bulundu, download otomatik başlayacaktır. 
+		<text>Bu download için bilinmeyen kaynaklar var, Shareaza yeni kaynaklar için tüm bağlı P2P ağlarını arıyor. Kaynaklar bulundu, download otomatik başlayacaktır.
 		 Shareaza kaynakları otomatik arar, yine de </text>
 		<text format="b"> Daha Fazla Kaynak Bul</text><text> komutunu kullanarak işe hız verebilirsiniz.</text>
 		<newline gap="8"/>
 		<text>Maalesef aradığınız dosyaya sahip olan kimse online durumda değil.
-		Tek çare birinin online duruma gelmesini beklemek ya da vazgeçmek ve daha 
+		Tek çare birinin online duruma gelmesini beklemek ya da vazgeçmek ve daha
 		geniş bir alanda bulabileceğiniz benzer bir dosya aramak. 	</text>
 	</document>
 
@@ -1987,12 +1987,12 @@
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent Tracker Bozuk</text>
 		<newline gap="8"/>
-		<text>BitTorrent tracker server, download için aksaklık ya da bozukluk olabileceği görünüyor. Shareaza 
+		<text>BitTorrent tracker server, download için aksaklık ya da bozukluk olabileceği görünüyor. Shareaza
 		alınacak listesini ya da download eşlemesini içeremez.</text>
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">Aktarım Alanı</text>
 		<newline gap="8"/>
@@ -2005,8 +2005,8 @@
 		<newline gap="8"/>
 		<text> Shareaza tarafından, bir ya da daha fazla sürücüde kullanılan boş alan azdır.</text>
 		<newline gap="8"/>
-		<text>Diskte sürekli olarak makul bir boş alan korumaya çalışmalısınız. Sürücüler dolu olursa programlar 
-		dengesiz olabilir ve geçici dosyalar kaybolabilir. Bir disk temizleyici kullanmalı, istenmeyen dosyaları silmeli ya da 
+		<text>Diskte sürekli olarak makul bir boş alan korumaya çalışmalısınız. Sürücüler dolu olursa programlar
+		dengesiz olabilir ve geçici dosyalar kaybolabilir. Bir disk temizleyici kullanmalı, istenmeyen dosyaları silmeli ya da
 		fazla ihtiyaç duymadığınız yazılımları kaldırmalısınız.</text>
 	</document>
 
@@ -2029,15 +2029,15 @@
 		<newline gap="8"/>
 		<text>Shareaza tüm host belleklerin yitirilmesine engel olmak için bağlantı girişimlerini kesti.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Limitli yarı açık bağlantı bulundu</text>
 		<newline gap="8"/>
-		<text>Shareaza Windows XP Service Pack 2 (ya da benzer bir ortam) buldu. 
+		<text>Shareaza Windows XP Service Pack 2 (ya da benzer bir ortam) buldu.
 		Bağlantı sayısı sınırlama uygulamaları derhal denenebilir.</text>
 		<newline gap="8"/>
-		<text>Shareaza düzgün bir çalışmayı garantilemek için ağ bağlantılarını sınırladı ve 
-		kendine ayrılacak değerleri belirledi, yine de performansta azalma olabilir. Lütfen 
+		<text>Shareaza düzgün bir çalışmayı garantilemek için ağ bağlantılarını sınırladı ve
+		kendine ayrılacak değerleri belirledi, yine de performansta azalma olabilir. Lütfen
 		daha fazla bilgi için Shareaza forumları ziyaret edin ve yenilikleri öğrenin.</text>
 	</document>
 
@@ -2053,7 +2053,7 @@
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">Torrent kodlama hatası olduğunu görür</text>
 		<newline gap="8"/>
-		<text>Windows, bu torrentda metin şifre çözümünde bir çeviri hatası bildirdi. 
+		<text>Windows, bu torrentda metin şifre çözümünde bir çeviri hatası bildirdi.
 		Torrent bozuk ya da sadece yanlış kodlanmış olması mümkündür. Bazı dosya isimleri yanlış olsa da torrent hala düzgün download edebilir.</text>
 		<newline gap="8"/>
 		<text>
@@ -2068,16 +2068,16 @@
 		<newline gap="8"/>
 		<text>eDonkey2000 server listenizde hiç server yer almıyor. ED2K ya bağlanarak server listenizi güncel olarak(met dosyası) download-a ihtiyacınız var</text>
 		<newline gap="8"/>
-		<text>Keşif servisleri penceresi ya da ed2k ayarlar sayfasından server listesi download edebilirsiniz(Keşif servisleri penceresini açmak için F9 'a basın).</text> 
+		<text>Keşif servisleri penceresi ya da ed2k ayarlar sayfasından server listesi download edebilirsiniz(Keşif servisleri penceresini açmak için F9 'a basın).</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Limitli aktarımlar, yavaş download edebilir</text>
 		<newline gap="8"/>
-		<text>Birçok Shareaza ağı bağlantı oranları uygular, istemcilerin paylaşılmayan aktarımını kısıtlar ya da sadece 
+		<text>Birçok Shareaza ağı bağlantı oranları uygular, istemcilerin paylaşılmayan aktarımını kısıtlar ya da sadece
 		bilinen paylaştırıcıların aktarımını tercih eder.</text>
 		<newline/>
-		<text>Neyse ki, genişbant  DSL bağlantıları iki şeritli yola benzer: aktarım ve download için ayrılmış bölümlere sahipsiniz. 
+		<text>Neyse ki, genişbant  DSL bağlantıları iki şeritli yola benzer: aktarım ve download için ayrılmış bölümlere sahipsiniz.
 		Eğer istemciniz düzgün yapılandırıldıysa, tam download kapasitesine sahip olduğu sürece yüksek oranda aktarım yapabilirsiniz.</text>
 		<newline gap="8"/>
 		<text>Varsayılan, downloadlar limitsiz olduğunda aktarım limitiniz mevcut bantgenişliğinin %85 'idir.
@@ -2105,7 +2105,7 @@
 		<text> Genel dosya kapsamları (ve numaraları) aratıldığında, aramayı yaratıyorken iyi olarak diğer şarta girebilirsin.
 		 Noktalama ve özel sembollar aramalarda kullanılmazlar, sadece metin girin.</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Lütfen anlamlı sözcüklerle arayın</text>
 		<newline gap="8"/>
@@ -2123,7 +2123,7 @@
 		<text format="b">Arama Başlayamadı</text>
 		<newline gap="8"/>
 		<text>Belirilen aramalar büyük ihtimalle gelişmiş içerikle çok sayıda sonuç dönebilir, bunu ayarlardan kapatabilirsiniz. Ya anlamlı arama yapabilir ya da filtreyi engelleyebilirsiniz.</text>
-		 
+
 		<newline gap="8"/>
 		<text>Filtre engellemek için araççubuğundaki &gt; Ayarlar &gt;içinde Genel ve kontrol edilmemiş gelişmiş içerik filtresine gidilir.</text>
 	</document>
@@ -2623,7 +2623,7 @@
 	<string id="8335" value="Bu dosya için kaynaklar güvenlik duvarında"/>
 	<string id="8336" value="Bu dosya için kaynaklar değişken olabilir"/>
 	<string id="16064" value="Shareaza ağ merkezi başlıyor..."/>
-	<string id="16065" value="Gelen bağlantılar için %s  port %i'den bağlanamaz. Gelen bağlantılar desteklenmeyecektir."/> 
+	<string id="16065" value="Gelen bağlantılar için %s  port %i'den bağlanamaz. Gelen bağlantılar desteklenmeyecektir."/>
 	<string id="16066" value="Shareaza ağ merkezi kapatılıyor..."/>
 	<string id="16067" value="Ağdan bağlantı kesiliyor."/>
 	<string id="16068" value="%s porttan %i gelmekte olan TCP bağlantıları kabul ediliyor ."/>
@@ -2699,10 +2699,10 @@
 	<string id="16261" value="Download için &quot;%s&quot; dosyası yaratılıyor."/>
 	<string id="16262" value="Download için &quot;%s&quot; yerel dosyası yaratılamaz, başarısızlıkla sonuçlandı."/>
 	<string id="16263" value="Download için &quot;%s&quot; yerel dosyası açılamaz, başarısızlıkla sonuçlandı."/>
-	<string id="16264" value="%s'e baglantı %i portundan &quot;%s&quot; downloadu için başlatılıyor ..."/> 
+	<string id="16264" value="%s'e baglantı %i portundan &quot;%s&quot; downloadu için başlatılıyor ..."/>
 	<string id="16265" value="%s Hosta download için bağlanılamaz."/>
 	<string id="16266" value="%s download bağlantısı kuruldu."/>
-	<string id="16267" value="(%I64i-%I64i) download parçaları &quot;%s&quot; için %s' den isteniyor."/> 
+	<string id="16267" value="(%I64i-%I64i) download parçaları &quot;%s&quot; için %s' den isteniyor."/>
 	<string id="16268" value="Daha fazla download parçası bulunamadı,%s bağlantısı kapatılıyor ."/>
 	<string id="16269" value="Download parçaları kısaldı, %s bağlantısı kapatılıyor."/>
 	<string id="16270" value="%s download isteği zaman aşımına uğradı, bağlantı kapatılıyor."/>
@@ -2723,7 +2723,7 @@
 	<string id="16285" value="%s'den gereksiz sıkıştırılmış bir bağlantı alınıyor."/>
 	<string id="16286" value="Host %s &quot;%s&quot; download unu gönderiyor,kabul ediliyor."/>
 	<string id="16287" value="&quot;%s&quot; download u için kaynak edinemezsin çünkü ağ bağlantısı yok."/>
-	<string id="16288" value="&quot;%s&quot; downloadu için %i bağlantısında kaynak sorgulanıyor..."/> 
+	<string id="16288" value="&quot;%s&quot; downloadu için %i bağlantısında kaynak sorgulanıyor..."/>
 	<string id="16289" value="&quot;%s&quot; download u için istek gönderiliyor..."/>
 	<string id="16290" value="%s download Hostu farklı fakat yararlı bir (%I64i-%I64i) dağılım yanıtı verdi, &quot;%s&quot;'den."/>
 	<string id="16291" value="&quot;%s&quot; dan &quot;%s&quot;'a taşındı, download tamamlandı."/>
@@ -2733,7 +2733,7 @@
 	<string id="16295" value="Ayrılan genişletilmiş bant genişliği &quot;%s&quot; downloadunu destekliyor."/>
 	<string id="16296" value="&quot;%s&quot; download başarıyla doğruluğu kanıtlandı."/>
 	<string id="16297" value="UYARI: Download &quot;%s&quot; doğrulaması başarılamadı, bu download etmeyi planladığın dosya olmayabilir!"/>
-	<string id="16298" value="%s download hostu meşgul, #%i %i den durum sırasında bekliyor(&quot;%s&quot;)."/> 
+	<string id="16298" value="%s download hostu meşgul, #%i %i den durum sırasında bekliyor(&quot;%s&quot;)."/>
 	<string id="16299" value="Duraklatılmış tüm downloadları temizlemek istediğinizden emin misiniz? Bir download, download penceresinden temizlendi, geri alınamaz."/>
 	<string id="16300" value="&quot;%s&quot; downloadu silmek istediğinizden emin misiniz?"/>
 	<string id="16301" value="%s'den &quot;%s&quot; için tiger-tree bölümü isteniyor..."/>
@@ -2754,7 +2754,7 @@
 	<string id="16316" value="&quot;%s&quot; dosyası için %s eDonkey2000 download hostundan güncelleme sırası zaman aşımına uğradı."/>
 	<string id="16317" value="&quot;%s&quot; için sıra bekleniyor."/>
 	<string id="16318" value="&quot;%s&quot; (%s) downloadu için yetersiz disk alanı."/>
-	<string id="16319" value="%s (%s) kaynağı &quot;%s&quot; (%I64i-%I64i)'in bozulan parçalarının gönderimi için  kapatılıyor."/> 
+	<string id="16319" value="%s (%s) kaynağı &quot;%s&quot; (%I64i-%I64i)'in bozulan parçalarının gönderimi için  kapatılıyor."/>
 	<string id="16320" value="%s aktarım hostu geçersiz bir HTTP isteği gönderdi."/>
 	<string id="16321" value="%s. %s 'e sıkıştırılmış bağlantı başlatılıyor"/>
 	<string id="16322" value="%s hostuna sıkıştırma için bağlantı kurulamaz."/>
@@ -2765,10 +2765,10 @@
 	<string id="16327" value="&quot;%s&quot; 'dan %s (%s) 'e aktarım kabul edilmiyor, meşgul ve istemci sırasını desteklemiyor."/>
 	<string id="16328" value="%s 'e sıkıştırılmış bağlantı kurmak için anlaşma bekleniyor..."/>
 	<string id="16329" value="%s hostunda aktarım için &quot;%s&quot; açılamıyor, disk/dosya hatası."/>
-	<string id="16330" value="%I64i-%I64i oranında aktarım içeriği &quot;%s&quot;'dan, %s (%s) hostu için gönderiliyor."/> 
+	<string id="16330" value="%I64i-%I64i oranında aktarım içeriği &quot;%s&quot;'dan, %s (%s) hostu için gönderiliyor."/>
 	<string id="16331" value="&quot;%s&quot; 'nun %s' e aktarılan parçaları tamamlandı."/>
 	<string id="16332" value="%s 'den gelen bağlantı, bir HTTP aktarım isteğidir."/>
-	<string id="16333" value="&quot;%s&quot;'in %s'a aktarımı fazla yoğun, #%i 'den %i 'ye (&quot;%s&quot;) sıralandı."/> 
+	<string id="16333" value="&quot;%s&quot;'in %s'a aktarımı fazla yoğun, #%i 'den %i 'ye (&quot;%s&quot;) sıralandı."/>
 	<string id="16334" value="%s 'den kalan sıkıştırma isteği bilinmeyen bir dosya istedi, yine de bağlanıyor..."/>
 	<string id="16335" value="&quot;%s&quot; 'dan %s 'e aktarım kaldırıldı."/>
 	<string id="16336" value="%s aktarım hostu kullanıcının engel listesinde, istek yok sayılıyor."/>
@@ -2781,7 +2781,7 @@
 	<string id="16343" value="%s 'deki eski aktarımlar kapatılıyor çünkü yeni bağlantı yapıldı."/>
 	<string id="16344" value="%s'ye yeni aktarım reddediliyor çünkü önceki bağlantı hala askıda."/>
 	<string id="16345" value="%s'ye &quot;%s&quot; aktarımı durdu çünkü dosya silindi."/>
-	<string id="16346" value="%I64i-%I64i oranında aktarım içeriği &quot;%s&quot; dosya parçasından, %s (%s) hostu için gönderiliyor."/> 
+	<string id="16346" value="%I64i-%I64i oranında aktarım içeriği &quot;%s&quot; dosya parçasından, %s (%s) hostu için gönderiliyor."/>
 	<string id="16347" value="Sıradaki %s altarımı isteğini çok hızlı yineliyor, bağlantı kapatılıyor."/>
 	<string id="16348" value="%s'de istek reddediliyor çünkü çok fazla aktarım bağlantısı var."/>
 	<string id="16349" value="%s'e &quot;%s&quot; için tiger-tree veri aktarılıyor."/>
@@ -2930,7 +2930,7 @@
 	<string id="16941" value="Trafik yoğunluğundan dolayı %s kullanıcı bağlantısı kapatılıyor."/>
 	<string id="16942" value="%s'ye gözatan kullanıcı bağlantısı kapatılıyor."/>
 	<string id="16943" value="Göz atılıyor %s"/>
-	<string id="16944" value="%i paylaşılan dosya %s'nin kütüphanesinde  bulundu."/> 
+	<string id="16944" value="%i paylaşılan dosya %s'nin kütüphanesinde  bulundu."/>
 	<string id="16992" value="Shareaza MediaServisleri plugin'ini desteklenemedi.  lütfen Shareaza tekrar yükleyin ve zorunlu ortam codeclerinin ve çıkış sürücülerinin yüklendiğini doğrulayın."/>
 	<string id="16993" value="Tüm ortam dosyaları|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Oynatma Listeleri|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Ses Dosyaları|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Dosyaları|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Ses Trackleri|*.cda|MIDI Dosyalar|*.mid;*.rmi;*.midi|Tüm Dosyalar|*.*||"/>
 	<string id="16994" value="&quot;%s&quot; ortam dosyası yüklenemez"/>
@@ -3039,7 +3039,7 @@
 	<string id="17487" value="BitTorrent %s birleştirilmesi doğrulandı, anlaşma sağlanıyor..."/>
 	<string id="17488" value="Bu torrent için URL trackerını değiştirdiniz. Bu değişikliği kaydetmek istediğinize emin misiniz?\n\nGeçersiz bir URL trackerı daha fazla downloadı engelleyebilir."/>
 	<string id="17489" value="BitTorrent ile %s birleştirilmesi yaygın bir protokoldür, &quot;%s&quot; tanındı."/>
-	<string id="17490" value="%i yeni BitTorrent kaynağı %s'den alındı."/> 
+	<string id="17490" value="%i yeni BitTorrent kaynağı %s'den alındı."/>
 	<string id="17491" value="&quot;%s&quot; torrent  download listenizde ve oluşturulamıyor."/>
 	<string id="17492" value="&quot;%s&quot; torrent dosyasında yükleme hatası. Bu geçerli bir torrent olmayabilir."/>
 	<string id="17493" value="&quot;%s&quot; BitTorrent paylaşım dosyası yaratılamaz."/>

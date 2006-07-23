@@ -3108,7 +3108,7 @@
 	<string id="17497" value="An unknown error occurred while trying to seed &quot;%s&quot;."/>
 	<string id="17498" value="An error was detected in the file &quot;%s&quot;."/>
 	<string id="17500" value="Tracker did not respond- Retrying announce (%i of %i)"/>
-	<string id="17501" value="Unable to communicate with tracker"/>	
+	<string id="17501" value="Unable to communicate with tracker"/>
 	<string id="17503" value="Tracker failed- Trying next tracker (%i of %i)"/>
 	<string id="17505" value="BitTorrent connection to %s was dropped."/>
 	<string id="17506" value="BitTorrent handshake with %s was dropped."/>

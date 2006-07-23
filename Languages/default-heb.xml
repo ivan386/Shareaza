@@ -331,7 +331,7 @@
 		<button id="ID_MEDIA_CLEAR" text="‪נקה"/>
 		<button id="ID_MEDIA_SAVE" text="‪שמור"/>
 	</toolbar>
-	
+
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="‪הצג מידע משתמש"/>
@@ -1497,7 +1497,7 @@
 			<link target="raza:command:ID_HELP_ROUTER">לחץ כאן כדי ללמוד איך להגדיר את הראוטר וחומת האש</link>
 			<newline gap="18" indent="16"/>
 		</group>
-		
+
 		<newline indent="16"/><icon res="145" width="32" height="32"/><gap size="8"/>
 		<heading align="middle" colour="6060FF">ה כ נ ס &#160;</heading>
 		<link target="http://www.hebrew.co.nr/" format="bu" align="middle">ל א י נ ד ק ס &#160; ה ע ב ר י</link>
@@ -1918,7 +1918,7 @@
 	<document name="DownloadHelp.Paused">
 		<text format="b">הורדה זו מושהת</text>
 		<newline gap="8"/>
-		<text>השהת את ההורדה. אם אתה מעוניין שזה ימשיך הוריד אתה 
+		<text>השהת את ההורדה. אם אתה מעוניין שזה ימשיך הוריד אתה
 		פקודת</text><text format="b"> המשך הורדה</text><text>יכול ללחוץ על
 		.</text>
 	</document>
@@ -2006,7 +2006,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">אזור העלאות</text>
 		<newline gap="8"/>
@@ -2032,7 +2032,7 @@
 		<newline gap="8"/>
 		<text>A disk or directory Shareaza needs cannot be written to.</text>
 		<newline gap="8"/>
-		<text>A network drive may have been disconnected, or you may not have write permission 
+		<text>A network drive may have been disconnected, or you may not have write permission
 		to a selected directory. Please check directories and permissions, or change the
 		temporary files location.</text>
 	</document>
@@ -2047,7 +2047,7 @@
 		<newline gap="8"/>
 		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">‫מערכת הפעלה חלונות XP עם חבילת הרחבה SP2 זוהתה.</text>
 		<newline gap="8"/>
@@ -2061,7 +2061,7 @@
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>
 		<text>Please note that (as with any automated filter) it may not be 100% effective at
-		screening content. It is designed simply to filter out excess unwanted results, rather than 
+		screening content. It is designed simply to filter out excess unwanted results, rather than
 		as a 100% safe block.</text>
 		<newline gap="8"/>
 		<text>Children's Internet use (including P2P file sharing)  should always be under parental supervision.</text>
@@ -2098,11 +2098,11 @@
 		clients that do not share, or simply preference uploading to known sharers.</text>
 		<newline/>
 		<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
-		separate allocations for upload and download. If your client is properly configured, 
+		separate allocations for upload and download. If your client is properly configured,
 		you should be able to upload at a good rate while retaining full download capacity.</text>
 		<newline gap="8"/>
 		<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
-		while downloads are unlimited. That configuration should give you the fastest possible 
+		while downloads are unlimited. That configuration should give you the fastest possible
 		downloads that are available.</text>
 	</document>
 
@@ -2116,7 +2116,7 @@
 		(file type). Furthermore, searches must not be limited to numbers or negative
 		terms only, and you should avoid overly general queries.</text>
 		<newline gap="8"/>
-		<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+		<text>Most clients on the network will ignore a search for all MP3 files, for example,
 		because it is not specific enough, and would generate too many results.</text>
 	</document>
 
@@ -2130,7 +2130,7 @@
 		other terms as well when creating the search. Punctuation and wildcards are not used
 		in searches, just the text you enter.</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
@@ -2593,7 +2593,7 @@
 	<string id="8179" value="‪(נקה את היסטוריית החיפוש)"/>
 	<string id="8180" value="‪:גודל הקובץ"/>
 	<string id="8181" value="‪עד"/><!-- size from xx TO xx-->
-	<string id="8208" value="‪Shareaza is creating hashes for %i file(s):" /> 
+	<string id="8208" value="‪Shareaza is creating hashes for %i file(s):" />
 	<string id="8223" value="&#8235;%i ימים %i שעות"/>
 	<string id="8224" value="‪:שרזה מוריד"/>
 	<string id="8225" value="‪:הורדה זו מושהת"/>

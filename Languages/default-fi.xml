@@ -1703,7 +1703,7 @@
 
 		<text>
 			Shareaza Asetus Manageri antaa  k&#228;ytt&#228;jien kustomoida t&#228;ysin kuinka
-			Shareaza toimii.  Asetukset 
+			Shareaza toimii.  Asetukset
 		</text>
 		<text format="b">Yleiset</text>
 		<text>
@@ -1751,7 +1751,7 @@
 
 		<text>
 			Shareaza Asetus Manageri antaa  k&#228;ytt&#228;jien kustomoida t&#228;ysin kuinka
-			Shareaza toimii.  Asetukset 
+			Shareaza toimii.  Asetukset
 		</text>
 		<text format="b">Internet </text>
 		<text>
@@ -1960,7 +1960,7 @@
 		<text>T&#228;m&#228; lataus odottaa jotakuta alkamaan l&#228;hett&#228;m&#228;&#228;n sit&#228;.
 		Shareaza on valmis aloittamaan latauksen, mutta kukaan ei ole l&#228;hett&#228;m&#228;ss&#228; sit&#228;
 		t&#228;ll&#228; hetkell&#228;. Sin&#228; olet varmaan odottamassa k&#228;ytt&#228;j&#228;n jonoissa, ja lataus
-		voi alkaa miloin tahansa. Sin&#228; voit tarkastella yksitt&#228;isi&#228; l&#228;hteit&#228; 
+		voi alkaa miloin tahansa. Sin&#228; voit tarkastella yksitt&#228;isi&#228; l&#228;hteit&#228;
 		n&#228;hd&#228;ksesi jokaisen jonossa olevan. Jos jaat tiedostoja itse, se saattaa
 		parantaa mahdollisuuksia aloittaa lataus nopeasti.</text>
 	</document>
@@ -2006,7 +2006,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">L&#228;hetykset Alue</text>
 		<newline gap="8"/>
@@ -2047,7 +2047,7 @@
 		<newline gap="8"/>
 		<text>Shareaza on pys‰ytt‰nyt yhdistys yritykset jotta kaikkia k‰ytt‰ji‰ jotka ovat v‰limuistissa ei hukattaisi.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 tunnistettu</text>
 		<newline gap="8"/>
@@ -2090,7 +2090,7 @@
 		p‰ivitetty palvelin lista (met tiedosto) yhdist‰‰ksesi ED2K.</text>
 		<newline gap="8"/>
 		<text>Sin‰ voit ladata palvelin listan ed2k asetukset sivulla tai discovery
-		palvelu ikkunassa. (Paina F9 avataksesi discovery palvelut ikkunan)</text> 
+		palvelu ikkunassa. (Paina F9 avataksesi discovery palvelut ikkunan)</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
@@ -2132,7 +2132,7 @@
 		toisia termej‰ aloittaessasi hakua. Pilkutuksia ja jokerimerkkej‰ ei k‰ytet‰
 		hauissa joten vain se teksti mink‰ annat.</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>

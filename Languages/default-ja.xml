@@ -11,9 +11,9 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <fonts>
-      <font name="System.Plain" face="MS UI Gothic" size="12" weight="plain" /> 
-      <font name="System.Bold" face="MS UI Gothic" size="12" weight="bold" /> 
-      <font name="Panel.Caption" face="MS UI Gothic" size="12" weight="plain" /> 
+      <font name="System.Plain" face="MS UI Gothic" size="12" weight="plain" />
+      <font name="System.Bold" face="MS UI Gothic" size="12" weight="bold" />
+      <font name="Panel.Caption" face="MS UI Gothic" size="12" weight="plain" />
 </fonts>
 
 <!-- Manifest -->
@@ -2026,7 +2026,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">アップロード領域</text>
 		<newline gap="8"/>
@@ -2067,7 +2067,7 @@
 		<newline gap="8"/>
 		<text>Shareazaは全てのキャッシュ済みホストの損失を避ける為、接続試行を中止しています。</text>
 	</document>
-	
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">半オープン接続制限を検出しました</text>
 		<newline gap="8"/>
@@ -2152,7 +2152,7 @@
 		入力しなければなりません。句読点とワイルドカードは検索文字列内では使用されません。
 		</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">別の検索文字列を入力して下さい</text>
 		<newline gap="8"/>
@@ -2193,7 +2193,7 @@
 	<document name="ShareHelp.BadShare">
 		<text format="b">このフォルダは共有すべきではありません</text>
 		<newline gap="8"/>
-		<text>このフォルダ(又はこのフォルダに含まれるフォルダ)はシステムフォルダです。 
+		<text>このフォルダ(又はこのフォルダに含まれるフォルダ)はシステムフォルダです。
 		他の殆どの人にとってそれらに含まれるファイルの大部分が無駄である為、 このフォルダを共有すべきではありません。</text>
 		<newline gap="8"/>
 		<text>WindowsディレクトリやProgram Filesディレクトリ、そしてそれと同じようなシステムフォルダは共有するのに
@@ -4101,7 +4101,7 @@
 		<control caption="あなたは以前このファイルをダウンロードして、削除したことがあります。どうしますか?"/>
 		<control caption="警告!!! 複数の同一ファイルを検出しました。 自分がライブラリーに入れた覚えが無い場合、怪しいソフトがライブラリーにかってに注入した可能性があります。もし覚えが無いファイルだった場合、今すぐShareazaを閉じてウイルス/スパイウェアーの検査をしてください。"/>
 	</dialog>
-	
+
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="終了ボタン">
 		<control/>
 		<control caption="初めてShareazaの終了ボタンをクリックしました。 次回から終了ボタンをクリックした時にShareazaがどういう挙動をするかを選択して下さい:"/>

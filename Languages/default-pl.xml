@@ -1497,7 +1497,7 @@
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">U W A G A &#160; - &#160; J E S T E Ś &#160; Z A B L O K O W A N Y &#160; F I R E W A L L E M</heading>
 			<newline gap="8" indent="42"/>
-			<text colour="FF0000">Shareaza wykryła, że jesteś za NATem lub firewallem 
+			<text colour="FF0000">Shareaza wykryła, że jesteś za NATem lub firewallem
 			  i nie możesz przyjmować połączeń z Internetu. &#160;</text>
 			<text colour="FF0000" format="b">Możesz mieć problemy z pobieraniem!</text>
 			<newline gap="6"/>
@@ -1703,7 +1703,7 @@
 		<newline gap="16"/>
 
 		<text>
-			Menedżer ustawień Shareazy pozwala zaawansowanym użytkownikom w pełni dostosować 
+			Menedżer ustawień Shareazy pozwala zaawansowanym użytkownikom w pełni dostosować
 			sposób działania Shareazy. Ustawienia w sekcji
 		</text>
 		<text format="b">Ogólne </text>
@@ -1751,7 +1751,7 @@
 		<newline gap="16"/>
 
 		<text>
-			Menedżer ustawień Shareazy pozwala zaawansowanym użytkownikom w pełni dostosować 
+			Menedżer ustawień Shareazy pozwala zaawansowanym użytkownikom w pełni dostosować
 			sposób działania Shareazy. Ustawienia w sekcji
 		</text>
 		<text format="b">Internet </text>
@@ -1908,47 +1908,47 @@
 	<document name="DownloadHelp.Completed">
 		<text format="b">To pobieranie zostało zakończone</text>
 		<newline gap="8"/>
-		<text>Shareaza skończyła pobieranie tego pliku i zweryfikowała, że jest w 100% poprawny. 
+		<text>Shareaza skończyła pobieranie tego pliku i zweryfikowała, że jest w 100% poprawny.
 		Przeniosła także ten plik do twojego folderu pobierań.</text>
 	</document>
 
 	<document name="DownloadHelp.Moving">
 		<text format="b">To pobieranie jest przenoszone</text>
 		<newline gap="8"/>
-		<text>Shareaza skończyła pobieranie tego pliku i zweryfikowała, że jest w 100% poprawny. 
+		<text>Shareaza skończyła pobieranie tego pliku i zweryfikowała, że jest w 100% poprawny.
 		Ten plik jest obecnie przenoszony i/lub rozpakowywany do twojego folderu pobierań.</text>
 	</document>
 
 	<document name="DownloadHelp.Paused">
 		<text format="b">To pobieranie jest wstrzymane</text>
 		<newline gap="8"/>
-		<text>Wstrzymałeś to pobieranie. Jeżeli chcesz wznowić pobieranie, 
+		<text>Wstrzymałeś to pobieranie. Jeżeli chcesz wznowić pobieranie,
 		Możesz wybrać polecenie</text><text format="b"> Wznów pobieranie</text><text>.</text>
 	</document>
 
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Dysk jest pełny</text>
 		<newline gap="8"/>
-		<text>Shareaza wstrzymała to pobieranie, ponieważ 
-		dysk jest pełny, lub pobierany plik nie może być na nim zapisany. Jeżeli 
-		chcesz kontynuować pobieranie, zwolnij trochę miejsca na dysku i/lub upewnij się 
+		<text>Shareaza wstrzymała to pobieranie, ponieważ
+		dysk jest pełny, lub pobierany plik nie może być na nim zapisany. Jeżeli
+		chcesz kontynuować pobieranie, zwolnij trochę miejsca na dysku i/lub upewnij się
 		że folder tymczasowy jest dostępny i wtedy wznów pobieranie.</text>
 	</document>
 
 	<document name="DownloadHelp.Verifying">
 		<text format="b">To pobieranie jest weryfikowane</text>
 		<newline gap="8"/>
-		<text>To pobieranie zostało zakończone i Shareaza weryfikuje je teraz, 
-		aby upewnić się, że jest identyczne z oryginalnym plikiem. 
+		<text>To pobieranie zostało zakończone i Shareaza weryfikuje je teraz,
+		aby upewnić się, że jest identyczne z oryginalnym plikiem.
 		Jeżeli zostały znalezione jakieś uszkodzone części, to Shareaza automatycznie je naprawi.</text>
 	</document>
 
 	<document name="DownloadHelp.Downloading">
 		<text format="b">To pobieranie jest aktywne!</text>
 		<newline gap="8"/>
-		<text>Jeżeli pobiera się za wolno, możesz spróbować przeszukać sieć w celu znalezienia 
+		<text>Jeżeli pobiera się za wolno, możesz spróbować przeszukać sieć w celu znalezienia
 		więcej źródeł komendą</text>
-		<text format="b"> Szukaj źródła</text><text>. Jeżeli prędkość się nie poprawiła, przyczyną może być limit na wysyłanie 
+		<text format="b"> Szukaj źródła</text><text>. Jeżeli prędkość się nie poprawiła, przyczyną może być limit na wysyłanie
 		użytkownika, od którego pobierasz. Prędkość pobierania najczęściej zwiększa się w miarę upływu czasu.</text>
 	</document>
 
@@ -1957,8 +1957,8 @@
 		<newline gap="8"/>
 		<text>To pobieranie czeka na kogoś, kto zacznie wysyłać.
 		Shareaza jest gotowa do rozpoczęcia pobierania pliku, ale nikt go na razie nie wysyła.
-		Prawdopodobnie czekasz w kolejce u jakiegoś użytkownika i pobieranie może zacząć się przesyłać w każdym czasie. 
-		Możesz przeanalizować indywidualne źródła, aby zobaczyć wszystkie kolejki w których czekasz. 
+		Prawdopodobnie czekasz w kolejce u jakiegoś użytkownika i pobieranie może zacząć się przesyłać w każdym czasie.
+		Możesz przeanalizować indywidualne źródła, aby zobaczyć wszystkie kolejki w których czekasz.
 		Jeżeli sam udostępniasz jakieś pliki, to może to poprawić szansę na szybkie rozpoczęcie pobierania.</text>
 	</document>
 
@@ -1966,8 +1966,8 @@
 		<text format="b">To pobieranie jest zakolejkowane</text>
 		<newline gap="8"/>
 		<text>To pobieranie czeka na zakończenie innego twojego pobierania.
-		Twoje ustawienia pobierania limitują liczbę pobierań, które mogą być aktywne w danym czasie, 
-		aby upewnić się, że każde pobieranie będzie mogło wykorzystać sporą część twojego łącza. 
+		Twoje ustawienia pobierania limitują liczbę pobierań, które mogą być aktywne w danym czasie,
+		aby upewnić się, że każde pobieranie będzie mogło wykorzystać sporą część twojego łącza.
 		Możesz zmienić te ustawienie przez Narzędzia, Ustawienia Shareazy.
 		Alternatywnie, możesz ręcznie rozpocząć to pobieranie za pomocą komendy wznów.</text>
 	</document>
@@ -1976,12 +1976,12 @@
 		<text format="b">To pobieranie nie ma źródeł</text>
 		<newline gap="8"/>
 		<text>Nie ma żadnych znanych źródeł dla tego pobierania, więc Shareaza ich szuka
-		we wszystkich podłączonych sieciach. Gdy tylko znajdą się źródła, pobieranie 
+		we wszystkich podłączonych sieciach. Gdy tylko znajdą się źródła, pobieranie
 		zostanie automatycznie wznowione. Shareaza szuka źródeł automatycznie,
 		 jednak możesz przyśpieszyć ten proces komendą</text>
 		<text format="b"> Szukaj źródła</text><text>.</text>
 		<newline gap="8"/>
-		<text>Niestety w wielu przypadkach może nie być użytkowników, którzy mają ten plik. 
+		<text>Niestety w wielu przypadkach może nie być użytkowników, którzy mają ten plik.
 		Jedynym wyściem jest czekać na kogoś, kto go będzie miał, lub spróbować znaleźć podobny plik, który będzie miał więcej źródeł.</text>
 	</document>
 
@@ -1994,16 +1994,16 @@
 	<document name="DownloadHelp.Tracker">
 		<text format="b">Tracker BitTorrent jest niedostępny</text>
 		<newline gap="8"/>
-		<text>Tracker BitTorrent dla tego pobierania jest niedostępny. 
+		<text>Tracker BitTorrent dla tego pobierania jest niedostępny.
 		Shareaza nie może się połączyć ani odebrać listy źródeł.</text>
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">Miejsce wysyłań</text>
 		<newline gap="8"/>
-		<text>To jest miejsce, gdzie są wyświetlone wysyłania i kolejki. Możesz rozszerzyć każdą kolejkę małym plusikiem po lewej 
+		<text>To jest miejsce, gdzie są wyświetlone wysyłania i kolejki. Możesz rozszerzyć każdą kolejkę małym plusikiem po lewej
 		i filtrować co jest wyświetlane przyciskiem w prawym dolnym rogu okna.</text>
 	</document>
 
@@ -2023,7 +2023,7 @@
 		<newline gap="8"/>
 		<text>Nie można zapisywać na dysku lub w folderze, którego potrzebuje Shareaza.</text>
 		<newline gap="8"/>
-		<text>Dysk sieciowy mógł zostać odłączony, lub nie masz prawa do zapisu 
+		<text>Dysk sieciowy mógł zostać odłączony, lub nie masz prawa do zapisu
 		we wskazanym folderze. Sprawdź foldery i pozwolenia lub zmień folder plików tymczasowych.</text>
 	</document>
 
@@ -2032,26 +2032,26 @@
 		<newline gap="8"/>
 		<text>Windows raportuje, że żadne połączenie z Internetem nie jest dostępne.</text>
 		<newline gap="8"/>
-		<text>Możliwe że modem lub router się zawiesił, co oznacza że nie można się połączyć z Internetem. 
+		<text>Możliwe że modem lub router się zawiesił, co oznacza że nie można się połączyć z Internetem.
 		Możesz ręcznie spróbować połączyć lub zresetować połączenie.</text>
 		<newline gap="8"/>
 		<text>Shareaza przerwała próby połączenia, aby zapobiec utracie wszystkich hosatów z cache'u.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Wykryto Windows XP Service Pack 2</text>
 		<newline gap="8"/>
 		<text>Shareaza wykryła Windows XP Service Pack 2. On limituje liczbę połączeń możliwych w danym momencie.</text>
 		<newline gap="8"/>
-		<text>Shareaza zlimitowała liczbę połączeń z siecią, aby zapewnić odpowiednią operatywność, 
-		jednak wydajność może ulec zmniejszeniu. Odwiedź forum Shareazy 
+		<text>Shareaza zlimitowała liczbę połączeń z siecią, aby zapewnić odpowiednią operatywność,
+		jednak wydajność może ulec zmniejszeniu. Odwiedź forum Shareazy
 		po dalsze informacje i nowe wiadomości.</text>
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Filtr treści dla dorosłych włączony</text>
 		<newline gap="8"/>
-		<text>Zauważ, że (jak każdy automatyczny filtr) może nie być w 100% efektywny. 
+		<text>Zauważ, że (jak każdy automatyczny filtr) może nie być w 100% efektywny.
 		Został stworzony aby filtrować większość niechcianych wyników, a nie jako w 100% bezpieczna blokada.</text>
 		<newline gap="8"/>
 		<text>Użytkowanie Internetu przez dzieci (włączając w to wymianę plików) powinno być zawsze pod kontrolą rodziców.</text>
@@ -2060,11 +2060,11 @@
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">Ten torrent ma błąd kodowania</text>
 		<newline gap="8"/>
-		<text>Windows raportował błąd translacji podczas dekodowania tekstu w tym torrencie. 
-		Jest możliwe, że torrent jest uszkodzony, lub po prostu źle zakodowany. Torrent może zostać pobrany poprawnie, 
+		<text>Windows raportował błąd translacji podczas dekodowania tekstu w tym torrencie.
+		Jest możliwe, że torrent jest uszkodzony, lub po prostu źle zakodowany. Torrent może zostać pobrany poprawnie,
 		ale nazwy niektórych plików mogą być niepoprawne.</text>
 		<newline gap="8"/>
-		<text>Większość programów do tworzenia torrentów powinna pozwolić ci naprawić ten problem, 
+		<text>Większość programów do tworzenia torrentów powinna pozwolić ci naprawić ten problem,
 		co sprawi, że będzie można pobierać ten torrent poprawnie w prawie wszystkich programach.</text>
 		<newline gap="8"/>
 		<link target="http://www.shareaza.com/help/?torrentencoding">Kliknij tutaj po dodatkową pomoc</link>
@@ -2074,27 +2074,27 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Twoja lista serwerów eDonkey jest pusta</text>
 		<newline gap="8"/>
-		<text>Nie ma żadnych serwerów eDonkey2000 na twojej liście. 
+		<text>Nie ma żadnych serwerów eDonkey2000 na twojej liście.
 		Musisz pobrać jakąś listę serwerów (plik .MET), aby móc się podłączyć do ED2K.</text>
 		<newline gap="8"/>
-		<text>Możesz pobrać listę serwerów na stronie ustawień ed2k, 
+		<text>Możesz pobrać listę serwerów na stronie ustawień ed2k,
 		lub w oknie serwisów discovery.</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Limitowanie prędkości wysyłań może spowolnić pobierania</text>
 		<newline gap="8"/>
-		<text>Kilka sieci z którymi łączy się Shareaza aby wymusić proporcje 
-		limitują prędkość wysyłania do klientów którzy się nie dzielą, 
+		<text>Kilka sieci z którymi łączy się Shareaza aby wymusić proporcje
+		limitują prędkość wysyłania do klientów którzy się nie dzielą,
 		lub po prostu wolą wysyłać do znanych im udostępniających.</text>
 		<newline/>
-		<text>Na szczęście, szerokopasmowe połączenia DSL są jak dwu pasmowa 
-		autostrada: masz osobne miejsce dla wysyłań i pobierań. 
-		Jeżeli twój klient jest dobrze skonfigurowany, powinieneś móc 
+		<text>Na szczęście, szerokopasmowe połączenia DSL są jak dwu pasmowa
+		autostrada: masz osobne miejsce dla wysyłań i pobierań.
+		Jeżeli twój klient jest dobrze skonfigurowany, powinieneś móc
 		wysyłać z dobrą prędkością i pobierać z maksymalną prędkością.</text>
 		<newline gap="8"/>
-		<text>Domyślnie, twój limit wysyłań jest ustawiony na 85% przepustowości wysyłania łącza, 
-		podczas gdy pobierania są nieograniczone. Ta konfiguracja powinna zapewnić ci 
+		<text>Domyślnie, twój limit wysyłań jest ustawiony na 85% przepustowości wysyłania łącza,
+		podczas gdy pobierania są nieograniczone. Ta konfiguracja powinna zapewnić ci
 		najszybsze możliwe prędkości pobierań.</text>
 	</document>
 
@@ -2105,33 +2105,33 @@
 		<newline gap="8"/>
 		<text>To wyszukiwanie jest źle sformułowane i może nie spełnić oczekiwań.
 		Wyszukiwania powinny zawierać kilka wyrazów, gdy możliwe i powinny mieć określone schema
-		(typ pliku). Wyszukiwania nie powinny być ograniczone do liczb lub niechcianych fraz 
+		(typ pliku). Wyszukiwania nie powinny być ograniczone do liczb lub niechcianych fraz
 		i powinieneś omijać zbyt ogólne zapytania.</text>
 		<newline gap="8"/>
-		<text>Większość klientów w sieci będzie ignorować wyszukiwania dla wszystkich plików MP3, 
+		<text>Większość klientów w sieci będzie ignorować wyszukiwania dla wszystkich plików MP3,
 		Ponieważ są zbyt ogólne i generują za dużo wyników.</text>
 	</document>
 
 	<document name="SearchHelp.BadSearch2">
 		<text format="b">Wpisz ponownie frazę do wyszukania</text>
 		<newline gap="8"/>
-		<text>To wyszukiwanie nie zawiera wystarczających fraz aby funkcjonować poprawnie. 
-		Wszystkie wyszukiwania potrzebują minimalną liczbę prawidłowych, alfabetycznych znaków, 
+		<text>To wyszukiwanie nie zawiera wystarczających fraz aby funkcjonować poprawnie.
+		Wszystkie wyszukiwania potrzebują minimalną liczbę prawidłowych, alfabetycznych znaków,
 		aby mogły zostać rozpoczęte.</text>
 		<newline gap="8"/>
-		<text>Jeżeli chcesz wyszukiwać pliki z popularnymi rozszerzeniami (i liczbami) musisz 
+		<text>Jeżeli chcesz wyszukiwać pliki z popularnymi rozszerzeniami (i liczbami) musisz
 		umieścić także inne frazy podczas tworzenia wyszukiwania.</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Wpisz ponownie frazę do wyszukania</text>
 		<newline gap="8"/>
 		<text>To wyszukiwanie zawiera tylko popul;arne rozszerzenia, lub niewyszukiwalne słowa.</text>
 		<newline gap="8"/>
-		<text>Jeżeli masz problem z ułożeniem wyszukiwania, pamiętaj, że to jest całkiem podobne do wyszukiwarki internetowej, 
+		<text>Jeżeli masz problem z ułożeniem wyszukiwania, pamiętaj, że to jest całkiem podobne do wyszukiwarki internetowej,
 		jak np. Google. Specyficzne frazy są najlepsze - unikalne nazwy, tytuły i słowa kluczowe.</text>
 		<newline gap="8"/>
-		<text>Ogólne wyszukiwania nie są efektywne i powodują niską wydajność wyszukiwania, 
+		<text>Ogólne wyszukiwania nie są efektywne i powodują niską wydajność wyszukiwania,
 		a także duże obciążenie łącza podczas wyszukiwania.</text>
 		<newline gap="8"/>
 		<text>Dalszą pomoc można uzyskać na stronie Shareazy.</text>
@@ -2140,10 +2140,10 @@
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">To wyszukiwanie nie może zostać rozpoczęte</text>
 		<newline gap="8"/>
-		<text>To wyszukiwanie prawdopodobnie zwróciłoby dużą liczbę wyników z zawartością dla dorosłych, 
+		<text>To wyszukiwanie prawdopodobnie zwróciłoby dużą liczbę wyników z zawartością dla dorosłych,
 		a to zostałow wyłączone w ustawieniach. Powinieneś albo wyłączyć filtr, albo inaczej skonstruować wyszukiwanie.</text>
 		<newline gap="8"/>
-		<text>Aby wyłączyć filtr, 
+		<text>Aby wyłączyć filtr,
 		wejdź do Narzędzia &gt; Ustawienia &gt; Ogólne i odznacz "Filtruj zawartość dla dorosłych z wyszukiwań".</text>
 	</document>
 
@@ -2161,16 +2161,16 @@
 	<document name="ShareHelp.BadShare">
 		<text format="b">Ten folder nie powinien być udostępniony</text>
 		<newline gap="8"/>
-		<text>Ten folder jest lub zawiera folder systemowy. 
-		Udostępniane tego folderu nie jest zalecane, 
+		<text>Ten folder jest lub zawiera folder systemowy.
+		Udostępniane tego folderu nie jest zalecane,
 		ponieważ większość ze znajdujących się w nim plików nie jest przydatna dla innych ludzi.</text>
 		<newline gap="8"/>
-		<text>Foldery jak folder Windows, Program Files i podobne foldery nie zawierają zwykle plików wartych udostępniania. 
+		<text>Foldery jak folder Windows, Program Files i podobne foldery nie zawierają zwykle plików wartych udostępniania.
 		Pliki warte zainteresowania byłyby w folderach, które się znajdują
 		</text><text format="i"> w środku tych folderów</text>
 		<text>. Udostępniaj je zamiast tych.</text>
 		<newline gap="8"/>
-		<text>Folder plików tymczasowych Shareazy też nie powinien być udostępniany przez zasoby, 
+		<text>Folder plików tymczasowych Shareazy też nie powinien być udostępniany przez zasoby,
 		ponieważ próba hashowania postępujących pobierań może mieć swój odcisk na wydajności całego komputera.</text>
 	</document>
 

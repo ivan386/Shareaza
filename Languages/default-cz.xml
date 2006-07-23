@@ -1757,7 +1757,7 @@
 		</text>
 		<text format="b">Internet </text>
 		<text>
-			zkontrolujte jak Shareaza pracuje společně s dalšími uzly uvnitř rozdělených sítí 
+			zkontrolujte jak Shareaza pracuje společně s dalšími uzly uvnitř rozdělených sítí
       peer-to-peer.
 		</text>
 		<newline gap="16" margin="16"/>
@@ -1917,7 +1917,7 @@
 	<document name="DownloadHelp.Moving">
 		<text format="b">Toto stahování bylo přesunuto</text>
 		<newline gap="8"/>
-		<text>Shareaza dokončila stahování tohoto souboru, a ověřila 
+		<text>Shareaza dokončila stahování tohoto souboru, a ověřila
      že je v pořádku.  Soubor je aktuálně přesunutý a rozbalený k vašim souborům do složky pro stahování.</text>
 	</document>
 
@@ -1932,17 +1932,17 @@
 		<text format="b">Disk je plný</text>
 		<newline gap="8"/>
 		<text>Shareaza automaticky pozastavila toto stahování, protože pevný disk je
-		už nešjspíš plný, nebo má stahovaný soubor problémy se zápisem.  Pokud si přejete 
-    pokračovat ve stahování, prosím uvolněte nějaký prostor na vašem pevném disku a zkontrolujte, 
-    zda je neúplný soubor ve složce přístupný, teprve potom začněte znovu 
+		už nešjspíš plný, nebo má stahovaný soubor problémy se zápisem.  Pokud si přejete
+    pokračovat ve stahování, prosím uvolněte nějaký prostor na vašem pevném disku a zkontrolujte,
+    zda je neúplný soubor ve složce přístupný, teprve potom začněte znovu
     stahovat.</text>
 	</document>
 
 	<document name="DownloadHelp.Verifying">
 		<text format="b">Toto stahování bylo ověřeno</text>
 		<newline gap="8"/>
-		<text>Toto stahování je dokončeno, a je nyní Shareazou kontrolováno aby se ubezpečila 
-     že je stažený soubor stejný jako původní soubor.  Pokud jsou nalezeny poškozené části, 
+		<text>Toto stahování je dokončeno, a je nyní Shareazou kontrolováno aby se ubezpečila
+     že je stažený soubor stejný jako původní soubor.  Pokud jsou nalezeny poškozené části,
      Shareaza je automaticky opraví.</text>
 	</document>
 
@@ -1952,16 +1952,16 @@
 		<text>Toto stahování právě probíhá.  Jestliže se stahuje příliš pomalu,
 		můžete zkusit vyhledat v síti více zdrojů viz příkaz </text>
 		<text format="b"> Najít více zdrojů. </text><text>  Jestli se rychlost nezlepší,
-		může to být způsobeno omezení rychlosti odesílání uživatele od kterého stahujete.  
+		může to být způsobeno omezení rychlosti odesílání uživatele od kterého stahujete.
     Rychlost stahování obvykle narůstá časem.</text>
 	</document>
 
 	<document name="DownloadHelp.Pending">
 		<text format="b">Toto stahování zatím čeká</text>
 		<newline gap="8"/>
-		<text>Toto stahování čeká na dokončení některého z vašich dalších stahování.  
-    Nastavte si váš limit pro stahování která mohou být aktivní, 
-    zajistíte tak že každé stahování dostane přidělenou optimální dostupnou 
+		<text>Toto stahování čeká na dokončení některého z vašich dalších stahování.
+    Nastavte si váš limit pro stahování která mohou být aktivní,
+    zajistíte tak že každé stahování dostane přidělenou optimální dostupnou
     šířku pásma. Toto nastavení můžete změnit přes Nástroje v nastavení Shareaza.</text>
 	</document>
 
@@ -1969,31 +1969,31 @@
 		<text format="b">Toto stahování čeká ve frontě</text>
 		<newline gap="8"/>
 		<text>Toto stahování čeká na dokončení nějakého jiného právě stahovaného souboru .
-		Vaše nastavení pro stahování omezí počet stahovaných souborů které mohou být aktivní 
-    v daném čase, zajistí aby každé stahování obdrželo dostupnou šířku pásma. Můžete změnit 
-    toto nastavení přes Nástroje, Nastavení Shareazy. 
+		Vaše nastavení pro stahování omezí počet stahovaných souborů které mohou být aktivní
+    v daném čase, zajistí aby každé stahování obdrželo dostupnou šířku pásma. Můžete změnit
+    toto nastavení přes Nástroje, Nastavení Shareazy.
 		Jinak, můžete pokračovat v tomto stahování příkazem ručně.</text>
 	</document>
 
 	<document name="DownloadHelp.Searching">
 		<text format="b">Toto stahování vyhledává zdroje</text>
 		<newline gap="8"/>
-		<text>Pro toto stahování nebyly nalezeny žádné známé zdroje, proto Shareaza prohledává 
-    všechny připojené sítě P2P pro nové zdroje.  Jakmile budou nalezeny, 
-    stahování se automaticky spustí.  Shareaza automaticky pátrá po zdrojích, 
+		<text>Pro toto stahování nebyly nalezeny žádné známé zdroje, proto Shareaza prohledává
+    všechny připojené sítě P2P pro nové zdroje.  Jakmile budou nalezeny,
+    stahování se automaticky spustí.  Shareaza automaticky pátrá po zdrojích,
     ale můžete urychlit postup použitím příkazu </text>
 		<text format="b"> Najít více zdrojů.</text>
 		<newline gap="8"/>
-		<text>Bohužel v mnoha případech nemusí být na lince žádní uživatelé zrovna 
-    pro soubor který hledáte.  Potom zbývá jen čekat na někoho 
-    kdo se připojí, nebo stahování zrušit a hledat podobný soubor který 
+		<text>Bohužel v mnoha případech nemusí být na lince žádní uživatelé zrovna
+    pro soubor který hledáte.  Potom zbývá jen čekat na někoho
+    kdo se připojí, nebo stahování zrušit a hledat podobný soubor který
     je více dostupný.</text>
 	</document>
 
 	<document name="DownloadHelp.Creating">
 		<text format="b">Tento stahování se připravuje</text>
 		<newline gap="8"/>
-		<text>Shareaza přerozdělí soubor ve kterém uloží toto stahování, 
+		<text>Shareaza přerozdělí soubor ve kterém uloží toto stahování,
     ušetříte tím později čas.</text>
 	</document>
 
@@ -2001,12 +2001,12 @@
 		<text format="b">BitTorrent Tracker Down</text>
 		<newline gap="8"/>
 		<text>Trasováním serveru BitTorrent pro toto stahování se zdá, že úkol byl
-		dokončen nebo také mohl selhat. Shareaza se nemůže připojit a přijmout 
+		dokončen nebo také mohl selhat. Shareaza se nemůže připojit a přijmout
     seznam stahování.</text>
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">Oblast odesílání</text>
 		<newline gap="8"/>
@@ -2023,7 +2023,7 @@
 		<text>Na disku je málo místa.</text>
 		<newline gap="8"/>
 		<text>Měli by jste se vždy pokusit udržet rozumnou volnou velikost místa na disku. Programy
-    se mohou stát nestabilní pokud jsou disky příliš zaplněné, a dočasné soubory mohou být ztraceny. 
+    se mohou stát nestabilní pokud jsou disky příliš zaplněné, a dočasné soubory mohou být ztraceny.
     Měli by jste spustit úklid disku, smazat nepotřebné soubory, nebo odinstalovat nepotřebné programy.</text>
 	</document>
 
@@ -2032,8 +2032,8 @@
 		<newline gap="8"/>
 		<text>Na disk nebo do adresáře Shareaza není možno zapisovat.</text>
 		<newline gap="8"/>
-		<text>Síťový disk byl možná odpojen, nebo nemáte povolení zapisovat 
-		do zvoleného adresáře. Prosím zkontrolujte adresáře a povolení, nebo změňte 
+		<text>Síťový disk byl možná odpojen, nebo nemáte povolení zapisovat
+		do zvoleného adresáře. Prosím zkontrolujte adresáře a povolení, nebo změňte
 		umístění dočasných souborů.</text>
 	</document>
 
@@ -2042,27 +2042,27 @@
 		<newline gap="8"/>
 		<text>Windows oznámily že není k dispozici žádné internetové spojení.</text>
 		<newline gap="8"/>
-		<text>Je pravděpodobné, že modem nebo router nefunguje, to znamená že Internet není 
+		<text>Je pravděpodobné, že modem nebo router nefunguje, to znamená že Internet není
     přístupný. Musíte se opět ručně připojit nebo resetujte vaše připojení.</text>
 		<newline gap="8"/>
 		<text>Shareaza zastavila spojení a pokusí se zabránit ztrátám všech načtených hostitelů.</text>
 	</document>
-	
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Byla zjištěna jen polovina otevřeného limitu pro připojení</text>
 		<newline gap="8"/>
 		<text>Shareaza objevila Windows XP Service Pack 2. Toto omezí počet spojení
     které se mohou pokusit připojit najednou.</text>
 		<newline gap="8"/>
-		<text>Shareaza má omezené připojení na síť, nastavením vhodných standardních hodnot 
-    zabezpečíte správnou činnost, ale výkon může být snížen. Pro další informace 
+		<text>Shareaza má omezené připojení na síť, nastavením vhodných standardních hodnot
+    zabezpečíte správnou činnost, ale výkon může být snížen. Pro další informace
     prosím navštivte diskuze Shareazy a aktuální novinky.</text>
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Aktivovace filtru pro dospělé-Adult</text>
 		<newline gap="8"/>
-		<text>Uvědomte si prosím, že (jako u každého automatizovaného filtru) nemusí být filtrování obsahu účinné 
+		<text>Uvědomte si prosím, že (jako u každého automatizovaného filtru) nemusí být filtrování obsahu účinné
     na 100%. Kontrola je navržena aby jednoduše odfiltrovala příliš nežádoucích výsledků, než aby blokování zajistila na 100%..</text>
 		<newline gap="8"/>
 		<text>Používání Internetu dětmi (včetně P2P sdílení souborů)  by by mělo být vždy pod kontrolou rodičů.</text>
@@ -2072,10 +2072,10 @@
 		<text format="b">Zdá se, že tento torrent má chybný kód</text>
 		<newline gap="8"/>
 		<text>Windows oznámily chybu překladu při dekódování textu v tomto torrentu. Není vyloučeno, že
-		torrent je poškozen, nebo jen nesprávně zakódovaný. Torrent může dál 
+		torrent je poškozen, nebo jen nesprávně zakódovaný. Torrent může dál
 		ještě řádně stahovat, i když pak mohou být nějaká jména souborů být nesprávná.</text>
 		<newline gap="8"/>
-		<text>Většina torrentů vytvořených programy by vám měla dovolit opravit tento torrent, takže 
+		<text>Většina torrentů vytvořených programy by vám měla dovolit opravit tento torrent, takže
 		po opravě bude řádně pracovat ve všech aplikacích BitTorrent.</text>
 		<newline gap="8"/>
 		<link target="http://www.shareaza.com/help/?torrentencoding">Klikněte sem pro další pomoc</link>
@@ -2085,11 +2085,11 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Váš seznam serveů eDonkey je prázdný</text>
 		<newline gap="8"/>
-		<text>Servery nejsou ve vašem seznamu serverů eDonkey2000. Potřebujete stáhnout 
+		<text>Servery nejsou ve vašem seznamu serverů eDonkey2000. Potřebujete stáhnout
 		aktualizovaný seznam serverů připojením k ED2K.</text>
 		<newline gap="8"/>
 		<text>Můžete si stáhnout seznam serverů ze stránky ed2k, nebo vyhledat
-		v okně služeb. ( Pro otevření okna služby vyhledávání stiskněte F9)</text> 
+		v okně služeb. ( Pro otevření okna služby vyhledávání stiskněte F9)</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
@@ -2099,11 +2099,11 @@
 		kteří nesdílejí, nebo prostě upřednosťují upload známým uživatelům kteří hodně sdílí.</text>
 		<newline/>
 		<text>Naštěstí, širokopásmové připojení DSL jsou jako dvě široké hlavní silnice: máte
-		přidělené samostatné přenosy  pro odesílání a stahování. Pokud je váš klient vhodně nastavený, 
+		přidělené samostatné přenosy  pro odesílání a stahování. Pokud je váš klient vhodně nastavený,
     měl by být schopen poskytovat upload při dobré kapacitě stahování.</text>
 		<newline gap="8"/>
 		<text>Standardně by váš limit odesílání měl být nastavený na asi 85% z dostupné šířka pásma,
-		zatímco vaše stahování je bez omezení. Toto nastavení by vám mělo umožnit nejrychlejší 
+		zatímco vaše stahování je bez omezení. Toto nastavení by vám mělo umožnit nejrychlejší
     možné stahování souborů.</text>
 	</document>
 
@@ -2113,29 +2113,29 @@
 		<text format="b">Prosím zadejte výraz pro hledání znovu a upřesněte jej</text>
 		<newline gap="8"/>
 		<text>Zadané hledání je špatně formulované a mohlo by dělat problémy.
-    Pokud je to možné, zadané hledání by by mělo zahrnout několik výrazů které by měly 
-    blíže určit co vlastně hledáte (typ souboru). Kromě toho, hledání nesmí být omezené na čísla nebo jen záporné 
+    Pokud je to možné, zadané hledání by by mělo zahrnout několik výrazů které by měly
+    blíže určit co vlastně hledáte (typ souboru). Kromě toho, hledání nesmí být omezené na čísla nebo jen záporné
     podmínky a měli by jste se také vyhnout moc všeobecných výrazů.</text>
 		<newline gap="8"/>
-		<text>Většina klientů na síti bude ignorovat hledání například všech souborů MP3, 
+		<text>Většina klientů na síti bude ignorovat hledání například všech souborů MP3,
     protože hledání není upřesněno a nalezlo by se příliš mnoho výsledků.</text>
 	</document>
 
 	<document name="SearchHelp.BadSearch2">
 		<text format="b">Prosím zadejte výraz pro hledání znovu a upřesněte jej</text>
 		<newline gap="8"/>
-		<text>Toto hledání neobsahuje dost podmínek aby fungovalo pořádně. Aby mohlo začít, 
+		<text>Toto hledání neobsahuje dost podmínek aby fungovalo pořádně. Aby mohlo začít,
     musí mít všechna hledání minimální počet platných abecedních znaků.</text>
 		<newline gap="8"/>
 		<text>Běžně zadané soubory (i čísla) lze vyhledávat, musíte proto zadat
-		takové podmínky také umožní hledání. Interpunkce a náhradní znaky nejsou podporované 
+		takové podmínky také umožní hledání. Interpunkce a náhradní znaky nejsou podporované
     při hledání, jen text který zadáte.</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Prosím zadejte výraz pro hledání znovu a upřesněte jej</text>
 		<newline gap="8"/>
-		<text>Zdá se že toto hledání obsahuje jen samotnou příponu souboru, nebo se nevyhledávají 
+		<text>Zdá se že toto hledání obsahuje jen samotnou příponu souboru, nebo se nevyhledávají
     slova.</text>
 		<newline gap="8"/>
 		<text>Jestliže máte problém při vytváření hledání, mějte na paměti že to je docela podobné jako
@@ -2152,10 +2152,10 @@
 		<text format="b">Toto vyhledávání nemůže být spuštěno</text>
 		<newline gap="8"/>
 		<text>Takto zadané hledání by pravděpodobně nalezlo velké množství výsledků s erotickým
-		obsahem, toto bylo vypnuto v nastavení. Musíte jinak zadat hledání, 
+		obsahem, toto bylo vypnuto v nastavení. Musíte jinak zadat hledání,
     nebo musíte vyřadit filtr pro dospělé.</text>
 		<newline gap="8"/>
-		<text>Pro vyřazení filtru, jděte do menu: Nástroje &gt; Nastavení Shareazy &gt; U hledání filtrovat 
+		<text>Pro vyřazení filtru, jděte do menu: Nástroje &gt; Nastavení Shareazy &gt; U hledání filtrovat
 		obsah (porno).</text>
 	</document>
 
@@ -2175,11 +2175,11 @@
 		<text>Tato složka je (nebo obsahuje) systémové adresáře. Sdílení této složky není
     doporučené, většinu souborů nemusí další lidé vidět.</text>
     <newline gap="8"/>
-		<text>Složky jako adresář Windows, Program Files a podobné složky obvykle neobsahují 
-    soubory vhodné pro sdílení. Do těchto adresářů by jste </text><text format="i"> neměli </text><text> ukládat 
+		<text>Složky jako adresář Windows, Program Files a podobné složky obvykle neobsahují
+    soubory vhodné pro sdílení. Do těchto adresářů by jste </text><text format="i"> neměli </text><text> ukládat
     zajímavé soubory ke sdílení. Prosím sdílejte jinde.</text>
     <newline gap="8"/>
-		<text>Také složku Shareazy 'Incomplete'(nedokončené) by jste neměli sdílet přes 
+		<text>Také složku Shareazy 'Incomplete'(nedokončené) by jste neměli sdílet přes
     knihovnu, ta se pak pokouší načítat pracovní soubory, což může mít dopad na výkon.</text>
 	</document>
 
