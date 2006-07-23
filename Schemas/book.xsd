@@ -78,7 +78,20 @@
       <attribute name="keywords" type="string"/>
       <attribute name="pages" type="int"/>
       <attribute name="year" type="year"/>
-      <attribute name="language" type="language"/>
+		<attribute name="language">
+			<simpleType base="string">
+				<enumeration value="Danish"/>
+				<enumeration value="English"/>
+				<enumeration value="French"/>
+				<enumeration value="German"/>
+				<enumeration value="Italian"/>
+				<enumeration value="Korean"/>
+				<enumeration value="Japanese"/>
+				<enumeration value="Mandarin"/>
+				<enumeration value="Russian"/>
+				<enumeration value="Spanish"/>
+			</simpleType>
+		</attribute>
       <attribute name="ISBN">
         <simpleType base="int">
           <pattern value="\d{10}"/>

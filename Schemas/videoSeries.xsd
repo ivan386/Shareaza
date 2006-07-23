@@ -14,6 +14,20 @@
 		<attribute name="producer" type="string"/>
 		<attribute name="studio" type="string"/>
 		<attribute name="stars" type="string"/>
+		<attribute name="language">
+			<simpleType base="string">
+				<enumeration value="Danish"/>
+				<enumeration value="English"/>
+				<enumeration value="French"/>
+				<enumeration value="German"/>
+				<enumeration value="Italian"/>
+				<enumeration value="Korean"/>
+				<enumeration value="Japanese"/>
+				<enumeration value="Mandarin"/>
+				<enumeration value="Russian"/>
+				<enumeration value="Spanish"/>
+			</simpleType>
+		</attribute>
 		<attribute name="subtitles">
 			<simpleType base="string">
 				<enumeration value="Danish"/>

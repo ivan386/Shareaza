@@ -19,6 +19,20 @@
 			<attribute name="title" type="string"/>
 			<attribute name="author" type="string"/>
 			<attribute name="subject" type="string"/>
+			<attribute name="language">
+				<simpleType base="string">
+					<enumeration value="Danish"/>
+					<enumeration value="English"/>
+					<enumeration value="French"/>
+					<enumeration value="German"/>
+					<enumeration value="Italian"/>
+					<enumeration value="Korean"/>
+					<enumeration value="Japanese"/>
+					<enumeration value="Mandarin"/>
+					<enumeration value="Russian"/>
+					<enumeration value="Spanish"/>
+				</simpleType>
+			</attribute>
 			<attribute name="keywords" type="string"/>
 			<attribute name="abstract" type="string"/>
 			<attribute name="initials" type="string"/>

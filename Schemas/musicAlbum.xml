@@ -265,7 +265,8 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sr">Vreme Trajanja</title>
                        <title language="tr">Toplam Süre</title>
                </member>
-               <member name="language" search="none">
+               <member name="language" search="indexed">
+                       <display defaultColumn="true"/>
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
                        <title language="chs">语言</title>
