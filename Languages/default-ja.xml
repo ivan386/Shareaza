@@ -524,7 +524,7 @@
 			<separator/>
 			<menu text="高度(_D)">
 				<item id="ID_VIEW_SYSTEM" text="システム(_Y)" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="近隣(_E)" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="近隣(_E)" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="ダウンロード(_D)" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="アップロード(_U)" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="ライブラリ(_L)" shortcut="F5"/>
@@ -606,7 +606,7 @@
 		</menu>
 		<menu text="表示(_V)">
 			<item id="ID_VIEW_SYSTEM" text="システム(_S)" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="近隣(_N)" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="近隣(_N)" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="ダウンロード(_D)" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="アップロード(_U)" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="ライブラリ(_L)" shortcut="F5"/>
@@ -3827,9 +3827,9 @@
 		<control caption="新規保存(_S)"/>
 		<control caption="削除(_D)"/>
 		<control caption="フィルタ:"/>
-		<control caption="DRM files"/>
-		<control caption="Suspicious files"/>
-		<control caption="Adult results"/>
+		<control caption="DRMファイルを除外"/>
+		<control caption="怪しいファイルを除外"/>
+		<control caption="アダルトファイルを除外"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="フィルタに名前を付けて保存">
