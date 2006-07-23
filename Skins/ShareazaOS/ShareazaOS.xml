@@ -2087,10 +2087,10 @@
 	</anchors>
 	</windowSkin>
 	<!-- end navbar language for hr -->
-	<!-- navbar language for jp -->
+	<!-- navbar language for ja -->
 	<windowSkin> 
-		<image type="image" language="jp" path="sos_navbar_jp.bmp"/>
-        <image type="watermark" language="jp" path="sos_navbarbg.bmp"/>
+		 <image type="image" language="ja" path="sos_navbar_jp.bmp"/>
+        <image type="watermark" language="ja" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl.Basic"/>
         <parts> 
           <part name="_ID_TAB_HOME.Up"			rect="1,0,78,29"/>
@@ -2124,8 +2124,8 @@
         </anchors>
 	</windowSkin>
 	<windowSkin>
-        <image type="image" language="jp" path="sos_navbar_jp.bmp"/>
-        <image type="watermark" language="jp" path="sos_navbarbg.bmp"/>
+        <image type="image" language="ja" path="sos_navbar_jp.bmp"/>
+        <image type="watermark" language="ja" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl"/>
         <target window="CMainTabBarCtrl.Windowed"/>
         <parts>
@@ -2164,6 +2164,6 @@
           <anchor name="_ID_TAB_NETWORK"	rect="505,2,119,29"/>
         </anchors>
 	</windowSkin>
-	<!-- end navbar language for jp -->
+	<!-- end navbar language for ja -->
     </windowSkins>
   </skin>
