@@ -1052,9 +1052,9 @@ void CEDClient::DeriveSoftwareVersion()
 				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		case 3:
-			m_sUserAgent.Format( _T("aMule %i.%i%c"), 
+			m_sUserAgent.Format( _T("aMule %i.%i.%i"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) );
 			break;
 		case 4:
 			if ( m_bEmAICH || m_bEmSecureID )
