@@ -313,7 +313,6 @@
 	<command code="33105" id="ID_DOWNLOADS_RATE"/>
 	<command code="33106" id="ID_LIBRARY_VIEW_COLLECTION"/>
 	<command code="33107" id="ID_LIBRARY_FOLDER_DOWNLOAD"/>
-	<command code="33108" id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION"/>
 	<command code="33109" id="ID_LIBRARY_EXPORT_COLLECTION"/>
 	<command code="33110" id="ID_LIBRARY_SEED_TORRENT"/>
 	<command code="33111" id="ID_LIBRARY_REBUILD_ANSI"/>
