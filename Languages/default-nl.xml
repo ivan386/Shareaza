@@ -1423,7 +1423,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="Ver_breek Verbinding"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Gebruiker Bekijken"/>
-		<item id="ID_CHAT_SEND_FILE" text="_Stuur Bestand..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="_Stuur Bestand..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Verleen Voor_rang"/>
 		<separator/>
 		<menu text="_Schriftstijl">
@@ -2203,7 +2203,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="Voeg een emoticon toe."/>
 	<tip id="ID_CHAT_ITALIC" message="Maak de tekst cursief (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Geef deze gebruiker voorrang met het uploaden."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Stuur een bestand naar de gebruiker..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Stuur een bestand naar de gebruiker..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Laat de tijd zien wanneer elke boodschap wordt ontvangen."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Maak de tekst onderstreept (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Het actieve venster afsluiten."/>

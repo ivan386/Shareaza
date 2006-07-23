@@ -1416,7 +1416,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="_Desconectar"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Explorar"/>
-		<item id="ID_CHAT_SEND_FILE" text="E_nivar Archivo..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="E_nivar Archivo..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="_Prioridad"/>
 		<separator/>
 		<menu text="_Formato">
@@ -2193,7 +2193,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="Insertar carita."/>
 	<tip id="ID_CHAT_ITALIC" message="Aplicar cursiva (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Dar prioridad al archivo que este usuario esta descargando actualmente."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Enviar archivo al usuario..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Enviar archivo al usuario..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Mostrar el tiempo cuando el mensaje es recibido."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Aplicar subrayado (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Cerrar ventana."/>

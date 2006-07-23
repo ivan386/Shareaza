@@ -1417,7 +1417,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="Pre_kini povezavo"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Brskanje po uporabniku"/>
-		<item id="ID_CHAT_SEND_FILE" text="Pošlji _datoteko..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="Pošlji _datoteko..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="_Potrdi prednost"/>
 		<separator/>
 		<menu text="_Oblika">
@@ -2196,7 +2196,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="Vstavite smeška."/>
 	<tip id="ID_CHAT_ITALIC" message="Uporabite poševno pisavo (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Dodelite temu uporabniku pravice za nalaganje (upload)."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Pošljite uporabniku datoteko..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Pošljite uporabniku datoteko..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Pokažite čas, ko je prejeto posamezno sporočilo."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Uporabite podčrtano pisavo (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Zaprite aktivo okno."/>

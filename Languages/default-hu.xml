@@ -1421,7 +1421,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <item id="ID_CHAT_DISCONNECT" text="Lekapcsolódás"/>
                <separator/>
                <item id="ID_CHAT_BROWSE" text="Fájllista és profil"/>
-               <item id="ID_CHAT_SEND_FILE" text="Fájl küldése..."/>
+               <!-- <item id="ID_CHAT_SEND_FILE" text="Fájl küldése..."/> -->
                <item id="ID_CHAT_PRIORITY" text="Elsőbbséget ad"/>
                <separator/>
                <menu text="_Format">
@@ -2203,7 +2203,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_CHAT_EMOTICONS" message="Vigyori beszúrása."/>
        <tip id="ID_CHAT_ITALIC" message="Dőlt betűk (Ctrl+I)"/>
        <tip id="ID_CHAT_PRIORITY" message="Feltöltési elsőbbséget ad a felhasználnak."/>
-       <tip id="ID_CHAT_SEND_FILE" message="Fájl elküldése..."/>
+       <!-- <tip id="ID_CHAT_SEND_FILE" message="Fájl elküldése..."/> -->
        <tip id="ID_CHAT_TIMESTAMP" message="Időbélyegző hozzáadása az üzenethez."/>
        <tip id="ID_CHAT_UNDERLINE" message="Aláhúzott betűk (Ctrl+U)"/>
        <tip id="ID_CHILD_CLOSE" message="A kiválasztott ablak bezárása."/>

@@ -1424,7 +1424,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="_Desconectar"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Navegar Usuário"/>
-		<item id="ID_CHAT_SEND_FILE" text="_Enviar Arquivo..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="_Enviar Arquivo..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Garantir _Prioridade"/>
 		<separator/>
 		<menu text="_Formato">
@@ -2212,7 +2212,7 @@
 <tip id="ID_CHAT_EMOTICONS" message="Inserir emoticon."/>
 <tip id="ID_CHAT_ITALIC" message="Aplicar formatação Italic (Ctrl+I)"/>
 <tip id="ID_CHAT_PRIORITY" message="Garantir prioridade ao usuário."/>
-<tip id="ID_CHAT_SEND_FILE" message="Enviar um arquivo ao usuário..."/>
+<!-- <tip id="ID_CHAT_SEND_FILE" message="Enviar um arquivo ao usuário..."/> -->
 <tip id="ID_CHAT_TIMESTAMP" message="Mostrar a hora que cada mensagem foi recebida."/>
 <tip id="ID_CHAT_UNDERLINE" message="Aplicar formatação Underline (Ctrl+U)"/>
 <tip id="ID_CHILD_CLOSE" message="Fechar a janela ativa."/>

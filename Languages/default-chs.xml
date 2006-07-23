@@ -1429,7 +1429,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="断开(_D)"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="浏览用户(_B)"/>
-		<item id="ID_CHAT_SEND_FILE" text="发送文件(_S)..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="发送文件(_S)..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="准予优先权(_P)"/>
 		<separator/>
 		<menu text="格式(_F)">
@@ -2189,7 +2189,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="插入一个表情符号。"/>
 	<tip id="ID_CHAT_ITALIC" message="应用斜体格式 (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="确定该用户的上传优先级。"/>
-	<tip id="ID_CHAT_SEND_FILE" message="发送文件给用户..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="发送文件给用户..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="显示收到消息的时间。"/>
 	<tip id="ID_CHAT_UNDERLINE" message="应用下划线格式 (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="关闭活动的窗口。"/>

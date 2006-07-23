@@ -1433,7 +1433,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="中斷連線"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="瀏覽使用者"/>
-		<item id="ID_CHAT_SEND_FILE" text="傳送檔案..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="傳送檔案..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="准予優先權"/>
 		<separator/>
 		<menu text="格式">
@@ -2147,7 +2147,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="插入表情符號"/>
 	<tip id="ID_CHAT_ITALIC" message="套用斜體格式 (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="給與這個使用者上傳的優先權."/>
-	<tip id="ID_CHAT_SEND_FILE" message="傳送檔案給這個使用者..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="傳送檔案給這個使用者..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="在每一個收到的訊息旁顯示時間."/>
 	<tip id="ID_CHAT_UNDERLINE" message="套用底線格式 (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="關閉活躍中的視窗."/>

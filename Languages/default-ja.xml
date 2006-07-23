@@ -1441,7 +1441,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="切断(_D)"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="参照(_B)"/>
-		<item id="ID_CHAT_SEND_FILE" text="ファイルを送信(_S)..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="ファイルを送信(_S)..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="認証優先順位(_P)"/>
 		<separator/>
 		<menu text="_Format">
@@ -2223,7 +2223,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="絵文字を挿入します"/>
 	<tip id="ID_CHAT_ITALIC" message="イタリック体フォーマットを適用します(Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="このユーザにアップロード優先権を与えます"/>
-	<tip id="ID_CHAT_SEND_FILE" message="ユーザへファイルを送信します..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="ユーザへファイルを送信します..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="各メッセージを受信した時間を表示します"/>
 	<tip id="ID_CHAT_UNDERLINE" message="アンダーライン属性のフォーマットを適用します(Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="アクティブウィンドウを閉じます"/>

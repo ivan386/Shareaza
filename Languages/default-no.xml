@@ -1423,7 +1423,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="Koble fra"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="Utforsk bruker"/>
-		<item id="ID_CHAT_SEND_FILE" text="Send fil..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="Send fil..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Gi prioritet"/>
 		<separator/>
 		<menu text="_Format">
@@ -2204,7 +2204,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="Sett inn et uttrykksikon."/>
 	<tip id="ID_CHAT_ITALIC" message="Velg kursiv skrift (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Gi opplastingsprioritet til bruker."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Send en fil til bruker..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Send en fil til bruker..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Vis tidspunkt for når hver melding ble mottatt."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Velg understreking (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Lukk det aktive vinduet."/>

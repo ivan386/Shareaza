@@ -1418,7 +1418,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="_Diskonnekteer"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Blaai deur Gebruikersinligting"/>
-		<item id="ID_CHAT_SEND_FILE" text="_Stuur Lêer..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="_Stuur Lêer..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Gee _Prioriteit"/>
 		<separator/>
 		<menu text="_Formaat">
@@ -2204,7 +2204,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="Plaas 'n emotikon."/>
 	<tip id="ID_CHAT_ITALIC" message="Druk teks kursief (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Gee oplaai-prioriteit aan hierdie gebruiker."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Stuur 'n lêer na die gebruiker..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Stuur 'n lêer na die gebruiker..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Vertoon die tyd wanneer elke boodskap ontvang is."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Onderstreep teks (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Sluit die geselekteerde venster."/>

@@ -1424,7 +1424,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="_Odpojit"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="P_rohlédnout uživatele"/>
-		<item id="ID_CHAT_SEND_FILE" text="Ode_slat soubor..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="Ode_slat soubor..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Udělit _přednost"/>
 		<separator/>
 		<menu text="_Formát">
@@ -2201,7 +2201,7 @@
   <tip id="ID_CHAT_EMOTICONS" message="Vložit smajlíky."/>
   <tip id="ID_CHAT_ITALIC" message="Použít kurzívu (Ctrl+I)"/>
   <tip id="ID_CHAT_PRIORITY" message="Udělit přednost odesílání pro tohoto uživatele."/>
-  <tip id="ID_CHAT_SEND_FILE" message="Poslat soubor uživateli..."/>
+  <!-- <tip id="ID_CHAT_SEND_FILE" message="Poslat soubor uživateli..."/> -->
   <tip id="ID_CHAT_TIMESTAMP" message="Ukázat čas kdy byla každá zpráva přijata."/>
   <tip id="ID_CHAT_UNDERLINE" message="Použít podtržení textu (Ctrl+U)"/>
   <tip id="ID_CHILD_CLOSE" message="Zavřít aktivní okno."/>

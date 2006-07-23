@@ -1423,7 +1423,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="Bağlantı _Kes"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="Kullanıcı _Ara"/>
-		<item id="ID_CHAT_SEND_FILE" text="_Dosya Gönder..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="_Dosya Gönder..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Ö_ncelik Ver"/>
 		<separator/>
 		<menu text="B_içim">
@@ -2167,7 +2167,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="İkon ekle."/>
 	<tip id="ID_CHAT_ITALIC" message="İtalik biçimini uygula (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Kullanıcının aktarım üstünlüğünü onayla."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Kullanıcıya dosya gönder..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Kullanıcıya dosya gönder..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Mesajların gönderildiği zamanı göster."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Altıçizili biçimini uygula (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Etkin olan pencereyi kapat."/>

@@ -1423,7 +1423,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="Rozłącz"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="Przegladaj użytkownika"/>
-		<item id="ID_CHAT_SEND_FILE" text="Wyślij plik..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="Wyślij plik..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Nadaj priorytet"/>
 		<separator/>
 		<menu text="Format">
@@ -2192,7 +2192,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="Umieść emoticonę."/>
 	<tip id="ID_CHAT_ITALIC" message="Zastosuj pochylone formatowanie (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Zwiększ priorytet wysyłania dla tego użytkownika."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Wyślij plik do użytkownika..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Wyślij plik do użytkownika..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Pokaż czas kiedy dana wiadomość została odebrana."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Zastosuj podkreślone formatowanie (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Zamknij aktywne okno."/>

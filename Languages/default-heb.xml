@@ -1417,7 +1417,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="‪ה_תנתק"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="‪_עיין בקבצי המשתמש"/>
-		<item id="ID_CHAT_SEND_FILE" text="‪...שלח קובץ"/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="‪...שלח קובץ"/> -->
 		<item id="ID_CHAT_PRIORITY" text="‪...הענק עדיפות למשתמש"/>
 		<separator/>
 		<menu text="‪_Format">
@@ -2201,7 +2201,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="הכנס סמיילי"/>
 	<tip id="ID_CHAT_ITALIC" message="החל עיצוב טקסט נוטה (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="הענק עדיפות העלאה למשתמש"/>
-	<tip id="ID_CHAT_SEND_FILE" message="שלח קובץ אל המשתמש"/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="שלח קובץ אל המשתמש"/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="הראה את השעה שבה כל הודעה התקבלה"/>
 	<tip id="ID_CHAT_UNDERLINE" message="החל עיצוב קו תחתון (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="סגור את החלון הפעיל"/>

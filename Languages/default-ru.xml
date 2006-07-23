@@ -1402,7 +1402,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="_Разъединить"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="Просмотр _юзера"/>
-		<item id="ID_CHAT_SEND_FILE" text="П_ослать файл..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="П_ослать файл..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="_Предоставить приоритет"/>
 		<separator/>
 		<menu text="_Формат">
@@ -2193,7 +2193,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="Вставить смайлик."/>
 	<tip id="ID_CHAT_ITALIC" message="Применить формат курсива (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Предоставить пользователю приоритет на загрузку."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Послать файл пользователю..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Послать файл пользователю..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Показывать время, когда получено каждое сообщение."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Применить формат подчеркивания (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Закрыть активное окно."/>

@@ -1425,7 +1425,7 @@ Umlauts:
 		<item id="ID_CHAT_DISCONNECT" text="_Katkesta Ühendus"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Sirvi Kasutajat"/>
-		<item id="ID_CHAT_SEND_FILE" text="Saa_da Fail..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="Saa_da Fail..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Anna _Eelistusi"/>
 		<separator/>
 		<menu text="_Teksti Formaat">
@@ -2202,7 +2202,7 @@ Umlauts:
 	<tip id="ID_CHAT_EMOTICONS" message="Sisesta emotikon."/>
 	<tip id="ID_CHAT_ITALIC" message="Kinnita kaldkiri (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Anna kasutajale eesõigus."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Saada kasutajale faile..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Saada kasutajale faile..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Näita sõnumite vastuvõtuaega."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Kinnita alakriips (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Sulge aken."/>

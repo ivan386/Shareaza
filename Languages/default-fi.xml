@@ -1422,7 +1422,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="_Katkaise Yhteys"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<item id="ID_CHAT_SEND_FILE" text="_L&#228;het&#228; tiedosto..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="_L&#228;het&#228; tiedosto..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Anna _Prioriteetti"/>
 		<separator/>
 		<menu text="_Formatoi">
@@ -2038,72 +2038,72 @@
 	</document>
 
 	<document name="GeneralHelp.ConnectionFail">
-		<text format="b">Internet yhteys on h‰vitetty</text>
+		<text format="b">Internet yhteys on hvitetty</text>
 		<newline gap="8"/>
-		<text>Windows raportoi ett‰ internet yhteytt‰ ei ole saatavilla.</text>
+		<text>Windows raportoi ett internet yhteytt ei ole saatavilla.</text>
 		<newline gap="8"/>
-		<text>On todenn‰kˆist‰ ett‰ modeemi tai reititin on pudonnut, tarkoittaen ett‰ webi‰ ei
-		voida k‰ytt‰‰. Sinun t‰ytyy manuaalisesti yhdist‰‰ uudelleen tai resetoida yhteys.</text>
+		<text>On todennkist ett modeemi tai reititin on pudonnut, tarkoittaen ett webi ei
+		voida kytt. Sinun tytyy manuaalisesti yhdist uudelleen tai resetoida yhteys.</text>
 		<newline gap="8"/>
-		<text>Shareaza on pys‰ytt‰nyt yhdistys yritykset jotta kaikkia k‰ytt‰ji‰ jotka ovat v‰limuistissa ei hukattaisi.</text>
+		<text>Shareaza on pysyttnyt yhdistys yritykset jotta kaikkia kyttji jotka ovat vlimuistissa ei hukattaisi.</text>
 	</document>
 
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 tunnistettu</text>
 		<newline gap="8"/>
-		<text>Shareaza on tunnistanut ett‰ sinulla on Windows XP Service Pack 2. T‰m‰ rajoittaa yhteyksien
-		m‰‰r‰‰ mit‰ ohjelma voi ottaa kerralla.</text>
+		<text>Shareaza on tunnistanut ett sinulla on Windows XP Service Pack 2. Tm rajoittaa yhteyksien
+		mr mit ohjelma voi ottaa kerralla.</text>
 		<newline gap="8"/>
-		<text>Shareaza on rajoittanut verkko yhteyksien m‰‰r‰‰ ja asettanut oikeat arvot
-		varmistaakseen toimivuuden kuitenkin tehoa voidaan v‰hent‰‰. Ole hyv‰ ja k‰y Shareazan
-		foorumeissa saadaksesi enemm‰n tietoa ja uusimmat uutiset.</text>
+		<text>Shareaza on rajoittanut verkko yhteyksien mr ja asettanut oikeat arvot
+		varmistaakseen toimivuuden kuitenkin tehoa voidaan vhent. Ole hyv ja ky Shareazan
+		foorumeissa saadaksesi enemmn tietoa ja uusimmat uutiset.</text>
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
-		<text format="b">Aikuisviihde suodatus on p‰‰ll‰</text>
+		<text format="b">Aikuisviihde suodatus on pll</text>
 		<newline gap="8"/>
-		<text>Ota huomioon ett‰ (kuin kaikissa muissa automatisoiduissa suodattimissa) varmaa 100% tehoa
-		sis‰llˆn suodatukseen. Se on vain tehty suodattamaan ei halutut tulokset kuin
-		100% t‰ysi blokkaus.</text>
+		<text>Ota huomioon ett (kuin kaikissa muissa automatisoiduissa suodattimissa) varmaa 100% tehoa
+		sislln suodatukseen. Se on vain tehty suodattamaan ei halutut tulokset kuin
+		100% tysi blokkaus.</text>
 		<newline gap="8"/>
-		<text>Lasten internetin k‰yttˆ‰ (mukaan lukien P2P tiedoston jako)  tulisi aina olla vanhemman valvonnassa.</text>
+		<text>Lasten internetin kytt (mukaan lukien P2P tiedoston jako)  tulisi aina olla vanhemman valvonnassa.</text>
 	</document>
 
 	<document name="GeneralHelp.BadTorrentEncoding">
-		<text format="b">T‰m‰ torrentti n‰ytt‰‰ sis‰lt‰v‰ koodaus virheen</text>
+		<text format="b">Tm torrentti nytt sisltv koodaus virheen</text>
 		<newline gap="8"/>
-		<text>Windows on raportoinut k‰‰ntˆvirheen koodattaessa teksti‰ t‰ss‰ torrentissa. Se on
-		mahdollista ett‰ torrentti on virheelinen tai vain v‰‰rin koodattu. T‰m‰ torrentti voi
-		kuitenkin latautua kunnolla mutta jotkut tiedosto nimet voivat olla v‰‰rin.</text>
+		<text>Windows on raportoinut kntvirheen koodattaessa teksti tss torrentissa. Se on
+		mahdollista ett torrentti on virheelinen tai vain vrin koodattu. Tm torrentti voi
+		kuitenkin latautua kunnolla mutta jotkut tiedosto nimet voivat olla vrin.</text>
 		<newline gap="8"/>
-		<text>Suurin osa torrent teko ohjelmista antaa mahdollisuuden korjata t‰m‰ torrentti, mik‰
-		varmistaa ett‰ se toimii oikein kaikissa BitTorrent ohjemissa.</text>
+		<text>Suurin osa torrent teko ohjelmista antaa mahdollisuuden korjata tm torrentti, mik
+		varmistaa ett se toimii oikein kaikissa BitTorrent ohjemissa.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Klikkaa t‰h‰n saadaksesi lis‰‰ apua (en)</link>
+		<link target="http://www.shareaza.com/help/?torrentencoding">Klikkaa thn saadaksesi lis apua (en)</link>
 		<text>, tai lataa ohjelma jolla voit korjata torrentin.</text>
 </document>
 
 	<document name="GeneralHelp.DonkeyServerList">
-		<text format="b">Sinun eDonkey palvelin lista on tyhj‰</text>
+		<text format="b">Sinun eDonkey palvelin lista on tyhj</text>
 		<newline gap="8"/>
-		<text>Sinulla ei ole yht‰‰n palvelinta eDonkey2000 palvelin listassa. Sinun tulee ladata
-		p‰ivitetty palvelin lista (met tiedosto) yhdist‰‰ksesi ED2K.</text>
+		<text>Sinulla ei ole yhtn palvelinta eDonkey2000 palvelin listassa. Sinun tulee ladata
+		pivitetty palvelin lista (met tiedosto) yhdistksesi ED2K.</text>
 		<newline gap="8"/>
-		<text>Sin‰ voit ladata palvelin listan ed2k asetukset sivulla tai discovery
+		<text>Sin voit ladata palvelin listan ed2k asetukset sivulla tai discovery
 		palvelu ikkunassa. (Paina F9 avataksesi discovery palvelut ikkunan)</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
-		<text format="b">Rajoitetut l‰etys paikat saattavat hidastaa latauksia</text>
+		<text format="b">Rajoitetut letys paikat saattavat hidastaa latauksia</text>
 		<newline gap="8"/>
-		<text>Moni verkko mihink‰ Shareaza yhdist‰‰ vaati tietyt l‰hetys paikat
-		k‰ytt‰jille jotka eiv‰tjaa tai eiv‰t vain halua ladata tunnetuille jakajille.</text>
+		<text>Moni verkko mihink Shareaza yhdist vaati tietyt lhetys paikat
+		kyttjille jotka eivtjaa tai eivt vain halua ladata tunnetuille jakajille.</text>
 		<newline/>
-		<text>Valitettavasti laajakaista DSL yhteydet ovat kuin kaksi kaistainen moottorite: sinulla t‰ytyy olla
-		eri rajoitukse l‰hetyksile ja latauksille. Jos sinun ohjelmasi on oikein konfiguroitu
-		sinun tulisi l‰hett‰‰ hyv‰ll‰ nopeudella samalla pit‰en t‰yden lataus tehon.</text>
+		<text>Valitettavasti laajakaista DSL yhteydet ovat kuin kaksi kaistainen moottorite: sinulla tytyy olla
+		eri rajoitukse lhetyksile ja latauksille. Jos sinun ohjelmasi on oikein konfiguroitu
+		sinun tulisi lhett hyvll nopeudella samalla piten tyden lataus tehon.</text>
 		<newline gap="8"/>
-		<text>Oletuksena sinun l‰hetys rajoitukset ovat noin 85% l‰hetys kaistasta
+		<text>Oletuksena sinun lhetys rajoitukset ovat noin 85% lhetys kaistasta
 		kun lataukset ovat rajoittamattomat. Tuon konfiguraation  tulisi antaa sinulle mahdollisimman nopean
 		lataus nopuden kuin mahdollista.</text>
 	</document>
@@ -2111,26 +2111,26 @@
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
-		<text format="b">Ole hyv‰ ja j‰rjest‰ hakusi uudelleen</text>
+		<text format="b">Ole hyv ja jrjest hakusi uudelleen</text>
 		<newline gap="8"/>
-		<text>T‰m‰ haku on huonosti formatoitu ja ei saata tomia oikein
-		Haut tulisivat sis‰lt‰‰ niin monta termi‰ kuin mahdollista ja sinun tulisi aina valita
-		tiedosto tyyppi. Haut eiv‰t saa olla rajoitettu vain numeroihin tai negatiivisiin
-		termeihein ja sinun tulisi v‰ltt‰‰ eritt‰in yleisi‰ hakuja.</text>
+		<text>Tm haku on huonosti formatoitu ja ei saata tomia oikein
+		Haut tulisivat sislt niin monta termi kuin mahdollista ja sinun tulisi aina valita
+		tiedosto tyyppi. Haut eivt saa olla rajoitettu vain numeroihin tai negatiivisiin
+		termeihein ja sinun tulisi vltt erittin yleisi hakuja.</text>
 		<newline gap="8"/>
-		<text>Suurin osa p2p ohjelmista hylk‰‰ MP3 tiedosto haun esimerkiksi
+		<text>Suurin osa p2p ohjelmista hylk MP3 tiedosto haun esimerkiksi
 		koska se ei ole liian tarkka ja tuottaisi liian monta tulosta.</text>
 	</document>
 
 	<document name="SearchHelp.BadSearch2">
-		<text format="b">Ole hyv‰ ja j‰rjest‰ hakusi uudelleen</text>
+		<text format="b">Ole hyv ja jrjest hakusi uudelleen</text>
 		<newline gap="8"/>
-		<text>T‰m‰ haku ei sis‰ll‰ tarpeeksi termej‰ toimiakseen kunnollisesti. Kaikki haut tarvitsevat
-		v‰himm‰is m‰‰r‰n numeroita tai aakkosellisia kirjaimia aloittaakseen.</text>
+		<text>Tm haku ei sisll tarpeeksi termej toimiakseen kunnollisesti. Kaikki haut tarvitsevat
+		vhimmis mrn numeroita tai aakkosellisia kirjaimia aloittaakseen.</text>
 		<newline gap="8"/>
-		<text>Kun taas yleisi‰ tiedosto p‰‰tteit‰ (ja numeroita) voi etsi‰, sinun tulee laittaa
-		toisia termej‰ aloittaessasi hakua. Pilkutuksia ja jokerimerkkej‰ ei k‰ytet‰
-		hauissa joten vain se teksti mink‰ annat.</text>
+		<text>Kun taas yleisi tiedosto ptteit (ja numeroita) voi etsi, sinun tulee laittaa
+		toisia termej aloittaessasi hakua. Pilkutuksia ja jokerimerkkej ei kytet
+		hauissa joten vain se teksti mink annat.</text>
 	</document>
 
 	<document name="SearchHelp.BadSearch3">
@@ -2203,7 +2203,7 @@
 	<tip id="ID_CHAT_EMOTICONS" message="Insert an emoticon."/>
 	<tip id="ID_CHAT_ITALIC" message="Apply italic formatting (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Grant upload priority to this user."/>
-	<tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Show the time when each message was received."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Apply underline formatting (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Close the active window."/>

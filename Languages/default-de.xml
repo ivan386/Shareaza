@@ -1427,7 +1427,7 @@ Other:
 			<item id="ID_CHAT_DISCONNECT" text="Verbindung _trennen"/>
 			<separator />
 			<item id="ID_CHAT_BROWSE" text="_Benutzer durchsuchen"/>
-			<item id="ID_CHAT_SEND_FILE" text="_Datei senden..."/>
+			<!-- <item id="ID_CHAT_SEND_FILE" text="_Datei senden..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="Priorität gewähren"/>
 			<separator />
 			<menu text="_Format">
@@ -2208,7 +2208,7 @@ Other:
 		<tip id="ID_CHAT_EMOTICONS" message="Smiley einfügen."/>
 		<tip id="ID_CHAT_ITALIC" message="Kursiv (Ctrl+I)"/>
 		<tip id="ID_CHAT_PRIORITY" message="Diesem Benutzer Uploadpriorität gewähren."/>
-		<tip id="ID_CHAT_SEND_FILE" message="Eine Datei senden..."/>
+		<!-- <tip id="ID_CHAT_SEND_FILE" message="Eine Datei senden..."/> -->
 		<tip id="ID_CHAT_TIMESTAMP" message="Die Zeit anzeigen wann eine Nachricht empfangen wurde."/>
 		<tip id="ID_CHAT_UNDERLINE" message="Unterstrichen (Ctrl+U)"/>
 		<tip id="ID_CHILD_CLOSE" message="Das aktive Fenster schließen."/>
