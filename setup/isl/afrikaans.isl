@@ -67,7 +67,7 @@ AboutSetupMessage=%1 weergawe %2%n%3%n%n%1 tuisblad:%n%4
 AboutSetupNote=
 
 ; *** Buttons
-TranslatorNote= 
+TranslatorNote=
 ButtonBack=< &Terug
 ButtonNext=&Volgende >
 ButtonInstall=&Installeer

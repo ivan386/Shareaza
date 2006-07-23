@@ -156,7 +156,7 @@ FullInstallation=Instalare completa
 ; if possible don't translate 'Compact' as 'Minimal' (I mean 'Minimal' in your language)
 CompactInstallation=Instalare compacta
 CustomInstallation=Instalare personalizata
-NoUninstallWarningTitle=Componenta exista 
+NoUninstallWarningTitle=Componenta exista
 NoUninstallWarning=S-a detectat ca urmatoarele componente sunt deja instalate in sistem:%n%n%1%n%nDeselectarea acestor componente nu va duce la dezinstalarea lor din sistem.%n%nDoriti sa continuati ?
 ComponentSize1=%1 KB
 ComponentSize2=%1 MB
