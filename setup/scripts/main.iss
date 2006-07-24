@@ -235,8 +235,6 @@ Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: 
 Root: HKCR; Subkey: ".co"; Flags: dontcreatekey uninsdeletekey
 Root: HKCR; Subkey: ".collection"; Flags: dontcreatekey uninsdeletekey
 Root: HKCR; Subkey: ".sks"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: ".torrent"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "bittorrent"; Flags: dontcreatekey uninsdeletekey
 Root: HKCR; Subkey: "ed2k"; Flags: dontcreatekey uninsdeletekey
 Root: HKCR; Subkey: "gnet"; Flags: dontcreatekey uninsdeletekey
 Root: HKCR; Subkey: "gnutella"; Flags: dontcreatekey uninsdeletekey
@@ -415,6 +413,19 @@ Begin
   Result := Installed;
 End;
 
+Function WeOwnTorrentAssoc: boolean;
+var
+  CommandString: string;
+  Position: Integer;
+Begin
+  Result := False;
+  if RegQueryStringValue(HKEY_CLASSES_ROOT, 'bittorrent\shell\open\command','', CommandString) then
+    Begin
+      Position := Pos('shareaza.exe', LowerCase(CommandString));
+      Result := (Position > 0);
+    End
+End;
+
 Function ShouldSkipPage(PageID: Integer): Boolean;
 Begin
   Result := False;
@@ -462,6 +473,10 @@ Begin
           Sleep(100);
           Wnd := FindWindowByClassName('ShareazaMainWnd');
         End;
+    End;
+    if WeOwnTorrentAssoc then begin
+      RegDeleteKeyIncludingSubkeys(HKEY_CLASSES_ROOT,'.torrent');
+      RegDeleteKeyIncludingSubkeys(HKEY_CLASSES_ROOT,'bittorrent');
     End;
   End;
 End;
