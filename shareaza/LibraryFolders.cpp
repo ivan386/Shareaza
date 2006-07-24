@@ -372,7 +372,8 @@ BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollection
 	{
 		bSuccess |= GetAlbumRoot()->MountCollection( oSHA1, pCollection );
 	}
-	
+
+/*	
 	if ( pCollection->GetParentURI().GetLength() )
 	{
 		if ( CAlbumFolder* pFolder = GetAlbumTarget( pCollection->GetParentURI(), NULL, NULL ) )
@@ -380,7 +381,7 @@ BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollection
 			bSuccess |= pFolder->MountCollection( oSHA1, pCollection, TRUE );
 		}
 	}
-	
+*/	
 	return bSuccess;
 }
 

@@ -462,41 +462,72 @@ CString CAlbumFolder::GetBestView() const
 
 BOOL CAlbumFolder::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection, BOOL bForce)
 {
-	if ( ! bForce )
-	{
-		BOOL bResult = FALSE;
+	BOOL bResult = FALSE;
+	bool bGoingDeeper = false;
 
+	// If folder doesn't contain any schema defined then don't go deeper
+	if ( m_pSchema == NULL ) return FALSE;
+
+	// Must we mount the collection here? 
+	// The parent may be absent thus we will try to mount it somewhere.
+	// Otherwise, if the validation succeeds we will mount it at the exact parent.
+	// If parent can not hold object like this we will mount at the collection root only.
+	CString strParentURI = pCollection->GetParentURI();
+	TRISTATE bMountHere = TS_UNKNOWN;
+
+	if ( strParentURI.GetLength() )
+		bMountHere = m_sSchemaURI == strParentURI ? TS_TRUE : TS_FALSE;
+
+	if ( bMountHere != TS_FALSE &&
+	// If the folder schema allows to hold objects having URIs of the collection
+		 m_pSchema->GetContained( pCollection->GetThisURI() ) != NULL ||
+	// or when the folder URI is the root collection folder
+		 m_sSchemaURI == CSchema::uriCollectionsFolder ) 
+	{
+		CAlbumFolder* pFolder = NULL;
+
+		if ( !bForce )
+		{
+			bGoingDeeper = true;
+
+			for ( POSITION pos = GetFolderIterator() ; pos ; )
+			{
+				CAlbumFolder* pSubFolder = GetNextFolder( pos );
+				// Mount it deeper if we can
+				bResult |= pSubFolder->MountCollection( oSHA1, pCollection, bForce );
+				
+				// Check if the same collection exists
+				if ( validAndEqual( pSubFolder->m_oCollSHA1, oSHA1 ) )
+				{
+					pFolder = pSubFolder;
+				}
+			}
+		}
+
+		// If the collection doesn't exist or we are forcing, mount it and update Library
+		if ( pFolder == NULL )
+		{
+			pFolder = AddFolder( pCollection->GetThisURI(), pCollection->GetTitle() );
+			if ( pFolder )
+			{
+				pFolder->SetCollection( oSHA1, pCollection );
+
+				m_nUpdateCookie++;
+				Library.m_nUpdateCookie++;
+				bResult = TRUE;
+			}
+		}
+	}
+
+	// If the criteria for the mounting didn't match and we haven't iterated subfolders
+	if ( !bGoingDeeper )
+	{
 		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
 			bResult |= GetNextFolder( pos )->MountCollection( oSHA1, pCollection, bForce );
 		}
-
-		if ( m_pSchema == NULL ) return bResult;
-
-		if ( m_pSchema->GetContained( pCollection->GetThisURI() ) == NULL &&
-			 m_sSchemaURI != CSchema::uriCollectionsFolder ) return bResult;
 	}
-
-	CAlbumFolder* pFolder = NULL;
-
-	for ( POSITION pos = GetFolderIterator() ; pos ; )
-	{
-		pFolder = GetNextFolder( pos );
-		if ( validAndEqual( pFolder->m_oCollSHA1, oSHA1 ) ) break;
-		pFolder = NULL;
-	}
-
-	if ( pFolder == NULL )
-	{
-		pFolder = AddFolder( pCollection->GetThisURI(), pCollection->GetTitle() );
-	}
-
-	pFolder->SetCollection( oSHA1, pCollection );
-
-	m_nUpdateCookie++;
-	Library.m_nUpdateCookie++;
-
-	return TRUE;
+	return bResult;
 }
 
 void CAlbumFolder::SetCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection)
