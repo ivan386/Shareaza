@@ -729,6 +729,8 @@ void CShareazaURL::Register(BOOL bOnStartup)
 	
 	RegisterShellType( _T("Shareaza.Collection"), _T("Shareaza Collection File"),
 		_T(".collection"), _T("Shareaza"), _T("COLLECTION"), IDI_COLLECTION );
+
+	SHChangeNotify( SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
