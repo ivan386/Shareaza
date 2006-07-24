@@ -741,7 +741,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 	HKEY hKey, hSub1, hSub2, hSub3, hSub4;
 	CString strProgram, strValue;
 	DWORD nDisposition;
-	TCHAR szPath[128];
+	TCHAR szPath[MAX_PATH];
 	
 	if ( RegCreateKeyEx( HKEY_CLASSES_ROOT, pszProtocol, 0, NULL, 0,
 		KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) ) return FALSE;
@@ -753,7 +753,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 	}
 	
 	BOOL bProtocol = _tcsncmp( pszName, _T("URL:"), 4 ) == 0;
-	GetModuleFileName( NULL, szPath, 128 );
+	GetModuleFileName( NULL, szPath, MAX_PATH );
 	strProgram = szPath;
 	
 	RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszName, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) ) );
@@ -836,7 +836,7 @@ BOOL CShareazaURL::IsRegistered(LPCTSTR pszProtocol)
 	
 	if ( RegOpenKeyEx( HKEY_CLASSES_ROOT, pszProtocol, 0, KEY_READ, &hKey[0] ) ) return FALSE;
 	
-	TCHAR szApp[128];
+	TCHAR szApp[MAX_PATH];
 	szApp[0] = 0;
 	
 	if ( RegOpenKeyEx( hKey[0], _T("shell"), 0, KEY_READ, &hKey[1] ) == 0 )
@@ -858,8 +858,8 @@ BOOL CShareazaURL::IsRegistered(LPCTSTR pszProtocol)
 	
 	RegCloseKey( hKey[0] );
 	
-	TCHAR szPath[128];
-	GetModuleFileName( NULL, szPath, 128 );
+	TCHAR szPath[MAX_PATH];
+	GetModuleFileName( NULL, szPath, MAX_PATH );
 	
 	return _tcsistr( szApp, szPath ) != NULL;
 }
@@ -947,9 +947,9 @@ BOOL CShareazaURL::RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR
 	}
 	
 	CString strAppPath, strIcon, strCommand;
-	TCHAR szPath[128];
+	TCHAR szPath[MAX_PATH];
 	
-	GetModuleFileName( NULL, szPath, 128 );
+	GetModuleFileName( NULL, szPath, MAX_PATH );
 	strAppPath = szPath;
 	
 	strIcon.Format( _T("\"%s\",-%u"), (LPCTSTR)strAppPath, nIDIcon );
