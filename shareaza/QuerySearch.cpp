@@ -158,7 +158,8 @@ CG1Packet* CQuerySearch::ToG1Packet()
 		pPacket->WriteByte( 0 );
 	}
 	
-	if ( m_oSHA1 )
+	// Some Gnutella Node does not like forwarding Query containing URN
+	/* if ( m_oSHA1 )
 	{
 		strExtra = m_oSHA1.toUrn();
 	}
@@ -168,12 +169,12 @@ CG1Packet* CQuerySearch::ToG1Packet()
 	}
 	else if ( m_oED2K )
 	{
-        strExtra = m_oED2K.toUrn();
+		strExtra = m_oED2K.toUrn();
 	}
 	else
-	{
+	{ */
 		strExtra = _T("urn:");
-	}
+	//}
 	
 	if ( m_pXML )
 	{
