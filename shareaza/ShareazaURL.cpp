@@ -846,7 +846,7 @@ BOOL CShareazaURL::IsRegistered(LPCTSTR pszProtocol)
 			if ( RegOpenKeyEx( hKey[2], _T("command"), 0, KEY_READ, &hKey[3] ) == 0 )
 			{
 				DWORD nType	= REG_SZ;
-				DWORD nApp	= sizeof(TCHAR) * 127;
+				DWORD nApp	= sizeof(TCHAR) * ( MAX_PATH - 1 );
 				RegQueryValueEx( hKey[3], NULL, NULL, &nType, (LPBYTE)szApp, &nApp );
 				szApp[ nApp / sizeof(TCHAR) ] = 0;
 				RegCloseKey( hKey[3] );
@@ -883,13 +883,13 @@ void CShareazaURL::DeleteKey(HKEY hParent, LPCTSTR pszKey)
 	
 	for ( DWORD dwIndex = 0 ; ; dwIndex++ )
 	{
-		DWORD dwName = 64 * sizeof(TCHAR);
+		DWORD dwName = 64; // Input parameter in TCHARs
 		TCHAR szName[64];
 		
 		LRESULT lResult = RegEnumKeyEx( hKey, dwIndex, szName, &dwName, NULL, NULL, 0, NULL );
 		if ( lResult != ERROR_SUCCESS ) break;
 		
-		szName[ dwName / sizeof(TCHAR) ] = 0;
+		szName[ dwName ] = 0;
 		pList.Add( szName );
 		DeleteKey( hKey, szName );
 	}
