@@ -478,6 +478,11 @@ BOOL CAlbumFolder::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFil
 	if ( strParentURI.GetLength() )
 		bMountHere = m_sSchemaURI == strParentURI ? TS_TRUE : TS_FALSE;
 
+	// If this folder is a collection or simple folder don't mount it
+	// (some collections are folder types which in turn can hold folders)
+	if ( m_oCollSHA1 || m_sSchemaURI == CSchema::uriFolder )
+		bMountHere = TS_FALSE;
+
 	if ( bMountHere != TS_FALSE &&
 	// If the folder schema allows to hold objects having URIs of the collection
 		 m_pSchema->GetContained( pCollection->GetThisURI() ) != NULL ||
