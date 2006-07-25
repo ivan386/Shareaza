@@ -2741,12 +2741,12 @@
 	<string id="16201" value="%s から不正な形式の問い合わせパケットを受信した為、無視しています"/>
 	<string id="16202" value="%s から不正な形式のヒットパケットを受信した為、無視しています"/>
 	<string id="16203" value="近隣 %s が不正な長さのプッシュパケットを転送した為、無視しています"/>
-	<string id="16208" value="近隣 %s から予期しない問い合わせルーチンテーブルのアップデートを受信中です"/>
-	<string id="16209" value="近隣 %s が不正な問い合わせルーチンテーブルのアップデートを送信しました。接続を中止しています"/>
-	<string id="16210" value="近隣 %s が問い合わせルーチンテーブルをアップデートしました (%i bit = %lu[%i], 進行 %i%%)"/>
+	<string id="16208" value="近隣 %s から予期しない問い合わせルーティングテーブルのアップデートを受信中です"/>
+	<string id="16209" value="近隣 %s が不正な問い合わせルーティングテーブルのアップデートを送信しました。接続を中止しています"/>
+	<string id="16210" value="近隣 %s が問い合わせルーティングテーブルをアップデートしました (%i bit = %lu[%i], 進行 %i%%)"/>
 	<string id="16211" value="近隣 %s がファイアーウォールされたアドレスにプッシュ要求を転送した為、無視しています"/>
 	<string id="16212" value="近隣 %s がGGEP以外でエンコードされた拡張パケットを転送しました"/>
-	<string id="16213" value="近隣 %s に問い合わせルーチンテーブルを送信中です (%i bit = %lu[%i], 進行 %i%%)"/>
+	<string id="16213" value="近隣 %s に問い合わせルーティングテーブルを送信中です (%i bit = %lu[%i], 進行 %i%%)"/>
 	<string id="16256" value="ダウンロードキューに &quot;%s&quot; を追加しました(ソース数:  %i)"/>
 	<string id="16257" value="&quot;%s&quot;のダウンロードが完了しました"/>
 	<string id="16258" value="&quot;%s&quot;のダウンロードを一時停止しています"/>
@@ -3827,9 +3827,9 @@
 		<control caption="新規保存(_S)"/>
 		<control caption="削除(_D)"/>
 		<control caption="フィルタ:"/>
-		<control caption="DRMファイルを除外"/>
-		<control caption="怪しいファイルを除外"/>
-		<control caption="アダルトファイルを除外"/>
+		<control caption="DRMファイル"/>
+		<control caption="怪しいファイル"/>
+		<control caption="アダルトファイル"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="フィルタに名前を付けて保存">
