@@ -106,7 +106,13 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 					{
 						if ( SetFilePointer( hFile, -2, NULL, FILE_CURRENT ) == 0 ) break;
 						ReadFile( hFile, &szByte, 1, &nRead, NULL );
-						if ( szByte ) str.insert( 0, szByte );
+
+						LPWSTR pwsz = (LPWSTR)CoTaskMemAlloc( 2 + sizeof(WCHAR) );
+						ZeroMemory( pwsz, 2 * sizeof(WCHAR) );
+						memcpy( pwsz, &szByte, 1 );
+
+						if ( szByte ) str.insert( 0, pwsz );
+						CoTaskMemFree( pwsz );
 						nTotalRead++;
 					}
 					if ( szByte != 0 )
@@ -481,7 +487,13 @@ STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pP
 					{
 						if ( SetFilePointer( hFile, -2, NULL, FILE_CURRENT ) == 0 ) break;
 						ReadFile( hFile, &szByte, 1, &nRead, NULL );
-						str.insert( 0, szByte );
+
+						LPWSTR pwsz = (LPWSTR)CoTaskMemAlloc( 2 + sizeof(WCHAR) );
+						ZeroMemory( pwsz, 2 * sizeof(WCHAR) );
+						memcpy( pwsz, &szByte, 1 );
+
+						str.insert( 0, pwsz );
+						CoTaskMemFree( pwsz );
 						nTotalRead++;
 					}
 					// store full path
