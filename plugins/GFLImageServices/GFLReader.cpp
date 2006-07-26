@@ -55,7 +55,7 @@ HRESULT BitmapToSafeArray (SAFEARRAY** const ppImage, const IMAGESERVICEDATA* co
 		} else
 			ATLTRACE ("SafeArrayAccessData error: 0x%08x\n", hr);
 	} else
-		ATLTRACE ("SafeArrayCreateVector error: Out of memory\n");
+		ATLTRACE (L"SafeArrayCreateVector error: Out of memory\n");
 	return hr;
 }
 
@@ -64,17 +64,17 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage )
 {
-	ATLTRACE ("LoadFromFile (\"%ls\", 0x%08x, 0x%08x)\n",
+	ATLTRACE (L"LoadFromFile (\"%ls\", 0x%08x, 0x%08x)\n",
 		CW2T (sFile), pParams, ppImage);
 
 	if (!pParams || !ppImage) {
-		ATLTRACE ("LoadFromFile error: E_POINTER\n");
+		ATLTRACE (L"LoadFromFile error: E_POINTER\n");
 		return E_POINTER;
 	}
 
 	*ppImage = NULL;
 
-	ATLTRACE ("Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
+	ATLTRACE (L"Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
 		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
 		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
 		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),
@@ -119,7 +119,7 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 		}
 	} else {
 		hr = E_FAIL;
-		ATLTRACE ("gflGetFileInformation error: %s\n", CA2T (gflGetErrorString (err)));
+		ATLTRACE (L"gflGetFileInformation error: %s\n", CA2T (gflGetErrorString (err)));
 	}
 
 	if (hGflBitmap)
@@ -141,13 +141,13 @@ STDMETHODIMP CGFLReader::LoadFromMemory (
 	/* [out] */ SAFEARRAY** ppImage )
 {
 	if (!pMemory || !pParams || !ppImage) {
-		ATLTRACE ("LoadFromMemory error: E_POINTER\n");
+		ATLTRACE (L"LoadFromMemory error: E_POINTER\n");
 		return E_POINTER;
 	}
 
 	*ppImage = NULL;
 	
-	ATLTRACE ("LoadFromMemory Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
+	ATLTRACE (L"LoadFromMemory Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
 		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
 		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
 		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),
@@ -187,13 +187,13 @@ STDMETHODIMP CGFLReader::LoadFromMemory (
 				}
 			} else {
 				hr = E_FAIL;
-				ATLTRACE ("gflGetFileInformationFromMemory error: %s\n", CA2T (gflGetErrorString (err)));
+				ATLTRACE (L"gflGetFileInformationFromMemory error: %s\n", CA2T (gflGetErrorString (err)));
 			}
 			SafeArrayUnaccessData (pMemory);
 		} else
-			ATLTRACE ("SafeArrayAccessData error: 0x%08x\n", hr);
+			ATLTRACE (L"SafeArrayAccessData error: 0x%08x\n", hr);
 	} else
-		ATLTRACE ("SafeArrayGetUBound error: 0x%08x\n", hr);
+		ATLTRACE (L"SafeArrayGetUBound error: 0x%08x\n", hr);
 
 	if (hGflBitmap)
 		gflFreeBitmap (hGflBitmap);
@@ -211,15 +211,15 @@ STDMETHODIMP CGFLReader::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [in] */ SAFEARRAY* pImage)
 {
-	ATLTRACE ("SaveToFile (\"%ls\", 0x%08x, 0x%08x)\n",
+	ATLTRACE (L"SaveToFile (\"%ls\", 0x%08x, 0x%08x)\n",
 		CW2T (sFile), pParams, pImage);
 
 	if (!pParams || !pImage) {
-		ATLTRACE ("SaveToFile error: E_POINTER\n");
+		ATLTRACE (L"SaveToFile error: E_POINTER\n");
 		return E_POINTER;
 	}
 	
-	ATLTRACE ("Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
+	ATLTRACE (L"Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
 		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
 		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
 		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),
@@ -265,17 +265,17 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [in] */ SAFEARRAY* pImage)
 {
-	ATLTRACE ("CGFLReader::SaveToMemory (\"%ls\", 0x%08x, 0x%08x, 0x%08x)\n",
+	ATLTRACE (L"CGFLReader::SaveToMemory (\"%ls\", 0x%08x, 0x%08x, 0x%08x)\n",
 		CW2T (sType), ppMemory, pParams, pImage);
 
 	if (!ppMemory || !pParams || !pImage) {
-		ATLTRACE ("CGFLReader::SaveToMemory error: E_POINTER\n");
+		ATLTRACE (L"CGFLReader::SaveToMemory error: E_POINTER\n");
 		return E_POINTER;
 	}
 
 	*ppMemory = NULL;
 	
-	ATLTRACE ("Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
+	ATLTRACE (L"Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
 		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
 		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
 		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),

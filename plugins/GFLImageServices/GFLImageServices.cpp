@@ -45,22 +45,22 @@ inline void FillExtMap ()
 	CString tmp;
 	_ExtMap.RemoveAll ();
 	GFL_INT32 count = gflGetNumberOfFormat ();
-	ATLTRACE ("Total %d formats\n", count);
+	ATLTRACE (L"Total %d formats\n", count);
 	for (GFL_INT32 i = 0; i < count; ++i) {
 		GFL_FORMAT_INFORMATION info;
 		GFL_ERROR err = gflGetFormatInformationByIndex (i, &info);
 		if (err == GFL_NO_ERROR && (info.Status & GFL_READ)) {
 			CString name (info.Name);
 			CString desc (info.Description);
-			ATLTRACE ("%3d. %7s %32s :", i, name, desc);
+			ATLTRACE (L"%3d. %7s %32s :", i, name, desc);
 			for (GFL_UINT32 j = 0; j < info.NumberOfExtension; ++j) {
 				CString ext (info.Extension [j]);
 				ext = ext.MakeLower ();
-				ATLTRACE (" .%s", ext);
+				ATLTRACE (L" .%s", ext);
 				if (!_ExtMap.Lookup (ext, tmp))
 					_ExtMap.SetAt (ext, name);
 			}
-			ATLTRACE ("\n");
+			ATLTRACE (L"\n");
 		}
 	}
 }
@@ -160,10 +160,10 @@ HRESULT SAFEgflLoadBitmap (const char * filename, GFL_BITMAP **bitmap, const GFL
 		if (err == GFL_NO_ERROR)
 			hr = S_OK;
 		else {
-			ATLTRACE ("gflLoadBitmap() error : %s\n", CA2T (gflGetErrorString (err)));
+			ATLTRACE (L"gflLoadBitmap() error : %s\n", CA2T (gflGetErrorString (err)));
 		}
 	} __except (EXCEPTION_EXECUTE_HANDLER) {
-		ATLTRACE ("gflLoadBitmap() exception\n");
+		ATLTRACE (L"gflLoadBitmap() exception\n");
 	}
 	return hr;
 }
@@ -176,10 +176,10 @@ HRESULT SAFEgflLoadBitmapFromMemory (const GFL_UINT8 * data, GFL_UINT32 data_len
 		if (err == GFL_NO_ERROR)
 			hr = S_OK;
 		else {
-			ATLTRACE ("gflLoadBitmapFromMemory() error : %s\n", CA2T (gflGetErrorString (err)));
+			ATLTRACE (L"gflLoadBitmapFromMemory() error : %s\n", CA2T (gflGetErrorString (err)));
 		}
 	} __except (EXCEPTION_EXECUTE_HANDLER) {
-		ATLTRACE ("gflLoadBitmapFromMemory() exception\n");
+		ATLTRACE (L"gflLoadBitmapFromMemory() exception\n");
 	}
 	return hr;
 }
@@ -192,10 +192,10 @@ HRESULT SAFEgflSaveBitmapIntoMemory (GFL_UINT8 ** data, GFL_UINT32 * data_length
 		if (err == GFL_NO_ERROR)
 			hr = S_OK;
 		else {
-			ATLTRACE ("gflSaveBitmapIntoMemory() error : %s\n", CA2T (gflGetErrorString (err)));
+			ATLTRACE (L"gflSaveBitmapIntoMemory() error : %s\n", CA2T (gflGetErrorString (err)));
 		}
 	} __except (EXCEPTION_EXECUTE_HANDLER) {
-		ATLTRACE ("gflSaveBitmapIntoMemory() exception\n");
+		ATLTRACE (L"gflSaveBitmapIntoMemory() exception\n");
 	}
 	return hr;
 }
@@ -208,10 +208,10 @@ HRESULT SAFEgflSaveBitmap (char *filename, const GFL_BITMAP *bitmap, const GFL_S
 		if (err == GFL_NO_ERROR)
 			hr = S_OK;
 		else {
-			ATLTRACE ("gflSaveBitmap() error : %s\n", CA2T (gflGetErrorString (err)));
+			ATLTRACE (L"gflSaveBitmap() error : %s\n", CA2T (gflGetErrorString (err)));
 		}
 	} __except (EXCEPTION_EXECUTE_HANDLER) {
-		ATLTRACE ("gflSaveBitmap() exception\n");
+		ATLTRACE (L"gflSaveBitmap() exception\n");
 	}
 	return hr;
 }
