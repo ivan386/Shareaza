@@ -41,7 +41,8 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				GenerateDebugInformation="TRUE"/>
+				GenerateDebugInformation="TRUE"
+				BaseAddress="0x22000000"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
@@ -244,8 +245,23 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Generated Fíles"
+			Name="Generated Files"
 			Filter="">
+			<File
+				RelativePath=".\debug\plugins\documentreader\DocumentReader_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath=".\release\plugins\documentreader\DocumentReader_i.c">
 				<FileConfiguration
@@ -261,21 +277,6 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\plugins\documentreader\DocumentReader_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
