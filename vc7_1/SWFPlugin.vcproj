@@ -40,7 +40,9 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				GenerateDebugInformation="TRUE"/>
+				GenerateDebugInformation="TRUE"
+				SubSystem="2"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
@@ -88,6 +90,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
 				OptimizeForProcessor="2"
+				OptimizeForWindowsApplication="FALSE"
 				AdditionalIncludeDirectories="$(IntDir)"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
@@ -110,7 +113,12 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				OptimizeReferences="2"/>
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
+				MergeSections=".rdata=.text"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
@@ -236,6 +244,21 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\release\plugins\swfplugin\SWFPlugin_i.c">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\debug\plugins\swfplugin\SWFPlugin_i.c">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -250,21 +273,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\release\plugins\swfplugin\SWFPlugin_i.c">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

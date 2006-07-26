@@ -41,7 +41,9 @@
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\shareaza\zlib"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				GenerateDebugInformation="TRUE"/>
+				GenerateDebugInformation="TRUE"
+				SubSystem="2"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
@@ -103,16 +105,18 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="TRUE"
-				AdditionalDependencies="unicows.lib zlibwapi.lib libcmt.lib"
+				AdditionalDependencies="unicows.lib libcmt.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\shareaza\zlib"
+				AdditionalLibraryDirectories=""
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
+				MergeSections=".rdata=.text"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"

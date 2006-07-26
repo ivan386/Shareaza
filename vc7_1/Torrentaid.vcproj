@@ -39,7 +39,11 @@
 				OutputFile="$(SolutionDir)$(ConfigurationName)/TorrentWizard.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				GenerateDebugInformation="TRUE"/>
+				GenerateDebugInformation="TRUE"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -67,7 +71,9 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/$(ProjectName)"
 			ConfigurationType="1"
-			UseOfMFC="1"
+			UseOfMFC="0"
+			UseOfATL="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="1"
 			WholeProgramOptimization="TRUE">
 			<Tool
@@ -79,6 +85,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
 				OptimizeForProcessor="2"
+				OptimizeForWindowsApplication="TRUE"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
@@ -92,11 +99,18 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib secur32.lib Oleacc.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)/TorrentWizard.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				OptimizeReferences="2"/>
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;secur32.lib;oleacc.lib"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
+				EntryPointSymbol="wWinMainCRTStartup"
+				MergeSections=".rdata=.text"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool

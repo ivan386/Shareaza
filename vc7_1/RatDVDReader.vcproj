@@ -42,7 +42,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
+				RegisterOutput="TRUE"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile="../plugins/RatDVDPlugin/$(ProjectName).def"
@@ -120,7 +120,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
+				RegisterOutput="TRUE"
 				AdditionalDependencies="unicows.lib Libcmt.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
@@ -267,6 +267,22 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\Debug\plugins\RatDVDReader\RatDVDReader_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\Release\plugins\RatDVDReader\RatDVDReader_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -281,22 +297,6 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Debug\plugins\RatDVDReader\RatDVDReader_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
