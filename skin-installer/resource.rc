@@ -78,7 +78,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,12,3
+ FILEVERSION 1,0,12,4
  PRODUCTVERSION 0,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -96,7 +96,7 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Shareaza"
             VALUE "FileDescription", "Shareaza Skin Installer"
-            VALUE "FileVersion", "1, 0, 12, 3"
+            VALUE "FileVersion", "1, 0, 12, 4"
             VALUE "OriginalFilename", "skin.exe"
             VALUE "ProductName", "Shareaza Skin Installer"
             VALUE "ProductVersion", "0, 0, 0, 0"
