@@ -13,76 +13,6 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Neutral (Default) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
-#ifdef _WIN32
-LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
-#pragma code_page(1252)
-#endif //_WIN32
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Version
-//
-
-VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,3
- PRODUCTVERSION 2,3,0,0
- FILEFLAGSMASK 0x3fL
-#ifdef _DEBUG
- FILEFLAGS 0x1L
-#else
- FILEFLAGS 0x0L
-#endif
- FILEOS 0x4L
- FILETYPE 0x2L
- FILESUBTYPE 0x0L
-BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "000004b0"
-        BEGIN
-            VALUE "Comments", "Shareaza Skin (SKS) File Support"
-            VALUE "CompanyName", "Shareaza Development Team"
-            VALUE "FileDescription", "Shareaza Skin (SKS) File Support"
-            VALUE "FileVersion", "1, 0, 0, 3"
-            VALUE "InternalName", "SkinScanSKS"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
-            VALUE "OriginalFilename", "SkinScanSKS.dll"
-            VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 3, 0, 0"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x0, 1200
-    END
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// REGISTRY
-//
-
-IDR_SKININFOEXTRACTOR   REGISTRY                "SkinInfoExtractor.rgs"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
-STRINGTABLE 
-BEGIN
-    IDS_PROJNAME            "Shareaza Skin Scanner (SKS)"
-END
-
-#endif    // Neutral (Default) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
 // English (U.S.) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
@@ -117,6 +47,76 @@ END
 #endif    // APSTUDIO_INVOKED
 
 #endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral (Default) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
+#pragma code_page(1257)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,4
+ PRODUCTVERSION 2,3,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004b0"
+        BEGIN
+            VALUE "Comments", "Shareaza Skin (SKS) File Support"
+            VALUE "CompanyName", "Shareaza Development Team"
+            VALUE "FileDescription", "Shareaza Skin (SKS) File Support"
+            VALUE "FileVersion", "1, 0, 0, 4"
+            VALUE "InternalName", "SkinScanSKS"
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006."
+            VALUE "OriginalFilename", "SkinScanSKS.dll"
+            VALUE "ProductName", "Shareaza"
+            VALUE "ProductVersion", "2, 3, 0, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_SKININFOEXTRACTOR   REGISTRY                "SkinInfoExtractor.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "Shareaza Skin Scanner (SKS)"
+END
+
+#endif    // Neutral (Default) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
