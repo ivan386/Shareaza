@@ -202,7 +202,8 @@ BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* m
 
 	// Replace the corresponding value in the collection
 	mii->dwItemData	= ( (DWORD_PTR)pMenu->GetSafeHmenu() << 16 ) | ( mii->wID & 0xFFFF );
-	m_pStrings.SetAt( mii->dwItemData, CString(mii->dwTypeData) );
+	CString strNew( (LPCTSTR)mii->dwTypeData );
+	m_pStrings.SetAt( mii->dwItemData, strNew );
 
 	return TRUE;
 }
