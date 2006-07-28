@@ -91,6 +91,7 @@ public:
 	void				ExpireFailedSources();
 	void				VoteSource(LPCTSTR pszUrl, bool bPositively);
 	void				ClearSources();
+	void				ClearFailedSources();
 public:
 	BOOL				AddSourceHit(CQueryHit* pHit, BOOL bForce = FALSE);
 	BOOL				AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);

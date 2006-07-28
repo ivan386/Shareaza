@@ -905,6 +905,21 @@ void CDownloadWithSources::ExpireFailedSources()
 	}
 }
 
+void CDownloadWithSources::ClearFailedSources()
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
+	{
+		POSITION posThis = pos;
+		CFailedSource* pBadSource = m_pFailedSources.GetNext( pos );
+		if ( m_pFailedSources.GetAt( posThis ) == pBadSource )
+		{
+			delete pBadSource;
+			m_pFailedSources.RemoveAt( posThis );
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources remove a source
 

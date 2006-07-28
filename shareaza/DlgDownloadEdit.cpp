@@ -403,14 +403,17 @@ void CDownloadEditDlg::OnOK()
 BOOL CDownloadEditDlg::Commit()
 {
 	CString strMessage;
+	Hashes::Sha1Hash oSHA1;
+	Hashes::TigerHash oTiger;
+	Hashes::Ed2kHash oED2K;
+
+	bool bCriticalChange = false;
+	bool bNeedUpdate = false;
 
 	UpdateData();
 	
-    Hashes::Sha1Hash oSHA1;
     oSHA1.fromString( m_sSHA1 );
-    Hashes::TigerHash oTiger;
     oTiger.fromString( m_sTiger );
-    Hashes::Ed2kHash oED2K;
     oED2K.fromString( m_sED2K );
 	
 	if ( m_sSHA1.GetLength() > 0 && !oSHA1 )
@@ -444,6 +447,7 @@ BOOL CDownloadEditDlg::Commit()
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 
 		m_pDownload->Rename( m_sName );
+		bNeedUpdate = true;
 	}
 
 	QWORD nNewSize = 0;
@@ -455,6 +459,10 @@ BOOL CDownloadEditDlg::Commit()
 		pLock.Lock();
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 		m_pDownload->m_nSize = nNewSize;
+
+		m_pDownload->CloseTransfers();
+		m_pDownload->ClearVerification();
+		bCriticalChange = true;
 	}
 	
 	if ( m_pDownload->m_oSHA1.isValid() != oSHA1.isValid()
@@ -471,6 +479,7 @@ BOOL CDownloadEditDlg::Commit()
 		
 		m_pDownload->CloseTransfers();
 		m_pDownload->ClearVerification();
+		bCriticalChange = true;
 	}
 	
 	if ( m_pDownload->m_oTiger.isValid() != oTiger.isValid()
@@ -487,6 +496,7 @@ BOOL CDownloadEditDlg::Commit()
 		
 		m_pDownload->CloseTransfers();
 		m_pDownload->ClearVerification();
+		bCriticalChange = true;
 	}
 	
 	if ( m_pDownload->m_oED2K.isValid() != oED2K.isValid()
@@ -503,22 +513,55 @@ BOOL CDownloadEditDlg::Commit()
 		
 		m_pDownload->CloseTransfers();
 		m_pDownload->ClearVerification();
+		bCriticalChange = true;
 	}
 
-	if ( m_bSHA1Trusted ) 
+	if ( m_bSHA1Trusted )
+	{
+		if ( !m_pDownload->m_oSHA1.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oSHA1.signalTrusted();
+	}
 	else
+	{
+		if ( m_pDownload->m_oSHA1.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oSHA1.signalUntrusted();
+	}
 
 	if ( m_bTigerTrusted )
+	{
+		if ( !m_pDownload->m_oTiger.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oTiger.signalTrusted();
+	}
 	else
+	{
+		if ( m_pDownload->m_oTiger.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oTiger.signalUntrusted();
+	}
 
 	if ( m_bED2KTrusted )
+	{
+		if ( !m_pDownload->m_oED2K.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oED2K.signalTrusted();
+	}
 	else
+	{
+		if ( m_pDownload->m_oED2K.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oED2K.signalUntrusted();
+	}
+
+	if (bCriticalChange)
+	{
+		m_pDownload->CloseTransfers();
+		m_pDownload->ClearSources();
+		m_pDownload->ClearFailedSources();
+		m_pDownload->ClearVerification();
+		bNeedUpdate = true;
+	}
+
+	if (bNeedUpdate)
+	{
+		m_pDownload->SetModified();
+	}
 
 	return TRUE;
 }
