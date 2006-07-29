@@ -1301,7 +1301,8 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 				else
 				{
 					str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
-					if ( ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) && !bNegative ) || !bExpression )
+					if ( *pszPtr == ' ' || !bExpression ||
+						 ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) && !bNegative ) )
 						str.Append( L" " );
 				}
 			}
