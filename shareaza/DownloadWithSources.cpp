@@ -193,10 +193,10 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 			if ( m_oSHA1 != pHit->m_oSHA1 ) return FALSE;
 			bHash = TRUE;
 		}
-		// should check Tiger as well as others, this is because
-		// there is some stupid hash combination (even for
-		// Shareaza 2.2.0.0 installer file) are exist. (CyberBob)
-		// I.E. Same SHA1 but different Tiger.
+		// We should check Tiger as well as others. This is because
+		// there exist some hash combinations, even for Shareaza 2.2.0.0 
+		// installer file, i.e. with the same SHA1 but different Tiger (CyberBob).
+
 		if ( m_oTiger && pHit->m_oTiger )
 		{
 			if ( m_oTiger != pHit->m_oTiger ) return FALSE;
