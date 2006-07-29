@@ -4,6 +4,7 @@
 	Version="8,00"
 	Name="OldImageServices"
 	ProjectGUID="{B82D1BB4-48BA-4106-A4AA-C8572C733965}"
+	RootNamespace="OldImageServices"
 	>
 	<Platforms>
 		<Platform
@@ -73,10 +74,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="Vfw32.lib"
+				AdditionalDependencies="Vfw32.lib  zlibwapi.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\ImageServices.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/ImageServices.def"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
@@ -173,6 +175,7 @@
 				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\ImageServices.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories=""
 				ModuleDefinitionFile="../plugins/$(ProjectName)/ImageServices.def"
 				OptimizeReferences="2"
 				TargetMachine="17"
@@ -1696,18 +1699,6 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\Debugx64\plugins\OldImageServices\ImageServices_i.c"
-				>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\releasex64\plugins\oldimageservices\ImageServices_i.c"
 				>
 				<FileConfiguration
@@ -1727,6 +1718,18 @@
 						Name="VCCLCompilerTool"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Debugx64\plugins\OldImageServices\ImageServices_i.c"
+				>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>
