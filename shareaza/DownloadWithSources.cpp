@@ -193,7 +193,11 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 			if ( m_oSHA1 != pHit->m_oSHA1 ) return FALSE;
 			bHash = TRUE;
 		}
-        else if ( m_oTiger && pHit->m_oTiger )
+		// should check Tiger as well as others, this is because
+		// there is some stupid hash combination (even for
+		// Shareaza 2.2.0.0 installer file) are exist. (CyberBob)
+		// I.E. Same SHA1 but different Tiger.
+		if ( m_oTiger && pHit->m_oTiger )
 		{
 			if ( m_oTiger != pHit->m_oTiger ) return FALSE;
 			bHash = TRUE;
@@ -500,7 +504,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	if ( ! pSource->m_bPushOnly )
 	{
 		//Reject invalid IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
-		if ( pSource->m_pAddress.S_un.S_un_b.s_b1 == 0 )
+		if ( pSource->m_pAddress.S_un.S_un_b.s_b1 == 0 || pSource->m_nPort == 0 )
 		{
 			delete pSource;
 			return FALSE;
