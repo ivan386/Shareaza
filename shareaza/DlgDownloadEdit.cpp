@@ -407,9 +407,6 @@ BOOL CDownloadEditDlg::Commit()
 	Hashes::TigerHash oTiger;
 	Hashes::Ed2kHash oED2K;
 
-	bool bCriticalChange = false;
-	bool bNeedUpdate = false;
-
 	UpdateData();
 	
     oSHA1.fromString( m_sSHA1 );
@@ -436,6 +433,15 @@ BOOL CDownloadEditDlg::Commit()
 	}
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+	bool bNeedUpdate = false;
+	bool bCriticalChange = false;
+
+	m_bSHA1Trusted	=	m_pDownload->m_oSHA1.isTrusted();
+	m_bTigerTrusted	=	m_pDownload->m_oTiger.isTrusted();
+	m_bED2KTrusted	=	m_pDownload->m_oED2K.isTrusted();
+	UpdateData( FALSE );
+
     if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 
 	if ( m_pDownload->m_sDisplayName != m_sName )
@@ -517,39 +523,21 @@ BOOL CDownloadEditDlg::Commit()
 	}
 
 	if ( m_bSHA1Trusted )
-	{
-		if ( !m_pDownload->m_oSHA1.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oSHA1.signalTrusted();
-	}
 	else
-	{
-		if ( m_pDownload->m_oSHA1.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oSHA1.signalUntrusted();
-	}
 
 	if ( m_bTigerTrusted )
-	{
-		if ( !m_pDownload->m_oTiger.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oTiger.signalTrusted();
-	}
 	else
-	{
-		if ( m_pDownload->m_oTiger.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oTiger.signalUntrusted();
-	}
 
 	if ( m_bED2KTrusted )
-	{
-		if ( !m_pDownload->m_oED2K.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oED2K.signalTrusted();
-	}
 	else
-	{
-		if ( m_pDownload->m_oED2K.isTrusted() ) bNeedUpdate = true;
 		m_pDownload->m_oED2K.signalUntrusted();
-	}
 
-	if (bCriticalChange)
+	if ( bCriticalChange )
 	{
 		m_pDownload->CloseTransfers();
 		m_pDownload->ClearSources();
@@ -558,7 +546,7 @@ BOOL CDownloadEditDlg::Commit()
 		bNeedUpdate = true;
 	}
 
-	if (bNeedUpdate)
+	if ( bNeedUpdate )
 	{
 		m_pDownload->SetModified();
 	}
