@@ -19,7 +19,7 @@
 	<image path="bar_off.gif"/>
 </images>
 <wizardText>
-	<text language="jp">
+	<text language="ja">
 		<item id="1" type="textbox" value="タイトル"/>
 		<item id="2" type="textbox" value="説明／詳細"/>
 		<item id="3" type="textbox" value="リリースノート"/>
