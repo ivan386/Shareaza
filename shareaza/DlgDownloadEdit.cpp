@@ -437,10 +437,9 @@ BOOL CDownloadEditDlg::Commit()
 	bool bNeedUpdate = false;
 	bool bCriticalChange = false;
 
-	m_bSHA1Trusted	=	m_pDownload->m_oSHA1.isTrusted();
-	m_bTigerTrusted	=	m_pDownload->m_oTiger.isTrusted();
-	m_bED2KTrusted	=	m_pDownload->m_oED2K.isTrusted();
-	UpdateData( FALSE );
+	bNeedUpdate	= m_pDownload->m_oSHA1.isTrusted() ^ ( m_bSHA1Trusted == TRUE );
+	bNeedUpdate	|= m_pDownload->m_oTiger.isTrusted() ^ ( m_bTigerTrusted == TRUE );
+	bNeedUpdate	|= m_pDownload->m_oED2K.isTrusted() ^ ( m_bED2KTrusted == TRUE );
 
     if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 
