@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
 <manifest	name="Audio Collection"
 			author="Tom Higginson"
@@ -18,6 +18,17 @@
 	<image path="bar_off.gif"/>
 </images>
 <wizardText>
+	<text language="ja">
+		<item id="1" type="textbox" value="コレクションタイトル"/>
+		<item id="2" type="textbox" value="”開く”の表示" default="開く"/>
+		<item id="3" type="textbox" value="ダウンロード中の表示" default="ダウンロード中"/>
+		<item id="4" type="textbox" value="”ダウンロード”の表示" default="今すぐダウンロード"/>
+		<item id="5" type="textbox" value="アルバム詳細"/>
+		<item id="6" type="textbox" value="Webリソースの説明"/>
+		<item id="7" type="colorpicker" value="遇数行の色" default="#FFFFFF"/>
+		<item id="8" type="colorpicker" value="奇数行の色" default="#E9EDEF"/>
+		<item id="9" type="textbox" value="リリースグループ詳細"/>
+	</text>
 	<!-- It's better to place english translation at the end to exit data collection immediately when language specific data already loaded -->
 	<text language="en">
 		<item id="1" type="textbox" value="Collection title"/>

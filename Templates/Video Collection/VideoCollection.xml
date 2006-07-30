@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
 <manifest	name="Template for Video"
 			author="Rolandas Rudomanskis"
@@ -33,6 +33,17 @@
 		<item id="7" type="colorpicker" value="Lyginių eilučių spalva" default="#E9EDEF"/>
 		<item id="8" type="textbox" value="Apie leidėjų grupę"/>
 		<item id="9" type="multi-filepicker" value="Paveikslėlis prie bylos" default="images/Screenshot_Part.png"/>
+	</text>
+	<text language="ja">
+		<item id="1" type="textbox" value="”開く”の表示" default="開く"/>
+		<item id="2" type="textbox" value="ダウンロード中の表示" default="ダウンロード中"/>
+		<item id="3" type="textbox" value="”ダウンロード”の表示" default="今すぐダウンロード"/>
+		<item id="4" type="textbox" value="アルバム詳細"/>
+		<item id="5" type="textbox" value="Webリソースの説明"/>
+		<item id="6" type="colorpicker" value="遇数行の色" default="#FFFFFF"/>
+		<item id="7" type="colorpicker" value="奇数行の色" default="#E9EDEF"/>
+		<item id="8" type="textbox" value="リリースグループ詳細"/>
+		<item id="9" type="multi-filepicker" value="スクリーンショット" default="images/Screenshot_Part.png"/>
 	</text>
 	<!-- It's better to place english translation at the end to exit data collection immediately when language specific data already loaded -->
 	<text language="en">
