@@ -23,9 +23,9 @@
 		<item id="1" type="textbox" value="タイトル"/>
 		<item id="2" type="textbox" value="説明／詳細"/>
 		<item id="3" type="textbox" value="リリースノート"/>
-		<item id="4" type="textbox" value="”開く”表示" default="開く"/>
+		<item id="4" type="textbox" value="”開く”の表示" default="開く"/>
 		<item id="5" type="textbox" value="ダウンロード中の表示" default="ダウンロード中"/>
-		<item id="6" type="textbox" value="”ダウンロード”の表示" default="ダウンロード"/>
+		<item id="6" type="textbox" value="”ダウンロード”の表示" default="今すぐダウンロード"/>
 	</text>
 	<text language="lt">
 		<item id="1" type="textbox" value="Rinkinio pavadinimas"/>
