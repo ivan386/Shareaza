@@ -1221,14 +1221,18 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			strType.ReleaseBuffer();
 		}
 	}
+	else
+	{
+		m_bBogus = TRUE;
+	}
 
 	// If we can determine type, we can add metadata
 	if ( strType.GetLength() )
 	{
 		// Determine type
-		// Note: Maybe should use library plug-in for this?
-		if ( strType == _T(".mp3") ||  strType == _T(".ogg") ||  strType == _T(".wav") ||  strType == _T(".mid") ||
-			 strType == _T(".ape") || strType == _T(".mac") || strType == _T(".apl") || strType == _T(".ra"))
+		CSchema* pSchema = NULL;
+
+		if ( ( pSchema = SchemaCache.Get( CSchema::uriAudio ) ) && pSchema->FilterType( strType ) )
 		{	// Audio
 			m_sSchemaURI = CSchema::uriAudio;
 
@@ -1251,8 +1255,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 				m_pXML->AddAttribute( _T("codec"), strCodec );
 			}*/
 		}
-		else if ( strType == _T(".avi") || strType == _T(".mpg") || strType == _T(".mpeg") || strType == _T(".ogm") || strType == _T(".mkv") ||
-				  strType == _T(".asf") || strType == _T(".wma") || strType == _T(".wmv") || strType == _T(".rm") )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriVideo ) ) && pSchema->FilterType( strType ) )
 		{	// Video
 			m_sSchemaURI = CSchema::uriVideo;
 			
@@ -1275,17 +1278,33 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 				m_pXML->AddAttribute( _T("codec"), strCodec );
 			}
 		}
-		else if ( strType == _T(".exe") || strType == _T(".dll") || strType == _T(".iso") || strType == _T(".bin") || strType == _T(".cue") )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriApplication ) ) && pSchema->FilterType( strType ) )
 		{	// Application
 			m_sSchemaURI = CSchema::uriApplication;
 		}
-		else if ( strType == _T(".jpg") || strType == _T(".jpeg") || strType == _T(".gif") || strType == _T(".png") || strType == _T(".bmp") )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriImage ) ) && pSchema->FilterType( strType ) )
 		{	// Image
 			m_sSchemaURI = CSchema::uriImage;
 		}
-		else if ( strType == _T(".pdf") || strType == _T(".doc") || strType == _T(".txt") || strType == _T(".xls") )
-		{	// Document
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriBook ) ) && pSchema->FilterType( strType ) )
+		{	// eBook
 			m_sSchemaURI = CSchema::uriBook;
+		}
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriDocument ) ) && pSchema->FilterType( strType ) )
+		{	// Document
+			m_sSchemaURI = CSchema::uriDocument;
+		}
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriPresentation ) ) && pSchema->FilterType( strType ) )
+		{	// Presentation
+			m_sSchemaURI = CSchema::uriPresentation;
+		}
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriSpreadsheet ) ) && pSchema->FilterType( strType ) )
+		{	// Spreadsheet
+			m_sSchemaURI = CSchema::uriSpreadsheet;
+		}
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriROM ) ) && pSchema->FilterType( strType ) )
+		{	// ROM Image
+			m_sSchemaURI = CSchema::uriROM;
 		}
 	}
 	
@@ -1398,6 +1417,7 @@ void CQueryHit::Resolve()
 			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort, m_nIndex,
 			(LPCTSTR)m_sName );
 	}
+	ASSERT( CString( inet_ntoa( m_pAddress ) ).GetLength() > 0 );
 }
 
 //////////////////////////////////////////////////////////////////////
