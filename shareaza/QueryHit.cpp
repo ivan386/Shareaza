@@ -1417,7 +1417,6 @@ void CQueryHit::Resolve()
 			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort, m_nIndex,
 			(LPCTSTR)m_sName );
 	}
-	ASSERT( CString( inet_ntoa( m_pAddress ) ).GetLength() > 0 );
 }
 
 //////////////////////////////////////////////////////////////////////
