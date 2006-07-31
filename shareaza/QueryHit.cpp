@@ -1232,7 +1232,8 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		// Determine type
 		CSchema* pSchema = NULL;
 
-		if ( ( pSchema = SchemaCache.Get( CSchema::uriAudio ) ) && pSchema->FilterType( strType ) )
+		if ( ( pSchema = SchemaCache.Get( CSchema::uriAudio ) ) != NULL &&
+			 pSchema->FilterType( strType ) )
 		{	// Audio
 			m_sSchemaURI = CSchema::uriAudio;
 
@@ -1255,7 +1256,8 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 				m_pXML->AddAttribute( _T("codec"), strCodec );
 			}*/
 		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriVideo ) ) && pSchema->FilterType( strType ) )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriVideo ) ) != NULL &&
+				  pSchema->FilterType( strType ) )
 		{	// Video
 			m_sSchemaURI = CSchema::uriVideo;
 			
@@ -1278,31 +1280,38 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 				m_pXML->AddAttribute( _T("codec"), strCodec );
 			}
 		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriApplication ) ) && pSchema->FilterType( strType ) )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriApplication ) ) != NULL &&
+				  pSchema->FilterType( strType ) )
 		{	// Application
 			m_sSchemaURI = CSchema::uriApplication;
 		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriImage ) ) && pSchema->FilterType( strType ) )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriImage ) ) != NULL && 
+					pSchema->FilterType( strType ) )
 		{	// Image
 			m_sSchemaURI = CSchema::uriImage;
 		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriBook ) ) && pSchema->FilterType( strType ) )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriBook ) ) != NULL && 
+					pSchema->FilterType( strType ) )
 		{	// eBook
 			m_sSchemaURI = CSchema::uriBook;
 		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriDocument ) ) && pSchema->FilterType( strType ) )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriDocument ) ) != NULL && 
+					pSchema->FilterType( strType ) )
 		{	// Document
 			m_sSchemaURI = CSchema::uriDocument;
 		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriPresentation ) ) && pSchema->FilterType( strType ) )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriPresentation ) ) != NULL && 
+					pSchema->FilterType( strType ) )
 		{	// Presentation
 			m_sSchemaURI = CSchema::uriPresentation;
 		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriSpreadsheet ) ) && pSchema->FilterType( strType ) )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriSpreadsheet ) ) != NULL && 
+					pSchema->FilterType( strType ) )
 		{	// Spreadsheet
 			m_sSchemaURI = CSchema::uriSpreadsheet;
 		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriROM ) ) && pSchema->FilterType( strType ) )
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriROM ) ) != NULL && 
+					pSchema->FilterType( strType ) )
 		{	// ROM Image
 			m_sSchemaURI = CSchema::uriROM;
 		}
