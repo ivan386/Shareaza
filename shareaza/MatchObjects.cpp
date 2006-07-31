@@ -196,7 +196,10 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 				}
 				else
 				{
-					pHit->m_bMatched = pFilter->m_pSchema->FilterType( pHit->m_sName, TRUE );
+					// ToDo: Change to pHit->m_bMatched when we will be able to get folder name
+					// from hits. Raza sends hits if folder name matches the search keywords too.
+					// For now, just move such files to bogus.
+					pHit->m_bBogus = pFilter->m_pSchema->FilterType( pHit->m_sName, TRUE );
 				}
 			}
 		}
