@@ -497,6 +497,8 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 				}
 				else // different IP found in the port mapping entry
 				{
+					theApp.Message( MSG_DEBUG, L"Port %s is used by %s, trying random port (%i of 10 attempts)",
+							(LPCTSTR)strPort, (LPCTSTR)strHost, 11 - nAttempts );
 					CString str;
 					str.Format( L"%hu", Settings.Connection.InPort );
 					if ( _tcsstr( strPort, str ) != NULL ) // ports are equal
