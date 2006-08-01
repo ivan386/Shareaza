@@ -179,10 +179,10 @@ BOOL CShakeNeighbour::OnConnected()
 	m_pOutput->Print( "GNUTELLA CONNECT/0.6\r\n" ); // Ask to connect
 	SendPublicHeaders();                            // User agent, ip addresses, Gnutella2 and deflate, advanced Gnutella features
 														// features
-	// POSSIBLE PLUTION ALART:
+	// POSSIBLE POLUTION ALERT:
 	// This SendHostHeaders() should not be here. because remote node is not known either G1 or G2.
-	// calling this function here cause send Cached G1 address to remote, but since RAZA tell the remote that it is G2 capable
-	// if the remote is RAZA, it will store GNUTELLA1 nodes into GNUTELLA2 cache.
+	// calling this function here sends Cached G1 address to remote host, but since RAZA tells the remote that it is G2 capable
+	// and if the remote host is RAZA, it will store GNUTELLA1 nodes into GNUTELLA2 cache.
 	// SendHostHeaders();                              // Try ultrapeers
 
 	m_pOutput->Print( "\r\n" );                     // A blank line ends this first block of headers
