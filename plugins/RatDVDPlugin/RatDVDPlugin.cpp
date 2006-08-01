@@ -285,14 +285,6 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 		pData.Release();
 	}
 
-	hr = pElements->get_ByName( L"genre", &pData );
-	if ( SUCCEEDED(hr) && pData )
-	{
-		if ( SUCCEEDED( pData->get_Value( &strValue ) ) )
-			pAttributes->Add( L"genre", strValue );
-		pData.Release();
-	}
-
 	hr = pElements->get_ByName( L"Plot", &pData );
 	if ( SUCCEEDED( hr ) && pData )
 	{
