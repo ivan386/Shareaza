@@ -178,7 +178,13 @@ BOOL CShakeNeighbour::OnConnected()
 	// We initiated the connection to this computer, send it our first block of handshake headers
 	m_pOutput->Print( "GNUTELLA CONNECT/0.6\r\n" ); // Ask to connect
 	SendPublicHeaders();                            // User agent, ip addresses, Gnutella2 and deflate, advanced Gnutella features
-	SendHostHeaders();                              // Try ultrapeers
+														// features
+	// POSSIBLE PLUTION ALART:
+	// This SendHostHeaders() should not be here. because remote node is not known either G1 or G2.
+	// calling this function here cause send Cached G1 address to remote, but since RAZA tell the remote that it is G2 capable
+	// if the remote is RAZA, it will store GNUTELLA1 nodes into GNUTELLA2 cache.
+	// SendHostHeaders();                              // Try ultrapeers
+
 	m_pOutput->Print( "\r\n" );                     // A blank line ends this first block of headers
 
 	// We've finished sending a group of headers, and await the response
@@ -227,9 +233,6 @@ BOOL CShakeNeighbour::OnRead()
 
 	// If the remote computer has sent the first line of its initial group of headers, keep reading them
 	if ( m_nState == nrsHandshake2 && ! ReadHeaders() ) return FALSE;
-
-	// If we've finished sending a group of headers, read the remote computer's response
-	if ( m_nState == nrsHandshake1 && ! ReadResponse() ) return FALSE;
 
 	// If the remote computer has sent the first line of its final group of headers, keep reading them
 	if ( m_nState == nrsHandshake3 && ! ReadHeaders() ) return FALSE;
