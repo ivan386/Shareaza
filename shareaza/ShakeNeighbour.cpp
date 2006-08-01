@@ -403,13 +403,14 @@ void CShakeNeighbour::SendPublicHeaders()
 		if ( m_nProtocol == PROTOCOL_G1 )
 		{
 			// Find out if we are an ultrapeer or at least eligible to become one soon
-			if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
+			if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || 
+				Neighbours.IsG1UltrapeerCapable() )
 			{
 				// Tell the remote computer that we are an ultrapeer
 				m_pOutput->Print( "X-Ultrapeer: True\r\n" );
 
 			} // We are not an ultrapeer nor are we elegible, and the settings say so too
-			else if ( Settings.Gnutella1.ClientMode != MODE_ULTRAPEER )
+			else
 			{
 				// Tell the remote computer that we are not an ultrapeer, we are just a Gnutella leaf node
 				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
@@ -418,13 +419,13 @@ void CShakeNeighbour::SendPublicHeaders()
 		else // This protocol ID this method got passed is unknown or for something other than Gnutella
 		{
 			// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
-			if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
+			if ( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
 			{
 				// Tell the remote computer that we are a hub
 				m_pOutput->Print( "X-Ultrapeer: True\r\n" );
 
 			} // We are not a hub nor are we eligible, and the settings say so too
-			else if ( Settings.Gnutella2.ClientMode != MODE_HUB )
+			else
 			{
 				// Tell the remote computer that we are a leaf
 				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
