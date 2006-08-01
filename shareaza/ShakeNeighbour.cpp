@@ -392,13 +392,13 @@ void CShakeNeighbour::SendPublicHeaders()
 	}
 
 	// If we initiated the connection to the remote computer and it is not an ultrapeer
-	//if ( m_bInitiated && m_bUltraPeerSet == TS_FALSE )
-	//{
+	if ( m_bInitiated && m_bUltraPeerSet == TS_FALSE )
+	{
 		// Really, we don't know if it's an ultrapeer or not yet
 		m_bUltraPeerSet = TS_UNKNOWN;
 
-	//} // The remote computer called us, or we called them and it's an ultrapeer or hasn't said yet
-	//else
+	} // The remote computer called us, or we called them and it's an ultrapeer or hasn't said yet
+	else
 	{
 		if ( m_nProtocol == PROTOCOL_G1 )
 		{
