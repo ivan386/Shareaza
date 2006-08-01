@@ -482,7 +482,7 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 						|| _tcsistr( strProtocol, L"VT_BSTR" ) == NULL )
 					break;
 
-				if ( _tcsstr( oTokens[ 4 ], m_sLocalIP ) != NULL )
+				if ( _tcsstr( oTokens[ 4 ], m_sLocalIP ) != NULL || m_sLocalIP == L"127.0.0.1" )
 				{
 					CString str;
 					hrDel = InvokeAction( pService, L"DeletePortMapping", 
@@ -497,8 +497,8 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 				}
 				else // different IP found in the port mapping entry
 				{
-					theApp.Message( MSG_DEBUG, L"Port %s is used by %s, trying random port (%i of 10 attempts)",
-							(LPCTSTR)strPort, (LPCTSTR)strHost, 11 - nAttempts );
+					theApp.Message( MSG_DEBUG, L"Port %s is used by %s, trying random port.",
+							(LPCTSTR)oTokens[ 1 ], (LPCTSTR)oTokens[ 4 ] );
 					CString str;
 					str.Format( L"%hu", Settings.Connection.InPort );
 					if ( _tcsstr( strPort, str ) != NULL ) // ports are equal
