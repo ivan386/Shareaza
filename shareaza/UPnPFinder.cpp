@@ -437,6 +437,11 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 
 	HRESULT hr = S_OK;
 	int nAttempts = 10;
+					
+	// ICS returns computer name instead of IP, thus we need to compare not IPs
+	TCHAR szComputerName[ MAX_COMPUTERNAME_LENGTH ] = {0};
+	DWORD nMaxLen = MAX_COMPUTERNAME_LENGTH + 1;
+	GetComputerName( szComputerName, &nMaxLen );
 
 	do
 	{
@@ -482,7 +487,8 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 						|| _tcsistr( strProtocol, L"VT_BSTR" ) == NULL )
 					break;
 
-				if ( _tcsstr( oTokens[ 4 ], m_sLocalIP ) != NULL || m_sLocalIP == L"127.0.0.1" )
+				if ( _tcsstr( oTokens[ 4 ], m_sLocalIP ) != NULL || 
+					 _tcsistr( oTokens[ 4 ], szComputerName ) != NULL )
 				{
 					CString str;
 					hrDel = InvokeAction( pService, L"DeletePortMapping", 
