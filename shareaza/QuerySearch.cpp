@@ -1327,6 +1327,10 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 	}
 	str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
 
+	// Greek last sigma fix
+	str += L" ";
+	Replace( str, _T("\x03C3 "), _T("\x03C2 ") ); 
+
 	strPhrase = str.TrimLeft().TrimRight( L" -" );
 	return;
 }
