@@ -394,50 +394,47 @@ void CShakeNeighbour::SendPublicHeaders()
 		m_pOutput->Print( "X-Query-Routing: 0.1\r\n" );										// We support the query routing protocol
 	}
 
-	// If we initiated the connection to the remote computer and it is not an ultrapeer
-	if ( m_bInitiated && m_bUltraPeerSet == TS_FALSE )
+	// The remote computer called us, or we called them and it's an ultrapeer or hasn't said yet
+	if ( !m_bInitiated && m_bUltraPeerSet == TS_UNKNOWN )
 	{
-		// Really, we don't know if it's an ultrapeer or not yet
-		m_bUltraPeerSet = TS_UNKNOWN;
+		// Really, we don't know if it's an ultrapeer or not, so assume remote client is not Ultrapeer.
+		m_bUltraPeerSet = TS_FALSE;
+	}
 
-	} // The remote computer called us, or we called them and it's an ultrapeer or hasn't said yet
-	else
+	if ( m_nProtocol == PROTOCOL_G1 )
 	{
-		if ( m_nProtocol == PROTOCOL_G1 )
+		// Find out if we are an ultrapeer or at least eligible to become one soon
+		if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || 
+			Neighbours.IsG1UltrapeerCapable() )
 		{
-			// Find out if we are an ultrapeer or at least eligible to become one soon
-			if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || 
-				Neighbours.IsG1UltrapeerCapable() )
-			{
-				// Tell the remote computer that we are an ultrapeer
-				m_pOutput->Print( "X-Ultrapeer: True\r\n" );
+			// Tell the remote computer that we are an ultrapeer
+			m_pOutput->Print( "X-Ultrapeer: True\r\n" );
 
-			} // We are not an ultrapeer nor are we elegible, and the settings say so too
-			else
-			{
-				// Tell the remote computer that we are not an ultrapeer, we are just a Gnutella leaf node
-				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
-			}
-		}
-		else // This protocol ID this method got passed is unknown or for something other than Gnutella
+		} // We are not an ultrapeer nor are we elegible, and the settings say so too
+		else
 		{
-			// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
-			if ( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
-			{
-				// Tell the remote computer that we are a hub
-				m_pOutput->Print( "X-Ultrapeer: True\r\n" );
-
-			} // We are not a hub nor are we eligible, and the settings say so too
-			else
-			{
-				// Tell the remote computer that we are a leaf
-				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
-			}
-			if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
-				m_pOutput->Print( "X-Ultrapeer-Needed: True\r\n" );
-			else
-				m_pOutput->Print( "X-Ultrapeer-Needed: False\r\n" );
+			// Tell the remote computer that we are not an ultrapeer, we are just a Gnutella leaf node
+			m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 		}
+	}
+	else // This protocol ID this method got passed is unknown or for something other than Gnutella
+	{
+		// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
+		if ( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
+		{
+			// Tell the remote computer that we are a hub
+			m_pOutput->Print( "X-Ultrapeer: True\r\n" );
+
+		} // We are not a hub nor are we eligible, and the settings say so too
+		else
+		{
+			// Tell the remote computer that we are a leaf
+			m_pOutput->Print( "X-Ultrapeer: False\r\n" );
+		}
+		if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
+			m_pOutput->Print( "X-Ultrapeer-Needed: True\r\n" );
+		else
+			m_pOutput->Print( "X-Ultrapeer-Needed: False\r\n" );
 	}
 }
 
