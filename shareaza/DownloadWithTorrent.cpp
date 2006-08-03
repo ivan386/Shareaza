@@ -82,7 +82,8 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 
 CDownloadWithTorrent::~CDownloadWithTorrent()
 {
-	if ( m_bTorrentRequested ) CBTTrackerRequest::SendStopped( this );
+	if ( m_bTorrentRequested ) 
+		CBTTrackerRequest::SendStopped( this );
 	m_pPeerID.clear();
 	CloseTorrentUploads();
 	if ( m_pTorrentBlock != NULL ) delete [] m_pTorrentBlock;
@@ -203,7 +204,11 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 				CBTTrackerRequest::SendStarted( this );
 		}
 	}
-	else if ( ! bLive && m_bTorrentRequested )
+
+	// Why to have it here when the stop is sent in the destructor, in Download::StopTrying 
+	// and in all places around? Stop is needed on pause only, it's not a final announce (Rolandas)
+/*
+	else if ( ! bLive && m_bTorrentRequested && !m_bSeeding )
 	{
 		theApp.Message( MSG_DEFAULT, _T("Sending final announce for %s"), m_pTorrent.m_sName );
 
@@ -213,7 +218,8 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		m_tTorrentTracker = 0;
 		//ZeroMemory(m_pPeerID.n, sizeof m_pPeerID.n );	// Okay to use the same one in a single session
 	}
-	
+*/
+
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
 	{
 		// Regular tracker update
@@ -721,12 +727,12 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 
 void CDownloadWithTorrent::CloseTorrent()
 {
-	if ( m_bTorrentRequested ) CBTTrackerRequest::SendStopped( this );
+	if ( m_bTorrentRequested ) 
+		CBTTrackerRequest::SendStopped( this );
+
 	m_bTorrentRequested		= FALSE;
 	m_bTorrentStarted		= FALSE;
 	CloseTorrentUploads();
-	// Don't clear PeerID since we are going to seed
-    // m_pPeerID.clear();
 }
 
 
