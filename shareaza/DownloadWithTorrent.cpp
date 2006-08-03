@@ -83,6 +83,7 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 CDownloadWithTorrent::~CDownloadWithTorrent()
 {
 	if ( m_bTorrentRequested ) CBTTrackerRequest::SendStopped( this );
+	m_pPeerID.clear();
 	CloseTorrentUploads();
 	if ( m_pTorrentBlock != NULL ) delete [] m_pTorrentBlock;
 }

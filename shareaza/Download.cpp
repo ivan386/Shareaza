@@ -84,7 +84,6 @@ CDownload::~CDownload()
 		if ( ! ::DeleteFile( m_sDiskName ) )
 			theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
 	}
-	m_pPeerID.clear();
 }
 
 //////////////////////////////////////////////////////////////////////
