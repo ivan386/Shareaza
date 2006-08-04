@@ -5171,7 +5171,7 @@ BEGIN
     IDS_DISCOVERY_FAILED    "Discovery service ""%s"" failed, fail count %i."
     IDS_DISCOVERY_FAIL_REMOVE 
                             "Discovery service ""%s"" has failed %i times, removing."
-    IDS_DISCOVERY_DEFAULTS  "http://g2cache.theg2.net/gwcache/lynnx.asp\nhttp://loot.alumnigroup.org/\nhttp://www.de-site.de/ed2k/koeln.met\nhttp://www.rob-knight.com/skullscache/\nhttp://portalemedia.shinranet.com/modules/AllMyGuests/gcache.php"
+    IDS_DISCOVERY_DEFAULTS  "http://www.de-site.de/ed2k/koeln.met"
     IDS_DISCOVERY_UPDATING  "Sending GWebCache update to service ""%s""..."
     IDS_DISCOVERY_SUBMIT    "Submitting GWebCache ""%s"" to a random GWebCache..."
 END
