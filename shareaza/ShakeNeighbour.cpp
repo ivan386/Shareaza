@@ -131,7 +131,7 @@ void CShakeNeighbour::AttachTo(CConnection* pConnection)
 		FD_READ | FD_WRITE | FD_CLOSE ); // Signal it when the socket is ready to read or write, or closed
 
 	// Put this CShakeNeighbour object into the Handshake1 state (do)
-	m_nState = nrsHandshake1; // We've finished sending a group of headers, and await the response
+	m_nState = nrsHandshake1; // We are waiting the request message
 
 	// Add this CShakeNeighbour object to the list of them
 	Neighbours.Add( this );
