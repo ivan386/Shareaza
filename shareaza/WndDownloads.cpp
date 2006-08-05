@@ -331,8 +331,8 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 						// Check the torrent clear settings
 						if ( Settings.BitTorrent.AutoClear )
 						{
-							// If we're not seeding and have reached the required ratio
-							if ( ( ! pDownload->IsSeeding() ) && ( Settings.BitTorrent.ClearRatio < pDownload->GetRatio() * 100.0f) ) 
+							// If we're seeding and have reached the required ratio
+							if ( pDownload->IsSeeding() && ( Settings.BitTorrent.ClearRatio < pDownload->GetRatio() * 100.0f ) ) 
 							{
 								pDownload->Remove();
 							}
