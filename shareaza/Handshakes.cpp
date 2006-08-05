@@ -94,9 +94,16 @@ BOOL CHandshakes::Listen()
 	SOCKADDR_IN saListen = Network.m_pHost; // This is the address of our computer as visible to remote computers on the Internet
 
 	// If the program connection settings disallow binding, zero the 4 bytes of the IP address
-	if ( ! Settings.Connection.InBind ) saListen.sin_addr.S_un.S_addr = 0; // S_addr is the IP address formatted as a single u_long
+	if ( ! Settings.Connection.InBind ) 
+		saListen.sin_addr.S_un.S_addr = 0; // S_addr is the IP address formatted as a single u_long
+	else
+	{
+		// Set the exclusive address option
+		BOOL bVal = TRUE;
+		setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char*)&bVal, sizeof(bVal) );
+	}
 
-	// Loop to try 5 times
+	// Loop to try 5 times since the socket might not be reused immediatelly
 	BOOL bBound = FALSE; // We're not bound to this socket yet
 	for ( int nAttempt = 0 ; nAttempt < 5 ; nAttempt++ )
 	{
@@ -177,8 +184,13 @@ void CHandshakes::Disconnect()
 	// If the socket in this CHandshakes object is valid
 	if ( m_hSocket != INVALID_SOCKET )
 	{
+		// Set linger period to zero (it will close the socket immediatelly)
+		// Default behaviour is to send data and close or timeout and close
+		linger ls = {1, 0};
+		int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
+
 		// Close it and set it invalid
-		closesocket( m_hSocket );
+		ret = closesocket( m_hSocket );
 		m_hSocket = INVALID_SOCKET;
 	}
 
@@ -427,8 +439,13 @@ BOOL CHandshakes::AcceptConnection()
 	// If the remote computer's IP address is blocked or banned
 	if ( Security.IsDenied( &pHost.sin_addr ) )
 	{
+		// Set linger period to zero (it will close the socket immediatelly)
+		// Default behaviour is to send data and close or timeout and close
+		linger ls = {1, 0};
+		int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
+
 		// Close the socket we just accepted the connection with
-		closesocket( hSocket );
+		ret = closesocket( hSocket );
 
 		// Report that this connection was denied for security reasons
 		CString strHost = inet_ntoa( pHost.sin_addr );

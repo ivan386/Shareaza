@@ -104,7 +104,14 @@ BOOL CDatagrams::Listen()
 	if ( Network.Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &saHost ) )
 	{
 		// Inbound resolved
-		if ( ! Settings.Connection.InBind ) saHost.sin_addr.S_un.S_addr = 0;
+		if ( ! Settings.Connection.InBind ) 
+			saHost.sin_addr.S_un.S_addr = 0;
+		else
+		{
+			// Set the exclusive address option
+			BOOL bVal = TRUE;
+			setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char*)&bVal, sizeof(bVal) );
+		}
 	}
 	else if ( Network.Resolve( Settings.Connection.OutHost, Settings.Connection.InPort, &saHost ) )
 	{
@@ -113,7 +120,14 @@ BOOL CDatagrams::Listen()
 	else
 	{
 		saHost = Network.m_pHost;
-		if ( ! Settings.Connection.InBind ) saHost.sin_addr.S_un.S_addr = 0;
+		if ( ! Settings.Connection.InBind ) 
+			saHost.sin_addr.S_un.S_addr = 0;
+		else
+		{
+			// Set the exclusive address option
+			BOOL bVal = TRUE;
+			setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char*)&bVal, sizeof(bVal) );
+		}
 	}
 
 	if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof(saHost) ) == 0 )
@@ -179,7 +193,12 @@ void CDatagrams::Disconnect()
 {
 	if ( m_hSocket == INVALID_SOCKET ) return;
 
-	closesocket( m_hSocket );
+	// Set linger period to zero (it will close the socket immediatelly)
+	// Default behaviour is to send data and close or timeout and close
+	linger ls = {1, 0};
+	int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
+
+	ret = closesocket( m_hSocket );
 	m_hSocket = INVALID_SOCKET;
 
 	delete [] m_pOutputBuffer;
