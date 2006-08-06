@@ -22,7 +22,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.2.22"
+		version="2.2.2.26"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -2250,7 +2250,7 @@ right quote	&#147;
 	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Rodyti ar paslėpti parsisiuntimų grupės juostą."/>
 	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatiškai šalinti iš sąrašo parsisiųstus failus."/>
 	<tip id="ID_DOWNLOADS_BOOST" message="Paspartinti pasirinkto failo parsisiuntimą, panaikinant greitaveikos apribojimus."/>
-	<tip id="ID_DOWNLOADS_CLEAR" message="Trinti/šalinti pasirinktą siunčiamą bylą(-as)."/>
+	<tip id="ID_DOWNLOADS_CLEAR" message="Trinti/šalinti pasirinktą siunčiamą failą(-us)."/>
 	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Pašalinti pasirinktą failą(-us) iš sąrašo."/>
 	<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Ištrinti atsisiųstus failus iš sąrašo."/>
 	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Atšaukti nebaigto siųstis failo(-ų) parsisiuntimą."/>
@@ -2545,7 +2545,7 @@ right quote	&#147;
 	<string id="7102" value="Ar tikrai norite pašalinti šabloną „%s“?\nŠio žingsnio negalėsite atšaukti."/>
 	<string id="8000" value="„Shareaza“ nuostatos"/>
 	<string id="8001" value="Sveiki! Čia „Shareaza“"/>
-	<string id="8002" value="Bylos ypatybės"/>
+	<string id="8002" value="Failo ypatybės"/>
 	<string id="8003" value="Taisyti savo profilį"/>
 	<string id="8004" value="!Sveiki! Čia „Shareaza“ (version) !\n.\n„Shareaza“ - visiškai nemokamas programinis produktas.\nNaudokitės juo atsakingai ir paisykite intelektualios nuosavybės įstatymo.\n."/>
 	<string id="8005" value=" (baigiamas darbas nelikus siuntimų)"/>
@@ -2569,13 +2569,13 @@ right quote	&#147;
 	<string id="8070" value="Jungiamasi..."/>
 	<string id="8071" value="Prisijungta"/>
 	<string id="8072" value="Atsijungti"/>
-	<string id="8096" value="Šioje srityje pateikiama daugiau informacijos apie pasirinktas bylas."/>
+	<string id="8096" value="Šioje srityje pateikiama daugiau informacijos apie pasirinktus failus."/>
 	<string id="8097" value="Yra vienas šaltinis (%s)."/>
 	<string id="8098" value="Yra %i šaltinių(-iai)(%s)."/>
 	<string id="8099" value="Yra viena apžvalga."/>
 	<string id="8100" value="Yra %i apžvalgos(-ų)."/>
 	<string id="8101" value="%s rašo:"/>
-	<string id="8102" value="%s įvertina šią bylą:"/>
+	<string id="8102" value="%s įvertina šį failą:"/>
 	<string id="8103" value="Spauskite peržiūrai"/>
 	<string id="8104" value="Peržiūrima..."/>
 	<string id="8105" value="Neįmanoma parsisiųsti peržiūros turinio iš „%s“."/>
@@ -2594,15 +2594,15 @@ right quote	&#147;
 	<string id="8144" value="Ieškoti"/>
 	<string id="8145" value="Ieškoti dar"/>
 	<string id="8146" value="Stop"/>
-	<string id="8147" value="Bet kokio tipo bylos"/>
+	<string id="8147" value="Bet kokio tipo failai"/>
 	<string id="8148" value="Įrašykite ieškinius:"/>
-	<string id="8149" value="Ieškoti šio tipo bylų:"/>
+	<string id="8149" value="Ieškoti šio tipo failų:"/>
 	<string id="8150" value="Ieškoma:"/>
 	<string id="8151" value="Rasta:"/>
 	<string id="8152" value="%lu mazgų, %lu atšakų"/>
 	<string id="8153" value="Kol kas neieškoma"/>
-	<string id="8154" value="Bylų nerasta"/>
-	<string id="8155" value="%lu byla per %lu kreipinį|%lu byla per %lu kreipinių|%lu bylų(-os) per %lu kreipinių"/>
+	<string id="8154" value="Failų nerasta"/>
+	<string id="8155" value="%lu failas per %lu kreipinį|%lu failas per %lu kreipinių|%lu failų(-ai) per %lu kreipinių"/>
 	<string id="8156" value="Paieška"/>
 	<string id="8157" value="Radiniai"/>
 	<string id="8158" value="Valyti"/>
@@ -2612,24 +2612,24 @@ right quote	&#147;
 	<string id="8162" value="Prisijungta, prašoma peržiūros..."/>
 	<string id="8163" value="Gaunamas peržiūros atsakymas (%2.f%%)..."/>
 	<string id="8164" value="Neįmanoma susisiekti su adresatu vartotojo duomenims peržiūrėti."/>
-	<string id="8165" value="Neįmanoma parsisiųsti bylų sąrašo. Šis adresatas galbūt nepalaiko peržiūros."/>
+	<string id="8165" value="Neįmanoma parsisiųsti failų sąrašo. Šis adresatas galbūt nepalaiko peržiūros."/>
 	<string id="8166" value="Ieškoti šiame tinkle:"/>
 	<string id="8167" value="Visuose tinkluose"/>
 	<string id="8176" value="Ieškoti P2P tinkle"/>
 	<string id="8177" value="Įrašykite kelis paieškos raktažodžius:"/>
-	<string id="8178" value="Koks tai bylos tipas?"/>
+	<string id="8178" value="Koks tai failo tipas?"/>
 	<string id="8179" value="(Valyti paieškos žurnalą)"/>
-	<string id="8180" value="Bylos dydis turi būti"/>
+	<string id="8180" value="Failo dydis turi būti"/>
 	<string id="8181" value="&#160;iki"/><!-- size from xx TO xx-->
-	<string id="8208" value="„Shareaza“ kuria maišą (tapatyb. kodą) bylai (liko %i):"/>
+	<string id="8208" value="„Shareaza“ kuria maišą (tapatyb. kodą) failui (liko %i):"/>
 	<string id="8223" value="%i d. ir %i val."/>
 	<string id="8224" value="„Shareaza“ siunčiasi:"/>
-	<string id="8225" value="Šios bylos parsisiuntimas pristabdytas:"/>
+	<string id="8225" value="Šio failo parsisiuntimas pristabdytas:"/>
 	<string id="8226" value="„Shareaza“ baigė parsisiųsti:"/>
 	<string id="8227" value="%i val. ir %i min."/>
 	<string id="8228" value="%i min. ir %i sek."/>
 	<string id="8229" value="%i sek."/>
-	<string id="8230" value="„Shareaza“ ieško šaltinių bylai(-oms):"/>
+	<string id="8230" value="„Shareaza“ ieško šaltinių failui(-ams):"/>
 	<string id="8231" value="Šaltinių nėra"/>
 	<string id="8232" value="Atverti"/>
 	<string id="8233" value="Peržiūra"/>
@@ -2638,28 +2638,28 @@ right quote	&#147;
 	<string id="8237" value="Atsisiunt. apimtis:"/>
 	<string id="8238" value="Šaltinių skaičius:"/>
 	<string id="8239" value="Baigta"/>
-	<string id="8240" value="„Shareaza“ perkelia parsisiųstą bylą:"/>
-	<string id="8241" value="„Shareaza“ ieško klaidų parsisiųstoje byloje:"/>
+	<string id="8240" value="„Shareaza“ perkelia parsisiųstą failą:"/>
+	<string id="8241" value="„Shareaza“ ieško klaidų parsisiųstame faile:"/>
 	<string id="8243" value="Išsiunt. santykis:"/>
 	<string id="8244" value="Apžvalgų skaičius:"/>
 	<string id="8288" value="Naršoma Jūsų „Shareaza“ kolekcija"/>
 	<string id="8289" value="Naršomas "/>
 	<string id="8290" value="Naršomas %i aplankų turinys"/>
 	<string id="8291" value="Aplankų rinkinys"/>
-	<string id="8292" value="Pasirinkta(-os) %i bylų(-os)"/>
-	<string id="8293" value="Nėra pasirinktų bylų"/>
+	<string id="8292" value="Pasirinktas %i failų(-ai)"/>
+	<string id="8293" value="Nėra pasirinktų failų"/>
 	<string id="8294" value="Paskutiniai papildymai"/>
-	<string id="8295" value="Įvertinti šią bylą"/>
+	<string id="8295" value="Įvertinti šį failą"/>
 	<string id="8304" value="Nežinoma"/>
 	<string id="8306" value="Vieta"/>
 	<string id="8307" value="Tipas"/>
 	<string id="8308" value="Dydis"/>
-	<string id="8309" value="Dalinės bylos šaltinis (turima %.2f%%)"/>
+	<string id="8309" value="Dalinio failo šaltinis (turima %.2f%%)"/>
 	<string id="8310" value="%i išsiuntimo vietų, %i laukia eilėje"/>
-	<string id="8311" value="Jūs jau turite šią bylą savo kolekcijoje."/>
-	<string id="8312" value="Ši byla jau yra parsisiunčiamų bylų sąraše."/>
-	<string id="8313" value="Ši byla, atrodo, yra reklaminė šiukšlė."/>
-	<string id="8314" value="Jūs anksčiau buvote parsisiuntę šią bylą ir ją ištrynėte."/>
+	<string id="8311" value="Jūs jau turite šį failą savo kolekcijoje."/>
+	<string id="8312" value="Šis failas jau yra parsisiunčiamų failų sąraše."/>
+	<string id="8313" value="Šis failas, atrodo, yra reklaminė šiukšlė."/>
+	<string id="8314" value="Jūs anksčiau buvote parsisiuntę šį failą ir jį ištrynėte."/>
 	<string id="8315" value="Įtraukta į juodajį sąrašą: "/>
 	<string id="8316" value="Kreipinių"/>
 	<string id="8317" value="Išsiųsta"/>
@@ -2672,16 +2672,16 @@ right quote	&#147;
 	<string id="8324" value="Neaktyvus"/>
 	<string id="8325" value="Aktyvus"/>
 	<string id="8326" value="Sekantis eilėje"/>
-	<string id="8327" value="Viso bylų:"/>
+	<string id="8327" value="Viso failų:"/>
 	<string id="8328" value="Bendra apimtis:"/>
 	<string id="8329" value="visos kolekcijos"/>
 	<string id="8330" value="aplankas"/>
 	<string id="8331" value="Šis šaltinis šiuo metu užimtas"/>
 	<string id="8332" value="Šis šaltinis yra už užkardos"/>
 	<string id="8333" value="Šis šaltinis gali siųsti nestabiliai"/>
-	<string id="8334" value="Šios bylos šaltiniai šiuo metu užimti"/>
-	<string id="8335" value="Šios bylos šaltiniai yra už užkardos"/>
-	<string id="8336" value="Šios bylos šaltiniai gali siųsti nestabiliai"/>
+	<string id="8334" value="Šio failo šaltiniai šiuo metu užimti"/>
+	<string id="8335" value="Šio failo šaltiniai yra už užkardos"/>
+	<string id="8336" value="Šio failo šaltiniai gali siųsti nestabiliai"/>
 	<string id="8337" value="Patikimas"/>
 	<string id="16064" value="Startuojamas „Shareaza“ tinklo branduolys..."/>
 	<string id="16065" value="Neįmanoma susieti %s adreso %i prievado įeinantiems susijungimams. Įeinantys susijungimai nebus palaikomi."/>
@@ -2699,7 +2699,7 @@ right quote	&#147;
 	<string id="16077" value="Adresas %s jau yra blokuojamas pagal Jūsų saugos taisykles."/>
 	<string id="16078" value="Pridėta %s adreso blokavimo saugos taisyklė."/>
 	<string id="16079" value="Ar tikrai norite atsijungti?"/>
-	<string id="16081" value="Siunčiama užklausa bylai „%s“ adresatui %s."/>
+	<string id="16081" value="Siunčiama užklausa failui „%s“ adresatui %s."/>
 	<string id="16083" value="Dirbtinis Jūsų kompiuterio veiksenos pakeitimas į mazgo veikseną gali sukelti nepageidaujamą poveikį našumui ir P2P tinklui. Geriau leisti, kad „Shareaza“ pati nuspręstų, ar tapti mazgu, ar ne.\n\nMazgo veiksena NEDUODA daugiau radinių ir nesuteikia Jums jokių pranašumų.\n\nAr tikrai norite tęsti, nežiūrint į visas kliūtis, kurias tai gali sukelti?"/>
 	<string id="16084" value="Atjungus Gnutella-1 protokolų palaikymą, radinių gali sumažėti, ir, jei Jūs veiksite kaip mazgas, tai gali paveikti ir kitų vartotojų paiešką. Ar tikrai norite tęsti?"/>
 	<string id="16085" value="Gnutella2 - tai „Shareaza“ programos pagrindinis tinklas. Atjungus jo palaikymą, gali labai sumažėti tiek radinių skaičius, tiek ir jų kokybė. Ar TIKRAI norite tęsti?"/>
@@ -2754,109 +2754,109 @@ right quote	&#147;
 	<string id="16257" value="„%s“ parsisiuntimas užbaigtas."/>
 	<string id="16258" value="„%s“ parsisiuntimas pristabdomas."/>
 	<string id="16259" value="„%s“ parsisiuntimas tęsiamas."/>
-	<string id="16260" value="Byla „%s“ ištrinta."/>
-	<string id="16261" value="Kuriama byla „%s“ parsisiuntimui."/>
-	<string id="16262" value="Neįmanoma sukurti vietinės bylos „%s“ parsisiuntimui, procedūra nutraukiama."/>
-	<string id="16263" value="Neįmanoma atverti vietinės bylos „%s“ parsisiuntimui, procedūra nutraukiama."/>
-	<string id="16264" value="Užmezgamas ryšys su %s iš %i prievado bylos „%s“ parsisiuntimui..."/>
+	<string id="16260" value="Failas „%s“ ištrintas."/>
+	<string id="16261" value="Kuriamas failas „%s“ parsisiuntimui."/>
+	<string id="16262" value="Neįmanoma sukurti vietinio failo „%s“ parsisiuntimui, procedūra nutraukiama."/>
+	<string id="16263" value="Neįmanoma atverti vietinio failo „%s“ parsisiuntimui, procedūra nutraukiama."/>
+	<string id="16264" value="Užmezgamas ryšys su %s iš %i prievado failo „%s“ parsisiuntimui..."/>
 	<string id="16265" value="Neįmanoma užmegzti ryšio su adresatu %s parsisiuntimui vykdyti."/>
 	<string id="16266" value="Ryšys su %s parsisiuntimui vykdyti užmegztas."/>
-	<string id="16267" value="Siunčiama užklausa parsisiųsti fragmentą (%I64i-%I64i), priklausantį bylai „%s“, iš adresato %s."/>
+	<string id="16267" value="Siunčiama užklausa parsisiųsti fragmentą (%I64i-%I64i), priklausantį failui „%s“, iš adresato %s."/>
 	<string id="16268" value="Nėra daugiau parsisiuntimo fragmentų, nutraukiamas ryšys su %s."/>
 	<string id="16269" value="Fragmentas sutrumpintas, nutraukiamas ryšys su %s."/>
 	<string id="16270" value="Parsisiuntimo iš %s užklausai baigėsi laiko limitas, nutraukiamas ryšys."/>
 	<string id="16271" value="Nutraukiamas parsisiuntimo ryšys su %s dėl siuntimų srauto kamščio."/>
-	<string id="16272" value="Adresatas %s neturi bylos „%s“."/>
+	<string id="16272" value="Adresatas %s neturi failo „%s“."/>
 	<string id="16273" value="Parsisiunčiant adresatas % atsiuntė neteisingą HTTP atsakymą."/>
 	<string id="16274" value="Parsisiunčiant adresatas %s astsiuntė atsakymą: %s (%s)."/>
 	<string id="16275" value="Parsisiunčiant atrasta, jog adresato %s „%s“ versija turi kitokį URN, procedūra nutraukiama."/>
 	<string id="16276" value="Parsisiunčiant atrasta, jog adresato %s „%s“ versija turi kitokį dydį, procedūra nutraukiama."/>
 	<string id="16277" value="Parsisiunčiant adresatas %s atsiuntė beprasmį „%s“ baitų rinkinį, laukiama sprendimo."/>
 	<string id="16278" value="Parsisiunčiant ryšys su %s nutrūko."/>
-	<string id="16279" value="Iš adresato %s gaunamas parsisiunčiamos bylos turinys (%s)."/>
+	<string id="16279" value="Iš adresato %s gaunamas parsisiunčiamo failo turinys (%s)."/>
 	<string id="16280" value="Adresatas %s yra užimtas, parsisiuntimą bus bandoma kartoti už %i sekundžių."/>
-	<string id="16281" value="Ar tikrai norite ištrinti bylą „%s“?\n\nJei bylą pašalinsite iš atsisiuntimų lango bylų sąrašo, Jūs negalėsite vėliau tęsti parsisiuntimo."/>
-	<string id="16282" value="Ar tikrai norite vykdyti atsisiųstą bylą „%s“ ?\n\nKai kurios bylos gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per byla, prieš vykdydami ją."/>
-	<string id="16283" value="Byla „%s“ jau yra atsisiunčiamų bylų sąraše, pridedama kaip šaltinis."/>
+	<string id="16281" value="Ar tikrai norite ištrinti failą „%s“?\n\nJei failą pašalinsite iš atsisiuntimų lango failų sąrašo, Jūs negalėsite vėliau tęsti parsisiuntimo."/>
+	<string id="16282" value="Ar tikrai norite vykdyti atsisiųstą failą „%s“ ?\n\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."/>
+	<string id="16283" value="Failas „%s“ jau yra atsisiunčiamų failų sąraše, pridedama kaip šaltinis."/>
 	<string id="16284" value="Gauta klaidinga įstūmiančiojo susijungimo užklausa iš %s, nutraukiamas ryšys."/>
 	<string id="16285" value="Gauta nereikalinga įstūmiančiojo susijungimo užklausa iš %s."/>
-	<string id="16286" value="Adresatas %s įstūminėja bylą „%s“, priimama."/>
-	<string id="16287" value="Neįmanoma gauti daugiau šaltinių bylos „%s“ parsisiuntimui, nes nėra ryšio su tinklu."/>
-	<string id="16288" value="Siunčiama užklausa bylos „%s“ parsisiuntimo šaltinių papildymui %i ryšiais(-iu)..."/>
-	<string id="16289" value="Siunčiama įstūmiančiojo parsisiuntimo užklausa bylai „%s“ parsisiųsti..."/>
-	<string id="16290" value="Adresatas %s atsiuntė kitą, bet naudingą atkarpą (%I64i-%I64i), priklausiančią bylai „%s“."/>
-	<string id="16291" value="Byla „%s“ perkelta į „%s“, parsisiuntimas baigtas."/>
-	<string id="16292" value="Neįmanoma perkelti bylos „%s“ į „%s“. Patikrinkite, ar nebaigtos bylos kas nors nenaudoja arba ar aplankas egzistuoja ir į jį galima rašyti."/>
-	<string id="16293" value="Nustatomas „%s“ adresas bylai „%s“ parsisiųsti..."/>
+	<string id="16286" value="Adresatas %s įstūminėja failą „%s“, priimama."/>
+	<string id="16287" value="Neįmanoma gauti daugiau šaltinių failo „%s“ parsisiuntimui, nes nėra ryšio su tinklu."/>
+	<string id="16288" value="Siunčiama užklausa failo „%s“ parsisiuntimo šaltinių papildymui %i ryšiais(-iu)..."/>
+	<string id="16289" value="Siunčiama įstūmiančiojo parsisiuntimo užklausa failui „%s“ parsisiųsti..."/>
+	<string id="16290" value="Adresatas %s atsiuntė kitą, bet naudingą atkarpą (%I64i-%I64i), priklausiančią failui „%s“."/>
+	<string id="16291" value="Failas „%s“ perkeltas į „%s“, parsisiuntimas baigtas."/>
+	<string id="16292" value="Neįmanoma perkelti failo „%s“ į „%s“. Patikrinkite, ar nebaigto failo kas nors nenaudoja arba ar aplankas egzistuoja ir į jį galima rašyti."/>
+	<string id="16293" value="Nustatomas „%s“ adresas failui „%s“ parsisiųsti..."/>
 	<string id="16294" value="Neįmanoma nustatyti „%s“ adreso."/>
-	<string id="16295" value="Vykdomas bylos „%s“ parsisiuntimo spartinimas, pašalinant siuntimo greitaveikos apribojimus."/>
-	<string id="16296" value="Parsisiunčiamos bylos „%s“ patikra sėkminga."/>
-	<string id="16297" value="ĮSPĖJIMAS: Parsisiunčiamos bylos „%s“ patikra nesėkminga - gali būti, kad tai nėra ta byla, kurią Jūs norėjote parsisiųsti!"/>
+	<string id="16295" value="Vykdomas failo „%s“ parsisiuntimo spartinimas, pašalinant siuntimo greitaveikos apribojimus."/>
+	<string id="16296" value="Parsisiunčiamo failo „%s“ patikra sėkminga."/>
+	<string id="16297" value="ĮSPĖJIMAS: Parsisiunčiamo failo „%s“ patikra nesėkminga - gali būti, kad tai nėra tas failas, kurį Jūs norėjote parsisiųsti!"/>
 	<string id="16298" value="Adresatas %s yra užimtas, laukiama eilėje Nr. %i iš %i vietų („%s“)."/>
-	<string id="16299" value="Ar tikrai norite ištrinti visas pristabdytas bylas? Jei bylas pašalinsite iš atsisiuntimų lango bylų sąrašo, Jūs negalėsite vėliau tęsti parsisiuntimo."/>
-	<string id="16300" value="Ar tikrai norite ištrinti parsisiunčiamą bylą „%s“?"/>
-	<string id="16301" value="Siunčiama užklausa apie bylos „%s“ dryžinės (tiger-tree) maišos apimtį adresatui %s..."/>
-	<string id="16302" value="Adresatas %s netenkina parsisiunčiamos bylos dryžinės (tiger-tree) maišos kriterijų."/>
+	<string id="16299" value="Ar tikrai norite ištrinti visus pristabdytus failu? Jei failus pašalinsite iš atsisiuntimų lango failų sąrašo, Jūs negalėsite vėliau tęsti parsisiuntimo."/>
+	<string id="16300" value="Ar tikrai norite ištrinti parsisiunčiamą failą „%s“?"/>
+	<string id="16301" value="Siunčiama užklausa apie failo „%s“ dryžinės (tiger-tree) maišos apimtį adresatui %s..."/>
+	<string id="16302" value="Adresatas %s netenkina parsisiunčiamo failo dryžinės (tiger-tree) maišos kriterijų."/>
 	<string id="16303" value="Gaunama dryžinės (tiger-tree) maišos apimtis iš adresato %s (%s)..."/>
 	<string id="16304" value="Gauti dryžinės (tiger-tree) maišos duomenys yra sugadinti arba prieštaringi, ignoruojama."/>
 	<string id="16305" value="Gauta dryžinė (tiger-tree) maiša neatitinka laukiamos šakninės reikšmės."/>
-	<string id="16306" value="Gauta bylos „%s“ dryžinės (tiger-tree) maišos apimtis, %i lygių(-iai), mažiausias gabalas, kurį galima patikrinti, yra %s."/>
+	<string id="16306" value="Gauta failo „%s“ dryžinės (tiger-tree) maišos apimtis, %i lygių(-iai), mažiausias gabalas, kurį galima patikrinti, yra %s."/>
 	<string id="16307" value="Nutraukiamas parsisiuntimo ryšys su adresu %s, daugiau nereikalingas."/>
 	<string id="16308" value="Parsisiunčiant, adresatas %s atsiuntė neprašytų duomenų, ryšys nutraukiamas."/>
-	<string id="16309" value="Siunčiama užklausa bylos „%s“ meta duomenims gauti adresatui %s..."/>
+	<string id="16309" value="Siunčiama užklausa failo „%s“ meta duomenims gauti adresatui %s..."/>
 	<string id="16310" value="Gaunami dryžinės (tiger-tree) maišos duomenys iš %s (%s)..."/>
-	<string id="16311" value="Siunčiama užklausa bylos „%s“ eDonkey2000 maišos rinkiniui gauti adresatui %s..."/>
+	<string id="16311" value="Siunčiama užklausa failo „%s“ eDonkey2000 maišos rinkiniui gauti adresatui %s..."/>
 	<string id="16312" value="Gautas neteisingas eDonkey2000 maišos rinkinys iš %s, šaltinis atmetamas."/>
-	<string id="16313" value="Gautas eDonkey2000 maišos rinkinys bylai „%s“, mažiausias gabalas, kurį galima patikrinti, yra %s."/>
+	<string id="16313" value="Gautas eDonkey2000 maišos rinkinys failui „%s“, mažiausias gabalas, kurį galima patikrinti, yra %s."/>
 	<string id="16314" value="Parsisiunčiant aptikta, jog Donkey2000 maišos rinkinys yra sugadintas arba prieštaringas, šaltinis atmetamas."/>
-	<string id="16315" value="Neįmanoma pradėti parsisiunčiamos bylos „%s“ išpakavimo."/>
-	<string id="16316" value="Baigėsi laiko limitas atnaujinant eilę eDonkey2000 adresate %s (byla „%s“)."/>
-	<string id="16317" value="Stovima eilėje bylai „%s“ gauti."/>
-	<string id="16318" value="Nepakanka vietos diske bylai „%s“ parsisiųsti (%s)."/>
-	<string id="16319" value="Šaltinis %s (%s) atmetamas, nes siunčia sugadintas bylos „%s“ dalis (%I64i-%I64i)."/>
-	<string id="16320" value="Adresatas %s, kuriam išsiunčiama byla, atsiuntė neteisingą HTTP užklausą."/>
+	<string id="16315" value="Neįmanoma pradėti parsisiunčiamo failo „%s“ išpakavimo."/>
+	<string id="16316" value="Baigėsi laiko limitas atnaujinant eilę eDonkey2000 adresate %s (failas „%s“)."/>
+	<string id="16317" value="Stovima eilėje failui „%s“ gauti."/>
+	<string id="16318" value="Nepakanka vietos diske failui „%s“ parsisiųsti (%s)."/>
+	<string id="16319" value="Šaltinis %s (%s) atmetamas, nes siunčia sugadintas failo „%s“ dalis (%I64i-%I64i)."/>
+	<string id="16320" value="Adresatas %s, kuriam išsiunčiamas failas, atsiuntė neteisingą HTTP užklausą."/>
 	<string id="16321" value="Užmezgamas įstūmiantysis ryšys su %s. %s"/>
 	<string id="16322" value="Neįmanoma susisiekti su adresatu %s įstūmiančiajam ryšiui užmegzti."/>
 	<string id="16323" value="Išsiuntimo ryšys su %s buvo nutrauktas."/>
-	<string id="16324" value="Užklausos bylos išsiuntimui iš adresato %s laiko limitas baigėsi."/>
+	<string id="16324" value="Užklausos failo išsiuntimui iš adresato %s laiko limitas baigėsi."/>
 	<string id="16325" value="Adresatas %s užklausė išsiųsti nežinomą arba nesamą objektą „%s“."/>
 	<string id="16326" value="Adresatas %s užklausė išsiųsti „%s“ su skirtingu SHA1."/>
 	<string id="16327" value="Atsakyta išsiųsti „%s“ adresatui %s (%s), užimtas, o klientas nepalaiko eilių."/>
 	<string id="16328" value="Įstūmiantysis ryšys su %s užmegztas, laukiama patvirtinimo..."/>
-	<string id="16329" value="Neįmanoma atverti „%s“ išsiuntimui adresu %s, disko/bylos klaida."/>
-	<string id="16330" value="Išsiunčiama atkarpa %I64i-%I64i, priklausanti bylai „%s“, adresatui %s (%s)."/>
-	<string id="16331" value="Baigta siųsti bylos „%s“ dalis adresatui %s."/>
+	<string id="16329" value="Neįmanoma atverti „%s“ išsiuntimui adresu %s, disko/failo klaida."/>
+	<string id="16330" value="Išsiunčiama atkarpa %I64i-%I64i, priklausanti failui „%s“, adresatui %s (%s)."/>
+	<string id="16331" value="Baigta siųsti failo „%s“ dalis adresatui %s."/>
 	<string id="16332" value="Įeinantis ryšys su %s yra HTTP išsiuntimo užklausa."/>
-	<string id="16333" value="Per daug užimtas išsiųsti bylą „%s“ adresatui %s, pastatyta į eilę Nr. %i iš %i vietų („%s“)."/>
-	<string id="16334" value="Pasenusi įstūmiančiojo ryšio užklausa iš adresato %s nežinomai bylai išsiųsti, leidžiama jungtis..."/>
-	<string id="16335" value="Byla „%s“, skirta adresatui %s, pašalinta iš išsiutimų sąrašo."/>
+	<string id="16333" value="Per daug užimtas išsiųsti failą „%s“ adresatui %s, pastatyta į eilę Nr. %i iš %i vietų („%s“)."/>
+	<string id="16334" value="Pasenusi įstūmiančiojo ryšio užklausa iš adresato %s nežinomam failui išsiųsti, leidžiama jungtis..."/>
+	<string id="16335" value="Failas „%s“, skirta adresatui %s, pašalintas iš išsiutimų sąrašo."/>
 	<string id="16336" value="Adresatas %s yra blokuojamų vartotojo agentų sąraše, užklausa neleidžiama."/>
-	<string id="16337" value="Išsiunčiamos bylos „%s“ antraštės adresatui %s (%s)."/>
-	<string id="16338" value="Adresatas %s užklausė išsiųsti netenkinamą bylos „%s“ atkarpą."/>
+	<string id="16337" value="Išsiunčiamo failo „%s“ antraštės adresatui %s (%s)."/>
+	<string id="16338" value="Adresatas %s užklausė išsiųsti netenkinamą failo „%s“ atkarpą."/>
 	<string id="16339" value="Išsiunčiamas įprastas HTML atsakymas parsisiųsti norinčiam adresatui %s (%s)."/>
 	<string id="16340" value="Adresatui %s atsakyta rodyti vartotojo duomenis."/>
 	<string id="16341" value="Adresatas %s (%s) atsiuntė užklausą rodyti vartotojo duomenis, siunčiamas atsakymas..."/>
 	<string id="16342" value="Nutraukiamas išsiuntimo ryšys su %s dėl siuntimų srauto kamščio."/>
 	<string id="16343" value="Nutraukiamas senesnis išsiuntimas adresatui %s, nes jis užmezgė naują ryšį."/>
 	<string id="16344" value="Adresatui %s atsakyta sukurti naują išsiuntimo ryšį, nes ankstesnis susijungimas vis dar yra laukiančiųjų sąraše."/>
-	<string id="16345" value="Bylos „%s“ išsiuntimas adresatui %s sustabdytas, nes byla buvo ištrinta."/>
-	<string id="16346" value="Išsiunčiamas atkarpos %I64i-%I64i turinys, priklausantis dalinei bylai „%s“ adresatui %s (%s)."/>
+	<string id="16345" value="Failo „%s“ išsiuntimas adresatui %s sustabdytas, nes failas buvo ištrintas."/>
+	<string id="16346" value="Išsiunčiamas atkarpos %I64i-%I64i turinys, priklausantis daliniam failui „%s“ adresatui %s (%s)."/>
 	<string id="16347" value="Išsiuntimų eilėje laukiantis adresatas %s siunčia pakartotinas užklausas per dažnai, ryšys nutraukiamas."/>
 	<string id="16348" value="Adresatui %s atsakyta sukurti įstūmiančiojo išsiuntimo ryšį, nes jo susijungimų skaičius per didelis."/>
-	<string id="16349" value="Išsiunčiami bylos „%s“ dryžinės (tiger-tree) maišos duomenys adresatui %s."/>
-	<string id="16350" value="Išsiunčiami bylos „%s“ meta duomenys adresatui %s."/>
-	<string id="16351" value="Atsakyta išsiųsti bylą „%s“ adresatui %s (%s), per daug adresato susijungimų vienu metu."/>
-	<string id="16352" value="Išsiunčiamas bylos „%s“ peržiūros turinys adresatui %s."/>
-	<string id="16353" value="Atsakoma išsiųsti bylos „%s“ peržiūros turinį adresatui %s, per daug peržiūros susijungimų."/>
-	<string id="16354" value="Adresatas %s užklausė bylos „%s“ peržiūros turinio, bet byla jo neturi."/>
-	<string id="16355" value="Bylos „%s“ dinaminė peržiūra ir išsiuntimas adresatui %s įtraukti į planinių užduočių sąrašą."/>
+	<string id="16349" value="Išsiunčiami failo „%s“ dryžinės (tiger-tree) maišos duomenys adresatui %s."/>
+	<string id="16350" value="Išsiunčiami failo „%s“ meta duomenys adresatui %s."/>
+	<string id="16351" value="Atsakyta išsiųsti failą „%s“ adresatui %s (%s), per daug adresato susijungimų vienu metu."/>
+	<string id="16352" value="Išsiunčiamas failo „%s“ peržiūros turinys adresatui %s."/>
+	<string id="16353" value="Atsakoma išsiųsti failo „%s“ peržiūros turinį adresatui %s, per daug peržiūros susijungimų."/>
+	<string id="16354" value="Adresatas %s užklausė failo „%s“ peržiūros turinio, bet failas jo neturi."/>
+	<string id="16355" value="Failo „%s“ dinaminė peržiūra ir išsiuntimas adresatui %s įtraukti į planinių užduočių sąrašą."/>
 	<string id="16356" value="Atsakoma išsiųsti vartotojo duomenis adresatui %s, per daug vartotojo duomenų išsiuntimų."/>
-	<string id="16357" value="Siunčiama byla „%s“ adresatui %s..."/>
-	<string id="16358" value="Išsiunčiant bylą, ryšys su %s nutrūko, išsaugoma vieta eilėje."/>
+	<string id="16357" value="Siunčiamas failas „%s“ adresatui %s..."/>
+	<string id="16358" value="Išsiunčiant failą, ryšys su %s nutrūko, išsaugoma vieta eilėje."/>
 	<string id="16359" value="Atsijungusio adresato %s buvimo išsiuntimų eilėje laikas baigėsi, pašalinama."/>
-	<string id="16360" value="Atsakoma išsiųsti bylą „%s“ adresatui %s (%s), visos eilės perpildytos."/>
-	<string id="16361" value="Atsakyta išsiųsti bylą adresatui %s (%s), tinklas neįgalintas."/>
-	<string id="16362" value="eDonkey2000 išsiuntimų nederėtų atšaukti. Ar tikrai norite atšaukti šios bylos išsiuntimą?"/>
+	<string id="16360" value="Atsakoma išsiųsti failą „%s“ adresatui %s (%s), visos eilės perpildytos."/>
+	<string id="16361" value="Atsakyta išsiųsti failą adresatui %s (%s), tinklas neįgalintas."/>
+	<string id="16362" value="eDonkey2000 išsiuntimų nederėtų atšaukti. Ar tikrai norite atšaukti šio failo išsiuntimą?"/>
 	<string id="16363" value="Torrent išsiuntimai"/>
 	<string id="16364" value="Baigta siųsti"/>
 	<string id="16365" value="Ar tikrai norite nutraukti visus atsisiuntimus šioje grupėje?"/>
@@ -2864,42 +2864,42 @@ right quote	&#147;
 	<string id="16367" value="eDonkey branduolys"/>
 	<string id="16368" value="eDonkey daliniai"/>
 	<string id="16369" value="eDonkey saugančioji"/>
-	<string id="16370" value="Mažos bylos"/>
-	<string id="16371" value="Vidutinės bylos"/>
-	<string id="16372" value="Didelės bylos"/>
-	<string id="16373" value="Dalinės bylos"/>
+	<string id="16370" value="Maži failai"/>
+	<string id="16371" value="Vidutiniai failai"/>
+	<string id="16372" value="Dideli failai"/>
+	<string id="16373" value="Daliniai failai"/>
 	<string id="16374" value="Nauja eilė"/>
 	<string id="16375" value="Daliniai"/>
-	<string id="16376" value="Visos bylos"/>
+	<string id="16376" value="Visi failai"/>
 	<string id="16377" value="HTTP saugančioji"/>
-	<string id="16384" value="Ar tikrai norite vykdyti bylą „%s“ ?\n\nKai kurios bylos gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per byla, prieš vykdydami ją."/>
-	<string id="16385" value="Jūs ruošiatės pakeisti %i bylų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
-	<string id="16386" value="Taisomi %i bylų(-os) meta duomenys."/>
-	<string id="16387" value="Bylos „%s“ maiša (tapatybės kodas) dar nebuvo apskaičiuota. Palaukite, kol ji bus apskaičiuota, ir po to mėginkite dar kartą."/>
-	<string id="16388" value="Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktoms byloms atpažinti ir dalintis su kitais bylos informacija.\n\nShareaza persiųs pasirinktos bylos(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\n\nAr norite tęsti?"/>
-	<string id="16389" value="Ar tikrai norite visam laikui ištrinti %i pasirinktų bylų(-ą)?\n\nBylos bus patalpintos į „Šiukšliadėžę“, jei ji yra įgalinta."/>
-	<string id="16390" value="Jūs dar nenurodėte grotuvo programos, pvz., Nullsoft WinAmp, į kurio grojaraštį norite įtraukti savo bylas. Ar norite dabar jį nurodyti?\n\nShareaza perduos bylos pavadinimą Jūsų pasirinktai programai kartu su „/ADD“ argumentu."/>
+	<string id="16384" value="Ar tikrai norite vykdyti failą „%s“ ?\n\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."/>
+	<string id="16385" value="Jūs ruošiatės pakeisti %i failų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
+	<string id="16386" value="Taisomi %i failų(-os) meta duomenys."/>
+	<string id="16387" value="Failo „%s“ maiša (tapatybės kodas) dar nebuvo apskaičiuota. Palaukite, kol ji bus apskaičiuota, ir po to mėginkite dar kartą."/>
+	<string id="16388" value="Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\n\nShareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\n\nAr norite tęsti?"/>
+	<string id="16389" value="Ar tikrai norite visam laikui ištrinti %i pasirinktus failus(-ą)?\n\nFailai bus patalpintos į „Šiukšliadėžę“, jei ji yra įgalinta."/>
+	<string id="16390" value="Jūs dar nenurodėte grotuvo programos, pvz., Nullsoft WinAmp, į kurio grojaraštį norite įtraukti savo failus. Ar norite dabar jį nurodyti?\n\nShareaza perduos failo pavadinimą Jūsų pasirinktai programai kartu su „/ADD“ argumentu."/>
 	<string id="16391" value="Jūsų kompiuteris nėra prijungtas prie tinklo."/>
 	<string id="16392" value="Paspauskite „Jungtis“ mygtuką norėdami pradėti."/>
-	<string id="16393" value="Bylos „%s“ maišos (tapatybės kodo) patikros testas nesėkmingas. Byla gali būti ne ta, kurią Jūs ketinote parsisiųsti. Ar tikrai norite vykdyti šią bylą?"/>
-	<string id="16394" value="Ar norėtumėte pašalinti „galimai nesaugi“ požymį nuo šios bylos?"/>
-	<string id="16395" value="Jūsų parsisiųstų bylų aplankas „%s“ dar nėra įtrauktas į Jūsų kolekciją.\n\nĮtraukus parsisiųstų bylų aplanką į savo kolekciją, Jūs galėsite lengviau tvarkyti ir peržiūrėti naujai parsisiųstas bylas, o taip pat pasinaudoti tokiomis papildomomis Shareaza funkcijomis, kaip bylų patikra ir savaiminis Shareaza atsinaujinimas. Parsisiųstų bylų laikymas Jūsų kolekcijoje nereikalauja, kad Jūs jas bendrintumėte: Jūs galite pasirinkti kiekvienai bylai atskirai, ar ją bendrinti ar ne.\n\nAr norėtumėte dabar įtraukti parsisiųstų bylų aplanką į savo kolekciją?"/>
-	<string id="16396" value="Jūsų parsisiųstų bylų aplankas įtrauktas į kolekciją. Ar norėtumėte jį irgi bendrinti?"/>
-	<string id="16397" value="Ar tikrai norite pašalinti %i pasirinktą albumo katalogą(-us)?\n\nĮsidėmėkite, kad šis veiksmas neištrins bylų, esančių albumų kataloguose, tiktai pačius katalogus."/>
+	<string id="16393" value="Failo „%s“ maišos (tapatybės kodo) patikros testas nesėkmingas. Failas gali būti ne tas, kurį Jūs ketinote parsisiųsti. Ar tikrai norite vykdyti šį failą?"/>
+	<string id="16394" value="Ar norėtumėte pašalinti „galimai nesaugus“ požymį nuo šio failo?"/>
+	<string id="16395" value="Jūsų parsisiųstų failų aplankas „%s“ dar nėra įtrauktas į Jūsų kolekciją.\n\nĮtraukę parsisiųstų failų aplanką į savo kolekciją, Jūs galėsite lengviau tvarkyti ir peržiūrėti naujai parsisiųstus failus, o taip pat pasinaudoti tokiomis papildomomis Shareaza funkcijomis, kaip failų patikra ir savaiminis Shareaza atnaujinimas. Parsisiųstų failų laikymas Jūsų kolekcijoje nereikalauja, kad Jūs jas bendrintumėte: Jūs galite pasirinkti kiekvienam failui atskirai, ar jį bendrinti ar ne.\n\nAr norėtumėte dabar įtraukti parsisiųstų failų aplanką į savo kolekciją?"/>
+	<string id="16396" value="Jūsų parsisiųstų failų aplankas įtrauktas į kolekciją. Ar norėtumėte jį irgi bendrinti?"/>
+	<string id="16397" value="Ar tikrai norite pašalinti %i pasirinktą albumo katalogą(-us)?\n\nĮsidėmėkite, kad šis veiksmas neištrins failų, esančių albumų kataloguose, tiktai pačius katalogus."/>
 	<string id="16398" value="„Shareaza“ negalėjo pervadinti:\n\n%s\nį\n%s"/>
-	<string id="16399" value="„Shareaza“ negalėjo ištrinti bylos:\n\n%s"/>
-	<string id="16400" value="Paskirties byla tokiu pavadinimu jau yra:\n\n„%s“\n\nAr norite ją perrašyti?"/>
-	<string id="16401" value="Rodyti visų tipų bylas"/>
-	<string id="16402" value="„Shareaza“ parsisiuntė rinkinio bylą:\n\n„%s“\n\nTurbūt ji nėra teisinga rinkinio byla."/>
-	<string id="16403" value="„Shareaza“ įtraukė rinkinio bylą „%s“ į Jūsų kolekciją."/>
-	<string id="16404" value="„Shareaza“ negalėjo įdiegti rinkinio bylos „%s“ kopijavimo į aplanką „%s“ būdu."/>
-	<string id="16405" value="Ar norite parsisiųsti šią bylą?\n\n„%s“\n\nPasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."/>
-	<string id="16406" value="Ar norite parsisiųsti visas bylas iš šio rinkinio?\n\nPasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."/>
+	<string id="16399" value="„Shareaza“ negalėjo ištrinti failo:\n\n%s"/>
+	<string id="16400" value="Paskirties failas tokiu pavadinimu jau yra:\n\n„%s“\n\nAr norite ją perrašyti?"/>
+	<string id="16401" value="Rodyti visų tipų failus"/>
+	<string id="16402" value="„Shareaza“ parsisiuntė rinkinio failą:\n\n„%s“\n\nTurbūt jis nėra teisingas rinkinio failas."/>
+	<string id="16403" value="„Shareaza“ įtraukė rinkinio failą „%s“ į Jūsų kolekciją."/>
+	<string id="16404" value="„Shareaza“ negalėjo įdiegti rinkinio failo „%s“ kopijavimo į aplanką „%s“ būdu."/>
+	<string id="16405" value="Ar norite parsisiųsti šį failą?\n\n„%s“\n\nPasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."/>
+	<string id="16406" value="Ar norite parsisiųsti visus failus iš šio rinkinio?\n\nPasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."/>
 	<string id="16407" value="Ar norite, kad šiam rinkiniui daugiau nebebūtų klausiama apie kokius nors atsisiuntimus?"/>
 	<string id="16408" value="Kopijuoti &amp;nuorodą"/>
 	<string id="16409" value="Eksportuoti &amp;nuorodas..."/>
-	<string id="16410" value="Pasirinkto aplanko „%s“ poaplankis jau yra Jūsų kolekcijoje.\nPridėjus šį aplanką, kai kurių bylų maišos bus perskaičiuotos.\n\n\n\nAr norite tęsti?"/>
-	<string id="16411" value="Neįmanoma perkelti bylos „%s“. Bylą turbūt naudoja kita programa.\nAr norėtumėte šią bylą nukopijuoti užuot perkėlus?"/>
+	<string id="16410" value="Pasirinkto aplanko „%s“ poaplankis jau yra Jūsų kolekcijoje.\nPridėjus šį aplanką, kai kurių failų maišos bus perskaičiuotos.\n\n\n\nAr norite tęsti?"/>
+	<string id="16411" value="Neįmanoma perkelti failo „%s“. Failą turbūt naudoja kita programa.\nAr norėtumėte šį failą nukopijuoti užuot perkėlus?"/>
 	<string id="16448" value="Susijungta su %s, patvirtinama..."/>
 	<string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
 	<string id="16450" value="Ryšys su %s nutrauktas."/>
@@ -2918,10 +2918,10 @@ right quote	&#147;
 	<string id="16515" value="Gnutella susijungimai (Aktyvūs)"/>
 	<string id="16516" value="Gnutella gavimų greitaveika"/>
 	<string id="16517" value="Gnutella išsiuntimų greitaveika"/>
-	<string id="16518" value="Parsisiunčiamų bylų skaičius"/>
-	<string id="16519" value="Parsisiunčiamų bylų atsisiuntimų skaičius"/>
+	<string id="16518" value="Parsisiunčiamų failų skaičius"/>
+	<string id="16519" value="Parsisiunčiamų failų atsisiuntimų skaičius"/>
 	<string id="16520" value="Parsisiuntimų greitaveika"/>
-	<string id="16521" value="Išsiunčiamų bylų išsiuntimų skaičius"/>
+	<string id="16521" value="Išsiunčiamų failų išsiuntimų skaičius"/>
 	<string id="16522" value="Išsiuntimų greitaveika"/>
 	<string id="16523" value="Gnutella gauti paketai"/>
 	<string id="16524" value="Gnutella išsiųsti paketai"/>
@@ -2938,7 +2938,7 @@ right quote	&#147;
 	<string id="16768" value="Gautas URL, adresas „%s“"/>
 	<string id="16769" value="Neįmanoma išnagrinėti URL: „Shareaza“ nesupranta šio adreso."/>
 	<string id="16770" value="Neįmanoma parodyti URL veiksmo dialogo lango, nes „Shareaza“ yra užimta."/>
-	<string id="16771" value="Jūs jau turite bylą „%s“ savo kolekcijoje. Ar vis tiek norite ją parsisiųsti?"/>
+	<string id="16771" value="Jūs jau turite failą „%s“ savo kolekcijoje. Ar vis tiek norite ją parsisiųsti?"/>
 	<string id="16772" value="Adresatas:"/>
 	<string id="16773" value="Prievadas:"/>
 	<string id="16774" value="&amp;Jungtis"/>
@@ -2970,8 +2970,8 @@ right quote	&#147;
 	<string id="16814" value="Prašome palaukti: Atnaujinamas eDonkey2000 serverių sąrašas..."/>
 	<string id="16816" value="eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\nAr įsitikinę, kad norite apriboti eilės numerius?"/>
 	<string id="16817" value="Windows nepalaiko kelių, ilgesnių už 256 simbolius.\nPasirinkite aplanką, kurio kelias yra trumpesnis."/>
-	<string id="16818" value="Atsisiuntimų aplankas neturi sutapti su laikinųjų bylų aplanku"/>
-	<string id="16819" value="Laikinųjų bylų aplankas negali būti įtrauktas į kolekciją, nes tai sumažins darbo efektyvumą. Nebaigtos siųstis bylos gali būti bendrinamos atsisiuntimų lange."/>
+	<string id="16818" value="Atsisiuntimų aplankas neturi sutapti su laikinųjų failų aplanku"/>
+	<string id="16819" value="Laikinųjų failų aplankas negali būti įtrauktas į kolekciją, nes tai sumažins darbo efektyvumą. Nebaigti siųstis failai gali būti bendrinami atsisiuntimų lange."/>
 	<string id="16864" value="Siunčiama užklausa apie paslaugų radimo tarnybas..."/>
 	<string id="16865" value="Siunčiama užklausa paslaugų radimo tarnybai „%s“..."/>
 	<string id="16866" value="GWebCache transakcija sėkminga („%s“)."/>
@@ -2989,19 +2989,19 @@ right quote	&#147;
 	<string id="16935" value="Nusiuntus peržiūros užklausą, adresatas %s atsiuntė neatpažįstamą atsakymą ir galbūt nepalaiko vartotojo/adresato duomenų peržiūros."/>
 	<string id="16936" value="Gaunamas peržiūros turinys iš adresato %s (%s)"/>
 	<string id="16938" value="Klaida iškoduojant Gnutella paketus, gautus iš peržiūrimo adresato %s."/>
-	<string id="16939" value="Vartotojo duomenys iš %s gauti, rasta(-os) %i bylų(-os)."/>
+	<string id="16939" value="Vartotojo duomenys iš %s gauti, rastas(-i) %i failų(-ai)."/>
 	<string id="16940" value="Ryšys su peržiūrimuoju adresatu %s prarastas."/>
 	<string id="16941" value="Ryšys su peržiūrimuoju adresatu %s nutrauktas dėl siuntimų srauto kamščio."/>
 	<string id="16942" value="Nutraukiamas ryšys su peržiūrimuoju adresatu %s."/>
 	<string id="16943" value="Žiūrimas adresatas - %s"/>
-	<string id="16944" value="Rasta %i bendrintų bylų(-os) %s kolekcijoje."/>
+	<string id="16944" value="Rasta %i bendrintų failų(-ai) %s kolekcijoje."/>
 	<string id="16991" value="Shareaza grotuvas"/>
 	<string id="16992" value="„Shareaza“ nesugebėjo sukurti atmintyje Grotuvo paslaugų papildinio objekto. Įdiekite „Shareaza“ iš naujo ir įsitikinkite, kad Jūs turite įdiegę reikalingus grotuvo kodekus bei išvesties tvarkykles."/>
-	<string id="16993" value="Visos grotuvo bylos|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Grojaraščiai|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Garso bylos|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Vaizdo bylos|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD garso takeliai|*.cda|MIDI bylos|*.mid;*.rmi;*.midi|Visos bylos|*.*||"/>
-	<string id="16994" value="Neįmanoma įkelti grotuvo bylos „%s“"/>
-	<string id="16995" value="Byla turbūt sugadinta arba Jūs galbūt neturite reikiamo šios bylos grojimui kodeko."/>
-	<string id="16996" value="Dalies šios bylos neįmanoma atlikti. Jums reikėtų parsisiųsti papildomų kodekų."/>
-	<string id="16997" value="Jokia byla negrojama. Grojimui spragtelkite grotuvo bylą savo kolekcijoje."/>
+	<string id="16993" value="Visi grotuvo failai|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Grojaraščiai|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Garso failai|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Vaizdo failai|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD garso takeliai|*.cda|MIDI failai|*.mid;*.rmi;*.midi|Visi failai|*.*||"/>
+	<string id="16994" value="Neįmanoma įkelti grotuvo failo „%s“"/>
+	<string id="16995" value="Failas turbūt sugadintas arba Jūs galbūt neturite reikiamo šio failui grojimui kodeko."/>
+	<string id="16996" value="Dalies šio failo neįmanoma atlikti. Jums reikėtų parsisiųsti papildomų kodekų."/>
+	<string id="16997" value="Joks failas negrojamas. Grojimui spragtelkite grotuvo failą savo kolekcijoje."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; J &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; I &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M &#160; &#160; A"/>
 	<string id="16999" value="G R O J A R A Š T I S"/>
 	<string id="17024" value="Užmezgamas ryšys su %s..."/>
@@ -3067,52 +3067,52 @@ right quote	&#147;
 	<string id="17225" value="eDonkey2000 kliento ryšys su %s nutrūko."/>
 	<string id="17226" value="Gautas neteisingo formato eDonkey2000 paketas iš %s (id=%x)."/>
 	<string id="17227" value="Įeinantis ryšys iš %s identifikuotas kaip eDonkey2000 kliento."/>
-	<string id="17228" value="Siunčiamas bylos „%s“ eDonkey2000 maišos rinkinys adresatui %s..."/>
+	<string id="17228" value="Siunčiamas failo „%s“ eDonkey2000 maišos rinkinys adresatui %s..."/>
 	<string id="17229" value="eDonkey2000 kliento ryšys su %s buvo nenaudojamas, ryšys nutrauktas."/>
 	<string id="17230" value="Užmezgamas eDonkey2000 kliento ryšys su %s..."/>
 	<string id="17231" value="eDonkey2000 klientas %s turi neteisingą GUID, ryšio patvirtinimas atšaukiamas."/>
 	<string id="17232" value="Baigėsi susijungimo su eDonkey2000 klientu %s laiko limitas."/>
 	<string id="17233" value="Baigėsi ryšio su eDonkey2000 klientu %s patvirtinimo laiko limitas."/>
 	<string id="17234" value="Atsakoma susijungimo su eDonkey2000 klientu %s, nes eDonkey2000 yra neįgalintas."/>
-	<string id="17248" value="Pradedamas eDonkey2000 dalinių bylų importas..."/>
-	<string id="17249" value="Veiksmas baigtas, sėkmingai importuotos %i dalinės bylos(-ų)."/>
+	<string id="17248" value="Pradedamas eDonkey2000 dalinių failų importas..."/>
+	<string id="17249" value="Veiksmas baigtas, sėkmingai importuoti %i daliniai failai(-ų)."/>
 	<string id="17250" value="Skenuojamas aplankas: „%s“..."/>
-	<string id="17251" value="  Neįmanoma importuoti bylos."/>
-	<string id="17252" value=" Aptikta dalinė byla „%s“, importuojama..."/>
-	<string id="17253" value="  Neįmanoma atverti dalinės bylos „%s“."/>
-	<string id="17254" value="  Aptikta parsisiunčiama byla „%s“, %s dydžio."/>
-	<string id="17255" value="  Parsisiunčiamos bylos duomenų byla yra naujesnė nei .part byla, atšaukiama."/>
+	<string id="17251" value="  Neįmanoma importuoti failo."/>
+	<string id="17252" value=" Aptiktas dalinis failas „%s“, importuojama..."/>
+	<string id="17253" value="  Neįmanoma atverti dalinio failo „%s“."/>
+	<string id="17254" value="  Aptiktas parsisiunčiamas failas „%s“, %s dydžio."/>
+	<string id="17255" value="  Parsisiunčiamo failo duomenų failas yra naujesnis nei .part failas, atšaukiama."/>
 	<string id="17256" value="  Kopijuojama „%s“ į „%s“..."/>
-	<string id="17257" value="  Bylos kopijavimas baigtas."/>
-	<string id="17258" value="  Sukurta dalinė „Shareaza“ parsisiuntimo byla, %s lieka."/>
-	<string id="17259" value="  Ši byla jau yra „Shareaza“ atsisiunčiamų bylų sąraše."/>
-	<string id="17260" value="  Bylos kopijavimui nepakanka vietos diske."/>
+	<string id="17257" value="  Failo kopijavimas baigtas."/>
+	<string id="17258" value="  Sukurtas dalinis „Shareaza“ parsisiuntimo failas, %s lieka."/>
+	<string id="17259" value="  Šis failas jau yra „Shareaza“ atsisiunčiamų failų sąraše."/>
+	<string id="17260" value="  Failo kopijavimui nepakanka vietos diske."/>
 	<string id="17472" value="Įeinantis ryšys su %s identifikuotas kaip BitTorrent kliento, deramasi dėl ryšio..."/>
 	<string id="17473" value="Baigėsi susijungimo su BitTorrent klientu %s laiko limitas."/>
 	<string id="17474" value="Baigėsi ryšio su BitTorrent klientu %s patvirtinimo laiko limitas."/>
 	<string id="17475" value="Nutraukiamas BitTorrent ryšys su adresatu %s dėl siuntimų srauto kamščio."/>
 	<string id="17476" value="BitTorrent ryšio užmezgimas su %s nepasisekė, nes nutolęs klientas kitokį ID."/>
-	<string id="17477" value="BitTorrent adresato %s atsakyme nurodyta ne ta byla."/>
-	<string id="17478" value="BitTorrent adresatas %s užklausė nežinomos bylos."/>
-	<string id="17479" value="BitTorrent ryšys su adresatu %s užmegztas bylai „%s“ siųstis."/>
-	<string id="17481" value="Gauta BitTorrent aprašančioji byla: „%s“"/>
-	<string id="17482" value="Neįmanoma išnagrinėti įkeltos BitTorrent bylos „%s“."/>
+	<string id="17477" value="BitTorrent adresato %s atsakyme nurodytas ne tas failas."/>
+	<string id="17478" value="BitTorrent adresatas %s užklausė nežinomo failo."/>
+	<string id="17479" value="BitTorrent ryšys su adresatu %s užmegztas failui „%s“ siųstis."/>
+	<string id="17481" value="Gautas BitTorrent aprašantysis failas: „%s“"/>
+	<string id="17482" value="Neįmanoma išnagrinėti įkelto BitTorrent failo „%s“."/>
 	<string id="17483" value="Iš BitTorrent seklio gauta klaida, susijusi su „%s“ : „%s“."/>
 	<string id="17484" value="Klaida nagrinėjant BitTorrent seklio atsakymą."/>
-	<string id="17485" value="Gautas BitTorrent seklio atsakymas apie bylą „%s“, %i nauji šaltiniai(-ų)."/>
+	<string id="17485" value="Gautas BitTorrent seklio atsakymas apie failą „%s“, %i nauji šaltiniai(-ų)."/>
 	<string id="17486" value="Užmezgamas ryšys su BitTorrent klientu %s..."/>
 	<string id="17487" value="Užmegztas ryšys su BitTorrent klientu %s, patvirtinama..."/>
-	<string id="17488" value="Jūs pakeitėte šios torrent bylos seklio nuorodą. Ar tikrai norite palikti šį pakeitimą?\n\nNeteisinga seklio nuoroda gali neleisti toliau vykdyti parsisiuntimo."/>
+	<string id="17488" value="Jūs pakeitėte šio torrent failo seklio nuorodą. Ar tikrai norite palikti šį pakeitimą?\n\nNeteisinga seklio nuoroda gali neleisti toliau vykdyti parsisiuntimo."/>
 	<string id="17489" value="BitTorrent ryšiui su adresatu %s naudojamas išplėstinis protokolas, identifikuotas kaip &quot;%s&quot;."/>
 	<string id="17490" value="Gauta %i naujų(-i) BitTorrent šaltinių(-iai) iš adresato %s."/>
-	<string id="17491" value="Torrent byla „%s“ jau yra parsisiunčiamų bylų sąraše ir pradėti ją skleisti negalima."/>
-	<string id="17492" value="Klaida įkeliant torrent bylą „%s“. Tikriausiai tai bloga torrent byla."/>
-	<string id="17493" value="Neįmanoma sukurti BitTorrent bendrintos bylos „%s“."/>
-	<string id="17494" value="Šiai torrent bylai priklauso byla „%s“, bet „Shareaza“ negali surasti šios bylos Jūsų kolekcijoje. Jei įmanoma, perkelkite šią bylą į bendrintus aplankus ir bandykite dar kartą."/>
-	<string id="17495" value="Šiai torrent bylai priklauso byla „%s“, kurios versija turėtų būti %s, tačiau esamos bylos versija yra %s."/>
-	<string id="17496" value="Įvyko klaida kopijuojant „%s“ į BitTorrent bendrintą bylą."/>
-	<string id="17497" value="Įvyko nežinoma klaida mėginant skleisti bylą „%s“."/>
-	<string id="17498" value="Byloje „%s“ aptikta klaida."/>
+	<string id="17491" value="Torrent failas „%s“ jau yra parsisiunčiamų failų sąraše ir pradėti ją skleisti negalima."/>
+	<string id="17492" value="Klaida įkeliant torrent failą „%s“. Tikriausiai tai blogas torrent failas."/>
+	<string id="17493" value="Neįmanoma sukurti BitTorrent bendrinto failo „%s“."/>
+	<string id="17494" value="Šiam torrent failui priklauso failas „%s“, bet „Shareaza“ negali surasti šio failo Jūsų kolekcijoje. Jei įmanoma, perkelkite šį failą į bendrintus aplankus ir bandykite dar kartą."/>
+	<string id="17495" value="Šiam torrent failui priklauso failas „%s“, kurio versija turėtų būti %s, tačiau esamo failo versija yra %s."/>
+	<string id="17496" value="Įvyko klaida kopijuojant „%s“ į BitTorrent bendrintą failą."/>
+	<string id="17497" value="Įvyko nežinoma klaida mėginant skleisti failą „%s“."/>
+	<string id="17498" value="Faile „%s“ aptikta klaida."/>
 	<string id="17500" value="Seklys neatsakė — anonsavimas kartojamas (%i iš %i)."/>
 	<string id="17501" value="Neįmanoma susisiekti su sekliu."/>
 	<string id="17503" value="Nesėkmingas bandymas — Bandomas kitas seklys (%i iš %i)"/>
@@ -3121,24 +3121,24 @@ right quote	&#147;
 	<string id="17507" value="BitTorrent užmegztas ryšys su adresatu %s nutrūko."/>
 	<string id="17510" value="BitTorrent ryšio su adresatu %s atsakoma, ryšys su šiuo klientu egzistuoja."/>
 	<string id="17511" value="BitTorrent ryšio su adresatu %s atsakoma, pasiektas susijungimų limitas."/>
-	<string id="17512" value="Privati torrent byla"/>
+	<string id="17512" value="Privatus torrent failas"/>
 	<string id="17513" value="Kodavimo klaida"/>
-	<string id="18496" value="Jūs pakeitėte vardą. Ar tikrai norite pervardinti šią parsisiunčiamą bylą?"/>
+	<string id="18496" value="Jūs pakeitėte vardą. Ar tikrai norite pervardinti šį parsisiunčiamą failą?"/>
 	<string id="18497" value="Jūs įrašėte SHA1 reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
 	<string id="18498" value="Jūs įrašėte šakninę dryžinės maišos (tiger-tree) reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
 	<string id="18499" value="Jūs įrašėte eDonkey2000 maišos reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
-	<string id="18500" value="Jūs pateikėte SHA1 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiai parsisiunčiamai bylai. Ar tikrai įsitikinę, kad norite pakeisti SHA1 maišą?"/>
-	<string id="18501" value="Jūs pateikėte šakninę dryžinės (tiger-tree) maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiai parsisiunčiamai bylai. Ar tikrai įsitikinę, kad norite pakeisti šakninę dryžinę maišą?"/>
-	<string id="18502" value="Jūs pateikėte eDonkey2000 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiai parsisiunčiamai bylai. Ar tikrai įsitikinę, kad norite pakeisti eDonkey2000 maišą?"/>
+	<string id="18500" value="Jūs pateikėte SHA1 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti SHA1 maišą?"/>
+	<string id="18501" value="Jūs pateikėte šakninę dryžinės (tiger-tree) maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti šakninę dryžinę maišą?"/>
+	<string id="18502" value="Jūs pateikėte eDonkey2000 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti eDonkey2000 maišą?"/>
 	<string id="18503" value="Ar tikrai norite, kad būtų užmiršta esamos patikros būklė? Visi parsisiųsti duomenys bus laikomi nepatikimais, o talpykla su maišų medžiais ir rinkiniais bus išvalyta."/>
-	<string id="18504" value="Ar tikrai norite, kad būtų užmiršti visi šaltiniai pažymėtai bylai?"/>
+	<string id="18504" value="Ar tikrai norite, kad būtų užmiršti visi šaltiniai pažymėtam failui?"/>
 	<string id="18505" value="Įveskite teisingus trinimo rėžius. „Nuo“ lauke nurodomas pirmasis trinamas baitas, o „iki“ lauke — paskutinis."/>
-	<string id="18506" value="Neįmanoma ištrinti bylos pasirinktuose rėžiuose, nes nėra jokios informacijos šiuose rėžiuose."/>
-	<string id="18507" value="Ištrinta %I64i baitų(-ai) parsisiunčiamoje byloje."/>
-	<string id="18508" value="Šaltinis %s bylai „%s“ atmetamas, nes eilės numeris (%i) yra per didelis."/>
-	<string id="18509" value="Negalima nustatyti, kad šios bylos parsisiuntimas baigtas, ir atlikti patikrą iš naujo, nes kol kas nėra jokių dalinių patikros duomenų, tokių kaip dryžinės (tiger-tree) maišos apimtis, eDonkey ar BitTorrent maišos rinkiniai. Be patikros informacijos parsisiunčiamai bylai negali būti atlikta patikra."/>
-	<string id="18510" value="Ar tikrai norite nustatyti, kad šios bylos parsisiuntimas baigtas ir atlikti jos patikrą? Bus peržiūrima visa byla, ir „Shareaza“ priims tas dalis, kurios praeis patikrą, o tas dalis, kurios nepraeis patikros, atsiųs iš naujo."/>
-	<string id="18511" value="Jūs pakeitėte bylos dydį. Ar tikrai norite jį pakeisti šiai parsisiunčiamai bylai?"/>
+	<string id="18506" value="Neįmanoma ištrinti failo pasirinktuose rėžiuose, nes nėra jokios informacijos šiuose rėžiuose."/>
+	<string id="18507" value="Ištrinta %I64i baitų(-ai) parsisiunčiamame faile."/>
+	<string id="18508" value="Šaltinis %s failui „%s“ atmetamas, nes eilės numeris (%i) yra per didelis."/>
+	<string id="18509" value="Negalima nustatyti, kad šio failo parsisiuntimas baigtas, ir atlikti patikrą iš naujo, nes kol kas nėra jokių dalinių patikros duomenų, tokių kaip dryžinės (tiger-tree) maišos apimtis, eDonkey ar BitTorrent maišos rinkiniai. Be patikros informacijos parsisiunčiamam failui negali būti atlikta patikra."/>
+	<string id="18510" value="Ar tikrai norite nustatyti, kad šio failo parsisiuntimas baigtas ir atlikti jos patikrą? Bus peržiūrimas visas failas, ir „Shareaza“ priims tas dalis, kurios praeis patikrą, o tas dalis, kurios nepraeis patikros, atsiųs iš naujo."/>
+	<string id="18511" value="Jūs pakeitėte failo dydį. Ar tikrai norite jį pakeisti šiam parsisiunčiamam failui?"/>
 	<string id="19000" value="Nuotolinė prieiga neįgalinta."/>
 	<string id="19001" value="Jūs privalote įrašyti vartotojo vardą ir slaptažodį."/>
 	<string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>
@@ -3225,11 +3225,11 @@ right quote	&#147;
 		<control caption="Spartą rodyti:"/>
 		<control caption="bitai/sek.|baitai/sek.|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Atsisiuntimai:"/>
-		<control caption="Visada išskleisti naujų bylų šaltinių medį"/>
+		<control caption="Visada išskleisti naujų failų šaltinių medį"/>
 		<control caption="Rodyti supaprastintą eigos juostą"/>
 		<control caption="_Paieška:"/>
 		<control caption="Visada išskleisti šaltinių medį"/>
-		<control caption="Eiti prie siuntimų pridėjus naują bylą"/>
+		<control caption="Eiti prie siuntimų pridėjus naują failą"/>
 		<control caption="Slėpti paieškos skydelį pradėjus paiešką"/>
 		<control caption="Paieškose filtruoti turinį suaugusiems"/>
 		<control caption="_Užuominos:"/>
@@ -3250,11 +3250,11 @@ right quote	&#147;
 		<control caption="Prisiminti aplankų peržiūros būdą"/>
 		<control caption="Stebėti kolekcijos katalogus"/>
 		<control caption="Greita maiša (daugiau CPU)"/>
-		<control caption="Leisti peržiūrėti bendrintas bylas"/>
-		<control caption="Paskutinės _bylos:"/>
+		<control caption="Leisti peržiūrėti bendrintus failus"/>
+		<control caption="Paskutiniai _failai:"/>
 		<control caption="Prisiminti:"/>
 		<control/><control/>
-		<control caption="bylas(ų)"/>
+		<control caption="failus(ų)"/>
 		<control caption="&#160;"/>
 		<control/><control/>
 		<control caption="dienas"/>
@@ -3274,27 +3274,27 @@ right quote	&#147;
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Grotuvas">
 		<control caption="Pa_rinktys:"/>
 		<control/>
-		<control caption="Naudoti „Shareaza“ grotuvą žemiau pateiktų bylų tipams GROTI"/>
+		<control caption="Naudoti „Shareaza“ grotuvą žemiau pateiktų failų tipams GROTI"/>
 		<control caption="... taip pat ĮTRAUKIANT į grojaraščio eilę"/>
-		<control caption="_Bylų plėtiniai:"/>
+		<control caption="_Failų plėtiniai:"/>
 		<control/>
 		<control caption="_Pridėti"/>
 		<control caption="Š_alinti"/>
 		<control caption="Muzikos _vaizdo papildinys:"/>
 		<control caption="Pasirinkti _papildinį..."/>
 		<control caption="_Grotuvo programa"/>
-		<control caption="Pasirinkite medija bylų valdiklį:"/>
+		<control caption="Pasirinkite medija failų valdiklį:"/>
 		<control caption="Įspėjimas: Pasirinkus išorinę grotuvo programą, bus atjungti medija ir muzikos vaizdo papildiniai!"/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Bendrija">
 		<control caption="Mano _profilis:"/>
-		<control caption="Jūs galite naudoti savo Gnutella vartotojo profilį dalinantis su kitais informacija apie save, savo interesus ir rekomenduotinas bylas bei tinklalapius."/>
+		<control caption="Jūs galite naudoti savo Gnutella vartotojo profilį dalinantis su kitais informacija apie save, savo interesus ir rekomenduotinus failus bei tinklalapius."/>
 		<control caption="Taisyti profilį"/>
 		<control caption="Po_kalbiai:"/>
 		<control caption="Įgalinti lygiaverčio tarptinklinio ryšio pakalbius su suderinamais klientais"/>
 		<control caption="Įgalinti pokalbius visuose tinkluose"/>
-		<control caption="Filtruoti pokalbio tekstus nuo infrormacinių šiukšlių"/>
+		<control caption="Filtruoti pokalbio tekstus nuo informacinių šiukšlių"/>
 		<control caption="Filtruoti nešvankybes pokalbiuose"/>
 	</dialog>
 
@@ -3311,7 +3311,7 @@ right quote	&#147;
 		<control/>
 		<control caption="_Pridėti"/>
 		<control caption="Š_alinti"/>
-		<control caption="Parsisiuntimų tvarkytuvė mėgins parsiųsti tik tas bylas, kurių plėtiniai čia išvardinti. Kitų plėtinių bylos bus tvarkomos Jūsų naršykle. „Shareaza“ turi veikti prieš siunčiantis bylas."/>
+		<control caption="Parsisiuntimų tvarkytuvė mėgins parsiųsti tik tuos failus, kurių plėtiniai čia išvardinti. Kitų plėtinių failai bus tvarkomi Jūsų naršykle. „Shareaza“ turi veikti prieš siunčiantis failus."/>
 	</dialog>
 
 	<dialog name="CInternetSettingsGroup" caption="Internetas"/>
@@ -3344,30 +3344,30 @@ right quote	&#147;
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Atsisiuntimai">
-		<control caption="Saugoti _parsiųstas bylas čia:"/>
+		<control caption="Saugoti _parsiųstus failus čia:"/>
 		<control/><control/>
-		<control caption="Laikyti _nebaigtas siųstis bylas čia:"/>
+		<control caption="Laikyti _nebaigtus siųstis failus čia:"/>
 		<control/><control/>
 		<control caption="Parsisiuntimų _skaičius:"/>
-		<control caption="Daugiausiai bylų:"/>
+		<control caption="Daugiausiai failų:"/>
 		<control/><control/>
 		<control caption="Daugiausiai siuntimų:"/>
 		<control/><control/>
-		<control caption="Siuntimų bylai:"/>
+		<control caption="Siuntimų failui:"/>
 		<control/><control/>
 		<control caption="Limitai:"/>
 		<control caption="Visuminė parsisiuntimų greitaveika:"/>
 		<control/>
 		<control caption="Maksimalus eilės dydis:"/>
 		<control/><control/>
-		<control caption="Bylų mainus vykdyti tik tinkluose, prie kurių prisijungta."/>
+		<control caption="Failų mainus vykdyti tik tinkluose, prie kurių prisijungta."/>
 	</dialog>
 
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Išsiuntimai">
 		<control caption="Pa_rinktys:"/>
-		<control caption="Siųsti nepilnai gautas bylas"/>
+		<control caption="Siųsti nepilnai gautus failus"/>
 		<control caption="Tapus mazgu, riboti siuntimą"/>
-		<control caption="Bendrinti bylų peržiūros turinį"/>
+		<control caption="Bendrinti failų peržiūros turinį"/>
 		<control caption="Limitas unikaliam IP:"/>
 		<control/><control/>
 		<control caption="_Vartotojų agentų filtras:"/>
@@ -3419,21 +3419,21 @@ right quote	&#147;
 		<control caption="% greitaveikos, kai ribojama"/>
 		<control/>
 		<control caption="Pagalba"/>
-		<control caption="Planuotojas yra sukurtas tam, kad leistų Jums nustatyti, kada „Shareaza“ prisijungs ir siųsis bylas.{n}{n}{n}Pastaba: Jei esate atvėrę „Shareaza“ tuo metu, kai planuotojas veikia, Jūs galite pastebėti, jog nuostatos keičiasi — tai normalu!"/>
+		<control caption="Planuotojas yra sukurtas tam, kad leistų Jums nustatyti, kada „Shareaza“ prisijungs ir siųsis failus.{n}{n}{n}Pastaba: Jei esate atvėrę „Shareaza“ tuo metu, kai planuotojas veikia, Jūs galite pastebėti, jog nuostatos keičiasi — tai normalu!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Tinklai">
-		<control caption="„Shareaza“ - tai bendros paskirties bylų apsikeitimo programa, kuri gali prisijungti prie kelių lygiaverčio tarptinklinio susijungimo (P2P) tinklų vienu metu. Čia Jūs galite pasirinkti, prie kurių P2P tinklų norite jungtis, o po to - derinti kiekvieną tinklą atskirai."/>
+		<control caption="„Shareaza“ - tai bendros paskirties failų apsikeitimo programa, kuri gali prisijungti prie kelių lygiaverčio tarptinklinio susijungimo (P2P) tinklų vienu metu. Čia Jūs galite pasirinkti, prie kurių P2P tinklų norite jungtis, o po to - derinti kiekvieną tinklą atskirai."/>
 		<control caption="Gnutella2 tinklas:"/>
 		<control caption="Gnutella2 tinklas - tai pagrindinis „Shareaza“ tinklas, siūlantis daugiau galimybių ir našumo nei kiti P2P tinklai. Ypač rekomenduojama."/>
 		<control caption="Jungtis prie Gnutella2 (G2)"/>
 		<control caption="Konfigūruoti Gnutella2"/>
 		<control caption="eDonkey2000 tinklas:"/>
-		<control caption="eDonkey2000 tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey2000 tinkle yra įspūdinga bylų kolekcija."/>
+		<control caption="eDonkey2000 tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey2000 tinkle yra įspūdinga failų kolekcija."/>
 		<control caption="Jungtis prie eDonkey2000"/>
 		<control caption="Konfigūruoti eDonkey2000"/>
 		<control caption="Pirminis Gnutella tinklas:"/>
-		<control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau bylų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
+		<control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau failų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
 		<control caption="Jungtis prie Gnutella"/>
 		<control caption="Konfigūruoti Gnutella1"/>
 	</dialog>
@@ -3483,7 +3483,7 @@ right quote	&#147;
 		<control/><control/>
 		<control caption="kitų eDonkey klientų(-o)."/>
 		<control caption="eDonkey2000 į_rankiai:"/>
-		<control caption="eDonkey/eMule dalinių bylų (.part) importas:"/>
+		<control caption="eDonkey/eMule dalinių failų (.part) importas:"/>
 		<control caption="Importuoti..."/>
 		<control caption="eDonkey2000 serverių sąrašo parsisiuntimas iš interneto:"/>
 		<control caption="Parsisiųsti..."/>
@@ -3494,17 +3494,17 @@ right quote	&#147;
 		<control caption="Rodyti papildomus BitTorrent sąsajos elementus"/>
 		<control caption="_Atsisiuntimų susijungimai:"/>
 		<control/><control/>
-		<control caption="Torrent bylų per kartą"/>
+		<control caption="Torrent failų per kartą"/>
 		<control/><control/>
 		<control caption="Klientų susijungimų"/>
 		<control caption="&#160;Valyti parsisiųstus torrent,&#160;&#160;&#160;&#160;&#160;&#160;&#160;kai bendrinimo santykis pasiekia"/>
 		<control/><control/><control/>
 		<control caption="&#160;Teikti pirmenybę torrent šaltiniams"/>
 		<control caption="_EndGame (paspartinimas):"/>
-		<control caption="Įgalinti BitTorrent „EndGame“ veikseną baigiant siųstis bylas"/>
-		<control caption="_Laikyti torrent bylas čia:"/>
+		<control caption="Įgalinti BitTorrent „EndGame“ veikseną baigiant siųstis failus"/>
+		<control caption="_Laikyti torrent failus čia:"/>
 		<control/><control/>
-		<control caption="_Torrent bylų kūrimo programa"/>
+		<control caption="_Torrent failų kūrimo programa"/>
 		<control/><control/>
 		<control caption="Numatytasis seklys: "/>
 		<control/>
@@ -3553,14 +3553,14 @@ right quote	&#147;
 		<control caption="_Pavadinimas:"/>
 		<control/>
 		<control caption="Į_rašo kriterijai:"/>
-		<control caption="Tik dalinai parsisiųstoms byloms"/>
-		<control caption="Minimalus šaltinio bylos dydis:"/>
+		<control caption="Tik dalinai parsisiųstiems failams"/>
+		<control caption="Minimalus šaltinio failo dydis:"/>
 		<control/>
-		<control caption="Maksimalus šaltinio bylos dydis:"/>
+		<control caption="Maksimalus šaltinio failo dydis:"/>
 		<control/>
 		<control caption="Su atžymomis:"/>
 		<control/>
-		<control caption="Bylos varde yra:"/>
+		<control caption="Failo varde yra:"/>
 		<control/>
 		<control caption="Protokolams:"/>
 		<control/>
@@ -3594,7 +3594,7 @@ right quote	&#147;
 		<control/>
 		<control caption="nupasakoti „Shareaza“ programai, koks Jūsų interneto ryšys,"/>
 		<control/>
-		<control caption="nurodyti bendrintų bylų vietą ir"/>
+		<control caption="nurodyti bendrintų failų vietą ir"/>
 		<control/>
 		<control caption="pradėti naudotis „Shareaza“ programa."/>
 	</dialog>
@@ -3604,7 +3604,7 @@ right quote	&#147;
 		<control caption="Pasirinkite vieną vartotojo sąsają:"/>
 		<control caption="Įprastinė veiksena"/>
 		<control caption="Eksperto veiksena"/>
-		<control caption="Paprasta, lengva naudotis meniu ir mygtukais.{n}Vartotojams pažįstama iš daugelio kitų bylų dalinimosi programų."/>
+		<control caption="Paprasta, lengva naudotis meniu ir mygtukais.{n}Vartotojams pažįstama iš daugelio kitų failų dalinimosi programų."/>
 		<control caption="Eksperto veiksena siūlo patyrusiems vartotojams daug papildomų komandų, langų ir t.t. Naujokus gali šiek tiek klaidinti!"/>
 		<control caption="Rodyti supaprastintas eigos juostas. (Sumažina procesoriaus apkrovimą)"/>
 		<control caption="Rodyti papildomus BitTorrent sąsajos elementus."/>
@@ -3627,8 +3627,8 @@ right quote	&#147;
 	</dialog>
 
 	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Sveiki! Čia „Shareaza“ [4 iš 7]">
-		<control caption="Lygiaverčio tarptinklinio susijungimo (P2P) tinklai yra geri tiek, kiek patys žmonės, kurie juo naudojasi. Parsisiųsti bylas galite dėl to, kad kiti vartotojai dalinasi."/>
-		<control caption="Kad naudotumėtės „Shareaza“, Jūs nebūtinai turite dalintis bylomis, tačiau kai kuri progr. įranga gali elgtis skirtingai su tais vartotojais, kurie niekuo nesidalina."/>
+		<control caption="Lygiaverčio tarptinklinio susijungimo (P2P) tinklai yra geri tiek, kiek patys žmonės, kurie juo naudojasi. Parsisiųsti failus galite dėl to, kad kiti vartotojai dalinasi."/>
+		<control caption="Kad naudotumėtės „Shareaza“, Jūs nebūtinai turite dalintis failais, tačiau kai kuri progr. įranga gali elgtis skirtingai su tais vartotojais, kurie niekuo nesidalina."/>
 		<control caption="Nurodykite, jei norite, aplankus, kurių turinį norite bendrinti. Paprasčiausiai paspauskite mygtuką „Pridėti“ kiekvieno naujo aplanko bendrinimui."/>
 		<control/>
 		<control caption="_Pridėti..."/>
@@ -3639,7 +3639,7 @@ right quote	&#147;
 	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Skenuojamas aplankas...">
 		<control/>
 		<control caption="..."/>
-		<control caption="Bylų(-os):"/>
+		<control caption="Failų(-ai):"/>
 		<control caption="0"/>
 		<control caption="Apimtis:"/>
 		<control caption="0"/>
@@ -3658,18 +3658,18 @@ right quote	&#147;
 	</dialog>
 
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Sveiki! Čia „Shareaza“ [6 iš 7]">
-		<control caption="„Shareaza“ - tai bendros paskirties bylų apsikeitimo programa, kuri gali prisijungti prie kelių lygiaverčio tarptinklinio susijungimo (P2P) tinklų vienu metu. Pasirinkite, prie kurių P2P tinklų norite jungtis, o po to derinkite kiekvieną tinklą atskirai."/>
+		<control caption="„Shareaza“ - tai bendros paskirties failų apsikeitimo programa, kuri gali prisijungti prie kelių lygiaverčio tarptinklinio susijungimo (P2P) tinklų vienu metu. Pasirinkite, prie kurių P2P tinklų norite jungtis, o po to derinkite kiekvieną tinklą atskirai."/>
 		<control caption="Jungtis prie Gnutella2 (Labai rekomenduojama)"/>
 		<control caption="Gnutella2 tinklas - tai pagrindinis „Shareaza“ tinklas, siūlantis daugiau galimybių ir našumo nei kiti P2P tinklai. Ypač rekomenduojama."/>
 		<control caption="Jungtis prie eDonkey2000"/>
-		<control caption="eDonkey2000 tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey2000 tinkle yra įspūdinga bylų kolekcija."/>
+		<control caption="eDonkey2000 tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey2000 tinkle yra įspūdinga failų kolekcija."/>
 		<control caption="Jungtis prie pirminio Gnutella"/>
-		<control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau bylų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
+		<control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau failų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
 	</dialog>
 
-	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000 dalinių bylų importas">
+	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000 dalinių failų importas">
 		<control/>
-		<control caption="„Shareaza“ aptiko, kad Jūs turite įsidiegę dar vieną, eDonkey2000, programą. Ar norėtumėte importuoti nebaigtas siųstis bylas į „Shareaza“?"/>
+		<control caption="„Shareaza“ aptiko, kad Jūs turite įsidiegę dar vieną, eDonkey2000, programą. Ar norėtumėte importuoti nebaigtus siųstis failus į „Shareaza“?"/>
 		<control caption="Taip"/>
 		<control caption="Ne|Atšaukti"/>
 		<control/>
@@ -3679,7 +3679,7 @@ right quote	&#147;
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Sveiki! Čia „Shareaza“ [7 iš 7]">
 		<control caption="Štai ir viskas! „Shareaza“ yra sukonfigūruota darbui Jūsų kompiuteryje."/>
 		<control caption="Jei Jums kada nors prisireiks pakeisti nuostatas, Jūs galėsite iš naujo paleisti šį Nuostatų vedlį, pasirinkdami jį iš meniu „Įrankiai“."/>
-		<control caption="Po to, kai paspausite mygtuką „Baigti“, Jūs galėsite prisijungti prie tinklų, kuriuos Jūs nurodėte, ieškoti ir parsisiųsti bylas."/>
+		<control caption="Po to, kai paspausite mygtuką „Baigti“, Jūs galėsite prisijungti prie tinklų, kuriuos Jūs nurodėte, ieškoti ir parsisiųsti failus."/>
 		<control caption="Jungtis prie tinklo, kai aš užversiu šį vedlį"/>
 		<control caption="Jungtis prie tinklo kiekvieną kartą, kai „Shareaza“ startuos"/>
 		<control caption="Paleisti „Shareaza“ kiekvieną kartą, kai Windows startuos"/>
@@ -3751,7 +3751,7 @@ right quote	&#147;
 		<control caption="_Peržiūra:"/>
 		<control/>
 		<control caption="Pasi_rinkti:"/>
-		<control caption="Kiti Gnutella vartotojai, peržiūrinėdami Jūsų profilį ir bendrintas bylas, matys Jūsų atvaizdą. Savo sukurti atvaizdai turi būti 128x128 pikselių ir gali būti bet kokia vaizdo byla, kurią palaiko Jūsų kompiuteris."/>
+		<control caption="Kiti Gnutella vartotojai, peržiūrinėdami Jūsų profilį ir bendrintus failus, matys Jūsų atvaizdą. Savo sukurti atvaizdai turi būti 128x128 pikselių ir gali būti bet koks vaizdo failas, kurį palaiko Jūsų kompiuteris."/>
 		<control caption="Perž_velgti..."/>
 		<control caption="Š_alinti"/>
 	</dialog>
@@ -3767,9 +3767,9 @@ right quote	&#147;
 		<control caption="Šalinti"/>
 	</dialog>
 
-	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Bylos">
-		<control caption="_Pamėgtos bylos:"/>
-		<control caption="Pamėgtos bylos - tai tos, kurias Jūs siūlote kitiems vartotojams. Jūs galite sukurti mėgiamas bylas, jas pridėję į savo kolekcijos „Mėgiamybės“ katalogą."/>
+	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Failai">
+		<control caption="_Pamėgti failai:"/>
+		<control caption="Pamėgti failai - tai tie, kuriuos Jūs siūlote kitiems vartotojams. Jūs galite sukurti mėgiamus failus, juos pridėję į savo kolekcijos „Mėgiamybės“ katalogą."/>
 		<control/>
 	</dialog>
 
@@ -3795,14 +3795,14 @@ right quote	&#147;
 		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Parsisiųsti bylą ar Torrent">
+	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Parsisiųsti failą ar Torrent">
 		<control/><control/>
-		<control caption="Su „Shareaza“ parsisiųsti bylas lengva. Tiesiog įrašykite arba įterpkite nukopijuotą bylos nuorodą į langelį apačioje ir paspauskite „Parsisiųsti“."/>
+		<control caption="Su „Shareaza“ parsisiųsti failus lengva. Tiesiog įrašykite arba įterpkite nukopijuotą failo nuorodą į langelį apačioje ir paspauskite „Parsisiųsti“."/>
 		<control/>
 		<control caption="_Parsisiųsti"/>
 		<control caption="_Atšaukti"/>
-		<control caption="„Shareaza“ gali parsiųsti bylas iš žiniatinklio (HTTP) ir automatiškai surasti ir parsisiųsti P2P nuorodas (Magnet, Gnutella, eDonkey2000, mP2P)."/>
-		<control caption="Jūs taip pat galite parsisiųsti BitTorrent bylas. Tai gali būti byla su .torrent plėtiniu arba HTTP nuoroda į tokią bylą. Torrent atsisiuntimui įterpkite nukopijuotą nuorodą į aukščiau esantį langelį. Jei Jūs jau turite .torrent bylą, spauskite „Atverti Torrent:“"/>
+		<control caption="„Shareaza“ gali parsiųsti failus iš žiniatinklio (HTTP) ir automatiškai surasti ir parsisiųsti P2P nuorodas (Magnet, Gnutella, eDonkey2000, mP2P)."/>
+		<control caption="Jūs taip pat galite parsisiųsti BitTorrent failus. Tai gali būti failas su .torrent plėtiniu arba HTTP nuoroda į tokį failą. Torrent atsisiuntimui įterpkite nukopijuotą nuorodą į aukščiau esantį langelį. Jei Jūs jau turite .torrent failą, spauskite „Atverti Torrent:“"/>
 		<control caption="Atverti _Torrent..."/>
 	</dialog>
 
@@ -3829,7 +3829,7 @@ right quote	&#147;
 		<control caption="Už užkardos"/>
 		<control caption="Nestabilius adresatus"/>
 		<control caption="Neatitinka kriterijų"/>
-		<control caption="Bylas, kurias jau turite"/>
+		<control caption="Failus, kuriuos jau turite"/>
 		<control caption="Klastotes"/>
 		<control caption="Filtruoti"/>
 		<control caption="Atšaukti"/>
@@ -3838,8 +3838,8 @@ right quote	&#147;
 		<control caption="_Išsaugoti kaip"/>
 		<control caption="_Trinti"/>
 		<control caption="Filtrai:"/>
-		<control caption="DRM bylas"/>
-		<control caption="Įtartinas bylas"/>
+		<control caption="DRM failus"/>
+		<control caption="Įtartinus failus"/>
 		<control caption="Turinį suaugusiems"/>
 	</dialog>
 
@@ -3859,7 +3859,7 @@ right quote	&#147;
 		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Parsisiunčiama byla : „Shareaza“">
+	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Siunčiamas failas : „Shareaza“">
 		<control caption="„Shareaza“ parsisiunčia:"/>
 		<control caption="..."/>
 		<control/><control/><control/>
@@ -3872,7 +3872,7 @@ right quote	&#147;
 		<control caption="Šaltinių skaičius:"/>
 		<control caption="..."/>
 		<control caption="Užverti šį langą, kai parsisiuntimas bus baigtas"/>
-		<control caption="Atverti bylą"/>
+		<control caption="Atverti failą"/>
 		<control caption="Rodyti kolekciją"/>
 		<control caption="Atšaukti siuntimą"/>
 		<control caption="Slėpti"/>
@@ -3881,7 +3881,7 @@ right quote	&#147;
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Bendra">
 		<control caption="Universalūs ištekliaus vardai (URNs)"/>
 		<control/><control/><control/><control/>
-		<control caption="Bylos savybės"/>
+		<control caption="Failo savybės"/>
 		<control caption="Vieta:"/>
 		<control/>
 		<control caption="Tipas:"/>
@@ -3898,7 +3898,7 @@ right quote	&#147;
 
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Mano apžvalga">
 		<control caption="Mano įvertinimas"/>
-		<control caption="Įvertinu šią bylą(-as):"/>
+		<control caption="Įvertinu šį failą(-us):"/>
 		<control caption="(Be įvertinimo)|Klastotė/Sugadinta/Klaidinanti|Prasta|Vidutinė|Gera|Labai gera|Puiki"/>
 		<control caption="Mano apžvalga ir komentarai"/>
 		<control/><control/>
@@ -3906,9 +3906,9 @@ right quote	&#147;
 
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Bendrinimas">
 		<control caption="Paprastas bendrinimas"/>
-		<control caption="Bendrinti šią bylą(-as), jei aplankas, kuriame ji yra, yra bendrintas"/>
-		<control caption="Nustatyti šios bylos(-ų) bendrinimą rankiniu būdu:"/>
-		<control caption="Tegul ši byla būna pasiekiama(-os) kitiems vartotojams"/>
+		<control caption="Bendrinti šį failą(-us), jei aplankas, kuriame jis yra, yra bendrintas"/>
+		<control caption="Nustatyti šio failo(-ų) bendrinimą rankiniu būdu:"/>
+		<control caption="Tegul šis failas būna pasiekiamas(-i) kitiems vartotojams"/>
 		<control caption="Žymė(s) išsiuntimų eilės parinkimui"/>
 		<control/>
 		<control caption="-Bendrinti šiuose tinkluose"/>
@@ -3924,14 +3924,14 @@ right quote	&#147;
 		<control/>
 	</dialog>
 
-	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Bylų kopijavimas|Bylų perkėlimas">
-		<control caption="Jūs pasirinkote %i bylą(-as) perkėlimui į šį aplanką:"/>
+	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Failų kopijavimas|Failų perkėlimas">
+		<control caption="Jūs pasirinkote %i failų(-us) perkėlimui į šį aplanką:"/>
 		<control/><control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
 		<control/>
 		<control caption="Pasiruošta..."/>
-		<control caption="Jūs pasirinkote %i bylą(-as) perkėlimui į šį aplanką:"/>
+		<control caption="Jūs pasirinkote %i failų(-us) perkėlimui į šį aplanką:"/>
 	</dialog>
 
 	<dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="Albumo aplanko ypatybės">
@@ -3940,7 +3940,7 @@ right quote	&#147;
 		<control caption="Katalogo tipas:"/>
 		<control/>
 		<control caption="Visi"/>
-		<control caption="Nukopijuoti šias bendras ypatybes kiekvienai bylai kataloge"/>
+		<control caption="Nukopijuoti šias bendras ypatybes kiekvienam failui kataloge"/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
 	</dialog>
@@ -4027,7 +4027,7 @@ right quote	&#147;
 
 	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="Nuorodos kopijavimas">
 		<control/>
-		<control caption="Jūs galite nukopijuoti pasirinktos bylos nuorodą skirtingais formatais. Pasirinkite norimą formatą, paspaudę vieną iš žemiau pateiktų nuorodų:"/>
+		<control caption="Jūs galite nukopijuoti pasirinkto failo nuorodą skirtingais formatais. Pasirinkite norimą formatą, paspaudę vieną iš žemiau pateiktų nuorodų:"/>
 		<control/><control/><control/><control/>
 		<control caption="Įtraukti _save kaip pastovų nuorodos šaltinį"/>
 		<control caption="Atšaukti"/>
@@ -4035,10 +4035,10 @@ right quote	&#147;
 
 	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Nuorodų eksportavimas">
 		<control/>
-		<control caption="Jūs pasirinkote %lu bylą(-ų,-as) su „Shareaza“ susietų nuorodų ekspotavimui. Pasirinkite nuorodos formatą ir paspauskite „Išsaugoti“:"/>
+		<control caption="Jūs pasirinkote %lu failą(-ų,-us) su „Shareaza“ susietų nuorodų ekspotavimui. Pasirinkite nuorodos formatą ir paspauskite „Išsaugoti“:"/>
 		<control/>
 		<control caption="Įterpti ženklą:"/>
-		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Pilnas bylos vardas|Bylos vardas (nuoroda)|Bylos vardas|Bylos plėtinys|Bylos dydis|Bylos dydis (baitais)|Aplanko kelias|Vietinis adresas|Vietinis prievadas"/>
+		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Pilnas failo vardas|Failo vardas (nuoroda)|Failo vardas|Failo plėtinys|Failo dydis|Failo dydis (baitais)|Aplanko kelias|Vietinis adresas|Vietinis prievadas"/>
 		<control caption="Šablonai:"/>
 		<control/>
 		<control caption="_Kopijuoti"/>
@@ -4049,13 +4049,13 @@ right quote	&#147;
 
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="„Shareaza“ nuorodų tvarkytuvė">
 		<control/>
-		<control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri nukreipia į šią bylą tinkle:"/>
+		<control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri nukreipia į šį failą tinkle:"/>
 		<control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri sujungs Jus su šiuo kompiuteriu ar serveriu:"/>
-		<control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri leis peržiūrėti bylas, esančias šiame kompiuteryje:"/>
+		<control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri leis peržiūrėti failus, esančius šiame kompiuteryje:"/>
 		<control/><control/><control/><control/>
 		<control caption="Pasirinkite, kokį veiksmą „Shareaza“ turėtų atlikti:"/>
 		<control caption="Parsi_siųsti dabar"/>
-		<control caption="_Ieškoti bylos"/>
+		<control caption="_Ieškoti failo"/>
 		<control caption="_Atšaukti"/>
 		<control caption="_Prisiminti pasirinkimą sekantį kartą"/>
 		<control caption="Stebėti parsisiuntimą _monitoriuje"/>
@@ -4071,11 +4071,11 @@ right quote	&#147;
 		<control caption="www.bitzi.com"/>
 	</dialog>
 
-	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Parsisiunčiamos bylos gudri peržiūra...">
+	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Parsisiunčiamo failo gudri peržiūra...">
 		<control/>
-		<control caption="„Shareaza“ kuria peržiūrą šiai bylai:"/>
+		<control caption="„Shareaza“ kuria peržiūrą šiam failui:"/>
 		<control/><control/>
-		<control caption="(kopijuojami parsisiųsti gabalai į naują pežiūros bylą)"/>
+		<control caption="(kopijuojami parsisiųsti gabalai į naują pežiūros failą)"/>
 		<control caption="_Atšaukti"/>
 	</dialog>
 
@@ -4093,24 +4093,24 @@ right quote	&#147;
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Pliskime Pasaulyje">
 		<control/>
 		<control caption="Padėkite plisti Pasaulyje"/>
-		<control caption="Mes viliamės, jog Jums ligi šiol buvo malonu naudotis „Shareaza“. Mes tikime, jog tai pati geriausia Jūsų sutikta bylų apsikeitimo programa."/>
-		<control caption="Deja, dauguma vartotojų, besidalijančių bylomis, nežino, ką jie praranda!"/>
+		<control caption="Mes viliamės, jog Jums ligi šiol buvo malonu naudotis „Shareaza“. Mes tikime, jog tai pati geriausia Jūsų sutikta failų apsikeitimo programa."/>
+		<control caption="Deja, dauguma vartotojų, besidalijančių failais, nežino, ką jie praranda!"/>
 		<control caption="Jei Jūs pažįstate ką nors, kam patiktų „Shareaza“, nesvarbu, ar jie - naujokai, ar taikstosi menkesniais produktais, tai kodėl jiems neduoti susipažinti su geresne alternatyva?"/>
 		<control caption="Tikimybė yra didelė, kad jie dėkos Jums už tai, kad juos išgelbėjote!"/>
 		<control caption="www.shareaza.com"/>
 		<control caption="Gerai"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Esamos bylos parsisiuntimas">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Esamo failo parsisiuntimas">
 		<control/><control/><control/><control/>
-		<control caption="Jūs jau turite šią bylą savo kolekcijoje. Ką Jūs norėtumėte daryti?"/>
-		<control caption="Parodyti bylą mano kolekcijoje"/>
-		<control caption="Parsisiųsti bylą dar kartą"/>
-		<control caption="Nesisiųsti šios bylos"/>
+		<control caption="Jūs jau turite šį failą savo kolekcijoje. Ką Jūs norėtumėte daryti?"/>
+		<control caption="Parodyti failą mano kolekcijoje"/>
+		<control caption="Parsisiųsti failą dar kartą"/>
+		<control caption="Nesisiųsti šio failo"/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
-		<control caption="Jūs buvote anksčiau parsisiuntę ir ištrynėte šią bylą. Ką norite daryti?"/>
-		<control caption="Dėmesio!!! Aptiktos vienodos bylos. Kai kurios kenkėjiškos programos gali užkrėsti Jūsų kolekciją. Įsitikinkite, jog Jūs tikrai atsisiuntėte šią bylą ar įtraukėte į savo kolekciją. Jei ne, baikite darbą ir praskenuokite bylas su antivirusine programa."/>
+		<control caption="Jūs buvote anksčiau parsisiuntę ir ištrynėte šį failą. Ką norite daryti?"/>
+		<control caption="Dėmesio!!! Aptikti vienodi failai. Kai kurios kenkėjiškos programos gali užkrėsti Jūsų kolekciją. Įsitikinkite, jog Jūs tikrai atsisiuntėte šį failą ar įtraukėte į savo kolekciją. Jei ne, baikite darbą ir praskenuokite failus su antivirusine programa."/>
 	</dialog>
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Mygtukas „Užverti“">
@@ -4123,9 +4123,9 @@ right quote	&#147;
 		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met bylos parsisiuntimas">
+	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met failo parsisiuntimas">
 		<control/>
-		<control caption="Jūs galite parsisiųsti eDonkey2000 server.met bylą iš interneto, jei norite atnaujinti vietinį serverių sąrašą."/>
+		<control caption="Jūs galite parsisiųsti eDonkey2000 server.met failą iš interneto, jei norite atnaujinti vietinį serverių sąrašą."/>
 		<control/><control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
@@ -4137,24 +4137,24 @@ right quote	&#147;
 		<control/>
 	</dialog>
 
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Trinti bylą">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Trinti failą">
 		<control caption="Ar tikrai norite ištrinti:"/>
 		<control/>
 		<control caption="Trinti"/>
 		<control caption="Trinti viską"/>
 		<control caption="Atšaukti"/>
 		<control/>
-		<control caption="„Shareaza“ gali įsiminti šią bylą(-as) ir įspėti Jus, jei vėliau susidursite su ja radiniuose. Pasirinkite priežastį, dėl kurios norite ištrinti bylą(-as):"/>
+		<control caption="„Shareaza“ gali įsiminti šį failą(-us) ir įspėti Jus, jei vėliau susidursite su juo radiniuose. Pasirinkite priežastį, dėl kurios norite ištrinti failą(-us):"/>
 		<control caption="Aš nenoriu komentuoti."/>
-		<control caption="Ši byla neteisingai pavadinta ir gali klaidinti."/>
-		<control caption="Ši byla yra labai blogos kokybės."/>
-		<control caption="Ši byla - tai klastotė arba yra sugadinta ar netinkama naudojimui."/>
-		<control caption="Jūs galite įrašyti pastabą, paaiškinančią dėl ko ši byla yra bloga:"/>
+		<control caption="Šis failas neteisingai pavadintas ir gali klaidinti."/>
+		<control caption="Šis failas yra labai blogos kokybės."/>
+		<control caption="Šis failas - tai klastotė arba yra sugadintas ar netinkamas naudojimui."/>
+		<control caption="Jūs galite įrašyti pastabą, paaiškinančią dėl ko šis failas yra blogas:"/>
 		<control/>
 	</dialog>
 
 	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Eksportuoti rinkinį">
-		<control caption="This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data bellow."/>
+		<control caption="Ši funkcija leidžia eksportuoti aplanko arba grojaraščio turinį į rinkinio failus. Norėdami tęsti, pasirinkite šabloną ir paspauskite „Toliau“.|Pritaikykite rinkinį sau įvesdami duomenis į žemiau pateiktus laukus."/>
 		<control/>
 		<control caption="Šablono informacija:"/>
 		<control caption="Pavadinimas:"/>
@@ -4168,10 +4168,10 @@ right quote	&#147;
 		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Išplėstinė bylos taisa">
-		<control caption="DĖMESIO: Šiame dialogo lange patyrę vartotojai gali taisyti bylos informaciją, bet neteisingi pakeitimai gali sugadinti bylą."/>
-		<control caption="_Bylos vardas ir dydis:"/>
-		<control caption="Bylos vardas:"/>
+	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Išplėstinė failo taisa">
+		<control caption="DĖMESIO: Šiame dialogo lange patyrę vartotojai gali taisyti failo informaciją, bet neteisingi pakeitimai gali sugadinti failą."/>
+		<control caption="_Failo vardas ir dydis:"/>
+		<control caption="Failo vardas:"/>
 		<control/><control/>
 		<control caption="Dydis (baitais):"/>
 		<control/>
@@ -4185,9 +4185,9 @@ right quote	&#147;
 		<control/><control/>
 		<control caption="_Veiksmai:"/>
 		<control caption="Pamiršti esamą patikros būseną (ir atlikti patikrą iš naujo)"/>
-		<control caption="Tarti, kad byla 100% baigta siųstis, ir atlikti patikrą iš naujo"/>
+		<control caption="Tarti, kad failas 100% baigtas siųstis, ir atlikti patikrą iš naujo"/>
 		<control caption="Pamiršti visus šaltinius"/>
-		<control caption="Sulieti su esama byla ir patikrinti"/>
+		<control caption="Sulieti su esamu failu ir patikrinti"/>
 		<control caption="Duomenų _trynimas:"/>
 		<control caption="Ištrinti baitus:"/>
 		<control/>
@@ -4199,13 +4199,13 @@ right quote	&#147;
 		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Atverti Torrent bylą">
+	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Atverti Torrent failą">
 		<control/>
-		<control caption="Jūs norėjote atverti BitTorrent tinklo torrent bylą. Ar parsisiųsti jos turinį ar pradėti skleisti?"/>
+		<control caption="Jūs norėjote atverti BitTorrent tinklo torrent failą. Ar parsisiųsti jo turinį ar pradėti skleisti?"/>
 		<control caption="Siųstis"/>
 		<control caption="Skleisti"/>
 		<control caption="Atšaukti"/>
-		<control caption="Tam, kad galetumėte dalintis bylomis BitTorrent tinkle, jas pirma reikia paskleisti. Kai procesas baigsis, Torrent byla atsiras parsisiunčiamų bylų sąraše."/>
+		<control caption="Tam, kad galetumėte dalintis failais BitTorrent tinkle, juos pirma reikia paskleisti. Kai procesas baigsis, Torrent failas atsiras parsisiunčiamų failų sąraše."/>
 		<control/>
 	</dialog>
 
@@ -4228,11 +4228,11 @@ right quote	&#147;
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Bylos">
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Failai">
 		<control caption="Torrent _informacija:"/>
 		<control caption="Vardas:"/>
 		<control/>
-		<control caption="_Bylos:"/>
+		<control caption="_Failai:"/>
 		<control/>
 	</dialog>
 
@@ -4303,7 +4303,7 @@ right quote	&#147;
 <!-- Columns Definitions -->
 <listColumns>
 	<list name="CLibraryWnd">
-		<column from="File" to="Byla"/>
+		<column from="File" to="Failas"/>
 		<column from="Extension" to="Plėtinys"/>
 		<column from="Size" to="Dydis"/>
 		<column from="Folder" to="Aplankas"/>
@@ -4312,7 +4312,7 @@ right quote	&#147;
 		<column from="Modified" to="Pakeista"/>
 	</list>
 	<list name="CDownloadCtrl">
-		<column from="Downloaded File" to="Parsisiunčiama byla"/>
+		<column from="Downloaded File" to="Parsisiunčiamas failas"/>
 		<column from="Size" to="Dydis"/>
 		<column from="Progress" to="Eiga"/>
 		<column from="Speed" to="Sparta"/>
@@ -4323,7 +4323,7 @@ right quote	&#147;
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Nutolęs vartotojas"/>
-		<column from="Uploaded File" to="Išsiunčiama byla"/>
+		<column from="Uploaded File" to="Išsiunčiamas failas"/>
 		<column from="Size" to="Dydis"/>
 		<column from="Progress" to="Eiga"/>
 		<column from="Speed" to="Sparta"/>
@@ -4382,7 +4382,7 @@ right quote	&#147;
 		<column from="URN" to="Universalus ištekliaus vardas"/>
 	</list>
 	<list name="CMatchCtrl">
-		<column from="File" to="Byla"/>
+		<column from="File" to="Failas"/>
 		<column from="Extension" to="Plėtinys"/>
 		<column from="Size" to="Dydis"/>
 		<column from="Rating" to="Įvertinimas"/>
@@ -4411,7 +4411,7 @@ right quote	&#147;
 		<column from="Expires" to="Nustoja galioti"/>
 	</list>
 	<list name="CTorrentFileList">
-		<column from="Filename" to="Bylos vardas"/>
+		<column from="Filename" to="Failo vardas"/>
 		<column from="Size" to="Dydis"/>
 	</list>
 	<list name="CTorrentTrackerList">
