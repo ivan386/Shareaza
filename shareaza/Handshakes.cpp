@@ -190,6 +190,7 @@ void CHandshakes::Disconnect()
 		int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
 
 		// Close it and set it invalid
+		shutdown( m_hSocket, SD_RECEIVE );
 		ret = closesocket( m_hSocket );
 		m_hSocket = INVALID_SOCKET;
 	}
@@ -445,6 +446,7 @@ BOOL CHandshakes::AcceptConnection()
 		int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
 
 		// Close the socket we just accepted the connection with
+		shutdown( m_hSocket, SD_RECEIVE );
 		ret = closesocket( hSocket );
 
 		// Report that this connection was denied for security reasons

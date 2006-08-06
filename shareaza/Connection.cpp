@@ -202,7 +202,8 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 			int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
 
 			// The error is something else, record it, close the socket, set the value of m_hSocket, and leave
-			theApp.Message( MSG_DEBUG, _T("connect() error 0x%x"), nError );
+			theApp.Message( MSG_DEBUG, _T("socket connect() error 0x%x"), nError );
+			shutdown( m_hSocket, SD_RECEIVE );
 			ret = closesocket( m_hSocket );
 			m_hSocket = INVALID_SOCKET;
 			return FALSE;
@@ -315,6 +316,7 @@ void CConnection::Close()
 		int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
 
 		// Close it and mark it invalid
+		shutdown( m_hSocket, SD_RECEIVE );
 		ret = closesocket( m_hSocket );
 		m_hSocket = INVALID_SOCKET;
 	}
@@ -349,7 +351,7 @@ BOOL CConnection::DoRun()
 		// If there is a nonzero error code for the connect operation
 		if ( pEvents.iErrorCode[ FD_CONNECT_BIT ] != 0 )
 		{
-			theApp.Message( MSG_DEBUG, _T("connect() error %i"), pEvents.iErrorCode[ FD_CONNECT_BIT ] );
+			theApp.Message( MSG_DEBUG, _T("socket connect() error %i"), pEvents.iErrorCode[ FD_CONNECT_BIT ] );
 			// This connection was dropped
 			OnDropped( TRUE );
 			return FALSE;
@@ -379,7 +381,7 @@ BOOL CConnection::DoRun()
 	// If the close event happened
 	if ( bClosed )
 	{
-		theApp.Message( MSG_DEBUG, _T("close() error %i"), pEvents.iErrorCode[ FD_CLOSE_BIT ] );
+		theApp.Message( MSG_DEBUG, _T("socket close() error %i"), pEvents.iErrorCode[ FD_CLOSE_BIT ] );
 		// Call OnDropped, telling it true if there is a close error
 		OnDropped( pEvents.iErrorCode[ FD_CLOSE_BIT ] != 0 ); // True if there is an nonzero error code for the close bit
 		return FALSE;

@@ -198,6 +198,7 @@ void CDatagrams::Disconnect()
 	linger ls = {1, 0};
 	int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
 
+	shutdown( m_hSocket, SD_RECEIVE );
 	ret = closesocket( m_hSocket );
 	m_hSocket = INVALID_SOCKET;
 
