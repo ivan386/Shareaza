@@ -160,8 +160,13 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 	while ( pHit )
 	{
 		CQueryHit* pNext = pHit->m_pNext;
-		
-		if ( Security.IsDenied( &pHit->m_pAddress, pHit->m_sName ) )
+
+		// Empty file names mean a hit for the currently downloading file.
+		// We just clicked the search result while the search was in progress.
+		// The size may be zero or match the size of the file.
+		// Empty file names are catched by the next clause and deleted.
+
+		if ( Security.IsDenied( &pHit->m_pAddress, pHit->m_sName ) || pHit->m_sName.IsEmpty() )
 		{
 			delete pHit;
 			pHit = pNext;
