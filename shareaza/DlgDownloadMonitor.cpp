@@ -1,7 +1,7 @@
 //
 // DlgDownloadMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,9 +60,9 @@ BEGIN_MESSAGE_MAP(CDownloadMonitorDlg, CSkinDialog)
 	ON_WM_CTLCOLOR()
 	ON_WM_CONTEXTMENU()
 	ON_WM_INITMENUPOPUP()
-	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_TRAY, OnTray)
 	ON_NOTIFY_EX(TTN_NEEDTEXT, 0, OnNeedText)
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 CList< CDownloadMonitorDlg* > CDownloadMonitorDlg::m_pWindows;
@@ -275,6 +275,9 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 	m_pGraph->m_nUpdates++;
 	m_pGraph->m_nMaximum = max( m_pGraph->m_nMaximum, nSpeed );
 	
+	// Update file name if it was changed from the Advanced Edit dialog
+	Update( &m_wndFile, m_pDownload->m_sDisplayName );
+
 	if ( m_pDownload->IsStarted() )
 	{
 		if ( theApp.m_bRTL )
@@ -465,7 +468,8 @@ void CDownloadMonitorDlg::Update(CWnd* pWnd, LPCTSTR pszText)
 {
 	CString strOld;
 	pWnd->GetWindowText( strOld );
-	if ( strOld != pszText ) pWnd->SetWindowText( pszText );
+	if ( strOld != pszText )
+		pWnd->SetWindowText( pszText );
 }
 
 void CDownloadMonitorDlg::Update(CWnd* pWnd, BOOL bEnabled)
@@ -686,6 +690,7 @@ void CDownloadMonitorDlg::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 BOOL CDownloadMonitorDlg::OnNeedText(UINT /*nID*/, NMHDR* pTTTH, LRESULT* /*pResult*/)
 {
+	// Fix it: It does not get a notification from the static window (!)
 	if ( pTTTH->idFrom == IDC_DOWNLOAD_FILE )
 	{
 		TOOLTIPTEXT* pTTT = (TOOLTIPTEXT*)pTTTH;
