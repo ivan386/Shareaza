@@ -99,7 +99,8 @@ void CMonitorBarCtrl::OnDestroy()
 
 CSize CMonitorBarCtrl::CalcFixedLayout(BOOL /*bStretch*/, BOOL /*bHorz*/)
 {
-	CSize size( 128, 30 );
+	int nHeight = Settings.General.GUIMode == GUI_WINDOWED ? 30 : 38;
+	CSize size( 128, nHeight );
 
 	for ( int nSnap = 1 ; nSnap >= 0 ; nSnap-- )
 	{
@@ -149,7 +150,11 @@ void CMonitorBarCtrl::OnSkinChange()
 	if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
 	if ( hWatermark != NULL ) m_bmWatermark.Attach( hWatermark );
 
-	if ( m_hWnd != NULL && IsWindowVisible() ) Invalidate();
+	if ( m_hWnd != NULL && IsWindowVisible() )
+	{
+		CalcFixedLayout( FALSE, FALSE );
+		Invalidate();
+	}
 }
 
 void CMonitorBarCtrl::DoPaint(CDC* pDC)

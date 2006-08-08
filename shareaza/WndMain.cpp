@@ -412,7 +412,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	if ( theApp.GetProfileInt( _T("Toolbars"), _T("CRemoteWnd"), TRUE ) )
 		m_wndRemoteWnd.Create( &m_wndMonitorBar );
-	
+
 	m_pWindows.SetOwner( this );
 	SetGUIMode( Settings.General.GUIMode, FALSE );
 	
@@ -467,6 +467,7 @@ void CMainWnd::OnClose()
 	
 	if ( ! IsIconic() ) SaveBarState( _T("Toolbars\\CoolBar") );
 	theApp.WriteProfileInt( _T("Toolbars"), _T("CRemoteWnd"), m_wndRemoteWnd.IsVisible() );
+	theApp.WriteProfileInt( L"Toolbars", L"ShowMonitor", m_wndMonitorBar.IsVisible() );
 	Settings.SaveWindow( _T("CMainWnd"), this );
 	m_pWindows.SaveWindowStates();
 	
@@ -750,7 +751,8 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 	
 	// Menu Bar
 	
-	if ( m_wndMenuBar.IsWindowVisible() == FALSE ) ShowControlBar( &m_wndMenuBar, TRUE, FALSE );
+	if ( m_wndMenuBar.IsWindowVisible() == FALSE ) 
+		ShowControlBar( &m_wndMenuBar, TRUE, FALSE );
 
 	// Scheduler
 	
@@ -1007,8 +1009,14 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 		SetWindowRgn( NULL, TRUE );
 	}
 	
-	m_wndMonitorBar.OnSkinChange();
 	m_wndRemoteWnd.OnSkinChange();
+	m_wndMonitorBar.OnSkinChange();
+	if ( theApp.GetProfileInt( L"Toolbars", L"ShowMonitor", TRUE ) )
+	{
+		// A quick workaround to show a monitor bar when skin or GUI mode is changed
+		if ( !m_wndMonitorBar.IsVisible() && Settings.General.GUIMode != GUI_WINDOWED )
+			PostMessage( WM_COMMAND, ID_WINDOW_MONITOR );
+	}
 	
 	SetWindowPos( NULL, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE|
 		SWP_NOACTIVATE|SWP_NOZORDER|SWP_FRAMECHANGED|SWP_DRAWFRAME );
@@ -1028,7 +1036,7 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	CFilePreviewDlg::OnSkinChange( TRUE );
 	
 	Invalidate();
-	
+
 	return 0;
 }
 
@@ -2233,7 +2241,9 @@ void CMainWnd::OnUpdateWindowMonitor(CCmdUI* pCmdUI)
 
 void CMainWnd::OnWindowMonitor() 
 {
-	ShowControlBar( &m_wndMonitorBar, ! m_wndMonitorBar.IsVisible(), TRUE );
+	BOOL bVisible = !m_wndMonitorBar.IsVisible();
+	theApp.WriteProfileInt( L"Toolbars", L"ShowMonitor", bVisible );
+	ShowControlBar( &m_wndMonitorBar, bVisible, TRUE );
 }
 
 void CMainWnd::OnUpdateWindowRemote(CCmdUI *pCmdUI)
