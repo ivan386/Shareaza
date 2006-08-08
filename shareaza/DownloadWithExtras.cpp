@@ -345,7 +345,12 @@ int CDownloadWithExtras::GetReviewAverage() const
 
 void CDownloadWithExtras::ShowMonitor(CSingleLock* pLock)
 {
-	if ( pLock ) pLock->Unlock();
+	bool bLocked = pLock && pLock->IsLocked();
+	if ( bLocked )
+	{
+		if ( !pLock->Unlock() )
+			return;
+	}
 	
 	if ( m_pMonitorWnd == NULL )
 	{
@@ -355,7 +360,7 @@ void CDownloadWithExtras::ShowMonitor(CSingleLock* pLock)
 	m_pMonitorWnd->ShowWindow( SW_SHOWNORMAL );
 	m_pMonitorWnd->BringWindowToTop();
 	
-	if ( pLock ) pLock->Lock();
+	if ( bLocked ) pLock->Lock();
 }
 
 BOOL CDownloadWithExtras::IsMonitorVisible() const
