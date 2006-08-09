@@ -422,6 +422,7 @@
 			<item id="ID_TAB_MEDIA" text="_Media Player"/>
 			<item id="ID_TAB_SEARCH" text="_Search"/>
 			<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
+			<item id="ID_WINDOW_REMOTE" text="_Remote"/>
 			<separator/>
 			<menu text="_Advanced">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Neighbours"/>
