@@ -448,6 +448,7 @@ right quote	&#147;
 			<item id="ID_TAB_MEDIA" text="_Grotuvas"/>
 			<item id="ID_TAB_SEARCH" text="Pa_ieška"/>
 			<item id="ID_TAB_TRANSFERS" text="_Atsisiuntimai"/>
+			<item id="ID_WINDOW_REMOTE" text="P_ultelis"/>
 			<separator/>
 			<menu text="Kita">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Kaimynai"/>
