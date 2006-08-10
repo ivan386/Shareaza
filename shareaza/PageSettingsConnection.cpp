@@ -40,8 +40,9 @@ BEGIN_MESSAGE_MAP(CConnectionSettingsPage, CSettingsPage)
 	ON_CBN_CLOSEUP(IDC_INBOUND_HOST, OnCloseUpInboundHost)
 	ON_EN_CHANGE(IDC_INBOUND_PORT, OnChangeInboundPort)
 	ON_BN_CLICKED(IDC_INBOUND_RANDOM, OnInboundRandom)
-	//}}AFX_MSG_MAP
 	ON_WM_SHOWWINDOW()
+	ON_BN_CLICKED(IDC_ENABLE_UPNP, OnClickedEnableUpnp)
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -249,7 +250,8 @@ void CConnectionSettingsPage::OnOK()
 			{
 				if ( !theApp.m_pUPnPFinder ) 
 					theApp.m_pUPnPFinder.reset( new CUPnPFinder );
-				theApp.m_pUPnPFinder->StartDiscovery();
+				if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
+					theApp.m_pUPnPFinder->StartDiscovery();
 			}
 			catch ( CUPnPFinder::UPnPError& ) {}
 			catch ( CException* e ) { e->Delete(); }
@@ -332,5 +334,26 @@ void CConnectionSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		}
 
 		UpdateData( FALSE );
+	}
+}
+
+void CConnectionSettingsPage::OnClickedEnableUpnp()
+{
+	if ( !m_bEnableUPnP )
+	{
+		if ( !theApp.m_pUPnPFinder ) 
+			theApp.m_pUPnPFinder.reset( new CUPnPFinder );
+
+		// If the UPnP Device Host service is not running ask the user to start it.
+		// It is not wise to have a delay up to 1 minute, especially that we would need
+		// to wait until this and SSDP service are started. 
+		// If the upnphost service can not be started Shareaza will lock up.
+		if ( !theApp.m_pUPnPFinder->AreServicesHealthy() )
+		{
+			CString strMessage;
+			LoadString( strMessage, IDS_UPNP_SERVICES_ERROR );
+			MessageBox( strMessage, NULL, MB_OK | MB_ICONEXCLAMATION );
+			UpdateData( FALSE );
+		}
 	}
 }

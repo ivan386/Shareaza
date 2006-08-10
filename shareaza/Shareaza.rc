@@ -5149,6 +5149,7 @@ BEGIN
     IDS_WIZARD_UPNP_SETUP   "Please wait: Finding UPnP devices and setting them up..."
     IDS_WIZARD_DISCOVERY    "Please wait: Updating discovery services..."
     IDS_WIZARD_ED2K         "Please wait: Updating eDonkey2000 server list..."
+    IDS_UPNP_SERVICES_ERROR "UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the SSDP Discovery Service to automatic."
 END
 
 STRINGTABLE 

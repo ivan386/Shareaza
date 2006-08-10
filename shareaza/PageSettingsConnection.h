@@ -1,7 +1,7 @@
 //
 // PageSettingsConnection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,9 +83,11 @@ protected:
 	afx_msg void OnCloseUpInboundHost();
 	afx_msg void OnChangeInboundPort();
 	afx_msg void OnInboundRandom();
-	//}}AFX_MSG
+	afx_msg void OnClickedEnableUpnp();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+
 };
 
 //{{AFX_INSERT_LOCATION}}
