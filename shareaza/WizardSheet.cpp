@@ -150,6 +150,13 @@ BOOL CWizardSheet::OnInitDialog()
 	GetDlgItem( 0x3024 )->MoveWindow( &rc );
 	GetDlgItem( 0x3025 )->MoveWindow( &rc );
 
+	LoadString( strMessage, IDS_GENERAL_BACK );
+	if ( GetDlgItem( 0x3023 ) )
+		GetDlgItem( 0x3023 )->SetWindowText( L"< " + strMessage );
+	LoadString( strMessage, IDS_GENERAL_NEXT );
+	if ( GetDlgItem( 0x3024 ) )
+		GetDlgItem( 0x3024 )->SetWindowText( strMessage + L" >" );
+
 	GetDlgItem( 2 )->GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.OffsetRect( 95 + 170 - rc.left, 0 );

@@ -118,8 +118,8 @@ BOOL CWizardConnectionPage::OnInitDialog()
 
 	//; 28.8 kbps; 33.6 kbps; 56.6 kbps; 64.0 kbps; 128 kbps; 256 kbps; 384 kbps; 512 kbps; 1024 kbps; 1536 kbps; 2048 kbps; 3072 kbps; 4096 kbps; 5120 kbps; 8192 kbps; 12288 kbps;
 
-	// 3 steps max
-	m_wndProgress.SetRange( 0, 3 );
+	// 3 steps with 30 sub-steps each
+	m_wndProgress.SetRange( 0, 90 );
 	m_wndProgress.SetPos( 0 );
 
 	m_wndStatus.SetWindowText( L"" );
@@ -361,14 +361,14 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	if ( HostCache.Gnutella2.CountHosts() < 25 )
 	{
 		m_bQueryDiscoveries = true;
-		m_nProgressSteps++;
+		m_nProgressSteps += 30;
 	}
 
 	// Load default ed2k server list (if necessary)
 	if ( HostCache.eDonkey.CountHosts() < 8 )
 	{
 		m_bUpdateDonkeyServers = true;
-		m_nProgressSteps++;
+		m_nProgressSteps += 30;
 	}
 
 	CWaitCursor pCursor;
@@ -386,7 +386,15 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
 	SetThreadName( pThread->m_nThreadID, "CWizardConnectionPage" );
 	m_hThread = pThread->m_hThread;
-	
+
+	// Disable all navigation buttons while the thread is running
+	CWizardSheet* pSheet = GetSheet();
+	if ( pSheet->GetDlgItem( 0x3023 ) )
+		pSheet->GetDlgItem( 0x3023 )->EnableWindow( FALSE );
+	if ( pSheet->GetDlgItem( 0x3024 ) )
+		pSheet->GetDlgItem( 0x3024 )->EnableWindow( FALSE );
+	if ( pSheet->GetDlgItem( 2 ) )
+		pSheet->GetDlgItem( 2 )->EnableWindow( FALSE );
 	return -1; // don't move to the next page; the thread will do this work
 }
 
@@ -405,26 +413,39 @@ void CWizardConnectionPage::OnRun()
 	short nCurrentStep = 0;
 	CString strMessage;
 
-	m_nProgressSteps++; // UPnP device detection
+	m_nProgressSteps += 30; // UPnP device detection
 	m_wndProgress.PostMessage( PBM_SETRANGE32, 0, (LPARAM)m_nProgressSteps );
 
 	LoadString( strMessage, IDS_WIZARD_UPNP_SETUP );
 	m_wndStatus.SetWindowText( strMessage );
+	
+	DWORD tStart = GetTickCount();
 
 	while ( theApp.m_pUPnPFinder && 
 			theApp.m_pUPnPFinder->IsAsyncFindRunning() )
 	{
-		Sleep( 50 );
+		Sleep( 1000 );
+		if ( GetTickCount() - tStart > 30000 )
+		{
+			theApp.m_pUPnPFinder->StopAsyncFind();
+			Settings.Connection.EnableUPnP = TS_FALSE;
+			break;
+		}
+		if ( nCurrentStep < 30  )
+			nCurrentStep++;
+
+		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 	}
-	nCurrentStep++;
+
+	nCurrentStep = 30;
 	m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 
 	if ( m_bQueryDiscoveries )
 	{
 		LoadString( strMessage, IDS_WIZARD_DISCOVERY );
 		m_wndStatus.SetWindowText( strMessage );
-		nCurrentStep++;
 		DiscoveryServices.QueryForHosts( PROTOCOL_G2 );
+		nCurrentStep +=30;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 	}
 
@@ -432,12 +453,20 @@ void CWizardConnectionPage::OnRun()
 	{
 		LoadString( strMessage, IDS_WIZARD_ED2K );
 		m_wndStatus.SetWindowText( strMessage );
-		nCurrentStep++;
 		HostCache.eDonkey.LoadDefaultED2KServers();
+		nCurrentStep +=30;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 	}
 
-	GetSheet()->SendMessage( PSM_SETCURSEL, 2, 0 ); // Go to the 3rd page
+	CWizardSheet* pSheet = GetSheet();
+	if ( pSheet->GetDlgItem( 0x3023 ) )
+		pSheet->GetDlgItem( 0x3023 )->EnableWindow();
+	if ( pSheet->GetDlgItem( 0x3024 ) )
+		pSheet->GetDlgItem( 0x3024 )->EnableWindow();
+	if ( pSheet->GetDlgItem( 2 ) )
+		pSheet->GetDlgItem( 2 )->EnableWindow();
+
+	pSheet->SendMessage( PSM_SETCURSEL, 2, 0 ); // Go to the 3rd page
 	PostMessage( WM_TIMER, 1 ); // Terminate thread if necessarily
 }
 BOOL CWizardConnectionPage::OnQueryCancel()

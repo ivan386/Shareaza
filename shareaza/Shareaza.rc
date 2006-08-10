@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,2,26
- PRODUCTVERSION 2,2,2,26
+ FILEVERSION 2,2,2,27
+ PRODUCTVERSION 2,2,2,27
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 26"
+            VALUE "FileVersion", "2, 2, 2, 27"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 26"
+            VALUE "ProductVersion", "2, 2, 2, 27"
         END
     END
     BLOCK "VarFileInfo"
@@ -5463,6 +5463,8 @@ BEGIN
     IDS_GENERAL_AUTO        "Auto"
     IDS_GENERAL_DEFAULT     "Default"
     IDS_GENERAL_CUSTOM      "Custom"
+    IDS_GENERAL_BACK        "&Back"
+    IDS_GENERAL_NEXT        "&Next"
 END
 
 STRINGTABLE 

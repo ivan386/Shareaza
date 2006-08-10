@@ -1334,6 +1334,8 @@
 #define IDS_GENERAL_AUTO                20007
 #define IDS_GENERAL_DEFAULT             20008
 #define IDS_GENERAL_CUSTOM              20009
+#define IDS_GENERAL_BACK                20010
+#define IDS_GENERAL_NEXT                20011
 #define IDS_STATUS_CONNECTING           20100
 #define IDS_STATUS_REQUESTING           20101
 #define IDS_STATUS_RESPONSE             20102
