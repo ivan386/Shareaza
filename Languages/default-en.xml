@@ -3147,8 +3147,8 @@
 	<string id="20007" value="Auto"/>
 	<string id="20008" value="Default"/>
 	<string id="20009" value="Custom"/>
-	<string id="20010" value="&amp;Back">
-	<string id="20011" value="&amp;Next">
+	<string id="20010" value="&amp;Back"/>
+	<string id="20011" value="&amp;Next"/>
 	<string id="20100" value="Connecting"/>
 	<string id="20101" value="Requesting"/>
 	<string id="20102" value="Response"/>
