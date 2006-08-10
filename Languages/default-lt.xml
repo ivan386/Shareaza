@@ -22,7 +22,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.2.26"
+		version="2.2.2.27"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -3153,6 +3153,8 @@ right quote	&#147;
 	<string id="20007" value="Auto"/>
 	<string id="20008" value="Numatyta"/>
 	<string id="20009" value="Pasirinktina"/>
+	<string id="20010" value="&amp;Atgal"/>
+	<string id="20011" value="&amp;Toliau"/>
 	<string id="20100" value="Jungiamasi"/>
 	<string id="20101" value="Užklausiama"/>
 	<string id="20102" value="Atsakas"/>
