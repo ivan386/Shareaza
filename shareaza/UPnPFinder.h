@@ -45,10 +45,17 @@ public:
 	void StartDiscovery();
 	void StopAsyncFind();
 	void DeletePorts();
+	bool AreServicesHealthy();
 	void AddDevice(DevicePointer pDevice);
 	void RemoveDevice(CComBSTR bsUDN);
 	void OnSearchComplete();
 	bool IsAsyncFindRunning() const { return m_bAsyncFindRunning; }
+
+	// API functions
+	SC_HANDLE (WINAPI *m_pfnOpenSCManager)(LPCTSTR, LPCTSTR, DWORD);
+	SC_HANDLE (WINAPI *m_pfnOpenService)(SC_HANDLE, LPCTSTR, DWORD);
+	BOOL (WINAPI *m_pfnQueryServiceStatusEx)(SC_HANDLE, SC_STATUS_TYPE, LPBYTE, DWORD, LPDWORD);
+	BOOL (WINAPI *m_pfnCloseServiceHandle)(SC_HANDLE);
 
 // Implementation
 private:

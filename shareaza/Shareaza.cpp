@@ -205,7 +205,8 @@ BOOL CShareazaApp::InitInstance()
 		try
 		{
 			m_pUPnPFinder.reset( new CUPnPFinder );
-			m_pUPnPFinder->StartDiscovery();
+			if ( m_pUPnPFinder->AreServicesHealthy() )
+				m_pUPnPFinder->StartDiscovery();
 		}
 		catch ( CUPnPFinder::UPnPError& ) {}
 		catch ( CException* e ) { e->Delete(); }

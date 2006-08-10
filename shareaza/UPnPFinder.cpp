@@ -66,6 +66,74 @@ CUPnPFinder::~CUPnPFinder()
 	if ( m_bCOM ) CoUninitialize();
 }
 
+// Helper function to check if UPnP Device Host service is healthy
+// Although SSPD service is dependent on this service but sometimes it may lock up.
+// This will result in application lockup when we call any methods of IUPnPDeviceFinder.
+// ToDo: Add a support for WinME.
+bool CUPnPFinder::AreServicesHealthy()
+{
+	if ( theApp.m_bWinME )
+		return true;
+	else if ( !theApp.m_bNT )
+		return false;
+
+	HINSTANCE hAdvapi32;
+	bool bResult = false;
+
+	//Get pointers to some functions that don't exist under Win9x
+	if ( ( hAdvapi32 = LoadLibrary( _T("Advapi32.dll") ) ) != 0 )
+	{
+		(FARPROC&)m_pfnOpenSCManager = GetProcAddress(	hAdvapi32, "OpenSCManagerW" );
+		(FARPROC&)m_pfnOpenService = GetProcAddress( hAdvapi32, "OpenServiceW" );
+		(FARPROC&)m_pfnQueryServiceStatusEx = GetProcAddress( hAdvapi32, "QueryServiceStatusEx" );
+		(FARPROC&)m_pfnCloseServiceHandle = GetProcAddress( hAdvapi32, "CloseServiceHandle" );
+
+		if ( m_pfnOpenSCManager && m_pfnOpenService && 
+			 m_pfnQueryServiceStatusEx && m_pfnCloseServiceHandle )
+		{
+			SC_HANDLE schSCManager;
+			SC_HANDLE schService;
+
+			// Open a handle to the Service Control Manager database
+			schSCManager = m_pfnOpenSCManager( 
+				NULL,				// local machine 
+				NULL,				// ServicesActive database 
+				GENERIC_READ );		// for enumeration and status lookup 
+
+			if ( schSCManager == NULL )
+				return false;
+
+			schService = m_pfnOpenService( schSCManager, L"upnphost", GENERIC_READ ); 
+			if ( schService == NULL )
+			{
+				m_pfnCloseServiceHandle( schSCManager );
+				return false;
+			}
+
+			SERVICE_STATUS_PROCESS ssStatus; 
+			DWORD nBytesNeeded;
+
+			if ( m_pfnQueryServiceStatusEx( schService, SC_STATUS_PROCESS_INFO,
+				(LPBYTE)&ssStatus, sizeof(SERVICE_STATUS_PROCESS), &nBytesNeeded ) )
+			{
+				if ( ssStatus.dwCurrentState == SERVICE_RUNNING )
+					bResult = true;
+			}
+
+			m_pfnCloseServiceHandle( schService );
+			m_pfnCloseServiceHandle( schSCManager );
+		}
+	}
+
+	if ( !bResult )
+	{
+		Settings.Connection.EnableUPnP = FALSE;
+		theApp.Message( MSG_ERROR, L"UPnP Device Host service is not running, skipping UPnP setup." );
+	}
+
+	return bResult;
+}
+
 // Helper function for processing the AsyncFind search
 void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 {

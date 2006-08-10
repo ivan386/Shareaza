@@ -377,7 +377,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	{
 		if ( !theApp.m_pUPnPFinder )
 			theApp.m_pUPnPFinder.reset( new CUPnPFinder );
-		theApp.m_pUPnPFinder->StartDiscovery();
+		if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
+			theApp.m_pUPnPFinder->StartDiscovery();
 	}
 	catch ( CUPnPFinder::UPnPError& ) {}
 	catch ( CException* e ) { e->Delete(); }
