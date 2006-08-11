@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.2.2.12 (EN1.97)"
+		version="2.2.2.27 (EN3706)"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -415,6 +415,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="关闭窗口(_C)"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="全屏(_F)"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="重置(_R)"/>
+		<item id="ID_CHILD_MINIMISE" text="最小化(_M)"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="关闭窗口(_C)"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="网络(_N)">
@@ -435,6 +448,7 @@
 			<item id="ID_TAB_MEDIA" text="媒体播放器(_M)"/>
 			<item id="ID_TAB_SEARCH" text="搜索(_S)"/>
 			<item id="ID_TAB_TRANSFERS" text="下载(_D)"/>
+			<item id="ID_WINDOW_REMOTE" text="远程(_R)"/>
 			<separator/>
 			<menu text="高级(_A)">
 				<item id="ID_VIEW_NEIGHBOURS" text="邻居(_N)"/>
@@ -512,7 +526,7 @@
 			<separator/>
 			<menu text="高级(_D)">
 				<item id="ID_VIEW_SYSTEM" text="系统(_Y)" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="邻居(_E)" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="邻居(_E)" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="下载(_D)" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="上传(_U)" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="收藏(_L)" shortcut="F5"/>
@@ -594,7 +608,7 @@
 		</menu>
 		<menu text="视图(_V)">
 			<item id="ID_VIEW_SYSTEM" text="系统(_S)" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="邻居(_N)" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="邻居(_N)" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="下载(_D)" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="上传(_U)" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="收藏(_L)" shortcut="F5"/>
@@ -2289,7 +2303,6 @@
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="将选定的专辑文件夹导出到一个收集文件中..."/>
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="下载选定收集中的所有文件。"/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="添加选定专辑文件夹中所有文件到播放列表。"/>
-	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="将选定的专辑文件夹作为一个收集文件导出..."/>
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="查看和编辑选定文件夹中所有文件的属性..."/>
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="对专辑文件夹内所有文件应用元数据。"/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="在此创建新的专辑文件夹..."/>
@@ -2681,7 +2694,6 @@
 	<string id="16137" value="拒绝双重连接 %s 主机。"/>
 	<string id="16138" value="已经连接到 %s 主机，因此不会再建立第二个连接。"/>
 	<string id="16139" value="邻居 %s 主机关闭了连接。(%i : %s)"/>
-	<string id="16140" value="邻居 %s 主机现在速度缓慢。"/>
 	<string id="16141" value="关闭到邻居 %s 主机的连接，因为它不是集端。"/>
 	<string id="16144" value="和 %s 主机的握手超时。"/>
 	<string id="16145" value="已和 Gnutella 中的 %s 主机成功建立连接 (G%i.%i : %s)。"/>
@@ -2899,6 +2911,8 @@
 	<string id="16533" value="全部 TCP 传送带宽"/>
 	<string id="16534" value="全部 UDP 接收带宽"/>
 	<string id="16535" value="全部 UDP 传送带宽"/>
+	<string id="16536" value="发送/接受 Ping 的 Gnutella 频率"/>
+	<string id="16537" value="发送/接受 Pong 的 Gnutella 频率"/>
 	<string id="16768" value="已接收链接 &quot;%s&quot;"/>
 	<string id="16769" value="未能粘贴链接: Shareaza 不能识别此链接。"/>
 	<string id="16770" value="未能显示链接操作对话框因为 Shareaza 正忙。"/>
@@ -2929,6 +2943,10 @@
 	<string id="16809" value="退出(_X)"/>
 	<string id="16810" value="岁"/>
 	<string id="16811" value="自动"/>
+	<string id="16812" value="请稍候: 查找 UPnP 驱动器并进行设置..."/>
+	<string id="16813" value="请稍候: 更新发现服务器..."/>
+	<string id="16814" value="请稍候: 更新 eDonkey2000 服务器列表..."/>
+	<string id="16815" value="UPnP 驱动器主机未运行。此服务要求进行设置。\n您需要将 SSDP Discovery 服务的启动类型设置为 &quot;自动&quot;。"/>
 	<string id="16816" value="eDonkey 网络使用需要等待很长时间的队列。限制最大可接受的队列位置如果非常严格的话，您可能难以开始下载。\n您确定要限制您能接受的队列位置吗？"/>
 	<string id="16817" value="Windows 系统不支持超过 256 个字符的文件路径。\n请选择一个较短路径的文件夹。"/>
 	<string id="16818" value="完成文件的文件夹与未完成文件的文件夹不能为同一文件夹。"/>
@@ -2956,6 +2974,7 @@
 	<string id="16942" value="关闭连接到 %s 的浏览用户。"/>
 	<string id="16943" value="浏览 %s"/>
 	<string id="16944" value="查找到 %i 个共享的文件，在 %s 的收藏中。"/>
+	<string id="16991" value="Shareaza 媒体播放器"/>
 	<string id="16992" value="Shareaza 无法初始化它的媒体服务插件。请重新安装，并确定您已经安装必要的媒体编码解码器和输出驱动程序。"/>
 	<string id="16993" value="所有媒体文件|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|播放列表文件|*.asx;*.wax;*.m3u;*.wvx;*.wmx|音频文件|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|视频文件|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD 音轨|*.cda|MIDI 文件|*.mid;*.rmi;*.midi|所有文件|*.*||"/>
 	<string id="16994" value="未能载入媒体文件 &quot;%s&quot;"/>
@@ -3112,6 +3131,8 @@
 	<string id="20007" value="自动"/>
 	<string id="20008" value="默认"/>
 	<string id="20009" value="自定义"/>
+	<string id="20010" value="&amp;后退"/>
+	<string id="20011" value="&amp;前进"/>
 	<string id="20100" value="连接中"/>
 	<string id="20101" value="请求中"/>
 	<string id="20102" value="回应"/>
@@ -3231,7 +3252,7 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="媒体">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="媒体">
 		<control caption="媒体服务(_M):"/>
 		<control/>
 		<control caption="使用 Shareaza 媒体播放器播放下列文件类型"/>
@@ -3242,6 +3263,9 @@
 		<control caption="移除(_R)"/>
 		<control caption="可视化音频插件(_V):"/>
 		<control caption="选择插件(_S)..."/>
+		<control caption="媒体滤镜(_M)"/>
+		<control caption="选择媒体滤镜:"/>
+		<control caption="警告: 选择一个额外的媒体滤镜将自动禁用所有的媒体和可视化插件！"/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="社区">
@@ -3273,7 +3297,7 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="连接">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="连接">
 		<control caption="传入地址(_I):"/>
 		<control caption="地址:"/>
 		<control caption="自动"/>
@@ -3292,6 +3316,7 @@
 		<control caption="我可以接收传入连接"/>
 		<control/>
 		<control caption="忽略 私用/本地 IP 地址"/>
+		<control caption="启用 UPnP 连接驱动器设置"/>
 		<control caption="超时(_T):"/>
 		<control caption="连接:"/>
 		<control/><control/>
@@ -3567,7 +3592,7 @@
 		<control caption="监视 Torrent 链接"/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="欢迎使用 Shareaza [7 之 3]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="欢迎使用 Shareaza [7 之 3]">
 		<control caption="为获得最佳效果，Shareaza 必须知道您的互联网连接。"/>
 		<control caption="&#160;(请选择)| 我在家中使用互联网| 我通过大学的局域网连接到互联网| 我通过办公室中的局域网连接到互联网| 我在旅馆或机场使用互联网"/>
 		<control caption="您的网络是否被防火墙保护，或者使用了 NAT 路由？"/>
@@ -3577,6 +3602,8 @@
 		<control caption="如果您知道互联网连接速度，请在下面做出选择:"/>
 		<control caption="| 调制解调器拨号| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="或选择:"/>
+		<control/>
+		<control caption="状态:"/>
 		<control/>
 	</dialog>
 
@@ -3979,10 +4006,10 @@
 		<control caption="取消"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="复制 URI">
+	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="复制 URI">
 		<control/>
 		<control caption="您可以用多种不同的格式为选定的项目复制 URI。请通过点击下列某一 URI 选择您希望使用的格式:"/>
-		<control/><control/><control/>
+		<control/><control/><control/><control/>
 		<control caption="将自己作为固定的资源包含在链接中(_M)"/>
 		<control caption="取消"/>
 	</dialog>
@@ -4055,7 +4082,7 @@
 		<control caption="确定"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="文件已存在">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="文件已存在">
 		<control/><control/><control/><control/>
 		<control caption="您的收藏中已经存在此文件。您希望怎样做？"/>
 		<control caption="显示收藏中的这个文件"/>
@@ -4064,6 +4091,7 @@
 		<control caption="确定"/>
 		<control caption="取消"/>
 		<control caption="您曾经下载并且删除此文件。您打算怎么做？"/>
+		<control caption="警告！！！检测到重复文件。一些恶意软件可能感染您的收藏。请确认您是手动下载或存放此文件。否则，请关闭 Shareaza 并用杀毒软件扫描您的电脑。"/>
 	</dialog>
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="关闭按钮">
@@ -4107,7 +4135,7 @@
 	</dialog>
 
 	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="收集导出">
-		<control caption="此功能用于将文件夹或播放列表中的内容导出为多格式的搜集文件。请选择一个模板并单击“下一页”继续。|通过输入下列数据自定义您的收集。"/>
+		<control caption="此功能用于将文件夹或播放列表中的内容导出为多格式的搜集文件。请选择一个模板并单击“前进”继续。|通过输入下列数据自定义您的收集。"/>
 		<control/>
 		<control caption="模板信息:"/>
 		<control caption="名称:"/>
@@ -4116,8 +4144,8 @@
 		<control/>
 		<control caption="描述:"/>
 		<control/>
-		<control caption="删除|上一页(_B)"/>
-		<control caption="下一页(_N)|导出"/>
+		<control caption="删除|后退(_B)"/>
+		<control caption="前进(_N)|导出..."/>
 		<control caption="取消(_C)"/>
 	</dialog>
 
