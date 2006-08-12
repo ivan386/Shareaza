@@ -71,6 +71,7 @@ Name: "multiuser"; Description: "{cm:tasks_multisetup}"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 0,5.01sp2
+Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 0,5.01; Check: CanUserModifyServices
 Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
 
 [Files]
@@ -351,17 +352,61 @@ Type: filesandordirs; Name: "{app}\Templates"
 
 ; Code sections need to be the last section in a script or the compiler will get confused
 [Code]
+type
+  SERVICE_STATUS = record
+    dwServiceType: cardinal;
+    dwCurrentState: cardinal;
+    dwControlsAccepted: cardinal;
+    dwWin32ExitCode: cardinal;
+    dwServiceSpecificExitCode: cardinal;
+    dwCheckPoint: cardinal;
+    dwWaitHint: cardinal;
+  end;
+  HANDLE = cardinal;
 const
   WM_CLOSE = $0010;
   KeyLoc1 = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1';
   KeyLoc2 = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza';
   KeyName = 'UninstallString';
   NET_FW_SCOPE_ALL = 0;
-  NET_FW_IP_VERSION_ANY = 2;
+  NET_FW_IP_VERSION_ANY       = 2;
+  SERVICE_QUERY_CONFIG        = $1;
+  SERVICE_CHANGE_CONFIG       = $2;
+  SERVICE_QUERY_STATUS        = $4;
+  SERVICE_START               = $10;
+  SERVICE_STOP                = $20;
+  SERVICE_ALL_ACCESS          = $f01ff;
+  SC_MANAGER_ALL_ACCESS       = $f003f;
+  SERVICE_AUTO_START          = $2;
+  SERVICE_DEMAND_START        = $3;
+  SERVICE_RUNNING             = $4;
+  SERVICE_NO_CHANGE           = $ffffffff;
 var
   CurrentPath: string;
   Installed: Boolean;
   FirewallFailed: string;
+  HasUserPrivileges: Boolean;
+
+// NT API functions for services
+Function OpenSCManager(lpMachineName, lpDatabaseName: string; dwDesiredAccess: cardinal): HANDLE;
+external 'OpenSCManagerA@advapi32.dll stdcall setuponly';
+
+Function OpenService(hSCManager: HANDLE; lpServiceName: string; dwDesiredAccess: cardinal): HANDLE;
+external 'OpenServiceA@advapi32.dll stdcall setuponly';
+
+Function CloseServiceHandle(hSCObject: HANDLE): Boolean;
+external 'CloseServiceHandle@advapi32.dll stdcall setuponly';
+
+Function StartNTService(hService: HANDLE; dwNumServiceArgs: cardinal; lpServiceArgVectors: cardinal): Boolean;
+external 'StartServiceA@advapi32.dll stdcall setuponly';
+
+Function QueryServiceStatus(hService: HANDLE; var ServiceStatus: SERVICE_STATUS): Boolean;
+external 'QueryServiceStatus@advapi32.dll stdcall setuponly';
+
+Function ChangeServiceConfig(hService: HANDLE; dwServiceType, dwStartType, dwErrorControl: cardinal;
+                             lpBinaryPathName, lpLoadOrderGroup: string; lpdwTagId: cardinal;
+                             lpDependencies, lpServiceStartName, lpPassword, lpDisplayName: string): Boolean;
+external 'ChangeServiceConfigA@advapi32.dll stdcall setuponly';
 
 Function InnoSetupUsed(): boolean;
 Begin
@@ -382,6 +427,100 @@ Begin
         Result := False;
 
 End;
+
+Function OpenServiceManager(): HANDLE;
+begin
+  Result := 0;
+  if (InstallOnThisVersion('0,5.01', '0,0') = irInstall) then
+    Result := OpenSCManager('', 'ServicesActive', SC_MANAGER_ALL_ACCESS);
+end;
+
+Function CanUserModifyServices(): Boolean;
+var
+ hSCManager: HANDLE;
+begin
+  hSCManager := 0;
+  Result := false;
+  HasUserPrivileges := false;
+  if (InstallOnThisVersion('0,5.01', '0,0') = irInstall) then begin
+    hSCManager := OpenSCManager('', 'ServicesActive', SC_MANAGER_ALL_ACCESS);
+    if (hSCManager <> 0) then begin
+      HasUserPrivileges := true;
+      Result := true;
+      CloseServiceHandle(hSCManager);
+    end;
+  end;
+end;
+
+Function IsServiceInstalled(ServiceName: string): boolean;
+var
+ hSCManager: HANDLE;
+ hService: HANDLE;
+begin
+  hSCManager := OpenServiceManager();
+  Result := false;
+  if (hSCManager <> 0) then begin
+    hService := OpenService(hSCManager, ServiceName, SERVICE_QUERY_CONFIG);
+    if (hService <> 0) then begin
+      Result := true;
+      CloseServiceHandle(hService);
+    end;
+    CloseServiceHandle(hSCManager);
+  end;
+end;
+
+Function StartService(ServiceName: string): boolean;
+var
+  hSCManager: HANDLE;
+  hService: HANDLE;
+begin
+  hSCManager := OpenServiceManager();
+  Result := false;
+  if (hSCManager <> 0) then begin
+    hService := OpenService(hSCManager, ServiceName, SERVICE_START);
+    if (hService <> 0) then begin
+      Result := StartNTService(hService, 0, 0);
+      CloseServiceHandle(hService);
+    end;
+    CloseServiceHandle(hSCManager);
+  end;
+end;
+
+Function IsServiceRunning(ServiceName: string): boolean;
+var
+  hSCManager: HANDLE;
+  hService: HANDLE;
+  sStatus: SERVICE_STATUS;
+begin
+  hSCManager := OpenServiceManager();
+  Result := false;
+  if (hSCManager <> 0) then begin
+    hService := OpenService(hSCManager, ServiceName, SERVICE_QUERY_STATUS);
+    if (hService <> 0) then begin
+      if (QueryServiceStatus(hService, sStatus)) then
+        Result := (sStatus.dwCurrentState = SERVICE_RUNNING)
+      CloseServiceHandle(hService);
+    end;
+    CloseServiceHandle(hSCManager);
+ end;
+end;
+
+Function ChangeServiceStartup(ServiceName: string; dwStartType: cardinal): boolean;
+var
+  hSCManager: HANDLE;
+  hService: HANDLE;
+begin
+  hSCManager := OpenServiceManager();
+  Result := false;
+  if (hSCManager <> 0) then begin
+    hService := OpenService(hSCManager, ServiceName, SERVICE_CHANGE_CONFIG);
+    if (hService <> 0) then begin
+       Result := ChangeServiceConfig(hService, SERVICE_NO_CHANGE, dwStartType, SERVICE_NO_CHANGE, '','',0,'','','','');
+       CloseServiceHandle(hService);
+    end;
+    CloseServiceHandle(hSCManager);
+  end;
+end;
 
 Function NextButtonClick(CurPageID: integer): Boolean;
 var
@@ -534,6 +673,7 @@ var
   FirewallManager: Variant;
   FirewallProfile: Variant;
   Reset: boolean;
+  Success: boolean;
 Begin
   if CurStep=ssPostInstall then begin
     if IsTaskSelected('firewall') then begin
@@ -569,6 +709,27 @@ Begin
         End;
       End;
     End;
+    if IsTaskSelected('upnp') then begin
+      if (HasUserPrivileges) then begin
+        Success := false;
+        if (IsServiceInstalled('SSDPSRV') and IsServiceInstalled('upnphost')) then begin
+          if (not IsServiceRunning('SSDPSRV')) then begin
+            // change the startup type to manual if it was disabled;
+            // we don't need to start it since UPnP Device Host service depends on it;
+            // assuming that user didn't modify the dependencies manually.
+            // Note: probably, we could elevate user rights with AdjustTokenPrivileges(?)
+            Success := ChangeServiceStartup('SSDPSRV', SERVICE_DEMAND_START);
+          end else
+            Success := true;
+          if (Success) then begin
+            // We succeeded to change the startup type, so we will change another service
+            Success := ChangeServiceStartup('upnphost', SERVICE_AUTO_START);
+            if (Success and not IsServiceRunning('upnphost')) then
+              StartService('upnphost');
+          end;
+        end;
+      end;
+    end;
   End;
   if CurStep=ssInstall then begin
     if not IsTaskSelected('firewall') then begin
