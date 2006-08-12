@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,2,27
- PRODUCTVERSION 2,2,2,27
+ FILEVERSION 2,2,2,28
+ PRODUCTVERSION 2,2,2,28
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 27"
+            VALUE "FileVersion", "2, 2, 2, 28"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 27"
+            VALUE "ProductVersion", "2, 2, 2, 28"
         END
     END
     BLOCK "VarFileInfo"
@@ -5149,7 +5149,7 @@ BEGIN
     IDS_WIZARD_UPNP_SETUP   "Please wait: Finding UPnP devices and setting them up..."
     IDS_WIZARD_DISCOVERY    "Please wait: Updating discovery services..."
     IDS_WIZARD_ED2K         "Please wait: Updating eDonkey2000 server list..."
-    IDS_UPNP_SERVICES_ERROR "UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the SSDP Discovery Service to automatic."
+    IDS_UPNP_SERVICES_ERROR "UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."
 END
 
 STRINGTABLE 

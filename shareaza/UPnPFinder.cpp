@@ -87,9 +87,10 @@ bool CUPnPFinder::AreServicesHealthy()
 		(FARPROC&)m_pfnOpenService = GetProcAddress( hAdvapi32, "OpenServiceW" );
 		(FARPROC&)m_pfnQueryServiceStatusEx = GetProcAddress( hAdvapi32, "QueryServiceStatusEx" );
 		(FARPROC&)m_pfnCloseServiceHandle = GetProcAddress( hAdvapi32, "CloseServiceHandle" );
+		(FARPROC&)m_pfnStartService = GetProcAddress( hAdvapi32, "StartServiceW" );
 
 		if ( m_pfnOpenSCManager && m_pfnOpenService && 
-			 m_pfnQueryServiceStatusEx && m_pfnCloseServiceHandle )
+			 m_pfnQueryServiceStatusEx && m_pfnCloseServiceHandle && m_pfnStartService )
 		{
 			SC_HANDLE schSCManager;
 			SC_HANDLE schService;
@@ -119,8 +120,19 @@ bool CUPnPFinder::AreServicesHealthy()
 				if ( ssStatus.dwCurrentState == SERVICE_RUNNING )
 					bResult = true;
 			}
-
 			m_pfnCloseServiceHandle( schService );
+
+			if ( !bResult )
+			{
+				schService = m_pfnOpenService( schSCManager, L"upnphost", SERVICE_START );
+				if ( schService )
+				{
+					// Power users have only right to start service, thus try to start it here
+					if ( m_pfnStartService( schService, 0, NULL ) )
+						bResult = true;
+					m_pfnCloseServiceHandle( schService );
+				}
+			}
 			m_pfnCloseServiceHandle( schSCManager );
 		}
 	}

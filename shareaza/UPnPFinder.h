@@ -56,6 +56,7 @@ public:
 	SC_HANDLE (WINAPI *m_pfnOpenService)(SC_HANDLE, LPCTSTR, DWORD);
 	BOOL (WINAPI *m_pfnQueryServiceStatusEx)(SC_HANDLE, SC_STATUS_TYPE, LPBYTE, DWORD, LPDWORD);
 	BOOL (WINAPI *m_pfnCloseServiceHandle)(SC_HANDLE);
+	BOOL (WINAPI *m_pfnStartService)(SC_HANDLE, DWORD, LPCTSTR*);
 
 // Implementation
 private:
