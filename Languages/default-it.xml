@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 32 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 36 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -17,7 +17,7 @@
 		description="Shareaza Default Italian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.0.2"
+		version="2.2.2.27"
 		type="Language"
 		language="it"
 		prompt="Clicca qui per selezionare l'Italiano come lingua predefinita."
@@ -292,7 +292,7 @@
 	</toolbar>
 	<!-- MEDIA WINDOW -->
 	<toolbar name="CMediaFrame.Basic">
-		<button id="ID_MEDIA_PLAY" text="Play"/>
+		<button id="ID_MEDIA_PLAY" text="Play&#160;&#160;&#160;"/>
 		<button id="ID_MEDIA_PAUSE" text="Pausa" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
@@ -309,7 +309,7 @@
 		<button id="ID_MEDIA_PLAYLIST" text="Playlist"/>
 	</toolbar>
 	<toolbar name="CMediaFrame">
-		<button id="ID_MEDIA_PLAY" text="Play"/>
+		<button id="ID_MEDIA_PLAY" text="Play&#160;&#160;&#160;"/>
 		<button id="ID_MEDIA_PAUSE" text="Pausa" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
@@ -410,9 +410,22 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Chiudi finestra"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="_Schermo intero"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Ripristina"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimizza"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Chiudi finestra"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
-		<menu text="Rete">
+		<menu text="_Rete">
 			<item id="ID_NETWORK_CONNECT" text="Connetti" shortcut="Ctrl+G"/>
 			<separator/>
 			<menu text="Connetti alla rete">
@@ -424,26 +437,27 @@
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Esci al termine dei trasferimenti"/>
 			<item id="ID_NETWORK_EXIT" text="Esci"/>
 		</menu>
-		<menu text="Visualizza">
-			<item id="ID_TAB_HOME" text="Pagina iniziale"/>
-			<item id="ID_TAB_LIBRARY" text="Libreria"/>
-			<item id="ID_TAB_MEDIA" text="Media Player"/>
-			<item id="ID_TAB_SEARCH" text="Cerca"/>
-			<item id="ID_TAB_TRANSFERS" text="Download"/>
+		<menu text="_Visualizza">
+			<item id="ID_TAB_HOME" text="Pagina _iniziale"/>
+			<item id="ID_TAB_LIBRARY" text="_Libreria"/>
+			<item id="ID_TAB_MEDIA" text="_Media player"/>
+			<item id="ID_TAB_SEARCH" text="_Cerca"/>
+			<item id="ID_TAB_TRANSFERS" text="_Download"/>
+			<item id="ID_WINDOW_REMOTE" text="Controllo _remoto"/>
 			<separator/>
-			<menu text="Avanzate">
-			<item id="ID_VIEW_NEIGHBOURS" text="Host"/>
-			<item id="ID_VIEW_UPLOADS" text="Upload"/>
-			<separator/>
-			<item id="ID_VIEW_SECURITY" text="Sicurezza"/>
-			<item id="ID_VIEW_HOSTS" text="Cache host"/>
-			<item id="ID_VIEW_DISCOVERY" text="Scoperta"/>
+			<menu text="A_vanzate">
+				<item id="ID_VIEW_NEIGHBOURS" text="_Host"/>
+				<item id="ID_VIEW_UPLOADS" text="_Upload"/>
+				<separator/>
+				<item id="ID_VIEW_SECURITY" text="_Sicurezza"/>
+				<item id="ID_VIEW_HOSTS" text="_Cache host"/>
+				<item id="ID_VIEW_DISCOVERY" text="Sco_perta"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Modalità normale"/>
-			<item id="ID_VIEW_TABBED" text="Modalità avanzata"/>
+			<item id="ID_VIEW_BASIC" text="Modalità _normale"/>
+			<item id="ID_VIEW_TABBED" text="Modalità _avanzata"/>
 		</menu>
-		<menu text="Strumenti">
+		<menu text="_Strumenti">
 			<item id="ID_LIBRARY_FOLDERS" text="Condividi file..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Scarica file..."/>
 			<separator/>
@@ -478,7 +492,7 @@
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
-		<menu text="Rete">
+		<menu text="_Rete">
 			<item id="ID_NETWORK_CONNECT" text="Connetti" shortcut="Ctrl+G"/>
 			<item id="ID_NETWORK_DISCONNECT" text="Disconnetti"/>
 			<separator/>
@@ -494,10 +508,10 @@
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Esci al termine dei trasferimenti"/>
 			<item id="ID_NETWORK_EXIT" text="Esci"/>
 		</menu>
-		<menu text="Visualizza">
+		<menu text="_Visualizza">
 			<item id="ID_TAB_HOME" text="Pagina iniziale"/>
 			<item id="ID_TAB_LIBRARY" text="Libreria"/>
-			<item id="ID_TAB_MEDIA" text="Media Player"/>
+			<item id="ID_TAB_MEDIA" text="Media player"/>
 			<item id="ID_TAB_SEARCH" text="Cerca"/>
 			<item id="ID_TAB_TRANSFERS" text="Trasferimenti"/>
 			<item id="ID_TAB_NETWORK" text="Rete"/>
@@ -507,7 +521,7 @@
 			<separator/>
 			<menu text="Avanzate">
 				<item id="ID_VIEW_SYSTEM" text="Sistema" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="Host" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="Host" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="Download" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="Upload" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="Libreria" shortcut="F5"/>
@@ -527,7 +541,7 @@
 			<item id="ID_VIEW_TABBED" text="Modalità a tabelle"/>
 			<item id="ID_VIEW_WINDOWED" text="Modalità a finestre"/>
 		</menu>
-		<menu text="Strumenti">
+		<menu text="_Strumenti">
 			<item id="ID_LIBRARY_FOLDERS" text="Condividi file..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Scarica file..."/>
 			<separator/>
@@ -539,7 +553,7 @@
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="Opzioni di Shareaza..."/>
 		</menu>
-		<menu text="Finestra">
+		<menu text="_Finestra">
 			<item id="ID_WINDOW_NAVBAR" text="Mostra barra di navigazione"/>
 			<item id="ID_WINDOW_TOOLBAR" text="Mostra barra degli strumenti"/>
 			<item id="ID_WINDOW_TABBAR" text="Mostra barra di stato"/>
@@ -562,14 +576,14 @@
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Informazioni su Shareaza..."/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
-		<menu text="Rete">
+		<menu text="_Rete">
 			<item id="ID_NETWORK_SEARCH" text="Nuova ricerca..." shortcut="Ctrl+S"/>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT" text="Connetti" shortcut="Ctrl+G"/>
@@ -587,9 +601,9 @@
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Esci al termine dei trasferimenti"/>
 			<item id="ID_NETWORK_EXIT" text="Esci"/>
 		</menu>
-		<menu text="Visualizza">
+		<menu text="_Visualizza">
 			<item id="ID_VIEW_SYSTEM" text="Sistema" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="Host" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="Host" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="Download" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="Upload" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="Libreria" shortcut="F5"/>
@@ -608,7 +622,7 @@
 			<item id="ID_VIEW_TABBED" text="Modalità a tabelle"/>
 			<item id="ID_VIEW_WINDOWED" text="Modalità a finestre"/>
 		</menu>
-		<menu text="Strumenti">
+		<menu text="_Strumenti">
 			<item id="ID_LIBRARY_FOLDERS" text="Condividi file..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Scarica file..."/>
 			<separator/>
@@ -620,7 +634,7 @@
 			<item id="ID_TOOLS_WIZARD" text="Configurazione guidata..."/>
 			<item id="ID_TOOLS_SETTINGS" text="Opzioni di Shareaza..."/>
 		</menu>
-		<menu text="Finestra">
+		<menu text="_Finestra">
 			<item id="ID_WINDOW_CASCADE" text="Schermo intero"/>
 			<item id="ID_WINDOW_TILE_HORZ" text="Disponi orizzontalmente"/>
 			<item id="ID_WINDOW_TILE_VERT" text="Disponi verticalmente"/>
@@ -647,7 +661,7 @@
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Informazioni su Shareaza..."/>
@@ -693,7 +707,7 @@
 		<item id="ID_VIEW_DOWNLOADS" text="Download"/>
 		<item id="ID_VIEW_UPLOADS" text="Upload"/>
 		<item id="ID_VIEW_LIBRARY" text="Libreria"/>
-		<item id="ID_VIEW_MEDIA" text="Media Player"/>
+		<item id="ID_VIEW_MEDIA" text="Media player"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Sicurezza"/>
 		<item id="ID_VIEW_HOSTS" text="Cache host"/>
@@ -1308,20 +1322,21 @@
 		<item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Film)"/>
 	</menu>
 	<menu name="CMediaList">
-		<item id="ID_MEDIA_SELECT" text="Play"/>
+		<item id="ID_MEDIA_SELECT" text="_Play"/>
 		<separator/>
-		<item id="ID_MEDIA_ADD" text="Aggiungi file..."/>
-		<item id="ID_MEDIA_ADD_FOLDER" text="Aggiungi cartella..."/>
-		<item id="ID_MEDIA_REMOVE" text="Rimuovi"/>
+		<item id="ID_MEDIA_ADD" text="_Aggiungi file..."/>
+		<item id="ID_MEDIA_ADD_FOLDER" text="Aggiungi _cartella..."/>
+		<item id="ID_MEDIA_REMOVE" text="_Rimuovi"/>
 		<separator/>
 		<item id="ID_MEDIA_RANDOM" text="Modalità casuale"/>
 		<item id="ID_MEDIA_REPEAT" text="Modalità ripetizione"/>
 		<separator/>
-		<item id="ID_MEDIA_OPEN" text="Apri playlist..."/>
-		<item id="ID_MEDIA_SAVE" text="Salva playlist..."/>
-		<item id="ID_MEDIA_CLEAR" text="Svuota playlist"/>
+		<item id="ID_MEDIA_OPEN" text="Apri play_list..."/>
+		<item id="ID_MEDIA_SAVE" text="_Salva playlist..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="_Esporta collezione..."/>
+		<item id="ID_MEDIA_CLEAR" text="S_vuota playlist"/>
 		<separator/>
-		<item id="ID_MEDIA_PLAYLIST" text="Mostra playlist"/>
+		<item id="ID_MEDIA_PLAYLIST" text="_Mostra playlist"/>
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
@@ -1531,8 +1546,8 @@
 		<gap size="8"/>
 		<heading align="middle">D O W N L O A D</heading>
 		<newline gap="8" indent="42"/>
-		<text>Per aprire la cartella con i tuoi download </text>
-		<link target="raza:shell:downloads">fai click qui</link>
+		<text>Per aprire la cartella con i tuoi download fai click </text>
+		<link target="raza:shell:downloads">qui</link>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -1722,7 +1737,7 @@
 		<text>Presentazione, gestione e apertura dei file della libreria.</text>
 		<newline gap="10"/>
 
-		<link target="raza:page:CMediaSettingsPage" format="b">Media Player:</link>
+		<link target="raza:page:CMediaSettingsPage" format="b">Media player:</link>
 		<gap size="4"/>
 		<text>Quando e dove usare lo Shareaza Media Centre integrato.</text>
 		<newline gap="10"/>
@@ -1900,8 +1915,8 @@
 		<text format="b">Seleziona un download</text>
 		<newline gap="8"/>
 		<text>Questa è la cartella ove vengono visualizzati i file da scaricare. Puoi visualizzare
-		i sorgenti da cui scaricare espandendo ogni file col piccolo + sulla sinistra.</text>
-		<newline gap="8"/>
+		i sorgenti da cui scaricare espandendo ogni file col piccolo + sulla sinistra.</text> 
+		<newline gap="8"/> 
 		<text>Puoi usare questo comando per ottenere informazioni di supporto su un download.  Devi
 		semplicemente selezionare un download e scegliere nuovamente questo comando.</text>
 	</document>
@@ -1924,7 +1939,7 @@
 		<text format="b">Questo download è in pausa</text>
 		<newline gap="8"/>
 		<text>Hai sospeso il trasferimento di questo file.  Se vuoi riprendere il download, puoi
-		cliccare sul comando </text><text format="b">Riprendi </text><text>.</text>
+		cliccare sul comando '</text><text format="b">Riprendi</text><text>'.</text>
 	</document>
 
 	<document name="DownloadHelp.DiskFull">
@@ -1949,8 +1964,8 @@
 		<text format="b">Questo download è attivo!</text>
 		<newline gap="8"/>
 		<text>Questo download è attualmente in progresso.  Se il trasferimento è troppo lento,
-		puoi provare a cercare nella rete più fonti con il comando </text>
-		<text format="b">Trova più fonti</text><text>.  Se la velocità non
+		puoi provare a cercare nella rete più fonti con il comando '</text>
+		<text format="b">Trova più fonti</text><text>'.  Se la velocità non
 		migliora allora potrebbe essere a causa della velocità di upload degli utenti da cui stai
 		scaricando.  La velocità di trasferimento di solito aumenta nel corso del tempo.</text>
 	</document>
@@ -2007,7 +2022,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-
+	
 	<document name="UploadHelp">
 		<text format="b">Area di Upload</text>
 		<newline gap="8"/>
@@ -2033,7 +2048,7 @@
 		<newline gap="8"/>
 		<text>Il disco o la cartella di cui Shareaza necessita non può essere scritta.</text>
 		<newline gap="8"/>
-		<text>Un drive di rete può essere disconnesso, o non hai il permesso di scrittura
+		<text>Un drive di rete può essere disconnesso, o non hai il permesso di scrittura 
 		nella cartella selezionata. Controlla le cartelle e i permessi, o cambia la posizione
 		dei file temporanei.</text>
 	</document>
@@ -2101,7 +2116,7 @@
 		ai client che non condividono o preferenzia l'invio a condivisori conosciuti.</text>
 		<newline/>
 		<text>Fortunatamente, la connessioni DSL a banda larga sono a due vie:
-		allocano separatamente l'invio e la ricezione. Se il client è configurato correttamente,
+		allocano separatamente l'invio e la ricezione. Se il client è configurato correttamente, 
 		dovresti essere in grado di inviare a buona velocità mantenendo la piena velocità di scaricamento.</text>
 		<newline gap="8"/>
 		<text>Di default, il limite di invio è fissato a circa 85% della banda di invio disponibile,
@@ -2116,10 +2131,10 @@
 		<newline gap="8"/>
 		<text>Questa ricerca è malformattata, e potrebbe non funzionare correttamente.
 		Le ricerche dovrebbero includere molti termini dove possibile, e specificare uno schema
-		(tipo file). Inoltre, le ricerche non devono essere limitate a numeri o
+		(tipo file). Inoltre, le ricerche non devono essere limitate a numeri o 
 		solo termini negativi, e si dovrebbero evitare ricerche generalizzate.</text>
 		<newline gap="8"/>
-		<text>La maggior parte dei client nella rete ignora una ricerca per tutti i file MP3, ad esempio,
+		<text>La maggior parte dei client nella rete ignora una ricerca per tutti i file MP3, ad esempio, 
 		in quanto non è abbastanza specifica, e potrebbe generare troppi risultati.</text>
 	</document>
 
@@ -2133,7 +2148,7 @@
 		anche altri termini quando fai una ricerca. La punteggiatura e i caratteri jolly non sono usati
 		nelle ricerche, solo il testo che digiti.</text>
 	</document>
-
+  	 
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Riformula la ricerca per favore</text>
 		<newline gap="8"/>
@@ -2301,10 +2316,9 @@
 	<tip id="ID_LIBRARY_DELETE" message="Elimina permanentemente i file selezionati."/>
 	<tip id="ID_LIBRARY_ENQUEUE" message="Aggiungi i file selezionati alla playlist."/>
 	<tip id="ID_LIBRARY_EXPLORE" message="Apri le cartelle selezionate."/>
-	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Esporta la cartella album selezionata a un file di collezione..."/>
+	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Esporta la cartella album selezionata a file di collezione..."/>
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Scarica tutti i file nella collezione selezionata."/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Aggiungi ogni file della cartella selezionata nella playlist."/>
-	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Esporta la cartella album selezionata come un file di collezione..."/>
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Visualizza e modifica le proprietà di tutti i file nelle cartelle selezionate..."/>
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Applica metadata comuni dalla cartella album a tutti i suoi file."/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="Crea una nuova cartella album..."/>
@@ -2348,6 +2362,7 @@
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Utilizza il formato video originale."/>
 	<tip id="ID_MEDIA_CLEAR" message="Svuota la playlist."/>
 	<tip id="ID_MEDIA_CLOSE" message="Chiudi il file multimediale corrente, liberando la memoria."/>
+	<tip id="ID_MEDIA_EXPORT_COLLECTION" message="Salva la playlist come file di collezione..."/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="Modalità video a schermo intero."/>
 	<tip id="ID_MEDIA_MUTE" message="Muto"/>
 	<tip id="ID_MEDIA_NEXT" message="Passa al file successivo nella playlist corrente." tip="File successivo"/>
@@ -2510,15 +2525,18 @@
 	<string id="WINDOW_DISCOVERY" value="Servizi di connessione"/>
 	<string id="WINDOW_BROWSEHOST" value="Scansione di"/>
 	<string id="WINDOW_HOME" value="Pagina iniziale di Shareaza"/>
-	<string id="WINDOW_MEDIA" value="Media Player"/>
+	<string id="WINDOW_MEDIA" value="Media player"/>
 	<string id="WINDOW_SEARCHPAD" value="Ricerca"/>
 	<string id="WINDOW_HELP" value="Aiuto di Shareaza"/>
 	<string id="7000" value="Sei sicuro di voler cancellare questo filtro ?"/>
-	<string id="7001" value="&amp;Schemi"/>
-	<string id="7002" value="Valori multipli"/>
+	<string id="7001" value="&amp;Schemi"/>	
+	<string id="7002" value="Valori multipli"/>	
 	<string id="7003" value="Multiplo"/>
 	<string id="7004" value="C'è già un filtro chiamato &quot;%s&quot;, vuoi sostituirlo?"/>
 	<string id="7005" value="Dai un nome al filtro."/>
+	<string id="7100" value="Questo template non è valido."/>
+	<string id="7101" value="Questo template non ha nessuna personalizzazione."/>
+	<string id="7102" value="Sei sicuro di voler cancellare il template &quot;%s&quot;?\nNon può essere annullato."/>
 	<string id="8000" value="Opzioni di Shareaza"/>
 	<string id="8001" value="Benvenuto su Shareaza"/>
 	<string id="8002" value="Proprietà file"/>
@@ -2531,6 +2549,7 @@
 	<string id="8009" value="Desideri eliminare la skin &quot;%s&quot;?  Quest'azione non potrà essere annullata."/>
 	<string id="8010" value="Questa è una versione pre-release di Shareaza e il periodo di beta testing è scaduto.  Scarica la versione completa e ufficiale da www.shareaza.com."/>
 	<string id="8011" value="Cambiando la visualizzazione qualsiasi finestra aperta si chiuderà. Desideri cambiare ora?"/>
+	<string id="8012" value="Informazioni sul torrent"/>
 	<string id="8060" value="Modalità Hub/Ultrapeer con %lu vicino(i).  %s nella libreria locale."/>
 	<string id="8061" value="Modalità Ultrapeer con %lu vicino(i).  %s nella libreria locale."/>
 	<string id="8062" value="Modalità Hub con %lu vicino(i).  %s nella tua libreria locale."/>
@@ -2594,7 +2613,7 @@
 	<string id="8177" value="Inserisci qui la tua ricerca:"/>
 	<string id="8178" value="Che tipo di file è?"/>
 	<string id="8179" value="(Cancella parole ricercate)"/>
-	<string id="8180" value="La dimens. del file deve essere"/>
+	<string id="8180" value="La dimens. del file deve essere"/>	
 	<string id="8181" value="&#160;a"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza sta calcolando l'hash per %i file:"/>
 	<string id="8223" value="%i giorni e %i ore"/>
@@ -2616,9 +2635,10 @@
 	<string id="8240" value="Shareaza sta spostando il download:"/>
 	<string id="8241" value="Shareaza sta verificando il download alla ricerca di eventuali errori:"/>
 	<string id="8243" value="Volume inviato:"/>
+	<string id="8244" value="Numero di revisioni:"/>
 	<string id="8288" value="Libreria di Shareaza"/>
-	<string id="8289" value=""/>
-	<string id="8290" value="Contenuto di %i cartelle"/>
+	<string id="8289" value="Esplorazione"/>
+	<string id="8290" value="Esplorazione del contenuto di %i cartelle"/>
 	<string id="8291" value="Cartelle multiple"/>
 	<string id="8292" value="%i file selezionati"/>
 	<string id="8293" value="Nessun file selezionato"/>
@@ -2638,7 +2658,7 @@
 	<string id="8316" value="Hits"/>
 	<string id="8317" value="Upload"/>
 	<string id="8318" value="%lu oggi, %lu totale"/>
-	<string id="8319" value="&#160;(No hashset)"/>
+	<string id="8319" value="No hashset"/>
 	<string id="8320" value="Stato:"/>
 	<string id="8321" value="Velocità:"/>
 	<string id="8322" value="URL:"/>
@@ -2656,6 +2676,7 @@
 	<string id="8334" value="I sorgenti di questo file sono al momento occupati"/>
 	<string id="8335" value="I sorgenti di questo file sono firewallati"/>
 	<string id="8336" value="I sorgenti di questo file possono essere instabili"/>
+	<string id="8337" value="Non sicuro"/>
 	<string id="16064" value="Avvio del nucleo della rete in corso..."/>
 	<string id="16065" value="Impossibile connettere a %s porta %i per le connessioni in entrata.  Le connessioni in entrata non saranno supportate."/>
 	<string id="16066" value="Chiusura del nucleo della rete in corso..."/>
@@ -2689,14 +2710,12 @@
 	<string id="16137" value="Rifiuto di una connessione duplicata da %s."/>
 	<string id="16138" value="Sei già connesso a %s, non si stabilirà una seconda connessione."/>
 	<string id="16139" value="L'host %s ha chiuso la connessione (%i : %s)."/>
-	<string id="16140" value="L'host %s sta navigando nelle connessioni."/>
 	<string id="16141" value="Connessione con l'host %s chiusa perchè non è un hub."/>
 	<string id="16144" value="Tempo scaduto durante il collegamento con %s."/>
 	<string id="16145" value="La connessione con l'host %s è stata stabilita con successo (G%i.%i : %s)."/>
 	<string id="16146" value="La negoziazione con %s è fallita a causa di dati non corretti sulla linea."/>
 	<string id="16147" value="Chiusura della connessione in eccedenza da %s con host hint (%s porta %i)."/>
 	<string id="16148" value="Connessione con %s rifiutata (%s)."/>
-	<string id="16149" value="Negoziazione 0.6 con %s fallita, nuovo tentativo con 0.4."/>
 	<string id="16150" value="Chiusura della connessione in surplus da %s."/>
 	<string id="16151" value="Connessione da %s rifiutata perchè è un nodo leaf protetto."/>
 	<string id="16152" value="L'host hub %s non ti accetta come hub, chiusura della connessione."/>
@@ -2908,6 +2927,8 @@
 	<string id="16533" value="Totale banda trasmissione TCP"/>
 	<string id="16534" value="Totale banda ricezione UDP"/>
 	<string id="16535" value="Totale banda trasmissione UDP"/>
+	<string id="16536" value="Rapporto dei ping ricevuti/inviati sulla rete Gnutella"/>
+	<string id="16537" value="Rapporto dei pong ricevuti/inviati sulla rete Gnutella"/>
 	<string id="16768" value="URL &quot;%s&quot; ricevuto"/>
 	<string id="16769" value="Impossibile analizzare l'URL: Shareaza non riesce a leggere questo URL."/>
 	<string id="16770" value="Impossibile mostrare il dialogo di azione dell'URL perchè Shareaza è occupato."/>
@@ -2938,6 +2959,10 @@
 	<string id="16809" value="E&amp;sci"/>
 	<string id="16810" value="anni"/>
 	<string id="16811" value="Automatico"/>
+	<string id="16812" value="Attendere: Ricerca e impostazione dei dispositivi UPnP..."/>
+	<string id="16813" value="Attendere: Aggiornamento dei servizi di connessione..."/>
+	<string id="16814" value="Attendere: Aggiornamento della lista dei server eDonkey2000..."/>
+	<string id="16815" value="Il servizio Host di periferiche Plug and Play universali non è attivo. Questo servizio è richiesto per effettuare la configurazione.\nDevi impostare il tipo di avvio del Servizio di rilevamento SSDP su automatico."/>
 	<string id="16816" value="La rete eDonkey usa grandi code con lunghi tempi di attesa. Limitando la posizione massima in coda accetti questo, puoi avere problemi nella partenza dei download.\nSei sicuro di voler limitare la posizione in coda da accettare?"/>
 	<string id="16817" value="Windows non supporta i percorsi più lunghi di 256 caratteri.\nSeleziona una cartella con un percorso più corto."/>
 	<string id="16818" value="Le cartelle dei file completi e incompleti non dovrebbero essere la stessa"/>
@@ -2965,6 +2990,7 @@
 	<string id="16942" value="Chiusura della connessione per l'esame dell'host %s."/>
 	<string id="16943" value="Scansione di %s"/>
 	<string id="16944" value="%i file condivisi trovati nella libreria di %s."/>
+	<string id="16991" value="Lettore multimediale di Shareaza"/>
 	<string id="16992" value="Shareaza non riesce ad instanziare il plugin MediaServices. Reinstalla Shareaza e assicurati di avere i codec multimediali e i driver di uscita installati."/>
 	<string id="16993" value="Tutti i file multimediali|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlist|*.asx;*.wax;*.m3u;*.wvx;*.wmx|File audio|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|File video|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Tracce CD audio|*.cda|File MIDI|*.mid;*.rmi;*.midi|Tutti i file|*.*||"/>
 	<string id="16994" value="Impossibile caricare il file multimediale &quot;%s&quot;"/>
@@ -3060,7 +3086,7 @@
 	<string id="17473" value="Tempo scaduto per la connessione al client BitTorrent %s."/>
 	<string id="17474" value="Tempo scaduto per la negoziazione con il client BitTorrent %s."/>
 	<string id="17475" value="Chiusura dell'aggancio BitTorrent con %s per mancanza di traffico."/>
-	<string id="17476" value="L'aggancio BitTorrent con %s fallisce perchè il client remoto ha una GUID diversa."/>
+	<string id="17476" value="L'aggancio BitTorrent con %s fallisce perchè il client remoto ha un Peer ID diverso."/>
 	<string id="17477" value="L'aggancio BitTorrent con %s ha risposto con il file sbagliato."/>
 	<string id="17478" value="L'aggancio BitTorrent con %s ha richiesto un file sconosciuto."/>
 	<string id="17479" value="L'aggancio BitTorrent con %s è stabilito per &quot;%s&quot;."/>
@@ -3084,6 +3110,14 @@
 	<string id="17498" value="È stato rivelato un errore nel file &quot;%s&quot;."/>
 	<string id="17500" value="Il tracker non ha risposto - Riprova annuncio (%i di %i)"/>
 	<string id="17501" value="Impossibile comunicare con il tracker"/>
+<string id="17503" value="Tracker failed - Trying next tracker (%i of %i)"/>
+<string id="17505" value="BitTorrent connection to %s was dropped."/>
+<string id="17506" value="BitTorrent handshake with %s was dropped."/>
+<string id="17507" value="BitTorrent coupling with %s was dropped."/>
+<string id="17510" value="BitTorrent coupling with %s not accepted, a connection to this client already exists."/>
+<string id="17511" value="BitTorrent coupling with %s not accepted, maximum connections reached."/>
+<string id="17512" value="Private torrent"/>
+<string id="17513" value="Encoding error"/>
 	<string id="18496" value="Hai modificato il nome del file.  Desideri rinominare questo download?"/>
 	<string id="18497" value="Hai inserito un hash SHA1 non valido.  Controlla e riprova di nuovo."/>
 	<string id="18498" value="Hai inserito un hash tiger-tree root non valido.  Controlla e riprova di nuovo."/>
@@ -3099,16 +3133,22 @@
 	<string id="18508" value="Rimozione della fonte %s per &quot;%s&quot; perchè la posizione in coda %i è troppo elevata."/>
 	<string id="18509" value="Non puoi simulare questo download come completo e riverificarlo perchè non sono presenti dati di verifica parziale, come un volume tiger-tree, un hashset eDonkey o un hashset BitTorrent.  Senza le informazioni di verifica il download non può essere riverificato."/>
 	<string id="18510" value="Desideri simulare questo download come completo e riverificarlo?  Verrà considerato il file intero e Shareaza accetterà le parti che riescono a passare la verifica e riscaricherà le parti che falliscono la verifica."/>
+	<string id="18511" value="Hai cambiato la dimensione del file.  Sei sicuro di voler cambiare la dimensione del file per questo download?"/>
 	<string id="19000" value="Accesso remoto è disabilitato."/>
 	<string id="19001" value="Devi scegliere un nome utente e password."/>
 	<string id="19002" value="Impossibile accettare connessioni, URL non disponibile."/>
 	<string id="20000" value="Nessuna URN disponibile"/>
+	<string id="20001" value="Chiudi"/>
 	<string id="20002" value="di"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Cambiare la direzione dell'interfaccia richiede il riavvio di Shareaza. \nDovrai lanciare Shareaza manualmente. Vuoi uscire ora?"/>
 	<string id="20004" value="Le lingue da destra-a-sinistra non sono supportate dal tuo sistema operativo."/>
 	<string id="20005" value="No"/>
 	<string id="20006" value="Sì"/>
 	<string id="20007" value="Auto"/>
+	<string id="20008" value="Default"/>
+	<string id="20009" value="Personalizzato"/>
+	<string id="20010" value="&amp;Indietro"/>
+	<string id="20011" value="&amp;Avanti"/>
 	<string id="20100" value="Connessione"/>
 	<string id="20101" value="Richiesta"/>
 	<string id="20102" value="Risposta"/>
@@ -3228,18 +3268,20 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media player">
 		<control caption="_Opzioni:"/>
-		<control caption="Usa Shareaza Media Player per RIPRODURRE i tipi di file elencati di seguito"/>
-		<control caption="Usa Shareaza Media Player per ACCODARE i tipi di file elencati di seguito"/>
+		<control/>
+		<control caption="Usa Shareaza media player per RIPRODURRE i tipi di file elencati di seguito"/>
+		<control caption="Usa Shareaza media player per ACCODARE i tipi di file elencati di seguito"/>
 		<control caption="_Tipi di file:"/>
 		<control/>
 		<control caption="_Aggiungi"/>
 		<control caption="_Rimuovi"/>
 		<control caption="Plugin di _visualizzazione audio:"/>
 		<control caption="_Seleziona plugin..."/>
-		<control caption="_Plugin servizi multimediali:"/>
-		<control/>
+		<control caption="Gestione dei file _multimediali"/>
+		<control caption="Scegli il media player:"/>
+		<control caption="Avvertimento: Scegliendo un media player esterno saranno automaticamente disabilitati tutti i plugin di visualizzazione e multimediali!"/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Comunità">
@@ -3271,7 +3313,7 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Connessione">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connessione">
 		<control caption="Indirizzi in _entrata:"/>
 		<control caption="Indirizzo:"/>
 		<control caption="Automatico"/>
@@ -3290,6 +3332,7 @@
 		<control caption="Posso accettare conn. in entrata"/>
 		<control/>
 		<control caption="Ignora indirizzi IP privati/locali"/>
+		<control caption="Abilita l'impostazione dei dispositivi UPnP"/>
 		<control caption="_Timeout:"/>
 		<control caption="Connessione:"/>
 		<control/><control/>
@@ -3353,7 +3396,7 @@
 		<control caption="Scegli una password:"/>
 		<control/>
 	</dialog>
-
+	
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
 		<control caption="Opzioni:"/>
 		<control caption="_Abilita schedulatore"/>
@@ -3411,7 +3454,7 @@
 		<control caption="Modalità:"/>
 		<control caption="Ottimale|Leaf|Ultrapeer"/>
 		<control caption="Connessioni G_1:"/>
-		<control caption="Leaf a Ultrapeer:"/>
+		<control caption="Leaf a Ultrapeer:"/>		
 		<control/><control/>
 		<control caption="Ultrapeer a Leaf:"/>
 		<control/><control/>
@@ -3565,7 +3608,7 @@
 		<control caption="Gestisci collegamenti ai torrent."/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Benvenuto su Shareaza [3 di 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Benvenuto su Shareaza [3 di 7]">
 		<control caption="Per prestazioni ottimali, Shareaza ha bisogno di conoscere il tipo della tua connessione a Internet."/>
 		<control caption="&#160;( seleziona )| Uso Internet a casa| Uso Internet in una LAN universitaria| Uso Internet in una LAN aziendale| Uso Internet in un albergo o all'aeroporto"/>
 		<control caption="La rete è protetta da un firewall o da un router NAT?"/>
@@ -3575,6 +3618,8 @@
 		<control caption="Se sai la velocità della tua connessione Internet, seleziona l'opzione migliore qui sotto:"/>
 		<control caption="| Modem analogico| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Modem via cavo/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="O scegli:"/>
+		<control/>
+		<control caption="Stato:"/>
 		<control/>
 	</dialog>
 
@@ -3790,9 +3835,9 @@
 		<control caption="_Salva come"/>
 		<control caption="_Cancella"/>
 		<control caption="Filtri:"/>
-		<control caption="DRM files"/>
-		<control caption="Suspicious files"/>
-		<control caption="Adult results"/>
+		<control caption="File DRM"/>	
+		<control caption="File sospetti"/>	
+		<control caption="Risultati per adulti"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Salva il filtro come">
@@ -3806,7 +3851,7 @@
 		<control caption="_Indirizzo servizio:"/>
 		<control/>
 		<control caption="Tipo servizio di ricerca:"/>
-		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
+		<control caption="Gnutella Bootstrap|GWebCache|URL server.met"/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>
 	</dialog>
@@ -3977,10 +4022,10 @@
 		<control caption="Annulla"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copia URI">
+	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="Copia URI">
 		<control/>
 		<control caption="Puoi copiare una URI per l'elemento selezionato in una varietà di formati diversi.  Scegli il formato che vuoi utilizzare cliccando su uno degli URI seguenti:"/>
-		<control/><control/><control/>
+		<control/><control/><control/><control/>
 		<control caption="Includi _me stesso come fonte stabile nell'URL"/>
 		<control caption="Annulla"/>
 	</dialog>
@@ -4053,7 +4098,7 @@
 		<control caption="OK"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Download di un file esistente">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Download di un file esistente">
 		<control/><control/><control/><control/>
 		<control caption="Questo file è già presente nella tua libreria.  Cosa desideri fare?"/>
 		<control caption="Mostrami il file nella libreria"/>
@@ -4062,6 +4107,7 @@
 		<control caption="OK"/>
 		<control caption="Annulla"/>
 		<control caption="Hai scaricato ed eliminato questo file precedentemente.  Cosa desideri fare?"/>
+		<control caption="Avvertimento!!! Rilevati file duplicati. Un software malevolo potrebbe aver infettato la tua libreria. Assicurati di aver scaricato questo file o di averlo messo maualmente. Altrimenti, chiudi Shareaza e scansiona il tuo computer con un programma antivirus."/>
 	</dialog>
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Pulsante di chiusura">
@@ -4104,29 +4150,43 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Esporta cartella">
-		<control caption="Questa funzione serve per esportare il contenuto di una cartella album come una ricca collezione di file."/>
-		<control caption="Esporta..."/>
-		<control caption="Annulla"/>
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Esporta collezione">
+		<control caption="Questa funzione serve per esportare il contenuto di una cartella o di una playlist come una collezione di file.  Seleziona un template e premi Avanti per continuare.|Personalizza la tua collezione inserendo i dati qui sotto."/>
+		<control/>
+		<control caption="Informazioni sul template:"/>
+		<control caption="Nome:"/>
+		<control/>
+		<control caption="Autore:"/>
+		<control/>
+		<control caption="Descrizione:"/>
+		<control/>
+		<control caption="Cancella|_Indietro"/>
+		<control caption="_Avanti|Esporta..."/>
+		<control caption="A_nnulla"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Modifica download (Avanzato)">
+	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Modifica download">
 		<control caption="ATTENZIONE: Questa finestra fornisce funzionalità di modifica dei download avanzate per utenti esperti e se usata in modo errato può causare danni."/>
-		<control caption="_Nome del file:"/>
+		<control caption="Nome del file e _dimensione:"/>
+		<control caption="Nome del file:"/>
+		<control/><control/>	
+		<control caption="Dimensione (Byte):"/>
 		<control/>
 		<control caption="_URN:"/>
+		<control caption="Sicuro"/>
 		<control caption="SHA1:"/>
-		<control/>
+		<control/><control/>
 		<control caption="Tiger-Root:"/>
-		<control/>
+		<control/><control/>
 		<control caption="ED2K:"/>
-		<control/>
+		<control/><control/>
 		<control caption="_Azioni:"/>
 		<control caption="Azzera stato di verifica attuale e verifica di nuovo"/>
 		<control caption="Simula il file completo al 100% e verifica di nuovo"/>
 		<control caption="Rimuovi tutte le fonti conosciute"/>
+		<control caption="Unisci con il file locale e verifica"/>
 		<control caption="_Cancella dati:"/>
-		<control caption="Cancella byte:"/>
+		<control caption="Range di byte:"/>
 		<control/>
 		<control caption="a"/>
 		<control/>
@@ -4146,7 +4206,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Informazioni avanzate di BitTorrent">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Generale">
 		<control caption="_Informazioni del torrent:"/>
 		<control caption="Nome:"/>
 		<control/>
@@ -4156,21 +4216,39 @@
 		<control/>
 		<control caption="Commenti:"/>
 		<control/>
+		<control caption="Trasferimenti:"/>	
+		<control caption="Avvia nuovi download:"/>	
+		<control caption="&#160;Quando necessario| Quando il rapp. DL/UL supera il 100%| Solo quando richiesto| Mai"/>	
+		<control/>	
+		<control caption="Totale inviato:"/>	
+		<control caption="Note:"/>	
+		<control/>	
+	</dialog>	
+
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="File">	
+		<control caption="_Informazioni del torrent:"/>	
+		<control caption="Nome:"/>	
+		<control/>	
+		<control caption="_File:"/>	
+		<control/>	
+	</dialog>	
+
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Tracker">	
+		<control caption="_Informazioni del torrent:"/>	
+		<control caption="Nome:"/>	
+		<control/>
 		<control caption="Tracker:"/>
 		<control/>
-		<control caption="_Utenti che scaricano:"/>
+		<control caption="Tracker _corrente:"/>
 		<control caption="Completi (condivisi):"/>
 		<control/>
 		<control caption="Incompleti:"/>
 		<control/>
-		<control caption="Trasferimenti:"/>
-		<control caption="Avvia nuovi download:"/>
-		<control caption="Quando necessario|Quando il rapp. DL/UL supera il 100%|Solo quando richiesto|Mai"/>
-		<control caption="_File:"/>
-		<control/>
 		<control caption="_Aggiorna"/>
+		<control caption="_Tracker:"/>
 		<control/>
-		<control caption="Chiudi"/>
+		<control caption="Modalità tracker:"/>	
+		<control caption="Disabilitato|Personalizzato|Tracker singolo|Multi-tracker|Multi-tracker (bloccato)"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Proprietà gruppo di download">
@@ -4332,9 +4410,14 @@
 		<column from="URL" to="URL"/>
 		<column from="Expires" to="Scadenza"/>
 	</list>
-	<list name="CTorrentTrackerList">
+	<list name="CTorrentFileList">
 		<column from="Filename" to="Nome file"/>
 		<column from="Size" to="Dimensione"/>
+	</list>
+	<list name="CTorrentTrackerList">	
+		<column from="Tracker" to="Tracker"/>	
+		<column from="Status" to="Stato"/>	
+		<column from="Type" to="Tipo"/>	
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="Utente"/>
