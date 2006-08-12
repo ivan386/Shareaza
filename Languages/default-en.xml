@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.2.27"
+		version="2.2.2.28"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2962,7 +2962,7 @@
 	<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
 	<string id="16813" value="Please wait: Updating discovery services..."/>
 	<string id="16814" value="Please wait: Updating eDonkey2000 server list..."/>
-	<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the SSDP Discovery Service to automatic."/>
+	<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windows doesn't support filepaths longer than 256 characters.\nPlease select a folder with a shorter path."/>
 	<string id="16818" value="The complete and incomplete folders should not be the same"/>

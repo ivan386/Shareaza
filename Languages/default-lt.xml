@@ -22,7 +22,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.2.27"
+		version="2.2.2.28"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -2969,7 +2969,7 @@ right quote	&#147;
 	<string id="16812" value="Prašome palaukti: Ieškomi ir konfigūruojami UPnP įrenginiai..."/>
 	<string id="16813" value="Prašome palaukti: Atnaujinamos paslaugų radimo tarnybos..."/>
 	<string id="16814" value="Prašome palaukti: Atnaujinamas eDonkey2000 serverių sąrašas..."/>
-	<string id="16815" value="UPnP Device Host tarnyba neveikia. Ši tarnyba yra reikalinga derinimo atlikimui.\nJums reikėtų nustatyti SSDP Discovery tarnybos startavimo tipą į automatinį."/>
+	<string id="16815" value="UPnP Device Host tarnyba neveikia. Ši tarnyba yra reikalinga derinimo atlikimui.\nJums reikėtų nustatyti šios tarnybos startavimo tipą į automatinį."/>
 	<string id="16816" value="eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\nAr įsitikinę, kad norite apriboti eilės numerius?"/>
 	<string id="16817" value="Windows nepalaiko kelių, ilgesnių už 256 simbolius.\nPasirinkite aplanką, kurio kelias yra trumpesnis."/>
 	<string id="16818" value="Atsisiuntimų aplankas neturi sutapti su laikinųjų failų aplanku"/>
