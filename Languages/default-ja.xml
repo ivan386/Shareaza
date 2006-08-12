@@ -447,6 +447,7 @@
 			<item id="ID_TAB_MEDIA" text="メディアプレーヤー(_M)"/>
 			<item id="ID_TAB_SEARCH" text="検索(_S)"/>
 			<item id="ID_TAB_TRANSFERS" text="ダウンロード(_D)"/>
+			<item id="ID_WINDOW_REMOTE" text="リモートを表示(_R)"/>
 			<separator/>
 			<menu text="高度(_A)">
 				<item id="ID_VIEW_NEIGHBOURS" text="近隣(_N)"/>
@@ -2965,6 +2966,7 @@
 	<string id="16812" value="UPNPデバイスを捜索しています、しばらくお待ちください・・・"/>
 	<string id="16813" value="ディスカバリーサービスの更新中です、しばらくお待ちください・・・"/>
 	<string id="16814" value="eDonkey2000サーバー・リストの更新中です、しばらくお待ちください・・・"/>
+	<string id="16815" value="UPnPサービスが有効ではありません。セットアップにはこのサービスが必要です\n&quot;SSDP Discovery Service&quot;を自動にセットしてください。"/>
 	<string id="16816" value="eDonkeyネットワークは非常に長時間順番待ちしなくてはならないような巨大なキューを使用しています。 キューで順番待ちする最大値を制限することによって、 ダウンロードが始まらないというようなトラブルが発生する可能性があります。 本当にキューで順番待ちする最大値の制限を行って宜しいですか?"/>
 	<string id="16817" value="Windowsは256文字以上のファイルパスをサポートしていません。\nより短いパスのフォルダを選択して下さい。"/>
 	<string id="16818" value="完了フォルダと未完了(ダウンロード)フォルダを同じ場所にするべきではありません"/>
@@ -3141,6 +3143,8 @@
 	<string id="20008" value="標準"/>
 	<string id="20009" value="指定"/>
 	<string id="20100" value="接続中"/>
+	<string id="20010" value="&amp;戻る"/>
+	<string id="20011" value="&amp;次へ"/>
 	<string id="20101" value="要求中"/>
 	<string id="20102" value="応答"/>
 	<string id="20103" value="ダウンロード中"/>
