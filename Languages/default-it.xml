@@ -2962,7 +2962,7 @@
 	<string id="16812" value="Attendere: Ricerca e impostazione dei dispositivi UPnP..."/>
 	<string id="16813" value="Attendere: Aggiornamento dei servizi di connessione..."/>
 	<string id="16814" value="Attendere: Aggiornamento della lista dei server eDonkey2000..."/>
-	<string id="16815" value="Il servizio Host di periferiche Plug and Play universali non è attivo. Questo servizio è richiesto per effettuare la configurazione.\nDevi impostare il tipo di avvio del Servizio di rilevamento SSDP su automatico."/>
+	<string id="16815" value="Il servizio Host di periferiche Plug and Play universali non è attivo. Questo servizio è richiesto per effettuare la configurazione.\nDevi impostare il tipo di avvio del servizio su automatico."/>
 	<string id="16816" value="La rete eDonkey usa grandi code con lunghi tempi di attesa. Limitando la posizione massima in coda accetti questo, puoi avere problemi nella partenza dei download.\nSei sicuro di voler limitare la posizione in coda da accettare?"/>
 	<string id="16817" value="Windows non supporta i percorsi più lunghi di 256 caratteri.\nSeleziona una cartella con un percorso più corto."/>
 	<string id="16818" value="Le cartelle dei file completi e incompleti non dovrebbero essere la stessa"/>
