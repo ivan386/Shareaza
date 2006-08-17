@@ -58,7 +58,7 @@ AboutSetupNote=
 TranslatorNote=Catalan translation by Carles Millan (inno@carlesmillan.com)
 
 ; *** Buttons
-ButtonBack=< &Enrera
+ButtonBack=< &Enrere
 ButtonNext=&Següent >
 ButtonInstall=&Instal·lar
 ButtonOK=Acceptar
@@ -169,7 +169,7 @@ NoProgramGroupCheck2=&No crear una carpeta al Menú Inici
 ; *** "Ready to Install" wizard page
 WizardReady=Preparat per a instal·lar
 ReadyLabel1=El programa d'instal·lació està preparat per a iniciar la instal·lació de [name] al vostre ordinador.
-ReadyLabel2a=Premeu Instal·lar per a continuar amb la instal·lació, o Enrera si voleu revisar o modificar les opcions d'instal·lació.
+ReadyLabel2a=Premeu Instal·lar per a continuar amb la instal·lació, o Enrere si voleu revisar o modificar les opcions d'instal·lació.
 ReadyLabel2b=Premeu Instal·lar per a continuar amb la instal·lació.
 ReadyMemoUserInfo=Informació de l'usuari:
 ReadyMemoDir=Carpeta de destinació:
