@@ -285,7 +285,7 @@
 	</toolbar>
 	<!-- MEDIA WINDOW -->
 	<toolbar name="CMediaFrame.Basic">
-		<button id="ID_MEDIA_PLAY" text="Reproduir&#160;&#160;&#160;"/>
+		<button id="ID_MEDIA_PLAY" text="Reproduir"/>
 		<button id="ID_MEDIA_PAUSE" text="Pausa" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Detenir"/>
 		<separator/>
@@ -302,7 +302,7 @@
 		<button id="ID_MEDIA_PLAYLIST" text="llista del reproductor"/>
 	</toolbar>
 	<toolbar name="CMediaFrame">
-		<button id="ID_MEDIA_PLAY" text="Reproduir&#160;&#160;&#160;"/>
+		<button id="ID_MEDIA_PLAY" text="Reproduir"/>
 		<button id="ID_MEDIA_PAUSE" text="Pausa" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Detenir"/>
 		<separator/>
@@ -405,16 +405,16 @@
 <menus>
 	<!-- SIMPLE POPUP MENU -->
 	<menu name="Simple">
-		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+		<item id="ID_CHILD_CLOSE" text="_Tanca la finestra"/>
 	</menu>
 	<!-- CHILD POPUP MENU -->
 	<menu name="Child">
-		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<item id="ID_CHILD_MAXIMISE" text="_Pantalla completa"/>
 		<separator/>
-		<item id="ID_CHILD_RESTORE" text="_Restore"/>
-		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<item id="ID_CHILD_RESTORE" text="_Restaura"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimitza"/>
 		<separator/>
-		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+		<item id="ID_CHILD_CLOSE" text="_Tanca la finestra"/>
 	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
@@ -436,7 +436,7 @@
 			<item id="ID_TAB_MEDIA" text="_Reproductor"/>
 			<item id="ID_TAB_SEARCH" text="_Recerca"/>
 			<item id="ID_TAB_TRANSFERS" text="_Descàrregues"/>
-			<item id="ID_WINDOW_REMOTE" text="_Remote"/>
+			<item id="ID_WINDOW_REMOTE" text="_Remot"/>
 			<separator/>
 			<menu text="_Avançat">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Xarxa" shortcut="F7"/>
@@ -629,8 +629,8 @@
 		</menu>
 		<menu text="_Window">
 			<item id="ID_WINDOW_CASCADE" text="_Pantalla Completa"/>
-			<item id="ID_WINDOW_TILE_HORZ" text="Tamany _Horizontal"/>
-			<item id="ID_WINDOW_TILE_VERT" text="Tamany _Vertical"/>
+			<item id="ID_WINDOW_TILE_HORZ" text="Mida _Horizontal"/>
+			<item id="ID_WINDOW_TILE_VERT" text="Mida _Vertical"/>
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="Mostrar _Barra de Navegació"/>
 			<item id="ID_WINDOW_TOOLBAR" text="Mostrar _Barra d'Eines"/>
@@ -1243,11 +1243,11 @@
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _Llista"/>
 		</menu>
-		<menu text="Tamany del Video">
-			<item id="ID_MEDIA_SIZE_ONE" text="Tamany _Original"/>
-			<item id="ID_MEDIA_SIZE_TWO" text="Tamany _Doble"/>
-			<item id="ID_MEDIA_SIZE_THREE" text="Tamany _Triple"/>
-			<item id="ID_MEDIA_SIZE_FILL" text="Tamany _Gran"/>
+		<menu text="Mida del Video">
+			<item id="ID_MEDIA_SIZE_ONE" text="Mida _Original"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="Mida _Doble"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="Mida _Triple"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="Mida _Gran"/>
 			<item id="ID_MEDIA_SIZE_DISTORT" text="_Omplir Finestra"/>
 			<separator/>
 			<item id="ID_MEDIA_ASPECT_DEFAULT" text="_Aspecte Original"/>
@@ -1281,11 +1281,11 @@
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _Llista"/>
 		</menu>
-		<menu text="Tamany del Video">
-			<item id="ID_MEDIA_SIZE_ONE" text="Tamany _Original"/>
-			<item id="ID_MEDIA_SIZE_TWO" text="Tamany _Doble"/>
-			<item id="ID_MEDIA_SIZE_THREE" text="Tamany _Triple"/>
-			<item id="ID_MEDIA_SIZE_FILL" text="Tamany _Gran"/>
+		<menu text="Mida del Video">
+			<item id="ID_MEDIA_SIZE_ONE" text="Mida _Original"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="Mida _Doble"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="Mida _Triple"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="Mida _Gran"/>
 			<item id="ID_MEDIA_SIZE_DISTORT" text="_Omplir Finestra"/>
 			<separator/>
 			<item id="ID_MEDIA_ASPECT_DEFAULT" text="_Aspecte Original"/>
@@ -1304,10 +1304,10 @@
 		</menu>
 	</menu>
 	<menu name="CMediaFrame.Zoom">
-		<item id="ID_MEDIA_SIZE_ONE" text="Tamany _Original"/>
-		<item id="ID_MEDIA_SIZE_TWO" text="Tamany _Doble"/>
-		<item id="ID_MEDIA_SIZE_THREE" text="Tamany _Triple"/>
-		<item id="ID_MEDIA_SIZE_FILL" text="Tamany _Gran"/>
+		<item id="ID_MEDIA_SIZE_ONE" text="Mida _Original"/>
+		<item id="ID_MEDIA_SIZE_TWO" text="Mida _Doble"/>
+		<item id="ID_MEDIA_SIZE_THREE" text="Mida _Triple"/>
+		<item id="ID_MEDIA_SIZE_FILL" text="Mida _Gran"/>
 		<item id="ID_MEDIA_SIZE_DISTORT" text="_Omplir Finestra"/>
 		<separator/>
 		<item id="ID_MEDIA_ASPECT_DEFAULT" text="_Aspecte per defecte"/>
@@ -1326,7 +1326,7 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Obrir llista de reproducció..."/>
 		<item id="ID_MEDIA_SAVE" text="_Guardar llista de reproducció..."/>
-		 <item id="ID_MEDIA_EXPORT_COLLECTION" text="E_xportar Col·lecció..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="E_xportar col·lecció..."/>
 		<item id="ID_MEDIA_CLEAR" text="_Netejar llista de reproducció"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAYLIST" text="Mostrar _Llista"/>
@@ -1537,15 +1537,43 @@
 
 		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
 		<gap size="8"/>
-	  	        <heading align="middle">L E S &#160; M E V E S &#160; D E S C À R R E G U E S</heading>
+		<heading align="middle">L E S &#160; M E V E S &#160; D E S C À R R E G U E S</heading>
 		<newline gap="8" indent="42"/>
-		<text>To open the folder with your downloads </text>
-		<link target="raza:shell:downloads">click here</link>
+		<text>Obri la teva carpeta de descàrregues </text>
+		<link target="raza:shell:downloads">fent clic ací</link>
 		<newline gap="18" indent="0"/>
+
+<!--new adition-->
+		<icon res="185" width="25" height="25"/><gap size="8"/>
+            <heading align="middle">E L &#160; C A T A L À &#160; A &#160; L A &#160; X A R X A</heading>
+            <newline gap="8" indent="42"/>		
+	<gap size="8"/>
+       		<link target="http://www.racocatala.cat/" format="bu" align="middle">Racó Català</link>
+        	<text align="middle">&#160;- Punt d’informació dels Països Catalans a la xarxa</text>
+	   <newline gap="8" indent="42"/>		
+	<gap size="8"/>
+       		<link target="http://www.softcatala.cat" format="bu" align="middle">SoftCatalà</link>
+       		<text align="middle">&#160;- Associació sense ànim de lucre que fomenta l'ús del català a les noves tecnologies</text>
+	<newline gap="8" indent="42"/>
+				<gap size="8"/>
+       		<link target="http://www.catmidia.cat" format="bu" align="middle">CATMidia</link>
+       		<text align="middle">&#160;- Comunitat que es preocupa, entre molts altres continguts, pel programari lliure així com per la seva traducció i adaptació al català.</text>
+	<newline gap="8" indent="42"/>
+		<gap size="8"/>
+       		<link target="http://www.vilaweb.cat" format="bu" align="middle">VilaWeb</link>
+       		<text align="middle">&#160;- Diari Electrònic Independent</text>
+    	<newline gap="8" indent="42"/>
+		<gap size="8"/>
+       		<link target="http://www.acpv.net" format="bu" align="middle">ACPV - Acció Cultural del País Valencià</link>
+       		<text align="middle">&#160;- Associació d'àmbit nacional l'objecte de la qual és l'estudi, la defensa i la promoció del patrimoni cultural, artístic i natural del País Valencià, a més de campanyes de promoció i defensa de l'ús del valencià, el català parlat al País Valencià</text>
+	<newline gap="8" indent="42"/>
+	
+	
+	<newline gap="18" indent="0"/>
 
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">A C C È S &#160; R E M O T &#160; H A B I L I T A T</heading>
+			<heading align="middle">A C C È S  &#160; R E M O T &#160; H A B I L I T A T</heading>
 			<newline gap="8" indent="42"/>
 			<text>Accès Remot de Shareaza habilitat. Controla Shareaza usant el teu navegador en:</text>
 			<newline gap="6"/>
@@ -1824,7 +1852,7 @@
 
 		<group id="4">
 			<newline gap="8" indent="0"/>
-			<text format="b">Informació de contacte</text>
+			<text format="b">Informació del contacte</text>
 			<newline gap="1" indent="8"/>
 		</group>
 		<group id="40">
@@ -1867,7 +1895,7 @@
 
 		<group id="6">
 			<newline gap="8" indent="0"/>
-			<text format="b">Notes personals</text>
+			<text format="b">Bio</text>
 			<newline gap="2" indent="8"/>
 			<text id="BioText"/>
 		</group>
@@ -1931,7 +1959,7 @@
 		<text format="b">En Pausa</text>
 		<newline gap="8"/>
 		<text>La transferència d'aquest arxiu està actualment detinguda, perquè ha estat
-		posada en pausa. Pots fer clic en '</text><text format="b">Continuar descàrrega </text><text>'.</text>
+		posada en pausa. Pots fer clic en </text><text format="b">Continuar descàrrega </text><text>.</text>
 	</document>
 
 	<document name="DownloadHelp.DiskFull">
@@ -1954,8 +1982,8 @@
 		<text format="b">Transferència Activa!</text>
 		<newline gap="8"/>
 		<text>Aquesta descàrrega està en progrès.  Si està baixant massa lent,
-		pots tractar de cercar a la Xarxa més fonts usant la comanda '</text>
-		<text format="b">cercar més Fonts. </text><text>'  Si la velocitat no incrementa i no millora pot ser que els usuaris
+		pots tractar de cercar a la Xarxa més fonts usant la comanda </text>
+		<text format="b">cercar més Fonts. </text><text>  Si la velocitat no incrementa i no millora pot ser que els usuaris
 		dels que estàs descarregant l'arxiu tinguin una velocitat de pujada molt baixa. La velocitat de descàrrega millora amb el temps.</text>
 	</document>
 
@@ -2050,21 +2078,22 @@
 	</document>
 
 	<document name="GeneralHelp.XPsp2">
-		<text format="b">S'ha detectat Windows XP Service Pack 2</text>
+		<text format="b">Windows XP Service Pack 2 detectat</text>
 		<newline gap="8"/>
 		<text>Shareaza ha detectat que tens Windows XP Service Pack 2.
 		Això fa una restricció del nombre de connexions que pots fer al mateix temps.</text>
 		<newline gap="8"/>
 		<text>Shareaza ha limitat les connexions i posat valors per a assegurar una operació propia,
-		de totes formes el rendiment és un poc més baix. Si us plau visitals
+		de totes formes el rendiment és un poc més baix. Si us plau visita els
 		fòrums de Shareaza per a més informació, i notícies noves...</text>
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Habilitat filtre de contingut sols apte per a adults</text>
 		<newline gap="8"/>
-		<text>Si us plau, recorda  que potser no sigui 100% efectiu al bloquejar contingut (com qualsevol filtre automàtic).
-		Està disenyat simplement per aliminar resultats no desitjats, no un bloqueig 100% segur.</text>
+		<text>Si us Plau recorda (com qualsevol filtre automàtic) pot ser que no sigui 100% efectiu al bloquejar contingut.
+		És disenyat simplement per aliminar resultats no desitjats,
+		no un bloqueig 100% segur.</text>
 		<newline gap="8"/>
 		<text>Si un menor/a està usant Internet (incloent-hi P2P) ha de tenir supervisió dels pares.</text>
  	</document>
@@ -2361,10 +2390,10 @@
 	<tip id="ID_MEDIA_SELECT" message="Reproduir."/>
 	<tip id="ID_MEDIA_SETTINGS" message="Mostar la pantalla de configuració..."/>
 	<tip id="ID_MEDIA_SIZE_DISTORT" message="Posar el video el més gran posible pot produir distorsió."/>
-	<tip id="ID_MEDIA_SIZE_FILL" message="Seleccionar el tamany automàticament."/>
-	<tip id="ID_MEDIA_SIZE_ONE" message="Mostrar en tamany original."/>
-	<tip id="ID_MEDIA_SIZE_THREE" message="Triple tamany."/>
-	<tip id="ID_MEDIA_SIZE_TWO" message="Doble tamany."/>
+	<tip id="ID_MEDIA_SIZE_FILL" message="Seleccionar la mida automàticament."/>
+	<tip id="ID_MEDIA_SIZE_ONE" message="Mostrar en la mida original."/>
+	<tip id="ID_MEDIA_SIZE_THREE" message="Triple mida."/>
+	<tip id="ID_MEDIA_SIZE_TWO" message="Doble mida."/>
 	<tip id="ID_MEDIA_STATUS" message="Mostrar o Amagar la línia de l'estat de l'arxiu de media."/>
 	<tip id="ID_MEDIA_STOP" message="Aturar reproducció."/>
 	<tip id="ID_MEDIA_VIS" message="Seleccionar un component de visualització d'audio..."/>
@@ -2596,7 +2625,7 @@
 	<string id="8177" value="Tecleja algunes paraules claus per a cercar:"/>
 	<string id="8178" value="¿Quin tipus d'arxiu vols cercar?"/>
 	<string id="8179" value="(Netejar Historial de recerca)"/>
-	<string id="8180" value="El tamany ha de ser de"/>
+	<string id="8180" value="La mida ha de ser de"/>
 	<string id="8181" value="&#160;a"/><!-- size from xx TO xx-->
     <string id="8208" value="Shareaza està creant els hashs per a %i arxiu(s):"/>
 	<string id="8223" value="%i days and %i hours"/>
@@ -2630,7 +2659,7 @@
 	<string id="8304" value="N/A"/>
 	<string id="8306" value="Localització"/>
 	<string id="8307" value="Tipus"/>
-	<string id="8308" value="Tamany"/>
+	<string id="8308" value="Mida"/>
 	<string id="8309" value="Font Parcial (%.2f%% disponible)"/>
 	<string id="8310" value="%i llocs de pujada, %i esperant en cua"/>
 	<string id="8311" value="Tu ja tens aquest arxiu dins La meva Col·lecció."/>
@@ -2709,11 +2738,11 @@
 	<string id="16157" value="El veí %s no és un hub, tancant Connexió."/>
 	<string id="16158" value="Connexió Gnutella][  amb veí %s ha estat establerta (%s)."/>
   	<string id="16159" value="Tancant connexió amb un no veí Gnutella2 %s."/>
-	<string id="16192" value="El veí %s ha enviat un paquet amb tamany excesiu, tancant connexió."/>
+	<string id="16192" value="El veí %s ha enviat un paquet amb mida excesiva, tancant connexió."/>
 	<string id="16193" value="El no-veí  %s ha enviat un paquet amb zero TTL, ignorant."/>
 	<string id="16194" value="El veí %s ha enviat un paquet amb excessiu TTL, llençant paquet (TTL=%i, Hops=%i)."/>
-	<string id="16195" value="El veí %s ha enviat un paquet de ping amb tamany invàlid. Ignorant..."/>
-	<string id="16196" value="El veí %s ha enviat un paquet de pong amb tamany invàlid, Ignorant..."/>
+	<string id="16195" value="El veí %s ha enviat un paquet de ping amb mida invàlida. Ignorant..."/>
+	<string id="16196" value="El veí %s ha enviat un paquet de pong amb mida invàlida, Ignorant..."/>
 	<string id="16197" value="%s -> %s [%i/%i] %s %s"/>
 	<string id="16198" value="El veí en mode Leaf %s està reenviant cerques. Connexió tancada."/>
 	<string id="16199" value="%s ha enviat un paquet desconegut (0x%.2x)."/>
@@ -2747,7 +2776,7 @@
 	<string id="16273" value="El veí %s ha Respost amb resposta HTTP invàlida."/>
 	<string id="16274" value="El veí %s ha respost amb %s (%s)."/>
 	<string id="16275" value="La versió de %s de l'arxiu %s té un URN diferent."/>
-	<string id="16276" value="La versió de %s de l'arxiu %s té diferent tamany."/>
+	<string id="16276" value="La versió de %s de l'arxiu %s té diferent mida."/>
 	<string id="16277" value="El veí %s ha respost amb un rang innecesari %s."/>
 	<string id="16278" value="La Connexió de transferència amb %s ha estat perduda."/>
 	<string id="16279" value="Rebent transferència de %s (%s)."/>
@@ -3058,7 +3087,7 @@
 	<string id="17251" value="No s'ha pogut importar l'arxiu."/>
 	<string id="17252" value="&quot;%s&quot; és una arxiu incomplet, important..."/>
 	<string id="17253" value="No s'ha pogut obrir l'arxiu part &quot;%s&quot;."/>
-	<string id="17254" value="Transferència &quot;%s&quot; trobada, tamany %s."/>
+	<string id="17254" value="Transferència &quot;%s&quot; trobada, mida %s."/>
 	<string id="17255" value="L'arxiu incomplet és més nou que el .part, abortant."/>
 	<string id="17256" value="Copiant &quot;%s&quot; a &quot;%s&quot;..."/>
 	<string id="17257" value="Còpia finalitzada."/>
@@ -3127,11 +3156,11 @@
     <string id="20004" value="Els llenguatges amb lectura de dreta a esquerra no estan suportats al seu sistema operatiu."/> 
 	<string id="20005" value="No"/>
 	<string id="20006" value="Sí"/>
- 	<string id="20007" value="Automàtic"/>
-	<string id="20008" value="Predeterminat"/>
- 	<string id="20009" value="Personalitzat"/>
-	<string id="20010" value="&amp;Back"/>
-	<string id="20011" value="&amp;Next"/>
+	<string id="20007" value="Automàtic"/>
+	<string id="20008" value="Predefinit"/>
+	<string id="20009" value="Personalitzat"/>
+	<string id="20010" value="&amp;Tornar"/>
+	<string id="20011" value="&amp;Següent"/>
 	<string id="20100" value="Connectant"/>
 	<string id="20101" value="Demanant"/>
 	<string id="20102" value="Resposta"/>
@@ -3305,14 +3334,14 @@
 		<control caption="Port:"/>
 		<control/>
 		<control caption="Atzar"/>
-		<control caption="Forçar adreça"/>
+		<control caption="Forçar Adreça"/>
 		<control caption="_Adreça de sortida:"/>
 		<control caption="Adreça:"/>
 		<control caption="Automàtic"/>
 		<control caption="Velocitat:"/>
 		<control/>
 		<control caption="O_pcions"/>
-		<control caption="Puc acceptar connexions entrants"/>
+		<control caption="Puc Acceptar connexions Entrants"/>
 		<control/>
 		<control caption="Ignorar direccions IP privades/locals"/>
 		<control caption="Enable UPnP connection devices setup"/>
@@ -3338,7 +3367,7 @@
 		<control caption="Límit:"/>
 		<control caption="Ample de banda:"/>
 		<control/>
-		<control caption="Tamany màxim de les cues:"/>
+		<control caption="Mida màxima de les cues:"/>
 		<control/><control/>
 		<control caption="Sols pujar i descarregar usant les xarxes connectades."/>
 	</dialog>
@@ -3534,9 +3563,9 @@
 		<control/>
 		<control caption="_Criteri d`Entrada:"/>
 		<control caption="Arxius solament descarregats parcialment"/>
-		<control caption="Mínim del tamany de l'arxiu font:"/>
+		<control caption="Mida mínima de l'arxiu font:"/>
 		<control/>
-		<control caption="Màxim del tamany de l'arxiu font:"/>
+		<control caption="Mida màxima de l'arxiu font:"/>
 		<control/>
 		<control caption="Arxius Marcats:"/>
 		<control/>
@@ -3559,7 +3588,7 @@
 		<control/><control/>
 		<control caption="Rotar després de N segons:"/>
 		<control/><control/>
-		<control caption="SI"/>
+		<control caption="Sí"/>
 		<control caption="Cancel·lar"/>
 		<control caption="Beneficiar a usuaris/es que pugin"/>
 	</dialog>
@@ -3650,7 +3679,7 @@
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Importar Transferències d`eDonkey2000 o eMule">
 		<control/>
 		<control caption="Shareaza ha detectat eDonkey2000 o eMule instal·lat. ¿Vols importar les transferències a Shareaza?"/>
-		<control caption="Si"/>
+		<control caption="Sí"/>
 		<control caption="No|Cancel·lar"/>
 		<control/>
 		<control caption="Tancar"/>
@@ -3796,10 +3825,10 @@
 		<control caption="Sols mostrar resultats que incloguin:"/>
 		<control/>
 		<control caption="( també pots excluir paraules amb -paraula )"/>
-		<control caption="Són del tamany:"/>
-		<control caption="Mínim:"/>
+		<control caption="Tenen la mida:"/>
+		<control caption="Mínima:"/>
 		<control/>
-		<control caption="Màxim:"/>
+		<control caption="Màxima:"/>
 		<control/>
 		<control caption="Encara que sigui:"/>
 		<control/><control/>
@@ -3815,7 +3844,7 @@
 		<control caption="Cancel·lar"/>
 		<control/>
 		<control caption="Posar-ho per defecte"/>
-		<control caption="_Desar com"/>
+		<control caption="_Guardar como"/>
 		<control caption="_Esborrar"/>
 		<control caption="Filtres:"/>
 		<control caption="Arxius DRM"/>
@@ -4018,7 +4047,7 @@
 		<control caption="Ha seleccionat %lu arxius per a exportar com a referències d` URI per a Shareaza. Si us plau selecciona el format, i fes clic a Guardar:"/>
 		<control/>
 		<control caption="Insertar camp:"/>
-        <control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Arxiu|Arxiu (URI)|Arxiu Filename|Extensió|Tamany|Tamany (octets)|Ruta|Servidor|Port"/>
+        <control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Arxiu|Arxiu (URI)|Arxiu Filename|Extensió|Mida|Mida (octets)|Ruta|Servidor|Port"/>
 		<control caption="Predefinits:"/>
         <control/>
         <control caption="Copiar"/>
@@ -4133,7 +4162,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Exportar col·lecció">
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Exportar Carpeta">
 		<control caption="Això ajuda a exportar el contingut de un àlbum o carpeta com una col·lecció de Shareaza. Per favor, seleccione una plantilla i prem següent per contiunar.|Personalitze la col·lecció indicant aquestes dades:"/>
 		<control/>
         <control caption="Informació de la plantilla:"/>
@@ -4241,7 +4270,7 @@
 		<control/>
 		<control caption="_Afegir"/>
 		<control caption="_Esborrar"/>
-		<control caption="SI"/>
+		<control caption="Sí"/>
 		<control caption="Cancel·lar"/>
 		<control caption="Carpeta de_arxius Completats:"/>
 		<control/>
@@ -4251,7 +4280,7 @@
 		<control/>
 		<control caption="Selecciona una visualització de la llista:"/>
 		<control/>
-		<control caption="Visualització de Footer|Visualització de Tamany Complet|Visualització Gran|Visualització Mitjana|Visualització Petita"/>
+		<control caption="Visualització de Footer|Visualització de mida completa|Visualització Gran|Visualització Mitjana|Visualització Petita"/>
 		<control caption="_Configurar..."/>
 		<control caption="Sí"/>
 		<control caption="Cancel·lar"/>
@@ -4285,7 +4314,7 @@
 	<list name="CLibraryWnd">
 		<column from="File" to="Arxiu"/>
 		<column from="Extension" to="Extensió"/>
-		<column from="Size" to="Tamany"/>
+		<column from="Size" to="Mida"/>
 		<column from="Folder" to="Carpeta"/>
 		<column from="Hits" to=""/>
 		<column from="Uploads" to="Pujades"/>
@@ -4293,7 +4322,7 @@
 	</list>
 	<list name="CDownloadCtrl">
 		<column from="Downloaded File" to="Arxiu descarregat"/>
-		<column from="Size" to="Tamany"/>
+		<column from="Size" to="Mida"/>
 		<column from="Progress" to="Progrés"/>
 		<column from="Speed" to="Velocitat"/>
 		<column from="Status" to="Estat"/>
@@ -4304,11 +4333,11 @@
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Usuari Remot"/>
 		<column from="Uploaded File" to="Arxiu pujat"/>
-		<column from="Size" to="Tamany"/>
+		<column from="Size" to="Mida"/>
 		<column from="Progress" to="Progrés"/>
 		<column from="Speed" to="Velocitat"/>
 		<column from="Client" to="Client"/>
-		<column from="Rating" to=""/>
+		<column from="Rating" to="Calificació"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adreça"/>
@@ -4367,7 +4396,7 @@
 	<list name="CMatchCtrl">
 		<column from="File" to="Arxiu"/>
 		<column from="Extension" to="Extensió"/>
-		<column from="Size" to="Tamany"/>
+		<column from="Size" to="Mida"/>
 		<column from="Rating" to=""/>
 		<column from="Status" to="Estat"/>
 		<column from="Host/Count" to=""/>
@@ -4395,7 +4424,7 @@
 	</list>
 	<list name="CTorrentFileList">
 		<column from="Filename" to="Nom d`arxiu"/>
-		<column from="Size" to="Tamany"/>
+		<column from="Size" to="Mida"/>
 	</list>
 	<list name="CTorrentTrackerList">
 		<column from="Tracker" to=""/>
