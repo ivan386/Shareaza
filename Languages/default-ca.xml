@@ -2125,7 +2125,7 @@
 		<text>Algunes xarxes a què Shareaza es connecta recolcen igualtats, limitant pujades
 		a clients que no comparteixen, o simplement preferència a pujar a clients que comparteixen.
 		</text>
-		Afortunadament, les connexions DSL són com una carretera de 2 vies. Has de configurar un 
+		<text>Afortunadament, les connexions DSL són com una carretera de 2 vies. Has de configurar un 
 		ample de banda per a la pujada i altre per a la baixada. Si el teu client està pròpiament configurat, 
 		deus poder pujar a una bona velocitat i al mateix temps estar descarregant al màxim.</text>
 		<newline gap="8"/>
