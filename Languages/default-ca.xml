@@ -4394,7 +4394,7 @@
 		<column from="File" to="Arxiu"/>
 		<column from="Extension" to="Extensió"/>
 		<column from="Size" to="Mida"/>
-		<column from="Rating" to=""/>
+		<column from="Rating" to="Qualificació"/>
 		<column from="Status" to="Estat"/>
 		<column from="Host/Count" to=""/>
 		<column from="Speed" to="Velocitat"/>
