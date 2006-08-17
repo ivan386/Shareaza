@@ -32,6 +32,7 @@ Name: "ee"; MessagesFile: "setup\isl\estonian.isl"; LicenseFile: "setup/license/
 Name: "tw"; MessagesFile: "setup\isl\chinese-trad.isl"; LicenseFile: "setup/license/chinese-trad.rtf"
 Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
 Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "ca"; MessagesFile: "setup\isl\catalan.isl"; LicenseFile: "setup/license/catalan.rtf"
 
 [Files]
 #ifndef debug
@@ -92,6 +93,8 @@ Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: tw; Components: language
 ; Slovenian
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: sl; Components: language
+; Catalan
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: ca; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -150,6 +153,8 @@ Source: "setup\license\estonian.rtf"; DestDir: "{app}\Uninstall"; DestName: "lic
 Source: "setup\license\chinese-trad.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tw; Components: language
 ; Slovenian
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sl; Components: language
+; Catalan
+Source: "setup\license\catalan.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ca; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -208,6 +213,8 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tw; Components: language
 ; Slovenian
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sl; Components: language
+; Catalan
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ca; Components: language
 #endif
 
 [CustomMessages]
@@ -944,3 +951,30 @@ sl.page_viruswarning_title=Virusno opozorilo
 sl.page_viruswarning_subtitle=Ali imate namešèen protivirusni program?
 sl.CreateDesktopIcon=Prikaži ikono &namizja
 sl.CreateQuickLaunchIcon=Prikaži ikono &Hitrega zaganjalnika
+; Catalan
+ca.components_plugins=Agregats (plug-in)
+ca.components_skins=Pells (skins)
+ca.components_languages=Idiomes
+ca.tasks_allusers=Tots els usuaris
+ca.tasks_selectusers=Instal·lar %1 per a:
+ca.tasks_currentuser=%1 únicament
+ca.tasks_multisetup=Habilitar el suport multi-usuari
+ca.tasks_firewall=Afegeix una excepció al tallafocs de Windows
+ca.tasks_upnp=Habilitar el descobriment de dispositius UPnP
+ca.tasks_deleteoldsetup=Esborrar instal·ladors antics
+ca.run_skinexe=Executant la instal·lació de la pell (skin)...
+ca.reg_incomingchat=Missatge de xat entrant
+ca.reg_apptitle=Shareaza: compartició d'arxius d'última generació
+ca.icons_license=Llicència
+ca.icons_uninstall=Desinstal·lació
+ca.icons_downloads=Descàrregues
+ca.icons_basicmode=Mode normal
+ca.icons_tabbedmode=Mode en pestanyes
+ca.icons_windowedmode=Mode de finestra
+ca.dialog_shutdown=%1 està sent executat. Dessitja que %1 siga aturat per que la instal·lació puga continuar?
+ca.dialog_firewall=La instal·lació ha fallat mentre s'afegia una exepció al tallafocs del Windows.%nSi us plau, afegeixi Shareaza al llistat d'excepcions manualment.
+ca.page_viruswarning_text=Mentre utilitzes Internet, has d'assegurar-te que tens un antivirus actualitzat per protegir-te de troians, cucs, virus i altres programes maliciosos. Pots consultar un llistat de programari antivirus i consells de seguretat fent clic a la següent drecera:
+ca.page_viruswarning_title=Advertència de virus
+ca.page_viruswarning_subtitle=Tens un programa antivíric instal·lat?
+ca.CreateDesktopIcon=Afegeix una icona a l'&escriptori
+ca.CreateQuickLaunchIcon=Afegeix una icona a l’&escriptori
