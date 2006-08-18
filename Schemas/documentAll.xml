@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
@@ -29,6 +30,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">Document:All Documents</title>
                <title language="af">Dokument:Alle Dokumente</title>
+               <title language="ca">Documents: Tots els documents</title>
                <title language="chs">&#160;文档:所有文档</title>
                <title language="cht">文件: 所有的文件</title>
                <title language="de">Dokumente:Alle Dokumente</title>
@@ -57,6 +59,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
                        <title language="de">Titel</title>
@@ -86,6 +89,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <headerContent version="1.0">
                <title language="en">All Documents</title>
                <title language="af">Alle Dokumente</title>
+               <title language="ca">Tots els documents</title>
                <title language="chs">所有文档</title>
                <title language="cht">所有文件</title>
                <title language="de">Alle Dokumente</title>
@@ -107,6 +111,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Tüm Dokümanlar</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle dokumente in jou biblioteek.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté tots els documents en la teua Col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有文档。</subtitle>
                <subtitle language="cht">這個資料夾包含您收藏中所有的文件</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dokumente ihrer Bibliothek.</subtitle>

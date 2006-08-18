@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
@@ -28,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">Skin</title>
                <title language="af">Omslag</title>
+               <title language="ca">Skin</title>
                <title language="chs">皮肤</title>
                <title language="cht">面板</title>
                <title language="de">Skin</title>
@@ -53,6 +55,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true" columnAlign="left"/>
                        <title language="en">Name</title>
                        <title language="af">Naam</title>
+                       <title language="ca">Nom</title>
                        <title language="chs">名称</title>
                        <title language="cht">名稱</title>
                        <title language="de">Name</title>
@@ -76,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="author" search="generic">
                        <title language="en">Author</title>
                        <title language="af">Outeur</title>
+                       <title language="ca">Autor</title>
                        <title language="chs">作者</title>
                        <title language="cht">作者</title>
                        <title language="de">Autor</title>
@@ -99,6 +103,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="link">
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
+                       <title language="ca">Enllaç</title>
                        <title language="chs">链接</title>
                        <title language="cht">連結</title>
                        <title language="de">Link</title>
@@ -122,6 +127,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="email">
                        <title language="en">Email</title>
                        <title language="af">E-pos</title>
+                       <title language="ca">Correu electrònic</title>
                        <title language="chs">电子邮件</title>
                        <title language="cht">電子郵件</title>
                        <title language="de">E-Mail</title>
@@ -145,6 +151,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="version">
                        <title language="en">Version</title>
                        <title language="af">Weergawe</title>
+                       <title language="ca">Versió</title>
                        <title language="chs">版本</title>
                        <title language="cht">版本</title>
                        <title language="de">Version</title>
@@ -169,6 +176,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true" columnAlign="center"/>
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
+                       <title language="ca">Art</title>
                        <title language="chs">类型</title>
                        <title language="cht">類型</title>
                        <title language="de">Art</title>
@@ -193,6 +201,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
+                       <title language="ca">Llengua</title>
                        <title language="chs">语言</title>
                        <title language="cht">語言</title>
                        <title language="de">Sprache</title>
@@ -216,6 +225,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="description">
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
+                       <title language="ca">Descripció</title>
                        <title language="chs">描述</title>
                        <title language="cht">描述</title>
                        <title language="de">Beschreibung</title>
@@ -239,6 +249,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="comments">
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
+                       <title language="ca">Comentaris</title>
                        <title language="chs">注释</title>
                        <title language="cht">注釋</title>
                        <title language="de">Kommentar</title>

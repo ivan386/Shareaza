@@ -4,6 +4,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
@@ -30,6 +31,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">ROM Image</title>
                <title language="af">ROM / CD Afdruk</title>
+               <title language="ca">Imatge ROM </title>
                <title language="chs">ROM 镜像</title>
                <title language="cht">ROM 影像</title>
                <title language="de">ROM Image</title>
@@ -55,6 +57,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
                        <title language="de">Titel</title>
@@ -79,6 +82,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">Company</title>
                        <title language="af">Maatskappy</title>
+                       <title language="ca">Companyia</title>
                        <title language="chs">公司</title>
                        <title language="cht">公司</title>
                        <title language="de">Firma</title>
@@ -103,6 +107,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">System</title>
                        <title language="af">Stelsel</title>
+                       <title language="ca">Sistema</title>
                        <title language="chs">系统</title>
                        <title language="cht">系統</title>
                        <title language="de">System</title>
@@ -126,6 +131,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="year">
                        <title language="en">Year</title>
                        <title language="af">Jaar</title>
+                       <title language="ca">Any</title>
                        <title language="chs">年份</title>
                        <title language="cht">年份</title>
                        <title language="de">Jahr</title>
@@ -149,6 +155,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="type">
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
+                       <title language="ca">Art</title>
                        <title language="chs">类型</title>
                        <title language="cht">類型</title>
                        <title language="de">Art</title>
@@ -173,6 +180,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
+                       <title language="ca">Llengua</title>
                        <title language="chs">语言</title>
                        <title language="cht">語言</title>
                        <title language="de">Sprache</title>
@@ -196,6 +204,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="rating">
                        <title language="en">Rating</title>
                        <title language="af">Gradering</title>
+                       <title language="ca">Valoració</title>
                        <title language="chs">分级</title>
                        <title language="cht">評價</title>
                        <title language="de">FSK</title>
@@ -219,6 +228,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="price">
                        <title language="en">Price</title>
                        <title language="af">Prys</title>
+                       <title language="ca">Preu</title>
                        <title language="chs">价格</title>
                        <title language="cht">價格</title>
                        <title language="de">Preis</title>
@@ -242,6 +252,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="link">
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
+                       <title language="ca">Enllaç</title>
                        <title language="chs">链接</title>
                        <title language="cht">連結</title>
                        <title language="de">Link</title>
@@ -265,6 +276,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="comments">
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
+                       <title language="ca">Comentaris</title>
                        <title language="chs">注释</title>
                        <title language="cht">注釋</title>
                        <title language="de">Kommentar</title>
@@ -408,6 +420,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="vcd"/>
                <type extension="vec"/>
                <type extension="vex"/>
+               <type extension="vhd"/>
                <type extension="vmx"/>
                <type extension="vmdk"/>
                <type extension="vz"/>

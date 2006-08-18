@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
@@ -29,6 +30,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">General:My Shareaza Library</title>
                <title language="af">Algemeen:My Shareaza Biblioteek</title>
+               <title language="ca">General: La meua Col·lecció</title>
                <title language="chs">&#160;常规:我的 Shareaza 收藏</title>
                <title language="cht">一般:我的 Shareaza 收藏</title>
                <title language="de">Allgemein:Shareaza Bibliothek</title>
@@ -54,6 +56,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
                        <title language="de">Titel</title>
@@ -77,6 +80,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="owner" search="indexed">
                        <title language="en">Owner</title>
                        <title language="af">Eienaar</title>
+                       <title language="ca">Propietari</title>
                        <title language="chs">所有人</title>
                        <title language="cht">所有人</title>
                        <title language="de">Besitzer</title>
@@ -100,6 +104,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="comments">
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
+                       <title language="ca">Comentaris</title>
                        <title language="chs">注释</title>
                        <title language="cht">注釋</title>
                        <title language="de">Kommentar</title>
@@ -127,6 +132,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <headerContent version="1.0">
                <title language="en">Welcome to Your Library!</title>
                <title language="af">Welkom by Jou Biblioteek!</title>
+               <title language="ca">Benvingut a La meua col·lecció!</title>
                <title language="chs">欢迎来到您的收藏！</title>
                <title language="cht">歡迎來到您的收藏!</title>
                <title language="de">Willkommen in ihrere Bibliothek!</title>
@@ -148,6 +154,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Kütüphanenize Hoşgeldiniz!</title>
                <subtitle language="en">You have {totalFiles} files totalling {totalVolume} in your library.</subtitle>
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
+               <subtitle language="ca">Tens {totalFiles} arxius a la teva col·lecció i {totalVolume} d'espai.</subtitle>
                <subtitle language="chs">您总计有 {totalFiles} 个文件，共计 {totalVolume} 位于您的收藏中。</subtitle>
                <subtitle language="cht">您有 {totalFiles} 個檔案，總計大小 {totalVolume} 在您的收藏.</subtitle>
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>

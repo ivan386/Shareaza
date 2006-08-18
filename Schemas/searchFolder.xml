@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
@@ -29,6 +30,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">Search:Search Results</title>
                <title language="af">Soek:Soekresultate</title>
+               <title language="ca">Cercar: Resultats de recerca</title>
                <title language="chs">&#160;搜索:搜索结果</title>
                <title language="cht">搜尋:搜尋結果</title>
                <title language="de">Suche:Suchergebnisse</title>
@@ -53,6 +55,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="title" search="none">
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
                        <title language="de">Titel</title>
@@ -76,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="time" search="none">
                        <title language="en">Time</title>
                        <title language="af">Tyd</title>
+                       <title language="ca">Temps</title>
                        <title language="chs">时间</title>
                        <title language="cht">時間</title>
                        <title language="de">Zeit</title>
@@ -99,6 +103,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="date" search="none">
                        <title language="en">Date</title>
                        <title language="af">Datum</title>
+                       <title language="ca">Data</title>
                        <title language="chs">日期</title>
                        <title language="cht">日期</title>
                        <title language="de">Datum</title>
@@ -122,6 +127,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="content" search="none">
                        <title language="en">Content</title>
                        <title language="af">Inhoud</title>
+                       <title language="ca">Contingut</title>
                        <title language="chs">内容</title>
                        <title language="cht">內容</title>
                        <title language="de">Inhalt</title>
@@ -149,11 +155,12 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <headerContent version="1.0">
                <title language="en">Search for "{content}"</title>
                <title language="af">Soek vir " {content} "</title>
+               <title language="ca">Cerca per "{content}"</title>
                <title language="chs">搜索 "{content}"</title>
                <title language="cht">搜尋於 "{content}"</title>
                <title language="de">Suche nach "{content}"</title>
                <title language="ee">Otsi "{content}"</title>
-               <title language="es">Busca por "{contenido}"</title>
+               <title language="es">Busca por "{content}"</title>
                <title language="fr">Recherche de "{content}"</title>
                <title language="heb">חפש תוכן "{content}"</title>
                <title language="hr">Traži "{content}"</title>
@@ -170,6 +177,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Ara "{content}"</title>
                <subtitle language="en">This folder contains the files which matched your search for "{content}"</subtitle>
                <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté arxius que varen coincidir amb la recerca "{content}"</subtitle>
                <subtitle language="chs">此文件夹包含了匹配搜索 "{content}" 的文件</subtitle>
                <subtitle language="cht">這個資料夾包含了符合您搜尋 "{content}" 的檔案</subtitle>
                <subtitle language="de">Dieser Ordner enthält die Dateien, die ihrer Suche nach "{content}" entsprachen.</subtitle>
