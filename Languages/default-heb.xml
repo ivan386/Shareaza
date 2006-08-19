@@ -501,7 +501,7 @@
 			<separator/>
 			<menu text="‪מתק_דם">
 				<item id="ID_VIEW_SYSTEM" text="‪_מערכת" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="‪_שכנים" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="‪_שכנים" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="‪_הורדות" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="‪ה_עלאות" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="‪_ספריה" shortcut="F5"/>
@@ -583,7 +583,7 @@
 		</menu>
 		<menu text="‪_תצוגה">
 			<item id="ID_VIEW_SYSTEM" text="‪_מערכת" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="‪_שכנים" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="‪_שכנים" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="‪_הורדות" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="‪ה_עלאות" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="‪_ספריה" shortcut="F5"/>

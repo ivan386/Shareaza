@@ -516,7 +516,7 @@
 			<separator/>
 			<menu text="進階">
 				<item id="ID_VIEW_SYSTEM" text="系統" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="我的鄰居" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="我的鄰居" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="下載" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="上傳" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="收藏" shortcut="F5"/>
@@ -598,7 +598,7 @@
 		</menu>
 		<menu text="檢視">
 			<item id="ID_VIEW_SYSTEM" text="系統" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="我的鄰居" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="我的鄰居" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="下載" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="上傳" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="收藏" shortcut="F5"/>

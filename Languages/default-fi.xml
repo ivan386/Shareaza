@@ -506,7 +506,7 @@
 			<separator/>
 			<menu text="L_is&#228;&#228;">
 				<item id="ID_VIEW_SYSTEM" text="J_&#228;rjestelm&#228;" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="N_aapurit" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="N_aapurit" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="_Lataukset" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="_L&#228;hetykset" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Kirjasto" shortcut="F5"/>
@@ -588,7 +588,7 @@
 		</menu>
 		<menu text="_N&#228;yt&#228;">
 			<item id="ID_VIEW_SYSTEM" text="_J&#228;rjestelm&#228;" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="_Naapurit" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="_Naapurit" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Lataukset" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="_L&#228;hetykset" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_Kirjasto" shortcut="F5"/>

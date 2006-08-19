@@ -510,7 +510,7 @@ Other:
 				<separator />
 				<menu text="_Erweitert">
 					<item id="ID_VIEW_SYSTEM" text="_Konsole" shortcut="F1"/>
-					<item id="ID_VIEW_NEIGHBOURS" text="N_etzwerk" shortcut="F2"/>
+					<item id="ID_VIEW_NEIGHBOURS" text="N_etzwerk" shortcut="Strg+F11"/>
 					<item id="ID_VIEW_DOWNLOADS" text="_Downloads" shortcut="F3"/>
 					<item id="ID_VIEW_UPLOADS" text="_Uploads" shortcut="F4"/>
 					<item id="ID_VIEW_LIBRARY" text="_Bibliothek" shortcut="F5"/>
@@ -592,7 +592,7 @@ Other:
 			</menu>
 			<menu text="_Ansicht">
 				<item id="ID_VIEW_SYSTEM" text="_Konsole" shortcut="F1"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="N_etzwerk" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="N_etzwerk" shortcut="Strg+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="_Downloads" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="_Uploads" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Bibliothek" shortcut="F5"/>

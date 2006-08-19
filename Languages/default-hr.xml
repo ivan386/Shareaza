@@ -501,7 +501,7 @@
 			<separator/>
 			<menu text="Napre_dno">
 				<item id="ID_VIEW_SYSTEM" text="Sistem" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="Susj_edi" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="Susj_edi" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="Skinuto" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="Dano" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="Ko_lekcija" shortcut="F5"/>
@@ -583,7 +583,7 @@
 		</menu>
 		<menu text="Pogled">
 			<item id="ID_VIEW_SYSTEM" text="_Sistem" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="Susjedi" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="Susjedi" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="Razmjena" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="Dajem" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="Ko_lekcija" shortcut="F5"/>

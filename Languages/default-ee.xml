@@ -508,7 +508,7 @@ Umlauts:
 			<separator/>
 			<menu text="T_äpsem">
 				<item id="ID_VIEW_SYSTEM" text="S_üsteem" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="N_aabrid" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="N_aabrid" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="_Allalaadimised" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="_Üleslaadimised" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Raamatukogu" shortcut="F5"/>
@@ -590,7 +590,7 @@ Umlauts:
 		</menu>
 		<menu text="_Vaated">
 			<item id="ID_VIEW_SYSTEM" text="_Süsteem" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="_Naabrid" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="_Naabrid" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Allalaadimised" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="_Üleslaadimised" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_Raamatukogu" shortcut="F5"/>

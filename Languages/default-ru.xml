@@ -503,7 +503,7 @@
 			<separator/>
 			<menu text="_Опытным">
 				<item id="ID_VIEW_SYSTEM" text="Си_стема" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="С_оединения" shortcut="F2"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="С_оединения" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="_Загрузки" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="_Выгрузки" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Хранилище" shortcut="F5"/>
@@ -585,7 +585,7 @@
 		</menu>
 		<menu text="_Вид">
 			<item id="ID_VIEW_SYSTEM" text="_Система" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="С_оединения" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="С_оединения" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Загрузки" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="_Выгрузки" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_Хранилище" shortcut="F5"/>
