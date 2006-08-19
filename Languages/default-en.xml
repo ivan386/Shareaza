@@ -4151,7 +4151,7 @@
 	</dialog>
 
 	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Collection Export">
-		<control caption="This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data bellow."/>
+		<control caption="This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data below."/>
 		<control/>
 		<control caption="Template Information:"/>
 		<control caption="Name:"/>
