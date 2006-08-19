@@ -2946,7 +2946,7 @@
 	<string id="16812" value="请稍候: 查找 UPnP 驱动器并进行设置..."/>
 	<string id="16813" value="请稍候: 更新发现服务器..."/>
 	<string id="16814" value="请稍候: 更新 eDonkey2000 服务器列表..."/>
-	<string id="16815" value="UPnP 驱动器主机未运行。此服务要求进行设置。\n您需要将 SSDP Discovery 服务的启动类型设置为 &quot;自动&quot;。"/>
+	<string id="16815" value="UPnP Device Host 服务未运行。请重新设置该服务。\n您需要将该服务的启动类型设置为&quot;自动&quot;。"/>
 	<string id="16816" value="eDonkey 网络使用需要等待很长时间的队列。限制最大可接受的队列位置如果非常严格的话，您可能难以开始下载。\n您确定要限制您能接受的队列位置吗？"/>
 	<string id="16817" value="Windows 系统不支持超过 256 个字符的文件路径。\n请选择一个较短路径的文件夹。"/>
 	<string id="16818" value="完成文件的文件夹与未完成文件的文件夹不能为同一文件夹。"/>
