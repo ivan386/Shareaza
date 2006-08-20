@@ -1,8 +1,8 @@
 ; Uncomment the next line to compile a debug build without any files.
 ;#define debug
 
-#if VER < 0x05010000
-  #error Inno Setup version 5.1.4 or higher is needed for this script
+#if VER < 0x05010700
+  #error Inno Setup version 5.1.7 or higher is needed for this script
 #endif
 #if PREPROCVER < 0x05010000
   #error PreProcessor version 5.1.2 or higher is needed for this script
@@ -37,6 +37,7 @@ VersionInfoCompany=Shareaza Development Team
 VersionInfoDescription=Shareaza Ultimate File Sharing
 PrivilegesRequired=poweruser
 ShowLanguageDialog=yes
+ShowUndisplayableLanguages=yes
 LanguageDetectionMethod=locale
 UninstallDisplayIcon={app}\Uninstall\setup.exe
 UninstallDisplayName={cm:NameAndVersion,Shareaza,{#version}}
@@ -58,9 +59,6 @@ SourceDir=..\..
 AppPublisherURL=http://www.shareaza.com/?id=home
 AppSupportURL=http://www.shareaza.com/?id=support
 AppUpdatesURL=http://www.shareaza.com/?id=download
-
-[LangOptions]
-LanguageCodePage=0
 
 [Components]
 ; Ask user wich components to install
