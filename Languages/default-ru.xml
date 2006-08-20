@@ -11,9 +11,7 @@
 		author="dAbserver"
 		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
-		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
-		email="contact@shareaza.com"
-		version="2.2.0.2"
+		version="2.2.2.28"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -406,6 +404,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Закрыть окно"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="Во весь _экран"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Восстановить"/>
+		<item id="ID_CHILD_MINIMISE" text="_Минимизировать"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Закрыть окно"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="_Сети">
@@ -426,6 +437,7 @@
 			<item id="ID_TAB_MEDIA" text="Про_игрыватель"/>
 			<item id="ID_TAB_SEARCH" text="_Поиск"/>
 			<item id="ID_TAB_TRANSFERS" text="_Загрузки"/>
+			<item id="ID_WINDOW_REMOTE" text="Пульт _управления"/>
 			<separator/>
 			<menu text="_Опытным">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Соединения"/>
@@ -540,7 +552,7 @@
 			<item id="ID_WINDOW_TOOLBAR" text="Показывать полоску _инструментов"/>
 			<item id="ID_WINDOW_TABBAR" text="Показывать полоску _закладок"/>
 			<item id="ID_WINDOW_MONITOR" text="Показать _монитор"/>
-			<item id="ID_WINDOW_REMOTE" text="Показывать панель _управления"/>
+			<item id="ID_WINDOW_REMOTE" text="Показывать пульт _управления"/>
 		</menu>
 		<menu text="_Помощь">
 			<item id="ID_HELP_FAQ" text="_ЧаВо Shareaza"/>
@@ -625,7 +637,7 @@
 			<item id="ID_WINDOW_TOOLBAR" text="Показать полоску _инструментов"/>
 			<item id="ID_WINDOW_TABBAR" text="Показать полоску _закладок"/>
 			<item id="ID_WINDOW_MONITOR" text="Показать _монитор"/>
-			<item id="ID_WINDOW_REMOTE" text="Показать панель _управления"/>
+			<item id="ID_WINDOW_REMOTE" text="Показать пульт _управления"/>
 		</menu>
 		<menu text="_Помощь">
 			<item id="ID_HELP_FAQ" text="_ЧаВо Shareaza"/>
@@ -1298,6 +1310,7 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Открыть список воспроизведения..."/>
 		<item id="ID_MEDIA_SAVE" text="_Сохранить список воспроизведения..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="_Экспортировать коллекцию..."/>
 		<item id="ID_MEDIA_CLEAR" text="О_чистить список воспроизведения"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAYLIST" text="По_казать список воспроизведения"/>
@@ -2293,7 +2306,6 @@
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Экспортировать помеченную папку альбома в файл коллекции..."/>
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Загрузить все файлы выбранной коллекции."/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Добавить все файлы, находящиеся в помеченной папке(ах) альбома, в Ваш список воспроизведения."/>
-	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Экспортировать помеченную папку альбома как файл коллекции..."/>
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Обзор и правка свойств всех файлов, находящихся в помеченной папке(ах)..."/>
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Применить общие мета данные папки альбома ко всем в ней содержащихся файлам."/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="Создать здесь новую папку альбома..."/>
@@ -2337,6 +2349,7 @@
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Использовать установленные в видео пропорции."/>
 	<tip id="ID_MEDIA_CLEAR" message="Очистить список воспроизведения."/>
 	<tip id="ID_MEDIA_CLOSE" message="Закрыть текущий медиа файл, освободив при этом память."/>
+	<tip id="ID_MEDIA_EXPORT_COLLECTION" message="Сохранить список воспроизведения как файл коллекции..."/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="В-/Выключить полноэкранный режим видео."/>
 	<tip id="ID_MEDIA_MUTE" message="Приглушить играющее аудио"/>
 	<tip id="ID_MEDIA_NEXT" message="Перейти к следующему файлу в текущем списке воспроизведения." tip="Следующий файл"/>
@@ -2473,7 +2486,7 @@
 	<tip id="ID_WINDOW_CASCADE" message="Расширить все открытые окна, чтобы заполнить экран."/>
 	<tip id="ID_WINDOW_MONITOR" message="Показать или скрыть монитор пропускной способности."/>
 	<tip id="ID_WINDOW_NAVBAR" message="Показать или скрыть навигационную полоску."/>
-	<tip id="ID_WINDOW_REMOTE" message="Показать или скрыть панель управления Shareaza'ой "/>
+	<tip id="ID_WINDOW_REMOTE" message="Показать или скрыть пульт управления Shareaza'ой "/>
 	<tip id="ID_WINDOW_TABBAR" message="Показать или скрыть полоску закладок."/>
 	<tip id="ID_WINDOW_TILE_HORZ" message="Расположить открытые окна горизонтально, без перекрывания."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Расположить открытые окна вертикально, без перекрывания."/>
@@ -2508,6 +2521,9 @@
 	<string id="7003" value="Разные"/>
 	<string id="7004" value="Фильтр с названием «%s» уже существует. Хотите его заменить?"/>
 	<string id="7005" value="Дайте название Вашему фильтру."/>
+	<string id="7100" value="Этот шаблон неправильный."/>
+	<string id="7101" value="В этом шаблоне нет никаких настроек."/>
+	<string id="7102" value="Уверены, что хотите удалить шаблон «%s»?\nДействие будет необратимое."/>
 	<string id="8000" value="Установки Shareaza"/>
 	<string id="8001" value="Добро пожаловать в Shareaza"/>
 	<string id="8002" value="Свойства файла"/>
@@ -2520,6 +2536,7 @@
 	<string id="8009" value="Уверены, что хотите удалить шкурку «%s»?  Действие будет необратимое."/>
 	<string id="8010" value="Это предвыпускная версия Shareaza, и период бета тестирования закончился.  Пожалуйста загрузите полную, официальную версию с www.shareaza.com."/>
 	<string id="8011" value="При смене вида все открытые Вами окна будут закрыты.  Хотите ли переключить сейчас?"/>
+	<string id="8012" value="Информация о торренте"/>
 	<string id="8060" value="Узел/режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
 	<string id="8061" value="Режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
 	<string id="8062" value="Режим узла с %lu хостом(ами).  %s в собсвенном хранилище."/>
@@ -2605,6 +2622,7 @@
 	<string id="8240" value="Shareaza перемещает загрузку:"/>
 	<string id="8241" value="Shareaza проверяет загрузку на ошибки:"/>
 	<string id="8243" value="Соотношение:"/>
+	<string id="8244" value="Число обзоров:"/>
 	<string id="8288" value="Обзор Вашего Shareaza хранилища"/>
 	<string id="8289" value="Просматривается "/>
 	<string id="8290" value="Просматривается содержимое %i папок"/>
@@ -2645,6 +2663,7 @@
 	<string id="8334" value="Источники этого файла сейчас заняты"/>
 	<string id="8335" value="Источники этого файла находятся за брандмауэром"/>
 	<string id="8336" value="Источники этого файла могут выгружать нестабильно"/>
+	<string id="8337" value="Недоверяемый"/>
 	<string id="16064" value="Старт ядра сети Shareaza..."/>
 	<string id="16065" value="Не могу использовать  %s порт %i для входящих соединений.  Входящие соединения не будут поддерживаться."/>
 	<string id="16066" value="Закрытие ядра сети Shareaza..."/>
@@ -2678,14 +2697,12 @@
 	<string id="16137" value="Отказ от двойного соединеня с %s."/>
 	<string id="16138" value="Уже соединенно с %s, повторного соединения не будет."/>
 	<string id="16139" value="Хост %s закрыл соединение (%i : %s)."/>
-	<string id="16140" value="Хост %s замедляет соединения."/>
 	<string id="16141" value="Закрыто соединение с хостом %s, потому что он не узел."/>
 	<string id="16144" value="Вышло время подтверждения соединения с %s."/>
 	<string id="16145" value="Gnutella соединение с хостом %s установленно успешно (G%i.%i : %s)."/>
 	<string id="16146" value="Подтверждение соединения с %s сбилось из-за недопустимых данных на линии."/>
 	<string id="16147" value="Закрывается лишнее соединение с %s после подсказки от хоста (%s порт %i)."/>
 	<string id="16148" value="Соединение с %s отклонено (%s)."/>
-	<string id="16149" value="Подверждение соединения с %s по Gnutella протоколу 0.6 было неудачно, пробую по 0.4."/>
 	<string id="16150" value="Закрываю лишнее соединение с %s."/>
 	<string id="16151" value="Отказано соединению с %s, так как это защищенный лепестковый узел."/>
 	<string id="16152" value="Соседний узел %s не принял нас как узел, соединение закрывается."/>
@@ -2897,6 +2914,8 @@
 	<string id="16533" value="Общая TCP полоса пропускания посылок"/>
 	<string id="16534" value="Общая UDP полоса пропускания приема"/>
 	<string id="16535" value="Общая UDP полоса пропускания посылок"/>
+	<string id="16536" value="Соотношение получ./высланных пингов Gnutella"/>
+	<string id="16537" value="Соотношение получ./высланных понгов Gnutella"/>
 	<string id="16768" value="Получена ссылка «%s»"/>
 	<string id="16769" value="Невозможно разобрать ссылку: Shareaza не понимает этой ссылки."/>
 	<string id="16770" value="Невозможно показать диалог действий со ссылками, так как Shareaza занята."/>
@@ -2927,6 +2946,10 @@
 	<string id="16809" value="Вы&amp;ход"/>
 	<string id="16810" value="лет"/>
 	<string id="16811" value="Автоматический"/>
+	<string id="16812" value="Подождите: Обнаруживаются и настраиваются UPnP устройства..."/>
+	<string id="16813" value="Подождите: Обновляются ресурсы соединений..."/>
+	<string id="16814" value="Подождите: Обновляется список серверов eDonkey2000..."/>
+	<string id="16815" value="Служба «UPnP Device Host Service» не запущена. Эта служба необходима для настройки.\nВам нужно установить тип загрузки этой службы на автоматический."/>
 	<string id="16816" value="В сети eDonkey используются длинные очереди, и в них приходится ждать долго. Если уменьшите величину, Вы начнете принимать соединения очень ограниченно и у Вас могут возникнуть проблемы с загрузкой.\nУверены, что хотите уменьшить число очередей?"/>
 	<string id="16817" value="Windows не поддерживает путей длиннее чем 256 знаков.\nВыберите другую папку, с более коротким путем."/>
 	<string id="16818" value="Папка для выгрузок не должна совпадать с папкой временных файлов"/>
@@ -2954,6 +2977,7 @@
 	<string id="16942" value="Закрываю соединение обзора пользователя с %s."/>
 	<string id="16943" value=" Просмотр %s"/>
 	<string id="16944" value=" Найдено %i разделяемых файлов в хранилище у %s."/>
+	<string id="16991" value="Проигрыватель Shareaza"/>
 	<string id="16992" value="Shareaza не смогла создать экземпляр модуля MediaServices.  Переустановите Shareaza программу и удостоверьтесь, что у Вас установлены все необходимые медиа кодеки и драйвера вывода данных."/>
 	<string id="16993" value="Все медиа файлы|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Списки воспроизв.|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Аудио файлы|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Видео файлы|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD аудио трэки|*.cda|MIDI файлы|*.mid;*.rmi;*.midi|Все файлы|*.*||"/>
 	<string id="16994" value="Не могу загрузить медиа файл «%s»"/>
@@ -3068,11 +3092,19 @@
 	<string id="17493" value="Невозможно создать BitTorrent разделяемый файл «%s»."/>
 	<string id="17494" value="Этот торрент содержит файл «%s», но Shareaza не может найти этого файла в Вашем хранилище.  Если возможно, переместите файл в разделяемую папку и попробуйте снова."/>
 	<string id="17495" value="Этот торрент содержит файл «%s» версии %s, но версия Вашего файла - %s."/>
-	<string id="17496" value="Призошла ошибка во время  копирования «%s» в BitTorrent разделяемый файл."/>
-	<string id="17497" value="Призошла неясная ошибка во время рапространения «%s»."/>
+	<string id="17496" value="Произошла ошибка во время  копирования «%s» в BitTorrent разделяемый файл."/>
+	<string id="17497" value="Произошла неясная ошибка во время рапространения «%s»."/>
 	<string id="17498" value="Обнаружена ошибка в файле «%s»."/>
 	<string id="17500" value="Трекер не ответил - повтор анонсирования (%i из %i)"/>
 	<string id="17501" value="Невозможно соединиться с трекером"/>
+	<string id="17503" value="Трекер не ответил - пробуется следующий трекер (%i из %i)"/>
+	<string id="17505" value="Установка связи BitTorrent с %s оборвалась."/>
+	<string id="17506" value="Приветствие BitTorrent с %s оборвалось."/>
+	<string id="17507" value="Пара BitTorrent с %s оборвалась."/>
+	<string id="17510" value="Спаривание BitTorrent с %s не принимается, связь с этим клиентом уже существует."/>
+	<string id="17511" value="Спаривание BitTorrent с %s не принимается, достигнут максимальный лимит соединений."/>
+	<string id="17512" value="Конфиденциальный торрент"/>
+	<string id="17513" value="Ошибка кодировки"/>
 	<string id="18496" value="Вы сделали изменения в поле имени.  Уверены, что хотите переименовать эту загрузку?"/>
 	<string id="18497" value="Вы ввели неправильное значение SHA1.  Проверьте и попробуйте снова."/>
 	<string id="18498" value="Вы ввели неправильное корневое значение tiger-tree.   Проверьте и попробуйте снова."/>
@@ -3088,6 +3120,7 @@
 	<string id="18508" value="Сбрасывается источник загрузки %s для «%s»,  так как номер очереди %i слишком велик."/>
 	<string id="18509" value="Вы не можете предположить, что загрузка полна, и проверить её заново, так как у Вас нет никаких частичных проверочных данных, таких как том tiger-tree, набор eDonkey или BitTorrent хеша.  Без этой проверочной информации загрузка не может быть перепроверена."/>
 	<string id="18510" value="Вы уверены, что хотите предположить, что эта загрузка полна, и повторно её проверить?  Будет рассмотрен весь файл, и Shareaza примет только те части, которые пройдут проверку. Другие же части будут загружены заново."/>
+	<string id="18511" value="Вы внесли изменения в размер файла.  Уверены, что хотите изменить размер для этой загрузки?"/>
 	<string id="19000" value="Удаленный доступ отключен."/>
 	<string id="19001" value="Вы должны выбрать имя пользователя и пароль."/>
 	<string id="19002" value="Невозможно принять соединений, ссылка недоступна."/>
@@ -3099,6 +3132,10 @@
 	<string id="20005" value="Нет"/>
 	<string id="20006" value="Да"/>
 	<string id="20007" value="Авто"/>
+	<string id="20008" value="По умолчанию"/>
+	<string id="20009" value="Пользовательский"/>
+	<string id="20010" value="&amp;Назад"/>
+	<string id="20011" value="&amp;Далее"/>
 	<string id="20100" value="Соединение"/>
 	<string id="20101" value="Запрос"/>
 	<string id="20102" value="Ответ"/>
@@ -3218,8 +3255,9 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Проигрыватель">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Проигрыватель">
 		<control caption="_Опции:"/>
+		<control/>
 		<control caption="Открывать следующие типы файлов в проигрывателе Shareaza"/>
 		<control caption="Брать в очередь проигрывателя файлы перечисленных ниже типов"/>
 		<control caption="Типы файлов:"/>
@@ -3228,8 +3266,9 @@
 		<control caption="_Удалить"/>
 		<control caption="Модуль аудио визуализации:"/>
 		<control caption="Выбрать _модуль..."/>
-		<control caption="Модуль медиа услуг:"/>
-		<control/>
+		<control caption="У_правление мультимедии"/>
+		<control caption="Выбрать менеджер мультимедии:"/>
+		<control caption="Внимание: Если выберите внешний менеджер мультимедии, все модули мультимедии и визуализации будут отключенны!"/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Сообщество">
@@ -3261,7 +3300,7 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Интернет"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Соединения">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Соединения">
 		<control caption="Адрес для входящего потока:"/>
 		<control caption="Адрес:"/>
 		<control caption="Автоматический"/>
@@ -3280,6 +3319,7 @@
 		<control caption="Могу принять входящие соединения"/>
 		<control/>
 		<control caption="Отклонять локальные IP адреса"/>
+		<control caption="Настраивать устройства UPnP"/>
 		<control caption="_Тайм-ауты:"/>
 		<control caption="Соединение:"/>
 		<control/><control/>
@@ -3555,7 +3595,7 @@
 		<control caption="Ассоциировать файлы торрентов с программой."/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Добро пожаловать в Shareaza [3 из 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Добро пожаловать в Shareaza [3 из 7]">
 		<control caption="Для оптимальной работы Shareaza должна знать о вашем соединении с Интернетом."/>
 		<control caption="&#160;( выберите )| Я пользуюсь Интернетом дома| Я пользуюсь Интернетом в сети учебного заведения| Я пользуюсь Интернетом в офисе| Я пользуюсь Интернетом в гостинице или в аэропорту"/>
 		<control caption="Ваша сеть или университетский городок защищены брандмауэром или маршрутизатором?"/>
@@ -3565,6 +3605,8 @@
 		<control caption="Если Вы знаете скорость вашего соединения с Интернетом, выберите опцию ниже:"/>
 		<control caption="| Коммутир. соединение| ИСДН| АДСЛ (256 К)| АДСЛ (512 К)| АДСЛ (768 К)| АДСЛ (1,5 М)| ADSL (4,0 M)| ADSL2 (8,0 M)| ADSL2 (12,0 M)| ADSL2+ (24,0 M)| Кабельный модем/СДСЛ| Т1| Т3| Локальная сеть| OC3"/>
 		<control caption="ИЛИ, выберите:"/>
+		<control/>
+		<control caption="Статус:"/>
 		<control/>
 	</dialog>
 
@@ -3967,10 +4009,10 @@
 		<control caption="Отмена"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Копировать ссылку">
+	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="Копировать ссылку">
 		<control/>
 		<control caption="Вы можете скопировать ссылку на объект в различных форматах.  Выберите нужный формат щелкнув на одну из ссылок ниже:"/>
-		<control/><control/><control/>
+		<control/><control/><control/><control/>
 		<control caption="Включить _меня как фиксиров. источник"/>
 		<control caption="Отмена"/>
 	</dialog>
@@ -4043,7 +4085,7 @@
 		<control caption="ДА"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Загрузка имеющегося файла">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Загрузка имеющегося файла">
 		<control/><control/><control/><control/>
 		<control caption="У Вас уже есть этот файл в хранилище.  Что бы Вы хотели сделать?"/>
 		<control caption="Показать мне это файл в хранилище"/>
@@ -4052,6 +4094,7 @@
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
 		<control caption="Вы уже загружали этот файл и удалили его.  Что бы Вы хотели сделать?"/>
+		<control caption="Внимание!!! Найденны дубликаты. Злоумышленные программы могут заразить Ваше хранилище. Проверьте, что это Вы загрузили или поместили этот файл. Иначе, закройте Shareaza и просканируйте Ваш компьютер."/>
 	</dialog>
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Кнопка «Закрыть»">
@@ -4094,27 +4137,41 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Экспорт папки">
-		<control caption="Эта функция используется, чтобы экспортировать содержание папки альбома в файл .collection."/>
-		<control caption="Экспорт..."/>
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Экспорт коллекции">
+		<control caption="Эта функция используется, чтобы экспортировать содержание папки или списка воспроизведения в файлы коллекции. Выберите шаблон и нажмите Далее, чтобы продолжить.|Настраивайте Вашу коллекцию при помощи ввода данных в следующие поля."/>
+		<control/>
+		<control caption="Информация о шаблоне:"/>
+		<control caption="Название:"/>
+		<control/>
+		<control caption="Автор:"/>
+		<control/>
+		<control caption="Описание:"/>
+		<control/>
+		<control caption="Удалить|_Назад"/>
+		<control caption="_Далее|Экспорт..."/>
 		<control caption="Отмена"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Правка загрузки (опытным)">
+	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Правка загрузки (опытным)">
 		<control caption="ВНИМАНИЕ: Этот диалог для ОПЫТНЫХ пользователей и дает опции, которые при неправильном использовании могут разрушить загрузку."/>
+		<control caption="Имя и размер файла:"/>
 		<control caption="Имя файла:"/>
+		<control/><control/>
+		<control caption="Размер (байты):"/>
 		<control/>
 		<control caption="_URNs:"/>
+		<control caption="Верим"/>
 		<control caption="SHA1:"/>
-		<control/>
-		<control caption="Tiger-root:"/>
-		<control/>
+		<control/><control/>
+		<control caption="Tiger-Root:"/>
+		<control/><control/>
 		<control caption="ED2K:"/>
-		<control/>
+		<control/><control/>
 		<control caption="_Действия:"/>
 		<control caption="Забыть текущий статус сверки (и перепроверить)"/>
 		<control caption="Считать, что файл загружен на 100% и перепроверить"/>
 		<control caption="Забыть все известные источники"/>
+		<control caption="Слить с локальным файлом и перепроверить"/>
 		<control caption="Стиратель:"/>
 		<control caption="Сотри байт с:"/>
 		<control/>
@@ -4136,31 +4193,49 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Подробная информация BitTorrent">
-		<control caption="Torrent _информация:"/>
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Оснавное">
+		<control caption="_Информация о торренте:"/>
 		<control caption="Имя:"/>
 		<control/>
 		<control caption="Создан:"/>
 		<control/>
 		<control caption="Чем:"/>
 		<control/>
-		<control caption="Комментарии:"/>
-		<control/>
-		<control caption="Трекер:"/>
-		<control/>
-		<control caption="_Источники (загружающие):"/>
-		<control caption="Полных (распростран.):"/>
-		<control/>
-		<control caption="Неполных:"/>
+		<control caption="Примечания:"/>
 		<control/>
 		<control caption="Пересылки:"/>
 		<control caption="Начать новые загрузки:"/>
 		<control caption="Когда необходимо|Когда соотношение выше 100%|Только когда запрашивают|Никогда"/>
+		<control/>
+		<control caption="Всего выгруженно:"/>
+		<control caption="Заметки:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Файлы">
+		<control caption="_Информация о торренте:"/>
+		<control caption="Имя:"/>
+		<control/>
 		<control caption="_Файлы:"/>
 		<control/>
-		<control caption="_Обновить"/>
+	</dialog>
+
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Трекеры">
+		<control caption="_Информация о торренте:"/>
+		<control caption="Имя:"/>
 		<control/>
-		<control caption="Закрыть"/>
+		<control caption="Трекер:"/>
+		<control/>
+		<control caption="_Активный трекер:"/>
+		<control caption="Полных (распростран.):"/>
+		<control/>
+		<control caption="_Источники (загруж.):"/>
+		<control/>
+		<control caption="_Обновить"/>
+		<control caption="_Трекеры:"/>
+		<control/>
+		<control caption="Режим трекера:"/>
+		<control caption="Отключен|Настраиваемый|Один трекер|Мультитрекер|Мультитрекер (заблокир.)"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Свойства группы загрузки">
@@ -4322,9 +4397,14 @@
 		<column from="URL" to="Ссылка"/>
 		<column from="Expires" to="Истекает"/>
 	</list>
-	<list name="CTorrentTrackerList">
+	<list name="CTorrentFileList">
 		<column from="Filename" to="Имя файла"/>
 		<column from="Size" to="Размер"/>
+	</list>
+	<list name="CTorrentTrackerList">
+		<column from="Tracker" to="Трекер"/>
+		<column from="Status" to="Статус"/>
+		<column from="Type" to="Тип"/>
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="Пользователь"/>
