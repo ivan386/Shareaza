@@ -480,7 +480,7 @@ CBTPacket* CDownloadWithTorrent::CreateBitfieldPacket()
 		
 		for ( int nBit = 7 ; nBit >= 0 && nBlock < m_nTorrentBlock ; nBit--, nBlock++ )
 		{
-			if ( m_pTorrentBlock[ nBlock ] )
+			if ( m_pTorrentBlock[ nBlock ] == TS_TRUE )
 			{
 				nByte |= ( 1 << nBit );
 				nCount++;
