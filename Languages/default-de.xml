@@ -16,7 +16,7 @@ Other:
 	<manifest
 		name="Deutsch"
 		author="Jann Röder"
-		updatedBy="zero9999 and Jann Röder"
+		updatedBy="zero9999, Jann Röder, Frontier"
 		description="Shareaza 2.2 German Skin File"
 		link="http://www.shareaza.com/"
 		email="spooky23 at arcor dot de"
@@ -2274,10 +2274,12 @@ Other:
 		<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com besuchen." tip="Shareaza.com"/>
 		<tip id="ID_HELP_SECURITY" message="Hinweise, wie Sie ihren Computer vor schädlichen Programmen (Viren, Spyware) schützen können."/>
 		<tip id="ID_HELP_UPDATE" message="Neueste Nachrichten und Updates."/>
-		<tip id="ID_HELP_WEB_1" message="Zeropaid.com besuchen" tip="Zeropaid.com"/>
-		<tip id="ID_HELP_WEB_2" message="P2PForums.com besuchen" tip="P2PForums.com"/>
-		<tip id="ID_HELP_WEB_3" message="Slyck.com besuchen" tip="Slyck.com"/>
-		<tip id="ID_HELP_WEB_4" message="NapJunk.net besuchen"/>
+		<tip id="ID_HELP_WEB_1" message="Visit this website"/>
+		<tip id="ID_HELP_WEB_2" message="Visit this website"/>
+		<tip id="ID_HELP_WEB_3" message="Visit this website"/>
+		<tip id="ID_HELP_WEB_4" message="Visit this website"/>
+		<tip id="ID_HELP_WEB_5" message="Visit this website"/>
+		<tip id="ID_HELP_WEB_6" message="Visit this website"/>
 		<tip id="ID_HITMONITOR_CLEAR" message="Den Treffermonitor-Puffer leeren." tip="Puffer leeren"/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Den Treffermonitor anhalten." tip="Anzeige anhalten"/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Das Netzwerk nach dem markierten Ausdruck durchsuchen." tip="Danach suchen"/>
@@ -2306,7 +2308,6 @@ Other:
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Das markierte Album als Kollektion exportieren..."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Alle Dateien der markierten Kollektion herunterladen."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Alle Dateien des markierten Albums zur Wiedergabeliste hinzufügen."/>
-		<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Das markierte Album als Kollektion exportieren..."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Die Eigenschaften aller Dateien im gewählten Ordner anzeigen und bearbeiten..."/>
 		<tip id="ID_LIBRARY_FOLDER_METADATA" message="Gemeinsame Metadaten des Albums für alle Dateien übernehmen."/>
 		<tip id="ID_LIBRARY_FOLDER_NEW" message="Ein neues Album erstellen..."/>
@@ -2328,7 +2329,7 @@ Other:
 		<tip id="ID_LIBRARY_SEARCH_QUICK" message="In ihrer Bibliothek suchen..."/>
 		<tip id="ID_LIBRARY_SEED_TORRENT" message="Das markierte Torrent &quot;seeden&quot;."/>
 		<tip id="ID_LIBRARY_SELECT_ALL" message="Alle Ordner in der Bibliothek auswählen und anzeigen." tip="Alle Ordner in der Bibliothek auswählen und anzeigen"/>
-		<tip id="ID_LIBRARY_SHARED" message="Markiertes Objekt freigeben / nicht freigeben." tip="Freigeben / Nicht freigeben"/>
+		<tip id="ID_LIBRARY_SHARED_FILE" message="Markiertes Objekt freigeben / nicht freigeben." tip="Freigeben / Nicht freigeben"/>
 		<tip id="ID_LIBRARY_SHARED_FOLDER" message="Den markierten Ordner freigeben / nicht freigeben."/>
 		<tip id="ID_LIBRARY_TREE_PHYSICAL" message="Die Ordner auf ihrer Festplatte anzeigen."/>
 		<tip id="ID_LIBRARY_TREE_VIRTUAL" message="Die Bibliothek verwalten."/>
@@ -2698,7 +2699,6 @@ Other:
 		<string id="16137" value="Doppelte Verbindung von %s verweigert."/>
 		<string id="16138" value="Bereits mit %s verbunden, es wird keine zusätzliche Verbindung hergestellt."/>
 		<string id="16139" value="Host %s hat die Verbindung beendet (%i : %s)."/>
-		<string id="16140" value="Host %s ist ein Crawler."/>
 		<string id="16141" value="Verbindung zu Host %s beendet, weil er kein Hub ist."/>
 		<string id="16144" value="Der Handshake mit %s hat die Wartezeit überschritten."/>
 		<string id="16145" value="Gnutella-Verbindung mit Host %s erfolgreich hergestellt (G%i.%i : %s)."/>
@@ -2855,7 +2855,6 @@ Other:
 		<string id="16375" value="Unvollständig"/>
 		<string id="16376" value="Alle Dateien"/>
 		<string id="16377" value="HTTP Guard"/>
-		<string id="16378" value="Host %s hat mit 416 geantwortet, ohne verfügbare Bereiche anzugeben. Verbindung wird geschlossen.."/>
 		<string id="16384" value="Sind Sie sicher, dass Sie die Datei &quot;%s&quot; ausführen möchten?\n\nManche Dateien können ihren Computer beschädigen. Stellen Sie die Echtheit der Datei sicher, bevor Sie sie ausführen (Virenscan)."/>
 		<string id="16385" value="Sie sind dabei die Metadaten von %i Dateien zu ändern. Wollen Sie fortfahren?"/>
 		<string id="16386" value="Metadaten von %i bearbeiten."/>
@@ -2917,6 +2916,8 @@ Other:
 		<string id="16533" value="Gesamt TCP Sendegeschwindigkeit"/>
 		<string id="16534" value="Gesamt UDP Empfangsgeschwindigkeit"/>
 		<string id="16535" value="Gesamt UDP Sendegeschwindigkeit"/>
+		<string id="16536" value="Gnutella Ratio of Received/Sent Pings"/>
+		<string id="16537" value="Gnutella Ratio of Received/Sent Pongs"/>
 		<string id="16768" value="URL &quot;%s&quot; empfangen"/>
 		<string id="16769" value="Auswertung der URL nicht möglich: Shareaza versteht die URL nicht."/>
 		<string id="16770" value="Der URL-Aktionsdialog kann nicht angezeigt werden, weil Shareaza beschäftigt ist."/>
@@ -2947,6 +2948,10 @@ Other:
 		<string id="16809" value="&amp;Schließen"/>
 		<string id="16810" value="Jahre alt"/>
 		<string id="16811" value="Automatisch"/>
+		<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
+		<string id="16813" value="Please wait: Updating discovery services..."/>
+		<string id="16814" value="Please wait: Updating eDonkey2000 server list..."/>
+		<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>
 		<string id="16816" value="Das eDonkey-Netzwerk benutzt lange Warteschlangen mit langen Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen, Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition auf diesen Wert setzen wollen?"/>
 		<string id="16817" value="Windows unterstützt keine Dateipfade länger als 256 Zeichen.\nBitte wählen Sie einen Ordner mit einem kürzeren Pfad."/>
 		<string id="16818" value="Das Verzeichnis für unvollständige Dateien darf sich nicht im Downloadverzeichnis befinden."/>
@@ -3074,7 +3079,6 @@ Other:
 		<string id="17477" value="BitTorrent-Kopplung mit %s hat mit der falschen Datei geantwortet."/>
 		<string id="17478" value="BitTorrent-Kopplung mit %s hat eine unbekannte Datei angefordert."/>
 		<string id="17479" value="BitTorrent-Kopplung %s hergestellt für &quot;%s&quot;."/>
-		<string id="17480" value="BitTorrent-Kopplung mit %s hat eine inaktive Datei angefordert."/>
 		<string id="17481" value="BitTorrent-Datei (Descriptor): &quot;%s&quot; empfangen"/>
 		<string id="17482" value="Auswertung der vorgeladenen BitTorrent-Datei &quot;%s&quot; nicht möglich."/>
 		<string id="17483" value="Fehler von BitTorrent-Tracker für &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3125,11 +3129,15 @@ Other:
 		<string id="20000" value="Keine URN verfügbar."/>
 		<string id="20001" value="Schließen"/>
 		<string id="20002" value="von"/>
+		<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
+		<string id="20004" value="Right-to-left languages are not supported in your OS."/>
 		<string id="20005" value="Nein"/>
 		<string id="20006" value="Ja"/>
 		<string id="20007" value="Auto"/>
 		<string id="20008" value="Vorgabe"/>
 		<string id="20009" value="Benutzerdefiniert"/>
+		<string id="20010" value="&amp;Back"/>
+		<string id="20011" value="&amp;Next"/>
 		<string id="20100" value="Verbinden"/>
 		<string id="20101" value="Anfordern"/>
 		<string id="20102" value="Antwort"/>
@@ -3263,7 +3271,6 @@ Other:
 			<control caption="_Medienverwaltung"/>
 			<control caption="Media Player wählen:"/>
 			<control caption="Warnung: Wenn Sie ihre Medien durch einen externen Player verwalten lassen, deaktiviert dies automatisch alle Medien- und Visualisierungsplugins!"/>
-			<control />
 		</dialog>
 
 		<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Community">
@@ -3590,7 +3597,7 @@ Other:
 			<control caption="Shareaza mit .torrent-Dateien verknüpfen."/>
 		</dialog>
 
-		<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Willkommen bei Shareaza [3 von 7]">
+		<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Willkommen bei Shareaza [3 von 7]">
 			<control caption="Um richtig zu funktionieren, benötigt Shareaza Informationen über ihre Internetverbindung."/>
 			<control caption="&#160;( Bitte wählen )| Ich benutze das Internet zu Hause| Ich benutze das Internet in einem Universitätsnetzwerk| Ich benutze das Internet in einem Büronetzwerk| Ich benutze das Internet in einem Hotel oder Flughafen"/>
 			<control caption="Ist ihr Netzwerk oder Campus durch eine Firewall oder einen NAT Router geschützt?"/>
@@ -3601,6 +3608,8 @@ Other:
 			<control caption="| Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Kabelmodem/SDSL| T1| T3| LAN| OC3"/>
 			<control caption="Benutzerdefiniert:"/>
 			<control />
+			<control caption="Status:"/>
+			<control/>
 		</dialog>
 
 		<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Willkommen bei Shareaza [4 von 7]">
@@ -4002,10 +4011,10 @@ Other:
 			<control caption="Abbrechen"/>
 		</dialog>
 
-		<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="URI kopieren">
+		<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="URI kopieren">
 			<control />
 			<control caption="Sie können für das gewählte Objekt eine URI in verschiede Formate kopieren. Bitte wählen Sie das gewünschte Format, indem Sie unten auf eine URI klicken:"/>
-			<control /><control /><control />
+			<control/><control/><control/><control/>
 			<control caption="_Mich selbst als Quelle aufnehmen"/>
 			<control caption="Abbrechen"/>
 		</dialog>
