@@ -277,7 +277,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella2.KHLPeriod"), &Gnutella2.KHLPeriod, 60000 );
 	Add( _T("Gnutella2.KHLHubCount"), &Gnutella2.KHLHubCount, 50 );
 	Add( _T("Gnutella2.HAWPeriod"), &Gnutella2.HAWPeriod, 300000 );
-	Add( _T("Gnutella2.HostExpire"), &Gnutella2.HostExpire, 0 );
+	Add( _T("Gnutella2.HostExpire"), &Gnutella2.HostExpire, 2 * 24 * 60 * 60 );
 	Add( _T("Gnutella2.HostCurrent"), &Gnutella2.HostCurrent, 10 * 60 );
 	Add( _T("Gnutella2.QueryGlobalThrottle"), &Gnutella2.QueryGlobalThrottle, 125 );
 	Add( _T("Gnutella2.QueryHostThrottle"), &Gnutella2.QueryHostThrottle, 120 );
@@ -576,6 +576,10 @@ void CSettings::Load()
 	Gnutella1.NumHubs			= min( Gnutella1.NumHubs, 2 );
 	Gnutella2.NumHubs			= min( Gnutella2.NumHubs, 3 );
 	Gnutella2.NumLeafs			= min( Gnutella2.NumLeafs, 1024 );
+
+	// Enforce HostCache Expire time to be minimum 1 day.
+	Gnutella1.HostExpire		= max( Gnutella1.HostExpire, 24 * 60 * 60u );
+	Gnutella2.HostExpire		= max( Gnutella2.HostExpire, 24 * 60 * 60u );
 
 	// Make sure download/incomplete folders aren't the same
 	if ( _tcsicmp( Downloads.IncompletePath, Downloads.CompletePath ) == 0 )
