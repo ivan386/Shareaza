@@ -102,6 +102,8 @@
 	
 	<vendor code="GNZL">
 		<title>Gnoozle</title>
+		<capability name="htmlHostBrowse"/>
+		<capability name="chatFlag"/>
 	</vendor>
 
 	<vendor code="GTKG">
