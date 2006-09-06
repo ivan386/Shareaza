@@ -1466,123 +1466,146 @@ int CDownloadsCtrl::GetClientStatus(CDownload *pDownload)
 		return nSources;
 }
 
-void CDownloadsCtrl::BubbleSortDownloads(int nColumn)
+void CDownloadsCtrl::BubbleSortDownloads(int nColumn)  // BinaryInsertionSortDownloads(int nColumn)
 {
-	POSITION pos;
-	int j, pass;
-	CDownload *x, *y;
-	BOOL bSwitch=TRUE,  bSort, bOK;
-	CString s, t;	
 
-	bSort=m_pbSortAscending[nColumn];
-	//for (j=DOWNLOAD_COLUMN_TITLE; j <= DOWNLOAD_COLUMN_PERCENTAGE; j++)
-	//	m_pbSortAscending[j]=FALSE;
-	m_pbSortAscending[nColumn]= !bSort;
+	m_pbSortAscending[nColumn]= !m_pbSortAscending[nColumn];
 
-	INT_PTR nTransfers = Downloads.GetCount();
-	for (pass=0; (pass < nTransfers-1) && (bSwitch == TRUE); pass++)
+	if (Downloads.GetCount() < 2) return;
+
+	POSITION pos = Downloads.GetIterator(), pos_y = pos;
+	Downloads.GetNext(pos);
+
+	while (pos != NULL)
 	{
-		bSwitch=FALSE;
-		pos=Downloads.GetIterator();
-		for (j=0 ; (j < nTransfers-pass-1) && (pos != NULL) ; j++ )
+		POSITION pos_x = pos;
+		CDownload *x = Downloads.GetNext(pos);
+		
+		BOOL bOK = FALSE, bRlBk = TRUE;
+		CDownload *y;
+		while (bRlBk && (pos_y != NULL))
 		{
-			x = Downloads.GetNext( pos );
-			y = Downloads.GetNext( pos );
-			s = x->GetDisplayName();
-			t = y->GetDisplayName();
-			bOK = FALSE;
-			if ( m_pbSortAscending[nColumn] == FALSE ) 
+			y = Downloads.GetPrevious(pos_y);
+			if ( m_pbSortAscending[nColumn] == FALSE )
 			{
 				switch ( nColumn )
 				{
 					case DOWNLOAD_COLUMN_TITLE:
-						if ( x->GetDisplayName().CompareNoCase( y->GetDisplayName() ) > 0 )
+						if ( x->GetDisplayName().CompareNoCase( y->GetDisplayName() ) < 0 )
 							bOK = TRUE;
-						break;
-					case DOWNLOAD_COLUMN_SIZE:
-						if ( x->m_nSize > y->m_nSize )
-							bOK = TRUE;
-						break;
-					case DOWNLOAD_COLUMN_PROGRESS:
-						if ( x->GetProgress() > y->GetProgress() )
-							bOK = TRUE;
-						break;
-					case DOWNLOAD_COLUMN_SPEED:
-						if ( x->GetMeasuredSpeed() > y->GetMeasuredSpeed() )
-							bOK = TRUE;
-						break;
-					case DOWNLOAD_COLUMN_STATUS:
-						if ( GetDownloadStatus( x ).CompareNoCase(GetDownloadStatus(y)) > 0 )
-							bOK = TRUE;
-						break;
-					case DOWNLOAD_COLUMN_CLIENT:
-						if ( GetClientStatus( x ) > GetClientStatus(y) )
-							bOK = TRUE;
-						break;
-					case DOWNLOAD_COLUMN_DOWNLOADED:
-						if ( x->GetVolumeComplete() > y->GetVolumeComplete() )
-							bOK = TRUE;
-						break;
-					case DOWNLOAD_COLUMN_PERCENTAGE:
-						if ( ((double)(x->GetVolumeComplete() ) / (double)(x->m_nSize)) > ((double)(y->GetVolumeComplete() ) / (double)(y->m_nSize)) )
-							bOK = TRUE;
-						break;
-				}
-				if (bOK)
-				{
-					bSwitch = TRUE;
-					Downloads.Swap( y, x );
-				}
-			}
-			else 
-			{
-				switch ( nColumn )
-				{
-					case DOWNLOAD_COLUMN_TITLE:
-						if ( x->GetDisplayName().CompareNoCase(y->GetDisplayName()) < 0 )
-							bOK = TRUE;
+						else
+							bRlBk = FALSE;
 						break;
 					case DOWNLOAD_COLUMN_SIZE:
 						if ( x->m_nSize < y->m_nSize )
 							bOK = TRUE;
+						else
+							bRlBk = FALSE;
 						break;
 					case DOWNLOAD_COLUMN_PROGRESS:
 						if ( x->GetProgress() < y->GetProgress() )
 							bOK = TRUE;
+						else
+							bRlBk = FALSE;
 						break;
 					case DOWNLOAD_COLUMN_SPEED:
 						if ( x->GetMeasuredSpeed() < y->GetMeasuredSpeed() )
 							bOK = TRUE;
+						else
+							bRlBk = FALSE;
 						break;
 					case DOWNLOAD_COLUMN_STATUS:
-						if ( GetDownloadStatus(x).CompareNoCase( GetDownloadStatus(y) ) < 0 )
+						if ( GetDownloadStatus( x ).CompareNoCase(GetDownloadStatus(y)) < 0 )
 							bOK = TRUE;
+						else
+							bRlBk = FALSE;
 						break;
 					case DOWNLOAD_COLUMN_CLIENT:
-						if ( GetClientStatus(x) < GetClientStatus(y) )
+						if ( GetClientStatus( x ) < GetClientStatus(y) )
 							bOK = TRUE;
+						else
+							bRlBk = FALSE;
 						break;
 					case DOWNLOAD_COLUMN_DOWNLOADED:
 						if ( x->GetVolumeComplete() < y->GetVolumeComplete() )
 							bOK = TRUE;
+						else
+							bRlBk = FALSE;
 						break;
 					case DOWNLOAD_COLUMN_PERCENTAGE:
 						if ( ((double)(x->GetVolumeComplete() ) / (double)(x->m_nSize)) < ((double)(y->GetVolumeComplete() ) / (double)(y->m_nSize)) )
 							bOK = TRUE;
+						else
+							bRlBk = FALSE;
 						break;
-
-				}
-				if (bOK)
-				{
-					bSwitch = TRUE;
-					Downloads.Swap( x, y );
-				}
+				}//end switch
 			}
-
-			if ( pos != NULL )
-				Downloads.GetPrevious( pos );
+			else
+			{
+				switch ( nColumn )
+				{
+					case DOWNLOAD_COLUMN_TITLE:
+						if ( x->GetDisplayName().CompareNoCase(y->GetDisplayName()) > 0 )
+							bOK = TRUE;
+						else
+							bRlBk = FALSE;
+						break;
+					case DOWNLOAD_COLUMN_SIZE:
+						if ( x->m_nSize > y->m_nSize )
+							bOK = TRUE;
+						else
+							bRlBk = FALSE;
+						break;
+					case DOWNLOAD_COLUMN_PROGRESS:
+						if ( x->GetProgress() > y->GetProgress() )
+							bOK = TRUE;
+						else
+							bRlBk = FALSE;
+						break;
+					case DOWNLOAD_COLUMN_SPEED:
+						if ( x->GetMeasuredSpeed() > y->GetMeasuredSpeed() )
+							bOK = TRUE;
+						else
+							bRlBk = FALSE;
+						break;
+					case DOWNLOAD_COLUMN_STATUS:
+						if ( GetDownloadStatus(x).CompareNoCase( GetDownloadStatus(y) ) > 0 )
+							bOK = TRUE;
+						else
+							bRlBk = FALSE;
+						break;
+					case DOWNLOAD_COLUMN_CLIENT:
+						if ( GetClientStatus(x) > GetClientStatus(y) )
+							bOK = TRUE;
+						else
+							bRlBk = FALSE;
+						break;
+					case DOWNLOAD_COLUMN_DOWNLOADED:
+						if ( x->GetVolumeComplete() > y->GetVolumeComplete() )
+							bOK = TRUE;
+						else
+							bRlBk = FALSE;
+						break;
+					case DOWNLOAD_COLUMN_PERCENTAGE:
+						if ( ((double)(x->GetVolumeComplete() ) / (double)(x->m_nSize)) > ((double)(y->GetVolumeComplete() ) / (double)(y->m_nSize)) )
+							bOK = TRUE;
+						else
+							bRlBk = FALSE;
+						break;
+				}//end switch                 
+			}//end if else
+		}//end while bRlBk
+		if (bOK)
+		{
+			Downloads.Reorder(x, y);
+			if (!bRlBk) Downloads.Move(x,1);
+			if (pos == NULL) break;
+			pos_y = pos;
+            Downloads.GetPrevious(pos_y);
 		}
-	}
+		else
+			pos_y = pos_x;
+	}//end while pos
 }
 
 void CDownloadsCtrl::OnSortPanelItems(NMHDR* pNotifyStruct, LRESULT* /*pResult*/)
