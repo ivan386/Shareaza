@@ -123,7 +123,7 @@ BOOL CDownloadTransferHTTP::AcceptPush(CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP close
 
-void CDownloadTransferHTTP::Close(TRISTATE bKeepSource)
+void CDownloadTransferHTTP::Close( TRISTATE bKeepSource, DWORD nRetryAfter )
 {
 	if ( m_pSource != NULL && m_nState == dtsDownloading && m_nPosition )
 	{
@@ -137,7 +137,7 @@ void CDownloadTransferHTTP::Close(TRISTATE bKeepSource)
 		}
 	}
 	
-	CDownloadTransfer::Close( bKeepSource );
+	CDownloadTransfer::Close( bKeepSource, nRetryAfter );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -583,6 +583,8 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 	if ( strCode == _T("200") || strCode == _T("206") )
 	{
 		SetState( dtsHeaders );
+		m_pSource->m_nFailures = 0;
+		m_pSource->m_nBusyCount = 0;
 	}
 	else if ( strCode == _T("503") )
 	{
@@ -594,6 +596,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 		else
 		{
 			m_bBusyFault = TRUE;
+			m_pSource->m_nFailures = 0;
 		}
 		
 		SetState( dtsHeaders );
@@ -962,6 +965,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		else
 		{
 			SetState( dtsBusy );
+			m_pSource->m_nBusyCount++;
 			m_tRequest = GetTickCount();
 			return TRUE;
 		}

@@ -57,7 +57,7 @@ protected:
 // Operations
 public:
 	virtual BOOL	Initiate();
-	virtual void	Close(TRISTATE bKeepSource);
+	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();

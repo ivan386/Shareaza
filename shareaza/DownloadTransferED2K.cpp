@@ -130,7 +130,7 @@ BOOL CDownloadTransferED2K::Initiate()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferED2K close
 
-void CDownloadTransferED2K::Close(TRISTATE bKeepSource)
+void CDownloadTransferED2K::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
 	SetState( dtsNull );
 
@@ -140,7 +140,7 @@ void CDownloadTransferED2K::Close(TRISTATE bKeepSource)
 		m_pClient = NULL;
 	}
 	
-	CDownloadTransfer::Close( bKeepSource );
+	CDownloadTransfer::Close( bKeepSource, nRetryAfter );
 }
 
 //////////////////////////////////////////////////////////////////////

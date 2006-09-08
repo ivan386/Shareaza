@@ -399,6 +399,7 @@ public:
 		CString		CollectionPath;				// Where .collection and .co files are stored
 		DWORD		BufferSize;
 		DWORD		SparseThreshold;			// NTFS 'sparse files' are not used on files below this size. (0 = Disable)
+		DWORD		MaxAllowedFailures;
 		INT			MaxFiles;					// How many files download at once
 		INT			MaxTransfers;				// How many total tranfers take place
 		INT			MaxFileTransfers;			// How mnay transfers are allowed per file

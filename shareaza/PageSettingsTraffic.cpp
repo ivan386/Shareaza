@@ -226,6 +226,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 
 	AddSetting( &Settings.Downloads.BufferSize, 1024, 0, 512, _T(" KB") );
 	AddSetting( &Settings.Downloads.SparseThreshold, 1024, 0, 256, _T(" MB") );
+	AddSetting( &Settings.Downloads.MaxAllowedFailures, 1, 3, 40 );
 	AddSetting( &Settings.Downloads.MaxFileSearches, 1, 0, 5 );
 	AddSetting( &Settings.Downloads.MaxConnectingSources, 1, 5, 50 );
 	AddSetting( &Settings.Downloads.MinSources, 1, 0, 6 );

@@ -59,6 +59,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload)
 : m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
+	m_nBusyCount	= 0;
 }
 
 void CDownloadSource::Construct(CDownload* pDownload)
@@ -97,6 +98,9 @@ void CDownloadSource::Construct(CDownload* pDownload)
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
 	SystemTimeToFileTime( &pTime, &m_tLastSeen );
+
+	m_nBusyCount	= 0;
+
 }
 
 CDownloadSource::~CDownloadSource()
@@ -141,6 +145,8 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 	}
 	
 	ResolveURL();
+
+	m_nBusyCount	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -171,6 +177,8 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nCl
 	m_sServer	= _T("eDonkey2000");
 	
 	ResolveURL();
+
+	m_nBusyCount	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -199,6 +207,8 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, const Hashes::BtGuid& oGU
 	m_sServer	= _T("BitTorrent");
 	
 	ResolveURL();
+
+	m_nBusyCount	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -225,6 +235,8 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL /*bS
 	}
 
 	m_nRedirectionCount = nRedirectionCount;
+
+	m_nBusyCount	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -420,7 +432,7 @@ void CDownloadSource::Remove(BOOL bCloseTransfer, BOOL bBan)
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource failure handler
 
-void CDownloadSource::OnFailure(BOOL bNondestructive)
+void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 {
 	if ( m_pTransfer != NULL )
 	{
@@ -429,24 +441,37 @@ void CDownloadSource::OnFailure(BOOL bNondestructive)
 		m_pTransfer = NULL;
 	}
 	
-	DWORD nDelay = Settings.Downloads.RetryDelay * ( 1u << m_nFailures );
-	
-	if ( m_nFailures < 20 )
+	DWORD nDelayFactor = max( m_nBusyCount, m_nFailures );
+
+	DWORD nDelay = Settings.Downloads.RetryDelay * ( 1u << nDelayFactor );
+
+	if ( nRetryAfter != 0 )
 	{
-		if ( nDelay > 3600000 ) nDelay = 3600000;
+		nDelay = nRetryAfter * 1000;
 	}
 	else
 	{
-		if ( nDelay > 86400000 ) nDelay = 86400000;
+		if ( nDelayFactor < 20 )
+		{
+			if ( nDelay > 3600000 ) nDelay = 3600000;
+		}
+		else  // I think it is nasty to set 1 Day delay
+		{
+			if ( nDelay > 86400000 ) nDelay = 86400000; 
+		}
 	}
 	
 	nDelay += GetTickCount();
 	
-	int nMaxFailures = ( m_bReadContent ? 40 : 3 );
+	// This is not too good because if the source has Uploaded even 1Byte data, Max failure gets set to 40
+	//int nMaxFailures = ( m_bReadContent ? 40 : 3 );
+
+	int nMaxFailures = Settings.Downloads.MaxAllowedFailures;
+
 	if ( nMaxFailures < 20 && m_pDownload->GetSourceCount() > 20 ) nMaxFailures = 0;
-	
+
 	m_pDownload->SetModified();
-	
+
 	if ( bNondestructive || ( ++m_nFailures < nMaxFailures ) )
 	{
 		m_tAttempt = max( m_tAttempt, nDelay );

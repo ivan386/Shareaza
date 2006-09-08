@@ -84,7 +84,8 @@ public:
 	DWORD				m_nSortOrder;			// How should this source be sorted in the list?
 	int					m_nColour;
 	DWORD				m_tAttempt;
-	int					m_nFailures;
+	int					m_nFailures;			// failure count.
+	int					m_nBusyCount;			// busy count. (used for inclementing RetryDelay)
 	int					m_nRedirectionCount;
 	Fragments::List		m_oAvailable;
 	Fragments::List		m_oPastFragments;
@@ -96,7 +97,7 @@ public:
 public:
 	inline BOOL	CanInitiate(BOOL bNetwork, BOOL bEstablished) const;
 	void		Remove(BOOL bCloseTransfer, BOOL bBan);
-	void		OnFailure(BOOL bNondestructive);
+	void		OnFailure(BOOL bNondestructive, DWORD nRetryAfter = 0);
 	void		OnResume();
 	void		OnResumeClosed();
 public:

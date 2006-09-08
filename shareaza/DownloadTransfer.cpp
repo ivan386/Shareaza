@@ -84,7 +84,7 @@ CDownloadTransfer::~CDownloadTransfer()
 // TS_UNKNOWN - keeps the source and will be dropped after several retries, will be
 //            - added to m_pFailedSources when removed
 
-void CDownloadTransfer::Close(TRISTATE bKeepSource)
+void CDownloadTransfer::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
 	SetState( dtsNull );
 
@@ -101,7 +101,7 @@ void CDownloadTransfer::Close(TRISTATE bKeepSource)
 			}
 			else
 			{
-				m_pSource->OnFailure( TRUE );
+				m_pSource->OnFailure( TRUE, nRetryAfter );
 			}
 			break;
 		case TS_UNKNOWN:

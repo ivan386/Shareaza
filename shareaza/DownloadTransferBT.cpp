@@ -93,7 +93,7 @@ BOOL CDownloadTransferBT::Initiate()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferBT close
 
-void CDownloadTransferBT::Close(TRISTATE bKeepSource)
+void CDownloadTransferBT::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
 	if ( m_pClient != NULL )
 	{
@@ -108,7 +108,7 @@ void CDownloadTransferBT::Close(TRISTATE bKeepSource)
 		}
 		m_pClient = NULL;
 	}
-	CDownloadTransfer::Close( bKeepSource );
+	CDownloadTransfer::Close( bKeepSource, nRetryAfter );
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -355,6 +355,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.CollectionPath"), &Downloads.CollectionPath, General.UserPath + _T("\\Collections") );
 	Add( _T("Downloads.BufferSize"), &Downloads.BufferSize, 81920 );
 	Add( _T("Downloads.SparseThreshold"), &Downloads.SparseThreshold, 8 * 1024 );
+	Add( _T("Downloads.MaxAllowedFailures"), &Downloads.MaxAllowedFailures, 10 );
 	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 32 );
 	Add( _T("Downloads.MaxTransfers"), &Downloads.MaxTransfers, 128 );
 	Add( _T("Downloads.MaxFileTransfers"), &Downloads.MaxFileTransfers, 8 );
