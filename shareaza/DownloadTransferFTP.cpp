@@ -155,7 +155,7 @@ BOOL CDownloadTransferFTP::Initiate()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferFTP close
 
-void CDownloadTransferFTP::Close (TRISTATE bKeepSource)
+void CDownloadTransferFTP::Close (TRISTATE bKeepSource, DWORD nRetryAfter)
 {
 	m_LIST.Close ();
 	m_RETR.Close ();
@@ -166,7 +166,7 @@ void CDownloadTransferFTP::Close (TRISTATE bKeepSource)
 	m_FtpState = ftpConnecting;
 	m_bSizeChecked = FALSE;
 	
-	CDownloadTransfer::Close( bKeepSource );
+	CDownloadTransfer::Close( bKeepSource, nRetryAfter );
 }
 
 //////////////////////////////////////////////////////////////////////
