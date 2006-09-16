@@ -93,7 +93,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Numero episodio</title>
                        <title language="ja">エピソード</title>
                        <title language="lt">Serijos numeris</title>
-                       <title language="nl">Episode Nummer</title>
+                       <title language="nl">Scènenummer</title>
                        <title language="no">Episode nummer</title>
                        <title language="br">Número do Episódio</title>
                        <title language="ru">№ серии/эпизода</title>
@@ -288,7 +288,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Numero parte</title>
                        <title language="ja">部品番号</title>
                        <title language="lt">Dalies numeris</title>
-                       <title language="nl">Deel Nummer</title>
+                       <title language="nl">Deelnummer</title>
                        <title language="no">Del nummer</title>
                        <title language="br">Número da Parte</title>
                        <title language="ru">Номер части</title>
@@ -384,7 +384,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Data di rilascio P2P</title>
                        <title language="ja">P2P配布日</title>
                        <title language="lt">P2P išleidimo data</title>
-                       <title language="nl">Datum P2P Vrijgave</title>
+                       <title language="nl">Datum P2P distributie</title>
                        <title language="no">P2P releasedato</title>
                        <title language="br">Data de Lançamento</title>
                        <title language="ru">P2P релиз дата</title>
@@ -408,7 +408,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Distributore</title>
                        <title language="ja">配布者</title>
                        <title language="lt">Distributorius</title>
-                       <title language="nl">Verspreider</title>
+                       <title language="nl">Distributeerder</title>
                        <title language="no">Distributør</title>
                        <title language="br">Distribuidor</title>
                        <title language="ru">Дистрибьютер</title>
@@ -432,7 +432,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Link del distributore</title>
                        <title language="ja">配布者リンク</title>
                        <title language="lt">Distrib. nuoroda</title>
-                       <title language="nl">Link naar Verspreider</title>
+                       <title language="nl">Link naar distributeerder</title>
                        <title language="no">Distributørlink</title>
                        <title language="br">Link do Distribuidor</title>
                        <title language="ru">Ссылка агента</title>
@@ -456,7 +456,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Gruppo di rilascio</title>
                        <title language="ja">配布グループ</title>
                        <title language="lt">Leidimo grupė</title>
-                       <title language="nl">Vrijgave Groep</title>
+                       <title language="nl">Distributiegroep</title>
                        <title language="no">Releasegruppe</title>
                        <title language="br">Grupo de Lançamento</title>
                        <title language="ru">Релиз группа</title>
@@ -480,7 +480,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Link gruppo di rilascio</title>
                        <title language="ja">配布グループリンク</title>
                        <title language="lt">Leid. gr. nuoroda</title>
-                       <title language="nl">Link Vrijgave Groep</title>
+                       <title language="nl">Link van distributiegroep</title>
                        <title language="no">Releasegruppe-link</title>
                        <title language="br">Link do Grupo</title>
                        <title language="ru">Ссылка группы</title>

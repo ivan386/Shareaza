@@ -43,7 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="it">Generale:File fantasma</title>
               <title language="ja">&#160;一般: ゴースト･ファイル</title>
               <title language="lt">Bendra:Šešėlinės bylos</title>
-              <title language="nl">General:Ghost Files</title>
+              <title language="nl">Algemeen:Ghost bestanden</title>
               <title language="no">General:Ghost Files</title>
               <title language="br">General:Ghost Files</title>
               <title language="ru">&#160;Основное: Теневые файлы</title>
@@ -97,7 +97,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="it">File fantasma</title>
                <title language="ja">ゴースト･ファイル</title>
                <title language="lt">Šešėlinės bylos</title>
-               <title language="nl">Ghost Files</title>
+               <title language="nl">Ghost bestanden</title>
                <title language="no">Ghost Files</title>
                <title language="br">Ghost Files</title>
                <title language="ru">Теневые файлы</title>
@@ -119,7 +119,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="it">Questa cartella contiene tutti i file che hai cancellato dalla libreria.</subtitle>
                <subtitle language="ja">このフォルダーには全てのライブラリーからコメント付で削除されたファイルが収録されています（ファイル自体は存在いたしません）</subtitle>
                <subtitle language="lt">Šiame aplanke yra visos bylos, kurias Jūs kažkada ištrynėte iš savo kolekcijos.</subtitle>
-               <subtitle language="nl">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="nl">Deze map bevat elk bestand dat je hebt verwijderd uit de bibliotheek.</subtitle>
                <subtitle language="no">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="br">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый файл, который Вы удалили с хранилища.</subtitle>

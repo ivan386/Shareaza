@@ -43,7 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="it">Serie</title>
                <title language="ja">シリーズ</title>
                <title language="lt">Serialai</title>
-               <title language="nl">Video Series</title>
+               <title language="nl">Videoseries</title>
                <title language="no">Serie</title>
                <title language="br">Série</title>
                <title language="ru">&#160;Видео серии</title>
@@ -339,7 +339,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Distributore</title>
                        <title language="ja">配布者</title>
                        <title language="lt">Distributorius</title>
-                       <title language="nl">Verspreider</title>
+                       <title language="nl">Distributeerder</title>
                        <title language="no">Distributør</title>
                        <title language="br">Distribuidor</title>
                        <title language="ru">Дистрибьютер</title>
@@ -363,7 +363,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Link del distributore</title>
                        <title language="ja">配布者リンク</title>
                        <title language="lt">Distrib. nuoroda</title>
-                       <title language="nl">Link naar Verspreider</title>
+                       <title language="nl">Link naar distributeerder</title>
                        <title language="no">Distributørlink</title>
                        <title language="br">Link do Distribuidor</title>
                        <title language="ru">Ссылка агента</title>
@@ -411,7 +411,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Gruppo di rilascio</title>
                        <title language="ja">配布グループ</title>
                        <title language="lt">Leidimo grupė</title>
-                       <title language="nl">Vrijgave Groep</title>
+                       <title language="nl">Distributiegroep</title>
                        <title language="no">Releasegruppe</title>
                        <title language="br">Grupo de Lançamento</title>
                        <title language="ru">Релиз группа</title>
@@ -435,7 +435,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Link gruppo di rilascio</title>
                        <title language="ja">配布グループリンク</title>
                        <title language="lt">Leid. gr. nuoroda</title>
-                       <title language="nl">Link Vrijgave Groep</title>
+                       <title language="nl">Link van distributiegroep</title>
                        <title language="no">Releasegruppe-link</title>
                        <title language="br">Link do Grupo</title>
                        <title language="ru">Ссылка группы</title>
@@ -577,7 +577,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="it">Questa cartella contiene gli episodi di {name}.</subtitle>
                <subtitle language="ja">このフォルダーには "{name}" のエピソードが収録されています</subtitle>
                <subtitle language="lt">Šiame kataloge yra filmo „{name}“ serijos.</subtitle>
-               <subtitle language="nl">Deze map bevat alle episodes van {name}.</subtitle>
+               <subtitle language="nl">Deze map bevat alle scènes van {name}.</subtitle>
                <subtitle language="no">Denne mappen inneholder episoder av {name}.</subtitle>
                <subtitle language="br">Esta pasta contém episódios de {name}.</subtitle>
                <subtitle language="ru">Эта папка отображает эпизоды {name}.</subtitle>

@@ -511,7 +511,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Data di rilascio P2P</title>
                        <title language="ja">P2P配布日</title>
                        <title language="lt">P2P išleidimo data</title>
-                       <title language="nl">Datum P2P Vrijgave</title>
+                       <title language="nl">Datum P2P distributie</title>
                        <title language="no">P2P releasedato</title>
                        <title language="br">Data de Lançamento</title>
                        <title language="ru">P2P релиз дата</title>
@@ -535,7 +535,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Distributore</title>
                        <title language="ja">配布者</title>
                        <title language="lt">Distributorius</title>
-                       <title language="nl">Verspreider</title>
+                       <title language="nl">Distributeerder</title>
                        <title language="no">Distributør</title>
                        <title language="br">Distribuidor</title>
                        <title language="ru">Дистрибьютер</title>
@@ -559,7 +559,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Link del distributore</title>
                        <title language="ja">配布者リンク</title>
                        <title language="lt">Distrib. nuoroda</title>
-                       <title language="nl">Link naar Verspreider</title>
+                       <title language="nl">Link naar distributeerder</title>
                        <title language="no">Distributørlink</title>
                        <title language="br">Link do Distribuidor</title>
                        <title language="ru">Ссылка агента</title>
@@ -583,7 +583,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Gruppo di rilascio</title>
                        <title language="ja">配布グループ</title>
                        <title language="lt">Leidimo grupė</title>
-                       <title language="nl">Vrijgave Groep</title>
+                       <title language="nl">Distributiegroep</title>
                        <title language="no">Releasegruppe</title>
                        <title language="br">Grupo de Lançamento</title>
                        <title language="ru">Релиз группа</title>
@@ -607,7 +607,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Link gruppo di rilascio</title>
                        <title language="ja">配布グループリンク</title>
                        <title language="lt">Leid. gr. nuoroda</title>
-                       <title language="nl">Link Vrijgave Groep</title>
+                       <title language="nl">Link van distributiegroep</title>
                        <title language="no">Releasegruppe-link</title>
                        <title language="br">Link do Grupo</title>
                        <title language="ru">Ссылка группы</title>
@@ -727,7 +727,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Encoder usato</title>
                        <title language="ja">使用エンコーダー</title>
                        <title language="lt">Naudotas koduoklis</title>
-                       <title language="nl">Gebruikte Encoder</title>
+                       <title language="nl">Gebruikte encodeerder</title>
                        <title language="no">Brukt omkoder</title>
                        <title language="br">Codificador Usado</title>
                        <title language="ru">Перекодировщик</title>
