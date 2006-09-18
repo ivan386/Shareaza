@@ -45,7 +45,7 @@ public:
 	DWORD		m_nProtocols;
 	QWORD		m_nMinSize;
 	QWORD		m_nMaxSize;
-	BOOL		m_bPartial;
+	DWORD		m_nFileStateFlag;
 	CString		m_sShareTag;
 	CString		m_sNameMatch;
 public:
@@ -62,12 +62,13 @@ public:
 	BOOL		m_bSelected;
 	DWORD		m_nMeasured;
 
+	enum		{ ulqNull = 0, ulqPartial = 1, ulqLibrary = 2, ulqBoth = 3 };
 // Operations
 public:
 	CString		GetCriteriaString() const;
 	void		Serialize(CArchive& ar, int nVersion);
 public:
-	BOOL		CanAccept(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, BOOL bPartial, LPCTSTR pszShareTags = NULL) const;
+	BOOL		CanAccept(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, DWORD nFileState, LPCTSTR pszShareTags = NULL) const;
 	BOOL		Enqueue(CUploadTransfer* pUpload, BOOL bForce = FALSE, BOOL bStart = FALSE);
 	BOOL		Dequeue(CUploadTransfer* pUpload);
 	int			GetPosition(CUploadTransfer* pUpload, BOOL bStart);

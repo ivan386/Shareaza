@@ -57,7 +57,7 @@ public:
 	BOOL			Reorder(CUploadQueue* pQueue, CUploadQueue* pBefore);
 	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, CLibraryFile* pFile);
 	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, CDownload* pFile);
-	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, BOOL bPartial, LPCTSTR pszShareTags = NULL);
+	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, DWORD nFileState, LPCTSTR pszShareTags = NULL);
 public:
 	int		GetTotalBandwidthPoints( BOOL ActiveOnly = FALSE );
 	int		GetQueueCapacity();

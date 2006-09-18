@@ -809,7 +809,8 @@ BOOL CUploadTransferHTTP::QueueRequest()
 			ASSERT( m_pQueue != NULL );
 
 			// If the queue can't accept this file
-			if ( ! m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, m_bFilePartial, m_sFileTags ) )
+			if ( ! m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, 
+				( m_bFilePartial ? CUploadQueue::ulqPartial: CUploadQueue::ulqLibrary ), m_sFileTags ) )
 			{	// This is probably a partial that has completed
 				theApp.Message( MSG_DEBUG, _T("File queue error- Partial may have recently completed") );
 
@@ -831,7 +832,8 @@ BOOL CUploadTransferHTTP::QueueRequest()
 		else if ( UploadQueues.Enqueue( this ) )
 		{
 			ASSERT( m_pQueue != NULL );
-			ASSERT( m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, m_bFilePartial, m_sFileTags ) );
+			ASSERT( m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, 
+				( m_bFilePartial ? CUploadQueue::ulqPartial : CUploadQueue::ulqLibrary ), m_sFileTags ) );
 			
 			nPosition = UploadQueues.GetPosition( this, TRUE );
 			ASSERT( nPosition >= 0 );

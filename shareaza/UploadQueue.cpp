@@ -47,7 +47,7 @@ CUploadQueue::CUploadQueue()
 	m_nProtocols		= 0;
 	m_nMinSize			= 0;
 	m_nMaxSize			= 0xFFFFFFFFFFFFFFFF;
-	m_bPartial			= FALSE;
+	m_nFileStateFlag	= ulqBoth;
 	
 	m_nCapacity			= 20;
 	m_nMinTransfers		= 1;
@@ -113,10 +113,16 @@ CString CUploadQueue::GetCriteriaString() const
 		str1 += str2;
 	}
 	
-	if ( m_bPartial )
+	if ( m_nFileStateFlag == ulqPartial )
 	{
 		if ( str1.GetLength() ) str1 += _T(", ");
 		LoadString( str2, IDS_UPLOAD_QUEUE_PARTIAL );
+		str1 += str2;
+	}
+	else if ( m_nFileStateFlag == ulqLibrary )
+	{
+		if ( str1.GetLength() ) str1 += _T(", ");
+		LoadString( str2, IDS_UPLOAD_QUEUE_COMPLETE );
 		str1 += str2;
 	}
 	
@@ -128,7 +134,7 @@ CString CUploadQueue::GetCriteriaString() const
 //////////////////////////////////////////////////////////////////////
 // CUploadQueue criteria testing
 
-BOOL CUploadQueue::CanAccept(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, BOOL bPartial, LPCTSTR pszShareTags) const
+BOOL CUploadQueue::CanAccept(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, DWORD nFileState, LPCTSTR pszShareTags) const
 {
 	if ( ! m_bEnable ) return FALSE;
 	
@@ -138,7 +144,7 @@ BOOL CUploadQueue::CanAccept(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize,
 	if ( m_nProtocols != 0 &&
 		 ( m_nProtocols & ( 1 << nProtocol ) ) == 0 ) return FALSE;
 	
-	if ( m_bPartial && !bPartial ) return FALSE;
+	if ( (m_nFileStateFlag & nFileState) == 0 ) return FALSE;
 	
 	if ( m_sShareTag.GetLength() > 0 )
 	{
@@ -455,7 +461,7 @@ void CUploadQueue::Serialize(CArchive& ar, int nVersion)
 		ar << m_nProtocols;
 		ar << m_nMinSize;
 		ar << m_nMaxSize;
-		ar << m_bPartial;
+		ar << m_nFileStateFlag;
 		ar << m_sShareTag;
 		ar << m_sNameMatch;
 		
@@ -491,7 +497,24 @@ void CUploadQueue::Serialize(CArchive& ar, int nVersion)
 			m_nMaxSize = nInt32;
 		}
 		
-		ar >> m_bPartial;
+		if ( nVersion >= 6 )
+		{
+			ar >> m_nFileStateFlag;
+		}
+		else
+		{
+			BOOL bPartial;
+			ar >> bPartial;
+			if ( bPartial )
+			{
+				m_nFileStateFlag = ulqPartial;
+			}
+			else
+			{
+				m_nFileStateFlag = ulqBoth;
+			}
+		}
+
 		ar >> m_sShareTag;
 		ar >> m_sNameMatch;
 		

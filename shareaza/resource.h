@@ -583,7 +583,7 @@
 #define IDC_ROTATE_TIME_SPIN            1308
 #define IDC_MARKED_CHECK                1309
 #define IDC_BANDWIDTH_VALUE             1310
-#define IDC_PARTIAL_ENABLE              1311
+#define IDC_QUEUE_PARTIALONLY           1311
 #define IDC_TRANSFERS_MAX               1312
 #define IDC_TRANSFERS_MAX_SPIN          1313
 #define IDC_BANDWIDTH_SLIDER            1314
@@ -690,6 +690,8 @@
 #define IDC_CONNECTION_PROGRESS         1429
 #define IDC_CONNECTION_STATUS           1430
 #define IDC_MESSAGE_DUPLICATES          1431
+#define IDC_QUEUE_LIBRARYONLY           1434
+#define IDC_QUEUE_BOTH                  1435
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502
@@ -1052,6 +1054,7 @@
 #define IDS_UPLOAD_QUEUE_COMPLETE       16376
 #define IDS_UPLOAD_QUEUE_HTTP_GUARD     16377
 #define IDS_DOWNLOAD_416_WITHOUT_RANGE  16378
+#define IDS_UPLOAD_QUEUE_LIBRARY        16379
 #define IDS_LIBRARY_CONFIRM_EXECUTE     16384
 #define IDS_LIBRARY_METADATA_MANY       16385
 #define IDS_LIBRARY_METADATA_EDIT       16386

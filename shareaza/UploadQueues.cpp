@@ -78,7 +78,7 @@ BOOL CUploadQueues::Enqueue(CUploadTransfer* pUpload, BOOL bForce)
 		if ( pQueue->CanAccept(	pUpload->m_nProtocol,
 								pUpload->m_sFileName,
 								pUpload->m_nFileSize,
-								pUpload->m_bFilePartial,
+								( pUpload->m_bFilePartial ? CUploadQueue::ulqPartial : CUploadQueue::ulqLibrary ),
 								pUpload->m_sFileTags ) )
 		{
 			if ( pQueue->Enqueue( pUpload, bForce, bForce ) ) return TRUE;
@@ -197,15 +197,15 @@ BOOL CUploadQueues::Reorder(CUploadQueue* pQueue, CUploadQueue* pBefore)
 
 CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, CLibraryFile* pFile)
 {
-	return SelectQueue( nProtocol, pFile->m_sName, pFile->GetSize(), FALSE, pFile->m_sShareTags );
+	return SelectQueue( nProtocol, pFile->m_sName, pFile->GetSize(), CUploadQueue::ulqLibrary, pFile->m_sShareTags );
 }
 
 CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, CDownload* pFile)
 {
-	return SelectQueue( nProtocol, pFile->m_sDisplayName, pFile->m_nSize, TRUE );
+	return SelectQueue( nProtocol, pFile->m_sDisplayName, pFile->m_nSize, CUploadQueue::ulqPartial );
 }
 
-CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, BOOL bPartial, LPCTSTR pszShareTags)
+CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, DWORD nFileState, LPCTSTR pszShareTags)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	int nIndex = 0;
@@ -214,7 +214,7 @@ CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, 
 	{
 		CUploadQueue* pQueue = GetNext( pos );
 		pQueue->m_nIndex = nIndex;
-		if ( pQueue->CanAccept( nProtocol, pszName, nSize, bPartial, pszShareTags ) ) return pQueue;
+		if ( pQueue->CanAccept( nProtocol, pszName, nSize, nFileState, pszShareTags ) ) return pQueue;
 	}
 
 	return NULL;
@@ -382,7 +382,7 @@ BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bC
 	{
 		CUploadQueue* pQueue = GetNext( pos );
 
-		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, FALSE, pFile->m_sShareTags ) )
+		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, CUploadQueue::ulqLibrary, pFile->m_sShareTags ) )
 		{	// If this queue will accept this file
 			if ( ( ! bCanQueue ) || ( pQueue->GetQueueRemaining() > 0 ) )
 			{	// And we don't care if there is space now, or the queue isn't full)
@@ -416,7 +416,7 @@ int CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile *pFile )
 	{
 		CUploadQueue* pQueue = GetNext( pos );
 
-		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, FALSE, pFile->m_sShareTags ) )
+		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, CUploadQueue::ulqLibrary, pFile->m_sShareTags ) )
 		{	// If this queue will accept this file
 
 			if ( pQueue->GetQueueRemaining() > 0 )
@@ -503,7 +503,7 @@ BOOL CUploadQueues::Save()
 
 void CUploadQueues::Serialize(CArchive& ar)
 {
-	int nVersion = 5;
+	int nVersion = 6;
 
 	if ( ar.IsStoring() )
 	{
@@ -548,7 +548,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 40;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 		pQueue->m_nCapacity			= 2000;
 		pQueue->m_nMinTransfers		= 4;
 		pQueue->m_nMaxTransfers		= 6;
@@ -560,6 +560,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nCapacity			= 2000;
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 5;
@@ -571,7 +572,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 50;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 		pQueue->m_nMinTransfers		= 4;
 		pQueue->m_nMaxTransfers		= 6;
 		pQueue->m_bRotate			= TRUE;
@@ -582,6 +583,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nMaxSize			= 1 * 1024 * 1024;
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_nMinTransfers		= 2;
@@ -592,6 +594,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nMinSize			= 1  * 1024 * 1024 + 1;
 		pQueue->m_nMaxSize			= 10 * 1024 * 1024 - 1;
 		pQueue->m_nCapacity			= 10;
@@ -603,6 +606,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_nMinTransfers		= 3;
@@ -617,7 +621,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 40;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 		pQueue->m_nCapacity			= 2000;
 		pQueue->m_nMinTransfers		= 3;
 		pQueue->m_nMaxTransfers		= 5;
@@ -629,6 +633,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nCapacity			= 2000;
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 5;
@@ -640,7 +645,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 50;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 		pQueue->m_nMinTransfers		= 3;
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
@@ -651,6 +656,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nMaxSize			= 1 * 1024 * 1024;
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_nMinTransfers		= 1;
@@ -661,6 +667,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nMinSize			= 1  * 1024 * 1024 + 1;
 		pQueue->m_nMaxSize			= 10 * 1024 * 1024 - 1;
 		pQueue->m_nCapacity			= 10;
@@ -672,6 +679,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_nMinTransfers		= 3;
@@ -686,7 +694,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 		pQueue->m_nCapacity			= 2000;
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 4;
@@ -698,6 +706,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nCapacity			= 2000;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 4;
@@ -709,7 +718,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRotate			= TRUE;
@@ -720,6 +729,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nMaxSize			= 10 * 1024 * 1024;
 		pQueue->m_nCapacity			= 8;
 		pQueue->m_nMinTransfers		= 2;
@@ -730,6 +740,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
 		pQueue->m_nMinTransfers		= 3;
 		pQueue->m_nMaxTransfers		= 4;
@@ -744,7 +755,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 		pQueue->m_nCapacity			= 2000;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 4;
@@ -756,6 +767,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nCapacity			= 1000;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 4;
@@ -767,7 +779,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRotate			= TRUE;
@@ -778,6 +790,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 40;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_nCapacity			= 10;
@@ -791,6 +804,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqBoth;
 		pQueue->m_nCapacity			= 500;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 3;
@@ -802,7 +816,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 		pQueue->m_nCapacity			= 8;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 3;
@@ -814,6 +828,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
 		pQueue->m_nCapacity			= 8;
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 3;
@@ -827,7 +842,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
-		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqBoth;
 		pQueue->m_nCapacity			= 500;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 2;
@@ -839,6 +854,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqBoth;
 		pQueue->m_nCapacity			= 5;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 2;
@@ -856,9 +872,12 @@ void CUploadQueues::CreateDefault()
 void CUploadQueues::Validate()
 {
 	CString strQueueName;
-	if ( SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x00A00000, TRUE ) == NULL &&
-		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x03200000, TRUE ) == NULL &&
-		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x1F400000, TRUE ) == NULL )
+	if ( SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x00A00000, CUploadQueue::ulqPartial ) == NULL &&
+		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x03200000, CUploadQueue::ulqPartial ) == NULL &&
+		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x1F400000, CUploadQueue::ulqPartial ) == NULL &&
+		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x00A00000, CUploadQueue::ulqLibrary ) == NULL &&
+		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x03200000, CUploadQueue::ulqLibrary ) == NULL &&
+		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x1F400000, CUploadQueue::ulqLibrary ) == NULL)
 	{
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_GUARD );
 		CUploadQueue* pQueue		= Create( strQueueName );
@@ -880,14 +899,17 @@ void CUploadQueues::Validate()
 			pQueue->m_nBandwidthPoints	= 20;
 			pQueue->m_nCapacity			= 500;
 			pQueue->m_nRotateTime		= 30*60;
-			pQueue->m_bPartial			= TRUE;
+			pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
 			pQueue->m_bRewardUploaders	= TRUE;
 		}
 	}
 
-	if ( SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x00A00000, TRUE ) == NULL &&
-		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x03200000, TRUE ) == NULL &&
-		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x1F400000, TRUE ) == NULL )
+	if ( SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x00A00000, CUploadQueue::ulqPartial ) == NULL &&
+		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x03200000, CUploadQueue::ulqPartial ) == NULL &&
+		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x1F400000, CUploadQueue::ulqPartial ) == NULL &&
+		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x00A00000, CUploadQueue::ulqLibrary ) == NULL &&
+		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x03200000, CUploadQueue::ulqLibrary ) == NULL &&
+		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x1F400000, CUploadQueue::ulqLibrary ) == NULL)
 	{
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_HTTP_GUARD );
 		CUploadQueue* pQueue		= Create( strQueueName );

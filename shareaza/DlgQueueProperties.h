@@ -39,6 +39,9 @@ public:
 public:
 	//{{AFX_DATA(CQueuePropertiesDlg)
 	enum { IDD = IDD_QUEUE_PROPERTIES };
+	CButton m_wndPartialOnly;
+	CButton m_wndLibraryOnly;
+	CButton m_wndBoth;
 	CEdit	m_wndMatch;
 	CEdit	m_wndBandwidthPoints;
 	CEdit	m_wndBandwidthValue;
@@ -59,7 +62,7 @@ public:
 	CString	m_sMinSize;
 	BOOL	m_bMarked;
 	CString	m_sName;
-	BOOL	m_bPartial;
+	DWORD	m_nFileStatusFlag;
 	BOOL	m_bProtocols;
 	BOOL	m_bRotate;
 	BOOL	m_bReward;
@@ -96,6 +99,9 @@ protected:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnChangeTransfersMax();
 	afx_msg void OnMatchCheck();
+	afx_msg void OnPartialClicked();
+	afx_msg void OnLibraryClicked();
+	afx_msg void OnBothClicked();
 	//}}AFX_MSG
 
 	// Get the protcol checkbox
