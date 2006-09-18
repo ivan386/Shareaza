@@ -441,7 +441,7 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 		m_pTransfer = NULL;
 	}
 	
-	DWORD nDelayFactor = max( m_nBusyCount, m_nFailures );
+	DWORD nDelayFactor = max( ( m_nBusyCount != 0 ) ? (m_nBusyCount - 1) : 0, m_nFailures );
 
 	DWORD nDelay = Settings.Downloads.RetryDelay * ( 1u << nDelayFactor );
 
