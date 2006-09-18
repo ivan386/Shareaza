@@ -643,7 +643,7 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 	StringList::iterator it, it2;
 	bool bDuplicate = false;
 
-	for ( it = pList.begin() ; it != pList.end() && !it->empty() ; ++it )
+	for ( it = pList.begin() ; it != pList.end() && !it->empty() ; )
 	{
 		for ( it2 = it + 1 ; it2 != pList.end() ; )
 		{
@@ -660,6 +660,8 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 			it = pList.erase( it );
 			bDuplicate = false;
 		}
+		else
+			++it;
 	}
 	
 	nBogus -= pList.size();
