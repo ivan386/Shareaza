@@ -623,9 +623,15 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 
 int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 {
-	if ( !pItem || !pItem->IsNamed( L"IPP" ) ) return 0;
+	if ( !pItem ) return 0;
 
-	DWORD nCount = min( DWORD(50), HostCache.Gnutella1.CountHosts() );
+	bool bIPP = false;
+	if ( pItem->IsNamed( L"IPP" ) )
+		bIPP = true;
+	else if ( !pItem->IsNamed( L"DIPP" ) && !pItem->IsNamed( L"DIP" ) )
+	return 0;
+
+	DWORD nCount = min( DWORD(50), bIPP ? HostCache.Gnutella1.CountHosts() : HostCache.G1DNA.CountHosts() );
 	WORD nPos = 0;
 
 	// Create 5 random positions from 0 to 50 in the descending order
@@ -640,7 +646,10 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 	nCount = Settings.Gnutella1.MaxHostsInPongs;
 
 	CHostCacheHost* pHost = NULL;
-	pHost = HostCache.Gnutella1.GetNewest() ;
+	if ( bIPP )
+		pHost = HostCache.Gnutella1.GetNewest() ;
+	else
+		pHost = HostCache.G1DNA.GetNewest();
 
 	while ( pHost && nCount )
 	{
@@ -649,8 +658,10 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 		for ( ; pHost && nPos-- ; pHost = pHost->m_pPrevTime );
 
 		// We won't provide Shareaza hosts for G1 cache, since users may disable
-		// G1 and it will pollute the host caches ( ??? )
-		if ( pHost )
+		// G1 and it will polute the host caches ( ??? )
+		if ( pHost && 
+			 ( ( bIPP && ( !pHost->m_pVendor || pHost->m_pVendor->m_sCode != L"GDNA" ) ) || 
+			   ( !bIPP && pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) ) )
 		{
 			pItem->Write( (void*)&pHost->m_pAddress, 4 );
 			pItem->Write( (void*)&pHost->m_nPort, 2 );
@@ -704,29 +715,41 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
 			CGGEPItem* pIPPs = pGGEP.Find( L"IPP", 6 );
+			// GDNA has a bug in their code; they send DIP but receive DIPP
+			CGGEPItem* pGDNAs = pGGEP.Find( L"DIPP", 6 );
+			if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
 
 			// We got a response to SCP extension, add hosts to cache if IPP extension exists
-			if ( pIPPs )
+			while ( pIPPs || pGDNAs )
 			{
+				CGGEPItem* pItem = pIPPs ? pIPPs : pGDNAs;
+				CString str = pGDNAs ? L"GDNA" : L"G1";
 				// The first four bytes represent the IP address and the last two represent the port
 				// The length of the number of bytes of IPP must be divisible by 6
-				if ( ( pIPPs->m_nLength - pIPPs->m_nPosition ) % 6 == 0 )
+				if ( ( pItem->m_nLength - pItem->m_nPosition ) % 6 == 0 )
 				{
-					while ( pIPPs->m_nPosition != pIPPs->m_nLength )
+					while ( pItem->m_nPosition != pItem->m_nLength )
 					{
 						DWORD nAddress = 0;
 						WORD nPort = 0;
-						pIPPs->Read( (void*)&nAddress, 4 );
-						pIPPs->Read( (void*)&nPort, 2 );
+						pItem->Read( (void*)&nAddress, 4 );
+						pItem->Read( (void*)&nPort, 2 );
 						if ( ! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) && 
 							 ! Network.IsReserved( (IN_ADDR*)&nAddress ) && nPort != 0 )
 						{
-							theApp.Message( MSG_DEBUG, _T("Got host through pong (%s:%i)"), 
-								(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
-							HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
+							theApp.Message( MSG_DEBUG, _T("Got %s host through pong (%s:%i)"), 
+								(LPCTSTR)str, (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
+							HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, pGDNAs ? (LPCTSTR)str : NULL );
+							// Add to separate cache to have a quick access only to GDNAs
+							if ( pGDNAs )
+								HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, (LPCTSTR)str );
 						}
 					}
 				}
+				if ( pIPPs )
+					pIPPs = NULL;
+				else if ( pGDNAs )
+					pGDNAs = NULL;
 			}
 			if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
 			{

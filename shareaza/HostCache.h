@@ -160,6 +160,7 @@ public:
 	CHostCacheList	Gnutella1;
 	CHostCacheList	Gnutella2;
 	CHostCacheList	eDonkey;
+	CHostCacheList	G1DNA;
 	CList< CHostCacheList* > m_pList;
 
 // Operations
