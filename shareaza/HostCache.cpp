@@ -49,12 +49,11 @@ CHostCache HostCache;
 
 CHostCache::CHostCache() :
 		Gnutella1( PROTOCOL_G1 ), Gnutella2( PROTOCOL_G2 ),
-		eDonkey( PROTOCOL_ED2K ), G1DNA( PROTOCOL_G1 ) 
+		eDonkey( PROTOCOL_ED2K )
 {
 	m_pList.AddTail( &Gnutella1 );
 	m_pList.AddTail( &Gnutella2 );
 	m_pList.AddTail( &eDonkey );
-	m_pList.AddTail( &G1DNA );
 }
 
 //////////////////////////////////////////////////////////////////////
