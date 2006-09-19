@@ -122,7 +122,7 @@ CString CUploadQueue::GetCriteriaString() const
 	else if ( m_nFileStateFlag == ulqLibrary )
 	{
 		if ( str1.GetLength() ) str1 += _T(", ");
-		LoadString( str2, IDS_UPLOAD_QUEUE_COMPLETE );
+		LoadString( str2, IDS_UPLOAD_QUEUE_LIBRARY );
 		str1 += str2;
 	}
 	
