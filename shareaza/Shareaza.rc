@@ -2681,9 +2681,9 @@ BEGIN
     CONTROL         "Partially downloaded files only",IDC_QUEUE_PARTIALONLY,
                     "Button",BS_AUTORADIOBUTTON | WS_TABSTOP,15,65,160,12
     CONTROL         "Shared Library files only",IDC_QUEUE_LIBRARYONLY,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,15,82,160,10
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,15,80,160,10
     CONTROL         "Both partial and library files",IDC_QUEUE_BOTH,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,15,96,159,10
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,15,94,159,10
     CONTROL         "Minimum source file size:",IDC_MINIMUM_CHECK,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,110,110,12
     EDITTEXT        IDC_MINIMUM_VALUE,130,110,45,12,ES_AUTOHSCROLL
@@ -2711,41 +2711,41 @@ BEGIN
     CONTROL         "Spin1",IDC_TRANSFERS_MIN_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,40,8,12
-    LTEXT           "Maximum number of transfers:",IDC_STATIC,205,57,115,12,
+    LTEXT           "Maximum number of transfers:",IDC_STATIC,205,63,115,12,
                     SS_CENTERIMAGE
-    EDITTEXT        IDC_TRANSFERS_MAX,325,57,40,12,ES_AUTOHSCROLL | 
+    EDITTEXT        IDC_TRANSFERS_MAX,325,63,40,12,ES_AUTOHSCROLL | 
                     ES_NUMBER
     CONTROL         "Spin1",IDC_TRANSFERS_MAX_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,57,8,12
-    LTEXT           "Maximum number waiting in queue:",IDC_STATIC,205,74,115,
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,63,8,12
+    LTEXT           "Maximum number waiting in queue:",IDC_STATIC,205,85,115,
                     12,SS_CENTERIMAGE
-    EDITTEXT        IDC_CAPACITY,325,74,40,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_CAPACITY,325,85,40,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_CAPACITY_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,74,8,12
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,85,8,12
     GROUPBOX        "&Service Parameters:",IDC_STATIC,195,113,180,113,
                     WS_GROUP
     LTEXT           "Saturated bandwidth percentage:",IDC_STATIC,205,124,115,
                     12,SS_CENTERIMAGE
     EDITTEXT        IDC_BANDWIDTH_POINTS,325,124,40,12,ES_CENTER | 
                     ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Upload bandwidth for this queue:",IDC_STATIC,205,138,
+    LTEXT           "Upload bandwidth for this queue:",IDC_STATIC,205,144,
                     115,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_BANDWIDTH_VALUE,325,138,40,12,ES_CENTER | 
+    EDITTEXT        IDC_BANDWIDTH_VALUE,325,144,40,12,ES_CENTER | 
                     ES_AUTOHSCROLL | ES_READONLY
     CONTROL         "Slider1",IDC_BANDWIDTH_SLIDER,"msctls_trackbar32",
-                    TBS_TOP | TBS_NOTICKS | WS_TABSTOP,200,156,170,15
+                    TBS_TOP | TBS_NOTICKS | WS_TABSTOP,200,163,170,15
     CONTROL         "Rotate after N seconds:",IDC_ROTATE_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,205,188,115,12
-    EDITTEXT        IDC_ROTATE_TIME,325,188,40,12,ES_AUTOHSCROLL | ES_NUMBER
+                    BS_AUTOCHECKBOX | WS_TABSTOP,205,204,115,12
+    EDITTEXT        IDC_ROTATE_TIME,325,204,40,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_ROTATE_TIME_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,188,8,12
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,204,8,12
     DEFPUSHBUTTON   "OK",IDOK,270,231,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,325,231,50,14
     CONTROL         "Reward uploaders",IDC_REWARD_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,205,174,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,205,185,115,12
 END
 
 IDD_DONKEY_SERVERS DIALOGEX 0, 0, 292, 124
