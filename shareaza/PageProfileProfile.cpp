@@ -106,8 +106,11 @@ BOOL CProfileProfilePage::OnInitDialog()
 		if ( CXMLElement* pPolitical = pLocation->GetElementByName( _T("political") ) )
 		{
 			m_sLocCountry	= pPolitical->GetAttributeValue( _T("country") );
-			m_sLocCity		= pPolitical->GetAttributeValue( _T("city") ) + _T(", ")
-							+ pPolitical->GetAttributeValue( _T("state") );
+			m_sLocCity		= pPolitical->GetAttributeValue( _T("city") );
+			CString str		= pPolitical->GetAttributeValue( _T("state") );
+			if ( str.GetLength() && m_sLocCity.GetLength() )
+				m_sLocCity += _T(", ");
+            m_sLocCity += str;
 		}
 
 		if ( CXMLElement* pCoordinates = pLocation->GetElementByName( _T("coordinates") ) )
