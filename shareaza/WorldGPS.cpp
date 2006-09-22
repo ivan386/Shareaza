@@ -67,6 +67,7 @@ BOOL CWorldGPS::Load()
 		{
 			strFile = Settings.General.Path + L"\\Data\\WorldGPS.dat";
 			if ( ! pFile.Open( (LPCTSTR)strFile.GetBuffer(), CFile::modeRead ) ) return FALSE;
+			bImport = false;
 		}
 		else
 			return FALSE;
