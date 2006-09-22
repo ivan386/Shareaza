@@ -96,6 +96,7 @@ BOOL CWorldGPS::Load()
 
 	if ( ! bSuccess ) return FALSE;
 
+	strFile = Settings.General.Path + L"\\Data\\WorldGPS.dat";
 	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
 
 	CArchive ar( &pFile, CArchive::store );
