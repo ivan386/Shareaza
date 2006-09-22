@@ -50,24 +50,34 @@ CWorldGPS::~CWorldGPS()
 //////////////////////////////////////////////////////////////////////
 // CWorldGPS load
 
-BOOL CWorldGPS::Load(LPCTSTR pszFile)
+BOOL CWorldGPS::Load()
 {
 	CFile pFile;
 
 	Clear();
 
-	CString strFile = Settings.General.Path + _T("\\Data\\WorldGPS.dat");
-	if ( ! pszFile ) pszFile = strFile;
+	CString strFile = Settings.General.Path + L"\\Data\\WorldGPS";
 
-	if ( ! pFile.Open( pszFile, CFile::modeRead ) ) return FALSE;
+	bool bImport = theApp.GetProfileInt( L"", L"ImportWorldGPS", FALSE ) != 0;
+	strFile.Append( bImport ? L".xml" : L".dat" );
+		
+	if ( ! pFile.Open( (LPCTSTR)strFile.GetBuffer(), CFile::modeRead ) )
+	{
+		if ( bImport )
+		{
+			strFile = Settings.General.Path + L"\\Data\\WorldGPS.dat";
+			if ( ! pFile.Open( (LPCTSTR)strFile.GetBuffer(), CFile::modeRead ) ) return FALSE;
+		}
+		else
+			return FALSE;
+	}
 
-	if ( _tcsstr( pszFile, _T(".xml") ) == NULL )
+	if ( !bImport )
 	{
 		CArchive ar( &pFile, CArchive::load );
 		Serialize( ar );
 		ar.Close();
 		pFile.Close();
-
 		return TRUE;
 	}
 

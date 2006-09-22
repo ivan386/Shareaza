@@ -43,7 +43,7 @@ public:
 
 // Operations
 public:
-	BOOL		Load(LPCTSTR pszFile = NULL);
+	BOOL		Load();
 	void		Clear();
 protected:
 	void		Serialize(CArchive& ar);
