@@ -121,14 +121,14 @@ BOOL CProfileProfilePage::OnInitDialog()
 			if ( _stscanf( str, _T("%f"), &nValue ) == 1 )
 			{
 				m_sLocLatitude.Format( nValue >= 0 ?
-					_T("%.2f° N") : _T("%.2f° S"), double( fabs( nValue ) ) );
+					_T("%.2f\xb0 N") : _T("%.2f\xb0 S"), double( fabs( nValue ) ) );
 			}
 
 			str = pCoordinates->GetAttributeValue( _T("longitude") );
 
 			if ( _stscanf( str, _T("%f"), &nValue ) == 1 )
 			{
-				m_sLocLongitude.Format( nValue >= 0 ? _T("%.1f° E") : _T("%.1f° W"),
+				m_sLocLongitude.Format( nValue >= 0 ? _T("%.1f\xb0 E") : _T("%.1f\xb0 W"),
 					double( fabs( nValue ) ) );
 			}
 		}
