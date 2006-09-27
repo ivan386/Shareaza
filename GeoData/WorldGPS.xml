@@ -1,38 +1,56 @@
 <?xml version="1.0"?>
 <world>
 	<country code="AF" name="Afghanistan">
+		<city name="Baghlān (بغلان)" state="Baghlān" latitude="36.17" longitude="68.75"/>
+		<city name="Balkh (بلخ)" state="Balkh" latitude="36.75861" longitude="66.89611"/>
+		<city name="Bāmīān (بامیان)" state="Bāmīān" latitude="34.82417" longitude="67.82166"/>
+		<city name="Chaghcharān" state="Ghowr" latitude="34.5225" longitude="65.25166"/>
+		<city name="Chūrchūr" state="Parvān" latitude="34.94" longitude="69.42667"/>
+		<city name="Darāyem" state="Badakhshān" latitude="36.86666" longitude="70.38333"/>
+		<city name="Farāh (فراه)" state="Farāh" latitude="32.53528" longitude="62.20306"/>
+		<city name="Feyẕābād" state="Badakhshān" latitude="37.1175" longitude="70.57972"/>
+		<city name="Feyẕābād" state="Dāykondī" latitude="33.43" longitude="65.69889"/>
+		<city name="Feyẕābād" state="Farāh" latitude="32.50945" longitude="62.15194"/>
+		<city name="Feyẕābād" state="Fāryāb" latitude="36.29111" longitude="64.86222"/>
+		<city name="Feyẕābād" state="Herāt" latitude="34.9" longitude="62.09"/>
+		<city name="Feyẕābād" state="Jowzjān" latitude="36.81972" longitude="66.46083"/>
+		<city name="Feyẕābād" state="Sar-e Pol" latitude="35.88306" longitude="65.91917"/>
+		<city name="Gardēz" state="Paktīā" latitude="33.61" longitude="69.21"/>
+		<city name="Ghaznī (غزنی)" state="Ghaznī" latitude="33.56" longitude="68.39"/>
+		<city name="Herāt (هرات)" state="Herāt" latitude="34.21" longitude="62.22"/>
+		<city name="Jalālābād " state="Herāt" latitude="34.35" longitude="62.08"/>
+		<city name="Jalālābād" state="Jowzjān" latitude="36.76472" longitude="65.87861"/>
+		<city name="Jalālābād (جلال آباد)" state="Nangarhār" latitude="34.44" longitude="70.41"/>
 		<city name="Kabul" state="Kābol" latitude="34.51667" longitude="69.18333"/>
-		<city name="" state="Velāyat-e Badakhshān" latitude="36.75" longitude="72"/>
-		<city name="" state="Velāyat-e Bādghīs" latitude="35" longitude="63.75"/>
-		<city name="" state="Velāyat-e Baghlān" latitude="35.75" longitude="69"/>
-		<city name="" state="Velāyat-e Balkh" latitude="36.83333" longitude="67.25"/>
-		<city name="" state="Velāyat-e Bāmīān" latitude="34.75" longitude="67.25"/>
-		<city name="" state="Velāyat-e Farāh" latitude="33" longitude="62.5"/>
-		<city name="" state="Velāyat-e Fāryāb" latitude="36" longitude="65"/>
-		<city name="" state="Velāyat-e Ghaznī" latitude="33" longitude="68"/>
-		<city name="" state="Velāyat-e Ghowr" latitude="34" longitude="65"/>
-		<city name="" state="Velāyat-e Helmand" latitude="31" longitude="64"/>
-		<city name="" state="Velāyat-e Herāt" latitude="34.5" longitude="62"/>
-		<city name="" state="Velāyat-e Jowzjān" latitude="37" longitude="66"/>
-		<city name="" state="Velāyat-e Kandahār" latitude="31" longitude="65.75"/>
-		<city name="" state="Velāyat-e Kāpīsā" latitude="34.90556" longitude="69.74167"/>
-		<city name="" state="Velāyat-e Khowst" latitude="33.38334" longitude="69.88333"/>
+		<city name="Kandahār (قندهار)" state="Kandahār" latitude="31.5" longitude="65.84"/>
+		<city name="Keshem" state="Badakhshān" latitude="36.80639" longitude="70.10416"/>
+		<city name="Khowst (خوست)" state="Khowst" latitude="33.42" longitude="70.12"/>
+		<city name="Khowst (خوست)" state="Nūrestān" latitude="35.20833" longitude="70.84583"/>
+		<city name="Kondūz (قندوز)" state="Kondoz" latitude="36.72" longitude="68.86"/>
+		<city name="Lashkar Khān" state="Helmand" latitude="29.99111" longitude="64.14417"/>
+		<city name="Mazār-e Sharīf (مزار شریف)" state="Balkh" latitude="36.70694" longitude="67.11222"/>
+		<city name="Mehtar Lām" state="Laghmān" latitude="34.67139" longitude="70.20944"/>
+		<city name="Meydān Shahr (میدان شهر)" state="Vardak" latitude="34.45" longitude="68.78333"/>
+		<city name="Meymaneh (میمنه)" state="Fāryāb" latitude="35.92139" longitude="64.78361"/>
+		<city name="Moḩammad'omarkheyl" state="Kāpīsā" latitude="35.03" longitude="69.29"/>
+		<city name="Nīljūy" state="Dāykondī" latitude="33.90583" longitude="66.14"/>
+		<city name="Nūrestān (نورستان)" state="Nūrestān" latitude="35.55305" longitude="71.55527"/>
+		<city name="Qal'eh-ye Now (قلعه نو)" state="Bādghīs" latitude="34.98667" longitude="63.12917"/>
+		<city name="Samangān (سمنگان)" state="Samangān" latitude="36.26528" longitude="68.01667"/>
+		<city name="Sar-e Pol (سر پ)" state="Badakhshān" latitude="36.97472" longitude="70.91"/>
+		<city name="Sar-e Pol (سر پ)" state="Bāmīān" latitude="34.04528" longitude="67.05805"/>
+		<city name="Sar-e Pol (سر پ)" state="Dāykondī" latitude="34.03722" longitude="66.24778"/>
+		<city name="Sar-e Pol (سر پ)" state="Herāt" latitude="34.375" longitude="63.35333"/>
+		<city name="Sar-e Pol (سر پ)" state="Lowgar" latitude="34.25778" longitude="69.12527"/>
+		<city name="Sar-e Pol (سر پ)" state="Sar-e Pol" latitude="35.53695" longitude="66.71639"/>
+		<city name="Sharan" state="Paktīkā" latitude="33.17583" longitude="68.73028"/>
+		<city name="Sheberghān" state="Jowzjān" latitude="36.66722" longitude="65.75361"/>
+		<city name="Tāloqān" state="Takhār" latitude="36.73" longitude="69.2"/>
 		<city name="" state="Velāyat-e Konar" latitude="34.95" longitude="71.13333"/>
-		<city name="" state="Velāyat-e Kondoz" latitude="36.75" longitude="68.5"/>
-		<city name="" state="Velāyat-e Laghmān" latitude="34.78333" longitude="70.18333"/>
-		<city name="" state="Velāyat-e Lowgar" latitude="33.83333" longitude="69"/>
-		<city name="" state="Velāyat-e Nangarhār" latitude="34.75" longitude="70.83334"/>
-		<city name="" state="Velāyat-e Nīmrūz" latitude="30.5" longitude="62"/>
-		<city name="" state="Velāyat-e Nūrestān" latitude="35.3" longitude="70.83334"/>
 		<city name="" state="Velāyat-e Orūzgān" latitude="33.25" longitude="66"/>
-		<city name="" state="Velāyat-e Paktīā" latitude="33.66667" longitude="69.46667"/>
-		<city name="" state="Velāyat-e Paktīkā" latitude="32.41667" longitude="68.75"/>
-		<city name="" state="Velāyat-e Parvān" latitude="35.25" longitude="69.5"/>
-		<city name="" state="Velāyat-e Samangān" latitude="36" longitude="67.66666"/>
-		<city name="" state="Velāyat-e Sar-e Pol" latitude="35.83333" longitude="66.33334"/>
-		<city name="" state="Velāyat-e Takhār" latitude="36.5" longitude="69.5"/>
-		<city name="" state="Velāyat-e Vardak" latitude="34.25" longitude="68"/>
+		<city name="" state="Velāyat-e Panjshīr" latitude="" longitude=""/>
 		<city name="" state="Velāyat-e Zābol" latitude="32" longitude="67.25"/>
+		<city name="Zaranj" state="Nīmrūz" latitude="30.96667" longitude="61.88334"/>
 	</country>
 	<country code="AL" name="Albania">
 		<city name="Berat" state="Berat" latitude="40.70583" longitude="19.95222"/>
@@ -49,54 +67,59 @@
 		<city name="Vlorë" state="Vlorë" latitude="40.46667" longitude="19.48972"/>
 	</country>
 	<country code="DZ" name="Algeria">
+		<city name="Adrar (أدرار)" state="Adrar" latitude="27.9" longitude="-0.2833333"/>
+		<city name="Aïn Temouchent (عين تيموشنت)" state="Aïn Temouchent" latitude="35.295" longitude="-1.1375"/>
 		<city name="Algiers" state="Alger" latitude="36.76305" longitude="3.050556"/>
-		<city name="Ouargla" state="Ouargla" latitude="31.9575" longitude="5.327778"/>
-		<city name="Tamanrasset" state="Tamanghasset" latitude="22.785" longitude="5.522778"/>
-		<city name="" state="Wilaya d' Adrar" latitude="25.75" longitude="-1"/>
-		<city name="" state="Wilaya d' Annaba" latitude="36.83333" longitude="7.583333"/>
-		<city name="" state="Wilaya d' El Bayadh" latitude="32.5" longitude="1.166667"/>
-		<city name="" state="Wilaya d' El Oued" latitude="33.16667" longitude="7.25"/>
-		<city name="" state="Wilaya d' El Tarf" latitude="36.75" longitude="8.166667"/>
-		<city name="" state="Wilaya d' Illizi" latitude="26.83333" longitude="8.166667"/>
-		<city name="" state="Wilaya d' Oran" latitude="35.66667" longitude="-0.5"/>
-		<city name="" state="Wilaya d' Oum el Bouaghi" latitude="35.83333" longitude="7.083333"/>
-		<city name="" state="Wilaya de Aïn Defla" latitude="36.16667" longitude="2.166667"/>
-		<city name="" state="Wilaya de Aïn Temouchent" latitude="35.33333" longitude="-1.083333"/>
-		<city name="" state="Wilaya de Batna" latitude="35.5" longitude="5.916667"/>
-		<city name="" state="Wilaya de Béchar" latitude="30.25" longitude="-3.083333"/>
-		<city name="" state="Wilaya de Bejaïa" latitude="36.66667" longitude="4.916667"/>
-		<city name="" state="Wilaya de Biskra" latitude="34.66667" longitude="5.416667"/>
-		<city name="" state="Wilaya de Blida" latitude="36.58333" longitude="3"/>
-		<city name="" state="Wilaya de Bordj Bou Arréridj" latitude="36.08333" longitude="4.75"/>
-		<city name="" state="Wilaya de Bouira" latitude="36.25" longitude="3.916667"/>
-		<city name="" state="Wilaya de Boumerdes" latitude="36.75" longitude="3.666667"/>
-		<city name="" state="Wilaya de Chlef" latitude="36.25" longitude="1.25"/>
-		<city name="" state="Wilaya de Constantine" latitude="36.33333" longitude="6.666667"/>
-		<city name="" state="Wilaya de Djelfa" latitude="34.33333" longitude="3.666667"/>
-		<city name="" state="Wilaya de Ghardaïa" latitude="31.08333" longitude="3.166667"/>
-		<city name="" state="Wilaya de Guelma" latitude="36.41667" longitude="7.416667"/>
-		<city name="" state="Wilaya de Jijel" latitude="36.75" longitude="6"/>
-		<city name="" state="Wilaya de Khenchela" latitude="35" longitude="7"/>
-		<city name="" state="Wilaya de Laghouat" latitude="33.58333" longitude="2.666667"/>
-		<city name="" state="Wilaya de Mascara" latitude="35.41667" longitude="0.1666667"/>
-		<city name="" state="Wilaya de Médéa" latitude="36.08333" longitude="3"/>
-		<city name="" state="Wilaya de Mila" latitude="36.41667" longitude="6.166667"/>
-		<city name="" state="Wilaya de Mostaganem" latitude="36" longitude="0.3333333"/>
-		<city name="" state="Wilaya de M'Sila" latitude="35.33333" longitude="4.333333"/>
-		<city name="" state="Wilaya de Naama" latitude="33.25" longitude="0.75"/>
-		<city name="" state="Wilaya de Relizane" latitude="35.75" longitude="0.9166667"/>
-		<city name="" state="Wilaya de Saïda" latitude="34.66667" longitude="0.3333333"/>
-		<city name="" state="Wilaya de Sétif" latitude="36.16667" longitude="5.5"/>
-		<city name="" state="Wilaya de Sidi Bel Abbès" latitude="34.83333" longitude="-0.5"/>
-		<city name="" state="Wilaya de Skikda" latitude="36.75" longitude="6.833333"/>
-		<city name="" state="Wilaya de Souk Ahras" latitude="36.16667" longitude="7.916667"/>
-		<city name="" state="Wilaya de Tébessa" latitude="35" longitude="7.833333"/>
-		<city name="" state="Wilaya de Tiaret" latitude="34.91667" longitude="1.583333"/>
-		<city name="" state="Wilaya de Tindouf" latitude="27.41667" longitude="-5.833333"/>
-		<city name="" state="Wilaya de Tipaza" latitude="36.58333" longitude="2.416667"/>
-		<city name="" state="Wilaya de Tissemsilt" latitude="35.75" longitude="1.75"/>
-		<city name="" state="Wilaya de Tizi Ouzou" latitude="36.75" longitude="4.25"/>
-		<city name="" state="Wilaya de Tlemcen" latitude="34.66667" longitude="-1.416667"/>
+		<city name="Annaba (عناب)" state="Annaba" latitude="36.9075" longitude="7.757222"/>
+		<city name="Annaba (عناب)" state="Skikda" latitude="36.9" longitude="7.766667"/>
+		<city name="Batna (باتنة)" state="Batna" latitude="35.54472" longitude="6.159722"/>
+		<city name="Béchar (بشار)" state="Béchar" latitude="31.61667" longitude="-2.216667"/>
+		<city name="Bejaïa (بجاي)" state="Bejaïa" latitude="36.75" longitude="5.083333"/>
+		<city name="Biskra (بسكرة)" state="Biskra" latitude="34.85" longitude="5.733333"/>
+		<city name="Blida (البليدة)" state="Blida" latitude="36.46861" longitude="2.828889"/>
+		<city name="Bordj Bou Arreridj (برج بوعريريج)" state="Bordj Bou Arréridj" latitude="36.075" longitude="4.775"/>
+		<city name="Bouira (البويرة)" state="Bouira" latitude="36.38" longitude="3.901389"/>
+		<city name="Bouira (البويرة)" state="Sétif" latitude="36.21556" longitude="5.278333"/>
+		<city name="Boumerdas (بومرداس)" state="Boumerdes" latitude="36.76667" longitude="3.477222"/>
+		<city name="Chlef (الشلف)" state="Chlef" latitude="36.16472" longitude="1.334722"/>
+		<city name="Constantine (قسنطينة)" state="Constantine" latitude="36.365" longitude="6.614722"/>
+		<city name="Djelfa (الجلفة)" state="Djelfa" latitude="34.66667" longitude="3.25"/>
+		<city name="El Bayadh (البيض)" state="El Bayadh" latitude="33.68611" longitude="1.013889"/>
+		<city name="El Oued (الوادي)" state="Boumerdes" latitude="36.81833" longitude="3.753333"/>
+		<city name="El Oued (الوادي)" state="El Oued" latitude="33.33333" longitude="6.883333"/>
+		<city name="El Tarf (الطارف)" state="El Tarf" latitude="36.76861" longitude="8.316667"/>
+		<city name="Ghardaïa (غرداي)" state="Ghardaïa" latitude="32.48333" longitude="3.666667"/>
+		<city name="Guelma (قالمة)" state="Guelma" latitude="36.46611" longitude="7.433889"/>
+		<city name="Illizi (اليزي)" state="Illizi" latitude="26.48333" longitude="8.466667"/>
+		<city name="Jijel (جيجل)" state="Jijel" latitude="36.8" longitude="5.766667"/>
+		<city name="Khenchela (خنشلة)" state="Khenchela" latitude="35.43583" longitude="7.143333"/>
+		<city name="Laghouat (الأغواط)" state="Laghouat" latitude="33.8" longitude="2.883333"/>
+		<city name="Laghouat (الأغواط)" state="Tiaret" latitude="35.15889" longitude="0.9538889"/>
+		<city name="Médéa (المدية)" state="Médéa" latitude="36.2675" longitude="2.75"/>
+		<city name="Mila (ميلة)" state="Mila" latitude="36.45028" longitude="6.264444"/>
+		<city name="Miliana" state="Aïn Defla" latitude="36.31" longitude="2.162222"/>
+		<city name="Mostaganem (مستغانم)" state="Mostaganem" latitude="35.93333" longitude="0.0902778"/>
+		<city name="M'Sila (المسيلة)" state="M'sila" latitude="35.72556" longitude="4.527778"/>
+		<city name="Muaskar (معسكر)" state="Muaskar" latitude="35.39444" longitude="0.1397222"/>
+		<city name="Oran (وهران)" state="Oran" latitude="35.69111" longitude="-0.6416667"/>
+		<city name="Ouargla (ورقلة)" state="Ouargla" latitude="31.9575" longitude="5.327778"/>
+		<city name="Oum el Bouaghi (أم البواقي)" state="Oum el Bouaghi" latitude="35.8775" longitude="7.113611"/>
+		<city name="Relizane (غليزان)" state="Relizane" latitude="35.7425" longitude="0.5591667"/>
+		<city name="Saïda (سعيدة)" state="Saïda" latitude="34.83333" longitude="0.15"/>
+		<city name="Sétif (سطيف)" state="Sétif" latitude="36.19139" longitude="5.409444"/>
+		<city name="Sidi Bel Abbès (سيدي بلعباس)" state="Sidi Bel Abbès" latitude="35.19389" longitude="-0.6413889"/>
+		<city name="Skikda (سكيكدة)" state="Skikda" latitude="36.86222" longitude="6.947222"/>
+		<city name="Souk Ahras (سوق أهراس)" state="Souk Ahras" latitude="36.28639" longitude="7.951111"/>
+		<city name="Tamanrasset (تمنراست)" state="Tamanghasset" latitude="22.785" longitude="5.522778"/>
+		<city name="Tébessa (تبسة)" state="Tébessa" latitude="35.40417" longitude="8.124166"/>
+		<city name="Tiaret (تيارت)" state="Tiaret" latitude="35.37583" longitude="1.313056"/>
+		<city name="Tindouf (تندوف)" state="Tindouf" latitude="27.65195" longitude="-8.214444"/>
+		<city name="Tiout" state="Naama" latitude="32.77111" longitude="-0.415"/>
+		<city name="Tipasa (تيبازة)" state="Tipaza" latitude="36.58972" longitude="2.4475"/>
+		<city name="Tissemsilt (تسمسيلت)" state="Tissemsilt" latitude="35.60778" longitude="1.811111"/>
+		<city name="Tizi Ouzou (تيزي وزو)" state="Tizi Ouzou" latitude="36.71695" longitude="4.049722"/>
+		<city name="Tlemcen (تلمسان)" state="Tlemcen" latitude="34.87833" longitude="-1.315"/>
+		<city name="" state="Wilaya de Naama (ولاية النعامة)" latitude="33.25" longitude="0.75"/>
 	</country>
 	<country code="AS" name="American Samoa">
 		<city name="" state="Eastern District" latitude="-14.26667" longitude="-170.65"/>
@@ -139,11 +162,11 @@
 		<city name="The Valley" state="Anguilla" latitude="18.21667" longitude="-63.05"/>
 	</country>
 	<country code="AG" name="Antigua and Barbuda">
-		<city name="" state="Barbuda" latitude="17.63333" longitude="-61.8"/>
-		<city name="" state="Parish of Saint George" latitude="17.11667" longitude="-61.8"/>
-		<city name="" state="Parish of Saint Mary" latitude="17.05" longitude="-61.85"/>
-		<city name="" state="Parish of Saint Paul" latitude="17.03333" longitude="-61.76667"/>
-		<city name="" state="Parish of Saint Peter" latitude="17.1" longitude="-61.76667"/>
+		<city name="Bolans" state="Saint Mary" latitude="17.03333" longitude="-61.88334"/>
+		<city name="Carlisle" state="Saint George" latitude="17.13333" longitude="-61.8"/>
+		<city name="Codrington" state="Barbuda" latitude="17.63333" longitude="-61.83333"/>
+		<city name="English Harbour Town" state="Saint Paul" latitude="17.01667" longitude="-61.76667"/>
+		<city name="Parham" state="Saint Peter" latitude="17.08333" longitude="-61.76667"/>
 		<city name="" state="Parish of Saint Philip" latitude="17.05" longitude="-61.71667"/>
 		<city name="Saint John's" state="Saint John" latitude="17.11667" longitude="-61.85"/>
 	</country>
@@ -224,16 +247,16 @@
 		<city name="Brisbane" state="Queensland" latitude="-27.5" longitude="153.0167"/>
 		<city name="Brunswick" state="Victoria" latitude="-37.76667" longitude="144.9667"/>
 		<city name="Bundaberg" state="Queensland" latitude="-24.85" longitude="152.35"/>
-		<city name="Burwood" state="Queensland" latitude="-20.43333" longitude="141.85"/>
 		<city name="Burwood" state="New South Wales" latitude="-33.88334" longitude="151.1"/>
+		<city name="Burwood" state="Queensland" latitude="-20.43333" longitude="141.85"/>
 		<city name="Cairns" state="Queensland" latitude="-16.91667" longitude="145.7667"/>
 		<city name="Caloundra" state="Queensland" latitude="-26.8" longitude="153.1333"/>
 		<city name="Camberwell" state="New South Wales" latitude="-32.48333" longitude="151.0833"/>
 		<city name="Camberwell" state="Victoria" latitude="-37.83333" longitude="145.0667"/>
 		<city name="Campbellfield" state="Victoria" latitude="-37.68333" longitude="144.95"/>
-		<city name="Campbelltown" state="Victoria" latitude="-37.2" longitude="143.95"/>
-		<city name="Campbelltown" state="South Australia" latitude="-34.88334" longitude="138.6667"/>
 		<city name="Campbelltown" state="New South Wales" latitude="-34.06667" longitude="150.8167"/>
+		<city name="Campbelltown" state="South Australia" latitude="-34.88334" longitude="138.6667"/>
+		<city name="Campbelltown" state="Victoria" latitude="-37.2" longitude="143.95"/>
 		<city name="Canberra" state="Australian Capital Territory" latitude="-35.28333" longitude="149.2167"/>
 		<city name="Caulfield" state="Victoria" latitude="-37.88334" longitude="145.0167"/>
 		<city name="Chatswood" state="New South Wales" latitude="-33.8" longitude="151.1833"/>
@@ -242,16 +265,16 @@
 		<city name="Chullora" state="New South Wales" latitude="-33.9" longitude="151.05"/>
 		<city name="Collingwood" state="Queensland" latitude="-22.33333" longitude="142.5333"/>
 		<city name="Collingwood" state="Victoria" latitude="-37.8" longitude="144.9833"/>
-		<city name="Crows Nest" state="Queensland" latitude="-27.26667" longitude="152.0667"/>
 		<city name="Crows Nest" state="New South Wales" latitude="-33.82806" longitude="151.2017"/>
+		<city name="Crows Nest" state="Queensland" latitude="-27.26667" longitude="152.0667"/>
 		<city name="Darwin" state="Northern Territory" latitude="-12.46667" longitude="130.8333"/>
 		<city name="Deakin" state="Victoria" latitude="-36.3" longitude="144.9667"/>
 		<city name="Deakin" state="Western Australia" latitude="-30.76667" longitude="129.9667"/>
 		<city name="Deewhy" state="New South Wales" latitude="-33.75" longitude="151.3"/>
 		<city name="Eastwood" state="New South Wales" latitude="-33.8" longitude="151.0833"/>
-		<city name="Epping" state="Victoria" latitude="-37.65" longitude="145.0333"/>
-		<city name="Epping" state="Tasmania" latitude="-41.76667" longitude="147.3667"/>
 		<city name="Epping" state="New South Wales" latitude="-33.78333" longitude="151.0833"/>
+		<city name="Epping" state="Tasmania" latitude="-41.76667" longitude="147.3667"/>
+		<city name="Epping" state="Victoria" latitude="-37.65" longitude="145.0333"/>
 		<city name="Fitzroy" state="New South Wales" latitude="-34.43333" longitude="150.4167"/>
 		<city name="Fitzroy" state="Victoria" latitude="-37.78333" longitude="144.9833"/>
 		<city name="Forest Hill" state="Victoria" latitude="-37.78333" longitude="145.4667"/>
@@ -264,10 +287,10 @@
 		<city name="Hawthorn" state="South Australia" latitude="-34.97083" longitude="138.6003"/>
 		<city name="Hawthorn" state="Victoria" latitude="-37.83333" longitude="145.0333"/>
 		<city name="Hobart" state="Tasmania" latitude="-42.91667" longitude="147.3333"/>
+		<city name="Inglewood" state="Queensland" latitude="-28.41667" longitude="151.0833"/>
 		<city name="Inglewood" state="South Australia" latitude="-34.83333" longitude="138.7667"/>
 		<city name="Inglewood" state="Victoria" latitude="-36.58333" longitude="143.8667"/>
 		<city name="Inglewood" state="Western Australia" latitude="-27.73333" longitude="118.75"/>
-		<city name="Inglewood" state="Queensland" latitude="-28.41667" longitude="151.0833"/>
 		<city name="Innisfail" state="New South Wales" latitude="-34.75" longitude="150.8"/>
 		<city name="Innisfail" state="Queensland" latitude="-17.53333" longitude="146.0333"/>
 		<city name="Ipswich" state="Queensland" latitude="-27.61667" longitude="152.7667"/>
@@ -275,8 +298,8 @@
 		<city name="Kadina" state="South Australia" latitude="-33.96667" longitude="137.7167"/>
 		<city name="Kalgoorlie" state="Western Australia" latitude="-30.75" longitude="121.4667"/>
 		<city name="Kalorama" state="Victoria" latitude="-37.81667" longitude="145.3667"/>
-		<city name="Kew" state="Victoria" latitude="-37.81667" longitude="145.0333"/>
 		<city name="Kew" state="New South Wales" latitude="-31.63333" longitude="152.7167"/>
+		<city name="Kew" state="Victoria" latitude="-37.81667" longitude="145.0333"/>
 		<city name="Kingston" state="Queensland" latitude="-27.66667" longitude="153.1167"/>
 		<city name="Kingston" state="South Australia" latitude="-34.23333" longitude="140.35"/>
 		<city name="Kingston" state="Tasmania" latitude="-42.96667" longitude="147.3167"/>
@@ -290,11 +313,11 @@
 		<city name="Manly" state="New South Wales" latitude="-33.8" longitude="151.2833"/>
 		<city name="Manly" state="Queensland" latitude="-25.56667" longitude="146.8333"/>
 		<city name="Mascot" state="New South Wales" latitude="-33.93333" longitude="151.2"/>
-		<city name="Meadows" state="Victoria" latitude="-38.56667" longitude="145.6667"/>
 		<city name="Meadows" state="South Australia" latitude="-35.18333" longitude="138.75"/>
+		<city name="Meadows" state="Victoria" latitude="-38.56667" longitude="145.6667"/>
 		<city name="Melbourne" state="Victoria" latitude="-37.81667" longitude="144.9667"/>
-		<city name="Mildura" state="Victoria" latitude="-34.2" longitude="142.15"/>
 		<city name="Mildura" state="Queensland" latitude="-23.26667" longitude="145.3"/>
+		<city name="Mildura" state="Victoria" latitude="-34.2" longitude="142.15"/>
 		<city name="Milton" state="New South Wales" latitude="-35.31667" longitude="150.4333"/>
 		<city name="Mitchell" state="New South Wales" latitude="-29.68333" longitude="152.1167"/>
 		<city name="Mitchell" state="Queensland" latitude="-26.48333" longitude="147.9667"/>
@@ -318,18 +341,18 @@
 		<city name="Raymond Terrace" state="New South Wales" latitude="-32.76667" longitude="151.75"/>
 		<city name="Regent" state="Victoria" latitude="-37.73333" longitude="145"/>
 		<city name="Richmond" state="New South Wales" latitude="-33.6" longitude="150.7667"/>
-		<city name="Richmond" state="Victoria" latitude="-37.83333" longitude="145"/>
 		<city name="Richmond" state="Queensland" latitude="-20.71667" longitude="143.1333"/>
 		<city name="Richmond" state="Tasmania" latitude="-42.73639" longitude="147.4361"/>
+		<city name="Richmond" state="Victoria" latitude="-37.83333" longitude="145"/>
 		<city name="Rosebery" state="New South Wales" latitude="-33.91667" longitude="151.2"/>
 		<city name="Rosebery" state="Tasmania" latitude="-41.78333" longitude="145.5167"/>
 		<city name="Rosebery" state="Victoria" latitude="-35.81667" longitude="142.4167"/>
 		<city name="Ryde" state="New South Wales" latitude="-33.81667" longitude="151.1"/>
 		<city name="South Melbourne" state="Victoria" latitude="-37.83333" longitude="144.9667"/>
 		<city name="Southport" state="Queensland" latitude="-27.96667" longitude="153.4"/>
-		<city name="Springvale" state="Western Australia" latitude="-17.8" longitude="127.6833"/>
 		<city name="Springvale" state="Queensland" latitude="-23.55" longitude="140.7"/>
 		<city name="Springvale" state="Victoria" latitude="-37.95" longitude="145.15"/>
+		<city name="Springvale" state="Western Australia" latitude="-17.8" longitude="127.6833"/>
 		<city name="Surfers Paradise" state="Queensland" latitude="-28" longitude="153.4333"/>
 		<city name="Sydney" state="New South Wales" latitude="-33.86785" longitude="151.2073"/>
 		<city name="Terrigal" state="New South Wales" latitude="-33.45" longitude="151.45"/>
@@ -360,13 +383,13 @@
 		<city name="Maria Enzersdorf" state="Niederösterreich" latitude="48.1" longitude="16.28333"/>
 		<city name="Salzburg" state="Salzburg" latitude="47.8" longitude="13.03333"/>
 		<city name="Sankt Pölten" state="Niederösterreich" latitude="48.2" longitude="15.63333"/>
-		<city name="Schwarzach" state="Vorarlberg" latitude="47.45" longitude="9.75"/>
 		<city name="Schwarzach" state="Salzburg" latitude="47.38334" longitude="12.6"/>
 		<city name="Schwarzach" state="Tirol" latitude="46.92916" longitude="12.57694"/>
-		<city name="See" state="Tirol" latitude="47.08333" longitude="10.46667"/>
-		<city name="See" state="Steiermark" latitude="47.06667" longitude="14.48333"/>
+		<city name="Schwarzach" state="Vorarlberg" latitude="47.45" longitude="9.75"/>
 		<city name="See" state="Niederösterreich" latitude="48.85278" longitude="15.84583"/>
 		<city name="See" state="Oberösterreich" latitude="48.16667" longitude="13.86667"/>
+		<city name="See" state="Steiermark" latitude="47.06667" longitude="14.48333"/>
+		<city name="See" state="Tirol" latitude="47.08333" longitude="10.46667"/>
 		<city name="Vienna" state="Wien" latitude="48.2" longitude="16.36667"/>
 		<city name="Villach" state="Kärnten" latitude="46.61028" longitude="13.85583"/>
 		<city name="Wels" state="Oberösterreich" latitude="48.16667" longitude="14.03333"/>
@@ -445,62 +468,87 @@
 		<city name="Zǝrdab" state="Zǝrdab" latitude="40.21833" longitude="47.70833"/>
 	</country>
 	<country code="BS" name="Bahamas">
-		<city name="" state="Acklins and Crooked Islands" latitude="22.58333" longitude="-74"/>
+		<city name="Abraham's Bay" state="Mayaguana" latitude="22.36667" longitude="-72.96667"/>
+		<city name="Alice Town" state="Bimini" latitude="25.71667" longitude="-79.3"/>
+		<city name="Alice Town" state="North Central Eleuthera" latitude="25.33333" longitude="-76.43333"/>
+		<city name="Andros Town" state="Central Andros" latitude="24.7" longitude="-77.78333"/>
+		<city name="Arthur's Town" state="Cat Island" latitude="24.63333" longitude="-75.7"/>
+		<city name="" state="Berry Islands" latitude="25.36667" longitude="-78"/>
 		<city name="" state="Bimini District" latitude="25.91667" longitude="-79.5"/>
-		<city name="" state="Cat Island District" latitude="24.41667" longitude="-75.61667"/>
-		<city name="" state="Exuma District" latitude="24.03333" longitude="-76.48333"/>
-		<city name="" state="Freeport District" latitude="26.66667" longitude="-78.75"/>
-		<city name="" state="Fresh Creek District" latitude="24.58333" longitude="-78"/>
-		<city name="" state="Governor's Harbour District" latitude="25.2" longitude="-76.5"/>
-		<city name="" state="Green Turtle Cay District" latitude="26.83333" longitude="-77.5"/>
-		<city name="" state="Harbour Island District" latitude="25.5" longitude="-76.75"/>
-		<city name="" state="High Rock District" latitude="27" longitude="-78.2"/>
-		<city name="" state="Inagua District" latitude="21.36667" longitude="-73.4"/>
-		<city name="" state="Kemps Bay District" latitude="24" longitude="-77.66666"/>
-		<city name="" state="Long Island District" latitude="23.38333" longitude="-75.1"/>
-		<city name="" state="Marsh Harbour District" latitude="26.4" longitude="-77.16666"/>
-		<city name="" state="Mayaguana District" latitude="22.36667" longitude="-72.91666"/>
+		<city name="Clarence Town" state="Long Island" latitude="23.1" longitude="-74.98333"/>
+		<city name="Cockburn Town" state="San Salvador" latitude="24.03333" longitude="-74.51667"/>
+		<city name="Colonel Hill" state="Crooked Island" latitude="22.76667" longitude="-74.21667"/>
+		<city name="Congo Town" state="Central Andros" latitude="24.16667" longitude="-77.58334"/>
+		<city name="Cooper's Town" state="Grand Cay" latitude="26.86667" longitude="-77.51667"/>
+		<city name="Deadman's Cay" state="Long Island" latitude="23.16667" longitude="-75.08334"/>
+		<city name="Duncan Town" state="Ragged Island" latitude="22.19083" longitude="-75.72583"/>
+		<city name="Dunmore Town" state="Harbour Island" latitude="25.5" longitude="-76.65"/>
+		<city name="Eight Mile Rock" state="West Grand Bahama" latitude="26.51667" longitude="-78.78333"/>
+		<city name="" state="Eleuthera Island" latitude="25.01" longitude="-76.133333"/>
+		<city name="Freeport City" state="" latitude="26.53333" longitude="-78.7"/>
+		<city name="Fresh Creek" state="South Andros" latitude="24.73333" longitude="-77.78333"/>
+		<city name="George Town" state="Black Point" latitude="23.46667" longitude="-75.78333"/>
+		<city name="Governor's Harbour" state="Central Eleuthera" latitude="25.16667" longitude="-76.23333"/>
+		<city name="Gregory Town" state="North Central Eleuthera" latitude="25.4" longitude="-76.55"/>
+		<city name="High Rock" state="East Grand Bahama" latitude="26.62083" longitude="-78.28333"/>
+		<city name="Hope Town" state="Hope Town" latitude="26.55" longitude="-76.95"/>
+		<city name="Mangrove Cay" state="Mangrove Cay" latitude="24.28333" longitude="-77.66666"/>
+		<city name="Marsh Harbour" state="Central Abaco" latitude="26.5" longitude="-77.08334"/>
+		<city name="Matthew Town" state="Inagua" latitude="20.95" longitude="-73.66666"/>
 		<city name="Nassau" state="New Providence" latitude="25.08333" longitude="-77.35"/>
-		<city name="" state="Nichollstown and Berry Islands" latitude="25.36667" longitude="-78"/>
-		<city name="" state="Ragged Island District" latitude="22.75" longitude="-75.83334"/>
-		<city name="" state="Rock Sound District" latitude="24.83333" longitude="-76.33334"/>
+		<city name="Nicholl's Town" state="Central Andros" latitude="25.13333" longitude="-78"/>
+		<city name="Rock Sound" state="South Eleuthera" latitude="24.83333" longitude="-76.18333"/>
+		<city name="Rum Cay" state="Rum Cay" latitude="23.66667" longitude="-74.88333"/>
 		<city name="" state="San Salvador and Rum Cay District" latitude="23.85" longitude="-74.66666"/>
 		<city name="" state="Sandy Point District" latitude="26.11667" longitude="-77.36667"/>
+		<city name="Scrub Hill" state="Long Island" latitude="23.48333" longitude="-75.23333"/>
+		<city name="Snug Corner" state="Acklins" latitude="22.53333" longitude="-73.88333"/>
+		<city name="Spanish Wells" state="Spanish Wells" latitude="25.55" longitude="-76.75"/>
 	</country>
 	<country code="BH" name="Bahrain">
-		<city name="" state="Al Ḩadd" latitude="26.23333" longitude="50.65"/>
-		<city name="" state="Al Minţaqah al Gharbīyah" latitude="26.11667" longitude="50.48333"/>
-		<city name="" state="Al Minţaqah al Wusţá" latitude="26.18333" longitude="50.51667"/>
-		<city name="" state="Al Minţaqah ash Shamālīyah" latitude="26.21667" longitude="50.48333"/>
-		<city name="" state="Al Muḩarraq" latitude="26.25" longitude="50.61666"/>
-		<city name="" state="Ar Rifā' wa al Minţaqah al Janūbīyah" latitude="26.1" longitude="50.55"/>
-		<city name="" state="Jidd Ḩafş" latitude="26.21667" longitude="50.53333"/>
-		<city name="" state="Madīnat Ḩamad" latitude="26.13333" longitude="50.5"/>
-		<city name="" state="Madīnat 'Īsá" latitude="26.16667" longitude="50.55"/>
-		<city name="Manama" state="Al Manāmah" latitude="26.23611" longitude="50.58306"/>
-		<city name="" state="Minţaqat Juzur Ḩawār" latitude="25.64694" longitude="50.77639"/>
-		<city name="" state="Sitrah" latitude="26.15" longitude="50.61666"/>
+		<city name="Al Budayyi' (البديع)" state="Al Minţaqah ash Shamālīyah" latitude="26.21305" longitude="50.45"/>
+		<city name="Al Ḩadd" state="Al Ḩadd" latitude="26.24556" longitude="50.65417"/>
+		<city name="Al Hujayr" state="Al Minţaqah al Wusţá" latitude="26.18333" longitude="50.55"/>
+		<city name="Al Jubaylāt" state="Al Minţaqah al Wusţá" latitude="26.18194" longitude="50.55333"/>
+		<city name="Al Mālikīyah" state="Al Minţaqah al Gharbīyah" latitude="26.09805" longitude="50.48667"/>
+		<city name="Al Muḩarraq (المحرق)" state="Al Muḩarraq" latitude="26.25722" longitude="50.61195"/>
+		<city name="'Ālī" state="Al Minţaqah ash Shamālīyah" latitude="26.16195" longitude="50.51639"/>
+		<city name="Ar Rifā'" state="" latitude="26.13" longitude="50.555"/>
+		<city name="Ar Rifā' ash Sharqī" state="" latitude="26.12389" longitude="50.57361"/>
+		<city name="Jidd Ḩafş (جد حفص)" state="Jidd Ḩafş" latitude="26.21861" longitude="50.54778"/>
+		<city name="Madīnat Ḩamad (مدينة حمد)" state="Madīnat Ḩamad" latitude="26.11528" longitude="50.50694"/>
+		<city name="Madīnat 'Īsá (مدينة عيسى)" state="Madīnat ‘Īsá" latitude="26.17361" longitude="50.54778"/>
+		<city name="Manama (المنامة)" state="Al Manāmah" latitude="26.23611" longitude="50.58306"/>
+		<city name="Mīnā' Salmān" state="Al Manāmah" latitude="26.21667" longitude="50.6"/>
+		<city name="Sitrah (سترة)" state="Sitrah" latitude="26.15472" longitude="50.62056"/>
+		<city name="Suwād al Janūbīyah" state="Minţaqat Juzur Ḩawār" latitude="25.6425" longitude="50.79972"/>
 	</country>
 	<country code="BD" name="Bangladesh">
+		<city name="Bāgherhāt" state="Khulna" latitude="22.66667" longitude="89.8"/>
 		<city name="Barisāl" state="Barisāl" latitude="22.7" longitude="90.36667"/>
+		<city name="Chandpur" state="Chittagong" latitude="25.36667" longitude="89"/>
 		<city name="Chittagong" state="Chittagong" latitude="22.36361" longitude="91.80334"/>
 		<city name="Dhaka" state="Dhaka" latitude="23.72305" longitude="90.40861"/>
-		<city name="" state="Khulna Division" latitude="22.91667" longitude="89.25"/>
-		<city name="" state="Rājshāhi Division" latitude="25" longitude="89"/>
+		<city name="Khulna" state="Khulna" latitude="22.58333" longitude="90.21667"/>
+		<city name="Naogaon" state="Rājshāhi" latitude="23.23333" longitude="90.41666"/>
+		<city name="Nārāyanganj" state="Dhaka" latitude="23.62333" longitude="90.50111"/>
+		<city name="Pābna" state="Rājshāhi" latitude="24" longitude="89.25"/>
+		<city name="Rājshāhi" state="Rājshāhi" latitude="24.36667" longitude="88.6"/>
 		<city name="Sylhet" state="Sylhet" latitude="24.53333" longitude="91.86667"/>
 	</country>
 	<country code="BB" name="Barbados">
+		<city name="Bathsheba" state="Saint Joseph" latitude="13.21667" longitude="-59.51667"/>
 		<city name="Bridgetown" state="Saint Michael" latitude="13.1" longitude="-59.61666"/>
-		<city name="" state="Christ Church" latitude="13.08333" longitude="-59.53333"/>
+		<city name="Hastings" state="Christ Church" latitude="13.06667" longitude="-59.58333"/>
+		<city name="Holetown" state="Saint James" latitude="13.18333" longitude="-59.65"/>
+		<city name="Oistins" state="Christ Church" latitude="13.06667" longitude="-59.53333"/>
 		<city name="" state="Saint Andrew" latitude="13.23333" longitude="-59.56667"/>
 		<city name="" state="Saint George" latitude="13.13333" longitude="-59.53333"/>
-		<city name="" state="Saint James" latitude="13.21667" longitude="-59.61666"/>
 		<city name="" state="Saint John" latitude="13.16667" longitude="-59.48333"/>
-		<city name="" state="Saint Joseph" latitude="13.2" longitude="-59.53333"/>
 		<city name="" state="Saint Lucy" latitude="13.3" longitude="-59.61666"/>
-		<city name="" state="Saint Peter" latitude="13.25" longitude="-59.61666"/>
 		<city name="" state="Saint Philip" latitude="13.11667" longitude="-59.46667"/>
 		<city name="" state="Saint Thomas" latitude="13.18333" longitude="-59.58333"/>
+		<city name="Speightstown" state="Saint Peter" latitude="13.25" longitude="-59.65"/>
 	</country>
 	<country code="BY" name="Belarus">
 		<city name="Miyory" state="Віцебская вобласьць" latitude="55.61555" longitude="27.62861"/>
@@ -617,8 +665,8 @@
 		<city name="Brugge" state="West-Vlaanderen" latitude="51.21667" longitude="3.233333"/>
 		<city name="Brussels" state="Bruxelles-Capitale" latitude="50.83333" longitude="4.333333"/>
 		<city name="Gent" state="Oost-Vlaanderen" latitude="51.05" longitude="3.716667"/>
-		<city name="" state="Halle" latitude="50.73333" longitude="4.233333"/>
 		<city name="Halle" state="Antwerpen" latitude="51.23333" longitude="4.633333"/>
+		<city name="" state="Halle" latitude="50.73333" longitude="4.233333"/>
 		<city name="Hasselt" state="Limburg" latitude="50.93333" longitude="5.333333"/>
 		<city name="Herstal" state="Liège" latitude="50.66667" longitude="5.633333"/>
 		<city name="Kontich" state="Antwerpen" latitude="51.13334" longitude="4.45"/>
@@ -635,10 +683,15 @@
 	<country code="BZ" name="Belize">
 		<city name="Belize City" state="Belize District" latitude="17.48333" longitude="-88.18333"/>
 		<city name="Belmopan" state="Cayo" latitude="17.25" longitude="-88.76667"/>
+		<city name="Benque Viejo del Carmen" state="Cayo" latitude="17.075" longitude="-89.13917"/>
 		<city name="Corozal" state="Corozal District" latitude="18.38333" longitude="-88.38333"/>
+		<city name="Dangriga" state="Stann Creek District" latitude="16.96667" longitude="-88.21667"/>
 		<city name="Orange Walk" state="Orange Walk District" latitude="18.08333" longitude="-88.56667"/>
-		<city name="" state="Stann Creek District" latitude="16.83333" longitude="-88.5"/>
+		<city name="Punta Gorda" state="Toledo" latitude="16.1" longitude="-88.8"/>
+		<city name="San Ignacio" state="Cayo" latitude="17.15611" longitude="-89.07139"/>
+		<city name="San Pedro" state="Belize" latitude="17.91667" longitude="-87.95"/>
 		<city name="Toledo Settlement" state="Toledo District" latitude="16.13333" longitude="-88.81667"/>
+		<city name="Trial Farm" state="Orange Walk" latitude="18.08333" longitude="-88.55"/>
 	</country>
 	<country code="BJ" name="Benin">
 		<city name="Abomey" state="Zou" latitude="7.183333" longitude="1.983333"/>
@@ -755,9 +808,9 @@
 		<city name="Novo Hamburgo" state="Rio Grande do Sul" latitude="-29.68333" longitude="-51.13334"/>
 		<city name="Ourinhos" state="São Paulo" latitude="-22.98333" longitude="-49.86666"/>
 		<city name="Palmas" state="Tocantins" latitude="-10.22278" longitude="-48.27778"/>
-		<city name="Petrópolis" state="Rio Grande do Sul" latitude="-30.04167" longitude="-51.1875"/>
 		<city name="Petrópolis" state="Rio de Janeiro" latitude="-22.51083" longitude="-43.18444"/>
 		<city name="Petrópolis" state="Rio Grande do Norte" latitude="-5.782222" longitude="-35.20167"/>
+		<city name="Petrópolis" state="Rio Grande do Sul" latitude="-30.04167" longitude="-51.1875"/>
 		<city name="Porto Alegre" state="Rio Grande do Sul" latitude="-30.03333" longitude="-51.2"/>
 		<city name="Pôrto Velho" state="Rondônia" latitude="-8.766666" longitude="-63.9"/>
 		<city name="Recife" state="Pernambuco" latitude="-8.05" longitude="-34.9"/>
@@ -765,9 +818,9 @@
 		<city name="Rio de Janeiro" state="Rio de Janeiro" latitude="-22.9" longitude="-43.23333"/>
 		<city name="Salvador" state="Bahia" latitude="-12.98333" longitude="-38.51667"/>
 		<city name="Santana de Parnaíba" state="São Paulo" latitude="-23.45" longitude="-46.91667"/>
-		<city name="Santos" state="Rio Grande do Sul" latitude="-32.65" longitude="-52.6"/>
-		<city name="Santos" state="Piauí" latitude="-7.066667" longitude="-43.13334"/>
 		<city name="Santos" state="Minas Gerais" latitude="-16.46667" longitude="-40.86666"/>
+		<city name="Santos" state="Piauí" latitude="-7.066667" longitude="-43.13334"/>
+		<city name="Santos" state="Rio Grande do Sul" latitude="-32.65" longitude="-52.6"/>
 		<city name="Santos" state="São Paulo" latitude="-23.95" longitude="-46.33333"/>
 		<city name="São Leopoldo" state="Amazonas" latitude="-7.516667" longitude="-72.55"/>
 		<city name="São Leopoldo" state="Rio Grande do Sul" latitude="-29.76667" longitude="-51.15"/>
@@ -863,8 +916,8 @@
 	</country>
 	<country code="BI" name="Burundi">
 		<city name="Bubanza" state="Bubanza" latitude="-3.083333" longitude="29.39444"/>
-		<city name="Bujumbura" state="Burundi" latitude="-3.376111" longitude="29.36"/>
 		<city name="Bujumbura" state="Bujumbura" latitude="-3.376111" longitude="29.36"/>
+		<city name="Bujumbura" state="Burundi" latitude="-3.376111" longitude="29.36"/>
 		<city name="Bururi" state="Bururi" latitude="-3.951111" longitude="29.61667"/>
 		<city name="Cankuzo" state="Cankuzo" latitude="-3.219445" longitude="30.55278"/>
 		<city name="Cibitoke" state="Cibitoke" latitude="-2.886111" longitude="29.12361"/>
@@ -931,17 +984,17 @@
 		<city name="Brandon" state="Quebec" latitude="46.25007" longitude="-73.41585"/>
 		<city name="Brantford" state="Ontario" latitude="43.1334" longitude="-80.26637"/>
 		<city name="Brockville" state="Ontario" latitude="44.58341" longitude="-75.68264"/>
-		<city name="Burlington" state="Prince Edward Island" latitude="46.48343" longitude="-63.59871"/>
-		<city name="Burlington" state="Ontario" latitude="43.38621" longitude="-79.83713"/>
 		<city name="Burlington" state="Newfoundland" latitude="49.74997" longitude="-56.01488"/>
 		<city name="Burlington" state="Nova Scotia" latitude="45.11685" longitude="-64.81548"/>
+		<city name="Burlington" state="Ontario" latitude="43.38621" longitude="-79.83713"/>
+		<city name="Burlington" state="Prince Edward Island" latitude="46.48343" longitude="-63.59871"/>
 		<city name="Burnaby" state="British Columbia" latitude="49.26636" longitude="-122.9526"/>
 		<city name="Burnaby" state="Ontario" latitude="46.93342" longitude="-79.39965"/>
 		<city name="Calgary" state="Alberta" latitude="51.05011" longitude="-114.0853"/>
 		<city name="Cambridge" state="Nouveau-Brunswick" latitude="45.83344" longitude="-66.03216"/>
-		<city name="Cambridge" state="Prince Edward Island" latitude="46.06681" longitude="-62.51535"/>
-		<city name="Cambridge" state="Ontario" latitude="45.3168" longitude="-75.116"/>
 		<city name="Cambridge" state="Nova Scotia" latitude="45.20015" longitude="-64.11544"/>
+		<city name="Cambridge" state="Ontario" latitude="45.3168" longitude="-75.116"/>
+		<city name="Cambridge" state="Prince Edward Island" latitude="46.06681" longitude="-62.51535"/>
 		<city name="Canmore" state="Alberta" latitude="51.08335" longitude="-115.3521"/>
 		<city name="Charlottetown" state="Newfoundland" latitude="48.4332" longitude="-54.01481"/>
 		<city name="Charlottetown" state="Prince Edward Island" latitude="46.25012" longitude="-63.13198"/>
@@ -955,16 +1008,16 @@
 		<city name="Edmonton" state="Alberta" latitude="53.55014" longitude="-113.4687"/>
 		<city name="Etobicoke" state="Ontario" latitude="43.68341" longitude="-79.54961"/>
 		<city name="Fort McMurray" state="Alberta" latitude="56.73351" longitude="-111.3852"/>
-		<city name="Fredericton" state="Prince Edward Island" latitude="46.36683" longitude="-63.432"/>
 		<city name="Fredericton" state="New Brunswick" latitude="45.94542" longitude="-66.66558"/>
+		<city name="Fredericton" state="Prince Edward Island" latitude="46.36683" longitude="-63.432"/>
 		<city name="Gatineau" state="Quebec" latitude="45.4834" longitude="-75.64934"/>
 		<city name="Guelph" state="Ontario" latitude="43.5668" longitude="-80.29967"/>
 		<city name="Halifax" state="Nova Scotia" latitude="44.65015" longitude="-63.5987"/>
 		<city name="Halifax" state="Ontario" latitude="46.23338" longitude="-81.01644"/>
 		<city name="Hamilton" state="Ontario" latitude="43.25011" longitude="-79.84963"/>
 		<city name="Hamilton" state="Prince Edward Island" latitude="46.50013" longitude="-63.69872"/>
-		<city name="Hull" state="Quebec" latitude="45.4445" longitude="-75.74105"/>
 		<city name="Hull" state="Ontario" latitude="46.57178" longitude="-81.20615"/>
+		<city name="Hull" state="Quebec" latitude="45.4445" longitude="-75.74105"/>
 		<city name="Kanata" state="Ontario" latitude="45.3001" longitude="-75.91606"/>
 		<city name="Kelowna" state="British Columbia" latitude="49.88307" longitude="-119.4857"/>
 		<city name="Kentville" state="Nova Scotia" latitude="45.08345" longitude="-64.49876"/>
@@ -1001,8 +1054,8 @@
 		<city name="North Vancouver" state="British Columbia" latitude="49.36636" longitude="-123.0693"/>
 		<city name="North York" state="Ontario" latitude="43.76682" longitude="-79.41631"/>
 		<city name="Norval" state="Ontario" latitude="43.65011" longitude="-79.84963"/>
-		<city name="Oakville" state="Ontario" latitude="43.45011" longitude="-79.68291"/>
 		<city name="Oakville" state="Manitoba" latitude="49.92941" longitude="-98.00462"/>
+		<city name="Oakville" state="Ontario" latitude="43.45011" longitude="-79.68291"/>
 		<city name="Oshawa" state="Ontario" latitude="43.90012" longitude="-78.84957"/>
 		<city name="Ottawa" state="Ontario" latitude="45.2668" longitude="-75.74935"/>
 		<city name="Penhold" state="Alberta" latitude="52.13342" longitude="-113.8687"/>
@@ -1010,24 +1063,24 @@
 		<city name="Peterborough" state="Quebec" latitude="46.41677" longitude="-73.33244"/>
 		<city name="Prince George" state="British Columbia" latitude="53.9166" longitude="-122.753"/>
 		<city name="Regina" state="Saskatchewan" latitude="50.45008" longitude="-104.6178"/>
-		<city name="Richmond Hill" state="Ontario" latitude="43.86681" longitude="-79.44962"/>
 		<city name="Richmond Hill" state="Alberta" latitude="55.17497" longitude="-118.9777"/>
+		<city name="Richmond Hill" state="Ontario" latitude="43.86681" longitude="-79.44962"/>
 		<city name="Rosemère" state="Quebec" latitude="45.63338" longitude="-73.79919"/>
 		<city name="Saint John" state="New Brunswick" latitude="45.25935" longitude="-66.03774"/>
 		<city name="Saint-Laurent" state="Quebec" latitude="45.42338" longitude="-72.34351"/>
 		<city name="Sarnia" state="Ontario" latitude="42.96677" longitude="-82.38313"/>
 		<city name="Saskatoon" state="Saskatchewan" latitude="52.11679" longitude="-106.6345"/>
 		<city name="Scarborough" state="Ontario" latitude="43.78342" longitude="-79.2496"/>
-		<city name="Sherbrooke" state="Quebec" latitude="45.40008" longitude="-71.89908"/>
-		<city name="Sherbrooke" state="Prince Edward Island" latitude="46.42513" longitude="-63.77932"/>
-		<city name="Sherbrooke" state="Ontario" latitude="42.86681" longitude="-79.5163"/>
 		<city name="Sherbrooke" state="Alberta" latitude="53.58347" longitude="-113.552"/>
 		<city name="Sherbrooke" state="Nova Scotia" latitude="45.13345" longitude="-61.98188"/>
+		<city name="Sherbrooke" state="Ontario" latitude="42.86681" longitude="-79.5163"/>
+		<city name="Sherbrooke" state="Prince Edward Island" latitude="46.42513" longitude="-63.77932"/>
+		<city name="Sherbrooke" state="Quebec" latitude="45.40008" longitude="-71.89908"/>
 		<city name="Spruce Grove" state="Alberta" latitude="53.53344" longitude="-113.9187"/>
-		<city name="St. John" state="Ontario" latitude="48.93348" longitude="-80.88307"/>
 		<city name="St. John" state="Manitoba" latitude="49.9072" longitude="-97.15485"/>
-		<city name="St. Johns" state="Ontario" latitude="43.08121" longitude="-79.26488"/>
+		<city name="St. John" state="Ontario" latitude="48.93348" longitude="-80.88307"/>
 		<city name="St. Johns" state="Manitoba" latitude="49.925" longitude="-97.13394"/>
+		<city name="St. Johns" state="Ontario" latitude="43.08121" longitude="-79.26488"/>
 		<city name="St. John's" state="Newfoundland" latitude="47.56659" longitude="-52.73135"/>
 		<city name="St. Laurent" state="Manitoba" latitude="50.38942" longitude="-97.93211"/>
 		<city name="St. Laurent" state="Ontario" latitude="49.38348" longitude="-79.58295"/>
@@ -1035,9 +1088,9 @@
 		<city name="Sudbury" state="Ontario" latitude="46.51678" longitude="-80.89973"/>
 		<city name="Sydney" state="Nova Scotia" latitude="46.15014" longitude="-60.18175"/>
 		<city name="Thornhill" state="British Columbia" latitude="54.51635" longitude="-128.5367"/>
-		<city name="Thornhill" state="Ontario" latitude="43.80011" longitude="-79.41631"/>
 		<city name="Thornhill" state="Manitoba" latitude="49.2003" longitude="-98.23247"/>
 		<city name="Thornhill" state="Nova Scotia" latitude="44.60015" longitude="-63.6154"/>
+		<city name="Thornhill" state="Ontario" latitude="43.80011" longitude="-79.41631"/>
 		<city name="Thunder Bay" state="British Columbia" latitude="49.76634" longitude="-124.2695"/>
 		<city name="Thunder Bay" state="Ontario" latitude="49.70001" longitude="-94.36713"/>
 		<city name="Timmins" state="Ontario" latitude="48.33347" longitude="-80.73307"/>
@@ -1052,26 +1105,26 @@
 		<city name="Vernon" state="British Columbia" latitude="50.25809" longitude="-119.2691"/>
 		<city name="Vernon" state="Ontario" latitude="45.1668" longitude="-75.46603"/>
 		<city name="Victoria" state="British Columbia" latitude="48.43294" longitude="-123.3693"/>
-		<city name="Victoria" state="Prince Edward Island" latitude="46.21683" longitude="-63.48201"/>
-		<city name="Victoria" state="Ontario" latitude="44.58342" longitude="-78.83288"/>
 		<city name="Victoria" state="Newfoundland" latitude="47.76659" longitude="-53.23138"/>
 		<city name="Victoria" state="Nova Scotia" latitude="46.50014" longitude="-60.58177"/>
+		<city name="Victoria" state="Ontario" latitude="44.58342" longitude="-78.83288"/>
+		<city name="Victoria" state="Prince Edward Island" latitude="46.21683" longitude="-63.48201"/>
 		<city name="Waterloo" state="Nova Scotia" latitude="44.33345" longitude="-64.68208"/>
 		<city name="Waterloo" state="Ontario" latitude="43.5001" longitude="-80.49969"/>
-		<city name="Westmount" state="Ontario" latitude="43.69291" longitude="-79.52351"/>
-		<city name="Westmount" state="Saskatchewan" latitude="50.38335" longitude="-105.5678"/>
-		<city name="Westmount" state="Nova Scotia" latitude="46.13344" longitude="-60.21515"/>
-		<city name="Westmount" state="British Columbia" latitude="49.33296" longitude="-123.2194"/>
 		<city name="Westmount" state="Alberta" latitude="53.55014" longitude="-113.5354"/>
+		<city name="Westmount" state="British Columbia" latitude="49.33296" longitude="-123.2194"/>
+		<city name="Westmount" state="Nova Scotia" latitude="46.13344" longitude="-60.21515"/>
+		<city name="Westmount" state="Ontario" latitude="43.69291" longitude="-79.52351"/>
 		<city name="Westmount" state="Quebec" latitude="45.48341" longitude="-73.59917"/>
+		<city name="Westmount" state="Saskatchewan" latitude="50.38335" longitude="-105.5678"/>
 		<city name="Weston" state="Manitoba" latitude="49.9161" longitude="-97.19065"/>
 		<city name="Weston" state="Nova Scotia" latitude="45.06685" longitude="-64.78208"/>
 		<city name="Weston" state="Ontario" latitude="43.71681" longitude="-79.51631"/>
 		<city name="Whitehorse" state="Yukon" latitude="60.71611" longitude="-135.0537"/>
 		<city name="Windsor" state="Newfoundland" latitude="48.94994" longitude="-55.66492"/>
-		<city name="Windsor" state="Quebec" latitude="45.57008" longitude="-72.00349"/>
 		<city name="Windsor" state="Nova Scotia" latitude="44.98345" longitude="-64.13203"/>
 		<city name="Windsor" state="Ontario" latitude="42.30008" longitude="-83.01654"/>
+		<city name="Windsor" state="Quebec" latitude="45.57008" longitude="-72.00349"/>
 		<city name="Winnipeg" state="Manitoba" latitude="49.8844" longitude="-97.14704"/>
 		<city name="Yellowknife" state="Northwest Territories" latitude="62.45599" longitude="-114.3525"/>
 	</country>
@@ -1144,8 +1197,8 @@
 		<city name="Caldera" state="Atacama" latitude="-27.06667" longitude="-70.78333"/>
 		<city name="Cañete" state="Bío-Bío" latitude="-37.8" longitude="-73.4"/>
 		<city name="Cañete" state="Maule" latitude="-34.9" longitude="-72.15"/>
-		<city name="Cauquenes" state="Maule" latitude="-35.96667" longitude="-72.35"/>
 		<city name="Cauquenes" state="Libertador General Bernardo O'Higgins" latitude="-34.23333" longitude="-70.68333"/>
+		<city name="Cauquenes" state="Maule" latitude="-35.96667" longitude="-72.35"/>
 		<city name="Chillán" state="Bío-Bío" latitude="-36.6" longitude="-72.11667"/>
 		<city name="Chillán" state="Magallanes y Antártica Chilena" latitude="-52.88334" longitude="-69.3"/>
 		<city name="Chimbarongo" state="Libertador General Bernardo O'Higgins" latitude="-34.7" longitude="-71.05"/>
@@ -1158,8 +1211,8 @@
 		<city name="Coronel" state="Bío-Bío" latitude="-37.01667" longitude="-73.13333"/>
 		<city name="Coronel" state="Maule" latitude="-36.05" longitude="-72.5"/>
 		<city name="Curicó" state="Maule" latitude="-34.98333" longitude="-71.23333"/>
-		<city name="Frutillar" state="Los Lagos" latitude="-41.11666" longitude="-73.05"/>
 		<city name="Frutillar" state="Bío-Bío" latitude="-36.15" longitude="-72.73333"/>
+		<city name="Frutillar" state="Los Lagos" latitude="-41.11666" longitude="-73.05"/>
 		<city name="Hualañé" state="Maule" latitude="-34.98333" longitude="-71.81667"/>
 		<city name="Iquique" state="Tarapacá" latitude="-20.21667" longitude="-70.16666"/>
 		<city name="La Florida" state="Región Metropolitana" latitude="-33.88334" longitude="-71.5"/>
@@ -1176,27 +1229,27 @@
 		<city name="Lota" state="Bío-Bío" latitude="-37.08333" longitude="-73.16666"/>
 		<city name="Maipú" state="Antofagasta" latitude="-23.1" longitude="-69.51667"/>
 		<city name="Maipú" state="Región Metropolitana" latitude="-33.51667" longitude="-70.76667"/>
-		<city name="Molina" state="Maule" latitude="-35.11666" longitude="-71.28333"/>
 		<city name="Molina" state="Los Lagos" latitude="-40.2" longitude="-72.28333"/>
+		<city name="Molina" state="Maule" latitude="-35.11666" longitude="-71.28333"/>
 		<city name="Mulchén" state="Bío-Bío" latitude="-37.71667" longitude="-72.23333"/>
 		<city name="Ñuñoa" state="Región Metropolitana" latitude="-33.46667" longitude="-70.6"/>
 		<city name="Parral" state="Coquimbo" latitude="-30.96667" longitude="-71.48333"/>
 		<city name="Parral" state="Maule" latitude="-36.15" longitude="-71.83334"/>
 		<city name="Peñalolén" state="Región Metropolitana" latitude="-33.48333" longitude="-70.53333"/>
 		<city name="Penco" state="Bío-Bío" latitude="-36.73333" longitude="-72.98333"/>
-		<city name="Providencia" state="Valparaíso" latitude="-33.13334" longitude="-71.08334"/>
 		<city name="Providencia" state="Atacama" latitude="-26.65" longitude="-69.75"/>
 		<city name="Providencia" state="Región Metropolitana" latitude="-33.43333" longitude="-70.61667"/>
+		<city name="Providencia" state="Valparaíso" latitude="-33.13334" longitude="-71.08334"/>
 		<city name="Pudahuel" state="Región Metropolitana" latitude="-33.43333" longitude="-70.83334"/>
 		<city name="Puente Alto" state="Región Metropolitana" latitude="-33.61666" longitude="-70.58334"/>
 		<city name="Puerto Montt" state="Los Lagos" latitude="-41.47167" longitude="-72.93694"/>
-		<city name="Punta Arenas" state="Magallanes y Antártica Chilena" latitude="-53.15" longitude="-70.91666"/>
-		<city name="Punta Arenas" state="Tarapacá" latitude="-21.65" longitude="-70.16666"/>
-		<city name="Punta Arenas" state="Maule" latitude="-35.26667" longitude="-72.41666"/>
-		<city name="Punta Arenas" state="Libertador General Bernardo O'Higgins" latitude="-34.65" longitude="-71.1"/>
 		<city name="Punta Arenas" state="Aisén del General Carlos Ibáñez del Campo" latitude="-44.85" longitude="-75.01667"/>
 		<city name="Punta Arenas" state="Bío-Bío" latitude="-36.63334" longitude="-73.05"/>
+		<city name="Punta Arenas" state="Libertador General Bernardo O'Higgins" latitude="-34.65" longitude="-71.1"/>
 		<city name="Punta Arenas" state="Los Lagos" latitude="-41.85833" longitude="-73.88917"/>
+		<city name="Punta Arenas" state="Magallanes y Antártica Chilena" latitude="-53.15" longitude="-70.91666"/>
+		<city name="Punta Arenas" state="Maule" latitude="-35.26667" longitude="-72.41666"/>
+		<city name="Punta Arenas" state="Tarapacá" latitude="-21.65" longitude="-70.16666"/>
 		<city name="Quillota" state="Valparaíso" latitude="-32.88334" longitude="-71.26667"/>
 		<city name="Quilpué" state="Maule" latitude="-35.53333" longitude="-71.46667"/>
 		<city name="Quilpué" state="Valparaíso" latitude="-32.73333" longitude="-70.7"/>
@@ -1208,11 +1261,11 @@
 		<city name="San Fernando" state="Atacama" latitude="-27.38333" longitude="-70.31667"/>
 		<city name="San Fernando" state="Libertador General Bernardo O'Higgins" latitude="-34.33333" longitude="-71.46667"/>
 		<city name="San Fernando" state="Valparaíso" latitude="-32.75" longitude="-70.65"/>
-		<city name="San Javier" state="Maule" latitude="-35.01667" longitude="-72.18333"/>
 		<city name="San Javier" state="Bío-Bío" latitude="-36.81667" longitude="-72.2"/>
-		<city name="San Javier" state="Región Metropolitana" latitude="-33.63334" longitude="-70.88333"/>
 		<city name="San Javier" state="Libertador General Bernardo O'Higgins" latitude="-34.66667" longitude="-70.98333"/>
 		<city name="San Javier" state="Los Lagos" latitude="-39.76667" longitude="-73"/>
+		<city name="San Javier" state="Maule" latitude="-35.01667" longitude="-72.18333"/>
+		<city name="San Javier" state="Región Metropolitana" latitude="-33.63334" longitude="-70.88333"/>
 		<city name="Santiago" state="Región Metropolitana" latitude="-33.45" longitude="-70.66666"/>
 		<city name="Santo Domingo" state="Antofagasta" latitude="-25.08333" longitude="-70.48333"/>
 		<city name="Santo Domingo" state="Atacama" latitude="-26.66667" longitude="-69.66666"/>
@@ -1224,20 +1277,20 @@
 		<city name="Temuco" state="Bío-Bío" latitude="-37.66667" longitude="-73.38333"/>
 		<city name="Temuco" state="Los Lagos" latitude="-39.51667" longitude="-72.43333"/>
 		<city name="Teno" state="Maule" latitude="-34.88334" longitude="-71.2"/>
-		<city name="Valdivia" state="Región Metropolitana" latitude="-33.95" longitude="-71.6"/>
-		<city name="Valdivia" state="Maule" latitude="-36.05" longitude="-72.36667"/>
-		<city name="Valdivia" state="Los Lagos" latitude="-39.8" longitude="-73.23333"/>
 		<city name="Valdivia" state="Coquimbo" latitude="-30.74667" longitude="-70.66084"/>
+		<city name="Valdivia" state="Los Lagos" latitude="-39.8" longitude="-73.23333"/>
+		<city name="Valdivia" state="Maule" latitude="-36.05" longitude="-72.36667"/>
+		<city name="Valdivia" state="Región Metropolitana" latitude="-33.95" longitude="-71.6"/>
 		<city name="Valdivia" state="Valparaíso" latitude="-32.18333" longitude="-70.93333"/>
 		<city name="Valparaiso" state="Antofagasta" latitude="-24.3" longitude="-69.81667"/>
 		<city name="Valparaiso" state="Atacama" latitude="-29.01667" longitude="-71.03333"/>
 		<city name="Valparaíso" state="Valparaíso" latitude="-33.04778" longitude="-71.60111"/>
-		<city name="Villa Alegre" state="Libertador General Bernardo O'Higgins" latitude="-34.6" longitude="-71.08334"/>
-		<city name="Villa Alegre" state="Valparaíso" latitude="-32.86666" longitude="-70.66666"/>
-		<city name="Villa Alegre" state="Los Lagos" latitude="-41.13334" longitude="-73.16666"/>
-		<city name="Villa Alegre" state="Bío-Bío" latitude="-37.4" longitude="-73.43333"/>
 		<city name="Villa Alegre" state="Araucanía" latitude="-38.23333" longitude="-72.31667"/>
+		<city name="Villa Alegre" state="Bío-Bío" latitude="-37.4" longitude="-73.43333"/>
+		<city name="Villa Alegre" state="Libertador General Bernardo O'Higgins" latitude="-34.6" longitude="-71.08334"/>
+		<city name="Villa Alegre" state="Los Lagos" latitude="-41.13334" longitude="-73.16666"/>
 		<city name="Villa Alegre" state="Maule" latitude="-35.66667" longitude="-71.75"/>
+		<city name="Villa Alegre" state="Valparaíso" latitude="-32.86666" longitude="-70.66666"/>
 		<city name="Viña del Mar" state="Valparaíso" latitude="-33.00806" longitude="-71.51972"/>
 		<city name="Vitacura" state="Región Metropolitana" latitude="-33.4" longitude="-70.6"/>
 		<city name="Yumbel" state="Bío-Bío" latitude="-37.08333" longitude="-72.56667"/>
@@ -1277,18 +1330,18 @@
 		<city name="Ürümqi" state="Xīnjiāng (新疆维吾尔自治区)" latitude="43.8" longitude="87.58334"/>
 		<city name="Wuhan" state="Húběi (湖北)" latitude="30.58333" longitude="114.2667"/>
 		<city name="Xi'an" state="Shānxī (山西省)" latitude="34.25834" longitude="108.9286"/>
+		<city name="Xinhua" state="Ānhuī (安徽省)" latitude="30.975" longitude="117.0917"/>
+		<city name="Xinhua" state="Fújiàn (福建省)" latitude="26.56778" longitude="118.8103"/>
+		<city name="Xinhua" state="Guǎngdōng (广东省)" latitude="23.41444" longitude="116.7436"/>
 		<city name="Xinhua" state="Guǎngxī (广西壮族自治区)" latitude="24.65" longitude="106.5667"/>
-		<city name="Xinhua" state="Zhèjiāng (浙江)" latitude="27.81778" longitude="120.7114"/>
-		<city name="Xinhua" state="Yúnnán (云南省)" latitude="25.70028" longitude="101.6836"/>
-		<city name="Xinhua" state="Sìchuān (四川)" latitude="29.25" longitude="103.6667"/>
-		<city name="Xinhua" state="Nèi Měnggǔ (内蒙古自治区)" latitude="41.05305" longitude="107.5897"/>
-		<city name="Xinhua" state="Jílín (吉林省)" latitude="43.16639" longitude="125.2419"/>
 		<city name="Xinhua" state="Guìzhōu (贵州省)" latitude="28.59278" longitude="106.1225"/>
 		<city name="Xinhua" state="Hēilóngjiāng (黑龙江)" latitude="47.13334" longitude="130.3"/>
-		<city name="Xinhua" state="Guǎngdōng (广东省)" latitude="23.41444" longitude="116.7436"/>
-		<city name="Xinhua" state="Fújiàn (福建省)" latitude="26.56778" longitude="118.8103"/>
-		<city name="Xinhua" state="Ānhuī (安徽省)" latitude="30.975" longitude="117.0917"/>
 		<city name="Xinhua" state="Húnán (湖南省)" latitude="27.85194" longitude="111.8986"/>
+		<city name="Xinhua" state="Jílín (吉林省)" latitude="43.16639" longitude="125.2419"/>
+		<city name="Xinhua" state="Nèi Měnggǔ (内蒙古自治区)" latitude="41.05305" longitude="107.5897"/>
+		<city name="Xinhua" state="Sìchuān (四川)" latitude="29.25" longitude="103.6667"/>
+		<city name="Xinhua" state="Yúnnán (云南省)" latitude="25.70028" longitude="101.6836"/>
+		<city name="Xinhua" state="Zhèjiāng (浙江)" latitude="27.81778" longitude="120.7114"/>
 		<city name="Xining" state="Qīnghǎi (青海)" latitude="36.61666" longitude="101.7667"/>
 		<city name="Yinchuan" state="Níngxià (宁夏回族自治区)" latitude="38.46806" longitude="106.2731"/>
 		<city name="Zhengzhou" state="Hénán (河南)" latitude="34.75778" longitude="113.6486"/>
@@ -1381,10 +1434,10 @@
 		<city name="Limón" state="San José" latitude="9.733334" longitude="-84.35"/>
 		<city name="Puerto Limón" state="Limón" latitude="10" longitude="-83.03333"/>
 		<city name="Puntarenas" state="Puntarenas" latitude="9.966667" longitude="-84.83334"/>
-		<city name="San José" state="San José" latitude="9.933333" longitude="-84.08334"/>
 		<city name="San José" state="Alajuela" latitude="10.96667" longitude="-85.13333"/>
 		<city name="San José" state="Guanacaste" latitude="10.38333" longitude="-84.96667"/>
 		<city name="San José" state="Heredia" latitude="10.36667" longitude="-84.13333"/>
+		<city name="San José" state="San José" latitude="9.933333" longitude="-84.08334"/>
 	</country>
 	<country code="HR" name="Croatia">
 		<city name="Bjelovar" state="Bjelovarsko-Bilogorska" latitude="45.89861" longitude="16.84889"/>
@@ -1412,10 +1465,10 @@
 	<country code="CU" name="Cuba">
 		<city name="Bayamo" state="Granma" latitude="20.37917" longitude="-76.64333"/>
 		<city name="Bayamo" state="Holguín" latitude="20.95" longitude="-75.91666"/>
+		<city name="Camagüey" state="Camagüey" latitude="21.43333" longitude="-77.76667"/>
+		<city name="Camagüey" state="Ciego de Ávila" latitude="22.36667" longitude="-79.26667"/>
 		<city name="Camagüey" state="Cienfuegos" latitude="22.11667" longitude="-80.56667"/>
 		<city name="Camagüey" state="Santiago de Cuba" latitude="20.3" longitude="-76.05"/>
-		<city name="Camagüey" state="Ciego de Ávila" latitude="22.36667" longitude="-79.26667"/>
-		<city name="Camagüey" state="Camagüey" latitude="21.43333" longitude="-77.76667"/>
 		<city name="Camagüey" state="Villa Clara" latitude="22.56667" longitude="-80.45"/>
 		<city name="Ciego de Ávila" state="Ciego de Ávila" latitude="21.83333" longitude="-78.73333"/>
 		<city name="Cienfuegos" state="Cienfuegos" latitude="22.14611" longitude="-80.43555"/>
@@ -1430,17 +1483,17 @@
 		<city name="" state="Provincia de Ciudad de La Habana" latitude="23.13333" longitude="-82.36667"/>
 		<city name="Sancti Spíritus" state="La Habana" latitude="22.81667" longitude="-82.31667"/>
 		<city name="Sancti Spíritus" state="Sancti Spíritus" latitude="21.96667" longitude="-79.43333"/>
-		<city name="Santa Clara" state="Ciego de Ávila" latitude="22.01889" longitude="-78.94666"/>
-		<city name="Santa Clara" state="Santiago de Cuba" latitude="20.08945" longitude="-75.78416"/>
-		<city name="Santa Clara" state="Pinar del Río" latitude="22.45" longitude="-83.48333"/>
-		<city name="Santa Clara" state="Matanzas" latitude="22.7175" longitude="-81.10389"/>
-		<city name="Santa Clara" state="Las Tunas" latitude="20.85" longitude="-77.73333"/>
-		<city name="Santa Clara" state="La Habana" latitude="22.76083" longitude="-81.74667"/>
-		<city name="Santa Clara" state="Holguín" latitude="21.03333" longitude="-76.28333"/>
-		<city name="Santa Clara" state="Cienfuegos" latitude="22.18333" longitude="-80.16666"/>
-		<city name="Santa Clara" state="Villa Clara" latitude="22.56667" longitude="-80.28333"/>
 		<city name="Santa Clara" state="Camagüey" latitude="21.16667" longitude="-78.45"/>
+		<city name="Santa Clara" state="Ciego de Ávila" latitude="22.01889" longitude="-78.94666"/>
+		<city name="Santa Clara" state="Cienfuegos" latitude="22.18333" longitude="-80.16666"/>
 		<city name="Santa Clara" state="Granma" latitude="20.55" longitude="-76.81667"/>
+		<city name="Santa Clara" state="Holguín" latitude="21.03333" longitude="-76.28333"/>
+		<city name="Santa Clara" state="La Habana" latitude="22.76083" longitude="-81.74667"/>
+		<city name="Santa Clara" state="Las Tunas" latitude="20.85" longitude="-77.73333"/>
+		<city name="Santa Clara" state="Matanzas" latitude="22.7175" longitude="-81.10389"/>
+		<city name="Santa Clara" state="Pinar del Río" latitude="22.45" longitude="-83.48333"/>
+		<city name="Santa Clara" state="Santiago de Cuba" latitude="20.08945" longitude="-75.78416"/>
+		<city name="Santa Clara" state="Villa Clara" latitude="22.56667" longitude="-80.28333"/>
 		<city name="Santiago de Cuba" state="Santiago de Cuba" latitude="20.02472" longitude="-75.82195"/>
 		<city name="Victoria de Las Tunas" state="Las Tunas" latitude="20.98333" longitude="-77.93333"/>
 	</country>
@@ -1531,8 +1584,8 @@
 	<country code="DO" name="Dominican Republic">
 		<city name="Azua de Compostela" state="Azua" latitude="18.45" longitude="-70.73333"/>
 		<city name="Baní" state="Peravia" latitude="18.33333" longitude="-70.38333"/>
-		<city name="Bonao" state="Monseñor Nouel" latitude="18.91667" longitude="-70.46667"/>
 		<city name="Bonao" state="La Altagracia" latitude="18.71667" longitude="-68.65"/>
+		<city name="Bonao" state="Monseñor Nouel" latitude="18.91667" longitude="-70.46667"/>
 		<city name="Cabrera" state="María Trinidad Sánchez" latitude="19.58333" longitude="-69.96667"/>
 		<city name="Comendador" state="Elías Piña" latitude="18.88333" longitude="-71.66666"/>
 		<city name="Concepción de La Vega" state="La Vega" latitude="19.21667" longitude="-70.51667"/>
@@ -3469,8 +3522,8 @@
 		<city name="" state="Puerto Princesa City" latitude="9.733334" longitude="118.7333"/>
 		<city name="Romblon" state="Romblon" latitude="12.57611" longitude="122.2711"/>
 		<city name="" state="Roxas City" latitude="11.58528" longitude="122.7511"/>
-		<city name="San Fernando" state="Pampanga" latitude="10.2" longitude="123.6667"/>
 		<city name="San Fernando" state="La Union" latitude="16.6" longitude="120.3"/>
+		<city name="San Fernando" state="Pampanga" latitude="10.2" longitude="123.6667"/>
 		<city name="" state="San Jose City" latitude="15.8" longitude="120.9833"/>
 		<city name="Santa Cruz" state="Laguna" latitude="10.45" longitude="123.35"/>
 		<city name="Siquijor" state="Siquijor" latitude="9.215555" longitude="123.5142"/>
@@ -4752,8 +4805,8 @@
 		<city name="" state="Texas" latitude="31.25028" longitude="-99.25028"/>
 		<city name="" state="Utah" latitude="39.25028" longitude="-111.7503"/>
 		<city name="" state="Vermont" latitude="44.00028" longitude="-72.75028"/>
-		<city name="" state="Washington" latitude="47.50028" longitude="-120.5003"/>
 		<city name="Washington" state="" latitude="38.895" longitude="-77.03667"/>
+		<city name="" state="Washington" latitude="47.50028" longitude="-120.5003"/>
 		<city name="" state="West Virginia" latitude="38.50028" longitude="-80.50028"/>
 		<city name="" state="Wisconsin" latitude="44.50028" longitude="-90.00028"/>
 		<city name="" state="Wyoming" latitude="43.00028" longitude="-107.5003"/>
