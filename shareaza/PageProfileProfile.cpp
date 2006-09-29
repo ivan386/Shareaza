@@ -153,6 +153,7 @@ BOOL CProfileProfilePage::OnInitDialog()
 	m_wndInterestRemove.EnableWindow( FALSE );
 
 	OnCloseUpCountry();
+	RecalcDropWidth( &m_wndCountry );
 
 	return TRUE;
 }
@@ -190,6 +191,7 @@ void CProfileProfilePage::OnCloseUpCountry()
 		}
 		m_wndCity.SetItemData( m_wndCity.AddString( strCity ), (LPARAM)pCity );
 	}
+	RecalcDropWidth( &m_wndCity );
 }
 
 void CProfileProfilePage::OnCloseUpCity()
