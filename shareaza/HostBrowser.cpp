@@ -521,10 +521,12 @@ BOOL CHostBrowser::ReadContent()
 				if ( ! nBlock ) break;
 			}
 		}
-		else
+		else if ( m_pBuffer )
 		{
 			m_pBuffer->AddBuffer( m_pInput, nVolume );
 		}
+		else
+			return FALSE;
 	}
 
 	switch ( m_nProtocol )
