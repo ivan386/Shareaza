@@ -676,7 +676,8 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 
 		return TRUE;
 	}
-	theApp.Message( MSG_DEBUG, _T("Recieved unknown UDP packet type"));
+	// We do not handle BT UDP packets.
+	// theApp.Message( MSG_DEBUG, _T("Recieved unknown UDP packet type"));
 
 	return FALSE;
 }
