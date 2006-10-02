@@ -18,7 +18,7 @@
 		<city name="Gardēz" state="Paktīā" latitude="33.61" longitude="69.21"/>
 		<city name="Ghaznī (غزنی)" state="Ghaznī" latitude="33.56" longitude="68.39"/>
 		<city name="Herāt (هرات)" state="Herāt" latitude="34.21" longitude="62.22"/>
-		<city name="Jalālābād " state="Herāt" latitude="34.35" longitude="62.08"/>
+		<city name="Jalālābād" state="Herāt" latitude="34.35" longitude="62.08"/>
 		<city name="Jalālābād" state="Jowzjān" latitude="36.76472" longitude="65.87861"/>
 		<city name="Jalālābād (جلال آباد)" state="Nangarhār" latitude="34.44" longitude="70.41"/>
 		<city name="Kabul" state="Kābol" latitude="34.51667" longitude="69.18333"/>
@@ -396,45 +396,45 @@
 	</country>
 	<country code="AZ" name="Azerbaijan">
 		<city name="" state="Abşeron Rayonu" latitude="40.41667" longitude="49.33333"/>
-		<city name="Ağcabǝdi" state="Ağcabǝdi" latitude="40.05278" longitude="47.46139"/>
+		<city name="Ağcabədi" state="Ağcabədi" latitude="40.05278" longitude="47.46139"/>
 		<city name="Ağdam" state="Ağdam" latitude="40.90528" longitude="45.55639"/>
 		<city name="Ağdaş" state="Ağdaş" latitude="40.65" longitude="47.47611"/>
 		<city name="Ağstafa" state="Ağstafa" latitude="41.11889" longitude="45.45389"/>
 		<city name="" state="Ağsu Rayonu" latitude="40.5" longitude="48.33333"/>
 		<city name="" state="Astara Rayonu" latitude="38.5" longitude="48.66667"/>
 		<city name="Baku" state="Bakı" latitude="40.39528" longitude="49.88222"/>
-		<city name="Balakǝn" state="Balakǝn" latitude="41.72583" longitude="46.40833"/>
-		<city name="Bǝrdǝ" state="Bǝrdǝ" latitude="40.37444" longitude="47.12667"/>
-		<city name="" state="Beylǝqan Rayonu" latitude="39.75" longitude="47.66667"/>
-		<city name="" state="Bilǝsuvar Rayonu" latitude="39.5" longitude="48.41667"/>
-		<city name="" state="Cǝbrayıl Rayonu" latitude="39.33333" longitude="47"/>
-		<city name="" state="Cǝlilabad Rayonu" latitude="39.25" longitude="48.5"/>
-		<city name="Daşkǝsǝn" state="Daşkǝsǝn" latitude="40.49472" longitude="46.07722"/>
-		<city name="" state="Dǝvǝçi Rayonu" latitude="41.16667" longitude="48.91667"/>
-		<city name="" state="Əli Bayramlı Şǝhǝri" latitude="39.91667" longitude="48.93333"/>
+		<city name="Balakən" state="Balakən" latitude="41.72583" longitude="46.40833"/>
+		<city name="Bərdə" state="Bərdə" latitude="40.37444" longitude="47.12667"/>
+		<city name="" state="Beyləqan Rayonu" latitude="39.75" longitude="47.66667"/>
+		<city name="" state="Biləsuvar Rayonu" latitude="39.5" longitude="48.41667"/>
+		<city name="" state="Cəbrayıl Rayonu" latitude="39.33333" longitude="47"/>
+		<city name="" state="Cəlilabad Rayonu" latitude="39.25" longitude="48.5"/>
+		<city name="Daşkəsən" state="Daşkəsən" latitude="40.49472" longitude="46.07722"/>
+		<city name="" state="Dəvəçi Rayonu" latitude="41.16667" longitude="48.91667"/>
+		<city name="" state="Əli Bayramlı Şəhəri" latitude="39.91667" longitude="48.93333"/>
 		<city name="" state="Füzuli Rayonu" latitude="39.58333" longitude="47.33333"/>
-		<city name="Gǝdǝbǝy" state="Gǝdǝbǝy" latitude="40.56556" longitude="45.81611"/>
-		<city name="" state="Gǝncǝ Şǝhǝri" latitude="40.65" longitude="46.35"/>
+		<city name="Gədəbəy" state="Gədəbəy" latitude="40.56556" longitude="45.81611"/>
+		<city name="" state="Gəncə Şəhəri" latitude="40.65" longitude="46.35"/>
 		<city name="Goranboy" state="Goranboy" latitude="40.61028" longitude="46.78972"/>
 		<city name="Göyçay" state="Göyçay" latitude="40.65306" longitude="47.74055"/>
 		<city name="" state="Hacıqabul Rayonu" latitude="40.08333" longitude="48.91667"/>
 		<city name="" state="İmişli Rayonu" latitude="39.83333" longitude="48.08333"/>
 		<city name="" state="İsmayıllı Rayonu" latitude="40.83333" longitude="48.16667"/>
-		<city name="Kǝlbǝcǝr" state="Kǝlbǝcǝr" latitude="40.10667" longitude="46.03833"/>
-		<city name="" state="Kürdǝmir Rayonu" latitude="40.25" longitude="48.16667"/>
+		<city name="Kəlbəcər" state="Kəlbəcər" latitude="40.10667" longitude="46.03833"/>
+		<city name="" state="Kürdəmir Rayonu" latitude="40.25" longitude="48.16667"/>
 		<city name="" state="Laçın Rayonu" latitude="39.66667" longitude="46.41667"/>
-		<city name="" state="Lǝnkǝran Rayonu" latitude="38.91667" longitude="48.91667"/>
-		<city name="" state="Lǝnkǝran Şǝhǝri" latitude="38.73333" longitude="48.83333"/>
+		<city name="" state="Lənkəran Rayonu" latitude="38.91667" longitude="48.91667"/>
+		<city name="" state="Lənkəran Şəhəri" latitude="38.73333" longitude="48.83333"/>
 		<city name="" state="Lerik Rayonu" latitude="38.75" longitude="48.41667"/>
 		<city name="" state="Masallı Rayonu" latitude="39" longitude="48.66667"/>
-		<city name="" state="Mingǝcevir Şǝhǝri" latitude="40.76667" longitude="47"/>
-		<city name="" state="Naftalan Şǝhǝri" latitude="40.48333" longitude="46.71667"/>
+		<city name="" state="Mingəcevir Şəhəri" latitude="40.76667" longitude="47"/>
+		<city name="" state="Naftalan Şəhəri" latitude="40.48333" longitude="46.71667"/>
 		<city name="" state="Naxçıvan Muxtar Respublikası" latitude="39.33333" longitude="45.5"/>
 		<city name="" state="Neftçala Rayonu" latitude="39.33333" longitude="49"/>
 		<city name="Oğuz" state="Oğuz" latitude="41.07084" longitude="47.45833"/>
-		<city name="Qax" state="Qǝx" latitude="41.4225" longitude="46.92417"/>
+		<city name="Qax" state="Qəx" latitude="41.4225" longitude="46.92417"/>
 		<city name="Qazax" state="Qazax" latitude="41.09333" longitude="45.36611"/>
-		<city name="Qǝbǝlǝ" state="Qǝbǝlǝ" latitude="40.98139" longitude="47.84583"/>
+		<city name="Qəbələ" state="Qəbələ" latitude="40.98139" longitude="47.84583"/>
 		<city name="" state="Qobustan Rayonu" latitude="40.5" longitude="49"/>
 		<city name="" state="Quba Rayonu" latitude="41.16667" longitude="48.41667"/>
 		<city name="" state="Qubadlı Rayonu" latitude="39.33333" longitude="46.58333"/>
@@ -444,28 +444,28 @@
 		<city name="" state="Salyan Rayonu" latitude="39.66667" longitude="49"/>
 		<city name="" state="Şamaxı Rayonu" latitude="40.58333" longitude="48.66667"/>
 		<city name="" state="Samux Rayonu" latitude="40.91667" longitude="46.41667"/>
-		<city name="Şǝki" state="Şǝki" latitude="41.19194" longitude="47.17056"/>
-		<city name="" state="Şǝki Şǝhǝri" latitude="41.18333" longitude="47.16667"/>
-		<city name="Şǝmkir" state="Şǝmkir" latitude="40.82972" longitude="46.01889"/>
-		<city name="" state="Siyǝzǝn Rayonu" latitude="41" longitude="49.08333"/>
-		<city name="" state="Sumqayıt Şǝhǝri" latitude="40.58333" longitude="49.66667"/>
+		<city name="Şəki" state="Şəki" latitude="41.19194" longitude="47.17056"/>
+		<city name="" state="Şəki Şəhəri" latitude="41.18333" longitude="47.16667"/>
+		<city name="Şəmkir" state="Şəmkir" latitude="40.82972" longitude="46.01889"/>
+		<city name="" state="Siyəzən Rayonu" latitude="41" longitude="49.08333"/>
+		<city name="" state="Sumqayıt Şəhəri" latitude="40.58333" longitude="49.66667"/>
 		<city name="" state="Şuşa Rayonu" latitude="39.66667" longitude="46.66667"/>
-		<city name="" state="Şuşa Şǝhǝri" latitude="39.75" longitude="46.75"/>
-		<city name="Tǝrtǝr" state="Tǝrtǝr" latitude="40.345" longitude="46.92889"/>
+		<city name="" state="Şuşa Şəhəri" latitude="39.75" longitude="46.75"/>
+		<city name="Tərtər" state="Tərtər" latitude="40.345" longitude="46.92889"/>
 		<city name="Tovuz" state="Tovuz" latitude="40.99222" longitude="45.62889"/>
 		<city name="Ucar" state="Ucar" latitude="40.51833" longitude="47.65417"/>
 		<city name="" state="Xaçmaz Rayonu" latitude="41.58333" longitude="48.75"/>
-		<city name="" state="Xankǝndi Şǝhǝri" latitude="39.81667" longitude="46.8"/>
+		<city name="" state="Xankəndi Şəhəri" latitude="39.81667" longitude="46.8"/>
 		<city name="Xanlar" state="Xanlar" latitude="40.58694" longitude="46.31583"/>
 		<city name="" state="Xızı Rayonu" latitude="40.75" longitude="49.16667"/>
 		<city name="" state="Xocalı Rayonu" latitude="39.83333" longitude="46.75"/>
-		<city name="" state="Xocavǝnd Rayonu" latitude="39.66667" longitude="47"/>
+		<city name="" state="Xocavənd Rayonu" latitude="39.66667" longitude="47"/>
 		<city name="" state="Yardımlı Rayonu" latitude="38.91667" longitude="48.25"/>
 		<city name="" state="Yevlax Rayonu" latitude="40.66667" longitude="47"/>
-		<city name="" state="Yevlax Şǝhǝri" latitude="40.58333" longitude="47.16667"/>
+		<city name="" state="Yevlax Şəhəri" latitude="40.58333" longitude="47.16667"/>
 		<city name="Zaqatala" state="Zaqatala" latitude="41.63361" longitude="46.64333"/>
-		<city name="" state="Zǝngilan Rayonu" latitude="39.08333" longitude="46.66667"/>
-		<city name="Zǝrdab" state="Zǝrdab" latitude="40.21833" longitude="47.70833"/>
+		<city name="" state="Zəngilan Rayonu" latitude="39.08333" longitude="46.66667"/>
+		<city name="Zərdab" state="Zərdab" latitude="40.21833" longitude="47.70833"/>
 	</country>
 	<country code="BS" name="Bahamas">
 		<city name="Abraham's Bay" state="Mayaguana" latitude="22.36667" longitude="-72.96667"/>
@@ -665,8 +665,8 @@
 		<city name="Brugge" state="West-Vlaanderen" latitude="51.21667" longitude="3.233333"/>
 		<city name="Brussels" state="Bruxelles-Capitale" latitude="50.83333" longitude="4.333333"/>
 		<city name="Gent" state="Oost-Vlaanderen" latitude="51.05" longitude="3.716667"/>
-		<city name="Halle" state="Antwerpen" latitude="51.23333" longitude="4.633333"/>
 		<city name="" state="Halle" latitude="50.73333" longitude="4.233333"/>
+		<city name="Halle" state="Antwerpen" latitude="51.23333" longitude="4.633333"/>
 		<city name="Hasselt" state="Limburg" latitude="50.93333" longitude="5.333333"/>
 		<city name="Herstal" state="Liège" latitude="50.66667" longitude="5.633333"/>
 		<city name="Kontich" state="Antwerpen" latitude="51.13334" longitude="4.45"/>
@@ -719,24 +719,25 @@
 		<city name="" state="Warwick Parish" latitude="32.26583" longitude="-64.80722"/>
 	</country>
 	<country code="BT" name="Bhutan">
-		<city name="" state="Bumthang Dzongkhag" latitude="27.7" longitude="90.78333"/>
-		<city name="" state="Chhukha Dzongkhag" latitude="27" longitude="89.55"/>
-		<city name="" state="Chirang Dzongkhag" latitude="26.93333" longitude="90.1"/>
-		<city name="" state="Daga Dzongkhag" latitude="27.1" longitude="89.86667"/>
-		<city name="" state="Geylegphug Dzongkhag" latitude="26.95" longitude="90.5"/>
-		<city name="" state="Ha Dzongkhag" latitude="27.33333" longitude="89.18333"/>
-		<city name="" state="Lhuntshi Dzongkhag" latitude="27.75" longitude="91.18333"/>
-		<city name="" state="Mongar Dzongkhag" latitude="27.25" longitude="91.23333"/>
-		<city name="" state="Paro Dzongkhag" latitude="27.51667" longitude="89.4"/>
-		<city name="" state="Pemagatsel Dzongkhag" latitude="27" longitude="91.36667"/>
-		<city name="" state="Punakha Dzongkhag" latitude="28" longitude="89.93333"/>
-		<city name="" state="Samchi Dzongkhag" latitude="27.03333" longitude="89.08334"/>
-		<city name="" state="Samdrup Jongkhar Dzongkhag" latitude="26.91667" longitude="91.61667"/>
-		<city name="" state="Shemgang Dzongkhag" latitude="27.08333" longitude="90.85"/>
-		<city name="" state="Tashigang Dzongkhag" latitude="27.33333" longitude="91.73333"/>
+		<city name="Bumtang Tang" state="Bumthang" latitude="27.6" longitude="90.81667"/>
+		<city name="Dagana" state="Dagana" latitude="27.06667" longitude="89.88333"/>
+		<city name="Gasa" state="Gasa" latitude="27.91667" longitude="89.68333"/>
+		<city name="Geylegphug" state="Geylegphug" latitude="26.85" longitude="90.5"/>
+		<city name="Ha" state="Ha" latitude="27.36667" longitude="89.28333"/>
+		<city name="Lhuntshi" state="Lhuntshi" latitude="27.65" longitude="91.15"/>
+		<city name="Mongar" state="Mongar" latitude="27.25" longitude="91.2"/>
+		<city name="Paro" state="Paro" latitude="27.43333" longitude="89.41666"/>
+		<city name="Pemagatsel" state="Pemagatsel" latitude="27.03333" longitude="91.45"/>
+		<city name="Phuntsholing" state="Chhukha" latitude="26.85" longitude="89.38333"/>
+		<city name="Punākha" state="Punakha" latitude="27.61667" longitude="89.86667"/>
+		<city name="Samdrup Jongkhar" state="Samdrup" latitude="26.81667" longitude="91.56667"/>
+		<city name="Samtse" state="Samtse" latitude="26.86667" longitude="89.1"/>
+		<city name="Tashigang" state="Tashigang" latitude="27.31667" longitude="91.56667"/>
 		<city name="Thimphu" state="Thimphu" latitude="27.48333" longitude="89.6"/>
-		<city name="" state="Tongsa Dzongkhag" latitude="27.35" longitude="90.53333"/>
-		<city name="" state="Wangdi Phodrang Dzongkhag" latitude="27.5" longitude="90.13333"/>
+		<city name="Trongsa" state="Trongsa" latitude="27.51667" longitude="90.5"/>
+		<city name="Tsirang" state="Tsirang" latitude="27.06667" longitude="90.1"/>
+		<city name="Wangdiphodrang" state="Wangdue Phodrang" latitude="27.48333" longitude="89.9"/>
+		<city name="Zhemgang" state="Zhemgang" latitude="27.23333" longitude="90.65"/>
 	</country>
 	<country code="BO" name="Bolivia">
 		<city name="Cobija" state="Pando" latitude="-11.03333" longitude="-68.73333"/>
@@ -934,29 +935,29 @@
 		<city name="Ruyigi" state="Ruyigi" latitude="-3.476389" longitude="30.24861"/>
 	</country>
 	<country code="KH" name="Cambodia">
-		<city name="" state="Khêt Siĕmréab-Ŏtâr Méanchey" latitude="13.75" longitude="104"/>
-		<city name="" state="Khétt Bântéay Méan Cheăy" latitude="13.75" longitude="103"/>
-		<city name="" state="Khétt Bătdâmbâng" latitude="12.83333" longitude="103"/>
-		<city name="" state="Khétt Kâmpóng Cham" latitude="12" longitude="105.5"/>
-		<city name="" state="Khétt Kâmpóng Chhnăng" latitude="12" longitude="104.5"/>
-		<city name="" state="Khétt Kâmpóng Spœ" latitude="11.5" longitude="104.5"/>
-		<city name="" state="Khétt Kâmpóng Thum" latitude="13" longitude="105"/>
-		<city name="" state="Khétt Kâmpôt" latitude="10.75" longitude="104.25"/>
-		<city name="" state="Khétt Kândal" latitude="11.5" longitude="104.8333"/>
-		<city name="" state="Khétt Kaôh Kŏng" latitude="11.5" longitude="103.5"/>
-		<city name="" state="Khétt Krâchéh" latitude="12.5" longitude="106"/>
-		<city name="" state="Khétt Môndôl Kiri" latitude="12.5" longitude="107"/>
-		<city name="" state="Khétt Poŭthĭsăt" latitude="12.5" longitude="104"/>
-		<city name="" state="Khétt Preăh Vĭhéar" latitude="14" longitude="104.8333"/>
-		<city name="" state="Khétt Prey Vêng" latitude="11.5" longitude="105.5"/>
-		<city name="" state="Khétt Rôtânăh Kiri" latitude="13.83333" longitude="107"/>
-		<city name="" state="Khétt Siĕm Réab" latitude="13.75" longitude="104"/>
-		<city name="" state="Khétt Stœ̆ng Trêng" latitude="14" longitude="106.25"/>
-		<city name="" state="Khétt Svay Riĕng" latitude="11.25" longitude="105.8333"/>
-		<city name="" state="Khétt Takêv" latitude="11" longitude="104.8333"/>
+		<city name="Bătdâmbâng" state="Bătdâmbâng" latitude="13.1" longitude="103.2"/>
+		<city name="Bông Lông" state="Rôtânăh Kiri" latitude="13.73333" longitude="106.9833"/>
+		<city name="Kâmpóng Cham" state="Kâmpóng Cham" latitude="12" longitude="105.45"/>
+		<city name="Kâmpóng Chhnăng" state="Kâmpóng Chhnăng" latitude="12.25" longitude="104.6667"/>
+		<city name="Kâmpóng Spœ" state="Kâmpóng Spœ" latitude="11.45" longitude="104.5333"/>
+		<city name="Kâmpóng Thum" state="Kâmpóng Thum" latitude="12.7" longitude="104.9"/>
+		<city name="Kâmpôt" state="Kâmpôt" latitude="10.61667" longitude="104.1833"/>
 		<city name="" state="Kirirôm" latitude="11.33333" longitude="104.05"/>
+		<city name="Krâchéh" state="Krâchéh" latitude="12.48333" longitude="106.0167"/>
+		<city name="Krŏng Kaôh Kŏng" state="Kaôh Kŏng" latitude="11.6175" longitude="102.9806"/>
 		<city name="" state="Krŏng Preăh Seihânŭ" latitude="10.61667" longitude="103.75"/>
 		<city name="Phnom Penh" state="Krŏng Phnum Pénh" latitude="11.55" longitude="104.9167"/>
+		<city name="Phnum Tbêng Méanchey" state="Preăh Vihéar" latitude="13.81667" longitude="104.9667"/>
+		<city name="Phumĭ Sâmraông" state="Ŏtâr Méanchey" latitude="13.68333" longitude="103.5167"/>
+		<city name="Poŭthĭsăt" state="Poŭthĭsăt" latitude="12.53333" longitude="103.9167"/>
+		<city name="Prey Vêng" state="Prey Vêng" latitude="11.48333" longitude="105.3167"/>
+		<city name="Sênmônoŭrôm" state="Môndól Kiri" latitude="12.45" longitude="107.2"/>
+		<city name="Siĕmréab" state="Siĕm Réab" latitude="13.36667" longitude="103.85"/>
+		<city name="Sisŏphŏn" state="Bântéay Méan Cheăy" latitude="13.58333" longitude="102.9833"/>
+		<city name="Stœ̆ng Trêng" state="Stœ̆ng Trêng" latitude="13.51667" longitude="105.9667"/>
+		<city name="Svay Riĕng" state="Svay Riĕng" latitude="11.08333" longitude="105.8"/>
+		<city name="Ta Khmau" state="Kândal" latitude="11.48333" longitude="104.95"/>
+		<city name="Takêv" state="Takêv" latitude="10.98333" longitude="104.7833"/>
 	</country>
 	<country code="CM" name="Cameroon">
 		<city name="Bafoussam" state="Province du Ouest" latitude="5.466667" longitude="10.41667"/>
@@ -966,7 +967,7 @@
 		<city name="Douala" state="Littoral Province" latitude="4.050278" longitude="9.7"/>
 		<city name="Ébolowa" state="Province du Sud" latitude="2.9" longitude="11.15"/>
 		<city name="Garoua" state="Province du Nord" latitude="9.3" longitude="13.4"/>
-		<city name="Maroua" state="Extreme-Nord Province " latitude="10.59556" longitude="14.32472"/>
+		<city name="Maroua" state="Extreme-Nord Province" latitude="10.59556" longitude="14.32472"/>
 		<city name="Ngaoundéré" state="Adamaoua" latitude="7.316667" longitude="13.58333"/>
 		<city name="Yaoundé" state="Province du Centre" latitude="3.866667" longitude="11.51667"/>
 	</country>
@@ -1129,22 +1130,34 @@
 		<city name="Yellowknife" state="Northwest Territories" latitude="62.45599" longitude="-114.3525"/>
 	</country>
 	<country code="CV" name="Cape Verde">
-		<city name="" state="Concelho da Boa Vista" latitude="16.08333" longitude="-22.83333"/>
-		<city name="" state="Concelho da Brava" latitude="14.86667" longitude="-24.71667"/>
-		<city name="" state="Concelho da Ribeira Grande" latitude="17.11667" longitude="-25.1"/>
-		<city name="" state="Concelho de Santa Catarina" latitude="15.1" longitude="-23.7"/>
-		<city name="" state="Concelho de Santa Cruz" latitude="15.1" longitude="-23.56667"/>
-		<city name="" state="Concelho de São Filipe" latitude="14.91667" longitude="-24.4"/>
-		<city name="" state="Concelho de São Miguel" latitude="15.2" longitude="-23.65"/>
-		<city name="" state="Concelho de São Nicolau" latitude="16.58333" longitude="-24.25"/>
-		<city name="" state="Concelho de São Vicente" latitude="16.83333" longitude="-25"/>
-		<city name="" state="Concelho do Maio" latitude="15.25" longitude="-23.16667"/>
+		<city name="Achada Grande" state="Mosteiros" latitude="14.98333" longitude="-24.31667"/>
+		<city name="Assomada" state="Santa Catarina" latitude="15.1" longitude="-23.68333"/>
+		<city name="Calhau" state="São Vicente" latitude="16.85" longitude="-24.86667"/>
+		<city name="Calheta" state="São Miguel" latitude="15.21667" longitude="-23.23333"/>
+		<city name="Chã das Caldeiras" state="Santa Catarina" latitude="14.93333" longitude="-24.36667"/>
+		<city name="Cidade Velha" state="Praia" latitude="14.91667" longitude="-23.61667"/>
 		<city name="" state="Concelho do Paul" latitude="17" longitude="-25.2"/>
-		<city name="" state="Concelho do Sal" latitude="16.75" longitude="-22.91667"/>
-		<city name="" state="Concelho do Tarrafal" latitude="15.25" longitude="-23.73333"/>
-		<city name="" state="Concelho dos Mosteiros" latitude="15" longitude="-24.35"/>
+		<city name="Cova Figueira" state="Santa Catarina do Fogo" latitude="14.88333" longitude="-24.3"/>
+		<city name="Espargos" state="Sal" latitude="16.73333" longitude="-22.93333"/>
+		<city name="Mindelo" state="São Vicente" latitude="16.88333" longitude="-25"/>
+		<city name="Nova Sintra" state="Brava" latitude="14.86667" longitude="-24.71667"/>
+		<city name="Órgãos" state="Santa Cruz" latitude="15.06667" longitude="-23.61667"/>
+		<city name="Pedra Badejo" state="Santa Cruz" latitude="15.13333" longitude="-23.55"/>
+		<city name="Pico" state="Santa Catarina" latitude="14.93333" longitude="-24.35"/>
+		<city name="Pombas" state="Santo Antão" latitude="17.15" longitude="-25.01667"/>
+		<city name="Ponta do Sol" state="Ribeira Grande" latitude="17.2" longitude="-25.1"/>
+		<city name="Porto Novo" state="Porto Novo" latitude="17.03333" longitude="-25.06667"/>
 		<city name="Praia" state="Praia" latitude="14.91667" longitude="-23.51667"/>
+		<city name="Praia Baixo" state="São Domingos" latitude="15.06667" longitude="-23.48333"/>
+		<city name="Ribeira Brava" state="São Nicolau" latitude="16.61667" longitude="-24.3"/>
+		<city name="Ribeira Grande" state="Ribeira Grande" latitude="17.18333" longitude="-25.06667"/>
+		<city name="Sal Rei" state="Boa Vista" latitude="16.18333" longitude="-22.91667"/>
+		<city name="Santa Maria" state="Sal" latitude="16.6" longitude="-22.9"/>
 		<city name="São Domingos" state="São Domingos" latitude="15.01667" longitude="-23.56667"/>
+		<city name="São Filipe" state="São Filipe" latitude="14.9" longitude="-24.51667"/>
+		<city name="São Pedro" state="São Vicente" latitude="16.81667" longitude="-25.08333"/>
+		<city name="Tarrafal" state="Tarrafal" latitude="16.56667" longitude="-24.36667"/>
+		<city name="Vila do Maio" state="Maio" latitude="15.13333" longitude="-23.21667"/>
 	</country>
 	<country code="KY" name="Cayman Islands">
 		<city name="George Town" state="" latitude="19.3" longitude="-81.38333"/>
@@ -1348,8 +1361,10 @@
 	</country>
 	<country code="CX" name="Christmas Island">
 		<city name="Flying Fish Cove" state="" latitude="-10.41667" longitude="105.7167"/>
+		<city name="The Settlement" state="" latitude="-10.41667" longitude="105.6667"/>
 	</country>
 	<country code="CC" name="Cocos Islands">
+		<city name="Home Island" state="" latitude="-12.11667" longitude="96.88333"/>
 		<city name="West Island" state="" latitude="-12.16667" longitude="96.83334"/>
 	</country>
 	<country code="CO" name="Colombia">
@@ -1391,9 +1406,12 @@
 		<city name="Yopal" state="Casanare" latitude="5.339445" longitude="-72.39417"/>
 	</country>
 	<country code="KM" name="Comoros">
-		<city name="" state="Anjouan" latitude="-12.25" longitude="44.41667"/>
-		<city name="" state="Mohéli" latitude="-12.25" longitude="43.75"/>
-		<city name="Moroni" state="Grande Comore" latitude="-11.70417" longitude="43.24028"/>
+		<city name="Domoni" state="Mwali" latitude="-12.25194" longitude="43.64222"/>
+		<city name="Domoni" state="Ngazidja" latitude="-11.48694" longitude="43.26917"/>
+		<city name="Domoni" state="Nzwani" latitude="-12.25694" longitude="44.53194"/>
+		<city name="Fomboni" state="Mwali" latitude="-12.28" longitude="43.7425"/>
+		<city name="Moroni (موروني)" state="Ngazidja" latitude="-11.70417" longitude="43.24028"/>
+		<city name="Moutsamoudou" state="Nzwani" latitude="-12.16278" longitude="44.39639"/>
 	</country>
 	<country code="CG" name="Congo-Brazzaville">
 		<city name="Brazzaville" state="Brazzaville" latitude="-4.259167" longitude="15.28472"/>
@@ -1423,8 +1441,10 @@
 		<city name="Uvira" state="Sud-Kivu" latitude="-3.406667" longitude="29.14583"/>
 	</country>
 	<country code="CK" name="Cook Islands">
+		<city name="" state="Aitutaki" latitude="-18.85833" longitude="-159.7917"/>
 		<city name="Avarua" state="" latitude="-21.20778" longitude="-159.775"/>
-		<city name="Rarotonga" state="" latitude="-21.23472" longitude="-159.775"/>
+		<city name="Palmerston" state="" latitude="-18.06083" longitude="-163.1933"/>
+		<city name="" state="Rarotonga" latitude="-21.23472" longitude="-159.775"/>
 	</country>
 	<country code="CR" name="Costa Rica">
 		<city name="Alajuela" state="Alajuela" latitude="10.01667" longitude="-84.21667"/>
@@ -1688,20 +1708,289 @@
 		<city name="Ţanţā (طنطا)" state="Al Gharbīyah" latitude="30.79111" longitude="30.99806"/>
 	</country>
 	<country code="SV" name="El Salvador">
-		<city name="" state="Departamento de Ahuachapán" latitude="13.86667" longitude="-89.91666"/>
-		<city name="" state="Departamento de Cabañas" latitude="13.86667" longitude="-88.75"/>
-		<city name="" state="Departamento de Chalatenango" latitude="14.13333" longitude="-89.01667"/>
-		<city name="" state="Departamento de Cuscatlán" latitude="13.83333" longitude="-89.03333"/>
-		<city name="" state="Departamento de La Libertad" latitude="13.75" longitude="-89.38333"/>
-		<city name="" state="Departamento de La Paz" latitude="13.46667" longitude="-88.98333"/>
-		<city name="" state="Departamento de La Unión" latitude="13.55" longitude="-87.9"/>
-		<city name="" state="Departamento de Morazán" latitude="13.8" longitude="-88.1"/>
-		<city name="" state="Departamento de San Miguel" latitude="13.53333" longitude="-88.28333"/>
-		<city name="" state="Departamento de San Vicente" latitude="13.51667" longitude="-88.75"/>
-		<city name="" state="Departamento de Santa Ana" latitude="14.1" longitude="-89.58334"/>
-		<city name="" state="Departamento de Sonsonate" latitude="13.7" longitude="-89.7"/>
-		<city name="" state="Departamento de Usulután" latitude="13.43333" longitude="-88.53333"/>
+		<city name="Acajutla" state="Sonsonate" latitude="13.59278" longitude="-89.8275"/>
+		<city name="Agua Caliente" state="Chalatenango" latitude="14.18333" longitude="-89.23333"/>
+		<city name="Aguilares" state="San Salvador" latitude="13.95722" longitude="-89.18972"/>
+		<city name="Ahuachapán" state="Ahuachapán" latitude="13.92139" longitude="-89.845"/>
+		<city name="Alegría" state="Usulután" latitude="13.5" longitude="-88.48333"/>
+		<city name="Anamorós" state="La Unión" latitude="13.74056" longitude="-87.87361"/>
+		<city name="Antiguo Cuscatlán" state="La Libertad" latitude="13.67306" longitude="-89.24084"/>
+		<city name="Apaneca" state="Ahuachapán" latitude="13.86" longitude="-89.80111"/>
+		<city name="Apastepeque" state="San Vicente" latitude="13.66667" longitude="-88.78333"/>
+		<city name="Apastepeque" state="Usulután" latitude="13.51667" longitude="-88.5"/>
+		<city name="Apopa" state="San Salvador" latitude="13.80722" longitude="-89.17917"/>
+		<city name="Arambala" state="Morazán" latitude="13.91667" longitude="-88.13333"/>
+		<city name="Arcatao" state="Chalatenango" latitude="14.08333" longitude="-88.75"/>
+		<city name="Armenia" state="Sonsonate" latitude="13.74361" longitude="-89.49889"/>
+		<city name="Atiquizaya" state="Ahuachapán" latitude="13.97694" longitude="-89.7525"/>
+		<city name="Ayutuxtepeque" state="San Salvador" latitude="13.74556" longitude="-89.20639"/>
+		<city name="Berlín" state="Usulután" latitude="13.5" longitude="-88.53333"/>
+		<city name="Bolívar" state="La Unión" latitude="13.57361" longitude="-87.95583"/>
+		<city name="Bolívar" state="Usulután" latitude="13.45" longitude="-88.66666"/>
+		<city name="Cacaopera" state="Morazán" latitude="13.76667" longitude="-88.08334"/>
+		<city name="California" state="Usulután" latitude="13.36667" longitude="-88.66666"/>
+		<city name="Caluco" state="Sonsonate" latitude="13.72361" longitude="-89.66222"/>
+		<city name="Candelaria de La Frontera" state="Santa Ana" latitude="14.11667" longitude="-89.65"/>
+		<city name="Carolina" state="Cabañas" latitude="13.95" longitude="-88.86667"/>
+		<city name="Carolina" state="San Miguel" latitude="13.85" longitude="-88.3"/>
+		<city name="Chalatenango" state="Chalatenango" latitude="14.03333" longitude="-88.93333"/>
+		<city name="Chalchuapa" state="Santa Ana" latitude="13.98667" longitude="-89.68111"/>
+		<city name="Chapeltique" state="San Miguel" latitude="13.63333" longitude="-88.26667"/>
+		<city name="Chilanga" state="Morazán" latitude="13.71667" longitude="-88.11667"/>
+		<city name="Chiltiupán" state="La Libertad" latitude="13.59056" longitude="-89.46889"/>
+		<city name="Chinameca" state="San Miguel" latitude="13.5" longitude="-88.35"/>
+		<city name="Chirilagua" state="San Miguel" latitude="13.22028" longitude="-88.13861"/>
+		<city name="Cinquera" state="Cabañas" latitude="13.88333" longitude="-88.96667"/>
+		<city name="Citalá" state="Chalatenango" latitude="14.36667" longitude="-89.21667"/>
+		<city name="Ciudad Arce" state="La Libertad" latitude="13.84028" longitude="-89.44722"/>
+		<city name="Ciudad Barrios" state="San Miguel" latitude="13.76667" longitude="-88.26667"/>
+		<city name="Coatepeque" state="La Libertad" latitude="13.91806" longitude="-89.49861"/>
+		<city name="Coatepeque" state="Santa Ana" latitude="13.92861" longitude="-89.50417"/>
+		<city name="Cojutepeque" state="Cuscatlán" latitude="13.71667" longitude="-88.93333"/>
+		<city name="Colón" state="La Libertad" latitude="13.72667" longitude="-89.36889"/>
+		<city name="Colón" state="Usulután" latitude="13.55" longitude="-88.56667"/>
+		<city name="Comacarán" state="San Miguel" latitude="13.53333" longitude="-88.06667"/>
+		<city name="Comalapa" state="Chalatenango" latitude="14.13333" longitude="-88.95"/>
+		<city name="Comalapa" state="La Paz" latitude="13.50111" longitude="-89.07584"/>
+		<city name="Comalapa" state="Sonsonate" latitude="13.7" longitude="-89.65"/>
+		<city name="Comasagua" state="La Libertad" latitude="13.63917" longitude="-89.37833"/>
+		<city name="Concepción Batres" state="Usulután" latitude="13.35" longitude="-88.36667"/>
+		<city name="Concepción de Ataco" state="Ahuachapán" latitude="13.87028" longitude="-89.84861"/>
+		<city name="Concepción de Oriente" state="La Unión" latitude="13.79139" longitude="-87.71667"/>
+		<city name="Concepción Quezaltepeque" state="Chalatenango" latitude="14.08333" longitude="-88.95"/>
+		<city name="Conchagua" state="La Unión" latitude="13.30778" longitude="-87.86472"/>
+		<city name="Corinto" state="Morazán" latitude="13.81083" longitude="-87.97139"/>
+		<city name="Cuisnahuat" state="Sonsonate" latitude="13.63667" longitude="-89.60361"/>
+		<city name="Cuscatancingo" state="San Salvador" latitude="13.73611" longitude="-89.18139"/>
+		<city name="Cuyultitán" state="La Paz" latitude="13.54861" longitude="-89.09778"/>
+		<city name="Delgado" state="San Salvador" latitude="13.72417" longitude="-89.17028"/>
+		<city name="Delicias de Concepción" state="La Paz" latitude="13.5" longitude="-88.9"/>
+		<city name="Delicias de Concepción" state="Morazán" latitude="13.78333" longitude="-88.13333"/>
+		<city name="Dolores" state="Cabañas" latitude="13.78333" longitude="-88.56667"/>
+		<city name="Dulce Nombre de María" state="Chalatenango" latitude="14.15" longitude="-89.01667"/>
+		<city name="El Carmen" state="Cuscatlán" latitude="13.75" longitude="-89"/>
+		<city name="El Carmen" state="La Unión" latitude="13.51889" longitude="-88"/>
+		<city name="El Congo" state="Santa Ana" latitude="13.90889" longitude="-89.49583"/>
+		<city name="El Divisadero" state="La Unión" latitude="13.53278" longitude="-87.85"/>
+		<city name="El Divisadero" state="Morazán" latitude="13.6" longitude="-88.05"/>
+		<city name="El Divisadero" state="San Salvador" latitude="13.6" longitude="-89.16666"/>
+		<city name="El Paisnal" state="San Salvador" latitude="13.97361" longitude="-89.21861"/>
+		<city name="El Refugio" state="Ahuachapán" latitude="13.97667" longitude="-89.70472"/>
+		<city name="El Refugio" state="San Vicente" latitude="13.71667" longitude="-88.85"/>
+		<city name="El Rosario" state="Cuscatlán" latitude="13.78333" longitude="-88.93333"/>
+		<city name="El Rosario" state="La Paz" latitude="13.49778" longitude="-89.02972"/>
+		<city name="El Rosario" state="Morazán" latitude="13.86667" longitude="-88.25"/>
+		<city name="El Sauce" state="La Unión" latitude="13.66889" longitude="-87.80055"/>
+		<city name="Ereguayquín" state="Usulután" latitude="13.35" longitude="-88.38333"/>
+		<city name="Estanzuelas" state="Chalatenango" latitude="14.13333" longitude="-89.08334"/>
+		<city name="Estanzuelas" state="Cuscatlán" latitude="13.91667" longitude="-89.05"/>
+		<city name="Estanzuelas" state="Usulután" latitude="13.65" longitude="-88.5"/>
+		<city name="Guacotecti" state="Cabañas" latitude="13.86667" longitude="-88.65"/>
+		<city name="Gualococti" state="Morazán" latitude="13.81667" longitude="-88.21667"/>
+		<city name="Guatajiagua" state="Morazán" latitude="13.66667" longitude="-88.2"/>
+		<city name="Guaymango" state="Ahuachapán" latitude="13.75028" longitude="-89.84222"/>
+		<city name="Guazapa" state="San Salvador" latitude="13.87694" longitude="-89.17306"/>
+		<city name="Huizúcar" state="Chalatenango" latitude="14.08333" longitude="-88.81667"/>
+		<city name="Huizúcar" state="La Libertad" latitude="13.58944" longitude="-89.23833"/>
+		<city name="Ilobasco" state="Cabañas" latitude="13.85" longitude="-88.85"/>
+		<city name="Ilopango" state="San Salvador" latitude="13.70167" longitude="-89.10944"/>
+		<city name="Intipucá" state="La Unión" latitude="13.19694" longitude="-88.05444"/>
+		<city name="Izalco" state="Sonsonate" latitude="13.74472" longitude="-89.67306"/>
+		<city name="Jayaque" state="La Libertad" latitude="13.67333" longitude="-89.43972"/>
+		<city name="Jerusalén" state="La Paz" latitude="13.65" longitude="-88.9"/>
+		<city name="Jicalapa" state="La Libertad" latitude="13.55278" longitude="-89.50667"/>
+		<city name="Jiquilisco" state="Usulután" latitude="13.31667" longitude="-88.58334"/>
+		<city name="Joateca" state="Morazán" latitude="13.9" longitude="-88.05"/>
+		<city name="Jocoaitique" state="Morazán" latitude="13.9" longitude="-88.15"/>
+		<city name="Jocoro" state="Morazán" latitude="13.61667" longitude="-88.01667"/>
+		<city name="Juayúa" state="Sonsonate" latitude="13.84139" longitude="-89.74555"/>
+		<city name="Jucuapa" state="Usulután" latitude="13.51667" longitude="-88.38333"/>
+		<city name="Jucuarán" state="Usulután" latitude="13.25389" longitude="-88.24778"/>
+		<city name="Jujutla" state="Ahuachapán" latitude="13.78694" longitude="-89.85722"/>
+		<city name="Jutiapa" state="Cabañas" latitude="13.88333" longitude="-88.9"/>
+		<city name="La Libertad" state="La Libertad" latitude="13.48833" longitude="-89.32222"/>
+		<city name="La Libertad" state="Santa Ana" latitude="13.97167" longitude="-89.68444"/>
+		<city name="La Reina" state="Chalatenango" latitude="14.2" longitude="-89.15"/>
+		<city name="La Unión" state="La Unión" latitude="13.33694" longitude="-87.84389"/>
+		<city name="Las Vueltas" state="Chalatenango" latitude="14.1" longitude="-88.88333"/>
+		<city name="Lislique" state="La Unión" latitude="13.80139" longitude="-87.89917"/>
+		<city name="Lolotique" state="San Miguel" latitude="13.55" longitude="-88.35"/>
+		<city name="Lolotiquillo" state="Morazán" latitude="13.73333" longitude="-88.08334"/>
+		<city name="Masahuat" state="Santa Ana" latitude="14.18333" longitude="-89.43333"/>
+		<city name="Meanguera" state="Morazán" latitude="13.85" longitude="-88.15"/>
+		<city name="Meanguera del Golfo" state="La Unión" latitude="13.17972" longitude="-87.6975"/>
+		<city name="Mejicanos" state="San Salvador" latitude="13.74028" longitude="-89.21306"/>
+		<city name="Mercedes La Ceiba" state="La Paz" latitude="13.63333" longitude="-88.9"/>
+		<city name="Mercedes Umaña" state="Usulután" latitude="13.56667" longitude="-88.5"/>
+		<city name="Metapán" state="Santa Ana" latitude="14.33333" longitude="-89.45"/>
+		<city name="Moncagua" state="La Libertad" latitude="13.9625" longitude="-89.38223"/>
+		<city name="Moncagua" state="San Miguel" latitude="13.53333" longitude="-88.25"/>
+		<city name="Monte San Juan" state="Cuscatlán" latitude="13.76667" longitude="-88.95"/>
+		<city name="Nahuizalco" state="Sonsonate" latitude="13.7775" longitude="-89.73666"/>
+		<city name="Nahulingo" state="Sonsonate" latitude="13.70361" longitude="-89.71278"/>
+		<city name="Nejapa" state="Ahuachapán" latitude="13.8975" longitude="-89.8775"/>
+		<city name="Nejapa" state="San Salvador" latitude="13.81472" longitude="-89.23139"/>
+		<city name="Nombre de Jesús" state="Chalatenango" latitude="14" longitude="-88.73333"/>
+		<city name="Nombre de Jesús" state="Morazán" latitude="13.58333" longitude="-88.13333"/>
+		<city name="Nueva Concepción" state="Chalatenango" latitude="14.13333" longitude="-89.3"/>
+		<city name="Nueva Concepción" state="San Miguel" latitude="13.27056" longitude="-88.1475"/>
+		<city name="Nueva Esparta" state="La Unión" latitude="13.78361" longitude="-87.83861"/>
+		<city name="Nueva Granada" state="Usulután" latitude="13.6" longitude="-88.45"/>
+		<city name="Nueva Guadalupe" state="La Unión" latitude="13.56667" longitude="-87.96667"/>
+		<city name="Nueva Guadalupe" state="San Miguel" latitude="13.53333" longitude="-88.35"/>
+		<city name="Nueva Trinidad" state="Chalatenango" latitude="14.06667" longitude="-88.8"/>
+		<city name="Nuevo Cuscatlán" state="La Libertad" latitude="13.64861" longitude="-89.26527"/>
+		<city name="Nuevo Edén de San Juan" state="San Miguel" latitude="13.81667" longitude="-88.48333"/>
+		<city name="Ojos de Agua" state="Chalatenango" latitude="14.21667" longitude="-89.21667"/>
+		<city name="Ojos de Agua" state="La Libertad" latitude="13.60417" longitude="-89.24277"/>
+		<city name="Olocuilta" state="La Paz" latitude="13.56972" longitude="-89.11723"/>
+		<city name="Opico" state="La Libertad" latitude="13.87333" longitude="-89.36056"/>
+		<city name="Oratorio de Concepción" state="Cuscatlán" latitude="13.81639" longitude="-89.05972"/>
+		<city name="Osicala" state="Morazán" latitude="13.8" longitude="-88.15"/>
+		<city name="Ozatlán" state="Usulután" latitude="13.38333" longitude="-88.5"/>
+		<city name="Panchimalco" state="San Salvador" latitude="13.61278" longitude="-89.18"/>
+		<city name="Paraíso de Osorio" state="La Paz" latitude="13.63333" longitude="-88.96667"/>
+		<city name="Pasaquina" state="La Unión" latitude="13.58444" longitude="-87.84111"/>
+		<city name="Perquín" state="Morazán" latitude="13.95" longitude="-88.16666"/>
+		<city name="Polorós" state="La Unión" latitude="13.81028" longitude="-87.81917"/>
+		<city name="Potonico" state="Chalatenango" latitude="13.96667" longitude="-88.9"/>
+		<city name="Puerto El Triunfo" state="Usulután" latitude="13.28333" longitude="-88.55"/>
+		<city name="Quezaltepeque" state="La Libertad" latitude="13.835" longitude="-89.27444"/>
+		<city name="Rosario de Mora" state="San Salvador" latitude="13.57528" longitude="-89.20889"/>
+		<city name="Sacacoyo" state="La Libertad" latitude="13.73639" longitude="-89.47195"/>
+		<city name="Salcoatitán" state="Sonsonate" latitude="13.82861" longitude="-89.75833"/>
+		<city name="San Agustín" state="Cuscatlán" latitude="13.7" longitude="-89.01667"/>
+		<city name="San Agustín" state="Santa Ana" latitude="13.95194" longitude="-89.28528"/>
+		<city name="San Agustín" state="Usulután" latitude="13.43333" longitude="-88.6"/>
+		<city name="San Alejo" state="La Unión" latitude="13.43139" longitude="-87.96306"/>
+		<city name="San Antonio de La Cruz" state="Chalatenango" latitude="14.01667" longitude="-88.78333"/>
+		<city name="San Antonio del Monte" state="Sonsonate" latitude="13.71639" longitude="-89.73833"/>
+		<city name="San Antonio Los Ranchos" state="Chalatenango" latitude="14" longitude="-88.9"/>
+		<city name="San Antonio Los Ranchos" state="San Vicente" latitude="13.63333" longitude="-88.86667"/>
+		<city name="San Antonio Masahuat" state="La Paz" latitude="13.56806" longitude="-89.03917"/>
+		<city name="San Antonio Masahuat" state="Santa Ana" latitude="14.16667" longitude="-89.46667"/>
+		<city name="San Antonio Pajonal" state="Santa Ana" latitude="14.19667" longitude="-89.58111"/>
+		<city name="San Bartolomé Perulapía" state="Cuscatlán" latitude="13.76583" longitude="-89.05083"/>
+		<city name="San Buenaventura" state="Usulután" latitude="13.53333" longitude="-88.38333"/>
+		<city name="San Cayetano Istepeque" state="San Vicente" latitude="13.65" longitude="-88.81667"/>
+		<city name="San Dionisio" state="Usulután" latitude="13.28333" longitude="-88.46667"/>
+		<city name="San Emigdio" state="La Paz" latitude="13.65" longitude="-88.98333"/>
+		<city name="San Esteban Catarina" state="San Vicente" latitude="13.68333" longitude="-88.78333"/>
+		<city name="San Fernando" state="Chalatenango" latitude="14.3" longitude="-89.03333"/>
+		<city name="San Fernando" state="Morazán" latitude="13.96667" longitude="-88.2"/>
+		<city name="San Fernando" state="San Vicente" latitude="13.48333" longitude="-88.75"/>
+		<city name="San Francisco Chinameca" state="La Paz" latitude="13.60556" longitude="-89.09639"/>
+		<city name="San Francisco Gotera" state="Morazán" latitude="13.7" longitude="-88.1"/>
+		<city name="San Francisco Javier" state="Usulután" latitude="13.41667" longitude="-88.56667"/>
+		<city name="San Francisco Lempa" state="Chalatenango" latitude="13.97444" longitude="-89.00139"/>
+		<city name="San Francisco Menéndez" state="Ahuachapán" latitude="13.84306" longitude="-90.01583"/>
+		<city name="San Francisco Morazán" state="Chalatenango" latitude="14.18333" longitude="-89.05"/>
+		<city name="San Gerardo" state="San Miguel" latitude="13.8" longitude="-88.4"/>
+		<city name="San Ignacio" state="Chalatenango" latitude="14.33333" longitude="-89.18333"/>
+		<city name="San Ignacio" state="La Libertad" latitude="13.93806" longitude="-89.29611"/>
+		<city name="San Ildefonso" state="San Vicente" latitude="13.73333" longitude="-88.75"/>
+		<city name="San Ildefonso" state="Santa Ana" latitude="14.15" longitude="-89.58334"/>
+		<city name="San Ildefonso" state="Usulután" latitude="13.31667" longitude="-88.35"/>
+		<city name="San Isidro" state="Cabañas" latitude="13.83333" longitude="-88.71667"/>
+		<city name="San Isidro" state="Morazán" latitude="13.85" longitude="-88.23333"/>
+		<city name="San Isidro Labrador" state="Chalatenango" latitude="14" longitude="-88.85"/>
+		<city name="San José" state="La Unión" latitude="13.56083" longitude="-87.90166"/>
+		<city name="San José Cancasque" state="Chalatenango" latitude="13.98333" longitude="-88.85"/>
+		<city name="San José Guayabal" state="Cuscatlán" latitude="13.84222" longitude="-89.09695"/>
+		<city name="San José Las Flores" state="Chalatenango" latitude="14.05" longitude="-88.83334"/>
+		<city name="San José Las Flores" state="Santa Ana" latitude="13.86889" longitude="-89.51083"/>
+		<city name="San José Villanueva" state="La Libertad" latitude="13.57806" longitude="-89.26527"/>
+		<city name="San Juan Nonualco" state="La Paz" latitude="13.5" longitude="-88.88333"/>
+		<city name="San Juan Talpa" state="La Paz" latitude="13.50278" longitude="-89.09084"/>
+		<city name="San Juan Tepezontes" state="La Paz" latitude="13.61389" longitude="-89.01"/>
+		<city name="San Julián" state="San Miguel" latitude="13.43333" longitude="-88.35"/>
+		<city name="San Julián" state="Sonsonate" latitude="13.61361" longitude="-89.7925"/>
+		<city name="San Lorenzo" state="Ahuachapán" latitude="14.03333" longitude="-89.78333"/>
+		<city name="San Lorenzo" state="San Vicente" latitude="13.71667" longitude="-88.8"/>
+		<city name="San Luis de la Reina" state="San Miguel" latitude="13.81667" longitude="-88.35"/>
+		<city name="San Luis del Carmen" state="Chalatenango" latitude="13.96667" longitude="-88.96667"/>
+		<city name="San Luis La Herradura" state="La Paz" latitude="13.35" longitude="-88.95"/>
+		<city name="San Luis Talpa" state="La Paz" latitude="13.47389" longitude="-89.08916"/>
+		<city name="San Martín" state="Ahuachapán" latitude="13.72583" longitude="-89.87139"/>
+		<city name="San Martín" state="Cuscatlán" latitude="13.78333" longitude="-88.91666"/>
+		<city name="San Martín" state="San Salvador" latitude="13.74167" longitude="-89.05639"/>
+		<city name="San Matías" state="Cabañas" latitude="13.88333" longitude="-88.7"/>
+		<city name="San Matías" state="La Libertad" latitude="13.88694" longitude="-89.3175"/>
+		<city name="San Matías" state="San Miguel" latitude="13.78333" longitude="-88.26667"/>
+		<city name="San Miguel" state="San Miguel" latitude="13.73333" longitude="-88.183333"/>
+		<city name="San Miguel" state="San Salvador" latitude="13.73333" longitude="-89.21667"/>
+		<city name="San Miguel" state="Santa Ana" latitude="14.15" longitude="-89.56667"/>
+		<city name="San Miguel de Mercedes" state="Chalatenango" latitude="14.01667" longitude="-88.93333"/>
+		<city name="San Miguel Tepezontes" state="La Paz" latitude="13.6225" longitude="-89.02139"/>
+		<city name="San Pablo Tacachico" state="La Libertad" latitude="13.97556" longitude="-89.34"/>
+		<city name="San Pedro Masahuat" state="La Paz" latitude="13.54361" longitude="-89.03861"/>
+		<city name="San Pedro Nonualco" state="La Paz" latitude="13.6" longitude="-88.93333"/>
+		<city name="San Pedro Perulapán" state="Cuscatlán" latitude="13.77333" longitude="-89.03889"/>
+		<city name="San Pedro Puxtla" state="Ahuachapán" latitude="13.77222" longitude="-89.80417"/>
+		<city name="San Rafael" state="Chalatenango" latitude="14.13333" longitude="-89.03333"/>
+		<city name="San Rafael" state="San Miguel" latitude="" longitude=""/>
+		<city name="San Rafael Cedros" state="Cuscatlán" latitude="13.73333" longitude="-88.88333"/>
+		<city name="San Rafael Obrajuelo" state="La Paz" latitude="13.5" longitude="-88.93333"/>
 		<city name="San Salvador" state="San Salvador" latitude="13.70861" longitude="-89.20306"/>
+		<city name="San Sebastián Salitrillo" state="Santa Ana" latitude="13.96917" longitude="-89.63611"/>
+		<city name="San Simón" state="Morazán" latitude="13.83333" longitude="-88.23333"/>
+		<city name="San Vicente" state="San Vicente" latitude="13.63333" longitude="-88.8"/>
+		<city name="San Vicente" state="Santa Ana" latitude="14.15" longitude="-89.66666"/>
+		<city name="Santa Ana" state="Chalatenango" latitude="14.03333" longitude="-88.8"/>
+		<city name="Santa Ana" state="San Miguel" latitude="13.25917" longitude="-88.17583"/>
+		<city name="Santa Ana" state="Santa Ana" latitude="13.99417" longitude="-89.55972"/>
+		<city name="Santa Catarina Masahuat" state="Sonsonate" latitude="13.78611" longitude="-89.76611"/>
+		<city name="Santa Cruz Analquito" state="Cuscatlán" latitude="13.65" longitude="-88.95"/>
+		<city name="Santa Cruz Michapa" state="Cuscatlán" latitude="13.73333" longitude="-88.96667"/>
+		<city name="Santa Isabel Ishuatán" state="Sonsonate" latitude="13.61" longitude="-89.58528"/>
+		<city name="Santa María" state="Usulután" latitude="13.35" longitude="-88.43333"/>
+		<city name="Santa María Ostuma" state="La Paz" latitude="13.61667" longitude="-88.93333"/>
+		<city name="Santa Rosa de Lima" state="La Unión" latitude="13.62472" longitude="-87.89361"/>
+		<city name="Santa Rosa Guachipilín" state="Santa Ana" latitude="14.2" longitude="-89.35"/>
+		<city name="Santa Tecla" state="La Libertad" latitude="13.67694" longitude="-89.27972"/>
+		<city name="Santiago de La Frontera" state="Santa Ana" latitude="14.18306" longitude="-89.60667"/>
+		<city name="Santiago de María" state="Usulután" latitude="13.48333" longitude="-88.46667"/>
+		<city name="Santiago Nonualco" state="La Paz" latitude="13.51667" longitude="-88.95"/>
+		<city name="Santiago Texacuangos" state="San Salvador" latitude="13.64278" longitude="-89.11833"/>
+		<city name="Santo Domingo" state="San Salvador" latitude="13.71667" longitude="-89.26667"/>
+		<city name="Santo Domingo" state="San Vicente" latitude="13.71667" longitude="-88.85"/>
+		<city name="Sensembra" state="Morazán" latitude="13.66667" longitude="-88.16666"/>
+		<city name="Sensuntepeque" state="Cabañas" latitude="13.86667" longitude="-88.63333"/>
+		<city name="Sesori" state="San Miguel" latitude="13.71667" longitude="-88.36667"/>
+		<city name="Sociedad" state="Morazán" latitude="13.7" longitude="-88.01667"/>
+		<city name="Sonsonate" state="Sonsonate" latitude="13.71889" longitude="-89.72417"/>
+		<city name="Sonzacate" state="Sonsonate" latitude="13.73417" longitude="-89.71472"/>
+		<city name="Soyapango" state="San Salvador" latitude="13.73472" longitude="-89.15139"/>
+		<city name="Suchitoto" state="Cuscatlán" latitude="13.93806" longitude="-89.02778"/>
+		<city name="Tacuba" state="Ahuachapán" latitude="13.90111" longitude="-89.92973"/>
+		<city name="Talnique" state="La Libertad" latitude="13.66694" longitude="-89.40916"/>
+		<city name="Tamanique" state="La Libertad" latitude="13.59833" longitude="-89.42028"/>
+		<city name="Tapalhuaca" state="La Paz" latitude="13.56028" longitude="-89.08028"/>
+		<city name="Tecapán" state="Usulután" latitude="13.45" longitude="-88.48333"/>
+		<city name="Tecoluca" state="Cuscatlán" latitude="13.78917" longitude="-89.00528"/>
+		<city name="Tecoluca" state="San Vicente" latitude="13.53333" longitude="-88.78333"/>
+		<city name="Tejutepeque" state="Cabañas" latitude="13.85" longitude="-88.9"/>
+		<city name="Tejutla" state="Chalatenango" latitude="14.16667" longitude="-89.1"/>
+		<city name="Tenancingo" state="Cuscatlán" latitude="13.83333" longitude="-88.98333"/>
+		<city name="Teotepeque" state="La Libertad" latitude="13.58528" longitude="-89.51833"/>
+		<city name="Tepecoyo" state="La Libertad" latitude="13.70028" longitude="-89.46778"/>
+		<city name="Tepetitán" state="San Vicente" latitude="13.65" longitude="-88.83334"/>
+		<city name="Texistepeque" state="Santa Ana" latitude="14.13333" longitude="-89.5"/>
+		<city name="Tonacatepeque" state="San Salvador" latitude="13.78111" longitude="-89.11861"/>
+		<city name="Torola" state="Morazán" latitude="13.91667" longitude="-88.23333"/>
+		<city name="Turín" state="Ahuachapán" latitude="13.96639" longitude="-89.76611"/>
+		<city name="Uluazapa" state="San Miguel" latitude="13.5" longitude="-88.06667"/>
+		<city name="Usulután" state="Usulután" latitude="13.35" longitude="-88.45"/>
+		<city name="Verapaz" state="San Vicente" latitude="13.65" longitude="-88.86667"/>
+		<city name="Victoria" state="Cabañas" latitude="13.95" longitude="-88.63333"/>
+		<city name="Victoria" state="La Libertad" latitude="13.71583" longitude="-89.30111"/>
+		<city name="Yamabal" state="Morazán" latitude="13.66667" longitude="-88.16666"/>
+		<city name="Yayantique" state="La Unión" latitude="13.44861" longitude="-88.02222"/>
+		<city name="Yoloaiquín" state="Morazán" latitude="13.76667" longitude="-88.15"/>
+		<city name="Yucuaiquín" state="La Unión" latitude="13.55" longitude="-88"/>
+		<city name="Zacatecoluca" state="La Paz" latitude="13.5" longitude="-88.86667"/>
+		<city name="Zaragoza" state="La Libertad" latitude="13.58944" longitude="-89.28889"/>
+		<city name="Zaragoza" state="San Miguel" latitude="13.51667" longitude="-88.36667"/>
 	</country>
 	<country code="GQ" name="Equatorial Guinea">
 		<city name="Bata" state="Litoral" latitude="1.85" longitude="9.75"/>
@@ -1713,42 +2002,127 @@
 		<city name="Palé" state="Annobón" latitude="-1.401389" longitude="5.6325"/>
 	</country>
 	<country code="ER" name="Eritrea">
-		<city name="Asmara" state="Eritrea" latitude="15.33333" longitude="38.93333"/>
-		<city name="" state="Zoba Ānseba" latitude="16.5" longitude="37.5"/>
-		<city name="" state="Zoba Debub" latitude="14.83333" longitude="38.83333"/>
-		<city name="" state="Zoba Debubawī K'eyih Bahrī" latitude="13.75" longitude="41.5"/>
-		<city name="" state="Zoba Gash Barka" latitude="15.25" longitude="37.5"/>
-		<city name="" state="Zoba Ma'ākel" latitude="15.33333" longitude="38.91667"/>
-		<city name="" state="Zoba Semēnawī K'eyih Bahrī" latitude="16" longitude="39"/>
+		<city name="Adi Keyh" state="Debub" latitude="14.84444" longitude="39.37333"/>
+		<city name="Āfabēt" state="Semēnawī K'eyih Bahrī" latitude="16.18333" longitude="38.68333"/>
+		<city name="Āreza" state="Debub" latitude="14.92528" longitude="38.56805"/>
+		<city name="Asmara" state="Ma'ākel" latitude="15.33333" longitude="38.93333"/>
+		<city name="Assab" state="Debubawī K'eyih Bahrī" latitude="13.00917" longitude="42.73944"/>
+		<city name="Barentu" state="Gash Barka" latitude="15.11389" longitude="37.59278"/>
+		<city name="Bēylul" state="Debubawī K'eyih Bahrī" latitude="13.26444" longitude="42.33417"/>
+		<city name="Dbarwa" state="Debub" latitude="15.095" longitude="38.83361"/>
+		<city name="Dekemhāre" state="Debub" latitude="15.07" longitude="39.0475"/>
+		<city name="Ela Bared" state="Ānseba" latitude="15.68333" longitude="38.61666"/>
+		<city name="Foro" state="Semēnawī K'eyih Bahrī" latitude="15.25917" longitude="39.62111"/>
+		<city name="Ghela'elo" state="Semēnawī K'eyih Bahrī" latitude="15.09417" longitude="40.05472"/>
+		<city name="Gheleb" state="Ānseba" latitude="15.8325" longitude="38.785"/>
+		<city name="Ghinda'e" state="Semēnawī K'eyih Bahrī" latitude="15.44917" longitude="39.08861"/>
+		<city name="Gogne" state="Gash Barka" latitude="15.085" longitude="37.40194"/>
+		<city name="Hagaz" state="Ānseba" latitude="15.70222" longitude="38.27611"/>
+		<city name="Haykota" state="Gash Barka" latitude="15.18167" longitude="37.07472"/>
+		<city name="Himbirtī" state="Ma'ākel" latitude="15.26" longitude="38.73472"/>
+		<city name="Keren" state="Ānseba" latitude="15.77778" longitude="38.45806"/>
+		<city name="Kerkebet" state="Ānseba" latitude="16.1" longitude="37.41667"/>
+		<city name="Massawa" state="Semēnawī K'eyih Bahrī" latitude="15.60972" longitude="39.45"/>
+		<city name="Mendefera" state="Debub" latitude="14.88556" longitude="38.81639"/>
+		<city name="Mensura" state="Gash Barka" latitude="15.47972" longitude="38.26028"/>
+		<city name="Mersa Fatuma" state="Semēnawī K'eyih Bahrī" latitude="14.90083" longitude="40.31361"/>
+		<city name="Mogolo" state="Gash Barka" latitude="15.31194" longitude="37.64194"/>
+		<city name="Nak'fa" state="Semēnawī K'eyih Bahrī" latitude="16.66694" longitude="38.47917"/>
+		<city name="Nefasīt" state="Semēnawī K'eyih Bahrī" latitude="15.33333" longitude="39.06194"/>
+		<city name="Omhājer" state="Gash Barka" latitude="14.325" longitude="36.65528"/>
+		<city name="Raheita" state="Debubawī K'eyih Bahrī" latitude="12.72694" longitude="43.08417"/>
+		<city name="Sebderat" state="Gash Barka" latitude="15.45" longitude="36.65"/>
+		<city name="Segheneytī" state="Debub" latitude="15.05278" longitude="39.18722"/>
+		<city name="Sen'afe" state="Debub" latitude="14.68528" longitude="39.41361"/>
+		<city name="Serejeka" state="Ma'ākel" latitude="15.4825" longitude="38.86361"/>
+		<city name="Shambiko" state="Gash Barka" latitude="14.91861" longitude="37.83472"/>
+		<city name="Sh'eb" state="Semēnawī K'eyih Bahrī" latitude="15.81667" longitude="39.03333"/>
+		<city name="Teseney" state="Gash Barka" latitude="15.11" longitude="36.6575"/>
+		<city name="Tio" state="Debubawī K'eyih Bahrī" latitude="14.69083" longitude="40.96"/>
 	</country>
 	<country code="EE" name="Estonia">
+		<city name="Elva" state="Tartumaa" latitude="58.2225" longitude="26.42111"/>
 		<city name="Haapsalu" state="Läänemaa" latitude="58.94305" longitude="23.54139"/>
 		<city name="Jõgeva" state="Jõgevamaa" latitude="58.74667" longitude="26.39389"/>
 		<city name="Jõhvi" state="Ida-Virumaa" latitude="59.35917" longitude="27.42111"/>
+		<city name="Kallaste" state="Tartumaa" latitude="58.655" longitude="27.15917"/>
 		<city name="Kärdla" state="Hiiumaa" latitude="58.99778" longitude="22.74917"/>
+		<city name="Keila" state="Harjumaa" latitude="59.30361" longitude="24.41306"/>
+		<city name="Kiviõli" state="Ida-Virumaa" latitude="59.35305" longitude="26.97111"/>
+		<city name="Kohtla-Järve" state="Ida-Virumaa" latitude="59.39861" longitude="27.27306"/>
+		<city name="Kunda" state="Lääne-Virumaa" latitude="59.48417" longitude="26.56111"/>
 		<city name="Kuressaare" state="Saaremaa" latitude="58.24805" longitude="22.50389"/>
+		<city name="Loksa" state="Harjumaa" latitude="59.57639" longitude="25.72139"/>
+		<city name="Maardu" state="Harjumaa" latitude="59.42805" longitude="25.025"/>
+		<city name="Mõisaküla" state="Viljandimaa" latitude="58.33139" longitude="25.25833"/>
+		<city name="Mustvee" state="Jõgevamaa" latitude="58.84861" longitude="26.93972"/>
+		<city name="Narva" state="Ida-Virumaa" latitude="59.37722" longitude="28.19028"/>
+		<city name="Narva-Jõesuu" state="Ida-Virumaa" latitude="59.45889" longitude="28.04083"/>
 		<city name="Paide" state="Järvamaa" latitude="58.88556" longitude="25.55722"/>
+		<city name="Paldiski" state="Harjumaa" latitude="59.35667" longitude="24.05305"/>
 		<city name="Pärnu" state="Pärnumaa" latitude="58.37472" longitude="24.51361"/>
+		<city name="Põltsamaa" state="Jõgevamaa" latitude="58.6525" longitude="25.97056"/>
 		<city name="Põlva" state="Põlvamaa" latitude="58.06028" longitude="27.06944"/>
+		<city name="Püssi" state="Ida-Virumaa" latitude="59.36" longitude="27.04972"/>
 		<city name="Rakvere" state="Lääne-Virumaa" latitude="59.34639" longitude="26.35583"/>
 		<city name="Rapla" state="Raplamaa" latitude="59.00722" longitude="24.79278"/>
+		<city name="Saue" state="Harjumaa" latitude="59.32028" longitude="24.5525"/>
+		<city name="Sillamäe" state="Ida-Virumaa" latitude="59.39972" longitude="27.75472"/>
+		<city name="Sindi" state="Pärnumaa" latitude="58.40055" longitude="24.6675"/>
 		<city name="Tallinn" state="Harjumaa" latitude="59.43389" longitude="24.72806"/>
 		<city name="Tartu" state="Tartumaa" latitude="58.36611" longitude="26.73611"/>
+		<city name="Tõrva" state="Valgamaa" latitude="58.00278" longitude="25.935"/>
 		<city name="Valga" state="Valgamaa" latitude="57.77444" longitude="26.04528"/>
 		<city name="Viljandi" state="Viljandimaa" latitude="58.36389" longitude="25.59"/>
+		<city name="Võhma" state="Viljandimaa" latitude="58.4875" longitude="25.60083"/>
 		<city name="Võru" state="Võrumaa" latitude="57.83389" longitude="27.01944"/>
 	</country>
 	<country code="ET" name="Ethiopia">
+		<city name="Abala" state="Āfar Kilil" latitude="14.23333" longitude="37"/>
+		<city name="Ābobo" state="Gambēla Hizboch" latitude="7.85" longitude="34.55"/>
+		<city name="Ādama" state="Oromīya Kilil" latitude="8.916667" longitude="38.91667"/>
 		<city name="Ādīs Ābaba" state="Ādīs Ābaba Āstedader" latitude="9.033333" longitude="38.7"/>
-		<city name="" state="Āfar Kilil" latitude="12" longitude="41.5"/>
-		<city name="" state="Āmara Kilil" latitude="11.5" longitude="38.5"/>
-		<city name="" state="Bīnshangul Gumuz Kilil" latitude="11" longitude="35.5"/>
+		<city name="Ānkober" state="Āmara Kilil" latitude="9.583333" longitude="39.73333"/>
+		<city name="Asaita" state="Āfar Kilil" latitude="11.56361" longitude="41.43945"/>
+		<city name="Āsela" state="Oromīya Kilil" latitude="7.95" longitude="39.13334"/>
+		<city name="Āsosa" state="Bīnshangul Gumuz" latitude="10.06667" longitude="34.53333"/>
+		<city name="Āwash" state="Āfar Kilil" latitude="8.7" longitude="38.61666"/>
+		<city name="Bahir Dar" state="Āmara Kilil" latitude="11.6" longitude="37.38334"/>
+		<city name="Bedelē" state="Oromīya Kilil" latitude="8.45" longitude="36.35"/>
+		<city name="Bichena" state="Āmara Kilil" latitude="10.45" longitude="38.2"/>
+		<city name="Bure" state="Āmara Kilil" latitude="7.25" longitude="38.48333"/>
+		<city name="Chagne" state="Āmara Kilil" latitude="10.95" longitude="36.5"/>
+		<city name="Dabena" state="Āfar Kilil" latitude="8.633333" longitude="36.13334"/>
+		<city name="Dangila" state="Āmara Kilil" latitude="11.26667" longitude="36.83333"/>
+		<city name="Debre Birhan" state="Āmara Kilil" latitude="9.683333" longitude="39.53333"/>
+		<city name="Debre Mark'os" state="Āmara Kilil" latitude="10.35" longitude="37.73333"/>
+		<city name="Debre Werk'" state="Āmara Kilil" latitude="10.66667" longitude="38.16667"/>
+		<city name="Debre Zeyit" state="Oromīya Kilil" latitude="8.75" longitude="38.98333"/>
+		<city name="Dembī Dolo" state="Oromīya Kilil" latitude="8.533333" longitude="34.8"/>
+		<city name="Desē" state="Āmara Kilil" latitude="11.13333" longitude="39.63334"/>
 		<city name="" state="Dirē Dawa Āstedader" latitude="9.5" longitude="42"/>
-		<city name="" state="Gambēla Hizboch Kilil" latitude="7.833333" longitude="34.5"/>
-		<city name="" state="Hārerī Hizb Kilil" latitude="9.25" longitude="42.16667"/>
-		<city name="" state="Oromīya Kilil" latitude="8" longitude="39"/>
+		<city name="Finote Selam" state="Āmara Kilil" latitude="10.7" longitude="37.26667"/>
+		<city name="Funyido" state="Gambēla Hizboch" latitude="7.75" longitude="34.5"/>
+		<city name="Gambēla" state="Gambēla Hizboch" latitude="8.25" longitude="34.58333"/>
+		<city name="Gonder" state="Āmara Kilil" latitude="12.6" longitude="37.46667"/>
+		<city name="Gore" state="Oromīya Kilil" latitude="10.7" longitude="40.2"/>
+		<city name="Gorgora" state="Āmara Kilil" latitude="12.24028" longitude="37.30083"/>
+		<city name="Hārer" state="Hārerī Hizb" latitude="9.309444" longitude="42.12583"/>
+		<city name="Ītang" state="Gambēla Hizboch" latitude="8.2" longitude="34.26667"/>
+		<city name="Jīma" state="Oromīya Kilil" latitude="7.666667" longitude="36.83333"/>
+		<city name="Lalībela" state="Āmara Kilil" latitude="12.03333" longitude="39.03333"/>
+		<city name="Metema" state="Āmara Kilil" latitude="12.96667" longitude="36.2"/>
+		<city name="Metu" state="Oromīya Kilil" latitude="8.3" longitude="35.58333"/>
+		<city name="Mot'a" state="Āmara Kilil" latitude="11.08333" longitude="37.86666"/>
+		<city name="Negēlē" state="Oromīya Kilil" latitude="5.316667" longitude="39.58333"/>
+		<city name="Nek'emtē" state="Oromīya Kilil" latitude="9.083333" longitude="36.55"/>
+		<city name="Shashemenē" state="Oromīya Kilil" latitude="7.2" longitude="38.6"/>
 		<city name="" state="Sumalē Kilil" latitude="7" longitude="44"/>
+		<city name="Teylut" state="Gambēla Hizboch" latitude="8.266666" longitude="33.91667"/>
 		<city name="" state="Tigray Kilil" latitude="14.16667" longitude="38.83333"/>
+		<city name="Tirgol" state="Gambēla Hizboch" latitude="7.816667" longitude="33.03333"/>
+		<city name="Weldiya" state="Āmara Kilil" latitude="11.83333" longitude="39.68333"/>
+		<city name="Yebelo" state="Oromīya Kilil" latitude="9.416667" longitude="35.06667"/>
 		<city name="" state="YeDebub Bihēroch Bihēreseboch na Hizboch Kilil" latitude="6.25" longitude="37"/>
 	</country>
 	<country code="FK" name="Falkland Islands">
@@ -4805,8 +5179,8 @@
 		<city name="" state="Texas" latitude="31.25028" longitude="-99.25028"/>
 		<city name="" state="Utah" latitude="39.25028" longitude="-111.7503"/>
 		<city name="" state="Vermont" latitude="44.00028" longitude="-72.75028"/>
-		<city name="Washington" state="" latitude="38.895" longitude="-77.03667"/>
 		<city name="" state="Washington" latitude="47.50028" longitude="-120.5003"/>
+		<city name="Washington" state="" latitude="38.895" longitude="-77.03667"/>
 		<city name="" state="West Virginia" latitude="38.50028" longitude="-80.50028"/>
 		<city name="" state="Wisconsin" latitude="44.50028" longitude="-90.00028"/>
 		<city name="" state="Wyoming" latitude="43.00028" longitude="-107.5003"/>
@@ -4974,8 +5348,8 @@
 		<city name="" state="Muḩāfaz̧at 'Adan" latitude="12.83333" longitude="44.91667"/>
 		<city name="" state="Muḩāfaz̧at al Bayḑā'" latitude="14" longitude="45.6"/>
 		<city name="" state="Muḩāfaz̧at al Ḩudaydah" latitude="15" longitude="43"/>
-		<city name="" state="Muḩāfaz̧at al Jawf" latitude="16" longitude="44.61666"/>
 		<city name="" state="Muḩāfaz̧at al Jawf" latitude="16.5" longitude="45"/>
+		<city name="" state="Muḩāfaz̧at al Jawf" latitude="16" longitude="44.61666"/>
 		<city name="" state="Muḩāfaz̧at al Mahrah" latitude="17" longitude="51.5"/>
 		<city name="" state="Muḩāfaz̧at al Maḩwīt" latitude="15.48333" longitude="43.56667"/>
 		<city name="" state="Muḩāfaz̧at al Maḩwīt" latitude="15.48333" longitude="43.56667"/>
