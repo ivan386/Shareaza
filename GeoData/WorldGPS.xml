@@ -2079,189 +2079,509 @@
 	</country>
 	<country code="ET" name="Ethiopia">
 		<city name="Abala" state="Āfar Kilil" latitude="14.23333" longitude="37"/>
+		<city name="Ābiy Ādī" state="Tigray Kilil" latitude="14.44194" longitude="39.07972"/>
 		<city name="Ābobo" state="Gambēla Hizboch" latitude="7.85" longitude="34.55"/>
-		<city name="Ādama" state="Oromīya Kilil" latitude="8.916667" longitude="38.91667"/>
-		<city name="Ādīs Ābaba" state="Ādīs Ābaba Āstedader" latitude="9.033333" longitude="38.7"/>
+		<city name="Ādama (ኣዳማ)" state="Oromīya Kilil" latitude="8.916667" longitude="38.91667"/>
+		<city name="Ādīgrat" state="Tigray Kilil" latitude="14.27694" longitude="39.46083"/>
+		<city name="Ādīs Ābaba (አዲስ አበባ)" state="Ādīs Ābaba Āstedader" latitude="9.033333" longitude="38.7"/>
+		<city name="Ādīs Zemen" state="Āmara Kilil" latitude="12.11667" longitude="37.78333"/>
+		<city name="Ādwa (አድዋ)" state="Tigray Kilil" latitude="14.16667" longitude="38.9"/>
+		<city name="Āgaro" state="Oromīya Kilil" latitude="7.85" longitude="36.65"/>
+		<city name="Āksum (አክሱም)" state="Tigray Kilil" latitude="14.12972" longitude="38.71583"/>
+		<city name="Ālamat'ā" state="Tigray Kilil" latitude="12.41833" longitude="39.5575"/>
+		<city name="'Alemaya" state="Oromīya Kilil" latitude="9.383333" longitude="41.93333"/>
+		<city name="Āmba Maryam" state="Āmara Kilil" latitude="11.43333" longitude="39.28333"/>
 		<city name="Ānkober" state="Āmara Kilil" latitude="9.583333" longitude="39.73333"/>
+		<city name="Ārba Minch' (አርባ ምንጭ)" state="SNNPR" latitude="6.033333" longitude="37.55"/>
 		<city name="Asaita" state="Āfar Kilil" latitude="11.56361" longitude="41.43945"/>
+		<city name="Āsbe Teferī" state="Oromīya Kilil" latitude="9.083333" longitude="40.86666"/>
 		<city name="Āsela" state="Oromīya Kilil" latitude="7.95" longitude="39.13334"/>
 		<city name="Āsosa" state="Bīnshangul Gumuz" latitude="10.06667" longitude="34.53333"/>
+		<city name="Āwasa" state="SNNPR" latitude="7.05" longitude="38.46667"/>
 		<city name="Āwash" state="Āfar Kilil" latitude="8.7" longitude="38.61666"/>
 		<city name="Bahir Dar" state="Āmara Kilil" latitude="11.6" longitude="37.38334"/>
 		<city name="Bedelē" state="Oromīya Kilil" latitude="8.45" longitude="36.35"/>
+		<city name="Bedēsa" state="Oromīya Kilil" latitude="8.9" longitude="40.78333"/>
 		<city name="Bichena" state="Āmara Kilil" latitude="10.45" longitude="38.2"/>
+		<city name="Bircot" state="Sumalē Kilil" latitude="7.6" longitude="43.75"/>
+		<city name="Bonga" state="SNNPR" latitude="7.266667" longitude="36.25"/>
 		<city name="Bure" state="Āmara Kilil" latitude="7.25" longitude="38.48333"/>
 		<city name="Chagne" state="Āmara Kilil" latitude="10.95" longitude="36.5"/>
+		<city name="Ch'ench'a" state="SNNPR" latitude="6.25" longitude="37.56667"/>
+		<city name="Ch'īret'ē" state="Sumalē Kilil" latitude="10.6" longitude="39.91667"/>
 		<city name="Dabena" state="Āfar Kilil" latitude="8.633333" longitude="36.13334"/>
 		<city name="Dangila" state="Āmara Kilil" latitude="11.26667" longitude="36.83333"/>
 		<city name="Debre Birhan" state="Āmara Kilil" latitude="9.683333" longitude="39.53333"/>
+		<city name="Debre Lībanos" state="Oromīya Kilil" latitude="9.716667" longitude="38.86666"/>
 		<city name="Debre Mark'os" state="Āmara Kilil" latitude="10.35" longitude="37.73333"/>
+		<city name="Debre Tabor" state="Āmara Kilil" latitude="11.85" longitude="38.01667"/>
 		<city name="Debre Werk'" state="Āmara Kilil" latitude="10.66667" longitude="38.16667"/>
-		<city name="Debre Zeyit" state="Oromīya Kilil" latitude="8.75" longitude="38.98333"/>
+		<city name="Debre Zeyit (ደብረ ዘይት)" state="Oromīya Kilil" latitude="8.75" longitude="38.98333"/>
+		<city name="Degeh Bur" state="Sumalē Kilil" latitude="8.216667" longitude="43.56667"/>
 		<city name="Dembī Dolo" state="Oromīya Kilil" latitude="8.533333" longitude="34.8"/>
+		<city name="Denan" state="Sumalē Kilil" latitude="6.516667" longitude="43.5"/>
 		<city name="Desē" state="Āmara Kilil" latitude="11.13333" longitude="39.63334"/>
-		<city name="" state="Dirē Dawa Āstedader" latitude="9.5" longitude="42"/>
+		<city name="Dīla (ዲላ)" state="SNNPR" latitude="6.416667" longitude="38.31667"/>
+		<city name="Dirē Dawa (ድሬዳዋ)" state="Dirē Dawa" latitude="9.593056" longitude="41.86611"/>
+		<city name="Dodola" state="Oromīya Kilil" latitude="6.983333" longitude="39.18333"/>
+		<city name="Fīk'" state="Sumalē Kilil" latitude="8.116667" longitude="42.3"/>
 		<city name="Finote Selam" state="Āmara Kilil" latitude="10.7" longitude="37.26667"/>
 		<city name="Funyido" state="Gambēla Hizboch" latitude="7.75" longitude="34.5"/>
 		<city name="Gambēla" state="Gambēla Hizboch" latitude="8.25" longitude="34.58333"/>
-		<city name="Gonder" state="Āmara Kilil" latitude="12.6" longitude="37.46667"/>
+		<city name="Gebre Guracha" state="Oromīya Kilil" latitude="9.8" longitude="38.4"/>
+		<city name="Geladī" state="Sumalē Kilil" latitude="6.95" longitude="46.41667"/>
+		<city name="Gelemso" state="Oromīya Kilil" latitude="8.816667" longitude="40.51667"/>
+		<city name="Genet" state="Oromīya Kilil" latitude="9.066667" longitude="38.5"/>
+		<city name="Gīmbī" state="Oromīya Kilil" latitude="9.45" longitude="39.26667"/>
+		<city name="Gīnīr" state="Oromīya Kilil" latitude="7.133333" longitude="40.7"/>
+		<city name="Goba (ጎባ)" state="Oromīya Kilil" latitude="7.016667" longitude="39.98333"/>
+		<city name="Godē" state="Sumalē Kilil" latitude="9.133333" longitude="42.6"/>
+		<city name="Gonder (ጎንደር)" state="Āmara Kilil" latitude="12.6" longitude="37.46667"/>
 		<city name="Gore" state="Oromīya Kilil" latitude="10.7" longitude="40.2"/>
 		<city name="Gorgora" state="Āmara Kilil" latitude="12.24028" longitude="37.30083"/>
-		<city name="Hārer" state="Hārerī Hizb" latitude="9.309444" longitude="42.12583"/>
+		<city name="Hārer (ሐረር)" state="Hārerī Hizb" latitude="9.309444" longitude="42.12583"/>
+		<city name="Hawzēn" state="Tigray Kilil" latitude="13.9775" longitude="39.42916"/>
+		<city name="Hāyk'" state="Āmara Kilil" latitude="11.3" longitude="39.68333"/>
+		<city name="Inda Silasē" state="Tigray Kilil" latitude="13.87194" longitude="39.73833"/>
 		<city name="Ītang" state="Gambēla Hizboch" latitude="8.2" longitude="34.26667"/>
+		<city name="Jijiga" state="Sumalē Kilil" latitude="9.35" longitude="42.8"/>
 		<city name="Jīma" state="Oromīya Kilil" latitude="7.666667" longitude="36.83333"/>
-		<city name="Lalībela" state="Āmara Kilil" latitude="12.03333" longitude="39.03333"/>
+		<city name="K'ebrī Dehar" state="Sumalē Kilil" latitude="6.733333" longitude="44.28333"/>
+		<city name="K'elafo" state="Sumalē Kilil" latitude="5.616667" longitude="44.13334"/>
+		<city name="Korem" state="Tigray Kilil" latitude="12.50583" longitude="39.52278"/>
+		<city name="Lalībela (ላሊበላ)" state="Āmara Kilil" latitude="12.03333" longitude="39.03333"/>
+		<city name="Maych'ew (ማይጨው)" state="Tigray Kilil" latitude="12.7875" longitude="39.54222"/>
+		<city name="Mek'elē (መቀሌ)" state="Tigray Kilil" latitude="13.49667" longitude="39.47528"/>
+		<city name="Mendī" state="Oromīya Kilil" latitude="9.8" longitude="35.1"/>
+		<city name="Metahāra" state="Oromīya Kilil" latitude="8.9" longitude="39.91667"/>
 		<city name="Metema" state="Āmara Kilil" latitude="12.96667" longitude="36.2"/>
 		<city name="Metu" state="Oromīya Kilil" latitude="8.3" longitude="35.58333"/>
+		<city name="Mī'ēso" state="Oromīya Kilil" latitude="9.233334" longitude="40.75"/>
+		<city name="Mīzan Teferī" state="SNNPR" latitude="6.983333" longitude="35.58333"/>
 		<city name="Mot'a" state="Āmara Kilil" latitude="11.08333" longitude="37.86666"/>
 		<city name="Negēlē" state="Oromīya Kilil" latitude="5.316667" longitude="39.58333"/>
+		<city name="Nejo" state="Oromīya Kilil" latitude="9.5" longitude="35.5"/>
 		<city name="Nek'emtē" state="Oromīya Kilil" latitude="9.083333" longitude="36.55"/>
-		<city name="Shashemenē" state="Oromīya Kilil" latitude="7.2" longitude="38.6"/>
-		<city name="" state="Sumalē Kilil" latitude="7" longitude="44"/>
+		<city name="Robe" state="Oromīya Kilil" latitude="5.1" longitude="38.98333"/>
+		<city name="Shambu" state="Oromīya Kilil" latitude="9.566667" longitude="37.1"/>
+		<city name="Shashemenē (ሻሸመኔ)" state="Oromīya Kilil" latitude="7.2" longitude="38.6"/>
+		<city name="Shīnīlē" state="Sumalē Kilil" latitude="9.688056" longitude="41.84472"/>
+		<city name="Sodo (ሶዶ)" state="SNNPR" latitude="8.583333" longitude="35.81667"/>
 		<city name="Teylut" state="Gambēla Hizboch" latitude="8.266666" longitude="33.91667"/>
-		<city name="" state="Tigray Kilil" latitude="14.16667" longitude="38.83333"/>
 		<city name="Tirgol" state="Gambēla Hizboch" latitude="7.816667" longitude="33.03333"/>
+		<city name="Warder" state="Sumalē Kilil" latitude="6.966667" longitude="45.33333"/>
 		<city name="Weldiya" state="Āmara Kilil" latitude="11.83333" longitude="39.68333"/>
+		<city name="Wik'ro" state="Tigray Kilil" latitude="14.1025" longitude="38.54972"/>
 		<city name="Yebelo" state="Oromīya Kilil" latitude="9.416667" longitude="35.06667"/>
-		<city name="" state="YeDebub Bihēroch Bihēreseboch na Hizboch Kilil" latitude="6.25" longitude="37"/>
+		<city name="Yirga 'Alem" state="SNNPR" latitude="6.75" longitude="38.41667"/>
+		<city name="Zela Āmbesa" state="Tigray Kilil" latitude="14.52111" longitude="39.38334"/>
+		<city name="Ziway" state="Oromīya Kilil" latitude="7.933333" longitude="38.71667"/>
 	</country>
 	<country code="FK" name="Falkland Islands">
 		<city name="Stanley" state="" latitude="-51.7" longitude="-57.85"/>
 	</country>
 	<country code="FO" name="Faroe Islands">
+		<city name="Argir" state="" latitude="61.98333" longitude="-6.75"/>
+		<city name="Fuglafjørður" state="" latitude="62.23333" longitude="-6.75"/>
+		<city name="Hoyvík" state="" latitude="62.03333" longitude="-6.75"/>
+		<city name="Klaksvík" state="" latitude="62.23333" longitude="-6.6"/>
+		<city name="Miðvágur" state="" latitude="62.05" longitude="-7.183333"/>
 		<city name="Tórshavn" state="" latitude="62.01667" longitude="-6.766667"/>
+		<city name="Tvøroyri" state="" latitude="61.55" longitude="-6.8"/>
+		<city name="Vágur" state="" latitude="61.46667" longitude="-6.816667"/>
+		<city name="Vestmanna" state="" latitude="62.15" longitude="-7.166667"/>
 	</country>
 	<country code="FJ" name="Fiji">
-		<city name="Suva" state="Central" latitude="-18.13333" longitude="178.4167"/>
+		<city name="Lambasa" state="Northern Division" latitude="-16.41667" longitude="179.3833"/>
+		<city name="Lami" state="Central Division" latitude="-17.93333" longitude="178.4"/>
+		<city name="Lautoka" state="Western Division" latitude="-17.61667" longitude="177.4667"/>
+		<city name="Levuka" state="Eastern Division" latitude="-17.68333" longitude="178.8333"/>
+		<city name="Nasinu" state="" latitude="-17.71667" longitude="178.8333"/>
+		<city name="Nausori" state="Central Division" latitude="-18.03333" longitude="178.5333"/>
+		<city name="Savusavu" state="Northern Division" latitude="-16.78333" longitude="179.3333"/>
+		<city name="Savusavu" state="Western Division" latitude="-17.68333" longitude="177.4667"/>
+		<city name="Suva" state="Central Division" latitude="-18.13333" longitude="178.4167"/>
+		<city name="Tavua" state="" latitude="-17.3" longitude="179.3667"/>
+		<city name="Vaileka" state="Western Division" latitude="-17.38333" longitude="178.15"/>
 	</country>
 	<country code="FI" name="Finland">
+		<city name="Äänekoski" state="Länsi-Suomen Lääni" latitude="62.58333" longitude="25.71667"/>
+		<city name="Anjalankoski" state="Etelä-Suomen Lääni" latitude="60.75" longitude="26.75"/>
+		<city name="Ekenäs" state="Etelä-Suomen Lääni" latitude="59.96667" longitude="23.45"/>
+		<city name="Espoo" state="Etelä-Suomen Lääni" latitude="60.21667" longitude="24.66667"/>
+		<city name="Eurajoki" state="Länsi-Suomen Lääni" latitude="61.2" longitude="21.73333"/>
+		<city name="Finström" state="Ahvenanmaa" latitude="60.26667" longitude="19.93333"/>
+		<city name="Forssa" state="Etelä-Suomen Lääni" latitude="60.78333" longitude="23.6"/>
 		<city name="Hämeenlinna" state="Etelä-Suomen Lääni" latitude="61" longitude="24.45"/>
+		<city name="Hamina" state="Etelä-Suomen Lääni" latitude="60.56667" longitude="27.2"/>
+		<city name="Hanko" state="Etelä-Suomen Lääni" latitude="59.83333" longitude="22.95"/>
+		<city name="Hanko" state="Länsi-Suomen Lääni" latitude="60.8" longitude="21.35"/>
+		<city name="Heinola" state="Etelä-Suomen Lääni" latitude="61.21667" longitude="26.03333"/>
 		<city name="Helsinki" state="Etelä-Suomen Lääni" latitude="60.17556" longitude="24.93417"/>
+		<city name="Hyvinkää" state="Etelä-Suomen Lääni" latitude="60.63334" longitude="24.86667"/>
+		<city name="Iisalmi" state="Itä-Suomen Lääni" latitude="63.56667" longitude="27.18333"/>
+		<city name="Imatra" state="Etelä-Suomen Lääni" latitude="61.16667" longitude="28.76667"/>
+		<city name="Jakobstad" state="Länsi-Suomen Lääni" latitude="63.66667" longitude="22.7"/>
+		<city name="Jämsä" state="Länsi-Suomen Lääni" latitude="63.81667" longitude="24.18333"/>
+		<city name="Jämsänkoski" state="Länsi-Suomen Lääni" latitude="61.91667" longitude="25.18333"/>
+		<city name="Jomala" state="Ahvenanmaa" latitude="60.15" longitude="19.96667"/>
+		<city name="Joutseno" state="Etelä-Suomen Lääni" latitude="61.11666" longitude="28.5"/>
+		<city name="Jyväskylä" state="Länsi-Suomen Lääni" latitude="62.23333" longitude="25.73333"/>
+		<city name="Kaarina" state="Länsi-Suomen Lääni" latitude="60.41667" longitude="22.41667"/>
+		<city name="Kajaani" state="Itä-Suomen Lääni" latitude="61.86666" longitude="27.33333"/>
+		<city name="Kajaani" state="Oulu Lääni" latitude="64.16666" longitude="27.66667"/>
+		<city name="Kalajoki" state="Oulu Lääni" latitude="64.28333" longitude="23.91667"/>
+		<city name="Kannus" state="Länsi-Suomen Lääni" latitude="63.9" longitude="23.9"/>
+		<city name="Karis" state="Etelä-Suomen Lääni" latitude="60.08333" longitude="23.66667"/>
+		<city name="Karkkila" state="Etelä-Suomen Lääni" latitude="60.53333" longitude="24.18333"/>
+		<city name="Kaskinen" state="Länsi-Suomen Lääni" latitude="60.62333" longitude="21.8925"/>
+		<city name="Kauniainen" state="Etelä-Suomen Lääni" latitude="60.21667" longitude="24.7"/>
+		<city name="Kemi" state="Lapin Lääni" latitude="65.73333" longitude="24.56667"/>
+		<city name="Kemijärvi" state="Lapin Lääni" latitude="66.66666" longitude="27.41667"/>
+		<city name="Kerava" state="Etelä-Suomen Lääni" latitude="60.4" longitude="25.11667"/>
+		<city name="Keuruu" state="Länsi-Suomen Lääni" latitude="62.26667" longitude="24.7"/>
+		<city name="Kokkola" state="Länsi-Suomen Lääni" latitude="63.28333" longitude="23.13333"/>
+		<city name="Kotka" state="Etelä-Suomen Lääni" latitude="60.46667" longitude="26.91667"/>
+		<city name="Kouvola" state="Etelä-Suomen Lääni" latitude="60.86666" longitude="26.7"/>
+		<city name="Kristinestad" state="Länsi-Suomen Lääni" latitude="62.28333" longitude="21.38333"/>
+		<city name="Kuopio" state="Itä-Suomen Lääni" latitude="62.9" longitude="27.68333"/>
+		<city name="Kuusamo" state="Oulu Lääni" latitude="65.96667" longitude="29.18333"/>
+		<city name="Kuusankoski" state="Etelä-Suomen Lääni" latitude="60.9" longitude="26.63333"/>
+		<city name="Lahti" state="Etelä-Suomen Lääni" latitude="60.96667" longitude="25.66667"/>
+		<city name="Lappeenranta" state="Etelä-Suomen Lääni" latitude="61.06667" longitude="28.18333"/>
+		<city name="Lohja" state="Etelä-Suomen Lääni" latitude="60.25" longitude="24.08333"/>
+		<city name="Loviisa" state="Etelä-Suomen Lääni" latitude="60.45" longitude="26.23333"/>
 		<city name="Maarianhamina" state="Ahvenanmaa Lääni" latitude="60.1" longitude="19.95"/>
+		<city name="Mariehamn" state="Ahvenanmaa" latitude="60.1" longitude="19.93333"/>
 		<city name="Mikkeli" state="Itä-Suomen Lääni" latitude="61.68333" longitude="27.25"/>
+		<city name="Naantali" state="Länsi-Suomen Lääni" latitude="60.45" longitude="22.03333"/>
+		<city name="Närpes" state="Länsi-Suomen Lääni" latitude="62.5" longitude="21.33333"/>
+		<city name="Nokia" state="Länsi-Suomen Lääni" latitude="61.46667" longitude="23.5"/>
+		<city name="Nykarleby" state="Länsi-Suomen Lääni" latitude="63.53333" longitude="22.53333"/>
+		<city name="Orimattila" state="Etelä-Suomen Lääni" latitude="60.8" longitude="25.75"/>
 		<city name="Oulu" state="Oulun Lääni" latitude="65.01667" longitude="25.46667"/>
-		<city name="Rovaniemi" state="Lapin lääni" latitude="66.5" longitude="25.71667"/>
+		<city name="Pargas" state="Länsi-Suomen Lääni" latitude="60.3" longitude="22.3"/>
+		<city name="Pori" state="Länsi-Suomen Lääni" latitude="61.48333" longitude="21.78333"/>
+		<city name="Porvoo (Borgå)" state="Etelä-Suomen Lääni" latitude="60.4" longitude="25.66667"/>
+		<city name="Raahe" state="Oulu Lääni" latitude="64.68333" longitude="24.48333"/>
+		<city name="Raisio" state="Länsi-Suomen Lääni" latitude="60.48333" longitude="22.18333"/>
+		<city name="Rauma" state="Länsi-Suomen Lääni" latitude="61.13334" longitude="21.5"/>
+		<city name="Riihimäki" state="Etelä-Suomen Lääni" latitude="60.75" longitude="24.76667"/>
+		<city name="Rovaniemi" state="Lapin Lääni" latitude="66.5" longitude="25.71667"/>
+		<city name="Savonlinna" state="Itä-Suomen Lääni" latitude="61.86666" longitude="28.88333"/>
+		<city name="Seinäjoki" state="Länsi-Suomen Lääni" latitude="62.8" longitude="22.83333"/>
+		<city name="Sodankylä" state="Lappi" latitude="67.41666" longitude="26.6"/>
+		<city name="Suolahti" state="Länsi-Suomen Lääni" latitude="62.56667" longitude="25.86667"/>
+		<city name="Tampere" state="Länsi-Suomen Lääni" latitude="61.5" longitude="23.75"/>
+		<city name="Tornio" state="Etelä-Suomen Lääni" latitude="61.23333" longitude="25.88333"/>
+		<city name="Tornio" state="Itä-Suomen Lääni" latitude="63.73333" longitude="28.7"/>
+		<city name="Tornio" state="Lapin Lääni" latitude="65.85" longitude="24.18333"/>
 		<city name="Turku" state="Länsi-Suomen Lääni" latitude="60.45" longitude="22.28333"/>
+		<city name="Utti" state="Etelä-Suomen Lääni" latitude="60.88334" longitude="26.93333"/>
+		<city name="Uusikaupunki" state="Länsi-Suomen Lääni" latitude="60.8" longitude="21.41667"/>
+		<city name="Vaasa" state="Länsi-Suomen Lääni" latitude="63.08333" longitude="21.66667"/>
+		<city name="Vantaa" state="Etelä-Suomen Lääni" latitude="60.7" longitude="25.08333"/>
+		<city name="Viitasaari" state="Länsi-Suomen Lääni" latitude="63.06667" longitude="25.86667"/>
 	</country>
 	<country code="FR" name="France">
+		<city name="Aix-en-Provence" state="Provence-Alpes-Côte d'Azur" latitude="43.53333" longitude="5.433333"/>
 		<city name="Ajaccio" state="Corse" latitude="41.91667" longitude="8.733334"/>
 		<city name="Amiens" state="Picardie" latitude="49.9" longitude="2.3"/>
+		<city name="Angers" state="Pays de la Loire" latitude="47.46667" longitude="-0.55"/>
+		<city name="Arcueil" state="Auvergne" latitude="45.25" longitude="3.2"/>
+		<city name="Aubervilliers" state="Île-de-France" latitude="48.91667" longitude="2.383333"/>
+		<city name="Avignon" state="Franche-Comté" latitude="46.4" longitude="5.833333"/>
+		<city name="Avignon" state="Provence-Alpes-Côte d'Azur" latitude="43.95" longitude="4.816667"/>
 		<city name="Besançon" state="Franche-Comté" latitude="47.25" longitude="6.033333"/>
 		<city name="Bordeaux" state="Aquitaine" latitude="44.83333" longitude="-0.5666667"/>
+		<city name="Boulogne-sur-Mer" state="Nord-Pas-de-Calais" latitude="50.71667" longitude="1.616667"/>
+		<city name="Brest" state="Bretagne" latitude="48.4" longitude="-4.483333"/>
+		<city name="Brest" state="Provence-Alpes-Côte d'Azur" latitude="43.65" longitude="5.366667"/>
 		<city name="Caen" state="Basse-Normandie" latitude="49.18333" longitude="-0.35"/>
-		<city name="Châlons-sur-Marne" state="Champagne-Ardenne" latitude="48.95" longitude="4.366667"/>
+		<city name="Cergy-Pontoise" state="Île-de-France" latitude="49" longitude="2.033333"/>
+		<city name="Châlons-en-Champagne" state="Champagne-Ardenne" latitude="48.95" longitude="4.366667"/>
+		<city name="Champagne" state="Rhône-Alpes" latitude="45.26667" longitude="4.8"/>
+		<city name="Champagne" state="Tromelin Island" latitude="49" longitude="4.5"/>
+		<city name="Chantilly" state="Centre" latitude="47.46667" longitude="0.3166667"/>
+		<city name="Chantilly" state="Picardie" latitude="49.2" longitude="2.466667"/>
 		<city name="Clermont-Ferrand" state="Auvergne" latitude="45.78333" longitude="3.083333"/>
+		<city name="Colmar" state="Alsace" latitude="48.08333" longitude="7.366667"/>
+		<city name="Croix" state="Franche-Comté" latitude="47.45" longitude="6.95"/>
+		<city name="Croix" state="Nord-Pas-de-Calais" latitude="50.66667" longitude="3.15"/>
 		<city name="Dijon" state="Bourgogne" latitude="47.31667" longitude="5.016667"/>
+		<city name="Fosses" state="Île-de-France" latitude="49.1" longitude="2.483333"/>
+		<city name="Garches" state="Île-de-France" latitude="48.85" longitude="2.183333"/>
+		<city name="Grenoble" state="Rhône-Alpes" latitude="45.16667" longitude="5.716667"/>
+		<city name="Guyancourt" state="Île-de-France" latitude="48.76667" longitude="2.066667"/>
+		<city name="Issy-les-Moulineaux" state="Île-de-France" latitude="48.81667" longitude="2.266667"/>
+		<city name="Ivry-sur-Seine" state="Île-de-France" latitude="48.81667" longitude="2.383333"/>
+		<city name="Jouy-en-Josas" state="Île-de-France" latitude="48.76667" longitude="2.166667"/>
+		<city name="La Courneuve" state="Île-de-France" latitude="48.91667" longitude="2.383333"/>
+		<city name="Le Chesnay" state="Haute-Normandie" latitude="49.2" longitude="1.55"/>
+		<city name="Le Chesnay" state="Île-de-France" latitude="48.45" longitude="2.1"/>
+		<city name="Le Havre" state="Basse-Normandie" latitude="49.51667" longitude="-1.283333"/>
+		<city name="Le Havre" state="Haute-Normandie" latitude="49.5" longitude="0.1333333"/>
+		<city name="Le Mans" state="Pays de la Loire" latitude="48" longitude="0.2"/>
 		<city name="Lille" state="Nord-Pas-de-Calais" latitude="50.63334" longitude="3.066667"/>
 		<city name="Limoges" state="Limousin" latitude="45.85" longitude="1.25"/>
+		<city name="Lingolsheim" state="Alsace" latitude="48.56667" longitude="7.683333"/>
 		<city name="Lyon" state="Rhône-Alpes" latitude="45.75" longitude="4.85"/>
+		<city name="Malakoff" state="Île-de-France" latitude="48.81667" longitude="2.3"/>
+		<city name="Marly" state="Limousin" latitude="45.46667" longitude="2.416667"/>
+		<city name="Marly" state="Nord-Pas-de-Calais" latitude="50.35" longitude="3.55"/>
 		<city name="Marseille" state="Provence-Alpes-Côte d'Azur" latitude="43.3" longitude="5.4"/>
+		<city name="Mérignac" state="Aquitaine" latitude="44.83333" longitude="-0.6333333"/>
+		<city name="Mérignac" state="Poitou-Charentes" latitude="45.33333" longitude="-0.2833333"/>
 		<city name="Metz" state="Lorraine" latitude="49.13334" longitude="6.166667"/>
 		<city name="Montpellier" state="Languedoc-Roussillon" latitude="43.6" longitude="3.883333"/>
+		<city name="Montreuil" state="Centre" latitude="48.76667" longitude="1.366667"/>
+		<city name="Montreuil" state="Île-de-France" latitude="48.86666" longitude="2.433333"/>
+		<city name="Montreuil" state="Pays de la Loire" latitude="46.4" longitude="-0.8333333"/>
+		<city name="Montreuil" state="Picardie" latitude="49.46667" longitude="1.85"/>
+		<city name="Mulhouse" state="Alsace" latitude="47.75" longitude="7.333333"/>
+		<city name="Nancy" state="Lorraine" latitude="48.68333" longitude="6.2"/>
+		<city name="Nanterre" state="Île-de-France" latitude="48.9" longitude="2.2"/>
 		<city name="Nantes" state="Pays de la Loire" latitude="47.21667" longitude="-1.55"/>
+		<city name="Neuilly-sur-Seine" state="Île-de-France" latitude="48.88334" longitude="2.266667"/>
+		<city name="Nice" state="Provence-Alpes-Côte d'Azur" latitude="43.7" longitude="7.25"/>
+		<city name="Nîmes" state="Languedoc-Roussillon" latitude="43.83333" longitude="4.35"/>
+		<city name="Obernai" state="Alsace" latitude="48.46667" longitude="7.483333"/>
 		<city name="Orléans" state="Centre" latitude="47.91667" longitude="1.9"/>
+		<city name="Pantin" state="Île-de-France" latitude="48.9" longitude="2.4"/>
 		<city name="Paris" state="Île-de-France" latitude="48.86666" longitude="2.333333"/>
+		<city name="Perpignan" state="Languedoc-Roussillon" latitude="42.68333" longitude="2.883333"/>
 		<city name="Poitiers" state="Poitou-Charentes" latitude="46.58333" longitude="0.3333333"/>
+		<city name="Pringy" state="Champagne-Ardenne" latitude="48.78333" longitude="4.516667"/>
+		<city name="Pringy" state="Île-de-France" latitude="48.51667" longitude="2.566667"/>
+		<city name="Pringy" state="Rhône-Alpes" latitude="45.95" longitude="6.116667"/>
+		<city name="Reims" state="Champagne-Ardenne" latitude="49.25" longitude="4.033333"/>
 		<city name="Rennes" state="Bretagne" latitude="48.08333" longitude="-1.683333"/>
+		<city name="Roubaix" state="Nord-Pas-de-Calais" latitude="50.7" longitude="3.166667"/>
 		<city name="Rouen" state="Haute-Normandie" latitude="49.43333" longitude="1.083333"/>
+		<city name="Rue" state="Picardie" latitude="50.26667" longitude="1.666667"/>
+		<city name="Rue" state="Poitou-Charentes" latitude="45.95" longitude="0.6666667"/>
+		<city name="Rungis" state="Île-de-France" latitude="48.75" longitude="2.35"/>
+		<city name="Saint-Étienne" state="Aquitaine" latitude="43.5" longitude="-1.45"/>
+		<city name="Saint-Étienne" state="Champagne-Ardenne" latitude="48.75" longitude="4.633333"/>
+		<city name="Saint-Étienne" state="Midi-Pyrénées" latitude="44.9" longitude="1.433333"/>
+		<city name="Saint-Étienne" state="Provence-Alpes-Côte d'Azur" latitude="44.63334" longitude="6.533333"/>
+		<city name="Saint-Étienne" state="Rhône-Alpes" latitude="45.13334" longitude="5.183333"/>
+		<city name="Seclin" state="Nord-Pas-de-Calais" latitude="50.55" longitude="3.033333"/>
+		<city name="Sèvres" state="Île-de-France" latitude="48.81667" longitude="2.2"/>
 		<city name="Strasbourg" state="Alsace" latitude="48.58333" longitude="7.75"/>
+		<city name="Toulon" state="Poitou-Charentes" latitude="46.48333" longitude="0.6333333"/>
+		<city name="Toulon" state="Provence-Alpes-Côte d'Azur" latitude="43.11666" longitude="5.933333"/>
 		<city name="Toulouse" state="Midi-Pyrénées" latitude="43.6" longitude="1.433333"/>
+		<city name="Tours" state="Centre" latitude="47.38334" longitude="0.6833333"/>
+		<city name="Tours" state="Rhône-Alpes" latitude="45.71667" longitude="5.533333"/>
+		<city name="Unieux" state="Rhône-Alpes" latitude="45.4" longitude="4.266667"/>
+		<city name="Valbonne" state="Provence-Alpes-Côte d'Azur" latitude="43.63292" longitude="6.999106"/>
+		<city name="Valenciennes" state="Nord-Pas-de-Calais" latitude="50.35" longitude="3.533333"/>
+		<city name="Vanves" state="Île-de-France" latitude="48.83333" longitude="2.3"/>
+		<city name="Villeurbanne" state="Rhône-Alpes" latitude="45.76667" longitude="4.883333"/>
+		<city name="Vry" state="Lorraine" latitude="49.18333" longitude="6.333333"/>
 	</country>
 	<country code="GF" name="French Guiana">
+		<city name="Apatou" state="" latitude="5.15" longitude="-54.33333"/>
+		<city name="Camopi" state="" latitude="3.216667" longitude="-52.46667"/>
 		<city name="Cayenne" state="" latitude="4.933333" longitude="-52.33333"/>
+		<city name="Grand-Santi" state="" latitude="4.25" longitude="-54.38334"/>
+		<city name="Iracoubo" state="" latitude="5.483333" longitude="-53.21667"/>
+		<city name="Kourou" state="" latitude="5.15" longitude="-52.65"/>
+		<city name="Macouria" state="" latitude="4.916667" longitude="-52.36666"/>
+		<city name="Mana" state="" latitude="5.666667" longitude="-53.78333"/>
+		<city name="Maripasoula" state="" latitude="3.65" longitude="-54.03333"/>
+		<city name="Matoury" state="" latitude="4.85" longitude="-52.33333"/>
+		<city name="Montsinéry" state="" latitude="4.9" longitude="-52.5"/>
+		<city name="Ouanary" state="" latitude="4.216667" longitude="-51.66667"/>
+		<city name="Papaïchton" state="" latitude="3.8" longitude="-54.16667"/>
+		<city name="Régina" state="" latitude="4.316667" longitude="-52.13334"/>
+		<city name="Rémiré" state="" latitude="4.883333" longitude="-52.28333"/>
+		<city name="Roura" state="" latitude="4.733333" longitude="-52.33333"/>
+		<city name="Saint Georges de l'Oyapock" state="" latitude="3.9" longitude="-51.8"/>
+		<city name="Saint Laurent du Maroni" state="" latitude="5.483333" longitude="-54.03333"/>
+		<city name="Saint-Élie" state="" latitude="4.833333" longitude="-53.28333"/>
+		<city name="Saint-Georges" state="" latitude="3.9" longitude="-51.8"/>
+		<city name="Saül" state="" latitude="3.616667" longitude="-53.2"/>
+		<city name="Sinnamary" state="" latitude="5.366667" longitude="-52.95"/>
 	</country>
 	<country code="PF" name="French Polynesia">
-		<city name="Papeete" state="" latitude="-17.53333" longitude="-149.5667"/>
+		<city name="Afareaitu" state="Moorea-Maiao" latitude="-17.55" longitude="-149.7833"/>
+		<city name="Arue" state="Arue" latitude="-17.51667" longitude="-149.5"/>
+		<city name="Avera" state="Taputapuatea" latitude="-22.45" longitude="-151.35"/>
+		<city name="Faa’a" state="Faa’a" latitude="-17.55" longitude="-149.6167"/>
+		<city name="Fare" state="Huahine" latitude="-16.7" longitude="-151.0167"/>
+		<city name="" state="Fatu Hiva" latitude="-10.46667" longitude="-138.6333"/>
+		<city name="Hitiaa" state="Hitiaa O Te Ra" latitude="-17.6" longitude="-149.3"/>
+		<city name="" state="Hiva Oa" latitude="-9.75" longitude="-139"/>
+		<city name="Mahina" state="Mahina" latitude="-17.5" longitude="-149.45"/>
+		<city name="Mataiea" state="Teva I Uta" latitude="" longitude=""/>
+		<city name="" state="Maupiti" latitude="-16.45" longitude="-152.25"/>
+		<city name="" state="Nuku Hiva" latitude="-8.9" longitude="-140.1"/>
+		<city name="Paea" state="Paea" latitude="-17.68333" longitude="-149.5833"/>
+		<city name="Papara" state="Papara" latitude="" longitude=""/>
+		<city name="Papeete" state="Papeete" latitude="-17.53333" longitude="-149.5667"/>
+		<city name="Patio" state="Tahaa" latitude="-16.58333" longitude="-151.4833"/>
+		<city name="Pirae" state="Pirae" latitude="-17.51667" longitude="-149.5333"/>
+		<city name="Punaauia" state="Punaauia" latitude="-17.63333" longitude="-149.6"/>
+		<city name="" state="Raivavae" latitude="-23.86667" longitude="-147.6667"/>
+		<city name="" state="Rapa" latitude="-27.6" longitude="-144.3333"/>
+		<city name="" state="Rimatara" latitude="-22.63333" longitude="-152.85"/>
+		<city name="" state="Rurutu" latitude="-22.43333" longitude="-151.3333"/>
+		<city name="" state="Tahuata" latitude="-9.95" longitude="-139.0833"/>
+		<city name="Taravao" state="Taiarapu-Est" latitude="-17.73333" longitude="-149.3167"/>
+		<city name="Tevaitoa" state="Tumaraa" latitude="-16.78333" longitude="-151.5"/>
+		<city name="" state="Tubuaï" latitude="-23.38333" longitude="-149.4667"/>
+		<city name="" state="Ua Huka" latitude="-8.9" longitude="-139.55"/>
+		<city name="" state="Ua Pou" latitude="-9.383333" longitude="-140.05"/>
+		<city name="Uturoa" state="Uturoa" latitude="-16.73333" longitude="-151.4333"/>
+		<city name="Vairao" state="Taiarapu-Ouest" latitude="-17.78333" longitude="-149.2833"/>
+		<city name="Vaitape" state="Bora-Bora" latitude="-16.51667" longitude="-151.75"/>
 	</country>
 	<country code="TF" name="French Southern Territories">
-		<city name="Martin-de-Viviès" state="" latitude="-37.8" longitude="77.56667"/>
+		<city name="Base Alfred Faure" state="Archipel Crozet" latitude="-46.43333" longitude="51.86666"/>
+		<city name="Martin-de-Viviès" state="Îles Saint Paul et Amsterdam" latitude="-37.8" longitude="77.56667"/>
+		<city name="Port-aux-Français" state="Archipel Kerguelen" latitude="-49.35" longitude="70.21667"/>
 	</country>
 	<country code="GA" name="Gabon">
+		<city name="Bakouamba" state="Ogooué-Lolo" latitude="-1.55" longitude="12.3"/>
+		<city name="Batoala" state="Ogooué-Ivindo" latitude="0.8" longitude="13.45"/>
+		<city name="Bifoun" state="Moyen-Ogooué" latitude="-0.3333333" longitude="10.38333"/>
+		<city name="Bitam" state="Woleu-Ntem" latitude="2.083333" longitude="11.48333"/>
+		<city name="Bongoville" state="Haut-Ogooué" latitude="-1.516667" longitude="13.83333"/>
+		<city name="Booué" state="Ogooué-Ivindo" latitude="-0.1" longitude="11.93333"/>
+		<city name="Cocobeach" state="Estuaire" latitude="0.9833333" longitude="9.6"/>
+		<city name="Ekata" state="Ogooué-Ivindo" latitude="0.6666667" longitude="14.3"/>
 		<city name="Franceville" state="Haut-Ogooué" latitude="-1.633333" longitude="13.58333"/>
+		<city name="Gamba" state="Ogooué-Maritime" latitude="-2.65" longitude="9.983334"/>
+		<city name="Kango" state="Estuaire" latitude="0.15" longitude="10.13333"/>
 		<city name="Koulamoutou" state="Ogooué-Lolo" latitude="-1.133333" longitude="12.48333"/>
+		<city name="Lalara" state="Woleu-Ntem" latitude="0.3666667" longitude="11.46667"/>
 		<city name="Lambaréné" state="Moyen-Ogooué" latitude="-0.7" longitude="10.21667"/>
+		<city name="Lastoursville" state="Ogooué-Lolo" latitude="-0.8166667" longitude="12.7"/>
 		<city name="Libreville" state="Estuaire" latitude="0.3833333" longitude="9.45"/>
 		<city name="Makokou" state="Ogooué-Ivindo" latitude="0.5666667" longitude="12.86667"/>
+		<city name="Mayumba" state="Nyanga" latitude="-3.416667" longitude="10.65"/>
+		<city name="Mékambo" state="Ogooué-Ivindo" latitude="1.016667" longitude="13.93333"/>
+		<city name="Minvoul" state="Woleu-Ntem" latitude="2.15" longitude="12.13333"/>
+		<city name="Mitzic" state="Woleu-Ntem" latitude="0.7833333" longitude="11.56667"/>
+		<city name="Moanda" state="Haut-Ogooué" latitude="-1.566667" longitude="13.2"/>
+		<city name="Momo" state="Woleu-Ntem" latitude="1.866667" longitude="11.8"/>
 		<city name="Mouila" state="Ngounié" latitude="-1.866667" longitude="11.01667"/>
+		<city name="Mounana" state="Haut-Ogooué" latitude="-1.433333" longitude="13.16667"/>
+		<city name="Ndjolé" state="Moyen-Ogooué" latitude="-0.1833333" longitude="10.75"/>
+		<city name="Ndjolé" state="Ngounié" latitude="-1.65" longitude="10.71667"/>
+		<city name="Ndjolé" state="Ogooué-Maritime" latitude="-1.583333" longitude="9.4"/>
+		<city name="Nkolabona" state="Woleu-Ntem" latitude="1.233333" longitude="11.71667"/>
+		<city name="Ntoum" state="Estuaire (East)" latitude="0.6166667" longitude="10.8"/>
+		<city name="Ntoum" state="Estuaire (West)" latitude="0.3833333" longitude="9.783333"/>
+		<city name="Ntoum" state="Woleu-Ntem" latitude="0.8166667" longitude="10.48333"/>
+		<city name="Okondja" state="Haut-Ogooué" latitude="-0.6833333" longitude="13.78333"/>
+		<city name="Okondja" state="Ngounié" latitude="-1.283333" longitude="11.1"/>
+		<city name="Omboué" state="Ogooué-Maritime" latitude="-1.566667" longitude="9.25"/>
+		<city name="Owendo" state="Estuaire" latitude="0.2833333" longitude="9.5"/>
 		<city name="Oyem" state="Woleu-Ntem" latitude="1.616667" longitude="11.58333"/>
+		<city name="Petit Loango" state="Ogooué-Maritime" latitude="-2.266667" longitude="9.583333"/>
+		<city name="Pointe Denis" state="Estuaire" latitude="0.3166667" longitude="9.366667"/>
 		<city name="Port-Gentil" state="Ogooué-Maritime" latitude="-0.7166667" longitude="8.783333"/>
+		<city name="Sette Cama" state="Ngounié" latitude="-2.333333" longitude="11.18333"/>
 		<city name="Tchibanga" state="Nyanga" latitude="-2.85" longitude="11.03333"/>
+		<city name="Zoula" state="Ogooué-Ivindo" latitude="1.083333" longitude="14.06667"/>
 	</country>
 	<country code="GM" name="Gambia">
+		<city name="Bakau" state="Western Division" latitude="13.47806" longitude="-16.68194"/>
 		<city name="Banjul" state="City of Banjul" latitude="13.45306" longitude="-16.5775"/>
 		<city name="Basse Santa Su" state="Upper River" latitude="13.31667" longitude="-14.21667"/>
 		<city name="Brikama" state="Western Division" latitude="13.2675" longitude="-16.64611"/>
-		<city name="Georgetown" state="Central River" latitude="13.53333" longitude="-14.76667"/>
+		<city name="Brufut" state="Western Division" latitude="13.38417" longitude="-16.75139"/>
+		<city name="Farafenni" state="" latitude="13.56667" longitude="-15.6"/>
+		<city name="Janjanbureh" state="Central River" latitude="13.53333" longitude="-14.76667"/>
+		<city name="Jufureh" state="Western Division" latitude="13.33861" longitude="-16.3825"/>
+		<city name="Kalagi" state="" latitude="13.25" longitude="-15.83333"/>
+		<city name="Kanilai" state="Western Division" latitude="13.17639" longitude="-16.01694"/>
 		<city name="Kerewan" state="North Bank" latitude="13.48944" longitude="-16.09111"/>
+		<city name="Kinteh Kunda" state="North Bank" latitude="13.50722" longitude="-16.06722"/>
+		<city name="Kuntaur" state="" latitude="13.66667" longitude="-14.88333"/>
+		<city name="Lamin" state="Western Division" latitude="13.35222" longitude="-16.43389"/>
 		<city name="Mansa Konko" state="Lower River" latitude="13.46667" longitude="-15.55"/>
+		<city name="Nema Kunku" state="Western Division" latitude="13.4125" longitude="-16.43"/>
+		<city name="Serekunda" state="Western Division" latitude="13.4425" longitude="-16.68139"/>
+		<city name="Soma" state="" latitude="13.43333" longitude="-15.53333"/>
+		<city name="Sukuta" state="Western Division" latitude="13.41139" longitude="-16.70889"/>
+		<city name="Tanji" state="Western Division" latitude="13.34889" longitude="-16.79083"/>
 	</country>
 	<country code="GE" name="Georgia">
-		<city name="" state="Abashis Raioni" latitude="42.2" longitude="42.2"/>
-		<city name="" state="Adigenis Raioni" latitude="41.71667" longitude="42.73333"/>
-		<city name="" state="Akhalgoris Raioni" latitude="42.21667" longitude="44.48333"/>
-		<city name="" state="Akhalk'alak'is Raioni" latitude="41.41667" longitude="43.45"/>
-		<city name="" state="Akhalts'ikhis Raioni" latitude="41.63334" longitude="43"/>
-		<city name="Akhmeta" state="Akhmetis Raioni" latitude="42.03111" longitude="45.2075"/>
-		<city name="Ambrolauri" state="Ambrolauris Raioni" latitude="42.52111" longitude="43.16222"/>
-		<city name="" state="Aspindzis Raioni" latitude="41.5" longitude="43.25"/>
-		<city name="" state="Baghdat'is Raioni" latitude="42" longitude="42.9"/>
-		<city name="" state="Bolnisis Raioni" latitude="41.36666" longitude="44.51667"/>
-		<city name="" state="Borjomis Raioni" latitude="41.78333" longitude="43.5"/>
-		<city name="Chiat'ura" state="Chiat'ura" latitude="42.29805" longitude="43.29889"/>
-		<city name="" state="Ch'khorotsqus Raioni" latitude="42.56667" longitude="42.2"/>
-		<city name="" state="Ch'okhatauris Raioni" latitude="41.93333" longitude="42.36666"/>
-		<city name="" state="Dedop'listsqaros Raioni" latitude="41.33333" longitude="46.25"/>
-		<city name="" state="Dmanisis Raioni" latitude="41.35" longitude="44.13334"/>
-		<city name="" state="Dushet'is Raioni" latitude="42.35" longitude="44.33333"/>
-		<city name="" state="Gardabanis Raioni" latitude="41.61666" longitude="45"/>
-		<city name="" state="Goris Raioni" latitude="42.06667" longitude="44.11666"/>
-		<city name="" state="Gurjaanis Raioni" latitude="41.71667" longitude="45.75"/>
-		<city name="Java" state="Javis Raioni" latitude="42.39972" longitude="43.93667"/>
-		<city name="" state="K'alak'i Chiat'ura" latitude="42.28333" longitude="43.25"/>
-		<city name="" state="K'alak'i Gori" latitude="42.06667" longitude="44.11666"/>
-		<city name="" state="K'alak'i K'ut'aisi" latitude="42.26667" longitude="42.6"/>
-		<city name="" state="K'alak'i P'ot'i" latitude="42.15" longitude="41.68333"/>
-		<city name="" state="K'alak'i Rust'avi" latitude="41.53333" longitude="45"/>
-		<city name="" state="K'alak'i T'bilisi" latitude="41.71667" longitude="44.83333"/>
-		<city name="" state="K'alak'i Tqibuli" latitude="42.35" longitude="42.9"/>
-		<city name="" state="K'alak'i Tsqaltubo" latitude="42.26667" longitude="42.6"/>
-		<city name="" state="K'alak'i Zugdidi" latitude="42.5" longitude="41.86666"/>
-		<city name="K'areli" state="K'arelis Raioni" latitude="42.02444" longitude="43.90111"/>
-		<city name="" state="Kaspis Raioni" latitude="41.9" longitude="44.36666"/>
-		<city name="Kharagauli" state="Kharagaulis Raioni" latitude="42.02028" longitude="43.21389"/>
-		<city name="" state="Khashuris Raioni" latitude="42" longitude="43.63334"/>
-		<city name="" state="Khobis Raioni" latitude="42.25" longitude="41.8"/>
-		<city name="" state="Khonis Raioni" latitude="42.4" longitude="42.5"/>
-		<city name="" state="Lagodekhis Raioni" latitude="41.83333" longitude="46.16667"/>
-		<city name="" state="Lanch'khut'is Raioni" latitude="42.1" longitude="41.95"/>
-		<city name="" state="Lentekhis Raioni" latitude="42.81667" longitude="42.86666"/>
-		<city name="" state="Marneulis Raioni" latitude="41.38334" longitude="44.85"/>
-		<city name="" state="Martvilis Raioni" latitude="42.53333" longitude="42.36666"/>
-		<city name="" state="Mestiis Raioni" latitude="43.05" longitude="42.55"/>
-		<city name="" state="Mts'khet'is Raioni" latitude="41.86666" longitude="44.66667"/>
-		<city name="Oni" state="Ninotsmindis Raioni" latitude="42.57944" longitude="43.4425"/>
-		<city name="" state="Onis Raioni" latitude="42.65" longitude="43.51667"/>
-		<city name="" state="Ozurget'is Raioni" latitude="41.93333" longitude="42.05"/>
-		<city name="" state="Qazbegis Raioni" latitude="42.6" longitude="44.55"/>
-		<city name="" state="Qvarlis Raioni" latitude="42" longitude="45.83333"/>
-		<city name="Sach'khere" state="Rust'avi" latitude="42.34528" longitude="43.41945"/>
-		<city name="" state="Sach'kheris Raioni" latitude="42.31667" longitude="43.51667"/>
-		<city name="" state="Sagarejos Raioni" latitude="41.66667" longitude="45.25"/>
-		<city name="" state="Samtrediis Raioni" latitude="42.16667" longitude="42.35"/>
-		<city name="" state="Senakis Raioni" latitude="42.28333" longitude="42.1"/>
-		<city name="" state="Sighnaghis Raioni" latitude="41.56667" longitude="45.85"/>
-		<city name="" state="Sokhumis Raioni" latitude="43.25" longitude="41"/>
-		<city name="Tbilisi" state="" latitude="41.725" longitude="44.79083"/>
-		<city name="" state="T'elavis Raioni" latitude="42.03333" longitude="45.5"/>
-		<city name="" state="T'erjolis Raioni" latitude="42.21667" longitude="42.9"/>
-		<city name="" state="T'et'ritsqaros Raioni" latitude="41.6" longitude="44.5"/>
-		<city name="" state="T'ianet'is Raioni" latitude="42.1" longitude="45"/>
-		<city name="" state="Ts'ageris Raioni" latitude="42.6" longitude="42.76667"/>
-		<city name="" state="Tsalenjikhis Raioni" latitude="42.66667" longitude="42.06667"/>
-		<city name="" state="Tsalkis Raioni" latitude="41.63334" longitude="43.96667"/>
-		<city name="Zestap'oni" state="Vanis Raioni" latitude="42.11" longitude="43.0525"/>
-		<city name="" state="Zestap'onis Raioni" latitude="42.1" longitude="43.05"/>
-		<city name="" state="Zugdidis Raioni" latitude="42.46667" longitude="41.8"/>
+		<city name="Abasha (აბაშა)" state="Samegrelo-Zemo Svaneti" latitude="42.19417" longitude="42.22417"/>
+		<city name="Adigeni (ადიგენი)" state="Samtskhe-Javakheti" latitude="41.68583" longitude="42.71028"/>
+		<city name="Akhalgori (ახალგორი)" state="Mtskheta-Mtianeti" latitude="42.12417" longitude="44.48583"/>
+		<city name="Akhalk'alak'i (ახალქალაქი)" state="Samtskhe-Javakheti" latitude="41.4125" longitude="43.47778"/>
+		<city name="Akhalts'ikhe (ახალციხე)" state="Mtskheta-Mtianeti" latitude="42.08139" longitude="44.78111"/>
+		<city name="Akhalts'ikhe (ახალციხე)" state="Samtskhe-Javakheti" latitude="41.86917" longitude="44.35417"/>
+		<city name="Akhmeta (ახმეტა)" state="Kakheti" latitude="42.03111" longitude="45.2075"/>
+		<city name="Ambrolauri (ამბროლაური)" state="Racha-Lechkhumi-Kvemo Svaneti" latitude="42.52111" longitude="43.16222"/>
+		<city name="Aqwa (Аҟəа)" state="Apsny" latitude="43.00333" longitude="41.01528"/>
+		<city name="Aspindza (ასპინძა)" state="Samtskhe-Javakheti" latitude="41.57389" longitude="43.25611"/>
+		<city name="Bagdat'i (ბაღდათი)" state="Imereti" latitude="42.08472" longitude="42.825"/>
+		<city name="Bat'umi (ბათუმი)" state="Ajaria" latitude="41.64194" longitude="41.63361"/>
+		<city name="Bolnisi (ბოლნისი)" state="Kvemo Kartli" latitude="41.445" longitude="44.54111"/>
+		<city name="Borjomi (ბორჯომი)" state="Samtskhe-Javakheti" latitude="41.8375" longitude="43.37917"/>
+		<city name="Chiat'ura (ჭიათურა)" state="Imereti" latitude="42.29805" longitude="43.29889"/>
+		<city name="Ch'khorotsqu (ჩხოროწყუ)" state="Samegrelo-Zemo Svaneti" latitude="42.63833" longitude="42.43083"/>
+		<city name="Ch'okhatauri (ჩოხატაური)" state="Guria" latitude="42.0175" longitude="42.25555"/>
+		<city name="Dedop'listsqaro (დედოფლისწყარო)" state="Kakheti" latitude="41.46556" longitude="46.10528"/>
+		<city name="Dmanisi (დმანისი)" state="Kvemo Kartli" latitude="41.52278" longitude="44.35333"/>
+		<city name="Dushet'i (დუშეთი)" state="Mtskheta-Mtianeti" latitude="42.08583" longitude="44.69584"/>
+		<city name="Gardabani (გარდაბანი)" state="Kvemo Kartli" latitude="41.45472" longitude="45.09472"/>
+		<city name="Gori (გორი)" state="Shida Kartli" latitude="41.97361" longitude="44.11111"/>
+		<city name="Gurjaani (გურჯაანი)" state="Kakheti" latitude="41.74306" longitude="45.80278"/>
+		<city name="Java (ჯავა)" state="Shida Kartli" latitude="42.39972" longitude="43.93667"/>
+		<city name="K'areli (ქარელი)" state="Shida Kartli" latitude="42.02444" longitude="43.90111"/>
+		<city name="Kaspi (კასპი)" state="Shida Kartli" latitude="41.91611" longitude="44.42417"/>
+		<city name="Kazret'i (კაზრეთი)" state="Kvemo Kartli" latitude="41.3775" longitude="44.41306"/>
+		<city name="K'eda (ქედა)" state="Ajaria" latitude="41.59694" longitude="41.94139"/>
+		<city name="Kharagauli (ხარაგაული)" state="Imereti" latitude="42.02028" longitude="43.21389"/>
+		<city name="Khashuri (ხაშური)" state="Shida Kartli" latitude="41.99111" longitude="43.59"/>
+		<city name="Khelvach'auri" state="Ajaria" latitude="41.58556" longitude="41.66889"/>
+		<city name="Khobi (ხობი)" state="Samegrelo-Zemo Svaneti" latitude="42.31805" longitude="41.89806"/>
+		<city name="Khoni (ხონი)" state="Imereti" latitude="42.32417" longitude="42.43"/>
+		<city name="K'obulet'i (ქობულეთი)" state="Ajaria" latitude="41.82" longitude="41.77528"/>
+		<city name="K'ut'aisi (ქუთაისი)" state="Imereti" latitude="42.24972" longitude="42.62611"/>
+		<city name="Lagodekhi (ლაგოდეხი)" state="Kakheti" latitude="41.81639" longitude="46.23583"/>
+		<city name="Lanch'khut'i (ლანჩხუთი)" state="Guria" latitude="42.09444" longitude="42.04167"/>
+		<city name="Lentekhi (ლენტეხი)" state="Racha-Lechkhumi-Kvemo Svaneti" latitude="42.78556" longitude="42.72611"/>
+		<city name="Marneuli (მარნეული)" state="Kvemo Kartli" latitude="41.46444" longitude="44.78695"/>
+		<city name="Martvili (მარტვილი)" state="Samegrelo-Zemo Svaneti" latitude="42.41528" longitude="42.37389"/>
+		<city name="Mestia (მესტია)" state="Samegrelo-Zemo Svaneti" latitude="43.04556" longitude="42.72972"/>
+		<city name="Mts'khet'a (მცხეთა)" state="Mtskheta-Mtianeti" latitude="41.84389" longitude="44.71639"/>
+		<city name="Ninotsminda (ნინოწმინდა)" state="Mtskheta-Mtianeti" latitude="41.26694" longitude="43.59056"/>
+		<city name="Ninotsminda (ნინოწმინდა)" state="Samtskhe-Javakheti" latitude="41.73333" longitude="45.29167"/>
+		<city name="Oni (ონი)" state="Racha-Lechkhumi-Kvemo Svaneti" latitude="42.57944" longitude="43.4425"/>
+		<city name="Ozurget'i (ოზურგეთი)" state="Guria" latitude="41.92139" longitude="42.00278"/>
+		<city name="P'ot'i (ფოთი)" state="Samegrelo-Zemo Svaneti" latitude="42.14194" longitude="41.67639"/>
+		<city name="Qazbegi (ყაზბეგი)" state="Mtskheta-Mtianeti" latitude="42.65667" longitude="44.64333"/>
+		<city name="Qvareli (ყვარელი)" state="Kakheti" latitude="41.95139" longitude="45.80167"/>
+		<city name="Rust'avi (რუსთავი)" state="Aspindzis Raioni" latitude="41.63778" longitude="43.15306"/>
+		<city name="Rust'avi (რუსთავი)" state="Kvemo Kartli" latitude="41.54528" longitude="45.01361"/>
+		<city name="Sach'khere (საჩხერე)" state="Imereti" latitude="42.34528" longitude="43.41945"/>
+		<city name="Sagarejo (საგარეჯო)" state="Kakheti" latitude="41.73639" longitude="45.33028"/>
+		<city name="Samtredia (სამტრედია)" state="Imereti" latitude="42.15389" longitude="42.335"/>
+		<city name="Senaki (სენაკი)" state="Samegrelo-Zemo Svaneti" latitude="42.26889" longitude="42.07917"/>
+		<city name="Sighnaghi (სიღნაღი)" state="Kakheti" latitude="41.61889" longitude="45.92167"/>
+		<city name="Sokhumi (სოხუმი)" state="Apkhazeti" latitude="43.00333" longitude="41.01528"/>
+		<city name="Tbilisi (თბილისი)" state="K'alak'i T'bilisi" latitude="41.725" longitude="44.79083"/>
+		<city name="T'elavi (თელავი)" state="Kakheti" latitude="41.91945" longitude="45.48528"/>
+		<city name="T'erjola (თერჯოლა)" state="Imereti" latitude="42.17805" longitude="42.98"/>
+		<city name="T'et'ri Tsqaro (თეთრი წყარო)" state="Kvemo Kartli" latitude="41.54417" longitude="44.45917"/>
+		<city name="T'ianet'i (თიანეთი)" state="Mtskheta-Mtianeti" latitude="42.10944" longitude="44.95528"/>
+		<city name="Tqibuli (ტყიბული)" state="Imereti" latitude="42.34417" longitude="42.99"/>
+		<city name="Ts'ageri (ცაგერი)" state="Racha-Lechkhumi-Kvemo Svaneti" latitude="42.64444" longitude="42.76361"/>
+		<city name="Tsalenjikha (წალენჯიხა)" state="Samegrelo-Zemo Svaneti" latitude="42.60444" longitude="42.07722"/>
+		<city name="Tsalka (წალკა)" state="Kvemo Kartli" latitude="41.59139" longitude="44.08694"/>
+		<city name="Ts'khinvali (ცხინვალი/Цхинвал)" state="Shida Kartli/Хуссар Ирыстон" latitude="42.2325" longitude="43.975"/>
+		<city name="Tsqaltubo (წყალტუბო)" state="Imereti" latitude="42.32528" longitude="42.60472"/>
+		<city name="Vani (ვანი)" state="Imereti" latitude="42.39972" longitude="43.2525"/>
+		<city name="Zestap'oni (ზესტაფონი)" state="Imereti" latitude="42.11" longitude="43.0525"/>
+		<city name="Zugdidi (ზუგდიდი)" state="Samegrelo-Zemo Svaneti" latitude="42.49083" longitude="41.8225"/>
 	</country>
 	<country code="DE" name="Germany">
 		<city name="Berlin" state="Land Berlin" latitude="52.51667" longitude="13.4"/>
@@ -5179,8 +5499,8 @@
 		<city name="" state="Texas" latitude="31.25028" longitude="-99.25028"/>
 		<city name="" state="Utah" latitude="39.25028" longitude="-111.7503"/>
 		<city name="" state="Vermont" latitude="44.00028" longitude="-72.75028"/>
-		<city name="" state="Washington" latitude="47.50028" longitude="-120.5003"/>
 		<city name="Washington" state="" latitude="38.895" longitude="-77.03667"/>
+		<city name="" state="Washington" latitude="47.50028" longitude="-120.5003"/>
 		<city name="" state="West Virginia" latitude="38.50028" longitude="-80.50028"/>
 		<city name="" state="Wisconsin" latitude="44.50028" longitude="-90.00028"/>
 		<city name="" state="Wyoming" latitude="43.00028" longitude="-107.5003"/>
