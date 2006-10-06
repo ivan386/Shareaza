@@ -11,7 +11,7 @@
 ; $jrsoftware: issrc/Files/Languages/Italian.isl,v 1.1 2005/04/12 15:41:13 mlaan Exp $
 ; Italian.isl revisione 27 - 2005/04/03 (Basato su Default.isl 1.67)
 ;
-; Tradotto da ale5000 - ale5000@tiscali.it - http://digilander.libero.it/kazaaita/
+; Tradotto da ale5000 - ale5000 AT tiscali DOT it - http://digilander.libero.it/kazaaita/
 ; Segnalatemi via e-mail eventuali errori o suggerimenti
 
 [LangOptions]
