@@ -1482,7 +1482,7 @@ void CDownloadsCtrl::BubbleSortDownloads(int nColumn)  // BinaryInsertionSortDow
 		CDownload *x = Downloads.GetNext(pos);
 		
 		BOOL bOK = FALSE, bRlBk = TRUE;
-		CDownload *y;
+		CDownload *y = NULL;
 		while (bRlBk && (pos_y != NULL))
 		{
 			y = Downloads.GetPrevious(pos_y);
