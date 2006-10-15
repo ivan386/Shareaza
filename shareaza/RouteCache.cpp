@@ -203,7 +203,7 @@ CRouteCacheItem* CRouteCacheTable::Add(const Hashes::Guid& oGUID, const CNeighbo
 {
 	if ( m_nUsed == m_nBuffer || ! m_pFree ) return NULL;
 	
-	if ( oGUID == NULL ) // There seem to be packets with oGUID == NULL (on heavy load) -> return NULL
+	if ( !oGUID.isValid() ) // There seem to be packets with oGUID == NULL (on heavy load) -> return NULL
 		return NULL;
 	
 	WORD nGUID = 0;
