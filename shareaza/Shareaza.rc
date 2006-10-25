@@ -5033,7 +5033,7 @@ BEGIN
     IDS_UPLOAD_QUEUE_HTTP_GUARD "HTTP Guard"
     IDS_DOWNLOAD_416_WITHOUT_RANGE 
                             "Host ""%s"" sent a 416, without providing available ranges. Closing connection."
-    IDS_UPLOAD_QUEUE_LIBRARY "Library"
+    IDS_UPLOAD_QUEUE_LIBRARY "Library Files"
 END
 
 STRINGTABLE 
