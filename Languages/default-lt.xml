@@ -2873,7 +2873,7 @@ right quote	&#147;
 	<string id="16375" value="Daliniai"/>
 	<string id="16376" value="Visi failai"/>
 	<string id="16377" value="HTTP saugančioji"/>
-	<string id="16379" value="Kolekcijos failai">
+	<string id="16379" value="Kolekcijos failai"/>
 	<string id="16384" value="Ar tikrai norite vykdyti failą „%s“ ?\n\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."/>
 	<string id="16385" value="Jūs ruošiatės pakeisti %i failų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
 	<string id="16386" value="Taisomi %i failų(-os) meta duomenys."/>
