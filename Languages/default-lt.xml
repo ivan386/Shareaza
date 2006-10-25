@@ -2873,6 +2873,7 @@ right quote	&#147;
 	<string id="16375" value="Daliniai"/>
 	<string id="16376" value="Visi failai"/>
 	<string id="16377" value="HTTP saugančioji"/>
+	<string id="16379" value="Kolekcijos failai">
 	<string id="16384" value="Ar tikrai norite vykdyti failą „%s“ ?\n\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."/>
 	<string id="16385" value="Jūs ruošiatės pakeisti %i failų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
 	<string id="16386" value="Taisomi %i failų(-os) meta duomenys."/>
@@ -3553,11 +3554,13 @@ right quote	&#147;
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Išsiuntimų eilės ypatybės">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Išsiuntimų eilės ypatybės">
 		<control caption="_Pavadinimas:"/>
 		<control/>
 		<control caption="Į_rašo kriterijai:"/>
 		<control caption="Tik dalinai parsisiųstiems failams"/>
+		<control caption="Tik bendrintiems kolekcijos failams"/>
+		<control caption="Ir dalinai parsiųstiems, ir bendrintiems"/>
 		<control caption="Minimalus šaltinio failo dydis:"/>
 		<control/>
 		<control caption="Maksimalus šaltinio failo dydis:"/>
