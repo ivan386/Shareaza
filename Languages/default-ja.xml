@@ -2870,6 +2870,7 @@
 	<string id="16375" value="部品"/>
 	<string id="16376" value="全てのファイル"/>
 	<string id="16377" value="HTTPガード"/>
+	<string id="16379" value="ライブラリー共有ファイル">
 	<string id="16384" value="ファイル &quot;%s&quot; を開いてよろしいですか?\n\nファイルがコンピュータに有害であることもあります。  ファイルを開く前に安全であるか確認して下さい"/>
 	<string id="16385" value="%i ファイルのメタデータを改変しようとしています。 続けて宜しいですか?"/>
 	<string id="16386" value="%i ファイルのメタデータを編集中です"/>
@@ -3547,6 +3548,8 @@
 		<control/>
 		<control caption="適用対象(_E):"/>
 		<control caption="部分ダウンロードファイルのみ"/>
+		<control caption="ライブラリー共有ファイルのみ"/>
+		<control caption="すべての共有ファイル"/>
 		<control caption="最小ソースファイルサイズ:"/>
 		<control/>
 		<control caption="最大ソースファイルサイズ:"/>
