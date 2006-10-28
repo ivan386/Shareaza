@@ -132,10 +132,8 @@ void CURLExportDlg::OnCloseUpUrlPreset()
 	LPCTSTR pszPresets[] =
 	{
 		_T("magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&dn=[NameURI]&xl=[ByteSize]"),
-		_T("gnutella://urn:sha1:[SHA1]/[NameURI]/"),
 		_T("ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/"),
 		_T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&dn=[NameURI]&xl=[ByteSize]\">[Name]</a><br>"),
-		_T("<a href=\"gnutella://urn:sha1:[SHA1]/[NameURI]/\">[Name]</a><br>"),
 		_T("<a href=\"ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/\">[Name]</a>"),
 	};
 
