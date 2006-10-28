@@ -43,7 +43,6 @@ public:
 	CStatic	m_wndMessage;
 	CString	m_sHost;
 	CString	m_sMagnet;
-	CString	m_sGnutella;
 	CString	m_sED2K;
 	//}}AFX_DATA
 

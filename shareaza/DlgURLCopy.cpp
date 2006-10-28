@@ -54,7 +54,6 @@ CURLCopyDlg::CURLCopyDlg(CWnd* pParent) : CSkinDialog(CURLCopyDlg::IDD, pParent)
 	//{{AFX_DATA_INIT(CURLCopyDlg)
 	m_sHost = _T("");
 	m_sMagnet = _T("");
-	m_sGnutella = _T("");
 	m_sED2K = _T("");
 	//}}AFX_DATA_INIT
 	m_bSize = FALSE;
@@ -68,7 +67,6 @@ void CURLCopyDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MESSAGE, m_wndMessage);
 	DDX_Text(pDX, IDC_URL_HOST, m_sHost);
 	DDX_Text(pDX, IDC_URL_MAGNET, m_sMagnet);
-	DDX_Text(pDX, IDC_URL_GNUTELLA, m_sGnutella);
 	DDX_Text(pDX, IDC_URL_ED2K, m_sED2K);
 	//}}AFX_DATA_MAP
 }
@@ -162,18 +160,6 @@ void CURLCopyDlg::OnIncludeSelf()
 			(LPCTSTR)strURN );
 
 		m_sMagnet += _T("&xs=") + CTransfer::URLEncode( strURL );
-	}
-
-	if ( m_oSHA1 )
-	{
-		m_sGnutella.Format( _T("gnutella://%s/"),
-			(LPCTSTR)m_oSHA1.toUrn() );
-
-		if ( m_sName.GetLength() )
-		{
-			m_sGnutella += CTransfer::URLEncode( m_sName )
-						+ _T("/");
-		}
 	}
 
 	if ( m_oED2K && m_bSize && m_sName.GetLength() )
