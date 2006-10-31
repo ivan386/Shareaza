@@ -624,6 +624,20 @@ void CBTClient::DetermineUserAgent()
 		nNickStart = 3;
 		nNickEnd = 11;
 	}
+	else if  ( m_oGUID[2] == 'R' && m_oGUID[3] == 'S' )
+	{	// Rufus
+		// The first two bits are version numbers. e.g. 0.6.5 = (0)(6+5) = char(0)char(11)
+		// The same with BitMagnet
+		m_sUserAgent.Format( _T("Rufus") );
+		nNickStart = 4;
+		nNickEnd = 12;
+	}
+	else if  ( m_oGUID[2] == 'B' && m_oGUID[3] == 'M' )
+	{	// BitMagnet, the former Rufus
+		m_sUserAgent.Format( _T("BitMagnet") );
+		nNickStart = 4;
+		nNickEnd = 12;
+	}
 	else if  ( m_oGUID[0] == '-' && m_oGUID[1] == 'M' && m_oGUID[2] == 'L' )
 	{	// MLdonkey
 		m_sUserAgent.Format( _T("MLdonkey %i.%i.%i"), m_oGUID[3] - '0' , m_oGUID[5] - '0' , m_oGUID[7] - '0' );
