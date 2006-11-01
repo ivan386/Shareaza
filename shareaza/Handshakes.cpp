@@ -443,10 +443,10 @@ BOOL CHandshakes::AcceptConnection()
 		// Set linger period to zero (it will close the socket immediatelly)
 		// Default behaviour is to send data and close or timeout and close
 		linger ls = {1, 0};
-		int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
+		int ret = setsockopt( hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
 
 		// Close the socket we just accepted the connection with
-		shutdown( m_hSocket, SD_RECEIVE );
+		shutdown( hSocket, SD_RECEIVE );
 		ret = closesocket( hSocket );
 
 		// Report that this connection was denied for security reasons
