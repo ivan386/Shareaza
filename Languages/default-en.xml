@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.2.28"
+		version="2.2.3.0"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2582,6 +2582,7 @@
 	<string id="8134" value="You are about to start a new search.  Would you like to clear the results of your previous search?"/>
 	<string id="8135" value="No Metadata"/>
 	<string id="8136" value="Plain Text Search"/>
+	<string id="8137" value="No Schema Columns"/>
 	<string id="8141" value="Show the Search Panel"/>
 	<string id="8142" value="Hide the Search Panel"/>
 	<string id="8143" value="Searching..."/>
@@ -4025,10 +4026,10 @@
 		<control caption="Cancel"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="Copy URI">
+	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copy URI">
 		<control/>
 		<control caption="You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"/>
-		<control/><control/><control/><control/>
+		<control/><control/><control/>
 		<control caption="Include _myself as a fixed source in the URL"/>
 		<control caption="Cancel"/>
 	</dialog>

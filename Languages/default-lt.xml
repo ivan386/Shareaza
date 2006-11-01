@@ -22,7 +22,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.2.28"
+		version="2.2.3.0"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -2589,6 +2589,7 @@ right quote	&#147;
 	<string id="8134" value="Jūs ketinate pradėti naują paiešką. Ar norite išvalyti ankstesnės paieškos radinius?"/>
 	<string id="8135" value="Nėra meta duomenų"/>
 	<string id="8136" value="Grynojo teksto paieška"/>
+	<string id="8137" value="Be schemos stulpelių"/>
 	<string id="8141" value="Rodyti paieškos skydelį"/>
 	<string id="8142" value="Paslėpti paieškos skydelį"/>
 	<string id="8143" value="Ieškoma..."/>
@@ -4032,10 +4033,10 @@ right quote	&#147;
 		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="Nuorodos kopijavimas">
+	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Nuorodos kopijavimas">
 		<control/>
 		<control caption="Jūs galite nukopijuoti pasirinkto failo nuorodą skirtingais formatais. Pasirinkite norimą formatą, paspaudę vieną iš žemiau pateiktų nuorodų:"/>
-		<control/><control/><control/><control/>
+		<control/><control/><control/>
 		<control caption="Įtraukti _save kaip pastovų nuorodos šaltinį"/>
 		<control caption="Atšaukti"/>
 	</dialog>

@@ -11,7 +11,7 @@
 		author="dAbserver"
 		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
-		version="2.2.2.28"
+		version="2.2.3.0"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -2569,6 +2569,7 @@
 	<string id="8134" value="Вы собираетесь начать новый поиск. Хотите ли Вы очистить результаты предыдущего поиска?"/>
 	<string id="8135" value="Нет мета данных"/>
 	<string id="8136" value="Поиск текста"/>
+	<string id="8137" value="Без колонок схемы"/>
 	<string id="8141" value="Показывать панель поиска"/>
 	<string id="8142" value="Скрыть панель поиска"/>
 	<string id="8143" value="Идет поиск..."/>
@@ -4012,10 +4013,10 @@
 		<control caption="Отмена"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="Копировать ссылку">
+	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Копировать ссылку">
 		<control/>
 		<control caption="Вы можете скопировать ссылку на объект в различных форматах.  Выберите нужный формат щелкнув на одну из ссылок ниже:"/>
-		<control/><control/><control/><control/>
+		<control/><control/><control/>
 		<control caption="Включить _меня как фиксиров. источник"/>
 		<control caption="Отмена"/>
 	</dialog>
