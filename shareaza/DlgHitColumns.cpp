@@ -68,7 +68,7 @@ BOOL CSchemaColumnsDlg::OnInitDialog()
 	m_wndColumns.InsertColumn( 1, _T("Type"), LVCFMT_LEFT, 0, 0 );
 	ListView_SetExtendedListViewStyle( m_wndColumns.GetSafeHwnd(), LVS_EX_CHECKBOXES );
 
-	m_wndSchemas.m_sNoSchemaText = _T("No Schema Columns");
+	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_NO_SCHEMA );
 	m_wndSchemas.Load( m_pSchema ? m_pSchema->m_sURI : _T("") );
 	
 	OnSelChangeSchemas();

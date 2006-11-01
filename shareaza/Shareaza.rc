@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,2,28
- PRODUCTVERSION 2,2,2,28
+ FILEVERSION 2,2,3,0
+ PRODUCTVERSION 2,2,3,0
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 2, 28"
+            VALUE "FileVersion", "2, 2, 3, 0"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 2, 28"
+            VALUE "ProductVersion", "2, 2, 3, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -4547,6 +4547,7 @@ BEGIN
                             "You are about to start a new search.  Would you like to clear the results of your previous search?"
     IDS_SEARCH_NO_METADATA  "No Metadata"
     IDS_SEARCH_PLAIN_TEXT   "Plain Text Search"
+    IDS_SEARCH_NO_SCHEMA    "No Schema Columns"
     IDS_SEARCH_PANEL_SHOW   "Show the Search Panel"
     IDS_SEARCH_PANEL_HIDE   "Hide the Search Panel"
     IDS_SEARCH_PANEL_SEARCHING "Searching..."
