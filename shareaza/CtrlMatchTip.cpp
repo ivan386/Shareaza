@@ -404,10 +404,27 @@ void CMatchTipCtrl::LoadFromFile()
 				LoadString( m_sStatus, IDS_TIP_EXISTS_DELETED );
 				m_crStatus = RGB( 255, 0, 0 );
 
-				if ( pExisting->m_sComments.GetLength() && pExisting->m_nRating == 1 )
+				if ( pExisting->m_sComments.GetLength() )
 				{
-					LoadString( m_sStatus, IDS_TIP_EXISTS_BLACKLISTED );
+					m_sStatus += L" (";
 					m_sStatus += pExisting->m_sComments;
+					m_sStatus.Replace( L"\r\n", L"; " );
+
+					int nLen = m_sStatus.GetLength();
+					if ( nLen > 150 )
+					{
+						// Truncate string including the last word 
+						// but no more than 150 characters plus punctuation
+						CString str( m_sStatus.Left( 150 ) );
+						if ( IsCharacter( m_sStatus.GetAt( 151 ) ) )
+						{
+							nLen = str.ReverseFind( ' ' );
+							m_sStatus = nLen == -1 ? str : str.Left( nLen );
+						}
+						m_sStatus += L"\x2026)";
+					}
+					else
+						m_sStatus.Append( L")" );
 				}
 			}
 
@@ -559,6 +576,11 @@ void CMatchTipCtrl::LoadFromHit()
 		if ( m_pHit->m_nRating == 1 ) 
 			LoadString( m_sStatus, IDS_TIP_EXISTS_BLACKLISTED );
 		m_sStatus += m_pHit->m_sComments;
+		m_crStatus = RGB( 255, 0, 0 );
+	}
+	else if ( m_pFile->m_bExisting == 2 )  // ghost rated
+	{
+		LoadString( m_sStatus, IDS_TIP_EXISTS_DELETED );
 		m_crStatus = RGB( 255, 0, 0 );
 	}
 
