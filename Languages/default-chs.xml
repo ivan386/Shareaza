@@ -4006,10 +4006,10 @@
 		<control caption="取消"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="复制 URI">
+	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="复制 URI">
 		<control/>
 		<control caption="您可以用多种不同的格式为选定的项目复制 URI。请通过点击下列某一 URI 选择您希望使用的格式:"/>
-		<control/><control/><control/><control/>
+		<control/><control/><control/>
 		<control caption="将自己作为固定的资源包含在链接中(_M)"/>
 		<control caption="取消"/>
 	</dialog>

@@ -4011,10 +4011,10 @@ Other:
 			<control caption="Abbrechen"/>
 		</dialog>
 
-		<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="URI kopieren">
+		<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="URI kopieren">
 			<control />
 			<control caption="Sie können für das gewählte Objekt eine URI in verschiede Formate kopieren. Bitte wählen Sie das gewünschte Format, indem Sie unten auf eine URI klicken:"/>
-			<control/><control/><control/><control/>
+			<control/><control/><control/>
 			<control caption="_Mich selbst als Quelle aufnehmen"/>
 			<control caption="Abbrechen"/>
 		</dialog>

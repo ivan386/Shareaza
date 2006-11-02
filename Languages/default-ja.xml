@@ -4021,10 +4021,10 @@
 		<control caption="キャンセル"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="URIをコピー">
+	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="URIをコピー">
 		<control/>
 		<control caption="選択したファイル用にそれぞれ異なる形式のURIをコピーすることが出来ます。 以下の中から使用したい形式のURIを選択して下さい:"/>
-		<control/><control/><control/><control/>
+		<control/><control/><control/>
 		<control caption="固定ソースとしてURLに自分自身を含める(_M)"/>
 		<control caption="キャンセル"/>
 	</dialog>
