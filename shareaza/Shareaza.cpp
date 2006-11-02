@@ -141,7 +141,7 @@ BOOL CShareazaApp::InitInstance()
 	// Beta expiry. Remember to re-compile to update the time, and remove this 
 	// section for final releases and public betas.
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
-	COleDateTimeSpan tTimeOut( 28, 0, 0, 0);
+	COleDateTimeSpan tTimeOut( 28*3, 0, 0, 0);
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		CString strMessage;
@@ -150,17 +150,17 @@ BOOL CShareazaApp::InitInstance()
 		//return FALSE;
 	}
 
-	// Alpha warning. Remember to remove this section for final releases and public betas.
-	if ( AfxMessageBox( 
-		L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
-		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
-		L"environment. It will frequently stop running, or display debug information to assist testing.\n\n"
-		L"If you wish to actually use this software, you should download "
-		L"the current stable release from www.shareaza.com\n"
-		L"If you continue past this point, you may experience system instability, lose downloads, "
-		L"or corrupt system files. Corrupted downloads/files may not be recoverable. "
-		L"Do you wish to continue?", MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
-		return FALSE;
+	//// Alpha warning. Remember to remove this section for final releases and public betas.
+	//if ( AfxMessageBox( 
+	//	L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
+	//	L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
+	//	L"environment. It will frequently stop running, or display debug information to assist testing.\n\n"
+	//	L"If you wish to actually use this software, you should download "
+	//	L"the current stable release from www.shareaza.com\n"
+	//	L"If you continue past this point, you may experience system instability, lose downloads, "
+	//	L"or corrupt system files. Corrupted downloads/files may not be recoverable. "
+	//	L"Do you wish to continue?", MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
+	//	return FALSE;
 
 	// ***********
 	
