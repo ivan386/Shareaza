@@ -2464,7 +2464,7 @@
 		<image id="ID_TOOLS_PROFILE" id1="ID_BROWSE_PROFILE"/>
 		<image id="ID_CHAT_EMOTICONS"/>
 		<image id="ID_LIBRARY_VIEW_ALBUM"/>
-		<image id="ID_LIBRARY_VIEW_COLLECTION"/>
+		<image id="ID_LIBRARY_VIEW_COLLECTION" id1="ID_LIBRARY_EXPORT_COLLECTION" id2="ID_MEDIA_EXPORT_COLLECTION"/>
 	</bitmap>
 	<bitmap id="159">
 		<image id="ID_CHILD_MAXIMISE"/>
