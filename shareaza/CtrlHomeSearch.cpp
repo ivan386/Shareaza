@@ -135,6 +135,7 @@ void CHomeSearchCtrl::Setup(COLORREF crWindow)
 	LoadString( strCaption, IDS_SEARCH_PANEL_START );
 	m_wndSearch.SetWindowText( strCaption );
 	HICON hIcon = CoolInterface.ExtractIcon( ID_SEARCH_SEARCH );
+	if ( hIcon )
 	m_wndSearch.SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
 
 	LoadString( strCaption, IDS_SEARCH_PANEL_ADVANCED );

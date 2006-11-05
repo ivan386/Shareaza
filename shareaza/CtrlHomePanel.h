@@ -46,8 +46,16 @@ protected:
 	CRichElement*	m_pdDownloadsMany;
 	CString			m_sDownloadsMany;
 protected:
-	struct Item
+	class Item
 	{
+	public:
+		inline Item () throw() :
+			m_pDownload( NULL ),
+			m_nIcon16( 0 ),
+			m_nSize( 0 ),
+			m_nComplete( 0 ),
+			m_bPaused( FALSE ) {}
+
 		CDownload*	m_pDownload;
 		CString		m_sText;
 		int			m_nIcon16;
@@ -104,8 +112,14 @@ protected:
 	CRichElement*	m_pdLibraryVolume;
 	CRichElement*	m_pdLibraryHashRemaining;
 protected:
-	struct Item
+	class Item
 	{
+	public:
+		inline Item() throw() :
+			m_pRecent( NULL ),
+			m_nIndex( 0 ),
+			m_nIcon16( 0 ) {}
+
 		CLibraryRecent*	m_pRecent;
 		DWORD			m_nIndex;
 		CString			m_sText;

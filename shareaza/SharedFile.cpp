@@ -855,7 +855,7 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 	
 	HANDLE hFile	= INVALID_HANDLE_VALUE;
 	BOOL bMetaData	= FALSE;
-	FILETIME pMetaDataTime;
+	FILETIME pMetaDataTime = { 0 };
 	
 	if ( pszMetaData != NULL )
 	{
@@ -864,14 +864,14 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 		if ( Library.m_pfnGFAEW != NULL && theApp.m_bNT )
 		{
 			USES_CONVERSION;
-			WIN32_FILE_ATTRIBUTE_DATA pInfo;
+			WIN32_FILE_ATTRIBUTE_DATA pInfo = { 0 };
 			bMetaData = (*Library.m_pfnGFAEW)( T2CW( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
 			pMetaDataTime = pInfo.ftLastWriteTime;
 		}
 		else if ( Library.m_pfnGFAEA != NULL )
 		{
 			USES_CONVERSION;
-			WIN32_FILE_ATTRIBUTE_DATA pInfo;
+			WIN32_FILE_ATTRIBUTE_DATA pInfo = { 0 };
 			bMetaData = (*Library.m_pfnGFAEA)( T2CA( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
 			pMetaDataTime = pInfo.ftLastWriteTime;
 		}

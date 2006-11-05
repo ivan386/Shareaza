@@ -56,13 +56,16 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CWndTabBar construction
 
-CWndTabBar::CWndTabBar()
+CWndTabBar::CWndTabBar() :
+	m_pSelected( NULL ),
+	m_pHot( NULL ),
+	m_nCookie( 0 ),
+	m_bTimer( FALSE ),
+	m_bMenuGray( FALSE ),
+	m_nCloseImage( 0 ),
+	m_nMaximumWidth( 140 ),
+	m_nMessage( 0 )
 {
-	m_nMaximumWidth	= 140;
-	m_nCookie		= 0;
-	m_bTimer		= FALSE;
-	m_bMenuGray		= FALSE;
-	m_nMessage		= 0;
 }
 
 CWndTabBar::~CWndTabBar()

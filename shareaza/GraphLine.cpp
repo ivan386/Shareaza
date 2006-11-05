@@ -243,6 +243,9 @@ void CLineGraph::Paint(CDC* pDC, CRect* pRect)
 
 		for ( int nLayer = 4 ; nLayer ; nLayer-- )
 		{
+			if ( nPoints == 1 )
+				pDC->SetPixel( *pPoints, pItem->m_cPen[3] );
+			else
 			pDC->Polyline( pPoints, nPoints );
 
 			if ( nLayer > 1 )

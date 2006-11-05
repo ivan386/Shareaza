@@ -66,14 +66,14 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTabBar construction
 
-CDownloadTabBar::CDownloadTabBar()
+CDownloadTabBar::CDownloadTabBar() :
+	m_pHot( NULL ),
+	m_bTimer( FALSE ),
+	m_bMenuGray( FALSE ),
+	m_nCookie( 0 ),
+	m_nMaximumWidth( 140 ),
+	m_nMessage( 0 )
 {
-	m_bTimer		= FALSE;
-	m_bMenuGray		= FALSE;
-	m_nCookie		= 0;
-	m_nMaximumWidth	= 140;
-	m_nMessage		= 0;
-	m_pHot			= NULL;
 }
 
 CDownloadTabBar::~CDownloadTabBar()
@@ -513,12 +513,12 @@ void CDownloadTabBar::NotifySelection()
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTabBar::TabItem construction
 
-CDownloadTabBar::TabItem::TabItem(CDownloadGroup* pGroup, int nCookie)
+CDownloadTabBar::TabItem::TabItem(CDownloadGroup* pGroup, int nCookie) :
+	m_pGroup( pGroup ),
+	m_nImage( 0 ),
+	m_nCount( 0 ),
+	m_bSelected( pGroup == DownloadGroups.GetSuperGroup() )
 {
-	m_pGroup	= pGroup;
-	m_nImage	= 0;
-	m_bSelected	= ( m_pGroup == DownloadGroups.GetSuperGroup() );
-	
 	Update( nCookie );
 }
 

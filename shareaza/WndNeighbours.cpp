@@ -601,6 +601,8 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMLVCUSTOMDRAW* pDraw = (NMLVCUSTOMDRAW*)pNMHDR;
 	
+	if ( ! ::IsWindow( m_wndList.m_hWnd ) ) return;
+
 	if ( pDraw->nmcd.dwDrawStage == CDDS_PREPAINT )
 	{
 		if ( m_wndList.GetItemCount() == 0 && ! Network.IsConnected() )

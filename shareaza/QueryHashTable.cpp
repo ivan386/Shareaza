@@ -80,10 +80,10 @@ void CQueryHashTable::Create()
 	m_nCookie	= GetTickCount();
 	m_nBits		= Settings.Library.QueryRouteSize;
 	m_nHash		= 1u << m_nBits;
-	m_pHash		= new BYTE[ ( m_nHash >> 3 ) + 1 ];
+	m_pHash		= new BYTE[ ( m_nHash + 31 ) / 8 ];
 	m_nCount	= 0;
 
-	FillMemory( m_pHash, ( m_nHash >> 3 ) + 1, 0xFF );
+	FillMemory( m_pHash, ( m_nHash + 31 ) / 8, 0xFF );
 
 	if ( bGrouped ) QueryHashMaster.Add( this );
 }
@@ -101,7 +101,7 @@ void CQueryHashTable::Clear()
 	m_nCookie	= GetTickCount();
 	m_nCount	= 0;
 
-	FillMemory( m_pHash, ( m_nHash >> 3 ) + 1, 0xFF );
+	FillMemory( m_pHash, ( m_nHash + 31 ) / 8, 0xFF );
 
 	if ( bGrouped ) QueryHashMaster.Add( this );
 }
@@ -633,10 +633,10 @@ BOOL CQueryHashTable::OnReset(CPacket* pPacket)
 		if ( m_nHash != nHashSize ) return FALSE;
 		if ( m_nBits > 24 ) return FALSE;
 
-		m_pHash	= new BYTE[ ( m_nHash >> 3 ) + 1 ];
+		m_pHash	= new BYTE[ ( m_nHash + 31 ) / 8 ];
 	}
 
-	FillMemory( m_pHash, ( m_nHash >> 3 ) + 1, 0xFF );
+	FillMemory( m_pHash, ( m_nHash + 31 ) / 8, 0xFF );
 
 	if ( bGrouped ) QueryHashMaster.Add( this );
 

@@ -59,65 +59,62 @@ static char THIS_FILE[]=__FILE__;
 
 // Make a new CNeighbour object for a certain network
 // Takes a protocol ID, like PROTOCOL_G1
-CNeighbour::CNeighbour(PROTOCOLID nProtocol)
-{
+CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
+	m_nRunCookie( 0 ),
+	m_nUnique( 0 ),
 	// Copy the given network protocol into this new object
-	m_nProtocol = nProtocol; // nProtocol is like PROTOCOL_ED2K
-
+	m_nProtocol( nProtocol ),	// nProtocol is like PROTOCOL_ED2K
 	// Set null and default values for connection state, software vendor, guid, and user profile
-	m_nState   = nrsNull; // No state now, soon we'll connect and do the handshake
-	m_pVendor  = NULL;    // We don't know what brand software the remote computer is running yet
-	m_pProfile = NULL;    // No profile on the person running the remote computer yet
-
+	m_nState( nrsNull ),		// No state now, soon we'll connect and do the handshake
+	m_pVendor( NULL ),			// We don't know what brand software the remote computer is running yet
+	m_pProfile( NULL ),			// No profile on the person running the remote computer yet
 	// Set handshake values to defaults
-	m_bAutomatic    = FALSE;  // Automatic setting used to maintain the connection
-	m_bShareaza     = FALSE;  // Expect the remote computer to not be running Shareaza
-	m_nNodeType     = ntNode; // Start out assuming that we and the remote computer are both hubs
-	m_bQueryRouting = FALSE;  // Don't start query routing or pong caching yet
-	m_bPongCaching  = FALSE;
-	m_bVendorMsg    = FALSE;  // The remote computer hasn't told us it supports the vendor-specific messages yet
-	m_bGGEP         = FALSE;  // The remote computer hasn't told us it supports the GGEP block yet
-	m_bObsoleteClient= FALSE; //
-	m_bBadClient	= FALSE;  //
-
+	m_bAutomatic( FALSE ),		// Automatic setting used to maintain the connection
+	m_bShareaza( FALSE ),		// Expect the remote computer to not be running Shareaza
+	m_nNodeType( ntNode ),		// Start out assuming that we and the remote computer are both hubs
+	m_bQueryRouting( FALSE ),	// Don't start query routing or pong caching yet
+	m_bPongCaching( FALSE ),	//
+	m_bVendorMsg( FALSE ),		// The remote computer hasn't told us it supports the vendor-specific messages yet
+	m_bGGEP( FALSE ),			// The remote computer hasn't told us it supports the GGEP block yet
+	m_bObsoleteClient( FALSE ),	//
+	m_bBadClient( FALSE ),		//
 	// Start out time variables as 0
-	m_tLastQuery  = 0; // We'll set these to the current tick or seconds count when we get a query or packet
-	m_tLastPacket = 0;
-
+	m_tLastQuery( 0 ),			// We'll set these to the current tick or seconds count when we get a query or packet
+	m_tLastPacket( 0 ),			//
 	// Zero packet and file counts
-	m_nInputCount = m_nOutputCount = 0;
-	m_nDropCount  = 0;
-	m_nLostCount  = 0;
-	m_nOutbound   = 0;
-	m_nFileCount  = 0;
-	m_nFileVolume = 0;
-
+	m_nInputCount( 0 ),
+	m_nOutputCount( 0 ),
+	m_nDropCount( 0 ),
+	m_nLostCount( 0 ),
+	m_nOutbound( 0 ),
+	m_nFileCount( 0 ),
+	m_nFileVolume( 0 ),
 	// The local and remote query tables aren't set up yet, make the pointers to them start out null
-	m_pQueryTableLocal  = NULL;
-	m_pQueryTableRemote = NULL;
-
+	m_pQueryTableLocal( NULL ),
+	m_pQueryTableRemote( NULL ),
 	// Null pointers and zero counts for zlib compression
-	m_pZInput   = NULL;
-	m_pZOutput  = NULL;
-	m_nZInput   = 0;
-	m_nZOutput  = 0;
-	m_pZSInput  = NULL;
-	m_pZSOutput = NULL;
-	m_bZFlush   = FALSE;
-	m_tZOutput  = 0;
+	m_pZInput( NULL ),
+	m_pZOutput( NULL ),
+	m_nZInput( 0 ),
+	m_nZOutput( 0 ),
+	m_pZSInput( NULL ),
+	m_pZSOutput( NULL ),
+	m_bZFlush( FALSE ),
+	m_tZOutput( 0 )
+{
 }
 
 // Make a new CNeighbour object, copying values from a base one
 // Takes a protocol ID and a base neighbour to copy information from
 CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	: CConnection( *pBase )
-	, m_nRunCookie()
+	, m_nRunCookie( 0 )
 	, m_nUnique(           pBase->m_nUnique )
 	, m_nProtocol( nProtocol )
 	, m_nState( nrsConnected )
 	, m_pVendor(           pBase->m_pVendor )
 	, m_oGUID(             pBase->m_oGUID )
-	, m_pProfile()
+	, m_pProfile( NULL )
 	, m_oMoreResultsGUID()
 	, m_bAutomatic(        pBase->m_bAutomatic )
 	, m_bShareaza(         pBase->m_bShareaza )
@@ -143,8 +140,8 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	, m_pZOutput(          pBase->m_pZOutput )
 	, m_nZInput(           pBase->m_nZInput )
 	, m_nZOutput(          pBase->m_nZOutput )
-	, m_pZSInput()
-	, m_pZSOutput()
+	, m_pZSInput( NULL )
+	, m_pZSOutput( NULL )
 	, m_bZFlush(           pBase->m_bZFlush )
 	, m_tZOutput(          pBase->m_tZOutput )
 {
@@ -258,7 +255,7 @@ BOOL CNeighbour::OnRun()
 	DWORD tNow = GetTickCount();
 
 	// If it's been awhile since the last packet came in through this connection
-	if ( tNow - m_tLastPacket > Settings.Connection.TimeoutTraffic * 3 )
+	if ( tNow - m_tLastPacket > Settings.Connection.TimeoutTraffic )
 	{
 		// Close the connection, citing traffic timeout as the reason, and return false
 		Close( IDS_CONNECTION_TIMEOUT_TRAFFIC );
