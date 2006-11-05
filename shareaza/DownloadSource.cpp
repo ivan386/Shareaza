@@ -59,6 +59,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload)
 : m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
+	m_nBusyCount	= 0;
 }
 
 void CDownloadSource::Construct(CDownload* pDownload)
@@ -174,6 +175,8 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nCl
 	m_sServer	= _T("eDonkey2000");
 	
 	ResolveURL();
+
+	m_nBusyCount	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -202,6 +205,8 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, const Hashes::BtGuid& oGU
 	m_sServer	= _T("BitTorrent");
 	
 	ResolveURL();
+
+	m_nBusyCount	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -227,6 +232,8 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL /*bS
 	}
 
 	m_nRedirectionCount = nRedirectionCount;
+
+	m_nBusyCount	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
