@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,23 +26,28 @@
 #include "Library.h"
 #include "SharedFile.h"
 #include "Download.h"
+#include "ShellIcons.h"
+#include "Settings.h"
 
 IMPLEMENT_DYNAMIC(CDeleteFileDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CDeleteFileDlg, CSkinDialog)
 	ON_WM_CTLCOLOR()
+	ON_WM_MEASUREITEM()
+	ON_WM_DRAWITEM()
+	ON_CBN_SELCHANGE(IDC_DELETE_OPTIONS, OnCbnChangeOptions)
 	ON_BN_CLICKED(IDC_DELETE_ALL, OnDeleteAll)
-	ON_BN_CLICKED(IDC_RATE_VALUE_0, OnBnClickedRateValue)
-	ON_BN_CLICKED(IDC_RATE_VALUE_1, OnBnClickedRateValue)
-	ON_BN_CLICKED(IDC_RATE_VALUE_2, OnBnClickedRateValue)
-	ON_BN_CLICKED(IDC_RATE_VALUE_3, OnBnClickedRateValue)
+	ON_CBN_SELCHANGE(IDC_GHOST_RATING, OnCbnChangeGhostRating)
+	ON_EN_CHANGE(IDC_RATE_COMMENTS, OnChangeComments)
 END_MESSAGE_MAP()
 
 
 CDeleteFileDlg::CDeleteFileDlg(CWnd* pParent) : CSkinDialog( CDeleteFileDlg::IDD, pParent )
+, m_nOption(0)
+, m_bCreateGhost(Settings.Library.CreateGhosts)
+, m_nRateValue(0)
+, m_bAll(FALSE)
 {
-	m_nRateValue = 0;
-	m_bAll = FALSE;
 }
 
 CDeleteFileDlg::~CDeleteFileDlg()
@@ -54,12 +59,15 @@ void CDeleteFileDlg::DoDataExchange(CDataExchange* pDX)
 	CSkinDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_FILE_NAME, m_wndName);
 	DDX_Control(pDX, IDC_RATE_COMMENTS, m_wndComments);
-	DDX_Control(pDX, IDC_RATE_PROMPT, m_wndPrompt);
 	DDX_Text(pDX, IDC_RATE_COMMENTS, m_sComments);
 	DDX_Text(pDX, IDC_FILE_NAME, m_sName);
-	DDX_Radio(pDX, IDC_RATE_VALUE_0, m_nRateValue);
 	DDX_Control(pDX, IDOK, m_wndOK);
 	DDX_Control(pDX, IDC_DELETE_ALL, m_wndAll);
+	DDX_Control(pDX, IDC_DELETE_OPTIONS, m_wndOptions);
+	DDX_CBIndex(pDX, IDC_DELETE_OPTIONS, m_nOption);
+	DDX_Control(pDX, IDC_GHOST_RATING, m_wndRating);
+	DDX_CBIndex(pDX, IDC_GHOST_RATING, m_nRateValue);
+	DDX_Check(pDX, IDC_CREATE_GHOST, m_bCreateGhost);
 }
 
 BOOL CDeleteFileDlg::OnInitDialog()
@@ -73,6 +81,8 @@ BOOL CDeleteFileDlg::OnInitDialog()
 		m_wndAll.EnableWindow( TRUE );
 		m_bAll = FALSE;
 	}
+	RecalcDropWidth( &m_wndOptions );
+	UpdateData( FALSE );
 
 	return FALSE;
 }
@@ -89,46 +99,10 @@ HBRUSH CDeleteFileDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-void CDeleteFileDlg::OnBnClickedRateValue()
-{
-	UpdateData();
-
-	switch ( m_nRateValue )
-	{
-	case 0: // None
-		m_sComments.Empty();
-		break;
-	case 1:	// Misnamed
-		m_sComments = _T("Incorrectly named \"") + m_sName + _T("\"");
-		break;
-	case 2:	// Poor Quality
-		m_sComments = _T("Very poor quality");
-		break;
-	case 3:	// Fake
-		m_sComments = _T("Fake/corrupt");
-		break;
-	}
-
-	m_wndComments.SetWindowText( m_sComments );
-
-	BOOL bComments = ( m_nRateValue > 0 || m_sComments.GetLength() );
-
-	if ( bComments != m_wndComments.IsWindowEnabled() )
-	{
-		m_wndPrompt.EnableWindow( bComments );
-		m_wndComments.EnableWindow( bComments );
-	}
-
-	if ( bComments )
-	{
-		m_wndComments.SetFocus();
-		m_wndComments.SetSel( 0, m_sComments.GetLength() );
-	}
-}
-
 void CDeleteFileDlg::OnDeleteAll()
 {
-	if ( m_nRateValue != 1 ) m_bAll = TRUE; // Can't all if misnamed
+	UpdateData( TRUE );
+	if ( m_nOption != 1 ) m_bAll = TRUE; // Can't all if misnamed
 	CDialog::OnOK();
 }
 
@@ -136,22 +110,18 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 {
 	if ( m_nRateValue > 0 || m_sComments.GetLength() > 0 )
 	{
-		if ( m_sComments.GetLength() > 0 )
-			pFile->m_sComments = m_sComments;
-
-		switch ( m_nRateValue )
+		if ( m_bCreateGhost )
 		{
-		case 1:	// Misnamed
-			// pFile->m_nRating = 0;
-			break;
-		case 2:	// Poor Quality
-			pFile->m_nRating = 2;
-			break;
-		case 3:	// Fake
-			pFile->m_nRating = 1;
-			break;
-		}
+			if ( m_sComments.GetLength() > 0 )
+				pFile->m_sComments = m_sComments;
 
+			pFile->m_nRating = m_nRateValue;
+		}
+		else 
+		{
+			pFile->m_sComments.Empty();
+			pFile->m_nRating = 0;
+		}
 		pFile->SaveMetadata();
 	}
 }
@@ -159,7 +129,6 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 {
 	if ( !pDownload->m_oSHA1 && !pDownload->m_oTiger && !pDownload->m_oED2K ) return;
-	if ( m_sComments.IsEmpty() ) return;
 
 	CSingleLock oLock( &Library.m_pSection );
 	if ( !oLock.Lock( 500 ) ) return;
@@ -173,7 +142,8 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 	if ( pFile == NULL && pDownload->m_oED2K )
 		pFile = LibraryMaps.LookupFileByED2K( pDownload->m_oED2K );
 	
-	if ( pFile == NULL )
+	if ( pFile == NULL && m_bCreateGhost && 
+		 ( m_nRateValue > 0 || m_sComments.GetLength() > 0 ) ) // The file is not completed
 	{
 		pFile = new CLibraryFile( NULL, pDownload->m_sDisplayName );
 		pFile->m_nSize		= pDownload->m_nSize;
@@ -185,7 +155,134 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 		pFile->Ghost();
 	}
 
-	Apply( pFile );
-
-	Library.Update();
+	if ( pFile != NULL ) // If we got ghost file, update its info too
+	{
+		Apply( pFile );
+		Library.Update();
+	}
 }
+
+void CDeleteFileDlg::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+{
+	lpMeasureItemStruct->itemWidth	= 1024;
+	lpMeasureItemStruct->itemHeight	= 18;
+}
+
+void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
+{
+	if ( lpDrawItemStruct->itemID == (UINT)-1 ) return;
+	if ( ( lpDrawItemStruct->itemAction & ODA_SELECT ) == 0 &&
+		( lpDrawItemStruct->itemAction & ODA_DRAWENTIRE ) == 0 ) return;
+
+	CRect rcItem( &lpDrawItemStruct->rcItem );
+	CPoint pt( rcItem.left + 1, rcItem.top + 1 );
+	CDC dc;
+
+	dc.Attach( lpDrawItemStruct->hDC );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+
+	int nRating = lpDrawItemStruct->itemID;
+
+	CFont* pOldFont = (CFont*)dc.SelectObject( nRating > 0 ? &theApp.m_gdiFontBold : &theApp.m_gdiFont );
+	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
+		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
+
+	dc.FillSolidRect( &rcItem,
+		GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
+		? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
+	dc.SetBkMode( TRANSPARENT );
+
+	rcItem.DeflateRect( 4, 1 );
+
+	if ( nRating > 1 )
+	{
+		for ( int nStar = nRating - 1 ; nStar ; nStar-- )
+		{
+			rcItem.right -= 16;
+			ShellIcons.Draw( &dc, SHI_STAR, 16, rcItem.right, rcItem.top, CLR_NONE,
+				( lpDrawItemStruct->itemState & ODS_SELECTED ) );
+			rcItem.right -= 2;
+		}
+	}
+	else if ( nRating == 1 )
+	{
+		rcItem.right -= 16;
+		ShellIcons.Draw( &dc, SHI_FAKE, 16, rcItem.right, rcItem.top, CLR_NONE,
+			( lpDrawItemStruct->itemState & ODS_SELECTED ) );
+	}
+
+	if ( ( lpDrawItemStruct->itemState & ODS_SELECTED ) == 0 )
+	{
+		static COLORREF crRating[7] =
+		{
+			RGB( 0, 0, 0 ),			// Unrated
+			RGB( 255, 0, 0 ),		// 0 - Fake
+			RGB( 128, 128, 128 ),	// 1 - Poor
+			RGB( 0, 0, 0 ),			// 2 - Average
+			RGB( 128, 128, 128 ),	// 3 - Good
+			RGB( 0, 128, 0 ),		// 4 - Very good
+			RGB( 0, 0, 255 ),		// 5 - Excellent
+		};
+
+		dc.SetTextColor( crRating[ nRating ] );
+	}
+
+	CString str;
+	m_wndRating.GetLBText( nRating, str );
+	dc.DrawText( str, &rcItem, DT_SINGLELINE|DT_LEFT|DT_VCENTER|DT_NOPREFIX );
+
+	dc.SelectObject( pOldFont );
+	dc.Detach();
+}
+
+void CDeleteFileDlg::OnCbnChangeOptions()
+{
+	static const CString strOriginalComments = m_sComments;
+	UpdateData();
+
+	switch ( m_nOption )
+	{
+	case 0: // Original comments
+		m_sComments = strOriginalComments;
+		break;
+	case 1:	// Misnamed
+		m_sComments = _T("Incorrectly named \"") + m_sName + _T("\"");
+		break;
+	case 2:	// Poor Quality
+		m_sComments = _T("Very poor quality");
+		break;
+	case 3:	// Fake
+		m_sComments = _T("Fake/corrupt");
+		break;
+	case 4: // New comments
+		m_sComments = strOriginalComments;
+		break;
+	}
+
+	m_wndComments.SetWindowText( m_sComments );
+	m_wndComments.EnableWindow( m_nOption > 0 );
+
+	if ( m_nOption > 0 )
+	{
+		m_wndComments.SetFocus();
+		m_wndComments.SetSel( 0, m_sComments.GetLength() );
+	}
+
+	m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
+	UpdateData( FALSE );
+}
+
+void CDeleteFileDlg::OnCbnChangeGhostRating()
+{
+	UpdateData( TRUE );
+	m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
+	UpdateData( FALSE );
+}
+
+void CDeleteFileDlg::OnChangeComments()
+{
+	UpdateData( TRUE );
+	m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
+	UpdateData( FALSE );
+}
+

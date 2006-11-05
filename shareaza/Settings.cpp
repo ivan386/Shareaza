@@ -100,6 +100,7 @@ void CSettings::Setup()
 	Add( _T("Library.BitziOkay"), &Library.BitziOkay, FALSE );
 	Add( _T("Library.HighPriorityHash"), &Library.HighPriorityHash, FALSE );
 	Add( _T("Library.HashWindow"), &Library.HashWindow, FALSE );
+	Add( _T("Library.CreateGhosts"), &Library.CreateGhosts, TRUE );
 
 	Add( _T("Library.BufferSize"), &Library.BufferSize, 0 );
 	Add( _T("Library.Parallel"), &Library.Parallel, 0 );

@@ -690,8 +690,12 @@
 #define IDC_CONNECTION_PROGRESS         1429
 #define IDC_CONNECTION_STATUS           1430
 #define IDC_MESSAGE_DUPLICATES          1431
+#define IDC_DELETE_OPTIONS              1432
+#define IDC_GHOST_RATING                1433
 #define IDC_QUEUE_LIBRARYONLY           1434
 #define IDC_QUEUE_BOTH                  1435
+#define IDC_CREATE_GHOST                1436
+#define IDC_MAKE_GHOSTS                 1437
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502
@@ -1708,9 +1712,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        277
+#define _APS_NEXT_RESOURCE_VALUE        278
 #define _APS_NEXT_COMMAND_VALUE         33136
-#define _APS_NEXT_CONTROL_VALUE         1432
+#define _APS_NEXT_CONTROL_VALUE         1438
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

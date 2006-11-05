@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,3,0
- PRODUCTVERSION 2,2,3,0
+ FILEVERSION 2,2,3,1
+ PRODUCTVERSION 2,2,3,1
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 3, 0"
+            VALUE "FileVersion", "2, 2, 3, 1"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 3, 0"
+            VALUE "ProductVersion", "2, 2, 3, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -2096,13 +2096,13 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,139,85,WS_GROUP
     CONTROL         "Remember folder views",IDC_STORE_VIEWS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,126,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,17,126,12
     CONTROL         "Watch library folders",IDC_WATCH_FOLDERS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,35,126,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,31,126,12
     CONTROL         "Quick hashing (Uses more CPU)",IDC_HIGH_HASH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,65,126,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,59,126,12
     CONTROL         "Allow others to browse shares",IDC_BROWSE_FILES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,50,126,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,45,126,12
     GROUPBOX        "&Recent Files:",IDC_STATIC,5,92,139,84,WS_GROUP
     LTEXT           "Remember:",IDC_STATIC,15,112,46,12,SS_CENTERIMAGE
     EDITTEXT        IDC_RECENT_TOTAL,65,112,35,12,ES_AUTOHSCROLL | ES_NUMBER
@@ -2134,6 +2134,8 @@ BEGIN
     EDITTEXT        IDC_COLLECTIONS_FOLDER,15,192,225,12,ES_AUTOHSCROLL | 
                     ES_READONLY
     PUSHBUTTON      "",IDC_COLLECTIONS_BROWSE,245,188,23,20
+    CONTROL         "Create ghost files when deleting",IDC_MAKE_GHOSTS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,74,126,10
 END
 
 IDD_FILE_METADATA DIALOG  0, 0, 246, 218
@@ -2859,7 +2861,7 @@ BEGIN
     DEFPUSHBUTTON   "Close",IDOK,236,140,50,14
 END
 
-IDD_DELETE_FILE DIALOGEX 0, 0, 292, 183
+IDD_DELETE_FILE DIALOGEX 0, 0, 292, 202
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Delete File"
 FONT 8, "Tahoma", 0, 0, 0x1
@@ -2867,28 +2869,27 @@ BEGIN
     LTEXT           "Are you sure that you want to delete:",IDC_STATIC,12,6,
                     264,12,SS_CENTERIMAGE
     CONTROL         "Filename.ext",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,23,22,259,12
+                    SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,19,22,266,12
     DEFPUSHBUTTON   "Delete",IDOK,124,39,50,14,WS_GROUP
     PUSHBUTTON      "Delete All",IDC_DELETE_ALL,178,39,50,14,WS_DISABLED | 
                     WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,232,39,50,14
-    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,8,60,276,1
-    LTEXT           "Shareaza can remember this file and warn you if you come across it again in another search.  Please select the reason for deleting this file:",
-                    IDC_STATIC,12,69,264,18
-    CONTROL         "I don't want to add a comment.",IDC_RATE_VALUE_0,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,23,92,258,12
-    CONTROL         "This file is named incorrectly, and could be misleading.",
-                    IDC_RATE_VALUE_1,"Button",BS_AUTORADIOBUTTON,23,106,258,
-                    12
-    CONTROL         "This file is of very poor quality.",IDC_RATE_VALUE_2,
-                    "Button",BS_AUTORADIOBUTTON,23,120,258,12
-    CONTROL         "This file is a fake, or is corrupt or somehow unusable.",
-                    IDC_RATE_VALUE_3,"Button",BS_AUTORADIOBUTTON,23,135,258,
-                    12
-    LTEXT           "You can type a short note describing why this file is bad:",
-                    IDC_RATE_PROMPT,12,151,264,8,WS_DISABLED
-    EDITTEXT        IDC_RATE_COMMENTS,23,163,258,12,ES_AUTOHSCROLL | 
-                    WS_DISABLED
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,8,59,276,1
+    LTEXT           "Shareaza can remember this file and warn you if you come across it again in another search.  It will create a ghost file with your comments and rating.",
+                    IDC_STATIC,12,63,264,25
+    LTEXT           "The reason for deleting:",IDC_STATIC,19,110,102,8
+    COMBOBOX        IDC_DELETE_OPTIONS,127,107,151,15,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "File rating:",IDC_STATIC,20,126,87,8
+    COMBOBOX        IDC_GHOST_RATING,127,124,151,30,CBS_DROPDOWNLIST | 
+                    CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "You can type a short note describing why you are deleting the file:",
+                    IDC_RATE_PROMPT,12,144,264,8,WS_DISABLED
+    EDITTEXT        IDC_RATE_COMMENTS,15,156,261,38,ES_MULTILINE | 
+                    ES_AUTOHSCROLL | WS_DISABLED
+    CONTROL         "Create a ghost file",IDC_CREATE_GHOST,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,93,101,10
 END
 
 IDD_COLLECTION_EXPORT DIALOGEX 0, 0, 355, 249
@@ -3825,7 +3826,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 176
+        BOTTOMMARGIN, 195
     END
 
     IDD_COLLECTION_EXPORT, DIALOG
@@ -4407,6 +4408,46 @@ BEGIN
     IDC_TORRENT_TRACKERMODE, 0x403, 23, 0
 0x754d, 0x746c, 0x2d69, 0x7274, 0x6361, 0x656b, 0x2072, 0x6c28, 0x636f, 
 0x656b, 0x2964, "\000" 
+    0
+END
+
+IDD_DELETE_FILE DLGINIT
+BEGIN
+    IDC_DELETE_OPTIONS, 0x403, 32, 0
+0x754a, 0x7473, 0x6420, 0x6c65, 0x7465, 0x6e69, 0x2c67, 0x6b20, 0x6565, 
+0x2070, 0x796d, 0x6320, 0x6d6f, 0x656d, 0x746e, 0x0073, 
+    IDC_DELETE_OPTIONS, 0x403, 56, 0
+0x6854, 0x7369, 0x6620, 0x6c69, 0x2065, 0x7369, 0x6e20, 0x6d61, 0x6465, 
+0x6920, 0x636e, 0x726f, 0x6572, 0x7463, 0x796c, 0x202c, 0x6e61, 0x2064, 
+0x6f63, 0x6c75, 0x2064, 0x6562, 0x6d20, 0x7369, 0x656c, 0x6461, 0x6e69, 
+0x0067, 
+    IDC_DELETE_OPTIONS, 0x403, 34, 0
+0x6854, 0x7369, 0x6620, 0x6c69, 0x2065, 0x7369, 0x6f20, 0x2066, 0x6576, 
+0x7972, 0x7020, 0x6f6f, 0x2072, 0x7571, 0x6c61, 0x7469, 0x0079, 
+    IDC_DELETE_OPTIONS, 0x403, 55, 0
+0x6854, 0x7369, 0x6620, 0x6c69, 0x2065, 0x7369, 0x6120, 0x6620, 0x6b61, 
+0x2c65, 0x6f20, 0x2072, 0x7369, 0x6320, 0x726f, 0x7572, 0x7470, 0x6f20, 
+0x2072, 0x6f73, 0x656d, 0x6f68, 0x2077, 0x6e75, 0x7375, 0x6261, 0x656c, 
+"\000" 
+    IDC_DELETE_OPTIONS, 0x403, 39, 0
+0x5220, 0x7065, 0x616c, 0x6563, 0x6d20, 0x2079, 0x6f63, 0x6d6d, 0x6e65, 
+0x7374, 0x7720, 0x7469, 0x2068, 0x6874, 0x2065, 0x656e, 0x2077, 0x6e6f, 
+0x7365, "\000" 
+    IDC_GHOST_RATING, 0x403, 12, 0
+0x4e28, 0x206f, 0x6152, 0x6974, 0x676e, 0x0029, 
+    IDC_GHOST_RATING, 0x403, 24, 0
+0x6146, 0x656b, 0x432f, 0x726f, 0x7572, 0x7470, 0x4d2f, 0x7369, 0x656c, 
+0x6461, 0x6e69, 0x0067, 
+    IDC_GHOST_RATING, 0x403, 5, 0
+0x6f50, 0x726f, "\000" 
+    IDC_GHOST_RATING, 0x403, 8, 0
+0x7641, 0x7265, 0x6761, 0x0065, 
+    IDC_GHOST_RATING, 0x403, 5, 0
+0x6f47, 0x646f, "\000" 
+    IDC_GHOST_RATING, 0x403, 10, 0
+0x6556, 0x7972, 0x4720, 0x6f6f, 0x0064, 
+    IDC_GHOST_RATING, 0x403, 10, 0
+0x7845, 0x6563, 0x6c6c, 0x6e65, 0x0074, 
     0
 END
 

@@ -1,7 +1,7 @@
 //
 // PageSettingsLibrary.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,6 +55,7 @@ public:
 	BOOL	m_bStoreViews;
 	BOOL	m_bHighPriorityHash;
 	BOOL	m_bBrowseFiles;
+	BOOL	m_bMakeGhosts;
 	CIconButtonCtrl	m_wndCollectionPath;
 	CString	m_sCollectionPath;
 	//}}AFX_DATA

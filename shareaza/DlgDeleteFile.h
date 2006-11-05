@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,8 +47,11 @@ public:
 	BOOL m_nRateValue;
 	CButton m_wndOK;
 	CEdit m_wndComments;
-	CStatic m_wndPrompt;
 	CButton m_wndAll;
+	CComboBox m_wndOptions;
+	int m_nOption;
+	CComboBox m_wndRating;
+	BOOL m_bCreateGhost;
 
 // Operations
 public:
@@ -57,12 +60,14 @@ public:
 
 // Implementation
 protected:
-	DECLARE_MESSAGE_MAP()
     virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnDeleteAll();
-public:
-	afx_msg void OnBnClickedRateValue();
+	afx_msg void OnCbnChangeOptions();
+	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
+	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
+	afx_msg void OnCbnChangeGhostRating();
+	afx_msg void OnChangeComments();
+	DECLARE_MESSAGE_MAP()
 };

@@ -5,7 +5,7 @@
 //	Revision:		"$Revision: 1.26 $"
 //  Last change by:	"$Author: rolandas $"
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -492,6 +492,8 @@ void CLibraryFileView::OnLibraryDelete()
 		{
 			CDeleteFileDlg dlg( this );
 			dlg.m_sName	= pFile->m_sName;
+			dlg.m_sComments = pFile->m_sComments;
+			dlg.m_nRateValue = pFile->m_nRating;
 			dlg.m_bAll	= pList.GetCount() > 1;
 			
 			pLock.Unlock();

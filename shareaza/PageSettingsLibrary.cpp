@@ -1,7 +1,7 @@
 //
 // PageSettingsLibrary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,6 +55,7 @@ END_MESSAGE_MAP()
 // CLibrarySettingsPage property page
 
 CLibrarySettingsPage::CLibrarySettingsPage() : CSettingsPage(CLibrarySettingsPage::IDD)
+, m_bMakeGhosts(FALSE)
 {
 	//{{AFX_DATA_INIT(CLibrarySettingsPage)
 	m_bWatchFolders = FALSE;
@@ -91,6 +92,7 @@ void CLibrarySettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_HIGH_HASH, m_bHighPriorityHash);
 	DDX_Control(pDX, IDC_COLLECTIONS_BROWSE, m_wndCollectionPath);
 	DDX_Text(pDX, IDC_COLLECTIONS_FOLDER, m_sCollectionPath);
+	DDX_Check(pDX, IDC_MAKE_GHOSTS, m_bMakeGhosts);
 	//}}AFX_DATA_MAP
 }
 
@@ -105,6 +107,7 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 	m_bWatchFolders		= Settings.Library.WatchFolders;
 	m_bBrowseFiles		= Settings.Community.ServeFiles;
 	m_bHighPriorityHash = Settings.Library.HighPriorityHash;
+	m_bMakeGhosts		= Settings.Library.CreateGhosts;
 
 	m_nRecentTotal		= Settings.Library.HistoryTotal;
 	m_nRecentDays		= Settings.Library.HistoryDays;
@@ -256,6 +259,7 @@ void CLibrarySettingsPage::OnOK()
 	Settings.Library.WatchFolders	= m_bWatchFolders;
 	Settings.Community.ServeFiles	= m_bBrowseFiles;
 	Settings.Library.HighPriorityHash=m_bHighPriorityHash;
+	Settings.Library.CreateGhosts	= m_bMakeGhosts;
 
 	Settings.Library.HistoryTotal	= m_nRecentTotal;
 	Settings.Library.HistoryDays	= m_nRecentDays;
