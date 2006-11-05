@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(CDeleteFileDlg, CSkinDialog)
 	ON_BN_CLICKED(IDC_DELETE_ALL, OnDeleteAll)
 	ON_CBN_SELCHANGE(IDC_GHOST_RATING, OnCbnChangeGhostRating)
 	ON_EN_CHANGE(IDC_RATE_COMMENTS, OnChangeComments)
+	ON_BN_CLICKED(IDC_CREATE_GHOST, OnClickedCreateGhost)
 END_MESSAGE_MAP()
 
 
@@ -187,9 +188,12 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
 
+	// fix me :(. the disabled box should have grey color
+	COLORREF crBack = COLOR_WINDOW;
+
 	dc.FillSolidRect( &rcItem,
 		GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
-		? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
+		? COLOR_HIGHLIGHT : crBack ) );
 	dc.SetBkMode( TRANSPARENT );
 
 	rcItem.DeflateRect( 4, 1 );
@@ -286,3 +290,11 @@ void CDeleteFileDlg::OnChangeComments()
 	UpdateData( FALSE );
 }
 
+
+void CDeleteFileDlg::OnClickedCreateGhost()
+{
+	m_bCreateGhost = !m_bCreateGhost;
+	m_wndOptions.EnableWindow( m_bCreateGhost );
+	m_wndRating.EnableWindow( m_bCreateGhost );
+	UpdateData( FALSE );
+}

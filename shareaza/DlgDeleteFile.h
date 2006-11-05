@@ -69,5 +69,6 @@ protected:
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnCbnChangeGhostRating();
 	afx_msg void OnChangeComments();
+	afx_msg void OnClickedCreateGhost();
 	DECLARE_MESSAGE_MAP()
 };
