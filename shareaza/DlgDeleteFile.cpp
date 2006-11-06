@@ -85,10 +85,16 @@ BOOL CDeleteFileDlg::OnInitDialog()
 		m_wndAll.EnableWindow( TRUE );
 		m_bAll = FALSE;
 	}
+	
+	DWORD nFlags = WS_CHILD|WS_TABSTOP|CBS_DROPDOWNLIST;
+	m_wndOptions.ModifyStyle( CBS_SORT, nFlags );
+	m_wndRating.ModifyStyle( CBS_SORT, nFlags|CBS_HASSTRINGS|CBS_OWNERDRAWFIXED );
+
+	UpdateData( FALSE );
+
 	RecalcDropWidth( &m_wndOptions );
 	m_sOriginalComments = m_sComments;
 	m_nOriginalRating = m_nRateValue;
-	UpdateData( FALSE );
 
 	if ( m_bCreateGhost )
 	{
