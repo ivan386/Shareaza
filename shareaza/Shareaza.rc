@@ -2880,10 +2880,10 @@ BEGIN
     CONTROL         "Create a ghost file",IDC_CREATE_GHOST,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,19,93,256,10
     LTEXT           "The reason for deleting:",IDC_STATIC,31,110,90,8
-    COMBOBOX        IDC_DELETE_OPTIONS,127,107,151,30,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_DELETE_OPTIONS,127,107,151,100,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "File rating:",IDC_STATIC,32,126,87,8
-    COMBOBOX        IDC_GHOST_RATING,127,124,151,30,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_GHOST_RATING,127,124,151,100,CBS_DROPDOWNLIST | 
                     CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | 
                     WS_TABSTOP
     LTEXT           "You can type a short note describing why you are deleting the file:",
