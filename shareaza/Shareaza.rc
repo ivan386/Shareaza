@@ -2877,19 +2877,19 @@ BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,8,59,276,1
     LTEXT           "Shareaza can remember this file and warn you if you come across it again in another search.  It will create a ghost file with your comments and rating.",
                     IDC_STATIC,12,63,264,25
-    LTEXT           "The reason for deleting:",IDC_STATIC,19,110,102,8
+    LTEXT           "The reason for deleting:",IDC_STATIC,31,110,90,8
     COMBOBOX        IDC_DELETE_OPTIONS,127,107,151,15,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
-    LTEXT           "File rating:",IDC_STATIC,20,126,87,8
+    LTEXT           "File rating:",IDC_STATIC,32,126,87,8
     COMBOBOX        IDC_GHOST_RATING,127,124,151,30,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | 
-                    WS_VSCROLL | WS_TABSTOP
+                    CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | 
+                    WS_TABSTOP
     LTEXT           "You can type a short note describing why you are deleting the file:",
                     IDC_RATE_PROMPT,12,144,264,8,WS_DISABLED
     EDITTEXT        IDC_RATE_COMMENTS,15,156,261,38,ES_MULTILINE | 
                     ES_AUTOHSCROLL | WS_DISABLED
     CONTROL         "Create a ghost file",IDC_CREATE_GHOST,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,19,93,101,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,93,256,10
 END
 
 IDD_COLLECTION_EXPORT DIALOGEX 0, 0, 355, 249

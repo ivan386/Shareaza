@@ -28,6 +28,8 @@
 #include "Download.h"
 #include "ShellIcons.h"
 #include "Settings.h"
+#include "Skin.h"
+#include "CoolInterface.h"
 
 IMPLEMENT_DYNAMIC(CDeleteFileDlg, CSkinDialog)
 
@@ -69,6 +71,7 @@ void CDeleteFileDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_GHOST_RATING, m_wndRating);
 	DDX_CBIndex(pDX, IDC_GHOST_RATING, m_nRateValue);
 	DDX_Check(pDX, IDC_CREATE_GHOST, m_bCreateGhost);
+	DDX_Control(pDX, IDC_RATE_PROMPT, m_wndPrompt);
 }
 
 BOOL CDeleteFileDlg::OnInitDialog()
@@ -83,7 +86,14 @@ BOOL CDeleteFileDlg::OnInitDialog()
 		m_bAll = FALSE;
 	}
 	RecalcDropWidth( &m_wndOptions );
+	m_sOriginalComments = m_sComments;
+	m_nOriginalRating = m_nRateValue;
 	UpdateData( FALSE );
+
+	if ( m_bCreateGhost )
+	{
+		m_wndOptions.SetFocus();
+	}
 
 	return FALSE;
 }
@@ -95,6 +105,16 @@ HBRUSH CDeleteFileDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	if ( pWnd == &m_wndName )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontBold );
+	}
+	else if ( pWnd == &m_wndPrompt && m_wndPrompt.IsWindowEnabled() &&
+			  m_nOption > 0 &&
+			  m_sComments.GetLength() == 0 && m_nRateValue == 0 )
+	{
+		CDC* pPromptDC = m_wndPrompt.GetDC();
+		if ( m_bCreateGhost || pPromptDC->GetTextColor() != RGB(255, 0, 0 ) )
+		{
+			pDC->SetTextColor( RGB(255, 0, 0 ) );
+		}
 	}
 
 	return hbr;
@@ -185,15 +205,24 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 	int nRating = lpDrawItemStruct->itemID;
 
 	CFont* pOldFont = (CFont*)dc.SelectObject( nRating > 0 ? &theApp.m_gdiFontBold : &theApp.m_gdiFont );
-	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
-		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
 
-	// fix me :(. the disabled box should have grey color
-	COLORREF crBack = COLOR_WINDOW;
+	// Prefill the background
+	BOOL bDisabled = ( lpDrawItemStruct->itemState & ODS_DISABLED );
 
-	dc.FillSolidRect( &rcItem,
-		GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
-		? COLOR_HIGHLIGHT : crBack ) );
+	if ( bDisabled )
+	{
+		dc.SetTextColor( CoolInterface.m_crDisabled );
+		dc.FillSolidRect( &rcItem, Skin.m_crDialog );
+	}
+	else
+	{
+		dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
+			? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
+		dc.FillSolidRect( &rcItem,
+			GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
+			? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
+	}
+
 	dc.SetBkMode( TRANSPARENT );
 
 	rcItem.DeflateRect( 4, 1 );
@@ -204,7 +233,7 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 		{
 			rcItem.right -= 16;
 			ShellIcons.Draw( &dc, SHI_STAR, 16, rcItem.right, rcItem.top, CLR_NONE,
-				( lpDrawItemStruct->itemState & ODS_SELECTED ) );
+				( lpDrawItemStruct->itemState & ODS_SELECTED ) || bDisabled );
 			rcItem.right -= 2;
 		}
 	}
@@ -212,7 +241,7 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 	{
 		rcItem.right -= 16;
 		ShellIcons.Draw( &dc, SHI_FAKE, 16, rcItem.right, rcItem.top, CLR_NONE,
-			( lpDrawItemStruct->itemState & ODS_SELECTED ) );
+			( lpDrawItemStruct->itemState & ODS_SELECTED ) || bDisabled );
 	}
 
 	if ( ( lpDrawItemStruct->itemState & ODS_SELECTED ) == 0 )
@@ -228,7 +257,7 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 			RGB( 0, 0, 255 ),		// 5 - Excellent
 		};
 
-		dc.SetTextColor( crRating[ nRating ] );
+		dc.SetTextColor( bDisabled ? CoolInterface.m_crDisabled : crRating[ nRating ] );
 	}
 
 	CString str;
@@ -241,30 +270,35 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 
 void CDeleteFileDlg::OnCbnChangeOptions()
 {
-	static const CString strOriginalComments = m_sComments;
 	UpdateData();
 
 	switch ( m_nOption )
 	{
 	case 0: // Original comments
-		m_sComments = strOriginalComments;
+		m_sComments = m_sOriginalComments;
+		m_nRateValue = m_nOriginalRating;
 		break;
 	case 1:	// Misnamed
 		m_sComments = _T("Incorrectly named \"") + m_sName + _T("\"");
+		m_nRateValue = 1;
 		break;
 	case 2:	// Poor Quality
 		m_sComments = _T("Very poor quality");
+		m_nRateValue = 2;
 		break;
 	case 3:	// Fake
 		m_sComments = _T("Fake/corrupt");
+		m_nRateValue = 1;
 		break;
 	case 4: // New comments
-		m_sComments = strOriginalComments;
+		m_sComments = m_sOriginalComments;
+		m_nRateValue = m_nOriginalRating;
 		break;
 	}
 
 	m_wndComments.SetWindowText( m_sComments );
 	m_wndComments.EnableWindow( m_nOption > 0 );
+	m_wndPrompt.EnableWindow( m_nOption > 0 );
 
 	if ( m_nOption > 0 )
 	{
@@ -273,6 +307,7 @@ void CDeleteFileDlg::OnCbnChangeOptions()
 	}
 
 	m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
+	m_wndPrompt.Invalidate();
 	UpdateData( FALSE );
 }
 
@@ -280,6 +315,7 @@ void CDeleteFileDlg::OnCbnChangeGhostRating()
 {
 	UpdateData( TRUE );
 	m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
+	m_wndPrompt.Invalidate();
 	UpdateData( FALSE );
 }
 
@@ -287,6 +323,7 @@ void CDeleteFileDlg::OnChangeComments()
 {
 	UpdateData( TRUE );
 	m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
+	m_wndPrompt.Invalidate();
 	UpdateData( FALSE );
 }
 
@@ -296,5 +333,8 @@ void CDeleteFileDlg::OnClickedCreateGhost()
 	m_bCreateGhost = !m_bCreateGhost;
 	m_wndOptions.EnableWindow( m_bCreateGhost );
 	m_wndRating.EnableWindow( m_bCreateGhost );
+	m_wndComments.EnableWindow( m_bCreateGhost && m_nOption > 0 );
+	m_wndPrompt.EnableWindow( m_bCreateGhost && m_nOption > 0 );
+	m_wndPrompt.Invalidate();
 	UpdateData( FALSE );
 }

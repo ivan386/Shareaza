@@ -44,7 +44,11 @@ public:
 	CStatic m_wndName;
 	CString m_sComments;
 	CString m_sName;
-	BOOL m_nRateValue;
+	int m_nRateValue;
+
+private:
+	CString m_sOriginalComments;
+	int m_nOriginalRating;
 	CButton m_wndOK;
 	CEdit m_wndComments;
 	CButton m_wndAll;
@@ -52,6 +56,7 @@ public:
 	int m_nOption;
 	CComboBox m_wndRating;
 	BOOL m_bCreateGhost;
+	CStatic m_wndPrompt;
 
 // Operations
 public:
