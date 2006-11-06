@@ -294,6 +294,8 @@ public:
 		for ( size_t i = 13052 ; i < 13055 ; ++i ) cTable[ i ] = TCHAR( i - 524 );
 		// map Katakana middle dot to space, since no API identifies it as a punctuation
 		cTable[ 12539 ] = cTable[ 65381 ] = L' ';
+		// map CJK Fullwidth space to halfwidth space
+		cTable[ 12288 ] = L' ';
 		// convert japanese halfwidth sound marks to fullwidth
 		// all forms should be mapped; we need NFKD here
 		cTable[ 65392 ] = TCHAR( 12540 );
