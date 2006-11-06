@@ -94,6 +94,13 @@ BOOL CDeleteFileDlg::OnInitDialog()
 	{
 		m_wndOptions.SetFocus();
 	}
+	else
+	{
+		m_wndOptions.EnableWindow( FALSE );
+		m_wndRating.EnableWindow( FALSE );
+		m_wndComments.EnableWindow( FALSE );
+		m_wndPrompt.EnableWindow( FALSE );
+	}
 
 	return FALSE;
 }
