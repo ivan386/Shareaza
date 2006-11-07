@@ -427,6 +427,11 @@ void CShareazaApp::InitResources()
 		// Windows 2003 or Win XP x64
 		m_bLimitedConnections = TRUE;
 	}
+	else if ( m_dwWindowsVersion == 6 && m_dwWindowsVersionMinor == 0 )
+	{
+		// Windows Vista
+		m_bLimitedConnections = TRUE;
+	}
 
 	//Get the amount of installed memory.
 	m_nPhysicalMemory = 0;
