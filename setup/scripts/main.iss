@@ -320,6 +320,10 @@ Type: files; Name: "{app}\Skins\Languages\default-es-mx.xml"
 Type: files; Name: "{app}\Skins\Languages\default-es-mx.ico"
 Type: files; Name: "{app}\Skins\Languages\default-en.xml"
 
+; Old japanese Translation code used to be "jp" but now it is "ja"
+Type: files; Name: "{app}\Skins\Languages\default-jp.ico"
+Type: files; Name: "{app}\Skins\Languages\default-jp.xml"
+
 ; Clean up old Shareaza icons
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"; Check: NSISUsed
 Type: files; Name: "{userdesktop}\Shareaza.lnk"; Tasks: not desktopicon
