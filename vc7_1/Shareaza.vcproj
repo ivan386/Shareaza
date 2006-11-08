@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="Shareaza"
-	ProjectGUID="{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}">
+	ProjectGUID="{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}"
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -102,6 +102,7 @@
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
+				AssemblerOutput="2"
 				ProgramDataBaseFileName="$(IntDir)/"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="TRUE"/>
@@ -114,6 +115,10 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib;Powrprof.lib;msi.lib"
+				GenerateMapFile="TRUE"
+				MapFileName="$(SolutionDir)$(ConfigurationName)/$(ProjectName).map"
+				MapExports="TRUE"
+				MapLines="TRUE"
 				OptimizeReferences="2"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -3128,6 +3133,22 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\debug\shareaza\Shareaza_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4668;4820"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\release\shareaza\Shareaza_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -3143,22 +3164,6 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\shareaza\Shareaza_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
