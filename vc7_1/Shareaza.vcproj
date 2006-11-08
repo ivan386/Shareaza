@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="Shareaza"
-	ProjectGUID="{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}"
+	ProjectGUID="{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
