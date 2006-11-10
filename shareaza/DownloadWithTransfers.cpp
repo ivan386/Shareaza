@@ -307,7 +307,6 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 	
 	BOOL bConnected = Network.IsConnected();
 	CDownloadSource* pConnectHead = NULL;
-	CDownloadSource* pPushHead = NULL;
 
 	// If BT preferencing is on, check them first
 	if ( ( m_oBTH ) && ( Settings.BitTorrent.PreferenceBTSources ) )
@@ -341,7 +340,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		}
 		else if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( ( tNow - Downloads.m_tBandwidthAtMaxED2K ) < 5000 ) ) 
 		{
-			// ED2K use (Ratio) is maxxed out, no point in starting new transfers
+			// ED2K use (Ratio) is maxed out, no point in starting new transfers
 		}
 		else if ( pSource->m_bPushOnly == FALSE )
 		{
@@ -363,30 +362,42 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		}
 		else
 		{
-			if ( pSource->m_tAttempt == 0 )
+			if ( pConnectHead->m_tAttempt == 0 )
 			{
-				if ( pPushHead == NULL && pSource->CanInitiate( bConnected, FALSE ) ) pPushHead = pSource;
+				if ( pConnectHead == NULL && pSource->CanInitiate( bConnected, FALSE ) ) pConnectHead = pSource;
 			}
 			else if ( pSource->m_tAttempt <= tNow )
 			{
 				if ( ! Settings.Downloads.NeverDrop ) pSource->Remove( TRUE, TRUE );
 			}
 		}
-		
+
+		if ( pConnectHead != NULL ) break;
 		pSource = pNext;
 	}
 	
 	if ( pConnectHead != NULL )
 	{
-		CDownloadTransfer* pTransfer = pConnectHead->CreateTransfer();
-		return pTransfer != NULL && pTransfer->Initiate();
-	}
-	
-	if ( pPushHead != NULL )
-	{
-		if ( Network.GetStableTime() < 15 ) return FALSE;
-		if ( pPushHead->PushRequest() ) return FALSE;
-		if ( ! Settings.Downloads.NeverDrop ) pPushHead->Remove( TRUE, TRUE );
+		if ( pConnectHead->m_bPushOnly )
+		{
+			if ( Network.GetStableTime() < 15 || pConnectHead->PushRequest() ) 
+			{
+				SortSource( pConnectHead, FALSE );
+			}
+			else
+			{
+				if ( ! Settings.Downloads.NeverDrop ) 
+					pConnectHead->Remove( TRUE, FALSE );
+				else
+					SortSource( pConnectHead, FALSE );
+			}
+			return TRUE;
+		}
+		else
+		{
+			CDownloadTransfer* pTransfer = pConnectHead->CreateTransfer();
+			return ( pTransfer != NULL && pTransfer->Initiate() );
+		}
 	}
 	
 	return FALSE;
