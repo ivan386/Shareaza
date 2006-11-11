@@ -12,8 +12,9 @@ To compile a debug build without any files uncomment "#define debug" in main.iss
 Compile procedure for Shareaza:
 1)	Place Shareaza.exe in \setup\builds\
 2)	Place skin.exe in \setup\builds\
-3)	Compile repair.iss
-4)	Compile main.iss
+3)	Place Shareaza.pdb in \setup\builds\ only for the debug builds of Shareaza
+4)	Compile repair.iss
+5)	Compile main.iss
 
 Compile procedure for TorrentAid:
 1)	Place TorrentWizard.exe in \setup\builds\
