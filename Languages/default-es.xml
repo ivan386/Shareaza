@@ -1476,7 +1476,7 @@
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">C O N E C T A T E</heading>
 			<newline gap="8" indent="42"/>
-			<text>Bienvenido a Shareaza! &#160;No has seleccionado ninguna Red Par A Par. &#160;</text>
+			<text>Bienvenido a Shareaza! &#160;No has seleccionado ninguna Red Peer to Peer. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">¡Haz Click Aquí Para Empezar!</link>
 			<newline gap="18" indent="0"/>
 		</group>
