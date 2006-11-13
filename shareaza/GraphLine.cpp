@@ -334,6 +334,6 @@ void CLineGraph::PaintLegend(CDC* pDC, CRect* pRect)
 	{
 		CGraphItem* pItem = GetNextItem( pos );
 		pDC->SetTextColor( pItem->m_nColour );
-		pDC->ExtTextOut( nLeft, nTop, 0, NULL, _T("• ") + pItem->m_sName, NULL );
+		pDC->ExtTextOut( nLeft, nTop, 0, NULL, _T("\x2022 ") + pItem->m_sName, NULL );
 	}
 }
