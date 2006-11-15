@@ -40,6 +40,8 @@
 #include "DownloadTransferED2K.h"
 #include "UploadTransferED2K.h"
 #include "SourceURL.h"
+#include "ImageServices.h"
+#include "ThumbCache.h"
 
 #include "ChatCore.h"
 #include "Security.h"
@@ -81,7 +83,7 @@ CEDClient::CEDClient()
 	m_bEmPeerCache	= FALSE;		// Not supported
 	m_bEmBrowse		= FALSE;		// Not over ed2k
 	m_bEmMultiPacket= FALSE;		// Not supported
-	m_bEmPreview	= FALSE;		// Not over ed2k
+	m_bEmPreview	= FALSE;
 	
 	// Misc stuff
 	m_bLogin		= FALSE;
@@ -633,6 +635,8 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 			return OnSourceRequest( pPacket );
 		case ED2K_C2C_ANSWERSOURCES:
 			return OnSourceAnswer( pPacket );
+		case ED2K_C2C_REQUESTPREVIEW:
+			return OnRequestPreview( pPacket );
 		case ED2K_C2C_PREVIEWANWSER:
 			return OnPreviewAnswer( pPacket );
 
@@ -743,7 +747,7 @@ void CEDClient::SendHello(BYTE nType)
 				 ( FALSE << 3) |						// Peer Cache
 				 ( TRUE << 2) |							// No browse
 				 ( FALSE << 1) |						// Multipacket
-				 ( FALSE ) );							// Preview
+				 ( TRUE ) );							// Preview
 
 	CEDTag( ED2K_CT_FEATUREVERSIONS, nVersion ).Write( pPacket );
 
@@ -1485,6 +1489,119 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	}
 	return TRUE;
 }
+
+//////////////////////////////////////////////////////////////////////
+// CEDClient file preview request
+
+BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
+{
+	if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount )
+	{
+		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
+		return TRUE;
+	}
+	else if ( Security.IsDenied( &m_pHost.sin_addr ) )  // Extra security check
+	{
+		theApp.Message( MSG_ERROR, _T("ED2K upload to %s blocked by security rules."), m_sAddress);
+		return TRUE;
+	}
+
+	Hashes::Ed2kHash oHash;
+	pPacket->Read( oHash );
+	Beep( 5000, 1000 );
+
+	CSingleLock oLock( &Library.m_pSection, TRUE );
+
+	CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( oHash, TRUE, TRUE );
+
+	// We own this file and previews are enabled
+	if ( pFile && Settings.Uploads.SharePreviews )
+	{
+		if ( Settings.eDonkey.EnableToday || !Settings.Connection.RequireForTransfers )
+		{
+			CEDPacket* pReply = CEDPacket::New( ED2K_C2C_PREVIEWANWSER, ED2K_PROTOCOL_EMULE );
+			pReply->Write( oHash );
+
+			CImageServices pServices;
+			CImageFile pImage( &pServices );
+			CThumbCache pCache;
+			CSize szThumb( 0, 0 );
+			CString sFilePath = pFile->GetPath();
+			DWORD nIndex = pFile->m_nIndex;
+
+			if ( pCache.Load( sFilePath, &szThumb, nIndex, &pImage ) )
+			{
+				// Got a cached copy
+			}
+			else if ( Settings.Uploads.DynamicPreviews && pImage.LoadFromFile( sFilePath, FALSE, TRUE ) && pImage.EnsureRGB() )
+			{
+				theApp.Message( MSG_DEFAULT, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)pFile->m_sName, (LPCTSTR)m_sAddress );
+
+				int nSize = szThumb.cy * pImage.m_nWidth / pImage.m_nHeight;
+
+				if ( nSize > szThumb.cx )
+				{
+					nSize = szThumb.cx * pImage.m_nHeight / pImage.m_nWidth;
+					pImage.Resample( szThumb.cx, nSize );
+				}
+				else
+				{
+					pImage.Resample( nSize, szThumb.cy );
+				}
+
+				pCache.Store( sFilePath, &szThumb, nIndex, &pImage );
+			}
+			else
+			{
+				theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_EMPTY, (LPCTSTR)m_sAddress, (LPCTSTR)pFile->m_sName );
+				Send( pReply ); // Not an image packet
+				return TRUE;
+			}
+
+			if ( ! pFile->m_bCachedPreview )
+			{
+				CQuickLock oLock( Library.m_pSection );
+				if ( ( pFile = Library.LookupFile( nIndex ) ) != NULL )
+				{
+					pFile->m_bCachedPreview = TRUE;
+					Library.Update();
+				}
+			}
+
+			BYTE* pBuffer = NULL;
+			DWORD nImageSize = 0;
+			const int nFrames = 1;
+
+			if ( ! pImage.SaveToMemory( _T(".png"), Settings.Uploads.PreviewQuality, 
+				 &pBuffer, &nImageSize ) )
+			{
+				theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_EMPTY, (LPCTSTR)m_sAddress, (LPCTSTR)pFile->m_sName );
+				Send( pReply );
+				return TRUE; // Not an image packet
+			}
+
+			pServices.Cleanup();
+
+			pReply->Write( (LPCVOID)&nFrames, 1 );	// We send only 1 frame
+			pReply->WriteLongLE( nImageSize );
+			pReply->Write( (LPCVOID)pBuffer, nImageSize );
+			delete [] pBuffer;
+
+			// Send reply
+			Send( pReply );
+			theApp.Message( MSG_DEFAULT, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)pFile->m_sName,
+				(LPCTSTR)m_sAddress );
+		}
+		else
+			return TRUE;
+	}
+	oLock.Unlock();
+
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CEDClient file preview answer
 
 BOOL CEDClient::OnPreviewAnswer(CEDPacket* pPacket)
 {

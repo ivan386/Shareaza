@@ -818,8 +818,20 @@ void CDownloadsWnd::OnDownloadsViewReviews()
 
 void CDownloadsWnd::OnUpdateDownloadsRemotePreview(CCmdUI* pCmdUI) 
 {
-	Prepare();
+	int nSelected = 0;
 
+	for ( POSITION pos = Downloads.GetIterator() ; pos && nSelected < 3 ; )
+	{
+		CDownload* pDownload = Downloads.GetNext( pos );
+		if ( pDownload->m_bSelected ) nSelected++;
+	}
+
+	if ( nSelected == 1 )
+		Prepare();
+	else
+		m_bSelRemotePreviewCapable = FALSE;
+
+	// Allow only 1 request
 	pCmdUI->Enable( m_bSelRemotePreviewCapable );
 }
 
@@ -832,40 +844,43 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 
-		// Check if the saved preview file is available first
-		if ( pDownload->m_bSelected && !pDownload->m_bGotPreview ) 
+		if ( pDownload->m_bSelected )
 		{
-			for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; 
-				  pSource = pSource->m_pNext )
+			// Check if the saved preview file is available first
+			if ( !pDownload->m_bGotPreview ) 
 			{
-				if ( pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull )
+				for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; 
+					pSource = pSource->m_pNext )
 				{
-					if ( pSource->m_nProtocol == PROTOCOL_ED2K )
+					if ( pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull )
 					{
-						pEDClient = EDClients.GetByGUID( pSource->m_oGUID );
+						if ( pSource->m_nProtocol == PROTOCOL_ED2K )
+						{
+							pEDClient = EDClients.GetByGUID( pSource->m_oGUID );
 
-						// Find first client which supports previews
-						if ( pEDClient && pEDClient->m_bEmPreview && !pEDClient->m_bPreviewRequestSent )
-							break;
-					}
-					else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bClientExtended && 
-						_tcsncmp( pSource->m_sServer, _T("Shareaza"), 8 ) == 0 )
-					{
-						// ToDo: get preview from Shareaza clients
+							// Find first client which supports previews
+							if ( pEDClient && pEDClient->m_bEmPreview && !pEDClient->m_bPreviewRequestSent )
+								break;
+						}
+						else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bClientExtended && 
+							_tcsncmp( pSource->m_sServer, _T("Shareaza"), 8 ) == 0 )
+						{
+							// ToDo: get preview from Shareaza clients
+						}
 					}
 				}
-			}
 
-			if ( pEDClient )
-			{
-				pEDClient->SendPreviewRequest( pDownload );
-				pDownload->m_bWaitingPreview = TRUE;
-				pDownload->m_tPreviewRequest = GetTickCount();
+				if ( pEDClient )
+				{
+					pEDClient->SendPreviewRequest( pDownload );
+					pDownload->m_bWaitingPreview = TRUE;
+					pDownload->m_tPreviewRequest = GetTickCount();
+				}
 			}
-		}
-		else if ( pDownload->m_bGotPreview )
-		{
-			pDownload->m_bWaitingPreview = TRUE; // OnTimer event will launch it
+			else if ( pDownload->m_bGotPreview )
+			{
+				pDownload->m_bWaitingPreview = TRUE; // OnTimer event will launch it
+			}
 		}
 	}
 }
