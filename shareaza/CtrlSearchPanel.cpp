@@ -514,11 +514,15 @@ void CSearchInputBox::OnSkinChange()
 	
 	LoadString( strCaption, IDS_SEARCH_PANEL_START );
 	m_wndStart.SetWindowText( strCaption );
-	m_wndStart.SetIcon( CoolInterface.ExtractIcon( ID_SEARCH_SEARCH ) );
+	HICON hIcon = CoolInterface.ExtractIcon( ID_SEARCH_SEARCH );
+	if ( hIcon )
+		m_wndStart.SetIcon( hIcon );
 
 	LoadString( strCaption, IDS_SEARCH_PANEL_STOP );
 	m_wndStop.SetWindowText( strCaption );
-	m_wndStop.SetIcon( CoolInterface.ExtractIcon( ID_SEARCH_STOP ) );
+	hIcon = CoolInterface.ExtractIcon( ID_SEARCH_STOP );
+	if ( hIcon )
+		m_wndStop.SetIcon( hIcon );
 }
 
 void CSearchInputBox::OnSize(UINT nType, int cx, int cy) 

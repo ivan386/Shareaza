@@ -64,48 +64,41 @@ END_INTERFACE_MAP()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile construction
 
-CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName)
+CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
+	m_pNextSHA1( NULL ),
+	m_pNextTiger( NULL ),
+	m_pNextED2K( NULL ),
+	m_nScanCookie( 0 ),
+	m_nUpdateCookie( 0 ),
+	m_nSelectCookie( 0 ),
+	m_nListCookie( 0 ),
+	m_pFolder( pFolder ),
+	m_sName( pszName ? pszName : _T("") ),
+	m_nIndex( 0 ),
+	m_bShared( TS_UNKNOWN ),
+	m_nSize( 0 ),
+	m_nVirtualBase( 0 ),
+	m_nVirtualSize( 0 ),
+	m_bVerify( TS_UNKNOWN ),
+	m_pSchema( NULL ),
+	m_pMetadata( NULL ),
+	m_bMetadataAuto( FALSE ),
+	m_nRating( 0 ),
+	m_nHitsToday( 0 ),
+	m_nHitsTotal( 0 ),
+	m_nUploadsToday( 0 ),
+	m_nUploadsTotal( 0 ),
+	m_bCachedPreview( FALSE ),
+	m_bBogus( FALSE ),
+	m_nSearchCookie( 0 ),
+	m_nSearchWords( 0 ),
+	m_pNextHit( NULL ),
+	m_nCollIndex( 0 ),
+	m_nIcon16( -1 )
 {
+	ZeroMemory( &m_pTime, sizeof(m_pTime) );
+	ZeroMemory( &m_pMetadataTime, sizeof(m_pMetadataTime) );
 	EnableDispatch( IID_ILibraryFile );
-	
-	m_pFolder		= pFolder;
-	m_pNextSHA1		= NULL;
-	m_pNextTiger	= NULL;
-	m_pNextED2K		= NULL;
-	m_nScanCookie	= 0;
-	m_nUpdateCookie	= 0;
-	m_nSelectCookie	= 0;
-	
-	m_nIndex		= 0;
-	m_nSize			= 0;
-	m_bShared		= TS_UNKNOWN;
-	m_nVirtualBase	= 0;
-	m_nVirtualSize	= 0;
-	
-//	m_bSHA1			= FALSE;
-//	m_bTiger		= FALSE;
-//	m_bMD5			= FALSE;
-//	m_bED2K			= FALSE;
-	m_bVerify		= TS_UNKNOWN;
-	
-	m_pSchema		= NULL;
-	m_pMetadata		= NULL;
-	m_bMetadataAuto	= FALSE;
-	m_nRating		= 0;
-	
-	m_nHitsToday		= 0;
-	m_nHitsTotal		= 0;
-	m_nUploadsToday		= 0;
-	m_nUploadsTotal		= 0;
-	m_bCachedPreview	= FALSE;
-	m_bBogus			= FALSE;
-	
-	m_nSearchCookie	= 0;
-	m_nSearchWords	= 0;
-	m_nCollIndex	= 0;
-	m_nIcon16		= -1;
-	
-	if ( pszName != NULL ) m_sName = pszName;
 }
 
 CLibraryFile::~CLibraryFile()
@@ -1172,6 +1165,8 @@ BOOL CLibraryFile::OnVerifyDownload(const Hashes::Sha1Hash& oSHA1, const Hashes:
 
 CSharedSource::CSharedSource(LPCTSTR pszURL, FILETIME* pTime)
 {
+	ZeroMemory( &m_pTime, sizeof( m_pTime ) );
+
 	if ( pszURL != NULL )
 	{
 		m_sURL = pszURL;

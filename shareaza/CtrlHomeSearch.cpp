@@ -136,12 +136,13 @@ void CHomeSearchCtrl::Setup(COLORREF crWindow)
 	m_wndSearch.SetWindowText( strCaption );
 	HICON hIcon = CoolInterface.ExtractIcon( ID_SEARCH_SEARCH );
 	if ( hIcon )
-	m_wndSearch.SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
+		m_wndSearch.SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
 
 	LoadString( strCaption, IDS_SEARCH_PANEL_ADVANCED );
 	m_wndAdvanced.SetWindowText( strCaption + _T('\x2026') );
 	hIcon = CoolInterface.ExtractIcon( ID_SEARCH_DETAILS );
-	m_wndAdvanced.SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
+	if ( hIcon )
+		m_wndAdvanced.SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
 
 	LoadString( m_wndSchema.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 
