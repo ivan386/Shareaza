@@ -94,6 +94,7 @@ CEDClient::CEDClient()
 
 	m_bOpenChat		= FALSE;
 	m_bCommentSent	= FALSE;
+	m_bPreviewRequestSent = FALSE;
 	
 	m_mInput.pLimit		= &Settings.Bandwidth.Request;
 	m_mOutput.pLimit	= &Settings.Bandwidth.Request;
@@ -632,7 +633,9 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 			return OnSourceRequest( pPacket );
 		case ED2K_C2C_ANSWERSOURCES:
 			return OnSourceAnswer( pPacket );
-	
+		case ED2K_C2C_PREVIEWANWSER:
+			return OnPreviewAnswer( pPacket );
+
 		default:
 			CString str;
 			str.Format( _T("Unrecognised packet - IP: %s - emule - type: 0x%x - in CEDClient::OnPacket"),
@@ -1013,6 +1016,15 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 	DeriveVersion();
 	
 	return TRUE;
+}
+
+void CEDClient::SendPreviewRequest(CDownload* pDownload)
+{
+	CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_REQUESTPREVIEW, ED2K_PROTOCOL_EMULE );
+	pPacket->Write( pDownload->m_oED2K );
+	
+	Send( pPacket );
+	m_bPreviewRequestSent = TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1471,6 +1483,68 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 		// Chat is disabled- don't open a chat window. Display in system window instead.
 		theApp.Message( MSG_DEFAULT, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
 	}
+	return TRUE;
+}
+
+BOOL CEDClient::OnPreviewAnswer(CEDPacket* pPacket)
+{
+	if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount )
+	{
+		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
+		// We don't do if that was the answer to our request; just leave.
+		return TRUE;
+	}
+
+	Hashes::Ed2kHash oHash;
+	pPacket->Read( oHash );
+	CDownload* pDownload = NULL;
+
+	if ( pPacket->GetRemaining() > 1 + 4 ) // The file has preview
+	{
+		// Check only downloads. Previews become unneeded when the download is completed.
+		if ( ( pDownload = Downloads.FindByED2K( oHash ) ) != NULL )
+		{
+			int nFrames = 0;
+			pPacket->Read( (void*)&nFrames, 1 );
+			if ( nFrames > 0 )
+			{
+				for ( int nFrame = 0 ; nFrame < nFrames ; nFrame++ )
+				{
+					DWORD nFrameSize = pPacket->ReadLongLE(); 
+					if ( pPacket->GetRemaining() < static_cast<int>( nFrameSize ) )
+					{
+						theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, 
+							(LPCTSTR)m_sAddress, pPacket->m_nType );
+
+						pDownload->m_tPreviewRequest = 0;		// The sign to try the next source
+						return TRUE;
+					}
+					else
+					{
+						CFile pFile;
+						
+						if ( pFile.Open( pDownload->m_sDiskName + L".png", CFile::modeCreate|CFile::modeWrite ) )
+						{
+							BYTE szByte = 0;
+
+							// Write only the first frame
+							for ( DWORD nByte = 0 ; nByte < nFrameSize ; nByte++ )
+							{
+								szByte = pPacket->ReadByte();
+								pFile.Write( &szByte, 1 );
+							}
+							pFile.Close();
+							pDownload->m_bGotPreview = TRUE;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	pDownload->m_tPreviewRequest = 0; // The sign to try the next source
+
 	return TRUE;
 }
 

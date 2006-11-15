@@ -82,7 +82,8 @@ public:
 
 	BOOL		m_bOpenChat;
 	BOOL		m_bCommentSent;
-	
+	BOOL		m_bPreviewRequestSent;
+
 // Operations
 public:
 	BOOL	ConnectTo(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID);
@@ -101,6 +102,7 @@ public:
 	BOOL	SeekNewDownload(CDownloadSource* pExcept = NULL);
 	inline  void OpenChat() { m_bOpenChat = TRUE; }
 	BOOL	SendCommentsPacket(int nRating, LPCTSTR pszComments);
+	void	SendPreviewRequest(CDownload* pDownload);
 protected:
 	void	DeriveSoftwareVersion();		// ID clients using the newer 'SoftwareVersion' tag
 	void	DeriveVersion();				// ID clients using the older method(s)
@@ -129,6 +131,7 @@ protected:
 	BOOL	OnQueueRequest(CEDPacket* pPacket);
 	BOOL	OnSourceRequest(CEDPacket* pPacket);
 	BOOL	OnSourceAnswer(CEDPacket* pPacket);
+	BOOL	OnPreviewAnswer(CEDPacket* pPacket);
 	BOOL	OnMessage(CEDPacket* pPacket);
 public:
 	BOOL	OnUdpReask(CEDPacket* pPacket);

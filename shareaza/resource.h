@@ -1451,6 +1451,7 @@
 #define ID_LIBRARY_ADD                  32838
 #define ID_LIBRARY_PROPERTIES           32839
 #define ID_LIBRARY_COLUMNS              32840
+#define ID_DOWNLOADS_REMOTE_PREVIEW     32841
 #define ID_DOWNLOADS_CLEAR_PAUSED       32842
 #define ID_UPLOADS_LAUNCH               32843
 #define ID_UPLOADS_DISCONNECT           32844

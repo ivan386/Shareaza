@@ -5659,12 +5659,13 @@ BEGIN
     ID_DOWNLOADS_SOURCES    "Search for more sources for the selected download(s)."
     ID_DOWNLOADS_LAUNCH     "Preview the selected file(s) in place."
     ID_DOWNLOADS_CLEAR      "Clear/remove the selected download(s)."
+    ID_DOWNLOADS_REMOTE_PREVIEW "Download preview image for the selected download."
 END
 
 STRINGTABLE 
 BEGIN
     ID_DOWNLOADS_PAUSE      "Pause the selected download(s)."
-    ID_DOWNLOADS_VIEW_REVIEWS "View reviews for the selected download"
+    ID_DOWNLOADS_VIEW_REVIEWS "View reviews for the selected download."
     ID_LIBRARY_EXPLORE      "Open the selected folder(s)."
     ID_LIBRARY_SCAN         "Scan the selected folders or files for changes."
     ID_LIBRARY_SHARED_FILE  "Share or unshare the selected files."

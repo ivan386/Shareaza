@@ -88,7 +88,7 @@ protected:
 	BOOL			m_bSelSourceAcceptConnections;
 	BOOL			m_bSelSourceExtended;
 	BOOL			m_bSelHasReviews;
-
+	BOOL			m_bSelRemotePreviewCapable;
 	BOOL			m_bConnectOkay;
 
 // Overrides
@@ -115,6 +115,8 @@ protected:
 	afx_msg void OnDownloadsLaunch();
 	afx_msg void OnUpdateDownloadsViewReviews(CCmdUI* pCmdUI);
 	afx_msg void OnDownloadsViewReviews();
+	afx_msg void OnUpdateDownloadsRemotePreview(CCmdUI* pCmdUI);
+	afx_msg void OnDownloadsRemotePreview();
 	afx_msg void OnUpdateDownloadsSources(CCmdUI* pCmdUI);
 	afx_msg void OnDownloadsSources();
 	afx_msg void OnDownloadsClearCompleted();

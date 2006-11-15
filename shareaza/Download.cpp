@@ -67,7 +67,7 @@ CDownload::CDownload()
 	m_tBegan		= 0;
 	
 	m_bDownloading	= FALSE;
-	
+
 	DownloadGroups.Link( this );
 }
 
@@ -168,6 +168,7 @@ void CDownload::Remove(BOOL bDelete)
 	DeletePreviews();
 	
 	::DeleteFile( m_sDiskName + _T(".sd") );
+	::DeleteFile( m_sDiskName + _T(".png") );
 	
 	Downloads.Remove( this );
 }
@@ -596,6 +597,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		if ( bSuccess ) Save();
 	}
 	
+	m_bGotPreview = GetFileAttributes( m_sDiskName + L".png" ) != INVALID_FILE_ATTRIBUTES;
 	m_nSaveCookie = m_nCookie;
 	
 	return bSuccess;

@@ -45,6 +45,10 @@ CDownloadWithExtras::CDownloadWithExtras()
 	m_pReviewFirst	= NULL;
 	m_pReviewLast	= NULL;
 	m_nReviewCount	= 0;
+	m_bWaitingPreview = FALSE;
+	m_tPreviewRequest = 0;
+	m_bRemotePreviewCapable = FALSE;
+	m_bGotPreview = FALSE;
 }
 
 CDownloadWithExtras::~CDownloadWithExtras()

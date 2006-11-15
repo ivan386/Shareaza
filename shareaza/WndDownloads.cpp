@@ -28,6 +28,8 @@
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
 #include "DownloadGroups.h"
+#include "EDClient.h"
+#include "EDClients.h"
 
 #include "Library.h"
 #include "LibraryMaps.h"
@@ -86,6 +88,8 @@ BEGIN_MESSAGE_MAP(CDownloadsWnd, CPanelWnd)
 	ON_COMMAND(ID_DOWNLOADS_LAUNCH, OnDownloadsLaunch)
 	ON_UPDATE_COMMAND_UI(ID_DOWNLOADS_VIEW_REVIEWS, OnUpdateDownloadsViewReviews)
 	ON_COMMAND(ID_DOWNLOADS_VIEW_REVIEWS, OnDownloadsViewReviews)
+	ON_UPDATE_COMMAND_UI(ID_DOWNLOADS_REMOTE_PREVIEW, OnUpdateDownloadsRemotePreview)
+	ON_COMMAND(ID_DOWNLOADS_REMOTE_PREVIEW, OnDownloadsRemotePreview)
 	ON_UPDATE_COMMAND_UI(ID_DOWNLOADS_SOURCES, OnUpdateDownloadsSources)
 	ON_COMMAND(ID_DOWNLOADS_SOURCES, OnDownloadsSources)
 	ON_COMMAND(ID_DOWNLOADS_CLEAR_COMPLETED, OnDownloadsClearCompleted)
@@ -354,6 +358,17 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 	// Window Update event (2 second timer)
     if ( ( nIDEvent == 2 ) && ( m_pDragList == NULL ) )
 	{
+		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+		{
+			CDownload* pDownload = Downloads.GetNext( pos );
+			if ( pDownload->m_bGotPreview && pDownload->m_bWaitingPreview )
+			{
+				pDownload->m_bWaitingPreview = FALSE;
+				CFile pFile;
+				CFileExecutor::Execute( pDownload->m_sDiskName + L".png", TRUE, TRUE );
+			}
+		}
+
 		// If the window is visible or hasn't been updated in 10 seconds
 		if ( ( IsWindowVisible() && IsActive( FALSE ) ) || ( ( GetTickCount() - m_tLastUpdate ) > 10*1000 ) )
 		{
@@ -482,6 +497,7 @@ void CDownloadsWnd::Prepare()
 	m_bSelShareConsistent = TRUE;
 	m_bSelMoreSourcesOK = FALSE;
 	m_bSelSourceAcceptConnections = m_bSelSourceExtended = m_bSelHasReviews = FALSE;
+	m_bSelRemotePreviewCapable = FALSE;
 	
 	m_bConnectOkay = FALSE;
 	
@@ -541,6 +557,8 @@ void CDownloadsWnd::Prepare()
 				m_bSelHasReviews = TRUE;
 		}
 		
+		pDownload->m_bRemotePreviewCapable = FALSE;
+
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 		{
 			if ( pSource->m_bSelected )
@@ -556,6 +574,29 @@ void CDownloadsWnd::Prepare()
 				if ( ! pSource->m_bPushOnly ) m_bSelSourceAcceptConnections = TRUE;
 				m_bSelSourceExtended = pSource->m_bClientExtended;
 			}
+
+			// Check if we could get remote previews
+			if ( pDownload->m_bSelected && pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull )
+			{
+				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
+				{
+					CEDClient* pEDClient = EDClients.GetByGUID( pSource->m_oGUID );
+					if ( pEDClient && pEDClient->m_bEmPreview && !pEDClient->m_bPreviewRequestSent )
+					{
+						pDownload->m_bRemotePreviewCapable = TRUE;
+					}
+				}
+				else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bClientExtended && 
+						  _tcsncmp( pSource->m_sServer, _T("Shareaza"), 8 ) == 0 )
+				{
+					// ToDo: get preview from Shareaza clients
+				}
+			}
+		}
+
+		if ( pDownload->m_bSelected )
+		{
+			m_bSelRemotePreviewCapable = pDownload->m_bRemotePreviewCapable || pDownload->m_bGotPreview;
 		}
 	}
 		
@@ -765,12 +806,66 @@ void CDownloadsWnd::OnDownloadsViewReviews()
 		CDownload* pDownload = Downloads.GetNext( pos );
 		if ( pDownload->m_bSelected && ( pDownload->GetReviewCount() >= 0 ) ) 
 		{
-			// Make sure data is locked while initialising the dialog
+			// Make sure data is locked while initializing the dialog
 			CDownloadReviewDlg dlg( NULL, pDownload );
 			pLock.Unlock();
 
 			dlg.DoModal();
 			return;
+		}
+	}
+}
+
+void CDownloadsWnd::OnUpdateDownloadsRemotePreview(CCmdUI* pCmdUI) 
+{
+	Prepare();
+
+	pCmdUI->Enable( m_bSelRemotePreviewCapable );
+}
+
+void CDownloadsWnd::OnDownloadsRemotePreview() 
+{
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CEDClient* pEDClient = NULL;
+
+	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+	{
+		CDownload* pDownload = Downloads.GetNext( pos );
+
+		// Check if the saved preview file is available first
+		if ( pDownload->m_bSelected && !pDownload->m_bGotPreview ) 
+		{
+			for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; 
+				  pSource = pSource->m_pNext )
+			{
+				if ( pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull )
+				{
+					if ( pSource->m_nProtocol == PROTOCOL_ED2K )
+					{
+						pEDClient = EDClients.GetByGUID( pSource->m_oGUID );
+
+						// Find first client which supports previews
+						if ( pEDClient && pEDClient->m_bEmPreview && !pEDClient->m_bPreviewRequestSent )
+							break;
+					}
+					else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bClientExtended && 
+						_tcsncmp( pSource->m_sServer, _T("Shareaza"), 8 ) == 0 )
+					{
+						// ToDo: get preview from Shareaza clients
+					}
+				}
+			}
+
+			if ( pEDClient )
+			{
+				pEDClient->SendPreviewRequest( pDownload );
+				pDownload->m_bWaitingPreview = TRUE;
+				pDownload->m_tPreviewRequest = GetTickCount();
+			}
+		}
+		else if ( pDownload->m_bGotPreview )
+		{
+			pDownload->m_bWaitingPreview = TRUE; // OnTimer event will launch it
 		}
 	}
 }

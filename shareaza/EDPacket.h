@@ -228,6 +228,8 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_FILEDESC				0x61
 #define ED2K_C2C_REQUESTSOURCES			0x81
 #define ED2K_C2C_ANSWERSOURCES			0x82
+#define ED2K_C2C_REQUESTPREVIEW			0x90
+#define ED2K_C2C_PREVIEWANWSER			0x91
 
 // Client - Client, UDP
 #define ED2K_C2C_UDP_REASKFILEPING		0x90

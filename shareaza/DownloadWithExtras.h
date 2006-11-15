@@ -65,7 +65,7 @@ protected:
 	
 // Attributes
 private:
-	CList< CString >				m_pPreviews;
+	CList< CString >		m_pPreviews;
 	CDownloadMonitorDlg*	m_pMonitorWnd;
 	CFilePreviewDlg*		m_pPreviewWnd;
 
@@ -73,7 +73,13 @@ protected:
 	CDownloadReview*	m_pReviewFirst;
 	CDownloadReview*	m_pReviewLast;
 	int					m_nReviewCount;
-	
+
+public:
+	BOOL				m_bRemotePreviewCapable;
+	BOOL				m_bWaitingPreview;	// The remote preview request was sent
+	DWORD				m_tPreviewRequest;	// The time when preview request was sent
+	BOOL				m_bGotPreview;
+
 // Operations
 public:
 	BOOL		Preview(CSingleLock* pLock = NULL);
@@ -86,7 +92,7 @@ public:
 	BOOL		AddReview(CDownloadReview* pReview);
 	void		DeleteReviews();
 	void		DeleteReview(CDownloadReview* pReview);
-	int	GetReviewCount() const { return m_nReviewCount; }
+	int			GetReviewCount() const { return m_nReviewCount; }
 	int			GetReviewAverage() const;
 protected:
 	virtual void Serialize(CArchive& ar, int nVersion);
