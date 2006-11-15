@@ -79,6 +79,7 @@
 	<command code="32838" id="ID_LIBRARY_ADD"/>
 	<command code="32839" id="ID_LIBRARY_PROPERTIES"/>
 	<command code="32840" id="ID_LIBRARY_COLUMNS"/>
+	<command code="32841" id="ID_DOWNLOADS_REMOTE_PREVIEW"/>
 	<command code="32842" id="ID_DOWNLOADS_CLEAR_PAUSED"/>
 	<command code="32843" id="ID_UPLOADS_LAUNCH"/>
 	<command code="32844" id="ID_UPLOADS_DISCONNECT"/>

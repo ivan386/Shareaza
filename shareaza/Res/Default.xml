@@ -884,6 +884,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
@@ -899,6 +900,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
@@ -2440,7 +2442,7 @@
 		<image id="ID_LIBRARY_VIEW_DETAIL"/>
 		<image id="ID_LIBRARY_VIEW_ICON"/>
 		<image id="ID_LIBRARY_VIEW_LIST"/>
-		<image id="ID_LIBRARY_VIEW_THUMBNAIL"/>
+		<image id="ID_LIBRARY_VIEW_THUMBNAIL" id1="ID_DOWNLOADS_REMOTE_PREVIEW"/>
 		<image id="ID_LIBRARY_PARENT"/>
 		<image id="ID_LIBRARY_PANEL" id1="ID_SEARCH_DETAILS"/>
 		<!-- Media Player -->
