@@ -628,6 +628,8 @@ ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 	{ ED2K_C2C_ASKSHAREDFILES,		_T("Browse") },
 	{ ED2K_C2C_ASKSHAREDFILESANSWER,_T("BrowseResp") },
 	{ ED2K_C2C_MESSAGE,				_T("Message") },
+	{ ED2K_C2C_REQUESTPREVIEW,		_T("RequestPreview") },
+	{ ED2K_C2C_PREVIEWANWSER,		_T("Preview") },
 
 	{ 0, NULL }
 };
