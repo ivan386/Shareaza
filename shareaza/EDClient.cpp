@@ -1656,6 +1656,8 @@ BOOL CEDClient::OnPreviewAnswer(CEDPacket* pPacket)
 					}
 				}
 			}
+
+			pDownload->m_tPreviewRequest = 0; // The sign to try the next source
 		}
 		else
 		{
@@ -1671,8 +1673,6 @@ BOOL CEDClient::OnPreviewAnswer(CEDPacket* pPacket)
 			return TRUE;
 		}
 	}
-
-	pDownload->m_tPreviewRequest = 0; // The sign to try the next source
 
 	return TRUE;
 }
