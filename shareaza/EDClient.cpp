@@ -747,7 +747,7 @@ void CEDClient::SendHello(BYTE nType)
 				 ( FALSE << 3) |						// Peer Cache
 				 ( TRUE << 2) |							// No browse
 				 ( FALSE << 1) |						// Multipacket
-				 ( TRUE ) );							// Preview
+				 ( Settings.Uploads.SharePreviews ) );	// Preview
 
 	CEDTag( ED2K_CT_FEATUREVERSIONS, nVersion ).Write( pPacket );
 
