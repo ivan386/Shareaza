@@ -1594,16 +1594,6 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 		else
 			return TRUE;
 	}
-	else if ( pFile == NULL )
-	{
-		// Check if we had this file shared or deleted it
-		pFile = LibraryMaps.LookupFileByED2K( oHash );
-		if ( pFile && pFile->m_nRating == 1 || pFile == NULL )
-		{
-			// Someone tried to spam us with ads
-			Security.Ban( &m_pHost.sin_addr, banWeek, FALSE );
-		}
-	}
 	oLock.Unlock();
 
 	return TRUE;
@@ -1666,6 +1656,19 @@ BOOL CEDClient::OnPreviewAnswer(CEDPacket* pPacket)
 					}
 				}
 			}
+		}
+		else
+		{
+			CSingleLock oLock( &Library.m_pSection, TRUE );
+
+			CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( oHash );
+			if ( pFile == NULL )
+			{
+				// Someone tried to spam us with ads
+				Security.Ban( &m_pHost.sin_addr, banWeek, FALSE );
+			}
+			oLock.Unlock();
+			return TRUE;
 		}
 	}
 
