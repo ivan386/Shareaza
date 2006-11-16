@@ -1508,7 +1508,6 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 
 	Hashes::Ed2kHash oHash;
 	pPacket->Read( oHash );
-	Beep( 5000, 1000 );
 
 	CSingleLock oLock( &Library.m_pSection, TRUE );
 
