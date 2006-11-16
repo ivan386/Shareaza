@@ -63,8 +63,11 @@
 #include <new>
 #include <typeinfo>
 
-#define BOOST_BIND_ENABLE_STDCALL 1
-#define BOOST_MEM_FN_ENABLE_STDCALL 1
+#ifndef _WIN64
+	#define BOOST_BIND_ENABLE_STDCALL 1
+	#define BOOST_MEM_FN_ENABLE_STDCALL 1
+#endif
+
 #include <boost/static_assert.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/bind.hpp>
