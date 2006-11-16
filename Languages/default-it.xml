@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 36 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 37 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -17,7 +17,7 @@
 		description="Shareaza Default Italian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.2.27"
+		version="2.2.3.0"
 		type="Language"
 		language="it"
 		prompt="Clicca qui per selezionare l'Italiano come lingua predefinita."
@@ -2582,6 +2582,7 @@
 	<string id="8134" value="Stai per iniziare una nuova ricerca. Desideri azzerare i risultati della ricerca precedente?"/>
 	<string id="8135" value="Nessun Metadata"/>
 	<string id="8136" value="Ricerca Plain Text"/>
+	<string id="8137" value="Colonne no schema"/>
 	<string id="8141" value="Mostra il Pannello Ricerche"/>
 	<string id="8142" value="Nascondi il Pannello Ricerche"/>
 	<string id="8143" value="Sto cercando..."/>
@@ -2866,6 +2867,7 @@
 	<string id="16375" value="Parziali"/>
 	<string id="16376" value="Tutti i file"/>
 	<string id="16377" value="Guardia HTTP"/>
+	<string id="16379" value="File della libreria"/>
 	<string id="16384" value="Desideri eseguire il file &quot;%s&quot; ?\n\nAlcuni file potrebbero essere pericolosi per il tuo computer. Assicurati di conoscere la natura del file prima di eseguirlo."/>
 	<string id="16385" value="Stai per modificare i metadata di %i file, desideri continuare?"/>
 	<string id="16386" value="Modifica dei metadata di %i file."/>
@@ -3546,11 +3548,13 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Proprietà della coda di upload">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Proprietà della coda di upload">
 		<control caption="_Nome:"/>
 		<control/>
 		<control caption="_Criteri:"/>
 		<control caption="Solo file scaricati parzialmente"/>
+		<control caption="Solo file della libreria condivisi"/>
+		<control caption="File parziali e della libreria"/>
 		<control caption="Dimensione minima del file:"/>
 		<control/>
 		<control caption="Dimensione massima del file:"/>
@@ -4022,10 +4026,10 @@
 		<control caption="Annulla"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStStBuBu" caption="Copia URI">
+	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copia URI">
 		<control/>
 		<control caption="Puoi copiare una URI per l'elemento selezionato in una varietà di formati diversi.  Scegli il formato che vuoi utilizzare cliccando su uno degli URI seguenti:"/>
-		<control/><control/><control/><control/>
+		<control/><control/><control/>
 		<control caption="Includi _me stesso come fonte stabile nell'URL"/>
 		<control caption="Annulla"/>
 	</dialog>
