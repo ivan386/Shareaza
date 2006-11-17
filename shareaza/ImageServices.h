@@ -46,6 +46,7 @@ public:
 // Static Load Tool
 public:
 	static BOOL	LoadBitmap(CBitmap* pBitmap, UINT nResourceID, LPCTSTR pszType);
+	BOOL IsFileViewable(LPCTSTR pszPath);
 
 // Implementation
 private:

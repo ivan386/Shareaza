@@ -279,6 +279,26 @@ SAFEARRAY* CImageServices::ImageToArray(CImageFile* pFile)
 	return pOutput;
 }
 
+BOOL CImageServices::IsFileViewable(LPCTSTR pszPath)
+{
+	LPTSTR pszExt = _tcsrchr( pszPath, '.' );
+
+	if ( pszExt )
+	{
+		LPCTSTR pszExtLow = _tcslwr( pszExt );
+
+		// Loads only once and add
+		PluginInfo service = GetService( pszPath );
+		if ( !service.first )
+			return FALSE;
+
+		if ( Plugins.LookupEnable( service.second, FALSE, pszExtLow ) )
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CImageServices service discovery and control
 
@@ -329,6 +349,14 @@ CImageServices::PluginInfo CImageServices::LoadService(const CString& strType)
 	{
 		//theApp.Message( MSG_DEBUG, _T("CImageServices::CoCreateInstance() -> %lu"), hResult );
 		return PluginInfo();
+	}
+
+	// Just add to the plugin collection for the reference
+    CPlugin* pPlugin = NULL;
+	if ( ( pPlugin = Plugins.Find( oCLSID ) ) == NULL ) 
+	{
+		pPlugin = new CPlugin( oCLSID, L"ImageService" );
+		Plugins.m_pList.AddTail( pPlugin );
 	}
 
 	return PluginInfo(

@@ -49,6 +49,7 @@
 #include "Uploads.h"
 #include "UploadQueue.h"
 #include "UploadQueues.h"
+#include "ImageServices.h"
 
 #include "XML.h"
 #include "Schema.h"
@@ -325,9 +326,10 @@ BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int /*nIndex*/)
 
 		if ( Settings.Uploads.SharePreviews )
 		{
-			if (	pFile->m_bCachedPreview ||
-					_tcsistr( pFile->m_sName, _T(".jpg") ) ||
-					_tcsistr( pFile->m_sName, _T(".png") ) )
+			CImageServices pServices;
+			bool bPreviewEnabled = pServices.IsFileViewable( (LPCTSTR)pFile->m_sName ) == TRUE;
+
+			if ( pFile->m_bCachedPreview || Settings.Uploads.DynamicPreviews && bPreviewEnabled )
 			{
 				bPreview = TRUE;
 			}

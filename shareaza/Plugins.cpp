@@ -354,6 +354,15 @@ BOOL CPlugins::OnEnqueueFile(LPCTSTR pszFile)
 	return FALSE;
 }
 
+CPlugin* CPlugins::Find(REFCLSID pCLSID) const
+{
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CPlugin* pPlugin = GetNext( pos );
+		if ( pPlugin->m_pCLSID == pCLSID )
+			return pPlugin;
+	}
+}
 
 //////////////////////////////////////////////////////////////////////
 // CPlugin construction

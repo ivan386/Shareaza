@@ -45,7 +45,8 @@ public:
 	void		Enumerate();
 	void		Clear();
 	BOOL		LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL bEnableDefault = TRUE);
-	BOOL		LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt = NULL );
+	BOOL		LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt = NULL);
+	CPlugin*	Find(REFCLSID pCLSID) const;
 public:
 	void		OnSkinChanged();
 	void		RegisterCommands();
