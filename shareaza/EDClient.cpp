@@ -1638,8 +1638,8 @@ BOOL CEDClient::OnPreviewAnswer(CEDPacket* pPacket)
 					else
 					{
 						CFile pFile;
-						
-						if ( pFile.Open( pDownload->m_sDiskName + L".png", CFile::modeCreate|CFile::modeWrite ) )
+						CString strPath = pDownload->m_sDiskName + L".png";
+						if ( pFile.Open( strPath, CFile::modeCreate|CFile::modeWrite ) )
 						{
 							BYTE szByte = 0;
 
@@ -1650,6 +1650,9 @@ BOOL CEDClient::OnPreviewAnswer(CEDPacket* pPacket)
 								pFile.Write( &szByte, 1 );
 							}
 							pFile.Close();
+
+							// Make it hidden, so the files won't be shared
+							SetFileAttributes( (LPCTSTR)strPath, FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM );
 							pDownload->m_bGotPreview = TRUE;
 							break;
 						}
