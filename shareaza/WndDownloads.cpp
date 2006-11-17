@@ -586,10 +586,10 @@ void CDownloadsWnd::Prepare()
 						pDownload->m_bRemotePreviewCapable = TRUE;
 					}
 				}
-				else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bClientExtended && 
-						  _tcsncmp( pSource->m_sServer, _T("Shareaza"), 8 ) == 0 )
+				else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bPreview )
 				{
-					// ToDo: get preview from Shareaza clients
+					// ToDo: Disabled, since no support yet
+					// pDownload->m_bRemotePreviewCapable = TRUE;
 				}
 			}
 		}
@@ -862,10 +862,9 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 							if ( pEDClient && pEDClient->m_bEmPreview && !pEDClient->m_bPreviewRequestSent )
 								break;
 						}
-						else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bClientExtended && 
-							_tcsncmp( pSource->m_sServer, _T("Shareaza"), 8 ) == 0 )
+						else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bPreview )
 						{
-							// ToDo: get preview from Shareaza clients
+							// ToDo: make async requests. We don't need to be sure if we get the answer
 						}
 					}
 				}

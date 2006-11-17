@@ -80,6 +80,8 @@ public:
 	FILETIME			m_tLastSeen;
 	int					m_nGnutella;
 	BOOL				m_bClientExtended;		// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
+	BOOL				m_bPreview;				// Does the user allow previews?
+	BOOL				m_sPreview;				// if empty it has the default /gnutella/preview/v1?urn:xyz format
 public:
 	DWORD				m_nSortOrder;			// How should this source be sorted in the list?
 	int					m_nColour;

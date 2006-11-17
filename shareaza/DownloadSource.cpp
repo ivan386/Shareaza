@@ -131,6 +131,13 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 	{
 		m_oGUID = pHit->m_oClientID;
 		m_bClientExtended = TRUE;
+		if ( pHit->m_nProtocol == PROTOCOL_G2 )
+		{
+			m_bPreview = pHit->m_bPreview;
+			m_sPreview = pHit->m_sPreview;
+		}
+		else
+			m_bPreview = FALSE;
 	}
 	else if ( pHit->m_nProtocol == PROTOCOL_ED2K )
 	{
