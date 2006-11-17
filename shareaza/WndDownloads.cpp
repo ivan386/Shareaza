@@ -877,7 +877,7 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 					pDownload->m_tPreviewRequest = GetTickCount();
 				}
 			}
-			else if ( pDownload->m_bGotPreview )
+			else
 			{
 				pDownload->m_bWaitingPreview = TRUE; // OnTimer event will launch it
 			}

@@ -1,7 +1,7 @@
 //
 // PageSettingsPlugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,6 +36,7 @@ IMPLEMENT_DYNCREATE(CPluginsSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CPluginsSettingsPage, CSettingsPage)
 	//{{AFX_MSG_MAP(CPluginsSettingsPage)
+	ON_WM_TIMER()
 	ON_NOTIFY(LVN_ITEMCHANGING, IDC_PLUGINS, OnItemChangingPlugins)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_PLUGINS, OnItemChangedPlugins)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_PLUGINS, OnCustomDrawPlugins)
@@ -99,7 +100,7 @@ BOOL CPluginsSettingsPage::OnInitDialog()
 	m_wndList.InsertGroup( 0, &pGroup );
 	*/
 
-	UpdateList();
+	SetTimer( 1, 100, NULL );
 	m_wndSetup.EnableWindow( FALSE );
 
 	return TRUE;
@@ -313,14 +314,18 @@ void CPluginsSettingsPage::EnumerateGenericPlugins()
 	for ( POSITION pos = Plugins.GetIterator() ; pos ; )
 	{
 		CPlugin* pPlugin = Plugins.GetNext( pos );
-		int nImage = 0;
 
-		if ( pPlugin->m_hIcon != NULL ) 
-			nImage = m_gdiImageList.Add( theApp.m_bRTL ? CreateMirroredIcon ( pPlugin->m_hIcon ) : 
-				pPlugin->m_hIcon );
+		if ( pPlugin->m_sName.GetLength() )
+		{
+			int nImage = 0;
 
-		InsertPlugin( pPlugin->GetStringCLSID(), pPlugin->m_sName, nImage,
-			pPlugin->m_pPlugin != NULL ? TS_TRUE : TS_FALSE, pPlugin );
+			if ( pPlugin->m_hIcon != NULL ) 
+				nImage = m_gdiImageList.Add( theApp.m_bRTL ? CreateMirroredIcon ( pPlugin->m_hIcon ) : 
+			pPlugin->m_hIcon );
+
+			InsertPlugin( pPlugin->GetStringCLSID(), pPlugin->m_sName, nImage,
+				pPlugin->m_pPlugin != NULL ? TS_TRUE : TS_FALSE, pPlugin );
+		}
 	}
 }
 
@@ -362,6 +367,8 @@ void CPluginsSettingsPage::EnumerateMiscPlugins(LPCTSTR pszType, HKEY hRoot)
 
 	for ( DWORD nIndex = 0 ; ; nIndex++ )
 	{
+		CWaitCursor pCursor;
+
 		DWORD nName = 128, nValue = 128, nType = REG_SZ;
 		TCHAR szName[128], szValue[128];
 
@@ -524,7 +531,6 @@ void CPluginsSettingsPage::UpdateList()
 
 	if ( ! IsWindowVisible() || m_wndList.GetItemCount() == 0 )
 	{
-		CWaitCursor pCursor;
 		m_bRunning = FALSE;
 
 		m_wndList.DeleteAllItems();
@@ -532,6 +538,14 @@ void CPluginsSettingsPage::UpdateList()
 		EnumerateMiscPlugins();
 
 		m_bRunning = TRUE;
-		pCursor.Restore();
+	}
+}
+
+void CPluginsSettingsPage::OnTimer(UINT /*nIDEvent*/)
+{
+	if ( IsWindowVisible() )
+	{
+		KillTimer( 1 );
+		UpdateList();
 	}
 }

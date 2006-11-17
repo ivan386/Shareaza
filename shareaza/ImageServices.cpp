@@ -351,11 +351,15 @@ CImageServices::PluginInfo CImageServices::LoadService(const CString& strType)
 		return PluginInfo();
 	}
 
-	// Just add to the plugin collection for the reference
+	// Just add to the plugin collection for the reference of CLSID.
+	// Not a very nice solution but without checking all plugins
+	// Shareaza holds only 1 plugin in the Plugins collection... 
+
     CPlugin* pPlugin = NULL;
 	if ( ( pPlugin = Plugins.Find( oCLSID ) ) == NULL ) 
 	{
-		pPlugin = new CPlugin( oCLSID, L"ImageService" );
+		// Put an empty name, so it won't be displayed in the Settings
+		pPlugin = new CPlugin( oCLSID, L"" );
 		Plugins.m_pList.AddTail( pPlugin );
 	}
 
