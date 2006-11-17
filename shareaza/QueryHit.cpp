@@ -1033,13 +1033,9 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 		}
 		else if ( strcmp( szType, "PVU" ) == 0 )
 		{
-			if ( nPacket == 0 )
+			m_bPreview = TRUE;
+			if ( nPacket != 0 )
 			{
-				m_bPreview = TRUE;
-			}
-			else
-			{
-				m_bPreview = TRUE;
 				m_sPreview = pPacket->ReadString( nPacket );
 			}
 		}

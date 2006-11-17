@@ -151,7 +151,8 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 						_tcsistr( pHit->m_sName, _T(".mpeg") ) ||
 						_tcsistr( pHit->m_sName, _T(".avi") ) ||
 						_tcsistr( pHit->m_sName, _T(".jpg") ) ||
-						_tcsistr( pHit->m_sName, _T(".jpeg") ) )
+						_tcsistr( pHit->m_sName, _T(".jpeg") ) ||
+						_tcsistr( pHit->m_sName, _T(".doc") ) )
 			{
 				CString strURL;
 				strURL.Format( _T("http://%s:%i/gnutella/preview/v1?%s"),
