@@ -1,7 +1,7 @@
 //
 // LibraryList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,162 +19,144 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_LIBRARYLIST_H__C045FFC3_F813_4962_94D0_FC5E9E4A7BA3__INCLUDED_)
-#define AFX_LIBRARYLIST_H__C045FFC3_F813_4962_94D0_FC5E9E4A7BA3__INCLUDED_
-
 #pragma once
 
 class CLibraryFile;
+class CLibraryFolder;
+class CAlbumFolder;
 
+class CLibraryListItem
+{
+public:
+	CLibraryListItem();
+	CLibraryListItem(DWORD val);
+	CLibraryListItem(CLibraryFile* val);
+	CLibraryListItem(CAlbumFolder* val);
+	CLibraryListItem(CLibraryFolder* val);
+	CLibraryListItem(const CLibraryListItem& val);
+	bool operator == (const CLibraryListItem& val) const;
+	bool operator != (const CLibraryListItem& val) const;
+	operator DWORD () const;
+	operator CLibraryFile* () const;
+	operator CAlbumFolder* () const;
+	operator CLibraryFolder* () const;
+	CLibraryListItem& operator = (const CLibraryListItem& val);
+
+public:
+	enum {
+		Empty = 0, LibraryFile, AlbumFolder, LibraryFolder
+	}					Type;
+
+protected:
+	union {
+		DWORD			dwLibraryFile;
+		CAlbumFolder*	pAlbumFolder;
+		CLibraryFolder*	pLibraryFolder;
+	};
+};
 
 class CLibraryList : public CComObject
 {
-// Construction
-public:
-	CLibraryList(int nBlockSize = 16);
-	virtual ~CLibraryList();
+	DECLARE_DYNCREATE(CLibraryList)
 
 // Attributes
 protected:
-	DWORD* m_pList;
-	INT_PTR		m_nCount;
-	INT_PTR		m_nBuffer;
-	INT_PTR		m_nBlock;
+	CList < CLibraryListItem, CLibraryListItem > m_List;
 
 // Operations
 public:
 	inline INT_PTR GetCount() const
 	{
-		return m_nCount;
+		return m_List.GetCount();
 	}
 
 	inline BOOL IsEmpty() const
 	{
-		return m_nCount == 0;
+		return m_List.IsEmpty();
 	}
 
-	inline DWORD GetHead() const
+	inline CLibraryListItem& GetHead()
 	{
-		ASSERT( m_nCount > 0 );
-		return m_pList[ 0 ];
+		return m_List.GetHead();
 	}
 
-	inline DWORD GetTail() const
+	inline CLibraryListItem& GetTail()
 	{
-		ASSERT( m_nCount > 0 );
-		return m_pList[ m_nCount - 1 ];
-	}
-
-	inline POSITION GetIterator() const
-	{
-		return m_nCount ? (POSITION)1 : NULL;
+		return m_List.GetTail();
 	}
 
 	inline POSITION GetHeadPosition() const
 	{
-		return m_nCount ? (POSITION)1 : NULL;
+		return m_List.GetHeadPosition();
+	}
+
+	inline POSITION GetIterator() const
+	{
+		return m_List.GetHeadPosition();
 	}
 
 	inline POSITION GetTailPosition() const
 	{
-		return m_nCount ? (POSITION)m_nCount : NULL;
+		return m_List.GetTailPosition();
 	}
 
-	inline DWORD GetPrev(POSITION& pos) const
+	inline CLibraryListItem GetPrev(POSITION& pos) const
 	{
-		INT_PTR nPos = (INT_PTR)pos;
-		ASSERT( nPos > 0 && nPos <= m_nCount );
-		DWORD nItem = m_pList[ --nPos ];
-		if ( nPos < 1 || nPos > m_nCount ) nPos = NULL;
-		pos = (POSITION)nPos;
-		return nItem;
+		return m_List.GetPrev( pos );
 	}
 
-	inline DWORD GetNext(POSITION& pos) const
+	inline CLibraryListItem GetNext(POSITION& pos) const
 	{
-		INT_PTR nPos = (INT_PTR)pos;
-		ASSERT( nPos > 0 && nPos <= m_nCount );
-		DWORD nItem = m_pList[ ++nPos - 2 ];
-		if ( nPos < 1 || nPos > m_nCount ) nPos = NULL;
-		pos = (POSITION)nPos;
-		return nItem;
+		return m_List.GetNext( pos );
 	}
 
-	inline POSITION AddHead(DWORD nItem)
+	inline POSITION AddHead(CLibraryListItem nItem)
 	{
-		if ( m_nCount == m_nBuffer )
-		{
-			m_nBuffer += m_nBlock;
-			m_pList = (DWORD*)realloc( m_pList, sizeof(DWORD) * m_nBuffer );
-		}
-		MoveMemory( m_pList + 1, m_pList, sizeof(DWORD) * m_nCount );
-		m_pList[ 0 ] = nItem;
-		m_nCount++;
-		return (POSITION)1;
+		return m_List.AddHead( nItem );
 	}
 
-	inline POSITION AddTail(DWORD nItem)
+	inline POSITION AddTail(CLibraryListItem nItem)
 	{
-		if ( m_nCount == m_nBuffer )
-		{
-			m_nBuffer += m_nBlock;
-			m_pList = (DWORD*)realloc( m_pList, sizeof(DWORD) * m_nBuffer );
-		}
-		m_pList[ m_nCount++ ] = nItem;
-		return (POSITION)m_nCount;
+		return m_List.AddTail( nItem );
 	}
 
-	inline POSITION CheckAndAdd(DWORD nItem)
+	inline POSITION CheckAndAdd(CLibraryListItem nItem)
 	{
 		return ( Find( nItem ) == NULL ) ? AddTail( nItem ) : NULL;
 	}
 
-	inline DWORD RemoveHead()
+	inline CLibraryListItem RemoveHead()
 	{
-		ASSERT( m_nCount > 0 );
-		DWORD nItem = m_pList[ 0 ];
-		m_nCount--;
-		MoveMemory( m_pList, m_pList + 1, sizeof(DWORD) * m_nCount );
-		return nItem;
+		return m_List.RemoveHead();
 	}
 
-	inline DWORD RemoveTail()
+	inline CLibraryListItem RemoveTail()
 	{
-		ASSERT( m_nCount > 0 );
-		return m_pList[ --m_nCount ];
+		return m_List.RemoveTail();
 	}
 
 	inline void RemoveAt(POSITION pos)
 	{
-		INT_PTR nPos = (INT_PTR)pos;
-		ASSERT( nPos > 0 && nPos <= m_nCount );
-		MoveMemory( m_pList + nPos - 1, m_pList + nPos, sizeof(DWORD) * ( m_nCount - nPos ) );
-		m_nCount--;
+		m_List.RemoveAt( pos );
 	}
 
 	inline void RemoveAll()
 	{
-		m_nCount = 0;
+		m_List.RemoveAll();
 	}
 
-	inline POSITION Find(DWORD nItem) const
+	inline POSITION Find(CLibraryListItem nItem) const
 	{
-		DWORD* pSeek = m_pList;
-		for ( INT_PTR nCount = m_nCount ; nCount ; nCount--, pSeek++ )
-		{
-			if ( *pSeek == nItem ) return (POSITION)( m_nCount - nCount + 1 );
-		}
-		return NULL;
+		return m_List.Find( nItem );
 	}
 
-// Operations
-public:
-	CLibraryFile*	GetNextFile(POSITION& pos) const;
-	int				Merge(CLibraryList* pList);
-
+	CLibraryFile*	GetNextFile(POSITION& pos);
+	INT_PTR			Merge(CLibraryList* pList);
 
 // Automation
-protected:
+public:
+	DECLARE_INTERFACE_MAP()
+
 	BEGIN_INTERFACE_PART(GenericView, IGenericView)
 		DECLARE_DISPATCH()
 		STDMETHOD(get_Name)(BSTR FAR* psName);
@@ -186,15 +168,11 @@ protected:
 	END_INTERFACE_PART(GenericView)
 
 	BEGIN_INTERFACE_PART(EnumVARIANT, IEnumVARIANT)
-		STDMETHOD(Next)(THIS_ DWORD celt, VARIANT FAR* rgvar, DWORD FAR* pceltFetched);
-		STDMETHOD(Skip)(THIS_ DWORD celt);
-		STDMETHOD(Reset)(THIS);
-		STDMETHOD(Clone)(THIS_ IEnumVARIANT FAR* FAR* ppenum);
+		XEnumVARIANT();
+		STDMETHOD(Next)(DWORD celt, VARIANT* rgvar, DWORD* pceltFetched);
+		STDMETHOD(Skip)(DWORD celt);
+		STDMETHOD(Reset)();
+		STDMETHOD(Clone)(IEnumVARIANT** ppenum);
 		POSITION m_pos;
 	END_INTERFACE_PART(EnumVARIANT)
-
-	DECLARE_INTERFACE_MAP()
-
 };
-
-#endif // !defined(AFX_LIBRARYLIST_H__C045FFC3_F813_4962_94D0_FC5E9E4A7BA3__INCLUDED_)

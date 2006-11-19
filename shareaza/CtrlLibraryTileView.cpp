@@ -27,7 +27,6 @@
 #include "AlbumFolder.h"
 #include "Schema.h"
 #include "CtrlLibraryFrame.h"
-#include "CtrlLibraryTree.h"
 #include "CtrlLibraryTileView.h"
 #include "DlgFolderProperties.h"
 #include "CoolInterface.h"
@@ -92,9 +91,12 @@ void CLibraryTileView::clear()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTileView create and destroy
 
-BOOL CLibraryTileView::PreCreateWindow(CREATESTRUCT& cs)
+BOOL CLibraryTileView::Create(CWnd* pParentWnd)
 {
-	return CLibraryView::PreCreateWindow( cs );
+	CRect rect( 0, 0, 0, 0 );
+	SelClear( FALSE );
+	return CWnd::Create( NULL, _T("CLibraryTileView"),
+		WS_CHILD|WS_TABSTOP|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
 }
 
 int CLibraryTileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -267,7 +269,7 @@ bool CLibraryTileView::Select(iterator pTile, TRISTATE bSelect)
 	{
 		m_nSelected++;
 		m_oSelTile.push_back( pTile );
-		SelAdd( (DWORD)pTile->m_pFolder );
+		SelAdd( pTile->m_pFolder );
 	}
 	else
 	{
@@ -276,7 +278,7 @@ bool CLibraryTileView::Select(iterator pTile, TRISTATE bSelect)
 		if ( pos != m_oSelTile.end() )
 		{
 			m_oSelTile.erase( pos );
-			SelRemove( (DWORD)pTile->m_pFolder );
+			SelRemove( pTile->m_pFolder );
 		}
 	}
 
@@ -301,7 +303,7 @@ bool CLibraryTileView::DeselectAll(iterator pTile)
 bool CLibraryTileView::DeselectAll()
 {
 	return DeselectAll( end() );
-	}
+}
 
 bool CLibraryTileView::SelectTo(iterator pTile)
 {
@@ -525,7 +527,13 @@ void CLibraryTileView::OnPaint()
 		if ( rcBlock.bottom >= rcClient.top && dc.RectVisible( &rcBlock ) )
 		{
 			pBuffer->FillSolidRect( &rcBuffer, CoolInterface.m_crWindow );
+			bool bSelected = pTile->m_bSelected;
+			if ( m_oDropItem == CLibraryListItem ( pTile->m_pFolder ) )
+			{
+				pTile->m_bSelected = true;
+			}
 			pTile->Paint( pBuffer, rcBuffer, &dcMem );
+			pTile->m_bSelected = bSelected;
 			dc.BitBlt( rcBlock.left, rcBlock.top, m_szBlock.cx, m_szBlock.cy,
 				pBuffer, 0, 0, SRCCOPY );
 			dc.ExcludeClipRect( &rcBlock );
@@ -544,7 +552,7 @@ void CLibraryTileView::OnPaint()
 	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
 }
 
- CLibraryTileView::iterator CLibraryTileView::HitTest(const CPoint& point)
+CLibraryTileView::iterator CLibraryTileView::HitTest(const CPoint& point)
 {
 	CRect rcClient;
 	GetClientRect( &rcClient );
@@ -567,6 +575,16 @@ void CLibraryTileView::OnPaint()
 	}
 
 	return end();
+}
+
+CLibraryListItem CLibraryTileView::DropHitTest( const CPoint& point )
+{
+	iterator pTile = HitTest( point );
+	if ( pTile != end() )
+	{
+		return pTile->m_pFolder;
+	}
+	return CLibraryListItem();
 }
 
 bool CLibraryTileView::GetItemRect(iterator pTile, CRect* pRect)
@@ -605,9 +623,8 @@ void CLibraryTileView::OnLButtonDown(UINT nFlags, CPoint point)
 	if ( SelectTo( pHit ) ) Invalidate();
 
 	SetFocus();
-	SetCapture();
 
-	if ( pHit != end() && ( nFlags & MK_RBUTTON ) == 0 && Settings.Library.ShowVirtual )
+	if ( pHit != end() && ( nFlags & MK_RBUTTON ) == 0 )
 	{
 		m_bDrag = TRUE;
 		m_ptDrag = point;
@@ -618,7 +635,7 @@ void CLibraryTileView::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CLibraryTileView::OnMouseMove(UINT nFlags, CPoint point)
 {
-	if ( m_bDrag & ( nFlags & MK_LBUTTON ) )
+	if ( m_bDrag && ( nFlags & MK_LBUTTON ) )
 	{
 		CSize szDiff = point - m_ptDrag;
 
@@ -628,13 +645,14 @@ void CLibraryTileView::OnMouseMove(UINT nFlags, CPoint point)
 			StartDragging( point );
 		}
 	}
+	else
+		m_bDrag = FALSE;
 
 	CLibraryView::OnMouseMove( nFlags, point );
 }
 
 void CLibraryTileView::OnLButtonUp(UINT nFlags, CPoint /*point*/)
 {
-	ReleaseCapture();
 	m_bDrag = FALSE;
 
 	if ( ( nFlags & (MK_SHIFT|MK_CONTROL) ) == 0 && m_pFocus != end() && m_pFocus->m_bSelected )
@@ -650,7 +668,12 @@ void CLibraryTileView::OnLButtonDblClk(UINT /*nFlags*/, CPoint /*point*/)
 
 void CLibraryTileView::OnRButtonDown(UINT nFlags, CPoint point)
 {
-	OnLButtonDown( nFlags, point );
+	iterator pHit = HitTest( point );
+
+	if ( SelectTo( pHit ) ) Invalidate();
+
+	SetFocus();
+
 	CLibraryView::OnRButtonDown( nFlags, point );
 }
 
@@ -725,17 +748,7 @@ void CLibraryTileView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 #define MAX_DRAG_SIZE	256
 #define MAX_DRAG_SIZE_2	128
 
-void CLibraryTileView::StartDragging(CPoint& ptMouse)
-{
-	CImageList* pImage = CreateDragImage( ptMouse );
-	if ( ! pImage ) return;
-
-	ReleaseCapture();
-	ClientToScreen( &ptMouse );
-	DragObjects( pImage, ptMouse );
-}
-
-CImageList* CLibraryTileView::CreateDragImage(const CPoint& ptMouse)
+HBITMAP CLibraryTileView::CreateDragImage(const CPoint& ptMouse)
 {
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 
@@ -814,15 +827,7 @@ CImageList* CLibraryTileView::CreateDragImage(const CPoint& ptMouse)
 
 	dcDrag.DeleteDC();
 
-	CImageList* pAll = new CImageList();
-	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
-	pAll->Add( &bmDrag, RGB( 250, 255, 250 ) );
-
-	bmDrag.DeleteObject();
-
-	pAll->BeginDrag( 0, ptMouse - rcAll.TopLeft() );
-
-	return pAll;
+	return (HBITMAP) bmDrag.Detach();
 }
 
 /////////////////////////////////////////////////////////////////////////////

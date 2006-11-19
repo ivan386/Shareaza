@@ -74,11 +74,19 @@ CAlbumFolder::CAlbumFolder(CAlbumFolder* pParent, LPCTSTR pszSchemaURI, LPCTSTR 
 	m_nSelectCookie	= 0;
 	m_nListCookie	= 0;
 	m_pCollection	= NULL;
+
+	RenewGUID();
 }
 
 CAlbumFolder::~CAlbumFolder()
 {
 	Clear();
+}
+
+void CAlbumFolder::RenewGUID()
+{
+	CoCreateGuid( reinterpret_cast< GUID* > ( m_oGUID.begin() ) );
+	m_oGUID.validate();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -135,10 +143,13 @@ CAlbumFolder* CAlbumFolder::GetFolderByURI(LPCTSTR pszURI) const
 
 BOOL CAlbumFolder::CheckFolder(CAlbumFolder* pFolder, BOOL bRecursive) const
 {
+	if ( this == pFolder ) return TRUE;
+	if ( *this == *pFolder ) return TRUE;
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CAlbumFolder* pCheck = GetNextFolder( pos );
 		if ( pCheck == pFolder ) return TRUE;
+		if ( *pCheck == *pFolder ) return TRUE;
 		if ( bRecursive && pCheck->CheckFolder( pFolder, TRUE ) ) return TRUE;
 	}
 
@@ -187,15 +198,42 @@ CAlbumFolder* CAlbumFolder::FindCollection(const Hashes::Sha1Hash& oSHA1)
 	return NULL;
 }
 
-void CAlbumFolder::OnFolderDelete(CAlbumFolder* pFolder)
+CAlbumFolder* CAlbumFolder::FindFolder(const Hashes::Guid& oGUID)
 {
+	if ( m_oGUID == oGUID )
+	{
+		// Its me!
+		return this;
+	}
+
+	// Find between childrens
+	POSITION pos = m_pFolders.GetHeadPosition();
+	while ( pos )
+	{
+		CAlbumFolder* pTemp = m_pFolders.GetNext( pos )->FindFolder( oGUID );
+		if ( pTemp )
+		{
+			// Found
+			return pTemp;
+		}
+	}
+	return NULL;
+}
+
+bool CAlbumFolder::OnFolderDelete(CAlbumFolder* pFolder)
+{
+	// Find by pointer (direct)
 	POSITION pos = m_pFolders.Find( pFolder );
-	if ( pos == NULL ) return;
+	if ( pos == NULL )
+	{
+		return false;
+	}
 	m_pFolders.RemoveAt( pos );
 
 	Library.m_nUpdateCookie++;
 	m_nUpdateCookie++;
 	Delete( TRUE );
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -321,7 +359,7 @@ int CAlbumFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
-		pList->CheckAndAdd( GetNextFile( pos )->m_nIndex );
+		pList->CheckAndAdd( GetNextFile( pos ) );
 		nCount++;
 	}
 
@@ -977,6 +1015,8 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 		if ( m_pXML ) m_pXML->Serialize( ar );
         SerializeOut( ar, m_oCollSHA1 );
 
+		SerializeOut( ar, m_oGUID );
+
 		ar << m_sName;
 		ar << m_bExpanded;
 		ar << m_bAutoDelete;
@@ -1027,6 +1067,11 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
             if ( !pCollection ) m_oCollSHA1.clear();
 		}
 
+		if ( nVersion >= 24 )
+		{
+			SerializeIn( ar, m_oGUID, nVersion );
+		}
+
 		ar >> m_sName;
 		ar >> m_bExpanded;
 		ar >> m_bAutoDelete;
@@ -1056,6 +1101,11 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 			}
 		}
 	}
+}
+
+bool CAlbumFolder::operator==(const CAlbumFolder& val) const
+{
+	return ( m_oGUID == val.m_oGUID );
 }
 
 //////////////////////////////////////////////////////////////////////

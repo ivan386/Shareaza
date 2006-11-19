@@ -45,6 +45,7 @@ public:
 	virtual BOOL			Select(DWORD nObject);
 	virtual void			CacheSelection();
 	virtual DWORD_PTR		HitTestIndex(const CPoint& point) const;
+	virtual HBITMAP			CreateDragImage(const CPoint& ptMouse);
 public:
 	void	SetViewSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns, BOOL bSave, BOOL bUpdate);
 protected:

@@ -40,7 +40,6 @@
 #include "CtrlLibraryThumbView.h"
 #include "CtrlLibraryAlbumView.h"
 #include "CtrlLibraryTileView.h"
-#include "CtrlLibraryHomeView.h"
 
 #include "CtrlLibraryPanel.h"
 #include "CtrlLibraryMetaPanel.h"
@@ -61,13 +60,8 @@ BEGIN_MESSAGE_MAP(CLibraryFrame, CWnd)
 	ON_WM_PAINT()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_SETCURSOR()
-	ON_WM_MOUSEMOVE()
-	ON_WM_LBUTTONUP()
-	ON_WM_RBUTTONDOWN()
 	ON_WM_TIMER()
 	ON_WM_CONTEXTMENU()
-	ON_WM_KEYDOWN()
-	ON_WM_KEYUP()
 	ON_WM_MEASUREITEM()
 	ON_COMMAND(ID_LIBRARY_REFRESH, OnLibraryRefresh)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_TREE_PHYSICAL, OnUpdateLibraryTreePhysical)
@@ -99,9 +93,8 @@ CLibraryFrame::CLibraryFrame()
 	m_pViews.AddTail( new CLibraryIconView() );
 	m_pViews.AddTail( new CLibraryThumbView() );
 	m_pViews.AddTail( new CLibraryAlbumView() );
-	m_pViews.AddTail( new CLibraryTileView() );
-	m_pViews.AddTail( new CLibraryHomeView() );
 	m_pViews.AddTail( new CLibraryCollectionView() );
+	m_pViews.AddTail( new CLibraryTileView() );
 
 	m_pPanels.AddTail( new CLibraryMetaPanel() );
 	m_pPanels.AddTail( new CLibraryHistoryPanel() );
@@ -113,11 +106,6 @@ CLibraryFrame::CLibraryFrame()
 	m_bPanelShow	= Settings.Library.ShowPanel;
 	m_nHeaderSize	= 0;
 	m_bUpdating		= FALSE;
-
-	m_pDragList		= NULL;
-	m_pDragImage	= NULL;
-	m_hCursMove		= theApp.LoadCursor( IDC_MOVE );
-	m_hCursCopy		= theApp.LoadCursor( IDC_COPY );
 }
 
 CLibraryFrame::~CLibraryFrame()
@@ -180,8 +168,6 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CLibraryFrame::OnDestroy()
 {
-	CancelDrag();
-
 	if ( m_wndViewTip.m_hWnd ) m_wndViewTip.DestroyWindow();
 
 	Settings.Library.TreeSize	= m_nTreeSize;
@@ -419,25 +405,6 @@ void CLibraryFrame::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureI
 
 BOOL CLibraryFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
-	if ( m_pDragList != NULL )
-	{
-		if ( Settings.Library.ShowVirtual )
-		{
-			if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
-				SetCursor( m_hCursMove );
-			else
-				SetCursor( m_hCursCopy );
-		}
-		else
-		{
-			if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
-				SetCursor( m_hCursCopy );
-			else
-				SetCursor( m_hCursMove );
-		}
-		return TRUE;
-	}
-
 	CRect rcClient, rc;
 	CPoint point;
 
@@ -775,9 +742,7 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 
 	if ( pFirstView == NULL )
 	{
-		ASSERT( FALSE );
-		m_bUpdating = FALSE;
-		return TRUE;
+		pFirstView = m_pViews.GetTail();
 	}
 
 	if ( pBestView != NULL && bBestView )
@@ -912,122 +877,6 @@ void CLibraryFrame::OnFilterTypes()
 	}
 
 	Update();
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CLibraryFrame drag & drop
-
-void CLibraryFrame::DragObjects(CLibraryList* pList, CImageList* pImage, const CPoint& ptMouse)
-{
-	ASSERT( m_pDragList == NULL );
-
-	m_pDragList		= pList;
-	m_pDragImage	= pImage;
-
-	CPoint ptStart( ptMouse );
-	ScreenToClient( &ptStart );
-
-	CRect rcClient;
-	GetClientRect( &rcClient );
-	ClientToScreen( &rcClient );
-
-	ClipCursor( &rcClient );
-	SetCapture();
-
-	SetFocus();
-	UpdateWindow();
-
-	OnSetCursor( NULL, 0, 0 );
-
-	m_pDragImage->DragEnter( this, ptStart );
-}
-
-void CLibraryFrame::CancelDrag()
-{
-	if ( m_pDragList == NULL ) return;
-
-	ClipCursor( NULL );
-	ReleaseCapture();
-
-	m_pDragImage->DragLeave( this );
-	m_pDragImage->EndDrag();
-	delete m_pDragImage;
-	m_pDragImage = NULL;
-
-	delete m_pDragList;
-	m_pDragList = NULL;
-
-	CSingleLock oLock( &Library.m_pSection );	// no lock, just serves as a dummy
-	m_wndTree.DropObjects( NULL, FALSE, oLock );
-}
-
-void CLibraryFrame::OnMouseMove(UINT /*nFlags*/, CPoint point)
-{
-	if ( m_pDragList == NULL ) return;
-
-	m_pDragImage->DragMove( point );
-
-	ClientToScreen( &point );
-	m_wndTree.DropShowTarget( m_pDragList, point );
-}
-
-void CLibraryFrame::OnLButtonUp(UINT nFlags, CPoint point)
-{
-	if ( m_pDragList == NULL ) return;
-
-	ClipCursor( NULL );
-	ReleaseCapture();
-
-	m_pDragImage->DragLeave( this );
-	m_pDragImage->EndDrag();
-	delete m_pDragImage;
-	m_pDragImage = NULL;
-
-	ClientToScreen( &point );
-
-	BOOL bCopy = FALSE;
-
-	if ( Settings.Library.ShowVirtual )
-	{
-		bCopy = ( nFlags & MK_SHIFT ) == 0;
-	}
-	else
-	{
-		bCopy = ( nFlags & MK_CONTROL ) != 0;
-	}
-
-	{
-		CSingleLock oLock( &Library.m_pSection, TRUE );
-		m_wndTree.DropObjects( m_pDragList, bCopy, oLock );
-		Library.Update();
-	}
-
-	delete m_pDragList;
-	m_pDragList = NULL;
-}
-
-void CLibraryFrame::OnRButtonDown(UINT nFlags, CPoint point)
-{
-	if ( m_pDragList != NULL )
-	{
-		CancelDrag();
-		return;
-	}
-
-	CWnd::OnRButtonDown( nFlags, point );
-}
-
-void CLibraryFrame::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
-{
-	if ( nChar == VK_ESCAPE ) CancelDrag();
-	if ( m_pDragList ) OnSetCursor( NULL, 0, 0 );
-	CWnd::OnKeyDown( nChar, nRepCnt, nFlags );
-}
-
-void CLibraryFrame::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
-{
-	if ( m_pDragList ) OnSetCursor( NULL, 0, 0 );
-	CWnd::OnKeyUp( nChar, nRepCnt, nFlags );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1231,6 +1080,7 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 void CLibraryFrame::OnSetFocus(CWnd* pOldWnd)
 {
 	CWnd::OnSetFocus( pOldWnd );
+
 	if ( m_pView != NULL && IsWindow( m_pView->m_hWnd ) && m_pView->IsWindowVisible() )
 		m_pView->SetFocus();
 }

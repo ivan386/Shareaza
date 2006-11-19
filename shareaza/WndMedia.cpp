@@ -49,7 +49,6 @@ BEGIN_MESSAGE_MAP(CMediaWnd, CPanelWnd)
 	ON_MESSAGE(0x0319, OnMediaKey)
 	ON_MESSAGE(WM_DEVMODECHANGE, OnDevModeChange)
 	ON_MESSAGE(WM_DISPLAYCHANGE, OnDisplayChange)
-	ON_WM_DROPFILES()
 END_MESSAGE_MAP()
 
 
@@ -99,13 +98,15 @@ int CMediaWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndFrame.Create( this );
 	LoadState();
 
-	DragAcceptFiles();
+	ENABLE_DROP()
 
 	return 0;
 }
 
 void CMediaWnd::OnDestroy()
 {
+	DISABLE_DROP()
+
 	SaveState();
 	CPanelWnd::OnDestroy();
 }
@@ -196,58 +197,57 @@ LRESULT CMediaWnd::OnDisplayChange(WPARAM wParam, LPARAM lParam)
 	return m_wndFrame.SendMessage( WM_DISPLAYCHANGE, wParam, lParam );
 }
 
-BOOL CMediaWnd::OnDropFiles(CList< CString >& pFiles, const CPoint& ptScreen, BOOL bDrop)
-{
-	if ( bDrop == FALSE ) return TRUE;
-
-	CPoint pt( ptScreen );
-
-	m_wndFrame.ScreenToClient( &pt );
-	CWnd* pDropped = m_wndFrame.ChildWindowFromPoint( pt );
-
-	BOOL bEnqueue;
-	if ( pDropped != NULL )
-		bEnqueue = ( pDropped->IsKindOf( RUNTIME_CLASS(CMediaListCtrl) ) );
-	else
-		bEnqueue = FALSE;
-
-	for ( POSITION pos = pFiles.GetHeadPosition() ; pos ; )
-	{
-		CString strFile = pFiles.GetNext( pos );
-
-		if ( bEnqueue )
-			EnqueueFile( strFile );
-		else
-			PlayFile( strFile );
-	}
-
-	return TRUE;
-}
-
-void CMediaWnd::OnDropFiles(HDROP hDropInfo)
-{
-	if ( hDropInfo != NULL )
-	{
-		CList< CString > oFileList;
-		UINT nFiles = DragQueryFile( hDropInfo, (UINT)-1, NULL, 0 );
-		for( UINT nNames = 0; nNames < nFiles; nNames++ )
-		{
-			TCHAR szFileName[MAX_PATH + 1] = {};
-			DragQueryFile( hDropInfo, nNames, (LPTSTR)szFileName, MAX_PATH + 1 );
-			oFileList.AddTail( szFileName ); 
-		}
-		CPoint oPoint;
-		POINT pt;
-		DragQueryPoint( hDropInfo, &pt );
-		oPoint.SetPoint( pt.x, pt.y );
-
-		OnDropFiles( oFileList, oPoint, TRUE );
-	}
-}
-
 BOOL CMediaWnd::OnNcActivate(BOOL bActive)
 {
 	m_wndFrame.UpdateScreenSaverStatus( bActive );
 
 	return CPanelWnd::OnNcActivate(bActive);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CMediaWnd IDropTarget implementation
+
+IMPLEMENT_DROP(CMediaWnd,CPanelWnd)
+
+BOOL CMediaWnd::OnDrop(IDataObject* pDataObj, DWORD /*grfKeyState*/, POINT ptScreen, DWORD* pdwEffect, BOOL bDrop)
+{
+	if ( ! pDataObj )
+		return TRUE;
+
+	FORMATETC fmtc = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
+	if ( SUCCEEDED ( pDataObj->QueryGetData( &fmtc ) ) )
+	{
+		*pdwEffect = DROPEFFECT_COPY;
+
+		if ( ! bDrop )
+			return TRUE;
+
+		CList< CString > oFiles;
+		if ( CShareazaDataSource::ObjectToFiles( pDataObj, oFiles ) == S_OK )
+		{
+			CPoint pt( ptScreen );
+			m_wndFrame.ScreenToClient( &pt );
+			CWnd* pDropped = m_wndFrame.ChildWindowFromPoint( pt );
+
+			BOOL bEnqueue;
+			if ( pDropped != NULL )
+				bEnqueue = ( pDropped->IsKindOf( RUNTIME_CLASS(CMediaListCtrl) ) );
+			else
+				bEnqueue = FALSE;
+
+			for ( POSITION pos = oFiles.GetHeadPosition() ; pos ; )
+			{
+				CString strFile = oFiles.GetNext( pos );
+
+				if ( bEnqueue )
+					EnqueueFile( strFile );
+				else
+					PlayFile( strFile );
+			}
+			return TRUE;
+		}
+
+		*pdwEffect = DROPEFFECT_NONE;
+	}
+	return FALSE;
 }

@@ -69,6 +69,7 @@ public:
 	virtual void		Update();
 	virtual BOOL		Select(DWORD nObject);
 	virtual DWORD_PTR	HitTestIndex(const CPoint& point) const;
+	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse);
 protected:
 	void				Clear();
 	int					GetThumbIndex(CLibraryThumbItem* pThumb) const;
@@ -82,8 +83,6 @@ protected:
 	void				ScrollTo(int nDelta);
 	CLibraryThumbItem*	HitTest(const CPoint& point) const;
 	BOOL				GetItemRect(CLibraryThumbItem* pThumb, CRect* pRect);
-	void				StartDragging(CPoint& ptMouse);
-	CImageList*			CreateDragImage(const CPoint& ptMouse);
 protected:
 	void		StartThread();
 	void		StopThread();
@@ -97,7 +96,7 @@ protected:
 public:
 	//{{AFX_VIRTUAL(CLibraryThumbView)
 	protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual BOOL Create(CWnd* pParentWnd);
 	//}}AFX_VIRTUAL
 
 // Implementation

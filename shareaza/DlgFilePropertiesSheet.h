@@ -33,7 +33,7 @@ class CFilePropertiesSheet : public CPropertySheet
 {
 // Construction
 public:
-	CFilePropertiesSheet(UINT nIndex = 0);
+	CFilePropertiesSheet(CLibraryListItem oObject = CLibraryListItem());
 	virtual ~CFilePropertiesSheet();
 
 	DECLARE_DYNAMIC(CFilePropertiesSheet)
@@ -52,7 +52,7 @@ protected:
 
 // Operations
 public:
-	void	Add(DWORD nIndex);
+	void	Add(CLibraryListItem oObject);
 	void	Add(CLibraryList* pList);
 
 // Overrides

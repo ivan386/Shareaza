@@ -127,7 +127,8 @@ void CBTClients::Add(CBTTrackerRequest* pRequest)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	ASSERT( ! m_bShutdown );
-	m_pRequests.AddTail( pRequest );
+	if( ! m_bShutdown )
+		m_pRequests.AddTail( pRequest );
 }
 
 void CBTClients::Remove(CBTTrackerRequest* pRequest)

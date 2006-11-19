@@ -104,7 +104,7 @@ CSearchPanel::~CSearchPanel()
 BOOL CSearchPanel::Create(CWnd* pParentWnd)
 {
 	CRect rect;
-	return CTaskPanel::Create( WS_VISIBLE, rect, pParentWnd, IDC_SEARCH_PANEL );
+	return CTaskPanel::Create( _T("CSearchPanel"), WS_VISIBLE, rect, pParentWnd, IDC_SEARCH_PANEL );
 }
 
 int CSearchPanel::OnCreate(LPCREATESTRUCT lpCreateStruct) 

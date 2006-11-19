@@ -88,10 +88,6 @@
 
 IMPLEMENT_DYNCREATE(CMainWnd, CMDIFrameWnd)
 
-BEGIN_INTERFACE_MAP(CMainWnd, CMDIFrameWnd)
-    INTERFACE_PART(CMainWnd, IID_IDropTarget, DropTarget)
-END_INTERFACE_MAP()
-
 BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
@@ -435,9 +431,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		PostMessage( WM_COMMAND, ID_NETWORK_CONNECT );
 	
 	Settings.Live.LoadWindowState = TRUE;
-	
-	RegisterDragDrop( GetSafeHwnd(), &m_xDropTarget );
-	
+		
 	// Go
 	
 	m_bTrayHide	= FALSE;
@@ -445,6 +439,8 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_bTimer	= FALSE;
 	
 	SetTimer( 1, 1000, NULL );
+
+	ENABLE_DROP()
 	
 	return 0;
 }
@@ -489,10 +485,11 @@ void CMainWnd::OnClose()
 
 void CMainWnd::OnDestroy() 
 {
+	DISABLE_DROP()
+
 	KillTimer( 1 );
 	if ( m_wndRemoteWnd.IsVisible() ) m_wndRemoteWnd.DestroyWindow();
 	
-	RevokeDragDrop( GetSafeHwnd() );
 	Network.Disconnect();
 	
 	CMDIFrameWnd::OnDestroy();
@@ -2489,193 +2486,40 @@ LRESULT CMainWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd IDropTarget implementation
 
-IMPLEMENT_UNKNOWN(CMainWnd, DropTarget)
+IMPLEMENT_DROP(CMainWnd,CMDIFrameWnd)
 
-CMainWnd::XDropTarget::XDropTarget ()
+BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* ptScreen */, DWORD* pdwEffect, BOOL bDrop)
 {
-	CoCreateInstance( CLSID_DragDropHelper, NULL, CLSCTX_INPROC_SERVER,
-		IID_IDropTargetHelper, (LPVOID*) &m_spdth );
-}
+	if ( ! pDataObj )
+		return TRUE;
 
-STDMETHODIMP CMainWnd::XDropTarget::DragEnter(IDataObject FAR* pDataObj, DWORD /*grfKeyState*/, POINTL pt, DWORD FAR* pdwEffect)
-{
-	METHOD_PROLOGUE( CMainWnd, DropTarget )
-	
-	if ( m_spdth )			// Use the helper if we have one
-    {
-        POINT ptl = { pt.x, pt.y };
-		m_spdth->DragEnter( pThis->GetSafeHwnd(), pDataObj, &ptl, *pdwEffect );
-    }
-    m_spdtoDragging = pDataObj;	// Remember what is being dragged
-	
-	if ( ObjectToFiles( pDataObj ) )
-	{
-		*pdwEffect = DROPEFFECT_COPY;
-		return S_OK;
-	}
-	else if ( ObjectToURL( pDataObj ).GetLength() > 0 )
-	{
-		*pdwEffect = DROPEFFECT_LINK;
-		return S_OK;
-	}
-	else
-	{
-		*pdwEffect = DROPEFFECT_NONE;
-		return E_UNEXPECTED;
-	}
-}
+	FORMATETC fmtcFiles = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
+	FORMATETC fmtcURL = { (CLIPFORMAT) RegisterClipboardFormat( CFSTR_SHELLURL ), NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
 
-STDMETHODIMP CMainWnd::XDropTarget::DragOver(DWORD /*grfKeyState*/, POINTL pt, DWORD FAR* pdwEffect)
-{
-	METHOD_PROLOGUE( CMainWnd, DropTarget )
-	
-	if ( m_spdth )			// Use the helper if we have one
-    {
-        POINT ptl = { pt.x, pt.y };
-        m_spdth->DragOver( &ptl, *pdwEffect );
-    }
-	
-	if ( m_pFiles.GetCount() > 0 )
+	if ( SUCCEEDED ( pDataObj->QueryGetData( &fmtcFiles ) ) )
 	{
-		CPoint point( pt.x, pt.y );
-		pThis->ClientToScreen( &point );
-		*pdwEffect = DROPEFFECT_NONE;
-		
-		if ( IsTorrentFile() )
+		CList < CString > oFiles;
+		if ( CShareazaDataSource::ObjectToFiles( pDataObj, oFiles ) == S_OK )
 		{
-			*pdwEffect = DROPEFFECT_COPY;
-		}
-		else if ( CChildWnd* pChild = pThis->m_pWindows.FindFromPoint( point ) )
-		{
-			if ( pChild->OnDropFiles( m_pFiles, point, FALSE ) )
+			BOOL bAccepted = FALSE;
+			POSITION pos = oFiles.GetHeadPosition();
+			while ( pos && ! ( bAccepted && ! bDrop ) )
 			{
-				*pdwEffect = DROPEFFECT_COPY;
+				bAccepted = CShareazaApp::Open( oFiles.GetNext( pos ), bDrop ) || bAccepted;
 			}
+
+			*pdwEffect = ( bAccepted && ! bDrop ) ? DROPEFFECT_COPY : DROPEFFECT_NONE;
 		}
 	}
-	else
+	else if ( SUCCEEDED ( pDataObj->QueryGetData( &fmtcURL ) ) )
 	{
-		*pdwEffect = DROPEFFECT_LINK;
-	}
-	
-	return S_OK;
-}
-
-STDMETHODIMP CMainWnd::XDropTarget::DragLeave()
-{
-	METHOD_PROLOGUE( CMainWnd, DropTarget )
-   
-	if ( m_spdth )			// Use the helper if we have one
-	{
-		m_spdth->DragLeave();
-	}
-	m_spdtoDragging.Release();	// Nothing is being dragged any more
-
-	return S_OK;
-}
-
-STDMETHODIMP CMainWnd::XDropTarget::Drop(IDataObject FAR* pDataObj, DWORD /*grfKeyState*/, POINTL pt, DWORD FAR* pdwEffect)
-{
-	METHOD_PROLOGUE( CMainWnd, DropTarget )
-	
-	if ( m_spdth )			// Use the helper if we have one
-    {
-        POINT ptl = { pt.x, pt.y };
-        m_spdth->Drop( pDataObj, &ptl, *pdwEffect );
-    }
-    m_spdtoDragging.Release();	// Nothing is being dragged any more
-	
-	if ( ObjectToFiles( pDataObj ) )
-	{
-		CPoint point( pt.x, pt.y );
-		pThis->ClientToScreen( &point );
-		
-		if ( IsTorrentFile() )
+		CString strURL;		
+		if ( CShareazaDataSource::ObjectToURL( pDataObj, strURL ) == S_OK )
 		{
-			theApp.Message( MSG_SYSTEM, IDS_BT_PREFETCH_FILE, (LPCTSTR)m_pFiles.GetHead() );
-			
-			CBTInfo* pTorrent = new CBTInfo();
-			
-			if ( pTorrent->LoadTorrentFile( m_pFiles.GetHead() ) )
-			{
-				if ( pTorrent->HasEncodingError() ) theApp.Message( MSG_SYSTEM, _T("Possible encoding error detected while parsing torrent") );
-				CShareazaURL* pURL = new CShareazaURL( pTorrent );
-				if ( pThis->PostMessage( WM_URL, (WPARAM)pURL ) ) return S_OK;
-				delete pURL;
-			}
-			
-			delete pTorrent;
-			theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, (LPCTSTR)m_pFiles.GetHead() );
-		}
-		else if ( CChildWnd* pChild = pThis->m_pWindows.FindFromPoint( point ) )
-		{
-			pChild->OnDropFiles( m_pFiles, point, TRUE );
+			BOOL bAccepted = CShareazaApp::OpenURL( strURL, bDrop );
+			*pdwEffect = ( bAccepted && ! bDrop ) ? DROPEFFECT_COPY : DROPEFFECT_NONE;
 		}
 	}
-	else
-	{
-		CString strURL = ObjectToURL( pDataObj );
-		theApp.Message( MSG_SYSTEM, IDS_URL_RECEIVED, (LPCTSTR)strURL );
-		
-		CShareazaURL* pURL = new CShareazaURL();
-		if ( pURL->Parse( strURL ) && pThis->PostMessage( WM_URL, (WPARAM)pURL ) ) return S_OK;
-		delete pURL;
-		
-		theApp.Message( MSG_ERROR, IDS_URL_PARSE_ERROR );
-	}
-	
-	return S_OK;
-}
 
-CString CMainWnd::XDropTarget::ObjectToURL(IDataObject* pObject)
-{
-	FORMATETC pFormat = { 0, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
-	STGMEDIUM pMedium;
-	CString str;
-	
-	pFormat.cfFormat = BYTE( RegisterClipboardFormat( _T("UniformResourceLocator") ) );
-	
-	if ( SUCCEEDED( pObject->GetData( &pFormat, &pMedium ) ) && pMedium.hGlobal != NULL )
-	{
-		if ( LPCSTR psz = (LPCSTR)GlobalLock( pMedium.hGlobal ) )
-		{
-			str = psz;
-			GlobalUnlock( pMedium.hGlobal );
-		}
-		
-		ReleaseStgMedium( &pMedium );
-	}
-	
-	return str;
-}
-
-BOOL CMainWnd::XDropTarget::ObjectToFiles(IDataObject* pObject)
-{
-	FORMATETC pFormat = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
-	STGMEDIUM pMedium;
-
-	m_pFiles.RemoveAll();
-	
-	if ( FAILED( pObject->GetData( &pFormat, &pMedium ) ) ) return FALSE;
-	if ( pMedium.hGlobal == NULL ) return FALSE;
-	
-	HDROP	hDropInfo	= (HDROP)pMedium.hGlobal;
-	UINT	nCount		= DragQueryFile( hDropInfo, 0xFFFFFFFF, NULL, 0 );
-	
-	for ( UINT nFile = 0 ; nFile < nCount ; nFile++ )
-	{
-		TCHAR szFile[MAX_PATH];
-		DragQueryFile( hDropInfo, nFile, szFile, MAX_PATH );
-		m_pFiles.AddTail( szFile );
-	}
-	
-	ReleaseStgMedium( &pMedium );
-	
-	return ( m_pFiles.GetCount() > 0 );
-}
-
-BOOL CMainWnd::XDropTarget::IsTorrentFile() const
-{
-	return	m_pFiles.GetCount() == 1 &&
-			_tcsistr( m_pFiles.GetHead(), _T(".torrent") ) != NULL;
+	return FALSE;
 }

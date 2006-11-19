@@ -79,10 +79,10 @@ CTaskPanel::~CTaskPanel()
 /////////////////////////////////////////////////////////////////////////////
 // CTaskPanel create
 
-BOOL CTaskPanel::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
+BOOL CTaskPanel::Create(LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
 {
 	dwStyle |= WS_CHILD|WS_CLIPCHILDREN;
-	return CWnd::Create( NULL, NULL, dwStyle, rect, pParentWnd, nID, NULL );
+	return CWnd::Create( NULL, lpszWindowName, dwStyle, rect, pParentWnd, nID, NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////

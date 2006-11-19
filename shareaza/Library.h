@@ -29,6 +29,7 @@ class CLibraryFile;
 class CLibraryFolder;
 class CAlbumFolder;
 
+#define LIBRARY_SER_VERSION	23
 
 class CLibrary : public CComObject
 {

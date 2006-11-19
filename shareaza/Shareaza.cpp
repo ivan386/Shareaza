@@ -51,6 +51,8 @@
 #include "Skin.h"
 #include "Scheduler.h"
 #include "FileExecutor.h"
+#include "ThumbCache.h"
+#include "BTInfo.h"
 
 #include "WndMain.h"
 #include "WndSystem.h"
@@ -63,10 +65,54 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+/////////////////////////////////////////////////////////////////////////////
+// CShareazaCommandLineInfo
+
+CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
+	m_bSilentTray( FALSE )
+{
+}
+
+void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast)
+{
+	if ( bFlag )
+	{
+		if ( ! lstrcmpi( pszParam, _T("tray") ) )
+		{
+			m_bSilentTray = TRUE;
+			return;
+		}
+		else if ( ! lstrcmpi( pszParam, _T("basic") ) )
+		{
+			Settings.General.GUIMode = GUI_BASIC;
+			return;
+		}
+		else if ( ! lstrcmpi( pszParam, _T("tabbed") ) )
+		{
+			Settings.General.GUIMode = GUI_TABBED;
+			return;
+		}
+		else if ( ! lstrcmpi( pszParam, _T("windowed") ) )
+		{
+			Settings.General.GUIMode = GUI_WINDOWED;
+			return;
+		}
+	}
+	CCommandLineInfo::ParseParam( pszParam, bFlag, bLast );
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CShareazaApp
+
 BEGIN_MESSAGE_MAP(CShareazaApp, CWinApp)
 	//{{AFX_MSG_MAP(CShareazaApp)
 	//}}AFX_MSG
 END_MESSAGE_MAP()
+
+const GUID CDECL BASED_CODE _tlid =
+	{ 0xE3481FE3, 0xE062, 0x4E1C, { 0xA2, 0x3A, 0x62, 0xA6, 0xD1, 0x3C, 0xBF, 0xB8 } };
+const WORD _wVerMajor = 1;
+const WORD _wVerMinor = 0;
 
 CShareazaApp theApp;
 
@@ -93,10 +139,38 @@ BOOL CShareazaApp::InitInstance()
 	GetVersionNumber();
 	InitResources();
 
-	EnableShellOpen();
-
 	AfxOleInit();
 	AfxEnableControlContainer();
+
+	LoadStdProfileSettings();
+	EnableShellOpen();
+//	RegisterShellFileTypes();
+
+	ParseCommandLine( m_ocmdInfo );
+	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppUnregister )
+	{
+		// Do not call this ->
+		// ProcessShellCommand( m_ocmdInfo );
+		// ... else all INI settings will be deleted (by design)
+
+		// Do not call this -> 
+		// AfxOleUnregisterTypeLib( _tlid, _wVerMajor, _wVerMinor );
+		// COleTemplateServer::UnregisterAll();
+		// COleObjectFactory::UpdateRegistryAll( FALSE );
+		// ... else OLE interface settings may be deleted (bug in MFC?)
+		return FALSE;
+	}
+	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppRegister )
+	{
+		ProcessShellCommand( m_ocmdInfo );
+	}
+	AfxOleRegisterTypeLib( AfxGetInstanceHandle(), _tlid );
+	COleTemplateServer::RegisterAll();
+	COleObjectFactory::UpdateRegistryAll( TRUE );
+	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppRegister )
+	{
+		return FALSE;
+	}
 
 	m_pMutex = CreateMutex( NULL, FALSE,
 		( m_dwWindowsVersion < 5 ) ? _T("Shareaza") : _T("Global\\Shareaza") );
@@ -164,9 +238,7 @@ BOOL CShareazaApp::InitInstance()
 
 	// ***********
 	
-	BOOL bSilentTray = ( m_lpCmdLine && _tcsistr( m_lpCmdLine, _T("-tray") ) != NULL );
-	
-	CSplashDlg* dlgSplash = new CSplashDlg( 18, bSilentTray );
+	CSplashDlg* dlgSplash = new CSplashDlg( 19, m_ocmdInfo.m_bSilentTray );
 
 	dlgSplash->Step( _T("Winsock") );
 		WSADATA wsaData;
@@ -174,16 +246,6 @@ BOOL CShareazaApp::InitInstance()
 	
 	dlgSplash->Step( _T("Settings Database") );
 		Settings.Load();
-
-	if ( m_lpCmdLine )
-	{
-		if ( _tcsistr( m_lpCmdLine, _T("-basic") ) != NULL )
-			Settings.General.GUIMode = GUI_BASIC;
-		else if ( _tcsistr( m_lpCmdLine, _T("-tabbed") ) != NULL )
-			Settings.General.GUIMode = GUI_TABBED;
-		else if ( _tcsistr( m_lpCmdLine, _T("-windowed") ) != NULL )
-			Settings.General.GUIMode = GUI_WINDOWED;
-	}
 
 	dlgSplash->Step( _T("Firewall/Router Setup") );
 	{
@@ -222,8 +284,6 @@ BOOL CShareazaApp::InitInstance()
 		VendorCache.Load();
 	dlgSplash->Step( _T("Profile") );
 		MyProfile.Load();
-	dlgSplash->Step( _T("Library") );
-		Library.Load();
 	dlgSplash->Step( _T("Query Manager") );
 		QueryHashMaster.Create();
 	dlgSplash->Step( _T("Host Cache") );
@@ -239,28 +299,26 @@ BOOL CShareazaApp::InitInstance()
 	dlgSplash->Step( _T("Rich Documents") );
 		Emoticons.Load();
 	dlgSplash->Step( _T("GUI") );
-	
-	if ( bSilentTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
-	
-	m_pMainWnd = new CMainWnd();
-	CoolMenu.EnableHook();
-	
-	if ( bSilentTray )
-	{
-		((CMainWnd*)m_pMainWnd)->CloseToTray();
-	}
-	else
-	{
-		dlgSplash->Topmost();
-		m_pMainWnd->ShowWindow( SW_SHOW );
-		m_pMainWnd->UpdateWindow();
-	}
+		if ( m_ocmdInfo.m_bSilentTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
+		m_pMainWnd = new CMainWnd();
+		CoolMenu.EnableHook();
+		if ( m_ocmdInfo.m_bSilentTray )
+		{
+			((CMainWnd*)m_pMainWnd)->CloseToTray();
+		}
+		else
+		{
+			dlgSplash->Topmost();
+			m_pMainWnd->ShowWindow( SW_SHOW );
+			m_pMainWnd->UpdateWindow();
+		}
 	// From this point translations are available and LoadString returns correct strings
 	dlgSplash->Step( _T("Download Manager") ); 
 		Downloads.Load();
 	dlgSplash->Step( _T("Upload Manager") );
 		UploadQueues.Load();
-
+	dlgSplash->Step( _T("Library") );
+		Library.Load();
 	dlgSplash->Step( _T("Upgrade Manager") );
 	if ( VersionChecker.NeedToCheck() ) VersionChecker.Start( m_pMainWnd->GetSafeHwnd() );
 
@@ -268,6 +326,8 @@ BOOL CShareazaApp::InitInstance()
 
 	dlgSplash->Hide();
 	m_bLive = TRUE;
+
+	ProcessShellCommand( m_ocmdInfo );
 
 	return TRUE;
 }
@@ -337,11 +397,94 @@ int CShareazaApp::ExitInstance()
 	return CWinApp::ExitInstance();
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CShareazaApp help (suppress F1)
-
 void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/) 
 {
+	// Suppress F1
+}
+
+CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
+{
+	if ( lpszFileName )
+		Open( lpszFileName, TRUE );
+	return NULL;
+}
+
+BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	int nLength = lstrlen( lpszFileName );
+	if ( nLength > 8 && lstrcmpi ( lpszFileName + nLength - 8, _T(".torrent") ) == 0 )
+		return OpenTorrent( lpszFileName, bDoIt );
+	else if ( nLength > 3 && lstrcmpi ( lpszFileName + nLength - 3, _T(".co") ) == 0 )
+		return OpenCollection( lpszFileName, bDoIt );
+	else if ( nLength > 11 && lstrcmpi ( lpszFileName + nLength - 11, _T(".collection") ) == 0 )
+		return OpenCollection( lpszFileName, bDoIt );
+	else
+		return OpenURL( lpszFileName, bDoIt );
+}
+
+BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	if ( bDoIt )
+		theApp.Message( MSG_SYSTEM, IDS_BT_PREFETCH_FILE, lpszFileName );
+
+	BOOL bResult = FALSE;
+	CBTInfo* pTorrent = new CBTInfo();
+	if ( pTorrent && pTorrent->LoadTorrentFile( lpszFileName ) )
+	{
+		if ( bDoIt && pTorrent->HasEncodingError() )
+			theApp.Message( MSG_SYSTEM, IDS_BT_ENCODING );
+		CShareazaURL* pURL = new CShareazaURL( pTorrent );
+		if ( pURL )
+		{
+			bResult = TRUE;
+			if ( bDoIt )
+				return AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
+			delete pURL;
+		}
+	}
+	delete pTorrent;
+
+	if ( bDoIt )
+		theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, lpszFileName );
+
+	return bResult;
+}
+
+BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	if ( ! bDoIt )
+		return TRUE;
+
+	LPTSTR pszPath = new TCHAR[ lstrlen( lpszFileName ) + 1 ];
+	if ( pszPath )
+	{
+		lstrcpy( pszPath, lpszFileName );
+		if ( AfxGetMainWnd()->PostMessage( WM_COLLECTION, (WPARAM)pszPath ) )
+			return TRUE;
+		delete [] pszPath;
+	}
+
+	return FALSE;
+}
+
+BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	if ( bDoIt )
+		theApp.Message( MSG_SYSTEM, IDS_URL_RECEIVED, lpszFileName );
+
+	CShareazaURL* pURL = new CShareazaURL();
+	if ( pURL && pURL->Parse( lpszFileName ) )
+	{
+		if ( bDoIt )
+			AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
+		return TRUE;
+	}
+	delete pURL;
+
+	if ( bDoIt )
+		theApp.Message( MSG_SYSTEM, IDS_URL_PARSE_ERROR );
+
+	return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

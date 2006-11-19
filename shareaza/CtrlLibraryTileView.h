@@ -103,9 +103,11 @@ private:
 
 // Operations
 public:
-	virtual BOOL	CheckAvailable(CLibraryTreeItem* pSel);
-	virtual void	Update();
-	virtual BOOL	Select(DWORD nObject);
+	virtual BOOL				CheckAvailable(CLibraryTreeItem* pSel);
+	virtual void				Update();
+	virtual BOOL				Select(DWORD nObject);
+	virtual CLibraryListItem	DropHitTest(const CPoint& point);
+	virtual HBITMAP				CreateDragImage(const CPoint& ptMouse);
 private:
 	void			clear();
 //	int				GetTileIndex(CLibraryTileItem* pTile) const;
@@ -128,14 +130,11 @@ private:
 	void				ScrollTo(int nDelta);
 	iterator			HitTest(const CPoint& point);
 	bool				GetItemRect(iterator pTile, CRect* pRect);
-	void				StartDragging(CPoint& ptMouse);
-	CImageList*			CreateDragImage(const CPoint& ptMouse);
 
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CLibraryTileView)
-protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual BOOL Create(CWnd* pParentWnd);
 	//}}AFX_VIRTUAL
 
 // Implementation

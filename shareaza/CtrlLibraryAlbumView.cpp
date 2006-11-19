@@ -30,12 +30,12 @@
 #include "ShellIcons.h"
 #include "CoolInterface.h"
 #include "CtrlLibraryAlbumView.h"
-#include "CtrlLibraryTree.h"
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryTip.h"
 #include "DlgFilePropertiesSheet.h"
 #include "Skin.h"
 #include "XML.h"
+#include "ShareazaDataSource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -81,10 +81,11 @@ CLibraryAlbumView::~CLibraryAlbumView()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryAlbumView create and destroy
 
-BOOL CLibraryAlbumView::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CLibraryAlbumView::Create(CWnd* pParentWnd)
 {
-	cs.style |= WS_VSCROLL;
-	return CLibraryFileView::PreCreateWindow( cs );
+	CRect rect( 0, 0, 0, 0 );
+	SelClear( FALSE );
+	return CWnd::Create( NULL, _T("CLibraryAlbumView"), WS_CHILD|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
 }
 
 int CLibraryAlbumView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
@@ -676,7 +677,6 @@ BOOL CLibraryAlbumView::GetItemRect(CLibraryAlbumTrack* pTrack, CRect* pRect)
 void CLibraryAlbumView::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	SetFocus();
-	SetCapture();
 	
 	CRect rcTrack;
 	CLibraryAlbumTrack* pHit = HitTest( point, &rcTrack );
@@ -702,8 +702,10 @@ void CLibraryAlbumView::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CLibraryAlbumView::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	if ( m_bDrag & ( nFlags & MK_LBUTTON ) )
+	if ( m_bDrag && ( nFlags & MK_LBUTTON ) )
 	{
+		CLibraryFileView::OnMouseMove( nFlags, point );
+
 		CSize szDiff = point - m_ptDrag;
 		
 		if ( abs( szDiff.cx ) > 5 || abs( szDiff.cy ) > 5 )
@@ -711,7 +713,13 @@ void CLibraryAlbumView::OnMouseMove(UINT nFlags, CPoint point)
 			m_bDrag = FALSE;
 			StartDragging( point );
 		}
+
+		CLibraryFileView::OnMouseMove( nFlags, point );
+
+		return;
 	}
+	else
+		m_bDrag = FALSE;
 	
 	// CLibraryFileView::OnMouseMove( nFlags, point );	Overridden below!
 	
@@ -746,15 +754,16 @@ void CLibraryAlbumView::OnMouseMove(UINT nFlags, CPoint point)
 	}
 }
 
-void CLibraryAlbumView::OnLButtonUp(UINT nFlags, CPoint /*point*/) 
+void CLibraryAlbumView::OnLButtonUp(UINT nFlags, CPoint point) 
 {
-	ReleaseCapture();
 	m_bDrag = FALSE;
 	
 	if ( ( nFlags & (MK_SHIFT|MK_CONTROL) ) == 0 && m_pFocus && m_pFocus->m_bSelected )
 	{
 		if ( DeselectAll( m_pFocus ) ) Invalidate();
 	}
+
+	CLibraryFileView::OnLButtonUp( nFlags, point );
 }
 
 void CLibraryAlbumView::OnLButtonDblClk(UINT /*nFlags*/, CPoint /*point*/) 
@@ -838,17 +847,7 @@ void CLibraryAlbumView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 #define MAX_DRAG_SIZE	256
 #define MAX_DRAG_SIZE_2	128
 
-void CLibraryAlbumView::StartDragging(CPoint& ptMouse)
-{
-	CImageList* pImage = CreateDragImage( ptMouse );
-	if ( pImage == NULL ) return;
-	
-	ReleaseCapture();
-	ClientToScreen( &ptMouse );
-	DragObjects( pImage, ptMouse );
-}
-
-CImageList* CLibraryAlbumView::CreateDragImage(const CPoint& ptMouse)
+HBITMAP CLibraryAlbumView::CreateDragImage(const CPoint& ptMouse)
 {
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 	
@@ -924,16 +923,8 @@ CImageList* CLibraryAlbumView::CreateDragImage(const CPoint& ptMouse)
 	pBuffer->SelectObject( pOldFont );
 	dcDrag.SelectObject( pOldDrag );
 	dcDrag.DeleteDC();
-	
-	CImageList* pAll = new CImageList();
-	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
-	pAll->Add( &bmDrag, RGB( 0, 255, 0 ) ); 
-	
-	bmDrag.DeleteObject();
-	
-	pAll->BeginDrag( 0, ptMouse - rcAll.TopLeft() );
-	
-	return pAll;
+
+	return (HBITMAP) bmDrag.Detach();
 }
 
 

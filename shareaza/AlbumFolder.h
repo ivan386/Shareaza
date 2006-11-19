@@ -43,24 +43,22 @@ public:
 
 // Attributes
 public:
-	CAlbumFolder*	m_pParent;
-	CList< CAlbumFolder* > m_pFolders;
-	CList< CLibraryFile* > m_pFiles;
-public:
-	CString			m_sSchemaURI;
-	CSchema*		m_pSchema;
-	CXMLElement*	m_pXML;
-    Hashes::Sha1Hash m_oCollSHA1;
-public:
-	CString			m_sName;
-	BOOL			m_bExpanded;
-	BOOL			m_bAutoDelete;
-	CString			m_sBestView;
-public:
-	DWORD				m_nUpdateCookie;
-	DWORD				m_nSelectCookie;
-	DWORD				m_nListCookie;
-	CCollectionFile*	m_pCollection;
+	CAlbumFolder*			m_pParent;
+	CList< CAlbumFolder* >	m_pFolders;
+	CList< CLibraryFile* >	m_pFiles;
+	CString					m_sSchemaURI;
+	CSchema*				m_pSchema;
+	CXMLElement*			m_pXML;
+    Hashes::Sha1Hash		m_oCollSHA1;
+	CString					m_sName;
+	BOOL					m_bExpanded;
+	BOOL					m_bAutoDelete;
+	CString					m_sBestView;
+	DWORD					m_nUpdateCookie;
+	DWORD					m_nSelectCookie;
+	DWORD					m_nListCookie;
+	CCollectionFile*		m_pCollection;
+	Hashes::Guid			m_oGUID;
 
 // Operations
 public:
@@ -73,6 +71,7 @@ public:
 	BOOL			CheckFolder(CAlbumFolder* pFolder, BOOL bRecursive = FALSE) const;
 	CAlbumFolder*	GetTarget(CSchemaMember* pMember, LPCTSTR pszValue) const;
     CAlbumFolder*	FindCollection(const Hashes::Sha1Hash& oSHA1);
+	CAlbumFolder*	FindFolder(const Hashes::Guid& oGUID);
 public:
 	void			AddFile(CLibraryFile* pFile);
 	POSITION		GetFileIterator() const;
@@ -91,11 +90,12 @@ public:
     BOOL			MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection, BOOL bForce = FALSE);
 	CCollectionFile*GetCollection();
 	CString			GetBestView() const;
-protected:
-    void			SetCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
-	void			OnFolderDelete(CAlbumFolder* pFolder);
-	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 	void			Serialize(CArchive& ar, int nVersion);
+	bool			operator==(const CAlbumFolder& val) const;
+	void			RenewGUID();
+    void			SetCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
+	bool			OnFolderDelete(CAlbumFolder* pFolder);
+	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 	void			Clear();
 
 	friend class CLibrary;

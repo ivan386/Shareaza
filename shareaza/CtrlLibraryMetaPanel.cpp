@@ -36,7 +36,6 @@
 #include "ImageServices.h"
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryMetaPanel.h"
-#include "CtrlLibraryTree.h"
 #include "FileExecutor.h"
 #include "DlgFilePropertiesSheet.h"
 

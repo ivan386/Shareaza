@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "ShareazaDataSource.h"
+
 class CAlbumFolder;
 class CLibraryFrame;
 class CLibraryTreeItem;
@@ -41,20 +43,25 @@ public:
 
 // Attributes
 public:
-	UINT			m_nCommandID;
-	LPCTSTR			m_pszToolBar;
-	BOOL			m_bAvailable;
-	BOOL			m_bGhostFolder;
-public:
-	CLibraryList	m_pSelection;
+	UINT				m_nCommandID;
+	LPCTSTR				m_pszToolBar;
+	BOOL				m_bAvailable;
+	BOOL				m_bGhostFolder;
+	CLibraryList		m_pSelection;
+	CLibraryListItem	m_oDropItem;
 
 // Operations
 public:
-	virtual BOOL		CheckAvailable(CLibraryTreeItem* pSel);
-	virtual void		GetHeaderContent(int& nImage, CString& strTitle);
-	virtual void		Update();
-	virtual BOOL		Select(DWORD nObject);
-	virtual void		CacheSelection();
+	virtual BOOL				CheckAvailable(CLibraryTreeItem* pSel);
+	virtual void				GetHeaderContent(int& nImage, CString& strTitle);
+	virtual void				Update();
+	virtual BOOL				Select(DWORD nObject);
+	virtual void				CacheSelection();
+	virtual CLibraryListItem	DropHitTest(const CPoint& point);
+	virtual CLibraryListItem	GetFolder() const;
+	virtual void				StartDragging(const CPoint& ptMouse);
+	virtual HBITMAP				CreateDragImage(const CPoint& ptMouse);
+
 protected:
 	void				PostUpdate();
 	CLibraryFrame*		GetFrame() const;
@@ -62,10 +69,10 @@ protected:
 	DWORD				GetFolderCookie() const;
 	CLibraryTreeItem*	GetFolderSelection() const;
 	CAlbumFolder*		GetSelectedAlbum(CLibraryTreeItem* pSel = NULL) const;
-	void				DragObjects(CImageList* pImage, const CPoint& ptMouse);
+
 protected:
-	BOOL	SelAdd(DWORD nObject, BOOL bNotify = TRUE);
-	BOOL	SelRemove(DWORD_PTR nObject, BOOL bNotify = TRUE);
+	BOOL	SelAdd(CLibraryListItem oObject, BOOL bNotify = TRUE);
+	BOOL	SelRemove(CLibraryListItem oObject, BOOL bNotify = TRUE);
 	BOOL	SelClear(BOOL bNotify = TRUE);
 	INT_PTR	GetSelectedCount() const;
 
@@ -79,8 +86,12 @@ public:
 // Implementation
 protected:
 	//{{AFX_MSG(CLibraryView)
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnDestroy();
 	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
+	DECLARE_DROP()
 };
 
 //{{AFX_INSERT_LOCATION}}

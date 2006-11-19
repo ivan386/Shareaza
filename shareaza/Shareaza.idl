@@ -19,11 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+import "ShObjIdl.idl";
+
 [ uuid(E3481FE3-E062-4E1C-A23A-62A6D13CBFB8), version(1.0) ]
 library Shareaza
 {
-	importlib("stdole32.tlb");
-
 	interface IApplication;
 
 	//
@@ -569,4 +569,16 @@ library Shareaza
 		[id(16)] HRESULT DownloadAll();
 		[id(17),propget] HRESULT MissingCount( [out,retval] LONG* pnCount );
 	}
+
+	//
+	//  Shareaza Data Source
+	//
+
+	[ uuid(34791E02-51DC-4CF4-9E34-018166D91D0E) ]
+	coclass ShareazaDataSource
+	{
+		[default] interface IDropSource;
+		interface IDataObject;
+	};
+
 };

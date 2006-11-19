@@ -475,7 +475,7 @@ BOOL CLiveList::IsNumber(LPCTSTR pszString)
 
 COLORREF CLiveList::crDrag = RGB( 250, 255, 250 );
 
-CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
+HBITMAP CLiveList::CreateDragBitmap(CListCtrl* pList, const CPoint& ptMouse)
 {
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 	int nIndex;
@@ -565,13 +565,22 @@ CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 	bmAll.DeleteObject();
 	dcAll.DeleteDC();
 
+	return (HBITMAP) bmDrag.Detach ();
+}
+
+CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
+{
+	CBitmap bmDrag;
+	bmDrag.Attach( CreateDragBitmap( pList, ptMouse) );
+	BITMAP bmpInfo;
+	bmDrag.GetBitmap( &bmpInfo );
 	CImageList* pAll = new CImageList();
-	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
+	pAll->Create( bmpInfo.bmWidth, bmpInfo.bmHeight, ILC_COLOR16|ILC_MASK, 1, 1 );
 	pAll->Add( &bmDrag, crDrag );
 
 	bmDrag.DeleteObject();
 
-	pAll->BeginDrag( 0, ptMouse - rcAll.TopLeft() );
+	pAll->BeginDrag( 0, ptMouse /*- rcAll.TopLeft()*/ );
 
 	return pAll;
 }

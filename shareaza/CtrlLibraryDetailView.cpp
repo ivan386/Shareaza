@@ -39,6 +39,7 @@
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryDetailView.h"
 #include "DlgHitColumns.h"
+#include "ShareazaDataSource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -985,20 +986,18 @@ void CLibraryDetailView::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemS
 
 void CLibraryDetailView::OnBeginDrag(NM_LISTVIEW* pNotify, LRESULT* /*pResult*/)
 {
-	GET_LIST();
-
 	CPoint ptAction( pNotify->ptAction );
 
+	StartDragging( ptAction );
+}
+
+HBITMAP CLibraryDetailView::CreateDragImage(const CPoint& ptMouse)
+{
+	GET_LIST();
 	m_bCreateDragImage = TRUE;
-	CImageList* pImage = CLiveList::CreateDragImage( pList, ptAction );
+	HBITMAP pImage = CLiveList::CreateDragBitmap( pList, ptMouse );
 	m_bCreateDragImage = FALSE;
-
-	if ( pImage == NULL ) return;
-
-	UpdateWindow();
-
-	ClientToScreen( &ptAction );
-	DragObjects( pImage, ptAction );
+	return pImage;
 }
 
 /////////////////////////////////////////////////////////////////////////////

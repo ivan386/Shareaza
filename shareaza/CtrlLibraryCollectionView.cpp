@@ -40,7 +40,6 @@
 #include "CtrlWeb.h"
 #include "CtrlLibraryTip.h"
 #include "CtrlLibraryFrame.h"
-#include "CtrlLibraryTree.h"
 #include "CtrlLibraryCollectionView.h"
 
 IMPLEMENT_DYNCREATE(CLibraryCollectionView, CLibraryFileView)
@@ -77,6 +76,16 @@ CLibraryCollectionView::CLibraryCollectionView()
 CLibraryCollectionView::~CLibraryCollectionView()
 {
 	delete m_pCollection;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CLibraryCollectionView create and destroy
+
+BOOL CLibraryCollectionView::Create(CWnd* pParentWnd)
+{
+	CRect rect( 0, 0, 0, 0 );
+	SelClear( FALSE );
+	return CWnd::Create( NULL, _T("CLibraryCollectionView"), WS_CHILD|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////

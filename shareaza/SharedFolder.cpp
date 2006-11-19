@@ -170,7 +170,7 @@ int CLibraryFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 	
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
-		pList->CheckAndAdd( GetNextFile( pos )->m_nIndex );
+		pList->CheckAndAdd( GetNextFile( pos ) );
 		nCount++;
 	}
 	

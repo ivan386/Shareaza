@@ -43,6 +43,8 @@ protected:
 	DWORD				m_nWebIndex;
 	CCollectionFile*	m_pCollection;
     Hashes::Sha1Hash    m_oSHA1;
+
+	virtual BOOL Create(CWnd* pParentWnd);
 	
 // Operations
 public:

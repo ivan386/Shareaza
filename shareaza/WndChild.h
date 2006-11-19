@@ -76,7 +76,6 @@ public:
 	virtual BOOL	OnQueryHits(CQueryHit* pHits);
 	virtual BOOL	OnPush(const Hashes::Guid& pClientID, CConnection* pConnection);
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
-	virtual BOOL	OnDropFiles(CList< CString >& pFiles, const CPoint& ptScreen, BOOL bDrop);
 
 // Overrides
 public:

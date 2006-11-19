@@ -29,6 +29,7 @@
 #include "CtrlMonitorBar.h"
 #include "WndMonitor.h"
 #include "WndHashProgressBar.h"
+#include "ShareazaDataSource.h"
 
 class CChildWnd;
 class CURLActionDlg;
@@ -83,7 +84,6 @@ public:
 
 // Implementation
 protected:
-	DECLARE_MESSAGE_MAP()
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnClose();
@@ -241,25 +241,8 @@ protected:
 	afx_msg void OnUpdateMediaCommand(CCmdUI *pCmdUI);
 	afx_msg void OnMediaCommand();
 
-// COM
-protected:
-	BEGIN_INTERFACE_PART(DropTarget, IDropTarget)
-		XDropTarget();
-		STDMETHOD(DragEnter)(IDataObject FAR* pDataObj, DWORD grfKeyState, POINTL pt, DWORD FAR* pdwEffect);
-		STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, DWORD FAR* pdwEffect);
-		STDMETHOD(DragLeave)();
-		STDMETHOD(Drop)(IDataObject FAR* pDataObj, DWORD grfKeyState, POINTL pt, DWORD FAR* pdwEffect);
-	protected:
-		CString	ObjectToURL(IDataObject* pObject);
-		BOOL	ObjectToFiles(IDataObject* pObject);
-		BOOL	IsTorrentFile() const;
-	protected:
-		CList< CString >				m_pFiles;			// The files being dragged
-		CComPtr< IDropTargetHelper >	m_spdth;			// Shell helper
-		CComPtr< IDataObject >			m_spdtoDragging;	// The object being dragged
-	END_INTERFACE_PART(DropTarget)
-	
-	DECLARE_INTERFACE_MAP()
+	DECLARE_MESSAGE_MAP()
+	DECLARE_DROP()
 };
 
 #define IDW_MENU_BAR		0xE810

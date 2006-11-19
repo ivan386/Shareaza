@@ -328,7 +328,7 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 void CLibraryDictionary::ProcessWord(CLibraryFile* pFile, const CString& strWord, BOOL bAdd)
 {
 	CLibraryWord* pWord;
-	
+
 	if ( m_pWords.Lookup( strWord, pWord ) )
 	{
 		if ( bAdd )

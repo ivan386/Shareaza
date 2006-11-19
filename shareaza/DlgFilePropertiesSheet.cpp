@@ -61,7 +61,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesSheet
 
-CFilePropertiesSheet::CFilePropertiesSheet(UINT nIndex) : 
+CFilePropertiesSheet::CFilePropertiesSheet(CLibraryListItem oObject) : 
 	CPropertySheet( L"" ),
 	m_sGeneralTitle( L"General" ),
 	m_sMetadataTitle( L"Metadata" ),
@@ -70,7 +70,7 @@ CFilePropertiesSheet::CFilePropertiesSheet(UINT nIndex) :
 	m_sSourcesTitle( L"Sources" ),
 	m_pSkin( NULL )
 {
-	if ( nIndex > 0 ) m_pList.AddTail( nIndex );
+	if ( oObject.Type != CLibraryListItem::Empty ) m_pList.AddTail( oObject );
 
 	m_psh.dwFlags &= ~PSP_HASHELP;
 }
@@ -82,9 +82,9 @@ CFilePropertiesSheet::~CFilePropertiesSheet()
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesSheet operations
 
-void CFilePropertiesSheet::Add(DWORD nIndex)
+void CFilePropertiesSheet::Add(CLibraryListItem oObject)
 {
-	m_pList.CheckAndAdd( nIndex );
+	m_pList.CheckAndAdd( oObject );
 }
 
 void CFilePropertiesSheet::Add(CLibraryList* pList)

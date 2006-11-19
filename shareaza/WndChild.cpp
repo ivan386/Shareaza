@@ -526,11 +526,6 @@ HRESULT CChildWnd::GetGenericView(IGenericView** ppView)
 	return S_FALSE;
 }
 
-BOOL CChildWnd::OnDropFiles(CList< CString >& /*pFiles*/, const CPoint& /*ptScreen*/, BOOL /*bDrop*/)
-{
-	return FALSE;
-}
-
 BOOL CChildWnd::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
 {
 	return FALSE;

@@ -67,6 +67,7 @@ public:
 	virtual void		Update();
 	virtual BOOL		Select(DWORD nObject);
 	virtual DWORD_PTR 	HitTestIndex(const CPoint& point) const;
+	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse);
 protected:
 	void				Clear();
 	BOOL				Select(CLibraryAlbumTrack* pItem, TRISTATE bSelect = TS_TRUE);
@@ -80,8 +81,6 @@ protected:
 	CLibraryAlbumTrack*	HitTest(const CPoint& point, CRect* pRect = NULL) const;
 	int					GetTrackIndex(CLibraryAlbumTrack* pTrack) const;
 	BOOL				GetItemRect(CLibraryAlbumTrack* pTrack, CRect* pRect);
-	void				StartDragging(CPoint& ptMouse);
-	CImageList*			CreateDragImage(const CPoint& ptMouse);
 
 	static int			SortList(LPCVOID pA, LPCVOID pB);
 
@@ -89,7 +88,7 @@ protected:
 public:
 	//{{AFX_VIRTUAL(CLibraryAlbumView)
 	protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual BOOL Create(CWnd* pParentWnd);
 	//}}AFX_VIRTUAL
 
 // Implementation

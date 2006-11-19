@@ -120,7 +120,7 @@ CHomePanel::~CHomePanel()
 BOOL CHomePanel::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 200, 0 );
-	return CTaskPanel::Create( WS_VISIBLE, rect, pParentWnd, IDC_HOME_PANEL );
+	return CTaskPanel::Create( _T("CHomePanel"), WS_VISIBLE, rect, pParentWnd, IDC_HOME_PANEL );
 }
 
 int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct) 

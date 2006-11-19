@@ -46,14 +46,12 @@ public:
 
 // Operations
 public:
-	void	OnSkinChange();
-	BOOL	Update(BOOL bForce = TRUE, BOOL bBestView = TRUE);
-	BOOL	Display(CLibraryFolder* pFolder);
-	BOOL	Display(CAlbumFolder* pFolder);
-	BOOL	Display(CLibraryFile* pFile);
-	BOOL	Select(DWORD nObject);
-	void	DragObjects(CLibraryList* pList, CImageList* pImage, const CPoint& ptMouse);
-public:
+	void				OnSkinChange();
+	BOOL				Update(BOOL bForce = TRUE, BOOL bBestView = TRUE);
+	BOOL				Display(CLibraryFolder* pFolder);
+	BOOL				Display(CAlbumFolder* pFolder);
+	BOOL				Display(CLibraryFile* pFile);
+	BOOL				Select(DWORD nObject);
 	CLibraryTreeItem*	GetFolderSelection() const;
 	CLibraryList*		GetViewSelection() const;
 
@@ -68,18 +66,15 @@ public:
 	CCoolBarCtrl		m_wndViewBottom;
 	CLibraryTipCtrl		m_wndViewTip;
 	CEdit				m_wndSearch;
-protected:
 	CList< CLibraryView* >	m_pViews;
 	CLibraryView*		m_pView;
 	CList< CLibraryPanel* >	m_pPanels;
 	CLibraryPanel*		m_pPanel;
-protected:
 	int					m_nTreeSize;
 	int					m_nPanelSize;
 	BOOL				m_bPanelShow;
 	int					m_nHeaderSize;
 	int					m_nTreeTypesHeight;
-protected:
 	BOOL				m_bUpdating;
 	DWORD				m_nLibraryCookie;
 	DWORD				m_nFolderCookie;
@@ -87,10 +82,6 @@ protected:
 	CLibraryList*		m_pViewSelection;
 	BOOL				m_bViewSelection;
 	CLibraryList		m_pViewEmpty;
-	CLibraryList*		m_pDragList;
-	CImageList*			m_pDragImage;
-	HCURSOR				m_hCursMove;
-	HCURSOR				m_hCursCopy;
 
 // Implementation
 protected:
@@ -99,20 +90,17 @@ protected:
 	void		UpdatePanel(BOOL bForce);
 	void		SetView(CLibraryView* pView, BOOL bUpdate = TRUE, BOOL bUser = TRUE);
 	void		SetPanel(CLibraryPanel* pPanel);
-	void		CancelDrag();
 	void		RunLocalSearch(auto_ptr< CQuerySearch > pSearch);
 
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CLibraryFrame)
-	public:
 	virtual BOOL Create(CWnd* pParentWnd);
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	//}}AFX_VIRTUAL
 
 // Implementation
-public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 protected:
     DECLARE_MESSAGE_MAP()
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
@@ -127,15 +115,10 @@ protected:
 	afx_msg void OnLibraryTreePhysical();
 	afx_msg void OnUpdateLibraryTreeVirtual(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryTreeVirtual();
-	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnUpdateLibraryPanel(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryPanel();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
-	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnLibrarySearch();
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	afx_msg void OnLibrarySearchQuick();

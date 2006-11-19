@@ -26,7 +26,7 @@
 
 #include "WndPanel.h"
 #include "CtrlMediaFrame.h"
-
+#include "ShareazaDataSource.h"
 
 class CMediaWnd : public CPanelWnd
 {
@@ -44,8 +44,6 @@ protected:
 // Operations
 public:
 	virtual void OnSkinChange();
-	virtual BOOL OnDropFiles(CList< CString >& pFiles, const CPoint& ptScreen, BOOL bDrop);
-public:
 	virtual BOOL PlayFile(LPCTSTR pszFile);
 	virtual BOOL EnqueueFile(LPCTSTR pszFile);
 	virtual BOOL IsPlaying();
@@ -74,10 +72,9 @@ protected:
 	afx_msg LRESULT OnMediaKey(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnDevModeChange(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnDisplayChange(WPARAM wParam, LPARAM lParam);
-	afx_msg void OnDropFiles(HDROP hDropInfo);
 
 	DECLARE_MESSAGE_MAP()
-
+	DECLARE_DROP()
 };
 
 //{{AFX_INSERT_LOCATION}}

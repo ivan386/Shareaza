@@ -23,13 +23,17 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Library.h"
+#include "SharedFile.h"
+#include "SharedFolder.h"
 #include "AlbumFolder.h"
 #include "Schema.h"
 #include "ShellIcons.h"
 #include "Skin.h"
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryView.h"
-#include "CtrlLibraryTree.h"
+#include "Schema.h"
+#include "SchemaCache.h"
+#include "SchemaCache.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -41,8 +45,8 @@ IMPLEMENT_DYNAMIC(CLibraryView, CWnd)
 
 BEGIN_MESSAGE_MAP(CLibraryView, CWnd)
 	//{{AFX_MSG_MAP(CLibraryView)
-	ON_WM_SIZE()
-	ON_WM_ERASEBKGND()
+	ON_WM_CREATE()
+	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -67,7 +71,7 @@ CLibraryView::~CLibraryView()
 
 BOOL CLibraryView::Create(CWnd* pParentWnd)
 {
-	CRect rect;
+	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
 	return CWnd::Create( NULL, NULL, WS_CHILD, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
 }
@@ -114,6 +118,24 @@ void CLibraryView::GetHeaderContent(int& nImage, CString& str)
 		str.Format( strFormat, nCount );
 		nImage = SHI_FOLDER_OPEN;
 	}
+	else if ( CSchema* pSchema = SchemaCache.Get( CSchema::uriLibrary ) )
+	{
+		nImage = pSchema->m_nIcon16;
+		LoadString( str, IDS_LIBHEAD_EXPLORE_FOLDER );
+		LPCTSTR psz = _tcschr( pSchema->m_sTitle, ':' );
+		if ( theApp.m_bRTL )
+		{
+			CString strCaption( psz ? psz + 1 : pSchema->m_sTitle );
+			str = _T("\x202A") + strCaption + _T(" \x200E") + str;
+		}
+		else
+			str += psz ? psz + 1 : pSchema->m_sTitle;
+	}
+	else
+	{
+		nImage = SHI_COMPUTER;
+		LoadString( str, IDS_LIBHEAD_HOME );
+	}
 }
 
 void CLibraryView::Update()
@@ -127,6 +149,34 @@ BOOL CLibraryView::Select(DWORD /*nObject*/)
 
 void CLibraryView::CacheSelection()
 {
+}
+
+CLibraryListItem CLibraryView::DropHitTest( const CPoint& /*point*/ )
+{
+	return CLibraryListItem();
+}
+
+CLibraryListItem CLibraryView::GetFolder() const
+{
+	CLibraryListItem oHit;
+
+	CLibraryTreeItem* pRoot = GetFolderSelection();
+	if ( pRoot )
+	{
+		if ( pRoot->m_pPhysical )
+		{
+			oHit = pRoot->m_pPhysical;
+		}
+		else if ( pRoot->m_pVirtual )
+		{
+			oHit = pRoot->m_pVirtual;
+		}
+	}
+	else
+	{
+		oHit = Library.GetAlbumRoot();
+	}
+	return oHit;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -167,24 +217,13 @@ CAlbumFolder* CLibraryView::GetSelectedAlbum(CLibraryTreeItem* pSel) const
 	return pSel->m_pVirtual;
 }
 
-void CLibraryView::DragObjects(CImageList* pImage, const CPoint& ptMouse)
-{
-	CLibraryFrame* pFrame	= (CLibraryFrame*)GetOwner();
-	CLibraryList* pList		= new CLibraryList( static_cast< int >( GetSelectedCount() ) );
-
-	for ( POSITION pos = m_pSelection.GetHeadPosition() ; pos ; )
-		pList->AddTail( m_pSelection.GetNext( pos ) );
-
-	pFrame->DragObjects( pList, pImage, ptMouse );
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryView selection operations
 
-BOOL CLibraryView::SelAdd(DWORD nObject, BOOL bNotify)
+BOOL CLibraryView::SelAdd(CLibraryListItem oObject, BOOL bNotify)
 {
-	if ( m_pSelection.Find( nObject ) ) return FALSE;
-	m_pSelection.AddTail( nObject );
+	if ( m_pSelection.Find( oObject ) ) return FALSE;
+	m_pSelection.AddTail( oObject );
 
 	if ( bNotify )
 	{
@@ -195,9 +234,9 @@ BOOL CLibraryView::SelAdd(DWORD nObject, BOOL bNotify)
 	return TRUE;
 }
 
-BOOL CLibraryView::SelRemove(DWORD_PTR nObject, BOOL bNotify)
+BOOL CLibraryView::SelRemove(CLibraryListItem oObject, BOOL bNotify)
 {
-	POSITION pos = m_pSelection.Find( static_cast< DWORD >( nObject ) );
+	POSITION pos = m_pSelection.Find( oObject );
 	if ( pos == NULL ) return FALSE;
 	m_pSelection.RemoveAt( pos );
 
@@ -212,7 +251,7 @@ BOOL CLibraryView::SelRemove(DWORD_PTR nObject, BOOL bNotify)
 
 BOOL CLibraryView::SelClear(BOOL bNotify)
 {
-	if ( m_pSelection.GetCount() == 0 ) return FALSE;
+	if ( m_pSelection.IsEmpty() ) return FALSE;
 	m_pSelection.RemoveAll();
 
 	if ( bNotify )
@@ -229,6 +268,91 @@ INT_PTR CLibraryView::GetSelectedCount() const
 	return m_pSelection.GetCount();
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CLibraryView message handlers
+int CLibraryView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+{
+	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
+	ENABLE_DROP()
+
+	return 0;
+}
+
+void CLibraryView::OnDestroy() 
+{
+	DISABLE_DROP()
+
+	CWnd::OnDestroy();
+}
+
+void CLibraryView::StartDragging(const CPoint& ptMouse)
+{
+	HBITMAP pImage = CreateDragImage( ptMouse );
+	if ( ! pImage )
+		return;
+
+	// Get GUID of parent folder
+	Hashes::Guid oGUID;
+	CLibraryListItem oHit = GetFolder();
+	if ( oHit.Type == CLibraryListItem::AlbumFolder )
+	{
+		oGUID = ((CAlbumFolder*)oHit)->m_oGUID;
+	}
+	CShareazaDataSource::DoDragDrop( &m_pSelection, pImage, oGUID );
+}
+
+HBITMAP CLibraryView::CreateDragImage(const CPoint& /*ptMouse*/)
+{
+	return NULL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CLibraryView drag drop
+
+IMPLEMENT_DROP(CLibraryView,CWnd)
+
+BOOL CLibraryView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT ptScreen, DWORD* pdwEffect, BOOL bDrop)
+{
+	if ( ! pDataObj )
+	{
+		m_oDropItem.Type = CLibraryListItem::Empty;
+		RedrawWindow();
+		return TRUE;
+	}
+
+	CPoint pt( ptScreen );
+	ScreenToClient( &pt );
+
+	CLibraryListItem oHit = DropHitTest( pt );
+
+	if ( bDrop )
+	{
+		m_oDropItem.Type = CLibraryListItem::Empty;
+		RedrawWindow();
+	}
+	else if ( m_oDropItem != oHit )
+	{
+		m_oDropItem = oHit;
+		RedrawWindow();
+	}
+
+	if ( oHit.Type == CLibraryListItem::Empty )
+	{
+		oHit = GetFolder();
+	}
+
+	switch ( oHit.Type )
+	{
+		case CLibraryListItem::LibraryFolder:
+			return CShareazaDataSource::DropToFolder( pDataObj, grfKeyState,
+				pdwEffect, bDrop, ((CLibraryFolder*)oHit)->m_sPath );
+
+		case CLibraryListItem::AlbumFolder:
+			return CShareazaDataSource::DropToAlbum( pDataObj, grfKeyState,
+				pdwEffect, bDrop, ((CAlbumFolder*)oHit) );
+
+		default:
+			break;
+	}
+
+	return FALSE;
+}

@@ -32,6 +32,7 @@
 #include "Schema.h"
 #include "SchemaCache.h"
 #include "CtrlLibraryThumbView.h"
+#include "ShareazaDataSource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -78,10 +79,11 @@ CLibraryThumbView::~CLibraryThumbView()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryThumbView create and destroy
 
-BOOL CLibraryThumbView::PreCreateWindow(CREATESTRUCT& cs)
+BOOL CLibraryThumbView::Create(CWnd* pParentWnd)
 {
-	cs.style |= WS_VSCROLL;
-	return CLibraryFileView::PreCreateWindow( cs );
+	CRect rect( 0, 0, 0, 0 );
+	SelClear( FALSE );
+	return CWnd::Create( NULL, _T("CLibraryThumbView"), WS_CHILD|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
 }
 
 int CLibraryThumbView::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -649,7 +651,6 @@ void CLibraryThumbView::OnLButtonDown(UINT nFlags, CPoint point)
 	if ( SelectTo( pHit ) ) Invalidate();
 
 	SetFocus();
-	SetCapture();
 
 	if ( pHit && ( nFlags & MK_RBUTTON ) == 0 )
 	{
@@ -662,7 +663,7 @@ void CLibraryThumbView::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CLibraryThumbView::OnMouseMove(UINT nFlags, CPoint point)
 {
-	if ( m_bDrag & ( nFlags & MK_LBUTTON ) )
+	if ( m_bDrag && ( nFlags & MK_LBUTTON ) )
 	{
 		CSize szDiff = point - m_ptDrag;
 
@@ -672,13 +673,14 @@ void CLibraryThumbView::OnMouseMove(UINT nFlags, CPoint point)
 			StartDragging( point );
 		}
 	}
+	else
+		m_bDrag = FALSE;
 
 	CLibraryFileView::OnMouseMove( nFlags, point );
 }
 
 void CLibraryThumbView::OnLButtonUp(UINT nFlags, CPoint /*point*/)
 {
-	ReleaseCapture();
 	m_bDrag = FALSE;
 
 	if ( ( nFlags & (MK_SHIFT|MK_CONTROL) ) == 0 && m_pFocus && m_pFocus->m_bSelected )
@@ -737,19 +739,7 @@ void CLibraryThumbView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 #define MAX_DRAG_SIZE	256
 #define MAX_DRAG_SIZE_2	128
 
-void CLibraryThumbView::StartDragging(CPoint& ptMouse)
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	CImageList* pImage = CreateDragImage( ptMouse );
-	if ( ! pImage ) return;
-
-	ReleaseCapture();
-	ClientToScreen( &ptMouse );
-	DragObjects( pImage, ptMouse );
-}
-
-CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
+HBITMAP CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 {
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 
@@ -830,15 +820,7 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 
 	dcDrag.DeleteDC();
 
-	CImageList* pAll = new CImageList();
-	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
-	pAll->Add( &bmDrag, RGB( 0, 255, 0 ) );
-
-	bmDrag.DeleteObject();
-
-	pAll->BeginDrag( 0, ptMouse - rcAll.TopLeft() );
-
-	return pAll;
+	return (HBITMAP) bmDrag.Detach();
 }
 
 /////////////////////////////////////////////////////////////////////////////

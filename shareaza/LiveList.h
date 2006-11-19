@@ -59,6 +59,7 @@ public:
 
 // Drag Helpers
 public:
+	static HBITMAP CreateDragBitmap(CListCtrl* pList, const CPoint& ptMouse);
 	static CImageList* CreateDragImage(CListCtrl* pList, const CPoint& ptMouse);
 	static COLORREF crDrag;
 

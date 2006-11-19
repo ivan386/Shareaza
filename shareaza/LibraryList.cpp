@@ -1,7 +1,7 @@
 //
 // LibraryList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,8 +22,12 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Application.h"
+#include "LiveList.h"
 #include "Library.h"
 #include "LibraryList.h"
+#include "SharedFile.h"
+#include "SharedFolder.h"
+#include "AlbumFolder.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -31,57 +35,163 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+//////////////////////////////////////////////////////////////////////
+// CLibraryListItem
+
+CLibraryListItem::CLibraryListItem() :
+	Type( CLibraryListItem::Empty ),
+	pAlbumFolder( NULL )
+{
+}
+
+CLibraryListItem::CLibraryListItem(DWORD val) :
+	Type ( CLibraryListItem::LibraryFile ),
+	dwLibraryFile ( val )
+{
+	ASSERT( val > 0 && val < 0x00100000 );
+}
+
+CLibraryListItem::CLibraryListItem(CLibraryFile* val) :
+	Type( CLibraryListItem::LibraryFile ),
+	dwLibraryFile( val->m_nIndex )
+{
+	ASSERT_VALID( val );
+}
+
+CLibraryListItem::CLibraryListItem(CAlbumFolder* val) :
+	Type( CLibraryListItem::AlbumFolder ),
+	pAlbumFolder( val )
+{
+	ASSERT_VALID( val );
+}
+
+CLibraryListItem::CLibraryListItem(CLibraryFolder* val) :
+	Type( CLibraryListItem::LibraryFolder ),
+	pLibraryFolder( val )
+{
+	ASSERT_VALID( val );
+}
+
+CLibraryListItem::CLibraryListItem(const CLibraryListItem& val) :
+	Type( val.Type ),
+	pAlbumFolder( val.pAlbumFolder )
+{
+}
+
+CLibraryListItem::operator DWORD () const
+{
+	ASSERT( Type == CLibraryListItem::LibraryFile );
+	if ( Type == CLibraryListItem::LibraryFile )
+		return dwLibraryFile;
+	return 0;		// error happened
+}
+
+CLibraryListItem::operator CLibraryFile* () const
+{
+	ASSERT( Type == CLibraryListItem::LibraryFile );
+	if ( Type == CLibraryListItem::LibraryFile )
+		return Library.LookupFile( dwLibraryFile );
+	return 0;		// file was removed or error happened
+}
+
+CLibraryListItem::operator CAlbumFolder* () const
+{
+	ASSERT( Type == CLibraryListItem::AlbumFolder );
+	if ( Type == CLibraryListItem::AlbumFolder )
+		return pAlbumFolder;
+	return NULL;	// error happened
+}
+
+CLibraryListItem::operator CLibraryFolder* () const
+{
+	ASSERT( Type == CLibraryListItem::LibraryFolder );
+	if ( Type == CLibraryListItem::LibraryFolder )
+		return pLibraryFolder;
+	return NULL;	// error happened
+}
+
+bool CLibraryListItem::operator == (const CLibraryListItem& val) const
+{
+	if ( Type == val.Type )
+	{
+		switch ( Type )
+		{
+		case CLibraryListItem::Empty:
+			// Both Empty
+			return TRUE;
+		
+		case CLibraryListItem::LibraryFile:
+			// Same file library number
+			return dwLibraryFile == val.dwLibraryFile;
+		
+		case CLibraryListItem::AlbumFolder:
+			ASSERT_VALID( pAlbumFolder );
+			ASSERT_VALID( val.pAlbumFolder );
+			// Same object or...
+			return ( pAlbumFolder == val.pAlbumFolder ) ||
+				// Same parent album and same album name
+				( ( pAlbumFolder->m_pParent == val.pAlbumFolder->m_pParent ) &&
+				( pAlbumFolder->m_sName == val.pAlbumFolder->m_sName ) );
+		
+		case CLibraryListItem::LibraryFolder:
+			ASSERT_VALID( pLibraryFolder );
+			ASSERT_VALID( val.pLibraryFolder );
+			// Same object or...
+			return ( pLibraryFolder == val.pLibraryFolder ) ||
+				// Same path
+				( pLibraryFolder->m_sPath == val.pLibraryFolder->m_sPath );
+		}
+	}
+	return false;
+}
+
+bool CLibraryListItem::operator != (const CLibraryListItem& val) const
+{
+	return ! ( *this == val );
+}
+
+CLibraryListItem& CLibraryListItem::operator = (const CLibraryListItem& val)
+{
+	Type = val.Type;
+	pAlbumFolder = val.pAlbumFolder;
+	return *this;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryList
+
+IMPLEMENT_DYNCREATE(CLibraryList, CComObject)
+
 BEGIN_INTERFACE_MAP(CLibraryList, CComObject)
 	INTERFACE_PART(CLibraryList, IID_IGenericView, GenericView)
 	INTERFACE_PART(CLibraryList, IID_IEnumVARIANT, EnumVARIANT)
 END_INTERFACE_MAP()
 
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryList construction
-
-CLibraryList::CLibraryList(int nBlockSize)
-{
-	m_pList		= NULL;
-	m_nCount	= 0;
-	m_nBuffer	= 0;
-	m_nBlock	= nBlockSize;
-}
-
-CLibraryList::~CLibraryList()
-{
-	if ( m_pList != NULL ) free( m_pList );
-}
-
 //////////////////////////////////////////////////////////////////////
 // CLibraryList file access
 
-CLibraryFile* CLibraryList::GetNextFile(POSITION& pos) const
+CLibraryFile* CLibraryList::GetNextFile(POSITION& pos)
 {
-	return Library.LookupFile( GetNext( pos ) );
+	ASSERT( pos != NULL );
+	return GetNext( pos );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryList list merging
 
-int CLibraryList::Merge(CLibraryList* pList)
+INT_PTR CLibraryList::Merge(CLibraryList* pList)
 {
-	int nCount = 0;
+	ASSERT( pList != NULL );
+	if ( pList == NULL )
+		return 0;
 
-	if ( pList == NULL ) return 0;
-
-	for ( POSITION pos = pList->GetIterator() ; pos ; )
+	POSITION pos = pList->GetHeadPosition();
+	while ( pos )
 	{
-		DWORD nItem = pList->GetNext( pos );
-
-		if ( Find( nItem ) == NULL )
-		{
-			AddTail( nItem );
-			nCount++;
-		}
+		CheckAndAdd( pList->GetNext( pos ) );
 	}
 
-	return nCount;
+	return GetCount();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -92,8 +202,10 @@ IMPLEMENT_DISPATCH(CLibraryList, GenericView)
 STDMETHODIMP CLibraryList::XGenericView::get_Name(BSTR FAR* psName)
 {
 	METHOD_PROLOGUE( CLibraryList, GenericView )
+
 	CString strName( _T("CLibraryFileView") );
 	strName.SetSysString( psName );
+
 	return S_OK;
 }
 
@@ -112,9 +224,11 @@ STDMETHODIMP CLibraryList::XGenericView::get_Param(LONG FAR* /*pnParam*/)
 STDMETHODIMP CLibraryList::XGenericView::get__NewEnum(IUnknown FAR* FAR* ppEnum)
 {
 	METHOD_PROLOGUE( CLibraryList, GenericView )
+
 	*ppEnum = &pThis->m_xEnumVARIANT;
 	pThis->m_xEnumVARIANT.m_pos = pThis->GetHeadPosition();
 	AddRef();
+
 	return S_OK;
 }
 
@@ -126,19 +240,22 @@ STDMETHODIMP CLibraryList::XGenericView::get_Item(VARIANT vIndex, VARIANT FAR* p
 	VariantInit( &va );
 	VariantClear( pvItem );
 
-	if ( FAILED( VariantChangeType( &va, (VARIANT FAR*)&vIndex, 0, VT_I4 ) ) ) return E_INVALIDARG;
+	if ( FAILED( VariantChangeType( &va, (VARIANT FAR*)&vIndex, 0, VT_I4 ) ) )
+		return E_INVALIDARG;
 
 	if ( va.lVal < 0 || va.lVal >= pThis->GetCount() ) return S_OK;
 
 	for ( POSITION pos = pThis->GetHeadPosition() ; pos ; )
 	{
-		DWORD nItem = pThis->GetNext( pos );
-
-		if ( va.lVal-- == 0 )
+		CLibraryListItem Item = pThis->GetNext( pos );
+		if ( Item.Type == CLibraryListItem::LibraryFile )
 		{
-			pvItem->vt		= VT_I4;
-			pvItem->lVal	= nItem;
-			break;
+			if ( va.lVal-- == 0 )
+			{
+				pvItem->vt		= VT_I4;
+				pvItem->lVal	= (DWORD) Item;
+				break;
+			}
 		}
 	}
 
@@ -148,7 +265,17 @@ STDMETHODIMP CLibraryList::XGenericView::get_Item(VARIANT vIndex, VARIANT FAR* p
 STDMETHODIMP CLibraryList::XGenericView::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CLibraryList, GenericView )
-	*pnCount = static_cast< LONG >( pThis->GetCount() );
+
+	*pnCount = 0;
+	for ( POSITION pos = pThis->GetHeadPosition() ; pos ; )
+	{
+		CLibraryListItem Item = pThis->GetNext( pos );
+		if ( Item.Type == CLibraryListItem::LibraryFile )
+		{
+			*pnCount++;
+		}
+	}
+
 	return S_OK;
 }
 
@@ -157,29 +284,53 @@ STDMETHODIMP CLibraryList::XGenericView::get_Count(LONG FAR* pnCount)
 
 IMPLEMENT_UNKNOWN(CLibraryList, EnumVARIANT)
 
-STDMETHODIMP CLibraryList::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, ULONG FAR* pceltFetched)
+CLibraryList::XEnumVARIANT::XEnumVARIANT()
 {
 	METHOD_PROLOGUE( CLibraryList, EnumVARIANT )
 
-	if ( pceltFetched ) *pceltFetched = 0;
-	else if ( celt > 1 ) return E_INVALIDARG;
+	m_pos = pThis->GetHeadPosition();
+}
 
-	if ( m_pos == NULL ) return S_FALSE;
+STDMETHODIMP CLibraryList::XEnumVARIANT::Next(ULONG celt, VARIANT* rgvar, ULONG* pceltFetched)
+{
+	METHOD_PROLOGUE( CLibraryList, EnumVARIANT )
 
-	VariantInit( &rgvar[0] );
-	rgvar[0].vt		= VT_I4;
-	rgvar[0].lVal	= pThis->GetNext( m_pos );
+	if ( rgvar == NULL )
+		return E_POINTER;
 
-	if ( pceltFetched ) (*pceltFetched)++;
+	if ( pceltFetched )
+		*pceltFetched = 0;
 
-	return S_OK;
+	while( celt && m_pos )
+	{
+		CLibraryListItem Item = pThis->GetNext( m_pos );
+		if ( Item.Type == CLibraryListItem::LibraryFile )
+		{
+			VariantInit( rgvar );
+			rgvar->vt	= VT_I4;
+			rgvar->lVal	= (DWORD) Item;
+			rgvar++;
+			celt--;
+			if ( pceltFetched )
+				(*pceltFetched)++;
+		}
+	}
+
+    return ( celt == 0 ? S_OK : S_FALSE );
 }
 
 STDMETHODIMP CLibraryList::XEnumVARIANT::Skip(ULONG celt)
 {
     METHOD_PROLOGUE( CLibraryList, EnumVARIANT )
 
-	while ( celt-- && m_pos ) pThis->GetNext( m_pos );
+	while ( celt && m_pos )
+	{
+		CLibraryListItem Item = pThis->GetNext( m_pos );
+		if ( Item.Type == CLibraryListItem::LibraryFile )
+		{
+			celt--;
+		}
+	}
 
     return ( celt == 0 ? S_OK : S_FALSE );
 }
@@ -187,11 +338,13 @@ STDMETHODIMP CLibraryList::XEnumVARIANT::Skip(ULONG celt)
 STDMETHODIMP CLibraryList::XEnumVARIANT::Reset()
 {
     METHOD_PROLOGUE( CLibraryList, EnumVARIANT )
+
 	m_pos = pThis->GetHeadPosition();
+
     return S_OK;
 }
 
-STDMETHODIMP CLibraryList::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* /*ppenum*/)
+STDMETHODIMP CLibraryList::XEnumVARIANT::Clone(IEnumVARIANT** /*ppenum*/)
 {
     return E_NOTIMPL;
 }

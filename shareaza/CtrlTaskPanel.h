@@ -67,7 +67,7 @@ protected:
 public:
 	//{{AFX_VIRTUAL(CTaskPanel)
 	public:
-	virtual BOOL Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
+	virtual BOOL Create(LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
 	//}}AFX_VIRTUAL
 
 // Implementation

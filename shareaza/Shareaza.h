@@ -28,15 +28,21 @@
 class CUPnPFinder;
 class CMainWnd;
 
+class CShareazaCommandLineInfo : public CCommandLineInfo
+{
+public:
+	CShareazaCommandLineInfo();
+
+	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
+
+	BOOL m_bSilentTray;
+};
 
 class CShareazaApp : public CWinApp
 {
-// Construction
 public:
 	CShareazaApp();
 
-// Attributes
-public:
 	HANDLE				m_pMutex;
 	CMutex				m_pSection;
 	WORD				m_nVersion[4];
@@ -56,52 +62,51 @@ public:
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
 	BOOL				m_bRTL;						// Right-to-Left GUI (2000, XP only)
 	BOOL                m_bMenuWasVisible;          // For the menus in media player window
-
 	int					m_nDefaultFontSize;			// The basic font size. (11)
 	CString				m_sDefaultFont;				// Main font. (Tahoma)
 	CString				m_sPacketDumpFont;			// Packet Window. (Lucida Console)
 	CString				m_sSystemLogFont;			// System Window. (Courier New)
-
 	boost::scoped_ptr< CUPnPFinder > m_pUPnPFinder;
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
 	CString				m_sUPnPExternalIP;
 
-	HINSTANCE m_hUser32;
-	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
-	BOOL (WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
-	HMONITOR (WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
-	HMONITOR (WINAPI *m_pfnMonitorFromWindow)(HWND, DWORD);
-	HINSTANCE m_hGDI32;
-	DWORD (WINAPI *m_pfnSetLayout)(HDC, DWORD);
-
-protected:
-	CCriticalSection	m_csMessage;
-	static TCHAR		szMessageBuffer[16384];
+	HINSTANCE			m_hUser32;
+	BOOL		(WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
+	BOOL		(WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
+	HMONITOR	(WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
+	HMONITOR	(WINAPI *m_pfnMonitorFromWindow)(HWND, DWORD);
+	HINSTANCE			m_hGDI32;
+	DWORD		(WINAPI *m_pfnSetLayout)(HDC, DWORD);
 	
-// Operations
 public:
-	static CMainWnd* SafeMainWnd();
-	void		Message(int nType, UINT nID, ...) throw();
-	void		Message(int nType, LPCTSTR pszFormat, ...) throw();
-	CString		GetErrorString();
-	BOOL		InternalURI(LPCTSTR pszURI);
+	static CMainWnd*	SafeMainWnd();
+	void				Message(int nType, UINT nID, ...) throw();
+	void				Message(int nType, LPCTSTR pszFormat, ...) throw();
+	CString				GetErrorString();
+	BOOL				InternalURI(LPCTSTR pszURI);
+	void				PrintMessage(int nType, LPCTSTR pszLog);
+	void				LogMessage(LPCTSTR pszLog);
+	void				DebugState(BOOL bState);
+
+	virtual BOOL		InitInstance();
+	virtual int			ExitInstance();
+	virtual void		WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
+	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);
+
+	static BOOL			Open(LPCTSTR lpszFileName, BOOL bDoIt);
+	static BOOL			OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt);
+	static BOOL			OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
+	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt);
+
 protected:
-	void		GetVersionNumber();
-	void		InitResources();
-public:
-	void		PrintMessage(int nType, LPCTSTR pszLog);
-	void		LogMessage(LPCTSTR pszLog);
-	void		DebugState(BOOL bState);
+	CCriticalSection			m_csMessage;
+	static TCHAR				szMessageBuffer[16384];
+	CShareazaCommandLineInfo	m_ocmdInfo;
 
-// Overrides
-public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
-	virtual void WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
+	void				GetVersionNumber();
+	void				InitResources();
 
-// Implementation
-public:
 	DECLARE_MESSAGE_MAP()
 };
 

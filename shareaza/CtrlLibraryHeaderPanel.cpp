@@ -32,7 +32,6 @@
 #include "Skin.h"
 
 #include "CtrlLibraryFrame.h"
-#include "CtrlLibraryTree.h"
 #include "CtrlLibraryHeaderPanel.h"
 
 #ifdef _DEBUG

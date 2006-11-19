@@ -1630,7 +1630,7 @@ void CDownloadsWnd::OnDownloadsRate()
 		CQuickLock oLock( Library.m_pSection );
 		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath ) )
 		{
-			dlg.Add( pFile->m_nIndex );
+			dlg.Add( pFile );
 		}
 	}
 	
