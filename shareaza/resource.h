@@ -696,6 +696,7 @@
 #define IDC_QUEUE_BOTH                  1435
 #define IDC_CREATE_GHOST                1436
 #define IDC_MAKE_GHOSTS                 1437
+#define IDC_COPYRIGHT                   1438
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502

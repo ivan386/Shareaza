@@ -88,6 +88,33 @@ BOOL CAboutDlg::OnInitDialog()
 	m_crWhite = CCoolInterface::GetDialogBkColor();
 	m_brWhite.CreateSolidBrush( m_crWhite );
 
+	TCHAR szPath[MAX_PATH];
+	GetModuleFileName( NULL, szPath, MAX_PATH );
+	LPCTSTR pszPath = szPath;
+
+	DWORD dwSize = GetFileVersionInfoSize( (LPTSTR)pszPath, &dwSize );
+	BYTE* pBuffer = new BYTE[ dwSize ];
+	GetFileVersionInfo( (LPTSTR)pszPath, NULL, dwSize, pBuffer );
+	WCHAR* pLanguage = (WCHAR*)pBuffer + 20 + 26 + 18 + 3;
+
+	CString strCopyRight;
+	CString strKey = _T("\\StringFileInfo\\");
+	strKey += pLanguage;
+	strKey += _T("\\LegalCopyright");
+
+	BYTE* pValue = NULL;
+	if ( VerQueryValue( pBuffer, (LPTSTR)(LPCTSTR)strKey, (void**)&pValue, (UINT*)&dwSize ) )
+	{
+		if ( pValue[1] )
+			strCopyRight = (LPCSTR)pValue;
+		else
+			strCopyRight = (LPCTSTR)pValue;
+	}
+	delete [] pBuffer;
+
+	CWnd* pCopy = GetDlgItem( IDC_COPYRIGHT );
+	pCopy->SetWindowText( (LPCTSTR)strCopyRight );
+
 	return TRUE;
 }
 
@@ -165,8 +192,9 @@ void CAboutDlg::OnRButtonDown(UINT /*nFlags*/, CPoint point)
 
 	if ( rc.PtInRect( point ) && ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) )
 	{
-		DWORD* pNullPtr = (DWORD*)NULL;
-		*pNullPtr = 0xFFFFFFFF;
+		// wtf ? Easter Egg
+		//DWORD* pNullPtr = (DWORD*)NULL;
+		//*pNullPtr = 0xFFFFFFFF;
 	}
 }
 

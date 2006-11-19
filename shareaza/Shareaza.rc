@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,3,1
- PRODUCTVERSION 2,2,3,1
+ FILEVERSION 2,2,3,2
+ PRODUCTVERSION 2,2,3,2
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 3, 1"
+            VALUE "FileVersion", "2, 2, 3, 2"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 3, 1"
+            VALUE "ProductVersion", "2, 2, 3, 2"
         END
     END
     BLOCK "VarFileInfo"
@@ -1360,8 +1360,8 @@ BEGIN
     CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,367,31
     LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,20,45,262,10,
                     SS_CENTERIMAGE
-    LTEXT           "Copyright © Shareaza Development Team, 2002-2005.",
-                    IDC_STATIC,20,60,262,12
+    LTEXT           "Copyright © Shareaza Development Team, 2002-",
+                    IDC_COPYRIGHT,20,60,262,12
     LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",
                     IDC_STATIC,20,75,262,24
     LTEXT           "Logo by Kid at designhazard.com",IDC_STATIC,20,105,262,
