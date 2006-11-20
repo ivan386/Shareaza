@@ -332,8 +332,11 @@ public:
 		}
 
 		// Add the given data to the end of the packet
-		CopyMemory( m_pBuffer + m_nLength, pData, nLength ); // Copy the data into the end
-		m_nLength += nLength;                                // Record that the new bytes are stored here
+		if ( nLength )
+		{
+			CopyMemory( m_pBuffer + m_nLength, pData, nLength ); // Copy the data into the end
+			m_nLength += nLength;                                // Record that the new bytes are stored here
+		}
 		return TRUE;
 	}
 	
