@@ -1435,7 +1435,8 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 		return FALSE;
 	}
 	
-	BOOL bAlpha = ( 0 != GetDIBits( hDC, m_bmAlpha, 0, 0, NULL, &pAlphaInfo, DIB_RGB_COLORS ) );
+	BOOL bAlpha = m_bmAlpha.m_hObject &&
+		GetDIBits( hDC, m_bmAlpha, 0, 0, NULL, &pAlphaInfo, DIB_RGB_COLORS );
 	if ( ! bAlpha ) CopyMemory( &pAlphaInfo, &pImageInfo, sizeof(pAlphaInfo) );
 	
 	int nTargePitch = ( ( pTargeInfo.bmiHeader.biWidth * 3 ) + 3 ) & ~3;
