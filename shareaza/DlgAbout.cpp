@@ -95,25 +95,18 @@ BOOL CAboutDlg::OnInitDialog()
 	DWORD dwSize = GetFileVersionInfoSize( (LPTSTR)pszPath, &dwSize );
 	BYTE* pBuffer = new BYTE[ dwSize ];
 	GetFileVersionInfo( (LPTSTR)pszPath, NULL, dwSize, pBuffer );
-	WCHAR* pLanguage = (WCHAR*)pBuffer + 20 + 26 + 18 + 3;
-
-	CString strCopyRight;
-	CString strKey = _T("\\StringFileInfo\\");
-	strKey += pLanguage;
-	strKey += _T("\\LegalCopyright");
 
 	BYTE* pValue = NULL;
-	if ( VerQueryValue( pBuffer, (LPTSTR)(LPCTSTR)strKey, (void**)&pValue, (UINT*)&dwSize ) )
-	{
-		if ( pValue[1] )
-			strCopyRight = (LPCSTR)pValue;
-		else
-			strCopyRight = (LPCTSTR)pValue;
-	}
+	CString strCopyRight;
+
+	if ( VerQueryValue( pBuffer, L"\\StringFileInfo\\000004b0\\LegalCopyright", 
+		 (void**)&pValue, (UINT*)&dwSize ) )
+		strCopyRight = (LPCTSTR)pValue;
+
 	delete [] pBuffer;
 
-	CWnd* pCopy = GetDlgItem( IDC_COPYRIGHT );
-	pCopy->SetWindowText( (LPCTSTR)strCopyRight );
+	CWnd* pWnd = GetDlgItem( IDC_COPYRIGHT );
+	pWnd->SetWindowText( (LPCTSTR)strCopyRight );
 
 	return TRUE;
 }
@@ -192,9 +185,8 @@ void CAboutDlg::OnRButtonDown(UINT /*nFlags*/, CPoint point)
 
 	if ( rc.PtInRect( point ) && ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) )
 	{
-		// wtf ? Easter Egg
-		//DWORD* pNullPtr = (DWORD*)NULL;
-		//*pNullPtr = 0xFFFFFFFF;
+		DWORD* pNullPtr = (DWORD*)NULL;
+		*pNullPtr = 0xFFFFFFFF;
 	}
 }
 
