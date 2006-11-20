@@ -1,7 +1,7 @@
 //
 // TigerTree.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,7 @@ class CTigerTree
 // Construction
 public:
 	CTigerTree();
-	~CTigerTree();
+	virtual ~CTigerTree();
 
 // Operations
 public:
@@ -91,7 +91,7 @@ class CTigerNode
 {
 // Construction
 public:
-	CTigerNode() : value(), bValid() {}
+	CTigerNode() : bValid( false ) { ZeroMemory( value, sizeof( value ) ) ; }
 
 // Attributes
 public:
