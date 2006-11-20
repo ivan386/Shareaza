@@ -126,7 +126,7 @@ void CLibraryMetaPanel::Update()
 	if ( pFirst == NULL ) m_nSelected = 0;
 	
 	m_nIcon32 = m_nIcon48 = -1;
-	
+
 	if ( m_nSelected == 1 )
 	{
 		m_nIndex	= pFirst->m_nIndex;
@@ -143,7 +143,20 @@ void CLibraryMetaPanel::Update()
 		m_nIcon32	= ShellIcons.Get( m_sName, 32 );
 		m_nIcon48	= ShellIcons.Get( m_sName, 48 );
 		m_nRating	= pFirst->m_nRating;
+		
+		// It's complicated, users may delete SThumbs.dat file or it gets corrupted.
+		// Thus, the file flag m_bCachedPreview is unreliable.
+		// We should trust only on the thread operation which is executed later.
+
+		BOOL bThumbWasCached = pFirst->m_bCachedPreview;
+		// Thumbnail was not extracted yet, reset the file flag
 		pFirst->m_bCachedPreview = ( m_bmThumb.m_hObject != NULL );
+
+		// If the states differ, update the Library (the window may flicker)
+		if ( bThumbWasCached != pFirst->m_bCachedPreview && m_sThumb == m_sPath )
+		{
+			Library.Update();
+		}
 	}
 	else if ( m_nSelected > 1 )
 	{
@@ -234,7 +247,8 @@ void CLibraryMetaPanel::Update()
 	
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
 	
-	if ( m_bmThumb.m_hObject != NULL && m_sThumb != m_sPath ) m_bmThumb.DeleteObject();
+	if ( m_bmThumb.m_hObject != NULL && m_sThumb != m_sPath ) 
+		m_bmThumb.DeleteObject();
 	
 	pLock2.Unlock();
 	pLock1.Unlock();
@@ -251,7 +265,7 @@ void CLibraryMetaPanel::Update()
 		
 		m_pWakeup.SetEvent();
 	}
-	
+
 	Invalidate();
 }
 
