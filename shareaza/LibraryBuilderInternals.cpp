@@ -885,7 +885,7 @@ DWORD CLibraryBuilderInternals::GetBestLanguageId(LPVOID pBuffer)
 	// ToDo: get LANGID of the Shareaza user interface
 	if ( !GetLanguageId( pTranslation, nLength, GetUserDefaultLangID(), nLangCode, false ) )
 	{
-		if ( !GetLanguageId( pTranslation, nLength, GetUserDefaultLangID(), nLangCode, true ) )
+		if ( !GetLanguageId( pTranslation, nLength, GetSystemDefaultLangID(), nLangCode, true ) )
 		{
 			if ( !GetLanguageId( pTranslation, nLength, MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), nLangCode, true ) )
 			{
