@@ -69,8 +69,10 @@ protected:		// ID3v1 and ID3v2 and MP3
 	BOOL		ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore);
 protected:		// Module Version
 	BOOL		ReadVersion(LPCTSTR pszPath);
-	BOOL		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, BOOL bCommaToDot = FALSE);
-	CString		GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey);
+	BOOL		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId, BOOL bCommaToDot = FALSE);
+	CString		GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId);
+	DWORD		GetBestLanguageId(LPVOID pBuffer);
+	BOOL		GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nLangId, DWORD &nId, bool bOnlyPrimary = false);
 protected:		// Windows Installer
 	BOOL		ReadMSI(LPCTSTR pszPath);
 	CString		GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);

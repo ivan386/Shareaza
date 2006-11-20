@@ -814,34 +814,29 @@ BOOL CLibraryBuilderInternals::ReadVersion(LPCTSTR pszPath)
 		return FALSE;
 	}
 	
-	WCHAR* pLanguage = (WCHAR*)pBuffer + 20 + 26 + 18 + 3;
-	
-	if ( wcslen( pLanguage ) != 8 )
-	{
-		delete [] pBuffer;
-		return FALSE;
-	}
+	DWORD nLangId = GetBestLanguageId( pBuffer );
 	
 	CXMLElement* pXML = new CXMLElement( NULL, _T("application") );
 	
 	pXML->AddAttribute( _T("os"), _T("Windows") );
-	CopyVersionField( pXML, _T("title"), pBuffer, _T("ProductName") );
-	CopyVersionField( pXML, _T("version"), pBuffer, _T("ProductVersion"), TRUE );
-	CopyVersionField( pXML, _T("fileDescription"), pBuffer, _T("FileDescription") );
-	CopyVersionField( pXML, _T("fileVersion"), pBuffer, _T("FileVersion"), TRUE );
-	CopyVersionField( pXML, _T("originalFileName"), pBuffer, _T("OriginalFilename") );
-	CopyVersionField( pXML, _T("company"), pBuffer, _T("CompanyName") );
-	CopyVersionField( pXML, _T("copyright"), pBuffer, _T("LegalCopyright") );
-	CopyVersionField( pXML, _T("comments"), pBuffer, _T("comments") );
+	CopyVersionField( pXML, _T("title"), pBuffer, _T("ProductName"), nLangId );
+	CopyVersionField( pXML, _T("version"), pBuffer, _T("ProductVersion"), nLangId, TRUE );
+	CopyVersionField( pXML, _T("fileDescription"), pBuffer, _T("FileDescription"), nLangId );
+	CopyVersionField( pXML, _T("fileVersion"), pBuffer, _T("FileVersion"), nLangId, TRUE );
+	CopyVersionField( pXML, _T("originalFileName"), pBuffer, _T("OriginalFilename"), nLangId );
+	CopyVersionField( pXML, _T("company"), pBuffer, _T("CompanyName"), nLangId );
+	CopyVersionField( pXML, _T("copyright"), pBuffer, _T("LegalCopyright"), nLangId );
+	CopyVersionField( pXML, _T("comments"), pBuffer, _T("comments"), nLangId );
 	
 	delete [] pBuffer;
 
 	return SubmitMetadata( CSchema::uriApplication, pXML );
 }
 
-BOOL CLibraryBuilderInternals::CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, BOOL bCommaToDot)
+BOOL CLibraryBuilderInternals::CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, 
+												LPCTSTR pszKey, DWORD nLangId, BOOL bCommaToDot)
 {
-	CString strValue = GetVersionKey( pBuffer, pszKey );
+	CString strValue = GetVersionKey( pBuffer, pszKey, nLangId );
 
 	if ( strValue.IsEmpty() ) return FALSE;
 	
@@ -858,15 +853,11 @@ BOOL CLibraryBuilderInternals::CopyVersionField(CXMLElement* pXML, LPCTSTR pszAt
 	return TRUE;
 }
 
-CString CLibraryBuilderInternals::GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey)
+CString CLibraryBuilderInternals::GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId)
 {
 	CString strKey, strValue;
 
-	WCHAR* pLanguage = (WCHAR*)pBuffer + 20 + 26 + 18 + 3;
-
-	strKey = _T("\\StringFileInfo\\");
-	strKey += pLanguage;
-	strKey += _T("\\");
+	strKey.Format( L"\\StringFileInfo\\%04x%04x\\", nLangId & 0x0000FFFF, ( nLangId & 0xFFFF0000 ) >> 16 );
 	strKey += pszKey;
 
 	BYTE* pValue = NULL;
@@ -880,7 +871,57 @@ CString CLibraryBuilderInternals::GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey)
 	else
 		strValue = (LPCTSTR)pValue;
 
-	return strValue;
+	return strValue.Trim();
+}
+
+DWORD CLibraryBuilderInternals::GetBestLanguageId(LPVOID pBuffer)
+{
+	DWORD nLangCode = 0;
+	UINT nLength = 0;
+	LPVOID	pTranslation = NULL;
+
+	VerQueryValue( pBuffer, L"\\VarFileInfo\\Translation", &pTranslation, &nLength );
+
+	// ToDo: get LANGID of the Shareaza user interface
+	if ( !GetLanguageId( pTranslation, nLength, GetUserDefaultLangID(), nLangCode, false ) )
+	{
+		if ( !GetLanguageId( pTranslation, nLength, GetUserDefaultLangID(), nLangCode, true ) )
+		{
+			if ( !GetLanguageId( pTranslation, nLength, MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), nLangCode, true ) )
+			{
+				if ( !GetLanguageId( pTranslation, nLength, MAKELANGID(LANG_ENGLISH, SUBLANG_NEUTRAL), nLangCode, true ) )
+					nLangCode = *(DWORD*)pTranslation; // Use the first one
+			}
+		}
+	}
+	return nLangCode;
+}
+
+BOOL CLibraryBuilderInternals::GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nLangId, DWORD &nId, bool bOnlyPrimary)
+{
+	LPWORD pData = NULL;
+	for ( pData = (LPWORD)pBuffer ; (LPBYTE)pData < ( (LPBYTE)pBuffer ) + nSize ; pData += 2 )
+	{
+		if ( *pData == nLangId )
+		{
+			nId = *(DWORD*)pData;
+			return TRUE;
+		}
+	}
+
+	if ( !bOnlyPrimary )
+		return FALSE;
+
+	for ( pData = (LPWORD)pBuffer ; (LPBYTE)pData < ( (LPBYTE)pBuffer ) + nSize ; pData += 2 )
+	{
+		if ( ( *pData & 0x00FF ) == ( nLangId & 0x00FF ) )
+		{
+			nId = *(DWORD*)pData;
+			return TRUE;
+		}
+	}
+
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
