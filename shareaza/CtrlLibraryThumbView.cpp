@@ -1119,13 +1119,15 @@ void CLibraryThumbItem::Paint(CDC* pDC, const CRect& rcBlock, const CSize& szThu
 
 	if ( m_bmThumb.m_hObject != NULL )
 	{
-		pMemDC->SelectObject( &m_bmThumb );
+		CBitmap* pOldBitmap = pMemDC->SelectObject( &m_bmThumb );
 
 		CPoint ptImage(	( rcThumb.left + rcThumb.right ) / 2 - m_szThumb.cx / 2,
 						( rcThumb.top + rcThumb.bottom ) / 2 - m_szThumb.cy / 2 );
 
 		pDC->BitBlt( ptImage.x, ptImage.y, m_szThumb.cx, m_szThumb.cy,
 			pMemDC, 0, 0, SRCCOPY );
+
+		pMemDC->SelectObject( pOldBitmap );
 	}
 	else
 	{
