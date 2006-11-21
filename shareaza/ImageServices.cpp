@@ -281,13 +281,13 @@ SAFEARRAY* CImageServices::ImageToArray(CImageFile* pFile)
 
 BOOL CImageServices::IsFileViewable(LPCTSTR pszPath)
 {
-	LPTSTR pszExt = _tcsrchr( pszPath, '.' );
+	LPTSTR pszExt = const_cast<wchar_t*>(_tcsrchr( pszPath, '.' ));
 
 	if ( pszExt )
 	{
 		LPCTSTR pszExtLow = _tcslwr( pszExt );
 
-		// Loads only once and add
+		// Loads only once and adds
 		PluginInfo service = GetService( pszPath );
 		if ( !service.first )
 			return FALSE;
