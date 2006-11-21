@@ -559,6 +559,9 @@
 				RelativePath="..\shareaza\Shareaza.rc">
 			</File>
 			<File
+				RelativePath="..\shareaza\ShareazaDataSource.cpp">
+			</File>
+			<File
 				RelativePath="..\shareaza\ShareazaURL.cpp">
 			</File>
 			<File
@@ -1018,9 +1021,6 @@
 					RelativePath="..\shareaza\CtrlLibraryHistoryPanel.cpp">
 				</File>
 				<File
-					RelativePath="..\shareaza\CtrlLibraryHomeView.cpp">
-				</File>
-				<File
 					RelativePath="..\shareaza\CtrlLibraryMetaPanel.cpp">
 				</File>
 				<File
@@ -1034,9 +1034,6 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlLibraryTip.cpp">
-				</File>
-				<File
-					RelativePath="..\shareaza\CtrlLibraryTree.cpp">
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlLibraryTreeView.cpp">
@@ -1803,6 +1800,9 @@
 				RelativePath="..\shareaza\HashDatabase.h">
 			</File>
 			<File
+				RelativePath="..\shareaza\HGlobal.h">
+			</File>
+			<File
 				RelativePath="..\shareaza\HostBrowser.h">
 			</File>
 			<File
@@ -1998,6 +1998,9 @@
 				RelativePath="..\shareaza\Shareaza.h">
 			</File>
 			<File
+				RelativePath="..\shareaza\ShareazaDataSource.h">
+			</File>
+			<File
 				RelativePath="..\shareaza\ShareazaURL.h">
 			</File>
 			<File
@@ -2023,6 +2026,9 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\StdAfx.h">
+			</File>
+			<File
+				RelativePath="..\shareaza\StreamArchive.h">
 			</File>
 			<File
 				RelativePath="..\shareaza\ThumbCache.h">
@@ -2203,9 +2209,6 @@
 					RelativePath="..\shareaza\CtrlLibraryHistoryPanel.h">
 				</File>
 				<File
-					RelativePath="..\shareaza\CtrlLibraryHomeView.h">
-				</File>
-				<File
 					RelativePath="..\shareaza\CtrlLibraryMetaPanel.h">
 				</File>
 				<File
@@ -2219,12 +2222,6 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlLibraryTip.h">
-				</File>
-				<File
-					RelativePath="..\shareaza\CtrlLibraryTree.h">
-				</File>
-				<File
-					RelativePath="..\shareaza\CtrlLibraryTreeView.h">
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlLibraryView.h">
@@ -3128,6 +3125,22 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\debug\shareaza\Shareaza_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4668;4820"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\release\shareaza\Shareaza_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -3143,22 +3156,6 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\shareaza\Shareaza_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
