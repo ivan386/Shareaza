@@ -379,7 +379,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.VerifyTiger"), &Downloads.VerifyTiger, TRUE );
 	Add( _T("Downloads.VerifyED2K"), &Downloads.VerifyED2K, TRUE );
 	Add( _T("Downloads.NeverDrop"), &Downloads.NeverDrop, FALSE );
-	Add( _T("Downloads.RequestHash"), &Downloads.RequestHash, FALSE );
+	Add( _T("Downloads.RequestHash"), &Downloads.RequestHash, TRUE );
 	Add( _T("Downloads.RequestHTTP11"), &Downloads.RequestHTTP11, TRUE );
 	Add( _T("Downloads.RequestURLENC"), &Downloads.RequestURLENC, TRUE );
 	Add( _T("Downloads.SaveInterval"), &Downloads.SaveInterval, 60000 );
