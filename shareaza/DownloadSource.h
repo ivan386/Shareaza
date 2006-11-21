@@ -25,9 +25,9 @@
 #pragma once
 
 #include "FileFragments.hpp"
+#include "DownloadTransfer.h"
 
 class CDownload;
-class CDownloadTransfer;
 class CQueryHit;
 class CEDClient;
 
@@ -145,6 +145,10 @@ public:
 		return TRUE;
 	}
 
+	inline bool CDownloadSource::IsOnline() const
+	{
+		return m_nBusyCount || ( m_pTransfer && m_pTransfer->m_nState > dtsNull );
+	}
 };
 
 #endif // !defined(AFX_DOWNLOADSOURCE_H__F0391D3E_0376_4F0F_934A_2E80260C4ECA__INCLUDED_)
