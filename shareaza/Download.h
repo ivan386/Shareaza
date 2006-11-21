@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -87,6 +87,7 @@ private:
 	friend class CDownloadTask; // m_pTask && OnTaskComplete
 	friend class CDownloadTransfer; // GetVerifyLength
 	friend class CDownloadWithTorrent; // m_bComplete
+	friend class CDownloadsWnd; // m_pTask
 };
 
 #endif // !defined(AFX_DOWNLOAD_H__156689EC_D090_4285_BB8C_9AD058024BB5__INCLUDED_)

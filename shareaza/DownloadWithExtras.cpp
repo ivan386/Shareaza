@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,6 +27,8 @@
 #include "DlgFilePreview.h"
 #include "DlgDownloadMonitor.h"
 #include "Plugins.h"
+#include "DownloadTask.h"
+#include "ImageServices.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -34,21 +36,19 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithExtras construction
 
 CDownloadWithExtras::CDownloadWithExtras()
+: m_pMonitorWnd(NULL)
+, m_pPreviewWnd(NULL)
+, m_pReviewFirst(NULL)
+, m_pReviewLast(NULL)
+, m_nReviewCount(0)
+, m_bWaitingPreview(FALSE)
+, m_bGotPreview(FALSE)
+, m_bRemotePreviewCapable(FALSE)
 {
-	m_pMonitorWnd	= NULL;
-	m_pPreviewWnd	= NULL;
-	m_pReviewFirst	= NULL;
-	m_pReviewLast	= NULL;
-	m_nReviewCount	= 0;
-	m_bWaitingPreview = FALSE;
-	m_tPreviewRequest = 0;
-	m_bRemotePreviewCapable = FALSE;
-	m_bGotPreview = FALSE;
 }
 
 CDownloadWithExtras::~CDownloadWithExtras()
@@ -419,6 +419,58 @@ void CDownloadWithExtras::Serialize(CArchive& ar, int nVersion)
 			}
 		}
 	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownload preview saver
+
+void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
+{
+	m_bWaitingPreview = FALSE;
+
+	CBuffer* pBuffer = NULL;
+
+	if ( ( pBuffer = pTask->IsPreviewAnswerValid() ) == NULL )
+		return;
+
+	CImageServices pServices;
+	CImageFile pImage( &pServices );
+	DWORD nBuffer = pBuffer->m_nLength;
+	BYTE* pBytes = new BYTE[ nBuffer ];
+	CopyMemory( pBytes, pBuffer->m_pBuffer, nBuffer );
+	CString strURN = pTask->m_pRequest.GetHeader( L"X-Previewed-URN" );
+
+	if ( ! pImage.LoadFromMemory( L".jpg", pBytes, nBuffer, FALSE, TRUE ) )
+	{
+		theApp.Message( MSG_ERROR, IDS_SEARCH_DETAILS_PREVIEW_FAILED, (LPCTSTR)strURN );
+		return;
+	}
+
+	BYTE* pBuffer2 = NULL;
+	DWORD nImageSize = 0;
+
+	if ( ! pImage.SaveToMemory( _T(".png"), Settings.Uploads.PreviewQuality, (LPBYTE*)&pBuffer2, &nImageSize ) )
+	{
+		theApp.Message( MSG_ERROR, IDS_SEARCH_DETAILS_PREVIEW_FAILED, (LPCTSTR)strURN );
+		return;
+	}
+
+	CFile pFile;
+	CString strPath = m_sDiskName + L".png";
+	if ( pFile.Open( strPath, CFile::modeCreate|CFile::modeWrite ) )
+	{
+		pFile.Write( pBuffer2, nImageSize );
+		pFile.Close();
+
+		// Make it hidden, so the files won't be shared
+		SetFileAttributes( (LPCTSTR)strPath, FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM );
+	}
+
+	pServices.Cleanup();
+	delete [] pBytes;
+	delete [] pBuffer2;
+	m_bGotPreview = TRUE;
+	m_bWaitingPreview = TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

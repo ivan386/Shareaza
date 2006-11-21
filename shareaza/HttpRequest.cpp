@@ -1,7 +1,7 @@
 //
 // HttpRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,15 +32,15 @@
 // CHttpRequest construction
 
 CHttpRequest::CHttpRequest()
+: m_sUserAgent(Settings.SmartAgent())
+, m_hInternet(NULL)
+, m_hThread(NULL)
+, m_nLimit(0)
+, m_nStatusCode(0)
+, m_pPost(NULL)
+, m_pResponse(NULL)
+, m_hNotifyWnd(NULL)
 {
-	m_sUserAgent	= Settings.SmartAgent();
-	m_hThread		= NULL;
-	m_hInternet		= NULL;
-	m_nLimit		= 0;
-	m_nStatusCode	= 0;
-	m_pPost			= NULL;
-	m_pResponse		= NULL;
-	m_hNotifyWnd	= NULL;
 }
 
 CHttpRequest::~CHttpRequest()
@@ -262,9 +262,8 @@ BOOL CHttpRequest::IsFinished()
 
 void CHttpRequest::Cancel()
 {
-	m_bCancel = TRUE;
-	
 	m_pSection.Lock();
+	m_bCancel = TRUE;
 	HINTERNET hInternet = m_hInternet;
 	m_hInternet = NULL;
 	m_pSection.Unlock();
@@ -327,9 +326,10 @@ int CHttpRequest::Run()
 	}
 	
 	pLock.Lock();
-	if ( m_hNotifyWnd != NULL ) PostMessage( m_hNotifyWnd, m_nNotifyMsg, m_nNotifyParam, 0 );
+	if ( m_hNotifyWnd != NULL ) 
+		PostMessage( m_hNotifyWnd, m_nNotifyMsg, m_nNotifyParam, 0 );
 	pLock.Unlock();
-	
+
 	return 0;
 }
 

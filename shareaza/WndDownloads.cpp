@@ -25,6 +25,7 @@
 #include "Transfers.h"
 #include "Downloads.h"
 #include "Download.h"
+#include "DownloadTask.h"
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
 #include "DownloadGroups.h"
@@ -162,7 +163,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadsWnd construction
 
-CDownloadsWnd::CDownloadsWnd() : CPanelWnd( TRUE, TRUE ), m_bMouseCaptured(false)
+CDownloadsWnd::CDownloadsWnd()
+: CPanelWnd( TRUE, TRUE )
+, m_bMouseCaptured(false)
 {
 	Create( IDR_DOWNLOADSFRAME );
 }
@@ -575,21 +578,21 @@ void CDownloadsWnd::Prepare()
 				m_bSelSourceExtended = pSource->m_bClientExtended;
 			}
 
-			// Check if we could get remote previews
+			// Check if we could get remote previews (only from the connected sources for the efficiency)
 			if ( pDownload->m_bSelected && pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull )
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
 					CEDClient* pEDClient = EDClients.GetByGUID( pSource->m_oGUID );
-					if ( pEDClient && pEDClient->m_bEmPreview && !pEDClient->m_bPreviewRequestSent )
+					if ( pEDClient && pEDClient->m_bEmPreview && !pSource->m_bPreviewRequestSent )
 					{
 						pDownload->m_bRemotePreviewCapable = TRUE;
 					}
 				}
-				else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bPreview )
+				else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bPreview &&
+						  !pSource->m_bPreviewRequestSent )
 				{
-					// ToDo: Disabled, since no support yet
-					// pDownload->m_bRemotePreviewCapable = TRUE;
+					pDownload->m_bRemotePreviewCapable = TRUE;
 				}
 			}
 		}
@@ -819,19 +822,22 @@ void CDownloadsWnd::OnDownloadsViewReviews()
 void CDownloadsWnd::OnUpdateDownloadsRemotePreview(CCmdUI* pCmdUI) 
 {
 	int nSelected = 0;
+	CDownload* pDownload = NULL;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos && nSelected < 3 ; )
 	{
-		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected ) nSelected++;
+		pDownload = Downloads.GetNext( pos );
+		if ( pDownload->m_bSelected ) 
+			nSelected++;
 	}
 
-	if ( nSelected == 1 )
+	if ( nSelected == 1 && !pDownload->IsTasking() )
+	{
 		Prepare();
+	}
 	else
 		m_bSelRemotePreviewCapable = FALSE;
 
-	// Allow only 1 request
 	pCmdUI->Enable( m_bSelRemotePreviewCapable );
 }
 
@@ -849,7 +855,9 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 			// Check if the saved preview file is available first
 			if ( !pDownload->m_bGotPreview ) 
 			{
-				for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; 
+				CDownloadSource* pSource = NULL;
+
+				for ( pSource = pDownload->GetFirstSource() ; pSource ; 
 					pSource = pSource->m_pNext )
 				{
 					if ( pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull )
@@ -859,12 +867,31 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 							pEDClient = EDClients.GetByGUID( pSource->m_oGUID );
 
 							// Find first client which supports previews
-							if ( pEDClient && pEDClient->m_bEmPreview && !pEDClient->m_bPreviewRequestSent )
+							if ( pEDClient && pEDClient->m_bEmPreview && !pSource->m_bPreviewRequestSent )
+							{
+								pSource->m_bPreviewRequestSent = TRUE;
 								break;
+							}
 						}
-						else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bPreview )
+						else if ( pSource->m_nProtocol == PROTOCOL_HTTP && 
+								  pSource->m_bPreview && !pSource->m_bPreviewRequestSent &&
+								  !pDownload->IsTasking() )
 						{
-							// ToDo: make async requests. We don't need to be sure if we get the answer
+							if ( pDownload->m_oSHA1 && pSource->m_sPreview.IsEmpty() )
+							{
+								pSource->m_sPreview.Format( _T("http://%s:%i/gnutella/preview/v1?%s"),
+									(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ), pSource->m_nPort,
+									(LPCTSTR)pDownload->m_oSHA1.toUrn() );
+							}
+
+							if ( pDownload->m_oSHA1 )
+							{
+								pDownload->m_pTask = new CDownloadTask( pDownload, pSource->m_sPreview );
+
+								pDownload->m_bWaitingPreview = TRUE;
+								pSource->m_bPreviewRequestSent = TRUE;
+								break;
+							}
 						}
 					}
 				}
@@ -873,7 +900,7 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 				{
 					pEDClient->SendPreviewRequest( pDownload );
 					pDownload->m_bWaitingPreview = TRUE;
-					pDownload->m_tPreviewRequest = GetTickCount();
+					pSource->m_bPreviewRequestSent = TRUE;
 				}
 			}
 			else
@@ -1952,3 +1979,4 @@ void CDownloadsWnd::OnCaptureChanged(CWnd *pWnd)
 	m_bMouseCaptured = true;
 	Update();
 }
+

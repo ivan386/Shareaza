@@ -28,6 +28,7 @@
 
 class CDownloadMonitorDlg;
 class CFilePreviewDlg;
+class CDownloadTask;
 
 // CDownloadReview stores a review of a download. It can be either a G2 review, copied from the
 // search, or an ed2k review recieved during download.
@@ -77,7 +78,6 @@ protected:
 public:
 	BOOL				m_bRemotePreviewCapable;
 	BOOL				m_bWaitingPreview;	// The remote preview request was sent
-	DWORD				m_tPreviewRequest;	// The time when preview request was sent
 	BOOL				m_bGotPreview;
 
 // Operations
@@ -94,6 +94,7 @@ public:
 	void		DeleteReview(CDownloadReview* pReview);
 	int			GetReviewCount() const { return m_nReviewCount; }
 	int			GetReviewAverage() const;
+	void		OnPreviewRequestComplete(CDownloadTask* pTask);
 protected:
 	virtual void Serialize(CArchive& ar, int nVersion);
 public:

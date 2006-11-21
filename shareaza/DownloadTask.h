@@ -1,7 +1,7 @@
 //
 // DownloadTask.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,15 +25,16 @@
 #pragma once
 
 #include "BTInfo.h"
+#include "HttpRequest.h"
 
 class CDownload;
-
 
 class CDownloadTask : public CWinThread
 {
 // Construction
 public:
 	CDownloadTask(CDownload* pDownload, int nTask);
+	CDownloadTask(CDownload* pDownload, const CString& strPreviewURL);
 	virtual ~CDownloadTask();
 
 	DECLARE_DYNAMIC(CDownloadTask)
@@ -51,12 +52,13 @@ public:
 	CString		m_sFilename;
 	CString		m_sPath;
 	CBTInfo		m_pTorrent;
+	CHttpRequest m_pRequest;
 protected:
 	CEvent*		m_pEvent;
 
 // Enumerations
 public:
-	enum { dtaskAllocate, dtaskCopySimple, dtaskCopyTorrent };
+	enum { dtaskAllocate, dtaskCopySimple, dtaskCopyTorrent, dtaskPreviewRequest };
 
 // Operations
 public:
@@ -68,10 +70,13 @@ protected:
 	void	RunCopyTorrent();
 	BOOL	CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength);
 	void	CreatePathForFile(const CString& strBase, const CString& strPath);
+private:
+	void	Construct(CDownload* pDownload);
 
 // Utilities
 public:
 	static CString SafeFilename(LPCTSTR pszName);
+	CBuffer* IsPreviewAnswerValid();
 
 // Overrides
 public:

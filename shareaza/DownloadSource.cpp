@@ -100,6 +100,8 @@ void CDownloadSource::Construct(CDownload* pDownload)
 	m_nFailures		= 0;
 	m_nBusyCount	= 0;
 	m_nRedirectionCount = 0;
+	m_bPreviewRequestSent = FALSE;
+	m_bPreview = FALSE;
 }
 
 CDownloadSource::~CDownloadSource()

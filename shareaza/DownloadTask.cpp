@@ -1,11 +1,7 @@
 //
 // DownloadTask.cpp
 //
-//	Date:			"$Date: 2005/12/28 09:17:52 $"
-//	Revision:		"$Revision: 1.24 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,7 +28,11 @@
 #include "DownloadGroups.h"
 #include "Transfers.h"
 #include "Uploads.h"
+#include "Library.h"
 #include "LibraryFolders.h"
+#include "LibraryMaps.h"
+#include "SharedFile.h"
+#include "HttpRequest.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -58,17 +58,37 @@ const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
 // CDownloadTask construction
 
 CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
+: m_nTask(nTask)
+, m_pEvent(NULL)
+, m_pDownload(pDownload)
+, m_bSuccess(FALSE)
+, m_nTorrentFile(0)
+{
+	Construct( pDownload );
+	SetThreadPriority( THREAD_PRIORITY_BELOW_NORMAL );
+}
+
+CDownloadTask::CDownloadTask(CDownload* pDownload, const CString& strPreviewURL)
+: m_nTask(dtaskPreviewRequest)
+, m_pEvent(NULL)
+, m_pDownload(pDownload)
+, m_bSuccess(FALSE)
+, m_nTorrentFile(0)
+{
+	m_pRequest.SetURL( strPreviewURL );
+	m_pRequest.AddHeader( _T("Accept"), _T("image/jpeg") );
+	m_pRequest.LimitContentLength( Settings.Search.MaxPreviewLength );
+	Construct( pDownload );
+	SetThreadPriority( THREAD_PRIORITY_NORMAL );
+}
+
+void CDownloadTask::Construct(CDownload* pDownload)
 {
 	ASSERT( pDownload->m_pTask == NULL );
 	pDownload->m_pTask = this;
-	
 
 	CString strLocalName = pDownload->m_sDisplayName;
-	
-	m_nTask		= nTask;
-	m_pDownload	= pDownload;
-	m_bSuccess	= FALSE;
-	m_nTorrentFile = 0;
+
 	m_nSize		= pDownload->m_nSize;
 	m_sName		= pDownload->m_sDisplayName;
 	m_sFilename	= pDownload->m_sDiskName;
@@ -95,18 +115,15 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
 		}
 	}
 
-	
+
 	if ( m_nTask == dtaskCopySimple && m_pDownload->m_pTorrent.m_nFiles > 1 )
 	{
 		m_nTask = dtaskCopyTorrent;
 		m_pTorrent.Copy( &m_pDownload->m_pTorrent );
 	}
-	
-	m_pEvent = NULL;
+
 	m_bAutoDelete = TRUE;
-	
 	CreateThread();
-	SetThreadPriority( THREAD_PRIORITY_BELOW_NORMAL );
 }
 
 CDownloadTask::~CDownloadTask()
@@ -177,6 +194,9 @@ int CDownloadTask::Run()
 				RunCopyTorrent();
 			}
 		}
+		break;
+	case dtaskPreviewRequest:
+		m_pRequest.Execute( FALSE ); // without threading
 		break;
 	}
 	
@@ -515,4 +535,56 @@ void CDownloadTask::CreatePathForFile(const CString& strBase, const CString& str
 			CreateDirectory( strFolder, NULL );
 		}
 	}
+}
+
+CBuffer* CDownloadTask::IsPreviewAnswerValid()
+{
+	m_pRequest.GetStatusCode();
+
+	if ( m_pRequest.GetStatusSuccess() == FALSE )
+	{
+		theApp.Message( MSG_DEBUG, L"Preview failed: HTTP status code %i",
+			m_pRequest.GetStatusCode() );
+		return NULL;
+	}
+
+	CString strURN = m_pRequest.GetHeader( L"X-Previewed-URN" );
+
+	if ( strURN.GetLength() )
+	{
+		Hashes::Sha1Hash oSHA1;
+		bool bValid = true;
+
+		if ( m_pDownload )
+		{
+			if ( oSHA1.fromUrn( strURN ) && validAndUnequal( oSHA1, m_pDownload->m_oSHA1 ) )
+				bValid = false;
+		}
+		else
+		{
+			CSingleLock oLock( &Library.m_pSection, TRUE );
+			CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
+			if ( pFile == NULL )
+				bValid = false;
+			oLock.Unlock();
+		}
+		if ( !bValid )
+		{
+			theApp.Message( MSG_DEBUG, L"Preview failed: wrong URN." );
+			return NULL;
+		}
+	}
+
+	CString strMIME = m_pRequest.GetHeader( L"Content-Type" );
+
+	if ( strMIME.CompareNoCase( L"image/jpeg" ) != 0 )
+	{
+		theApp.Message( MSG_DEBUG, L"Preview failed: unacceptable content type." );
+		return NULL;
+	}
+
+	CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
+	if ( pBuffer == NULL ) return NULL;
+
+	return pBuffer;
 }

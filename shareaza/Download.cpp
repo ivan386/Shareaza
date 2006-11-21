@@ -48,26 +48,22 @@ static char THIS_FILE[]=__FILE__;
 // CDownload construction
 
 CDownload::CDownload()
+: m_nSerID(Downloads.GetFreeSID())
+, m_bExpanded(Settings.Downloads.AutoExpand)
+, m_bSelected(FALSE)
+, m_bVerify(TS_UNKNOWN)
+, m_nRunCookie(0)
+, m_nSaveCookie(0)
+, m_nGroupCookie(0)
+, m_bPaused(FALSE)
+, m_bBoosted(FALSE)
+, m_bShared(Settings.Uploads.SharePartials)
+, m_bComplete(FALSE)
+, m_tCompleted(0)
+, m_tSaved(0)
+, m_tBegan(0)
+, m_bDownloading(FALSE)
 {
-	m_nSerID		= Downloads.GetFreeSID();
-	m_bExpanded		= Settings.Downloads.AutoExpand;
-	m_bSelected		= FALSE;
-	m_bVerify		= TS_UNKNOWN;
-	
-	m_nRunCookie	= 0;
-	m_nSaveCookie	= 0;
-	m_nGroupCookie	= 0;
-	
-	m_bPaused		= FALSE;
-	m_bBoosted		= FALSE;
-	m_bShared		= Settings.Uploads.SharePartials;
-	m_bComplete		= FALSE;
-	m_tCompleted	= 0;
-	m_tSaved		= 0;
-	m_tBegan		= 0;
-	
-	m_bDownloading	= FALSE;
-
 	DownloadGroups.Link( this );
 }
 
@@ -432,6 +428,10 @@ void CDownload::OnDownloaded()
 		AppendMetadata();
 	}
 	
+	if ( m_pTask && m_pTask->m_nTask == CDownloadTask::dtaskPreviewRequest )
+	{
+		m_pTask->Abort(); // We don't need previews if the file was downloaded
+	}
 	ASSERT( m_pTask == NULL );
 	m_pTask = new CDownloadTask( this, CDownloadTask::dtaskCopySimple );
 	
@@ -451,6 +451,10 @@ void CDownload::OnTaskComplete(CDownloadTask* pTask)
 	if ( pTask->m_nTask == CDownloadTask::dtaskAllocate )
 	{
 		// allocate complete
+	}
+	else if ( pTask->m_nTask == CDownloadTask::dtaskPreviewRequest )
+	{
+		OnPreviewRequestComplete( pTask );
 	}
 	else
 	{
