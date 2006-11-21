@@ -579,7 +579,8 @@ void CDownloadsWnd::Prepare()
 			}
 
 			// Check if we could get remote previews (only from the connected sources for the efficiency)
-			if ( pDownload->m_bSelected && pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull )
+			if ( pDownload->m_bSelected && 
+				 ( pSource->m_nBusyCount || pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull ) )
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
@@ -860,7 +861,7 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 				for ( pSource = pDownload->GetFirstSource() ; pSource ; 
 					pSource = pSource->m_pNext )
 				{
-					if ( pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull )
+					if ( pSource->m_nBusyCount || pSource->m_pTransfer && pSource->m_pTransfer->m_nState > dtsNull )
 					{
 						if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 						{
