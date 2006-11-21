@@ -539,7 +539,7 @@ void CDownloadTask::CreatePathForFile(const CString& strBase, const CString& str
 
 CBuffer* CDownloadTask::IsPreviewAnswerValid()
 {
-	if ( m_nTask != dtaskPreviewRequest || !m_pRequest->IsFinished() )
+	if ( m_nTask != dtaskPreviewRequest || !m_pRequest.IsFinished() )
 		return NULL;
 
 	m_pRequest.GetStatusCode();
