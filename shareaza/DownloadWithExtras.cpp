@@ -452,6 +452,7 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 	if ( ! pImage.SaveToMemory( _T(".png"), Settings.Uploads.PreviewQuality, (LPBYTE*)&pBuffer2, &nImageSize ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_SEARCH_DETAILS_PREVIEW_FAILED, (LPCTSTR)strURN );
+		delete [] pBytes;
 		return;
 	}
 
