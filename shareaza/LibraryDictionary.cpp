@@ -141,13 +141,15 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sHiragana);
 		if ( IsCharacter( *pszPtr ) )
 			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sRegular);
+		if ( _istdigit( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sNumeric);
 
 		if ( ( boundary[ 1 ] & (sHiragana | sKatakana) ) == (sHiragana | sKatakana) )
 		{
 			boundary[ 1 ] = boundary[ 0 ];
 		}
 
-		bool bCharacter = ( boundary[ 1 ] & sRegular );
+		bool bCharacter = ( ( boundary[ 1 ] & sRegular ) == sRegular );
 		int nDistance = !bCharacter ? 1 : 0;
 
 		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ] && nPos )
@@ -258,8 +260,7 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 			}
 			bDone = true;
 		}
-
-		if ( IsKatakana( *pszKeyword ) )
+		else if ( IsKatakana( *pszKeyword ) )
 		{
 			// Continuous Katakana string does not have Prefix or postfix with Katakana
 			// but can contain a few words in one continuous string
@@ -280,19 +281,16 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 				}
 			}
 			bDone = true;
-			if ( bDigit ) 
-				return nCount;
 		}
-
-		// Continuous Kanji string may have Prefix or postfix with Kanji
-		// moreover can contain a few words in one continuous string
-		// Assume MAX number of Words contained in one continuous Kanji string as Two words
-		// including prefix/postfix
-		// Note, according to GDF, minimum char length for Kanji is 1 char
-		// moreover, it is not known how long the prefix/postfix
-		// not even the length of chars in one word.
-		if ( IsKanji( *pszKeyword ) )
+		else if ( IsKanji( *pszKeyword ) )
 		{
+			// Continuous Kanji string may have Prefix or postfix with Kanji
+			// moreover can contain a few words in one continuous string
+			// Assume MAX number of Words contained in one continuous Kanji string as Two words
+			// including prefix/postfix
+			// Note, according to GDF, minimum char length for Kanji is 1 char
+			// moreover, it is not known how long the prefix/postfix
+			// not even the length of chars in one word.
 			if ( nLength >= 2 )
 			{
 				for (int nLen = 1; nLen < nLength ; nLen++)

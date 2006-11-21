@@ -805,46 +805,53 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 			return FALSE;
 	}
 
-	// Check we aren't just searching for broad terms - set counters, etc
-	for ( const_iterator pWord = begin(); pWord != end(); pWord++ )
+	// Setting up Common keyword list
+	static const LPCTSTR common[] =
 	{
-		nValidCharacters = 0;
-		static const LPCTSTR common[] =
-		{
-			L"mp3", L"ogg",
+		L"mp3", L"ogg",
 			L"jpg", L"gif", L"png", L"bmp",
 			L"mpg", L"avi", L"mkv", L"wmv", L"mov", L"ogm",
 			L"exe", L"zip", L"rar", L"iso", L"bin", L"cue",
 			L"dvd", L"mpeg", L"divx", L"xvid",
 			L"xxx", L"sex", L"fuck",
 			L"torrent"
-		};
-		static const size_t commonWords = sizeof common / sizeof common[ 0 ];
+	};
+	static const size_t commonWords = sizeof common / sizeof common[ 0 ];
 
-		for ( unsigned int index=0; index < (pWord->second) ; index++)
+	// Check we aren't just searching for broad terms - set counters, etc
+	for ( const_iterator pWord = begin(); pWord != end(); pWord++ )
+	{
+		nValidCharacters = 0;
+		TCHAR szChar = *(pWord->first);
+		int nLength = int(pWord->second);
+
+		if ( !IsCharacter( szChar ) ) // check if the char is valid
 		{
-			TCHAR szChar = pWord->first[ index ];
-			if ( !IsCharacter(szChar) ) // check if the char is valid
-			{
-				// do nothing
-			} //after the char inspection
-			else if ( 0x00 <= szChar && 0x7f >= szChar) // check if the char is 1 byte length in UTF8 (non-char will not reach here)
-			{
-				nValidCharacters++;
-			}
-			else if ( 0x80 <= szChar && 0x7ff >= szChar)  // check if the char is 2 byte length in UTF8 (non-char will not reach here)
-			{
-				nValidCharacters += 2;
-			}
-			else if ( 0x3041 <= szChar && 0x30fe >= szChar )
-			{
-				nValidCharacters += 2;
-			}
-			else if ( 0x800 <= szChar && 0xffff >= szChar)  // check if the char is 3 byte length in UTF8 (non-char will not reach here)
-			{
-				nValidCharacters += 3;
-			}
-
+			// do nothing here
+		} //after the char inspection
+		else if ( _istdigit( szChar ) )
+		{
+			if ( nLength > 3 ) nValidCharacters = nLength;
+		}
+		else if ( nLength > 2 )
+		{
+			nValidCharacters = nLength;
+		}
+		else if ( 0x00 <= szChar && 0x7f >= szChar) // check if the char is 1 byte length in UTF8 (non-char will not reach here)
+		{
+			nValidCharacters = nLength;
+		}
+		else if ( 0x80 <= szChar && 0x7ff >= szChar)  // check if the char is 2 byte length in UTF8 (non-char will not reach here)
+		{
+			nValidCharacters = nLength * 2;
+		}
+		else if ( 0x3041 <= szChar && 0x30fe >= szChar )
+		{
+			nValidCharacters = nLength * 2;
+		}
+		else if ( 0x800 <= szChar && 0xffff >= szChar)  // check if the char is 3 byte length in UTF8 (non-char will not reach here)
+		{
+			nValidCharacters = nLength * 3;
 		}
 
 		if ( std::find_if( common, common + commonWords, FindStr( *pWord ) ) != common + commonWords )
@@ -852,12 +859,12 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 			// Common term. Don't count it.
 			if (nValidCharacters >= 3) nCommonWords++;
 		}
-		else
+		else if (nValidCharacters >= 3)
 		{
 			// Valid search term.
-			if (nValidCharacters >= 3) nValidWords++;
+			nValidWords++;
 		}
-	
+
 	}
 
 	nValidWords += nCommonWords / 3; // make it accept query, if there are more than 3 different common words.
@@ -1251,6 +1258,8 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sHiragana);
 		if ( IsCharacter( *pszPtr ) )
 			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sRegular);
+		if ( _istdigit( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sNumeric);
 
 		if ( ( boundary[ 1 ] & (sHiragana | sKatakana) ) == (sHiragana | sKatakana) )
 		{
@@ -1387,7 +1396,8 @@ void CQuerySearch::AddStringToWordList(LPCTSTR pszString)
 		}
 		else
 		{
-			if ( ! bNegate && pszWord < pszPtr && IsWord( pszWord, 0, pszPtr - pszWord ) )
+			if ( ! bNegate && pszWord < pszPtr &&
+				( (_istdigit( *pszWord ) && pszPtr - pszWord > 3 ) || IsWord( pszWord, 0, pszPtr - pszWord ) ) )
 			{
 				m_oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
 			}
@@ -1413,7 +1423,8 @@ void CQuerySearch::AddStringToWordList(LPCTSTR pszString)
 		}
 	}
 	
-	if ( ! bNegate && pszWord < pszPtr && IsWord( pszWord, 0, pszPtr - pszWord ) )
+	if ( ! bNegate && pszWord < pszPtr &&
+		( (_istdigit( *pszWord ) && pszPtr - pszWord > 3 ) || IsWord( pszWord, 0, pszPtr - pszWord ) ) )
 	{
 		m_oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
 	}
