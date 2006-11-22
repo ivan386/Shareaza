@@ -4,6 +4,7 @@ Shareaza Skin Installer
 
 This installer was developed by Robert Rainwater.
 Version 1.0.9 and later are extensions by Jann Röder <jann_roeder@arcor.de>
+1.0.12 version improved by Rolandas Rudomanskis.
 
 History
 =======
@@ -87,33 +88,16 @@ History
  - Fixed Bug with "Set Skin as Default". It now selects the skin and opens the skin settings window.
  - Renamed "Set Skin as Default" button to "Select Skin"
 
-Issues
-======
-
-The skin installer does not display non-ASCII characters from UTF-8 skin files correctly, and it probably doesn't work at all for files saved as UTF-16. For UTF-8 files this is a cosmetical issue, for UTF-16 files this is quite severe, because they won't work at all. If you know how to fix this easily, please contact me at jann_roeder@arcor.de
-
+1.0.12
+ - Linked against zlib 1.2.3 (winapi)
+ - UTF-8 support implemented
+ - "Updated by" authors are displayed
+ - GUI fixed (white background)
+ 
 ToDo
 ====
 
 - Maybe disable all other skins when clicking on Select Skin
-- Unicode support
-
-Build Environment
-=================
-
-If you want to build the skin installer from source you need the following:
-- The MinGW and MSYS environment http://www.mingw.org
-- The zlib library http://www.zlib.org
-
-At the time of this writing, Shareaza still uses version 1.1.4 of the zlib library. You can get this version here: http://www.gzip.org/zlib/zlib-1.1.4.tar.gz
-
-However the skin installer can also be built using the latest zlib (1.2.1). The Makefile expects the current zlib at ../zlib and zlib 1.1.4 at ../zlib-1.1.4
-
-The build process will place the skin.exe in the ../bin folder. You might want to put zlib1.dll and zlib.dll into that folder as well. For the build process using zlib-1.1.4 it is required that you have zlib.dll in ../bin . The build process using the current zlib requires the file libzdll.a to be present in ../zlib . This is the zlib import library and can be created using the command "make -f win32/Makefile.gcc" from inside the zlib folder.
-
-Finally:
-To build the skin installer using the current zlib, simply type "make"
-To build using zlib-1.1.4 type "make -f Makefille.oldzlib"
 
 Copyright Information
 =====================
