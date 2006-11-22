@@ -90,7 +90,8 @@
 #include <boost/ptr_container/ptr_container.hpp>
 #include <boost/checked_delete.hpp>
 
-#if _MSC_VER > 1310
+#if _MSC_VER >= 1400 
+#elif _MSC_VER > 1310
 #include <intrin.h>
 #endif
 
