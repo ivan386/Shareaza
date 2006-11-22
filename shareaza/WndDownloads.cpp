@@ -860,22 +860,21 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 				for ( pSource = pDownload->GetFirstSource() ; pSource ; 
 					pSource = pSource->m_pNext )
 				{
-					if ( pSource->IsOnline() )
+					if ( pSource->IsOnline() && !pSource->m_bPreviewRequestSent )
 					{
 						if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 						{
 							pEDClient = EDClients.GetByGUID( pSource->m_oGUID );
 
 							// Find first client which supports previews
-							if ( pEDClient && pEDClient->m_bEmPreview && !pSource->m_bPreviewRequestSent )
+							if ( pEDClient && pEDClient->m_bEmPreview )
 							{
 								pSource->m_bPreviewRequestSent = TRUE;
 								break;
 							}
 						}
 						else if ( pSource->m_nProtocol == PROTOCOL_HTTP && 
-								  pSource->m_bPreview && !pSource->m_bPreviewRequestSent &&
-								  !pDownload->IsTasking() )
+								  pSource->m_bPreview && !pDownload->IsTasking() )
 						{
 							if ( pDownload->m_oSHA1 && pSource->m_sPreview.IsEmpty() )
 							{
