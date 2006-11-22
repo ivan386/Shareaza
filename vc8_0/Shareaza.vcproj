@@ -972,6 +972,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\ShareazaDataSource.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\ShareazaURL.cpp"
 				>
 			</File>
@@ -1891,10 +1895,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\CtrlLibraryHomeView.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\CtrlLibraryMetaPanel.cpp"
 					>
 				</File>
@@ -1912,10 +1912,6 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlLibraryTip.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\CtrlLibraryTree.cpp"
 					>
 				</File>
 				<File
@@ -2997,6 +2993,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\HGlobal.h"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\HostBrowser.h"
 				>
 			</File>
@@ -3257,6 +3257,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\ShareazaDataSource.h"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\ShareazaURL.h"
 				>
 			</File>
@@ -3290,6 +3294,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\StdAfx.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\StreamArchive.h"
 				>
 			</File>
 			<File
@@ -3528,10 +3536,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\CtrlLibraryHomeView.h"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\CtrlLibraryMetaPanel.h"
 					>
 				</File>
@@ -3549,10 +3553,6 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlLibraryTip.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\CtrlLibraryTree.h"
 					>
 				</File>
 				<File
@@ -4785,55 +4785,6 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\releasewin32\shareaza\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\debugwin32\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
@@ -4966,6 +4917,55 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)3.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\releasewin32\shareaza\Shareaza_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
