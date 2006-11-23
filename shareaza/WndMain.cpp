@@ -692,8 +692,9 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	// Fix resource handle
 	
-	if ( AfxGetResourceHandle() != m_hInstance )
-		AfxSetResourceHandle( m_hInstance );
+	ASSERT( AfxGetResourceHandle() == m_hInstance );
+	//if ( AfxGetResourceHandle() != m_hInstance )
+	//	AfxSetResourceHandle( m_hInstance );
 
 	// Propagate to children
 	
