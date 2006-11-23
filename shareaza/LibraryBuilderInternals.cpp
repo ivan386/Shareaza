@@ -882,6 +882,26 @@ DWORD CLibraryBuilderInternals::GetBestLanguageId(LPVOID pBuffer)
 
 	VerQueryValue( pBuffer, L"\\VarFileInfo\\Translation", &pTranslation, &nLength );
 
+	if ( pTranslation == NULL ) // No Translation block is available
+	{
+		VerQueryValue( pBuffer, L"\\StringFileInfo\\", &pTranslation, &nLength );
+		if ( pTranslation != NULL )
+		{
+			WCHAR* pLanguage = (WCHAR*)pTranslation + 3;
+			if ( wcslen( pLanguage ) != 8 )
+				return 0;
+			else
+			{
+				DWORD nSublang = 0;
+				// Read the langid just after StringFileInfo block
+				swscanf( pLanguage, L"%4x%4x", &nLangCode, &nSublang );
+				nLangCode += ( nSublang << 16 );
+				return nLangCode;
+			}
+		}
+		else
+			return 0;
+	}
 	// ToDo: get LANGID of the Shareaza user interface
 	if ( !GetLanguageId( pTranslation, nLength, GetUserDefaultLangID(), nLangCode, false ) )
 	{
