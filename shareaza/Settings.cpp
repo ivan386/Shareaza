@@ -75,7 +75,7 @@ void CSettings::Setup()
 	Add( _T("Library.WatchFolders"), &Library.WatchFolders, TRUE );
 	Add( _T("Library.WatchFoldersTimeout"), &Library.WatchFoldersTimeout, 5 );
 	Add( _T("Library.PartialMatch"), &Library.PartialMatch, TRUE );
-	Add( _T("Library.VirtualFiles"), &Library.VirtualFiles, TRUE );
+	Add( _T("Library.VirtualFiles"), &Library.VirtualFiles, FALSE );
 	Add( _T("Library.SourceMesh"), &Library.SourceMesh, TRUE );
 	Add( _T("Library.SourceExpire"), &Library.SourceExpire, 86400 );
 	Add( _T("Library.TigerHeight"), &Library.TigerHeight, 9 );
@@ -508,7 +508,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	35
+#define SMART_VERSION	36
 
 void CSettings::Load()
 {
@@ -653,9 +653,6 @@ void CSettings::SmartUpgrade()
 		}
 	}
 
-	if ( nVersion < 34 )
-		BitTorrent.LinkPing				= 120 * 1000;
-
 	// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
 	if ( nVersion < 20 )
 	{
@@ -760,10 +757,18 @@ void CSettings::SmartUpgrade()
 		RegDeleteKey( HKEY_CURRENT_USER, _T("Software\\Shareaza\\Shareaza\\Plugins\\LibraryBuilder") );
 	}
 
+	if ( nVersion < 34 )
+		BitTorrent.LinkPing				= 120 * 1000;
+
 	if ( nVersion < 35 )
 	{
 		Gnutella1.QuerySearchUTF8 = TRUE;
 		Gnutella1.QueryHitUTF8 = TRUE;
+	}
+
+	if ( nVersion < 36 )
+	{
+		Library.VirtualFiles = FALSE;
 	}
 }
 
