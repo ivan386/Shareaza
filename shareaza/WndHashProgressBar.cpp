@@ -77,7 +77,7 @@ void CHashProgressBar::Create(CWnd* pParent)
 
 void CHashProgressBar::Run()
 {
-	if ( Settings.Library.HashWindow && m_sCurrent.GetLength() )
+	if ( Settings.Library.HashWindow )
 	{
 		// Update current hashing status
 		m_nTotal = static_cast< int >( LibraryMaps.GetFileCount() );
