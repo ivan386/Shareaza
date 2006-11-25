@@ -556,8 +556,8 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		{
 			LPTSTR pszOutput = strValue.GetBuffer( nLength - nOffset + 1 );
 
-			DWORD nOut = 0;
-			for ( DWORD nChar = 0 ; nChar < nLength - nOffset ; nChar++, nOut++ )
+			DWORD nOut = 0, nChar = 0;
+			for ( ; nChar < nLength - nOffset ; nChar++, nOut++ )
 			{
 				pszOutput[ nOut ] = (TCHAR)pBuffer[ nOffset + nChar ];
 				if ( pszOutput[ nOut ] == 0 )
@@ -567,7 +567,8 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 				}
 			}
 			strValue.ReleaseBuffer( nOut );
-
+			if ( nChar == nLength - nOffset )
+				nOffset += nLength - nOffset;
 		}
 		else if ( nEncoding == 1 && ( ( nLength - nOffset ) & 1 ) == 0 && nLength - nOffset >= 2 )
 		{
@@ -577,8 +578,8 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 			if ( pBuffer[0] == 0xFF && pBuffer[1] == 0xFE )
 			{
 				pBuffer += 2;
-				DWORD nOut = 0;
-				for ( DWORD nChar = 0 ; nChar < nNewLength ; nChar++, nOut++ )
+				DWORD nOut = 0, nChar = 0;
+				for ( ; nChar < nNewLength ; nChar++, nOut++ )
 				{
 					pszOutput[ nOut ] = (TCHAR)pBuffer[ nOffset + nChar*2+0 ] | ( (TCHAR)pBuffer[ nOffset + nChar*2+1 ] << 8 );
 					if ( pszOutput[ nOut ] == 0 ) 
@@ -589,12 +590,14 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 				}
 				strValue.ReleaseBuffer( nOut );
 				pBuffer -= 2;
+				if ( nChar == nNewLength )
+					nOffset += nLength - nOffset;
 			}
 			else if ( pBuffer[0] == 0xFE && pBuffer[1] == 0xFF )
 			{
 				pBuffer += 2;
-				DWORD nOut = 0;
-				for ( DWORD nChar = 0 ; nChar < nLength - nOffset ; nChar++, nOut++ )
+				DWORD nOut = 0, nChar = 0;
+				for ( ; nChar < nLength - nOffset ; nChar++, nOut++ )
 				{
 					pszOutput[ nOut ] = (TCHAR)pBuffer[ nOffset + nChar*2+1 ] | ( (TCHAR)pBuffer[ nOffset + nChar*2+0 ] << 8 );
 					if ( pszOutput[ nOut ] == 0 )
@@ -605,6 +608,8 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 				}
 				strValue.ReleaseBuffer( nOut );
 				pBuffer -= 2;
+				if ( nChar == nLength - nOffset )
+					nOffset += nLength - nOffset;
 			}
 			else
 			{
@@ -617,8 +622,8 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 			DWORD nNewLength = ( nLength - nOffset ) / 2;
 			LPTSTR pszOutput = strValue.GetBuffer( nNewLength + 1 );
 
-			DWORD nOut = 0;
-			for ( DWORD nChar = 0 ; nChar < nNewLength ; nChar++, nOut++ )
+			DWORD nOut = 0, nChar = 0;
+			for ( ; nChar < nNewLength ; nChar++, nOut++ )
 			{
 				pszOutput[ nOut ] = (TCHAR)pBuffer[ nOffset + nChar*2+1 ] | ( (TCHAR)pBuffer[ nOffset + nChar*2+0 ] << 8 );
 				if ( pszOutput[ nOut ] == 0 ) 
@@ -627,6 +632,8 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 					break;
 				}
 			}
+			if ( nChar == nNewLength )
+				nOffset += nLength - nOffset;
 
 			strValue.ReleaseBuffer( nOut );
 		}
