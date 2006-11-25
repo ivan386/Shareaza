@@ -611,6 +611,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
+		ASSERT( m_sName.GetLength() );
 		ar << m_sName;
 		ar << m_nIndex;
 		ar << m_nSize;
@@ -672,6 +673,8 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 	else
 	{
 		ar >> m_sName;
+		ASSERT( m_sName.GetLength() );
+
 		ar >> m_nIndex;
 		
 		if ( nVersion >= 17 )
