@@ -531,7 +531,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2(HANDLE hFile)
 
 BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, BOOL bSkipLanguage)
 {
-	CString strValue;
+	CString strResult, strValue;
 	
 	BYTE nEncoding = *pBuffer++;
 	nLength--;
@@ -548,83 +548,119 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		}
 	}
 	
-	if ( nEncoding == 0 )
+	DWORD nOffset = 0;
+
+	while ( nOffset < nLength )
 	{
-		LPTSTR pszOutput = strValue.GetBuffer( nLength + 1 );
-		
-        DWORD nOut = 0;
-		for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
+		if ( nEncoding == 0 )
 		{
-			pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar ];
-			if ( pszOutput[ nOut ] == 0 ) break;
-		}
-		strValue.ReleaseBuffer( nOut );
-		
-	}
-	else if ( nEncoding == 1 && ( nLength & 1 ) == 0 && nLength >= 2 )
-	{
-		nLength = ( nLength - 2 ) / 2;
-		LPTSTR pszOutput = strValue.GetBuffer( nLength + 1 );
-		
-		if ( pBuffer[0] == 0xFF && pBuffer[1] == 0xFE )
-		{
-			pBuffer += 2;
-            DWORD nOut = 0;
-			for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
+			LPTSTR pszOutput = strValue.GetBuffer( nLength - nOffset + 1 );
+
+			DWORD nOut = 0;
+			for ( DWORD nChar = 0 ; nChar < nLength - nOffset ; nChar++, nOut++ )
 			{
-				pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar*2+0 ] | ( (TCHAR)pBuffer[ nChar*2+1 ] << 8 );
-				if ( pszOutput[ nOut ] == 0 ) break;
+				pszOutput[ nOut ] = (TCHAR)pBuffer[ nOffset + nChar ];
+				if ( pszOutput[ nOut ] == 0 )
+				{
+					nOffset += nOut + 1;
+					break;
+				}
 			}
 			strValue.ReleaseBuffer( nOut );
+
 		}
-		else if ( pBuffer[0] == 0xFE && pBuffer[1] == 0xFF )
+		else if ( nEncoding == 1 && ( ( nLength - nOffset ) & 1 ) == 0 && nLength - nOffset >= 2 )
 		{
-			pBuffer += 2;
-            DWORD nOut = 0;
-			for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
+			DWORD nNewLength = ( nLength - nOffset - 2 ) / 2;
+			LPTSTR pszOutput = strValue.GetBuffer( nNewLength + 1 );
+
+			if ( pBuffer[0] == 0xFF && pBuffer[1] == 0xFE )
 			{
-				pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar*2+1 ] | ( (TCHAR)pBuffer[ nChar*2+0 ] << 8 );
-				if ( pszOutput[ nOut ] == 0 ) break;
+				pBuffer += 2;
+				DWORD nOut = 0;
+				for ( DWORD nChar = 0 ; nChar < nNewLength ; nChar++, nOut++ )
+				{
+					pszOutput[ nOut ] = (TCHAR)pBuffer[ nOffset + nChar*2+0 ] | ( (TCHAR)pBuffer[ nOffset + nChar*2+1 ] << 8 );
+					if ( pszOutput[ nOut ] == 0 ) 
+					{
+						nOffset += ( nOut + 1 ) * 2;
+						break;
+					}
+				}
+				strValue.ReleaseBuffer( nOut );
+				pBuffer -= 2;
 			}
+			else if ( pBuffer[0] == 0xFE && pBuffer[1] == 0xFF )
+			{
+				pBuffer += 2;
+				DWORD nOut = 0;
+				for ( DWORD nChar = 0 ; nChar < nLength - nOffset ; nChar++, nOut++ )
+				{
+					pszOutput[ nOut ] = (TCHAR)pBuffer[ nOffset + nChar*2+1 ] | ( (TCHAR)pBuffer[ nOffset + nChar*2+0 ] << 8 );
+					if ( pszOutput[ nOut ] == 0 )
+					{
+						nOffset += ( nOut + 1 ) * 2;
+						break;
+					}
+				}
+				strValue.ReleaseBuffer( nOut );
+				pBuffer -= 2;
+			}
+			else
+			{
+				strValue.ReleaseBuffer( 0 );
+				return FALSE;
+			}
+		}
+		else if ( nEncoding == 2 && ( ( nLength - nOffset ) & 1 ) == 0 )
+		{
+			DWORD nNewLength = ( nLength - nOffset ) / 2;
+			LPTSTR pszOutput = strValue.GetBuffer( nNewLength + 1 );
+
+			DWORD nOut = 0;
+			for ( DWORD nChar = 0 ; nChar < nNewLength ; nChar++, nOut++ )
+			{
+				pszOutput[ nOut ] = (TCHAR)pBuffer[ nOffset + nChar*2+1 ] | ( (TCHAR)pBuffer[ nOffset + nChar*2+0 ] << 8 );
+				if ( pszOutput[ nOut ] == 0 ) 
+				{
+					nOffset += ( nOut + 1 ) * 2;
+					break;
+				}
+			}
+
 			strValue.ReleaseBuffer( nOut );
+		}
+		else if ( nEncoding == 3 )
+		{
+			int nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pBuffer + nOffset, nLength - nOffset, NULL, 0 );
+			LPTSTR pszOutput = strValue.GetBuffer( nWide + 1 );
+			MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pBuffer + nOffset, nLength - nOffset, pszOutput, nWide );
+			pszOutput[ nWide ] = 0;
+			strValue.ReleaseBuffer();
+			nOffset += (DWORD)strlen( (LPCSTR)pBuffer + nOffset ) + 1;
+		}
+
+		strValue.Trim();
+		strValue.Replace( L"\r\n", L"; " ); // Windows style replacement
+		strValue.Replace( L"\n", L"; " ); // Unix style replacement
+		strValue.Replace( L"\r", L"; " ); // Mac style replacement
+
+		if ( strResult.GetLength() == 0 && ( strValue.GetLength() == 0 || _tcslen( strValue ) == 0 ) ) 
+			return FALSE;
+		else if ( strResult.GetLength() && strValue.GetLength() )
+		{
+			strResult += '/';
+			strResult.Append( strValue );
+		}
+		else if ( strValue.GetLength() )
+		{
+			strResult = strValue;
 		}
 		else
-		{
-			strValue.ReleaseBuffer( 0 );
-			return FALSE;
-		}
-	}
-	else if ( nEncoding == 2 && ( nLength & 1 ) == 0 )
-	{
-		nLength = nLength / 2;
-		LPTSTR pszOutput = strValue.GetBuffer( nLength + 1 );
-		
-        DWORD nOut = 0;
-		for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
-		{
-			pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar*2+1 ] | ( (TCHAR)pBuffer[ nChar*2+0 ] << 8 );
-			if ( pszOutput[ nOut ] == 0 ) break;
-		}
-		
-		strValue.ReleaseBuffer( nOut );
-	}
-	else if ( nEncoding == 3 )
-	{
-		int nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pBuffer, nLength, NULL, 0 );
-		LPTSTR pszOutput = strValue.GetBuffer( nWide + 1 );
-		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pBuffer, nLength, pszOutput, nWide );
-		pszOutput[ nWide ] = 0;
-		strValue.ReleaseBuffer();
+			break;
 	}
 	
-	strValue.Trim();
-	strValue.Replace( L"\r\n", L"; " ); // Windows style replacement
-	strValue.Replace( L"\n", L"; " ); // Unix style replacement
-	strValue.Replace( L"\r", L"; " ); // Mac style replacement
-	
-	if ( strValue.GetLength() == 0 || _tcslen( strValue ) == 0 ) return FALSE;
-	
-	pXML->AddAttribute( pszAttribute, strValue );
+	pXML->AddAttribute( pszAttribute, strResult );
 	
 	return TRUE;
 }
