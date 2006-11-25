@@ -71,7 +71,7 @@ public:
 	void		BoostPriority(BOOL bPriority);
 	BOOL		GetBoostPriority();
 	//BOOL		SanityCheck();
-	void		UpdateStatus(CString* pStr, int* pRemaining );
+	void		UpdateStatus(CString& strFileName, int* pRemaining );
 	BOOL		ReadFileWithPriority(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD lpNumberOfBytesRead, BOOL bPriority = TRUE);
 protected:
 	void		ReHashCurrentFile();

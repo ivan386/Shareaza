@@ -126,7 +126,7 @@ CString CLibraryBuilder::GetCurrentFile()
 	return str;
 }
 
-void CLibraryBuilder::UpdateStatus(CString* pStr, int* pRemaining )
+void CLibraryBuilder::UpdateStatus(CString& strFileName, int* pRemaining )
 {
 	m_pSection.Lock();
 		
@@ -136,13 +136,11 @@ void CLibraryBuilder::UpdateStatus(CString* pStr, int* pRemaining )
 		if ( m_bThread ) *pRemaining ++;
 	}
 
-	if ( pStr != NULL )
-	{
-		*pStr = m_sPath;
-		if ( ! m_bThread ) pStr->Empty();
-	}
-	m_pSection.Unlock();
+	strFileName = m_sPath;
+	if ( ! m_bThread ) 
+		strFileName.Empty();
 
+	m_pSection.Unlock();
 }
 
 void CLibraryBuilder::RequestPriority(LPCTSTR pszPath)

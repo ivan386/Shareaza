@@ -77,11 +77,11 @@ void CHashProgressBar::Create(CWnd* pParent)
 
 void CHashProgressBar::Run()
 {
-	if ( Settings.Library.HashWindow )
+	if ( Settings.Library.HashWindow && m_sCurrent.GetLength() )
 	{
 		// Update current hashing status
 		m_nTotal = static_cast< int >( LibraryMaps.GetFileCount() );
-		LibraryBuilder.UpdateStatus( &m_sCurrent, &m_nRemaining );
+		LibraryBuilder.UpdateStatus( m_sCurrent, &m_nRemaining );
 
 		int nPos = m_sCurrent.ReverseFind( '\\' );
 		if ( nPos > 0 ) m_sCurrent = m_sCurrent.Mid( nPos + 1 );
