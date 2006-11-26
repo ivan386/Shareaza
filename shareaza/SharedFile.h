@@ -115,7 +115,7 @@ protected:
 	void			Serialize(CArchive& ar, int nVersion);
 	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime, LPCTSTR pszMetaData);
 	BOOL			LoadMetadata(HANDLE hFile);
-	void			OnDelete(BOOL bDeleteGhost = FALSE);
+	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TS_UNKNOWN);
 	void			Ghost();
     BOOL			OnVerifyDownload(const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, LPCTSTR pszSources);
 	

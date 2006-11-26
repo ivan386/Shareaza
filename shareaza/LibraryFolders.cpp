@@ -169,7 +169,7 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 	POSITION pos = m_pFolders.Find( pFolder );
 	if ( pos == NULL ) return FALSE;
 	
-	pFolder->OnDelete();
+	pFolder->OnDelete( Settings.Library.CreateGhosts ? TS_TRUE : TS_FALSE );
 	m_pFolders.RemoveAt( pos );
 	
 	Library.Update();

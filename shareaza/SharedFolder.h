@@ -80,7 +80,7 @@ protected:
 	BOOL			ThreadScan(DWORD nScanCookie = 0);
 	BOOL			SetMonitor();
 	BOOL			CheckMonitor();
-	void			OnDelete();
+	void			OnDelete(TRISTATE bCreateGhost = TS_UNKNOWN);
 	void			OnFileRename(CLibraryFile* pFile);
 	void			Clear();
 	void			PathToName();

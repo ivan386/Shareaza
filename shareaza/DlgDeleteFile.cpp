@@ -158,6 +158,12 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 		}
 		pFile->SaveMetadata();
 	}
+	else if ( m_bCreateGhost )
+	{
+		pFile->m_sComments	= m_sComments = L"Ghost File";
+		pFile->m_bShared = TS_FALSE;
+		pFile->SaveMetadata();
+	}
 }
 
 void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
@@ -319,7 +325,7 @@ void CDeleteFileDlg::OnCbnChangeOptions()
 		m_wndComments.SetSel( 0, m_sComments.GetLength() );
 	}
 
-	m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
+	//m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
 	m_wndPrompt.Invalidate();
 	UpdateData( FALSE );
 }
@@ -327,7 +333,7 @@ void CDeleteFileDlg::OnCbnChangeOptions()
 void CDeleteFileDlg::OnCbnChangeGhostRating()
 {
 	UpdateData( TRUE );
-	m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
+	//m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
 	m_wndPrompt.Invalidate();
 	UpdateData( FALSE );
 }
@@ -335,7 +341,7 @@ void CDeleteFileDlg::OnCbnChangeGhostRating()
 void CDeleteFileDlg::OnChangeComments()
 {
 	UpdateData( TRUE );
-	m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
+	//m_bCreateGhost = m_sComments.GetLength() || m_nRateValue > 0;
 	m_wndPrompt.Invalidate();
 	UpdateData( FALSE );
 }

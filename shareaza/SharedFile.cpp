@@ -1088,12 +1088,23 @@ BOOL CLibraryFile::SaveMetadata()
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile delete handler
+// bDeleteGhost is used only when deleting ghost files
 
-void CLibraryFile::OnDelete(BOOL bDeleteGhost)
+void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 {
 	if ( m_pFolder != NULL )
 	{
-		if ( m_nRating > 0 || m_sComments.GetLength() > 0 )
+		if ( bCreateGhost == TS_TRUE )
+		{
+			if ( m_nRating == 0 && m_sComments.IsEmpty() )
+			{
+				m_bShared = TS_FALSE;
+				m_sComments = L"Ghost File";
+			}
+			Ghost();
+			return;
+		}
+		else if ( ( m_nRating > 0 || m_sComments.GetLength() > 0 ) && bCreateGhost != TS_FALSE )
 		{
 			Ghost();
 			return;
