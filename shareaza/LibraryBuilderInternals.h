@@ -45,6 +45,7 @@ protected:
 	BOOL		m_bEnableASF;
 	BOOL		m_bEnableOGG;
 	BOOL		m_bEnableAPE;
+	BOOL		m_bEnableMPC;
 	BOOL		m_bEnableAVI;
 	BOOL		m_bEnablePDF;
 	BOOL		m_bEnableCHM;
@@ -88,7 +89,8 @@ protected:		// General Media
 	BOOL		ReadOGG(HANDLE hFile);
 	BYTE*		ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
 	BOOL		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
-	BOOL		ReadAPE(HANDLE hFile, bool bMP3APE = false);
+	BOOL		ReadAPE(HANDLE hFile, bool bIgnoreHeader = false);
+	BOOL		ReadMPC(HANDLE hFile);
 	BOOL		ReadPDF(HANDLE hFile, LPCTSTR pszPath);
 	CString		ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
 	CString		ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);

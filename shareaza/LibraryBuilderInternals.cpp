@@ -76,6 +76,7 @@ void CLibraryBuilderInternals::LoadSettings()
 	m_bEnableASF	= theApp.GetProfileInt( _T("Library"), _T("ScanASF"), TRUE );
 	m_bEnableOGG	= theApp.GetProfileInt( _T("Library"), _T("ScanOGG"), TRUE );
 	m_bEnableAPE	= theApp.GetProfileInt( _T("Library"), _T("ScanAPE"), TRUE );
+	m_bEnableMPC	= theApp.GetProfileInt( _T("Library"), _T("ScanMPC"), TRUE );
 	m_bEnableAVI	= theApp.GetProfileInt( _T("Library"), _T("ScanAVI"), TRUE );
 	m_bEnablePDF	= theApp.GetProfileInt( _T("Library"), _T("ScanPDF"), TRUE );
 	m_bEnableCHM	= theApp.GetProfileInt( _T("Library"), _T("ScanCHM"), TRUE );
@@ -137,6 +138,12 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(CString& strPath, HANDLE hFile, H
 	{
 		if ( ! m_bEnableAPE ) return FALSE;
 		return ReadAPE( hFile );
+	}
+	else if ( strType == _T(".mpc") )
+	{
+		if ( ! m_bEnableMPC ) return FALSE;
+		if ( ReadID3v2( hFile ) ) return TRUE;
+		return ReadMPC( hFile );
 	}
 	else if ( strType == _T(".jpg") || strType == _T(".jpeg") )
 	{
@@ -1916,10 +1923,15 @@ BOOL CLibraryBuilderInternals::ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& 
 	return TRUE;
 }
 
+BOOL CLibraryBuilderInternals::ReadMPC(HANDLE hFile)
+{
+	return ReadAPE( hFile, true );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals APE Monkey's Audio (threaded)
 
-BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bMP3APE)
+BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 {
 	if ( GetFileSize( hFile, NULL ) < sizeof(APE_TAG_FOOTER) ) return SubmitCorrupted();
 
@@ -1934,10 +1946,11 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bMP3APE)
 	if ( nRead != sizeof(pFooter) || strncmp( pFooter.cID, "APETAGEX", 8 ) ||
 		( pFooter.nVersion != 1000 && pFooter.nVersion != 2000 ) )
 	{
-		if ( !bMP3APE )
-			return SubmitMetadata( CSchema::uriAudio, pXML );
-		else
+		if ( bIgnoreHeader )
+			// Invalid footer, try to validate header only
 			pFooter.nFields = -1;
+		else
+			return SubmitMetadata( CSchema::uriAudio, pXML );
 	}
 
 	SetFilePointer( hFile, -(LONG)pFooter.nSize, NULL, FILE_END );
@@ -2046,19 +2059,26 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bMP3APE)
 	
 	ReadFile( hFile, &pAPE, sizeof(pAPE), &nRead, NULL );
 
-	if ( nRead != sizeof(pAPE) || pAPE.cID[0] != 'M' || pAPE.cID[1] != 'A' || pAPE.cID[2] != 'C' ||
-		pAPE.nSampleRate == 0 || pAPE.nChannels == 0 )
+	// Signatures we handle although the headers may be invalid.
+	// APE tags usually are placed in footer (it's recommended).
+	bool bMAC = pAPE.cID[0] == 'M' && pAPE.cID[1] == 'A' && pAPE.cID[2] == 'C';
+	bool bMPC = pAPE.cID[0] == 'M' && pAPE.cID[1] == 'P' && pAPE.cID[2] == '+';
+
+	bool bValidSignature = bMAC || bMPC;
+
+	if ( nRead != sizeof(pAPE) || !bValidSignature || pAPE.nSampleRate == 0 || pAPE.nChannels == 0 ||
+		 bIgnoreHeader )
 	{
-		// APE tags in MP3 footer
-		if ( pFooter.nFields > 0 && bMP3APE )
+		// APE tags in MP3 or MPC footer
+		if ( pFooter.nFields > 0 && bIgnoreHeader )
 		{
-			ScanMP3Frame( pXML, hFile, 0 );
+			if ( !bValidSignature ) ScanMP3Frame( pXML, hFile, 0 );
 			return SubmitMetadata( CSchema::uriAudio, pXML );
 		}
 		else // No APE footer and no header in MP3 or invalid APE file
 		{
 			delete pXML;
-			return bMP3APE ? FALSE : SubmitCorrupted();
+			return bIgnoreHeader ? FALSE : SubmitCorrupted();
 		}
 	}
 
