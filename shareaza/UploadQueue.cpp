@@ -333,8 +333,8 @@ void CUploadQueue::StartImpl(CUploadTransfer* pUpload)
 	pUpload->m_pQueue = this;
 	if ( pUpload->m_nProtocol == PROTOCOL_ED2K )
 	{
-		CUploadTransferED2K * pEdUpload = dynamic_cast<CUploadTransferED2K *>(pUpload);
-		if ( pEdUpload != NULL ) pEdUpload->m_pClient->Connect();
+		CUploadTransferED2K * pEdUpload = static_cast<CUploadTransferED2K *>(pUpload);
+		pEdUpload->m_pClient->Connect();
 	}
 }
 
