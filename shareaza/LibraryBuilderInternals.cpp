@@ -98,8 +98,8 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(CString& strPath, HANDLE hFile, H
 	{
 		if ( ! m_bEnableMP3 ) return FALSE;
 		if ( ReadID3v2( hFile ) ) return TRUE;
-		if ( ReadID3v1( hFile ) ) return TRUE;
 		if ( ReadAPE( hFile, true ) ) return TRUE;
+		if ( ReadID3v1( hFile ) ) return TRUE;
 		if ( ReadMP3Frames( hFile ) ) return TRUE;
 		return SubmitCorrupted();
 	}
