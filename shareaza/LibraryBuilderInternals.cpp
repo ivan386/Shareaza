@@ -99,6 +99,7 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(CString& strPath, HANDLE hFile, H
 		if ( ! m_bEnableMP3 ) return FALSE;
 		if ( ReadID3v2( hFile ) ) return TRUE;
 		if ( ReadID3v1( hFile ) ) return TRUE;
+		if ( ReadAPE( hFile, true ) ) return TRUE;
 		if ( ReadMP3Frames( hFile ) ) return TRUE;
 		return SubmitCorrupted();
 	}
@@ -1918,111 +1919,68 @@ BOOL CLibraryBuilderInternals::ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals APE Monkey's Audio (threaded)
 
-BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bMP3APE)
 {
-	if ( GetFileSize( hFile, NULL ) < sizeof(APE_HEADER) ) return SubmitCorrupted();
-	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	
-	APE_HEADER pAPE;
+	if ( GetFileSize( hFile, NULL ) < sizeof(APE_TAG_FOOTER) ) return SubmitCorrupted();
+
 	DWORD nRead;
-	
-	ReadFile( hFile, &pAPE, sizeof(pAPE), &nRead, NULL );
-	if ( nRead != sizeof(pAPE) ) return SubmitCorrupted();
-	if ( pAPE.cID[0] != 'M' || pAPE.cID[1] != 'A' || pAPE.cID[2] != 'C' ) return SubmitCorrupted();
-	if ( pAPE.nSampleRate == 0 ) return SubmitCorrupted();
-	if ( pAPE.nChannels == 0 ) return SubmitCorrupted();
-	
-	DWORD nBlocksPerFrame = ( pAPE.nVersion >= 3900 || ( pAPE.nVersion >= 3800 &&
-		pAPE.nCompressionLevel == 4000 ) ) ? 73728 : 9216;
-	
-	DWORD nBlocks	= ( pAPE.nTotalFrames - 1 ) * nBlocksPerFrame + pAPE.nFinalFrameBlocks;
-	DWORD nSamples	= nBlocks * pAPE.nChannels;
-	
-	if ( pAPE.nFormatFlags & 8 )
-		nSamples *= 3;
-	else if ( ( pAPE.nFormatFlags & 1 ) == 0 )
-		nSamples *= 2;
-	
-	DWORD nDuration	= nSamples / pAPE.nSampleRate;
-	
-	CXMLElement* pXML = new CXMLElement( NULL, _T("audio") );
-	CString strItem;
-	
-	strItem.Format( _T("%lu"), nDuration );
-	pXML->AddAttribute( _T("seconds"), strItem );
-	
-	strItem.Format( _T("%lu"), pAPE.nSampleRate );
-	pXML->AddAttribute( _T("sampleRate"), strItem );
-	
-	strItem.Format( _T("%lu"), pAPE.nChannels );
-	pXML->AddAttribute( _T("channels"), strItem );
-	
-	if ( ReadID3v1( hFile, pXML ) )
-	{
-		return SubmitMetadata( CSchema::uriAudio, pXML );
-	}
-	
-	if ( GetFileSize( hFile, NULL ) < sizeof(APE_HEADER) + sizeof(APE_TAG_FOOTER) )
-	{
-		return SubmitMetadata( CSchema::uriAudio, pXML );
-	}
-	
 	APE_TAG_FOOTER pFooter;
-	
+
+	CXMLElement* pXML = new CXMLElement( NULL, _T("audio") );
+
 	SetFilePointer( hFile, -(LONG)sizeof(pFooter), NULL, FILE_END );
 	ReadFile( hFile, &pFooter, sizeof(pFooter), &nRead, NULL );
-	
+
 	if ( nRead != sizeof(pFooter) || strncmp( pFooter.cID, "APETAGEX", 8 ) ||
-		 (DWORD)pFooter.nFields > 16 ||
-		 ( pFooter.nVersion != 1000 && pFooter.nVersion != 2000 ) )
+		( pFooter.nVersion != 1000 && pFooter.nVersion != 2000 ) )
 	{
 		return SubmitMetadata( CSchema::uriAudio, pXML );
 	}
-	
+
 	SetFilePointer( hFile, -(LONG)pFooter.nSize, NULL, FILE_END );
-	
+
 	for ( int nTag = 0 ; nTag < pFooter.nFields ; nTag++ )
 	{
 		DWORD nLength, nFlags;
-		
+
 		ReadFile( hFile, &nLength, 4, &nRead, NULL );
-		if ( nRead != 4 || nLength > 1024 ) break;
+		if ( nRead != 4 || nLength > 1024 * 4 ) break;
 		ReadFile( hFile, &nFlags, 4, &nRead, NULL );
 		if ( nRead != 4 ) break;
-		
+
 		CString strKey, strValue;
-		
-		while ( strKey.GetLength() < 64 )
+
+		while ( strKey.GetLength() < 255 )
 		{
 			BYTE nChar;
 			ReadFile( hFile, &nChar, 1, &nRead, NULL );
 			if ( nRead != 1 || nChar == 0 ) break;
 			strKey += (TCHAR)nChar;
 		}
-		
-		if ( nRead != 1 || strKey.GetLength() >= 64 ) break;
-		
+
+		if ( nRead != 1 || strKey.GetLength() >= 255 ) break;
+
 		LPSTR pszInput = new CHAR[ nLength ];
 		ReadFile( hFile, pszInput, nLength, &nRead, NULL );
 		if ( nLength != nRead ) break;
-		
+
 		int nWide = MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, NULL, 0 );
 		LPWSTR pszWide = new WCHAR[ nWide + 1 ];
 		MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, pszWide, nWide );
 		pszWide[ nWide ] = 0;
 		strValue = pszWide;
-		
+
 		delete [] pszWide;
 		delete [] pszInput;
-		
+
 		strKey.TrimLeft(); strKey.TrimRight();
 		strValue.TrimLeft(); strValue.TrimRight();
-		
+
 		if ( strKey.GetLength() && strValue.GetLength() )
 		{
 			CharLower( strKey.GetBuffer() );
 			strKey.ReleaseBuffer();
-			
+
 			if ( strKey == _T("title") )
 			{
 				pXML->AddAttribute( _T("title"), strValue );
@@ -2055,7 +2013,79 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile)
 			{
 				pXML->AddAttribute( _T("link"), strValue );
 			}
+			else if ( strKey == _T("composer") )
+			{
+				pXML->AddAttribute( _T("composer"), strValue );
+			}
+			else if ( strKey == _T("publisher") )
+			{
+				pXML->AddAttribute( _T("copyright"), strValue );
+			}
+			else if ( strKey == _T("language") )
+			{
+				pXML->AddAttribute( _T("language"), strValue );
+			}
+			else if ( strKey == _T("disc") )
+			{
+				pXML->AddAttribute( _T("disc"), strValue );
+			}
 		}
+	}
+
+	if ( GetFileSize( hFile, NULL ) < sizeof(APE_HEADER) )
+	{
+		delete pXML;
+		return SubmitCorrupted();
+	}
+
+	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+	APE_HEADER pAPE;
+	
+	ReadFile( hFile, &pAPE, sizeof(pAPE), &nRead, NULL );
+
+	if ( nRead != sizeof(pAPE) || pAPE.cID[0] != 'M' || pAPE.cID[1] != 'A' || pAPE.cID[2] != 'C' ||
+		pAPE.nSampleRate == 0 || pAPE.nChannels == 0 )
+	{
+		if ( pFooter.nFields )
+		{
+			if ( bMP3APE )
+				ScanMP3Frame( pXML, hFile, 0 );
+			return SubmitMetadata( CSchema::uriAudio, pXML );
+		}
+		else
+		{
+			delete pXML;
+			return SubmitCorrupted();
+		}
+	}
+
+	DWORD nBlocksPerFrame = ( pAPE.nVersion >= 3900 || ( pAPE.nVersion >= 3800 &&
+		pAPE.nCompressionLevel == 4000 ) ) ? 73728 : 9216;
+	
+	DWORD nBlocks	= ( pAPE.nTotalFrames - 1 ) * nBlocksPerFrame + pAPE.nFinalFrameBlocks;
+	DWORD nSamples	= nBlocks * pAPE.nChannels;
+	
+	if ( pAPE.nFormatFlags & 8 )
+		nSamples *= 3;
+	else if ( ( pAPE.nFormatFlags & 1 ) == 0 )
+		nSamples *= 2;
+	
+	DWORD nDuration	= nSamples / pAPE.nSampleRate;
+	
+	CString strItem;
+	
+	strItem.Format( _T("%lu"), nDuration );
+	pXML->AddAttribute( _T("seconds"), strItem );
+	
+	strItem.Format( _T("%lu"), pAPE.nSampleRate );
+	pXML->AddAttribute( _T("sampleRate"), strItem );
+	
+	strItem.Format( _T("%lu"), pAPE.nChannels );
+	pXML->AddAttribute( _T("channels"), strItem );
+	
+	if ( ReadID3v1( hFile, pXML ) )
+	{
+		return SubmitMetadata( CSchema::uriAudio, pXML );
 	}
 	
 	return SubmitMetadata( CSchema::uriAudio, pXML );
