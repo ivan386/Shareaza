@@ -1934,7 +1934,10 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bMP3APE)
 	if ( nRead != sizeof(pFooter) || strncmp( pFooter.cID, "APETAGEX", 8 ) ||
 		( pFooter.nVersion != 1000 && pFooter.nVersion != 2000 ) )
 	{
-		return SubmitMetadata( CSchema::uriAudio, pXML );
+		if ( !bMP3APE )
+			return SubmitMetadata( CSchema::uriAudio, pXML );
+		else
+			pFooter.nFields = -1;
 	}
 
 	SetFilePointer( hFile, -(LONG)pFooter.nSize, NULL, FILE_END );
@@ -2046,16 +2049,16 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bMP3APE)
 	if ( nRead != sizeof(pAPE) || pAPE.cID[0] != 'M' || pAPE.cID[1] != 'A' || pAPE.cID[2] != 'C' ||
 		pAPE.nSampleRate == 0 || pAPE.nChannels == 0 )
 	{
-		if ( pFooter.nFields )
+		// APE tags in MP3 footer
+		if ( pFooter.nFields > 0 && bMP3APE )
 		{
-			if ( bMP3APE )
-				ScanMP3Frame( pXML, hFile, 0 );
+			ScanMP3Frame( pXML, hFile, 0 );
 			return SubmitMetadata( CSchema::uriAudio, pXML );
 		}
-		else
+		else // No APE footer and no header in MP3 or invalid APE file
 		{
 			delete pXML;
-			return SubmitCorrupted();
+			return bMP3APE ? FALSE : SubmitCorrupted();
 		}
 	}
 
