@@ -731,7 +731,7 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 	if ( nRead != 4 ) return FALSE;
 	nHeader = SWAP_LONG( nHeader );
 
-	for ( DWORD nSeek = 0 ; bVariable || ( nFrameCount < 16 && nSeek < 4096 ) ; nSeek++ )
+	for ( DWORD nSeek = 0 ; bVariable || ( nFrameCount < 16 && nSeek < 4096 * 2  ) ; nSeek++ )
 	{
 		DWORD nTime = GetTickCount();
 		
