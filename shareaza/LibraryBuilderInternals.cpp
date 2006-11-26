@@ -2077,8 +2077,20 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 		}
 		else // No APE footer and no header in MP3 or invalid APE file
 		{
-			delete pXML;
-			return bIgnoreHeader ? FALSE : SubmitCorrupted();
+			if ( bIgnoreHeader )
+			{
+				delete pXML;
+				return FALSE;
+			}
+			else if ( bMPC )
+			{
+				return SubmitMetadata( CSchema::uriAudio, pXML );
+			}
+			else
+			{
+				delete pXML;
+				return SubmitCorrupted();
+			}
 		}
 	}
 
