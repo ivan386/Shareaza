@@ -139,11 +139,12 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(CString& strPath, HANDLE hFile, H
 		if ( ! m_bEnableAPE ) return FALSE;
 		return ReadAPE( hFile );
 	}
-	else if ( strType == _T(".mpc") )
+	else if ( strType == _T(".mpc") || strType == _T(".mpp") || strType == _T(".mp+") )
 	{
 		if ( ! m_bEnableMPC ) return FALSE;
 		if ( ReadID3v2( hFile ) ) return TRUE;
-		return ReadMPC( hFile );
+		if ( ReadMPC( hFile ) ) return TRUE;
+		return ReadID3v1( hFile );
 	}
 	else if ( strType == _T(".jpg") || strType == _T(".jpeg") )
 	{
@@ -2077,20 +2078,8 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 		}
 		else // No APE footer and no header in MP3 or invalid APE file
 		{
-			if ( bIgnoreHeader )
-			{
-				delete pXML;
-				return FALSE;
-			}
-			else if ( bMPC )
-			{
-				return SubmitMetadata( CSchema::uriAudio, pXML );
-			}
-			else
-			{
-				delete pXML;
-				return SubmitCorrupted();
-			}
+			delete pXML;
+			return bIgnoreHeader ? FALSE : SubmitCorrupted();;
 		}
 	}
 

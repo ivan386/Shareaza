@@ -615,7 +615,9 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 					CloseHandle( hFile );
 				}
 			}
-			if ( ( strExtension != _T("mp3") && strExtension != _T("pdf") ) 
+			if ( ( strExtension != _T("mp3") && strExtension != _T("pdf") &&
+				   strExtension != _T("mpc") && strExtension != _T("mpp") &&
+				   strExtension != _T("mp+") ) 
 				 || bXmlPossiblyModified )
 				nSelected--;
 		}
@@ -638,7 +640,9 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 		CharLower( strExtension.GetBuffer() );
 		strExtension.ReleaseBuffer();
 
-		if ( strExtension == _T("mp3") || strExtension == _T("pdf") )
+		if ( strExtension == _T("mp3") || strExtension == _T("pdf") ||
+			 strExtension == _T("mpc") || strExtension == _T("mpp") ||
+			 strExtension == _T("mp+") )
 			dlg.AddFile( pFile );
 	}
 
