@@ -826,8 +826,16 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 			
 			if ( ! nFrameSize ) return FALSE;
 			
-			nTotalBitrate += nBitrate / 1000;
-			nFrameCount++;
+			// Skip frame when it has reserved layer
+			if ( nLayer )
+			{
+				nTotalBitrate += nBitrate / 1000;
+				nFrameCount++;
+			}
+			else if ( nFrameCount == 0 ) // reset base values if it was the first frame
+			{
+				nBaseBitrate = nBaseFrequency = 0;
+			}
 			
 			SetFilePointer( hFile, nFrameSize - 4, NULL, FILE_CURRENT );
 			ReadFile( hFile, &nHeader, 4, &nRead, NULL );
