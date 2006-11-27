@@ -787,7 +787,7 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 			BYTE nChannels	= (BYTE)( ( nHeader & 0x000000C0 ) >> 6 );  // 11000000
 			BOOL bPadding	= (BOOL)( nHeader & 0x0200 ) ? TRUE : FALSE;// 1000000000
 			// Is audio copyrighted?
-			BOOL bCopyRight = (BOOL)( ( nHeader & 0x4 ) >> 3 ) ? TRUE: FALSE; // 100
+			BOOL bCopyRight = (BOOL)( ( nHeader & 0x8 ) >> 3 ) ? TRUE: FALSE; // 1000
 			
 			int nBitColumn = 0;
 			
