@@ -701,20 +701,37 @@ BOOL CLibraryBuilderInternals::ReadMP3Frames(HANDLE hFile)
 	}
 }
 
+//
+// Refer to this doc: http://www.mp3-tech.org/programmer/frame_header.html
+//
 BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore)
 {
+	// Bitrate index
 	static DWORD nBitrateTable[16][5] =
 	{
-		{ 0, 0, 0, 0 },					{ 32, 32, 32, 32, 8 },		{ 64, 48, 40, 48, 16 },
+		// L1 - Layer I
+		// L2 - Layer II
+		// L3 - Layer III
+		// V1 - MPEG Version 1
+		// V2 - MPEG Version 2 and Version 2.5
+
+		// Row data:
+		// V1,L1	V1,L2	V1,L3  	V2,L1	V2, L2 & L3
+		// The first row with zeros is for "free" bitrate (the constant bitrate not higher than value)
+		{ 0, 0, 0, 0, 0 },				{ 32, 32, 32, 32, 8 },		{ 64, 48, 40, 48, 16 },
 		{ 96, 56, 48, 56, 24 },			{ 128, 64, 56, 64, 32 },	{ 160, 80, 64, 80, 40 },
 		{ 192, 96, 80, 96, 48 },		{ 224, 112, 96, 112, 56 },	{ 256, 128, 112, 128, 64 },
 		{ 288, 160, 128, 144, 80 },		{ 320, 192, 160, 160, 96 },	{ 352, 224, 192, 176, 112 },
 		{ 384, 256, 224, 192, 128 },	{ 416, 320, 256, 224, 144 },{ 448, 384, 320, 256, 160 },
-		{ 0, 0, 0, 0 }
+		{ 0, 0, 0, 0, 0 }
+		// The last row with zeros is for "bad" bitrate (no value)
 	};
 
+	// Sampling rate frequency index
 	static DWORD nFrequencyTable[4][4] =
 	{
+		// Row data:
+		// MPEG1	?	MPEG2  	MPEG2.5
 		{ 11025, 0, 22050, 44100 },
 		{ 12000, 0,  24000, 48000 },
 		{ 8000, 0, 16000, 32000 },
@@ -744,14 +761,33 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 	{
 		DWORD nTime = GetTickCount();
 		
+		// "frame sync"
+		// First 11 bits must have bit 1 for MPEG 2.5 extension
+		// For other versions--first 12 bits
+
 		if ( ( nHeader & 0xFFE00000 ) == 0xFFE00000 )
 		{
+			// Version: MPEG Audio version ID
+			// 0: MPEG Version 2.5 (later extension of MPEG 2)
+			// 1: reserved
+			// 2: MPEG Version 2 (ISO/IEC 13818-3)
+			// 3: MPEG Version 1 (ISO/IEC 11172-3)
+
+			// We are taking 2 bits at position 20-21 (or 19-20 counting from 0)
+			// hex 0x00180000 = binary 110000000000000000000
 			BYTE nVersion	= (BYTE)( ( nHeader & 0x00180000 ) >> 19 );
-			nLayer			= (BYTE)( ( nHeader & 0x00060000 ) >> 17 );
-			BYTE nBitIndex	= (BYTE)( ( nHeader & 0x0000F000 ) >> 12 );
-			BYTE nFreqIndex	= (BYTE)( ( nHeader & 0x00000C00 ) >> 10 );
-			BYTE nChannels	= (BYTE)( ( nHeader & 0x000000C0 ) >> 6 );
-			BOOL bPadding	= (BOOL)( nHeader & 0x0200 ) ? TRUE : FALSE;
+			// Layer description:
+			// 0: reserved
+			// 1: L3
+			// 2: L2
+			// 3: L1
+			nLayer			= (BYTE)( ( nHeader & 0x00060000 ) >> 17 ); // 1100000000000000000
+			BYTE nBitIndex	= (BYTE)( ( nHeader & 0x0000F000 ) >> 12 ); // 1111000000000000
+			BYTE nFreqIndex	= (BYTE)( ( nHeader & 0x00000C00 ) >> 10 ); // 110000000000
+			BYTE nChannels	= (BYTE)( ( nHeader & 0x000000C0 ) >> 6 );  // 11000000
+			BOOL bPadding	= (BOOL)( nHeader & 0x0200 ) ? TRUE : FALSE;// 1000000000
+			// Is audio copyrighted?
+			BOOL bCopyRight = (BOOL)( ( nHeader & 0x4 ) >> 3 ) ? TRUE: FALSE; // 100
 			
 			int nBitColumn = 0;
 			
@@ -1939,7 +1975,7 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 	DWORD nRead;
 	APE_TAG_FOOTER pFooter;
 
-	CXMLElement* pXML = new CXMLElement( NULL, _T("audio") );
+	CXMLElement* pXML = new CXMLElement( NULL, L"audio" );
 
 	SetFilePointer( hFile, -(LONG)sizeof(pFooter), NULL, FILE_END );
 	ReadFile( hFile, &pFooter, sizeof(pFooter), &nRead, NULL );
@@ -1998,53 +2034,53 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 			CharLower( strKey.GetBuffer() );
 			strKey.ReleaseBuffer();
 
-			if ( strKey == _T("title") )
+			if ( strKey == L"title" )
 			{
-				pXML->AddAttribute( _T("title"), strValue );
+				pXML->AddAttribute( L"title", strValue );
 			}
-			else if ( strKey == _T("artist") )
+			else if ( strKey == L"artist" )
 			{
-				pXML->AddAttribute( _T("artist"), strValue );
+				pXML->AddAttribute( L"artist", strValue );
 			}
-			else if ( strKey == _T("album") )
+			else if ( strKey == L"album" )
 			{
-				pXML->AddAttribute( _T("album"), strValue );
+				pXML->AddAttribute( L"album", strValue );
 			}
-			else if ( strKey == _T("comment") )
+			else if ( strKey == L"comment" )
 			{
-				pXML->AddAttribute( _T("description"), strValue );
+				pXML->AddAttribute( L"description", strValue );
 			}
-			else if ( strKey == _T("year") )
+			else if ( strKey == L"year" )
 			{
-				pXML->AddAttribute( _T("year"), strValue );
+				pXML->AddAttribute( L"year", strValue );
 			}
-			else if ( strKey == _T("track") )
+			else if ( strKey == L"track" )
 			{
-				pXML->AddAttribute( _T("track"), strValue );
+				pXML->AddAttribute( L"track", strValue );
 			}
-			else if ( strKey == _T("genre") )
+			else if ( strKey == L"genre" )
 			{
-				pXML->AddAttribute( _T("genre"), strValue );
+				pXML->AddAttribute( L"genre", strValue );
 			}
-			else if ( strKey.Find( _T(" url") ) > 0 )
+			else if ( strKey.Find( L" url" ) > 0 )
 			{
-				pXML->AddAttribute( _T("link"), strValue );
+				pXML->AddAttribute( L"link", strValue );
 			}
-			else if ( strKey == _T("composer") )
+			else if ( strKey == L"composer" )
 			{
-				pXML->AddAttribute( _T("composer"), strValue );
+				pXML->AddAttribute( L"composer", strValue );
 			}
-			else if ( strKey == _T("publisher") )
+			else if ( strKey == L"publisher" )
 			{
-				pXML->AddAttribute( _T("copyright"), strValue );
+				pXML->AddAttribute( L"copyright", strValue );
 			}
-			else if ( strKey == _T("language") )
+			else if ( strKey == L"language" )
 			{
-				pXML->AddAttribute( _T("language"), strValue );
+				pXML->AddAttribute( L"language", strValue );
 			}
-			else if ( strKey == _T("disc") )
+			else if ( strKey == L"disc" )
 			{
-				pXML->AddAttribute( _T("disc"), strValue );
+				pXML->AddAttribute( L"disc", strValue );
 			}
 		}
 	}
@@ -2098,14 +2134,14 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 	
 	CString strItem;
 	
-	strItem.Format( _T("%lu"), nDuration );
-	pXML->AddAttribute( _T("seconds"), strItem );
+	strItem.Format( L"%lu", nDuration );
+	pXML->AddAttribute( L"seconds", strItem );
 	
-	strItem.Format( _T("%lu"), pAPE.nSampleRate );
-	pXML->AddAttribute( _T("sampleRate"), strItem );
+	strItem.Format( L"%lu", pAPE.nSampleRate );
+	pXML->AddAttribute( L"sampleRate", strItem );
 	
-	strItem.Format( _T("%lu"), pAPE.nChannels );
-	pXML->AddAttribute( _T("channels"), strItem );
+	strItem.Format( L"%lu", pAPE.nChannels );
+	pXML->AddAttribute( L"channels", strItem );
 	
 	if ( ReadID3v1( hFile, pXML ) )
 	{
@@ -2196,7 +2232,7 @@ BOOL CLibraryBuilderInternals::ReadAVI(HANDLE hFile)
 
 	if ( ! bMoviFound ) return SubmitCorrupted();
 	
-	CXMLElement* pXML = new CXMLElement( NULL, _T("video") );
+	CXMLElement* pXML = new CXMLElement( NULL, L"video" );
 	CString strItem;
 	
 	double nTime = (double)pHeader.dwMicroSecPerFrame / 1000000.0f;
@@ -2205,15 +2241,15 @@ BOOL CLibraryBuilderInternals::ReadAVI(HANDLE hFile)
 	
 	double nRate = 1000000.0f / (double)pHeader.dwMicroSecPerFrame;
 	
-	strItem.Format( _T("%lu"), pHeader.dwWidth );
-	pXML->AddAttribute( _T("width"), strItem );
-	strItem.Format( _T("%lu"), pHeader.dwHeight );
-	pXML->AddAttribute( _T("height"), strItem );
-	strItem.Format( _T("%.3f"), nTime );
-	pXML->AddAttribute( _T("minutes"), strItem );
-	strItem.Format( _T("%.2f"), nRate );
-	pXML->AddAttribute( _T("frameRate"), strItem );
-	pXML->AddAttribute( _T("codec"), strCodec );
+	strItem.Format( L"%lu", pHeader.dwWidth );
+	pXML->AddAttribute( L"width", strItem );
+	strItem.Format( L"%lu", pHeader.dwHeight );
+	pXML->AddAttribute( L"height", strItem );
+	strItem.Format( L"%.3f", nTime );
+	pXML->AddAttribute( L"minutes", strItem );
+	strItem.Format( L"%.2f", nRate );
+	pXML->AddAttribute( L"frameRate", strItem );
+	pXML->AddAttribute( L"codec", strCodec );
 	
 	return SubmitMetadata( CSchema::uriVideo, pXML );
 }
