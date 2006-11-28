@@ -201,8 +201,8 @@ CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 	}
 
 	// Stop if we already have enough caches
-	if ( ( pService->m_bGnutella2 && ( GetCount( PROTOCOL_G2 ) >= Settings.Discovery.CacheCount ) ) ||
-		 ( pService->m_bGnutella1 && ( GetCount( PROTOCOL_G1 ) >= Settings.Discovery.CacheCount ) ) )
+	if ( ( pService->m_bGnutella2 && ( GetCount( pService->m_nType, PROTOCOL_G2 ) >= Settings.Discovery.CacheCount ) ) ||
+		 ( pService->m_bGnutella1 && ( GetCount( pService->m_nType, PROTOCOL_G1 ) >= Settings.Discovery.CacheCount ) ) )
 	{
 		// Check if the service is already in the list.
 		if ( m_pList.Find( pService ) == NULL )
