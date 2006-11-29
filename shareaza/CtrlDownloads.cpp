@@ -1194,7 +1194,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			rcCell.DeflateRect( 0, 1 );
 			dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
 			rcCell.DeflateRect( 1, 1 );
-			CFragmentBar::DrawSource( &dc, &rcCell, pSource, crNatural );
+			CFragmentBar::DrawSource( &dc, &rcCell, pSource, RGB( 220, 240, 220 ) );
 			break;
 			
 		case DOWNLOAD_COLUMN_SPEED:

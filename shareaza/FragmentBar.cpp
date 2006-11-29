@@ -251,9 +251,13 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 		
 		pDC->FillSolidRect( prcBar, GetSysColor( COLOR_BTNFACE ) );
 	}
-	else
+	else if ( pSource->IsOnline() )
 	{
 		pDC->FillSolidRect( prcBar, crNatural );
+	}
+	else
+	{
+		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
 	}
 }
 
