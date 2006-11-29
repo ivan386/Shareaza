@@ -348,7 +348,7 @@
 		<button id="ID_HITMONITOR_SEARCH" text="Requery"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Pause"/>
-		<button id="ID_SEARCH_CLEAR" text="Clear"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Clear"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Type some words to filter the results with"/>
 		<control id="107" width="160"/>
