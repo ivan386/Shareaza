@@ -788,6 +788,7 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 			BOOL bPadding	= (BOOL)( nHeader & 0x0200 ) ? TRUE : FALSE;// 1000000000
 			// Is audio copyrighted?
 			BOOL bCopyRight = (BOOL)( ( nHeader & 0x8 ) >> 3 ) ? TRUE: FALSE; // 1000
+			UNUSED_ALWAYS( bCopyRight );
 			
 			int nBitColumn = 0;
 			
@@ -1976,9 +1977,10 @@ BOOL CLibraryBuilderInternals::ReadMPC(HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals APE Monkey's Audio (threaded)
 
-BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
+BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bPreferFooter)
 {
-	if ( GetFileSize( hFile, NULL ) < sizeof(APE_TAG_FOOTER) ) return SubmitCorrupted();
+	DWORD nFileSize = GetFileSize( hFile, NULL );
+	if ( nFileSize < sizeof(APE_TAG_FOOTER) ) return SubmitCorrupted();
 
 	DWORD nRead;
 	APE_TAG_FOOTER pFooter;
@@ -1991,11 +1993,9 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 	if ( nRead != sizeof(pFooter) || strncmp( pFooter.cID, "APETAGEX", 8 ) ||
 		( pFooter.nVersion != 1000 && pFooter.nVersion != 2000 ) )
 	{
-		if ( bIgnoreHeader )
+		if ( bPreferFooter )
 			// Invalid footer, try to validate header only
 			pFooter.nFields = -1;
-		else
-			return SubmitMetadata( CSchema::uriAudio, pXML );
 	}
 
 	SetFilePointer( hFile, -(LONG)pFooter.nSize, NULL, FILE_END );
@@ -2093,7 +2093,7 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 		}
 	}
 
-	if ( GetFileSize( hFile, NULL ) < sizeof(APE_HEADER) )
+	if ( nFileSize < sizeof(APE_HEADER) )
 	{
 		delete pXML;
 		return SubmitCorrupted();
@@ -2111,11 +2111,10 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 
 	bool bValidSignature = bMAC || bMPC;
 
-	if ( nRead != sizeof(pAPE) || !bValidSignature || pAPE.nSampleRate == 0 || pAPE.nChannels == 0 ||
-		 bIgnoreHeader )
+	if ( nRead != sizeof(pAPE) || !bValidSignature || pAPE.nSampleRate == 0 || bPreferFooter )
 	{
 		// APE tags in MP3 or MPC footer
-		if ( pFooter.nFields > 0 && bIgnoreHeader )
+		if ( pFooter.nFields > 0 && bPreferFooter )
 		{
 			if ( !bValidSignature ) ScanMP3Frame( pXML, hFile, 0 );
 			return SubmitMetadata( CSchema::uriAudio, pXML );
@@ -2123,25 +2122,40 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bIgnoreHeader)
 		else // No APE footer and no header in MP3 or invalid APE file
 		{
 			delete pXML;
-			return bIgnoreHeader ? FALSE : SubmitCorrupted();;
+			return bPreferFooter ? FALSE : SubmitCorrupted();
 		}
 	}
 
-	DWORD nBlocksPerFrame = ( pAPE.nVersion >= 3900 || ( pAPE.nVersion >= 3800 &&
+	// Or samples per frame
+	DWORD nSamplesPerFrame = ( pAPE.nVersion >= 3900 || ( pAPE.nVersion >= 3800 &&
 		pAPE.nCompressionLevel == 4000 ) ) ? 73728 : 9216;
+	if ( pAPE.nVersion >= 3950 )
+		nSamplesPerFrame *= 4;
 	
-	DWORD nBlocks	= ( pAPE.nTotalFrames - 1 ) * nBlocksPerFrame + pAPE.nFinalFrameBlocks;
-	DWORD nSamples	= nBlocks * pAPE.nChannels;
-	
-	if ( pAPE.nFormatFlags & 8 )
-		nSamples *= 3;
-	else if ( ( pAPE.nFormatFlags & 1 ) == 0 )
-		nSamples *= 2;
-	
+	DWORD nBitsPerSample = ( pAPE.nFormatFlags & 8 ) ? 24 : ( pAPE.nFormatFlags & 1 ) ? 8 : 16;
+	if ( nBitsPerSample == 0 )
+	{
+		delete pXML;
+		return SubmitCorrupted();
+	}
+		
+	DWORD nSamples = ( ( pAPE.nTotalFrames - 1 ) * nSamplesPerFrame ) + pAPE.nFinalFrameBlocks;
 	DWORD nDuration	= nSamples / pAPE.nSampleRate;
+	DWORD nUncompressedSize = nSamples * pAPE.nChannels * ( nBitsPerSample / 8 );
 	
+	if ( nUncompressedSize == 0 )
+	{
+		delete pXML;
+		return SubmitCorrupted();
+	}
+
+	float nCompressRatio = (float)nFileSize / ( nUncompressedSize + pAPE.nHeaderBytes );
+	DWORD nBitRate = ( ( nSamples * pAPE.nChannels * nBitsPerSample ) / nDuration ) * nCompressRatio;
 	CString strItem;
 	
+	strItem.Format( L"%lu", nBitRate / 1000 );
+	pXML->AddAttribute( L"bitrate", strItem );
+
 	strItem.Format( L"%lu", nDuration );
 	pXML->AddAttribute( L"seconds", strItem );
 	

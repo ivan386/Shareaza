@@ -99,6 +99,8 @@ typedef struct
 	unsigned __int32 nTerminatingBytes;		// the bytes after that raw data (for extended info)
 	unsigned __int32 nTotalFrames;			// the number of frames in the file
 	unsigned __int32 nFinalFrameBlocks;		// the number of samples in the final frame
+	unsigned __int32 nPeakLevel;
+	unsigned __int32 nSeekElements;
 } APE_HEADER;
 
 typedef struct
