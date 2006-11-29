@@ -1492,6 +1492,8 @@ void CMatchFile::Added(CQueryHit* pHit)
 	for ( CQueryHit* pFileHits = m_pHits; pFileHits ; 
 			pFileHits = pFileHits->m_pNext, nTotal++ )
 	{
+		if ( pFileHits->m_pNext && validAndEqual( pFileHits->m_oClientID, pFileHits->m_pNext->m_oClientID ) )
+			pFileHits->m_bBogus = TRUE;
 		if ( pFileHits->m_bBogus )
 			nBogusCount++;
 	}
