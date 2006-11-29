@@ -652,8 +652,8 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 			return TRUE;
 
 		// Note: Do not enable MetAutoQuery until we have a MET file set up!
-		if ( ( Settings.eDonkey.EnableToday ) && ( Settings.eDonkey.MetAutoQuery ) &&
-			 ( HostCache.eDonkey.CountHosts() < 3 ) && ( m_tMetQueried == 0 ) )
+		if ( Settings.eDonkey.EnableToday && ( Settings.eDonkey.MetAutoQuery ||
+			 HostCache.eDonkey.CountHosts() < 3 || m_tMetQueried == 0 ) )
 		{	
 			m_tMetQueried = tNow;					// Execute this once only. (Very important)
 			if ( RequestRandomService( PROTOCOL_ED2K ) ) return TRUE;
