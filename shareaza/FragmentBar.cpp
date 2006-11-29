@@ -249,9 +249,9 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 				pFragment->begin(), pFragment->size(), crNatural, FALSE );
 		}
 		
-		pDC->FillSolidRect( prcBar, GetSysColor( COLOR_BTNFACE ) );
+		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
 	}
-	else if ( pSource->IsOnline() )
+	else if ( pSource->HasUsefulRanges() )
 	{
 		pDC->FillSolidRect( prcBar, crNatural );
 	}
