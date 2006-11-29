@@ -251,7 +251,7 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 		
 		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
 	}
-	else if ( pSource->HasUsefulRanges() )
+	else if ( pSource->IsOnline() && pSource->HasUsefulRanges() || !pSource->m_oPastFragments.empty() )
 	{
 		pDC->FillSolidRect( prcBar, crNatural );
 	}
