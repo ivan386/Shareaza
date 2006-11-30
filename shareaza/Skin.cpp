@@ -111,6 +111,7 @@ void CSkin::Clear()
 	}
 	
 	m_pStrings.RemoveAll();
+	m_pControlTips.RemoveAll();
 	m_pMenus.RemoveAll();
 	m_pToolbars.RemoveAll();
 	m_pDocuments.RemoveAll();
@@ -298,6 +299,10 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		{
 			if ( ! LoadStrings( pSub ) ) break;
 		}
+		else if ( pSub->IsNamed( _T("controltips") ) )
+		{
+			if ( ! LoadControlTips( pSub ) ) break;
+		}
 		else if ( pSub->IsNamed( _T("fonts" ) ) )
 		{
 			if ( ! LoadFonts( pSub, strPath ) ) break;
@@ -310,7 +315,7 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		{
 			if ( ! LoadListColumns( pSub ) ) break;
 		}
-		else if ( pSub->IsNamed( _T("commandMap") ) )
+		else if ( pSub->IsNamed( _T("commandMap") ) || pSub->IsNamed( _T("tipMap") ) )
 		{
 			if ( ! LoadCommandMap( pSub ) ) break;
 		}
@@ -393,6 +398,35 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 		}
 	}
 	
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CSkin dialog control tips
+
+BOOL CSkin::LoadControlTip(CString& str, UINT nCtrlID)
+{
+	if ( m_pControlTips.Lookup( nCtrlID, str ) ) return TRUE;
+	str.Empty();
+	return FALSE;
+}
+
+BOOL CSkin::LoadControlTips(CXMLElement* pBase)
+{
+	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
+	{
+		CXMLElement* pXML = pBase->GetNextElement( pos );
+
+		if ( pXML->IsNamed( _T("tip") ) )
+		{
+			if ( UINT nID = LookupCommandID( pXML ) )
+			{
+				CString strMessage = pXML->GetAttributeValue( _T("message") );
+				m_pControlTips.SetAt( nID, strMessage );
+			}
+		}
+	}
+
 	return TRUE;
 }
 
@@ -799,7 +833,7 @@ BOOL CSkin::LoadListColumns(CXMLElement* pBase)
 //////////////////////////////////////////////////////////////////////
 // CSkin dialogs
 
-BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
+BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl* pWndTooltips)
 {
 	if ( nIconID )
 	{
@@ -822,11 +856,18 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 		strName = pszName;
 	
 	CWnd* pWnd = pDialog->GetWindow( GW_CHILD );
-	CString strCaption;
+	CString strCaption, strTip;
 	
 	for ( int nCount = 0 ; pWnd ; nCount++, pWnd = pWnd->GetNextWindow() )
 	{
 		TCHAR szClass[3] = { 0, 0, 0 };
+		LoadControlTip( strTip, pWnd->GetDlgCtrlID() );
+
+		if ( pWndTooltips && strTip.GetLength() )
+		{
+			pWndTooltips->AddTool( pWnd, strTip );
+		}
+
 		GetClassName( pWnd->GetSafeHwnd(), szClass, 3 );
 		strCaption += szClass;
 	}
@@ -952,6 +993,12 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 		if ( pXML->IsNamed( _T("control") ) )
 		{
 			strCaption = pXML->GetAttributeValue( _T("caption") );
+			strTip = pXML->GetAttributeValue( L"tip" );
+			if ( pWndTooltips && strTip.GetLength() )
+			{
+				pWndTooltips->AddTool( pWnd, strTip );
+			}
+
 			Replace( strCaption, _T("{n}"), _T("\r\n") );
 			
 			if ( strCaption.GetLength() )
@@ -1219,7 +1266,7 @@ BOOL CSkin::LoadCommandMap(CXMLElement* pBase)
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
 
-		if (  pXML->IsNamed( _T("command") ) )
+		if ( pXML->IsNamed( L"command" ) || pXML->IsNamed( L"control" ) )
 		{
 			CString strTemp = pXML->GetAttributeValue( _T("code") );
 			UINT nID;

@@ -58,10 +58,13 @@ protected:
 // Strings
 public:
 	BOOL	LoadString(CString& str, UINT nStringID);
+	BOOL	LoadControlTip(CString& str, UINT nCtrlID);
 	int		GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL);
 protected:
 	BOOL	LoadStrings(CXMLElement* pBase);
+	BOOL	LoadControlTips(CXMLElement* pBase);
 	CMap<UINT, UINT, CString, CString&>	m_pStrings;
+	CMap<UINT, UINT, CString, CString&>	m_pControlTips;
 
 // Menus
 public:
@@ -107,7 +110,7 @@ protected:
 
 // Dialogs
 public:
-	BOOL	Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID = 0);
+	BOOL	Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID = 0, CToolTipCtrl* pWndTooltips = NULL);
 	CString	GetDialogCaption(LPCTSTR pszName);
 protected:
 	BOOL	LoadDialogs(CXMLElement* pBase);

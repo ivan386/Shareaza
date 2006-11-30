@@ -151,8 +151,11 @@ CSettingsPage* CSettingsPage::GetPage(CRuntimeClass* pClass) const
 BOOL CSettingsPage::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+	m_wndToolTip.Create( this );
+	m_wndToolTip.Activate( TRUE );
+	m_wndToolTip.SetMaxTipWidth( 200 );
 
-	Skin.Apply( NULL, this );
+	Skin.Apply( NULL, this, 0, &m_wndToolTip );
 
 	return TRUE;
 }
@@ -225,4 +228,28 @@ HBRUSH CSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	}
 
 	return hbr;
+}
+
+
+BOOL CSettingsPage::PreTranslateMessage(MSG* pMsg)
+{
+	if ( pMsg->message >= WM_MOUSEFIRST && pMsg->message <= WM_MOUSELAST )
+	{
+		MSG msg;
+		CopyMemory( &msg, pMsg, sizeof(MSG) );
+		HWND hWndParent = ::GetParent( msg.hwnd );
+
+		while ( hWndParent && hWndParent != m_hWnd )
+		{
+			msg.hwnd = hWndParent;
+			hWndParent = ::GetParent( hWndParent );
+		}
+
+		if ( msg.hwnd )
+		{
+			m_wndToolTip.RelayEvent( &msg );
+		}
+	}
+
+	return CDialog::PreTranslateMessage(pMsg);
 }
