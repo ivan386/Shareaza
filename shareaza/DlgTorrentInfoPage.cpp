@@ -33,13 +33,13 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CTorrentInfoPage, CPropertyPage)
+IMPLEMENT_DYNAMIC(CTorrentInfoPage, CPropertyPageAdv)
 
-BEGIN_MESSAGE_MAP(CTorrentInfoPage, CPropertyPage)
+BEGIN_MESSAGE_MAP(CTorrentInfoPage, CPropertyPageAdv)
 	//{{AFX_MSG_MAP(CTorrentInfoPage)
 	ON_WM_PAINT()
-	//}}AFX_MSG_MAP
 	ON_WM_CTLCOLOR()
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -47,7 +47,7 @@ END_MESSAGE_MAP()
 // CTorrentInfoPage property page
 
 CTorrentInfoPage::CTorrentInfoPage(UINT nIDD) : 
-	CPropertyPage( nIDD ), m_nIcon( -1 )
+	CPropertyPageAdv( nIDD ), m_nIcon( -1 )
 {
 }
 
@@ -57,7 +57,7 @@ CTorrentInfoPage::~CTorrentInfoPage()
 
 void CTorrentInfoPage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CPropertyPageAdv::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTorrentInfoPage)
 	//}}AFX_DATA_MAP
 }
@@ -79,9 +79,9 @@ Hashes::BtGuid CTorrentInfoPage::GetPeerID()
 
 BOOL CTorrentInfoPage::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+	CPropertyPageAdv::OnInitDialog();
 
-	Skin.Apply( NULL, this );
+	Skin.Apply( NULL, this, 0, &m_wndToolTip );
 
 	m_pInfo = GetTorrentInfo();
 	m_pPeerID = GetPeerID();
@@ -145,7 +145,7 @@ void CTorrentInfoPage::PaintStaticHeader(CDC* pDC, CRect* prc, LPCTSTR psz)
 
 HBRUSH CTorrentInfoPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-	HBRUSH hbr = CPropertyPage::OnCtlColor( pDC, pWnd, nCtlColor );
+	HBRUSH hbr = CPropertyPageAdv::OnCtlColor( pDC, pWnd, nCtlColor );
 
 	if ( nCtlColor == CTLCOLOR_DLG || nCtlColor == CTLCOLOR_STATIC )
 	{

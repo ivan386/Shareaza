@@ -28,6 +28,7 @@
 #include "Skin.h"
 #include "DlgFilePropertiesSheet.h"
 #include "DlgFilePropertiesPage.h"
+#include "PagePropertyAdv.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,20 +36,20 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CFilePropertiesPage, CPropertyPage)
+IMPLEMENT_DYNAMIC(CFilePropertiesPage, CPropertyPageAdv)
 
-BEGIN_MESSAGE_MAP(CFilePropertiesPage, CPropertyPage)
+BEGIN_MESSAGE_MAP(CFilePropertiesPage, CPropertyPageAdv)
 	//{{AFX_MSG_MAP(CFilePropertiesPage)
 	ON_WM_PAINT()
-	//}}AFX_MSG_MAP
 	ON_WM_CTLCOLOR()
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesPage property page
 
-CFilePropertiesPage::CFilePropertiesPage(UINT nIDD) : CPropertyPage( nIDD )
+CFilePropertiesPage::CFilePropertiesPage(UINT nIDD) : CPropertyPageAdv( nIDD )
 {
 	//{{AFX_DATA_INIT(CFilePropertiesPage)
 	//}}AFX_DATA_INIT
@@ -61,7 +62,7 @@ CFilePropertiesPage::~CFilePropertiesPage()
 
 void CFilePropertiesPage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CPropertyPageAdv::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CFilePropertiesPage)
 	//}}AFX_DATA_MAP
 }
@@ -91,7 +92,7 @@ CLibraryList* CFilePropertiesPage::GetList() const
 
 BOOL CFilePropertiesPage::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+	CPropertyPageAdv::OnInitDialog();
 
 	Skin.Apply( NULL, this );
 
@@ -200,7 +201,7 @@ void CFilePropertiesPage::PaintStaticHeader(CDC* pDC, CRect* prc, LPCTSTR psz)
 
 HBRUSH CFilePropertiesPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-	HBRUSH hbr = CPropertyPage::OnCtlColor( pDC, pWnd, nCtlColor );
+	HBRUSH hbr = CPropertyPageAdv::OnCtlColor( pDC, pWnd, nCtlColor );
 
 	if ( nCtlColor == CTLCOLOR_DLG || nCtlColor == CTLCOLOR_STATIC )
 	{

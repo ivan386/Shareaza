@@ -179,7 +179,7 @@ BOOL CFileMetadataPage::PreTranslateMessage(MSG* pMsg)
 		if ( m_wndData.OnTab() ) return TRUE;
 	}
 
-	return CPropertyPage::PreTranslateMessage( pMsg );
+	return CFilePropertiesPage::PreTranslateMessage( pMsg );
 }
 
 void CFileMetadataPage::OnOK()

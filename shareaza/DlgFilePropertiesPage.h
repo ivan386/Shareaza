@@ -23,12 +23,12 @@
 #define AFX_DLGFILEPROPERTIESPAGE_H__A39F7917_D5EC_493E_AE35_7B2543BE9650__INCLUDED_
 
 #pragma once
+#include "PagePropertyAdv.h"
 
 class CLibraryFile;
 class CLibraryList;
 
-
-class CFilePropertiesPage : public CPropertyPage
+class CFilePropertiesPage : public CPropertyPageAdv
 {
 // Construction
 public:

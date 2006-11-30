@@ -2047,6 +2047,9 @@
 					RelativePath="PageProfileProfile.cpp">
 				</File>
 				<File
+					RelativePath="PagePropertyAdv.cpp">
+				</File>
+				<File
 					RelativePath="PageSettingsBandwidth.cpp">
 				</File>
 				<File
@@ -3224,6 +3227,9 @@
 				</File>
 				<File
 					RelativePath="PageProfileProfile.h">
+				</File>
+				<File
+					RelativePath="PagePropertyAdv.h">
 				</File>
 				<File
 					RelativePath="PageSettingsBandwidth.h">

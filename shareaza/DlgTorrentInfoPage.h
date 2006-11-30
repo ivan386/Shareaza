@@ -25,9 +25,9 @@
 #pragma once
 
 #include "BTInfo.h"
+#include "PagePropertyAdv.h"
 
-
-class CTorrentInfoPage : public CPropertyPage
+class CTorrentInfoPage : public CPropertyPageAdv
 {
 // Construction
 public:
