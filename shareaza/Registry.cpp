@@ -100,7 +100,9 @@ int CRegistry::GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault)
 		RegCloseKey( hKey );
 	}
 
-	if ( nErrorCode != ERROR_SUCCESS ) DisplayErrorMessageBox( pszName, nErrorCode );
+	//if ( nErrorCode != ERROR_SUCCESS ) 
+	//	DisplayErrorMessageBox( pszName, nErrorCode );
+
 
 	return nValue;
 }
