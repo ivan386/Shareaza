@@ -2488,4 +2488,9 @@
 	<icon res="261" id="ID_HELP_HOMEPAGE"/>
 </commandImages>
 
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="In the maximum mode the bandwidth won't exceed the specified value. In the average mode it will fluctuate around the value to both sides."/>
+</controlTips>
+
 </skin>

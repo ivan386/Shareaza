@@ -333,4 +333,8 @@
 	<command code="57652" id="ID_WINDOW_TILE_VERT"/>
 </commandMap>
 
+<tipMap>
+	<control code="1374" id="IDC_THROTTLE_MODE"/>
+</tipMap>
+
 </skin>
