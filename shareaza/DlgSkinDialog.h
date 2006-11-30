@@ -44,6 +44,7 @@ public:
 public:
 	BOOL	SkinMe(LPCTSTR pszSkin = NULL, UINT nIcon = 0, BOOL bLanguage = TRUE);
 	BOOL	SelectCaption(CWnd* pWnd, int nIndex);
+	CToolTipCtrl m_wndToolTip;
 protected:
 	CSkinWindow*	m_pSkin;
 
@@ -53,6 +54,7 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	//}}AFX_VIRTUAL
 
 // Implementation

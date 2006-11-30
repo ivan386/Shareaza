@@ -93,7 +93,7 @@ BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 
 	if ( bLanguage )
 	{
-		bSuccess = ::Skin.Apply( strSkin, this, nIcon );
+		bSuccess = ::Skin.Apply( strSkin, this, nIcon, &m_wndToolTip );
 	}
 	if ( nIcon || theApp.m_bRTL && nIcon )
 	{
@@ -313,6 +313,11 @@ int CSkinDialog::OnCreate(LPCREATESTRUCT lpCreateStruct)
 BOOL CSkinDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+
+	m_wndToolTip.Create( this );
+	m_wndToolTip.Activate( TRUE );
+	m_wndToolTip.SetMaxTipWidth( 200 );
+
 	if ( theApp.m_bRTL )
 	{
 		CStatic* pBanner = (CStatic*)GetDlgItem( IDC_BANNER );
@@ -334,4 +339,27 @@ BOOL CSkinDialog::OnInitDialog()
 BOOL CSkinDialog::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
 {
 	return FALSE;
+}
+
+BOOL CSkinDialog::PreTranslateMessage(MSG* pMsg)
+{
+	if ( pMsg->message >= WM_MOUSEFIRST && pMsg->message <= WM_MOUSELAST )
+	{
+		MSG msg;
+		CopyMemory( &msg, pMsg, sizeof(MSG) );
+		HWND hWndParent = ::GetParent( msg.hwnd );
+
+		while ( hWndParent && hWndParent != m_hWnd )
+		{
+			msg.hwnd = hWndParent;
+			hWndParent = ::GetParent( hWndParent );
+		}
+
+		if ( msg.hwnd )
+		{
+			m_wndToolTip.RelayEvent( &msg );
+		}
+	}
+
+	return CDialog::PreTranslateMessage(pMsg);
 }
