@@ -367,7 +367,7 @@ void CDownload::OnRun()
 			if( GetTransferCount() > 0 ) bDownloading = TRUE;
 
 		}
-		else if ( ! m_bComplete )
+		else if ( ! m_bComplete && m_bVerify != TS_TRUE )
 		{	//If this download isn't trying to download, see if it can try
 			if ( IsDownloading() )
 			{	// This download was probably started by a push/etc

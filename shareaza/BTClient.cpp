@@ -191,7 +191,7 @@ BOOL CBTClient::OnRun()
 			Close();
 			return FALSE;
 		}
-/*		else if ( tNow - m_mOutput.tLast > Settings.BitTorrent.LinkPing / 2 && m_pOutput->m_nLength == 0 )
+		/*else if ( tNow - m_mOutput.tLast > Settings.BitTorrent.LinkPing / 2 && m_pOutput->m_nLength == 0 )
 		{
 			DWORD dwZero = 0;
 			m_pOutput->Add( &dwZero, 4 );			// wtf???
@@ -253,6 +253,10 @@ BOOL CBTClient::OnRead()
 {
 	BOOL bSuccess = TRUE;
 	
+	if ( m_pDownload == NULL || m_pDownload->IsPaused() || 
+		 m_pDownload->IsMoving() || m_pDownload->IsCompleted() && !m_pDownload->m_bVerify )
+		return FALSE;
+
 	CTransfer::OnRead();
 	
 	if ( m_bOnline )
