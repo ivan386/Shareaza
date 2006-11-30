@@ -612,12 +612,12 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
 				pCopy->m_nPort, (LPCTSTR)m_oED2K.toUrn() );
 		}
-		else if ( m_oBTH )
-		{
-			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
-				pCopy->m_nPort, (LPCTSTR)m_oBTH.toUrn() );
-		}
+		//else if ( m_oBTH )
+		//{
+		//	strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
+		//		(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
+		//		pCopy->m_nPort, (LPCTSTR)m_oBTH.toUrn() );
+		//}
 		else if ( m_oMD5 )
 		{
 			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
