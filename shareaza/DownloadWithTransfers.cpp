@@ -369,7 +369,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 			}
 			else if ( pSource->m_tAttempt <= tNow )
 			{
-				if ( pConnectHead == NULL && pSource->CanInitiate( bConnected, FALSE ) ) pConnectHead = pSource;
+				pSource->Remove( TRUE, FALSE );
 			}
 		}
 		pSource = pNext;
