@@ -153,7 +153,7 @@ BOOL CDownloadWithSearch::CanSearch() const
 	return m_pFile != NULL && 
 		( ( m_oSHA1 || m_oTiger ) && ( Settings.Gnutella1.EnableToday || Settings.Gnutella2.EnableToday ) ||
 		  ( m_oED2K && ( Settings.Gnutella2.EnableToday || Settings.eDonkey.EnableToday ) ) || 
-		  ( m_oBTH && Settings.Gnutella2.EnableToday ) );
+		  m_oBTH );
 }
 
 //////////////////////////////////////////////////////////////////////
