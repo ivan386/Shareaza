@@ -1009,23 +1009,27 @@ void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace)
 	}
 }
 
-BOOL LoadSourcesString(CString& str, DWORD num)
+BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction)
 {
-	if (num == 0)
+	if ( bFraction )
+	{
+		return Skin.LoadString( str, IDS_STATUS_SOURCESOF );
+	}
+	else if ( num == 0 )
 	{
 		return Skin.LoadString( str, IDS_STATUS_NOSOURCES );
 	}
-	else if (num == 1)
+	else if ( num == 1 )
 	{
 		return Skin.LoadString( str, IDS_STATUS_SOURCE );
 	}
-	else if ( ( (num % 100) > 10) && ( (num % 100) < 20) )
+	else if ( ( ( num % 100 ) > 10) && ( ( num % 100 ) < 20 ) )
 	{
 		return Skin.LoadString( str, IDS_STATUS_SOURCES11TO19 );
 	}
 	else
 	{
-		switch (num % 10)
+		switch ( num % 10 )
 		{
 			case 0: 
 				return Skin.LoadString( str, IDS_STATUS_SOURCESTENS );

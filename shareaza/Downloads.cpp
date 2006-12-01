@@ -210,7 +210,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	{
 		pDownload->SetStartTimer();
 
-		if ( ( (pDownload->GetSourceCount() <= 1 ) ||
+		if ( ( (pDownload->GetEffectiveSourceCount() <= 1 ) ||
 			( pDownload->m_oED2K && ! pDownload->m_oSHA1 )) )
 		{
 			pDownload->FindMoreSources();
@@ -317,13 +317,14 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	m_pList.AddTail( pDownload );
 	
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
-		(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
+		(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
 	
 	if ( (  pDownload->m_oBTH && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||
 		 ( !pDownload->m_oBTH && ( GetTryingCount(FALSE) < Settings.Downloads.MaxFiles ) ) )
 	{
 		pDownload->SetStartTimer();
-		if ( pDownload->GetSourceCount() <= 1 ) pDownload->FindMoreSources();
+		if ( pDownload->GetEffectiveSourceCount() <= 1 ) 
+			pDownload->FindMoreSources();
 	}
 	
 	DownloadGroups.Link( pDownload );

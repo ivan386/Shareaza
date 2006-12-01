@@ -5567,6 +5567,7 @@ BEGIN
     IDS_STATUS_CHOKED       "Choked"
     IDS_STATUS_NEXT         "Next"
     IDS_STATUS_Q            "Q"
+    IDS_STATUS_SOURCESOF    "sources"
 END
 
 STRINGTABLE 
@@ -5659,7 +5660,6 @@ BEGIN
     ID_DOWNLOADS_SOURCES    "Search for more sources for the selected download(s)."
     ID_DOWNLOADS_LAUNCH     "Preview the selected file(s) in place."
     ID_DOWNLOADS_CLEAR      "Clear/remove the selected download(s)."
-    ID_DOWNLOADS_REMOTE_PREVIEW "Download preview image for the selected download."
 END
 
 STRINGTABLE 
@@ -5673,6 +5673,8 @@ BEGIN
     ID_LIBRARY_ADD          "Add a new folder to your library..."
     ID_LIBRARY_PROPERTIES   "View and edit the properties of the selected files..."
     ID_LIBRARY_COLUMNS      "Select metadata columns to be displayed..."
+    ID_DOWNLOADS_REMOTE_PREVIEW 
+                            "Download preview image for the selected download."
     ID_DOWNLOADS_CLEAR_PAUSED "Clear downloads which have been paused."
     ID_UPLOADS_LAUNCH       "Launch the selected shared file(s)."
     ID_UPLOADS_DISCONNECT   "Disconnect the selected upload transfer(s)."

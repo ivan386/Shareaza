@@ -354,7 +354,8 @@ void CDownload::OnRun()
 					}
 					else
 					{
-						if ( CheckTorrentRatio() ) StartTransfersIfNeeded( tNow );
+						if ( CheckTorrentRatio() ) 
+							StartTransfersIfNeeded( tNow );
 					}
 				}
 				else if ( m_pFile == NULL && ! m_bComplete && m_pTask == NULL )
@@ -387,7 +388,7 @@ void CDownload::OnRun()
 		}
 	}
 	
-	// Set the currently downloading state (Used to optimise display in Ctrl/Wnd functions)
+	// Set the currently downloading state (Used to optimize display in Ctrl/Wnd functions)
 	m_bDownloading = bDownloading;
 	
 	// Don't save Downloads with many sources too often, since it's slow

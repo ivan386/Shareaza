@@ -77,10 +77,19 @@ public:
 	CXMLElement*		m_pXML;
 	int					m_nSourceCount;
 
+private:
+	int					m_nG1SourceCount;
+	int					m_nG2SourceCount;
+	int					m_nEdSourceCount;
+	int					m_nHTTPSourceCount;
+	int					m_nBTSourceCount;
+	int					m_nFTPSourceCount;
+
 // Operations
 public:
 	CString				GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept);
 	CString				GetTopFailedSources(int nMaximum, PROTOCOLID nProtocol);
+	int					GetEffectiveSourceCount() const;
 	int					GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;
 	int					GetBTSourceCount(BOOL bNoPush = FALSE) const;
 	int					GetED2KCompleteSourceCount() const;

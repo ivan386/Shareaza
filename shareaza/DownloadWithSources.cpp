@@ -56,11 +56,17 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadWithSources construction
 
 CDownloadWithSources::CDownloadWithSources()
+: m_pSourceFirst(NULL)
+, m_pSourceLast(NULL)
+, m_nSourceCount(0)
+, m_pXML(NULL)
+, m_nBTSourceCount(0)
+, m_nG1SourceCount(0)
+, m_nG2SourceCount(0)
+, m_nEdSourceCount(0)
+, m_nHTTPSourceCount(0)
+, m_nFTPSourceCount(0)
 {
-	m_pSourceFirst	= NULL;
-	m_pSourceLast	= NULL;
-	m_nSourceCount	= 0;
-	m_pXML			= NULL;
 }
 
 CDownloadWithSources::~CDownloadWithSources()
@@ -100,6 +106,19 @@ int CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 	return nCount;
 }
 
+int	CDownloadWithSources::GetEffectiveSourceCount() const
+{
+	int nResult = 0;
+	if ( Settings.IsG1Allowed() )
+		nResult += m_nG1SourceCount;
+	if ( Settings.IsG2Allowed() )
+		nResult += m_nG2SourceCount;
+	if ( Settings.IsEdAllowed() )
+		nResult += m_nEdSourceCount;
+	if ( Settings.IsG1Allowed() || Settings.IsG2Allowed() )
+		nResult += m_nHTTPSourceCount;
+	return nResult + m_nBTSourceCount + m_nFTPSourceCount;
+}
 
 int CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 {
@@ -173,7 +192,8 @@ void CDownloadWithSources::ClearSources()
 	}
 
 	m_pSourceFirst = m_pSourceLast = NULL;
-	m_nSourceCount = 0;
+	m_nSourceCount = m_nEdSourceCount = m_nG1SourceCount m_nFTPSourceCount = 0;
+	m_nG2SourceCount = m_nHTTPSourceCount = m_nBTSourceCount = 0;
 	
 	SetModified();
 }
@@ -548,7 +568,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 					bExistingIsRaza = ( _tcsncmp( pExisting->m_sServer, _T("Shareaza"), 8 ) == 0 );
 
 				if ( !bG2Exists )
-					bG2Exists = ( pExisting->m_nProtocol == PROTOCOL_HTTP );
+					bG2Exists = ( pExisting->m_nProtocol == PROTOCOL_HTTP || pExisting->m_nProtocol == PROTOCOL_G2 );
 
 				// Point to non-HTTP source which is Shareaza
 				if ( bExistingIsRaza )
@@ -560,13 +580,15 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 				if ( pExisting->m_pTransfer != NULL ) // We already downloading
 				{
 					// Remove new source which is not HTTP and return
-					if ( pExisting->m_nProtocol == PROTOCOL_HTTP && pSource->m_nProtocol != PROTOCOL_HTTP )
+					if ( ( pExisting->m_nProtocol == PROTOCOL_HTTP || pExisting->m_nProtocol == PROTOCOL_G2 ) && 
+						 ( pSource->m_nProtocol != PROTOCOL_HTTP && pSource->m_nProtocol != PROTOCOL_G2 ) )
 						bDeleteSource = true;
 				}
 				else // We are not downloading
 				{
 					// Replace non-HTTP source with a new one (we will add it later)
-					if ( pExisting->m_nProtocol != PROTOCOL_HTTP && pSource->m_nProtocol == PROTOCOL_HTTP )
+					if ( ( pExisting->m_nProtocol != PROTOCOL_HTTP && pExisting->m_nProtocol != PROTOCOL_G2 ) && 
+						 ( pSource->m_nProtocol == PROTOCOL_HTTP || pSource->m_nProtocol == PROTOCOL_G2 ) )
 					{
 						// Set connection delay the same as for the old source
 						pSource->m_tAttempt = pExisting->m_tAttempt;
@@ -593,7 +615,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	}
 
 	// We don't need to make G2 source
-	if ( pCopy && bExistingIsRaza && bG2Exists )
+	if ( pCopy && !pCopy->m_bPushOnly && bExistingIsRaza && bG2Exists )
 		pCopy = NULL;
 
 	// Make G2 source from the existing non-HTTP Shareaza source
@@ -630,9 +652,13 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL );
 			pG2Source->m_sServer = pCopy->m_sServer;	// Copy user-agent
 			pG2Source->m_tAttempt = pCopy->m_tAttempt;	// Set the same connection delay
-			pG2Source->m_nProtocol = PROTOCOL_HTTP;
+			pG2Source->m_nProtocol = pCopy->m_nProtocol;
 
 			m_nSourceCount++;
+			if ( pCopy->m_nProtocol == PROTOCOL_HTTP )
+				m_nHTTPSourceCount++;
+			else if ( pCopy->m_nProtocol == PROTOCOL_G2 )
+				m_nG2SourceCount++;
 
 			pG2Source->m_pPrev = m_pSourceLast;
 			pG2Source->m_pNext = NULL;
@@ -662,6 +688,20 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	}
 
 	m_nSourceCount++;
+
+	if ( pSource->m_nProtocol == PROTOCOL_G1 )
+		m_nG1SourceCount++;
+	else if ( pSource->m_nProtocol == PROTOCOL_G2 )
+		m_nG2SourceCount++;
+	else if ( pSource->m_nProtocol == PROTOCOL_ED2K )
+		m_nEdSourceCount++;
+	else if ( pSource->m_nProtocol == PROTOCOL_HTTP )
+		m_nHTTPSourceCount++;
+	else if ( pSource->m_nProtocol == PROTOCOL_BT )
+		m_nBTSourceCount++;
+	else if ( pSource->m_nProtocol == PROTOCOL_FTP )
+		m_nFTPSourceCount++;
+
 	pSource->m_pPrev = m_pSourceLast;
 	pSource->m_pNext = NULL;
 		
@@ -936,7 +976,20 @@ void CDownloadWithSources::RemoveSource(CDownloadSource* pSource, BOOL bBan)
 	
 	ASSERT( m_nSourceCount > 0 );
 	m_nSourceCount --;
-	
+
+	if ( pSource->m_nProtocol == PROTOCOL_G1 )
+		m_nG1SourceCount--;
+	else if ( pSource->m_nProtocol == PROTOCOL_G2 )
+		m_nG2SourceCount--;
+	else if ( pSource->m_nProtocol == PROTOCOL_ED2K )
+		m_nEdSourceCount--;
+	else if ( pSource->m_nProtocol == PROTOCOL_HTTP )
+		m_nHTTPSourceCount--;
+	else if ( pSource->m_nProtocol == PROTOCOL_BT )
+		m_nBTSourceCount--;
+	else if ( pSource->m_nProtocol == PROTOCOL_FTP )
+		m_nFTPSourceCount--;
+
 	if ( pSource->m_pPrev != NULL )
 		pSource->m_pPrev->m_pNext = pSource->m_pNext;
 	else
@@ -1118,7 +1171,8 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 			CDownloadSource* pSource = new CDownloadSource( (CDownload*)this );
 			
 			// Add to the list
-			m_nSourceCount ++;
+			m_nSourceCount++;
+
 			pSource->m_pPrev = m_pSourceLast;
 			pSource->m_pNext = NULL;
 			
@@ -1134,6 +1188,19 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 
 			// Load details from disk
 			pSource->Serialize( ar, nVersion );
+
+			if ( pSource->m_nProtocol == PROTOCOL_G1 )
+				m_nG1SourceCount++;
+			else if ( pSource->m_nProtocol == PROTOCOL_G2 )
+				m_nG2SourceCount++;
+			else if ( pSource->m_nProtocol == PROTOCOL_ED2K )
+				m_nEdSourceCount++;
+			else if ( pSource->m_nProtocol == PROTOCOL_HTTP )
+				m_nHTTPSourceCount++;
+			else if ( pSource->m_nProtocol == PROTOCOL_BT )
+				m_nBTSourceCount++;
+			else if ( pSource->m_nProtocol == PROTOCOL_FTP )
+				m_nFTPSourceCount++;
 
 			// Extract ed2k client ID from url (m_pAddress) because it wasn't saved
 			if ( ( !pSource->m_nPort ) && ( _tcsnicmp( pSource->m_sURL, _T("ed2kftp://"), 10 ) == 0 )  )

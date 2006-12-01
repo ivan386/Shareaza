@@ -218,7 +218,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 		// If we can start new downloads, or this download is already running
 		if ( Downloads.m_bAllowMoreDownloads || m_pTransferFirst != NULL )
 		{
-			// If we can start new trasnfers
+			// If we can start new transfers
 			if ( Downloads.m_bAllowMoreTransfers )
 			{
 				// If download bandwidth isn't at max

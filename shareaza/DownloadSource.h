@@ -147,7 +147,7 @@ public:
 
 	inline bool CDownloadSource::IsOnline() const
 	{
-		return m_nBusyCount || ( m_pTransfer && m_pTransfer->m_nState > dtsNull );
+		return m_nBusyCount || ( m_pTransfer && m_pTransfer->m_nState > dtsConnecting );
 	}
 };
 

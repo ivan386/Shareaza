@@ -101,7 +101,7 @@ void CDownloadWithSearch::RunSearch(DWORD tNow)
 	}
 	else if ( tNow > m_tSearchCheck && tNow - m_tSearchCheck >= 1000 )
 	{
-		BOOL bFewSources = GetSourceCount( FALSE, TRUE ) < Settings.Downloads.MinSources;
+		BOOL bFewSources = GetEffectiveSourceCount() < Settings.Downloads.MinSources;
 		BOOL bDataStarve = ( tNow > m_tReceived ? tNow - m_tReceived : 0 ) > Settings.Downloads.StarveTimeout * 1000;
 		
 		m_tSearchCheck = tNow;
@@ -132,7 +132,7 @@ void CDownloadWithSearch::StartManualSearch()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadWithSearch start (or continue) an autoamtic search
+// CDownloadWithSearch start (or continue) an automatic search
 
 void CDownloadWithSearch::StartAutomaticSearch()
 {
@@ -150,7 +150,10 @@ void CDownloadWithSearch::StartAutomaticSearch()
 
 BOOL CDownloadWithSearch::CanSearch() const
 {
-	return m_pFile != NULL && ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH );
+	return m_pFile != NULL && 
+		( ( m_oSHA1 || m_oTiger ) && ( Settings.Gnutella1.EnableToday || Settings.Gnutella2.EnableToday ) ||
+		  ( m_oED2K && ( Settings.Gnutella2.EnableToday || Settings.eDonkey.EnableToday ) ) || 
+		  ( m_oBTH && Settings.Gnutella2.EnableToday ) );
 }
 
 //////////////////////////////////////////////////////////////////////

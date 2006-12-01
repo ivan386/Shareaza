@@ -262,7 +262,7 @@ BOOL CDownloadsCtrl::IsFiltered(CDownload* pDownload)
 	{
 		return ( ( nFilterMask & DLF_ACTIVE ) == 0 );
 	}
-	else if ( pDownload->GetSourceCount() > 0 )
+	else if ( pDownload->GetEffectiveSourceCount() > 0 )
 	{
 		if ( pDownload->IsDownloading() )
 		{
@@ -923,7 +923,8 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
 	
 	/*int nTransfers		=*/ pDownload->GetTransferCount();
-	int nSources		= pDownload->GetSourceCount();
+	int nSources		= pDownload->GetEffectiveSourceCount();
+	int nTotalSources	= pDownload->GetSourceCount();
 	int nRating			= pDownload->GetReviewAverage();
 
 	if ( ( nRating == 0 ) && ( pDownload->GetReviewCount() > 0 ) )
@@ -1036,13 +1037,18 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				else if ( pDownload->m_bVerify == TS_FALSE )
 					LoadString( strText, IDS_STATUS_UNVERIFIED );
 			}
-			else if ( nSources > 0 )
+			else if ( nTotalSources == 0 )
+				LoadString( strText, IDS_STATUS_NOSOURCES );
+			else if ( nSources == nTotalSources )
 			{
 				LoadSourcesString( strSource,  nSources );
 				strText.Format( _T("(%i %s)"), nSources, strSource );
 			}
 			else
-				LoadString( strText, IDS_STATUS_NOSOURCES );
+			{
+				LoadSourcesString( strSource,  nTotalSources, true );
+				strText.Format( _T("(%i/%i %s)"), nSources, nTotalSources, strSource );
+			}
 			break;
 		case DOWNLOAD_COLUMN_DOWNLOADED:
 			strText = Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE );
@@ -1397,7 +1403,7 @@ void CDownloadsCtrl::OnChangeHeader(NMHDR* /*pNotifyStruct*/, LRESULT* /*pResult
 CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 {
 	CString strText;
-	int nSources = pDownload->GetSourceCount();
+	int nSources = pDownload->GetEffectiveSourceCount();
 
 	if ( pDownload->IsCompleted() )
 		if ( pDownload->IsSeeding() )
@@ -1458,7 +1464,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 
 int CDownloadsCtrl::GetClientStatus(CDownload *pDownload)
 {
-	int nSources = pDownload->GetSourceCount();
+	int nSources = pDownload->GetEffectiveSourceCount();
 			
 	if ( pDownload->IsCompleted() )
 		return -1;
