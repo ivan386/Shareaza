@@ -154,7 +154,7 @@ int CDownloadWithSources::GetED2KCompleteSourceCount() const
 		if ( ( ! pSource->m_bPushOnly ) &&						// Push sources shouldn't be counted since you often cannot reach them
 			 ( pSource->m_tAttempt < tNow || pSource->m_tAttempt - tNow <= 900000 ) &&	// Only count sources that are probably active
 			 ( pSource->m_nProtocol == PROTOCOL_ED2K ) &&		// Only count ed2k sources
-             ( pSource->m_oAvailable.empty() ) )				// Only count complete sources
+             ( pSource->m_oAvailable.empty() && pSource->IsOnline() ) )	// Only count complete sources
 			
 		{
 			nCount++;
