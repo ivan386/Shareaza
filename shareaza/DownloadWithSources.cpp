@@ -192,7 +192,7 @@ void CDownloadWithSources::ClearSources()
 	}
 
 	m_pSourceFirst = m_pSourceLast = NULL;
-	m_nSourceCount = m_nEdSourceCount = m_nG1SourceCount m_nFTPSourceCount = 0;
+	m_nSourceCount = m_nEdSourceCount = m_nG1SourceCount = m_nFTPSourceCount = 0;
 	m_nG2SourceCount = m_nHTTPSourceCount = m_nBTSourceCount = 0;
 	
 	SetModified();
