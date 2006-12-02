@@ -1398,7 +1398,7 @@ void CMainWnd::LocalSystemChecks()
 						else
 							PostMessage( WM_COMMAND, ID_HELP_CONNECTIONFAIL );
 
-						Network.Disconnect();
+						PostMessage( WM_COMMAND, ID_NETWORK_DISCONNECT );
 					}
 				}
 			}
@@ -1411,7 +1411,7 @@ void CMainWnd::LocalSystemChecks()
 					if ( Network.IsAvailable() )
 					{
 						nConnectionFailCount = 0;
-						Network.Connect();
+						PostMessage( WM_COMMAND, ID_NETWORK_CONNECT );
 						theApp.Message( MSG_ERROR, _T("Internet reconnect detected- restarting network") );
 					}
 				}
