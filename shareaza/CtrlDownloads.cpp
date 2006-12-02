@@ -1214,7 +1214,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		case DOWNLOAD_COLUMN_STATUS:
 			if ( pSource->m_pTransfer != NULL )
 				strText = pSource->m_pTransfer->GetStateText( FALSE );
-			else if ( pSource->m_tAttempt )
+			else if ( pSource->m_tAttempt && pDownload->IsTrying() )
 			{
 				DWORD nTime = GetTickCount();
 				

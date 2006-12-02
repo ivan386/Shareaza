@@ -36,6 +36,7 @@
 #include "FragmentedFile.h"
 #include "BTTrackerRequest.h"
 #include "XML.h"
+#include "Network.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -101,10 +102,11 @@ void CDownload::Pause()
 
 void CDownload::Resume()
 {
-	if ( m_bComplete ) return;
+	if ( m_bComplete || !Network.IsConnected() ) return;
 	if ( ! m_bPaused ) 
 	{
-		if ( ( m_tBegan == 0 ) && ( GetSourceCount() < Settings.Downloads.MinSources ) ) FindMoreSources();
+		if ( ( m_tBegan == 0 ) && ( GetEffectiveSourceCount() < Settings.Downloads.MinSources ) ) 
+			FindMoreSources();
 		SetStartTimer();
 		return;
 	}
@@ -221,6 +223,7 @@ void CDownload::StopTrying()
 {
 	if ( m_bComplete ) return;
 	m_tBegan = 0;
+
 	m_bDownloading	= FALSE;
 
 	// if m_bTorrentRequested = TRUE, raza sends Stop
@@ -311,7 +314,7 @@ void CDownload::OnRun()
 			if ( ( ! m_bComplete ) && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )	
 			{	//If it's not complete, and we've been trying for at least 3 hours
 
-				DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + Settings.Downloads.StarveGiveUp;
+				DWORD tHoursToTry = min ( ( GetEffectiveSourceCount() + 49 ) / 50 , 9 ) + Settings.Downloads.StarveGiveUp;
 
 				if (  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 ) )
 				{	//And have had no new data for 5-14 hours	
@@ -352,10 +355,12 @@ void CDownload::OnRun()
 					{
 						if ( ValidationCanFinish() ) OnDownloaded();
 					}
-					else
+					else if ( CheckTorrentRatio() )
 					{
-						if ( CheckTorrentRatio() ) 
+						if ( m_oBTH && Network.IsListening() || Network.IsConnected() )
 							StartTransfersIfNeeded( tNow );
+						else
+							m_tBegan = 0;
 					}
 				}
 				else if ( m_pFile == NULL && ! m_bComplete && m_pTask == NULL )
@@ -374,17 +379,22 @@ void CDownload::OnRun()
 			{	// This download was probably started by a push/etc
 				SetStartTimer();
 			}
-			if ( m_oBTH )
-			{	//Torrents only try when 'ready to go'. (Reduce tracker load)
-				if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
-					SetStartTimer();
+			if ( Network.IsListening() )
+			{
+				if ( m_oBTH )
+				{	//Torrents only try when 'ready to go'. (Reduce tracker load)
+					if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
+						SetStartTimer();
+				}
+				else
+				{	//We have extra regular downloads 'trying' so when a new slot is ready, a download
+					//has sources and is ready to go.	
+					if ( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+						SetStartTimer();
+				}
 			}
 			else
-			{	//We have extra regular downloads 'trying' so when a new slot is ready, a download
-				//has sources and is ready to go.	
-				if ( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
-					SetStartTimer();
-			}
+				m_tBegan = 0;
 		}
 	}
 	
