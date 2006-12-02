@@ -21,9 +21,6 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "CoolInterface.h"
-#include "ShellIcons.h"
-#include "Skin.h"
 #include "DlgTorrentInfoSheet.h"
 #include "DlgTorrentInfoPage.h"
 
@@ -37,8 +34,6 @@ IMPLEMENT_DYNAMIC(CTorrentInfoPage, CPropertyPageAdv)
 
 BEGIN_MESSAGE_MAP(CTorrentInfoPage, CPropertyPageAdv)
 	//{{AFX_MSG_MAP(CTorrentInfoPage)
-	ON_WM_PAINT()
-	ON_WM_CTLCOLOR()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -47,7 +42,7 @@ END_MESSAGE_MAP()
 // CTorrentInfoPage property page
 
 CTorrentInfoPage::CTorrentInfoPage(UINT nIDD) : 
-	CPropertyPageAdv( nIDD ), m_nIcon( -1 )
+	CPropertyPageAdv( nIDD )
 {
 }
 
@@ -81,77 +76,9 @@ BOOL CTorrentInfoPage::OnInitDialog()
 {
 	CPropertyPageAdv::OnInitDialog();
 
-	Skin.Apply( NULL, this, 0, &m_wndToolTip );
-
 	m_pInfo = GetTorrentInfo();
 	m_pPeerID = GetPeerID();
 	
 	return TRUE;
 }
 
-void CTorrentInfoPage::OnPaint()
-{
-	CPaintDC dc( this );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
-
-	if ( m_nIcon >= 0 )
-	{
-		ShellIcons.Draw( &dc, m_nIcon, 48, 4, 4 );
-	}
-
-	for ( CWnd* pWnd = GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
-	{
-		if ( pWnd->GetStyle() & WS_VISIBLE ) continue;
-
-		TCHAR szClass[16];
-		GetClassName( pWnd->GetSafeHwnd(), szClass, 16 );
-		if ( _tcsicmp( szClass, _T("STATIC") ) ) continue;
-
-		CString str;
-		CRect rc;
-
-		pWnd->GetWindowText( str );
-		pWnd->GetWindowRect( &rc );
-		ScreenToClient( &rc );
-
-		if ( str.IsEmpty() || str.GetAt( 0 ) != '-' )
-			PaintStaticHeader( &dc, &rc, str );
-	}
-
-	dc.SetBkColor( CCoolInterface::GetDialogBkColor() );
-}
-
-void CTorrentInfoPage::PaintStaticHeader(CDC* pDC, CRect* prc, LPCTSTR psz)
-{
-	CFont* pOldFont = (CFont*)pDC->SelectObject( GetFont() );
-	CSize sz = pDC->GetTextExtent( psz );
-
-	pDC->SetBkMode( OPAQUE );
-	pDC->SetBkColor( Skin.m_crBannerBack );
-	pDC->SetTextColor( Skin.m_crBannerText );
-
-	CRect rc( prc );
-	rc.bottom	= rc.top + min( rc.Height(), 16 );
-	rc.right	= rc.left + sz.cx + 10;
-
-	pDC->ExtTextOut( rc.left + 4, rc.top + 1, ETO_CLIPPED|ETO_OPAQUE,
-		&rc, psz, static_cast< UINT >( _tcslen( psz ) ), NULL );
-
-	rc.SetRect( rc.right, rc.top, prc->right, rc.top + 1 );
-	pDC->ExtTextOut( rc.left, rc.top, ETO_OPAQUE, &rc, NULL, 0, NULL );
-
-	pDC->SelectObject( pOldFont );
-}
-
-HBRUSH CTorrentInfoPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
-{
-	HBRUSH hbr = CPropertyPageAdv::OnCtlColor( pDC, pWnd, nCtlColor );
-
-	if ( nCtlColor == CTLCOLOR_DLG || nCtlColor == CTLCOLOR_STATIC )
-	{
-		pDC->SetBkColor( Skin.m_crDialog );
-		hbr = Skin.m_brDialog;
-	}
-
-	return hbr;
-}

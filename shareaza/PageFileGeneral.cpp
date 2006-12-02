@@ -56,7 +56,6 @@ CFileGeneralPage::CFileGeneralPage() :
 	m_sSHA1(), m_sTiger(), m_sType(), m_sSize(), m_sPath(),
 	m_sModified(), m_sIndex(), m_sMD5(), m_sED2K()
 {
-	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CFileGeneralPage::~CFileGeneralPage()

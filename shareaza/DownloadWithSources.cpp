@@ -1,10 +1,6 @@
 //
 // DownloadWithSources.cpp
 //
-//	Date:			"$Date: 2006/04/04 23:48:54 $"
-//	Revision:		"$Revision: 1.31 $"
-//  Last change by:	"$Author: rolandas $"
-//
 // Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //

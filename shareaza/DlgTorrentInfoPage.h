@@ -36,17 +36,11 @@ public:
 
 	DECLARE_DYNAMIC(CTorrentInfoPage)
 
-// Helpers
-protected:
-
-private:
-	void	PaintStaticHeader(CDC* pDC, CRect* prc, LPCTSTR psz);
 
 // Dialog Data
 public:
 	//{{AFX_DATA(CTorrentInfoPage)
 	//}}AFX_DATA
-	int				m_nIcon;
 	CBTInfo*		m_pInfo;
 	Hashes::BtGuid	m_pPeerID;
 	
@@ -66,8 +60,6 @@ public:
 protected:
 	//{{AFX_MSG(CTorrentInfoPage)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnPaint();
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

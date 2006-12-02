@@ -52,7 +52,6 @@ END_MESSAGE_MAP()
 CFileSourcesPage::CFileSourcesPage() : 
 	CFilePropertiesPage(CFileSourcesPage::IDD), m_sSource()
 {
-	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CFileSourcesPage::~CFileSourcesPage()

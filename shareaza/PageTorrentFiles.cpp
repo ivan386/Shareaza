@@ -51,7 +51,6 @@ CTorrentFilesPage::CTorrentFilesPage() :
 	CTorrentInfoPage( CTorrentFilesPage::IDD ),
 	m_sName()
 {
-	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CTorrentFilesPage::~CTorrentFilesPage()

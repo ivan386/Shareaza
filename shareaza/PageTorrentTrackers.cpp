@@ -56,7 +56,6 @@ CTorrentTrackersPage::CTorrentTrackersPage() :
 	CTorrentInfoPage( CTorrentTrackersPage::IDD ),
 	m_sName(), m_sTracker(), m_sEscapedPeerID()
 {
-	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CTorrentTrackersPage::~CTorrentTrackersPage()

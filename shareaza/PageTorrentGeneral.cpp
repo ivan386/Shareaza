@@ -51,7 +51,6 @@ CTorrentGeneralPage::CTorrentGeneralPage() :
 	m_sName(), m_sComment(), m_sCreationDate(),
 	m_sCreatedBy(), m_sTorrentOther()
 {
-	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CTorrentGeneralPage::~CTorrentGeneralPage()

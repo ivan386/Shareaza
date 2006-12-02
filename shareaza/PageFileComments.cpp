@@ -50,7 +50,6 @@ CFileCommentsPage::CFileCommentsPage() :
 	CFilePropertiesPage( CFileCommentsPage::IDD ),
 	m_sComments(), m_nRating( -1 )
 {
-	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CFileCommentsPage::~CFileCommentsPage()

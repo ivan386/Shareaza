@@ -52,7 +52,6 @@ CFileSharingPage::CFileSharingPage() :
 	CFilePropertiesPage(CFileSharingPage::IDD), m_bOverride( -1 ), 
 	m_bShare( FALSE ), m_sTags()
 {
-	m_psp.dwFlags |= PSP_USETITLE;
 }
 
 CFileSharingPage::~CFileSharingPage()

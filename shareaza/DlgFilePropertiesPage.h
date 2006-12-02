@@ -49,8 +49,6 @@ public:
 	//{{AFX_DATA(CFilePropertiesPage)
 	//}}AFX_DATA
 
-	int	m_nIcon;
-
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CFilePropertiesPage)
@@ -62,8 +60,6 @@ public:
 protected:
 	//{{AFX_MSG(CFilePropertiesPage)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnPaint();
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
