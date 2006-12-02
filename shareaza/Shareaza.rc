@@ -2785,19 +2785,19 @@ BEGIN
                     IDC_STATIC,25,126,250,18
 END
 
-IDD_FILE_SHARING DIALOG  0, 0, 246, 218
+IDD_FILE_SHARING DIALOGEX 0, 0, 246, 218
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | 
     WS_THICKFRAME
 CAPTION "Sharing"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     LTEXT           "Simple Sharing",IDC_STATIC,5,40,235,11,NOT WS_VISIBLE
     CONTROL         "Share this file if the parent folder is shared",
                     IDC_SHARE_OVERRIDE_0,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,10,54,220,10
+                    WS_GROUP,10,54,220,10,WS_EX_TRANSPARENT
     CONTROL         "Override sharing setting for this file:",
                     IDC_SHARE_OVERRIDE_1,"Button",BS_AUTORADIOBUTTON,10,66,
-                    220,10
+                    220,10,WS_EX_TRANSPARENT
     CONTROL         "Make this file available to other users",IDC_FILE_SHARE,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,22,79,
                     213,12
