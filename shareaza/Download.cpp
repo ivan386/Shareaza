@@ -102,7 +102,9 @@ void CDownload::Pause()
 
 void CDownload::Resume()
 {
-	if ( m_bComplete || !Network.IsConnected() ) return;
+	if ( m_bComplete ) return;
+	if ( !Network.IsConnected() && !Network.Connect( TRUE ) ) return;
+
 	if ( ! m_bPaused ) 
 	{
 		if ( ( m_tBegan == 0 ) && ( GetEffectiveSourceCount() < Settings.Downloads.MinSources ) ) 
@@ -357,7 +359,7 @@ void CDownload::OnRun()
 					}
 					else if ( CheckTorrentRatio() )
 					{
-						if ( m_oBTH && Network.IsListening() || Network.IsConnected() )
+						if ( Network.IsConnected() )
 							StartTransfersIfNeeded( tNow );
 						else
 							m_tBegan = 0;
@@ -379,7 +381,7 @@ void CDownload::OnRun()
 			{	// This download was probably started by a push/etc
 				SetStartTimer();
 			}
-			if ( Network.IsListening() )
+			if ( Network.IsConnected() )
 			{
 				if ( m_oBTH )
 				{	//Torrents only try when 'ready to go'. (Reduce tracker load)
