@@ -652,13 +652,10 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL );
 			pG2Source->m_sServer = pCopy->m_sServer;	// Copy user-agent
 			pG2Source->m_tAttempt = pCopy->m_tAttempt;	// Set the same connection delay
-			pG2Source->m_nProtocol = pCopy->m_nProtocol;
+			pG2Source->m_nProtocol = PROTOCOL_HTTP;
 
 			m_nSourceCount++;
-			if ( pCopy->m_nProtocol == PROTOCOL_HTTP )
-				m_nHTTPSourceCount++;
-			else if ( pCopy->m_nProtocol == PROTOCOL_G2 )
-				m_nG2SourceCount++;
+			m_nHTTPSourceCount++;
 
 			pG2Source->m_pPrev = m_pSourceLast;
 			pG2Source->m_pNext = NULL;
@@ -684,6 +681,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	if ( bDeleteSource )
 	{
 		delete pSource;
+		SetModified();
 		return FALSE;
 	}
 
@@ -845,7 +843,7 @@ void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength
 				(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
 				(LPCTSTR)pSource->m_sServer, (LPCTSTR)m_sDisplayName,
 				nOffset, nOffset + nLength - 1 );
-			pSource->Remove( TRUE, TRUE );
+			pSource->Remove( TRUE, FALSE );
 		}
 		
 		pSource = pNext;
