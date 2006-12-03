@@ -56,20 +56,18 @@ static char THIS_FILE[]=__FILE__;
 // CConnection construction
 
 // Make a new CConnection object
-CConnection::CConnection()
+CConnection::CConnection() :
+	m_bInitiated( FALSE ),
+	m_bConnected( FALSE ),
+	m_tConnected( 0 ),
+	m_hSocket( INVALID_SOCKET ),
+	m_pInput( NULL ),
+	m_pOutput( NULL ),
+	m_nQueuedRun( 0 )				// DoRun sets it to 0, QueueRun sets it to 2 (do)
 {
-	// Initialize member variables with null or default values
-	m_hSocket		= INVALID_SOCKET;	// Set the actual Windows socket to the invalid value
-	m_pInput		= NULL;				// Null pointers to input and output CBuffer objects
-	m_pOutput		= NULL;
-	m_bInitiated	= FALSE;			// This connection hasn't been initiated or connected yet
-	m_bConnected	= FALSE;
-	m_tConnected	= 0;				// This will be the tick count when the connection is made
-	m_nQueuedRun	= 0;				// DoRun sets it to 0, QueueRun sets it to 2 (do)
-
-	// Zero the memory of the input and output TCPBandwidthMeter objects
-	ZeroMemory( &m_mInput, sizeof(m_mInput) );
-	ZeroMemory( &m_mOutput, sizeof(m_mOutput) );
+	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
+	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
+	ZeroMemory( &m_mOutput, sizeof( m_mOutput ) );
 }
 
 // make a destructive copy (similar to AttachTo)
@@ -83,11 +81,11 @@ CConnection::CConnection(CConnection& other)
 	, m_pInput(     other.m_pInput )		// transfered
 	, m_pOutput(    other.m_pOutput )		// transfered
 	, m_sUserAgent( other.m_sUserAgent )
-	, m_sLastHeader()
-	, m_mInput()
-	, m_mOutput()
 	, m_nQueuedRun( 0 )
 {
+	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
+	ZeroMemory( &m_mOutput, sizeof( m_mOutput ) );
+
 	// Make sure the socket isn't valid yet
 	ASSERT( m_hSocket != INVALID_SOCKET );				// Make sure the socket exists
 
