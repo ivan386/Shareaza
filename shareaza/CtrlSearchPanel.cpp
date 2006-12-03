@@ -31,6 +31,7 @@
 #include "ShellIcons.h"
 #include "XML.h"
 #include "Skin.h"
+#include "WndBaseMatch.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -291,6 +292,26 @@ void CSearchPanel::OnSchemaChange()
 		int nPos = strTitle.Find( ':' );
 		if ( nPos > 0 ) strTitle = strTitle.Mid( nPos + 1 );
 		m_boxSchema.SetCaption( strTitle );
+	}
+
+	CBaseMatchWnd* pMainSearchFrame = static_cast< CBaseMatchWnd* >(GetParent());
+	if ( pMainSearchFrame )
+	{
+		CList< CSchemaMember* > pColumns;
+
+		if ( pSchema )
+		{
+			CString strMembers = pSchema->m_sDefaultColumns;
+			for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
+			{
+				CSchemaMember* pMember = pSchema->GetNextMember( pos );
+
+				if ( strMembers.Find( _T("|") + pMember->m_sName + _T("|") ) >= 0 )
+					pColumns.AddTail( pMember );
+			}
+		}
+
+		pMainSearchFrame->m_wndList.SelectSchema( pSchema, &pColumns );
 	}
 }
 
