@@ -905,6 +905,9 @@ void CRemote::PageDownloads()
 		if ( pGroup == NULL ) continue;
 		
 		CString strStatus1, strStatus2;
+		int nSources		= pDownload->GetEffectiveSourceCount();
+		int nTotalSources	= pDownload->GetSourceCount();
+
 		Add( _T("download_id"), str );
 		Add( _T("download_filename"), pDownload->GetDisplayName() );
 		LoadString( strStatus1, IDS_STATUS_UNKNOWN );
@@ -958,7 +961,7 @@ void CRemote::PageDownloads()
 					str.Format( _T("%i:%.2i:%.2i"), tNow / 3600, ( tNow / 60 ) % 60, tNow % 60 );
 			}
 		}
-		else if ( pDownload->GetSourceCount() > 0 )
+		else if ( nSources > 0 )
 			LoadString( str, IDS_STATUS_PENDING );
 		else if ( pDownload->m_oBTH )
 		{
@@ -979,22 +982,20 @@ void CRemote::PageDownloads()
 			else if ( pDownload->m_bVerify == TS_FALSE )
 				LoadString( str, IDS_STATUS_UNVERIFIED );
 		}
-		// roo_koo_too source count fix
-		else if ( pDownload->GetSourceCount() == 1 )
+		else if ( nTotalSources == 0 )
+			LoadString( str, IDS_STATUS_NOSOURCES );
+		else if ( nSources == nTotalSources )
 		{
-			CString strSC;
-			LoadSourcesString( strSC, 1 );
-			str.Format( _T("(1 %s)"), strSC );
-		}
-		else if ( pDownload->GetSourceCount() > 1 )
-		{
-			int nSources = pDownload->GetSourceCount();
-			CString strSC;
-			LoadSourcesString( strSC, nSources );
-			str.Format( _T("(%i %s)"), nSources, strSC );
+			CString strSources;
+			LoadSourcesString( str,  nSources );
+			str.Format( _T("(%i %s)"), nSources, strSources );
 		}
 		else
-			LoadString( str, IDS_STATUS_NOSOURCES );
+		{
+			CString strSources;
+			LoadSourcesString( str,  nTotalSources, true );
+			str.Format( _T("(%i/%i %s)"), nSources, nTotalSources, strSources );
+		}
 		Add( _T("download_sources"), str );
 		Output( _T("downloadsDownload") );
 		
