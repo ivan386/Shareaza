@@ -269,8 +269,6 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 
 void CUploadTipCtrl::DrawProgressBar(CDC* pDC, CPoint* pPoint, CUploadFile* pFile)
 {
-	/*CUploadTransfer* pUpload =*/ pFile->GetActive();
-
 	CRect rcCell( pPoint->x, pPoint->y, m_sz.cx, pPoint->y + TIP_TEXTHEIGHT );
 	pPoint->y += TIP_TEXTHEIGHT;
 
