@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.3.0"
+		version="2.2.3.3"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -369,7 +369,7 @@
 		<button id="ID_HITMONITOR_SEARCH" text="Requery"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Pause"/>
-		<button id="ID_SEARCH_CLEAR" text="Clear"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Clear"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Type some words to filter the results with"/>
 		<control id="107" width="160"/>
@@ -922,6 +922,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
@@ -937,6 +938,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
@@ -3188,6 +3190,7 @@
 	<string id="20134" value="Choked"/>
 	<string id="20135" value="Next"/>
 	<string id="20136" value="Q"/>
+	<string id="20137" values="sources"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Sunday"/>
 	<string id="20201" value="Monday"/>
 	<string id="20202" value="Tuesday"/>
