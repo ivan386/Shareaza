@@ -121,7 +121,8 @@ BOOL CDownloadTransferED2K::Initiate()
 	
 	m_pHost			= m_pClient->m_pHost;
 	m_sAddress		= m_pClient->m_sAddress;
-	
+	if( m_sAddress.IsEmpty() )
+		m_sAddress	= inet_ntoa( m_pHost.sin_addr );
 	m_pClient->m_mInput.pLimit = &m_nBandwidth;
 	
 	return TRUE;
