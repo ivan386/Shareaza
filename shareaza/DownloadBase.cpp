@@ -45,6 +45,7 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadBase construction
 
 CDownloadBase::CDownloadBase()
+: m_sSearchKeyword()
 {
 	m_nCookie		= 1;
 	m_nSize			= SIZE_UNKNOWN;
@@ -133,6 +134,7 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsStoring() )
 	{
 		ar << m_sDisplayName;
+		ar << m_sSearchKeyword;
 		ar << m_nSize;
         SerializeOut( ar, m_oSHA1 );
         SerializeOut( ar, m_oTiger );
@@ -145,6 +147,10 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 
 		if ( nVersion >= 29 )
 		{
+			if ( nVersion >= 33 )
+			{
+				ar >> m_sSearchKeyword;
+			}
 			ar >> m_nSize;
 		}
 		else

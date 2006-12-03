@@ -675,7 +675,7 @@ BOOL CDownload::Save(BOOL bFlush)
 //////////////////////////////////////////////////////////////////////
 // CDownload serialize
 
-#define DOWNLOAD_SER_VERSION	32
+#define DOWNLOAD_SER_VERSION	33
 
 void CDownload::Serialize(CArchive& ar, int nVersion)
 {
@@ -726,6 +726,14 @@ void CDownload::Serialize(CArchive& ar, int nVersion)
 		if ( nVersion >= 26 ) ar >> m_nSerID;
 		
 		DownloadGroups.Link( this );
+	}
+
+	if ( nVersion == 32 )
+	{ // Compatibility for CB Branch.
+		if ( ! ar.IsBufferEmpty() )
+		{
+			ar >> m_sSearchKeyword;
+		}
 	}
 }
 
