@@ -249,53 +249,17 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength)
 
 BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 {
-	CWnd* pWnd = AfxGetMainWnd();
-
 	if ( _tcscmp( pszTopic, _T("URL") ) == 0 )
 	{
-		theApp.Message( MSG_SYSTEM, IDS_URL_RECEIVED, pszMessage );
-
-		CShareazaURL* pURL = new CShareazaURL();
-
-		if ( pURL->Parse( pszMessage ) )
-		{
-			if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
-			return TRUE;
-		}
-
-		delete pURL;
-		theApp.Message( MSG_ERROR, IDS_URL_PARSE_ERROR );
+		return CShareazaApp::OpenURL( pszMessage, TRUE );
 	}
 	else if ( _tcscmp( pszTopic, _T("TORRENT") ) == 0 )
 	{
-		theApp.Message( MSG_SYSTEM, IDS_BT_PREFETCH_FILE, pszMessage );
-
-		CBTInfo* pTorrent = new CBTInfo();
-
-		if ( pTorrent->LoadTorrentFile( pszMessage ) )
-		{
-			if ( pTorrent->HasEncodingError() ) theApp.Message( MSG_SYSTEM, _T("Possible encoding error detected while parsing torrent") );
-			CShareazaURL* pURL = new CShareazaURL( pTorrent );
-			if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
-			return TRUE;
-		}
-
-		delete pTorrent;
-		theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, pszMessage );
+		return CShareazaApp::OpenTorrent( pszMessage, TRUE );
 	}
 	else if ( _tcscmp( pszTopic, _T("COLLECTION") ) == 0 )
 	{
-		LPTSTR pszPath = new TCHAR[ _tcslen(pszMessage) + 1 ];
-		CopyMemory( pszPath, pszMessage, sizeof(TCHAR) * ( _tcslen(pszMessage) + 1 ) );
-
-		if ( pWnd->PostMessage( WM_COLLECTION, (WPARAM)pszPath ) )
-		{
-			return TRUE;
-		}
-		else
-		{
-			delete [] pszPath;
-		}
+		return CShareazaApp::OpenCollection( pszMessage, TRUE );
 	}
 
 	return FALSE;
