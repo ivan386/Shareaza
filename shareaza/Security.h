@@ -169,5 +169,6 @@ public:
 extern CMessageFilter MessageFilter;
 extern CAdultFilter AdultFilter;
 extern CSecurity Security;
+extern CSecurity FailedNeighbours;
 
 #endif // !defined(AFX_SECURITY_H__85BE0E66_93D0_44B1_BEE1_E2C3C81CB8AF__INCLUDED_)

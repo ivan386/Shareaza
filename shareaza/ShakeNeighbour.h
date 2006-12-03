@@ -55,6 +55,18 @@ protected:
 									//
 
 	// Set to true when we have received the following handshake headers
+	BOOL        m_bG1Send;          // The remote computer is going to send us Gnutella1 packets
+									// It Did not send any "Content-Type: " or sent us a header like one of these
+									//
+									//    Content-Type: application/x-gnutella-packets
+									//    
+									//
+	BOOL        m_bG1Accept;        // The remote computer accepts Gnutella2 packets
+									// It Did not send any "Accept: " or sent us a header like one of these
+									//
+									//    Accept: application/x-gnutella-packets
+									//
+									//
 	BOOL        m_bG2Send;          // The remote computer is going to send us Gnutella2 packets
 									// It sent us a header like one of these
 									//
@@ -108,7 +120,7 @@ protected:
 public:
 
 	// Connect, disconnect, and copy
-	virtual BOOL ConnectTo(IN_ADDR* pAddress, WORD nPost, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE); // Connect to an ip address and port number
+	virtual BOOL ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE); // Connect to an ip address and port number
 	virtual void AttachTo(CConnection* pConnection); // Copy the values from the given CConnection object into the CConnection core of this one
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED ); // Close the socket and log the reason the connection didn't work
 

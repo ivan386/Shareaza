@@ -256,7 +256,7 @@ CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, 
 		return NULL;
 
 	// Don't add own firewalled IPs
-	if ( Network.IsFirewalledAddress( &pAddress->S_un.S_addr, TRUE ) ) 
+	if ( Network.IsFirewalledAddress( &pAddress->S_un.S_addr, TRUE, TRUE ) ) 
 		return NULL;
 
 	// Don't add own IP if set not to. (Above check may not run if not ignoring local IPs)
@@ -264,7 +264,11 @@ CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, 
 		return NULL;
 
 	// Check security settings, don't add blocked IPs
-	if ( Security.IsDenied( pAddress ) )
+	if ( FailedNeighbours.IsDenied( pAddress ) || Security.IsDenied( pAddress ) )
+		return NULL;
+
+	// check against IANA Reserved address.
+	if ( Network.IsReserved( pAddress ) )
 		return NULL;
 
 	// Try adding it to the cache. (duplicates will be rejected)
@@ -306,7 +310,7 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor)
 		 return TRUE;
 	
 	// Don't add own firewalled IPs
-	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) ) 
+	if ( Network.IsFirewalledAddress( &nAddress, TRUE, TRUE ) ) 
 		return TRUE;
 
 	// Don't add own IP if set not to. (Above check may not run if not ignoring local IPs)
@@ -314,7 +318,11 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor)
 		 return TRUE;
 
 	// Check security settings, don't add blocked IPs
-	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
+	if ( FailedNeighbours.IsDenied( (IN_ADDR*)&nAddress ) || Security.IsDenied( (IN_ADDR*)&nAddress ) )
+		 return TRUE;
+
+	// check against IANA Reserved address.
+	if ( Network.IsReserved( (IN_ADDR*)&nAddress ) )
 		 return TRUE;
 
 	// Try adding it to the cache. (duplicates will be rejected)
@@ -958,9 +966,12 @@ void CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor)
 	
 	if ( pszVendor != NULL )
 	{
-		if ( m_pVendor == NULL || m_pVendor->m_sCode != pszVendor )
+		CString sVendorCode(pszVendor);
+		sVendorCode.Trim();
+
+		if ( ( m_pVendor == NULL || m_pVendor->m_sCode != sVendorCode ) && sVendorCode.GetLength() != 0 )
 		{
-			m_pVendor = VendorCache.Lookup( pszVendor );
+			m_pVendor = VendorCache.Lookup( (LPCTSTR)sVendorCode );
 		}
 	}
 }

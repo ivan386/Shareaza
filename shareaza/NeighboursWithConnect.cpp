@@ -1339,4 +1339,11 @@ void CNeighboursWithConnect::Maintain()
 			if ( pNewest != NULL ) pNewest->Close(); // Close the connection
 		}
 	}
+
+	// If connected to Enough Ultrappeers and Hubs, then clear HandshakeBan list.
+	if (	( !Settings.Gnutella1.EnableToday || nCount[PROTOCOL_G1][ntHub] >= nLimit[PROTOCOL_G1][ntHub] ) &&
+			( !Settings.Gnutella2.EnableToday || nCount[PROTOCOL_G2][ntHub] >= nLimit[PROTOCOL_G2][ntHub] ) )
+	{
+		FailedNeighbours.Clear();
+	}
 }
