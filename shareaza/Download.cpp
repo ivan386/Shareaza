@@ -66,7 +66,6 @@ CDownload::CDownload()
 , m_bDownloading(FALSE)
 , m_bTempPaused(FALSE)
 {
-	m_bTempPaused	= FALSE;
 	DownloadGroups.Link( this );
 }
 
@@ -318,7 +317,7 @@ void CDownload::OnRun()
 
 	if ( ! m_bTempPaused )
 	{
-		if ( m_bDiskFull  ) Pause( False );
+		if ( m_bDiskFull  ) Pause( FALSE );
 		else if ( IsTrying() || IsSeeding() )
 		{	//This download is trying to download
 

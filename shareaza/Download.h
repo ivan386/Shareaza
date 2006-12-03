@@ -57,7 +57,7 @@ private:
 								// You should count the transfers if you need a 100% current answer.
 // Operations
 public:
-	void        	Pause( BOOL bRealPause = TRUE );
+	void        	Pause(BOOL bRealPause = TRUE);
 	void        	Resume();
 	void        	Remove(BOOL bDelete = FALSE);
 	void        	Boost();
