@@ -3535,11 +3535,13 @@ Other:
 			<control />
 		</dialog>
 
-		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Warteschlange Eigenschaften">
+		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Warteschlange Eigenschaften">
 			<control caption="_Name:"/>
 			<control />
 			<control caption="_Kriterium:"/>
 			<control caption="Nur unvollständige Dateien"/>
+			<control caption="Nur Dateien der Bibliothek"/>
+			<control caption="Unvollständige und Dateien der Bibliothek"/>
 			<control caption="Minimale Dateigröße:"/>
 			<control />
 			<control caption="Maximale Dateigröße:"/>
