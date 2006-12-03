@@ -25,7 +25,7 @@
 
 // Note: ftp active mode code was commented out
 
-#define FTP_RETRY_DELAY		30000	// 30s
+#define FTP_RETRY_DELAY		30	// 30s
 
 class CDownloadTransferFTP : public CDownloadTransfer
 {
