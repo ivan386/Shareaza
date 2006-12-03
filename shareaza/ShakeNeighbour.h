@@ -1,7 +1,7 @@
 //
 // ShakeNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -61,7 +61,7 @@ protected:
 									//    Content-Type: application/x-gnutella-packets
 									//    
 									//
-	BOOL        m_bG1Accept;        // The remote computer accepts Gnutella2 packets
+	BOOL        m_bG1Accept;        // The remote computer accepts Gnutella1 packets
 									// It Did not send any "Accept: " or sent us a header like one of these
 									//
 									//    Accept: application/x-gnutella-packets

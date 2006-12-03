@@ -1,10 +1,6 @@
 //
 // Network.h
 //
-//	Date:			"$Date: 2006/03/22 14:15:39 $"
-//	Revision:		"$Revision: 1.14 $"
-//  Last change by:	"$Author: rolandas $"
-//
 // Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //

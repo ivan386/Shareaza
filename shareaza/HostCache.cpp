@@ -1,11 +1,7 @@
 //
 // HostCache.cpp
 //
-//	Date:			"$Date: 2006/04/04 23:36:57 $"
-//	Revision:		"$Revision: 1.19 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -966,12 +962,12 @@ void CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor)
 	
 	if ( pszVendor != NULL )
 	{
-		CString sVendorCode(pszVendor);
-		sVendorCode.Trim();
+		CString strVendorCode(pszVendor);
+		strVendorCode.Trim();
 
-		if ( ( m_pVendor == NULL || m_pVendor->m_sCode != sVendorCode ) && sVendorCode.GetLength() != 0 )
+		if ( ( m_pVendor == NULL || m_pVendor->m_sCode != strVendorCode ) && strVendorCode.GetLength() != 0 )
 		{
-			m_pVendor = VendorCache.Lookup( (LPCTSTR)sVendorCode );
+			m_pVendor = VendorCache.Lookup( (LPCTSTR)strVendorCode );
 		}
 	}
 }
