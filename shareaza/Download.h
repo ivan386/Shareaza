@@ -45,6 +45,7 @@ public:
 	int			m_nSaveCookie;
 	int			m_nGroupCookie;
 private:
+	BOOL		m_bTempPaused;
 	BOOL		m_bPaused;
 	BOOL		m_bBoosted;
 	BOOL		m_bShared;
@@ -56,7 +57,7 @@ private:
 								// You should count the transfers if you need a 100% current answer.
 // Operations
 public:
-	void        	Pause();
+	void        	Pause( BOOL bRealPause = TRUE );
 	void        	Resume();
 	void        	Remove(BOOL bDelete = FALSE);
 	void        	Boost();
@@ -64,7 +65,7 @@ public:
 	BOOL        	Rename(LPCTSTR pszName);
 	void        	SetStartTimer();
 	BOOL        	IsStarted() const;		//Has the download actually downloaded anything?
-	virtual BOOL	IsPaused() const;
+	virtual BOOL	IsPaused( BOOL bRealState = FALSE ) const;
 	virtual BOOL	IsDownloading() const;	//Is the download receiving data?
 	virtual BOOL	IsMoving() const;
 	virtual BOOL	IsCompleted() const;

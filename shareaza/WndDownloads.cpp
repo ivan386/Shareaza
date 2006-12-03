@@ -653,7 +653,7 @@ void CDownloadsWnd::OnDownloadsPause()
 		
 		if ( pDownload->m_bSelected )
 		{
-			if ( ! pDownload->IsPaused() && ! pDownload->IsMoving() ) pDownload->Pause();
+			if ( ! pDownload->IsPaused() && ! pDownload->IsMoving() ) pDownload->Pause( TRUE );
 		}
 	}
 	

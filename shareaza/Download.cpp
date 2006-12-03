@@ -64,7 +64,9 @@ CDownload::CDownload()
 , m_tSaved(0)
 , m_tBegan(0)
 , m_bDownloading(FALSE)
+, m_bTempPaused(FALSE)
 {
+	m_bTempPaused	= FALSE;
 	DownloadGroups.Link( this );
 }
 
@@ -86,15 +88,23 @@ CDownload::~CDownload()
 //////////////////////////////////////////////////////////////////////
 // CDownload control : pause
 
-void CDownload::Pause()
+void CDownload::Pause( BOOL bRealPause )
 {
 	if ( m_bComplete || m_bPaused ) return;
-	
-	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
-	
-	StopTrying();
 
-	m_bPaused = TRUE;
+	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
+	if ( !bRealPause ) 
+	{
+		StopTrying();
+		m_bTempPaused = TRUE;
+		return;
+	}
+	else
+	{
+		StopTrying();
+		m_bTempPaused = TRUE;
+		m_bPaused = TRUE;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -104,8 +114,7 @@ void CDownload::Resume()
 {
 	if ( m_bComplete ) return;
 	if ( !Network.IsConnected() && !Network.Connect( TRUE ) ) return;
-
-	if ( ! m_bPaused ) 
+	if ( ! m_bTempPaused ) 
 	{
 		if ( ( m_tBegan == 0 ) && ( GetEffectiveSourceCount() < Settings.Downloads.MinSources ) ) 
 			FindMoreSources();
@@ -124,6 +133,7 @@ void CDownload::Resume()
 	}
 	
 	m_bPaused				= FALSE;
+	m_bTempPaused			= FALSE;
 	m_bDiskFull				= FALSE;
 	m_tReceived				= GetTickCount();
 	m_bTorrentTrackerError	= FALSE;
@@ -263,9 +273,9 @@ BOOL CDownload::IsStarted() const
 	return ( GetVolumeComplete() > 0 );
 }
 
-BOOL CDownload::IsPaused() const
+BOOL CDownload::IsPaused( BOOL bRealState ) const
 {
-	return m_bPaused;
+	return ( bRealState ? m_bPaused : m_bTempPaused );
 }
 
 BOOL CDownload::IsDownloading() const
@@ -306,9 +316,9 @@ void CDownload::OnRun()
 	DWORD tNow = GetTickCount();
 	BOOL bDownloading = FALSE;
 
-	if ( ! m_bPaused )
+	if ( ! m_bTempPaused )
 	{
-		if ( m_bDiskFull  ) Pause();
+		if ( m_bDiskFull  ) Pause( False );
 		else if ( IsTrying() || IsSeeding() )
 		{	//This download is trying to download
 
@@ -710,6 +720,7 @@ void CDownload::Serialize(CArchive& ar, int nVersion)
 	{
 		ar >> m_bExpanded;
 		ar >> m_bPaused;
+		m_bTempPaused = m_bPaused;
 		ar >> m_bBoosted;
 		if ( nVersion >= 14 ) ar >> m_bShared;
 		if ( nVersion >= 26 ) ar >> m_nSerID;

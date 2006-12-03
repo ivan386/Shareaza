@@ -59,7 +59,7 @@ public:
 protected:
 	virtual BOOL	IsCompleted() const = 0;
 	virtual BOOL	IsMoving() const = 0;
-	virtual BOOL	IsPaused() const = 0;
+	virtual BOOL	IsPaused( BOOL bRealState = FALSE ) const = 0;
 	virtual BOOL	IsTrying() const = 0;
 	void			GenerateDiskName();
 	virtual void	Serialize(CArchive& ar, int nVersion);

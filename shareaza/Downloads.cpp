@@ -342,7 +342,7 @@ void CDownloads::PauseAll()
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		GetNext( pos )->Pause();
+		GetNext( pos )->Pause( FALSE );
 	}
 }
 
