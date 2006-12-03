@@ -22,7 +22,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.3.0"
+		version="2.2.3.3"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -374,7 +374,7 @@ right quote	&#147;
 		<button id="ID_HITMONITOR_SEARCH" text="Pakartoti užklausą"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Pauzė"/>
-		<button id="ID_SEARCH_CLEAR" text="Valyti"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Valyti"/>
 		<rightAlign/>
 		<label text="Filtras:" tip="Įrašykite atrankos filtro žodžius"/>
 		<control id="107" width="160"/>
@@ -927,6 +927,7 @@ right quote	&#147;
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Peržiūra"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Nuotolinė peržiūra"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="P_eržvelgti įvertinimus"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Tęsti"/>
@@ -942,6 +943,7 @@ right quote	&#147;
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Peržiūra"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Nuotolinė peržiūra"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Kopijos peržiūra"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Įt_raukti į grojaraštį"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="P_eržvelgti įvertinimus"/>
@@ -2275,6 +2277,7 @@ right quote	&#147;
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Perkelti pasirinktą failą(-us) aukštyn, suteikiant didesnį prioritetą."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Pristabdyti pasirinkto failo(-ų) atsisiuntimą."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Įvertinti pasirinktą failą."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Peržiūrėti pasirinkto siunčiamo failo miniatūrą."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Tęsti pasirinkto failo(-ų) atsisiuntimą."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Keisti parsisiuntimų nuostatas..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Bendrinti šį dalinai parsisiųstą failą."/>
@@ -3195,6 +3198,7 @@ right quote	&#147;
 	<string id="20134" value="Apkrautas"/>
 	<string id="20135" value="Sekantis"/>
 	<string id="20136" value="Eil."/>
+	<string id="20137" values="šaltinių"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Sekmadienis"/>
 	<string id="20201" value="Pirmadienis"/>
 	<string id="20202" value="Antradienis"/>

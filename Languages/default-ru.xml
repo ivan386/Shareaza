@@ -11,7 +11,7 @@
 		author="dAbserver"
 		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
-		version="2.2.3.0"
+		version="2.2.3.3"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -899,6 +899,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Удаленный просмотр"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="П_росмотр оценок"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Возобновить"/>
@@ -914,6 +915,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Удаленный просмотр"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Предв. просмотр _копии"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="П_росмотр оценок"/>
@@ -2255,6 +2257,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Переместить помеченную загрузку(и) вверх по списку приоритета."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Приостановить загрузку помеченного файла(ов)."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Оценить помеченную загрузку."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Удаленный просмотр эскиза выбранного файла."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Возобновить загрузку помеченного файла(ов)."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Конфигурировать установки загрузок..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Разделять этот частично загруженный файл с другими пользователями."/>
@@ -3175,6 +3178,7 @@
 	<string id="20134" value="Перегружен"/>
 	<string id="20135" value="Следующий"/>
 	<string id="20136" value="Оч."/>
+	<string id="20137" values="источников"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Воскресенье"/>
 	<string id="20201" value="Понедельник"/>
 	<string id="20202" value="Вторник"/>

@@ -2270,6 +2270,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Move the selected download(s) up the priority list."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Pause the selected download(s)."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Rate the selected download."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Resume the selected download(s)."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Configure download settings..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>
