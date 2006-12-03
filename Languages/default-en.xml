@@ -3191,7 +3191,7 @@
 	<string id="20134" value="Choked"/>
 	<string id="20135" value="Next"/>
 	<string id="20136" value="Q"/>
-	<string id="20137" values="sources"/><!-- 3/10 sources, for e.g. -->
+	<string id="20137" value="sources"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Sunday"/>
 	<string id="20201" value="Monday"/>
 	<string id="20202" value="Tuesday"/>

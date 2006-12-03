@@ -3178,7 +3178,7 @@
 	<string id="20134" value="Перегружен"/>
 	<string id="20135" value="Следующий"/>
 	<string id="20136" value="Оч."/>
-	<string id="20137" values="источников"/><!-- 3/10 sources, for e.g. -->
+	<string id="20137" value="источников"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Воскресенье"/>
 	<string id="20201" value="Понедельник"/>
 	<string id="20202" value="Вторник"/>

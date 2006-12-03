@@ -3198,7 +3198,7 @@ right quote	&#147;
 	<string id="20134" value="Apkrautas"/>
 	<string id="20135" value="Sekantis"/>
 	<string id="20136" value="Eil."/>
-	<string id="20137" values="šaltinių"/><!-- 3/10 sources, for e.g. -->
+	<string id="20137" value="šaltinių"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Sekmadienis"/>
 	<string id="20201" value="Pirmadienis"/>
 	<string id="20202" value="Antradienis"/>
