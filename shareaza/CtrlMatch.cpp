@@ -211,7 +211,10 @@ void CMatchCtrl::SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumn
 		for ( POSITION pos = m_pColumns.GetHeadPosition() ; pos ; nColumn++ )
 		{
 			CSchemaMember* pMember = m_pColumns.GetNext( pos );
-			InsertColumn( nColumn, pMember->m_sTitle, pMember->m_nColumnAlign, pMember->m_nColumnWidth );
+			if ( !pMember->m_bHidden )
+				InsertColumn( nColumn, pMember->m_sTitle, pMember->m_nColumnAlign, pMember->m_nColumnWidth );
+			else
+				nColumn--;
 		}
 	}
 	

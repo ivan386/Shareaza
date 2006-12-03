@@ -37,19 +37,19 @@ static char THIS_FILE[]=__FILE__;
 // CSchemaMember construction
 
 CSchemaMember::CSchemaMember(CSchema* pSchema)
+: m_pSchema(pSchema)
+, m_bNumeric(FALSE)
+, m_bIndexed(FALSE)
+, m_bSearched(FALSE)
+, m_nMinOccurs(0)
+, m_nMaxOccurs(0)
+, m_nMaxLength(128)
+, m_bPrompt(FALSE)
+, m_nFormat(smfNone)
+, m_nColumnWidth(60)
+, m_nColumnAlign(LVCFMT_LEFT)
+, m_bHidden(FALSE)
 {
-	m_pSchema		= pSchema;
-	m_bNumeric		= FALSE;
-	m_bIndexed		= FALSE;
-	m_bSearched		= FALSE;
-	m_nMinOccurs	= 0;
-	m_nMaxOccurs	= 0;
-	m_nMaxLength	= 128;
-    
-	m_bPrompt		= FALSE;
-	m_nFormat		= smfNone;
-	m_nColumnWidth	= 60;
-	m_nColumnAlign	= LVCFMT_LEFT;
 }
 
 CSchemaMember::~CSchemaMember()
@@ -298,7 +298,14 @@ BOOL CSchemaMember::LoadDisplay(CXMLElement* pDisplay)
 	CString strAlign	= pDisplay->GetAttributeValue( _T("columnAlign") );
 	CString strColumn	= pDisplay->GetAttributeValue( _T("defaultColumn") );
 	CString strSearch	= pDisplay->GetAttributeValue( _T("prompt") );
-	
+	CString strHidden	= pDisplay->GetAttributeValue( _T("hidden") );	
+
+	if ( strHidden.CompareNoCase( _T("true") ) == 0 )
+	{
+		m_bHidden = TRUE;
+		strSearch = strColumn = L"false";
+	}
+
 	if ( strFormat.CompareNoCase( _T("timeMMSS") ) == 0 )
 		m_nFormat = smfTimeMMSS;
 	else if ( strFormat.CompareNoCase( _T("timeHHMMSSdec") ) == 0 )

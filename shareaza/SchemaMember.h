@@ -45,6 +45,7 @@ public:
 	BOOL		m_bNumeric;
 	BOOL		m_bIndexed;
 	BOOL		m_bSearched;
+	BOOL		m_bHidden;
 public:
 	int			m_nMinOccurs;
 	int			m_nMaxOccurs;

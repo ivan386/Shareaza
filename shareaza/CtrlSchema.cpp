@@ -136,7 +136,7 @@ void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
 		
-		if ( bPromptOnly && ! pMember->m_bPrompt ) continue;
+		if ( bPromptOnly && ! pMember->m_bPrompt || pMember->m_bHidden ) continue;
 		
 		CWnd* pControl = NULL;
 		CRect rc;

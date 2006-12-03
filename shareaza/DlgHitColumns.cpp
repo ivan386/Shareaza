@@ -99,21 +99,24 @@ void CSchemaColumnsDlg::OnSelChangeSchemas()
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
 
-		LV_ITEM pItem = {};
-		pItem.mask		= LVIF_TEXT|LVIF_PARAM;
-		pItem.iItem		= m_wndColumns.GetItemCount();
-		pItem.lParam	= (LPARAM)pMember;
-		pItem.pszText	= (LPTSTR)(LPCTSTR)pMember->m_sTitle;
-		pItem.iItem		= m_wndColumns.InsertItem( &pItem );
-		pItem.mask		= LVIF_TEXT;
-		pItem.iSubItem	= 1;
-		pItem.pszText	= (LPTSTR)(LPCTSTR)pMember->m_sType;
-		m_wndColumns.SetItem( &pItem );
-
-		if ( strMembers.Find( _T("|") + pMember->m_sName + _T("|") ) >= 0 )
+		if ( !pMember->m_bHidden )
 		{
-			m_wndColumns.SetItemState( pItem.iItem, INDEXTOSTATEIMAGEMASK( 2 ),
-				LVIS_STATEIMAGEMASK );
+			LV_ITEM pItem = {};
+			pItem.mask		= LVIF_TEXT|LVIF_PARAM;
+			pItem.iItem		= m_wndColumns.GetItemCount();
+			pItem.lParam	= (LPARAM)pMember;
+			pItem.pszText	= (LPTSTR)(LPCTSTR)pMember->m_sTitle;
+			pItem.iItem		= m_wndColumns.InsertItem( &pItem );
+			pItem.mask		= LVIF_TEXT;
+			pItem.iSubItem	= 1;
+			pItem.pszText	= (LPTSTR)(LPCTSTR)pMember->m_sType;
+			m_wndColumns.SetItem( &pItem );
+
+			if ( strMembers.Find( _T("|") + pMember->m_sName + _T("|") ) >= 0 )
+			{
+				m_wndColumns.SetItemState( pItem.iItem, INDEXTOSTATEIMAGEMASK( 2 ),
+					LVIS_STATEIMAGEMASK );
+			}
 		}
 	}
 }
@@ -157,7 +160,7 @@ BOOL CSchemaColumnsDlg::LoadColumns(CSchema* pSchema, CList< CSchemaMember* >* p
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
-		if ( strMembers.Find( _T("|") + pMember->m_sName + _T("|") ) >= 0 )
+		if ( !pMember->m_bHidden && strMembers.Find( _T("|") + pMember->m_sName + _T("|") ) >= 0 )
 			pColumns->AddTail( pMember );
 	}
 
@@ -203,12 +206,18 @@ CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchema* pSchema, CList< CSchemaMember
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; nID++ )
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
-		UINT nFlags = MF_STRING;
 
-		if ( nID > 1000 && ( ( nID - 1000 ) % 16 ) == 0 ) nFlags |= MF_MENUBREAK;
-		if ( pColumns && pColumns->Find( pMember ) != NULL ) nFlags |= MF_CHECKED;
+		if ( !pMember->m_bHidden )
+		{
+			UINT nFlags = MF_STRING;
 
-		pMenu->AppendMenu( nFlags, nID, pMember->m_sTitle );
+			if ( nID > 1000 && ( ( nID - 1000 ) % 16 ) == 0 ) nFlags |= MF_MENUBREAK;
+			if ( pColumns && pColumns->Find( pMember ) != NULL ) nFlags |= MF_CHECKED;
+
+			pMenu->AppendMenu( nFlags, nID, pMember->m_sTitle );
+		}
+		else
+			nID--;
 	}
 
 	return pMenu;
@@ -230,6 +239,11 @@ BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchema* pSchema, CList< CSchemaMembe
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
 
+		if ( pMember->m_bHidden )
+		{
+			nID--;
+			continue;
+		}
 		if ( nID == nToggleID )
 		{
 			if ( ( pos = pTarget->Find( pMember ) ) != 0 )
