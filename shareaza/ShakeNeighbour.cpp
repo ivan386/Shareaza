@@ -376,7 +376,7 @@ void CShakeNeighbour::SendMinimalHeaders()
 		{
 			// Reply by saying we accept them also, and will be sending them
 			m_pOutput->Print( "Accept: application/x-gnutella-packets\r\n" );
-			m_pOutput->Print( "Content-Type: application/x-gnutella\r\n" );
+			m_pOutput->Print( "Content-Type: application/x-gnutella-packets\r\n" );
 		}
 	}
 }
