@@ -49,16 +49,6 @@ CDownloadBase::CDownloadBase()
 {
 	m_nCookie		= 1;
 	m_nSize			= SIZE_UNKNOWN;
-//	m_bSHA1			= FALSE;
-//	m_bSHA1Trusted	= FALSE;
-//	m_bTiger		= FALSE;
-//	m_bTigerTrusted	= FALSE;
-//	m_bMD5			= FALSE;
-//	m_bMD5Trusted	= FALSE;
-//	m_bED2K			= FALSE;
-//	m_bED2KTrusted	= FALSE;
-//	m_bBTH			= FALSE;
-//	m_bBTHTrusted	= FALSE;
 	m_pTask			= NULL;
 }
 
