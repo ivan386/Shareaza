@@ -45,7 +45,7 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // Service functions
 
-inline void MakePORTArgs (const SOCKADDR_IN& host, CString& strValue)
+inline void MakePORTArgs(const SOCKADDR_IN& host, CString& strValue)
 {
 	strValue.Format( _T("%u,%u,%u,%u,%hu,%hu"),
 		unsigned( host.sin_addr.S_un.S_un_b.s_b1 ),
@@ -56,7 +56,7 @@ inline void MakePORTArgs (const SOCKADDR_IN& host, CString& strValue)
 		(host.sin_port >> 8) & 0xff );
 }
 
-inline bool ParsePASVArgs (const CString& args, SOCKADDR_IN& host)
+inline bool ParsePASVArgs(const CString& args, SOCKADDR_IN& host)
 {
 	CString strValue (args);
 	int begin = strValue.Find (_T('('));
@@ -102,7 +102,7 @@ inline bool ParsePASVArgs (const CString& args, SOCKADDR_IN& host)
 	return true;
 }
 
-inline bool FTPisOK( const CString& str )
+inline bool FTPisOK(const CString& str)
 {
 	return ( str.GetLength () == 3 && str [0] == _T('2') );
 }
@@ -110,14 +110,14 @@ inline bool FTPisOK( const CString& str )
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferFTP construction
 
-CDownloadTransferFTP::CDownloadTransferFTP (CDownloadSource* pSource) :
-	CDownloadTransfer ( pSource, PROTOCOL_FTP ),
-	m_FtpState (ftpConnecting),
-	m_tRequest (0),
-	m_bPassive (TRUE /* FALSE */),
-	m_bSizeChecked (FALSE)
+CDownloadTransferFTP::CDownloadTransferFTP(CDownloadSource* pSource) :
+	CDownloadTransfer( pSource, PROTOCOL_FTP ),
+	m_FtpState( ftpConnecting ),
+	m_tRequest( 0 ),
+	m_bPassive( TRUE /* FALSE */ ),
+	m_bSizeChecked( FALSE )
 {
-	m_RETR.SetOwner (this);
+	m_RETR.SetOwner( this );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -147,7 +147,7 @@ BOOL CDownloadTransferFTP::Initiate()
 	else
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CONNECT_ERROR, (LPCTSTR)m_sAddress );
-		Close( TS_UNKNOWN );
+		Close();
 		return FALSE;
 	}
 }
@@ -221,9 +221,10 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 	if ( m_pInput == NULL || m_pOutput == NULL )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CLOSING_EXTRA, (LPCTSTR)m_sAddress );
-		Close( TS_TRUE );
+		Close();
 		return FALSE;
-	} else if ( m_FtpState == ftpConnecting )
+	}
+	else if ( m_FtpState == ftpConnecting )
 	{
 		// Handshaking
 		m_tRequest = GetTickCount();
@@ -250,9 +251,10 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 	}
 	else
 	{
-		if ( m_pSource != NULL ) m_pSource->SetAvailableRanges( NULL );		
+		if ( m_pSource != NULL )
+			m_pSource->SetAvailableRanges( NULL );		
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
-		Close( TS_TRUE );
+		Close();
 		return FALSE;
 	}
 }
@@ -289,8 +291,9 @@ BOOL CDownloadTransferFTP::OnRun()
 		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
 		{
 			theApp.Message( MSG_ERROR, IDS_CONNECTION_TIMEOUT_CONNECT, (LPCTSTR)m_sAddress );
-			if ( m_pSource != NULL ) m_pSource->PushRequest();
-			Close( TS_UNKNOWN );
+			if ( m_pSource != NULL )
+				m_pSource->PushRequest();
+			Close();
 			return FALSE;
 		}
 		break;
@@ -300,7 +303,7 @@ BOOL CDownloadTransferFTP::OnRun()
 		if ( tNow - m_tRequest > Settings.Connection.TimeoutHandshake )
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_REQUEST_TIMEOUT, (LPCTSTR)m_sAddress );
-			Close( TS_UNKNOWN );
+			Close();
 			return FALSE;
 		}
 		break;
@@ -312,7 +315,7 @@ BOOL CDownloadTransferFTP::OnRun()
 		if ( tNow - m_mInput.tLast > Settings.Connection.TimeoutTraffic * 2 )
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_TRAFFIC_TIMEOUT, (LPCTSTR)m_sAddress );
-			Close( TS_TRUE );
+			Close();
 			return FALSE;
 		}
 		break;
@@ -321,7 +324,7 @@ BOOL CDownloadTransferFTP::OnRun()
 		if ( tNow - m_tRequest > 1000 )
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
-			Close( TS_TRUE );
+			Close();
 			return FALSE;
 		}
 		break;
@@ -375,78 +378,81 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 
 	switch( m_FtpState )
 	{
-		case ftpConnecting:
-			if ( strHeader == _T("220") ) // Connected
+	case ftpConnecting:
+		if ( strHeader == _T("220") )			// Connected
+		{
+			m_LIST.m_sUserAgent = m_RETR.m_sUserAgent = m_sUserAgent =
+				m_pSource->m_sServer = strValue;
+			if ( IsAgentBlocked() )
 			{
-			m_LIST.m_sUserAgent = m_RETR.m_sUserAgent = m_sUserAgent = strValue;
-				if ( IsAgentBlocked() )
-				{
-					Close( TS_FALSE );
-					return FALSE;
-				}
+				// Ban
+				Close( TS_FALSE );
+				return FALSE;
+			}
 			// Sending login
-				m_FtpState = ftpUSER;
+			m_FtpState = ftpUSER;
 			SetState( dtsRequesting );
 			return SendCommand();
-			}
+		}
 		break;
 
-		case ftpUSER:
-		if ( strHeader == _T("331") )	// Access allowed
-			{		
+	case ftpUSER:
+		if ( strHeader == _T("331") )			// Access allowed
+		{		
 			// Sending password
-				m_FtpState = ftpPASS;
+			m_FtpState = ftpPASS;
 			SetState( dtsRequesting );
 			return SendCommand ();
-			} else 
-		if ( FTPisOK( strHeader ) )		// Extra headers, may be some 220
+		}
+		else if ( FTPisOK( strHeader ) )		// Extra headers, may be some 220
 			// Bypass
-				return TRUE;
-			// Wrong login or other errors
+			return TRUE;
+		// Wrong login or other errors
 		// 530: This FTP server is anonymous only.
 		break;
 
-		case ftpPASS:
-		if ( strHeader == _T("230") )	// Logged in
-			{
+	case ftpPASS:
+		if ( strHeader == _T("230") )			// Logged in
+		{
 			// Downloading
 			m_FtpState = ftpDownloading;
 			SetState( dtsRequesting );
-				return StartNextFragment();
-		} else 
-		if ( FTPisOK( strHeader ) )		// Extra headers
+			return StartNextFragment();
+		}
+		else if ( FTPisOK( strHeader ) )		// Extra headers
 			// Bypass
 			return TRUE;
-			// Wrong password or other errors
+		// Wrong password or other errors
 		// 530: Login incorrect.
 		break;
 
 	case ftpSIZE_TYPE:
-		if ( strHeader == _T("200") )	// Type I setted
-			{
+		if ( strHeader == _T("200") )			// Type I setted
+		{
 			// Getting file size
 			m_FtpState = ftpSIZE;
 			SetState( dtsRequesting );
 			return SendCommand ();
-			} else
-		if ( FTPisOK( strHeader ) )		// Extra headers, may be some 230
+		}
+		else if ( FTPisOK( strHeader ) )		// Extra headers, may be some 230
 			// Bypass
-				return TRUE;
+			return TRUE;
 		break;
 
 	case ftpSIZE:
-		if ( strHeader == _T("213") )	// SIZE reply
-			{
+		if ( strHeader == _T("213") )			// SIZE reply
+		{
 			QWORD size = _tstoi64( strValue );
 			if ( size <= 0 )
 			{
 				// Wrong SIZE reply format
 				ASSERT( FALSE );
-				Close( TS_TRUE );
+				// Ban
+				Close( TS_FALSE );
 				return FALSE;
 			}
 			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
-			m_pDownload->m_nSize = size;
+				m_pDownload->m_nSize = size;
 			else
 			{
 				if ( m_pDownload->m_nSize != size )
@@ -454,56 +460,60 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 					// File size changed!
 					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE,
 						(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
+					// Ban
 					Close( TS_FALSE );
 					return FALSE;
 				}
 			}
 			m_bSizeChecked = TRUE;
+
 			// Downloading
 			m_FtpState = ftpDownloading;
 			SetState( dtsRequesting );
 			return StartNextFragment();
-		} else 
-		if ( FTPisOK( strHeader ) )		// Extra headers, may be some 230
+		}
+		else if ( FTPisOK( strHeader ) )		// Extra headers, may be some 230
+		{
 			// Bypass
 			return TRUE;
-		else
-		if ( strHeader == _T("550") )	// File unavailable
+		}
+		else if ( strHeader == _T("550") )		// File unavailable
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILENOTFOUND,
 				(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
+			// Ban
 			Close( TS_FALSE );
 			return FALSE;
 		}
 		break;
 
 	case ftpLIST_TYPE:
-		if ( strHeader == _T("200") )	// Type A setted
+		if ( strHeader == _T("200") )			// Type A setted
 		{
 			// Mode choosing
 			m_FtpState = ftpLIST_PASVPORT;
 			SetState( dtsRequesting );
 			return SendCommand ();
-		} else
-		if ( FTPisOK( strHeader ) )		// Extra headers, may be some 230
+		}
+		else if ( FTPisOK( strHeader ) )		// Extra headers, may be some 230
 			// Bypass
 			return TRUE;
 		break;
 
 	case ftpLIST_PASVPORT:
 		if ( strHeader == _T("227") ||
-			 strHeader == _T("200") )	// Entered passive or active mode
+			 strHeader == _T("200") )			// Entered passive or active mode
 		{
 			// Getting file size
 			if ( m_bPassive )
 			{
 				// Passive mode
 				SOCKADDR_IN host;
-				if ( !ParsePASVArgs( strValue, host ) )
+				if ( ! ParsePASVArgs( strValue, host ) )
 				{
 					// Wrong PASV reply format
 					ASSERT( FALSE );
-					Close( TS_TRUE );
+					Close( TS_FALSE );
 					return FALSE;
 				}
 				if ( !m_LIST.ConnectTo( &host ) )
@@ -511,38 +521,40 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 					// Cannot connect
 					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CONNECT_ERROR,
 						(LPCTSTR)m_sAddress );
-					Close( TS_TRUE );
+					Close();
 					return FALSE;
 				}
 			}
 			m_FtpState = ftpLIST;
 			SetState( dtsRequesting );
 			return SendCommand ();
-		} else
-		if ( FTPisOK( strHeader ) )		// Extra headers
+		}
+		else if ( FTPisOK( strHeader ) )		// Extra headers
 			// Bypass
 			return TRUE;
 		break;
 
 	case ftpLIST:
 		if ( strHeader == _T("125") ||
-			 strHeader == _T("150") )		// Transfer started
-			{
+			 strHeader == _T("150") )			// Transfer started
+		{
 			// Downloading
 			return TRUE;
-			} else
-		if ( strHeader == _T("226") )		// Transfer completed
-			{
-				// Extract file size
+		}
+		else if ( strHeader == _T("226") )		// Transfer completed
+		{
+			// Extract file size
 			QWORD size = m_LIST.ExtractFileSize();
 			if ( size == SIZE_UNKNOWN )
 			{
 				// Wrong LIST reply format
-				Close( TS_TRUE );
+				ASSERT( FALSE );
+				// Ban
+				Close( TS_FALSE );
 				return FALSE;
 			}
 			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
-			m_pDownload->m_nSize = size;
+				m_pDownload->m_nSize = size;
 			else
 			{
 				if ( m_pDownload->m_nSize != size )
@@ -550,75 +562,78 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 					// File size changed!
 					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE,
 						(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
+					// Ban
 					Close( TS_FALSE );
 					return FALSE;
 				}
 			}
 			m_bSizeChecked = TRUE;
+
 			// Aborting
 			m_LIST.Close();
 			m_FtpState = ftpABOR;
 			SetState( dtsRequesting );
 			return SendCommand();
-		} else
-		if ( strHeader == _T("550") )	// File unavailable
+		}
+		else if ( strHeader == _T("550") )		// File unavailable
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILENOTFOUND,
 				(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
+			// Ban
 			Close( TS_FALSE );
 			return FALSE;
-			}
+		}
 		break;
 
 	case ftpRETR_TYPE:
-			if ( strHeader == _T("200") ) // Type I setted
-			{
+		if ( strHeader == _T("200") )			// Type I setted
+		{
 			// Mode choosing
 			m_FtpState = ftpRETR_PASVPORT;
 			SetState( dtsDownloading );
 			return SendCommand();
-		} else
-		if ( FTPisOK( strHeader ) )		// Extra headers, may be some 230
+		}
+		else if ( FTPisOK( strHeader ) )		// Extra headers, may be some 230
 			// Bypass
 			return TRUE;
 		break;
 
 	case ftpRETR_PASVPORT:
 		if ( strHeader == _T("227") ||
-			 strHeader == _T("200") )	// Entered passive or active mode
+			 strHeader == _T("200") )			// Entered passive or active mode
 		{
 			// File fragment choosing
 			if ( m_bPassive )
 			{
 				SOCKADDR_IN host;
-				if ( !ParsePASVArgs( strValue, host ) )
+				if ( ! ParsePASVArgs( strValue, host ) )
 				{
 					// Wrong PASV reply format
 					ASSERT( FALSE );
-					Close( TS_TRUE );
+					Close( TS_FALSE );
 					return FALSE;
 				}
-				if ( !m_RETR.ConnectTo( &host ) )
+				if ( ! m_RETR.ConnectTo( &host ) )
 				{
 					// Cannot connect
 					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CONNECT_ERROR,
 						(LPCTSTR)m_sAddress );
-					Close( TS_TRUE );
+					Close();
 					return FALSE;
 				}
-				}
+			}
 			m_FtpState = ftpRETR_REST;
 			SetState (dtsDownloading);
 			return SendCommand ();
-		} else
-		if ( FTPisOK( strHeader ) )		// Extra headers
+		}
+		else if ( FTPisOK( strHeader ) )		// Extra headers
 			// Bypass
 			return TRUE;
 		break;
 
 	case ftpRETR_REST:
-		if ( strHeader == _T("350") )	// Offset setted
-			{
+		if ( strHeader == _T("350") )			// Offset setted
+		{
 			// Downloading
 			m_FtpState = ftpRETR;
 			SetState( dtsDownloading );
@@ -628,24 +643,25 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 
 	case ftpRETR:
 		if ( strHeader == _T("125") ||
-			 strHeader == _T("150") )	// Transfer started
-			{
+			 strHeader == _T("150") )			// Transfer started
+		{
 			// Downloading
 			return TRUE;
-		} else
-		if ( strHeader == _T("226") ||
-			 strHeader == _T("426") )	// Transfer completed
+		}
+		else if ( strHeader == _T("226") ||
+			 strHeader == _T("426") )			// Transfer completed
 		{
 			// Aborting
 			m_RETR.Close();
 			m_FtpState = ftpABOR;
 			SetState( dtsDownloading );
 			return SendCommand ();
-			} else
-		if ( strHeader == _T("550") )	// File unavailable
-			{
+		}
+		else if ( strHeader == _T("550") )		// File unavailable
+		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILENOTFOUND,
 				(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
+			// Ban
 			Close( TS_FALSE );
 			return FALSE;
 		}
@@ -655,7 +671,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 		// Downloading
 		m_FtpState = ftpDownloading;
 		SetState( dtsDownloading );
-				return StartNextFragment();
+		return StartNextFragment();
 
 	default:
 		// Really unexpected errors
@@ -664,8 +680,8 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 
 	theApp.Message( MSG_ERROR, IDS_DOWNLOAD_HTTPCODE,
 		(LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue);
-		Close( TS_TRUE );
-		return FALSE;
+	Close();
+	return FALSE;
 }
 
 BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
@@ -699,7 +715,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 			if ( !Handshakes.Add( &m_LIST, host ) )
 			{
 				// Unexpected errors
-				Close( TS_TRUE );
+				Close();
 				return FALSE;
 			}
 			CString args;
@@ -742,7 +758,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 			if ( !Handshakes.Add( &m_RETR, host ) )
 			{
 				// Unexpected errors
-				Close( TS_TRUE );
+				Close();
 				return FALSE;
 			}
 			CString args;
@@ -768,7 +784,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 		strLine = _T("ABOR");
 		break;
 
-		default:
+	default:
 		return TRUE;
 	}
 	
@@ -790,11 +806,12 @@ void CDownloadTransferFTP::OnDropped(BOOL /*bError*/)
 	if ( m_nState == dtsConnecting )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CONNECT_ERROR, (LPCTSTR)m_sAddress );
-		if ( m_pSource != NULL ) m_pSource->PushRequest();
-		Close( TS_UNKNOWN );
-	} else
-		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DROPPED, (LPCTSTR)m_sAddress );
-			Close( m_nState >= dtsDownloading ? TS_TRUE : TS_UNKNOWN );
-		}
+		if ( m_pSource != NULL )
+			m_pSource->PushRequest();
+	}
+	else
+	{
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DROPPED, (LPCTSTR)m_sAddress );
+	}
+	Close();
 }

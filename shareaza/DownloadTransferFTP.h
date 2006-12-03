@@ -25,13 +25,15 @@
 
 // Note: ftp active mode code was commented out
 
+#define FTP_RETRY_DELAY		30000	// 30s
+
 class CDownloadTransferFTP : public CDownloadTransfer
 {
 public:
 	CDownloadTransferFTP(CDownloadSource* pSource);
 	virtual ~CDownloadTransferFTP() {}
 	virtual BOOL	Initiate();
-	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
+	virtual void	Close(TRISTATE bKeepSource = TS_TRUE, DWORD nRetryAfter = FTP_RETRY_DELAY);
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
@@ -136,7 +138,7 @@ protected:
 	public:
 		CFTPRETR() : m_pOwner( NULL ), m_tContent( 0 ), m_nTotal( 0 ) {}
 		virtual ~CFTPRETR() {}
-	
+
 		inline void SetOwner(CDownloadTransferFTP* pOwner)
 		{
 			m_pOwner = pOwner;
@@ -199,9 +201,15 @@ protected:
 			return FALSE;
 		}
 
+		virtual void OnDropped(BOOL /* bError */)
+		{
+			if ( m_pOwner )
+				m_pOwner->Close();
+		}
+
 	protected:
-		CDownloadTransferFTP* m_pOwner;	// Owner object
-		DWORD m_tContent;				// Last Receive time
+		CDownloadTransferFTP*	m_pOwner;	// Owner object
+		DWORD					m_tContent;	// Last Receive time
 		QWORD					m_nTotal;	// Received bytes by m_tContent time
 	};
 
