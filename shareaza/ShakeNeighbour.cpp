@@ -183,7 +183,7 @@ BOOL CShakeNeighbour::OnConnected()
 	m_pOutput->Print( "GNUTELLA CONNECT/0.6\r\n" ); // Ask to connect
 	SendPublicHeaders();                            // User agent, ip addresses, Gnutella2 and deflate, advanced Gnutella 
 													// features
-	// POSSIBLE POLUTION ALERT:
+	// POSSIBLE POLLUTION ALERT:
 	// This SendHostHeaders() should not be here. because remote node is not known either G1 or G2.
 	// calling this function here sends Cached G1 address to remote host, but since RAZA tells the remote that it is G2 capable
 	// and if the remote host is RAZA, it will store GNUTELLA1 nodes into GNUTELLA2 cache.
@@ -372,7 +372,7 @@ void CShakeNeighbour::SendMinimalHeaders()
 		{
 			m_pOutput->Print( "Accept: application/x-gnutella-packets\r\n" );
 		}
-		else if ( m_bG1Accept ) // The remote computer contacted us, and accepts Gnutella2 packets
+		else if ( m_bG1Accept ) // The remote computer contacted us, and accepts Gnutella1 packets
 		{
 			// Reply by saying we accept them also, and will be sending them
 			m_pOutput->Print( "Accept: application/x-gnutella-packets\r\n" );
@@ -464,7 +464,7 @@ void CShakeNeighbour::SendPublicHeaders()
 		m_pOutput->Print( "X-Query-Routing: 0.1\r\n" );										// We support the query routing protocol
 	}
 
-	if ( m_nProtocol == PROTOCOL_G1 ) // This protocol ID this method got passed is Gnutella2
+	if ( m_nProtocol == PROTOCOL_G1 ) // This protocol ID this method got passed is Gnutella1
 	{
 		// Find out if we are an ultrapeer or at least eligible to become one soon
 		if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || 
@@ -499,13 +499,13 @@ void CShakeNeighbour::SendPublicHeaders()
 		else
 			m_pOutput->Print( "X-Ultrapeer-Needed: False\r\n" );
 	}
-	else if ( m_nProtocol == PROTOCOL_NULL ) // This protocol ID this method got passed is Gnutella2
+	else if ( m_nProtocol == PROTOCOL_NULL ) // This protocol ID this method got passed is both Gnutella1 and Gnutella2
 	{
 		if ( m_bInitiated )
 		{
 			if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday )
 			{
-				// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
+				// Find out if we are a Gnutella1 Ultrapeer or Gnutella2 hub already, or at least eligible to become one soon
 				if ( ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() ) &&
 					 ( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) )
 				{
@@ -525,7 +525,7 @@ void CShakeNeighbour::SendPublicHeaders()
 			}
 			else if ( Settings.Gnutella1.EnableToday )
 			{
-				// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
+				// Find out if we are a Gnutella1 Ultrapeer, or at least eligible to become one soon
 				if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
 				{
 					// Tell the remote computer that we are a hub
@@ -572,7 +572,7 @@ void CShakeNeighbour::SendPublicHeaders()
 			if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday && 
 				( m_bG2Send || m_bG2Accept) && ( m_bG1Send || m_bG1Accept) )
 			{
-				// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
+				// Find out if we are a Gnutella1 Ultrapeer or Gnutella2 hub already, or at least eligible to become one soon
 				if ( ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() ) &&
 					( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) )
 				{
@@ -592,7 +592,7 @@ void CShakeNeighbour::SendPublicHeaders()
 			}
 			else if ( Settings.Gnutella1.EnableToday && ( m_bG1Send || m_bG1Accept) )
 			{
-				// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
+				// Find out if we are a Gnutella1 Ultrapeer, or at least eligible to become one soon
 				if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
 				{
 					// Tell the remote computer that we are a hub
@@ -652,7 +652,7 @@ void CShakeNeighbour::SendPrivateHeaders()
 	}
 	else if ( m_bInitiated && m_bG1Send && m_bG1Accept && ( m_nProtocol != PROTOCOL_G2 ) )
 	{
-		// Tell it we also accept gnutella2 packets, and we're also going to send them
+		// Tell it we also accept gnutella1 packets, and we're also going to send them
 		m_pOutput->Print( "Accept: application/x-gnutella-packets\r\n" );
 		m_pOutput->Print( "Content-Type: application/x-gnutella-packets\r\n" );
 	}
@@ -1031,7 +1031,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			// Add the host to the Gnutella2 host cache, noting it's a DNA hub
 			// adding host with "GDNA" will not help a lot, if the name is blank, raza might get the name through
 			// KHL over linked Neighbours.
-			//if ( HostCache.Gnutella2.Add( strHost, 0, _T("GDNA") ) ) nCount++;
+			if ( HostCache.Gnutella2.Add( strHost, 0, NULL ) ) ) nCount++;
 		}
 		// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
 		DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
