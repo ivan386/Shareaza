@@ -68,7 +68,7 @@ CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDef
 	//if ( nErrorCode != ERROR_SUCCESS ) 
 	//	DisplayErrorMessageBox( pszName, nErrorCode );
 
-	return strValue;
+	return strValue.GetLength() ? strValue : pszDefault;
 }
 
 //////////////////////////////////////////////////////////////////////
