@@ -117,7 +117,7 @@ void CSettings::Setup()
 	Add( _T("Search.SwitchToTransfers"), &Search.SwitchToTransfers, TRUE );
 	Add( _T("Search.SchemaTypes"), &Search.SchemaTypes, TRUE );
 	Add( _T("Search.ShowNames"), &Search.ShowNames, TRUE );
-	Add( _T("Search.FilterMask"), &Search.FilterMask, 0x28 );
+	Add( _T("Search.FilterMask"), &Search.FilterMask, 0x168 );
 	Add( _T("Search.MonitorSchemaURI"), &Search.MonitorSchemaURI, CSchema::uriAudio );
 	Add( _T("Search.MonitorFilter"), &Search.MonitorFilter, NULL );
 	Add( _T("Search.MonitorQueue"), &Search.MonitorQueue, 128 );
@@ -776,6 +776,7 @@ void CSettings::SmartUpgrade()
 	{
 		Downloads.RequestHash = TRUE;
 		Gnutella.SpecifyProtocol = TRUE;
+		Search.FilterMask = Search.FilterMask | 0x140; // Turn on DRM and Suspicious filters
 	}
 }
 
