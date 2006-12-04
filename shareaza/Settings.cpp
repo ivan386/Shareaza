@@ -230,7 +230,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella.HostCacheView"), &Gnutella.HostCacheView, PROTOCOL_ED2K );
 	Add( _T("Gnutella.ConnectThrottle"), &Gnutella.ConnectThrottle, 120 );
 	Add( _T("Gnutella.BlockBlankClients"), &Gnutella.BlockBlankClients, TRUE );
-	Add( _T("Gnutella.SpecifyProtocol"), &Gnutella.SpecifyProtocol, FALSE );
+	Add( _T("Gnutella.SpecifyProtocol"), &Gnutella.SpecifyProtocol, TRUE );
 
 	Add( _T("Gnutella1.ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
 	Add( _T("Gnutella1.EnableAlways"), &Gnutella1.EnableAlways, FALSE );
@@ -508,7 +508,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	36
+#define SMART_VERSION	37
 
 void CSettings::Load()
 {
@@ -769,6 +769,12 @@ void CSettings::SmartUpgrade()
 	if ( nVersion < 36 )
 	{
 		Library.VirtualFiles = FALSE;
+	}
+
+	if ( nVersion < 37 )
+	{
+		Downloads.RequestHash = TRUE;
+		Gnutella.SpecifyProtocol = TRUE;
 	}
 }
 
