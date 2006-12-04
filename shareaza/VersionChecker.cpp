@@ -261,11 +261,22 @@ void CVersionChecker::ProcessResponse()
 	
 	if ( m_pResponse.Lookup( _T("AddDiscovery"), strValue ) )
 	{
-		strValue.TrimLeft();
-		strValue.TrimRight();
+		strValue.Trim();
 		DiscoveryServices.Add( strValue, CDiscoveryService::dsWebCache );
 	}
-	
+
+	if ( m_pResponse.Lookup( _T("AddDiscoveryUHC"), strValue ) )
+	{
+		strValue.Trim();
+		DiscoveryServices.Add( strValue, CDiscoveryService::dsGnutella, PROTOCOL_G1 );
+	}
+
+	if ( m_pResponse.Lookup( _T("AddDiscoveryKHL"), strValue ) )
+	{
+		strValue.Trim();
+		DiscoveryServices.Add( strValue, CDiscoveryService::dsGnutella, PROTOCOL_G2 );
+	}
+
 	if ( m_pResponse.Lookup( _T("NextCheck"), strValue ) )
 	{
 		_stscanf( strValue, _T("%lu"), &nDays );
