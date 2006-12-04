@@ -150,6 +150,14 @@ typedef enum
 	sKatakana = 16
 } ScriptType;
 
+struct CompareNums
+{
+	inline bool operator()(WORD lhs, WORD rhs) const
+	{
+		return lhs > rhs;
+	}
+};
+
 inline bool IsCharacter(TCHAR nChar)
 {
     WORD nCharType = 0;

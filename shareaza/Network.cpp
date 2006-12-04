@@ -47,6 +47,7 @@
 #include "Buffer.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
+#include "GGEP.h"
 #include "G1Neighbour.h"
 
 #include "WndMain.h"
@@ -168,9 +169,10 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 {
 	if ( bAutoConnect && !m_bEnabled )
 	{
-		Settings.Gnutella1.EnableToday = Settings.Gnutella1.EnableAlways;
-		Settings.Gnutella2.EnableToday = Settings.Gnutella2.EnableAlways;
-		Settings.eDonkey.EnableToday = Settings.eDonkey.EnableAlways;
+		//Settings.Gnutella1.EnableToday = Settings.Gnutella1.EnableAlways;
+		//Settings.Gnutella2.EnableToday = Settings.Gnutella2.EnableAlways;
+		//Settings.eDonkey.EnableToday = Settings.eDonkey.EnableAlways;
+		DiscoveryServices.Execute( FALSE, PROTOCOL_NULL );
 	}
 
 	CSingleLock pLock( &m_pSection, TRUE );
@@ -180,13 +182,13 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	{
 		m_bAutoConnect = TRUE;
 		// Remove really old G1 hosts before trying to connect to G1
-		if ( Settings.Gnutella1.EnableToday ) HostCache.Gnutella1.PruneOldHosts();
+		//if ( Settings.Gnutella1.EnableToday ) HostCache.Gnutella1.PruneOldHosts();
 	}
 	
 	// If we are already connected, see if we need to query discovery services and exit.
 	if ( m_bEnabled )
 	{
-		if ( bAutoConnect ) DiscoveryServices.Execute();
+		//if ( bAutoConnect ) DiscoveryServices.Execute( FALSE );
 		return TRUE;
 	}
 	
@@ -619,22 +621,100 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 	if ( ! m_pLookups.Lookup( (HANDLE)wParam, pResolve ) ) return;
 	m_pLookups.RemoveKey( (HANDLE)wParam );
 
+	CString strAddress;
+	CDiscoveryService* pService;
+
 	if ( WSAGETASYNCERROR(lParam) == 0 )
 	{
 		if ( pResolve->m_nCommand == 0 )
 		{
 			HostCache.ForProtocol( pResolve->m_nProtocol )->Add( (IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort );
 		}
-		else
+		else if ( pResolve->m_nCommand == 1 || pResolve->m_nCommand == 2 )
 		{
 			Neighbours.ConnectTo( (IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort, pResolve->m_nProtocol, FALSE, pResolve->m_nCommand );
 		}
+		else if ( pResolve->m_nCommand == 3 )
+		{
+			// code to invoke UDPHC/UDPKHL Sender.
+			if ( pResolve->m_nProtocol == PROTOCOL_G1 )
+			{
+				strAddress = L"uhc:" + *(pResolve->m_sAddress);
+				pService = DiscoveryServices.GetByAddress( strAddress );
+				if ( pService == NULL )
+				{
+					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
+					pService = DiscoveryServices.GetByAddress( strAddress );
+				}
+
+				if ( pService != NULL )
+				{
+					pService->m_pAddress = *((IN_ADDR*)pResolve->m_pHost.h_addr);
+					pService->m_nPort =  pResolve->m_nPort;
+				}
+				UDPHostCache((IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort);
+			}
+			else if ( pResolve->m_nProtocol == PROTOCOL_G2 )
+			{
+				strAddress = L"ukhl:" + *(pResolve->m_sAddress);
+				pService = DiscoveryServices.GetByAddress( strAddress );
+				if ( pService == NULL )
+				{
+					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
+					pService = DiscoveryServices.GetByAddress( strAddress );
+				}
+
+				if ( pService != NULL )
+				{
+					pService->m_pAddress =  *((IN_ADDR*)pResolve->m_pHost.h_addr);
+					pService->m_nPort =  pResolve->m_nPort;
+				}
+				UDPKnownHubCache((IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort);
+			}
+		}
 	}
-	else if ( pResolve->m_nCommand > 0 )
+	else if ( pResolve->m_nCommand == 0 )
 	{
 		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, LPCTSTR( *pResolve->m_sAddress ) );
 	}
-	
+	else
+	{
+		if ( pResolve->m_nCommand == 3 )
+		{
+			if ( pResolve->m_nProtocol == PROTOCOL_G1 )
+			{
+				strAddress = L"uhc:" + *(pResolve->m_sAddress);
+				pService = DiscoveryServices.GetByAddress( strAddress );
+				if ( pService == NULL )
+				{
+					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
+					pService = DiscoveryServices.GetByAddress( strAddress );
+				}
+
+				if ( pService != NULL )
+				{
+					pService->OnFailure();
+				}
+			}
+			else if ( pResolve->m_nProtocol == PROTOCOL_G2 )
+			{
+				strAddress = L"ukhl:" + *(pResolve->m_sAddress);
+				pService = DiscoveryServices.GetByAddress( strAddress );
+				if ( pService == NULL )
+				{
+					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
+					pService = DiscoveryServices.GetByAddress( strAddress );
+				}
+
+				if ( pService != NULL )
+				{
+					pService->OnFailure();
+				}
+			}
+		}
+
+	}
+
 	delete pResolve->m_sAddress;
 	delete pResolve;
 }
@@ -902,4 +982,31 @@ void CNetwork::OnQueryHits(CQueryHit* pHits)
 	}
 
 	pHits->Delete();
+}
+
+void CNetwork::UDPHostCache( IN_ADDR* pAddress, WORD nPort )
+{
+	bool bNeedFreePeerSlot = Neighbours.IsG1Ultrapeer() ? true : false;
+
+	CG1Packet* pPing = CG1Packet::New( G1_PACKET_PING, 1, Hashes::Guid( MyProfile.oGUID ) );
+
+	CGGEPBlock pBlock;
+	CGGEPItem* pItem;
+	
+	pItem = pBlock.Add( L"SCP" );
+	pItem->UnsetCOBS();
+	pItem->UnsetSmall();
+	if ( bNeedFreePeerSlot ) 
+		pItem->WriteByte( 1 );
+	else
+		pItem->WriteByte( 0 );
+
+	pBlock.Write( pPing );
+	Datagrams.Send( pAddress, nPort, pPing, TRUE, NULL, FALSE );
+}
+
+void CNetwork::UDPKnownHubCache( IN_ADDR* pAddress, WORD nPort )
+{
+	CG2Packet* pKHLR = CG2Packet::New( G2_PACKET_KHL_REQ );
+	Datagrams.Send( pAddress, nPort, pKHLR, TRUE, NULL, FALSE );
 }

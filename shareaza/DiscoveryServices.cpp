@@ -156,6 +156,27 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 	case CDiscoveryService::dsGnutella:
 		if ( _tcschr( pszAddress, '.' ) != NULL )
 			pService = new CDiscoveryService( CDiscoveryService::dsGnutella, strAddress );
+
+		if ( _tcsnicmp( strAddress, _T("gnutella1:host:"),  15 ) == 0 )
+		{
+			nProtocol = PROTOCOL_G1;
+			pService->m_nSubType = 1;
+		}
+		else if ( _tcsnicmp( strAddress, _T("gnutella2:host:"), 15 ) == 0 )
+		{
+			nProtocol = PROTOCOL_G2;
+			pService->m_nSubType = 2;
+		}
+		else if ( _tcsnicmp( strAddress, _T("uhc:"), 4 )  == 0 )
+		{
+			nProtocol = PROTOCOL_G1;
+			pService->m_nSubType = 3;
+		}
+		else if ( _tcsnicmp( strAddress, _T("ukhl:"), 5 )  == 0 )
+		{
+			nProtocol = PROTOCOL_G2;
+			pService->m_nSubType = 4;
+		}
 		break;
 
 	case CDiscoveryService::dsBlocked:
@@ -329,6 +350,20 @@ CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 			if ( pService->m_sAddress.CompareNoCase( pszAddress ) == 0 )
 				return pService;
 		}
+	}
+
+	return NULL;
+}
+
+CDiscoveryService* CDiscoveryServices::GetByAddress( IN_ADDR* pAddress, WORD nPort, int nSubType )
+{
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDiscoveryService* pService = GetNext( pos );
+
+			if ( pService->m_nSubType == nSubType && pService->m_pAddress.S_un.S_addr == pAddress->S_un.S_addr &&
+				pService->m_nPort == nPort )
+				return pService;
 	}
 
 	return NULL;
@@ -520,6 +555,8 @@ void CDiscoveryServices::AddDefaults()
 					break;
 				case 'D': Add( strService, CDiscoveryService::dsServerMet, PROTOCOL_ED2K );	// eDonkey service
 					break;
+				case 'U': Add( strService, CDiscoveryService::dsGnutella );					// Bootstrap and UDP Discovery Service
+					break;
 				case 'X': Add( strService, CDiscoveryService::dsBlocked );					// Blocked service
 					break;
 				case '#':																	// Comment line
@@ -618,32 +655,44 @@ BOOL CDiscoveryServices::Update()
 // You should never query server.met files, because of the load it would create.
 // This is public, and will be called quite regularly.
 
-BOOL CDiscoveryServices::Execute(BOOL bSecondary)
+BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol)
 {
+	/*
+		bDiscovery:
+			TRUE	- Want Discovery(GEC, UHC, MET)
+			FALSE	- Want Bootstrap connection.
+		nProtocol:
+			PROTOCOL_NULL	- Auto Detection
+			PROTOCOL_G1		- Execute entry for G1
+			PROTOCOL_G2		- Execute entry for G2
+			PROTOCOL_GED2K	- Execute entry for ED2K
+	*/
+
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
-	if ( bSecondary )
+	if ( bDiscovery ) // If this is a user-initiated manual query, or AutoStart with Cache empty
 	{
+
 		if ( m_hInternet ) return FALSE;
 		if ( tNow - m_tQueried < 60 ) return FALSE;
 		if ( tNow - m_tExecute < 10 ) return FALSE;
-	}
-	else
-	{
-		theApp.Message( MSG_SYSTEM, IDS_DISCOVERY_BOOTSTRAP );
-	}
-	
-	m_tExecute = tNow;
-	DWORD	nG1Hosts = HostCache.Gnutella1.CountHosts();
-	DWORD	nG2Hosts = HostCache.Gnutella2.CountHosts();
-	BOOL	bG1Required = Settings.Gnutella1.EnableToday && ( nG1Hosts < 200 );
-	BOOL	bG2Required = Settings.Gnutella2.EnableToday && ( nG2Hosts < 800 );
 
-	if ( ! bSecondary ) // If this is a user-initiated manual query (Or the 'on-startup' query)
-	{
-		ExecuteBootstraps( Settings.Discovery.BootstrapCount );
+		m_tExecute = tNow;
+		DWORD	nG1Hosts = HostCache.Gnutella1.CountHosts();
+		DWORD	nG2Hosts = HostCache.Gnutella2.CountHosts();
+		BOOL	bG1Required = Settings.Gnutella1.EnableToday && !( nG1Hosts > 0 ) && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1);
+		BOOL	bG2Required = Settings.Gnutella2.EnableToday && !( nG2Hosts > 0 ) && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2);
+
+		// UDP services
+		if ( bG1Required && bG2Required )
+			return ExecuteBootstraps( 1, TRUE, PROTOCOL_NULL );
+		else if ( bG2Required )
+			return ExecuteBootstraps( 1, TRUE, PROTOCOL_G2 );
+		else if ( bG1Required )
+			return ExecuteBootstraps( 1, TRUE, PROTOCOL_G1 );
+
 		
 		if ( ( bG2Required ) && ( nG2Hosts < 25 ) && RequestRandomService( PROTOCOL_G2 ) )
 			return TRUE;
@@ -653,40 +702,39 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 
 		// Note: Do not enable MetAutoQuery until we have a MET file set up!
 		if ( Settings.eDonkey.EnableToday && ( Settings.eDonkey.MetAutoQuery ||
-			 HostCache.eDonkey.CountHosts() < 3 || m_tMetQueried == 0 ) )
-		{	
+			 HostCache.eDonkey.CountHosts() < 3 || m_tMetQueried == 0 ) &&
+			 ( nProtocol == PROTOCOL_ED2K || nProtocol == PROTOCOL_NULL ) )
+		{
 			m_tMetQueried = tNow;					// Execute this once only. (Very important)
 			if ( RequestRandomService( PROTOCOL_ED2K ) ) return TRUE;
 		}
 		
-		if ( ( bG1Required ) && ( m_nLastQueryProtocol == PROTOCOL_G2 ) )
-			return RequestRandomService( PROTOCOL_G1 );
-		else
-			return RequestRandomService( PROTOCOL_G2 );
+		if ( bG1Required && bG2Required )					// G1 + G2 hosts are wanted
+		{
+			if ( ( bG1Required ) && ( m_nLastQueryProtocol == PROTOCOL_G2 ) )
+				return RequestRandomService( PROTOCOL_G1 );
+			else if ( ( bG2Required ) && ( m_nLastQueryProtocol == PROTOCOL_G1 ) )
+				return RequestRandomService( PROTOCOL_G2 );
+		}
+		else if ( bG2Required )								// Only G2
+		{
+			return RequestRandomService( PROTOCOL_G2 );	
+		}
+		else if ( bG1Required )								// Only G1
+		{
+			return RequestRandomService( PROTOCOL_G1 );	
+		}
 	}
-
-	// A general request. (We have to be very careful not to be too agressive here.)
-
-	// Select the network protocol we want to request hosts from
-	if ( bG1Required && bG2Required )					// G1 + G2 hosts are wanted
+	else
 	{
-		// Select which protocol should be requested
-		if ( nG2Hosts < 25 )
-			return RequestRandomService( PROTOCOL_G2 );
-		else if ( nG1Hosts < 15 )
-			return RequestRandomService( PROTOCOL_G1 );
-		else if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) || ( nG2Hosts <= nG1Hosts ) )
-			return RequestRandomService( PROTOCOL_G2 );
-		else
-			return RequestRandomService( PROTOCOL_G1 );
-	}
-	else if ( bG2Required )								// Only G2
-	{
-		return RequestRandomService( PROTOCOL_G2 );	
-	}
-	else if ( bG1Required )								// Only G1
-	{
-		return RequestRandomService( PROTOCOL_G1 );	
+		theApp.Message( MSG_SYSTEM, IDS_DISCOVERY_BOOTSTRAP );
+		// TCP bootstraps
+		if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday && nProtocol == PROTOCOL_NULL )
+			ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_NULL );
+		else if ( Settings.Gnutella2.EnableToday && nProtocol == PROTOCOL_G2 )
+			ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_G2 );
+		else if ( Settings.Gnutella1.EnableToday && nProtocol == PROTOCOL_G1 )
+			ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_G1 );
 	}
 
 	return FALSE;
@@ -695,18 +743,42 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices resolve N gnutella bootstraps
 
-int CDiscoveryServices::ExecuteBootstraps(int nCount)
+int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nProtocol)
 {
 	CArray< CDiscoveryService* > pRandom;
 	int nSuccess;
+	BOOL bGnutella1, bGnutella2;
+
+	switch(nProtocol)
+	{
+		case PROTOCOL_NULL:
+			bGnutella1 = TRUE;
+			bGnutella2 = TRUE;
+			break;
+		case PROTOCOL_G1:
+			bGnutella1 = TRUE;
+			bGnutella2 = FALSE;
+			break;
+		case PROTOCOL_G2:
+			bGnutella1 = FALSE;
+			bGnutella2 = TRUE;
+			break;
+		default:
+			bGnutella1 = FALSE;
+			bGnutella2 = FALSE;
+			break;
+	}
 
 	if ( nCount < 1 ) return 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDiscoveryService* pService = GetNext( pos );
-		if ( pService->m_nType == CDiscoveryService::dsGnutella )
-			pRandom.Add( pService );
+		if ( pService->m_nType == CDiscoveryService::dsGnutella && 
+			( ( bGnutella1 && bGnutella2 ) || ( bGnutella1 == pService->m_bGnutella1 && bGnutella2 == pService->m_bGnutella2 ) ) &&
+			( ( ( pService->m_nSubType == 3 || pService->m_nSubType == 4 ) && bUDP ) ||
+			( ( pService->m_nSubType == 0 || pService->m_nSubType == 1 || pService->m_nSubType == 2 ) && !bUDP ) ) ) 
+				pRandom.Add( pService );
 	}
 
 	for ( nSuccess = 0 ; nCount > 0 && pRandom.GetSize() > 0 ; )
@@ -1479,6 +1551,11 @@ CDiscoveryService::CDiscoveryService(int nType, LPCTSTR pszAddress)
 	m_nAccessPeriod	= max( Settings.Discovery.UpdatePeriod, 1800u );
 	m_nUpdatePeriod	= Settings.Discovery.DefaultUpdate;
 	
+	m_nSubType		= 0;
+	m_nPort			= 0;
+
+	m_pAddress.S_un.S_addr = 0;
+
 	if ( pszAddress != NULL ) m_sAddress = pszAddress;
 }
 
@@ -1531,6 +1608,32 @@ void CDiscoveryService::Serialize(CArchive& ar, int /*nVersion*/)
 		ar >> m_nHosts;
 		ar >> m_nAccessPeriod;
 		ar >> m_nUpdatePeriod;
+
+		// Check it has a valid protocol
+		if ( _tcsnicmp( m_sAddress, _T("gnutella1:host:"),  15 ) == 0 )
+		{
+			m_bGnutella1 = TRUE;
+			m_bGnutella2 = FALSE;
+			m_nSubType = 1;
+		}
+		else if ( _tcsnicmp( m_sAddress, _T("gnutella2:host:"), 15 ) == 0 )
+		{
+			m_bGnutella1 = FALSE;
+			m_bGnutella2 = TRUE;
+			m_nSubType = 2;
+		}
+		else if ( _tcsnicmp( m_sAddress, _T("uhc:"), 4 ) == 0 )
+		{
+			m_bGnutella1 = TRUE;
+			m_bGnutella2 = FALSE;
+			m_nSubType = 3;
+		}
+		else if ( _tcsnicmp( m_sAddress, _T("ukhl:"), 5 ) == 0 )
+		{
+			m_bGnutella1 = FALSE;
+			m_bGnutella2 = TRUE;
+			m_nSubType = 4;
+		}
 	}
 }
 
@@ -1564,21 +1667,111 @@ BOOL CDiscoveryService::Execute(int nMode)
 
 BOOL CDiscoveryService::ResolveGnutella()
 {
-	CString strHost	= m_sAddress;
-	int nPort		= GNUTELLA_DEFAULT_PORT;
-	int nPos		= strHost.Find( ':' );
-	
-	if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
-		strHost = strHost.Left( nPos );
-	
 	if ( ! Network.Connect( FALSE ) ) return FALSE;
-	
-	if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, 0 ) )
+
+	if ( time( NULL ) - m_tAccessed < 300 ) return FALSE;
+
+	CString strHost	= m_sAddress;
+	int nSkip = 0;
+	m_nHosts = 0;
+
+	// Check it has a valid protocol
+	if ( _tcsnicmp( strHost, _T("gnutella1:host:"),  15 ) == 0 )
 	{
-		OnSuccess();
-		return TRUE;
+		m_nSubType = 1;
+		nSkip = 15;
+		m_bGnutella1 = TRUE;
+		m_bGnutella2 = FALSE;
 	}
-	
+	else if ( _tcsnicmp( strHost, _T("gnutella2:host:"), 15 ) == 0 )
+	{
+		m_nSubType = 2;
+		nSkip = 15;
+		m_bGnutella1 = FALSE;
+		m_bGnutella2 = TRUE;
+	}
+	else if ( _tcsnicmp( strHost, _T("uhc:"), 4 ) == 0 )
+	{
+		m_nSubType = 3;
+		nSkip = 4;
+		m_bGnutella1 = TRUE;
+		m_bGnutella2 = FALSE;
+	}
+	else if ( _tcsnicmp( strHost, _T("ukhl:"), 5 ) == 0 )
+	{
+		m_nSubType = 4;
+		nSkip = 5;
+		m_bGnutella1 = FALSE;
+		m_bGnutella2 = TRUE;
+	}
+
+	int nPort = GNUTELLA_DEFAULT_PORT;
+
+	if (m_nSubType == 0)
+	{
+		int nPos = strHost.Find( ':' );
+		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
+			strHost = strHost.Left( nPos );
+
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, 0 ) )
+		{
+			OnSuccess();
+			return TRUE;
+		}
+	}
+	else if (m_nSubType == 1)
+	{
+		strHost = strHost.Mid( nSkip );
+		int nPos		= strHost.Find( ':');
+		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
+			strHost = strHost.Left( nPos );
+
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, 1 ) )
+		{
+			OnAccess();
+			return TRUE;
+		}
+	}
+	else if (m_nSubType == 2)
+	{
+		strHost = strHost.Mid( nSkip );
+		int nPos		= strHost.Find( ':');
+		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
+			strHost = strHost.Left( nPos );
+
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G2, 1 ) )
+		{
+			OnAccess();
+			return TRUE;
+		}
+	}
+	else if (m_nSubType == 3)
+	{
+		strHost = strHost.Mid( nSkip );
+		int nPos		= strHost.Find( ':');
+		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
+			strHost = strHost.Left( nPos );
+
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, 3 ) )
+		{
+			OnAccess();
+			return TRUE;
+		}
+	}
+	else if (m_nSubType == 4)
+	{
+		strHost = strHost.Mid( nSkip );
+		int nPos		= strHost.Find( ':');
+		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
+			strHost = strHost.Left( nPos );
+
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G2, 3 ) )
+		{
+			OnAccess();
+			return TRUE;
+		}
+	}
+
 	OnFailure();
 	
 	return FALSE;

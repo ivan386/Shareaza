@@ -40,6 +40,8 @@
 #include "GProfile.h"
 #include "CrawlSession.h"
 
+#include "GGEP.h"
+#include "G1Neighbour.h"
 #include "G2Neighbour.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
@@ -47,8 +49,10 @@
 #include "EDPacket.h"
 #include "Security.h"
 #include "HostCache.h"
+#include "DiscoveryServices.h"
 #include "QueryKeys.h"
 #include "LibraryMaps.h"
+#include "VendorCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -218,6 +222,8 @@ void CDatagrams::Disconnect()
 
 	m_nInBandwidth	= m_nInFrags	= m_nInPackets	= 0;
 	m_nOutBandwidth	= m_nOutFrags	= m_nOutPackets	= 0;
+	m_bStable = FALSE;
+
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -273,6 +279,22 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 			sendto( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, 0,
 				(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
 		}
+
+		return TRUE;
+	}
+	else if ( pPacket->m_nProtocol == PROTOCOL_G1 )
+	{
+		// Quick hack
+		CBuffer pBuffer;
+
+		((CG1Packet*)pPacket)->ToBuffer( &pBuffer );
+		pPacket->SmartDump( NULL, &pHost->sin_addr, TRUE );
+		if ( bRelease ) pPacket->Release();
+
+		sendto( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, 0,
+			(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+
+		m_nOutPackets++;
 
 		return TRUE;
 	}
@@ -632,9 +654,16 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 	{
 		CG1Packet* pG1Packet = CG1Packet::New( (GNUTELLAPACKET*)pG1UDP );
 		pG1Packet->SmartDump( NULL, &pHost->sin_addr, FALSE );
-		// OnPacket( pHost, pG1Packet );
-		pG1Packet->Release();
-		return TRUE;
+		if ( OnPacket( pHost, pG1Packet ) )
+		{
+			pG1Packet->Release();
+			return TRUE;
+		}
+		else
+		{
+			pG1Packet->Release();
+			if ( TRUE /* should put setting define if the packet should go through all packet handlers or not */) return TRUE;
+		}
 	}
 
 	ED2K_UDP_HEADER* pMULE = (ED2K_UDP_HEADER*)pBuffer;
@@ -900,7 +929,26 @@ void CDatagrams::Remove(CDatagramIn* pDG, BOOL bReclaimOnly)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDatagrams packet handler
+// CDatagrams G1UDP packet handler
+
+BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
+{
+	theApp.Message( MSG_SYSTEM, _T("G1UDP: Received Type(0x%x) TTL(%i) Hops(%i) size(%i) from %s:%i"),
+		pPacket->m_nType, pPacket->m_nTTL, pPacket->m_nHops, pPacket->m_nLength,
+		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),pHost->sin_port );
+
+	m_nInPackets++;
+	switch ( pPacket->m_nType )
+	{
+		case G1_PACKET_PING:		return OnPing( pHost, pPacket );			// Ping
+		case G1_PACKET_PONG:		return OnPong( pHost, pPacket );			// Pong, response to a ping
+		default:					return FALSE;
+	}
+	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDatagrams G2UDP packet handler
 
 BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
@@ -954,8 +1002,108 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	{
 		return OnCrawlAnswer( pHost, pPacket );
 	}
+	else if ( pPacket->IsType( G2_PACKET_KHL_ANS ) )
+	{
+		return OnKHLA( pHost, pPacket );
+	}
+	else if ( pPacket->IsType( G2_PACKET_KHL_REQ ) )
+	{
+		return OnKHLR( pHost, pPacket );
+	}
 
 	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDatagrams PING packet handler for G1UDP
+
+BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
+{
+	BOOL bSCP = FALSE;
+	// If this ping packet strangely has length, and the remote computer does GGEP blocks
+	if ( pPacket->m_nLength )
+	{
+		CGGEPBlock pGGEP;
+		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
+		if ( pGGEP.ReadFromPacket( pPacket ) )
+		{
+			if ( CGGEPItem* pItem = pGGEP.Find( _T("SCP") ) )
+			{
+				bSCP = TRUE;
+			}
+		}
+	}
+
+	CGGEPBlock pGGEP;
+	// Received SCP GGEP, send 5 random hosts from the cache
+	// Since we do not provide leaves, ignore the preference data
+	if ( bSCP )
+	{
+		CGGEPItem* pItem = pGGEP.Add( _T("IPP") );
+		DWORD nCount = min( DWORD(50), HostCache.Gnutella1.CountHosts() );
+		WORD nPos = 0;
+		pItem->UnsetCOBS();
+		pItem->UnsetSmall();
+
+		// Create 5 random positions from 0 to 50 in the descending order
+		std::vector< WORD > pList;
+		pList.reserve( Settings.Gnutella1.MaxHostsInPongs );
+		for ( WORD nNo = 0 ; nNo < Settings.Gnutella1.MaxHostsInPongs ; nNo++ )
+		{
+			pList.push_back( (WORD)( ( nCount + 1 ) * rand() / ( RAND_MAX + (float)nCount ) ) );
+		}
+		std::sort( pList.begin(), pList.end(), CompareNums() );
+
+		nCount = Settings.Gnutella1.MaxHostsInPongs;
+		CHostCacheHost* pHost = HostCache.Gnutella1.GetNewest();
+		while ( pHost && nCount )
+		{
+			nPos = pList.back(); // take the smallest value;
+			pList.pop_back(); // remove it
+			for ( ; pHost && nPos-- ; pHost = pHost->m_pPrevTime );
+
+			// We won't provide Shareaza hosts for G1 cache, since users may disable
+			// G1 and it will pollute the host caches ( ??? )
+			if ( pHost && pHost->m_pVendor != VendorCache.m_pShareaza )
+			{
+				pItem->Write( (void*)&pHost->m_pAddress, 4 );
+				pItem->Write( (void*)&pHost->m_nPort, 2 );
+				theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s:%i)"), 
+					(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort ); 
+				nCount--;
+			}
+			if ( nCount == 0 ) break;
+		}
+
+		if ( nCount == (DWORD)Settings.Gnutella1.MaxHostsInPongs ) bSCP = FALSE; // the cache is empty
+	}
+
+	// Make a new pong packet, the response to a ping
+	CG1Packet* pPong = CG1Packet::New(			// Gets it quickly from the Gnutella packet pool
+		G1_PACKET_PONG,							// We're making a pong packet
+		pPacket->m_nHops,						// Give it TTL same as HOP count of received PING packet
+		pPacket->m_oGUID);						// Give it the same GUID as the ping
+
+	// Get statistics about how many files we are sharing
+	QWORD nMyVolume;
+	DWORD nMyFiles;
+	LibraryMaps.GetStatistics( &nMyFiles, &nMyVolume );
+
+	// Start the pong's payload with the IP address and port number from the Network object (do)
+	pPong->WriteShortLE( htons( Network.m_pHost.sin_port ) );
+	pPong->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
+
+	// Then, write in the information about how many files we are sharing
+	pPong->WriteLongLE( nMyFiles );
+	pPong->WriteLongLE( (DWORD)nMyVolume );
+
+	if ( !pGGEP.IsEmpty() ) pGGEP.Write( pPong );
+
+	// Send the pong packet to the remote computer we are currently looping on
+	Send( pHost, pPong );
+	theApp.Message( MSG_SYSTEM, _T("G1UDP: Sent Pong to %s"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -969,6 +1117,137 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG2Packet* /*pPacket*/)
 
 //////////////////////////////////////////////////////////////////////
 // CDatagrams PONG packet handler
+
+BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
+{
+	Statistics.Current.Gnutella1.PongsReceived++;
+	// If the pong is too short, or the pong is too long and settings say we should watch that
+	if ( pPacket->m_nLength < 14 || ( pPacket->m_nLength > 14 && Settings.Gnutella1.StrictPackets && !Settings.Gnutella1.EnableGGEP ) )
+	{
+		// Pong packets should be 14 bytes long, drop this strangely sized one
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_SIZE_PONG, (LPCTSTR)inet_ntoa( pHost->sin_addr ) );
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE; // Don't disconnect from the remote computer, though
+	}
+
+	// Read information from the pong packet
+	WORD nPort     = pPacket->ReadShortLE(); // 2 bytes, port number (do) of us? the remote computer? the computer that sent the packet?
+	DWORD nAddress = pPacket->ReadLongLE();  // 4 bytes, IP address
+	DWORD nFiles   = pPacket->ReadLongLE();  // 4 bytes, the number of files the source computer is sharing
+	DWORD nVolume  = pPacket->ReadLongLE();  // 4 bytes, the total size of all those files
+	UNUSED_ALWAYS(nFiles);
+	UNUSED_ALWAYS(nVolume);
+
+	CDiscoveryService * pService = DiscoveryServices.GetByAddress( &(pHost->sin_addr) , ntohs(pHost->sin_port), 3 );
+
+	// If that IP address is in our list of computers to not talk to, except ones in UHC list in discovery
+	if ( pService == NULL && Security.IsDenied( (IN_ADDR*)&nAddress ) )
+	{
+		// Record the packet as dropped, do nothing else, and leave now
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+	}
+
+	// If the pong is bigger than 14 bytes, and the remote compuer told us in the handshake it supports GGEP blocks
+	if ( pPacket->m_nLength > 14 && Settings.Gnutella1.EnableGGEP )
+	{
+		CGGEPBlock pGGEP;
+		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
+		if ( pGGEP.ReadFromPacket( pPacket ) )
+		{
+
+			CGGEPItem* pUP = pGGEP.Find( L"UP" );
+			CGGEPItem* pGUE = pGGEP.Find( L"GUE" );
+			CGGEPItem* pVC = pGGEP.Find( L"VC", 4 );
+			CString sVendorCode;
+			if ( pVC != NULL )
+			{
+				CHAR szaVendor[ 4 ];
+				pVC->Read( szaVendor,4 );
+				TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
+
+				sVendorCode.Format( _T("%s"), (LPCTSTR)szVendor);
+			}
+
+			if ( pUP != NULL && pGUE != NULL )
+			{
+				sVendorCode.Trim( _T(" ") );
+				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, (LPCTSTR)sVendorCode );
+				theApp.Message( MSG_DEBUG, _T("Got %s host through pong marked with GGEP GUE and UP (%s:%i)"), 
+					(LPCTSTR)sVendorCode, (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
+			}
+
+
+			int nCount = 0;
+			CGGEPItem* pIPPs = pGGEP.Find( L"IPP", 6 );
+
+			// We got a response to SCP extension, add hosts to cache if IPP extension exists
+			if ( pIPPs != NULL )
+			{
+				// The first four bytes represent the IP address and the last two represent the port
+				// The length of the number of bytes of IPP must be divisible by 6
+				if ( ( pIPPs->m_nLength - pIPPs->m_nPosition ) % 6 == 0 )
+				{
+					while ( pIPPs->m_nPosition != pIPPs->m_nLength )
+					{
+						DWORD nIPPAddress = 0;
+						WORD nIPPPort = 0;
+						pIPPs->Read( (void*)&nIPPAddress, 4 );
+						pIPPs->Read( (void*)&nIPPPort, 2 );
+						if ( nPort != 0 )
+						{
+							CHostCacheHost * pCachedHost;
+							theApp.Message( MSG_DEBUG, _T("Got Gnutella hosts through UDP pong (%s:%i)"), 
+								(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nIPPAddress ) ), nIPPPort ); 
+							pCachedHost = HostCache.Gnutella1.Add( (IN_ADDR*)&nIPPAddress, nIPPPort, 0, NULL );
+							// Add to separate cache to have a quick access only to GDNAs
+
+							if ( pCachedHost != NULL ) nCount++;
+						}
+					}
+				}
+
+				if ( pService != NULL )
+				{
+					pService->OnSuccess();
+					pService->m_nHosts = nCount;
+				}
+			}
+
+			/*
+			CGGEPItem* pPHCs = pGGEP.Find( L"PHC", 1 );
+			if (pPHCs)
+			{
+			CString strServices = pPHCs->ReadFrom()
+
+
+			for ( strServices += '\n' ; strServices.GetLength() ; )
+			{
+			CString strService = strServices.SpanExcluding( _T("\r\n") );
+			strServices = strServices.Mid( strService.GetLength() + 1 );
+
+			if ( strService.GetLength() > 0 )
+			{
+			if ( _tcsistr( strService, _T("server.met") ) == NULL )
+			Add( strService, CDiscoveryService::dsWebCache );
+			else
+			Add( strService, CDiscoveryService::dsServerMet, PROTOCOL_ED2K );
+			}
+			}
+			}
+			*/
+		}
+		else
+		{
+			// It's not, drop the packet, but stay connected
+			theApp.Message( MSG_ERROR, IDS_PROTOCOL_GGEP_REQUIRED, (LPCTSTR)inet_ntoa( pHost->sin_addr ) );
+			Statistics.Current.Gnutella1.Dropped++;
+			return TRUE;
+		}
+	}
+
+	return TRUE;
+}
 
 BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
@@ -1480,5 +1759,177 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 BOOL CDatagrams::OnCrawlAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
 	CrawlSession.OnCrawl( pHost, pPacket );
+	return TRUE;
+}
+
+// KHLA - KHL(Known Hub List) Answer, go over G2 UDP packet more like Gnutella2 version of UDPHC
+// Better put cache as security to prevent attack, such as flooding cache with invalid host addresses.
+BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
+{
+	if ( ! pPacket->m_bCompound ) return FALSE; // block execution of code for above reason
+
+	CDiscoveryService * pService = DiscoveryServices.GetByAddress( &(pHost->sin_addr) , ntohs(pHost->sin_port), 4 );
+
+	if ( pService == NULL && ( Security.IsDenied( &pHost->sin_addr ) || Network.IsFirewalledAddress( (LPVOID*)&pHost->sin_addr, TRUE ) ||
+		Network.IsReserved( &pHost->sin_addr ) ) ) return FALSE;
+
+	CHAR szType[9], szInner[9];
+	DWORD nLength, nInner, tAdjust = 0;
+	BOOL bCompound;
+	int nCount = 0;
+
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+
+	tAdjust = tNow;
+
+	while ( pPacket->ReadPacket( szType, nLength, &bCompound ) )
+	{
+		DWORD nNext = pPacket->m_nPosition + nLength;
+
+		if (	strcmp( szType, "NH" ) == 0 ||
+				strcmp( szType, "CH" ) == 0 )
+		{
+			DWORD nAddress = 0, tSeen = tNow;
+			WORD nPort = 0;
+			CString strVendor;
+
+			if ( bCompound || 0 == strcmp( szType, "NH" ) )
+			{
+				while ( pPacket->m_nPosition < nNext && pPacket->ReadPacket( szInner, nInner ) )
+				{
+					DWORD nNextX = pPacket->m_nPosition + nInner;
+
+					if ( strcmp( szInner, "NA" ) == 0 && nInner >= 6 )
+					{
+						nAddress = pPacket->ReadLongLE();
+						nPort = pPacket->ReadShortBE();
+					}
+					else if ( strcmp( szInner, "V" ) == 0 && nInner >= 4 )
+					{
+						strVendor = pPacket->ReadString( 4 );
+					}
+					else if ( strcmp( szInner, "TS" ) == 0 && nInner >= 4 )
+					{
+						tSeen = pPacket->ReadLongBE() + tAdjust;
+					}
+
+					pPacket->m_nPosition = nNextX;
+				}
+
+				if ( nLength >= 6 )
+				{
+					nAddress = pPacket->ReadLongLE();
+					nPort = pPacket->ReadShortBE();
+					if ( nLength >= 10 ) tSeen = pPacket->ReadLongBE() + tAdjust;
+				}
+
+			}
+
+			CHostCacheHost* pCached = HostCache.Gnutella2.Add(
+				(IN_ADDR*)&nAddress, nPort, tSeen, strVendor );
+
+
+			if ( pCached != NULL )
+			{
+				nCount++;
+				pCached->m_pVendor->m_sCode = strVendor;
+			}
+
+		}
+		else if ( strcmp( szType, "TS" ) == 0 && nLength >= 4 )
+		{
+			tAdjust = (LONG)tNow - (LONG)pPacket->ReadLongBE();
+		}
+
+		pPacket->m_nPosition = nNext;
+	}
+
+	if ( pService != NULL )
+	{
+		pService->OnSuccess();
+		pService->m_nHosts = nCount;
+	}
+
+	return TRUE;
+}
+
+// KHLR - KHL(Known Hub List) request, go over UDP packet more like UDPHC for G1.
+BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
+{
+	UNUSED_ALWAYS(pPacket);
+
+	if ( Security.IsDenied( &pHost->sin_addr ) || Network.IsFirewalledAddress( (LPVOID*)&pHost->sin_addr, TRUE ) ||
+		Network.IsReserved( &pHost->sin_addr ) ) return FALSE;
+
+	CG2Packet* pKHLA = CG2Packet::New( G2_PACKET_KHL_ANS, TRUE );
+
+	//	DWORD nBase = pPacket->m_nPosition;
+
+	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
+	{
+		CG2Neighbour* pNeighbour = (CG2Neighbour*)Neighbours.GetNext( pos );
+
+		if (pNeighbour->m_nProtocol == PROTOCOL_G2 &&
+			pNeighbour->m_nState == nrsConnected &&
+			pNeighbour->m_nNodeType != ntLeaf &&
+			pNeighbour->m_pHost.sin_addr.S_un.S_addr != Network.m_pHost.sin_addr.S_un.S_addr )
+		{
+			if ( pNeighbour->m_pVendor && pNeighbour->m_pVendor->m_sCode.GetLength() == 4 )
+			{
+				pKHLA->WritePacket( "NH", 14 + 6, TRUE );					// 4
+				pKHLA->WritePacket( "HS", 2 );								// 4
+				pKHLA->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );		// 2
+				pKHLA->WritePacket( "V", 4 );								// 3
+				pKHLA->WriteString( pNeighbour->m_pVendor->m_sCode );		// 5
+			}
+			else
+			{
+				pKHLA->WritePacket( "NH", 7 + 6, TRUE );					// 4
+				pKHLA->WritePacket( "HS", 2 );								// 4
+				pKHLA->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );		// 2
+				pKHLA->WriteByte( 0 );										// 1
+			}
+
+			pKHLA->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );	// 4
+			pKHLA->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );		// 2
+		}
+	}
+
+	int nCount = Settings.Gnutella2.KHLHubCount;
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+
+	pKHLA->WritePacket( "TS", 4 );
+	pKHLA->WriteLongBE( static_cast< DWORD >( time( NULL ) ) );
+
+	for ( CHostCacheHost* pCachedHost = HostCache.Gnutella2.GetNewest() ; pCachedHost && nCount > 0 ;
+			pCachedHost = pCachedHost->m_pPrevTime )
+	{
+		if ( pCachedHost->CanQuote( tNow ) &&
+			Neighbours.Get( &pCachedHost->m_pAddress ) == NULL &&
+			pCachedHost->m_pAddress.S_un.S_addr != Network.m_pHost.sin_addr.S_un.S_addr )
+		{
+
+			BOOL bCompound = ( pCachedHost->m_pVendor && pCachedHost->m_pVendor->m_sCode.GetLength() > 0 );
+			CG2Packet* pCHPacket = CG2Packet::New( "CH", bCompound );
+
+			if ( bCompound )
+			{
+				pCHPacket->WritePacket( "V", pCachedHost->m_pVendor->m_sCode.GetLength() );
+				pCHPacket->WriteString( pCachedHost->m_pVendor->m_sCode );
+			}
+
+			pCHPacket->WriteLongLE( pCachedHost->m_pAddress.S_un.S_addr );					// 4
+			pCHPacket->WriteShortBE( pCachedHost->m_nPort );								// 2
+			pCHPacket->WriteLongBE( pCachedHost->m_tSeen );									// 4
+			pKHLA->WritePacket( pCHPacket );
+			pCHPacket->Release();
+
+
+			nCount--;
+		}
+	}
+
+	Send( pHost, pKHLA );
+
 	return TRUE;
 }

@@ -392,17 +392,6 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	return TRUE;
 }
 
-namespace
-{
-struct CompareNums
-{
-	bool operator()(WORD lhs, WORD rhs) const
-	{
-		return lhs > rhs;
-	}
-};
-}
-
 // Takes a pointer to the bytes of a ping packet from the remote computer, sitting in the input buffer
 // Responds to it with a pong packet
 // Always returns true

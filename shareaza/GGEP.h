@@ -42,6 +42,7 @@ public:
 	CGGEPItem*	m_pLast;
 	BYTE*		m_pInput;
 	DWORD		m_nInput;
+	BYTE		m_nItemCount;
 
 // Operations
 public:
@@ -51,12 +52,18 @@ public:
 public:
 	BOOL		ReadFromPacket(CPacket* pPacket);
 	BOOL		ReadFromString(LPCTSTR pszData);
+	BOOL		ReadFromBuffer(LPVOID pszData, DWORD nLength);
 	void		Write(CPacket* pPacket);
 	void		Write(CString& str);
 	static		CGGEPBlock* FromPacket(CPacket* pPacket);
 protected:
-	BOOL	ReadInternal();
-	BYTE	ReadByte();
+	BOOL		ReadInternal();
+	BYTE		ReadByte();
+public:
+	inline BOOL	IsEmpty()
+	{
+		return ( m_nItemCount == 0 );
+	}
 
 	friend class CGGEPItem;
 };
@@ -76,24 +83,48 @@ public:
 	BYTE*		m_pBuffer;
 	DWORD		m_nLength;
 	DWORD		m_nPosition;
+	bool		m_bCOBS;
+	bool		m_bSmall;
 
 // Operations
 public:
-	BOOL	IsNamed(LPCTSTR pszID);
-	void	Read(LPVOID pData, int nLength);
-	BYTE	ReadByte();
-	void	Write(LPCVOID pData, int nLength);
-	void	WriteByte(BYTE nValue);
-	CString	ToString();
+	BOOL		IsNamed(LPCTSTR pszID);
+	void		Read(LPVOID pData, int nLength);
+	BYTE		ReadByte();
+	void		Write(LPCVOID pData, int nLength);
+	void		WriteByte(BYTE nValue);
+	CString		ToString();
+	void		WriteUTF8( LPCWSTR pszText);
+
 protected:
-	BOOL	ReadFrom(CGGEPBlock* pBlock, BYTE nFlags);
-	void	WriteTo(CPacket* pPacket, bool bSmall=true, bool bNeedCOBS=true);
-	void	WriteTo(CString& str, bool bSmall=true, bool bNeedCOBS=true);
+	BOOL		ReadFrom(CGGEPBlock* pBlock, BYTE nFlags);
+	void		WriteTo(CPacket* pPacket, bool bSmall=true, bool bNeedCOBS=true);
+	void		WriteTo(CString& str, bool bSmall=true, bool bNeedCOBS=true);
 protected:
-	BOOL	Encode(BOOL bIfZeros = FALSE);
-	BOOL	Decode();
-	BOOL	Deflate(BOOL bIfSmaller = FALSE);
-	BOOL	Inflate();
+	BOOL		Encode(BOOL bIfZeros = FALSE);
+	BOOL		Decode();
+	BOOL		Deflate(BOOL bIfSmaller = FALSE);
+	BOOL		Inflate();
+public:
+	inline void	SetCOBS(void)
+	{
+		m_bCOBS = true;
+	}
+
+	inline void	UnsetCOBS(void)
+	{
+		m_bCOBS = false;
+	}
+
+	inline void	SetSmall(void)
+	{
+		m_bSmall = true;
+	}
+
+	inline void	UnsetSmall(void)
+	{
+		m_bSmall = false;
+	}
 
 	friend class CGGEPBlock;
 };

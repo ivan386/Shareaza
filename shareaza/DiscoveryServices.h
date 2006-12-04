@@ -68,13 +68,15 @@ public:
 	BOOL				QueryForHosts(PROTOCOLID nProtocol);
 	DWORD				MetQueried() const;
 	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
+	CDiscoveryService*	GetByAddress( IN_ADDR* pAddress, WORD nPort, int nSubType );
 	void				Clear();
 
 public:
 	BOOL				Load();
 	BOOL				Save();
 	BOOL				Update();
-	BOOL				Execute(BOOL bSecondary = FALSE);
+	BOOL				Execute(BOOL bDiscovery /* = FALSE */, PROTOCOLID nProtocol);
+	int					ExecuteBootstraps( int nCount, BOOL bUDP = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL );
 	void				Stop();
 	void				OnGnutellaAdded(IN_ADDR* pAddress, int nCount);
 	void				OnGnutellaFailed(IN_ADDR* pAddress);
@@ -82,7 +84,6 @@ protected:
 	void				Serialize(CArchive& ar);
 	BOOL				EnoughServices() const;
 	void				AddDefaults();
-	int					ExecuteBootstraps(int nCount);
 	BOOL				RequestRandomService(PROTOCOLID nProtocol);	
 	CDiscoveryService*  GetRandomService(PROTOCOLID nProtocol);
 	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
@@ -123,6 +124,9 @@ public:
 	DWORD		m_nFailures;
 	DWORD		m_nAccessPeriod;
 	DWORD		m_nUpdatePeriod;
+	int			m_nSubType; // 0 = old BootStrap, 1 = Gnutella TCP, 2 = Gnutella2 TCP, 3 = Gnutella UDPHC, 4 = Gnutella2 UDPKHL
+	IN_ADDR		m_pAddress;
+	WORD		m_nPort;
 
 	enum
 	{

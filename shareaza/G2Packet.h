@@ -151,6 +151,8 @@ inline void CG2Packet::CG2PacketPool::FreePoolImpl(CPacket* pPacket)
 #define G2_PACKET_PONG				"PO"
 #define G2_PACKET_LNI				"LNI"
 #define G2_PACKET_KHL				"KHL"
+#define G2_PACKET_KHL_REQ			"KHLR"
+#define G2_PACKET_KHL_ANS			"KHLA"
 #define G2_PACKET_HAW				"HAW"
 #define G2_PACKET_QHT				"QHT"
 #define G2_PACKET_QUERY_KEY_REQ		"QKR"

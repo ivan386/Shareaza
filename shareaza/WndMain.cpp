@@ -47,6 +47,7 @@
 #include "Scheduler.h"
 #include "DlgHelp.h"
 #include "LibraryHistory.h"
+#include "DiscoveryServices.h"
 
 #include "WndMain.h"
 #include "WndChild.h"
@@ -1559,8 +1560,18 @@ void CMainWnd::OnNetworkG2()
 	}
 	else
 	{
-		Settings.Gnutella2.EnableToday = TRUE;
-		Network.Connect( TRUE );
+		if ( Network.IsConnected() )
+		{
+			Settings.Gnutella2.EnableToday = TRUE;
+			DiscoveryServices.Execute( FALSE, PROTOCOL_G2 );
+		}
+		else
+		{
+			Settings.Gnutella1.EnableToday = FALSE;
+			Settings.Gnutella2.EnableToday = TRUE;
+			Settings.eDonkey.EnableToday = FALSE;
+			Network.Connect( TRUE );
+		}
 	}
 }
 
@@ -1581,8 +1592,18 @@ void CMainWnd::OnNetworkG1()
 	}
 	else
 	{
-		Settings.Gnutella1.EnableToday = TRUE;
-		Network.Connect( TRUE );
+		if ( Network.IsConnected() )
+		{
+			Settings.Gnutella1.EnableToday = TRUE;
+			DiscoveryServices.Execute( FALSE, PROTOCOL_G1 );
+		}
+		else
+		{
+			Settings.Gnutella1.EnableToday = TRUE;
+			Settings.Gnutella2.EnableToday = FALSE;
+			Settings.eDonkey.EnableToday = FALSE;
+			Network.Connect( TRUE );
+		}
 	}
 }
 
@@ -1603,8 +1624,18 @@ void CMainWnd::OnNetworkED2K()
 	}
 	else
 	{
-		Settings.eDonkey.EnableToday = TRUE;
-		Network.Connect( TRUE );
+		if ( Network.IsConnected() )
+		{
+			Settings.eDonkey.EnableToday = TRUE;
+			DiscoveryServices.Execute( FALSE, PROTOCOL_G1 );
+		}
+		else
+		{
+			Settings.Gnutella1.EnableToday = FALSE;
+			Settings.Gnutella2.EnableToday = FALSE;
+			Settings.eDonkey.EnableToday = TRUE;
+			Network.Connect( TRUE );
+		}
 	}
 }
 

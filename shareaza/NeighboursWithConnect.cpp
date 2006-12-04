@@ -1274,16 +1274,16 @@ void CNeighboursWithConnect::Maintain()
 					 tNow - m_tPresent[ nProtocol ] >= 30 )    // We've been connected to a hub for more than 30 seconds
 				{
 					// We're looping for Gnutella2 right now
-					if ( nProtocol == PROTOCOL_G2 )
+					if ( nProtocol == PROTOCOL_G2 && Settings.Gnutella2.EnableToday )
 					{
 						// Execute the discovery services (do)
-						DiscoveryServices.Execute( TRUE );
+						if ( pCache->GetOldest() == NULL ) DiscoveryServices.Execute( TRUE, PROTOCOL_G2 );
 
 					} // We're looping for Gnutella right now
-					else if ( nProtocol == PROTOCOL_G1 )
+					else if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella1.EnableToday )
 					{
 						// If the Gnutella host cache is empty (do), execute discovery services (do)
-						if ( pCache->GetOldest() == NULL ) DiscoveryServices.Execute( TRUE );
+						if ( pCache->GetOldest() == NULL ) DiscoveryServices.Execute( TRUE, PROTOCOL_G1 );
 					}
 				}
 			}
