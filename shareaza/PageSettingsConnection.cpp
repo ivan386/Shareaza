@@ -173,7 +173,7 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 
 	UpdateData( FALSE );
 
-	m_wndInBind.EnableWindow( m_sInHost != strAutomatic);
+	m_wndInBind.EnableWindow( m_sInHost != strAutomatic );
 	
 	if ( theApp.m_bServer || theApp.m_dwWindowsVersion < 5 && !theApp.m_bWinME )
 	{
@@ -204,7 +204,11 @@ void CConnectionSettingsPage::OnEditChangeInboundHost()
 
 void CConnectionSettingsPage::OnCloseUpInboundHost()
 {
-	m_wndInBind.EnableWindow( m_wndInHost.GetCurSel() != 0 );
+	CString strAutomatic = GetInOutHostTranslation();
+	CString strSelection;
+	m_wndInHost.GetLBText( m_wndInHost.GetCurSel(), strSelection );
+
+	m_wndInBind.EnableWindow( strAutomatic != strSelection );
 }
 
 void CConnectionSettingsPage::OnChangeInboundPort()
