@@ -85,7 +85,6 @@
 #define IDD_FOLDER_PROPERTIES           186
 #define IDD_SETTINGS_MEDIA              187
 #define IDI_CHECKMARK                   188
-#define IDD_SETTINGS_INTERFACE          188
 #define IDD_SETTINGS_LIBRARY            189
 #define IDD_FILE_METADATA               190
 #define IDI_FILE                        191
