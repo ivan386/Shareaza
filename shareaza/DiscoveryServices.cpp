@@ -685,15 +685,6 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol)
 		BOOL	bG1Required = Settings.Gnutella1.EnableToday && !( nG1Hosts > 0 ) && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1);
 		BOOL	bG2Required = Settings.Gnutella2.EnableToday && !( nG2Hosts > 0 ) && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2);
 
-		// UDP services
-		if ( bG1Required && bG2Required )
-			return ExecuteBootstraps( 1, TRUE, PROTOCOL_NULL );
-		else if ( bG2Required )
-			return ExecuteBootstraps( 1, TRUE, PROTOCOL_G2 );
-		else if ( bG1Required )
-			return ExecuteBootstraps( 1, TRUE, PROTOCOL_G1 );
-
-		
 		if ( ( bG2Required ) && ( nG2Hosts < 25 ) && RequestRandomService( PROTOCOL_G2 ) )
 			return TRUE;
 		
@@ -776,7 +767,7 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 		CDiscoveryService* pService = GetNext( pos );
 		if ( pService->m_nType == CDiscoveryService::dsGnutella && 
 			( ( bGnutella1 && bGnutella2 ) || ( bGnutella1 == pService->m_bGnutella1 && bGnutella2 == pService->m_bGnutella2 ) ) &&
-			( ( ( pService->m_nSubType == 3 || pService->m_nSubType == 4 ) && bUDP ) ||
+			( ( ( pService->m_nSubType == 3 || pService->m_nSubType == 4 ) && bUDP && ( time( NULL ) - pService->m_tAccessed >= 300 ) ) ||
 			( ( pService->m_nSubType == 0 || pService->m_nSubType == 1 || pService->m_nSubType == 2 ) && !bUDP ) ) ) 
 				pRandom.Add( pService );
 	}
@@ -823,7 +814,11 @@ BOOL CDiscoveryServices::RequestRandomService(PROTOCOLID nProtocol)
 
 	if ( pService )
 	{
-		if ( pService->m_nType == CDiscoveryService::dsServerMet )
+		if ( pService->m_nType == CDiscoveryService::dsGnutella )
+		{
+			if ( pService->ResolveGnutella() ) return TRUE;
+		}
+		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
 		{
 			if ( RequestWebCache( pService, wcmServerMet, nProtocol ) ) return TRUE;
 		}
@@ -860,9 +855,15 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 				case PROTOCOL_G1:
 					if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella1 ) )
 						pServices.Add( pService );
+					else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == 3 ) &&
+						time( NULL ) - pService->m_tAccessed >= 300 )
+						pServices.Add( pService );
 					break;
 				case PROTOCOL_G2:
 					if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella2 ) )
+						pServices.Add( pService );
+					else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == 4 ) &&
+						time( NULL ) - pService->m_tAccessed >= 300 )
 						pServices.Add( pService );
 					break;
 				case PROTOCOL_ED2K:
