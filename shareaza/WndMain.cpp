@@ -1627,7 +1627,7 @@ void CMainWnd::OnNetworkED2K()
 		if ( Network.IsConnected() )
 		{
 			Settings.eDonkey.EnableToday = TRUE;
-			DiscoveryServices.Execute( FALSE, PROTOCOL_G1 );
+			DiscoveryServices.Execute( FALSE, PROTOCOL_ED2K );
 		}
 		else
 		{
