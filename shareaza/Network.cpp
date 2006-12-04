@@ -169,9 +169,9 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 {
 	if ( bAutoConnect && !m_bEnabled )
 	{
-		//Settings.Gnutella1.EnableToday = Settings.Gnutella1.EnableAlways;
-		//Settings.Gnutella2.EnableToday = Settings.Gnutella2.EnableAlways;
-		//Settings.eDonkey.EnableToday = Settings.eDonkey.EnableAlways;
+		Settings.Gnutella1.EnableToday = ( Settings.Gnutella1.EnableAlways ? TRUE : Settings.Gnutella1.EnableToday );
+		Settings.Gnutella2.EnableToday = ( Settings.Gnutella2.EnableAlways ? TRUE : Settings.Gnutella2.EnableToday );
+		Settings.eDonkey.EnableToday = ( Settings.eDonkey.EnableAlways ? TRUE : Settings.eDonkey.EnableToday );
 		DiscoveryServices.Execute( FALSE, PROTOCOL_NULL );
 	}
 
