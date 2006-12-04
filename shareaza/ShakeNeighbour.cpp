@@ -1031,7 +1031,8 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			// Add the host to the Gnutella2 host cache, noting it's a DNA hub
 			// adding host with "GDNA" will not help a lot, if the name is blank, raza might get the name through
 			// KHL over linked Neighbours.
-			if ( HostCache.Gnutella2.Add( strHost, 0, NULL ) ) ) nCount++;
+			if ( HostCache.Gnutella2.Add( strHost, 0, NULL ) )
+				nCount++;
 		}
 		// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
 		DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
