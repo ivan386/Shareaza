@@ -361,7 +361,7 @@ Other:
 			<button id="ID_HITMONITOR_SEARCH" text="Danach suchen"/>
 			<separator/>
 			<button id="ID_HITMONITOR_PAUSE" text="Anhalten"/>
-			<button id="ID_SEARCH_CLEAR" text="Anzeige löschen"/>
+			<button id="ID_HITMONITOR_CLEAR" text="Anzeige löschen"/>
 			<rightAlign/>
 			<label text="Filter:" tip="Schreiben Sie ein paar Wörter um die Ergebnisse zu filtern"/>
 			<control id="107" width="160"/>
@@ -914,7 +914,8 @@ Other:
 			<item id="ID_DOWNLOADS_HELP" text="_Hilfe..."/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
-			<item id="ID_DOWNLOADS_LAUNCH" text="V_orschau"/>
+			<item id="ID_DOWNLOADS_LAUNCH" text="V_orschau (lokal)"/>
+			<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Vo_rschau herunterladen"/>
 			<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Vorschau (Kopie)"/> -->
 			<item id="ID_DOWNLOADS_ENQUEUE" text="_In Wiedergabeliste aufnehmen"/>
 			<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Reze_nsionen anzeigen"/>
@@ -2247,6 +2248,7 @@ Other:
 		<tip id="ID_DOWNLOADS_MOVE_UP" message="Markierte(n) Download(s) eine höhere Priorität zuweisen." tip="Höhere Priorität"/>
 		<tip id="ID_DOWNLOADS_PAUSE" message="Markierte(n) Download(s) anhalten." tip="Anhalten"/>
 		<tip id="ID_DOWNLOADS_RATE" message="Den markierten Download bewerten."/>
+		<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Vorschaubild des ausgewählten Downloads herunterladen."/>
 		<tip id="ID_DOWNLOADS_RESUME" message="Markierte(n) Download(s) fortsetzen." tip="Download fortsetzen"/>
 		<tip id="ID_DOWNLOADS_SETTINGS" message="Downloadeinstellungen  anpassen..."/>
 		<tip id="ID_DOWNLOADS_SHARE" message="Diese teilweise heruntergeladene Datei freigeben."/>
@@ -3165,6 +3167,7 @@ Other:
 		<string id="20134" value="Choked"/>
 		<string id="20135" value="Next"/>
 		<string id="20136" value="Q"/>
+		<string id="20137" values="Quellen"/><!-- 3/10 sources, for e.g. -->
 		<string id="20200" value="Sonntag"/>
 		<string id="20201" value="Montag"/>
 		<string id="20202" value="Dienstag"/>
