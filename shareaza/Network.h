@@ -105,8 +105,8 @@ protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 public:
-	void		UDPHostCache( IN_ADDR* pAddress, WORD nPort );
-	void		UDPKnownHubCache( IN_ADDR* pAddress, WORD nPort );
+	void		UDPHostCache(IN_ADDR* pAddress, WORD nPort);
+	void		UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort);
 
 	friend class CHandshakes;
 	friend class CNeighbours;

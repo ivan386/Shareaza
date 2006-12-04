@@ -217,9 +217,7 @@ void CDiscoveryWnd::Update()
 				pItem->Set( 2, _T("0 - Never") );
 		}
 		
-		//if ( pService->m_nType == CDiscoveryService::dsWebCache ||
-		//	 pService->m_nType == CDiscoveryService::dsServerMet )
-		if (  pService->m_nType != CDiscoveryService::dsBlocked  )
+		if ( pService->m_nType != CDiscoveryService::dsBlocked )
 		{
 			pItem->Format( 4, _T("%u"), pService->m_nAccesses );
 			pItem->Format( 6, _T("%u"), pService->m_nFailures );

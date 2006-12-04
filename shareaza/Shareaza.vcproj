@@ -2074,9 +2074,6 @@
 					RelativePath="PageSettingsGnutella.cpp">
 				</File>
 				<File
-					RelativePath="PageSettingsInterface.cpp">
-				</File>
-				<File
 					RelativePath="PageSettingsLibrary.cpp">
 				</File>
 				<File
@@ -3254,9 +3251,6 @@
 				</File>
 				<File
 					RelativePath="PageSettingsGnutella.h">
-				</File>
-				<File
-					RelativePath="PageSettingsInterface.h">
 				</File>
 				<File
 					RelativePath="PageSettingsLibrary.h">
