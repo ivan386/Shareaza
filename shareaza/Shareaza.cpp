@@ -354,7 +354,7 @@ int CShareazaApp::ExitInstance()
 
 	{
 		CFirewall firewall;
-		if ( Settings.Connection.DeleteFirewallExeption && firewall.AccessWindowsFirewall() )
+		if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
 		{
 			// Remove application from the firewall exception list
 			CString strBinaryPath;

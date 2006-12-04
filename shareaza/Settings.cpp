@@ -181,7 +181,7 @@ void CSettings::Setup()
 	Add( _T("Connection.DetectConnectionReset"), &Connection.DetectConnectionReset, FALSE );
 	Add( _T("Connection.ForceConnectedState"), &Connection.ForceConnectedState, TRUE );
 	Add( _T("Connection.SlowConnect"), &Connection.SlowConnect, FALSE );
-	Add( _T("Connection.DeleteFirewallExeption"), &Connection.DeleteFirewallExeption, FALSE );
+	Add( _T("Connection.DeleteFirewallException"), &Connection.DeleteFirewallException, FALSE );
 	Add( _T("Connection.EnableUPnP"), &Connection.EnableUPnP, TRUE );
 	Add( _T("Connection.DeleteUPnPPorts"), &Connection.DeleteUPnPPorts, TRUE );
 	Add( _T("Connection.SkipWANPPPSetup"), &Connection.SkipWANPPPSetup, FALSE );
