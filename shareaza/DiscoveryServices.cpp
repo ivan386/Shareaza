@@ -846,33 +846,31 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 	{
 		CDiscoveryService* pService = GetNext( pos );
 
-		// If this one hasn't been recently accessed
-		if ( tNow - pService->m_tAccessed > pService->m_nAccessPeriod )
+		switch ( nProtocol )
 		{
-			// Then add it to the possible list (if it's of the right sort)
-			switch ( nProtocol )
-			{
-				case PROTOCOL_G1:
-					if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella1 ) )
-						pServices.Add( pService );
-					else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == 3 ) &&
-						time( NULL ) - pService->m_tAccessed >= 300 )
-						pServices.Add( pService );
-					break;
-				case PROTOCOL_G2:
-					if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella2 ) )
-						pServices.Add( pService );
-					else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == 4 ) &&
-						time( NULL ) - pService->m_tAccessed >= 300 )
-						pServices.Add( pService );
-					break;
-				case PROTOCOL_ED2K:
-					if ( pService->m_nType == CDiscoveryService::dsServerMet )
-						pServices.Add( pService );
-					break;
-				default:
-					break;
-			}
+		case PROTOCOL_G1:
+			if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella1 ) &&
+				( tNow - pService->m_tAccessed > pService->m_nAccessPeriod ) )
+				pServices.Add( pService );
+			else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == 3 ) &&
+				time( NULL ) - pService->m_tAccessed >= 300 )
+				pServices.Add( pService );
+			break;
+		case PROTOCOL_G2:
+			if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella2 ) &&
+				( tNow - pService->m_tAccessed > pService->m_nAccessPeriod ) )
+				pServices.Add( pService );
+			else if ( ( pService->m_nType == CDiscoveryService::dsGnutella ) && ( pService->m_nSubType == 4 ) &&
+				time( NULL ) - pService->m_tAccessed >= 300 )
+				pServices.Add( pService );
+			break;
+		case PROTOCOL_ED2K:
+			if ( pService->m_nType == CDiscoveryService::dsServerMet  &&
+				( tNow - pService->m_tAccessed > pService->m_nAccessPeriod ) )
+				pServices.Add( pService );
+			break;
+		default:
+			break;
 		}
 	}
 
