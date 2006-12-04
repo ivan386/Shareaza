@@ -44,6 +44,7 @@ public:
 	CComboBox	m_wndInSpeed;
 	CComboBox	m_wndOutSpeed;
 	CComboBox	m_wndInHost;
+	CComboBox	m_wndOutHost;
 	CButton	m_wndInBind;
 	CSpinButtonCtrl	m_wndTimeoutHandshake;
 	CSpinButtonCtrl	m_wndTimeoutConnection;
