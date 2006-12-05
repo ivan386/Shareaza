@@ -470,10 +470,13 @@ CString CPacket::ToASCII() const
 // Takes text that describes what happened
 void CPacket::Debug(LPCTSTR pszReason) const
 {
+	UNUSED_ALWAYS(pszReason);
 // Only include these lines in the program if it is being compiled in debug mode
 #ifdef _DEBUG
 
-	theApp.Message( MSG_DEBUG, pszReason );
+	// Do not display binary data in the system log
+	// Some conversions may crash application
+	// theApp.Message( MSG_DEBUG, pszReason );
 	CString strOutput;
 
 	// Loop the index i down each byte in the packet buffer
@@ -490,11 +493,6 @@ void CPacket::Debug(LPCTSTR pszReason) const
 	}
 
 	theApp.Message( MSG_DEBUG, LPCTSTR( strOutput ) );
-
-#else
-	pszReason;
-// Go back to including all the lines in the program
-#endif
 }
 
 //////////////////////////////////////////////////////////////////////
