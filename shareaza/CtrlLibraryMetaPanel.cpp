@@ -150,10 +150,10 @@ void CLibraryMetaPanel::Update()
 
 		BOOL bThumbWasCached = pFirst->m_bCachedPreview;
 		// Thumbnail was not extracted yet, reset the file flag
-		pFirst->m_bCachedPreview = ( m_bmThumb.m_hObject != NULL );
+		pFirst->m_bCachedPreview = TRUE; //( m_bmThumb.m_hObject != NULL );
 
 		// If the states differ, update the Library (the window may flicker)
-		if ( bThumbWasCached != pFirst->m_bCachedPreview && m_sThumb == m_sPath )
+		if ( bThumbWasCached != ( m_bmThumb.m_hObject != NULL ) && m_sThumb == m_sPath )
 		{
 			Library.Update();
 		}
