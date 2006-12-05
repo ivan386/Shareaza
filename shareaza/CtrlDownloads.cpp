@@ -150,7 +150,7 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 	m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_pProtocols.Add( &bmImages, RGB( 0, 255, 0 ) );
-	
+
 	m_nGroupCookie		= 0;
 	m_nFocus			= 0;
 	m_bCreateDragImage	= FALSE;
@@ -158,7 +158,7 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_bDrag				= FALSE;
 	m_pDeselect1		= NULL;
 	m_pDeselect2		= NULL;
-	
+
 	m_pbSortAscending	= new BOOL[COLUMNS_TO_SORT + 1];
 	for (int i=DOWNLOAD_COLUMN_TITLE; i <= DOWNLOAD_COLUMN_PERCENTAGE; i++)
 		m_pbSortAscending[i]=TRUE;
@@ -179,33 +179,33 @@ void CDownloadsCtrl::OnDestroy()
 void CDownloadsCtrl::InsertColumn(int nColumn, LPCTSTR pszCaption, int nFormat, int nWidth)
 {
 	HDITEM pColumn = {};
-	
+
 	pColumn.mask	= HDI_FORMAT | HDI_LPARAM | HDI_TEXT | HDI_WIDTH;
 	pColumn.cxy		= nWidth;
 	pColumn.pszText	= (LPTSTR)pszCaption;
 	pColumn.fmt		= nFormat;
 	pColumn.lParam	= nColumn;
-	
+
 	m_wndHeader.InsertItem( m_wndHeader.GetItemCount(), &pColumn );
 }
 
 void CDownloadsCtrl::SaveColumnState()
 {
 	HDITEM pItem = { HDI_WIDTH|HDI_ORDER };
-	
+
 	CString strOrdering, strWidths, strItem;
-	
+
 	for ( int nColumns = 0 ; m_wndHeader.GetItem( nColumns, &pItem ) ; nColumns++ )
 	{
 		m_wndHeader.GetItem( nColumns, &pItem );
-		
+
 		strItem.Format( _T("%.2x"), pItem.iOrder );
 		strOrdering += strItem;
-		
+
 		strItem.Format( _T("%.4x"), pItem.cxy );
 		strWidths += strItem;
 	}
-	
+
 	theApp.WriteProfileString( _T("ListStates"), _T("CDownloadCtrl.Ordering"), strOrdering );
 	theApp.WriteProfileString( _T("ListStates"), _T("CDownloadCtrl.Widths"), strWidths );
 }
@@ -213,32 +213,32 @@ void CDownloadsCtrl::SaveColumnState()
 BOOL CDownloadsCtrl::LoadColumnState()
 {
 	CString strOrdering, strWidths, strItem;
-	
+
 	strOrdering = theApp.GetProfileString( _T("ListStates"), _T("CDownloadCtrl.Ordering"), _T("") );
 	strWidths = theApp.GetProfileString( _T("ListStates"), _T("CDownloadCtrl.Widths"), _T("") );
-	
+
 	HDITEM pItem = { HDI_WIDTH|HDI_ORDER };
-	
+
 	if ( _tcsncmp( strWidths, _T("0000"), 4 ) == 0 &&
-		 _tcsncmp( strOrdering, _T("00"), 2 ) == 0 )
+		_tcsncmp( strOrdering, _T("00"), 2 ) == 0 )
 	{
 		strWidths = strWidths.Mid( 4 );
 		strOrdering = strOrdering.Mid( 2 );
 	}
-	
+
 	for ( int nColumns = 0 ; m_wndHeader.GetItem( nColumns, &pItem ) ; nColumns++ )
 	{
 		if ( strWidths.GetLength() < 4 || strOrdering.GetLength() < 2 ) return FALSE;
-		
+
 		_stscanf( strWidths.Left( 4 ), _T("%x"), &pItem.cxy );
 		_stscanf( strOrdering.Left( 2 ), _T("%x"), &pItem.iOrder );
-		
+
 		strWidths = strWidths.Mid( 4 );
 		strOrdering = strOrdering.Mid( 2 );
-		
+
 		m_wndHeader.SetItem( nColumns, &pItem );
 	}
-	
+
 	return TRUE;
 }
 
@@ -298,7 +298,7 @@ BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
 				return TRUE;
 			}
 		}
-		
+
 		return FALSE;
 	}
 }
@@ -306,25 +306,25 @@ BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
 void CDownloadsCtrl::SelectTo(int nIndex)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	
+
 	BOOL bShift		= GetAsyncKeyState( VK_SHIFT ) & 0x8000;
 	BOOL bControl	= GetAsyncKeyState( VK_CONTROL ) & 0x8000;
 	BOOL bRight		= GetAsyncKeyState( VK_RBUTTON ) & 0x8000;
-	
+
 	if ( ! bShift && ! bControl && ! bRight )
 	{
 		if ( m_pDeselect1 == NULL && m_pDeselect2 == NULL ) DeselectAll();
 	}
-	
+
 	Update();
-	
+
 	INT nMin, nMax;
 	GetScrollRange( SB_VERT, &nMin, &nMax );
 	nIndex = max( 0, min( nIndex, nMax - 1 ) );
-	
+
 	CDownloadSource* pSource;
 	CDownload* pDownload;
-	
+
 	if ( bShift )
 	{
 		if ( m_nFocus < nIndex )
@@ -345,14 +345,14 @@ void CDownloadsCtrl::SelectTo(int nIndex)
 				if ( pSource != NULL ) pSource->m_bSelected = TRUE;
 			}
 		}
-		
+
 		m_nFocus = nIndex;
 	}
 	else
 	{
 		m_nFocus = nIndex;
 		GetAt( m_nFocus, &pDownload, &pSource );
-		
+
 		if ( bControl )
 		{
 			if ( pDownload != NULL ) pDownload->m_bSelected = ! pDownload->m_bSelected;
@@ -364,14 +364,14 @@ void CDownloadsCtrl::SelectTo(int nIndex)
 			if ( pSource != NULL ) pSource->m_bSelected = TRUE;
 		}
 	}
-	
+
 	CRect rcClient;
 	GetClientRect( &rcClient );
-	
+
 	int nScroll = GetScrollPos( SB_VERT );
 	int nHeight = ( rcClient.bottom - HEADER_HEIGHT ) / ITEM_HEIGHT - 1;
 	nHeight = max( 0, nHeight );
-	
+
 	if ( m_nFocus < nScroll )
 	{
 		SetScrollPos( SB_VERT, m_nFocus );
@@ -433,7 +433,7 @@ void CDownloadsCtrl::SelectAll(CDownload* /*pDownload*/, CDownloadSource* /*pSou
 		for ( POSITION pos = Downloads.GetIterator() ; pos != NULL ; )
 		{
 			CDownload* pDownload = Downloads.GetNext( pos );
-			
+
 			if ( pDownload != NULL ) pDownload->m_bSelected = TRUE;
 		}
 	}
@@ -444,19 +444,19 @@ void CDownloadsCtrl::SelectAll(CDownload* /*pDownload*/, CDownloadSource* /*pSou
 void CDownloadsCtrl::DeselectAll(CDownload* pExcept1, CDownloadSource* pExcept2)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	
+
 	for ( POSITION pos = Downloads.GetIterator() ; pos != NULL ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
-		
+
 		if ( pDownload != pExcept1 ) pDownload->m_bSelected = FALSE;
-		
+
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource != NULL ; pSource = pSource->m_pNext )
 		{
 			if ( pSource != pExcept2 ) pSource->m_bSelected = FALSE;
 		}
 	}
-	
+
 	Invalidate();
 }
 
@@ -464,7 +464,7 @@ int CDownloadsCtrl::GetSelectedCount()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	int nCount = 0;
-	
+
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
@@ -472,36 +472,36 @@ int CDownloadsCtrl::GetSelectedCount()
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 			if ( pSource->m_bSelected ) nCount ++;
 	}
-	
+
 	pLock.Unlock();
-	
+
 	return nCount;
 }
 
 BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownloadSource** ppSource, int* pnIndex, RECT* prcItem)
 {
 	CRect rcClient, rcItem;
-	
+
 	GetClientRect( &rcClient );
 	rcClient.top += HEADER_HEIGHT;
-	
+
 	rcItem.CopyRect( &rcClient );
 	rcItem.left -= GetScrollPos( SB_HORZ );
 	rcItem.bottom = rcItem.top + ITEM_HEIGHT;
-	
+
 	int nScroll = GetScrollPos( SB_VERT );
 	int nIndex = 0;
-	
+
 	if ( ppDownload != NULL ) *ppDownload = NULL;
 	if ( ppSource != NULL ) *ppSource = NULL;
-	
+
 	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload && rcItem.top < rcClient.bottom ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
-		
+
 		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie ) continue;
 		if ( IsFiltered( pDownload ) ) continue;
-		
+
 		if ( nScroll > 0 )
 		{
 			nScroll --;
@@ -517,14 +517,14 @@ BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownl
 			}
 			rcItem.OffsetRect( 0, ITEM_HEIGHT );
 		}
-		
+
 		nIndex ++;
 		if ( ! pDownload->m_bExpanded ) continue;
-		
+
 		if ( Settings.Downloads.ShowSources )
 		{
 			int nSources = pDownload->GetSourceCount();
-			
+
 			if ( nScroll >= nSources )
 			{
 				nScroll -= nSources;
@@ -532,7 +532,7 @@ BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownl
 				continue;
 			}
 		}
-		
+
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 		{
 			if ( Settings.Downloads.ShowSources || ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nState > dtsConnecting ) )
@@ -552,12 +552,12 @@ BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownl
 					}
 					rcItem.OffsetRect( 0, ITEM_HEIGHT );
 				}
-				
+
 				nIndex ++;
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -565,25 +565,25 @@ BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource*
 {
 	/*int nScroll =*/ GetScrollPos( SB_VERT );
 	int nIndex = 0;
-	
+
 	if ( ppDownload != NULL ) *ppDownload = NULL;
 	if ( ppSource != NULL ) *ppSource = NULL;
-	
+
 	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
-		
+
 		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie ) continue;
 		if ( IsFiltered( pDownload ) ) continue;
-		
+
 		if ( nIndex++ == nSelect )
 		{
 			if ( ppDownload != NULL ) *ppDownload = pDownload;
 			return TRUE;
 		}
-		
+
 		if ( ! pDownload->m_bExpanded ) continue;
-		
+
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 		{
 			if ( Settings.Downloads.ShowSources || ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nState > dtsConnecting ) )
@@ -596,48 +596,48 @@ BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource*
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
 BOOL CDownloadsCtrl::GetRect(CDownload* pSelect, RECT* prcItem)
 {
 	CRect rcClient, rcItem;
-	
+
 	GetClientRect( &rcClient );
 	rcClient.top += HEADER_HEIGHT;
-	
+
 	rcItem.CopyRect( &rcClient );
 	rcItem.left -= GetScrollPos( SB_HORZ );
 	rcItem.bottom = rcItem.top + ITEM_HEIGHT;
-	
+
 	int nScroll = GetScrollPos( SB_VERT );
 	rcItem.OffsetRect( 0, ITEM_HEIGHT * -nScroll );
-	
+
 	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
-		
+
 		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie ) continue;
 		if ( IsFiltered( pDownload ) ) continue;
-		
+
 		if ( pDownload == pSelect )
 		{
 			*prcItem = rcItem;
 			return TRUE;
 		}
-		
+
 		rcItem.OffsetRect( 0, ITEM_HEIGHT );
-		
+
 		if ( ! pDownload->m_bExpanded ) continue;
-		
+
 		if ( Settings.Downloads.ShowSources )
 		{
 			int nSources = pDownload->GetSourceCount();
 			rcItem.OffsetRect( 0, ITEM_HEIGHT * nSources );
 			continue;
 		}
-		
+
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 		{
 			if ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nState > dtsConnecting )
@@ -646,7 +646,7 @@ BOOL CDownloadsCtrl::GetRect(CDownload* pSelect, RECT* prcItem)
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -655,21 +655,21 @@ void CDownloadsCtrl::MoveSelected(int nDelta)
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CList<CDownload*> pList;
 	POSITION pos;
-	
+
 	for ( pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
 	}
-	
+
 	pos = nDelta > 0 ? pList.GetTailPosition() : pList.GetHeadPosition();
-	
+
 	while ( pos )
 	{
 		CDownload* pDownload = nDelta > 0 ? pList.GetPrev( pos ) : pList.GetNext( pos );
 		Downloads.Move( pDownload, nDelta );
 	}
-	
+
 	Update();
 }
 
@@ -677,15 +677,15 @@ BOOL CDownloadsCtrl::DropShowTarget(CList< CDownload* >* /*pSel*/, const CPoint&
 {
 	CPoint ptLocal( ptScreen );
 	CRect rcClient;
-	
+
 	ScreenToClient( &ptLocal );
 	GetClientRect( &rcClient );
-	
+
 	BOOL bLocal = rcClient.PtInRect( ptLocal );
 	CDownload* pHit = NULL;
-	
+
 	if ( bLocal ) HitTest( ptLocal, &pHit, NULL, NULL, NULL );
-	
+
 	if ( pHit != m_pDragDrop )
 	{
 		CImageList::DragShowNolock( FALSE );
@@ -693,7 +693,7 @@ BOOL CDownloadsCtrl::DropShowTarget(CList< CDownload* >* /*pSel*/, const CPoint&
 		RedrawWindow();
 		CImageList::DragShowNolock( TRUE );
 	}
-	
+
 	return bLocal;
 }
 
@@ -701,29 +701,29 @@ BOOL CDownloadsCtrl::DropObjects(CList< CDownload* >* pSel, const CPoint& ptScre
 {
 	CPoint ptLocal( ptScreen );
 	CRect rcClient;
-	
+
 	ScreenToClient( &ptLocal );
 	GetClientRect( &rcClient );
-	
+
 	m_pDragDrop = NULL;
-	
+
 	if ( pSel == NULL || ! rcClient.PtInRect( ptLocal ) ) return FALSE;
-	
+
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pHit = NULL;
-	
+
 	HitTest( ptLocal, &pHit, NULL, NULL, NULL );
-	
+
 	for ( POSITION pos = pSel->GetHeadPosition() ; pos ; )
 	{
 		CDownload* pDownload = (CDownload*)pSel->GetNext( pos );
-		
+
 		if ( Downloads.Check( pDownload ) && pDownload != pHit )
 		{
 			Downloads.Reorder( pDownload, pHit );
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -734,17 +734,17 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 {
 	int nWidth = 0, nHeight = 0;
 	CRect rcClient;
-	
+
 	if ( nType != 1982 ) CWnd::OnSize( nType, cx, cy );
-	
+
 	GetClientRect( &rcClient );
-	
+
 	HDITEM pColumn = {};
 	pColumn.mask = HDI_WIDTH;
-	
+
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn ++ )
 		nWidth += pColumn.cxy;
-	
+
 	SCROLLINFO pScroll = {};
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE;
@@ -752,16 +752,16 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 	pScroll.nMax	= nWidth;
 	pScroll.nPage	= rcClient.right;
 	SetScrollInfo( SB_HORZ, &pScroll, TRUE );
-	
+
 	int nScroll = GetScrollPos( SB_HORZ );
 	m_wndHeader.SetWindowPos( NULL, -nScroll, 0, rcClient.right + nScroll, HEADER_HEIGHT, SWP_SHOWWINDOW );
-	
+
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	
+
 	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
-		
+
 		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie || IsFiltered( pDownload ) )
 		{
 			pDownload->m_bSelected = FALSE;
@@ -769,9 +769,9 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 				pSource->m_bSelected = FALSE;
 			continue;
 		}
-		
+
 		nHeight ++;
-		
+
 		if ( ! pDownload->m_bExpanded )
 		{
 		}
@@ -790,9 +790,9 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 			}
 		}
 	}
-	
+
 	pLock.Unlock();
-	
+
 	ZeroMemory( &pScroll, sizeof(pScroll) );
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE;
@@ -800,9 +800,9 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 	pScroll.nMax	= nHeight;
 	pScroll.nPage	= ( rcClient.bottom - HEADER_HEIGHT ) / ITEM_HEIGHT + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
-	
+
 	m_nFocus = min( m_nFocus, max( 0, nHeight - 1 ) );
-	
+
 	Invalidate();
 }
 
@@ -815,27 +815,27 @@ void CDownloadsCtrl::OnPaint()
 	CRect rcClient, rcItem;
 	CPaintDC dc( this );
 	if ( theApp.m_bRTL ) dc.SetTextAlign( TA_RTLREADING );
-	
+
 	GetClientRect( &rcClient );
 	rcClient.top += HEADER_HEIGHT;
-	
+
 	rcItem.CopyRect( &rcClient );
 	rcItem.left -= GetScrollPos( SB_HORZ );
 	rcItem.bottom = rcItem.top + ITEM_HEIGHT;
-	
+
 	int nScroll = GetScrollPos( SB_VERT );
 	int nIndex = 0;
-	
+
 	CFont* pfOld	= (CFont*)dc.SelectObject( &theApp.m_gdiFont );
 	BOOL bFocus		= ( GetFocus() == this );
-	
+
 	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload && rcItem.top < rcClient.bottom ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
-		
+
 		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie ) continue;
 		if ( IsFiltered( pDownload ) ) continue;
-		
+
 		if ( nScroll > 0 )
 		{
 			nScroll --;
@@ -845,15 +845,15 @@ void CDownloadsCtrl::OnPaint()
 			PaintDownload( dc, rcItem, pDownload, bFocus && ( m_nFocus == nIndex ), m_pDragDrop == pDownload );
 			rcItem.OffsetRect( 0, ITEM_HEIGHT );
 		}
-		
+
 		nIndex ++;
-		
+
 		if ( ! pDownload->m_bExpanded ) continue;
-		
+
 		if ( Settings.Downloads.ShowSources )
 		{
 			int nSources = pDownload->GetSourceCount();
-			
+
 			if ( nScroll >= nSources )
 			{
 				nScroll -= nSources;
@@ -861,7 +861,7 @@ void CDownloadsCtrl::OnPaint()
 				continue;
 			}
 		}
-		
+
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource && rcItem.top < rcClient.bottom ; pSource = pSource->m_pNext )
 		{
 			if ( Settings.Downloads.ShowSources || ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nState > dtsConnecting ) )
@@ -875,14 +875,14 @@ void CDownloadsCtrl::OnPaint()
 					PaintSource( dc, rcItem, pDownload, pSource, bFocus && ( m_nFocus == nIndex ) );
 					rcItem.OffsetRect( 0, ITEM_HEIGHT );
 				}
-				
+
 				nIndex ++;
 			}
 		}
 	}
-	
+
 	dc.SelectObject( pfOld );
-	
+
 	rcClient.top = rcItem.top;
 	if ( rcClient.top < rcClient.bottom )
 		dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
@@ -892,17 +892,17 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 {
 	COLORREF crNatural	= m_bCreateDragImage ? RGB( 250, 255, 250 ) : CoolInterface.m_crWindow;
 	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
-	
+
 	if ( bDrop )
 	{
 		CRect rcDrop( rcRow.left, rcRow.top, rcRow.right, rcRow.top + 2 );
 		dc.Draw3dRect( &rcDrop, 0, 0 );
 		dc.ExcludeClipRect( &rcDrop );
 	}
-	
+
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
-	
+
 	if ( pDownload->m_bVerify == TS_FALSE )
 		dc.SetTextColor( RGB( 255, 0, 0 ) );
 	else if ( pDownload->m_bSelected )
@@ -916,12 +916,12 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	}
 	else
 		dc.SetTextColor( CoolInterface.m_crText );
-	
+
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
 	HDITEM pColumn = {};
-	
+
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
-	
+
 	/*int nTransfers		=*/ pDownload->GetTransferCount();
 	int nSources		= pDownload->GetEffectiveSourceCount();
 	int nTotalSources	= pDownload->GetSourceCount();
@@ -932,7 +932,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		// There are reviews but no ratings- give it an "average" rating
 		nRating = 3;
 	}
-	
+
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn++ )
 	{
 		CString strText;
@@ -940,13 +940,13 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		CString strSource;
 		BOOL bDisplayText	= TRUE;
 		UINT nIconStyle;
-		
+
 		m_wndHeader.GetItemRect( nColumn, &rcCell );
 		rcCell.left		+= rcRow.left;
 		rcCell.right	+= rcRow.left;
 		rcCell.top		= rcRow.top;
 		rcCell.bottom	= rcRow.bottom;
-		
+
 		switch ( pColumn.lParam )
 		{
 		case DOWNLOAD_COLUMN_TITLE:
@@ -954,7 +954,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			if ( IsExpandable( pDownload ) )
 			{
 				ImageList_DrawEx( ShellIcons.GetHandle( 16 ), pDownload->m_bExpanded ? SHI_MINUS : SHI_PLUS, dc.GetSafeHdc(),
-						rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, ILD_NORMAL );
+					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, ILD_NORMAL );
 			}
 			else
 				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crNatural );
@@ -980,21 +980,21 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			}
 
 			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pDownload->m_sDisplayName, 16 ), dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, nIconStyle );
+				rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, nIconStyle );
 			rcCell.left += 16;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
 			rcCell.left += 1;
-			
+
 			strText = pDownload->GetDisplayName();
 			break;
-			
+
 		case DOWNLOAD_COLUMN_SIZE:
 			if ( pDownload->m_nSize < SIZE_UNKNOWN )
 				strText = Settings.SmartVolume( pDownload->m_nSize, FALSE );
 			else
 				LoadString( strText, IDS_STATUS_UNKNOWN );
 			break;
-			
+
 		case DOWNLOAD_COLUMN_PROGRESS:
 			if ( rcCell.Width() > 50 )
 			{
@@ -1012,11 +1012,13 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 			{
-				strText.Format( _T("%.0f%%"), pDownload->GetProgress() * 100.0 );
+				strText.Format( _T("%.6f"), pDownload->GetProgress() * 100.0 );
+				strText.ReleaseBuffer( strText.GetLength() - 7 );
+				strText += '%';
 			}
 
 			break;
-			
+
 		case DOWNLOAD_COLUMN_SPEED:
 			if ( ! pDownload->IsMoving() )
 			{
@@ -1024,11 +1026,11 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 					strText = Settings.SmartVolume( nSpeed, FALSE, TRUE );
 			}
 			break;
-			
+
 		case DOWNLOAD_COLUMN_STATUS:
 			strText = GetDownloadStatus( pDownload );
 			break;
-			
+
 		case DOWNLOAD_COLUMN_CLIENT:
 			if ( pDownload->IsCompleted() )
 			{
@@ -1057,9 +1059,16 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 			{
 				if ( rcCell.Width() > 50 )
-					strText.Format( _T("%.2f%%"), pDownload->GetProgress() * 100.0 );
+				{
+					strText.Format( _T("%.6f"), pDownload->GetProgress() * 100.0 );
+					strText.ReleaseBuffer( strText.GetLength() - 4 );
+				}
 				else
-					strText.Format( _T("%.0f%%"), pDownload->GetProgress() * 100.0 );
+				{
+					strText.Format( _T("%.6f"), pDownload->GetProgress() * 100.0 );
+					strText.ReleaseBuffer( strText.GetLength() - 7 );
+				}
+				strText += '%';
 			}
 			else
 				LoadString( strText, IDS_STATUS_UNKNOWN );
