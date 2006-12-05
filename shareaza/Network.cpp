@@ -182,7 +182,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	{
 		m_bAutoConnect = TRUE;
 		// Remove really old G1 hosts before trying to connect to G1
-		//if ( Settings.Gnutella1.EnableToday ) HostCache.Gnutella1.PruneOldHosts();
+		if ( Settings.Gnutella1.EnableToday ) HostCache.Gnutella1.PruneOldHosts();
 	}
 	
 	// If we are already connected, see if we need to query discovery services and exit.

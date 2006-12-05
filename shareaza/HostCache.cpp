@@ -115,7 +115,7 @@ BOOL CHostCache::Save()
 
 void CHostCache::Serialize(CArchive& ar)
 {
-	int nVersion = 10;
+	int nVersion = 11;
 	
 	if ( ar.IsStoring() )
 	{
@@ -868,6 +868,9 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 			ar << m_tKeyTime;
 			ar << m_nKeyHost;
 		}
+
+		ar << m_tFailure;
+		ar << m_nFailures;
 	}
 	else
 	{
@@ -926,6 +929,13 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 			ar >> m_tKeyTime;
 			ar >> m_nKeyHost;
 		}
+
+		if ( nVersion >= 11 )
+		{
+			ar >> m_tFailure;
+			ar >> m_nFailures;
+		}
+
 	}
 }
 
