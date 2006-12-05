@@ -211,8 +211,11 @@ void CShakeNeighbour::OnDropped(BOOL /*bError*/)
 	// We tried to connect the socket, but are still waiting for the socket connection to be made
 	if ( m_nState == nrsConnecting )
 	{
-		if ( m_bInitiated ) 
+		if ( m_bInitiated )
+		{
 			FailedNeighbours.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
+			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+		}
 		// Close the connection, citing refused as the reason it didn't work out
 		Close( IDS_CONNECTION_REFUSED );
 
@@ -225,7 +228,7 @@ void CShakeNeighbour::OnDropped(BOOL /*bError*/)
 		if ( m_bInitiated ) 
 		{
 			FailedNeighbours.Ban( &m_pHost.sin_addr, ban5Mins, FALSE );
-			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), false );
 		}
 		// Close the connection, citing dropped as the explanation of what happened
 		Close( IDS_CONNECTION_DROPPED );
@@ -280,6 +283,7 @@ BOOL CShakeNeighbour::OnRun()
 			DiscoveryServices.OnGnutellaFailed( &m_pHost.sin_addr );
 			// Connection to remote node never succeeded. The node is likely not online.
 			FailedNeighbours.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
+			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), false );
 			Close( IDS_CONNECTION_TIMEOUT_CONNECT );
 			return FALSE;
 		}
@@ -298,7 +302,7 @@ BOOL CShakeNeighbour::OnRun()
 			if ( m_bInitiated )
 			{
 				FailedNeighbours.Ban( &m_pHost.sin_addr, ban5Mins, FALSE );
-				HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+				HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nState == nrsRejected );
 			}
 			// Close the connection
 			Close( IDS_HANDSHAKE_TIMEOUT );

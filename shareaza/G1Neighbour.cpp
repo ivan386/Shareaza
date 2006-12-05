@@ -648,7 +648,7 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 
 		// We won't provide Shareaza hosts for G1 cache, since users may disable
 		// G1 and it will polute the host caches ( ??? )
-		if ( pHost && 
+		if ( pHost && pHost->m_nFailures == 0 &&
 			 ( ( bIPP && ( !pHost->m_pVendor || pHost->m_pVendor->m_sCode != L"GDNA" ) ) || 
 			   ( !bIPP && pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) ) )
 		{

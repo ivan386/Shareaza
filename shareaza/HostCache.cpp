@@ -184,12 +184,12 @@ void CHostCache::Remove(CHostCacheHost* pHost)
 	}
 }
 
-void CHostCache::OnFailure(IN_ADDR* pAddress, WORD nPort)
+void CHostCache::OnFailure(IN_ADDR* pAddress, WORD nPort, bool bRemove)
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
 		CHostCacheList* pCache = m_pList.GetNext( pos );
-		pCache->OnFailure( pAddress, nPort );
+		pCache->OnFailure( pAddress, nPort, bRemove );
 	}
 }
 
@@ -290,7 +290,8 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor)
 
 		time_t tNow;
 		time( &tNow );
-		if ( tNow < (time_t)tSeen ) tSeen = tNow;
+		if ( tNow < (time_t)tSeen ) 
+			tSeen = tNow;
 	}
 
 	nPos = strHost.Find( ':' );
@@ -495,7 +496,7 @@ void CHostCacheList::RemoveOldest()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList failure processor
 
-void CHostCacheList::OnFailure(IN_ADDR* pAddress, WORD nPort)
+void CHostCacheList::OnFailure(IN_ADDR* pAddress, WORD nPort, bool bRemove)
 {
 	BYTE nHash	= pAddress->S_un.S_un_b.s_b1
 				+ pAddress->S_un.S_un_b.s_b2
@@ -534,9 +535,14 @@ void CHostCacheList::OnFailure(IN_ADDR* pAddress, WORD nPort)
 			
 			pHost->m_tFailure = time( NULL );
 			*/
-			
-			Remove( pHost );
-			
+			if ( bRemove )
+				Remove( pHost );
+			else
+			{
+				pHost->m_tFailure = time( NULL );
+				pHost->m_nFailures++;
+			}
+	
 			break;
 		}
 	}
@@ -599,7 +605,7 @@ void CHostCacheList::PruneOldHosts()
 		else // ed2k
 			nExpire = 0;
 
-		if ( ( nExpire ) && ( tNow - pHost->m_tSeen > nExpire ) )
+		if ( ( nExpire ) && ( tNow - pHost->m_tSeen > nExpire ) || pHost->m_nFailures == 3 )
 		{
 			Remove( pHost );
 		}

@@ -1064,7 +1064,7 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 
 			// We won't provide Shareaza hosts for G1 cache, since users may disable
 			// G1 and it will pollute the host caches ( ??? )
-			if ( pHost && pHost->m_pVendor != VendorCache.m_pShareaza )
+			if ( pHost && pHost->m_pVendor != VendorCache.m_pShareaza && pHost->m_nFailures == 0 )
 			{
 				pItem->Write( (void*)&pHost->m_pAddress, 4 );
 				pItem->Write( (void*)&pHost->m_nPort, 2 );

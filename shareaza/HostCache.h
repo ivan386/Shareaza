@@ -57,7 +57,7 @@ public:
 	CHostCacheHost*	Find(IN_ADDR* pAddress) const;
 	BOOL			Check(CHostCacheHost* pHost) const;
 	void			Remove(CHostCacheHost* pHost);
-	void			OnFailure(IN_ADDR* pAddress, WORD nPort);
+	void			OnFailure(IN_ADDR* pAddress, WORD nPort, bool bRemove=true);
 	DWORD			CountHosts() const;
 	void			PruneByQueryAck();			// For G2
 	void			PruneOldHosts();			// For G1
@@ -174,7 +174,7 @@ public:
 	CHostCacheHost*	Find(IN_ADDR* pAddress) const;
 	BOOL			Check(CHostCacheHost* pHost) const;
 	void			Remove(CHostCacheHost* pHost);
-	void			OnFailure(IN_ADDR* pAddress, WORD nPort);
+	void			OnFailure(IN_ADDR* pAddress, WORD nPort, bool bRemove=true);
 
 // Inlines
 public:
