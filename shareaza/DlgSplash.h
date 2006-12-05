@@ -51,7 +51,7 @@ protected:
 public:
 	void	Step(LPCTSTR pszText);
 	void	Topmost();
-	void	Hide();
+	void	Hide(bool bDelete=true);
 protected:
 	void	DoPaint(CDC* pDC);
 

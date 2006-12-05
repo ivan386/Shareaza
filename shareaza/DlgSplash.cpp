@@ -128,7 +128,7 @@ void CSplashDlg::Topmost()
 	}
 }
 
-void CSplashDlg::Hide()
+void CSplashDlg::Hide(bool bDelete)
 {
 	m_sState = _T("Ready");
 	Invalidate();
@@ -139,7 +139,8 @@ void CSplashDlg::Hide()
 	}
 
 	DestroyWindow();
-	delete this;
+	if ( bDelete )
+		delete this;
 }
 
 LRESULT CSplashDlg::OnPrintClient(WPARAM wParam, LPARAM /*lParam*/)

@@ -69,7 +69,7 @@ static char THIS_FILE[] = __FILE__;
 // CShareazaCommandLineInfo
 
 CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
-	m_bSilentTray( FALSE )
+	m_bSilentTray(FALSE), m_bNoSplash(FALSE)
 {
 }
 
@@ -80,6 +80,11 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		if ( ! lstrcmpi( pszParam, _T("tray") ) )
 		{
 			m_bSilentTray = TRUE;
+			return;
+		}
+		if ( ! lstrcmpi( pszParam, _T("nosplash") ) )
+		{
+			m_bNoSplash = TRUE;
 			return;
 		}
 		else if ( ! lstrcmpi( pszParam, _T("basic") ) )
@@ -238,16 +243,16 @@ BOOL CShareazaApp::InitInstance()
 
 	// ***********
 	
-	CSplashDlg* dlgSplash = new CSplashDlg( 19, m_ocmdInfo.m_bSilentTray );
+	CSplashDlg* dlgSplash = NULL;
 
-	dlgSplash->Step( _T("Winsock") );
+	SplashStep( dlgSplash, L"Winsock" );
 		WSADATA wsaData;
 		if ( WSAStartup( 0x0101, &wsaData ) ) return FALSE;
 	
-	dlgSplash->Step( _T("Settings Database") );
+	SplashStep( dlgSplash, L"Settings Database" );
 		Settings.Load();
 
-	dlgSplash->Step( _T("Firewall/Router Setup") );
+	SplashStep( dlgSplash, L"Firewall/Router Setup" );
 	{
 		CFirewall firewall;
 		if ( firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
@@ -274,31 +279,31 @@ BOOL CShareazaApp::InitInstance()
 		catch ( CException* e ) { e->Delete(); }
 	}
 
-	dlgSplash->Step( _T("P2P URIs") );
+	SplashStep( dlgSplash, L"P2P URIs" );
 		CShareazaURL::Register( TRUE );
-	dlgSplash->Step( _T("Shell Icons") );
+	SplashStep( dlgSplash, L"Shell Icons" );
 		ShellIcons.Clear();
-	dlgSplash->Step( _T("Metadata Schemas") );
+	SplashStep( dlgSplash, L"Metadata Schemas" );
 		SchemaCache.Load();
-	dlgSplash->Step( _T("Vendor Data") );
+	SplashStep( dlgSplash, L"Vendor Data" );
 		VendorCache.Load();
-	dlgSplash->Step( _T("Profile") );
+	SplashStep( dlgSplash, L"Profile" );
 		MyProfile.Load();
-	dlgSplash->Step( _T("Query Manager") );
+	SplashStep( dlgSplash, L"Query Manager" );
 		QueryHashMaster.Create();
-	dlgSplash->Step( _T("Host Cache") );
+	SplashStep( dlgSplash, L"Host Cache" );
 		HostCache.Load();
-	dlgSplash->Step( _T("Discovery Services") );
+	SplashStep( dlgSplash, L"Discovery Services" );
 		DiscoveryServices.Load();
-	dlgSplash->Step( _T("Security Services") );
+	SplashStep( dlgSplash, L"Security Services" );
 		Security.Load();
 		AdultFilter.Load();
 		MessageFilter.Load();
-	dlgSplash->Step( _T("Scheduler") );
+	SplashStep( dlgSplash, L"Scheduler" );
 		Schedule.Load();
-	dlgSplash->Step( _T("Rich Documents") );
+	SplashStep( dlgSplash, L"Rich Documents" );
 		Emoticons.Load();
-	dlgSplash->Step( _T("GUI") );
+	SplashStep( dlgSplash, L"GUI" );
 		if ( m_ocmdInfo.m_bSilentTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
 		m_pMainWnd = new CMainWnd();
 		CoolMenu.EnableHook();
@@ -308,28 +313,39 @@ BOOL CShareazaApp::InitInstance()
 		}
 		else
 		{
-			dlgSplash->Topmost();
+			if ( dlgSplash ) 
+				dlgSplash->Topmost();
 			m_pMainWnd->ShowWindow( SW_SHOW );
 			m_pMainWnd->UpdateWindow();
 		}
 	// From this point translations are available and LoadString returns correct strings
-	dlgSplash->Step( _T("Download Manager") ); 
+	SplashStep( dlgSplash, L"Download Manager" ); 
 		Downloads.Load();
-	dlgSplash->Step( _T("Upload Manager") );
+	SplashStep( dlgSplash, L"Upload Manager" );
 		UploadQueues.Load();
-	dlgSplash->Step( _T("Library") );
+	SplashStep( dlgSplash, L"Library" );
 		Library.Load();
-	dlgSplash->Step( _T("Upgrade Manager") );
-	if ( VersionChecker.NeedToCheck() ) VersionChecker.Start( m_pMainWnd->GetSafeHwnd() );
+	SplashStep( dlgSplash, L"Upgrade Manager" );
+	if ( VersionChecker.NeedToCheck() ) 
+		VersionChecker.Start( m_pMainWnd->GetSafeHwnd() );
 
 	pCursor.Restore();
 
-	dlgSplash->Hide();
+	if ( dlgSplash )
+		dlgSplash->Hide();
 	m_bLive = TRUE;
 
 	ProcessShellCommand( m_ocmdInfo );
 
 	return TRUE;
+}
+
+void CShareazaApp::SplashStep(CSplashDlg*& dlg, LPCTSTR pszMessage)
+{
+	if ( m_ocmdInfo.m_bNoSplash ) return;
+	if ( dlg == NULL )
+		dlg = new CSplashDlg( 19, m_ocmdInfo.m_bSilentTray );
+	dlg->Step( pszMessage );
 }
 
 /////////////////////////////////////////////////////////////////////////////

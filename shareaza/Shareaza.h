@@ -27,6 +27,7 @@
 
 class CUPnPFinder;
 class CMainWnd;
+class CSplashDlg;
 
 class CShareazaCommandLineInfo : public CCommandLineInfo
 {
@@ -36,6 +37,7 @@ public:
 	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
 
 	BOOL m_bSilentTray;
+	BOOL m_bNoSplash;
 };
 
 class CShareazaApp : public CWinApp
@@ -106,6 +108,7 @@ protected:
 
 	void				GetVersionNumber();
 	void				InitResources();
+	void				SplashStep(CSplashDlg*& dlg, LPCTSTR pszMessage);
 
 	DECLARE_MESSAGE_MAP()
 };
