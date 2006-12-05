@@ -794,8 +794,13 @@ BOOL CShakeNeighbour::ReadResponse()
 			// Clip out just the part that says why we were rejected, document it, and set the state to rejected
 			strLine = strLine.Mid( 13 );
 			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
-			m_nState = nrsRejected; // Set the neigbour state in this CShakeNeighbour object to rejected
-
+			m_nState = nrsRejected; // Set the neighbour state in this CShakeNeighbour object to rejected
+			if ( strLine == _T("503 Not Good Leaf") || strLine == _T("503 We're Leaves") ||
+				 strLine == _T("503 Service unavailable") )
+			{
+				FailedNeighbours.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
+				HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), false );
+			}
 		} // It does say "200 OK", and the remote computer contacted us
 		else if ( ! m_bInitiated )
 		{
@@ -1494,7 +1499,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		// We'll set this flag to true if we need to tell the remote computer we're a leaf so we can connect
 		BOOL bFallback = FALSE;
 
-		// We are an ultrapeer or at least we are capable of becomming one
+		// We are an ultrapeer or at least we are capable of becoming one
 		if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
 		{
 			// The remote computer told us "X-Ultrapeer: False"
@@ -1588,7 +1593,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			DelayClose( IDS_HANDSHAKE_IAMLEAF ); // Send the buffer and then close the socket citing our being a leaf as the reason
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
-		} // We are an ultrapeer, or at least we are capable of becomming one
+		} // We are an ultrapeer, or at least we are capable of becoming one
 		else if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
 		{
 			// The remote computer told us it is a leaf
