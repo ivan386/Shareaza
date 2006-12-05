@@ -290,7 +290,7 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor)
 
 		time_t tNow;
 		time( &tNow );
-		if ( tNow < tSeen ) tSeen = tNow;
+		if ( tNow < (time_t)tSeen ) tSeen = tNow;
 	}
 
 	nPos = strHost.Find( ':' );
