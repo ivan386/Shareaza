@@ -493,6 +493,7 @@ void CPacket::Debug(LPCTSTR pszReason) const
 	}
 
 	theApp.Message( MSG_DEBUG, LPCTSTR( strOutput ) );
+#endif
 }
 
 //////////////////////////////////////////////////////////////////////
