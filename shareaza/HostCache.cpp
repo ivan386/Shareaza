@@ -1043,7 +1043,18 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 	if ( ! m_tConnect ) return TRUE;
 	if ( m_pAddress.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) return FALSE;
 	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
-	return tNow - m_tConnect >= Settings.Gnutella.ConnectThrottle;
+
+	// Check is host expired
+	bool bShouldTry = tNow - m_tSeen < Settings.Gnutella1.HostExpire;
+	// Check if it failed today
+	CTime pFailureTime( (time_t)m_tFailure );
+	CTime pTimeToday( (time_t)tNow );
+	bShouldTry &= ( pTimeToday.GetYear() != pFailureTime.GetYear() ) || 
+				  ( pTimeToday.GetMonth() != pFailureTime.GetMonth() ) ||
+				  ( pTimeToday.GetDay() != pFailureTime.GetDay() );
+	bShouldTry &= m_nFailures != 3;
+
+	return bShouldTry && tNow - m_tConnect >= Settings.Gnutella.ConnectThrottle;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -1244,6 +1244,8 @@ void CNeighboursWithConnect::Maintain()
 				{
 					// Make sure the connection we just made matches the protocol we're looping for right now
 					ASSERT( pHost->m_nProtocol == nProtocol );
+					pHost->m_nFailures = 0;
+					pHost->m_tFailure = 0;
 
 					// Count that we now have one more handshaking connection for this network
 					nCount[ nProtocol ][0]++;
