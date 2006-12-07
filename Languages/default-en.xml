@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.3.3"
+		version="2.2.3.4"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -4361,6 +4361,7 @@
 		<column from="Port" to=""/>
 		<column from="Client" to=""/>
 		<column from="Last Seen" to=""/>
+		<column from="Daily Uptime" to=""/>
 		<column from="Name" to=""/>
 		<column from="Description" to=""/>
 		<column from="CurUsers" to=""/>
