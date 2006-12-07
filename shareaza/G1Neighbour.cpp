@@ -708,11 +708,11 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			CGGEPItem* pGDNAs = pGGEP.Find( L"DIPP", 6 );
 			if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
 			// Read daily uptime
-			CGGEPItem* pDU = pGGEP.Find( L"DU", 2 );
-			WORD nUptime = 0;
+			CGGEPItem* pDU = pGGEP.Find( L"DU", 1 );
 			if ( pDU )
 			{
-				pDU->Read( (void*)&nUptime, 2 );
+				DWORD nUptime = 0;
+				pDU->Read( (void*)&nUptime, 1 );
 				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, time(NULL), NULL, nUptime );
 			}
 

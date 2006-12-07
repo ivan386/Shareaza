@@ -52,8 +52,8 @@ protected:
 	
 // Operations
 public:
-	CHostCacheHost*	Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, WORD nUptime = 0);
-	BOOL			Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, WORD nUptime = 0);
+	CHostCacheHost*	Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
+	BOOL			Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	CHostCacheHost*	Find(IN_ADDR* pAddress) const;
 	BOOL			Check(CHostCacheHost* pHost) const;
 	void			Remove(CHostCacheHost* pHost);
@@ -68,7 +68,7 @@ public:
 	int				ImportMET(CFile* pFile);
 	int				LoadDefaultED2KServers();
 protected:
-	CHostCacheHost*	AddInternal(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, WORD nUptime = 0);
+	CHostCacheHost*	AddInternal(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime = 0);
 	void			RemoveOldest();
 	
 // Inlines
@@ -125,7 +125,7 @@ public:
 	DWORD		m_tStats;			// ED2K stats UDP request
 	DWORD		m_tFailure;
 	DWORD		m_nFailures;
-	WORD		m_nDailyUptime;
+	DWORD		m_nDailyUptime;
 	DWORD		m_tCheckTime;
 
 // Attributes: Query Keys

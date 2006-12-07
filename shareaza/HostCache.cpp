@@ -253,7 +253,7 @@ void CHostCacheList::Clear()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host add
 
-CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, WORD nUptime)
+CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
 {
 	// Don't add invalid addresses
 	if ( ! nPort ) 
@@ -281,7 +281,7 @@ CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, 
 	return AddInternal( pAddress, nPort, tSeen, pszVendor, nUptime );
 }
 
-BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, WORD nUptime)
+BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
 {
 	CString strHost( pszHost );
 	
@@ -337,7 +337,7 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, WORD n
 		 return TRUE;
 
 	// Try adding it to the cache. (duplicates will be rejected)
-	AddInternal( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor );
+	AddInternal( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor, nUptime );
 	
 	return TRUE;
 }
@@ -345,7 +345,7 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, WORD n
 // This function actually add the remote client to the host cache. Private, but used by the public 
 // functions. No security checking, etc.
 CHostCacheHost* CHostCacheList::AddInternal(IN_ADDR* pAddress, WORD nPort, 
-											DWORD tSeen, LPCTSTR pszVendor, WORD nUptime)
+											DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
 {
 	// Check if we already have the host
 	BYTE nHash	= pAddress->S_un.S_un_b.s_b1
