@@ -785,7 +785,7 @@ BOOL CShakeNeighbour::ReadResponse()
 			if ( strLine == _T("503 Not Good Leaf") || strLine == _T("503 We're Leaves") ||
 				 strLine == _T("503 Service unavailable") )
 			{
-				HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_NULL, false );
+				HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, false );
 			}
 		} // It does say "200 OK", and the remote computer contacted us
 		else if ( ! m_bInitiated )
