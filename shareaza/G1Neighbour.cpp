@@ -696,6 +696,9 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 		return TRUE;
 	}
 
+	CString strVendorCode;
+	DWORD nUptime = 0;
+
 	// If the pong is bigger than 14 bytes, and the remote computer told us in the handshake it supports GGEP blocks
 	if ( pPacket->m_nLength > 14 && m_bGGEP )
 	{
@@ -703,53 +706,64 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
-			CGGEPItem* pIPPs = pGGEP.Find( L"IPP", 6 );
-			// GDNA has a bug in their code; they send DIP but receive DIPP (fixed in the latest versions)
-			CGGEPItem* pGDNAs = pGGEP.Find( L"DIPP", 6 );
-			if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
-			// Read daily uptime
-			CGGEPItem* pDU = pGGEP.Find( L"DU", 1 );
 			CGGEPItem* pUP = pGGEP.Find( L"UP" );
 
-			if ( pUP && pDU ) // Catch pongs and update host cache only from ultrapeers
+			if ( pUP ) // Catch pongs and update host cache only from ultrapeers
 			{
-				DWORD nUptime = 0;
-				pDU->Read( (void*)&nUptime, 4 );
-				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, time(NULL), NULL, nUptime );
-			}
-
-			// We got a response to SCP extension, add hosts to cache if IPP extension exists
-			while ( pUP && ( pIPPs || pGDNAs ) )
-			{
-				CGGEPItem* pItem = pIPPs ? pIPPs : pGDNAs;
-				CString str = pGDNAs ? L"GDNA" : L"G1";
-				// The first four bytes represent the IP address and the last two represent the port
-				// The length of the number of bytes of IPP must be divisible by 6
-				if ( ( pItem->m_nLength - pItem->m_nPosition ) % 6 == 0 )
+				// Read vendor code
+				if ( CGGEPItem* pVC = pGGEP.Find( L"VC", 4 ) )
 				{
-					while ( pItem->m_nPosition != pItem->m_nLength )
+					CHAR szaVendor[ 4 ];
+					pVC->Read( szaVendor, 4 );
+					TCHAR szVendor[ 5 ] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
+					strVendorCode.Format( _T("%s"), (LPCTSTR)szVendor);
+				}
+
+				// Read daily uptime
+				if ( CGGEPItem* pDU = pGGEP.Find( L"DU", 1 ) )
+				{
+					pDU->Read( (void*)&nUptime, 4 );
+				}
+
+				CGGEPItem* pIPPs = pGGEP.Find( L"IPP", 6 );
+				// GDNA has a bug in their code; they send DIP but receive DIPP (fixed in the latest versions)
+				CGGEPItem* pGDNAs = pGGEP.Find( L"DIPP", 6 );
+				if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
+
+				// We got a response to SCP extension, add hosts to cache if IPP extension exists
+				while ( pIPPs || pGDNAs )
+				{
+					CGGEPItem* pItem = pIPPs ? pIPPs : pGDNAs;
+					CString str = pGDNAs ? L"GDNA" : L"G1";
+					// The first four bytes represent the IP address and the last two represent the port
+					// The length of the number of bytes of IPP must be divisible by 6
+					if ( ( pItem->m_nLength - pItem->m_nPosition ) % 6 == 0 )
 					{
-						DWORD nAddress = 0;
-						WORD nPort = 0;
-						pItem->Read( (void*)&nAddress, 4 );
-						pItem->Read( (void*)&nPort, 2 );
-						if ( ! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) && 
-							 ! Network.IsReserved( (IN_ADDR*)&nAddress ) && nPort != 0 )
+						while ( pItem->m_nPosition != pItem->m_nLength )
 						{
-							theApp.Message( MSG_DEBUG, _T("Got %s host through pong (%s:%i)"), 
-								(LPCTSTR)str, (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
-							HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, pGDNAs ? (LPCTSTR)str : NULL );
-							// Add to separate cache to have a quick access only to GDNAs
-							if ( pGDNAs )
-								HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, (LPCTSTR)str );
+							DWORD nAddress = 0;
+							WORD nPort = 0;
+							pItem->Read( (void*)&nAddress, 4 );
+							pItem->Read( (void*)&nPort, 2 );
+							if ( ! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) && 
+								 ! Network.IsReserved( (IN_ADDR*)&nAddress ) && nPort != 0 )
+							{
+								theApp.Message( MSG_DEBUG, _T("Got %s host through pong (%s:%i)"), 
+									(LPCTSTR)str, (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
+								HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, pGDNAs ? (LPCTSTR)str : NULL );
+								// Add to separate cache to have a quick access only to GDNAs
+								if ( pGDNAs )
+									HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, (LPCTSTR)str );
+							}
 						}
 					}
+					if ( pIPPs )
+						pIPPs = NULL;
+					else if ( pGDNAs )
+						pGDNAs = NULL;
 				}
-				if ( pIPPs )
-					pIPPs = NULL;
-				else if ( pGDNAs )
-					pGDNAs = NULL;
 			}
+
 			if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
 			{
 				// Find the CG1Neighbour object that created this pong packet (do)
@@ -795,7 +809,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 	}
 
 	// If the IP address and port number in the pong is reachable
-	if ( ! bLocal && ! Network.IsFirewalledAddress( &nAddress, TRUE ) )
+	if (  ! bLocal && ! Network.IsFirewalledAddress( &nAddress, TRUE ) )
 	{
 		// If the pong hasn't hopped at all yet, and the address in it is the address of this remote computer
 		if ( pPacket->m_nHops == 0 && nAddress == m_pHost.sin_addr.S_un.S_addr )
@@ -805,13 +819,14 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			m_nFileVolume = nVolume;
 
 			// Add the IP address and port number to the Gnutella host cache of computers we can try to connect to
-			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, m_bShareaza ? SHAREAZA_VENDOR_T : NULL );
+			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, time(NULL), 
+									 m_bShareaza ? SHAREAZA_VENDOR_T : (LPCTSTR)strVendorCode, nUptime );
 
 		} // This pong packet wasn't made by the remote computer, just sent to us by it
 		else
 		{
 			// Add the IP address and port number to the Gnutella host cache of computers we can try to connect to
-			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
+			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, time(NULL), (LPCTSTR)strVendorCode, nUptime );
 		}
 	}
 
