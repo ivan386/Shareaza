@@ -170,7 +170,7 @@ void CShakeNeighbour::Close(UINT nError)
 			break;
 	}
 
-	HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_NULL, bRemove );
+	HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, bRemove );
 
 	// Have CNeighbour remove this object from the list, and put away the socket
 	CNeighbour::Close( nError );
