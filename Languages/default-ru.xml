@@ -11,7 +11,7 @@
 		author="dAbserver"
 		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
-		version="2.2.3.3"
+		version="2.2.3.4"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -4348,6 +4348,7 @@
 		<column from="Port" to="Порт"/>
 		<column from="Client" to="Клиент"/>
 		<column from="Last Seen" to="Когда встречался"/>
+		<column from="Daily Uptime" to="Работоспособность"/>
 		<column from="Name" to="Название"/>
 		<column from="Description" to="Описание"/>
 		<column from="CurUsers" to="Текущих пользов."/>
