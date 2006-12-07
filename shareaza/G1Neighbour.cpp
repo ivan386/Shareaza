@@ -709,7 +709,9 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
 			// Read daily uptime
 			CGGEPItem* pDU = pGGEP.Find( L"DU", 1 );
-			if ( pDU )
+			CGGEPItem* pUP = pGGEP.Find( L"UP" );
+
+			if ( pUP && pDU ) // Catch pongs and update host cache only from ultrapeers
 			{
 				DWORD nUptime = 0;
 				pDU->Read( (void*)&nUptime, 4 );
@@ -717,7 +719,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			}
 
 			// We got a response to SCP extension, add hosts to cache if IPP extension exists
-			while ( pIPPs || pGDNAs )
+			while ( pUP && ( pIPPs || pGDNAs ) )
 			{
 				CGGEPItem* pItem = pIPPs ? pIPPs : pGDNAs;
 				CString str = pGDNAs ? L"GDNA" : L"G1";
