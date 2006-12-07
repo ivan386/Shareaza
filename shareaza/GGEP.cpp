@@ -261,7 +261,8 @@ BOOL CGGEPItem::IsNamed(LPCTSTR pszID)
 
 void CGGEPItem::Read(LPVOID pData, int nLength)
 {
-	if ( m_nPosition + (DWORD)nLength > m_nLength ) AfxThrowUserException();
+	if ( m_nPosition + (DWORD)nLength > m_nLength )
+		nLength = m_nLength;
 	CopyMemory( pData, m_pBuffer + m_nPosition, nLength );
 	m_nPosition += nLength;
 }

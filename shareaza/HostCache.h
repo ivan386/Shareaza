@@ -136,7 +136,7 @@ public:
 
 // Operations
 public:
-	void		Update(WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, WORD nUptime = 0);
+	void		Update(WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
 //	CG1Packet*	ToG1Ping(int nTTL, const Hashes::Guid& oGUID);
 	CString		ToString() const;

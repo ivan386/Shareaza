@@ -1031,7 +1031,7 @@ void CHostCacheHost::Reset(IN_ADDR* pAddress)
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost update
 
-void CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, WORD nUptime)
+void CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
 {
 	m_nPort		= nPort;
 	m_tSeen		= tSeen > 1 ? tSeen : static_cast< DWORD >( time( NULL ) );

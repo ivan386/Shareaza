@@ -712,7 +712,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			if ( pDU )
 			{
 				DWORD nUptime = 0;
-				pDU->Read( (void*)&nUptime, 1 );
+				pDU->Read( (void*)&nUptime, 4 );
 				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, time(NULL), NULL, nUptime );
 			}
 
