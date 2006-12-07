@@ -704,9 +704,17 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
 			CGGEPItem* pIPPs = pGGEP.Find( L"IPP", 6 );
-			// GDNA has a bug in their code; they send DIP but receive DIPP
+			// GDNA has a bug in their code; they send DIP but receive DIPP (fixed in the latest versions)
 			CGGEPItem* pGDNAs = pGGEP.Find( L"DIPP", 6 );
 			if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
+			// Read daily uptime
+			CGGEPItem* pDU = pGGEP.Find( L"DU", 2 );
+			WORD nUptime = 0;
+			if ( pDU )
+			{
+				pDU->Read( (void*)&nUptime, 2 );
+				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, time(NULL), NULL, nUptime );
+			}
 
 			// We got a response to SCP extension, add hosts to cache if IPP extension exists
 			while ( pIPPs || pGDNAs )

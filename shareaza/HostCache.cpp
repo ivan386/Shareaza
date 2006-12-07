@@ -278,7 +278,7 @@ CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, 
 		return NULL;
 
 	// Try adding it to the cache. (duplicates will be rejected)
-	return AddInternal( pAddress, nPort, tSeen, pszVendor );
+	return AddInternal( pAddress, nPort, tSeen, pszVendor, nUptime );
 }
 
 BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, WORD nUptime)
@@ -1025,8 +1025,7 @@ void CHostCacheHost::Reset(IN_ADDR* pAddress)
 	m_nKeyValue		= 0;
 	m_nKeyHost		= 0;
 
-	m_bCheckedLocally = FALSE;
-	m_nDailyUptime = 0;
+	m_bCheckedLocally = TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1036,7 +1035,10 @@ void CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, WORD nUp
 {
 	m_nPort		= nPort;
 	m_tSeen		= tSeen > 1 ? tSeen : static_cast< DWORD >( time( NULL ) );
-	m_nDailyUptime = nUptime > 86400 ? 86400 : nUptime;
+	if ( nUptime )
+	{
+		m_nDailyUptime = nUptime > 86400 ? 86400 : nUptime;
+	}
 	
 	if ( pszVendor != NULL )
 	{
@@ -1101,7 +1103,7 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 	if ( ! m_tConnect ) return TRUE;
 	if ( m_pAddress.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) return FALSE;
 	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
-	if ( tNow - m_tFailure < 60 * 60 ) return FALSE;
+	if ( tNow - m_tFailure >= 60 * 60 ) return FALSE;
 
 	// Check is host expired
 	bool bShouldTry = tNow - m_tSeen < Settings.Gnutella1.HostExpire;
