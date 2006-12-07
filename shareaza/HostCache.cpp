@@ -1107,7 +1107,7 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 
 	// Check is host expired
 	bool bShouldTry = tNow - m_tSeen < Settings.Gnutella1.HostExpire;
-	bShouldTry &= m_nFailures != 3;
+	bShouldTry &= m_nFailures < 3;
 
 	return bShouldTry && tNow - m_tConnect >= Settings.Gnutella.ConnectThrottle;
 }
