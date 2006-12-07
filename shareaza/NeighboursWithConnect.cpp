@@ -1246,6 +1246,7 @@ void CNeighboursWithConnect::Maintain()
 					ASSERT( pHost->m_nProtocol == nProtocol );
 					pHost->m_nFailures = 0;
 					pHost->m_tFailure = 0;
+					pHost->m_bCheckedLocally = TRUE;
 
 					// Count that we now have one more handshaking connection for this network
 					nCount[ nProtocol ][0]++;
@@ -1342,12 +1343,5 @@ void CNeighboursWithConnect::Maintain()
 			// Disconnect from one leaf
 			if ( pNewest != NULL ) pNewest->Close(); // Close the connection
 		}
-	}
-
-	// If connected to Enough Ultrappeers and Hubs, then clear HandshakeBan list.
-	if (	( !Settings.Gnutella1.EnableToday || nCount[PROTOCOL_G1][ntHub] >= nLimit[PROTOCOL_G1][ntHub] ) &&
-			( !Settings.Gnutella2.EnableToday || nCount[PROTOCOL_G2][ntHub] >= nLimit[PROTOCOL_G2][ntHub] ) )
-	{
-		FailedNeighbours.Clear();
 	}
 }

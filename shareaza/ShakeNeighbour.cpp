@@ -170,12 +170,7 @@ void CShakeNeighbour::Close(UINT nError)
 			break;
 	}
 
-	HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), bRemove );
-	if ( m_bInitiated )
-	{
-		bool bShortBan = m_nState == IDS_HANDSHAKE_TIMEOUT || m_nState == IDS_CONNECTION_DROPPED;
-		FailedNeighbours.Ban( &m_pHost.sin_addr, bShortBan ? ban5Mins : ban2Hours, FALSE );
-	}
+	HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_NULL, bRemove );
 
 	// Have CNeighbour remove this object from the list, and put away the socket
 	CNeighbour::Close( nError );
@@ -790,8 +785,7 @@ BOOL CShakeNeighbour::ReadResponse()
 			if ( strLine == _T("503 Not Good Leaf") || strLine == _T("503 We're Leaves") ||
 				 strLine == _T("503 Service unavailable") )
 			{
-				FailedNeighbours.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
-				HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), false );
+				HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_NULL, false );
 			}
 		} // It does say "200 OK", and the remote computer contacted us
 		else if ( ! m_bInitiated )
@@ -882,7 +876,6 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			m_nState = nrsRejected;
 			// Ban them and ignore anything else in the headers
 			theApp.Message( MSG_ERROR, _T("Banning hostile client %s"), (LPCTSTR)m_sUserAgent );
-			FailedNeighbours.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
 			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
 			m_bBadClient = TRUE;
 			return FALSE;
@@ -895,7 +888,6 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 			m_nState = nrsRejected;
 			Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
-			FailedNeighbours.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
 			m_bBadClient = TRUE;
 			return FALSE;
 		}
@@ -1733,6 +1725,7 @@ void CShakeNeighbour::OnHandshakeComplete()
 	// If the remote computer is G2, or can send and understand Gnutella2 packets and isn't G1
 	if ( m_bG2Send && m_bG2Accept && m_nProtocol != PROTOCOL_G1 )
 	{
+		HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_G2, true );
 		// check if this connection is still needed at this point
 		if ( ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) ||
 			( m_nNodeType == ntLeaf && !Neighbours.NeedMoreLeafs( PROTOCOL_G2 ) ) )
@@ -1750,6 +1743,7 @@ void CShakeNeighbour::OnHandshakeComplete()
 	}
 	else if (  m_bG1Send && m_bG1Accept && m_nProtocol != PROTOCOL_G2 )
 	{
+		HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_G1, true );
 		// check if this connection is still needed at this point
 		if ( ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) ||
 			( m_nNodeType == ntLeaf && !Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) )
@@ -1862,6 +1856,7 @@ BOOL CShakeNeighbour::IsClientBad()
 	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )	
 	{
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 1.") ) )	return TRUE;
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 6.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 7.") ) )	return TRUE;
 		// Current versions okay
@@ -1881,6 +1876,8 @@ BOOL CShakeNeighbour::IsClientBad()
 	if ( _tcsistr( m_sUserAgent, _T("mxie") ) )			return TRUE;
 
 	if ( _tcsistr( m_sUserAgent, _T("BearShare MP3") ) ) return TRUE;
+
+	if ( _tcsistr( m_sUserAgent, _T("WinMX") ) )		return TRUE;
 
 	// Clients that over-query or otherwise cause problems
 	//if ( _tcsistr( m_sUserAgent, _T("") ) )			return TRUE;

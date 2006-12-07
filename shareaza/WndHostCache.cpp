@@ -92,7 +92,7 @@ CHostCacheWnd::~CHostCacheWnd()
 int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if ( Settings.Gnutella.HostCacheView < PROTOCOL_NULL || Settings.Gnutella.HostCacheView > PROTOCOL_ED2K )
-		Settings.Gnutella.HostCacheView = PROTOCOL_G2;
+		 Settings.Gnutella.HostCacheView = PROTOCOL_G2;
 
 	m_nMode = PROTOCOLID( Settings.Gnutella.HostCacheView );
 
@@ -122,10 +122,11 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 1, _T("Port"), LVCFMT_CENTER, 60, 0 );
 	m_wndList.InsertColumn( 2, _T("Client"), LVCFMT_CENTER, 100, 1 );
 	m_wndList.InsertColumn( 3, _T("Last Seen"), LVCFMT_CENTER, 130, 2 );
-	m_wndList.InsertColumn( 4, _T("Name"), LVCFMT_LEFT, 130, 3 );
-	m_wndList.InsertColumn( 5, _T("Description"), LVCFMT_LEFT, 130, 4 );
-	m_wndList.InsertColumn( 6, _T("CurUsers"), LVCFMT_CENTER, 60, 5 );
-	m_wndList.InsertColumn( 7, _T("MaxUsers"), LVCFMT_CENTER, 60, 6 );
+	m_wndList.InsertColumn( 4, _T("Daily Uptime"), LVCFMT_CENTER, 130, 3 );
+	m_wndList.InsertColumn( 5, _T("Name"), LVCFMT_LEFT, 130, 4 );
+	m_wndList.InsertColumn( 6, _T("Description"), LVCFMT_LEFT, 130, 5 );
+	m_wndList.InsertColumn( 7, _T("CurUsers"), LVCFMT_CENTER, 60, 6 );
+	m_wndList.InsertColumn( 8, _T("MaxUsers"), LVCFMT_CENTER, 60, 7 );
 
 	m_wndList.SetFont( &theApp.m_gdiFont );
 
@@ -206,11 +207,17 @@ void CHostCacheWnd::Update(BOOL bForce)
 		CTime pTime( (time_t)pHost->m_tSeen );
 		pItem->Set( 3, pTime.Format( _T("%Y-%m-%d %H:%M:%S") ) );
 		
-		pItem->Set( 4, pHost->m_sName );
-		pItem->Set( 5, pHost->m_sDescription );
+		if ( pHost->m_nDailyUptime )
+		{ 
+			pTime = (time_t)pHost->m_nDailyUptime;
+			pItem->Set( 4, pTime.Format( _T("%H:%M:%S") ) );
+
+		}
+		pItem->Set( 5, pHost->m_sName );
+		pItem->Set( 6, pHost->m_sDescription );
 		
-		if ( pHost->m_nUserCount ) pItem->Format( 6, _T("%u"), pHost->m_nUserCount );
-		if ( pHost->m_nUserLimit ) pItem->Format( 7, _T("%u"), pHost->m_nUserLimit );
+		if ( pHost->m_nUserCount ) pItem->Format( 7, _T("%u"), pHost->m_nUserCount );
+		if ( pHost->m_nUserLimit ) pItem->Format( 8, _T("%u"), pHost->m_nUserLimit );
 	}
 	
 	if ( !m_bAllowUpdates && !bForce ) return;

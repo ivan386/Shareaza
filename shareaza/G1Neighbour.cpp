@@ -648,7 +648,7 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 
 		// We won't provide Shareaza hosts for G1 cache, since users may disable
 		// G1 and it will polute the host caches ( ??? )
-		if ( pHost && pHost->m_nFailures == 0 &&
+		if ( pHost && pHost->m_nFailures == 0 && pHost->m_bCheckedLocally &&
 			 ( ( bIPP && ( !pHost->m_pVendor || pHost->m_pVendor->m_sCode != L"GDNA" ) ) || 
 			   ( !bIPP && pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) ) )
 		{
@@ -696,7 +696,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 		return TRUE;
 	}
 
-	// If the pong is bigger than 14 bytes, and the remote compuer told us in the handshake it supports GGEP blocks
+	// If the pong is bigger than 14 bytes, and the remote computer told us in the handshake it supports GGEP blocks
 	if ( pPacket->m_nLength > 14 && m_bGGEP )
 	{
 		CGGEPBlock pGGEP;

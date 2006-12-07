@@ -406,7 +406,7 @@ void CNeighboursWnd::OnNeighboursDisconnect()
 		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
 		{
 			HostCache.OnFailure( &pNeighbour->m_pHost.sin_addr,
-				htons( pNeighbour->m_pHost.sin_port ) );
+				htons( pNeighbour->m_pHost.sin_port ), pNeighbour->m_nProtocol );
 			
 			pNeighbour->Close();
 		}
