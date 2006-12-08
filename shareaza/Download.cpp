@@ -640,6 +640,9 @@ BOOL CDownload::Save(BOOL bFlush)
 	
 	if ( m_sDiskName.IsEmpty() )
 		GenerateDiskName();
+	if ( m_sSafeName.IsEmpty() )
+		m_sSafeName = CDownloadTask::SafeFilename( m_sDisplayName.Right( 64 ) );
+
 	::DeleteFile( m_sDiskName + _T(".sd.sav") );
 	
 	if ( ! pFile.Open( m_sDiskName + _T(".sd.sav"),

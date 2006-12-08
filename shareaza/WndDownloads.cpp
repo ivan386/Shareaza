@@ -980,6 +980,8 @@ void CDownloadsWnd::OnDownloadsLaunch()
 			{
 				if ( pDownload->CanPreview() )
 				{
+					if ( pDownload->m_sSafeName.IsEmpty() )
+						pDownload->m_sSafeName = CDownloadTask::SafeFilename( pDownload->m_sDisplayName.Right( 64 ) );
 					pDownload->Preview( &pLock );
 				}
 				else
