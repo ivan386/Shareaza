@@ -127,7 +127,12 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 6, _T("Description"), LVCFMT_LEFT, 130, 5 );
 	m_wndList.InsertColumn( 7, _T("CurUsers"), LVCFMT_CENTER, 60, 6 );
 	m_wndList.InsertColumn( 8, _T("MaxUsers"), LVCFMT_CENTER, 60, 7 );
-
+	m_wndList.InsertColumn( 9, _T("Failures"), LVCFMT_CENTER, 60, 7 );
+#ifdef _DEBUG
+	m_wndList.InsertColumn( 10, _T("Key"), LVCFMT_RIGHT, 0, 7 );
+	m_wndList.InsertColumn( 11, _T("Query"), LVCFMT_RIGHT, 0, 8 );
+	m_wndList.InsertColumn( 12, _T("Ack"), LVCFMT_RIGHT, 0, 9 );
+#endif
 	m_wndList.SetFont( &theApp.m_gdiFont );
 
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
@@ -164,8 +169,11 @@ void CHostCacheWnd::Update(BOOL bForce)
 	if ( ! pLock.Lock( 50 ) ) return;
 	
 	m_wndList.ModifyStyle( WS_VISIBLE, 0 );
-	
-	CLiveList pLiveList( 8 );
+#ifdef _DEBUG	
+	CLiveList pLiveList( 13 );
+#else
+	CLiveList pLiveList( 10 );
+#endif
 	
 	PROTOCOLID nEffective = m_nMode ? m_nMode : PROTOCOL_G2;
 
@@ -192,17 +200,12 @@ void CHostCacheWnd::Update(BOOL bForce)
 		pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
 		pItem->Format( 1, _T("%hu"), pHost->m_nPort );
 		
-#ifdef _DEBUG
-		pItem->Format( 2, _T("K:%u A:%u Q:%u"),
-			pHost->m_nKeyValue, pHost->m_tAck, pHost->m_tQuery );
-#else
 		if ( pHost->m_pVendor )
 			pItem->Set( 2, pHost->m_pVendor->m_sName );
 		else if ( pHost->m_nProtocol == PROTOCOL_G2 )
 			pItem->Set( 2, _T("(Gnutella2)") );
 		else if ( pHost->m_nProtocol == PROTOCOL_ED2K )
 			pItem->Set( 2, _T("(eDonkey Server)") );
-#endif
 		
 		CTime pTime( (time_t)pHost->m_tSeen );
 		pItem->Set( 3, pTime.Format( _T("%Y-%m-%d %H:%M:%S") ) );
@@ -218,6 +221,12 @@ void CHostCacheWnd::Update(BOOL bForce)
 		
 		if ( pHost->m_nUserCount ) pItem->Format( 7, _T("%u"), pHost->m_nUserCount );
 		if ( pHost->m_nUserLimit ) pItem->Format( 8, _T("%u"), pHost->m_nUserLimit );
+		if ( pHost->m_nFailures ) pItem->Format( 9, _T("%u"), pHost->m_nFailures );
+#ifdef _DEBUG
+		if ( pHost->m_nKeyValue ) pItem->Format( 10, _T("%u"), pHost->m_nKeyValue);
+		if ( pHost->m_tQuery ) pItem->Format( 11, _T("%u"), pHost->m_tQuery );
+		if ( pHost->m_tAck ) pItem->Format( 12, _T("%u"), pHost->m_tAck);
+#endif
 	}
 	
 	if ( !m_bAllowUpdates && !bForce ) return;
@@ -272,8 +281,8 @@ void CHostCacheWnd::OnTimer(UINT_PTR nIDEvent)
 		CHostCacheList* pCache = HostCache.ForProtocol( nEffective );
 		DWORD tTicks = GetTickCount();
 
-		// Wait 5 seconds before refreshing; do not force updates
-		if ( ( pCache->m_nCookie != m_nCookie ) && ( ( tTicks - tLastUpdate ) > 5000 ) ) Update();
+		// Wait 10 seconds before refreshing; do not force updates
+		if ( ( pCache->m_nCookie != m_nCookie ) && ( ( tTicks - tLastUpdate ) > 10000 ) ) Update();
 	}
 }
 

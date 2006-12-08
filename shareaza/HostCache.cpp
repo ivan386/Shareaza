@@ -269,12 +269,12 @@ CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, 
 	if ( ( Settings.Connection.IgnoreOwnIP ) && ( Network.m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr ) )
 		return NULL;
 
-	// Check security settings, don't add blocked IPs
-	if ( Security.IsDenied( pAddress ) )
-		return NULL;
-
 	// check against IANA Reserved address.
 	if ( Network.IsReserved( pAddress ) )
+		return NULL;
+
+	// Check security settings, don't add blocked IPs
+	if ( Security.IsDenied( pAddress ) )
 		return NULL;
 
 	// Try adding it to the cache. (duplicates will be rejected)
@@ -328,12 +328,12 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 	if ( ( Settings.Connection.IgnoreOwnIP ) && ( Network.m_pHost.sin_addr.S_un.S_addr == nAddress ) )
 		 return TRUE;
 
-	// Check security settings, don't add blocked IPs
-	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
-		 return TRUE;
-
 	// check against IANA Reserved address.
 	if ( Network.IsReserved( (IN_ADDR*)&nAddress ) )
+		 return TRUE;
+
+	// Check security settings, don't add blocked IPs
+	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
 		 return TRUE;
 
 	// Try adding it to the cache. (duplicates will be rejected)
@@ -377,7 +377,7 @@ CHostCacheHost* CHostCacheList::AddInternal(IN_ADDR* pAddress, WORD nPort,
 		
 		pHost->Reset( pAddress );
 	}
-	else if ( time( NULL ) - pHost->m_tFailure >= 180 )
+	else if ( time( NULL ) - pHost->m_tFailure >= 300 )
 	{
 		if ( pHost->m_pPrevTime )
 			pHost->m_pPrevTime->m_pNextTime = pHost->m_pNextTime;
@@ -521,9 +521,10 @@ void CHostCacheList::OnFailure(IN_ADDR* pAddress, WORD nPort, bool bRemove)
 		if ( pHost->m_pAddress.S_un.S_addr == pAddress->S_un.S_addr &&
 			 ( ! nPort || pHost->m_nPort == nPort ) )
 		{
+			pHost->m_nFailures++;
+
 			if ( pHost->m_bPriority ) return;
 			
-			/*
 			if ( pHost->m_pPrevTime )
 				pHost->m_pPrevTime->m_pNextTime = pHost->m_pNextTime;
 			else
@@ -544,14 +545,11 @@ void CHostCacheList::OnFailure(IN_ADDR* pAddress, WORD nPort, bool bRemove)
 			
 			m_pOldest = pHost;
 			
-			pHost->m_tFailure = time( NULL );
-			*/
-			if ( bRemove )
+			if ( bRemove || pHost->m_nFailures > 2 )
 				Remove( pHost );
 			else
 			{
 				pHost->m_tFailure = time( NULL );
-				pHost->m_nFailures++;
 				pHost->m_bCheckedLocally = TRUE;
 			}
 	
@@ -644,7 +642,7 @@ void CHostCacheList::PruneOldHosts()
 		else // ed2k
 			nExpire = 0;
 
-		if ( ( nExpire ) && ( tNow - pHost->m_tSeen > nExpire ) || pHost->m_nFailures == 3 )
+		if ( ( nExpire ) && ( tNow - pHost->m_tSeen > nExpire ) || pHost->m_nFailures > 2 )
 		{
 			Remove( pHost );
 		}
@@ -1103,7 +1101,7 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 	if ( ! m_tConnect ) return TRUE;
 	if ( m_pAddress.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) return FALSE;
 	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
-	if ( tNow - m_tFailure >= 60 * 60 ) return FALSE;
+	if ( tNow - m_tFailure >= 300 ) return FALSE;
 
 	// Check is host expired
 	bool bShouldTry = tNow - m_tSeen < Settings.Gnutella1.HostExpire;

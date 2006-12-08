@@ -916,7 +916,7 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 	}
 
 	// Read the vendor, function, and version numbers from the packet payload
-	DWORD nVendor  = pPacket->ReadLongLE();  // 4 bytes, vendor code in ASCII characters, like "RAZA" (do)
+	DWORD nVendor  = pPacket->ReadLongBE();  // 4 bytes, vendor code in ASCII characters, like "RAZA" (do)
 	WORD nFunction = pPacket->ReadShortLE(); // 2 bytes, function (do)
 	WORD nVersion  = pPacket->ReadShortLE(); // 2 bytes, version (do)
 
@@ -936,16 +936,16 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 			pReply->WriteLongLE( 0 );
 			pReply->WriteShortLE( 0xFFFE );
 			pReply->WriteShortLE( 1 );
-			pReply->WriteLongLE( 'AZAR' );
-			pReply->WriteLongLE( 'RAEB' );
+			pReply->WriteLongBE( 'RAZA' );
+			pReply->WriteLongBE( 'BEAR' );
 			Send( pReply ); // Send the reply packet to the remote computer
 
 		} // Vendor is the ASCII text "RAZA" for Shareaza
-		else if ( nVendor == 'AZAR' ) // It's backwards because of network byte order
+		else if ( nVendor == 'RAZA' ) // It's backwards because of network byte order
 		{
 			// Function code query for "RAZA" (do)
 			CG1Packet* pReply = CG1Packet::New( pPacket->m_nType, 1, pPacket->m_oGUID ); // Create a reply packet
-			pReply->WriteLongLE( 'AZAR' );
+			pReply->WriteLongBE( 'RAZA' );
 			pReply->WriteShortLE( 0xFFFE );
 			pReply->WriteShortLE( 1 );
 			pReply->WriteShortLE( 0x0001 );
@@ -957,11 +957,11 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 			Send( pReply ); // Send the reply packet to the remote computer
 
 		} // Vendor is the ASCII text "BEAR" for BearShare
-		else if ( nVendor == 'RAEB' ) // It's backwards because of network byte order
+		else if ( nVendor == 'BEAR' ) // It's backwards because of network byte order
 		{
 			// Function code query for "BEAR"
 			CG1Packet* pReply = CG1Packet::New( pPacket->m_nType, 1, pPacket->m_oGUID ); // Create a reply packet
-			pReply->WriteLongLE( 'RAEB' );
+			pReply->WriteLongBE( 'BEAR' );
 			pReply->WriteShortLE( 0xFFFE );
 			pReply->WriteShortLE( 1 );
 			pReply->WriteShortLE( 0x0004 );
@@ -974,7 +974,7 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 		}
 
 	} // The vendor is "RAZA" Shareaza, and the function isn't 0xFFFF
-	else if ( nVendor == 'AZAR' )
+	else if ( nVendor == 'RAZA' )
 	{
 		// Switch on what the function is
 		switch ( nFunction )
@@ -988,7 +988,7 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 			{
 				// Send a response packet (do)
 				CG1Packet* pReply = CG1Packet::New( pPacket->m_nType, 1, pPacket->m_oGUID );
-				pReply->WriteLongLE( 'AZAR' );
+				pReply->WriteLongBE( 'RAZA' );
 				pReply->WriteShortLE( 0x0002 );
 				pReply->WriteShortLE( 1 );
 				pReply->WriteShortLE( theApp.m_nVersion[0] );
@@ -1030,7 +1030,7 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 		}
 
 	} // The vendor is "BEAR" for BearShare
-	else if ( nVendor == 'RAEB' )
+	else if ( nVendor == 'BEAR' )
 	{
 		// Sort by the function number to see what the vendor specific packet from BearShare wants
 		switch ( nFunction )
@@ -1074,7 +1074,7 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 			{
 				// Send a response packet (do)
 				CG1Packet* pReply = CG1Packet::New( pPacket->m_nType, 1, pPacket->m_oGUID );
-				pReply->WriteLongLE( 'RAEB' );
+				pReply->WriteLongBE( 'BEAR' );
 				pReply->WriteShortLE( 0x000C );
 				pReply->WriteShortLE( 1 );
 				pReply->WriteShortLE( SearchManager.OnQueryStatusRequest( pPacket->m_oGUID ) );
@@ -1088,6 +1088,18 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 
 			break;
 		}
+	}
+	else if ( nVendor == 'LIME' )
+	{
+		//TODO
+	}
+	else if ( nVendor == 'GTKG' )
+	{
+		//TODO
+	}
+	else if ( nVendor == 'GNUC' )
+	{
+		//TODO
 	}
 
 	// Always return true to stay connected to the remote computer
@@ -1123,7 +1135,7 @@ void CG1Neighbour::SendClusterAdvisor()
 			{
 				// Make a new vendor specific packet
 				pPacket = CG1Packet::New( G1_PACKET_VENDOR, 1 );
-				pPacket->WriteLongLE( 'AZAR' );  // The vendor code is "RAZA" because we are running Shareaza
+				pPacket->WriteLongBE( 'RAZA' );  // The vendor code is "RAZA" because we are running Shareaza
 				pPacket->WriteShortLE( 0x0003 ); // 3 is the code for a cluster advisor packet
 				pPacket->WriteShortLE( 1 );      // Version number is 1
 				pPacket->WriteShortLE( 0 );      // (do)

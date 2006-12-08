@@ -116,13 +116,14 @@ protected:
 
 	// Possibly not in use (do)
 	TRISTATE m_bUltraPeerLoaded;
-
+	UINT	m_nDelayCloseReason;	// Reason for DelayClose;
 public:
 
 	// Connect, disconnect, and copy
 	virtual BOOL ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE); // Connect to an ip address and port number
 	virtual void AttachTo(CConnection* pConnection); // Copy the values from the given CConnection object into the CConnection core of this one
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED ); // Close the socket and log the reason the connection didn't work
+	virtual void DelayClose(UINT nError = IDS_CONNECTION_CLOSED ); // Close the socket and log the reason the connection didn't work
 
 protected:
 

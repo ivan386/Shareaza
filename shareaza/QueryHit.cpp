@@ -36,6 +36,7 @@
 #include "GGEP.h"
 #include "VendorCache.h"
 #include "RouteCache.h"
+#include "Security.h"
 
 #include "SHA.h"
 #include "TigerTree.h"
@@ -288,6 +289,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 		DWORD nLength;
 		bool bSpam = false;
 		DWORD nPrevHubAddress = 0;
+		WORD nPrevHubPort = 0;
 
 		while ( pPacket->ReadPacket( szType, nLength, &bCompound ) )
 		{
@@ -354,12 +356,12 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				pHub.sin_port				= htons( pPacket->ReadShortBE() );
 				
 				// ToDo: We should check if ALL hubs are unique
-				if ( nPrevHubAddress == pHub.sin_addr.S_un.S_addr )
+				if ( nPrevHubAddress == pHub.sin_addr.S_un.S_addr && nPrevHubPort == pHub.sin_port)
 				{
 					bSpam = true;
 				}
 				nPrevHubAddress = pHub.sin_addr.S_un.S_addr;
-
+				nPrevHubPort = pHub.sin_port;
 				oIncrID[15]++;
 				oIncrID.validate();
 				Network.NodeRoute->Add( oIncrID, &pHub );
@@ -367,12 +369,15 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			else if ( strcmp( szType, "GU" ) == 0 && nLength == 16 )
 			{
 				pPacket->Read( oClientID );
+				oClientID.validate();
 				oIncrID		= oClientID;
 			}
 			else if ( ( strcmp( szType, "NA" ) == 0 || strcmp( szType, "NI" ) == 0 ) && nLength >= 6 )
 			{
 				nAddress	= pPacket->ReadLongLE();
 				if ( Network.IsReserved( (IN_ADDR*)&nAddress ), false )
+					AfxThrowUserException();
+				if ( Security.IsDenied( (IN_ADDR*)&nAddress ), false )
 					AfxThrowUserException();
 				nPort		= pPacket->ReadShortBE();
 			}
@@ -470,6 +475,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 		if ( pnHops ) *pnHops = nHops;
 		
 		pPacket->Read( oSearchID );
+		oSearchID.validate();
 		
 		if ( ! bPush ) bPush = ( nPort == 0 || Network.IsFirewalledAddress( &nAddress ) );
 		
@@ -926,10 +932,12 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 			else if ( nPacket >= 16 && strURN == _T("ed2k") )
 			{
 				pPacket->Read( m_oED2K );
+				m_oED2K.validate();
 			}
 			else if ( nPacket >= 20 && strURN == _T("btih") )
 			{
 				pPacket->Read( m_oBTH );
+				m_oBTH.validate();
 			}
 		}
 		else if ( strcmp( szType, "URL" ) == 0 )

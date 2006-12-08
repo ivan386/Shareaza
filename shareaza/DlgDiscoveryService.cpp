@@ -122,6 +122,34 @@ void CDiscoveryServiceDlg::OnOK()
 	m_pService->m_sAddress	= m_sAddress;
 	m_pService->m_nType		= m_nType + 1;
 
+	if ( m_pService->m_nType == CDiscoveryService::dsGnutella )
+	{
+		if ( _tcsnicmp( m_sAddress, _T("gnutella1:host:"),  15 ) == 0 )
+		{
+			m_pService->m_bGnutella1 = TRUE;
+			m_pService->m_bGnutella2 = FALSE;
+			m_pService->m_nSubType = 1;
+		}
+		else if ( _tcsnicmp( m_sAddress, _T("gnutella2:host:"), 15 ) == 0 )
+		{
+			m_pService->m_bGnutella1 = FALSE;
+			m_pService->m_bGnutella2 = TRUE;
+			m_pService->m_nSubType = 2;
+		}
+		else if ( _tcsnicmp( m_sAddress, _T("uhc:"), 4 ) == 0 )
+		{
+			m_pService->m_bGnutella1 = TRUE;
+			m_pService->m_bGnutella2 = FALSE;
+			m_pService->m_nSubType = 3;
+		}
+		else if ( _tcsnicmp( m_sAddress, _T("ukhl:"), 5 ) == 0 )
+		{
+			m_pService->m_bGnutella1 = FALSE;
+			m_pService->m_bGnutella2 = TRUE;
+			m_pService->m_nSubType = 4;
+		}
+	}
+
 	DiscoveryServices.Add( m_pService );
 	m_pService = NULL;
 

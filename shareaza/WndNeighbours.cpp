@@ -249,7 +249,7 @@ void CNeighboursWnd::Update()
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
-				CG2Neighbour* pG2 = reinterpret_cast<CG2Neighbour*>(pNeighbour);
+				CG2Neighbour* pG2 = static_cast<CG2Neighbour*>(pNeighbour);
 				
 				switch ( pNeighbour->m_nNodeType )
 				{
@@ -285,7 +285,7 @@ void CNeighboursWnd::Update()
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 			{
-				CEDNeighbour* pED2K = reinterpret_cast<CEDNeighbour*>(pNeighbour);
+				CEDNeighbour* pED2K = static_cast<CEDNeighbour*>(pNeighbour);
 				
 				pItem->m_nImage = theApp.m_bRTL ? nProtocolRev - PROTOCOL_ED2K : PROTOCOL_ED2K;
 				pItem->Set( 8, _T("eDonkey") );
@@ -405,10 +405,7 @@ void CNeighboursWnd::OnNeighboursDisconnect()
 	{
 		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
 		{
-			HostCache.OnFailure( &pNeighbour->m_pHost.sin_addr,
-				htons( pNeighbour->m_pHost.sin_port ), pNeighbour->m_nProtocol );
-			
-			pNeighbour->Close();
+			pNeighbour->Close( IDS_CONNECTION_CLOSED );
 		}
 	}
 }

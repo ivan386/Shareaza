@@ -48,26 +48,25 @@ static char THIS_FILE[]=__FILE__;
 // CShakeNeighbour construction
 
 // Make a new CShakeNeighbour object
-CShakeNeighbour::CShakeNeighbour() : CNeighbour( PROTOCOL_NULL ) // Call the CNeighbour constructor first, with no protocol
-{
+CShakeNeighbour::CShakeNeighbour() : CNeighbour( PROTOCOL_NULL ), // Call the CNeighbour constructor first, with no protocol
 	// Set member variables that record headers to false
-	m_bSentAddress   = FALSE; // We haven't told the remote computer "Listen-IP: 1.2.3.4:5"
-	m_bG1Send        = FALSE; // The remote computer hasn't said "Content-Type: application/x-gnutella-packets" yet
-	m_bG1Accept      = FALSE; // The remote computer hasn't said "Accept: application/x-gnutella-packets" yet
-	m_bG2Send        = FALSE; // The remote computer hasn't said "Content-Type: application/x-gnutella2" yet
-	m_bG2Accept      = FALSE; // The remote computer hasn't said "Accept: application/x-gnutella2" yet
-	m_bDeflateSend   = FALSE; // The remote computer hasn't said "Content-Encoding: deflate" yet
-	m_bDeflateAccept = FALSE; // The remote computer hasn't said "Accept-Encoding: deflate" yet
-
+m_bSentAddress(FALSE),			// We haven't told the remote computer "Listen-IP: 1.2.3.4:5"
+m_bG1Send(FALSE),				// The remote computer hasn't said "Content-Type: application/x-gnutella-packets" yet
+m_bG1Accept(FALSE),				// The remote computer hasn't said "Accept: application/x-gnutella-packets" yet
+m_bG2Send(FALSE),				// The remote computer hasn't said "Content-Type: application/x-gnutella2" yet
+m_bG2Accept(FALSE),				// The remote computer hasn't said "Accept: application/x-gnutella2" yet
+m_bDeflateSend(FALSE),			// The remote computer hasn't said "Content-Encoding: deflate" yet
+m_bDeflateAccept(FALSE),		// The remote computer hasn't said "Accept-Encoding: deflate" yet
+// Start out ultrapeer settings as unknown
+m_bUltraPeerSet(TS_UNKNOWN),	// The remote computer hasn't told us if it's ultra or not yet
+m_bUltraPeerNeeded(TS_UNKNOWN),	// The remote computer hasn't told us if it needs more ultra connections yet
+m_bUltraPeerLoaded(TS_UNKNOWN),	// May not be in use (do)
+m_nDelayCloseReason(0),
 	//ToDo: Check this - G1 setting?
 	// Set m_bCanDeflate to true if the checkboxes in Shareaza Settings allow us to send and receive compressed data
-	m_bCanDeflate = Neighbours.IsG2Leaf() ? ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) 
-										  : ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Leaf );
-
-	// Start out ultrapeer settings as unknown
-	m_bUltraPeerSet    = TS_UNKNOWN; // The remote computer hasn't told us if it's ultra or not yet
-	m_bUltraPeerNeeded = TS_UNKNOWN; // The remote computer hasn't told us if it needs more ultra connections yet
-	m_bUltraPeerLoaded = TS_UNKNOWN; // May not be in use (do)
+m_bCanDeflate( Neighbours.IsG2Leaf() ? ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) 
+: ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Leaf ) )
+{
 }
 
 // Delete this CShakeNeighbour object
@@ -151,18 +150,23 @@ void CShakeNeighbour::Close(UINT nError)
 {
 	// If we initiated the connection to the remote computer
 	bool bRemove = false;
+	bool bFail = true;
 
 	switch ( nError )
 	{
 		case 0:
+			bFail = false;
 		case IDS_HANDSHAKE_TIMEOUT:
 			bRemove = m_nState == nrsRejected && m_bInitiated;
 			break;
 		case IDS_CONNECTION_DROPPED:
-			bRemove = !m_bInitiated;
+			bRemove = true;
 			break;
 		case IDS_CONNECTION_REFUSED:
 			bRemove = m_nState == nrsConnecting && m_bInitiated;
+			break;
+		case IDS_HANDSHAKE_REJECTED:
+			bRemove = true;
 			break;
 		case IDS_CONNECTION_TIMEOUT_CONNECT:
 		case IDS_HANDSHAKE_FAIL:
@@ -170,10 +174,28 @@ void CShakeNeighbour::Close(UINT nError)
 			break;
 	}
 
-	HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, bRemove );
+	if ( bFail && m_bInitiated && m_bAutomatic )
+		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, bRemove );
 
 	// Have CNeighbour remove this object from the list, and put away the socket
 	CNeighbour::Close( nError );
+}
+
+//////////////////////////////////////////////////////////////////////
+// CShakeNeighbour DelayClose
+
+// Called when the socket connection has been dropped
+// Takes an error code that explains why
+// Records the failure and puts everything away
+void CShakeNeighbour::DelayClose(UINT nError)
+{
+	// If we initiated the connection to the remote computer
+	m_nDelayCloseReason = nError;
+	// Change this object's state to closing
+	m_nState = nrsClosing;
+
+	// Have the connection object write all the outgoing data soon
+	CNeighbour::QueueRun();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -302,7 +324,7 @@ BOOL CShakeNeighbour::OnRun()
 	// DelayClose was called, it sends the write buffer to the remote computer before closing the socket
 	case nrsClosing:
 
-		Close( 0 );
+		Close( m_nDelayCloseReason );
 		return FALSE;
 
 		break;
@@ -485,7 +507,7 @@ void CShakeNeighbour::SendPublicHeaders()
 			// Tell the remote computer that we are a leaf
 			m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 		}
-		if ( Neighbours.NeedMoreHubs( PROTOCOL_G2) )
+		if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
 			m_pOutput->Print( "X-Ultrapeer-Needed: True\r\n" );
 		else
 			m_pOutput->Print( "X-Ultrapeer-Needed: False\r\n" );
@@ -785,7 +807,7 @@ BOOL CShakeNeighbour::ReadResponse()
 			if ( strLine == _T("503 Not Good Leaf") || strLine == _T("503 We're Leaves") ||
 				 strLine == _T("503 Service unavailable") )
 			{
-				HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, false );
+				DelayClose( IDS_HANDSHAKE_REJECTED );
 			}
 		} // It does say "200 OK", and the remote computer contacted us
 		else if ( ! m_bInitiated )
@@ -876,8 +898,8 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			m_nState = nrsRejected;
 			// Ban them and ignore anything else in the headers
 			theApp.Message( MSG_ERROR, _T("Banning hostile client %s"), (LPCTSTR)m_sUserAgent );
-			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
 			m_bBadClient = TRUE;
+			DelayClose( IDS_HANDSHAKE_REJECTED );
 			return FALSE;
 		}
 		
@@ -888,6 +910,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 			m_nState = nrsRejected;
 			Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
+			DelayClose( IDS_HANDSHAKE_REJECTED );
 			m_bBadClient = TRUE;
 			return FALSE;
 		}
@@ -1068,7 +1091,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			{
 				// since there is no clever way to detect what the given Hosts' vender codes are, just add then as NULL
 				// in order to prevent HostCache/KHL pollution done by wrong assumptions.
-				if ( HostCache.Gnutella2.Add( strHost, 0, NULL ) ) nCount++; // Count it
+				//if ( HostCache.Gnutella2.Add( strHost, 0, NULL ) ) nCount++; // Count it
 
 			} 
 			else	// This is a Gnutella connection, not Gnutella2
@@ -1438,9 +1461,6 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		SendMinimalHeaders();       // Tell the remote computer we're Shareaza and we can exchange Gnutella2 packets
 		m_pOutput->Print( "\r\n" ); // End the group of headers with a blank line
 
-		// Tell the host cache that this didn't work out
-		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
-
 		// Close the connection citing not Gnutella2 as the reason, but send the departing buffer first
 		DelayClose( IDS_HANDSHAKE_NOTG2 );
 
@@ -1727,7 +1747,7 @@ void CShakeNeighbour::OnHandshakeComplete()
 	{
 		HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_G2, true );
 		// check if this connection is still needed at this point
-		if ( ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) ||
+		if ( !m_bAutomatic && ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) ||
 			( m_nNodeType == ntLeaf && !Neighbours.NeedMoreLeafs( PROTOCOL_G2 ) ) )
 		{
 			delete this;
@@ -1745,7 +1765,7 @@ void CShakeNeighbour::OnHandshakeComplete()
 	{
 		HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_G1, true );
 		// check if this connection is still needed at this point
-		if ( ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) ||
+		if ( !m_bAutomatic && ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) ||
 			( m_nNodeType == ntLeaf && !Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) )
 		{
 			delete this;

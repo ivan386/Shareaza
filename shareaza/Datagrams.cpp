@@ -1155,7 +1155,6 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 		{
 
 			CGGEPItem* pUP = pGGEP.Find( L"UP" );
-			CGGEPItem* pGUE = pGGEP.Find( L"GUE" );
 			CGGEPItem* pVC = pGGEP.Find( L"VC", 4 );
 			CString sVendorCode;
 			if ( pVC != NULL )
@@ -1167,12 +1166,10 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 				sVendorCode.Format( _T("%s"), (LPCTSTR)szVendor);
 			}
 
-			if ( pUP != NULL && pGUE != NULL )
+			if ( pUP != NULL )
 			{
 				sVendorCode.Trim( _T(" ") );
 				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, (LPCTSTR)sVendorCode );
-				theApp.Message( MSG_DEBUG, _T("Got %s host through pong marked with GGEP GUE and UP (%s:%i)"), 
-					(LPCTSTR)sVendorCode, (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
 			}
 
 
@@ -1212,28 +1209,6 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 				}
 			}
 
-			/*
-			CGGEPItem* pPHCs = pGGEP.Find( L"PHC", 1 );
-			if (pPHCs)
-			{
-			CString strServices = pPHCs->ReadFrom()
-
-
-			for ( strServices += '\n' ; strServices.GetLength() ; )
-			{
-			CString strService = strServices.SpanExcluding( _T("\r\n") );
-			strServices = strServices.Mid( strService.GetLength() + 1 );
-
-			if ( strService.GetLength() > 0 )
-			{
-			if ( _tcsistr( strService, _T("server.met") ) == NULL )
-			Add( strService, CDiscoveryService::dsWebCache );
-			else
-			Add( strService, CDiscoveryService::dsServerMet, PROTOCOL_ED2K );
-			}
-			}
-			}
-			*/
 		}
 		else
 		{
@@ -1555,13 +1530,14 @@ BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams PUSH packet handler
 
-BOOL CDatagrams::OnPush(SOCKADDR_IN* /*pHost*/, CG2Packet* pPacket)
+BOOL CDatagrams::OnPush(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
 	DWORD nLength = pPacket->GetRemaining();
 
 	if ( ! pPacket->SkipCompound( nLength, 6 ) )
 	{
-		pPacket->Debug( _T("BadPush") );
+		theApp.Message( MSG_ERROR, _T("G2UDP: Invalid PUSH packet received from %s"), 
+			(LPCTSTR)inet_ntoa( pHost->sin_addr ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
 	}

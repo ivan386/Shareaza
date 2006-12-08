@@ -133,7 +133,7 @@ void CPacket::Shorten(DWORD nLength)
 // Returns a string
 CString CPacket::ReadString(UINT cp, DWORD nMaximum)
 {
-	// We'll convert the ASCII text in the packet into wide characters, and return them in this string
+	// We'll convert the ANSI text in the packet into wide characters, and return them in this string
 	CString strString;
 
 	// If maximum would have us read beyond the end of the packet, make it smaller to read to the end of the packet
@@ -145,7 +145,7 @@ CString CPacket::ReadString(UINT cp, DWORD nMaximum)
 	LPCSTR pszScan  = pszInput;                        // Start out pszScan at the same spot, it will find the next null terminator
 
 	// Loop for each byte in the packet at and beyond our position in it, searching for a null terminator
-    DWORD nLength = 0; // When this loop is done, nLength will be the number of ASCII bytes we moved over before finding the null terminator
+    DWORD nLength = 0; // When this loop is done, nLength will be the number of ANSI bytes we moved over before finding the null terminator
 	for ( ; nLength < nMaximum ; nLength++ )
 	{
 		// Move the position pointer in this CPacket object to the next byte
@@ -155,9 +155,9 @@ CString CPacket::ReadString(UINT cp, DWORD nMaximum)
 		if ( ! *pszScan++ ) break;
 	}
 
-	// Find out how many wide characters the ASCII bytes will become when converted
+	// Find out how many wide characters the ANSI bytes will become when converted
 	int nWide = MultiByteToWideChar(
-		cp,   // Use the code page for ASCII
+		cp,   // Use the code page for ANSI
 		0,        // No character type options
 		pszInput, // Pointer to ASCII text in the packet
 		nLength,  // Number of bytes to read there, the number of bytes before we found the null terminator
@@ -168,7 +168,7 @@ CString CPacket::ReadString(UINT cp, DWORD nMaximum)
 	MultiByteToWideChar(
 		cp,                       // Use the UTF8 code page
 		0,                            // No character type options
-		pszInput,                     // Pointer to ASCII text
+		pszInput,                     // Pointer to ANSI text
 		nLength,                      // Number of bytes to read there, the number of bytes before we found the null terminator
 		strString.GetBuffer( nWide ), // Get access to the string's buffer, telling it we will write in nWide wide characters
 		nWide );                      // Tell MultiByteToWideChar it can write nWide characters in the buffer
@@ -178,7 +178,7 @@ CString CPacket::ReadString(UINT cp, DWORD nMaximum)
 	return strString;
 }
 
-// Takes the number of bytes to look at from our position in the packet as ASCII text
+// Takes the number of bytes to look at from our position in the packet as ANSI text
 // Reads those up to the next null terminator as text
 // Returns a string
 CString CPacket::ReadStringASCII(DWORD nMaximum)
@@ -187,12 +187,12 @@ CString CPacket::ReadStringASCII(DWORD nMaximum)
 }
 
 // Takes text, and true to also write a null terminator
-// Converts the text into ASCII bytes using the ASCII code page, and writes them into the end of the packet
+// Converts the text into ANSI bytes using the ANSI code page, and writes them into the end of the packet
 void CPacket::WriteString(LPCTSTR pszString, BOOL bNull)
 {
-	// Find out how many ASCII bytes the wide characters will become when converted
+	// Find out how many ANSI bytes the wide characters will become when converted
 	int nByte = WideCharToMultiByte(
-		CP_ACP,    // Use the ASCII code page
+		CP_ACP,    // Use the ANSI code page
 		0,         // No special flags
 		pszString, // Wide characters to convert
 		-1,        // The wide character text is null terminated, and the null terminator will be converted into a wide null terminator
@@ -209,18 +209,18 @@ void CPacket::WriteString(LPCTSTR pszString, BOOL bNull)
 		return;
 	}
 
-	// Convert the wide characters into bytes of ASCII text
+	// Convert the wide characters into bytes of ANSI text
 	WideCharToMultiByte(
-		CP_ACP,    // Use the ASCII code page
+		CP_ACP,    // Use the ANSI code page
 		0,         // No special flags
 		pszString, // Wide characters to convert
 		-1,        // The wide character text is null terminated
-		pszByte,   // Have WideCharToMultiByte write the ASCII bytes in our static or just allocated buffer
+		pszByte,   // Have WideCharToMultiByte write the ANSI bytes in our static or just allocated buffer
 		nByte,     // This is how much space it has
 		NULL,      // No special options for unmappable characters
 		NULL );
 
-	// Write the ASCII text into the end of the packet
+	// Write the ANSI text into the end of the packet
 	Write( pszByte, nByte - ( bNull ? 0 : 1 ) ); // If bNull is true, also write the null terminator which got converted
 
 	// If we needed a bigger buffer and allocated one, we have to remember to delete it
@@ -228,7 +228,7 @@ void CPacket::WriteString(LPCTSTR pszString, BOOL bNull)
 }
 
 // Takes text
-// Determines how many bytes of ASCII text it would turn into when converted
+// Determines how many bytes of ANSI text it would turn into when converted
 // Returns the number, 5 for "hello", that does not include a null terminator
 int CPacket::GetStringLen(LPCTSTR pszString) const
 {
@@ -238,7 +238,7 @@ int CPacket::GetStringLen(LPCTSTR pszString) const
 	// Find the number of characters in the text
 	int nLength = static_cast< int >( _tcslen( pszString ) ); // Same as lstrlen, doesn't include null terminator
 
-	// Find out how many ASCII bytes the text would convert into, and return that number
+	// Find out how many ANSI bytes the text would convert into, and return that number
 	nLength = WideCharToMultiByte( CP_ACP, 0, pszString, nLength, NULL, 0, NULL, NULL );
 	return nLength;
 }
