@@ -698,6 +698,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 
 	CString strVendorCode;
 	DWORD nUptime = 0;
+	bool bUpdateNeeded = Neighbours.m_pPongCache->Lookup( this ) == NULL;
 
 	// If the pong is bigger than 14 bytes, and the remote computer told us in the handshake it supports GGEP blocks
 	if ( pPacket->m_nLength > 14 && m_bGGEP )
@@ -731,7 +732,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 				if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
 
 				// We got a response to SCP extension, add hosts to cache if IPP extension exists
-				while ( pIPPs || pGDNAs )
+				while ( bUpdateNeeded && ( pIPPs || pGDNAs ) )
 				{
 					CGGEPItem* pItem = pIPPs ? pIPPs : pGDNAs;
 					CString str = pGDNAs ? L"GDNA" : L"G1";
@@ -809,7 +810,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 	}
 
 	// If the IP address and port number in the pong is reachable
-	if (  ! bLocal && ! Network.IsFirewalledAddress( &nAddress, TRUE ) )
+	if (  bUpdateNeeded && ! bLocal && ! Network.IsFirewalledAddress( &nAddress, TRUE ) )
 	{
 		// If the pong hasn't hopped at all yet, and the address in it is the address of this remote computer
 		if ( pPacket->m_nHops == 0 && nAddress == m_pHost.sin_addr.S_un.S_addr )

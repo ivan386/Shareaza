@@ -44,9 +44,11 @@ protected:
 // Operations
 public:
 	void		Clear();
+	void		ClearNeighbour(CNeighbour* pNeighbour);
 	BOOL		ClearIfOld();
 	CPongItem*	Add(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume);
 	CPongItem*	Lookup(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem* >* pIgnore);
+	CPongItem*	Lookup(CNeighbour* pFrom);
 public:
 	POSITION	GetIterator() const;
 	CPongItem*	GetNext(POSITION& pos) const;

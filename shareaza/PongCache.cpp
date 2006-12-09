@@ -72,6 +72,21 @@ BOOL CPongCache::ClearIfOld()
 	return FALSE;
 }
 
+void CPongCache::ClearNeighbour(CNeighbour* pNeighbour)
+{
+	for ( POSITION pos = m_pCache.GetHeadPosition() ; pos ; )
+	{
+		CPongItem* pItem = m_pCache.GetNext( pos );
+		if ( pItem->m_pNeighbour == pNeighbour )
+		{
+			delete pItem;
+			m_pCache.RemoveAt( pos );
+		}
+	}
+
+	m_nTime = GetTickCount();
+}
+
 //////////////////////////////////////////////////////////////////////
 // CPongCache add
 
@@ -119,6 +134,19 @@ CPongItem* CPongCache::Lookup(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem
 	return NULL;
 }
 
+CPongItem* CPongCache::Lookup(CNeighbour* pFrom)
+{
+	for ( POSITION pos = m_pCache.GetHeadPosition() ; pos ; )
+	{
+		CPongItem* pItem = m_pCache.GetNext( pos );
+
+		if ( pItem->m_pNeighbour == pFrom )
+			return pItem;
+	}
+
+	return NULL;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CPongCache list access
 
@@ -157,12 +185,15 @@ CG1Packet* CPongItem::ToPacket(int nTTL, const Hashes::Guid& oGUID)
 {
 	CG1Packet* pPong = CG1Packet::New( G1_PACKET_PONG, nTTL, oGUID );
 
-	pPong->m_nHops = m_nHops;
+	if ( pPong != NULL )
+	{
+		pPong->m_nHops = m_nHops;
 
-	pPong->WriteShortLE( m_nPort );
-	pPong->WriteLongLE( *(DWORD*)&m_pAddress );
-	pPong->WriteLongLE( m_nFiles );
-	pPong->WriteLongLE( m_nVolume );
+		pPong->WriteShortLE( m_nPort );
+		pPong->WriteLongLE( *(DWORD*)&m_pAddress );
+		pPong->WriteLongLE( m_nFiles );
+		pPong->WriteLongLE( m_nVolume );
+	}
 
 	return pPong;
 }
