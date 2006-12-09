@@ -593,7 +593,10 @@ DWORD CHostCacheList::CountHosts() const
 	DWORD nCount = 0;
 
 	for ( CHostCacheHost* pHost = GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
-		nCount++;
+	{
+		if ( pHost->m_nFailures == 0 && pHost->m_bCheckedLocally )
+			nCount++;
+	}
 
 	return ( nCount );
 }
