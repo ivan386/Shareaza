@@ -698,7 +698,8 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 
 	CString strVendorCode;
 	DWORD nUptime = 0;
-	bool bUpdateNeeded = Neighbours.m_pPongCache->Lookup( this ) == NULL;
+	bool bUpdateNeeded = GetTickCount() - m_tLastOutPing > Settings.Gnutella1.PongUpdate || 
+						 Neighbours.m_pPongCache->Lookup( this ) == NULL;
 
 	// If the pong is bigger than 14 bytes, and the remote computer told us in the handshake it supports GGEP blocks
 	if ( pPacket->m_nLength > 14 && m_bGGEP )

@@ -283,6 +283,7 @@ public:
 		DWORD		RequeryDelay;
 		DWORD		HostExpire;
 		DWORD		PingFlood;
+		DWORD		PongUpdate;					// Will we update host cache?
 		DWORD		PingRate;
 		DWORD		PongCache;
 		int			PongCount;
