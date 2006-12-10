@@ -105,6 +105,7 @@ void CBTClient::AttachTo(CConnection* pConnection)
 {
 	ASSERT( m_hSocket == INVALID_SOCKET );
 	CTransfer::AttachTo( pConnection );
+	m_tConnected = GetTickCount();
 	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_ACCEPTED, (LPCTSTR)m_sAddress );
 }
 
@@ -253,8 +254,8 @@ BOOL CBTClient::OnRead()
 {
 	BOOL bSuccess = TRUE;
 	
-	if ( m_pDownload == NULL || m_pDownload->IsPaused() || 
-		 m_pDownload->IsMoving() || m_pDownload->IsCompleted() && !m_pDownload->m_bVerify )
+	if ( m_pDownload != NULL && ( m_pDownload->IsPaused() || 
+		 m_pDownload->IsMoving() || m_pDownload->IsCompleted() && !m_pDownload->m_bVerify ) )
 		return FALSE;
 
 	CTransfer::OnRead();
