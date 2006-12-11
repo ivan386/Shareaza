@@ -255,7 +255,8 @@ BOOL CBTClient::OnRead()
 	BOOL bSuccess = TRUE;
 	
 	if ( m_pDownload != NULL && ( m_pDownload->IsPaused() || 
-		 m_pDownload->IsMoving() || m_pDownload->IsCompleted() && !m_pDownload->m_bVerify ) )
+		 m_pDownload->IsMoving() && !m_pDownload->m_bVerify || 
+		 m_pDownload->IsCompleted() && !m_pDownload->m_bVerify ) )
 		return FALSE;
 
 	CTransfer::OnRead();
@@ -392,7 +393,8 @@ BOOL CBTClient::OnHandshake1()
 			return FALSE;
 		}
 		else if ( m_pDownload->UploadExists( &m_pHost.sin_addr ) )	// If there is already an upload of this file to this client
-		{	// Display and error and exit
+		{
+			// Display and error and exit
 			m_pDownload = NULL;
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DUPLICATE, (LPCTSTR)m_sAddress );
 			Close();
@@ -716,6 +718,11 @@ BOOL CBTClient::OnOnline()
 	
 	if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnConnected() ) return FALSE;
 	if ( ! m_pUpload->OnConnected() ) return FALSE;
+	if ( Uploads.GetTorrentUploadCount() < Settings.BitTorrent.UploadCount )
+	{
+		m_pUpload->m_bChoked = FALSE;
+		Send( CBTPacket::New( BT_PACKET_UNCHOKE ) );
+	}
 	
 	return TRUE;
 }
