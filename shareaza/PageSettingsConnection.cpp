@@ -266,6 +266,7 @@ void CConnectionSettingsPage::OnOK()
 	CString strAutomatic = GetInOutHostTranslation();
 
 	if ( m_sInHost.CompareNoCase( strAutomatic ) == 0 )
+	{
 		m_sInHost.Empty();
 		m_bInBind = FALSE;
 	}
