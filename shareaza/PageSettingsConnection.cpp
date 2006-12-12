@@ -77,6 +77,7 @@ void CConnectionSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_INBOUND_SPEED, m_wndInSpeed);
 	DDX_Control(pDX, IDC_OUTBOUND_SPEED, m_wndOutSpeed);
 	DDX_Control(pDX, IDC_INBOUND_HOST, m_wndInHost);
+	DDX_Control(pDX, IDC_OUTBOUND_HOST, m_wndOutHost);
 	DDX_Control(pDX, IDC_INBOUND_BIND, m_wndInBind);
 	DDX_Control(pDX, IDC_TIMEOUT_HANDSHAKE_SPIN, m_wndTimeoutHandshake);
 	DDX_Control(pDX, IDC_TIMEOUT_CONNECTION_SPIN, m_wndTimeoutConnection);
@@ -133,6 +134,37 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	m_nTimeoutConnection	= Settings.Connection.TimeoutConnect / 1000;
 	m_nTimeoutHandshake		= Settings.Connection.TimeoutHandshake / 1000;
 
+	DWORD ip = 0;
+	CString strIP;
+
+	// Take an IP address table
+	char mib[ sizeof(MIB_IPADDRTABLE) + 32 * sizeof(MIB_IPADDRROW) ];
+	ULONG nSize = sizeof(mib);
+	PMIB_IPADDRTABLE ipAddr = (PMIB_IPADDRTABLE)mib;
+
+	if ( GetIpAddrTable( ipAddr, &nSize, TRUE ) == NO_ERROR )
+	{
+		DWORD nCount = ipAddr->dwNumEntries;
+		for ( DWORD nIf = 0 ; nIf < nCount ; nIf++ )
+		{
+			ip = ipAddr->table[ nIf ].dwAddr;
+			if ( ip == 0x0100007f ) continue; // loopback
+
+			MIB_IFROW ifRow = {};
+			ifRow.dwIndex = ipAddr->table[ nIf ].dwIndex;
+			// Check interface
+			if ( GetIfEntry( &ifRow ) != NO_ERROR || ifRow.dwAdminStatus != MIB_IF_ADMIN_STATUS_UP )
+				continue;
+
+			strIP.Format( L"%d.%d.%d.%d", ( ip & 0x0000ff ),
+				( ( ip & 0x00ff00 ) >> 8 ), ( ( ip & 0xff0000 ) >> 16 ),
+				( ip >> 24 ) );
+
+			m_wndInHost.InsertString( -1, (LPCTSTR)strIP );
+			m_wndOutHost.InsertString( -1, (LPCTSTR)strIP );
+		}
+	}
+
 	if ( m_sInHost.IsEmpty() ) m_sInHost = strAutomatic;
 	if ( m_sOutHost.IsEmpty() ) m_sOutHost = strAutomatic;
 
@@ -172,7 +204,11 @@ void CConnectionSettingsPage::OnEditChangeInboundHost()
 
 void CConnectionSettingsPage::OnCloseUpInboundHost()
 {
-	m_wndInBind.EnableWindow( m_wndInHost.GetCurSel() != 0 );
+	CString strAutomatic = GetInOutHostTranslation();
+	CString strSelection;
+	m_wndInHost.GetLBText( m_wndInHost.GetCurSel(), strSelection );
+
+	m_wndInBind.EnableWindow( strAutomatic != strSelection );
 }
 
 void CConnectionSettingsPage::OnChangeInboundPort()
@@ -231,6 +267,11 @@ void CConnectionSettingsPage::OnOK()
 
 	if ( m_sInHost.CompareNoCase( strAutomatic ) == 0 )
 		m_sInHost.Empty();
+		m_bInBind = FALSE;
+	}
+	else
+		m_bInBind = TRUE;
+
 	if ( m_sOutHost.CompareNoCase( strAutomatic ) == 0 )
 		m_sOutHost.Empty();
 
