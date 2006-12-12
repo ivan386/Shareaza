@@ -368,7 +368,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 
 	if ( m_bADSL ) // not a very reliable way to detect ADSL, since WANEthLinkC* is optional
 	{
-		if ( theApp.m_bUPnPPortsForwarded ) // another physical device or the setup was ran again manually
+		if ( theApp.m_bUPnPPortsForwarded == TS_TRUE ) // another physical device or the setup was ran again manually
 		{
 			// Reset settings and recheck ( is there a better solution? )
 			Settings.Connection.SkipWANIPSetup  = FALSE;
