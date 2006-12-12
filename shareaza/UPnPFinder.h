@@ -108,7 +108,7 @@ private:
 	bool	m_bPortIsFree;
 	CString m_sLocalIP;
 	CString m_sExternalIP;
-	bool	m_bADSL;
+	bool	m_bADSL;		// Is the device ADSL?
 
 	com_ptr< IUPnPDeviceFinderCallback > m_pDeviceFinderCallback;
 	com_ptr< IUPnPServiceCallback >      m_pServiceCallback;
