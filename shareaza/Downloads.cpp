@@ -446,7 +446,7 @@ INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
 		CDownload* pDownload = GetNext( pos );
 		
 		if ( ! pDownload->IsMoving() && ! pDownload->IsPaused() &&
-			 pDownload->GetSourceCount( TRUE ) > 0 )
+			 pDownload->GetEffectiveSourceCount() > 0 )
 				nCount++;
 	}
 	

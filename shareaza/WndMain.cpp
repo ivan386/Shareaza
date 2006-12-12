@@ -1641,8 +1641,10 @@ void CMainWnd::OnNetworkED2K()
 
 void CMainWnd::OnUpdateNetworkAutoClose(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( Settings.Live.AutoClose || ( Transfers.GetActiveCount() > 0 ) );
-	pCmdUI->SetCheck( Settings.Live.AutoClose );
+	pCmdUI->Enable( Settings.Connection.RequireForTransfers && 
+					( Settings.Live.AutoClose || ( Transfers.GetActiveCount() > 0 ) )
+				  );
+	pCmdUI->SetCheck( Settings.Connection.RequireForTransfers && Settings.Live.AutoClose );
 }
 
 void CMainWnd::OnNetworkAutoClose() 
