@@ -14,7 +14,7 @@ Umlauts:
 <!-- Manifest -->
 <manifest	name="Eesti"
 		author="Janza"
-		updateBy=""
+		updateBy="Felix_K"
 		description="Shareaza Default Eesti Skin File"
 		link="http://www.shareaza.com/"
 		email="janekk32@solo.delfi.ee"
@@ -3149,7 +3149,7 @@ Umlauts:
 	<string id="20121" value="Loon"/>
 	<string id="20122" value="Torrent"/>
 	<string id="20123" value="Jälitajata"/>
-	<string id="20124" value="(Allikateat)"/>
+	<string id="20124" value="(Allikateta)"/>
 	<string id="20125" value="Kinnitatud"/>
 	<string id="20126" value="Kinnitamata"/>
 	<string id="20127" value="allikas"/>
@@ -3162,6 +3162,7 @@ Umlauts:
 	<string id="20134" value="Umbes"/>
 	<string id="20135" value="Järgmine"/>
 	<string id="20136" value="Q"/>
+	<string id="20137" value="allikast"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Pühapäev"/>
 	<string id="20201" value="Esmaspäev"/>
 	<string id="20202" value="Teisipäev"/>
