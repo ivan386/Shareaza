@@ -184,7 +184,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 	
 	for ( CHostCacheHost* pHost = pCache->GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
 	{
-		// cancel update if mouse moves ouside window or user right-clicks
+		// cancel update if mouse moves outside window or user right-clicks
 		// do not break if different cache window button pressed
 		if ( !m_bAllowUpdates && !bForce ) break;
 		if ( m_nMode == PROTOCOL_NULL )
@@ -228,7 +228,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 		if ( pHost->m_tAck ) pItem->Format( 12, _T("%u"), pHost->m_tAck);
 #endif
 	}
-	
+
 	if ( !m_bAllowUpdates && !bForce ) return;
 	pLiveList.Apply( &m_wndList, TRUE );
 	m_wndList.ShowWindow( SW_SHOW );
