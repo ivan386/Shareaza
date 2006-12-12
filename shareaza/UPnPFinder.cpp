@@ -38,6 +38,7 @@ CUPnPFinder::CUPnPFinder()
 	m_nAsyncFindHandle( 0 ),
 	m_bAsyncFindRunning( false ),
 	m_bADSL( false ),
+	m_ADSLFailed( false ),
 	m_bPortIsFree( true ),
 	m_sLocalIP(),
 	m_sExternalIP(),
@@ -374,8 +375,9 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 			Settings.Connection.SkipWANIPSetup  = FALSE;
 			Settings.Connection.SkipWANPPPSetup = FALSE;
 			m_bADSL = false;
+			m_ADSLFailed = false;
 		}
-		else
+		else if ( !m_ADSLFailed )
 		{
 			theApp.Message( MSG_DEBUG, L"ADSL device detected. Disabling WANIPConn setup..." );
 			Settings.Connection.SkipWANIPSetup  = TRUE;
@@ -410,7 +412,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 	if ( strResult.IsEmpty() )
 		return hr;
 
-	theApp.Message( MSG_DEBUG, L"Got status info from the service %s: %s\n", strServiceId, strResult );
+	theApp.Message( MSG_DEBUG, L"Got status info from the service %s: %s", strServiceId, strResult );
 
 	if ( _tcsistr( strResult, L"|VT_BSTR=Connected|" ) != NULL )
 	{
@@ -423,7 +425,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 		if ( FAILED( hr ) ) 
 			UPnPMessage( hr );
 		else
-			theApp.Message( MSG_DEBUG, L"Callback added for the service %s\n",
+			theApp.Message( MSG_DEBUG, L"Callback added for the service %s",
 				strServiceId );
 
 		// Delete old and add new port mappings
@@ -440,12 +442,14 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 		theApp.Message( MSG_DEBUG, L"Disconnected PPP service in ADSL device..." );
 		Settings.Connection.SkipWANIPSetup  = FALSE;
 		Settings.Connection.SkipWANPPPSetup = TRUE;
+		m_ADSLFailed = true;
 	}
 	else if ( _tcsistr( strResult, L"|VT_BSTR=Disconnected|" ) != NULL && m_bADSL && bIP )
 	{
 		theApp.Message( MSG_DEBUG, L"Disconnected IP service in ADSL device..." );
 		Settings.Connection.SkipWANIPSetup  = TRUE;
 		Settings.Connection.SkipWANPPPSetup = FALSE;
+		m_ADSLFailed = true;
 	}
 	return S_OK;
 }
