@@ -1026,7 +1026,7 @@ void CHostCacheHost::Reset(IN_ADDR* pAddress)
 	m_nKeyValue		= 0;
 	m_nKeyHost		= 0;
 
-	m_bCheckedLocally = TRUE;
+	m_bCheckedLocally = FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
