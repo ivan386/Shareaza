@@ -410,6 +410,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Restore"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="Sieć">
@@ -430,6 +443,7 @@
 			<item id="ID_TAB_MEDIA" text="Odtwarzacz"/>
 			<item id="ID_TAB_SEARCH" text="Szukaj"/>
 			<item id="ID_TAB_TRANSFERS" text="Pobierania"/>
+			<item id="ID_WINDOW_REMOTE" text="Pokaż Remote"/>
 			<separator/>
 			<menu text="Zaawansowane">
 				<item id="ID_VIEW_NEIGHBOURS" text="Sieć"/>
@@ -908,6 +922,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="Podgląd"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Pokaż podglądy"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="Wznów"/>
@@ -923,6 +938,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="Podgląd"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Preview Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Dodaj do listy odtwarzania"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Pokaż recenzje"/>
@@ -2241,6 +2257,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Przenieś zaznaczone pobieranie (pobierania) na górę listy priorytetów."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Zatrzymaj zaznaczone pobieranie (pobierania)."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Oceń zaznaczone pobieranie."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Wznów zaznaczone pobieranie (pobierania)."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Skonfiguruj ustawienia pobierania..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Dziel się tym częściowo pobranym plikiem z innymi użytkownikami."/>

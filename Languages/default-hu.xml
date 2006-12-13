@@ -444,6 +444,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_TAB_MEDIA" text="Médialejátszó"/>
                        <item id="ID_TAB_SEARCH" text="Keresés"/>
                        <item id="ID_TAB_TRANSFERS" text="Letöltések"/>
+			<item id="ID_WINDOW_REMOTE" text="Távirányító mutatása"/>
                        <separator/>
                        <menu text="Fejlett">
                                <item id="ID_VIEW_NEIGHBOURS" text="Hálózat"/>
@@ -922,6 +923,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <!-- DOWNLOADS WINDOW -->
        <menu name="CDownloadsWnd.Download.Basic">
                <item id="ID_DOWNLOADS_LAUNCH" text="Előnézet"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
                <item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Vélemények"/>
                <separator/>
                <item id="ID_DOWNLOADS_RESUME" text="Folytat"/>
@@ -934,6 +936,7 @@ prompt="Kattints ide a magyar nyelvhez."
        </menu>
        <menu name="CDownloadsWnd.Download">
                <item id="ID_DOWNLOADS_LAUNCH" text="Előnézet"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
                <item id="ID_DOWNLOADS_ENQUEUE" text="Listához ad"/>
                <item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Vélemények"/>
                <separator/>
@@ -2265,6 +2268,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_DOWNLOADS_MOVE_UP" message="A kiválasztott letöltés(ek) feljebb tolása az elsőbbségi listán."/>
        <tip id="ID_DOWNLOADS_PAUSE" message="Szünetelteti a kiválasztott letöltés(ek)et.."/>
        <tip id="ID_DOWNLOADS_RATE" message="A letöltés osztályozása."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
        <tip id="ID_DOWNLOADS_RESUME" message="A kiválasztott letöltés(ek) folytatása."/>
        <tip id="ID_DOWNLOADS_SETTINGS" message="Letöltési beállítások..."/>
        <tip id="ID_DOWNLOADS_SHARE" message="Ezt a félig letöltött fájlt ossza meg másokkal."/>

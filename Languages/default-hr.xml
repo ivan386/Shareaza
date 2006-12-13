@@ -404,6 +404,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Restore"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="_Mreža">
@@ -424,6 +437,7 @@
 			<item id="ID_TAB_MEDIA" text="_Media Player"/>
 			<item id="ID_TAB_SEARCH" text="_Traži"/>
 			<item id="ID_TAB_TRANSFERS" text="Skidam"/>
+			<item id="ID_WINDOW_REMOTE" text="Pokaži _Remote"/>
 			<separator/>
 			<menu text="N_apredno">
 				<item id="ID_VIEW_NEIGHBOURS" text="Susjedi"/>
@@ -902,6 +916,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Pregledaj"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Pogledaj Kritiku"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="Nastavi"/>
@@ -917,6 +932,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Pregledaj"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pregledaj Kopiju"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Dodaj u Pla_ylistu"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Pogledaj Kritiku"/>
@@ -2244,6 +2260,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Move the selected download(s) up the priority list."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Pause the selected download(s)."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Ocjeni odabrano skidanje."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="nastavi odabrano skidanje."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Configure download settings..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>

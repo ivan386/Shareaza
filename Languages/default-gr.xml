@@ -402,6 +402,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Restore"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="_Δίκτυα">
@@ -422,6 +435,7 @@
 			<item id="ID_TAB_MEDIA" text="_Μέσο αναπαραγωγής"/>
 			<item id="ID_TAB_SEARCH" text="_Έρευνα"/>
 			<item id="ID_TAB_TRANSFERS" text="_Κατέβασμα αρχείων"/>
+			<item id="ID_WINDOW_REMOTE" text="Δείξε την _Remote bar"/>
 			<separator/>
 			<menu text="_Για προχωρημένους">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Γείτονες"/>
@@ -900,6 +914,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Επισκόπηση"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Δες τις κριτικές"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Επανάφερε"/>
@@ -915,7 +930,8 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Επισκόπηση"/>
-		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Δες το αντίγραφο"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Δες το αντίγραφο"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Εισαγωγή στην Pla_ylist"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Δες τις κριτικές"/>
 		<separator/>
@@ -2244,6 +2260,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Μετακίνησε το συγκεκριμένο αρχείο(α) στην μεγαλύτερη λίστα προτεραιότητας."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Διέκοψε το συγεκριμένο αρχείο(α)."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Βαθμολόγησε το συγκεκριμένο αρχείο."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Επανάφερε το συγκεκριμένο αρχείο(α)."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Ρύθμισε τα download settings..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>

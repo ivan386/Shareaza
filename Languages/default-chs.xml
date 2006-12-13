@@ -927,6 +927,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="预览(_P)"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="查看评价(_V)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="续传(_R)"/>
@@ -942,6 +943,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="预览(_P)"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="预览副本(_V)"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="加入播放列表(_Y)"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="查看评价(_V)"/>
@@ -2252,6 +2254,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="提升选定下载的优先级。"/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="暂停选定的下载。"/>
 	<tip id="ID_DOWNLOADS_RATE" message="评价此选定的下载。"/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="续传选定的下载。"/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="配置下载设置..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="将未完全下载的文件同样共享给其它用户。"/>

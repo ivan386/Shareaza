@@ -926,6 +926,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="プレビュー(_P)"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="レビューを表示(_V)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="再開(_R)"/>
@@ -941,6 +942,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="プレビュー(_P)"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="再生リストに追加(_Y)"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="レビューを表示(_V)"/>
@@ -2273,6 +2275,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="選択したダウンロードの優先順位を上に移動します"/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="選択したダウンロードを一時停止します"/>
 	<tip id="ID_DOWNLOADS_RATE" message="選択したダウンロードを評価します"/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="選択したダウンロードを再開します"/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="ダウンロード設定を行います..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="他のユーザとこの部分ダウンロードを共有します"/>

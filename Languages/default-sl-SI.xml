@@ -403,6 +403,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Restore"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="_Omrežje">
@@ -423,6 +436,7 @@
 			<item id="ID_TAB_MEDIA" text="_Medijski predvajalnik"/>
 			<item id="ID_TAB_SEARCH" text="_Iskanje"/>
 			<item id="ID_TAB_TRANSFERS" text="_Prenosi"/>
+			<item id="ID_WINDOW_REMOTE" text="Pokaži oddaljen dostop"/>
 			<separator/>
 			<menu text="_Napredno">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Sosedje"/>
@@ -901,6 +915,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Predogled"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Poglej _ocene"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Nadaljuj"/>
@@ -916,6 +931,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Predogled"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Dodaj predvajalnemu seznamu"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Poglej _ocene"/>
@@ -2245,6 +2261,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Dvig izbranih prenosov po prednostnem seznamu."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Trenutno prekini izbrane prenose."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Oceni izbran prenos."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Nadaljuj z izbranimi prenosi."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Nastavitve prenosov..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Deli to delno prenešeno datoteko z drugimi."/>

@@ -419,6 +419,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Restore"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="網路">
@@ -439,6 +452,7 @@
 			<item id="ID_TAB_MEDIA" text="多媒體播放程式"/>
 			<item id="ID_TAB_SEARCH" text="搜尋"/>
 			<item id="ID_TAB_TRANSFERS" text="下載"/>
+			<item id="ID_WINDOW_REMOTE" text="顯示遙控器"/>
 			<separator/>
 			<menu text="進階">
 				<item id="ID_VIEW_NEIGHBOURS" text="我的鄰居"/>
@@ -917,6 +931,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="預覽"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="檢視評論"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="繼續"/>
@@ -932,6 +947,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="預覽"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="新增至播放清單"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="檢視評論"/>
@@ -2196,6 +2212,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="提升選擇的檔案的優先度."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="暫停選擇的下載."/>
 	<tip id="ID_DOWNLOADS_RATE" message="為選擇的下載評分."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="繼續選擇的下載."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="規劃下載設定..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="與其他使用者分享這個部份完成的檔案."/>

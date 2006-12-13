@@ -915,6 +915,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Vista Prèvia"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Veure Ressenyes"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Continuar"/>
@@ -930,6 +931,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Vista Prèvia"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Vi_sta Prèvia a Copia"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Afegir a  la llista de reproducció"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Veure Ressenyes"/>
@@ -2277,6 +2279,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Donar més prioritat."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Posar en pausa les transferències seleccionades."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Valorar la descàrrega seleccionada."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Continuar descarregant els arxius seleccionats."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Configurar opcions de descàrregues..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Compartir aquest arxiu parcial amb altres."/>

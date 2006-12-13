@@ -922,6 +922,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="Anteprima"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Visualizza revisioni"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="Riprendi"/>
@@ -937,6 +938,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="Anteprima"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Copia di anteprima"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Aggiungi alla playlist"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Visualizza revisioni"/>
@@ -2268,6 +2270,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Sposta il download selezionato più su nella lista delle priorità."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Sospendi i download selezionati."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Valuta il download selezionato."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Riprende i download selezionati."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Configura le impostazioni di download..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Condividi con gli altri utenti questo file scaricato parzialmente."/>

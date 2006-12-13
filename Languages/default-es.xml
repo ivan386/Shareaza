@@ -436,6 +436,7 @@
 			<item id="ID_TAB_MEDIA" text="_Reproductor"/>
 			<item id="ID_TAB_SEARCH" text="_Búsqueda"/>
 			<item id="ID_TAB_TRANSFERS" text="_Descargas"/>
+			<item id="ID_WINDOW_REMOTE" text="_Mostrar Control Remoto"/>
 			<separator/>
 			<menu text="_Avanzado">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Red" shortcut="F7"/>
@@ -550,7 +551,7 @@
 			<item id="ID_WINDOW_TOOLBAR" text="Mostrar _Barra de Herramientas"/>
 			<item id="ID_WINDOW_TABBAR" text="Mostrar _Barra de Lengüetas"/>
 			<item id="ID_WINDOW_MONITOR" text="Mostrar _Monitor"/>
-			<item id="ID_WINDOW_REMOTE" text="Mostrar _Control Remoto"/>
+			<item id="ID_WINDOW_REMOTE" text="Mostrar Control Remoto"/>
 		</menu>
 
         <menu text="_Ayuda">
@@ -637,7 +638,7 @@
 			<item id="ID_WINDOW_TOOLBAR" text="Mostrar _Barra de Herramientas"/>
 			<item id="ID_WINDOW_TABBAR" text="Mostrar _Barra de Lengüetas "/>
 			<item id="ID_WINDOW_MONITOR" text="Show _Monitor"/>
-			<item id="ID_WINDOW_REMOTE" text="Show _Remote"/>
+			<item id="ID_WINDOW_REMOTE" text="Mostrar Control Remoto"/>
 		</menu>
       <menu text="_Ayuda">
 			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
@@ -933,14 +934,13 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Vista Previa"/>
-		 <item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="V_ista Previa Rpida"/>
-		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Vi_sta Previa a Copia"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Vista Previa Rápida"/>
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Vi_sta Previa a Copia"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Agregar a la lista de reproducción"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Ver Reviews"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Reanudar"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="P_ausar"/>
-		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Vista Previa Rápida"/>
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancelar"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Buscar más fuentes"/>
@@ -2263,6 +2263,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Dar más prioridad."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Poner en pausa las transferencias seleccionadas."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Darle rating a la descarga seleccionada."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Continuar descargando los archivos seleccionados."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Configurar opciones de descargas..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Compartir este archivo parcial con otros."/>
@@ -2314,7 +2315,6 @@
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar esta carpeta a un archivo de Colección..."/>
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Bajar todos los archivos de la Colección seleccionada."/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Agregar los archivos seleccionados a la lista de reproducción."/>
-	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Exportar esta carpeta a un archivo de Colección..."/>
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Ver o editar las propiedaes de la carpeta..."/>
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Aplicar metadata de la carpeta a todos los archivos."/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="Crear nuevo album/carpeta virtual..."/>
@@ -2358,6 +2358,7 @@
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Usar proporción automática."/>
 	<tip id="ID_MEDIA_CLEAR" message="Limpiar la lista de reproducción."/>
 	<tip id="ID_MEDIA_CLOSE" message="Cerrar archivo."/>
+	<tip id="ID_MEDIA_EXPORT_COLLECTION" message="Save the playlist as a collection file..."/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="Pantalla completa."/>
 	<tip id="ID_MEDIA_MUTE" message="Poner el sonido del reproductor en Silencio."/>
 	<tip id="ID_MEDIA_NEXT" message="Ir al siguiente archivo."/>

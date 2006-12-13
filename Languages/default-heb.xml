@@ -404,6 +404,19 @@
 
 <!-- Menu Definitions -->
 <menus>
+	<!-- SIMPLE POPUP MENU -->
+	<menu name="Simple">
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
+	<!-- CHILD POPUP MENU -->
+	<menu name="Child">
+		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<separator/>
+		<item id="ID_CHILD_RESTORE" text="_Restore"/>
+		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<separator/>
+		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="‪_רשת שרזה">
@@ -424,6 +437,7 @@
 			<item id="ID_TAB_MEDIA" text="‪_נגן המדיה"/>
 			<item id="ID_TAB_SEARCH" text="‪_חיפוש"/>
 			<item id="ID_TAB_TRANSFERS" text="‪_הורדות"/>
+			<item id="ID_WINDOW_REMOTE" text="‪הצג פנל ש_ליטה"/>
 			<separator/>
 			<menu text="‪מתק_דם">
 				<item id="ID_VIEW_NEIGHBOURS" text="‪_שכנים"/>
@@ -902,6 +916,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="‪_תצוגה מקדימה"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="‪הצג _ביקורות"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="‪המשך"/>
@@ -917,6 +932,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="‪_תצוגה מקדימה"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="‪Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="‪הוסף לרשימת השמעה"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="‪הצג _ביקורות"/>
@@ -2250,6 +2266,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="ההעבר את ההורדות הנבחרות מעלה ברשימת העדפות"/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="השהה את ההורדה או ההורדות שבחרת"/>
 	<tip id="ID_DOWNLOADS_RATE" message="דרג את ההורדה שבחרת"/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="המשך את ההורדה או ההורדות שבחרת"/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="קבע הגדרות הורדה"/>
 	<tip id="ID_DOWNLOADS_SHARE" message="שתף את קובץ זה שהורד חלקית עם משתמשים אחרים"/>
