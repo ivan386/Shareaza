@@ -68,7 +68,7 @@ Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: 
 Name: "multiuser"; Description: "{cm:tasks_multisetup}"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
-Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 0,5.01sp2
+;Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 0,5.01sp2
 Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 0,5.01; Check: CanUserModifyServices
 Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
 
