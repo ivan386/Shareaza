@@ -1740,12 +1740,15 @@ BOOL CDatagrams::OnCrawlAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 // Better put cache as security to prevent attack, such as flooding cache with invalid host addresses.
 BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	if ( ! pPacket->m_bCompound ) return FALSE; // block execution of code for above reason
+	if ( ! pPacket->m_bCompound ) return FALSE; // if it is not Compound packet, it is basically malformed packet
 
 	CDiscoveryService * pService = DiscoveryServices.GetByAddress( &(pHost->sin_addr) , ntohs(pHost->sin_port), 4 );
 
-	if ( pService == NULL && ( Security.IsDenied( &pHost->sin_addr ) || Network.IsFirewalledAddress( (LPVOID*)&pHost->sin_addr, TRUE ) ||
-		Network.IsReserved( &pHost->sin_addr ) ) ) return FALSE;
+	if (	pService == NULL &&
+		(	Network.IsFirewalledAddress( (LPVOID*)&pHost->sin_addr, TRUE ) ||
+			Network.IsReserved( &pHost->sin_addr ) ||
+			Security.IsDenied( &pHost->sin_addr ) )
+		) return FALSE;
 
 	CHAR szType[9], szInner[9];
 	DWORD nLength, nInner, tAdjust = 0;
@@ -1753,8 +1756,6 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	int nCount = 0;
 
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
-
-	tAdjust = tNow;
 
 	while ( pPacket->ReadPacket( szType, nLength, &bCompound ) )
 	{
@@ -1790,13 +1791,14 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 					pPacket->m_nPosition = nNextX;
 				}
 
-				if ( nLength >= 6 )
-				{
-					nAddress = pPacket->ReadLongLE();
-					nPort = pPacket->ReadShortBE();
-					if ( nLength >= 10 ) tSeen = pPacket->ReadLongBE() + tAdjust;
-				}
+				nLength = nNext - pPacket->m_nPosition;
+			}
 
+			if ( nLength >= 6 )
+			{
+				nAddress = pPacket->ReadLongLE();
+				nPort = pPacket->ReadShortBE();
+				if ( nLength >= 10 ) tSeen = pPacket->ReadLongBE() + tAdjust;
 			}
 
 			CHostCacheHost* pCached = HostCache.Gnutella2.Add(
@@ -1806,7 +1808,6 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 			if ( pCached != NULL )
 			{
 				nCount++;
-				pCached->m_pVendor->m_sCode = strVendor;
 			}
 
 		}
@@ -1850,22 +1851,24 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		{
 			if ( pNeighbour->m_pVendor && pNeighbour->m_pVendor->m_sCode.GetLength() == 4 )
 			{
-				pKHLA->WritePacket( "NH", 14 + 6, TRUE );					// 4
-				pKHLA->WritePacket( "HS", 2 );								// 4
+				pKHLA->WritePacket( "NH", 16 + 6, TRUE );					// 4
+				pKHLA->WritePacket( "HS", 4 );								// 4
 				pKHLA->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );		// 2
+				pKHLA->WriteShortBE( (WORD)Settings.Gnutella2.NumLeafs );	// 2
 				pKHLA->WritePacket( "V", 4 );								// 3
 				pKHLA->WriteString( pNeighbour->m_pVendor->m_sCode );		// 5
 			}
 			else
 			{
-				pKHLA->WritePacket( "NH", 7 + 6, TRUE );					// 4
-				pKHLA->WritePacket( "HS", 2 );								// 4
+				pKHLA->WritePacket( "NH", 9 + 6, TRUE );					// 4
+				pKHLA->WritePacket( "HS", 4 );								// 4
 				pKHLA->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );		// 2
+				pKHLA->WriteShortBE( (WORD)Settings.Gnutella2.NumLeafs );	// 2
 				pKHLA->WriteByte( 0 );										// 1
 			}
 
 			pKHLA->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );	// 4
-			pKHLA->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );		// 2
+			pKHLA->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );	// 2
 		}
 	}
 
@@ -1873,7 +1876,7 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	pKHLA->WritePacket( "TS", 4 );
-	pKHLA->WriteLongBE( static_cast< DWORD >( time( NULL ) ) );
+	pKHLA->WriteLongBE( tNow );
 
 	for ( CHostCacheHost* pCachedHost = HostCache.Gnutella2.GetNewest() ; pCachedHost && nCount > 0 ;
 			pCachedHost = pCachedHost->m_pPrevTime )
