@@ -50,7 +50,7 @@ WizardSmallImageFile=setup\misc\corner.bmp
 ChangesAssociations=yes
 ChangesEnvironment=yes
 OutputManifestFile=Manifest.txt
-MinVersion=4.0,4.0sp4
+MinVersion=4.0,4.0sp6
 
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
