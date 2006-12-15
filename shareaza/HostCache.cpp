@@ -637,7 +637,7 @@ void CHostCacheList::PruneOldHosts()
 		CHostCacheHost* pNext = pHost->m_pPrevTime;
 
 		DWORD nExpire;
-		float nProbability = 1.0;
+		float nProbability = .0;
 
 		if ( pHost->m_nProtocol == PROTOCOL_G1 )
 		{
