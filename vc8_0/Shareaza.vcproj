@@ -78,13 +78,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib Powrprof.lib msi.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib msi.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateManifest="false"
 				ManifestFile=""
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib;Powrprof.lib;msi.lib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib;msi.lib"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -175,7 +175,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib winmm.lib wininet.lib Iphlpapi.lib Powrprof.lib msi.lib"
+				AdditionalDependencies="version.lib winmm.lib wininet.lib Iphlpapi.lib msi.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -271,13 +271,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib Powrprof.lib msi.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib msi.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				GenerateManifest="false"
 				ManifestFile=""
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib;Powrprof.lib;msi.lib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib;msi.lib"
 				OptimizeReferences="2"
 				ProfileGuidedDatabase="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(TargetName).pgd"
 			/>
@@ -370,7 +370,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib winmm.lib wininet.lib Iphlpapi.lib Powrprof.lib msi.lib"
+				AdditionalDependencies="version.lib winmm.lib wininet.lib Iphlpapi.lib msi.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -4785,54 +4785,6 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\releasex64\shareaza\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\releasewin32\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
@@ -4966,6 +4918,54 @@
 						Name="VCCLCompilerTool"
 						ObjectFile="$(IntDir)\$(InputName)2.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\releasex64\shareaza\Shareaza_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
