@@ -637,15 +637,23 @@ void CHostCacheList::PruneOldHosts()
 		CHostCacheHost* pNext = pHost->m_pPrevTime;
 
 		DWORD nExpire;
+		float nProbability = 1.0;
 
 		if ( pHost->m_nProtocol == PROTOCOL_G1 )
+		{
+			// Calculate some kind of probability if we need to prune it
+			float nProbability = (float)pHost->m_nDailyUptime / ( 24 * 60 * 60 );
+			if ( pHost->m_nFailures )
+				nProbability /= pHost->m_nFailures;
+
 			nExpire = Settings.Gnutella1.HostExpire;
+		}
 		else if ( pHost->m_nProtocol == PROTOCOL_G2 )
 			nExpire = Settings.Gnutella2.HostExpire;
 		else // ed2k
 			nExpire = 0;
 
-		if ( ( nExpire ) && ( tNow - pHost->m_tSeen > nExpire ) || pHost->m_nFailures > 2 )
+		if ( ( nExpire ) && ( tNow - pHost->m_tSeen > nExpire ) && nProbability < .75 )
 		{
 			Remove( pHost );
 		}
