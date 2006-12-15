@@ -652,6 +652,10 @@ void CHostCacheList::PruneOldHosts()
 		else // ed2k
 			nExpire = 0;
 
+		// Since we discard hosts after 3 failures, it means that we will remove
+		// hosts with the DU less than 8 hours without no failures when they expire;
+		// hosts with the DU less than 16 hours with 1 failure;
+		// hosts with the DU less than 24 hours with 2 failures;
 		if ( ( nExpire ) && ( tNow - pHost->m_tSeen > nExpire ) && nProbability < .333 )
 		{
 			Remove( pHost );
