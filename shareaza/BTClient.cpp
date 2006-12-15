@@ -103,14 +103,6 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 
 void CBTClient::AttachTo(CConnection* pConnection)
 {
-	if ( m_pDownload != NULL && ( m_pDownload->IsPaused() || 
-		m_pDownload->IsMoving() && !m_pDownload->m_bVerify || 
-		m_pDownload->IsCompleted() && !m_pDownload->m_bVerify ) )
-	{
-		Close();
-		return;
-	}
-
 	ASSERT( m_hSocket == INVALID_SOCKET );
 	CTransfer::AttachTo( pConnection );
 	m_tConnected = GetTickCount();
@@ -262,14 +254,6 @@ BOOL CBTClient::OnRead()
 {
 	BOOL bSuccess = TRUE;
 	
-	if ( m_pDownload != NULL && ( m_pDownload->IsPaused() || 
-		 m_pDownload->IsMoving() && !m_pDownload->m_bVerify || 
-		 m_pDownload->IsCompleted() && !m_pDownload->m_bVerify ) )
-	{
-		Close();
-		return FALSE;
-	}
-
 	CTransfer::OnRead();
 	
 	if ( m_bOnline )
@@ -389,7 +373,7 @@ BOOL CBTClient::OnHandshake1()
 		
 		// Find the requested file
 		m_pDownload = Downloads.FindByBTH( oFileHash, TRUE );
-		
+
 		if ( m_pDownload == NULL )				// If we can't find the file
 		{	//Display and error and exit
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
@@ -411,6 +395,15 @@ BOOL CBTClient::OnHandshake1()
 			Close();
 			return FALSE;
 		}
+		// The file isn't verified yet, close the connection
+		else if ( m_pDownload->IsMoving() && !m_pDownload->m_bVerify || 
+				  m_pDownload->IsCompleted() && !m_pDownload->m_bVerify )
+		{
+			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
+			Close();
+			return FALSE;
+		}
+
 
 		// Check we don't have too many active torrent connections 
 		// (Prevent routers overloading for very popular torrents)
