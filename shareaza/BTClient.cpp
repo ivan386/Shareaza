@@ -103,6 +103,14 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 
 void CBTClient::AttachTo(CConnection* pConnection)
 {
+	if ( m_pDownload != NULL && ( m_pDownload->IsPaused() || 
+		m_pDownload->IsMoving() && !m_pDownload->m_bVerify || 
+		m_pDownload->IsCompleted() && !m_pDownload->m_bVerify ) )
+	{
+		Close();
+		return;
+	}
+
 	ASSERT( m_hSocket == INVALID_SOCKET );
 	CTransfer::AttachTo( pConnection );
 	m_tConnected = GetTickCount();
@@ -257,7 +265,10 @@ BOOL CBTClient::OnRead()
 	if ( m_pDownload != NULL && ( m_pDownload->IsPaused() || 
 		 m_pDownload->IsMoving() && !m_pDownload->m_bVerify || 
 		 m_pDownload->IsCompleted() && !m_pDownload->m_bVerify ) )
+	{
+		Close();
 		return FALSE;
+	}
 
 	CTransfer::OnRead();
 	
