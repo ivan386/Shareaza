@@ -1831,8 +1831,8 @@ void CMediaFrame::DisableScreenSaver()
 {
 	if ( m_bScreenSaverEnabled )
 	{
-		GetActivePwrScheme( &m_nPowerSchemeId );				// get ID of current power scheme
-		GetCurrentPowerPolicies( &m_CurrentGP, &m_CurrentPP );	// get active policies
+		theApp.m_pfnGetActivePwrScheme( &m_nPowerSchemeId );				// get ID of current power scheme
+		theApp.m_pfnGetCurrentPowerPolicies( &m_CurrentGP, &m_CurrentPP );	// get active policies
 
 		m_nVidAC = m_CurrentPP.user.VideoTimeoutAc;				// save current values
 		m_nVidDC = m_CurrentPP.user.VideoTimeoutDc;
@@ -1841,7 +1841,7 @@ void CMediaFrame::DisableScreenSaver()
 		m_CurrentPP.user.VideoTimeoutDc = 0;
 
 		// set new values
-		SetActivePwrScheme( m_nPowerSchemeId, &m_CurrentGP, &m_CurrentPP );
+		theApp.m_pfnSetActivePwrScheme( m_nPowerSchemeId, &m_CurrentGP, &m_CurrentPP );
 
 		BOOL bParam = FALSE;
 		BOOL bRetVal = SystemParametersInfo( SPI_GETSCREENSAVEACTIVE, 0, &bParam, 0 );
@@ -1866,7 +1866,7 @@ void CMediaFrame::EnableScreenSaver()
 		m_CurrentPP.user.VideoTimeoutDc = m_nVidDC;
 
 		// set original values
-		SetActivePwrScheme( m_nPowerSchemeId, &m_CurrentGP, &m_CurrentPP );
+		theApp.m_pfnSetActivePwrScheme( m_nPowerSchemeId, &m_CurrentGP, &m_CurrentPP );
 
 		// Restore screen saver timeout value if it's not zero.
 		// Otherwise, if the screen saver was inactive, 

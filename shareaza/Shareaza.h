@@ -73,13 +73,22 @@ public:
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
 	CString				m_sUPnPExternalIP;
 
-	HINSTANCE			m_hUser32;
+	// GDI and display monitor functions
+	HINSTANCE	m_hUser32;
 	BOOL		(WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
 	BOOL		(WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
 	HMONITOR	(WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
 	HMONITOR	(WINAPI *m_pfnMonitorFromWindow)(HWND, DWORD);
-	HINSTANCE			m_hGDI32;
+
+	// For RTL layout support
+	HINSTANCE	m_hGDI32;
 	DWORD		(WINAPI *m_pfnSetLayout)(HDC, DWORD);
+
+	// Power schemes management
+	HINSTANCE	m_hPowrProf;
+	BOOLEAN		(WINAPI *m_pfnGetActivePwrScheme)(PUINT);
+	BOOLEAN		(WINAPI *m_pfnGetCurrentPowerPolicies)(PGLOBAL_POWER_POLICY, PPOWER_POLICY);
+	BOOLEAN		(WINAPI *m_pfnSetActivePwrScheme)(UINT, PGLOBAL_POWER_POLICY, PPOWER_POLICY);
 	
 public:
 	static CMainWnd*	SafeMainWnd();

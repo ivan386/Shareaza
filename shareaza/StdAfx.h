@@ -164,6 +164,91 @@ const TRISTATE TS_UNKNOWN = 0;
 const TRISTATE TS_FALSE   = 1;
 const TRISTATE TS_TRUE    = 2;
 
+// Typedefs from powrprof.h
+typedef struct _GLOBAL_MACHINE_POWER_POLICY
+{
+	ULONG Revision;
+	SYSTEM_POWER_STATE LidOpenWakeAc;
+	SYSTEM_POWER_STATE LidOpenWakeDc;
+	ULONG BroadcastCapacityResolution;
+} GLOBAL_MACHINE_POWER_POLICY, *PGLOBAL_MACHINE_POWER_POLICY;
+
+typedef struct _GLOBAL_USER_POWER_POLICY
+{
+	ULONG Revision;
+	POWER_ACTION_POLICY PowerButtonAc;
+	POWER_ACTION_POLICY PowerButtonDc;
+	POWER_ACTION_POLICY SleepButtonAc;
+	POWER_ACTION_POLICY SleepButtonDc;
+	POWER_ACTION_POLICY LidCloseAc;
+	POWER_ACTION_POLICY LidCloseDc;
+	SYSTEM_POWER_LEVEL DischargePolicy[NUM_DISCHARGE_POLICIES];
+	ULONG GlobalFlags;
+} GLOBAL_USER_POWER_POLICY, *PGLOBAL_USER_POWER_POLICY;
+
+typedef struct _GLOBAL_POWER_POLICY
+{
+	GLOBAL_USER_POWER_POLICY user;
+	GLOBAL_MACHINE_POWER_POLICY mach;
+} GLOBAL_POWER_POLICY, *PGLOBAL_POWER_POLICY;
+
+typedef struct _MACHINE_POWER_POLICY
+{
+	ULONG Revision;
+	SYSTEM_POWER_STATE MinSleepAc;
+	SYSTEM_POWER_STATE MinSleepDc;
+	SYSTEM_POWER_STATE ReducedLatencySleepAc;
+	SYSTEM_POWER_STATE ReducedLatencySleepDc;
+	ULONG DozeTimeoutAc;
+	ULONG DozeTimeoutDc;
+	ULONG DozeS4TimeoutAc;
+	ULONG DozeS4TimeoutDc;
+	UCHAR MinThrottleAc;
+	UCHAR MinThrottleDc;
+	UCHAR pad1[2];
+	POWER_ACTION_POLICY OverThrottledAc;
+	POWER_ACTION_POLICY OverThrottledDc;
+} MACHINE_POWER_POLICY, *PMACHINE_POWER_POLICY;
+
+typedef struct _MACHINE_PROCESSOR_POWER_POLICY
+{
+	ULONG Revision;
+	PROCESSOR_POWER_POLICY ProcessorPolicyAc;    
+	PROCESSOR_POWER_POLICY ProcessorPolicyDc;    
+} MACHINE_PROCESSOR_POWER_POLICY, *PMACHINE_PROCESSOR_POWER_POLICY;
+
+typedef struct _USER_POWER_POLICY
+{
+	ULONG Revision;
+	POWER_ACTION_POLICY IdleAc;
+	POWER_ACTION_POLICY IdleDc;
+	ULONG IdleTimeoutAc;
+	ULONG IdleTimeoutDc;
+	UCHAR IdleSensitivityAc;
+	UCHAR IdleSensitivityDc;
+	UCHAR ThrottlePolicyAc;
+	UCHAR ThrottlePolicyDc;
+	SYSTEM_POWER_STATE MaxSleepAc;
+	SYSTEM_POWER_STATE MaxSleepDc;
+	ULONG Reserved[2];
+	ULONG VideoTimeoutAc;
+	ULONG VideoTimeoutDc;
+	ULONG SpindownTimeoutAc;
+	ULONG SpindownTimeoutDc;
+	BOOLEAN OptimizeForPowerAc;
+	BOOLEAN OptimizeForPowerDc;
+	UCHAR FanThrottleToleranceAc;
+	UCHAR FanThrottleToleranceDc;
+	UCHAR ForcedThrottleAc;
+	UCHAR ForcedThrottleDc;
+} USER_POWER_POLICY, *PUSER_POWER_POLICY;
+
+typedef struct _POWER_POLICY
+{
+	USER_POWER_POLICY user;
+	MACHINE_POWER_POLICY mach;
+} POWER_POLICY, *PPOWER_POLICY;
+
 // CArchive operators to help replacing TRISTATE with safer and more convenient tribools
 inline CArchive& operator<<(CArchive& ar, const boost::logic::tribool& rhs)
 {

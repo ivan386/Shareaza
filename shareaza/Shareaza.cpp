@@ -644,6 +644,19 @@ void CShareazaApp::InitResources()
 	else
 		m_pfnSetLayout = NULL;
 
+	if ( ( m_hPowrProf = LoadLibrary( _T("PowrProf.dll") ) ) != 0 )
+	{
+		(FARPROC&)m_pfnGetActivePwrScheme = GetProcAddress( m_hPowrProf, "GetActivePwrScheme" );
+		(FARPROC&)m_pfnGetCurrentPowerPolicies = GetProcAddress( m_hPowrProf, "GetCurrentPowerPolicies" );
+		(FARPROC&)m_pfnSetActivePwrScheme = GetProcAddress( m_hPowrProf, "SetActivePwrScheme" );
+	}
+	else
+	{
+		m_pfnGetActivePwrScheme = NULL;
+		m_pfnGetCurrentPowerPolicies = NULL;
+		m_pfnSetActivePwrScheme = NULL;
+	}
+
 	// Get the fonts from the registry
 	theApp.m_sDefaultFont		= theApp.GetProfileString( _T("Fonts"), _T("DefaultFont"), _T("Tahoma") );
 	theApp.m_sPacketDumpFont	= theApp.GetProfileString( _T("Fonts"), _T("PacketDumpFont"), _T("Lucida Console") );
