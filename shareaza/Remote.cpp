@@ -987,13 +987,13 @@ void CRemote::PageDownloads()
 		else if ( nSources == nTotalSources )
 		{
 			CString strSources;
-			LoadSourcesString( str,  nSources );
+			LoadSourcesString( strSources, nSources );
 			str.Format( _T("(%i %s)"), nSources, strSources );
 		}
 		else
 		{
 			CString strSources;
-			LoadSourcesString( str,  nTotalSources, true );
+			LoadSourcesString( strSources, nTotalSources, true );
 			str.Format( _T("(%i/%i %s)"), nSources, nTotalSources, strSources );
 		}
 		Add( _T("download_sources"), str );
