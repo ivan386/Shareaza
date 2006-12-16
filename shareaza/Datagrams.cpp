@@ -1854,7 +1854,7 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 				pKHLA->WritePacket( "NH", 16 + 6, TRUE );					// 4
 				pKHLA->WritePacket( "HS", 4 );								// 4
 				pKHLA->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );		// 2
-				pKHLA->WriteShortBE( (WORD)Settings.Gnutella2.NumLeafs );	// 2
+				pKHLA->WriteShortBE( (WORD)pNeighbour->m_nLeafLimit );	// 2
 				pKHLA->WritePacket( "V", 4 );								// 3
 				pKHLA->WriteString( pNeighbour->m_pVendor->m_sCode );		// 5
 			}
@@ -1863,7 +1863,7 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 				pKHLA->WritePacket( "NH", 9 + 6, TRUE );					// 4
 				pKHLA->WritePacket( "HS", 4 );								// 4
 				pKHLA->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );		// 2
-				pKHLA->WriteShortBE( (WORD)Settings.Gnutella2.NumLeafs );	// 2
+				pKHLA->WriteShortBE( (WORD)pNeighbour->m_nLeafLimit );	// 2
 				pKHLA->WriteByte( 0 );										// 1
 			}
 
