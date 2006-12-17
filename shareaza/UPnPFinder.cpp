@@ -390,7 +390,8 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 	// But looks like it is.
 	if ( !m_bADSL )
 	{
-		m_bADSL = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANEthLinkC" ) == -1 );
+		m_bADSL = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANEthLinkC" ) == -1 ) ||
+				  !( strServiceId.Find( L"urn:upnp-org:serviceId:WANDSLLinkC" ) == -1 );
 	}
 
 	bool bPPP = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANPPPConn" ) == -1 );
