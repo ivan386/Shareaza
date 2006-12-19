@@ -167,7 +167,8 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( ! m_pTorrent.IsAvailable() ) return TRUE;
 	if ( m_bDiskFull ) return FALSE;
 	
-	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000 ) ChokeTorrent( tNow );
+	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000 ) 
+		ChokeTorrent( tNow );
 	
 	if ( m_pFile != NULL && m_pFile->IsOpen() == FALSE )
 	{
@@ -694,6 +695,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	pDownload->m_bSeeding	= TRUE;
 	pDownload->m_bComplete	= TRUE;
 	pDownload->m_tCompleted	= GetTickCount();
+	pDownload->m_bVerify	= TS_TRUE;
 	
 	memset( m_pTorrentBlock, TS_TRUE, m_nTorrentBlock );
 	m_nTorrentSuccess = m_nTorrentBlock;
