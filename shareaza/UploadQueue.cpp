@@ -369,7 +369,8 @@ DWORD CUploadQueue::GetBandwidthLimit(INT_PTR nTransfers) const
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
 	
 	// Limit if torrents are active
-	if ( Uploads.m_nTorrentSpeed > 0 ) nLimit = ( nLimit * ( 100 - Settings.BitTorrent.BandwidthPercentage ) ) / 100;
+	if ( Uploads.m_nTorrentSpeed > 0 ) 
+		nLimit = ( nLimit * Settings.BitTorrent.BandwidthPercentage ) / 100;
 	
 	return static_cast< DWORD >( nLimit
 			* ( nLocalPoints + Settings.Uploads.ThrottleMode )
