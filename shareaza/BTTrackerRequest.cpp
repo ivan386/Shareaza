@@ -260,7 +260,14 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 	}
 	
 	CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
+
 	if ( pBuffer == NULL ) return;
+	if ( pBuffer->m_pBuffer == NULL )
+	{
+		theApp.Message( MSG_ERROR, IDS_BT_TRACK_PARSE_ERROR );
+		m_pDownload->OnTrackerEvent( FALSE );
+		return;
+	}
 
 	CBENode* pRoot = CBENode::Decode( pBuffer );
 	

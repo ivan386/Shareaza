@@ -313,17 +313,20 @@ void CTorrentTrackersPage::OnRun()
 			if ( m_pRequest.Execute( FALSE ) && m_pRequest.InflateResponse() )
 			{
 				CBuffer* pResponse = m_pRequest.GetResponseBuffer();
-				
-				if ( CBENode* pNode = CBENode::Decode( pResponse ) )
+
+				if ( pResponse != NULL && pResponse->m_pBuffer != NULL )
 				{
-					if ( OnTree( pNode ) )
+					if ( CBENode* pNode = CBENode::Decode( pResponse ) )
 					{
+						if ( OnTree( pNode ) )
+						{
+							delete pNode;
+							PostMessage( WM_TIMER, 3 );
+							return;
+						}
+						
 						delete pNode;
-						PostMessage( WM_TIMER, 3 );
-						return;
 					}
-					
-					delete pNode;
 				}
 			}
 		}
