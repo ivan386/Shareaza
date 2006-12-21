@@ -345,6 +345,8 @@ void CBENode::Encode(CBuffer* pBuffer) const
 	}
 }
 
+#define INC(x) { pInput += (x); nInput -= (x); }
+
 //////////////////////////////////////////////////////////////////////
 // CBENode decoding
 
@@ -357,7 +359,15 @@ CBENode* CBENode::Decode(CBuffer* pBuffer)
 		auto_ptr< CBENode > pNode( new CBENode() );
 		LPBYTE pInput	= pBuffer->m_pBuffer;
 		DWORD nInput	= pBuffer->m_nLength;
-	
+
+		if ( nInput > 1 && pInput[0] == '\r' && pInput[1] == '\n' )
+		{
+			// IIS based trackers may insert unneeded EOL at the beginning
+			// of the torrent files or scrape responses, due to IIS bug.
+			// We will skip it.
+			INC( 2 );
+		}
+
 		pNode->Decode( pInput, nInput );
 		return pNode.release();
 	}
@@ -367,8 +377,6 @@ CBENode* CBENode::Decode(CBuffer* pBuffer)
 		return NULL;
 	}
 }
-
-#define INC(x) { pInput += (x); nInput -= (x); }
 
 void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 {
