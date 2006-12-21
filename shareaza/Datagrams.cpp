@@ -1398,7 +1398,11 @@ BOOL CDatagrams::OnHit(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnQueryKeyRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	if ( ! Neighbours.IsG2Hub() ) return FALSE;
+	if ( ! Neighbours.IsG2Hub() )
+	{
+		Statistics.Current.Gnutella2.Dropped++;
+		return FALSE;
+	}
 
 	DWORD nRequestedAddress = pHost->sin_addr.S_un.S_addr;
 	WORD nRequestedPort = ntohs( pHost->sin_port );
@@ -1456,7 +1460,11 @@ BOOL CDatagrams::OnQueryKeyRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	if ( ! pPacket->m_bCompound ) return FALSE;
+	if ( ! pPacket->m_bCompound )
+	{
+		Statistics.Current.Gnutella2.Dropped++;
+		return FALSE;
+	}
 
 	DWORD nKey = 0, nAddress = 0;
 
@@ -1562,7 +1570,11 @@ BOOL CDatagrams::OnPush(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	if ( ! pPacket->m_bCompound ) return FALSE;
+	if ( ! pPacket->m_bCompound )
+	{
+		Statistics.Current.Gnutella2.Dropped++;
+		return FALSE;
+	}
 
 	BOOL bWantLeaves	= FALSE;
 	BOOL bWantNames		= FALSE;
@@ -1740,7 +1752,11 @@ BOOL CDatagrams::OnCrawlAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 // Better put cache as security to prevent attack, such as flooding cache with invalid host addresses.
 BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	if ( ! pPacket->m_bCompound ) return FALSE; // if it is not Compound packet, it is basically malformed packet
+	if ( ! pPacket->m_bCompound )
+	{
+		Statistics.Current.Gnutella2.Dropped++;
+		return FALSE; // if it is not Compound packet, it is basically malformed packet
+	}
 
 	CDiscoveryService * pService = DiscoveryServices.GetByAddress( &(pHost->sin_addr) , ntohs(pHost->sin_port), 4 );
 
@@ -1748,7 +1764,11 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		(	Network.IsFirewalledAddress( (LPVOID*)&pHost->sin_addr, TRUE ) ||
 			Network.IsReserved( &pHost->sin_addr ) ||
 			Security.IsDenied( &pHost->sin_addr ) )
-		) return FALSE;
+		)
+	{
+		Statistics.Current.Gnutella2.Dropped++;
+		return FALSE;
+	}
 
 	CHAR szType[9], szInner[9];
 	DWORD nLength, nInner, tAdjust = 0;
@@ -1834,7 +1854,11 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	UNUSED_ALWAYS(pPacket);
 
 	if ( Security.IsDenied( &pHost->sin_addr ) || Network.IsFirewalledAddress( (LPVOID*)&pHost->sin_addr, TRUE ) ||
-		Network.IsReserved( &pHost->sin_addr ) ) return FALSE;
+		Network.IsReserved( &pHost->sin_addr ) )
+	{
+		Statistics.Current.Gnutella2.Dropped++;
+		return FALSE;
+	}
 
 	CG2Packet* pKHLA = CG2Packet::New( G2_PACKET_KHL_ANS, TRUE );
 
