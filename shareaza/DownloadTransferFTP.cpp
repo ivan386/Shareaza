@@ -157,11 +157,11 @@ BOOL CDownloadTransferFTP::Initiate()
 
 void CDownloadTransferFTP::Close (TRISTATE bKeepSource, DWORD nRetryAfter)
 {
-	m_LIST.Close ();
-	m_RETR.Close ();
-
 	if ( m_pSource != NULL && m_nState == dtsDownloading && m_FtpState == ftpRETR)
 		m_pSource->AddFragment( m_nOffset, m_nPosition );
+
+	m_LIST.Close ();
+	m_RETR.Close ();
 
 	m_FtpState = ftpConnecting;
 	m_bSizeChecked = FALSE;
@@ -648,14 +648,18 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 			// Downloading
 			return TRUE;
 		}
-		else if ( strHeader == _T("226") ||
-			 strHeader == _T("426") )			// Transfer completed
+		else if ( strHeader == _T("226") )			// Transfer completed
+		{
+			// Waiting for last chunk
+			return TRUE;
+		}
+		else if ( strHeader == _T("426") )			// Transfer completed
 		{
 			// Aborting
 			m_RETR.Close();
 			m_FtpState = ftpABOR;
 			SetState( dtsDownloading );
-			return SendCommand ();
+			return SendCommand();
 		}
 		else if ( strHeader == _T("550") )		// File unavailable
 		{

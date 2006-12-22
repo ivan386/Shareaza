@@ -153,6 +153,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.UdpOutExpire, 1000, 1, 300, _T(" s") );
 	AddSetting( &Settings.Gnutella2.UdpOutResend, 1000, 1, 300, _T(" s") );
 	AddSetting( &Settings.Gnutella2.UdpInExpire, 1000, 1, 300, _T(" s") );
+	AddSetting( &Settings.Gnutella2.LNIPeriod, 1000, 1, 60 * 60, _T(" s") );
 	AddSetting( &Settings.Gnutella2.KHLPeriod, 1000, 1, 60 * 60, _T(" s") );
 	AddSetting( &Settings.Gnutella2.KHLHubCount, 1, 1, 256 );
 	AddSetting( &Settings.Gnutella2.HAWPeriod, 1000, 1, 60 * 60, _T(" s") );

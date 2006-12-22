@@ -196,7 +196,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 	
 	if ( pUDP )
 	{
-		pPacket->WritePacket( "UDP", nKey ? 10 : 6 );
+		pPacket->WritePacket( G2_PACKET_UDP, nKey ? 10 : 6 );
 		pPacket->WriteLongLE( pUDP->sin_addr.S_un.S_addr );
 		pPacket->WriteShortBE( htons( pUDP->sin_port ) );
 		if ( nKey ) pPacket->WriteLongBE( nKey );
@@ -204,34 +204,34 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 	
 	if ( m_oTiger && m_oSHA1 )
 	{
-        pPacket->WritePacket( "URN", Hashes::Sha1Hash::byteCount + Hashes::TigerHash::byteCount + 3 );
+        pPacket->WritePacket( G2_PACKET_URN, Hashes::Sha1Hash::byteCount + Hashes::TigerHash::byteCount + 3 );
 		pPacket->WriteString( "bp" );
 		pPacket->Write( m_oSHA1 );
         pPacket->Write( m_oTiger );
 	}
 	else if ( m_oSHA1 )
 	{
-		pPacket->WritePacket( "URN", Hashes::Sha1Hash::byteCount + 5 );
+		pPacket->WritePacket( G2_PACKET_URN, Hashes::Sha1Hash::byteCount + 5 );
 		pPacket->WriteString( "sha1" );
 		pPacket->Write( m_oSHA1 );
 	}
 	else if ( m_oTiger )
 	{
-		pPacket->WritePacket( "URN", Hashes::TigerHash::byteCount + 4 );
+		pPacket->WritePacket( G2_PACKET_URN, Hashes::TigerHash::byteCount + 4 );
 		pPacket->WriteString( "ttr" );
 		pPacket->Write( m_oTiger );
 	}
 	// If the target source has only ed2k hash (w/o SHA1) it will allow to find such files
 	if ( m_oED2K )
 	{
-        pPacket->WritePacket( "URN", Hashes::Ed2kHash::byteCount + 5 );
+        pPacket->WritePacket( G2_PACKET_URN, Hashes::Ed2kHash::byteCount + 5 );
 		pPacket->WriteString( "ed2k" );
 		pPacket->Write( m_oED2K );
 	}
 	
 	if ( m_oBTH )
 	{
-		pPacket->WritePacket( "URN", Hashes::BtHash::byteCount + 5 );
+		pPacket->WritePacket( G2_PACKET_URN, Hashes::BtHash::byteCount + 5 );
 		pPacket->WriteString( "btih" );
 		pPacket->Write( m_oBTH );
 	}
@@ -241,12 +241,12 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		if ( m_sKeywords != m_sSearch )
 		{
 			short bValue = (short)( 2 * rand() / ( RAND_MAX + 1.0 ) );
-			pPacket->WritePacket( "DN", pPacket->GetStringLen( bValue ? m_sSearch : m_sKeywords ) );
+			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( bValue ? m_sSearch : m_sKeywords ) );
 			pPacket->WriteString( bValue ? m_sSearch : m_sKeywords, FALSE );
 		}
 		else
 		{
-			pPacket->WritePacket( "DN", pPacket->GetStringLen( m_sKeywords ) );
+			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( m_sKeywords ) );
 			pPacket->WriteString( m_sKeywords, FALSE );
 		}
 	}
@@ -265,7 +265,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 			strXML = m_pXML->ToString( TRUE );
 		}
 		
-		pPacket->WritePacket( "MD", pPacket->GetStringLen( strXML ) );
+		pPacket->WritePacket( G2_PACKET_METADATA, pPacket->GetStringLen( strXML ) );
 		pPacket->WriteString( strXML, FALSE );
 	}
 	
@@ -273,13 +273,13 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 	{
 		if ( m_nMinSize < 0xFFFFFFFF && ( m_nMaxSize < 0xFFFFFFFF || m_nMaxSize == SIZE_UNKNOWN ) )
 		{
-			pPacket->WritePacket( "SZR", 8 );
+			pPacket->WritePacket( G2_PACKET_SIZE_RESTRICTION, 8 );
 			pPacket->WriteLongBE( (DWORD)m_nMinSize );
 			pPacket->WriteLongBE( m_nMaxSize == SIZE_UNKNOWN ? 0xFFFFFFFF : (DWORD)m_nMaxSize );
 		}
 		else
 		{
-			pPacket->WritePacket( "SZR", 16 );
+			pPacket->WritePacket( G2_PACKET_SIZE_RESTRICTION, 16 );
 			pPacket->WriteInt64( m_nMinSize );
 			pPacket->WriteInt64( m_nMaxSize );
 		}
@@ -287,7 +287,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 	
 	if ( ! m_bWantURL || ! m_bWantDN || ! m_bWantXML || ! m_bWantCOM || ! m_bWantPFS )
 	{
-		pPacket->WritePacket( "I",
+		pPacket->WritePacket( G2_PACKET_INTEREST,
 			( m_bWantURL ? 4 : 0 ) + ( m_bWantDN ? 3 : 0 ) + ( m_bWantXML ? 3 : 0 ) +
 			( m_bWantCOM ? 4 : 0 ) + ( m_bWantPFS ? 4 : 0 ) );
 		
@@ -298,7 +298,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		if ( m_bWantPFS ) pPacket->WriteString( "PFS" );
 	}
 	
-	//if ( m_bAndG1 ) pPacket->WritePacket( "G1", 0 );
+	//if ( m_bAndG1 ) pPacket->WritePacket( G2_PACKET_G1, 0 );
 	
 	pPacket->WriteByte( 0 );
 	pPacket->Write( m_oGUID );
@@ -642,16 +642,16 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 {
 	if ( ! pPacket->m_bCompound ) return FALSE;
 	
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
-	
+
 	m_bAndG1 = FALSE;
 	
-	while ( pPacket->ReadPacket( szType, nLength ) )
+	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 		
-		if ( strcmp( szType, "QKY" ) == 0 && nLength >= 4 )
+		if ( nType == G2_PACKET_QKY && nLength >= 4 )
 		{
 			if ( m_pEndpoint.sin_addr.S_un.S_addr == 0 && pEndpoint != NULL )
 				m_pEndpoint = *pEndpoint;
@@ -661,7 +661,7 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 			DWORD* pZero = (DWORD*)( pPacket->m_pBuffer + pPacket->m_nPosition - 4 );
 			*pZero = 0;
 		}
-		else if ( strcmp( szType, "UDP" ) == 0 && nLength >= 6 )
+		else if ( nType == G2_PACKET_UDP && nLength >= 6 )
 		{
 			m_pEndpoint.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
 			m_pEndpoint.sin_port = htons( pPacket->ReadShortBE() );
@@ -678,7 +678,7 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 				*pZero = 0;
 			}
 		}
-		else if ( strcmp( szType, "I" ) == 0 )
+		else if ( nType == G2_PACKET_INTEREST )
 		{
 			m_bWantURL = m_bWantDN = m_bWantXML = m_bWantCOM = m_bWantPFS = FALSE;
 			
@@ -695,7 +695,7 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 				else if ( str == _T("PFS") )	m_bWantPFS = TRUE;
 			}
 		}
-		else if ( strcmp( szType, "URN" ) == 0 )
+		else if ( nType == G2_PACKET_URN )
 		{
 			CString strURN = pPacket->ReadString( nLength );
 			if ( strURN.GetLength() + 1 >= (int)nLength ) return FALSE;
@@ -723,14 +723,14 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 				pPacket->Read( m_oBTH );
 			}
 		}
-		else if ( strcmp( szType, "DN" ) == 0 )
+		else if ( nType == G2_PACKET_DESCRIPTIVE_NAME )
 		{
 			m_sSearch = pPacket->ReadString( nLength );
 			m_sKeywords = m_sSearch;
 			ToLower( m_sKeywords );
 			MakeKeywords( m_sKeywords, false );
 		}
-		else if ( strcmp( szType, "MD" ) == 0 )
+		else if ( nType == G2_PACKET_METADATA )
 		{
 			CString strXML = pPacket->ReadString( nLength );
 			
@@ -752,7 +752,7 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 				}
 			}
 		}
-		else if ( strcmp( szType, "SZR" ) == 0 )
+		else if ( nType == G2_PACKET_SIZE_RESTRICTION )
 		{
 			if ( nLength == 8 )
 			{
@@ -766,7 +766,7 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 				m_nMaxSize = pPacket->ReadInt64();
 			}
 		}
-		else if ( strcmp( szType, "G1" ) == 0 )
+		else if ( nType == G2_PACKET_G1 )
 		{
 			m_bAndG1 = TRUE;
 		}

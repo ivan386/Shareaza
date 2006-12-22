@@ -1711,7 +1711,7 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 		{
 			CG2Packet* pProfile = CG2Packet::New( G2_PACKET_PROFILE_DELIVERY, TRUE );
 			CString strXML = MyProfile.GetXML()->ToString( TRUE );
-			pProfile->WritePacket( "XML", pProfile->GetStringLen( strXML ) );
+			pProfile->WritePacket( G2_PACKET_XML, pProfile->GetStringLen( strXML ) );
 			pProfile->WriteString( strXML, FALSE );
 			pProfile->ToBuffer( &pBuffer );
 			pProfile->Release();

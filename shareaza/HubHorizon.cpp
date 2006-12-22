@@ -166,7 +166,7 @@ int CHubHorizonPool::AddHorizonHubs(CG2Packet* pPacket)
 
 	for ( CHubHorizonHub* pHub = m_pActive ; pHub ; pHub = pHub->m_pNext )
 	{
-		pPacket->WritePacket( "S", 6 );
+		pPacket->WritePacket( G2_PACKET_HORIZON, 6 );
 		pPacket->WriteLongLE( pHub->m_pAddress.S_un.S_addr );
 		pPacket->WriteShortBE( pHub->m_nPort );
 

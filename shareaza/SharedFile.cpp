@@ -941,13 +941,15 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 	if ( bChanged )
 	{
 		Library.AddFile( this );
-		CFolderScanDlg::Update( m_sName, (DWORD)( m_nSize / 1024 ) );
+		CFolderScanDlg::Update( m_sName,
+			( m_nSize == SIZE_UNKNOWN ) ? 0 : (DWORD)( m_nSize / 1024 ) );
 		pLock.Unlock();
 		m_nUpdateCookie++;
 	}
 	else
 	{
-		CFolderScanDlg::Update( m_sName, (DWORD)( m_nSize / 1024 ) );
+		CFolderScanDlg::Update( m_sName,
+			( m_nSize == SIZE_UNKNOWN ) ? 0 : (DWORD)( m_nSize / 1024 ) );
 	}
 	
 	return bChanged;

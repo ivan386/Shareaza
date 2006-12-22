@@ -523,7 +523,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 				// a cached key, or fetch a fresh one
 				
 				CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY_KEY_REQ, TRUE );
-				pPacket->WritePacket( "QNA", 6 );
+				pPacket->WritePacket( G2_PACKET_QUERY_ADDRESS, 6 );
 				pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
 				pPacket->WriteShortBE( pHost->m_nPort );
 				pCacheHub->Send( pPacket );
@@ -554,7 +554,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 				else
 				{
 					// We are not the receiver, so include receiver address
-					pPacket->WritePacket( "RNA", 6 );
+					pPacket->WritePacket( G2_PACKET_REQUEST_ADDRESS, 6 );
 					pPacket->WriteLongLE( pReceiver->sin_addr.S_un.S_addr );
 					pPacket->WriteShortBE( ntohs( pReceiver->sin_port ) );
 					

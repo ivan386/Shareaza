@@ -311,6 +311,7 @@ public:
 		DWORD		UdpOutExpire;
 		DWORD		UdpOutResend;
 		DWORD		UdpInExpire;
+		DWORD		LNIPeriod;
 		DWORD		KHLPeriod;
 		DWORD		KHLHubCount;
 		DWORD		HAWPeriod;

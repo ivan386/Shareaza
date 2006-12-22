@@ -80,14 +80,14 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, CNeighbo
 
 	// Start it with the text "TS" and the time now
 	DWORD tNow = static_cast< DWORD >( time( NULL ) ); // Number of seconds since 1970
-	pPacket->WritePacket( "TS", 4 );
+	pPacket->WritePacket( G2_PACKET_TIMESTAMP, 4 );
 	pPacket->WriteLongBE( tNow );
 
 	// Record that we are making this packet
 	theApp.Message( MSG_DEBUG, _T("Creating a query acknowledgement:") );
 
 	// Write in header information about us
-	pPacket->WritePacket( "D", 8 );
+	pPacket->WritePacket( G2_PACKET_QUERY_DONE, 8 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 	pPacket->WriteShortBE( WORD( GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) ) );
@@ -105,7 +105,7 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, CNeighbo
 			 pNeighbour != pExcept )                   // This isn't the computer the caller warned us to except
 		{
 			// Write information about this connected computer into the packet
-			pPacket->WritePacket( "D", 8 );
+			pPacket->WritePacket( G2_PACKET_QUERY_DONE, 8 );
 			pPacket->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );
 			pPacket->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );
 			pPacket->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );
@@ -127,7 +127,7 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, CNeighbo
 			 HubHorizonPool.Find( &pHost->m_pAddress ) == NULL )    // The IP address is also in the hub horizon pool
 		{
 			// Add the IP address to the packet we're making
-			pPacket->WritePacket( "S", 10 );
+			pPacket->WritePacket( G2_PACKET_QUERY_SEARCH, 10 );
 			pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
 			pPacket->WriteShortBE( pHost->m_nPort );
 			pPacket->WriteLongBE( pHost->m_tSeen );

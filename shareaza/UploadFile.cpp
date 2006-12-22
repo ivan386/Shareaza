@@ -36,20 +36,16 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CUploadFile construction
 
-CUploadFile::CUploadFile(CUploadTransfer* pUpload, const Hashes::Sha1Hash& oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize)
-: m_oFragments( nSize )
+CUploadFile::CUploadFile(CUploadTransfer* pUpload, const Hashes::Sha1Hash& oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize) :
+	m_pAddress( pUpload->m_pHost.sin_addr ),
+	m_nRequests( 0 ),
+	m_oFragments( nSize ),
+	m_bSelected( FALSE )
 {
-	m_pAddress	= pUpload->m_pHost.sin_addr;
 	m_sName		= pszName;
 	m_sPath		= pszPath;
 	m_nSize		= nSize;
-	
-    m_oSHA1 = oSHA1;
-	
-	m_nRequests		= 0;
-
-	m_bSelected		= FALSE;
-
+    m_oSHA1		= oSHA1;
 	m_pTransfers.AddTail( pUpload );
 }
 

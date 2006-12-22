@@ -1,7 +1,7 @@
 //
 // G2Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,60 +32,80 @@ class CHubHorizonGroup;
 
 class CG2Neighbour : public CNeighbour
 {
-// Construction
 public:
 	CG2Neighbour(CNeighbour* pBase);
 	virtual ~CG2Neighbour();
 
-// Attributes
+	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
+	virtual BOOL	SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
+
+	BOOL			OnPing(CG2Packet* pPacket, BOOL bTCP = TRUE);
+	BOOL			OnPong(CG2Packet* pPacket, BOOL bTCP = TRUE);
+	BOOL			OnPacket(CG2Packet* pPacket);
+	void			SendLNI();
+	BOOL			OnLNI(CG2Packet* pPacket);
+	void			SendKHL();
+	BOOL			OnKHL(CG2Packet* pPacket);
+	void			SendHAW();
+	BOOL			OnHAW(CG2Packet* pPacket);
+	BOOL			OnQuery(CG2Packet* pPacket);
+	BOOL			OnQueryAck(CG2Packet* pPacket);
+	BOOL			OnQueryKeyReq(CG2Packet* pPacket);
+	BOOL			OnQueryKeyAns(CG2Packet* pPacket);
+	BOOL			OnPush(CG2Packet* pPacket);
+	BOOL			OnProfileChallenge(CG2Packet* pPacket);
+	BOOL			OnProfileDelivery(CG2Packet* pPacket);
+
+	static CG2Packet* CreateLNIPacket(CG2Neighbour* pOwner = NULL);
+	static CG2Packet* CreateKHLPacket(CG2Neighbour* pOwner = NULL);
+	static BOOL		ParseKHLPacket(CG2Packet* pPacket, CG2Neighbour* pOwner = NULL);
+
 public:
 	DWORD				m_nLeafCount;
 	DWORD				m_nLeafLimit;
 	BOOL				m_bCachedKeys;
 	CRouteCache*		m_pGUIDCache;
 	CHubHorizonGroup*	m_pHubGroup;
-protected:
-	LONG				m_tAdjust;
-	DWORD				m_tLastPingIn;
-	DWORD				m_tLastPingOut;
-	DWORD				m_tWaitLNI;
-	DWORD				m_tLastKHL;
-	DWORD				m_tLastHAW;
-protected:
-	CList< CG2Packet* >	m_pOutbound;
 
 protected:
-	int					m_nQueryLimiter;				// Counter for query limiting
-	DWORD				m_tQueryTimer;					// Timer for query limiting
-	BOOL				m_bBlacklisted;					// Has this client been over-querying.
+	DWORD				m_tLastRun;
+	LONG				m_tAdjust;				// Time adjust of neighbour
+	DWORD				m_tLastPingIn;			// Time when /PI packet recievied
+	DWORD				m_tLastPingOut;			// Time when /PI packet sent
+	DWORD				m_nCountPingIn;			// Number of /PI packets recievied
+	DWORD				m_nCountPingOut;		// Number of /PI packets sent
+	DWORD				m_tLastRelayPingIn;		// Time when /PI/UDP packet recievied
+	DWORD				m_tLastRelayPingOut;	// Time when /PI/UDP packet sent
+	DWORD				m_nCountRelayPingIn;	// Number of /PI/UDP packets recievied
+	DWORD				m_nCountRelayPingOut;	// Number of /PI/UDP packets sent
+	DWORD				m_tLastRelayedPingIn;	// Time when /PI/RELAY/UDP packet recievied
+	DWORD				m_tLastRelayedPingOut;	// Time when /PI/RELAY/UDP packet sent
+	DWORD				m_nCountRelayedPingIn;	// Number of /PI/RELAY/UDP packets recievied
+	DWORD				m_nCountRelayedPingOut;	// Number of /PI/RELAY/UDP packets sent
+	DWORD				m_tLastKHLIn;			// Time when KHL packet recievied
+	DWORD				m_tLastKHLOut;			// Time when KHL packet sent
+	DWORD				m_nCountKHLIn;			// Number of KHL packets recievied
+	DWORD				m_nCountKHLOut;			// Number of KHL packets sent
+	DWORD				m_tLastLNIIn;			// Time when LNI packet recievied
+	DWORD				m_tLastLNIOut;			// Time when LNI packet sent
+	DWORD				m_nCountLNIIn;			// Number of LNI packets recievied
+	DWORD				m_nCountLNIOut;			// Number of LNI packets sent
+	DWORD				m_tLastHAWIn;			// Time when HAW packet recievied
+	DWORD				m_tLastHAWOut;			// Time when HAW packet sent
+	DWORD				m_nCountHAWIn;			// Number of HAW packets recievied
+	DWORD				m_nCountHAWOut;			// Number of HAW packets sent
+	CList< CG2Packet* >	m_pOutbound;			// Queue of outbound packets
+	int					m_nQueryLimiter;		// Counter for query limiting
+	DWORD				m_tQueryTimer;			// Timer for query limiting
+	BOOL				m_bBlacklisted;			// Has this client been over-querying.
 
-// Operations
-public:
-	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
-	virtual BOOL	SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
 protected:
 	virtual BOOL	OnRead();
 	virtual BOOL	OnWrite();
 	virtual BOOL	OnRun();
-protected:
-	void	SendStartups();
-	BOOL	ProcessPackets();
-	BOOL	OnPacket(CG2Packet* pPacket);
-	BOOL	OnPing(CG2Packet* pPacket);
-	void	SendLNI();
-	BOOL	OnLNI(CG2Packet* pPacket);
-	void	SendKHL();
-	BOOL	OnKHL(CG2Packet* pPacket);
-	void	SendHAW();
-	BOOL	OnHAW(CG2Packet* pPacket);
-	BOOL	OnQuery(CG2Packet* pPacket);
-	BOOL	OnQueryAck(CG2Packet* pPacket);
-	BOOL	OnQueryKeyReq(CG2Packet* pPacket);
-	BOOL	OnQueryKeyAns(CG2Packet* pPacket);
-	BOOL	OnPush(CG2Packet* pPacket);
-	BOOL	OnProfileChallenge(CG2Packet* pPacket);
-	BOOL	OnProfileDelivery(CG2Packet* pPacket);
 
+	void			SendStartups();
+	BOOL			ProcessPackets();
 };
 
 #endif // !defined(AFX_G2NEIGHBOUR_H__F3C423B0_60F0_4721_81A3_1109E59CD425__INCLUDED_)

@@ -90,9 +90,9 @@ void CCrawlSession::SendCrawl(SOCKADDR_IN* pHost)
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_CRAWL_REQ, TRUE );
-	pPacket->WritePacket( "RLEAF", 0 );
-	pPacket->WritePacket( "RNAME", 0 );
-	pPacket->WritePacket( "RGPS", 0 );
+	pPacket->WritePacket( G2_PACKET_CRAWL_RLEAF, 0 );
+	pPacket->WritePacket( G2_PACKET_CRAWL_RNAME, 0 );
+	pPacket->WritePacket( G2_PACKET_CRAWL_RGPS, 0 );
 	Datagrams.Send( pHost, pPacket );
 }
 
@@ -217,27 +217,27 @@ CCrawlNode::~CCrawlNode()
 void CCrawlNode::OnCrawl(CCrawlSession* pSession, CG2Packet* pPacket)
 {
 	BOOL bCompound;
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
 
 	m_tResponse = static_cast< DWORD >( time( NULL ) );
 	if ( m_tCrawled == 0 ) m_tCrawled = m_tResponse;
 
-	while ( pPacket->ReadPacket( szType, nLength, &bCompound ) )
+	while ( pPacket->ReadPacket( nType, nLength, &bCompound ) )
 	{
 		DWORD nNext = pPacket->m_nPosition + nLength;
 
-		if ( strcmp( szType, "SELF" ) == 0 )
+		switch ( nType )
 		{
+		case G2_PACKET_SELF:
 			OnNode( pSession, pPacket, nLength, parseSelf );
-		}
-		else if ( strcmp( szType, "NH" ) == 0 )
-		{
+			break;
+		case G2_PACKET_NEIGHBOUR_HUB:
 			OnNode( pSession, pPacket, nLength, parseHub );
-		}
-		else if ( strcmp( szType, "NL" ) == 0 )
-		{
+			break;
+		case G2_PACKET_NEIGHBOUR_LEAF:
 			OnNode( pSession, pPacket, nLength, parseLeaf );
+			break;
 		}
 
 		pPacket->m_nPosition = nNext;
@@ -259,29 +259,29 @@ void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD /*nPa
 	float nLatitude = 0;
 	float nLongitude = 0;
 
-	CHAR szType[9];
+	G2_PACKET nInnerType;
 	DWORD nLength;
 
-	while ( pPacket->ReadPacket( szType, nLength ) )
+	while ( pPacket->ReadPacket( nInnerType, nLength ) )
 	{
 		DWORD nNext = pPacket->m_nPosition + nLength;
 
-		if ( strcmp( szType, "NA" ) == 0 && nLength >= 6 )
+		if ( nInnerType == G2_PACKET_NODE_ADDRESS && nLength >= 6 )
 		{
 			pHost.sin_family = PF_INET;
 			pHost.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
 			pHost.sin_port = htons( pPacket->ReadShortBE() );
 		}
-		else if ( strcmp( szType, "HS" ) == 0 && nLength >= 2 )
+		else if ( nInnerType == G2_PACKET_HUB_STATUS && nLength >= 2 )
 		{
 			bHub = TRUE;
 			nLeafs = (int)pPacket->ReadShortBE();
 		}
-		else if ( strcmp( szType, "NAME" ) == 0 )
+		else if ( nInnerType == G2_PACKET_NAME )
 		{
 			strNick = pPacket->ReadString( nLength );
 		}
-		else if ( strcmp( szType, "GPS" ) == 0 && nLength >= 4 )
+		else if ( nInnerType == G2_PACKET_GPS && nLength >= 4 )
 		{
 			DWORD nGPS = pPacket->ReadLongBE();
 			nLatitude	= (float)HIWORD( nGPS ) / 65535.0f * 180.0f - 90.0f;

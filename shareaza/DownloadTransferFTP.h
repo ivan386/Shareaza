@@ -201,12 +201,6 @@ protected:
 			return FALSE;
 		}
 
-		virtual void OnDropped(BOOL /* bError */)
-		{
-			if ( m_pOwner )
-				m_pOwner->Close();
-		}
-
 	protected:
 		CDownloadTransferFTP*	m_pOwner;	// Owner object
 		DWORD					m_tContent;	// Last Receive time

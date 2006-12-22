@@ -131,7 +131,8 @@ public:
 	
 	inline QWORD GetSize() const
 	{
-		return ( m_nVirtualSize > 0 ) ? m_nVirtualSize : m_nSize;
+		return ( m_nVirtualSize ) ? m_nVirtualSize :
+			( ( m_nSize == SIZE_UNKNOWN ) ? 0 : m_nSize );
 	}
 	
 // Friends

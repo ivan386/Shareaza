@@ -392,31 +392,31 @@ BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int /*nIndex*/)
 
 	// Pass 2: Write the child packet
 
-	pPacket->WritePacket( "H", nGroup, TRUE );
+	pPacket->WritePacket( G2_PACKET_HIT_DESCRIPTOR, nGroup, TRUE );
 	
 	if ( pFile->m_oTiger && pFile->m_oSHA1 )
 	{
-		pPacket->WritePacket( "URN", 3 + Hashes::Sha1Hash::byteCount + Hashes::TigerHash::byteCount );
+		pPacket->WritePacket( G2_PACKET_URN, 3 + Hashes::Sha1Hash::byteCount + Hashes::TigerHash::byteCount );
 		pPacket->WriteString( "bp" );
 		pPacket->Write( pFile->m_oSHA1 );
 		pPacket->Write( pFile->m_oTiger );
 	}
 	else if ( pFile->m_oTiger )
 	{
-		pPacket->WritePacket( "URN", 4 + Hashes::TigerHash::byteCount );
+		pPacket->WritePacket( G2_PACKET_URN, 4 + Hashes::TigerHash::byteCount );
 		pPacket->WriteString( "ttr" );
 		pPacket->Write( pFile->m_oTiger );
 	}
 	else if ( pFile->m_oSHA1 )
 	{
-		pPacket->WritePacket( "URN", 5 + Hashes::Sha1Hash::byteCount );
+		pPacket->WritePacket( G2_PACKET_URN, 5 + Hashes::Sha1Hash::byteCount );
 		pPacket->WriteString( "sha1" );
 		pPacket->Write( pFile->m_oSHA1 );
 	}
 	
 	if ( pFile->m_oED2K )
 	{
-        pPacket->WritePacket( "URN", 5 + Hashes::Ed2kHash::byteCount );
+        pPacket->WritePacket( G2_PACKET_URN, 5 + Hashes::Ed2kHash::byteCount );
 		pPacket->WriteString( "ed2k" );
 		pPacket->Write( pFile->m_oED2K );
 	}
@@ -425,48 +425,48 @@ BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int /*nIndex*/)
 	{
 		if ( pFile->GetSize() <= 0xFFFFFFFF )
 		{
-			pPacket->WritePacket( "DN", pPacket->GetStringLen( pFile->m_sName ) + 4 );
+			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pFile->m_sName ) + 4 );
 			pPacket->WriteLongBE( (DWORD)pFile->GetSize() );
 			pPacket->WriteString( pFile->m_sName, FALSE );
 		}
 		else
 		{
-			pPacket->WritePacket( "SZ", 8 );
+			pPacket->WritePacket( G2_PACKET_SIZE, 8 );
 			pPacket->WriteInt64( pFile->GetSize() );
-			pPacket->WritePacket( "DN", pPacket->GetStringLen( pFile->m_sName ) );
+			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pFile->m_sName ) );
 			pPacket->WriteString( pFile->m_sName, FALSE );
 		}
 
-		if ( bCollection ) pPacket->WritePacket( "COLLECT", 0 );
+		if ( bCollection ) pPacket->WritePacket( G2_PACKET_COLLECTION, 0 );
 	}
 
 	{
 		CSingleLock pQueueLock( &UploadQueues.m_pSection, TRUE );
 
 		CUploadQueue* pQueue = UploadQueues.SelectQueue( PROTOCOL_HTTP, pFile );
-		pPacket->WritePacket( "G", 1 );
+		pPacket->WritePacket( G2_PACKET_GROUP_ID, 1 );
 		pPacket->WriteByte( BYTE( pQueue ? pQueue->m_nIndex + 1 : 0 ) );
 	}
 
 	if ( pFile->IsAvailable() && ( m_pSearch == NULL || m_pSearch->m_bWantURL ) )
 	{
-		pPacket->WritePacket( "URL", 0 );
+		pPacket->WritePacket( G2_PACKET_URL, 0 );
 
 		if ( INT_PTR nCount = pFile->m_pSources.GetCount() )
 		{
-			pPacket->WritePacket( "CSC", 2 );
+			pPacket->WritePacket( G2_PACKET_CACHED_SOURCES, 2 );
 			pPacket->WriteShortBE( (WORD)nCount );
 		}
 
 		if ( bPreview )
 		{
-			pPacket->WritePacket( "PVU", 0 );
+			pPacket->WritePacket( G2_PACKET_PREVIEW_URL, 0 );
 		}
 	}
 
 	if ( strMetadata.GetLength() )
 	{
-		pPacket->WritePacket( "MD", pPacket->GetStringLen( strMetadata ) );
+		pPacket->WritePacket( G2_PACKET_METADATA, pPacket->GetStringLen( strMetadata ) );
 		pPacket->WriteString( strMetadata, FALSE );
 	}
 
@@ -474,16 +474,16 @@ BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int /*nIndex*/)
 	{
 		if ( strComment.GetLength() )
 		{
-			pPacket->WritePacket( "COM", pPacket->GetStringLen( strComment ) );
+			pPacket->WritePacket( G2_PACKET_COMMENT, pPacket->GetStringLen( strComment ) );
 			pPacket->WriteString( strComment, FALSE );
 		}
 
-		if ( pFile->m_bBogus ) pPacket->WritePacket( "BOGUS", 0 );
+		if ( pFile->m_bBogus ) pPacket->WritePacket( G2_PACKET_BOGUS, 0 );
 	}
 
 	if ( m_pSearch == NULL )
 	{
-		pPacket->WritePacket( "ID", 4 );
+		pPacket->WritePacket( G2_PACKET_OBJECT_ID, 4 );
 		pPacket->WriteLongBE( pFile->m_nIndex );
 	}
 
@@ -590,38 +590,38 @@ void CLocalSearch::AddHit(CDownload* pDownload, int /*nIndex*/)
 		}
 	}
 
-	pPacket->WritePacket( "H", nGroup, TRUE );
+	pPacket->WritePacket( G2_PACKET_HIT_DESCRIPTOR, nGroup, TRUE );
 	
     if ( pDownload->m_oTiger && pDownload->m_oSHA1 )
 	{
-        pPacket->WritePacket( "URN", 3 + Hashes::Sha1Hash::byteCount + Hashes::TigerHash::byteCount );
+        pPacket->WritePacket( G2_PACKET_URN, 3 + Hashes::Sha1Hash::byteCount + Hashes::TigerHash::byteCount );
 		pPacket->WriteString( "bp" );
 		pPacket->Write( pDownload->m_oSHA1 );
 		pPacket->Write( pDownload->m_oTiger );
 	}
     else if ( pDownload->m_oTiger )
 	{
-		pPacket->WritePacket( "URN", 4 + Hashes::TigerHash::byteCount );
+		pPacket->WritePacket( G2_PACKET_URN, 4 + Hashes::TigerHash::byteCount );
 		pPacket->WriteString( "ttr" );
 		pPacket->Write( pDownload->m_oTiger );
 	}
 	else if ( pDownload->m_oSHA1 )
 	{
-		pPacket->WritePacket( "URN", 5 + Hashes::Sha1Hash::byteCount );
+		pPacket->WritePacket( G2_PACKET_URN, 5 + Hashes::Sha1Hash::byteCount );
 		pPacket->WriteString( "sha1" );
 		pPacket->Write( pDownload->m_oSHA1 );
 	}
 	
     if ( pDownload->m_oED2K )
 	{
-        pPacket->WritePacket( "URN", 5 + Hashes::Ed2kHash::byteCount );
+        pPacket->WritePacket( G2_PACKET_URN, 5 + Hashes::Ed2kHash::byteCount );
 		pPacket->WriteString( "ed2k" );
 		pPacket->Write( pDownload->m_oED2K );
 	}
 	
 	if ( pDownload->m_oBTH )
 	{
-        pPacket->WritePacket( "URN", 5 + Hashes::BtHash::byteCount );
+        pPacket->WritePacket( G2_PACKET_URN, 5 + Hashes::BtHash::byteCount );
 		pPacket->WriteString( "btih" );
 		pPacket->Write( pDownload->m_oBTH );
 	}
@@ -630,15 +630,15 @@ void CLocalSearch::AddHit(CDownload* pDownload, int /*nIndex*/)
 	{
 		if ( pDownload->m_nSize <= 0xFFFFFFFF )
 		{
-			pPacket->WritePacket( "DN", pPacket->GetStringLen( pDownload->m_sDisplayName ) + 4 );
+			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pDownload->m_sDisplayName ) + 4 );
 			pPacket->WriteLongBE( (DWORD)pDownload->m_nSize );
 			pPacket->WriteString( pDownload->m_sDisplayName, FALSE );
 		}
 		else
 		{
-			pPacket->WritePacket( "SZ", 8 );
+			pPacket->WritePacket( G2_PACKET_SIZE, 8 );
 			pPacket->WriteInt64( pDownload->m_nSize );
-			pPacket->WritePacket( "DN", pPacket->GetStringLen( pDownload->m_sDisplayName ) );
+			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pDownload->m_sDisplayName ) );
 			pPacket->WriteString( pDownload->m_sDisplayName, FALSE );
 		}
 	}
@@ -647,12 +647,12 @@ void CLocalSearch::AddHit(CDownload* pDownload, int /*nIndex*/)
 	{
 		if ( strURL.GetLength() > 0 )
 		{
-			pPacket->WritePacket( "URL", pPacket->GetStringLen( strURL ) );
+			pPacket->WritePacket( G2_PACKET_URL, pPacket->GetStringLen( strURL ) );
 			pPacket->WriteString( strURL, FALSE );
 		}
 		else
 		{
-			pPacket->WritePacket( "URL", 0 );
+			pPacket->WritePacket( G2_PACKET_URL, 0 );
 		}
 	}
 
@@ -660,12 +660,12 @@ void CLocalSearch::AddHit(CDownload* pDownload, int /*nIndex*/)
 
 	if ( nComplete <= 0xFFFFFFFF )
 	{
-		pPacket->WritePacket( "PART", 4 );
+		pPacket->WritePacket( G2_PACKET_PARTIAL, 4 );
 		pPacket->WriteLongBE( (DWORD)nComplete );
 	}
 	else
 	{
-		pPacket->WritePacket( "PART", 8 );
+		pPacket->WritePacket( G2_PACKET_PARTIAL, 8 );
 		pPacket->WriteInt64( nComplete );
 	}
 }
@@ -708,22 +708,22 @@ void CLocalSearch::CreatePacketG2()
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_HIT, TRUE );
 	m_pPacket = pPacket;
 
-	pPacket->WritePacket( "GU", 16 );
+	pPacket->WritePacket( G2_PACKET_NODE_GUID, 16 );
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
 	
 	if ( TRUE /* Network.IsListening() */ )
 	{
-		pPacket->WritePacket( "NA", 6 );
+		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );
 		pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
 		pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 	}
 
-	pPacket->WritePacket( "V", 4 );
+	pPacket->WritePacket( G2_PACKET_VENDOR, 4 );
 	pPacket->WriteString( SHAREAZA_VENDOR_A, FALSE );
 
 	if ( ! Network.IsStable() || ! Datagrams.IsStable() )
 	{
-		pPacket->WritePacket( "FW", 0 );
+		pPacket->WritePacket( G2_PACKET_PEER_FIREWALLED, 0 );
 	}
 
 	{
@@ -738,7 +738,7 @@ void CLocalSearch::CreatePacketG2()
 				if ( pNeighbour->m_nNodeType != ntLeaf &&
 					 pNeighbour->m_nProtocol == PROTOCOL_G2 )
 				{
-					pPacket->WritePacket( "NH", 6 );
+					pPacket->WritePacket( G2_PACKET_NEIGHBOUR_HUB, 6 );
 					pPacket->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );
 					pPacket->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );
 				}
@@ -746,7 +746,7 @@ void CLocalSearch::CreatePacketG2()
 		}
 	}
 
-	if ( ! Uploads.m_bStable ) pPacket->WritePacket( "UNSTA", 0 );
+	if ( ! Uploads.m_bStable ) pPacket->WritePacket( G2_PACKET_PEER_UNSTABLE, 0 );
 
 	CSingleLock pQueueLock( &UploadQueues.m_pSection );
 	int nQueue = 1;
@@ -756,8 +756,8 @@ void CLocalSearch::CreatePacketG2()
 		for ( POSITION pos = UploadQueues.GetIterator() ; pos ; nQueue++ )
 		{
 			CUploadQueue* pQueue = UploadQueues.GetNext( pos );
-			pPacket->WritePacket( "HG", ( 4 + 7 ) + 2, TRUE );
-			pPacket->WritePacket( "SS", 7 );
+			pPacket->WritePacket( G2_PACKET_HIT_GROUP, ( 4 + 7 ) + 2, TRUE );
+			pPacket->WritePacket( G2_PACKET_PEER_STATUS, 7 );
 			pPacket->WriteShortBE( WORD( pQueue->GetQueuedCount() + pQueue->GetTransferCount() ) );
 			pPacket->WriteByte( BYTE( pQueue->GetTransferCount( TRUE ) ) );
 			pPacket->WriteLongBE( pQueue->GetPredictedBandwidth() * 8 / 1024 );
@@ -774,14 +774,14 @@ void CLocalSearch::CreatePacketG2()
 	if ( strNick.GetLength() )
 	{
 		int nNick = pPacket->GetStringLen( strNick );
-		pPacket->WritePacket( "UPRO", nNick + 6, TRUE );
-		pPacket->WritePacket( "NICK", nNick );
+		pPacket->WritePacket( G2_PACKET_PROFILE, nNick + 6, TRUE );
+		pPacket->WritePacket( G2_PACKET_NICK, nNick );
 		pPacket->WriteString( strNick, FALSE );
 	}
 
-	if ( Settings.Community.ServeProfile ) pPacket->WritePacket( "BUP", 0 );
-	if ( Settings.Community.ServeFiles ) pPacket->WritePacket( "BH", 0 );
-	if ( Settings.Community.ChatEnable ) pPacket->WritePacket( "PCH", 0 );
+	if ( Settings.Community.ServeProfile ) pPacket->WritePacket( G2_PACKET_BROWSE_PROFILE, 0 );
+	if ( Settings.Community.ServeFiles ) pPacket->WritePacket( G2_PACKET_BROWSE_HOST, 0 );
+	if ( Settings.Community.ChatEnable ) pPacket->WritePacket( G2_PACKET_PEER_CHAT, 0 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1015,7 +1015,7 @@ CG2Packet* CLocalSearch::AlbumToPacket(CAlbumFolder* pFolder)
 	if ( pFolder->m_pSchema != NULL && pFolder->m_pSchema->m_bPrivate ) return NULL;
 	if ( pFolder->GetSharedCount() == 0 ) return NULL;
 
-	CG2Packet* pPacket = CG2Packet::New( "VF", TRUE );
+	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_VIRTUAL_FOLDER, TRUE );
 
 	if ( pFolder->m_pSchema != NULL )
 	{
@@ -1034,7 +1034,7 @@ CG2Packet* CLocalSearch::AlbumToPacket(CAlbumFolder* pFolder)
 		CString strXML = pXML->ToString();
 		delete pXML;
 
-		pPacket->WritePacket( "MD", pPacket->GetStringLen( strXML ) );
+		pPacket->WritePacket( G2_PACKET_METADATA, pPacket->GetStringLen( strXML ) );
 		pPacket->WriteString( strXML, FALSE );
 	}
 
@@ -1047,7 +1047,7 @@ CG2Packet* CLocalSearch::AlbumToPacket(CAlbumFolder* pFolder)
 		}
 	}
 
-	pPacket->WritePacket( "FILES", static_cast< DWORD >( pFolder->GetFileCount() * 4 ) );
+	pPacket->WritePacket( G2_PACKET_FILES, static_cast< DWORD >( pFolder->GetFileCount() * 4 ) );
 
 	for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
 	{
@@ -1060,7 +1060,7 @@ CG2Packet* CLocalSearch::AlbumToPacket(CAlbumFolder* pFolder)
 
 CG2Packet* CLocalSearch::FoldersToPacket()
 {
-	CG2Packet* pPacket = CG2Packet::New( "PF", TRUE );
+	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PHYSICAL_FOLDER, TRUE );
 
 	for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 	{
@@ -1080,9 +1080,9 @@ CG2Packet* CLocalSearch::FolderToPacket(CLibraryFolder* pFolder)
 
 	if ( pFolder->GetSharedCount() == 0 ) return NULL;
 
-	CG2Packet* pPacket = CG2Packet::New( "PF", TRUE );
+	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PHYSICAL_FOLDER, TRUE );
 
-	pPacket->WritePacket( "DN", pPacket->GetStringLen( pFolder->m_sName ) );
+	pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pFolder->m_sName ) );
 	pPacket->WriteString( pFolder->m_sName, FALSE );
 
 	for ( POSITION pos = pFolder->GetFolderIterator() ; pos ; )
@@ -1094,7 +1094,7 @@ CG2Packet* CLocalSearch::FolderToPacket(CLibraryFolder* pFolder)
 		}
 	}
 
-	pPacket->WritePacket( "FILES", static_cast< DWORD >( pFolder->GetFileCount() * 4 ) );
+	pPacket->WritePacket( G2_PACKET_FILES, static_cast< DWORD >( pFolder->GetFileCount() * 4 ) );
 
 	for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
 	{

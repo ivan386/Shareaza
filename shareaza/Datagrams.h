@@ -1,7 +1,7 @@
 //
 // Datagrams.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -109,6 +109,7 @@ public:
 	BOOL	Listen();
 	void	Disconnect();
 	BOOL	IsStable();
+	void	SetStable(BOOL bStable = TRUE);
 	BOOL	Send(IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
 	BOOL	Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
 	void	PurgeToken(LPVOID pToken);
@@ -135,12 +136,14 @@ protected:
 	BOOL	OnPong(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnQueryAck(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnHit(SOCKADDR_IN* pHost, CG2Packet* pPacket);
+	BOOL	OnCommonHit(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnQueryKeyRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnPush(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnCrawlAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket);
+	BOOL	OnDiscovery(SOCKADDR_IN* pHost, CG2Packet* pPacket);
+	BOOL	OnKHL(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 

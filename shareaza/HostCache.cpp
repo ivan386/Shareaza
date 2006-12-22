@@ -703,10 +703,10 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 			}
 			else m_pNewest = pHost;
 			
-			BYTE nHash	= pHost->m_pAddress.S_un.S_un_b.s_b1
+			BYTE nHash	= ( pHost->m_pAddress.S_un.S_un_b.s_b1
 						+ pHost->m_pAddress.S_un.S_un_b.s_b2
 						+ pHost->m_pAddress.S_un.S_un_b.s_b3
-						+ pHost->m_pAddress.S_un.S_un_b.s_b4;
+						+ pHost->m_pAddress.S_un.S_un_b.s_b4 ) & 0xff;
 			
 			CHostCacheHost** pHash = m_pHash + nHash;
 			pHost->m_pNextHash = *pHash;

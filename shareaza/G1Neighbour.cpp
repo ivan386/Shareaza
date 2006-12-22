@@ -1292,7 +1292,7 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 		{
 			// Create a new Gnutella2 push packet with the same information as this one, and send it
 			CG2Packet* pWrap = CG2Packet::New( G2_PACKET_PUSH, TRUE );
-			pWrap->WritePacket( "TO", 16 );
+			pWrap->WritePacket( G2_PACKET_PUSH_TO, 16 );
 			pWrap->Write( oClientID );
 			pWrap->WriteByte( 0 );
 			pWrap->WriteLongLE( nAddress );

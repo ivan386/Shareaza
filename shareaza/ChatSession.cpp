@@ -892,27 +892,19 @@ BOOL CChatSession::ReadPackets()
 
 BOOL CChatSession::OnPacket(CG2Packet* pPacket)
 {
-	if ( pPacket->IsType( "CMSG" ) )
+	switch( pPacket->m_nType )
 	{
+	case G2_PACKET_CHAT_MESSAGE:
 		return OnChatMessage( pPacket );
-	}
-	else if ( pPacket->IsType( G2_PACKET_PROFILE_CHALLENGE ) )
-	{
+	case G2_PACKET_PROFILE_CHALLENGE:
 		return OnProfileChallenge( pPacket );
-	}
-	else if ( pPacket->IsType( G2_PACKET_PROFILE_DELIVERY ) )
-	{
+	case G2_PACKET_PROFILE_DELIVERY:
 		return OnProfileDelivery( pPacket );
-	}
-	else if ( pPacket->IsType( "CHATREQ" ) )
-	{
+	case G2_PACKET_CHAT_REQUEST:
 		return OnChatRequest( pPacket );
-	}
-	else if ( pPacket->IsType( "CHATANS" ) )
-	{
+	case G2_PACKET_CHAT_ANSWER:
 		return OnChatAnswer( pPacket );
 	}
-	
 	return TRUE;
 }
 
@@ -923,7 +915,7 @@ BOOL CChatSession::OnProfileChallenge(CG2Packet* /*pPacket*/)
 	CG2Packet* pProfile = CG2Packet::New( G2_PACKET_PROFILE_DELIVERY, TRUE );
 	CString strXML = MyProfile.GetXML( NULL, TRUE )->ToString( TRUE );
 	
-	pProfile->WritePacket( "XML", pProfile->GetStringLen( strXML ) );
+	pProfile->WritePacket( G2_PACKET_XML, pProfile->GetStringLen( strXML ) );
 	pProfile->WriteString( strXML, FALSE );
 	
 	Send( pProfile, TRUE );
@@ -938,14 +930,14 @@ BOOL CChatSession::OnProfileDelivery(CG2Packet* pPacket)
 	if ( m_pProfile != NULL ) delete m_pProfile;
 	m_pProfile = NULL;
 	
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
 	
-	while ( pPacket->ReadPacket( szType, nLength ) )
+	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 		
-		if ( strcmp( szType, "XML" ) == 0 )
+		if ( nType == G2_PACKET_XML )
 		{
 			CXMLElement* pXML = CXMLElement::FromString( pPacket->ReadString( nLength ), TRUE );
 			
@@ -980,8 +972,8 @@ BOOL CChatSession::OnProfileDelivery(CG2Packet* pPacket)
 	{
 		m_pWndPrivate->OnProfileReceived();
 		
-		CG2Packet* pPacket = CG2Packet::New( "CHATREQ", TRUE );
-		pPacket->WritePacket( "USERGUID", 16 );
+		CG2Packet* pPacket = CG2Packet::New( G2_PACKET_CHAT_REQUEST, TRUE );
+		pPacket->WritePacket( G2_PACKET_USER_GUID, 16 );
 		pPacket->Write( m_oGUID );
 		
 		Send( pPacket, TRUE );
@@ -996,14 +988,14 @@ BOOL CChatSession::OnChatRequest(CG2Packet* pPacket)
 	
 	Hashes::Guid oGUID;
 	
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
 	
-	while ( pPacket->ReadPacket( szType, nLength ) )
+	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 		
-		if ( strcmp( szType, "USERGUID" ) == 0 && nLength >= 16 )
+		if ( nType == G2_PACKET_USER_GUID && nLength >= 16 )
 		{
 			pPacket->Read( oGUID );
 		}
@@ -1011,20 +1003,20 @@ BOOL CChatSession::OnChatRequest(CG2Packet* pPacket)
 		pPacket->m_nPosition = nOffset;
 	}
 	
-	pPacket = CG2Packet::New( "CHATANS", TRUE );
+	pPacket = CG2Packet::New( G2_PACKET_CHAT_ANSWER, TRUE );
 	
-	pPacket->WritePacket( "USERGUID", 16 );
+	pPacket->WritePacket( G2_PACKET_USER_GUID, 16 );
 	Hashes::Guid tmp = MyProfile.oGUID;
 	pPacket->Write( tmp );
 	
 	if ( validAndEqual( oGUID, tmp ) )
 	{
-		pPacket->WritePacket( "ACCEPT", 0 );
+		pPacket->WritePacket( G2_PACKET_CHAT_ACCEPT, 0 );
 		PostOpenWindow();
 	}
 	else
 	{
-		pPacket->WritePacket( "DENY", 0 );
+		pPacket->WritePacket( G2_PACKET_CHAT_DENY, 0 );
 	}
 	
 	Send( pPacket, TRUE );
@@ -1036,31 +1028,33 @@ BOOL CChatSession::OnChatAnswer(CG2Packet* pPacket)
 {
 	if ( ! pPacket->m_bCompound ) return TRUE;
 	
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
 	
-	while ( pPacket->ReadPacket( szType, nLength ) )
+	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 		
-		if ( strcmp( szType, "ACCEPT" ) == 0 )
+		switch ( nType )
 		{
+		case G2_PACKET_CHAT_ACCEPT:
 			m_nState = cssActive;
 			StatusMessage( 2, IDS_CHAT_PRIVATE_ONLINE, (LPCTSTR)m_sUserNick );
 			StatusMessage( 0, 0 );
 			return TRUE;
-		}
-		else if ( strcmp( szType, "DENY" ) == 0 )
-		{
+
+		case G2_PACKET_CHAT_DENY:
 			StatusMessage( 1, IDS_CHAT_PRIVATE_REFUSED, (LPCTSTR)m_sUserNick );
+			break;
+
+		case G2_PACKET_CHAT_AWAY:
+			{
+				CString strAway = pPacket->ReadString( nLength );
+				StatusMessage( 1, IDS_CHAT_PRIVATE_AWAY, (LPCTSTR)m_sUserNick,
+					(LPCTSTR)strAway );
+			}
+			break;
 		}
-		else if ( strcmp( szType, "AWAY" ) == 0 )
-		{
-			CString strAway = pPacket->ReadString( nLength );
-			StatusMessage( 1, IDS_CHAT_PRIVATE_AWAY, (LPCTSTR)m_sUserNick,
-				(LPCTSTR)strAway );
-		}
-		
 		pPacket->m_nPosition = nOffset;
 	}
 	
@@ -1075,20 +1069,22 @@ BOOL CChatSession::OnChatMessage(CG2Packet* pPacket)
 	
 	BOOL bAction = FALSE;
 	CString strBody;
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
 	
-	while ( pPacket->ReadPacket( szType, nLength ) )
+	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 		
-		if ( strcmp( szType, "BODY" ) == 0 )
+		switch ( nType )
 		{
+		case G2_PACKET_BODY:
 			strBody = pPacket->ReadString( nLength );
-		}
-		else if ( strcmp( szType, "ACT" ) == 0 )
-		{
+			break;
+		
+		case G2_PACKET_CHAT_ACTION:
 			bAction = TRUE;
+			break;
 		}
 		
 		pPacket->m_nPosition = nOffset;
@@ -1112,11 +1108,11 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 
 	if ( m_nProtocol == PROTOCOL_G2 )
 	{
-		CG2Packet* pPacket = CG2Packet::New( "CMSG", TRUE );
+		CG2Packet* pPacket = CG2Packet::New( G2_PACKET_CHAT_MESSAGE, TRUE );
 		
-		if ( bAction ) pPacket->WritePacket( "ACT", 0 );
+		if ( bAction ) pPacket->WritePacket( G2_PACKET_CHAT_ACTION, 0 );
 		
-		pPacket->WritePacket( "BODY", pPacket->GetStringLen( pszText ) );
+		pPacket->WritePacket( G2_PACKET_BODY, pPacket->GetStringLen( pszText ) );
 		pPacket->WriteString( pszText, FALSE );
 		
 		Send( pPacket, TRUE );

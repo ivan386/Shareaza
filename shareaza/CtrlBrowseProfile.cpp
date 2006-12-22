@@ -352,18 +352,18 @@ void CBrowseProfileCtrl::OnHeadPacket(CG2Packet* pPacket)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CString strFile;
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
 
-	while ( pPacket->ReadPacket( szType, nLength ) )
+	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nNext = pPacket->m_nPosition + nLength;
 
-		if ( strcmp( szType, "NAME" ) == 0 )
+		if ( nType == G2_PACKET_NAME )
 		{
 			strFile = pPacket->ReadString( nLength );
 		}
-		else if ( strcmp( szType, "BODY" ) == 0 )
+		else if ( nType == G2_PACKET_BODY )
 		{
 			m_imgHead.Clear();
 

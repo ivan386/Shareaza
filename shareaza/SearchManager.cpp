@@ -157,17 +157,17 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 	DWORD nHubs = 0, nLeaves = 0;
 	CArray< DWORD > pDone;
 
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
 
 	theApp.Message( MSG_DEBUG, _T("Processing query acknowledge from %s:"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 
-	while ( pPacket->ReadPacket( szType, nLength ) )
+	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 
-		if ( strcmp( szType, "D" ) == 0 && nLength >= 4 )
+		if ( nType == G2_PACKET_QUERY_DONE && nLength >= 4 )
 		{
 			DWORD nAddress = pPacket->ReadLongLE();
 			pDone.Add( nAddress );
@@ -188,7 +188,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 			theApp.Message( MSG_DEBUG, _T("  Done %s"),
 				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ) );
 		}
-		else if ( strcmp( szType, "S" ) == 0 && nLength >= 6 )
+		else if ( nType == G2_PACKET_QUERY_SEARCH && nLength >= 6 )
 		{
 			DWORD nAddress	= pPacket->ReadLongLE();
 			WORD nPort		= pPacket->ReadShortBE();
@@ -202,11 +202,11 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 				HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, min( tNow, tSeen ) );
 			}
 		}
-		else if ( strcmp( szType, "TS" ) == 0 && nLength == 4 )
+		else if ( nType == G2_PACKET_TIMESTAMP && nLength == 4 )
 		{
 			tAdjust = (LONG)tNow - (LONG)pPacket->ReadLongBE();
 		}
-		else if ( strcmp( szType, "RA" ) == 0 && nLength >= 2 )
+		else if ( nType == G2_PACKET_RETRY_AFTER && nLength >= 2 )
 		{
 			DWORD nRetryAfter = 0;
 
@@ -224,7 +224,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 				pHost->m_tRetryAfter = tNow + nRetryAfter;
 			}
 		}
-		else if ( strcmp( szType, "FR" ) == 0 && nLength >= 4 )
+		else if ( nType == G2_PACKET_FROM_ADDRESS && nLength >= 4 )
 		{
 			nFromIP = pPacket->ReadLongLE();
 		}

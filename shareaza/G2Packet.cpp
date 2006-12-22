@@ -1,7 +1,7 @@
 //
 // G2Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,11 +38,12 @@ CG2Packet::CG2PacketPool CG2Packet::POOL;
 //////////////////////////////////////////////////////////////////////
 // CG2Packet construction
 
-CG2Packet::CG2Packet() : CPacket( PROTOCOL_G2 )
+CG2Packet::CG2Packet() :
+	CPacket( PROTOCOL_G2 ),
+	m_nType( G2_PACKET_NULL ),
+	m_bCompound( FALSE )
 {
-	m_sType[0]		= 0;
-	m_bCompound		= FALSE;
-	m_bBigEndian	= FALSE;
+	m_bBigEndian = FALSE;
 }
 
 CG2Packet::~CG2Packet()
@@ -56,7 +57,7 @@ void CG2Packet::Reset()
 {
 	CPacket::Reset();
 
-	m_sType[0]		= 0;
+	m_nType			= G2_PACKET_NULL;
 	m_bCompound		= FALSE;
 	m_bBigEndian	= FALSE;
 }
@@ -94,9 +95,8 @@ CG2Packet* CG2Packet::New(BYTE* pSource)
 	}
 
 	nTypeLen++;
-    LPSTR pszType = pPacket->m_sType;
-	for ( ; nTypeLen-- ;  ) *pszType++ = (CHAR)*pSource++;
-	*pszType++ = 0;
+	CopyMemory( &pPacket->m_nType, pSource, nTypeLen );
+	pSource += nTypeLen;
 
 	pPacket->Write( pSource, nLength );
 
@@ -106,9 +106,9 @@ CG2Packet* CG2Packet::New(BYTE* pSource)
 //////////////////////////////////////////////////////////////////////
 // CG2Packet construct wrapping G1 packet
 
-CG2Packet* CG2Packet::New(LPCSTR pszType, CG1Packet* pWrap, int nMinTTL)
+CG2Packet* CG2Packet::New(G2_PACKET nType, CG1Packet* pWrap, int nMinTTL)
 {
-	CG2Packet* pPacket = New( pszType, FALSE );
+	CG2Packet* pPacket = New( nType, FALSE );
 
 	GNUTELLAPACKET pHeader;
 	
@@ -129,7 +129,7 @@ CG2Packet* CG2Packet::New(LPCSTR pszType, CG1Packet* pWrap, int nMinTTL)
 
 CG2Packet* CG2Packet::Clone() const
 {
-	CG2Packet* pPacket = CG2Packet::New( m_sType, m_bCompound );
+	CG2Packet* pPacket = CG2Packet::New( m_nType, m_bCompound );
 	pPacket->Write( m_pBuffer, m_nLength );
 	return pPacket;
 }
@@ -140,19 +140,19 @@ CG2Packet* CG2Packet::Clone() const
 void CG2Packet::WritePacket(CG2Packet* pPacket)
 {
 	if ( pPacket == NULL ) return;
-	WritePacket( pPacket->m_sType, pPacket->m_nLength, pPacket->m_bCompound );
+	WritePacket( pPacket->m_nType, pPacket->m_nLength, pPacket->m_bCompound );
 	Write( pPacket->m_pBuffer, pPacket->m_nLength );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CG2Packet sub-packet write
 
-void CG2Packet::WritePacket(LPCSTR pszType, DWORD nLength, BOOL bCompound)
+void CG2Packet::WritePacket(G2_PACKET nType, DWORD nLength, BOOL bCompound)
 {
-	ASSERT( strlen( pszType ) > 0 );
+	ASSERT( G2_TYPE_LEN( nType ) > 0 );
 	ASSERT( nLength <= 0xFFFFFF );
 
-	BYTE nTypeLen	= (BYTE)( strlen( pszType ) - 1 ) & 0x07;
+	BYTE nTypeLen	= (BYTE)( G2_TYPE_LEN( nType ) - 1 ) & 0x07;
 	BYTE nLenLen	= 1;
 
 	if ( nLength > 0xFF )
@@ -179,7 +179,7 @@ void CG2Packet::WritePacket(LPCSTR pszType, DWORD nLength, BOOL bCompound)
 		Write( &nLength, nLenLen );
 	}
 
-	Write( pszType, nTypeLen + 1 );
+	Write( &nType, nTypeLen + 1 );
 
 	m_bCompound = TRUE;	// This must be compound now
 }
@@ -187,7 +187,7 @@ void CG2Packet::WritePacket(LPCSTR pszType, DWORD nLength, BOOL bCompound)
 //////////////////////////////////////////////////////////////////////
 // CG2Packet sub-packet read
 
-BOOL CG2Packet::ReadPacket(LPSTR pszType, DWORD& nLength, BOOL* pbCompound)
+BOOL CG2Packet::ReadPacket(G2_PACKET& nType, DWORD& nLength, BOOL* pbCompound)
 {
 	if ( GetRemaining() == 0 ) return FALSE;
 
@@ -216,8 +216,8 @@ BOOL CG2Packet::ReadPacket(LPSTR pszType, DWORD& nLength, BOOL* pbCompound)
 
 	if ( GetRemaining() < (int)nLength + nTypeLen + 1 ) AfxThrowUserException();
 
-	Read( pszType, nTypeLen + 1 );
-	pszType[ nTypeLen + 1 ] = 0;
+	nType = G2_PACKET_NULL;
+	Read( &nType, nTypeLen + 1 );
 
 	if ( pbCompound )
 	{
@@ -416,10 +416,10 @@ int CG2Packet::GetStringLen(LPCTSTR pszString) const
 
 void CG2Packet::ToBuffer(CBuffer* pBuffer) const
 {
-	ASSERT( strlen( m_sType ) > 0 );
+	ASSERT( G2_TYPE_LEN( m_nType ) > 0 );
 
 	BYTE nLenLen	= 1;
-	BYTE nTypeLen	= (BYTE)( strlen( m_sType ) - 1 ) & 0x07;
+	BYTE nTypeLen	= (BYTE)( G2_TYPE_LEN( m_nType ) - 1 ) & 0x07;
 
 	if ( m_nLength > 0xFF )
 	{
@@ -449,7 +449,7 @@ void CG2Packet::ToBuffer(CBuffer* pBuffer) const
 		pBuffer->Add( &m_nLength, nLenLen );
 	}
 
-	pBuffer->Add( m_sType, nTypeLen + 1 );
+	pBuffer->Add( &m_nType, nTypeLen + 1 );
 
 	pBuffer->Add( m_pBuffer, m_nLength );
 }

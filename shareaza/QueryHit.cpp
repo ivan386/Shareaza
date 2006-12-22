@@ -285,27 +285,27 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 	try
 	{
 		BOOL bCompound;
-		CHAR szType[9];
+		G2_PACKET nType;
 		DWORD nLength;
 		bool bSpam = false;
 		DWORD nPrevHubAddress = 0;
 		WORD nPrevHubPort = 0;
 
-		while ( pPacket->ReadPacket( szType, nLength, &bCompound ) )
+		while ( pPacket->ReadPacket( nType, nLength, &bCompound ) )
 		{
 			DWORD nSkip = pPacket->m_nPosition + nLength;
 			
 			if ( bCompound )
 			{
-				if ( strcmp( szType, "H" ) &&
-					 strcmp( szType, "HG" ) &&
-					 strcmp( szType, "UPRO" ) )
+				if ( nType != G2_PACKET_HIT_DESCRIPTOR &&
+					 nType != G2_PACKET_HIT_GROUP &&
+					 nType != G2_PACKET_PROFILE )
 				{
 					pPacket->SkipCompound( nLength );
 				}
 			}
 			
-			if ( strcmp( szType, "H" ) == 0 && bCompound )
+			if ( nType == G2_PACKET_HIT_DESCRIPTOR && bCompound )
 			{
 				CQueryHit* pHit = new CQueryHit( PROTOCOL_G2 );
 				
@@ -315,17 +315,17 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				
 				pHit->ReadG2Packet( pPacket, nLength );
 			}
-			else if ( strcmp( szType, "HG" ) == 0 && bCompound )
+			else if ( nType == G2_PACKET_HIT_GROUP && bCompound )
 			{
 				DWORD nQueued = 0, nUploads = 0, nSpeed = 0;
-				CHAR szInner[9];
+				G2_PACKET nInnerType;
 				DWORD nInner;
 				
-				while ( pPacket->m_nPosition < nSkip && pPacket->ReadPacket( szInner, nInner ) )
+				while ( pPacket->m_nPosition < nSkip && pPacket->ReadPacket( nInnerType, nInner ) )
 				{
 					DWORD nSkipInner = pPacket->m_nPosition + nInner;
 					
-					if ( strcmp( szInner, "SS" ) == 0 && nInner >= 7 )
+					if ( nInnerType == G2_PACKET_PEER_STATUS && nInner >= 7 )
 					{
 						nQueued		= pPacket->ReadShortBE();
 						nUploads	= pPacket->ReadByte();
@@ -348,7 +348,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 					}
 				}
 			}
-			else if ( strcmp( szType, "NH" ) == 0 && nLength >= 6 )
+			else if ( nType == G2_PACKET_NEIGHBOUR_HUB && nLength >= 6 )
 			{
 				SOCKADDR_IN pHub;
 				
@@ -366,13 +366,13 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				oIncrID.validate();
 				Network.NodeRoute->Add( oIncrID, &pHub );
 			}
-			else if ( strcmp( szType, "GU" ) == 0 && nLength == 16 )
+			else if ( nType == G2_PACKET_NODE_GUID && nLength == 16 )
 			{
 				pPacket->Read( oClientID );
 				oClientID.validate();
 				oIncrID		= oClientID;
 			}
-			else if ( ( strcmp( szType, "NA" ) == 0 || strcmp( szType, "NI" ) == 0 ) && nLength >= 6 )
+			else if ( ( nType == G2_PACKET_NODE_ADDRESS || nType == G2_PACKET_NODE_INFO ) && nLength >= 6 )
 			{
 				nAddress	= pPacket->ReadLongLE();
 				if ( Network.IsReserved( (IN_ADDR*)&nAddress ), false )
@@ -381,12 +381,12 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 					AfxThrowUserException();
 				nPort		= pPacket->ReadShortBE();
 			}
-			else if ( strcmp( szType, "V" ) == 0 && nLength >= 4 )
+			else if ( nType == G2_PACKET_VENDOR && nLength >= 4 )
 			{
 				CString strVendor = pPacket->ReadString( 4 );
 				pVendor = VendorCache.Lookup( strVendor );
 			}
-			else if ( strcmp( szType, "MD" ) == 0 )
+			else if ( nType == G2_PACKET_METADATA )
 			{
 				CString strXML	= pPacket->ReadString( nLength );
 				LPCTSTR pszXML	= strXML;
@@ -402,16 +402,16 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 					pszXML = _tcsstr( pszXML + 1, _T("<?xml") );
 				}
 			}
-			else if ( strcmp( szType, "UPRO" ) == 0 && bCompound )
+			else if ( nType == G2_PACKET_PROFILE && bCompound )
 			{
-				CHAR szInner[9];
+				G2_PACKET nInnerType;
 				DWORD nInner;
 				DWORD ip;
 
-				while ( pPacket->m_nPosition < nSkip && pPacket->ReadPacket( szInner, nInner ) )
+				while ( pPacket->m_nPosition < nSkip && pPacket->ReadPacket( nInnerType, nInner ) )
 				{
 					DWORD nSkipInner = pPacket->m_nPosition + nInner;
-					if ( strcmp( szInner, "NICK" ) == 0 )
+					if ( nInnerType == G2_PACKET_NICK )
 					{
 						strNick = pPacket->ReadString( nInner );
 						USES_CONVERSION;
@@ -424,31 +424,31 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 					pPacket->m_nPosition = nSkipInner;
 				}
 			}
-			else if ( strcmp( szType, "BH" ) == 0 )
+			else if ( nType == G2_PACKET_BROWSE_HOST )
 			{
 				bBrowseHost |= 1;
 			}
-			else if ( strcmp( szType, "BUP" ) == 0 )
+			else if ( nType == G2_PACKET_BROWSE_PROFILE )
 			{
 				bBrowseHost |= 2;
 			}
-			else if ( strcmp( szType, "PCH" ) == 0 )
+			else if ( nType == G2_PACKET_PEER_CHAT )
 			{
 				bPeerChat = TRUE;
 			}
-			else if ( strcmp( szType, "BUSY" ) == 0 )
+			else if ( nType == G2_PACKET_PEER_BUSY )
 			{
 				bBusy = TRUE;
 			}
-			else if ( strcmp( szType, "UNSTA" ) == 0 )
+			else if ( nType == G2_PACKET_PEER_UNSTABLE )
 			{
 				bStable = FALSE;
 			}
-			else if ( strcmp( szType, "FW" ) == 0 )
+			else if ( nType == G2_PACKET_PEER_FIREWALLED )
 			{
 				bPush = TRUE;
 			}
-			else if ( strcmp( szType, "SS" ) == 0 && nLength > 0 )
+			else if ( nType == G2_PACKET_PEER_STATUS && nLength > 0 )
 			{
 				BYTE nStatus = pPacket->ReadByte();
 				
@@ -897,15 +897,15 @@ void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendor* pVendor,
 void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 {
 	DWORD nPacket, nEnd = pPacket->m_nPosition + nLength;
-	CHAR szType[9];
-	
+	G2_PACKET nType;
+
 	m_bResolveURL = FALSE;
 	
-	while ( pPacket->m_nPosition < nEnd && pPacket->ReadPacket( szType, nPacket ) )
+	while ( pPacket->m_nPosition < nEnd && pPacket->ReadPacket( nType, nPacket ) )
 	{
 		DWORD nSkip = pPacket->m_nPosition + nPacket;
 		
-		if ( strcmp( szType, "URN" ) == 0 )
+		if ( nType == G2_PACKET_URN )
 		{
 			CString strURN = pPacket->ReadString( nPacket );
 			if ( strURN.GetLength() + 1 >= (int)nPacket ) AfxThrowUserException();
@@ -940,7 +940,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 				m_oBTH.validate();
 			}
 		}
-		else if ( strcmp( szType, "URL" ) == 0 )
+		else if ( nType == G2_PACKET_URL )
 		{
 			if ( nPacket == 0 )
 			{
@@ -951,7 +951,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 				m_sURL = pPacket->ReadString( nPacket );
 			}
 		}
-		else if ( strcmp( szType, "DN" ) == 0 )
+		else if ( nType == G2_PACKET_DESCRIPTIVE_NAME )
 		{
 			if ( m_bSize )
 			{
@@ -964,7 +964,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 				m_sName = pPacket->ReadString( nPacket - 4 );
 			}
 		}
-		else if ( strcmp( szType, "MD" ) == 0 && nPacket > 0 )
+		else if ( nType == G2_PACKET_METADATA && nPacket > 0 )
 		{
 			CString strXML = pPacket->ReadString( nPacket );
 			
@@ -994,7 +994,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 				pXML->Delete();
 			}
 		}
-		else if ( strcmp( szType, "SZ" ) == 0 )
+		else if ( nType == G2_PACKET_SIZE )
 		{
 			if ( nPacket == 4 )
 			{
@@ -1007,25 +1007,25 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 				m_nSize = pPacket->ReadInt64();
 			}
 		}
-		else if ( strcmp( szType, "G" ) == 0 && nPacket >= 1 )
+		else if ( nType == G2_PACKET_GROUP_ID && nPacket >= 1 )
 		{
 			m_nGroup = pPacket->ReadByte();
 			if ( m_nGroup < 0 ) m_nGroup = 0;
 			if ( m_nGroup > 7 ) m_nGroup = 7;
 		}
-		else if ( strcmp( szType, "ID" ) == 0 && nPacket >= 4 )
+		else if ( nType == G2_PACKET_OBJECT_ID && nPacket >= 4 )
 		{
 			m_nIndex = pPacket->ReadLongBE();
 		}
-		else if ( strcmp( szType, "CSC" ) == 0 && nPacket >= 2 )
+		else if ( nType == G2_PACKET_CACHED_SOURCES && nPacket >= 2 )
 		{
 			m_nSources = pPacket->ReadShortBE();
 		}
-		else if ( strcmp( szType, "PART" ) == 0 && nPacket >= 4 )
+		else if ( nType == G2_PACKET_PARTIAL && nPacket >= 4 )
 		{
 			m_nPartial = pPacket->ReadLongBE();
 		}
-		else if ( strcmp( szType, "COM" ) == 0 )
+		else if ( nType == G2_PACKET_COMMENT )
 		{
 			CString strXML = pPacket->ReadString( nPacket );
 			
@@ -1039,7 +1039,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 				delete pComment;
 			}
 		}
-		else if ( strcmp( szType, "PVU" ) == 0 )
+		else if ( nType == G2_PACKET_PREVIEW_URL )
 		{
 			m_bPreview = TRUE;
 			if ( nPacket != 0 )
@@ -1047,11 +1047,11 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 				m_sPreview = pPacket->ReadString( nPacket );
 			}
 		}
-		else if ( strcmp( szType, "BOGUS" ) == 0 )
+		else if ( nType == G2_PACKET_BOGUS )
 		{
 			m_bBogus = TRUE;
 		}
-		else if ( strcmp( szType, "COLLECT" ) == 0 )
+		else if ( nType == G2_PACKET_COLLECTION )
 		{
 			m_bCollection = TRUE;
 		}

@@ -719,14 +719,14 @@ BOOL CHostBrowser::OnPacket(CG2Packet* pPacket)
 
 void CHostBrowser::OnProfilePacket(CG2Packet* pPacket)
 {
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
 
-	while ( pPacket->ReadPacket( szType, nLength ) )
+	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
 
-		if ( strcmp( szType, "XML" ) == 0 )
+		if ( nType == G2_PACKET_XML )
 		{
 			CXMLElement* pXML = CXMLElement::FromString( pPacket->ReadString( nLength ), TRUE );
 

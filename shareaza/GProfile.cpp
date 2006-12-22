@@ -87,7 +87,7 @@ void CGProfile::Create()
 
 	Hashes::Guid tmp;
 	
-	for ( int nByte = 0 ; nByte < 16 ; nByte++ ) tmp[ nByte ] = uchar( tmp[ nByte ] + rand() );
+	for ( int nByte = 0 ; nByte < 16 ; nByte++ ) tmp[ nByte ] = uchar( ( tmp[ nByte ] + rand() ) & 0xff );
 	tmp.validate();
 
 	oGUID = tmp;
@@ -295,10 +295,10 @@ CG2Packet* CGProfile::CreateAvatar()
 
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PROFILE_AVATAR );
 
-	pPacket->WritePacket( "NAME", pPacket->GetStringLen( strPath ) );
+	pPacket->WritePacket( G2_PACKET_NAME, pPacket->GetStringLen( strPath ) );
 	pPacket->WriteString( strPath, FALSE );
 
-	pPacket->WritePacket( "BODY", (DWORD)pFile.GetLength() );
+	pPacket->WritePacket( G2_PACKET_BODY, (DWORD)pFile.GetLength() );
 	LPBYTE pBody = pPacket->WriteGetPointer( (DWORD)pFile.GetLength() );
 
 	if ( pBody == NULL )

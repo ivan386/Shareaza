@@ -277,6 +277,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella2.UdpOutExpire"), &Gnutella2.UdpOutExpire, 26000 );
 	Add( _T("Gnutella2.UdpOutResend"), &Gnutella2.UdpOutResend, 6000 );
 	Add( _T("Gnutella2.UdpInExpire"), &Gnutella2.UdpInExpire, 30000 );
+	Add( _T("Gnutella2.LNIPeriod"), &Gnutella2.LNIPeriod, 60000 );
 	Add( _T("Gnutella2.KHLPeriod"), &Gnutella2.KHLPeriod, 60000 );
 	Add( _T("Gnutella2.KHLHubCount"), &Gnutella2.KHLHubCount, 50 );
 	Add( _T("Gnutella2.HAWPeriod"), &Gnutella2.HAWPeriod, 300000 );

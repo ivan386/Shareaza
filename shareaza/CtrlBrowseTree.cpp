@@ -845,31 +845,31 @@ void CBrowseTreeCtrl::OnTreePacket(CG2Packet* pPacket)
 void CBrowseTreeCtrl::OnTreePacket(CG2Packet* pPacket, DWORD nFinish, CBrowseTreeItem* pItem)
 {
 	BOOL bCompound;
-	CHAR szType[9];
+	G2_PACKET nType;
 	DWORD nLength;
 
 	while (	pPacket->m_nPosition < nFinish &&
-			pPacket->ReadPacket( szType, nLength, &bCompound ) )
+			pPacket->ReadPacket( nType, nLength, &bCompound ) )
 	{
 		DWORD nNext = pPacket->m_nPosition + nLength;
 
-		if ( ( strcmp( szType, "PF" ) == 0 || strcmp( szType, "VF" ) == 0 ) && bCompound == TRUE )
+		if ( ( nType == G2_PACKET_PHYSICAL_FOLDER || nType == G2_PACKET_VIRTUAL_FOLDER ) && bCompound == TRUE )
 		{
 			CBrowseTreeItem* pChild = new CBrowseTreeItem( pItem );
 			OnTreePacket( pPacket, nNext, pChild );
 			pChild->m_bExpanded = ( pItem == m_pRoot );
 			pItem->Add( pChild );
 		}
-		else if ( strcmp( szType, "DN" ) == 0 && bCompound == FALSE )
+		else if ( nType == G2_PACKET_DESCRIPTIVE_NAME && bCompound == FALSE )
 		{
 			pItem->m_sText = pPacket->ReadString( nLength );
 		}
-		else if ( strcmp( szType, "MD" ) == 0 && bCompound == FALSE )
+		else if ( nType == G2_PACKET_METADATA && bCompound == FALSE )
 		{
 			CXMLElement* pXML = CXMLElement::FromString( pPacket->ReadString( nLength ) );
 			if ( pXML != NULL ) pItem->AddXML( pXML );
 		}
-		else if ( strcmp( szType, "FILES" ) == 0 && bCompound == FALSE )
+		else if ( nType == G2_PACKET_FILES && bCompound == FALSE )
 		{
 			if ( pItem->m_pFiles != NULL ) delete [] pItem->m_pFiles;
 

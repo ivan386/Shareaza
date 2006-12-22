@@ -25,6 +25,7 @@
 #pragma once
 
 #include "WndPanel.h"
+#include "G2Packet.h"
 
 class CLiveItem;
 class CNeighbour;
@@ -58,7 +59,7 @@ protected:
 	CList< CLiveItem* >	m_pQueue;
 	CCriticalSection	m_pSection;
 
-	static LPCSTR m_pszG2[];
+	static G2_PACKET m_nG2[];
 
 // Operations
 public:

@@ -56,8 +56,25 @@ BEGIN_MESSAGE_MAP(CPacketWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI_RANGE(1, 3200, OnUpdateBlocker)
 END_MESSAGE_MAP()
 
-LPCSTR CPacketWnd::m_pszG2[] = { "PI", "PO", "LNI", "KHL", "HAW", "QKR", "QKA", "Q1", "QH1", "Q2", "QH2", "QA", "QHT", "PUSH", "UPROC", "UPROD", NULL };
-
+G2_PACKET CPacketWnd::m_nG2[] = {
+	G2_PACKET_PING,
+	G2_PACKET_PONG,
+	G2_PACKET_LNI,
+	G2_PACKET_KHL,
+	G2_PACKET_HAW,
+	G2_PACKET_QUERY_KEY_REQ,
+	G2_PACKET_QUERY_KEY_ANS,
+	G2_PACKET_QUERY_WRAP,
+	G2_PACKET_HIT_WRAP,
+	G2_PACKET_QUERY,
+	G2_PACKET_HIT,
+	G2_PACKET_QUERY_ACK,
+	G2_PACKET_QHT,
+	G2_PACKET_PUSH,
+	G2_PACKET_PROFILE_CHALLENGE,
+	G2_PACKET_PROFILE_DELIVERY,
+	G2_PACKET_NULL
+};
 
 /////////////////////////////////////////////////////////////////////////////
 // CPacketWnd construction
@@ -190,9 +207,9 @@ void CPacketWnd::Process(const CNeighbour* pNeighbour, const IN_ADDR* pUDP, BOOL
 	}
 	else if ( pPacketG2 )
 	{
-		for ( int nType = 0 ; m_pszG2[ nType ] ; nType++ )
+		for ( int nType = 0 ; m_nG2[ nType ] ; nType++ )
 		{
-			if ( strcmp( pPacketG2->m_sType, m_pszG2[ nType ] ) == 0 )
+			if ( pPacketG2->IsType( m_nG2[ nType ] ) )
 			{
 				if ( ! m_bTypeG2[ nType ] ) return;
 				break;
@@ -358,12 +375,14 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 	pTypes2.CreatePopupMenu();
 
-	for ( int nType = 0 ; m_pszG2[ nType ] ; nType++ )
+	for ( int nType = 0 ; m_nG2[ nType ] ; nType++ )
 	{
+		CStringA tmp;
+		tmp.Append( (LPCSTR)&m_nG2[ nType ], G2_TYPE_LEN( m_nG2[ nType ] ) );
 		if ( m_bTypeG2[ nType ] )
-			pTypes2.AppendMenu( MF_STRING|MF_CHECKED, 3100 + nType, CString( m_pszG2[ nType ] ) );
+			pTypes2.AppendMenu( MF_STRING|MF_CHECKED, 3100 + nType, CA2CT( tmp ) );
 		else
-			pTypes2.AppendMenu( MF_STRING, 3100 + nType, CString( m_pszG2[ nType ] ) );
+			pTypes2.AppendMenu( MF_STRING, 3100 + nType, CA2CT( tmp ) );
 	}
 
 	pTypes3.CreatePopupMenu();

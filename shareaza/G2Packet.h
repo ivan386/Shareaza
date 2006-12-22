@@ -1,7 +1,7 @@
 //
 // G2Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,6 +28,148 @@
 
 class CG1Packet;
 
+typedef QWORD G2_PACKET;
+
+#define G2_TYPE_LEN(p)( \
+	( ! ( (G2_PACKET)((p)) & 0x00000000000000ffui64 ) ) ? 0 : ( \
+	( ! ( (G2_PACKET)((p)) & 0x000000000000ff00ui64 ) ) ? 1 : ( \
+	( ! ( (G2_PACKET)((p)) & 0x0000000000ff0000ui64 ) ) ? 2 : ( \
+	( ! ( (G2_PACKET)((p)) & 0x00000000ff000000ui64 ) ) ? 3 : ( \
+	( ! ( (G2_PACKET)((p)) & 0x000000ff00000000ui64 ) ) ? 4 : ( \
+	( ! ( (G2_PACKET)((p)) & 0x0000ff0000000000ui64 ) ) ? 5 : ( \
+	( ! ( (G2_PACKET)((p)) & 0x00ff000000000000ui64 ) ) ? 6 : ( \
+	( ! ( (G2_PACKET)((p)) & 0xff00000000000000ui64 ) ) ? 7 : ( \
+	8 )))))))))
+
+// #define	MAKEWORD(a,b)	(( WORD) (((a)) | (( WORD) ((b))) << 8 )) <- already defined
+#define	MAKEDWORD(a,b)	((DWORD) (((a)) | ((DWORD) ((b))) << 16))
+#define	MAKEQWORD(a,b)	((QWORD) (((a)) | ((QWORD) ((b))) << 32))
+#define	MAKE_G2_PACKET(a,b,c,d,e,f,g,h) \
+	MAKEQWORD(	MAKEDWORD(MAKEWORD(((a)),((b))),MAKEWORD(((c)),((d)))), \
+				MAKEDWORD(MAKEWORD(((e)),((f))),MAKEWORD(((g)),((h)))) \
+	);
+
+//
+// G2 Packet Flags
+//
+
+#define G2_FLAG_COMPOUND	0x04
+#define G2_FLAG_BIG_ENDIAN	0x02
+
+//
+// G2 Packet Types
+//
+
+const G2_PACKET G2_PACKET_NULL				= MAKE_G2_PACKET(  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_BODY				= MAKE_G2_PACKET( 'B', 'O', 'D', 'Y',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_BOGUS				= MAKE_G2_PACKET( 'B', 'O', 'G', 'U', 'S',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_BROWSE_HOST		= MAKE_G2_PACKET( 'B', 'H',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );	// ??
+const G2_PACKET G2_PACKET_BROWSE_PROFILE	= MAKE_G2_PACKET( 'B', 'U', 'P',  0 ,  0 ,  0 ,  0 ,  0  );	// ??
+const G2_PACKET G2_PACKET_CACHED_HUB		= MAKE_G2_PACKET( 'C', 'H',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CACHED_SOURCES	= MAKE_G2_PACKET( 'C', 'S', 'C',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CHAT_ACCEPT		= MAKE_G2_PACKET( 'A', 'C', 'C', 'E', 'P', 'T',  0 ,  0  );
+const G2_PACKET G2_PACKET_CHAT_ACTION		= MAKE_G2_PACKET( 'A', 'C', 'T',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CHAT_ANSWER		= MAKE_G2_PACKET( 'C', 'H', 'A', 'T', 'A', 'N', 'S',  0  );
+const G2_PACKET G2_PACKET_CHAT_AWAY			= MAKE_G2_PACKET( 'A', 'W', 'A', 'Y',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CHAT_DENY			= MAKE_G2_PACKET( 'D', 'E', 'N', 'Y',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CHAT_MESSAGE		= MAKE_G2_PACKET( 'C', 'M', 'S', 'G',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CHAT_REQUEST		= MAKE_G2_PACKET( 'C', 'H', 'A', 'T', 'R', 'E', 'Q',  0  );
+const G2_PACKET G2_PACKET_COLLECTION		= MAKE_G2_PACKET( 'C', 'O', 'L', 'L', 'E', 'C', 'T',  0  );
+const G2_PACKET G2_PACKET_COMMENT			= MAKE_G2_PACKET( 'C', 'O', 'M',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CRAWL_ANS			= MAKE_G2_PACKET( 'C', 'R', 'A', 'W', 'L', 'A',  0 ,  0  );
+const G2_PACKET G2_PACKET_CRAWL_REQ			= MAKE_G2_PACKET( 'C', 'R', 'A', 'W', 'L', 'R',  0 ,  0  );
+const G2_PACKET G2_PACKET_CRAWL_REXT		= MAKE_G2_PACKET( 'R', 'E', 'X', 'T',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CRAWL_RGPS		= MAKE_G2_PACKET( 'R', 'G', 'P', 'S',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CRAWL_RLEAF		= MAKE_G2_PACKET( 'R', 'L', 'E', 'A', 'F',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CRAWL_RNAME		= MAKE_G2_PACKET( 'R', 'N', 'A', 'M', 'E',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_DESCRIPTIVE_NAME	= MAKE_G2_PACKET( 'D', 'N',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_DISCOVERY			= MAKE_G2_PACKET( 'D', 'I', 'S',  0 ,  0 ,  0 ,  0 ,  0  );	// by Ryo-oh-ki
+const G2_PACKET G2_PACKET_DISCOVERY_ANS		= MAKE_G2_PACKET( 'D', 'I', 'S', 'C', 'A',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_DISCOVERY_HUB		= MAKE_G2_PACKET( 'D', 'I', 'S', 'C', 'H',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_DISCOVERY_LOG		= MAKE_G2_PACKET( 'D', 'I', 'S', 'C', 'L',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_DISCOVERY_REQ		= MAKE_G2_PACKET( 'D', 'I', 'S', 'C', 'R',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_FILES				= MAKE_G2_PACKET( 'F', 'I', 'L', 'E', 'S',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_FROM_ADDRESS		= MAKE_G2_PACKET( 'F', 'R',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_G1				= MAKE_G2_PACKET( 'G', '1',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_GPS				= MAKE_G2_PACKET( 'G', 'P', 'S',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_GROUP_ID			= MAKE_G2_PACKET( 'G',  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_HAW				= MAKE_G2_PACKET( 'H', 'A', 'W',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_HIT				= MAKE_G2_PACKET( 'Q', 'H', '2',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_HIT_DESCRIPTOR	= MAKE_G2_PACKET( 'H',  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_HIT_GROUP			= MAKE_G2_PACKET( 'H', 'G',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_HIT_WRAP			= MAKE_G2_PACKET( 'Q', 'H', '1',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_HORIZON			= MAKE_G2_PACKET( 'S',  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_HUB				= MAKE_G2_PACKET( 'H', 'U', 'B',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_HUB_STATUS		= MAKE_G2_PACKET( 'H', 'S',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_INTEREST			= MAKE_G2_PACKET( 'I',  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_KHL				= MAKE_G2_PACKET( 'K', 'H', 'L',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_KHL_ANS			= MAKE_G2_PACKET( 'K', 'H', 'L', 'A',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_KHL_REQ			= MAKE_G2_PACKET( 'K', 'H', 'L', 'R',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_LEAF				= MAKE_G2_PACKET( 'L', 'E', 'A', 'F',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_LIBRARY_STATUS	= MAKE_G2_PACKET( 'L', 'S',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_LNI				= MAKE_G2_PACKET( 'L', 'N', 'I',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_METADATA			= MAKE_G2_PACKET( 'M', 'D',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_NAME				= MAKE_G2_PACKET( 'N', 'A', 'M', 'E',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_NEIGHBOUR_HUB		= MAKE_G2_PACKET( 'N', 'H',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_NEIGHBOUR_LEAF	= MAKE_G2_PACKET( 'N', 'L',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );	// ??
+const G2_PACKET G2_PACKET_NICK				= MAKE_G2_PACKET( 'N', 'I', 'C', 'K',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_NODE_ADDRESS		= MAKE_G2_PACKET( 'N', 'A',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_NODE_GUID			= MAKE_G2_PACKET( 'G', 'U',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_NODE_INFO			= MAKE_G2_PACKET( 'N', 'I',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );	// ??
+const G2_PACKET G2_PACKET_OBJECT_ID			= MAKE_G2_PACKET( 'I', 'D',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PARTIAL			= MAKE_G2_PACKET( 'P', 'A', 'R', 'T',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PEER_BUSY			= MAKE_G2_PACKET( 'B', 'U', 'S', 'Y',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PEER_CHAT			= MAKE_G2_PACKET( 'P', 'C', 'H',  0 ,  0 ,  0 ,  0 ,  0  );	// ??
+const G2_PACKET G2_PACKET_PEER_FIREWALLED	= MAKE_G2_PACKET( 'F', 'W',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PEER_STATUS		= MAKE_G2_PACKET( 'S', 'S',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PEER_UNSTABLE		= MAKE_G2_PACKET( 'U', 'N', 'S', 'T', 'A',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PHYSICAL_FOLDER	= MAKE_G2_PACKET( 'P', 'F',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PING				= MAKE_G2_PACKET( 'P', 'I',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PONG				= MAKE_G2_PACKET( 'P', 'O',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PREVIEW_URL		= MAKE_G2_PACKET( 'P', 'V', 'U',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PROFILE			= MAKE_G2_PACKET( 'U', 'P', 'R', 'O',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PROFILE_AVATAR	= MAKE_G2_PACKET( 'U', 'P', 'R', 'O', 'A', 'V', 'T', 'R' );
+const G2_PACKET G2_PACKET_PROFILE_CHALLENGE	= MAKE_G2_PACKET( 'U', 'P', 'R', 'O', 'C',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PROFILE_DELIVERY	= MAKE_G2_PACKET( 'U', 'P', 'R', 'O', 'D',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PUSH				= MAKE_G2_PACKET( 'P', 'U', 'S', 'H',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PUSH_TO			= MAKE_G2_PACKET( 'T', 'O',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QHT				= MAKE_G2_PACKET( 'Q', 'H', 'T',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QKY				= MAKE_G2_PACKET( 'Q', 'K', 'Y',  0 ,  0 ,  0 ,  0 ,  0  );	// ???
+const G2_PACKET G2_PACKET_QUERY				= MAKE_G2_PACKET( 'Q', '2',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_ACK			= MAKE_G2_PACKET( 'Q', 'A',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_ADDRESS		= MAKE_G2_PACKET( 'Q', 'N', 'A',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_CACHED		= MAKE_G2_PACKET( 'C', 'A', 'C', 'H', 'E', 'D',  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_DONE		= MAKE_G2_PACKET( 'D',  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_KEY			= MAKE_G2_PACKET( 'Q', 'K',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_KEY_ANS		= MAKE_G2_PACKET( 'Q', 'K', 'A',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_KEY_REQ		= MAKE_G2_PACKET( 'Q', 'K', 'R',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_REFRESH		= MAKE_G2_PACKET( 'R', 'E', 'F',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_SEARCH		= MAKE_G2_PACKET( 'S',  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_QUERY_WRAP		= MAKE_G2_PACKET( 'Q', '1',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );	// Obsolete
+const G2_PACKET G2_PACKET_RELAY				= MAKE_G2_PACKET( 'R', 'E', 'L', 'A', 'Y',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_REQUEST_ADDRESS	= MAKE_G2_PACKET( 'R', 'N', 'A',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_RETRY_AFTER		= MAKE_G2_PACKET( 'R', 'A',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_SELF				= MAKE_G2_PACKET( 'S', 'E', 'L', 'F',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_SEND_ADDRESS		= MAKE_G2_PACKET( 'S', 'N', 'A',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_SIZE				= MAKE_G2_PACKET( 'S', 'Z',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_SIZE_RESTRICTION	= MAKE_G2_PACKET( 'S', 'Z', 'R',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_TIMESTAMP			= MAKE_G2_PACKET( 'T', 'S',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_UDP				= MAKE_G2_PACKET( 'U', 'D', 'P',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_URL				= MAKE_G2_PACKET( 'U', 'R', 'L',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_URN				= MAKE_G2_PACKET( 'U', 'R', 'N',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_USER_GUID			= MAKE_G2_PACKET( 'U', 'S', 'E', 'R', 'G', 'U', 'I', 'D' );
+const G2_PACKET G2_PACKET_VENDOR			= MAKE_G2_PACKET( 'V',  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_VERSION			= MAKE_G2_PACKET( 'C', 'V',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_VIRTUAL_FOLDER	= MAKE_G2_PACKET( 'V', 'F',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_XML				= MAKE_G2_PACKET( 'X', 'M', 'L',  0 ,  0 ,  0 ,  0 ,  0  );
+
+//
+// G2 SS
+//
+
+#define G2_SS_PUSH		0x01
+#define G2_SS_BUSY		0x02
+#define G2_SS_STABLE	0x04
 
 class CG2Packet : public CPacket
 {
@@ -38,16 +180,15 @@ protected:
 
 // Attributes
 public:
-	CHAR	m_sType[9];
-	BOOL	m_bCompound;
-
-	CString	m_sTypeCache;
+	G2_PACKET	m_nType;
+	BOOL		m_bCompound;
+	CString		m_sTypeCache;
 
 // Operations
 public:
 	void	WritePacket(CG2Packet* pPacket);
-	void	WritePacket(LPCSTR pszType, DWORD nLength, BOOL bCompound = FALSE);
-	BOOL	ReadPacket(LPSTR pszType, DWORD& nLength, BOOL* pbCompound = NULL);
+	void	WritePacket(G2_PACKET nType, DWORD nLength, BOOL bCompound = FALSE);
+	BOOL	ReadPacket(G2_PACKET& nType, DWORD& nLength, BOOL* pbCompound = NULL);
 	BOOL	SkipCompound();
 	BOOL	SkipCompound(DWORD& nLength, DWORD nRemaining = 0);
 	BOOL	GetTo(Hashes::Guid& oGUID);
@@ -67,14 +208,19 @@ public:
 
 // Inlines
 public:
-	inline BOOL IsType(LPCSTR pszType) const
+	inline BOOL IsType(G2_PACKET nType) const
 	{
-		return strcmp( pszType, m_sType ) == 0;
+		return nType == m_nType;
 	}
 
 	virtual inline LPCTSTR GetType() const
 	{
-		if ( m_sTypeCache.IsEmpty() ) ((CG2Packet*)this)->m_sTypeCache = m_sType;
+		if ( m_sTypeCache.IsEmpty() )
+		{
+			CStringA tmp;
+			tmp.Append( (LPCSTR)&m_nType, G2_TYPE_LEN( m_nType ) );
+			((CG2Packet*)this)->m_sTypeCache = CA2CT( tmp );
+		}
 		return m_sTypeCache;
 	}
 
@@ -93,14 +239,13 @@ protected:
 
 // Construction
 public:
-	inline static CG2Packet* New(LPCSTR pszType = NULL, BOOL bCompound = FALSE)
+	inline static CG2Packet* New(G2_PACKET nType = G2_PACKET_NULL, BOOL bCompound = FALSE)
 	{
 		CG2Packet* pPacket = (CG2Packet*)POOL.New();
 
-		if ( pszType != NULL )
+		if ( nType != G2_PACKET_NULL )
 		{
-			strncpy( pPacket->m_sType, pszType, 9 );
-			pPacket->m_sType[8] = 0;
+			pPacket->m_nType = nType;
 		}
 
 		pPacket->m_bCompound = bCompound;
@@ -110,7 +255,7 @@ public:
 	}
 
 	static CG2Packet* New(BYTE* pSource);
-	static CG2Packet* New(LPCSTR pszType, CG1Packet* pWrap, int nMinTTL = 255);
+	static CG2Packet* New(G2_PACKET nType, CG1Packet* pWrap, int nMinTTL = 255);
 
 	inline virtual void Delete()
 	{
@@ -134,53 +279,5 @@ inline void CG2Packet::CG2PacketPool::FreePoolImpl(CPacket* pPacket)
 {
 	delete [] (CG2Packet*)pPacket;
 }
-
-//
-// G2 Packet Flags
-//
-
-#define G2_FLAG_COMPOUND	0x04
-#define G2_FLAG_BIG_ENDIAN	0x02
-
-//
-// G2 Packet Types
-//
-
-#define G2_PACKET_TO				"TO"
-#define G2_PACKET_PING				"PI"
-#define G2_PACKET_PONG				"PO"
-#define G2_PACKET_LNI				"LNI"
-#define G2_PACKET_KHL				"KHL"
-#define G2_PACKET_KHL_REQ			"KHLR"
-#define G2_PACKET_KHL_ANS			"KHLA"
-#define G2_PACKET_HAW				"HAW"
-#define G2_PACKET_QHT				"QHT"
-#define G2_PACKET_QUERY_KEY_REQ		"QKR"
-#define G2_PACKET_QUERY_KEY_ANS		"QKA"
-#define G2_PACKET_QUERY				"Q2"
-#define G2_PACKET_HIT				"QH2"
-#define G2_PACKET_QUERY_WRAP		"Q1"			// Obsolete
-#define G2_PACKET_HIT_WRAP			"QH1"
-#define G2_PACKET_QUERY_ACK			"QA"
-#define G2_PACKET_PUSH				"PUSH"
-#define G2_PACKET_PROFILE_CHALLENGE	"UPROC"
-#define G2_PACKET_PROFILE_DELIVERY	"UPROD"
-#define G2_PACKET_PROFILE_AVATAR	"UPROAVTR"
-#define G2_PACKET_CRAWL_REQ			"CRAWLR"
-#define G2_PACKET_CRAWL_ANS			"CRAWLA"
-#define G2_PACKET_PHYSICAL_FOLDER	"PF"
-#define G2_PACKET_VIRTUAL_FOLDER	"VF"
-#define G2_PACKET_DISCOVERY_REQ		"DISCR"
-#define G2_PACKET_DISCOVERY_ANS		"DISCA"
-#define G2_PACKET_DISCOVERY_HUB		"DISCH"
-#define G2_PACKET_DISCOVERY_LOG		"DISCL"
-
-//
-// G2 SS
-//
-
-#define G2_SS_PUSH		0x01
-#define G2_SS_BUSY		0x02
-#define G2_SS_STABLE	0x04
 
 #endif // !defined(AFX_G2PACKET_H__1790A2FA_5A60_4846_A7BD_629747EEC1C5__INCLUDED_)
