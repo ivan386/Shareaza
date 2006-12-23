@@ -62,7 +62,7 @@ protected:
 	virtual BOOL	IsMoving() const = 0;
 	virtual BOOL	IsPaused(BOOL bRealState = FALSE) const = 0;
 	virtual BOOL	IsTrying() const = 0;
-	void			GenerateDiskName();
+	void			GenerateDiskName(bool bTorrent = false);
 	virtual void	Serialize(CArchive& ar, int nVersion);
 
 };

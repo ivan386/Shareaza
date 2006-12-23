@@ -357,6 +357,9 @@ void CDownload::OnRun()
 				if ( m_bSeeding )
 				{
 					RunValidation( TRUE );
+					if ( !Network.IsConnected() && Settings.BitTorrent.AutoSeed )
+						Network.Connect();
+					SetModified();
 				}
 				else if ( m_pFile != NULL )
 				{
@@ -542,7 +545,8 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	
 
 	// Delete the SD file
-	::DeleteFile( strDiskFileName + _T(".sd") );
+	if ( m_oBTH && !Settings.BitTorrent.AutoSeed )
+		::DeleteFile( strDiskFileName + _T(".sd") );
 
 	LibraryBuilder.RequestPriority( m_sDiskName );
 	
@@ -636,13 +640,25 @@ BOOL CDownload::Save(BOOL bFlush)
 	m_nSaveCookie = m_nCookie;
 	m_tSaved = GetTickCount();
 	
-	if ( m_bComplete ) return TRUE;
+	if ( m_bComplete && !m_bSeeding ) return TRUE;
+	if ( m_bSeeding && !Settings.BitTorrent.AutoSeed ) return TRUE;
 	
-	if ( m_sDiskName.IsEmpty() )
-		GenerateDiskName();
-	if ( m_sSafeName.IsEmpty() )
-		m_sSafeName = CDownloadTask::SafeFilename( m_sDisplayName.Right( 64 ) );
-
+	CString strBackupDiskName;
+	if ( m_bSeeding )
+	{
+		if ( m_sSafeName.IsEmpty() )
+			GenerateDiskName( true );
+		strBackupDiskName = m_sDiskName;
+		m_sDiskName = Settings.Downloads.IncompletePath + _T("\\") + m_sSafeName;
+	}
+	else
+	{
+		if ( m_sDiskName.IsEmpty() )
+			GenerateDiskName();
+		if ( m_sSafeName.IsEmpty() )
+			m_sSafeName = CDownloadTask::SafeFilename( m_sDisplayName.Right( 64 ) );
+	}
+	
 	::DeleteFile( m_sDiskName + _T(".sd.sav") );
 	
 	if ( ! pFile.Open( m_sDiskName + _T(".sd.sav"),
@@ -661,28 +677,36 @@ BOOL CDownload::Save(BOOL bFlush)
 	pFile.Read( szID, 3 );
 	pFile.Close();
 	
+	BOOL bResult = TRUE;
 	if ( szID[0] == 'S' && szID[1] == 'D' && szID[2] == 'L' )
 	{
 		::DeleteFile( m_sDiskName + _T(".sd") );
 		MoveFile( m_sDiskName + _T(".sd.sav"), m_sDiskName + _T(".sd") );
-		return TRUE;
 	}
 	else
 	{
 		::DeleteFile( m_sDiskName + _T(".sd.sav") );
-		return FALSE;
+		bResult = FALSE;
 	}
+
+	if ( m_bSeeding )
+		m_sDiskName = strBackupDiskName;
+
+	return bResult;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownload serialize
 
-#define DOWNLOAD_SER_VERSION	33
+#define DOWNLOAD_SER_VERSION	34
 
 void CDownload::Serialize(CArchive& ar, int nVersion)
 {
-	ASSERT( ! m_bComplete );
+	ASSERT( ! m_bComplete || m_bSeeding );
 	
+	if ( !Settings.BitTorrent.AutoSeed && m_bSeeding )
+		return;
+
 	if ( nVersion == 0 )
 	{
 		nVersion = DOWNLOAD_SER_VERSION;

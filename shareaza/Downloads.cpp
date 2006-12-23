@@ -1166,6 +1166,17 @@ void CDownloads::Load()
 			
 			if ( pDownload->Load( strPath ) )
 			{
+				if ( pDownload->m_bSeeding )
+				{
+					pDownload->m_bComplete = TRUE;
+					pDownload->m_bVerify = TS_TRUE;
+				}
+				if ( pDownload->m_bSeeding && !Settings.BitTorrent.AutoSeed )
+				{
+					::DeleteFile( strPath );
+					continue;
+				}
+
 				m_pList.AddTail( pDownload );
 			}
 			else

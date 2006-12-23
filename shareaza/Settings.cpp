@@ -511,7 +511,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	37
+#define SMART_VERSION	38
 
 void CSettings::Load()
 {
@@ -779,6 +779,11 @@ void CSettings::SmartUpgrade()
 		Downloads.RequestHash = TRUE;
 		Gnutella.SpecifyProtocol = TRUE;
 		Search.FilterMask = Search.FilterMask | 0x140; // Turn on DRM and Suspicious filters
+	}
+
+	if ( nVersion < 38 )
+	{
+		BitTorrent.AutoSeed = TRUE;
 	}
 }
 

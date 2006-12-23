@@ -67,12 +67,20 @@ void CDownloadBase::SetModified()
 //////////////////////////////////////////////////////////////////////
 // CDownloadBase disk file name (the <hash>.partial file in the incomplete directory)
 
-void CDownloadBase::GenerateDiskName()
+void CDownloadBase::GenerateDiskName(bool bTorrent)
 {
+	// Seeding torrents already have a disk name, we need only safe name
+	if ( bTorrent )
+	{
+		m_sSafeName += _T("btih_");
+		m_sSafeName += m_oBTH.toString();
+		return;
+	}
+
 	// Exit if we've already named the temp file
 	if ( m_sDiskName.GetLength() > 0 ) return;
 
-	// Get a meaningful (but safe) name. Used for previews, etc. Make sure we get extention if name is long.
+	// Get a meaningful (but safe) name. Used for previews, etc. Make sure we get extension if name is long.
 	m_sSafeName = CDownloadTask::SafeFilename( m_sDisplayName.Right( 64 ) );
 
 	// Start disk file name with hash
@@ -106,7 +114,7 @@ void CDownloadBase::GenerateDiskName()
 		m_sDiskName.Format( _T("rand_%2i%2i%2i%2i"), rand() % 100, rand() % 100, rand() % 100, rand() % 100 );
 	}
 
-	// Add a .partial extention
+	// Add a .partial extension
 	m_sDiskName += _T(".partial");
 	// Create download directory if it doesn't exist
 		CreateDirectory( Settings.Downloads.IncompletePath, NULL );
