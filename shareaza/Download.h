@@ -89,6 +89,7 @@ private:
 	friend class CDownloadTransfer; // GetVerifyLength
 	friend class CDownloadWithTorrent; // m_bComplete
 	friend class CDownloadsWnd; // m_pTask
+	friend class CDownloads;	// m_bComplete for Load()
 };
 
 #endif // !defined(AFX_DOWNLOAD_H__156689EC_D090_4285_BB8C_9AD058024BB5__INCLUDED_)
