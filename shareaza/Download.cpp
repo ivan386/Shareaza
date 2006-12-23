@@ -627,6 +627,9 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		if ( bSuccess ) Save();
 	}
 	
+	if ( m_bSeeding )
+		m_sDiskName = m_sServingFileName;
+
 	m_bGotPreview = GetFileAttributes( m_sDiskName + L".png" ) != INVALID_FILE_ATTRIBUTES;
 	m_nSaveCookie = m_nCookie;
 	
@@ -643,12 +646,11 @@ BOOL CDownload::Save(BOOL bFlush)
 	if ( m_bComplete && !m_bSeeding ) return TRUE;
 	if ( m_bSeeding && !Settings.BitTorrent.AutoSeed ) return TRUE;
 	
-	CString strBackupDiskName;
 	if ( m_bSeeding )
 	{
 		if ( m_sSafeName.IsEmpty() )
 			GenerateDiskName( true );
-		strBackupDiskName = m_sDiskName;
+		m_sServingFileName = m_sDiskName;
 		m_sDiskName = Settings.Downloads.IncompletePath + _T("\\") + m_sSafeName;
 	}
 	else
@@ -690,7 +692,9 @@ BOOL CDownload::Save(BOOL bFlush)
 	}
 
 	if ( m_bSeeding )
-		m_sDiskName = strBackupDiskName;
+	{
+		m_sDiskName = m_sServingFileName;
+	}
 
 	return bResult;
 }

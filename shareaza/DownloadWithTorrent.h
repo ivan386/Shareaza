@@ -54,6 +54,7 @@ public:
     Hashes::BtGuid m_pPeerID;
 	CString		m_sKey;
     BOOL		m_bTorrentEndgame;
+	CString		m_sServingFileName;
 protected:
 	BOOL		m_bSeeding;
 	DWORD		m_nTorrentBlock;
