@@ -740,7 +740,7 @@ _ignoreOut:inc	ecx
 	// Loop down the arrays
 	for ( std::ptrdiff_t slot = -METER_LENGTH; slot; ++slot )
 	{
-		// If this record is from the last 2 seconds, add it to the input or output total
+		// If this record is from the last 6 seconds, add it to the input or output total
 		if ( m_mInput.pTimes[ METER_LENGTH + slot ] >= tCutoff )
 			nInput += m_mInput.pHistory[ METER_LENGTH + slot ];
 		if ( m_mOutput.pTimes[ METER_LENGTH + slot ] >= tCutoff )

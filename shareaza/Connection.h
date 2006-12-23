@@ -42,7 +42,7 @@ typedef struct
 	// Transfer statistics
 	DWORD	nTotal;			// The total number of bytes read or written
 	DWORD	tLast;			// The time the last read or write happened
-	DWORD	nMeasure;		// The average speed in bytes per second over the last 2 seconds
+	DWORD	nMeasure;		// The average speed in bytes per second over the last 6 seconds (see METER_PERIOD)
 
 	// The arrays of byte counts and times
 	DWORD	pHistory[64];	// 64 records of a number of bytes transferred

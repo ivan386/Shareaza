@@ -106,9 +106,9 @@ void CBTClient::AttachTo(CConnection* pConnection)
 {
 	ASSERT( m_hSocket == INVALID_SOCKET );
 
+	CTransfer::AttachTo( pConnection );
 	theApp.Message( MSG_TEMP, L"Attaching new BT client connection: %s", (LPCTSTR)m_sAddress );
 
-	CTransfer::AttachTo( pConnection );
 	ASSERT( m_mInput.pLimit != NULL );
 	m_tConnected = GetTickCount();
 	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_ACCEPTED, (LPCTSTR)m_sAddress );
