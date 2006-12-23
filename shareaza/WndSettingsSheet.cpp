@@ -1,7 +1,7 @@
 //
 // WndSettingsSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -286,8 +286,9 @@ void CSettingsSheet::Layout()
 	TEXTMETRIC txtMetric;
 
 	CDC* pDC = GetDC();
-	pDC->SelectObject( &theApp.m_gdiFont );
+	CFont* pOldFont = pDC->SelectObject( &theApp.m_gdiFont );
 	pDC->GetTextMetrics( &txtMetric );
+	pDC->SelectObject( pOldFont );
 	ReleaseDC( pDC );
 
 	m_nButtonHeight = ( txtMetric.tmHeight + txtMetric.tmExternalLeading ) + 10;
