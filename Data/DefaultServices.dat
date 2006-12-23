@@ -15,14 +15,7 @@ X http://www.xolox.nl/gwebcache/default.asp
 X http://www.student.ru.nl/markjansen/g2/bazooka.php
 X http://gwc2.wodi.org/bazooka
 X http://gwc2.wodi.org/bazooka.php
-U uhc:cache.kicks-ass.net:8000
-U uhc:g6.6dns.org:1337
-U uhc:galvatron.dyndns.org:59009
 U uhc:guruz.udp-host-cache.com:6666
-U uhc:kisama.ath.cx:8080
-U uhc:krill.shacknet.nu:20095
-U uhc:plankton.merseine.nu:20098
-U uhc:pokerface.ibiza.bishopston.net:3558
 U uhc:secondary.udp-host-cache.com:9999
 U uhc:tribaldance.ibiza.bishopston.net:3558
 U uhc:uhc.udp-host-cache.com:9999
@@ -30,9 +23,6 @@ U uhc:uhc2.limewire.com:20181
 U uhc:zomfg.gtkg.org:40000
 M http://omega359.info/skulls/skulls.php
 M http://gwc.wodi.org/skulls.php
-1 http://gwcrab.sarcastro.com:8001/
-1 http://gwc.ak-electron.org:8080/
-1 http://www.jlnetworks.co.uk/gwcii/gwcii.php
 2 http://cache.trillinux.org/g2/bazooka.php
 2 http://elactronix.com/g2/bazooka.php
 2 http://gwcrab2.sarcastro.com:8002/
@@ -51,14 +41,14 @@ D http://www.de-site.de/ed2k/koeln.met
 D http://www.emule-server.de/server.met/min/server.met
 #
 # Keep these comments at the end
-# Last updated 2nd - November, 2006
+# Last updated 23rd - December, 2006
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
 #
 # A letter and space must precede each link to indicate the type of service
 # D = eDonkey server.met file, M = multinetwork gwebcache,
-# 2 = Gnutella 2 gwebcache, 1 = Gnutella gwebcache
+# 2 = Gnutella 2 gwebcache, 1 = Gnutella gwebcache (obsolete)
 # X = banned, U = BootStrap(uhc, ukhl, gnutella1 host, gnutella2 host)
 #
 # If you make changes to this file that cause problems for you
