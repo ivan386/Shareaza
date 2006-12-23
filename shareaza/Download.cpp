@@ -79,7 +79,11 @@ CDownload::~CDownload()
 		CloseTransfers();
 		CloseTorrentUploads();
 		Uploads.OnRename( m_sDiskName, NULL );
-		if ( ! ::DeleteFile( m_sDiskName ) )
+		if ( m_bSeeding && m_bComplete )
+		{
+			// do nothing
+		}
+		else if ( ! ::DeleteFile( m_sDiskName ) )
 			theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
 	}
 }
@@ -176,7 +180,16 @@ void CDownload::Remove(BOOL bDelete)
 	DeleteFile( bDelete );
 	DeletePreviews();
 	
-	::DeleteFile( m_sDiskName + _T(".sd") );
+	if ( m_bSeeding )
+	{
+		::DeleteFile( Settings.Downloads.IncompletePath + L"\\" + m_sSafeName + L".sd" );
+		int nBackSlash = m_sDiskName.ReverseFind( '\\' );
+		CString strTempFileName = m_sDiskName.Mid( nBackSlash + 1 );
+		if ( m_oBTH.toString< Hashes::base16Encoding >() == strTempFileName )
+			::DeleteFile( m_sDiskName );
+	}
+	else
+		::DeleteFile( m_sDiskName + _T(".sd") );
 	::DeleteFile( m_sDiskName + _T(".png") );
 	
 	Downloads.Remove( this );
@@ -650,6 +663,8 @@ BOOL CDownload::Save(BOOL bFlush)
 	{
 		if ( m_sSafeName.IsEmpty() )
 			GenerateDiskName( true );
+		// Swap disk name with the safe name, since the complete file may be located elsewhere
+		// while .sd file remains in the incomplete folder for the single-file torrents.
 		m_sServingFileName = m_sDiskName;
 		m_sDiskName = Settings.Downloads.IncompletePath + _T("\\") + m_sSafeName;
 	}

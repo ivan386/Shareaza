@@ -309,7 +309,7 @@ void CTorrentSeedDlg::RunSingleFile()
 {
 	m_sTarget = FindFile( &m_pInfo.m_pFiles[0] );
 	
-	if ( m_sTarget.IsEmpty() || GetFileAttributes( m_sTarget ) == 0xFFFFFFFF )
+	if ( m_sTarget.IsEmpty() || GetFileAttributes( m_sTarget ) == INVALID_FILE_ATTRIBUTES )
 	{
 		CString strFormat;
 		LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
@@ -369,25 +369,25 @@ CString CTorrentSeedDlg::FindFile(LPVOID pVoid)
 		{
 			strFile = pShared->GetPath();
 			oLibraryLock.Unlock();
-			if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
+			if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
 		}
 	}
 
 	strFile = Settings.Downloads.CompletePath + "\\" + pFile->m_sPath;
-	if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
+	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
 
 	strFile = strPath + pFile->m_sPath;
-	if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
+	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
 	
 	//Try removing the outer directory in case of multi-file torrent oddities
 	LPCTSTR pszName = _tcsrchr( pFile->m_sPath, '\\' );
 	if ( pszName == NULL ) pszName = pFile->m_sPath; else pszName ++;
 
 	strFile = Settings.Downloads.CompletePath + "\\" + pszName;
-	if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
+	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
 
 	strFile = strPath + pszName;
-	if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
+	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
 
 	strFile.Empty();
 	return strFile;

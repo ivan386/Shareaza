@@ -164,7 +164,7 @@ void CDownloadWithFile::DeleteFile(BOOL bForce)
 			MoveFile( m_sDiskName, m_sDiskName + _T(".aborted") );
 		}
 	}
-	else if ( bForce )
+	else if ( bForce ) // be careful, do not delete completed BT seeding file
 	{
 		if ( ! ::DeleteFile( m_sDiskName ) )
 			theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
