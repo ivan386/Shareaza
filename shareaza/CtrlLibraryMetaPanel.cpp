@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,17 +67,15 @@ END_MESSAGE_MAP()
 // CLibraryMetaPanel construction
 
 CLibraryMetaPanel::CLibraryMetaPanel()
+: m_nThumbSize(96)
+, m_crLight(CCoolInterface::CalculateColour( CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 ))
+, m_bNewFile(TRUE)
 {
-	m_nThumbSize	= 96;
-	m_crLight		=	CCoolInterface::CalculateColour(
-						CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 );
-
 	// Try to get the number of lines to scroll when the mouse wheel is rotated
 	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
 	{
 		m_nScrollWheelLines = 3;
 	}
-	m_bNewFile = TRUE;
 }
 
 CLibraryMetaPanel::~CLibraryMetaPanel()
@@ -670,7 +668,7 @@ void CLibraryMetaPanel::OnRun()
 			m_bThread = FALSE;
 			break;
 		}
-		
+
 		m_pSection.Lock();
 		CString strPath = m_sPath;
 		m_pSection.Unlock();
