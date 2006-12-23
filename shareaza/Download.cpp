@@ -558,8 +558,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	
 
 	// Delete the SD file
-	if ( m_oBTH && !Settings.BitTorrent.AutoSeed )
-		::DeleteFile( strDiskFileName + _T(".sd") );
+	::DeleteFile( strDiskFileName + _T(".sd") );
 
 	LibraryBuilder.RequestPriority( m_sDiskName );
 	
