@@ -5,7 +5,7 @@
 //	Revision:		"$Revision: 1.42 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,7 +80,15 @@ END_MESSAGE_MAP()
 //////////////////////////////////////////////////////////////////////////////
 // CDownloadsCtrl construction
 
-CDownloadsCtrl::CDownloadsCtrl()
+CDownloadsCtrl::CDownloadsCtrl() :
+	m_nGroupCookie( 0 ),
+	m_nFocus( 0 ),
+	m_bCreateDragImage( FALSE ),
+	m_pDragDrop( NULL ),
+	m_bDrag( FALSE ),
+	m_pDeselect1( NULL ),
+	m_pDeselect2( NULL ),
+	m_pbSortAscending( NULL )
 {
 	// Try to get the number of lines to scroll when the mouse wheel is rotated
 	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
