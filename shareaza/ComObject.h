@@ -1,7 +1,7 @@
 //
 // ComObject.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,30 +24,22 @@
 
 #pragma once
 
-
 class CComObject : public CCmdTarget
 {
-// Construction
 public:
 	CComObject();
 	virtual ~CComObject();
 
 	DECLARE_DYNCREATE(CComObject)
 
-// Operations
-public:
 	BOOL		EnableDispatch(REFIID pIID);
 	LPUNKNOWN	GetInterface(REFIID pIID, BOOL bAddRef = FALSE);
 	LPDISPATCH	GetDispatch(BOOL bAddRef = FALSE);
 
-// Attributes
-public:
-	const CLSID*	m_pCLSID;
 protected:
+	const CLSID*	m_pCLSID;
 	CMap< LPUNKNOWN, LPUNKNOWN, const IID*, const IID* > m_pDispatchMap;
 
-// Implementation
-protected:
 	STDMETHOD_(ULONG, ComAddRef)(LPUNKNOWN);
 	STDMETHOD_(ULONG, ComRelease)(LPUNKNOWN);
 	STDMETHOD(ComQueryInterface)(LPUNKNOWN, REFIID, LPVOID*);
@@ -57,15 +49,14 @@ protected:
 	STDMETHOD(ComInvoke)(LPUNKNOWN, DISPID, REFIID, LCID, WORD, DISPPARAMS FAR*, VARIANT FAR*, EXCEPINFO FAR*, UINT FAR*);
 
 	DECLARE_OLETYPELIB(CComObject)
-
 };
 
 class GUIDX
 {
 public:
-	static CString Encode(const void * pInGUID);
+	static const CString Encode(REFCLSID pGUID);
 	static bool Decode(LPCTSTR pszIn, LPVOID pOutGUID);
-	inline static bool Unhex(LPCTSTR psz, LPBYTE pOut);
+	static bool Unhex(LPCTSTR psz, LPBYTE pOut);
 };
 
 //{{AFX_INSERT_LOCATION}}

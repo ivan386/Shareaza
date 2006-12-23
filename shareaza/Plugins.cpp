@@ -144,7 +144,7 @@ BOOL CPlugins::LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt)
 {
 	HKEY hPlugins = NULL;
 
-	CString strCLSID = GUIDX::Encode( &pCLSID );
+	CString strCLSID = GUIDX::Encode( pCLSID );
 
 	if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_CURRENT_USER,
 		_T("Software\\Shareaza\\Shareaza\\Plugins"), 0, KEY_ALL_ACCESS, &hPlugins ) )
@@ -449,7 +449,7 @@ BOOL CPlugin::StartIfEnabled()
 
 CString CPlugin::GetStringCLSID() const
 {
-	return GUIDX::Encode( &m_pCLSID );
+	return GUIDX::Encode( m_pCLSID );
 }
 
 //////////////////////////////////////////////////////////////////////

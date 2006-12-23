@@ -1,7 +1,7 @@
 //
 // ComObject.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,10 +37,10 @@ IMPLEMENT_OLETYPELIB(CComObject, LIBID_Shareaza, 1, 0);
 /////////////////////////////////////////////////////////////////////////////
 // CComObject construction
 
-CComObject::CComObject()
+CComObject::CComObject() :
+	m_pCLSID( NULL )
 {
 	EnableTypeLib();
-	m_pCLSID = NULL;
 }
 
 CComObject::~CComObject()
@@ -186,14 +186,13 @@ STDMETHODIMP CComObject::ComInvoke(	LPUNKNOWN pUnk, DISPID dispidMember, REFIID 
 /////////////////////////////////////////////////////////////////////////////
 // GUID tools
 
-CString GUIDX::Encode(const void * pInGUID)
+const CString GUIDX::Encode(REFCLSID pGUID)
 {
-	const GUID* pGUID = reinterpret_cast<const GUID*>(pInGUID);
 	CString str;
 	str.Format( _T("{%.8X-%.4X-%.4X-%.2X%.2X-%.2X%.2X%.2X%.2X%.2X%.2X}"),
-		pGUID->Data1, pGUID->Data2, pGUID->Data3,
-		pGUID->Data4[0], pGUID->Data4[1], pGUID->Data4[2], pGUID->Data4[3],
-		pGUID->Data4[4], pGUID->Data4[5], pGUID->Data4[6], pGUID->Data4[7] );
+		pGUID.Data1, pGUID.Data2, pGUID.Data3,
+		pGUID.Data4[0], pGUID.Data4[1], pGUID.Data4[2], pGUID.Data4[3],
+		pGUID.Data4[4], pGUID.Data4[5], pGUID.Data4[6], pGUID.Data4[7] );
 	return str;
 }
 
