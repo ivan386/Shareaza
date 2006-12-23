@@ -661,8 +661,8 @@ BOOL CDownload::Save(BOOL bFlush)
 	
 	if ( m_bSeeding )
 	{
-		if ( m_sSafeName.IsEmpty() )
-			GenerateDiskName( true );
+		m_sSafeName.Empty();
+		GenerateDiskName( true );
 		// Swap disk name with the safe name, since the complete file may be located elsewhere
 		// while .sd file remains in the incomplete folder for the single-file torrents.
 		m_sServingFileName = m_sDiskName;
