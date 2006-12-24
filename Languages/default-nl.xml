@@ -17,7 +17,7 @@
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.1.0"
+		version="2.2.4.0"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te selecteren."
@@ -3235,7 +3235,7 @@
 		<control caption="_Verwijder"/>
 		<control caption="_Verzamelingen hier opslaan:"/>
 		<control/><control/>
-		<control caption="Create ghost files when deleting"/>
+		<control caption="Maak een ghost bestand aan tijdens verwijderen"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Mediaspeler">
