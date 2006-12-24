@@ -3234,7 +3234,7 @@
 		<control caption="Normálně na lištu|Shodit do ikony v liště"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Knihovna">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Knihovna">
 		<control caption="_Nastavení:"/>
 		<control caption="Pamatovat si vzhled složky"/>
 		<control caption="Sledovat složky knihovny"/>
@@ -3258,6 +3258,7 @@
 		<control caption="Odst_ranit"/>
 		<control caption="Sbírku _uložit zde:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">

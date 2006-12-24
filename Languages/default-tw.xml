@@ -3179,7 +3179,7 @@
 		<control caption="標準|最小化至系統列"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="收藏">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="收藏">
 		<control caption="選項:"/>
 		<control caption="記住資料夾檢視方式"/>
 		<control caption="監視收藏的資料夾"/>
@@ -3203,6 +3203,7 @@
 		<control caption="移除"/>
 		<control caption="將組檔存放在這個位置:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="多媒體播放程式">

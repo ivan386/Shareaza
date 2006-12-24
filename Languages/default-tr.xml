@@ -3186,7 +3186,7 @@
 		<control caption="Normal|Boyut Küçült"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Kütüphane">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Kütüphane">
 		<control caption="Seçenekler:"/>
 		<control caption="Klasör görünümlerini hatırla"/>
 		<control caption="Kütüphane klasörlerini izle"/>
@@ -3210,6 +3210,7 @@
 		<control caption="Kaldır"/>
 		<control caption="Tüm Kolleksiyonlar Burada:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Ortam Oynatıcısı">

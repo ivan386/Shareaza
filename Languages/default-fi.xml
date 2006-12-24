@@ -3246,7 +3246,7 @@
 		<control caption="Normal|Minimise to Tray"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Library">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Library">
 		<control caption="_Options:"/>
 		<control caption="Remember folder views"/>
 		<control caption="Watch library folders"/>
@@ -3270,6 +3270,7 @@
 		<control caption="_Remove"/>
 		<control caption="Store _Collections Here:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">

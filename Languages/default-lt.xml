@@ -22,7 +22,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.3.4"
+		version="2.2.4.0"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -3255,7 +3255,7 @@ right quote	&#147;
 		<control caption="Įprastas veiksmas|Patalpinti juostelėn"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Kolekcija">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Kolekcija">
 		<control caption="Pa_rinktys:"/>
 		<control caption="Prisiminti aplankų peržiūros būdą"/>
 		<control caption="Stebėti kolekcijos katalogus"/>
@@ -3279,6 +3279,7 @@ right quote	&#147;
 		<control caption="Š_alinti"/>
 		<control caption="_Laikyti rinkinius čia:"/>
 		<control/><control/>
+		<control caption="Kurti šešėlinius failus trinant"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Grotuvas">

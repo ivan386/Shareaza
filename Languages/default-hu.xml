@@ -3240,7 +3240,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Normál|Leküldi az óra mellé"/>
        </dialog>
 
-       <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Könyvtár">
+       <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Könyvtár">
                <control caption="Opciók:"/>
                <control caption="Utolsó mappa megjegyzése"/>
                <control caption="Mappák figyelése"/>
@@ -3264,6 +3264,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Eltávolít"/>
                <control caption="Gyűjtemények tárolása:"/>
                <control/><control/>
+		<control caption="Create ghost files when deleting"/>
        </dialog>
 
        <dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Medialejátszó">

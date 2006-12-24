@@ -3254,7 +3254,7 @@
 		<control caption="Normal|Minimitzar a barra de tasques"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="La meva Col·lecció">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="La meva Col·lecció">
 		<control caption="_Opcions:"/>
 		<control caption="Recordar vistes de carpetes"/>
 		<control caption="Veure carpetes de La meva Col·lecció"/>
@@ -3278,6 +3278,7 @@
 		<control caption="_Esborrar"/>
 		<control caption="Desar _Col·leccions Aquí:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Reproductor">

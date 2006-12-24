@@ -3218,7 +3218,7 @@
 		<control caption="‪רגיל|מזער"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="ספריה">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="ספריה">
 		<control caption=":אפשרויות"/>
 		<control caption="זכור את תצוגות התיקייה"/>
 		<control caption="צפה בתיקיות הספריה"/>
@@ -3242,6 +3242,7 @@
 		<control caption="הסר"/>
 		<control caption=":אגור כאן את האוספים"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="נגן המדיה">

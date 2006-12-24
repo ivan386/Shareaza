@@ -3228,7 +3228,7 @@
 		<control caption="Normal|Minimizar para a Bandeja"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Biblioteca">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Biblioteca">
                 <control caption="_Opções:"/>
 		<control caption="Lembrar exibição das pastas"/>
 		<control caption="Manter Biblioteca atualizada"/>
@@ -3252,7 +3252,8 @@
 		<control caption="_Remover"/>
 		<control caption="Guardar _Coleções aqui:"/>
         	<control/><control/>
-		</dialog>
+		<control caption="Create ghost files when deleting"/>
+	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Mídia">
 		<control caption="_Opções:"/>

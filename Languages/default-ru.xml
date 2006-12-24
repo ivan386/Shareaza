@@ -11,7 +11,7 @@
 		author="dAbserver"
 		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
-		version="2.2.3.4"
+		version="2.2.4.0"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -3235,7 +3235,7 @@
 		<control caption="Обычное действие|Отправить в трей"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Хранилище">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Хранилище">
 		<control caption="_Опции:"/>
 		<control caption="Запоминать вид папок"/>
 		<control caption="Следить за папками хранил."/>
@@ -3259,6 +3259,7 @@
 		<control caption="_Удалить"/>
 		<control caption="Держать _коллекции в папке:"/>
 		<control/><control/>
+		<control caption="Создавать теневые файлы при стирании"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Проигрыватель">

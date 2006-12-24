@@ -3247,7 +3247,7 @@
 		<control caption="Normale|Minimizza nell'area di notifica"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Libreria">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Libreria">
 		<control caption="_Opzioni:"/>
 		<control caption="Salva visualizzazione cartelle"/>
 		<control caption="Visualizza cartelle nella libreria"/>
@@ -3271,6 +3271,7 @@
 		<control caption="Ri_muovi"/>
 		<control caption="Salva _collezioni qui:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media player">

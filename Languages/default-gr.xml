@@ -3208,7 +3208,7 @@
 		<control caption="Κανονικά|Ελαχιστοποίησε στην μπάρα"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Βιβλιοθήκη">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Βιβλιοθήκη">
 		<control caption="_Επιλογές:"/>
 		<control caption="Remember folder views"/>
 		<control caption="Watch library folders"/>
@@ -3232,6 +3232,7 @@
 		<control caption="_Απομάκρυνε"/>
 		<control caption="Φύλαξε _τις συλλογές Εδώ:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">

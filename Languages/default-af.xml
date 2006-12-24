@@ -3220,7 +3220,7 @@
 		<control caption="Normaal|Minimeer na Taakbalk"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Biblioteek">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Biblioteek">
 		<control caption="_Verstellings:"/>
 		<control caption="Onthou gidsaansigte"/>
 		<control caption="Hou biblioteekgidse dop"/>
@@ -3244,6 +3244,7 @@
 		<control caption="V_erwyder"/>
 		<control caption="Stoor Ve_rsamelings Hier:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Speler">

@@ -3229,7 +3229,7 @@
 		<control caption="Navadno|Minimiziraj v opravilno vrstico"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Knjižnica">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Knjižnica">
 		<control caption="_Možnosti:"/>
 		<control caption="Zapomni si poglede map"/>
 		<control caption="Opazuj knjižnične mape"/>
@@ -3253,6 +3253,7 @@
 		<control caption="_Odstrani"/>
 		<control caption="Shrani _zbirke na tem mestu:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="Predvajalnik">

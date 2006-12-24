@@ -3219,7 +3219,7 @@
 		<control caption="Normal|Minimer til systemfeltet"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Bibliotek">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Bibliotek">
 		<control caption="_Egenskaper:"/>
 		<control caption="Husk mappevisning"/>
 		<control caption="Overvåk mapper i biblioteket"/>
@@ -3243,6 +3243,7 @@
 		<control caption="_Fjern"/>
 		<control caption="Lagre _samlinger her:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Mediaspiller">

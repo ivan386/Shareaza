@@ -3229,7 +3229,7 @@
 		<control caption="标准|最小化到系统托盘"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="收藏">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="收藏">
 		<control caption="选项(_O):"/>
 		<control caption="记住文件夹视图"/>
 		<control caption="监视收藏文件夹"/>
@@ -3253,6 +3253,7 @@
 		<control caption="移除(_R)"/>
 		<control caption="在这里储存收集(_C):"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="媒体">

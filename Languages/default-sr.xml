@@ -3211,7 +3211,7 @@
 		<control caption="Normalno|Spusti u Tray"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Kolekcija">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Kolekcija">
 		<control caption="_Opcije:"/>
 		<control caption="Zapamti fascikle"/>
 		<control caption="Prati fascikle moje kolekcije"/>
@@ -3235,6 +3235,7 @@
 		<control caption="Ukloni"/>
 		<control caption="Ovde Sačuvaj Kolek_cije:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">

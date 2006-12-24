@@ -3170,7 +3170,7 @@ Other:
 		<control caption="Normal|Minimiser dans la barre des tâches"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Bibliothèque">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Bibliothèque">
 		<control caption="_Options:"/>
 		<control caption="Mémoriser l'affich. des dossiers"/>
 		<control caption="Surveiller les dossiers"/>
@@ -3194,6 +3194,7 @@ Other:
 		<control caption="Enleve_r"/>
 		<control caption="Stocker les _collections ici:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Lecteur multimédia">

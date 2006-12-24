@@ -3241,7 +3241,7 @@
 		<control caption="通常|タスクトレイに最小化"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="ライブラリ">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="ライブラリ">
 		<control caption="オプション(_O):"/>
 		<control caption="フォルダ表示を記録する"/>
 		<control caption="ライブラリフォルダを監視する"/>
@@ -3265,6 +3265,7 @@
 		<control caption="削除(_R)"/>
 		<control caption="コレクションの格納先(_C):"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="メディアプレーヤー">

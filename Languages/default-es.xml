@@ -3241,7 +3241,7 @@
 		<control caption="Normal|Minimizar a barra de tareas"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Mi Colección">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Mi Colección">
 		<control caption="_Opciones:"/>
 		<control caption="Recordar vistas de carpetas"/>
 		<control caption="Ver carpetas de Mi Colección"/>
@@ -3265,6 +3265,7 @@
 		<control caption="_Eliminar"/>
 		<control caption="Guardar _Colecciones Aquí:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuStSt" caption="Reproductor">

@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.3.4"
+		version="2.2.4.0"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3248,7 +3248,7 @@
 		<control caption="Normal|Minimise to Tray"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Library">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Library">
 		<control caption="_Options:"/>
 		<control caption="Remember folder views"/>
 		<control caption="Watch library folders"/>
@@ -3272,6 +3272,7 @@
 		<control caption="_Remove"/>
 		<control caption="Store _Collections Here:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
