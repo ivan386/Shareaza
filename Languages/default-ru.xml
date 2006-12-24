@@ -3259,7 +3259,7 @@
 		<control caption="_Удалить"/>
 		<control caption="Держать _коллекции в папке:"/>
 		<control/><control/>
-		<control caption="Создавать теневые файлы при стирании"/>
+		<control caption="Теневые файлы при стирании"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Проигрыватель">
