@@ -342,8 +342,9 @@ Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins\Languages"; Components
 ;Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}}\Shareaza*.exe"; Tasks: deleteoldsetup and multiuser
 ;Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}\Shareaza*.exe"; Tasks: deleteoldsetup and not multiuser
 
-; Delete DefaultServices.dat because of G1 problems (remove in some future)
-Type: files; Name: "{app}\Data\DefaultServices.dat"
+; Delete Discovery.dat because of G1 problems (remove in some future)
+Type: files; Name: "{app}\Data\Discovery.dat"
+Type: files; Name: "{userappdata}\Shareaza\Data\Discovery.dat"; Tasks: multiuser
 
 [UninstallDelete]
 ; Clean up files created after installation
