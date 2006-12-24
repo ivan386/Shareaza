@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 37 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 41 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -17,7 +17,7 @@
 		description="Shareaza Default Italian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.3.0"
+		version="2.2.4.0"
 		type="Language"
 		language="it"
 		prompt="Clicca qui per selezionare l'Italiano come lingua predefinita."
@@ -369,7 +369,7 @@
 		<button id="ID_HITMONITOR_SEARCH" text="Richiedi"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Pausa"/>
-		<button id="ID_SEARCH_CLEAR" text="Rimuovi"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Rimuovi"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Inserisci le parole con cui vuoi filtrare i risultati"/>
 		<control id="107" width="160"/>
@@ -922,7 +922,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="Anteprima"/>
-		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Anteprima r_emota"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Visualizza revisioni"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="Riprendi"/>
@@ -938,7 +938,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="Anteprima"/>
-		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Anteprima r_emota"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Copia di anteprima"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Aggiungi alla playlist"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Visualizza revisioni"/>
@@ -2270,7 +2270,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Sposta il download selezionato più su nella lista delle priorità."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Sospendi i download selezionati."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Valuta il download selezionato."/>
-	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Scarica l'anteprima del download selezionato."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Riprende i download selezionati."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Configura le impostazioni di download..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Condividi con gli altri utenti questo file scaricato parzialmente."/>
@@ -2585,7 +2585,7 @@
 	<string id="8134" value="Stai per iniziare una nuova ricerca. Desideri azzerare i risultati della ricerca precedente?"/>
 	<string id="8135" value="Nessun Metadata"/>
 	<string id="8136" value="Ricerca Plain Text"/>
-	<string id="8137" value="Colonne no schema"/>
+	<string id="8137" value="Colonne senza schema"/>
 	<string id="8141" value="Mostra il Pannello Ricerche"/>
 	<string id="8142" value="Nascondi il Pannello Ricerche"/>
 	<string id="8143" value="Sto cercando..."/>
@@ -2851,7 +2851,7 @@
 	<string id="16356" value="Rifiutata la richiesta da %s di esplorare l'utente, troppe connessioni per esplorare l'utente."/>
 	<string id="16357" value="Invio del file &quot;%s&quot; all'host %s in corso..."/>
 	<string id="16358" value="La connessione in upload a %s è persa, la posizione in coda viene conservata."/>
-	<string id="16359" value="La coda in upload dell'host %s si è disconnessa, rimossa."/>
+	<string id="16359" value="La coda in upload offline dell'host %s è scaduta, rimossa."/>
 	<string id="16360" value="Upload di &quot;%s&quot; a %s (%s) rifiutato, tutte le code sono piene."/>
 	<string id="16361" value="Upload a %s (%s) rifiutato, rete disabilitata."/>
 	<string id="16362" value="Gli upload di eDonkey2000 non dovrebbero essere annullati. Sei sicuro di voler annullare questo upload?"/>
@@ -3115,14 +3115,14 @@
 	<string id="17498" value="È stato rivelato un errore nel file &quot;%s&quot;."/>
 	<string id="17500" value="Il tracker non ha risposto - Riprova annuncio (%i di %i)"/>
 	<string id="17501" value="Impossibile comunicare con il tracker"/>
-<string id="17503" value="Tracker failed - Trying next tracker (%i of %i)"/>
-<string id="17505" value="BitTorrent connection to %s was dropped."/>
-<string id="17506" value="BitTorrent handshake with %s was dropped."/>
-<string id="17507" value="BitTorrent coupling with %s was dropped."/>
-<string id="17510" value="BitTorrent coupling with %s not accepted, a connection to this client already exists."/>
-<string id="17511" value="BitTorrent coupling with %s not accepted, maximum connections reached."/>
-<string id="17512" value="Private torrent"/>
-<string id="17513" value="Encoding error"/>
+	<string id="17503" value="Tracker fallito - Provo il tracker successivo (%i di %i)"/>
+	<string id="17505" value="La connessione BitTorrent a %s è caduta."/>
+	<string id="17506" value="La negoziazione BitTorrent con %s è stata interrotta."/>
+	<string id="17507" value="L'aggancio BitTorrent a %s è caduto."/>
+	<string id="17510" value="Aggancio BitTorrent a %s non accettato, una connessione a questo client esiste già."/>
+	<string id="17511" value="Aggancio BitTorrent a %s non accettato, numero massimo di connessioni raggiunto."/>
+	<string id="17512" value="Torrent privato"/>
+	<string id="17513" value="Errore di codifica"/>
 	<string id="18496" value="Hai modificato il nome del file.  Desideri rinominare questo download?"/>
 	<string id="18497" value="Hai inserito un hash SHA1 non valido.  Controlla e riprova di nuovo."/>
 	<string id="18498" value="Hai inserito un hash tiger-tree root non valido.  Controlla e riprova di nuovo."/>
@@ -3191,6 +3191,7 @@
 	<string id="20134" value="Occupato"/>
 	<string id="20135" value="Successivo"/>
 	<string id="20136" value="C"/>
+	<string id="20137" value="fonti"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Domenica"/>
 	<string id="20201" value="Lunedì"/>
 	<string id="20202" value="Martedì"/>
@@ -3271,7 +3272,7 @@
 		<control caption="Ri_muovi"/>
 		<control caption="Salva _collezioni qui:"/>
 		<control/><control/>
-		<control caption="Create ghost files when deleting"/>
+		<control caption="Crea file fantasma durante la cancellazione"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media player">
@@ -4115,7 +4116,7 @@
 		<control caption="OK"/>
 		<control caption="Annulla"/>
 		<control caption="Hai scaricato ed eliminato questo file precedentemente.  Cosa desideri fare?"/>
-		<control caption="Avvertimento!!! Rilevati file duplicati. Un software malevolo potrebbe aver infettato la tua libreria. Assicurati di aver scaricato questo file o di averlo messo maualmente. Altrimenti, chiudi Shareaza e scansiona il tuo computer con un programma antivirus."/>
+		<control caption="Avvertimento!!! Rilevati file duplicati. Un software malevolo potrebbe aver infettato la tua libreria. Assicurati di aver scaricato o messo manualmente questo file. Altrimenti, chiudi Shareaza e scansiona il tuo computer con un antivirus."/>
 	</dialog>
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Pulsante di chiusura">
@@ -4178,7 +4179,7 @@
 		<control caption="Nome del file e _dimensione:"/>
 		<control caption="Nome del file:"/>
 		<control/><control/>	
-		<control caption="Dimensione (Byte):"/>
+		<control caption="Dimens. (Byte):"/>
 		<control/>
 		<control caption="_URN:"/>
 		<control caption="Sicuro"/>
@@ -4361,6 +4362,7 @@
 		<column from="Port" to="Porta"/>
 		<column from="Client" to="Client"/>
 		<column from="Last Seen" to="Ultima visita"/>
+		<column from="Daily Uptime" to="Uptime giornaliero"/>
 		<column from="Name" to="Nome"/>
 		<column from="Description" to="Descrizione"/>
 		<column from="CurUsers" to="Utenti connessi"/>
