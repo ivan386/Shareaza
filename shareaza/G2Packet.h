@@ -132,6 +132,13 @@ const G2_PACKET G2_PACKET_PROFILE_AVATAR	= MAKE_G2_PACKET( 'U', 'P', 'R', 'O', '
 const G2_PACKET G2_PACKET_PROFILE_CHALLENGE	= MAKE_G2_PACKET( 'U', 'P', 'R', 'O', 'C',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_PROFILE_DELIVERY	= MAKE_G2_PACKET( 'U', 'P', 'R', 'O', 'D',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_PUSH				= MAKE_G2_PACKET( 'P', 'U', 'S', 'H',  0 ,  0 ,  0 ,  0  );
+// Whoever the one defined this as G2_PACKET_PUSH_TO, has never read G2 Spec, this is not only for PUSH, is "GENERIC ROUTING TO"
+// identifier thus the name is totally wrong. if bereaving it is only for PUSH, then it is serious problem, since this is
+// useful sometimes but this is kind of dangerous extension in G2, you can even put this on HAW, KHL and send to HUB,
+// then HUB will route to the node on TCP if it is Neighbour. thus you can send FAKE IP:PORT to the specific NODE which
+// you know GUID, and make the node's CACHE filled with fake, then send PING in same way like FLOODING. as a result of it,
+// the node will not be able to comeback because of FULL of faked cache.
+// P.S. currently it is blocked to do it only on CB, standard RAZA will accept any routed packets.
 const G2_PACKET G2_PACKET_PUSH_TO			= MAKE_G2_PACKET( 'T', 'O',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_QHT				= MAKE_G2_PACKET( 'Q', 'H', 'T',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_QKY				= MAKE_G2_PACKET( 'Q', 'K', 'Y',  0 ,  0 ,  0 ,  0 ,  0  );	// ???
@@ -154,6 +161,8 @@ const G2_PACKET G2_PACKET_SEND_ADDRESS		= MAKE_G2_PACKET( 'S', 'N', 'A',  0 ,  0
 const G2_PACKET G2_PACKET_SIZE				= MAKE_G2_PACKET( 'S', 'Z',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_SIZE_RESTRICTION	= MAKE_G2_PACKET( 'S', 'Z', 'R',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_TIMESTAMP			= MAKE_G2_PACKET( 'T', 'S',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+// This is the Correct definition ( G2_PACKET_TO )
+const G2_PACKET G2_PACKET_TO				= MAKE_G2_PACKET( 'T', 'O',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_UDP				= MAKE_G2_PACKET( 'U', 'D', 'P',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_URL				= MAKE_G2_PACKET( 'U', 'R', 'L',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_URN				= MAKE_G2_PACKET( 'U', 'R', 'N',  0 ,  0 ,  0 ,  0 ,  0  );
