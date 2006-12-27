@@ -109,7 +109,10 @@ BOOL CRouteCache::Add(const Hashes::Guid& oGUID, const SOCKADDR_IN* pEndpoint)
 	return TRUE;
 }
 
-CRouteCacheItem* CRouteCache::Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD tAdded)
+CRouteCacheItem* CRouteCache::Add(const Hashes::Guid& oGUID,		// GUID of node
+								  const CNeighbour* pNeighbour,		// pointer to CNeighbour for Destination of GUID
+								  const SOCKADDR_IN* pEndpoint,		// pointer to SOCKADDR_IN structure containing Destination
+								  DWORD tAdded)						// Time the node added ( TickCount )
 {
 	SOCKADDR_IN cEndpoint;
 	if ( pEndpoint != NULL ) cEndpoint = *pEndpoint;
@@ -142,8 +145,18 @@ CRouteCacheItem* CRouteCache::Lookup(const Hashes::Guid& oGUID, CNeighbour** ppN
 			return NULL;
 		}
 
-		pItem = Add( pItem->m_oGUID, pItem->m_pNeighbour,
-			pItem->m_pNeighbour ? NULL : &pItem->m_pEndpoint, pItem->m_tAdded );
+		ASSERT( oGUID.isValid() );
+		ASSERT( pItem->m_oGUID.isValid() );
+		ASSERT( validAndEqual( oGUID, pItem->m_oGUID ) );
+
+		// This needs to be done, because CRouteCache::Add() can cause m_pHistory cache table deleted.
+		// thus this operation is needed.
+		Hashes::Guid oTempGUID( pItem->m_oGUID);
+		CNeighbour* pTempNeighbour = const_cast<CNeighbour*>(pItem->m_pNeighbour);
+		SOCKADDR_IN pTempEndPoint = pItem->m_pEndpoint;
+		DWORD tTempAddTime = pItem->m_tAdded;
+
+		pItem = Add( oTempGUID, pTempNeighbour, &pTempEndPoint, tTempAddTime );
 	}
 
 	if ( ppNeighbour ) *ppNeighbour = (CNeighbour*)pItem->m_pNeighbour;
