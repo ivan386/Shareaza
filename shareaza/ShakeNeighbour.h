@@ -45,7 +45,7 @@ public:
 protected:
 
 	// Shareaza Settings allow us to send and receive compressed data
-	BOOL m_bCanDeflate;
+	BOOL		m_bCanDeflate;
 
 	// Set to true when we have sent the following handshake header
 	BOOL        m_bSentAddress;     // We told the remote computer our Internet IP address that we are listening on
@@ -116,7 +116,12 @@ protected:
 
 	// Possibly not in use (do)
 	TRISTATE m_bUltraPeerLoaded;
+	BOOL	m_bDelayClose;			// This is DelayClose
 	UINT	m_nDelayCloseReason;	// Reason for DelayClose;
+	CString	m_sTryUltrapeers;		// Storage of X-Try-Ultrapeers Header
+	CString	m_sTryHubs;				// Storage of X-Try-Hubs Header
+	CString	m_sTryDNAHubs;			// Storage of X-Try-DNA-Hubs Header
+
 public:
 
 	// Connect, disconnect, and copy
