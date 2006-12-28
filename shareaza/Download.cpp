@@ -372,7 +372,7 @@ void CDownload::OnRun()
 					RunValidation( TRUE );
 					if ( !Network.IsConnected() && Settings.BitTorrent.AutoSeed )
 					{
-						Network.Connect();
+						Network.Connect( TRUE );
 						m_tBegan = GetTickCount();
 					}
 					SetModified();
