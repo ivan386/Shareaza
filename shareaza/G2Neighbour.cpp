@@ -284,6 +284,7 @@ void CG2Neighbour::SendStartups()
 
 	Datagrams.Send( &m_pHost, CG2Packet::New( G2_PACKET_PING ) );
 
+	SendLNI();
 	Send( CG2Packet::New( G2_PACKET_PROFILE_CHALLENGE ), TRUE, TRUE );
 }
 
