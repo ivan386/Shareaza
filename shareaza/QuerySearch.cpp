@@ -155,7 +155,7 @@ CG1Packet* CQuerySearch::ToG1Packet()
 	}
 	else
 	{
-		pPacket->WriteByte( 0 );
+		pPacket->WriteByte( NULL );
 	}
 	
 	// Some Gnutella Node does not like forwarding Query containing URN
@@ -172,18 +172,18 @@ CG1Packet* CQuerySearch::ToG1Packet()
 		strExtra = m_oED2K.toUrn();
 	}
 	else
-	{ */
+	{ 
 		strExtra = _T("urn:");
-	//}
+	}*/
 	
 	if ( m_pXML )
 	{
-		if ( strExtra.GetLength() ) strExtra += '\x1C';
-		strExtra += m_pXML->ToString( TRUE );
+		//if ( strExtra.GetLength() ) strExtra += '\x1C';
+		pPacket->WriteString( m_pXML->ToString( TRUE ) );
 	}
 	
-	pPacket->WriteString( strExtra );
-	
+	pPacket->WriteByte( NULL );
+		
 	return pPacket;
 }
 
