@@ -155,7 +155,7 @@ CG1Packet* CQuerySearch::ToG1Packet()
 	}
 	else
 	{
-		pPacket->WriteByte( NULL );
+		pPacket->WriteByte( 0 );
 	}
 	
 	// Some Gnutella Node does not like forwarding Query containing URN
