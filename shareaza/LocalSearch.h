@@ -76,7 +76,7 @@ protected:
 	void		CreatePacketG1(int nCount);
 	void		CreatePacketG2();
 	void		AddMetadata(CSchema* pSchema, CXMLElement* pXML, int nIndex);
-	CString		GetXMLString();
+	CString		GetXMLString(BOOL bNewlines = TRUE);
 	void		WriteTrailer();
 	void		WriteTrailerG1();
 	void		WriteTrailerG2();
