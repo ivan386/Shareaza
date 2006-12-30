@@ -182,7 +182,7 @@ CG1Packet* CQuerySearch::ToG1Packet()
 		pPacket->WriteString( m_pXML->ToString( TRUE ) );
 	}
 	
-	pPacket->WriteByte( NULL );
+	pPacket->WriteByte( 0 );
 		
 	return pPacket;
 }
