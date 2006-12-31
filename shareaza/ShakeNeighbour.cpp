@@ -61,11 +61,12 @@ m_bDeflateAccept(FALSE),		// The remote computer hasn't said "Accept-Encoding: d
 m_bUltraPeerSet(TS_UNKNOWN),	// The remote computer hasn't told us if it's ultra or not yet
 m_bUltraPeerNeeded(TS_UNKNOWN),	// The remote computer hasn't told us if it needs more ultra connections yet
 m_bUltraPeerLoaded(TS_UNKNOWN),	// May not be in use (do)
+m_nDelayCloseReason(0),
 	//ToDo: Check this - G1 setting?
 	// Set m_bCanDeflate to true if the checkboxes in Shareaza Settings allow us to send and receive compressed data
 m_bCanDeflate( Neighbours.IsG2Leaf() ? ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) 
 : ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Leaf ) ),
-m_nDelayCloseReason(0)
+m_bDelayClose(FALSE)
 {
 }
 
