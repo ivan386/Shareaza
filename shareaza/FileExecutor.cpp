@@ -103,8 +103,10 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 		}
 	}
 
+	bool bPartial = false;
 	if ( _tcsistr( _T("|partial|"), strType ) != NULL && pszExt )
 	{
+		bPartial = true;
 		strType.SetString( _T("|") );
 		strType.Append( pszExt );
 		strType.Append( _T("|") );
@@ -122,7 +124,11 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 		strPureExtension.Insert( 0, '.' );
 		bPreviewEnabled = Plugins.LookupCLSID( _T("ImageService"), strPureExtension, clsid );
 		GUIDX::Decode( _T("{2EE9D739-7726-41cf-8F18-4B1B8763BC63}"), &clsid );
-		bPreviewEnabled &= bHasThumbnail && Plugins.LookupEnable( clsid, FALSE, strPureExtension );
+
+		// We won't care if extensions are disabled for the partial files
+		// A workaround to get Image Viewer executed for image partials
+		if ( !bPartial )
+			bPreviewEnabled &= bHasThumbnail && Plugins.LookupEnable( clsid, FALSE, strPureExtension );
 	}
 
 	if ( bForce == NULL && strType.GetLength() &&
@@ -173,7 +179,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 			return TRUE;
 		}
 		
-		if ( bPreviewEnabled && Plugins.OnExecuteFile( pszFile, bHasThumbnail ) )
+		if ( bPreviewEnabled && Plugins.OnExecuteFile( pszFile, bHasThumbnail || bPartial ) )
 			return TRUE;
 	}
 	
