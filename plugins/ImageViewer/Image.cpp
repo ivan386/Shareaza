@@ -454,17 +454,19 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 	
 	DWORD dwCLSID = 128;
 	TCHAR szCLSID[128];
+
 	CRegKey pKey;
-	
+		
 	if ( pKey.Open( HKEY_LOCAL_MACHINE,
-		 _T("SOFTWARE\\Shareaza\\Shareaza\\Plugins\\ImageService") ) != ERROR_SUCCESS )
+		_T("SOFTWARE\\Shareaza\\Shareaza\\Plugins\\ImageService") ) != ERROR_SUCCESS )
 		return NULL;
 	
-	if ( pKey.QueryValue( pszType, NULL, szCLSID, &dwCLSID ) != ERROR_SUCCESS )
+	bool bPartial = lstrcmpi( pszType, _T(".partial") ) == 0;
+	if ( pKey.QueryValue( bPartial ? _T(".jpg") : pszType, NULL, szCLSID, &dwCLSID ) != ERROR_SUCCESS )
 		return NULL;
 	
 	pKey.Close();
-	
+
 	CLSID pCLSID;
 
 	szCLSID[ 37 ] = 0;

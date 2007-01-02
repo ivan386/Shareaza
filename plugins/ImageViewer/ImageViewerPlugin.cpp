@@ -153,19 +153,22 @@ HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnExecute(BSTR sFilePath)
 	// is to check if there is an ImageService plugin available for this file type.  This is
 	// done by checking a registry key:
 	
-	DWORD dwCount = 128;
-	TCHAR szValue[128];
-	CRegKey pReg;
-	
-	if ( pReg.Open( HKEY_LOCAL_MACHINE,
-		 _T("SOFTWARE\\Shareaza\\Shareaza\\Plugins\\ImageService") ) != ERROR_SUCCESS )
-		return S_FALSE;
-	
-	if ( pReg.QueryValue( pszFileType, NULL, szValue, &dwCount ) != ERROR_SUCCESS )
-		return S_FALSE;
-	
-	pReg.Close();
-	
+	if ( lstrcmpi( pszFileType, _T(".partial") ) != 0 )
+	{
+		DWORD dwCount = 128;
+		TCHAR szValue[128];
+		CRegKey pReg;
+
+		if ( pReg.Open( HKEY_LOCAL_MACHINE,
+			_T("SOFTWARE\\Shareaza\\Shareaza\\Plugins\\ImageService") ) != ERROR_SUCCESS )
+			return S_FALSE;
+
+		if ( pReg.QueryValue( pszFileType, NULL, szValue, &dwCount ) != ERROR_SUCCESS )
+			return S_FALSE;
+
+		pReg.Close();
+	}
+
 	// If we made it to this point, there was indeed an ImageService plugin for the file type,
 	// so we should have a go at opening it.  Delegate to our OpenNewWindow() function to
 	// select or create the image window.
