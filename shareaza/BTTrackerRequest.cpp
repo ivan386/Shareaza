@@ -51,7 +51,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	ASSERT( pDownload != NULL );
 	ASSERT( pDownload->m_pTorrent.IsAvailable() ); 
 	
-	m_bAutoDelete	= TRUE;
+	m_bAutoDelete	= FALSE;
 	m_pDownload		= pDownload;
 	m_bProcess		= bProcess;
 	
@@ -116,8 +116,8 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 
 	//theApp.Message( MSG_DEBUG, _T("Sending announce") );
 
-	BTClients.Add( this );
-	CreateThread();
+	if ( BTClients.Add( this ) )
+		CreateThread();
 }
 
 CBTTrackerRequest::~CBTTrackerRequest()

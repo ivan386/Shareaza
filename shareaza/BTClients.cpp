@@ -123,19 +123,31 @@ void CBTClients::Remove(CBTClient* pClient)
 //////////////////////////////////////////////////////////////////////
 // CBTClients request thread management
 
-void CBTClients::Add(CBTTrackerRequest* pRequest)
+BOOL CBTClients::Add(CBTTrackerRequest* pRequest)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	ASSERT( ! m_bShutdown );
+
 	if( ! m_bShutdown )
 		m_pRequests.AddTail( pRequest );
+	else
+	{
+		delete pRequest;
+		return FALSE;
+	}
+	return TRUE;
 }
 
 void CBTClients::Remove(CBTTrackerRequest* pRequest)
 {
+	ASSERT( pRequest );
 	CSingleLock pLock( &m_pSection, TRUE );
-	if ( POSITION pos = m_pRequests.Find( pRequest ) ) m_pRequests.RemoveAt( pos );
-	if ( ! m_bShutdown || m_pRequests.GetCount() > 0 ) return;
+
+	if ( POSITION pos = m_pRequests.Find( pRequest ) )
+		m_pRequests.RemoveAt( pos );
+
+	if ( ! m_bShutdown || m_pRequests.GetCount() > 0 )
+		return;
+
 	pLock.Unlock();
 	m_pShutdown.SetEvent();
 }
@@ -158,5 +170,6 @@ void CBTClients::ShutdownRequests()
 		HANDLE hThread = pRequest->m_hThread;
 		pLock.Unlock();
 		CHttpRequest::CloseThread( &hThread, _T("CBTTrackerRequest") );
+		delete pRequest;
 	}
 }

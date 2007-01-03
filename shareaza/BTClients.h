@@ -53,7 +53,7 @@ public:
 protected:
 	void		Add(CBTClient* pClient);
 	void		Remove(CBTClient* pClient);
-	void		Add(CBTTrackerRequest* pRequest);
+	BOOL		Add(CBTTrackerRequest* pRequest);
 	void		Remove(CBTTrackerRequest* pRequest);
 
 // List Access
