@@ -521,11 +521,15 @@ void CBTClient::DetermineUserAgent()
 		};
 		static const azureusStyleEntry azureusStyleClients[] =
 		{
+			{ 'A', 'G', L"Ares" },
+			{ 'A', '~', L"Ares" },
 			{ 'A', 'R', L"Arctic" },
 			{ 'A', 'X', L"BitPump" },
 			{ 'A', 'Z', L"Azureus" },
 			{ 'B', 'B', L"BitBuddy" },
 			{ 'B', 'C', L"BitComet" },
+			{ 'B', 'F', L"Bitflu" },
+			{ 'B', 'G', L"BTG" },
 			{ 'b', 'k', L"BitKitten" },
 			{ 'B', 'O', L"BO" },
 			{ 'B', 'R', L"BitRocket" },
@@ -533,12 +537,19 @@ void CBTClient::DetermineUserAgent()
 			{ 'B', 'X', L"Bittorrent X" },
 			{ 'C', 'D', L"Enhanced CTorrent" },
 			{ 'C', 'T', L"CTorrent" },
+			{ 'D', 'E', L"DelugeTorrent" },
+			{ 'E', 'B', L"EBit" },
+			{ 'E', 'S', L"Electric Sheep" },
+			{ 'F', 'C', L"FileCroc" },
+			{ 'H', 'L', L"Halite" },
 			{ 'K', 'T', L"KTorrent" },
 			{ 'L', 'P', L"Lphant" },
 			{ 'L', 'T', L"libtorrent" },
 			{ 'l', 't', L"rTorrent" },
 			{ 'M', 'T', L"MoonlightTorrent" },
 			{ 'M', 'P', L"MooPolice" },
+			{ 'P', 'C', L"CacheLogic" },
+			{ 'q', 'B', L"qBittorrent" },
 			{ 'Q', 'T', L"QT4" },
 			{ 'R', 'T', L"Retriever" },
 			{ 'S', 'B', L"SwiftBit" },
@@ -546,12 +557,14 @@ void CBTClient::DetermineUserAgent()
 			{ 'S', 'S', L"Swarmscope" },
 		// Shareaza versions don't always 'fit' into the BT numbering, so skip that for now
 		//	{ 'S', 'Z', L"Shareaza" },
-			{ 'S', '~', L"Sbeta" },
+			{ 'S', '~', L"Sbeta" },		// Shareaza alpha/beta versions
 			{ 'T', 'N', L"TorrentDotNET" },
 			{ 'T', 'R', L"Transmission" },
 			{ 'T', 'S', L"Torrentstorm" },
+			{ 'U', 'T', L"uLeecher!" },
 			{ 'U', 'T', L"\x00B5Torrent" },
 			{ 'X', 'T', L"XanTorrent" },
+			{ 'X', 'X', L"xTorrent" },
 			{ 'Z', 'T', L"ZipTorrent" }
 		};
 		static const size_t azureusClients = sizeof azureusStyleClients / sizeof azureusStyleEntry;
@@ -608,7 +621,7 @@ void CBTClient::DetermineUserAgent()
 	}
 	else if  ( m_oGUID[0] == 'P' && m_oGUID[1] == 'l' && m_oGUID[2] == 'u' && m_oGUID[3] == 's' )
 	{	// BitTorrent Plus
-		m_sUserAgent.Format( _T("BitTorrent Plus %i.%i%i"), m_oGUID[4] - '0', m_oGUID[5] - '0', m_oGUID[6] - '0' );
+		m_sUserAgent.Format( _T("BitTorrent Plus %i.%i%i%c"), m_oGUID[4] - '0', m_oGUID[5] - '0', m_oGUID[6] - '0', m_oGUID[7] );
 	}
 	else if  ( m_oGUID[0] == 'e' && m_oGUID[1] == 'x' && m_oGUID[2] == 'b' && m_oGUID[3] == 'c' )
 	{	
@@ -641,11 +654,23 @@ void CBTClient::DetermineUserAgent()
 		m_sUserAgent.Format( _T("eXeem") );
 		nNickStart = 2;
 	}
+	else if ( m_oGUID[0] == '-' && m_oGUID[1] == 'F' && m_oGUID[2] == 'G' )
+	{
+		m_sUserAgent.Format( _T("FlashGet %i.%i%i"), ( ( m_oGUID[3] - '0' ) * 10 + ( m_oGUID[4] - '0' ) ), m_oGUID[5] - '0', m_oGUID[6] - '0' );
+	}
 	else if  ( m_oGUID[0] == '-' && m_oGUID[1] == 'G' && m_oGUID[2] == '3' )
 	{	// G3 Torrent
 		m_sUserAgent.Format( _T("G3 Torrent") );
 		nNickStart = 3;
 		nNickEnd = 11;
+	}
+	else if ( m_oGUID[0] == '1' && m_oGUID[1] == '0' && m_oGUID[2] == '-' && m_oGUID[3] == '-' && m_oGUID[4] == '-' && m_oGUID[5] == '-' && m_oGUID[6] == '-' && m_oGUID[7] == '-' && m_oGUID[8] == '-' )
+	{
+		m_sUserAgent = _T("JVTorrent");
+	}
+	else if ( m_oGUID[0] == 'L' && m_oGUID[1] == 'I' && m_oGUID[2] == 'M' && m_oGUID[3] == 'E' )
+	{
+		m_sUserAgent = _T("Limewire");
 	}
 	else if  ( m_oGUID[2] == 'R' && m_oGUID[3] == 'S' )
 	{	// Rufus
@@ -672,6 +697,10 @@ void CBTClient::DetermineUserAgent()
 	else if  ( ( m_oGUID[0] == 'a' && m_oGUID[1] == '0' && m_oGUID[2] == '0' && m_oGUID[3] == '-' && m_oGUID[4] == '-' && m_oGUID[5] == '-' && m_oGUID[6] == '0' ) || ( m_oGUID[0] == 'a' && m_oGUID[1] == '0' && m_oGUID[2] == '2' && m_oGUID[3] == '-' && m_oGUID[4] == '-' && m_oGUID[5] == '-' && m_oGUID[6] == '0' ) )
 	{	// Swarmy
 		m_sUserAgent.Format( _T("Swarmy") );
+	}
+	else if ( m_oGUID[0] == '3' && m_oGUID[1] == '4' && m_oGUID[2] == '6' && m_oGUID[3] == '-' )
+	{
+		m_sUserAgent = _T("TorrentTopia");
 	}
 	else if  ( m_oGUID[0] == 'X' && m_oGUID[1] == 'B' && m_oGUID[2] == 'T' )
 	{	// XBT
