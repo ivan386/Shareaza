@@ -38,6 +38,7 @@ public:
 
 	BOOL m_bSilentTray;
 	BOOL m_bNoSplash;
+	BOOL m_bNoAlphaWarning;
 };
 
 class CShareazaApp : public CWinApp

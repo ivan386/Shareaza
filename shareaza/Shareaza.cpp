@@ -69,7 +69,7 @@ static char THIS_FILE[] = __FILE__;
 // CShareazaCommandLineInfo
 
 CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
-	m_bSilentTray(FALSE), m_bNoSplash(FALSE)
+	m_bSilentTray(FALSE), m_bNoSplash(FALSE), m_bNoAlphaWarning(FALSE)
 {
 }
 
@@ -82,9 +82,14 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 			m_bSilentTray = TRUE;
 			return;
 		}
-		if ( ! lstrcmpi( pszParam, _T("nosplash") ) )
+		else if ( ! lstrcmpi( pszParam, _T("nosplash") ) )
 		{
 			m_bNoSplash = TRUE;
+			return;
+		}
+		else if ( ! lstrcmpi( pszParam, _T("nowarn") ) )
+		{
+			m_bNoAlphaWarning = TRUE;
 			return;
 		}
 		else if ( ! lstrcmpi( pszParam, _T("basic") ) )
@@ -230,6 +235,7 @@ BOOL CShareazaApp::InitInstance()
 	}
 
 	// Alpha warning. Remember to remove this section for final releases and public betas.
+	if ( ! m_ocmdInfo.m_bNoAlphaWarning )
 	if ( AfxMessageBox( 
 		L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
 		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
