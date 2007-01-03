@@ -357,7 +357,7 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIP[2];
 	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIP[3];
 	
-	if ( IsFirewalledAddress( &pAddress ) ) return;
+	if ( IsFirewalledAddress( &pAddress, FALSE, TRUE ) ) return;
 	
 	m_pHost.sin_addr = pAddress;
 
