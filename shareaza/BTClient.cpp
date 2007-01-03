@@ -561,7 +561,7 @@ void CBTClient::DetermineUserAgent()
 			{ 'T', 'N', L"TorrentDotNET" },
 			{ 'T', 'R', L"Transmission" },
 			{ 'T', 'S', L"Torrentstorm" },
-			{ 'U', 'T', L"uLeecher!" },
+			{ 'U', 'L', L"uLeecher!" },
 			{ 'U', 'T', L"\x00B5Torrent" },
 			{ 'X', 'T', L"XanTorrent" },
 			{ 'X', 'X', L"xTorrent" },
