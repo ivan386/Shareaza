@@ -1,10 +1,6 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2006/04/09 09:38:02 $"
-//	Revision:		"$Revision: 1.44 $"
-//  Last change by:	"$Author: rolandas $"
-//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -154,7 +150,7 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 		break;
 
 	case CDiscoveryService::dsGnutella:
-		if ( _tcschr( pszAddress, '.' ) != NULL )
+		if ( CheckWebCacheValid( pszAddress ) )
 			pService = new CDiscoveryService( CDiscoveryService::dsGnutella, strAddress );
 
 		if ( _tcsnicmp( strAddress, _T("gnutella1:host:"),  15 ) == 0 )
@@ -181,6 +177,20 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 
 	case CDiscoveryService::dsBlocked:
 		pService = new CDiscoveryService( CDiscoveryService::dsBlocked, strAddress );
+		for ( POSITION pos = GetIterator() ; pos ; )
+		{
+			CDiscoveryService* pItem = GetNext( pos );
+
+			if ( _tcsistr( pszAddress, pService->m_sAddress ) != NULL )
+			{
+				if ( pItem->m_nType != CDiscoveryService::dsBlocked )
+				{
+					pItem->m_nType = CDiscoveryService::dsBlocked;
+					return NULL;
+				}
+			}
+		}
+
 		break;
 	}
 		
@@ -279,8 +289,16 @@ BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 		pszAddress += 7;
 	else if ( _tcsnicmp( pszAddress, _T("https://"), 8 ) == 0 ) 
 		pszAddress += 8;
+	else if ( _tcsnicmp( pszAddress, _T("gnutella1:host:"), 15 ) == 0 )
+		return TRUE;
+	else if ( _tcsnicmp( pszAddress, _T("gnutella2:host:"), 15 ) == 0 )
+		return TRUE;
+	else if ( _tcsnicmp( pszAddress, _T("uhc:"), 4 ) == 0 )
+		return TRUE;
+	else if ( _tcsnicmp( pszAddress, _T("ukhl:"), 5 ) == 0 )
+		return TRUE;
 	else
-		 return FALSE;
+		return FALSE;
 
 	// Scan through, make sure there are some '.' in there.
 	pszAddress = _tcschr( pszAddress, '.' );
@@ -505,6 +523,11 @@ BOOL CDiscoveryServices::EnoughServices() const
 		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
 		{
 			nServerMetCount ++;
+		}
+		else if ( pService->m_nType == CDiscoveryService::dsGnutella )
+		{
+			if ( pService->m_nSubType == 3 ) nG1Count++;
+			if ( pService->m_nSubType == 4 ) nG2Count++;
 		}
 	}
 
@@ -1672,6 +1695,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 
 	CString strHost	= m_sAddress;
 	int nSkip = 0;
+	int nPort = 0;
 	m_nHosts = 0;
 
 	// Check it has a valid protocol
@@ -1681,6 +1705,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		nSkip = 15;
 		m_bGnutella1 = TRUE;
 		m_bGnutella2 = FALSE;
+		nPort = GNUTELLA_DEFAULT_PORT;
 	}
 	else if ( _tcsnicmp( strHost, _T("gnutella2:host:"), 15 ) == 0 )
 	{
@@ -1688,6 +1713,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		nSkip = 15;
 		m_bGnutella1 = FALSE;
 		m_bGnutella2 = TRUE;
+		nPort = GNUTELLA_DEFAULT_PORT;
 	}
 	else if ( _tcsnicmp( strHost, _T("uhc:"), 4 ) == 0 )
 	{
@@ -1695,6 +1721,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		nSkip = 4;
 		m_bGnutella1 = TRUE;
 		m_bGnutella2 = FALSE;
+		nPort = 9999;
 	}
 	else if ( _tcsnicmp( strHost, _T("ukhl:"), 5 ) == 0 )
 	{
@@ -1702,9 +1729,8 @@ BOOL CDiscoveryService::ResolveGnutella()
 		nSkip = 5;
 		m_bGnutella1 = FALSE;
 		m_bGnutella2 = TRUE;
+		nPort = GNUTELLA_DEFAULT_PORT;
 	}
-
-	int nPort = GNUTELLA_DEFAULT_PORT;
 
 	if (m_nSubType == 0)
 	{

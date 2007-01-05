@@ -235,7 +235,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength)
 	}
 	else
 	{
-		// Windows 9x will return the data as an ASCII string. (even though UNICODE was specified)
+		// Windows 9x will return the data as an ANSI string. (even though UNICODE was specified)
 		int nWide = MultiByteToWideChar( CP_ACP, 0, (LPCSTR)pData, (int)nLength, NULL, 0 );
 		MultiByteToWideChar( CP_ACP, 0, (LPCSTR)pData, (int)nLength, str.GetBuffer( nWide ), nWide );
 		str.ReleaseBuffer( nWide );

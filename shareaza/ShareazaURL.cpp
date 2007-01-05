@@ -132,6 +132,13 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL)
 		m_nAction	= uriSource;
 		return TRUE;
 	}
+	else if (	_tcsnicmp( pszURL, _T("uhc:"), 4 ) == 0 ||
+				_tcsnicmp( pszURL, _T("ukhl:"), 5 ) == 0 ||
+				_tcsnicmp( pszURL, _T("gnutella1:"), 10 ) == 0 ||
+				_tcsnicmp( pszURL, _T("gnutella2:"), 10 ) == 0 )
+	{
+		return ParseShareaza( pszURL );
+	}
 	
 	return FALSE;
 }
@@ -282,6 +289,13 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 	else if ( _tcsnicmp( pszURL, _T("meturl:"), 7 ) == 0 )
 	{
 		return ParseDiscovery( pszURL + 7, CDiscoveryService::dsServerMet );
+	}
+	else if (	_tcsnicmp( pszURL, _T("uhc:"), 4 ) == 0 ||
+				_tcsnicmp( pszURL, _T("ukhl:"), 5 ) == 0 ||
+				_tcsnicmp( pszURL, _T("gnutella1:host:"), 15 ) == 0 ||
+				_tcsnicmp( pszURL, _T("gnutella2:host:"), 15 ) == 0 )
+	{
+		return ParseDiscovery( pszURL, CDiscoveryService::dsGnutella );
 	}
 	else
 	{
@@ -607,7 +621,11 @@ BOOL CShareazaURL::ParsePioletFile(LPCTSTR pszURL)
 BOOL CShareazaURL::ParseDiscovery(LPCTSTR pszURL, int nType)
 {
 	if ( _tcsncmp( pszURL, _T("http://"), 7 ) != 0 &&
-		 _tcsncmp( pszURL, _T("https://"), 8 ) != 0 ) return FALSE;
+		 _tcsncmp( pszURL, _T("https://"), 8 ) != 0 &&
+		 _tcsncmp( pszURL, _T("uhc:"), 4 ) != 0 &&
+		 _tcsncmp( pszURL, _T("ukhl:"), 5 ) != 0 &&
+		 _tcsncmp( pszURL, _T("gnutella1:host:"), 15 ) != 0 &&
+		 _tcsncmp( pszURL, _T("gnutella2:host:"), 15 ) != 0 ) return FALSE;
 	
 	m_nAction	= uriDiscovery;
 	m_sURL		= pszURL;
@@ -686,11 +704,19 @@ void CShareazaURL::Register(BOOL bOnStartup)
 	{
 		RegisterShellType( _T("gnutella"), _T("URL:Gnutella Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 		RegisterShellType( _T("gnet"), _T("URL:Gnutella Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("uhc"), _T("URL:Gnutella1 UDP Host Cache"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("ukhl"), _T("URL:Gnutella2 UDP known Hub Cache"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("gnutella1"), _T("URL:Gnutella1 Bootstrap"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("gnutella2"), _T("URL:Gnutella2 Bootstrap"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 	}
 	else
 	{
 		UnregisterShellType( _T("gnutella") );
 		UnregisterShellType( _T("gnet") );
+		UnregisterShellType( _T("uhc") );
+		UnregisterShellType( _T("ukhl") );
+		UnregisterShellType( _T("gnutella1") );
+		UnregisterShellType( _T("gnutella2") );
 	}
 	
 	if ( Settings.Web.ED2K )
