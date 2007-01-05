@@ -30,6 +30,8 @@
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
 #include "DownloadTransferBT.h"
+#include "DownloadTransferED2K.h"
+#include "EDClient.h"
 #include "FragmentedFile.h"
 #include "FragmentBar.h"
 #include "Skin.h"
@@ -621,17 +623,33 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 //	CDownload* pDownload = pSource->m_pDownload;
 
 	if ( pSource->m_sNick.GetLength() > 0 )
-		m_sName = pSource->m_sNick + _T(" (") + inet_ntoa( pSource->m_pAddress ) + ')';
+	{
+		m_sName = pSource->m_sNick;
+		if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
+		{
+			m_sName.AppendFormat( _T(" (%lu@%s:%u)"), pSource->m_pAddress.S_un.S_addr, 
+				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
+		}
+		else if ( pSource->m_bPushOnly )
+		{
+			m_sName.AppendFormat( _T(" (%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pAddress ) ) );
+		}
+		else
+		{
+			m_sName.AppendFormat( _T(" (%s:%u)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pAddress ) ), pSource->m_nPort );
+		}
+	}
 	else
 	{
 		if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
 		{
-			m_sName.Format( _T("%lu@%s"), (DWORD)pSource->m_pAddress.S_un.S_addr,
-				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ) );
+			m_sName.Format( _T("%lu@%s:%u"), (DWORD)pSource->m_pAddress.S_un.S_addr,
+				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
 		}
 		else
 		{
 			m_sName = inet_ntoa( pSource->m_pAddress );
+			m_sName.AppendFormat( _T(":%u"), pSource->m_nPort );
 		}
 	}
 

@@ -1177,25 +1177,58 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			
 			if ( pSource->m_pTransfer != NULL )
 			{
-				if ( Settings.Search.ShowNames && pSource->m_sNick.GetLength() )
-					strText = pSource->m_sNick + _T(" (") + pSource->m_pTransfer->m_sAddress + _T(")");
-				else
+				if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
+				{
+					if ( Settings.Search.ShowNames && pSource->m_sNick.GetLength() )
+					{
+						strText = pSource->m_sNick;
+						strText.AppendFormat( _T(" (%lu@%s:%u)"), pSource->m_pAddress.S_un.S_addr, 
+							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
+					}
+					else
+					{
+						strText.Format( _T("%lu@%s:%u"), pSource->m_pAddress.S_un.S_addr, 
+							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
+					}
+				}
+				else if ( Settings.Search.ShowNames && pSource->m_sNick.GetLength() )
+				{
+					strText = pSource->m_sNick + _T(" (") + pSource->m_pTransfer->m_sAddress;
+					strText.AppendFormat( _T(":%u)"), ntohs( pSource->m_pTransfer->m_pHost.sin_port ) );
+				}
+				else 
+				{
 					strText = pSource->m_pTransfer->m_sAddress;
+					strText.AppendFormat( _T(":%u"), ntohs( pSource->m_pTransfer->m_pHost.sin_port ) );
+				}
 			}
 			else
 			{
 				if ( Settings.Search.ShowNames && pSource->m_sNick.GetLength() )
-					strText = pSource->m_sNick + _T(" (") + inet_ntoa( pSource->m_pAddress ) + _T(")");
+				{
+					if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
+					{
+						strText = pSource->m_sNick;
+						strText.AppendFormat( _T(" (%lu@%s:%u)"), pSource->m_pAddress.S_un.S_addr, 
+							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
+					}
+					else
+					{
+						strText = pSource->m_sNick + _T(" (") + inet_ntoa( pSource->m_pAddress );
+						strText.AppendFormat( _T(":%u)"), pSource->m_nPort );
+					}
+				}
 				else
 				{
 					if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
 					{
-						strText.Format( _T("%lu@%s"), pSource->m_pAddress.S_un.S_addr, 
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ) );
+						strText.Format( _T("%lu@%s:%u"), pSource->m_pAddress.S_un.S_addr, 
+							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
 					}
 					else
 					{
 						strText = inet_ntoa( pSource->m_pAddress );
+						strText.AppendFormat( _T(":%u"), pSource->m_nPort );
 					}
 				}
 			}
