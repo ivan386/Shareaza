@@ -121,7 +121,7 @@ library Shareaza
 	//
 
 	[ uuid(D1B5D3A4-B890-470a-A3FF-9700F3C2A063) ]
-	interface IGeneralPlugin : IUnknown
+	interface IGeneralPlugin : stdole.IUnknown
 	{
 		HRESULT SetApplication( [in] IApplication* pApplication );
 		HRESULT QueryCapabilities( [out] DWORD* pnCaps );
@@ -134,7 +134,7 @@ library Shareaza
 	//
 
 	[ uuid(CB25DAED-D745-45db-994E-32639D2888A9) ]
-	interface ICommandPlugin : IUnknown
+	interface ICommandPlugin : stdole.IUnknown
 	{
 		HRESULT RegisterCommands();
 		HRESULT InsertCommands();
@@ -147,7 +147,7 @@ library Shareaza
 	//
 
 	[ uuid(8E878640-37B5-44a3-A37C-FC3BF1CCF6B6) ]
-	interface IExecutePlugin : IUnknown
+	interface IExecutePlugin : stdole.IUnknown
 	{
 		HRESULT OnExecute( [in] BSTR sFilePath );
 		HRESULT OnEnqueue( [in] BSTR sFilePath );
@@ -160,7 +160,7 @@ library Shareaza
 	interface ISToolbar;
 
 	[ uuid(ADDB77AE-3483-4a15-B391-AE31563BD7E3) ]
-	interface IPluginWindow : IUnknown
+	interface IPluginWindow : stdole.IUnknown
 	{
 		HRESULT ListenForSingleMessage( [in] UINT nMessage );
 		HRESULT ListenForMultipleMessages( [in] SAFEARRAY* pMessages );
@@ -176,7 +176,7 @@ library Shareaza
 	};
 
 	[ uuid(C6631461-2654-4572-BB3C-54F52F0FF1B9) ]
-	interface IPluginWindowOwner : IUnknown
+	interface IPluginWindowOwner : stdole.IUnknown
 	{
 		HRESULT OnTranslate( [in] MSG* pMessage );
 		HRESULT OnMessage( [in] UINT nMessage, [in] WPARAM wParam, [in] LPARAM lParam, [out] LRESULT* plResult );
@@ -189,7 +189,7 @@ library Shareaza
 	//
 
 	[ uuid(32496CEA-3B51-4f2f-9CE7-73D6AC942C34) ]
-	interface ILibraryBuilderPlugin : IUnknown
+	interface ILibraryBuilderPlugin : stdole.IUnknown
 	{
 		HRESULT Process( [in] HANDLE hFile, [in] BSTR sFile, [in] ISXMLElement* pXML );
 	};
@@ -216,7 +216,7 @@ library Shareaza
 	} IMAGESERVICEFLAGS;
 
 	[ uuid(AB0A7BF2-94C0-4daa-8256-2BB6C3648050) ]
-	interface IImageServicePlugin : IUnknown
+	interface IImageServicePlugin : stdole.IUnknown
 	{
 		HRESULT LoadFromFile( [in] BSTR sFile, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
 		HRESULT LoadFromMemory( [in] BSTR sType, [in] SAFEARRAY* pMemory, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
@@ -229,7 +229,7 @@ library Shareaza
 	//
 
 	[ uuid(52A97CBD-2B99-45e8-B6F9-41E9CD583960) ]
-	interface IDownloadPreviewSite : IUnknown
+	interface IDownloadPreviewSite : stdole.IUnknown
 	{
 		HRESULT GetSuggestedFilename( [out,retval] BSTR* psFile );
 		HRESULT GetAvailableRanges( [out,retval] SAFEARRAY **pArray );
@@ -241,7 +241,7 @@ library Shareaza
 	};
 
 	[ uuid(1182FCD9-9F14-4e4a-BD05-432422B5BFAF) ]
-	interface IDownloadPreviewPlugin : IUnknown
+	interface IDownloadPreviewPlugin : stdole.IUnknown
 	{
 		HRESULT SetSite( [in] IDownloadPreviewSite* pSite );
 		HRESULT Preview( [in] HANDLE hFile, [in] BSTR sFile );
@@ -266,7 +266,7 @@ library Shareaza
 	} MediaZoom;
 
 	[ uuid(59978299-C8AC-4818-83F4-C382BB611D5C), pointer_default(unique) ]
-	interface IMediaPlayer : IUnknown
+	interface IMediaPlayer : stdole.IUnknown
 	{
 		HRESULT Create( [in] HWND hWnd );
 		HRESULT Destroy();
@@ -312,7 +312,7 @@ library Shareaza
 	} SHAREAZAVISCHUNK;
 
 	[ uuid(E788D125-4D41-4a35-A436-D1A1FD0C8EC9) ]
-	interface IAudioVisPlugin : IUnknown
+	interface IAudioVisPlugin : stdole.IUnknown
 	{
 		HRESULT Configure();
 		HRESULT Create( [in] HWND hWnd );
@@ -327,7 +327,7 @@ library Shareaza
 	};
 
 	[ uuid(71045028-F95C-4c03-AB09-6D906DBFC731) ]
-	interface IWrappedPluginControl : IUnknown
+	interface IWrappedPluginControl : stdole.IUnknown
 	{
 		HRESULT Load( [in] BSTR sDLL, [in] LONG nIndex );
 		HRESULT Unload();
