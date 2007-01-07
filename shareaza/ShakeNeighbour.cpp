@@ -1048,7 +1048,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		// However this should not be used for G2 because Shareaza 2.2.1.0 and earlier may give
 		// G1 host list with "accept: application/x-gnutella2" specified, if the node has
 		// Gnutella1 enabled
-		m_sTryDNAHubs = strValue;
+		m_sTryUltrapeers = strValue;
 	}
 
 	// Report success
