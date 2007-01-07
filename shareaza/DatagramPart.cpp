@@ -1,7 +1,7 @@
 //
 // DatagramPart.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,11 +37,12 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDatagramOut construction
 
-CDatagramOut::CDatagramOut()
+CDatagramOut::CDatagramOut() :
+	m_pBuffer( NULL ),
+	m_pLocked( NULL ),
+	m_nLocked( 0 ),
+	m_bAck( FALSE )
 {
-	m_pBuffer	= NULL;
-	m_pLocked	= NULL;
-	m_nLocked	= 0;
 }
 
 CDatagramOut::~CDatagramOut()
@@ -72,6 +73,7 @@ void CDatagramOut::Create(SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence
 
 	strncpy( pHeader.szTag, SGP_TAG_2, 3 );
 	pHeader.nFlags = m_bCompressed ? SGP_DEFLATE : 0;
+	m_bAck = bAck;
 	if ( bAck ) pHeader.nFlags |= SGP_ACKNOWLEDGE;
 
 	pHeader.nSequence	= m_nSequence;

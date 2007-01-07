@@ -524,6 +524,7 @@ BOOL CDatagrams::TryWrite()
 					(LPCTSTR)CString( inet_ntoa( pDG->m_pHost.sin_addr ) ),
 					htons( pDG->m_pHost.sin_port ) );
 #endif
+				if( ! pDG->m_bAck ) Remove( pDG );
 
 				break;
 			}
