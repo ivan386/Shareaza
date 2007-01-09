@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,6 +85,45 @@ static LPCTSTR GetFORMATLIST(UINT id)
 }
 
 #endif
+
+typedef struct {
+	HWND	hWnd;
+	DWORD	dwEffect;
+	CString	sFrom;
+	CString	sTo;
+} AsyncFileOperationParams;
+
+UINT AsyncFileOperationThread(LPVOID param)
+{
+	ASSERT( param != NULL );
+
+	AsyncFileOperationParams* pAFOP = (AsyncFileOperationParams*)param;
+	SetThreadName( GetCurrentThreadId(), "SHFileOperation" );
+
+	// Full OLE initialization
+	HRESULT hr = OleInitialize( NULL );
+	if ( SUCCEEDED( hr ) )
+	{
+		// Shell file operations
+		SHFILEOPSTRUCT sFileOp = {
+			pAFOP->hWnd,
+			((pAFOP->dwEffect == DROPEFFECT_COPY) ? FO_COPY : FO_MOVE),
+			pAFOP->sFrom,
+			pAFOP->sTo,
+			FOF_ALLOWUNDO,
+			FALSE,
+			NULL,
+			NULL
+		};
+		VERIFY( SHFileOperation( &sFileOp ) == 0 );
+
+		OleUninitialize();
+	}
+
+	delete pAFOP;
+
+	return 0;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // Helper for implementing OLE enumerators
@@ -205,6 +244,9 @@ void CShareazaDataSource::Clean()
 template < typename T >
 UINT CShareazaDataSource::DragDropThread(LPVOID param)
 {
+	DWORD dwCurrentThreadID = GetCurrentThreadId();
+	SetThreadName( dwCurrentThreadID, "DragDrop" );
+
 	// Full OLE initialization
 	HRESULT hr = OleInitialize( NULL );
 	if ( SUCCEEDED( hr ) )
@@ -212,8 +254,6 @@ UINT CShareazaDataSource::DragDropThread(LPVOID param)
 		// Get thread ID's
 		HWND hwndAttach	= AfxGetMainWnd()->GetSafeHwnd();
 		DWORD dwAttachThreadID = GetWindowThreadProcessId( hwndAttach, NULL );
-		DWORD dwCurrentThreadID = GetCurrentThreadId();
-		SetThreadName( dwCurrentThreadID, "DragDrop" );
 
 		// Attach input queues if necessary
 		if ( dwAttachThreadID != dwCurrentThreadID )
@@ -290,24 +330,26 @@ HRESULT CShareazaDataSource::DoDragDrop(const T* pList, HBITMAP pImage, const Ha
 			{
 				// Prepare IDragSourceHelper handler
 				hr = Add( pIDataObject, pImage );
+
+				// Send data object to thread
+				IStream* pStream = NULL;
+				hr = CoMarshalInterThreadInterfaceInStream( IID_IDataObject,
+					pIDataObject, &pStream);
 				if ( SUCCEEDED( hr ) )
 				{
-					// Send data object to thread
-					IStream* pStream = NULL;
-					hr = CoMarshalInterThreadInterfaceInStream( IID_IDataObject,
-						pIDataObject, &pStream);
-					if ( SUCCEEDED( hr ) )
-					{
-						pIDataObject.Detach();
+					pIDataObject.Detach();
 
-						// Begin async drag-n-drop operation
-						CWinThread* pThread = AfxBeginThread( DragDropThread<T>,
-							(LPVOID)pStream, THREAD_PRIORITY_NORMAL );
-						hr = ( pThread != NULL ) ? S_OK : E_FAIL;
-					}
+					// Begin async drag-n-drop operation
+					CWinThread* pThread = AfxBeginThread( DragDropThread<T>,
+						(LPVOID)pStream, THREAD_PRIORITY_NORMAL );
+					hr = ( pThread != NULL ) ? S_OK : E_FAIL;
 				}
 			}
 		}
+	}
+	if ( pImage )
+	{
+		DeleteObject( pImage );
 	}
 	return hr;
 }
@@ -405,12 +447,16 @@ HRESULT CShareazaDataSource::SetDropEffect(IDataObject* pIDataObject, DWORD dwEf
 BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeyState, DWORD* pdwEffect, BOOL bDrop, LPCTSTR pszDest)
 {
 	ASSERT( pIDataObject != NULL );
+	ASSERT( pdwEffect != NULL );
 
 	FORMATETC fmtc = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
 	if ( SUCCEEDED ( pIDataObject->QueryGetData( &fmtc ) ) )
 	{
 		*pdwEffect = (grfKeyState & MK_CONTROL) ? DROPEFFECT_COPY :
-		( (grfKeyState & MK_SHIFT ) ? DROPEFFECT_MOVE : DROPEFFECT_COPY );
+			// Default action setted to Move (temporary fix)
+			DROPEFFECT_MOVE;
+			// TODO:
+			//( (grfKeyState & MK_SHIFT ) ? DROPEFFECT_MOVE : DROPEFFECT_COPY );
 
 		if ( ! bDrop )
 			return TRUE;
@@ -428,42 +474,39 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 				DROPFILES* pdf = (DROPFILES*)GlobalLock( medium.hGlobal );
 				if ( pdf )
 				{
-					CString tmpFrom;
-					CString tmpTo( pszDest );
-					tmpTo.Append( _T('\0') );								// must be double null terminated
+					AsyncFileOperationParams* pAFOP = new AsyncFileOperationParams;
+					ASSERT( pAFOP );
+					pAFOP->hWnd = AfxGetMainWnd()->GetSafeHwnd();
+					pAFOP->dwEffect = *pdwEffect;
+					pAFOP->sTo = pszDest;
+					pAFOP->sTo.Append( _T('\0') );							// must be double null terminated
 					LPCTSTR pFrom = (LPCTSTR)( (char*)pdf + pdf->pFiles );	// must be double null terminated
 #ifdef _UNICODE
 					if ( ! pdf->fWide )
 					{	
 						// ANSI -> UNICODE
 						int nWide = MultiByteToWideChar( CP_ACP, 0, (LPCSTR) pFrom, size, NULL, 0 );
-						MultiByteToWideChar( CP_ACP, 0, (LPCSTR) pFrom, size, tmpFrom.GetBuffer( nWide ), nWide );
-						tmpFrom.ReleaseBuffer( nWide );
-						pFrom = tmpFrom;
+						MultiByteToWideChar( CP_ACP, 0, (LPCSTR) pFrom, size, pAFOP->sFrom.GetBuffer( nWide ), nWide );
+						pAFOP->sFrom.ReleaseBuffer( nWide );
 					}
+					else
+						pAFOP->sFrom.Append( pFrom, size );
 #else
 					if ( pdf->fWide )
 					{
 						// UNICODE -> ANSI
 						int nWide = WideCharToMultiByte( CP_ACP, 0, (LPCWSTR) pFrom, size, NULL, 0 );
-						WideCharToMultiByte( CP_ACP, 0, (LPCWSTR) pFrom, size, tmpFrom.GetBuffer( nWide ), nWide );
-						tmpFrom.ReleaseBuffer( nWide );
-						pFrom = tmpFrom;
+						WideCharToMultiByte( CP_ACP, 0, (LPCWSTR) pFrom, size, pAFOP->sFrom.GetBuffer( nWide ), nWide );
+						pAFOP->sFrom.ReleaseBuffer( nWide );
 					}
+					else
+						pAFOP->sFrom.Append( pFrom, size );
 #endif // _UNICODE
-					SHFILEOPSTRUCT sFileOp = {
-						AfxGetMainWnd()->GetSafeHwnd(),
-						((*pdwEffect == DROPEFFECT_COPY) ? FO_COPY : FO_MOVE),
-						pFrom,
-						tmpTo,
-						FOF_ALLOWUNDO,
-						FALSE,
-						NULL,
-						NULL
-					};
-					bRet = ( SHFileOperation( &sFileOp ) == 0 );
-
 					GlobalUnlock( medium.hGlobal );
+
+					CWinThread* pThread = AfxBeginThread( AsyncFileOperationThread,
+						(LPVOID)pAFOP, THREAD_PRIORITY_NORMAL );
+					bRet = ( pThread != NULL );
 				}
 			}
 			ReleaseStgMedium( &medium );
@@ -711,10 +754,6 @@ HRESULT CShareazaDataSource::Add(IDataObject* pIDataObject, HBITMAP pImage)
 		SelectObject( hdcMem, hbmpOld );
 		DeleteDC( hdcMem );
 		hr = pIDragSourceHelper->InitializeFromBitmap( &shdi, pIDataObject );
-	}
-	if ( pImage )
-	{
-		DeleteObject( pImage );
 	}
 	return hr;
 }
