@@ -10,11 +10,12 @@ X http://gwebcache.alpha64.info/
 X http://reukiodo.dyndns.org/gwebcache/gwcii.php
 U uhc:guruz.udp-host-cache.com:6666
 U uhc:secondary.udp-host-cache.com:9999
-U uhc:tribaldance.ibiza.bishopston.net:3558
 U uhc:uhc.udp-host-cache.com:9999
 U uhc:uhc2.limewire.com:20181
 U uhc:zomfg.gtkg.org:40000
 U uhc:g6.6dns.org:1337
+U uhc:yin.cloud.bishopston.net:33558
+U uhc:yang.cloud.bishopston.net:33558
 2 http://gwc2.wodi.org/skulls.php
 2 http://bazooka1.servehttp.com/g2/bazooka.php
 2 http://cache2.bazookanetworks.com/g2/bazooka.php
