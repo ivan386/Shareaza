@@ -8,6 +8,7 @@ X http://www.student.ru.nl/markjansen/g2/bazooka.php
 X http://gwebcache.alpha64.info/index.php
 X http://gwebcache.alpha64.info/
 X http://reukiodo.dyndns.org/gwebcache/gwcii.php
+X http://hosting.urbanculture.co.nz/g2/bazooka.php
 U uhc:guruz.udp-host-cache.com:6666
 U uhc:secondary.udp-host-cache.com:9999
 U uhc:uhc.udp-host-cache.com:9999
@@ -27,7 +28,6 @@ U uhc:yang.cloud.bishopston.net:33558
 2 http://cache.trillinux.org/g2/bazooka.php
 2 http://midian.jayl.de/g2/bazooka.php
 2 http://silvers.servehttp.com/g2/bazooka.php
-2 http://hosting.urbanculture.co.nz/g2/bazooka.php
 2 http://g2.sbicomputing.com/g2/bazooka.php
 2 http://mirror.farrugiafamily.com/g2/bazooka.php
 2 http://savs.biz/g2/bazooka.php
