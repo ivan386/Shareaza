@@ -201,7 +201,12 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		pPacket->WriteShortBE( htons( pUDP->sin_port ) );
 		if ( nKey ) pPacket->WriteLongBE( nKey );
 	}
-	
+	else if ( nKey )
+	{
+		pPacket->WritePacket( G2_PACKET_QKY, 4 );
+		pPacket->WriteLongBE( nKey );
+	}
+
 	if ( m_oTiger && m_oSHA1 )
 	{
         pPacket->WritePacket( G2_PACKET_URN, Hashes::Sha1Hash::byteCount + Hashes::TigerHash::byteCount + 3 );
