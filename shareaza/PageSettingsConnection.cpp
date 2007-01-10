@@ -148,7 +148,7 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 		for ( DWORD nIf = 0 ; nIf < nCount ; nIf++ )
 		{
 			ip = ipAddr->table[ nIf ].dwAddr;
-			if ( ip == 0x0100007f ) continue; // loopback
+			if ( ip == 0x0100007f || ip == 0x0 ) continue; // loopback or 0.0.0.0
 
 			MIB_IFROW ifRow = {};
 			ifRow.dwIndex = ipAddr->table[ nIf ].dwIndex;
