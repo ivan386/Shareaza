@@ -67,7 +67,7 @@ protected:
 	afx_msg void OnMediaEnqueue();
 	afx_msg void OnSelChangeMediaTypes();
 	afx_msg void OnEditChangeMediaTypes();
-	afx_msg void OnCloseupMediaService();
+	afx_msg void OnSelChangeMediaService();
 	afx_msg void OnMediaAdd();
 	afx_msg void OnMediaRemove();
 	afx_msg void OnMediaVis();

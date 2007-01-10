@@ -38,7 +38,7 @@ IMPLEMENT_DYNCREATE(CWizardProfilePage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CWizardProfilePage, CWizardPage)
 	//{{AFX_MSG_MAP(CWizardProfilePage)
-	ON_CBN_CLOSEUP(IDC_LOC_COUNTRY, OnCloseUpCountry)
+	ON_CBN_SELCHANGE(IDC_LOC_COUNTRY, OnSelChangeCountry)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -160,7 +160,7 @@ BOOL CWizardProfilePage::OnSetActive()
 	return CWizardPage::OnSetActive();
 }
 
-void CWizardProfilePage::OnCloseUpCountry()
+void CWizardProfilePage::OnSelChangeCountry()
 {
 	CWaitCursor pCursor;
 

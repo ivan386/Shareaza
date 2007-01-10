@@ -37,8 +37,8 @@ IMPLEMENT_DYNCREATE(CProfileProfilePage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CProfileProfilePage, CSettingsPage)
 	//{{AFX_MSG_MAP(CProfileProfilePage)
-	ON_CBN_CLOSEUP(IDC_LOC_COUNTRY, OnCloseUpCountry)
-	ON_CBN_CLOSEUP(IDC_LOC_CITY, OnCloseUpCity)
+	ON_CBN_SELCHANGE(IDC_LOC_COUNTRY, OnSelChangeCountry)
+	ON_CBN_SELCHANGE(IDC_LOC_CITY, OnSelChangeCity)
 	ON_LBN_SELCHANGE(IDC_INTEREST_LIST, OnSelChangeInterestList)
 	ON_CBN_SELCHANGE(IDC_INTEREST_ALL, OnSelChangeInterestAll)
 	ON_CBN_EDITCHANGE(IDC_INTEREST_ALL, OnEditChangeInterestAll)
@@ -152,13 +152,13 @@ BOOL CProfileProfilePage::OnInitDialog()
 	m_wndInterestAdd.EnableWindow( FALSE );
 	m_wndInterestRemove.EnableWindow( FALSE );
 
-	OnCloseUpCountry();
+	OnSelChangeCountry();
 	RecalcDropWidth( &m_wndCountry );
 
 	return TRUE;
 }
 
-void CProfileProfilePage::OnCloseUpCountry()
+void CProfileProfilePage::OnSelChangeCountry()
 {
 	CWaitCursor pCursor;
 
@@ -194,7 +194,7 @@ void CProfileProfilePage::OnCloseUpCountry()
 	RecalcDropWidth( &m_wndCity );
 }
 
-void CProfileProfilePage::OnCloseUpCity()
+void CProfileProfilePage::OnSelChangeCity()
 {
 	int nSel = m_wndCity.GetCurSel();
 	if ( nSel < 0 ) return;

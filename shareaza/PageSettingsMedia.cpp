@@ -42,7 +42,7 @@ BEGIN_MESSAGE_MAP(CMediaSettingsPage, CSettingsPage)
 	ON_BN_CLICKED(IDC_MEDIA_ENQUEUE, OnMediaEnqueue)
 	ON_CBN_SELCHANGE(IDC_MEDIA_TYPES, OnSelChangeMediaTypes)
 	ON_CBN_EDITCHANGE(IDC_MEDIA_TYPES, OnEditChangeMediaTypes)
-	ON_CBN_CLOSEUP(IDC_MEDIA_SERVICE, OnCloseupMediaService)
+	ON_CBN_SELCHANGE(IDC_MEDIA_SERVICE, OnSelChangeMediaService)
 	ON_BN_CLICKED(IDC_MEDIA_ADD, OnMediaAdd)
 	ON_BN_CLICKED(IDC_MEDIA_REMOVE, OnMediaRemove)
 	ON_BN_CLICKED(IDC_MEDIA_VIS, OnMediaVis)
@@ -252,7 +252,7 @@ void CMediaSettingsPage::OnOK()
 	CSettingsPage::OnOK();
 }
 
-void CMediaSettingsPage::OnCloseupMediaService()
+void CMediaSettingsPage::OnSelChangeMediaService()
 {
 	int nCustomIndex = ( m_wndServices.GetCount() == 2 ) ? 1 : 2;
 	int nSelected = m_wndServices.GetCurSel();

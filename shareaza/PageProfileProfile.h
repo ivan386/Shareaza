@@ -71,8 +71,8 @@ public:
 protected:
 	//{{AFX_MSG(CProfileProfilePage)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnCloseUpCountry();
-	afx_msg void OnCloseUpCity();
+	afx_msg void OnSelChangeCountry();
+	afx_msg void OnSelChangeCity();
 	afx_msg void OnSelChangeInterestList();
 	afx_msg void OnSelChangeInterestAll();
 	afx_msg void OnEditChangeInterestAll();
