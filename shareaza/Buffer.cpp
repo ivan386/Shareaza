@@ -305,6 +305,8 @@ void CBuffer::EnsureBuffer(size_t nLength)
 	// If the size of the buffer minus the size filled is bigger than or big enough for the given length, do nothing
 	if ( m_nBuffer - m_nLength >= nLength ) return; // There is enough room to write nLength bytes without allocating anything
 
+	if ( ULONG_MAX - m_nLength < nLength ) return;
+
 	// Make m_nBuffer the size of what's written plus what's requested
 	m_nBuffer = m_nLength + static_cast< DWORD >( nLength );
 
@@ -396,7 +398,11 @@ BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek, UINT nCodePage)
 	if ( nCR >= 0 ) strLine.Truncate( nCR ); // Cut the string to that length, like "hello"
 
 	// Now that the line has been copied into the string, remove it and the '\n' from the buffer
-	if ( ! bPeek ) Remove( nLength + 1 ); // Unless we're peeking, then leave it in the buffer
+	if ( ! bPeek )
+	{
+		Remove( 1 );
+		Remove( nLength ); // Unless we're peeking, then leave it in the buffer
+	}
 
 	// Report that we found a line and moved it from the buffer to the string
 	return TRUE;
@@ -574,10 +580,11 @@ BOOL CBuffer::Ungzip()
 		WORD nLen = *(WORD*)m_pBuffer;
 
 		// If the buffer has less data than it should, return false
-		if ( (int)m_nLength < (int)nLen + 2 ) return FALSE;
+		if ( (int)m_nLength - 2 < (int)nLen ) return FALSE;
 
 		// Remove the length word and the length it describes from the front of the buffer
-		Remove( 2 + nLen );
+		Remove( 2 );
+		Remove( nLen );
 	}
 
 	// If there is a 1 in position 0000 1000 in the flags byte
@@ -638,9 +645,24 @@ BOOL CBuffer::Ungzip()
 		return FALSE;
 	}
 
-	// Make a new buffer for the output
+	// Make a new buffer for the output.
+	// Guess that inflating the data won't make it more than 6 times as big
+
 	CBuffer pOutput;
-	pOutput.EnsureBuffer( m_nLength * 6 ); // Guess that inflating the data won't make it more than 6 times as big
+	bool bValidSize = true;
+	DWORD nLength = m_nLength;
+	for ( short i = 0 ; i < 5 ; i++, nLength += m_nLength )
+	{
+		if ( UINT_MAX - nLength < m_nLength )
+		{
+			bValidSize = false;
+			pOutput.EnsureBuffer( UINT_MAX );
+			break;
+		}
+	}
+
+	if ( bValidSize ) 
+		pOutput.EnsureBuffer( m_nLength * 6 );
 
 	// Tell the z_stream structure where to work
 	pStream.next_in   = m_pBuffer;         // Decompress the memory here
