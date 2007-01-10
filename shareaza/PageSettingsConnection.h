@@ -81,14 +81,13 @@ protected:
 	//{{AFX_MSG(CConnectionSettingsPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnEditChangeInboundHost();
-	afx_msg void OnCloseUpInboundHost();
+	afx_msg void OnChangedInboundHost();
 	afx_msg void OnChangeInboundPort();
 	afx_msg void OnInboundRandom();
 	afx_msg void OnClickedEnableUpnp();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

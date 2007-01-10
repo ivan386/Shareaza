@@ -37,8 +37,8 @@ IMPLEMENT_DYNCREATE(CConnectionSettingsPage, CSettingsPage)
 BEGIN_MESSAGE_MAP(CConnectionSettingsPage, CSettingsPage)
 	//{{AFX_MSG_MAP(CConnectionSettingsPage)
 	ON_CBN_EDITCHANGE(IDC_INBOUND_HOST, OnEditChangeInboundHost)
-	ON_CBN_CLOSEUP(IDC_INBOUND_HOST, OnCloseUpInboundHost)
 	ON_EN_CHANGE(IDC_INBOUND_PORT, OnChangeInboundPort)
+	ON_CBN_SELCHANGE(IDC_INBOUND_HOST, OnChangedInboundHost)
 	ON_BN_CLICKED(IDC_INBOUND_RANDOM, OnInboundRandom)
 	ON_WM_SHOWWINDOW()
 	ON_BN_CLICKED(IDC_ENABLE_UPNP, OnClickedEnableUpnp)
@@ -202,7 +202,7 @@ void CConnectionSettingsPage::OnEditChangeInboundHost()
 	m_wndInBind.EnableWindow( m_sInHost != strAutomatic );
 }
 
-void CConnectionSettingsPage::OnCloseUpInboundHost()
+void CConnectionSettingsPage::OnChangedInboundHost()
 {
 	CString strAutomatic = GetInOutHostTranslation();
 	CString strSelection;
