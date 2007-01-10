@@ -805,7 +805,7 @@ Begin
       End;
     End;
   End;
-MsgBox(ExpandConstant('Test'), mbError, MB_OK);
+
   if CurStep=ssDone then Reset := ResetLanguages;
 End;
 
