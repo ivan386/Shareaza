@@ -1168,9 +1168,11 @@ void CDownloads::Load()
 			{
 				if ( pDownload->m_bSeeding )
 				{
-					if ( !Settings.BitTorrent.AutoSeed )
+					if ( !Settings.BitTorrent.AutoSeed || 
+						 GetFileAttributes( pDownload->m_sServingFileName ) == INVALID_FILE_ATTRIBUTES )
 					{
 						::DeleteFile( strPath );
+						delete pDownload;
 						continue;
 					}
 					pDownload->m_bComplete = TRUE;
