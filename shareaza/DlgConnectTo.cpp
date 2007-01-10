@@ -112,6 +112,8 @@ BOOL CConnectToDlg::OnInitDialog()
 	m_nPort		= Settings.Connection.InPort;
 	m_nProtocol	= PROTOCOL_G1;
 
+	m_wndPort.SendMessage(EM_SETLIMITTEXT, 5);
+
 	UpdateData( FALSE );
 
 	if ( ( nItem = theApp.GetProfileInt( _T("ConnectTo"), _T("Last.Index"), 0 ) ) != 0 )
