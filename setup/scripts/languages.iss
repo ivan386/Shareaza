@@ -305,6 +305,7 @@ lt.page_viruswarning_title=Бspлjimas apie virusus
 lt.page_viruswarning_subtitle=Ar Jыs turite бsidiegж antivirusinж programа?
 lt.CreateDesktopIcon=Rodyti piktogramа &Darbalaukyje
 lt.CreateQuickLaunchIcon=Rodyti Sparиiosios &Paleisties piktogramа
+lt.PathNotExist=Klaida, katalogo kelias „%1“ neegzistuoja
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -548,6 +549,7 @@ ru.page_viruswarning_title=Предостережение о вирусах
 ru.page_viruswarning_subtitle=Имеете ли Вы установленную антивирусную программу?
 ru.CreateDesktopIcon=Показывать значок на &Рабочем столе
 ru.CreateQuickLaunchIcon=Показывать значок в &Панели быстрого запуска
+ru.PathNotExist=Ошибка, путь к папке %1 не существует
 ; Greek
 gr.components_plugins=Plugins
 gr.components_skins=Skins
