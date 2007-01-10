@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 41 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 42 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -4143,19 +4143,20 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Elimina file">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Elimina file">
 		<control caption="Sei sicuro di voler eliminare:"/>
 		<control/>
 		<control caption="Elimina"/>
 		<control caption="Elimina tutti"/>
 		<control caption="Annulla"/>
 		<control/>
-		<control caption="Shareaza può memorizzare questo file e avvisarti se lo ritrovi per caso in un'altra ricerca.  Seleziona il motivo della eliminazione di questo file:"/>
-		<control caption="Non voglio aggiungere commenti."/>
-		<control caption="Questo file ha un nome non corretto e può trarre in inganno."/>
-		<control caption="Questo file è di qualità molto scarsa."/>
-		<control caption="Questo file è falso, corrotto o in qualche modo inutilizzabile."/>
-		<control caption="Puoi inserire una breve nota che descrive perchè questo file è sbagliato:"/>
+		<control caption="Shareaza può memorizzare questo file e avvisarti se lo ritrovi per caso in un'altra ricerca.  Verrà creato un file fantasma con i tuoi commenti e la tua valutazione."/>
+		<control caption="Crea un file fantasma"/>
+		<control caption="Motivo della cancellazione:"/>
+		<control caption="Cancella soltanto, mantieni i miei commenti|Questo file ha un nome non corretto e potrebbe essere ingannevole|Questo file è di scarsa qualità|Questo file è falso, corrotto o in qualche modo inutilizzabile|Sostituisci i miei commenti con i nuovi"/>
+		<control caption="Valutazione del file:"/>
+		<control caption="(Nessuna valutazione)|Falso/Corrotto/Fuorviante|Scarso|Medio|Buono|Molto buono|Eccellente"/>
+		<control caption="Puoi inserire una breve nota che descrive perchè stai cancellando il file:"/>
 		<control/>
 	</dialog>
 
