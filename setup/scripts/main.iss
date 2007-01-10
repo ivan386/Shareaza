@@ -206,6 +206,9 @@ Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; Work
 Filename: "{app}\skin.exe"; Parameters: "/uninstallsilent"; WorkingDir: "{app}"; StatusMsg: "{cm:run_skinexe}"; RunOnceId: "uninstallskinexe"
 
 [Registry]
+Root: HKLM; Subkey: "SOFTWARE\Shareaza\Shareaza"; ValueType: dword; ValueName: "MultiUser"; ValueData: 1; Flags: deletevalue; Tasks: multiuser
+Root: HKLM; Subkey: "SOFTWARE\Shareaza\Shareaza"; ValueType: dword; ValueName: "MultiUser"; ValueData: 0; Flags: deletevalue; Tasks: not multiuser
+
 ; Write installation path to registry
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; ValueType: string; ValueName: ; ValueData: "{app}"; Flags: uninsdeletekey deletevalue
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza"; ValueType: string; ValueName: "Path" ; ValueData: "{app}"; Flags: uninsdeletekey deletevalue
@@ -287,14 +290,18 @@ Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: stri
 Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; Tasks: not multiuser
 
 [Dirs]
-; Make incomplete, torrent and collection dir
-; Note: download dir will be created when installer is copied
+; Make complete, incomplete, torrent and collection dir
+; Note: download dir will be created when installer is copied but we create also here to be sure
+Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
 Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{localappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
 Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
 Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
+
+Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
 Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{app}\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
 Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
 Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
+
 Name: "{userappdata}\Shareaza\Data"; Flags: uninsalwaysuninstall; Tasks: multiuser
 
 
@@ -597,6 +604,27 @@ Begin
   DelayDeleteFile(Filename,3);
 End;
 
+// We don't allow to modify the setting of MultiUser if was already selected.
+Procedure CurPageChanged(const CurrentPage: integer);
+var
+  i : integer;
+  MultiUserValue: DWORD;
+Begin
+  if CurrentPage = wpSelectTasks then begin
+    i := WizardForm.TasksList.Items.IndexOf(ExpandConstant('{cm:tasks_multisetup}'));
+    if i <> -1 then begin
+      if RegQueryDWordValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Shareaza\Shareaza', 'MultiUser', MultiUserValue) then begin
+        if MultiUserValue = 1 then
+          Wizardform.TasksList.Checked[i] := true
+        else
+          Wizardform.TasksList.Checked[i] := false;
+
+        WizardForm.TasksList.ItemEnabled[i] := false;
+      End;
+    End;
+  End;
+End;
+
 Procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
   InstallFolder: string;
@@ -682,6 +710,7 @@ var
   FirewallProfile: Variant;
   Reset: boolean;
   Success: boolean;
+  Path: string;
 Begin
   if CurStep=ssPostInstall then begin
     if IsTaskSelected('firewall') then begin
@@ -752,6 +781,31 @@ Begin
       End;
     End;
   End;
+
+  // Check if the needed paths exist otherwise delete it from the registry (They will be recreated later in the installation process)
+  if CurStep=ssInstall then begin
+    if RegQueryStringValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'CompletePath', Path) and (not DirExists(Path)) then begin
+      if not RegDeleteValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'CompletePath') then begin
+        MsgBox(ExpandConstant('{cm:PathNotExist,complete}'), mbError, MB_OK);
+      End;
+    End;
+    if RegQueryStringValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'IncompletePath', Path) and (not DirExists(Path)) then begin
+      if not RegDeleteValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'IncompletePath') then begin
+        MsgBox(ExpandConstant('{cm:PathNotExist,incomplete}'), mbError, MB_OK);
+      End;
+    End;
+    if RegQueryStringValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'CollectionPath', Path) and (not DirExists(Path)) then begin
+      if not RegDeleteValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'CollectionPath') then begin
+        MsgBox(ExpandConstant('{cm:PathNotExist,collection}'), mbError, MB_OK);
+      End;
+    End;
+    if RegQueryStringValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'TorrentPath', Path) and (not DirExists(Path)) then begin
+      if not RegDeleteValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'TorrentPath') then begin
+        MsgBox(ExpandConstant('{cm:PathNotExist,torrent}'), mbError, MB_OK);
+      End;
+    End;
+  End;
+MsgBox(ExpandConstant('Test'), mbError, MB_OK);
   if CurStep=ssDone then Reset := ResetLanguages;
 End;
 
