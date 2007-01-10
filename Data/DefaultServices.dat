@@ -35,9 +35,11 @@ U uhc:yang.cloud.bishopston.net:33558
 D http://www.gruk.org/server.met
 D http://www.de-site.de/ed2k/koeln.met
 D http://www.emule-server.de/server.met/min/server.met
+D http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met
+D http://www.esel-paradies.de/server/server.met
 #
 # Keep these comments at the end
-# Last updated 8th - January, 2007
+# Last updated 10th - January, 2007
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
