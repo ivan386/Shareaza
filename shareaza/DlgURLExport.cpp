@@ -43,7 +43,8 @@ static char THIS_FILE[] = __FILE__;
 BEGIN_MESSAGE_MAP(CURLExportDlg, CSkinDialog)
 	//{{AFX_MSG_MAP(CURLExportDlg)
 	ON_CBN_CLOSEUP(IDC_URL_TOKEN, OnCloseUpUrlToken)
-	ON_CBN_CLOSEUP(IDC_URL_PRESET, OnCloseUpUrlPreset)
+	ON_CBN_SELCHANGE(IDC_URL_PRESET, OnSelChangeUrlPreset)
+	ON_CBN_KILLFOCUS(IDC_URL_PRESET, OnKillFocusUrlPreset)
 	ON_BN_CLICKED(IDC_SAVE, OnSave)
 	ON_BN_CLICKED(IDC_COPY, OnCopy)
 	//}}AFX_MSG_MAP
@@ -105,6 +106,11 @@ void CURLExportDlg::AddFile(CLibraryFile* pFile)
 	if ( pFile->m_oSHA1 ) m_pFiles.AddTail( pFile->m_nIndex );
 }
 
+void CURLExportDlg::OnKillFocusUrlPreset()
+{
+	m_wndPreset.SetCurSel( -1 );
+}
+
 void CURLExportDlg::OnCloseUpUrlToken()
 {
 	int nToken = m_wndToken.GetCurSel();
@@ -123,10 +129,9 @@ void CURLExportDlg::OnCloseUpUrlToken()
 	m_wndFormat.SetFocus();
 }
 
-void CURLExportDlg::OnCloseUpUrlPreset()
+void CURLExportDlg::OnSelChangeUrlPreset()
 {
 	int nPreset = m_wndPreset.GetCurSel();
-	m_wndPreset.SetCurSel( -1 );
 	if ( nPreset < 0 || nPreset > 5 ) return;
 
 	LPCTSTR pszPresets[] =
@@ -138,7 +143,6 @@ void CURLExportDlg::OnCloseUpUrlPreset()
 	};
 
 	m_wndFormat.SetWindowText( pszPresets[ nPreset ] );
-	m_wndFormat.SetFocus();
 }
 
 void CURLExportDlg::OnSave()

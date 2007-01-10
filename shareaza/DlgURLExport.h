@@ -64,7 +64,8 @@ protected:
 	//{{AFX_MSG(CURLExportDlg)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnCloseUpUrlToken();
-	afx_msg void OnCloseUpUrlPreset();
+	afx_msg void OnSelChangeUrlPreset();
+	afx_msg void OnKillFocusUrlPreset();
 	afx_msg void OnSave();
 	afx_msg void OnCopy();
 	//}}AFX_MSG
