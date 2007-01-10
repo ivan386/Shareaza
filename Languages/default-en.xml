@@ -4143,19 +4143,20 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Delete File">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Delete File">
 		<control caption="Are you sure that you want to delete:"/>
 		<control/>
 		<control caption="Delete"/>
 		<control caption="Delete All"/>
 		<control caption="Cancel"/>
 		<control/>
-		<control caption="Shareaza can remember this file and warn you if you come across it again in another search.  Please select the reason for deleting this file:"/>
-		<control caption="I don't want to add a comment."/>
-		<control caption="This file is named incorrectly, and could be misleading."/>
-		<control caption="This file is of very poor quality."/>
-		<control caption="This file is a fake, or is corrupt or somehow unusable."/>
-		<control caption="You can type a short note describing why this file is bad:"/>
+		<control caption="Shareaza can remember this file and warn you if you come across it again in another search.  It will create a ghost file with your comments and rating."/>
+		<control caption="Create a ghost file"/>
+		<control caption="The reason for deleting:"/>
+		<control caption="Just deleting, keep my comments|This file is named incorrectly, and could be misleading|This file is of very poor quality|This file is a fake, or is corrupt or somehow unusable|Replace my comments with the new ones"/>
+		<control caption="File rating:"/>
+		<control caption="(No Rating)|Fake/Corrupt/Misleading|Poor|Average|Good|Very Good|Excellent"/>
+		<control caption="You can type a short note describing why you are deleting the file:"/>
 		<control/>
 	</dialog>
 
