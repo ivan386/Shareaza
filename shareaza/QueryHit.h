@@ -117,6 +117,7 @@ protected:
 	BOOL		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0);
 	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer);
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
+	BOOL		HasBogusMetadata();
 	void		Resolve();
 	BOOL		AutoDetectSchema(LPCTSTR pszInfo);
 	BOOL		AutoDetectAudio(LPCTSTR pszInfo);

@@ -689,6 +689,20 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 	return TRUE;
 }
 
+BOOL CQueryHit::HasBogusMetadata()
+{
+	if ( m_pXML == NULL ) return FALSE;
+
+	CXMLAttribute* pAttribute = NULL;
+	if ( ( pAttribute = m_pXML->GetAttribute( L"title" ) ) != NULL )
+	{
+		if ( _tcsnistr( (LPCTSTR)pAttribute->GetValue(), L"not related", 11 ) )
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CQueryHit XML metadata reader
 
@@ -1470,6 +1484,9 @@ BOOL CQueryHit::ParseXML(CXMLElement* pMetaData, DWORD nRealIndex)
 						delete m_pXML;
 					m_pXML = pHit->Detach();
 					pIndex->Delete();
+
+					if ( HasBogusMetadata() )
+						m_bBogus = TRUE;
 				}
 				
 				break;
