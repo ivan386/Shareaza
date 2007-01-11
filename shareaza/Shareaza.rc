@@ -5459,7 +5459,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_REMOTE_DISABLED     "Remote access is disabled."
-    IDS_REMOTE_ENABLED      "You must chose a username and password."
+    IDS_REMOTE_ENABLED      "You must choose a username and password."
     IDS_REMOTE_UNAVAILABLE  "Unable to accept connections, URL unavailable."
 END
 
