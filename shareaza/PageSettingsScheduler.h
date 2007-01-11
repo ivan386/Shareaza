@@ -59,10 +59,7 @@ protected:
 	BYTE			m_nDownDay;
 	BYTE			m_nDownHour;
 
-	BOOL			m_bPaint;
-	BYTE			m_nPaintValue;
-
-	CString			m_sDayName[7];			// List of day names
+	CString			m_sDayName[8];			// List of day names and "Everyday"
 
 // Overrides
 public:
@@ -88,6 +85,8 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
+private:
+	void ToggleTimeBlocks(BYTE nDirection);
 };
 
 //{{AFX_INSERT_LOCATION}}

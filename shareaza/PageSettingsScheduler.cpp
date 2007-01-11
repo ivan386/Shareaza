@@ -100,8 +100,6 @@ BOOL CSchedulerSettingsPage::OnInitDialog()
 
 	m_nDownDay			= m_nHoverDay = 0xFF;
 	m_nDownHour			= m_nHoverHour = 0xFF;
-	m_bPaint			= FALSE;
-	m_nPaintValue		= 0;
 
 	m_wndLimitedSpin.SetRange( 5, 95 );
 
@@ -112,6 +110,7 @@ BOOL CSchedulerSettingsPage::OnInitDialog()
 	LoadString (m_sDayName[4], IDS_DAY_THURSDAY);
 	LoadString (m_sDayName[5], IDS_DAY_FRIDAY);
 	LoadString (m_sDayName[6], IDS_DAY_SATURDAY);
+	LoadString (m_sDayName[7], IDS_DAY_EVERYDAY);
 
 	UpdateData( FALSE );
 
@@ -126,43 +125,45 @@ void CSchedulerSettingsPage::OnMouseMove(UINT /*nFlags*/, CPoint point)
 
 	GetClientRect( &rc );
 
-	rc.top += 10 + HEADING_HEIGHT;
-	rc.left += 34;
+	rc.top += HEADING_HEIGHT - 10;
+	rc.left += 4;
 
-
-	rc.bottom = rc.top + ( 7 * 16 );
-	rc.right = rc.left + ( 24 * 16 );
+	rc.bottom = rc.top + 20 + ( 7 * 16 );
+	rc.right = rc.left + 30 + ( 24 * 16 );
 
 	if ( rc.PtInRect( point ) )
 	{
-		int nHoverDay = ( point.y - rc.top ) / 16;
-		int nHoverHour = ( point.x - rc.left ) / 16;
+		BOOL bAllHours = point.y - rc.top < 20;
+		BOOL bWholeDay = point.x - rc.left < 30;
+		int nHoverDay  = bAllHours ? 7 : ( point.y - ( rc.top + 20 ) ) / 16;
+		int nHoverHour = bWholeDay ? 24  : ( point.x - ( rc.left + 30 ) ) / 16;
 
 		if ( ( nHoverDay != m_nHoverDay ) || ( nHoverHour != m_nHoverHour ) )
 		{
-			if ( m_bPaint )
-			{
-				m_pSchedule[nHoverDay][nHoverHour] = m_nPaintValue;
-				Invalidate();
-			}
 			if ( nHoverDay != m_nHoverDay )
 			{
 				m_nHoverDay = BYTE( nHoverDay );
-
-				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
-				m_wndDisplay.SetWindowText( strSliceDisplay );
-
-				Invalidate();
 			}
 			if ( nHoverHour != m_nHoverHour )
 			{
 				m_nHoverHour = BYTE( nHoverHour );
-
-				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
-				m_wndDisplay.SetWindowText( strSliceDisplay );
-
-				Invalidate();
 			}
+
+			if ( m_nHoverHour < 24 )
+			{
+				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
+			}
+			else if ( m_nHoverHour == 24 && m_nHoverDay < 7 )
+			{
+				strSliceDisplay.Format(_T("%s, 0:00 - 23:59"), m_sDayName[m_nHoverDay] );
+			}
+			else
+			{
+				strSliceDisplay = "";
+			}
+			m_wndDisplay.SetWindowText( strSliceDisplay );
+
+			Invalidate();
 		}
 	}
 	else
@@ -186,49 +187,20 @@ void CSchedulerSettingsPage::OnMouseMove(UINT /*nFlags*/, CPoint point)
 void CSchedulerSettingsPage::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
 	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
-	m_nDownDay = m_nHoverDay;
+	m_nDownDay  = m_nHoverDay;
 	m_nDownHour = m_nHoverHour;
-	m_bPaint		= TRUE;
-	m_nPaintValue	= m_pSchedule[m_nHoverDay][m_nHoverHour];
 	SetCapture();
 	Invalidate();
 }
 
 void CSchedulerSettingsPage::OnLButtonUp(UINT /*nFlags*/, CPoint /*point*/)
 {
-	m_bPaint		= FALSE;
-	m_nPaintValue	= 0;
-	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
-
-	if ( m_nDownDay != m_nHoverDay ) return;
-	if ( m_nDownHour != m_nHoverHour ) return;
-
-	m_pSchedule[m_nHoverDay][m_nHoverHour] ++;
-	m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
-
-	m_nDownDay	= 0xFF;
-	m_nDownHour	= 0xFF;
-
-	ReleaseCapture();
-	Invalidate();
-	UpdateWindow();
+	ToggleTimeBlocks(1);
 }
 
 void CSchedulerSettingsPage::OnLButtonDblClk(UINT /*nFlags*/, CPoint /*point*/)
 {
-	m_bPaint		= FALSE;
-	m_nPaintValue	= 0;
-	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
-
-	m_pSchedule[m_nHoverDay][m_nHoverHour] ++;
-	m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
-
-	m_nDownDay	= 0xFF;
-	m_nDownHour = 0xFF;
-
-	ReleaseCapture();
-	Invalidate();
-	UpdateWindow();
+	ToggleTimeBlocks(1);
 }
 
 void CSchedulerSettingsPage::OnRButtonDown(UINT /*nFlags*/, CPoint /*point*/)
@@ -236,31 +208,13 @@ void CSchedulerSettingsPage::OnRButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
 	m_nDownDay		= m_nHoverDay;
 	m_nDownHour		= m_nHoverHour;
-	m_bPaint		= TRUE;
-	m_nPaintValue	= m_pSchedule[m_nHoverDay][m_nHoverHour];
 	SetCapture();
 	Invalidate();
 }
 
 void CSchedulerSettingsPage::OnRButtonUp(UINT /*nFlags*/, CPoint /*point*/)
 {
-	m_bPaint		= FALSE;
-	m_nPaintValue	= 0;
-	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
-
-	if ( m_nDownDay != m_nHoverDay ) return;
-	if ( m_nDownHour != m_nHoverHour ) return;
-
-	m_pSchedule[m_nHoverDay][m_nHoverHour] += 2;
-	m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
-
-	m_nDownDay		= 0xFF;
-	m_nDownHour		= 0xFF;
-
-
-	ReleaseCapture();
-	Invalidate();
-	UpdateWindow();
+	ToggleTimeBlocks(2);
 }
 
 BOOL CSchedulerSettingsPage::OnEraseBkgnd(CDC* /*pDC*/)
@@ -330,4 +284,42 @@ void CSchedulerSettingsPage::OnOK()
 	Schedule.Save();
 
 	CSettingsPage::OnOK();
+}
+
+void CSchedulerSettingsPage::ToggleTimeBlocks(BYTE nDirection)
+{
+	ASSERT( nDirection == 1 || nDirection == 2 );
+	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
+
+	if ( m_nDownDay != m_nHoverDay ) return;
+	if ( m_nDownHour != m_nHoverHour ) return;
+
+	if ( m_nHoverHour < 24 && m_nHoverDay == 7 )
+	{
+		for ( int iDay = 0; iDay < 7; iDay++ )
+		{
+			m_pSchedule[iDay][m_nHoverHour] += nDirection;
+			m_pSchedule[iDay][m_nHoverHour] %= 3;
+		}
+	}
+	else if ( m_nHoverHour == 24 && m_nHoverDay < 7 )
+	{
+		for ( int iHour = 0; iHour < 24; iHour++ )
+		{
+			m_pSchedule[m_nHoverDay][iHour] += nDirection;
+			m_pSchedule[m_nHoverDay][iHour] %= 3;
+		}
+	}
+	else if ( m_nHoverHour < 24 && m_nHoverDay < 7 )
+	{
+		m_pSchedule[m_nHoverDay][m_nHoverHour] += nDirection;
+		m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
+	}
+
+	m_nDownDay	= 0xFF;
+	m_nDownHour	= 0xFF;
+
+	ReleaseCapture();
+	Invalidate();
+	UpdateWindow();
 }

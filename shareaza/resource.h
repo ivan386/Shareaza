@@ -1390,6 +1390,7 @@
 #define IDS_DAY_THURSDAY                20204
 #define IDS_DAY_FRIDAY                  20205
 #define IDS_DAY_SATURDAY                20206
+#define IDS_DAY_EVERYDAY                20207
 #define IDS_RATING_NORATING             20210
 #define IDS_RATING_1                    20211
 #define IDS_RATING_2                    20212

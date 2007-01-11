@@ -5489,6 +5489,7 @@ BEGIN
     IDS_DAY_THURSDAY        "Thursday"
     IDS_DAY_FRIDAY          "Friday"
     IDS_DAY_SATURDAY        "Saturday"
+    IDS_DAY_EVERYDAY        "Everyday"
 END
 
 STRINGTABLE 
