@@ -206,7 +206,7 @@
 				</simpleType>
 			</attribute>
 			<attribute name="soundType">
-				<simpleType type="string">
+				<simpleType base="string">
 					<enumeration value="Single Channel"/>
 					<enumeration value="Stereo"/>
 					<enumeration value="Joint Stereo"/>
