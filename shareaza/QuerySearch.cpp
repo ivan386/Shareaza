@@ -900,7 +900,9 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 	if ( pszSchemaURI && *pszSchemaURI && pXML )
 	{
 		TRISTATE bResult = MatchMetadata( pszSchemaURI, pXML );
-		if ( bResult != TS_UNKNOWN ) return ( bResult == TS_TRUE );
+		if ( bResult != TS_UNKNOWN && !Settings.Search.SchemaTypes )
+			return ( bResult == TS_TRUE );
+
 		if ( m_sKeywords.GetLength() > 0 )
 		{
 			bool bReject = false;
@@ -1211,8 +1213,11 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 					if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
 					{
 						ToLower( pAttribute->m_sValue );
-						MakeKeywords( pAttribute->m_sValue, bExpression );
-						AddStringToWordList( pAttribute->m_sValue );
+						CString strKeywords = pAttribute->m_sValue;
+						MakeKeywords( strKeywords, bExpression );
+						AddStringToWordList( strKeywords );
+						if ( strKeywords.GetLength() )
+							m_sKeywords += L" " + strKeywords;
 					}
 				}
 			}
@@ -1223,11 +1228,16 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 			{
 				CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
 				ToLower( pAttribute->m_sValue );
-				MakeKeywords( pAttribute->m_sValue, bExpression );
-				AddStringToWordList( pAttribute->m_sValue );
+				CString strKeywords = pAttribute->m_sValue;
+				MakeKeywords( strKeywords, bExpression );
+				AddStringToWordList( strKeywords );
+				if ( strKeywords.GetLength() )
+					m_sKeywords += L" " + strKeywords;
 			}
 		}
 	}
+
+	m_sKeywords.TrimLeft();
 }
 
 // Function is used to split a phrase in asian languages to separate keywords
