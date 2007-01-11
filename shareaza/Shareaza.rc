@@ -2183,10 +2183,10 @@ BEGIN
                     NOT WS_BORDER
 END
 
-IDD_SETTINGS_WEB DIALOG  0, 0, 282, 220
+IDD_SETTINGS_WEB DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Web"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "&Peer to Peer Link Handling:",IDC_STATIC,5,5,270,85,
                     WS_GROUP
@@ -2202,17 +2202,17 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,150,35,105,12
     CONTROL         "BitTorrent ( .torrent )",IDC_URI_TORRENT,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,150,50,105,12
-    GROUPBOX        "&Download Manager:",IDC_STATIC,5,105,270,110,WS_GROUP
+    GROUPBOX        "&Download Manager:",IDC_STATIC,5,95,270,120,WS_GROUP
     CONTROL         "Use Shareaza to manage all my web downloads:",
                     IDC_WEB_HOOK,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | 
-                    WS_TABSTOP,15,120,245,15
-    COMBOBOX        IDC_EXT_LIST,20,140,60,70,CBS_SIMPLE | CBS_AUTOHSCROLL | 
+                    WS_TABSTOP,15,110,245,15
+    COMBOBOX        IDC_EXT_LIST,20,130,60,80,CBS_SIMPLE | CBS_AUTOHSCROLL | 
                     CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
                     WS_TABSTOP
-    PUSHBUTTON      "&Add",IDC_EXT_ADD,85,140,40,15
-    PUSHBUTTON      "&Remove",IDC_EXT_REMOVE,85,158,40,15
+    PUSHBUTTON      "&Add",IDC_EXT_ADD,85,130,40,15
+    PUSHBUTTON      "&Remove",IDC_EXT_REMOVE,85,148,40,15
     LTEXT           "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads.",
-                    IDC_STATIC,135,140,130,70
+                    IDC_STATIC,135,130,130,70
 END
 
 IDD_PROFILE_IDENTITY DIALOG  0, 0, 282, 159
