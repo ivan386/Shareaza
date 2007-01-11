@@ -245,7 +245,10 @@ void CSchedulerSettingsPage::OnPaint()
 	{
 		for ( nHour = 0 ; nHour < 24 ; nHour++ )
 		{
-			if ( ( nDay == m_nHoverDay ) && ( nHour == m_nHoverHour ) )
+			if ( ( ( nDay == m_nHoverDay ) && ( nHour == m_nHoverHour ) ) ||
+				 ( ( nDay == m_nHoverDay ) && ( m_nHoverHour == 24 ) ) ||
+				 ( ( m_nHoverDay == 7 ) && ( nHour == m_nHoverHour ) ) 
+				)
 				ImageList_DrawEx( m_pTimeSlices, m_pSchedule[nDay][nHour], dc.GetSafeHdc(), rc.left + ( nHour * 16 ),
 					rc.top + ( nDay * 16 ) , 16, 16, CLR_DEFAULT, RGB( 180, 180, 180), ILD_SELECTED );
 			else
