@@ -1311,7 +1311,7 @@ BEGIN
     CONTROL         "Show a prompt before opening URIs",IDC_PROMPT_URLS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,50,148,10
     LTEXT           "Show rates in:",IDC_STATIC,15,70,56,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_RATES_IN_BYTES,74,70,80,55,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_RATES_IN_BYTES,74,70,80,80,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Downloads:",IDC_STATIC,7,93,160,38
     CONTROL         "Expand new downloads by default",IDC_EXPAND_DOWNLOAD,
