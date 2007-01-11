@@ -387,6 +387,7 @@ it.page_viruswarning_title=Attenzione ai virus
 it.page_viruswarning_subtitle=Hai installato un programma antivirus?
 it.CreateDesktopIcon=Visualizza un'icona sul &desktop
 it.CreateQuickLaunchIcon=Visualizza un'icona in &Avvio veloce
+it.PathNotExist=Errore, il percorso della cartella %1 non esiste
 ; Norwegian
 no.components_plugins=Plugins
 no.components_skins=Skins
