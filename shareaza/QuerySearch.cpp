@@ -1215,9 +1215,11 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 						ToLower( pAttribute->m_sValue );
 						CString strKeywords = pAttribute->m_sValue;
 						MakeKeywords( strKeywords, bExpression );
-						AddStringToWordList( strKeywords );
 						if ( strKeywords.GetLength() )
+						{
 							m_sKeywords += L" " + strKeywords;
+							AddStringToWordList( strKeywords );
+						}
 					}
 				}
 			}
@@ -1230,9 +1232,11 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 				ToLower( pAttribute->m_sValue );
 				CString strKeywords = pAttribute->m_sValue;
 				MakeKeywords( strKeywords, bExpression );
-				AddStringToWordList( strKeywords );
 				if ( strKeywords.GetLength() )
+				{
 					m_sKeywords += L" " + strKeywords;
+					AddStringToWordList( strKeywords );
+				}
 			}
 		}
 	}
