@@ -241,7 +241,7 @@ void CBrowseProfileCtrl::UpdateDocument1(CGProfile* pProfile)
 	if ( m_pdContactICQ != NULL )
 	{
 		m_pdContactICQ->SetText( str );
-		m_pdContactICQ->m_sLink = _T("http://web.icq.com/wwp?Uin=") + str;
+		m_pdContactICQ->m_sLink = _T("http://people.icq.com/people/about_me.php?uin=") + str;
 	}
 
 	str = pProfile->GetContact( _T("AOL") );
