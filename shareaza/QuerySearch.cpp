@@ -1213,12 +1213,11 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 					if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
 					{
 						ToLower( pAttribute->m_sValue );
-						CString strKeywords = pAttribute->m_sValue;
-						MakeKeywords( strKeywords, bExpression );
-						if ( strKeywords.GetLength() )
+						MakeKeywords( pAttribute->m_sValue, bExpression );
+						if ( pAttribute->m_sValue.GetLength() )
 						{
-							m_sKeywords += L" " + strKeywords;
-							AddStringToWordList( strKeywords );
+							m_sKeywords += L" " + pAttribute->m_sValue;
+							AddStringToWordList( pAttribute->m_sValue );
 						}
 					}
 				}
@@ -1230,12 +1229,11 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 			{
 				CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
 				ToLower( pAttribute->m_sValue );
-				CString strKeywords = pAttribute->m_sValue;
-				MakeKeywords( strKeywords, bExpression );
-				if ( strKeywords.GetLength() )
+				MakeKeywords( pAttribute->m_sValue, bExpression );
+				if ( pAttribute->m_sValue.GetLength() )
 				{
-					m_sKeywords += L" " + strKeywords;
-					AddStringToWordList( strKeywords );
+					m_sKeywords += L" " + pAttribute->m_sValue;
+					AddStringToWordList( pAttribute->m_sValue );
 				}
 			}
 		}
