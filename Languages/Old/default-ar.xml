@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default English Skin File -->
+<!-- Shareaza Default Arabic Skin File -->
 
-<!-- This skin basically represents the current Shareaza defaults. You can use this file as    -->
+<!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
 <!-- which you changed!  Including sections you did not edit will reduce performance and limit  -->
 <!-- compatibility with future versions and other skins.  -->
@@ -12,15 +12,16 @@
 
 <!-- Manifest -->
 <manifest	name="العربية"
-			author="lazorde"
-			description="Shareaza Default Arabic Skin File"
-			link="http://www.shareaza.com/"
-			email="lazorde_sa@hotmail.com"
-			version="2.1.0.18"
-			type="Language"
-			language="ar"
-			prompt="هنا اضغط العربية للغة."
-			/>
+		author="lazorde"
+		updatedBy=""
+		description="Shareaza Default Arabic Skin File"
+		link="http://www.shareaza.com/"
+		email="lazorde_sa@hotmail.com"
+		version="2.1.0.18"
+		type="Language"
+		language="ar"
+		prompt="هنا اضغط العربية للغة."
+/>
 
 <!-- Toolbar Definitions -->
 <toolbars>

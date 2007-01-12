@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Chinese Tradition Skin File -->
 
-<!-- This skin basically represents the current Shareaza defaults.  You can use this file as    -->
+<!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
 <!-- which you changed!  Including sections you did not edit will reduce performance and limit  -->
 <!-- compatibility with future versions and other skins.  -->
@@ -12,15 +12,16 @@
 
 <!-- Manifest -->
 <manifest	name="&#32321;&#39636;&#20013;&#25991;"
-			author="CML"
-			description="Shareaza &#32321;&#39636;&#20013;&#25991;&#38754;&#26495;&#27284;&#26696;"
-			link="http://edonkey2000c.24cc.com/"
-			email="edonkey2000c@yahoo.com.tw"
-			version="1.9.1.6"
-			type="Language"
-			language="cht"
-			prompt="&#25353;&#36889;&#35041;&#20358;&#36984;&#25799;&#32321;&#39636;&#20013;&#25991;&#28858;&#24744;&#25152;&#20351;&#29992;&#30340;&#35486;&#35328;."
-			/>
+		author="CML"
+		updatedBy=""
+		description="Shareaza &#32321;&#39636;&#20013;&#25991;&#38754;&#26495;&#27284;&#26696;"
+		link="http://edonkey2000c.24cc.com/"
+		email="edonkey2000c@yahoo.com.tw"
+		version="1.9.1.6"
+		type="Language"
+		language="cht"
+		prompt="&#25353;&#36889;&#35041;&#20358;&#36984;&#25799;&#32321;&#39636;&#20013;&#25991;&#28858;&#24744;&#25152;&#20351;&#29992;&#30340;&#35486;&#35328;."
+/>
 
 <!-- Toolbar Definitions -->
 <toolbars>
