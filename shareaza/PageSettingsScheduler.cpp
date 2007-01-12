@@ -44,6 +44,7 @@ BEGIN_MESSAGE_MAP(CSchedulerSettingsPage, CSettingsPage)
 	ON_WM_RBUTTONDOWN()
 	ON_WM_RBUTTONUP()
 	//}}AFX_MSG_MAP
+	ON_WM_SETCURSOR()
 END_MESSAGE_MAP()
 
 
@@ -149,6 +150,19 @@ void CSchedulerSettingsPage::OnMouseMove(UINT /*nFlags*/, CPoint point)
 				m_nHoverHour = BYTE( nHoverHour );
 			}
 
+			if ( m_nHoverDay == 7 )
+			{
+				::SetCursor( AfxGetApp()->LoadCursor( IDC_DOWN ) );
+			}
+			else if ( m_nHoverHour == 24 )
+			{
+				::SetCursor( AfxGetApp()->LoadCursor( theApp.m_bRTL ? IDC_LEFT : IDC_RIGHT ) );
+			}
+			else
+			{
+				::SetCursor( AfxGetApp()->LoadStandardCursor( IDC_ARROW ) );
+			}
+
 			if ( m_nHoverHour < 24 )
 			{
 				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
@@ -168,6 +182,7 @@ void CSchedulerSettingsPage::OnMouseMove(UINT /*nFlags*/, CPoint point)
 	}
 	else
 	{
+		::SetCursor( AfxGetApp()->LoadStandardCursor( IDC_ARROW ) );
 		m_wndDisplay.SetWindowText( _T("") );
 
 		if ( ( m_nHoverDay != 0xFF ) || ( m_nHoverHour != 0xFF ) )
@@ -325,4 +340,10 @@ void CSchedulerSettingsPage::ToggleTimeBlocks(BYTE nDirection)
 	ReleaseCapture();
 	Invalidate();
 	UpdateWindow();
+}
+
+BOOL CSchedulerSettingsPage::OnSetCursor(CWnd* /*pWnd*/, UINT /*nHitTest*/, UINT /*message*/)
+{
+	// Do not pass the event down, so cursor will be handled only here
+	return FALSE;
 }

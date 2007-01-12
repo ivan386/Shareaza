@@ -127,8 +127,8 @@ IDI_COLORS              ICON                    "res\\colors.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,4,1
- PRODUCTVERSION 2,2,4,1
+ FILEVERSION 2,2,4,2
+ PRODUCTVERSION 2,2,4,2
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 4, 1"
+            VALUE "FileVersion", "2, 2, 4, 2"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 4, 1"
+            VALUE "ProductVersion", "2, 2, 4, 2"
         END
     END
     BLOCK "VarFileInfo"
@@ -4431,6 +4431,9 @@ END
 IDC_HAND                CURSOR                  "Res\\Hand.cur"
 IDC_COPY                CURSOR                  "Res\\Copy.cur"
 IDC_MOVE                CURSOR                  "Res\\Move.cur"
+IDC_DOWN                CURSOR                  "Res\\sch-down.cur"
+IDC_RIGHT               CURSOR                  "Res\\sch-right.cur"
+IDC_LEFT                CURSOR                  "Res\\sch-left.cur"
 
 /////////////////////////////////////////////////////////////////////////////
 //
