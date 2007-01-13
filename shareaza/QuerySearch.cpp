@@ -838,7 +838,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 		{
 			if ( nLength > 3 ) nValidCharacters = nLength;
 		}
-		else if ( nLength > 2 )
+		else if ( nLength > 3 )
 		{
 			nValidCharacters = nLength;
 		}
@@ -1195,51 +1195,57 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 	if ( !bHash )
 	{
 		MakeKeywords( m_sKeywords, bExpression );
-		AddStringToWordList( m_sKeywords );
 	}
 
-	if ( m_pXML == NULL ) return;
-	
-	if ( CXMLElement* pXML = m_pXML->GetFirstElement() )
+	if ( m_pXML )
 	{
-		if ( m_pSchema != NULL )
+		if ( CXMLElement* pXML = m_pXML->GetFirstElement() )
 		{
-			for ( POSITION pos = m_pSchema->GetMemberIterator() ; pos ; )
+			if ( m_pSchema != NULL )
 			{
-				CSchemaMember* pMember = m_pSchema->GetNextMember( pos );
-				
-				if ( pMember->m_bIndexed )
+				for ( POSITION pos = m_pSchema->GetMemberIterator() ; pos ; )
 				{
-					if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
+					CSchemaMember* pMember = m_pSchema->GetNextMember( pos );
+
+					if ( pMember->m_bIndexed )
 					{
-						ToLower( pAttribute->m_sValue );
-						MakeKeywords( pAttribute->m_sValue, bExpression );
-						if ( pAttribute->m_sValue.GetLength() )
+						if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
 						{
-							m_sKeywords += L" " + pAttribute->m_sValue;
-							AddStringToWordList( pAttribute->m_sValue );
+							ToLower( pAttribute->m_sValue );
+							CString strKeywords = pAttribute->m_sValue;
+							MakeKeywords( strKeywords, bExpression );
+							if ( strKeywords.GetLength() )
+								m_sKeywords += L" " + strKeywords;
+						}
+					}
+					else
+					{
+						if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
+						{
+							ToLower( pAttribute->m_sValue );
+							//MakeKeywords( pAttribute->m_sValue, bExpression );
 						}
 					}
 				}
 			}
-		}
-		else
-		{
-			for ( POSITION pos = pXML->GetAttributeIterator() ; pos ; )
+			else
 			{
-				CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
-				ToLower( pAttribute->m_sValue );
-				MakeKeywords( pAttribute->m_sValue, bExpression );
-				if ( pAttribute->m_sValue.GetLength() )
+				for ( POSITION pos = pXML->GetAttributeIterator() ; pos ; )
 				{
-					m_sKeywords += L" " + pAttribute->m_sValue;
-					AddStringToWordList( pAttribute->m_sValue );
+					CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
+					ToLower( pAttribute->m_sValue );
+					CString strKeywords = pAttribute->m_sValue;
+					MakeKeywords( strKeywords, bExpression );
+					if ( strKeywords.GetLength() )
+						m_sKeywords += L" " + strKeywords;
 				}
 			}
 		}
 	}
 
 	m_sKeywords.TrimLeft();
+
+	AddStringToWordList( m_sKeywords );
 }
 
 // Function is used to split a phrase in asian languages to separate keywords
