@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
 
@@ -2099,7 +2099,7 @@
 		<newline gap="8"/>
 		<link target="http://www.shareaza.com/help/?torrentencoding">Click here for additional help</link>
 		<text>, or to download software to repair the torrent.</text>
-</document>
+	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Your eDonkey server list is empty</text>
