@@ -54,8 +54,8 @@ protected:
 	CImageList		m_pTimeSlices;			// Images for the three states a time slice can be in
 	CBitmap			m_bmHeader;				// Header graphic (times)
 
-	BYTE			m_nHoverDay;
-	BYTE			m_nHoverHour;
+	BYTE			m_nHoverDay;			// The day of the week (0-6) or all days of the week (7)
+	BYTE			m_nHoverHour;			// The hour of the day (0-23) or all hours of the day (24)
 	BYTE			m_nDownDay;
 	BYTE			m_nDownHour;
 
@@ -79,7 +79,6 @@ protected:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
@@ -88,6 +87,7 @@ protected:
 
 private:
 	void ToggleTimeBlocks(BYTE nDirection);
+	void InvalidateSchedulerRect();
 };
 
 //{{AFX_INSERT_LOCATION}}
