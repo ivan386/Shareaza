@@ -468,6 +468,7 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 			if ( bDoIt )
 				return AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
 			delete pURL;
+			pTorrent = NULL;	// Deleted inside CShareazaURL::Clear()
 		}
 	}
 	delete pTorrent;

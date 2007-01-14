@@ -162,8 +162,8 @@ void CTorrentSeedDlg::OnDownload()
 		EndDialog( IDOK );
 		return;
 	}
-	
-	delete pTorrent;
+	else
+		delete pTorrent;
 	theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, (LPCTSTR)m_sTorrent );
 	EndDialog( IDOK );
 }

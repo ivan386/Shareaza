@@ -165,8 +165,8 @@ void CDownloadDlg::OnTorrentFile()
 		
 		delete pURL;
 	}
-	
-	delete pTorrent;
+	else
+		delete pTorrent;
 }
 
 void CDownloadDlg::OnOK() 
