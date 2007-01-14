@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -492,7 +492,13 @@ void CMainWnd::OnDestroy()
 	if ( m_wndRemoteWnd.IsVisible() ) m_wndRemoteWnd.DestroyWindow();
 	
 	Network.Disconnect();
-	
+
+	if ( CWnd* pDockBar = GetDlgItem( AFX_IDW_DOCKBAR_TOP ) )
+	{
+		LONG_PTR nBrush = GetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND );
+		if ( nBrush > 64 ) DeleteObject( (HBRUSH)nBrush );
+	}
+
 	CMDIFrameWnd::OnDestroy();
 }
 
