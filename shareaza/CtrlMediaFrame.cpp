@@ -1,11 +1,7 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2006/03/25 15:25:46 $"
-//	Revision:		"$Revision: 1.44 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -148,6 +144,8 @@ CMediaFrame::CMediaFrame()
 	m_bListVisible		= Settings.MediaPlayer.ListVisible;
 	m_nListSize			= Settings.MediaPlayer.ListSize;
 	m_bStatusVisible	= Settings.MediaPlayer.StatusVisible;
+	m_rcVideo.SetRectEmpty();
+	m_rcStatus.SetRectEmpty();
 	m_bScreenSaverEnabled = TRUE;
 	m_nVidAC = m_nVidDC = 0;
 	m_nPowerSchemeId = 0;
