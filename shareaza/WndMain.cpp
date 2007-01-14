@@ -2524,8 +2524,8 @@ IMPLEMENT_DROP(CMainWnd,CMDIFrameWnd)
 
 BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* ptScreen */, DWORD* pdwEffect, BOOL bDrop)
 {
-	if ( ! pDataObj )
-		return TRUE;
+	if ( ! pDataObj || ! pdwEffect )
+		return FALSE;
 
 	FORMATETC fmtcFiles = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
 	FORMATETC fmtcURL = { (CLIPFORMAT) RegisterClipboardFormat( CFSTR_SHELLURL ), NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
@@ -2541,8 +2541,9 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 			{
 				bAccepted = CShareazaApp::Open( oFiles.GetNext( pos ), bDrop ) || bAccepted;
 			}
-
-			*pdwEffect = ( bAccepted && ! bDrop ) ? DROPEFFECT_COPY : DROPEFFECT_NONE;
+			if ( bAccepted )
+				*pdwEffect = DROPEFFECT_COPY;
+			return bAccepted;
 		}
 	}
 	else if ( SUCCEEDED ( pDataObj->QueryGetData( &fmtcURL ) ) )
@@ -2551,9 +2552,10 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 		if ( CShareazaDataSource::ObjectToURL( pDataObj, strURL ) == S_OK )
 		{
 			BOOL bAccepted = CShareazaApp::OpenURL( strURL, bDrop );
-			*pdwEffect = ( bAccepted && ! bDrop ) ? DROPEFFECT_COPY : DROPEFFECT_NONE;
+			if ( bAccepted )
+				*pdwEffect = DROPEFFECT_COPY;
+			return bAccepted;
 		}
 	}
-
 	return FALSE;
 }
