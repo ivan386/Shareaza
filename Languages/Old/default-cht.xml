@@ -3616,90 +3616,90 @@
 
 <!-- Columns Definitions -->
 <listColumns>
-    <list name="CLibraryWnd">
-        <column from="File" to="&#27284;&#26696;"/>
-        <column from="Type" to="&#39006;&#22411;"/>
-        <column from="Size" to="&#22823;&#23567;"/>
-        <column from="Hits" to="&#30896;&#25758;"/>
-        <column from="Uploads" to="&#19978;&#36617;&#25976;"/>
-    </list>   
-    <list name="CNeighboursWnd"> 
-        <column from="Address" to="&#20301;&#22336;"/>
-        <column from="Port" to="&#36899;&#25509;&#22496;"/>
-        <column from="Time" to="&#26178;&#38291;"/>
-        <column from="Packets" to="&#23553;&#21253;"/>
-        <column from="Bandwidth" to="&#38971;&#23532;"/>
-        <column from="Total" to="&#32317;&#35336;"/>
-        <column from="Flow" to="&#27969;&#31243;"/>
-        <column from="Leaves" to="&#33865;&#23376;"/>
-        <column from="Mode" to="&#27169;&#24335;"/>
-        <column from="Client" to="&#23458;&#25142;&#31471;"/>
-        <column from="Name" to="&#21517;&#31281;"/>
-    </list>  
-    <list name="CUploadCtrl">
-        <column from="Remote User" to="&#36960;&#31471;&#20351;&#29992;&#32773;"/>
-        <column from="Uploaded File" to="&#24050;&#19978;&#36617;&#27284;&#26696;"/>
-        <column from="Size" to="&#22823;&#23567;"/>
-        <column from="Progress" to="&#36914;&#24230;"/>
-        <column from="Queue" to="&#25490;&#38538;"/>
-        <column from="Speed" to="&#36895;&#24230;"/>
-        <column from="Client" to="&#23458;&#25142;&#31471;"/>
-    </list>   
-    <list name="CDownloadCtrl"> 
-        <column from="Remote File downloaded from Remote User" to="&#36960;&#31471;&#27284;&#26696;&#24050;&#19979;&#36617;&#24478;&#36960;&#31471;&#20351;&#29992;&#32773;"/>
-        <column from="Size" to="&#22823;&#23567;"/>
-        <column from="Progress" to="&#36914;&#24230;"/>
-        <column from="Speed" to="&#36895;&#24230;"/>
-        <column from="Status" to="&#29376;&#24907;"/>
-        <column from="Client" to="&#23458;&#25142;&#31471;"/>
-        <column from="Order" to="&#27425;&#24207;"/>
-    </list>    
-    <list name="CMatchCtrl">
-        <column from="File" to="&#27284;&#26696;"/>
-        <column from="Type" to="&#39006;&#22411;"/>
-        <column from="Size" to="&#22823;&#23567;"/>
-        <column from="Rating" to="&#35413;&#20729;"/>
-        <column from="Status" to="&#29376;&#24907;"/>
-        <column from="Host/Count" to="&#20027;&#27231;/&#35336;&#25976;"/>
-        <column from="Speed" to="&#36895;&#24230;"/>
-        <column from="Client" to="&#23458;&#25142;&#31471;"/>
-    </list>    
-    <list name="CDiscoveryWnd">
-        <column from="Address" to="&#20301;&#22336;"/>
-        <column from="Type" to="&#39006;&#22411;"/>
-        <column from="Last Access" to="&#26368;&#24460;&#23384;&#21462;"/>
-        <column from="Hosts" to="&#20027;&#27231;&#25976;"/>
-        <column from="Accesses" to="&#20351;&#29992;&#25976;"/>
-        <column from="Updates" to="&#26356;&#26032;&#25976;"/>
-        <column from="Failures" to="&#22833;&#25943;&#25976;"/>
-    </list>    
-    <list name="CHostCacheWnd"> 
-        <column from="Address" to="&#20301;&#22336;"/>
-        <column from="Port" to="&#36899;&#25509;&#22496;"/>
-        <column from="Client" to="&#23458;&#25142;&#31471;"/>
-        <column from="Last Seen" to="&#26368;&#24460;&#30475;&#35211;"/>
-        <column from="Name" to="&#21517;&#31281;"/>
-        <column from="Hops" to="&#36899;&#32080;&#25976;"/>
-        <column from="Files" to="&#27284;&#26696;&#25976;"/>
-        <column from="Volume" to="&#22823;&#23567;"/>
-        <column from="Description" to="&#25551;&#36848;"/>
-        <column from="CurUsers" to="&#30446;&#21069;&#20351;&#29992;&#32773;&#25976;"/>
-        <column from="MaxUsers" to="&#26368;&#22823;&#20351;&#29992;&#32773;&#25976;"/>
-    </list>    
-    <list name="CSecurityWnd">
-        <column from="Address / Content" to="&#20301;&#22336; / &#20839;&#23481;"/>
-        <column from="Action" to="&#21205;&#20316;"/>
-        <column from="Expires" to="&#21040;&#26399;"/>
-        <column from="Hits" to="&#30896;&#25758;&#25976;"/>
-        <column from="Comment" to="&#35387;&#35299;"/>
-    </list>
-    <list name="CSearchMonitorWnd"> 
+	<list name="CLibraryWnd">
+		<column from="File" to="&#27284;&#26696;"/>
+		<column from="Type" to="&#39006;&#22411;"/>
+		<column from="Size" to="&#22823;&#23567;"/>
+		<column from="Hits" to="&#30896;&#25758;"/>
+		<column from="Uploads" to="&#19978;&#36617;&#25976;"/>
+	</list>
+	<list name="CNeighboursWnd"> 
+		<column from="Address" to="&#20301;&#22336;"/>
+		<column from="Port" to="&#36899;&#25509;&#22496;"/>
+		<column from="Time" to="&#26178;&#38291;"/>
+		<column from="Packets" to="&#23553;&#21253;"/>
+		<column from="Bandwidth" to="&#38971;&#23532;"/>
+		<column from="Total" to="&#32317;&#35336;"/>
+		<column from="Flow" to="&#27969;&#31243;"/>
+		<column from="Leaves" to="&#33865;&#23376;"/>
+		<column from="Mode" to="&#27169;&#24335;"/>
+		<column from="Client" to="&#23458;&#25142;&#31471;"/>
+		<column from="Name" to="&#21517;&#31281;"/>
+	</list>
+	<list name="CUploadCtrl">
+		<column from="Remote User" to="&#36960;&#31471;&#20351;&#29992;&#32773;"/>
+		<column from="Uploaded File" to="&#24050;&#19978;&#36617;&#27284;&#26696;"/>
+		<column from="Size" to="&#22823;&#23567;"/>
+		<column from="Progress" to="&#36914;&#24230;"/>
+		<column from="Queue" to="&#25490;&#38538;"/>
+		<column from="Speed" to="&#36895;&#24230;"/>
+		<column from="Client" to="&#23458;&#25142;&#31471;"/>
+	</list>
+	<list name="CDownloadCtrl"> 
+		<column from="Remote File downloaded from Remote User" to="&#36960;&#31471;&#27284;&#26696;&#24050;&#19979;&#36617;&#24478;&#36960;&#31471;&#20351;&#29992;&#32773;"/>
+		<column from="Size" to="&#22823;&#23567;"/>
+		<column from="Progress" to="&#36914;&#24230;"/>
+		<column from="Speed" to="&#36895;&#24230;"/>
+		<column from="Status" to="&#29376;&#24907;"/>
+		<column from="Client" to="&#23458;&#25142;&#31471;"/>
+		<column from="Order" to="&#27425;&#24207;"/>
+	</list>
+	<list name="CMatchCtrl">
+		<column from="File" to="&#27284;&#26696;"/>
+		<column from="Type" to="&#39006;&#22411;"/>
+		<column from="Size" to="&#22823;&#23567;"/>
+		<column from="Rating" to="&#35413;&#20729;"/>
+		<column from="Status" to="&#29376;&#24907;"/>
+		<column from="Host/Count" to="&#20027;&#27231;/&#35336;&#25976;"/>
+		<column from="Speed" to="&#36895;&#24230;"/>
+		<column from="Client" to="&#23458;&#25142;&#31471;"/>
+	</list>
+	<list name="CDiscoveryWnd">
+		<column from="Address" to="&#20301;&#22336;"/>
+		<column from="Type" to="&#39006;&#22411;"/>
+		<column from="Last Access" to="&#26368;&#24460;&#23384;&#21462;"/>
+		<column from="Hosts" to="&#20027;&#27231;&#25976;"/>
+		<column from="Accesses" to="&#20351;&#29992;&#25976;"/>
+		<column from="Updates" to="&#26356;&#26032;&#25976;"/>
+		<column from="Failures" to="&#22833;&#25943;&#25976;"/>
+	</list>
+	<list name="CHostCacheWnd"> 
+		<column from="Address" to="&#20301;&#22336;"/>
+		<column from="Port" to="&#36899;&#25509;&#22496;"/>
+		<column from="Client" to="&#23458;&#25142;&#31471;"/>
+		<column from="Last Seen" to="&#26368;&#24460;&#30475;&#35211;"/>
+		<column from="Name" to="&#21517;&#31281;"/>
+		<column from="Hops" to="&#36899;&#32080;&#25976;"/>
+		<column from="Files" to="&#27284;&#26696;&#25976;"/>
+		<column from="Volume" to="&#22823;&#23567;"/>
+		<column from="Description" to="&#25551;&#36848;"/>
+		<column from="CurUsers" to="&#30446;&#21069;&#20351;&#29992;&#32773;&#25976;"/>
+		<column from="MaxUsers" to="&#26368;&#22823;&#20351;&#29992;&#32773;&#25976;"/>
+	</list>
+	<list name="CSecurityWnd">
+		<column from="Address / Content" to="&#20301;&#22336; / &#20839;&#23481;"/>
+		<column from="Action" to="&#21205;&#20316;"/>
+		<column from="Expires" to="&#21040;&#26399;"/>
+		<column from="Hits" to="&#30896;&#25758;&#25976;"/>
+		<column from="Comment" to="&#35387;&#35299;"/>
+	</list>
+	<list name="CSearchMonitorWnd"> 
 	<column from="Search" to="&#25628;&#23563;"/>
 	<column from="Schema" to="&#27010;&#35201;"/>
-    </list>
-    <list name="CPacketWnd"> 
+	</list>
+	<list name="CPacketWnd"> 
 	<column from="Address" to="&#20301;&#22336;"/>
 	<column from="Type" to="&#39006;&#22411;"/>
-    </list>
+	</list>
 </listColumns>
 </skin>
