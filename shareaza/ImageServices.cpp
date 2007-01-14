@@ -1,7 +1,7 @@
 //
 // ImageServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,7 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 {
 	IImageServicePlugin* pService = GetService( pszType ).first;
 	if ( pService == NULL ) return FALSE;
-	
+
 	IMAGESERVICEDATA pParams = {};
 	pParams.cbSize		= sizeof(pParams);
 	if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
@@ -343,11 +343,10 @@ CImageServices::PluginInfo CImageServices::LoadService(const CString& strType)
 	HINSTANCE hRes = AfxGetResourceHandle();
 	AfxSetResourceHandle( hRes );
 
-	void* pService = NULL;
+	CComPtr< IImageServicePlugin > pService;
 	if ( FAILED( CoCreateInstance( oCLSID, NULL, CLSCTX_ALL|dwContext,
-		IID_IImageServicePlugin, &pService ) ) )
+		IID_IImageServicePlugin, (void**)&pService ) ) )
 	{
-		//theApp.Message( MSG_DEBUG, _T("CImageServices::CoCreateInstance() -> %lu"), hResult );
 		return PluginInfo();
 	}
 
