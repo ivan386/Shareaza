@@ -1,7 +1,7 @@
 //
 // SkinWindow.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,6 +71,7 @@ CSkinWindow::CSkinWindow()
 	m_nHoverAnchor	= 0;
 	m_nDownAnchor	= 0;
 	m_nMirror = 0;
+	m_rcMirror.SetRectEmpty();
 }
 
 CSkinWindow::~CSkinWindow()
