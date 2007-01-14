@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -526,7 +526,8 @@ BOOL CLibrary::ThreadScan()
 			m_nUpdateCookie = m_nUpdateSaved = tTime - Settings.Library.WatchFoldersTimeout * 1000;
 	}
 
-	CSingleLock pLock( &m_pSection, TRUE );
+	CSingleLock pLock( &m_pSection );
+	if ( ! pLock.Lock( 100 ) ) return FALSE;
 
 	m_nScanCount++;
 	if ( bChanged ) m_nUpdateCookie = GetTickCount();
@@ -542,6 +543,8 @@ BOOL CLibrary::ThreadScan()
 			StartThread();
 		}
 	}
+
+	pLock.Unlock();
 
 	return bChanged;
 }
