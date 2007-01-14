@@ -115,7 +115,7 @@ UINT AsyncFileOperationThread(LPVOID param)
 			NULL,
 			NULL
 		};
-		VERIFY( SHFileOperation( &sFileOp ) == 0 );
+		SHFileOperation( &sFileOp );
 
 		OleUninitialize();
 	}
@@ -203,7 +203,7 @@ protected:
 IMPLEMENT_DYNCREATE(CShareazaDataSource, CComObject)
 
 // {34791E02-51DC-4CF4-9E34-018166D91D0E}
-IMPLEMENT_OLECREATE_FLAGS(CShareazaDataSource, "Shareaza.DataSource", afxRegApartmentThreading, 0x34791e02, 0x51dc, 0x4cf4, 0x9e, 0x34, 0x1, 0x81, 0x66, 0xd9, 0x1d, 0xe);
+IMPLEMENT_OLECREATE_FLAGS(CShareazaDataSource, "Shareaza.DataSource", afxRegFreeThreading|afxRegApartmentThreading, 0x34791e02, 0x51dc, 0x4cf4, 0x9e, 0x34, 0x1, 0x81, 0x66, 0xd9, 0x1d, 0xe);
 
 CShareazaDataSource::CShareazaDataSource() :
 	m_rgde (NULL ),
@@ -296,22 +296,22 @@ UINT CShareazaDataSource::DragDropThread(LPVOID param)
 
 // Perform CLibraryList drag operation
 
-HRESULT CShareazaDataSource::DoDragDrop(const CLibraryList* pList, HBITMAP pImage, const Hashes::Guid& oGUID)
+HRESULT CShareazaDataSource::DoDragDrop(const CLibraryList* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset)
 {
-	return DoDragDrop < CLibraryList > (pList, pImage, oGUID);
+	return DoDragDrop < CLibraryList > (pList, pImage, oGUID, ptOffset);
 }
 
 // Perform CLibraryTreeItem drag operation
 
-HRESULT CShareazaDataSource::DoDragDrop(const CLibraryTreeItem* pList, HBITMAP pImage, const Hashes::Guid& oGUID)
+HRESULT CShareazaDataSource::DoDragDrop(const CLibraryTreeItem* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset)
 {
-	return DoDragDrop < CLibraryTreeItem > (pList, pImage, oGUID);
+	return DoDragDrop < CLibraryTreeItem > (pList, pImage, oGUID, ptOffset);
 }
 
 // Perform universal drag operation
 
 template < typename T >
-HRESULT CShareazaDataSource::DoDragDrop(const T* pList, HBITMAP pImage, const Hashes::Guid& oGUID)
+HRESULT CShareazaDataSource::DoDragDrop(const T* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset)
 {
 	ASSERT_VALID( pList );
 
@@ -329,7 +329,7 @@ HRESULT CShareazaDataSource::DoDragDrop(const T* pList, HBITMAP pImage, const Ha
 			if ( SUCCEEDED( hr ) )
 			{
 				// Prepare IDragSourceHelper handler
-				hr = Add( pIDataObject, pImage );
+				hr = Add( pIDataObject, pImage, ptOffset );
 
 				// Send data object to thread
 				IStream* pStream = NULL;
@@ -732,7 +732,7 @@ HRESULT CShareazaDataSource::Add(IDataObject* pIDataObject)
 
 // Add medias by IDragSourceHelper
 
-HRESULT CShareazaDataSource::Add(IDataObject* pIDataObject, HBITMAP pImage)
+HRESULT CShareazaDataSource::Add(IDataObject* pIDataObject, HBITMAP pImage, const CPoint& ptOffset)
 {
 	CComQIPtr< IDragSourceHelper, &IID_IDragSourceHelper > pIDragSourceHelper( pIDataObject );
 	HRESULT hr = S_FALSE;
@@ -743,16 +743,10 @@ HRESULT CShareazaDataSource::Add(IDataObject* pIDataObject, HBITMAP pImage)
 		GetObject( pImage, sizeof( BITMAP ), &bmpInfo );
 		shdi.sizeDragImage.cx = bmpInfo.bmWidth;
 		shdi.sizeDragImage.cy = bmpInfo.bmHeight;
-		shdi.ptOffset.x = 8;
-		shdi.ptOffset.y = 8;
+		shdi.ptOffset.x = ptOffset.x;
+		shdi.ptOffset.y = ptOffset.y;
 		shdi.hbmpDragImage = pImage;
-		HDC hdcScreen = GetDC( NULL );
-		HDC hdcMem = CreateCompatibleDC( hdcScreen );
-		ReleaseDC( NULL, hdcScreen );
-		HBITMAP hbmpOld = (HBITMAP) SelectObject( hdcMem, pImage );
-		shdi.crColorKey = GetPixel( hdcMem, 0, 0 );
-		SelectObject( hdcMem, hbmpOld );
-		DeleteDC( hdcMem );
+		shdi.crColorKey = DRAG_COLOR_KEY;
 		hr = pIDragSourceHelper->InitializeFromBitmap( &shdi, pIDataObject );
 	}
 	return hr;

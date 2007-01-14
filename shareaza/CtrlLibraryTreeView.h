@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -88,7 +88,7 @@ protected:
 	BOOL				CleanItems(CLibraryTreeItem* pItem, DWORD nCookie, BOOL bVisible);
 	BOOL				CollapseRecursive(CLibraryTreeItem* pItem);
 	void				NotifySelection();
-	HBITMAP				CreateDragImage(const CPoint& ptMouse);
+	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
 	void				StartDragging(CPoint& ptMouse);
 	void				PostUpdate();
 	void				UpdatePhysical(DWORD nSelectCookie);

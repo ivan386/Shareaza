@@ -1,7 +1,7 @@
 //
 // CtrlMediaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -406,7 +406,7 @@ void CMediaListCtrl::OnCustomDraw(NMLVCUSTOMDRAW* pNotify, LRESULT* pResult)
 			pNotify->clrTextBk	= RGB( 0, 0, 0x30 );
 		}
 
-		if ( m_bCreateDragImage ) pNotify->clrTextBk = RGB( 0, 255, 0 );
+		if ( m_bCreateDragImage ) pNotify->clrTextBk = DRAG_COLOR_KEY;
 
 		*pResult = CDRF_DODEFAULT;
 	}

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -286,7 +286,8 @@ void CLibraryView::OnDestroy()
 
 void CLibraryView::StartDragging(const CPoint& ptMouse)
 {
-	HBITMAP pImage = CreateDragImage( ptMouse );
+	CPoint ptMiddle( 0, 0 );
+	HBITMAP pImage = CreateDragImage( ptMouse, ptMiddle );
 	if ( ! pImage )
 		return;
 
@@ -297,10 +298,10 @@ void CLibraryView::StartDragging(const CPoint& ptMouse)
 	{
 		oGUID = ((CAlbumFolder*)oHit)->m_oGUID;
 	}
-	CShareazaDataSource::DoDragDrop( &m_pSelection, pImage, oGUID );
+	CShareazaDataSource::DoDragDrop( &m_pSelection, pImage, oGUID, ptMiddle );
 }
 
-HBITMAP CLibraryView::CreateDragImage(const CPoint& /*ptMouse*/)
+HBITMAP CLibraryView::CreateDragImage(const CPoint& /*ptMouse*/, CPoint& /*ptMiddle*/)
 {
 	return NULL;
 }

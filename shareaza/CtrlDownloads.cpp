@@ -1,11 +1,7 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.42 $"
-//  Last change by:	"$Author: thetruecamper $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -898,7 +894,7 @@ void CDownloadsCtrl::OnPaint()
 
 void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDownload, BOOL bFocus, BOOL bDrop)
 {
-	COLORREF crNatural	= m_bCreateDragImage ? RGB( 250, 255, 250 ) : CoolInterface.m_crWindow;
+	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
 	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
 
 	if ( bDrop )
@@ -1136,7 +1132,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 
 void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus)
 {
-	COLORREF crNatural	= m_bCreateDragImage ? RGB( 250, 255, 250 ) : CoolInterface.m_crWindow;
+	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
 	COLORREF crBack		= pSource->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
 	
 	dc.SetBkColor( crBack );
@@ -2019,9 +2015,6 @@ void CDownloadsCtrl::OnBeginDrag(CPoint ptAction)
 	pWindow->DragDownloads( pSel, pDragImage, ptAction );
 }
 
-#define MAX_DRAG_SIZE	128
-#define MAX_DRAG_SIZE_2	(MAX_DRAG_SIZE/2)
-
 CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPoint& ptMouse)
 {
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
@@ -2065,7 +2058,7 @@ CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPo
 	
 	CBitmap *pOldDrag = dcDrag.SelectObject( &bmDrag );
 	
-	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), RGB( 250, 255, 250 ) );
+	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), DRAG_COLOR_KEY );
 	
 	CRgn pRgn;
 	
@@ -2088,7 +2081,7 @@ CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPo
 		
 		if ( rcDummy.IntersectRect( &rcAll, &rcOne ) )
 		{
-			dcDrag.FillSolidRect( &rcOut, RGB( 250, 255, 250 ) );
+			dcDrag.FillSolidRect( &rcOut, DRAG_COLOR_KEY );
 			PaintDownload( dcDrag, rcOut, pDownload, FALSE, FALSE );
 		}
 	}
@@ -2099,7 +2092,7 @@ CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPo
 	
 	CImageList* pAll = new CImageList();
 	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
-	pAll->Add( &bmDrag, RGB( 250, 255, 250 ) ); 
+	pAll->Add( &bmDrag, DRAG_COLOR_KEY ); 
 	
 	bmDrag.DeleteObject();
 	

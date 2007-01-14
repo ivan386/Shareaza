@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,13 +44,13 @@ public:
 	// pList - list item being dragged
 	// pImage - bitmap of item
 	// oGUID - GUID of parent folder ( only for albums )
-	static HRESULT DoDragDrop(const CLibraryList* pList, HBITMAP pImage, const Hashes::Guid& oGUID);
+	static HRESULT DoDragDrop(const CLibraryList* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset);
 
 	// Perform CLibraryTreeItem drag operation
 	// pList - tree item being dragged
 	// pImage - bitmap of item
 	// oGUID - GUID of parent folder ( only for albums )
-	static HRESULT DoDragDrop(const CLibraryTreeItem* pList, HBITMAP pImage, const Hashes::Guid& oGUID);
+	static HRESULT DoDragDrop(const CLibraryTreeItem* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset);
 
 	// Get CFSTR_SHELLURL as string from data object
 	static HRESULT ObjectToURL(IDataObject* pObject, CString& str);
@@ -126,13 +126,13 @@ protected:
 
 	// Perform universal drag operation
 	template < typename T > static UINT DragDropThread(LPVOID param);
-	template < typename T > static HRESULT DoDragDrop(const T* pList, HBITMAP pImage, const Hashes::Guid& oGUID);
+	template < typename T > static HRESULT DoDragDrop(const T* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset);
 
 	// Add CF_SHAREAZA
 	static HRESULT	Add(IDataObject* pIDataObject);
 
 	// Add medias by IDragSourceHelper
-	static HRESULT	Add(IDataObject* pIDataObject, HBITMAP pImage);
+	static HRESULT	Add(IDataObject* pIDataObject, HBITMAP pImage, const CPoint& ptOffset);
 
 	// Add CF_HDROP/CF_SHAREAZA_ALBUMS/CF_SHAREAZA_FILES
 	template < typename T > static HRESULT AddFiles(IDataObject* pIDataObject, const T* pSelFirst, const Hashes::Guid& oGUID);

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTileView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,7 +107,7 @@ public:
 	virtual void				Update();
 	virtual BOOL				Select(DWORD nObject);
 	virtual CLibraryListItem	DropHitTest(const CPoint& point);
-	virtual HBITMAP				CreateDragImage(const CPoint& ptMouse);
+	virtual HBITMAP				CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
 private:
 	void			clear();
 //	int				GetTileIndex(CLibraryTileItem* pTile) const;

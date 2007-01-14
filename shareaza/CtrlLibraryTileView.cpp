@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -745,10 +745,7 @@ void CLibraryTileView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTileView drag setup
 
-#define MAX_DRAG_SIZE	256
-#define MAX_DRAG_SIZE_2	128
-
-HBITMAP CLibraryTileView::CreateDragImage(const CPoint& ptMouse)
+HBITMAP CLibraryTileView::CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle)
 {
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 
@@ -790,13 +787,13 @@ HBITMAP CLibraryTileView::CreateDragImage(const CPoint& ptMouse)
 
 	CBitmap *pOldDrag = dcDrag.SelectObject( &bmDrag );
 
-	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), RGB( 250, 255, 250 ) );
+	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), DRAG_COLOR_KEY );
 
 	CRgn pRgn;
 
+	ptMiddle.SetPoint( ptMouse.x - rcAll.left, ptMouse.y - rcAll.top );
 	if ( bClipped )
 	{
-		CPoint ptMiddle( ptMouse.x - rcAll.left, ptMouse.y - rcAll.top );
 		pRgn.CreateEllipticRgn(	ptMiddle.x - MAX_DRAG_SIZE_2, ptMiddle.y - MAX_DRAG_SIZE_2,
 								ptMiddle.x + MAX_DRAG_SIZE_2, ptMiddle.y + MAX_DRAG_SIZE_2 );
 		dcDrag.SelectClipRgn( &pRgn );
@@ -814,7 +811,7 @@ HBITMAP CLibraryTileView::CreateDragImage(const CPoint& ptMouse)
 
 		if ( rcDummy.IntersectRect( &rcAll, &rcOne ) )
 		{
-			pBuffer->FillSolidRect( &rcBuffer, RGB( 250, 255, 250 ) );
+			pBuffer->FillSolidRect( &rcBuffer, DRAG_COLOR_KEY );
 			( *pTile )->Paint( pBuffer, rcBuffer, &dcMem );
 			dcDrag.BitBlt( rcOne.left - rcAll.left, rcOne.top - rcAll.top,
 				m_szBlock.cx, m_szBlock.cy, pBuffer, 0, 0, SRCCOPY );

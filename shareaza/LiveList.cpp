@@ -470,12 +470,7 @@ BOOL CLiveList::IsNumber(LPCTSTR pszString)
 //////////////////////////////////////////////////////////////////////
 // CLiveList dragging helper
 
-#define MAX_DRAG_SIZE	128
-#define MAX_DRAG_SIZE_2	(MAX_DRAG_SIZE/2)
-
-COLORREF CLiveList::crDrag = RGB( 250, 255, 250 );
-
-HBITMAP CLiveList::CreateDragBitmap(CListCtrl* pList, const CPoint& ptMouse)
+HBITMAP CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse, CPoint& ptMiddle)
 {
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 	int nIndex;
@@ -526,22 +521,22 @@ HBITMAP CLiveList::CreateDragBitmap(CListCtrl* pList, const CPoint& ptMouse)
 
 	CBitmap *pOldAll = dcAll.SelectObject( &bmAll );
 
-	dcAll.FillSolidRect( &rcClient, crDrag );
+	dcAll.FillSolidRect( &rcClient, DRAG_COLOR_KEY );
 
 	COLORREF crBack = pList->GetBkColor();
-	pList->SetBkColor( crDrag );
+	pList->SetBkColor( DRAG_COLOR_KEY );
 	pList->SendMessage( WM_PAINT, (WPARAM)dcAll.GetSafeHdc() );
 	pList->SetBkColor( crBack );
 
 	CBitmap *pOldDrag = dcDrag.SelectObject( &bmDrag );
 
-	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), crDrag );
+	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), DRAG_COLOR_KEY );
 
 	CRgn pRgn;
 
+	ptMiddle.SetPoint( ptMouse.x - rcAll.left, ptMouse.y - rcAll.top );
 	if ( bClipped )
 	{
-		CPoint ptMiddle( ptMouse.x - rcAll.left, ptMouse.y - rcAll.top );
 		pRgn.CreateEllipticRgn(	ptMiddle.x - MAX_DRAG_SIZE_2, ptMiddle.y - MAX_DRAG_SIZE_2,
 								ptMiddle.x + MAX_DRAG_SIZE_2, ptMiddle.y + MAX_DRAG_SIZE_2 );
 		dcDrag.SelectClipRgn( &pRgn );
@@ -570,17 +565,16 @@ HBITMAP CLiveList::CreateDragBitmap(CListCtrl* pList, const CPoint& ptMouse)
 
 CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 {
+	CPoint ptOffset( 0, 0 );
 	CBitmap bmDrag;
-	bmDrag.Attach( CreateDragBitmap( pList, ptMouse) );
+	bmDrag.Attach( CreateDragImage( pList, ptMouse, ptOffset) );
 	BITMAP bmpInfo;
 	bmDrag.GetBitmap( &bmpInfo );
 	CImageList* pAll = new CImageList();
 	pAll->Create( bmpInfo.bmWidth, bmpInfo.bmHeight, ILC_COLOR16|ILC_MASK, 1, 1 );
-	pAll->Add( &bmDrag, crDrag );
-
+	pAll->Add( &bmDrag, DRAG_COLOR_KEY );
 	bmDrag.DeleteObject();
-
-	pAll->BeginDrag( 0, ptMouse /*- rcAll.TopLeft()*/ );
+	pAll->BeginDrag( 0, ptOffset );
 
 	return pAll;
 }

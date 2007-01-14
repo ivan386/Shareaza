@@ -1,7 +1,7 @@
 //
 // Shareaza.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -309,3 +309,8 @@ inline bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
 #define BT_ID1				'S'
 #define BT_ID2				'~'
 
+// Drag-n-drop stuff
+
+#define MAX_DRAG_SIZE		256
+#define MAX_DRAG_SIZE_2		(MAX_DRAG_SIZE/2)
+#define DRAG_COLOR_KEY		(RGB(250,255,250))	// Light-green

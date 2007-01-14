@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -971,15 +971,13 @@ BOOL CLibraryTreeView::GetRect(CPoint& pt, CLibraryTreeItem* pItem, CLibraryTree
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView drag setup
 
-#define MAX_DRAG_SIZE	256
-#define MAX_DRAG_SIZE_2	128
-
 void CLibraryTreeView::StartDragging(CPoint& ptMouse)
 {
-	if ( !m_pSelFirst )
+	if ( ! m_pSelFirst )
 		return;
 
-	HBITMAP pImage = CreateDragImage( ptMouse );
+	CPoint ptMiddle( 0, 0 );
+	HBITMAP pImage = CreateDragImage( ptMouse, ptMiddle );
 	if ( ! pImage )
 		return;
 
@@ -989,10 +987,10 @@ void CLibraryTreeView::StartDragging(CPoint& ptMouse)
 	{
 		oGUID = m_pSelFirst->parent()->m_pVirtual->m_oGUID;
 	}
-	CShareazaDataSource::DoDragDrop ( m_pSelFirst, pImage, oGUID );
+	CShareazaDataSource::DoDragDrop ( m_pSelFirst, pImage, oGUID, ptMiddle );
 }
 
-HBITMAP CLibraryTreeView::CreateDragImage(const CPoint& ptMouse)
+HBITMAP CLibraryTreeView::CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle)
 {
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 
@@ -1035,13 +1033,13 @@ HBITMAP CLibraryTreeView::CreateDragImage(const CPoint& ptMouse)
 
 	CBitmap *pOldDrag = dcDrag.SelectObject( &bmDrag );
 
-	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), RGB( 250, 255, 250 ) );
+	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), DRAG_COLOR_KEY );
 
 	CRgn pRgn;
 
+	ptMiddle.SetPoint( ptMouse.x - rcAll.left, ptMouse.y - rcAll.top );
 	if ( bClipped )
 	{
-		CPoint ptMiddle( ptMouse.x - rcAll.left, ptMouse.y - rcAll.top );
 		pRgn.CreateEllipticRgn(	ptMiddle.x - MAX_DRAG_SIZE_2, ptMiddle.y - MAX_DRAG_SIZE_2,
 								ptMiddle.x + MAX_DRAG_SIZE_2, ptMiddle.y + MAX_DRAG_SIZE_2 );
 		dcDrag.SelectClipRgn( &pRgn );
@@ -1057,21 +1055,13 @@ HBITMAP CLibraryTreeView::CreateDragImage(const CPoint& ptMouse)
 		if ( rcDummy.IntersectRect( &rcAll, &rcOne ) )
 		{
 			rcOne.OffsetRect( -rcAll.left, -rcAll.top );
-			pItem->Paint( dcDrag, rcOne, FALSE, RGB( 250, 255, 250 ) );
+			pItem->Paint( dcDrag, rcOne, FALSE, DRAG_COLOR_KEY );
 		}
 	}
 
 	dcDrag.SelectObject( pOldFont );
 	dcDrag.SelectObject( pOldDrag );
 	dcDrag.DeleteDC();
-
-/*	CImageList* pAll = new CImageList();
-	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
-	pAll->Add( &bmDrag, RGB( 250, 255, 250 ) );
-
-	bmDrag.DeleteObject();
-
-	pAll->BeginDrag( 0, ptMouse - rcAll.TopLeft() );*/
 
 	return (HBITMAP) bmDrag.Detach();
 }

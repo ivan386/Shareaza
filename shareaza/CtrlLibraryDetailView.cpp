@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -900,7 +900,7 @@ void CLibraryDetailView::OnCustomDraw(NMLVCUSTOMDRAW* pNotify, LRESULT* pResult)
 
 		if ( m_bCreateDragImage )
 		{
-			pNotify->clrTextBk = RGB( 250, 255, 250 );
+			pNotify->clrTextBk = DRAG_COLOR_KEY;
 		}
 
 		*pResult = CDRF_DODEFAULT;
@@ -991,11 +991,11 @@ void CLibraryDetailView::OnBeginDrag(NM_LISTVIEW* pNotify, LRESULT* /*pResult*/)
 	StartDragging( ptAction );
 }
 
-HBITMAP CLibraryDetailView::CreateDragImage(const CPoint& ptMouse)
+HBITMAP CLibraryDetailView::CreateDragImage(const CPoint& ptMouse, CPoint& ptOffset)
 {
 	GET_LIST();
 	m_bCreateDragImage = TRUE;
-	HBITMAP pImage = CLiveList::CreateDragBitmap( pList, ptMouse );
+	HBITMAP pImage = CLiveList::CreateDragImage( pList, ptMouse, ptOffset );
 	m_bCreateDragImage = FALSE;
 	return pImage;
 }

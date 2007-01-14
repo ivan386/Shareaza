@@ -1,7 +1,7 @@
 //
 // CtrlLibraryAlbumView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,7 +67,7 @@ public:
 	virtual void		Update();
 	virtual BOOL		Select(DWORD nObject);
 	virtual DWORD_PTR 	HitTestIndex(const CPoint& point) const;
-	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse);
+	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
 protected:
 	void				Clear();
 	BOOL				Select(CLibraryAlbumTrack* pItem, TRISTATE bSelect = TS_TRUE);
