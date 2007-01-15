@@ -1638,7 +1638,7 @@
 				RelativePath="..\shareaza\ComMenu.h">
 			</File>
 			<File
-				RelativePath="..\shareaza\.\CommonInclude.hpp">
+				RelativePath="..\shareaza\CommonInclude.hpp">
 			</File>
 			<File
 				RelativePath="..\shareaza\ComObject.h">
@@ -1878,7 +1878,7 @@
 				RelativePath="..\shareaza\MetaPanel.h">
 			</File>
 			<File
-				RelativePath="..\shareaza\.\MinMax.hpp">
+				RelativePath="..\shareaza\MinMax.hpp">
 			</File>
 			<File
 				RelativePath="..\shareaza\Neighbour.h">
@@ -2941,7 +2941,7 @@
 				RelativePath="..\shareaza\Res\Firewalled.ico">
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\FlagEnglish.ICO">
+				RelativePath="..\shareaza\Res\FlagEnglish.ico">
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Hand.cur">
@@ -2983,19 +2983,19 @@
 				RelativePath="..\shareaza\Res\LogoLarge.jpg">
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\mail.ico">
+				RelativePath="..\shareaza\Res\Mail.ico">
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Manifest.xml">
 			</File>
 			<File
-				RelativePath="..\shareaza\.\Res\Manifest64.xml">
+				RelativePath="..\shareaza\Res\Manifest64.xml">
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Media.ico">
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\mediaStates.bmp">
+				RelativePath="..\shareaza\Res\MediaStates.bmp">
 			</File>
 			<File
 				RelativePath="..\shareaza\res\MenuBar.bmp">
@@ -3022,7 +3022,7 @@
 				RelativePath="..\shareaza\Res\Packets.ico">
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\Paintbrushes.ICO">
+				RelativePath="..\shareaza\Res\Paintbrushes.ico">
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\PanelMark.bmp">
@@ -3035,6 +3035,15 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\RemoteWnd.bmp">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\sch-down.cur">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\sch-left.cur">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\sch-right.cur">
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Scheduler.bmp">
@@ -3125,7 +3134,7 @@
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath=".\release\shareaza\Shareaza_i.c">
+				RelativePath="release\shareaza\Shareaza_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="TRUE">
@@ -3143,7 +3152,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\debug\shareaza\Shareaza_i.c">
+				RelativePath="debug\shareaza\Shareaza_i.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool

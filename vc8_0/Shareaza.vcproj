@@ -2777,7 +2777,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\.\CommonInclude.hpp"
+				RelativePath="..\shareaza\CommonInclude.hpp"
 				>
 			</File>
 			<File
@@ -3097,7 +3097,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\.\MinMax.hpp"
+				RelativePath="..\shareaza\MinMax.hpp"
 				>
 			</File>
 			<File
@@ -4536,7 +4536,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\FlagEnglish.ICO"
+				RelativePath="..\shareaza\Res\FlagEnglish.ico"
 				>
 			</File>
 			<File
@@ -4593,7 +4593,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\mail.ico"
+				RelativePath="..\shareaza\Res\Mail.ico"
 				>
 			</File>
 			<File
@@ -4601,7 +4601,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\.\Res\Manifest64.xml"
+				RelativePath="..\shareaza\Res\Manifest64.xml"
 				>
 			</File>
 			<File
@@ -4609,7 +4609,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\mediaStates.bmp"
+				RelativePath="..\shareaza\Res\MediaStates.bmp"
 				>
 			</File>
 			<File
@@ -4645,7 +4645,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\Paintbrushes.ICO"
+				RelativePath="..\shareaza\Res\Paintbrushes.ico"
 				>
 			</File>
 			<File
@@ -4662,6 +4662,18 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\RemoteWnd.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\sch-down.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\sch-left.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\sch-right.cur"
 				>
 			</File>
 			<File
@@ -4781,7 +4793,7 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\releasewin32\shareaza\Shareaza_i.c"
+				RelativePath="releasewin32\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -4830,7 +4842,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\debugwin32\shareaza\Shareaza_i.c"
+				RelativePath="debugwin32\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -4871,7 +4883,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\debugx64\shareaza\Shareaza_i.c"
+				RelativePath="debugx64\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -4919,7 +4931,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\releasex64\shareaza\Shareaza_i.c"
+				RelativePath="releasex64\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
