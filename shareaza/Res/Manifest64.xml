@@ -7,7 +7,7 @@
    <assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="AMD64" publicKeyToken="6595b64144ccf1df" language="*"/>
   </dependentAssembly>
  </dependency>
-    <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2"> 
+   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2"> 
       <security>
         <requestedPrivileges>
           <requestedExecutionLevel level="highestAvailable" uiAccess="false"/>
