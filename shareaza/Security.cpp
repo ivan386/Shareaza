@@ -1154,11 +1154,12 @@ void CAdultFilter::Load()
 
 	// Insert some defaults if the load failed
 	if ( strBlockedWords.IsEmpty() )
-		strBlockedWords = L"xxx porn fuck cock cunt vagina pussy nude naked hentai lesbian "
-						  L"whore shit rape preteen hardcore lolita playboy penthouse dildo "
-						  L"upskirt beastiality bestiality pedofil necrofil ";
+		strBlockedWords = L"xxx porn fuck cock cunt vagina pussy nude naked boobs breast hentai "
+						  L"lesbian whore shit rape preteen hardcore lolita playboy penthouse "
+						  L"topless r-rated x-rated dildo pr0n erotic sexy orgasm nipple fetish "
+						  L"upskirt beastiality bestiality pedofil necrofil tits lolicon shemale fisting";
 	if ( strDubiousWords.IsEmpty() )
-		strDubiousWords = L"ass sex anal gay teen thong babe bikini viagra dick";
+		strDubiousWords = L"ass sex anal gay teen thong babe bikini viagra dick cum sluts";
 
 	// Load the blocked words into the Adult Filter
 	if ( strBlockedWords.GetLength() > 3 )
@@ -1400,7 +1401,7 @@ void CMessageFilter::Load()
 	// Insert some defaults if there was a read error
 
 	if ( strED2KSpamPhrases.IsEmpty() )
-		strED2KSpamPhrases = _T("Your client is connecting too fast|Join the L33cher Team|PeerFactor|Your client is making too many connections|AUTOMATED MESSAGE:");
+		strED2KSpamPhrases = _T("Your client is connecting too fast|Join the L33cher Team|PeerFactor|Your client is making too many connections|ZamBoR 2|AUTOMATED MESSAGE:|eMule FX the BEST eMule ever|DI-Emule");
 
 	if ( strFilteredPhrases.IsEmpty() )
 		strFilteredPhrases = _T("");
