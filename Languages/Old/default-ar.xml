@@ -21,6 +21,7 @@
 		type="Language"
 		language="ar"
 		prompt="هنا اضغط العربية للغة."
+		dir="rtl"
 />
 
 <!-- Toolbar Definitions -->
@@ -1095,7 +1096,7 @@
 		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_خصائص الالبوم"/>
 	</menu>
 	<!-- LIBRARY VIEWS -->
-	     <menu name="CLibraryTileView">
+	<menu name="CLibraryTileView">
 		<item id="ID_LIBRARY_ALBUM_OPEN" text="_فتح"/>
 		<item id="ID_LIBRARY_ALBUM_DELETE" text="_حذف"/>
 		<separator/>
@@ -2279,10 +2280,10 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com قم بزيارة موقع."/>
 	<tip id="ID_HELP_SECURITY" message="ساعد على حماية نظامك من البرامج العدائية"/>
 	<tip id="ID_HELP_UPDATE" message="Check for news and updates."/>
-	<tip id="ID_HELP_WEB_1" message="قم بزياره Zeropaid.com"/>
-	<tip id="ID_HELP_WEB_2" message="قم بزياره P2PForums.com"/>
-	<tip id="ID_HELP_WEB_3" message="قم بزياره Slyck.com"/>
-	<tip id="ID_HELP_WEB_4" message="قم بزيارة NapJunk.net"/>
+	<tip id="ID_HELP_WEB_1" message="Visit this website"/>
+	<tip id="ID_HELP_WEB_2" message="Visit this website"/>
+	<tip id="ID_HELP_WEB_3" message="Visit this website"/>
+	<tip id="ID_HELP_WEB_4" message="Visit this website"/>
 	<tip id="ID_HELP_WEB_5" message="Visit this website"/>
 	<tip id="ID_HELP_WEB_6" message="Visit this website"/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Clear the hit monitor buffer."/>
@@ -3204,18 +3205,22 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="عام"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBu" caption="عام">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="عام">
 		<control caption="_واجهة المستخدم:"/>
 		<control caption=" Shareaza اتصال تلقائي عند تشغيل"/>
 		<control caption=" عند تشغيل الويندوز Shareaza تشغيل "/>
-		<control caption="Highlight new search results in bold"/>
-		<control caption="Expand multi-source files by default"/>
-		<control caption="Switch to Transfers view on download"/>
-		<control caption="Expand new downloads by default"/>
-		<control caption="Show a prompt before opening URLs"/>
+		<control caption="Show a prompt before opening URIs"/>
 		<control caption="Show rates in:"/>
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
-		<control caption="_Tooltips:"/>
+		<control caption="_Downloads:"/>
+		<control caption="Expand new downloads by default"/>
+		<control caption="Display simple progress bar"/>
+		<control caption="_Search:"/>
+		<control caption="Expand multi-source files by default"/>
+		<control caption="Switch to Transfers view on download"/>
+		<control caption="Hide side bar when starting search"/>
+		<control caption="Filter adult content from searches"/>
+		<control caption="T_ooltips:"/>
 		<control/>
 		<control caption="التأخير (ث):"/>
 		<control/><control/>
@@ -3226,17 +3231,13 @@
 		<control caption="Ask Me|Close Immediately|Minimise to Tray|Close After Transfers"/>
 		<control caption="When I click minimise:"/>
 		<control caption="Normal|Minimise to Tray"/>
-        <control caption="Hide side bar when starting search"/>
-		<control caption="Filter adult content from searches"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="مكتبة الملفات">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="مكتبة الملفات">
 		<control caption="_خصائص:"/>
 		<control caption="تذكر عرض المجلد"/>
 		<control caption="مشاهدة مجلدات المكتبة"/>
-        <control/>
-		<control caption="فرز العناصر بالامتداد"/>
-        <control/>
+		<control caption="Quick hashing (Uses more CPU)"/>
 		<control caption="إسمح للآخرين لتصفّح الأسهم"/>
 		<control caption="_الملفات الأخيرة:"/>
 		<control caption="تذكر:"/>
@@ -3256,6 +3257,7 @@
 		<control caption="_ازالة"/>
 		<control caption="مخزن _ مجموعات هنا:"/>
 		<control/><control/>
+		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="مشغل الوسائط">
@@ -3272,12 +3274,15 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="المنتديات">
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="المنتديات">
 		<control caption="م _لفي الخاص:"/>
 		<control caption="You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others."/>
 		<control caption="تحرير ملفي الخاص"/>
 		<control caption="_محادثة:"/>
 		<control caption="Enable peer to peer chat with compatible clients"/>
+		<control caption="Enable chat on all networks"/>
+		<control caption="Filter chat messages for spam"/>
+		<control caption="Censor profanity in chat"/>
 	</dialog>
 
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="الانترنت">
@@ -3298,15 +3303,15 @@
 
 	<dialog name="CInternetSettingsGroup" caption="انترنت"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="الاتصال">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="الاتصال">
 		<control caption="_العنوان الداخلي:"/>
 		<control caption="العنوان:"/>
 		<control caption="تلاقائي"/>
-		<control caption="المنفذ:"/>
-		<control/>
-		<control caption="عشوائي"/>
 		<control caption="السرعة:"/>
 		<control/>
+		<control caption="Port:"/>
+		<control/>
+		<control caption="Random"/>
 		<control caption="Force binding to this address"/>
 		<control caption="_Outbound Address:"/>
 		<control caption="العنوان:"/>
@@ -3314,16 +3319,18 @@
 		<control caption="السرعة:"/>
 		<control/>
 		<control caption="خ_صائص:"/>
+		<control caption="Can accept incoming connections"/>
+		<control/>
 		<control caption="حظر الاي بي الخاص بالشبكة المحلية"/>
+		<control caption="Enable UPnP connection devices setup"/>
 		<control caption="_الخروج:"/>
 		<control caption="الاتصال:"/>
 		<control/><control/>
 		<control caption="المصافحة:"/>
 		<control/><control/>
-		<control caption="يمكن أن أقبل إرتباطات قادمة"/>
 	</dialog>
 
-	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="مكتبة الملفات">
+	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="مكتبة الملفات">
 		<control caption="احفظ _الملفات المكتملة هنا:"/>
 		<control/><control/>
 		<control caption="خزن _الملفات غير المكتملة هنا:"/>
@@ -3340,19 +3347,16 @@
 		<control/>
 		<control caption="Maximum Queue Length:"/>
 		<control/><control/>
-		<control caption="_خصائص:"/>
 		<control caption="التحميل والارسال الوحيد إلى الشبكات التي مرتبطة."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="رفع الملفات">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="رفع الملفات">
 		<control caption="_خصائص:"/>
 		<control caption="إشتراك في تحميل الجزئية الجديدة"/>
-		<control caption="إشتراك الحدّ في نمط المحور"/>
-		<control caption="مشاركة ملف العرض"/>
-		<control caption="بطاقة شريط metadata"/>
+		<control caption="Limit sharing in hub mode"/>
+		<control caption="Share preview files"/>
 		<control caption="حدّ لكلّ مضيّف فريد:"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="_User-Agent Filter:"/>
 		<control/>
 		<control caption="+"/>
@@ -3371,16 +3375,16 @@
 	</dialog>
 
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="التحكم عن بعد">
-	    <control caption="_الدليل:"/>
-	    <control caption="Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc)."/>
-	    <control caption="_مفعل:"/>
-	    <control caption=" لتحكم عن بعد Shareaza تفعيل:"/>
-	    <control/>
-	    <control caption="_بطاقة الاعتماد:"/>
-	    <control caption="اختر اسم المستخدم:"/>
-	    <control/>
-	    <control caption="اختر كلمة المرور:"/>
-	    <control/>
+		<control caption="_الدليل:"/>
+		<control caption="Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc)."/>
+		<control caption="_مفعل:"/>
+		<control caption=" لتحكم عن بعد Shareaza تفعيل:"/>
+		<control/>
+		<control caption="_بطاقة الاعتماد:"/>
+		<control caption="اختر اسم المستخدم:"/>
+		<control/>
+		<control caption="اختر كلمة المرور:"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
@@ -3421,30 +3425,30 @@
 		<control caption="Configure Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Gnutella2 شبكة (مفضلة):"/>
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+		<control caption="Gnutella2 شبكة:"/>
+		<control caption="Always connect to Gnutella2"/>
 		<control caption="الاتصال بـ Gnutella2 today"/>
+		<control caption="Mode:"/>
+		<control caption="Optimal|Leaf|Hub"/>
+		<control caption="G_2 Connections:"/>
+		<control caption="Leaf to Hub:"/>
+		<control/><control/>
+		<control caption="Hub to Leaf:"/>
+		<control/><control/>
+		<control caption="Hub to Hub:"/>
+		<control/><control/>
 		<control caption="Gnutella1 شبكة:"/>
+		<control caption="Always connect to Gnutella1"/>
 		<control caption="الاتصال بـ Gnutella1 today"/>
-		<control caption="الاتصال دائما بـ Gnutella1"/>
-		<control caption="_Hub Election:"/>
-		<control caption="Allow this node to become a Hub"/>
-		<control caption="Force this node to be a Hub"/>
-		<control caption="Allow this node to become a Leaf"/>
-		<control caption="Accept only Hub connections"/>
-		<control caption="Gnutella-G_2:"/>
-		<control caption="Leaf to Hub:"/>
+		<control caption="Mode:"/>
+		<control caption="Optimal|Leaf|Ultrapeer"/>
+		<control caption="G_1 Connections:"/>
+		<control caption="Leaf to Ultrapeer:"/>
 		<control/><control/>
-		<control caption="Hub to Leaf:"/>
+		<control caption="Ultrapeer to Leaf:"/>
 		<control/><control/>
-		<control caption="Hub to Hub:"/>
-		<control/><control/>
-		<control caption="Gnutella-G_1:"/>
-		<control caption="Leaf to Hub:"/>
-		<control/><control/>
-		<control caption="Hub to Leaf:"/>
-		<control/><control/>
-		<control caption="Hub to Hub:"/>
+		<control caption="Peer to Peer:"/>
 		<control/><control/>
 		<control caption="_Link Compression:"/>
 		<control caption="Hub to Leaf"/>
@@ -3472,22 +3476,26 @@
 		<control caption="تحميل..."/>
 	</dialog>
 
-<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
-	<control caption="_Store Torrents Here:"/>
-	<control/><control/>
-	<control caption="_Download Connections:"/>
-	<control/><control/>
-	<control caption="Client connections"/>
-	<control caption="_Interface:"/>
-	<control caption="Display additional BitTorrent interface elements"/>
-	<control caption="_EndGame:"/>
-	<control caption="Enable EndGame mode when completing torrents"/>
-	<control caption="_Torrent Creator"/>
-	<control caption="Tracker:"/>
-	<control/><control/><control/><control/><control/>
-	<control caption="Torrents at once"/>
-	<control caption="_Default Tracker:"/>
-</dialog>
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
+		<control caption="_Interface:"/>
+		<control caption="Display additional BitTorrent interface elements"/>
+		<control caption="_Download Connections:"/>
+		<control/><control/>
+		<control caption="Torrents at once"/>
+		<control/><control/>
+		<control caption="Client connections"/>
+		<control caption="&#160;Clear downloaded torrents&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;When the share ratio reaches"/>
+		<control/><control/><control/>
+		<control caption="&#160;Prefer torrent sources"/>
+		<control caption="_EndGame:"/>
+		<control caption="Enable EndGame mode when completing torrents"/>
+		<control caption="_Store Torrents Here:"/>
+		<control/><control/>
+		<control caption="_Torrent Creator"/>
+		<control/><control/>
+		<control caption="Default Tracker: "/>
+		<control/>
+	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="بروتوكول">
 		<control caption="Shareaza Common Architecture Protocol Explorer:"/>
@@ -3528,11 +3536,13 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Upload Queue Properties">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Upload Queue Properties">
 		<control caption="_الاسم:"/>
 		<control/>
 		<control caption="_Entry Criteria:"/>
 		<control caption="Partially downloaded files only"/>
+		<control caption="Shared Library files only"/>
+		<control caption="Both partial and library files"/>
 		<control caption="Minimum source file size:"/>
 		<control/>
 		<control caption="Maximum source file size:"/>
@@ -3560,6 +3570,7 @@
 		<control/><control/>
 		<control caption="موافق"/>
 		<control caption="الغاء"/>
+		<control caption="Reward uploaders"/>
 	</dialog>
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Shareaza مرحبا بك في">
@@ -3588,13 +3599,13 @@
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Shareaza مرحبا بك في [3 of 7]">
 		<control caption="للحصول على اداء افضل يجب عليك وضع اعداد الاتصال ونوع الاتصال ."/>
-	    	<control caption="&#160;( please select )| I am using the Internet at home| I am using the Internet on a college LAN| I am using the Internet on a office LAN| I am using the Internet at a hotel or airport"/>
+		<control caption="&#160;( please select )| I am using the Internet at home| I am using the Internet on a college LAN| I am using the Internet on a office LAN| I am using the Internet at a hotel or airport"/>
 		<control caption="هل شبكتك محمية ببرنامج جدادر ناري ؟"/>
-	    	<control caption="&#160;No, I CAN accept all incoming connections| Yes, so I CANNOT accept incoming connections from the Internet| I don't know, please AUTO-DETECT the firewalled state"/>
+		<control caption="&#160;No, I CAN accept all incoming connections| Yes, so I CANNOT accept incoming connections from the Internet| I don't know, please AUTO-DETECT the firewalled state"/>
 		<control caption="هل لديك برنامج حماية جدار ناري على جهازك في المنزل ؟"/>
-	    	<control caption="&#160;No, I have FULL ACCESS to the Internet| Yes, but I will set up port-forwarding for Shareaza| Yes, so I CANNOT accept incoming connections from the Internet| I don't know, please AUTO-DETECT the firewalled state"/>
+		<control caption="&#160;No, I have FULL ACCESS to the Internet| Yes, but I will set up port-forwarding for Shareaza| Yes, so I CANNOT accept incoming connections from the Internet| I don't know, please AUTO-DETECT the firewalled state"/>
 		<control caption="اذا كنت تجهل نوع الاتصال لديك اختر النوع من بين القوائم التالية:"/>
-		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
+		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="او, اختر:"/>
 		<control/>
 	</dialog>
@@ -3625,7 +3636,7 @@
 		<control/>
 		<control caption="and I'm a:"/>
 		<control caption="&#160;(choose)"/> 
-        <control caption="&#160;(choose)| guy| ونثاء| رجل| امرئه"/> 
+		<control caption="&#160;(choose)| guy| ونثاء| رجل| امرئه"/> 
 		<control caption="from:"/>
 		<control/><control/>
 	</dialog>
@@ -3686,7 +3697,7 @@
 		<control caption="الاساسي:"/>
 		<control/>
 		<control caption="_ماسنجر الاتصال:"/>
-		<control caption=" MSN ماسنجر:"/>
+		<control caption="MSN/.NET Passport:"/>
 		<control/>
 		<control caption="Yahoo ماسنجر:"/>
 		<control/>
@@ -3785,11 +3796,11 @@
 		<control caption="الغاء"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filter Matches">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filter Matches">
 		<control caption="Only show matches which include the _words:"/>
 		<control/>
 		<control caption="( you can also exclude words with -word )"/>
-		<control caption="And are of _size (KB):"/>
+		<control caption="And are of _size:"/>
 		<control caption="Minimum:"/>
 		<control/>
 		<control caption="Maximum:"/>
@@ -3806,6 +3817,21 @@
 		<control caption="Bogus results"/>
 		<control caption="فرز"/>
 		<control caption="الغاء"/>
+		<control/>
+		<control caption="Set as default"/>
+		<control caption="_Save as"/>
+		<control caption="_Delete"/>
+		<control caption="Filters:"/>
+		<control caption="DRM files"/>
+		<control caption="Suspicious files"/>
+		<control caption="Adult results"/>
+	</dialog>
+
+	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Save filter as">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancel"/>
+		<control caption="Save the current filter as"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="خدمة الاكتشاف">
@@ -3963,7 +3989,7 @@
 		<control caption="None|Accept|Deny"/>
 		<control caption="تصدير:"/>
 		<control caption="Never (Indefinite)|At End of Session|After:"/> 
-        <control/> 
+		<control/> 
 		<control caption="d"/>
 		<control/>
 		<control caption="h"/>
@@ -3995,8 +4021,8 @@
 		<control/>
 		<control caption="You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"/>
 		<control/>
-	    	<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
-		<control/>
+		<control caption="Insert Token:"/>
+		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption="Select preset:"/>
 		<control/>
 		<control caption="الغاء"/>
@@ -4083,8 +4109,7 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption=" Server.met تحميل ملف">
 		<control/>
 		<control caption="لزيادة سرعة الاتصال eDonkey2000 بامكانك تحميل السيرفرات الجديدية لبرنامج"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="موافق"/>
 		<control caption="الغاء"/>
 	</dialog>
@@ -4111,10 +4136,19 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="تصدير مجلد">
-		<control caption="هذه المميزة تستخدم  لتصدير محتويات حافظة الالبوم."/>
-		<control caption="تصدير..."/>
-		<control caption="الغاء"/>
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Collection Export">
+		<control caption="This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data below."/>
+		<control/>
+		<control caption="Template Information:"/>
+		<control caption="Name:"/>
+		<control/>
+		<control caption="Author:"/>
+		<control/>
+		<control caption="Description:"/>
+		<control/>
+		<control caption="Delete|_Back"/>
+		<control caption="_Next|Export..."/>
+		<control caption="_Cancel"/>
 	</dialog>
 
 	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Advanced)">
@@ -4144,54 +4178,81 @@
 	</dialog>
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption=" Torrent فتح ملف ">
-	    <control/>
-	    <control caption="You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?"/>
-	    <control caption="Download"/>
-	    <control caption="Seed"/>
-	    <control caption="الغاء"/>
-	    <control caption="To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."/>
-	    <control/>
+		<control/>
+		<control caption="You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?"/>
+		<control caption="Download"/>
+		<control caption="Seed"/>
+		<control caption="الغاء"/>
+		<control caption="To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."/>
+		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="BitTorrent Tracker Viewer">
-	    <control caption="Torrent _Information:"/>
-	    <control caption="الاسم:"/>
-	    <control/>
-	    <control caption="Tracker:"/>
-	    <control/>
-	    <control caption="_Downloaders:"/>
-	    <control caption="Completed (Seeds):"/>
-	    <control/>
-	    <control caption="Incomplete:"/>
-	    <control/>
-	    <control caption="_ملفات:"/>
-	    <control/>
-	    <control caption="_تحديث"/>
-	    <control/>
-	    <control caption="اغلاق"/>
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="General">
+		<control caption="Torrent _Information:"/>
+		<control caption="الاسم:"/>
+		<control/>
+		<control caption="Created:"/>
+		<control/>
+		<control caption="By:"/>
+		<control/>
+		<control caption="Comments:"/>
+		<control/>
+		<control caption="Transfers:"/>
+		<control caption="Start new download transfers:"/>
+		<control caption="&#160;As needed| When ratio over 100%| Only when requested| Never"/>
+		<control/>
+		<control caption="Total Uploaded:"/>
+		<control caption="Notes:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Files">
+		<control caption="Torrent _Information:"/>
+		<control caption="الاسم:"/>
+		<control/>
+		<control caption="_Files:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
+		<control caption="Torrent _Information:"/>
+		<control caption="الاسم:"/>
+		<control/>
+		<control caption="Tracker:"/>
+		<control/>
+		<control caption="_Current Tracker:"/>
+		<control caption="Completed (Seeds):"/>
+		<control/>
+		<control caption="Incomplete:"/>
+		<control/>
+		<control caption="_تحديث"/>
+		<control caption="_Trackers:"/>
+		<control/>
+		<control caption="Tracker Mode:"/>
+		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Properties">
-	    <control caption="_الاسم:"/>
-	    <control/><control/>
-	    <control caption="_فرز:"/>
-	    <control/>
-	    <control caption="_إضافة"/>
-	    <control caption="_ازالة"/>
-	    <control caption="موافق"/>
-	    <control caption="الغاء"/>
-	    <control caption="Completed File _Folder:"/>
-	    <control/>
+		<control caption="_الاسم:"/>
+		<control/><control/>
+		<control caption="_فرز:"/>
+		<control/>
+		<control caption="_إضافة"/>
+		<control caption="_ازالة"/>
+		<control caption="موافق"/>
+		<control caption="الغاء"/>
+		<control caption="Completed File _Folder:"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Select Visualisation">
-	    <control/>
-	    <control caption="Select an audio visualisation from the list:"/>
-	    <control/> 
-        <control caption="Footer Display|Full Size Display|Large Display|Medium Display|Small Display"/> 
-	    <control caption="_تركيب..."/>
-	    <control caption="موافق"/>
-	    <control caption="الغاء"/>
+		<control/>
+		<control caption="Select an audio visualisation from the list:"/>
+		<control/>
+		<control caption="Footer Display|Full Size Display|Large Display|Medium Display|Small Display"/>
+		<control caption="_تركيب..."/>
+		<control caption="موافق"/>
+		<control caption="الغاء"/>
 	</dialog>
 
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Upgrade Alert">
@@ -4202,109 +4263,121 @@
 		<control caption="Don't check for new versions"/>
 		<control caption="Don't Upgrade"/>
 	</dialog>
+
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Download Reviews">
+		<control/>
+		<control caption="OK"/>
+		<control/><control/>
+	</dialog>
+
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Localisation">
+		<control caption="OK"/>
+		<control caption="Cancel"/>
+		<control caption="Please select the method of re-encoding"/>
+		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
+	</dialog>
 </dialogs>
 
 <!-- Columns Definitions -->
 <listColumns>
-    <list name="CLibraryWnd">
-        <column from="File" to="ملف"/>
-        <column from="Type" to="النوع"/>
-        <column from="Size" to="الحجم"/>
-	    <column from="Folder" to="مجلد"/>
-        <column from="Hits" to=""/>
-        <column from="Uploads" to="رفع الملفات"/>
-        <column from="Modified" to="تعديل"/>
-    </list>
-    <list name="CDownloadCtrl">
-        <column from="Downloaded File" to="تحميل ملف"/>
-        <column from="Size" to="الحجم"/>
-        <column from="Progress" to="التقدم"/>
-        <column from="Speed" to="السرعة"/>
-        <column from="Status" to="الحالة"/>
-        <column from="Client" to="العميل"/>
-        <column from="Downloaded" to="محمل"/>
-	    <column from="Complete" to="مكتمل"/>
-    </list>
-    <list name="CUploadCtrl">
-        <column from="Remote User" to="المستخدم البعيد"/>
-        <column from="Uploaded File" to="الملف المرسل"/>
-        <column from="Size" to="الحجم"/>
-        <column from="Progress" to="التقدم"/>
-        <column from="Speed" to="السرعة"/>
-        <column from="Client" to="العميل"/>
+	<list name="CLibraryWnd">
+		<column from="File" to="ملف"/>
+		<column from="Extension" to=""/>
+		<column from="Size" to="الحجم"/>
+		<column from="Folder" to="مجلد"/>
+		<column from="Hits" to=""/>
+		<column from="Uploads" to="رفع الملفات"/>
+		<column from="Modified" to="تعديل"/>
+	</list>
+	<list name="CDownloadCtrl">
+		<column from="Downloaded File" to="تحميل ملف"/>
+		<column from="Size" to="الحجم"/>
+		<column from="Progress" to="التقدم"/>
+		<column from="Speed" to="السرعة"/>
+		<column from="Status" to="الحالة"/>
+		<column from="Client" to="العميل"/>
+		<column from="Downloaded" to="محمل"/>
+		<column from="Complete" to="مكتمل"/>
+	</list>
+	<list name="CUploadCtrl">
+		<column from="Remote User" to="المستخدم البعيد"/>
+		<column from="Uploaded File" to="الملف المرسل"/>
+		<column from="Size" to="الحجم"/>
+		<column from="Progress" to="التقدم"/>
+		<column from="Speed" to="السرعة"/>
+		<column from="Client" to="العميل"/>
 		<column from="Rating" to=""/>
-    </list>
-    <list name="CNeighboursWnd">
-        <column from="Address" to="العنوان"/>
-        <column from="Port" to="المنفذ"/>
-        <column from="Time" to="الوقت"/>
-        <column from="Packets" to="الحزمة"/>
-        <column from="Bandwidth" to=""/>
-        <column from="Total" to="المجموع"/>
-        <column from="Flow" to="التدفق"/>
-        <column from="Leaves" to=""/>
-        <column from="Mode" to="النمط"/>
-        <column from="Client" to="العميل"/>
-        <column from="Name" to="الاسم"/>
-    </list>
-    <list name="CSecurityWnd">
-        <column from="Address / Content" to="العنوان / المحتوى"/>
-        <column from="Action" to="العمل"/>
-        <column from="Expires" to="ينتهي"/>
-        <column from="Precedence" to="الأسبقية"/>
-        <column from="Hits" to=""/>
-        <column from="Comment" to="التعليق"/>
-    </list>
-    <list name="CHostCacheWnd">
-        <column from="Address" to="العنوان"/>
-        <column from="Port" to="المنفذ"/>
-        <column from="Client" to="العميل"/>
-        <column from="Last Seen" to="رأى أخيرا"/>
-        <column from="Name" to="الاسم"/>
-        <column from="Description" to="تعريف"/>
-        <column from="CurUsers" to=""/>
-        <column from="MaxUsers" to="اقصى مستخدمون"/>
-    </list>
-    <list name="CDiscoveryWnd">
-        <column from="Address" to="العنوان"/>
-        <column from="Type" to="النوع"/>
-        <column from="Last Access" to="الوصول الأخي"/>
-        <column from="Hosts" to="المضيفون"/>
-        <column from="Accesses" to="المداخل"/>
-        <column from="Updates" to="تحديث"/>
-        <column from="Failures" to="حالات الفشل"/>
-    </list>
-    <list name="CPacketWnd">
-        <column from="Address" to="العنوان"/>
-        <column from="Protocol" to="البروتوكول"/>
-        <column from="Type" to="النوع"/>
-        <column from="T/H" to=""/>
-        <column from="Hex" to=""/>
-        <column from="ASCII" to=""/>
-        <column from="G1-ID" to=""/>
-    </list>
-    <list name="CSearchMonitorWnd">
-        <column from="Search" to="بحث"/>
-        <column from="URN" to=""/>
-        <column from="Schema" to=""/>
-    </list>
-    <list name="CMatchCtrl">
-        <column from="File" to="ملف"/>
-        <column from="Type" to="النوع"/>
-        <column from="Size" to="الحجم"/>
-        <column from="Rating" to=""/>
-	    <column from="Status" to="الحالة"/>
-        <column from="Host/Count" to=""/>
-        <column from="Speed" to="السرعة"/>
-        <column from="Client" to="العميل"/>
-    </list>
-    <list name="CUploadQueueList">
-        <column from="Name" to="الاسم"/>
-        <column from="Criteria" to=""/>
-        <column from="Bandwidth" to=""/>
-        <column from="Transfers" to="نقل البيانات"/>
-        <column from="Order" to="الطلب"/>
-    </list>
+	</list>
+	<list name="CNeighboursWnd">
+		<column from="Address" to="العنوان"/>
+		<column from="Port" to="المنفذ"/>
+		<column from="Time" to="الوقت"/>
+		<column from="Packets" to="الحزمة"/>
+		<column from="Bandwidth" to=""/>
+		<column from="Total" to="المجموع"/>
+		<column from="Flow" to="التدفق"/>
+		<column from="Leaves" to=""/>
+		<column from="Mode" to="النمط"/>
+		<column from="Client" to="العميل"/>
+		<column from="Name" to="الاسم"/>
+	</list>
+	<list name="CSecurityWnd">
+		<column from="Address / Content" to="العنوان / المحتوى"/>
+		<column from="Action" to="العمل"/>
+		<column from="Expires" to="ينتهي"/>
+		<column from="Precedence" to="الأسبقية"/>
+		<column from="Hits" to=""/>
+		<column from="Comment" to="التعليق"/>
+	</list>
+	<list name="CHostCacheWnd">
+		<column from="Address" to="العنوان"/>
+		<column from="Port" to="المنفذ"/>
+		<column from="Client" to="العميل"/>
+		<column from="Last Seen" to="رأى أخيرا"/>
+		<column from="Name" to="الاسم"/>
+		<column from="Description" to="تعريف"/>
+		<column from="CurUsers" to=""/>
+		<column from="MaxUsers" to="اقصى مستخدمون"/>
+	</list>
+	<list name="CDiscoveryWnd">
+		<column from="Address" to="العنوان"/>
+		<column from="Type" to="النوع"/>
+		<column from="Last Access" to="الوصول الأخي"/>
+		<column from="Hosts" to="المضيفون"/>
+		<column from="Accesses" to="المداخل"/>
+		<column from="Updates" to="تحديث"/>
+		<column from="Failures" to="حالات الفشل"/>
+	</list>
+	<list name="CPacketWnd">
+		<column from="Address" to="العنوان"/>
+		<column from="Protocol" to="البروتوكول"/>
+		<column from="Type" to="النوع"/>
+		<column from="T/H" to=""/>
+		<column from="Hex" to=""/>
+		<column from="ASCII" to=""/>
+		<column from="G1-ID" to=""/>
+	</list>
+	<list name="CSearchMonitorWnd">
+		<column from="Search" to="بحث"/>
+		<column from="URN" to=""/>
+		<column from="Schema" to=""/>
+	</list>
+	<list name="CMatchCtrl">
+		<column from="File" to="ملف"/>
+		<column from="Extension" to=""/>
+		<column from="Size" to="الحجم"/>
+		<column from="Rating" to=""/>
+		<column from="Status" to="الحالة"/>
+		<column from="Host/Count" to=""/>
+		<column from="Speed" to="السرعة"/>
+		<column from="Client" to="العميل"/>
+	</list>
+	<list name="CUploadQueueList">
+		<column from="Name" to="الاسم"/>
+		<column from="Criteria" to=""/>
+		<column from="Bandwidth" to=""/>
+		<column from="Transfers" to="نقل البيانات"/>
+		<column from="Order" to="الطلب"/>
 	</list>
 	<list name="CAdvancedSettingsList">
 		<column from="Setting" to=""/>
