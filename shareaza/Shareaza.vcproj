@@ -1775,10 +1775,10 @@
 					RelativePath="DlgSplash.cpp">
 				</File>
 				<File
-					RelativePath=".\DlgTorrentInfoPage.cpp">
+					RelativePath="DlgTorrentInfoPage.cpp">
 				</File>
 				<File
-					RelativePath=".\DlgTorrentInfoSheet.cpp">
+					RelativePath="DlgTorrentInfoSheet.cpp">
 				</File>
 				<File
 					RelativePath="DlgTorrentSeed.cpp">
@@ -2110,13 +2110,13 @@
 					RelativePath="PageSettingsWeb.cpp">
 				</File>
 				<File
-					RelativePath=".\PageTorrentFiles.cpp">
+					RelativePath="PageTorrentFiles.cpp">
 				</File>
 				<File
-					RelativePath=".\PageTorrentGeneral.cpp">
+					RelativePath="PageTorrentGeneral.cpp">
 				</File>
 				<File
-					RelativePath=".\PageTorrentTrackers.cpp">
+					RelativePath="PageTorrentTrackers.cpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -2169,7 +2169,7 @@
 				RelativePath="ComMenu.h">
 			</File>
 			<File
-				RelativePath=".\CommonInclude.hpp">
+				RelativePath="CommonInclude.hpp">
 			</File>
 			<File
 				RelativePath="ComObject.h">
@@ -2409,7 +2409,7 @@
 				RelativePath="MetaPanel.h">
 			</File>
 			<File
-				RelativePath=".\MinMax.hpp">
+				RelativePath="MinMax.hpp">
 			</File>
 			<File
 				RelativePath="Neighbour.h">
@@ -3051,10 +3051,10 @@
 					RelativePath="DlgSplash.h">
 				</File>
 				<File
-					RelativePath=".\DlgTorrentInfoPage.h">
+					RelativePath="DlgTorrentInfoPage.h">
 				</File>
 				<File
-					RelativePath=".\DlgTorrentInfoSheet.h">
+					RelativePath="DlgTorrentInfoSheet.h">
 				</File>
 				<File
 					RelativePath="DlgTorrentSeed.h">
@@ -3289,13 +3289,13 @@
 					RelativePath="PageSettingsWeb.h">
 				</File>
 				<File
-					RelativePath=".\PageTorrentFiles.h">
+					RelativePath="PageTorrentFiles.h">
 				</File>
 				<File
-					RelativePath=".\PageTorrentGeneral.h">
+					RelativePath="PageTorrentGeneral.h">
 				</File>
 				<File
-					RelativePath=".\PageTorrentTrackers.h">
+					RelativePath="PageTorrentTrackers.h">
 				</File>
 			</Filter>
 			<Filter
@@ -3456,7 +3456,7 @@
 				RelativePath="Res\Firewalled.ico">
 			</File>
 			<File
-				RelativePath="Res\FlagEnglish.ICO">
+				RelativePath="Res\FlagEnglish.ico">
 			</File>
 			<File
 				RelativePath="Res\Hand.cur">
@@ -3498,22 +3498,22 @@
 				RelativePath="Res\LogoLarge.jpg">
 			</File>
 			<File
-				RelativePath="Res\mail.ico">
+				RelativePath="Res\Mail.ico">
 			</File>
 			<File
 				RelativePath="Res\Manifest.xml">
 			</File>
 			<File
-				RelativePath=".\Res\Manifest64.xml">
+				RelativePath="Res\Manifest64.xml">
 			</File>
 			<File
 				RelativePath="Res\Media.ico">
 			</File>
 			<File
-				RelativePath="Res\mediaStates.bmp">
+				RelativePath="Res\MediaStates.bmp">
 			</File>
 			<File
-				RelativePath="res\MenuBar.bmp">
+				RelativePath="Res\MenuBar.bmp">
 			</File>
 			<File
 				RelativePath="Res\Move.cur">
@@ -3537,7 +3537,7 @@
 				RelativePath="Res\Packets.ico">
 			</File>
 			<File
-				RelativePath="Res\Paintbrushes.ICO">
+				RelativePath="Res\Paintbrushes.ico">
 			</File>
 			<File
 				RelativePath="Res\PanelMark.bmp">
@@ -3550,6 +3550,15 @@
 			</File>
 			<File
 				RelativePath="Res\RemoteWnd.bmp">
+			</File>
+			<File
+				RelativePath="Res\sch-down.cur">
+			</File>
+			<File
+				RelativePath="Res\sch-left.cur">
+			</File>
+			<File
+				RelativePath="Res\sch-right.cur">
 			</File>
 			<File
 				RelativePath="Res\Scheduler.bmp">
@@ -3573,10 +3582,10 @@
 				RelativePath="Res\Security.ico">
 			</File>
 			<File
-				RelativePath="res\Shareaza.ico">
+				RelativePath="Res\Shareaza.ico">
 			</File>
 			<File
-				RelativePath="res\Shareaza.rc2">
+				RelativePath="Res\Shareaza.rc2">
 			</File>
 			<File
 				RelativePath="Res\ShareazaIcon.ico">
