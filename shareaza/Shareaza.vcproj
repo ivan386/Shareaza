@@ -3633,9 +3633,6 @@
 				RelativePath="Res\WizardDot.bmp">
 			</File>
 			<File
-				RelativePath="Res\WorkBanner.bmp">
-			</File>
-			<File
 				RelativePath="Res\World.ico">
 			</File>
 		</Filter>
