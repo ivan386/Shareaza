@@ -218,7 +218,9 @@ void CHomeDownloadsBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Downloads") ) );
-	
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_DOWNLOADSFRAME );
+	if ( hIcon ) SetIcon( hIcon );
+
 	m_pDocument = new CRichDocument();
 	
 	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;
@@ -644,6 +646,8 @@ void CHomeLibraryBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Library") ) );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_LIBRARYFRAME );
+	if ( hIcon ) SetIcon( hIcon );
 	
 	m_pDocument = new CRichDocument();
 	
@@ -994,6 +998,8 @@ void CHomeUploadsBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Uploads") ) );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_UPLOADSFRAME );
+	if ( hIcon ) SetIcon( hIcon );
 	
 	m_pDocument = new CRichDocument();
 	
@@ -1122,6 +1128,8 @@ void CHomeConnectionBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Connection") ) );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_NEIGHBOURSFRAME );
+	if ( hIcon ) SetIcon( hIcon );
 	
 	m_pDocument = new CRichDocument();
 	
@@ -1309,6 +1317,8 @@ void CHomeTorrentsBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Torrents") ) );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_BITTORRENT_ICON );
+	if ( hIcon ) SetIcon( hIcon );
 	
 	m_pDocument = new CRichDocument();
 	
