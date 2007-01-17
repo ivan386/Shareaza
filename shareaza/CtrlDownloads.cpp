@@ -1339,6 +1339,15 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 	}
 }
 
+void CDownloadsCtrl::OnSkinChange()
+{
+	for ( int nImage = 0 ; nImage < 6 ; nImage++ )
+	{
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage + 1 ].commandID );
+		m_pProtocols.Replace( nImage + 1, hIcon );
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // CDownloadsCtrl interaction message handlers
 

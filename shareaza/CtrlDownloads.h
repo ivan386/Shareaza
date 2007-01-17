@@ -44,6 +44,7 @@ public:
 	BOOL		DropShowTarget(CList< CDownload* >* pSel, const CPoint& ptScreen);
 	BOOL		DropObjects(CList< CDownload* >* pSel, const CPoint& ptScreen);
 	int			GetExpandableColumnX() const;
+	void		OnSkinChange();
 protected:
 	void		InsertColumn(int nColumn, LPCTSTR pszCaption, int nFormat, int nWidth);
 	void		SaveColumnState();
