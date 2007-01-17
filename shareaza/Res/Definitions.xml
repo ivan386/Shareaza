@@ -151,6 +151,7 @@
 	<command code="32928" id="ID_DISCOVERY_QUERY"/>
 	<command code="32929" id="ID_DISCOVERY_REMOVE"/>
 	<command code="32930" id="ID_DISCOVERY_ADD"/>
+	<command code="32931" id="ID_DISCOVERY_BLOCKED"/>
 	<command code="32932" id="ID_DISCOVERY_GNUTELLA"/>
 	<command code="32933" id="ID_DISCOVERY_WEBCACHE"/>
 	<command code="32934" id="ID_DOWNLOADS_AUTO_CLEAR"/>
@@ -292,7 +293,9 @@
 	<command code="33080" id="ID_NETWORK_G2"/>
 	<command code="33081" id="ID_NETWORK_G1"/>
 	<command code="33082" id="ID_NETWORK_ED2K"/>
-	<command code="33083" id="ID_DISCOVERY_BLOCKED"/>
+	<command code="33083" id="ID_NETWORK_HTTP"/>
+	<command code="33084" id="ID_NETWORK_FTP"/>
+	<command code="33085" id="ID_NETWORK_BT"/>
 	<command code="33086" id="ID_HOSTCACHE_PRIORITY"/>
 	<command code="33087" id="ID_VIEW_BASIC"/>
 	<command code="33088" id="ID_LIBRARY_SEARCH_QUICK"/>
