@@ -148,11 +148,12 @@ BOOL CEDNeighbour::OnRun()
 	}
 	else
 	{
-		if ( tNow - m_tLastPacket > 20 * 60 * 1000 )
-		{
-			Close( IDS_CONNECTION_TIMEOUT_TRAFFIC );
-			return FALSE;
-		}
+		// Temporary commenting out this code, because no PING/PONG on ed2k and can cause DROP without reason.
+		//if ( tNow - m_tLastPacket > 20 * 60 * 1000 )
+		//{
+		//	Close( IDS_CONNECTION_TIMEOUT_TRAFFIC );
+		//	return FALSE;
+		//}
 	}
 	
 	return TRUE;
