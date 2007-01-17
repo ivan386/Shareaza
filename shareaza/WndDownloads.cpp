@@ -55,7 +55,6 @@
 #include "DlgHelp.h"
 #include "Skin.h"
 #include "Network.h"
-#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
