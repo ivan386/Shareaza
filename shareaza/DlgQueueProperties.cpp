@@ -26,6 +26,7 @@
 #include "UploadQueues.h"
 #include "DlgQueueProperties.h"
 #include "LiveList.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -139,8 +140,16 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 	if ( theApp.m_bRTL ) 
 		bmProtocols.m_hObject = CreateMirroredBitmap( (HBITMAP)bmProtocols.m_hObject );
 
-	m_gdiProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 );
+	if ( ! m_gdiProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) )
+		m_gdiProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_gdiProtocols.Add( &bmProtocols, RGB( 0, 255, 0 ) );
+
+	// Replace with the skin images (if fails old images remain)
+	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
+	{
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
+		m_gdiProtocols.Replace( nImage, hIcon );
+	}
 
 	m_wndProtocols.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE, LVS_EX_CHECKBOXES, LVS_EX_CHECKBOXES );
 	m_wndProtocols.SetImageList( &m_gdiProtocols, LVSIL_SMALL );
