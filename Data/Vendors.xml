@@ -116,6 +116,13 @@
 		<link>http://freshmeat.net/projects/hagelslag/</link>
 	</vendor>
 	
+	<vendor code="HYDR">
+		<title>Hydranode</title>
+		<link>http://www.hydranode.com/</link>
+		<capability name="htmlHostBrowse"/>
+		<capability name="chatFlag"/>
+	</vendor>
+	
 	<vendor code="JOET">
 		<title>Joetella</title>
 	</vendor>
