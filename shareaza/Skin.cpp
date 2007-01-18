@@ -1545,8 +1545,8 @@ void CSkin::CreateDefault()
 	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_6 );
 	
 	// Plugins
-	
 	Plugins.RegisterCommands();
+	Plugins.OnSkinChanged();
 }
 
 void CSkin::Finalise()
@@ -1563,8 +1563,6 @@ void CSkin::Finalise()
 	}
 	
 	CoolMenu.SetWatermark( GetWatermark( _T("CCoolMenu") ) );
-	
-	Plugins.OnSkinChanged();
 }
 
 //////////////////////////////////////////////////////////////////////
