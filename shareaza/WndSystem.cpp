@@ -68,7 +68,7 @@ CSystemWnd::~CSystemWnd()
 void CSystemWnd::Add(int nType, LPCTSTR pszText)
 {
 	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
-	if ( nType != MSG_SYSTEM && ! Settings.General.VerboseMode ) return;
+	if ( nType != MSG_SYSTEM && nType != MSG_DISPLAYED_ERROR && !Settings.General.VerboseMode ) return;
 
 	if ( Settings.General.ShowTimestamp )
 	{

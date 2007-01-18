@@ -51,11 +51,12 @@ END_MESSAGE_MAP()
 CTextCtrl::CTextCtrl()
 {
 	m_crBackground	= GetSysColor( COLOR_WINDOW );
-	m_crText[0]		= RGB( 0, 0, 0 );			// MSG_DEFAULT
-	m_crText[1]		= RGB( 0, 0, 127 );			// MSG_SYSTEM / MSG_DOWNLOAD
-	m_crText[2]		= RGB( 255, 0, 0 );			// MSG_ERROR
-	m_crText[3]		= RGB( 192, 192, 192 );		// MSG_DEBUG
-	m_crText[4]		= RGB( 0, 0, 255 );			// MSG_TEMP
+	m_crText[0]		= RGB( 0, 0, 0 );			// Black		- MSG_DEFAULT
+	m_crText[1]		= RGB( 0, 0, 127 );			// Blue		- MSG_SYSTEM / MSG_DOWNLOAD
+	m_crText[2]		= RGB( 255, 0, 0 );			// Red		- MSG_ERROR
+	m_crText[3]		= RGB( 192, 192, 192 );		// Gray		- MSG_DEBUG
+	m_crText[4]		= RGB( 0, 0, 255 );			// Light Blue	- MSG_TEMP
+	m_crText[5]		= RGB( 255, 0, 0 );			// Red		- MSG_DISPLAYED_ERROR
 
 	m_pFont.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,

@@ -222,12 +222,14 @@ inline bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
 	return false;
 }
 
-#define MSG_DEFAULT		0
-#define MSG_SYSTEM		1
-#define MSG_ERROR		2
-#define MSG_DEBUG		3
-#define MSG_TEMP		4
-#define MSG_DOWNLOAD	1
+// To see the color of the message you must look at CTextCtrl::CTextCtrl() in CtrlText.cpp
+#define MSG_DEFAULT			0
+#define MSG_SYSTEM			1
+#define MSG_DOWNLOAD		1
+#define MSG_ERROR			2
+#define MSG_DEBUG			3
+#define MSG_TEMP			4
+#define MSG_DISPLAYED_ERROR	5	// It behave as MSG_ERROR but it is displayed also when VerboseMode is off
 
 #define WM_WINSOCK		(WM_USER+101)
 #define WM_VERSIONCHECK	(WM_USER+102)

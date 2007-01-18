@@ -41,7 +41,7 @@ protected:
 	CSize				m_cCharacter;
 	CFont				m_pFont;
 	COLORREF			m_crBackground;
-	COLORREF			m_crText[5];
+	COLORREF			m_crText[6];
 	BOOL				m_bProcess;
 	CCriticalSection	m_pSection;
 	UINT				m_nScrollWheelLines; // number of lines to scroll when the mouse wheel is rotated
