@@ -32,6 +32,7 @@
 #include "DlgDonkeyServers.h"
 #include "LiveList.h"
 #include "Skin.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -114,7 +115,10 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
 	if ( theApp.m_bRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
+
+	if ( ! m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) )
+		m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
+
 	m_gdiImageList.Add( &bmImages, RGB( 0, 255, 0 ) );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 	
@@ -257,6 +261,11 @@ void CHostCacheWnd::OnSkinChange()
 		Settings.Gnutella.HostCacheView = m_nMode = PROTOCOL_G2;
 	}
 
+	for ( int nImage = 1 ; nImage < 4 ; nImage++ )
+	{
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
+		m_gdiImageList.Replace( nImage, hIcon );
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

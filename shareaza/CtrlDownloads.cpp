@@ -152,7 +152,8 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
 	if ( theApp.m_bRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-	m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
+	if ( ! m_pProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) )
+		m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_pProtocols.Add( &bmImages, RGB( 0, 255, 0 ) );
 
 	m_nGroupCookie		= 0;
@@ -1341,10 +1342,10 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 
 void CDownloadsCtrl::OnSkinChange()
 {
-	for ( int nImage = 0 ; nImage < 6 ; nImage++ )
+	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage + 1 ].commandID );
-		m_pProtocols.Replace( nImage + 1, hIcon );
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
+		m_pProtocols.Replace( nImage, hIcon );
 	}
 }
 

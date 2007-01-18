@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "CtrlNetworkCombo.h"
+#include "CoolInterface.h"
 
 IMPLEMENT_DYNAMIC(CNetworkCombo, CComboBox)
 
@@ -101,6 +102,12 @@ int CNetworkCombo::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CNetworkCombo::OnSkinChange()
 {
+	for ( int nImage = 1 ; nImage < 4 ; nImage++ )
+	{
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
+		m_gdiImageList.Replace( nImage + 1, hIcon );
+	}
+
 	CString str;
 	LoadString( str, IDS_SEARCH_ALL_NETWORKS );
 	BOOL bSel = GetCurSel() == 0;

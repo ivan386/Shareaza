@@ -51,6 +51,7 @@ protected:
 	void		PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, BOOL bFocus);
 	void		PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, CUploadFile* pFile, int nPosition, BOOL bFocus);
 	int			GetExpandableColumnX() const;
+	void		OnSkinChange();
 
 	friend class CUploadsWnd;
 

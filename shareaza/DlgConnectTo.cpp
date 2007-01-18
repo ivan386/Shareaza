@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "DlgConnectTo.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -86,12 +87,22 @@ BOOL CConnectToDlg::OnInitDialog()
 	SelectCaption( this, m_bBrowseHost );
 	SelectCaption( &m_wndPrompt, m_bBrowseHost );
 
+	// Load default images
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
 	if ( theApp.m_bRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-	m_pImages.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
+
+	if ( ! m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) )
+		m_pImages.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_pImages.Add( &bmImages, RGB( 0, 255, 0 ) );
+
+	// Replace with the skin images (if fails old images remain)
+	for ( int nImage = 1 ; nImage < 4 ; nImage++ )
+	{
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
+		m_pImages.Replace( nImage, hIcon );
+	}
 
 	m_wndAdvanced.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
 	m_wndProtocol.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );

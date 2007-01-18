@@ -295,7 +295,7 @@ struct ProtocolCmdIDMapEntry
 
 const ProtocolCmdIDMapEntry protocolCmdMap[] =
 {
-	{ PROTOCOL_NULL, 0 },
+	{ PROTOCOL_NULL, ID_NETWORK_NULL },
 	{ PROTOCOL_G1, ID_NETWORK_G1 },
 	{ PROTOCOL_G2, ID_NETWORK_G2 },
 	{ PROTOCOL_ED2K, ID_NETWORK_ED2K },

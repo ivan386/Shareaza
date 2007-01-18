@@ -41,6 +41,7 @@
 #include "WndBrowseHost.h"
 #include "DlgURLCopy.h"
 #include "DlgSettingsManager.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -345,6 +346,12 @@ void CNeighboursWnd::OnSkinChange()
 	CPanelWnd::OnSkinChange();
 	Settings.LoadList( _T("CNeighboursWnd"), &m_wndList );
 	Skin.CreateToolBar( _T("CNeighboursWnd"), &m_wndToolBar );
+
+	for ( int nImage = 0 ; nImage < 4 ; nImage++ )
+	{
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
+		m_gdiImageList.Replace( nImage, hIcon );
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

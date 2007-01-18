@@ -1647,6 +1647,7 @@
 #define ID_MEDIA_ADD_FOLDER             33055
 #define ID_LIBRARY_FOLDER_FILE_PROPERTIES 33056
 #define ID_LIBRARY_REBUILD              33057
+#define ID_NETWORK_NULL					33058
 #define ID_DOWNLOADS_COPY               33060
 #define ID_LIBRARY_VIEW_ALBUM           33061
 #define ID_SEARCH_DETAILS               33062
@@ -1720,7 +1721,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        281
 #define _APS_NEXT_COMMAND_VALUE         33136
-#define _APS_NEXT_CONTROL_VALUE         1439
+#define _APS_NEXT_CONTROL_VALUE         1441
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif
