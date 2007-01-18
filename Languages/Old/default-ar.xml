@@ -407,6 +407,15 @@
 		<button id="ID_CHAT_CONNECT" text="اتصال" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="قطع الاتصال"/>
 	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="Best Fit"/>
+		<button id="ImageViewer_ActualSize" text="Actual Size"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Refresh"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Close"/>
+	</toolbar>
 </toolbars>
 
 <!-- Menu Definitions -->
@@ -1454,6 +1463,15 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Timestamp"/>
 		<item id="ID_CHAT_CLEAR" text="ت_نظيف الشاشة"/>
 	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="_Best Fit"/>
+		<item id="ImageViewer_ActualSize" text="_Actual Size"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="_Refresh"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="_Close"/>
+	</menu>
 </menus>
 
 <!-- Watermarks -->
@@ -2499,6 +2517,11 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Arrange open windows as horizontal, non-overlapping tiles."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Arrange open windows as vertical, non-overlapping tiles."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="اظهار او اخفاء مربع الادوات."/>
+	<!-- PLUGIN TIPS -->
+	<tip id="ImageViewer_BestFit" message="Resize the image to fit within the window."/>
+	<tip id="ImageViewer_ActualSize" message="Show the image at its natural size."/>
+	<tip id="ImageViewer_Refresh" message="Refresh the image."/>
+	<tip id="ImageViewer_Close" message="Close the image viewer window."/>
 </commandTips>
 
 <!-- Localised Strings -->

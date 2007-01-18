@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 42 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 43 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -400,11 +400,20 @@
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
 		<button id="ID_CHAT_BROWSE" text="Esplora utente"/>
-		<!-- <button id="ID_CHAT_SEND_FILE" text="Invia file"/> -->
+		<!--<button id="ID_CHAT_SEND_FILE" text="Invia file"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Concedi priorità"/>
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="Connetti" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Disconnetti"/>
+	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="Adatta dimensioni"/>
+		<button id="ImageViewer_ActualSize" text="Dimensioni effettive"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Aggiorna"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Chiudi"/>
 	</toolbar>
 </toolbars>
 
@@ -1453,6 +1462,15 @@
 		<separator/>
 		<item id="ID_CHAT_TIMESTAMP" text="Registra orario"/>
 		<item id="ID_CHAT_CLEAR" text="Svuota finestra"/>
+	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="Ada_tta dimensioni"/>
+		<item id="ImageViewer_ActualSize" text="_Dimensioni effettive"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="_Aggiorna"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="_Chiudi"/>
 	</menu>
 </menus>
 
@@ -2507,6 +2525,11 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Disponi le finestre aperte orizzontalmente, senza sovrapposizioni."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Disponi le finestre aperte verticalmente, senza sovrapposizioni."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Mostra o nascondi la barra degli strumenti."/>
+	<!-- PLUGIN TIPS -->
+	<tip id="ImageViewer_BestFit" message="Ridimensiona l'immagine per adattarsi alla finestra."/>
+	<tip id="ImageViewer_ActualSize" message="Mostra l'immagine con le dimensioni naturali."/>
+	<tip id="ImageViewer_Refresh" message="Aggiorna l'immagine."/>
+	<tip id="ImageViewer_Close" message="Chiudi la finestra del visualizzatore di immagini."/>
 </commandTips>
 
 <!-- Localised Strings -->
