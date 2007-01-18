@@ -1,7 +1,7 @@
 //
 // CtrlSearchPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,7 +85,12 @@ public:
 
 	CComboBox		m_wndSizeMin;
 	CComboBox		m_wndSizeMax;
-	CNetworkCombo	m_wndNetworks;
+	CButton			m_wndCheckBoxG1;
+	CButton			m_wndCheckBoxG2;
+	CButton			m_wndCheckBoxED2K;
+	CBrush			m_brBack;
+	COLORREF		m_crBack;
+	CImageList		m_gdiImageList;
 	
 // Operations
 public:
@@ -102,6 +107,10 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
+	afx_msg void OnG2Clicked();
+	afx_msg void OnG1Clicked();
+	afx_msg void OnED2KClicked();
+	afx_msg LRESULT OnCtlColorStatic(WPARAM, LPARAM);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -189,7 +198,9 @@ public:
 	BOOL				m_bSendSearch;
 protected:
 	CSearchInputBox		m_boxSearch;
+public:
 	CSearchAdvancedBox	m_boxAdvanced;
+protected:
 	CSearchSchemaBox	m_boxSchema;
 	CSearchResultsBox	m_boxResults;
 	BOOL				m_bAdvanced;
@@ -231,5 +242,10 @@ protected:
 #define IDC_SEARCH_NETWORKS	107
 #define IDC_SEARCH_SIZEMIN	108
 #define IDC_SEARCH_SIZEMAX	109
+
+#define IDC_SEARCH_GNUTELLA1	277
+#define IDC_SEARCH_GNUTELLA2	278
+#define IDC_SEARCH_EDONKEY		279
+
 
 #endif // !defined(AFX_CTRLSEARCHPANEL_H__EAFFA7F3_526D_45C3_8C17_17A265ED3240__INCLUDED_)
