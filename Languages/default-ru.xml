@@ -400,6 +400,15 @@
 		<button id="ID_CHAT_CONNECT" text="Соединиться" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Разъединить"/>
 	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="Лучший размер"/>
+		<button id="ImageViewer_ActualSize" text="Оригинальный размер"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Обновить"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Закрыть"/>
+	</toolbar>
 </toolbars>
 
 <!-- Menu Definitions -->
@@ -1430,6 +1439,15 @@
 		<separator/>
 		<item id="ID_CHAT_TIMESTAMP" text="_Временной штамп"/>
 		<item id="ID_CHAT_CLEAR" text="О_чистить окно"/>
+	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="_Лучший размер"/>
+		<item id="ImageViewer_ActualSize" text="_Оригинальный размер"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="Об_новить"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="_Закрыть"/>
 	</menu>
 </menus>
 
@@ -2494,6 +2512,11 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Расположить открытые окна горизонтально, без перекрывания."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Расположить открытые окна вертикально, без перекрывания."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Показать или скрыть полоску инструментов."/>
+	<!-- PLUGIN TIPS -->
+	<tip id="ImageViewer_BestFit" message="Изменить размер, чтобы картинка посметилась в окне."/>
+	<tip id="ImageViewer_ActualSize" message="Показывать картинку в натуральном размере."/>
+	<tip id="ImageViewer_Refresh" message="Обновить картинку."/>
+	<tip id="ImageViewer_Close" message="Закрыть окно просмотра картинки."/>
 </commandTips>
 
 <!-- Localised Strings -->
