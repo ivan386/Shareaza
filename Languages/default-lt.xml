@@ -411,6 +411,15 @@ right quote	&#147;
 		<button id="ID_CHAT_CONNECT" text="Susijungti" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Atsijungti"/>
 	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="Geriausias dydis"/>
+		<button id="ImageViewer_ActualSize" text="Tikras dydis"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Atnaujinti"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Užverti"/>
+	</toolbar>
 </toolbars>
 
 <!-- Menu Definitions -->
@@ -1458,6 +1467,15 @@ right quote	&#147;
 		<separator/>
 		<item id="ID_CHAT_TIMESTAMP" text="Rodyti _laiką"/>
 		<item id="ID_CHAT_CLEAR" text="_Valyti langą"/>
+	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="_Geriausias dydis"/>
+		<item id="ImageViewer_ActualSize" text="_Tikras dydis"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="_Atnaujinti"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="_Užverti"/>
 	</menu>
 </menus>
 
@@ -2514,6 +2532,11 @@ right quote	&#147;
 	<tip id="ID_WINDOW_TILE_HORZ" message="Išdėstyti atvertus langus iš kairės į dešinę, neuždengiant vienas kito."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Išdėstyti atvertus langus iš viršaus į apačią, neuždengiant vienas kito."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Rodyti ar paslėpti įrankių juostą."/>
+	<!-- PLUGIN TIPS -->
+	<tip id="ImageViewer_BestFit" message="Keisti paveikslėlio dydį, kad tilptų į langą."/>
+	<tip id="ImageViewer_ActualSize" message="Rodyti natūralaus dydžio paveikslėlį."/>
+	<tip id="ImageViewer_Refresh" message="Atnaujinti paveikslėlį."/>
+	<tip id="ImageViewer_Close" message="Užverti pavekslėlių žiūryklės langą."/>
 </commandTips>
 
 <!-- Localised Strings -->
