@@ -321,7 +321,7 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 {
 	ASSERT( pConnection != NULL );
 	
-	if ( !Network.IsConnected() || (Settings.Connection.RequireForTransfers && !Settings.eDonkey.EnableToday) )
+	if ( !Network.IsConnected() || ( Settings.Connection.RequireForTransfers && !Settings.eDonkey.EnableToday ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_DISABLED,
 			(LPCTSTR)pConnection->m_sAddress );
