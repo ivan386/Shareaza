@@ -1673,7 +1673,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	
 	StartSending( upsPreview );
 	
-	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)m_sFileName,
+	theApp.Message( MSG_SYSTEM, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)m_sFileName,
 		(LPCTSTR)m_sAddress );
 	
 	return TRUE;

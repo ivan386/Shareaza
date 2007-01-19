@@ -1586,7 +1586,7 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 
 			// Send reply
 			Send( pReply );
-			theApp.Message( MSG_DEFAULT, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)pFile->m_sName,
+			theApp.Message( MSG_SYSTEM, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)pFile->m_sName,
 				(LPCTSTR)m_sAddress );
 		}
 		else
