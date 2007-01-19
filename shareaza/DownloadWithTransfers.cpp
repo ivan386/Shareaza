@@ -243,6 +243,8 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 
 BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished) const
 {
+	if( !Network.IsConnected() ) return FALSE;
+
 	if ( Settings.Connection.RequireForTransfers )
 	{
 		switch ( m_nProtocol )

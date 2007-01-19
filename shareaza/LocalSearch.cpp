@@ -190,7 +190,7 @@ BOOL CLocalSearch::AddHit(CLibraryFile* pFile, int nIndex)
 	{
 		if ( ! Settings.Gnutella1.EnableToday ) 
 		{
-			theApp.Message( MSG_ERROR, _T("CLocalSearch::AddHit() dropping G1 hit G1- network not enabled ") );
+			theApp.Message( MSG_ERROR, _T("CLocalSearch::AddHit() dropping G1 hit - G1 network not enabled") );
 			return FALSE;
 		}
 		if ( ! AddHitG1( pFile, nIndex ) ) return FALSE;

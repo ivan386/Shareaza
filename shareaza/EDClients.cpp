@@ -301,7 +301,7 @@ void CEDClients::OnRun()
 	if ( tNow - m_tLastRun < Settings.eDonkey.PacketThrottle ) return;
 	m_tLastRun = tNow;
 
-	if ( Settings.eDonkey.ServerWalk && Settings.eDonkey.EnableToday )
+	if ( Settings.eDonkey.ServerWalk && Network.IsConnected() && Settings.eDonkey.EnableToday )
 	{
 		RunGlobalStatsRequests( tNow );
 	}
@@ -321,7 +321,7 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 {
 	ASSERT( pConnection != NULL );
 	
-	if ( Settings.Connection.RequireForTransfers && ! Settings.eDonkey.EnableToday )
+	if ( !Network.IsConnected() || (Settings.Connection.RequireForTransfers && !Settings.eDonkey.EnableToday) )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_DISABLED,
 			(LPCTSTR)pConnection->m_sAddress );

@@ -282,7 +282,7 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("IsHubCapable():") );
 
 	// We can't be a Gnutella2 hub if the user has not chosen to connect to Gnutella2 in the program settings
-	if ( !Settings.Gnutella2.EnableToday )
+	if ( !Network.IsConnected() || !Settings.Gnutella2.EnableToday )
 	{
 		// Finish the lines of debugging information, and report no, we can't be a hub
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: G2 not enabled") );
@@ -545,7 +545,7 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("IsUltrapeerCapable():") );
 
 	// We can't be a Gnutella ultrapeer if we're not connected to the Gnutella network
-	if ( ! Settings.Gnutella1.EnableToday )
+	if ( !Network.IsConnected() || !Settings.Gnutella1.EnableToday )
 	{
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Gnutella1 not enabled") );
 		return FALSE;
@@ -906,6 +906,9 @@ BOOL CNeighboursWithConnect::NeedMoreLeafs(PROTOCOLID nProtocol)
 // Returns true if we are that busy, false if we have unused capacity
 BOOL CNeighboursWithConnect::IsHubLoaded(PROTOCOLID nProtocol)
 {
+	// Only continue if the network is connected
+	if ( ! Network.IsConnected() ) return FALSE;
+
 	// Make an array to count connections for each network the program connects to
 	int nConnected[4] = {
 		0,   // No unknown network connections counted yet
@@ -1170,7 +1173,7 @@ void CNeighboursWithConnect::Maintain()
 		if ( nCount[ nProtocol ][ ntHub ] < nLimit[ nProtocol ][ ntHub ] )
 		{
 			// Don't try to connect to G1 right away, wait a few seconds to reduce the number of connections
-			if ( ( nProtocol == PROTOCOL_G1 ) && ( Settings.Gnutella2.EnableToday == TRUE ) )
+			if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella2.EnableToday == TRUE )
 			{
 				// Wait 4 seconds before trying G1
 				if ( ! Network.ReadyToTransfer( tTimer ) ) return;

@@ -185,7 +185,7 @@ void CDonkeySettingsPage::OnOK()
 	UpdateData();
 
 	Settings.eDonkey.EnableAlways	= m_bEnableAlways && ( Settings.GetOutgoingBandwidth() >= 2 );
-	Settings.eDonkey.EnableToday	= ( m_bEnableToday || Settings.eDonkey.EnableAlways ) && ( Settings.GetOutgoingBandwidth() >= 2 );
+	Settings.eDonkey.EnableToday	= m_bEnableToday && ( Settings.GetOutgoingBandwidth() >= 2 );
 	Settings.eDonkey.MaxLinks		= m_nLinks;
 	Settings.eDonkey.ServerWalk		= m_bServerWalk;
 	Settings.eDonkey.MaxResults		= m_nResults;

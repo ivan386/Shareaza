@@ -624,6 +624,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 
 BOOL CUploadTransferHTTP::IsNetworkDisabled()
 {
+	if ( !Network.IsConnected() ) return TRUE;
 	if ( Settings.Connection.RequireForTransfers == FALSE ) return FALSE;
 	
 	if ( m_nGnutella > 2 )

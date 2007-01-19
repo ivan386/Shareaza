@@ -258,7 +258,7 @@ void CGnutellaSettingsPage::OnOK()
 	
 	//Load values into the settings variables
 	Settings.Gnutella2.EnableToday		= m_bG2Today;
-	Settings.Gnutella1.EnableToday		= m_bG1Today || m_bG1Always;
+	Settings.Gnutella1.EnableToday		= m_bG1Today;
 	Settings.Gnutella1.EnableAlways		= m_bG1Always;
 	Settings.Gnutella.DeflateHub2Hub	= m_bDeflateHub2Hub;
 	Settings.Gnutella.DeflateLeaf2Hub	= m_bDeflateLeaf2Hub;

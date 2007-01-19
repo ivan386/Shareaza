@@ -265,9 +265,10 @@ CMainWnd::CMainWnd()
 	m_pSkin			= NULL;
 	m_pURLDialog	= NULL;
 	m_tURLTime		= 0;
-	
+	m_bNoNetWarningShowed = FALSE;
+
 	LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW );
-	
+
 	theApp.m_pSafeWnd = this;
 }
 
@@ -1251,12 +1252,23 @@ void CMainWnd::UpdateMessages()
 		}
 	}
 	else if ( Network.IsConnected() )
-	{	//Trying to connect
-		LoadString( strMessage, IDS_STATUS_BAR_CONNECTING );
+	{	// If G1, G2, eDonkey are disabled and only BitTorrent is enabled say connected
+		if( !Settings.Gnutella1.EnableToday && !Settings.Gnutella2.EnableToday && !Settings.eDonkey.EnableToday )
+		{
+			LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
+			if( !m_bNoNetWarningShowed )
+			{
+				m_bNoNetWarningShowed = TRUE;
+				AfxMessageBox( _T("All networks except BitTorrent are disabled."), MB_ICONEXCLAMATION|MB_OK );
+			}
+		}
+		else	//Trying to connect
+			LoadString( strMessage, IDS_STATUS_BAR_CONNECTING );
 	}
 	else
 	{	//Idle
 		LoadString( strMessage, IDS_STATUS_BAR_DISCONNECTED );
+		m_bNoNetWarningShowed = FALSE;
 	}
 
 	if ( VersionChecker.m_sQuote.GetLength() )
@@ -1551,33 +1563,23 @@ void CMainWnd::OnUpdateNetworkG2(CCmdUI* pCmdUI)
 
 void CMainWnd::OnNetworkG2() 
 {
-	if ( Network.IsConnected() && Settings.Gnutella2.EnableToday )
+	if( Settings.Gnutella2.EnableToday )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_NETWORK_DISABLE_G2 );
-		
-		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) == IDYES )
-		{
-			Settings.Gnutella2.EnableToday = FALSE;
-			//if ( !Settings.Gnutella1.EnableToday && !Settings.eDonkey.EnableToday &&
-			//	Settings.Connection.RequireForTransfers )
-			//	Network.Disconnect();
-		}
+
+		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
+			return;
 	}
-	else
+
+	Settings.Gnutella2.EnableToday = !Settings.Gnutella2.EnableToday;
+
+	if( Settings.Gnutella2.EnableToday )
 	{
-		if ( Network.IsConnected() )
-		{
-			Settings.Gnutella2.EnableToday = TRUE;
-			DiscoveryServices.Execute( FALSE, PROTOCOL_G2 );
-		}
-		else
-		{
-			Settings.Gnutella1.EnableToday = FALSE;
-			Settings.Gnutella2.EnableToday = TRUE;
-			Settings.eDonkey.EnableToday = FALSE;
+		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
-		}
+		else
+			DiscoveryServices.Execute( FALSE, PROTOCOL_G2 );
 	}
 }
 
@@ -1589,27 +1591,14 @@ void CMainWnd::OnUpdateNetworkG1(CCmdUI* pCmdUI)
 
 void CMainWnd::OnNetworkG1() 
 {
-	if ( Network.IsConnected() && Settings.Gnutella1.EnableToday )
+	Settings.Gnutella1.EnableToday = !Settings.Gnutella1.EnableToday;
+
+	if( Settings.Gnutella1.EnableToday )
 	{
-		Settings.Gnutella1.EnableToday = FALSE;
-		//if ( !Settings.Gnutella2.EnableToday && !Settings.eDonkey.EnableToday &&
-		//	  Settings.Connection.RequireForTransfers )
-		//	Network.Disconnect();
-	}
-	else
-	{
-		if ( Network.IsConnected() )
-		{
-			Settings.Gnutella1.EnableToday = TRUE;
-			DiscoveryServices.Execute( FALSE, PROTOCOL_G1 );
-		}
-		else
-		{
-			Settings.Gnutella1.EnableToday = TRUE;
-			Settings.Gnutella2.EnableToday = FALSE;
-			Settings.eDonkey.EnableToday = FALSE;
+		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
-		}
+		else
+			DiscoveryServices.Execute( FALSE, PROTOCOL_G1 );
 	}
 }
 
@@ -1621,27 +1610,14 @@ void CMainWnd::OnUpdateNetworkED2K(CCmdUI* pCmdUI)
 
 void CMainWnd::OnNetworkED2K() 
 {
-	if ( Network.IsConnected() && Settings.eDonkey.EnableToday )
+	Settings.eDonkey.EnableToday = !Settings.eDonkey.EnableToday;
+
+	if( Settings.eDonkey.EnableToday )
 	{
-		Settings.eDonkey.EnableToday = FALSE;
-		//if ( !Settings.Gnutella1.EnableToday && !Settings.Gnutella2.EnableToday &&
-		//	  Settings.Connection.RequireForTransfers )
-		//	Network.Disconnect();
-	}
-	else
-	{
-		if ( Network.IsConnected() )
-		{
-			Settings.eDonkey.EnableToday = TRUE;
-			DiscoveryServices.Execute( FALSE, PROTOCOL_ED2K );
-		}
-		else
-		{
-			Settings.Gnutella1.EnableToday = FALSE;
-			Settings.Gnutella2.EnableToday = FALSE;
-			Settings.eDonkey.EnableToday = TRUE;
+		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
-		}
+		else
+			DiscoveryServices.Execute( FALSE, PROTOCOL_ED2K );
 	}
 }
 

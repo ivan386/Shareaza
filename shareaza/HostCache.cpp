@@ -1143,8 +1143,8 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
 		// Must support ED2K
-		if ( ! Settings.eDonkey.EnableToday ) return FALSE;
-		if ( ! Settings.eDonkey.ServerWalk ) return FALSE;
+		if ( !Network.IsConnected() || !Settings.eDonkey.EnableToday ) return FALSE;
+		if ( !Settings.eDonkey.ServerWalk ) return FALSE;
 		
 		// Get the time if not supplied
 		if ( 0 == tNow ) tNow = static_cast< DWORD >( time( NULL ) );
@@ -1161,7 +1161,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 	else if ( m_nProtocol == PROTOCOL_G2 )
 	{
 		// Must support G2
-		if ( ! Settings.Gnutella2.EnableToday ) return FALSE;
+		if ( !Network.IsConnected() || !Settings.Gnutella2.EnableToday ) return FALSE;
 		
 		// Must not be waiting for an ack
 		if ( 0 != m_tAck ) return FALSE;

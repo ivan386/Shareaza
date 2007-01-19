@@ -55,7 +55,7 @@ public:
 	CMonitorBarCtrl		m_wndMonitorBar;
 	CRemoteWnd			m_wndRemoteWnd;
 	CHashProgressBar	m_wndHashProgressBar;
-public:
+
 	HINSTANCE			m_hInstance;
 	BOOL				m_bTrayHide;
 	BOOL				m_bTrayIcon;
@@ -65,7 +65,10 @@ public:
 	CSkinWindow*		m_pSkin;
 	CURLActionDlg*		m_pURLDialog;
 	DWORD				m_tURLTime;
-	
+
+private:
+	BOOL				m_bNoNetWarningShowed;
+
 // Operations
 public:
 	void		SetGUIMode(int nMode, BOOL bSaveState = TRUE);

@@ -1249,7 +1249,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( m_oUpED2K, TRUE, TRUE );
 	if ( ( pFile ) && ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, TRUE ) ) )
 	{
-		if ( Settings.eDonkey.EnableToday || !Settings.Connection.RequireForTransfers )
+		if ( Network.IsConnected() && (Settings.eDonkey.EnableToday || !Settings.Connection.RequireForTransfers) )
 		{
 			// Create the reply packet
 			pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
@@ -1514,7 +1514,7 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 	// We own this file and previews are enabled
 	if ( pFile && Settings.Uploads.SharePreviews )
 	{
-		if ( Settings.eDonkey.EnableToday || !Settings.Connection.RequireForTransfers )
+		if ( Network.IsConnected() && (Settings.eDonkey.EnableToday || !Settings.Connection.RequireForTransfers) )
 		{
 			CEDPacket* pReply = CEDPacket::New( ED2K_C2C_PREVIEWANWSER, ED2K_PROTOCOL_EMULE );
 			pReply->Write( oHash );
