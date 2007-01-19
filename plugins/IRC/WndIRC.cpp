@@ -24,6 +24,12 @@
 #include "IRC.h"
 #include "IRCPlugin.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 CIRCWnd::CIRCWnd() : m_pPlugin(NULL)
 {
 }
@@ -113,7 +119,7 @@ STDMETHODIMP CIRCWnd::OnMessage(UINT nMessage, WPARAM wParam, LPARAM lParam, LRE
 STDMETHODIMP CIRCWnd::OnUpdate(UINT nCommandID, STRISTATE* pbVisible, 
 							   STRISTATE* pbEnabled, STRISTATE* pbChecked)
 {
-	if ( nCommandID == WM_CLOSE )
+	if ( nCommandID == m_pPlugin->m_nCmdOpen )
 		return S_OK;
 
 	return S_FALSE;
@@ -121,7 +127,7 @@ STDMETHODIMP CIRCWnd::OnUpdate(UINT nCommandID, STRISTATE* pbVisible,
 
 STDMETHODIMP CIRCWnd::OnCommand(UINT nCommandID)
 {
-	if ( nCommandID == WM_CLOSE )
+	if ( nCommandID == WM_CLOSE || nCommandID == WM_DESTROY )
 	{
 		PostMessage( WM_CLOSE );
 		return S_OK;
@@ -132,6 +138,11 @@ STDMETHODIMP CIRCWnd::OnCommand(UINT nCommandID)
 
 LRESULT CIRCWnd::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
+	if ( uMsg == WM_DESTROY )
+	{
+		m_pPlugin->m_pWindow = NULL;
+	}
+	
 	bHandled = FALSE;
 	return 0;
 }
