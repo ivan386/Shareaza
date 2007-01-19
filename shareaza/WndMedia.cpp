@@ -1,7 +1,7 @@
 //
 // WndMedia.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,6 +49,8 @@ BEGIN_MESSAGE_MAP(CMediaWnd, CPanelWnd)
 	ON_MESSAGE(0x0319, OnMediaKey)
 	ON_MESSAGE(WM_DEVMODECHANGE, OnDevModeChange)
 	ON_MESSAGE(WM_DISPLAYCHANGE, OnDisplayChange)
+	ON_MESSAGE(WM_ENQUEUEFILE, OnEnqueueFile)
+	ON_MESSAGE(WM_PLAYFILE, OnPlayFile)
 END_MESSAGE_MAP()
 
 
@@ -238,11 +240,11 @@ BOOL CMediaWnd::OnDrop(IDataObject* pDataObj, DWORD /*grfKeyState*/, POINT ptScr
 			for ( POSITION pos = oFiles.GetHeadPosition() ; pos ; )
 			{
 				CString strFile = oFiles.GetNext( pos );
-
+				// Async enqueuing/playing of file to prevent locking in dialogs and so on
 				if ( bEnqueue )
-					EnqueueFile( strFile );
+					PostMessage( WM_ENQUEUEFILE, 0, (LPARAM) new CString( strFile ) );
 				else
-					PlayFile( strFile );
+					PostMessage( WM_PLAYFILE, 0, (LPARAM) new CString( strFile ) );
 			}
 			return TRUE;
 		}
@@ -250,4 +252,18 @@ BOOL CMediaWnd::OnDrop(IDataObject* pDataObj, DWORD /*grfKeyState*/, POINT ptScr
 		*pdwEffect = DROPEFFECT_NONE;
 	}
 	return FALSE;
+}
+
+LRESULT CMediaWnd::OnEnqueueFile(WPARAM /*wParam*/, LPARAM lParam)
+{
+	m_wndFrame.EnqueueFile( *(CString*)lParam );
+	delete (CString*)lParam;
+	return 0;
+}
+
+LRESULT CMediaWnd::OnPlayFile(WPARAM /*wParam*/, LPARAM lParam)
+{
+	m_wndFrame.PlayFile( *(CString*)lParam );
+	delete (CString*)lParam;
+	return 0;
 }

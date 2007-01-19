@@ -1,7 +1,7 @@
 //
 // WndMedia.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,6 +72,8 @@ protected:
 	afx_msg LRESULT OnMediaKey(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnDevModeChange(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnDisplayChange(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnEnqueueFile(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnPlayFile(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()
 	DECLARE_DROP()
