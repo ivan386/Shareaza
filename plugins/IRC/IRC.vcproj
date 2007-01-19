@@ -18,7 +18,7 @@
 			UseOfMFC="2"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -36,6 +36,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
+				AdditionalDependencies="gdi32.lib"
 				OutputFile="$(OutDir)/IRC.dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\IRC.def"
@@ -85,7 +86,7 @@
 			UseOfMFC="2"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
@@ -99,6 +100,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
+				AdditionalDependencies="gdi32.lib"
 				OutputFile="$(OutDir)/IRC.dll"
 				LinkIncremental="1"
 				ModuleDefinitionFile=".\IRC.def"
@@ -171,6 +173,9 @@
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\WndIRC.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -187,6 +192,9 @@
 			</File>
 			<File
 				RelativePath=".\StdAfx.h">
+			</File>
+			<File
+				RelativePath=".\WndIRC.h">
 			</File>
 		</Filter>
 		<Filter

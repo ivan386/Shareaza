@@ -21,6 +21,11 @@
 
 #include "StdAfx.h"
 #include "IRCPlugin.h"
+#include "WndIRC.h"
+
+CIRCPlugin::CIRCPlugin() : m_pWindow(NULL)
+{
+}
 
 // ICommandPlugin Methods
 STDMETHODIMP CIRCPlugin::RegisterCommands()
@@ -73,7 +78,17 @@ STDMETHODIMP CIRCPlugin::OnCommand(unsigned int nCommandID)
 {
 	if ( nCommandID == m_nCmdOpen )
 	{
-		MessageBox( GetActiveWindow(), "And here we start! ;)", "Shareaza", MB_ICONINFORMATION );
+		if ( m_pWindow == NULL )
+		{
+			m_pWindow = new CComObject< CIRCWnd >;
+			m_pWindow->Create( this );
+			m_pWindow->ShowWindow( SW_SHOWNORMAL );
+		}
+
+		m_pWindow->ResizeWindow();
+		m_pWindow->BringWindowToTop();
+		m_pWindow->Invalidate();
+
 		return S_OK;
 	}
 	return S_FALSE;

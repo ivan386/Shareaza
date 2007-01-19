@@ -22,7 +22,7 @@
 #pragma once
 #include "IRC.h"
 
-// CIRCPlugin
+class CIRCWnd;
 
 class ATL_NO_VTABLE CIRCPlugin : 
 	public CComObjectRootEx<CComSingleThreadModel>,
@@ -31,7 +31,7 @@ class ATL_NO_VTABLE CIRCPlugin :
 	public IGeneralPlugin
 {
 public:
-	CIRCPlugin(){}
+	CIRCPlugin();
 
 	DECLARE_REGISTRY_RESOURCEID(IDR_IRCPLUGIN)
 	DECLARE_NOT_AGGREGATABLE(CIRCPlugin)
@@ -50,6 +50,7 @@ public:
 public:
 	CComPtr<IApplication>	m_pApplication;
 	CComPtr<IUserInterface>	m_pInterface;
+	CIRCWnd*				m_pWindow;
 
 public:
 	UINT	m_nCmdCloseTab;
