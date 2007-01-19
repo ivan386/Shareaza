@@ -817,7 +817,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 		{
 			ChunkifyRequest( &nOffset, &nLength, Settings.eDonkey.RequestSize, FALSE );
 			
-			Fragments::Fragment Selected( nOffset, nOffset + nLength );
+			Fragments::Fragment Selected( nOffset, nOffset + nLength - 1 );
 			oPossible.erase( Selected );
 			
 			m_oRequested.push_back( Selected );
@@ -858,7 +858,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 		pPacket->WriteLongLE( (DWORD)( nOffsetEnd[2] & 0x00000000ffffffff ) );
 		Send( pPacket );
 
-		do
+		while ( nCount-- )
 		{
 			int nType = ( m_nDownloaded == 0 || ( nOffsetBegin[nCount] % ED2K_PART_SIZE ) == 0 )
 				? MSG_DEFAULT : MSG_DEBUG;
@@ -866,8 +866,8 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 			theApp.Message( nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 				nOffsetBegin[nCount], nOffsetEnd[nCount],
 				(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
-		} 
-		while ( nCount-- );
+			//ASSERT( uint64(nOffsetEnd[nCount]) < uint64(m_pDownload->m_nSize) );
+		}
 	}
 
 	// If there are no more possible chunks to request, and endgame is available but not active
