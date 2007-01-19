@@ -578,12 +578,14 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 							CopyMemory( oGUID.begin(), p + sizeof( DWORD ), 16 );							
 							CAlbumFolder* pFolder = 
 								LibraryFolders.GetAlbumRoot()->FindFolder( oGUID );
-							if ( *pAlbumFolder == *pFolder )
+							if ( pFolder && *pAlbumFolder == *pFolder )
 							{
 								// Drop disabled to same album
 							}
 							else
 							{
+								// if pFolder == NULL than file is not from album
+
 								bRet = TRUE;
 								if ( bDrop )
 								{
