@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 43 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 44 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2054,7 +2054,7 @@
 	<!-- General help documents -->
 
 	<document name="GeneralHelp.DiskSpace">
-		<text format="b">Lo Spazio su Disco è Insufficiente</text>
+		<text format="b">Lo spazio su disco è insufficiente</text>
 		<newline gap="8"/>
 		<text>L'ammontare di spazio libero su uno o più dischi utilizzati da Shareaza è insufficiente.</text>
 		<newline gap="8"/>
@@ -2712,7 +2712,7 @@
 	<string id="16069" value="Le connessioni in uscita saranno effettuate da %s porta %i."/>
 	<string id="16070" value="Impossibile risolvere %s per le connessioni in uscita.  Le connessioni in uscita utilizzeranno l'interfaccia predefinita."/>
 	<string id="16071" value="Protetto da firewall, non in ascolto per connessioni in entrata."/>
-	<string id="16072" value="In ascolto per UDP datagrams su %s porta %i."/>
+	<string id="16072" value="In ascolto per pacchetti UDP su %s porta %i."/>
 	<string id="16073" value="Risoluzione host &quot;%s&quot; in corso..."/>
 	<string id="16074" value="Impossibile risolvere l'host &quot;%s&quot;."/>
 	<string id="16075" value="Il gestore di sicurezza ha negato la connessione da %s."/>
