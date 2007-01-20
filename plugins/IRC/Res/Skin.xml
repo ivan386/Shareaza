@@ -47,18 +47,15 @@
 		<rightAlign/>
 		<button id="IRC_Settings" text="Settings" tip="Configure IRC Settings"/>
 	</toolbar>
-	<toolbar name="CMainWnd.Tabbed">
-		<button id="ID_TAB_CONNECT" text="Connect"/>
-		<separator/>
-		<button id="ID_TAB_HOME" text="Home"/>
-		<button id="ID_TAB_LIBRARY" text="Library"/>
-		<button id="ID_TAB_MEDIA" text="Media"/>
-		<button id="ID_TAB_IRC" text="Chat"/>
-		<button id="ID_TAB_SEARCH" text="Search"/>
-		<button id="ID_TAB_TRANSFERS" text="Transfers"/>
-		<button id="ID_TAB_NETWORK" text="Network"/>
-	</toolbar>
 </toolbars>
+
+<strings>
+	<string id="ID_TAB_IRC" value="Chat"/>
+</strings>
+
+<commandTips>
+	<tip id="ID_TAB_IRC" message="Show or hide the CHAT window."/>
+</commandTips>
 
 <commandImages>
 	<bitmap id="208">

@@ -62,7 +62,7 @@ BOOL CIRCWnd::Create(CIRCPlugin* pPlugin)
 	m_pWindow->ListenForSingleMessage( WM_SETCURSOR );
 	m_pWindow->ListenForSingleMessage( WM_SYSCOMMAND );
 
-	m_pWindow->Create2( m_pPlugin->m_nCmdOpen, VARIANT_TRUE, VARIANT_TRUE );
+	m_pWindow->Create2( m_pPlugin->m_nCmdWindow, VARIANT_TRUE, VARIANT_TRUE );
 	m_pWindow->GetHwnd( &m_hWnd );
 
 	return TRUE;
@@ -119,7 +119,7 @@ STDMETHODIMP CIRCWnd::OnMessage(UINT nMessage, WPARAM wParam, LPARAM lParam, LRE
 STDMETHODIMP CIRCWnd::OnUpdate(UINT nCommandID, STRISTATE* pbVisible, 
 							   STRISTATE* pbEnabled, STRISTATE* pbChecked)
 {
-	if ( nCommandID == m_pPlugin->m_nCmdOpen )
+	if ( nCommandID == m_pPlugin->m_nCmdWindow )
 		return S_OK;
 
 	return S_FALSE;

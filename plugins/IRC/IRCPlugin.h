@@ -53,6 +53,7 @@ public:
 	CIRCWnd*				m_pWindow;
 
 public:
+	UINT	m_nCmdWindow;
 	UINT	m_nCmdCloseTab;
 	UINT	m_nCmdWhois;
 	UINT	m_nCmdQuery;
@@ -73,7 +74,6 @@ public:
 	UINT	m_nCmdConnect;
 	UINT	m_nCmdDisconnect;
 	UINT	m_nCmdSettings;
-	UINT	m_nCmdOpen;
 	UINT	m_nCmdAdd;
 	UINT	m_nCmdRemove;
 

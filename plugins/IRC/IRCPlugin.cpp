@@ -30,6 +30,7 @@ CIRCPlugin::CIRCPlugin() : m_pWindow(NULL)
 // ICommandPlugin Methods
 STDMETHODIMP CIRCPlugin::RegisterCommands()
 {
+	m_pInterface->RegisterCommand( L"ID_TAB_IRC", NULL, &m_nCmdWindow );
 	m_pInterface->RegisterCommand( L"IRC_CloseTab", NULL, &m_nCmdCloseTab );
 	m_pInterface->RegisterCommand( L"IRC_Whois", NULL, &m_nCmdWhois );
 	m_pInterface->RegisterCommand( L"IRC_Query", NULL, &m_nCmdQuery );
@@ -50,7 +51,6 @@ STDMETHODIMP CIRCPlugin::RegisterCommands()
 	m_pInterface->RegisterCommand( L"IRC_Connect", NULL, &m_nCmdConnect );
 	m_pInterface->RegisterCommand( L"IRC_Disconnect", NULL, &m_nCmdDisconnect );
 	m_pInterface->RegisterCommand( L"IRC_Settings", NULL, &m_nCmdSettings );
-	m_pInterface->RegisterCommand( L"ID_TAB_IRC", NULL, &m_nCmdOpen );
 	m_pInterface->RegisterCommand( L"IRC_Add", NULL, &m_nCmdAdd );
 	m_pInterface->RegisterCommand( L"IRC_Remove", NULL, &m_nCmdRemove );
 
@@ -59,14 +59,84 @@ STDMETHODIMP CIRCPlugin::RegisterCommands()
 
 STDMETHODIMP CIRCPlugin::InsertCommands()
 {
-	m_pInterface->AddFromResource( v_hResources, IDR_SKIN );
+	try
+	{
+		HRESULT hr = m_pInterface->AddFromResource( v_hResources, IDR_SKIN );
+		THROW_HR( hr );
+
+		// Add a button to all tool bars. We don't use the skin file because
+		// each plugin could insert its own button.
+		CComPtr< ISToolbar > pMainToolbar;
+		hr = m_pInterface->GetToolbar( CComBSTR( L"CMainWnd.Tabbed" ), VARIANT_FALSE, &pMainToolbar );
+		THROW_HR( hr );
+
+		CComPtr< ISToolbarItem > pToolbarItem;
+		hr = pMainToolbar->InsertButton( 4, m_nCmdWindow, CComBSTR( L"Chat" ), &pToolbarItem );
+		THROW_HR( hr );
+		pMainToolbar.Release();
+		pToolbarItem.Release();
+
+		hr = m_pInterface->GetToolbar( CComBSTR( L"CMainWnd.Windowed" ), VARIANT_FALSE, &pMainToolbar );
+		THROW_HR( hr );
+		hr = pMainToolbar->InsertButton( 10, m_nCmdWindow, CComBSTR( L"" ), &pToolbarItem );
+		THROW_HR( hr );
+		pMainToolbar.Release();
+		pToolbarItem.Release();
+
+		struct MenuDataEntry
+		{
+			LPCTSTR pszMenuName;
+			long nMenuItemPosition;
+			long nCommandPosition;
+		};
+
+		static const MenuDataEntry menuData[] =
+		{
+			{ L"CMainWnd.Basic", 1, 3 },
+			{ L"CMainWnd.Tabbed", 1, 3 },
+			{ L"CMainWnd.Windowed", 1, 6 },
+			{ L"CMainWnd.View.Basic", 0, 3 },
+			{ L"CMainWnd.View.Tabbed", 0, 3 },
+			{ L"CMainWnd.View.Windowed", 0, 8 },
+			{ L"CHomeWnd.Basic", 0, 3 },
+			{ L"CHomeWnd.Tabbed", 0, 3 }
+		};
+
+		CComPtr< ISMenu > pMenu;
+		CComPtr< ISMenu > pMenuItem;
+		CComPtr< ISMenu > pNewItem;
+		for ( u_short nConfig = 0 ; nConfig < 8 ; nConfig++ )
+		{
+			hr = m_pInterface->GetMenu( CComBSTR( menuData[ nConfig ].pszMenuName ), 
+										VARIANT_FALSE, &pMenu );
+			if ( FAILED(hr) ) continue;
+
+			hr = pMenu->get_Item( CComVariant( menuData[ nConfig ].nMenuItemPosition ), &pMenuItem );
+			if ( FAILED(hr) ) continue;
+
+			hr = pMenuItem->InsertCommand( menuData[ nConfig ].nCommandPosition, 
+				m_nCmdWindow, CComBSTR( L"&Chat" ), &pNewItem );
+
+			if ( FAILED(hr) ) // right-click menu
+				hr = pMenu->InsertCommand( menuData[ nConfig ].nCommandPosition,
+										   m_nCmdWindow, CComBSTR( L"&Chat" ), &pNewItem );
+			pNewItem.Release();
+			pMenuItem.Release();
+			pMenu.Release();
+		}
+	}
+	catch ( HRESULT hrErr )
+	{
+		return hrErr;
+	}
+
 	return S_OK;
 }
 
 STDMETHODIMP CIRCPlugin::OnUpdate(unsigned int nCommandID, STRISTATE* pbVisible, 
 								  STRISTATE* pbEnabled, STRISTATE* pbChecked)
 {
-	if ( pbEnabled && nCommandID == m_nCmdOpen )
+	if ( pbEnabled && nCommandID == m_nCmdWindow )
 	{
 		*pbEnabled = TSTRUE;
 		return S_OK;
@@ -76,7 +146,7 @@ STDMETHODIMP CIRCPlugin::OnUpdate(unsigned int nCommandID, STRISTATE* pbVisible,
 
 STDMETHODIMP CIRCPlugin::OnCommand(unsigned int nCommandID)
 {
-	if ( nCommandID == m_nCmdOpen )
+	if ( nCommandID == m_nCmdWindow )
 	{
 		if ( m_pWindow == NULL )
 		{

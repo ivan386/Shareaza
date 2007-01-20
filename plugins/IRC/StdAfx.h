@@ -59,4 +59,6 @@ extern HINSTANCE			v_hResources;
 extern CRITICAL_SECTION		v_csSynch;
 extern BOOL					v_fRunningOnNT;
 
+#define THROW_HR(x) if( FAILED(x) ) throw x
+
 using namespace ATL;
