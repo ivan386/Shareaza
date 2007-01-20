@@ -1,7 +1,7 @@
 //
 // LocalSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -151,7 +151,9 @@ INT_PTR CLocalSearch::Execute(INT_PTR nMaximum)
 
 INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 {
-	CQuickLock oLock( Library.m_pSection );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 1000 ) ) return 0;
+
 	CList< CLibraryFile* >* pFiles = Library.Search( m_pSearch, static_cast< int >( nMaximum ) );
 	if ( pFiles == NULL ) return 0;
 
@@ -995,14 +997,14 @@ void CLocalSearch::DestroyPacket()
 void CLocalSearch::WriteVirtualTree()
 {
 	CSingleLock oLock( &Library.m_pSection );
-	if ( oLock.Lock( 100 ) )
+	if ( oLock.Lock( 1000 ) )
 	{
 		m_pPacket = AlbumToPacket( Library.GetAlbumRoot() );
 		oLock.Unlock();
 		if ( m_pPacket != NULL ) DispatchPacket();
 	}
 
-	if ( oLock.Lock( 100 ) )
+	if ( oLock.Lock( 1000 ) )
 	{
 		m_pPacket = FoldersToPacket();
 		oLock.Unlock();
