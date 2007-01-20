@@ -165,6 +165,11 @@ BOOL CUploadTransferBT::OnInterested(CBTPacket* /*pPacket*/)
 BOOL CUploadTransferBT::OnUninterested(CBTPacket* /*pPacket*/)
 {
 	if ( ! m_bInterested ) return TRUE;
+	if ( m_pDownload->IsSeeding() )
+	{
+		Close(); // Remove from upload queue
+		return FALSE; // Don't read the rest of buffer
+	}
 	m_bInterested = FALSE;
 	m_nState = upsReady;
 	return TRUE;
@@ -228,6 +233,12 @@ BOOL CUploadTransferBT::OnCancel(CBTPacket* pPacket)
 	
 	m_oRequested.erase( Fragments::Fragment( nOffset, nOffset + nLength ) );
 	
+	if ( m_pDownload->IsSeeding() )
+	{
+		Close(); // Remove from upload queue
+		return FALSE; // Don't read the rest of buffer
+	}
+
 	return TRUE;
 }
 
