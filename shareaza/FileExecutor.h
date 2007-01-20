@@ -1,7 +1,7 @@
 //
 // FileExecutor.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,7 +42,6 @@ protected:
 	static void			GetFileComponents(LPCTSTR pszFile, CString& strPath, CString& strType, CString& strShortPath );
 	static CMediaWnd*	GetMediaWindow(BOOL bFocus);
 	static CLibraryWnd*	GetLibraryWindow();
-	static HDDEDATA CALLBACK DDECallback(UINT wType, UINT wFmt, HCONV hConv, HSZ hsz1, HSZ hsz2, HDDEDATA hData, DWORD dwData1, DWORD dwData2);
 
 };
 

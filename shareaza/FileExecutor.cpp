@@ -1,7 +1,7 @@
 //
 // FileExecutor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -739,9 +739,4 @@ BOOL CFileExecutor::DisplayURL(LPCTSTR pszURL)
 
 	return bSuccess;
 #endif
-}
-
-HDDEDATA CALLBACK CFileExecutor::DDECallback(UINT /*wType*/, UINT /*wFmt*/, HCONV /*hConv*/, HSZ /*hsz1*/, HSZ /*hsz2*/, HDDEDATA /*hData*/, DWORD /*dwData1*/, DWORD /*dwData2*/)
-{
-	return (HDDEDATA)NULL;
 }
