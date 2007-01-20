@@ -229,6 +229,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Show &Nav Bar",               ID_WINDOW_NAVBAR
         MENUITEM "Show &Tool Bar",              ID_WINDOW_TOOLBAR
+        MENUITEM SEPARATOR
         MENUITEM "Show Tab &Bar",               ID_WINDOW_TABBAR
         MENUITEM "Show &Monitor",               ID_WINDOW_MONITOR
         MENUITEM "Show &Remote",                ID_WINDOW_REMOTE
