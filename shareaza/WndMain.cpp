@@ -494,11 +494,7 @@ void CMainWnd::OnDestroy()
 	
 	Network.Disconnect();
 
-	if ( CWnd* pDockBar = GetDlgItem( AFX_IDW_DOCKBAR_TOP ) )
-	{
-		LONG_PTR nBrush = GetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND );
-		if ( nBrush > 64 ) DeleteObject( (HBRUSH)nBrush );
-	}
+	m_brshDockbar.DeleteObject();
 
 	CMDIFrameWnd::OnDestroy();
 }
@@ -982,7 +978,7 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	
 	if ( CMenu* pMenu = Skin.GetMenu( _T("CMainWnd") ) )
 	{
-		m_wndMenuBar.SetMenu( pMenu->Detach() );
+		m_wndMenuBar.SetMenu( pMenu->GetSafeHmenu() );
 	}
 	
 	Skin.CreateToolBar( _T("CMainWnd"), &m_wndToolBar );
@@ -993,10 +989,10 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	
 	if ( CWnd* pDockBar = GetDlgItem( AFX_IDW_DOCKBAR_TOP ) )
 	{
-		LONG_PTR nBrush = GetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND );
-		if ( nBrush > 64 ) DeleteObject( (HBRUSH)nBrush );
-		nBrush = (LONG_PTR)CreateSolidBrush( CoolInterface.m_crMidtone );
-		SetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND, (ULONG_PTR_ARG)nBrush );
+		m_brshDockbar.DeleteObject();
+		m_brshDockbar.CreateSolidBrush( CoolInterface.m_crMidtone );
+		SetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND,
+			(ULONG_PTR_ARG)(HBRUSH)m_brshDockbar );
 	}
 	
 	m_pSkin = Skin.GetWindowSkin( this );
