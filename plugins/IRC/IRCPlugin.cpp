@@ -137,11 +137,17 @@ STDMETHODIMP CIRCPlugin::InsertCommands()
 STDMETHODIMP CIRCPlugin::OnUpdate(unsigned int nCommandID, STRISTATE* pbVisible, 
 								  STRISTATE* pbEnabled, STRISTATE* pbChecked)
 {
-	if ( pbEnabled && ( nCommandID == m_nCmdWindow || nCommandID == m_nCmdWindow2 ) )
+	// Called when window is inactive. 
+	// Button enabled but unchecked (no rectangular around button or menu entry)
+	if ( nCommandID == m_nCmdWindow || nCommandID == m_nCmdWindow2 )
 	{
-		*pbEnabled = TSTRUE;
+		if ( pbEnabled )
+			*pbEnabled = TSTRUE;
+		if ( pbChecked )
+			*pbChecked = TSFALSE;
 		return S_OK;
 	}
+
 	return S_FALSE;
 }
 

@@ -119,8 +119,14 @@ STDMETHODIMP CIRCWnd::OnMessage(UINT nMessage, WPARAM wParam, LPARAM lParam, LRE
 STDMETHODIMP CIRCWnd::OnUpdate(UINT nCommandID, STRISTATE* pbVisible, 
 							   STRISTATE* pbEnabled, STRISTATE* pbChecked)
 {
+	// Called when window is active.
+	// Check the button or menu entry (rectangular around them)
 	if ( nCommandID == m_pPlugin->m_nCmdWindow || nCommandID == m_pPlugin->m_nCmdWindow2 )
+	{
+		if ( pbChecked )
+			*pbChecked = TSTRUE;
 		return S_OK;
+	}
 
 	return S_FALSE;
 }
