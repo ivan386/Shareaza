@@ -50,7 +50,7 @@
 </toolbars>
 
 <strings>
-	<string id="ID_TAB_IRC" value="Chat"/>
+	<string id="WINDOW_IRC" value="Chat"/>
 </strings>
 
 <commandTips>
@@ -63,7 +63,7 @@
 		<image id="IRC_Voice"/>
 		<image id="IRC_UnIgnore"/>
 		<image id="IRC_Time"/>
-		<image id="ID_TAB_IRC"/>
+		<image id="ID_TAB_IRC" id1="WINDOW_IRC"/>
 		<image id="IRC_Remove"/>
 		<image id="IRC_Query"/>
 		<image id="IRC_Op"/>
@@ -83,8 +83,5 @@
 		<image id="IRC_UnBan"/>
 	</bitmap>
 </commandImages>
-
-<commandTips>
-</commandTips>
 
 </skin>

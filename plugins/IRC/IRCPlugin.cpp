@@ -31,6 +31,7 @@ CIRCPlugin::CIRCPlugin() : m_pWindow(NULL)
 STDMETHODIMP CIRCPlugin::RegisterCommands()
 {
 	m_pInterface->RegisterCommand( L"ID_TAB_IRC", NULL, &m_nCmdWindow );
+	m_pInterface->RegisterCommand( L"WINDOW_IRC", NULL, &m_nCmdWindow2 );
 	m_pInterface->RegisterCommand( L"IRC_CloseTab", NULL, &m_nCmdCloseTab );
 	m_pInterface->RegisterCommand( L"IRC_Whois", NULL, &m_nCmdWhois );
 	m_pInterface->RegisterCommand( L"IRC_Query", NULL, &m_nCmdQuery );
@@ -136,7 +137,7 @@ STDMETHODIMP CIRCPlugin::InsertCommands()
 STDMETHODIMP CIRCPlugin::OnUpdate(unsigned int nCommandID, STRISTATE* pbVisible, 
 								  STRISTATE* pbEnabled, STRISTATE* pbChecked)
 {
-	if ( pbEnabled && nCommandID == m_nCmdWindow )
+	if ( pbEnabled && ( nCommandID == m_nCmdWindow || nCommandID == m_nCmdWindow2 ) )
 	{
 		*pbEnabled = TSTRUE;
 		return S_OK;
@@ -146,7 +147,7 @@ STDMETHODIMP CIRCPlugin::OnUpdate(unsigned int nCommandID, STRISTATE* pbVisible,
 
 STDMETHODIMP CIRCPlugin::OnCommand(unsigned int nCommandID)
 {
-	if ( nCommandID == m_nCmdWindow )
+	if ( nCommandID == m_nCmdWindow || nCommandID == m_nCmdWindow2 )
 	{
 		if ( m_pWindow == NULL )
 		{

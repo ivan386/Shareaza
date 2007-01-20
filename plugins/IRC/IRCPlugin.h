@@ -54,6 +54,7 @@ public:
 
 public:
 	UINT	m_nCmdWindow;
+	UINT	m_nCmdWindow2;
 	UINT	m_nCmdCloseTab;
 	UINT	m_nCmdWhois;
 	UINT	m_nCmdQuery;
