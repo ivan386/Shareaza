@@ -1,7 +1,7 @@
 //
 // DDEServer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,33 +27,27 @@
 
 class CDDEServer
 {
-// Construction
 public:
 	CDDEServer(LPCTSTR pszService);
 	virtual ~CDDEServer();
 
-// Attributes
-protected:
-	static CDDEServer* m_pServer;
-protected:
-	DWORD	m_hInstance;
-	HSZ		m_hszService;
-	CString	m_sService;
-
-// Operations
-public:
 	BOOL	Create();
 	void	Close();
-protected:
-	CString StringFromHsz(HSZ hsz);
-	static CString	ReadArgument(LPCTSTR& pszMessage);
-	static FNCALLBACK DDECallback;
-protected:
-	virtual BOOL	CheckAccept(LPCTSTR pszTopic);
-	virtual BOOL	Execute(LPCTSTR pszTopic, HDDEDATA hData, HDDEDATA* phResult);
-	virtual BOOL	Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength);
-	virtual BOOL	Execute(LPCTSTR pszTopic, LPCTSTR pszMessage);
 
+protected:
+	static CDDEServer*	m_pServer;
+	DWORD				m_hInstance;
+	HSZ					m_hszService;
+	CString				m_sService;
+
+protected:
+	CString				StringFromHsz(HSZ hsz);
+	static CString		ReadArgument(LPCTSTR& pszMessage);
+	static FNCALLBACK	DDECallback;
+	virtual BOOL		CheckAccept(LPCTSTR pszTopic);
+	virtual BOOL		Execute(LPCTSTR pszTopic, HDDEDATA hData);
+	virtual BOOL		Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength);
+	virtual BOOL		Execute(LPCTSTR pszTopic, LPCTSTR pszMessage);
 };
 
 extern CDDEServer DDEServer;

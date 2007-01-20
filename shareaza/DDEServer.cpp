@@ -1,7 +1,7 @@
 //
 // DDEServer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,14 +62,15 @@ CDDEServer::~CDDEServer()
 BOOL CDDEServer::Create()
 {
 	USES_CONVERSION;
-	DWORD dwFilterFlags = 0;
-	UINT uiResult;
 
-	uiResult = DdeInitialize( &m_hInstance, DDECallback, dwFilterFlags, 0 );
+	// Used transactions XTYP_CONNECT and XTYP_EXECUTE only, all others filtered
+	UINT uiResult = DdeInitialize( &m_hInstance, DDECallback, APPCLASS_STANDARD |
+		CBF_FAIL_ADVISES | CBF_FAIL_POKES | CBF_FAIL_REQUESTS | CBF_FAIL_SELFCONNECTIONS |
+		CBF_SKIP_CONNECT_CONFIRMS | CBF_SKIP_DISCONNECTS |
+		CBF_SKIP_REGISTRATIONS | CBF_SKIP_UNREGISTRATIONS, 0 );
 	if ( uiResult != DMLERR_NO_ERROR ) return FALSE;
 
 	m_hszService = DdeCreateStringHandle( m_hInstance, (LPCTSTR)m_sService, CP_WINUNICODE );
-
 
     DdeNameService( m_hInstance, m_hszService, NULL, DNS_REGISTER );
 
@@ -97,34 +98,21 @@ void CDDEServer::Close()
 HDDEDATA CALLBACK CDDEServer::DDECallback(UINT wType, UINT /*wFmt*/, HCONV /*hConv*/, HSZ hsz1, HSZ /*hsz2*/, HDDEDATA hData, ULONG_PTR /*dwData1*/, ULONG_PTR /*dwData2*/)
 {
 	HDDEDATA hResult = NULL;
-
-	if ( ! m_pServer ) return hResult;
-
-	switch ( wType )
+	if ( m_pServer )
 	{
-	case XTYP_CONNECT:
+		switch ( wType )
+		{
+		case XTYP_CONNECT:
+			hResult = m_pServer->CheckAccept( m_pServer->StringFromHsz( hsz1 ) ) ?
+				(HDDEDATA)TRUE : (HDDEDATA)FALSE;
+			break;
 
-		hResult = m_pServer->CheckAccept( m_pServer->StringFromHsz( hsz1 ) ) ?
-			(HDDEDATA)TRUE : (HDDEDATA)FALSE;
-		break;
-
-	case XTYP_CONNECT_CONFIRM:
-
-		// m_pServer->AddConversation( hConv, hsz1 );
-		break;
-
-	case XTYP_DISCONNECT:
-
-		// m_pServer->RemoveConversation( hConv );
-		break;
-
-	case XTYP_EXECUTE:
-
-		m_pServer->Execute( m_pServer->StringFromHsz( hsz1 ), hData, &hResult );
-		break;
-
+		case XTYP_EXECUTE:
+			hResult = m_pServer->Execute( m_pServer->StringFromHsz( hsz1 ), hData ) ?
+				(HDDEDATA)DDE_FACK : (HDDEDATA)DDE_FNOTPROCESSED;
+			break;
+		}
 	}
-
 	return hResult;
 }
 
@@ -201,17 +189,12 @@ BOOL CDDEServer::CheckAccept(LPCTSTR pszTopic)
 //////////////////////////////////////////////////////////////////////
 // CDDEServer execute HDDEDATA mode
 
-BOOL CDDEServer::Execute(LPCTSTR pszTopic, HDDEDATA hData, HDDEDATA* phResult)
+BOOL CDDEServer::Execute(LPCTSTR pszTopic, HDDEDATA hData)
 {
-	DWORD nLength	= 0;
-	LPVOID pData	= DdeAccessData( hData, &nLength );
-
+	DWORD nLength = 0;
+	LPVOID pData = DdeAccessData( hData, &nLength );
 	BOOL bResult = Execute( pszTopic, pData, nLength );
-
 	DdeUnaccessData( hData );
-
-	*phResult = (HDDEDATA)static_cast< DWORD_PTR >( bResult ? DDE_FACK : DDE_FNOTPROCESSED );
-
 	return bResult;
 }
 
@@ -264,4 +247,3 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 
 	return FALSE;
 }
-
