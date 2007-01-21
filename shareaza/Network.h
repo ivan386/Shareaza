@@ -46,12 +46,14 @@ public:
 	CRouteCache*	NodeRoute;
 	CRouteCache*	QueryRoute;
 	CQueryKeys*		QueryKeys;
-public:
+
 	CMutex			m_pSection;
 	CEvent			m_pWakeup;
 	SOCKADDR_IN		m_pHost;				// Structure (Windows Sockets) which holds address of the local machine
 	BOOL			m_bEnabled;				// If the network "enabled" (Connected or trying)
 	BOOL			m_bAutoConnect;
+	BOOL			m_bTCPListeningReady;
+	BOOL			m_bUDPListeningReady;
 	DWORD			m_tStartedConnecting;	// The time Shareaza started trying to connect
 	DWORD			m_tLastConnect;			// The last time a neighbour connection attempt was made
 	DWORD			m_tLastED2KServerHop;	// The last time the ed2k server was changed

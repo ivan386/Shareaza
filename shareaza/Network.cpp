@@ -72,9 +72,11 @@ CNetwork::CNetwork()
 	NodeRoute				= new CRouteCache();
 	QueryRoute				= new CRouteCache();
 	QueryKeys				= new CQueryKeys();
-	
+
 	m_bEnabled				= FALSE;
 	m_bAutoConnect			= FALSE;
+	m_bTCPListeningReady	= FALSE;
+	m_bUDPListeningReady	= FALSE;
 	m_tStartedConnecting	= 0;
 	m_tLastConnect			= 0;
 	m_tLastED2KServerHop	= 0;
@@ -220,9 +222,12 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 			(LPCTSTR)Settings.Connection.OutHost );
 	}
 
-	Handshakes.Listen();
-	Datagrams.Listen();
+	m_bTCPListeningReady = Handshakes.Listen();
+	m_bUDPListeningReady = Datagrams.Listen();
 	Neighbours.Connect();
+
+	ASSERT(m_bTCPListeningReady);
+	ASSERT(m_bUDPListeningReady);
 
 	NodeRoute->SetDuration( Settings.Gnutella.RouteCache );
 	QueryRoute->SetDuration( Settings.Gnutella.RouteCache );
@@ -252,6 +257,8 @@ void CNetwork::Disconnect()
 
 	m_bEnabled				= FALSE;
 	m_bAutoConnect			= FALSE;
+	m_bTCPListeningReady	= FALSE;
+	m_bUDPListeningReady	= FALSE;
 	m_tStartedConnecting	= 0;
 
 	Neighbours.Close();
@@ -310,7 +317,7 @@ void CNetwork::Disconnect()
 	DiscoveryServices.Stop();
 
 	theApp.Message( MSG_SYSTEM, IDS_NETWORK_DISCONNECTED ); 
-	theApp.Message( MSG_DEFAULT, _T("") );
+	theApp.Message( MSG_SYSTEM, _T("") );
 }
 
 //////////////////////////////////////////////////////////////////////
