@@ -2419,9 +2419,9 @@
 	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Apri una nuova finestra di monitoraggio dei trasferimenti pacchetti in uscita di questo host."/>
 	<tip id="ID_NETWORK_AUTO_CLOSE" message="Chiudi automaticamente Shareaza quando i trasferimenti sono stati completati."/>
 	<tip id="ID_NETWORK_BROWSE_TO" message="Esplora un utente, mostrando il suo profilo e i file condivisi..."/>
-	<tip id="ID_NETWORK_CONNECT" message="Connetti alla rete."/>
+	<tip id="ID_NETWORK_CONNECT" message="Connetti alle reti selezionate."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Connetti manualmente ad un host..."/>
-	<tip id="ID_NETWORK_DISCONNECT" message="Disconnetti dalla rete."/>
+	<tip id="ID_NETWORK_DISCONNECT" message="Disconnetti da tutte le reti, ciò fermerà anche tutti i download e gli upload."/>
 	<tip id="ID_NETWORK_ED2K" message="Connetti alla rete eDonkey2000."/>
 	<tip id="ID_NETWORK_EXIT" message="Esci da Shareaza"/>
 	<tip id="ID_NETWORK_G1" message="Connetti alla rete Gnutella originale."/>

@@ -2419,9 +2419,9 @@
 	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Open a new Packet Dump window monitoring outgoing traffic to this neighbour."/>
 	<tip id="ID_NETWORK_AUTO_CLOSE" message="Automatically close Shareaza when transfers have completed."/>
 	<tip id="ID_NETWORK_BROWSE_TO" message="Browse a user, showing their profile and shared files..."/>
-	<tip id="ID_NETWORK_CONNECT" message="Connect to the network."/>
+	<tip id="ID_NETWORK_CONNECT" message="Connect to selected networks."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Manually connect to a host..."/>
-	<tip id="ID_NETWORK_DISCONNECT" message="Disconnect from the network."/>
+	<tip id="ID_NETWORK_DISCONNECT" message="Disconnect from all networks, this will also stop all downloads and uploads."/>
 	<tip id="ID_NETWORK_ED2K" message="Connect to the eDonkey2000 network."/>
 	<tip id="ID_NETWORK_EXIT" message="Exit Shareaza"/>
 	<tip id="ID_NETWORK_G1" message="Connect to the original Gnutella network."/>
