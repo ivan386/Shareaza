@@ -2784,7 +2784,7 @@
 	<string id="16264" value="Initiating a connection to %s port %i to download &quot;%s&quot;..."/>
 	<string id="16265" value="Unable to connect to download host %s."/>
 	<string id="16266" value="Download connection to %s established."/>
-	<string id="16267" value="Requesting download fragment (%I64i-%I64i) of &quot;%s&quot; from %s."/>
+	<string id="16267" value="Requesting download fragment (%I64u-%I64u) of &quot;%s&quot; from %s."/>
 	<string id="16268" value="No more download fragments, closing connection to %s."/>
 	<string id="16269" value="Fragment shortened, closing connection to %s."/>
 	<string id="16270" value="Download request to %s timed out, closing connection."/>

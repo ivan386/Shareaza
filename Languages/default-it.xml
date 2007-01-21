@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 45 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 46 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2784,7 +2784,7 @@
 	<string id="16264" value="Avvio di una connessione con %s porta %i per il download &quot;%s&quot;..."/>
 	<string id="16265" value="Impossibile connettersi per il download con l'host %s."/>
 	<string id="16266" value="Connessione per il download con %s effettuata."/>
-	<string id="16267" value="Richiesta della frazione di download (%I64i-%I64i) da %s."/>
+	<string id="16267" value="Richiesta della frazione di download (%I64u-%I64u) di &quot;%s&quot; da %s."/>
 	<string id="16268" value="Non ci sono più frazioni di download, chiusura della connessione con %s."/>
 	<string id="16269" value="Frammento accorciato, chiusura della connessione con %s."/>
 	<string id="16270" value="Il tempo di richiesta per il download con %s è scaduto, chiusura della connessione."/>
