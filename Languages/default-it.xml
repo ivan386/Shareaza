@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 44 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 45 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -17,7 +17,7 @@
 		description="Shareaza Default Italian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.4.0"
+		version="2.2.4.2"
 		type="Language"
 		language="it"
 		prompt="Clicca qui per selezionare l'Italiano come lingua predefinita."
@@ -565,6 +565,7 @@
 		<menu text="_Finestra">
 			<item id="ID_WINDOW_NAVBAR" text="Mostra barra di navigazione"/>
 			<item id="ID_WINDOW_TOOLBAR" text="Mostra barra degli strumenti"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="Mostra barra di stato"/>
 			<item id="ID_WINDOW_MONITOR" text="Mostra monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="Mostra controllo remoto"/>
@@ -650,6 +651,7 @@
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="Mostra barra di navigazione"/>
 			<item id="ID_WINDOW_TOOLBAR" text="Mostra barra degli strumenti"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="Mostra barra di stato"/>
 			<item id="ID_WINDOW_MONITOR" text="Mostra monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="Mostra controllo remoto"/>
@@ -3499,7 +3501,7 @@
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
 		<control caption="Rete _eDonkey2000:"/>
 		<control caption="Connetti a eDonkey2000 oggi"/>
-		<control caption="Connetti ad ogni sessione"/>
+		<control caption="Connetti sempre a eDonkey2000"/>
 		<control caption="Ricerca _globale:"/>
 		<control caption="Cerca server remoti conosciuti nella cache dei server:"/>
 		<control caption="Termina la ricerca dopo:"/>

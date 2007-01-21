@@ -566,6 +566,7 @@
 		<menu text="_نافذة">
 			<item id="ID_WINDOW_NAVBAR" text="عرض _عامود التصفح"/>
 			<item id="ID_WINDOW_TOOLBAR" text="اظهار _مربع الادوات"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="اظهار شريط المع_لومات"/>
 			<item id="ID_WINDOW_MONITOR" text="اظهار _الشاشة"/>
 			<item id="ID_WINDOW_REMOTE" text="اظهار _الاتصال عن بعد"/>
@@ -651,6 +652,7 @@
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="عرض _عامود التصفح"/>
 			<item id="ID_WINDOW_TOOLBAR" text="اظهار _مربع الادوات"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="اظهار شريط المع_لومات"/>
 			<item id="ID_WINDOW_MONITOR" text="اظهار _الشاشة"/>
 			<item id="ID_WINDOW_REMOTE" text="اظهار _الاتصال عن بعد"/>
@@ -3481,8 +3483,8 @@
 
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 شبكة:"/>
-		<control caption="الاتصال بـ eDonkey2000 "/>
-		<control caption="تشغيل لتلاقائي للسيرفر عن تشغيل البرنامج"/>
+		<control caption="الاتصال بـ eDonkey2000 today"/>
+		<control caption="Always connect to eDonkey2000"/>
 		<control caption="_البحث العالمي:"/>
 		<control caption="البحث في السيرفرات البعيدة في ذاكرة السيرفر:"/>
 		<control caption="توقف عن البحث بعد:"/>
