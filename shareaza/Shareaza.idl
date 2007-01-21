@@ -138,7 +138,7 @@ library Shareaza
 	{
 		HRESULT RegisterCommands();
 		HRESULT InsertCommands();
-		HRESULT OnUpdate( [in] UINT nCommandID, [in,out] STristate* pbVisible, [in,out] STristate* pbEnabled, [in,out] STristate* pbChecked );
+		HRESULT OnUpdate( [in] UINT nCommandID, [in,out] STRISTATE* pbVisible, [in,out] STRISTATE* pbEnabled, [in,out] STRISTATE* pbChecked );
 		HRESULT OnCommand( [in] UINT nCommandID );
 	};
 
@@ -180,7 +180,7 @@ library Shareaza
 	{
 		HRESULT OnTranslate( [in] MSG* pMessage );
 		HRESULT OnMessage( [in] UINT nMessage, [in] WPARAM wParam, [in] LPARAM lParam, [out] LRESULT* plResult );
-		HRESULT OnUpdate( [in] UINT nCommandID, [in,out] STristate* pbVisible, [in,out] STristate* pbEnabled, [in,out] STristate* pbChecked );
+		HRESULT OnUpdate( [in] UINT nCommandID, [in,out] STRISTATE* pbVisible, [in,out] STRISTATE* pbEnabled, [in,out] STRISTATE* pbChecked );
 		HRESULT OnCommand( [in] UINT nCommandID );
 	};
 
@@ -516,8 +516,8 @@ library Shareaza
 		[id(10),propget] HRESULT Parent( [out,retval] ILibraryFolder** ppFolder );
 		[id(11),propget] HRESULT Path( [out,retval] BSTR* psPath );
 		[id(12),propget] HRESULT Name( [out,retval] BSTR* psPath );
-		[id(13),propget] HRESULT Shared( [out,retval] STristate* pnValue );
-		[id(13),propput] HRESULT Shared( [in] STristate nValue );
+		[id(13),propget] HRESULT Shared( [out,retval] STRISTATE* pnValue );
+		[id(13),propput] HRESULT Shared( [in] STRISTATE nValue );
 		[id(14),propget] HRESULT EffectiveShared( [out,retval] VARIANT_BOOL* pbValue );
 
 		[id(20),propget] HRESULT Folders( [out,retval] ILibraryFolders** ppFolders );
@@ -533,8 +533,8 @@ library Shareaza
 		[id(10),propget] HRESULT Folder( [out,retval] ILibraryFolder** ppFolder );
 		[id(11),propget] HRESULT Path( [out,retval] BSTR* psPath );
 		[id(12),propget] HRESULT Name( [out,retval] BSTR* psPath );
-		[id(13),propget] HRESULT Shared( [out,retval] STristate* pnValue );
-		[id(13),propput] HRESULT Shared( [in] STristate nValue );
+		[id(13),propget] HRESULT Shared( [out,retval] STRISTATE* pnValue );
+		[id(13),propput] HRESULT Shared( [in] STRISTATE nValue );
 		[id(14),propget] HRESULT EffectiveShared( [out,retval] VARIANT_BOOL* pbValue );
 
 		[id(20),propget] HRESULT Size( [out,retval] LONG* pnSize );
