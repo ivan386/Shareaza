@@ -1,7 +1,7 @@
 //
 // DownloadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -697,8 +697,7 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 		m_pClient->WritePartStatus( pPacket, m_pDownload );
 	}
 
-	//We don't have any need to do this- it's not very useful (or accurate). 
-	// Raza only offers extended request V1 by default
+	//It's not very accurate
 	if ( Settings.eDonkey.ExtendedRequest >= 2 && m_pClient->m_bEmRequest >= 2 ) 
 	{
 		pPacket->WriteShortLE( (WORD) m_pDownload->GetED2KCompleteSourceCount() );

@@ -200,7 +200,7 @@ void CSettings::Setup()
 	Add( _T("Bandwidth.HubUploads"), &Bandwidth.HubUploads, 5120 );
 
 	Add( _T("Community.ChatEnable"), &Community.ChatEnable, TRUE );
-	Add( _T("Community.ChatAllNetworks"), &Community.ChatAllNetworks, FALSE );
+	Add( _T("Community.ChatAllNetworks"), &Community.ChatAllNetworks, TRUE );
 	Add( _T("Community.ChatFilter"), &Community.ChatFilter, TRUE );
 	Add( _T("Community.ChatFilterED2K"), &Community.ChatFilterED2K, TRUE );
 	Add( _T("Community.ChatCensor"), &Community.ChatCensor, FALSE );
@@ -317,7 +317,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.ReAskTime"), &eDonkey.ReAskTime, 1740 );
 	Add( _T("eDonkey.DequeueTime"), &eDonkey.DequeueTime, 3610 );
 	Add( _T("eDonkey.TagNames"), &eDonkey.TagNames, TRUE );
-	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, 1 );
+	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, 2 );
 	Add( _T("eDonkey.SendPortServer"), &eDonkey.SendPortServer, TRUE );
 	Add( _T("eDonkey.MagnetSearch"), &eDonkey.MagnetSearch, TRUE );
 	Add( _T("eDonkey.MinServerFileSize"), &eDonkey.MinServerFileSize, 0 );
@@ -510,7 +510,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	40
+#define SMART_VERSION	41
 
 void CSettings::Load()
 {
@@ -794,9 +794,15 @@ void CSettings::SmartUpgrade()
 
 	if ( nVersion < 40 )
 	{
-		Community.ChatFilter = TRUE;
 		eDonkey.ForceHighID = TRUE;
 		eDonkey.FastConnect = FALSE;
+	}
+
+	if ( nVersion < 41 )
+	{
+		eDonkey.ExtendedRequest = 2;
+		Community.ChatAllNetworks = TRUE;
+		Community.ChatFilter = TRUE;
 	}
 }
 
