@@ -5561,8 +5561,8 @@ STRINGTABLE
 BEGIN
     ID_HELP_ABOUT           "Display the Shareaza about dialog..."
     ID_NETWORK_EXIT         "Exit Shareaza"
-    ID_NETWORK_CONNECT      "Connect to the network."
-    ID_NETWORK_DISCONNECT   "Disconnect from the network."
+    ID_NETWORK_CONNECT      "Connect to selected networks."
+    ID_NETWORK_DISCONNECT   "Disconnect from all networks, this will also stop all downloads and uploads."
     ID_TOOLS_SETTINGS       "Configure Shareaza settings..."
     ID_VIEW_SYSTEM          "Show or hide the SYSTEM window."
     ID_VIEW_NEIGHBOURS      "Show or hide the NEIGHBOURS window."
