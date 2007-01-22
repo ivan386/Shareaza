@@ -1,7 +1,7 @@
 //
 // Settings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -201,7 +201,7 @@ void CSettings::Setup()
 
 	Add( _T("Community.ChatEnable"), &Community.ChatEnable, TRUE );
 	Add( _T("Community.ChatAllNetworks"), &Community.ChatAllNetworks, FALSE );
-	Add( _T("Community.ChatFilter"), &Community.ChatFilter, FALSE );
+	Add( _T("Community.ChatFilter"), &Community.ChatFilter, TRUE );
 	Add( _T("Community.ChatFilterED2K"), &Community.ChatFilterED2K, TRUE );
 	Add( _T("Community.ChatCensor"), &Community.ChatCensor, FALSE );
 
@@ -291,8 +291,8 @@ void CSettings::Setup()
 	Add( _T("Gnutella2.QueryLimit"), &Gnutella2.QueryLimit, 2400 );
 
 	Add( _T("eDonkey.EnableAlways"), &eDonkey.EnableAlways, FALSE );
-	Add( _T("eDonkey.FastConnect"), &eDonkey.FastConnect, TRUE );
-	Add( _T("eDonkey.ForceHighID"), &eDonkey.ForceHighID, FALSE );
+	Add( _T("eDonkey.FastConnect"), &eDonkey.FastConnect, FALSE );
+	Add( _T("eDonkey.ForceHighID"), &eDonkey.ForceHighID, TRUE );
 	Add( _T("eDonkey.NumServers"), &eDonkey.NumServers, 1 );
 	Add( _T("eDonkey.MaxLinks"), &eDonkey.MaxLinks, 200 );
 	Add( _T("eDonkey.MaxResults"), &eDonkey.MaxResults, 100 );
@@ -510,7 +510,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	39
+#define SMART_VERSION	40
 
 void CSettings::Load()
 {
@@ -790,6 +790,13 @@ void CSettings::SmartUpgrade()
 	{
 		General.RatesInBytes = TRUE;
 		General.VerboseMode = FALSE;
+	}
+
+	if ( nVersion < 40 )
+	{
+		Community.ChatFilter = TRUE;
+		eDonkey.ForceHighID = TRUE;
+		eDonkey.FastConnect = FALSE;
 	}
 }
 

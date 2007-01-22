@@ -1,7 +1,7 @@
 //
 // EDNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -339,20 +339,20 @@ BOOL CEDNeighbour::OnServerMessage(CEDPacket* pPacket)
 BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 4 ) return TRUE;
-	
+
 	DWORD nClientID = pPacket->ReadLongLE();
-	
+
 	if ( nClientID == 0 )
 	{
 		Close( IDS_ED2K_SERVER_REFUSED );
 		return FALSE;
 	}
-	
+
 	if ( pPacket->GetRemaining() >= 4 )
 	{
 		m_nTCPFlags = pPacket->ReadLongLE();
 	}
-	
+
 	if ( m_nClientID == 0 )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_ONLINE, (LPCTSTR)m_sAddress, nClientID );
@@ -364,10 +364,10 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	{
 		theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_IDCHANGE, (LPCTSTR)m_sAddress, m_nClientID, nClientID );
 	}
-	
+
 	m_nState	= nrsConnected;
 	m_nClientID	= nClientID;
-	
+
 	if ( ! CEDPacket::IsLowID( m_nClientID ) )
 	{
 		if ( Settings.Connection.InHost.IsEmpty() )
@@ -377,16 +377,17 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	}
 	else
 	{
-		if ( ( Settings.eDonkey.ForceHighID ) && ( Network.IsStable() ) && 
-			 ( Settings.Connection.FirewallStatus != CONNECTION_FIREWALLED ) )
-		{	
+		if ( Settings.eDonkey.ForceHighID && Network.IsListening() && 
+			 Settings.Connection.FirewallStatus != CONNECTION_FIREWALLED )
+		{
 			// We got a low ID when we should have gotten a high ID.
 			// Most likely, the user's router needs to get a few UDP packets before it opens up.
 			DWORD tNow = GetTickCount();
+			theApp.Message( MSG_DEBUG, _T("Fake low ID detected.") );
 
 			if ( Network.m_tLastED2KServerHop > tNow ) Network.m_tLastED2KServerHop = tNow;
 
-			if ( ( Network.m_tLastED2KServerHop + ( 8 * 60 * 60 * 1000 ) ) < tNow  )
+			if ( Network.m_tLastED2KServerHop == 0 || ( Network.m_tLastED2KServerHop + ( 8 * 60 * 60 * 1000 ) ) < tNow  )
 			{
 				// Try another server, but not more than once every 8 hours to avoid wasting server bandwidth
 				// If the user has messed up their settings somewhere.
