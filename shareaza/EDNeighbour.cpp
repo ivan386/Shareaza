@@ -377,7 +377,7 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	}
 	else
 	{
-		if ( Settings.eDonkey.ForceHighID && Network.IsListening() && 
+		if ( Settings.eDonkey.ForceHighID && Network.IsStable() && 
 			 Settings.Connection.FirewallStatus != CONNECTION_FIREWALLED )
 		{
 			// We got a low ID when we should have gotten a high ID.
