@@ -1,7 +1,7 @@
 //
 // WizardNetworksPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,14 +78,14 @@ BOOL CWizardNetworksPage::OnInitDialog()
 	CWizardPage::OnInitDialog();
 
 	Skin.Apply( _T("CWizardNetworksPage"), this );
-	
-	m_bG2Enable = Settings.Gnutella2.EnableToday;
-	m_bG1Enable = Settings.Gnutella1.EnableToday;
-	m_bEDEnable = Settings.eDonkey.EnableToday;
-	
+
+	m_bG2Enable = Settings.Gnutella2.EnableAlways;
+	m_bG1Enable = Settings.Gnutella1.EnableAlways;
+	m_bEDEnable = Settings.eDonkey.EnableAlways;
+
 	m_wndG2Enable.EnableWindow( ! m_bG2Enable );
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
@@ -98,11 +98,14 @@ BOOL CWizardNetworksPage::OnSetActive()
 LRESULT CWizardNetworksPage::OnWizardNext() 
 {
 	UpdateData();
-	
+
+	Settings.Gnutella2.EnableAlways	= m_bG2Enable;
 	Settings.Gnutella2.EnableToday	= m_bG2Enable;
+	Settings.Gnutella1.EnableAlways	= m_bG1Enable;
 	Settings.Gnutella1.EnableToday	= m_bG1Enable;
+	Settings.eDonkey.EnableAlways	= m_bEDEnable;
 	Settings.eDonkey.EnableToday	= m_bEDEnable;
-	
+
 	DoDonkeyImport();
 
 	//if ( m_bEDEnable ) 

@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -577,7 +577,7 @@ enum
 
 enum
 {
-	CONNECTION_FIREWALLED, CONNECTION_OPEN, CONNECTION_AUTO
+	CONNECTION_FIREWALLED, CONNECTION_OPEN, CONNECTION_OPEN_TCPONLY, CONNECTION_OPEN_UDPONLY, CONNECTION_AUTO
 };
 
 #define GNUTELLA_DEFAULT_PORT	6346

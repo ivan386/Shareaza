@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,6 +33,10 @@ class CQueryKeys;
 class CQuerySearch;
 class CQueryHit;
 
+enum // It is used from CNetwork::IsFirewalled
+{
+	CHECK_BOTH, CHECK_TCP, CHECK_UDP
+};
 
 class CNetwork
 {
@@ -81,6 +85,7 @@ public:
 	BOOL		IsListening() const;
 	int			IsWellConnected() const;
 	BOOL		IsStable() const;
+	BOOL		IsFirewalled(int nCheck = CHECK_BOTH);
 	DWORD		GetStableTime() const;
 	BOOL		IsConnectedTo(IN_ADDR* pAddress);
 	BOOL		ReadyToTransfer(DWORD tNow) const;		// Are we ready to start downloading?
@@ -115,6 +120,5 @@ public:
 };
 
 extern CNetwork Network;
-
 
 #endif // !defined(AFX_NETWORK_H__544414B1_3698_4C92_B0B0_1DC56AB48074__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // PageSettingsConnection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -118,12 +118,13 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	m_wndCanAccept.AddString( str );
 	LoadString( str, IDS_GENERAL_YES );
 	m_wndCanAccept.AddString( str );
+	m_wndCanAccept.AddString( _T("TCP-Only") );
+	m_wndCanAccept.AddString( _T("UDP-Only") );
 	LoadString( str, IDS_GENERAL_AUTO );
 	m_wndCanAccept.AddString( str );
 
 	m_wndCanAccept.SetCurSel( Settings.Connection.FirewallStatus );
 
-	//m_bCanAccept			= Settings.Connection.FirewallStatus == CONNECTION_OPEN;
 	m_sInHost				= Settings.Connection.InHost;
 	m_bInRandom				= Settings.Connection.RandomPort;
 	m_nInPort				= m_bInRandom ? 0 : Settings.Connection.InPort;

@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -327,7 +327,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	int nCount = 0;
 	
 	if ( pPeers->IsType( CBENode::beList )
-		&& ( !m_pDownload->IsMoving() || Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED ) )
+		&& ( !m_pDownload->IsMoving() || Network.IsFirewalled() ) )
 	{
 		for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
 		{
@@ -363,7 +363,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 		}
 	}
 	else if ( pPeers->IsType( CBENode::beString )
-		&& ( !m_pDownload->IsMoving() || Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED  ) )
+		&& ( !m_pDownload->IsMoving() || Network.IsFirewalled() ) )
 	{
 		if ( 0 == ( pPeers->m_nValue % 6 ) )
 		{
@@ -373,8 +373,8 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 			{
 				IN_ADDR* pAddress = (IN_ADDR*)pPointer;
 				WORD nPort = *(WORD*)( pPointer + 4 );
-				
-                nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
+
+				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
 			}
 		}
 	}

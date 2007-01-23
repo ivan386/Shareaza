@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -241,7 +241,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		{	// We are seeding or completed, base requests on BT uploads
 			// If we're still moving the file, not firewalled, have enough sources or have maxxed out uploads
 			CBTTrackerRequest::SendUpdate( this,
-				!IsCompleted() || Settings.Connection.FirewallStatus == CONNECTION_OPEN
+				!IsCompleted() || !Network.IsFirewalled()
 					|| nSources > nSourcesWanted / 2
 					|| Uploads.GetTorrentUploadCount() >= Settings.BitTorrent.UploadCount
 					? 0					// We don't need to request peers.
@@ -542,7 +542,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 	m_tTorrentChoke = tNow;
 
 	// Check if a firewalled seeding client needs to start some new connections
-	if ( IsCompleted() && Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED )
+	if ( IsCompleted() && Network.IsFirewalled() )
 	{
 		// We might need to 'push' a connection if we don't have enough upload connections
 		if ( m_pTorrentUploads.GetCount() < max( Settings.BitTorrent.UploadCount * 2, 5 ) )
@@ -723,11 +723,11 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	m_nTorrentUploaded		= 0;
 	m_nTorrentDownloaded	= 0;
 
-	if ( Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED && GetSourceCount() < 40 )
+	if ( Network.IsFirewalled() && GetSourceCount() < 40 )
 		CBTTrackerRequest::SendStarted( this );
 	else
 		CBTTrackerRequest::SendStarted( this, 0 );	
-	
+
 	return TRUE;
 }
 

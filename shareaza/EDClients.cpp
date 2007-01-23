@@ -1,7 +1,7 @@
 //
 // EDClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -534,7 +534,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 	CHostCacheHost *pHost;
 
 	// Don't send stat requests or time out servers if we're not stable
-	if ( ! Datagrams.IsStable() ) return;
+	if ( Network.IsFirewalled(CHECK_UDP) ) return;
 
 	if ( m_nLastServerKey != 0 )
 	{

@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -131,6 +131,29 @@ BOOL CNetwork::IsStable() const
 	return IsListening() && ( Handshakes.m_nStableCount > 0 );
 }
 
+BOOL CNetwork::IsFirewalled(int nCheck)
+{
+	if ( Settings.Connection.FirewallStatus == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP
+		return FALSE;		// We know we are not firewalled on both TCP and UDP
+	else if ( Settings.Connection.FirewallStatus == CONNECTION_OPEN_TCPONLY && nCheck == CHECK_TCP )
+		return FALSE;		// We know we are not firewalled on TCP port
+	else if ( Settings.Connection.FirewallStatus == CONNECTION_OPEN_UDPONLY && nCheck == CHECK_UDP )
+		return FALSE;		// We know we are not firewalled on UDP port
+	else if ( Settings.Connection.FirewallStatus == CONNECTION_AUTO )
+	{
+		BOOL bTCPOpened = IsStable();
+		BOOL bUDPOpened = Datagrams.IsStable();
+		if( nCheck == CHECK_BOTH && bTCPOpened && bUDPOpened )
+			return FALSE;	// We know we are not firewalled on both TCP and UDP
+		else if ( nCheck == CHECK_TCP && bTCPOpened )
+			return FALSE;	// We know we are not firewalled on TCP port
+		else if ( nCheck == CHECK_UDP && bUDPOpened )
+			return FALSE;	// We know we are not firewalled on UDP port
+	}
+
+	return TRUE;			// We know we are firewalled
+}
+
 DWORD CNetwork::GetStableTime() const
 {
 	if ( ! IsStable() || ! Handshakes.m_tStableTime ) return 0;
@@ -205,7 +228,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
-	if ( Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED )
+	if ( IsFirewalled() )
 		theApp.Message( MSG_DEFAULT, IDS_NETWORK_FIREWALLED );
 
 	SOCKADDR_IN pOutgoing;
@@ -260,6 +283,7 @@ void CNetwork::Disconnect()
 	m_bTCPListeningReady	= FALSE;
 	m_bUDPListeningReady	= FALSE;
 	m_tStartedConnecting	= 0;
+	Datagrams.SetStable(FALSE);
 
 	Neighbours.Close();
 

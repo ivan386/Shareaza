@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -409,7 +409,7 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 		}
 
 		// Make sure the datagram is stable (do)
-		if ( !Datagrams.IsStable() )
+		if ( Network.IsFirewalled(CHECK_UDP) )
 		{
 			// Record this is why we can't be a hub, and return no
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: datagram not stable") );
@@ -670,7 +670,7 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 		}
 
 		// Make sure the datagram is stable (do)
-		if ( ! Datagrams.IsStable() )
+		if ( Network.IsFirewalled(CHECK_UDP) )
 		{
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: datagram not stable") );
 			return FALSE;

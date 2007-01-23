@@ -1,7 +1,7 @@
 //
 // Datagrams.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -233,17 +233,11 @@ void CDatagrams::Disconnect()
 //////////////////////////////////////////////////////////////////////
 // CDatagrams stable test
 
-BOOL CDatagrams::IsStable()
+BOOL CDatagrams::IsStable()	// Avoid using this function directly, use !Network.IsFirewalled(CHECK_UDP) instead
 {
 	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
-	if ( ! Network.IsListening() ) return FALSE;
 
-	if ( Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED )
-		return FALSE;			// We know we are firewalled
-	else if ( Settings.Connection.FirewallStatus == CONNECTION_OPEN )
-		return TRUE;			// We know we are not firewalled
-	else // ( Settings.Connection.FirewallStatus == CONNECTION_AUTO )
-		return m_bStable;		// Use detected state
+	return m_bStable;		// Use detected state
 }
 
 void CDatagrams::SetStable(BOOL bStable)

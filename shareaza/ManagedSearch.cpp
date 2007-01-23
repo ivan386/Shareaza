@@ -1,7 +1,7 @@
 //
 // ManagedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -305,15 +305,15 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 				continue; 
 			}
 		}
-		
+
 		// Set the last query time for this host for this search
-		
+
 		m_pNodes.SetAt( nAddress, tSecs );
-		
+
 		// Create the appropriate packet type
-		
+
 		CPacket* pPacket = NULL;
-		
+
 		if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 		{
 			pPacket = m_pSearch->ToG1Packet();
@@ -321,7 +321,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 		{
 			m_pSearch->m_bAndG1 = ( Settings.Gnutella1.EnableToday && m_bAllowG1 );
-			pPacket = m_pSearch->ToG2Packet( Datagrams.IsStable() ? &Network.m_pHost : NULL, 0 );
+			pPacket = m_pSearch->ToG2Packet( !Network.IsFirewalled(CHECK_UDP) ? &Network.m_pHost : NULL, 0 );
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
@@ -331,9 +331,9 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		{
 			ASSERT( FALSE );
 		}
-		
+
 		// Try to send the search
-		
+
 		if ( pPacket != NULL && pNeighbour->SendQuery( m_pSearch.get(), pPacket, TRUE ) )
 		{
 			// Reset the last "search more" sent to this neighbour (if applicable)
@@ -397,7 +397,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 		{
 			// Well, we already know we don't have a key.. pretty simple
 		}
-		else if ( Datagrams.IsStable() )
+		else if ( !Network.IsFirewalled(CHECK_UDP) )
 		{
 			// If we are "stable", we have to TX/RX our own UDP traffic,
 			// so we must have a query key for the local addess
@@ -483,11 +483,11 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 		{
 			// Timing wise, we can request a query key now -- but first we must figure
 			// out who should be the receiver
-			
+
 			CNeighbour* pCacheHub = NULL;
 			pReceiver = NULL;
-			
-			if ( Datagrams.IsStable() )
+
+			if ( !Network.IsFirewalled(CHECK_UDP) )
 			{
 				// If we are stable, we must be the receiver
 				pReceiver = &Network.m_pHost;
@@ -496,12 +496,12 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 			{
 				// Otherwise, we need to find a neighbour G2 hub who has acked
 				// this query already
-				
+
 				for ( POSITION pos = Neighbours.GetIterator() ; pos ; pCacheHub = NULL )
 				{
 					pCacheHub = Neighbours.GetNext( pos );
 					DWORD nTemp;
-					
+
 					if ( m_pNodes.Lookup( pCacheHub->m_pHost.sin_addr.S_un.S_addr, nTemp ) )
 					{
 						if ( pCacheHub->m_nProtocol == PROTOCOL_G2 &&
@@ -514,38 +514,38 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 					}
 				}
 			}
-			
+
 			// If we found a receiver, we can ask for the query key
-			
+
 			if ( pCacheHub != NULL )
 			{
 				// The receiver is a cache-capable hub, so we ask it to return
 				// a cached key, or fetch a fresh one
-				
+
 				CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY_KEY_REQ, TRUE );
 				pPacket->WritePacket( G2_PACKET_QUERY_ADDRESS, 6 );
 				pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
 				pPacket->WriteShortBE( pHost->m_nPort );
 				pCacheHub->Send( pPacket );
-				
+
 				// Report
-				
+
 				CString strReceiver = CString( inet_ntoa( pReceiver->sin_addr ) );
 				theApp.Message( MSG_DEBUG, _T("Requesting query key from %s through %s"),
 					(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ), (LPCTSTR)strReceiver );
-				
+
 				if ( pHost->m_tAck == 0 ) pHost->m_tAck = tSecs;
 				pHost->m_tKeyTime = tSecs;
 				pHost->m_nKeyValue = 0;
-				
+
 				return TRUE;
 			}
 			else if ( pReceiver != NULL )
 			{
 				// We need to transmit directly to the remote query host
-				
+
 				CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY_KEY_REQ, TRUE );
-				
+
 				if ( pReceiver == &Network.m_pHost )
 				{
 					theApp.Message( MSG_DEBUG, _T("Requesting query key from %s"),

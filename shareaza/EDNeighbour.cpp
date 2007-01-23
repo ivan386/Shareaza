@@ -377,8 +377,7 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	}
 	else
 	{
-		if ( Settings.eDonkey.ForceHighID && Network.IsStable() && 
-			 Settings.Connection.FirewallStatus != CONNECTION_FIREWALLED )
+		if ( Settings.eDonkey.ForceHighID && Network.IsStable() && !Network.IsFirewalled() )
 		{
 			// We got a low ID when we should have gotten a high ID.
 			// Most likely, the user's router needs to get a few UDP packets before it opens up.
@@ -417,44 +416,44 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 BOOL CEDNeighbour::OnServerList(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 1 ) return TRUE;
-	
+
 	int nCount = pPacket->ReadByte();
 	if ( pPacket->GetRemaining() < nCount * 6 ) return TRUE;
-	
+
 	while ( nCount-- > 0 )
 	{
 		DWORD nAddress	= pPacket->ReadLongLE();
 		WORD nPort		= pPacket->ReadShortLE();
-		
+
 		theApp.Message( MSG_DEBUG, _T("CEDNeighbour::OnServerList(): %s: %s:%i"),
 			(LPCTSTR)m_sAddress,
 			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)nAddress ) ), nPort );
-		
+
 		if ( Settings.eDonkey.LearnNewServers )
 		{
 			HostCache.eDonkey.Add( (IN_ADDR*)&nAddress, nPort );
 		}
 	}
-	
+
 	HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
-	
+
 	return TRUE;
 }
 
 BOOL CEDNeighbour::OnServerStatus(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 8 ) return TRUE;
-	
+
 	m_nUserCount	= pPacket->ReadLongLE();
 	m_nFileCount	= pPacket->ReadLongLE();
-	
+
 	if ( CHostCacheHost* pHost = HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) ) )
 	{
 		// pHost->m_nUserCount = max( pHost->m_nUserCount, m_nUserCount );
 		pHost->m_nUserCount = m_nUserCount;
 		pHost->m_nUserLimit = max( pHost->m_nUserLimit, m_nUserCount );
 	}
-	
+
 	return TRUE;
 }
 
@@ -507,7 +506,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 		m_sUserAgent = _T("eFarm Server");
 	else
 		m_sUserAgent = _T("eDonkey2000 Server");
-	
+
 	if ( CHostCacheHost* pHost = HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) ) )
 	{
 		pHost->m_sName			= m_sServerName;
@@ -536,14 +535,14 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 BOOL CEDNeighbour::OnCallbackRequest(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 6 ) return TRUE;
-	
+
 	DWORD nAddress	= pPacket->ReadLongLE();
 	WORD nPort		= pPacket->ReadShortLE();
-	
+
 	if ( Network.IsFirewalledAddress( &nAddress ) ) return TRUE;
-	
+
 	EDClients.PushTo( nAddress, nPort );
-	
+
 	return TRUE;
 }
 
