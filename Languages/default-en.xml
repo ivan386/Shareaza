@@ -1535,8 +1535,32 @@
 			<heading align="middle">W A R N I N G &#160; - &#160; Y O U &#160; A R E &#160; F I R E W A L L E D</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
-			  and are unable to receive connections from the Internet. &#160;</text>
+			and are unable to receive connections from the Internet. &#160;</text>
+			<text colour="FF0000" format="b">This may cause poor download and search performance.</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
+			<newline gap="18" indent="0"/>
+		</group>
+
+		<group id="6">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; T C P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+			and are unable to receive TCP connections from the Internet. &#160;</text>
 			<text colour="FF0000" format="b">This may cause poor download performance.</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
+			<newline gap="18" indent="0"/>
+		</group>
+
+		<group id="7">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; U D P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+			and are unable to receive UDP messages from the Internet. &#160;</text>
+			<text colour="FF0000" format="b">This may cause poor search performance.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
 			<newline gap="18" indent="0"/>
