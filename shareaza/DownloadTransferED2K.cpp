@@ -816,7 +816,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 		{
 			ChunkifyRequest( &nOffset, &nLength, Settings.eDonkey.RequestSize, FALSE );
 			
-			Fragments::Fragment Selected( nOffset, nOffset + nLength - 1 );
+			Fragments::Fragment Selected( nOffset, nOffset + nLength );
 			oPossible.erase( Selected );
 			
 			m_oRequested.push_back( Selected );
@@ -865,7 +865,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 			theApp.Message( nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 				nOffsetBegin[nCount], nOffsetEnd[nCount],
 				(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
-			//ASSERT( uint64(nOffsetEnd[nCount]) < uint64(m_pDownload->m_nSize) );
+			//ASSERT( uint64(nOffsetEnd[nCount]) <= uint64(m_pDownload->m_nSize) );
 		}
 	}
 
