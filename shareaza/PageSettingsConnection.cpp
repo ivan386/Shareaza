@@ -118,10 +118,10 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	m_wndCanAccept.AddString( str );
 	LoadString( str, IDS_GENERAL_YES );
 	m_wndCanAccept.AddString( str );
-	m_wndCanAccept.AddString( _T("TCP-Only") );
-	m_wndCanAccept.AddString( _T("UDP-Only") );
 	LoadString( str, IDS_GENERAL_AUTO );
 	m_wndCanAccept.AddString( str );
+	m_wndCanAccept.AddString( _T("TCP-Only") );
+	m_wndCanAccept.AddString( _T("UDP-Only") );
 
 	m_wndCanAccept.SetCurSel( Settings.Connection.FirewallStatus );
 
