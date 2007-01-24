@@ -282,18 +282,16 @@
 #define IDC_EXPAND_MATCHES              1087
 #define IDC_CONNECTION_TYPE             1087
 #define IDC_CHAT_CENSOR                 1087
-#define IDC_CONNECTION_SPEED            1088
 #define IDC_SHARE_FOLDERS               1088
 #define IDC_SCHEMA_TYPES                1088
 #define IDC_HIGHLIGHT_NEW               1088
 #define IDC_SHARE_ADD                   1089
 #define IDC_CLOSE_MODE                  1089
-#define IDC_CONNECTION_LAN_SELECT       1089
+#define IDC_WIZARD_UPLOAD_SPEED         1089
 #define IDC_SHARE_REMOVE                1090
-#define IDC_CONNECTION_GROUP            1090
+#define IDC_WIZARD_UPNP                 1090
 #define IDC_WEB                         1091
 #define IDC_AUTO_CONNECT                1091
-#define IDC_CONNECTION_HOME_SELECT      1091
 #define IDC_TITLE                       1092
 #define IDC_TRAY_MINIMISE               1092
 #define IDC_FILTER_PUSH                 1093
@@ -542,8 +540,6 @@
 #define IDC_NAME                        1273
 #define IDC_FILE_COMMENTS               1274
 #define IDC_FOLDER                      1274
-#define IDC_CONNECTION_LAN_LABEL        1275
-#define IDC_CONNECTION_HOME_LABEL       1276
 #define IDC_BROWSE_USER                 1276
 #define IDC_RESPECT                     1277
 #define IDC_SAVE                        1278
@@ -699,6 +695,7 @@
 #define IDC_CREATE_GHOST                1436
 #define IDC_MAKE_GHOSTS                 1437
 #define IDC_COPYRIGHT                   1438
+#define IDC_WIZARD_DOWNLOAD_SPEED       1442
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502
@@ -1145,7 +1142,6 @@
 #define IDS_BITZI_CLOSE                 16784
 #define IDS_MEDIAVIS_NOVIS              16785
 #define IDS_WIZARD_NEED_SPEED           16800
-#define IDS_WIZARD_NEED_CONNECTION      16801
 #define IDS_WIZARD_SHARE_CONFIRM        16802
 #define IDS_WIZARD_SHARE_ALREADY        16803
 #define IDS_PROFILE_NO_NICK             16804
@@ -1647,7 +1643,7 @@
 #define ID_MEDIA_ADD_FOLDER             33055
 #define ID_LIBRARY_FOLDER_FILE_PROPERTIES 33056
 #define ID_LIBRARY_REBUILD              33057
-#define ID_NETWORK_NULL					33058
+#define ID_NETWORK_NULL                 33058
 #define ID_DOWNLOADS_COPY               33060
 #define ID_LIBRARY_VIEW_ALBUM           33061
 #define ID_SEARCH_DETAILS               33062

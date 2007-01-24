@@ -55,6 +55,7 @@ public:
 		BOOL		AlwaysOpenURLs;
 		CString		Language;
 		BOOL		IgnoreXPsp2;				// Ignore the presence of Windows XPsp2 limits
+		BOOL		ItWasLimited;				// If the user path the half-open connection limit we change the settings back to gain full speed
 	} General;
 
 	struct sInterface
@@ -515,12 +516,13 @@ public:
 		Item(LPCTSTR pszName, DWORD* pDword, DOUBLE* pFloat, CString* pString);
 		void	Load();
 		void	Save();
-	public:
+
 		CString		m_sName;
 		DWORD*		m_pDword;
 		DOUBLE*		m_pFloat;
 		CString*	m_pString;
 	};
+
 protected:
 	CList< Item* >	m_pItems;
 
@@ -530,7 +532,7 @@ public:
 	void	Save(BOOL bShutdown = FALSE);
 	Item*	GetSetting(LPCTSTR pszName) const;
 	Item*	GetSetting(LPVOID pValue) const;
-public:
+
 	BOOL	LoadWindow(LPCTSTR pszName, CWnd* pWindow);
 	void	SaveWindow(LPCTSTR pszName, CWnd* pWindow);
 	BOOL	LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort = 0);
@@ -541,14 +543,7 @@ public:
 	DWORD	GetOutgoingBandwidth();						//Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);
-protected:
-	void	Setup();
-	void	Add(LPCTSTR pszName, DWORD* pDword, DWORD nDefault);
-	void	Add(LPCTSTR pszName, int* pDword, DWORD nDefault);
-	void	Add(LPCTSTR pszName, DOUBLE* pFloat, DOUBLE nDefault);
-	void	Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault);
-	void	SmartUpgrade();
-public:
+
 	inline bool	IsG1Allowed()
 	{
 		return Gnutella1.EnableToday || !Connection.RequireForTransfers;
@@ -561,6 +556,17 @@ public:
 	{
 		return eDonkey.EnableToday || !Connection.RequireForTransfers;
 	}
+
+protected:
+	void	Setup();
+	void	Add(LPCTSTR pszName, DWORD* pDword, DWORD nDefault);
+	void	Add(LPCTSTR pszName, int* pDword, DWORD nDefault);
+	void	Add(LPCTSTR pszName, DOUBLE* pFloat, DOUBLE nDefault);
+	void	Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault);
+	void	SmartUpgrade();
+
+public:
+	void	OnChangeConnectionSpeed();
 };
 
 extern CSettings Settings;
@@ -577,7 +583,7 @@ enum
 
 enum
 {
-	CONNECTION_FIREWALLED, CONNECTION_OPEN, CONNECTION_AUTO, CONNECTION_OPEN_TCPONLY, CONNECTION_OPEN_UDPONLY
+	CONNECTION_AUTO, CONNECTION_FIREWALLED, CONNECTION_OPEN, CONNECTION_OPEN_TCPONLY, CONNECTION_OPEN_UDPONLY
 };
 
 #define GNUTELLA_DEFAULT_PORT	6346

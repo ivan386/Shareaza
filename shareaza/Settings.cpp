@@ -61,6 +61,7 @@ void CSettings::Setup()
 	Add( _T("Settings.AlwaysOpenURLs"), &General.AlwaysOpenURLs, FALSE );
 	Add( _T("Settings.Language"), &General.Language, _T("en") );
 	Add( _T("Settings.IgnoreXPsp2"), &General.IgnoreXPsp2, FALSE );
+	Add( _T("Settings.ItWasLimited"), &General.ItWasLimited, FALSE );
 
 	Add( _T("Interface.TipDelay"), &Interface.TipDelay, 600 );
 	Add( _T("Interface.TipAlpha"), &Interface.TipAlpha, 230 );
@@ -360,11 +361,11 @@ void CSettings::Setup()
 	Add( _T("Downloads.BufferSize"), &Downloads.BufferSize, 81920 );
 	Add( _T("Downloads.SparseThreshold"), &Downloads.SparseThreshold, 8 * 1024 );
 	Add( _T("Downloads.MaxAllowedFailures"), &Downloads.MaxAllowedFailures, 10 );
-	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 32 );
-	Add( _T("Downloads.MaxTransfers"), &Downloads.MaxTransfers, 128 );
-	Add( _T("Downloads.MaxFileTransfers"), &Downloads.MaxFileTransfers, 8 );
-	Add( _T("Downloads.MaxFileSearches"), &Downloads.MaxFileSearches, 0 );
-	Add( _T("Downloads.MaxConnectingSources"), &Downloads.MaxConnectingSources, 30 );
+	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 26 );
+	Add( _T("Downloads.MaxTransfers"), &Downloads.MaxTransfers, 100 );
+	Add( _T("Downloads.MaxFileTransfers"), &Downloads.MaxFileTransfers, 10 );
+	Add( _T("Downloads.MaxFileSearches"), &Downloads.MaxFileSearches, 2 );
+	Add( _T("Downloads.MaxConnectingSources"), &Downloads.MaxConnectingSources, 28 );
 	Add( _T("Downloads.MinSources"), &Downloads.MinSources, 1 );
 	Add( _T("Downloads.ConnectThrottle"), &Downloads.ConnectThrottle, 250 );
 	Add( _T("Downloads.QueueLimit"), &Downloads.QueueLimit, 0 );
@@ -510,7 +511,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	41
+#define SMART_VERSION	42
 
 void CSettings::Load()
 {
@@ -572,11 +573,11 @@ void CSettings::Load()
 	// Enforce a few sensible values to avoid being banned/dropped/etc (in case of registry fiddling)
 	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, 4*60*1000u );
 	Downloads.StarveTimeout		= max( Downloads.StarveTimeout, 45*60u );
+	Downloads.ConnectThrottle	= max( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
+	Downloads.MaxFiles			= min( Downloads.MaxFiles, 100 );
 	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000u );
 	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, 45*60u );
 	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, 60*60u );
-	Downloads.ConnectThrottle	= max( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
-	Downloads.MaxFiles			= min( Downloads.MaxFiles, 100 );
 
 	// Set client links
 	Gnutella1.NumHubs			= min( Gnutella1.NumHubs, 2 );
@@ -665,8 +666,6 @@ void CSettings::SmartUpgrade()
 		Gnutella2.UdpOutExpire			= 26000;
 		Library.TigerHeight		= 9;
 
-		Downloads.MaxFiles				= max( Downloads.MaxFiles, 8 );
-		Downloads.MaxFileTransfers		= max( Downloads.MaxFileTransfers, 16 );
 		Downloads.AutoExpand			= FALSE;
 
 		Uploads.SharePartials			= TRUE;
@@ -701,15 +700,7 @@ void CSettings::SmartUpgrade()
 	{
 		Connection.TimeoutTraffic		= 140000;
 
-		Gnutella2.NumHubs				= 2;
-		Gnutella2.NumLeafs				= 300;
 		Gnutella2.NumPeers				= 6;
-	}
-
-	if ( nVersion < 26 )
-	{
-		Downloads.ConnectThrottle		= max( Downloads.ConnectThrottle, 200u );
-		Downloads.MaxTransfers			= min( Downloads.MaxTransfers, 128 );
 	}
 
 	if ( nVersion < 28 )
@@ -803,6 +794,140 @@ void CSettings::SmartUpgrade()
 		eDonkey.ExtendedRequest = 2;
 		Community.ChatAllNetworks = TRUE;
 		Community.ChatFilter = TRUE;
+	}
+
+	if ( nVersion < 42 )
+	{
+		Connection.FirewallStatus = CONNECTION_AUTO;
+		Gnutella2.NumHubs = 2;
+		General.ItWasLimited = TRUE;
+		OnChangeConnectionSpeed();
+	}
+}
+
+void CSettings::OnChangeConnectionSpeed()
+{
+	BOOL bLimited = theApp.m_bLimitedConnections && !General.IgnoreXPsp2;
+
+	if ( Connection.InSpeed > 750 )
+	{
+		Gnutella2.NumPeers = max( Gnutella2.NumPeers, 4 );
+	}
+
+	if ( Connection.InSpeed <= 80 )
+	{	// NT Modem users / Win9x Modem users
+		Downloads.MaxFiles				= 8;
+		Downloads.MaxTransfers			= 24;
+		Downloads.MaxFileTransfers		= 4;
+		Downloads.MaxConnectingSources	= 16;
+		Downloads.MaxFileSearches		= 0;
+		Downloads.SourcesWanted			= 200;	// Don't bother requesting so many sources
+		Search.GeneralThrottle			= 300;	// Slow searches a little so we don't get flooded
+
+		Gnutella2.NumLeafs				= 200;
+		BitTorrent.DownloadTorrents		= 1;	// Best not to try too many torrents
+	}
+	else if ( !theApp.m_bNT )
+	{	// Others Win9x users
+		Downloads.MaxFiles				= 8;
+		Downloads.MaxTransfers			= 24;
+		Downloads.MaxFileTransfers		= 6;
+		Downloads.MaxConnectingSources	= 16;
+		Downloads.MaxFileSearches		= 1;
+		Downloads.SourcesWanted			= 200;	// Don't bother requesting so many sources
+		Search.GeneralThrottle			= 250;	// Slow searches a little so we don't get flooded
+
+		Gnutella2.NumLeafs				= 200;
+		BitTorrent.DownloadTorrents		= 1;	// Best not to try too many torrents
+	}
+	else if ( Connection.InSpeed <= 256 )
+	{	// IDSN, Dual modems, etc
+		Downloads.MaxFiles				= 14;
+		Downloads.MaxTransfers			= 32;
+		Downloads.MaxFileTransfers		= 6;
+		Downloads.MaxConnectingSources	= 20;
+		Downloads.MaxFileSearches		= 1;
+		Downloads.SourcesWanted			= 500;
+		Search.GeneralThrottle			= 250;	// Slow searches a little so we don't get flooded
+
+		Gnutella2.NumLeafs				= 300;
+		BitTorrent.DownloadTorrents		= 3;
+	}
+	else if ( Connection.InSpeed <= 768 )
+	{	// Slower broadband
+		Downloads.MaxFiles				= 20;
+		Downloads.MaxTransfers			= 64;
+		Downloads.MaxFileTransfers		= 8;
+		Downloads.MaxConnectingSources	= 24;
+		Downloads.MaxFileSearches		= 1;
+		Downloads.SourcesWanted			= 500;
+		Search.GeneralThrottle			= 250;
+
+		Gnutella2.NumLeafs				= 300;
+		BitTorrent.DownloadTorrents		= 3;
+	}
+	else if ( Connection.InSpeed <= 2500 || bLimited )
+	{	// Fast broadband
+		Downloads.MaxFiles				= 26;
+		Downloads.MaxTransfers			= 100;
+		Downloads.MaxFileTransfers		= 10;
+		Downloads.MaxConnectingSources	= 28;
+		Downloads.MaxFileSearches		= 2;
+		Downloads.SourcesWanted			= 500;
+		Search.GeneralThrottle			= 200;
+
+		Gnutella2.NumLeafs				= 300;
+		BitTorrent.DownloadTorrents		= 3;
+	}
+	else if ( Connection.InSpeed <= 5000 )
+	{	// Very high capacity connection
+		Downloads.MaxFiles				= 32;
+		Downloads.MaxTransfers			= 200;
+		Downloads.MaxFileTransfers		= 32;
+		Downloads.MaxConnectingSources	= 32;
+		Downloads.MaxFileSearches		= 3;
+		Downloads.SourcesWanted			= 500;
+		Search.GeneralThrottle			= 200;
+
+		Gnutella2.NumLeafs				= 400;	//Can probably support more leaves
+		BitTorrent.DownloadTorrents		= 4;	// Should be able to handle several torrents
+	}
+	else
+	{
+		Downloads.MaxFiles				= 50;
+		Downloads.MaxTransfers			= 250;
+		Downloads.MaxFileTransfers		= 40;
+		Downloads.MaxConnectingSources	= 40;
+		Downloads.MaxFileSearches		= 5;
+		Downloads.SourcesWanted			= 500;
+		Search.GeneralThrottle			= 200;
+
+		Gnutella2.NumLeafs				= 450;	//Can probably support more leaves
+		BitTorrent.DownloadTorrents		= 4;	// Should be able to handle several torrents
+	}
+
+	if( bLimited )
+	{	// Window XP Service Pack 2
+		theApp.Message( MSG_ERROR, _T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced.") );
+		Connection.ConnectThrottle		= max( Connection.ConnectThrottle, 250u );
+		Downloads.ConnectThrottle		= max( Downloads.ConnectThrottle, 800u );
+		Gnutella.ConnectFactor			= min( Gnutella.ConnectFactor, 3u );
+		Connection.SlowConnect			= TRUE;
+		Connection.RequireForTransfers	= TRUE;
+		Downloads.MaxConnectingSources	= 8;
+		Gnutella1.EnableAlways			= FALSE;
+		Gnutella1.EnableToday			= FALSE;
+
+		General.ItWasLimited			= TRUE;
+	}
+	else if( General.ItWasLimited )	// We change the settings back if the user path the half-open connection limit
+	{
+		Connection.ConnectThrottle		= 0;
+		Downloads.ConnectThrottle		= 250;
+		Gnutella.ConnectFactor			= 4;
+		Connection.SlowConnect			= FALSE;
+
+		General.ItWasLimited			= FALSE;
 	}
 }
 

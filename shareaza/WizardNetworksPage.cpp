@@ -106,13 +106,8 @@ LRESULT CWizardNetworksPage::OnWizardNext()
 	Settings.eDonkey.EnableAlways	= m_bEDEnable;
 	Settings.eDonkey.EnableToday	= m_bEDEnable;
 
-	DoDonkeyImport();
-
-	//if ( m_bEDEnable ) 
-	//{
-	//	CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
-	//	Settings.Live.UploadLimitWarning = TRUE;
-	//}
+	if ( HostCache.eDonkey.CountHosts() < 8 )
+		DoDonkeyImport();
 
 	return 0;
 }
@@ -121,7 +116,7 @@ void CWizardNetworksPage::DoDonkeyImport()
 {
 	CString strPrograms, strFolder;
 	CDonkeyImportDlg dlg( this );
-	
+
 	if ( HINSTANCE hShell = LoadLibrary( _T("shfolder.dll") ) )
 	{
 		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPWSTR);
@@ -136,24 +131,24 @@ void CWizardNetworksPage::DoDonkeyImport()
 		
 		FreeLibrary( hShell );
 	}
-	
+
 	if ( strPrograms.IsEmpty() ) strPrograms = _T("C:\\Program Files");
-	
+
 	// Get the server list from eMule if possible
 	strFolder = strPrograms + _T("\\eMule\\server.met");
 	HostCache.eDonkey.Import( strFolder );
-	
+
 	// Get a server list from the web (if you need one)
 	if ( ( Settings.eDonkey.EnableToday ) && ( HostCache.eDonkey.CountHosts() < 20 ) ) 
 		DiscoveryServices.QueryForHosts( PROTOCOL_ED2K );
-	
+
 	LPCTSTR pszFolders[] =
 	{
 		_T("<%PROGRAMFILES%>\\eMule\\temp"),
 		_T("<%PROGRAMFILES%>\\eDonkey2000\\temp"),
 		NULL
 	};
-	
+
     int nCount = 0;
 	for ( int nFolder = 0 ; pszFolders[ nFolder ] ; nFolder++ )
 	{
@@ -166,6 +161,6 @@ void CWizardNetworksPage::DoDonkeyImport()
 			nCount++;
 		}
 	}
-	
+
 	if ( nCount > 0 ) dlg.DoModal();
 }

@@ -26,7 +26,6 @@
 #include "WndMain.h"
 #include "Skin.h"
 #include "ShareazaURL.h"
-#include "Network.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -151,7 +150,6 @@ LRESULT CWizardInterfacePage::OnWizardNext()
 	// If this system is capable of handling multiple networks, go to the network settings wizard.
 	if ( ( theApp.m_bNT )													&&	// 9x based systems can't handle enough connections
 		 ( !theApp.m_bLimitedConnections || Settings.General.IgnoreXPsp2 )	&&	// The connection rate limiting (XPsp2) makes multi-network performance awful
-		 ( !Network.IsFirewalled() )										&&	// Firewalled users place a heavy load on other networks. (ED2K, in particular)
 		 ( Settings.Connection.InSpeed > 256 )								&&	// Must have a decent connection to be worth it. (Or extra traffic will slow downloads)
 		 ( Settings.GetOutgoingBandwidth() > 16 ))								// If your outbound bandwidth is too low, the ED2K ratio will throttle you anyway
 		return 0;

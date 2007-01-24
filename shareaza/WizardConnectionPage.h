@@ -40,13 +40,10 @@ public:
 public:
 	//{{AFX_DATA(CWizardConnectionPage)
 	enum { IDD = IDD_WIZARD_CONNECTION };
-	CComboBox	m_wndLanSelect;
-	CStatic		m_wndLanLabel;
-	CComboBox	m_wndHomeSelect;
-	CStatic		m_wndHomeLabel;
-	CComboBox	m_wndGroup;
-	CComboBox	m_wndSpeed;
 	CComboBox	m_wndType;
+	CComboBox	m_wndDownloadSpeed;
+	CComboBox	m_wndUploadSpeed;
+	CComboBox	m_wndUPnP;
 	CProgressCtrl m_wndProgress;
 	CStatic		m_wndStatus;
 	//}}AFX_DATA
@@ -73,9 +70,8 @@ protected:
 	//{{AFX_MSG(CWizardConnectionPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelChangeConnectionType();
-	afx_msg void OnEditChangeConnectionSpeed();
-	afx_msg void OnSelChangeConnectionSpeed();
-	afx_msg void OnSelChangeConnectionGroup();
+	afx_msg void OnChangeConnectionSpeed();
+	afx_msg void OnSelChangeUPnP();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
@@ -83,6 +79,7 @@ protected:
 private:
 	bool	m_bQueryDiscoveries;
 	bool	m_bUpdateDonkeyServers;
+	bool	m_bUPnPForward;
 	short	m_nProgressSteps;
 };
 
