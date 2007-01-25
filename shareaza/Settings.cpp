@@ -458,7 +458,7 @@ CSettings::CSettings()
 	Live.DiskWriteWarning			= FALSE;
 	Live.AdultWarning				= FALSE;
 	Live.QueueLimitWarning			= FALSE;
-	Live.DefaultED2KServersLoaded;	= FALSE;
+	Live.DefaultED2KServersLoaded	= FALSE;
 	Live.DonkeyServerWarning		= FALSE;
 	Live.UploadLimitWarning			= FALSE;
 	Live.DiskSpaceStop				= FALSE;
