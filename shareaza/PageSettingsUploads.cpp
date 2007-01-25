@@ -1,7 +1,7 @@
 //
 // PageSettingsUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -144,21 +144,15 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	m_wndQueueDelete.EnableWindow( m_wndQueues.GetSelectedCount() > 0 );
 
 	m_bQueuesChanged = FALSE;
-	
+
 	// Update value in limit combo box
 	if ( Settings.Bandwidth.Uploads )
-	{
 		m_sBandwidthLimit = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
-	}
 	else
-	{
-		m_sBandwidthLimit	= Settings.SmartVolume( 0, FALSE, TRUE );
-		int nSpace			= m_sBandwidthLimit.Find( ' ' );
-		m_sBandwidthLimit	= _T("MAX") + m_sBandwidthLimit.Mid( nSpace );
-	}
+		m_sBandwidthLimit	= _T("MAX");
 
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 

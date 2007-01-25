@@ -141,9 +141,16 @@ LRESULT CWizardInterfacePage::OnWizardNext()
 	CWaitCursor pCursor;
 	CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
 
-	if ( m_bExpert ) Settings.General.GUIMode = GUI_TABBED;
-	else Settings.General.GUIMode = GUI_BASIC;
-	pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
+	if ( m_bExpert && Settings.General.GUIMode == GUI_BASIC )
+	{
+		Settings.General.GUIMode = GUI_TABBED;
+		pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
+	}
+	else if ( !m_bExpert && Settings.General.GUIMode != GUI_BASIC )
+	{
+		Settings.General.GUIMode = GUI_BASIC;
+		pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
+	}
 
 	Settings.Save();
 

@@ -84,7 +84,7 @@ BOOL CWizardProfilePage::OnInitDialog()
 
 	Skin.Apply( _T("CWizardProfilePage"), this );
 
-	for ( int nAge = 13 ; nAge < 110 ; nAge++ )
+	for ( int nAge = 13 ; nAge <= 110 ; nAge++ )
 	{
 		CString str, strYearsOld;
 		LoadString( strYearsOld, IDS_WIZARD_YEARS_OLD );
@@ -156,6 +156,8 @@ BOOL CWizardProfilePage::OnSetActive()
 	}
 
 	UpdateData( FALSE );
+
+	OnSelChangeCountry();
 
 	return CWizardPage::OnSetActive();
 }

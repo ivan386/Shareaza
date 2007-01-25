@@ -94,36 +94,43 @@ BOOL CWizardConnectionPage::OnInitDialog()
 
 	CString strTemp;
 
-	m_wndType.SetItemData( 0, 0 );
-	m_wndType.SetItemData( 1, 56 );		// Dial up Modem;
-	m_wndType.SetItemData( 2, 128 );	// ISDN
-	m_wndType.SetItemData( 3, 256);		// ADSL (256K)
-	m_wndType.SetItemData( 4, 512);		// ADSL (512K)
-	m_wndType.SetItemData( 5, 768);		// ADSL (768K)
-	m_wndType.SetItemData( 6, 1536 );	// ADSL (1.5M)
-	m_wndType.SetItemData( 7, 4096 );	// ADSL (4.0M)
-	m_wndType.SetItemData( 8, 8192 );	// ADSL2 (8.0M)
-	m_wndType.SetItemData( 9, 12288 );	// ADSL2 (12.0M)
-	m_wndType.SetItemData(10, 24576 );	// ADSL2+ (24.0M)
-	m_wndType.SetItemData(11, 1550 );	// Cable Modem/SDSL
-	m_wndType.SetItemData(12, 1544 );	// T1
-	m_wndType.SetItemData(13, 45000 );	// T3
-	m_wndType.SetItemData(14, 100000 );	// LAN
-	m_wndType.SetItemData(15, 155000 );	// OC3
+	m_wndType.SetItemData( 0, 56 );		// Dial up Modem;
+	m_wndType.SetItemData( 1, 128 );	// ISDN
+	m_wndType.SetItemData( 2, 256);		// ADSL (256K)
+	m_wndType.SetItemData( 3, 512);		// ADSL (512K)
+	m_wndType.SetItemData( 4, 768);		// ADSL (768K)
+	m_wndType.SetItemData( 5, 1536 );	// ADSL (1.5M)
+	m_wndType.SetItemData( 6, 4096 );	// ADSL (4.0M)
+	m_wndType.SetItemData( 7, 8192 );	// ADSL2 (8.0M)
+	m_wndType.SetItemData( 8, 12288 );	// ADSL2 (12.0M)
+	m_wndType.SetItemData( 9, 24576 );	// ADSL2+ (24.0M)
+	m_wndType.SetItemData(10, 1550 );	// Cable Modem/SDSL
+	m_wndType.SetItemData(11, 1544 );	// T1
+	m_wndType.SetItemData(12, 45000 );	// T3
+	m_wndType.SetItemData(13, 102400 );	// LAN
+	m_wndType.SetItemData(14, 155000 );	// OC3
 	m_wndType.SetCurSel( -1 );
-	//; Dial up Modem; ISDN; ADSL (256K); ADSL (512K); ADSL (768K); ADSL (1.5M); ADSL (4.0M); ADSL2 (8.0M); ADSL2 (12.0M); ADSL2+ (24.0M); Cable Modem/SDSL; T1; T3; LAN; OC3;
+	//Dial up Modem;ISDN;ADSL (256K);ADSL (512K);ADSL (768K);ADSL (1.5M);ADSL (4.0M);ADSL2 (8.0M);ADSL2 (12.0M);ADSL2+ (24.0M);Cable Modem/SDSL;T1;T3;LAN;OC3;
 
-	strTemp.Format( _T(" %Lu kbps"), Settings.Connection.InSpeed );
+	const double nSpeeds[] = { 28.8, 33.6, 56, 64, 128, 256, 384, 512, 640, 768, 1024, 1536, 1544, 1550, 2048, 3072, 4096, 5120, 8192, 10240, 12288, 24576, 45000, 102400, 155000, 0 };
+	for ( int nSpeed = 0 ; nSpeeds[ nSpeed ] ; nSpeed++ )
+	{
+		strTemp.Format( _T("%lg kbps"), nSpeeds[ nSpeed ] );
+		m_wndDownloadSpeed.AddString( strTemp );
+		m_wndUploadSpeed.AddString( strTemp );
+	}
+
+	strTemp.Format( _T("%lu kbps"), Settings.Connection.InSpeed );
 	m_wndDownloadSpeed.SetWindowText( strTemp );
-	strTemp.Format( _T(" %Lu kbps"), Settings.Connection.OutSpeed );
+	strTemp.Format( _T("%lu kbps"), Settings.Connection.OutSpeed );
 	m_wndUploadSpeed.SetWindowText( strTemp );
-	// 28.8 kbps; 33.6 kbps; 56.6 kbps; 64.0 kbps; 128 kbps; 256 kbps; 384 kbps; 512 kbps; 1024 kbps; 1536 kbps; 2048 kbps; 3072 kbps; 4096 kbps; 5120 kbps; 8192 kbps; 12288 kbps;
 
 	LoadString( strTemp, IDS_GENERAL_YES );
 	m_wndUPnP.AddString(strTemp);
 	LoadString( strTemp, IDS_GENERAL_NO );
 	m_wndUPnP.AddString(strTemp);
 	m_wndUPnP.SetCurSel( 0 );
+	OnSelChangeUPnP();
 
 	// 3 steps with 30 sub-steps each
 	m_wndProgress.SetRange( 0, 90 );
@@ -202,25 +209,18 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	else
 	{
 		CString strSpeed;
+		double nTemp;
 
 		m_wndDownloadSpeed.GetWindowText( strSpeed );
-		if ( _stscanf( strSpeed, _T("%lu"), &nDownloadSpeed ) != 1 )
-			nDownloadSpeed = 0;
+		if ( _stscanf( strSpeed, _T("%lf"), &nTemp ) == 1 )
+			nDownloadSpeed = (DWORD)nTemp;
 
 		m_wndUploadSpeed.GetWindowText( strSpeed );
-		if ( _stscanf( strSpeed, _T("%lu"), &nUploadSpeed ) != 1 )
-			nUploadSpeed = 0;
+		if ( _stscanf( strSpeed, _T("%lf"), &nTemp ) == 1 )
+			nUploadSpeed = (DWORD)nTemp;
 	}
 
-	if ( nDownloadSpeed <= 0 )
-	{
-		CString strSpeed;
-		LoadString( strSpeed, IDS_WIZARD_NEED_SPEED );
-		AfxMessageBox( strSpeed, MB_ICONEXCLAMATION );
-		return -1;
-	}
-
-	if ( nUploadSpeed <= 0 )
+	if ( nDownloadSpeed <= 0 || nUploadSpeed <= 0 )
 	{
 		CString strSpeed;
 		LoadString( strSpeed, IDS_WIZARD_NEED_SPEED );
@@ -364,6 +364,7 @@ void CWizardConnectionPage::OnRun()
 	pSheet->SendMessage( PSM_SETCURSEL, 2, 0 );	// Go to the 3rd page
 	PostMessage( WM_TIMER, 1 );					// Terminate thread if necessarily
 }
+
 BOOL CWizardConnectionPage::OnQueryCancel()
 {
 	if ( m_hThread )
