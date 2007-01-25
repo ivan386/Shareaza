@@ -90,9 +90,9 @@ BOOL CHostCache::Load()
 	{
 		pException->Delete();
 	}
-	
-	if ( eDonkey.GetNewest() == NULL ) eDonkey.Import( _T("C:\\Program Files\\eMule\\server.met") );
-	
+
+	if ( eDonkey.GetNewest() == NULL ) eDonkey.CheckMinimumED2KServers();
+
 	return TRUE;
 }
 
@@ -588,13 +588,13 @@ void CHostCacheList::OnSuccess(IN_ADDR* pAddress, WORD nPort, bool bUpdate)
 
 // CHostCacheList count
 
-DWORD CHostCacheList::CountHosts() const
+DWORD CHostCacheList::CountHosts(BOOL bCountUncheckedLocally) const
 {
 	DWORD nCount = 0;
 
 	for ( CHostCacheHost* pHost = GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
 	{
-		if ( pHost->m_nFailures == 0 && pHost->m_bCheckedLocally )
+		if ( pHost->m_nFailures == 0 && ( pHost->m_bCheckedLocally || bCountUncheckedLocally ) )
 			nCount++;
 	}
 
@@ -797,7 +797,34 @@ int CHostCacheList::ImportMET(CFile* pFile)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCacheList MET import
+// CHostCacheList Check Minimum ED2K Servers
+
+BOOL CHostCacheList::CheckMinimumED2KServers()
+{
+	// Load default ed2k server list (if necessary)
+	if ( !EnoughED2KServers() )
+	{
+		LoadDefaultED2KServers();
+		DoED2KServersImport();
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CHostCacheList Enough ED2K Servers
+
+BOOL CHostCacheList::EnoughED2KServers()
+{
+	if ( CountHosts(TRUE) < 8 )
+		return FALSE;
+
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CHostCacheList Default ED2K servers import
 
 int CHostCacheList::LoadDefaultED2KServers()
 {
@@ -809,7 +836,7 @@ int CHostCacheList::LoadDefaultED2KServers()
 
 	if (  pFile.Open( strFile, CFile::modeRead ) )			// Load default list from file if possible
 	{
-		theApp.Message( MSG_DEFAULT, _T("Loading default ED2K server list") );
+		theApp.Message( MSG_SYSTEM, _T("Loading default ED2K server list") );
 
 		try
 		{
@@ -861,10 +888,34 @@ int CHostCacheList::LoadDefaultED2KServers()
 		}
 	}
 
+	if ( !EnoughED2KServers() )
+		theApp.Message( MSG_DISPLAYED_ERROR, _T("Loading default ED2K server list failed") );
+
 	return nServers;
 }
 
+//////////////////////////////////////////////////////////////////////
+// CHostCacheList ED2K servers import
 
+void CHostCacheList::DoED2KServersImport()
+{
+	CString strPrograms, strFolder;
+	TCHAR szPath[MAX_PATH];
+
+	if( SUCCEEDED( SHGetFolderPath( NULL, CSIDL_PROGRAM_FILES, NULL, SHGFP_TYPE_CURRENT, szPath ) ) )
+		strPrograms = szPath;
+
+	if ( strPrograms.IsEmpty() ) strPrograms = _T("C:\\Program Files");
+
+	theApp.Message( MSG_SYSTEM, _T("Importing server.met from eMule/eMule mod") );
+
+	// Get the server list from eMule if possible
+	strFolder = strPrograms + _T("\\eMule\\config\\server.met");
+	Import( strFolder );
+
+	strFolder = strPrograms + _T("\\Neomule\\config\\server.met");
+	Import( strFolder );
+}
 
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost construction

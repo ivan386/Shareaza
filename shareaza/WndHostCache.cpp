@@ -470,6 +470,10 @@ void CHostCacheWnd::OnHostCacheRemove()
 			HostCache.Remove( pHost );
 		}
 	}
+
+	HostCache.eDonkey.CheckMinimumED2KServers();
+
+	Update();
 }
 
 void CHostCacheWnd::OnUpdateHostcacheG2Horizon(CCmdUI* pCmdUI) 

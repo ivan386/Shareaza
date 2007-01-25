@@ -106,8 +106,7 @@ LRESULT CWizardNetworksPage::OnWizardNext()
 	Settings.eDonkey.EnableAlways	= m_bEDEnable;
 	Settings.eDonkey.EnableToday	= m_bEDEnable;
 
-	if ( HostCache.eDonkey.CountHosts() < 8 )
-		DoDonkeyImport();
+	DoDonkeyImport();
 
 	return 0;
 }
@@ -121,26 +120,18 @@ void CWizardNetworksPage::DoDonkeyImport()
 	{
 		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPWSTR);
 		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathW" );
-		
+
 		if ( pfnSHGetFolderPath != NULL )
 		{
 			strPrograms.ReleaseBuffer(
 				(*pfnSHGetFolderPath)( GetSafeHwnd(), 0x26, NULL, 0,
 				strPrograms.GetBuffer( MAX_PATH + 1 ) ) == S_OK ? -1 : 0 );
 		}
-		
+
 		FreeLibrary( hShell );
 	}
 
 	if ( strPrograms.IsEmpty() ) strPrograms = _T("C:\\Program Files");
-
-	// Get the server list from eMule if possible
-	strFolder = strPrograms + _T("\\eMule\\server.met");
-	HostCache.eDonkey.Import( strFolder );
-
-	// Get a server list from the web (if you need one)
-	if ( ( Settings.eDonkey.EnableToday ) && ( HostCache.eDonkey.CountHosts() < 20 ) ) 
-		DiscoveryServices.QueryForHosts( PROTOCOL_ED2K );
 
 	LPCTSTR pszFolders[] =
 	{
@@ -149,7 +140,7 @@ void CWizardNetworksPage::DoDonkeyImport()
 		NULL
 	};
 
-    int nCount = 0;
+	int nCount = 0;
 	for ( int nFolder = 0 ; pszFolders[ nFolder ] ; nFolder++ )
 	{
 		strFolder = pszFolders[ nFolder ];

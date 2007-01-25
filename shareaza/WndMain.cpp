@@ -1437,7 +1437,9 @@ void CMainWnd::LocalSystemChecks()
 		// Check we have donkey servers
 		if ( ( Settings.Live.DonkeyServerWarning == FALSE ) && ( Settings.eDonkey.EnableToday ) )
 		{
-			if ( ( ! Settings.eDonkey.MetAutoQuery ) && ( HostCache.eDonkey.CountHosts() < 1 ) )
+			HostCache.eDonkey.CheckMinimumED2KServers();
+
+			if ( ( ! Settings.eDonkey.MetAutoQuery ) && ( HostCache.eDonkey.CountHosts(TRUE) < 1 ) )
 			{
 				Settings.Live.DonkeyServerWarning = TRUE;
 				PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );
@@ -1610,8 +1612,6 @@ void CMainWnd::OnNetworkED2K()
 	{
 		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
-		else
-			DiscoveryServices.Execute( FALSE, PROTOCOL_ED2K );
 	}
 }
 

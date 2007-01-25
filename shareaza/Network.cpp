@@ -207,10 +207,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 
 	// If we are already connected, see if we need to query discovery services and exit.
 	if ( m_bEnabled )
-	{
-		//if ( bAutoConnect ) DiscoveryServices.Execute( FALSE );
 		return TRUE;
-	}
 
 	// Begin network startup
 	theApp.Message( MSG_SYSTEM, IDS_NETWORK_STARTUP );
@@ -225,6 +222,9 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 		InternetSetOption( hInternet, INTERNET_OPTION_CONNECTED_STATE, &ici, sizeof(ici) );
 		InternetCloseHandle( hInternet );
 	}
+
+	// It will check if it is needed inside the function
+	DiscoveryServices.Execute(TRUE, PROTOCOL_NULL);
 
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
@@ -260,8 +260,6 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
 	m_hThread				= pThread->m_hThread;
 	SetThreadName( pThread->m_nThreadID, "Network" );
-
-	// if ( m_bAutoConnect && bAutoConnect ) DiscoveryServices.Execute();
 
 	return TRUE;
 }

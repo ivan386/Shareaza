@@ -308,7 +308,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000 );
 	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 500 );
 	Add( _T("eDonkey.SourceThrottle"), &eDonkey.SourceThrottle, 1000 );
-	Add( _T("eDonkey.MetAutoQuery"), &eDonkey.MetAutoQuery, FALSE );
+	Add( _T("eDonkey.MetAutoQuery"), &eDonkey.MetAutoQuery, TRUE );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
 	Add( _T("eDonkey.LearnNewServersClient"), &eDonkey.LearnNewServersClient, FALSE );
 	Add( _T("eDonkey.ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met") );
@@ -511,7 +511,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	42
+#define SMART_VERSION	43
 
 void CSettings::Load()
 {
@@ -802,6 +802,11 @@ void CSettings::SmartUpgrade()
 		Gnutella2.NumHubs = 2;
 		General.ItWasLimited = TRUE;
 		OnChangeConnectionSpeed();
+	}
+
+	if ( nVersion < 43 )
+	{	
+		eDonkey.MetAutoQuery = TRUE;
 	}
 }
 

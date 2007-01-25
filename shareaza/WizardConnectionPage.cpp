@@ -242,19 +242,21 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	if ( theApp.m_bLimitedConnections && !Settings.General.IgnoreXPsp2 ) 
 		CHelpDlg::Show( _T("GeneralHelp.XPsp2") );
 
-	// Update the G2 host cache (if necessary)
-	if ( HostCache.Gnutella2.CountHosts() < 25 )
-	{
-		m_bQueryDiscoveries = true;
-		m_nProgressSteps += 30;
-	}
+	m_nProgressSteps = 0;
 
 	// Load default ed2k server list (if necessary)
-	if ( HostCache.eDonkey.CountHosts() < 8 )
+	if ( !HostCache.eDonkey.EnoughED2KServers() )
 	{
 		m_bUpdateDonkeyServers = true;
 		m_nProgressSteps += 30;
 	}
+
+	// Update the G1, G2 and eDonkey host cache (if necessary)
+	m_bQueryDiscoveries = true;
+	m_nProgressSteps += 30;
+
+	if ( m_bUPnPForward )
+		m_nProgressSteps += 30;	// UPnP device detection
 
 	CWaitCursor pCursor;
 	// Create UPnP finder object if it doesn't exist
@@ -298,7 +300,6 @@ void CWizardConnectionPage::OnRun()
 	short nCurrentStep = 0;
 	CString strMessage;
 
-	m_nProgressSteps += 30;	// UPnP device detection
 	m_wndProgress.PostMessage( PBM_SETRANGE32, 0, (LPARAM)m_nProgressSteps );
 
 	if ( m_bUPnPForward )
@@ -323,17 +324,8 @@ void CWizardConnectionPage::OnRun()
 
 			m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 		}
-	}
 
-	nCurrentStep = 30;
-	m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
-
-	if ( m_bQueryDiscoveries )
-	{
-		LoadString( strMessage, IDS_WIZARD_DISCOVERY );
-		m_wndStatus.SetWindowText( strMessage );
-		DiscoveryServices.QueryForHosts( PROTOCOL_G2 );
-		nCurrentStep +=30;
+		nCurrentStep = 30;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 	}
 
@@ -341,7 +333,21 @@ void CWizardConnectionPage::OnRun()
 	{
 		LoadString( strMessage, IDS_WIZARD_ED2K );
 		m_wndStatus.SetWindowText( strMessage );
-		HostCache.eDonkey.LoadDefaultED2KServers();
+		HostCache.eDonkey.CheckMinimumED2KServers();
+		nCurrentStep +=30;
+		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
+	}
+
+	if ( m_bQueryDiscoveries )
+	{
+		LoadString( strMessage, IDS_WIZARD_DISCOVERY );
+		m_wndStatus.SetWindowText( strMessage );
+
+		DiscoveryServices.CheckMinimumServices();
+
+		// It will check if it is needed inside the function
+		DiscoveryServices.Execute(TRUE, PROTOCOL_NULL);
+
 		nCurrentStep +=30;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 	}
