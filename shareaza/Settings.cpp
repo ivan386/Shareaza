@@ -454,20 +454,21 @@ CSettings::CSettings()
 	General.UserPath = General.Path;
 
 	// Reset 'live' values.
-	Live.DiskSpaceWarning	= FALSE;
-	Live.DiskWriteWarning	= FALSE;
-	Live.AdultWarning		= FALSE;
-	Live.QueueLimitWarning	= FALSE;
-	Live.DonkeyServerWarning= FALSE;
-	Live.UploadLimitWarning	= FALSE;
-	Live.DiskSpaceStop		= FALSE;
-	Live.BandwidthScale		= 100;
-	Live.LoadWindowState	= FALSE;
-	Live.AutoClose			= FALSE;
-	Live.FirstRun			= FALSE;
-	Live.LastDuplicateHash	= L"";
-	Live.NewFile			= FALSE;
-	Live.MaliciousWarning	= FALSE;
+	Live.DiskSpaceWarning			= FALSE;
+	Live.DiskWriteWarning			= FALSE;
+	Live.AdultWarning				= FALSE;
+	Live.QueueLimitWarning			= FALSE;
+	Live.DefaultED2KServersLoaded;	= FALSE;
+	Live.DonkeyServerWarning		= FALSE;
+	Live.UploadLimitWarning			= FALSE;
+	Live.DiskSpaceStop				= FALSE;
+	Live.BandwidthScale				= 100;
+	Live.LoadWindowState			= FALSE;
+	Live.AutoClose					= FALSE;
+	Live.FirstRun					= FALSE;
+	Live.LastDuplicateHash			= L"";
+	Live.NewFile					= FALSE;
+	Live.MaliciousWarning			= FALSE;
 
 	// Add all settings
 	Setup();

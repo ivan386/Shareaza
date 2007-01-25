@@ -496,6 +496,7 @@ public:
 		BOOL		DiskWriteWarning;			// Has the user been warned of write problems?
 		BOOL		AdultWarning;				// Has the user been warned about the adult filter?
 		BOOL		QueueLimitWarning;			// Has the user been warned about limiting the max Q position accepted?
+		BOOL		DefaultED2KServersLoaded;	// Has Shareaza already loaded default ED2K servers?
 		BOOL		DonkeyServerWarning;		// Has the user been warned about having an empty server list?
 		BOOL		UploadLimitWarning;			// Has the user been warned about the ed2k/BT ratio?
 		BOOL		DiskSpaceStop;				// Has Shareaza paused all downloads due to critical disk space?

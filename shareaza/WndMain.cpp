@@ -1433,17 +1433,18 @@ void CMainWnd::LocalSystemChecks()
 			}
 		}
 
-
 		// Check we have donkey servers
+		if ( Settings.Live.DefaultED2KServersLoaded == FALSE )
+		{
+			Settings.Live.DefaultED2KServersLoaded  = TRUE;
+			HostCache.eDonkey.CheckMinimumED2KServers();
+		}
+
 		if ( ( Settings.Live.DonkeyServerWarning == FALSE ) && ( Settings.eDonkey.EnableToday ) )
 		{
-			HostCache.eDonkey.CheckMinimumED2KServers();
-
+			Settings.Live.DonkeyServerWarning = TRUE;
 			if ( ( ! Settings.eDonkey.MetAutoQuery ) && ( HostCache.eDonkey.CountHosts(TRUE) < 1 ) )
-			{
-				Settings.Live.DonkeyServerWarning = TRUE;
 				PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );
-			}
 		}
 
 		// Check for duplicates if LibraryBuilder finished hashing during startup
