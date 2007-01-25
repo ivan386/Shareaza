@@ -53,12 +53,57 @@
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlwin.h>
+#include <atlstr.h>
+#include <atlcoll.h>
+
+#ifndef ATLENSURE_THROW
+#define ATLENSURE_THROW(expr, hr)          \
+	do {                                       \
+	int __atl_condVal=!!(expr);            \
+	ATLASSERT(__atl_condVal);              \
+	if(!(__atl_condVal)) AtlThrow(hr);     \
+	} while (0)
+#endif // ATLENSURE
+
+#ifndef ATLENSURE
+#define ATLENSURE(expr) ATLENSURE_THROW(expr, E_FAIL)
+#endif // ATLENSURE
+
+#ifndef ATLENSURE_SUCCEEDED
+#define ATLENSURE_SUCCEEDED(hr) ATLENSURE_THROW(SUCCEEDED(hr), hr)
+#endif // ATLENSURE
+
+/* Used inside COM methods that do not want to throw */
+#ifndef ATLENSURE_RETURN_VAL
+#define ATLENSURE_RETURN_VAL(expr, val)        \
+	do {                                           \
+	int __atl_condVal=!!(expr);                \
+	ATLASSERT(__atl_condVal);                  \
+	if(!(__atl_condVal)) return val;           \
+	} while (0) 
+#endif 
+
+/* Used inside COM methods that do not want to throw */
+#ifndef ATLENSURE_RETURN
+#define ATLENSURE_RETURN(expr) ATLENSURE_RETURN_HR(expr, E_FAIL)
+#endif 
+
+/* Naming is slightly off in these macros
+ATLENSURE_RETURN is an HRESULT return of E_FAIL
+ATLENSURE_RETURN_VAL is any return value (function can pick)
+ATLENSURE_RETURN_HR is HRESULT-specific, though currently the same as _VAL
+*/
+#ifndef ATLENSURE_RETURN_HR
+#define ATLENSURE_RETURN_HR(expr, hr) ATLENSURE_RETURN_VAL(expr, hr)
+#endif
+
+#define THROW_HR(x) if( FAILED(x) ) throw x
+
+#include "AtlControls.h"
 
 extern HINSTANCE			v_hModule;
 extern HINSTANCE			v_hResources;
 extern CRITICAL_SECTION		v_csSynch;
 extern BOOL					v_fRunningOnNT;
-
-#define THROW_HR(x) if( FAILED(x) ) throw x
 
 using namespace ATL;

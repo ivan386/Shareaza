@@ -109,7 +109,7 @@ STDMETHODIMP CIRCPlugin::InsertCommands()
 		for ( u_short nConfig = 0 ; nConfig < 8 ; nConfig++ )
 		{
 			hr = m_pInterface->GetMenu( CComBSTR( menuData[ nConfig ].pszMenuName ), 
-										VARIANT_FALSE, &pMenu );
+				VARIANT_FALSE, &pMenu );
 			if ( FAILED(hr) ) continue;
 
 			hr = pMenu->get_Item( CComVariant( menuData[ nConfig ].nMenuItemPosition ), &pMenuItem );
@@ -120,7 +120,7 @@ STDMETHODIMP CIRCPlugin::InsertCommands()
 
 			if ( FAILED(hr) ) // right-click menu
 				hr = pMenu->InsertCommand( menuData[ nConfig ].nCommandPosition,
-										   m_nCmdWindow, CComBSTR( L"&Chat" ), &pNewItem );
+				m_nCmdWindow, CComBSTR( L"&Chat" ), &pNewItem );
 			pNewItem.Release();
 			pMenuItem.Release();
 			pMenu.Release();
@@ -134,7 +134,7 @@ STDMETHODIMP CIRCPlugin::InsertCommands()
 	return S_OK;
 }
 
-STDMETHODIMP CIRCPlugin::OnUpdate(unsigned int nCommandID, STRISTATE* pbVisible, 
+STDMETHODIMP CIRCPlugin::OnUpdate(INT nCommandID, STRISTATE* pbVisible, 
 								  STRISTATE* pbEnabled, STRISTATE* pbChecked)
 {
 	// Called when window is inactive. 
@@ -144,25 +144,33 @@ STDMETHODIMP CIRCPlugin::OnUpdate(unsigned int nCommandID, STRISTATE* pbVisible,
 		if ( pbEnabled )
 			*pbEnabled = TSTRUE;
 		if ( pbChecked )
-			*pbChecked = TSFALSE;
+		{
+			if ( m_pWindow )
+			{
+				SGUIMode mode = GuiWindowed;
+				m_pInterface->get_GUIMode( &mode );
+				*pbChecked = mode == GuiWindowed ? TSTRUE : TSFALSE;
+			}
+			else
+				*pbChecked = TSFALSE;
+		}
 		return S_OK;
 	}
 
 	return S_FALSE;
 }
 
-STDMETHODIMP CIRCPlugin::OnCommand(unsigned int nCommandID)
+STDMETHODIMP CIRCPlugin::OnCommand(INT nCommandID)
 {
 	if ( nCommandID == m_nCmdWindow || nCommandID == m_nCmdWindow2 )
 	{
 		if ( m_pWindow == NULL )
 		{
 			m_pWindow = new CComObject< CIRCWnd >;
-			m_pWindow->Create( this );
+			m_pWindow->Create( this, L"CIRCWnd" );
 			m_pWindow->ShowWindow( SW_SHOWNORMAL );
 		}
 
-		m_pWindow->ResizeWindow();
 		m_pWindow->BringWindowToTop();
 		m_pWindow->Invalidate();
 
@@ -180,7 +188,7 @@ STDMETHODIMP CIRCPlugin::SetApplication(IApplication* pApplication)
 	return S_OK;
 }
 
-STDMETHODIMP CIRCPlugin::QueryCapabilities(unsigned long* pnCaps)
+STDMETHODIMP CIRCPlugin::QueryCapabilities(LONG* pnCaps)
 {
 	return S_OK;
 }
@@ -192,5 +200,7 @@ STDMETHODIMP CIRCPlugin::Configure()
 
 STDMETHODIMP CIRCPlugin::OnSkinChanged()
 {
+	if ( m_pWindow )
+		m_pWindow->OnSkinChanged();
 	return S_OK;
 }

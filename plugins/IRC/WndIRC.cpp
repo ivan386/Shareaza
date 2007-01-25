@@ -24,13 +24,7 @@
 #include "IRC.h"
 #include "IRCPlugin.h"
 
-#ifdef _DEBUG
-#undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
-#define new DEBUG_NEW
-#endif
-
-CIRCWnd::CIRCWnd() : m_pPlugin(NULL)
+CIRCWnd::CIRCWnd()
 {
 }
 
@@ -39,20 +33,15 @@ CIRCWnd::CIRCWnd() : m_pPlugin(NULL)
 
 CIRCWnd::~CIRCWnd()
 {
-	// Destroy the various objects we may have allocated
+	if ( IsWindow() )
+		Detach();
 }
 
-BOOL CIRCWnd::Create(CIRCPlugin* pPlugin)
+BOOL CIRCWnd::Create(CIRCPlugin* pPlugin, LPCTSTR pszClassName)
 {
-	m_pPlugin		= pPlugin;
-	m_pApplication	= pPlugin->m_pApplication;
+	//__super::Create( pPlugin, pszClassName );
 
-	// Get an IUserInterface pointer from the IApplication
-	CComPtr< IUserInterface > pUI;
-	m_pApplication->get_UserInterface( &pUI );
-
-	pUI->NewWindow( L"IRCWindow", this, &m_pWindow );
-	m_pWindow->ListenForSingleMessage( WM_CREATE );
+	// Don't listen to WM_CREATE. Otherwise no tab will be created in the Tab bar
 	m_pWindow->ListenForSingleMessage( WM_CLOSE );
 	m_pWindow->ListenForSingleMessage( WM_DESTROY );
 	m_pWindow->ListenForSingleMessage( WM_CONTEXTMENU );
@@ -60,12 +49,21 @@ BOOL CIRCWnd::Create(CIRCPlugin* pPlugin)
 	m_pWindow->ListenForSingleMessage( WM_PAINT );
 	m_pWindow->ListenForSingleMessage( WM_NCLBUTTONUP );
 	m_pWindow->ListenForSingleMessage( WM_SETCURSOR );
-	m_pWindow->ListenForSingleMessage( WM_SYSCOMMAND );
 
-	m_pWindow->Create2( m_pPlugin->m_nCmdWindow2, VARIANT_TRUE, VARIANT_TRUE );
+	m_pWindow->Create2( m_pPlugin->m_nCmdWindow2, VARIANT_TRUE, VARIANT_FALSE );
 	m_pWindow->GetHwnd( &m_hWnd );
+	m_pFrame = new CComObject< CIRCFrame >;
+	m_pFrame->Create( m_pPlugin, L"CIRCFrame" );
+
+	// Load window position and size. The frame will be sized too
+	m_pWindow->LoadState( VARIANT_FALSE );
 
 	return TRUE;
+}
+
+void CIRCWnd::OnSkinChanged()
+{
+	m_pFrame->OnSkinChanged();
 }
 
 BOOL CIRCWnd::Refresh()
@@ -84,26 +82,6 @@ BOOL CIRCWnd::Refresh()
 	return TRUE;
 }
 
-BOOL CIRCWnd::ResizeWindow()
-{
-	HWND hMDI = GetParent();
-	RECT rcWnd, rcMDI;
-
-	::GetClientRect( hMDI, &rcMDI );
-	rcWnd.left = rcWnd.top = 0;
-	m_pWindow->AdjustWindowRect( &rcWnd, VARIANT_TRUE );
-
-	rcWnd.left = rcMDI.left;
-	rcWnd.right = rcMDI.right;
-	rcWnd.top = rcMDI.top;
-	rcWnd.bottom = rcMDI.bottom;
-
-	// Move
-	MoveWindow( &rcWnd );
-
-	return TRUE;
-}
-
 // IPluginWindowOwner Methods
 STDMETHODIMP CIRCWnd::OnTranslate(MSG* pMessage)
 {
@@ -111,12 +89,14 @@ STDMETHODIMP CIRCWnd::OnTranslate(MSG* pMessage)
 	return E_NOTIMPL;
 }
 
-STDMETHODIMP CIRCWnd::OnMessage(UINT nMessage, WPARAM wParam, LPARAM lParam, LRESULT* plResult)
+STDMETHODIMP CIRCWnd::OnMessage(INT nMessage, WPARAM wParam, LPARAM lParam, LRESULT* plResult)
 {
+	if ( m_pFrame->IsWindow() )
+		m_pFrame->ProcessWindowMessage( m_hWnd, nMessage, wParam, lParam, *plResult );
 	return ProcessWindowMessage( m_hWnd, nMessage, wParam, lParam, *plResult ) ? S_OK : S_FALSE;
 }
 
-STDMETHODIMP CIRCWnd::OnUpdate(UINT nCommandID, STRISTATE* pbVisible, 
+STDMETHODIMP CIRCWnd::OnUpdate(INT nCommandID, STRISTATE* pbVisible, 
 							   STRISTATE* pbEnabled, STRISTATE* pbChecked)
 {
 	// Called when window is active.
@@ -131,12 +111,12 @@ STDMETHODIMP CIRCWnd::OnUpdate(UINT nCommandID, STRISTATE* pbVisible,
 	return S_FALSE;
 }
 
-STDMETHODIMP CIRCWnd::OnCommand(UINT nCommandID)
+STDMETHODIMP CIRCWnd::OnCommand(INT nCommandID)
 {
-	if ( nCommandID == WM_CLOSE || nCommandID == WM_DESTROY )
+	if ( m_pWindow && m_pFrame->m_hWnd != NULL )
 	{
-		PostMessage( WM_CLOSE );
-		return S_OK;
+		if ( m_pFrame->OnCommand( nCommandID ) == S_OK )
+			return S_OK;
 	}
 
 	return S_FALSE;
@@ -146,16 +126,20 @@ LRESULT CIRCWnd::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandl
 {
 	if ( uMsg == WM_DESTROY )
 	{
+		// Save window position and size (for windowed mode)
+		m_pWindow->SaveState();
 		m_pPlugin->m_pWindow = NULL;
 	}
-	
+
 	bHandled = FALSE;
 	return 0;
 }
 
-LRESULT CIRCWnd::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
+LRESULT CIRCWnd::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& bHandled)
 {
 	bHandled = FALSE;
+	if ( m_pWindow && m_pFrame->m_hWnd != NULL )
+		m_pFrame->SetWindowPos( NULL, 0, 0, (int)LOWORD(lParam), (int)HIWORD(lParam), SWP_NOZORDER );
 	return 0;
 }
 

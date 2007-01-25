@@ -48,48 +48,48 @@ public:
 
 	// Attributes
 public:
-	CComPtr<IApplication>	m_pApplication;
-	CComPtr<IUserInterface>	m_pInterface;
-	CIRCWnd*				m_pWindow;
+	CComPtr<IApplication>		m_pApplication;
+	CComPtr<IUserInterface>		m_pInterface;
+	CIRCWnd*					m_pWindow;
 
 public:
-	UINT	m_nCmdWindow;
-	UINT	m_nCmdWindow2;
-	UINT	m_nCmdCloseTab;
-	UINT	m_nCmdWhois;
-	UINT	m_nCmdQuery;
-	UINT	m_nCmdTime;
-	UINT	m_nCmdVersion;
-	UINT	m_nCmdIgnore;
-	UINT	m_nCmdUnIgnore;
-	UINT	m_nCmdOp;
-	UINT	m_nCmdDeOp;
-	UINT	m_nCmdVoice;
-	UINT	m_nCmdDeVoice;
-	UINT	m_nCmdKick;
-	UINT	m_nCmdKickWhy;
-	UINT	m_nCmdBan;
-	UINT	m_nCmdUnBan;
-	UINT	m_nCmdBanKick;
-	UINT	m_nCmdBanKickWhy;
-	UINT	m_nCmdConnect;
-	UINT	m_nCmdDisconnect;
-	UINT	m_nCmdSettings;
-	UINT	m_nCmdAdd;
-	UINT	m_nCmdRemove;
+	INT	m_nCmdWindow;
+	INT	m_nCmdWindow2;
+	INT	m_nCmdCloseTab;
+	INT	m_nCmdWhois;
+	INT	m_nCmdQuery;
+	INT	m_nCmdTime;
+	INT	m_nCmdVersion;
+	INT	m_nCmdIgnore;
+	INT	m_nCmdUnIgnore;
+	INT	m_nCmdOp;
+	INT	m_nCmdDeOp;
+	INT	m_nCmdVoice;
+	INT	m_nCmdDeVoice;
+	INT	m_nCmdKick;
+	INT	m_nCmdKickWhy;
+	INT	m_nCmdBan;
+	INT	m_nCmdUnBan;
+	INT	m_nCmdBanKick;
+	INT	m_nCmdBanKickWhy;
+	INT	m_nCmdConnect;
+	INT	m_nCmdDisconnect;
+	INT	m_nCmdSettings;
+	INT	m_nCmdAdd;
+	INT	m_nCmdRemove;
 
 	// ICommandPlugin Methods
 public:
 	STDMETHOD(RegisterCommands)();
 	STDMETHOD(InsertCommands)();
-	STDMETHOD(OnUpdate)(unsigned int nCommandID, STRISTATE* pbVisible, 
+	STDMETHOD(OnUpdate)(INT nCommandID, STRISTATE* pbVisible, 
 						STRISTATE* pbEnabled, STRISTATE* pbChecked);
-	STDMETHOD(OnCommand)(unsigned int nCommandID);
+	STDMETHOD(OnCommand)(INT nCommandID);
 
 	// IGeneralPlugin Methods
 public:
 	STDMETHOD(SetApplication)(IApplication* pApplication);
-	STDMETHOD(QueryCapabilities)(unsigned long* pnCaps);
+	STDMETHOD(QueryCapabilities)(LONG* pnCaps);
 	STDMETHOD(Configure)();
 	STDMETHOD(OnSkinChanged)();
 };

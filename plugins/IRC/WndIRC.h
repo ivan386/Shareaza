@@ -21,13 +21,14 @@
 
 #pragma once
 #include "IRC.h"
+#include "BasePluginWindow.h"
+#include "CtrlIRCFrame.h"
 
 class CIRCPlugin;
+
 // CIRCWnd
 
-class ATL_NO_VTABLE CIRCWnd : 
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CWindow, public CMDIChildWinTraits, public IPluginWindowOwner
+class CIRCWnd : public CBasePluginWindow< CMDIChildWinTraits >
 {
 public:
 	// Construction
@@ -35,35 +36,20 @@ public:
 	CIRCWnd();
 	virtual ~CIRCWnd();
 
-	// Attributes
-public:
-	CIRCPlugin*				m_pPlugin;
-	CComPtr<IApplication>	m_pApplication;
-	CComPtr<IPluginWindow>	m_pWindow;
-
-	BOOL Create(CIRCPlugin* pPlugin);
+	BOOL Create(CIRCPlugin* pPlugin, LPCTSTR pszClassName);
 	BOOL Refresh();
-	BOOL ResizeWindow();
+	void OnSkinChanged(void);
 
-	DECLARE_NOT_AGGREGATABLE(CIRCWnd)
-
-	BEGIN_COM_MAP(CIRCWnd)
-		COM_INTERFACE_ENTRY(IPluginWindowOwner)
-	END_COM_MAP()
-
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
-
-public:
-	HRESULT FinalConstruct() { return S_OK; }
-	void FinalRelease() {}
+protected:
+	CIRCFrame*				m_pFrame;
 
 	// IPluginWindowOwner Methods
 public:
 	STDMETHOD(OnTranslate)(MSG* pMessage);
-	STDMETHOD(OnMessage)(UINT nMessage, WPARAM wParam, LPARAM  Param, LRESULT* plResult);
-	STDMETHOD(OnUpdate)(UINT nCommandID, STRISTATE* pbVisible, STRISTATE* pbEnabled, STRISTATE* pbChecked);
-	STDMETHOD(OnCommand)(UINT nCommandID);
-
+	STDMETHOD(OnMessage)(INT nMessage, WPARAM wParam, LPARAM  Param, LRESULT* plResult);
+	STDMETHOD(OnUpdate)(INT nCommandID, STRISTATE* pbVisible, STRISTATE* pbEnabled, STRISTATE* pbChecked);
+	STDMETHOD(OnCommand)(INT nCommandID);
+	
 	// Message Map
 public:
 	BEGIN_MSG_MAP(CIRCWindow)
