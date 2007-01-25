@@ -110,12 +110,12 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	m_wndType.SetItemData(13, 45000 );	// T3
 	m_wndType.SetItemData(14, 100000 );	// LAN
 	m_wndType.SetItemData(15, 155000 );	// OC3
+	m_wndType.SetCurSel( -1 );
 	//; Dial up Modem; ISDN; ADSL (256K); ADSL (512K); ADSL (768K); ADSL (1.5M); ADSL (4.0M); ADSL2 (8.0M); ADSL2 (12.0M); ADSL2+ (24.0M); Cable Modem/SDSL; T1; T3; LAN; OC3;
 
-	m_wndType.SetCurSel( -1 );
-	strTemp.Format( _T(" %lu.0 kbps"), Settings.Connection.InSpeed );
+	strTemp.Format( _T(" %Lu kbps"), Settings.Connection.InSpeed );
 	m_wndDownloadSpeed.SetWindowText( strTemp );
-	strTemp.Format( _T(" %lu.0 kbps"), Settings.Connection.OutSpeed );
+	strTemp.Format( _T(" %Lu kbps"), Settings.Connection.OutSpeed );
 	m_wndUploadSpeed.SetWindowText( strTemp );
 	// 28.8 kbps; 33.6 kbps; 56.6 kbps; 64.0 kbps; 128 kbps; 256 kbps; 384 kbps; 512 kbps; 1024 kbps; 1536 kbps; 2048 kbps; 3072 kbps; 4096 kbps; 5120 kbps; 8192 kbps; 12288 kbps;
 
@@ -123,6 +123,7 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	m_wndUPnP.AddString(strTemp);
 	LoadString( strTemp, IDS_GENERAL_NO );
 	m_wndUPnP.AddString(strTemp);
+	m_wndUPnP.SetCurSel( 0 );
 
 	// 3 steps with 30 sub-steps each
 	m_wndProgress.SetRange( 0, 90 );
