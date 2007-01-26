@@ -48,6 +48,16 @@ typedef struct
 	DWORD	nOffset2;
 } ED2K_PART_HEADER;
 
+typedef struct
+{
+	BYTE	nProtocol;
+	DWORD	nLength;
+	BYTE	nType;
+	Hashes::Ed2kHash::RawStorage pMD4;
+	DWORD	nOffset1;
+	DWORD	nOffset2;
+} ED2K_PART_HEADER_I64;
+
 #pragma pack()
 
 typedef struct
@@ -221,6 +231,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_ASKSHAREDFILESANSWER	0x4B
 #define ED2K_C2C_MESSAGE				0x4E
 
+// eMule Client - Client TCP
 #define	ED2K_C2C_EMULEINFO				0x01
 #define	ED2K_C2C_EMULEINFOANSWER		0x02
 #define ED2K_C2C_COMPRESSEDPART			0x40
@@ -230,6 +241,11 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_ANSWERSOURCES			0x82
 #define ED2K_C2C_REQUESTPREVIEW			0x90
 #define ED2K_C2C_PREVIEWANWSER			0x91
+
+// eMule Client - Client TCP (64Bit LargeFile support)
+#define ED2K_C2C_COMPRESSEDPART_I64		0xA1
+#define ED2K_C2C_SENDINGPART_I64		0xA2
+#define ED2K_C2C_REQUESTPARTS_I64		0xA3
 
 // Client - Client, UDP
 #define ED2K_C2C_UDP_REASKFILEPING		0x90

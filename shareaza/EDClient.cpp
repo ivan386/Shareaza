@@ -84,6 +84,7 @@ CEDClient::CEDClient()
 	m_bEmBrowse		= FALSE;		// Not over ed2k
 	m_bEmMultiPacket= FALSE;		// Not supported
 	m_bEmPreview	= FALSE;
+	m_bEmLargeFile	= FALSE;		// LargeFile support
 	
 	// Misc stuff
 	m_bLogin		= FALSE;
@@ -259,6 +260,7 @@ void CEDClient::Merge(CEDClient* pClient)
 	if ( ! m_bEmBrowse )		m_bEmBrowse = pClient->m_bEmBrowse;
 	if ( ! m_bEmMultiPacket )	m_bEmMultiPacket = pClient->m_bEmMultiPacket;	
 	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview;
+	if ( ! m_bEmLargeFile )		m_bEmLargeFile = pClient->m_bEmLargeFile;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -639,6 +641,20 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 		case ED2K_C2C_PREVIEWANWSER:
 			return OnPreviewAnswer( pPacket );
 
+
+		// Extented Upload (64Bit LargeFile support)
+		case ED2K_C2C_REQUESTPARTS_I64:
+			if ( m_pUpload != NULL ) m_pUpload->OnRequestParts64( pPacket );
+			return TRUE;
+
+		// Extented Download (64Bit LargeFile support)
+		case ED2K_C2C_SENDINGPART_I64:
+			if ( m_pDownload != NULL ) m_pDownload->OnSendingPart64( pPacket );
+			return TRUE;
+		case ED2K_C2C_COMPRESSEDPART_I64:
+			if ( m_pDownload != NULL ) m_pDownload->OnCompressedPart64( pPacket );
+			return TRUE;
+
 		default:
 			CString str;
 			str.Format( _T("Unrecognised packet - IP: %s - emule - type: 0x%x - in CEDClient::OnPacket"),
@@ -750,6 +766,11 @@ void CEDClient::SendHello(BYTE nType)
 
 	CEDTag( ED2K_CT_FEATUREVERSIONS, nVersion ).Write( pPacket );
 
+	// ED2K_CT_MOREFEATUREVERSIONS - basically for Kad and Large File support
+	nVersion = ( ( FALSE << 5 ) |								// Multipacket
+				 ( Settings.eDonkey.LargeFileSupport << 4 ) );	// LargeFile support
+	CEDTag( ED2K_CT_MOREFEATUREVERSIONS, nVersion ).Write( pPacket );
+
 	// 5 - UDP Port
 	CEDTag( ED2K_CT_UDPPORTS, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
 
@@ -847,7 +868,13 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		case ED2K_CT_UNKNOWN2:
 			break;
 		case ED2K_CT_MOREFEATUREVERSIONS:
-			// This currently only holds the KAD version- We aren't interested in that.
+			// This currently holds the KAD version (We aren't interested in that) and Large File support.
+			if ( pTag.m_nType == ED2K_TAG_INT ) 
+			{
+				m_bEmule = TRUE;
+				m_bEmMultiPacket= (pTag.m_nValue >> 5 ) & 0x01;
+				m_bEmLargeFile	= (pTag.m_nValue >> 4 ) & 0x01;
+			}
 			break;
 		case ED2K_CT_UNKNOWN3:
 			break;

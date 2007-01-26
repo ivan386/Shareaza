@@ -70,6 +70,7 @@ public:	//Client capabilities
 	BOOL		m_bEmBrowse;		// Not over ed2k
 	BOOL		m_bEmMultiPacket;	// Not supported
 	BOOL		m_bEmPreview;		// Not over ed2k
+	BOOL		m_bEmLargeFile;		// Large file support
 public:
 	BOOL		m_bLogin;
     Hashes::Ed2kHash m_oUpED2K;

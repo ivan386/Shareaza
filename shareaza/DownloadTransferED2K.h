@@ -88,6 +88,9 @@ protected:
 	BOOL	SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength);
 	BOOL	RunQueued(DWORD tNow);
 
+public:		// 64bit Large file support
+	BOOL	OnSendingPart64(CEDPacket* pPacket);
+	BOOL	OnCompressedPart64(CEDPacket* pPacket);
 };
 
 #endif // !defined(AFX_DOWNLOADTRANSFERED2K_H__C03CF64E_8944_4C5C_BB14_C61C3F37E19E__INCLUDED_)

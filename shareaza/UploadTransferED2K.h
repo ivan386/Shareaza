@@ -74,6 +74,8 @@ protected:
 	BOOL	DispatchNextChunk();
 	BOOL	CheckFinishedRequest();
 
+public:		// 64bit Large file support
+	BOOL	OnRequestParts64(CEDPacket* pPacket);
 };
 
 #endif // !defined(AFX_UPLOADTRANSFERED2K_H__04FAF448_0A7F_4566_97D2_38845BF71F20__INCLUDED_)

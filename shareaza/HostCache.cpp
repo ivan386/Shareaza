@@ -902,7 +902,7 @@ void CHostCacheList::DoED2KServersImport()
 	CString strPrograms, strFolder;
 	TCHAR szPath[MAX_PATH];
 
-	if( SUCCEEDED( SHGetFolderPath( NULL, CSIDL_PROGRAM_FILES, NULL, SHGFP_TYPE_CURRENT, szPath ) ) )
+	if( SUCCEEDED( SHGetSpecialFolderPath( NULL, szPath, CSIDL_PROGRAM_FILES, 0 ) ) )
 		strPrograms = szPath;
 
 	if ( strPrograms.IsEmpty() ) strPrograms = _T("C:\\Program Files");

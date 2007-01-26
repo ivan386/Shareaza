@@ -601,51 +601,104 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 	
 	QWORD nChunk = m_nLength - m_nPosition;
 	nChunk = min( nChunk, Settings.eDonkey.FrameSize );
+	bool bI64Offset =	( ( m_nOffset + m_nPosition ) & 0xffffffff00000000 ) ||
+						( ( m_nOffset + m_nPosition + nChunk ) & 0xffffffff00000000 );
 	
 #if 0
 	// Use packet form
 	
-	CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_SENDINGPART );
-	pPacket->Write( &m_pED2K, sizeof(MD4) );
-	pPacket->WriteLongLE( m_nOffset + m_nPosition );
-	pPacket->WriteLongLE( m_nOffset + m_nPosition + nChunk );
-	
-	m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, pPacket->GetWritePointer( nChunk ), nChunk, &nChunk );
-	// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
-	// ReadFile( hFile, pPacket->WriteGetPointer( nChunk ), nChunk, &nChunk, NULL );
-	
-	if ( nChunk == 0 )
+	if (bI64Offset)
 	{
-		pPacket->Release();
-		return FALSE;
+		CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_SENDINGPART_I64, ED2K_PROTOCOL_EMULE );
+		pPacket->Write( m_oED2K );
+		pPacket->WriteLongLE( ( m_nOffset + m_nPosition ) & 0x00000000ffffffff );
+		pPacket->WriteLongLE( ( ( m_nOffset + m_nPosition ) & 0xffffffff00000000 ) >> 32);
+		pPacket->WriteLongLE( ( m_nOffset + m_nPosition + nChunk ) & 0x00000000ffffffff );
+		pPacket->WriteLongLE( ( ( m_nOffset + m_nPosition + nChunk ) & 0xffffffff00000000 ) >> 32);
+
+		m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, pPacket->GetWritePointer( nChunk ), nChunk, &nChunk );
+		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
+		// ReadFile( hFile, pPacket->WriteGetPointer( nChunk ), nChunk, &nChunk, NULL );
+
+		if ( nChunk == 0 )
+		{
+			pPacket->Release();
+			return FALSE;
+		}
+
+		pPacket->m_nLength = sizeof(MD4) + 16 + nChunk;
+
+		Send( pPacket );
 	}
-	
-	pPacket->m_nLength = sizeof(MD4) + 8 + nChunk;
-	
-	Send( pPacket );
+	else
+	{
+		CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_SENDINGPART );
+		pPacket->Write( m_oED2K );
+		pPacket->WriteLongLE( m_nOffset + m_nPosition );
+		pPacket->WriteLongLE( m_nOffset + m_nPosition + nChunk );
+
+		m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, pPacket->GetWritePointer( nChunk ), nChunk, &nChunk );
+		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
+		// ReadFile( hFile, pPacket->WriteGetPointer( nChunk ), nChunk, &nChunk, NULL );
+
+		if ( nChunk == 0 )
+		{
+			pPacket->Release();
+			return FALSE;
+		}
+
+		pPacket->m_nLength = sizeof(MD4) + 8 + nChunk;
+
+		Send( pPacket );
+	}
 	
 #else
 	// Raw write
-	
-	CBuffer* pBuffer = m_pClient->m_pOutput;
-	pBuffer->EnsureBuffer( sizeof(ED2K_PART_HEADER) + (DWORD)nChunk );
-	
-	ED2K_PART_HEADER* pHeader = (ED2K_PART_HEADER*)( pBuffer->m_pBuffer + pBuffer->m_nLength );
-	
-	if ( ! m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
-	// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
-	// ReadFile( hFile, &pHeader[1], nChunk, &nChunk, NULL );
-	if ( nChunk == 0 ) return FALSE;
-	
-	pHeader->nProtocol	= ED2K_PROTOCOL_EDONKEY;
-	pHeader->nType		= ED2K_C2C_SENDINGPART;
-    pHeader->nLength	= 1 + Hashes::Ed2kHash::byteCount + 8 + (DWORD)nChunk;
-    std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, &pHeader->pMD4[ 0 ] );
-	pHeader->nOffset1	= (DWORD)( m_nOffset + m_nPosition );
-	pHeader->nOffset2	= (DWORD)( m_nOffset + m_nPosition + nChunk );
-	
-	pBuffer->m_nLength += sizeof(ED2K_PART_HEADER) + (DWORD)nChunk;
-	m_pClient->Send( NULL );
+	if (bI64Offset)
+	{
+		CBuffer* pBuffer = m_pClient->m_pOutput;
+		pBuffer->EnsureBuffer( sizeof(ED2K_PART_HEADER_I64) + (DWORD)nChunk );
+
+		ED2K_PART_HEADER_I64* pHeader = (ED2K_PART_HEADER_I64*)( pBuffer->m_pBuffer + pBuffer->m_nLength );
+
+		if ( ! m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
+		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
+		// ReadFile( hFile, &pHeader[1], nChunk, &nChunk, NULL );
+		if ( nChunk == 0 ) return FALSE;
+
+		pHeader->nProtocol	= ED2K_PROTOCOL_EMULE;
+		pHeader->nType		= ED2K_C2C_SENDINGPART_I64;
+		pHeader->nLength	= 1 + Hashes::Ed2kHash::byteCount + 16 + (DWORD)nChunk;
+		std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, &pHeader->pMD4[ 0 ] );
+		pHeader->nOffset1	= (QWORD)( m_nOffset + m_nPosition );
+		pHeader->nOffset2	= (QWORD)( m_nOffset + m_nPosition + nChunk );
+
+		pBuffer->m_nLength += sizeof(ED2K_PART_HEADER_I64) + (DWORD)nChunk;
+		m_pClient->Send( NULL );
+
+	}
+	else
+	{
+		CBuffer* pBuffer = m_pClient->m_pOutput;
+		pBuffer->EnsureBuffer( sizeof(ED2K_PART_HEADER) + (DWORD)nChunk );
+
+		ED2K_PART_HEADER* pHeader = (ED2K_PART_HEADER*)( pBuffer->m_pBuffer + pBuffer->m_nLength );
+
+		if ( ! m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
+		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
+		// ReadFile( hFile, &pHeader[1], nChunk, &nChunk, NULL );
+		if ( nChunk == 0 ) return FALSE;
+
+		pHeader->nProtocol	= ED2K_PROTOCOL_EDONKEY;
+		pHeader->nType		= ED2K_C2C_SENDINGPART;
+		pHeader->nLength	= 1 + Hashes::Ed2kHash::byteCount + 8 + (DWORD)nChunk;
+		std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, &pHeader->pMD4[ 0 ] );
+		pHeader->nOffset1	= (DWORD)( m_nOffset + m_nPosition );
+		pHeader->nOffset2	= (DWORD)( m_nOffset + m_nPosition + nChunk );
+
+		pBuffer->m_nLength += sizeof(ED2K_PART_HEADER) + (DWORD)nChunk;
+		m_pClient->Send( NULL );
+	}
 	
 #endif
 	
@@ -793,3 +846,62 @@ BOOL CUploadTransferED2K::OnReask()
 	
 	return TRUE;
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// CUploadTransferED2K 64bit Large file support
+
+BOOL CUploadTransferED2K::OnRequestParts64(CEDPacket* pPacket)
+{
+	if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount + 4 * 3 * 2 )
+	{
+		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
+		Close();
+		return FALSE;
+	}
+
+	Hashes::Ed2kHash oED2K;
+	pPacket->Read( oED2K );
+
+	if ( validAndUnequal( oED2K, m_oED2K ) )
+	{
+		if ( ! Request( oED2K ) ) return FALSE;
+	}
+
+	if ( m_nState != upsQueued && m_nState != upsRequest && m_nState != upsUploading )
+	{
+		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
+		Close();
+		return FALSE;
+	}
+
+	QWORD nOffset[2][3];
+	pPacket->Read( nOffset, sizeof(QWORD) * 2 * 3 );
+
+	for ( int nRequest = 0 ; nRequest < 3 ; nRequest++ )
+	{
+		if ( nOffset[1][nRequest] <= m_nFileSize )
+		{
+			// Valid (or null) request
+			if ( nOffset[0][nRequest] < nOffset[1][nRequest] )
+			{
+				// Add non-null ranges to the list
+				AddRequest( nOffset[0][nRequest], nOffset[1][nRequest] - nOffset[0][nRequest] );
+			}
+		}
+		else
+		{
+			// Invalid request- had an impossible range.
+			theApp.Message( MSG_ERROR, _T("Invalid file range(s) in request from %s"), (LPCTSTR)m_sAddress );
+			// They probably have an incorrent hash associated with a file. Calling close now
+			// will send "file not found" to stop them re-asking, then close the connection.
+			Close();
+			return FALSE;
+		}
+	}
+
+	ServeRequests();
+
+	return TRUE;
+}
+

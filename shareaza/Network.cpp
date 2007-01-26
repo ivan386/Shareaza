@@ -224,7 +224,8 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	}
 
 	// It will check if it is needed inside the function
-	DiscoveryServices.Execute(TRUE, PROTOCOL_NULL);
+	if ( bAutoConnect )
+		DiscoveryServices.Execute(TRUE, PROTOCOL_NULL);
 
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
