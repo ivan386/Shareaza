@@ -640,7 +640,7 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 	else
 		pHost = HostCache.G1DNA.GetNewest();
 
-	while ( pHost && nCount )
+	while ( pHost && nCount && !pList.empty() )
 	{
 		nPos = pList.back(); // take the smallest value;
 		pList.pop_back(); // remove it

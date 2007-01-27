@@ -1057,7 +1057,7 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 
 		nCount = Settings.Gnutella1.MaxHostsInPongs;
 		CHostCacheHost* pHost = HostCache.Gnutella1.GetNewest();
-		while ( pHost && nCount )
+		while ( pHost && nCount && !pList.empty() )
 		{
 			nPos = pList.back(); // take the smallest value;
 			pList.pop_back(); // remove it
