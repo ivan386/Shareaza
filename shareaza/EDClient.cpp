@@ -863,10 +863,6 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 				m_nEmCompatible = pTag.m_nValue >> 24;
 			}
 			break;
-		case ED2K_CT_UNKNOWN1:
-			break;
-		case ED2K_CT_UNKNOWN2:
-			break;
 		case ED2K_CT_MOREFEATUREVERSIONS:
 			// This currently holds the KAD version (We aren't interested in that) and Large File support.
 			if ( pTag.m_nType == ED2K_TAG_INT ) 
@@ -876,6 +872,8 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 				m_bEmLargeFile	= (pTag.m_nValue >> 4 ) & 0x01;
 			}
 			break;
+		case ED2K_CT_UNKNOWN1:
+		case ED2K_CT_UNKNOWN2:
 		case ED2K_CT_UNKNOWN3:
 			break;
 		default:
@@ -916,7 +914,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		// We can use it to ID clients
 		DWORD nValue = pPacket->ReadLongLE();
 		
-		// MLDonkey
+		// MLdonkey
 		if ( nValue == 0x4B444C4D ) m_nEmCompatible = 10;
 	}
 	
@@ -1071,83 +1069,94 @@ void CEDClient::DeriveSoftwareVersion()
 		// Determine client from the compatible client byte
 		switch ( m_nEmCompatible )
 		{
-		case 0:
-			m_sUserAgent.Format( _T("eMule %i.%i%c"), 
-				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+			case 0:
+				m_sUserAgent.Format( _T("eMule %i.%i%c"), 
+					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 /*
-			//This code displays the eMule build number- not currently used
-			m_sUserAgent.Format( _T("eMule %i.%i%c (%i)"), 
-				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a', ( ( m_nSoftwareVersion ) & 0x7F ) );
+				//This code displays the eMule build number- not currently used
+				m_sUserAgent.Format( _T("eMule %i.%i%c (%i)"), 
+					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a', ( ( m_nSoftwareVersion ) & 0x7F ) );
 */
-			break;
-		case 1:
-			m_sUserAgent.Format( _T("cDonkey %i.%i%c"), 
-				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
-			break;
-		case 2:
-			m_sUserAgent.Format( _T("xMule %i.%i%c"), 
-				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
-			break;
-		case 3:
-			m_sUserAgent.Format( _T("aMule %i.%i.%i"), 
-				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) );
-			break;
-		case 4:
-			if ( m_bEmAICH || m_bEmSecureID )
-			{
-				if ( m_sUserAgent.IsEmpty() ) 
-					m_sUserAgent.Format( _T("eMule mod v%i"), m_nVersion );
 				break;
-			}
-			// This is a Shareaza beta build. Note that the 2nd last number (Beta build #) may be 
-			// truncated, since it's only 3 bits.
-			m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
-				( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
-			
-			//Client allows G2 browse, etc
-			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
-			break;
-		case 5:
-			m_sUserAgent.Format( _T("ePlus %i.%i%c"), 
-				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
-			break;
-		case 10:
-			m_sUserAgent.Format( _T("MlDonkey") );
-			break;
-		case 20:
-			m_sUserAgent.Format( _T("Lphant %i.%i%c"), 
-				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
-			break;
-		case 40:
-			if ( m_bEmAICH || m_bEmSecureID )
-			{
-				if ( m_sUserAgent.IsEmpty() ) 
-					m_sUserAgent.Format( _T("eMule mod v%i"), m_nVersion );
+			case 1:
+				m_sUserAgent.Format( _T("cDonkey %i.%i%c"), 
+					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 				break;
-			}
-			//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
-			m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
-				( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
-			
-			//Client allows G2 browse, etc
-			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
-			break;
-		default:
-			m_sUserAgent.Format( _T("eMule/c(%i) %i.%i%c"), m_nEmCompatible,
-				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
-			break;
+			case 2:
+				m_sUserAgent.Format( _T("xMule %i.%i%c"), 
+					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+				break;
+			case 3:
+				m_sUserAgent.Format( _T("aMule %i.%i.%i"), 
+					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) );
+				break;
+			case 4:
+				if ( m_bEmAICH || m_bEmSecureID )
+				{
+					if ( m_sUserAgent.IsEmpty() ) 
+						m_sUserAgent.Format( _T("eMule mod (4) %i.%i%c"), 
+							( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+							( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+					break;
+				}
+
+				// This is a Shareaza beta build. Note that the 2nd last number (Beta build #) may be 
+				// truncated, since it's only 3 bits.
+				m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
+					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
+
+				//Client allows G2 browse, etc
+				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+				break;
+			case 5:
+				m_sUserAgent.Format( _T("ePlus %i.%i%c"), 
+					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+				break;
+			case 10:
+				m_sUserAgent.Format( _T("MLdonkey %i.%i.%i"),
+					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) &0x07 ) );
+
+				if ( ( ( m_nSoftwareVersion ) &0x7F ) > 0 )
+					m_sUserAgent.AppendFormat( _T(".%i"), ( ( m_nSoftwareVersion ) &0x7F ) );
+				break;
+			case 20:
+				m_sUserAgent.Format( _T("Lphant %i.%i%c"), 
+					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+				break;
+			case 40:
+				if ( m_bEmAICH || m_bEmSecureID )
+				{
+					if ( m_sUserAgent.IsEmpty() ) 
+						m_sUserAgent.Format( _T("eMule mod (40) %i.%i%c"), 
+							( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+							( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+					break;
+				}
+
+				//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
+				m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
+					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
+
+				//Client allows G2 browse, etc
+				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+				break;
+			default:	// (Sent a compatible client ID, but we don't recognise it)
+				m_sUserAgent.Format( _T("eMule/c (%i) %i.%i%c"), m_nEmCompatible,
+					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+				break;
 		}
 	}
 	else
@@ -1162,85 +1171,100 @@ void CEDClient::DeriveVersion()
 	if ( m_nSoftwareVersion ) return;
 
 	if ( m_oGUID[5] == 13 && m_oGUID[14] == 110 )
-	{
 		m_bEmule = TRUE;
-		m_sUserAgent.Format( _T("eMule v%i"), m_nVersion );
-	}
 	else if ( m_oGUID[5] == 14 && m_oGUID[14] == 111 )
-	{
 		m_bEmule = TRUE;
-		m_sUserAgent.Format( _T("eMule v%i"), m_nVersion );
-	}
-	else if ( m_oGUID[5] == 'M' && m_oGUID[14] == 'L' )
-	{
-		m_sUserAgent.Format( _T("mlDonkey v%i"), m_nVersion );
-	}
-	else
-	{
-		if ( m_nVersion >= 1000 )
-			m_sUserAgent.Format( _T("eDonkey v1.%i"), m_nVersion - 1000 );
-		else
-			m_sUserAgent.Format( _T("eDonkey v1.%i"), m_nVersion);
-	}
 
-	
-	if ( m_bEmule && m_nEmVersion > 0 )
+	if( m_nEmVersion <= 0 ) m_nEmVersion = m_nVersion;
+
+	if ( m_bEmule )
 	{
 		switch ( m_nEmCompatible )
 		{
-		case 0:
-			m_sUserAgent.Format( _T("eMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-			break;
-		case 1:
-			m_sUserAgent.Format( _T("cDonkey v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-			break;
-		case 2:
-			m_sUserAgent.Format( _T("xMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-			break;
-		case 3:
-			m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-			break;
-		case 4:
-			if ( m_bEmAICH || m_bEmSecureID )
-			{
-				if ( m_sUserAgent.IsEmpty() )
-					m_sUserAgent.Format( _T("eMule mod v%i"), m_nVersion );
+			case 0:
+				m_sUserAgent.Format( _T("eMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 				break;
-			}
-			m_sUserAgent.Format( _T("Shareaza") );
-			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
-			break;
-		case 10:
-			m_sUserAgent.Format( _T("MlDonkey v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-			break;
-		case 20:
-			m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-			break;
-		case 40:
-			if ( m_bEmAICH || m_bEmSecureID )
-			{
-				if ( m_sUserAgent.IsEmpty() )
-					m_sUserAgent.Format( _T("eMule mod v%i"), m_nVersion );
+			case 1:
+				m_sUserAgent.Format( _T("cDonkey v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 				break;
-			}
-			m_sUserAgent.Format( _T("Shareaza") );
-			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
-			break;
-		case ED2K_CLIENT_MOD:	// (Did not send a compatible client ID, but did send a MOD tag)
-			m_sUserAgent.Format( _T("eMule mod %i"), m_nEmVersion );
-			break;
-		case ED2K_CLIENT_UNKNOWN:	// (Did not send a compatible client ID)
-			if ( _tcsistr( m_sNick, _T("www.pruna.com") ) )
-				m_sUserAgent.Format( _T("Pruna %i"), m_nEmVersion );
-			else
-				m_sUserAgent.Format( _T("Unidentified %i"), m_nEmVersion );
-			break;
-		default:	// (Sent a compatible client ID, but we don't recognise it)
-			m_sUserAgent.Format( _T("eMule/c (%i) v0.%i%i"), m_nEmCompatible, m_nEmVersion >> 4, m_nEmVersion & 15 );
-			break;
+			case 2:
+				m_sUserAgent.Format( _T("xMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+				break;
+			case 3:
+				m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+				break;
+			case 4:
+				if ( m_bEmAICH || m_bEmSecureID )
+				{
+					if ( m_sUserAgent.IsEmpty() )
+						m_sUserAgent.Format( _T("eMule mod (4) v%i"), m_nEmVersion );
+					break;
+				}
+
+				m_sUserAgent.Format( _T("Shareaza") );
+				//Client allows G2 browse, etc
+				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+				break;
+			case 10:
+				m_sUserAgent.Format( _T("MLdonkey v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+				break;
+			case 20:
+				m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+				break;
+			case 40:
+				if ( m_bEmAICH || m_bEmSecureID )
+				{
+					if ( m_sUserAgent.IsEmpty() )
+						m_sUserAgent.Format( _T("eMule mod (40) v%i"), m_nEmVersion );
+					break;
+				}
+
+				m_sUserAgent.Format( _T("Shareaza") );
+				//Client allows G2 browse, etc
+				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+				break;
+			case ED2K_CLIENT_MOD:		// (Did not send a compatible client ID, but did send a MOD tag)
+				m_sUserAgent.Format( _T("eMule mod v%i"), m_nEmVersion );
+				break;
+			case ED2K_CLIENT_UNKNOWN:	// (Did not send a compatible client ID)
+				if ( _tcsistr( m_sNick, _T("www.pruna.com") ) )	// ToDO: We need a better way to recognize pruna
+					m_sUserAgent.Format( _T("Pruna v%i"), m_nEmVersion );
+				else
+					m_sUserAgent.Format( _T("Unidentified v%i"), m_nEmVersion );
+				break;
+			default:					// (Sent a compatible client ID, but we don't recognise it)
+				m_sUserAgent.Format( _T("eMule/c (%i) v0.%i%i"), m_nEmCompatible, m_nEmVersion >> 4, m_nEmVersion & 15 );
+				break;
 		}
+	}
+	else if ( m_oGUID[5] == 'M' && m_oGUID[14] == 'L' )
+	{
+		m_sUserAgent.Format( _T("MLdonkey v%i"), m_nVersion );
+	}
+	else
+	{
+		m_sUserAgent.Format( _T("eDonkeyHybrid ") );
+
+		if ( m_nVersion >= 20000 )		// Unknown
+			m_sUserAgent.AppendFormat( _T("%i"), m_nVersion );
+		else if ( m_nVersion >= 10100 )	// eDonkey from versions 1.1.0 to latest version
+		{
+			CString strVersion;
+			strVersion.Format( _T("%i"), m_nVersion );
+			m_sUserAgent.AppendFormat( _T("v%c.%c.%c"), strVersion[0], strVersion[2], strVersion[4] );
+		}
+		else if ( m_nVersion >= 1100 )	// Unknown
+			m_sUserAgent.AppendFormat( _T("%i"), m_nVersion );
+		else if ( m_nVersion >= 1025 )	// eDonkey 0.xx
+			m_sUserAgent.AppendFormat( _T("v0.%i"), m_nVersion - 1000 );
+		else if ( m_nVersion >= 1000 )	// eDonkey 1.0.x
+			m_sUserAgent.AppendFormat( _T("v1.0.%i"), m_nVersion - 1000 );
+		else if ( m_nVersion > 0 )		// Probably the first edonkey versions
+			m_sUserAgent.Format( _T("eDonkey v%i" ), m_nVersion );
+		else							// It shouldn't happen
+			m_sUserAgent.Format( _T("Unidentified eDonkey") );
 	}
 }
 
