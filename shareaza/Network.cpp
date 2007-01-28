@@ -133,13 +133,13 @@ BOOL CNetwork::IsStable() const
 
 BOOL CNetwork::IsFirewalled(int nCheck)
 {
-	if ( Settings.Connection.FirewallStatus == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP
+	if ( Settings.Connection.FirewallState == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP
 		return FALSE;		// We know we are not firewalled on both TCP and UDP
-	else if ( Settings.Connection.FirewallStatus == CONNECTION_OPEN_TCPONLY && nCheck == CHECK_TCP )
+	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_TCPONLY && nCheck == CHECK_TCP )
 		return FALSE;		// We know we are not firewalled on TCP port
-	else if ( Settings.Connection.FirewallStatus == CONNECTION_OPEN_UDPONLY && nCheck == CHECK_UDP )
+	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_UDPONLY && nCheck == CHECK_UDP )
 		return FALSE;		// We know we are not firewalled on UDP port
-	else if ( Settings.Connection.FirewallStatus == CONNECTION_AUTO )
+	else if ( Settings.Connection.FirewallState == CONNECTION_AUTO )
 	{
 		BOOL bTCPOpened = IsStable();
 		BOOL bUDPOpened = Datagrams.IsStable();

@@ -123,7 +123,7 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	m_wndCanAccept.AddString( _T("TCP-Only") );
 	m_wndCanAccept.AddString( _T("UDP-Only") );
 
-	m_wndCanAccept.SetCurSel( Settings.Connection.FirewallStatus );
+	m_wndCanAccept.SetCurSel( Settings.Connection.FirewallState );
 
 	m_sInHost				= Settings.Connection.InHost;
 	m_bInRandom				= Settings.Connection.RandomPort;
@@ -277,7 +277,7 @@ void CConnectionSettingsPage::OnOK()
 	if ( m_sOutHost.CompareNoCase( strAutomatic ) == 0 )
 		m_sOutHost.Empty();
 
-	Settings.Connection.FirewallStatus		= m_wndCanAccept.GetCurSel();
+	Settings.Connection.FirewallState		= m_wndCanAccept.GetCurSel();
 	Settings.Connection.InHost				= m_sInHost;
 
 	bool bRandomForwarded = ( m_nInPort == 0 && 
