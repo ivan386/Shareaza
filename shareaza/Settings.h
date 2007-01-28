@@ -176,7 +176,7 @@ public:
 	struct sConnection
 	{
 		BOOL		AutoConnect;
-		int			FirewallStatus;
+		int			FirewallState;
 		CString		OutHost;
 		CString		InHost;
 		DWORD		InPort;

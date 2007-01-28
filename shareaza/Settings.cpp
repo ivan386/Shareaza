@@ -161,7 +161,7 @@ void CSettings::Setup()
 	Add( _T("Web.Torrent"), &Web.Torrent, TRUE );
 
 	Add( _T("Connection.AutoConnect"), &Connection.AutoConnect, FALSE );
-	Add( _T("Connection.FirewallStatus"), &Connection.FirewallStatus, CONNECTION_AUTO );
+	Add( _T("Connection.FirewallState"), &Connection.FirewallState, CONNECTION_AUTO );
 	Add( _T("Connection.OutHost"), &Connection.OutHost, NULL );
 	Add( _T("Connection.InHost"), &Connection.InHost, NULL );
 	Add( _T("Connection.InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT );
@@ -799,7 +799,6 @@ void CSettings::SmartUpgrade()
 
 	if ( nVersion < 42 )
 	{
-		Connection.FirewallStatus = CONNECTION_AUTO;
 		Gnutella2.NumHubs = 2;
 		General.ItWasLimited = TRUE;
 		OnChangeConnectionSpeed();
