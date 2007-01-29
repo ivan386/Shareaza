@@ -263,6 +263,8 @@ BOOL CShareazaApp::InitInstance()
 
 	if ( nGUIMode != -1 )
 		Settings.General.GUIMode = nGUIMode;
+	else if ( Settings.General.GUIMode == -1 )
+		Settings.General.GUIMode = GUI_BASIC;
 
 	SplashStep( dlgSplash, L"Firewall/Router Setup" );
 	{
