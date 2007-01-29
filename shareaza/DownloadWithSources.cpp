@@ -868,12 +868,14 @@ CFailedSource* CDownloadWithSources::LookupFailedSource(LPCTSTR pszUrl, bool bRe
 			if ( pResult->m_bLocal )
 				break;
 			
-			if ( bReliable )
+			if ( bReliable ) // Not used at the moment anywhere, we check that explicitly
 			{
 				INT_PTR nTotalVotes = pResult->m_nNegativeVotes + pResult->m_nPositiveVotes;
 				if ( nTotalVotes > 30 && pResult->m_nNegativeVotes / nTotalVotes > 2 / 3 )
 					break;
 			}
+			break; // temp solution to have the same source not added more than once
+				   // we should check IPs which add these sources though, since voting takes place
 		}
 		else
 			pResult = NULL;
@@ -893,12 +895,7 @@ void CDownloadWithSources::AddFailedSource(CDownloadSource* pSource, bool bLocal
 	else
 		strURL = pSource->m_sURL;
 
-	if ( LookupFailedSource( (LPCTSTR)strURL ) == NULL )
-	{
-		CFailedSource* pBadSource = new CFailedSource( strURL, bLocal, bOffline );
-		m_pFailedSources.AddTail( pBadSource );
-		theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i", m_sDisplayName, m_pFailedSources.GetCount() );
-	}
+	AddFailedSource( (LPCTSTR)strURL, bLocal, bOffline );
 }
 
 void CDownloadWithSources::AddFailedSource(LPCTSTR pszUrl, bool bLocal, bool bOffline)
