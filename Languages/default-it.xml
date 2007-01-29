@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 46 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 47 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -815,17 +815,17 @@
 	</menu>
 	<!-- SEARCH WINDOW -->
 	<menu name="CSearchWnd.Basic">
-		<item id="ID_SEARCH_DOWNLOAD" text="Scarica"/>
+		<item id="ID_SEARCH_DOWNLOAD" text="_Scarica"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Esplora utente"/>
 		<item id="ID_SEARCH_CHAT" text="Chat"/>
 		<separator/>
 		<menu text="Cerca">
-			<item id="ID_SEARCH_FOR_SIMILAR" text="File simili"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="File _simili"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musica dello stesso artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodi della stessa serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musica dello stesso artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso _album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 		</menu>
 		<menu text="Servizi web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
@@ -833,8 +833,8 @@
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
-		<item id="ID_SEARCH_DOWNLOAD" text="Scarica"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Scarica ora"/>
+		<item id="ID_SEARCH_DOWNLOAD" text="_Scarica"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Scarica _ora"/>
 		<item id="ID_SEARCH_COPY" text="Copia URI"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Esplora utente"/>
@@ -842,12 +842,12 @@
 		<item id="ID_SECURITY_BAN" text="Blocca utente"/>
 		<separator/>
 		<menu text="Cerca">
-			<item id="ID_SEARCH_FOR_THIS" text="Questo file"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="File simili"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_Questo file"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="File _simili"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musica dello stesso artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodi della stessa serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musica dello stesso artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso _album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 		</menu>
 		<menu text="Servizi web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
@@ -861,17 +861,17 @@
 	</menu>
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
-		<item id="ID_SEARCH_DOWNLOAD" text="Scarica"/>
+		<item id="ID_SEARCH_DOWNLOAD" text="_Scarica"/>
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Scarica _ora"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="Chat"/>
 		<separator/>
 		<menu text="Cerca">
-			<item id="ID_SEARCH_FOR_SIMILAR" text="File simili"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="File _simili"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musica dello stesso artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodi della stessa serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musica dello stesso artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso _album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 		</menu>
 		<menu text="Informazioni file sul web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
@@ -879,19 +879,19 @@
 		</menu>
 	</menu>
 	<menu name="CBrowseHostWnd">
-		<item id="ID_SEARCH_DOWNLOAD" text="Scarica"/>
+		<item id="ID_SEARCH_DOWNLOAD" text="_Scarica"/>
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Scarica _ora"/>
 		<item id="ID_SEARCH_COPY" text="Copia URI"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="Chat"/>
 		<separator/>
 		<menu text="Cerca">
-			<item id="ID_SEARCH_FOR_THIS" text="Questo file"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="File simili"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_Questo file"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="File _simili"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musica dello stesso artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodi della stessa serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musica dello stesso artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso _album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 		</menu>
 		<menu text="Servizi web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
@@ -904,19 +904,19 @@
 	</menu>
 	<!-- HIT MONITOR WINDOW -->
 	<menu name="CHitMonitorWnd">
-		<item id="ID_SEARCH_DOWNLOAD" text="Scarica"/>
-		<item id="ID_SEARCH_COPY" text="Copia URI"/>
+		<item id="ID_SEARCH_DOWNLOAD" text="_Scarica"/>
+		<item id="ID_SEARCH_COPY" text="Copia _URI"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Esplora utente"/>
 		<item id="ID_SEARCH_CHAT" text="Chat"/>
 		<separator/>
 		<menu text="Cerca">
-			<item id="ID_SEARCH_FOR_THIS" text="Questo file"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="File simili"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_Questo file"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="File _simili"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musica dello stesso artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodi della stessa serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musica dello stesso artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso _album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 		</menu>
 		<menu text="Servizi web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
@@ -998,7 +998,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Rimuovi"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copia URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Elimina file"/>
 		<item id="ID_DOWNLOADS_RATE" text="Valuta file..."/>
@@ -1121,12 +1121,12 @@
 		<item id="ID_LIBRARY_DELETE" text="Elimina"/>
 		<separator/>
 		<menu text="Cerca">
-			<item id="ID_SEARCH_FOR_THIS" text="Questo file"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="File simili"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_Questo file"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="File _simili"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musica dello stesso artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodi della stessa serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musica dello stesso artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso _album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 		</menu>
 		<menu text="Servizi web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
@@ -1153,12 +1153,12 @@
 		<item id="ID_LIBRARY_DELETE" text="Elimina"/>
 		<separator/>
 		<menu text="Cerca">
-			<item id="ID_SEARCH_FOR_THIS" text="Questo file"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="File simili"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_Questo file"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="File _simili"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musica dello stesso artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodi della stessa serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musica dello stesso artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso _album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 		</menu>
 		<menu text="Servizi web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
@@ -1187,12 +1187,12 @@
 		<item id="ID_LIBRARY_DELETE" text="Elimina"/>
 		<separator/>
 		<menu text="Cerca">
-			<item id="ID_SEARCH_FOR_THIS" text="Questo file"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="File simili"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_Questo file"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="File _simili"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musica dello stesso artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodi della stessa serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musica dello stesso artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso _album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 		</menu>
 		<menu text="Servizi web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
@@ -1221,12 +1221,12 @@
 		<item id="ID_LIBRARY_DELETE" text="Elimina"/>
 		<separator/>
 		<menu text="Cerca">
-			<item id="ID_SEARCH_FOR_THIS" text="Questo file"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="File simili"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_Questo file"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="File _simili"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musica dello stesso artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodi della stessa serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musica dello stesso artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musica dello stesso _album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodi della stessa serie"/>
 		</menu>
 		<menu text="Servizi web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
@@ -1255,7 +1255,7 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="Apri file multimediale..."/>
 		<separator/>
-		<menu text="Playlist">
+		<menu text="Play_list">
 			<item id="ID_MEDIA_PREVIOUS" text="Precedente"/>
 			<item id="ID_MEDIA_NEXT" text="Successiva"/>
 			<item id="ID_MEDIA_RANDOM" text="Riproduzione casuale"/>
@@ -1276,7 +1276,7 @@
 			<separator/>
 			<item id="ID_MEDIA_FULLSCREEN" text="Schermo intero"/>
 		</menu>
-		<menu text="Impostazioni">
+		<menu text="_Impostazioni">
 			<item id="ID_MEDIA_VIS" text="Scegli visualizzazione..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Mostra playlist"/>
@@ -1341,8 +1341,8 @@
 		<item id="ID_MEDIA_ADD_FOLDER" text="Aggiungi _cartella..."/>
 		<item id="ID_MEDIA_REMOVE" text="_Rimuovi"/>
 		<separator/>
-		<item id="ID_MEDIA_RANDOM" text="Modalità casuale"/>
-		<item id="ID_MEDIA_REPEAT" text="Modalità ripetizione"/>
+		<item id="ID_MEDIA_RANDOM" text="Modalità cas_uale"/>
+		<item id="ID_MEDIA_REPEAT" text="Modalità ri_petizione"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="Apri play_list..."/>
 		<item id="ID_MEDIA_SAVE" text="_Salva playlist..."/>
@@ -1535,8 +1535,32 @@
 			<heading align="middle">A T T E N Z I O N E &#160; - &#160; S E I &#160; P R O T E T T O &#160; D A &#160; U N &#160; F I R E W A L L</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza ha rivelato che sei dietro un router NAT o un firewall,
-			e quindi non puoi ricevere connessioni da Internet. &#160;</text>
+			e quindi non puoi ricevere connessioni da internet. &#160;</text>
+			<text colour="FF0000" format="b">Questo può causare scarse prestazioni nelle ricerche e nei download.</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">Clicca qui per sapere come configurare il tuo router o firewall</link>
+			<newline gap="18" indent="0"/>
+		</group>
+
+		<group id="4">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">A T T E N Z I O N E &#160; - &#160; L A &#160; P O R T A &#160; T C P &#160; È &#160; P R O T E T T A &#160; D A &#160; U N &#160; F I R E W A L L</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">Shareaza ha rivelato che sei dietro un router NAT o un firewall,
+			e quindi non puoi ricevere connessioni TCP da internet. &#160;</text>
 			<text colour="FF0000" format="b">Questo può causare scarse prestazioni di download.</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">Clicca qui per sapere come configurare il tuo router o firewall</link>
+			<newline gap="18" indent="0"/>
+		</group>
+
+		<group id="4">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">A T T E N Z I O N E &#160; - &#160; L A &#160; P O R T A &#160; U D P &#160; È &#160; P R O T E T T A &#160; D A &#160; U N &#160; F I R E W A L L</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">Shareaza ha rivelato che sei dietro un router NAT o un firewall,
+			e quindi non puoi ricevere messaggi UDP da internet. &#160;</text>
+			<text colour="FF0000" format="b">Questo può causare scarse prestazioni nelle ricerche.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Clicca qui per sapere come configurare il tuo router o firewall</link>
 			<newline gap="18" indent="0"/>
@@ -2978,7 +3002,6 @@
 	<string id="16784" value="&amp;Chiudi"/>
 	<string id="16785" value="(Nessuna visualizzazione)"/>
 	<string id="16800" value="Non hai ancora specificato la velocità di connessione.  Prima di continuare, scegli il tipo di connessione Internet, o scrivi la velocità di connessione."/>
-	<string id="16801" value="Scegli il tipo di connessione Internet che stai usando prima di continuare."/>
 	<string id="16802" value="Non hai indicato nessuna cartella da condividere.  Desideri continuare?"/>
 	<string id="16803" value="La cartella che vuoi condividere è già condivisa come parte di un'altra cartella condivisa:\n\n%s"/>
 	<string id="16804" value="Non hai inserito un nickname nel tuo profilo utente."/>
@@ -3642,16 +3665,14 @@
 		<control caption="Gestisci collegamenti ai torrent."/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Benvenuto su Shareaza [3 di 7]">
-		<control caption="Per prestazioni ottimali, Shareaza ha bisogno di conoscere il tipo della tua connessione a Internet."/>
-		<control caption="&#160;( seleziona )| Uso Internet a casa| Uso Internet in una LAN universitaria| Uso Internet in una LAN aziendale| Uso Internet in un albergo o all'aeroporto"/>
-		<control caption="La rete è protetta da un firewall o da un router NAT?"/>
-		<control caption="&#160;No, POSSO accettare connessioni in entrata| Si, NON POSSO accettare connessioni in entrata da Internet| Non lo so, AUTO-RILEVA lo stato del firewall"/>
-		<control caption="Hai un firewall o un router NAT sulla tua connessione Internet di casa?"/>
-		<control caption="&#160;No, ho PIENO ACCESSO a Internet| Si, ma configurerò un port-forwarding per Shareaza| Si, NON POSSO accettare connessioni in entrata da Internet| Non lo so, AUTO-RILEVA lo stato del firewall"/>
-		<control caption="Se sai la velocità della tua connessione Internet, seleziona l'opzione migliore qui sotto:"/>
-		<control caption="| Modem analogico| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Modem via cavo/SDSL| T1| T3| LAN| OC3"/>
-		<control caption="O scegli:"/>
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStms" caption="Benvenuto su Shareaza [3 di 7]">
+		<control caption="Scegli il tipo della tua connessione a internet:"/>
+		<control caption="Modem analogico|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Modem via cavo/SDSL|T1|T3|LAN|OC3"/>
+		<control caption="O scegli la velocità di scaricamento:"/>
+		<control/>
+		<control caption="e la velocità di invio (upload):"/>
+		<control/>
+		<control caption="Vuoi impostare automaticamente il port-forwarding usando UPnP?"/>
 		<control/>
 		<control caption="Stato:"/>
 		<control/>
