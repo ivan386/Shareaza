@@ -435,7 +435,11 @@ BOOL CSkin::LoadControlTips(CXMLElement* pBase)
 
 CMenu* CSkin::GetMenu(LPCTSTR pszName, bool bChild)
 {
+	ASSERT( Settings.General.GUIMode == GUI_WINDOWED || 
+		Settings.General.GUIMode == GUI_TABBED ||
+		Settings.General.GUIMode == GUI_BASIC );
 	LPCTSTR* pszModeSuffix = m_pszModeSuffix[ Settings.General.GUIMode ];
+	ASSERT( pszName != NULL ); 
 	CString strName( pszName );
 	CMenu* pMenu = NULL;
 	CMenu* pWorkingMenu = bChild ? &m_mnuChild : &m_mnuDefault;
@@ -578,6 +582,9 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 	
 	pBar->Clear();
 	
+	ASSERT( Settings.General.GUIMode == GUI_WINDOWED || 
+		Settings.General.GUIMode == GUI_TABBED ||
+		Settings.General.GUIMode == GUI_BASIC );
 	LPCTSTR* pszModeSuffix = m_pszModeSuffix[ Settings.General.GUIMode ];
 	CCoolBarCtrl* pBase = NULL;
 	CString strName( pszName );
@@ -1090,6 +1097,9 @@ CSkinWindow* CSkin::GetWindowSkin(LPCTSTR pszWindow, LPCTSTR pszAppend)
 
 CSkinWindow* CSkin::GetWindowSkin(CWnd* pWnd)
 {
+	ASSERT( Settings.General.GUIMode == GUI_WINDOWED || 
+		Settings.General.GUIMode == GUI_TABBED ||
+		Settings.General.GUIMode == GUI_BASIC );
 	LPCTSTR* pszModeSuffix = m_pszModeSuffix[ Settings.General.GUIMode ];
 	BOOL bPanel = FALSE;
 	

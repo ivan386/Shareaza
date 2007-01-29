@@ -69,7 +69,10 @@ static char THIS_FILE[] = __FILE__;
 // CShareazaCommandLineInfo
 
 CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
-	m_bSilentTray(FALSE), m_bNoSplash(FALSE), m_bNoAlphaWarning(FALSE)
+	m_bSilentTray( FALSE ),
+	m_bNoSplash( FALSE ),
+	m_bNoAlphaWarning( FALSE ),
+	m_nGUIMode( -1 )
 {
 }
 
@@ -94,17 +97,17 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		}
 		else if ( ! lstrcmpi( pszParam, _T("basic") ) )
 		{
-			Settings.General.GUIMode = GUI_BASIC;
+			m_nGUIMode = GUI_BASIC;
 			return;
 		}
 		else if ( ! lstrcmpi( pszParam, _T("tabbed") ) )
 		{
-			Settings.General.GUIMode = GUI_TABBED;
+			m_nGUIMode = GUI_TABBED;
 			return;
 		}
 		else if ( ! lstrcmpi( pszParam, _T("windowed") ) )
 		{
-			Settings.General.GUIMode = GUI_WINDOWED;
+			m_nGUIMode = GUI_WINDOWED;
 			return;
 		}
 	}
@@ -156,7 +159,6 @@ BOOL CShareazaApp::InitInstance()
 	EnableShellOpen();
 //	RegisterShellFileTypes();
 
-	Settings.General.GUIMode = -1;
 	ParseCommandLine( m_ocmdInfo );
 	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppUnregister )
 	{
@@ -256,15 +258,11 @@ BOOL CShareazaApp::InitInstance()
 		WSADATA wsaData;
 		if ( WSAStartup( 0x0101, &wsaData ) ) return FALSE;
 	
-	// Save GUI mode from the switches
-	int nGUIMode = Settings.General.GUIMode;
 	SplashStep( dlgSplash, L"Settings Database" );
 		Settings.Load();
 
-	if ( nGUIMode != -1 )
-		Settings.General.GUIMode = nGUIMode;
-	else if ( Settings.General.GUIMode == -1 )
-		Settings.General.GUIMode = GUI_BASIC;
+	if ( m_ocmdInfo.m_nGUIMode != -1 )
+		Settings.General.GUIMode = m_ocmdInfo.m_nGUIMode;
 
 	SplashStep( dlgSplash, L"Firewall/Router Setup" );
 	{

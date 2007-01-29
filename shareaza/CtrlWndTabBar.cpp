@@ -171,8 +171,6 @@ void CWndTabBar::OnSkinChange()
 		CMenu* pOldMenu = m_mnuChild.GetSubMenu( pChild->m_bPanelMode ? 1 : 0 );
 		CMenu* pNewMenu = Skin.GetMenu( pChild->m_bPanelMode ? L"Simple" : L"Child", true );
 
-		if ( pNewMenu == NULL ) AfxAbort();
-
 		for ( UINT i = 0 ; i < pOldMenu->GetMenuItemCount() ; i++ )
 		{
 			TCHAR szBuffer[128] = {};
