@@ -1284,27 +1284,27 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 
 	if ( pItem == NULL )
 	{
-		pItem = pParent->addItem( pFolder->m_sName );
-		if ( bVisible ) m_nTotal++;
-
-		pItem->m_bExpanded	= pFolder->m_bExpanded;
-		pItem->m_pPhysical	= pFolder;
-		pItem->m_bShared	= bShared;
-		pItem->m_bBold		= ( pFolder->m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) == 0 );
-
+		CString strName = pFolder->m_sName;
 		if ( pFolder->m_pParent == NULL )
 		{
 			if ( pFolder->m_sPath.Find( _T(":\\") ) == 1 || pFolder->m_sPath.GetLength() == 2 )
 			{
 				CString strDrive;
 				strDrive.Format( _T(" (%c:)"), pFolder->m_sPath[0] );
-				pItem->m_sText += strDrive;
+				strName += strDrive;
 			}
 			else
 			{
-				pItem->m_sText += _T(" (Net)");
+				strName += _T(" (Net)");
 			}
 		}
+		pItem = pParent->addItem( strName );
+		if ( bVisible ) m_nTotal++;
+
+		pItem->m_bExpanded	= pFolder->m_bExpanded;
+		pItem->m_pPhysical	= pFolder;
+		pItem->m_bShared	= bShared;
+		pItem->m_bBold		= ( pFolder->m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) == 0 );
 
 		bChanged = bVisible;
 	}
