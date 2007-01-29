@@ -226,27 +226,33 @@ BOOL CSkin::LoadFromFile(LPCTSTR pszFile)
 
 BOOL CSkin::LoadFromResource(HINSTANCE hInstance, UINT nResourceID)
 {
+	BOOL bRet = FALSE;
 	HMODULE hModule = hInstance != NULL ? (HMODULE)hInstance : GetModuleHandle( NULL );
 	HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nResourceID ), MAKEINTRESOURCE( 23 ) );
-	
-	if ( hRes == NULL ) return FALSE;
-	
-	CString strBody;
-	
-	DWORD nSize			= SizeofResource( hModule, hRes );
-	HGLOBAL hMemory		= ::LoadResource( hModule, hRes );
-	LPTSTR pszOutput	= strBody.GetBuffer( nSize + 1 );
-	LPCSTR pszInput		= (LPCSTR)LockResource( hMemory );
-	
-	while ( nSize-- ) *pszOutput++ = *pszInput++;
-	*pszOutput++ = 0;
-	
-	strBody.ReleaseBuffer();
+	if ( hRes )
+	{
+		DWORD nSize			= SizeofResource( hModule, hRes );
+		HGLOBAL hMemory		= LoadResource( hModule, hRes );
+		if ( hMemory )
+		{
+			LPCSTR pszInput	= (LPCSTR)LockResource( hMemory );
+			if ( pszInput )
+			{
+				CString strBody;
+				LPTSTR pszOutput = strBody.GetBuffer( nSize + 1 );
+				while ( nSize-- ) *pszOutput++ = *pszInput++;
+				*pszOutput++ = 0;
+				strBody.ReleaseBuffer();
 
-	CString strPath;
-	strPath.Format( _T("%lu$"), (DWORD)hModule );
-	
-	return LoadFromString( strBody, strPath );
+				CString strPath;
+				strPath.Format( _T("%lu$"), (DWORD)hModule );
+
+				bRet = LoadFromString( strBody, strPath );
+			}
+			FreeResource( hMemory );
+		}
+	}
+	return bRet;
 }
 
 BOOL CSkin::LoadFromString(const CString& strXML, const CString& strPath)
@@ -1843,7 +1849,7 @@ HBITMAP CSkin::LoadBitmap(CString& strName)
 
 LPCTSTR CSkin::m_pszModeSuffix[3][4] =
 {
-	{ _T(".Windowed"), _T(""), NULL, NULL },			// Windowed
-	{ _T(".Tabbed"), _T(""), NULL, NULL },				// Tabbed
-	{ _T(".Basic"), _T(".Tabbed"), _T(""), NULL }		// Basic
+	{ _T(".Windowed"), _T(""), NULL, NULL },			// GUI_WINDOWED
+	{ _T(".Tabbed"), _T(""), NULL, NULL },				// GUI_TABBED
+	{ _T(".Basic"), _T(".Tabbed"), _T(""), NULL }		// GUI_BASIC
 };

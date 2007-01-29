@@ -63,6 +63,3 @@ private:
 	bool m_COM;
 	services_map m_services;
 };
-
-extern const LPCTSTR RT_JPEG;
-extern const LPCTSTR RT_PNG;

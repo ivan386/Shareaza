@@ -129,33 +129,30 @@ BOOL CCoolInterface::AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack)
 	
 	if ( nBase < 0 ) return FALSE;
 	
+	BOOL bRet = FALSE;
 	HRSRC hRsrc = FindResource( AfxGetInstanceHandle(), MAKEINTRESOURCE(nIDToolBar), RT_TOOLBAR );
-	if ( hRsrc == NULL ) return FALSE;
-	
-	HGLOBAL hGlobal = LoadResource( AfxGetInstanceHandle(), hRsrc );
-	if ( hGlobal == NULL ) return FALSE;
-	
-	TOOLBAR_RES* pData = (TOOLBAR_RES*)LockResource( hGlobal );
-	
-	if ( pData == NULL )
+	if ( hRsrc )
 	{
-		FreeResource( hGlobal );
-		return FALSE;
-	}
-	
-	for ( WORD nItem = 0 ; nItem < pData->wItemCount ; nItem++ )
-	{
-		if ( pData->items()[ nItem ] != ID_SEPARATOR )
+		HGLOBAL hGlobal = LoadResource( AfxGetInstanceHandle(), hRsrc );
+		if ( hGlobal )
 		{
-			m_pImageMap.SetAt( pData->items()[ nItem ], nBase );
-			nBase++;
+			TOOLBAR_RES* pData = (TOOLBAR_RES*)LockResource( hGlobal );
+			if ( pData )
+			{
+				for ( WORD nItem = 0 ; nItem < pData->wItemCount ; nItem++ )
+				{
+					if ( pData->items()[ nItem ] != ID_SEPARATOR )
+					{
+						m_pImageMap.SetAt( pData->items()[ nItem ], nBase );
+						nBase++;
+					}
+				}
+				bRet = TRUE;
+			}			
+			FreeResource( hGlobal );
 		}
 	}
-	
-	UnlockResource( hGlobal );
-	FreeResource( hGlobal );
-	
-	return TRUE;
+	return bRet;
 }
 
 BOOL CCoolInterface::ConfirmImageList()

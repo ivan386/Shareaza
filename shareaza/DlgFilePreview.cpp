@@ -156,18 +156,22 @@ BOOL CFilePreviewDlg::Create()
 	ASSERT( m_pDownload != NULL );
 	
 	LPCTSTR lpszTemplateName = MAKEINTRESOURCE( IDD );
-	
+	BOOL bResult = FALSE;
 	HINSTANCE hInst		= AfxFindResourceHandle( lpszTemplateName, RT_DIALOG );
 	HRSRC hResource		= ::FindResource( hInst, lpszTemplateName, RT_DIALOG );
-	HGLOBAL hTemplate	= LoadResource( hInst, hResource );
-	
-	LPCDLGTEMPLATE lpDialogTemplate = (LPCDLGTEMPLATE)LockResource( hTemplate );
-	
-	BOOL bResult = CreateDlgIndirect( lpDialogTemplate, NULL, hInst );
-	
-	UnlockResource( hTemplate );
-	FreeResource( hTemplate );
-	
+	if ( hResource )
+	{
+		HGLOBAL hTemplate = LoadResource( hInst, hResource );
+		if ( hTemplate )
+		{		
+			LPCDLGTEMPLATE lpDialogTemplate = (LPCDLGTEMPLATE)LockResource( hTemplate );
+			if ( lpDialogTemplate )
+			{
+				bResult = CreateDlgIndirect( lpDialogTemplate, NULL, hInst );
+			}
+			FreeResource( hTemplate );
+		}
+	}
 	return bResult;
 }
 

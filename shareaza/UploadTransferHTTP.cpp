@@ -1775,18 +1775,22 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 	
 	HMODULE hModule = GetModuleHandle( NULL );
 	HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nResourceID ), MAKEINTRESOURCE( 23 ) );
-	
-	if ( hRes != NULL )
+	if ( hRes )
 	{
 		DWORD nSize			= SizeofResource( hModule, hRes );
 		HGLOBAL hMemory		= LoadResource( hModule, hRes );
-		LPTSTR pszOutput	= strBody.GetBuffer( nSize + 1 );
-		LPCSTR pszInput		= (LPCSTR)LockResource( hMemory );
-		
-		while ( nSize-- ) *pszOutput++ = *pszInput++;
-		*pszOutput++ = 0;
-		
-		strBody.ReleaseBuffer();
+		if ( hMemory )
+		{
+			LPCSTR pszInput	= (LPCSTR)LockResource( hMemory );
+			if ( pszInput )
+			{
+				LPTSTR pszOutput = strBody.GetBuffer( nSize + 1 );
+				while ( nSize-- ) *pszOutput++ = *pszInput++;
+				*pszOutput++ = 0;
+				strBody.ReleaseBuffer();
+			}
+			FreeResource( hMemory );
+		}
 	}
 	
 	int nBreak	= strBody.Find( _T("\r\n") );

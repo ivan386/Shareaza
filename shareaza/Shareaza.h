@@ -319,3 +319,7 @@ inline bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
 #define MAX_DRAG_SIZE		256
 #define MAX_DRAG_SIZE_2		(MAX_DRAG_SIZE/2)
 #define DRAG_COLOR_KEY		(RGB(250,255,250))	// Light-green
+
+extern const LPCTSTR RT_BMP;
+extern const LPCTSTR RT_JPEG;
+extern const LPCTSTR RT_PNG;

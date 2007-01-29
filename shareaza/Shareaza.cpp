@@ -65,6 +65,10 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+const LPCTSTR RT_BMP = _T("BMP");
+const LPCTSTR RT_JPEG = _T("JPEG");
+const LPCTSTR RT_PNG = _T("PNG");
+
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
 

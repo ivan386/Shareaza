@@ -33,9 +33,6 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CImageServices, CComObject)
 
-const LPCTSTR RT_JPEG = _T("JPEG");
-const LPCTSTR RT_PNG = _T("PNG");
-
 /////////////////////////////////////////////////////////////////////////////
 // CImageServices load operations
 

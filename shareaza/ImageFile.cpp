@@ -97,34 +97,42 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 
 	HMODULE hModule = (HMODULE)hInstance;
 	HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nResourceID ), pszType );
-
-	if ( hRes == NULL ) return FALSE;
-
-	DWORD nSize			= SizeofResource( hModule, hRes );
-	HGLOBAL hMemory		= ::LoadResource( hModule, hRes );
-	LPCVOID pMemory		= (LPCVOID)LockResource( hMemory );
-	CString strType;
-
-	if ( pszType == RT_BITMAP || _tcscmp( pszType, _T("BMP") ) == 0 )
+	if ( hRes  )
 	{
-		pszType = _T(".bmp");
-	}
-	else if ( _tcscmp( pszType, RT_JPEG ) == 0 )
-	{
-		pszType = _T(".jpg");
-	}
-	else if ( _tcscmp( pszType, RT_PNG ) == 0 )
-	{
-		pszType = _T(".png");
-	}
-	else
-	{
-		strType.Format( _T(".%s"), pszType );
-		pszType = strType;
-	}
+		DWORD nSize			= SizeofResource( hModule, hRes );
+		HGLOBAL hMemory		= LoadResource( hModule, hRes );
+		if ( hMemory )
+		{
+			LPCVOID pMemory	= (LPCVOID)LockResource( hMemory );
+			if ( pMemory )
+			{
+				CString strType;
 
-	CImageServices srv;
-	return m_bLoaded = srv.LoadFromMemory( this, pszType, pMemory, nSize, bScanOnly, bPartialOk );
+				if ( pszType == RT_BITMAP || _tcscmp( pszType, RT_BMP ) == 0 )
+				{
+					pszType = _T(".bmp");
+				}
+				else if ( _tcscmp( pszType, RT_JPEG ) == 0 )
+				{
+					pszType = _T(".jpg");
+				}
+				else if ( _tcscmp( pszType, RT_PNG ) == 0 )
+				{
+					pszType = _T(".png");
+				}
+				else
+				{
+					strType.Format( _T(".%s"), pszType );
+					pszType = strType;
+				}
+
+				CImageServices srv;
+				m_bLoaded = srv.LoadFromMemory( this, pszType, pMemory, nSize, bScanOnly, bPartialOk );
+			}
+			FreeResource( hMemory );
+		}
+	}
+	return m_bLoaded;
 }
 
 /////////////////////////////////////////////////////////////////////////////

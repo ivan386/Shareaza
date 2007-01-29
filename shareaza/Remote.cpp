@@ -1423,16 +1423,22 @@ void CRemote::PageBanner(CString& strPath)
 	else if ( strPath == _T("/remote/header_2.png") )
 		nID = IDR_HOME_HEADER_2;
 	
-	if ( HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nID ), _T("PNG") ) )
+	if ( HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nID ), RT_PNG ) )
 	{
 		DWORD nSize			= SizeofResource( hModule, hRes );
 		HGLOBAL hMemory		= LoadResource( hModule, hRes );
-		LPVOID pSource		= LockResource( hMemory );
-		
-		m_pResponse.EnsureBuffer( nSize );
-		CopyMemory( m_pResponse.m_pBuffer, pSource, nSize );
-		m_pResponse.m_nLength = nSize;
-		m_sHeader = _T("Cache-Control: max-age=259200\r\nContent-Type: image/png\r\n");
+		if ( hMemory )
+		{
+			LPVOID pSource	= LockResource( hMemory );
+			if ( pSource )
+			{			
+				m_pResponse.EnsureBuffer( nSize );
+				CopyMemory( m_pResponse.m_pBuffer, pSource, nSize );
+				m_pResponse.m_nLength = nSize;
+				m_sHeader = _T("Cache-Control: max-age=259200\r\nContent-Type: image/png\r\n");
+			}
+			FreeResource( hMemory );
+		}
 	}
 }
 
