@@ -440,7 +440,7 @@ CMenu* CSkin::GetMenu(LPCTSTR pszName, bool bChild)
 	CMenu* pMenu = NULL;
 	CMenu* pWorkingMenu = bChild ? &m_mnuChild : &m_mnuDefault;
 
-	for ( int nModeTry = 0 ; pszModeSuffix[ nModeTry ] ; nModeTry++ )
+	for ( int nModeTry = 0 ; nModeTry < 3 && pszModeSuffix[ nModeTry ] ; nModeTry++ )
 	{
 		if ( m_pMenus.Lookup( strName + pszModeSuffix[ nModeTry ], pMenu ) )
 			return pMenu;
@@ -582,7 +582,7 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 	CCoolBarCtrl* pBase = NULL;
 	CString strName( pszName );
 	
-	for ( int nModeTry = 0 ; pszModeSuffix[ nModeTry ] ; nModeTry++ )
+	for ( int nModeTry = 0 ; nModeTry < 3 && pszModeSuffix[ nModeTry ] ; nModeTry++ )
 	{
 		if ( m_pToolbars.Lookup( strName + pszModeSuffix[ nModeTry ], pBase ) ) break;
 	}
@@ -1112,7 +1112,7 @@ CSkinWindow* CSkin::GetWindowSkin(CWnd* pWnd)
 			if ( pSkin != NULL ) return pSkin;
 		}
 		
-		for ( int nSuffix = 0 ; pszModeSuffix[ nSuffix ] != NULL ; nSuffix ++ )
+		for ( int nSuffix = 0 ; nSuffix < 3 && pszModeSuffix[ nSuffix ] != NULL ; nSuffix ++ )
 		{
 			if ( pszModeSuffix[ nSuffix ][0] != 0 || ! bPanel )
 			{
