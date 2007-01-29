@@ -947,7 +947,6 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 	{
 		case G1_PACKET_PING:		return OnPing( pHost, pPacket );			// Ping
 		case G1_PACKET_PONG:		return OnPong( pHost, pPacket );			// Pong, response to a ping
-		default:					return FALSE;
 	}
 	return FALSE;
 }
