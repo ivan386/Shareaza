@@ -100,6 +100,8 @@ UINT AsyncFileOperationThread(LPVOID param)
 	AsyncFileOperationParams* pAFOP = (AsyncFileOperationParams*)param;
 	SetThreadName( GetCurrentThreadId(), "SHFileOperation" );
 
+	bool bCopy = (pAFOP->dwEffect == DROPEFFECT_COPY);
+
 	// Full OLE initialization
 	HRESULT hr = OleInitialize( NULL );
 	if ( SUCCEEDED( hr ) )
@@ -107,7 +109,7 @@ UINT AsyncFileOperationThread(LPVOID param)
 		// Shell file operations
 		SHFILEOPSTRUCT sFileOp = {
 			pAFOP->hWnd,
-			((pAFOP->dwEffect == DROPEFFECT_COPY) ? FO_COPY : FO_MOVE),
+			( bCopy ? FO_COPY : FO_MOVE ),
 			pAFOP->sFrom,
 			pAFOP->sTo,
 			FOF_ALLOWUNDO,
@@ -116,6 +118,63 @@ UINT AsyncFileOperationThread(LPVOID param)
 			NULL
 		};
 		SHFileOperation( &sFileOp );
+
+		// Process metadata also
+		CString sMetadataFrom;
+		CString sMetadataTo( (LPCTSTR)pAFOP->sTo );
+		if ( sMetadataTo[ sMetadataTo.GetLength() - 1 ] == _T('\\') )
+			sMetadataTo.Delete( sMetadataTo.GetLength() - 1 );
+		sMetadataTo.Append( _T("\\Metadata\\") );
+		int nLength = pAFOP->sFrom.GetLength() - 1;
+		ASSERT( nLength > 0 );
+		int nSingleLength = 0;
+		for ( int i = 0; nLength > 0 && i < nLength; i += ( nSingleLength + 1 ) )
+		{
+			CString sFile( (LPCTSTR)pAFOP->sFrom.Mid( i ) );
+			nSingleLength = sFile.GetLength();
+			int nSlash = sFile.ReverseFind( _T('\\') );
+			CString sMetadata( sFile.Left( nSlash ) + _T("\\Metadata\\") +
+				sFile.Mid( nSlash + 1 ) + _T(".xml") );
+			// If metadata exist
+			DWORD dwAttrs = GetFileAttributes( sMetadata );
+			if ( dwAttrs != INVALID_FILE_ATTRIBUTES &&
+				! ( dwAttrs & FILE_ATTRIBUTE_DIRECTORY ) )
+			{
+				// Adds metadata file to file operations
+				sMetadataFrom.Append( sMetadata );
+				sMetadataFrom.Append( _T(""), 1 );
+			}
+		}
+		if ( ! sMetadataFrom.IsEmpty() )
+		{
+			CreateDirectory( sMetadataTo, NULL );
+			SetFileAttributes( sMetadataTo, FILE_ATTRIBUTE_HIDDEN );
+
+			sMetadataFrom.Append( _T(""), 1 );		// double null terminated
+			sMetadataTo.Append( _T(""), 1 );		// double null terminated
+			SHFILEOPSTRUCT sFileOp = {
+				pAFOP->hWnd,
+				( bCopy ? FO_COPY : FO_MOVE ),
+				sMetadataFrom,
+				sMetadataTo,
+				0,
+				FALSE,
+				NULL,
+				NULL
+			};
+			SHFileOperation( &sFileOp );
+		}
+
+		// Notify Shell about changes (first file/folder only)
+		if ( ! bCopy )
+		{
+			int nSlash = pAFOP->sFrom.ReverseFind( _T('\\') );
+			CString sFromDir( ( nSlash == -1 ) ? pAFOP->sFrom : pAFOP->sFrom.Left( nSlash ) );
+			SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)sFromDir, 0 );
+		}
+		SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)pAFOP->sTo, 0 );
+
+		Library.Update();
 
 		OleUninitialize();
 	}
@@ -479,7 +538,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 					pAFOP->hWnd = AfxGetMainWnd()->GetSafeHwnd();
 					pAFOP->dwEffect = *pdwEffect;
 					pAFOP->sTo = pszDest;
-					pAFOP->sTo.Append( _T('\0') );							// must be double null terminated
+					pAFOP->sTo.Append( _T(""), 1 );							// must be double null terminated
 					LPCTSTR pFrom = (LPCTSTR)( (char*)pdf + pdf->pFiles );	// must be double null terminated
 #ifdef _UNICODE
 					if ( ! pdf->fWide )
@@ -490,7 +549,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 						pAFOP->sFrom.ReleaseBuffer( nWide );
 					}
 					else
-						pAFOP->sFrom.Append( pFrom, size );
+						pAFOP->sFrom.Append( pFrom, size / sizeof( TCHAR ) );
 #else
 					if ( pdf->fWide )
 					{
@@ -500,7 +559,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 						pAFOP->sFrom.ReleaseBuffer( nWide );
 					}
 					else
-						pAFOP->sFrom.Append( pFrom, size );
+						pAFOP->sFrom.Append( pFrom, size / sizeof( TCHAR ) );
 #endif // _UNICODE
 					GlobalUnlock( medium.hGlobal );
 
@@ -599,7 +658,6 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 									}
 
 									pAlbumFolder->m_nUpdateCookie++;
-									Library.m_nUpdateCookie++;
 								}
 							}
 						}
@@ -671,7 +729,6 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 								pAlbumFolder->m_pFolders.AddTail( pFolder );
 
 								pAlbumFolder->m_nUpdateCookie++;
-								Library.m_nUpdateCookie++;
 
 								// Keep album
 								pFolder = NULL;								
@@ -691,12 +748,17 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 	}
 
 	if ( bRet )
-	{					
-		if ( bDrop && *pdwEffect == DROPEFFECT_MOVE )
+	{
+		if ( bDrop )
 		{
-			// Optimized move used
-			*pdwEffect = DROPEFFECT_NONE;
-			SetDropEffect( pIDataObject, DROPEFFECT_NONE );
+			Library.Update();
+
+			if ( *pdwEffect == DROPEFFECT_MOVE )
+			{
+				// Optimized move used
+				*pdwEffect = DROPEFFECT_NONE;
+				SetDropEffect( pIDataObject, DROPEFFECT_NONE );
+			}
 		}
 	}
 	else
