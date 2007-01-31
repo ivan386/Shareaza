@@ -3674,7 +3674,7 @@
 		<control caption="and the upload speed:"/>
 		<control/>
 		<control caption="Do you want to automatically setup port-forwarding by using UPnP?"/>
-		<control caption="Yes|No"/>
+		<control/>
 		<control caption="Status:"/>
 		<control/>
 	</dialog>
