@@ -83,12 +83,32 @@ BOOL CHandshakes::Listen()
 	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released
 
 	// Setup m_hSocket as a new TCP socket
-	if ( m_hSocket != INVALID_SOCKET ) return FALSE; // Make sure the socket hasn't been created yet
+	if ( m_hSocket != INVALID_SOCKET )	// Make sure the socket hasn't been created yet
+	{
+		theApp.Message( MSG_ERROR, _T("Too fast re-connection, wait 2 sec.") );
+		Sleep(2000);					// Too fast re-connection after disconnection, wait 2 sec
+		if ( m_hSocket != INVALID_SOCKET )
+			return FALSE;
+	}
+
 	m_hSocket = socket(	// Create a socket
 		PF_INET,		// Specify the Internet address family
 		SOCK_STREAM,	// Use TCP and not UDP
 		IPPROTO_TCP );
-	if ( m_hSocket == INVALID_SOCKET ) return FALSE; // Now, make sure it has been created
+	if ( m_hSocket == INVALID_SOCKET )	// Now, make sure it has been created
+	{
+		theApp.Message( MSG_ERROR, _T("Creating socket is failed.") );
+		// Second attempt
+		m_hSocket = socket(	// Create a socket
+			PF_INET,		// Specify the Internet address family
+			SOCK_STREAM,	// Use TCP and not UDP
+			IPPROTO_TCP );
+		if ( m_hSocket == INVALID_SOCKET )
+		{
+			theApp.Message( MSG_ERROR, _T("Creating socket is failed a second time.") );
+			return FALSE;
+		}
+	}
 
 	// Get our computer's Internet IP address and port number from the network object
 	SOCKADDR_IN saListen = Network.m_pHost; // This is the address of our computer as visible to remote computers on the Internet
