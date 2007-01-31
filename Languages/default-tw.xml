@@ -3667,7 +3667,7 @@
 		<control/>
 		<control caption="興趣:"/>
 		<control/>
-		<control caption="&新增"/>
+		<control caption="&lt; 新增"/>
 		<control caption="移除 &gt;"/>
 		<control/>
 	</dialog>
