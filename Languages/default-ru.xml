@@ -1525,7 +1525,7 @@
 
 		<group id="6">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Н И М А Н И Е  &#160; -  &#160; Н Е Т &#160; С В Я З И &#160; C &#160; T C P &#160; П О Р Т О М</heading>
+			<heading align="middle">В Н И М А Н И Е  &#160; - &#160; Н Е Т &#160; С В Я З И &#160; C &#160; T C P &#160; П О Р Т О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
 			и неспособны принимать TCP соединения из Интернета. &#160;</text>
@@ -1541,7 +1541,7 @@
 
 		<group id="7">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Н И М А Н И Е  &#160; -  &#160; Н Е Т &#160; С В Я З И &#160; C &#160; U D P &#160; П О Р Т О М</heading>
+			<heading align="middle">В Н И М А Н И Е  &#160; - &#160; Н Е Т &#160; С В Я З И &#160; C &#160; U D P &#160; П О Р Т О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
 			и неспособны принимать TCP соединения из Интернета. &#160;</text>
