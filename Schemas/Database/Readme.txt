@@ -18,3 +18,8 @@ About using Access. It is very simple. Just open Shareaza_schemas.mdb file and y
 There is one caveat for advanced users. The database changes the default alphabet sorting order to "General" (i.e. English). This is needed to correctly sort english words ("Y" at the end and not after "I"). If you want to compact the database then do not change this value from Tools->Options->General->New Database Sort Order when you compact it. When the sorting order is English you can paste to/from Excel from/to Datasheet view. Otherwise, you will have a mess.
 
 Note: In East Asian Windows you may need to disable some languages to test schemas, otherwise auto-generation of XML files may not work. The required texts are always english and your translation, nothing else is mandatory.
+
+Notes for developers: If you need to update a language translation, never overwrite the database file with the file provided by translators.
+The best way to do updates is to re-link the table TextData1, open in and copy-paste data of the appropriate language to TextData table.
+The prebuilt queries can be used to merge data too, but they have to be modified before. The only thing is needed--to change language code.
+"Files Changed" query will tell what files were updated in that case and you will be sure what files have to be committed to SVN repository.
