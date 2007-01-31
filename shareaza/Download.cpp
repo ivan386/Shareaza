@@ -317,7 +317,7 @@ BOOL CDownload::IsTrying() const
 
 BOOL CDownload::IsShared() const
 {
-	return !IsPaused() ? m_bShared || m_oBTH || ( Settings.eDonkey.EnableToday && m_oED2K ) : m_bShared;
+	return !IsPaused(TRUE) ? m_bShared || m_oBTH || ( Settings.eDonkey.EnableToday && m_oED2K ) : m_bShared;
 }
 
 //////////////////////////////////////////////////////////////////////
