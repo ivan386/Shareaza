@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 47 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 48 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -3665,7 +3665,8 @@
 		<control caption="Gestisci collegamenti ai torrent."/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStms" caption="Benvenuto su Shareaza [3 di 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Benvenuto su Shareaza [3 di 7]">
+		<control caption="Per prestazioni ottimali, Shareaza ha bisogno di avere informazioni sulla tua connessione a internet."/>
 		<control caption="Scegli il tipo della tua connessione a internet:"/>
 		<control caption="Modem analogico|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Modem via cavo/SDSL|T1|T3|LAN|OC3"/>
 		<control caption="O scegli la velocità di scaricamento:"/>
