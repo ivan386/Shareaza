@@ -1457,7 +1457,7 @@ CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "For optimum performance, Shareaza needs to know a little bit about your connection to the Internet.",
-                    IDC_STATIC,7,10,263,15
+                    IDC_STATIC,7,10,263,18
     LTEXT           "Choose the type of your Internet connection:",
                     IDC_STATIC,7,30,260,12
     COMBOBOX        IDC_CONNECTION_TYPE,26,44,100,178,CBS_DROPDOWNLIST | 
