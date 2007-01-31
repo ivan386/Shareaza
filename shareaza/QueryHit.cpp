@@ -1387,7 +1387,7 @@ void CQueryHit::Resolve()
 			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
 			(LPCTSTR)m_oSHA1.toUrn() );
 	}
-	
+
 	if ( m_sURL.GetLength() )
 	{
 		m_nSources ++;
@@ -1397,7 +1397,7 @@ void CQueryHit::Resolve()
 		return;
 	
 	m_nSources++;
-	
+
 	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
 		if ( m_bPush == TS_TRUE )
@@ -1416,8 +1416,8 @@ void CQueryHit::Resolve()
 		}
 		return;
 	}
-	
-	if ( m_nIndex == 0 || m_oTiger || m_oED2K || Settings.Downloads.RequestHash )
+
+	if ( m_nIndex == 0 || m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || Settings.Downloads.RequestHash )
 	{
 		if ( m_oSHA1 )
 		{
@@ -1437,11 +1437,18 @@ void CQueryHit::Resolve()
 		{
 			m_sURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
 				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
-                (LPCTSTR)m_oED2K.toUrn() );
+				(LPCTSTR)m_oED2K.toUrn() );
+			return;
+		}
+		else if ( m_oBTH )
+		{
+			m_sURL.Format( _T("btc://%s:%i//%s/"),
+				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
+				(LPCTSTR)m_oBTH.toString() );
 			return;
 		}
 	}
-	
+
 	if ( Settings.Downloads.RequestURLENC )
 	{
 		m_sURL.Format( _T("http://%s:%i/get/%lu/%s"),
