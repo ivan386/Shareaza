@@ -1544,7 +1544,7 @@
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">R E M O T E &#160; A C C E S S &#160; I S &#160; E N A B L E D</heading>
 			<newline gap="8" indent="42"/>
-			<text>Shareaza Remote Access is enabled.  Control Shareaza using your web browser at:</text>
+			<text>Shareaza Remote Access is enabled. Control Shareaza using your web browser at:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
 			<text>&#160;- or -&#160;</text>
@@ -1709,7 +1709,7 @@
 		
 		<text>
 			The Shareaza Settings Manager allows advanced users to completely customise how
-			Shareaza works.  The settings in the 
+			Shareaza works. The settings in the 
 		</text>
 		<text format="b">General </text>
 		<text>
@@ -1757,7 +1757,7 @@
 		
 		<text>
 			The Shareaza Settings Manager allows advanced users to completely customise how
-			Shareaza works.  The settings in the 
+			Shareaza works. The settings in the 
 		</text>
 		<text format="b">Internet </text>
 		<text>
@@ -1915,14 +1915,14 @@
 		<text format="b">This Download has Completed</text>
 		<newline gap="8"/>
 		<text>Shareaza has finished downloading this file, and has verified that it
-		is 100% correct.  It has also moved the file to your downloads folder.</text>
+		is 100% correct. It has also moved the file to your downloads folder.</text>
 	</document>
 
 	<document name="DownloadHelp.Moving">
 		<text format="b">This Download is Moving</text>
 		<newline gap="8"/>
 		<text>Shareaza has finished downloading this file, and has verified that
-		it is correct.  It is currently being moved and/or unpacked to your downloads folder.</text>
+		it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 	</document>
 	
 	<document name="DownloadHelp.Paused">
@@ -1936,7 +1936,7 @@
 		<text format="b">The Disk is Full</text>
 		<newline gap="8"/>
 		<text>Shareaza has paused this download automatically because the hard disk
-		appears to be full, or the download file cannot be written to.  If you wish
+		appears to be full, or the download file cannot be written to. If you wish
 		to continue downloading, please free some space on your hard disk and/or check
 		to make sure the incomplete file folder is accessible, and then resume the
 		download.</text>
@@ -1946,14 +1946,14 @@
 		<text format="b">This Download is Verifying</text>
 		<newline gap="8"/>
 		<text>This download has finished, and Shareaza is now checking it to ensure
-		that it is exactly the same as the original file.  If any damaged parts are
+		that it is exactly the same as the original file. If any damaged parts are
 		found, Shareaza will repair them automatically.</text>
 	</document>
 	
 	<document name="DownloadHelp.Downloading">
 		<text format="b">This Download is Active!</text>
 		<newline gap="8"/>
-		<text>This download is currently in progress.  If it is downloading too slowly,
+		<text>This download is currently in progress. If it is downloading too slowly,
 		you could try searching the network for more sources with the '</text>
 		<text format="b">Find More Sources</text><text>' command. If the speed does not 
 		improve it may be due to limited upload speeds of the users you are downloading 
@@ -1977,7 +1977,7 @@
 		<text>This download is waiting for some of your other downloads to complete.
 		Your download settings limit the number of downloads which may be active at
 		any given time, to ensure that each download gets a good share of the available
-		bandwidth.  You can change these settings via Tools, Shareaza Settings.
+		bandwidth. You can change these settings via Tools, Shareaza Settings.
 		Alternatively, you may manually start this download with the resume command.</text>
 	</document>
 	
@@ -1985,13 +1985,13 @@
 		<text format="b">This Download is Searching</text>
 		<newline gap="8"/>
 		<text>There are no known sources for this download, so Shareaza is searching
-		all connected P2P networks for new sources.  Once sources are found, the
-		download will start automatically.  Shareaza searches for sources automatically,
+		all connected P2P networks for new sources. Once sources are found, the
+		download will start automatically. Shareaza searches for sources automatically,
 		however you can speed up the process using the </text>
 		<text format="b">Find More Sources </text><text>command.</text>
 		<newline gap="8"/>
 		<text>Unfortunately in many cases there may be no users online who have the
-		file you are looking for.  The only course of action here is to wait for
+		file you are looking for. The only course of action here is to wait for
 		someone to come online, or cancel it and try to find a similar file which is
 		more widely available.</text>
 	</document>
@@ -2007,7 +2007,7 @@
 		<text format="b">BitTorrent Tracker Down</text>
 		<newline gap="8"/>
 		<text>The BitTorrent tracker server for this download appears to be
-		down or malfunctioning.  Shareaza is unable to contact it to receive
+		down or malfunctioning. Shareaza is unable to contact it to receive
 		a list of downloader peers.</text>
 	</document>
 
