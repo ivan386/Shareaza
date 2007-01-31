@@ -1456,19 +1456,21 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
+    LTEXT           "For optimum performance, Shareaza needs to know a little bit about your connection to the Internet.",
+                    IDC_STATIC,7,10,263,15
     LTEXT           "Choose the type of your Internet connection:",
-                    IDC_STATIC,7,15,260,12
-    COMBOBOX        IDC_CONNECTION_TYPE,26,31,100,178,CBS_DROPDOWNLIST | 
+                    IDC_STATIC,7,30,260,12
+    COMBOBOX        IDC_CONNECTION_TYPE,26,44,100,178,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Or choose the download speed:",IDC_STATIC,7,54,130,12
-    COMBOBOX        IDC_WIZARD_DOWNLOAD_SPEED,26,70,75,178,CBS_DROPDOWN | 
+    LTEXT           "Or choose the download speed:",IDC_STATIC,7,64,130,12
+    COMBOBOX        IDC_WIZARD_DOWNLOAD_SPEED,26,78,75,178,CBS_DROPDOWN | 
                     WS_VSCROLL | WS_TABSTOP
-    LTEXT           "and the upload speed:",IDC_STATIC,165,54,100,12
-    COMBOBOX        IDC_WIZARD_UPLOAD_SPEED,166,70,75,178,CBS_DROPDOWN | 
+    LTEXT           "and the upload speed:",IDC_STATIC,165,64,100,12
+    COMBOBOX        IDC_WIZARD_UPLOAD_SPEED,166,78,75,178,CBS_DROPDOWN | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "Do you want to automatically setup port-forwarding by using UPnP?",
-                    IDC_STATIC,7,93,240,12
-    COMBOBOX        IDC_WIZARD_UPNP,26,109,75,178,CBS_DROPDOWNLIST | 
+                    IDC_STATIC,7,98,240,12
+    COMBOBOX        IDC_WIZARD_UPNP,26,112,75,178,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "Status:",IDC_CONNECTION_STATUS,9,132,261,8
     CONTROL         "",IDC_CONNECTION_PROGRESS,"msctls_progress32",WS_BORDER,
