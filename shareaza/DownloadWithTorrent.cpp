@@ -241,7 +241,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		{	// We are seeding or completed, base requests on BT uploads
 			// If we're still moving the file, not firewalled, have enough sources or have maxxed out uploads
 			CBTTrackerRequest::SendUpdate( this,
-				!IsCompleted() || !Network.IsFirewalled()
+				!IsCompleted() || /*!Network.IsFirewalled()*/Settings.Connection.FirewallStatus == CONNECTION_OPEN // Temp disable
 					|| nSources > nSourcesWanted / 2
 					|| Uploads.GetTorrentUploadCount() >= Settings.BitTorrent.UploadCount
 					? 0					// We don't need to request peers.
@@ -542,7 +542,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 	m_tTorrentChoke = tNow;
 
 	// Check if a firewalled seeding client needs to start some new connections
-	if ( IsCompleted() && Network.IsFirewalled() )
+	if ( IsCompleted() && /*Network.IsFirewalled()*/Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED ) // Temp disable
 	{
 		// We might need to 'push' a connection if we don't have enough upload connections
 		if ( m_pTorrentUploads.GetCount() < max( Settings.BitTorrent.UploadCount * 2, 5 ) )
@@ -723,7 +723,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	m_nTorrentUploaded		= 0;
 	m_nTorrentDownloaded	= 0;
 
-	if ( Network.IsFirewalled() && GetSourceCount() < 40 )
+	if ( Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED/*Network.IsFirewalled()*/ && GetSourceCount() < 40 ) // Temp disable
 		CBTTrackerRequest::SendStarted( this );
 	else
 		CBTTrackerRequest::SendStarted( this, 0 );	

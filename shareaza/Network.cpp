@@ -229,7 +229,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
-	if ( IsFirewalled() )
+	if ( /*IsFirewalled()*/Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED ) // Temp disable
 		theApp.Message( MSG_DEFAULT, IDS_NETWORK_FIREWALLED );
 
 	SOCKADDR_IN pOutgoing;
