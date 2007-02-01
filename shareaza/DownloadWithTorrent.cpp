@@ -192,14 +192,15 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( m_pTask != NULL ) return FALSE;
 	
 	BOOL bLive = ( ! IsPaused() ) && ( IsTrying() );
-	
+
+	if ( !m_pPeerID )
+		GenerateTorrentDownloadID();
+
 	if ( bLive && ! m_bTorrentStarted )
 	{
 		if ( ! m_bTorrentRequested || tNow > m_tTorrentTracker )
 		{
 			theApp.Message( MSG_DEFAULT, _T("Sending initial announce for %s"), m_pTorrent.m_sName );
-
-			GenerateTorrentDownloadID();
 
 			m_bTorrentRequested		= TRUE;
 			m_bTorrentStarted		= FALSE;
