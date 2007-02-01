@@ -128,6 +128,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 				ar >> m_bSeeding;
 				ar >> m_sServingFileName;
 			}
+			GenerateTorrentDownloadID();
 		}
 	}
 }
