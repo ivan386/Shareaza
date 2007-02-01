@@ -119,7 +119,7 @@ void CShareManagerDlg::OnShareAdd()
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder to share:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
+	pBI.ulFlags			= BIF_EDITBOX | BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
 
 	pPath = SHBrowseForFolder( &pBI );
 
