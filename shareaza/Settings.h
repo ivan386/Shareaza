@@ -509,6 +509,11 @@ public:
 		BOOL		MaliciousWarning;			// Is the warning dialog opened?
 	} Live;
 
+	struct sExperimental
+	{
+		BOOL		EnableDIPPSupport;			// Handle GDNA host cache exchange
+	} Experimental;
+
 // Attributes : Item List
 public:
 	class Item

@@ -298,6 +298,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Bandwidth.UdpOut, 128, 0, 8192, _T(" Kb/s") );
 	AddSetting( &Settings.Bandwidth.HubUploads, 128, 0, 4096, _T(" Kb/s") );
 
+	AddSetting( &Settings.Experimental.EnableDIPPSupport, 1, 0, 1 );
+
 	CLiveList::Sort( &m_wndList, 0 );
 	CLiveList::Sort( &m_wndList, 0 );
 

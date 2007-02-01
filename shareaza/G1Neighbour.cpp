@@ -449,15 +449,19 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
-			// If the neigbour sent
-			if ( CGGEPItem* pItem = pGGEP.Find( _T("SCP") ) )
+			// If the neighbour sent
+			if ( Settings.Experimental.EnableDIPPSupport )
 			{
-				bSCP = true;
+				if ( CGGEPItem* pItem = pGGEP.Find( _T("SCP") ) )
+				{
+					bSCP = true;
+				}
+				if ( CGGEPItem* pItem = pGGEP.Find( _T("DNA") ) )
+				{
+					bDNA = true;
+				}
 			}
-			if ( CGGEPItem* pItem = pGGEP.Find( _T("DNA") ) )
-			{
-				bDNA = true;
-			}
+
 			if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
 			{
 				// Broadcast the packet to the computers we are connected to
@@ -484,13 +488,16 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	}
 
 	CGGEPBlock pGGEP;
-	if ( bSCP )
+	if ( Settings.Experimental.EnableDIPPSupport )
 	{
-		WriteRandomCache( pGGEP.Add( L"IPP" ) );
-	}
-	if ( bDNA )
-	{
-		WriteRandomCache( pGGEP.Add( L"DIPP" ) );
+		if ( bSCP )
+		{
+			WriteRandomCache( pGGEP.Add( L"IPP" ) );
+		}
+		if ( bDNA )
+		{
+			WriteRandomCache( pGGEP.Add( L"DIPP" ) );
+		}
 	}
 
 	// Save information from this ping packet in the CG1Neighbour object
@@ -727,10 +734,15 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 					pDU->Read( (void*)&nUptime, 4 );
 				}
 
-				CGGEPItem* pIPPs = pGGEP.Find( L"IPP", 6 );
-				// GDNA has a bug in their code; they send DIP but receive DIPP (fixed in the latest versions)
-				CGGEPItem* pGDNAs = pGGEP.Find( L"DIPP", 6 );
-				if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
+				CGGEPItem* pIPPs = NULL;
+				CGGEPItem* pGDNAs = NULL;
+				if ( Settings.Experimental.EnableDIPPSupport )
+				{
+					pIPPs = pGGEP.Find( L"IPP", 6 );
+					// GDNA has a bug in their code; they send DIP but receive DIPP (fixed in the latest versions)
+					pGDNAs = pGGEP.Find( L"DIPP", 6 );
+					if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
+				}
 
 				// We got a response to SCP extension, add hosts to cache if IPP extension exists
 				while ( bUpdateNeeded && ( pIPPs || pGDNAs ) )
