@@ -268,6 +268,9 @@ BOOL CShareazaApp::InitInstance()
 	if ( m_ocmdInfo.m_nGUIMode != -1 )
 		Settings.General.GUIMode = m_ocmdInfo.m_nGUIMode;
 
+	if ( Settings.General.GUIMode != GUI_WINDOWED && Settings.General.GUIMode != GUI_TABBED && Settings.General.GUIMode != GUI_BASIC )
+		Settings.General.GUIMode = GUI_BASIC;
+
 	SplashStep( dlgSplash, L"Firewall/Router Setup" );
 	{
 		CFirewall firewall;
