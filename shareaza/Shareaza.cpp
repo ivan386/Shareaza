@@ -401,7 +401,7 @@ int CShareazaApp::ExitInstance()
 	if ( m_pUPnPFinder )
 	{
 		m_pUPnPFinder->StopAsyncFind();
-		if ( Settings.Connection.DeleteUPnPPorts )
+	if ( Settings.Connection.DeleteUPnPPorts )
 			m_pUPnPFinder->DeletePorts();
 		m_pUPnPFinder.reset();
 	}
@@ -724,6 +724,9 @@ TCHAR CShareazaApp::szMessageBuffer[16384];
 void CShareazaApp::Message(int nType, UINT nID, ...) throw()
 {
 	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
+#ifdef NDEBUG
+	if ( nType == MSG_TEMP ) return;
+#endif
 	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
 	
 	CSingleLock pLock( &m_csMessage, TRUE );
@@ -757,6 +760,9 @@ void CShareazaApp::Message(int nType, UINT nID, ...) throw()
 void CShareazaApp::Message(int nType, LPCTSTR pszFormat, ...) throw()
 {
 	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
+#ifdef NDEBUG
+	if ( nType == MSG_TEMP ) return;
+#endif
 	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
 	
 	CSingleLock pLock( &m_csMessage, TRUE );
