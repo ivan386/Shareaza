@@ -59,7 +59,7 @@ MinVersion=4.0,4.0sp6
 SourceDir=..\..
 
 ; links to website for software panel
-AppPublisherURL=http://www.shareaza.com/?id=home
+AppPublisherURL=http://www.shareaza.com/
 AppSupportURL=http://www.shareaza.com/?id=support
 AppUpdatesURL=http://www.shareaza.com/?id=download
 
