@@ -79,7 +79,7 @@ CDownload::~CDownload()
 		CloseTransfers();
 		CloseTorrentUploads();
 		Uploads.OnRename( m_sDiskName, NULL );
-		if ( m_bSeeding && m_bComplete )
+		if ( m_bSeeding && Settings.BitTorrent.AutoSeed )
 		{
 			// do nothing
 		}
