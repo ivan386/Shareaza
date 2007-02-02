@@ -406,10 +406,19 @@
 		<separator/>
 		<button id="ID_CHAT_BROWSE" text="参照"/>
 		<!--<button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
-		<button id="ID_CHAT_PRIORITY" text="認証優先順位"/>
+		<button id="ID_CHAT_PRIORITY" text="転送順位を優先"/>
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="接続" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="切断"/>
+	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="自動拡大/縮小"/>
+		<button id="ImageViewer_ActualSize" text="原寸大"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="更新"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="閉じる"/>
 	</toolbar>
 </toolbars>
 
@@ -427,7 +436,8 @@
 		<item id="ID_CHILD_MINIMISE" text="最小化(_M)"/>
 		<separator/>
 		<item id="ID_CHILD_CLOSE" text="閉じる(_C)"/>
-	</menu>	<!-- MAIN WINDOW MENU BAR -->
+	</menu>
+	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="ネットワーク(_N)">
 			<item id="ID_NETWORK_CONNECT" text="接続(_C)" shortcut="Ctrl+G"/>
@@ -645,6 +655,7 @@
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="ナビゲーションバーを表示(_N)"/>
 			<item id="ID_WINDOW_TOOLBAR" text="ツールバーを表示(_T)"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="タブバーを表示(_B)"/>
 			<item id="ID_WINDOW_MONITOR" text="モニタを表示(_M)"/>
 			<item id="ID_WINDOW_REMOTE" text="リモートを表示(_R)"/>
@@ -739,7 +750,7 @@
 		<item id="ID_NETWORK_AUTO_CLOSE" text="転送後に終了(_T)"/>
 		<item id="ID_NETWORK_EXIT" text="終了(_X)"/>
 	</menu>
-	<!--  REMOTE MENU -->
+	<!-- REMOTE MENU -->
 	<menu name="CRemoteWnd">
 		<item id="ID_TRAY_OPEN" text="Shareazaを表示(_O)"/>
 		<separator/>
@@ -1458,6 +1469,15 @@
 		<item id="ID_CHAT_TIMESTAMP" text="タイムスタンプ(_T)"/>
 		<item id="ID_CHAT_CLEAR" text="ウィンドウをクリア(_L)"/>
 	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="自動(_B)"/>
+		<item id="ImageViewer_ActualSize" text="原寸大(_A)"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="更新(_R)"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="閉じる(_C)"/>
+	</menu>
 </menus>
 
 <!-- Watermarks -->
@@ -1520,7 +1540,31 @@
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">ShareazaはあなたがNATまたはファイアーウォールの背後に隠れていて、
 			  インターネットからの接続を受け付けることができないことを検出しました。&#160;</text>
+			<text colour="FF0000" format="b">これはダウンロード性能やサーチ性能の著しい低下を意味します。</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">ここをクリックすればルータやファイアーウォールの設定法について知ることができます</link>
+			<newline gap="18" indent="0"/>
+		</group>
+
+		<group id="6">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">警 告 &#160; - &#160; あ な た の Ｔ Ｃ Ｐ ポ ー ト は フ ァ イ アー ウ ォ ー ル に よ っ て 遮 断 さ れ て い ま す</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">ShareazaはあなたがNATまたはファイアーウォールの背後に隠れていて、
+			  インターネットからの接続を受け付けることができないことを検出しました。&#160;</text>
 			<text colour="FF0000" format="b">これはダウンロード性能の著しい低下を意味します。</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">ここをクリックすればルータやファイアーウォールの設定法について知ることができます</link>
+			<newline gap="18" indent="0"/>
+		</group>
+
+		<group id="7">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">警 告 &#160; - &#160; あ な た の Ｕ Ｄ Ｐ ポ ー ト は フ ァ イ アー ウ ォ ー ル に よ っ て 遮 断 さ れ て い ま す</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">ShareazaはあなたがNATまたはファイアーウォールの背後に隠れていて、
+			  インターネットからのメッセージを受け付けることができないことを検出しました。&#160;</text>
+			<text colour="FF0000" format="b">これはサーチ性能の著しい低下を意味します。</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">ここをクリックすればルータやファイアーウォールの設定法について知ることができます</link>
 			<newline gap="18" indent="0"/>
@@ -2104,7 +2148,7 @@
 		<newline gap="8"/>
 		<link target="http://www.shareaza.com/help/?torrentencoding">ここで追加のヘルプを参照</link>
 		<text>するか、Torrentを修復するソフトウェアをダウンロードして下さい。</text>
-</document>
+	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">eDonkeyサーバーリストが空です</text>
@@ -2275,7 +2319,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="選択したダウンロードの優先順位を上に移動します"/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="選択したダウンロードを一時停止します"/>
 	<tip id="ID_DOWNLOADS_RATE" message="選択したダウンロードを評価します"/>
-	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="選択されたダウンロードのプレビューイメージをダウンロードします"/>
 	<tip id="ID_DOWNLOADS_RESUME" message="選択したダウンロードを再開します"/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="ダウンロード設定を行います..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="他のユーザとこの部分ダウンロードを共有します"/>
@@ -2327,7 +2371,6 @@
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="選択したアルバムフォルダをコレクションファイルにエクスポートします..."/>
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="選択したコレクション内の全てのファイルをダウンロードします"/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="選択したアルバムフォルダ内の全てのファイルを再生リストに追加します"/>
-	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="選択したアルバムフォルダをコレクションファイルとしてエクスポートします..."/>
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="選択したフォルダ内の全てのファイルのプロパティを表示・編集します..."/>
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="一般的なメタデータをアルバムフォルダからそのファイル全てに適用します"/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="ここに新しいアルバムフォルダを作成します..."/>
@@ -2512,6 +2555,11 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="開いているウィンドウを重ならないようにタイル状に横に並べて表示します"/>
 	<tip id="ID_WINDOW_TILE_VERT" message="開いているウィンドウを重ならないようにタイル状に縦に並べて表示します"/>
 	<tip id="ID_WINDOW_TOOLBAR" message="ツールバーを表示・非表示します"/>
+	<!-- PLUGIN TIPS -->
+	<tip id="ImageViewer_BestFit" message="イメージの大きさをウインドウの大きさにあわせて自動的に拡大・縮小します"/>
+	<tip id="ImageViewer_ActualSize" message="イメージを原寸大で表示します"/>
+	<tip id="ImageViewer_Refresh" message="イメージを更新します"/>
+	<tip id="ImageViewer_Close" message="イメージビュアーを閉じます"/>
 </commandTips>
 
 <!-- Localised Strings -->
@@ -2557,6 +2605,7 @@
 	<string id="8009" value="&quot;%s&quot; スキンを削除してよろしいですか?  この作業は元に戻せません"/>
 	<string id="8010" value="これはShareazaのプレリリースバージョンで、ベータテスト期間は終了しています。www.shareaza.comからオフィシャルリリースをダウンロードして下さい"/>
 	<string id="8011" value="画面表示の変更は現在開いている全てのウィンドウを閉じます。今すぐ変更しますか?"/>
+	<string id="8012" value="Torrentの情報"/>
 	<string id="8060" value="ハブ/ウルトラピアモード 近隣接続 %lu, 共有 %s"/>
 	<string id="8061" value="ウルトラピアモード 近隣接続 %lu, 共有 %s"/>
 	<string id="8062" value="ハブモード 近隣接続 %lu, 共有 %s"/>
@@ -2589,6 +2638,7 @@
 	<string id="8134" value="新規検索を開始しようとしています。以前の検索結果をクリアしますか?"/>
 	<string id="8135" value="メタデータ無し"/>
 	<string id="8136" value="プレーンテキスト検索"/>
+	<string id="8137" value="スキーマなし"/>
 	<string id="8141" value="検索パネルを表示します"/>
 	<string id="8142" value="検索パネルを非表示にします"/>
 	<string id="8143" value="検索中..."/>
@@ -2642,6 +2692,7 @@
 	<string id="8240" value="Shareazaはダウンロードデータを移動中です:"/>
 	<string id="8241" value="Shareazaはダウンロードエラーをチェック中です:"/>
 	<string id="8243" value="アップロード量:"/>
+	<string id="8244" value="レビュー数:"/>
 	<string id="8288" value="Shareazaライブラリを閲覧中です"/>
 	<string id="8289" value="閲覧:"/>
 	<string id="8290" value="%i フォルダの内容を閲覧しています"/>
@@ -2682,6 +2733,7 @@
 	<string id="8334" value="このファイル用のソースは現在ビジー状態です"/>
 	<string id="8335" value="このファイル用のソースはファイアーウォールされています"/>
 	<string id="8336" value="このファイル用のソースは不安定である可能性があります"/>
+	<string id="8337" value="信頼できない"/>
 	<string id="16064" value="Shareazaネットワークコアを開始しています..."/>
 	<string id="16065" value="入力接続用に %s ポート %i をバインドできませんでした。入力接続はサポートされません"/>
 	<string id="16066" value="Shareazaネットワークコアを終了しています..."/>
@@ -2715,14 +2767,12 @@
 	<string id="16137" value="%s からの2重接続を拒否しています"/>
 	<string id="16138" value="既に %sに接続している為、2番目の接続は確立されません"/>
 	<string id="16139" value="近隣 %s は接続を閉じました (%i : %s)."/>
-	<string id="16140" value="近隣 %s は接続をクローリングしています"/>
 	<string id="16141" value="ハブではない為、近隣 %s との接続を閉じました"/>
 	<string id="16144" value="%s とのハンドシェークが時間切れになりました"/>
 	<string id="16145" value="近隣 %s とのGnutella接続に成功しました (G%i.%i : %s)"/>
 	<string id="16146" value="無効なデータが配信された為、%s との連結に失敗しました"/>
 	<string id="16147" value="%s との余剰接続を閉じています。ホストヒント (%s ポート %i)"/>
 	<string id="16148" value="%s への接続が拒否されました (%s)"/>
-	<string id="16149" value="%s とのGnutella 0.6ハンドシェイクに失敗しました。0.4を使用して再試行中です"/>
 	<string id="16150" value="%s からの剰余接続を閉じています"/>
 	<string id="16151" value="保護されているリーフノードの為 %s からの接続を拒否しています"/>
 	<string id="16152" value="ハブ近隣 %s がハブとして受け付けない為接続を閉じています"/>
@@ -2935,9 +2985,9 @@
 	<string id="16533" value="総TCP送信帯域幅"/>
 	<string id="16534" value="総UDP受信帯域幅"/>
 	<string id="16535" value="総UDP送信帯域幅"/>
-	<string id="16768" value="URL &quot;%s&quot; を受信しました"/>
 	<string id="16536" value="Gnutella Pings 送受信比"/>
 	<string id="16537" value="Gnutella Pongs 送受信比"/>
+	<string id="16768" value="URL &quot;%s&quot; を受信しました"/>
 	<string id="16769" value="URLの解析に失敗しました: ShareazaはこのURLを理解できません"/>
 	<string id="16770" value="Shareazaがビジーの為、URLアクションダイアログを表示できませんでした"/>
 	<string id="16771" value="既にライブラリ内に &quot;%s&quot; を所有しています。それでもこれをダウンロードしますか?"/>
@@ -2956,7 +3006,6 @@
 	<string id="16784" value="閉じる(&amp;C)"/>
 	<string id="16785" value="(視覚効果無し)"/>
 	<string id="16800" value="まだ接続速度を設定していません。 続けるにはインターネット接続形式を選択するか、接続速度を入力して下さい"/>
-	<string id="16801" value="ウィザードを続けるには使用しているインターネット接続形式を選択して下さい"/>
 	<string id="16802" value="共有フォルダが指定されていません。宜しいですかですか?"/>
 	<string id="16803" value="このフォルダは別の共有フォルダの一部として既に共有されています:\n\n%s"/>
 	<string id="16804" value="ユーザプロフィールに名前が入力されていません"/>
@@ -3118,6 +3167,14 @@
 	<string id="17498" value="ファイル &quot;%s&quot; 内でエラーが検出されました"/>
 	<string id="17500" value="トラッカーが応答しませんでした。再アナウンスしています (%i / %i)"/>
 	<string id="17501" value="トラッカーと通信できませんでした"/>
+	<string id="17503" value="トラッカーと交信失敗、次のトラッカーと交信します (%i 中 %i)"/>
+	<string id="17505" value="BitTorrent接続が切断されました(%s)"/>
+	<string id="17506" value="BitTorrentハンドシェークが切断されました(%s)"/>
+	<string id="17507" value="BitTorrent coupling with %s was dropped."/>
+	<string id="17510" value="BitTorrent coupling with %s not accepted, a connection to this client already exists."/>
+	<string id="17511" value="BitTorrent coupling with %s not accepted, maximum connections reached."/>
+	<string id="17512" value="プライベートTorrent"/>
+	<string id="17513" value="エンコーディングエラー"/>
 	<string id="18496" value="名前領域を変更しました。このダウンロードをリネームして宜しいですか?"/>
 	<string id="18497" value="SHA1値を入力しましたが、この値は無効です。正確な値かどうか確認して再試行して下さい"/>
 	<string id="18498" value="ルートtiger-tree値を入力しましたが、この値は無効です。正確な値かどうか確認して再試行して下さい"/>
@@ -3133,6 +3190,7 @@
 	<string id="18508" value="ダウンロードソース %s (&quot;%s&quot;) はキューの順番待ち位置が高すぎる為、破棄されました"/>
 	<string id="18509" value="tiger-treeボリュームやeDonkeyハッシュセット、BitTorrentハッシュセットといった、どのような部分検証データもない為、このダウンロードを完了・再検証できません。 検証情報が無ければダウンロードを再検証できません"/>
 	<string id="18510" value="このダウンロードを完了済みとして再検証しますか?　ファイル全体が考慮され、Shareazaは検証に成功する部分を受け付け、検証に失敗する部分を再ダウンロードします"/>
+	<string id="18511" value="現在のダウンロードと異なるファイルサイズに変更しようとしています。変更しますか？"/>
 	<string id="19000" value="リモートアクセスが無効になりました"/>
 	<string id="19001" value="ユーザー名とパスワードを入力しなければなりません"/>
 	<string id="19002" value="接続を受け付けることができません。URLが利用不能です"/>
@@ -3146,9 +3204,9 @@
 	<string id="20007" value="自動"/>
 	<string id="20008" value="標準"/>
 	<string id="20009" value="指定"/>
-	<string id="20100" value="接続中"/>
 	<string id="20010" value="&amp;戻る"/>
 	<string id="20011" value="&amp;次へ"/>
+	<string id="20100" value="接続中"/>
 	<string id="20101" value="要求中"/>
 	<string id="20102" value="応答"/>
 	<string id="20103" value="ダウンロード中"/>
@@ -3185,6 +3243,7 @@
 	<string id="20134" value="チョーク済"/>
 	<string id="20135" value="次へ"/>
 	<string id="20136" value="Q"/>
+	<string id="20137" value="ソース"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="日曜"/>
 	<string id="20201" value="月曜"/>
 	<string id="20202" value="火曜"/>
@@ -3265,7 +3324,7 @@
 		<control caption="削除(_R)"/>
 		<control caption="コレクションの格納先(_C):"/>
 		<control/><control/>
-		<control caption="Create ghost files when deleting"/>
+		<control caption="ファイル削除時にゴーストを作成する"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="メディアプレーヤー">
@@ -3282,7 +3341,6 @@
 		<control caption="メディア･ハンドラー(_M)"/>
 		<control caption="メディア･プレーヤーの選択:"/>
 		<control caption="注意:外部のメディアプレーヤーを選択すると内臓のShareazaﾒﾃﾞｨｱﾌﾟﾚｰﾔｰ、オーディオ視覚プラグインは共に自動的に無効になります。"/>
-		<control/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="コミュニティ">
@@ -3547,7 +3605,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="アップロードキュープロパティ">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="アップロードキュープロパティ">
 		<control caption="名前(_N):"/>
 		<control/>
 		<control caption="適用対象(_E):"/>
@@ -3611,16 +3669,15 @@
 		<control caption="BitTorrentリンクを処理する"/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Shareazaへようこそ [3 of 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Shareazaへようこそ [3 of 7]">
 		<control caption="最適な性能を得る為、あなたのインターネット接続についての情報をいくつかShareazaに提供する必要があります。"/>
-		<control caption="&#160;( 選択して下さい )| 自宅でインターネットを使用しています| 学校のLANでインターネットを使用しています| 会社のLANでインターネットを使用しています| ホテルや空港でインターネットを使用しています"/>
-		<control caption="あなたのネットワークや学校はファイアーウォールやNATルータによって保護されていますか?"/>
-		<control caption="&#160;いいえ、全ての入力接続を受け付けることが出来ます| はい、インターネットからの入力接続を受け付けることが出来ません| よく分かりません。ファイアーウォールの状態を自動検出して下さい"/>
-		<control caption="あなたのインターネット接続はファイアーウォールやNATルータによって保護されていますか?"/>
-		<control caption="&#160;いいえ、インターネットへ完全にアクセス出来ます| はい、しかしShareaza用にポートフォワード設定を行う予定です| はい、その為インターネットからの入力接続を受け付けることができません| よく分かりません。ファイアーウォールの状態を自動検出して下さい"/>
-		<control caption="インターネットの接続速度が分かっている場合は、以下の中から最適なものを選択して下さい:"/>
-		<control caption="| ダイヤルアップモデム| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| ケーブルモデム/SDSL| T1| T3| LAN| OC3"/>
-		<control caption="選択:"/>
+		<control caption="以下の中からあなたが使用しているインターネットの接続を選択して下さい:"/>
+		<control caption="ダイヤルアップモデム| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| ケーブルモデム/SDSL| T1| T3| LAN| OC3"/>
+		<control caption="下り速度："/>
+		<control/>
+		<control caption="上り速度:"/>
+		<control/>
+		<control caption="Universal Plug and Playを使用して自動的にポートを空けますか?"/>
 		<control/>
 		<control caption="状態:"/>
 		<control/>
@@ -4137,7 +4194,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="ファイル削除">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="ファイル削除">
 		<control caption="本当に削除してよろしいですか？:"/>
 		<control/>
 		<control caption="削除"/>
@@ -4145,10 +4202,11 @@
 		<control caption="キャンセル"/>
 		<control/>
 		<control caption="Shareazaはこのファイルを記録して、別の機会に同じファイルに遭遇した時にあなたに警告を行うことが出来ます。 このファイルを削除する理由を選択して下さい:"/>
-		<control caption="コメントを追加しない"/>
-		<control caption="このファイルの名前が間違っていて紛らわしい"/>
-		<control caption="このファイルの品質が非常に悪い"/>
-		<control caption="このファイルは偽物であるか、使用できない"/>
+		<control caption="ゴーストを作成"/>
+		<control caption="削除理由:"/>
+		<control caption="削除(コメントを保持)|名前が間違っている(内容と合っていない、紛らわしい)|このファイルの品質が非常に悪い|このファイルは偽物であるか、破損しているなどの理由で使用できない|最新のコメントと置き換える"/>
+		<control caption="ファイルの評価："/>
+		<control caption="(評価なし)|偽者、破損、紛らわしい|悪い|普通|良い|とても良い|素薔薇しい"/>
 		<control caption="このファイルが何故悪いかを説明する短いメモを入力することができます:"/>
 		<control/>
 	</dialog>
@@ -4179,14 +4237,11 @@
 		<control caption="URN(_U):"/>
 		<control caption="信頼"/>
 		<control caption="SHA1:"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="Tiger-Root:"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="ED2K:"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="操作(_A):"/>
 		<control caption="現在の検証情報を廃棄 (そして再検証)"/>
 		<control caption="ファイルが100%完全であるとみなして再検証する"/>
@@ -4225,7 +4280,7 @@
 		<control/>
 		<control caption="転送:"/>
 		<control caption="新しくダウンロード転送を開始:"/>
-	　　　<control caption="必要に応じて行う|割合が100%を超えた時|要求された場合のみ|決して行わない"/>
+		<control caption="必要に応じて行う|割合が100%を超えた時|要求された場合のみ|決して行わない"/>
 		<control/>
 		<control caption="総アップロード:"/>
 		<control caption="備考:"/>
@@ -4256,9 +4311,7 @@
 		<control/>
 		<control caption="トラッカーモード:"/>
 		<control caption="無効|指定|単一|複数|複数(固定)"/>
-		<control/>
 	</dialog>
-
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="ダウンロードグループプロパティ">
 		<control caption="名前(_N):"/>
@@ -4362,6 +4415,7 @@
 		<column from="Port" to="ポート"/>
 		<column from="Client" to="クライアント"/>
 		<column from="Last Seen" to="最終確認日"/>
+		<column from="Daily Uptime" to="平均活動時間"/>
 		<column from="Name" to="名前"/>
 		<column from="Description" to="説明"/>
 		<column from="CurUsers" to="ユーザー"/>
@@ -4419,9 +4473,14 @@
 		<column from="URL" to="URL"/>
 		<column from="Expires" to="期限"/>
 	</list>
+	<list name="CTorrentFileList">
+		<column from="Filename" to="ファイル名"/>
+		<column from="Size" to="サイズ"/>
+	</list>
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to="ファイル名"/>
 		<column from="Size" to="サイズ"/>
+		<column from="Type" to="種類"/>
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="ユーザー"/>
