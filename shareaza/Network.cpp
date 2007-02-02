@@ -249,9 +249,6 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	m_bTCPListeningReady = Handshakes.Listen();
 	m_bUDPListeningReady = Datagrams.Listen();
 
-	ASSERT(m_bTCPListeningReady);
-	ASSERT(m_bUDPListeningReady);
-
 	if ( !m_bTCPListeningReady || !m_bUDPListeningReady )
 	{
 		theApp.Message( MSG_DISPLAYED_ERROR, _T("The connection process is failed.") );
