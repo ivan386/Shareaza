@@ -446,8 +446,8 @@ void CSettings::Setup()
 
 CSettings::CSettings()
 {
-	TCHAR szPath[512];
-	GetModuleFileName( NULL, szPath, 512 );
+	TCHAR szPath[260];
+	GetModuleFileName( NULL, szPath, 260 );
 
 	// Set default program and user paths
 	General.Path = szPath;
