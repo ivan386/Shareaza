@@ -191,7 +191,10 @@ BOOL CEDNeighbour::OnConnected()
 	// Tags sent to the server
 
 	// User name
-	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket, 0 );
+	if ( Settings.eDonkey.LearnNewServers )
+		CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket, 0 );
+	else	// nolistsrvs in the nick say to the server that we don't want server list
+		CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 - 13 ) + _T(" - nolistsrvs") ).Write( pPacket, 0 );
 	// Version ('ed2k version')
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket, 0 );
 	// Port
@@ -357,7 +360,7 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	{
 		theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_ONLINE, (LPCTSTR)m_sAddress, nClientID );
 		SendSharedFiles();
-		Send( CEDPacket::New(  ED2K_C2S_GETSERVERLIST ) );
+		Send( CEDPacket::New( ED2K_C2S_GETSERVERLIST ) );
 		HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
 	}
 	else
@@ -400,16 +403,15 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 
 	CString strServerFlags;
 	strServerFlags.Format(
-        _T( "Server Flags: Zlib: %d Short Tags: %d Unicode: %d GetSources2: %d (64): %d  (128): %d" ), 
+		_T( "Server Flags -> Zlib: %d, Short Tags: %d, Unicode: %d, GetSources2: %d, Related Search: %d, 64 bit size: %d" ),
 		m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE,
-        m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS,
-        m_nTCPFlags & ED2K_SERVER_TCP_UNICODE,
-        m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2,
-        m_nTCPFlags & ED2K_SERVER_TCP_RELATEDSEARCH,
-        m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE );
+		m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS,
+		m_nTCPFlags & ED2K_SERVER_TCP_UNICODE,
+		m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2,
+		m_nTCPFlags & ED2K_SERVER_TCP_RELATEDSEARCH,
+		m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE );
 	theApp.Message( MSG_DEBUG, strServerFlags );
-	
-	
+
 	return TRUE;
 }
 
@@ -524,7 +526,6 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_UNICODE;
 		if ( m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2 )
 			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_GETSOURCES2;
-
 	}
 	
 	theApp.Message( MSG_SYSTEM, IDS_ED2K_SERVER_IDENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sServerName );
