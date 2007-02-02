@@ -1,7 +1,7 @@
 //
 // TorrentWizard.cpp
 //
-// Copyright (c) Shareaza Pty. Ltd., 2003.
+// Copyright (c) Shareaza Pty. Ltd., 2003-2007.
 // This file is part of TorrentAid Torrent Wizard (www.torrentaid.com).
 //
 // TorrentAid Torrent Wizard is free software; you can redistribute it
@@ -80,15 +80,17 @@ BOOL CTorrentWizardApp::InitInstance()
 
 void CTorrentWizardApp::InitEnvironment()
 {
-	TCHAR szPath[128];
-	DWORD dwSize;
-	
+	TCHAR szPath[260];
+	DWORD dwSize = 0;
+
 	m_nVersion[0] = m_nVersion[1] = m_nVersion[2] = m_nVersion[3] = 0;
-	
-	GetModuleFileName( NULL, szPath, 128 );
-	m_sPath	= szPath;
-	dwSize	= GetFileVersionInfoSize( szPath, &dwSize );
-	
+
+	if ( GetModuleFileName( NULL, szPath, 260 ) )
+	{
+		m_sPath	= szPath;
+		dwSize	= GetFileVersionInfoSize( szPath, &dwSize );
+	}
+
 	if ( dwSize > 0 )
 	{
 		BYTE* pBuffer = new BYTE[ dwSize ];
@@ -108,14 +110,14 @@ void CTorrentWizardApp::InitEnvironment()
 		
 		delete [] pBuffer;
 	}
-	
+
 	m_sVersion.Format( _T("%i.%i.%i.%i"),
 		m_nVersion[0], m_nVersion[1], m_nVersion[2], m_nVersion[3] );
-	
+
 	OSVERSIONINFO pVersion;
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionEx( &pVersion );
-	
+
 	m_bNT = ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT );
 }
 
