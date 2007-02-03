@@ -46,5 +46,11 @@ Name: "{group}\Torrent Wizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir:
 Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,TorrentAid}"
 
 [Registry]
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; ValueName: "TorrentCreatorPath"; ValueData: "{app}\TorrentWizard.exe"; Flags: deletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; ValueName: "TorrentCreatorPath"; ValueData: "{app}\TorrentWizard.exe"; Flags: deletevalue uninsdeletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; ValueName: "TorrentCreatorPath"; ValueData: "{app}\TorrentWizard.exe"; Flags: deletevalue uninsdeletevalue
 Root: HKCU; Subkey: "Software\TorrentAid\"; Flags: dontcreatekey uninsdeletekey
+
+[InstallDelete]
+Type: files; Name: "{userprograms}\TorrentAid.*"
+Type: filesandordirs; Name: "{group}"
+
