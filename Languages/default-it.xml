@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 48 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 49 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -3006,7 +3006,7 @@
 	<string id="16803" value="La cartella che vuoi condividere è già condivisa come parte di un'altra cartella condivisa:\n\n%s"/>
 	<string id="16804" value="Non hai inserito un nickname nel tuo profilo utente."/>
 	<string id="16805" value="Non hai inserito la località nel tuo profilo utente.\n\nÈ consigliato inserire una località in modo che gli altri utenti sanno dove sei. Si noti che inserire la località non rivela nessuna informazione compromettente.\n\nDesideri continuare senza inserire una località?"/>
-	<string id="16806" value="Hai indicato che vuoi impostare il port-forwarding sul tuo router NAT o firewall.\n\nConfigura la tua rete per impostare il forward delle porte TCP e UDP %i al tuo PC."/>
+	<string id="16806" value="Shareaza non ha potuto fare il port-forwarding sul tuo router NAT o firewall.\n\nConfigura la tua rete per fare il forward delle porte TCP e UDP %i al tuo PC."/>
 	<string id="16807" value="Inserisci il limite di banda che desideri impostare nella forma &quot;123 kb/s&quot; per kilobit al secondo, oppure &quot;123 KB/s&quot; per kilobyte al secondo."/>
 	<string id="16808" value="Non hai selezionato la tua età e il tuo sesso. Continuare comunque?"/>
 	<string id="16809" value="E&amp;sci"/>
