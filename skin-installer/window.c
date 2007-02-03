@@ -101,7 +101,7 @@ INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lPara
 				SetBkMode(lpDrawItemStruct->hDC, TRANSPARENT);
 				SetTextColor(lpDrawItemStruct->hDC, RGB(0, 0, 0));
 				GetDlgItemText(hwndDlg, (UINT)wParam, buf, 256);
-				DrawText(lpDrawItemStruct->hDC, buf, wcslen(buf), &lpDrawItemStruct->rcItem, DT_LEFT);
+				DrawText(lpDrawItemStruct->hDC, buf, (int)wcslen(buf), &lpDrawItemStruct->rcItem, DT_LEFT);
 			}
 			break;
 		case WM_COMMAND:
