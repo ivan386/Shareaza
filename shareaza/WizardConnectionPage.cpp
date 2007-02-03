@@ -314,7 +314,7 @@ void CWizardConnectionPage::OnRun()
 				theApp.m_pUPnPFinder->IsAsyncFindRunning() )
 		{
 			Sleep( 1000 );
-			if ( GetTickCount() - tStart > 30000 )
+			if ( GetTickCount() - tStart > 32000 )
 			{
 				theApp.m_pUPnPFinder->StopAsyncFind();
 				Settings.Connection.EnableUPnP = TS_FALSE;
