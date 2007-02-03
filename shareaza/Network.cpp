@@ -613,7 +613,7 @@ void CNetwork::OnRun()
 			// If the UPnP device host service hangs we can do nothing.
 			// In this situation only reboot helps since network thread stucks
 			// when we try to kill or reset the finder.
-			if ( GetTickCount() - m_tUPnP < 30000 )
+			if ( GetTickCount() - m_tUPnP < 32000 )
 				continue;
 			else
 			{
