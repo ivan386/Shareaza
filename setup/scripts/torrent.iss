@@ -4,12 +4,11 @@
 AppName=TorrentAid
 AppVerName=TorrentAid {#version}
 AppPublisher=Shareaza Development Team
-DefaultDirName={reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1,Inno Setup: App Path|{reg:HKLM\SOFTWARE\Shareaza,|{pf}\Shareaza}}
-DisableDirPage=yes
+DefaultDirName={pf}\TorrentAid
 DefaultGroupName=TorrentAid
 DisableProgramGroupPage=yes
-Compression=lzma/ultra
-InternalCompressLevel=Ultra
+Compression=lzma/max
+InternalCompressLevel=max
 SolidCompression=yes
 OutputBaseFilename=TorrentAid_{#version}
 OutputDir=setup\builds
@@ -19,9 +18,7 @@ VersionInfoVersion={#version}
 AppId=TorrentAid
 AppVersion={#version}
 DirExistsWarning=no
-DisableFinishedPage=yes
-DisableReadyPage=yes
-PrivilegesRequired=admin
+PrivilegesRequired=poweruser
 LanguageDetectionMethod=locale
 ShowLanguageDialog=auto
 UninstallDisplayIcon={app}\TorrentWizard.exe
@@ -33,15 +30,20 @@ LicenseFile=setup\license\default.rtf
 SourceDir=..\..
 
 ; links to website for software panel
-AppPublisherURL=http://www.torrentaid.com/default.htm
-AppSupportURL=http://www.torrentaid.com/tutorial.htm
-AppUpdatesURL=http://www.torrentaid.com/download.htm
+AppPublisherURL=http://www.shareaza.com/TorrentAid/
+AppSupportURL=http://www.shareaza.com/?id=support
+AppUpdatesURL=http://www.shareaza.com/TorrentAid/?id=download
 
 [Files]
+; Install unicows.dll on Win 9X
+Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
+
+; Main file
 Source: "setup\builds\TorrentWizard.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 [Icons]
-Name: "{userprograms}\TorrentAid"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "TorrentAid"
+Name: "{group}\Torrent Wizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "TorrentAid Torrent Wizard"
+Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,TorrentAid}"
 
 [Registry]
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; ValueName: "TorrentCreatorPath"; ValueData: "{app}\TorrentWizard.exe"; Flags: deletevalue
