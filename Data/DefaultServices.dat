@@ -6,7 +6,6 @@ X http://midian.jayl.de/bazooka.php
 X http://www.student.ru.nl/markjansen/g2/bazooka.php
 X http://reukiodo.dyndns.org/gwebcache/gwcii.php
 X http://hosting.urbanculture.co.nz/g2/bazooka.php
-X http://s15223749.onlinehome-server.info/g2/bazooka.php
 X http://s15223749.onlinehome-server.info/bazooka/bazooka.php
 U uhc:guruz.udp-host-cache.com:6666
 U uhc:secondary.udp-host-cache.com:9999
@@ -33,6 +32,7 @@ U ukhl:mylene.dynu.net:6603
 2 http://mirror.farrugiafamily.com/g2/bazooka.php
 2 http://g2.wow-toj.be/bazooka.php
 2 http://www.k33bz.com/g2/bazooka.php
+2 http://s15223749.onlinehome-server.info/g2/bazooka.php
 D http://www.gruk.org/server.met
 D http://www.de-site.de/ed2k/koeln.met
 D http://www.emule-server.de/server.met/min/server.met
