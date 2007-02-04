@@ -308,8 +308,6 @@ void CWizardConnectionPage::OnRun()
 		LoadString( strMessage, IDS_WIZARD_UPNP_SETUP );
 		m_wndStatus.SetWindowText( strMessage );
 
-		DWORD tStart = GetTickCount();
-
 		while ( theApp.m_pUPnPFinder && 
 				theApp.m_pUPnPFinder->IsAsyncFindRunning() )
 		{
