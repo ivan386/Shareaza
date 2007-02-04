@@ -3013,7 +3013,7 @@ right quote	&#147;
 	<string id="16803" value="Aplankas, kurį norite bendrinti, aplankų medyje yra žemiau kito, jau bendrinto, aplanko:\n\n%s"/>
 	<string id="16804" value="Jūs neįvedėte slapyvardžio savo profilyje."/>
 	<string id="16805" value="Jūs neįvedėte vietovės savo profilyje.\n\nSavo vietovės įvedimo tikslas - leisti kitiems vartotojams matyti, iš kur Jūs esate.\n\nĮsidėmėkite, kad įvedę vietovę Jūs neatskleisite jokios konfidencialios informacijos.\n\nAr tikrai norite tęsti, neįvedę savo vietovės?"/>
-	<string id="16806" value="Jūs nurodėte, jog norite paruošti prievado nukreipimą į savo NAT maršrutizatorių ar užkardą.\n\nSukonfigūruokite savo tinklą TCP ir UDP prievado %i nukreipimui į savo vietinį kompiuterį."/>
+	<string id="16806" value="Shareaza nesugebėjo nukreipti prievado į Jūsų NAT maršrutizatorių ar užkardą.\n\nSukonfigūruokite savo tinklą TCP ir UDP prievado %i nukreipimui į savo vietinį kompiuterį."/>
 	<string id="16807" value="Įveskite norimą greitaveikos limitą „123 kb/s“ pavidalu, jei spartą renkatės kilobitais per sekundę, arba „123 KB/s“, jei renkatės kilobaitais per sekundę."/>
 	<string id="16808" value="Jūs nenurodėte savo amžiaus ir lyties. Ar tikrai norite tęsti be šių duomenų?"/>
 	<string id="16809" value="&amp;Užverti"/>
