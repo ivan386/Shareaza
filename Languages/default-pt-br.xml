@@ -1480,7 +1480,7 @@
 			</style>
 		</styles>
 
-		<anchor id="Cabeçalho" width="32" height="172"/>
+		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 
 		<group id="1">
