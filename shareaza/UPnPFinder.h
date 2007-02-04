@@ -49,7 +49,21 @@ public:
 	void AddDevice(DevicePointer pDevice);
 	void RemoveDevice(CComBSTR bsUDN);
 	void OnSearchComplete();
-	bool IsAsyncFindRunning() const { return m_bAsyncFindRunning; }
+	inline bool IsAsyncFindRunning() 
+	{
+		if ( m_pDeviceFinder && m_bAsyncFindRunning && GetTickCount() - m_tLastEvent > 10000 )
+		{
+			m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
+			m_bAsyncFindRunning = false;
+		}
+		MSG msg;
+		while ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+		{
+			TranslateMessage( &msg );
+			DispatchMessage( &msg );
+		}
+		return m_bAsyncFindRunning;
+	}
 
 	// API functions
 	SC_HANDLE (WINAPI *m_pfnOpenSCManager)(LPCTSTR, LPCTSTR, DWORD);
@@ -96,7 +110,11 @@ private:
 	HRESULT GetVariantElement(SAFEARRAY* psa, LONG pos, VARIANT* pvar);
 	CString	GetLocalRoutableIP(ServicePointer pService);
 
-//Private variables
+// Public members
+public:
+	DWORD	m_tLastEvent;	// When the last event was received?
+
+// Private members
 private:
 	std::vector< DevicePointer >  m_pDevices;
 	std::vector< ServicePointer > m_pServices;

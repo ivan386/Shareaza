@@ -601,7 +601,6 @@ UINT CNetwork::ThreadStart(LPVOID pParam)
 
 void CNetwork::OnRun()
 {
-	DWORD m_tUPnP = GetTickCount();
 	while ( m_bEnabled )
 	{
 		Sleep( 50 );
@@ -609,17 +608,7 @@ void CNetwork::OnRun()
 	
 		if ( ! theApp.m_bLive ) continue;
 		if ( theApp.m_pUPnPFinder && theApp.m_pUPnPFinder->IsAsyncFindRunning() )
-		{
-			// If the UPnP device host service hangs we can do nothing.
-			// In this situation only reboot helps since network thread stucks
-			// when we try to kill or reset the finder.
-			if ( GetTickCount() - m_tUPnP < 32000 )
-				continue;
-			else
-			{
-				theApp.m_bUPnPPortsForwarded = TS_FALSE;
-			}
-		}
+			continue;
 
 		if ( m_bEnabled && m_pSection.Lock() )
 		{

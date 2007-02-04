@@ -42,6 +42,7 @@ CUPnPFinder::CUPnPFinder()
 	m_bPortIsFree( true ),
 	m_sLocalIP(),
 	m_sExternalIP(),
+	m_tLastEvent( GetTickCount() ),
 	m_pDeviceFinderCallback( new CDeviceFinderCallback( *this ) ),
 	m_pServiceCallback( new CServiceCallback( *this ) )
 {}
@@ -159,6 +160,7 @@ void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 		return theApp.Message( MSG_ERROR, L"CreateAsyncFind failed in UPnP finder." );
 
 	m_bAsyncFindRunning = true;
+	m_tLastEvent = GetTickCount();
 
 	if ( FAILED( m_pDeviceFinder->StartAsyncFind( m_nAsyncFindHandle ) ) )
 	{
@@ -223,6 +225,7 @@ void CUPnPFinder::AddDevice(DevicePointer device)
 	//We are going to add a device 
 	CComBSTR bsFriendlyName, bsUniqueName;
 
+	m_tLastEvent = GetTickCount();
 	HRESULT hr = device->get_FriendlyName( &bsFriendlyName );
 
 	if ( FAILED( hr ) )
@@ -674,6 +677,8 @@ HRESULT CUPnPFinder::InvokeAction(ServicePointer pService,
 {
 	if ( !pService || !action )
 		return E_POINTER;
+
+	m_tLastEvent = GetTickCount();
 	CString strInArgs;
 	strInArgs.SetString( pszInArgString ? pszInArgString : _T("") );
 
@@ -1013,6 +1018,7 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 			LPCWSTR pszStateVarName, VARIANT varValue)
 {
 	CComBSTR bsServiceId;
+	m_instance.m_tLastEvent = GetTickCount();
 
 	HRESULT hr = pService->get_Id( &bsServiceId );
 	if ( FAILED( hr ) )
