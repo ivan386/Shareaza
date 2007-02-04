@@ -718,7 +718,7 @@ void CEDClient::SendHello(BYTE nType)
 	pPacket->WriteLongLE( pServer ? pServer->m_nClientID : Network.m_pHost.sin_addr.S_un.S_addr );
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 	
-	pPacket->WriteLongLE( 5 );	// Number of Tags
+	pPacket->WriteLongLE( 6 );	// Number of Tags
 	
 	// 1 - Nickname
 	CString strNick = MyProfile.GetNick();
@@ -766,18 +766,18 @@ void CEDClient::SendHello(BYTE nType)
 
 	CEDTag( ED2K_CT_FEATUREVERSIONS, nVersion ).Write( pPacket );
 
-	// ED2K_CT_MOREFEATUREVERSIONS - basically for Kad and Large File support
+	// 5- ED2K_CT_MOREFEATUREVERSIONS - basically for Kad and Large File support
 	nVersion = ( ( FALSE << 5 ) |								// Multipacket
 				 ( Settings.eDonkey.LargeFileSupport << 4 ) );	// LargeFile support
 	CEDTag( ED2K_CT_MOREFEATUREVERSIONS, nVersion ).Write( pPacket );
 
-	// 5 - UDP Port
+	// 6 - UDP Port
 	CEDTag( ED2K_CT_UDPPORTS, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
 
 
 //Note: This isn't needed
 /*
-	// 6 - Port
+	// 7 - Port
 	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port )  ).Write( pPacket );
 */	
 	if ( pServer != NULL )
