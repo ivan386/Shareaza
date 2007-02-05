@@ -51,6 +51,12 @@ public:
 	BOOL	SetVolume(float nVolume);
 	BOOL	PaintStatusMicro(CDC& dc, CRect& rcBar);
 	void	UpdateScreenSaverStatus(BOOL bWindowActive);
+
+	CString	GetNowPlaying();
+
+	inline IMediaPlayer* GetPlayer() { return m_pPlayer; }
+	inline MediaState GetState() { return m_pPlayer != NULL ? m_nState : smsNull; }
+
 protected:
 	void	SetFullScreen(BOOL bFullScreen);
 	void	PaintSplash(CDC& dc, CRect& rcBar);
@@ -67,9 +73,9 @@ protected:
 	void	DisableScreenSaver();
 	void	EnableScreenSaver();
 	HRESULT PluginPlay(BSTR bsFileName);
-public:
-	inline IMediaPlayer* GetPlayer() { return m_pPlayer; }
-	inline MediaState GetState() { return m_pPlayer != NULL ? m_nState : smsNull; }
+
+private:
+	void UpdateNowPlaying(BOOL bEmpty = FALSE);
 
 // Attributes
 protected:
@@ -85,18 +91,18 @@ protected:
 	BOOL			m_bEnqueue;
 	BOOL			m_bStopFlag;
 	DWORD			m_tLastPlay;
-protected:
+
 	CString			m_sFile;
 	CMetaList		m_pMetadata;
 	DWORD			m_tMetadata;
-protected:
+
 	CMediaListCtrl	m_wndList;
 	CCoolBarCtrl	m_wndListBar;
 	CCoolBarCtrl	m_wndToolBar;
 	CSliderCtrl		m_wndPosition;
 	CSliderCtrl		m_wndSpeed;
 	CSliderCtrl		m_wndVolume;
-protected:
+
 	BOOL			m_bFullScreen;
 	DWORD			m_tBarTime;
 	CPoint			m_ptCursor;
@@ -104,7 +110,7 @@ protected:
 	BOOL			m_bListWasVisible;
 	int				m_nListSize;
 	BOOL			m_bStatusVisible;
-protected:
+
 	CRect			m_rcVideo;
 	CRect			m_rcStatus;
 	CBitmap			m_bmLogo;
@@ -112,14 +118,18 @@ protected:
 	CFont			m_pFontDefault;
 	CFont			m_pFontKey;
 	CFont			m_pFontValue;
-protected:
+
 	BOOL			m_bScreenSaverEnabled;
 	ULONG			m_nVidAC, m_nVidDC;
 	UINT			m_nPowerSchemeId, m_nScreenSaverTime;
 	GLOBAL_POWER_POLICY m_CurrentGP;	// Current Global Power Policy
 	POWER_POLICY	m_CurrentPP;		// Current Power Policy
+
 public:
 	static CMediaFrame* g_pMediaFrame;
+
+private:
+	CString			m_sNowPlaying;
 
 // Overrides
 public:

@@ -26,6 +26,7 @@
 #include "Plugins.h"
 #include "Library.h"
 #include "SharedFile.h"
+#include "Registry.h"
 
 #include "Skin.h"
 #include "ShellIcons.h"
@@ -126,7 +127,7 @@ CMediaFrame* CMediaFrame::g_pMediaFrame = NULL;
 CMediaFrame::CMediaFrame()
 {
 	if ( g_pMediaFrame == NULL ) g_pMediaFrame = this;
-	
+
 	m_pPlayer		= NULL;
 	m_nState		= smsNull;
 	m_bMute			= FALSE;
@@ -138,7 +139,7 @@ CMediaFrame::CMediaFrame()
 	m_bEnqueue		= FALSE;
 	m_tLastPlay		= 0;
 	m_tMetadata		= 0;
-	
+
 	m_bFullScreen		= FALSE;
 	m_bListWasVisible   = Settings.MediaPlayer.ListVisible;
 	m_bListVisible		= Settings.MediaPlayer.ListVisible;
@@ -152,10 +153,14 @@ CMediaFrame::CMediaFrame()
 	m_nScreenSaverTime = 0;
 	ZeroMemory( &m_CurrentGP, sizeof(GLOBAL_POWER_POLICY) );
 	ZeroMemory( &m_CurrentPP, sizeof(POWER_POLICY) );
+
+	UpdateNowPlaying(TRUE);
 }
 
 CMediaFrame::~CMediaFrame()
 {
+	UpdateNowPlaying(TRUE);
+
 	if ( g_pMediaFrame == this ) g_pMediaFrame = NULL;
 }
 
@@ -1171,6 +1176,8 @@ void CMediaFrame::OnMediaPlay()
 		if ( m_pPlayer != NULL ) m_pPlayer->Play();
 		UpdateState();
 	}
+
+	UpdateNowPlaying();
 }
 
 void CMediaFrame::OnUpdateMediaPause(CCmdUI* pCmdUI) 
@@ -1187,6 +1194,8 @@ void CMediaFrame::OnMediaPause()
 	if ( m_pPlayer ) m_pPlayer->Pause();
 	UpdateState();
 	if ( ! m_bScreenSaverEnabled ) EnableScreenSaver();
+
+	UpdateNowPlaying(TRUE);
 }
 
 void CMediaFrame::OnUpdateMediaStop(CCmdUI* pCmdUI) 
@@ -1200,6 +1209,8 @@ void CMediaFrame::OnMediaStop()
 	m_bStopFlag = TRUE;
 	m_wndList.Reset();
 	EnableScreenSaver();
+
+	UpdateNowPlaying(TRUE);
 }
 
 void CMediaFrame::OnUpdateMediaFullScreen(CCmdUI* pCmdUI) 
@@ -1890,4 +1901,22 @@ void CMediaFrame::UpdateScreenSaverStatus(BOOL bWindowActive)
 		if ( ! m_bScreenSaverEnabled ) 
 			EnableScreenSaver();
 	}
+}
+
+CString CMediaFrame::GetNowPlaying()
+{
+	return m_sNowPlaying;
+}
+
+void CMediaFrame::UpdateNowPlaying(BOOL bEmpty)
+{
+	if(bEmpty)
+		m_sNowPlaying = _T("");
+	else
+		m_sNowPlaying = m_sFile;	// ToDO: Remove path from filename
+
+	CRegistry pRegistry;
+	pRegistry.SetString( _T("MediaPlayer"), _T("NowPlaying"), m_sFile );
+
+	//Plugins.OnEvent(EVENT_CHANGEDSONG);	// ToDO: Maybe plug-ins can be alerted in some way
 }
