@@ -189,6 +189,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.eDonkey.MinServerFileSize, 1, 0, 50, _T(" MB") );
 	AddSetting( &Settings.eDonkey.TagNames, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.Endgame, 1, 0, 1 );
+	AddSetting( &Settings.eDonkey.LargeFileSupport, 1, 0, 1 );
 
 	AddSetting( &Settings.BitTorrent.DefaultTrackerPeriod, 60000, 5, 120, _T(" m") );
 	AddSetting( &Settings.BitTorrent.MaxTrackerRetry, 1, 1, 8 );
