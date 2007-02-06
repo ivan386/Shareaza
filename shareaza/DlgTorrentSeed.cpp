@@ -250,7 +250,7 @@ void CTorrentSeedDlg::OnDestroy()
 	if ( m_hThread != NULL )
 	{
 		m_bCancel = TRUE;
-		CHttpRequest::CloseThread( &m_hThread, _T("CTorrentSeedDlg") );
+		CloseThread( &m_hThread, _T("CTorrentSeedDlg") );
 		ASSERT( m_hThread == NULL );
 	}
 	

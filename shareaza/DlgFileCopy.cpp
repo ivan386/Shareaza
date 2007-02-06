@@ -227,24 +227,7 @@ void CFileCopyDlg::StopOperation()
 
 	m_bThread = FALSE;
 
-    int nAttempt = 100;
-	for ( ; nAttempt > 0 ; nAttempt-- )
-	{
-		DWORD nCode;
-
-		if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
-		if ( nCode != STILL_ACTIVE ) break;
-		Sleep( 250 );
-	}
-
-	if ( nAttempt == 0 )
-	{
-		TerminateThread( m_hThread, 0 );
-		theApp.Message( MSG_DEBUG, _T("WARNING: Terminating FileOp thread.") );
-		Sleep( 250 );
-	}
-
-	m_hThread = NULL;
+	CloseThread( &m_hThread, _T("CFileCopyDlg"), 25000 );
 
 	//m_wndCancel.SetWindowText( _T("&Close") );
 	CString sText;

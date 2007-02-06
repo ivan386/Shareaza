@@ -456,29 +456,10 @@ void CLibrary::StopThread()
 {
 	LibraryBuilder.StopThread();
 
-	if ( m_hThread != NULL )
-	{
-		m_bThread = FALSE;
-		m_pWakeup.SetEvent();
+	m_bThread = FALSE;
+	m_pWakeup.SetEvent();
 
-        int nAttempt = 10;
-		for ( ; nAttempt > 0 ; nAttempt-- )
-		{
-			DWORD nCode;
-			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
-			if ( nCode != STILL_ACTIVE ) break;
-			Sleep( 200 );
-		}
-
-		if ( nAttempt == 0 )
-		{
-			TerminateThread( m_hThread, 0 );
-			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CLibrary thread.") );
-			Sleep( 100 );
-		}
-
-		m_hThread = NULL;
-	}
+	CloseThread( &m_hThread, _T("CLibrary") );
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -195,23 +195,8 @@ void CLibraryBuilder::StopThread()
 
 	m_bThread = FALSE;
 
-    int nAttempt = 20;
-	for ( ; nAttempt > 0 ; nAttempt-- )
-	{
-		DWORD nCode;
-		if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
-		if ( nCode != STILL_ACTIVE ) break;
-		Sleep( 150 );
-	}
+	CloseThread( &m_hThread, _T("CLibraryBuilder") );
 
-	if ( nAttempt == 0 )
-	{
-		TerminateThread( m_hThread, 0 );
-		theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CLibraryBuilder thread.") );
-		Sleep( 100 );
-	}
-
-	m_hThread	= NULL;
 	m_tActive	= 0;
 }
 

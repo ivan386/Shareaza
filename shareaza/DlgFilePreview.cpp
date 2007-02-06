@@ -290,27 +290,9 @@ void CFilePreviewDlg::OnClose()
 
 void CFilePreviewDlg::OnDestroy() 
 {
-	if ( m_hThread != NULL )
-	{
-        int nAttempt = 100;
-		for ( ; nAttempt > 0 ; nAttempt-- )
-		{
-			DWORD nCode;
-			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
-			if ( nCode != STILL_ACTIVE ) break;
-			Sleep( 50 );
-		}
-		
-		if ( nAttempt == 0 )
-		{
-			TerminateThread( m_hThread, 0 );
-			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CFilePreviewDlg thread.") );
-			Sleep( 250 );
-		}
-	}
+	CloseThread( &m_hThread, _T("CFilePreviewDlg") );
 	
 	m_bThread	= FALSE;
-	m_hThread	= NULL;
 	
 	if ( m_pDownload != NULL )
 	{

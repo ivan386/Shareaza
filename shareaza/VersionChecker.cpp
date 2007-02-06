@@ -120,7 +120,7 @@ BOOL CVersionChecker::Start(HWND hWndNotify)
 void CVersionChecker::Stop()
 {
 	m_pRequest.Cancel();
-	CHttpRequest::CloseThread( &m_hThread, _T("CVersionChecker") );
+	CloseThread( &m_hThread, _T("CVersionChecker") );
 }
 
 //////////////////////////////////////////////////////////////////////

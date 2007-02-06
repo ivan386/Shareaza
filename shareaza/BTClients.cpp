@@ -169,7 +169,7 @@ void CBTClients::ShutdownRequests()
 		CBTTrackerRequest* pRequest = m_pRequests.RemoveHead();
 		HANDLE hThread = pRequest->m_hThread;
 		pLock.Unlock();
-		CHttpRequest::CloseThread( &hThread, _T("CBTTrackerRequest") );
+		CloseThread( &hThread, _T("CBTTrackerRequest") );
 		delete pRequest;
 	}
 }

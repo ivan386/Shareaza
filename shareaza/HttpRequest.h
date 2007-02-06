@@ -84,8 +84,4 @@ protected:
 	int		Run();
 	void	RunRequest();
 	void	RunResponse(HINTERNET hURL);
-
-// Utilities
-public:
-	static void CloseThread(HANDLE* phThread, LPCTSTR pszName);
 };

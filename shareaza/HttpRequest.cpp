@@ -267,30 +267,11 @@ void CHttpRequest::Cancel()
 	HINTERNET hInternet = m_hInternet;
 	m_hInternet = NULL;
 	m_pSection.Unlock();
-	
+
 	if ( hInternet != NULL ) InternetCloseHandle( hInternet );
-	
-	if ( m_hThread != NULL )
-	{
-		ASSERT( GetCurrentThread() != m_hThread );
-		
-        int nAttempt = 100;
-		for ( ; nAttempt > 0 ; nAttempt-- )
-		{
-			DWORD nCode = 0;
-			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
-			if ( nCode != STILL_ACTIVE ) break;
-			Sleep( 100 );
-		}
-		
-		if ( nAttempt == 0 )
-		{
-			TerminateThread( m_hThread, 0 );
-			Sleep( 100 );
-		}
-	}
-	
-	m_hThread = NULL;
+
+	CloseThread( &m_hThread, _T("CHttpRequest"), 10000 );
+
 	m_bCancel = FALSE;
 }
 
@@ -407,34 +388,4 @@ void CHttpRequest::RunResponse(HINTERNET hURL)
 	m_nStatusCode = 0;
 	HttpQueryInfo( hURL, HTTP_QUERY_STATUS_CODE|HTTP_QUERY_FLAG_NUMBER,
 		&m_nStatusCode, &nLength, 0 );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CHttpRequest clear
-
-void CHttpRequest::CloseThread(HANDLE* phThread, LPCTSTR pszName)
-{
-	if ( *phThread == NULL ) return;
-	
-    int nAttempt = 100;
-	for ( ; nAttempt > 0 ; nAttempt-- )
-	{
-		DWORD nCode;
-		if ( ! GetExitCodeThread( *phThread, &nCode ) ) break;
-		if ( nCode != STILL_ACTIVE ) break;
-		Sleep( 100 );
-	}
-	
-	if ( nAttempt == 0 )
-	{
-		TerminateThread( *phThread, 0 );
-		if ( pszName != NULL )
-		{
-			theApp.Message( MSG_DEBUG,
-				_T("WARNING: Terminating %s thread."), pszName );
-		}
-		Sleep( 100 );
-	}
-	
-	*phThread = NULL;
 }

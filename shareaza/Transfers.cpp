@@ -1,7 +1,7 @@
 //
 // Transfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -102,23 +102,7 @@ void CTransfers::StopThread()
 	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
 
-    int nAttempt = 40;
-	for ( ; nAttempt > 0 ; nAttempt-- )
-	{
-		DWORD nCode;
-		if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
-		if ( nCode != STILL_ACTIVE ) break;
-		Sleep( 100 );
-	}
-
-	if ( nAttempt == 0 )
-	{
-		TerminateThread( m_hThread, 0 );
-		theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CTransfers thread.") );
-		Sleep( 100 );
-	}
-
-	m_hThread = NULL;
+	CloseThread( &m_hThread, _T("CTransfers") );
 
 	Downloads.m_nTransfers	= 0;
 	Downloads.m_nBandwidth	= 0;

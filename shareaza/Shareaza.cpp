@@ -1411,3 +1411,21 @@ HBITMAP CreateMirroredBitmap(HBITMAP hbmOrig)
 	}
 	return hbm;
 }
+
+void CloseThread(HANDLE* phThread, LPCTSTR pszName, DWORD dwTimeout)
+{
+	if ( *phThread )
+	{
+		if ( WaitForSingleObject( *phThread, dwTimeout ) == WAIT_TIMEOUT )
+		{
+			TerminateThread( *phThread, 0 );
+			CloseHandle( *phThread );
+			if ( pszName )
+			{
+				theApp.Message( MSG_DEBUG,
+					_T("WARNING: Terminating %s thread."), pszName );
+			}
+		}
+		*phThread = NULL;
+	}
+}

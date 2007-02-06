@@ -215,39 +215,10 @@ void CHandshakes::Disconnect()
 		m_hSocket = INVALID_SOCKET;
 	}
 
-	// If this CHandshakes object has a thread handle
-	if ( m_hThread != NULL )
-	{
-		// Set the state of the wakeup event to signaled, releasing any threads that are waiting on it
-		m_pWakeup.SetEvent();
+	// Set the state of the wakeup event to signaled, releasing any threads that are waiting on it
+	m_pWakeup.SetEvent();
 
-		// Loop 10 times
-		int nAttempt = 10;
-        for ( ; nAttempt > 0 ; nAttempt-- )
-		{
-			// Stay in the loop while the thread is still active
-			DWORD nCode;
-			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;	// If the call fails, leave the loop
-			if ( nCode != STILL_ACTIVE ) break;						// If the thread is not still active, leave the loop
-
-			// Have this thread pause on this line of code and do nothing for a tenth of a second
-			Sleep( 100 );
-		}
-
-		// If we waited a whole second and checked 10 times for the thread to close but always it was still active
-		if ( nAttempt == 0 )
-		{
-			// Terminate it manually
-			TerminateThread( m_hThread, 0 );
-			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CHandshakes thread.") );
-
-			// Wait a tenth of a second
-			Sleep( 100 );
-		}
-
-		// The thread is gone now, set the handle to null
-		m_hThread = NULL;
-	}
+	CloseThread( &m_hThread, _T("CHandshakes") );
 
 	// Make sure only one thread can execute the remaining code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released
