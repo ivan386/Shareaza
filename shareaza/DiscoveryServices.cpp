@@ -181,7 +181,7 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 		{
 			CDiscoveryService* pItem = GetNext( pos );
 
-			if ( _tcsistr( pszAddress, pService->m_sAddress ) != NULL )
+			if ( _tcsistr( pItem->m_sAddress, pService->m_sAddress ) != NULL )
 			{
 				if ( pItem->m_nType != CDiscoveryService::dsBlocked )
 				{
