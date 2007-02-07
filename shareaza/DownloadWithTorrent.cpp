@@ -136,8 +136,8 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	{
 		// Actually, it's incorrect if we download from G2/ed2k sources
 		m_nTorrentDownloaded = m_nSize;
-		m_nTorrentUploaded = m_pTorrent.m_nTotalUpload;
 	}
+	m_nTorrentUploaded = m_pTorrent.m_nTotalUpload;
 }
 
 //////////////////////////////////////////////////////////////////////
