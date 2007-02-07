@@ -1555,7 +1555,7 @@ BOOL CMediaFrame::PrepareVis()
 BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 {
 	if ( ! Prepare() ) return FALSE;
-	
+
 	if ( m_sFile == pszFile )
 	{
 		m_pPlayer->Stop();
@@ -1623,7 +1623,7 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 		LoadString( strMessage, IDS_MEDIA_PARTIAL_RENDER );
 		m_pMetadata.Add( _T("Warning"), strMessage );
 	}
-	
+
 	return TRUE;
 }
 
@@ -1641,6 +1641,7 @@ HRESULT CMediaFrame::PluginPlay(BSTR bsFilePath)
 		Cleanup(); 
 		return EXCEPTION_CONTINUE_EXECUTION;
 	}
+
 	return hr;
 }
 
@@ -1775,7 +1776,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* /*pNotify*/, LRESULT* pResult)
 			if ( ! m_bRepeat && m_bLastNotPlayed && ! m_bLastMedia )
 			{
 				if ( m_nState != smsPlaying )
-                	bPlayIt = FALSE;
+					bPlayIt = FALSE;
 				else // New file was clicked, clear the flag
 					m_bLastNotPlayed = FALSE;
 			}
@@ -1831,6 +1832,8 @@ void CMediaFrame::OnNewCurrent(NMHDR* /*pNotify*/, LRESULT* pResult)
 		Cleanup();
 
 	*pResult = 0;
+
+	UpdateNowPlaying();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1913,10 +1916,28 @@ void CMediaFrame::UpdateNowPlaying(BOOL bEmpty)
 	if(bEmpty)
 		m_sNowPlaying = _T("");
 	else
-		m_sNowPlaying = m_sFile;	// ToDO: Remove path from filename
+	{
+		m_sNowPlaying = m_sFile;
+
+		// Strip path
+		LPCTSTR pszFileName = _tcsrchr( m_sNowPlaying, '\\' );
+		if ( pszFileName )
+		{
+			int nFileNameLen = static_cast< int >( _tcslen( pszFileName ) );
+			m_sNowPlaying = m_sNowPlaying.Right( nFileNameLen - 1 );
+		}
+
+		// Strip extension
+		LPCTSTR pszExt = _tcsrchr( m_sNowPlaying, '.' );
+		if ( pszExt )
+		{
+			int nFileNameLen = static_cast< int >( pszExt - m_sNowPlaying );
+			m_sNowPlaying = m_sNowPlaying.Left( nFileNameLen );
+		}
+	}
 
 	CRegistry pRegistry;
-	pRegistry.SetString( _T("MediaPlayer"), _T("NowPlaying"), m_sFile );
+	pRegistry.SetString( _T("MediaPlayer"), _T("NowPlaying"), m_sNowPlaying );
 
 	//Plugins.OnEvent(EVENT_CHANGEDSONG);	// ToDO: Maybe plug-ins can be alerted in some way
 }
