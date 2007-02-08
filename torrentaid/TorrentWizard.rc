@@ -18,7 +18,7 @@
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
 #ifdef _WIN32
 LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
-#pragma code_page(1252)
+#pragma code_page(932)
 #endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
@@ -340,8 +340,8 @@ IDR_MAINFRAME           ICON                    "res\\TorrentWizard.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,4
- PRODUCTVERSION 1,0,0,4
+ FILEVERSION 1,0,0,5
+ PRODUCTVERSION 1,0,0,5
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -359,12 +359,12 @@ BEGIN
             VALUE "Comments", "TorrentAid Torrent Wizard"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "TorrentAid Torrent Wizard"
-            VALUE "FileVersion", "1, 0, 0, 4"
+            VALUE "FileVersion", "1, 0, 0, 5"
             VALUE "InternalName", "TorrentWizard"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2007."
             VALUE "OriginalFilename", "TorrentWizard.exe"
             VALUE "ProductName", "TorrentAid Suite"
-            VALUE "ProductVersion", "1, 0, 0, 4"
+            VALUE "ProductVersion", "1, 0, 0, 5"
         END
     END
     BLOCK "VarFileInfo"

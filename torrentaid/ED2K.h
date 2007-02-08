@@ -45,6 +45,7 @@ public:
 	inline	void		Reset();
 	inline	void		Add(LPCVOID pData, DWORD nLength);
 	inline	void		Finish();
+
 };
 
 #define ED2K_BLOCK_SIZE		9500 * 1024
@@ -118,12 +119,20 @@ inline void CED2K::Finish()
 		m_oBlock.Finish();
 		operator =( m_oBlock );
 	}
+	else if ( m_nBlockBytes == 0 )
+	{
+		m_oBlock.Reset();
+		m_oBlock.Finish();
+		m_oComposite.Add( &m_oBlock.m_b, sizeof( m_oBlock.m_b ) );
+		m_oComposite.Finish();
+		operator =( m_oComposite );
+	}
 	else if ( m_nBlockCount > 1 || m_nBlockBytes )
 	{
 		if ( m_nBlockBytes > 0 )
 		{
 			m_oBlock.Finish();
-			m_oComposite.Add( &m_oBlock.m_b, sizeof m_oBlock.m_b );
+			m_oComposite.Add( &m_oBlock.m_b, sizeof( m_oBlock.m_b ) );
 			m_oBlock.Reset();
 			++m_nBlockCount;
 			m_nBlockBytes = 0;
