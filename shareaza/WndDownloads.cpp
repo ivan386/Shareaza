@@ -1265,15 +1265,6 @@ void CDownloadsWnd::OnDownloadsCopy()
 
 void CDownloadsWnd::OnUpdateDownloadsShare(CCmdUI* pCmdUI) 
 {
-#ifndef _DEBUG
-	if ( Settings.eDonkey.EnableToday )
-	{
-		pCmdUI->Enable( FALSE );
-		pCmdUI->SetCheck( TRUE );
-		return;
-	}
-#endif
-	
 	Prepare();
 	pCmdUI->Enable( m_bSelDownload && m_bSelShareConsistent );
 	pCmdUI->SetCheck( m_bSelShareState );
