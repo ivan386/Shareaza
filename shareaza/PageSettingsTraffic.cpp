@@ -104,6 +104,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Connection.DetectConnectionReset, 1, 0, 1 );
 	AddSetting( &Settings.Connection.ForceConnectedState, 1, 0, 1 );
 	AddSetting( &Settings.Connection.SlowConnect, 1, 0, 1 );
+	AddSetting( &Settings.Connection.EnableFirewallException, 1, 0, 1 );
 	AddSetting( &Settings.Connection.DeleteFirewallException, 1, 0, 1 );
 	AddSetting( &Settings.Connection.DeleteUPnPPorts, 1, 0, 1 );
 	AddSetting( &Settings.Connection.SkipWANPPPSetup, 1, 0, 1 );

@@ -197,7 +197,8 @@ public:
 		BOOL		DetectConnectionReset;		// Detect regaining of internet connection
 		BOOL		ForceConnectedState;		// Force WinINet into a connected state on startup. (Put IE into online mode)
 		BOOL		SlowConnect;				// Connect to one network at a time. Don't download while connecting. (XPsp2)
-		BOOL		DeleteFirewallException;	// Allow to keep Firewall exception on shutdown
+		BOOL		EnableFirewallException;	// Create Firewall exception at startup
+		BOOL		DeleteFirewallException;	// Delete Firewall exception on shutdown
 		BOOL		EnableUPnP;
 		BOOL		DeleteUPnPPorts;			// Delete forwarded ports on shutdown (UPnP)
 		BOOL		SkipWANPPPSetup;			// Skip WANPPPConn1 device setup (UPnP)

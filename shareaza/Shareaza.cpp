@@ -295,23 +295,25 @@ BOOL CShareazaApp::InitInstance()
 		Schedule.Load();
 	SplashStep( dlgSplash, L"Rich Documents" );
 		Emoticons.Load();
-	SplashStep( dlgSplash, L"Firewall/Router Setup" );
+
+	if ( Settings.Connection.EnableFirewallException && firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
 	{
+		SplashStep( dlgSplash, L"Windows Firewall Setup" );
 		CFirewall firewall;
-		if ( firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
-		{
-			// Add to firewall exception list if necessary
-			// and enable UPnP Framework if disabled
-			CString strBinaryPath;
-			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
-			strBinaryPath.ReleaseBuffer( MAX_PATH );
-			firewall.SetupService( NET_FW_SERVICE_UPNP );
-			firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
-		}
+
+		// Add to firewall exception list if necessary
+		// and enable UPnP Framework if disabled
+		CString strBinaryPath;
+		GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
+		strBinaryPath.ReleaseBuffer( MAX_PATH );
+		firewall.SetupService( NET_FW_SERVICE_UPNP );
+		firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
 	}
-	// We will run the UPnP discovery in the QuickStart Wizard
+
+	// If it is the first run we will run the UPnP discovery only in the QuickStart Wizard
 	if ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun )
 	{
+		SplashStep( dlgSplash, L"Firewall/Router Setup" );
 		try
 		{
 			m_pUPnPFinder.reset( new CUPnPFinder );
@@ -321,6 +323,7 @@ BOOL CShareazaApp::InitInstance()
 		catch ( CUPnPFinder::UPnPError& ) {}
 		catch ( CException* e ) { e->Delete(); }
 	}
+
 	SplashStep( dlgSplash, L"GUI" );
 		if ( m_ocmdInfo.m_bSilentTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
 		m_pMainWnd = new CMainWnd();
@@ -390,22 +393,24 @@ int CShareazaApp::ExitInstance()
 	Uploads.Clear( FALSE );
 	EDClients.Clear();
 	BTClients.Clear();
-	SplashStep( dlgSplash, L"Closing Firewall/Router Access", true );	
+
+	if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
 	{
+		SplashStep( dlgSplash, L"Closing Windows Firewall Access", true );	
 		CFirewall firewall;
-		if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
-		{
-			// Remove application from the firewall exception list
-			CString strBinaryPath;
-			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
-			strBinaryPath.ReleaseBuffer( MAX_PATH );
-			firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
-		}
+
+		// Remove application from the firewall exception list
+		CString strBinaryPath;
+		GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
+		strBinaryPath.ReleaseBuffer( MAX_PATH );
+		firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
 	}
+
 	if ( m_pUPnPFinder )
 	{
+		SplashStep( dlgSplash, L"Closing Firewall/Router Access", true );
 		m_pUPnPFinder->StopAsyncFind();
-	if ( Settings.Connection.DeleteUPnPPorts )
+		if ( Settings.Connection.DeleteUPnPPorts )
 			m_pUPnPFinder->DeletePorts();
 		m_pUPnPFinder.reset();
 	}

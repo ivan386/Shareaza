@@ -1,7 +1,7 @@
 //
 // UPnPFinder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -142,7 +142,7 @@ bool CUPnPFinder::AreServicesHealthy()
 	if ( !bResult )
 	{
 		Settings.Connection.EnableUPnP = FALSE;
-		theApp.Message( MSG_ERROR, L"UPnP Device Host service is not running, skipping UPnP setup." );
+		theApp.Message( MSG_DISPLAYED_ERROR, L"UPnP Device Host service is not running, skipping UPnP setup." );
 	}
 
 	return bResult;
