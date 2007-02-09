@@ -871,12 +871,15 @@ int CHostCacheList::LoadDefaultED2KServers()
 
 						CHostCacheHost* pServer = Add( &pAddress, (WORD)nPort );
 
-						if ( cType == 'P' )
-							pServer->m_bPriority = TRUE;
-						else
-							pServer->m_bPriority = FALSE;
+						if ( pServer )
+						{
+							if ( cType == 'P' )
+								pServer->m_bPriority = TRUE;
+							else
+								pServer->m_bPriority = FALSE;
 
-						nServers++;
+							nServers++;
+						}
 					}
 				}
 			}
