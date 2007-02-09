@@ -2558,6 +2558,90 @@
 					RelativePath="..\shareaza\TigerTree.cpp"
 					>
 				</File>
+				<Filter
+					Name="Policies"
+					>
+					<File
+						RelativePath="..\shareaza\Hashes\HashDescriptors.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
+								PrecompiledHeaderThrough="..\StdAfx.h"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
+								PrecompiledHeaderThrough="..\StdAfx.h"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
+								PrecompiledHeaderThrough="..\StdAfx.h"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
+								PrecompiledHeaderThrough="..\StdAfx.h"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath="..\shareaza\Hashes\HashStringConversion.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
+								PrecompiledHeaderThrough="..\StdAfx.h"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
+								PrecompiledHeaderThrough="..\StdAfx.h"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
+								PrecompiledHeaderThrough="..\StdAfx.h"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|x64"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
+								PrecompiledHeaderThrough="..\StdAfx.h"
+							/>
+						</FileConfiguration>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Pages"
@@ -4059,80 +4143,8 @@
 						>
 					</File>
 					<File
-						RelativePath="..\shareaza\Hashes\HashDescriptors.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Debug|x64"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|x64"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
 						RelativePath="..\shareaza\Hashes\HashDescriptors.hpp"
 						>
-					</File>
-					<File
-						RelativePath="..\shareaza\Hashes\HashStringConversion.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Debug|x64"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|x64"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
-							/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\shareaza\Hashes\HashStringConversion.hpp"
@@ -4983,7 +4995,7 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="Shareaza.rc"
+			Value="..\shareaza\Shareaza.rc"
 		/>
 	</Globals>
 </VisualStudioProject>

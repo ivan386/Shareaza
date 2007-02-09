@@ -2003,6 +2003,72 @@
 				<File
 					RelativePath="TigerTree.cpp">
 				</File>
+				<Filter
+					Name="Policies"
+					Filter="">
+					<File
+						RelativePath="Hashes\HashDescriptors.cpp">
+						<FileConfiguration
+							Name="Debug|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="3"
+								PrecompiledHeaderThrough="..\StdAfx.h"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="3"
+								PrecompiledHeaderThrough="..\StdAfx.h"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug x64|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="3"
+								PrecompiledHeaderThrough="..\StdAfx.h"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release x64|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="3"
+								PrecompiledHeaderThrough="..\StdAfx.h"/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath="Hashes\HashStringConversion.cpp">
+						<FileConfiguration
+							Name="Debug|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="3"
+								PrecompiledHeaderThrough="..\StdAfx.h"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="3"
+								PrecompiledHeaderThrough="..\StdAfx.h"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug x64|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="3"
+								PrecompiledHeaderThrough="..\StdAfx.h"/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release x64|Win32">
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="3"
+								PrecompiledHeaderThrough="..\StdAfx.h"/>
+						</FileConfiguration>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Pages"
@@ -3140,37 +3206,7 @@
 						RelativePath="Hashes\Hash.hpp">
 					</File>
 					<File
-						RelativePath="Hashes\HashDescriptors.cpp">
-						<FileConfiguration
-							Name="Debug|Win32">
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32">
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"/>
-						</FileConfiguration>
-					</File>
-					<File
 						RelativePath="Hashes\HashDescriptors.hpp">
-					</File>
-					<File
-						RelativePath="Hashes\HashStringConversion.cpp">
-						<FileConfiguration
-							Name="Debug|Win32">
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32">
-							<Tool
-								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="Hashes\HashStringConversion.hpp">
