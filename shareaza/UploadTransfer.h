@@ -87,9 +87,10 @@ public:
 	virtual BOOL	Promote();
 	virtual BOOL	OnRename(LPCTSTR pszSource, LPCTSTR pszTarget);
 public:
-	virtual float	GetProgress();
+	virtual float	GetProgress() const;
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
+	virtual DWORD	GetMaxSpeed() const;
 	virtual void	SetSpeedLimit(DWORD nLimit);
 protected:
 	virtual BOOL	OnRun();

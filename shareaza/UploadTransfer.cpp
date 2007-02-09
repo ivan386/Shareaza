@@ -170,7 +170,7 @@ BOOL CUploadTransfer::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 //////////////////////////////////////////////////////////////////////
 // CUploadTransfer statistics
 
-float CUploadTransfer::GetProgress()
+float CUploadTransfer::GetProgress() const
 {
 	if ( m_nState != upsUploading || m_nLength == 0 || m_nLength == SIZE_UNKNOWN ) return 0;
 	return (float)m_nPosition / (float)m_nLength;
@@ -181,6 +181,11 @@ DWORD CUploadTransfer::GetAverageSpeed()
 	if ( m_nState != upsUploading || m_nLength == 0 || m_nLength == SIZE_UNKNOWN ) return GetMeasuredSpeed();
 	DWORD nTime = ( GetTickCount() - m_tContent ) / 1000;
 	return nTime ? (DWORD)( m_nPosition / nTime ) : 0;
+}
+
+DWORD CUploadTransfer::GetMaxSpeed() const
+{
+	return m_nMaxRate;
 }
 
 DWORD CUploadTransfer::GetMeasuredSpeed()
