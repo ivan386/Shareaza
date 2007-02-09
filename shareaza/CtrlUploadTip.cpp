@@ -188,9 +188,10 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 
 	if ( pUpload->m_nProtocol != PROTOCOL_BT )
 	{
-		strSpeed.Format( _T("%s of %s"),
+		strSpeed.Format( _T("%s of %s (%s)"),
 			(LPCTSTR)Settings.SmartVolume( pUpload->GetMeasuredSpeed() * 8, FALSE, TRUE ),
-			(LPCTSTR)Settings.SmartVolume( pUpload->m_nBandwidth * 8, FALSE, TRUE ) );
+			(LPCTSTR)Settings.SmartVolume( pUpload->m_nBandwidth * 8, FALSE, TRUE ),
+			(LPCTSTR)Settings.SmartVolume( pUpload->GetMaxSpeed() * 8, FALSE, TRUE ) );
 	}
 	else
 	{
