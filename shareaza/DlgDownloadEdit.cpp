@@ -364,7 +364,7 @@ void CDownloadEditDlg::OnMergeAndVerify()
 				return;
 			}
 
-			// m_pDownload->m_pTask is set correctly elsewhere in the code
+			// m_pDownload->m_pTask is already set correctly in CDownloadTask::Construct
 			/* m_pDownload->SetNewTask( new CDownloadTask( m_pDownload, hSelectedFile ) ); */
 			new CDownloadTask( m_pDownload, hSelectedFile );
 
