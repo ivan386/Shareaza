@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -317,7 +317,7 @@ BOOL CDownload::IsTrying() const
 
 BOOL CDownload::IsShared() const
 {
-	return !IsPaused(TRUE) ? m_bShared || m_oBTH || ( Settings.eDonkey.EnableToday && m_oED2K ) : m_bShared;
+	return !IsPaused(TRUE) ? m_bShared || ( m_oBTH && ( IsSeeding() || IsStarted() ) ) || ( Settings.eDonkey.EnableToday && m_oED2K ) : m_bShared;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -503,6 +503,10 @@ void CDownload::OnTaskComplete(CDownloadTask* pTask)
 	{
 		OnPreviewRequestComplete( pTask );
 	}
+	else if ( pTask->m_nTask == CDownloadTask::dtaskMergeFile )
+	{
+		// Merge Complete.
+	}
 	else
 	{
 		OnMoved( pTask );
@@ -678,8 +682,19 @@ BOOL CDownload::Save(BOOL bFlush)
 	}
 	else
 	{
-		if ( m_sDiskName.IsEmpty() )
-			GenerateDiskName();
+		if ( m_sDiskName.GetLength() == 0 )	// <- Condition added (CyberBob); this is needed to solve the problem below...
+			GenerateDiskName();				//<- this is very very dangerous to cause Loss of Download by Over writing
+							// existing SD file by different file.
+							// Example of Situation cause trouble.
+							// having same file, assume file A, and B
+							// A have SHA1 hash of the file got though G1 search result.
+							// B have ED2K hash of the file Got through ED2K search result.
+							//
+							// once B get SHA1 hash from G2 network, it just over write SD file for File A, so the Downloaded Chunk
+							// Info gets messed up, plus leave SD file named same as File B, so it just leave the file which cause
+							// File error all the time, when Shareaza gets exit before the download complete(Complete download might
+							// have missing Chunk anyway... so the downloaded file will be broken most of times.)
+							// To solve this problem, need some FileExistance check is required.
 		if ( m_sSafeName.IsEmpty() )
 			m_sSafeName = CDownloadTask::SafeFilename( m_sDisplayName.Right( 64 ) );
 	}

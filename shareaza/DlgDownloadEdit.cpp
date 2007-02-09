@@ -1,7 +1,7 @@
 //
 // DlgDownloadEdit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Download.h"
 #include "Downloads.h"
+#include "DownloadTask.h"
 #include "Transfers.h"
 #include "DlgDownloadEdit.h"
 #include "DlgTorrentInfoSheet.h"
@@ -328,6 +329,16 @@ void CDownloadEditDlg::OnMergeAndVerify()
 		pLock.Unlock();
 		return;
 	}
+	if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsTasking() )
+	{
+		pLock.Unlock();
+		strMessage = _T("The selected download item currently has some Task attached, please wait and do it later.");
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		return;
+	}
+
+	pLock.Unlock();
+
 	// Select file
 	CString strExt( PathFindExtension( m_pDownload->m_sDisplayName ) );
 	if ( ! strExt.IsEmpty() ) strExt = strExt.Mid( 1 );
@@ -342,52 +353,29 @@ void CDownloadEditDlg::OnMergeAndVerify()
 		HANDLE hSelectedFile = CreateFile( dlgSelectFile.GetPathName(), GENERIC_READ,
             FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
 			FILE_ATTRIBUTE_NORMAL, NULL);
-		if ( hSelectedFile != INVALID_HANDLE_VALUE ) 
+		if ( hSelectedFile != INVALID_HANDLE_VALUE )
 		{
-			// Read missing file fragments from selected file
-			BYTE Buf [65536];
-			DWORD dwToRead, dwReaded;
-			for ( Fragments::List::const_iterator pFragment = oList.begin();
-				pFragment != oList.end(); ++pFragment )
+			pLock.Lock();
+			if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsTasking() )
 			{
-				QWORD qwLength = pFragment->end() - pFragment->begin();
-				QWORD qwOffset = pFragment->begin();
-				LONG nOffsetHigh = (LONG)( qwOffset >> 32 );
-				LONG nOffsetLow = (LONG)( qwOffset & 0xFFFFFFFF );
-				SetFilePointer( hSelectedFile, nOffsetLow, &nOffsetHigh, FILE_BEGIN );
-				if ( GetLastError() == NO_ERROR )
-				{
-					while ( ( dwToRead = (DWORD)min( qwLength, (QWORD)sizeof( Buf ) ) ) != 0 )
-					{
-						if ( ReadFile( hSelectedFile, Buf, dwToRead, &dwReaded, NULL ) && dwReaded != 0 )
-						{
-							// "Multithreading" :-)
-							MSG msg;
-							while ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
-							{
-								TranslateMessage( &msg );
-								DispatchMessage( &msg );
-							}
-							Sleep( 0 );
-								m_pDownload->SubmitData( qwOffset, Buf, (QWORD) dwReaded );
-								qwOffset += (QWORD) dwReaded;
-								qwLength -= (QWORD) dwReaded;
-						}
-						else
-							// File error or end of file. Not Fatal
-							break;
-					}
-				}
+				pLock.Unlock();
+				strMessage = _T("The selected download item currently has some Task attached, please wait and do it later.");
+				AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+				return;
 			}
-			CloseHandle( hSelectedFile );
-			m_pDownload->Resume();
+
+			// m_pDownload->m_pTask is set correctly elsewhere in the code
+			/* m_pDownload->SetNewTask( new CDownloadTask( m_pDownload, hSelectedFile ) ); */
+			new CDownloadTask( m_pDownload, hSelectedFile );
+
+			pLock.Unlock();
 		}
 		else
 		{
 			// File open error
 			LoadString( strFormat, IDS_DOWNLOAD_FILE_OPEN_ERROR );
 			strMessage.Format( strFormat, dlgSelectFile.GetPathName() );
-			AfxMessageBox( strMessage, MB_ICONINFORMATION );
+			AfxMessageBox( strMessage, MB_ICONERROR );
 		}
 	}
 

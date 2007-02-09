@@ -1,7 +1,7 @@
 //
 // DownloadTask.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,6 +63,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
 , m_pDownload(pDownload)
 , m_bSuccess(FALSE)
 , m_nTorrentFile(0)
+, m_hSelectedFile(INVALID_HANDLE_VALUE)
 {
 	Construct( pDownload );
 	SetThreadPriority( THREAD_PRIORITY_BELOW_NORMAL );
@@ -74,10 +75,23 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, const CString& strPreviewURL)
 , m_pDownload(pDownload)
 , m_bSuccess(FALSE)
 , m_nTorrentFile(0)
+, m_hSelectedFile(INVALID_HANDLE_VALUE)
 {
 	m_pRequest.SetURL( strPreviewURL );
 	m_pRequest.AddHeader( _T("Accept"), _T("image/jpeg") );
 	m_pRequest.LimitContentLength( Settings.Search.MaxPreviewLength );
+	Construct( pDownload );
+	SetThreadPriority( THREAD_PRIORITY_NORMAL );
+}
+
+CDownloadTask::CDownloadTask(CDownload* pDownload, HANDLE hSelectedFile)
+: m_nTask(dtaskMergeFile)
+, m_pEvent(NULL)
+, m_pDownload(pDownload)
+, m_bSuccess(FALSE)
+, m_nTorrentFile(0)
+, m_hSelectedFile(hSelectedFile)
+{
 	Construct( pDownload );
 	SetThreadPriority( THREAD_PRIORITY_NORMAL );
 }
@@ -139,6 +153,7 @@ CDownloadTask::~CDownloadTask()
 	CEvent* pEvent = m_pEvent;
 	Transfers.m_pSection.Unlock();
 	if ( pEvent != NULL ) pEvent->SetEvent();
+	if ( m_hSelectedFile != INVALID_HANDLE_VALUE ) CloseHandle( m_hSelectedFile );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -151,6 +166,8 @@ void CDownloadTask::Abort()
 	WaitForSingleObject( *pEvent, INFINITE );
 	Transfers.m_pSection.Lock();
 	delete pEvent;
+	if ( m_hSelectedFile != INVALID_HANDLE_VALUE ) CloseHandle( m_hSelectedFile );
+	m_hSelectedFile = INVALID_HANDLE_VALUE;
 }
 
 BOOL CDownloadTask::WasAborted()
@@ -197,6 +214,11 @@ int CDownloadTask::Run()
 		break;
 	case dtaskPreviewRequest:
 		m_pRequest.Execute( FALSE ); // without threading
+		break;
+	case dtaskCheckHash:
+		break;
+	case dtaskMergeFile:
+		RunMerge();
 		break;
 	}
 	
@@ -434,6 +456,88 @@ void CDownloadTask::RunCopyTorrent()
 	}
 	
 	CloseHandle( hSource );
+	m_bSuccess = TRUE;
+}
+
+void CDownloadTask::RunMerge()
+{
+	CString strMessage;
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	if ( ! Downloads.Check( m_pDownload ) ||
+		m_pDownload->IsCompleted() ||
+		m_pDownload->IsMoving() ||
+		! m_pDownload->PrepareFile() )
+	{
+		// Download almost completed
+		pLock.Unlock();
+		CloseHandle( m_hSelectedFile );
+		m_hSelectedFile = INVALID_HANDLE_VALUE;
+		m_bSuccess = TRUE;
+		return;
+	}
+
+	if ( m_pDownload->NeedTigerTree() &&
+		 m_pDownload->NeedHashset() &&
+		! m_pDownload->m_oBTH )
+	{
+		// No hashsets
+		pLock.Unlock();
+		LoadString( strMessage, IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		CloseHandle( m_hSelectedFile );
+		m_hSelectedFile = INVALID_HANDLE_VALUE;
+		m_bSuccess = TRUE;
+		return;
+	}
+	const Fragments::List oList( m_pDownload->GetEmptyFragmentList() );
+	if ( ! oList.size() )
+	{
+		// No available fragments
+		pLock.Unlock();
+		CloseHandle( m_hSelectedFile );
+		m_hSelectedFile = INVALID_HANDLE_VALUE;
+		m_bSuccess = TRUE;
+		return;
+	}
+	pLock.Unlock();
+
+	// Read missing file fragments from selected file
+	BYTE Buf [65536];
+	DWORD dwToRead, dwReaded;
+	for ( Fragments::List::const_iterator pFragment = oList.begin();
+		pFragment != oList.end(); ++pFragment )
+	{
+		QWORD qwLength = pFragment->end() - pFragment->begin();
+		QWORD qwOffset = pFragment->begin();
+		LONG nOffsetHigh = (LONG)( qwOffset >> 32 );
+		LONG nOffsetLow = (LONG)( qwOffset & 0xFFFFFFFF );
+		SetFilePointer( m_hSelectedFile, nOffsetLow, &nOffsetHigh, FILE_BEGIN );
+		if ( GetLastError() == NO_ERROR )
+		{
+			while ( ( dwToRead = (DWORD)min( qwLength, (QWORD)sizeof( Buf ) ) ) != 0 )
+			{
+				if ( ReadFile( m_hSelectedFile, Buf, dwToRead, &dwReaded, NULL ) && dwReaded != 0 )
+				{
+					pLock.Lock();
+					m_pDownload->SubmitData( qwOffset, Buf, (QWORD) dwReaded );
+					m_pDownload->RunValidation(FALSE);
+					qwOffset += (QWORD) dwReaded;
+					qwLength -= (QWORD) dwReaded;
+					pLock.Unlock();
+				}
+				else
+				{
+					// File error or end of file. Not Fatal
+					break;
+				}
+				Sleep( 100 );
+				if ( m_hSelectedFile == INVALID_HANDLE_VALUE ) return;		// Aborting
+			}
+		}
+	}
+
+	CloseHandle( m_hSelectedFile );
+	m_hSelectedFile = INVALID_HANDLE_VALUE;
 	m_bSuccess = TRUE;
 }
 

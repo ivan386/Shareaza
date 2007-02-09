@@ -1,7 +1,7 @@
 //
 // DownloadBase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,7 +55,8 @@ protected:
 
 // Operations
 public:
-	BOOL	        IsTasking() const { return m_pTask != NULL; }
+	BOOL			IsTasking() const { return m_pTask != NULL; }
+	BOOL			SetNewTask(CDownloadTask* pTask);
 	void			SetModified();
 protected:
 	virtual BOOL	IsCompleted() const = 0;
