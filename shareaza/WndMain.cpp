@@ -1576,7 +1576,7 @@ void CMainWnd::OnNetworkG2()
 		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
 		else
-			DiscoveryServices.Execute( FALSE, PROTOCOL_G2 );
+			DiscoveryServices.Execute( FALSE, PROTOCOL_G2, FALSE );
 	}
 }
 
@@ -1595,7 +1595,7 @@ void CMainWnd::OnNetworkG1()
 		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
 		else
-			DiscoveryServices.Execute( FALSE, PROTOCOL_G1 );
+			DiscoveryServices.Execute( FALSE, PROTOCOL_G1, FALSE );
 	}
 }
 

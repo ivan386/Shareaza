@@ -45,13 +45,14 @@ protected:
 	CDiscoveryService*	m_pWebCache;
 	int					m_nWebCache;
 	CDiscoveryService*	m_pSubmit;
-	DWORD				m_tQueried;					// Time a webcache was last queried
 	PROTOCOLID			m_nLastQueryProtocol;		// Protocol that was queried most recently
 	DWORD				m_tUpdated;					// Time a webcache was last updated
 	PROTOCOLID			m_nLastUpdateProtocol;		// Protocol that had a service update most recently
-	DWORD				m_tExecute;					// Time the Execute() function was last run
 	BOOL				m_bFirstTime;
 
+private:
+	DWORD				m_tExecute;					// Time the Execute() function was last run
+	DWORD				m_tQueried;					// Time a webcache/MET was last queried
 	DWORD				m_tMetQueried;				// Time a MET was last queried
 
 // Operations
@@ -67,6 +68,7 @@ public:
 	BOOL				CheckMinimumServices();
 	/*BOOL				QueryForHosts(PROTOCOLID nProtocol);*/	/* THIS FUNCTION IS NO LONGER NEEDED */
 	DWORD				MetQueried() const;
+	DWORD				LastExecute() const;
 	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
 	CDiscoveryService*	GetByAddress( IN_ADDR* pAddress, WORD nPort, int nSubType );
 	void				Clear();
@@ -74,7 +76,7 @@ public:
 	BOOL				Load();
 	BOOL				Save();
 	BOOL				Update();
-	BOOL				Execute(BOOL bDiscovery /* = FALSE */, PROTOCOLID nProtocol);
+	BOOL				Execute(BOOL bDiscovery, PROTOCOLID nProtocol, BOOL bForceDiscovery);
 	int					ExecuteBootstraps( int nCount, BOOL bUDP = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL );
 	void				Stop();
 	void				OnGnutellaAdded(IN_ADDR* pAddress, int nCount);

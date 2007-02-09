@@ -340,7 +340,7 @@ void CWizardConnectionPage::OnRun()
 		DiscoveryServices.CheckMinimumServices();
 
 		// It will check if it is needed inside the function
-		DiscoveryServices.Execute(TRUE, PROTOCOL_NULL);
+		for ( int i = 0; i < 3 && !DiscoveryServices.Execute(TRUE, PROTOCOL_NULL, FALSE); i++ );
 
 		nCurrentStep +=30;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );

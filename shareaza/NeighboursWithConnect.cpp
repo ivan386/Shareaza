@@ -1279,17 +1279,20 @@ void CNeighboursWithConnect::Maintain()
 				if ( nCount[ nProtocol ][ 0 ] == 0          || // We don't have any handshaking connections for this network, or
 					 tNow - m_tPresent[ nProtocol ] >= 30 )    // We've been connected to a hub for more than 30 seconds
 				{
+					DWORD tDiscoveryLastExecute = DiscoveryServices.LastExecute();
+
 					// We're looping for Gnutella2 right now
 					if ( nProtocol == PROTOCOL_G2 && Settings.Gnutella2.EnableToday )
 					{
 						// Execute the discovery services (do)
-						if ( pCache->GetOldest() == NULL ) DiscoveryServices.Execute( TRUE, PROTOCOL_G2 );
-
+						if ( pCache->GetOldest() == NULL && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 10 ) )
+							DiscoveryServices.Execute( TRUE, PROTOCOL_G2, TRUE );
 					} // We're looping for Gnutella right now
 					else if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella1.EnableToday )
 					{
 						// If the Gnutella host cache is empty (do), execute discovery services (do)
-						if ( pCache->GetOldest() == NULL ) DiscoveryServices.Execute( TRUE, PROTOCOL_G1 );
+						if ( pCache->GetOldest() == NULL && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 10 ) )
+							DiscoveryServices.Execute( TRUE, PROTOCOL_G1, TRUE );
 					}
 				}
 			}
