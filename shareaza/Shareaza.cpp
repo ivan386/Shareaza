@@ -359,12 +359,12 @@ BOOL CShareazaApp::InitInstance()
 	return TRUE;
 }
 
-void CShareazaApp::SplashStep(CSplashDlg*& dlg, LPCTSTR pszMessage)
+void CShareazaApp::SplashStep(CSplashDlg*& dlg, LPCTSTR pszMessage, bool bClosing)
 {
 	if ( m_ocmdInfo.m_bNoSplash ) return;
 	if ( dlg == NULL )
 		dlg = new CSplashDlg( 19, m_ocmdInfo.m_bSilentTray );
-	dlg->Step( pszMessage );
+	dlg->Step( pszMessage, bClosing );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -374,19 +374,24 @@ int CShareazaApp::ExitInstance()
 {
 	CWaitCursor pCursor;
 	
+	CSplashDlg* dlgSplash = NULL;
+	SplashStep( dlgSplash, L"Closing Server Processes", true );
 	DDEServer.Close();
 	IEProtocol.Close();
+	SplashStep( dlgSplash, L"Disconnecting", true );
 	VersionChecker.Stop();
 	DiscoveryServices.Stop();
 	Network.Disconnect();
+	SplashStep( dlgSplash, L"Stopping Library Tasks", true );
 	Library.StopThread();
-	
+	SplashStep( dlgSplash, L"Stopping Transfers", true );	
 	Transfers.StopThread();
 	Downloads.CloseTransfers();
+	SplashStep( dlgSplash, L"Clearing Clients", true );	
 	Uploads.Clear( FALSE );
 	EDClients.Clear();
 	BTClients.Clear();
-
+	SplashStep( dlgSplash, L"Closing Firewall/Router Access", true );	
 	{
 		CFirewall firewall;
 		if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
@@ -408,6 +413,7 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_bLive )
 	{
+		SplashStep( dlgSplash, L"Saving", true );
 		Downloads.Save();
 		DownloadGroups.Save();
 		Library.Save();
@@ -416,7 +422,7 @@ int CShareazaApp::ExitInstance()
 		UploadQueues.Save();
 		DiscoveryServices.Save();
 	}
-	
+	SplashStep( dlgSplash, L"Finalizing", true );
 	Downloads.Clear( TRUE );
 	Library.Clear();
 	Skin.Clear();
@@ -430,7 +436,8 @@ int CShareazaApp::ExitInstance()
 	if ( m_hGDI32 != NULL ) FreeLibrary( m_hGDI32 );
 
 	if ( m_hPowrProf != NULL ) FreeLibrary( m_hPowrProf );
-
+	if ( dlgSplash )
+		dlgSplash->Hide();
 	if ( m_pMutex != NULL ) CloseHandle( m_pMutex );
 
 	return CWinApp::ExitInstance();

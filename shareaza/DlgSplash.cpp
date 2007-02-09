@@ -111,10 +111,10 @@ BOOL CSplashDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CSplashDlg::Step(LPCTSTR pszText)
+void CSplashDlg::Step(LPCTSTR pszText, bool bClosing)
 {
 	m_nPos ++;
-	m_sState.Format( _T("Starting %s..."), pszText );
+	m_sState.Format( bClosing ? _T("%s...") : _T("Starting %s..."), pszText );
 
 	CClientDC dc( this );
 	DoPaint( &dc );
@@ -138,7 +138,7 @@ void CSplashDlg::Hide()
 		(*m_pfnAnimateWindow)( GetSafeHwnd(), 250, AW_HIDE|AW_BLEND );
 	}
 
-	DestroyWindow();
+	::DestroyWindow( m_hWnd );
 	delete this;
 }
 

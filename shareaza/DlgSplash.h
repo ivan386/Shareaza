@@ -49,7 +49,7 @@ protected:
 
 // Operations
 public:
-	void	Step(LPCTSTR pszText);
+	void	Step(LPCTSTR pszText, bool bClosing = false);
 	void	Topmost();
 	void	Hide();
 protected:
