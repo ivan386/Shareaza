@@ -296,10 +296,10 @@ BOOL CShareazaApp::InitInstance()
 	SplashStep( dlgSplash, L"Rich Documents" );
 		Emoticons.Load();
 
+	CFirewall firewall;
 	if ( Settings.Connection.EnableFirewallException && firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
 	{
 		SplashStep( dlgSplash, L"Windows Firewall Setup" );
-		CFirewall firewall;
 
 		// Add to firewall exception list if necessary
 		// and enable UPnP Framework if disabled
@@ -394,10 +394,10 @@ int CShareazaApp::ExitInstance()
 	EDClients.Clear();
 	BTClients.Clear();
 
+	CFirewall firewall;
 	if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
 	{
 		SplashStep( dlgSplash, L"Closing Windows Firewall Access", true );	
-		CFirewall firewall;
 
 		// Remove application from the firewall exception list
 		CString strBinaryPath;
