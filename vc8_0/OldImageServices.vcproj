@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="OldImageServices"
 	ProjectGUID="{B82D1BB4-48BA-4106-A4AA-C8572C733965}"
 	RootNamespace="OldImageServices"
 	>
 	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
 		<Platform
 			Name="x64"
 		/>
@@ -14,6 +17,195 @@
 	<ToolFiles>
 	</ToolFiles>
 	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			ConfigurationType="2"
+			UseOfATL="0"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				OutputDirectory="$(IntDir)"
+				HeaderFileName="$(IntDir)/$(InputName).h"
+				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
+				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Wall"
+				Optimization="0"
+				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib;../plugins/$(ProjectName);../plugins/$(ProjectName)/libjpeg;../plugins/$(ProjectName)/libpng"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;ZLIB_DLL;ZLIB_WINAPI;PNG_SETJMP_NOT_SUPPORTED;_CRT_SECURE_NO_DEPRECATE;PNG_USER_CONFIG"
+				StringPooling="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="1"
+				RuntimeTypeInfo="true"
+				ProgramDataBaseFileName="$(IntDir)/"
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+				DisableSpecificWarnings="4061;4100;4127;4255;4263;4264;4265;4365;4514;4571;4619;4625;4626;4668;4711;4820;4826"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				RegisterOutput="true"
+				AdditionalDependencies="Vfw32.lib  zlibwapi.lib"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\ImageServices.dll"
+				LinkIncremental="2"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins"
+				ModuleDefinitionFile="../plugins/$(ProjectName)/ImageServices.def"
+				GenerateDebugInformation="true"
+				ProfileGuidedDatabase=""
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			ConfigurationType="2"
+			UseOfATL="0"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				TargetEnvironment="3"
+				OutputDirectory="$(IntDir)"
+				HeaderFileName="$(IntDir)/$(InputName).h"
+				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
+				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="true"
+				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib;../plugins/$(ProjectName);../plugins/$(ProjectName)/libjpeg;../plugins/$(ProjectName)/libpng"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;ZLIB_DLL;ZLIB_WINAPI;PNG_SETJMP_NOT_SUPPORTED;_CRT_SECURE_NO_DEPRECATE;PNG_USER_CONFIG"
+				StringPooling="true"
+				RuntimeLibrary="0"
+				RuntimeTypeInfo="true"
+				ProgramDataBaseFileName="$(IntDir)/"
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="true"
+				DisableSpecificWarnings="4061;4100;4127;4255;4263;4264;4265;4365;4514;4571;4619;4625;4626;4668;4711;4820;4826"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				RegisterOutput="true"
+				AdditionalDependencies="Vfw32.lib  zlibwapi.lib"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\ImageServices.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins"
+				ModuleDefinitionFile="../plugins/$(ProjectName)/ImageServices.def"
+				OptimizeReferences="2"
+				ProfileGuidedDatabase=""
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
 		<Configuration
 			Name="Debug|x64"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
@@ -218,6 +410,22 @@
 				RelativePath="..\plugins\OldImageServices\ImageServices.cpp"
 				>
 				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|x64"
 					>
 					<Tool
@@ -246,6 +454,22 @@
 				RelativePath="..\plugins\OldImageServices\JPEGReader.cpp"
 				>
 				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|x64"
 					>
 					<Tool
@@ -265,6 +489,22 @@
 			<File
 				RelativePath="..\plugins\OldImageServices\PNGReader.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
 					>
@@ -286,6 +526,22 @@
 				RelativePath="..\shareaza\Shareaza.idl"
 				>
 				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						HeaderFileName="$(IntDir)/ShareazaOM.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						HeaderFileName="$(IntDir)/ShareazaOM.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|x64"
 					>
 					<Tool
@@ -305,6 +561,22 @@
 			<File
 				RelativePath="..\plugins\OldImageServices\StdAfx.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
 					>
@@ -437,6 +709,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcapimin.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -456,6 +744,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcapistd.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -477,6 +781,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jccoefct.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -496,6 +816,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jccolor.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -517,6 +853,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcdctmgr.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -536,6 +888,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jchuff.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -557,6 +925,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcinit.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -576,6 +960,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcmainct.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -597,6 +997,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcmarker.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -616,6 +1032,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcmaster.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -637,6 +1069,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcomapi.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -656,6 +1104,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcparam.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -677,6 +1141,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcphuff.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -696,6 +1176,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcprepct.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -717,6 +1213,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jcsample.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -736,6 +1248,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jctrans.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -757,6 +1285,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdapimin.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -776,6 +1320,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdapistd.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -797,6 +1357,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdatadst.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -816,6 +1392,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdatasrc.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -837,6 +1429,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdcoefct.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -856,6 +1464,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdcolor.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -877,6 +1501,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jddctmgr.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -896,6 +1536,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdhuff.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -917,6 +1573,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdinput.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -936,6 +1608,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdmainct.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -957,6 +1645,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdmarker.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -976,6 +1680,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdmaster.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -997,6 +1717,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdmerge.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1016,6 +1752,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdphuff.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1037,6 +1789,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdpostct.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1056,6 +1824,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdsample.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1077,6 +1861,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jdtrans.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1096,6 +1896,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jerror.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1117,6 +1933,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jfdctflt.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1136,6 +1968,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jfdctfst.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1157,6 +2005,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jfdctint.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1176,6 +2040,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jidctflt.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1197,6 +2077,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jidctfst.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1216,6 +2112,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jidctint.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1237,6 +2149,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jidctred.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1256,6 +2184,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jmemmgr.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1277,6 +2221,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jmemnobs.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1296,6 +2256,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jquant1.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1317,6 +2293,22 @@
 					RelativePath="..\plugins\OldImageServices\libjpeg\jquant2.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1336,6 +2328,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libjpeg\jutils.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1365,6 +2373,22 @@
 					RelativePath="..\plugins\OldImageServices\libpng\png.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1384,6 +2408,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libpng\pngerror.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1405,6 +2445,22 @@
 					RelativePath="..\plugins\OldImageServices\libpng\pngget.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1424,6 +2480,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libpng\pngmem.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1445,6 +2517,22 @@
 					RelativePath="..\plugins\OldImageServices\libpng\pngpread.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1464,6 +2552,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libpng\pngread.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1485,6 +2589,22 @@
 					RelativePath="..\plugins\OldImageServices\libpng\pngrio.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1504,6 +2624,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libpng\pngrtran.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1525,6 +2661,22 @@
 					RelativePath="..\plugins\OldImageServices\libpng\pngrutil.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1544,6 +2696,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libpng\pngset.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1565,6 +2733,22 @@
 					RelativePath="..\plugins\OldImageServices\libpng\pngtrans.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1584,6 +2768,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libpng\pngvcrd.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1605,6 +2805,22 @@
 					RelativePath="..\plugins\OldImageServices\libpng\pngwio.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1624,6 +2840,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libpng\pngwrite.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1645,6 +2877,22 @@
 					RelativePath="..\plugins\OldImageServices\libpng\pngwtran.c"
 					>
 					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
@@ -1664,6 +2912,22 @@
 				<File
 					RelativePath="..\plugins\OldImageServices\libpng\pngwutil.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
@@ -1699,8 +2963,116 @@
 			Name="Generated Files"
 			>
 			<File
+				RelativePath=".\debugx64\plugins\oldimageservices\ImageServices_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)2.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\releasex64\plugins\oldimageservices\ImageServices_i.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\releasewin32\plugins\oldimageservices\ImageServices_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
 					ExcludedFromBuild="true"
@@ -1713,17 +3085,44 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Debugx64\plugins\OldImageServices\ImageServices_i.c"
+				RelativePath=".\debugwin32\plugins\oldimageservices\ImageServices_i.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
 					ExcludedFromBuild="true"
