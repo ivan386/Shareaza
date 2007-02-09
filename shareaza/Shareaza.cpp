@@ -271,6 +271,30 @@ BOOL CShareazaApp::InitInstance()
 	if ( Settings.General.GUIMode != GUI_WINDOWED && Settings.General.GUIMode != GUI_TABBED && Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
 
+	SplashStep( dlgSplash, L"P2P URIs" );
+		CShareazaURL::Register( TRUE );
+	SplashStep( dlgSplash, L"Shell Icons" );
+		ShellIcons.Clear();
+	SplashStep( dlgSplash, L"Metadata Schemas" );
+		SchemaCache.Load();
+	SplashStep( dlgSplash, L"Vendor Data" );
+		VendorCache.Load();
+	SplashStep( dlgSplash, L"Profile" );
+		MyProfile.Load();
+	SplashStep( dlgSplash, L"Query Manager" );
+		QueryHashMaster.Create();
+	SplashStep( dlgSplash, L"Host Cache" );
+		HostCache.Load();
+	SplashStep( dlgSplash, L"Discovery Services" );
+		DiscoveryServices.Load();
+	SplashStep( dlgSplash, L"Security Services" );
+		Security.Load();
+		AdultFilter.Load();
+		MessageFilter.Load();
+	SplashStep( dlgSplash, L"Scheduler" );
+		Schedule.Load();
+	SplashStep( dlgSplash, L"Rich Documents" );
+		Emoticons.Load();
 	SplashStep( dlgSplash, L"Firewall/Router Setup" );
 	{
 		CFirewall firewall;
@@ -297,31 +321,6 @@ BOOL CShareazaApp::InitInstance()
 		catch ( CUPnPFinder::UPnPError& ) {}
 		catch ( CException* e ) { e->Delete(); }
 	}
-
-	SplashStep( dlgSplash, L"P2P URIs" );
-		CShareazaURL::Register( TRUE );
-	SplashStep( dlgSplash, L"Shell Icons" );
-		ShellIcons.Clear();
-	SplashStep( dlgSplash, L"Metadata Schemas" );
-		SchemaCache.Load();
-	SplashStep( dlgSplash, L"Vendor Data" );
-		VendorCache.Load();
-	SplashStep( dlgSplash, L"Profile" );
-		MyProfile.Load();
-	SplashStep( dlgSplash, L"Query Manager" );
-		QueryHashMaster.Create();
-	SplashStep( dlgSplash, L"Host Cache" );
-		HostCache.Load();
-	SplashStep( dlgSplash, L"Discovery Services" );
-		DiscoveryServices.Load();
-	SplashStep( dlgSplash, L"Security Services" );
-		Security.Load();
-		AdultFilter.Load();
-		MessageFilter.Load();
-	SplashStep( dlgSplash, L"Scheduler" );
-		Schedule.Load();
-	SplashStep( dlgSplash, L"Rich Documents" );
-		Emoticons.Load();
 	SplashStep( dlgSplash, L"GUI" );
 		if ( m_ocmdInfo.m_bSilentTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
 		m_pMainWnd = new CMainWnd();
