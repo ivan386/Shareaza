@@ -72,7 +72,8 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol) :
 	m_tRotateTime( 0 ),
 	m_tAverageTime( 0 ),
 	m_nAveragePos( 0 ),
-	m_tRatingTime( 0 )
+	m_tRatingTime( 0 ),
+	m_nMaxRate( 0 )
 {
 	ZeroMemory( m_nAverageRate, sizeof( m_nAverageRate ) );
 
@@ -250,6 +251,7 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 	if ( m_nState != upsUploading || m_nLength == 0 || m_nLength == SIZE_UNKNOWN ) return;
 
 	DWORD nSpeed = GetMeasuredSpeed();
+	m_nMaxRate = max( m_nMaxRate, nSpeed );
 
 	if ( Settings.Live.BandwidthScale < 100 )
 	{
@@ -291,7 +293,11 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 		DWORD nOld = m_nBandwidth;	// Save
 		ZeroMemory( m_nAverageRate, sizeof( m_nAverageRate ) );
 
-		m_nBandwidth = m_nBandwidth + m_pQueue->GetAvailableBandwidth() / ( m_pQueue->GetTransferCount() + 1 );
+		DWORD nIncrease = m_pQueue->GetAvailableBandwidth() / ( m_pQueue->GetTransferCount() + 1 );
+		if ( nIncrease + m_nBandwidth < m_nMaxRate )
+			m_nBandwidth += nIncrease;
+		else
+			m_nBandwidth = m_nMaxRate;
 
 		theApp.Message( MSG_DEBUG, _T("Changing upload throttle on %s from %s to %s"),
 			(LPCTSTR)m_sAddress,

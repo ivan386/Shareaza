@@ -77,7 +77,8 @@ protected:
 	DWORD			m_tAverageTime;
 	int				m_nAveragePos;
 	DWORD			m_nAverageRate[ULA_SLOTS];
-	DWORD			m_tRatingTime;		//	When rating was last calculated
+	DWORD			m_nMaxRate;			// Maximum average speed we got
+	DWORD			m_tRatingTime;		// When rating was last calculated
 	
 // Operations
 public:
