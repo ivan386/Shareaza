@@ -286,6 +286,18 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 			(LPCTSTR)Settings.SmartVolume( nOld * 8, FALSE, TRUE ),
 			(LPCTSTR)Settings.SmartVolume( m_nBandwidth * 8, FALSE, TRUE ) );
 	}
+	else if ( m_pQueue->GetAvailableBandwidth() )
+	{
+		DWORD nOld = m_nBandwidth;	// Save
+		ZeroMemory( m_nAverageRate, sizeof( m_nAverageRate ) );
+
+		m_nBandwidth = m_nBandwidth + m_pQueue->GetAvailableBandwidth() / ( m_pQueue->GetTransferCount() + 1 );
+
+		theApp.Message( MSG_DEBUG, _T("Changing upload throttle on %s from %s to %s"),
+			(LPCTSTR)m_sAddress,
+			(LPCTSTR)Settings.SmartVolume( nOld * 8, FALSE, TRUE ),
+			(LPCTSTR)Settings.SmartVolume( m_nBandwidth * 8, FALSE, TRUE ) );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
