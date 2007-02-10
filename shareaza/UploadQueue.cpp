@@ -393,7 +393,7 @@ DWORD CUploadQueue::GetAvailableBandwidth() const
 	for ( POSITION pos = m_pActive.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransfer* pActive = m_pActive.GetNext( pos );
-		// If host is set as "Next", don't count allocated bandwidth
+		// If newly queued host is set as "Next", don't count allocated bandwidth
 		// Max speed in such case is zero.
 		nUsed += pActive->GetMaxSpeed();
 	}
@@ -446,7 +446,7 @@ void CUploadQueue::RescaleBandwidth()
 	for ( POSITION pos = m_pActive.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransfer* pActive = m_pActive.GetNext( pos );
-		// If host is set as "Next", don't count allocated bandwidth
+		// If newly queued host is set as "Next", don't count allocated bandwidth
 		// Max speed in such case is zero.
 		nAllocated += pActive->GetMaxSpeed();
 	}	
