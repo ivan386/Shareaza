@@ -246,11 +246,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	m_nProgressSteps = 0;
 
 	// Load default ed2k server list (if necessary)
-	if ( !HostCache.eDonkey.EnoughED2KServers() )
-	{
-		m_bUpdateDonkeyServers = true;
-		m_nProgressSteps += 30;
-	}
+	m_bUpdateDonkeyServers = true;
+	m_nProgressSteps += 30;
 
 	// Update the G1, G2 and eDonkey host cache (if necessary)
 	m_bQueryDiscoveries = true;
@@ -327,6 +324,7 @@ void CWizardConnectionPage::OnRun()
 	{
 		LoadString( strMessage, IDS_WIZARD_ED2K );
 		m_wndStatus.SetWindowText( strMessage );
+
 		HostCache.eDonkey.CheckMinimumED2KServers();
 		nCurrentStep +=30;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
@@ -338,11 +336,20 @@ void CWizardConnectionPage::OnRun()
 		m_wndStatus.SetWindowText( strMessage );
 
 		DiscoveryServices.CheckMinimumServices();
+		nCurrentStep +=15;
+		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 
-		// It will check if it is needed inside the function
-		for ( int i = 0; i < 3 && !DiscoveryServices.Execute(TRUE, PROTOCOL_NULL, FALSE); i++ );
+		BOOL bConnected = Network.IsConnected();
+		if ( bConnected || Network.Connect(TRUE) )
+		{
+			// It will check if it is needed inside the function
+			for ( int i = 0; i < 2 && !DiscoveryServices.Execute(TRUE, PROTOCOL_NULL, FALSE); i++ )
+				Sleep(5000);
 
-		nCurrentStep +=30;
+			if ( !bConnected )
+				Network.Disconnect();
+		}
+		nCurrentStep +=15;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 	}
 

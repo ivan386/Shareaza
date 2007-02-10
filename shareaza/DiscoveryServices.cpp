@@ -707,7 +707,7 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, BOOL bFo
 	if ( bDiscovery ) // If this is a user-initiated manual query, or AutoStart with Cache empty
 	{
 		if ( m_hInternet ) return FALSE;
-		if ( m_tExecute != 0 && tNow - m_tExecute < 10 ) return FALSE;
+		if ( m_tExecute != 0 && tNow - m_tExecute < 5 ) return FALSE;
 		if ( m_tQueried != 0 && tNow - m_tQueried < 60 && !bForceDiscovery ) return FALSE;
 		if ( bForceDiscovery && nProtocol == PROTOCOL_NULL ) return FALSE;
 
@@ -742,6 +742,8 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, BOOL bFo
 			if ( RequestRandomService( PROTOCOL_ED2K ) )
 				return TRUE;
 		}
+		else
+			return TRUE;
 	}
 	else
 	{
