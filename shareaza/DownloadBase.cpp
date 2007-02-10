@@ -56,7 +56,9 @@ CDownloadBase::~CDownloadBase()
 {
 }
 
-CDownloadBase::SetNewTask(CDownloadTask* pTask)
+//////////////////////////////////////////////////////////////////////
+
+BOOL CDownloadBase::SetNewTask(CDownloadTask* pTask)
 {
 	if ( IsTasking() || pTask == NULL ) return FALSE;
 
