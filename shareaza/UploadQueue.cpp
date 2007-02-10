@@ -393,7 +393,9 @@ DWORD CUploadQueue::GetAvailableBandwidth() const
 	for ( POSITION pos = m_pActive.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransfer* pActive = m_pActive.GetNext( pos );
-		nUsed += pActive->m_nBandwidth;
+		// If host is set as "Next", don't count allocated bandwidth
+		// Max speed in such case is zero.
+		nUsed += pActive->GetMaxSpeed();
 	}
 	
 	if ( nUsed >= nTotal ) return 0;
@@ -444,15 +446,17 @@ void CUploadQueue::RescaleBandwidth()
 	for ( POSITION pos = m_pActive.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransfer* pActive = m_pActive.GetNext( pos );
-		nAllocated += pActive->m_nBandwidth;
-	}
+		// If host is set as "Next", don't count allocated bandwidth
+		// Max speed in such case is zero.
+		nAllocated += pActive->GetMaxSpeed();
+	}	
 	
 	double nScale = (double)nTotal / (double)nAllocated;
 	
 	for ( POSITION pos = m_pActive.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransfer* pActive = m_pActive.GetNext( pos );
-		pActive->SetSpeedLimit( (DWORD)( nScale * pActive->m_nBandwidth ) );
+		pActive->SetSpeedLimit( (DWORD)( nScale * pActive->GetMaxSpeed() ) );
 	}
 }
 
