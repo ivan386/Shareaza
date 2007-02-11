@@ -169,22 +169,22 @@ void CPrivateChatFrame::OnProfileReceived()
 
 void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 {
-	DWORD nIdle = (DWORD)time( NULL ) - theApp.m_dwLastInput;
-
-	if ( nIdle > Settings.Community.AwayMessageIdleTime )
-	{
-		CString strTime;
-		if ( nIdle > 86400 )
-			strTime.Format( _T("%i:%.2i:%.2i:%.2i"), nIdle / 86400, ( nIdle / 3600 ) % 24, ( nIdle / 60 ) % 60, nIdle % 60 );
-		else
-			strTime.Format( _T("%i:%.2i:%.2i"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
-
-		m_pSession->SendAwayMessage( (LPCTSTR)strTime );
-	}
-
 	// Check message spam filter (if enabled)
 	if ( ! MessageFilter.IsFiltered( pszText ) )
 	{
+		DWORD nIdle = (DWORD)time( NULL ) - theApp.m_dwLastInput;
+
+		if ( nIdle > Settings.Community.AwayMessageIdleTime )
+		{
+			CString strTime;
+			if ( nIdle > 86400 )
+				strTime.Format( _T("%i:%.2i:%.2i:%.2i"), nIdle / 86400, ( nIdle / 3600 ) % 24, ( nIdle / 60 ) % 60, nIdle % 60 );
+			else
+				strTime.Format( _T("%i:%.2i:%.2i"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
+
+			m_pSession->SendAwayMessage( (LPCTSTR)strTime );
+		}
+
 		// Adult filter (if enabled)
 		if ( AdultFilter.IsChatFiltered( pszText ) ) AdultFilter.Censor( (TCHAR*)pszText );
 

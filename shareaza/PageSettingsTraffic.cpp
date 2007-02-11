@@ -96,7 +96,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.General.MinTransfersRest, 1, 1, 100, _T(" ms") );
 
 	AddSetting( &Settings.Community.ChatFilterED2K, 1, 0, 1 );
-	AddSetting( &Settings.Community.AwayMessageIdleTime, 60, 10, 60, _T(" m") );
+	AddSetting( &Settings.Community.AwayMessageIdleTime, 60, 5, 60, _T(" m") );
 
 	AddSetting( &Settings.Connection.IgnoreOwnIP, 1, 0, 1 );
 	AddSetting( &Settings.Connection.SendBuffer, 1, 64, 10240 );
