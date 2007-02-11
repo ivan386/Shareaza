@@ -180,7 +180,6 @@ void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 			strTime.Format( _T("%i:%.2i:%.2i"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
 
 		m_pSession->SendAwayMessage( (LPCTSTR)strTime );
-		return;
 	}
 
 	// Check message spam filter (if enabled)
