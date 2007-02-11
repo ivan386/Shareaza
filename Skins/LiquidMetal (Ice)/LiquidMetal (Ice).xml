@@ -569,8 +569,8 @@
 <!-- This will skin the tabs in BRAZILIAN (i.e. "Home" "Library" "Media" "Search" etc.) -->
   <windowSkin>
 
-     <image type="image"       language="br"   path="NavBar (BR).bmp"/>
-     <image type="watermark"   language="br"   path="NavBarBG.bmp"/>
+     <image type="image"       language="pt-br"   path="NavBar (BR).bmp"/>
+     <image type="watermark"   language="pt-br"   path="NavBarBG.bmp"/>
 
      <target window="CMainTabBarCtrl"/>
      <target window="CmainTabBarCtrl.Windowed"/>
@@ -620,8 +620,8 @@
 
    <windowSkin>
 
-     <image type="image"       language="br"   path="NavBar (BR).bmp"/>
-     <image type="watermark"   language="br"   path="NavBarBG.bmp"/>
+     <image type="image"       language="pt-br"   path="NavBar (BR).bmp"/>
+     <image type="watermark"   language="pt-br"   path="NavBarBG.bmp"/>
 
       <target window="CMainTabBarCtrl.Basic"/>
 
