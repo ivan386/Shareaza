@@ -739,8 +739,8 @@
   </windowSkin>
 
  <windowSkin>
-  <image type="image" language="br" path="pt.bmp" /> 
-  <image type="watermark" language="br" path="navbarback.bmp" /> 
+  <image type="image" language="pt-br" path="pt.bmp" /> 
+  <image type="watermark" language="pt-br" path="navbarback.bmp" /> 
   <target window="CMainTabBarCtrl" /> 
   <target window="CMainTabBarCtrl.Windowed" /> 
  <parts>
@@ -780,8 +780,8 @@
   </anchors>
   </windowSkin>
  <windowSkin>
-  <image type="image" language="br" path="pt.bmp" /> 
-  <image type="watermark" language="br" path="navbarback.bmp" /> 
+  <image type="image" language="pt-br" path="pt.bmp" /> 
+  <image type="watermark" language="pt-br" path="navbarback.bmp" /> 
   <target window="CMainTabBarCtrl.Basic" /> 
  <parts>
   <part name="_ID_TAB_HOME.Up" rect="0,0,91,29" /> 
