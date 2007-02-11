@@ -1020,8 +1020,8 @@
       <!-- end navbar language for nl -->
       <!-- navbar language for pt-br -->
       <windowSkin> 
-        <image type="image" language="br" path="sos_navbar_pt-br.bmp"/>
-        <image type="watermark" language="br" path="sos_navbarbg.bmp"/>
+        <image type="image" language="pt-br" path="sos_navbar_pt-br.bmp"/>
+        <image type="watermark" language="pt-br" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl"/>
         <target window="CMainTabBarCtrl.Windowed"/>
         <parts> 
@@ -1061,8 +1061,8 @@
         </anchors>
       </windowSkin>
       <windowSkin> 
-        <image type="image" language="br" path="sos_navbar_pt-br.bmp"/>
-        <image type="watermark" language="br" path="sos_navbarbg.bmp"/>
+        <image type="image" language="pt-br" path="sos_navbar_pt-br.bmp"/>
+        <image type="watermark" language="pt-br" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl.Basic"/>
         <parts> 
           <part name="_ID_TAB_HOME.Up"	 rect="0,0,66,29"/>
