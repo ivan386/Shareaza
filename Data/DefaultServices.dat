@@ -16,7 +16,6 @@ U uhc:g6.6dns.org:1337
 U uhc:yin.cloud.bishopston.net:33558
 U uhc:yang.cloud.bishopston.net:33558
 U ukhl:mylene.dynu.net:6602
-U ukhl:mylene.dynu.net:6603
 2 http://gwc2.wodi.org/skulls.php
 2 http://bazooka1.servehttp.com/g2/bazooka.php
 2 http://cache2.bazookanetworks.com/g2/bazooka.php
@@ -40,7 +39,7 @@ D http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met
 D http://www.esel-paradies.de/server/server.met
 #
 # Keep these comments at the end
-# Last updated 10th - January, 2007
+# Last updated 11th - February, 2007
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
