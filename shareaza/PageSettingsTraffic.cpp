@@ -87,6 +87,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 
 	AddSetting( &Settings.General.Debug, 1, 0, 1 );
 	AddSetting( &Settings.General.DebugLog, 1, 0, 1 );
+	AddSetting( &Settings.General.DebugUPnP, 1, 0, 1 );
 	AddSetting( &Settings.General.MaxDebugLogSize, 1024*1024, 0, 100, _T(" MB") );
 	AddSetting( &Settings.General.UpdateCheck, 1, 0, 1 );
 	AddSetting( &Settings.General.DiskSpaceWarning, 1, 5, 2000 , _T(" M") );
@@ -95,6 +96,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.General.MinTransfersRest, 1, 1, 100, _T(" ms") );
 
 	AddSetting( &Settings.Community.ChatFilterED2K, 1, 0, 1 );
+	AddSetting( &Settings.Community.AwayMessageIdleTime, 60, 10, 60, _T(" m") );
 
 	AddSetting( &Settings.Connection.IgnoreOwnIP, 1, 0, 1 );
 	AddSetting( &Settings.Connection.SendBuffer, 1, 64, 10240 );

@@ -1,7 +1,7 @@
 //
 // ChatSession.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,6 +74,7 @@ public:
 	void		Print(LPCTSTR pszString);
 	void		Send(CG2Packet* pPacket, BOOL bRelease = TRUE);
 	BOOL		SendPrivateMessage(BOOL bAction, LPCTSTR pszText);
+	BOOL		SendAwayMessage(LPCTSTR pszText);
 	void		StatusMessage(int nFlags, UINT nID, ...);
 	void		OnOpenWindow();
 	void		OnCloseWindow();
@@ -109,7 +110,7 @@ protected:
 enum
 {
 	cssNull, cssConnecting, cssRequest1, cssHeaders1, cssRequest2, cssHeaders2,
-	cssRequest3, cssHeaders3, cssHandshake, cssActive
+	cssRequest3, cssHeaders3, cssHandshake, cssActive, cssAway
 };
 
 #endif // !defined(AFX_CHATSESSION_H__F75BAA22_513A_4569_9BFB_90A053662CDB__INCLUDED_)

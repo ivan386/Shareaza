@@ -1,11 +1,7 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/11/28 09:18:06 $"
-//	Revision:		"$Revision: 1.24 $"
-//  Last change by:	"$Author: mogthecat $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -1008,8 +1004,21 @@ BOOL CChatSession::OnChatRequest(CG2Packet* pPacket)
 	pPacket->WritePacket( G2_PACKET_USER_GUID, 16 );
 	Hashes::Guid tmp = MyProfile.oGUID;
 	pPacket->Write( tmp );
-	
-	if ( validAndEqual( oGUID, tmp ) )
+
+	DWORD nIdle = (DWORD)time( NULL ) - theApp.m_dwLastInput;
+
+	if ( nIdle > Settings.Community.AwayMessageIdleTime )
+	{
+		CString strTime;
+		if ( nIdle > 86400 )
+			strTime.Format( _T("%i:%.2i:%.2i:%.2i"), nIdle / 86400, ( nIdle / 3600 ) % 24, ( nIdle / 60 ) % 60, nIdle % 60 );
+		else
+			strTime.Format( _T("%i:%.2i:%.2i"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
+
+		pPacket->WritePacket( G2_PACKET_CHAT_AWAY, pPacket->GetStringLen( strTime ) );
+		pPacket->WriteString( strTime, FALSE );
+	}
+	else if ( validAndEqual( oGUID, tmp ) )
 	{
 		pPacket->WritePacket( G2_PACKET_CHAT_ACCEPT, 0 );
 		PostOpenWindow();
@@ -1104,7 +1113,7 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 {
 	CSingleLock pLock( &ChatCore.m_pSection, TRUE );
 	
-	if ( m_nState != cssActive ) return FALSE;
+	if ( m_nState != cssActive && m_nState != cssAway ) return FALSE;
 
 	if ( m_nProtocol == PROTOCOL_G2 )
 	{
@@ -1119,8 +1128,14 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 	}
 	else if ( m_nProtocol == PROTOCOL_ED2K )
 	{
+		CString strMessage;
+
+		if ( m_nState == cssAway )
+			strMessage.Format( L"%s is away: %s", (LPCTSTR)m_sUserNick, pszText );
+		else
+			strMessage = pszText;
+
 		// Limit outgoing ed2k messages to shorter than ED2K_MESSAGE_MAX characters, just in case
-		CString strMessage = pszText;
 		strMessage = strMessage.Left( ED2K_MESSAGE_MAX - 50 );
 
 		// Create an ed2k packet holding the message
@@ -1128,8 +1143,8 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 
 		if ( m_bUnicode )
 		{
-			pPacket->WriteShortLE( WORD( pPacket->GetStringLenUTF8( pszText ) ) );
-			pPacket->WriteStringUTF8( pszText, FALSE );
+			pPacket->WriteShortLE( WORD( pPacket->GetStringLenUTF8( strMessage ) ) );
+			pPacket->WriteStringUTF8( strMessage, FALSE );
 		}
 		else
 		{
@@ -1149,17 +1164,33 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 	else // PROTOCOL_G1
 	{
 
-		CString str;
+		CString str, strMessage;
 		
 		if ( ! m_bOld ) str += _T("MESSAGE ");
 		if ( bAction ) str += _T("\001ACTION ");
-		str += pszText;
+
+		if ( m_nState == cssAway )
+			strMessage.Format( L"%s is away: %s", (LPCTSTR)m_sUserNick, pszText );
+		else
+			strMessage = pszText;
+
+		str += strMessage;
 		str += _T("\r\n");
 		
 		Print( str );
 	}
 
 	return TRUE;
+}
+
+BOOL CChatSession::SendAwayMessage(LPCTSTR pszText)
+{
+	int nOldState = m_nState;
+	m_nState = cssAway;
+	BOOL bResult = SendPrivateMessage( FALSE, pszText );
+	m_nState = nOldState;
+
+	return bResult;
 }
 
 //////////////////////////////////////////////////////////////////////

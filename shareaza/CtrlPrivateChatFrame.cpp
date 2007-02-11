@@ -1,7 +1,7 @@
 //
 // CtrlPrivateChatFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,6 +30,7 @@
 #include "WndBrowseHost.h"
 #include "Skin.h"
 #include "Security.h"
+#include "Settings.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -168,6 +169,20 @@ void CPrivateChatFrame::OnProfileReceived()
 
 void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 {
+	DWORD nIdle = (DWORD)time( NULL ) - theApp.m_dwLastInput;
+
+	if ( nIdle > Settings.Community.AwayMessageIdleTime )
+	{
+		CString strTime;
+		if ( nIdle > 86400 )
+			strTime.Format( _T("%i:%.2i:%.2i:%.2i"), nIdle / 86400, ( nIdle / 3600 ) % 24, ( nIdle / 60 ) % 60, nIdle % 60 );
+		else
+			strTime.Format( _T("%i:%.2i:%.2i"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
+
+		m_pSession->SendAwayMessage( (LPCTSTR)strTime );
+		return;
+	}
+
 	// Check message spam filter (if enabled)
 	if ( ! MessageFilter.IsFiltered( pszText ) )
 	{

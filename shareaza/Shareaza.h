@@ -74,6 +74,9 @@ public:
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
 	CString				m_sUPnPExternalIP;
+	DWORD				m_dwLastInput;				// Time of last input event	in secs
+	HHOOK				m_hHookKbd;
+	HHOOK				m_hHookMouse;
 
 	// GDI and display monitor functions
 	HINSTANCE	m_hUser32;
@@ -91,7 +94,7 @@ public:
 	BOOLEAN		(WINAPI *m_pfnGetActivePwrScheme)(PUINT);
 	BOOLEAN		(WINAPI *m_pfnGetCurrentPowerPolicies)(PGLOBAL_POWER_POLICY, PPOWER_POLICY);
 	BOOLEAN		(WINAPI *m_pfnSetActivePwrScheme)(UINT, PGLOBAL_POWER_POLICY, PPOWER_POLICY);
-	
+
 public:
 	static CMainWnd*	SafeMainWnd();
 	void				Message(int nType, UINT nID, ...) throw();
@@ -149,6 +152,9 @@ HICON	CreateMirroredIcon(HICON hIconOrig);
 HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 
 void CloseThread(HANDLE* phThread, LPCTSTR pszName, DWORD dwTimeout = 5000);
+
+LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);
 
 #ifdef _DEBUG
 #define MLOG(x) theApp.Message( MSG_DEBUG, x )

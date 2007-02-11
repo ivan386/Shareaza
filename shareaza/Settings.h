@@ -55,6 +55,7 @@ public:
 		BOOL		AlwaysOpenURLs;
 		CString		Language;
 		BOOL		IgnoreXPsp2;				// Ignore the presence of Windows XPsp2 limits
+		BOOL		DebugUPnP;
 		BOOL		ItWasLimited;				// If the user path the half-open connection limit we change the settings back to gain full speed
 	} General;
 
@@ -230,6 +231,7 @@ public:
 		BOOL		Timestamp;
 		BOOL		ServeProfile;
 		BOOL		ServeFiles;
+		DWORD		AwayMessageIdleTime;		// Time in secs of idle system time before showing away message
 	} Community;
 
 	struct sDiscovery
