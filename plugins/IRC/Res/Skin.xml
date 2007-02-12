@@ -39,6 +39,13 @@
 	<document name="CIRCChannelsBox" title="Channels" leftMargin="6" topMargin="6"></document>
 </documents>
 
+<!-- Command bar watermarks -->
+<watermarks> 
+    <watermark target="CIRCPanel" path=""/>
+    <watermark target="CIRCChannelsBox.Caption" path=""/>
+    <watermark target="CIRCUsersBox.Caption" path=""/>
+</watermarks>
+
 <toolbars>
 	<!-- IRC WINDOW -->
 	<toolbar name="CMainIrcBar">

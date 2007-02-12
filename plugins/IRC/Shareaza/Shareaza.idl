@@ -173,6 +173,7 @@ library Shareaza
 		HRESULT ThrowMenu( [in] BSTR sName, [in] LONG nDefaultID, [in] POINT* pPoint );
 		HRESULT AddToolbar( [in] BSTR sName, [in] LONG nPosition, [out] HWND* phWnd, [out,retval] ISToolbar** ppToolbar );
 		HRESULT AdjustWindowRect( [in,out] RECT* pRect, [in] VARIANT_BOOL bClientToWindow );
+		HRESULT CreateFrame( [in] INT nCommandID, [in] HWND phParent );
 	};
 
 	[ uuid(C6631461-2654-4572-BB3C-54F52F0FF1B9) ]
@@ -419,6 +420,7 @@ library Shareaza
 		[id(31)] HRESULT InsertSeparator( [in] LONG nPosition );
 		[id(32)] HRESULT InsertMenu( [in] LONG nPosition, [in] BSTR sText, [out,retval] ISMenu** ppMenu );
 		[id(33)] HRESULT InsertCommand( [in] LONG nPosition, [in] LONG nCommandID, [in] BSTR sText, [out,retval] ISMenu** ppMenu );
+		[id(34)] HRESULT GetHmenu( [out] HMENU* phWnd );
 	};
 
 	typedef enum
