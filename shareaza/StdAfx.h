@@ -127,6 +127,20 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 
 #pragma warning( pop )
 
+
+//
+// Smaller type check fix (/RTCc)
+//
+
+#ifdef _DEBUG
+	#undef GetRValue
+	#define GetRValue(rgb)      ((BYTE)( (rgb)        & 0xff))
+	#undef GetGValue
+	#define GetGValue(rgb)      ((BYTE)(((rgb) >>  8) & 0xff))
+	#undef GetBValue
+	#define GetBValue(rgb)      ((BYTE)(((rgb) >> 16) & 0xff))
+#endif
+
 //
 // Missing constants
 //

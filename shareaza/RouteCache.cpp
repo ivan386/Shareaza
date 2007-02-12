@@ -1,7 +1,7 @@
 //
 // RouteCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -200,7 +200,7 @@ CRouteCacheTable::~CRouteCacheTable()
 CRouteCacheItem* CRouteCacheTable::Find(const Hashes::Guid& oGUID)
 {
 	WORD nGUID = 0, *ppGUID = (WORD*)&oGUID[ 0 ];
-	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID = WORD( nGUID + *ppGUID++ );
+	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID = WORD( ( nGUID + *ppGUID++ ) & 0xffff );
 
 	CRouteCacheItem* pItem = *( m_pHash + ( nGUID & HASH_MASK ) );
 
@@ -221,7 +221,7 @@ CRouteCacheItem* CRouteCacheTable::Add(const Hashes::Guid& oGUID, const CNeighbo
 	
 	WORD nGUID = 0;
 	WORD *ppGUID = (WORD*)&oGUID[ 0 ];
-	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID = WORD( nGUID + *ppGUID++ );
+	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID = WORD( ( nGUID + *ppGUID++ ) & 0xffff );
 
 	CRouteCacheItem** pHash = m_pHash + ( nGUID & HASH_MASK );
 
