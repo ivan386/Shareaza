@@ -38,7 +38,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="TRUE"
+				RegisterOutput="FALSE"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -56,7 +56,9 @@
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
 				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Registering $(TargetFileName)"
+				CommandLine="cd &quot;$(SolutionDir)$(ConfigurationName)\&quot; &amp;&amp; regsvr32 /s /c &quot;plugins\$(TargetFileName)&quot;"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copying libgfl254.dll"
@@ -111,7 +113,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="TRUE"
+				RegisterOutput="FALSE"
 				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
@@ -135,7 +137,9 @@
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
 				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Registering $(TargetFileName)"
+				CommandLine="cd &quot;$(SolutionDir)$(ConfigurationName)\&quot; &amp;&amp; regsvr32 /s /c &quot;plugins\$(TargetFileName)&quot;"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copying libgfl254.dll"
