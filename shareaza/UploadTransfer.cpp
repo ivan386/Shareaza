@@ -1,7 +1,7 @@
 //
 // UploadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -293,7 +293,7 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 			(LPCTSTR)Settings.SmartVolume( nOld * 8, FALSE, TRUE ),
 			(LPCTSTR)Settings.SmartVolume( m_nBandwidth * 8, FALSE, TRUE ) );
 	}
-	else if ( m_pQueue->GetAvailableBandwidth() )
+	else if ( m_pQueue && m_pQueue->GetAvailableBandwidth() )
 	{
 		DWORD nOld = m_nBandwidth;	// Save
 		ZeroMemory( m_nAverageRate, sizeof( m_nAverageRate ) );
