@@ -477,7 +477,7 @@ void CLibrary::OnRun()
 	while ( m_bThread )
 	{
 		if ( m_nInhibit == 0 ) ThreadScan();
-		WaitForSingleObject( m_pWakeup, 500 );
+		WaitForSingleObject( m_pWakeup, 1000 );
 	}
 }
 
@@ -490,6 +490,13 @@ BOOL CLibrary::ThreadScan()
 	if ( ! theApp.m_bLive ) return FALSE;
 
 	BOOL bChanged = FALSE;
+
+	CSingleLock pLock( &m_pSection );
+	if ( ! pLock.Lock( 100 ) )
+	{
+		m_pWakeup.SetEvent();	// skip default delay
+		return FALSE;
+	}
 
 	// Determine if the call was due to Library::Update(), for e.g. when file was deleted
 	DWORD tTime = GetTickCount();
@@ -507,9 +514,6 @@ BOOL CLibrary::ThreadScan()
 			m_nUpdateCookie = m_nUpdateSaved = tTime - Settings.Library.WatchFoldersTimeout * 1000;
 	}
 
-	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 100 ) ) return FALSE;
-
 	m_nScanCount++;
 	if ( bChanged ) m_nUpdateCookie = GetTickCount();
 
@@ -524,8 +528,6 @@ BOOL CLibrary::ThreadScan()
 			StartThread();
 		}
 	}
-
-	pLock.Unlock();
 
 	return bChanged;
 }
