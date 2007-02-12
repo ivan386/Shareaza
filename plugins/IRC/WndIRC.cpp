@@ -24,7 +24,7 @@
 #include "IRC.h"
 #include "IRCPlugin.h"
 
-CIRCWnd::CIRCWnd()
+CIRCWnd::CIRCWnd() : m_pFrame(NULL)
 {
 }
 
@@ -37,9 +37,9 @@ CIRCWnd::~CIRCWnd()
 		Detach();
 }
 
-BOOL CIRCWnd::Create(CIRCPlugin* pPlugin, LPCTSTR pszClassName)
+BOOL CIRCWnd::Initialize(CIRCPlugin* pPlugin, LPCTSTR pszClassName)
 {
-	//__super::Create( pPlugin, pszClassName );
+	__super::Initialize( pPlugin, pszClassName );
 
 	// Don't listen to WM_CREATE. Otherwise no tab will be created in the Tab bar
 	m_pWindow->ListenForSingleMessage( WM_CLOSE );
@@ -53,7 +53,7 @@ BOOL CIRCWnd::Create(CIRCPlugin* pPlugin, LPCTSTR pszClassName)
 	m_pWindow->Create2( m_pPlugin->m_nCmdWindow2, VARIANT_TRUE, VARIANT_FALSE );
 	m_pWindow->GetHwnd( &m_hWnd );
 	m_pFrame = new CComObject< CIRCFrame >;
-	m_pFrame->Create( m_pPlugin, L"CIRCFrame" );
+	m_pFrame->Initialize( m_pPlugin, m_hWnd );
 
 	// Load window position and size. The frame will be sized too
 	m_pWindow->LoadState( VARIANT_FALSE );
@@ -86,13 +86,11 @@ BOOL CIRCWnd::Refresh()
 STDMETHODIMP CIRCWnd::OnTranslate(MSG* pMessage)
 {
 	// Add your function implementation here.
-	return E_NOTIMPL;
+	return __super::OnTranslate( pMessage );
 }
 
 STDMETHODIMP CIRCWnd::OnMessage(INT nMessage, WPARAM wParam, LPARAM lParam, LRESULT* plResult)
 {
-	if ( m_pFrame->IsWindow() )
-		m_pFrame->ProcessWindowMessage( m_hWnd, nMessage, wParam, lParam, *plResult );
 	return ProcessWindowMessage( m_hWnd, nMessage, wParam, lParam, *plResult ) ? S_OK : S_FALSE;
 }
 
@@ -113,7 +111,7 @@ STDMETHODIMP CIRCWnd::OnUpdate(INT nCommandID, STRISTATE* pbVisible,
 
 STDMETHODIMP CIRCWnd::OnCommand(INT nCommandID)
 {
-	if ( m_pWindow && m_pFrame->m_hWnd != NULL )
+	if ( m_pFrame && m_pFrame->m_hWnd != NULL )
 	{
 		if ( m_pFrame->OnCommand( nCommandID ) == S_OK )
 			return S_OK;
@@ -122,12 +120,18 @@ STDMETHODIMP CIRCWnd::OnCommand(INT nCommandID)
 	return S_FALSE;
 }
 
+STDMETHODIMP CIRCWnd::GetWndClassName(BSTR* pszClassName)
+{
+	return __super::GetWndClassName( pszClassName );
+}
+
 LRESULT CIRCWnd::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
 	if ( uMsg == WM_DESTROY )
 	{
 		// Save window position and size (for windowed mode)
 		m_pWindow->SaveState();
+		m_pFrame->DestroyWindow();
 		m_pPlugin->m_pWindow = NULL;
 	}
 
@@ -138,7 +142,7 @@ LRESULT CIRCWnd::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandl
 LRESULT CIRCWnd::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& bHandled)
 {
 	bHandled = FALSE;
-	if ( m_pWindow && m_pFrame->m_hWnd != NULL )
+	if ( m_pFrame && m_pFrame->m_hWnd != NULL )
 		m_pFrame->SetWindowPos( NULL, 0, 0, (int)LOWORD(lParam), (int)HIWORD(lParam), SWP_NOZORDER );
 	return 0;
 }

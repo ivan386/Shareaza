@@ -1,13 +1,9 @@
 #pragma once
 #include "IRC.h"
+#include "IRCPlugin.h"
 using namespace ATLControls;
 
-class CIRCPlugin;
-
-template <class TWinTraits = CNullTraits>
-class ATL_NO_VTABLE CBasePluginWindow : public CComObjectRootEx< CComSingleThreadModel >,
-										public CWindowImpl< CBasePluginWindow, CWindow, TWinTraits >,
-										public IPluginWindowOwner
+class IPluginWindowOwnerImpl : public IPluginWindowOwner
 {
 	// Attributes
 protected:
@@ -15,28 +11,61 @@ protected:
 	CComPtr<IApplication>	m_pApplication;
 	CComPtr<IPluginWindow>	m_pWindow;
 	CString					m_sClassName;
+	HWND					m_hParent;
 
 public:
-	virtual BOOL Create(CIRCPlugin* pPlugin, LPCTSTR pszClassName);
+	BOOL Initialize(CIRCPlugin* pPlugin, LPCTSTR pszClassName, HWND hParent = NULL)
+	{
+		m_pPlugin		= pPlugin;
+		m_pApplication	= pPlugin->m_pApplication;
+		m_sClassName	= pszClassName;
+		m_hParent		= hParent;
 
+		// Get an IUserInterface pointer from the IApplication
+		CComPtr< IUserInterface > pUI;
+		m_pApplication->get_UserInterface( &pUI );
+		pUI->NewWindow( CComBSTR( m_sClassName ), this, &m_pWindow );
+		return TRUE;
+	}
+
+	HRESULT __stdcall OnTranslate(MSG* pMessage)
+	{ return S_OK; }
+
+	HRESULT __stdcall OnMessage(INT nMessage, WPARAM wParam, LPARAM  Param, LRESULT* plResult)
+	{ return S_OK; }
+
+	HRESULT __stdcall OnUpdate(INT nCommandID, STRISTATE* pbVisible, STRISTATE* pbEnabled, STRISTATE* pbChecked)
+	{ return S_OK; }
+	
+	HRESULT __stdcall OnCommand(INT nCommandID)
+	{ return S_OK; }
+
+	HRESULT __stdcall GetWndClassName(BSTR* psName)
+	{
+		m_sClassName.SetSysString( psName );
+		return S_OK;
+	}
+};
+
+template <class TWinTraits = CNullTraits>
+class ATL_NO_VTABLE CBasePluginWindow : public CComObjectRootEx< CComSingleThreadModel >,
+										public CWindowImpl< CBasePluginWindow, CWindow, TWinTraits >,
+										public IPluginWindowOwnerImpl
+{
+public:
+	CBasePluginWindow(){}
+	virtual ~CBasePluginWindow(){}
 	HRESULT FinalConstruct() { return S_OK; }
 	void FinalRelease() {}
+	virtual HWND Create()
+	{
+		DWORD dwStyle = TWinTraits::GetWndStyle( 0 );
+		DWORD dwExStyle = TWinTraits::GetWndExStyle( 0 );
+		return CWindow::Create( m_sClassName, m_hParent, 0, NULL, dwStyle, dwExStyle );
+	}
 
 	DECLARE_NOT_AGGREGATABLE(CBasePluginWindow)
-
-	BEGIN_COM_MAP(CBasePluginWindow)
-		COM_INTERFACE_ENTRY(IPluginWindowOwner)
-	END_COM_MAP()
-
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
-
-	// IPluginWindowOwner Methods
-public:
-	virtual HRESULT __stdcall OnTranslate(MSG* pMessage);
-	virtual HRESULT __stdcall OnMessage(INT nMessage, WPARAM wParam, LPARAM  Param, LRESULT* plResult);
-	virtual HRESULT __stdcall OnUpdate(INT nCommandID, STRISTATE* pbVisible, STRISTATE* pbEnabled, STRISTATE* pbChecked);
-	virtual HRESULT __stdcall OnCommand(INT nCommandID) = 0;
-	virtual HRESULT __stdcall GetWndClassName(BSTR* psName);
 
 	// Message Map
 public:

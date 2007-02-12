@@ -55,13 +55,19 @@ public:
 	virtual ~CIRCFrame();
 
 	void	OnSkinChanged(void);
+	virtual BOOL Initialize(CIRCPlugin* pPlugin, HWND hWnd);
+
+	BEGIN_COM_MAP(CIRCFrame)
+		COM_INTERFACE_ENTRY(IPluginWindowOwner)
+	END_COM_MAP()
 
 	// IPluginWindowOwner Methods
 public:
 	STDMETHOD(OnTranslate)(MSG* pMessage);
-	STDMETHOD(OnMessage)(INT nMessage, WPARAM wParam, LPARAM  Param, LRESULT* plResult);
+	STDMETHOD(OnMessage)(INT nMessage, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
 	STDMETHOD(OnUpdate)(INT nCommandID, STRISTATE* pbVisible, STRISTATE* pbEnabled, STRISTATE* pbChecked);
 	STDMETHOD(OnCommand)(INT nCommandID);
+	STDMETHOD(GetWndClassName)(BSTR* pszClassName);
 
 public:
 	BOOL			m_bConnected;
@@ -87,7 +93,7 @@ protected:
 	// Header
 	HICON			m_bHeaderIcon;
 	HBITMAP			m_hBuffer;
-	CIRCPanel*		m_pPanel;
+	//CIRCPanel*		m_pPanel;
 	TCHAR*			m_pszLineJoiner;
 	CIRCTabCtrl		m_wndTab;
 
@@ -115,15 +121,13 @@ public:
 
 public:
 	BEGIN_MSG_MAP(CIRCFrame)
-		MESSAGE_HANDLER(WM_CLOSE, OnClose)
 		MESSAGE_HANDLER(WM_CREATE, OnCreate)
 		MESSAGE_HANDLER(WM_SIZE, OnSize)
-		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
+		MESSAGE_HANDLER(WM_PAINT, OnPaint)
 	END_MSG_MAP()
 
-	LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-	LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+	LRESULT OnPaint(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 };
 

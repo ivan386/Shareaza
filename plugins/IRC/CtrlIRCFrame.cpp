@@ -2,9 +2,14 @@
 
 #include "stdafx.h"
 #include "CtrlIRCFrame.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
 // CIRCFrame
-
-
 CIRCNewMessage::operator =(CIRCNewMessage &rhs)
 {
 	m_sTargetName	= rhs.m_sTargetName;
@@ -35,26 +40,41 @@ CIRCFrame::CIRCFrame()
 	m_nLocalTextLimit		= 300;
 	m_nLocalLinesLimit		= 14;
 	m_pszLineJoiner			= _T("\x200D");
-	m_pPanel				= NULL;
+	//m_pPanel				= NULL;
 	// m_pTray				= ((CMainWnd*)AfxGetMainWnd())->m_pTray;
 }
 
 CIRCFrame::~CIRCFrame()
 {
 	if ( g_pIrcFrame == this ) g_pIrcFrame = NULL;
+	//m_pPanel->DestroyWindow();
+	if ( IsWindow() )
+		Detach();
 }
 
-LRESULT CIRCFrame::OnClose(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
+BOOL CIRCFrame::Initialize(CIRCPlugin* pPlugin, HWND hParent)
 {
-	if ( IsWindow() )
-		DestroyWindow();
-	bHandled = TRUE;
-	return 0;
+	__super::Initialize( pPlugin, NULL, hParent );
+
+	m_pWindow->ListenForSingleMessage( WM_CREATE );
+	m_pWindow->ListenForSingleMessage( WM_CONTEXTMENU );
+	m_pWindow->ListenForSingleMessage( WM_SIZE );
+	m_pWindow->ListenForSingleMessage( WM_PAINT );
+	m_pWindow->ListenForSingleMessage( WM_NCLBUTTONUP );
+	m_pWindow->ListenForSingleMessage( WM_SETCURSOR );
+
+	if ( SUCCEEDED( m_pWindow->CreateFrame( m_pPlugin->m_nCmdWindow, hParent ) ) )
+	{
+		m_pWindow->GetHwnd( &m_hWnd );
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 void CIRCFrame::OnSkinChanged()
 {
-	m_pPanel->Setup();
+	//m_pPanel->Setup();
 }
 
 HRESULT CIRCFrame::OnTranslate(MSG* pMessage)
@@ -62,9 +82,13 @@ HRESULT CIRCFrame::OnTranslate(MSG* pMessage)
 	return E_NOTIMPL;
 }
 
-HRESULT CIRCFrame::OnMessage(INT nMessage, WPARAM wParam, LPARAM  Param, LRESULT* plResult)
+HRESULT CIRCFrame::OnMessage(INT nMessage, WPARAM wParam, LPARAM lParam, LRESULT* plResult)
 {
-	return E_NOTIMPL;
+	if ( (UINT)nMessage == WM_CREATE )
+		m_pWindow->GetHwnd( &m_hWnd );
+	if ( m_hWnd == NULL ) return S_FALSE;
+
+	return ProcessWindowMessage( m_hWnd, nMessage, wParam, lParam, *plResult ) ? S_OK : S_FALSE;
 }
 
 HRESULT CIRCFrame::OnUpdate(INT nCommandID, STRISTATE* pbVisible, STRISTATE* pbEnabled, STRISTATE* pbChecked)
@@ -74,16 +98,25 @@ HRESULT CIRCFrame::OnUpdate(INT nCommandID, STRISTATE* pbVisible, STRISTATE* pbE
 
 HRESULT CIRCFrame::OnCommand(INT nCommandID)
 {
+	if ( nCommandID == m_pPlugin->m_nCmdWindow )
+	{
+		ShowWindow( SW_SHOWNORMAL );
+		return S_OK;
+	}
 	return S_FALSE;
+}
+
+HRESULT CIRCFrame::GetWndClassName(BSTR* pszClassName)
+{
+	return __super::GetWndClassName( pszClassName );
 }
 
 LRESULT CIRCFrame::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
-	m_pPanel = new CComObject< CIRCPanel >;
-	if ( !m_pPanel->Create( m_pPlugin, L"CIRCPanel" ) ) return -1;
-
-	m_wndTab.Create( m_hWnd, 0, 0, WS_CHILD | WS_VISIBLE | TCS_FLATBUTTONS | TCS_OWNERDRAWFIXED );
-
+	//m_pPanel = new CComObject< CIRCPanel >;
+	//if ( !m_pPanel->Create( m_pPlugin, L"CIRCPanel" ) ) return -1;
+	m_wndTab.Create( m_hWnd, 0, 0, WS_CHILD | WS_VISIBLE | TCS_FLATBUTTONS /*| TCS_OWNERDRAWFIXED*/ );
+	ShowWindow( SW_SHOWNORMAL );
 	return 0;
 }
 
@@ -94,7 +127,7 @@ LRESULT CIRCFrame::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, B
 	GetClientRect( &rc );
 	if ( rc.right - rc.left < 32 || rc.bottom - rc.top < 32 ) return 0;
 
-	m_pPanel->SetWindowPos( NULL, 0, 0, PANEL_WIDTH, rc.bottom - rc.top, SWP_NOZORDER );
+	//m_pPanel->SetWindowPos( NULL, 0, 0, PANEL_WIDTH, rc.bottom - rc.top, SWP_NOZORDER );
 	rc.bottom -= TOOLBAR_HEIGHT;
 	rc.top    += IRCHEADER_HEIGHT;
 	rc.left   += PANEL_WIDTH;
@@ -153,7 +186,7 @@ LRESULT CIRCTabCtrl::OnDrawItem(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam,
 	{
 		RECT rect = lpDrawItem->rcItem;
 		int nTabIndex = lpDrawItem->itemID;
-		 /*Settings.IRC.Colors[ ID_COLOR_TABS ]*/;
+		/*Settings.IRC.Colors[ ID_COLOR_TABS ]*/;
 		COLORREF cBorder = 15132390;
 		HBRUSH hbr = CreateSolidBrush( cBorder );
 		HDC hOldDC = ::GetDC(NULL);
@@ -180,8 +213,22 @@ LRESULT CIRCTabCtrl::OnDrawItem(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam,
 	return 0;
 }
 
-LRESULT CIRCFrame::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+LRESULT CIRCFrame::OnPaint(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
-	m_pPanel->DestroyWindow();
+	RECT rcClient;
+	PAINTSTRUCT ps;
+
+	// Get the client rectangle, and begin painting
+	GetClientRect( &rcClient );
+	HDC hDC = BeginPaint( &ps );
+
+	::SetBkMode( hDC, OPAQUE );
+	::SetBkColor( hDC, RGB(200,200,200) );
+
+	CComBSTR bsText( L"Empty frame area..." );
+	::ExtTextOut( hDC, 6, 6, ETO_OPAQUE, &rcClient, bsText, bsText.Length(), NULL );
+
+	// Finish painting
+	EndPaint( &ps );
 	return 0;
 }

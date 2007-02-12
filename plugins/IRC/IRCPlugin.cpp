@@ -167,7 +167,7 @@ STDMETHODIMP CIRCPlugin::OnCommand(INT nCommandID)
 		if ( m_pWindow == NULL )
 		{
 			m_pWindow = new CComObject< CIRCWnd >;
-			m_pWindow->Create( this, L"CIRCWnd" );
+			m_pWindow->Initialize( this, L"CIRCWnd" );
 			m_pWindow->ShowWindow( SW_SHOWNORMAL );
 		}
 

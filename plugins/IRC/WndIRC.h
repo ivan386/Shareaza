@@ -36,12 +36,16 @@ public:
 	CIRCWnd();
 	virtual ~CIRCWnd();
 
-	BOOL Create(CIRCPlugin* pPlugin, LPCTSTR pszClassName);
+	virtual BOOL Initialize(CIRCPlugin* pPlugin, LPCTSTR pszClassName);
 	BOOL Refresh();
 	void OnSkinChanged(void);
 
 protected:
-	CIRCFrame*				m_pFrame;
+	CIRCFrame*	m_pFrame;
+
+	BEGIN_COM_MAP(CIRCWnd)
+		COM_INTERFACE_ENTRY(IPluginWindowOwner)
+	END_COM_MAP()
 
 	// IPluginWindowOwner Methods
 public:
@@ -49,6 +53,7 @@ public:
 	STDMETHOD(OnMessage)(INT nMessage, WPARAM wParam, LPARAM  Param, LRESULT* plResult);
 	STDMETHOD(OnUpdate)(INT nCommandID, STRISTATE* pbVisible, STRISTATE* pbEnabled, STRISTATE* pbChecked);
 	STDMETHOD(OnCommand)(INT nCommandID);
+	STDMETHOD(GetWndClassName)(BSTR* pszClassName);
 	
 	// Message Map
 public:
