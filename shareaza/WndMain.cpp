@@ -251,6 +251,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_MEDIA_ADD, OnMediaCommand)
 	ON_COMMAND(ID_MEDIA_ADD_FOLDER, OnMediaCommand)
 	ON_COMMAND(ID_HELP, OnHelpFaq)
+	ON_COMMAND(ID_HELP_TEST, OnHelpConnectiontest)
 END_MESSAGE_MAP()
 
 
@@ -2348,6 +2349,15 @@ void CMainWnd::OnHelpFaq()
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
 		_T("http://www.shareaza.com/help/?faq"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpConnectiontest()
+{
+	CString strTestUrl;
+	strTestUrl.Format( _T("http://www.shareaza.com/help/test/?port=%d"), Settings.Connection.InPort );
+	ShellExecute( GetSafeHwnd(), _T("open"),
+		strTestUrl,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 

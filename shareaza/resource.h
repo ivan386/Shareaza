@@ -1705,6 +1705,7 @@
 #define ID_HELP_ROUTER                  33124
 #define ID_HELP_SECURITY                33125
 #define ID_HELP_CODEC                   33126
+#define ID_HELP_TEST                    33127
 #define ID_HELP_DISKSPACE               33130
 #define ID_HELP_DISKWRITEFAIL           33131
 #define ID_HELP_CONNECTIONFAIL          33132

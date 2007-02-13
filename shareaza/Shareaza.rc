@@ -238,6 +238,7 @@ BEGIN
     BEGIN
         MENUITEM "Shareaza Users &Guide",       ID_HELP_FAQ
         MENUITEM "Shareaza &Forums",            ID_HELP_FORUMS
+        MENUITEM "Connection Test",             ID_HELP_TEST
         MENUITEM "Router Help",                 ID_TOOLS_SEEDTORRENT
         MENUITEM "Security Help",               ID_HELP_SECURITY
         MENUITEM SEPARATOR
@@ -5873,6 +5874,7 @@ BEGIN
     ID_HELP_ROUTER          "Get help configuring your router or firewall."
     ID_HELP_SECURITY        "Help protecting your system from hostile programs"
     ID_HELP_CODEC           "All about codecs and video problems"
+    ID_HELP_TEST            "Run the connection test"
 END
 
 STRINGTABLE 
