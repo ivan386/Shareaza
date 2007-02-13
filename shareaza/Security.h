@@ -134,16 +134,18 @@ public:
 private:
 	LPTSTR		m_pszBlockedWords;			// Definitely adult content
 	LPTSTR		m_pszDubiousWords;			// Possibly adult content
+	LPTSTR		m_pszChildWords;			// Words related to child ponography
 
 // Operations
 public:
 	void		Load();
-	BOOL		IsHitAdult( LPCTSTR );		// Does this search result have adult content?
-	BOOL		IsSearchFiltered( LPCTSTR );// Check if search is filtered
-	BOOL		IsChatFiltered( LPCTSTR );	// Check filter for chat
-	BOOL		Censor( TCHAR* );			// Censor (remove) bad words from a string
+	BOOL		IsHitAdult(LPCTSTR);		// Does this search result have adult content?
+	BOOL		IsSearchFiltered(LPCTSTR);	// Check if search is filtered
+	BOOL		IsChatFiltered(LPCTSTR);	// Check filter for chat
+	BOOL		Censor(TCHAR*);				// Censor (remove) bad words from a string
+	BOOL		IsChildPornography(LPCTSTR);
 private:
-	BOOL		IsFiltered( LPCTSTR );
+	BOOL		IsFiltered(LPCTSTR);
 };
 
 // A message filter class for chat messages. (Spam protection)

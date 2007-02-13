@@ -1100,9 +1100,10 @@ void  CSecureRule::MaskFix()
 // CAdultFilter construction
 
 CAdultFilter::CAdultFilter()
+:	m_pszBlockedWords(NULL),
+	m_pszDubiousWords(NULL),
+	m_pszChildWords(NULL)
 {
-	m_pszBlockedWords = NULL;
-	m_pszDubiousWords = NULL;
 }
 
 CAdultFilter::~CAdultFilter()
@@ -1112,13 +1113,16 @@ CAdultFilter::~CAdultFilter()
 
 	if ( m_pszDubiousWords ) delete [] m_pszDubiousWords;
 	m_pszDubiousWords = NULL;
+
+	if ( m_pszChildWords ) delete [] m_pszChildWords;
+	m_pszChildWords = NULL;
 }
 
 void CAdultFilter::Load()
 {
 	CFile pFile;
 	CString strFile = Settings.General.Path + _T("\\Data\\AdultFilter.dat");
-	CString strBlockedWords, strDubiousWords;
+	CString strBlockedWords, strDubiousWords, strChildWords;
 
 	// Delete current adult filters (if present)
 	if ( m_pszBlockedWords ) delete [] m_pszBlockedWords;
@@ -1127,10 +1131,12 @@ void CAdultFilter::Load()
 	if ( m_pszDubiousWords ) delete [] m_pszDubiousWords;
 	m_pszDubiousWords = NULL;
 
+	if ( m_pszChildWords ) delete [] m_pszChildWords;
+	m_pszChildWords = NULL;
+
 	// Load the adult filter from disk
 	if (  pFile.Open( strFile, CFile::modeRead ) ) 
 	{
-
 		try
 		{
 			CBuffer pBuffer;
@@ -1143,7 +1149,14 @@ void CAdultFilter::Load()
 			pFile.Close();
 
 			pBuffer.ReadLine( strBlockedWords );	// Line 1: words that are blocked
+			if ( strBlockedWords.GetLength() && strBlockedWords.GetAt( 0 ) == '#' )
+				strBlockedWords.Empty();
 			pBuffer.ReadLine( strDubiousWords );	// Line 2: words that may be okay
+			if ( strDubiousWords.GetLength() && strDubiousWords.GetAt( 0 ) == '#' )
+				strDubiousWords.Empty();
+			pBuffer.ReadLine( strChildWords );		// Line 3: words for child pornography
+			if ( strChildWords.GetLength() && strChildWords.GetAt( 0 ) == '#' )
+				strChildWords.Empty();
 		}
 		catch ( CException* pException )
 		{
@@ -1160,6 +1173,9 @@ void CAdultFilter::Load()
 						  L"upskirt beastiality bestiality pedofil necrofil tits lolicon shemale fisting";
 	if ( strDubiousWords.IsEmpty() )
 		strDubiousWords = L"ass sex anal gay teen thong babe bikini viagra dick cum sluts";
+
+	if ( strChildWords.IsEmpty() )
+		strChildWords = L"child preteen";
 
 	// Load the blocked words into the Adult Filter
 	if ( strBlockedWords.GetLength() > 3 )
@@ -1248,9 +1264,51 @@ void CAdultFilter::Load()
 		*pszFilter++ = 0;
 	}
 
+	// Load child pornography words into the Adult Filter
+	if ( strChildWords.GetLength() > 3 )
+	{
+		LPCTSTR pszPtr = strChildWords;
+		int nWordLen = 3;
+		CList< CString > pWords;
+
+		int nStart = 0, nPos = 0;
+		for ( ; *pszPtr ; nPos++, pszPtr++ )
+		{
+			if ( *pszPtr == ' ' )
+			{
+				if ( nStart < nPos )
+				{
+					pWords.AddTail( strChildWords.Mid( nStart, nPos - nStart ) );
+					nWordLen += ( nPos - nStart ) + 1;
+				}
+				nStart = nPos + 1;	
+			}
+		}
+
+		if ( nStart < nPos )
+		{
+			pWords.AddTail( strChildWords.Mid( nStart, nPos - nStart ) );
+			nWordLen += ( nPos - nStart ) + 1;
+		}
+
+		m_pszChildWords = new TCHAR[ nWordLen ];
+		LPTSTR pszFilter = m_pszChildWords;
+
+		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
+		{
+			CString strWord = pWords.GetNext( pos );
+			CharLower( strWord.GetBuffer() );
+			strWord.ReleaseBuffer();
+			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
+			pszFilter += strWord.GetLength() + 1;
+		}
+
+		*pszFilter++ = 0;
+		*pszFilter++ = 0;
+	}
 }
 
-BOOL CAdultFilter::IsHitAdult( LPCTSTR pszText )
+BOOL CAdultFilter::IsHitAdult(LPCTSTR pszText)
 {
 	if ( pszText )
 	{
@@ -1259,7 +1317,7 @@ BOOL CAdultFilter::IsHitAdult( LPCTSTR pszText )
 	return FALSE;
 }
 
-BOOL CAdultFilter::IsSearchFiltered( LPCTSTR pszText )
+BOOL CAdultFilter::IsSearchFiltered(LPCTSTR pszText)
 {
 	if ( Settings.Search.AdultFilter && pszText )
 	{
@@ -1268,7 +1326,7 @@ BOOL CAdultFilter::IsSearchFiltered( LPCTSTR pszText )
 	return FALSE;
 }
 
-BOOL CAdultFilter::IsChatFiltered( LPCTSTR pszText )
+BOOL CAdultFilter::IsChatFiltered(LPCTSTR pszText)
 {
 	if ( Settings.Community.ChatCensor && pszText )
 	{
@@ -1277,7 +1335,7 @@ BOOL CAdultFilter::IsChatFiltered( LPCTSTR pszText )
 	return FALSE;
 }
 
-BOOL CAdultFilter::Censor( TCHAR* pszText )
+BOOL CAdultFilter::Censor(TCHAR* pszText)
 {
 	BOOL bModified = FALSE;
 	if ( ! pszText ) return FALSE;
@@ -1311,7 +1369,30 @@ BOOL CAdultFilter::Censor( TCHAR* pszText )
 	return bModified;
 }
 
-BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
+BOOL CAdultFilter::IsChildPornography(LPCTSTR pszText)
+{
+	if ( pszText )
+	{
+		LPCTSTR pszWord;
+		bool bFound = false;
+
+		for ( pszWord = m_pszChildWords ; *pszWord ; )
+		{
+			if ( _tcsistr( pszText, pszWord ) != NULL )
+			{
+				bFound = true;
+				break;
+			}
+			pszWord += _tcslen( pszWord ) + 1;
+		}
+
+		return ( bFound && IsFiltered( pszText ) );
+	}
+	
+	return FALSE;
+}
+
+BOOL CAdultFilter::IsFiltered(LPCTSTR pszText)
 {
 	if ( pszText )
 	{
