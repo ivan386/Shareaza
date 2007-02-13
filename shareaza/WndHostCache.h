@@ -92,6 +92,8 @@ protected:
 	afx_msg void OnHostcacheEd2kDownload();
 	afx_msg void OnUpdateHostcachePriority(CCmdUI* pCmdUI);
 	afx_msg void OnHostcachePriority();
+	afx_msg void OnUpdateNeighboursCopy(CCmdUI *pCmdUI);
+	afx_msg void OnNeighboursCopy();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

@@ -30,6 +30,7 @@
 #include "VendorCache.h"
 #include "WndHostCache.h"
 #include "DlgDonkeyServers.h"
+#include "DlgURLCopy.h"
 #include "LiveList.h"
 #include "Skin.h"
 #include "CoolInterface.h"
@@ -71,6 +72,8 @@ BEGIN_MESSAGE_MAP(CHostCacheWnd, CPanelWnd)
 	ON_COMMAND(ID_HOSTCACHE_ED2K_DOWNLOAD, OnHostcacheEd2kDownload)
 	ON_UPDATE_COMMAND_UI(ID_HOSTCACHE_PRIORITY, OnUpdateHostcachePriority)
 	ON_COMMAND(ID_HOSTCACHE_PRIORITY, OnHostcachePriority)
+	ON_UPDATE_COMMAND_UI(ID_NEIGHBOURS_COPY, OnUpdateNeighboursCopy)
+	ON_COMMAND(ID_NEIGHBOURS_COPY, OnNeighboursCopy)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -450,6 +453,34 @@ void CHostCacheWnd::OnHostcachePriority()
 	}
 	
 	HostCache.eDonkey.m_nCookie ++;
+}
+
+void CHostCacheWnd::OnUpdateNeighboursCopy(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable( m_wndList.GetSelectedCount() == 1 );
+}
+
+void CHostCacheWnd::OnNeighboursCopy()
+{
+	CSingleLock pLock( &Network.m_pSection, TRUE );
+	
+	CString strURL;
+
+	CHostCacheHost* pHost = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
+	if ( ! pHost ) return;
+
+	if ( pHost->m_nProtocol == PROTOCOL_G1 || pHost->m_nProtocol == PROTOCOL_G2 )
+	{
+		strURL.Format( _T("gnutella:host:%s:%u"),
+			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->m_pAddress ) ), pHost->m_nPort );
+	}
+	else if ( pHost->m_nProtocol == PROTOCOL_ED2K )
+	{
+		strURL.Format( _T("ed2k://|server|%s|%u|/"),
+			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->m_pAddress ) ), pHost->m_nPort );
+	}
+	
+	CURLCopyDlg::SetClipboardText( strURL );
 }
 
 void CHostCacheWnd::OnUpdateHostCacheRemove(CCmdUI* pCmdUI) 

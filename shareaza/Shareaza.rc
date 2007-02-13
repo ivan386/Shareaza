@@ -433,6 +433,7 @@ BEGIN
     BEGIN
         MENUITEM "&Connect",                    ID_HOSTCACHE_CONNECT
         MENUITEM "&Disconnect",                 ID_HOSTCACHE_DISCONNECT
+        MENUITEM "Copy &URL",                   ID_NEIGHBOURS_COPY
         MENUITEM "&Priority Server",            ID_HOSTCACHE_PRIORITY
         MENUITEM SEPARATOR
         MENUITEM "&Remove Host(s)",             ID_HOSTCACHE_REMOVE
