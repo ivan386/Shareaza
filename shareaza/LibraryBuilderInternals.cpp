@@ -963,7 +963,7 @@ CString CLibraryBuilderInternals::GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, D
 	if ( ! VerQueryValue( pBuffer, (LPTSTR)(LPCTSTR)strKey, (void**)&pValue, (UINT*)&dwSize ) )
 		return strValue;
 	
-	if ( pValue[1] )
+	if ( pValue && pValue[1] )
 		strValue = (LPCSTR)pValue;
 	else
 		strValue = (LPCTSTR)pValue;
