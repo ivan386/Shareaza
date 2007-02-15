@@ -6,21 +6,24 @@
 // This file is part of Shareaza (www.shareaza.com), original author Michael Stokes. 
 //
 
-#if !defined(AFX_STDAFX_H__80A3B8C9_2B22_4F48_9344_06243C79A307__INCLUDED_)
-#define AFX_STDAFX_H__80A3B8C9_2B22_4F48_9344_06243C79A307__INCLUDED_
-
 #pragma once
 
 #define STRICT
-
+#define WINVER 0x0400
 #define _WIN32_WINNT 0x0400
+#define _WIN32_WINDOWS 0x0410
+#define _WIN32_IE 0x0400
+#define _WIN32_DCOM
 #define _ATL_APARTMENT_THREADED
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
+#define _ATL_CSTRING_NO_CRT
+#define _ATL_ALL_WARNINGS
+
+#include "resource.h"
 
 #include <atlbase.h>
 extern CComModule _Module;
 #include <atlcom.h>
 #include <atlwin.h>
 
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_STDAFX_H__80A3B8C9_2B22_4F48_9344_06243C79A307__INCLUDED)
+using namespace ATL;
