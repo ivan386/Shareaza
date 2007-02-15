@@ -1,7 +1,7 @@
 //
 // ThumbCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "ThumbCache.h"
+#include "ImageServices.h"
 #include "ImageFile.h"
 #include "Library.h"
 

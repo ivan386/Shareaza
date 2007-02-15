@@ -26,6 +26,7 @@
 #include "SharedFile.h"
 #include "SharedFolder.h"
 #include "ImageServices.h"
+#include "ImageFile.h"
 #include "ThumbCache.h"
 #include "ShellIcons.h"
 #include "CoolInterface.h"
@@ -880,7 +881,6 @@ UINT CLibraryThumbView::ThreadStart(LPVOID pParam)
 void CLibraryThumbView::OnRun()
 {
 	CSingleLock pLock( &m_pSection );
-	CImageServices pServices;
 	CThumbCache pCache;
 
 	while ( m_bThread )
@@ -916,7 +916,7 @@ void CLibraryThumbView::OnRun()
 
 //		DWORD tNow = GetTickCount();
 
-		CImageFile pFile( &pServices );
+		CImageFile pFile;
 		BOOL bSuccess = FALSE;
 		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
 

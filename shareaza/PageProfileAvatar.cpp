@@ -1,7 +1,7 @@
 //
 // PageProfileAvatar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "GProfile.h"
 #include "ImageServices.h"
+#include "ImageFile.h"
 #include "PageProfileAvatar.h"
 #include "XML.h"
 
@@ -143,8 +144,7 @@ void CAvatarProfilePage::PrepareImage()
 	if ( m_bmAvatar.m_hObject != NULL ) m_bmAvatar.DeleteObject();
 	if ( m_sAvatar.IsEmpty() ) return;
 
-	CImageServices pService;
-	CImageFile pFile( &pService );
+	CImageFile pFile;
 
 	CClientDC dc( this );
 	SendMessage( WM_CTLCOLORSTATIC, (WPARAM)dc.GetSafeHdc(), (LPARAM)m_wndPreview.GetSafeHwnd() );

@@ -29,6 +29,7 @@
 #include "Plugins.h"
 #include "DownloadTask.h"
 #include "ImageServices.h"
+#include "ImageFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -433,8 +434,7 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 	if ( ( pBuffer = pTask->IsPreviewAnswerValid() ) == NULL )
 		return;
 
-	CImageServices pServices;
-	CImageFile pImage( &pServices );
+	CImageFile pImage;
 	DWORD nBuffer = pBuffer->m_nLength;
 	BYTE* pBytes = new BYTE[ nBuffer ];
 	CopyMemory( pBytes, pBuffer->m_pBuffer, nBuffer );
@@ -466,8 +466,6 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 		// Make it hidden, so the files won't be shared
 		SetFileAttributes( (LPCTSTR)strPath, FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM );
 	}
-
-	pServices.Cleanup();
 	delete [] pBytes;
 	delete [] pBuffer2;
 	m_bGotPreview = TRUE;

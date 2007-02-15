@@ -34,6 +34,23 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CImageServices, CComObject)
 
 /////////////////////////////////////////////////////////////////////////////
+// CImageServices construction
+
+CImageServices::CImageServices() :
+	m_COM( GetCurrentThreadId() == AfxGetApp()->m_nThreadID )
+{
+}
+
+CImageServices::~CImageServices()
+{
+	if ( m_COM && ( GetCurrentThreadId() != AfxGetApp()->m_nThreadID ) )
+	{
+		m_COM = false;
+		OleUninitialize();
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CImageServices load operations
 
 BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly, BOOL bPartialOk)
@@ -332,9 +349,14 @@ CImageServices::PluginInfo CImageServices::LoadService(const CString& strType)
 
 	if ( !m_COM )
 	{
-		if ( FAILED( CoInitializeEx( NULL, COINIT_MULTITHREADED ) ) )
-			return PluginInfo();
-		m_COM = true;
+		HRESULT hr = OleInitialize( NULL );
+		if ( FAILED( hr ) )
+		{
+			if ( hr != RPC_E_CHANGED_MODE )
+				return PluginInfo();
+		}
+		else
+			m_COM = true;
 	}
 
 	HINSTANCE hRes = AfxGetResourceHandle();
@@ -365,26 +387,13 @@ CImageServices::PluginInfo CImageServices::LoadService(const CString& strType)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CImageServices cleanup
-
-void CImageServices::Cleanup()
-{
-	if ( m_COM && ( GetCurrentThreadId() != AfxGetApp()->m_nThreadID ) )
-	{
-		m_COM = false;
-		CoUninitialize();
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // CImageServices load bitmap
 
 BOOL CImageServices::LoadBitmap(CBitmap* pBitmap, UINT nResourceID, LPCTSTR pszType)
 {
 	if ( pBitmap->m_hObject == NULL ) pBitmap->DeleteObject();
 
-	CImageServices pService;
-	CImageFile pFile( &pService );
+	CImageFile pFile;
 	if ( ! pFile.LoadFromResource( AfxGetResourceHandle(), nResourceID, pszType ) ) return FALSE;
 	if ( ! pFile.EnsureRGB() ) return FALSE;
 	pBitmap->Attach( pFile.CreateBitmap() );

@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,6 +45,7 @@
 
 #include "LocalSearch.h"
 #include "ImageServices.h"
+#include "ImageFile.h"
 #include "ThumbCache.h"
 #include "Neighbours.h"
 #include "Neighbour.h"
@@ -1571,8 +1572,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 		return TRUE;
 	}
 	
-	CImageServices pServices;
-	CImageFile pImage( &pServices );
+	CImageFile pImage;
 	CThumbCache pCache;
 	CSize szThumb( 0, 0 );
 	
@@ -1632,8 +1632,6 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 		SendResponse( IDR_HTML_FILENOTFOUND );
 		return TRUE;
 	}
-	
-	pServices.Cleanup();
 	
 	m_pOutput->Print( "HTTP/1.1 200 OK\r\n" );
 	SendDefaultHeaders();

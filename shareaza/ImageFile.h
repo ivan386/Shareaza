@@ -1,7 +1,7 @@
 //
 // ImageFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,40 +23,37 @@
 
 class CImageServices;
 
+// NOTE: Dont call CImageFile's Load/Save methods across thread boundaries!
 
 class CImageFile : public CComObject
 {
 // Construction
 public:
-	CImageFile(CImageServices* pFoo = NULL);
+	CImageFile();
 	virtual ~CImageFile();
 
 	DECLARE_DYNAMIC(CImageFile)
 
 public:
-	BOOL	m_bScanned;
-	int		m_nWidth;
-	int		m_nHeight;
-	int		m_nComponents;
-public:
-	BOOL	m_bLoaded;
-	LPBYTE	m_pImage;
+	BOOL			m_bScanned;
+	int				m_nWidth;
+	int				m_nHeight;
+	int				m_nComponents;
+	BOOL			m_bLoaded;
+	LPBYTE			m_pImage;
+	CImageServices	m_ImageServices;
 
 // Operations
 public:
 	void	Clear();
-public:
 	BOOL	LoadFromMemory(LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL	LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL	LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
-public:
 	BOOL	SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
 //	BOOL	SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
 //	BOOL	SaveToFile(LPCTSTR pszFile, int nQuality);
-public:
 	DWORD	GetSerialSize() const;
 	void	Serialize(CArchive& ar);
-public:
 	HBITMAP	CreateBitmap(HDC hUseDC = 0);
 	BOOL	Resample(int nNewWidth, int nNewHeight);
 	BOOL	FastResample(int nNewWidth, int nNewHeight);

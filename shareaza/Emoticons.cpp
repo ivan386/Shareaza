@@ -1,7 +1,7 @@
 //
 // Emoticons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -302,8 +302,7 @@ BOOL CEmoticons::LoadTrillian(LPCTSTR pszFile)
 	if ( nSlash >= 0 ) strValue = strValue.Mid( nSlash + 1 );
 	strValue = strPath + strValue;
 
-	CImageServices pServices;
-	CImageFile pImage( &pServices );
+	CImageFile pImage;
 
 	if (	! pImage.LoadFromFile( strValue ) ||
 			! pImage.EnsureRGB( GetSysColor( COLOR_WINDOW ) ) ||

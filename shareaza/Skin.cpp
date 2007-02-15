@@ -1814,8 +1814,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 
 HBITMAP CSkin::LoadBitmap(CString& strName)
 {
-	CImageServices pServices;
-	CImageFile pFile( &pServices );
+	CImageFile pFile;
 	int nPos = strName.Find( '$' );
 	
 	if ( nPos < 0 )

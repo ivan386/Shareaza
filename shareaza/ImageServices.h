@@ -1,7 +1,7 @@
 //
 // ImageServices.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,35 +21,31 @@
 
 #pragma once
 
-#include "ImageFile.h"
+class CImageFile;
 
+// NOTE: Dont call CImageServices's methods across thread boundaries!
 
 class CImageServices : public CComObject
 {
 // Construction
 public:
-	CImageServices()
-		: m_COM( GetCurrentThreadId() == AfxGetApp()->m_nThreadID )
-	{}
-	~CImageServices() { Cleanup(); }
+	CImageServices();
+	virtual ~CImageServices();
 
 	DECLARE_DYNAMIC(CImageServices)
 
 // Operations
-public:
-	void	Cleanup();
-	BOOL	LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
-	BOOL	LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
-	BOOL	SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
-//	BOOL	SaveToFile(CImageFile* pFile, LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
+	BOOL		LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
+	BOOL		LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
+	BOOL		SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
+//	BOOL		SaveToFile(CImageFile* pFile, LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
 
 // Static Load Tool
-public:
 	static BOOL	LoadBitmap(CBitmap* pBitmap, UINT nResourceID, LPCTSTR pszType);
 	BOOL IsFileViewable(LPCTSTR pszPath);
 
 // Implementation
-private:
+protected:
 	typedef std::pair< CComQIPtr< IImageServicePlugin >, CLSID > PluginInfo;
 	typedef std::map< CString, PluginInfo > services_map;
 	typedef services_map::const_iterator const_iterator;
@@ -60,6 +56,6 @@ private:
 	PluginInfo	LoadService(const CString& strType);
 
 // Attributes
-	bool m_COM;
-	services_map m_services;
+	bool			m_COM;
+	services_map	m_services;
 };

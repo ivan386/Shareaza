@@ -41,6 +41,7 @@
 #include "UploadTransferED2K.h"
 #include "SourceURL.h"
 #include "ImageServices.h"
+#include "ImageFile.h"
 #include "ThumbCache.h"
 
 #include "ChatCore.h"
@@ -1583,8 +1584,7 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 			CEDPacket* pReply = CEDPacket::New( ED2K_C2C_PREVIEWANWSER, ED2K_PROTOCOL_EMULE );
 			pReply->Write( oHash );
 
-			CImageServices pServices;
-			CImageFile pImage( &pServices );
+			CImageFile pImage;
 			CThumbCache pCache;
 			CSize szThumb( 0, 0 );
 			CString sFilePath = pFile->GetPath();
@@ -1636,8 +1636,6 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 				Send( pReply );
 				return TRUE; // Not an image packet
 			}
-
-			pServices.Cleanup();
 
 			pReply->Write( (LPCVOID)&nFrames, 1 );	// We send only 1 frame
 			pReply->WriteLongLE( nImageSize );

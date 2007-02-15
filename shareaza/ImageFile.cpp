@@ -1,7 +1,7 @@
 //
 // ImageFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "ImageServices.h"
+#include "ImageFile.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -38,11 +39,10 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CImageFile, CComObject)
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile construction
 
-CImageFile::CImageFile(CImageServices* /* pFoo  = NULL */)
+CImageFile::CImageFile()
 {
 	m_bScanned		= FALSE;
 	m_nWidth		= 0;
@@ -79,16 +79,14 @@ BOOL CImageFile::LoadFromMemory(LPCTSTR pszType, LPCVOID pData, DWORD nLength, B
 {
 	Clear();
 
-	CImageServices srv;
-	return m_bLoaded = srv.LoadFromMemory( this, pszType, pData, nLength, bScanOnly, bPartialOk );
+	return m_bLoaded = m_ImageServices.LoadFromMemory( this, pszType, pData, nLength, bScanOnly, bPartialOk );
 }
 
 BOOL CImageFile::LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly, BOOL bPartialOk)
 {
 	Clear();
 
-	CImageServices srv;
-	return m_bLoaded = srv.LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
+	return m_bLoaded = m_ImageServices.LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
 }
 
 BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly, BOOL bPartialOk)
@@ -141,15 +139,13 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 BOOL CImageFile::SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength)
 {
 	if ( ! m_bLoaded ) return FALSE;
-	CImageServices srv;
-	return srv.SaveToMemory( this, pszType, nQuality, ppBuffer, pnLength );
+	return m_ImageServices.SaveToMemory( this, pszType, nQuality, ppBuffer, pnLength );
 }
 
 /*BOOL CImageFile::SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength)
 {
 	if ( ! m_bLoaded ) return FALSE;
-	CImageServices srv;
-	return srv.SaveToFile( this, pszType, nQuality, hFile, pnLength );
+	return m_ImageServices.SaveToFile( this, pszType, nQuality, hFile, pnLength );
 }
 
 BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality)
@@ -161,8 +157,7 @@ BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality)
 
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
 
-	CImageServices srv;
-	BOOL bResult = srv.SaveToFile( this, pszFile, nQuality, hFile );
+	BOOL bResult = m_ImageServices.SaveToFile( this, pszFile, nQuality, hFile );
 
 	CloseHandle( hFile );
 

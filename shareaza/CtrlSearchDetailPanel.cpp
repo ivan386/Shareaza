@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -221,8 +221,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 		
 		if ( pFile->m_pPreview != NULL && pFile->m_nPreview > 0 )
 		{
-			CImageServices pServices;
-			CImageFile pImage( &pServices );
+			CImageFile pImage;
 			
 			if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pFile->m_pPreview, pFile->m_nPreview, FALSE, TRUE ) )
 			{
@@ -510,8 +509,7 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 		{
 			if ( m_pFile->m_pPreview != NULL && m_pFile->m_nPreview > 0 )
 			{
-				CImageServices pServices;
-				CImageFile pImage( &pServices );
+				CImageFile pImage;
 				
 				if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)m_pFile->m_pPreview, m_pFile->m_nPreview, FALSE, TRUE ) )
 				{
@@ -831,7 +829,6 @@ UINT CSearchDetailPanel::ThreadStart(LPVOID pParam)
 void CSearchDetailPanel::OnRun()
 {
 	CSingleLock pLock( &m_pSection );
-	CImageServices pServices;
 	
 	while ( m_bThread )
 	{
@@ -868,7 +865,7 @@ void CSearchDetailPanel::OnRun()
 		
 		if ( ExecuteRequest( strURL, &pBuffer, &nBuffer ) )
 		{
-			CImageFile pImage( &pServices );
+			CImageFile pImage;
 			
 			if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pBuffer, nBuffer, FALSE, TRUE ) )
 			{

@@ -34,6 +34,7 @@
 #include "Skin.h"
 #include "ThumbCache.h"
 #include "ImageServices.h"
+#include "ImageFile.h"
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryMetaPanel.h"
 #include "FileExecutor.h"
@@ -641,8 +642,6 @@ UINT CLibraryMetaPanel::ThreadStart(LPVOID pParam)
 
 void CLibraryMetaPanel::OnRun()
 {
-	CImageServices pServices;
-
 	while ( m_bThread )
 	{
 		WaitForSingleObject( m_pWakeup, INFINITE );
@@ -657,7 +656,7 @@ void CLibraryMetaPanel::OnRun()
 		CString strPath = m_sPath;
 		m_pSection.Unlock();
 
-		CImageFile pFile( &pServices );
+		CImageFile pFile;
 		CThumbCache pCache;
 		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
 		BOOL bSuccess = FALSE;
