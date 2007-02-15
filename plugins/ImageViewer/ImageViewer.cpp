@@ -68,7 +68,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 STDAPI DllRegisterServer(void)
 {
 	// Pass FALSE as the argument here, as we don't want to register a type library.
-	return _Module.RegisterServer( FALSE );
+	return _Module.RegisterServer( TRUE );
 }
 
 /////////////////////////////////////////////////////////////////////////////
