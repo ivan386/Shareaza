@@ -24,11 +24,12 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\Shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
-				MinimalRebuild="TRUE"
+				MinimalRebuild="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="3"
-				WarningLevel="3"
+				WarningLevel="4"
 				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="4"/>
 			<Tool
@@ -36,10 +37,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				OutputFile="../$(OutDir)/SWFPlugin.dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\SWFPlugin.def"
 				GenerateDebugInformation="TRUE"
+				GenerateMapFile="FALSE"
 				SubSystem="2"
 				BaseAddress="0x1af20000"
 				ImportLibrary="$(OutDir)/SWFPlugin.lib"
@@ -47,15 +48,14 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="..\..\shareaza"
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/SWFPlugin.tlb"
-				HeaderFileName="SWFPlugin.h"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="SWFPlugin_i.c"
-				ProxyFileName="SWFPlugin_p.c"/>
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
@@ -94,26 +94,24 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				GlobalOptimizations="TRUE"
-				InlineFunctionExpansion="1"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				EnableFiberSafeOptimizations="TRUE"
-				OptimizeForProcessor="2"
 				AdditionalIncludeDirectories="..\..\Shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				StringPooling="TRUE"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="FALSE"
+				BufferSecurityCheck="TRUE"
+				EnableFunctionLevelLinking="FALSE"
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="0"/>
+				Detect64BitPortabilityProblems="TRUE"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				OutputFile="../$(OutDir)/SWFPlugin.dll"
 				LinkIncremental="1"
 				ModuleDefinitionFile=".\SWFPlugin.def"
 				GenerateDebugInformation="FALSE"
@@ -123,20 +121,19 @@
 				OptimizeForWindows98="1"
 				SetChecksum="TRUE"
 				BaseAddress="0x1af20000"
-				ImportLibrary="$(OutDir)/SWFPlugin.lib"
+				ImportLibrary=""
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="..\..\shareaza"
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/SWFPlugin.tlb"
-				HeaderFileName="SWFPlugin.h"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="SWFPlugin_i.c"
-				ProxyFileName="SWFPlugin_p.c"/>
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"

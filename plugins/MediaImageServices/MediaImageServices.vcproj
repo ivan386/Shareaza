@@ -23,7 +23,7 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\Shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
-				MinimalRebuild="TRUE"
+				MinimalRebuild="FALSE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -39,10 +39,10 @@
 				RegisterOutput="FALSE"
 				IgnoreImportLibrary="TRUE"
 				AdditionalDependencies="Strmiids.lib Quartz.lib"
-				OutputFile="../$(OutDir)/MediaImageServices.dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\MediaImageServices.def"
 				GenerateDebugInformation="TRUE"
+				GenerateMapFile="FALSE"
 				SubSystem="2"
 				SetChecksum="FALSE"
 				BaseAddress="0x1af60000"
@@ -51,15 +51,14 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="..\..\shareaza"
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/MediaImageServices.tlb"
-				HeaderFileName="MediaImageServices.h"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="MediaImageServices_i.c"
-				ProxyFileName="MediaImageServices_p.c"/>
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
@@ -97,22 +96,20 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				GlobalOptimizations="TRUE"
-				InlineFunctionExpansion="1"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				EnableFiberSafeOptimizations="TRUE"
-				OptimizeForProcessor="2"
 				AdditionalIncludeDirectories="..\..\Shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="FALSE"
+				BufferSecurityCheck="TRUE"
+				EnableFunctionLevelLinking="FALSE"
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="0"/>
+				Detect64BitPortabilityProblems="TRUE"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -120,7 +117,6 @@
 				RegisterOutput="FALSE"
 				IgnoreImportLibrary="TRUE"
 				AdditionalDependencies="Strmiids.lib Quartz.lib"
-				OutputFile="../$(OutDir)/MediaImageServices.dll"
 				LinkIncremental="1"
 				ModuleDefinitionFile=".\MediaImageServices.def"
 				GenerateDebugInformation="FALSE"
@@ -130,20 +126,19 @@
 				OptimizeForWindows98="1"
 				SetChecksum="TRUE"
 				BaseAddress="0x1af60000"
-				ImportLibrary="$(OutDir)/MediaImageServices.lib"
+				ImportLibrary=""
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="..\..\shareaza"
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/MediaImageServices.tlb"
-				HeaderFileName="MediaImageServices.h"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="MediaImageServices_i.c"
-				ProxyFileName="MediaImageServices_p.c"/>
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"

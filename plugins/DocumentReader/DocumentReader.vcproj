@@ -17,19 +17,21 @@
 			ConfigurationType="2"
 			UseOfMFC="0"
 			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\shareaza\zlib;..\..\shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
-				MinimalRebuild="TRUE"
+				MinimalRebuild="FALSE"
+				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="3"
-				WarningLevel="3"
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -42,7 +44,7 @@
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
 				ModuleDefinitionFile=".\DocumentReader.def"
 				GenerateDebugInformation="TRUE"
-				GenerateMapFile="TRUE"
+				GenerateMapFile="FALSE"
 				MapFileName="$(OutDir)/$(ProjectName).map"
 				SubSystem="2"
 				BaseAddress="0x22000000"
@@ -51,14 +53,13 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
+				AdditionalIncludeDirectories="..\..\shareaza"
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/DocumentReader.tlb"
-				HeaderFileName="DocumentReader.h"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="DocumentReader_i.c"
-				ProxyFileName="DocumentReader_p.c"/>
+				InterfaceIdentifierFileName="$(InputName)_i.c"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
@@ -94,18 +95,22 @@
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="1"
+				Optimization="3"
 				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
-				OptimizeForProcessor="2"
-				OptimizeForWindowsApplication="TRUE"
+				OmitFramePointers="TRUE"
 				AdditionalIncludeDirectories="..\..\shareaza\zlib;..\..\shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
+				StringPooling="TRUE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="0"
+				BufferSecurityCheck="TRUE"
+				EnableFunctionLevelLinking="FALSE"
 				UsePrecompiledHeader="3"
-				WarningLevel="3"
-				DebugInformationFormat="3"/>
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -118,29 +123,28 @@
 				IgnoreAllDefaultLibraries="FALSE"
 				IgnoreDefaultLibraryNames="User32.lib;GDI32.lib;ComDlg32.lib;WinSpool.lib;shell32.lib;version.lib"
 				ModuleDefinitionFile=".\DocumentReader.def"
-				GenerateDebugInformation="TRUE"
-				GenerateMapFile="TRUE"
-				MapFileName="$(OutDir)/$(ProjectName).map"
+				GenerateDebugInformation="FALSE"
+				GenerateMapFile="FALSE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
+				SetChecksum="TRUE"
 				BaseAddress="0x22000000"
-				SupportUnloadOfDelayLoadedDLL="FALSE"
-				ImportLibrary="$(OutDir)/DocumentReader.lib"
-				MergeSections=".rdata=.text"
+				ImportLibrary=""
+				MergeSections=""
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
+				AdditionalIncludeDirectories="..\..\shareaza"
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/DocumentReader.tlb"
-				HeaderFileName="DocumentReader.h"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="DocumentReader_i.c"
-				ProxyFileName="DocumentReader_p.c"/>
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
