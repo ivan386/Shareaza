@@ -375,7 +375,7 @@ BOOL CImage::Load(LPCTSTR pszPath)
 					LPCTSTR pszType = _tcsrchr( pszPath, '.' );
 					if ( pszType == NULL ) return FALSE;
 					
-					BSTR bstrType = SysAllocString ( pszType );
+					BSTR bstrType = SysAllocString ( CT2CW( pszType ) );
 					hr = pService->LoadFromMemory( bstrType, pInput, &pParams, &pArray );
 					SysFreeString( bstrType );
 					SafeArrayDestroy( pInput );
