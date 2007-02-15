@@ -533,7 +533,7 @@ CComBSTR CDocReader::GetMetadataXML(unzFile pFile)
 	WCHAR* pszUnicode = new WCHAR[ sXML.length() + 1 ];
 	if ( ! pszUnicode ) return "";
 
-	ConvertToUnicodeEx( sXML.c_str(), sXML.length(), pszUnicode, sXML.length(), CP_UTF8 );
+	ConvertToUnicodeEx( sXML.c_str(), (DWORD)sXML.length(), pszUnicode, (DWORD)sXML.length(), CP_UTF8 );
 	CComBSTR sUnicode( pszUnicode );
 	
 	delete [] pszUnicode;
@@ -2218,7 +2218,7 @@ HRESULT CDocReader::CDocumentProperties::
     switch ( vt )
     {
       case VT_BSTR: vtItem.bstrVal = ((BSTR)pv); break;
-      case VT_I4:   vtItem.lVal    = ((LONG)pv); break;
+      case VT_I4:   vtItem.lVal    = ((LONG)(LONG_PTR)pv); break;
       //case VT_BOOL: vtItem.boolVal = ((VARIANT_BOOL)((LONG)pv)); break;
 	  //case VT_DATE: VariantCopy(&vtItem, ((VARIANT*)pv)); break;
       default: return E_INVALIDARG;

@@ -456,7 +456,7 @@ STDAPI LoadPropertySetList(IPropertyStorage *pPropStg, WORD *pwCodePage, CDocPro
          // to VB supportted types (variant arrays and ole picdisp)...
 			BOOL bDontSkip = !( ( ( sps.vt & VT_CF ) == VT_CF ) ^ bOnlyThumb );
             if ( ( ( sps.vt & VT_VECTOR ) != VT_VECTOR ) && 
-                VarTypeReadable( (sps.vt & VT_TYPEMASK) ) && bDontSkip )
+                VarTypeReadable( (VARTYPE)(sps.vt & VT_TYPEMASK) ) && bDontSkip )
             {
                 spc.ulKind = PRSPEC_PROPID;
                 spc.propid = sps.propid;
@@ -838,7 +838,7 @@ STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *p
 		dwRet = SearchPathW( NULL, pwszFile, NULL, MAX_PATH, pwszPath, &lpwszFilePart );
 		SEH_EXCEPT_NULL
         if ( ( 0 == dwRet || dwRet > MAX_PATH ) ) return FALSE;
-        if ( pcPathIdx ) *pcPathIdx = ( ( (ULONG_PTR)lpwszFilePart - (ULONG_PTR)pwszPath ) / 2 );
+        if ( pcPathIdx ) *pcPathIdx = (ULONG)( ( (ULONG_PTR)lpwszFilePart - (ULONG_PTR)pwszPath ) / 2 );
 	}
 	else
 	{
@@ -852,8 +852,8 @@ STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *p
 		dwRet = SearchPathA( NULL, szFile, NULL, MAX_PATH, szBuffer, &lpszFilePart );
         if ( ( 0 == dwRet || dwRet > MAX_PATH ) ) return FALSE;
 
-        if ( pcPathIdx ) *pcPathIdx = (ULONG_PTR)lpszFilePart - (ULONG_PTR)&szBuffer;
-        if ( FAILED(ConvertToUnicodeEx( szBuffer, lstrlen(szBuffer), pwszPath, MAX_PATH, GetACP() )) )
+        if ( pcPathIdx ) *pcPathIdx = (ULONG)( (ULONG_PTR)lpszFilePart - (ULONG_PTR)&szBuffer );
+        if ( FAILED(ConvertToUnicodeEx( szBuffer, lstrlen(szBuffer), pwszPath, MAX_PATH, (WORD)GetACP() )) )
             return FALSE;
 	}
 
@@ -946,7 +946,7 @@ STDAPI_(BOOL) FGetIconForFile(LPCWSTR pwszFile, HICON *pico)
             CHECK_NULL_RETURN(s_pfnExtractAssociatedIconW, FALSE);
         }
 
-        idx = (lstrlenW(pwszFile) * 2);
+        idx = (WORD)(lstrlenW(pwszFile) * 2);
         memcpy((BYTE*)rgBuffer, (BYTE*)pwszFile, idx); idx = 0;
         *pico = s_pfnExtractAssociatedIconW(DllModuleHandle(), (LPWSTR)rgBuffer, &idx);
     }
@@ -962,7 +962,7 @@ STDAPI_(BOOL) FGetIconForFile(LPCWSTR pwszFile, HICON *pico)
         psz = ConvertToMBCS(pwszFile, CP_ACP);
         if (psz)
         {
-            idx = lstrlen(psz);
+            idx = (WORD)lstrlen(psz);
             memcpy((BYTE*)rgBuffer, (BYTE*)psz, idx); idx = 0;
             *pico = s_pfnExtractAssociatedIconA(DllModuleHandle(), (LPSTR)rgBuffer, &idx);
 		    CoTaskMemFree(psz);
