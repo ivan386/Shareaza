@@ -1,7 +1,7 @@
 //
 // LibraryFolders.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -113,13 +113,12 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 	if ( IsFolderShared( strPath ) ) return NULL;
 	if ( IsSubFolderShared( strPath ) ) return NULL;
 
-	CLibraryFolder* pFolder;
+	CLibraryFolder* pFolder = new CLibraryFolder( NULL, strPath )
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
-		pFolder = new CLibraryFolder( NULL, strPath );
+
 		BOOL bAdded = FALSE;
-		
+
 		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
 			POSITION posAdd = pos;

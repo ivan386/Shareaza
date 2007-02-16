@@ -1,7 +1,7 @@
 //
 // SharedFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -382,8 +382,8 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 				}
 				else
 				{
-					pLock.Lock();
 					pFolder = new CLibraryFolder( this, strPath );
+					pLock.Lock();
 					m_pFolders.SetAt( pFolder->m_sNameLC, pFolder );
 					bChanged = TRUE;
 					m_nUpdateCookie++;
@@ -423,8 +423,8 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 				}
 				else
 				{
-					pLock.Lock();
 					pFile = new CLibraryFile( this, pFind.cFileName );
+					pLock.Lock();
 					m_pFiles.SetAt( pFile->GetNameLC(), pFile );
 					m_nFiles++;
 					bChanged = TRUE;
