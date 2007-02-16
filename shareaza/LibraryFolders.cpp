@@ -113,7 +113,7 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 	if ( IsFolderShared( strPath ) ) return NULL;
 	if ( IsSubFolderShared( strPath ) ) return NULL;
 
-	CLibraryFolder* pFolder = new CLibraryFolder( NULL, strPath )
+	CLibraryFolder* pFolder = new CLibraryFolder( NULL, strPath );
 	{
 		CQuickLock oLock( Library.m_pSection );
 
