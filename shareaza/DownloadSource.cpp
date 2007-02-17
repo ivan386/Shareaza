@@ -332,7 +332,12 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		
 		ar >> m_sServer;
 		if ( nVersion >= 24 ) ar >> m_sNick;
-		if ( nVersion >= 35 ) ar >> m_sCountry;
+
+		if ( nVersion >= 36 ) 
+			ar >> m_sCountry;
+		else
+			m_sCountry = theApp.GetCountryCode( m_pAddress );
+
 		ar >> m_nSpeed;
 		ar >> m_bPushOnly;
 		ar >> m_bCloseConn;

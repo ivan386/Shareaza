@@ -729,7 +729,7 @@ BOOL CDownload::Save(BOOL bFlush)
 //////////////////////////////////////////////////////////////////////
 // CDownload serialize
 
-#define DOWNLOAD_SER_VERSION	35
+#define DOWNLOAD_SER_VERSION	36
 
 void CDownload::Serialize(CArchive& ar, int nVersion)
 {
