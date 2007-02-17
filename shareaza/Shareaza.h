@@ -110,7 +110,7 @@ public:
 	void				LogMessage(LPCTSTR pszLog);
 	void				DebugState(BOOL bState);
 
-	CString				GetCountryCode(IN_ADDR pAddress);
+	CString				GetCountryCode(IN_ADDR pAddress) const;
 
 	virtual BOOL		InitInstance();
 	virtual int			ExitInstance();

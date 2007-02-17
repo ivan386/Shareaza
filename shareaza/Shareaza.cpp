@@ -703,16 +703,16 @@ void CShareazaApp::InitResources()
 
 	// Load the GeoIP library for mapping IPs to countries
 	m_hGeoIP = LoadLibrary( _T("geoip.dll") );
-    if (m_hGeoIP == NULL)
+    if ( m_hGeoIP == NULL )
     {
-        FreeLibrary(m_hGeoIP);
+        FreeLibrary( m_hGeoIP );
     }
 	else
 	{
-		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress(m_hGeoIP, "GeoIP_new");
-		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress(m_hGeoIP, "GeoIP_country_code_by_addr");
+		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
+		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_addr" );
 
-		m_pGeoIP = pfnGeoIP_new(GEOIP_MEMORY_CACHE);
+		m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
 
 	// Get the fonts from the registry
@@ -900,10 +900,10 @@ CString CShareazaApp::GetErrorString()
 	return strMessage;
 }
 
-CString CShareazaApp::GetCountryCode(IN_ADDR pAddress)
+CString CShareazaApp::GetCountryCode(IN_ADDR pAddress) const
 {
 	if ( m_pGeoIP )
-		return CString( m_pfnGeoIP_country_code_by_addr(m_pGeoIP, inet_ntoa( pAddress )) );
+		return CString( m_pfnGeoIP_country_code_by_addr( m_pGeoIP, inet_ntoa( pAddress ) ) );
 	return _T("");
 }
 
