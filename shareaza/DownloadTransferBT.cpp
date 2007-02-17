@@ -86,6 +86,7 @@ BOOL CDownloadTransferBT::Initiate()
 	m_tConnected	= GetTickCount();
 	m_pHost			= m_pClient->m_pHost;
 	m_sAddress		= m_pClient->m_sAddress;
+	m_sCountry		= theApp.GetCountryCode( m_pHost.sin_addr );
 	
 	return TRUE;
 }
@@ -200,6 +201,7 @@ BOOL CDownloadTransferBT::OnConnected()
 		SetState( dtsTorrent );
 		m_pHost		= m_pClient->m_pHost;
 		m_sAddress	= m_pClient->m_sAddress;
+		m_sCountry	= theApp.GetCountryCode( m_pHost.sin_addr );
 		m_pSource->SetLastSeen();
 		m_pClient->m_mInput.pLimit = &m_nBandwidth;
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );

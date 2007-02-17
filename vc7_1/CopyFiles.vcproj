@@ -86,7 +86,7 @@
 					Description="Copying Files..."
 					CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)&quot; &gt; nul
 "
-					Outputs="&quot;$(ConfigurationName)/data/DefaultServices.dat&quot; &gt;nul"/>
+					Outputs="NULL"/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32"
@@ -96,7 +96,7 @@
 					Description="Copying Files..."
 					CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)&quot; &gt; nul
 "
-					Outputs="&quot;$(ConfigurationName)/data/DefaultServices.dat&quot; &gt;nul"/>
+					Outputs="NULL"/>
 			</FileConfiguration>
 		</File>
 	</Files>

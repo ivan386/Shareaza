@@ -135,6 +135,7 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 8, _T("Mode"), LVCFMT_CENTER, 60, 7 );
 	m_wndList.InsertColumn( 9, _T("Client"), LVCFMT_LEFT, 100, 8 );
 	m_wndList.InsertColumn( 10, _T("Name"), LVCFMT_LEFT, 100, 9 );
+	m_wndList.InsertColumn( 11, _T("Country"), LVCFMT_LEFT, 40, 10 );
 
 	m_wndList.SetFont( &theApp.m_gdiFont );
 	
@@ -162,7 +163,7 @@ void CNeighboursWnd::Update()
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return;
 	
-	CLiveList pLiveList( 11 );
+	CLiveList pLiveList( 12 );
 	
 	m_tLastUpdate = GetTickCount();
 	int nProtocolRev = m_gdiImageList.GetImageCount() - 1;
@@ -326,6 +327,8 @@ void CNeighboursWnd::Update()
 		{
 			pItem->Set( 10, pNeighbour->m_pProfile->GetNick() );
 		}
+
+		pItem->Set( 11, pNeighbour->m_sCountry );
 	}
 	
 	pLiveList.Apply( &m_wndList, TRUE );

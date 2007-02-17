@@ -33,6 +33,7 @@
 #include "Skin.h"
 #include "CtrlDownloads.h"
 #include "WndDownloads.h"
+#include "Flags.h"
 
 IMPLEMENT_DYNAMIC(CDownloadsCtrl, CWnd)
 
@@ -71,6 +72,7 @@ END_MESSAGE_MAP()
 #define DOWNLOAD_COLUMN_CLIENT		5
 #define DOWNLOAD_COLUMN_DOWNLOADED	6
 #define DOWNLOAD_COLUMN_PERCENTAGE  7
+#define DOWNLOAD_COLUMN_COUNTRY		8
 #define COLUMNS_TO_SORT				DOWNLOAD_COLUMN_PERCENTAGE - DOWNLOAD_COLUMN_TITLE
 
 //////////////////////////////////////////////////////////////////////////////
@@ -145,6 +147,7 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( DOWNLOAD_COLUMN_CLIENT, _T("Client"), LVCFMT_CENTER, 80 );
 	InsertColumn( DOWNLOAD_COLUMN_DOWNLOADED, _T("Downloaded"), LVCFMT_CENTER, 0 );
 	InsertColumn( DOWNLOAD_COLUMN_PERCENTAGE, _T("Complete"), LVCFMT_CENTER, 60 );
+	InsertColumn( DOWNLOAD_COLUMN_COUNTRY, _T("Country"), LVCFMT_LEFT, 40 );
 	
 	LoadColumnState();
 	
@@ -1285,6 +1288,17 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 				strText.Format( _T("%i%%"), ((int) ( (double)( pSource->m_pTransfer->m_nDownloaded ) / (double)( pSource->m_pDownload->m_nSize ) * 100 )) );
 			else
 				strText = _T("-");
+			break;
+		case DOWNLOAD_COLUMN_COUNTRY:
+			dc.FillSolidRect( rcCell.left, rcCell.top, 20, rcCell.Height(), crBack );
+			rcCell.left += 2;
+			ImageList_DrawEx( Flags.m_pImage, Flags.GetFlagIndex(pSource->m_sCountry), dc.GetSafeHdc(),
+					rcCell.left, rcCell.top + 2, 18, 12, crNatural, CLR_DEFAULT, pSource->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+
+			rcCell.left += 18;
+			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
+
+			strText = pSource->m_sCountry;
 			break;
 
 		}

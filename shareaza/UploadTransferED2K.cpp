@@ -61,6 +61,7 @@ CUploadTransferED2K::CUploadTransferED2K(CEDClient* pClient) : CUploadTransfer( 
 	m_sUserAgent	= m_pClient->m_sUserAgent;
 	m_pHost			= m_pClient->m_pHost;
 	m_sAddress		= inet_ntoa( m_pHost.sin_addr );
+	m_sCountry		= theApp.GetCountryCode( m_pHost.sin_addr );
 	m_sNick			= m_pClient->m_sNick;
 	
 	m_tRankingSent	= 0;

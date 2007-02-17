@@ -140,6 +140,7 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 11, _T("Query"), LVCFMT_RIGHT, 0, 8 );
 	m_wndList.InsertColumn( 12, _T("Ack"), LVCFMT_RIGHT, 0, 9 );
 #endif
+	m_wndList.InsertColumn( 13, _T("Country"), LVCFMT_CENTER, 60, 10 );
 	m_wndList.SetFont( &theApp.m_gdiFont );
 
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
@@ -177,9 +178,9 @@ void CHostCacheWnd::Update(BOOL bForce)
 	
 	m_wndList.ModifyStyle( WS_VISIBLE, 0 );
 #ifdef _DEBUG	
-	CLiveList pLiveList( 13 );
+	CLiveList pLiveList( 14 );
 #else
-	CLiveList pLiveList( 10 );
+	CLiveList pLiveList( 11 );
 #endif
 	
 	PROTOCOLID nEffective = m_nMode ? m_nMode : PROTOCOL_G2;
@@ -234,6 +235,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 		if ( pHost->m_tQuery ) pItem->Format( 11, _T("%u"), pHost->m_tQuery );
 		if ( pHost->m_tAck ) pItem->Format( 12, _T("%u"), pHost->m_tAck);
 #endif
+		pItem->Set( 13, pHost->m_sCountry );
 	}
 
 	if ( !m_bAllowUpdates && !bForce ) return;

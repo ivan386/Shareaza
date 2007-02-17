@@ -628,6 +628,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Flags.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\FragmentBar.cpp"
 				>
 			</File>
@@ -3018,6 +3022,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Firewall.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Flags.h"
 				>
 			</File>
 			<File

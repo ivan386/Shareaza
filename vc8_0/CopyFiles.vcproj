@@ -273,46 +273,42 @@
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
-				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Copying Files..."
 					CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)$(TargetName)&quot; &gt; nul&#x0D;&#x0A;"
-					Outputs="&quot;$(ConfigurationName)$(TargetName)/data/DefaultServices.dat&quot;"
+					Outputs="NULL"
 				/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Debug|x64"
-				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Copying Files..."
 					CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)$(TargetName)&quot; &gt; nul&#x0D;&#x0A;"
-					Outputs="&quot;$(ConfigurationName)$(TargetName)/data/DefaultServices.dat&quot;"
+					Outputs="NULL"
 				/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32"
-				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Copying Files..."
 					CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)$(TargetName)&quot; &gt; nul&#x0D;&#x0A;"
-					Outputs="&quot;$(ConfigurationName)$(TargetName)/data/DefaultServices.dat&quot;"
+					Outputs="NULL"
 				/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|x64"
-				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Copying Files..."
 					CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)$(TargetName)&quot; &gt; nul&#x0D;&#x0A;"
-					Outputs="&quot;$(ConfigurationName)$(TargetName)/data/DefaultServices.dat&quot;"
+					Outputs="NULL"
 				/>
 			</FileConfiguration>
 		</File>

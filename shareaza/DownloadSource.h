@@ -59,6 +59,7 @@ public:
 	WORD				m_nPort;
 	IN_ADDR				m_pServerAddress;
 	WORD				m_nServerPort;
+	CString				m_sCountry;
 public:
 	CString				m_sName;
 	DWORD				m_nIndex;

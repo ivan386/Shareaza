@@ -94,6 +94,11 @@ public:
 	BOOLEAN		(WINAPI *m_pfnGetActivePwrScheme)(PUINT);
 	BOOLEAN		(WINAPI *m_pfnGetCurrentPowerPolicies)(PGLOBAL_POWER_POLICY, PPOWER_POLICY);
 	BOOLEAN		(WINAPI *m_pfnSetActivePwrScheme)(UINT, PGLOBAL_POWER_POLICY, PPOWER_POLICY);
+	
+	// GeoIP - IP to Country lookup
+	HINSTANCE m_hGeoIP;
+	GeoIP* m_pGeoIP;
+	GeoIP_country_code_by_addrFunc m_pfnGeoIP_country_code_by_addr;
 
 public:
 	static CMainWnd*	SafeMainWnd();
@@ -104,6 +109,8 @@ public:
 	void				PrintMessage(int nType, LPCTSTR pszLog);
 	void				LogMessage(LPCTSTR pszLog);
 	void				DebugState(BOOL bState);
+
+	CString				GetCountryCode(IN_ADDR pAddress);
 
 	virtual BOOL		InitInstance();
 	virtual int			ExitInstance();

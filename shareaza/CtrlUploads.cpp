@@ -34,6 +34,7 @@
 #include "FragmentBar.h"
 #include "Skin.h"
 #include "CtrlUploads.h"
+#include "Flags.h"
 
 #include "Downloads.h"
 
@@ -71,6 +72,7 @@ END_MESSAGE_MAP()
 #define UPLOAD_COLUMN_SPEED		4
 #define UPLOAD_COLUMN_CLIENT	5
 #define UPLOAD_COLUMN_RATING	6
+#define UPLOAD_COLUMN_COUNTRY	7
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -126,6 +128,7 @@ int CUploadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( UPLOAD_COLUMN_SPEED, _T("Speed"), LVCFMT_CENTER, 80 );
 	InsertColumn( UPLOAD_COLUMN_CLIENT, _T("Client"), LVCFMT_CENTER, 100 );
 	InsertColumn( UPLOAD_COLUMN_RATING, _T("Rating"), LVCFMT_CENTER, 0 );
+	InsertColumn( UPLOAD_COLUMN_COUNTRY, _T("Country"), LVCFMT_LEFT, 60 );
 	
 	
 	LoadColumnState();
@@ -1002,6 +1005,17 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			break;
 		case UPLOAD_COLUMN_RATING:
 			strText.Format(_T("%d"), pTransfer->m_nUserRating );
+			break;
+		case UPLOAD_COLUMN_COUNTRY:
+			dc.FillSolidRect( rcCell.left, rcCell.top, 20, rcCell.Height(), crBack );
+			rcCell.left += 2;
+			ImageList_DrawEx( Flags.m_pImage, Flags.GetFlagIndex(pTransfer->m_sCountry), dc.GetSafeHdc(),
+					rcCell.left, rcCell.top + 2, 18, 12, crNatural, CLR_DEFAULT, pFile->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+
+			rcCell.left += 18;
+			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
+
+			strText = pTransfer->m_sCountry;
 			break;
 		}
 		

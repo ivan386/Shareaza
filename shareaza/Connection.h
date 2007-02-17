@@ -69,6 +69,7 @@ public:
 	// The remote computer's IP address, who connected to the other, are we connected, and when it happened
 	SOCKADDR_IN m_pHost;      // The remote computer's IP address in Windows Sockets format
 	CString     m_sAddress;   // The same IP address in a string like "1.2.3.4"
+	CString		m_sCountry;   // The country of this host
 	BOOL        m_bInitiated; // True if we initiated the connection, false if the remote computer connected to us
 	BOOL        m_bConnected; // True when the socket is connected
 	DWORD       m_tConnected; // The tick count when the socket connection was made

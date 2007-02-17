@@ -101,6 +101,11 @@ Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonl
 ; Copy repair installer
 ;Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; Check: not WizardSilent
 
+; GeoIP
+Source: "GeoIP\geoip.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "GeoIP\data\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
 Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl*.dll"; MinVersion: 0,4.0
