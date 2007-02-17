@@ -129,7 +129,7 @@ void CHomeViewCtrl::Update()
 	m_pDocument.ShowGroup( GROUP_CONNECTED, bConnected );
 
 	BOOL bOnG2 = bConnected && Settings.Gnutella2.EnableToday && ( Neighbours.GetCount( PROTOCOL_G2, nrsConnected, -1 ) >= Settings.Gnutella2.NumHubs );
-	BOOL bTCPFirewalled = Network.IsFirewalled(CHECK_TCP);
+	// BOOL bTCPFirewalled = Network.IsFirewalled(CHECK_TCP);
 	BOOL bUDPFirewalled = Network.IsFirewalled(CHECK_UDP);
 
 	m_pDocument.ShowGroup( GROUP_FIREWALLED, bOnG2 && bUDPFirewalled );
