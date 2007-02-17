@@ -1,7 +1,7 @@
 //
 // DownloadSource.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,6 +67,8 @@ public:
 	BOOL				m_bSHA1;
 	BOOL				m_bTiger;
 	BOOL				m_bED2K;
+	BOOL				m_bBTH;
+	BOOL				m_bMD5;
 public:
 	CString				m_sServer;
 	CString				m_sNick;

@@ -1,11 +1,7 @@
 //
 // DownloadSource.cpp
 //
-//	Date:			"$Date: 2006/03/27 01:36:17 $"
-//	Revision:		"$Revision: 1.16 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -64,7 +60,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload)
 void CDownloadSource::Construct(CDownload* pDownload)
 {
 	ASSERT( pDownload != NULL );
-	
+
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
 
@@ -73,7 +69,7 @@ void CDownloadSource::Construct(CDownload* pDownload)
 	m_pNext			= NULL;
 	m_pTransfer		= NULL;
 	m_bSelected		= FALSE;
-	
+
 	m_nProtocol		= PROTOCOL_NULL;
 	ZeroMemory( &m_pAddress, sizeof( m_pAddress ) );
 	m_nPort			= 0;
@@ -85,6 +81,8 @@ void CDownloadSource::Construct(CDownload* pDownload)
 	m_bSHA1			= FALSE;
 	m_bTiger		= FALSE;
 	m_bED2K			= FALSE;
+	m_bBTH			= FALSE;
+	m_bMD5			= FALSE;
 	
 	m_nSpeed		= 0;
 	m_bPushOnly		= FALSE;
@@ -128,6 +126,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 	m_bSHA1		= bool( pHit->m_oSHA1 );
 	m_bTiger	= bool( pHit->m_oTiger );
 	m_bED2K		= bool( pHit->m_oED2K );
+	m_bBTH		= bool( pHit->m_oBTH );
 	
 	if ( pHit->m_nProtocol == PROTOCOL_G1 || pHit->m_nProtocol == PROTOCOL_G2 )
 	{
@@ -152,6 +151,16 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 	
 	ResolveURL();
 
+	if ( m_nProtocol == PROTOCOL_BT && ( pHit->m_nProtocol == PROTOCOL_G1 || pHit->m_nProtocol == PROTOCOL_G2 ) && pHit->m_oBTH )
+	{
+		// Dont downgrade protocol from G1/G2 to BitTorrent
+		m_nProtocol = pHit->m_nProtocol;
+
+		m_sURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ),
+			m_nPort,
+			(LPCTSTR)pHit->m_oBTH.toUrn() );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -205,7 +214,8 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, const Hashes::BtGuid& oGU
 			(LPCTSTR)CString( inet_ntoa( *pAddress ) ), nPort,
 			(LPCTSTR)pDownload->m_oBTH.toString() );
 	}
-	
+
+	m_bBTH		= TRUE;
 	m_oGUID	= transformGuid( oGUID );
 	m_sServer	= _T("BitTorrent");
 	
@@ -252,6 +262,7 @@ BOOL CDownloadSource::ResolveURL()
 	
 	m_bSHA1		|= static_cast< BOOL >( bool( pURL.m_oSHA1 ) );
 	m_bED2K		|= static_cast< BOOL >( bool( pURL.m_oED2K ) );
+	m_bBTH		|= static_cast< BOOL >( bool( pURL.m_oBTH ) );
 
 	m_nProtocol	= pURL.m_nProtocol;
 	m_pAddress	= pURL.m_pAddress;
@@ -299,6 +310,8 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		ar << m_bSHA1;
 		ar << m_bTiger;
 		ar << m_bED2K;
+		ar << m_bBTH;
+		ar << m_bMD5;
 		
 		ar << m_sServer;
 		ar << m_sNick;
@@ -329,6 +342,11 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		ar >> m_bSHA1;
 		ar >> m_bTiger;
 		ar >> m_bED2K;
+		if ( nVersion >= 37 )
+		{
+			ar >> m_bBTH;
+			ar >> m_bMD5;
+		}
 		
 		ar >> m_sServer;
 		if ( nVersion >= 24 ) ar >> m_sNick;

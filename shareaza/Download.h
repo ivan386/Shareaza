@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,8 +24,15 @@
 
 #pragma once
 
-#include "DownloadWithExtras.h"
+#define DOWNLOAD_SER_VERSION	37
+// History:
+// 33 - added m_sSearchKeyword to CDownloadBase (CyberBob)
+// 34 - added m_bSeeding and m_sServingFileName to CDownloadWithTorrent (Rolandas)
+// 35 - added m_sCountry to CDownloadSource (dcat)
+// 36 - nothing (Rolandas)
+// 37 - added m_oBTH to CDownloadBase, m_bBTH and m_bMD5 to CDownloadSource (Ryo-oh-ki)
 
+#include "DownloadWithExtras.h"
 
 class CDownload : public CDownloadWithExtras
 {

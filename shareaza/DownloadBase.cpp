@@ -1,11 +1,7 @@
 //
 // DownloadBase.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.13 $"
-//  Last change by:	"$Author: thetruecamper $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -114,6 +110,11 @@ void CDownloadBase::GenerateDiskName(bool bTorrent)
 		m_sDiskName += _T("btih_");
 		m_sDiskName += m_oBTH.toString();
 	}
+	else if ( m_oMD5 )
+	{
+		m_sDiskName += _T("md5_");
+		m_sDiskName += m_oMD5.toString();
+	}
 	else if ( m_sDisplayName.GetLength() > 0 )
 	{
 		m_sDiskName += _T("name_");
@@ -148,6 +149,7 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
         SerializeOut( ar, m_oTiger );
         SerializeOut( ar, m_oMD5 );
         SerializeOut( ar, m_oED2K );
+		SerializeOut( ar, m_oBTH );
 	}
 	else
 	{
@@ -169,8 +171,11 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 		}
         SerializeIn( ar, m_oSHA1, nVersion );
         SerializeIn( ar, m_oTiger, nVersion );
-        if ( nVersion >= 22 ) SerializeIn( ar, m_oMD5, nVersion );
-        if ( nVersion >= 13 ) SerializeIn( ar, m_oED2K, nVersion );
-
+        if ( nVersion >= 22 )
+			SerializeIn( ar, m_oMD5, nVersion );
+        if ( nVersion >= 13 )
+			SerializeIn( ar, m_oED2K, nVersion );
+		if ( nVersion >= 37 )
+			SerializeIn( ar, m_oBTH, nVersion );
 	}
 }
