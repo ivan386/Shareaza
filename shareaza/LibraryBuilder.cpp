@@ -346,6 +346,13 @@ void CLibraryBuilder::OnRun()
 			if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex ) )
 			{
 				m_sPath = pFile->GetPath();
+				if ( LPCTSTR pszExt = _tcsrchr( m_sPath, '.' ) )
+				{
+					CString strExt;
+					strExt.Format( L"|%s|", ++pszExt );
+					if ( pszExt && _tcsistr( Settings.Library.PrivateTypes, strExt ) )
+						continue;
+				}
 			}
 			else
 			{
