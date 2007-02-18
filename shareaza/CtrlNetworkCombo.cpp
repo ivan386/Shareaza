@@ -1,7 +1,7 @@
 //
 // CtrlNetworkCombo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -102,10 +102,11 @@ int CNetworkCombo::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CNetworkCombo::OnSkinChange()
 {
+	int nRevStart = m_gdiImageList.GetImageCount();
 	for ( int nImage = 1 ; nImage < 4 ; nImage++ )
 	{
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_gdiImageList.Replace( nImage + 1, hIcon );
+		m_gdiImageList.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage + 1, hIcon );
 	}
 
 	CString str;

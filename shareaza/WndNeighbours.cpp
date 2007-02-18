@@ -1,7 +1,7 @@
 //
 // WndNeighbours.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,6 +42,8 @@
 #include "DlgURLCopy.h"
 #include "DlgSettingsManager.h"
 #include "CoolInterface.h"
+
+#include "Flags.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -86,7 +88,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CNeighboursWnd construction
 
-CNeighboursWnd::CNeighboursWnd() : CPanelWnd( TRUE, TRUE )
+CNeighboursWnd::CNeighboursWnd() : CPanelWnd( TRUE, TRUE ), m_nProtocolRev( 0 )
 {
 	Create( IDR_NEIGHBOURSFRAME );
 }
@@ -113,17 +115,31 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.SetTip( &m_wndTip );
 	
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
-		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
-		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
+		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES,
+		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES );
 	
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
 	if ( theApp.m_bRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
+
+	if ( !m_gdiImageList.Create( 17, 17, ILC_COLOR32|ILC_MASK, 6, 1 ) )
+		m_gdiImageList.Create( 17, 17, ILC_COLOR16|ILC_MASK, 6, 1 );
+
 	m_gdiImageList.Add( &bmImages, RGB( 0, 255, 0 ) );
+
+	// Merge protocols and flags in one image list
+	int nImages = m_gdiImageList.GetImageCount();
+	int nFlags = Flags.m_pImage.GetImageCount();
+	m_nProtocolRev = nImages - 1; // save the max index
+
+	m_gdiImageList.SetImageCount( nImages + nFlags );
+	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
+		m_gdiImageList.Replace( nImages + nFlag, Flags.m_pImage.ExtractIcon( nFlag ) );
+
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
-	
+	bmImages.DeleteObject();
+
 	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 110, -1 );
 	m_wndList.InsertColumn( 1, _T("Port"), LVCFMT_CENTER, 45, 0 );
 	m_wndList.InsertColumn( 2, _T("Time"), LVCFMT_CENTER, 80, 1 );
@@ -166,8 +182,7 @@ void CNeighboursWnd::Update()
 	CLiveList pLiveList( 12 );
 	
 	m_tLastUpdate = GetTickCount();
-	int nProtocolRev = m_gdiImageList.GetImageCount() - 1;
-	
+
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
 		CString str;
@@ -247,7 +262,7 @@ void CNeighboursWnd::Update()
 				}
 				
 				pItem->Set( 8, str );
-				pItem->m_nImage = theApp.m_bRTL ? nProtocolRev - PROTOCOL_G1 : PROTOCOL_G1;
+				pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev - PROTOCOL_G1 : PROTOCOL_G1;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
@@ -283,13 +298,13 @@ void CNeighboursWnd::Update()
 					pItem->Set( 7, _T("?") );
 				}
 				
-				pItem->m_nImage = theApp.m_bRTL ? nProtocolRev - PROTOCOL_G2 : PROTOCOL_G2;
+				pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev - PROTOCOL_G2 : PROTOCOL_G2;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 			{
 				CEDNeighbour* pED2K = static_cast<CEDNeighbour*>(pNeighbour);
 				
-				pItem->m_nImage = theApp.m_bRTL ? nProtocolRev - PROTOCOL_ED2K : PROTOCOL_ED2K;
+				pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev - PROTOCOL_ED2K : PROTOCOL_ED2K;
 				pItem->Set( 8, _T("eDonkey") );
 				pItem->Set( 10, pED2K->m_sServerName );
 				
@@ -315,12 +330,12 @@ void CNeighboursWnd::Update()
 			}
 			else
 			{
-				pItem->m_nImage = theApp.m_bRTL ? nProtocolRev : PROTOCOL_NULL;
+				pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev : PROTOCOL_NULL;
 			}
 		}
 		else
 		{
-			pItem->m_nImage = theApp.m_bRTL ? nProtocolRev : PROTOCOL_NULL;
+			pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev : PROTOCOL_NULL;
 		}
 		
 		if ( pNeighbour->m_pProfile != NULL )
@@ -329,6 +344,9 @@ void CNeighboursWnd::Update()
 		}
 
 		pItem->Set( 11, pNeighbour->m_sCountry );
+		int nFlag = Flags.GetFlagIndex( pNeighbour->m_sCountry );
+		if ( nFlag >= 0 )
+			pItem->SetImage( &m_wndList, (int)pNeighbour->m_nUnique, 11, m_nProtocolRev + nFlag + 1 );
 	}
 	
 	pLiveList.Apply( &m_wndList, TRUE );
@@ -353,7 +371,7 @@ void CNeighboursWnd::OnSkinChange()
 	for ( int nImage = 0 ; nImage < 4 ; nImage++ )
 	{
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_gdiImageList.Replace( nImage, hIcon );
+		m_gdiImageList.Replace( theApp.m_bRTL ? m_nProtocolRev - nImage : nImage, hIcon );
 	}
 }
 
@@ -624,7 +642,8 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		LV_ITEM pItem = { LVIF_IMAGE, static_cast< int >( pDraw->nmcd.dwItemSpec ) };
 		m_wndList.GetItem( &pItem );
 				
-		switch ( pItem.iImage )
+		int nImage = theApp.m_bRTL ? m_nProtocolRev - pItem.iImage : pItem.iImage;
+		switch ( nImage )
 		{
 		case PROTOCOL_NULL:
 			pDraw->clrText = RGB( 192, 192, 192 );

@@ -1293,7 +1293,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			dc.FillSolidRect( rcCell.left, rcCell.top, 20, rcCell.Height(), crBack );
 			rcCell.left += 2;
 			ImageList_DrawEx( Flags.m_pImage, Flags.GetFlagIndex(pSource->m_sCountry), dc.GetSafeHdc(),
-					rcCell.left, rcCell.top + 2, 18, 12, crNatural, CLR_DEFAULT, pSource->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+					rcCell.left, rcCell.top - 1, 18, 18, CLR_NONE, CLR_DEFAULT, pSource->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 
 			rcCell.left += 18;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
@@ -1356,10 +1356,11 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 
 void CDownloadsCtrl::OnSkinChange()
 {
+	int nRevStart = m_pProtocols.GetImageCount() - 1;
 	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
 	{
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_pProtocols.Replace( nImage, hIcon );
+		m_pProtocols.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage, hIcon );
 	}
 }
 

@@ -1,7 +1,7 @@
 //
 // WndNeighbours.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,6 +48,8 @@ protected:
 	CImageList			m_gdiImageList;
 	CLiveListSizer		m_pSizer;
 	DWORD				m_tLastUpdate;
+private:
+	int					m_nProtocolRev; // Reversed index of start image in RTL mode
 
 // Operations
 public:

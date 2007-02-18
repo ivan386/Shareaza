@@ -1,7 +1,7 @@
 //
 // LiveList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -228,6 +228,34 @@ BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 	return bModified;
 }
 
+BOOL CLiveItem::SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIndex)
+{
+	BOOL bModified = FALSE;
+	LV_FINDINFO pFind;
+	int nItem;
+
+	pFind.flags		= LVFI_PARAM;
+	pFind.lParam	= nParam;
+	nItem = pCtrl->FindItem( &pFind );
+
+	LV_ITEM pItem = {};
+	pItem.mask	= LVIF_IMAGE;
+	pItem.iItem	= nItem;
+	pItem.iSubItem = nColumn;
+
+	if ( ! pCtrl->GetItem( &pItem ) ) return FALSE;
+
+	if ( pItem.iImage < 0 )
+		bModified = TRUE;
+
+	if ( bModified )
+	{
+		pItem.iImage = nImageIndex;
+		pCtrl->SetItem( &pItem );
+	}
+
+	return bModified;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CLiveList sort method

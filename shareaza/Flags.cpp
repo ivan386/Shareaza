@@ -49,9 +49,9 @@ CFlags::~CFlags()
 BOOL CFlags::Load()
 {
 	Clear();
-	m_pImage.Create( 18, 12, ILC_COLOR32|ILC_MASK, 26 * 26, 8 ) || 
-		m_pImage.Create( 18, 12, ILC_COLOR24|ILC_MASK, 26 * 26, 8 ) ||
-		m_pImage.Create( 18, 12, ILC_COLOR16|ILC_MASK, 26 * 26, 8 );
+	m_pImage.Create( 18, 18, ILC_COLOR32|ILC_MASK, 26 * 26, 8 ) || 
+		m_pImage.Create( 18, 18, ILC_COLOR24|ILC_MASK, 26 * 26, 8 ) ||
+		m_pImage.Create( 18, 18, ILC_COLOR16|ILC_MASK, 26 * 26, 8 );
 
 	CString strFile = Settings.General.Path + _T("\\Data\\Flags.png");
 
@@ -103,29 +103,79 @@ void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 	BYTE* pSource = pImage->m_pImage;
 	pSource += pRect->top * nPitch + pRect->left * pImage->m_nComponents;
 
-	HDC hDC = GetDC( 0 );
-	CBitmap bmImage;
-
-	bmImage.CreateCompatibleBitmap( CDC::FromHandle( hDC ), 18, 12 );
-
-	BITMAPINFOHEADER pInfo;
-	pInfo.biSize		= sizeof(BITMAPINFOHEADER);
-	pInfo.biWidth		= 18;
-	pInfo.biHeight		= 12;
-	pInfo.biPlanes		= 1;
-	pInfo.biBitCount	= 24;
-	pInfo.biCompression	= BI_RGB;
-	pInfo.biSizeImage	= 18 * 12 * 3;
-
-	for ( int nY = 11 ; nY >= 0 ; nY-- )
+	HDC hDCMem1, hDCMem2;
+	if ( HDC hDC = GetDC( NULL ) ) // Get screen DC
 	{
-		SetDIBits( hDC, bmImage, nY, 1, pSource, (BITMAPINFO*)&pInfo, DIB_RGB_COLORS );
-		pSource += nPitch;
-	}
+		hDCMem1 = CreateCompatibleDC( hDC ); // Create memory DC for the source
+		if ( !hDCMem1 ) 
+		{
+			ReleaseDC( NULL, hDC );
+			return;
+		}
 
-	ReleaseDC( 0, hDC );
-	m_pImage.Add( &bmImage, crBack );
-	bmImage.DeleteObject();
+		hDCMem2 = CreateCompatibleDC( hDC ); // Create memory DC for the destination
+		if ( !hDCMem2 )
+		{
+			DeleteDC( hDCMem1 );
+			ReleaseDC( NULL, hDC );
+			return;
+		}
+
+		CBitmap bmOriginal, bmMoved;
+		CDC* pDC = CDC::FromHandle( hDC );
+
+		if ( !bmOriginal.CreateCompatibleBitmap( pDC, 18, 12 ) ) // Source bitmap
+		{
+			ReleaseDC( NULL, hDC );
+			DeleteDC( hDCMem1 );
+			DeleteDC( hDCMem2 );
+			return;
+		}
+
+		if ( !bmMoved.CreateCompatibleBitmap( pDC, 18, 18 ) ) // Destination bitmap
+		{
+			ReleaseDC( NULL, hDC );
+			DeleteDC( hDCMem1 );
+			DeleteDC( hDCMem2 );
+			bmOriginal.DeleteObject();
+			return;
+		}
+
+		BITMAPINFOHEADER pInfo;
+		pInfo.biSize		= sizeof(BITMAPINFOHEADER);
+		pInfo.biWidth		= 18;
+		pInfo.biHeight		= 12;
+		pInfo.biPlanes		= 1;
+		pInfo.biBitCount	= 24;
+		pInfo.biCompression	= BI_RGB;
+		pInfo.biSizeImage	= 18 * 12 * 3;
+
+		for ( int nY = 11 ; nY >= 0 ; nY-- )
+		{
+			SetDIBits( hDCMem1, bmOriginal, nY, 1, pSource, (BITMAPINFO*)&pInfo, DIB_RGB_COLORS );
+			pSource += nPitch;
+		}
+
+		HBITMAP hOld_bm1, hOld_bm2;
+		hOld_bm1 = (HBITMAP)SelectObject( hDCMem1, bmOriginal.m_hObject );
+		hOld_bm2 = (HBITMAP)SelectObject( hDCMem2, bmMoved.m_hObject );
+		CDC* pDC2 = CDC::FromHandle( hDCMem2 );
+		pDC2->SetBkMode( TRANSPARENT );
+		pDC2->FillSolidRect( 0, 0, 18, 18, crBack );
+
+		if ( theApp.m_bRTL )
+			theApp.m_pfnSetLayout( hDCMem2, LAYOUT_RTL );
+		StretchBlt( hDCMem2, 0, 3, 18, 12, hDCMem1, 0, 0, 18, 12, SRCCOPY );
+
+		SelectObject( hDCMem1, hOld_bm1 );
+		SelectObject( hDCMem2, hOld_bm2 );
+		DeleteDC( hDCMem1 );
+		DeleteDC( hDCMem2 );
+		ReleaseDC( NULL, hDC );
+		m_pImage.Add( &bmMoved, crBack );
+		bmMoved.DeleteObject();
+		bmOriginal.DeleteObject();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

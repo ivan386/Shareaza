@@ -87,7 +87,7 @@ public:
 public:
 	int		Add(CListCtrl* pCtrl, int nItem, int nColumns);
 	BOOL	Update(CListCtrl* pCtrl, int nItem, int nColumns);
-
+	BOOL	SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIndex);
 };
 
 #ifndef CDRF_NOTIFYSUBITEMDRAW

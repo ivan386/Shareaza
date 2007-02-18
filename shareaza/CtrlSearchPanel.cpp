@@ -711,10 +711,11 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CSearchAdvancedBox::OnSkinChange()
 {
+	int nRevStart = m_gdiImageList.GetImageCount() - 1;
 	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
 	{
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_gdiImageList.Replace( nImage, hIcon );
+		m_gdiImageList.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage, hIcon );
 	}
 }
 
