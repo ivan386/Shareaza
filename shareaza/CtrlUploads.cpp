@@ -809,32 +809,32 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 		switch ( pColumn.lParam )
 		{
 		case UPLOAD_COLUMN_TITLE:
-			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crBack );
 			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), pQueue->m_bExpanded ? SHI_MINUS : SHI_PLUS, dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, ILD_NORMAL );
+					rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, ILD_NORMAL );
 			rcCell.left += 16;
 			if ( pQueue == UploadQueues.m_pTorrentQueue )
 			{
 				ImageList_DrawEx( m_pProtocols, PROTOCOL_BT, dc.GetSafeHdc(),
-						rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+						rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			}
 			else if ( pQueue->m_nProtocols == ( 1 << PROTOCOL_HTTP ) )
 			{
 				ImageList_DrawEx( m_pProtocols, PROTOCOL_HTTP, dc.GetSafeHdc(),
-						rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+						rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			}
 			else if ( pQueue->m_nProtocols == ( 1 << PROTOCOL_ED2K ) )
 			{
 				ImageList_DrawEx( m_pProtocols, PROTOCOL_ED2K, dc.GetSafeHdc(),
-						rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+						rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			}
 			else
 			{
 				ImageList_DrawEx( ShellIcons.GetHandle( 16 ), pQueue->m_bExpanded ? SHI_FOLDER_OPEN : SHI_FOLDER_CLOSED, dc.GetSafeHdc(),
-						rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+						rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			}
 			rcCell.left += 16;
-			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crBack );
 			rcCell.left += 1;
 			
 			strText = pQueue->m_sName;
@@ -940,13 +940,13 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 		switch ( pColumn.lParam )
 		{
 		case UPLOAD_COLUMN_TITLE:
-			dc.FillSolidRect( rcCell.left, rcCell.top, 24, rcCell.Height(), crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.top, 24, rcCell.Height(), crBack );
 			rcCell.left += 24;
-			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 16, 1, crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 16, 1, crBack );
 			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pFile->m_sName, 16 ), dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, pFile->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+					rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, pFile->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			rcCell.left += 16;
-			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crBack );
 			rcCell.left += 1;
 			strText = pFile->m_sName;
 			break;

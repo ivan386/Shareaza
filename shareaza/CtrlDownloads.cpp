@@ -958,14 +958,14 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		switch ( pColumn.lParam )
 		{
 		case DOWNLOAD_COLUMN_TITLE:
-			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crBack );
 			if ( IsExpandable( pDownload ) )
 			{
 				ImageList_DrawEx( ShellIcons.GetHandle( 16 ), pDownload->m_bExpanded ? SHI_MINUS : SHI_PLUS, dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, ILD_NORMAL );
+					rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, ILD_NORMAL );
 			}
 			else
-				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crNatural );
+				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crBack );
 			rcCell.left += 16;
 			nIconStyle = pDownload->m_bSelected ? ILD_SELECTED : ILD_NORMAL;
 
@@ -988,9 +988,9 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			}
 
 			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pDownload->m_sDisplayName, 16 ), dc.GetSafeHdc(),
-				rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, nIconStyle );
+				rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, nIconStyle );
 			rcCell.left += 16;
-			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crBack );
 			rcCell.left += 1;
 
 			strText = pDownload->GetDisplayName();
@@ -1166,13 +1166,13 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		switch ( pColumn.lParam )
 		{
 		case DOWNLOAD_COLUMN_TITLE:
-			dc.FillSolidRect( rcCell.left, rcCell.top, 24, rcCell.Height(), crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.top, 24, rcCell.Height(), crBack );
 			rcCell.left += 24;
-			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 16, 1, crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 16, 1, crBack );
 			ImageList_DrawEx( m_pProtocols, pSource->m_nProtocol, dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, pSource->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+					rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, pSource->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			rcCell.left += 16;
-			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
+			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crBack );
 			rcCell.left += 1;
 			
 			if ( pSource->m_pTransfer != NULL )
