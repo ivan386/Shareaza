@@ -245,7 +245,7 @@ BOOL CLiveItem::SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIn
 
 	if ( ! pCtrl->GetItem( &pItem ) ) return FALSE;
 
-	if ( pItem.iImage < 0 )
+	if ( pItem.iImage != nImageIndex )
 		bModified = TRUE;
 
 	if ( bModified )
