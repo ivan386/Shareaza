@@ -703,11 +703,7 @@ void CShareazaApp::InitResources()
 
 	// Load the GeoIP library for mapping IPs to countries
 	m_hGeoIP = LoadLibrary( _T("geoip.dll") );
-    if ( m_hGeoIP == NULL )
-    {
-        FreeLibrary( m_hGeoIP );
-    }
-	else
+    if ( m_hGeoIP )
 	{
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
 		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_addr" );
