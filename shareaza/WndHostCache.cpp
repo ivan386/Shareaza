@@ -235,7 +235,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 		if ( pHost->m_tQuery ) pItem->Format( 11, _T("%u"), pHost->m_tQuery );
 		if ( pHost->m_tAck ) pItem->Format( 12, _T("%u"), pHost->m_tAck);
 #endif
-		pItem->Set( 13, pHost->m_sCountry );
+		if ( pHost->m_sCountry ) pItem->Set( 13, pHost->m_sCountry );
 	}
 
 	if ( !m_bAllowUpdates && !bForce ) return;
