@@ -36,6 +36,8 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+#define EMOTICON_SIZE 16
+
 CEmoticons Emoticons;
 
 
@@ -176,7 +178,9 @@ CMenu* CEmoticons::CreateMenu()
 BOOL CEmoticons::Load()
 {
 	Clear();
-	m_pImage.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 8 );
+	m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR32|ILC_MASK, 1, 8 ) || 
+		m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR24|ILC_MASK, 1, 8 ) ||
+		m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR16|ILC_MASK, 1, 8 );
 
 	CString strFile = Settings.General.Path + _T("\\Data\\Emoticons.xml");
 
@@ -209,10 +213,10 @@ int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, C
 {
 	ASSERT( pImage->m_bLoaded && pImage->m_nComponents == 3 );
 
-	if ( pRect->left < 0 || pRect->left + 16 > pImage->m_nWidth ) return -1;
-	if ( pRect->top < 0 || pRect->top > pImage->m_nHeight + 16 ) return -1;
-	if ( pRect->right != pRect->left + 16 ) return -1;
-	if ( pRect->bottom != pRect->top + 16 ) return -1;
+	if ( pRect->left < 0 || pRect->left + EMOTICON_SIZE > pImage->m_nWidth ) return -1;
+	if ( pRect->top < 0 || pRect->top > pImage->m_nHeight + EMOTICON_SIZE ) return -1;
+	if ( pRect->right != pRect->left + EMOTICON_SIZE ) return -1;
+	if ( pRect->bottom != pRect->top + EMOTICON_SIZE ) return -1;
 
 	DWORD nPitch = pImage->m_nWidth * pImage->m_nComponents;
 	while ( nPitch & 3 ) nPitch++;
@@ -220,34 +224,86 @@ int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, C
 	BYTE* pSource = pImage->m_pImage;
 	pSource += pRect->top * nPitch + pRect->left * pImage->m_nComponents;
 
-	HDC hDC = GetDC( 0 );
-	CBitmap bmImage;
-
-	bmImage.CreateCompatibleBitmap( CDC::FromHandle( hDC ), 16, 16 );
-
-	BITMAPINFOHEADER pInfo;
-	pInfo.biSize		= sizeof(BITMAPINFOHEADER);
-	pInfo.biWidth		= 16;
-	pInfo.biHeight		= 16;
-	pInfo.biPlanes		= 1;
-	pInfo.biBitCount	= 24;
-	pInfo.biCompression	= BI_RGB;
-	pInfo.biSizeImage	= 16 * 16 * 3;
-
-	for ( int nY = 15 ; nY >= 0 ; nY-- )
+	HDC hDCMem1, hDCMem2;
+	if ( HDC hDC = GetDC( NULL ) ) // Get screen DC
 	{
-		SetDIBits( hDC, bmImage, nY, 1, pSource, (BITMAPINFO*)&pInfo, DIB_RGB_COLORS );
-		pSource += nPitch;
+		hDCMem1 = CreateCompatibleDC( hDC ); // Create memory DC for the source
+		if ( !hDCMem1 ) 
+		{
+			ReleaseDC( NULL, hDC );
+			return -1;
+		}
+
+		hDCMem2 = CreateCompatibleDC( hDC ); // Create memory DC for the destination
+		if ( !hDCMem2 )
+		{
+			DeleteDC( hDCMem1 );
+			ReleaseDC( NULL, hDC );
+			return -1;
+		}
+
+		CBitmap bmOriginal, bmMoved;
+		CDC* pDC = CDC::FromHandle( hDC );
+
+		if ( !bmOriginal.CreateCompatibleBitmap( pDC, EMOTICON_SIZE, EMOTICON_SIZE ) ) // Source bitmap
+		{
+			ReleaseDC( NULL, hDC );
+			DeleteDC( hDCMem1 );
+			DeleteDC( hDCMem2 );
+			return -1;
+		}
+
+		if ( !bmMoved.CreateCompatibleBitmap( pDC, EMOTICON_SIZE, EMOTICON_SIZE ) ) // Destination bitmap
+		{
+			ReleaseDC( NULL, hDC );
+			DeleteDC( hDCMem1 );
+			DeleteDC( hDCMem2 );
+			bmOriginal.DeleteObject();
+			return -1;
+		}
+
+		BITMAPINFOHEADER pInfo;
+		pInfo.biSize		= sizeof(BITMAPINFOHEADER);
+		pInfo.biWidth		= EMOTICON_SIZE;
+		pInfo.biHeight		= EMOTICON_SIZE;
+		pInfo.biPlanes		= 1;
+		pInfo.biBitCount	= 24;
+		pInfo.biCompression	= BI_RGB;
+		pInfo.biSizeImage	= EMOTICON_SIZE * EMOTICON_SIZE * 3;
+
+		for ( int nY = EMOTICON_SIZE - 1 ; nY >= 0 ; nY-- )
+		{
+			SetDIBits( hDCMem1, bmOriginal, nY, 1, pSource, (BITMAPINFO*)&pInfo, DIB_RGB_COLORS );
+			pSource += nPitch;
+		}
+
+		HBITMAP hOld_bm1, hOld_bm2;
+		hOld_bm1 = (HBITMAP)SelectObject( hDCMem1, bmOriginal.m_hObject );
+		hOld_bm2 = (HBITMAP)SelectObject( hDCMem2, bmMoved.m_hObject );
+		CDC* pDC2 = CDC::FromHandle( hDCMem2 );
+		pDC2->SetBkMode( TRANSPARENT );
+		pDC2->FillSolidRect( 0, 0, EMOTICON_SIZE, EMOTICON_SIZE, crBack );
+
+		if ( theApp.m_bRTL )
+			theApp.m_pfnSetLayout( hDCMem2, LAYOUT_RTL );
+		StretchBlt( hDCMem2, 0, 0, EMOTICON_SIZE, EMOTICON_SIZE, hDCMem1, 0, 0, EMOTICON_SIZE, EMOTICON_SIZE, SRCCOPY );
+
+		SelectObject( hDCMem1, hOld_bm1 );
+		SelectObject( hDCMem2, hOld_bm2 );
+		DeleteDC( hDCMem1 );
+		DeleteDC( hDCMem2 );
+		ReleaseDC( NULL, hDC );
+		int nIndex = m_pImage.Add( &bmMoved, crBack );
+		bmMoved.DeleteObject();
+		bmOriginal.DeleteObject();
+
+		m_pIndex.Add( pszText );
+		if ( bButton ) m_pButtons.Add( nIndex );
+
+		return nIndex;
 	}
 
-	ReleaseDC( 0, hDC );
-	int nIndex = m_pImage.Add( &bmImage, crBack );
-	bmImage.DeleteObject();
-
-	m_pIndex.Add( pszText );
-	if ( bButton ) m_pButtons.Add( nIndex );
-
-	return nIndex;
+	return -1;
 }
 
 //////////////////////////////////////////////////////////////////////
