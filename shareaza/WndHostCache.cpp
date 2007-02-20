@@ -135,12 +135,12 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 7, _T("CurUsers"), LVCFMT_CENTER, 60, 6 );
 	m_wndList.InsertColumn( 8, _T("MaxUsers"), LVCFMT_CENTER, 60, 7 );
 	m_wndList.InsertColumn( 9, _T("Failures"), LVCFMT_CENTER, 60, 7 );
+	m_wndList.InsertColumn( 10, _T("Country"), LVCFMT_LEFT, 40, 10 );
 #ifdef _DEBUG
-	m_wndList.InsertColumn( 10, _T("Key"), LVCFMT_RIGHT, 0, 7 );
-	m_wndList.InsertColumn( 11, _T("Query"), LVCFMT_RIGHT, 0, 8 );
-	m_wndList.InsertColumn( 12, _T("Ack"), LVCFMT_RIGHT, 0, 9 );
+	m_wndList.InsertColumn( 11, _T("Key"), LVCFMT_RIGHT, 0, 7 );
+	m_wndList.InsertColumn( 12, _T("Query"), LVCFMT_RIGHT, 0, 8 );
+	m_wndList.InsertColumn( 13, _T("Ack"), LVCFMT_RIGHT, 0, 9 );
 #endif
-	m_wndList.InsertColumn( 13, _T("Country"), LVCFMT_CENTER, 60, 10 );
 	m_wndList.SetFont( &theApp.m_gdiFont );
 
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
@@ -230,12 +230,12 @@ void CHostCacheWnd::Update(BOOL bForce)
 		if ( pHost->m_nUserCount ) pItem->Format( 7, _T("%u"), pHost->m_nUserCount );
 		if ( pHost->m_nUserLimit ) pItem->Format( 8, _T("%u"), pHost->m_nUserLimit );
 		if ( pHost->m_nFailures ) pItem->Format( 9, _T("%u"), pHost->m_nFailures );
+		if ( pHost->m_sCountry ) pItem->Set( 10, pHost->m_sCountry );
 #ifdef _DEBUG
-		if ( pHost->m_nKeyValue ) pItem->Format( 10, _T("%u"), pHost->m_nKeyValue);
-		if ( pHost->m_tQuery ) pItem->Format( 11, _T("%u"), pHost->m_tQuery );
-		if ( pHost->m_tAck ) pItem->Format( 12, _T("%u"), pHost->m_tAck);
+		if ( pHost->m_nKeyValue ) pItem->Format( 11, _T("%u"), pHost->m_nKeyValue);
+		if ( pHost->m_tQuery ) pItem->Format( 12, _T("%u"), pHost->m_tQuery );
+		if ( pHost->m_tAck ) pItem->Format( 13, _T("%u"), pHost->m_tAck);
 #endif
-		if ( pHost->m_sCountry ) pItem->Set( 13, pHost->m_sCountry );
 	}
 
 	if ( !m_bAllowUpdates && !bForce ) return;
