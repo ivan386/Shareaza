@@ -4191,6 +4191,7 @@
 		<column from="Client" to=""/>
 		<column from="Downloaded" to=""/>
 		<column from="Complete" to=""/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to=""/>
@@ -4200,6 +4201,7 @@
 		<column from="Speed" to=""/>
 		<column from="Client" to=""/>
 		<column from="Rating" to=""/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to=""/>
@@ -4213,6 +4215,7 @@
 		<column from="Mode" to=""/>
 		<column from="Client" to=""/>
 		<column from="Name" to=""/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to=""/>
@@ -4232,6 +4235,8 @@
 		<column from="Description" to=""/>
 		<column from="CurUsers" to=""/>
 		<column from="MaxUsers" to=""/>
+		<column from="Failures" to=""/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to=""/>
