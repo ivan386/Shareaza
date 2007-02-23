@@ -854,9 +854,7 @@ void CLibraryThumbView::StartThread()
 	}
 
 	m_bThread	= TRUE;
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
-	SetThreadName( pThread->m_nThreadID, "CtrlLibraryThumbView" );
-	m_hThread	= pThread->m_hThread;
+	m_hThread = BeginThread( "CtrlLibraryThumbView", ThreadStart, this, THREAD_PRIORITY_IDLE );
 }
 
 void CLibraryThumbView::StopThread()
@@ -868,7 +866,7 @@ void CLibraryThumbView::StopThread()
 
 	m_bThread = FALSE;
 
-	CloseThread( &m_hThread, _T("CLibraryThumbView"), 10000 );
+	CloseThread( &m_hThread, 10000 );
 }
 
 UINT CLibraryThumbView::ThreadStart(LPVOID pParam)

@@ -268,9 +268,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	catch ( CUPnPFinder::UPnPError& ) {}
 	catch ( CException* e ) { e->Delete(); }
 
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
-	SetThreadName( pThread->m_nThreadID, "CWizardConnectionPage" );
-	m_hThread = pThread->m_hThread;
+	m_hThread = BeginThread( "WizardConnectionPage", ThreadStart, this, THREAD_PRIORITY_NORMAL );
 
 	// Disable all navigation buttons while the thread is running
 	CWizardSheet* pSheet = GetSheet();
@@ -377,7 +375,7 @@ void CWizardConnectionPage::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( nIDEvent != 1 ) return;
 
-	CloseThread( &m_hThread, _T("CWizardConnectionPage"), 500 );
+	CloseThread( &m_hThread, 500 );
 
 	if ( theApp.m_bUPnPPortsForwarded != TS_TRUE && m_bUPnPForward )
 	{

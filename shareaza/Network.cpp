@@ -260,9 +260,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 
 	m_bEnabled				= TRUE;
 	m_tStartedConnecting	= GetTickCount();
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
-	m_hThread				= pThread->m_hThread;
-	SetThreadName( pThread->m_nThreadID, "Network" );
+	m_hThread				= BeginThread( "Network", ThreadStart, this );
 
 	// It will check if it is needed inside the function
 	DiscoveryServices.Execute(TRUE, PROTOCOL_NULL, FALSE);
@@ -294,7 +292,7 @@ void CNetwork::Disconnect()
 	pLock.Unlock();
 
 	m_pWakeup.SetEvent();
-	CloseThread( &m_hThread, _T("CNetwork") );
+	CloseThread( &m_hThread );
 
 	Handshakes.Disconnect();
 	pLock.Lock();

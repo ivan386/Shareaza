@@ -184,13 +184,8 @@ BOOL CHandshakes::Listen()
 		256 );		// Maximum length of the queue of pending connections, let 256 computers try to call us at once (do)
 
 	// Create a new thread to run the ThreadStart method, passing it a pointer to this C
-	CWinThread* pThread = // Save the new thread handle
-		AfxBeginThread(	// Create a new thread
-		ThreadStart,	// Have it start running the ThreadStart method
-		this			// ThreadStart gets one parameter passed to it, a pointer to this CHandshakes object
-		);	// AfxBeginThread returns a pointer to the new thread object, copy the thread handle from within it
-	m_hThread = pThread->m_hThread;
-	SetThreadName( pThread->m_nThreadID, "Handshakes" );
+	m_hThread = BeginThread( "Handshakes", ThreadStart, this );
+
 	// Report success
 	return TRUE;
 }
@@ -218,7 +213,7 @@ void CHandshakes::Disconnect()
 	// Set the state of the wakeup event to signaled, releasing any threads that are waiting on it
 	m_pWakeup.SetEvent();
 
-	CloseThread( &m_hThread, _T("CHandshakes") );
+	CloseThread( &m_hThread );
 
 	// Make sure only one thread can execute the remaining code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released

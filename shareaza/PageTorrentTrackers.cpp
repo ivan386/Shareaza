@@ -183,7 +183,7 @@ void CTorrentTrackersPage::OnDestroy()
 	if ( m_hThread != NULL ) 
 	{
 		m_pRequest.Cancel();
-		CloseThread( &m_hThread, _T("CTorrentTrackersPage") );
+		CloseThread( &m_hThread );
 	}
 	
 	CTorrentInfoPage::OnDestroy();
@@ -196,13 +196,11 @@ void CTorrentTrackersPage::OnTorrentRefresh()
 	if ( m_hThread != NULL ) 
 	{
 		m_pRequest.Cancel();
-		CloseThread( &m_hThread, _T("CTorrentTrackersPage") );
+		CloseThread( &m_hThread );
 	}
 	
 	m_wndRefresh.EnableWindow( FALSE );
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this );
-	m_hThread = pThread->m_hThread;
-	SetThreadName( pThread->m_nThreadID, "PageTorrentTrackers" );
+	m_hThread = BeginThread( "PageTorrentTrackers", ThreadStart, this );
 }
 
 void CTorrentTrackersPage::OnTimer(UINT_PTR nIDEvent) 
@@ -216,7 +214,7 @@ void CTorrentTrackersPage::OnTimer(UINT_PTR nIDEvent)
 	else
 	{
 		// Close the scrape thread
-		CloseThread( &m_hThread, _T("CTorrentTrackersPage") );
+		CloseThread( &m_hThread );
 		// Re-enable the refresh button in one minute
 		SetTimer( 1, 60000, NULL );
 		

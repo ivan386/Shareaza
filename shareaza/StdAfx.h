@@ -460,33 +460,3 @@ private:
 };
 
 extern const CLowerCaseTable ToLower;
-
-inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
-{
-#ifndef NDEBUG
-	struct
-	{
-		DWORD dwType;		// must be 0x1000
-		LPCSTR szName;		// pointer to name (in user addr space)
-		DWORD dwThreadID;	// thread ID (-1=caller thread)
-		DWORD dwFlags;		// reserved for future use, must be zero
-	} info =
-	{
-		0x1000,
-		szThreadName,
-		dwThreadID,
-		0
-	};
-
-
-	__try
-	{
-		RaiseException( 0x406D1388, 0, sizeof info / sizeof( DWORD ), (ULONG_PTR*)&info );
-	}
-	__except( EXCEPTION_CONTINUE_EXECUTION )
-	{
-	}
-#endif
-	UNUSED_ALWAYS(dwThreadID);
-	UNUSED_ALWAYS(szThreadName);
-}

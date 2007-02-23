@@ -181,11 +181,8 @@ BOOL CLibraryBuilder::StartThread()
 	m_bThread	= TRUE;
 	m_tActive	= 0;
 
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, m_bPriority ?
+	m_hThread = BeginThread( "LibraryBuilder", ThreadStart, this, m_bPriority ?
 		THREAD_PRIORITY_NORMAL : THREAD_PRIORITY_BELOW_NORMAL );
-	SetThreadName( pThread->m_nThreadID, "LibraryBuilder" );
-
-	m_hThread = pThread->m_hThread;
 
 	return TRUE;
 }
@@ -196,7 +193,7 @@ void CLibraryBuilder::StopThread()
 
 	m_bThread = FALSE;
 
-	CloseThread( &m_hThread, _T("CLibraryBuilder") );
+	CloseThread( &m_hThread );
 
 	m_tActive	= 0;
 }

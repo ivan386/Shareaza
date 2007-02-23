@@ -97,9 +97,7 @@ BOOL CBitziDownloader::Start(CBitziDownloadDlg* pDlg)
 	m_nDelay	= 0;
 	m_nFailures	= 0;
 
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
-	SetThreadName( pThread->m_nThreadID, "BitziDownloader" );
-	m_hThread = pThread->m_hThread;
+	m_hThread = BeginThread( "BitziDownloader", ThreadStart, this );
 
 	return TRUE;
 }
@@ -115,7 +113,7 @@ void CBitziDownloader::Stop()
 	if ( m_hInternet ) InternetCloseHandle( m_hInternet );
 	m_hInternet = NULL;
 
-	CloseThread( &m_hThread, _T("CBitziDownloader") );
+	CloseThread( &m_hThread );
 
 	m_pDlg		= NULL;
 }

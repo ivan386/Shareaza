@@ -259,9 +259,7 @@ void CLibraryMetaPanel::Update()
 		if ( m_bThread == FALSE )
 		{
 			m_bThread = TRUE;
-			CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
-			SetThreadName( pThread->m_nThreadID, "CtrlLibraryMetaPanel" );
-			m_hThread = pThread->m_hThread;
+			m_hThread = BeginThread( "CtrlLibraryMetaPanel", ThreadStart, this, THREAD_PRIORITY_IDLE );
 		}
 		
 		m_pWakeup.SetEvent();
@@ -288,7 +286,7 @@ void CLibraryMetaPanel::OnDestroy()
 	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
 	
-	CloseThread( &m_hThread, _T("CLibraryMetaPanel"), 10000 );
+	CloseThread( &m_hThread, 10000 );
 	
 	CLibraryPanel::OnDestroy();
 }

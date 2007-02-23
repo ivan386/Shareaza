@@ -214,9 +214,7 @@ void CFileCopyDlg::StartOperation()
 
 	m_bThread = TRUE;
 	m_bCancel = FALSE;
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
-	SetThreadName( pThread->m_nThreadID, "DlgFileCopy" );
-	m_hThread = pThread->m_hThread;
+	m_hThread = BeginThread( "DlgFileCopy", ThreadStart, this );
 }
 
 void CFileCopyDlg::StopOperation()
@@ -227,7 +225,7 @@ void CFileCopyDlg::StopOperation()
 
 	m_bThread = FALSE;
 
-	CloseThread( &m_hThread, _T("CFileCopyDlg"), 25000 );
+	CloseThread( &m_hThread, 25000 );
 
 	//m_wndCancel.SetWindowText( _T("&Close") );
 	CString sText;

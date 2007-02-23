@@ -98,7 +98,6 @@ UINT AsyncFileOperationThread(LPVOID param)
 	ASSERT( param != NULL );
 
 	AsyncFileOperationParams* pAFOP = (AsyncFileOperationParams*)param;
-	SetThreadName( GetCurrentThreadId(), "SHFileOperation" );
 
 	bool bCopy = (pAFOP->dwEffect == DROPEFFECT_COPY);
 
@@ -304,7 +303,6 @@ template < typename T >
 UINT CShareazaDataSource::DragDropThread(LPVOID param)
 {
 	DWORD dwCurrentThreadID = GetCurrentThreadId();
-	SetThreadName( dwCurrentThreadID, "DragDrop" );
 
 	// Full OLE initialization
 	HRESULT hr = OleInitialize( NULL );
@@ -399,9 +397,9 @@ HRESULT CShareazaDataSource::DoDragDrop(const T* pList, HBITMAP pImage, const Ha
 					pIDataObject.Detach();
 
 					// Begin async drag-n-drop operation
-					CWinThread* pThread = AfxBeginThread( DragDropThread<T>,
-						(LPVOID)pStream, THREAD_PRIORITY_NORMAL );
-					hr = ( pThread != NULL ) ? S_OK : E_FAIL;
+					HANDLE hThread = BeginThread( "DragDrop",
+						DragDropThread<T>, (LPVOID)pStream );
+					hr = ( hThread != NULL ) ? S_OK : E_FAIL;
 				}
 			}
 		}
@@ -563,9 +561,9 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 #endif // _UNICODE
 					GlobalUnlock( medium.hGlobal );
 
-					CWinThread* pThread = AfxBeginThread( AsyncFileOperationThread,
-						(LPVOID)pAFOP, THREAD_PRIORITY_NORMAL );
-					bRet = ( pThread != NULL );
+					HANDLE hThread = BeginThread( "SHFileOperation",
+						AsyncFileOperationThread, (LPVOID)pAFOP );
+					bRet = ( hThread != NULL );
 				}
 			}
 			ReleaseStgMedium( &medium );

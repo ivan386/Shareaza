@@ -1072,9 +1072,7 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
 	if ( ! m_hInternet ) return FALSE;
 	
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
-	SetThreadName( pThread->m_nThreadID, "Discovery" );
-	m_hThread = pThread->m_hThread;
+	m_hThread = BeginThread( "Discovery", ThreadStart, this );
 	
 	return TRUE;
 }
@@ -1084,7 +1082,7 @@ void CDiscoveryServices::StopWebRequest()
 	if ( m_hInternet ) InternetCloseHandle( m_hInternet );
 	m_hInternet = NULL;
 
-	CloseThread( &m_hThread, _T("CDiscoveryServices") );
+	CloseThread( &m_hThread );
 }
 
 //////////////////////////////////////////////////////////////////////

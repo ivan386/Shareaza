@@ -444,9 +444,7 @@ void CLibrary::StartThread()
 	if ( m_hThread == NULL )
 	{
 		m_bThread = TRUE;
-		CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_BELOW_NORMAL );
-		SetThreadName( pThread->m_nThreadID, "Library" );
-		m_hThread = pThread->m_hThread;
+		m_hThread = BeginThread( "Library", ThreadStart, this, THREAD_PRIORITY_BELOW_NORMAL );
 	}
 
 	LibraryBuilder.StartThread();
@@ -459,7 +457,7 @@ void CLibrary::StopThread()
 	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
 
-	CloseThread( &m_hThread, _T("CLibrary") );
+	CloseThread( &m_hThread );
 }
 
 //////////////////////////////////////////////////////////////////////

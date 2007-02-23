@@ -105,9 +105,7 @@ void CDonkeyServersDlg::OnOK()
 	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
 	if ( m_hInternet == NULL ) return;
 
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
-	SetThreadName( pThread->m_nThreadID, "DlgDonkeyServices" );
-	m_hThread = pThread->m_hThread;
+	m_hThread = BeginThread( "DlgDonkeyServices", ThreadStart, this );
 
 	m_wndOK.EnableWindow( FALSE );
 	m_wndURL.EnableWindow( FALSE );
@@ -127,7 +125,7 @@ void CDonkeyServersDlg::OnTimer(UINT_PTR nIDEvent)
 		m_hInternet = NULL;
 	}
 
-	CloseThread( &m_hThread, _T("CDonkeyServersDlg") );
+	CloseThread( &m_hThread );
 
 	if ( nIDEvent == 1 ) EndDialog( IDOK );
 }

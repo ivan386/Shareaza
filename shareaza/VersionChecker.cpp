@@ -107,9 +107,7 @@ BOOL CVersionChecker::Start(HWND hWndNotify)
 	m_hWndNotify	= hWndNotify;
 	m_bUpgrade		= FALSE;
 	
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
-	SetThreadName( pThread->m_nThreadID, "VersionChecker" );
-	m_hThread = pThread->m_hThread;
+	m_hThread = BeginThread( "VersionChecker", ThreadStart, this, THREAD_PRIORITY_IDLE );
 	
 	return TRUE;
 }
@@ -120,7 +118,7 @@ BOOL CVersionChecker::Start(HWND hWndNotify)
 void CVersionChecker::Stop()
 {
 	m_pRequest.Cancel();
-	CloseThread( &m_hThread, _T("CVersionChecker") );
+	CloseThread( &m_hThread );
 }
 
 //////////////////////////////////////////////////////////////////////

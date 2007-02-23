@@ -158,7 +158,10 @@ void	RecalcDropWidth(CComboBox* pWnd);
 HICON	CreateMirroredIcon(HICON hIconOrig);
 HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 
-void CloseThread(HANDLE* phThread, LPCTSTR pszName, DWORD dwTimeout = 5000);
+HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
+	LPVOID pParam, int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
+	DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+void CloseThread(HANDLE* phThread, DWORD dwTimeout = 5000);
 
 LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);

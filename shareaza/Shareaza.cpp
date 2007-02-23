@@ -1453,20 +1453,154 @@ HBITMAP CreateMirroredBitmap(HBITMAP hbmOrig)
 	return hbm;
 }
 
-void CloseThread(HANDLE* phThread, LPCTSTR pszName, DWORD dwTimeout)
+inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
+{
+#ifndef NDEBUG
+	struct
+	{
+		DWORD dwType;		// must be 0x1000
+		LPCSTR szName;		// pointer to name (in user addr space)
+		DWORD dwThreadID;	// thread ID (-1=caller thread)
+		DWORD dwFlags;		// reserved for future use, must be zero
+	} info =
+	{
+		0x1000,
+		szThreadName,
+		dwThreadID,
+		0
+	};
+	__try
+	{
+		RaiseException( 0x406D1388, 0, sizeof info / sizeof( DWORD ), (ULONG_PTR*)&info );
+	}
+	__except( EXCEPTION_CONTINUE_EXECUTION )
+	{
+	}
+#endif
+	UNUSED_ALWAYS(dwThreadID);
+	UNUSED_ALWAYS(szThreadName);
+}
+
+class CRazaThread : public CWinThread
+{
+	DECLARE_DYNAMIC(CRazaThread)
+
+public:
+	CRazaThread(AFX_THREADPROC pfnThreadProc, LPVOID pParam) :
+		CWinThread( pfnThreadProc, pParam )
+	{
+	}
+	virtual ~CRazaThread()
+	{
+		Remove( m_hThread );
+	}
+
+	static void Add(CRazaThread* pThread, LPCSTR pszName)
+	{
+		CSingleLock oLock( &m_ThreadMapSection, TRUE );
+
+		if ( pszName )
+		{
+			SetThreadName( pThread->m_nThreadID, pszName );
+		}
+
+		CThreadTag tag = { pThread, pszName };
+		m_ThreadMap.SetAt( pThread->m_hThread, tag );
+
+		TRACE( "Creating '%s' thread (0x%08x). Count: %d\n",
+			( pszName ? pszName : "unnamed" ), pThread->m_hThread, m_ThreadMap.GetCount() );
+	}
+
+	static void Remove(HANDLE hThread)
+	{
+		CSingleLock oLock( &m_ThreadMapSection, TRUE );
+		CThreadTag tag = {};
+		if ( m_ThreadMap.Lookup( hThread, tag ) )
+		{
+			m_ThreadMap.RemoveKey( hThread );
+
+			TRACE( "Removing '%s' thread (0x%08x). Count: %d\n",
+				( tag.pszName ? tag.pszName : "unnamed" ),
+				hThread, m_ThreadMap.GetCount() );
+		}
+	}
+
+	static void Terminate(HANDLE hThread)
+	{
+		// Its a very dangerous function produces 100% urecoverable TLS leaks/deadlocks
+		TerminateThread( hThread, 0 );
+
+		CSingleLock oLock( &m_ThreadMapSection, TRUE );
+		CThreadTag tag = {};
+		if ( m_ThreadMap.Lookup( hThread, tag ) )
+		{
+			ASSERT( hThread == tag.pThread->m_hThread );
+			ASSERT_VALID( tag.pThread );
+			ASSERT( static_cast<CWinThread*>( tag.pThread ) != AfxGetApp() );
+			tag.pThread->Delete();
+		}
+		else
+			CloseHandle( hThread );
+
+		theApp.Message( MSG_DEBUG, _T("WARNING: Terminating '%s' thread (0x%08x)."),
+			( tag.pszName ? tag.pszName : "unnamed" ), hThread );
+		TRACE( _T("WARNING: Terminating '%s' thread (0x%08x)."),
+			( tag.pszName ? tag.pszName : "unnamed" ), hThread );
+	}
+
+protected:
+	typedef struct
+	{
+		CRazaThread*	pThread;	// Thread object
+		LPCSTR			pszName;	// Thread name
+	} CThreadTag;
+
+	typedef CMap<HANDLE, HANDLE, CThreadTag, const CThreadTag&> CThreadMap;
+
+	static CCriticalSection	m_ThreadMapSection;	// Guarding of m_ThreadMap
+	static CThreadMap		m_ThreadMap;		// Map of running threads
+};
+
+IMPLEMENT_DYNAMIC(CRazaThread, CWinThread)
+
+CCriticalSection		CRazaThread::m_ThreadMapSection;
+CRazaThread::CThreadMap	CRazaThread::m_ThreadMap;
+
+HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
+	LPVOID pParam, int nPriority, UINT nStackSize, DWORD dwCreateFlags,
+	LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+{
+	CRazaThread* pThread = new CRazaThread( pfnThreadProc, pParam );
+	ASSERT_VALID( pThread );
+	if ( pThread )
+	{
+		if ( pThread->CreateThread( dwCreateFlags | CREATE_SUSPENDED, nStackSize,
+			lpSecurityAttrs ) )
+		{
+			VERIFY( pThread->SetThreadPriority( nPriority ) );
+			if ( ! ( dwCreateFlags & CREATE_SUSPENDED ) )
+				VERIFY( pThread->ResumeThread() != (DWORD)-1 );
+
+			CRazaThread::Add( pThread, pszName );
+
+			return pThread->m_hThread;
+		}
+		pThread->Delete();
+	}
+	return NULL;
+}
+
+void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 {
 	if ( *phThread )
 	{
 		if ( WaitForSingleObject( *phThread, dwTimeout ) == WAIT_TIMEOUT )
 		{
-			TerminateThread( *phThread, 0 );
-			CloseHandle( *phThread );
-			if ( pszName )
-			{
-				theApp.Message( MSG_DEBUG,
-					_T("WARNING: Terminating %s thread."), pszName );
-			}
+			CRazaThread::Terminate( *phThread );
 		}
+
+		CRazaThread::Remove( *phThread );
+
 		*phThread = NULL;
 	}
 }

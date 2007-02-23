@@ -208,10 +208,7 @@ void CTorrentSeedDlg::OnSeed()
 			}
 
 			// Start the torrent seed process
-			CWinThread* pThread = AfxBeginThread( ThreadStart, this,
-				THREAD_PRIORITY_NORMAL );
-			m_hThread = pThread->m_hThread;
-			SetThreadName( pThread->m_nThreadID, "DlgTorrentSeed" );
+			m_hThread = BeginThread( "DlgTorrentSeed", ThreadStart, this );
 		}
 		else	// We are already seeding the torrent
 		{
@@ -250,8 +247,7 @@ void CTorrentSeedDlg::OnDestroy()
 	if ( m_hThread != NULL )
 	{
 		m_bCancel = TRUE;
-		CloseThread( &m_hThread, _T("CTorrentSeedDlg") );
-		ASSERT( m_hThread == NULL );
+		CloseThread( &m_hThread );
 	}
 	
 	CSkinDialog::OnDestroy();

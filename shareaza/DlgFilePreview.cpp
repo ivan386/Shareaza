@@ -227,9 +227,7 @@ BOOL CFilePreviewDlg::OnInitDialog()
 	m_bThread = TRUE;
 	m_bCancel = FALSE;
 	
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
-	SetThreadName( pThread->m_nThreadID, "DlgFilePreview" );
-	m_hThread = pThread->m_hThread;
+	m_hThread = BeginThread( "DlgFilePreview", ThreadStart, this );
 	
 	return TRUE;
 }
@@ -290,7 +288,7 @@ void CFilePreviewDlg::OnClose()
 
 void CFilePreviewDlg::OnDestroy() 
 {
-	CloseThread( &m_hThread, _T("CFilePreviewDlg") );
+	CloseThread( &m_hThread );
 	
 	m_bThread	= FALSE;
 	

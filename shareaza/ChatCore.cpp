@@ -215,9 +215,7 @@ void CChatCore::StartThread()
 	if ( GetCount() == 0 ) return;
 	
 	m_bThread = TRUE;
-	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
-	SetThreadName( pThread->m_nThreadID, "ChatCore" );
-	m_hThread = pThread->m_hThread;
+	m_hThread = BeginThread( "ChatCore", ThreadStart, this );
 }
 
 void CChatCore::StopThread()
@@ -226,7 +224,7 @@ void CChatCore::StopThread()
 
 	m_pWakeup.SetEvent();
 
-	CloseThread( &m_hThread, _T("CChatCore") );
+	CloseThread( &m_hThread );
 }
 
 //////////////////////////////////////////////////////////////////////

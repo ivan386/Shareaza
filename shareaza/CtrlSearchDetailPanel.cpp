@@ -260,7 +260,7 @@ void CSearchDetailPanel::OnDestroy()
 	m_bThread = FALSE;
 	CancelPreview();
 	
-	CloseThread( &m_hThread, _T("CSearchDetailPanel") );
+	CloseThread( &m_hThread );
 	
 	CWnd::OnDestroy();
 }
@@ -783,9 +783,7 @@ BOOL CSearchDetailPanel::RequestPreview()
 	if ( m_hThread == NULL )
 	{
 		m_bThread = TRUE;
-		CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
-		SetThreadName( pThread->m_nThreadID, "CtrlSearchDetailPanel" );
-		m_hThread = pThread->m_hThread;
+		m_hThread = BeginThread( "CtrlSearchDetailPanel", ThreadStart, this, THREAD_PRIORITY_IDLE );
 	}
 	
 	m_bRunPreview = TRUE;
