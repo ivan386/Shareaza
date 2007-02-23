@@ -32,6 +32,11 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+#define REAL_FLAG_WIDTH 18
+#define REAL_FLAG_HEIGHT 12
+#define IMAGELIST_FLAG_WIDTH 18
+#define IMAGELIST_FLAG_HEIGHT 18
+
 CFlags Flags;
 
 CFlags::CFlags()
@@ -49,9 +54,9 @@ CFlags::~CFlags()
 BOOL CFlags::Load()
 {
 	Clear();
-	m_pImage.Create( 18, 18, ILC_COLOR32|ILC_MASK, 26 * 26, 8 ) || 
-		m_pImage.Create( 18, 18, ILC_COLOR24|ILC_MASK, 26 * 26, 8 ) ||
-		m_pImage.Create( 18, 18, ILC_COLOR16|ILC_MASK, 26 * 26, 8 );
+	m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR32|ILC_MASK, 26 * 26, 8 ) || 
+		m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR24|ILC_MASK, 26 * 26, 8 ) ||
+		m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR16|ILC_MASK, 26 * 26, 8 );
 
 	CString strFile = Settings.General.Path + _T("\\Data\\Flags.png");
 
@@ -60,8 +65,8 @@ BOOL CFlags::Load()
 	if (	! pImage.LoadFromFile( strFile ) ||
 			! pImage.EnsureRGB( GetSysColor( COLOR_WINDOW ) ) ||
 			! pImage.SwapRGB() || 
-			pImage.m_nWidth != (18 * 26) ||
-			pImage.m_nHeight != (12 * 26) )
+			pImage.m_nWidth != (REAL_FLAG_WIDTH * 26) ||
+			pImage.m_nHeight != (REAL_FLAG_HEIGHT * 26) )
 	{
 		return FALSE;
 	}
@@ -73,10 +78,10 @@ BOOL CFlags::Load()
 		for ( int j = 0; j < 26; j++ )
 		{
 			CRect rc( 0, 0, 0, 0 );
-			rc.left		= i * 18;
-			rc.right	= (i + 1) * 18;
-			rc.top		= j * 12;
-			rc.bottom	= (j + 1) * 12;
+			rc.left		= i * REAL_FLAG_WIDTH;
+			rc.right	= (i + 1) * REAL_FLAG_WIDTH;
+			rc.top		= j * REAL_FLAG_HEIGHT;
+			rc.bottom	= (j + 1) * REAL_FLAG_HEIGHT;
 
 			AddFlag( &pImage, &rc, crBack );
 		}
@@ -92,10 +97,10 @@ void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 {
 	ASSERT( pImage->m_bLoaded && pImage->m_nComponents == 3 );
 
-	if ( pRect->left < 0 || pRect->left + 18 > pImage->m_nWidth ) return;
-	if ( pRect->top < 0 || pRect->top > pImage->m_nHeight + 12 ) return;
-	if ( pRect->right != pRect->left + 18 ) return;
-	if ( pRect->bottom != pRect->top + 12 ) return;
+	if ( pRect->left < 0 || pRect->left + REAL_FLAG_WIDTH > pImage->m_nWidth ) return;
+	if ( pRect->top < 0 || pRect->top > pImage->m_nHeight + REAL_FLAG_HEIGHT ) return;
+	if ( pRect->right != pRect->left + REAL_FLAG_WIDTH ) return;
+	if ( pRect->bottom != pRect->top + REAL_FLAG_HEIGHT ) return;
 
 	DWORD nPitch = pImage->m_nWidth * pImage->m_nComponents;
 	while ( nPitch & 3 ) nPitch++;
@@ -124,7 +129,7 @@ void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 		CBitmap bmOriginal, bmMoved;
 		CDC* pDC = CDC::FromHandle( hDC );
 
-		if ( !bmOriginal.CreateCompatibleBitmap( pDC, 18, 12 ) ) // Source bitmap
+		if ( !bmOriginal.CreateCompatibleBitmap( pDC, REAL_FLAG_WIDTH, REAL_FLAG_HEIGHT ) ) // Source bitmap
 		{
 			ReleaseDC( NULL, hDC );
 			DeleteDC( hDCMem1 );
@@ -132,7 +137,7 @@ void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 			return;
 		}
 
-		if ( !bmMoved.CreateCompatibleBitmap( pDC, 18, 18 ) ) // Destination bitmap
+		if ( !bmMoved.CreateCompatibleBitmap( pDC, IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT ) ) // Destination bitmap
 		{
 			ReleaseDC( NULL, hDC );
 			DeleteDC( hDCMem1 );
@@ -143,14 +148,14 @@ void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 
 		BITMAPINFOHEADER pInfo;
 		pInfo.biSize		= sizeof(BITMAPINFOHEADER);
-		pInfo.biWidth		= 18;
-		pInfo.biHeight		= 12;
+		pInfo.biWidth		= REAL_FLAG_WIDTH;
+		pInfo.biHeight		= REAL_FLAG_HEIGHT;
 		pInfo.biPlanes		= 1;
 		pInfo.biBitCount	= 24;
 		pInfo.biCompression	= BI_RGB;
-		pInfo.biSizeImage	= 18 * 12 * 3;
+		pInfo.biSizeImage	= REAL_FLAG_WIDTH * REAL_FLAG_HEIGHT * 3;
 
-		for ( int nY = 11 ; nY >= 0 ; nY-- )
+		for ( int nY = REAL_FLAG_HEIGHT - 1 ; nY >= 0 ; nY-- )
 		{
 			SetDIBits( hDCMem1, bmOriginal, nY, 1, pSource, (BITMAPINFO*)&pInfo, DIB_RGB_COLORS );
 			pSource += nPitch;
@@ -161,11 +166,12 @@ void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 		hOld_bm2 = (HBITMAP)SelectObject( hDCMem2, bmMoved.m_hObject );
 		CDC* pDC2 = CDC::FromHandle( hDCMem2 );
 		pDC2->SetBkMode( TRANSPARENT );
-		pDC2->FillSolidRect( 0, 0, 18, 18, crBack );
+		pDC2->FillSolidRect( 0, 0, IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, crBack );
 
 		if ( theApp.m_bRTL )
 			theApp.m_pfnSetLayout( hDCMem2, LAYOUT_RTL );
-		StretchBlt( hDCMem2, 0, 3, 18, 12, hDCMem1, 0, 0, 18, 12, SRCCOPY );
+		StretchBlt( hDCMem2, 0, 3, REAL_FLAG_WIDTH, REAL_FLAG_HEIGHT, 
+					hDCMem1, 0, 0, REAL_FLAG_WIDTH, REAL_FLAG_HEIGHT, SRCCOPY );
 
 		SelectObject( hDCMem1, hOld_bm1 );
 		SelectObject( hDCMem2, hOld_bm2 );
