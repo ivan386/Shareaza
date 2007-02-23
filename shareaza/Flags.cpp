@@ -199,7 +199,10 @@ int CFlags::GetFlagIndex(CString sCountry)
 	{
 		char nFirstLetter = sCountry[0] - 65;
 		char nSecondLetter = sCountry[1] - 65;
-		return nFirstLetter * 26 + nSecondLetter;
+		// Currently only the letters A-Z are in the flag matrix 
+		// but GeoIP can also return some combinations that aren't all letters (A1, A2, etc.)
+		if ( nFirstLetter >= 0 && nFirstLetter <= 25 && nSecondLetter >= 0 && nSecondLetter <= 25 )
+			return nFirstLetter * 26 + nSecondLetter;
 	}
 	return -1;
 }
