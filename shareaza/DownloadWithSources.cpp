@@ -611,7 +611,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	}
 
 	// We don't need to make G2 source
-	if ( pCopy && !pCopy->m_bPushOnly && bExistingIsRaza && bG2Exists )
+	if ( pCopy && ( pCopy->m_bPushOnly || bExistingIsRaza && bG2Exists ) )
 		pCopy = NULL;
 
 	// Make G2 source from the existing non-HTTP Shareaza source
