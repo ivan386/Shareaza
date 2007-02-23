@@ -85,7 +85,7 @@ BOOL CLibraryCollectionView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	return CWnd::Create( NULL, _T("CLibraryCollectionView"), WS_CHILD|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
+	return CWnd::Create( NULL, _T("CLibraryCollectionView"), WS_CHILD, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
