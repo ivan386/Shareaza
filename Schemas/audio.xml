@@ -17,7 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -147,7 +147,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Kompozitorius</title>
                        <title language="nl">Componist</title>
                        <title language="no">Composer</title>
-                       <title language="pt-br">Composer</title>
+                       <title language="pt-br">Compositor</title>
                        <title language="ru">Композитор</title>
                        <title language="sl-SI">Skladatelj</title>
                        <title language="sr">Kompozitor</title>
@@ -681,7 +681,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pirminis albumas</title>
                        <title language="nl">Origineel album</title>
                        <title language="no">Original Album</title>
-                       <title language="pt-br">Original Album</title>
+                       <title language="pt-br">Álbum Original</title>
                        <title language="ru">Альбом-источник</title>
                        <title language="sl-SI">Izvorni album</title>
                        <title language="sr">Originalni Album</title>
@@ -705,7 +705,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pradinis atlikėjas</title>
                        <title language="nl">Originele artiest</title>
                        <title language="no">Original Artist</title>
-                       <title language="pt-br">Original Artist</title>
+                       <title language="pt-br">Artista Original </title>
                        <title language="ru">Первоначальный артист</title>
                        <title language="sl-SI">Izvorni izvajalec</title>
                        <title language="sr">Originalni izvođač</title>
@@ -754,7 +754,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Kanalų</title>
                        <title language="nl">Kanalen</title>
                        <title language="no">Channels</title>
-                       <title language="pt-br">Channels</title>
+                       <title language="pt-br">Canais</title>
                        <title language="ru">Каналы</title>
                        <title language="sl-SI">Kanali</title>
                        <title language="sr">Kanali</title>
@@ -778,7 +778,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Garso tipas</title>
                        <title language="nl">Geluidstype</title>
                        <title language="no">Sound Type</title>
-                       <title language="pt-br">Sound Type</title>
+                       <title language="pt-br">Tipo de Som</title>
                        <title language="ru">Тип звука</title>
                        <title language="sl-SI">Zvokovni tip</title>
                        <title language="sr">Vrsta Zvuka</title>

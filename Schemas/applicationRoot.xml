@@ -17,7 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -45,7 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Programa:Mano programos</title>
                <title language="nl">Programma:Mijn Programma's</title>
                <title language="no">Program: mine programmer</title>
-               <title language="pt-br">Aplicativo:Meus Aplicativos</title>
+               <title language="pt-br">Aplicativo: Meus Aplicativos</title>
                <title language="ru">&#160;Приложение: Мои приложения</title>
                <title language="sl-SI">Program:Moji programi</title>
                <title language="sr">Program:Svi Programi</title>
@@ -124,7 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų programų bylos.</subtitle>
                <subtitle language="nl">Deze mappen bevatten al je programmabestanden.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine programmer</subtitle>
-               <subtitle language="pt-br">Estas pastas contém todos os seus arquivos de aplicativos.</subtitle>
+               <subtitle language="pt-br">Estas pastas contém todos os arquivos da sua aplicação.</subtitle>
                <subtitle language="ru">Эти папки отображают все Ваши приложения.</subtitle>
                <subtitle language="sl-SI">Te mape vsebujejo vse programske datoteke.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže sve vaše programe.</subtitle>

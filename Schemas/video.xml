@@ -17,7 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -219,7 +219,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pasirodė eteryje</title>
                        <title language="nl">Datum Originele Uitzending</title>
                        <title language="no">Første gang vist</title>
-                       <title language="pt-br">Data de Lançamento Original</title>
+                       <title language="pt-br">Data do Lançamento Original</title>
                        <title language="ru">Дата выхода</title>
                        <title language="sl-SI">Izvorni datum oddaje</title>
                        <title language="sr">Originalni Datum Izdanja</title>
@@ -461,7 +461,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">IMDB nuoroda</title>
                        <title language="nl">Link naar IMDB</title>
                        <title language="no">IMDB link</title>
-                       <title language="pt-br">Link IMDB</title>
+                       <title language="pt-br">Link do IMDB</title>
                        <title language="ru">IMDB ссылка</title>
                        <title language="sl-SI">IMDB povezava</title>
                        <title language="sr">IMBD Link</title>
@@ -584,7 +584,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Kadrų dažnis</title>
                        <title language="nl">Frame Rate</title>
                        <title language="no">Frame Rate</title>
-                       <title language="pt-br">Frame Rate</title>
+                       <title language="pt-br">Taxa de Frames</title>
                        <title language="ru">Частота кадров</title>
                        <title language="sl-SI">Zapis filma</title>
                        <title language="sr">Sličica u sekundi</title>
