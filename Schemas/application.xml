@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -44,7 +44,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="lt">Programa</title>
               <title language="nl">Programma</title>
               <title language="no">Program</title>
-              <title language="br">Aplicativo</title>
+              <title language="pt-br">Aplicativo</title>
               <title language="ru">Приложение</title>
               <title language="sl-SI">Program</title>
               <title language="sr">Program</title>
@@ -70,7 +70,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="br">Título</title>
+                       <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
@@ -95,7 +95,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Versija</title>
                        <title language="nl">Versie</title>
                        <title language="no">Versjon</title>
-                       <title language="br">Versão</title>
+                       <title language="pt-br">Versão</title>
                        <title language="ru">Версия</title>
                        <title language="sl-SI">Različica</title>
                        <title language="sr">Verzija</title>
@@ -119,7 +119,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
-                       <title language="br">Descrição</title>
+                       <title language="pt-br">Descrição</title>
                        <title language="ru">Описание</title>
                        <title language="sl-SI">Opis</title>
                        <title language="sr">Opis</title>
@@ -143,7 +143,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Apie leidimą</title>
                        <title language="nl">Aantekeningen bij distributie</title>
                        <title language="no">Releasenotat</title>
-                       <title language="br">Notas de Lançamento</title>
+                       <title language="pt-br">Notas de Lançamento</title>
                        <title language="ru">Прим. по релизу</title>
                        <title language="sl-SI">Opomba izdaje</title>
                        <title language="sr">Obavesti Izdavača</title>
@@ -167,7 +167,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Bylos versija</title>
                        <title language="nl">Bestandsversie</title>
                        <title language="no">Filversjon</title>
-                       <title language="br">Versão do Arquivo</title>
+                       <title language="pt-br">Versão do Arquivo</title>
                        <title language="ru">Версия файла</title>
                        <title language="sl-SI">Različica datoteke</title>
                        <title language="sr">Verzije</title>
@@ -191,7 +191,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pradinis vardas</title>
                        <title language="nl">Originele Bestandsnaam</title>
                        <title language="no">Originalnavn</title>
-                       <title language="br">Nome Original do Arquivo</title>
+                       <title language="pt-br">Nome Original do Arquivo</title>
                        <title language="ru">Ориг. имя файла</title>
                        <title language="sl-SI">Izvorno datotečno ime</title>
                        <title language="sr">Originalno Ime Datoteke</title>
@@ -216,7 +216,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Kompanija</title>
                        <title language="nl">Bedrijf</title>
                        <title language="no">Firma</title>
-                       <title language="br">Companhia</title>
+                       <title language="pt-br">Companhia</title>
                        <title language="ru">Компания</title>
                        <title language="sl-SI">Tvrdka</title>
                        <title language="sr">Proizvođač</title>
@@ -240,7 +240,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Autorių teisės</title>
                        <title language="nl">Copyright</title>
                        <title language="no">Kopibeskyttelse</title>
-                       <title language="br">Direitos de Cópia</title>
+                       <title language="pt-br">Direitos de Cópia</title>
                        <title language="ru">Автор. права</title>
                        <title language="sl-SI">Avtorska pravica</title>
                        <title language="sr">Prava</title>
@@ -265,7 +265,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
-                       <title language="br">Tipo</title>
+                       <title language="pt-br">Tipo</title>
                        <title language="ru">Тип</title>
                        <title language="sl-SI">Tip</title>
                        <title language="sr">Vrsta</title>
@@ -289,7 +289,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Archyvo tipas</title>
                        <title language="nl">Archieftypes</title>
                        <title language="no">Arkivtype</title>
-                       <title language="br">Tipo de Arquivo</title>
+                       <title language="pt-br">Tipo de Arquivo</title>
                        <title language="ru">Тип архива</title>
                        <title language="sl-SI">Arhivski tip</title>
                        <title language="sr">Vrsta Arhive</title>
@@ -314,7 +314,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">OS</title>
                        <title language="nl">OS</title>
                        <title language="no">OS</title>
-                       <title language="br">Sistema Operacional</title>
+                       <title language="pt-br">Sistema Operacional</title>
                        <title language="ru">ОС</title>
                        <title language="sl-SI">Operac. sistem</title>
                        <title language="sr">OS</title>
@@ -338,7 +338,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Raktažodžiai</title>
                        <title language="nl">Sleutelwoorden</title>
                        <title language="no">Nøkkelord</title>
-                       <title language="br">Palavras-chave</title>
+                       <title language="pt-br">Palavras-chave</title>
                        <title language="ru">Ключ. слова</title>
                        <title language="sl-SI">Ključne besede</title>
                        <title language="sr">Ključne Reči</title>
@@ -362,7 +362,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">P2P išleidimo data</title>
                        <title language="nl">Datum P2P distributie</title>
                        <title language="no">P2P releasedato</title>
-                       <title language="br">Data de Lançamento</title>
+                       <title language="pt-br">Data de Lançamento</title>
                        <title language="ru">P2P релиз дата</title>
                        <title language="sl-SI">P2P datum izdaje</title>
                        <title language="sr">Datum Objave na P2P</title>
@@ -386,7 +386,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Distributorius</title>
                        <title language="nl">Distributeerder</title>
                        <title language="no">Distributør</title>
-                       <title language="br">Distribuidor</title>
+                       <title language="pt-br">Distribuidor</title>
                        <title language="ru">Дистрибьютер</title>
                        <title language="sl-SI">Distributer</title>
                        <title language="sr">Distributer</title>
@@ -410,7 +410,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Distrib. nuoroda</title>
                        <title language="nl">Link naar distributeerder</title>
                        <title language="no">Distributørlink</title>
-                       <title language="br">Link do Distribuidor</title>
+                       <title language="pt-br">Link do Distribuidor</title>
                        <title language="ru">Ссылка агента</title>
                        <title language="sl-SI">Povezava distributerja</title>
                        <title language="sr">Link na Distributera</title>
@@ -434,7 +434,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Leidimo grupė</title>
                        <title language="nl">Distributiegroep</title>
                        <title language="no">Releasegruppe</title>
-                       <title language="br">Grupo de Lançamento</title>
+                       <title language="pt-br">Grupo de Lançamento</title>
                        <title language="ru">Релиз группа</title>
                        <title language="sl-SI">Skupina izdaje</title>
                        <title language="sr">Grupa Objavljivača</title>
@@ -458,7 +458,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Leid. gr. nuoroda</title>
                        <title language="nl">Link van distributiegroep</title>
                        <title language="no">Releasegruppe-link</title>
-                       <title language="br">Link do Grupo</title>
+                       <title language="pt-br">Link do Grupo</title>
                        <title language="ru">Ссылка группы</title>
                        <title language="sl-SI">Povezava skupine izdaje</title>
                        <title language="sr">Link na Grupu Objavljivača</title>
@@ -482,7 +482,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>
-                       <title language="br">Link</title>
+                       <title language="pt-br">Link</title>
                        <title language="ru">Ссылка</title>
                        <title language="sl-SI">Povezava</title>
                        <title language="sr">Link</title>

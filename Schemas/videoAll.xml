@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -45,7 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Video:Visi vaizdo įrašai</title>
                <title language="nl">Video:Alle Video's</title>
                <title language="no">Video: alle videoer</title>
-               <title language="br">Vídeo:Todos os Vídeos</title>
+               <title language="pt-br">Vídeo:Todos os Vídeos</title>
                <title language="ru">&#160;Видео: Все видео</title>
                <title language="sl-SI">Video:Vsi videji</title>
                <title language="sr">Film:Svi Filmovi</title>
@@ -74,7 +74,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="br">Título</title>
+                       <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
@@ -102,7 +102,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Visi vaizdo įrašai</title>
                <title language="nl">Alle Video's</title>
                <title language="no">All video</title>
-               <title language="br">Todos os Vídeos</title>
+               <title language="pt-br">Todos os Vídeos</title>
                <title language="ru">Все видео</title>
                <title language="sl-SI">Vsi videji</title>
                <title language="sr">Svi Filmovi</title>
@@ -124,7 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos vaizdo bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elk videobestand uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle videofilene i mine filer</subtitle>
-               <subtitle language="br">Esta pasta contém todos os vídeos presentes em sua biblioteca.</subtitle>
+               <subtitle language="pt-br">Esta pasta contém todos os vídeos presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый видео файл в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vsako video datoteko v vaši knjižnici.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve video snimke u vašoj kolekciji.</subtitle>

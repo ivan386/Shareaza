@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -45,7 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Muzikos stilius</title>
                <title language="nl">Muziek Genre</title>
                <title language="no">Musikksjanger</title>
-               <title language="br">Gênero Musical</title>
+               <title language="pt-br">Gênero Musical</title>
                <title language="ru">&#160;Стиль музыки</title>
                <title language="sl-SI">Glasbeni žanr</title>
                <title language="sr">Muzika Žanr</title>
@@ -74,7 +74,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="br">Título</title>
+                       <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
@@ -98,7 +98,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
-                       <title language="br">Descrição</title>
+                       <title language="pt-br">Descrição</title>
                        <title language="ru">Описание</title>
                        <title language="sl-SI">Opis</title>
                        <title language="sr">Opis</title>
@@ -122,7 +122,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Kolekcionierius</title>
                        <title language="nl">Samensteller</title>
                        <title language="no">Samler</title>
-                       <title language="br">Colecionador</title>
+                       <title language="pt-br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
                        <title language="sl-SI">Kolektor</title>
                        <title language="sr">Sakupio</title>
@@ -146,7 +146,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
-                       <title language="br">Comentários</title>
+                       <title language="pt-br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sl-SI">Komentarji</title>
                        <title language="sr">Komentari</title>
@@ -179,7 +179,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">{name} muzika</title>
                <title language="nl">{name} Muziek</title>
                <title language="no">{name} Musikk</title>
-               <title language="br">{name} - Música</title>
+               <title language="pt-br">{name} - Música</title>
                <title language="ru">Музыка {name}</title>
                <title language="sl-SI">{name} Glasba</title>
                <title language="sr">{name} - Muzika</title>
@@ -201,7 +201,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti „{name}“ žanrui/stiliui.</subtitle>
                <subtitle language="nl">Deze map bevat al je muziek die valt onder het genre {name}.</subtitle>
                <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name}-sjangeren.</subtitle>
-               <subtitle language="br">Esta pasta contém todas as músicas do gênero: {name}.</subtitle>
+               <subtitle language="pt-br">Esta pasta contém todas as músicas do gênero: {name}.</subtitle>
                <subtitle language="ru">Эта папка отображает всю музыку стиля {name}.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vso vašo glasbo, ki sodi v žanr {name}.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve vaše pesme koje spadaju u {name} žanr.</subtitle>

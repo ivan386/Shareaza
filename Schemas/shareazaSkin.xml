@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -44,7 +44,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Apvalkalas</title>
                <title language="nl">Skin</title>
                <title language="no">Skin</title>
-               <title language="br">Pele</title>
+               <title language="pt-br">Pele</title>
                <title language="ru">Шкурка</title>
                <title language="sl-SI">Preobleka</title>
                <title language="sr">Skin</title>
@@ -70,7 +70,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Naam</title>
                        <title language="no">Navn</title>
-                       <title language="br">Nome</title>
+                       <title language="pt-br">Nome</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Ime</title>
                        <title language="sr">Ime</title>
@@ -94,7 +94,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Autorius</title>
                        <title language="nl">Auteur</title>
                        <title language="no">Forfatter</title>
-                       <title language="br">Autor</title>
+                       <title language="pt-br">Autor</title>
                        <title language="ru">Автор</title>
                        <title language="sl-SI">Avtor</title>
                        <title language="sr">Autor</title>
@@ -118,7 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>
-                       <title language="br">Link</title>
+                       <title language="pt-br">Link</title>
                        <title language="ru">Ссылка</title>
                        <title language="sl-SI">Povezava</title>
                        <title language="sr">Link</title>
@@ -142,7 +142,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">El. paštas</title>
                        <title language="nl">E-mail</title>
                        <title language="no">E-post</title>
-                       <title language="br">Email</title>
+                       <title language="pt-br">Email</title>
                        <title language="ru">E-mail</title>
                        <title language="sl-SI">E-naslov</title>
                        <title language="sr">Email</title>
@@ -166,7 +166,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Versija</title>
                        <title language="nl">Versie</title>
                        <title language="no">Versjon</title>
-                       <title language="br">Versão</title>
+                       <title language="pt-br">Versão</title>
                        <title language="ru">Версия</title>
                        <title language="sl-SI">Različica</title>
                        <title language="sr">Verzija</title>
@@ -191,7 +191,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
-                       <title language="br">Tipo</title>
+                       <title language="pt-br">Tipo</title>
                        <title language="ru">Тип</title>
                        <title language="sl-SI">Tip</title>
                        <title language="sr">Vrsta</title>
@@ -216,7 +216,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Kalba</title>
                        <title language="nl">Taal</title>
                        <title language="no">Språk</title>
-                       <title language="br">Idioma</title>
+                       <title language="pt-br">Idioma</title>
                        <title language="ru">Язык</title>
                        <title language="sl-SI">Jezik</title>
                        <title language="sr">Jezik</title>
@@ -240,7 +240,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
-                       <title language="br">Descrição</title>
+                       <title language="pt-br">Descrição</title>
                        <title language="ru">Описание</title>
                        <title language="sl-SI">Opis</title>
                        <title language="sr">Opis</title>
@@ -264,7 +264,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
-                       <title language="br">Comentários</title>
+                       <title language="pt-br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sl-SI">Komentarji</title>
                        <title language="sr">Komentari</title>

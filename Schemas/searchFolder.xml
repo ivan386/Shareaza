@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -45,7 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Paieška:Radiniai</title>
                <title language="nl">Zoeken:Zoekresultaten</title>
                <title language="no">Søk: søkeresultat</title>
-               <title language="br">Pesquisar:Resultados de Pesquisa</title>
+               <title language="pt-br">Pesquisar:Resultados de Pesquisa</title>
                <title language="ru">&#160;Поиск: Результаты поиска</title>
                <title language="sl-SI">Iskanje:Rezultati iskanja</title>
                <title language="sr">Traži:Rezultati Potrage</title>
@@ -70,7 +70,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="br">Título</title>
+                       <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
@@ -94,7 +94,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Laikas</title>
                        <title language="nl">Tijd</title>
                        <title language="no">Tid</title>
-                       <title language="br">Tempo</title>
+                       <title language="pt-br">Tempo</title>
                        <title language="ru">Время</title>
                        <title language="sl-SI">Čas</title>
                        <title language="sr">Vreme</title>
@@ -118,7 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Data</title>
                        <title language="nl">Datum</title>
                        <title language="no">Dato</title>
-                       <title language="br">Data</title>
+                       <title language="pt-br">Data</title>
                        <title language="ru">Дата</title>
                        <title language="sl-SI">Datum</title>
                        <title language="sr">Datum</title>
@@ -142,7 +142,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Turinys</title>
                        <title language="nl">Inhoud</title>
                        <title language="no">Innhold</title>
-                       <title language="br">Conteúdo</title>
+                       <title language="pt-br">Conteúdo</title>
                        <title language="ru">Содержание</title>
                        <title language="sl-SI">Vsebina</title>
                        <title language="sr">Sadržaj</title>
@@ -170,7 +170,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">„{content}“ radiniai</title>
                <title language="nl">Zoeken naar "{content}"</title>
                <title language="no">Søk etter "{content}"</title>
-               <title language="br">Pesquisar por "{content}"</title>
+               <title language="pt-br">Pesquisar por "{content}"</title>
                <title language="ru">Поиск для "{content}"</title>
                <title language="sl-SI">Išči po "{content}"</title>
                <title language="sr">Traži "{content}"</title>
@@ -192,7 +192,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Šiame kataloge yra bylos, surastos pagal ieškinį „{content}“.</subtitle>
                <subtitle language="nl">Deze map bevat alle bestanden die resulteerden uit je zoekopdracht naar "{content}"</subtitle>
                <subtitle language="no">Denne mappen inneholder resultat som matcher søk etter "{content}"</subtitle>
-               <subtitle language="br">Esta pasta contém os arquivos que foram encontrados na sua pesquisa por "{content}".</subtitle>
+               <subtitle language="pt-br">Esta pasta contém os arquivos que foram encontrados na sua pesquisa por "{content}".</subtitle>
                <subtitle language="ru">Эта папка отображает результаты поиска для {content}.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje datoteke, ki so se ujemale vašemu iskanju po "{content}"</subtitle>
                <subtitle language="sr">Ova fascikla sadrži nađene datoteke po izrazu "{content}"</subtitle>

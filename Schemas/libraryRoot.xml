@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -45,7 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Bendra:Mano „Shareaza“ kolekcija</title>
                <title language="nl">Algemeen:Mijn Shareaza Bibliotheek</title>
                <title language="no">Generelt: mine filer</title>
-               <title language="br">Geral:Minha Biblioteca do Shareaza</title>
+               <title language="pt-br">Geral:Minha Biblioteca do Shareaza</title>
                <title language="ru">&#160;Основное: Моё хранилище</title>
                <title language="sl-SI">Splošno:Moja Shareaza knjižnica</title>
                <title language="sr">Opšte:Moja Kolekcija</title>
@@ -71,7 +71,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="br">Título</title>
+                       <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
@@ -95,7 +95,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Savininkas</title>
                        <title language="nl">Eigenaar</title>
                        <title language="no">Eier</title>
-                       <title language="br">Proprietário</title>
+                       <title language="pt-br">Proprietário</title>
                        <title language="ru">Владелец</title>
                        <title language="sl-SI">Lastnik</title>
                        <title language="sr">Vlasnik</title>
@@ -119,7 +119,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
-                       <title language="br">Comentários</title>
+                       <title language="pt-br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sl-SI">Komentarji</title>
                        <title language="sr">Komentari</title>
@@ -147,7 +147,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Sveiki apsilankę savo kolekcijoje!</title>
                <title language="nl">Welkom bij mijn bibliotheek!</title>
                <title language="no">Velkommen til mine filer</title>
-               <title language="br">Bem-vindo à Sua Biblioteca</title>
+               <title language="pt-br">Bem-vindo à Sua Biblioteca</title>
                <title language="ru">Добро пожаловать в Ваше хранилище!</title>
                <title language="sl-SI">Dobrodošli v vaši knjižnici!</title>
                <title language="sr">Dobrodošli U Vašu Kolekciju!</title>
@@ -169,7 +169,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}.</subtitle>
                <subtitle language="nl">Je hebt {totalFiles} bestanden met een totaal van {totalVolume} in je bibliotheek.</subtitle>
                <subtitle language="no">Du har {totalFiles} filer totalt {totalVolume} i mine filer.</subtitle>
-               <subtitle language="br">Você tem {totalFiles} arquivos totalizando {totalVolume} na sua biblioteca.</subtitle>
+               <subtitle language="pt-br">Você tem {totalFiles} arquivos totalizando {totalVolume} na sua biblioteca.</subtitle>
                <subtitle language="ru">У Вас файлов {totalFiles} занимающих {totalVolume} в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">V vaši knjižnici imate {totalFiles} datotek, v skupni velikosti {totalVolume}.</subtitle>
                <subtitle language="sr">Imate {totalFiles} datoteka Tj {totalVolume} koje delite sa svetom.</subtitle>

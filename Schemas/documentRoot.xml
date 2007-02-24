@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -45,7 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Dokumentas:Mano dokumentai</title>
                <title language="nl">Document:Mijn Documenten</title>
                <title language="no">Dokument: Mine dokumenter</title>
-               <title language="br">Documento:Meus Documentos</title>
+               <title language="pt-br">Documento:Meus Documentos</title>
                <title language="ru">&#160;Документ:&#160;Мои документы</title>
                <title language="sl-SI">Dokument:Moji dokumenti</title>
                <title language="sr">Dokument:Moji Dokumenti</title>
@@ -74,7 +74,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="br">Título</title>
+                       <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
@@ -102,7 +102,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Sveiki apsilankę&#160;„Mano dokumentuose“!</title>
                <title language="nl">Welkom bij mijn documenten!</title>
                <title language="no">Velkommen til Mine dokumenter!</title>
-               <title language="br">Bem-Vindo aos Meus Documentos</title>
+               <title language="pt-br">Bem-Vindo aos Meus Documentos</title>
                <title language="ru">Добро пожаловать в Ваши документы!</title>
                <title language="sl-SI">Dobrodošli v mojih dokumentih!</title>
                <title language="sr">Dobrodošli Među Vaše Dokumente!</title>
@@ -124,7 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos dokumentai.</subtitle>
                <subtitle language="nl">Deze mappen bevatten al je documenten.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine dokumenter.</subtitle>
-               <subtitle language="br">Estas pastas contêm todos os seu documentos.</subtitle>
+               <subtitle language="pt-br">Estas pastas contêm todos os seu documentos.</subtitle>
                <subtitle language="ru">Эти папки отображают все Ваши документы.</subtitle>
                <subtitle language="sl-SI">Te mape vsebujejo vse dokumente.</subtitle>
                <subtitle language="sr">Ove fascile sadrže sve vaše dokumente.</subtitle>

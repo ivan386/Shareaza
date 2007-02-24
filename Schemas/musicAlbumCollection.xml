@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -45,7 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Muzika:Pagal albumus</title>
                <title language="nl">Muziek:Per Album</title>
                <title language="no">Musikk: per album</title>
-               <title language="br">Música:Por Álbum</title>
+               <title language="pt-br">Música:Por Álbum</title>
                <title language="ru">&#160;Музыка: По альбомам</title>
                <title language="sl-SI">Glasba:Po albumu</title>
                <title language="sr">Muzika:Po Albumima</title>
@@ -74,7 +74,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="br">Título</title>
+                       <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
@@ -102,7 +102,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Muzika pagal albumus</title>
                <title language="nl">Muziek Per Album</title>
                <title language="no">Musikk per album</title>
-               <title language="br">Música por Álbum</title>
+               <title language="pt-br">Música por Álbum</title>
                <title language="ru">Музыка по альбомам</title>
                <title language="sl-SI">Glasba Po albumu</title>
                <title language="sr">Muzika Po Albumima</title>
@@ -124,7 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos albumų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met albums die je in je bibliotheek hebt.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste over alle dine album</subtitle>
-               <subtitle language="br">Esta pasta contém todos os álbuns presentes em sua biblioteca.</subtitle>
+               <subtitle language="pt-br">Esta pasta contém todos os álbuns presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает список музыкальных альбомов найденных в файлах Вашего хранилища.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje seznam albumov v vaši knjižnici.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži popis albuma koje imate u kolekciji.</subtitle>

@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -45,7 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Muzika:Mano muzika</title>
                <title language="nl">Muziek:Mijn Muziek</title>
                <title language="no">Musikk: min musikk</title>
-               <title language="br">Música:Minhas Músicas</title>
+               <title language="pt-br">Música:Minhas Músicas</title>
                <title language="ru">&#160;Музыка: Моя музыка</title>
                <title language="sl-SI">Glasba:Moja glasba</title>
                <title language="sr">Muzika:Moje Pesme</title>
@@ -74,7 +74,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="br">Título</title>
+                       <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
@@ -104,7 +104,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Sveiki apsilankę „Mano muzikoje“!</title>
                <title language="nl">Welkom bij Mijn Muziek!</title>
                <title language="no">Velkommen til min musikk</title>
-               <title language="br">Bem-vindo à Minhas Músicas</title>
+               <title language="pt-br">Bem-vindo à Minhas Músicas</title>
                <title language="ru">Добро пожаловать в Вашу музыку!</title>
                <title language="sl-SI">Dobrodošli v moji glasbi!</title>
                <title language="sr">Dobrodošli Među Vaše Pesme</title>
@@ -126,7 +126,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Šiuose kataloguose yra visa Jūsų kolekcijos muzika, surūšiuota pagal albumus, atlikėjus ir žanrus/stilius. Tęskite atverdami žemiau esantį katalogą.</subtitle>
                <subtitle language="nl">Deze mappen bevatten alle muziek uit je bibliotheek, georganiseerd per album, per artiest en per genre.  Open een map hieronder om verder te gaan.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine musikkfiler, organisert etter album, artist og sjanger. Åpne en mappe for å fortsette.</subtitle>
-               <subtitle language="br">Estas pastas contém todas as músicas da sua biblioteca, organizadas por àlbum, artista e gênero. Abra uma pasta abaixo para continuar.</subtitle>
+               <subtitle language="pt-br">Estas pastas contém todas as músicas da sua biblioteca, organizadas por àlbum, artista e gênero. Abra uma pasta abaixo para continuar.</subtitle>
                <subtitle language="ru">Эти папки отображают всю музыку организованную по альбомам, артистам и стилям.</subtitle>
                <subtitle language="sl-SI">Te mape vsebujejo vso glasbo v vaši knjižnici, urejeno po albumu, izvajalcu in žanru. Odprite mapo spodaj za nadaljevanje.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže svu muziku iz vaše kolekcije složenu po albumima, izvođaču i žanru.</subtitle>

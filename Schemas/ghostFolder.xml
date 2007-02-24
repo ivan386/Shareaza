@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
@@ -18,6 +17,7 @@ Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Serbian Schemas File translated by Woodstoock
@@ -45,7 +45,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="lt">Bendra:Šešėlinės bylos</title>
               <title language="nl">Algemeen:Ghost bestanden</title>
               <title language="no">General:Ghost Files</title>
-              <title language="br">General:Ghost Files</title>
+              <title language="pt-br">General:Ghost Files</title>
               <title language="ru">&#160;Основное: Теневые файлы</title>
               <title language="sl-SI">Splošno:Navidezne datoteke</title>
               <title language="sr">General:Ghost Files</title>
@@ -74,7 +74,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="br">Título</title>
+                       <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
                        <title language="sr">Naslov</title>
@@ -99,7 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Šešėlinės bylos</title>
                <title language="nl">Ghost bestanden</title>
                <title language="no">Ghost Files</title>
-               <title language="br">Ghost Files</title>
+               <title language="pt-br">Ghost Files</title>
                <title language="ru">Теневые файлы</title>
                <title language="sl-SI">Navidezne datoteke</title>
                <title language="sr">Ghost Files</title>
@@ -121,7 +121,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Šiame aplanke yra visos bylos, kurias Jūs kažkada ištrynėte iš savo kolekcijos.</subtitle>
                <subtitle language="nl">Deze map bevat elk bestand dat je hebt verwijderd uit de bibliotheek.</subtitle>
                <subtitle language="no">This folder contains every file which you've deleted from the Library.</subtitle>
-               <subtitle language="br">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="pt-br">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый файл, который Вы удалили с хранилища.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vse datoteke, ki ste jih brisali iz vaše knjižnice.</subtitle>
                <subtitle language="sr">This folder contains every file which you've deleted from the Library.</subtitle>
