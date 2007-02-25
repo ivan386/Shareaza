@@ -29,6 +29,17 @@
 		<item id="8" type="colorpicker" value="奇数行の色" default="#E9EDEF"/>
 		<item id="9" type="textbox" value="リリースグループ詳細"/>
 	</text>
+	<text language="pt-br">
+		<item id="1" type="textbox" value="Título da coleção"/>
+		<item id="2" type="textbox" value="Ao abrir arquivo" default="Abrir Arquivo"/>
+		<item id="3" type="textbox" value="Enquanto baixando" default="Baixando"/>
+		<item id="4" type="textbox" value="Ação de download" default="Baixar Agora"/>
+		<item id="5" type="textbox" value="Descrição do Álbum"/>
+		<item id="6" type="textbox" value="Descrição de Recurso da Rede"/>
+		<item id="7" type="colorpicker" value="Colorir fileiras ímpares" default="#FFFFFF"/>
+		<item id="8" type="colorpicker" value="Colorir fileiras pares" default="#E9EDEF"/>
+		<item id="9" type="textbox" value="Sobre o grupo de lançamento"/>
+	</text>
 	<!-- It's better to place english translation at the end to exit data collection immediately when language specific data already loaded -->
 	<text language="en">
 		<item id="1" type="textbox" value="Collection title"/>

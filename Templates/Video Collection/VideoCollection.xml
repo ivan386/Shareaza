@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
 <manifest	name="Template for Video"
 			author="Rolandas Rudomanskis"
@@ -44,6 +44,17 @@
 		<item id="7" type="colorpicker" value="奇数行の色" default="#E9EDEF"/>
 		<item id="8" type="textbox" value="リリースグループ詳細"/>
 		<item id="9" type="multi-filepicker" value="スクリーンショット" default="images/Screenshot_Part.png"/>
+	</text>
+	<text language="pt-br">
+		<item id="1" type="textbox" value="Ação ao abrir arquivo" default="Abrir Arquivo"/>
+		<item id="2" type="textbox" value="Enquanto baixando" default="Baixando"/>
+		<item id="3" type="textbox" value="Ação de download" default="Baixar Agora"/>
+		<item id="4" type="textbox" value="Descrição do álbum"/>
+		<item id="5" type="textbox" value="Descrição do Recurso da Rede"/>
+		<item id="6" type="colorpicker" value="Colorir fileiras ímpares" default="#FFFFFF"/>
+		<item id="7" type="colorpicker" value="Colorir fileiras pares" default="#E9EDEF"/>
+		<item id="8" type="textbox" value="Sobre o grupo de lançamento"/>
+		<item id="9" type="multi-filepicker" value="Imagem para o arquivo" default="imagens/Screenshot_Part.png"/>
 	</text>
 	<!-- It's better to place english translation at the end to exit data collection immediately when language specific data already loaded -->
 	<text language="en">

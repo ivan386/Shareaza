@@ -43,6 +43,14 @@
 		<item id="5" type="textbox" value="При загрузке файла" default="Загружается"/>
 		<item id="6" type="textbox" value="Действие для загрузки" default="Загрузить сейчас"/>
 	</text>
+	<text language="pt-br">
+		<item id="1" type="textbox" value="Título da Coleção"/>
+		<item id="2" type="textbox" value="Descrição da Coleção"/>
+		<item id="3" type="textbox" value="Nota de Lançamento"/>
+		<item id="4" type="textbox" value="Ação ao abrir arquivo" default="Abrir Arquivo"/>
+		<item id="5" type="textbox" value="Enquanto baixando" default="Baixando"/>
+		<item id="6" type="textbox" value="Ação de download" default="Baixar Agora"/>
+	</text>
 	<!-- It's better to place english translation at the end to exit data collection immediately when language specific data already loaded -->
 	<text language="en">
 		<item id="1" type="textbox" value="Collection Title"/>
