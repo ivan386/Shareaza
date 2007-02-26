@@ -151,6 +151,8 @@ CShareazaApp::CShareazaApp()
 
 BOOL CShareazaApp::InitInstance()
 {
+	CWinApp::InitInstance();
+
 	CWaitCursor pCursor;
 
 	SetRegistryKey( _T("Shareaza") );
@@ -1514,7 +1516,7 @@ public:
 	static void Remove(HANDLE hThread)
 	{
 		CSingleLock oLock( &m_ThreadMapSection, TRUE );
-		CThreadTag tag = {};
+		CThreadTag tag = { 0 };
 		if ( m_ThreadMap.Lookup( hThread, tag ) )
 		{
 			m_ThreadMap.RemoveKey( hThread );
@@ -1531,7 +1533,7 @@ public:
 		TerminateThread( hThread, 0 );
 
 		CSingleLock oLock( &m_ThreadMapSection, TRUE );
-		CThreadTag tag = {};
+		CThreadTag tag = { 0 };
 		if ( m_ThreadMap.Lookup( hThread, tag ) )
 		{
 			ASSERT( hThread == tag.pThread->m_hThread );
@@ -1594,9 +1596,15 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 {
 	if ( *phThread )
 	{
-		if ( WaitForSingleObject( *phThread, dwTimeout ) == WAIT_TIMEOUT )
+		__try
 		{
-			CRazaThread::Terminate( *phThread );
+			if ( WaitForSingleObject( *phThread, dwTimeout ) == WAIT_TIMEOUT )
+			{
+				CRazaThread::Terminate( *phThread );
+			}
+		}
+		__except( EXCEPTION_CONTINUE_EXECUTION )
+		{
 		}
 
 		CRazaThread::Remove( *phThread );
