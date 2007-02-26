@@ -1445,7 +1445,7 @@ HBITMAP CreateMirroredBitmap(HBITMAP hbmOrig)
 		theApp.m_pfnSetLayout( hdcMem2, LAYOUT_RTL );
 		BitBlt( hdcMem2, 0, 0, bm.bmWidth, bm.bmHeight, hdcMem1, 0, 0, SRCCOPY );
 		SelectObject( hdcMem1, hOld_bm1 );
-		SelectObject( hdcMem1, hOld_bm2 );
+		SelectObject( hdcMem2, hOld_bm2 );
 		DeleteDC( hdcMem1 );
 		DeleteDC( hdcMem2 );
 		ReleaseDC( NULL, hdc );
