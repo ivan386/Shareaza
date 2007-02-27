@@ -60,6 +60,7 @@ public:
 	IN_ADDR				m_pServerAddress;
 	WORD				m_nServerPort;
 	CString				m_sCountry;
+	CString				m_sCountryName;
 public:
 	CString				m_sName;
 	DWORD				m_nIndex;

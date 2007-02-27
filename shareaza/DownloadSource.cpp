@@ -282,7 +282,8 @@ BOOL CDownloadSource::ResolveURL()
 		}
 	}
 	
-	m_sCountry = theApp.GetCountryCode( m_pAddress );
+	m_sCountry		= theApp.GetCountryCode( m_pAddress );
+	m_sCountryName	= theApp.GetCountryName( m_pAddress );
 
 	return TRUE;
 }
@@ -316,6 +317,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		ar << m_sServer;
 		ar << m_sNick;
 		ar << m_sCountry;
+		ar << m_sCountryName;
 		ar << m_nSpeed;
 		ar << m_bPushOnly;
 		ar << m_bCloseConn;
@@ -355,6 +357,11 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 			ar >> m_sCountry;
 		else
 			m_sCountry = theApp.GetCountryCode( m_pAddress );
+
+		if ( nVersion >= 38 ) 
+			ar >> m_sCountryName;
+		else
+			m_sCountryName = theApp.GetCountryName( m_pAddress );
 
 		ar >> m_nSpeed;
 		ar >> m_bPushOnly;

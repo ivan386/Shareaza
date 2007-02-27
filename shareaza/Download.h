@@ -24,13 +24,14 @@
 
 #pragma once
 
-#define DOWNLOAD_SER_VERSION	37
+#define DOWNLOAD_SER_VERSION	38
 // History:
 // 33 - added m_sSearchKeyword to CDownloadBase (CyberBob)
 // 34 - added m_bSeeding and m_sServingFileName to CDownloadWithTorrent (Rolandas)
 // 35 - added m_sCountry to CDownloadSource (dcat)
 // 36 - nothing (Rolandas)
 // 37 - added m_oBTH to CDownloadBase, m_bBTH and m_bMD5 to CDownloadSource (Ryo-oh-ki)
+// 38 - added m_sCountryName to CDownloadSource (dcat)
 
 #include "DownloadWithExtras.h"
 

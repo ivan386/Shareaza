@@ -40,6 +40,8 @@
 #include "GraphItem.h"
 #include "CtrlDownloadTip.h"
 
+#include "Flags.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -658,6 +660,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 		m_sName += _T(" (push)");
 	}
 
+	m_sCountryName = pSource->m_sCountryName;
 
 	m_sURL = pSource->m_sURL;
 
@@ -688,7 +691,10 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	}
 
 	AddSize( pDC, m_sName );
+	m_sz.cy += TIP_TEXTHEIGHT;
+
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
+	AddSize( pDC, m_sCountryName );
 	m_sz.cy += TIP_TEXTHEIGHT + TIP_RULE;
 
 	AddSize( pDC, m_sURL, 80 );
@@ -726,8 +732,24 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 	CPoint pt( 0, 0 );
 
 	DrawText( pDC, &pt, m_sName );
-	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	pt.y += TIP_TEXTHEIGHT;
+
+	int nFlagIndex = Flags.GetFlagIndex( pSource->m_sCountry );
+	if ( nFlagIndex >= 0 )
+	{
+		ImageList_DrawEx( Flags.m_pImage, nFlagIndex, pDC->GetSafeHdc(),
+			pt.x, pt.y, 18, 18, CoolInterface.m_crTipBack, CLR_NONE, ILD_NORMAL );
+		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
+	}
+
+	pt.x += 25;
+	pt.y += 2;
+
+	pDC->SelectObject( &CoolInterface.m_fntNormal );
+	DrawText( pDC, &pt, m_sCountryName );
+	pt.y += TIP_TEXTHEIGHT;
+
+	pt.x -= 25;
 
 	DrawRule( pDC, &pt );
 

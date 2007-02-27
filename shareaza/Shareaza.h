@@ -99,6 +99,7 @@ public:
 	HINSTANCE m_hGeoIP;
 	GeoIP* m_pGeoIP;
 	GeoIP_country_code_by_addrFunc m_pfnGeoIP_country_code_by_addr;
+	GeoIP_country_name_by_addrFunc m_pfnGeoIP_country_name_by_addr;
 
 public:
 	static CMainWnd*	SafeMainWnd();
@@ -111,6 +112,7 @@ public:
 	void				DebugState(BOOL bState);
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
+	CString				GetCountryName(IN_ADDR pAddress) const;
 
 	virtual BOOL		InitInstance();
 	virtual int			ExitInstance();

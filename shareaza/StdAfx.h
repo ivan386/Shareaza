@@ -287,6 +287,7 @@ typedef enum {
 
 typedef GeoIP* (*GeoIP_newFunc)(int);
 typedef const char * (*GeoIP_country_code_by_addrFunc) (GeoIP*, const char *);
+typedef const char * (*GeoIP_country_name_by_addrFunc) (GeoIP*, const char *);
 
 // CArchive operators to help replacing TRISTATE with safer and more convenient tribools
 inline CArchive& operator<<(CArchive& ar, const boost::logic::tribool& rhs)

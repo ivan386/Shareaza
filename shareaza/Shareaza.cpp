@@ -709,6 +709,7 @@ void CShareazaApp::InitResources()
 	{
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
 		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_addr" );
+		m_pfnGeoIP_country_name_by_addr = (GeoIP_country_name_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_addr" );
 
 		m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
@@ -902,6 +903,13 @@ CString CShareazaApp::GetCountryCode(IN_ADDR pAddress) const
 {
 	if ( m_pGeoIP )
 		return CString( m_pfnGeoIP_country_code_by_addr( m_pGeoIP, inet_ntoa( pAddress ) ) );
+	return _T("");
+}
+
+CString CShareazaApp::GetCountryName(IN_ADDR pAddress) const
+{
+	if ( m_pGeoIP )
+		return CString( m_pfnGeoIP_country_name_by_addr( m_pGeoIP, inet_ntoa( pAddress ) ) );
 	return _T("");
 }
 
