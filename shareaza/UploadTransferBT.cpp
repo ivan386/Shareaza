@@ -54,7 +54,7 @@ CUploadTransferBT::CUploadTransferBT(CBTClient* pClient, CDownload* pDownload) :
 	m_pClient			= pClient;
 	m_pHost				= pClient->m_pHost;
 	m_sAddress			= pClient->m_sAddress;
-	m_sCountry			= theApp.GetCountryCode( m_pHost.sin_addr );
+	UpdateCountry();
 	m_sUserAgent		= _T("BitTorrent");
 	
 	m_nState			= upsReady;

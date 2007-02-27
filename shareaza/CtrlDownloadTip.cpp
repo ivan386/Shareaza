@@ -32,6 +32,7 @@
 #include "DownloadTransferBT.h"
 #include "DownloadTransferED2K.h"
 #include "EDClient.h"
+#include "Flags.h"
 #include "FragmentedFile.h"
 #include "FragmentBar.h"
 #include "Skin.h"
@@ -39,8 +40,6 @@
 #include "GraphLine.h"
 #include "GraphItem.h"
 #include "CtrlDownloadTip.h"
-
-#include "Flags.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

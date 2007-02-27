@@ -67,12 +67,13 @@ public:
 public:
 
 	// The remote computer's IP address, who connected to the other, are we connected, and when it happened
-	SOCKADDR_IN m_pHost;      // The remote computer's IP address in Windows Sockets format
-	CString     m_sAddress;   // The same IP address in a string like "1.2.3.4"
-	CString		m_sCountry;   // The country of this host
-	BOOL        m_bInitiated; // True if we initiated the connection, false if the remote computer connected to us
-	BOOL        m_bConnected; // True when the socket is connected
-	DWORD       m_tConnected; // The tick count when the socket connection was made
+	SOCKADDR_IN m_pHost;        // The remote computer's IP address in Windows Sockets format
+	CString     m_sAddress;     // The same IP address in a string like "1.2.3.4"
+	CString		m_sCountry;     // The two letter country code of this host
+	CString		m_sCountryName; // The full name of the country
+	BOOL        m_bInitiated;   // True if we initiated the connection, false if the remote computer connected to us
+	BOOL        m_bConnected;   // True when the socket is connected
+	DWORD       m_tConnected;   // The tick count when the socket connection was made
 
 public:
 
@@ -109,6 +110,7 @@ public:
 	BOOL SendMyAddress();  // If we are listening on a port, tell the other computer our IP address and port number
 	BOOL IsAgentBlocked(); // Check the other computer's software title against our list of programs not to talk to
 	
+	void UpdateCountry();  // Call whenever the IP address is set
 protected:
 
 	// Read and write data through the socket, and look at headers

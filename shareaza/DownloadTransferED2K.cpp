@@ -123,7 +123,7 @@ BOOL CDownloadTransferED2K::Initiate()
 	m_sAddress		= m_pClient->m_sAddress;
 	if( m_sAddress.IsEmpty() )
 		m_sAddress	= inet_ntoa( m_pHost.sin_addr );
-	m_sCountry		= theApp.GetCountryCode( m_pHost.sin_addr );
+	UpdateCountry();
 	m_pClient->m_mInput.pLimit = &m_nBandwidth;
 	
 	return TRUE;
@@ -228,7 +228,7 @@ BOOL CDownloadTransferED2K::OnConnected()
 
 	m_pHost		= m_pClient->m_pHost;
 	m_sAddress	= m_pClient->m_sAddress;
-	m_sCountry	= theApp.GetCountryCode( m_pHost.sin_addr );
+	UpdateCountry();
 	
 	m_pSource->m_oGUID		= m_pClient->m_oGUID;
 	m_pSource->m_sServer	= m_sUserAgent = m_pClient->m_sUserAgent;

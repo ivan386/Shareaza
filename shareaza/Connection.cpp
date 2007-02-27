@@ -72,16 +72,18 @@ CConnection::CConnection() :
 
 // make a destructive copy (similar to AttachTo)
 CConnection::CConnection(CConnection& other)
-	: m_pHost(      other.m_pHost )
-	, m_sAddress(   other.m_sAddress )
-	, m_bInitiated( other.m_bInitiated )
-	, m_bConnected( other.m_bConnected )
-	, m_tConnected( other.m_tConnected )
-	, m_hSocket(    other.m_hSocket )
-	, m_pInput(     other.m_pInput )		// transfered
-	, m_pOutput(    other.m_pOutput )		// transfered
-	, m_sUserAgent( other.m_sUserAgent )
-	, m_nQueuedRun( 0 )
+	: m_pHost(        other.m_pHost )
+	, m_sAddress(     other.m_sAddress )
+	, m_sCountry(     other.m_sCountry )
+	, m_sCountryName( other.m_sCountryName )
+	, m_bInitiated(   other.m_bInitiated )
+	, m_bConnected(   other.m_bConnected )
+	, m_tConnected(   other.m_tConnected )
+	, m_hSocket(      other.m_hSocket )
+	, m_pInput(       other.m_pInput )		// transfered
+	, m_pOutput(      other.m_pOutput )		// transfered
+	, m_sUserAgent(   other.m_sUserAgent )
+	, m_nQueuedRun(   0 )
 {
 	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
 	ZeroMemory( &m_mOutput, sizeof( m_mOutput ) );
@@ -98,8 +100,6 @@ CConnection::CConnection(CConnection& other)
 	// Null the input and output pointers
 	other.m_pInput	= NULL;
 	other.m_pOutput	= NULL;
-
-	m_sCountry = theApp.GetCountryCode( m_pHost.sin_addr );
 }
 
 // Delete this CConnection object
@@ -151,7 +151,7 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 	m_pHost.sin_family	= PF_INET;							// PF_INET means just normal IPv4, not IPv6 yet
 	m_pHost.sin_port	= htons( nPort );					// Copy the port number into the m_pHost structure
 	m_sAddress			= inet_ntoa( m_pHost.sin_addr );	// Save the IP address as a string of text
-	m_sCountry			= theApp.GetCountryCode( m_pHost.sin_addr );
+	UpdateCountry();
 
 	// Create a socket and store it in m_hSocket
 	m_hSocket = socket(
@@ -242,7 +242,7 @@ void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost)
 	m_hSocket		= hSocket;							// Keep the socket here
 	m_pHost			= *pHost;							// Copy the remote IP address into this object
 	m_sAddress		= inet_ntoa( m_pHost.sin_addr );	// Store it as a string also
-	m_sCountry		= theApp.GetCountryCode( m_pHost.sin_addr );
+	UpdateCountry();
 
 	// Make new input and output buffer objects
 	m_pInput		= new CBuffer( &Settings.Bandwidth.PeerIn );
@@ -277,6 +277,7 @@ void CConnection::AttachTo(CConnection* pConnection)
 	m_pHost			= pConnection->m_pHost;
 	m_sAddress		= pConnection->m_sAddress;
 	m_sCountry		= pConnection->m_sCountry;
+	m_sCountryName	= pConnection->m_sCountryName;
 	m_hSocket		= pConnection->m_hSocket;
 	m_bInitiated	= pConnection->m_bInitiated;
 	m_bConnected	= pConnection->m_bConnected;
@@ -944,6 +945,12 @@ BOOL CConnection::IsAgentBlocked()
 
 	// Allow it
 	return FALSE;
+}
+
+void CConnection::UpdateCountry()
+{
+	m_sCountry     = theApp.GetCountryCode( m_pHost.sin_addr );
+	m_sCountryName = theApp.GetCountryName( m_pHost.sin_addr );
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -30,6 +30,7 @@
 #include "CtrlNeighbourTip.h"
 #include "GraphLine.h"
 #include "GraphItem.h"
+#include "Flags.h"
 
 #include "EDPacket.h"
 #include "EDNeighbour.h"
@@ -143,6 +144,12 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	m_sz.cy += TIP_TEXTHEIGHT;
 
+	if ( pNeighbour->m_sCountryName.GetLength() )
+	{
+		AddSize( pDC, pNeighbour->m_sCountryName );
+		m_sz.cy += TIP_TEXTHEIGHT + 4;
+	}
+
 	if ( pNeighbour->m_sUserAgent.GetLength() )
 	{
 		AddSize( pDC, pNeighbour->m_sUserAgent );
@@ -207,6 +214,27 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	DrawText( pDC, &pt, pNeighbour->m_sAddress );
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	pt.y += TIP_TEXTHEIGHT;
+
+	if ( pNeighbour->m_sCountryName.GetLength() )
+	{
+		int nFlagIndex = Flags.GetFlagIndex( pNeighbour->m_sCountry );
+		if ( nFlagIndex >= 0 )
+		{
+			ImageList_DrawEx( Flags.m_pImage, nFlagIndex, pDC->GetSafeHdc(),
+				pt.x, pt.y, 18, 18, CoolInterface.m_crTipBack, CLR_NONE, ILD_NORMAL );
+			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
+
+			pt.x += 25;
+			pt.y += 2;
+			DrawText( pDC, &pt, pNeighbour->m_sCountryName );
+			pt.x -= 25;
+		}
+		else
+		{
+			DrawText( pDC, &pt, pNeighbour->m_sCountryName );
+		}
+		pt.y += TIP_TEXTHEIGHT + 2;
+	}
 
 	if ( pNeighbour->m_nState < nrsConnected )
 	{
