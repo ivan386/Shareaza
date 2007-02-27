@@ -280,9 +280,6 @@ int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, C
 		HBITMAP hOld_bm1, hOld_bm2;
 		hOld_bm1 = (HBITMAP)SelectObject( hDCMem1, bmOriginal.m_hObject );
 		hOld_bm2 = (HBITMAP)SelectObject( hDCMem2, bmMoved.m_hObject );
-		CDC* pDC2 = CDC::FromHandle( hDCMem2 );
-		pDC2->SetBkMode( TRANSPARENT );
-		pDC2->FillSolidRect( 0, 0, EMOTICON_SIZE, EMOTICON_SIZE, crBack );
 
 		if ( theApp.m_bRTL )
 			theApp.m_pfnSetLayout( hDCMem2, LAYOUT_RTL );
