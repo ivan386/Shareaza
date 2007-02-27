@@ -222,6 +222,7 @@ void CChatCore::StopThread()
 {
 	if ( m_hThread == NULL ) return;
 
+	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
 
 	CloseThread( &m_hThread );

@@ -323,7 +323,7 @@ void CLibraryTipCtrl::StopThread()
 	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
 
-	CloseThread( &m_hThread, 2000 );
+	CloseThread( &m_hThread );
 }
 
 /////////////////////////////////////////////////////////////////////////////

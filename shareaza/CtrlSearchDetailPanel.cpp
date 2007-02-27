@@ -70,16 +70,27 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSearchDetailPanel construction
 
-CSearchDetailPanel::CSearchDetailPanel()
+CSearchDetailPanel::CSearchDetailPanel() :
+	m_pMatches( NULL ),
+	m_bValid( FALSE ),
+	m_pFile( NULL ),
+	m_nIcon48( 0 ),
+	m_nIcon32( 0 ),
+	m_nRating( 0 ),
+	m_pSchema( NULL ),
+	m_nScrollWheelLines( 0 ),
+	m_bCanPreview( FALSE ),
+	m_bRunPreview( FALSE ),
+	m_bIsPreviewing( FALSE ),
+	m_hThread( NULL ),
+	m_bThread( FALSE ),
+	m_crLight( CCoolInterface::CalculateColour(
+		CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 ) ),
+	m_nThumbSize( 0 )
 {
-	m_pMatches	= NULL;
-	m_bValid	= FALSE;
-	m_pFile		= NULL;
-	m_hThread	= NULL;
-	m_bThread	= FALSE;
-	m_crLight	=	CCoolInterface::CalculateColour(
-					CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 );
-	m_nThumbSize = 0;
+	m_rcStatus.SetRectEmpty();
+	m_szThumb.SetSize( 0, 0 );
+	m_rcThumb.SetRectEmpty();
 
 	// Try to get the number of lines to scroll when the mouse wheel is rotated
 	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
@@ -257,11 +268,12 @@ void CSearchDetailPanel::OnDestroy()
 {
 	ClearReviews();
 
-	m_bThread = FALSE;
 	CancelPreview();
-	
+
+	m_bThread = FALSE;
+	m_pWakeup.SetEvent();
 	CloseThread( &m_hThread );
-	
+
 	CWnd::OnDestroy();
 }
 

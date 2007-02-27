@@ -375,7 +375,7 @@ void CWizardConnectionPage::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( nIDEvent != 1 ) return;
 
-	CloseThread( &m_hThread, 500 );
+	CloseThread( &m_hThread );
 
 	if ( theApp.m_bUPnPPortsForwarded != TS_TRUE && m_bUPnPForward )
 	{
