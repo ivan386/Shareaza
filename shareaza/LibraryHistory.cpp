@@ -1,7 +1,7 @@
 //
 // LibraryHistory.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -119,8 +119,7 @@ CLibraryRecent* CLibraryHistory::GetByPath(LPCTSTR pszPath) const
 
 CLibraryRecent* CLibraryHistory::Add(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, LPCTSTR pszSources)
 {
-	CSingleLock pLock( &Library.m_pSection );
-	if ( ! pLock.Lock( 500 ) ) return NULL;
+	CSingleLock pLock( &Library.m_pSection, TRUE );
 
 	CLibraryRecent* pRecent = GetByPath( pszPath );
 	if ( pRecent != NULL ) return pRecent;
@@ -292,7 +291,6 @@ CLibraryRecent::CLibraryRecent()
 
 	m_bToday	= FALSE;
 	m_pFile		= NULL;
-//	m_bSHA1		= FALSE;
 }
 
 CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, LPCTSTR pszSources)
