@@ -87,19 +87,18 @@ private:
 	bool empty() const { return m_oList.empty(); }
 	iterator erase(iterator item) { return m_oList.erase( item ); }
 
-	CSize				m_szBlock;
-	int					m_nColumns;
-	int					m_nRows;
-private:
-	Container m_oList;
-	int					m_nScroll;
-private:
-	int					m_nSelected;
-	iterator			m_pFocus;
-	iterator			m_pFirst;
-	std::list< iterator > m_oSelTile;
-	BOOL				m_bDrag;
-	CPoint				m_ptDrag;
+	CMutex					m_pSection;
+	CSize					m_szBlock;
+	int						m_nColumns;
+	int						m_nRows;
+	Container				m_oList;
+	int						m_nScroll;
+	int						m_nSelected;
+	iterator				m_pFocus;
+	iterator				m_pFirst;
+	std::list< iterator >	m_oSelTile;
+	BOOL					m_bDrag;
+	CPoint					m_ptDrag;
 
 // Operations
 public:
@@ -109,15 +108,15 @@ public:
 	virtual CLibraryListItem	DropHitTest(const CPoint& point);
 	virtual HBITMAP				CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
 private:
-	void			clear();
-//	int				GetTileIndex(CLibraryTileItem* pTile) const;
-	bool			Select(iterator pTile, TRISTATE bSelect = TS_TRUE);
-	bool			DeselectAll(iterator pTile);
-	bool			DeselectAll();
-	bool			SelectTo(iterator pTile);
-	void			SelectTo(int nDelta);
-	void			Highlight(iterator pTile);
-private:
+	void				clear();
+//	int					GetTileIndex(CLibraryTileItem* pTile) const;
+	bool				Select(iterator pTile, TRISTATE bSelect = TS_TRUE);
+	bool				DeselectAll(iterator pTile);
+	bool				DeselectAll();
+	bool				SelectTo(iterator pTile);
+	void				SelectTo(int nDelta);
+	void				Highlight(iterator pTile);
+
 	struct SortList : public std::binary_function<CLibraryTileItem, CLibraryTileItem, bool >
 	{
 		bool operator()(const CLibraryTileItem& lhs, const CLibraryTileItem& rhs) const
