@@ -1,7 +1,7 @@
 //
 // CtrlMainTabBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,6 +20,8 @@
 //
 
 #pragma once
+
+#include "ShareazaDataSource.h"
 
 class CSkinWindow;
 
@@ -62,7 +64,7 @@ protected:
 	CSkinWindow*	m_pSkin;
 	TabItem*		m_pHover;
 	TabItem*		m_pDown;
-protected:
+	DWORD			m_dwHoverTime;
 	CDC				m_dcSkin;
 	CBitmap			m_bmSkin;
 	HBITMAP			m_hOldSkin;
@@ -81,6 +83,7 @@ public:
 // Implementation
 protected:
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnDestroy();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
@@ -90,4 +93,5 @@ protected:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 
 	DECLARE_MESSAGE_MAP()
+	DECLARE_DROP()
 };

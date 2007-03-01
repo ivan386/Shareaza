@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "ShareazaDataSource.h"
+
 class CCoolBarItem;
 
 
@@ -39,7 +41,6 @@ public:
 // Attributes
 protected:
 	CList< CCoolBarItem* >	m_pItems;
-protected:
 	int				m_nHeight;
 	BOOL			m_bStretch;
 	BOOL			m_bGripper;
@@ -49,7 +50,7 @@ protected:
 	BOOL			m_bBuffered;
 	BOOL			m_bMenuGray;
 	CSyncObject*	m_pSyncObject;
-protected:
+	DWORD			m_dwHoverTime;
 	CCoolBarItem*	m_pDown;
 	CCoolBarItem*	m_pHot;
 	BOOL			m_bTimer;
@@ -57,16 +58,17 @@ protected:
 	CBrush			m_brBack;
 	COLORREF		m_crBack;
 	BOOL			m_bRecalc;
+	BOOL			m_bDropEnabled;
 
 // Operations
 public:
+	inline void		EnableDrop() { m_bDropEnabled = TRUE; }
 	void			SetSize(int nHeight, BOOL bStretch);
 	void			SetGripper(BOOL bGripper);
 	void			SetBold(BOOL bBold);
 	void			SetDragForward(BOOL bForward);
 	void			SetWatermark(HBITMAP hBitmap, BOOL bDetach = FALSE);
 	void			SetSyncObject(CSyncObject* pSyncObject);
-public:
 	CCoolBarItem*	Add(UINT nID, LPCTSTR pszText = NULL, int nPosition = -1);
 	CCoolBarItem*	Add(UINT nCtrlID, int nWidth, int nHeight = 0);
 	CCoolBarItem*	GetIndex(int nIndex) const;
@@ -103,6 +105,7 @@ public:
 protected:
 	//{{AFX_MSG(CCoolBarCtrl)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnDestroy();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
@@ -114,6 +117,7 @@ protected:
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
+	DECLARE_DROP()
 
 	friend class CCoolBarItem;
 };

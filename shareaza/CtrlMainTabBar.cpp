@@ -1,7 +1,7 @@
 //
 // CtrlMainTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,6 +31,7 @@ IMPLEMENT_DYNAMIC(CMainTabBarCtrl, CControlBar)
 
 BEGIN_MESSAGE_MAP(CMainTabBarCtrl, CControlBar)
 	ON_WM_CREATE()
+	ON_WM_DESTROY()
 	ON_WM_SETCURSOR()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDBLCLK()
@@ -44,11 +45,12 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CMainTabBarCtrl construction
 
-CMainTabBarCtrl::CMainTabBarCtrl()
+CMainTabBarCtrl::CMainTabBarCtrl() :
+	m_pSkin( NULL ),
+	m_pHover( NULL ),
+	m_pDown( NULL ),
+	m_dwHoverTime( 0 )
 {
-	m_pSkin		= NULL;
-	m_pHover	= NULL;
-	m_pDown		= NULL;
 }
 
 CMainTabBarCtrl::~CMainTabBarCtrl()
@@ -145,9 +147,22 @@ void CMainTabBarCtrl::OnSkinChange()
 int CMainTabBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
+
 	m_dwStyle |= CBRS_BORDER_3D;
 	SetTimer( 1, 250, NULL );
+
+	ENABLE_DROP()
+
 	return 0;
+}
+
+void CMainTabBarCtrl::OnDestroy()
+{
+	DISABLE_DROP()
+
+	KillTimer( 1 );
+
+	CControlBar::OnDestroy();
 }
 
 void CMainTabBarCtrl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL /*bDisableIfNoHndler*/)
@@ -313,15 +328,18 @@ BOOL CMainTabBarCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CControlBar::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CMainTabBarCtrl::OnMouseMove(UINT /*nFlags*/, CPoint point)
+void CMainTabBarCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	TabItem* pItem = HitTest( point );
 
 	if ( pItem != m_pHover )
 	{
+		m_dwHoverTime = pItem ? GetTickCount() : 0;
 		m_pHover = pItem;
 		Invalidate();
 	}
+
+	CControlBar::OnMouseMove( nFlags, point );
 }
 
 void CMainTabBarCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
@@ -392,6 +410,38 @@ void CMainTabBarCtrl::OnTimer(UINT_PTR /*nIDEvent*/)
 			Invalidate();
 		}
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CMainTabBarCtrl IDropTarget implementation
+
+IMPLEMENT_DROP(CMainTabBarCtrl, CControlBar)
+
+BOOL CMainTabBarCtrl::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT ptScreen, DWORD* /* pdwEffect */, BOOL /* bDrop */)
+{
+	// Mouse move imitation during dragging
+	CPoint pt( ptScreen );
+	ScreenToClient( &pt );
+	OnMouseMove( 0, pt );
+
+	if ( pDataObj )
+	{
+		// DragEnter or DragOver
+		if ( m_pHover && m_dwHoverTime )
+		{
+			if ( GetTickCount() - m_dwHoverTime >= DRAG_HOVER_TIME )
+			{
+				m_dwHoverTime = 0;
+				GetOwner()->PostMessage( WM_COMMAND, m_pHover->m_nID );
+			}
+		}
+	}
+	else
+	{
+		// DragLeave
+		m_dwHoverTime = 0;
+	}
+	return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

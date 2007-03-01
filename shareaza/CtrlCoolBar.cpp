@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,6 +36,7 @@ IMPLEMENT_DYNAMIC(CCoolBarCtrl, CControlBar)
 BEGIN_MESSAGE_MAP(CCoolBarCtrl, CControlBar)
 	//{{AFX_MSG_MAP(CCoolBarCtrl)
 	ON_WM_CREATE()
+	ON_WM_DESTROY()
 	ON_WM_TIMER()
 	ON_WM_HSCROLL()
 	ON_WM_CTLCOLOR()
@@ -62,22 +63,23 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CCoolBar construction
 
-CCoolBarCtrl::CCoolBarCtrl()
+CCoolBarCtrl::CCoolBarCtrl() :
+	m_bStretch( FALSE ),
+	m_nHeight( DEFAULT_HEIGHT ),
+	m_bGripper( FALSE ),
+	m_bBold( FALSE ),
+	m_bDragForward( FALSE ),
+	m_pSyncObject( NULL ),
+	m_dwHoverTime( 0 ),
+	m_bBuffered( FALSE ),
+	m_bMenuGray( FALSE ),
+	m_pDown( NULL ),
+	m_pHot( NULL ),
+	m_bTimer( FALSE ),
+	m_crBack( 0 ),
+	m_bRecalc( FALSE ),
+	m_bDropEnabled( FALSE )
 {
-	m_bStretch		= FALSE;
-	m_nHeight		= DEFAULT_HEIGHT;
-	m_bGripper		= FALSE;
-	m_bBold			= FALSE;
-	m_bDragForward	= FALSE;
-	m_pSyncObject	= NULL;
-	m_bBuffered		= FALSE;
-	m_bMenuGray		= FALSE;
-
-	m_pDown		= NULL;
-	m_pHot		= NULL;
-	m_bTimer	= FALSE;
-	m_crBack	= 0;
-	m_bRecalc	= FALSE;
 }
 
 CCoolBarCtrl::~CCoolBarCtrl()
@@ -327,8 +329,21 @@ void CCoolBarCtrl::OnUpdated()
 int CCoolBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
+
 	m_dwStyle |= CBRS_BORDER_3D;
+
+	if ( m_bDropEnabled ) ENABLE_DROP()
+
 	return 0;
+}
+
+void CCoolBarCtrl::OnDestroy()
+{
+	if ( m_bDropEnabled ) DISABLE_DROP()
+
+	KillTimer( 1 );
+
+	CControlBar::OnDestroy();
 }
 
 CSize CCoolBarCtrl::CalcFixedLayout(BOOL bStretch, BOOL /*bHorz*/)
@@ -726,6 +741,7 @@ void CCoolBarCtrl::OnMouseMove(UINT nFlags, CPoint point)
 
 	if ( pItem != m_pHot )
 	{
+		m_dwHoverTime = pItem ? GetTickCount() : 0;
 		m_pHot = pItem;
 		Invalidate();
 	}
@@ -892,6 +908,39 @@ void CCoolBarCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	GetParent()->SendMessage( WM_HSCROLL, MAKELONG( nSBCode, nPos ), (LPARAM)pScrollBar->GetSafeHwnd() );
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// CCoolBarCtrl IDropTarget implementation
+
+IMPLEMENT_DROP(CCoolBarCtrl, CControlBar)
+
+BOOL CCoolBarCtrl::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT ptScreen, DWORD* /* pdwEffect */, BOOL /* bDrop */)
+{
+	ASSERT( m_bDropEnabled == TRUE );
+
+	// Mouse move imitation during dragging
+	CPoint pt( ptScreen );
+	ScreenToClient( &pt );
+	OnMouseMove( 0, pt );
+
+	if ( pDataObj )
+	{
+		// DragEnter or DragOver
+		if ( m_pHot && m_dwHoverTime )
+		{
+			if ( GetTickCount() - m_dwHoverTime >= DRAG_HOVER_TIME )
+			{
+				m_dwHoverTime = 0;
+				GetOwner()->PostMessage( WM_COMMAND, m_pHot->m_nID );
+			}
+		}
+	}
+	else
+	{
+		// DragLeave
+		m_dwHoverTime = 0;
+	}
+	return FALSE;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CCoolBarItem construction

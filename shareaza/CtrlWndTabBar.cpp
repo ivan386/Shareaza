@@ -1,7 +1,7 @@
 ﻿//
 // CtrlWndTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,19 +37,18 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CWndTabBar, CControlBar)
-	//{{AFX_MSG_MAP(CWndTabBar)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_RBUTTONUP()
 	ON_WM_LBUTTONDBLCLK()
 	ON_WM_MOUSEMOVE()
 	ON_WM_TIMER()
 	ON_WM_CREATE()
+	ON_WM_DESTROY()
 	ON_WM_MEASUREITEM()
 	ON_WM_DRAWITEM()
 	ON_WM_MBUTTONUP()
 	ON_WM_LBUTTONUP()
 	ON_WM_SETCURSOR()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -59,6 +58,7 @@ END_MESSAGE_MAP()
 CWndTabBar::CWndTabBar() :
 	m_pSelected( NULL ),
 	m_pHot( NULL ),
+	m_dwHoverTime( 0 ),
 	m_nCookie( 0 ),
 	m_bTimer( FALSE ),
 	m_bMenuGray( FALSE ),
@@ -144,7 +144,18 @@ int CWndTabBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_dwStyle |= CBRS_BORDER_3D;
 
+	ENABLE_DROP()
+
 	return 0;
+}
+
+void CWndTabBar::OnDestroy()
+{
+	DISABLE_DROP()
+
+	KillTimer( 1 );
+
+	CControlBar::OnDestroy();
 }
 
 CSize CWndTabBar::CalcFixedLayout(BOOL /*bStretch*/, BOOL /*bHorz*/)
@@ -470,6 +481,7 @@ void CWndTabBar::OnMouseMove(UINT nFlags, CPoint point)
 
 	if ( pItem != m_pHot )
 	{
+		m_dwHoverTime = pItem ? GetTickCount() : 0;
 		m_pHot = pItem;
 		Invalidate();
 	}
@@ -698,6 +710,40 @@ void CWndTabBar::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CoolMenu.OnDrawItem( lpDrawItemStruct );
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// CWndTabBar IDropTarget implementation
+
+IMPLEMENT_DROP(CWndTabBar, CControlBar)
+
+BOOL CWndTabBar::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT ptScreen, DWORD* /* pdwEffect */, BOOL /* bDrop */)
+{
+	// Mouse move imitation during dragging
+	CPoint pt( ptScreen );
+	ScreenToClient( &pt );
+	OnMouseMove( 0, pt );
+
+	if ( pDataObj )
+	{
+		// DragEnter or DragOver
+		if ( m_pHot && m_dwHoverTime )
+		{
+			if ( GetTickCount() - m_dwHoverTime >= DRAG_HOVER_TIME )
+			{
+				m_dwHoverTime = 0;
+				CChildWnd* pChild = (CChildWnd*)CWnd::FromHandle( m_pHot->m_hWnd );
+				if ( pChild->IsIconic() )
+					pChild->ShowWindow( SW_SHOWNORMAL );
+				pChild->MDIActivate();
+			}
+		}
+	}
+	else
+	{
+		// DragLeave
+		m_dwHoverTime = 0;
+	}
+	return FALSE;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CWndTabBar::TabItem construction

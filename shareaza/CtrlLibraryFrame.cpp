@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -135,6 +135,7 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
+	m_wndTreeTop.EnableDrop();
 	if ( ! m_wndTreeTop.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndTreeTop.SetBarStyle( m_wndTreeTop.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_BOTTOM );
 	m_wndTreeTop.SetOwner( GetOwner() );

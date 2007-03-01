@@ -394,8 +394,6 @@ HRESULT CShareazaDataSource::DoDragDrop(const T* pList, HBITMAP pImage, const Ha
 					pIDataObject, &pStream);
 				if ( SUCCEEDED( hr ) )
 				{
-					pIDataObject.Detach();
-
 					// Begin async drag-n-drop operation
 					HANDLE hThread = BeginThread( "DragDrop",
 						DragDropThread<T>, (LPVOID)pStream );

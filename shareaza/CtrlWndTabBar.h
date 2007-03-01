@@ -1,7 +1,7 @@
 //
 // CtrlWndTabBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,8 @@
 #define AFX_CTRLWNDTABBAR_H__879DC787_89B3_41D4_A23E_0D690E04D000__INCLUDED_
 
 #pragma once
+
+#include "ShareazaDataSource.h"
 
 class CChildWnd;
 
@@ -66,15 +68,14 @@ protected:
 	CList< TabItem* > m_pItems;
 	TabItem*		m_pSelected;
 	TabItem*		m_pHot;
+	DWORD			m_dwHoverTime;
 	DWORD			m_nCookie;
 	BOOL			m_bTimer;
 	BOOL			m_bMenuGray;
-protected:
 	CImageList		m_pImages;
 	CMap< void*, void*, int, int > m_pIcons;
 	int				m_nCloseImage;
 	CMenu			m_mnuChild;
-protected:
 	int				m_nMaximumWidth;
 	UINT			m_nMessage;
 	CString			m_sMessage;
@@ -111,6 +112,7 @@ protected:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnDestroy();
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnMButtonUp(UINT nFlags, CPoint point);
@@ -119,6 +121,7 @@ protected:
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
+	DECLARE_DROP()
 
 	friend class TabItem;
 };
