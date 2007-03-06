@@ -20,6 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -48,6 +49,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Geral: Minha Biblioteca do Shareaza</title>
                <title language="ru">&#160;Основное: Моё хранилище</title>
                <title language="sl-SI">Splošno:Moja Shareaza knjižnica</title>
+               <title language="sq">Përgjithësi:Libraria Ime në Shareaza</title>
                <title language="sr">Opšte:Moja Kolekcija</title>
                <title language="tr">Genel: Shareaza Kütüphanem</title>
        </titles>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
                </member>
@@ -98,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Proprietário</title>
                        <title language="ru">Владелец</title>
                        <title language="sl-SI">Lastnik</title>
+                       <title language="sq">Zotëruesi</title>
                        <title language="sr">Vlasnik</title>
                        <title language="tr">Sahibi</title>
                </member>
@@ -122,6 +126,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sl-SI">Komentarji</title>
+                       <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
                        <title language="tr">Yorumlar</title>
                </member>
@@ -150,6 +155,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Bem-vindo à Sua Biblioteca</title>
                <title language="ru">Добро пожаловать в Ваше хранилище!</title>
                <title language="sl-SI">Dobrodošli v vaši knjižnici!</title>
+               <title language="sq">Mirë se erdhët në Librarinë Tuaj!</title>
                <title language="sr">Dobrodošli U Vašu Kolekciju!</title>
                <title language="tr">Kütüphanenize Hoşgeldiniz!</title>
                <subtitle language="en">You have {totalFiles} files totalling {totalVolume} in your library.</subtitle>
@@ -172,6 +178,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Você tem {totalFiles} arquivos totalizando {totalVolume} na sua biblioteca.</subtitle>
                <subtitle language="ru">У Вас файлов {totalFiles} занимающих {totalVolume} в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">V vaši knjižnici imate {totalFiles} datotek, v skupni velikosti {totalVolume}.</subtitle>
+               <subtitle language="sq">Ju keni {totalFiles} skeda që gjenden {totalVolume} në librarinë tuaj.</subtitle>
                <subtitle language="sr">Imate {totalFiles} datoteka Tj {totalVolume} koje delite sa svetom.</subtitle>
                <subtitle language="tr">Kütüphanenizde {totalFiles} toplanmış {totalVolume} dosya vardır.</subtitle>
        </headerContent>

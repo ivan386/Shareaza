@@ -20,6 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -48,6 +49,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Vídeo: Filmes</title>
                <title language="ru">&#160;Видео: Фильмы</title>
                <title language="sl-SI">Video:Filmi</title>
+               <title language="sq">Video:Filma</title>
                <title language="sr">Film:Dugometražni</title>
                <title language="tr">Video: Filmler</title>
        </titles>
@@ -77,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
                </member>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Filmes</title>
                <title language="ru">Фильмы</title>
                <title language="sl-SI">Filmi</title>
+               <title language="sq">Filma</title>
                <title language="sr">Film</title>
                <title language="tr">Filmler</title>
                <subtitle language="en">This folder contains a list films you have in your library.</subtitle>
@@ -127,6 +131,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém todos os filmes presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает список фильмов в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje seznam filmov v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban një listë me filmat që ju keni në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži popis filmova koje imate u kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki filmlerin bir listesini içerir.</subtitle>
        </headerContent>

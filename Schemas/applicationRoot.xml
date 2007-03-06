@@ -20,6 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -48,6 +49,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Aplicativo: Meus Aplicativos</title>
                <title language="ru">&#160;Приложение: Мои приложения</title>
                <title language="sl-SI">Program:Moji programi</title>
+               <title language="sq">Aplikm:Aplikimi Im</title>
                <title language="sr">Program:Svi Programi</title>
                <title language="tr">Uygulama: Uygulamalarım</title>
        </titles>
@@ -77,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
                </member>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Bem-vindo à Minhas Aplicações</title>
                <title language="ru">Добро пожаловать в Ваши приложения!</title>
                <title language="sl-SI">Dobrodošli v mojih programih!</title>
+               <title language="sq">Mirë se erdhët në Aplikimet e Mia!</title>
                <title language="sr">Dobrodošli Među Vaše Programe!</title>
                <title language="tr">Uygulamalarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of your application files.</subtitle>
@@ -127,6 +131,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Estas pastas contém todos os arquivos da sua aplicação.</subtitle>
                <subtitle language="ru">Эти папки отображают все Ваши приложения.</subtitle>
                <subtitle language="sl-SI">Te mape vsebujejo vse programske datoteke.</subtitle>
+               <subtitle language="sq">Këto dosje përmbajnë gjithë skedat tuaja aplikuese.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže sve vaše programe.</subtitle>
                <subtitle language="tr">Bu klasörler tüm uygulama dosyalarınızı içerir.</subtitle>
        </headerContent>

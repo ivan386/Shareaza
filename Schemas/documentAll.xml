@@ -20,6 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -48,6 +49,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Documento: Todos os Documentos</title>
                <title language="ru">&#160;Документ:&#160;Все документы</title>
                <title language="sl-SI">Dokument:Vsi dokumenti</title>
+               <title language="sq">Dokumenti:Gjithë Dokumentet</title>
                <title language="sr">Dokument:Svi Dokumenti</title>
                <title language="tr">Doküman: Tüm Dokümanlar</title>
        </titles>
@@ -77,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
                </member>
@@ -107,6 +110,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Todos os Documentos</title>
                <title language="ru">Все документы</title>
                <title language="sl-SI">Vsi dokumenti</title>
+               <title language="sq">Gjithë Dokumentet</title>
                <title language="sr">Svi Dokumenti</title>
                <title language="tr">Tüm Dokümanlar</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
@@ -129,6 +133,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém todos os documentos da sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый документ в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vse dokumente v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban çdo dokument të librarisë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve vaše dokumente u kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her dokümanı içerir.</subtitle>
        </headerContent>

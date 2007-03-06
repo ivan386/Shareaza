@@ -20,6 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -48,6 +49,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Livro: Todos os Livros</title>
                <title language="ru">&#160;Книга: Все книги</title>
                <title language="sl-SI">Knjiga:Vse knjige</title>
+               <title language="sq">Libri:Gjithë Librat</title>
                <title language="sr">Knjiga:Sve Knjige</title>
                <title language="tr">Kitap: Tüm Kitaplar</title>
        </titles>
@@ -77,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
                </member>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Todos os Livros</title>
                <title language="ru">Все книги</title>
                <title language="sl-SI">Vse knjige</title>
+               <title language="sq">Gjithë Librat</title>
                <title language="sr">Sve Knjige</title>
                <title language="tr">Tüm Kitaplar</title>
                <subtitle language="en">This folder contains every book in your library.</subtitle>
@@ -127,6 +131,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém todos os livros presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждую книгу в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vse knjige v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban çdo libër të librarisë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve vaše knjige u kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her kitabı içerir.</subtitle>
        </headerContent>

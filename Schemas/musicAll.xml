@@ -20,6 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -48,6 +49,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Música: Todas as Músicas</title>
                <title language="ru">&#160;Музыка: Вся музыка</title>
                <title language="sl-SI">Glasba:Vsa glasba</title>
+               <title language="sq">Muzikë:Gjithë Muzika</title>
                <title language="sr">Muzika:Sva Muzika</title>
                <title language="tr">Müzik: Tüm Müzikler</title>
        </titles>
@@ -77,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
                </member>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Todas as Músicas</title>
                <title language="ru">Вся музыка</title>
                <title language="sl-SI">Vsa glasba</title>
+               <title language="sq">Gjithë Muzika</title>
                <title language="sr">Sva Muzika</title>
                <title language="tr">Tüm Müzikler</title>
                <subtitle language="en">This folder contains every music file in your library.</subtitle>
@@ -127,6 +131,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém todas as músicas presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый музыкальный файл в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vsako glasbeno datoteko v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban çdo skedë muzikore të librarisë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve pesme u vašoj kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her müzik dosyasını içerir.</subtitle>
        </headerContent>

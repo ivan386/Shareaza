@@ -20,6 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -48,6 +49,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Artista</title>
                <title language="ru">&#160;Музыкальный артист</title>
                <title language="sl-SI">Glasbeni izvajalec</title>
+               <title language="sq">Artisti i Muzikës</title>
                <title language="sr">Muzika Izvođač</title>
                <title language="tr">Şarkıcı</title>
        </titles>
@@ -77,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Nome</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Ime</title>
+                       <title language="sq">Emri</title>
                        <title language="sr">Ime</title>
                        <title language="tr">İsim</title>
                </member>
@@ -101,6 +104,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Descrição</title>
                        <title language="ru">Описание</title>
                        <title language="sl-SI">Opis</title>
+                       <title language="sq">Përshkrimi</title>
                        <title language="sr">Opis</title>
                        <title language="tr">Tanımlama</title>
                </member>
@@ -125,6 +129,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
                        <title language="sl-SI">Kolektor</title>
+                       <title language="sq">Koleksionuesi</title>
                        <title language="sr">Sakupio</title>
                        <title language="tr">Koleksiyoncu</title>
                </member>
@@ -149,6 +154,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sl-SI">Komentarji</title>
+                       <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
                        <title language="tr">Yorumlar</title>
                </member>
@@ -188,6 +194,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">{name} - Discografia</title>
                <title language="ru">Дискография {name}</title>
                <title language="sl-SI">{name} - Diskografija</title>
+               <title language="sq">{name} - Diskografi</title>
                <title language="sr">{name} - Diskografija</title>
                <title language="tr">{name} Keşif</title>
                <subtitle language="en">This folder contains all of your music by {name}.</subtitle>
@@ -210,6 +217,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pastas contém todas as músicas de {name}.</subtitle>
                <subtitle language="ru">Эта папка отображает всю музыку {name}.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vso vašo glasbo po {name}.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban gjithë muzikën tuaj nga {name}.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži popis vaših pesama od {name}.</subtitle>
                <subtitle language="tr">Bu klasör {name} sanatçının müziklerini içerir.</subtitle>
        </headerContent>

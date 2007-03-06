@@ -20,6 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
@@ -48,6 +49,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Vídeo: Clipes Musicais</title>
                <title language="ru">&#160;Видео: Музыкальные видео</title>
                <title language="sl-SI">Video:Glasbeni videji</title>
+               <title language="sq">Video:Video Muzikore</title>
                <title language="sr">Film:Spotovi</title>
                <title language="tr">Video: Klipler</title>
        </titles>
@@ -77,6 +79,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
                </member>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Clipes Musicais</title>
                <title language="ru">Музыкальные видео</title>
                <title language="sl-SI">Glasbeni videji</title>
+               <title language="sq">Videot e Muzikës</title>
                <title language="sr">Spotovi</title>
                <title language="tr">Klipler</title>
                <subtitle language="en">This folder contains music videos.</subtitle>
@@ -127,6 +131,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém todos os clipes musicais.</subtitle>
                <subtitle language="ru">Эта папка отображает каждое музыкальное видео в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje glasbene videje.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban video muzikore.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži vaše spotove.</subtitle>
                <subtitle language="tr">Bu klasör müzik videolarını içerir.</subtitle>
        </headerContent>
