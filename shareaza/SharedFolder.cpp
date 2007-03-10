@@ -361,12 +361,10 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			if ( pFind.cFileName[0] == '.' ) continue;
 			if ( pFind.dwFileAttributes & (FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM) ) continue;
 			if ( _tcsicmp( pFind.cFileName, _T("Metadata") ) == 0 ) continue;
-			if ( _tcsicmp( pFind.cFileName, _T("SThumbs.dat") ) == 0 ) continue;
-			
+
 			if ( pFind.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
 			{
 				CLibraryFolder* pFolder = GetFolderByName( pFind.cFileName );
-				
 				if ( pFolder != NULL )
 				{
 					m_nFiles	-= pFolder->m_nFiles;
@@ -398,9 +396,18 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			else
 			{
 				if ( pFind.dwFileAttributes & (FILE_ATTRIBUTE_ENCRYPTED) ) continue;
+				if ( _tcsicmp( pFind.cFileName, _T("SThumbs.dat") ) == 0 ) continue;
+				if ( _tcsicmp( pFind.cFileName, _T("Thumbs.db") ) == 0 ) continue;
+				LPCTSTR pszExt = _tcsrchr( pFind.cFileName, '.' );
+				if ( pszExt )
+				{
+					CString strExt;
+					strExt.Format( L"|%s|", ++pszExt );
+					if ( _tcsistr( Settings.Library.PrivateTypes, strExt ) )
+						continue;
+				}			
 
 				CLibraryFile* pFile = GetFile( pFind.cFileName );
-				
 				if ( pFile != NULL )
 				{
 					m_nVolume -= pFile->m_nSize / 1024;
@@ -411,7 +418,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 						bChanged = TRUE;
 					}
 				}
-				else if ( bKazaaFolder && _tcsistr( pFind.cFileName, _T(".dat") ) != NULL )
+				else if ( bKazaaFolder && _tcsicmp( pszExt, _T(".dat") ) == 0 )
 				{
 					// Ignore .dat files in Kazaa folder
 					continue;

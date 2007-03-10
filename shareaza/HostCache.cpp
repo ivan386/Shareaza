@@ -902,13 +902,7 @@ int CHostCacheList::LoadDefaultED2KServers()
 
 void CHostCacheList::DoED2KServersImport()
 {
-	CString strPrograms, strFolder;
-	TCHAR szPath[MAX_PATH];
-
-	if( SUCCEEDED( SHGetSpecialFolderPath( NULL, szPath, CSIDL_PROGRAM_FILES, 0 ) ) )
-		strPrograms = szPath;
-
-	if ( strPrograms.IsEmpty() ) strPrograms = _T("C:\\Program Files");
+	CString strPrograms( GetProgramFilesFolder() ), strFolder;
 
 	theApp.Message( MSG_SYSTEM, _T("Importing server.met from eMule/eMule mod") );
 

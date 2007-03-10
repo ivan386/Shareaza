@@ -174,6 +174,9 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout = 5000);
 LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);
 
+CString GetWindowsFolder();
+CString GetProgramFilesFolder();
+
 #ifdef _DEBUG
 #define MLOG(x) theApp.Message( MSG_DEBUG, x )
 #else

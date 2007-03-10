@@ -113,25 +113,8 @@ LRESULT CWizardNetworksPage::OnWizardNext()
 
 void CWizardNetworksPage::DoDonkeyImport()
 {
-	CString strPrograms, strFolder;
+	CString strPrograms( GetProgramFilesFolder() ), strFolder;
 	CDonkeyImportDlg dlg( this );
-
-	if ( HINSTANCE hShell = LoadLibrary( _T("shfolder.dll") ) )
-	{
-		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPWSTR);
-		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathW" );
-
-		if ( pfnSHGetFolderPath != NULL )
-		{
-			strPrograms.ReleaseBuffer(
-				(*pfnSHGetFolderPath)( GetSafeHwnd(), 0x26, NULL, 0,
-				strPrograms.GetBuffer( MAX_PATH + 1 ) ) == S_OK ? -1 : 0 );
-		}
-
-		FreeLibrary( hShell );
-	}
-
-	if ( strPrograms.IsEmpty() ) strPrograms = _T("C:\\Program Files");
 
 	LPCTSTR pszFolders[] =
 	{

@@ -200,34 +200,8 @@ void CWizardSharePage::OnShareAdd()
 	CharLower( strPathLC.GetBuffer() );
 	strPathLC.ReleaseBuffer();
 
-
 	//Get system paths (to compare)
-	CString strWindowsLC, strProgramsLC;
-	PTSTR pszWindowsPath, pszProgramsPath;
-
-	pszWindowsPath = strWindowsLC.GetBuffer( MAX_PATH + 1 );
-	pszProgramsPath = strProgramsLC.GetBuffer( MAX_PATH + 1 );
-
-	if ( HINSTANCE hShell = LoadLibrary( _T("shfolder.dll") ) )
-	{
-		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPWSTR);
-		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathW" );
-		if ( pfnSHGetFolderPath != NULL )
-		{
-			(*pfnSHGetFolderPath)(NULL, CSIDL_WINDOWS, NULL, NULL, pszWindowsPath);
-			(*pfnSHGetFolderPath)(NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath);
-		}
-		FreeLibrary( hShell );
-	}
-	CharLower( pszWindowsPath );
-	CharLower( pszProgramsPath );
-
-	strWindowsLC.ReleaseBuffer();
-	strProgramsLC.ReleaseBuffer();
-
-	if ( strWindowsLC.IsEmpty() ) strWindowsLC = _T("c:\\windows");
-	if ( strProgramsLC.IsEmpty() ) strProgramsLC = _T("c:\\program files");
-
+	CString strWindowsLC( GetWindowsFolder() ), strProgramsLC( GetProgramFilesFolder() );
 
 	//Get various shareaza paths (to compare)
 	CString strIncompletePathLC = Settings.Downloads.IncompletePath;

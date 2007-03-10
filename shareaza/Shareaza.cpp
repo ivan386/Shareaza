@@ -1666,3 +1666,34 @@ LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam)
 
 	return ::CallNextHookEx( theApp.m_hHookMouse, nCode, wParam, lParam );
 }
+
+CString GetWindowsFolder()
+{
+	TCHAR pszWindowsPath[ MAX_PATH ] = { 0 };
+	GetWindowsDirectory( pszWindowsPath, MAX_PATH );
+	CharLower( pszWindowsPath );
+	return CString( pszWindowsPath );
+}
+
+CString GetProgramFilesFolder()
+{
+	TCHAR pszProgramsPath[ MAX_PATH ] = { 0 };
+	if ( HINSTANCE hShell = LoadLibrary( _T("shfolder.dll") ) )
+	{
+		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPWSTR);
+		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathW" );
+		if ( pfnSHGetFolderPath )
+		{
+			(*pfnSHGetFolderPath)( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath );
+		}
+		FreeLibrary( hShell );
+	}
+	if ( ! *pszProgramsPath )
+	{
+		// Get drive letter
+		GetWindowsDirectory( pszProgramsPath, MAX_PATH );
+		_tcscpy( pszProgramsPath + 1, _T(":\\program files") );
+	}
+	CharLower( pszProgramsPath );
+	return CString( pszProgramsPath );
+}
