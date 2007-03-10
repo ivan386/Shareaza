@@ -161,8 +161,6 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 			m_bPanel = FALSE;
 	}
 	
-	OnSkinChange();
-	
 	PostMessage( WM_TIMER, 1 );
 	
 	return 0;

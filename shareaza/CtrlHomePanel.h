@@ -41,11 +41,6 @@ public:
 
 // Attributes
 protected:
-	CRichElement*	m_pdDownloadsNone;
-	CRichElement*	m_pdDownloadsOne;
-	CRichElement*	m_pdDownloadsMany;
-	CString			m_sDownloadsMany;
-protected:
 	class Item
 	{
 	public:
@@ -64,12 +59,15 @@ protected:
 		BOOL		m_bPaused;
 	};
 
+	CRichElement*		m_pdDownloadsNone;
+	CRichElement*		m_pdDownloadsOne;
+	CRichElement*		m_pdDownloadsMany;
+	CString				m_sDownloadsMany;
 	CArray< Item* >		m_pList;
 	CFont				m_pFont;
 	HCURSOR				m_hHand;
 	CDownloadTipCtrl	m_wndTip;
-
-	Item*		m_pHover;
+	Item*				m_pHover;
 
 // Operations
 public:
@@ -78,8 +76,6 @@ public:
 	Item*	HitTest(const CPoint& point) const;
 	BOOL	ExecuteDownload(CDownload* pDownload);
 
-// Overrides
-public:
 	//{{AFX_VIRTUAL(CHomeDownloadsBox)
 	//}}AFX_VIRTUAL
 
@@ -108,10 +104,6 @@ public:
 
 // Attributes
 protected:
-	CRichElement*	m_pdLibraryFiles;
-	CRichElement*	m_pdLibraryVolume;
-	CRichElement*	m_pdLibraryHashRemaining;
-protected:
 	class Item
 	{
 	public:
@@ -126,11 +118,13 @@ protected:
 		int				m_nIcon16;
 	};
 
+	CRichElement*	m_pdLibraryFiles;
+	CRichElement*	m_pdLibraryVolume;
+	CRichElement*	m_pdLibraryHashRemaining;
 	CArray< Item* >	m_pList;
 	CFont			m_pFont;
 	HCURSOR			m_hHand;
-
-	Item*		m_pHover;
+	Item*			m_pHover;
 
 // Operations
 public:
@@ -138,8 +132,6 @@ public:
 	void	Update();
 	Item*	HitTest(const CPoint& point) const;
 
-// Overrides
-public:
 	//{{AFX_VIRTUAL(CHomeLibraryBox)
 	//}}AFX_VIRTUAL
 
@@ -183,8 +175,6 @@ public:
 	void		Setup();
 	void		Update();
 
-// Overrides
-public:
 	//{{AFX_VIRTUAL(CHomeUploadsBox)
 	//}}AFX_VIRTUAL
 
@@ -217,8 +207,6 @@ public:
 	void	Setup();
 	void	Update();
 
-// Overrides
-public:
 	//{{AFX_VIRTUAL(CHomeConnectionBox)
 	//}}AFX_VIRTUAL
 
@@ -252,8 +240,6 @@ public:
 	void	Setup();
 	void	Update();
 
-// Overrides
-public:
 	//{{AFX_VIRTUAL(CHomeTorrentsBox)
 	//}}AFX_VIRTUAL
 

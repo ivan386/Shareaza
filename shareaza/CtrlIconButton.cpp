@@ -1,7 +1,7 @@
 //
 // CtrlIconButton.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,15 +80,38 @@ void CIconButtonCtrl::SetText(LPCTSTR pszText)
 	Invalidate();
 }
 
-void CIconButtonCtrl::SetIcon(UINT nIconID)
+void CIconButtonCtrl::SetIcon(HICON hIcon, BOOL bMirrored)
 {
-	SetIcon( AfxGetApp()->LoadIcon( nIconID ) );
+	if ( hIcon )
+	{
+		if ( bMirrored )
+		{
+			hIcon = CreateMirroredIcon( hIcon );
+			ASSERT( hIcon != NULL );
+		}
+		if ( hIcon )
+		{
+			if ( m_pImageList.GetImageCount() )
+			{
+				ASSERT( m_pImageList.GetImageCount() == 1 );
+				VERIFY( m_pImageList.Remove( 0 ) );
+			}
+			VERIFY( m_pImageList.Add( hIcon ) != -1 );
+			VERIFY( DestroyIcon( hIcon ) );
+
+			RemoveStyle();
+		}
+	}
 }
 
-void CIconButtonCtrl::SetIcon(HICON hIcon)
+void CIconButtonCtrl::SetCoolIcon(UINT nIconID, BOOL bMirrored)
 {
-	m_pImageList.Add( hIcon );
-	RemoveStyle();
+	SetIcon( CoolInterface.ExtractIcon( nIconID, bMirrored ), FALSE );
+}
+
+void CIconButtonCtrl::SetIcon(UINT nIconID, BOOL bMirrored)
+{
+	SetIcon( AfxGetApp()->LoadIcon( nIconID ), bMirrored );
 }
 
 void CIconButtonCtrl::SetHandCursor(BOOL bCursor)

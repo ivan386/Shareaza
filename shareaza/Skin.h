@@ -145,8 +145,9 @@ protected:
 	BOOL		LoadFonts(CXMLElement* pBase, const CString& strPath);
 
 // Other
-protected:
+public:
 	UINT	LookupCommandID(CXMLElement* pXML, LPCTSTR pszName = NULL);
+protected:
 	BOOL	LoadCommandMap(CXMLElement* pBase);
 	BOOL	LoadCommandImages(CXMLElement* pBase, const CString& strPath);
 	BOOL	LoadCommandBitmap(CXMLElement* pBase, const CString& strPath);

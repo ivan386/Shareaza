@@ -155,8 +155,9 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
 	if ( theApp.m_bRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-	if ( ! m_pProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) )
-		m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
+	m_pProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
+	m_pProtocols.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
+	m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_pProtocols.Add( &bmImages, RGB( 0, 255, 0 ) );
 
 	m_nGroupCookie		= 0;
@@ -1359,8 +1360,12 @@ void CDownloadsCtrl::OnSkinChange()
 	int nRevStart = m_pProtocols.GetImageCount() - 1;
 	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_pProtocols.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage, hIcon );
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
+		if ( hIcon )
+		{
+			m_pProtocols.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage, hIcon );
+			DestroyIcon( hIcon );
+		}
 	}
 }
 
@@ -2116,6 +2121,8 @@ CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPo
     dcDrag.DeleteDC();
 	
 	CImageList* pAll = new CImageList();
+	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR32|ILC_MASK, 1, 1 ) ||
+	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR24|ILC_MASK, 1, 1 ) ||
 	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
 	pAll->Add( &bmDrag, DRAG_COLOR_KEY ); 
 	

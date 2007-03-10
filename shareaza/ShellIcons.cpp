@@ -84,33 +84,21 @@ void CShellIcons::Clear()
 	m_i16.SetOverlayImage( SHI_RATING_GOOD, SHI_O_RATING_GOOD );
 	
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_FILE), IMAGE_ICON, 32, 32, 0 );
-	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
-	m_i32.Add( hTemp );
-	DestroyIcon( hTemp );
+	AddIcon( hTemp, m_i32 );
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_FILE), IMAGE_ICON, 48, 48, 0 );
-	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
-	m_i48.Add( hTemp );
-	DestroyIcon( hTemp );
+	AddIcon( hTemp, m_i48 );
 	
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_EXECUTABLE), IMAGE_ICON, 32, 32, 0 );
-	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
-	m_i32.Add( hTemp );
-	DestroyIcon( hTemp );
+	AddIcon( hTemp, m_i32 );
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_EXECUTABLE), IMAGE_ICON, 48, 48, 0 );
-	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
-	m_i48.Add( hTemp );
-	DestroyIcon( hTemp );
+	AddIcon( hTemp, m_i48 );
 	
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_COLLECTION_MASK), IMAGE_ICON, 32, 32, 0 );
 	// not needed?
-	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
-	m_i32.SetOverlayImage( m_i32.Add( hTemp ), SHI_O_COLLECTION );
-	DestroyIcon( hTemp );
+	m_i32.SetOverlayImage( AddIcon( hTemp, m_i32 ), SHI_O_COLLECTION );
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_COLLECTION_MASK), IMAGE_ICON, 48, 48, 0 );
 	// not needed?
-	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
-	m_i48.SetOverlayImage( m_i48.Add( hTemp ), SHI_O_COLLECTION );
-	DestroyIcon( hTemp );
+	m_i48.SetOverlayImage( AddIcon( hTemp, m_i48 ), SHI_O_COLLECTION );
 	
 	m_m16.RemoveAll();
 	m_m32.RemoveAll();

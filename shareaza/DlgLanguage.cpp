@@ -100,6 +100,8 @@ BOOL CLanguageDlg::OnInitDialog()
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
+	m_pImages.Create( 32, 32, ILC_COLOR32|ILC_MASK, 1, 1 ) ||
+	m_pImages.Create( 32, 32, ILC_COLOR24|ILC_MASK, 1, 1 ) ||
 	m_pImages.Create( 32, 32, ILC_COLOR16|ILC_MASK, 1, 1 );
 
 	AddEnglishDefault();

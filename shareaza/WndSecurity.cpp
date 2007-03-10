@@ -102,6 +102,8 @@ int CSecurityWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( theApp.m_bRTL ) 
 		bmBase.m_hObject = CreateMirroredBitmap( (HBITMAP) bmBase.m_hObject );
 
+	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR32, 3, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR24, 3, 1 ) ||
 	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR16, 3, 1 );
 	m_gdiImageList.Add( &bmBase, RGB( 0, 255, 0 ) );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );

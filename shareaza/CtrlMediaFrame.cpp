@@ -218,6 +218,8 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CBitmap bmIcons;
 	bmIcons.LoadBitmap( IDB_MEDIA_STATES );
+	m_pIcons.Create( 16, 16, ILC_COLOR32|ILC_MASK, 3, 0 ) ||
+	m_pIcons.Create( 16, 16, ILC_COLOR24|ILC_MASK, 3, 0 ) ||
 	m_pIcons.Create( 16, 16, ILC_COLOR16|ILC_MASK, 3, 0 );
 	m_pIcons.Add( &bmIcons, RGB( 0, 255, 0 ) );
 	

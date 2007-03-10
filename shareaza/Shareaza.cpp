@@ -1356,7 +1356,25 @@ void RecalcDropWidth(CComboBox* pWnd)
     pWnd->SetDroppedWidth( nWidth );
 }
 
-HICON CreateMirroredIcon(HICON hIconOrig)
+int AddIcon(UINT nIcon, CImageList& gdiImageList)
+{
+	return AddIcon( theApp.LoadIcon( nIcon ), gdiImageList );
+}
+
+int AddIcon(HICON hIcon, CImageList& gdiImageList)
+{
+	int num = -1;
+	if ( hIcon )
+	{
+		if ( theApp.m_bRTL )
+			hIcon = CreateMirroredIcon( hIcon );
+		num = gdiImageList.Add( hIcon );
+		VERIFY( DestroyIcon( hIcon ) );
+	}
+	return num;
+}
+
+HICON CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal)
 {
 	HDC hdcScreen, hdcBitmap, hdcMask = NULL;
 	HBITMAP hbm, hbmMask, hbmOld,hbmOldMask;
@@ -1414,6 +1432,8 @@ HICON CreateMirroredIcon(HICON hIconOrig)
 
 	if ( hdcBitmap ) DeleteDC( hdcBitmap );
 	if ( hdcMask ) DeleteDC( hdcMask );
+	if ( hIcon && hIconOrig && bDestroyOriginal ) VERIFY( DestroyIcon( hIconOrig ) );
+	if ( ! hIcon ) hIcon = hIconOrig;
 	return hIcon;
 }
 

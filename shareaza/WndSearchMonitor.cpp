@@ -84,9 +84,8 @@ int CSearchMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
 		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
 	
-	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR16, 1, 1 );
-	m_gdiImageList.Add( theApp.m_bRTL ? CreateMirroredIcon( theApp.LoadIcon( IDR_SEARCHMONITORFRAME ) ) :
-		theApp.LoadIcon( IDR_SEARCHMONITORFRAME ) );
+	VERIFY( m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR32, 1, 1 ) );
+	AddIcon( IDR_SEARCHMONITORFRAME , m_gdiImageList );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Search"), LVCFMT_LEFT, 200, -1 );

@@ -39,9 +39,9 @@ CPlugins Plugins;
 //////////////////////////////////////////////////////////////////////
 // CPlugins construction
 
-CPlugins::CPlugins()
+CPlugins::CPlugins() :
+	m_nCommandID( ID_PLUGIN_FIRST )
 {
-	m_nCommandID = ID_PLUGIN_FIRST;
 }
 
 CPlugins::~CPlugins()
@@ -110,7 +110,7 @@ void CPlugins::Clear()
 //////////////////////////////////////////////////////////////////////
 // CPlugins CLSID helpers
 
-BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL bEnableDefault)
+BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL bEnableDefault) const
 {
 	DWORD dwType, dwCLSID;
 	TCHAR szCLSID[64];
@@ -140,7 +140,7 @@ BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL
 	return FALSE;
 }
 
-BOOL CPlugins::LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt)
+BOOL CPlugins::LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt) const
 {
 	HKEY hPlugins = NULL;
 
@@ -369,21 +369,19 @@ CPlugin* CPlugins::Find(REFCLSID pCLSID) const
 //////////////////////////////////////////////////////////////////////
 // CPlugin construction
 
-CPlugin::CPlugin(REFCLSID pCLSID, LPCTSTR pszName)
+CPlugin::CPlugin(REFCLSID pCLSID, LPCTSTR pszName) :
+	m_pCLSID( pCLSID ),
+	m_sName( pszName ),
+	m_nCapabilities( 0 ),
+	m_pPlugin( NULL ),
+	m_pCommand( NULL ),
+	m_pExecute( NULL )
 {
-	m_pCLSID	= pCLSID;
-	m_sName		= pszName;
-	m_hIcon		= LookupIcon();
-
-	m_pPlugin	= NULL;
-	m_pCommand	= NULL;
-	m_pExecute	= NULL;
 }
 
 CPlugin::~CPlugin()
 {
 	Stop();
-	if ( m_hIcon != NULL ) DestroyIcon( m_hIcon );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -455,7 +453,7 @@ CString CPlugin::GetStringCLSID() const
 //////////////////////////////////////////////////////////////////////
 // CPlugin icon helper
 
-HICON CPlugin::LookupIcon()
+HICON CPlugin::LookupIcon() const
 {
 	CString strName;
 	HKEY hKey;

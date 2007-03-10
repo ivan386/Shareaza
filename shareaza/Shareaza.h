@@ -157,7 +157,13 @@ BOOL	TimeFromString(LPCTSTR psz, FILETIME* pTime);
 CString	TimeToString(FILETIME* pTime);
 
 void	RecalcDropWidth(CComboBox* pWnd);
-HICON	CreateMirroredIcon(HICON hIconOrig);
+// Load and add icon to CImageList, mirrored if needed
+int		AddIcon(UINT nIcon, CImageList& gdiImageList);
+// Add icon to CImageList, mirrored if needed
+int		AddIcon(HICON hIcon, CImageList& gdiImageList);
+// Create mirrored icon. Returns:
+// mirrored icon (original destroyed if needed) if succeed or original icon otherwise
+HICON	CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal = TRUE);
 HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 
 HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,

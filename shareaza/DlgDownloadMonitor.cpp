@@ -193,7 +193,10 @@ BOOL CDownloadMonitorDlg::OnInitDialog()
 			HICON hIcon;
 
 			if ( ShellIcons.Lookup( strType, NULL, &hIcon, NULL, NULL ) )
-				m_wndIcon.SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
+			{
+				if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+				m_wndIcon.SetIcon( hIcon );
+			}
 		}
 
 		m_wndFile.SetWindowText( m_sName );

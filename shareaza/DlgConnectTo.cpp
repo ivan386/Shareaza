@@ -44,15 +44,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CConnectToDlg dialog
 
-CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) : CSkinDialog(CConnectToDlg::IDD, pParent)
+CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) :
+	CSkinDialog( CConnectToDlg::IDD, pParent ),
+	m_bNoUltraPeer( FALSE ),
+	m_nPort( GNUTELLA_DEFAULT_PORT ),
+	m_nProtocol( PROTOCOL_G2 ),
+	m_bBrowseHost( bBrowseHost )
 {
-	//{{AFX_DATA_INIT(CConnectToDlg)
-	m_sHost = _T("");
-	m_bNoUltraPeer = FALSE;
-	m_nPort = 0;
-	m_nProtocol = PROTOCOL_ANY;
-	//}}AFX_DATA_INIT
-	m_bBrowseHost = bBrowseHost;
 }
 
 void CConnectToDlg::DoDataExchange(CDataExchange* pDX)
@@ -93,15 +91,20 @@ BOOL CConnectToDlg::OnInitDialog()
 	if ( theApp.m_bRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 
-	if ( ! m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) )
-		m_pImages.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
+	m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
+	m_pImages.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
+	m_pImages.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_pImages.Add( &bmImages, RGB( 0, 255, 0 ) );
 
 	// Replace with the skin images (if fails old images remain)
 	for ( int nImage = 1 ; nImage < 4 ; nImage++ )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_pImages.Replace( nImage, hIcon );
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
+		if ( hIcon )
+		{
+			m_pImages.Replace( nImage, hIcon );
+			DestroyIcon( hIcon );
+		}
 	}
 
 	m_wndAdvanced.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );

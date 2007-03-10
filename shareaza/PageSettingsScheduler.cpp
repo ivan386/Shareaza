@@ -90,7 +90,9 @@ BOOL CSchedulerSettingsPage::OnInitDialog()
 
 	CBitmap bmTimeSlices;
 	bmTimeSlices.LoadBitmap( IDB_SCHEDULER_TIMESLICES );
-	m_pTimeSlices.Create( 16, 16, ILC_COLOR24, 3, 0 );
+	m_pTimeSlices.Create( 16, 16, ILC_COLOR32|ILC_MASK, 3, 0 ) ||
+	m_pTimeSlices.Create( 16, 16, ILC_COLOR24|ILC_MASK, 3, 0 ) ||
+	m_pTimeSlices.Create( 16, 16, ILC_COLOR16|ILC_MASK, 3, 0 );
 	m_pTimeSlices.Add( &bmTimeSlices, RGB( 0, 255, 0 ) );
 
 	CopyMemory( m_pSchedule, Schedule.m_pSchedule, sizeof( m_pSchedule ) );

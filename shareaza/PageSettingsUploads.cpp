@@ -103,9 +103,8 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	CRect rcList;
 	m_wndQueues.GetClientRect( &rcList );
 	rcList.right -= GetSystemMetrics( SM_CXVSCROLL );
-	
-	m_wndQueues.SetImageList( &CoolInterface.m_pImages, LVSIL_SMALL );
-	
+
+	CoolInterface.SetImageListTo( m_wndQueues, LVSIL_SMALL );
 	m_wndQueues.InsertColumn( 0, _T("Name"), LVCFMT_LEFT, rcList.right - 100 - 70 - 70, -1 );
 	m_wndQueues.InsertColumn( 1, _T("Criteria"), LVCFMT_LEFT, 100, 0 );
 	m_wndQueues.InsertColumn( 2, _T("Bandwidth"), LVCFMT_CENTER, 70, 1 );

@@ -1,7 +1,7 @@
 //
 // CoolInterface.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "CoolInterface.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -46,6 +47,15 @@ CCoolInterface::CCoolInterface()
 CCoolInterface::~CCoolInterface()
 {
 	Clear();
+
+	HICON hIcon;
+	HWND hWnd;
+	for( POSITION pos = m_pWindowIcons.GetStartPosition(); pos; )
+	{
+		m_pWindowIcons.GetNextAssoc( pos, hIcon, hWnd );
+		VERIFY( DestroyIcon( hIcon ) );
+	}
+	m_pWindowIcons.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -54,20 +64,26 @@ CCoolInterface::~CCoolInterface()
 void CCoolInterface::Clear()
 {
 	m_pNameMap.RemoveAll();
-	m_pImageMap.RemoveAll();
-	
-	if ( m_pImages.m_hImageList )
+
+	m_pImageMap16.RemoveAll();
+	if ( m_pImages16.m_hImageList )
 	{
-		m_pImages.DeleteImageList();
+		m_pImages16.DeleteImageList();
 	}
-	
+
+	m_pImageMap32.RemoveAll();
+	if ( m_pImages32.m_hImageList )
+	{
+		m_pImages32.DeleteImageList();
+	}
+
 	if ( m_bmBuffer.m_hObject != NULL )
 	{
 		m_dcBuffer.SelectObject( CGdiObject::FromHandle( m_bmOldBuffer ) );
 		m_dcBuffer.DeleteDC();
 		m_bmBuffer.DeleteObject();
 	}
-	
+
 	m_czBuffer = CSize( 0, 0 );
 }
 
@@ -90,37 +106,104 @@ UINT CCoolInterface::NameToID(LPCTSTR pszName)
 //////////////////////////////////////////////////////////////////////
 // CCoolInterface image management
 
-int CCoolInterface::ImageForID(UINT nID)
+int CCoolInterface::ImageForID(UINT nID, int nImageListType)
+{
+	int nImage = -1;
+	if ( nImageListType == LVSIL_SMALL )
+		return m_pImageMap16.Lookup( nID, nImage ) ? nImage : -1;
+	else
+		return m_pImageMap32.Lookup( nID, nImage ) ? nImage : -1;
+}
+
+void CCoolInterface::AddIcon(UINT nID, HICON hIcon, int nImageListType)
+{
+	VERIFY( ConfirmImageList() );
+
+	if ( nImageListType == LVSIL_SMALL )
+		m_pImageMap16.SetAt( nID, m_pImages16.Add( hIcon ) );
+	else
+		m_pImageMap32.SetAt( nID, m_pImages32.Add( hIcon ) );
+}
+
+void CCoolInterface::CopyIcon(UINT nFromID, UINT nToID, int nImageListType)
 {
 	int nImage;
-	if ( m_pImageMap.Lookup( nID, nImage ) ) return nImage;
-	return -1;
+	if ( nImageListType == LVSIL_SMALL )
+	{
+		if ( m_pImageMap16.Lookup( nFromID, nImage ) )
+			m_pImageMap16.SetAt( nToID, nImage );
+	}
+	else
+	{
+		if ( m_pImageMap32.Lookup( nFromID, nImage ) )
+			m_pImageMap32.SetAt( nToID, nImage );
+	}
 }
 
-void CCoolInterface::AddIcon(UINT nID, HICON hIcon)
+HICON CCoolInterface::ExtractIcon(UINT nID, BOOL bMirrored, int nImageListType)
 {
-	ConfirmImageList();
-	int nImage = m_pImages.Add( hIcon );
-	m_pImageMap.SetAt( nID, nImage );
+	HICON hIcon = NULL;
+	int nImage = ImageForID( nID, nImageListType );
+	if ( nImage >= 0 )
+	{
+		if ( nImageListType == LVSIL_SMALL )
+			hIcon = m_pImages16.ExtractIcon( nImage );
+		else
+			hIcon = m_pImages32.ExtractIcon( nImage );
+	}
+	if ( hIcon == NULL )
+	{
+		hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
+			MAKEINTRESOURCE( nID ), IMAGE_ICON,
+			( ( nImageListType == LVSIL_SMALL ) ? 16 : 32 ),
+			( ( nImageListType == LVSIL_SMALL ) ? 16 : 32 ), 0 );
+		if ( hIcon )
+			AddIcon( nID, hIcon, nImageListType );
+	}
+	if ( hIcon )
+	{
+		if ( bMirrored && nID != ID_HELP_ABOUT )
+		{
+			hIcon = CreateMirroredIcon( hIcon );
+			ASSERT( hIcon != NULL );
+		}
+	}
+	return hIcon;
 }
 
-void CCoolInterface::CopyIcon(UINT nFromID, UINT nToID)
+void CCoolInterface::SetIcon(UINT nID, BOOL bMirrored, BOOL bBigIcon, CWnd* pWnd)
 {
-	int nImage;
-	if ( m_pImageMap.Lookup( nFromID, nImage ) )
-		m_pImageMap.SetAt( nToID, nImage );
+	HICON hIcon = ExtractIcon( nID, bMirrored, bBigIcon ? LVSIL_NORMAL : LVSIL_SMALL );
+	if ( hIcon )
+	{
+		m_pWindowIcons.SetAt( hIcon, pWnd->GetSafeHwnd() );
+		hIcon = pWnd->SetIcon( hIcon, bBigIcon );
+		if ( hIcon )
+		{
+			VERIFY( m_pWindowIcons.RemoveKey( hIcon ) );
+			VERIFY( DestroyIcon( hIcon ) );
+		}
+	}
 }
 
-HICON CCoolInterface::ExtractIcon(UINT nID)
+void CCoolInterface::SetIcon(HICON hIcon, BOOL bMirrored, BOOL bBigIcon, CWnd* pWnd)
 {
-	int nImage = ImageForID( nID );
-	if ( nImage >= 0 ) return m_pImages.ExtractIcon( nImage );
-	return NULL;
+	if ( hIcon )
+	{
+		if ( bMirrored ) hIcon = CreateMirroredIcon( hIcon );
+		m_pWindowIcons.SetAt( hIcon, pWnd->GetSafeHwnd() );
+		hIcon = pWnd->SetIcon( hIcon, bBigIcon );
+		if ( hIcon )
+		{
+			VERIFY( m_pWindowIcons.RemoveKey( hIcon ) );
+			VERIFY( DestroyIcon( hIcon ) );
+		}
+	}
 }
 
-BOOL CCoolInterface::AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack)
+/*BOOL CCoolInterface::AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack)
 {
-	ConfirmImageList();
+	VERIFY( ConfirmImageList() );
 	
 	CBitmap pBmp;
 	if ( ! pBmp.LoadBitmap( nIDToolBar ) ) return FALSE;
@@ -130,10 +213,10 @@ BOOL CCoolInterface::AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack)
 	if ( nBase < 0 ) return FALSE;
 	
 	BOOL bRet = FALSE;
-	HRSRC hRsrc = FindResource( AfxGetInstanceHandle(), MAKEINTRESOURCE(nIDToolBar), RT_TOOLBAR );
+	HRSRC hRsrc = FindResource( AfxGetResourceHandle(), MAKEINTRESOURCE(nIDToolBar), RT_TOOLBAR );
 	if ( hRsrc )
 	{
-		HGLOBAL hGlobal = LoadResource( AfxGetInstanceHandle(), hRsrc );
+		HGLOBAL hGlobal = LoadResource( AfxGetResourceHandle(), hRsrc );
 		if ( hGlobal )
 		{
 			TOOLBAR_RES* pData = (TOOLBAR_RES*)LockResource( hGlobal );
@@ -153,14 +236,19 @@ BOOL CCoolInterface::AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack)
 		}
 	}
 	return bRet;
-}
+}*/
 
 BOOL CCoolInterface::ConfirmImageList()
 {
-	if ( m_pImages.m_hImageList != NULL ) return TRUE;
-	
-	if ( m_pImages.Create( 16, 16, ILC_COLOR16|ILC_MASK, 16, 4 ) ) return TRUE;
-	else return m_pImages.Create( 16, 16, ILC_COLOR24|ILC_MASK, 16, 4 );
+	return
+		( m_pImages16.m_hImageList ||
+		  m_pImages16.Create( 16, 16, ILC_COLOR32|ILC_MASK, 16, 4 ) ||
+		  m_pImages16.Create( 16, 16, ILC_COLOR24|ILC_MASK, 16, 4 ) ||
+		  m_pImages16.Create( 16, 16, ILC_COLOR16|ILC_MASK, 16, 4 ) ) &&
+		( m_pImages32.m_hImageList ||
+		  m_pImages32.Create( 32, 32, ILC_COLOR32|ILC_MASK, 16, 4 ) ||
+		  m_pImages32.Create( 32, 32, ILC_COLOR24|ILC_MASK, 16, 4 ) ||
+		  m_pImages32.Create( 32, 32, ILC_COLOR16|ILC_MASK, 16, 4 ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -366,3 +454,73 @@ BOOL CCoolInterface::EnableTheme(CWnd* pWnd, BOOL bEnable)
 	return bResult;
 }
 
+int CCoolInterface::GetImageCount(int nImageListType)
+{
+	return ( nImageListType == LVSIL_SMALL ) ?
+		m_pImages16.GetImageCount() :
+		m_pImages32.GetImageCount();
+}
+
+BOOL CCoolInterface::Add(CSkin* pSkin, CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, int nImageListType)
+{
+	VERIFY( ConfirmImageList() );
+
+	int nBase = ( nImageListType == LVSIL_SMALL ) ?
+		m_pImages16.Add( CBitmap::FromHandle( hbmImage ), crMask ) :
+		m_pImages32.Add( CBitmap::FromHandle( hbmImage ), crMask );
+	if ( nBase < 0 )
+	{
+		return FALSE;
+	}
+
+	const LPCTSTR pszNames[] = {
+		_T("id"),  _T("id1"), _T("id2"), _T("id3"), _T("id4"), _T("id5"),
+		_T("id6"), _T("id7"), _T("id8"), _T("id9"), NULL };
+	int nIndex = 0;
+	int nIndexRev = GetImageCount( nImageListType ) - 1;	// Total number of images
+	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
+	{
+		CXMLElement* pXML = pBase->GetNextElement( pos );
+		if ( ! pXML->IsNamed( _T("image") ) ) continue;
+		CString strValue = pXML->GetAttributeValue( _T("index") );
+		if ( strValue.GetLength() ) _stscanf( strValue, _T("%i"), &nIndex );
+		nIndex += nBase;
+		for ( int nName = 0 ; pszNames[ nName ] ; nName++ )
+		{
+			UINT nID = pSkin->LookupCommandID( pXML, pszNames[ nName ] );
+			if ( nID ) 
+			{
+				if ( nImageListType == LVSIL_SMALL )
+					m_pImageMap16.SetAt( nID, theApp.m_bRTL ? nIndexRev : nIndex );
+				else
+					m_pImageMap32.SetAt( nID, theApp.m_bRTL ? nIndexRev : nIndex );
+			}
+			if ( nName && ! nID ) break;
+		}
+		nIndexRev--;	
+		nIndex -= nBase;
+		nIndex ++;
+	}
+	return TRUE;
+}
+
+CImageList* CCoolInterface::SetImageListTo(CListCtrl& pWnd, int nImageListType)
+{
+	return ( nImageListType == LVSIL_SMALL ) ? 
+		pWnd.SetImageList( &m_pImages16, nImageListType ) :
+		pWnd.SetImageList( &m_pImages32, nImageListType );
+}
+
+BOOL CCoolInterface::Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle, int nImageListType)
+{
+	return ( nImageListType == LVSIL_SMALL ) ?
+		m_pImages16.Draw( pDC, nImage, pt, nStyle ) :
+		m_pImages32.Draw( pDC, nImage, pt, nStyle );
+}
+
+BOOL CCoolInterface::DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz, COLORREF clrBk, COLORREF clrFg, UINT nStyle, int nImageListType)
+{
+	return ( nImageListType == LVSIL_SMALL ) ?
+		m_pImages16.DrawEx( pDC, nImage, pt, sz, clrBk, clrFg, nStyle ) :
+		m_pImages32.DrawEx( pDC, nImage, pt, sz, clrBk, clrFg, nStyle );
+}

@@ -30,24 +30,20 @@ class CChildWnd;
 
 class CPlugins
 {
-// Construction
 public:
 	CPlugins();
 	virtual ~CPlugins();
 
-// Attributes
 public:
-	CList< CPlugin* > m_pList;
-	UINT		m_nCommandID;
+	CList< CPlugin* >	m_pList;
+	UINT				m_nCommandID;
 
-// Operations
 public:
 	void		Enumerate();
 	void		Clear();
-	BOOL		LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL bEnableDefault = TRUE);
-	BOOL		LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt = NULL);
+	BOOL		LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL bEnableDefault = TRUE) const;
+	BOOL		LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt = NULL) const;
 	CPlugin*	Find(REFCLSID pCLSID) const;
-public:
 	void		OnSkinChanged();
 	void		RegisterCommands();
 	UINT		GetCommandID();
@@ -56,8 +52,6 @@ public:
 	BOOL		OnExecuteFile(LPCTSTR pszFile, BOOL bHasThumbnail = FALSE);
 	BOOL		OnEnqueueFile(LPCTSTR pszFile);
 
-// Inlines
-public:
 	inline POSITION GetIterator() const
 	{
 		return m_pList.GetHeadPosition();
@@ -72,37 +66,29 @@ public:
 	{
 		return m_pList.GetCount();
 	}
-
 };
 
 
 class CPlugin
 {
-// Construction
 public:
 	CPlugin(REFCLSID pCLSID, LPCTSTR pszName);
 	virtual ~CPlugin();
 
-// Attributes
 public:
-	CLSID		m_pCLSID;
-	CString		m_sName;
-	HICON		m_hIcon;
-	DWORD		m_nCapabilities;
-public:
+	CLSID			m_pCLSID;
+	CString			m_sName;
+	DWORD			m_nCapabilities;
 	IGeneralPlugin*	m_pPlugin;
 	ICommandPlugin*	m_pCommand;
 	IExecutePlugin*	m_pExecute;
 
-// Operations
 public:
 	BOOL		Start();
 	void		Stop();
 	BOOL		StartIfEnabled();
 	CString		GetStringCLSID() const;
-protected:
-	HICON		LookupIcon();
-
+	HICON		LookupIcon() const;
 };
 
 extern CPlugins Plugins;

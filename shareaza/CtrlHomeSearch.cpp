@@ -54,9 +54,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeSearchCtrl construction
 
-CHomeSearchCtrl::CHomeSearchCtrl()
+CHomeSearchCtrl::CHomeSearchCtrl() :
+	m_pTextInput( NULL )
 {
-	m_pTextInput = NULL;
 }
 
 CHomeSearchCtrl::~CHomeSearchCtrl()
@@ -134,15 +134,11 @@ void CHomeSearchCtrl::Setup(COLORREF crWindow)
 
 	LoadString( strCaption, IDS_SEARCH_PANEL_START );
 	m_wndSearch.SetWindowText( strCaption );
-	HICON hIcon = CoolInterface.ExtractIcon( ID_SEARCH_SEARCH );
-	if ( hIcon )
-		m_wndSearch.SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
+	m_wndSearch.SetCoolIcon( ID_SEARCH_SEARCH, theApp.m_bRTL );
 
 	LoadString( strCaption, IDS_SEARCH_PANEL_ADVANCED );
 	m_wndAdvanced.SetWindowText( strCaption + _T('\x2026') );
-	hIcon = CoolInterface.ExtractIcon( ID_SEARCH_DETAILS );
-	if ( hIcon )
-		m_wndAdvanced.SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
+	m_wndAdvanced.SetCoolIcon( ID_SEARCH_DETAILS, theApp.m_bRTL );
 
 	LoadString( m_wndSchema.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 

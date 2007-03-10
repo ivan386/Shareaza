@@ -285,7 +285,7 @@ void CSearchPanel::OnSchemaChange()
 		HICON hIcon = ShellIcons.ExtractIcon( pSchema->m_nIcon16, 16 );
 		// inefficient but we need to mirror it again
 		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
-		m_boxSchema.SetIcon( hIcon, TRUE );
+		m_boxSchema.SetIcon( hIcon );
 		CString strTitle = pSchema->m_sTitle;
 		int nPos = strTitle.Find( ':' );
 		if ( nPos > 0 ) strTitle = strTitle.Mid( nPos + 1 );
@@ -497,22 +497,14 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
 	m_wndSchemas.SendMessage( CB_SETDROPPEDWIDTH, 200 );
 
-	LoadString( strCaption, IDS_SEARCH_PANEL_START );
 	m_wndStart.Create( rc, this, IDC_SEARCH_START );
-	m_wndStart.SetWindowText( strCaption );
-	HICON hIcon = CoolInterface.ExtractIcon( ID_SEARCH_SEARCH );
-	if ( hIcon )
-		m_wndStart.SetIcon( hIcon );
 	m_wndStart.SetHandCursor( TRUE );
 
-	LoadString( strCaption, IDS_SEARCH_PANEL_STOP );
 	m_wndStop.Create( rc, this, IDC_SEARCH_STOP );
-	m_wndStop.SetWindowText( strCaption );
-	hIcon = CoolInterface.ExtractIcon( ID_SEARCH_STOP );
-	if ( hIcon )
-		m_wndStop.SetIcon( hIcon );
 	m_wndStop.SetHandCursor( TRUE );
-	
+
+	OnSkinChange();
+
 	SetPrimary( TRUE );
 	
 	return 0;
@@ -521,18 +513,15 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CSearchInputBox::OnSkinChange()
 {
 	CString strCaption;
-	
+
 	LoadString( strCaption, IDS_SEARCH_PANEL_START );
 	m_wndStart.SetWindowText( strCaption );
-	HICON hIcon = CoolInterface.ExtractIcon( ID_SEARCH_SEARCH );
-	if ( hIcon )
-		m_wndStart.SetIcon( hIcon );
+	m_wndStart.SetCoolIcon( ID_SEARCH_SEARCH, FALSE );
 
 	LoadString( strCaption, IDS_SEARCH_PANEL_STOP );
 	m_wndStop.SetWindowText( strCaption );
-	hIcon = CoolInterface.ExtractIcon( ID_SEARCH_STOP );
-	if ( hIcon )
-		m_wndStop.SetIcon( hIcon );
+	m_wndStop.SetCoolIcon( ID_SEARCH_STOP, FALSE );
+
 }
 
 void CSearchInputBox::OnSize(UINT nType, int cx, int cy) 
@@ -672,8 +661,9 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( theApp.m_bRTL )
 		bmProtocols.m_hObject = CreateMirroredBitmap( (HBITMAP)bmProtocols.m_hObject );
 
-	if ( ! m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 6, 1 ) )
-		m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 6, 1 );
+	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 6, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 6, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 6, 1 );
 	m_gdiImageList.Add( &bmProtocols, RGB( 0, 255, 0 ) );
 
 	// Min combo
@@ -714,8 +704,12 @@ void CSearchAdvancedBox::OnSkinChange()
 	int nRevStart = m_gdiImageList.GetImageCount() - 1;
 	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_gdiImageList.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage, hIcon );
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
+		if ( hIcon )
+		{
+			m_gdiImageList.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage, hIcon );
+			DestroyIcon( hIcon );
+		}
 	}
 }
 

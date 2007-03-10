@@ -1,7 +1,7 @@
 //
 // CtrlHomePanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -175,7 +175,12 @@ void CHomePanel::Update()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeDownloadsBox construction
 
-CHomeDownloadsBox::CHomeDownloadsBox()
+CHomeDownloadsBox::CHomeDownloadsBox() :
+	m_pdDownloadsNone( NULL ),
+	m_pdDownloadsOne( NULL ),
+	m_pdDownloadsMany( NULL ),
+	m_hHand( NULL ),
+	m_pHover( NULL )
 {
 	SetPrimary();
 }
@@ -218,8 +223,9 @@ void CHomeDownloadsBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Downloads") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_DOWNLOADSFRAME );
-	if ( hIcon ) SetIcon( hIcon );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_DOWNLOADSFRAME, FALSE );
+	if ( hIcon )
+		SetIcon( hIcon );
 
 	m_pDocument = new CRichDocument();
 	
@@ -605,7 +611,12 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 /////////////////////////////////////////////////////////////////////////////
 // CHomeLibraryBox
 
-CHomeLibraryBox::CHomeLibraryBox()
+CHomeLibraryBox::CHomeLibraryBox() :
+	m_pdLibraryFiles( NULL ),
+	m_pdLibraryVolume( NULL ),
+	m_pdLibraryHashRemaining( NULL ),
+	m_hHand( NULL ),
+	m_pHover( NULL )
 {
 	SetPrimary();
 }
@@ -646,8 +657,9 @@ void CHomeLibraryBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Library") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_LIBRARYFRAME );
-	if ( hIcon ) SetIcon( hIcon );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_LIBRARYFRAME, FALSE );
+	if ( hIcon )
+		SetIcon( hIcon );
 	
 	m_pDocument = new CRichDocument();
 	
@@ -973,7 +985,13 @@ void CHomeLibraryBox::OnTimer(UINT_PTR nIDEvent)
 /////////////////////////////////////////////////////////////////////////////
 // CHomeUploadsBox construction
 
-CHomeUploadsBox::CHomeUploadsBox()
+CHomeUploadsBox::CHomeUploadsBox() :
+	m_pdUploadsNone( NULL ),
+	m_pdUploadsOne( NULL ),
+	m_pdUploadsMany( NULL ),
+	m_pdUploadedNone( NULL ),
+	m_pdUploadedOne( NULL ),
+	m_pdUploadedMany( NULL )
 {
 	SetPrimary();
 }
@@ -998,8 +1016,9 @@ void CHomeUploadsBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Uploads") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_UPLOADSFRAME );
-	if ( hIcon ) SetIcon( hIcon );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_UPLOADSFRAME, FALSE );
+	if ( hIcon )
+		SetIcon( hIcon );
 	
 	m_pDocument = new CRichDocument();
 	
@@ -1095,8 +1114,11 @@ void CHomeUploadsBox::Update()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeConnectionBox construction
 
-CHomeConnectionBox::CHomeConnectionBox()
+CHomeConnectionBox::CHomeConnectionBox() :
+	m_pdConnectedHours( NULL ),
+	m_pdConnectedMinutes( NULL )
 {
+	ZeroMemory( m_pdCount, sizeof( m_pdCount ) );
 	SetPrimary();
 }
 
@@ -1128,8 +1150,9 @@ void CHomeConnectionBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Connection") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_NEIGHBOURSFRAME );
-	if ( hIcon ) SetIcon( hIcon );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_NEIGHBOURSFRAME, FALSE );
+	if ( hIcon )
+		SetIcon( hIcon );
 	
 	m_pDocument = new CRichDocument();
 	
@@ -1293,7 +1316,11 @@ void CHomeConnectionBox::Update()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeTorrentsBox construction
 
-CHomeTorrentsBox::CHomeTorrentsBox()
+CHomeTorrentsBox::CHomeTorrentsBox() :
+	m_pdTorrentsNone( NULL ),
+	m_pdTorrentsOne( NULL ),
+	m_pdTorrentsMany( NULL ),
+	m_pdReseedTorrent( NULL )
 {
 	SetPrimary();
 }
@@ -1317,8 +1344,9 @@ void CHomeTorrentsBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Torrents") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_BITTORRENT_ICON );
-	if ( hIcon ) SetIcon( hIcon );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_BITTORRENT_ICON, FALSE );
+	if ( hIcon )
+		SetIcon( hIcon );
 	
 	m_pDocument = new CRichDocument();
 	

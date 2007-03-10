@@ -599,6 +599,8 @@ CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 	BITMAP bmpInfo;
 	bmDrag.GetBitmap( &bmpInfo );
 	CImageList* pAll = new CImageList();
+	pAll->Create( bmpInfo.bmWidth, bmpInfo.bmHeight, ILC_COLOR32|ILC_MASK, 1, 1 ) ||
+	pAll->Create( bmpInfo.bmWidth, bmpInfo.bmHeight, ILC_COLOR24|ILC_MASK, 1, 1 ) ||
 	pAll->Create( bmpInfo.bmWidth, bmpInfo.bmHeight, ILC_COLOR16|ILC_MASK, 1, 1 );
 	pAll->Add( &bmDrag, DRAG_COLOR_KEY );
 	bmDrag.DeleteObject();

@@ -146,15 +146,7 @@ void CPluginWnd::OnSkinChange()
 
 	if ( m_nResID )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( m_nResID );
-
-		if ( ! hIcon )
-		{
-			hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
-				MAKEINTRESOURCE( m_nResID ), IMAGE_ICON, 16, 16, 0 );
-		}
-
-		SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon, FALSE );
+		CoolInterface.SetIcon( m_nResID, theApp.m_bRTL, FALSE, this );
 
 		CString strCaption;
 		Skin.LoadString( strCaption, m_nResID );

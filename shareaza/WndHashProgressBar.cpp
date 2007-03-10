@@ -159,14 +159,8 @@ int CHashProgressBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	m_hIcon = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_SEARCH_FOLDER),
-		IMAGE_ICON, 48, 48, 0 );
-
-	if ( m_hIcon == NULL )
-	{
-		m_hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
-			MAKEINTRESOURCE(IDI_SEARCH_FOLDER), IMAGE_ICON, 32, 32, 0 );
-	}
+	m_hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
+		MAKEINTRESOURCE(IDI_SEARCH_FOLDER), IMAGE_ICON, 32, 32, 0 );
 
 	m_crFill	= GetSysColor( COLOR_ACTIVECAPTION );
 	m_crBorder	= CCoolInterface::CalculateColour( m_crFill, 0xFFFFFFFF, 128 );
@@ -199,9 +193,9 @@ void CHashProgressBar::OnPaint()
 
 	// Icon
 	DrawIconEx( dc, rcClient.left + 4, rcClient.top + 4,
-		m_hIcon, 48, 48, 0, m_brFill, DI_NORMAL );
+		m_hIcon, 32, 32, 0, m_brFill, DI_NORMAL );
 	dc.ExcludeClipRect( rcClient.left + 4, rcClient.top + 4,
-		rcClient.left + 4 + 48, rcClient.top + 4 + 48 );
+		rcClient.left + 4 + 32, rcClient.top + 4 + 32 );
 
 	// Text
 	CFont* pOld = dc.GetCurrentFont();
@@ -213,7 +207,7 @@ void CHashProgressBar::OnPaint()
 
 	dc.SelectObject( &CoolInterface.m_fntNormal );
 	sz = dc.GetTextExtent( strText );
-	rcText.SetRect( 4 + 48 + 8, 12, 4 + 48 + 8 + sz.cx, 12 + sz.cy );
+	rcText.SetRect( 4 + 32 + 8, 12, 4 + 48 + 8 + sz.cx, 12 + sz.cy );
 	rcText.OffsetRect( rcClient.left, rcClient.top );
 	dc.ExtTextOut( rcText.left, rcText.top, ETO_OPAQUE|ETO_CLIPPED,
 		&rcText, strText, NULL );

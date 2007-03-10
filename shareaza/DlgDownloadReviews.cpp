@@ -69,9 +69,8 @@ BOOL CDownloadReviewDlg::OnInitDialog()
 	CRect rcList;
 	m_wndReviews.GetClientRect( &rcList );
 	rcList.right -= GetSystemMetrics( SM_CXVSCROLL );
-	
-	m_wndReviews.SetImageList( &CoolInterface.m_pImages, LVSIL_SMALL );
-	
+
+	CoolInterface.SetImageListTo( m_wndReviews, LVSIL_SMALL );
 	m_wndReviews.InsertColumn( 0, _T("User"), LVCFMT_LEFT, 100, -1 );
 	m_wndReviews.InsertColumn( 1, _T("Rating"), LVCFMT_CENTER, 90, 0 );
 	m_wndReviews.InsertColumn( 2, _T("Comments"), LVCFMT_CENTER, rcList.right- 100 - 80, 1 );

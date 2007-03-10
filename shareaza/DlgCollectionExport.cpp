@@ -82,8 +82,10 @@ BOOL CCollectionExportDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
 
+	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 1, 1 ) ||
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
-	m_gdiImageList.Add( theApp.LoadIcon( IDI_SKIN ) ); // change icon
+	AddIcon( IDI_SKIN, m_gdiImageList );
 
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
@@ -279,9 +281,7 @@ BOOL CCollectionExportDlg::AddTemplate(LPCTSTR pszPath, LPCTSTR pszName)
 	
 	if ( ExtractIconEx( strIcon, 0, NULL, &hIcon, 1 ) != NULL && hIcon != NULL )
 	{
-		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
-		pItem.m_nImage = m_gdiImageList.Add( hIcon );
-		DestroyIcon( hIcon );
+		pItem.m_nImage = AddIcon( hIcon, m_gdiImageList );
 	}
 	else
 	{

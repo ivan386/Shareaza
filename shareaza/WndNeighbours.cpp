@@ -122,10 +122,9 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
 	if ( theApp.m_bRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-
-	if ( !m_gdiImageList.Create( 17, 17, ILC_COLOR32|ILC_MASK, 6, 1 ) )
-		m_gdiImageList.Create( 17, 17, ILC_COLOR16|ILC_MASK, 6, 1 );
-
+	m_gdiImageList.Create( 17, 17, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
+	m_gdiImageList.Create( 17, 17, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
+	m_gdiImageList.Create( 17, 17, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_gdiImageList.Add( &bmImages, RGB( 0, 255, 0 ) );
 
 	// Merge protocols and flags in one image list
@@ -135,7 +134,14 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_gdiImageList.SetImageCount( nImages + nFlags );
 	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
-		m_gdiImageList.Replace( nImages + nFlag, Flags.m_pImage.ExtractIcon( nFlag ) );
+	{
+		HICON hIcon = Flags.m_pImage.ExtractIcon( nFlag );
+		if ( hIcon )
+		{
+			m_gdiImageList.Replace( nImages + nFlag, hIcon );
+			VERIFY( DestroyIcon( hIcon ) );
+		}
+	}
 
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 	bmImages.DeleteObject();
@@ -370,8 +376,12 @@ void CNeighboursWnd::OnSkinChange()
 
 	for ( int nImage = 0 ; nImage < 4 ; nImage++ )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_gdiImageList.Replace( theApp.m_bRTL ? m_nProtocolRev - nImage : nImage, hIcon );
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
+		if ( hIcon )
+		{
+			m_gdiImageList.Replace( theApp.m_bRTL ? m_nProtocolRev - nImage : nImage, hIcon );
+			DestroyIcon( hIcon );
+		}
 	}
 }
 
@@ -626,7 +636,7 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMLVCUSTOMDRAW* pDraw = (NMLVCUSTOMDRAW*)pNMHDR;
 	
-	if ( ! ::IsWindow( m_wndList.m_hWnd ) ) return;
+	if ( ! ::IsWindow( m_wndList.GetSafeHwnd() ) ) return;
 
 	if ( pDraw->nmcd.dwDrawStage == CDDS_PREPAINT )
 	{

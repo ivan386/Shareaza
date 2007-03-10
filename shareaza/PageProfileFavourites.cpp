@@ -79,10 +79,10 @@ BOOL CFavouritesProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 
+	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 1, 1 ) ||
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
-	HICON hIcon = AfxGetApp()->LoadIcon( IDI_WEB_URL );
-	if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
-	m_gdiImageList.Add( hIcon );
+	AddIcon( IDI_WEB_URL, m_gdiImageList );
 
 	CRect rc;
 	m_wndList.GetClientRect( &rc );

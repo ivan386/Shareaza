@@ -82,11 +82,10 @@ BOOL CFileSourcesPage::OnInitDialog()
 	m_wndList.InsertColumn( 0, _T("URL"), LVCFMT_LEFT, rc.right - 128, -1 );
 	m_wndList.InsertColumn( 1, _T("Expires"), LVCFMT_RIGHT, 128, 0 );
 
+	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 1, 1 ) ||
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
-	HICON hIcon;
-	hIcon = theApp.LoadIcon( IDI_WEB_URL );
-	if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
-	m_gdiImageList.Add( hIcon );
+	AddIcon( IDI_WEB_URL, m_gdiImageList );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,

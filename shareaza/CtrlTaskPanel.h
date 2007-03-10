@@ -86,15 +86,22 @@ protected:
 
 class CTaskBox : public CWnd
 {
-// Construction
 public:
 	CTaskBox();
 	virtual ~CTaskBox();
 
 	DECLARE_DYNAMIC(CTaskBox)
+	
+	CTaskPanel*	GetPanel() const;
+	void		SetCaption(LPCTSTR pszCaption);
+	void		SetIcon(HICON hIcon);
+	void		SetSize(int nHeight);
+	void		SetPrimary(BOOL bPrimary = TRUE);
+	void		SetWatermark(HBITMAP hBitmap);
+	void		SetCaptionmark(HBITMAP hBitmap, BOOL bDefault = TRUE);
+	void		Expand(BOOL bOpen = TRUE);
 
-// Attributes
-private:
+protected:
 	CTaskPanel*	m_pPanel;
 	int			m_nHeight;
 	BOOL		m_bVisible;
@@ -103,36 +110,21 @@ private:
 	BOOL		m_bPrimary;
 	HICON		m_hIcon;
 	BOOL		m_bIconDel;
-protected:
 	CBitmap		m_bmWatermark;
 	CBitmap		m_bmCaptionmark;
 	BOOL		m_bCaptionCurve;
 
-// Operations
-public:
-	CTaskPanel*	GetPanel() const;
-	void		SetCaption(LPCTSTR pszCaption);
-	void		SetIcon(HICON hIcon, BOOL bDelete = FALSE);
-	void		SetSize(int nHeight);
-	void		SetPrimary(BOOL bPrimary = TRUE);
-	void		SetWatermark(HBITMAP hBitmap);
-	void		SetCaptionmark(HBITMAP hBitmap, BOOL bDefault = TRUE);
-	void		Expand(BOOL bOpen = TRUE);
-protected:
-	int		GetOuterHeight() const;
-	void	PaintBorders();
-	void	InvalidateNonclient();
-
+	int			GetOuterHeight() const;
+	void		PaintBorders();
+	void		InvalidateNonclient();
 	virtual void OnExpanded(BOOL bOpen);
 
-// Overrides
 public:
 	//{{AFX_VIRTUAL(CTaskBox)
 	public:
 	virtual BOOL Create(CTaskPanel* pPanel, int nHeight = 0, LPCTSTR pszCaption = NULL, UINT nIDIcon = 0);
 	//}}AFX_VIRTUAL
 
-// Implementation
 protected:
 	//{{AFX_MSG(CTaskBox)
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);

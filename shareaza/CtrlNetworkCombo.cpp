@@ -82,10 +82,10 @@ int CNetworkCombo::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( theApp.m_bRTL )
 		bmProtocols.m_hObject = CreateMirroredBitmap( (HBITMAP)bmProtocols.m_hObject );
 
-	if ( ! m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 6, 1 ) )
-		m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 6, 1 );
-
-	m_gdiImageList.Add( AfxGetApp()->LoadIcon( IDR_MAINFRAME ) );
+	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 6, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 6, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 6, 1 );
+	AddIcon( IDR_MAINFRAME, m_gdiImageList );
 	m_gdiImageList.Add( &bmProtocols, RGB( 0, 255, 0 ) );
 
 	CString str;
@@ -105,8 +105,12 @@ void CNetworkCombo::OnSkinChange()
 	int nRevStart = m_gdiImageList.GetImageCount();
 	for ( int nImage = 1 ; nImage < 4 ; nImage++ )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_gdiImageList.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage + 1, hIcon );
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
+		if ( hIcon )
+		{
+			m_gdiImageList.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage + 1, hIcon );
+			DestroyIcon( hIcon );
+		}
 	}
 
 	CString str;

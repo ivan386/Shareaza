@@ -837,8 +837,8 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 	if ( bSelected && Settings.General.GUIMode != GUI_WINDOWED )
 	{
 		ptImage.x = rc.right - 18;
-		ImageList_DrawEx( CoolInterface.m_pImages, pBar->m_nCloseImage,
-			pDC->GetSafeHdc(), ptImage.x, ptImage.y, 0, 0, crBack, CoolInterface.m_crShadow,
+		CoolInterface.DrawEx( pDC, pBar->m_nCloseImage,
+			ptImage, CSize( 0, 0 ), crBack, CoolInterface.m_crShadow,
 			ILD_BLEND50 );
 		pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
 		rc.right -= 20;

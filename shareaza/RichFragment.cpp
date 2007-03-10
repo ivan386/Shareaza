@@ -204,8 +204,8 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 	}
 	else if ( m_pElement->m_nType == retCmdIcon )
 	{
-		ImageList_DrawEx( CoolInterface.m_pImages, m_pElement->m_nImageIndex,
-			*pDC, m_pt.x, m_pt.y, 16, 16, pDC->GetBkColor(), CLR_NONE, ILD_NORMAL );
+		CoolInterface.DrawEx( pDC, m_pElement->m_nImageIndex,
+			m_pt, CSize( 16, 16 ), pDC->GetBkColor(), CLR_NONE, ILD_NORMAL );
 
 		if ( bSelect )
 		{

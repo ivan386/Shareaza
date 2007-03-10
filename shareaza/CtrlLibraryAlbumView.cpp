@@ -104,6 +104,8 @@ int CLibraryAlbumView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	CBitmap bmStar;
 	bmStar.LoadBitmap( IDB_SMALL_STAR );
+	m_pStars.Create( 12, 12, ILC_COLOR32|ILC_MASK, 6, 0 ) ||
+	m_pStars.Create( 12, 12, ILC_COLOR24|ILC_MASK, 6, 0 ) ||
 	m_pStars.Create( 12, 12, ILC_COLOR16|ILC_MASK, 6, 0 );
 	m_pStars.Add( &bmStar, RGB( 0, 255, 0 ) );
 	

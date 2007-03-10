@@ -81,10 +81,10 @@ BOOL CSkinsSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 
+	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 1, 1 ) ||
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
-	HICON hIcon = theApp.LoadIcon( IDI_SKIN );
-	if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
-	m_gdiImageList.Add( hIcon );
+	AddIcon( IDI_SKIN, m_gdiImageList );
 
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 	m_wndList.InsertColumn( 0, _T("Name"), LVCFMT_LEFT, 210, 0 );

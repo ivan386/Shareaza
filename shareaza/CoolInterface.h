@@ -1,7 +1,7 @@
 //
 // CoolInterface.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "Skin.h"
+
 
 class CCoolInterface
 {
@@ -32,11 +34,6 @@ public:
 	CCoolInterface();
 	virtual ~CCoolInterface();
 
-// Attributes
-public:
-	CMap< CString, const CString&, UINT, UINT > m_pNameMap;
-	CMap< UINT, UINT, int, int > m_pImageMap;
-	CImageList		m_pImages;
 public:
 	CFont		m_fntNormal;
 	CFont		m_fntBold;
@@ -44,7 +41,6 @@ public:
 	CFont		m_fntCaption;
 	CFont		m_fntItalic;
 	CFont		m_fntBoldItalic;
-public:
 	BOOL		m_bCustom;
 	COLORREF	m_crWindow;
 	COLORREF	m_crMidtone;
@@ -72,38 +68,51 @@ public:
 	COLORREF	m_crTaskBoxPrimaryText;
 	COLORREF	m_crTaskBoxCaptionHover;
 	COLORREF	m_crTaskBoxClient;
-protected:
-	CSize		m_czBuffer;
-	CDC			m_dcBuffer;
-	CBitmap		m_bmBuffer;
-	HBITMAP		m_bmOldBuffer;
 
-// Operations
-public:
 	void		Clear();
-public:
 	void		NameCommand(UINT nID, LPCTSTR pszName);
 	UINT		NameToID(LPCTSTR pszName);
-public:
-	int			ImageForID(UINT nID);
-	void		AddIcon(UINT nID, HICON hIcon);
-	void		CopyIcon(UINT nFromID, UINT nToID);
-	HICON		ExtractIcon(UINT nID);
-	BOOL		AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack = RGB(0,255,0));
-	BOOL		ConfirmImageList();
-public:
+	int			ImageForID(UINT nID, int nImageListType = LVSIL_SMALL);
+	void		AddIcon(UINT nID, HICON hIcon, int nImageListType = LVSIL_SMALL);
+	void		CopyIcon(UINT nFromID, UINT nToID, int nImageListType = LVSIL_SMALL);
+	HICON		ExtractIcon(UINT nID, BOOL bMirrored, int nImageListType = LVSIL_SMALL);
+	// Set skinned icon to window i.e. pWnd->SetIcon( hIcon, bBigIcon )
+	void		SetIcon(UINT nID, BOOL bMirrored, BOOL bBigIcon, CWnd* pWnd);
+	// Set skinned icon to window i.e. pWnd->SetIcon( hIcon, bBigIcon )
+	void		SetIcon(HICON hIcon, BOOL bMirrored, BOOL bBigIcon, CWnd* pWnd);
+	//	BOOL	AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack = RGB(0,255,0));
+	int			GetImageCount(int nImageListType = LVSIL_SMALL);
+	BOOL		Add(CSkin* pSkin, CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, int nImageListType = LVSIL_SMALL);
+	CImageList*	SetImageListTo(CListCtrl& pWnd, int nImageListType = LVSIL_SMALL);
+	BOOL		Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle, int nImageListType = LVSIL_SMALL);
+	BOOL		DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz, COLORREF clrBk, COLORREF clrFg, UINT nStyle, int nImageListType = LVSIL_SMALL);
 	CDC*		GetBuffer(CDC& dcScreen, CSize& szItem);
 	BOOL		DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int nOffX = 0, int nOffY = 0);
-public:
 	void		CreateFonts(LPCTSTR pszFace = NULL, int nSize = 0);
 	void		CalculateColours(BOOL bCustom = FALSE);
 	void		OnSysColourChange();
-public:
 	static COLORREF	CalculateColour(COLORREF crFore, COLORREF crBack, int nAlpha);
 	static COLORREF	GetDialogBkColor();
 	static BOOL		IsNewWindows();
 	static BOOL		EnableTheme(CWnd* pWnd, BOOL bEnable = TRUE);
 
+protected:
+	typedef CMap< UINT, UINT, int, int > CUINTintMap;
+	typedef CMap< CString, const CString&, UINT, UINT > CStringUINTMap;
+	typedef CMap< HICON, HICON, HWND, HWND > CHICONHWNDMap;
+
+	CStringUINTMap	m_pNameMap;
+	CUINTintMap		m_pImageMap16;		// Small images (LVSIL_SMALL)
+	CImageList		m_pImages16;		// Small images (LVSIL_SMALL)
+	CUINTintMap		m_pImageMap32;		// Normal images (LVSIL_NORMAL)
+	CImageList		m_pImages32;		// Normal images (LVSIL_NORMAL)
+	CSize			m_czBuffer;
+	CDC				m_dcBuffer;
+	CBitmap			m_bmBuffer;
+	HBITMAP			m_bmOldBuffer;
+	CHICONHWNDMap	m_pWindowIcons;
+
+	BOOL			ConfirmImageList();
 };
 
 extern CCoolInterface CoolInterface;

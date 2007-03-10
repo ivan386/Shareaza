@@ -138,8 +138,9 @@ int CUploadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( theApp.m_bRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 
-	if ( ! m_pProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) )
-		m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
+	m_pProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
+	m_pProtocols.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
+	m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_pProtocols.Add( &bmImages, RGB( 0, 255, 0 ) );
 	
 	m_nFocus	= 0;
@@ -1074,8 +1075,12 @@ void CUploadsCtrl::OnSkinChange()
 {
 	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID );
-		m_pProtocols.Replace( nImage, hIcon );
+		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
+		if ( hIcon )
+		{
+			m_pProtocols.Replace( nImage, hIcon );
+			DestroyIcon( hIcon );
+		}
 	}
 }
 

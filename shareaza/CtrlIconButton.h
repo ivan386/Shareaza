@@ -43,8 +43,9 @@ protected:
 // Operations
 public:
 	void	SetText(LPCTSTR pszText);
-	void	SetIcon(UINT nIconID);
-	void	SetIcon(HICON hIcon);
+	void	SetIcon(HICON hIcon, BOOL bMirrored = FALSE);
+	void	SetCoolIcon(UINT nIconID, BOOL bMirrored = FALSE);
+	void	SetIcon(UINT nIconID, BOOL bMirrored = FALSE);
 	void	SetHandCursor(BOOL bCursor);
 protected:
 	BOOL	RemoveStyle();

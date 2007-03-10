@@ -230,18 +230,13 @@ void CRichElement::PrePaintIcon(CDC* /*pDC*/)
 {
 	if ( m_hImage != NULL || m_sText.IsEmpty() ) return;
 
-	UINT nID, nWidth = 16, nHeight = 16;
+	UINT nID = 0, nWidth = 16, nHeight = 16;
 	_stscanf( m_sText, _T("%lu.%i.%i"), &nID, &nWidth, &nHeight );
+	ASSERT( ( nWidth == 16 && nHeight == 16 ) || ( nWidth == 32 && nHeight == 32 ) );
 
-	HICON hIcon = CoolInterface.ExtractIcon( nID );
-	m_hImage = theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon;
-
-	if ( m_hImage == NULL )
-	{
-		hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
-			MAKEINTRESOURCE( nID ), IMAGE_ICON, nWidth, nHeight, 0 );
-		m_hImage = theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon;
-	}
+	m_hImage = CoolInterface.ExtractIcon( nID, theApp.m_bRTL,
+		( nWidth == 16 ) ? LVSIL_SMALL : LVSIL_NORMAL );
+	ASSERT( m_hImage != NULL );
 }
 
 //////////////////////////////////////////////////////////////////////

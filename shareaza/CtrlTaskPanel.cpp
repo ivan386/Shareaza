@@ -293,13 +293,12 @@ CTaskBox::CTaskBox()
 	m_bHover		= FALSE;
 	m_bPrimary		= FALSE;
 	m_hIcon			= NULL;
-	m_bIconDel		= FALSE;
 	m_bCaptionCurve	= TRUE;
 }
 
 CTaskBox::~CTaskBox()
 {
-	if ( m_bIconDel ) DestroyIcon( m_hIcon );
+	if ( m_hIcon ) DestroyIcon( m_hIcon );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -324,10 +323,7 @@ BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT 
 	
 	if ( nIDIcon )
 	{
-		HICON hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
-			MAKEINTRESOURCE( nIDIcon ), IMAGE_ICON, 16, 16, 0 );
-		m_hIcon = theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon;
-		CWnd::SetIcon( m_hIcon, FALSE );
+		CoolInterface.SetIcon( nIDIcon, theApp.m_bRTL, FALSE, this );
 	}
 	
 	CString strKey;
@@ -356,14 +352,16 @@ void CTaskBox::SetCaption(LPCTSTR pszCaption)
 	}
 }
 
-void CTaskBox::SetIcon(HICON hIcon, BOOL bIconDel)
+void CTaskBox::SetIcon(HICON hIcon)
 {
-	if ( m_bIconDel ) DestroyIcon( m_hIcon );
+	ASSERT( m_hIcon != hIcon );
 
-	m_hIcon		= hIcon;
-	m_bIconDel	= bIconDel;
+	if ( m_hIcon )
+		DestroyIcon( m_hIcon );
 
-	CWnd::SetIcon( hIcon, FALSE );
+	m_hIcon = hIcon;
+
+	CWnd::SetIcon( m_hIcon, FALSE );
 	InvalidateNonclient();
 }
 

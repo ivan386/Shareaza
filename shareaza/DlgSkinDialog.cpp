@@ -97,18 +97,7 @@ BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 	}
 	if ( nIcon || theApp.m_bRTL && nIcon )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( nIcon );
-		
-		if ( ! hIcon ) hIcon = (HICON)LoadImage( AfxGetInstanceHandle(),
-			MAKEINTRESOURCE( nIcon ), IMAGE_ICON, 16, 16, 0 );
-		if ( theApp.m_bRTL )
-		{
-			// no idea why some dialogs get mirrored icons
-			if ( nIcon != ID_HELP_ABOUT )
-				hIcon = CreateMirroredIcon( hIcon );
-		}
-
-		if ( hIcon ) SetIcon( hIcon, FALSE );
+		CoolInterface.SetIcon( nIcon, theApp.m_bRTL, FALSE, this );
 	}
 
 	if ( m_pSkin != NULL )
