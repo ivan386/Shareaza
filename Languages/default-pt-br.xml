@@ -1993,7 +1993,7 @@
 	<document name="UploadHelp">
 		<text format="b">Área de Uploads</text>
 		<newline gap="8"/>
-		<text>Aqui é onde onde as filas e uploads são exibidos. Você pode expandir cada fila
+		<text>Aqui é aonde as filas e uploads são exibidos. Você pode expandir cada fila
 		com o + na esquerda, e filtrar o que é exibido com o botão 
 		a direita da barra de ferramentas da janela.</text>
 	</document>
@@ -3189,7 +3189,7 @@
 		<control/>
 		<control caption="Tray:"/>
 		<control caption="Quando clicar em Fechar:"/>
-		<control caption="Me Perguntar|Fechar Imediatamente|Minimizar para o Tray|Fechar Após as Transferências"/>
+		<control caption="Me Perguntar|Fechar de Imediato|Minimizar para o Tray|Fechar Após as Transferências"/>
 		<control caption="Quando clicar em Minimizar:"/>
 		<control caption="Normal|Minimizar para o Tray"/>
 	</dialog>
@@ -3222,8 +3222,8 @@
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
 		<control caption="Opções:"/>
 		<control/>
-		<control caption="Usar o Media Player do Shareaza para TOCAR os tipos listados abaixo"/>
-		<control caption="Usar o Media Player do Shareaza para pôr na fila os tipos listados abaixo"/>
+		<control caption="Usar o Media Player do Shareaza pra TOCAR os tipos listados abaixo"/>
+		<control caption="Usar o Media Player do Shareaza pra PÔR NA FILA os tipos listados abaixo"/>
 		<control caption="Tipos de Arquivo:"/>
 		<control/>
 		<control caption="Adicionar"/>
@@ -3802,7 +3802,7 @@
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Minha Análise">
 		<control caption="Minha Classificação"/>
 		<control caption="Eu classifico este arq.:"/>
-		<control caption="(Sem Classificação)|Falso/Corrupto/Ilusório|Pobre|Médio|Bom|Muito Bom|Excelente"/>
+		<control caption="(Sem Classificação)|Falso/Corrompido/Ilusório|Pobre|Médio|Bom|Muito Bom|Excelente"/>
 		<control caption="Minha análise e Comentários"/>
 		<control/><control/>
 	</dialog>
@@ -4052,7 +4052,7 @@
 	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Editar Download">
 		<control caption="ATENÇÃO: Este diálogo provém funções de edição avançada de download para usuários power, se usadas incorretamente podem e talvez causarão corrupção."/>
 		<control caption="Nome do Arq. e Tamanho:"/>
-		<control caption="Nome do arq.:"/>
+		<control caption="Nome do arq:"/>
 		<control/><control/>
 		<control caption="Tamanho (Bytes):"/>
 		<control/>
