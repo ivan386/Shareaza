@@ -1,7 +1,7 @@
 //
 // Buffer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,7 @@ public:
 public:
 
 	// Add and remove data from the memory block in the CBuffer object
-	void  Add(const void* pData, size_t nLength);                   // Add data to the end of the block already in this object
+	void  Add(const void* pData, size_t nLength) throw();			// Add data to the end of the block already in this object
 	template
 	<
 		typename Descriptor,
@@ -54,14 +54,33 @@ public:
 		template< typename > class CheckingPolicy,
 		template< typename > class ValidationPolicy
 	>
-	void Add(const Hashes::Hash< Descriptor, StoragePolicy,
-			CheckingPolicy, ValidationPolicy >& oHash)
+	inline void Add(const Hashes::Hash< Descriptor, StoragePolicy,
+			CheckingPolicy, ValidationPolicy >& oHash) throw()
 	{
 		Add( &oHash[ 0 ], oHash.byteCount );
 	};
-	void  Insert(DWORD nOffset, const void* pData, size_t nLength); // Insert the data in the middle somewhere
-	void  Remove(size_t nLength);                                   // Delete the first nLength bytes from the memory block
-	void  Clear();                                                 // Mark the entire buffer empty, not changing the size of the allocated block
+	void  Insert(DWORD nOffset, const void* pData, size_t nLength);	// Insert the data in the middle somewhere
+	
+	// Takes a number of bytes
+	// Removes this number from the start of the buffer, shifting the memory after it to the start
+	inline void Remove(size_t nLength) throw()
+	{
+		if ( nLength >= m_nLength )
+		{
+			ASSERT( nLength == m_nLength );
+			m_nLength = 0;
+		}
+		else if ( nLength )
+		{
+			m_nLength -= static_cast< DWORD >( nLength );
+			MoveMemory( m_pBuffer, m_pBuffer + nLength, m_nLength );
+		}
+	}
+	// Clears the memory from the buffer
+	inline void Clear() throw()
+	{
+		m_nLength = 0;
+	}
 
 	// Add text to the buffer, does not add a null terminator
 	void  Print(LPCSTR pszText);                           // Add ASCII text to the buffer

@@ -1,7 +1,7 @@
 //
 // Buffer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,7 +71,7 @@ CBuffer::~CBuffer()
 
 // Takes a pointer to memory, and how many bytes are stored there
 // Adds that memory to this buffer
-void CBuffer::Add(const void * pData, size_t nLength_)
+void CBuffer::Add(const void * pData, size_t nLength_) throw()
 {
 	// primitive overflow protection (relevant for 64bit)
 	if ( nLength_ > std::numeric_limits< int >::max() - m_nBuffer ) return;
@@ -163,35 +163,6 @@ void CBuffer::Insert(DWORD nOffset, const void * pData, size_t nLength_)
 		m_nBuffer = 0;
 		theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::Insert()") );
 	}
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// CBuffer remove
-
-// Takes a number of bytes
-// Removes this number from the start of the buffer, shifting the memory after it to the start
-void CBuffer::Remove(size_t nLength)
-{
-	// Check the given length
-	if ( nLength > m_nLength // We're being asked to remove more bytes than are stores in the buffer
-		|| nLength == 0 )    // We're being asked to remove nothing
-		return;              // Leave now
-
-	// Subtract the removed bytes from the count of how many are stored here
-	m_nLength -= static_cast< DWORD >( nLength );
-
-	// Shift the bytes at nLength in the buffer back up to the start of the buffer
-	MoveMemory(
-		m_pBuffer,           // Destination is the start of the buffer
-		m_pBuffer + nLength, // Source is nLength into the buffer
-		m_nLength );         // Length to copy is the new adjusted length
-}
-
-// Clears the memory from the buffer
-void CBuffer::Clear()
-{
-	// Record that there are no bytes stored in the buffer
-	m_nLength = 0; // Note that the buffer still has the same allocated size of m_nLength
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -400,8 +371,7 @@ BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek, UINT nCodePage)
 	// Now that the line has been copied into the string, remove it and the '\n' from the buffer
 	if ( ! bPeek )
 	{
-		Remove( 1 );
-		Remove( nLength ); // Unless we're peeking, then leave it in the buffer
+		Remove( nLength + 1 ); // Unless we're peeking, then leave it in the buffer
 	}
 
 	// Report that we found a line and moved it from the buffer to the string
@@ -583,44 +553,25 @@ BOOL CBuffer::Ungzip()
 		if ( (int)m_nLength - 2 < (int)nLen ) return FALSE;
 
 		// Remove the length word and the length it describes from the front of the buffer
-		Remove( 2 );
-		Remove( nLen );
+		Remove( nLen + 2 );
 	}
 
 	// If there is a 1 in position 0000 1000 in the flags byte
 	if ( nFlags & 0x08 )
 	{
-		// Loop until after we remove a 0 byte from the buffer
-		for ( ;; )
-		{
-			// If the buffer is empty, return false
-			if ( m_nLength == 0 ) return FALSE;
-
-			// Move the first byte of the buffer into an int
-			int nChar = m_pBuffer[0]; // Copy one byte from the start of the buffer into an int named nChar
-			Remove( 1 );              // Remove that first byte from the buffer
-
-			// If we just removed a 0 byte, exit the loop
-			if ( nChar == 0 ) break;
-		}
+		DWORD i = 0;
+		for( ; m_pBuffer[i] && i < m_nLength; ++i );
+		if ( i == m_nLength ) return FALSE;
+		Remove( i + 1 );
 	}
 
 	// If there is a 1 in position 0001 0000 in the flags byte
 	if ( nFlags & 0x10 )
 	{
-		// Loop until after we remove a 0 byte from the buffer
-		for ( ;; )
-		{
-			// If the buffer is empty, return false
-			if ( m_nLength == 0 ) return FALSE;
-
-			// Move the first byte of the buffer into an int
-			int nChar = m_pBuffer[0]; // Copy one byte from the start of the buffer into an int named nChar
-			Remove( 1 );              // Remove that first byte from the buffer
-
-			// If we just removed a 0 byte, exit the loop
-			if ( nChar == 0 ) break;
-		}
+		DWORD i = 0;
+		for( ; m_pBuffer[i] && i < m_nLength; ++i );
+		if ( i == m_nLength ) return FALSE;
+		Remove( i + 1 );
 	}
 
 	// If there is a 1 in position 0000 0010 in the flags byte
@@ -635,63 +586,64 @@ BOOL CBuffer::Ungzip()
 	if ( m_nLength <= 8 ) return FALSE; // Make sure the buffer has more than 8 bytes
 	m_nLength -= 8;                     // Remove the last 8 bytes in the buffer
 
-	// Setup a z_stream structure to perform a raw inflate
-	z_stream pStream = {};
-	if ( Z_OK != inflateInit2( // Initialize a stream inflation with more options than just inflateInit
-		&pStream,              // Stream structure to initialize
-		-MAX_WBITS ) ) {       // Window bits value of -15 to perform a raw inflate
-
-		// The Zlib function inflateInit2 returned something other than Z_OK, report error
-		return FALSE;
-	}
-
 	// Make a new buffer for the output.
 	// Guess that inflating the data won't make it more than 6 times as big
-
 	CBuffer pOutput;
-	bool bValidSize = true;
-	DWORD nLength = m_nLength;
-	for ( short i = 0 ; i < 5 ; i++, nLength += m_nLength )
+	DWORD nLength = m_nLength * 6;
+	for (;;)
 	{
-		if ( UINT_MAX - nLength < m_nLength )
+		pOutput.EnsureBuffer( nLength );
+		if ( ! pOutput.m_nBuffer )
 		{
-			bValidSize = false;
-			pOutput.EnsureBuffer( UINT_MAX );
-			break;
+			// Out of memory
+			return FALSE;
 		}
-	}
 
-	if ( bValidSize ) 
-		pOutput.EnsureBuffer( m_nLength * 6 );
+		// Setup a z_stream structure to perform a raw inflate
+		z_stream pStream = { 0 };
+		if ( Z_OK != inflateInit2(	// Initialize a stream inflation with more options than just inflateInit
+			&pStream,				// Stream structure to initialize
+			-MAX_WBITS ) )			// Window bits value of -15 to perform a raw inflate
+		{
+			// The Zlib function inflateInit2 returned something other than Z_OK, report error
+			return FALSE;
+		}
 
-	// Tell the z_stream structure where to work
-	pStream.next_in   = m_pBuffer;         // Decompress the memory here
-	pStream.avail_in  = static_cast< uInt >( m_nLength );         // There is this much of it
-	pStream.next_out  = pOutput.m_pBuffer; // Write decompressed data here
-	pStream.avail_out = static_cast< uInt >( pOutput.m_nBuffer ); // Tell ZLib it has this much space, it make this smaller to show how much space is left
+		// Tell the z_stream structure where to work
+		pStream.next_in   = m_pBuffer;         // Decompress the memory here
+		pStream.avail_in  = static_cast< uInt >( m_nLength );         // There is this much of it
+		pStream.next_out  = pOutput.m_pBuffer; // Write decompressed data here
+		pStream.avail_out = static_cast< uInt >( pOutput.m_nBuffer ); // Tell ZLib it has this much space, it make this smaller to show how much space is left
 
-	// Call ZLib inflate to decompress all the data, and see if it returns Z_STREAM_END
-	BOOL bSuccess = ( Z_STREAM_END == inflate( &pStream, Z_FINISH ) );
+		// Call ZLib inflate to decompress all the data, and see if it returns Z_STREAM_END
+		int nRes = inflate( &pStream, Z_FINISH );
 
-	// The inflate call returned Z_STREAM_END
-	if ( bSuccess )
-	{
-		// Move the decompressed data from the output buffer into this one
-		Clear();                   // Record there are no bytes stored here, doesn't change the allocated block size
-		Add(pOutput.m_pBuffer,     // Add the memory at the start of the output buffer
-			pOutput.m_nBuffer      // The amount of space the buffer had when we gave it to Zlib
-			- pStream.avail_out ); // Minus the amount it said it left, this is the number of bytes it wrote
+		// The inflate call returned Z_STREAM_END
+		if ( Z_STREAM_END == nRes )
+		{
+			// Move the decompressed data from the output buffer into this one
+			Clear();                   // Record there are no bytes stored here, doesn't change the allocated block size
+			Add(pOutput.m_pBuffer,     // Add the memory at the start of the output buffer
+				pOutput.m_nBuffer      // The amount of space the buffer had when we gave it to Zlib
+				- pStream.avail_out ); // Minus the amount it said it left, this is the number of bytes it wrote
 
-		// Close ZLib and report success
-		inflateEnd( &pStream );
-		return TRUE;
-
-	} // The inflate call returned something else
-	else
-	{
-		// Close ZLib and report error
-		inflateEnd( &pStream );
-		return FALSE;
+			// Close ZLib and report success
+			inflateEnd( &pStream );
+			return TRUE;
+		}
+		// Buffer too small
+		else if ( Z_BUF_ERROR == nRes )
+		{
+			nLength *= 2;
+			inflateEnd( &pStream );
+		}
+		// The inflate call returned something else
+		else
+		{
+			// Close ZLib and report error
+			inflateEnd( &pStream );
+			return FALSE;
+		}
 	}
 }
 
