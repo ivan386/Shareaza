@@ -69,6 +69,7 @@ static char THIS_FILE[] = __FILE__;
 const LPCTSTR RT_BMP = _T("BMP");
 const LPCTSTR RT_JPEG = _T("JPEG");
 const LPCTSTR RT_PNG = _T("PNG");
+const LPCTSTR RT_GZIP = _T("GZIP");
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
@@ -1696,4 +1697,51 @@ CString GetProgramFilesFolder()
 	}
 	CharLower( pszProgramsPath );
 	return CString( pszProgramsPath );
+}
+
+CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)
+{
+	CString strBody;
+	BOOL bGZIP = FALSE;
+	HRSRC hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_HTML );
+	if ( ! hRes )
+	{
+		hRes = FindResource( hInstance, MAKEINTRESOURCE( nResourceID ), RT_GZIP );
+		bGZIP = ( hRes != NULL );
+	}
+	if ( hRes )
+	{
+		DWORD nSize			= SizeofResource( hInstance, hRes );
+		HGLOBAL hMemory		= LoadResource( hInstance, hRes );
+		if ( hMemory )
+		{
+			LPCSTR pszInput	= (LPCSTR)LockResource( hMemory );
+			if ( pszInput )
+			{
+				if ( bGZIP )
+				{
+					CBuffer buf;
+					buf.Add( pszInput, nSize );
+					if ( buf.Ungzip() )
+					{
+						int nWide = MultiByteToWideChar( 0, 0, (LPCSTR)buf.m_pBuffer, buf.m_nLength, NULL, 0 );
+						LPTSTR pszOutput = strBody.GetBuffer( nWide + 1 );
+						MultiByteToWideChar( 0, 0, (LPCSTR)buf.m_pBuffer, buf.m_nLength, pszOutput, nWide );
+						pszOutput[ nWide ] = _T('\0');
+						strBody.ReleaseBuffer();
+					}
+				}
+				else
+				{
+					int nWide = MultiByteToWideChar( 0, 0, pszInput, nSize, NULL, 0 );
+					LPTSTR pszOutput = strBody.GetBuffer( nWide + 1 );
+					MultiByteToWideChar( 0, 0, pszInput, nSize, pszOutput, nWide );
+					pszOutput[ nWide ] = _T('\0');
+					strBody.ReleaseBuffer();
+				}
+			}
+			FreeResource( hMemory );
+		}
+	}
+	return strBody;
 }

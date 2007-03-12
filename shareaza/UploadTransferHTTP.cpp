@@ -1769,28 +1769,8 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 
 void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 {
-	CString strBody, strResponse;
-	
-	HMODULE hModule = GetModuleHandle( NULL );
-	HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nResourceID ), MAKEINTRESOURCE( 23 ) );
-	if ( hRes )
-	{
-		DWORD nSize			= SizeofResource( hModule, hRes );
-		HGLOBAL hMemory		= LoadResource( hModule, hRes );
-		if ( hMemory )
-		{
-			LPCSTR pszInput	= (LPCSTR)LockResource( hMemory );
-			if ( pszInput )
-			{
-				LPTSTR pszOutput = strBody.GetBuffer( nSize + 1 );
-				while ( nSize-- ) *pszOutput++ = *pszInput++;
-				*pszOutput++ = 0;
-				strBody.ReleaseBuffer();
-			}
-			FreeResource( hMemory );
-		}
-	}
-	
+	CString strBody( ::LoadHTML( GetModuleHandle( NULL ), nResourceID ) ), strResponse;
+
 	int nBreak	= strBody.Find( _T("\r\n") );
 	bool bWindowsEOL = true;
 

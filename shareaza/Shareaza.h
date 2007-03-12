@@ -177,6 +177,9 @@ LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);
 CString GetWindowsFolder();
 CString GetProgramFilesFolder();
 
+// Loads RT_HTML or RT_GZIP resource as string
+CString LoadHTML(HINSTANCE hInstance, UINT nResourceID);
+
 #ifdef _DEBUG
 #define MLOG(x) theApp.Message( MSG_DEBUG, x )
 #else
@@ -353,3 +356,4 @@ inline bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
 extern const LPCTSTR RT_BMP;
 extern const LPCTSTR RT_JPEG;
 extern const LPCTSTR RT_PNG;
+extern const LPCTSTR RT_GZIP;

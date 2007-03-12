@@ -32,6 +32,7 @@
 #include "Plugins.h"
 #include "XML.h"
 #include "WndChild.h"
+#include "Buffer.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -226,33 +227,11 @@ BOOL CSkin::LoadFromFile(LPCTSTR pszFile)
 
 BOOL CSkin::LoadFromResource(HINSTANCE hInstance, UINT nResourceID)
 {
-	BOOL bRet = FALSE;
-	HMODULE hModule = hInstance != NULL ? (HMODULE)hInstance : GetModuleHandle( NULL );
-	HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nResourceID ), MAKEINTRESOURCE( 23 ) );
-	if ( hRes )
-	{
-		DWORD nSize			= SizeofResource( hModule, hRes );
-		HGLOBAL hMemory		= LoadResource( hModule, hRes );
-		if ( hMemory )
-		{
-			LPCSTR pszInput	= (LPCSTR)LockResource( hMemory );
-			if ( pszInput )
-			{
-				CString strBody;
-				LPTSTR pszOutput = strBody.GetBuffer( nSize + 1 );
-				while ( nSize-- ) *pszOutput++ = *pszInput++;
-				*pszOutput++ = 0;
-				strBody.ReleaseBuffer();
-
-				CString strPath;
-				strPath.Format( _T("%lu$"), (DWORD)hModule );
-
-				bRet = LoadFromString( strBody, strPath );
-			}
-			FreeResource( hMemory );
-		}
-	}
-	return bRet;
+	HMODULE hModule = ( hInstance != NULL ) ? (HMODULE)hInstance : GetModuleHandle( NULL );
+	CString strBody( ::LoadHTML( hModule, nResourceID ) );
+	CString strPath;
+	strPath.Format( _T("%lu$"), (DWORD)hModule );
+	return LoadFromString( strBody, strPath );
 }
 
 BOOL CSkin::LoadFromString(const CString& strXML, const CString& strPath)
