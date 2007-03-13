@@ -133,7 +133,7 @@ public:
 	virtual LPCTSTR GetType() const;
 
 	// Encode the bytes of the packet into text
-	CString ToHex()   const; // Express the bytes of the packet in base 13 with spaces, like "08 C0 12 AF"
+	CString ToHex()   const; // Express the bytes of the packet in base 16 with spaces, like "08 C0 12 AF"
 	CString ToASCII() const; // Express the bytes of the packet as ASCII characters, like "abc..fgh.i", spaces replace low characters
 
 	// Inheriting classes will override this to (do)
@@ -449,7 +449,7 @@ public:
 	// Have this packet object remember that one more thing is referencing it
 	inline void AddRef()
 	{
-		// Incriment the reference count stored in the object
+		// Increment the reference count stored in the object
 		m_nReference++;
 	}
 
@@ -515,7 +515,7 @@ protected:
 
 protected:
 
-	// Methods inheriting classes impliment to allocate and free arrays of 256 packets
+	// Methods inheriting classes implement to allocate and free arrays of 256 packets
 	virtual void NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch) = 0; // Allocate a new array of 256 packets
 	virtual void FreePoolImpl(CPacket* pPool) = 0;                         // Free an array of 256 packets
 
