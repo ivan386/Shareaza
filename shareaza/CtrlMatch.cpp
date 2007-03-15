@@ -1775,6 +1775,7 @@ void CMatchCtrl::OnClickHeader(NMHDR* pNotifyStruct, LRESULT* /*pResult*/)
 
 void CMatchCtrl::OnChangeHeader(NMHDR* /*pNotifyStruct*/, LRESULT* /*pResult*/)
 {
+	UpdateScroll();
 	Invalidate();
 }
 
