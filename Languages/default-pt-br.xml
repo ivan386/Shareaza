@@ -17,7 +17,7 @@
 		description="Tradução para o português do Brasil do Shareaza"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.5.0"
+		version=""
 		type="Language"
 		language="pt-br"
 		prompt="Clique aqui para traduzir o Shareaza para o português do Brasil."
@@ -293,7 +293,7 @@
 	<!-- MEDIA WINDOW -->
 	<toolbar name="CMediaFrame.Basic">
 		<button id="ID_MEDIA_PLAY" text="Tocar&#160;&#160;&#160;"/>
-		<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
+		<button id="ID_MEDIA_PAUSE" text="Pausar" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Parar"/>
 		<separator/>
 		<label text="Procurar:" tip="Procurar uma posição no arquivo de mídia"/>
@@ -310,7 +310,7 @@
 	</toolbar>
 	<toolbar name="CMediaFrame">
 		<button id="ID_MEDIA_PLAY" text="Tocar"/>
-		<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
+		<button id="ID_MEDIA_PAUSE" text="Pausar" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Parar"/>
 		<separator/>
 		<label text="Procurar:" tip="Procurar uma posição no arquivo de mídia"/>
@@ -350,7 +350,7 @@
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configurações"/>
 	</toolbar>
 	<toolbar name="CNeighboursWnd">
-		<button id="ID_NETWORK_CONNECT_TO" text="Conectar À"/>
+		<button id="ID_NETWORK_CONNECT_TO" text="Conectar na"/>
 		<button id="ID_NEIGHBOURS_DISCONNECT" text="Desconectar"/>
 		<separator/>
 		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
@@ -377,12 +377,12 @@
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
 	<toolbar name="CHostCacheWnd.Basic">
-		<button id="ID_HOSTCACHE_CONNECT" text="Conectar À"/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Conectar na"/>
 		<button id="ID_HOSTCACHE_DISCONNECT" text="Desconectar"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Remover"/>
 	</toolbar>
 	<toolbar name="CHostCacheWnd">
-		<button id="ID_HOSTCACHE_CONNECT" text="Conectar À"/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Conectar na"/>
 		<button id="ID_HOSTCACHE_DISCONNECT" text="Desconectar"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Remover"/>
 		<rightAlign/>
@@ -403,7 +403,7 @@
 		<!-- <button id="ID_CHAT_SEND_FILE" text="Enviar Arquivo"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Garantir Prioridade"/>
 		<separator/>
-		<button id="ID_CHAT_CONNECT" text="Connect" visible="false"/>
+		<button id="ID_CHAT_CONNECT" text="Conectar" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Desconectar"/>
 	</toolbar>
 	<!-- IMAGE VIEWER WINDOW -->
@@ -459,7 +459,7 @@
 				<item id="ID_VIEW_UPLOADS" text="Uploads"/>
 			<separator/>
 				<item id="ID_VIEW_SECURITY" text="Segurança"/>
-				<item id="ID_VIEW_HOSTS" text="Armazenamento de_Hosts"/>
+				<item id="ID_VIEW_HOSTS" text="Armazenamento de Hosts"/>
 				<item id="ID_VIEW_DISCOVERY" text="Descobrimento"/>
 			</menu>
 			<separator/>
@@ -468,7 +468,7 @@
 		</menu>
 		<menu text="Ferramentas">
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar Arquivos..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="_Baixar Arquivo/Torrent..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Baixar Arquivo/Torrent..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Escolher uma Skin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Escolher um Idioma..."/>
@@ -511,7 +511,7 @@
 				<item id="ID_NETWORK_G1" text="Conectar na Gnutella 1"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Conectar Á..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Conectar na..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="Navegar Usuário..."/>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Sair Após as Transferências"/>
@@ -600,7 +600,7 @@
 			<item id="ID_NETWORK_CONNECT" text="Conectar" shortcut="Ctrl+G"/>
 			<item id="ID_NETWORK_DISCONNECT" text="Desconectar"/>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Conectar À..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Conectar na..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="Navegar Host..."/>
 			<separator/>
 			<menu text="Escolha as Redes">
@@ -1461,7 +1461,7 @@
 			<item id="ID_CHAT_BOLD" text="Escolher Negrito"/>
 			<item id="ID_CHAT_ITALIC" text="Escolher Itálico"/>
 			<item id="ID_CHAT_UNDERLINE" text="Escolher Sublinhado"/>
-			<item id="ID_CHAT_COLOUR" text="Escolher Côr"/>
+			<item id="ID_CHAT_COLOUR" text="Escolher Cor"/>
 			<item id="ID_CHAT_EMOTICONS" text="Emoticons"/>
 		</menu>
 		<separator/>
@@ -1627,7 +1627,7 @@
 				<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Ir para a Minha Biblioteca</link>
 				<group id="1">
 					<newline gap="8"/>
-					<text>O Shareaza está scaneando e processando</text>
+					<text>O Shareaza está scaneando e processando </text>
 					<text id="LibraryHashRemaining" format="b">%lu </text>
 					<text>arquivos.</text>
 					<newline gap="8"/>
@@ -1696,7 +1696,7 @@
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i uploads ativos</link>
 			<newline gap="4"/>
 			<text id="UploadedNone">Você não fez upload de quaisquer arquivos hoje.</text>
-			<text id="UploadedOne">Você fez upload de  1 arquivo (%s).</text>
+			<text id="UploadedOne">Você fez upload de 1 arquivo (%s).</text>
 			<text id="UploadedMany">Você fez upload de %i arquivos (%s).</text>
 		</para>
 	</document>
@@ -1707,7 +1707,7 @@
 			</style>
 		</styles>
 		<para align="center">
-			<text id="TorrentsNone" format="b">Não  Fazendo seed de torrents</text>
+			<text id="TorrentsNone" format="b">Não está fazendo seed de torrents</text>
 			<text id="TorrentsOne" format="b">Fazendo seed de 1 torrent</text>
 			<text id="TorrentsMany" format="b">Fazendo seed de %i torrents</text>
 			<newline gap="4"/>
@@ -1885,7 +1885,7 @@
 		</group>
 		<group id="3">
 			<newline gap="16" indent="0"/>
-			<text format="b">Links da Rede Favoritos</text>
+			<text format="b">Links Favoritos da Rede</text>
 			<newline gap="4" indent="8" id="Bookmarks"/>
 		</group>
 		<newline gap="16" indent="0"/>
@@ -1938,9 +1938,9 @@
 		<text format="b">Este download está ativo!</text>
 		<newline gap="8"/>
 		<text>Este download está atualmente em progresso. Se está baixando muito lentamente,
-		você poderia tentar procurar na rede por mais fontes com o comando '</text>
+		você pode tentar procurar na rede por mais fontes com o comando '</text>
 		<text format="b">Encontrar Mais Fontes</text><text>'. Se a velocidade não
-		melhorar pode ser devido a velocidades de upload limitadas dos usuários de que você está baixando.
+		melhorar pode ser devido a velocidades de upload limitadas dos usuários de quem você está baixando.
 		A velocidade de download geralmente aumenta com o tempo.</text>
 	</document>
 	<document name="DownloadHelp.Pending">
@@ -1972,8 +1972,8 @@
 		<text format="b">Encontrar mais fontes </text><text>.</text>
 		<newline gap="8"/>
 		<text>Infelizmente em muitos casos podem não haver usuários online que tenham o
-		arquivo que você está procurando. O único curso de ação aqui é esperar por
-		alguém vir online, ou cancelá-lo e tentar achar um arquivo similar o qual seja
+		arquivo que você está procurando. O único curso de ação aqui é esperar 
+		alguém vir online, ou cancelá-lo e tentar achar um arquivo similar o qual está
 		mais amplamente disponível.</text>
 	</document>
 	<document name="DownloadHelp.Creating">
@@ -2110,7 +2110,7 @@
 		pesquisável.</text>
 		<newline gap="8"/>
 		<text>Se você está tendo problemas ao criar uma pesquisa, mantenha em mente que é bastante similar
-		a uma busca na rede. Termos específicos ou frases são melhores- nomes únicos, títulos e
+		a uma busca na rede. Termos específicos ou frases são melhores - nomes únicos, títulos e
 		palavras-chave.</text>
 		<newline gap="8"/>
 		<text>Termos gerais não podem ser pesquisados eficientemente e podem resultar em uma pobre
@@ -2193,9 +2193,9 @@
 <tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Limpar automaticamente os downloads que acabarem."/>
 <tip id="ID_DOWNLOADS_BOOST" message="Aumentar a performance do download selecionado removendo os limites de banda."/>
 <tip id="ID_DOWNLOADS_CLEAR" message="Limpar/Remover o(s) download(s) selecionado(s)."/>
-<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Remover o(s) download(s) selecionados da lista."/>
+<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Remover o(s) download(s) selecionado(s) da lista."/>
 <tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Limpar os downloads que acabarem."/>
-<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Cancelar o(s) download(s) incompleto(s) selecionados."/>
+<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Cancelar o(s) download(s) incompleto(s) selecionado(s)."/>
 <tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Limpar os downloads que foram pausados."/>
 <tip id="ID_DOWNLOADS_COPY" message="Copiar a URI do arquivo selecionado."/>
 <tip id="ID_DOWNLOADS_EDIT" message="Exibir a interface de edição do download avançada..."/>
@@ -2263,11 +2263,11 @@
 <tip id="ID_LIBRARY_COPY" message="Copiar os arquivos selecionados para outra pasta da biblioteca..."/>
 <tip id="ID_LIBRARY_CREATETORRENT" message="Cria um arquivo .torrent para este arquivo para fazer upload para um site na rede."/>
 <tip id="ID_LIBRARY_DELETE" message="Apagar os arquivos selecionados permanentemente."/>
-<tip id="ID_LIBRARY_ENQUEUE" message="Adicionar o(s) arquivo(s) selecionados à sua lista de execuções."/>
+<tip id="ID_LIBRARY_ENQUEUE" message="Adicionar o(s) arquivo(s) selecionado(s) à sua lista de execuções."/>
 <tip id="ID_LIBRARY_EXPLORE" message="Abrir a(s) pasta(s) selecionada(s)."/>
 <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar a pasta do álbum selecionado para os arquivos de coleções..."/>
 <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Baixar todos os arquivos na coleção selecionada."/>
-<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Adicionar cada arquivo na(s) pasta(s) do álbum(s) selecionado(s) para a sua lista de execuções."/>
+<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Adicionar cada arquivo na(s) pasta(s) do álbum(s) selecionada(s) para a sua lista de execuções."/>
 <tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Ver e editar as propriedades de todos os arquivos na(s) pasta(s) selecionada(s)..."/>
 <tip id="ID_LIBRARY_FOLDER_METADATA" message="Aplicar metadata comum da pasta do álbum para todos os seus arquivos."/>
 <tip id="ID_LIBRARY_FOLDER_NEW" message="Criar uma nova pasta de álbum aqui..."/>
@@ -2488,7 +2488,7 @@
 	<string id="7004" value="Já há um filtro chamado &quot;%s&quot;, você deseja substituí-lo?"/>
 	<string id="7005" value="Por favor dê um nome ao seu filtro."/>
 	<string id="7100" value="Este template é inválido."/>
-	<string id="7101" value="Este template não tem quaisquer customizações."/>
+	<string id="7101" value="Este template não tem quaisquer modificações."/>
 	<string id="7102" value="Você tem certeza de que quer apagar o &quot;%s&quot; template?\nIsto não pode ser desfeito."/>
 	<string id="8000" value="Configurações do Shareaza"/>
 	<string id="8001" value="Bem-vindo ao Shareaza"/>
@@ -2671,7 +2671,7 @@
 	<string id="16147" value="Fechando conexão supérflua de %s com a dica do host (%s porta %i)."/>
 	<string id="16148" value="Conexão com %s rejeitada (%s)."/>
 	<string id="16150" value="Fechando conexão supérflua com %s."/>
-	<string id="16151" value="Recusando conexão com %s porque este é um leaf node protegido."/>
+	<string id="16151" value="Recusando a conexão com %s porque este é um leaf node protegido."/>
 	<string id="16152" value="O Hub vizinho %s não nos aceitará como um hub, fechando conexão."/>
 	<string id="16153" value="O Vizinho conectando %s está voltando ao modo de leaf node protegido."/>
 	<string id="16154" value="Conexão com hub estabelecida, fechando conexões com o peer."/>
@@ -2686,14 +2686,14 @@
 	<string id="16195" value="O Vizinho %s repassou um pacote ping com comprimento inválido, ignorando."/>
 	<string id="16196" value="O Vizinho %s repassou um pacote pong com comprimento inválido, ignorando."/>
 	<string id="16197" value="%s -> %s [%i/%i] %s %s"/>
-	<string id="16198" value="O vizinho Leaf %s está repassando pesquisas, derrubando conexão."/>
+	<string id="16198" value="O Vizinho Leaf %s está repassando pesquisas, derrubando conexão."/>
 	<string id="16199" value="O Vizinho %s repassou um pacote desconhecido (0x%.2x), ignorando."/>
 	<string id="16200" value="O Vizinho %s repassou um pong com dados de endereço inválidos, ignorando."/>
 	<string id="16201" value="Recebendo um pacote de pesquisa malformatado de %s, ignorando."/>
-	<string id="16202" value="Recebendo um pacote de acerto malformatado %s, ignorando."/>"/>
+	<string id="16202" value="Recebendo um pacote de acerto malformatado de %s, ignorando."/>"/>
 	<string id="16203" value="O Vizinho %s repassou uma conexão de push com comprimento inválido, ignorando."/>
 	<string id="16208" value="Recebendo uma atualização da tabela de roteamento de pesquisa inesperada do vizinho %s."/>
-	<string id="16209" value="O Vizinho %s enviou uma atualização da tabela de roteamento depesquisa inválida, descartando conexão."/>
+	<string id="16209" value="O Vizinho %s enviou uma atualização da tabela de roteamento de pesquisa inválida, descartando conexão."/>
 	<string id="16210" value="O Vizinho %s atualizou a sua tabela de roteamento de pesquisa (%i bit = %lu[%i], %i%% full)."/>
 	<string id="16211" value="O Vizinho %s enviou uma requisição de push para um endereço atrás de um firewall , ignorando."/>
 	<string id="16212" value="O Vizinho %s enviou um pacote extendido que não é codificado por GGEP."/>
@@ -2728,29 +2728,29 @@
 	<string id="16283" value="O arquivo &quot;%s&quot; já está sendo baixado, adicionando fontes."/>
 	<string id="16284" value="Recebida uma conexão push defeituosa de %s, fechando conexão."/>
 	<string id="16285" value="Recebida uma conexão push desnecessária de %s."/>
-	<string id="16286" value="Host %s está enviando o download &quot;%s&quot; por push, aceitando."/>
+	<string id="16286" value="O Host %s está enviando o download &quot;%s&quot; por push, aceitando."/>
 	<string id="16287" value="Impossível achar mais fontes para &quot;%s&quot; porque não há conexão de rede."/>
 	<string id="16288" value="Inquirindo por mais fontes para o download &quot;%s&quot; em %i conexões..."/>
 	<string id="16289" value="Enviando pedido de push para o download &quot;%s&quot;..."/>
-	<string id="16290" value="Host de download %s respondeu com um diferente, mas útil intervalo de bytes (%I64i-%I64i) de &quot;%s&quot;."/>
+	<string id="16290" value="O Host de download %s respondeu com um diferente, mas útil intervalo de bytes (%I64i-%I64i) de &quot;%s&quot;."/>
 	<string id="16291" value="Moveu &quot;%s&quot; para &quot;%s&quot;, download completado."/>
 	<string id="16292" value="Não pôde mover o download &quot;%s&quot; para &quot;%s&quot;. Verifique se o arquivo incompleto não está em uso e que a sua pasta de downloads existe e pode ser escrita."/>
 	<string id="16293" value="Resolvendo &quot;%s&quot; para baixar &quot;%s&quot;..."/>
 	<string id="16294" value="Incapaz de resolver &quot;%s&quot;."/>
 	<string id="16295" value="Acelerando o download &quot;%s&quot; removendo o limite de banda."/>
 	<string id="16296" value="Download verificado com sucesso &quot;%s&quot;."/>
-	<string id="16297" value="ATENÇÃO: Download &quot;%s&quot; falhou na verificação, e pode não ser o arquivo que você pretendia baixar!"/>
-	<string id="16298" value="Host de download %s está ocupado, esperando na posição #%i de %i da fila de espera (&quot;%s&quot;)."/>
+	<string id="16297" value="ATENÇÃO: O Download &quot;%s&quot; falhou na verificação, e pode não ser o arquivo que você pretendia baixar!"/>
+	<string id="16298" value="O Host de download %s está ocupado, esperando na posição #%i de %i da fila de espera (&quot;%s&quot;)."/>
 	<string id="16299" value="Você tem certeza que você quer limpar todos os downloads pausados? Uma vez que um download for limpo da janela de Downloads, ele não pode ser resumido."/>
 	<string id="16300" value="Você tem certeza que você quer apagar o download &quot;%s&quot;?"/>
 	<string id="16301" value="Requisitando o volume TigerTree para &quot;%s&quot; de %s..."/>
-	<string id="16302" value="Host de download %s não pôde satisfazer o pedido de tiger-tree."/>
+	<string id="16302" value="O Host de download %s não pôde satisfazer o pedido de tiger-tree."/>
 	<string id="16303" value="Recebendo volume TigerTree de %s (%s)..."/>
 	<string id="16304" value="Os Dados TigerTree do host de download estão corrompidos ou internamente inconsistentes, ignorando-os."/>
 	<string id="16305" value="Os Dados TigerTree do host de download não combinam com o valor esperado da raiz."/>
 	<string id="16306" value="Recebido volume de TigerTree para &quot;%s&quot;, %i níveis, pedaço mínimo verificável %s."/>
 	<string id="16307" value="Fechando conexão de download com %s, não mais necessária."/>
-	<string id="16308" value="Host de download %s enviou dados não solicitados, fechando conexão."/>
+	<string id="16308" value="O Host de download %s enviou dados não solicitados, fechando conexão."/>
 	<string id="16309" value="Requisitando metadata para &quot;%s&quot; de %s..."/>
 	<string id="16310" value="Recebendo dados TigerTree de %s (%s)..."/>
 	<string id="16311" value="Recebendo Hashset do eDonkey2000 para &quot;%s&quot; de %s..."/>
@@ -2758,17 +2758,17 @@
 	<string id="16313" value="Recebido Hashset do eDonkey2000 para &quot;%s&quot;, pedaço mínimo verificável %s."/>
 	<string id="16314" value="Hashset do eDonkey2000 do host de download está corrompido ou internamente inconsistente, derrubando fonte."/>
 	<string id="16315" value="Incapaz de inicializar inflação para o download &quot;%s&quot;."/>
-	<string id="16316" value="Tempo de espera para atualização do host de download eDonkey2000 %s terminou para o arquivo &quot;%s&quot;."/>
+	<string id="16316" value="O tempo de espera para atualização do host de download eDonkey2000 %s terminou para o arquivo &quot;%s&quot;."/>
 	<string id="16317" value="Ficando na fila de espera por &quot;%s&quot;."/>
 	<string id="16318" value="Espaço em disco insuficiente para baixar &quot;%s&quot; (%s)."/>
 	<string id="16319" value="Derrubando fonte %s (%s) por enviar partes corruptas de &quot;%s&quot; (%I64i-%I64i)."/>
-	<string id="16320" value="Host de upload %s enviou um pedido de HTTP inválido."/>
+	<string id="16320" value="O Host de upload %s enviou um pedido de HTTP inválido."/>
 	<string id="16321" value="Inicializando conexão de push com %s. %s"/>
 	<string id="16322" value="Incapaz de conectar com o host %s para o push."/>
 	<string id="16323" value="Conexão de upload com %s foi fechada."/>
 	<string id="16324" value="O tempo limite de espera de pedido para conexão de upload com %s foi ultrapassado."/>
-	<string id="16325" value="Host de upload %s requisitou um objeto não disponível ou desconhecido: &quot;%s&quot;."/>
-	<string id="16326" value="Host de upload %s requisitou &quot;%s&quot; com SHA1 diferente."/>
+	<string id="16325" value="O Host de upload %s requisitou um objeto não disponível ou desconhecido: &quot;%s&quot;."/>
+	<string id="16326" value="O Host de upload %s requisitou &quot;%s&quot; com SHA1 diferente."/>
 	<string id="16327" value="Recusando upload de &quot;%s&quot; para %s (%s), está ocupado e o cliente não suporta filas."/>
 	<string id="16328" value="Conexão push estabelecida com %s, esperando inicialização..."/>
 	<string id="16329" value="Não pôde abrir &quot;%s&quot; para fazer upload para o host %s, erro de disco/arquivo."/>
@@ -2778,20 +2778,20 @@
 	<string id="16333" value="Muito ocupado para enviar &quot;%s&quot; para %s. Esperando na fila na posição #%i de %i (&quot;%s&quot;)."/>
 	<string id="16334" value="Pedido push legacy de %s requisitou um arquivo desconhecido, conectando mesmo assim..."/>
 	<string id="16335" value="Removido o upload de &quot;%s&quot; para %s."/>
-	<string id="16336" value="Host de upload %s está na lista de usuário agentes bloqueados, negando pedido."/>
+	<string id="16336" value="O Host de upload %s está na lista de usuário agentes bloqueados, negando pedido."/>
 	<string id="16337" value="Enviando cabeçalhos de upload de &quot;%s&quot; para o host %s (%s)."/>
 	<string id="16338" value="O host de upload %s requisitou um intervalo de arquivo que não satisfaz &quot;%s&quot;."/>
-	<string id="16339" value="Mandando resposta de HTML padrão para o host de upload %s (%s)."/>
+	<string id="16339" value="Mandando resposta HTML padrão para o host de upload %s (%s)."/>
 	<string id="16340" value="Negado o pedido do usuário de navegação de %s."/>
-	<string id="16341" value="Host de upload %s (%s) enviou um pedido de navegação de usuário, respondendo..."/>
+	<string id="16341" value="O Host de upload %s (%s) enviou um pedido de navegação de usuário, respondendo..."/>
 	<string id="16342" value="Fechando a conexão de upload %s devido a falta de tráfego."/>
-	<string id="16343" value="Fechando upload mais velho de %s porque este fez uma nova conexão."/>
+	<string id="16343" value="Fechando o upload mais velho de %s porque este fez uma nova conexão."/>
 	<string id="16344" value="Recusando novo upload para %s porque uma conexão anterior ainda está pendente."/>
 	<string id="16345" value="Parado o upload &quot;%s&quot; para %s porque o arquivo foi apagado."/>
 	<string id="16346" value="Enviando intervalo de conteúdo do upload %I64i-%I64i do arquivo parcial &quot;%s&quot; para host %s (%s)."/>
 	<string id="16347" value="Upload na fila de espera %s está re-requisitando muito rápido, fechando conexão."/>
-	<string id="16348" value="Recusando pedido de push %s porque este tem muitas conexões de upload."/>
-	<string id="16349" value="Enviando data de TigerTree para &quot;%s&quot; para %s."/>
+	<string id="16348" value="Recusando o pedido de push %s porque este tem muitas conexões de upload."/>
+	<string id="16349" value="Enviando a data do TigerTree para &quot;%s&quot; para %s."/>
 	<string id="16350" value="Enviando metadata para &quot;%s&quot; para %s."/>
 	<string id="16351" value="Recusando upload de &quot;%s&quot; para %s (%s), muitos concorrentes do host."/>
 	<string id="16352" value="Enviando uma prévia de &quot;%s&quot; para %s."/>
@@ -2834,7 +2834,7 @@
 	<string id="16394" value="Você gostaria de remover o atributo de &quot;potencialmente inseguro&quot; deste arquivo?"/>
 	<string id="16395" value="Sua pasta de downloads &quot;%s&quot; não está ainda na sua biblioteca.\n\nIncluir sua pasta de arquivos baixados na sua biblioteca é um jeito fácil de ver e organizar seus novos downloads, e faz com que você aproveite vantagens avançadas do Shareaza, como verificação de Hash e atualização automática. Colocar arquivos baixados na sua biblioteca não requer necessariamente que você os compartilhe: você pode escolher se quer ou não compartilhar os arquivos independentemente.\n\nVocê gostaria de adicionar a sua pasta de arquivos baixados na sua biblioteca agora?"/>
 	<string id="16396" value="Sua pasta de downloads foi adicionada à sua biblioteca. Você gostaria de compartilhá-la também?"/>
-	<string id="16397" value="Você tem certeza que você quer apagar a(s)%i pasta(s) de Álbum(s) selecionada(s) ?\n\nNote que esta ação não apaga os arquivos dentro das pastas do álbum, apenas as próprias pastas."/>
+	<string id="16397" value="Você tem certeza que você quer apagar a(s)%i pasta(s) do(s) Álbum(s) selecionada(s) ?\n\nNote que esta ação não apaga os arquivos dentro das pastas do álbum, apenas as próprias pastas."/>
 	<string id="16398" value="O Shareaza não pôde renomear:\n\n%s\npara\n%s"/>
 	<string id="16399" value="O Shareaza não pôde apagar o arquivo:\n\n%s"/>
 	<string id="16400" value="O arquivo alvo existe:\n\n%s\n\n Você gostaria de sobrescrevê-lo?"/>
@@ -2917,7 +2917,7 @@
 	<string id="16813" value="Por favor espere: Atualizando os serviços de descobrimento..."/>
 	<string id="16814" value="Por favor espere: Atualizando a lista de servidores do eDonkey2000..."/>
 	<string id="16815" value="O serviço de host de Dispositivo UPnP não está rodando. Este serviço é requerido para fazer a configuração.\nVocê precisa configurar o tipo de inicialização do serviço para automático."/>
-	<string id="16816" value="A rede eDonkey faz uso de longas filas com longos tempos de espera. Em Limitar a posição máxima na fila que você aceitará tão estritamente, você pode ter problemas para iniciar seu downloads.\nVocê tem certeza que você quer limitar quais as posições máximas na fila que você aceitará?"/>
+	<string id="16816" value="A rede eDonkey faz uso de longas filas com longos tempos de espera. Em limitar a posição máxima na fila que você aceitará tão estritamente, você pode ter problemas para iniciar seu downloads.\nVocê tem certeza que você quer limitar quais as posições máximas na fila que você aceitará?"/>
 	<string id="16817" value="O Windows não suporta nomes de caminhos maiores do que 256 caracteres.\nPor favor selecione uma pasta com uma caminho menor."/>
 	<string id="16818" value="O diretório de arquivos completos e incompletos não devem ser os mesmos"/>
 	<string id="16819" value="O diretório de arquivos incompletos não deve ficar na biblioteca, como isso reduziria a performance seria reduzida. Arquivos incompletos podem ser compartilhados diretamente da janela de Transferências."/>
@@ -2949,7 +2949,7 @@
 	<string id="16993" value="Todos os Arquivos de Mídia|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Arquivos de Áudio|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Arquivos de Vídeo|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Faixas de Áudio de CD|*.cda|Arquivos MIDI|*.mid;*.rmi;*.midi|Todos os Arquivos|*.*||"/>
 	<string id="16994" value="Incapaz de carregar o arquivo de mídia &quot;%s&quot;"/>
 	<string id="16995" value="Este arquivo pode estar danificado, ou você pode não ter os codecs necessários para rodá-lo."/>
-	<string id="16996" value="Parte deste arquivo não pôde ser executada, você pode precisar de baixar codecs adicionais."/>
+	<string id="16996" value="Parte deste arquivo não pôde ser executado, você pode precisar baixar codecs adicionais."/>
 	<string id="16997" value="Não há arquivo tocando. Clique duas vezes num arquivo de mídia na sua biblioteca para tocá-lo."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 	<string id="16999" value="LISTA     DE     EXECUÇÕES"/>
@@ -3019,10 +3019,10 @@
 	<string id="17228" value="Enviando Hashset do eDonkey2000 &quot;%s&quot; para %s..."/>
 	<string id="17229" value="A conexão com o cliente eDonkey2000 %s estava inativa, fechada."/>
 	<string id="17230" value="Inicializando conexão com o cliente eDonkey2000 %s..."/>
-	<string id="17231" value="Cliente eDonkey2000 %s tem o GUID errado, abortando inicialização."/>
+	<string id="17231" value="O Cliente eDonkey2000 %s tem o GUID errado, abortando inicialização."/>
 	<string id="17232" value="O tempo de conexão com o cliente eDonkey2000 se esgotou %s."/>
 	<string id="17233" value="O tempo de inicialização com o cliente eDonkey2000 se esgotou %s."/>
-	<string id="17234" value="Recusando link de cliente eDonkey2000 de %s porque o eDonkey2000 está desativado."/>
+	<string id="17234" value="Recusando o link do cliente eDonkey2000 de %s porque o eDonkey2000 está desativado."/>
 	<string id="17248" value="Inicializando o processo de importação de downloads parciais do eDonkey2000..."/>
 	<string id="17249" value="Processo completo, %i downloads parciais importados com sucesso."/>
 	<string id="17250" value="Scaneando a pasta: &quot;%s&quot;..."/>
@@ -3064,7 +3064,7 @@
 	<string id="17498" value="Um erro foi detectado no arquivo &quot;%s&quot;."/>
 	<string id="17500" value="O Tracker não respondeu - Tentando novamente (%i de %i)"/>
 	<string id="17501" value="Incapaz de comunicar com o Tracker"/>
-	<string id="17503" value="O tracker falhou- Tentando o próximo tracker (%i de %i)"/>
+	<string id="17503" value="O tracker falhou - Tentando o próximo tracker (%i de %i)"/>
 	<string id="17505" value="A conexão BitTorrent com %s foi derrubada."/>
 	<string id="17506" value="A inicialização BitTorrent com %s foi derrubada."/>
 	<string id="17507" value="A conexão BitTorrent com %s foi derrubada."/>
@@ -3076,10 +3076,10 @@
 	<string id="18497" value="Você digitou um valor SHA1, contudo, é inválido. Por favor verifique-o e tente de novo."/>
 	<string id="18498" value="Você digitou um valor raiz tiger-tree, contudo, é inválido. Por favor verifique-o e tente de novo."/>
 	<string id="18499" value="Você digitou um valor de hash eDonkey2000, contudo, é inválido. Por favor verifique-o e tente de novo."/>
-	<string id="18500" value="Você digitou umm valor de hash SHA1 o qual é diferente do que está atualmente associado com este download. Você tem certeza de que você quer mudar o valor de hash SHA1 agora?"/>
+	<string id="18500" value="Você digitou um valor de hash SHA1 o qual é diferente do que está atualmente associado com este download. Você tem certeza de que você quer mudar o valor de hash SHA1 agora?"/>
 	<string id="18501" value="Você digitou um valor raiz tiger-tree o qual é diferente do que está atualmente associado com este download. Você tem certeza de que você quer mudar o hash raiz tiger-tree agora?"/>
 	<string id="18502" value="Você digitou um valor de hash eDonkey2000 o qual é diferente do que está atualmente associado com este download. Você tem certeza de que você quer mudar o hash do eDonkey2000 agora?"/>
-	<string id="18503" value="Você tem certeza de que você quer esquecer o status da verificação atual? Todos os dados baixados serão tratados como não confiáveis, e árvores de hash armazenadas e hashsets seráo descartados."/>
+	<string id="18503" value="Você tem certeza de que você quer esquecer o status da verificação atual? Todos os dados baixados serão tratados como não confiáveis, e as árvores de hash armazenadas e hashsets serão descartados."/>
 	<string id="18504" value="Você tem certeza de que você quer esquecer todas as fontes para o download selecionado?"/>
 	<string id="18505" value="Por favor entre com um intervalo válido para apagar. O &quot;do&quot; campo é o primeiro byte a apagar, o &quot;último&quot; do campo é o último byte a apagar."/>
 	<string id="18506" value="Incapaz de apagar o intervalo selecionado do download porque nenhuma parte do intervalo está presente."/>
@@ -3230,7 +3230,7 @@
 		<control caption="Remover"/>
 		<control caption="Plugin de Visualização de Áudio:"/>
 		<control caption="Selecionar Plugin..."/>
-		<control caption="Gerencimaneto de Mídia"/>
+		<control caption="Gerenciamento de Mídia"/>
 		<control caption="Escolha o Gerenciador de Mídia:"/>
 		<control caption="Aviso: Escolher um Gerenciador de Mídia externo desativará automaticamente todos os Plugins de Visualização e Mídia!"/>
 	</dialog>
@@ -3280,7 +3280,7 @@
 		<control/>
 		<control caption="Ignorar endereços IP locais/privados"/>
 		<control caption="Configuração de dispositivos de conexão UPNP"/>
-		<control caption="Tempos para finalizar a:"/>
+		<control caption="Tempo para finalizar a:"/>
 		<control caption="Conexão:"/>
 		<control/><control/>
 		<control caption="Inicialização:"/>
@@ -3356,10 +3356,10 @@
 		<control caption="Não conectar"/>
 		<control caption="Conexão limitada"/>
 		<control caption="Conectar na velocidade máxima"/>
-		<control caption="% da _banda sob limite"/>
+		<control caption="% da banda sob limite"/>
 		<control/>
 		<control caption="Ajuda"/>
-		<control caption="O Agendador é designado para permitir a você escolher as horas quando o Shareaza se conectará e baixará arquivos. {n}{n}{n}Nota: Se você tiver com o Shareaza aberto enquanto o agendador está ativo, você pode vê-lo mudando as configurações- Isto é normal!-"/>
+		<control caption="O Agendador é designado para permitir a você escolher as horas quando o Shareaza se conectará e baixará arquivos. {n}{n}{n}Nota: Se você tiver com o Shareaza aberto enquanto o agendador está ativo, você pode vê-lo mudando as configurações - Isto é normal!-"/>
 	</dialog>
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Redes">
 		<control caption="Shareaza é uma aplicação de compartilhamento de arquivos de propósito geral que pode acessar várias redes P2P ao mesmo tempo. Nesta página você seleciona quais redes P2P você quer conectar, e ajustar opções específicas pra cada rede."/>
@@ -3419,7 +3419,7 @@
 		<control caption="Conectar a não mais do que:"/>
 		<control/><control/>
 		<control caption="outros clientes eDonkey."/>
-		<control caption="Ferramentas _do eDonkey2000"/>
+		<control caption="Ferramentas do eDonkey2000"/>
 		<control caption="Importar arquivos parciais do eDonkey/eMule (.part):"/>
 		<control caption="Importar..."/>
 		<control caption="Baixar lista de servidores do eDonkey2000 da rede:"/>
@@ -3573,7 +3573,7 @@
 		<control caption="Fechar"/>
 	</dialog>
 	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Bem Vindo ao Shareaza [5 de 7]">
-		<control caption="O Shareaza é um lugar muito mais amistoso quando todos escrevem alguns detalhes básicos sobre eles mesmo."/>
+		<control caption="O Shareaza é um lugar muito mais amistoso quando todos escrevem alguns detalhes básicos sobre eles mesmos."/>
 		<control caption="Eu uso o nome:"/>
 		<control/>
 		<control caption="e eu sou um(a):"/>
@@ -3605,7 +3605,7 @@
 		<control caption="Após fechar este assistente clicando em Concluir, você pode conectar as redes que você selecionou e começar a procurar e baixar conteúdo."/>
 		<control caption="Conectar a rede quando eu fechar este assistente"/>
 		<control caption="Conectar a rede toda vez que eu iniciar o Shareaza"/>
-		<control caption="Iniciar o Shareaza toda vez que o Windows inicia"/>
+		<control caption="Iniciar o Shareaza toda vez que o Windows iniciar"/>
 		<control caption="Divirta-se usando o Shareaza!"/>
 	</dialog>
 	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Editar o Meu Perfil">
@@ -3940,16 +3940,16 @@
 	</dialog>
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Gerenciador de URI do Shareaza">
 		<control/>
-		<control caption="Você clicou num link URI o qual liga ao seguinte conteúdo na rede:"/>
+		<control caption="Você clicou num link URI o qual leva ao seguinte conteúdo na rede:"/>
 		<control caption="Você clicou num link URI o qual conectará você ao seguinte Host ou Servidor:"/>
-		<control caption="Você clicou num link URI o qual permitirá a você navegar os arquivos compartilhados disponíveis do no seguinte host:"/>
+		<control caption="Você clicou num link URI o qual permitirá a você navegar os arquivos compartilhados disponíveis do seguinte host:"/>
 		<control/><control/><control/><control/>
 		<control caption="Por favor selecione a ação que você gostaria que o Shareaza tomasse:"/>
 		<control caption="Baixar Agora"/>
 		<control caption="Procurar por Arquivo"/>
 		<control caption="Cancelar"/>
 		<control caption="Lembrar a minha seleção da próxima vez"/>
-		<control caption="Abrir uma janela do _monitor de download"/>
+		<control caption="Abrir uma janela do monitor de download"/>
 		<control caption="Você clicou num link URI que adicionará os seguintes Serviços de Descobrimento ao seu cache de Serviços de Descobrimento."/>
 	</dialog>
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Baixando Metadata...">
@@ -3972,7 +3972,7 @@
 		<control caption="Você sabia que o Shareaza é um produto 100% gratuito?"/>
 		<control caption="O Shareaza NÃO CONTÉM nenhum &quot;spyware&quot;, &quot;adware&quot; ou outro programa junto com o Shareaza. NÃO exibe NENHUMA propaganda ou &quot;popups&quot;,.{n}{n}Se você ver uma propaganda ou um &quot;popups&quot; enquanto usando o Shareaza, esteja assegurado de que eles NÃO estão vindo deste programa."/>
 		<control caption="Infelizmente muito outros programas vem com adwares indesejáveis ou spywares, então se você ver algo suspeito você pode desejar verificar o seu PC com um programa de remoção de spywares e propagandas."/>
-		<control caption="Você não tem que pagar para obter o Shareaza. O Shareaza pode ser baixado livremente por qualquer um em www.shareaza.com. Se você pagou algum dinheiro pelo Shareaza, você deve exigir um refundo completo imediatamente."/>
+		<control caption="Você não tem que pagar para obter o Shareaza. O Shareaza pode ser baixado livremente por qualquer um em www.shareaza.com. Se você pagou algum dinheiro pelo Shareaza, você deve exigir uma restituição completa imediatamente."/>
 		<control caption="O Shareaza respeita os seus usuários!"/>
 		<control caption="www.shareaza.com"/>
 		<control caption="Fechar"/>
@@ -4009,7 +4009,7 @@
 	</dialog>
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Baixar Arquivo Server.met">
 		<control/>
-		<control caption="Você pode baixar um Server.met do eDonkey2000 da rede para atualizar a sua lista local de servidores."/>
+		<control caption="Você pode baixar um Server.met do eDonkey2000 para atualizar a sua lista local de servidores."/>
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
@@ -4069,7 +4069,7 @@
 		<control caption="Assumir que o arquivo está 100% completo e re-verificar"/>
 		<control caption="Esquecer todas as fontes conhecidas"/>
 		<control caption="Unir com o arquivo local e verificar"/>
-		<control caption="Apagador de Dados:"/>
+		<control caption="Destruidor de Dados:"/>
 		<control caption="Bytes Range:"/>
 		<control/>
 		<control caption="pra"/>
@@ -4099,7 +4099,7 @@
 		<control caption="Comentários:"/>
 		<control/>
 		<control caption="Transferências:"/>
-		<control caption="Iniciar novas transferência de download:"/>
+		<control caption="Iniciar novas transferências de download:"/>
 		<control caption="&#160;Quando necessitado| Quando o ratio é maior do que 100%| Apenas quando pedido| Nunca"/>
 		<control/>
 		<control caption="Total de Upload feito:"/>
@@ -4128,7 +4128,7 @@
 		<control caption="Trackers:"/>
 		<control/>
 		<control caption="Modo Tracker:"/>
-		<control caption="Desativado|Custom|Single Tracker|Multi-tracker|Multi-tracker (trancado)"/>
+		<control caption="Desativado|Custom|Tracker Único|Multi-tracker|Multi-tracker (trancado)"/>
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propriedades dos grupos de Download">
 		<control caption="Nome:"/>
