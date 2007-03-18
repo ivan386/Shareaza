@@ -697,34 +697,37 @@ void CSearchWnd::ExecuteSearch()
 	
 	if ( pManaged )
 	{
-		pManaged->m_pSearch->m_sKeywords.Empty();
-		pManaged->m_pSearch->BuildWordList();
+		//pManaged->m_pSearch->m_sKeywords.Empty();
+		//pManaged->m_pSearch->BuildWordList();
 
-		if ( AdultFilter.IsSearchFiltered( pManaged->m_pSearch->m_sKeywords ) )
+		if ( pManaged->m_pSearch->CheckValid() )
 		{
-			CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
-		}
-		else if ( pManaged->m_pSearch->CheckValid() )
-		{
-			m_bPaused			= FALSE;
-			m_tSearch			= GetTickCount();
-			m_bWaitMore			= FALSE;
-
-			pManaged->Stop();
-			pManaged->Start();
-		
-			m_nMaxResults		= m_pMatches->m_nGnutellaHits + min( 300u, Settings.Gnutella.MaxResults );
-			m_nMaxED2KResults	= m_pMatches->m_nED2KHits + min( 201, Settings.eDonkey.MaxResults );
-			m_nMaxQueryCount	= pManaged->m_nQueryCount + min( Settings.Gnutella2.QueryLimit, 10000u );
-
-			m_wndPanel.ShowSearch( pManaged );
-
-			m_wndPanel.Disable();
-
-			if ( m_bPanel && Settings.Search.HideSearchPanel )
+			if ( AdultFilter.IsSearchFiltered( pManaged->m_pSearch->m_sKeywords ) )
 			{
-				m_bPanel = FALSE;
-				OnSkinChange();
+				CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
+			}
+			else
+			{
+				m_bPaused			= FALSE;
+				m_tSearch			= GetTickCount();
+				m_bWaitMore			= FALSE;
+
+				pManaged->Stop();
+				pManaged->Start();
+
+				m_nMaxResults		= m_pMatches->m_nGnutellaHits + min( 300u, Settings.Gnutella.MaxResults );
+				m_nMaxED2KResults	= m_pMatches->m_nED2KHits + min( 201, Settings.eDonkey.MaxResults );
+				m_nMaxQueryCount	= pManaged->m_nQueryCount + min( Settings.Gnutella2.QueryLimit, 10000u );
+
+				m_wndPanel.ShowSearch( pManaged );
+
+				m_wndPanel.Disable();
+
+				if ( m_bPanel && Settings.Search.HideSearchPanel )
+				{
+					m_bPanel = FALSE;
+					OnSkinChange();
+				}
 			}
 		}
 		else
@@ -879,7 +882,7 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 				if ( ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults ) && ( pManaged->m_tLastED2K != 0xFFFFFFFF ) )
 				{
 					if ( !pManaged->m_bAllowG2 ) //If G2 is not active, pause the search now.
-					{						
+					{
 						m_bWaitMore = TRUE;
 						pManaged->m_bActive = FALSE;
 					}

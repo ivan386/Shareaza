@@ -372,8 +372,9 @@ auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 		}
 	}
 	
-	pSearch->m_pSearch->BuildWordList();
-	
+	CQuerySearch::PrepareCheck( &(*pSearch->m_pSearch) );
+	// why need the code below? these gets executed later again.
+	// pSearch->m_pSearch->BuildWordList();
 	if ( ! pSearch->m_pSearch->CheckValid() )
 	{
 		pSearch.reset();

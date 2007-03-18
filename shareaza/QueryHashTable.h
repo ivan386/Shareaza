@@ -65,6 +65,7 @@ public:
 //	BOOL	CheckPhrase(LPCTSTR pszSearch) const;
 	BOOL	CheckString(const CString& strString) const;
 	BOOL	Check(const CQuerySearch* pSearch) const;
+	BOOL	CheckHash(const DWORD nHash) const;
 	int		GetPercent() const;
 	void	Draw(HDC hDC, const RECT* pRC);
 
@@ -74,8 +75,10 @@ protected:
 	int		Add(LPCTSTR pszString, size_t nStart, size_t nLength);
 	int		AddExact(LPCTSTR pszString, size_t nStart, size_t nLength);
 	BOOL	PatchToOldShareaza(CQueryHashTable* pTarget, CNeighbour* pNeighbour);
-	static inline DWORD	HashWord(LPCTSTR pszString, size_t nStart, size_t nLength, DWORD nBits);
-	static inline DWORD	HashNumber(DWORD nNumber, int nBits);
+public:
+	static			DWORD	HashWord(LPCTSTR pszString, size_t nStart, size_t nLength, DWORD nBits);
+protected:
+	static	inline	DWORD	HashNumber(DWORD nNumber, int nBits);
 
 };
 

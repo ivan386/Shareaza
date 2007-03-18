@@ -250,10 +250,48 @@ inline bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
 	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
 	{
-		if ( ! _istdigit( *pszString ) ) return true;
+		if ( _istdigit( *pszString ) ) return false;
+	}
+	return true;
+}
+
+inline bool IsHasDigit(LPCTSTR pszString, size_t nStart, size_t nLength)
+{
+	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
+	{
+		if ( _istdigit( *pszString ) ) return true;
 	}
 	return false;
 }
+
+inline bool IsNumeric(LPCTSTR pszString, size_t nStart, size_t nLength)
+{
+	bool bDigit = true;
+	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
+	{
+		if ( !_istdigit( *pszString ) ) bDigit = false;
+	}
+	return bDigit;
+}
+
+inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool& bDigit, bool& bMix)
+{
+	bWord = false;
+	bDigit = false;
+	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
+	{
+		if ( _istdigit( *pszString ) ) bDigit = true;
+		else if ( IsCharacter( *pszString ) ) bWord = true;
+	}
+
+	bMix = bWord && bDigit;
+	if ( bMix )
+	{
+		bWord = false;
+		bDigit = false;
+	}
+}
+
 
 // To see the color of the message you must look at CTextCtrl::CTextCtrl() in CtrlText.cpp
 #define MSG_DEFAULT			0

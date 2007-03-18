@@ -85,6 +85,8 @@ CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin)
 : m_oGUID( pOrigin->m_oGUID ),
   m_sSearch( pOrigin->m_sSearch ),
   m_sKeywords( pOrigin->m_sKeywords ),
+  m_sPosKeywords( pOrigin->m_sPosKeywords ),
+  m_sG2Keywords( pOrigin->m_sG2Keywords ),
   m_pSchema( pOrigin->m_pSchema ),
   m_pXML( pOrigin->m_pXML ? pOrigin->m_pXML->Clone() : NULL ),
   m_nMinSize( pOrigin->m_nMinSize ),
@@ -106,8 +108,9 @@ CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin)
   m_bUDP( pOrigin->m_bUDP ),
   m_pEndpoint( pOrigin->m_pEndpoint ),
   m_nKey( pOrigin->m_nKey ),
-
-  m_oWords()                //! \todo comment this - we copy the search string but not the word list
+  m_oURNs( pOrigin->m_oURNs ),
+  m_oKeywordHashList( pOrigin->m_oKeywordHashList )
+  //m_oWords()                //! \todo comment this - we copy the search string but not the word list
 { }
 
 CQuerySearch::~CQuerySearch()
@@ -134,16 +137,16 @@ CG1Packet* CQuerySearch::ToG1Packet()
 	pPacket->WriteShortLE( nFlags );
 	
 	CString strExtra;
-	
-	if ( !m_sKeywords.IsEmpty() && !m_sSearch.IsEmpty() )
+
+	if ( !m_sPosKeywords.IsEmpty() )
 	{
 		if ( Settings.Gnutella1.QuerySearchUTF8 ) //Support UTF-8 Query
 		{
-			pPacket->WriteStringUTF8( m_sKeywords );
+			pPacket->WriteStringUTF8( m_sPosKeywords );
 		}
 		else
 		{
-			pPacket->WriteString( m_sKeywords );
+			pPacket->WriteString( m_sPosKeywords );
 		}
 	}
 	else if ( m_pSchema != NULL && m_pXML != NULL )
@@ -240,19 +243,19 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		pPacket->WriteString( "btih" );
 		pPacket->Write( m_oBTH );
 	}
-	
-	if ( !m_sKeywords.IsEmpty() && !m_sSearch.IsEmpty() )
+
+	if ( !m_sG2Keywords.IsEmpty() )
 	{
-		if ( m_sKeywords != m_sSearch )
+		short bValue = (short)( 2 * rand() / ( RAND_MAX + 1.0 ) );
+		if ( bValue )
 		{
-			short bValue = (short)( 2 * rand() / ( RAND_MAX + 1.0 ) );
-			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( bValue ? m_sSearch : m_sKeywords ) );
-			pPacket->WriteString( bValue ? m_sSearch : m_sKeywords, FALSE );
+			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( m_sG2Keywords ) );
+			pPacket->WriteString( m_sG2Keywords, FALSE );
 		}
-		else
+		else if ( !m_sSearch.IsEmpty() )
 		{
-			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( m_sKeywords ) );
-			pPacket->WriteString( m_sKeywords, FALSE );
+			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( m_sSearch ) );
+			pPacket->WriteString( m_sSearch, FALSE );
 		}
 	}
 	
@@ -562,8 +565,10 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 	}
 
 	m_sKeywords = m_sSearch;
-	ToLower( m_sKeywords );
-	MakeKeywords( m_sKeywords, false );
+	// Commenting out below 2 lines. they are called from CheckValid at the end of this function thus
+	// no need to call it here.
+	//ToLower( m_sKeywords );
+	//MakeKeywords( m_sKeywords, false );
 
 	if ( pPacket->GetRemaining() >= 1 )
 	{
@@ -732,8 +737,10 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 		{
 			m_sSearch = pPacket->ReadString( nLength );
 			m_sKeywords = m_sSearch;
-			ToLower( m_sKeywords );
-			MakeKeywords( m_sKeywords, false );
+			// Commenting out below 2 lines. they are called from CheckValid at the end of this function thus
+			// no need to call it here.
+			//ToLower( m_sKeywords );
+			//MakeKeywords( m_sKeywords, false );
 		}
 		else if ( nType == G2_PACKET_METADATA )
 		{
@@ -783,7 +790,7 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 	
 	pPacket->Read( m_oGUID );
 	
-	return CheckValid();
+	return CheckValid( true );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -791,90 +798,172 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 
 BOOL CQuerySearch::CheckValid(bool bExpression)
 {
-	DWORD nValidWords = 0;
-	DWORD nCommonWords = 0;
-	size_t nValidCharacters = 0;
+	bool bHashOk = false;
 
-	// Search without any terms and no hash is invalid
-	if ( m_oWords.empty() )
+	// Searches by hash are ok
+	if ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH )
 	{
-		// Searches by hash are okay
-		if ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH )
+		if ( m_oURNs.empty() )
 		{
-			BuildWordList( false );
-			return TRUE;
+			if ( m_oSHA1 )
+			{
+				CString strurn = m_oSHA1.toUrn();
+				m_oURNs.push_back( CQueryHashTable::HashWord( strurn, 0, strurn.GetLength(), 32 ) );
+			}
+
+			if ( m_oTiger )
+			{
+				CString strurn = m_oTiger.toUrn();
+				m_oURNs.push_back( CQueryHashTable::HashWord( strurn, 0, strurn.GetLength(), 32 ) );
+			}
+
+			if ( m_oED2K )
+			{
+				CString strurn = m_oED2K.toUrn();
+				m_oURNs.push_back( CQueryHashTable::HashWord( strurn, 0, strurn.GetLength(), 32 ) );
+			}
+
+			if ( m_oBTH )
+			{
+				CString strurn = m_oBTH.toUrn();
+				m_oURNs.push_back( CQueryHashTable::HashWord( strurn, 0, strurn.GetLength(), 32 ) );
+			}
 		}
 
+		bHashOk = true;
+		if ( m_oWords.empty() && m_sSearch.GetLength() ) BuildWordList( bExpression );
+	}
+	else if ( m_oWords.empty() && m_sSearch.GetLength() ) // no hashed keywords, but keywords are there as string.
+	{
 		BuildWordList( bExpression );
-		if ( m_oWords.empty() )
-			return FALSE;
 	}
 
-	// Setting up Common keyword list
-	static const LPCTSTR common[] =
+	if ( m_oKeywordHashList.size() )
 	{
-		L"mp3", L"ogg",
+		return TRUE;
+	}
+	else if ( !m_oWords.empty() )
+	{
+		// Setting up Common keyword list
+		static const LPCTSTR common[] =
+		{
+			L"mp3", L"ogg", L"ac3",
 			L"jpg", L"gif", L"png", L"bmp",
-			L"mpg", L"avi", L"mkv", L"wmv", L"mov", L"ogm",
-			L"exe", L"zip", L"rar", L"iso", L"bin", L"cue",
-			L"dvd", L"mpeg", L"divx", L"xvid",
+			L"mpg", L"avi", L"mkv", L"wmv", L"mov", L"ogm", L"mpa", L"mpv", L"m2v", L"mp2",
+			L"exe", L"zip", L"rar", L"iso", L"bin", L"cue", L"img", L"lzh", L"bz2", L"rpm", L"deb",
+			L"dvd", L"mpeg", L"divx", L"xvid", L"mp4",
 			L"xxx", L"sex", L"fuck",
 			L"torrent"
-	};
-	static const size_t commonWords = sizeof common / sizeof common[ 0 ];
+		};
+		static const size_t commonWords = sizeof common / sizeof common[ 0 ];
 
-	// Check we aren't just searching for broad terms - set counters, etc
-	for ( const_iterator pWord = begin(); pWord != end(); pWord++ )
+		bool bExtendChar;	// flag used for extended char
+		TCHAR szChar;
+		int nLength;
+		DWORD nValidWords = 0;
+		DWORD nCommonWords = 0;
+		size_t nValidCharacters = 0;
+
+		// Check we aren't just searching for broad terms - set counters, etc
+		for ( const_iterator pWord = begin(); pWord != end(); pWord++ )
+		{
+			nValidCharacters = 0;
+			szChar = *(pWord->first);
+			nLength = int(pWord->second);
+
+			bExtendChar = false;	//  clear the flag used for extended char
+			// NOTE: because of how oWord act, each keywords in oWords gets sorted in ascending order with HEX code of char,
+			//		thus Extended chars are always located at end of oWords. Which means it is not necessary to Clear the flag
+			//		inside the loop.
+
+			if ( !IsCharacter( szChar ) ) // check if the char is valid
+			{
+				// do nothing here
+				continue;
+			} //after the char inspection
+			else if ( nLength > 3 )	// any char string longer than 3 byte are counted.
+			{
+				nValidCharacters = nLength;
+			}
+			else if ( 0x00 <= szChar && 0x7f >= szChar ) // check if the char is 1 byte length in UTF8 (non-char will not reach here)
+			{
+				nValidCharacters = nLength;
+			}
+			else if ( 0x80 <= szChar && 0x7ff >= szChar)  // check if the char is 2 byte length in UTF8 (non-char will not reach here)
+			{
+				nValidCharacters = nLength * 2;
+			}
+			else if ( 0x3041 <= szChar && 0x30fe >= szChar )	// these region is for Japanese Hiragana/Katakana chars(3Bytes).
+			{													// because of number of chars exist in that region, they
+																// are counted as 2byte chars to make only 2 or longer chars
+																// are accepted on Query.
+				nValidCharacters = nLength * 2;
+				bExtendChar = true;	// set Extended char flag
+			}
+			else if ( 0x800 <= szChar && 0xffff >= szChar)  // check if the char is 3 byte length in UTF8 (non-char will not reach here)
+			{
+				nValidCharacters = nLength * 3;
+				bExtendChar = true;	// set Extended char flag
+			}
+			else if ( nLength > 2 )
+			{
+				// char inspection
+				bool bWord =false;
+				bool bDigit =false;
+				bool bMix =false;
+				IsType(&szChar, 0, nLength, bWord, bDigit, bMix);
+				if ( bWord || bMix )
+					nValidCharacters = nLength;
+			}
+
+			if ( nValidCharacters > 2 ) // if char is longer than 3byte in utf8 (Gnutella standard)
+			{
+				if ( std::find_if( common, common + commonWords, FindStr( *pWord ) ) != common + commonWords )
+					// if the keyword is matched to one of the common keyword set in common[] array.
+				{
+					// Common term. Don't count it as valid keywords, instead count it as common keywords
+					nCommonWords++;
+					DWORD nHash = CQueryHashTable::HashWord( pWord->first, 0, pWord->second, 32 );
+					m_oKeywordHashList.push_back( nHash );
+				}
+				else
+				{
+					// check if it is valid search term.
+					// NOTE: code below will filter and narrowing down more. it has to be in one of the condition
+					//			1. It is 4byte or longer in UTF8 string(Japanese Hiragana/Katakana are both 3 byte char too 
+					//				however they are counted as 2byte char)
+					//			2. Query has Schema with it(File type specified)
+					//			3. the string contains extended char(3byte length char used in Asia region )
+					//if ( nValidCharacters > 3 || m_pSchema != NULL || bExtendChar ) nValidWords++;
+
+					nValidWords++;	// count any 3char or longer as valid keywords
+					DWORD nHash = CQueryHashTable::HashWord( pWord->first, 0, pWord->second, 32 );
+					m_oKeywordHashList.push_back( nHash );
+				}
+			}
+		}
+
+		if ( m_pSchema != NULL ) // if schema has been selected
+		{
+			nValidWords += ( nCommonWords > 1 ) ? 1 : 0; // make it accept query, if there are 2 or more different common words.
+		}
+		else // no schema
+		{
+			nValidWords += ( nCommonWords > 2 ) ? 1 : 0; // make it accept query, if there are 3 or more different common words.
+		}
+
+		if ( nValidWords ) return TRUE;
+	}
+	
+	if ( bHashOk )
 	{
-		nValidCharacters = 0;
-		TCHAR szChar = *(pWord->first);
-		int nLength = int(pWord->second);
-
-		if ( !IsCharacter( szChar ) ) // check if the char is valid
-		{
-			// do nothing here
-		} //after the char inspection
-		else if ( _istdigit( szChar ) )
-		{
-			if ( nLength > 3 ) nValidCharacters = nLength;
-		}
-		else if ( nLength > 3 )
-		{
-			nValidCharacters = nLength;
-		}
-		else if ( 0x00 <= szChar && 0x7f >= szChar) // check if the char is 1 byte length in UTF8 (non-char will not reach here)
-		{
-			nValidCharacters = nLength;
-		}
-		else if ( 0x80 <= szChar && 0x7ff >= szChar)  // check if the char is 2 byte length in UTF8 (non-char will not reach here)
-		{
-			nValidCharacters = nLength * 2;
-		}
-		else if ( 0x3041 <= szChar && 0x30fe >= szChar )
-		{
-			nValidCharacters = nLength * 2;
-		}
-		else if ( 0x800 <= szChar && 0xffff >= szChar)  // check if the char is 3 byte length in UTF8 (non-char will not reach here)
-		{
-			nValidCharacters = nLength * 3;
-		}
-
-		if ( std::find_if( common, common + commonWords, FindStr( *pWord ) ) != common + commonWords )
-		{
-			// Common term. Don't count it.
-			if (nValidCharacters >= 3) nCommonWords++;
-		}
-		else if (nValidCharacters >= 3)
-		{
-			// Valid search term.
-			nValidWords++;
-		}
-
+		return TRUE;
 	}
 
-	nValidWords += nCommonWords / 3; // make it accept query, if there are more than 3 different common words.
+	m_oKeywordHashList.clear();
+	m_oWords.clear();
 
-	return BOOL(nValidWords);
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1131,7 +1220,9 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 
 void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 {
+	// clear word tables.
 	m_oWords.clear();
+	m_oNegWords.clear();
 
 	m_sSearch.Trim();
 	ToLower( m_sSearch );
@@ -1209,7 +1300,12 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 
 					if ( pMember->m_bIndexed )
 					{
-						if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
+						// quick hack for bitrate problem.
+						if ( pMember->m_sName.CompareNoCase( _T("bitrate") ) == 0 )
+						{
+							// do nothing.
+						}
+						else if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
 						{
 							ToLower( pAttribute->m_sValue );
 							CString strKeywords = pAttribute->m_sValue;
@@ -1245,7 +1341,28 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 
 	m_sKeywords.TrimLeft();
 
-	AddStringToWordList( m_sKeywords );
+	// build word pos/neg tables (m_oWords/m_oNegWords)
+	BuildWordTable( m_sKeywords );
+	
+	// clear QueryStrings.
+	m_sPosKeywords.Empty();
+	m_sG2Keywords.Empty();
+
+	// create string with positive keywords.
+	for ( const_iterator pWord = begin(); pWord != end(); pWord++ )
+	{
+		m_sPosKeywords.AppendFormat( _T("%s "), LPCTSTR( CString( pWord->first, int(pWord->second) ) ) );
+	}
+
+	m_sG2Keywords = m_sPosKeywords;	// copy Positive keywords string to G2 keywords string.
+	m_sPosKeywords.TrimRight();		// trim off extra space char at the end of string.
+
+	// append negative keywords to G2 keywords string.
+	for ( const_iterator pWord = beginNeg(); pWord != endNeg(); pWord++ )
+	{
+		m_sG2Keywords.AppendFormat( _T("-%s "), LPCTSTR( CString( pWord->first, int(pWord->second) ) ) );
+	}
+	m_sG2Keywords.TrimRight();		// trim off extra space char at the end of string.
 }
 
 // Function is used to split a phrase in asian languages to separate keywords
@@ -1281,10 +1398,11 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sHiragana);
 		if ( IsCharacter( *pszPtr ) )
 			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sRegular);
-		if ( _istdigit( *pszPtr ) )
-			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sNumeric);
+		// for now, disable Numeric Detection in order not to split string like "shareaza2" to "shareaza 2"
+		//if ( _istdigit( *pszPtr ) )
+		//	boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sNumeric);
 
-		if ( ( boundary[ 1 ] & (sHiragana | sKatakana) ) == (sHiragana | sKatakana) )
+		if ( ( boundary[ 1 ] & (sHiragana | sKatakana) ) == (sHiragana | sKatakana) && ( boundary[ 0 ] & (sHiragana | sKatakana) ) )
 		{
 			boundary[ 1 ] = boundary[ 0 ];
 		}
@@ -1296,7 +1414,7 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 
 		int nDistance = !bCharacter ? 1 : 0;
 		
-		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ]  && nPos  )
+		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ] && nPos  )
 		{
 			if ( nPos > nPrevWord )
 			{
@@ -1401,7 +1519,7 @@ void CQuerySearch::SlideKeywords(CString& strPhrase)
 	strPhrase = strTemp.TrimRight( L" " );
 }
 
-void CQuerySearch::AddStringToWordList(LPCTSTR pszString)
+void CQuerySearch::BuildWordTable(LPCTSTR pszString)
 {
 	if ( ! *pszString ) return;
 
@@ -1419,10 +1537,19 @@ void CQuerySearch::AddStringToWordList(LPCTSTR pszString)
 		}
 		else
 		{
-			if ( ! bNegate && pszWord < pszPtr &&
-				( (_istdigit( *pszWord ) && pszPtr - pszWord > 3 ) || IsWord( pszWord, 0, pszPtr - pszWord ) ) )
+			if ( pszWord < pszPtr )
 			{
-				m_oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+				if ( bNegate )
+				{
+					m_oNegWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+				}
+				else
+				{
+					bool bWord = false, bDigit = false, bMix = false;
+					IsType( pszWord, 0, pszPtr - pszWord, bWord, bDigit, bMix );
+					if ( ( bWord || bMix ) || ( bDigit && pszPtr - pszWord > 3 ) )
+						m_oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+				}
 			}
 			
 			pszWord = pszPtr + 1;
@@ -1445,11 +1572,20 @@ void CQuerySearch::AddStringToWordList(LPCTSTR pszString)
 			if ( bNegate && ! bQuote && *pszPtr != '-' ) bNegate = FALSE;
 		}
 	}
-	
-	if ( ! bNegate && pszWord < pszPtr &&
-		( (_istdigit( *pszWord ) && pszPtr - pszWord > 3 ) || IsWord( pszWord, 0, pszPtr - pszWord ) ) )
+
+	if ( pszWord < pszPtr )
 	{
-		m_oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+		if ( bNegate )
+		{
+			m_oNegWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+		}
+		else
+		{
+			bool bWord = false, bDigit = false, bMix = false;
+			IsType( pszWord, 0, pszPtr - pszWord, bWord, bDigit, bMix );
+			if ( ( bWord || bMix ) || ( bDigit && pszPtr - pszWord > 3 ) )
+				m_oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+		}
 	}
 }
 
@@ -1543,4 +1679,20 @@ CSearchWnd* CQuerySearch::OpenWindow(auto_ptr< CQuerySearch > pSearch)
 	{
 		return NULL;
 	}
+}
+
+void CQuerySearch::PrepareCheck()
+{
+	m_oWords.clear();
+	m_oURNs.clear();
+	m_oKeywordHashList.clear();
+	m_sKeywords.Empty();
+}
+
+void CQuerySearch::PrepareCheck(CQuerySearch* pQuerySearch)
+{
+	pQuerySearch->m_oWords.clear();
+	pQuerySearch->m_oURNs.clear();
+	pQuerySearch->m_oKeywordHashList.clear();
+	pQuerySearch->m_sKeywords.Empty();
 }

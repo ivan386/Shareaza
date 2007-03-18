@@ -141,10 +141,11 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sHiragana);
 		if ( IsCharacter( *pszPtr ) )
 			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sRegular);
-		if ( _istdigit( *pszPtr ) )
-			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sNumeric);
+		// for now, disable Numeric Detection in order not to split string like "shareaza2" to "shareaza 2"
+		//if ( _istdigit( *pszPtr ) )
+		//	boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sNumeric);
 
-		if ( ( boundary[ 1 ] & (sHiragana | sKatakana) ) == (sHiragana | sKatakana) )
+		if ( ( boundary[ 1 ] & (sHiragana | sKatakana) ) == (sHiragana | sKatakana) && ( boundary[ 0 ] & (sHiragana | sKatakana) ) )
 		{
 			boundary[ 1 ] = boundary[ 0 ];
 		}
@@ -160,27 +161,27 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 			// word length limit for ASIAN chars, merging is necessary to be done.
 
 			// nNextWord == nPrevWord when previous word was regular
-			if ( nPos > nNextWord && nNextWord > nPrevWord )
-			{
-				strWord = strTransformed.Mid( nPrevWord, nPos - nPrevWord );
-				nCount += MakeKeywords( pFile, strWord, bAdd );
-			}
+			//if ( nPos > nNextWord && nNextWord > nPrevWord )
+			//{
+			//	strWord = strTransformed.Mid( nPrevWord, nPos - nPrevWord );
+			//	nCount += MakeKeywords( pFile, strWord, bAdd );
+			//}
 			if ( nPos > nNextWord )
 			{
 				strWord = strTransformed.Mid( nNextWord, nPos - nNextWord );
 				nCount += MakeKeywords( pFile, strWord, bAdd );
-				if ( nNextWord > nPrevWord )
-				{
-					strWord = strTransformed.Mid( nPrevWord, nNextWord - nPrevWord );
-					nCount += MakeKeywords( pFile, strWord, bAdd );
-				}
+				//if ( nNextWord > nPrevWord )
+				//{
+				//	strWord = strTransformed.Mid( nPrevWord, nNextWord - nPrevWord );
+				//	nCount += MakeKeywords( pFile, strWord, bAdd );
+				//}
 			}
 			if ( nNextWord > nPrevWord )
 				nPrevWord = nNextWord;
 			nNextWord = nPos + nDistance;
 		}
 	}
-	
+
 	strWord = strTransformed.Mid( nPrevWord, nPos - nPrevWord );
 	nCount += MakeKeywords( pFile, strWord, bAdd );
 	return nCount;
@@ -194,129 +195,140 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 	int nLength = strWord.GetLength();
 	CString strKeyword( strWord );
 	LPCTSTR pszKeyword = strKeyword;
-	bool bDone = false;
-	bool bWord = IsWord( strKeyword, 0, nLength );
-	bool bDigit = !bWord && nLength > 3 && _istdigit( strKeyword.GetAt( 0 ) );
 
-	if ( nLength && ( bWord || bDigit ) )
+	if ( !nLength )
+	{
+		// not a word at all, do nothing.
+	}
+	else if ( IsHiragana( *pszKeyword ) )
 	{
 		ProcessWord( pFile, strKeyword, bAdd );
 		nCount++;
-		
-		if ( IsHiragana( *pszKeyword ) )
-		{
-			// Continuous Hiragana string can be structured with a few prefix or postfix or both
-			// Assume Prefix/Postfix length is MAX 2 chars
-			// Note, according to GDF, minimum char length for Hiragana is 2 char
-			if ( nLength >= 3 )
-			{
-				// take of last 1 char
-				strKeyword = strWord.Left( nLength - 1 );
-				ProcessWord( pFile, strKeyword, bAdd );
-				nCount++;
-				// take of first 1 char
-				strKeyword = strWord.Right( nLength - 1 );
-				ProcessWord( pFile, strKeyword, bAdd );
-				nCount++;
-			}
 
-			if ( nLength >= 4 )
-			{
-				// take of last 2 chars
-				strKeyword = strWord.Left( nLength - 2 );
-				ProcessWord( pFile, strKeyword, bAdd );
-				nCount++;
-				// take of first 2 chars
-				strKeyword = strWord.Right( nLength - 2 );
-				ProcessWord( pFile, strKeyword, bAdd );
-				nCount++;
-				// take of first & last chars
-				strKeyword = strWord.Left( nLength - 1 );
-				strKeyword = strKeyword.Right( nLength - 2 );
-				ProcessWord( pFile, strKeyword, bAdd );
-				nCount++;
-			}
-
-			if ( nLength >= 5 )
-			{
-				// take of first 1 & last 2 chars
-				strKeyword = strWord.Left( nLength - 2 );   
-				strKeyword = strKeyword.Right( nLength - 3 );
-				ProcessWord( pFile, strKeyword, bAdd );
-				nCount++;
-				// take of first 2 & last 1 chars
-				strKeyword = strWord.Right( nLength - 2 );
-				strKeyword = strKeyword.Left( nLength - 3 );
-				ProcessWord( pFile, strKeyword, bAdd );
-				nCount++;
-			}
-			if ( nLength >= 6 )
-			{
-				// take of first 2 & last 2 chars
-				strKeyword = strWord.Left( nLength - 2 );   
-				strKeyword = strKeyword.Right( nLength - 4 );
-				ProcessWord( pFile, strKeyword, bAdd );
-				nCount++;
-			}
-			bDone = true;
-		}
-		else if ( IsKatakana( *pszKeyword ) )
+		// Continuous Hiragana string can be structured with a few prefix or postfix or both
+		// Assume Prefix/Postfix length is MAX 2 chars
+		// Note, according to GDF, minimum char length for Hiragana is 2 char
+		if ( nLength >= 3 )
 		{
-			// Continuous Katakana string does not have Prefix or postfix with Katakana
-			// but can contain a few words in one continuous string
-			// Assume MAX number of Words contained in one continuous Katakana string as Two words
-			// Note, according to GDF, minimum char length for Katakana is 2 char
-			// moreover, it is not known how long the prefix/postfix
-			// not even the length of chars in one word.
-			if ( nLength >= 3 )
-			{
-				for (int nLen = 2; nLen < nLength ; nLen++)
-				{
-					strKeyword = strWord.Left( nLen );
-					ProcessWord( pFile, strKeyword, bAdd );
-					nCount++;
-					strKeyword = strWord.Right( nLen );
-					ProcessWord( pFile, strKeyword, bAdd );
-					nCount++;
-				}
-			}
-			bDone = true;
-		}
-		else if ( IsKanji( *pszKeyword ) )
-		{
-			// Continuous Kanji string may have Prefix or postfix with Kanji
-			// moreover can contain a few words in one continuous string
-			// Assume MAX number of Words contained in one continuous Kanji string as Two words
-			// including prefix/postfix
-			// Note, according to GDF, minimum char length for Kanji is 1 char
-			// moreover, it is not known how long the prefix/postfix
-			// not even the length of chars in one word.
-			if ( nLength >= 2 )
-			{
-				for (int nLen = 1; nLen < nLength ; nLen++)
-				{
-					strKeyword = strWord.Left( nLen );
-					ProcessWord( pFile, strKeyword, bAdd );
-					nCount++;
-					strKeyword = strWord.Right( nLen );
-					ProcessWord( pFile, strKeyword, bAdd );
-					nCount++;
-				}
-			}
-			bDone = true;
-		}
-
-		if ( !bDone && nLength >= 5 && Settings.Library.PartialMatch )
-		{
+			// take of last 1 char
 			strKeyword = strWord.Left( nLength - 1 );
 			ProcessWord( pFile, strKeyword, bAdd );
 			nCount++;
-			
+			// take of first 1 char
+			strKeyword = strWord.Right( nLength - 1 );
+			ProcessWord( pFile, strKeyword, bAdd );
+			nCount++;
+		}
+
+		if ( nLength >= 4 )
+		{
+			// take of last 2 chars
 			strKeyword = strWord.Left( nLength - 2 );
+			ProcessWord( pFile, strKeyword, bAdd );
+			nCount++;
+			// take of first 2 chars
+			strKeyword = strWord.Right( nLength - 2 );
+			ProcessWord( pFile, strKeyword, bAdd );
+			nCount++;
+			// take of first & last chars
+			strKeyword = strWord.Left( nLength - 1 );
+			strKeyword = strKeyword.Right( nLength - 2 );
+			ProcessWord( pFile, strKeyword, bAdd );
+			nCount++;
+		}
+
+		if ( nLength >= 5 )
+		{
+			// take of first 1 & last 2 chars
+			strKeyword = strWord.Left( nLength - 2 );   
+			strKeyword = strKeyword.Right( nLength - 3 );
+			ProcessWord( pFile, strKeyword, bAdd );
+			nCount++;
+			// take of first 2 & last 1 chars
+			strKeyword = strWord.Right( nLength - 2 );
+			strKeyword = strKeyword.Left( nLength - 3 );
+			ProcessWord( pFile, strKeyword, bAdd );
+			nCount++;
+		}
+		if ( nLength >= 6 )
+		{
+			// take of first 2 & last 2 chars
+			strKeyword = strWord.Left( nLength - 2 );   
+			strKeyword = strKeyword.Right( nLength - 4 );
 			ProcessWord( pFile, strKeyword, bAdd );
 			nCount++;
 		}
 	}
+	else if ( IsKatakana( *pszKeyword ) )
+	{
+		ProcessWord( pFile, strKeyword, bAdd );
+		nCount++;
+
+		// Continuous Katakana string does not have Prefix or postfix with Katakana
+		// but can contain a few words in one continuous string
+		// Assume MAX number of Words contained in one continuous Katakana string as Two words
+		// Note, according to GDF, minimum char length for Katakana is 2 char
+		// moreover, it is not known how long the prefix/postfix
+		// not even the length of chars in one word.
+		if ( nLength >= 3 )
+		{
+			for (int nLen = 2; nLen < nLength ; nLen++)
+			{
+				strKeyword = strWord.Left( nLen );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+				strKeyword = strWord.Right( nLen );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+			}
+		}
+	}
+	else if ( IsKanji( *pszKeyword ) )
+	{
+		ProcessWord( pFile, strKeyword, bAdd );
+		nCount++;
+
+		// Continuous Kanji string may have Prefix or postfix with Kanji
+		// moreover can contain a few words in one continuous string
+		// Assume MAX number of Words contained in one continuous Kanji string as Two words
+		// including prefix/postfix
+		// Note, according to GDF, minimum char length for Kanji is 1 char
+		// moreover, it is not known how long the prefix/postfix
+		// not even the length of chars in one word.
+		if ( nLength >= 2 )
+		{
+			for (int nLen = 1; nLen < nLength ; nLen++)
+			{
+				strKeyword = strWord.Left( nLen );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+				strKeyword = strWord.Right( nLen );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+			}
+		}
+	}
+	else
+	{
+		ProcessWord( pFile, strKeyword, bAdd );
+		nCount++;
+		if ( Settings.Library.PartialMatch )
+		{
+			if ( nLength >= 4 )
+			{
+				strKeyword = strWord.Left( nLength - 1 );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+			}
+			if ( nLength >= 5 )
+			{
+				strKeyword = strWord.Left( nLength - 2 );
+				ProcessWord( pFile, strKeyword, bAdd );
+				nCount++;
+			}
+		}
+	}
+
 	return nCount;
 }
 
@@ -375,10 +387,10 @@ BOOL CLibraryDictionary::BuildHashTable()
 		CString strWord;
 		
 		m_pWords.GetNextAssoc( pos, strWord, pWord );
-		
+
 		CLibraryFile* pFileTemp = *(pWord->m_pList); 
 
-		if ( pFileTemp->IsShared() )	// Check if the file is shared
+		if (  pFileTemp->IsShared() )	// Check if the file is shared
 		{
 			if ( ( pFileTemp->IsGhost() ) || (UploadQueues.CanUpload( PROTOCOL_HTTP, pFileTemp, FALSE ) ) ) // Check if a queue exists
 			{
@@ -582,6 +594,55 @@ CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nM
 	return pHits;
 }
 
+BOOL CLibraryDictionary::IsValidKeyword(CString& strKeyword)
+{
+	LPCTSTR szKeyword = (LPCTSTR)strKeyword;
+	int nLength = strKeyword.GetLength();
+	if ( !IsCharacter( *szKeyword ) )
+	{
+		return FALSE;
+	}
+	else if ( nLength > 3 )
+	{
+		return TRUE;
+	}
+	else if ( IsHiragana(*szKeyword ) )
+	{
+		if ( nLength > 1 )
+			return TRUE;
+		else
+			return FALSE;
+	}
+	else if ( IsKatakana(*szKeyword ) )
+	{
+		if ( nLength > 1 )
+			return TRUE;
+		else
+			return FALSE;
+	}
+	else if ( IsKanji(*szKeyword ) )
+	{
+		return TRUE;
+	}
+
+	bool bWord = false;
+	bool bDigit = false;
+	bool bMix = false;
+
+	IsType(szKeyword, 0, nLength, bWord, bDigit, bMix);
+	if ( bWord || bMix )
+	{
+		if ( nLength > 2 )
+			return TRUE;
+	}
+	else if ( bDigit )
+	{
+		if ( nLength > 3 )
+			return TRUE;
+	}
+
+	return FALSE;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryWord construction
@@ -632,4 +693,3 @@ BOOL CLibraryWord::Remove(CLibraryFile* pFile)
 	
 	return ( m_nCount > 0 );
 }
-

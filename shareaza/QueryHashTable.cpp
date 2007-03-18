@@ -993,6 +993,18 @@ BOOL CQueryHashTable::CheckString(const CString& strString) const
 	return ! ( *pHash & nMask );
 }
 
+BOOL CQueryHashTable::CheckHash(const DWORD nHash) const
+{
+	if ( ! m_bLive || m_pHash == NULL ) return TRUE;
+
+	DWORD lHash	= nHash >> (32 - m_nBits);
+	BYTE* pHash	= m_pHash + ( lHash >> 3 );
+	BYTE nMask	= BYTE( 1 << ( lHash & 7 ) );
+
+	return ! ( *pHash & nMask );
+}
+
+
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable check query object
 
@@ -1000,41 +1012,35 @@ BOOL CQueryHashTable::Check(const CQuerySearch* pSearch) const
 {
 	if ( ! m_bLive || m_pHash == NULL ) return TRUE;
 	
-	if ( pSearch->m_oSHA1 || pSearch->m_oED2K || pSearch->m_oBTH )
+	if ( !pSearch->m_oURNs.empty() )
 	{
-		if ( pSearch->m_oSHA1 )
+		CQuerySearch::const_hash_iterator iUrn = pSearch->urnBegin();
+		CQuerySearch::const_hash_iterator iUrnEnd = pSearch->urnEnd();
+		for ( ; iUrn != iUrnEnd ; iUrn++ )
 		{
-			if ( CheckString( pSearch->m_oSHA1.toUrn() ) ) return TRUE;
+			if ( CheckHash(*iUrn) ) return TRUE;
 		}
-		
-		if ( pSearch->m_oED2K )
-		{
-            if ( CheckString( pSearch->m_oED2K.toUrn() ) ) return TRUE;
-		}
-		
-		if ( pSearch->m_oBTH )
-		{
-			if ( CheckString( pSearch->m_oBTH.toUrn() ) ) return TRUE;
-		}
-
 		return FALSE;
 	}
 
 	DWORD nWordHits		= 0;
+	DWORD nWords		= 0;
 
-	for ( CQuerySearch::const_iterator pWord = pSearch->begin(); pWord != pSearch->end(); ++pWord )
+	if ( !pSearch->m_oKeywordHashList.empty() )
 	{
-		if ( pWord->first[ 0 ] == '-' ) continue;
+		CQuerySearch::const_hash_iterator iKeyword = pSearch->keywordBegin();
+		CQuerySearch::const_hash_iterator iKeywordEnd = pSearch->keywordEnd();
+		for ( ; iKeyword != iKeywordEnd ; iKeyword++ )
+		{
+			nWords++;
+			if ( CheckHash(*iKeyword) ) nWordHits++;
+		}
 
-		DWORD nHash	= HashWord( pWord->first, 0, pWord->second, m_nBits );
-		BYTE* pHash	= m_pHash + ( nHash >> 3 );
-		BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
-		if ( ! ( *pHash & nMask ) ) nWordHits++;
 	}
 
-	return ( pSearch->tableSize() >= 3 )
-		? nWordHits * 3 / pSearch->tableSize() >= 2 // at least 2/3 matches
-		: nWordHits == pSearch->tableSize();
+	return ( nWords >= 3 )
+		? nWordHits * 3 / nWords >= 2 // at least 2/3 matches
+		: nWordHits == nWords;
 }
 
 //////////////////////////////////////////////////////////////////////
