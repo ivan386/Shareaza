@@ -93,7 +93,7 @@ void CSettings::Setup()
 	Add( _T("Library.SchemaURI"), &Library.SchemaURI, CSchema::uriAudio );
 	Add( _T("Library.FilterURI"), &Library.FilterURI, NULL );
 	Add( _T("Library.SafeExecute"), &Library.SafeExecute, _T("|ace|ape|asf|avi|bmp|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|mp2|mp3|mpa|mpe|mpg|mpeg|ogg|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|") );
-	Add( _T("Library.PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|dbx|part|partial|pst|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
+	Add( _T("Library.PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|dbx|part|partial|pst|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
 	Add( _T("Library.ThumbSize"), &Library.ThumbSize, 96 );
 	Add( _T("Library.BitziAgent"), &Library.BitziAgent, _T(".") );
 	Add( _T("Library.BitziWebView"), &Library.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
@@ -517,7 +517,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	44
+#define SMART_VERSION	45
 
 void CSettings::Load()
 {
@@ -812,6 +812,18 @@ void CSettings::SmartUpgrade()
 	if ( nVersion < 44 )
 	{	
 		BitTorrent.AutoSeed = TRUE;
+	}
+
+	if ( nVersion < 45 )
+	{
+		Replace( Library.PrivateTypes, _T("|dat|"), _T("|") );
+
+		if ( _tcsistr( Library.PrivateTypes, _T("|jc!|") ) == NULL )	// FlashGet
+			Library.PrivateTypes += _T("jc!|");
+		if ( _tcsistr( Library.PrivateTypes, _T("|fb!|") ) == NULL )	// FlashGet torrent
+			Library.PrivateTypes += _T("fb!|");
+		if ( _tcsistr( Library.PrivateTypes, _T("|bc!|") ) == NULL )	// BitComet
+			Library.PrivateTypes += _T("bc!|");
 	}
 }
 
