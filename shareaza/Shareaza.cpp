@@ -1518,12 +1518,34 @@ class CRazaThread : public CWinThread
 
 public:
 	CRazaThread(AFX_THREADPROC pfnThreadProc, LPVOID pParam) :
-		CWinThread( pfnThreadProc, pParam )
+		CWinThread( NULL, pParam ),
+		m_pfnThreadProcExt( pfnThreadProc )
 	{
 	}
 	virtual ~CRazaThread()
 	{
 		Remove( m_hThread );
+	}
+
+	virtual BOOL InitInstance()
+	{
+		ASSERT_VALID( this );
+		return TRUE;
+	}
+
+	virtual int Run()
+	{
+		ASSERT_VALID( this );
+		ASSERT( m_pfnThreadProcExt );
+
+		bool bCOM = SUCCEEDED( OleInitialize( NULL ) );
+
+		int nResult = ( *m_pfnThreadProcExt )( m_pThreadParams );
+
+		if ( bCOM )
+			OleUninitialize();
+
+		return nResult;
 	}
 
 	static void Add(CRazaThread* pThread, LPCSTR pszName)
@@ -1593,6 +1615,7 @@ protected:
 
 	static CCriticalSection	m_ThreadMapSection;	// Guarding of m_ThreadMap
 	static CThreadMap		m_ThreadMap;		// Map of running threads
+	AFX_THREADPROC			m_pfnThreadProcExt;
 };
 
 IMPLEMENT_DYNAMIC(CRazaThread, CWinThread)

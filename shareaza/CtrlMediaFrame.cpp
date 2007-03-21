@@ -1470,7 +1470,7 @@ BOOL CMediaFrame::Prepare()
 	if ( Plugins.LookupCLSID( _T("MediaPlayer"), _T("Default"), pCLSID ) )
 	{
 		HINSTANCE hRes = AfxGetResourceHandle();
-		CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER|CLSCTX_LOCAL_SERVER,
+		CoCreateInstance( pCLSID, NULL, CLSCTX_ALL,
 			IID_IMediaPlayer, (void**)&m_pPlayer );
 		AfxSetResourceHandle( hRes );
 	}
@@ -1516,8 +1516,7 @@ BOOL CMediaFrame::PrepareVis()
 	if ( GUIDX::Decode( Settings.MediaPlayer.VisCLSID, &pCLSID ) &&
 		 Plugins.LookupEnable( pCLSID, TRUE ) )
 	{
-		HRESULT hr = CoCreateInstance( pCLSID, NULL,
-			CLSCTX_INPROC_SERVER|CLSCTX_LOCAL_SERVER, IID_IAudioVisPlugin,
+		HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL, IID_IAudioVisPlugin,
 			(void**)&pPlugin );
 		
 		if ( SUCCEEDED(hr) && pPlugin != NULL )

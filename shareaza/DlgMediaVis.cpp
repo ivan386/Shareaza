@@ -175,7 +175,7 @@ BOOL CMediaVisDlg::EnumerateWrapped(LPCTSTR pszName, REFCLSID pCLSID, LPCTSTR ps
 
 	HINSTANCE hRes = AfxGetResourceHandle();
 
-	HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER|CLSCTX_LOCAL_SERVER,
+	HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL,
 		IID_IWrappedPluginControl, (void**)&pPlugin );
 
 	AfxSetResourceHandle( hRes );
@@ -272,7 +272,7 @@ void CMediaVisDlg::OnSetup()
 
 	HINSTANCE hRes = AfxGetResourceHandle();
 
-	HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER|CLSCTX_LOCAL_SERVER,
+	HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL,
 		IID_IAudioVisPlugin, (void**)&pPlugin );
 
 	AfxSetResourceHandle( hRes );

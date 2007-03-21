@@ -125,12 +125,10 @@ BOOL CFirewall::SetupProgram( CString path, CString name, BOOL bRemove )
 // Returns true if it works, false if there was an error
 BOOL CFirewall::AccessWindowsFirewall()
 {
-	// Initialize COM itself so this thread can use it
-	HRESULT result = CoInitialize( NULL ); // Must be NULL
-	if ( FAILED( result ) ) return FALSE;
+	HRESULT result;
 
 	// Create an instance of the firewall settings manager
-	result = CoCreateInstance( __uuidof( NetFwMgr ), NULL, CLSCTX_INPROC_SERVER, __uuidof( INetFwMgr ), ( void** )&Manager );
+	result = CoCreateInstance( __uuidof( NetFwMgr ), NULL, CLSCTX_ALL, __uuidof( INetFwMgr ), ( void** )&Manager );
 	if ( FAILED( result ) || ! Manager ) return FALSE;
 
 	// Retrieve the local firewall policy
@@ -270,7 +268,7 @@ BOOL CFirewall::AddProgram( CString path, CString name )
 {
 	// Create an instance of an authorized application, we'll use this to add our new application
 	if ( Program ) { Program->Release(); Program = NULL; }
-	HRESULT result = CoCreateInstance( __uuidof( NetFwAuthorizedApplication ), NULL, CLSCTX_INPROC_SERVER,
+	HRESULT result = CoCreateInstance( __uuidof( NetFwAuthorizedApplication ), NULL, CLSCTX_ALL,
 		__uuidof( INetFwAuthorizedApplication ), ( void** )&Program );
 	if ( FAILED( result ) ) return FALSE;
 

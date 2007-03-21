@@ -40,7 +40,6 @@ static char THIS_FILE[]=__FILE__;
 CLibraryBuilderPlugins::CLibraryBuilderPlugins(CLibraryBuilder* pBuilder)
 {
 	m_pBuilder	= pBuilder;
-	m_bCOM		= FALSE;
 }
 
 CLibraryBuilderPlugins::~CLibraryBuilderPlugins()
@@ -124,12 +123,6 @@ void CLibraryBuilderPlugins::Cleanup()
 		if ( pPlugin ) pPlugin->Release();
 	}
 	
-	if ( m_bCOM )
-	{
-		m_bCOM = FALSE;
-		CoUninitialize();
-	}
-	
 	m_pMap.RemoveAll();
 }
 
@@ -146,20 +139,9 @@ ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 		return NULL;
 	}
 	
-	if ( ! m_bCOM )
-	{
-		if ( FAILED( CoInitializeEx( NULL, COINIT_MULTITHREADED ) ) )
-		{
-			m_pMap.SetAt( pszType, NULL );
-			return NULL;
-		}
-		
-		m_bCOM = TRUE;
-	}
+	ILibraryBuilderPlugin* pPlugin = NULL;
 	
-	ILibraryBuilderPlugin* pPlugin;
-	
-	/*HRESULT hResult =*/ CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER,
+	CoCreateInstance( pCLSID, NULL, CLSCTX_ALL,
 		IID_ILibraryBuilderPlugin, (void**)&pPlugin );
 	
 	m_pMap.SetAt( pszType, pPlugin );

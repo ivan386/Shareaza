@@ -101,82 +101,76 @@ UINT AsyncFileOperationThread(LPVOID param)
 
 	bool bCopy = (pAFOP->dwEffect == DROPEFFECT_COPY);
 
-	// Full OLE initialization
-	HRESULT hr = OleInitialize( NULL );
-	if ( SUCCEEDED( hr ) )
+	// Shell file operations
+	SHFILEOPSTRUCT sFileOp = {
+		pAFOP->hWnd,
+		( bCopy ? FO_COPY : FO_MOVE ),
+		pAFOP->sFrom,
+		pAFOP->sTo,
+		FOF_ALLOWUNDO,
+		FALSE,
+		NULL,
+		NULL
+	};
+	SHFileOperation( &sFileOp );
+
+	// Process metadata also
+	CString sMetadataFrom;
+	CString sMetadataTo( (LPCTSTR)pAFOP->sTo );
+	if ( sMetadataTo[ sMetadataTo.GetLength() - 1 ] == _T('\\') )
+		sMetadataTo.Delete( sMetadataTo.GetLength() - 1 );
+	sMetadataTo.Append( _T("\\Metadata\\") );
+	int nLength = pAFOP->sFrom.GetLength() - 1;
+	ASSERT( nLength > 0 );
+	int nSingleLength = 0;
+	for ( int i = 0; nLength > 0 && i < nLength; i += ( nSingleLength + 1 ) )
 	{
-		// Shell file operations
+		CString sFile( (LPCTSTR)pAFOP->sFrom.Mid( i ) );
+		nSingleLength = sFile.GetLength();
+		int nSlash = sFile.ReverseFind( _T('\\') );
+		CString sMetadata( sFile.Left( nSlash ) + _T("\\Metadata\\") +
+			sFile.Mid( nSlash + 1 ) + _T(".xml") );
+		// If metadata exist
+		DWORD dwAttrs = GetFileAttributes( sMetadata );
+		if ( dwAttrs != INVALID_FILE_ATTRIBUTES &&
+			! ( dwAttrs & FILE_ATTRIBUTE_DIRECTORY ) )
+		{
+			// Adds metadata file to file operations
+			sMetadataFrom.Append( sMetadata );
+			sMetadataFrom.Append( _T(""), 1 );
+		}
+	}
+	if ( ! sMetadataFrom.IsEmpty() )
+	{
+		CreateDirectory( sMetadataTo, NULL );
+		SetFileAttributes( sMetadataTo, FILE_ATTRIBUTE_HIDDEN );
+
+		sMetadataFrom.Append( _T(""), 1 );		// double null terminated
+		sMetadataTo.Append( _T(""), 1 );		// double null terminated
 		SHFILEOPSTRUCT sFileOp = {
 			pAFOP->hWnd,
 			( bCopy ? FO_COPY : FO_MOVE ),
-			pAFOP->sFrom,
-			pAFOP->sTo,
-			FOF_ALLOWUNDO,
+			sMetadataFrom,
+			sMetadataTo,
+			0,
 			FALSE,
 			NULL,
 			NULL
 		};
 		SHFileOperation( &sFileOp );
-
-		// Process metadata also
-		CString sMetadataFrom;
-		CString sMetadataTo( (LPCTSTR)pAFOP->sTo );
-		if ( sMetadataTo[ sMetadataTo.GetLength() - 1 ] == _T('\\') )
-			sMetadataTo.Delete( sMetadataTo.GetLength() - 1 );
-		sMetadataTo.Append( _T("\\Metadata\\") );
-		int nLength = pAFOP->sFrom.GetLength() - 1;
-		ASSERT( nLength > 0 );
-		int nSingleLength = 0;
-		for ( int i = 0; nLength > 0 && i < nLength; i += ( nSingleLength + 1 ) )
-		{
-			CString sFile( (LPCTSTR)pAFOP->sFrom.Mid( i ) );
-			nSingleLength = sFile.GetLength();
-			int nSlash = sFile.ReverseFind( _T('\\') );
-			CString sMetadata( sFile.Left( nSlash ) + _T("\\Metadata\\") +
-				sFile.Mid( nSlash + 1 ) + _T(".xml") );
-			// If metadata exist
-			DWORD dwAttrs = GetFileAttributes( sMetadata );
-			if ( dwAttrs != INVALID_FILE_ATTRIBUTES &&
-				! ( dwAttrs & FILE_ATTRIBUTE_DIRECTORY ) )
-			{
-				// Adds metadata file to file operations
-				sMetadataFrom.Append( sMetadata );
-				sMetadataFrom.Append( _T(""), 1 );
-			}
-		}
-		if ( ! sMetadataFrom.IsEmpty() )
-		{
-			CreateDirectory( sMetadataTo, NULL );
-			SetFileAttributes( sMetadataTo, FILE_ATTRIBUTE_HIDDEN );
-
-			sMetadataFrom.Append( _T(""), 1 );		// double null terminated
-			sMetadataTo.Append( _T(""), 1 );		// double null terminated
-			SHFILEOPSTRUCT sFileOp = {
-				pAFOP->hWnd,
-				( bCopy ? FO_COPY : FO_MOVE ),
-				sMetadataFrom,
-				sMetadataTo,
-				0,
-				FALSE,
-				NULL,
-				NULL
-			};
-			SHFileOperation( &sFileOp );
-		}
-
-		// Notify Shell about changes (first file/folder only)
-		if ( ! bCopy )
-		{
-			int nSlash = pAFOP->sFrom.ReverseFind( _T('\\') );
-			CString sFromDir( ( nSlash == -1 ) ? pAFOP->sFrom : pAFOP->sFrom.Left( nSlash ) );
-			SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)sFromDir, 0 );
-		}
-		SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)pAFOP->sTo, 0 );
-
-		Library.Update();
-
-		OleUninitialize();
 	}
+
+	// Notify Shell about changes (first file/folder only)
+	if ( ! bCopy )
+	{
+		int nSlash = pAFOP->sFrom.ReverseFind( _T('\\') );
+		CString sFromDir( ( nSlash == -1 ) ? pAFOP->sFrom : pAFOP->sFrom.Left( nSlash ) );
+		SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)sFromDir, 0 );
+	}
+	SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)pAFOP->sTo, 0 );
+
+	Library.Update();
+
 
 	delete pAFOP;
 
@@ -304,51 +298,44 @@ UINT CShareazaDataSource::DragDropThread(LPVOID param)
 {
 	DWORD dwCurrentThreadID = GetCurrentThreadId();
 
-	// Full OLE initialization
-	HRESULT hr = OleInitialize( NULL );
-	if ( SUCCEEDED( hr ) )
+	// Get thread ID's
+	HWND hwndAttach	= AfxGetMainWnd()->GetSafeHwnd();
+	DWORD dwAttachThreadID = GetWindowThreadProcessId( hwndAttach, NULL );
+
+	// Attach input queues if necessary
+	if ( dwAttachThreadID != dwCurrentThreadID )
+		AttachThreadInput( dwAttachThreadID, dwCurrentThreadID, TRUE );
+
 	{
-		// Get thread ID's
-		HWND hwndAttach	= AfxGetMainWnd()->GetSafeHwnd();
-		DWORD dwAttachThreadID = GetWindowThreadProcessId( hwndAttach, NULL );
-
-		// Attach input queues if necessary
-		if ( dwAttachThreadID != dwCurrentThreadID )
-			AttachThreadInput( dwAttachThreadID, dwCurrentThreadID, TRUE );
-
+		CComPtr< IDataObject > pIDataObject;
+		HRESULT hr = CoGetInterfaceAndReleaseStream( (IStream*)param, IID_IDataObject,
+			(LPVOID*)&pIDataObject );
+		if ( SUCCEEDED( hr ) )
 		{
-			CComPtr< IDataObject > pIDataObject;
-			hr = CoGetInterfaceAndReleaseStream( (IStream*)param, IID_IDataObject,
-				(LPVOID*)&pIDataObject );
-			if ( SUCCEEDED( hr ) )
-			{
-				// Create drag-n-drop source object							
-				// TODO: next line returns E_NOINTERFACE for unknown reason
-				// CComQIPtr< IDropSource > pIDropSource( pIDataObject );
-				// therefore we used some hack since IDropSource object is
-				// not IDataObject dependent:
-				CShareazaDataSource foo;
-				IDropSource* pIDropSource = &(foo.m_xDropSource);
+			// Create drag-n-drop source object							
+			// TODO: next line returns E_NOINTERFACE for unknown reason
+			// CComQIPtr< IDropSource > pIDropSource( pIDataObject );
+			// therefore we used some hack since IDropSource object is
+			// not IDataObject dependent:
+			CShareazaDataSource foo;
+			IDropSource* pIDropSource = &(foo.m_xDropSource);
 
-				DWORD dwEffect = DROPEFFECT_NONE;
-				hr = ::DoDragDrop( pIDataObject, pIDropSource,
-					DROPEFFECT_MOVE | DROPEFFECT_COPY, &dwEffect );
-				ASSERT ( SUCCEEDED( hr ) );
+			DWORD dwEffect = DROPEFFECT_NONE;
+			hr = ::DoDragDrop( pIDataObject, pIDropSource,
+				DROPEFFECT_MOVE | DROPEFFECT_COPY, &dwEffect );
+			ASSERT ( SUCCEEDED( hr ) );
 
-				// TODO: need to detect unoptimized move and
-				// delete dragged items
-				ASSERT ( dwEffect != DROPEFFECT_MOVE );
-			}
+			// TODO: need to detect unoptimized move and
+			// delete dragged items
+			ASSERT ( dwEffect != DROPEFFECT_MOVE );
 		}
-
-		// Detach input queues
-		if ( dwAttachThreadID != dwCurrentThreadID )
-			AttachThreadInput( dwAttachThreadID, dwCurrentThreadID, FALSE );
-
-		OleUninitialize();
 	}
 
-	return hr;
+	// Detach input queues
+	if ( dwAttachThreadID != dwCurrentThreadID )
+		AttachThreadInput( dwAttachThreadID, dwCurrentThreadID, FALSE );
+
+	return 0;
 }
 
 // Perform CLibraryList drag operation

@@ -56,6 +56,5 @@ protected:
 	PluginInfo	LoadService(const CString& strType);
 
 // Attributes
-	bool			m_COM;
 	services_map	m_services;
 };

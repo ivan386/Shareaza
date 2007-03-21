@@ -122,7 +122,6 @@ private:
 
 	LONG	m_nAsyncFindHandle;
 	bool	m_bAsyncFindRunning;
-	bool	m_bCOM;
 	bool	m_bPortIsFree;
 	CString m_sLocalIP;
 	CString m_sExternalIP;

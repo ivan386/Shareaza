@@ -36,18 +36,12 @@ IMPLEMENT_DYNAMIC(CImageServices, CComObject)
 /////////////////////////////////////////////////////////////////////////////
 // CImageServices construction
 
-CImageServices::CImageServices() :
-	m_COM( GetCurrentThreadId() == AfxGetApp()->m_nThreadID )
+CImageServices::CImageServices()
 {
 }
 
 CImageServices::~CImageServices()
 {
-	if ( m_COM && ( GetCurrentThreadId() != AfxGetApp()->m_nThreadID ) )
-	{
-		m_COM = false;
-		OleUninitialize();
-	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -337,33 +331,16 @@ CImageServices::PluginInfo CImageServices::GetService(const CString& strFile)
 
 CImageServices::PluginInfo CImageServices::LoadService(const CString& strType)
 {
-	DWORD dwContext = 0;
-	// Add here all problematic extensions
-	if ( strType.Find( L".asf" ) >= 0 )
-		dwContext = CLSCTX_NO_CUSTOM_MARSHAL;
-
 	CLSID oCLSID;
 
 	if ( !Plugins.LookupCLSID( L"ImageService", strType, oCLSID ) )
 		return PluginInfo();
 
-	if ( !m_COM )
-	{
-		HRESULT hr = OleInitialize( NULL );
-		if ( FAILED( hr ) )
-		{
-			if ( hr != RPC_E_CHANGED_MODE )
-				return PluginInfo();
-		}
-		else
-			m_COM = true;
-	}
-
 	HINSTANCE hRes = AfxGetResourceHandle();
 	AfxSetResourceHandle( hRes );
 
 	CComPtr< IImageServicePlugin > pService;
-	if ( FAILED( CoCreateInstance( oCLSID, NULL, CLSCTX_ALL|dwContext,
+	if ( FAILED( CoCreateInstance( oCLSID, NULL, CLSCTX_ALL,
 		IID_IImageServicePlugin, (void**)&pService ) ) )
 	{
 		return PluginInfo();

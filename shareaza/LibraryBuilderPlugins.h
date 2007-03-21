@@ -30,24 +30,20 @@ interface ILibraryBuilderPlugin;
 
 class CLibraryBuilderPlugins
 {
-// Construction
 public:
 	CLibraryBuilderPlugins(CLibraryBuilder* pBuilder);
 	virtual ~CLibraryBuilderPlugins();
 
-// Attributes
 public:
 	CMap< CString, const CString&, ILibraryBuilderPlugin*, ILibraryBuilderPlugin* > m_pMap;
 	CLibraryBuilder*	m_pBuilder;
-	BOOL				m_bCOM;
 
-// Operations
 public:
 	BOOL	ExtractMetadata(CString& strPath, HANDLE hFile);
 	void	Cleanup();
+
 protected:
 	ILibraryBuilderPlugin*	LoadPlugin(LPCTSTR pszType);
-
 };
 
 #endif // !defined(AFX_LIBRARYBUILDERPLUGINS_H__9D5B1BBA_DED4_42C9_89FE_FC3244779663__INCLUDED_)

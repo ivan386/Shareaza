@@ -391,7 +391,7 @@ BOOL CPlugin::Start()
 {
 	if ( m_pPlugin != NULL ) return FALSE;
 
-	HRESULT hResult = CoCreateInstance( m_pCLSID, NULL, CLSCTX_INPROC_SERVER,
+	HRESULT hResult = CoCreateInstance( m_pCLSID, NULL, CLSCTX_ALL,
 		IID_IGeneralPlugin, (void**)&m_pPlugin );
 
 	if ( FAILED( hResult ) || m_pPlugin == NULL )

@@ -364,8 +364,6 @@ BOOL CFilePreviewDlg::RunPlugin(HANDLE hFile)
 	m_pPlugin = NULL;
 	m_pSection.Unlock();
 	
-	CoUninitialize();
-	
 	if ( hr != S_OK ) Sleep( 1000 );
 	
 	return ( hr != S_FALSE );	// Fall through if it's S_FALSE
@@ -374,23 +372,13 @@ BOOL CFilePreviewDlg::RunPlugin(HANDLE hFile)
 BOOL CFilePreviewDlg::LoadPlugin(LPCTSTR pszType)
 {
 	CLSID pCLSID;
-	
+
 	if ( ! Plugins.LookupCLSID( _T("DownloadPreview"), pszType, pCLSID ) ) return FALSE;
-	
-	if ( FAILED( CoInitializeEx( NULL, COINIT_MULTITHREADED ) ) ) return FALSE;
-	
-	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER,
+
+	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL,
 		IID_IDownloadPreviewPlugin, (void**)&m_pPlugin );
-	
-	if ( SUCCEEDED( hResult ) )
-	{
-		return TRUE;
-	}
-	else
-	{
-		CoUninitialize();
-		return FALSE;
-	}
+
+	return SUCCEEDED( hResult );
 }
 
 /////////////////////////////////////////////////////////////////////////////
