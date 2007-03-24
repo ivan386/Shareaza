@@ -1,7 +1,7 @@
 //
 // ZLib.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,13 +49,15 @@ auto_array< BYTE > CZLib::Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput
 	auto_array< BYTE > pBuffer( new BYTE[ *pnOutput ] );
 
 	// Compress the data at pInput into pBuffer, putting how many bytes it wrote under pnOutput
-	if ( compress(            // Compress data from one buffer to another, returns Z_OK 0 false if it works
+	int nRes = compress(      // Compress data from one buffer to another, returns Z_OK 0 false if it works
 		pBuffer.get(),        // The output buffer where ZLib can write compressed data
 		pnOutput,             // Reads how much space it has there, writes how much space it used
 		(const BYTE *)pInput, // The source buffer with data to compress
-		nInput ) != Z_OK )    // The number of bytes there
+		nInput );             // The number of bytes there
+	if ( nRes != Z_OK )
 	{
 		// The compress function reported error
+		ASSERT( Z_BUF_ERROR != nRes );	// TODO
 		return auto_array< BYTE >();
 	}
 
@@ -71,27 +73,48 @@ auto_array< BYTE > CZLib::Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput
 // Takes a pointer to compressed input bytes, and how many are there
 // Decompresses the memory into a new buffer this function allocates
 // Returns a pointer to the new buffer, and writes its size under pnOutput
-auto_array< BYTE > CZLib::Decompress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest)
+auto_array< BYTE > CZLib::Decompress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput)
 {
+	BYTE* pBuffer;
+
 	// Guess how big the data will be decompressed, use nSuggest, or just guess it will be 6 times as big
-	*pnOutput = nSuggest ? nSuggest : nInput * 6;
-
-	// Allocate a buffer that big
-	auto_array< BYTE > pBuffer( new BYTE[ *pnOutput ] );
-
-	// Uncompress the data from pInput into pBuffer, writing how big it is now in pnOutput
-	if ( uncompress( // Uncompress data
-		pBuffer.get(),            // Destination buffer where uncompress can write uncompressed data
-		pnOutput,                 // Reads how much space it has there, and writes how much space it used
-		(const BYTE *)pInput,     // Source buffer of compressed data
-		nInput ) != Z_OK )        // Number of bytes there
+	for ( DWORD nSuggest = min( nInput * 6ul, 1024ul ); ; nSuggest *= 2 )
 	{
-		// The uncompress function returned an error, delete the buffer we allocated and return error
-		return auto_array< BYTE >();
+		pBuffer = new BYTE[ nSuggest ];
+		if ( ! pBuffer )
+		{
+			// Out of memory
+			*pnOutput = 0;
+			return auto_array< BYTE >();
+		}
+
+		*pnOutput = nSuggest;
+
+		// Uncompress the data from pInput into pBuffer, writing how big it is now in pnOutput
+		int nRes = uncompress(        // Uncompress data
+			pBuffer,                  // Destination buffer where uncompress can write uncompressed data
+			pnOutput,                 // Reads how much space it has there, and writes how much space it used
+			(const BYTE *)pInput,     // Source buffer of compressed data
+			nInput );                 // Number of bytes there
+
+		if ( Z_OK == nRes )
+			break;
+
+		delete [] pBuffer;
+
+		if ( Z_BUF_ERROR != nRes )
+		{
+			// The uncompress function returned an error, delete the buffer we allocated and return error
+			*pnOutput = 0;
+			return auto_array< BYTE >();
+		}
 	}
 
 	// The pBuffer buffer is bigger than necessary, move its bytes into one perfectly sized, and return it
 	auto_array< BYTE > pOutput( new BYTE[ *pnOutput ] ); // Make a new buffer exactly the right size
-	memcpy( pOutput.get(), pBuffer.get(), *pnOutput );   // Copy the data from the one that's too big
+	memcpy( pOutput.get(), pBuffer, *pnOutput );         // Copy the data from the one that's too big
+
+	delete [] pBuffer;
+
 	return pOutput;                                      // Return a pointer to the perfectly sized one
 }

@@ -107,7 +107,7 @@ public:
 
 	// Use the buffer with the ZLib compression library
 	BOOL Deflate(BOOL bIfSmaller = FALSE); // Compress the data in this buffer
-	BOOL Inflate(DWORD nSuggest = 0);      // Remove the compression on the data in this buffer
+	BOOL Inflate();                        // Remove the compression on the data in this buffer
 	BOOL Ungzip();                         // Delete the gzip header and then remove the compression
 
 	// Read and write a DIME message in the buffer

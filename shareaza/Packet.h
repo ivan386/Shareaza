@@ -1,7 +1,7 @@
 //
 // Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -121,7 +121,7 @@ public:
 	virtual int GetStringLenUTF8(LPCTSTR pszString) const; // Takes a string, and determines how long it would be as ASCII text converted UTF8
 
 	// Data compression
-	auto_array< BYTE > ReadZLib(DWORD nLength, DWORD* pnOutput, DWORD nSuggest = 0); // Read compressed data from the packet, decompress it, and return it
+	auto_array< BYTE > ReadZLib(DWORD nLength, DWORD* pnOutput);         // Read compressed data from the packet, decompress it, and return it
 	void   WriteZLib(LPCVOID pData, DWORD nLength);                      // Compress the given data and write it into the packet
 
 	// Insert data into the packet

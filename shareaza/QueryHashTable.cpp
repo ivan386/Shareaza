@@ -1,7 +1,7 @@
 //
 // QueryHashTable.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -676,7 +676,7 @@ BOOL CQueryHashTable::OnPatch(CPacket* pPacket)
 
 	if ( nCompression == 1 )
 	{
-		if ( ! m_pBuffer->Inflate( m_nHash + 4 ) )
+		if ( ! m_pBuffer->Inflate() )
 		{
 			m_pBuffer->Clear();
 			return FALSE;

@@ -510,11 +510,11 @@ BOOL CBuffer::Deflate(BOOL bIfSmaller)
 // Takes the size we think the data will be when decompressed, or 0 if we don't know
 // Decompresses the data in this buffer in place
 // Returns true if the data is decompressed, false if there was an error
-BOOL CBuffer::Inflate(DWORD nSuggest)
+BOOL CBuffer::Inflate()
 {
 	// The bytes in this buffer are compressed, decompress them
 	DWORD nCompress = 0; // Decompress will write the size of the buffer it allocates and returns in this variable
-	auto_array< BYTE > pCompress( CZLib::Decompress( m_pBuffer, static_cast< DWORD >( m_nLength ), &nCompress, nSuggest ) );
+	auto_array< BYTE > pCompress( CZLib::Decompress( m_pBuffer, static_cast< DWORD >( m_nLength ), &nCompress ) );
 	if ( !pCompress.get() )
 		return FALSE; // Decompress had an error
 

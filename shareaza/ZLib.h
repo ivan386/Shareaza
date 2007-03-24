@@ -1,7 +1,7 @@
 //
 // ZLib.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,7 +38,7 @@ public:
 
 	// Compress and decompress nInput bytes at pInput to a new returned buffer of size pnOutput
 	static auto_array< BYTE > Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest = 0);
-	static auto_array< BYTE > Decompress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest = 0);
+	static auto_array< BYTE > Decompress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput);
 };
 
 // End the group of lines to only include once, pragma once doesn't require an endif at the bottom

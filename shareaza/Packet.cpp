@@ -1,7 +1,7 @@
 //
 // Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -317,7 +317,7 @@ int CPacket::GetStringLenUTF8(LPCTSTR pszString) const
 // Takes a length of compressed data, access to a DWORD to write a size, and a guess as to how big the data will be decompressed
 // Uses zlib to decompress the next nLength bytes of data from our current position in the packet
 // Returns a pointer to the decompressed memory that CZLib allocated
-auto_array< BYTE > CPacket::ReadZLib(DWORD nLength, DWORD* pnOutput, DWORD nSuggest)
+auto_array< BYTE > CPacket::ReadZLib(DWORD nLength, DWORD* pnOutput)
 {
 	// The packet has m_nLength bytes, and we are at m_nPosition in it, make sure nLength can fit in the part afterwards
 	if ( m_nLength - m_nPosition < nLength )
@@ -328,8 +328,7 @@ auto_array< BYTE > CPacket::ReadZLib(DWORD nLength, DWORD* pnOutput, DWORD nSugg
 	auto_array< BYTE > pOutput( CZLib::Decompress( // Use zlib, return a pointer to memory CZLib allocated
 		m_pBuffer + m_nPosition,        // The compressed data starts here
 		nLength,                        // And is this long
-		(DWORD*)pnOutput,               // CZLib::Decompress will write the size of the memory it returns a pointer to here
-		nSuggest ) );                     // Tell zlib how big we expect the data to be when decompressed
+		(DWORD*)pnOutput ) );           // CZLib::Decompress will write the size of the memory it returns a pointer to here
 
 	// Move the position in the packet past the memory we just decompressed
 	m_nPosition += nLength;
