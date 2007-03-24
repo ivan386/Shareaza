@@ -170,7 +170,6 @@ public:
 public:
 	BOOL		m_bExpanded;
 	BOOL		m_bSelected;
-	BOOL		m_bExisting;
 	BOOL		m_bDownload;
 	BOOL		m_bNew;
 	BOOL		m_bOneValid;
@@ -195,9 +194,9 @@ protected:
 	inline void		ClearNew();
 public:
 	
-	inline DWORD GetFilteredCount() const
+	inline DWORD GetFilteredCount()
 	{
-		if ( m_pList->m_bFilterLocal && m_bExisting == 1 ) return 0;
+		if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TS_FALSE ) return 0;
 		if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
 		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
@@ -206,10 +205,10 @@ public:
 		return m_nFiltered;
 	}
 	
-	inline DWORD GetItemCount() const
+	inline DWORD GetItemCount()
 	{
-		if ( m_pList->m_bFilterLocal && m_bExisting == 1 )return 0;
-			if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
+		if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TS_FALSE )return 0;
+		if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
 		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
 		if ( m_pBest == NULL ) return 0;
@@ -220,7 +219,7 @@ public:
 			return m_nFiltered + 1;
 	}
 	
-	inline int GetRating() const
+/*	inline int GetRating() const
 	{
 		int nRating = 0;
 		
@@ -229,9 +228,22 @@ public:
 		if ( m_bStable == TS_TRUE ) nRating ++;
 
 		return nRating;
-	}
+	}*/
 	
+
+	// Refresh file status (name, uri, etc.) in accord with Hits list
+	void		RefreshStatus();
+	
+	// Is this file known (i.e. exist in Library)?
+	// TS_UNKNOWN	- Not
+	// TS_FALSE		- Yes
+	// TS_TRUE		- Yes, Ghost
+	TRISTATE	GetLibraryStatus();
+
 	friend class CMatchList;
+
+protected:
+	TRISTATE	m_bExisting;
 };
 
 

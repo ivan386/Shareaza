@@ -378,7 +378,7 @@ void CMatchTipCtrl::LoadFromFile()
 
 	m_sStatus.Empty();
 
-	if ( m_pFile->m_bExisting )
+	if ( m_pFile->GetLibraryStatus() )
 	{
 		CLibraryFile* pExisting = NULL;
 
