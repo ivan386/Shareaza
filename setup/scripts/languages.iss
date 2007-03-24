@@ -33,6 +33,7 @@ Name: "tw"; MessagesFile: "setup\isl\chinese-trad.isl"; LicenseFile: "setup/lice
 Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
 Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl"; LicenseFile: "setup/license/default.rtf"
 Name: "ca"; MessagesFile: "setup\isl\catalan.isl"; LicenseFile: "setup/license/catalan.rtf"
+Name: "sq"; MessagesFile: "setup\isl\albanian.isl"; LicenseFile: "setup/license/albanian.rtf"
 
 [Files]
 #ifndef debug
@@ -95,6 +96,8 @@ Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: sl; Components: language
 ; Catalan
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: ca; Components: language
+; Albanian
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Languages: sq; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -155,6 +158,8 @@ Source: "setup\license\chinese-trad.rtf"; DestDir: "{app}\Uninstall"; DestName: 
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sl; Components: language
 ; Catalan
 Source: "setup\license\catalan.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ca; Components: language
+; Catalan
+Source: "setup\license\albanian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sq; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -215,6 +220,8 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sl; Components: language
 ; Catalan
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ca; Components: language
+; Albanian
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sq; Components: language
 #endif
 
 [CustomMessages]
@@ -982,3 +989,31 @@ ca.page_viruswarning_title=Advertència de virus
 ca.page_viruswarning_subtitle=Tens un programa antivíric instal·lat?
 ca.CreateDesktopIcon=Afegeix una icona a l'&escriptori
 ca.CreateQuickLaunchIcon=Afegeix una icona a l’&escriptori
+; Albanian
+sq.components_plugins=Plugins
+sq.components_skins=Skins
+sq.components_languages=Languages
+sq.tasks_allusers=All users
+sq.tasks_selectusers=Install %1 for:
+sq.tasks_currentuser=%1 only
+sq.tasks_multisetup=Enable multi-user support
+sq.tasks_firewall=Add an exception to the Windows Firewall
+sq.tasks_upnp=Enable discovery of UPnP devices
+sq.tasks_deleteoldsetup=Delete old installers
+sq.run_skinexe=Running skin installation...
+sq.reg_incomingchat=Incoming chat message
+sq.reg_apptitle=Shareaza Ultimate File Sharing
+sq.icons_license=License
+sq.icons_uninstall=Uninstall
+sq.icons_downloads=Downloads
+sq.icons_basicmode=Normal Mode
+sq.icons_tabbedmode=Tabbed Mode
+sq.icons_windowedmode=Windowed Mode
+sq.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+sq.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+sq.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+sq.page_viruswarning_title=Virus Warning
+sq.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+sq.CreateDesktopIcon=Display a &desktop icon
+sq.CreateQuickLaunchIcon=Display a &Quick Launch icon
+sq.PathNotExist=Error, the path of the %1 folder doesn't exist
