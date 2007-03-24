@@ -1,11 +1,7 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2006/02/23 21:10:12 $"
-//	Revision:		"$Revision: 1.26 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -747,7 +743,7 @@ void CLibraryFileView::OnLibraryShared()
 		if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) ) )
 		{
 			// Don't share not verified files
-			if ( pFile->m_bVerify == TS_TRUE )
+			if ( pFile->m_bVerify != TS_FALSE )
 			{
 				if ( pFile->IsShared() )
 					pFile->m_bShared = pFile->m_pFolder->IsShared() ? TS_FALSE : TS_UNKNOWN;
