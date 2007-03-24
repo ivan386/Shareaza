@@ -385,13 +385,13 @@ BOOL CTorrentTrackersPage::OnTree(CBENode* pNode)
 	if ( CBENode* pComplete = pFile->GetNode( "complete" ) )
 	{
 		if ( ! pComplete->IsType( CBENode::beInt ) ) return FALSE;	
-		m_nComplete = (int)pComplete->GetInt();
+		m_nComplete = (int)(pComplete->GetInt() & ~0xFFFF0000);
 	}
 	
 	if ( CBENode* pIncomplete = pFile->GetNode( "incomplete" ) )
 	{
 		if ( ! pIncomplete->IsType( CBENode::beInt ) ) return FALSE;	
-		m_nIncomplete = (int)pIncomplete->GetInt();
+		m_nIncomplete = (int)(pIncomplete->GetInt() & ~0xFFFF0000);
 	}
 	
 	return TRUE;
