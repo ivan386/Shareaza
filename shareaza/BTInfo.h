@@ -1,7 +1,7 @@
 //
 // BTInfo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -92,6 +92,7 @@ public:
 	DWORD		m_nBlockCount;
     Hashes::BtPureHash* m_pBlockBTH;
 	QWORD		m_nTotalUpload;					// Total amount uploaded
+	QWORD		m_nTotalDownload;				// Total amount downloaded
 public:
 	CString		m_sName;						// Name of the torrent
 	int			m_nFiles;						// Number of files

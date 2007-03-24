@@ -132,11 +132,6 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 		}
 	}
 
-	if ( m_bSeeding )
-	{
-		// Actually, it's incorrect if we download from G2/ed2k sources
-		m_nTorrentDownloaded = m_nSize;
-	}
 	m_nTorrentUploaded = m_pTorrent.m_nTotalUpload;
 }
 
@@ -759,8 +754,8 @@ void CDownloadWithTorrent::CloseTorrent()
 
 float CDownloadWithTorrent::GetRatio() const
 {
-	if ( m_nTorrentUploaded == 0 || m_nTorrentDownloaded == 0 ) return 0;
-	return (float)m_nTorrentUploaded / (float)m_nTorrentDownloaded;
+	if ( m_pTorrent.m_nTotalUpload == 0 || m_pTorrent.m_nTotalDownload == 0 ) return 0;
+	return (float)m_pTorrent.m_nTotalUpload / (float)m_pTorrent.m_nTotalDownload;
 }
 
 //////////////////////////////////////////////////////////////////////

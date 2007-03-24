@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,27 +38,25 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CBTInfo construction
 
-CBTInfo::CBTInfo()
+CBTInfo::CBTInfo() 
+: m_bEncodingError(FALSE)
+, m_nTotalSize(0)
+, m_nBlockSize(0)
+, m_nBlockCount(0)
+, m_pBlockBTH(NULL)
+, m_nTotalUpload(0)
+, m_nTotalDownload(0)
+, m_nFiles(0)
+, m_pFiles(NULL)
+, m_pAnnounceTracker(NULL)
+, m_nTrackerIndex(-1)
+, m_nTrackerMode(tNull)
+, m_nEncoding(Settings.BitTorrent.TorrentCodePage)
+, m_tCreationDate(0)
+, m_bPrivate(FALSE)
+, m_nStartDownloads(dtAlways)
+, m_nTestByte(0)
 {
-	m_bEncodingError	= FALSE;
-	m_nTotalSize		= 0;
-	m_nBlockSize		= 0;
-	m_nBlockCount		= 0;
-	m_pBlockBTH 		= NULL;
-	m_nTotalUpload		= 0;
-
-	m_nFiles			= 0;
-	m_pFiles			= NULL;
-
-	m_pAnnounceTracker	= NULL;
-	m_nTrackerIndex		= -1;
-	m_nTrackerMode		= tNull;
-
-	m_nEncoding			= Settings.BitTorrent.TorrentCodePage;
-	m_tCreationDate		= 0;
-	m_bPrivate			= FALSE;
-
-	m_nStartDownloads	= dtAlways;
 }
 
 CBTInfo::~CBTInfo()
@@ -121,6 +119,7 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	m_nBlockSize		= pSource->m_nBlockSize;
 	m_nBlockCount		= pSource->m_nBlockCount;
 	m_nTotalUpload		= pSource->m_nTotalUpload;
+	m_nTotalDownload	= pSource->m_nTotalDownload;
 
 	m_sName				= pSource->m_sName;
 	m_nFiles			= pSource->m_nFiles;
@@ -173,7 +172,7 @@ void CBTInfo::Copy(CBTInfo* pSource)
 
 void CBTInfo::Serialize(CArchive& ar)
 {
-	int nVersion = 5;
+	int nVersion = 6;
 	
 	if ( ar.IsStoring() )
 	{
@@ -191,6 +190,7 @@ void CBTInfo::Serialize(CArchive& ar)
         }
 
 		ar << m_nTotalUpload;
+		ar << m_nTotalDownload;
 		
 		ar << m_sName;
 
@@ -256,7 +256,8 @@ void CBTInfo::Serialize(CArchive& ar)
         }
 
 		if ( nVersion >= 4 ) ar >> m_nTotalUpload;
-		
+		if ( nVersion >= 6 ) ar >> m_nTotalDownload;
+
 		ar >> m_sName;
 
 		if ( nVersion >= 3 )
