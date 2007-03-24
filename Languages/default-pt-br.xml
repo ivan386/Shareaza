@@ -2893,7 +2893,7 @@
 	<string id="16774" value="&amp;Conectar"/>
 	<string id="16775" value="&amp;Navegar"/>
 	<string id="16776" value="Adicionar"/>
-	<string id="16777" value="Nome do Arquivo:"/>
+	<string id="16777" value="Arquivo:"/>
 	<string id="16778" value="URL:"/>
 	<string id="16779" value="Tipo:"/>
 	<string id="16780" value="Não Especificado"/>
@@ -3769,7 +3769,7 @@
 		<control caption="O Shareaza está baixando:"/>
 		<control caption="..."/>
 		<control/><control/><control/>
-		<control caption="Velocidade total de transferência:"/>
+		<control caption="Velocidade de transferência:"/>
 		<control caption="..."/>
 		<control caption="Tempo restante estimado:"/>
 		<control caption="..."/>
@@ -3946,10 +3946,10 @@
 		<control/><control/><control/><control/>
 		<control caption="Por favor selecione a ação que você gostaria que o Shareaza tomasse:"/>
 		<control caption="Baixar Agora"/>
-		<control caption="Procurar por Arquivo"/>
+		<control caption="Procurar Arquivo"/>
 		<control caption="Cancelar"/>
-		<control caption="Lembrar a minha seleção da próxima vez"/>
-		<control caption="Abrir uma janela do monitor de download"/>
+		<control caption="Lembrar a seleção da próxima vez"/>
+		<control caption="Abrir janela do monitor de download"/>
 		<control caption="Você clicou num link URI que adicionará os seguintes Serviços de Descobrimento ao seu cache de Serviços de Descobrimento."/>
 	</dialog>
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Baixando Metadata...">
@@ -4051,8 +4051,8 @@
 	</dialog>
 	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Editar Download">
 		<control caption="ATENÇÃO: Este diálogo provém funções de edição avançada de download para usuários power, se usadas incorretamente podem e talvez causarão corrupção."/>
-		<control caption="Nome do Arq. e Tamanho:"/>
-		<control caption="Nome do arq:"/>
+		<control caption="Nome do Arquivo e Tamanho:"/>
+		<control caption="Arquivo:"/>
 		<control/><control/>
 		<control caption="Tamanho (Bytes):"/>
 		<control/>
@@ -4072,7 +4072,7 @@
 		<control caption="Destruidor de Dados:"/>
 		<control caption="Bytes Range:"/>
 		<control/>
-		<control caption="pra"/>
+		<control caption="até"/>
 		<control/>
 		<control caption="Apagar"/>
 		<control caption="Info do Torrent"/>
@@ -4100,7 +4100,7 @@
 		<control/>
 		<control caption="Transferências:"/>
 		<control caption="Iniciar novas transferências de download:"/>
-		<control caption="&#160;Quando necessitado| Quando o ratio é maior do que 100%| Apenas quando pedido| Nunca"/>
+		<control caption="&#160;Quando necessitado| Qndo o ratio for maior que 100%| Apenas quando pedido| Nunca"/>
 		<control/>
 		<control caption="Total de Upload feito:"/>
 		<control caption="Notas:"/>
@@ -4128,7 +4128,7 @@
 		<control caption="Trackers:"/>
 		<control/>
 		<control caption="Modo Tracker:"/>
-		<control caption="Desativado|Custom|Tracker Único|Multi-tracker|Multi-tracker (trancado)"/>
+		<control caption="Desativado|Modificado|Tracker Único|Multi-tracker|Multi-tracker (trancado)"/>
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propriedades dos grupos de Download">
 		<control caption="Nome:"/>
