@@ -1,7 +1,7 @@
 //
 // CoolMenu.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,6 @@ CCoolMenu CoolMenu;
 
 CCoolMenu::CCoolMenu()
 {
-	m_nCheckIcon	= 0;
 	m_bEnable		= TRUE;
 	m_bUnhook		= FALSE;
 }
@@ -372,7 +371,7 @@ void CCoolMenu::OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	nIcon = CoolInterface.ImageForID( (DWORD)lpDrawItemStruct->itemID );
 
-	if ( bChecked && nIcon < 0 ) nIcon = m_nCheckIcon;
+	if ( bChecked && nIcon < 0 ) nIcon = CoolInterface.ImageForID( ID_CHECKMARK );
 
 	if ( nIcon >= 0 )
 	{

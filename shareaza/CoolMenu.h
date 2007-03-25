@@ -50,7 +50,6 @@ protected:
 	// my guess: the compiler cannot distinguish between T and __w64 T with respect to overload resolution
 	//   or template instantiation - in that case it's a false warning and should be supressed
 	CMap< DWORD_PTR, DWORD_PTR&, CString, CString& >	m_pStrings;
-	int			m_nCheckIcon;
 protected:
 	CBitmap		m_bmWatermark;
 	CDC			m_dcWatermark;
