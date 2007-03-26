@@ -78,7 +78,7 @@ auto_array< BYTE > CZLib::Decompress(LPCVOID pInput, DWORD nInput, DWORD* pnOutp
 	BYTE* pBuffer;
 
 	// Guess how big the data will be decompressed, use nSuggest, or just guess it will be 6 times as big
-	for ( DWORD nSuggest = min( nInput * 6ul, 1024ul ); ; nSuggest *= 2 )
+	for ( DWORD nSuggest = max( nInput * 6ul, 1024ul ); ; nSuggest *= 2 )
 	{
 		pBuffer = new BYTE[ nSuggest ];
 		if ( ! pBuffer )
