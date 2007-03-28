@@ -7,8 +7,8 @@
 ; messages that didn't have them already, because on those messages Inno
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
-; Translated by Robertas Rimas (Loptar@takas.lt)
-; Corrected and updated by Rolandas Rudomanskis (rolandasr@gmail.com)
+; Translated by Robertas Rimas (Loptar AT takas DOT lt)
+; Corrected and updated by Rolandas Rudomanskis (rolandasr AT gmail DOT com)
 
 [LangOptions]
 LanguageName=Lietuvi<0173>
