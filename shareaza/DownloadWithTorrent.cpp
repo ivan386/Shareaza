@@ -131,8 +131,6 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			GenerateTorrentDownloadID();
 		}
 	}
-
-	m_nTorrentUploaded = m_pTorrent.m_nTotalUpload;
 }
 
 //////////////////////////////////////////////////////////////////////

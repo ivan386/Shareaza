@@ -387,7 +387,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		LoadString( strVolume, IDS_TIP_NA );
 	}
 
-	if ( pDownload->m_nTorrentUploaded )
+	if ( pDownload->m_oBTH )
 	{
 		if ( theApp.m_bRTL )
 		{
