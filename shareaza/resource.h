@@ -1710,7 +1710,10 @@
 #define ID_HELP_DISKSPACE               33130
 #define ID_HELP_DISKWRITEFAIL           33131
 #define ID_HELP_CONNECTIONFAIL          33132
-#define ID_HELP_DONKEYSERVERS           33134
+#define ID_HELP_DONKEYSERVERS           33133
+#define ID_MEDIA_STATE_STOP				33200
+#define ID_MEDIA_STATE_PAUSE			33201
+#define ID_MEDIA_STATE_PLAY				33202
 
 // Next default values for new objects
 // 
