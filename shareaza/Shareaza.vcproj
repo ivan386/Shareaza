@@ -3391,6 +3391,34 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe;htm;xml;png">
 			<File
 				RelativePath="Res\About.htm">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="Res\BadRange.htm">
@@ -3406,6 +3434,34 @@
 			</File>
 			<File
 				RelativePath="Res\Browser.htm">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="Res\Busy.htm">
@@ -3460,9 +3516,68 @@
 			</File>
 			<File
 				RelativePath="Res\Default.xml">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Res\DefaultServices.dat">
 			</File>
 			<File
 				RelativePath="Res\Definitions.xml">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="Res\Disabled.htm">
