@@ -4,6 +4,7 @@
 	Version="8,00"
 	Name="CopyFiles"
 	ProjectGUID="{13C7CBBC-B681-4D81-8878-E2EA1F47022D}"
+	RootNamespace="CopyFiles"
 	>
 	<Platforms>
 		<Platform
@@ -273,6 +274,7 @@
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
+				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
@@ -283,6 +285,7 @@
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Debug|x64"
+				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
@@ -293,6 +296,7 @@
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32"
+				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
@@ -303,6 +307,7 @@
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|x64"
+				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
