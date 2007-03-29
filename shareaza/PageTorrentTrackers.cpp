@@ -384,7 +384,10 @@ BOOL CTorrentTrackersPage::OnTree(CBENode* pNode)
 	
 	if ( CBENode* pComplete = pFile->GetNode( "complete" ) )
 	{
-		if ( ! pComplete->IsType( CBENode::beInt ) ) return FALSE;	
+		if ( ! pComplete->IsType( CBENode::beInt ) ) return FALSE;
+		// Since we read QWORDs, make sure we won't get negative values;
+		// Some buggy trackers send very huge numbers, so let's leave them as
+		// the max int.	
 		m_nComplete = (int)(pComplete->GetInt() & ~0xFFFF0000);
 	}
 	
