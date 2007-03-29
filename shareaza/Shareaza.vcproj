@@ -3405,9 +3405,6 @@
 				RelativePath="Res\Browse.ico">
 			</File>
 			<File
-				RelativePath="Res\BrowseHost.ico">
-			</File>
-			<File
 				RelativePath="Res\Browser.htm">
 			</File>
 			<File
@@ -3610,12 +3607,6 @@
 			</File>
 			<File
 				RelativePath="Res\SearchFolder.ico">
-			</File>
-			<File
-				RelativePath="Res\SearchMonitor.ico">
-			</File>
-			<File
-				RelativePath="Res\SearchPad.ico">
 			</File>
 			<File
 				RelativePath="Res\Security.bmp">

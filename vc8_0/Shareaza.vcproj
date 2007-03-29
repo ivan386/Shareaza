@@ -4428,10 +4428,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\BrowseHost.ico"
-				>
-			</File>
-			<File
 				RelativePath="..\shareaza\Res\Browser.htm"
 				DeploymentContent="true"
 				>
@@ -4706,14 +4702,6 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\SearchFolder.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\Res\SearchMonitor.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\Res\SearchPad.ico"
 				>
 			</File>
 			<File
