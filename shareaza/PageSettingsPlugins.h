@@ -78,7 +78,7 @@ protected:
 	afx_msg void OnCustomDrawPlugins(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnPluginsSetup();
 	afx_msg void OnPluginsWeb();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

@@ -536,7 +536,7 @@ void CPluginsSettingsPage::UpdateList()
 	}
 }
 
-void CPluginsSettingsPage::OnTimer(UINT /*nIDEvent*/)
+void CPluginsSettingsPage::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	if ( IsWindowVisible() )
 	{
