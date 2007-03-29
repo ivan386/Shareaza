@@ -2852,14 +2852,14 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -2881,14 +2881,14 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -2949,14 +2949,14 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -2969,14 +2969,14 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -3198,20 +3198,16 @@
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath="debug\shareaza\Shareaza_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
+				RelativePath="..\shareaza\Res\About.htm.gz">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Browser.htm.gz">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Default.xml.gz">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Definitions.xml.gz">
 			</File>
 			<File
 				RelativePath="release\shareaza\Shareaza_i.c">
@@ -3229,6 +3225,22 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 						DisableSpecificWarnings="4255;4668;4820"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="debug\shareaza\Shareaza_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4668;4820"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
