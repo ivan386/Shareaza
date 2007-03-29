@@ -2504,6 +2504,11 @@
 		<image id="ID_CHILD_MINIMISE"/>
 		<image id="ID_CHILD_CLOSE"/>
 	</bitmap>
+	<bitmap id="222">
+		<image id="ID_MEDIA_STATE_STOP"/>
+		<image id="ID_MEDIA_STATE_PAUSE"/>
+		<image id="ID_MEDIA_STATE_PLAY"/>
+	</bitmap>
 	<bitmap id="227">
 		<image id="ID_NETWORK_NULL"/>
 		<image id="ID_NETWORK_G1"/>
