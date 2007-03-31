@@ -61,6 +61,7 @@ public:
 	int		GetNext(BOOL bSet = TRUE);
 	void	Reset(BOOL bNext = TRUE);
 	CString	GetPath(int nItem);
+	void	OnSkinChange();
 
 // Overrides
 public:

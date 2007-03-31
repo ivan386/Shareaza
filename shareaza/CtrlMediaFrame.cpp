@@ -329,6 +329,8 @@ void CMediaFrame::OnSkinChange()
 		m_pIcons.Replace( 2, hIcon );
 		DestroyIcon( hIcon );
 	}
+	
+	m_wndList.OnSkinChange();
 }
 
 void CMediaFrame::OnUpdateCmdUI()

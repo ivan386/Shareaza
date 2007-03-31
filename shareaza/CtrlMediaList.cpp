@@ -362,7 +362,6 @@ int CMediaListCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CListCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	SetBkColor( CoolInterface.m_crMediaPanel );
 	SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	InsertColumn( 0, _T("Name"), LVCFMT_LEFT, 100, -1 );
 	InsertColumn( 1, _T("Path"), LVCFMT_LEFT, 0, 0 );
@@ -789,4 +788,9 @@ void CMediaListCtrl::OnMediaCollection()
 	CCollectionExportDlg dlg( pCollection );
 	dlg.DoModal();
 	delete pCollection;
+}
+
+void CMediaListCtrl::OnSkinChange()
+{
+	SetBkColor( CoolInterface.m_crMediaPanel );
 }
