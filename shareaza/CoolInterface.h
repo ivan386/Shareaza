@@ -69,6 +69,17 @@ public:
 	COLORREF	m_crTaskBoxCaptionHover;
 	COLORREF	m_crTaskBoxClient;
 
+	COLORREF	m_crMediaWindow;
+	COLORREF	m_crMediaWindowText;
+	COLORREF	m_crMediaStatus;
+	COLORREF	m_crMediaStatusText;
+	COLORREF	m_crMediaPanel;
+	COLORREF	m_crMediaPanelText;
+	COLORREF	m_crMediaPanelActive;
+	COLORREF	m_crMediaPanelActiveText;
+	COLORREF	m_crMediaPanelCaption;
+	COLORREF	m_crMediaPanelCaptionText;
+
 	void		Clear();
 	void		NameCommand(UINT nID, LPCTSTR pszName);
 	UINT		NameToID(LPCTSTR pszName);

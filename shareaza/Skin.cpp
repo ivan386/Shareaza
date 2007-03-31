@@ -1181,7 +1181,19 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("banner.text"), &m_crBannerText );
 	pColours.SetAt( _T("schema.row1"), &m_crSchemaRow[0] );
 	pColours.SetAt( _T("schema.row2"), &m_crSchemaRow[1] );
-	
+
+//	The color is controlled by media player plugin, thus we can not skin it.
+//	pColours.SetAt( _T("media.window"), &CoolInterface.m_crMediaWindow );
+	pColours.SetAt( _T("media.window.text"), &CoolInterface.m_crMediaWindowText );
+	pColours.SetAt( _T("media.status"), &CoolInterface.m_crMediaStatus );
+	pColours.SetAt( _T("media.status.text"), &CoolInterface.m_crMediaStatusText );
+	pColours.SetAt( _T("media.panel"), &CoolInterface.m_crMediaPanel );
+	pColours.SetAt( _T("media.panel.text"), &CoolInterface.m_crMediaPanelText );
+	pColours.SetAt( _T("media.panel.active"), &CoolInterface.m_crMediaPanelActive );
+	pColours.SetAt( _T("media.panel.active.text"), &CoolInterface.m_crMediaPanelActiveText );
+	pColours.SetAt( _T("media.panel.caption"), &CoolInterface.m_crMediaPanelCaption );
+	pColours.SetAt( _T("media.panel.caption.text"), &CoolInterface.m_crMediaPanelCaptionText );
+
 	BOOL bSystem = FALSE, bNonBase = FALSE;
 	
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )

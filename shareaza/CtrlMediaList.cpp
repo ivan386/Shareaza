@@ -31,6 +31,7 @@
 #include "Buffer.h"
 #include "CtrlMediaList.h"
 #include "DlgCollectionExport.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -361,7 +362,7 @@ int CMediaListCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CListCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	SetBkColor( RGB( 0, 0, 0x30 ) );
+	SetBkColor( CoolInterface.m_crMediaPanel );
 	SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	InsertColumn( 0, _T("Name"), LVCFMT_LEFT, 100, -1 );
 	InsertColumn( 1, _T("Path"), LVCFMT_LEFT, 0, 0 );
@@ -397,13 +398,13 @@ void CMediaListCtrl::OnCustomDraw(NMLVCUSTOMDRAW* pNotify, LRESULT* pResult)
 		if (	GetItemState( static_cast< int >( pNotify->nmcd.dwItemSpec ), LVIS_SELECTED ) == 0 &&
 				GetItemState( static_cast< int >( pNotify->nmcd.dwItemSpec ), STATE_CURRENT ) != 0 )
 		{
-			pNotify->clrText	= RGB( 255, 255, 255 );
-			pNotify->clrTextBk	= RGB( 128, 0, 0 );
+			pNotify->clrText	= CoolInterface.m_crMediaPanelActiveText;
+			pNotify->clrTextBk	= CoolInterface.m_crMediaPanelActive;
 		}
 		else
 		{
-			pNotify->clrText	= RGB( 255, 255, 255 );
-			pNotify->clrTextBk	= RGB( 0, 0, 0x30 );
+			pNotify->clrText	= CoolInterface.m_crMediaPanelText;
+			pNotify->clrTextBk	= CoolInterface.m_crMediaPanel;
 		}
 
 		if ( m_bCreateDragImage ) pNotify->clrTextBk = DRAG_COLOR_KEY;

@@ -25,6 +25,7 @@
 #include "ImageServices.h"
 #include "Skin.h"
 #include "WndMedia.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -180,7 +181,7 @@ void CMediaWnd::OnPaint()
 	{
 		CRect rc;
 		GetClientRect( &rc );
-		dc.FillSolidRect( &rc, 0 );
+		dc.FillSolidRect( &rc, CoolInterface.m_crMediaWindow );
 	}
 }
 

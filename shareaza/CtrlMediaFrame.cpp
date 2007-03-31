@@ -520,11 +520,12 @@ void CMediaFrame::OnPaint()
 		dc.FillSolidRect( rcBar.right - 1, rcBar.top, 1, rcBar.Height(), GetSysColor( COLOR_3DSHADOW ) );
 		dc.FillSolidRect( rcBar.left + 2, rcBar.top, rcBar.Width() - 3, rcBar.Height(), GetSysColor( COLOR_BTNFACE ) );
 		dc.ExcludeClipRect( &rcBar );
-		
+
 		rcBar.SetRect( rcBar.right, rcClient.top,
 			rcClient.right, rcClient.top + HEADER_HEIGHT );
 		
-		if ( dc.RectVisible( &rcBar ) ) PaintListHeader( dc, rcBar );
+		if ( dc.RectVisible( &rcBar ) )
+			PaintListHeader( dc, rcBar );
 	}
 	
 	if ( m_bStatusVisible )
@@ -537,6 +538,10 @@ void CMediaFrame::OnPaint()
 	{
 		if ( dc.RectVisible( &m_rcVideo ) ) PaintSplash( dc, m_rcVideo );
 	}
+	else
+	{
+		// media player plugin handles painting of m_rcVideo rectangular itself
+	}
 	
 	dc.SelectObject( pOldFont );
 }
@@ -545,7 +550,7 @@ void CMediaFrame::PaintSplash(CDC& dc, CRect& /*rcBar*/)
 {
 	if ( m_bmLogo.m_hObject == NULL )
 	{
-		dc.FillSolidRect( &m_rcVideo, 0 );
+		dc.FillSolidRect( &m_rcVideo, CoolInterface.m_crMediaWindow );
 		return;
 	}
 	
@@ -572,12 +577,12 @@ void CMediaFrame::PaintSplash(CDC& dc, CRect& /*rcBar*/)
 	pt.x = ( m_rcVideo.left + m_rcVideo.right ) / 2 - dc.GetTextExtent( strText ).cx / 2;
 	pt.y = rcText.top + 8;
 	
-	dc.SetBkColor( 0 );
-	dc.SetTextColor( RGB( 200, 200, 255 ) );
+	dc.SetBkColor( CoolInterface.m_crMediaWindow );
+	dc.SetTextColor( CoolInterface.m_crMediaWindowText );
 	dc.ExtTextOut( pt.x, pt.y, ETO_OPAQUE, &m_rcVideo, strText, NULL );
 	dc.ExcludeClipRect( &rcText );
 	
-	dc.FillSolidRect( &m_rcVideo, 0 );
+	dc.FillSolidRect( &m_rcVideo, CoolInterface.m_crMediaWindow );
 }
 
 void CMediaFrame::PaintListHeader(CDC& dc, CRect& rcBar)
@@ -588,15 +593,15 @@ void CMediaFrame::PaintListHeader(CDC& dc, CRect& rcBar)
 	CSize szText = dc.GetTextExtent( strText );
 	pt.x -= szText.cx / 2; pt.y -= szText.cy / 2;
 	dc.SetBkMode( OPAQUE );
-	dc.SetBkColor( RGB( 0, 0, 0x80 ) );
-	dc.SetTextColor( RGB( 0xFF, 0xFF, 0 ) );
+	dc.SetBkColor( CoolInterface.m_crMediaPanelCaption );
+	dc.SetTextColor( CoolInterface.m_crMediaPanelCaptionText );
 	dc.ExtTextOut( pt.x, pt.y, ETO_OPAQUE|ETO_CLIPPED, &rcBar, strText, NULL );
 }
 
 void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 {
-	COLORREF crBack = RGB( 0x00, 0x00, 0x60 );
-	COLORREF crText = RGB( 0xF0, 0xF0, 0xFF );
+	COLORREF crBack = CoolInterface.m_crMediaStatus;
+	COLORREF crText = CoolInterface.m_crMediaStatusText;
 	
 	dc.SelectObject( &m_pFontValue );
 	DWORD dwOptions = theApp.m_bRTL ? ETO_RTLREADING : 0;

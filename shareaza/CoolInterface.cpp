@@ -390,6 +390,17 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crTaskBoxPrimaryText	= RGB( 255, 255, 255 );
 	m_crTaskBoxCaptionHover	= RGB( 84, 143, 255 );
 	m_crTaskBoxClient		= RGB( 214, 223, 247 );
+
+	m_crMediaWindow		= RGB( 0, 0, 0 );
+	m_crMediaWindowText	= RGB( 200, 200, 255 );
+	m_crMediaStatus		= RGB( 0, 0, 0x60 );
+	m_crMediaStatusText	= RGB( 0xF0, 0xF0, 0xFF );
+	m_crMediaPanel  	= RGB( 0, 0, 0x30 );
+	m_crMediaPanelText  	= RGB( 255, 255, 255 );
+	m_crMediaPanelActive  	= RGB( 128, 0, 0 );
+	m_crMediaPanelActiveText = RGB( 255, 255, 255 );
+	m_crMediaPanelCaption	= RGB( 0x00, 0x00, 0x80 );
+	m_crMediaPanelCaptionText = RGB( 0xFF, 0xFF, 0 );
 }
 
 void CCoolInterface::OnSysColourChange()
