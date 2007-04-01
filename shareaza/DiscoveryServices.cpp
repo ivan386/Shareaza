@@ -1241,6 +1241,10 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		}
 		else if ( _tcsnicmp( strLine, _T("u|"), 2 ) == 0 )
 		{
+			// Make sure the address of the gwebcache isn't empty
+			if ( _tcsnicmp( strLine, _T("u||"), 3) == 0 )
+				continue;
+			
 			// URL ADDRESS AT: strLine.Mid( 2 )
 			// CORRECT (REQUESTED) NETWORK
 			Add( strLine.Mid( 2 ).SpanExcluding( _T("|") ), CDiscoveryService::dsWebCache, m_nLastQueryProtocol );
