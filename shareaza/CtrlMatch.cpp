@@ -625,6 +625,7 @@ void CMatchCtrl::OnPaint()
 		CMatchFile* pFile = *ppFile;
 		int nCount = pFile->GetFilteredCount();
 		
+		// Don't paint the file if it has been filtered.
 		if ( ! nCount ) continue;
 		
 		if ( rcItem.top >= rcClient.top && dc.RectVisible( &rcItem ) )
@@ -639,6 +640,7 @@ void CMatchCtrl::OnPaint()
 		{
 			for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
 			{
+				// Don't paint filtered hits.
 				if ( ! pHit->m_bFiltered ) continue;
 				
 				if ( rcItem.top >= rcClient.top && dc.RectVisible( &rcItem ) )
@@ -710,14 +712,17 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 
 	if ( pFile->GetLibraryStatus() == TS_FALSE )
 	{
+		// Green if already in the library
 		crText = pHit ? RGB( 0, 64, 0 ) : RGB( 0, 127, 0 );
 	}
 	else if ( pFile->GetLibraryStatus() == TS_TRUE )
 	{
+		// Brown/Orange if a ghost rating is in the library
 		crText = RGB( 200, 90, 0 );
 	}
 	else if ( pFile->m_bDownload || ( pHit && pHit->m_bDownload ) )
 	{
+		// Blue if chosen for download
 		crText = pHit ? RGB( 0, 0, 100 ) : RGB( 0, 0, 160 );
 	}
 
@@ -1612,6 +1617,7 @@ void CMatchCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		DoExpand( TRUE );
 		break;
 	case VK_TAB:
+		// TODO: shift TAB for going back to search result list
 		if ( CBaseMatchWnd* pOwner = (CBaseMatchWnd*)GetOwner() )
 		{
 			if ( pOwner->IsKindOf( RUNTIME_CLASS(CBaseMatchWnd) ) )
