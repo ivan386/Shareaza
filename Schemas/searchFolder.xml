@@ -46,7 +46,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Paieška:Radiniai</title>
                <title language="nl">Zoeken:Zoekresultaten</title>
                <title language="no">Søk: søkeresultat</title>
-               <title language="pt-br">Pesquisar: Resultados de Pesquisa</title>
+               <title language="pt-br">Procurar: Resultados da Busca</title>
                <title language="ru">&#160;Поиск: Результаты поиска</title>
                <title language="sl-SI">Iskanje:Rezultati iskanja</title>
                <title language="sq">Kërkimi:Rezultatet e Kërkimit</title>
@@ -176,7 +176,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">„{content}“ radiniai</title>
                <title language="nl">Zoeken naar "{content}"</title>
                <title language="no">Søk etter "{content}"</title>
-               <title language="pt-br">Pesquisar por "{content}"</title>
+               <title language="pt-br">Procurar por "{content}"</title>
                <title language="ru">Поиск для "{content}"</title>
                <title language="sl-SI">Išči po "{content}"</title>
                <title language="sq">Kërko për "{content}"</title>
@@ -199,7 +199,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="lt">Šiame kataloge yra bylos, surastos pagal ieškinį „{content}“.</subtitle>
                <subtitle language="nl">Deze map bevat alle bestanden die resulteerden uit je zoekopdracht naar "{content}"</subtitle>
                <subtitle language="no">Denne mappen inneholder resultat som matcher søk etter "{content}"</subtitle>
-               <subtitle language="pt-br">Esta pasta contém os arquivos que foram encontrados na sua pesquisa por "{content}".</subtitle>
+               <subtitle language="pt-br">Esta pasta contém os arquivos os quais combinaram na sua busca por "{content}".</subtitle>
                <subtitle language="ru">Эта папка отображает результаты поиска для {content}.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje datoteke, ki so se ujemale vašemu iskanju po "{content}"</subtitle>
                <subtitle language="sq">Kjo dosje përmban skedat të cilat ngjanin me kërkimin tuaj për "{content}"</subtitle>
