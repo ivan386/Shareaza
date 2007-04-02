@@ -1823,7 +1823,8 @@ TRISTATE CMatchFile::GetLibraryStatus()
 		}
 		else
 		{
-			m_bExisting = TS_UNKNOWN;
+			if ( m_bExisting == TS_FALSE )
+				m_bExisting = TS_TRUE;
 		}
 		pLock.Unlock();
 	}
