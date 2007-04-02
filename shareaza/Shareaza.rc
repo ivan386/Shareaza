@@ -888,7 +888,7 @@ BEGIN
         MENUITEM "Thumbnail View",              ID_LIBRARY_VIEW_THUMBNAIL
         MENUITEM "Tile View",                   ID_LIBRARY_VIEW_TILE
         MENUITEM "Album View",                  ID_LIBRARY_VIEW_ALBUM
-        MENUITEM "Collection View",             33106
+        MENUITEM "Collection View",             ID_LIBRARY_VIEW_COLLECTION
     END
     POPUP "Other"
     BEGIN
