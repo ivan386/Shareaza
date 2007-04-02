@@ -342,7 +342,6 @@ BOOL CBTClient::OnHandshake1()
 	// Read in the BT protocol header
 	if ( memcmp( pIn, BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) != 0 )
 	{
-		ASSERT( FALSE );
 		theApp.Message( MSG_ERROR, _T("BitTorrent coupling from %s had invalid header"), (LPCTSTR)m_sAddress );
 		Close();
 		return FALSE;
