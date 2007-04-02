@@ -475,9 +475,10 @@ void CDownload::OnDownloaded()
 		AppendMetadata();
 	}
 	
-	if ( m_pTask && m_pTask->m_nTask == CDownloadTask::dtaskPreviewRequest )
+	if ( m_pTask && ( m_pTask->m_nTask == CDownloadTask::dtaskPreviewRequest ||
+		m_pTask->m_nTask == CDownloadTask::dtaskMergeFile ) )
 	{
-		m_pTask->Abort(); // We don't need previews if the file was downloaded
+		m_pTask->Abort();
 	}
 	ASSERT( m_pTask == NULL );
 	m_pTask = new CDownloadTask( this, CDownloadTask::dtaskCopySimple );
