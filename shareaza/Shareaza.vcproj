@@ -3395,28 +3395,32 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -3438,28 +3442,32 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -3520,28 +3528,32 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -3554,28 +3566,32 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c $(InputDir)$(InputFileName) &gt;$(InputDir)$(InputFileName).gz"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
+"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
