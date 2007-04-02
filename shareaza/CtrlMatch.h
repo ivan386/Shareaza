@@ -1,7 +1,7 @@
 //
 // CtrlMatch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,6 +69,8 @@ protected:
 	CBitmap			m_bmSortDesc;
 	BOOL			m_bTips;
 	int				m_nScrollWheelLines;
+	CMatchFile*		m_pLastSelectedFile;
+	CQueryHit*		m_pLastSelectedHit;
 
 // Operations
 public:
@@ -99,6 +101,7 @@ protected:
 	void	NotifySelection();
 	void	DoDelete();
 	void	DoExpand(BOOL bExpand);
+	void	SelectAll();
 
 // Overrides
 public:

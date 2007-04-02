@@ -1,7 +1,7 @@
 //
 // CtrlMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -88,6 +88,8 @@ CMatchCtrl::CMatchCtrl()
 	m_nMessage		= 0;
 	m_bSearchLink	= FALSE;
 	m_bTips			= TRUE;
+	m_pLastSelectedFile = NULL;
+	m_pLastSelectedHit = NULL;
 
 	// Try to get the number of lines to scroll when the mouse wheel is rotated
 	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
@@ -1409,24 +1411,105 @@ void CMatchCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 		bChanged |= m_pMatches->ClearSelection();
 		m_nFocus = nIndex;
 	}
-	
+
 	if ( pFile != NULL )
 	{
-		BOOL bSelected = ( pHit != NULL ) ? pHit->m_bSelected : pFile->m_bSelected;
-		
-		if ( nFlags & MK_RBUTTON )
+		if ( nFlags & MK_SHIFT )
 		{
-			if ( ! bSelected )
+			if ( m_pLastSelectedFile == pFile && m_pLastSelectedHit == pHit )
 			{
-				m_pMatches->ClearSelection();
-				m_pMatches->Select( pFile, pHit, TRUE );
+				bChanged |= m_pMatches->ClearSelection();
 				m_nFocus = nIndex;
+				m_pMatches->Select( pFile, pHit, TRUE );
+			}
+			else if ( m_pLastSelectedFile )
+			{
+				if ( ! m_pLastSelectedFile->m_bExpanded )
+				{
+					m_pLastSelectedHit = NULL;
+				}
+
+				bChanged |= m_pMatches->ClearSelection();
+				m_nFocus = nIndex;
+
+				BOOL bEnd = FALSE;
+				BOOL bFileFound = FALSE;
+				BOOL bHitFound = FALSE;
+				CMatchFile** ppCurFile = m_pMatches->m_pFiles;
+				for ( DWORD i = 0 ; i < m_pMatches->m_nFiles && ! bEnd ; i++, ppCurFile++ )
+				{
+					if ( *ppCurFile == pFile || *ppCurFile == m_pLastSelectedFile )
+					{
+						if ( ( *ppCurFile == m_pLastSelectedFile && ! m_pLastSelectedHit ) ||
+							 ( *ppCurFile == pFile && ! pHit ) )
+						{
+							if ( bFileFound )
+							{
+								bEnd = TRUE;
+							}
+							bHitFound = TRUE;
+						}
+						bFileFound = TRUE;
+					}
+					if ( (*ppCurFile)->GetFilteredCount() )
+					{
+						if ( bFileFound && bHitFound )
+						{
+							m_pMatches->Select( *ppCurFile, NULL, TRUE );
+						}
+						if ( (*ppCurFile)->m_bExpanded && ! bEnd )
+						{
+							for ( CQueryHit* pCurHit = (*ppCurFile)->m_pHits ; pCurHit ;
+								pCurHit = pCurHit->m_pNext )
+							{
+								if ( pCurHit == pHit || pCurHit == m_pLastSelectedHit )
+								{
+									if ( bHitFound || pHit == m_pLastSelectedHit )
+									{
+										bEnd = TRUE;
+									}
+									bHitFound = TRUE;
+								}
+								if ( bFileFound && bHitFound && pCurHit->m_bFiltered )
+								{
+									m_pMatches->Select( *ppCurFile, pCurHit, TRUE );
+								}
+								if ( bEnd )
+								{
+									break;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		else
 		{
-			bChanged |= m_pMatches->Select( pFile, pHit, ! bSelected );
+			m_pLastSelectedFile = pFile;
+			m_pLastSelectedHit = pHit;
+
+			BOOL bSelected = ( pHit != NULL ) ? pHit->m_bSelected : pFile->m_bSelected;
+			
+			if ( nFlags & MK_RBUTTON )
+			{
+				if ( ! bSelected )
+				{
+					m_pMatches->ClearSelection();
+					m_pMatches->Select( pFile, pHit, TRUE );
+					m_nFocus = nIndex;
+				}
+			}
+			else
+			{
+				bChanged |= m_pMatches->Select( pFile, pHit, ! bSelected );
+			}
 		}
+	}
+	else
+	{
+		m_pLastSelectedFile = NULL;
+		m_pLastSelectedHit = NULL;
 	}
 	
 	if ( bChanged ) NotifySelection();
@@ -1575,11 +1658,16 @@ BOOL CMatchCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 void CMatchCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	BOOL bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000;
+	BOOL bControl = ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0x8000;
 	
 	m_wndTip.Hide();
 	
 	switch ( nChar )
 	{
+	case 'A':
+	case 'a':
+		if ( bControl ) SelectAll();
+		return;
 	case VK_ESCAPE:
 		if ( m_pMatches->ClearSelection() ) NotifySelection();
 		Update();
@@ -1707,18 +1795,21 @@ void CMatchCtrl::DoDelete()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	BOOL bChanged = FALSE;
-	
+
+	m_pLastSelectedFile = NULL;
+	m_pLastSelectedHit = NULL;
+
 	for ( POSITION pos = m_pMatches->m_pSelectedFiles.GetHeadPosition() ; pos ; )
 	{
 		CMatchFile* pFile = (CMatchFile*)m_pMatches->m_pSelectedFiles.GetNext( pos );
 		bChanged |= m_pMatches->Select( pFile, NULL, FALSE );
-		
+
 		for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
 		{
 			pHit->m_bBogus = TRUE;
 		}
 	}
-	
+
 	for ( POSITION pos = m_pMatches->m_pSelectedHits.GetHeadPosition() ; pos ; )
 	{
 		CQueryHit* pHit = (CQueryHit*)m_pMatches->m_pSelectedHits.GetNext( pos );
@@ -1745,6 +1836,38 @@ void CMatchCtrl::DoExpand(BOOL bExpand)
 		bChanged |= pFile->Expand( bExpand );
 	}
 	
+	m_wndTip.Hide();
+	if ( bChanged ) NotifySelection();
+	Update();
+}
+
+void CMatchCtrl::SelectAll()
+{
+	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
+	BOOL bChanged = FALSE;
+
+	bChanged |= m_pMatches->ClearSelection();
+
+	CMatchFile** ppCurFile = m_pMatches->m_pFiles;
+	for ( DWORD i = 0 ; i < m_pMatches->m_nFiles ; i++, ppCurFile++ )
+	{
+		if ( (*ppCurFile)->GetFilteredCount() )
+		{
+			m_pMatches->Select( *ppCurFile, NULL, TRUE );
+			if ( (*ppCurFile)->m_bExpanded )
+			{
+				for ( CQueryHit* pCurHit = (*ppCurFile)->m_pHits ; pCurHit ;
+					pCurHit = pCurHit->m_pNext )
+				{
+					if ( pCurHit->m_bFiltered )
+					{
+						m_pMatches->Select( *ppCurFile, pCurHit, TRUE );
+					}
+				}
+			}
+		}
+	}
+
 	m_wndTip.Hide();
 	if ( bChanged ) NotifySelection();
 	Update();
