@@ -1234,6 +1234,14 @@ CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits, BOOL b
 			strVolume.Format( _T("%I64i %s"), nVolume, pszUnit );
 			return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 		}
+		else if ( nVolume < 10*1024 )
+		{
+			if ( bTruncate )
+				strVolume.Format( _T("%.0lf K%s"), (double)nVolume / 1024, pszUnit );
+			else
+				strVolume.Format( _T("%.2lf K%s"), (double)nVolume / 1024, pszUnit );
+			return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
+		}
 
 		nVolume /= 1024;
 	}
