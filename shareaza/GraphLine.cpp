@@ -318,6 +318,8 @@ void CLineGraph::PaintGrid(CDC* pDC, CRect* pRect)
 			else
 				strValue.Format( _T("%lu"), nScale * nPos );
 			pDC->ExtTextOut( pRect->left + 4, nY + 1, 0, NULL, strValue, NULL );
+			// Add the scale to the right side also
+			pDC->ExtTextOut( pRect->right - 4 - strValue.GetLength() * 5, nY + 1, 0, NULL, strValue, NULL );
 		}
 	}
 
