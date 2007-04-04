@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "GraphLine.h"
 #include "GraphItem.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -43,8 +44,8 @@ CLineGraph::CLineGraph()
 	m_bShowAxis		= TRUE;
 	m_bShowGrid		= TRUE;
 	m_bShowLegend	= TRUE;
-	m_crBack		= 0;
-	m_crGrid		= RGB( 0, 0, 128 );
+	m_crBack		= CoolInterface.m_crTrafficWindowBack;
+	m_crGrid		= CoolInterface.m_crTrafficWindowGrid;
 	m_nMinGridVert	= 32;
 
 	m_nSpeed		= 100;
@@ -293,7 +294,7 @@ void CLineGraph::PaintGrid(CDC* pDC, CRect* pRect)
 			GRAPHITEM* pDesc	= pItem->GetItemDesc( pItem->m_nCode );
 			if ( pDesc && pDesc->m_nUnits == 1 ) bVolume = TRUE;
 		}
-		pDC->SetTextColor( RGB( 193, 196, 255 ) );
+		pDC->SetTextColor( CoolInterface.m_crTrafficWindowText );
 	}
 
 	nScale = m_nMinGridVert * m_nMaximum / ( pRect->Height() - TOP_MARGIN );

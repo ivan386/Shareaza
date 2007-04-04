@@ -401,6 +401,10 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crMediaPanelActiveText = RGB( 255, 255, 255 );
 	m_crMediaPanelCaption	= RGB( 0x00, 0x00, 0x80 );
 	m_crMediaPanelCaptionText = RGB( 0xFF, 0xFF, 0 );
+
+	m_crTrafficWindowBack = RGB( 0, 0, 0 );
+	m_crTrafficWindowText = RGB( 193, 196, 255 );
+	m_crTrafficWindowGrid = RGB( 0, 0, 128 );
 }
 
 void CCoolInterface::OnSysColourChange()

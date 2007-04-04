@@ -1194,6 +1194,10 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("media.panel.caption"), &CoolInterface.m_crMediaPanelCaption );
 	pColours.SetAt( _T("media.panel.caption.text"), &CoolInterface.m_crMediaPanelCaptionText );
 
+	pColours.SetAt( _T("traffic.window.back"), &CoolInterface.m_crTrafficWindowBack );
+	pColours.SetAt( _T("traffic.window.text"), &CoolInterface.m_crTrafficWindowText );
+	pColours.SetAt( _T("traffic.window.grid"), &CoolInterface.m_crTrafficWindowGrid );
+
 	BOOL bSystem = FALSE, bNonBase = FALSE;
 	
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )

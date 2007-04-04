@@ -80,6 +80,10 @@ public:
 	COLORREF	m_crMediaPanelCaption;
 	COLORREF	m_crMediaPanelCaptionText;
 
+	COLORREF	m_crTrafficWindowBack;
+	COLORREF	m_crTrafficWindowText;
+	COLORREF	m_crTrafficWindowGrid;
+
 	void		Clear();
 	void		NameCommand(UINT nID, LPCTSTR pszName);
 	UINT		NameToID(LPCTSTR pszName);
