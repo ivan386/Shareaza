@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -831,12 +831,9 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 		}
 
 		bHashOk = true;
-		if ( m_oWords.empty() && m_sSearch.GetLength() ) BuildWordList( bExpression );
 	}
-	else if ( m_oWords.empty() && m_sSearch.GetLength() ) // no hashed keywords, but keywords are there as string.
-	{
-		BuildWordList( bExpression );
-	}
+
+	BuildWordList( bExpression );
 
 	if ( m_oKeywordHashList.size() )
 	{
