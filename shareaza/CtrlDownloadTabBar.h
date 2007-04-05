@@ -72,6 +72,7 @@ protected:
 // Operations
 public:
 	void			SetWatermark(HBITMAP hBitmap);
+	void			OnSkinChange();
 	void			Update(int nCookie);
 	BOOL			DropShowTarget(CList< CDownload* >* pList, const CPoint& ptScreen);
 	BOOL			DropObjects(CList< CDownload* >* pList, const CPoint& ptScreen);

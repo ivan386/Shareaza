@@ -102,6 +102,11 @@ void CDownloadTabBar::SetWatermark(HBITMAP hBitmap)
 	if ( hBitmap != NULL ) m_bmImage.Attach( hBitmap );
 }
 
+void CDownloadTabBar::OnSkinChange()
+{
+	SetWatermark( Skin.GetWatermark( _T("CDownloadTabBar") ) );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTabBar message handlers
 
