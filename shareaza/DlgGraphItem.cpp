@@ -190,7 +190,7 @@ void CGraphItemDlg::OnPaint()
 	dc.Draw3dRect( &rc, 0, 0 );
 	rc.DeflateRect( 1, 1 );
 	dc.FillSolidRect( &rc, 0 );
-	dc.Draw3dRect( rc.left, ( rc.top + rc.bottom ) / 2, rc.Width() + 1, 2, m_crColour, 0 );
+	dc.Draw3dRect( rc.left, ( rc.top + rc.bottom ) / 2 - 1, rc.Width(), 2, m_crColour, m_crColour );
 }
 
 void CGraphItemDlg::OnOK()
