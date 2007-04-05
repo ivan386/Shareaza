@@ -3955,7 +3955,6 @@ IDR_HTML_BUSY           HTML                    "Res\\Busy.htm"
 IDR_HTML_BADRANGE       HTML                    "Res\\BadRange.htm"
 IDR_HTML_DISABLED       HTML                    "Res\\Disabled.htm"
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // GZIP
@@ -4048,6 +4047,8 @@ BEGIN
 0x5747, 0x6265, 0x6143, 0x6863, 0x0065, 
     IDC_SERVICE_TYPE, 0x403, 15, 0
 0x6553, 0x7672, 0x7265, 0x6d2e, 0x7465, 0x5520, 0x4c52, "\000" 
+    IDC_SERVICE_TYPE, 0x403, 8, 0
+0x6c42, 0x636f, 0x656b, 0x0064, 
     0
 END
 
