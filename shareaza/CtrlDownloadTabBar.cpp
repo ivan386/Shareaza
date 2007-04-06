@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -734,7 +734,12 @@ void CDownloadTabBar::OnUpdateDownloadGroupProperties(CCmdUI* pCmdUI)
 void CDownloadTabBar::OnDownloadGroupProperties() 
 {
 	CDownloadGroupDlg dlg( GetSelectedGroup() );
-	if ( dlg.DoModal() == IDOK ) NotifySelection();
+	if ( dlg.DoModal() == IDOK )
+	{
+		GetSelectedGroup()->Clear();
+		GetSelectedGroup()->LinkAll();
+		NotifySelection();
+	}
 }
 
 void CDownloadTabBar::OnUpdateDownloadGroupResume(CCmdUI* pCmdUI) 
