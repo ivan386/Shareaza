@@ -106,15 +106,15 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 		m_wndFilterList.AddString( m_pGroup->m_pFilters.GetNext( pos ) );
 	}
 
-	CList<CString>	m_pUsedIcons;
+	CList<CString>	pUsedIcons;
 
 	for ( POSITION pos = SchemaCache.GetIterator() ; pos ; )
 	{
 		CSchema* pSchema = SchemaCache.GetNext( pos );
 
-		if ( m_pUsedIcons.Find( pSchema->m_sIcon ) == NULL || pSchema->m_sURI == m_pGroup->m_sSchemaURI )
+		if ( pUsedIcons.Find( pSchema->m_sIcon ) == NULL || pSchema->m_sURI == m_pGroup->m_sSchemaURI )
 		{
-			m_pUsedIcons.AddTail( pSchema->m_sIcon );
+			pUsedIcons.AddTail( pSchema->m_sIcon );
 
 			int nIndex = m_wndImages.InsertItem( LVIF_IMAGE|LVIF_PARAM|LVIF_TEXT,
 				m_wndImages.GetItemCount(), _T("Icon"), 0, 0, pSchema->m_nIcon16,
