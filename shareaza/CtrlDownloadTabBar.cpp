@@ -733,11 +733,15 @@ void CDownloadTabBar::OnUpdateDownloadGroupProperties(CCmdUI* pCmdUI)
 
 void CDownloadTabBar::OnDownloadGroupProperties() 
 {
-	CDownloadGroupDlg dlg( GetSelectedGroup() );
+	CDownloadGroup* pGroup = GetSelectedGroup();
+	CDownloadGroupDlg dlg( pGroup );
 	if ( dlg.DoModal() == IDOK )
 	{
-		GetSelectedGroup()->Clear();
-		GetSelectedGroup()->LinkAll();
+		if ( pGroup != DownloadGroups.GetSuperGroup() )
+		{
+			pGroup->Clear();
+			pGroup->LinkAll();
+		}
 		NotifySelection();
 	}
 }
