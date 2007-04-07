@@ -1357,13 +1357,13 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 
 void CDownloadsCtrl::OnSkinChange()
 {
-	int nRevStart = m_pProtocols.GetImageCount() - 1;
+	/* int nRevStart = m_pProtocols.GetImageCount() - 1; */
 	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
 	{
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
 		if ( hIcon )
 		{
-			m_pProtocols.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage, hIcon );
+			m_pProtocols.Replace( theApp.m_bRTL ? /*nRevStart -*/ nImage : nImage, hIcon );
 			DestroyIcon( hIcon );
 		}
 	}
