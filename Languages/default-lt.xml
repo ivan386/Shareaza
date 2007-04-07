@@ -4196,19 +4196,20 @@ right quote	&#147;
 		<control/>
 	</dialog>
 
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Trinti failą">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Trinti failą">
 		<control caption="Ar tikrai norite ištrinti:"/>
 		<control/>
 		<control caption="Trinti"/>
 		<control caption="Trinti viską"/>
 		<control caption="Atšaukti"/>
 		<control/>
-		<control caption="„Shareaza“ gali įsiminti šį failą(-us) ir įspėti Jus, jei vėliau susidursite su juo radiniuose. Pasirinkite priežastį, dėl kurios norite ištrinti failą(-us):"/>
-		<control caption="Aš nenoriu komentuoti."/>
-		<control caption="Šis failas neteisingai pavadintas ir gali klaidinti."/>
-		<control caption="Šis failas yra labai blogos kokybės."/>
-		<control caption="Šis failas - tai klastotė arba yra sugadintas ar netinkamas naudojimui."/>
-		<control caption="Jūs galite įrašyti pastabą, paaiškinančią dėl ko šis failas yra blogas:"/>
+		<control caption="„Shareaza“ gali įsiminti šį failą(-us) ir įspėti Jus, jei vėliau susidursite su juo radiniuose. Programa sukurs šešėlinį failą su komentarais ir įvertinimu."/>
+		<control caption="Kurti šešėlinį failą"/>
+		<control caption="Trinimo priežastis:"/>
+		<control caption="Tiesiog trinu, palikti mano komentarus|Šis failas neteisingai pavadintas ir gali klaidinti|Šis failas yra labai blogos kokybės|Tai klastotė, sugadintas ar netinkamas naudojimui failas|Pakeisti mano komentarus į kitus"/>
+		<control caption="Failo įvertinimas:"/>
+		<control caption="(Be įvertinimo)|Klastotė/Sugadinta/Klaidinanti|Prasta|Vidutinė|Gera|Labai gera|Puiki"/>
+		<control caption="Jūs galite įrašyti pastabą, paaiškinančią dėl ko trinate šį failą:"/>
 		<control/>
 	</dialog>
 

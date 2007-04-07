@@ -241,7 +241,7 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar à Lista de Execuções"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<rightAlign/>
 		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
 		<control id="108" width="120"/>
@@ -249,7 +249,7 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar à Lista de Execuções"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 		<separator/>
@@ -263,7 +263,7 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar à Lista de Execuções"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
 		<rightAlign/>
 		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
@@ -272,7 +272,7 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar à Lista de Execuções"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
@@ -990,14 +990,14 @@
 	</menu>
 	<menu name="CDownloadsWnd.Completed.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir ou Tocar"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="Adicionar à lista de execuções"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Apagar Arquivo"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir ou Tocar"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="Adicionar à lista de execuções"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copiar URI"/>
@@ -1117,7 +1117,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Physical.Basic">
 		<item id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar à lista de execuções"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="Compartilhado"/>
 		<separator/>
@@ -1148,7 +1148,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Physical">
 		<item id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar à lista de execuções"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="Compartilhado"/>
 		<separator/>
@@ -1182,7 +1182,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
 		<item id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar à lista de execuções"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="Compartilhado"/>
@@ -1216,7 +1216,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
 		<item id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar à lista de execuções"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="Compartilhado"/>
 		<separator/>
@@ -1784,7 +1784,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CDownloadsSettingsPage" format="b">Downloads:</link>
 		<gap size="4"/>
-		<text>Download throughput, agendamento, verificação, tempo(s) esgotado(s) e gerenciamento.</text>
+		<text>Taxa de transferência efetivia de download, agendamento, verificação, tempo(s) esgotado(s) e gerenciamento.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CUploadsSettingsPage" format="b">Uploads:</link>
 		<gap size="4"/>
@@ -2251,9 +2251,9 @@
 <tip id="ID_HOSTCACHE_G2_CACHE" message="Mostrar hosts armazenados da Gnutella 2."/>
 <tip id="ID_HOSTCACHE_G2_HORIZON" message="Mostrar o horizonte dos Hubs Gnutella 2."/>
 <tip id="ID_HOSTCACHE_IMPORT" message="Importar uma lista de hosts conhecidos, tais como o arquivo &quot;server.met&quot;..."/>
-<tip id="ID_HOSTCACHE_PRIORITY" message="Tentar conectar à este servidor antes dos outros."/>
+<tip id="ID_HOSTCACHE_PRIORITY" message="Tentar conectar a este servidor antes dos outros."/>
 <tip id="ID_HOSTCACHE_REMOVE" message="Remover os Host selecionados do cache de host."/>
-<tip id="ID_LIBRARY_ADD" message="Adicionar uma nova pasta à sua biblioteca..."/>
+<tip id="ID_LIBRARY_ADD" message="Adicionar uma nova pasta a sua biblioteca..."/>
 <tip id="ID_LIBRARY_ALBUM_DELETE" message="Apagar a pasta do álbum selecionada."/>
 <tip id="ID_LIBRARY_ALBUM_OPEN" message="Abrir a pasta do álbum selecionada."/>
 <tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Ver e editar as propriedades da pasta do álbum selecionada..."/>
@@ -2263,7 +2263,7 @@
 <tip id="ID_LIBRARY_COPY" message="Copiar os arquivos selecionados para outra pasta da biblioteca..."/>
 <tip id="ID_LIBRARY_CREATETORRENT" message="Cria um arquivo .torrent para este arquivo para fazer upload para um site na rede."/>
 <tip id="ID_LIBRARY_DELETE" message="Apagar os arquivos selecionados permanentemente."/>
-<tip id="ID_LIBRARY_ENQUEUE" message="Adicionar o(s) arquivo(s) selecionado(s) à sua lista de execuções."/>
+<tip id="ID_LIBRARY_ENQUEUE" message="Adicionar o(s) arquivo(s) selecionado(s) a sua lista de execuções."/>
 <tip id="ID_LIBRARY_EXPLORE" message="Abrir a(s) pasta(s) selecionada(s)."/>
 <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar a pasta do álbum selecionado para os arquivos de coleções..."/>
 <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Baixar todos os arquivos na coleção selecionada."/>
@@ -2348,10 +2348,10 @@
 <tip id="ID_NETWORK_CONNECT" message="Conectar nas redes selecionadas."/>
 <tip id="ID_NETWORK_CONNECT_TO" message="Conectar manualmente a um host..."/>
 <tip id="ID_NETWORK_DISCONNECT" message="Desconectar de todas as redes, isto parará também todos os downloads e uploads."/>
-<tip id="ID_NETWORK_ED2K" message="Conectar à rede eDonkey2000."/>
+<tip id="ID_NETWORK_ED2K" message="Conectar a rede eDonkey2000."/>
 <tip id="ID_NETWORK_EXIT" message="Sair do Shareaza"/>
-<tip id="ID_NETWORK_G1" message="Conectar à rede Gnutella original."/>
-<tip id="ID_NETWORK_G2" message="Conectar à rede Gnutella 2 (Altamente Recomendado)."/>
+<tip id="ID_NETWORK_G1" message="Conectar a rede Gnutella original."/>
+<tip id="ID_NETWORK_G2" message="Conectar a rede Gnutella 2 (Altamente Recomendado)."/>
 <tip id="ID_NETWORK_SEARCH" message="Começar uma nova pesquisa da rede..."/>
 <tip id="ID_SEARCH_CHAT" message="Abrir uma sessão de conversa com o usuário selecionado."/>
 <tip id="ID_SEARCH_CLEAR" message="Limpar os resultados da busca."/>
@@ -2389,10 +2389,10 @@
 <tip id="ID_SYSTEM_VERBOSE" message="Exibir um log de atividade do sistema detalhado."/>
 <tip id="ID_TAB_CONNECT" message="Conectar ou desconectar da rede."/>
 <tip id="ID_TAB_HELP" message="Consiga ajuda usando o Shareaza."/>
-<tip id="ID_TAB_HOME" message="Retornar à Home page do Shareaza"/>
+<tip id="ID_TAB_HOME" message="Retornar a Home page do Shareaza"/>
 <tip id="ID_TAB_LIBRARY" message="Ver e gerenciar a sua biblioteca de conteúdo local."/>
 <tip id="ID_TAB_MEDIA" message="Tocar arquivos de mídia de áudio e vídeo da sua biblioteca."/>
-<tip id="ID_TAB_NETWORK" message="Ver quão bem você está conectado à Rede."/>
+<tip id="ID_TAB_NETWORK" message="Ver quão bem você está conectado a Rede."/>
 <tip id="ID_TAB_SEARCH" message="Pesquisar na rede por arquivos para baixar"/>
 <tip id="ID_TAB_TRANSFERS" message="Monitorar uploads e downloads que você está fazendo."/>
 <tip id="ID_TOOLS_DOWNLOAD" message="Começar a baixar um novo arquivo ou torrent..."/>
@@ -2508,8 +2508,8 @@
 	<string id="8062" value="Modo Hub com %lu vizinho(s). %s na biblioteca local."/>
 	<string id="8063" value="Conectado. %s na sua biblioteca local."/>
 	<string id="8064" value="Conectado com %lu vizinho(s). %s na biblioteca local."/>
-	<string id="8065" value="Conectando à rede..."/>
-	<string id="8066" value="Não conectado à rede."/>
+	<string id="8065" value="Conectando a rede..."/>
+	<string id="8066" value="Não conectado a rede."/>
 	<string id="8067" value="%s entram : %s saem [D:%i/U:%i]"/>
 	<string id="8068" value="[H:%i] %s entram : %s saem [D:%i/U:%i]"/>
 	<string id="8069" value="Conectar"/>
@@ -2648,7 +2648,7 @@
 	<string id="16078" value="Adicionada uma regra de segurança para bloquear %s."/>
 	<string id="16079" value="Você tem certeza que você quer desconectar?"/>
 	<string id="16081" value="Enviando inquisição para &quot;%s&quot; para %s."/>
-	<string id="16083" value="Forçar o seu PC em modo de HUB pode ter resultados adversos na perfomance e na rede P2P. É geralmente melhor deixar o Shareaza decidir se o modo hub deve ou não ser usado.\n\nModo hub NÃO produz melhores resultados de busca, ou tem quaisquer outras vantagens à você.\n\nVocê realmente quer fazer isso, apesar destas desvantagens?"/>
+	<string id="16083" value="Forçar o seu PC em modo de HUB pode ter resultados adversos na perfomance e na rede P2P. É geralmente melhor deixar o Shareaza decidir se o modo hub deve ou não ser usado.\n\nModo hub NÃO produz melhores resultados de busca, ou tem quaisquer outras vantagens a você.\n\nVocê realmente quer fazer isso, apesar destas desvantagens?"/>
 	<string id="16084" value="Desativar o suporte aos protocolos Gnutella-1 pode limitar os seus resultados de busca, e se você está agindo como um hub pode também ter um impacto sob os resultados de outros usuários. Você tem certeza que você quer fazer isto?"/>
 	<string id="16085" value="Gnutella 2 é a rede premiére do Shareaza. Desativar o suporte pode limitar severamente ambos o número e a qualidade dos seus resultados de busca. Você tem CERTEZA que você quer fazer isto?"/>
 	<string id="16087" value="Sua banda de upload é muito baixa para ativar essa rede"/>
@@ -2662,7 +2662,7 @@
 	<string id="16135" value="Incapaz de iniciar uma conexão de vizinho com %s (rejeitado)."/>
 	<string id="16136" value="O Vizinho %s descartou a conexão inesperadamente."/>
 	<string id="16137" value="Recusando conexão duplicada de %s."/>
-	<string id="16138" value="Já conectado à %s, não estabelecerá uma segunda conexão."/>
+	<string id="16138" value="Já conectado a %s, não estabelecerá uma segunda conexão."/>
 	<string id="16139" value="O Vizinho %s fechou a conexão (%i : %s)."/>
 	<string id="16141" value="Fechada a conexão com o vizinho %s pois este não é um hub."/>
 	<string id="16144" value="Inicialização com %s excedeu tempo de espera."/>
@@ -2698,7 +2698,7 @@
 	<string id="16211" value="O Vizinho %s enviou uma requisição de push para um endereço atrás de um firewall , ignorando."/>
 	<string id="16212" value="O Vizinho %s enviou um pacote extendido que não é codificado por GGEP."/>
 	<string id="16213" value="Enviando tabela de roteamento de pesquisa para o vizinho %s (%i bit = %lu[%i], %i%% full)"/>
-	<string id="16256" value="Foi &quot;%s&quot; adicionado à fila de download com %i fonte(s)."/>
+	<string id="16256" value="Foi &quot;%s&quot; adicionado a fila de download com %i fonte(s)."/>
 	<string id="16257" value="Download de &quot;%s&quot; completado."/>
 	<string id="16258" value="Pausando download de &quot;%s&quot;."/>
 	<string id="16259" value="Resumindo o download de &quot;%s&quot;."/>
@@ -2833,7 +2833,7 @@
 	<string id="16393" value="O arquivo &quot;%s&quot; falhou no teste de verificação de hash, e pode não ser o arquivo que você pretendia baixar. Você tem certeza que você quer abrí-lo?"/>
 	<string id="16394" value="Você gostaria de remover o atributo de &quot;potencialmente inseguro&quot; deste arquivo?"/>
 	<string id="16395" value="Sua pasta de downloads &quot;%s&quot; não está ainda na sua biblioteca.\n\nIncluir sua pasta de arquivos baixados na sua biblioteca é um jeito fácil de ver e organizar seus novos downloads, e faz com que você aproveite vantagens avançadas do Shareaza, como verificação de Hash e atualização automática. Colocar arquivos baixados na sua biblioteca não requer necessariamente que você os compartilhe: você pode escolher se quer ou não compartilhar os arquivos independentemente.\n\nVocê gostaria de adicionar a sua pasta de arquivos baixados na sua biblioteca agora?"/>
-	<string id="16396" value="Sua pasta de downloads foi adicionada à sua biblioteca. Você gostaria de compartilhá-la também?"/>
+	<string id="16396" value="Sua pasta de downloads foi adicionada a sua biblioteca. Você gostaria de compartilhá-la também?"/>
 	<string id="16397" value="Você tem certeza que você quer apagar a(s)%i pasta(s) do(s) Álbum(s) selecionada(s) ?\n\nNote que esta ação não apaga os arquivos dentro das pastas do álbum, apenas as próprias pastas."/>
 	<string id="16398" value="O Shareaza não pôde renomear:\n\n%s\npara\n%s"/>
 	<string id="16399" value="O Shareaza não pôde apagar o arquivo:\n\n%s"/>
@@ -3039,7 +3039,7 @@
 	<string id="17472" value="Conexão de entrada de %s é uma conexão de BitTorrent, negociando..."/>
 	<string id="17473" value="O tempo de conexão com o cliente BitTorrent se esgotou %s."/>
 	<string id="17474" value="O tempo de inicialização com o cliente BitTorrent se esgotou %s."/>
-	<string id="17475" value="Fechando conexão com BitTorrent %s devido à falta de tráfego."/>
+	<string id="17475" value="Fechando conexão com BitTorrent %s devido a falta de tráfego."/>
 	<string id="17476" value="Conexão BitTorrent com %s falhou porque um cliente remoto tem um Peer ID diferente."/>
 	<string id="17477" value="Conexão BitTorrent com %s respondeu com o arquivo errado."/>
 	<string id="17478" value="Conexão BitTorrent com %s pediu um arquivo desconhecido."/>
@@ -3378,8 +3378,8 @@
 	</dialog>
 <dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Rede Gnutella2:"/>
-		<control caption="Sempre conectar à Gnutella2"/>
-		<control caption="Conectar à Gnutella2 hoje"/>
+		<control caption="Sempre conectar a Gnutella2"/>
+		<control caption="Conectar a Gnutella2 hoje"/>
 		<control caption="Modo:"/>
 		<control caption="Otimizado|Leaf|Hub"/>
 		<control caption="Conexões G2:"/>
@@ -3390,8 +3390,8 @@
 		<control caption="Hub para Hub:"/>
 		<control/><control/>
 		<control caption="Rede Gnutella1:"/>
-		<control caption="Sempre conectar à Gnutella1"/>
-		<control caption="Conectar à Gnutella1 hoje"/>
+		<control caption="Sempre conectar a Gnutella1"/>
+		<control caption="Conectar a Gnutella1 hoje"/>
 		<control caption="Modo:"/>
 		<control caption="Otimizado|Leaf|Ultrapeer"/>
 		<control caption="Conexões G1:"/>
@@ -3408,7 +3408,7 @@
 	</dialog>
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
 		<control caption="Rede Edonkey2000:"/>
-		<control caption="Conectar à eDonkey2000 hoje"/>
+		<control caption="Conectar a eDonkey2000 hoje"/>
 		<control caption="Sempre conectar a ed2k"/>
 		<control caption="Pesquisa Global:"/>
 		<control caption="Pesquisar em servidores remotos conhecidos no cache do servidor:"/>
@@ -3911,7 +3911,7 @@
 	</dialog>
 	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Gerenciador de Pasta Compartilhada">
 		<control/>
-		<control caption="Esta é uma lista de pastas na sua biblioteca. Você pode adicionar e remover pastas usando os botões à esquerda. Qdo você adiciona uma nova pasta ela é compartilhada com outros usuários, mas você pode descompartilhá-la se você desejar."/>
+		<control caption="Esta é uma lista de pastas na sua biblioteca. Você pode adicionar e remover pastas usando os botões a esquerda. Qdo você adiciona uma nova pasta ela é compartilhada com outros usuários, mas você pode descompartilhá-la se você desejar."/>
 		<control/>
 		<control caption="Adicionar..."/>
 		<control caption="Remover"/>
@@ -4026,13 +4026,13 @@
 		<control caption="Apagar Todos"/>
 		<control caption="Cancelar"/>
 		<control/>
-		<control caption="O Shareaza pode se lembrar deste arquivo e avisar você se ele aparecer novamente em uma nova pesquisa. Ele criará um arquivo ghost com os seus comentários e classificação:"/>
+		<control caption="O Shareaza pode se lembrar deste arquivo e avisar você se você encontrá-lo de novo em uma outra pesquisa. Ele criará um arquivo ghost com os seus comentários e classificação:"/>
 		<control caption="Criar um arquivo ghost"/>
 		<control caption="A razão para apagá-lo:"/>
-		<control caption="Apenas apagando, mantenha meus comentários|Este arquivo está nomeado incorretamente, e é ilusório|Este arquivo é de qualidade muito pobre|Este arquivo é falso, ou está corrompido ou de algum modo inutilizável|Substitua meus comentários com os novos"/>
+		<control caption="Apenas apagando, mantenha os meus comentários|Este arquivo está nomeado incorretamente, e é ilusório|Este arquivo é de qualidade muito pobre|Este arquivo é falso, ou está corrompido ou de algum modo inutilizável|Substitua os meus comentários com os novos"/>
 		<control caption="Classificação do arquivo:"/>
-		<control caption="(Sem Classificação)|Falso/Corrompido/Ilusório/Pobre/Médio/Bom/Muito Bom|Excelente"/>
-		<control caption="Você pode digitar uma curta nota descrevendo por que você está apagando o arquivo:"/>
+		<control caption="(Sem Classificação)|Falso/Corrompido/Ilusório|Pobre|Médio|Bom|Muito Bom|Excelente"/>
+		<control caption="Você pode digitar uma nota curta dizendo por que você está apagando o arquivo:"/>
 		<control/>
 	</dialog>
 	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Exportar Coleção">
