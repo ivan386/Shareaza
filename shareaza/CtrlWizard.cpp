@@ -528,10 +528,10 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 									{
 										// a kind of hack to store button type
 										pButton->SetText( _T(" ") );
-										pButton->SetIcon( IDI_BROWSE );
+										pButton->SetCoolIcon( IDI_BROWSE, theApp.m_bRTL );
 									}
-									else if (strType == "colorpicker") 
-										pButton->SetIcon( IDI_COLORS );
+									else if (strType == "colorpicker")
+										pButton->SetCoolIcon( IDI_COLORS, theApp.m_bRTL );
 									pControl = pButton;
 									// store file name which will be displayed for each multipicker row
 									strCaption = pList[ pos ]->m_sName;

@@ -95,7 +95,7 @@ BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 	{
 		bSuccess = ::Skin.Apply( strSkin, this, nIcon, &m_wndToolTip );
 	}
-	if ( nIcon || theApp.m_bRTL && nIcon )
+	if ( nIcon )
 	{
 		CoolInterface.SetIcon( nIcon, theApp.m_bRTL, FALSE, this );
 	}

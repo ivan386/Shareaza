@@ -88,7 +88,7 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 	SkinMe( _T("CDownloadGroupDlg") );
 
 	m_wndImages.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
-	m_wndBrowse.SetIcon( IDI_BROWSE );
+	m_wndBrowse.SetCoolIcon( IDI_BROWSE, theApp.m_bRTL );
 
 	CSingleLock pLock( &DownloadGroups.m_pSection, TRUE );
 
