@@ -201,7 +201,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pradinis vardas</title>
                        <title language="nl">Originele Bestandsnaam</title>
                        <title language="no">Originalnavn</title>
-                       <title language="pt-br">Nome Original do Arquivo</title>
+                       <title language="pt-br">Nome Original </title>
                        <title language="ru">Ориг. имя файла</title>
                        <title language="sl-SI">Izvorno datotečno ime</title>
                        <title language="sq">Emri i Skedës Origjinal</title>
@@ -329,7 +329,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">OS</title>
                        <title language="nl">OS</title>
                        <title language="no">OS</title>
-                       <title language="pt-br">Sistema Operacional</title>
+                       <title language="pt-br">Sistema </title>
                        <title language="ru">ОС</title>
                        <title language="sl-SI">Operac. sistem</title>
                        <title language="sq">Sistemi Operativ</title>
@@ -405,7 +405,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">P2P išleidimo data</title>
                        <title language="nl">Datum P2P distributie</title>
                        <title language="no">P2P releasedato</title>
-                       <title language="pt-br">Data de Lançamento no P2P</title>
+                       <title language="pt-br">Lançamento no P2P</title>
                        <title language="ru">P2P релиз дата</title>
                        <title language="sl-SI">P2P datum izdaje</title>
                        <title language="sq">Data e Lëshimit në P2P</title>
@@ -505,7 +505,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Leid. gr. nuoroda</title>
                        <title language="nl">Link van distributiegroep</title>
                        <title language="no">Releasegruppe-link</title>
-                       <title language="pt-br">Link do Grupo de Lançamento</title>
+                       <title language="pt-br">Link do Grupo</title>
                        <title language="ru">Ссылка группы</title>
                        <title language="sl-SI">Povezava skupine izdaje</title>
                        <title language="sq">Linku i Grupit të Lëshimit</title>
