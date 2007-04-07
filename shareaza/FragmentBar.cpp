@@ -89,7 +89,7 @@ void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 {
 	CRect rcArea;
 	// Investigate why nLength is greater than nTotal !!! 
-	if ( nLength + nOffset > nTotal )
+	if ( nLength > nTotal - nOffset )
 		nLength = nTotal - nOffset;
 
 	if ( theApp.m_bRTL )
