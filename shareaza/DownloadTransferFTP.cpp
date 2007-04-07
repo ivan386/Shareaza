@@ -1,11 +1,7 @@
 //
 // DownloadTransferFTP.cpp
 //
-//	Date:			"$Date: 2005/11/17 21:34:55 $"
-//	Revision:		"$Revision: 1.10 $"
-//  Last change by:	"$Author: thetruecamper $"
-//
-// Copyright (c) Nikolay Raspopov, 2004-2005.
+// Copyright (c) Nikolay Raspopov, 2004-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -382,7 +378,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 		if ( strHeader == _T("220") )			// Connected
 		{
 			m_LIST.m_sUserAgent = m_RETR.m_sUserAgent = m_sUserAgent =
-				m_pSource->m_sServer = strValue;
+				m_pSource->m_sServer = strValue.Trim( _T(" \t\r\n-=_") );
 			if ( IsAgentBlocked() )
 			{
 				// Ban
@@ -394,7 +390,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 			SetState( dtsRequesting );
 			return SendCommand();
 		}
-		break;
+		// break;
 
 	case ftpUSER:
 		if ( strHeader == _T("331") )			// Access allowed
@@ -404,12 +400,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 			SetState( dtsRequesting );
 			return SendCommand ();
 		}
-		else if ( FTPisOK( strHeader ) )		// Extra headers, may be some 220
-			// Bypass
-			return TRUE;
-		// Wrong login or other errors
-		// 530: This FTP server is anonymous only.
-		break;
+		// break;
 
 	case ftpPASS:
 		if ( strHeader == _T("230") )			// Logged in
@@ -422,8 +413,10 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 		else if ( FTPisOK( strHeader ) )		// Extra headers
 			// Bypass
 			return TRUE;
-		// Wrong password or other errors
+		// Wrong login, password or other errors
+		// 530: This FTP server is anonymous only.
 		// 530: Login incorrect.
+		// etc.
 		break;
 
 	case ftpSIZE_TYPE:
