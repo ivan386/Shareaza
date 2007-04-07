@@ -1,7 +1,7 @@
 //
 // DownloadTransferFTP.h
 //
-// Copyright (c) Nikolay Raspopov, 2004-2005.
+// Copyright (c) Nikolay Raspopov, 2004-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -230,6 +230,9 @@ protected:
 	CFTPRETR		m_RETR;			// FTP "RETR" helper object
 	BOOL			m_bPassive;		// Passive or Active FTP mode
 	BOOL			m_bSizeChecked;	// File size flag
+	BOOL			m_bMultiline;	// Processing multiline reply
+	CString			m_sMultiNumber;	// Multiline number
+	CString			m_sMultiReply;	// Multiline reply
 
 	// Connecting or file size getting or download starting
 	BOOL			StartNextFragment();

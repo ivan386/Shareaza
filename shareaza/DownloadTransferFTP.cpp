@@ -111,7 +111,8 @@ CDownloadTransferFTP::CDownloadTransferFTP(CDownloadSource* pSource) :
 	m_FtpState( ftpConnecting ),
 	m_tRequest( 0 ),
 	m_bPassive( TRUE /* FALSE */ ),
-	m_bSizeChecked( FALSE )
+	m_bSizeChecked( FALSE ),
+	m_bMultiline( FALSE )
 {
 	m_RETR.SetOwner( this );
 }
@@ -344,18 +345,45 @@ BOOL CDownloadTransferFTP::OnRead()
 	CDownloadTransfer::OnRead();
 	
 	CString strLine;
+	CString Number;
 	while ( m_pInput->ReadLine( strLine ) )
 	{
-		strLine.Trim( _T(" \t\r\n") );
-		if ( strLine.GetLength() > 256 )
-			strLine = _T("#LINE_TOO_LONG#");
-		if ( strLine.GetLength() > 3 )
+		BOOL bNumber = ( strLine.GetLength() >= 3 ) &&
+			_istdigit( strLine[0] ) && _istdigit( strLine[1] ) && _istdigit( strLine[2] );
+		if ( bNumber )
+			Number = strLine.Left( 3 );
+
+		if ( ! m_bMultiline && bNumber && strLine[3] == _T('-') )
 		{
-			m_sLastHeader = strLine.Left( 3 ).TrimRight( _T(" \t\r\n") );
-			if ( !OnHeaderLine( m_sLastHeader,
-				strLine.Mid( 4 ).TrimLeft( _T(" \t\r\n") ) ) )
-		return FALSE;
-	}
+			// Got first line of multi-line reply
+			m_bMultiline = TRUE;
+			m_sMultiNumber = Number;
+			m_sMultiReply = strLine.Mid( 4 );
+		}
+		else if ( ! m_bMultiline && bNumber )
+		{
+			// Got single-line reply
+			if ( ! OnHeaderLine( Number, strLine.Mid( 4 ).Trim( _T(" \t\r\n") ) ) )
+				return FALSE;
+		}
+		else if ( m_bMultiline && bNumber && strLine[3] == _T(' ') &&
+			m_sMultiNumber == Number )
+		{
+			// Got last line of multi-line reply
+			m_bMultiline = FALSE;
+			m_sMultiReply += _T("\n");
+			m_sMultiReply += strLine.Mid( 4 );
+			if ( ! OnHeaderLine( Number, m_sMultiReply.Trim( _T(" \t\r\n") ) ) )
+				return FALSE;
+		}
+		else if ( m_bMultiline )
+		{
+			// Got next line of multi-line reply
+			m_sMultiReply += _T("\n");
+			m_sMultiReply += strLine;
+		}
+		// else Got strange extra line - ignoring
+			 
 	}
 	return TRUE;
 }
