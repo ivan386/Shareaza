@@ -251,6 +251,13 @@ BOOL CPanelWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		CPoint pt;
 		GetCursorPos( &pt );
 
+		if ( theApp.m_bRTL )
+		{
+			CRect rc;
+			pWnd->GetWindowRect( &rc );
+			pt.x = 2 * rc.left + rc.Width() - pt.x;
+		}
+
 		if ( m_rcClose.PtInRect( pt ) )
 		{
 			SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
@@ -270,6 +277,13 @@ void CPanelWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 	}
 	else if ( nHitTest == HTCAPTION && m_bPanelClose && m_pSkin == NULL )
 	{
+		if ( theApp.m_bRTL )
+		{
+			CRect rc;
+			GetWindowRect( &rc );
+			point.x = 2 * rc.left + rc.Width() - point.x;
+		}
+
 		if ( m_rcClose.PtInRect( point ) )
 		{
 			PostMessage( WM_SYSCOMMAND, SC_CLOSE );
