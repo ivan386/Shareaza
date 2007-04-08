@@ -223,7 +223,7 @@ void CHomeDownloadsBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Downloads") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_DOWNLOADSFRAME, FALSE );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_DOWNLOADSFRAME, theApp.m_bRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 
@@ -657,7 +657,7 @@ void CHomeLibraryBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Library") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_LIBRARYFRAME, FALSE );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_LIBRARYFRAME, theApp.m_bRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 	
@@ -1016,7 +1016,7 @@ void CHomeUploadsBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Uploads") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_UPLOADSFRAME, FALSE );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_UPLOADSFRAME, theApp.m_bRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 	
@@ -1150,7 +1150,7 @@ void CHomeConnectionBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Connection") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_NEIGHBOURSFRAME, FALSE );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_NEIGHBOURSFRAME, theApp.m_bRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 	
@@ -1344,7 +1344,7 @@ void CHomeTorrentsBox::Setup()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Torrents") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_BITTORRENT_ICON, FALSE );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_BITTORRENT_ICON, theApp.m_bRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 	
