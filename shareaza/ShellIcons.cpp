@@ -135,7 +135,7 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
 			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_SMALLICON ) )
 		{
-			hIcon = sfi.hIcon;
+			hIcon = theApp.m_bRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
 		}
 		nIndex = hIcon ? m_i16.Add( hIcon ) : 0;
 		m_m16.SetAt( strType, nIndex );
@@ -146,7 +146,7 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
 			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON ) )
 		{
-			hIcon = sfi.hIcon;
+			hIcon = theApp.m_bRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
 		}
 		nIndex = hIcon ? m_i32.Add( hIcon ) : 0;
 		m_m32.SetAt( strType, nIndex );
@@ -157,7 +157,7 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
 			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_LARGEICON ) )
 		{
-			hIcon = sfi.hIcon;
+			hIcon = theApp.m_bRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
 		}
 		nIndex = hIcon ? m_i48.Add( hIcon ) : 0;
 		m_m48.SetAt( strType, nIndex );
