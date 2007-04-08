@@ -180,7 +180,11 @@ int CLibraryCollectionView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	if ( m_pWebCtrl->Create( 0, this ) != -1 )
 	{
-		m_pWebCtrl->EnableCoolMenu();
+		// Disable cool menu because in RTL mode the text is drawn mirrored
+		// It worked before, but somehow was broken and nothing helps.
+		// TODO: fix it
+		if ( !theApp.m_bRTL ) 
+			m_pWebCtrl->EnableCoolMenu();
 		m_pWebCtrl->EnableSandbox();
 		m_pWebCtrl->SetExternal( m_xExternal.GetDispatch() );
 		m_pWebCtrl->Navigate( _T("about:blank") );
