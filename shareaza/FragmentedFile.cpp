@@ -210,7 +210,7 @@ BOOL CFragmentedFile::WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength)
 		nResult = min( pMatches.first->end(), oMatch.end() ) - nStart;
 
 		const char* pSource
-			= static_cast< const char* >( pData ) + nStart - oMatch.begin();
+			= static_cast< const char* >( pData ) + ( nStart - oMatch.begin() );
 
 		if ( !m_pFile->Write( nStart, pSource, nResult, &nResult ) ) return FALSE;
 

@@ -27,67 +27,82 @@
 class CLiveItem;
 
 
-class CLiveList
+class CLiveList : public CObject
 {
-// Construction
+	DECLARE_DYNAMIC( CLiveList )
+
 public:
 	CLiveList(int nColumns);
 	virtual ~CLiveList();
 
-// Attributes
-protected:
-	int			m_nColumns;
-	CMap< DWORD_PTR, DWORD_PTR, CLiveItem*, CLiveItem*& > m_pItems;
-protected:
-	static CBitmap m_bmSortAsc;
-	static CBitmap m_bmSortDesc;
+#ifdef _DEBUG
+	virtual void AssertValid() const
+	{
+		CObject::AssertValid();
+		ASSERT( m_nColumns > 0 && m_nColumns < 100 );
+		ASSERT_VALID( &m_pItems );
+		ASSERT_VALID( &m_pSection );
+		ASSERT_VALID( &m_bmSortAsc );
+		ASSERT_VALID( &m_bmSortDesc );
+	}
+#endif
 
-// Operations
-public:
 	CLiveItem*	Add(DWORD_PTR nParam);
 	CLiveItem*	Add(LPVOID pParam);
 	void		Apply(CListCtrl* pCtrl, BOOL bSort = FALSE);
-protected:
-	void		Clear();
 
 // Sort Helpers
-public:
 	static void			Sort(CListCtrl* pCtrl, int nColumn = -1, BOOL bGraphic = TRUE);
 	static int CALLBACK	SortCallback(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
 	static int			SortProc(LPCTSTR sA, LPCTSTR sB, BOOL bNumeric = FALSE);
 	static inline BOOL	IsNumber(LPCTSTR pszString);
 
 // Drag Helpers
-public:
 	static HBITMAP		CreateDragImage(CListCtrl* pList, const CPoint& ptMouse, CPoint& ptMiddle);
 	static CImageList*	CreateDragImage(CListCtrl* pList, const CPoint& ptMouse);
+
+protected:
+	typedef CMap< DWORD_PTR, DWORD_PTR, CLiveItem*, CLiveItem*& > CLiveItemMap;
+
+	int					m_nColumns;
+	CLiveItemMap		m_pItems;
+	CCriticalSection	m_pSection;
+	static CBitmap		m_bmSortAsc;
+	static CBitmap		m_bmSortDesc;
+
+	void		Clear();
 };
 
 
-class CLiveItem
+class CLiveItem : public CObject
 {
-// Construction
+	DECLARE_DYNAMIC( CLiveItem )
+
 public:
 	CLiveItem(int nColumns, DWORD_PTR nParam);
 	virtual ~CLiveItem();
 
-// Attributes
+#ifdef _DEBUG
+	virtual void AssertValid() const
+	{
+		CObject::AssertValid();
+		ASSERT( m_nImage >= 0 && m_nImage < 1000 );
+		ASSERT( m_pColumn );
+	}
+#endif
+
+	void	Set(int nColumn, LPCTSTR pszText);
+	void	Format(int nColumn, LPCTSTR pszFormat, ...);
+	int		Add(CListCtrl* pCtrl, int nItem, int nColumns);
+	BOOL	Update(CListCtrl* pCtrl, int nItem, int nColumns);
+	BOOL	SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIndex);
+
 public:
 	DWORD_PTR	m_nParam;
 	int			m_nImage;
 	UINT		m_nMaskOverlay;
 	UINT		m_nMaskState;
-public:
 	CString*	m_pColumn;
-
-// Operations
-public:
-	void	Set(int nColumn, LPCTSTR pszText);
-	void	Format(int nColumn, LPCTSTR pszFormat, ...);
-public:
-	int		Add(CListCtrl* pCtrl, int nItem, int nColumns);
-	BOOL	Update(CListCtrl* pCtrl, int nItem, int nColumns);
-	BOOL	SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIndex);
 };
 
 #ifndef CDRF_NOTIFYSUBITEMDRAW

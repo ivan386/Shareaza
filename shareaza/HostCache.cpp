@@ -348,10 +348,10 @@ CHostCacheHost* CHostCacheList::AddInternal(IN_ADDR* pAddress, WORD nPort,
 											DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
 {
 	// Check if we already have the host
-	BYTE nHash	= pAddress->S_un.S_un_b.s_b1
+	BYTE nHash	= ( pAddress->S_un.S_un_b.s_b1
 				+ pAddress->S_un.S_un_b.s_b2
 				+ pAddress->S_un.S_un_b.s_b3
-				+ pAddress->S_un.S_un_b.s_b4;
+				+ pAddress->S_un.S_un_b.s_b4 ) & 0xff;
 	
 	CHostCacheHost** pHash = m_pHash + nHash;
 	CHostCacheHost* pHost = *pHash;
@@ -420,10 +420,10 @@ CHostCacheHost*	CHostCacheList::Find(IN_ADDR* pAddress) const
 {
 	if ( ! pAddress->S_un.S_un_b.s_b1 ) return NULL;
 	
-	BYTE nHash	= pAddress->S_un.S_un_b.s_b1
+	BYTE nHash	= ( pAddress->S_un.S_un_b.s_b1
 				+ pAddress->S_un.S_un_b.s_b2
 				+ pAddress->S_un.S_un_b.s_b3
-				+ pAddress->S_un.S_un_b.s_b4;
+				+ pAddress->S_un.S_un_b.s_b4 ) & 0xff;
 	
 	CHostCacheHost** pHash = (class CHostCacheHost **)m_pHash + nHash;
 	CHostCacheHost* pHost = *pHash;
@@ -471,10 +471,10 @@ void CHostCacheList::Remove(CHostCacheHost* pHost)
 			else
 				m_pNewest = pHost->m_pPrevTime;
 			
-			BYTE nHash	= pHost->m_pAddress.S_un.S_un_b.s_b1
+			BYTE nHash	= ( pHost->m_pAddress.S_un.S_un_b.s_b1
 						+ pHost->m_pAddress.S_un.S_un_b.s_b2
 						+ pHost->m_pAddress.S_un.S_un_b.s_b3
-						+ pHost->m_pAddress.S_un.S_un_b.s_b4;
+						+ pHost->m_pAddress.S_un.S_un_b.s_b4 ) & 0xff;
 			
 			CHostCacheHost** pPrevious = m_pHash + nHash;
 			
@@ -509,10 +509,10 @@ void CHostCacheList::RemoveOldest()
 
 void CHostCacheList::OnFailure(IN_ADDR* pAddress, WORD nPort, bool bRemove)
 {
-	BYTE nHash	= pAddress->S_un.S_un_b.s_b1
+	BYTE nHash	= ( pAddress->S_un.S_un_b.s_b1
 				+ pAddress->S_un.S_un_b.s_b2
 				+ pAddress->S_un.S_un_b.s_b3
-				+ pAddress->S_un.S_un_b.s_b4;
+				+ pAddress->S_un.S_un_b.s_b4 ) & 0xff;
 	
 	CHostCacheHost** pHash = m_pHash + nHash;
 	
@@ -563,10 +563,10 @@ void CHostCacheList::OnFailure(IN_ADDR* pAddress, WORD nPort, bool bRemove)
 
 void CHostCacheList::OnSuccess(IN_ADDR* pAddress, WORD nPort, bool bUpdate)
 {
-	BYTE nHash	= pAddress->S_un.S_un_b.s_b1
+	BYTE nHash	= ( pAddress->S_un.S_un_b.s_b1
 		+ pAddress->S_un.S_un_b.s_b2
 		+ pAddress->S_un.S_un_b.s_b3
-		+ pAddress->S_un.S_un_b.s_b4;
+		+ pAddress->S_un.S_un_b.s_b4 ) & 0xff;
 
 	CHostCacheHost** pHash = m_pHash + nHash;
 

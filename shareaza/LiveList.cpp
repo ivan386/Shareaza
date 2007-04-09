@@ -34,9 +34,11 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CLiveList construction
 
-CLiveList::CLiveList(int nColumns)
+IMPLEMENT_DYNAMIC( CLiveList, CObject )
+
+CLiveList::CLiveList(int nColumns) :
+	m_nColumns ( nColumns )
 {
-	m_nColumns = nColumns;
 }
 
 CLiveList::~CLiveList()
@@ -49,12 +51,17 @@ CLiveList::~CLiveList()
 
 void CLiveList::Clear()
 {
+	ASSERT_VALID( this );
+
+	CQuickLock oLock( m_pSection );
+
 	for ( POSITION pos = m_pItems.GetStartPosition() ; pos ; )
 	{
 		CLiveItem* pItem;
 		DWORD_PTR nParam;
 
 		m_pItems.GetNextAssoc( pos, nParam, pItem );
+		ASSERT_VALID( pItem );
 		delete pItem;
 	}
 	m_pItems.RemoveAll();
@@ -65,13 +72,18 @@ void CLiveList::Clear()
 
 CLiveItem* CLiveList::Add(DWORD_PTR nParam)
 {
+	ASSERT_VALID( this );
+
 	CLiveItem* pItem = new CLiveItem( m_nColumns, nParam );
+	ASSERT_VALID( pItem );
 	m_pItems.SetAt( nParam, pItem );
 	return pItem;
 }
 
 CLiveItem* CLiveList::Add(LPVOID pParam)
 {
+	ASSERT_VALID( this );
+
 	return Add( (DWORD_PTR)pParam );
 }
 
@@ -80,15 +92,20 @@ CLiveItem* CLiveList::Add(LPVOID pParam)
 
 void CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
 {
+	ASSERT_VALID( this );
+
+	CQuickLock oLock( m_pSection );
+
 	BOOL bModified = FALSE;
 
 	for ( int nItem = 0 ; nItem < pCtrl->GetItemCount() ; nItem++ )
 	{
 		DWORD nParam		= (DWORD)pCtrl->GetItemData( nItem );
-		CLiveItem* pItem	= NULL;
+		CLiveItem* pItem;
 
 		if ( m_pItems.Lookup( nParam, pItem ) )
 		{
+			ASSERT_VALID( pItem );
 			if ( pItem->Update( pCtrl, nItem, m_nColumns ) ) bModified = TRUE;
 
 			delete pItem;
@@ -109,7 +126,7 @@ void CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
 		DWORD_PTR nParam;
 
 		m_pItems.GetNextAssoc( pos, nParam, pItem );
-
+		ASSERT_VALID( pItem );
 		pItem->Add( pCtrl, nCount++, m_nColumns );
 		bModified = TRUE;
 
@@ -124,13 +141,15 @@ void CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
 //////////////////////////////////////////////////////////////////////
 // CLiveItem construction
 
-CLiveItem::CLiveItem(int nColumns, DWORD_PTR nParam)
+IMPLEMENT_DYNAMIC( CLiveItem, CObject )
+
+CLiveItem::CLiveItem(int nColumns, DWORD_PTR nParam) :
+	m_pColumn		( new CString[ nColumns ] ),
+	m_nParam		( nParam ),
+	m_nImage		( 0 ),
+	m_nMaskOverlay	( 0 ),
+	m_nMaskState	( 0 )
 {
-	m_pColumn		= new CString[ nColumns ];
-	m_nParam		= nParam;
-	m_nImage		= 0;
-	m_nMaskOverlay	= 0;
-	m_nMaskState	= 0;
 }
 
 CLiveItem::~CLiveItem()
@@ -143,6 +162,9 @@ CLiveItem::~CLiveItem()
 
 void CLiveItem::Set(int nColumn, LPCTSTR pszText)
 {
+	ASSERT_VALID( this );
+	ASSERT( pszText );
+
 	m_pColumn[ nColumn ] = pszText;
 }
 
@@ -151,7 +173,9 @@ void CLiveItem::Set(int nColumn, LPCTSTR pszText)
 
 void CLiveItem::Format(int nColumn, LPCTSTR pszFormat, ...)
 {
-	static TCHAR szBuffer[1024];
+	ASSERT_VALID( this );
+
+	TCHAR szBuffer[1024];
 	va_list pArgs;
 
 	va_start( pArgs, pszFormat );
@@ -167,6 +191,9 @@ void CLiveItem::Format(int nColumn, LPCTSTR pszFormat, ...)
 
 int CLiveItem::Add(CListCtrl* pCtrl, int nItem, int nColumns)
 {
+	ASSERT_VALID( this );
+	ASSERT_VALID( pCtrl );
+
 	LV_ITEM pItem = {};
 	pItem.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE|LVIF_STATE;
 	pItem.iItem		= nItem >= 0 ? nItem : pCtrl->GetItemCount();
@@ -176,12 +203,13 @@ int CLiveItem::Add(CListCtrl* pCtrl, int nItem, int nColumns)
 	pItem.stateMask	= LVIS_OVERLAYMASK | LVIS_STATEIMAGEMASK;
 	pItem.pszText	= (LPTSTR)(LPCTSTR)m_pColumn[0];
 	pItem.iItem		= pCtrl->InsertItem( &pItem );
+	ASSERT( pItem.iItem != -1 );
 	pItem.mask		= LVIF_TEXT;
 
 	for ( pItem.iSubItem = 1 ; pItem.iSubItem < nColumns ; pItem.iSubItem++ )
 	{
 		pItem.pszText = (LPTSTR)(LPCTSTR)m_pColumn[ pItem.iSubItem ];
-		pCtrl->SetItem( &pItem );
+		VERIFY( pCtrl->SetItem( &pItem ) );
 	}
 
 	return pItem.iItem;
@@ -192,6 +220,9 @@ int CLiveItem::Add(CListCtrl* pCtrl, int nItem, int nColumns)
 
 BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 {
+	ASSERT_VALID( this );
+	ASSERT_VALID( pCtrl );
+
 	BOOL bModified = FALSE;
 
 	LV_ITEM pItem = {};
@@ -214,13 +245,13 @@ BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 		bModified = TRUE;
 	}
 
-	if ( bModified ) pCtrl->SetItem( &pItem );
+	if ( bModified ) VERIFY( pCtrl->SetItem( &pItem ) );
 
 	for ( int nColumn = 0 ; nColumn < nColumns ; nColumn++ )
 	{
 		if ( pCtrl->GetItemText( nItem, nColumn ) != m_pColumn[ nColumn ] )
 		{
-			pCtrl->SetItemText( nItem, nColumn, m_pColumn[ nColumn ] );
+			VERIFY( pCtrl->SetItemText( nItem, nColumn, m_pColumn[ nColumn ] ) );
 			bModified = TRUE;
 		}
 	}
@@ -230,6 +261,9 @@ BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 
 BOOL CLiveItem::SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIndex)
 {
+	ASSERT_VALID( this );
+	ASSERT_VALID( pCtrl );
+
 	BOOL bModified = FALSE;
 	LV_FINDINFO pFind;
 	int nItem;
@@ -237,6 +271,7 @@ BOOL CLiveItem::SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIn
 	pFind.flags		= LVFI_PARAM;
 	pFind.lParam	= nParam;
 	nItem = pCtrl->FindItem( &pFind );
+	ASSERT( nItem != -1 );
 
 	LV_ITEM pItem = {};
 	pItem.mask	= LVIF_IMAGE;
@@ -251,7 +286,7 @@ BOOL CLiveItem::SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIn
 	if ( bModified )
 	{
 		pItem.iImage = nImageIndex;
-		pCtrl->SetItem( &pItem );
+		VERIFY( pCtrl->SetItem( &pItem ) );
 	}
 
 	return bModified;
@@ -265,6 +300,8 @@ CBitmap CLiveList::m_bmSortDesc;
 
 void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 {
+	ASSERT_VALID( pCtrl );
+
 	int nOldColumn	= (int)GetWindowLongPtr( pCtrl->GetSafeHwnd(), GWLP_USERDATA );
 	BOOL bWaiting	= FALSE;
 
@@ -302,13 +339,13 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 		}
 
 		CHeaderCtrl* pHeader = (CHeaderCtrl*)CWnd::FromHandle( (HWND)pCtrl->SendMessage( LVM_GETHEADER ) );
-
+		ASSERT_VALID( pHeader );
 		for ( int nCol = 0 ; ; nCol++ )
 		{
 			HDITEM pColumn = {};
 			pColumn.mask = HDI_BITMAP|HDI_FORMAT;
 
-			if ( !pHeader->GetItem( nCol, &pColumn ) ) break;
+			if ( ! pHeader->GetItem( nCol, &pColumn ) ) break;
 
 			if ( nCol == abs( nColumn ) - 1 )
 			{
@@ -321,7 +358,7 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 				pColumn.hbm = NULL;
 			}
 
-			pHeader->SetItem( nCol, &pColumn );
+			VERIFY( pHeader->SetItem( nCol, &pColumn ) );
 		}
 	}
 #endif
@@ -337,6 +374,7 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 int CALLBACK CLiveList::SortCallback(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
 	CListCtrl* pList	= (CListCtrl*)lParamSort;
+	ASSERT_VALID( pList );
 	int nColumn			= (int)GetWindowLongPtr( pList->GetSafeHwnd(), GWLP_USERDATA );
 	LV_FINDINFO pFind;
 	int nA, nB;
@@ -500,6 +538,8 @@ BOOL CLiveList::IsNumber(LPCTSTR pszString)
 
 HBITMAP CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse, CPoint& ptMiddle)
 {
+	ASSERT_VALID( pList );
+
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 	int nIndex;
 
@@ -593,6 +633,8 @@ HBITMAP CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse, CPoi
 
 CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 {
+	ASSERT_VALID( pList );
+
 	CPoint ptOffset( 0, 0 );
 	CBitmap bmDrag;
 	bmDrag.Attach( CreateDragImage( pList, ptMouse, ptOffset) );
