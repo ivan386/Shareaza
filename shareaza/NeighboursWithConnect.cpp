@@ -1033,14 +1033,14 @@ void CNeighboursWithConnect::Maintain()
 			{
 				// If our connection to this remote computer is up to a hub, we are a leaf, if it's down to a leaf, we are a hub
 				if ( pNeighbour->m_nNodeType == ntHub )  m_bG2Leaf = TRUE; // Save these results in the member variables
-				else if ( pNeighbour->m_nNodeType == ntLeaf ) m_bG2Hub  = TRUE;
+				else m_bG2Hub  = TRUE;
 
 			} // We're connected to this neighbours and exchanging Gnutella packets
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 			{
 				// If our connection to this remote computer is up to a hub, we are a leaf, if it's down to a leaf, we are an ultrapeer
 				if ( pNeighbour->m_nNodeType == ntHub )  m_bG1Leaf      = TRUE; // Save these results in the member variables
-				else if ( pNeighbour->m_nNodeType == ntLeaf ) m_bG1Ultrapeer = TRUE;
+				else m_bG1Ultrapeer = TRUE;
 			}
 		}
 	}
