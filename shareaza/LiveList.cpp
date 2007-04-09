@@ -271,7 +271,6 @@ BOOL CLiveItem::SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIn
 	pFind.flags		= LVFI_PARAM;
 	pFind.lParam	= nParam;
 	nItem = pCtrl->FindItem( &pFind );
-	ASSERT( nItem != -1 );
 
 	LV_ITEM pItem = {};
 	pItem.mask	= LVIF_IMAGE;
