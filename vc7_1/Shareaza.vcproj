@@ -3179,6 +3179,9 @@
 				RelativePath="..\shareaza\Res\Traffic.ico">
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\UpDownArrow.ico">
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Uploads.ico">
 			</File>
 			<File

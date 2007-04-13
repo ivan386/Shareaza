@@ -120,6 +120,7 @@ IDI_SMALL               ICON                    "Res\\ShareazaSmall.ico"
 IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 IDI_COLORS              ICON                    "res\\colors.ico"
+IDI_UPDOWN_ARROW        ICON                    "Res\\UpDownArrow.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

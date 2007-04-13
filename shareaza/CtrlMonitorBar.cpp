@@ -81,6 +81,8 @@ int CMonitorBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_hTab = (HICON)LoadImage( AfxGetResourceHandle(),
 		MAKEINTRESOURCE(IDI_POINTER_ARROW), IMAGE_ICON, 16, 16, 0 );
+	m_hUpDown = (HICON)LoadImage( AfxGetResourceHandle(),
+		MAKEINTRESOURCE(IDI_UPDOWN_ARROW), IMAGE_ICON, 16, 16, 0 );
 
 	OnSkinChange();
 
@@ -179,6 +181,8 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 		pMemDC->Draw3dRect( rcClient.left + 3, nY, 4, 1,
 			CoolInterface.m_crDisabled, CoolInterface.m_crDisabled );
 	}
+
+	DrawIconEx( pMemDC->GetSafeHdc(), rcClient.right - 16, rcClient.bottom - 16, m_hUpDown, 16, 16, 0, NULL, DI_NORMAL );
 
 	m_pTxItem->SetHistory( rcClient.Width(), TRUE );
 	m_pRxItem->SetHistory( rcClient.Width(), TRUE );
