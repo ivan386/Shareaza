@@ -915,7 +915,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	if ( pDownload->m_bVerify == TS_FALSE )
 		dc.SetTextColor( RGB( 255, 0, 0 ) );
 	else if ( pDownload->m_bSelected )
-		dc.SetTextColor( CoolInterface.m_crText );
+		dc.SetTextColor( CoolInterface.m_crCmdTextSel );
 	else if ( pDownload->m_bVerify == TS_TRUE )
 	{
 		if ( pDownload->m_oBTH && ( pDownload->m_nTorrentUploaded < pDownload->m_nTorrentDownloaded ) )
@@ -1144,7 +1144,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 	dc.SetBkMode( OPAQUE );
 	
 	if ( pSource->m_bSelected )
-		dc.SetTextColor( CoolInterface.m_crText );
+		dc.SetTextColor( CoolInterface.m_crCmdTextSel );
 	else
 		dc.SetTextColor( CoolInterface.m_crText );
 	
