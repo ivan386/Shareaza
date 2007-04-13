@@ -3794,6 +3794,9 @@
 				RelativePath="Res\Traffic.ico">
 			</File>
 			<File
+				RelativePath="Res\UpDownArrow.ico">
+			</File>
+			<File
 				RelativePath="Res\Uploads.ico">
 			</File>
 			<File

@@ -4997,6 +4997,9 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\UpDownArrow.ico">
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Uploads.ico"
 				>
 			</File>
