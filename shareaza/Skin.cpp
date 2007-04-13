@@ -1198,6 +1198,14 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("traffic.window.text"), &CoolInterface.m_crTrafficWindowText );
 	pColours.SetAt( _T("traffic.window.grid"), &CoolInterface.m_crTrafficWindowGrid );
 
+	pColours.SetAt( _T("monitor.history.back"), &CoolInterface.m_crMonitorHistoryBack );
+	pColours.SetAt( _T("monitor.history.back.max"), &CoolInterface.m_crMonitorHistoryBackMax );
+	pColours.SetAt( _T("monitor.history.text"), &CoolInterface.m_crMonitorHistoryText );
+	pColours.SetAt( _T("monitor.download.line"), &CoolInterface.m_crMonitorDownloadLine );
+	pColours.SetAt( _T("monitor.upload.line"), &CoolInterface.m_crMonitorUploadLine );
+	pColours.SetAt( _T("monitor.download.bar"), &CoolInterface.m_crMonitorDownloadBar );
+	pColours.SetAt( _T("monitor.upload.bar"), &CoolInterface.m_crMonitorUploadBar );
+
 	BOOL bSystem = FALSE, bNonBase = FALSE;
 	
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )

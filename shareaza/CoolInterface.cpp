@@ -405,6 +405,14 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crTrafficWindowBack = RGB( 0, 0, 0 );
 	m_crTrafficWindowText = RGB( 193, 196, 255 );
 	m_crTrafficWindowGrid = RGB( 0, 0, 128 );
+
+	m_crMonitorHistoryBack = RGB( 0, 0, 0 );
+	m_crMonitorHistoryBackMax = RGB( 80, 0, 0 );
+	m_crMonitorHistoryText = RGB( 255, 0, 0 );
+	m_crMonitorDownloadLine = RGB( 0, 0xFF, 0 );
+	m_crMonitorUploadLine = RGB( 0xFF, 0xFF, 0 );
+	m_crMonitorDownloadBar = RGB( 0, 0xBB, 0 );
+	m_crMonitorUploadBar = RGB( 0xBB, 0xBB, 0 );
 }
 
 void CCoolInterface::OnSysColourChange()

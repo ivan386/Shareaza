@@ -84,6 +84,14 @@ public:
 	COLORREF	m_crTrafficWindowText;
 	COLORREF	m_crTrafficWindowGrid;
 
+	COLORREF	m_crMonitorHistoryBack;
+	COLORREF	m_crMonitorHistoryBackMax;
+	COLORREF	m_crMonitorHistoryText;
+	COLORREF	m_crMonitorDownloadLine;
+	COLORREF	m_crMonitorUploadLine;
+	COLORREF	m_crMonitorDownloadBar;
+	COLORREF	m_crMonitorUploadBar;
+
 	void		Clear();
 	void		NameCommand(UINT nID, LPCTSTR pszName);
 	UINT		NameToID(LPCTSTR pszName);
