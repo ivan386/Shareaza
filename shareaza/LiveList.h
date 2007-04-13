@@ -86,7 +86,7 @@ public:
 	virtual void AssertValid() const
 	{
 		CObject::AssertValid();
-		ASSERT( m_nImage >= 0 && m_nImage < 1000 );
+		ASSERT( m_nImage >= I_IMAGECALLBACK && m_nImage < 1000 );
 		ASSERT( m_pColumn );
 	}
 #endif

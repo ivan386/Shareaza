@@ -118,7 +118,7 @@ BOOL CGraphListDlg::OnInitDialog()
 CLiveItem* CGraphListDlg::PrepareItem(CGraphItem* pItem)
 {
 	CLiveItem* pLive = new CLiveItem( LIST_COLUMNS, (DWORD)pItem );
-	pLive->m_nImage = -1;
+	pLive->m_nImage = I_IMAGECALLBACK;
 
 	pLive->Set( 0, pItem->m_sName );
 
