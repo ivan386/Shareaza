@@ -203,13 +203,14 @@ int CLiveItem::Add(CListCtrl* pCtrl, int nItem, int nColumns)
 	pItem.stateMask	= LVIS_OVERLAYMASK | LVIS_STATEIMAGEMASK;
 	pItem.pszText	= (LPTSTR)(LPCTSTR)m_pColumn[0];
 	pItem.iItem		= pCtrl->InsertItem( &pItem );
-	ASSERT( pItem.iItem != -1 );
-	pItem.mask		= LVIF_TEXT;
-
-	for ( pItem.iSubItem = 1 ; pItem.iSubItem < nColumns ; pItem.iSubItem++ )
+	if( pItem.iItem != -1 )
 	{
-		pItem.pszText = (LPTSTR)(LPCTSTR)m_pColumn[ pItem.iSubItem ];
-		VERIFY( pCtrl->SetItem( &pItem ) );
+		pItem.mask		= LVIF_TEXT;
+		for ( pItem.iSubItem = 1 ; pItem.iSubItem < nColumns ; pItem.iSubItem++ )
+		{
+			pItem.pszText = (LPTSTR)(LPCTSTR)m_pColumn[ pItem.iSubItem ];
+			VERIFY( pCtrl->SetItem( &pItem ) );
+		}
 	}
 
 	return pItem.iItem;
