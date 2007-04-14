@@ -1295,6 +1295,7 @@
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Play"/>
+		<item id="ID_MEDIA_PROPERTIES" text="_Properties..."/>
 		<separator/>
 		<item id="ID_MEDIA_ADD" text="_Add File..."/>
 		<item id="ID_MEDIA_ADD_FOLDER" text="Add _Folder..."/>
@@ -2424,7 +2425,7 @@
 		<image id="ID_LIBRARY_COLUMNS"/>
 		<image id="ID_LIBRARY_SEARCH" id1="ID_LIBRARY_SEARCH_QUICK" id2="ID_LIBRARY_FOLDER_OPEN"/>
 		<image id="ID_LIBRARY_REFRESH"/>
-		<image id="ID_LIBRARY_PROPERTIES" id1="ID_LIBRARY_FOLDER_FILE_PROPERTIES" id2="ID_DOWNLOAD_GROUP_PROPERTIES"/>
+		<image id="ID_LIBRARY_PROPERTIES" id1="ID_LIBRARY_FOLDER_FILE_PROPERTIES" id2="ID_DOWNLOAD_GROUP_PROPERTIES" id3="ID_MEDIA_PROPERTIES"/>
 		<image id="ID_LIBRARY_ADD" id1="ID_LIBRARY_FOLDER_NEW"/>
 		<image id="ID_LIBRARY_REMOVE" id1="ID_LIBRARY_FOLDER_DELETE" id2="ID_LIBRARY_ALBUM_DELETE"/>
 		<image id="ID_UPLOADS_DISCONNECT"/>

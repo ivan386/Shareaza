@@ -31,6 +31,7 @@
 #include "Buffer.h"
 #include "CtrlMediaList.h"
 #include "DlgCollectionExport.h"
+#include "DlgFilePropertiesSheet.h"
 #include "CoolInterface.h"
 
 #ifdef _DEBUG
@@ -55,6 +56,8 @@ BEGIN_MESSAGE_MAP(CMediaListCtrl, CListCtrl)
 	ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDoubleClick)
 	ON_COMMAND(ID_MEDIA_ADD, OnMediaAdd)
+	ON_UPDATE_COMMAND_UI(ID_MEDIA_PROPERTIES, OnUpdateMediaProperties)
+	ON_COMMAND(ID_MEDIA_PROPERTIES, OnMediaProperties)
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_REMOVE, OnUpdateMediaRemove)
 	ON_COMMAND(ID_MEDIA_REMOVE, OnMediaRemove)
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_CLEAR, OnUpdateMediaClear)
@@ -565,6 +568,39 @@ void CMediaListCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 
 /////////////////////////////////////////////////////////////////////////////
 // CMediaListCtrl command handlers
+
+void CMediaListCtrl::OnUpdateMediaProperties(CCmdUI* pCmdUI) 
+{
+	CQuickLock oLock( Library.m_pSection );
+	if ( GetSelectedCount() > 0 )
+	{
+		// If at least one selected file is in the library then enable
+		for ( int nItem = -1 ; ( nItem = GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
+		{
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( GetPath( nItem ) ) )
+			{
+				pCmdUI->Enable( TRUE );
+				return;
+			}
+		}
+	}
+
+	pCmdUI->Enable( FALSE );
+}
+
+void CMediaListCtrl::OnMediaProperties() 
+{
+	CFilePropertiesSheet dlg;
+
+	CQuickLock oLock( Library.m_pSection );
+	for ( int nItem = -1 ; ( nItem = GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
+	{
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( GetPath( nItem ) ) )
+			dlg.Add( pFile );
+	}
+
+	dlg.DoModal();
+}
 
 void CMediaListCtrl::OnUpdateMediaSelect(CCmdUI* pCmdUI) 
 {

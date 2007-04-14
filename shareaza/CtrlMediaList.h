@@ -1,7 +1,7 @@
 //
 // CtrlMediaList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,6 +85,8 @@ protected:
 	afx_msg void OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnCustomDraw(NMLVCUSTOMDRAW* pNotify, LRESULT* pResult);
 	afx_msg void OnMediaAdd();
+	afx_msg void OnUpdateMediaProperties(CCmdUI* pCmdUI);
+	afx_msg void OnMediaProperties();
 	afx_msg void OnUpdateMediaRemove(CCmdUI* pCmdUI);
 	afx_msg void OnMediaRemove();
 	afx_msg void OnUpdateMediaClear(CCmdUI* pCmdUI);

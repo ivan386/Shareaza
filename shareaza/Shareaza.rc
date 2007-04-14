@@ -799,6 +799,7 @@ BEGIN
     POPUP "CMediaList"
     BEGIN
         MENUITEM "&Select",                     ID_MEDIA_SELECT
+        MENUITEM "&Properties...",              ID_MEDIA_PROPERTIES
         MENUITEM "&Add File...",                ID_MEDIA_ADD
         MENUITEM "Add Fo&lder...",              ID_MEDIA_ADD_FOLDER
         MENUITEM "&Remove",                     ID_MEDIA_REMOVE
@@ -806,7 +807,7 @@ BEGIN
         MENUITEM "&Clear",                      ID_MEDIA_CLEAR
         MENUITEM "&Open...",                    ID_MEDIA_OPEN
         MENUITEM "Sa&ve...",                    ID_MEDIA_SAVE
-        MENUITEM "E&xport Collection..",        ID_MEDIA_EXPORT_COLLECTION
+        MENUITEM "E&xport Collection...",       ID_MEDIA_EXPORT_COLLECTION
         MENUITEM SEPARATOR
         MENUITEM "Ra&ndom",                     ID_MEDIA_RANDOM
         MENUITEM "R&epeat",                     ID_MEDIA_REPEAT
@@ -5898,6 +5899,11 @@ BEGIN
     ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
     ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
+END
+
+STRINGTABLE 
+BEGIN
+    ID_MEDIA_PROPERTIES     "View and edit the properties of the selected files..."
 END
 
 #endif    // English (Australia) resources

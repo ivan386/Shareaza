@@ -334,6 +334,7 @@
 	<command code="33125" id="ID_HELP_SECURITY"/>
 	<command code="33126" id="ID_HELP_CODEC"/>
 	<command code="33127" id="ID_HELP_TEST"/>
+	<command code="33137" id="ID_MEDIA_PROPERTIES"/>
 	<command code="33200" id="ID_MEDIA_STATE_STOP"/>
 	<command code="33201" id="ID_MEDIA_STATE_PAUSE"/>
 	<command code="33202" id="ID_MEDIA_STATE_PLAY"/>
