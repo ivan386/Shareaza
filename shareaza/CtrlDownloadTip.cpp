@@ -102,7 +102,7 @@ void CDownloadTipCtrl::OnShow()
 	if ( m_pGraph ) delete m_pGraph;
 
 	m_pGraph	= CreateLineGraph();
-	m_pItem		= new CGraphItem( 0, 0, RGB( 0xFF, 0, 0 ) );
+	m_pItem		= new CGraphItem( 0, 0, RGB( 0, 0, 0xFF ) );
 	m_pGraph->AddItem( m_pItem );
 }
 
