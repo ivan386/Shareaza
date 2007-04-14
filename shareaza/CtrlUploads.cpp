@@ -779,13 +779,13 @@ void CUploadsCtrl::OnPaint()
 void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, BOOL bFocus)
 {
 	COLORREF crNatural	= CoolInterface.m_crWindow;
-	COLORREF crBack		= pQueue->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
+	COLORREF crBack		= pQueue->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
 	
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
 	
 	if ( pQueue->m_bSelected )
-		dc.SetTextColor( CoolInterface.m_crText );
+		dc.SetTextColor( CoolInterface.m_crHiText );
 	else
 		dc.SetTextColor( CoolInterface.m_crText );
 	
@@ -910,13 +910,13 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 	CUploadTransfer* pTransfer = pFile->GetActive();
 	
 	COLORREF crNatural	= CoolInterface.m_crWindow;
-	COLORREF crBack		= pFile->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
+	COLORREF crBack		= pFile->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
 	
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
 	
 	if ( pFile->m_bSelected )
-		dc.SetTextColor( CoolInterface.m_crText );
+		dc.SetTextColor( CoolInterface.m_crHiText );
 	else if ( pTransfer == NULL || pTransfer->m_nState == upsNull )
 		dc.SetTextColor( CoolInterface.m_crDisabled );
 	else
