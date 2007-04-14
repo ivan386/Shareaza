@@ -67,7 +67,6 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDiscoveryGo();
 	afx_msg void OnServerWalk();
-	afx_msg void OnImportDownloads();
 	afx_msg void OnEnableToday();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

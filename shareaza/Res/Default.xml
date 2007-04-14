@@ -524,6 +524,7 @@
 		<menu text="_Tools">
 			<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Download File/Torrent..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="_Import eDonkey/eMule partial downloads (.part)..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Choose a S_kin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Choose a _Language..."/>
@@ -607,6 +608,7 @@
 		<menu text="_Tools">
 			<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Download File/Torrent..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="_Import eDonkey/eMule partial downloads (.part)..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Choose a S_kin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Choose a _Language..."/>
@@ -2513,7 +2515,7 @@
 		<image id="ID_NETWORK_NULL"/>
 		<image id="ID_NETWORK_G1"/>
 		<image id="ID_NETWORK_G2"/>
-		<image id="ID_NETWORK_ED2K"/>
+		<image id="ID_NETWORK_ED2K" id="IDC_IMPORT_DOWNLOADS"/>
 		<image id="ID_NETWORK_HTTP"/>
 		<image id="ID_NETWORK_FTP"/>
 		<image id="ID_NETWORK_BT" id1="ID_DOWNLOADS_TORRENT_INFO"/>

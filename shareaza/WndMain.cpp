@@ -48,6 +48,7 @@
 #include "DlgHelp.h"
 #include "LibraryHistory.h"
 #include "DiscoveryServices.h"
+#include "DlgDonkeyImport.h"
 
 #include "WndMain.h"
 #include "WndChild.h"
@@ -182,6 +183,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_NETWORK_AUTO_CLOSE, OnNetworkAutoClose)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_DOWNLOAD, OnUpdateToolsDownload)
 	ON_COMMAND(ID_TOOLS_DOWNLOAD, OnToolsDownload)
+	ON_UPDATE_COMMAND_UI(IDC_IMPORT_DOWNLOADS, OnUpdateToolsImportDownloads)
+	ON_COMMAND(IDC_IMPORT_DOWNLOADS, OnToolsImportDownloads)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SECURITY, OnUpdateViewSecurity)
 	ON_COMMAND(ID_VIEW_SECURITY, OnViewSecurity)
 	ON_UPDATE_COMMAND_UI(ID_WINDOW_CASCADE, OnUpdateWindowCascade)
@@ -2077,6 +2080,37 @@ void CMainWnd::OnToolsDownload()
 	{
 		PostMessage( WM_URL, (WPARAM)dlg.GetURL() );
 	}
+}
+
+void CMainWnd::OnUpdateToolsImportDownloads(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( IsWindowEnabled() );
+}
+
+void CMainWnd::OnToolsImportDownloads() 
+{
+	TCHAR szPath[MAX_PATH];
+	LPITEMIDLIST pPath;
+	LPMALLOC pMalloc;
+
+	BROWSEINFO pBI = {};
+	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
+	pBI.pszDisplayName	= szPath;
+	pBI.lpszTitle		= _T("Select the eDonkey2000/eMule temp folder:");
+	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
+
+	pPath = SHBrowseForFolder( &pBI );
+
+	if ( pPath == NULL ) return;
+
+	SHGetPathFromIDList( pPath, szPath );
+	SHGetMalloc( &pMalloc );
+	pMalloc->Free( pPath );
+	pMalloc->Release();
+
+	CDonkeyImportDlg dlg;
+	dlg.m_pImporter.AddFolder( szPath );
+	dlg.DoModal();
 }
 
 void CMainWnd::OnToolsSkin() 

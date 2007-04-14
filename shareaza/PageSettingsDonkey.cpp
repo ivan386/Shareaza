@@ -25,7 +25,6 @@
 #include "WndSettingsSheet.h"
 #include "PageSettingsNetworks.h"
 #include "PageSettingsDonkey.h"
-#include "DlgDonkeyImport.h"
 #include "DlgDonkeyServers.h"
 
 #ifdef _DEBUG
@@ -40,7 +39,6 @@ BEGIN_MESSAGE_MAP(CDonkeySettingsPage, CSettingsPage)
 	//{{AFX_MSG_MAP(CDonkeySettingsPage)
 	ON_BN_CLICKED(IDC_DISCOVERY_GO, OnDiscoveryGo)
 	ON_BN_CLICKED(IDC_SERVER_WALK, OnServerWalk)
-	ON_BN_CLICKED(IDC_IMPORT_DOWNLOADS, OnImportDownloads)
 	ON_BN_CLICKED(IDC_ENABLE_TODAY, OnEnableToday)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -146,32 +144,6 @@ void CDonkeySettingsPage::OnServerWalk()
 	UpdateData();
 	m_wndResultsSpin.EnableWindow( m_bServerWalk );
 	m_wndResults.EnableWindow( m_bServerWalk );
-}
-
-void CDonkeySettingsPage::OnImportDownloads()
-{
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	LPMALLOC pMalloc;
-
-	BROWSEINFO pBI = {};
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select your temp (download) folder:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
-
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return;
-
-	SHGetPathFromIDList( pPath, szPath );
-	SHGetMalloc( &pMalloc );
-	pMalloc->Free( pPath );
-	pMalloc->Release();
-
-	CDonkeyImportDlg dlg;
-	dlg.m_pImporter.AddFolder( szPath );
-	dlg.DoModal();
 }
 
 void CDonkeySettingsPage::OnDiscoveryGo()

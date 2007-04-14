@@ -177,6 +177,8 @@ protected:
 	afx_msg void OnNetworkAutoClose();
 	afx_msg void OnUpdateToolsDownload(CCmdUI* pCmdUI);
 	afx_msg void OnToolsDownload();
+	afx_msg void OnUpdateToolsImportDownloads(CCmdUI* pCmdUI);
+	afx_msg void OnToolsImportDownloads();
 	afx_msg void OnUpdateViewSecurity(CCmdUI* pCmdUI);
 	afx_msg void OnViewSecurity();
 	afx_msg void OnUpdateWindowCascade(CCmdUI* pCmdUI);
