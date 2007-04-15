@@ -4366,8 +4366,9 @@
 		<column from="Speed" to="Скорость"/>
 		<column from="Status" to="Статус"/>
 		<column from="Client" to="Клиент"/>
-	<column from="Downloaded" to="Загружено"/>
-	<column from="Complete" to="Завершено"/>
+		<column from="Downloaded" to="Загружено"/>
+		<column from="Complete" to="Завершено"/>
+		<column from="Country" to="Страна"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Удаленный юзер"/>
@@ -4377,6 +4378,7 @@
 		<column from="Speed" to="Скорость"/>
 		<column from="Client" to="Клиент"/>
 		<column from="Rating" to="Рейтинг"/>
+		<column from="Country" to="Страна"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Адрес"/>
@@ -4390,6 +4392,7 @@
 		<column from="Mode" to="Режим"/>
 		<column from="Client" to="Клиент"/>
 		<column from="Name" to="Название"/>
+		<column from="Country" to="Страна"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Адрес/Содержание"/>
@@ -4409,6 +4412,8 @@
 		<column from="Description" to="Описание"/>
 		<column from="CurUsers" to="Текущих пользов."/>
 		<column from="MaxUsers" to="Макс. число польз."/>
+		<column from="Failures" to="Отказов"/>
+		<column from="Country" to="Страна"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Адрес"/>

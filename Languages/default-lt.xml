@@ -4380,6 +4380,7 @@ right quote	&#147;
 		<column from="Client" to="Klientas"/>
 		<column from="Downloaded" to="Parsisiųsta"/>
 		<column from="Complete" to="Baigta"/>
+		<column from="Country" to="Šalis"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Nutolęs vartotojas"/>
@@ -4389,6 +4390,7 @@ right quote	&#147;
 		<column from="Speed" to="Sparta"/>
 		<column from="Client" to="Klientas"/>
 		<column from="Rating" to="Reitingas"/>
+		<column from="Country" to="Šalis"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adresas"/>
@@ -4402,6 +4404,7 @@ right quote	&#147;
 		<column from="Mode" to="Veiksena"/>
 		<column from="Client" to="Klientas"/>
 		<column from="Name" to="Pavadinimas"/>
+		<column from="Country" to="Šalis"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Adresas ar turinys"/>
@@ -4421,6 +4424,8 @@ right quote	&#147;
 		<column from="Description" to="Aprašas"/>
 		<column from="CurUsers" to="Vartotojų skč."/>
 		<column from="MaxUsers" to="Maks. vartotojų"/>
+		<column from="Failures" to="Nesėkmių"/>
+		<column from="Country" to="Šalis"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Adresas"/>
