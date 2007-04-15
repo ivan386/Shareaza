@@ -2516,7 +2516,7 @@
 		<image id="ID_NETWORK_NULL"/>
 		<image id="ID_NETWORK_G1"/>
 		<image id="ID_NETWORK_G2"/>
-		<image id="ID_NETWORK_ED2K" id="IDC_IMPORT_DOWNLOADS"/>
+		<image id="ID_NETWORK_ED2K" id1="IDC_IMPORT_DOWNLOADS"/>
 		<image id="ID_NETWORK_HTTP"/>
 		<image id="ID_NETWORK_FTP"/>
 		<image id="ID_NETWORK_BT" id1="ID_DOWNLOADS_TORRENT_INFO"/>
