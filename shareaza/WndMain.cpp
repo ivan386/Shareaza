@@ -2092,11 +2092,13 @@ void CMainWnd::OnToolsImportDownloads()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-
+	
+	CString strMessage;
+	LoadString( strMessage, IDS_SELECT_ED2K_TEMP_FOLDER );
 	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select the eDonkey2000/eMule temp folder:");
+	pBI.lpszTitle		= strMessage;
 	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
 
 	pPath = SHBrowseForFolder( &pBI );

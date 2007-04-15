@@ -5476,6 +5476,7 @@ BEGIN
     IDS_RATING_4            "Good"
     IDS_RATING_5            "Very Good"
     IDS_RATING_6            "Excellent"
+    IDS_SELECT_ED2K_TEMP_FOLDER "Select the eDonkey2000/eMule temp folder:"
 END
 
 STRINGTABLE 

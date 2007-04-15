@@ -3157,6 +3157,7 @@
 	<string id="20214" value="Good"/>
 	<string id="20215" value="Very Good"/>
 	<string id="20216" value="Excellent"/>
+	<string id="20217" value="Select the eDonkey2000/eMule temp folder:"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
