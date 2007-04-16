@@ -214,8 +214,7 @@ BEGIN
         MENUITEM "&New Search...\tCtrl+S",      ID_NETWORK_SEARCH
         MENUITEM "&Download URL...\tCtrl+D",    ID_TOOLS_DOWNLOAD
         MENUITEM "Seed Torrent...",             ID_TOOLS_SEEDTORRENT
-        MENUITEM "Import eDonkey/eMule partial downloads (.part)...", 
-                                                IDC_IMPORT_DOWNLOADS
+        MENUITEM "Import eMule partial downloads...", IDC_IMPORT_DOWNLOADS
         MENUITEM SEPARATOR
         MENUITEM "My &Profile...",              ID_TOOLS_PROFILE
         MENUITEM "S&kin Shareaza...",           ID_TOOLS_SKIN
