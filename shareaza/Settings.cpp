@@ -492,26 +492,54 @@ CSettings::~CSettings()
 
 void CSettings::Add(LPCTSTR pszName, DWORD* pDword, DWORD nDefault)
 {
-	m_pItems.AddTail( new Item( pszName, pDword, NULL, NULL ) );
+	m_pItems.AddTail( new Item( pszName, pDword, NULL, NULL, NULL ) );
 	*pDword = nDefault;
 }
 
 void CSettings::Add(LPCTSTR pszName, int* pDword, DWORD nDefault)
 {
-	m_pItems.AddTail( new Item( pszName, (DWORD*)pDword, NULL, NULL ) );
+	m_pItems.AddTail( new Item( pszName, (DWORD*)pDword, NULL, NULL, NULL ) );
 	*pDword = nDefault;
 }
 
 void CSettings::Add(LPCTSTR pszName, DOUBLE* pFloat, DOUBLE nDefault)
 {
-	m_pItems.AddTail( new Item( pszName, NULL, pFloat, NULL ) );
+	m_pItems.AddTail( new Item( pszName, NULL, pFloat, NULL, NULL ) );
 	*pFloat = nDefault;
 }
 
 void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 {
-	m_pItems.AddTail( new Item( pszName, NULL, NULL, pString ) );
+	m_pItems.AddTail( new Item( pszName, NULL, NULL, pString, NULL ) );
 	if ( pszDefault ) *pString = pszDefault;
+}
+
+void CSettings::Add(LPCTSTR pszName, string_set* pSet, LPCTSTR pszDefault)
+{
+	m_pItems.AddTail( new Item( pszName, NULL, NULL, NULL, pSet ) );
+	if ( pszDefault )
+	{
+		LoadSet( pSet, pszDefault );
+	}
+}
+
+void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
+{
+	pSet->clear();
+	for( LPCTSTR start = pszString; *start; start++ )
+	{
+		LPCTSTR c = _tcschr( start, _T('|') );
+		int len = c ? ( c - start ) : (int) _tcslen( start );
+		if ( len > 0 )
+		{
+			CString tmp;
+			tmp.Append( start, len );
+			pSet->insert( tmp );
+		}
+		if ( ! c )
+			break;
+		start = c;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -527,9 +555,10 @@ void CSettings::Load()
 	{
 		Item* pItem = m_pItems.GetNext( pos );
 		pItem->Load();
-		ASSERT( pItem->m_pDword && !pItem->m_pFloat && !pItem->m_pString \
-			|| !pItem->m_pDword && pItem->m_pFloat && !pItem->m_pString \
-			|| !pItem->m_pDword && !pItem->m_pFloat && pItem->m_pString );
+		ASSERT( ( pItem->m_pDword && !pItem->m_pFloat && !pItem->m_pString && !pItem->m_pSet ) \
+			|| ( !pItem->m_pDword && pItem->m_pFloat && !pItem->m_pString && !pItem->m_pSet ) \
+			|| ( !pItem->m_pDword && !pItem->m_pFloat && pItem->m_pString && !pItem->m_pSet ) \
+			|| ( !pItem->m_pDword && !pItem->m_pFloat && !pItem->m_pString && pItem->m_pSet ) );
 	}
 
 	if ( pRegistry.GetInt( _T("Settings"), _T("FirstRun"), TRUE ) )
@@ -678,7 +707,7 @@ void CSettings::SmartUpgrade()
 		Uploads.MaxPerHost				= 2;
 		Uploads.ShareTiger				= TRUE;
 
-		Replace( Library.PrivateTypes, _T("|nfo|"), _T("|") );
+		Library.PrivateTypes.erase( _T("nfo") );
 		Replace( Library.SafeExecute, _T("|."), _T("|") );
 	}
 
@@ -816,14 +845,17 @@ void CSettings::SmartUpgrade()
 
 	if ( nVersion < 45 )
 	{
-		Replace( Library.PrivateTypes, _T("|dat|"), _T("|") );
+		Library.PrivateTypes.erase( _T("dat") );
 
-		if ( _tcsistr( Library.PrivateTypes, _T("|jc!|") ) == NULL )	// FlashGet
-			Library.PrivateTypes += _T("jc!|");
-		if ( _tcsistr( Library.PrivateTypes, _T("|fb!|") ) == NULL )	// FlashGet torrent
-			Library.PrivateTypes += _T("fb!|");
-		if ( _tcsistr( Library.PrivateTypes, _T("|bc!|") ) == NULL )	// BitComet
-			Library.PrivateTypes += _T("bc!|");
+		// FlashGet
+		if ( ! IsIn( Library.PrivateTypes, _T("jc!") ) )
+			Library.PrivateTypes.insert( _T("jc!") );
+		// FlashGet torrent
+		if ( ! IsIn( Library.PrivateTypes, _T("fb!") ) )
+			Library.PrivateTypes.insert( _T("fb!") );
+		// BitComet
+		if ( ! IsIn( Library.PrivateTypes, _T("bc!") ) )
+			Library.PrivateTypes.insert( _T("bc!") );
 	}
 }
 
@@ -974,7 +1006,8 @@ CSettings::Item* CSettings::GetSetting(LPVOID pValue) const
 		Item* pItem = m_pItems.GetNext( pos );
 		if ( pItem->m_pDword == pValue ||
 			 pItem->m_pFloat == pValue ||
-			 pItem->m_pString == pValue ) return pItem;
+			 pItem->m_pString == pValue ||
+			 pItem->m_pSet ) return pItem;
 	}
 
 	return NULL;
@@ -1347,12 +1380,13 @@ DWORD CSettings::GetOutgoingBandwidth()
 //////////////////////////////////////////////////////////////////////
 // CSettings::Item construction and operations
 
-CSettings::Item::Item(LPCTSTR pszName, DWORD* pDword, DOUBLE* pFloat, CString* pString)
+CSettings::Item::Item(LPCTSTR pszName, DWORD* pDword, DOUBLE* pFloat, CString* pString, string_set* pSet) :
+	m_sName		( pszName ),
+	m_pDword	( pDword ),
+	m_pFloat	( pFloat ),
+	m_pString	( pString ),
+	m_pSet		( pSet )
 {
-	m_sName		= pszName;
-	m_pDword	= pDword;
-	m_pFloat	= pFloat;
-	m_pString	= pString;
 }
 
 void CSettings::Item::Load()
@@ -1370,11 +1404,18 @@ void CSettings::Item::Load()
 	{
 		*m_pFloat = pRegistry.GetFloat( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pFloat );
 	}
-	else
+	else if ( m_pString )
 	{
 		*m_pString = pRegistry.GetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pString );
 	}
-
+	else if ( m_pSet )
+	{
+		CString foo( pRegistry.GetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), _T("") ) );
+		if ( foo.GetLength() )
+		{
+			LoadSet( m_pSet, foo );
+		}
+	}
 }
 
 void CSettings::Item::Save()
@@ -1394,8 +1435,18 @@ void CSettings::Item::Save()
 		str.Format( _T("%e"), *m_pFloat );
 		pRegistry.SetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), str );
 	}
-	else
+	else if ( m_pString )
 	{
 		pRegistry.SetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pString );
+	}
+	else if ( m_pSet )
+	{
+		CString foo( _T("|") );
+		for( string_set::const_iterator i = m_pSet->begin(); i != m_pSet->end(); i++ )
+		{
+			foo += *i;
+			foo += _T('|');
+		}
+		pRegistry.SetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), foo );
 	}
 }

@@ -94,7 +94,7 @@ public:
 		CString		SchemaURI;
 		CString		FilterURI;
 		CString		SafeExecute;
-		CString		PrivateTypes;
+		string_set	PrivateTypes;
 		DWORD		ThumbSize;
 		CString		BitziAgent;
 		CString		BitziWebView;
@@ -522,7 +522,7 @@ public:
 	class Item
 	{
 	public:
-		Item(LPCTSTR pszName, DWORD* pDword, DOUBLE* pFloat, CString* pString);
+		Item(LPCTSTR pszName, DWORD* pDword, DOUBLE* pFloat, CString* pString, string_set* pSet);
 		void	Load();
 		void	Save();
 
@@ -530,6 +530,7 @@ public:
 		DWORD*		m_pDword;
 		DOUBLE*		m_pFloat;
 		CString*	m_pString;
+		string_set*	m_pSet;
 	};
 
 protected:
@@ -572,7 +573,9 @@ protected:
 	void	Add(LPCTSTR pszName, int* pDword, DWORD nDefault);
 	void	Add(LPCTSTR pszName, DOUBLE* pFloat, DOUBLE nDefault);
 	void	Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault);
+	void	Add(LPCTSTR pszName, string_set* pSet, LPCTSTR pszDefault);
 	void	SmartUpgrade();
+	static void LoadSet(string_set* pSet, LPCTSTR pszString);
 
 public:
 	void	OnChangeConnectionSpeed();

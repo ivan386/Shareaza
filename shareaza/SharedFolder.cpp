@@ -401,9 +401,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 				LPCTSTR pszExt = _tcsrchr( pFind.cFileName, '.' );
 				if ( pszExt )
 				{
-					CString strExt;
-					strExt.Format( L"|%s|", ++pszExt );
-					if ( _tcsistr( Settings.Library.PrivateTypes, strExt ) )
+					if ( IsIn( Settings.Library.PrivateTypes, pszExt + 1 ) )
 						continue;
 				}			
 

@@ -461,3 +461,16 @@ private:
 };
 
 extern const CLowerCaseTable ToLower;
+
+template<>
+struct std::less< CString > : public std::binary_function< CString, CString, bool>
+{
+	bool operator()(const CString& _Left, const CString& _Right) const throw()
+	{
+		return ( _Left.CompareNoCase( _Right ) < 0 );
+	}
+};
+
+typedef std::set < CString > string_set;
+
+#define IsIn(x,y) ((x.find((y)))!=(x.end()))

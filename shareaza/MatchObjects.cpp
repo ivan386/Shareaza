@@ -32,12 +32,14 @@
 #include "Library.h"
 #include "SharedFile.h"
 #include "Schema.h"
+#include "SchemaCache.h"
 #include "Security.h"
 #include "ShellIcons.h"
 #include "VendorCache.h"
 #include "Downloads.h"
 #include "Transfers.h"
 #include "XML.h"
+#include "Download.h"
 
 #include "TigerTree.h"
 #include "SHA.h"
@@ -46,6 +48,8 @@
 #include "CtrlMatch.h"
 #include "LiveList.h"
 #include "ResultFilters.h"
+
+#include "CtrlSearchDetailPanel.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -1513,17 +1517,9 @@ void CMatchFile::Added(CQueryHit* pHit)
 		if ( ! m_bSuspicious )
 		{
 			// Unshared types are suspicious. (A user is assumed to want to exclude these entirely)
-			if ( LPCTSTR pszFind = _tcsistr( Settings.Library.PrivateTypes, pszExt ) )
+			if ( IsIn( Settings.Library.PrivateTypes, pszExt ) )
 			{
-				if ( pszFind[ _tcslen( pszExt ) ] == 0 ||
-					pszFind[ _tcslen( pszExt ) ] == '|' )
-				{
-					if ( pszFind == Settings.Library.PrivateTypes ||
-						pszFind[-1] == '|' )
-					{
-						m_bSuspicious = TRUE;
-					}
-				}
+				m_bSuspicious = TRUE;
 			}
 
 			// These are basically always viral or useless

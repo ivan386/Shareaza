@@ -121,7 +121,7 @@ CString CLibraryFile::GetPath() const
 	if ( m_pFolder != NULL )
 		return m_pFolder->m_sPath + '\\' + m_sName;
 	else
-		return CString();
+		return m_sName;
 }
 
 CString CLibraryFile::GetSearchName() const
@@ -162,19 +162,9 @@ BOOL CLibraryFile::IsShared() const
 {
 	if ( LPCTSTR pszExt = _tcsrchr( m_sName, '.' ) )
 	{
-		pszExt++;
-		
-		if ( LPCTSTR pszFind = _tcsistr( Settings.Library.PrivateTypes, pszExt ) )
+		if ( IsIn( Settings.Library.PrivateTypes, pszExt + 1 ) )
 		{
-			if ( pszFind[ _tcslen( pszExt ) ] == 0 ||
-				 pszFind[ _tcslen( pszExt ) ] == '|' )
-			{
-				if ( pszFind == Settings.Library.PrivateTypes ||
-					 pszFind[-1] == '|' )
-				{
-					return FALSE;
-				}
-			}
+			return FALSE;
 		}
 	}
 	
@@ -621,17 +611,9 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		ar << m_nVirtualSize;
 		if ( m_nVirtualSize > 0 ) ar << m_nVirtualBase;
 		
-//		ar << m_bSHA1;
-//		if ( m_bSHA1 ) ar.Write( &m_pSHA1, sizeof(SHA1) );
         SerializeOut( ar, m_oSHA1 );
-//		ar << m_bTiger;
-//		if ( m_bTiger ) ar.Write( &m_pTiger, sizeof(TIGEROOT) );
         SerializeOut( ar, m_oTiger );
-//		ar << m_bMD5;
-//		if ( m_bMD5 ) ar.Write( &m_pMD5, sizeof(MD5) );
         SerializeOut( ar, m_oMD5 );
-//		ar << m_bED2K;
-//		if ( m_bED2K ) ar.Write( &m_pED2K, sizeof(MD4) );
         SerializeOut( ar, m_oED2K );
 		ar << m_bVerify;
 		
@@ -707,11 +689,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 			if ( m_nVirtualSize > 0 ) ar >> m_nVirtualBase;
 		}
 		
-//		ar >> m_bSHA1;
-//		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
         SerializeIn( ar, m_oSHA1, nVersion );
-//		if ( nVersion >= 8 ) ar >> m_bTiger; else m_bTiger = FALSE;
-//		if ( m_bTiger ) ar.Read( &m_pTiger, sizeof(TIGEROOT) );
         if ( nVersion >= 8 )
         {
             SerializeIn( ar, m_oTiger, nVersion );
@@ -720,8 +698,6 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
         {
             m_oTiger.clear();
         }
-//		if ( nVersion >= 11 ) ar >> m_bMD5; else m_bMD5 = FALSE;
-//		if ( m_bMD5 ) ar.Read( &m_pMD5, sizeof(MD5) );
         if ( nVersion >= 11 )
         {
             SerializeIn( ar, m_oMD5, nVersion );

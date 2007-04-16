@@ -127,13 +127,10 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 		if ( strType.GetLength() ) m_wndSafeList.AddString( strType );
 	}
 	
-	for ( strList = Settings.Library.PrivateTypes + '|' ; strList.GetLength() ; )
+	for ( string_set::const_iterator i = Settings.Library.PrivateTypes.begin() ;
+		i != Settings.Library.PrivateTypes.end(); i++ )
 	{
-		CString strType = strList.SpanExcluding( _T(" |") );
-		strList = strList.Mid( strType.GetLength() + 1 );
-		strType.TrimLeft();
-		strType.TrimRight();
-		if ( strType.GetLength() ) m_wndPrivateList.AddString( strType );
+		m_wndPrivateList.AddString( *i );
 	}
 
 	m_wndCollectionPath.SetIcon( IDI_BROWSE );
@@ -285,19 +282,15 @@ void CLibrarySettingsPage::OnOK()
 		}
 	}
 	
-	Settings.Library.PrivateTypes.Empty();
+	Settings.Library.PrivateTypes.clear();
 
 	for ( int nItem = 0 ; nItem < m_wndPrivateList.GetCount() ; nItem++ )
 	{
 		CString str;
 		m_wndPrivateList.GetLBText( nItem, str );
-
 		if ( str.GetLength() )
 		{
-			if ( Settings.Library.PrivateTypes.IsEmpty() )
-				Settings.Library.PrivateTypes += '|';
-			Settings.Library.PrivateTypes += str;
-			Settings.Library.PrivateTypes += '|';
+			Settings.Library.PrivateTypes.insert( str );
 		}
 	}
 
