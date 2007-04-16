@@ -3409,7 +3409,7 @@
 		<control caption="Leaf to Hub"/>
 		<control caption="Hub to Hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Network:"/>
 		<control caption="Connect to eDonkey2000 today"/>
 		<control caption="Always connect to eDonkey2000"/>
@@ -3423,8 +3423,6 @@
 		<control/><control/>
 		<control caption="other eDonkey clients."/>
 		<control caption="eDonkey2000 _Tools:"/>
-		<control caption="Import eDonkey/eMule partial downloads (.part):"/>
-		<control caption="Import..."/>
 		<control caption="Download eDonkey2000 serverlist from the web:"/>
 		<control caption="Download..."/>
 	</dialog>
