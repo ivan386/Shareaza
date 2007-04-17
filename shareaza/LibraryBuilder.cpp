@@ -344,9 +344,9 @@ void CLibraryBuilder::OnRun()
 			{
 				m_sPath = pFile->GetPath();
 
-				if ( LPCTSTR pszExt = _tcsrchr( m_sPath, '.' ) )
+				if ( int nExt = m_sPath.ReverseFind( _T('.') ) + 1 )
 				{
-					if ( IsIn( Settings.Library.PrivateTypes, pszExt + 1 ) )
+					if ( IsIn( Settings.Library.PrivateTypes, (LPCTSTR)m_sPath + nExt ) )
 					{
 						continue;
 					}

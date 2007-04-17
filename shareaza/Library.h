@@ -1,7 +1,7 @@
 //
 // Library.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,29 +45,24 @@ public:
 	CMutex			m_pSection;
 	DWORD			m_nUpdateCookie;
 	DWORD			m_nScanCount;
-protected:
 	DWORD			m_nScanCookie;
 	DWORD			m_nScanTime;
 	DWORD			m_nUpdateSaved;
 	int				m_nFileSwitch;
-	DWORD			m_nInhibit;
-protected:
 	HANDLE			m_hThread;
 	BOOL			m_bThread;
 	CEvent			m_pWakeup;
-public:
 	HINSTANCE		m_hKernel;
 	BOOL			(WINAPI* m_pfnGFAEW)(LPCWSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
 	BOOL			(WINAPI* m_pfnGFAEA)(LPCSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
 
 // Sync Operations
 public:
-	void			Update()
+	inline void		Update()
 	{
 		CQuickLock oLock( m_pSection );
 		m_nUpdateCookie = GetTickCount();
 	}
-	void			Inhibit(BOOL bInhibit);
 	void			CheckDuplicates(LPCTSTR pszEd2kHash);
 
 // File and Folder Operations

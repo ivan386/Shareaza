@@ -1,11 +1,7 @@
 //
 // MatchObjects.cpp
 //
-//	Date:			"$Date: 2006/04/04 23:30:59 $"
-//	Revision:		"$Revision: 1.26 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -1506,9 +1502,9 @@ void CMatchFile::Added(CQueryHit* pHit)
 	m_bSuspicious = (float)nBogusCount / nTotal > Settings.Search.SpamFilterThreshold / 100.0f;
 
 	// Get extention
-	if ( LPCTSTR pszExt = _tcsrchr( pHit->m_sName, '.' ) )
+	if ( int nExt = pHit->m_sName.ReverseFind( _T('.') ) + 1 )
 	{
-		pszExt++;
+		LPCTSTR pszExt = (LPCTSTR)pHit->m_sName + nExt;
 
 		// Set torrent bool
 		if ( ( _tcsicmp( pszExt, _T("torrent") ) == 0 ) ) m_bTorrent = TRUE;

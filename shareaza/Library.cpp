@@ -72,7 +72,6 @@ CLibrary::CLibrary()
 	m_nUpdateCookie	= 0;
 	m_nUpdateSaved	= 0;
 	m_nFileSwitch	= 0;
-	m_nInhibit		= 0;
 
 	m_pfnGFAEW		= NULL;
 	m_pfnGFAEA		= NULL;
@@ -87,17 +86,6 @@ CLibrary::CLibrary()
 CLibrary::~CLibrary()
 {
 	if ( m_hKernel != NULL ) FreeLibrary( m_hKernel );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibrary locking
-
-void CLibrary::Inhibit(BOOL bInhibit)
-{
-	if ( bInhibit )
-		InterlockedIncrement( (PLONG)&m_nInhibit );
-	else
-		InterlockedDecrement( (PLONG)&m_nInhibit );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -474,7 +462,7 @@ void CLibrary::OnRun()
 {
 	while ( m_bThread )
 	{
-		if ( m_nInhibit == 0 ) ThreadScan();
+		ThreadScan();
 		WaitForSingleObject( m_pWakeup, 1000 );
 	}
 }

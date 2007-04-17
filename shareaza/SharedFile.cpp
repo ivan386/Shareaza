@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -160,9 +160,9 @@ CString CLibraryFile::GetSearchName() const
 
 BOOL CLibraryFile::IsShared() const
 {
-	if ( LPCTSTR pszExt = _tcsrchr( m_sName, '.' ) )
+	if ( int nExt = m_sName.ReverseFind( _T('.') ) + 1 )
 	{
-		if ( IsIn( Settings.Library.PrivateTypes, pszExt + 1 ) )
+		if ( IsIn( Settings.Library.PrivateTypes, (LPCTSTR)m_sName + nExt ) )
 		{
 			return FALSE;
 		}

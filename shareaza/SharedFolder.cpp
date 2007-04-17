@@ -416,7 +416,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 						bChanged = TRUE;
 					}
 				}
-				else if ( bKazaaFolder && _tcsicmp( pszExt, _T(".dat") ) == 0 )
+				else if ( bKazaaFolder && pszExt && _tcsicmp( pszExt, _T(".dat") ) == 0 )
 				{
 					// Ignore .dat files in Kazaa folder
 					continue;
