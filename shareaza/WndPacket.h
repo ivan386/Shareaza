@@ -63,7 +63,7 @@ protected:
 
 // Operations
 public:
-	void		Process(const CNeighbour* pNeighbour, const IN_ADDR* pUDP, BOOL bOutgoing, const CPacket* pPacket);
+	void		SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD nNeighbourUnique = 0);
 	void		OnSkinChange();
 protected:
 	void		AddNeighbour(CMenu* pMenus, int nGroup, UINT nID, DWORD nTarget, LPCTSTR pszText);

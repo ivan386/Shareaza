@@ -807,7 +807,7 @@ BOOL CNetwork::SendPush(const Hashes::Guid& oGUID, DWORD nIndex)
 		{
 			CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PUSH, TRUE );
 			
-			pPacket->WritePacket( G2_PACKET_PUSH_TO, 16 );
+			pPacket->WritePacket( G2_PACKET_TO, 16 );
 			pPacket->Write( oGUID );
 			
 			pPacket->WriteByte( 0 );

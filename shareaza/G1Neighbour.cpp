@@ -229,7 +229,7 @@ BOOL CG1Neighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
 		QueueRun(); // (do)
 
 		// Show this packet to all the windows on the tab bar
-		pPacketG1->SmartDump( this, NULL, TRUE );
+		pPacketG1->SmartDump( &m_pHost, FALSE, TRUE, m_nUnique );
 
 		// Record that we sent the packet
 		bSuccess = TRUE;
@@ -324,7 +324,7 @@ BOOL CG1Neighbour::OnPacket(CG1Packet* pPacket)
 	}
 
 	// Show this packet to all the windows on the tab bar
-	pPacket->SmartDump( this, NULL, FALSE );
+	pPacket->SmartDump( &m_pHost, FALSE, FALSE, m_nUnique );
 
 	// Sort the packet by type, hand it to the correct packet handler, and return the result from that
 	switch ( pPacket->m_nType )
@@ -1304,7 +1304,7 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 		{
 			// Create a new Gnutella2 push packet with the same information as this one, and send it
 			CG2Packet* pWrap = CG2Packet::New( G2_PACKET_PUSH, TRUE );
-			pWrap->WritePacket( G2_PACKET_PUSH_TO, 16 );
+			pWrap->WritePacket( G2_PACKET_TO, 16 );
 			pWrap->Write( oClientID );
 			pWrap->WriteByte( 0 );
 			pWrap->WriteLongLE( nAddress );

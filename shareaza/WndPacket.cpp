@@ -170,19 +170,22 @@ void CPacketWnd::OnSkinChange()
 /////////////////////////////////////////////////////////////////////////////
 // CPacketWnd operations
 
-void CPacketWnd::Process(const CNeighbour* pNeighbour, const IN_ADDR* pUDP, BOOL bOutgoing, const CPacket* pPacket)
+void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD nNeighbourUnique)
 {
+	ASSERT( pPacket );
+	ASSERT( pAddress );
+
 	if ( m_bPaused || m_hWnd == NULL ) return;
 
-	if ( pNeighbour )
+	if ( nNeighbourUnique )
 	{
 		if ( bOutgoing )
 		{
-			if ( m_nOutputFilter && m_nOutputFilter != pNeighbour->m_nUnique ) return;
+			if ( m_nOutputFilter && m_nOutputFilter != nNeighbourUnique ) return;
 		}
 		else
 		{
-			if ( m_nInputFilter && m_nInputFilter != pNeighbour->m_nUnique ) return;
+			if ( m_nInputFilter && m_nInputFilter != nNeighbourUnique ) return;
 		}
 	}
 	else
@@ -230,9 +233,9 @@ void CPacketWnd::Process(const CNeighbour* pNeighbour, const IN_ADDR* pUDP, BOOL
 	
 	pItem->m_nParam = bOutgoing;
 	
-	if ( pNeighbour )
+	if ( ! bUDP )
 	{
-		pItem->Set( 0, pNeighbour->m_sAddress );
+		pItem->Set( 0, CString( inet_ntoa( pAddress->sin_addr ) ) );
 		if ( pPacketG2 )
 			pItem->Set( 1, _T("G2 TCP") );
 		else if ( pPacketG1 )
@@ -242,7 +245,7 @@ void CPacketWnd::Process(const CNeighbour* pNeighbour, const IN_ADDR* pUDP, BOOL
 	}
 	else
 	{
-		pItem->Set( 0, _T("(") + CString( inet_ntoa( *pUDP ) ) + _T(")") );
+		pItem->Set( 0, _T("(") + CString( inet_ntoa( pAddress->sin_addr ) ) + _T(")") );
 		if ( pPacketG2 )
 			pItem->Set( 1, _T("G2 UDP") );
 		else if ( pPacketG1 )

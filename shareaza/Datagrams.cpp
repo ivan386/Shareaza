@@ -274,7 +274,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 		CBuffer pBuffer;
 
 		((CEDPacket*)pPacket)->ToBufferUDP( &pBuffer );
-		pPacket->SmartDump( NULL, &pHost->sin_addr, TRUE );
+		pPacket->SmartDump( pHost, TRUE, TRUE );
 		if ( bRelease ) pPacket->Release();
 
 		if ( ntohs( pHost->sin_port ) != 4669 )	// Hack
@@ -291,7 +291,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 		CBuffer pBuffer;
 
 		((CG1Packet*)pPacket)->ToBuffer( &pBuffer );
-		pPacket->SmartDump( NULL, &pHost->sin_addr, TRUE );
+		pPacket->SmartDump( pHost, TRUE, TRUE );
 		if ( bRelease ) pPacket->Release();
 
 		sendto( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, 0,
@@ -362,7 +362,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 
 	m_nOutPackets++;
 
-	pPacket->SmartDump( NULL, &pHost->sin_addr, TRUE );
+	pPacket->SmartDump( pHost, TRUE, TRUE );
 
 #ifdef DEBUG_UDP
 	pPacket->Debug( _T("UDP Out") );
@@ -658,7 +658,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 		&& ( sizeof(GNUTELLAPACKET) + pG1UDP->m_nLength ) == nLength )
 	{
 		CG1Packet* pG1Packet = CG1Packet::New( (GNUTELLAPACKET*)pG1UDP );
-		pG1Packet->SmartDump( NULL, &pHost->sin_addr, FALSE );
+		pG1Packet->SmartDump( pHost, TRUE, FALSE );
 		if ( OnPacket( pHost, pG1Packet ) )
 		{
 			pG1Packet->Release();
@@ -682,7 +682,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 
 		if ( ! pPacket->InflateOrRelease( ED2K_PROTOCOL_EMULE ) )
 		{
-			pPacket->SmartDump( NULL, &pHost->sin_addr, FALSE );
+			pPacket->SmartDump( pHost, TRUE, FALSE );
 			EDClients.OnUDP( pHost, pPacket );
 			pPacket->Release();
 		}
@@ -956,7 +956,7 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 
 BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	pPacket->SmartDump( NULL, &pHost->sin_addr, FALSE );
+	pPacket->SmartDump( pHost, TRUE, FALSE );
 
 	m_nInPackets++;
 

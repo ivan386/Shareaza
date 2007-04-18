@@ -500,7 +500,7 @@ void CPacket::Debug(LPCTSTR pszReason) const
 
 // Takes a CNeighbour object, an IP address without a port number, and true if we are sending the packet, false if we received it
 // Gives this packet and related objects to each window in the tab bar for them to process it
-void CPacket::SmartDump(CNeighbour* pNeighbour, IN_ADDR* pUDP, BOOL bOutgoing) const
+void CPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD nNeighbourUnique) const
 {
 	// Get exclusive access to the program's critical section while this method runs
 	CSingleLock pLock( &theApp.m_pSection ); // When the method exits, pLock will go out of scope, be destructed, and release the lock
@@ -517,7 +517,7 @@ void CPacket::SmartDump(CNeighbour* pNeighbour, IN_ADDR* pUDP, BOOL bOutgoing) c
 			while ( ( pWnd = (CPacketWnd*)pWindows->Find( RUNTIME_CLASS(CPacketWnd), pWnd ) ) != NULL )
 			{
 				// Give each window this packet to process, along with the related CNeighbour object, IP address, and travel direction
-				pWnd->Process( pNeighbour, pUDP, bOutgoing, this );
+				pWnd->SmartDump( this, pAddress, bUDP, bOutgoing, nNeighbourUnique );
 			}
 		}
 	}

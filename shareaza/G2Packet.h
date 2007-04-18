@@ -1,7 +1,7 @@
 //
 // G2Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,8 +63,8 @@ typedef QWORD G2_PACKET;
 const G2_PACKET G2_PACKET_NULL				= MAKE_G2_PACKET(  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_BODY				= MAKE_G2_PACKET( 'B', 'O', 'D', 'Y',  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_BOGUS				= MAKE_G2_PACKET( 'B', 'O', 'G', 'U', 'S',  0 ,  0 ,  0  );
-const G2_PACKET G2_PACKET_BROWSE_HOST		= MAKE_G2_PACKET( 'B', 'H',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );	// ??
-const G2_PACKET G2_PACKET_BROWSE_PROFILE	= MAKE_G2_PACKET( 'B', 'U', 'P',  0 ,  0 ,  0 ,  0 ,  0  );	// ??
+const G2_PACKET G2_PACKET_BROWSE_HOST		= MAKE_G2_PACKET( 'B', 'H',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_BROWSE_PROFILE	= MAKE_G2_PACKET( 'B', 'U', 'P',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_CACHED_HUB		= MAKE_G2_PACKET( 'C', 'H',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_CACHED_SOURCES	= MAKE_G2_PACKET( 'C', 'S', 'C',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_CHAT_ACCEPT		= MAKE_G2_PACKET( 'A', 'C', 'C', 'E', 'P', 'T',  0 ,  0  );
@@ -83,7 +83,7 @@ const G2_PACKET G2_PACKET_CRAWL_RGPS		= MAKE_G2_PACKET( 'R', 'G', 'P', 'S',  0 ,
 const G2_PACKET G2_PACKET_CRAWL_RLEAF		= MAKE_G2_PACKET( 'R', 'L', 'E', 'A', 'F',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_CRAWL_RNAME		= MAKE_G2_PACKET( 'R', 'N', 'A', 'M', 'E',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_DESCRIPTIVE_NAME	= MAKE_G2_PACKET( 'D', 'N',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
-const G2_PACKET G2_PACKET_DISCOVERY			= MAKE_G2_PACKET( 'D', 'I', 'S',  0 ,  0 ,  0 ,  0 ,  0  );	// by Ryo-oh-ki
+const G2_PACKET G2_PACKET_DISCOVERY			= MAKE_G2_PACKET( 'D', 'I', 'S',  0 ,  0 ,  0 ,  0 ,  0  );	// Extension. UDP request for node /KHL (Ryo-oh-ki)
 const G2_PACKET G2_PACKET_DISCOVERY_ANS		= MAKE_G2_PACKET( 'D', 'I', 'S', 'C', 'A',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_DISCOVERY_HUB		= MAKE_G2_PACKET( 'D', 'I', 'S', 'C', 'H',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_DISCOVERY_LOG		= MAKE_G2_PACKET( 'D', 'I', 'S', 'C', 'L',  0 ,  0 ,  0  );
@@ -111,15 +111,15 @@ const G2_PACKET G2_PACKET_LNI				= MAKE_G2_PACKET( 'L', 'N', 'I',  0 ,  0 ,  0 ,
 const G2_PACKET G2_PACKET_METADATA			= MAKE_G2_PACKET( 'M', 'D',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_NAME				= MAKE_G2_PACKET( 'N', 'A', 'M', 'E',  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_NEIGHBOUR_HUB		= MAKE_G2_PACKET( 'N', 'H',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
-const G2_PACKET G2_PACKET_NEIGHBOUR_LEAF	= MAKE_G2_PACKET( 'N', 'L',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );	// ??
+const G2_PACKET G2_PACKET_NEIGHBOUR_LEAF	= MAKE_G2_PACKET( 'N', 'L',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );	// Extension. /CRAWL leaf info
 const G2_PACKET G2_PACKET_NICK				= MAKE_G2_PACKET( 'N', 'I', 'C', 'K',  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_NODE_ADDRESS		= MAKE_G2_PACKET( 'N', 'A',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_NODE_GUID			= MAKE_G2_PACKET( 'G', 'U',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
-const G2_PACKET G2_PACKET_NODE_INFO			= MAKE_G2_PACKET( 'N', 'I',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );	// ??
+const G2_PACKET G2_PACKET_NODE_INFO			= MAKE_G2_PACKET( 'N', 'I',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );	// Obsolete. Equal to G2_PACKET_NODE_ADDRESS
 const G2_PACKET G2_PACKET_OBJECT_ID			= MAKE_G2_PACKET( 'I', 'D',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_PARTIAL			= MAKE_G2_PACKET( 'P', 'A', 'R', 'T',  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_PEER_BUSY			= MAKE_G2_PACKET( 'B', 'U', 'S', 'Y',  0 ,  0 ,  0 ,  0  );
-const G2_PACKET G2_PACKET_PEER_CHAT			= MAKE_G2_PACKET( 'P', 'C', 'H',  0 ,  0 ,  0 ,  0 ,  0  );	// ??
+const G2_PACKET G2_PACKET_PEER_CHAT			= MAKE_G2_PACKET( 'P', 'C', 'H',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_PEER_FIREWALLED	= MAKE_G2_PACKET( 'F', 'W',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_PEER_STATUS		= MAKE_G2_PACKET( 'S', 'S',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_PEER_UNSTABLE		= MAKE_G2_PACKET( 'U', 'N', 'S', 'T', 'A',  0 ,  0 ,  0  );
@@ -132,16 +132,8 @@ const G2_PACKET G2_PACKET_PROFILE_AVATAR	= MAKE_G2_PACKET( 'U', 'P', 'R', 'O', '
 const G2_PACKET G2_PACKET_PROFILE_CHALLENGE	= MAKE_G2_PACKET( 'U', 'P', 'R', 'O', 'C',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_PROFILE_DELIVERY	= MAKE_G2_PACKET( 'U', 'P', 'R', 'O', 'D',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_PUSH				= MAKE_G2_PACKET( 'P', 'U', 'S', 'H',  0 ,  0 ,  0 ,  0  );
-// Whoever the one defined this as G2_PACKET_PUSH_TO, has never read G2 Spec, this is not only for PUSH, is "GENERIC ROUTING TO"
-// identifier thus the name is totally wrong. if bereaving it is only for PUSH, then it is serious problem, since this is
-// useful sometimes but this is kind of dangerous extension in G2, you can even put this on HAW, KHL and send to HUB,
-// then HUB will route to the node on TCP if it is Neighbour. thus you can send FAKE IP:PORT to the specific NODE which
-// you know GUID, and make the node's CACHE filled with fake, then send PING in same way like FLOODING. as a result of it,
-// the node will not be able to comeback because of FULL of faked cache.
-// P.S. currently it is blocked to do it only on CB, standard RAZA will accept any routed packets.
-const G2_PACKET G2_PACKET_PUSH_TO			= MAKE_G2_PACKET( 'T', 'O',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_QHT				= MAKE_G2_PACKET( 'Q', 'H', 'T',  0 ,  0 ,  0 ,  0 ,  0  );
-const G2_PACKET G2_PACKET_QKY				= MAKE_G2_PACKET( 'Q', 'K', 'Y',  0 ,  0 ,  0 ,  0 ,  0  );	// ???
+const G2_PACKET G2_PACKET_QKY				= MAKE_G2_PACKET( 'Q', 'K', 'Y',  0 ,  0 ,  0 ,  0 ,  0  );	// Extension. /Q2 query key without /Q2/UDP
 const G2_PACKET G2_PACKET_QUERY				= MAKE_G2_PACKET( 'Q', '2',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_QUERY_ACK			= MAKE_G2_PACKET( 'Q', 'A',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_QUERY_ADDRESS		= MAKE_G2_PACKET( 'Q', 'N', 'A',  0 ,  0 ,  0 ,  0 ,  0  );
@@ -161,7 +153,6 @@ const G2_PACKET G2_PACKET_SEND_ADDRESS		= MAKE_G2_PACKET( 'S', 'N', 'A',  0 ,  0
 const G2_PACKET G2_PACKET_SIZE				= MAKE_G2_PACKET( 'S', 'Z',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_SIZE_RESTRICTION	= MAKE_G2_PACKET( 'S', 'Z', 'R',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_TIMESTAMP			= MAKE_G2_PACKET( 'T', 'S',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
-// This is the Correct definition ( G2_PACKET_TO )
 const G2_PACKET G2_PACKET_TO				= MAKE_G2_PACKET( 'T', 'O',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_UDP				= MAKE_G2_PACKET( 'U', 'D', 'P',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_URL				= MAKE_G2_PACKET( 'U', 'R', 'L',  0 ,  0 ,  0 ,  0 ,  0  );
