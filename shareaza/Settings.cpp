@@ -1007,7 +1007,7 @@ CSettings::Item* CSettings::GetSetting(LPVOID pValue) const
 		if ( pItem->m_pDword == pValue ||
 			 pItem->m_pFloat == pValue ||
 			 pItem->m_pString == pValue ||
-			 pItem->m_pSet ) return pItem;
+			 pItem->m_pSet == pValue ) return pItem;
 	}
 
 	return NULL;
