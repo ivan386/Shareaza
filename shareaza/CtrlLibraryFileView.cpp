@@ -46,6 +46,7 @@
 #include "DlgTorrentSeed.h"
 #include "DlgDecodeMetadata.h"
 #include "RelatedSearch.h"
+#include "Security.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -252,7 +253,8 @@ void CLibraryFileView::OnLibraryLaunch()
 	{
 		CString strPath = pFile->GetPath();
 
-		if ( pFile->m_bVerify == TS_FALSE )
+		if ( pFile->m_bVerify == TS_FALSE && 
+			 !AdultFilter.IsChildPornography( strPath ) )
 		{
 			DWORD nIndex = pFile->m_nIndex;
 			CString strFormat, strMessage;
