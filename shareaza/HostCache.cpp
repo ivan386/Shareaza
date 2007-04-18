@@ -266,7 +266,7 @@ CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, 
 		return NULL;
 
 	// Don't add own IP if set not to. (Above check may not run if not ignoring local IPs)
-	if ( ( Settings.Connection.IgnoreOwnIP ) && ( Network.m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr ) )
+	if ( ( Settings.Connection.IgnoreOwnIP ) && Network.IsSelfIP( *pAddress ) )
 		return NULL;
 
 	// check against IANA Reserved address.
@@ -325,7 +325,7 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 		return TRUE;
 
 	// Don't add own IP if set not to. (Above check may not run if not ignoring local IPs)
-	if ( ( Settings.Connection.IgnoreOwnIP ) && ( Network.m_pHost.sin_addr.S_un.S_addr == nAddress ) )
+	if ( ( Settings.Connection.IgnoreOwnIP ) && Network.IsSelfIP( *(IN_ADDR*)&nAddress ) )
 		 return TRUE;
 
 	// check against IANA Reserved address.
@@ -1172,7 +1172,7 @@ CString CHostCacheHost::ToString() const
 BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 {
 	if ( ! m_tConnect ) return TRUE;
-	if ( m_pAddress.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) return FALSE;
+	if ( Network.IsSelfIP( m_pAddress ) ) return FALSE;
 	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
 	if ( tNow - m_tFailure >= 300 ) return FALSE;
 

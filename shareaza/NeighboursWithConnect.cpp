@@ -95,7 +95,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 	}
 
 	// Don't connect to self
-	if ( Settings.Connection.IgnoreOwnIP && pAddress->S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) 
+	if ( Settings.Connection.IgnoreOwnIP && Network.IsSelfIP( *pAddress ) ) 
 		return NULL;
 
 	// Don't connect to blocked addresses

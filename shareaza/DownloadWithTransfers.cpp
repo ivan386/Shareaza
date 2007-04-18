@@ -239,68 +239,6 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadSource check (INLINE)
-
-BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished) const
-{
-	if( !Network.IsConnected() ) return FALSE;
-
-	if ( Settings.Connection.RequireForTransfers )
-	{
-		switch ( m_nProtocol )
-		{
-		case PROTOCOL_G1:
-			if ( ! Settings.Gnutella1.EnableToday ) return FALSE;
-			break;
-		case PROTOCOL_G2:
-			if ( ! Settings.Gnutella2.EnableToday ) return FALSE;
-			break;
-		case PROTOCOL_ED2K:
-			if ( ! Settings.eDonkey.EnableToday ) return FALSE;
-			if ( ! bNetwork ) return FALSE;
-			break;
-		case PROTOCOL_HTTP:
-			if ( m_nGnutella == 2 )
-			{
-				if ( ! Settings.Gnutella2.EnableToday ) return FALSE;
-			}
-			else if ( m_nGnutella == 1 )
-			{
-				if ( ! Settings.Gnutella1.EnableToday ) return FALSE;
-			}
-			else
-			{
-				if ( ! Settings.Gnutella1.EnableToday &&
-					 ! Settings.Gnutella2.EnableToday ) return FALSE;
-			}
-			break;
-		case PROTOCOL_FTP:
-			if ( ! bNetwork ) return FALSE;
-			break;
-		case PROTOCOL_BT:
-			if ( ! bNetwork ) return FALSE;
-			break;
-		default:
-			theApp.Message( MSG_ERROR, _T("Source with invalid protocol found") );
-			return FALSE;
-		}
-	}
-
-	if ( !bEstablished && !Settings.Downloads.NeverDrop && m_pDownload->LookupFailedSource( m_sURL ) != NULL )
-	{
-		// Don't try to connect to sources which we determined were bad
-		// We will check them later after 2 hours cleanup
-		m_pDownload->RemoveSource( (CDownloadSource*)this, TRUE );
-		return FALSE;
-	}
-
-	if ( ( Settings.Connection.IgnoreOwnIP ) && ( m_pAddress.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) ) 
-		return FALSE;
-	
-	return bEstablished || Downloads.AllowMoreTransfers( (IN_ADDR*)&m_pAddress );
-}
-
-//////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers start a new transfer
 
 BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)

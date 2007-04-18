@@ -97,6 +97,37 @@ CNetwork::~CNetwork()
 //////////////////////////////////////////////////////////////////////
 // CNetwork attributes
 
+BOOL CNetwork::IsSelfIP(IN_ADDR nAddress) const
+{
+	if ( nAddress.s_addr == INADDR_ANY || nAddress.s_addr == INADDR_NONE )
+	{
+		return FALSE;
+	}
+	if ( nAddress.s_addr == m_pHost.sin_addr.s_addr )
+	{
+		return TRUE;
+	}
+	if ( nAddress.s_net == 127 )
+	{
+		return TRUE;
+	}
+	if ( m_sHostName.GetLength() )
+	{
+		hostent* h = gethostbyname( m_sHostName );
+		if ( h )
+		{
+			for ( char** p = h->h_addr_list ; *p ; p++ )
+			{
+				if ( *(ULONG*)*p == nAddress.s_addr )
+				{
+					return TRUE;
+				}
+			}
+		}
+	}
+	return FALSE;
+}
+
 BOOL CNetwork::IsAvailable() const
 {
 	DWORD dwState = 0;
@@ -162,7 +193,7 @@ DWORD CNetwork::GetStableTime() const
 
 BOOL CNetwork::IsConnectedTo(IN_ADDR* pAddress)
 {
-	if ( pAddress->S_un.S_addr == m_pHost.sin_addr.S_un.S_addr ) return TRUE;
+	if ( IsSelfIP( *pAddress ) ) return TRUE;
 	if ( Handshakes.IsConnectedTo( pAddress ) ) return TRUE;
 	if ( Neighbours.Get( pAddress ) != NULL ) return TRUE;
 	if ( Transfers.IsConnectedTo( pAddress ) ) return TRUE;
@@ -215,6 +246,9 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 		InternetSetOption( hInternet, INTERNET_OPTION_CONNECTED_STATE, &ici, sizeof(ici) );
 		InternetCloseHandle( hInternet );
 	}
+
+	gethostname( m_sHostName.GetBuffer( 256 ), 256 );
+	m_sHostName.ReleaseBuffer();
 
 	// If we are already connected exit.
 	if ( m_bEnabled )
@@ -364,8 +398,6 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 	if ( IsFirewalledAddress( &pAddress, FALSE, TRUE ) ) return;
 	
 	m_pHost.sin_addr = pAddress;
-
-	//Security.Ban( &pAddress, banSession, 0 );		// Ban self
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -373,12 +405,8 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 
 void CNetwork::CreateID(Hashes::Guid& oID)
 {
-	oID = MyProfile.oGUID;
-	Hashes::Guid::iterator i = oID.begin();
-	*i++ += GetTickCount();
-	*i++ += m_nSequence++;
-	*i++ += rand() * ( RAND_MAX + 1 ) * ( RAND_MAX + 1 ) + rand() * ( RAND_MAX + 1 ) + rand();
-	*i   += rand() * ( RAND_MAX + 1 ) * ( RAND_MAX + 1 ) + rand() * ( RAND_MAX + 1 ) + rand();
+	VERIFY( SUCCEEDED( CoCreateGuid( reinterpret_cast<GUID*>( &oID[ 0 ] ) ) ) );
+	VERIFY( oID.validate() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -387,18 +415,13 @@ void CNetwork::CreateID(Hashes::Guid& oID)
 BOOL CNetwork::IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf, BOOL bForceCheck)
 {
 	if ( ! pAddress ) return TRUE;
+	if ( bIncludeSelf && IsSelfIP( *(IN_ADDR*)pAddress ) ) return TRUE;
+	if ( ! *(DWORD*)pAddress ) return TRUE;							// 0.0.0.0
 	if ( ! bForceCheck && ! Settings.Connection.IgnoreLocalIP ) return FALSE;
-	
-	DWORD nAddress = *(DWORD*)pAddress;
-	
-	if ( ! nAddress ) return TRUE;
-	if ( ( nAddress & 0xFFFF ) == 0xA8C0 ) return TRUE;
-	if ( ( nAddress & 0xF0AC ) == 0x08AC ) return TRUE;
-	if ( ( nAddress & 0xFF ) == 0x0A ) return TRUE;
-	if ( ( nAddress & 0xFF ) == 0x7F ) return TRUE;		// 127.*
-	
-	if ( bIncludeSelf && nAddress == *(DWORD*)(&m_pHost.sin_addr) ) return TRUE;
-	
+	if ( ( *(DWORD*)pAddress & 0xFFFF ) == 0xA8C0 ) return TRUE;
+	if ( ( *(DWORD*)pAddress & 0xF0AC ) == 0x08AC ) return TRUE;
+	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x0A ) return TRUE;
+	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x7F ) return TRUE;		// 127.*
 	return FALSE;
 }
 
@@ -894,12 +917,12 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 	}
 	else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 	{
-		if ( pEndpoint.sin_addr.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) return FALSE;
+		if ( Network.IsSelfIP( pEndpoint.sin_addr ) ) return FALSE;
 		Datagrams.Send( &pEndpoint, (CG2Packet*)pPacket, FALSE );
 	}
 	else
 	{
-		if ( pEndpoint.sin_addr.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) return FALSE;
+		if ( Network.IsSelfIP( pEndpoint.sin_addr ) ) return FALSE;
 		pPacket = CG2Packet::New( G2_PACKET_HIT_WRAP, (CG1Packet*)pPacket );
 		Datagrams.Send( &pEndpoint, (CG2Packet*)pPacket, TRUE );
 	}

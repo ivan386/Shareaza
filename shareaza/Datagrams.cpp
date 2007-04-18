@@ -1491,7 +1491,7 @@ BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 	if ( pCache != NULL ) pCache->SetKey( nKey );
 
-	if ( nAddress != 0 && nAddress != Network.m_pHost.sin_addr.S_un.S_addr )
+	if ( nAddress != 0 && ! Network.IsSelfIP( *(IN_ADDR*)&nAddress ) )
 	{
 		if ( CNeighbour* pNeighbour = Neighbours.Get( (IN_ADDR*)&nAddress ) )
 		{
@@ -1883,7 +1883,7 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		if (pNeighbour->m_nProtocol == PROTOCOL_G2 &&
 			pNeighbour->m_nState == nrsConnected &&
 			pNeighbour->m_nNodeType != ntLeaf &&
-			pNeighbour->m_pHost.sin_addr.S_un.S_addr != Network.m_pHost.sin_addr.S_un.S_addr )
+			! Network.IsSelfIP( pNeighbour->m_pHost.sin_addr ) )
 		{
 			if ( pNeighbour->m_pVendor && pNeighbour->m_pVendor->m_sCode.GetLength() == 4 )
 			{
@@ -1919,7 +1919,7 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	{
 		if ( pCachedHost->CanQuote( tNow ) &&
 			Neighbours.Get( &pCachedHost->m_pAddress ) == NULL &&
-			pCachedHost->m_pAddress.S_un.S_addr != Network.m_pHost.sin_addr.S_un.S_addr )
+			! Network.IsSelfIP( pCachedHost->m_pAddress ) )
 		{
 
 			BOOL bCompound = ( pCachedHost->m_pVendor && pCachedHost->m_pVendor->m_sCode.GetLength() > 0 );

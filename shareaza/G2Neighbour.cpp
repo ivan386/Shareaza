@@ -730,7 +730,7 @@ CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner)
 				pNeighbour->m_nProtocol == PROTOCOL_G2 &&
 				pNeighbour->m_nState == nrsConnected &&
 				pNeighbour->m_nNodeType != ntLeaf &&
-				pNeighbour->m_pHost.sin_addr.S_un.S_addr != Network.m_pHost.sin_addr.S_un.S_addr )
+				! Network.IsSelfIP( pNeighbour->m_pHost.sin_addr ) )
 		{
 			if ( pNeighbour->m_pVendor && pNeighbour->m_pVendor->m_sCode.GetLength() == 4 )
 			{
@@ -763,7 +763,7 @@ CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner)
 	{
 		if (	pHost->CanQuote( tNow ) &&
 				Neighbours.Get( &pHost->m_pAddress ) == NULL &&
-				pHost->m_pAddress.S_un.S_addr != Network.m_pHost.sin_addr.S_un.S_addr )
+				! Network.IsSelfIP( pHost->m_pAddress ) )
 		{
 			int nLength = 10;
 

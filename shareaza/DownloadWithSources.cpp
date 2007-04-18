@@ -329,7 +329,7 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAd
 		return FALSE;
 	
 	// Check for own IP, in case IgnoreLocalIP is not set
-	if ( ( Settings.Connection.IgnoreOwnIP ) && ( pAddress->S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) ) 
+	if ( ( Settings.Connection.IgnoreOwnIP ) && Network.IsSelfIP( *pAddress ) ) 
 		return FALSE;
 
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
@@ -357,8 +357,8 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 	
 	if ( bURN )
 	{
-		if ( pURL.m_pAddress.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) return FALSE;
-		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) || 
+		if ( Network.IsSelfIP( pURL.m_pAddress ) ||
+			 Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) || 
 			 Network.IsReserved( &pURL.m_pAddress ) ) return FALSE;
 	}
 
@@ -527,7 +527,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		}
 
 		//Reject if source is the local IP/port
-		if ( Network.m_pHost.sin_addr.S_un.S_addr == pSource->m_pAddress.S_un.S_addr )
+		if ( Network.IsSelfIP( pSource->m_pAddress ) )
 		{
 			if ( ( ( pSource->m_nServerPort == 0 ) && (Settings.Connection.InPort == pSource->m_nPort ) )
 				|| ( Settings.Connection.IgnoreOwnIP ) )

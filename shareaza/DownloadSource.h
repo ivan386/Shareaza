@@ -99,7 +99,7 @@ public:
 	BOOL		ResolveURL();
 	void		Serialize(CArchive& ar, int nVersion);
 public:
-	inline BOOL	CanInitiate(BOOL bNetwork, BOOL bEstablished) const;
+	BOOL		CanInitiate(BOOL bNetwork, BOOL bEstablished);
 	void		Remove(BOOL bCloseTransfer, BOOL bBan);
 	void		OnFailure(BOOL bNondestructive, DWORD nRetryAfter = 0);
 	void		OnResume();

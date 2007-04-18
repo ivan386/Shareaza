@@ -977,7 +977,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	
 	if ( m_bRangeFault )
 	{
-		if ( m_pHost.sin_addr.S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr )
+		if ( Network.IsSelfIP( m_pHost.sin_addr ) )
 		{
 			Close( TS_TRUE );
 			return FALSE;
