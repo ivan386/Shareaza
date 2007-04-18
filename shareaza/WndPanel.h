@@ -32,7 +32,6 @@ class CPanelWnd : public CChildWnd
 // Construction
 public:
 	CPanelWnd(BOOL bTabMode = FALSE, BOOL bGroupMode = FALSE);
-	virtual ~CPanelWnd();
 
 	DECLARE_DYNCREATE(CPanelWnd)
 
@@ -58,7 +57,6 @@ protected:
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
 	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
 	afx_msg BOOL OnNcActivate(BOOL bActive);
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnNcLButtonDown(UINT nHitTest, CPoint point);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);

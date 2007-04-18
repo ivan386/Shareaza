@@ -93,10 +93,6 @@ CNeighboursWnd::CNeighboursWnd() : CPanelWnd( TRUE, TRUE ), m_nProtocolRev( 0 )
 	Create( IDR_NEIGHBOURSFRAME );
 }
 
-CNeighboursWnd::~CNeighboursWnd()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CNeighboursWnd system message handlers
 
@@ -107,15 +103,15 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
 	
-	m_wndList.Create( WS_VISIBLE|LVS_ICON|LVS_AUTOARRANGE|LVS_REPORT|LVS_SHOWSELALWAYS,
+	m_wndList.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_VISIBLE |
+		LVS_AUTOARRANGE | LVS_REPORT | LVS_SHOWSELALWAYS,
 		rectDefault, this, IDC_NEIGHBOURS );
 	m_pSizer.Attach( &m_wndList );
 	
 	m_wndTip.Create( &m_wndList, &Settings.Interface.TipNeighbours );
 	m_wndList.SetTip( &m_wndTip );
 	
-	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
-		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES,
+	m_wndList.SetExtendedStyle(
 		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES );
 	
 	CBitmap bmImages;

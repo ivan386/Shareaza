@@ -303,7 +303,6 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 	ASSERT_VALID( pCtrl );
 
 	int nOldColumn	= (int)GetWindowLongPtr( pCtrl->GetSafeHwnd(), GWLP_USERDATA );
-	BOOL bWaiting	= FALSE;
 
 	if ( nColumn == -1 )
 	{
@@ -324,9 +323,6 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 		}
 
 		SetWindowLongPtr( pCtrl->GetSafeHwnd(), GWLP_USERDATA, nColumn );
-
-		bWaiting = TRUE;
-		theApp.BeginWaitCursor();
 	}
 
 #ifdef IDB_SORT_ASC
@@ -347,25 +343,29 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 
 			if ( ! pHeader->GetItem( nCol, &pColumn ) ) break;
 
+			HBITMAP hbm;
+			int     fmt;
 			if ( nCol == abs( nColumn ) - 1 )
 			{
-				pColumn.fmt |= HDF_BITMAP|HDF_BITMAP_ON_RIGHT;
-				pColumn.hbm = (HBITMAP)( nColumn > 0 ? m_bmSortAsc.GetSafeHandle() : m_bmSortDesc.GetSafeHandle() );
+				fmt = pColumn.fmt | HDF_BITMAP | HDF_BITMAP_ON_RIGHT;
+				hbm = (HBITMAP)( nColumn > 0 ? m_bmSortAsc.GetSafeHandle() : m_bmSortDesc.GetSafeHandle() );
 			}
 			else
 			{
-				pColumn.fmt &= ~HDF_BITMAP;
-				pColumn.hbm = NULL;
+				fmt = pColumn.fmt & ~HDF_BITMAP;
+				hbm = NULL;
 			}
-
-			VERIFY( pHeader->SetItem( nCol, &pColumn ) );
+			if ( pColumn.fmt != fmt || pColumn.hbm != hbm )
+			{
+				pColumn.fmt = fmt;
+				pColumn.hbm = hbm;
+				VERIFY( pHeader->SetItem( nCol, &pColumn ) );
+			}
 		}
 	}
 #endif
 
 	if ( nColumn ) pCtrl->SendMessage( LVM_SORTITEMS, (WPARAM)pCtrl, (LPARAM)SortCallback );
-
-	if ( bWaiting ) theApp.EndWaitCursor();
 }
 
 //////////////////////////////////////////////////////////////////////

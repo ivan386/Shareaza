@@ -77,10 +77,6 @@ CChildWnd::CChildWnd()
 	m_pCmdMsg		= NULL;
 }
 
-CChildWnd::~CChildWnd()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CChildWnd operations
 
@@ -92,7 +88,8 @@ BOOL CChildWnd::Create(UINT nID, BOOL bVisible)
 	LoadString( strCaption, m_nResID );
 
 	return CMDIChildWnd::Create( NULL, strCaption, WS_CHILD |
-		 WS_OVERLAPPEDWINDOW | ( bVisible ? WS_VISIBLE : 0 ) );
+		 WS_OVERLAPPEDWINDOW | ( bVisible ? WS_VISIBLE : 0 ) |
+		 WS_CLIPCHILDREN | WS_CLIPSIBLINGS );
 }
 
 CMainWnd* CChildWnd::GetMainWnd()
@@ -141,7 +138,7 @@ BOOL CChildWnd::TestPoint(const CPoint& ptScreen)
 
 	if ( pHit == NULL ) return FALSE;
 	if ( pHit == this ) return TRUE;
-
+	if ( ! ::IsWindow( pHit->m_hWnd ) || ! ::IsWindow( m_hWnd ) ) return FALSE;
 	if ( pHit->GetAncestor( GA_ROOT ) != GetAncestor( GA_ROOT ) ) return FALSE;
 
 	CPoint ptChild( ptScreen );

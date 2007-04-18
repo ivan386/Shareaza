@@ -36,7 +36,6 @@ class CNeighboursWnd : public CPanelWnd
 // Construction
 public:
 	CNeighboursWnd();
-	virtual ~CNeighboursWnd();
 
 	DECLARE_SERIAL(CNeighboursWnd)
 

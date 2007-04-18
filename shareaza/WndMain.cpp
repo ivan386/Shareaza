@@ -271,7 +271,7 @@ CMainWnd::CMainWnd()
 	m_tURLTime		= 0;
 	m_bNoNetWarningShowed = FALSE;
 
-	LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW );
+	LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS );
 
 	theApp.m_pSafeWnd = this;
 }
@@ -288,7 +288,7 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
 	WNDCLASS wndcls = {};
 	
-	wndcls.style			= CS_DBLCLKS;
+	wndcls.style			= CS_DBLCLKS | CS_OWNDC;
 	wndcls.lpfnWndProc		= AfxWndProc;
 	wndcls.hInstance		= AfxGetInstanceHandle();
 	wndcls.hIcon			= theApp.LoadIcon( IDR_MAINFRAME );

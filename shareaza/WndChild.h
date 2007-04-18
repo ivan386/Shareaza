@@ -41,7 +41,6 @@ class CChildWnd : public CMDIChildWnd
 // Construction
 public:
 	CChildWnd();
-	virtual ~CChildWnd();
 
 	DECLARE_DYNCREATE(CChildWnd)
 

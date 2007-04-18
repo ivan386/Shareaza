@@ -41,7 +41,6 @@ BEGIN_MESSAGE_MAP(CPanelWnd, CChildWnd)
 	ON_WM_NCCALCSIZE()
 	ON_WM_NCHITTEST()
 	ON_WM_NCACTIVATE()
-	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_NCLBUTTONDOWN()
 	ON_WM_SETCURSOR()
@@ -69,19 +68,8 @@ CPanelWnd::CPanelWnd(BOOL bTabMode, BOOL bGroupMode)
 	m_bPanelClose = ( m_bPanelMode && ! m_bTabMode );
 }
 
-CPanelWnd::~CPanelWnd()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CPanelWnd message handlers
-
-int CPanelWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if ( CChildWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-
-	return 0;
-}
 
 void CPanelWnd::OnSize(UINT nType, int cx, int cy)
 {
