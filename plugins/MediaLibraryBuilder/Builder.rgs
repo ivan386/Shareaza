@@ -44,6 +44,7 @@ HKLM
 						ForceRemove val '.m2p' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.mkv' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.mov' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
+						ForceRemove val '.mp4' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.mpeg' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.mpg' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.ogm' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
