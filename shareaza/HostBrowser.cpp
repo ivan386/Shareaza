@@ -1,7 +1,7 @@
 //
 // HostBrowser.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -513,8 +513,8 @@ BOOL CHostBrowser::ReadContent()
 
 				inflate( pStream, Z_SYNC_FLUSH );
 
-				m_pInput->Remove( m_pInput->m_nLength - pStream->avail_in );
 				nVolume -= ( m_pInput->m_nLength - pStream->avail_in );
+				m_pInput->Remove( m_pInput->m_nLength - pStream->avail_in );
 
 				DWORD nBlock = ( m_pBuffer->m_nBuffer - m_pBuffer->m_nLength ) - pStream->avail_out;
 				m_pBuffer->m_nLength += nBlock;
