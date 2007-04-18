@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,7 +28,9 @@
 #include "Neighbours.h"
 #include "Neighbour.h"
 #include "Packet.h"
+#include "G2Packet.h"
 #include "Buffer.h"
+#include "Datagrams.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -715,6 +717,16 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, BOOL bFo
 		BOOL	bG1Required = Settings.Gnutella1.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1) && ( bForceDiscovery || HostCache.Gnutella1.CountHosts(TRUE) < 15 );
 		BOOL	bG2Required = Settings.Gnutella2.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2) && ( bForceDiscovery || HostCache.Gnutella2.CountHosts(TRUE) < 25 );
 		BOOL	bEdRequired = Settings.eDonkey.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) && Settings.eDonkey.MetAutoQuery && ( m_tMetQueried == 0 || tNow - m_tMetQueried >= 60 * 60 ) && ( bForceDiscovery || !HostCache.eDonkey.EnoughED2KServers() );
+
+		// Broadcast dicovery
+		if ( bG2Required && Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
+		{
+			SOCKADDR_IN addr;
+			CopyMemory( &addr, &(Network.m_pHost), sizeof( SOCKADDR_IN ) );
+			addr.sin_family = AF_INET;
+			addr.sin_addr.S_un.S_addr = INADDR_NONE;
+			Datagrams.Send( &addr, CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
+		}
 
 		if ( nProtocol == PROTOCOL_NULL )								// G1 + G2 + Ed hosts are wanted
 		{
