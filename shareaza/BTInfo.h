@@ -26,35 +26,31 @@
 
 #include "SHA.h"
 #include "ED2K.h"
+#include "MD5.h"
 #include "Buffer.h"
 #include "TigerTree.h"
+#include "ShareazaFile.h"
 
 class CBuffer;
 class CBENode;
 
 
-class CBTInfo  
+class CBTInfo : public CShareazaFile
 {
 // Construction
 public:
 	CBTInfo();
-	~CBTInfo();
+	virtual ~CBTInfo();
 	
 // Subclass
 public:
-	class CBTFile
+	class CBTFile : public CShareazaFile
 	{
 	public:
 		CBTFile();
 		void		Copy(CBTFile* pSource);
 		void		Serialize(CArchive& ar, int nVersion);
-	public:
-		CString	m_sPath;
-		QWORD	m_nSize;
-        Hashes::Sha1Hash m_oSHA1;
-		Hashes::Ed2kHash m_oED2K;
-		Hashes::TigerHash m_oTiger;
-		int		nFilePriority;
+		int			nFilePriority;
 	};
 	enum { prNotWanted, prLow, prNormal, prHigh };
 
@@ -64,7 +60,7 @@ public:
 	{
 	public:
 		CBTTracker();
-		~CBTTracker();
+		virtual ~CBTTracker();
 		void		Copy(CBTTracker* pSource);
 		void		Serialize(CArchive& ar, int nVersion);
 	public:
@@ -80,38 +76,27 @@ public:
 // Attributes
 public:
 	BOOL		m_bEncodingError;
-    Hashes::BtHash m_oInfoBTH;
-    Hashes::Sha1Hash m_oDataSHA1;
-	Hashes::Ed2kHash m_oDataED2K;
-	Hashes::TigerHash m_oDataTiger;
 	CList< CString >	m_sURLs;	// Add sources from torrents - DWK
-
-public:
 	QWORD		m_nTotalSize;
 	DWORD		m_nBlockSize;
 	DWORD		m_nBlockCount;
     Hashes::BtPureHash* m_pBlockBTH;
 	QWORD		m_nTotalUpload;					// Total amount uploaded
 	QWORD		m_nTotalDownload;				// Total amount downloaded
-public:
-	CString		m_sName;						// Name of the torrent
 	int			m_nFiles;						// Number of files
 	CBTFile*	m_pFiles;						// List of files
-public:
 	CString		m_sTracker;						// Address of tracker we are using
-
 	CBTTracker*	m_pAnnounceTracker;				// Tracker in the announce key
 	CArray< CBTTracker* > m_pTrackerList;		// Multi-tracker list
 	int			m_nTrackerIndex;				// The tracker we are currently using
 	int			m_nTrackerMode;					// The current tracker situation
-public:
 	UINT		m_nEncoding;
 	CString		m_sComment;
 	DWORD		m_tCreationDate;
 	CString		m_sCreatedBy;
 	BOOL		m_bPrivate;
-
 	int			m_nStartDownloads;				// When do we start downloads for this torrent
+
 private:
 	CSHA		m_pTestSHA1;
 	DWORD		m_nTestByte;
@@ -142,8 +127,8 @@ protected:
 
 // Inlines
 public:
-	bool        IsAvailable() const { return m_oInfoBTH; }
-	BOOL		HasEncodingError() const { return m_bEncodingError; }
+	inline bool IsAvailable() const { return m_oBTH; }
+	inline BOOL	HasEncodingError() const { return m_bEncodingError; }
 
 	// Check if a string is a valid path/file name.
 	inline BOOL IsValid(LPCTSTR psz) const
@@ -155,7 +140,7 @@ public:
 		return TRUE;
 	}
 
-	BOOL		IsMultiTracker() const { return (m_pTrackerList.GetCount() > 0 ); }
+	inline BOOL	IsMultiTracker() const { return (m_pTrackerList.GetCount() > 0 ); }
 };
 
 // Tracker status/types

@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "ShareazaFile.h"
+
 class CPacket;
 class CSchema;
 class CXMLElement;
@@ -33,12 +35,12 @@ class CG2Packet;
 class CEDPacket;
 
 
-class CQuerySearch : private boost::noncopyable
+class CQuerySearch : private boost::noncopyable, public CShareazaFile
 {
 // Construction
 public:
 	CQuerySearch(BOOL bGUID = TRUE);
-	~CQuerySearch();
+	virtual ~CQuerySearch();
 private:
 	CQuerySearch(const CQuerySearch* pOrigin);
 public:
@@ -47,7 +49,6 @@ public:
 // Attributes
 public:
 	Hashes::Guid		m_oGUID;
-public:
 	CString				m_sSearch;		// search string, transformed by lowercase table
 	CString				m_sKeywords;	// search keywords (stems, minus words, split asian phrase etc.)
 	CString				m_sPosKeywords;	// Positive keywords ( no minus, no quotes basically for Gnutella1 Query)
@@ -56,20 +57,13 @@ public:
 	CXMLElement*		m_pXML;
 	QWORD				m_nMinSize;
 	QWORD				m_nMaxSize;
-public:
-	Hashes::Sha1Hash	m_oSHA1;
-	Hashes::TigerHash	m_oTiger;
-	Hashes::Ed2kHash	m_oED2K;
-	Hashes::BtHash		m_oBTH;
 	Hashes::Ed2kHash	m_oSimilarED2K;
-public:
 	BOOL				m_bWantURL;
 	BOOL				m_bWantDN;
 	BOOL				m_bWantXML;
 	BOOL				m_bWantCOM;
 	BOOL				m_bWantPFS;
 	BOOL				m_bAndG1;
-public:
 	BOOL				m_bUDP;
 	SOCKADDR_IN			m_pEndpoint;
 	DWORD				m_nKey;
@@ -78,6 +72,7 @@ public:
 
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.
+
 private:
 	typedef std::pair< LPCTSTR, size_t > WordEntry;
 	struct CompareWordEntries

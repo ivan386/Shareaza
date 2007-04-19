@@ -102,8 +102,23 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	
 	if ( ar.IsLoading() && m_pTorrent.IsAvailable() )
 	{
-		m_oBTH = m_pTorrent.m_oInfoBTH;
+		m_oBTH = m_pTorrent.m_oBTH;
         m_oBTH.signalTrusted();
+		if ( ! m_oTiger && m_pTorrent.m_oTiger )
+		{
+			m_oTiger = m_pTorrent.m_oTiger;
+			m_oTiger.signalTrusted();
+		}
+		if ( ! m_oSHA1 && m_pTorrent.m_oSHA1 )
+		{
+			m_oSHA1 = m_pTorrent.m_oSHA1;
+			m_oSHA1.signalTrusted();
+		}
+		if ( ! m_oED2K && m_pTorrent.m_oED2K )
+		{
+			m_oED2K = m_pTorrent.m_oED2K;
+			m_oED2K.signalTrusted();
+		}
 	}
 
 	if ( nVersion >= 23 && m_pTorrent.IsAvailable() )
@@ -144,7 +159,23 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 	
 	m_pTorrent.Copy( pTorrent );
 	
-	m_oBTH = m_pTorrent.m_oInfoBTH;
+	m_oBTH = m_pTorrent.m_oBTH;
+	m_oBTH.signalTrusted();
+	if ( ! m_oTiger && m_pTorrent.m_oTiger )
+	{
+		m_oTiger = m_pTorrent.m_oTiger;
+		m_oTiger.signalTrusted();
+	}
+	if ( ! m_oSHA1 && m_pTorrent.m_oSHA1 )
+	{
+		m_oSHA1 = m_pTorrent.m_oSHA1;
+		m_oSHA1.signalTrusted();
+	}
+	if ( ! m_oED2K && m_pTorrent.m_oED2K )
+	{
+		m_oED2K = m_pTorrent.m_oED2K;
+		m_oED2K.signalTrusted();
+	}
 	
 	m_nTorrentSize	= m_pTorrent.m_nBlockSize;
 	m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
@@ -301,7 +332,7 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 		// Random characters for ID
 		for ( nByte = 8 ; nByte < 16 ; nByte++ ) 
 		{
-			m_pPeerID[ nByte ] = uchar( m_pPeerID[ nByte ] + rand() );
+			m_pPeerID[ nByte ] = uchar( ( m_pPeerID[ nByte ] + rand() ) & 0xff );
 		}
 		for ( nByte = 16 ; nByte < 20 ; nByte++ )
 		{
@@ -314,7 +345,7 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 		// Old style ID 
 		for ( nByte = 0 ; nByte < 20 ; nByte++ )
 		{
-			m_pPeerID[ nByte ] = uchar( m_pPeerID[ nByte ] + rand() );
+			m_pPeerID[ nByte ] = uchar( ( m_pPeerID[ nByte ] + rand() ) & 0xff );
 		}
 	}
 	m_pPeerID.validate();

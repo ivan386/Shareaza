@@ -80,7 +80,10 @@ void CBTInfo::Clear()
 	// Delete files
 	if ( m_pFiles != NULL ) delete [] m_pFiles;
 	
-    m_oInfoBTH.clear();
+    m_oBTH.clear();
+	m_oSHA1.clear();
+	m_oTiger.clear();
+	m_oED2K.clear();
 	m_nTotalSize	= 0;
 	m_nBlockSize	= 0;
 	m_nBlockCount	= 0;
@@ -111,10 +114,10 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	Clear();
 	
 	m_bEncodingError	= pSource->m_bEncodingError;
-	m_oInfoBTH			= pSource->m_oInfoBTH;
-	m_oDataSHA1			= pSource->m_oDataSHA1;
-	m_oDataED2K			= pSource->m_oDataED2K;
-	m_oDataTiger		= pSource->m_oDataTiger;
+	m_oBTH				= pSource->m_oBTH;
+	m_oSHA1				= pSource->m_oSHA1;
+	m_oED2K				= pSource->m_oED2K;
+	m_oTiger			= pSource->m_oTiger;
 	m_nTotalSize		= pSource->m_nTotalSize;
 	m_nBlockSize		= pSource->m_nBlockSize;
 	m_nBlockCount		= pSource->m_nBlockCount;
@@ -178,8 +181,8 @@ void CBTInfo::Serialize(CArchive& ar)
 	{
 		ar << nVersion;
 		
-        SerializeOut( ar, m_oInfoBTH );
-        if ( !m_oInfoBTH ) return;
+        SerializeOut( ar, m_oBTH );
+        if ( !m_oBTH ) return;
 		
 		ar << m_nTotalSize;
 		ar << m_nBlockSize;
@@ -232,8 +235,8 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar >> nVersion;
 		if ( nVersion < 1 ) AfxThrowUserException();
 		
-        SerializeIn( ar, m_oInfoBTH, nVersion );
-        if ( !m_oInfoBTH ) return;
+        SerializeIn( ar, m_oBTH, nVersion );
+        if ( !m_oBTH ) return;
 		
 		if ( nVersion >= 2 )
 		{
@@ -640,19 +643,20 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	if ( CBENode* pSHA1 = pInfo->GetNode( "sha1" ) )
 	{
 		if ( ! pSHA1->IsType( CBENode::beString ) || pSHA1->m_nValue != Hashes::Sha1Hash::byteCount ) return FALSE;
-		m_oDataSHA1 = *static_cast< const Hashes::BtHash::RawStorage* >( pSHA1->m_pValue );
+		m_oSHA1 = *static_cast< const Hashes::BtHash::RawStorage* >( pSHA1->m_pValue );
 	}
 	
 	if ( CBENode* pED2K = pInfo->GetNode( "ed2k" ) )
 	{
 		if ( ! pED2K->IsType( CBENode::beString ) || pED2K->m_nValue != Hashes::Ed2kHash::byteCount ) return FALSE;
-		m_oDataED2K = *static_cast< const Hashes::Ed2kHash::RawStorage* >( pED2K->m_pValue );
+		m_oED2K = *static_cast< const Hashes::Ed2kHash::RawStorage* >( pED2K->m_pValue );
 	}
+
 
 	if ( CBENode* pTiger = pInfo->GetNode( "tiger" ) )
 	{
 		if ( ! pTiger->IsType( CBENode::beString ) || pTiger->m_nValue != Hashes::TigerHash::byteCount ) return FALSE;
-		m_oDataTiger = *static_cast< const Hashes::TigerHash::RawStorage* >( pTiger->m_pValue );
+		m_oTiger = *static_cast< const Hashes::TigerHash::RawStorage* >( pTiger->m_pValue );
 	}
 	
 	// Details on file (or files).
@@ -666,7 +670,10 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		m_pFiles = new CBTFile[ m_nFiles ];
 		m_pFiles[0].m_sPath = m_sName;
 		m_pFiles[0].m_nSize = m_nTotalSize;
-		m_pFiles[0].m_oSHA1 = m_oDataSHA1;
+		m_pFiles[0].m_oSHA1 = m_oSHA1;
+		m_pFiles[0].m_oTiger = m_oTiger;
+		m_pFiles[0].m_oED2K = m_oED2K;
+
 
 		// Add sources from torrents - DWK
 		CBENode* pSources = pRoot->GetNode( "sources" );
@@ -818,28 +825,28 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			// Set data/file hashes (if they aren't)
 			if ( m_pFiles[0].m_oSHA1 )
 			{
-				m_oDataSHA1 = m_pFiles[0].m_oSHA1;
+				m_oSHA1 = m_pFiles[0].m_oSHA1;
 			}
-			else if ( m_oDataSHA1 )
+			else if ( m_oSHA1 )
 			{
-				m_pFiles[0].m_oSHA1 = m_oDataSHA1;
+				m_pFiles[0].m_oSHA1 = m_oSHA1;
 
 			}
 			if ( m_pFiles[0].m_oED2K )
 			{
-				m_oDataED2K = m_pFiles[0].m_oED2K;
+				m_oED2K = m_pFiles[0].m_oED2K;
 			}
-			else if ( m_oDataED2K )
+			else if ( m_oED2K )
 			{
-				m_pFiles[0].m_oED2K = m_oDataED2K;
+				m_pFiles[0].m_oED2K = m_oED2K;
 			}
 			if ( m_pFiles[0].m_oTiger )
 			{
-				m_oDataTiger = m_pFiles[0].m_oTiger;
+				m_oTiger = m_pFiles[0].m_oTiger;
 			}
-			else if ( m_oDataTiger )
+			else if ( m_oTiger )
 			{
-				m_pFiles[0].m_oTiger = m_oDataTiger;
+				m_pFiles[0].m_oTiger = m_oTiger;
 			}
 		}
 	}
@@ -853,7 +860,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	
 	if ( ! CheckFiles() ) return FALSE;
 	
-	pInfo->GetBth( m_oInfoBTH );
+	pInfo->GetBth( m_oBTH );
 	
 	return TRUE;
 }

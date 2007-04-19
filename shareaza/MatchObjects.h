@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "ShareazaFile.h"
+
 class CSchema;
 class CSchemaMember;
 class CQuerySearch;
@@ -128,14 +130,12 @@ protected:
 };
 
 
-class CMatchFile
+class CMatchFile : public CShareazaFile
 {
-// Construction
 public:
 	CMatchFile(CMatchList* pList, CQueryHit* pHit = NULL);
 	virtual ~CMatchFile();
 	
-// Attributes
 public:
 	CMatchList*	m_pList;
 	CQueryHit*	m_pHits;
@@ -147,13 +147,7 @@ public:
 	CMatchFile*	m_pNextSHA1;
 	CMatchFile*	m_pNextTiger;
 	CMatchFile*	m_pNextED2K;
-public:
-    Hashes::Sha1Hash m_oSHA1;
-    Hashes::TigerHash m_oTiger;
-    Hashes::Ed2kHash m_oED2K;
-	QWORD		m_nSize;
 	CString		m_sSize;
-public:
 	TRISTATE	m_bBusy;
 	TRISTATE	m_bPush;
 	TRISTATE	m_bStable;
@@ -166,22 +160,17 @@ public:
 	BOOL		m_bSuspicious;			// Appears to be a suspicious file (small exe, vbs, etc)
 	BOOL		m_bCollection;			// Appears to be a collection
 	BOOL		m_bTorrent;				// Appears to be a torrent
-
-public:
 	BOOL		m_bExpanded;
 	BOOL		m_bSelected;
 	BOOL		m_bDownload;
 	BOOL		m_bNew;
 	BOOL		m_bOneValid;
 	int			m_nShellIndex;
-public:
 	CString*	m_pColumns;
 	int			m_nColumns;
 	BYTE*		m_pPreview;
 	DWORD		m_nPreview;
-	
-// Operations
-public:
+
 	BOOL		Add(CQueryHit* pHit, BOOL bForce = FALSE);
 	BOOL		Check(CQueryHit* pHit) const;
 	BOOL		Expand(BOOL bExpand = TRUE);

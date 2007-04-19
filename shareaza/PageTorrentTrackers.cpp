@@ -245,7 +245,7 @@ void CTorrentTrackersPage::OnOK()
 		{
 			m_pInfo->m_sTracker = m_sTracker;
 			m_pInfo->m_nTrackerMode = tCustom;
-			m_pInfo->m_oInfoBTH.validate();
+			m_pInfo->m_oBTH.validate();
 		}
 	}
 	else
@@ -292,7 +292,7 @@ void CTorrentTrackersPage::OnRun()
 		if ( strURL.GetLength() > 7 ) 
 		{
 			// Fetch scrape only for the given info hash
-			CString strParam = Escape( m_pInfo->m_oInfoBTH.toString< Hashes::base16Encoding >() );
+			CString strParam = Escape( m_pInfo->m_oBTH.toString< Hashes::base16Encoding >() );
 
 			if ( strURL.Find( _T("/scrape?") ) != -1 )
 			{
@@ -376,7 +376,7 @@ BOOL CTorrentTrackersPage::OnTree(CBENode* pNode)
 	CBENode* pFiles = pNode->GetNode( "files" );
 	if ( ! pFiles->IsType( CBENode::beDict ) ) return FALSE;
 	
-    CBENode* pFile = pFiles->GetNode( &m_pInfo->m_oInfoBTH[ 0 ], Hashes::BtHash::byteCount );
+    CBENode* pFile = pFiles->GetNode( &m_pInfo->m_oBTH[ 0 ], Hashes::BtHash::byteCount );
 	if ( ! pFile->IsType( CBENode::beDict ) ) return FALSE;	
 	
 	m_nComplete		= 0;

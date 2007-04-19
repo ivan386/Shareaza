@@ -1,7 +1,7 @@
 //
 // SourceURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,8 +24,9 @@
 
 #pragma once
 
+#include "ShareazaFile.h"
 
-class CSourceURL  
+class CSourceURL  : public CShareazaFile
 {
 // Construction
 public:
@@ -33,7 +34,6 @@ public:
 	
 // Attributes
 public:
-	CString		m_sURL;
 	PROTOCOLID	m_nProtocol;
 public:
 	CString		m_sAddress;
@@ -41,14 +41,9 @@ public:
 	WORD		m_nPort;
 	IN_ADDR		m_pServerAddress;
 	WORD		m_nServerPort;
-	CString		m_sPath;
 public:
-    Hashes::Sha1Hash m_oSHA1;
-    Hashes::Ed2kHash m_oED2K;
-    Hashes::BtHash m_oBTH;
     Hashes::BtGuid m_oBTC;
 	BOOL		m_bSize;
-	QWORD		m_nSize;
 	CString		m_sLogin;
 	CString		m_sPassword;
 	

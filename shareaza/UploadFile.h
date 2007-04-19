@@ -1,7 +1,7 @@
 //
 // UploadFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,46 +25,35 @@
 #pragma once
 
 #include "FileFragments.hpp"
+#include "ShareazaFile.h"
+
 class CUploadTransfer;
 
-class CUploadFile
+class CUploadFile : public CShareazaFile
 {
-// Construction
 public:
     CUploadFile(CUploadTransfer* pUpload, const Hashes::Sha1Hash& oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize);
 	virtual ~CUploadFile();
 
-// Attributes
-public:
-	IN_ADDR			m_pAddress;
-    Hashes::Sha1Hash m_oSHA1;
-	CString			m_sName;
-	CString			m_sPath;
-	QWORD			m_nSize;
-public:
-	DWORD			m_nRequests;
-	Fragments::List	m_oFragments;
-public:
-	BOOL			m_bSelected;
-protected:
-	CList< CUploadTransfer* > m_pTransfers;
-
-// Operations
-public:
 	void				Add(CUploadTransfer* pUpload);
 	BOOL				Remove(CUploadTransfer* pUpload);
 	CUploadTransfer*	GetActive() const;
-public:
 	void				AddFragment(QWORD nOffset, QWORD nLength);
 	void				Remove();
 
-// Inlines
-public:
 	inline BOOL IsEmpty() const
 	{
 		return m_pTransfers.IsEmpty();
 	}
 
+public:
+	IN_ADDR						m_pAddress;
+	DWORD						m_nRequests;
+	Fragments::List				m_oFragments;
+	BOOL						m_bSelected;
+
+protected:
+	CList< CUploadTransfer* >	m_pTransfers;
 };
 
 #endif // !defined(AFX_UPLOADFILE_H__D2D194F0_8528_482F_A4DA_DE1D9C496335__INCLUDED_)

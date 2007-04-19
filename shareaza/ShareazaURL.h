@@ -1,7 +1,7 @@
 //
 // ShareazaURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,11 +24,13 @@
 
 #pragma once
 
+#include "ShareazaFile.h"
+
 class CQuerySearch;
 class CBTInfo;
 
 
-class CShareazaURL
+class CShareazaURL : public CShareazaFile
 {
 // Construction
 public:
@@ -39,18 +41,8 @@ public:
 // Attributes
 public:
 	int			m_nAction;
-public:
-    Hashes::Sha1Hash m_oSHA1;
-    Hashes::TigerHash m_oTiger;
-    Hashes::Md5Hash m_oMD5;
-    Hashes::Ed2kHash m_oED2K;
-    Hashes::BtHash m_oBTH;
-public:
-	CString		m_sName;
 	BOOL		m_bSize;
-	QWORD		m_nSize;
 	int			m_nPort;
-	CString		m_sURL;
 	CBTInfo*	m_pTorrent;
 
 	enum

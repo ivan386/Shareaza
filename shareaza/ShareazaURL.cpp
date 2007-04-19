@@ -55,10 +55,10 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	Clear();
 	m_nAction	= uriDownload;
 	m_pTorrent	= pTorrent;
-	m_oBTH		= pTorrent->m_oInfoBTH;
-	m_oSHA1     = pTorrent->m_oDataSHA1;
-	m_oED2K		= pTorrent->m_oDataED2K;
-	m_oTiger	= pTorrent->m_oDataTiger;
+	m_oBTH		= pTorrent->m_oBTH;
+	m_oSHA1     = pTorrent->m_oSHA1;
+	m_oED2K		= pTorrent->m_oED2K;
+	m_oTiger	= pTorrent->m_oTiger;
 	m_sName		= pTorrent->m_sName;
 	m_bSize		= TRUE;
 	m_nSize		= pTorrent->m_nTotalSize;

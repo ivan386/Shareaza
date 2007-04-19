@@ -25,6 +25,7 @@
 #pragma once
 
 #include "Transfer.h"
+#include "ShareazaFile.h"
 
 class CUploadQueue;
 class CUploadFile;
@@ -35,7 +36,7 @@ class CDownload;
 #define ULA_SLOTS	16
 
 
-class CUploadTransfer : public CTransfer
+class CUploadTransfer : public CTransfer, public CShareazaFile
 {
 // Construction
 public:
@@ -54,9 +55,6 @@ public:
 	DWORD			m_nUserRating;	// Has the downloader uploaded anything?
 	BOOL			m_bClientExtended;// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
 public:
-	Hashes::Sha1Hash m_oSHA1;		// Hash of requested file
-    Hashes::TigerHash m_oTiger;     // ..
-    Hashes::Ed2kHash m_oED2K;       // ..
 	CString			m_sFileName;	// Name of requested file
 	CString			m_sFilePath;	// Path of requested file
 	QWORD			m_nFileBase;	// Base offset in requested file

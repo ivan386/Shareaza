@@ -1,7 +1,7 @@
 //
 // SharedFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "ShareazaFile.h"
+
 class CLibraryFolder;
 class CSharedSource;
 class CSchema;
@@ -34,7 +36,7 @@ class CTigerTree;
 class CED2K;
 
 
-class CLibraryFile : public CComObject
+class CLibraryFile : public CComObject, public CShareazaFile
 {
 // Construction
 public:
@@ -54,18 +56,12 @@ public:
 	DWORD			m_nListCookie;
 public:
 	CLibraryFolder*	m_pFolder;
-	CString			m_sName;
 	DWORD			m_nIndex;
-	QWORD			m_nSize;
 	FILETIME		m_pTime;
 	TRISTATE		m_bShared;
 	QWORD			m_nVirtualBase;
 	QWORD			m_nVirtualSize;
 public:
-    Hashes::Sha1Hash m_oSHA1;
-    Hashes::TigerHash m_oTiger;
-    Hashes::Md5Hash m_oMD5;
-    Hashes::Ed2kHash m_oED2K;
 	TRISTATE		m_bVerify;
 public:
 	CSchema*		m_pSchema;

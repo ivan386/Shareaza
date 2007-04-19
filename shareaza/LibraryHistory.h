@@ -1,7 +1,7 @@
 //
 // LibraryHistory.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,8 @@
 #define AFX_LIBRARYHISTORY_H__71D206EC_CDA8_46AD_9800_4A11C9EBAEA5__INCLUDED_
 
 #pragma once
+
+#include "ShareazaFile.h"
 
 class CLibraryRecent;
 class CLibraryFile;
@@ -73,7 +75,7 @@ public:
 };
 
 
-class CLibraryRecent
+class CLibraryRecent : public CShareazaFile
 {
 // Construction
 public:
@@ -87,10 +89,6 @@ public:
 	BOOL			m_bToday;
 public:
 	CLibraryFile*	m_pFile;
-public:
-    Hashes::Sha1Hash m_oSHA1;
-    Hashes::Ed2kHash m_oED2K;
-	CString			m_sPath;
 	CString			m_sSources;
 
 // Operations

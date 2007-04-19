@@ -92,10 +92,6 @@ CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin)
   m_nMinSize( pOrigin->m_nMinSize ),
   m_nMaxSize( pOrigin->m_nMaxSize ),
 
-  m_oSHA1( pOrigin->m_oSHA1 ),
-  m_oTiger( pOrigin->m_oTiger ),
-  m_oED2K( pOrigin->m_oED2K ),
-  m_oBTH( pOrigin->m_oBTH ),
   m_oSimilarED2K(),         //! \todo verify this
 
   m_bWantURL( pOrigin->m_bWantURL ),
@@ -111,7 +107,12 @@ CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin)
   m_oURNs( pOrigin->m_oURNs ),
   m_oKeywordHashList( pOrigin->m_oKeywordHashList )
   //m_oWords()                //! \todo comment this - we copy the search string but not the word list
-{ }
+{
+	m_oSHA1		= pOrigin->m_oSHA1;
+	m_oTiger	= pOrigin->m_oTiger;
+	m_oED2K		= pOrigin->m_oED2K;
+	m_oBTH		= pOrigin->m_oBTH;
+}
 
 CQuerySearch::~CQuerySearch()
 {

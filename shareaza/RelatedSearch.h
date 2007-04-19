@@ -1,7 +1,7 @@
 //
 // RelatedSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,13 +24,15 @@
 
 #pragma once
 
+#include "ShareazaFile.h"
+
 class CSchema;
 class CXMLElement;
 class CMatchFile;
 class CLibraryFile;
 
 
-class CRelatedSearch
+class CRelatedSearch : public CShareazaFile
 {
 // Construction
 public:
@@ -40,11 +42,6 @@ public:
 
 // Attributes
 public:
-    Hashes::Sha1Hash m_oSHA1;
-    Hashes::TigerHash m_oTiger;
-    Hashes::Ed2kHash m_oED2K;
-public:
-	CString			m_sName;
 	CSchema*		m_pSchema;
 	CXMLElement*	m_pXML;
 	BOOL			m_bXML;

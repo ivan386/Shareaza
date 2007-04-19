@@ -185,7 +185,7 @@ void CTorrentSeedDlg::OnSeed()
 				return;
 			}
 		}
-		if ( Downloads.FindByBTH( m_pInfo.m_oInfoBTH ) == NULL )
+		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) == NULL )
 		{
 			// Connect if (we aren't)
 			if ( ! Network.IsConnected() ) Network.Connect();
@@ -199,11 +199,11 @@ void CTorrentSeedDlg::OnSeed()
 				LibraryHistory.LastSeededTorrent.m_tLastSeeded = static_cast< DWORD >( time( NULL ) );
 
 				// If it's a 'new' torrent, reset the counters
-				if ( !validAndEqual( LibraryHistory.LastSeededTorrent.m_oBTH, m_pInfo.m_oInfoBTH ) )
+				if ( !validAndEqual( LibraryHistory.LastSeededTorrent.m_oBTH, m_pInfo.m_oBTH ) )
 				{
 					LibraryHistory.LastSeededTorrent.m_nUploaded	= 0;
 					LibraryHistory.LastSeededTorrent.m_nDownloaded	= 0;
-					LibraryHistory.LastSeededTorrent.m_oBTH 		= m_pInfo.m_oInfoBTH;
+					LibraryHistory.LastSeededTorrent.m_oBTH 		= m_pInfo.m_oBTH;
 				}
 			}
 
@@ -439,7 +439,7 @@ BOOL CTorrentSeedDlg::VerifySingle()
 HANDLE CTorrentSeedDlg::CreateTarget()
 {
 	m_sTarget = Settings.Downloads.IncompletePath + '\\';
-	m_sTarget += m_pInfo.m_oInfoBTH.toString< Hashes::base16Encoding >();
+	m_sTarget += m_pInfo.m_oBTH.toString< Hashes::base16Encoding >();
 	
 	HANDLE hTarget = CreateFile(	m_sTarget, GENERIC_WRITE, 0, NULL, CREATE_NEW,
 									FILE_ATTRIBUTE_NORMAL, NULL );
@@ -617,7 +617,7 @@ BOOL CTorrentSeedDlg::CreateDownload()
 	CSingleLock pTransfersLock( &Transfers.m_pSection );
 	if ( ! pTransfersLock.Lock( 2000 ) ) return FALSE;
 	
-	if ( Downloads.FindByBTH( m_pInfo.m_oInfoBTH ) != NULL )
+	if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) != NULL )
 	{
 		CString strFormat;
 		LoadString(strFormat, IDS_BT_SEED_ALREADY );

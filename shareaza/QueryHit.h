@@ -1,7 +1,7 @@
 //
 // QueryHit.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "ShareazaFile.h"
+
 class CVendor;
 class CMatchFile;
 class CXMLElement;
@@ -33,7 +35,7 @@ class CG2Packet;
 class CEDPacket;
 
 
-class CQueryHit
+class CQueryHit : public CShareazaFile
 {
 // Construction
 public:
@@ -61,15 +63,8 @@ public:
 	CString			m_sNick;
 public:
 	int				m_nGroup;
-    Hashes::Sha1Hash m_oSHA1;
-    Hashes::TigerHash m_oTiger;
-    Hashes::Ed2kHash m_oED2K;
-    Hashes::BtHash m_oBTH;
-	CString			m_sURL;
-	CString			m_sName;
 	DWORD			m_nIndex;
 	BOOL			m_bSize;
-	QWORD			m_nSize;
 	DWORD			m_nSources;
 	DWORD			m_nPartial;
 	BOOL			m_bPreview;

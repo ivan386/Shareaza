@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "ShareazaFile.h"
+
 class CZIPFile;
 class CXMLElement;
 class CLibraryFile;
@@ -36,23 +38,16 @@ public:
 
 // Member File Class
 public:
-	class File
+	class File : public CShareazaFile
 	{
 	// Construction
 	public:
 		File(CCollectionFile* pParent);
-		~File();
+		virtual ~File();
 
 	// Attributes
 	public:
 		CCollectionFile*	m_pParent;
-        Hashes::Sha1Hash    m_oSHA1;
-        Hashes::Md5Hash     m_oMD5;
-        Hashes::TigerHash   m_oTiger;
-        Hashes::Ed2kHash    m_oED2K;
-	public:
-		CString				m_sName;
-		QWORD				m_nSize;
 		CXMLElement*		m_pMetadata;
 		CString				m_sSource;
 

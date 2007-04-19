@@ -73,10 +73,8 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 	m_nSelectCookie( 0 ),
 	m_nListCookie( 0 ),
 	m_pFolder( pFolder ),
-	m_sName( pszName ? pszName : _T("") ),
 	m_nIndex( 0 ),
 	m_bShared( TS_UNKNOWN ),
-	m_nSize( 0 ),
 	m_nVirtualBase( 0 ),
 	m_nVirtualSize( 0 ),
 	m_bVerify( TS_UNKNOWN ),
@@ -98,6 +96,10 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 {
 	ZeroMemory( &m_pTime, sizeof(m_pTime) );
 	ZeroMemory( &m_pMetadataTime, sizeof(m_pMetadataTime) );
+	if ( pszName )
+		m_sName = pszName;
+	if ( pFolder )
+		m_sPath = pFolder->m_sPath;
 	EnableDispatch( IID_ILibraryFile );
 }
 
@@ -1101,6 +1103,7 @@ void CLibraryFile::Ghost()
 	SystemTimeToFileTime( &pTime, &m_pTime );
 	Library.RemoveFile( this );
 	m_pFolder = NULL;
+	m_sPath.Empty();
 	Library.AddFile( this );
 	Library.OnFileDelete( this );
 }
