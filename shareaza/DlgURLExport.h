@@ -1,7 +1,7 @@
 //
 // DlgURLExport.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,54 +25,43 @@
 #pragma once
 
 #include "DlgSkinDialog.h"
-
-class CLibraryFile;
-
+#include "ShareazaFile.h"
 
 class CURLExportDlg : public CSkinDialog
 {
-// Construction
-public:
-	CURLExportDlg(CWnd* pParent = NULL);   // standard constructor
+	DECLARE_DYNAMIC(CURLExportDlg)
 
-// Dialog Data
 public:
-	//{{AFX_DATA(CURLExportDlg)
+	CURLExportDlg(CWnd* pParent = NULL);
+
+public:
 	enum { IDD = IDD_URL_EXPORT };
-	CButton	m_wndSave;
-	CButton	m_wndCopy;
+	CButton			m_wndSave;
+	CButton			m_wndCopy;
 	CProgressCtrl	m_wndProgress;
-	CComboBox	m_wndToken;
-	CComboBox	m_wndPreset;
-	CEdit	m_wndFormat;
-	CStatic	m_wndMessage;
-	CString	m_sFormat;
-	//}}AFX_DATA
+	CComboBox		m_wndToken;
+	CComboBox		m_wndPreset;
+	CEdit			m_wndFormat;
+	CStatic			m_wndMessage;
+	CString			m_sFormat;
 
-	CList< DWORD > m_pFiles;
-	void		AddFile(CLibraryFile* pFile);
+	void		Add(const CShareazaFile* pFile);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CURLExportDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
-	//{{AFX_MSG(CURLExportDlg)
+	CList< const CShareazaFile* >	m_pFiles;
+
+	void		MakeURL(const CShareazaFile* pFile, CString& strLine);
+
+	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
 	afx_msg void OnCloseUpUrlToken();
 	afx_msg void OnSelChangeUrlPreset();
 	afx_msg void OnKillFocusUrlPreset();
 	afx_msg void OnSave();
 	afx_msg void OnCopy();
-	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
 
 };
-
-//{{AFX_INSERT_LOCATION}}
 
 #endif // !defined(AFX_DLGURLEXPORT_H__1B69A614_F171_4EE4_925E_FEDBBAF13A0D__INCLUDED_)

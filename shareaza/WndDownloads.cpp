@@ -1250,15 +1250,18 @@ void CDownloadsWnd::OnDownloadsCopy()
 	{
 		CDownload* pDownload = pList.RemoveHead();
 		
-        if ( Downloads.Check( pDownload ) && ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_sDisplayName.GetLength() ) )
+        if ( Downloads.Check( pDownload ) && ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sDisplayName.GetLength() ) )
 		{
 			CURLCopyDlg dlg;
-			dlg.m_sName		= pDownload->m_sDisplayName;
-			dlg.m_oSHA1		= pDownload->m_oSHA1;
-			dlg.m_oTiger	= pDownload->m_oTiger;
-			dlg.m_oED2K		= pDownload->m_oED2K;
-			dlg.m_bSize		= pDownload->m_nSize != SIZE_UNKNOWN;
-			dlg.m_nSize		= pDownload->m_nSize;
+			CShareazaFile file;
+			file.m_sName		= pDownload->m_sDisplayName;
+			file.m_oSHA1		= pDownload->m_oSHA1;
+			file.m_oTiger		= pDownload->m_oTiger;
+			file.m_oED2K		= pDownload->m_oED2K;
+			file.m_oBTH			= pDownload->m_oBTH;
+			file.m_oMD5			= pDownload->m_oMD5;
+			file.m_nSize		= pDownload->m_nSize;
+			dlg.Add( &file );
 			dlg.DoModal();
 		}
 	}

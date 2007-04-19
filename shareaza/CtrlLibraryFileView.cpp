@@ -368,13 +368,8 @@ void CLibraryFileView::OnLibraryURL()
 		if ( ! pFile ) return;
 		
 		CURLCopyDlg dlg;
-		
-		dlg.m_sName = pFile->m_sName;
-		dlg.m_bSize = TRUE;
-		dlg.m_nSize = pFile->GetSize();
-		dlg.m_oSHA1 = pFile->m_oSHA1;
-		dlg.m_oTiger = pFile->m_oTiger;
-		dlg.m_oED2K = pFile->m_oED2K;
+
+		dlg.Add( pFile );
 		
 		pLock.Unlock();
 		
@@ -388,12 +383,12 @@ void CLibraryFileView::OnLibraryURL()
 		
 		for ( CLibraryFile* pFile = GetNextSelectedFile(); pFile; pFile = GetNextSelectedFile() )
 		{
-			dlg.AddFile( pFile );
+			dlg.Add( pFile );
 		}
 
 		pLock.Unlock();
 
-		if ( dlg.m_pFiles.GetCount() ) dlg.DoModal();
+		dlg.DoModal();
 	}
 }
 

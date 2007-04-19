@@ -52,6 +52,7 @@
 #include "DlgNewSearch.h"
 #include "DlgHitColumns.h"
 #include "DlgURLCopy.h"
+#include "DlgURLExport.h"
 #include "DlgExistingFile.h"
 #include "CoolMenu.h"
 #include "ResultFilters.h"
@@ -454,39 +455,59 @@ int CBaseMatchWnd::CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::Ti
 
 void CBaseMatchWnd::OnUpdateSearchCopy(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( m_pMatches->GetSelectedCount() == 1 );
+	CString strMessage;
+	int bSelected = m_pMatches->m_pSelectedFiles.GetCount() +
+		m_pMatches->m_pSelectedHits.GetCount();
+	pCmdUI->Enable( bSelected );
+	bSelected > 1 ? LoadString( strMessage, IDS_LIBRARY_EXPORTURIS ) : LoadString( strMessage, IDS_LIBRARY_COPYURI );
+	pCmdUI->SetText( strMessage );
 }
 
 void CBaseMatchWnd::OnSearchCopy() 
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
-	CURLCopyDlg dlg;
 
-	if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
+	int bSelected = m_pMatches->m_pSelectedFiles.GetCount() +
+		m_pMatches->m_pSelectedHits.GetCount();
+	if ( bSelected == 1 )
 	{
-		dlg.m_sName = pFile->m_pHits->m_sName;
-		dlg.m_bSize	= TRUE;
-		dlg.m_nSize	= pFile->m_nSize;
-		dlg.m_oSHA1 = pFile->m_oSHA1;
-		dlg.m_oTiger = pFile->m_oTiger;
-		dlg.m_oED2K = pFile->m_oED2K;
+		CURLCopyDlg dlg;
 
-		if ( pFile->GetFilteredCount() == 1 )
-			dlg.m_sHost = pFile->m_pHits->m_sURL;
+		if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
+		{
+			dlg.Add( pFile );
+		}
+		else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
+		{
+			dlg.Add( pHit );
+		}
+
+		pLock.Unlock();
+
+		dlg.DoModal();
 	}
-	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
+	else if ( bSelected > 1 )
 	{
-		dlg.m_sHost = pHit->m_sURL;
-		dlg.m_sName = pHit->m_sName;
-		dlg.m_bSize = TRUE;
-		dlg.m_nSize = pHit->m_nSize;
-		dlg.m_oSHA1 = pHit->m_oSHA1;
-		dlg.m_oTiger = pHit->m_oTiger;
-		dlg.m_oED2K = pHit->m_oED2K;
-	}
+		CURLExportDlg dlg;
 
-	pLock.Unlock();
-	dlg.DoModal();
+		POSITION pos = m_pMatches->m_pSelectedFiles.GetHeadPosition();
+		while ( pos )
+		{
+			CMatchFile* pFile = m_pMatches->m_pSelectedFiles.GetNext( pos );
+			dlg.Add( pFile );
+		}
+
+		pos = m_pMatches->m_pSelectedHits.GetHeadPosition();
+		while ( pos )
+		{
+			CQueryHit* pHit = m_pMatches->m_pSelectedHits.GetNext( pos );
+			dlg.Add( pHit );
+		}
+
+		pLock.Unlock();
+
+		dlg.DoModal();
+	}
 }
 
 void CBaseMatchWnd::OnUpdateSearchChat(CCmdUI* pCmdUI) 

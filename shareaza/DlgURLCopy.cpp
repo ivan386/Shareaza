@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,12 +51,6 @@ END_MESSAGE_MAP()
 
 CURLCopyDlg::CURLCopyDlg(CWnd* pParent) : CSkinDialog(CURLCopyDlg::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CURLCopyDlg)
-	m_sHost = _T("");
-	m_sMagnet = _T("");
-	m_sED2K = _T("");
-	//}}AFX_DATA_INIT
-	m_bSize = FALSE;
 }
 
 void CURLCopyDlg::DoDataExchange(CDataExchange* pDX)
@@ -71,6 +65,12 @@ void CURLCopyDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+void CURLCopyDlg::Add(const CShareazaFile* pFile)
+{
+	ASSERT( pFile != NULL );
+	m_pFile = pFile;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CURLCopyDlg message handlers
 
@@ -79,6 +79,8 @@ BOOL CURLCopyDlg::OnInitDialog()
 	CSkinDialog::OnInitDialog();
 
 	SkinMe( NULL, IDI_WEB_URL );
+
+	m_sHost = m_pFile->m_sURL;
 
 	m_wndIncludeSelf.ShowWindow( ( Network.IsListening() && m_sHost.IsEmpty() )
 		? SW_SHOW : SW_HIDE );
@@ -92,31 +94,31 @@ void CURLCopyDlg::OnIncludeSelf()
 {
 	CString strURN = _T("");
 	
-	if ( m_oTiger && m_oSHA1 )
+	if ( m_pFile->m_oTiger && m_pFile->m_oSHA1 )
 	{
 		strURN	= _T("urn:bitprint:")
-                + m_oSHA1.toString() + '.'
-				+ m_oTiger.toString();
+                + m_pFile->m_oSHA1.toString() + '.'
+				+ m_pFile->m_oTiger.toString();
 	}
 
-	if ( m_oSHA1 && ! strURN.GetLength() )
+	if ( m_pFile->m_oSHA1 && ! strURN.GetLength() )
 	{
-		strURN = m_oSHA1.toUrn();
+		strURN = m_pFile->m_oSHA1.toUrn();
 	}
 
-	if ( m_oTiger && ! strURN.GetLength() )
+	if ( m_pFile->m_oTiger && ! strURN.GetLength() )
 	{
-		strURN = m_oTiger.toUrn();
+		strURN = m_pFile->m_oTiger.toUrn();
 	}
 
-	if ( m_oED2K )
+	if ( m_pFile->m_oED2K )
 	{
 		if ( strURN.GetLength() )
 		{
 			strURN	+= _T("&xt=");
 		}
 
-		strURN += m_oED2K.toUrn();
+		strURN += m_pFile->m_oED2K.toUrn();
 	}
 
 	m_sMagnet = _T("magnet:?");
@@ -126,9 +128,9 @@ void CURLCopyDlg::OnIncludeSelf()
 		m_sMagnet += _T("xt=") + strURN;
 	}
 
-	if ( m_sName.GetLength() )
+	if ( m_pFile->m_sName.GetLength() )
 	{
-		CString strName = CTransfer::URLEncode( m_sName );
+		CString strName = CTransfer::URLEncode( m_pFile->m_sName );
 
 		if ( strURN.GetLength() )
 		{
@@ -140,12 +142,12 @@ void CURLCopyDlg::OnIncludeSelf()
 		}
 	}
 
-	if ( m_bSize )
+	if ( m_pFile->m_nSize != 0 && m_pFile->m_nSize != SIZE_UNKNOWN )
 	{
 		CString strSize;
 
 		strSize.Format( _T("&xl=%I64i"),
-			m_nSize );
+			m_pFile->m_nSize );
 
 		m_sMagnet += strSize;
 	}
@@ -162,12 +164,26 @@ void CURLCopyDlg::OnIncludeSelf()
 		m_sMagnet += _T("&xs=") + CTransfer::URLEncode( strURL );
 	}
 
-	if ( m_oED2K && m_bSize && m_sName.GetLength() )
+	if ( m_pFile->m_oSHA1 )
+	{
+		m_sGnutella.Format( _T("gnutella://%s/"),
+			(LPCTSTR)m_pFile->m_oSHA1.toUrn() );
+
+		if ( m_pFile->m_sName.GetLength() )
+		{
+			m_sGnutella += CTransfer::URLEncode( m_pFile->m_sName )
+						+ _T("/");
+		}
+	}
+
+	if ( m_pFile->m_oED2K && 
+		( m_pFile->m_nSize != 0 && m_pFile->m_nSize != SIZE_UNKNOWN ) &&
+		m_pFile->m_sName.GetLength() )
 	{
 		m_sED2K.Format( _T("ed2k://|file|%s|%I64i|%s|/"),
-			(LPCTSTR)CConnection::URLEncode( m_sName ),
-			m_nSize,
-			(LPCTSTR)m_oED2K.toString() );
+			(LPCTSTR)CConnection::URLEncode( m_pFile->m_sName ),
+			m_pFile->m_nSize,
+			(LPCTSTR)m_pFile->m_oED2K.toString() );
 
 		if ( m_wndIncludeSelf.GetCheck() )
 		{
