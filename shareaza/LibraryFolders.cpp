@@ -47,12 +47,10 @@ CLibraryFolders LibraryFolders;
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders construction
 
-CLibraryFolders::CLibraryFolders()
+CLibraryFolders::CLibraryFolders() :
+	m_pAlbumRoot( NULL )
 {
 	EnableDispatch( IID_ILibraryFolders );
-	
-	m_pAlbumRoot	= NULL;
-	m_bRemoveMask	= FALSE;
 }
 
 CLibraryFolders::~CLibraryFolders()
@@ -160,10 +158,8 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath, BOOL bShared)
 
 BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 {
-	CQuickLock pLock( Library.m_pSection );
 	CWaitCursor pCursor;
-	
-	if ( m_bRemoveMask ) return FALSE;
+	CQuickLock pLock( Library.m_pSection );
 	
 	POSITION pos = m_pFolders.Find( pFolder );
 	if ( pos == NULL ) return FALSE;
@@ -469,11 +465,6 @@ BOOL CLibraryFolders::ThreadScan(BOOL* pbContinue, BOOL bForce)
 {
 	BOOL bChanged = FALSE;
 
-	{
-		CQuickLock oLock( Library.m_pSection );
-		m_bRemoveMask = TRUE;
-	}
-	
 	for ( POSITION pos = GetFolderIterator() ; pos && *pbContinue ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
@@ -487,11 +478,6 @@ BOOL CLibraryFolders::ThreadScan(BOOL* pbContinue, BOOL bForce)
 			
 			pFolder->SetMonitor();
 		}
-	}
-	
-	{
-		CQuickLock oLock( Library.m_pSection );
-		m_bRemoveMask = FALSE;
 	}
 	
 	return bChanged;
