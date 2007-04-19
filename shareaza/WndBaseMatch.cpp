@@ -404,6 +404,20 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) Downloads.Add( pHit, TRUE );
 	}
 	
+	for ( pos = pHits.GetHeadPosition() ; pos ; )
+	{
+		CQueryHit* pHit = pHits.GetNext( pos );
+		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) 
+		{
+			CDownload *pDownload = Downloads.Add( pHit );
+			// Send any reviews to the download, so they can be viewed later
+			if ( pDownload && ( pHit->m_nRating || ! pHit->m_sComments.IsEmpty() ) )
+			{
+				pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
+			}
+		}
+	}
+
 	pMultiLock.Unlock();
 	
 	m_wndList.Invalidate();
@@ -539,7 +553,7 @@ void CBaseMatchWnd::OnHitMonitorSearch()
 
 	if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
 	{
-		strFile = pFile->m_pHits->m_sName;
+		strFile = pFile->m_sName;
 	}
 	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{

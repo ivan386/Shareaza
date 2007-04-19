@@ -120,7 +120,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	CancelPreview();
 	ClearReviews();
 	
-	if ( pFile == NULL || ( pFile->m_pBest == NULL ) )
+	if ( pFile == NULL || ( ! pFile->IsValid() ) )
 	{
 		if ( m_bValid )
 		{
@@ -134,67 +134,17 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	m_bValid	= TRUE;
 	m_pFile		= pFile;
 	m_oSHA1		= pFile->m_oSHA1;
-	m_sName		= pFile->m_pBest->m_sName;
+	m_sName		= pFile->m_sName;
 	m_sSize		= pFile->m_sSize;
-	m_nIcon32	= ShellIcons.Get( pFile->m_pBest->m_sName, 32 );
-	m_nIcon48	= ShellIcons.Get( pFile->m_pBest->m_sName, 48 );
+	m_nIcon32	= ShellIcons.Get( pFile->m_sName, 32 );
+	m_nIcon48	= ShellIcons.Get( pFile->m_sName, 48 );
 	m_nRating	= pFile->m_nRated ? pFile->m_nRating / pFile->m_nRated : 0;
 	
-	m_bCanPreview	= FALSE;
-	m_pSchema		= NULL;
-	
-	DWORD nSpeed = 0;
-	
-	for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
-	{
-		if ( m_pSchema == NULL ) m_pSchema = SchemaCache.Get( pHit->m_sSchemaURI );
-		nSpeed += pHit->m_nSpeed;
-		
-		if ( pHit->m_oSHA1 && pHit->m_bPush == TS_FALSE )
-		{
-			if ( pHit->m_bPreview )
-			{
-				m_pPreviewURLs.AddTail( pHit->m_sPreview );
-				m_bCanPreview = TRUE;
-			}
-#ifdef _DEBUG
-			else if (	_tcsistr( pHit->m_sName, _T(".mpg") ) ||
-						_tcsistr( pHit->m_sName, _T(".mpeg") ) ||
-						_tcsistr( pHit->m_sName, _T(".avi") ) ||
-						_tcsistr( pHit->m_sName, _T(".jpg") ) ||
-						_tcsistr( pHit->m_sName, _T(".jpeg") ) ||
-						_tcsistr( pHit->m_sName, _T(".doc") ) )
-			{
-				CString strURL;
-				strURL.Format( _T("http://%s:%i/gnutella/preview/v1?%s"),
-					(LPCTSTR)CString( inet_ntoa( pHit->m_pAddress ) ), pHit->m_nPort,
-					(LPCTSTR)pHit->m_oSHA1.toUrn() );
-				m_pPreviewURLs.AddTail( strURL );
-				m_bCanPreview = TRUE;
-			}
-#endif
-		}
-		
-		if ( pHit->m_nRating > 0 || pHit->m_sComments.GetLength() > 0 )
-		{
-			m_pReviews.AddTail( new Review( pHit->m_oClientID,
-				&pHit->m_pAddress, pHit->m_sNick, pHit->m_nRating, pHit->m_sComments ) );
-		}
-	}
-	
-	m_pMetadata.Setup( m_pSchema );
-	
-	if ( m_pSchema != NULL )
-	{
-		for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
-		{
-			if ( pHit->m_pXML != NULL && m_pSchema->CheckURI( pHit->m_sSchemaURI ) )
-			{
-				m_pMetadata.Combine( pHit->m_pXML );
-			}
-		}
-	}
-	
+	m_pSchema		= pFile->AddHitsToMetadata( m_pMetadata );
+	DWORD nSpeed	= pFile->GetTotalHitsSpeed();
+	m_bCanPreview	= pFile->AddHitsToPreviewURLs( m_pPreviewURLs );
+	pFile->AddHitsToReviews( m_pReviews );
+
 	m_pMetadata.Vote();
 	m_pMetadata.CreateLinks();
 	m_pMetadata.Clean( 4096 );
@@ -677,9 +627,9 @@ void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSearchDetailPanel::Review construction
+// Review construction
 
-CSearchDetailPanel::Review::Review(const Hashes::Guid& oGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments)
+Review::Review(const Hashes::Guid& oGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments)
 {
 	m_oGUID		= oGUID;
 	m_nRating	= nRating;
@@ -701,12 +651,12 @@ CSearchDetailPanel::Review::Review(const Hashes::Guid& oGUID, IN_ADDR* pAddress,
 	}
 }
 
-CSearchDetailPanel::Review::~Review()
+Review::~Review()
 {
 	if ( m_wndComments.m_hWnd != NULL ) m_wndComments.DestroyWindow();
 }
 
-void CSearchDetailPanel::Review::Layout(CSearchDetailPanel* pParent, CRect* pRect)
+void Review::Layout(CSearchDetailPanel* pParent, CRect* pRect)
 {
 	pRect->bottom += 22;
 	
@@ -730,7 +680,7 @@ void CSearchDetailPanel::Review::Layout(CSearchDetailPanel* pParent, CRect* pRec
 	m_rc.CopyRect( pRect );
 }
 
-void CSearchDetailPanel::Review::Reposition(int nScroll)
+void Review::Reposition(int nScroll)
 {
 	if ( m_wndComments.m_hWnd != NULL )
 	{
@@ -739,7 +689,7 @@ void CSearchDetailPanel::Review::Reposition(int nScroll)
 	}
 }
 
-void CSearchDetailPanel::Review::Paint(CDC* pDC, int nScroll)
+void Review::Paint(CDC* pDC, int nScroll)
 {
 	CRect rc( &m_rc );
 	rc.OffsetRect( 0, -nScroll );
@@ -754,8 +704,8 @@ void CSearchDetailPanel::Review::Paint(CDC* pDC, int nScroll)
 	strCaption.Format( strFormat, (LPCTSTR)m_sNick );
 	
 	pDC->SetBkColor( CoolInterface.m_crWindow );
-	DrawText( pDC, rc.left, rc.top, strCaption );
-	
+	CSearchDetailPanel::DrawText( pDC, rc.left, rc.top, strCaption );
+
 	CPoint ptStar( rc.right - 3, rc.top );
 	
 	if ( m_nRating > 1 )

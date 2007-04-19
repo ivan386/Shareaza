@@ -50,9 +50,9 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 		m_oSHA1		= pFile->m_oSHA1;
 		m_oTiger	= pFile->m_oTiger;
 		m_oED2K		= pFile->m_oED2K;
-		m_sName		= pFile->m_pBest->m_sName;
+		m_sName		= pFile->m_sName;
 
-		m_pSchema	= SchemaCache.Get( pFile->m_pBest->m_sSchemaURI );
+		m_pSchema	= SchemaCache.Get( pFile->GetBestSchemaURI() );
 		m_pXML		= NULL;
 		m_bXML		= FALSE;
 
@@ -61,17 +61,7 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 			m_pXML = new CXMLElement( NULL, m_pSchema->m_sSingular );
 			m_bXML = TRUE;
 
-			for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
-			{
-				if ( pHit->m_pXML != NULL )
-				{
-					for ( POSITION pos = pHit->m_pXML->GetAttributeIterator() ; pos ; )
-					{
-						CXMLAttribute* pAttribute = pHit->m_pXML->GetNextAttribute( pos );
-						m_pXML->AddAttribute( pAttribute->GetName(), pAttribute->GetValue() );
-					}
-				}
-			}
+			pFile->AddHitsToXML( m_pXML );
 		}
 	}
 	else

@@ -642,7 +642,7 @@ void CRemote::PageSearch()
 		if ( pFile->GetFilteredCount() == 0 ) continue;
 		
 		Add( _T("row_urn"), pFile->GetURN() );
-		Add( _T("row_filename"), pFile->m_pBest->m_sName );
+		Add( _T("row_filename"), pFile->m_sName );
 		if ( pFile->GetFilteredCount() > 1 )
 		{
 			if ( pFile->m_bExpanded )
@@ -676,11 +676,11 @@ void CRemote::PageSearch()
 		else
 		{
 			PageSearchRowColumn( MATCH_COL_COUNT, pFile,
-				CString( inet_ntoa( pFile->m_pBest->m_pAddress ) ) );
+				CString( inet_ntoa( pFile->GetBestAddress() ) ) );
 		}
 		
 		PageSearchRowColumn( MATCH_COL_SPEED, pFile, pFile->m_sSpeed );
-		PageSearchRowColumn( MATCH_COL_CLIENT, pFile, pFile->GetFilteredCount() == 1 ? pFile->m_pBest->m_pVendor->m_sName : _T("") );
+		PageSearchRowColumn( MATCH_COL_CLIENT, pFile, pFile->GetFilteredCount() == 1 ? pFile->GetBestVendorName() : _T("") );
 		
 		Output( _T("searchRowEnd") );
 		Prepare( _T("column_") );
@@ -688,7 +688,7 @@ void CRemote::PageSearch()
 		
 		if ( pFile->m_bExpanded )
 		{
-			for ( CQueryHit* pHit = pFile->m_pHits ; pHit != NULL ; pHit = pHit->m_pNext )
+			for ( CQueryHit* pHit = pFile->GetHits() ; pHit != NULL ; pHit = pHit->m_pNext )
 			{
 				if ( ! pHit->m_bFiltered ) continue;
 				

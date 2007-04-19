@@ -1,7 +1,7 @@
 //
 // MatchObjects.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,6 +32,10 @@ class CQuerySearch;
 class CQueryHit;
 class CMatchFile;
 class CResultFilters;
+class CDownload;
+class CMetaList;
+class CXMLElement;
+class Review;
 
 typedef struct
 {
@@ -45,15 +49,12 @@ typedef struct
 
 class CMatchList
 {
-// Construction
 public:
 	CMatchList();
 	virtual ~CMatchList();
 	
-// Attributes
 public:
-	CMutex		m_pSection;
-public:
+	CMutex			m_pSection;
 	CString			m_sFilter;
 	BOOL			m_bFilterBusy;
 	BOOL			m_bFilterPush;
@@ -72,7 +73,6 @@ public:
 	CSchema*		m_pSchema;
 	BOOL			m_bNew;
 	CResultFilters*	m_pResultFilters;
-public:
 	CMatchFile**	m_pFiles;
 	DWORD			m_nFiles;
 	DWORD			m_nItems;
@@ -103,7 +103,6 @@ protected:
 		fSize	= 3,
 	};
 	
-// Operations
 public:
 	void		AddHits(CQueryHit* pHits, CQuerySearch* pFilter = NULL, BOOL bRequire = FALSE);
 	DWORD		FileToItem(CMatchFile* pFile);
@@ -138,8 +137,6 @@ public:
 	
 public:
 	CMatchList*	m_pList;
-	CQueryHit*	m_pHits;
-	CQueryHit*	m_pBest;
 	DWORD		m_nTotal;
 	DWORD		m_nFiltered;
 	DWORD		m_nSources;
@@ -177,11 +174,7 @@ public:
 	inline int	Compare(CMatchFile* pFile) const;
 	CString		GetURN() const;
 	void		Serialize(CArchive& ar, int nVersion);
-protected:
-	inline DWORD	Filter();
-	inline void		Added(CQueryHit* pHit);
-	inline void		ClearNew();
-public:
+
 	
 	inline DWORD GetFilteredCount()
 	{
@@ -208,20 +201,63 @@ public:
 			return m_nFiltered + 1;
 	}
 	
-/*	inline int GetRating() const
-	{
-		int nRating = 0;
-		
-		if ( m_bPush != TS_TRUE ) nRating += 4;
-		if ( m_bBusy != TS_TRUE ) nRating += 2;
-		if ( m_bStable == TS_TRUE ) nRating ++;
+//	int			GetRating() const;
+	DWORD		Filter();
+	void		Added(CQueryHit* pHit);
+	void		ClearNew();
 
-		return nRating;
-	}*/
-	
+	// Access to Hits list first element.
+	// Use with CAUTION. If Hit was changed then certainly call RefreshStatus().
+	CQueryHit*	GetHits() const;
+
+	// Access to best Hit.
+	// Use with CAUTION. If Hit was changed then certainly call RefreshStatus().
+	CQueryHit*	GetBest() const;
 
 	// Refresh file status (name, uri, etc.) in accord with Hits list
 	void		RefreshStatus();
+
+	// Count bogus status setted Hits
+	DWORD		GetBogusHitsCount() const;
+
+	// Count Hits
+	DWORD		GetTotalHitsCount() const;
+
+	// Sum Hits speeds
+	DWORD		GetTotalHitsSpeed() const;
+
+	// Get first available Hits Schema
+	CSchema*	GetHitsSchema() const;
+
+	// Change Hits bogus status
+	void		SetBogus( BOOL bBogus = TRUE );
+
+	// Clear selection of file itself and all Hits
+	BOOL		ClearSelection();
+
+	// File has hits
+	BOOL		IsValid() const;
+
+	// Get partial count of best Hit
+	DWORD		GetBestPartial() const;
+	
+	// Get rating of best Hit
+	int			GetBestRating() const;
+
+	// Get address of best Hit
+	IN_ADDR		GetBestAddress() const;
+
+	// Get vendor name of best Hit
+	LPCTSTR		GetBestVendorName() const;
+
+	// Get schema of best Hit
+	LPCTSTR		GetBestSchemaURI() const;
+	
+	// Get measured of best Hit
+	TRISTATE	GetBestMeasured() const;
+
+	// Get browse host flag of best Hit
+	BOOL		GetBestBrowseHost() const;
 	
 	// Is this file known (i.e. exist in Library)?
 	// TS_UNKNOWN	- Not
@@ -229,7 +265,23 @@ public:
 	// TS_TRUE		- Yes, Ghost
 	TRISTATE	GetLibraryStatus();
 
-	friend class CMatchList;
+	// Get some data for interface
+	void		GetQueueTip(CString& sPartial) const;
+	void		GetPartialTip(CString& sQueue) const;
+	void		GetUser(CString& sUser) const;
+	void		GetStatusTip(CString& sStatus, COLORREF& crStatus);
+
+	// Output some data
+	void		AddHitsToDownload(CDownload* pDownload, BOOL bForce = FALSE) const;
+	void		AddHitsToXML(CXMLElement* pXML) const;
+	CSchema*	AddHitsToMetadata(CMetaList& oMetadata) const;
+	BOOL		AddHitsToPreviewURLs(CList < CString > & oPreviewURLs) const;
+	void		AddHitsToReviews(CList < Review* >& oReviews) const;
+
+protected:
+	CQueryHit*	m_pHits;
+	CQueryHit*	m_pBest;
+	TRISTATE	m_bLibraryStatus;
 
 protected:
 	TRISTATE	m_bExisting;

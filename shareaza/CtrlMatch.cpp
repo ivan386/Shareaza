@@ -640,7 +640,7 @@ void CMatchCtrl::OnPaint()
 		
 		if ( nCount > 1 && pFile->m_bExpanded )
 		{
-			for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
+			for ( CQueryHit* pHit = pFile->GetHits() ; pHit ; pHit = pHit->m_pNext )
 			{
 				// Don't paint filtered hits.
 				if ( ! pHit->m_bFiltered ) continue;
@@ -685,7 +685,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	int nColumns	= m_wndHeader.GetItemCount();
 	int nHits		= pHit ? 0 : pFile->GetFilteredCount();
 	
-	LPCTSTR pszName	= pHit ? pHit->m_sName : pFile->m_pBest->m_sName;
+	LPCTSTR pszName	= pHit ? pHit->m_sName : pFile->m_sName;
 	LPCTSTR pszType	= _tcsrchr( pszName, '.' );
 	int nNameLen	= static_cast< int >( pszType ? pszType - pszName : _tcslen( pszName ) );
 	
@@ -802,7 +802,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				{
 					if ( pHit && pHit->m_nPartial )
 						nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_PARTIAL );
-					else if ( nHits == 1 && pFile->m_pBest->m_nPartial )
+					else if ( nHits == 1 && pFile->GetBestPartial() )
 						nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_PARTIAL );
 				}
 				
@@ -847,7 +847,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			}
 			else if ( nHits == 1 )
 			{
-				DrawStatus( dc, rcCol, pFile, pFile->m_pBest, bSelected, crBack );
+				DrawStatus( dc, rcCol, pFile, pFile->GetBest(), bSelected, crBack );
 			}
 			else
 			{
@@ -862,7 +862,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			}
 			else if ( nHits == 1 )
 			{
-				DrawRating( dc, rcCol, pFile->m_pBest->m_nRating, bSelected, crBack );
+				DrawRating( dc, rcCol, pFile->GetBestRating(), bSelected, crBack );
 			}
 			else
 			{
@@ -875,7 +875,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		case MATCH_COL_COUNT:
 			if ( nHits == 1 || pHit != NULL )
 			{
-				CQueryHit* ppHit = ( nHits == 1 || pHit == NULL ) ? pFile->m_pBest : pHit;
+				CQueryHit* ppHit = ( nHits == 1 || pHit == NULL ) ? pFile->GetBest() : pHit;
 				
 				if ( Settings.Search.ShowNames && ppHit->m_sNick.GetLength() )
 				{
@@ -966,7 +966,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			}
 			else
 			{
-				if ( ! bSelected && pFile->m_pBest->m_bMeasured == TS_TRUE ) dc.SetTextColor( RGB( 0, 127, 0 ) );
+				if ( ! bSelected && pFile->GetBestMeasured() == TS_TRUE ) dc.SetTextColor( RGB( 0, 127, 0 ) );
 				pszText = pFile->m_sSpeed;
 			}
 			break;
@@ -979,8 +979,8 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			}
 			else if ( nHits == 1 )
 			{
-				if ( ! bSelected && pFile->m_pBest->m_bBrowseHost ) dc.SetTextColor( RGB( 0, 127, 0 ) );
-				pszText = pFile->m_pBest->m_pVendor->m_sName;
+				if ( ! bSelected && pFile->GetBestBrowseHost() ) dc.SetTextColor( RGB( 0, 127, 0 ) );
+				pszText = pFile->GetBestVendorName();
 			}
 			break;
 
@@ -1267,7 +1267,7 @@ BOOL CMatchCtrl::HitTest(const CPoint& point, CMatchFile** poFile, CQueryHit** p
 		
 		if ( nCount > 1 && pFile->m_bExpanded )
 		{
-			for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
+			for ( CQueryHit* pHit = pFile->GetHits() ; pHit ; pHit = pHit->m_pNext )
 			{
 				if ( ! pHit->m_bFiltered ) continue;
 				
@@ -1321,7 +1321,7 @@ BOOL CMatchCtrl::GetItemRect(CMatchFile* pFindFile, CQueryHit* pFindHit, CRect* 
 			
 			if ( nCount > 1 && pFile->m_bExpanded )
 			{
-				for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
+				for ( CQueryHit* pHit = pFile->GetHits() ; pHit ; pHit = pHit->m_pNext )
 				{
 					if ( ! pHit->m_bFiltered ) continue;
 					
@@ -1352,7 +1352,7 @@ BOOL CMatchCtrl::GetItemRect(CMatchFile* pFindFile, CQueryHit* pFindHit, CRect* 
 		
 		if ( nCount > 1 && pFile->m_bExpanded )
 		{
-			for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
+			for ( CQueryHit* pHit = pFile->GetHits() ; pHit ; pHit = pHit->m_pNext )
 			{
 				if ( ! pHit->m_bFiltered ) continue;
 				
@@ -1459,7 +1459,7 @@ void CMatchCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 						}
 						if ( (*ppCurFile)->m_bExpanded && ! bEnd )
 						{
-							for ( CQueryHit* pCurHit = (*ppCurFile)->m_pHits ; pCurHit ;
+							for ( CQueryHit* pCurHit = (*ppCurFile)->GetHits() ; pCurHit ;
 								pCurHit = pCurHit->m_pNext )
 							{
 								if ( pCurHit == pHit || pCurHit == m_pLastSelectedHit )
@@ -1803,11 +1803,7 @@ void CMatchCtrl::DoDelete()
 	{
 		CMatchFile* pFile = (CMatchFile*)m_pMatches->m_pSelectedFiles.GetNext( pos );
 		bChanged |= m_pMatches->Select( pFile, NULL, FALSE );
-
-		for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
-		{
-			pHit->m_bBogus = TRUE;
-		}
+		pFile->SetBogus( TRUE );
 	}
 
 	for ( POSITION pos = m_pMatches->m_pSelectedHits.GetHeadPosition() ; pos ; )
@@ -1856,7 +1852,7 @@ void CMatchCtrl::SelectAll()
 			m_pMatches->Select( *ppCurFile, NULL, TRUE );
 			if ( (*ppCurFile)->m_bExpanded )
 			{
-				for ( CQueryHit* pCurHit = (*ppCurFile)->m_pHits ; pCurHit ;
+				for ( CQueryHit* pCurHit = (*ppCurFile)->GetHits() ; pCurHit ;
 					pCurHit = pCurHit->m_pNext )
 				{
 					if ( pCurHit->m_bFiltered )

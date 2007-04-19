@@ -481,10 +481,9 @@ void CLibraryMaps::CullDeletedFiles(CLibraryFile* pMatch)
 //////////////////////////////////////////////////////////////////////
 // CLibraryMaps search
 
-CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int /*nMaximum*/, BOOL bLocal)
+CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 {
 	CList< CLibraryFile* >* pHits = NULL;
-	
 	if ( pSearch == NULL )
 	{
 		for ( POSITION pos = GetFileIterator() ; pos ; )
@@ -497,24 +496,21 @@ CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int /*nMaxim
 				{
 					if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
 					pHits->AddTail( pFile );
+					if ( nMaximum && pHits->GetCount() >= nMaximum ) break;
 				}
 			}
 		}
 	}
 	else if ( pSearch->m_oSHA1 )
 	{
-		if ( CLibraryFile* pFile = LookupFileBySHA1( pSearch->m_oSHA1 ) )
+		if ( CLibraryFile* pFile = LookupFileBySHA1( pSearch->m_oSHA1, ! bLocal ) )
 		{
-			if ( bLocal || pFile->IsShared() )
+			if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
+			pHits->AddTail( pFile );
+			if ( ! bLocal )
 			{
-				pHits = new CList< CLibraryFile* >;
-				pHits->AddTail( pFile );
-				
-				if ( ! bLocal )
-				{
-					pFile->m_nHitsToday++;
-					pFile->m_nHitsTotal++;
-				}
+				pFile->m_nHitsToday++;
+				pFile->m_nHitsTotal++;
 			}
 		}
 	}
@@ -522,36 +518,28 @@ CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int /*nMaxim
 	{
 		if ( CLibraryFile* pFile = LookupFileByTiger( pSearch->m_oTiger ) )
 		{
-			if ( bLocal || pFile->IsShared() )
+			if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
+			pHits->AddTail( pFile );
+			if ( ! bLocal )
 			{
-				pHits = new CList< CLibraryFile* >;
-				pHits->AddTail( pFile );
-				
-				if ( ! bLocal )
-				{
-					pFile->m_nHitsToday++;
-					pFile->m_nHitsTotal++;
-				}
+				pFile->m_nHitsToday++;
+				pFile->m_nHitsTotal++;
 			}
 		}
 	}
 	else if ( pSearch->m_oED2K )
 	{
-		for ( POSITION pos = GetFileIterator() ; pos ; )
+		if ( CLibraryFile* pFile = LookupFileByED2K( pSearch->m_oED2K ) )
 		{
-			CLibraryFile* pFile = GetNextFile( pos );
-			
-			if ( validAndEqual( pFile->m_oED2K, pSearch->m_oED2K ) )
+			if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
+			pHits->AddTail( pFile );
+			if ( ! bLocal )
 			{
-				if ( bLocal || ( pFile->IsShared() && pFile->m_oSHA1 ) )
-				{
-					if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
-					pHits->AddTail( pFile );
-				}
+				pFile->m_nHitsToday++;
+				pFile->m_nHitsTotal++;
 			}
 		}
 	}
-	
 	return pHits;
 }
 

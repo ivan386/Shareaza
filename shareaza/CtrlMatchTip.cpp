@@ -310,7 +310,7 @@ void CMatchTipCtrl::ShowInternal()
 
 void CMatchTipCtrl::LoadFromFile()
 {
-	m_sName = m_pFile->m_pBest->m_sName;
+	m_sName = m_pFile->m_sName;
 	m_sSize = m_pFile->m_sSize;
 	LoadTypeInfo();
 	
@@ -327,147 +327,21 @@ void CMatchTipCtrl::LoadFromFile()
 		m_sED2K = m_pFile->m_oED2K.toShortUrn();
 	}
 
-	if ( m_pFile->m_nFiltered == 1 && m_pFile->m_pBest->m_nPartial )
-	{
-		CString strFormat;
-		LoadString( strFormat, IDS_TIP_PARTIAL );
-		m_sPartial.Format( strFormat, 100.0f * (float)m_pFile->m_pBest->m_nPartial / (float)m_pFile->m_nSize );
-	}
-	else
-	{
-		m_sPartial.Empty();
-	}
+	m_pFile->GetPartialTip( m_sPartial );
+	m_pFile->GetQueueTip( m_sQueue );
 
-	if ( m_pFile->m_nFiltered == 1 && m_pFile->m_pBest->m_nUpSlots )
-	{
-		CString strFormat;
-		LoadString( strFormat, IDS_TIP_QUEUE );
-		m_sQueue.Format( strFormat, m_pFile->m_pBest->m_nUpSlots,
-			max( 0, m_pFile->m_pBest->m_nUpQueue - m_pFile->m_pBest->m_nUpSlots ) );
-	}
-	else
-	{
-		m_sQueue.Empty();
-	}
-
-	m_pSchema = NULL;
-
-	for ( CQueryHit* pHit = m_pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
-	{
-		m_pSchema = SchemaCache.Get( pHit->m_sSchemaURI );
-		if ( m_pSchema ) break;
-	}
-
-	m_pMetadata.Setup( m_pSchema );
+	m_pSchema = m_pFile->AddHitsToMetadata( m_pMetadata );
 
 	if ( m_pSchema != NULL )
 	{
-		for ( CQueryHit* pHit = m_pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
-		{
-			if ( pHit->m_pXML && m_pSchema->CheckURI( pHit->m_sSchemaURI ) )
-			{
-				m_pMetadata.Combine( pHit->m_pXML );
-			}
-		}
-
 		m_pMetadata.Vote();
 		m_pMetadata.Clean( 72 );
 	}
 
 	m_nRating = m_pFile->m_nRated ? m_pFile->m_nRating / m_pFile->m_nRated : 0;
 
-	m_sStatus.Empty();
-
-	if ( m_pFile->GetLibraryStatus() )
-	{
-		CLibraryFile* pExisting = NULL;
-
-		CQuickLock oLock( Library.m_pSection );
-		if ( pExisting == NULL && m_pFile->m_oSHA1 )
-			pExisting = LibraryMaps.LookupFileBySHA1( m_pFile->m_oSHA1 );
-		if ( pExisting == NULL && m_pFile->m_oTiger )
-			pExisting = LibraryMaps.LookupFileByTiger( m_pFile->m_oTiger );
-		if ( pExisting == NULL && m_pFile->m_oED2K )
-			pExisting = LibraryMaps.LookupFileByED2K( m_pFile->m_oED2K );
-		
-		if ( pExisting != NULL )
-		{
-			if ( pExisting->IsAvailable() )
-			{
-				LoadString( m_sStatus, IDS_TIP_EXISTS_LIBRARY );
-				m_crStatus = RGB( 0, 128, 0 );
-			}
-			else
-			{
-				LoadString( m_sStatus, IDS_TIP_EXISTS_DELETED );
-				m_crStatus = RGB( 255, 0, 0 );
-
-				if ( pExisting->m_sComments.GetLength() )
-				{
-					m_sStatus += L" (";
-					m_sStatus += pExisting->m_sComments;
-					m_sStatus.Replace( L"\r\n", L"; " );
-
-					int nLen = m_sStatus.GetLength();
-					if ( nLen > 150 )
-					{
-						// Truncate string including the last word 
-						// but no more than 150 characters plus punctuation
-						CString str( m_sStatus.Left( 150 ) );
-						if ( IsCharacter( m_sStatus.GetAt( 151 ) ) )
-						{
-							nLen = str.ReverseFind( ' ' );
-							m_sStatus = nLen == -1 ? str : str.Left( nLen );
-						}
-						m_sStatus += L"\x2026)";
-					}
-					else
-						m_sStatus.Append( L")" );
-				}
-			}
-
-		}
-	}
-	else if ( m_pFile->m_bDownload || m_pFile->m_pBest->m_bDownload )
-	{
-		LoadString( m_sStatus, IDS_TIP_EXISTS_DOWNLOAD );
-		m_crStatus = RGB( 0, 0, 160 );
-	}
-	else if ( m_pFile->m_pBest->m_bBogus || ! m_pFile->m_bOneValid )
-	{
-		LoadString( m_sStatus, IDS_TIP_BOGUS );
-		m_crStatus = RGB( 255, 0, 0 );
-	}
-
-	if ( m_pFile->m_nFiltered == 1 )
-	{
-		if ( m_pFile->m_pBest->m_sNick.GetLength() )
-		{
-			m_sUser.Format( _T("%s (%s - %s)"),
-				(LPCTSTR)m_pFile->m_pBest->m_sNick,
-				(LPCTSTR)CString( inet_ntoa( m_pFile->m_pBest->m_pAddress ) ),
-				(LPCTSTR)m_pFile->m_pBest->m_pVendor->m_sName );
-		}
-		else
-		{
-			if ( ( m_pFile->m_pBest->m_nProtocol == PROTOCOL_ED2K ) && ( m_pFile->m_pBest->m_bPush == TS_TRUE ) )
-			{
-				m_sUser.Format( _T("%lu@%s - %s"), m_pFile->m_pBest->m_oClientID.begin()[2], 
-					(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*m_pFile->m_pBest->m_oClientID.begin() ) ),
-					(LPCTSTR)m_pFile->m_pBest->m_pVendor->m_sName );
-			}
-			else
-			{
-				m_sUser.Format( _T("%s - %s"),
-					(LPCTSTR)CString( inet_ntoa( m_pFile->m_pBest->m_pAddress ) ),
-					(LPCTSTR)m_pFile->m_pBest->m_pVendor->m_sName );
-			}
-		}
-	}
-	else
-	{
-		m_sUser.Empty();
-	}
+	m_pFile->GetStatusTip( m_sStatus, m_crStatus );
+	m_pFile->GetUser( m_sUser );
 
 	if (m_pFile->m_bBusy == 2)
 	{

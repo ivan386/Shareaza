@@ -449,7 +449,7 @@ void CBrowseFrameCtrl::OnTreeSelection(NMHDR* /*pNotify*/, LRESULT* pResult)
 	{
 		CMatchFile* pFile = (*ppFile);
 
-		for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
+		for ( CQueryHit* pHit = pFile->GetHits() ; pHit ; pHit = pHit->m_pNext )
 		{
 			if ( ( pHit->m_bMatched = bGlobal ) != FALSE ) continue;
 

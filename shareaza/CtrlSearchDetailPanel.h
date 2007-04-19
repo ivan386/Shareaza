@@ -31,7 +31,25 @@
 
 class CMatchFile;
 class CImageFile;
+class CSearchDetailPanel;
 
+class Review
+{
+public:
+	Review(const Hashes::Guid& oGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments);
+	virtual ~Review();
+	void			Layout(CSearchDetailPanel* pParent, CRect* pRect);
+	void			Reposition(int nScroll);
+	void			Paint(CDC* pDC, int nScroll);
+
+protected:
+	Hashes::Guid	m_oGUID;
+	CString			m_sNick;
+	int				m_nRating;
+	CRichDocument	m_pComments;
+	CRichViewCtrl	m_wndComments;
+	CRect			m_rc;
+};
 
 class CSearchDetailPanel : public CWnd
 {
@@ -45,12 +63,12 @@ public:
 // Operations
 public:
 	void		Update(CMatchFile* pFile);
+
 protected:
 	static void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL);
 	void		DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork);
 	void		DrawThumbnail(CDC* pDC, CRect& rcThumb);
 	void		ClearReviews();
-protected:
 	BOOL		RequestPreview();
 	void		CancelPreview();
 	static UINT	ThreadStart(LPVOID pParam);
@@ -59,24 +77,6 @@ protected:
     void		OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFile* pImage);
     BOOL		CachePreviewImage(const Hashes::Sha1Hash& oSHA1, LPBYTE pBuffer, DWORD nBuffer);
 	
-// Item
-protected:
-	class Review
-	{
-	public:
-		Review(const Hashes::Guid& oGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments);
-		virtual ~Review();
-		void			Layout(CSearchDetailPanel* pParent, CRect* pRect);
-		void			Reposition(int nScroll);
-		void			Paint(CDC* pDC, int nScroll);
-	public:
-		Hashes::Guid	m_oGUID;
-		CString			m_sNick;
-		int				m_nRating;
-		CRichDocument	m_pComments;
-		CRichViewCtrl	m_wndComments;
-		CRect			m_rc;
-	};
 	friend class Review;
 
 // Attributes

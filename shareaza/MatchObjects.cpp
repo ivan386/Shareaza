@@ -595,7 +595,7 @@ CQueryHit* CMatchList::GetSelectedHit() const
 	{
 		if ( m_pSelectedFiles.GetCount() != 1 ) return NULL;
 		CMatchFile* pFile = m_pSelectedFiles.GetHead();
-		return pFile->m_nFiltered == 1 ? pFile->m_pHits : NULL;
+		return ( pFile->m_nFiltered == 1 ) ? pFile->GetHits() : NULL;
 	}
 	
 	return m_pSelectedHits.GetHead();
@@ -615,21 +615,10 @@ BOOL CMatchList::ClearSelection()
 	
 	for ( DWORD nCount = 0 ; nCount < m_nFiles ; nCount++, pLoop++ )
 	{
-		if ( (*pLoop)->m_bSelected )
+		bChanged = (*pLoop)->ClearSelection();
+		if ( bChanged )
 		{
 			UpdateRange( nCount, nCount );
-			(*pLoop)->m_bSelected = FALSE;
-			bChanged = TRUE;
-		}
-		
-		for ( CQueryHit* pHit = (*pLoop)->m_pHits ; pHit ; pHit = pHit->m_pNext )
-		{
-			if ( pHit->m_bSelected )
-			{
-				UpdateRange( nCount, nCount );
-				pHit->m_bSelected = FALSE;
-				bChanged = TRUE;
-			}
 		}
 	}
 	
@@ -1192,8 +1181,8 @@ void CMatchFile::RefreshStatus()
 		if ( (DWORD)nVote > nBestVote )
 		{
 			nBestVote = (DWORD)nVote;
-//			m_sName = pHit->m_sName;
-//			m_sURL = pHit->m_sURL;
+			m_sName = pHit->m_sName;
+			m_sURL = pHit->m_sURL;
 		}
 	}
 }
@@ -1595,14 +1584,14 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 	switch ( m_pList->m_nSortColumn )
 	{
 	case MATCH_COL_NAME:
-		x = _tcsicoll( m_pHits->m_sName, pFile->m_pHits->m_sName );
+		x = _tcsicoll( m_sName, pFile->m_sName );
 		if ( ! x ) return 0;
 		return x > 0 ? 1 : -1;
 
 	case MATCH_COL_TYPE:
 		{
-			LPCTSTR pszType1 = _tcsrchr( m_pHits->m_sName, '.' );
-			LPCTSTR pszType2 = _tcsrchr( pFile->m_pHits->m_sName, '.' );
+			LPCTSTR pszType1 = _tcsrchr( m_sName, '.' );
+			LPCTSTR pszType2 = _tcsrchr( pFile->m_sName, '.' );
 			if ( ! pszType1 ) return ( pszType2 ? -1 : 0 );
 			if ( ! pszType2 ) return 1;
 			x = _tcsicmp( pszType1, pszType2 );
@@ -1796,6 +1785,371 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 			m_pHits = pNext;
 			m_pHits->Serialize( ar, nVersion );
 		}
+
+		RefreshStatus();
+	}
+}
+
+CQueryHit* CMatchFile::GetHits() const
+{
+	return m_pHits;
+}
+
+CQueryHit*	CMatchFile::GetBest() const
+{
+	return m_pBest;
+}
+
+/*int CMatchFile::GetRating() const
+{
+	int nRating = 0;
+
+	if ( m_bPush != TS_TRUE ) nRating += 4;
+	if ( m_bBusy != TS_TRUE ) nRating += 2;
+	if ( m_bStable == TS_TRUE ) nRating ++;
+
+	return nRating;
+}*/
+
+DWORD CMatchFile::GetBogusHitsCount() const
+{
+	DWORD nBogusCount = 0;
+	for ( CQueryHit* pHits = m_pHits; pHits ; pHits = pHits->m_pNext )
+	{
+		if ( pHits->m_bBogus )
+			nBogusCount++;
+	}
+	return nBogusCount;
+}
+
+DWORD CMatchFile::GetTotalHitsCount() const
+{
+	DWORD nTotalCount = 0;
+	for ( CQueryHit* pHits = m_pHits; pHits ; pHits = pHits->m_pNext, nTotalCount++ );
+	return nTotalCount;
+}
+
+DWORD CMatchFile::GetTotalHitsSpeed() const
+{
+	DWORD nSpeed = 0;
+	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+	{
+		nSpeed += pHit->m_nSpeed;
+	}
+	return nSpeed;
+}
+
+void CMatchFile::AddHitsToDownload(CDownload* pDownload, BOOL bForce) const
+{
+	// Best goes first if forced
+	if ( bForce && m_pBest != NULL )
+	{
+		pDownload->AddSourceHit( m_pBest, TRUE );
+	}
+
+	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+	{
+		if ( bForce )
+		{
+			// Best already added
+			if ( pHit != m_pBest )
+			{
+				pDownload->AddSourceHit( pHit, TRUE );
+			}
+		}
+		else
+		{
+			pDownload->AddSourceHit( pHit );
+		}
+
+		// Send any reviews to the download, so they can be viewed later
+		if ( pHit->m_nRating || ! pHit->m_sComments.IsEmpty() )
+		{
+			pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
+		}
+	}
+}
+
+void CMatchFile::AddHitsToXML(CXMLElement* pXML) const
+{
+	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+	{
+		if ( pHit->m_pXML != NULL )
+		{
+			for ( POSITION pos = pHit->m_pXML->GetAttributeIterator() ; pos ; )
+			{
+				CXMLAttribute* pAttribute = pHit->m_pXML->GetNextAttribute( pos );
+				pXML->AddAttribute( pAttribute->GetName(), pAttribute->GetValue() );
+			}
+		}
+	}
+}
+
+CSchema* CMatchFile::GetHitsSchema() const
+{
+	CSchema* pSchema = NULL;
+	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+	{
+		pSchema = SchemaCache.Get( pHit->m_sSchemaURI );
+		if ( pSchema ) break;
+	}
+	return pSchema;
+}
+
+CSchema* CMatchFile::AddHitsToMetadata(CMetaList& oMetadata) const
+{
+	CSchema* pSchema = GetHitsSchema();
+	if ( pSchema )
+	{
+		oMetadata.Setup( pSchema );
+
+		for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+		{
+			if ( pHit->m_pXML && pSchema->CheckURI( pHit->m_sSchemaURI ) )
+			{
+				oMetadata.Combine( pHit->m_pXML );
+			}
+		}
+	}
+	return pSchema;
+}
+
+BOOL CMatchFile::AddHitsToPreviewURLs(CList<CString>& oPreviewURLs) const
+{
+	BOOL bCanPreview = FALSE;
+	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+	{
+		if ( pHit->m_oSHA1 && pHit->m_bPush == TS_FALSE )
+		{
+			if ( pHit->m_bPreview )
+			{
+				oPreviewURLs.AddTail( pHit->m_sPreview );
+				bCanPreview = TRUE;
+			}
+#ifdef _DEBUG
+			else if (	_tcsistr( pHit->m_sName, _T(".mpg") ) ||
+						_tcsistr( pHit->m_sName, _T(".mpeg") ) ||
+						_tcsistr( pHit->m_sName, _T(".avi") ) ||
+						_tcsistr( pHit->m_sName, _T(".jpg") ) ||
+						_tcsistr( pHit->m_sName, _T(".jpeg") ) )
+			{
+				CString strURL;
+				strURL.Format( _T("http://%s:%i/gnutella/preview/v1?%s"),
+					(LPCTSTR)CString( inet_ntoa( pHit->m_pAddress ) ), pHit->m_nPort,
+					(LPCTSTR)pHit->m_oSHA1.toUrn() );
+				oPreviewURLs.AddTail( strURL );
+				bCanPreview = TRUE;
+			}
+#endif
+		}
+	}
+	return bCanPreview;
+}
+
+void CMatchFile::AddHitsToReviews(CList < Review* >& oReviews) const
+{
+	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+	{
+		if ( pHit->m_nRating > 0 || pHit->m_sComments.GetLength() > 0 )
+		{
+			oReviews.AddTail( new Review( pHit->m_oClientID,
+				&pHit->m_pAddress, pHit->m_sNick, pHit->m_nRating, pHit->m_sComments ) );
+		}
+	}
+}
+
+void CMatchFile::SetBogus( BOOL bBogus )
+{
+	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+	{
+		pHit->m_bBogus = bBogus;
+	}
+}
+
+BOOL CMatchFile::ClearSelection()
+{
+	BOOL bChanged = FALSE;
+	if ( m_bSelected )
+	{
+		m_bSelected = FALSE;
+		bChanged = TRUE;
+	}
+	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+	{
+		if ( pHit->m_bSelected )
+		{
+			pHit->m_bSelected = FALSE;
+			bChanged = TRUE;
+		}
+	}
+	return bChanged;
+}
+
+BOOL CMatchFile::IsValid() const
+{
+	return ( m_pBest != NULL );
+}
+
+DWORD CMatchFile::GetBestPartial() const
+{
+	return ( m_pBest ? m_pBest->m_nPartial : 0 );
+}
+
+int CMatchFile::GetBestRating() const
+{
+	return ( m_pBest ? m_pBest->m_nRating : 0 );
+}
+
+IN_ADDR CMatchFile::GetBestAddress() const
+{
+	const IN_ADDR foo = { 0xff, 0xff, 0xff, 0xff };
+	return ( m_pBest ? m_pBest->m_pAddress : foo );
+}
+
+LPCTSTR CMatchFile::GetBestVendorName() const
+{
+	return ( ( m_pBest && m_pBest->m_pVendor) ? m_pBest->m_pVendor->m_sName : _T("") );
+}
+
+LPCTSTR CMatchFile::GetBestSchemaURI() const
+{
+	return ( m_pBest ? m_pBest->m_sSchemaURI : _T("") );
+}
+
+TRISTATE CMatchFile::GetBestMeasured() const
+{
+	return ( m_pBest ? m_pBest->m_bMeasured : TS_UNKNOWN );
+}
+
+BOOL CMatchFile::GetBestBrowseHost() const
+{
+	return ( m_pBest && m_pBest->m_bBrowseHost );
+}
+
+void CMatchFile::GetPartialTip(CString& sPartial) const
+{
+	if ( m_nFiltered == 1 && m_pBest && m_pBest->m_nPartial )
+	{
+		CString strFormat;
+		LoadString( strFormat, IDS_TIP_PARTIAL );
+		sPartial.Format( strFormat, 100.0f * (float)m_pBest->m_nPartial / (float)m_nSize );
+	}
+	else
+	{
+		sPartial.Empty();
+	}
+}
+
+void CMatchFile::GetQueueTip(CString& sQueue) const
+{
+	if ( m_nFiltered == 1 && m_pBest && m_pBest->m_nUpSlots )
+	{
+		CString strFormat;
+		LoadString( strFormat, IDS_TIP_QUEUE );
+		sQueue.Format( strFormat, m_pBest->m_nUpSlots,
+			max( 0, m_pBest->m_nUpQueue - m_pBest->m_nUpSlots ) );
+	}
+	else
+	{
+		sQueue.Empty();
+	}
+}
+
+void CMatchFile::GetUser(CString& sUser) const
+{
+	if ( m_nFiltered == 1 && m_pBest )
+	{
+		if ( m_pBest->m_sNick.GetLength() )
+		{
+			sUser.Format( _T("%s (%s - %s)"),
+				(LPCTSTR)m_pBest->m_sNick,
+				(LPCTSTR)CString( inet_ntoa( m_pBest->m_pAddress ) ),
+				(LPCTSTR)m_pBest->m_pVendor->m_sName );
+		}
+		else
+		{
+			if ( ( m_pBest->m_nProtocol == PROTOCOL_ED2K ) && ( m_pBest->m_bPush == TS_TRUE ) )
+			{
+				sUser.Format( _T("%lu@%s - %s"), m_pBest->m_oClientID.begin()[2], 
+					(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*m_pBest->m_oClientID.begin() ) ),
+					(LPCTSTR)m_pBest->m_pVendor->m_sName );
+			}
+			else
+			{
+				sUser.Format( _T("%s - %s"),
+					(LPCTSTR)CString( inet_ntoa( m_pBest->m_pAddress ) ),
+					(LPCTSTR)m_pBest->m_pVendor->m_sName );
+			}
+		}
+	}
+	else
+	{
+		sUser.Empty();
+	}
+}
+
+void CMatchFile::GetStatusTip( CString& sStatus, COLORREF& crStatus)
+{
+	sStatus.Empty();
+
+	if ( GetLibraryStatus() != TS_UNKNOWN )
+	{
+		CLibraryFile* pExisting = NULL;
+
+		CQuickLock oLock( Library.m_pSection );
+		if ( pExisting == NULL && m_oSHA1 )
+			pExisting = LibraryMaps.LookupFileBySHA1( m_oSHA1 );
+		if ( pExisting == NULL && m_oTiger )
+			pExisting = LibraryMaps.LookupFileByTiger( m_oTiger );
+		if ( pExisting == NULL && m_oED2K )
+			pExisting = LibraryMaps.LookupFileByED2K( m_oED2K );
+		
+		if ( pExisting != NULL )
+		{
+			if ( pExisting->IsAvailable() )
+			{
+				LoadString( sStatus, IDS_TIP_EXISTS_LIBRARY );
+				crStatus = RGB( 0, 128, 0 );
+			}
+			else
+			{
+				LoadString( sStatus, IDS_TIP_EXISTS_DELETED );
+				crStatus = RGB( 255, 0, 0 );
+
+				if ( pExisting->m_sComments.GetLength() )
+				{
+					sStatus += L" (";
+					sStatus += pExisting->m_sComments;
+					sStatus.Replace( L"\r\n", L"; " );
+
+					int nLen = sStatus.GetLength();
+					if ( nLen > 150 )
+					{
+						// Truncate string including the last word 
+						// but no more than 150 characters plus punctuation
+						CString str( sStatus.Left( 150 ) );
+						if ( IsCharacter( sStatus.GetAt( 151 ) ) )
+						{
+							nLen = str.ReverseFind( ' ' );
+							sStatus = nLen == -1 ? str : str.Left( nLen );
+						}
+						sStatus += L"\x2026)";
+					}
+					else
+						sStatus.Append( L")" );
+				}
+			}
+		}
+	}
+	else if ( m_bDownload || m_pBest->m_bDownload )
+	{
+		LoadString( sStatus, IDS_TIP_EXISTS_DOWNLOAD );
+		crStatus = RGB( 0, 0, 160 );
+	}
+	else if ( m_pBest->m_bBogus || ! m_bOneValid )
+	{
+		LoadString( sStatus, IDS_TIP_BOGUS );
+		crStatus = RGB( 255, 0, 0 );
 	}
 }
 
