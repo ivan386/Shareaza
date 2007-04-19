@@ -365,7 +365,7 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 	}
 #endif
 
-	if ( nColumn ) pCtrl->SendMessage( LVM_SORTITEMS, (WPARAM)pCtrl, (LPARAM)SortCallback );
+	if ( nColumn ) pCtrl->SortItems( SortCallback, (DWORD_PTR)pCtrl );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -373,27 +373,22 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 
 int CALLBACK CLiveList::SortCallback(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
-	CListCtrl* pList	= (CListCtrl*)lParamSort;
+	CListCtrl* pList = (CListCtrl*)lParamSort;
 	ASSERT_VALID( pList );
-	int nColumn			= (int)GetWindowLongPtr( pList->GetSafeHwnd(), GWLP_USERDATA );
-	LV_FINDINFO pFind;
-	int nA, nB;
 
+	int nColumn = (int)GetWindowLongPtr( pList->GetSafeHwnd(), GWLP_USERDATA );
+
+	LV_FINDINFO pFind;
 	pFind.flags		= LVFI_PARAM;
 	pFind.lParam	= lParam1;
-	nA = pList->FindItem( &pFind );
+	int nA = pList->FindItem( &pFind );
 	pFind.lParam	= lParam2;
-	nB = pList->FindItem( &pFind );
+	int nB = pList->FindItem( &pFind );
 
-	CString sA, sB;
+	CString sA( pList->GetItemText( nA, abs( nColumn ) - 1 ) );
+	CString sB( pList->GetItemText( nB, abs( nColumn ) - 1 ) );
 
-	BOOL bInv	= ( nColumn > 0 ) ? TRUE : FALSE;
-	nColumn		= ( bInv ? nColumn : -nColumn ) - 1;
-
-	sA	= pList->GetItemText( nA, nColumn );
-	sB	= pList->GetItemText( nB, nColumn );
-
-	return bInv ? SortProc( sB, sA ) : SortProc( sA, sB );
+	return ( nColumn > 0 ) ? SortProc( sB, sA ) : SortProc( sA, sB );
 }
 
 //////////////////////////////////////////////////////////////////////
