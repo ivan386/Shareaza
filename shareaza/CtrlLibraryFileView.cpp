@@ -582,18 +582,14 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 			BOOL bXmlPossiblyModified = FALSE;
 			if ( !pFile->m_bMetadataAuto )
 			{
-				HANDLE hFile = CreateFile( pFile->m_pFolder->m_sPath + _T("\\") + pFile->m_sName, GENERIC_READ, FILE_SHARE_READ,
-						NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-				
-				if ( hFile != INVALID_HANDLE_VALUE )
+				WIN32_FIND_DATA fd = { 0 };
+				if ( GetFileAttributesEx( pFile->GetPath(), GetFileExInfoStandard, &fd ) )
 				{
-					FILETIME pFileDataTime;
 					ULARGE_INTEGER nMetaDataTime;
 					ULARGE_INTEGER nFileDataTime;
 
-					GetFileTime( hFile, NULL, NULL, &pFileDataTime );
-					nFileDataTime.HighPart = pFileDataTime.dwHighDateTime;
-					nFileDataTime.LowPart = pFileDataTime.dwLowDateTime;
+					nFileDataTime.HighPart = fd.ftLastWriteTime.dwHighDateTime;
+					nFileDataTime.LowPart = fd.ftLastWriteTime.dwLowDateTime;
 					// Convert 100 ns into seconds
 					nFileDataTime.QuadPart /= 10000000;
 
@@ -605,7 +601,6 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 					if ( nMetaDataTime.HighPart == nFileDataTime.HighPart &&
 						nMetaDataTime.LowPart - nFileDataTime.LowPart > 10 ) 
 						bXmlPossiblyModified = TRUE;
-					CloseHandle( hFile );
 				}
 			}
 			if ( ( strExtension != _T("mp3") && strExtension != _T("pdf") &&
