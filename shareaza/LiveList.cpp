@@ -365,7 +365,7 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 	}
 #endif
 
-	if ( nColumn ) pCtrl->SortItems( SortCallback, (DWORD_PTR)pCtrl );
+	if ( nColumn ) pCtrl->SendMessage( LVM_SORTITEMS, (WPARAM)pCtrl, (LPARAM)SortCallback );
 }
 
 //////////////////////////////////////////////////////////////////////
