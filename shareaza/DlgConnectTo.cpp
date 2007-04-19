@@ -1,7 +1,7 @@
 //
 // DlgConnectTo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,12 +31,21 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+typedef struct {
+	CString		sHost;
+	int			nPort;
+	PROTOCOLID	nProtocol;
+} CONNECT_HOST_DATA;
+
+const LPCTSTR CONNECT_SECTION = _T("ConnectTo");
+
 BEGIN_MESSAGE_MAP(CConnectToDlg, CSkinDialog)
 	//{{AFX_MSG_MAP(CConnectToDlg)
-	ON_CBN_SELCHANGE(IDC_CONNECT_HOST, OnSelChangeConnectHost)
 	ON_WM_MEASUREITEM()
 	ON_WM_DRAWITEM()
-	ON_CBN_CLOSEUP(IDC_CONNECT_PROTOCOL, OnCloseUpConnectProtocol)
+	ON_WM_DESTROY()
+	ON_CBN_SELCHANGE(IDC_CONNECT_HOST, OnCbnSelchangeConnectHost)
+	ON_CBN_SELCHANGE(IDC_CONNECT_PROTOCOL, OnCbnSelchangeConnectProtocol)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -56,7 +65,6 @@ CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) :
 void CConnectToDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	int nProtocol = m_nProtocol;
 	//{{AFX_DATA_MAP(CConnectToDlg)
 	DDX_Control(pDX, IDC_CONNECT_ADVANCED, m_wndAdvanced);
 	DDX_Control(pDX, IDC_CONNECT_PROTOCOL, m_wndProtocol);
@@ -67,10 +75,8 @@ void CConnectToDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_CONNECT_HOST, m_sHost);
 	DDX_Check(pDX, IDC_CONNECT_ULTRAPEER, m_bNoUltraPeer);
 	DDX_Text(pDX, IDC_CONNECT_PORT, m_nPort);
-	DDX_CBIndex(pDX, IDC_CONNECT_PROTOCOL, nProtocol);
+	DDX_CBIndex(pDX, IDC_CONNECT_PROTOCOL, m_nProtocol);
 	//}}AFX_DATA_MAP
-	ASSERT( nProtocol >= PROTOCOL_ANY && nProtocol <= PROTOCOL_BT );
-	m_nProtocol = PROTOCOLID( nProtocol );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -112,51 +118,90 @@ BOOL CConnectToDlg::OnInitDialog()
 	m_wndUltrapeer.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
 	m_wndUltrapeer.EnableWindow( FALSE );
 
-	int nItem, nCount = theApp.GetProfileInt( _T("ConnectTo"), _T("Count"), 0 );
+	int nItem, nCount = theApp.GetProfileInt( CONNECT_SECTION, _T("Count"), 0 );
 
 	for ( nItem = 0 ; nItem < nCount ; nItem++ )
 	{
-		CString strItem, strHost;
-		strItem.Format( _T("%.3i.Host"), nItem + 1 );
-		strHost = theApp.GetProfileString( _T("ConnectTo"), strItem, _T("") );
-		if ( strHost.GetLength() )
-			m_wndHost.SetItemData( m_wndHost.AddString( strHost ), nItem + 1 );
-	}
+		CONNECT_HOST_DATA* pData = new CONNECT_HOST_DATA;
+		if ( pData )
+		{
+			CString strItem;
+			strItem.Format( _T("%.3i.Host"), nItem + 1 );
+			pData->sHost = theApp.GetProfileString( CONNECT_SECTION, strItem, _T("") );
+			pData->sHost.Trim( _T(" \t\r\n:\"") );
+			pData->sHost.MakeLower();
 
-	m_nPort		= Settings.Connection.InPort;
-	m_nProtocol	= PROTOCOL_G1;
+			strItem.Format( _T("%.3Ii.Port"), nItem + 1 );
+			pData->nPort = theApp.GetProfileInt( CONNECT_SECTION, strItem, GNUTELLA_DEFAULT_PORT );
+			
+			strItem.Format( _T("%.3Ii.Protocol"), nItem + 1 );
+			pData->nProtocol = (PROTOCOLID)theApp.GetProfileInt( CONNECT_SECTION, strItem, PROTOCOL_G2 );
+
+			// Validation
+			if ( pData->sHost.GetLength() &&
+				pData->nPort >= 0 &&
+				pData->nPort <= 65535 &&
+				( pData->nProtocol == PROTOCOL_G1 ||
+				  pData->nProtocol == PROTOCOL_G2 ||
+				  pData->nProtocol == PROTOCOL_ED2K ) &&
+				m_wndHost.FindStringExact( -1, pData->sHost ) == CB_ERR )
+			{
+				int nIndex = m_wndHost.AddString( pData->sHost );
+				ASSERT( nIndex != CB_ERR );
+				VERIFY( m_wndHost.SetItemData( nIndex, (DWORD_PTR)pData ) != CB_ERR );
+			}
+			else
+			{
+				delete pData;
+			}
+		}
+	}
+	nCount = m_wndHost.GetCount();
+	nItem = theApp.GetProfileInt( CONNECT_SECTION, _T("Last.Index"), 0 );
+	if ( nItem >= nCount ) nItem = 0;
+	LoadItem( nItem );
 
 	m_wndPort.SendMessage(EM_SETLIMITTEXT, 5);
 
 	UpdateData( FALSE );
 
-	if ( ( nItem = theApp.GetProfileInt( _T("ConnectTo"), _T("Last.Index"), 0 ) ) != 0 )
-	{
-		LoadItem( nItem );
-	}
-
 	return TRUE;
 }
 
-void CConnectToDlg::LoadItem(INT_PTR nItem)
+void CConnectToDlg::LoadItem(int nItem)
 {
-	CString strItem, strHost;
-	strItem.Format( _T("%.3Ii.Host"), nItem );
-	m_sHost = theApp.GetProfileString( _T("ConnectTo"), strItem, _T("") );
-	strItem.Format( _T("%.3Ii.Port"), nItem );
-	m_nPort = theApp.GetProfileInt( _T("ConnectTo"), strItem, GNUTELLA_DEFAULT_PORT );
-	strItem.Format( _T("%.3Ii.Protocol"), nItem );
-	int nProtocol = theApp.GetProfileInt( _T("ConnectTo"), strItem, PROTOCOL_G2 );
-	ASSERT( nProtocol >= PROTOCOL_ANY && nProtocol <= PROTOCOL_BT );
-	m_nProtocol = PROTOCOLID( nProtocol );
+	ASSERT( nItem != CB_ERR);
+
+	if ( m_wndHost.GetCurSel() != nItem )
+	{
+		m_wndHost.SetCurSel( nItem );
+	}
+	CONNECT_HOST_DATA* pData = (CONNECT_HOST_DATA*)m_wndHost.GetItemData( nItem );
+	ASSERT( pData != NULL );
+	if ( (int)pData != CB_ERR )
+	{
+		m_sHost		= pData->sHost;
+		m_nPort		= pData->nPort;
+		m_nProtocol	= pData->nProtocol - 1;
+	}
+	m_wndUltrapeer.EnableWindow( ( m_nProtocol + 1 ) == PROTOCOL_G1 );
 	UpdateData( FALSE );
 }
 
-void CConnectToDlg::OnSelChangeConnectHost()
+void CConnectToDlg::OnCbnSelchangeConnectHost()
 {
-	int nSel = m_wndHost.GetCurSel();
-	if ( nSel < 0 ) return;
-	LoadItem( m_wndHost.GetItemData( nSel ) );
+	if ( ! UpdateData () ) return;
+
+	int nItem = m_wndHost.GetCurSel();
+	ASSERT( nItem != CB_ERR );
+	LoadItem( nItem );
+}
+
+void CConnectToDlg::OnCbnSelchangeConnectProtocol()
+{
+	if ( ! UpdateData () ) return;
+
+	m_wndUltrapeer.EnableWindow( ( m_nProtocol + 1 ) == PROTOCOL_G1 );
 }
 
 void CConnectToDlg::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
@@ -207,70 +252,100 @@ void CConnectToDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct
 	dc.Detach();
 }
 
-void CConnectToDlg::OnCloseUpConnectProtocol()
-{
-	int nPort;
-
-	switch ( m_wndProtocol.GetCurSel() + 1 )
-	{
-	case PROTOCOL_G1:
-		nPort = GNUTELLA_DEFAULT_PORT;
-		m_wndUltrapeer.EnableWindow( TRUE );
-		break;
-	case PROTOCOL_G2:
-		nPort = GNUTELLA_DEFAULT_PORT;
-		m_wndUltrapeer.EnableWindow( FALSE );
-		break;
-	case PROTOCOL_ED2K:
-		nPort = ED2K_DEFAULT_PORT;
-		m_wndUltrapeer.EnableWindow( FALSE );
-		break;
-	default:
-		return;
-	}
-
-	CString str;
-	str.Format( _T("%lu"), nPort );
-	m_wndPort.SetWindowText( str );
-	m_wndHost.SetFocus();
-}
-
 void CConnectToDlg::OnOK()
 {
-	UpdateData( TRUE );
+	if ( ! UpdateItems() )
+		return;
 
-	int nColon = m_sHost.Find( ':' );
+	SaveItems();
 
-	if ( nColon > 0 )
+	CSkinDialog::OnOK();
+}
+
+BOOL CConnectToDlg::UpdateItems()
+{
+	if ( ! UpdateData() )
+		return FALSE;
+
+	m_sHost.Trim( _T(" \t\r\n:\"") );
+	m_sHost.MakeLower();
+	int n = m_sHost.Find( _T(':') );
+	if ( n != -1 )
 	{
-		CString strPort = m_sHost.Mid( nColon + 1 );
-		_stscanf( strPort, _T("%lu"), &m_nPort );
-		m_sHost = m_sHost.Left( nColon );
-
-		m_wndHost.SetWindowText( m_sHost );
-		m_wndPort.SetWindowText( strPort );
+		m_nPort = _tstoi( m_sHost.Mid( n + 1 ) );
+		m_sHost = m_sHost.Left( n );
+	}
+	if ( m_sHost.IsEmpty() || m_nPort <= 0 || m_nPort >= 65536 )
+	{
+		UpdateData( FALSE );
+		return FALSE;
 	}
 
-	int nItem = m_wndHost.FindString( -1, m_sHost );
-
-	if ( nItem < 0 )
+	int nItem = m_wndHost.FindStringExact( -1, m_sHost );
+	if ( nItem != CB_ERR )
 	{
-		nItem = theApp.GetProfileInt( _T("ConnectTo"), _T("Count"), 0 ) + 1;
-		theApp.WriteProfileInt( _T("ConnectTo"), _T("Count"), nItem );
-		theApp.WriteProfileInt( _T("ConnectTo"), _T("Last.Index"), nItem );
+		// Edit existing item
+		CONNECT_HOST_DATA* pData = (CONNECT_HOST_DATA*)m_wndHost.GetItemData( nItem );
+		ASSERT( pData != NULL && (int)pData != CB_ERR );
+		pData->nPort = m_nPort;
+		pData->nProtocol = (PROTOCOLID)( m_nProtocol + 1 );
+		if( m_wndHost.GetCurSel() != nItem ) m_wndHost.SetCurSel( nItem );
 	}
 	else
 	{
-		theApp.WriteProfileInt( _T("ConnectTo"), _T("Last.Index"), ++nItem );
+		// Create new item
+		CONNECT_HOST_DATA* pData = new CONNECT_HOST_DATA;
+		ASSERT( pData != NULL );
+		if ( pData )
+		{
+			pData->sHost = m_sHost;
+			pData->nPort = m_nPort;
+			pData->nProtocol = (PROTOCOLID)( m_nProtocol + 1 );
+			nItem = m_wndHost.AddString( pData->sHost );
+			ASSERT( nItem != CB_ERR );
+			VERIFY( m_wndHost.SetItemData( nItem, (DWORD_PTR)pData ) != CB_ERR );
+			VERIFY( m_wndHost.SetCurSel( nItem ) != CB_ERR );
+		}
 	}
 
-	CString strItem;
-	strItem.Format( _T("%.3i.Host"), nItem );
-	theApp.WriteProfileString( _T("ConnectTo"), strItem, m_sHost );
-	strItem.Format( _T("%.3i.Port"), nItem );
-	theApp.WriteProfileInt( _T("ConnectTo"), strItem, m_nPort );
-	strItem.Format( _T("%.3i.Protocol"), nItem );
-	theApp.WriteProfileInt( _T("ConnectTo"), strItem, m_nProtocol );
+	return TRUE;
+}
 
-	CSkinDialog::OnOK();
+void CConnectToDlg::SaveItems()
+{
+	int nCount = m_wndHost.GetCount();
+	ASSERT( nCount != CB_ERR );
+	theApp.WriteProfileInt( CONNECT_SECTION, _T("Count"), nCount );
+
+	int nItem = m_wndHost.GetCurSel();
+	ASSERT( nItem != CB_ERR );
+	theApp.WriteProfileInt( CONNECT_SECTION, _T("Last.Index"), nItem );
+
+	for( nItem = 0; nItem < nCount; nItem++ )
+	{
+		CONNECT_HOST_DATA* pData = (CONNECT_HOST_DATA*)m_wndHost.GetItemData( nItem );
+		ASSERT( pData != NULL && (int)pData != CB_ERR );
+
+		CString strItem;
+		strItem.Format( _T("%.3i.Host"), nItem + 1 );
+		theApp.WriteProfileString( CONNECT_SECTION, strItem, pData->sHost );
+		strItem.Format( _T("%.3i.Port"), nItem + 1 );
+		theApp.WriteProfileInt( CONNECT_SECTION, strItem, pData->nPort );
+		strItem.Format( _T("%.3i.Protocol"), nItem + 1 );
+		theApp.WriteProfileInt( CONNECT_SECTION, strItem, pData->nProtocol );
+	}
+}
+
+void CConnectToDlg::OnDestroy()
+{
+	while( m_wndHost.GetCount() )
+	{
+		CONNECT_HOST_DATA* pData = (CONNECT_HOST_DATA*)m_wndHost.GetItemData( 0 );
+		ASSERT( pData != NULL && (int)pData != CB_ERR );
+
+		m_wndHost.DeleteString( 0 );
+		delete pData;
+	}
+
+	CSkinDialog::OnDestroy();
 }

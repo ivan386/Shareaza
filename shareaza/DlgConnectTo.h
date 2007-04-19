@@ -1,7 +1,7 @@
 //
 // DlgConnectTo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,48 +29,39 @@
 
 class CConnectToDlg : public CSkinDialog
 {
-// Construction
 public:
 	CConnectToDlg(CWnd* pParent = NULL, BOOL bBrowseHost = FALSE);
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CConnectToDlg)
 	enum { IDD = IDD_CONNECT_TO };
-	CButton	m_wndAdvanced;
+	CButton		m_wndAdvanced;
 	CComboBox	m_wndProtocol;
-	CButton	m_wndUltrapeer;
-	CButton	m_wndPrompt;
-	CEdit	m_wndPort;
+	CButton		m_wndUltrapeer;
+	CButton		m_wndPrompt;
+	CEdit		m_wndPort;
 	CComboBox	m_wndHost;
-	CString	m_sHost;
-	BOOL	m_bNoUltraPeer;
-	int		m_nPort;
-	PROTOCOLID	m_nProtocol;
-	//}}AFX_DATA
+	CString		m_sHost;
+	BOOL		m_bNoUltraPeer;
+	int			m_nPort;
+	int			m_nProtocol;
 
+protected:
 	CImageList	m_pImages;
 	BOOL		m_bBrowseHost;
 
-	void		LoadItem(INT_PTR nItem);
+	void		LoadItem(int nItem);
+	BOOL		UpdateItems();
+	void		SaveItems();
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CConnectToDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CConnectToDlg)
+	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
-	afx_msg void OnSelChangeConnectHost();
+
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
-	afx_msg void OnCloseUpConnectProtocol();
-	//}}AFX_MSG
+	afx_msg void OnCbnSelchangeConnectHost();
+	afx_msg void OnCbnSelchangeConnectProtocol();
+	afx_msg void OnDestroy();
+
 	DECLARE_MESSAGE_MAP()
 };
 
