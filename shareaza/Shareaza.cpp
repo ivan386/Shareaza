@@ -339,9 +339,9 @@ BOOL CShareazaApp::InitInstance()
 		}
 		else
 		{
+			m_pMainWnd->ShowWindow( SW_SHOW );
 			if ( dlgSplash ) 
 				dlgSplash->Topmost();
-			m_pMainWnd->ShowWindow( SW_SHOW );
 			m_pMainWnd->UpdateWindow();
 		}
 	// From this point translations are available and LoadString returns correct strings

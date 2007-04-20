@@ -124,7 +124,7 @@ void CSplashDlg::Topmost()
 {
 	if ( IsWindowVisible() )
 	{
-		SetWindowPos( &wndTopMost, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE|SWP_SHOWWINDOW );
+		SetWindowPos( &wndTop, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE|SWP_SHOWWINDOW );
 	}
 }
 
