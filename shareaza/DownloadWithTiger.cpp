@@ -491,8 +491,9 @@ void CDownloadWithTiger::ContinueValidation()
 	if ( m_pFile == NULL )
 	{
 		hComplete = CreateFile( m_sDiskName, GENERIC_READ,
-			FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
-			FILE_ATTRIBUTE_NORMAL, NULL );
+			FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+		VERIFY_FILE_ACCESS( hComplete, m_sDiskName )
 		if ( hComplete == INVALID_HANDLE_VALUE ) return;
 	}
 

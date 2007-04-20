@@ -319,8 +319,9 @@ BOOL CFileCopyDlg::ProcessFile(CString& strName, CString& strPath, BOOL bMetaDat
 
 	// Check if we can move the file first
 	sSource = strPath + _T("\\") + strName;
-	HANDLE hFile = CreateFile(	sSource, GENERIC_WRITE, 0 , NULL,
-								OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	HANDLE hFile = CreateFile( sSource, GENERIC_WRITE, 0, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	VERIFY_FILE_ACCESS( hFile, sSource )
 	if ( hFile == INVALID_HANDLE_VALUE )
 	{
 		CString strMessage, strFormat, strName;

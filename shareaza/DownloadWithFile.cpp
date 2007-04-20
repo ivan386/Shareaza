@@ -565,9 +565,10 @@ BOOL CDownloadWithFile::WriteMetadata(LPCTSTR pszPath)
 	strMetadata += m_sDiskName.Mid( m_sDiskName.ReverseFind( '\\' ) );
 	strMetadata += _T(".xml");
 	
-	HANDLE hFile = CreateFile( strMetadata, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS,
-								FILE_ATTRIBUTE_NORMAL, NULL );
-	
+	HANDLE hFile = CreateFile( strMetadata, GENERIC_WRITE,
+		0, NULL, CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL, NULL );
+	VERIFY_FILE_ACCESS( hFile, strMetadata )
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
 	
 	DWORD nWritten;
@@ -594,8 +595,10 @@ BOOL CDownloadWithFile::AppendMetadata()
 	CXMLElement* pXML = m_pXML->GetFirstElement();
 	if ( pXML == NULL ) return FALSE;
 	
-	HANDLE hFile = CreateFile( m_sDiskName, GENERIC_READ|GENERIC_WRITE,
-		FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	HANDLE hFile = CreateFile( m_sDiskName, GENERIC_READ | GENERIC_WRITE,
+		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	VERIFY_FILE_ACCESS( hFile, m_sDiskName )
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
 	
 	CString strURI = m_pXML->GetAttributeValue( CXMLAttribute::schemaName );

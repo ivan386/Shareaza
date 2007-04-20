@@ -109,10 +109,13 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 	if ( pArray != NULL ) SafeArrayDestroy( pArray );
 	
 	BOOL bMapped = FALSE;	
-	HANDLE hFile = CreateFile( szFilename, GENERIC_READ, FILE_SHARE_READ,
+	HANDLE hFile = CreateFile( szFilename, GENERIC_READ,
+		FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	if ( hFile != INVALID_HANDLE_VALUE ) {
-	HANDLE hMap = CreateFileMapping( hFile, NULL, PAGE_READONLY, 0, 0, NULL );
+	VERIFY_FILE_ACCESS( hFile, szFilename )
+	if ( hFile != INVALID_HANDLE_VALUE )
+	{
+		HANDLE hMap = CreateFileMapping( hFile, NULL, PAGE_READONLY, 0, 0, NULL );
 		if ( hMap )
 		{		
 			LPCVOID pBuffer = MapViewOfFile( hMap, FILE_MAP_READ, 0, 0, 0 );

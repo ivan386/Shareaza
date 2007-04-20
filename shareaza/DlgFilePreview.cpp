@@ -323,9 +323,10 @@ UINT CFilePreviewDlg::ThreadStart(LPVOID pParam)
 
 void CFilePreviewDlg::OnRun()
 {
-	HANDLE hFile = CreateFile( m_sSourceName, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE,
+	HANDLE hFile = CreateFile( m_sSourceName, GENERIC_READ,
+		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	
+	VERIFY_FILE_ACCESS( hFile, m_sSourceName )
 	if ( hFile != INVALID_HANDLE_VALUE )
 	{
 		if ( ! RunPlugin( hFile ) && ! m_bCancel ) RunManual( hFile );
@@ -387,9 +388,9 @@ const DWORD BUFFER_SIZE = 40960u;
 
 BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 {
-	HANDLE hTarget = CreateFile( m_sTargetName, GENERIC_WRITE, FILE_SHARE_READ,
+	HANDLE hTarget = CreateFile( m_sTargetName, GENERIC_WRITE, 0,
 		NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-	
+	VERIFY_FILE_ACCESS( hTarget, m_sTargetName )
 	if ( hTarget == INVALID_HANDLE_VALUE ) return FALSE;
 	
 	m_nRange = m_nPosition = 0;

@@ -353,6 +353,7 @@ void CDownloadEditDlg::OnMergeAndVerify()
 		HANDLE hSelectedFile = CreateFile( dlgSelectFile.GetPathName(), GENERIC_READ,
             FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
 			FILE_ATTRIBUTE_NORMAL, NULL);
+		VERIFY_FILE_ACCESS( hSelectedFile, dlgSelectFile.GetPathName() )
 		if ( hSelectedFile != INVALID_HANDLE_VALUE )
 		{
 			pLock.Lock();

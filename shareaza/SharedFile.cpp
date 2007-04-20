@@ -851,9 +851,10 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 		}
 		else
 		{
-			hFile = CreateFile( strMetaData, GENERIC_READ, FILE_SHARE_READ,
+			hFile = CreateFile( strMetaData, GENERIC_READ,
+				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
 				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-			
+			VERIFY_FILE_ACCESS( hFile, strMetaData )
 			if ( hFile != INVALID_HANDLE_VALUE )
 			{
 				bMetaData = TRUE;
@@ -873,6 +874,7 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 				hFile = CreateFile( pszMetaData + m_sName + _T(".xml"),
 					GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
 					FILE_ATTRIBUTE_NORMAL, NULL );
+				VERIFY_FILE_ACCESS( hFile, pszMetaData + m_sName + _T(".xml") )
 			}
 			
 			if ( hFile != INVALID_HANDLE_VALUE )
@@ -1029,17 +1031,17 @@ BOOL CLibraryFile::SaveMetadata()
 	{
 		pXML->AddAttribute( _T("xmlns:xsi"), CXMLAttribute::xmlnsInstance );
 		
-		HANDLE hFile = CreateFile( strMetaFile, GENERIC_WRITE, FILE_SHARE_READ, NULL,
+		HANDLE hFile = CreateFile( strMetaFile, GENERIC_WRITE, 0, NULL,
 			CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-		
+		VERIFY_FILE_ACCESS( hFile, strMetaFile )	
 		if ( hFile == INVALID_HANDLE_VALUE )
 		{
 			CreateDirectory( strMetaFolder, NULL );
 			SetFileAttributes( strMetaFolder, FILE_ATTRIBUTE_HIDDEN );
 			
-			hFile = CreateFile( strMetaFile, GENERIC_WRITE, FILE_SHARE_READ, NULL,
+			hFile = CreateFile( strMetaFile, GENERIC_WRITE, 0, NULL,
 				CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-			
+			VERIFY_FILE_ACCESS( hFile, strMetaFile )			
 			if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
 		}
 		

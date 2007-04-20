@@ -462,6 +462,21 @@ private:
 
 extern const CLowerCaseTable ToLower;
 
+#ifdef _DEBUG
+	#define VERIFY_FILE_ACCESS(h,f) \
+	{ \
+		DWORD err = GetLastError(); \
+		if ( ( h ) == INVALID_HANDLE_VALUE && ( err == ERROR_ACCESS_DENIED || \
+			err == ERROR_SHARING_VIOLATION || err == ERROR_LOCK_VIOLATION ) ) \
+		{ \
+			theApp.Message( MSG_DEBUG, _T("Denied access to file \"%s\"..."), LPCTSTR( ( f ) ) ); \
+			TRACE( _T("Denied access to file \"%ls\"...\n"), LPCTSTR( ( f ) ) ); \
+		} \
+	}
+#else
+	#define VERIFY_FILE_ACCESS(h,f) ((void)0);
+#endif
+
 template<>
 struct std::less< CString > : public std::binary_function< CString, CString, bool>
 {

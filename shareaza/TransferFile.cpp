@@ -197,22 +197,10 @@ BOOL CTransferFile::Open(BOOL bWrite, BOOL bCreate)
 {
 	if ( m_hFile != INVALID_HANDLE_VALUE ) return FALSE;
 
-	DWORD dwDesiredAccess = GENERIC_READ;
-	if ( bWrite ) dwDesiredAccess |= GENERIC_WRITE;
-
-	DWORD dwShare = FILE_SHARE_READ|FILE_SHARE_WRITE;
-	if ( theApp.m_bNT ) dwShare |= FILE_SHARE_DELETE;
-	DWORD dwCreation = bCreate ? CREATE_ALWAYS : OPEN_EXISTING;
-
-#if 1
-	m_hFile = CreateFile( m_sPath, dwDesiredAccess, dwShare,
-		NULL, dwCreation, FILE_ATTRIBUTE_NORMAL, NULL );
-#else
-	// Testing
-	m_hFile = CreateFile( _T("C:\\Junk\\Incomplete.bin"), dwDesiredAccess,
-		dwShare, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-#endif
-
+	m_hFile = CreateFile( m_sPath, GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
+		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+		NULL, ( bCreate ? CREATE_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );
+	VERIFY_FILE_ACCESS( m_hFile, m_sPath )
 	if ( m_hFile != INVALID_HANDLE_VALUE ) m_bWrite = bWrite;
 
 	return m_hFile != INVALID_HANDLE_VALUE;

@@ -393,7 +393,7 @@ BOOL CTorrentSeedDlg::VerifySingle()
 {
 	HANDLE hTarget = CreateFile( m_sTarget, GENERIC_READ, FILE_SHARE_READ, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	
+	VERIFY_FILE_ACCESS( hTarget, m_sTarget )
 	if ( hTarget == INVALID_HANDLE_VALUE )
 	{
 		CString strFormat;
@@ -441,9 +441,9 @@ HANDLE CTorrentSeedDlg::CreateTarget()
 	m_sTarget = Settings.Downloads.IncompletePath + '\\';
 	m_sTarget += m_pInfo.m_oBTH.toString< Hashes::base16Encoding >();
 	
-	HANDLE hTarget = CreateFile(	m_sTarget, GENERIC_WRITE, 0, NULL, CREATE_NEW,
-									FILE_ATTRIBUTE_NORMAL, NULL );
-	
+	HANDLE hTarget = CreateFile( m_sTarget, GENERIC_WRITE, 0, NULL, CREATE_NEW,
+		FILE_ATTRIBUTE_NORMAL, NULL );
+	VERIFY_FILE_ACCESS( hTarget, m_sTarget )
 	if ( hTarget == INVALID_HANDLE_VALUE )
 	{
 		CString strFormat;
@@ -478,7 +478,9 @@ BOOL CTorrentSeedDlg::BuildFiles(HANDLE hTarget)
 		if ( strSource.GetLength() > 0 )
 		{
 			hSource = CreateFile( strSource, GENERIC_READ,
-				FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+			VERIFY_FILE_ACCESS( hSource, strSource )
 		}
 		
 		if ( hSource == INVALID_HANDLE_VALUE )

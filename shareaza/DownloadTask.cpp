@@ -230,9 +230,9 @@ int CDownloadTask::Run()
 void CDownloadTask::RunAllocate()
 {
 	HANDLE hFile = CreateFile( m_sFilename, GENERIC_WRITE,
-		FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL, NULL );
-	
+		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	VERIFY_FILE_ACCESS( hFile, m_sFilename )
 	if ( hFile == INVALID_HANDLE_VALUE ) return;
 	
 	if ( GetFileSize( hFile, NULL ) != 0 )
@@ -326,7 +326,7 @@ void CDownloadTask::RunCopySimple()
 	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
 		FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-	
+	VERIFY_FILE_ACCESS( hSource, m_sFilename )
 	if ( hSource == INVALID_HANDLE_VALUE ) return;
 	
 	for ( int nCopy = 0; !m_bSuccess && nCopy < 10; ++nCopy )
@@ -404,7 +404,7 @@ void CDownloadTask::RunCopyTorrent()
 	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
 		FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-	
+	VERIFY_FILE_ACCESS( hSource, m_sFilename )
 	if ( hSource == INVALID_HANDLE_VALUE ) return;
 
 	m_bSuccess = FALSE;
@@ -547,7 +547,7 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 {
 	HANDLE hTarget = CreateFile( pszTarget, GENERIC_WRITE,
 		0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL );
-	
+	VERIFY_FILE_ACCESS( hTarget, pszTarget )
 	if ( hTarget == INVALID_HANDLE_VALUE ) return FALSE;
 	
 	BYTE* pBuffer = new BYTE[ BUFFER_SIZE ];
