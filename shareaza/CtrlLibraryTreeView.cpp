@@ -1290,12 +1290,12 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 			if ( pFolder->m_sPath.Find( _T(":\\") ) == 1 || pFolder->m_sPath.GetLength() == 2 )
 			{
 				CString strDrive;
-				strDrive.Format( _T(" (%c:)"), pFolder->m_sPath[0] );
-				strName += strDrive;
+				strDrive.Format( _T("(%c:) "), pFolder->m_sPath[0] );
+				strName = strDrive + strName;
 			}
 			else
 			{
-				strName += _T(" (Net)");
+				strName = _T("(Net) ") + strName;
 			}
 		}
 		pItem = pParent->addItem( strName );
