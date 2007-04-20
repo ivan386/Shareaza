@@ -292,18 +292,22 @@ SAFEARRAY* CImageServices::ImageToArray(CImageFile* pFile)
 
 BOOL CImageServices::IsFileViewable(LPCTSTR pszPath)
 {
-	LPTSTR pszExt = const_cast<wchar_t*>(_tcsrchr( pszPath, '.' ));
+	CString strType = pszPath;
+	
+	int nExtPos = strType.ReverseFind( '.' );
+	if ( nExtPos > 0 ) strType = strType.Mid( nExtPos );
+	
+	CharLower( strType.GetBuffer() );
+	strType.ReleaseBuffer();
 
-	if ( pszExt )
+	if ( strType.GetLength() )
 	{
-		LPCTSTR pszExtLow = _tcslwr( pszExt );
-
 		// Loads only once and adds
 		PluginInfo service = GetService( pszPath );
 		if ( !service.first )
 			return FALSE;
 
-		if ( Plugins.LookupEnable( service.second, FALSE, pszExtLow ) )
+		if ( Plugins.LookupEnable( service.second, FALSE, strType ) )
 			return TRUE;
 	}
 

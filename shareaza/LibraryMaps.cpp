@@ -275,9 +275,9 @@ void CLibraryMaps::Clear()
 {
 	for ( POSITION pos = GetFileIterator() ; pos ; ) delete GetNextFile( pos );
 	
-	ASSERT( m_pIndexMap.GetCount() == 0 );
-	ASSERT( m_pNameMap.GetCount() == 0 );
-	ASSERT( m_pPathMap.GetCount() == 0 );
+	ASSERT( m_pIndexMap.IsEmpty() );
+	ASSERT( m_pNameMap.IsEmpty() );
+	ASSERT( m_pPathMap.IsEmpty() );
 #ifdef _DEBUG
 	for ( POSITION p = m_pPathMap.GetStartPosition() ; p ; )
 	{

@@ -369,10 +369,18 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 					
 					if ( pFolder->m_sName != pFind.cFileName )
 					{
-						pFolder->m_sPath = strPath;
-						pFolder->PathToName();
-						pFolder->m_nUpdateCookie++;
+						CString strNameLC( pFolder->m_sName );
+						CharLower( strNameLC.GetBuffer() );
+						strNameLC.ReleaseBuffer();
+
+						pLock.Lock();
+						m_pFolders.RemoveKey( strNameLC );
+						pFolder->OnDelete();
+						pFolder = new CLibraryFolder( this, strPath );
+						m_pFolders.SetAt( pFolder->m_sNameLC, pFolder );
 						bChanged = TRUE;
+						m_nUpdateCookie++;
+						pLock.Unlock();
 					}
 				}
 				else
@@ -409,8 +417,12 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 					
 					if ( pFile->m_sName != pFind.cFileName )
 					{
+						pLock.Lock();
+						Library.RemoveFile( pFile );
 						pFile->m_sName = pFind.cFileName;
+						Library.AddFile( pFile );
 						bChanged = TRUE;
+						pLock.Unlock();
 					}
 				}
 				else if ( bKazaaFolder && pszExt && _tcsicmp( pszExt, _T(".dat") ) == 0 )
