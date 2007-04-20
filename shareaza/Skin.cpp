@@ -311,8 +311,7 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		else if ( pSub->IsNamed( _T("manifest") ) )
 		{
 			CString strType = pSub->GetAttributeValue( _T("type") );
-			CharLower( strType.GetBuffer() );
-			strType.ReleaseBuffer();
+			ToLower( strType );
 			
 			if ( strType == _T("language") )
 			{
@@ -1215,8 +1214,7 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 
 		CString strName		= pXML->GetAttributeValue( _T("name") );
 		CString strValue	= pXML->GetAttributeValue( _T("value") );
-		CharLower( strName.GetBuffer() );
-		strName.ReleaseBuffer();
+		ToLower( strName );
 
 		COLORREF* pColour;
 

@@ -120,8 +120,7 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	if ( m_i16.m_hImageList == NULL ) Clear();
 
 	CString strType( pszType );
-	CharLower( strType.GetBuffer() );
-	strType.ReleaseBuffer();
+	ToLower( strType );
 
 	HICON hIcon = NULL;
 	int nIndex = 0;
@@ -340,7 +339,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 	CString strIcon( szResult );
 
 	int nIcon, nIndex = strIcon.ReverseFind( ',' );
-	if ( nIndex < 0 && strIcon.Right(3).MakeLower() != _T("ico") ) return 0;
+	if ( nIndex < 0 && ToLower( strIcon.Right(3) ) != _T("ico") ) return 0;
 
 	if ( nIndex != -1 )
 	{

@@ -63,8 +63,8 @@ public:
 	{
 		if ( ! pszURI || ! *pszURI ) return NULL;
 		CString strURI( pszURI );
-		CharLower( strURI.GetBuffer() );
-		strURI.ReleaseBuffer();
+		ToLower( strURI );
+
 		CSchema* pSchema = NULL;
 		return ( m_pURIs.Lookup( strURI, pSchema ) ) ? pSchema : NULL;
 	}
@@ -73,8 +73,8 @@ public:
 	{
 		if ( ! pszName || ! *pszName ) return NULL;
 		CString strName( pszName );
-		CharLower( strName.GetBuffer() );
-		strName.ReleaseBuffer();
+		ToLower( strName );
+
 		CSchema* pSchema = NULL;
 		return m_pNames.Lookup( strName, pSchema ) ? pSchema : NULL;
 	}

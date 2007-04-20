@@ -65,7 +65,7 @@ void CFileExecutor::GetFileComponents(LPCTSTR pszFile, CString& strPath, CString
 	if ( nPos >= 0 ) strPath = strFile.Left( nPos );
 	nPos = strFile.ReverseFind( '.' );
 	if ( nPos >= 0 ) strType = strFile.Mid( nPos + 1 );
-	if ( strType.GetLength() ) strType = _T("|") + strType.MakeLower() + _T("|");
+	if ( strType.GetLength() ) strType = _T("|") + ToLower( strType ) + _T("|");
 }
 
 CMediaWnd* CFileExecutor::GetMediaWindow(BOOL bFocus)
@@ -245,12 +245,10 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 			if ( nFind != -1 )
 			{
 				strCommand.SetString( strCommand.Left( nFind ) + strFile + strCommand.Mid( nFind + 2 ) );
-				CharLower( strCommand.GetBuffer() );
-				strCommand.ReleaseBuffer();
+				ToLower( strCommand );
 				
 				CString strServiceLC = Settings.MediaPlayer.ServicePath;
-				CharLower( strServiceLC.GetBuffer() );
-				strServiceLC.ReleaseBuffer();
+				ToLower( strServiceLC );
 				
 				nFind = strCommand.Find( strServiceLC );
 				strCommand.SetString( strCommand.Mid( strServiceLC.GetLength() + nFind ) );
@@ -270,7 +268,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 
 	if ( nError <= SE_ERR_DLLNOTFOUND )
 	{
-		CString strExecutable = Settings.MediaPlayer.ServicePath.Mid( nBackSlash + 1 ).MakeLower();
+		CString strExecutable = ToLower( Settings.MediaPlayer.ServicePath.Mid( nBackSlash + 1 ) );
 		CString strParam;
 
 		if ( strExecutable == L"mplayerc.exe" )

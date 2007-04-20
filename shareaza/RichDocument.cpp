@@ -324,15 +324,15 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 		if ( strTemp.GetLength() ) _stscanf( strTemp, _T("%i"), &pElement->m_nGroup );
 		
 		strTemp = pXML->GetAttributeValue( _T("format") );
-		CharLower( strTemp.GetBuffer() );
-		strTemp.ReleaseBuffer();
+		ToLower( strTemp );
+
 		if ( strTemp.Find( 'b' ) >= 0 )	pElement->m_nFlags |= retfBold;
 		if ( strTemp.Find( 'i' ) >= 0 )	pElement->m_nFlags |= retfItalic;
 		if ( strTemp.Find( 'u' ) >= 0 )	pElement->m_nFlags |= retfUnderline;
 		
 		strTemp = pXML->GetAttributeValue( _T("align") );
-		CharLower( strTemp.GetBuffer() );
-		strTemp.ReleaseBuffer(); 
+		ToLower( strTemp );
+
 		if ( strTemp == _T("middle") ) pElement->m_nFlags |= retfMiddle;
 		
 		strTemp = pXML->GetAttributeValue( _T("colour") );
@@ -391,8 +391,7 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 		if ( ! pXML->IsNamed( _T("style") ) ) continue;
 		
 		CString strName = pXML->GetAttributeValue( _T("name") );
-		CharLower( strName.GetBuffer() );
-		strName.ReleaseBuffer();
+		ToLower( strName );
 		
 		CString strFontFace = theApp.m_sDefaultFont;
 		int nFontSize = theApp.m_nDefaultFontSize + 1;

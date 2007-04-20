@@ -346,8 +346,8 @@ CXMLElement* CXMLElement::Clone(CXMLElement* pParent)
 		CXMLAttribute* pAttribute = GetNextAttribute( pos )->Clone( pClone );
 		CString strName( pAttribute->m_sName );
 
-		CharLower( strName.GetBuffer() );
-		strName.ReleaseBuffer();
+		ToLower( strName );
+
 		pClone->m_pAttributes.SetAt( strName, pAttribute );
 	}
 
@@ -520,8 +520,8 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 		{
 			CString strName( pAttribute->m_sName );
 			CXMLAttribute* pExisting;
-			CharLower( strName.GetBuffer() );
-			strName.ReleaseBuffer();
+			ToLower( strName );
+
 			if ( m_pAttributes.Lookup( strName, pExisting ) ) delete pExisting;
 			m_pAttributes.SetAt( strName, pAttribute );
 		}
@@ -778,8 +778,8 @@ void CXMLElement::Serialize(CArchive& ar)
 			pAttribute->Serialize( ar );
 
 			CString strName( pAttribute->m_sName );
-			CharLower( strName.GetBuffer() );
-			strName.ReleaseBuffer();
+			ToLower( strName );
+
 			m_pAttributes.SetAt( strName, pAttribute );
 		}
 

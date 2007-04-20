@@ -924,13 +924,11 @@ BOOL CConnection::IsAgentBlocked()
 
 	// Get the list of blocked programs, and make a copy here of it all in lowercase letters
 	CString strBlocked = Settings.Uploads.BlockAgents;
-	CharLower( strBlocked.GetBuffer() );
-	strBlocked.ReleaseBuffer();
+	ToLower( strBlocked );
 
 	// Get the name of the program running on the other side of the connection, and make it lowercase also
 	CString strAgent = m_sUserAgent;
-	CharLower( strAgent.GetBuffer() );
-	strAgent.ReleaseBuffer();
+	ToLower( strAgent );
 
 	// Loop through the list of programs to block
 	for ( strBlocked += '|' ; strBlocked.GetLength() ; )

@@ -229,8 +229,7 @@ BOOL CVendor::LoadFrom(CXMLElement* pXML)
 		else if ( pKey->IsNamed( _T("capability") ) )
 		{
 			CString strCap = pKey->GetAttributeValue( _T("name") );
-			CharLower( strCap.GetBuffer() );
-			strCap.ReleaseBuffer(); 
+			ToLower( strCap );
 
 			BOOL bValue = TRUE;
 			

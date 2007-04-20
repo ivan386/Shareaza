@@ -1210,9 +1210,9 @@ void CAdultFilter::Load()
 			
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
-			CString strWord = pWords.GetNext( pos );
-			CharLower( strWord.GetBuffer() );
-			strWord.ReleaseBuffer();
+			CString strWord( pWords.GetNext( pos ) );
+			ToLower( strWord );
+
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
@@ -1253,9 +1253,9 @@ void CAdultFilter::Load()
 			
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
-			CString strWord = pWords.GetNext( pos );
-			CharLower( strWord.GetBuffer() );
-			strWord.ReleaseBuffer();
+			CString strWord( pWords.GetNext( pos ) );
+			ToLower( strWord );
+
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
@@ -1296,9 +1296,9 @@ void CAdultFilter::Load()
 
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
-			CString strWord = pWords.GetNext( pos );
-			CharLower( strWord.GetBuffer() );
-			strWord.ReleaseBuffer();
+			CString strWord( pWords.GetNext( pos ) );
+			ToLower( strWord );
+
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
@@ -1520,9 +1520,9 @@ void CMessageFilter::Load()
 			
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
-			CString strWord = pWords.GetNext( pos );
-			CharLower( strWord.GetBuffer() );
-			strWord.ReleaseBuffer();
+			CString strWord( pWords.GetNext( pos ) );
+			ToLower( strWord );
+
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
@@ -1563,9 +1563,9 @@ void CMessageFilter::Load()
 			
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
-			CString strWord = pWords.GetNext( pos );
-			CharLower( strWord.GetBuffer() );
-			strWord.ReleaseBuffer();
+			CString strWord( pWords.GetNext( pos ) );
+			ToLower( strWord );
+
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}

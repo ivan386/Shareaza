@@ -119,10 +119,8 @@ protected:
 public:
 	inline CString GetNameLC() const
 	{
-		CString str = m_sName;
-		CharLower( str.GetBuffer() );
-		str.ReleaseBuffer();
-		return str;
+		CString str( m_sName );
+		return ToLower( str );
 	}
 	
 	inline QWORD GetSize() const

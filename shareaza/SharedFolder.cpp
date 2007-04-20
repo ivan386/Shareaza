@@ -99,8 +99,7 @@ CLibraryFolder* CLibraryFolder::GetFolderByName(LPCTSTR pszName) const
 {
 	CLibraryFolder* pOutput = NULL;
 	CString strName( pszName );
-	CharLower( strName.GetBuffer() );
-	strName.ReleaseBuffer();
+	ToLower( strName );
 	return ( m_pFolders.Lookup( strName, pOutput ) ) ? pOutput : NULL;
 }
 
@@ -154,8 +153,7 @@ CLibraryFile* CLibraryFolder::GetFile(LPCTSTR pszName) const
 {
 	CLibraryFile* pOutput = NULL;
 	CString strName( pszName );
-	CharLower( strName.GetBuffer() );
-	strName.ReleaseBuffer();
+	ToLower( strName );
 	return ( m_pFiles.Lookup( strName, pOutput ) ) ? pOutput : NULL;
 }
 
@@ -311,8 +309,7 @@ void CLibraryFolder::PathToName()
 	int nPos = m_sName.ReverseFind( '\\' );
 	if ( nPos >= 0 && nPos < m_sName.GetLength() - 1 ) m_sName = m_sName.Mid( nPos + 1 );
 	m_sNameLC = m_sName;
-	CharLower( m_sNameLC.GetBuffer() );
-	m_sNameLC.ReleaseBuffer();
+	ToLower( m_sNameLC );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -458,8 +455,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 		if ( pFolder->m_nScanCookie != nScanCookie )
 		{
 			CString strNameLC( pFolder->m_sName );
-			CharLower( strNameLC.GetBuffer() );
-			strNameLC.ReleaseBuffer();
+			ToLower( strNameLC );
 			
 			m_nFiles	-= pFolder->m_nFiles;
 			m_nVolume	-= pFolder->m_nVolume;
@@ -481,8 +477,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 		if ( pFile->m_nScanCookie != nScanCookie )
 		{
 			CString strNameLC( pFile->m_sName );
-			CharLower( strNameLC.GetBuffer() );
-			strNameLC.ReleaseBuffer();
+			ToLower( strNameLC );
 			
 			m_nFiles	--;
 			m_nVolume	-= pFile->m_nSize / 1024;

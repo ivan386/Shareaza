@@ -55,10 +55,9 @@ BOOL CLibraryBuilderPlugins::ExtractMetadata(CString& strPath, HANDLE hFile)
 	CString strType;
 	
 	int nExtPos = strPath.ReverseFind( '.' );
-	if ( nExtPos > 0 ) strType = strPath.Mid( nExtPos );
+	if ( nExtPos != -1 ) strType = strPath.Mid( nExtPos );
 	
-	CharLower( strType.GetBuffer() );
-	strType.ReleaseBuffer();
+	ToLower( strType );
 	
 	ILibraryBuilderPlugin* pPlugin = NULL;
 	
@@ -148,4 +147,3 @@ ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 	
 	return pPlugin;
 }
-

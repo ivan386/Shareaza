@@ -90,10 +90,9 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(CString& strPath, HANDLE hFile, H
 	CString strType;
 	
 	int nExtPos = strPath.ReverseFind( '.' );
-	if ( nExtPos > 0 ) strType = strPath.Mid( nExtPos );
+	if ( nExtPos != -1 ) strType = strPath.Mid( nExtPos );
 	
-	CharLower( strType.GetBuffer() );
-	strType.ReleaseBuffer();
+	ToLower( strType );
 	
 	if ( strType == _T(".mp3") )
 	{
@@ -2039,8 +2038,7 @@ BOOL CLibraryBuilderInternals::ReadAPE(HANDLE hFile, bool bPreferFooter)
 
 		if ( strKey.GetLength() && strValue.GetLength() )
 		{
-			CharLower( strKey.GetBuffer() );
-			strKey.ReleaseBuffer();
+			ToLower( strKey );
 
 			if ( strKey == L"title" )
 			{
@@ -2313,7 +2311,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 		CString strEntry;
 		int nData = 0;
 		nData = strLine.Find( _T(" ") );
-		strEntry = strLine.Left( nData ).MakeLower();
+		strEntry = ToLower( strLine.Left( nData ) );
 		if ( strEntry != _T("h") && nData > 0 )
 		{
 			if ( _stscanf( strLine.Mid( nData + 1 ), _T("%lu"), &nData ) != 1 ) break;
@@ -2378,7 +2376,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 			CString strEntry;
 			DWORD nData = 0;
 			nData = strLine.Find( _T(" ") );
-			strEntry = strLine.Left( nData ).MakeLower();
+			strEntry = ToLower( strLine.Left( nData ) );
 			if ( strEntry == _T("size") ) 
 			{
 				_stscanf( strLine.Mid( nData + 1 ), _T("%lu"), &nData );
@@ -2427,7 +2425,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 			CString strEntry;
 			int nData = 0;
 			nData = strLine.Find( _T(" ") );
-			strEntry = strLine.Left( nData ).MakeLower();
+			strEntry = ToLower( strLine.Left( nData ) );
 			if ( strEntry == _T("size") ) 
 			{
 				_stscanf( strLine.Mid( nData + 1 ), _T("%lu"), &nCount );
@@ -2521,7 +2519,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 			CString strEntry;
 			int nData = 0;
 			nData = strLine.Find( _T(" ") );
-			strEntry = strLine.Left( nData ).MakeLower();
+			strEntry = ToLower( strLine.Left( nData ) );
 			if ( strEntry == _T("info") ) 
 				_stscanf( strLine.Mid( nData + 1 ), _T("%lu"), &nOffsetInfo );
 			else if ( strEntry == _T("prev") ) 
@@ -2586,8 +2584,8 @@ BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 		{
 			if ( ReadLine( hFile, (LPCTSTR)_T("<") ).IsEmpty() &&
 				 ReadLine( hFile, (LPCTSTR)_T("/") ).IsEmpty() &&
-				 ReadLine( hFile, (LPCTSTR)_T("/") ).MakeLower() == _T("type") &&
-				 ReadLine( hFile, (LPCTSTR)_T("/") ).MakeLower() == _T("catalog") )
+				 ToLower( ReadLine( hFile, (LPCTSTR)_T("/") ) ) == _T("type") &&
+				 ToLower( ReadLine( hFile, (LPCTSTR)_T("/") ) ) == _T("catalog") )
 			{
 				strLine = ReadLine( hFile, (LPCTSTR)_T("/>") );
 				while ( !strLine.IsEmpty() )
@@ -2595,7 +2593,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 					CString strEntry;
 					int nData = 0;
 					nData = strLine.Find( _T(" ") );
-					strEntry = strLine.Left( nData ).MakeLower();
+					strEntry = ToLower( strLine.Left( nData ) );
 					if ( strEntry == _T("metadata") )
 					{
 						_stscanf( strLine.Mid( nData + 1 ), _T("%lu"), &nOffsetMeta );
@@ -2637,9 +2635,9 @@ BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 			if ( ReadLine( hFile, (LPCTSTR)_T("<") ).IsEmpty() && 
 				 ReadLine( hFile, (LPCTSTR)_T("/") ).IsEmpty() )
 			{
-				if ( ReadLine( hFile, (LPCTSTR)_T("/") ).MakeLower() == _T("type") )
+				if ( ToLower( ReadLine( hFile, (LPCTSTR)_T("/") ) ) == _T("type") )
 				{
-					if ( ReadLine( hFile, (LPCTSTR)_T("/") ).MakeLower() == _T("page") )
+					if ( ToLower( ReadLine( hFile, (LPCTSTR)_T("/") ) ) == _T("page") )
 						nPages++;
 				}
 			}
@@ -2666,7 +2664,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 				int nData = strLine.Find( _T("(") );
 				if ( nData > 0 )
 				{
-					strEntry = strLine.Left( nData ).MakeLower().Trim();
+					strEntry = ToLower( strLine.Left( nData ) ).Trim();
 					strLine = strLine.Mid( nData );
 				}
 				else
@@ -2674,7 +2672,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(HANDLE hFile, LPCTSTR pszPath)
 					nData = strLine.Find( _T("<") );
 					if ( nData > 0 )
 					{
-						strEntry = strLine.Left( nData ).MakeLower().Trim();
+						strEntry = ToLower( strLine.Left( nData ) ).Trim();
 						strLine = strLine.Mid( nData );
 					}
 				}
@@ -3257,15 +3255,13 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 			case 2: // unknown data
 			break;
 			case 3: // redirection url
-				CharLower( strLine.GetBuffer() );
-				strLine.ReleaseBuffer();
+				ToLower( strLine );
 				if ( strLine.Left( 7 ) == _T("ms-its:") )
 				{
 					nPos = strLine.Find( _T("::"), 7 );
 					strTemp = _tcsrchr( pszPath, '\\' );
 					strTemp = strTemp.Mid( 1 );
-					CharLower( strTemp.GetBuffer() );
-					strTemp.ReleaseBuffer();
+					ToLower( strTemp );
 					if ( strLine.Mid( 7, nPos - 7 ).Trim() != strTemp )
 						bCorrupted = TRUE; // it requires additional file
 				}
@@ -3276,8 +3272,7 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 				if ( strLine.IsEmpty() ) break;
 				nPos = strLine.Find( ',' );
 				strTemp = strLine.Left( nPos );
-				CharLower( strTemp.GetBuffer() );
-				strTemp.ReleaseBuffer();
+				ToLower( strTemp );
 				if ( strLine.CompareNoCase( _T("htmlhelp") ) != 0 &&
 					 strTemp != _T("arial") && strTemp != _T("tahoma") &&
 					 strTemp != _T("times new roman") && strTemp != _T("verdana") &&

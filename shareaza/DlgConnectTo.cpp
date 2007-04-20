@@ -129,7 +129,7 @@ BOOL CConnectToDlg::OnInitDialog()
 			strItem.Format( _T("%.3i.Host"), nItem + 1 );
 			pData->sHost = theApp.GetProfileString( CONNECT_SECTION, strItem, _T("") );
 			pData->sHost.Trim( _T(" \t\r\n:\"") );
-			pData->sHost.MakeLower();
+			ToLower( pData->sHost );
 
 			strItem.Format( _T("%.3Ii.Port"), nItem + 1 );
 			pData->nPort = theApp.GetProfileInt( CONNECT_SECTION, strItem, GNUTELLA_DEFAULT_PORT );
@@ -268,7 +268,7 @@ BOOL CConnectToDlg::UpdateItems()
 		return FALSE;
 
 	m_sHost.Trim( _T(" \t\r\n:\"") );
-	m_sHost.MakeLower();
+	ToLower( m_sHost );
 	int n = m_sHost.Find( _T(':') );
 	if ( n != -1 )
 	{

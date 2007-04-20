@@ -160,10 +160,8 @@ void CMediaSettingsPage::OnMediaAdd()
 {
 	UpdateData();
 
-	CharLower( m_sType.GetBuffer() );
-	m_sType.ReleaseBuffer();
-	m_sType.TrimLeft();
-	m_sType.TrimRight();
+	ToLower( m_sType );
+	m_sType.Trim();
 	if ( m_sType.IsEmpty() ) return;
 
 	if ( m_wndList.FindStringExact( -1, m_sType ) >= 0 ) return;
@@ -205,7 +203,7 @@ void CMediaSettingsPage::OnOK()
 		// Starting from v.0.8.5 VLC player reads unicode paths
 		CString strExecutable;
 		m_wndServices.GetWindowText( strExecutable );
-		Settings.MediaPlayer.ShortPaths = strExecutable.MakeLower() == _T("vlc.exe");
+		Settings.MediaPlayer.ShortPaths = ToLower( strExecutable ) == _T("vlc.exe");
 		*/
 	}
 

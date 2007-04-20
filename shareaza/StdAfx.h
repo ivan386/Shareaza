@@ -445,8 +445,8 @@ public:
 		cTable[ 65438 ] = TCHAR( 12441 );
 		cTable[ 65439 ] = TCHAR( 12442 );
 	};
-	const TCHAR& operator()(const TCHAR cLookup) const { return cTable[ cLookup ]; }
-	CString& operator()(CString& strSource) const
+	inline const TCHAR& operator()(const TCHAR cLookup) const { return cTable[ cLookup ]; }
+	inline CString& operator()(CString& strSource) const
 	{
 		const int nLength = strSource.GetLength();
 		const LPTSTR str = strSource.GetBuffer() + nLength;
@@ -455,7 +455,7 @@ public:
 		strSource.ReleaseBuffer( nLength );
 		return strSource;
 	}
-	const TCHAR& operator[](const TCHAR cLookup) const { return ( *this )( cLookup ); }
+	inline const TCHAR& operator[](const TCHAR cLookup) const { return ( *this )( cLookup ); }
 private:
 	TCHAR cTable[ 65537 ];
 };

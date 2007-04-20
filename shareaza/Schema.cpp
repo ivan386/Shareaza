@@ -310,8 +310,7 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 		if ( pElement->IsNamed( _T("object") ) )
 		{
 			CString strType = pElement->GetAttributeValue( _T("type") );
-			CharLower( strType.GetBuffer() );
-			strType.ReleaseBuffer();
+			ToLower( strType );
 			
 			if ( strType == _T("file") )
 				m_nType = stFile;
@@ -319,8 +318,7 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 				m_nType = stFolder;
 			
 			strType = pElement->GetAttributeValue( _T("availability") );
-			CharLower( strType.GetBuffer() );
-			strType.ReleaseBuffer();
+			ToLower( strType );
 			
 			if ( strType == _T("system") )
 				m_nAvailability = saSystem;
@@ -488,8 +486,7 @@ void CSchema::LoadDescriptorTypeFilter(CXMLElement* pElement)
 		if ( pType->GetName().CompareNoCase( _T("type") ) == 0 )
 		{
 			CString strType = pType->GetAttributeValue( _T("extension"), _T("") );
-			CharLower( strType.GetBuffer() );
-			strType.ReleaseBuffer();
+			ToLower( strType );
 
 			m_sTypeFilter += _T("|.");
 			m_sTypeFilter += strType;

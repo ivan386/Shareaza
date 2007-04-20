@@ -303,8 +303,7 @@ BOOL CChatFrame::IsInRange(LPCTSTR pszToken)
 	if ( nStart <= 0 ) return FALSE;
 	if ( nStart < strRange.GetLength() ) strRange = strRange.Left( nStart );
 	
-	CharLower( strRange.GetBuffer() );
-	strRange.ReleaseBuffer();
+	ToLower( strRange );
 	strRange.MakeReverse();
 	strToken.Format( _T("]%s["), pszToken );
 	nStart = strRange.Find( strToken );
@@ -390,8 +389,7 @@ void CChatFrame::OnLocalText(LPCTSTR pszText)
 	if ( *pszText == '/' )
 	{
 		CString strCommand = CString( pszText ).SpanExcluding( _T(" \t") );
-		CharLower( strCommand.GetBuffer() );
-		strCommand.ReleaseBuffer();
+		ToLower( strCommand );
 		
 		if ( strCommand == _T("/me") )
 		{

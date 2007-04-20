@@ -367,8 +367,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			if ( hBitmap == NULL ) return FALSE;
 			
 			str = pGroup->GetAttributeValue( _T("type") );
-			CharLower( str.GetBuffer() );
-			str.ReleaseBuffer();
+			ToLower( str );
 			
 			if ( str == _T("watermark") || str == _T("water") )
 			{

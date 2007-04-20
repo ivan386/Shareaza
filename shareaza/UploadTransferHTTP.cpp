@@ -217,8 +217,8 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Accept") ) == 0 )
 	{
-		CharLower( strValue.GetBuffer() );
-		strValue.ReleaseBuffer();
+		ToLower( strValue );
+
 		if ( strValue.Find( _T("application/x-gnutella-packets") ) >= 0 ) m_bHostBrowse = 1;
 		if ( strValue.Find( _T("application/x-gnutella2") ) >= 0 ) m_bHostBrowse = 2;
 		if ( strValue.Find( _T("application/x-shareaza") ) >= 0 ) m_bHostBrowse = 2;

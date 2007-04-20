@@ -535,9 +535,8 @@ void CDownloadMonitorDlg::OnDownloadLaunch()
 	CLSID pCLSID;
 	
 	int nExtPos = strName.ReverseFind( '.' );
-	if ( nExtPos > 0 ) strType = strName.Mid( nExtPos );
-	CharLower( strType.GetBuffer() );
-	strType.ReleaseBuffer();
+	if ( nExtPos != -1 ) strType = strName.Mid( nExtPos );
+	ToLower( strType );
 	
 	if ( bCompleted || ! Plugins.LookupCLSID( _T("DownloadPreview"), strType, pCLSID ) )
 	{

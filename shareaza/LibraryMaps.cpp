@@ -120,12 +120,14 @@ CLibraryFile* CLibraryMaps::LookupFile(DWORD nIndex, BOOL bSharedOnly, BOOL bAva
 
 CLibraryFile* CLibraryMaps::LookupFileByName(LPCTSTR pszName, BOOL bSharedOnly, BOOL bAvailableOnly)
 {
+	ASSERT_VALID( this );
+	ASSERT( pszName && *pszName );
+
 	CLibraryFile* pFile = NULL;
 	CString strName( pszName );
+	ToLower( strName );
 	
 	CQuickLock oLock( Library.m_pSection );
-	CharLower( strName.GetBuffer() );
-	strName.ReleaseBuffer();
 	
 	if ( m_pNameMap.Lookup( strName, pFile ) && ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
 	{
@@ -137,11 +139,16 @@ CLibraryFile* CLibraryMaps::LookupFileByName(LPCTSTR pszName, BOOL bSharedOnly, 
 
 CLibraryFile* CLibraryMaps::LookupFileByPath(LPCTSTR pszPath, BOOL bSharedOnly, BOOL bAvailableOnly)
 {
+	ASSERT_VALID( this );
+	ASSERT( pszPath && *pszPath );
+
 	CLibraryFile* pFile = NULL;
+	CString strPath( pszPath );
+	ToLower( strPath );
 	
 	CQuickLock oLock( Library.m_pSection );
 	
-	if ( m_pPathMap.Lookup( pszPath, pFile ) && ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
+	if ( m_pPathMap.Lookup( strPath, pFile ) && ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
 	{
 		return pFile;
 	}
@@ -154,7 +161,10 @@ CLibraryFile* CLibraryMaps::LookupFileByPath(LPCTSTR pszPath, BOOL bSharedOnly, 
 
 CLibraryFile* CLibraryMaps::LookupFileByURN(LPCTSTR pszURN, BOOL bSharedOnly, BOOL /*bAvailableOnly*/)
 {
-	CLibraryFile* pFile;
+	ASSERT_VALID( this );
+	ASSERT( pszURN && *pszURN );
+
+	CLibraryFile* pFile = NULL;
     Hashes::TigerHash oTiger;
     Hashes::Sha1Hash oSHA1;
     Hashes::Ed2kHash oED2K;
@@ -268,6 +278,15 @@ void CLibraryMaps::Clear()
 	ASSERT( m_pIndexMap.GetCount() == 0 );
 	ASSERT( m_pNameMap.GetCount() == 0 );
 	ASSERT( m_pPathMap.GetCount() == 0 );
+#ifdef _DEBUG
+	for ( POSITION p = m_pPathMap.GetStartPosition() ; p ; )
+	{
+		CString k;
+		CLibraryFile* v;
+		m_pPathMap.GetNextAssoc( p, k, v );
+		TRACE ( _T("m_pPathMap lost : %ls = 0x%08x\n"), (LPCTSTR)k, v );
+	}
+#endif
 	
 	ZeroMemory( m_pSHA1Map, HASH_SIZE * sizeof *m_pSHA1Map );
 	ZeroMemory( m_pTigerMap, HASH_SIZE * sizeof *m_pTigerMap );
@@ -327,7 +346,9 @@ void CLibraryMaps::OnFileAdd(CLibraryFile* pFile)
 	
 	if ( pFile->m_pFolder != NULL )
 	{
-		m_pPathMap.SetAt( pFile->GetPath(), pFile );
+		CString strPath( pFile->GetPath() );
+		ToLower( strPath );
+		m_pPathMap.SetAt( strPath, pFile );
 	}
 	else if ( m_pDeleted.Find( pFile ) == NULL )
 	{
@@ -384,8 +405,10 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 	
 	if ( pFile->m_pFolder != NULL )
 	{
-		pOld = LookupFileByPath( pFile->GetPath() );
-		if ( pOld == pFile ) m_pPathMap.RemoveKey( pFile->GetPath() );
+		CString strPath( pFile->GetPath() );
+		ToLower( strPath );
+		pOld = LookupFileByPath( strPath );
+		if ( pOld == pFile ) m_pPathMap.RemoveKey( strPath );
 	}
 	
 	if ( POSITION pos = m_pDeleted.Find( pFile ) )

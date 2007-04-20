@@ -344,9 +344,8 @@ BOOL CFilePreviewDlg::RunPlugin(HANDLE hFile)
 	CString strType;
 	
 	int nExtPos = m_sTargetName.ReverseFind( '.' );
-	if ( nExtPos > 0 ) strType = m_sTargetName.Mid( nExtPos );
-	CharLower( strType.GetBuffer() );
-	strType.ReleaseBuffer();
+	if ( nExtPos != -1 ) strType = m_sTargetName.Mid( nExtPos );
+	ToLower( strType );
 	
 	if ( ! LoadPlugin( strType ) ) return FALSE;
 	

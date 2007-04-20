@@ -1242,11 +1242,10 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 	if ( m_sName.GetLength() )
 	{
 		int nExtPos = m_sName.ReverseFind( '.' );
-		if ( nExtPos > 0 ) 
+		if ( nExtPos != -1 ) 
 		{
 			strType = m_sName.Mid( nExtPos );
-			CharLower( strType.GetBuffer() );
-			strType.ReleaseBuffer();
+			ToLower( strType );
 		}
 	}
 	else
@@ -1641,14 +1640,8 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar << m_bChat;
 		ar << m_bBrowseHost;
 		
-//		ar << m_bSHA1;
-//		if ( m_bSHA1 ) ar.Write( &m_pSHA1, sizeof(SHA1) );
         SerializeOut( ar, m_oSHA1 );
-//		ar << m_bTiger;
-//		if ( m_bTiger ) ar.Write( &m_pTiger, sizeof(TIGEROOT) );
         SerializeOut( ar, m_oTiger );
-//		ar << m_bED2K;
-//		if ( m_bED2K ) ar.Write( &m_pED2K, sizeof(MD4) );
         SerializeOut( ar, m_oED2K );
 
 		ar << m_sURL;
@@ -1698,14 +1691,8 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar >> m_bChat;
 		ar >> m_bBrowseHost;
 
-//		ar >> m_bSHA1;
-//		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
         SerializeIn( ar, m_oSHA1, nVersion );
-//		ar >> m_bTiger;
-//		if ( m_bTiger ) ar.Read( &m_pTiger, sizeof(TIGEROOT) );
         SerializeIn( ar, m_oTiger, nVersion );
-//		ar >> m_bED2K;
-//		if ( m_bED2K ) ar.Read( &m_pED2K, sizeof(MD4) );
         SerializeIn( ar, m_oED2K, nVersion );
 
 		ar >> m_sURL;

@@ -197,24 +197,20 @@ void CWizardSharePage::OnShareAdd()
 	pMalloc->Free( pPath );
 
 	CString strPathLC( szPath );
-	CharLower( strPathLC.GetBuffer() );
-	strPathLC.ReleaseBuffer();
+	ToLower( strPathLC );
 
 	//Get system paths (to compare)
 	CString strWindowsLC( GetWindowsFolder() ), strProgramsLC( GetProgramFilesFolder() );
 
 	//Get various shareaza paths (to compare)
 	CString strIncompletePathLC = Settings.Downloads.IncompletePath;
-	CharLower( strIncompletePathLC.GetBuffer() );
-	strIncompletePathLC.ReleaseBuffer();
+	ToLower( strIncompletePathLC );
 
 	CString strGeneralPathLC = Settings.General.Path;
-	CharLower( strGeneralPathLC.GetBuffer() );
-	strGeneralPathLC.ReleaseBuffer();
+	ToLower( strGeneralPathLC );
 
 	CString strUserPathLC = Settings.General.UserPath;
-	CharLower( strUserPathLC.GetBuffer() );
-	strUserPathLC.ReleaseBuffer();
+	ToLower( strUserPathLC );
 
 
 	//Check shared path isn't invalid
@@ -238,8 +234,7 @@ void CWizardSharePage::OnShareAdd()
 	{
 		BOOL bSubFolder = FALSE;
 		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
-		CharLower( strOldLC.GetBuffer() );
-		strOldLC.ReleaseBuffer();
+		ToLower( strOldLC );
 
 		if ( strPathLC == strOldLC )
 		{

@@ -130,8 +130,7 @@ void CShareManagerDlg::OnShareAdd()
 	pMalloc->Free( pPath );
 
 	CString strPathLC( szPath );
-	CharLower( strPathLC.GetBuffer() );
-	strPathLC.ReleaseBuffer();
+	ToLower( strPathLC );
 
 	//Check shared path isn't invalid
 	if ( !LibraryFolders.IsShareable( strPathLC ) )
@@ -146,8 +145,7 @@ void CShareManagerDlg::OnShareAdd()
 	{
 		BOOL bSubFolder = FALSE;
 		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
-		CharLower( strOldLC.GetBuffer() );
-		strOldLC.ReleaseBuffer();
+		ToLower( strOldLC );
 
 		if ( strPathLC == strOldLC )
 		{

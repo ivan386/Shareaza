@@ -576,8 +576,7 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 		if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ), FALSE, TRUE ) )
 		{
 			CString strExtension = pFile->m_sName.Right(3);
-			CharLower( strExtension.GetBuffer() );
-			strExtension.ReleaseBuffer();
+			ToLower( strExtension );
 
 			BOOL bXmlPossiblyModified = FALSE;
 			if ( !pFile->m_bMetadataAuto )
@@ -625,8 +624,7 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 	for ( CLibraryFile* pFile = GetNextSelectedFile(); pFile; pFile = GetNextSelectedFile() )
 	{
 		CString strExtension = pFile->m_sName.Right(3);
-		CharLower( strExtension.GetBuffer() );
-		strExtension.ReleaseBuffer();
+		ToLower( strExtension );
 
 		if ( strExtension == _T("mp3") || strExtension == _T("pdf") ||
 			 strExtension == _T("mpc") || strExtension == _T("mpp") ||

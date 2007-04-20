@@ -112,8 +112,7 @@ void CDownloadTask::Construct(CDownload* pDownload)
 	if ( nExt >= 2 )
 	{
 		CString sExtention = strLocalName.Mid( nExt );
-		CharLower( sExtention.GetBuffer() );
-		sExtention.ReleaseBuffer();
+		ToLower( sExtention );
 
 		if ( ( sExtention == ".collection" ) || ( sExtention == ".co" ) )
 		{
