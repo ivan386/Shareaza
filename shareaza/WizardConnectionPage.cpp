@@ -232,7 +232,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	Settings.Connection.OutSpeed = nUploadSpeed;
 
 	// Set upload limit to 90% of capacity, trimmed down to the nearest KB. (Usually works out at ~85% total)
-	Settings.Bandwidth.Uploads = (DWORD)( Settings.Connection.OutSpeed * Settings.Uploads.FreeBandwidthFactor / 100 );
+	Settings.Bandwidth.Uploads = (DWORD)( Settings.Connection.OutSpeed * (100 - Settings.Uploads.FreeBandwidthFactor) / 100 );
 	Settings.Bandwidth.Uploads >>= 3;
 	Settings.Bandwidth.Uploads *= 1024;
 
