@@ -456,7 +456,7 @@ public:
 		bool bSigma = false;
 		for ( int i = -nLength; i; ++i ) 
 		{
-			if ( str[ -1 ] == 0x3c3 ) 
+			if ( str[ -1 ] == 0x3a3 )
 			{
 				bSigma = true;
 				break;
