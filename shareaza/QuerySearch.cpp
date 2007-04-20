@@ -1223,11 +1223,8 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 	m_oNegWords.clear();
 
 	m_sSearch.Trim();
-	ToLower( m_sSearch );
 
-	// temporarily solution for last greek sigma fix
-	// the phrase can contain punctuation marks and it won't work
-	Replace( m_sSearch, _T("\x03C3 "), _T("\x03C2 ") ); 
+	ToLower( m_sSearch );
 
 	if ( m_sKeywords.IsEmpty() )
 		m_sKeywords = m_sSearch;
@@ -1474,10 +1471,6 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 			str.Append( L" " );
 	}
 	str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
-
-	// Greek last sigma fix
-	str += L" ";
-	Replace( str, _T("\x03C3 "), _T("\x03C2 ") ); 
 
 	strPhrase = str.TrimLeft().TrimRight( L" -" );
 	return;

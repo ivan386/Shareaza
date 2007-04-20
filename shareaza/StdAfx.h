@@ -413,6 +413,8 @@ private:
 	CGuarded* operator&() const; // too unsafe
 };
 
+#include "RegExp\regexpr2.h"
+
 class CLowerCaseTable
 {
 public:
@@ -450,9 +452,32 @@ public:
 	{
 		const int nLength = strSource.GetLength();
 		const LPTSTR str = strSource.GetBuffer() + nLength;
+
+		bool bSigma = false;
+		for ( int i = -nLength; i; ++i ) 
+		{
+			if ( str[ -1 ] == 0x3c3 ) 
+			{
+				bSigma = true;
+				break;
+			}
+		}
+
+		if ( bSigma )
+		{
+			// Lowercase greek final sigmas first (word endings)
+			const regex::rpattern regExpPattern( _T("(\\w+)\x3a3(\\W|$)"), _T("$1\x3c2$2"), 
+				regex::GLOBAL|regex::MULTILINE|regex::NOBACKREFS, regex::MODE_SAFE );
+			regex::subst_results results;
+			std::wstring strTemp( strSource, nLength );
+			regExpPattern.substitute( strTemp, results );
+			strSource.SetString( strTemp.c_str(), nLength );
+		}
+		
+		// Lowercase now everything. Not final sigmas are taken from the table
 		for ( int i = -nLength; i; ++i ) str[ i ] = ( *this )( str[ i ] );
-		if ( str[ -1 ] == 0x3c3 ) str[ -1 ] = 0x3c2; // last greek sigma fix
 		strSource.ReleaseBuffer( nLength );
+
 		return strSource;
 	}
 	inline const TCHAR& operator[](const TCHAR cLookup) const { return ( *this )( cLookup ); }
