@@ -74,11 +74,11 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 
 	*ppImage = NULL;
 
-	ATLTRACE (L"Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
+	ATLTRACE (L"LoadFromFile Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
 		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : ""),
+		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : "\0"),
+		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : "\0"),
+		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : "\0"),
 		pParams->nComponents, pParams->nQuality);
 
 	GFL_BITMAP* hGflBitmap = NULL;
@@ -149,9 +149,9 @@ STDMETHODIMP CGFLReader::LoadFromMemory (
 	
 	ATLTRACE (L"LoadFromMemory Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
 		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : ""),
+		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : "\0"),
+		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : "\0"),
+		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : "\0"),
 		pParams->nComponents, pParams->nQuality);
 
 	GFL_BITMAP* hGflBitmap = NULL;
@@ -219,11 +219,11 @@ STDMETHODIMP CGFLReader::SaveToFile (
 		return E_POINTER;
 	}
 	
-	ATLTRACE (L"Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
+	ATLTRACE (L"SaveToFile Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
 		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : ""),
+		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : "\0"),
+		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : "\0"),
+		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : "\0"),
 		pParams->nComponents, pParams->nQuality);
 
 	CString ext (sFile);
@@ -277,9 +277,9 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 	
 	ATLTRACE (L"Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
 		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : ""),
+		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : "\0"),
+		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : "\0"),
+		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : "\0"),
 		pParams->nComponents, pParams->nQuality);
 
 	CString ext (sType);
