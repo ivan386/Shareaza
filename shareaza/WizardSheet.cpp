@@ -139,23 +139,23 @@ BOOL CWizardSheet::OnInitDialog()
 	}
 	*/
 
-	GetDlgItem( 0x3023 )->GetWindowRect( &rc );
+	GetDlgItem( ID_WIZBACK )->GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.OffsetRect( 95 + 6 - rc.left, 0 );
-	GetDlgItem( 0x3023 )->MoveWindow( &rc );
+	GetDlgItem( ID_WIZBACK )->MoveWindow( &rc );
 
-	GetDlgItem( 0x3024 )->GetWindowRect( &rc );
+	GetDlgItem( ID_WIZNEXT )->GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.OffsetRect( 95 + 88 - rc.left, 0 );
-	GetDlgItem( 0x3024 )->MoveWindow( &rc );
-	GetDlgItem( 0x3025 )->MoveWindow( &rc );
+	GetDlgItem( ID_WIZNEXT )->MoveWindow( &rc );
+	GetDlgItem( ID_WIZFINISH )->MoveWindow( &rc );
 
 	LoadString( strMessage, IDS_GENERAL_BACK );
-	if ( GetDlgItem( 0x3023 ) )
-		GetDlgItem( 0x3023 )->SetWindowText( L"< " + strMessage );
+	if ( GetDlgItem( ID_WIZBACK ) )
+		GetDlgItem( ID_WIZBACK )->SetWindowText( L"< " + strMessage );
 	LoadString( strMessage, IDS_GENERAL_NEXT );
-	if ( GetDlgItem( 0x3024 ) )
-		GetDlgItem( 0x3024 )->SetWindowText( strMessage + L" >" );
+	if ( GetDlgItem( ID_WIZNEXT ) )
+		GetDlgItem( ID_WIZNEXT )->SetWindowText( strMessage + L" >" );
 
 	GetDlgItem( 2 )->GetWindowRect( &rc );
 	ScreenToClient( &rc );

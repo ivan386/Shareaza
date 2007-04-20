@@ -272,10 +272,10 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 
 	// Disable all navigation buttons while the thread is running
 	CWizardSheet* pSheet = GetSheet();
-	if ( pSheet->GetDlgItem( 0x3023 ) )
-		pSheet->GetDlgItem( 0x3023 )->EnableWindow( FALSE );
-	if ( pSheet->GetDlgItem( 0x3024 ) )
-		pSheet->GetDlgItem( 0x3024 )->EnableWindow( FALSE );
+	if ( pSheet->GetDlgItem( ID_WIZBACK ) )
+		pSheet->GetDlgItem( ID_WIZBACK )->EnableWindow( FALSE );
+	if ( pSheet->GetDlgItem( ID_WIZNEXT ) )
+		pSheet->GetDlgItem( ID_WIZNEXT )->EnableWindow( FALSE );
 	if ( pSheet->GetDlgItem( 2 ) )
 		pSheet->GetDlgItem( 2 )->EnableWindow( FALSE );
 	return -1; // don't move to the next page; the thread will do this work
@@ -352,10 +352,10 @@ void CWizardConnectionPage::OnRun()
 	}
 
 	CWizardSheet* pSheet = GetSheet();
-	if ( pSheet->GetDlgItem( 0x3023 ) )
-		pSheet->GetDlgItem( 0x3023 )->EnableWindow();
-	if ( pSheet->GetDlgItem( 0x3024 ) )
-		pSheet->GetDlgItem( 0x3024 )->EnableWindow();
+	if ( pSheet->GetDlgItem( ID_WIZBACK ) )
+		pSheet->GetDlgItem( ID_WIZBACK )->EnableWindow();
+	if ( pSheet->GetDlgItem( ID_WIZNEXT ) )
+		pSheet->GetDlgItem( ID_WIZNEXT )->EnableWindow();
 	if ( pSheet->GetDlgItem( 2 ) )
 		pSheet->GetDlgItem( 2 )->EnableWindow();
 
