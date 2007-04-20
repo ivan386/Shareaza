@@ -370,8 +370,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 					if ( pFolder->m_sName != pFind.cFileName )
 					{
 						CString strNameLC( pFolder->m_sName );
-						CharLower( strNameLC.GetBuffer() );
-						strNameLC.ReleaseBuffer();
+						ToLower( strNameLC );
 
 						pLock.Lock();
 						m_pFolders.RemoveKey( strNameLC );

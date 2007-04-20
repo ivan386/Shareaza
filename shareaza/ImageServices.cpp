@@ -295,10 +295,9 @@ BOOL CImageServices::IsFileViewable(LPCTSTR pszPath)
 	CString strType = pszPath;
 	
 	int nExtPos = strType.ReverseFind( '.' );
-	if ( nExtPos > 0 ) strType = strType.Mid( nExtPos );
+	if ( nExtPos != -1 ) strType = strType.Mid( nExtPos );
 	
-	CharLower( strType.GetBuffer() );
-	strType.ReleaseBuffer();
+	ToLower( strType );
 
 	if ( strType.GetLength() )
 	{
