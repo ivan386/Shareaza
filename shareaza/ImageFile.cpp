@@ -42,14 +42,14 @@ IMPLEMENT_DYNAMIC(CImageFile, CComObject)
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile construction
 
-CImageFile::CImageFile()
+CImageFile::CImageFile() :
+	m_bScanned( FALSE ),
+	m_nWidth( 0 ),
+	m_nHeight( 0 ),
+	m_nComponents( 0 ),
+	m_bLoaded( FALSE ),
+	m_pImage( NULL )
 {
-	m_bScanned		= FALSE;
-	m_nWidth		= 0;
-	m_nHeight		= 0;
-	m_nComponents	= 0;
-	m_bLoaded		= FALSE;
-	m_pImage		= NULL;
 }
 
 CImageFile::~CImageFile()
@@ -62,7 +62,7 @@ CImageFile::~CImageFile()
 
 void CImageFile::Clear()
 {
-	if ( m_bLoaded ) delete [] m_pImage;
+	delete [] m_pImage;
 
 	m_bScanned		= FALSE;
 	m_nWidth		= 0;
@@ -152,7 +152,7 @@ BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality)
 {
 	if ( ! m_bLoaded ) return FALSE;
 
-	HANDLE hFile = CreateFile( pszFile, GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE,
+	HANDLE hFile = CreateFile( pszFile, GENERIC_WRITE, 0,
 		NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL );
 
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
