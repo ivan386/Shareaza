@@ -117,7 +117,10 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	//theApp.Message( MSG_DEBUG, _T("Sending announce") );
 
 	if ( BTClients.Add( this ) )
+	{
 		CreateThread();
+		SetThreadName( m_nThreadID, "BT Tracker Request" );
+	}
 }
 
 CBTTrackerRequest::~CBTTrackerRequest()

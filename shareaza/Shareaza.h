@@ -166,6 +166,7 @@ int		AddIcon(HICON hIcon, CImageList& gdiImageList);
 HICON	CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal = TRUE);
 HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 
+inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName);
 HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 	LPVOID pParam, int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
 	DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);

@@ -67,6 +67,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
 {
 	Construct( pDownload );
 	SetThreadPriority( THREAD_PRIORITY_BELOW_NORMAL );
+	SetThreadName( m_nThreadID, "Download Task 1" );
 }
 
 CDownloadTask::CDownloadTask(CDownload* pDownload, const CString& strPreviewURL)
@@ -82,6 +83,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, const CString& strPreviewURL)
 	m_pRequest.LimitContentLength( Settings.Search.MaxPreviewLength );
 	Construct( pDownload );
 	SetThreadPriority( THREAD_PRIORITY_NORMAL );
+	SetThreadName( m_nThreadID, "Download Task 2" );
 }
 
 CDownloadTask::CDownloadTask(CDownload* pDownload, HANDLE hSelectedFile)
@@ -94,6 +96,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, HANDLE hSelectedFile)
 {
 	Construct( pDownload );
 	SetThreadPriority( THREAD_PRIORITY_NORMAL );
+	SetThreadName( m_nThreadID, "Download Task 3" );
 }
 
 void CDownloadTask::Construct(CDownload* pDownload)

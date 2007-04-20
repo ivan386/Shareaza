@@ -1484,7 +1484,7 @@ HBITMAP CreateMirroredBitmap(HBITMAP hbmOrig)
 	return hbm;
 }
 
-inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
+void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
 {
 #ifndef NDEBUG
 	struct

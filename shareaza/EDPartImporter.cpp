@@ -81,6 +81,7 @@ void CEDPartImporter::Start(CEdit* pCtrl)
 	ASSERT( pCtrl != NULL );
 	m_pTextCtrl = pCtrl;
 	CreateThread();
+	SetThreadName( m_nThreadID, "ED Part Importer" );
 }
 
 void CEDPartImporter::Stop()
