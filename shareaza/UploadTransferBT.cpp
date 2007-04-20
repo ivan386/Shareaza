@@ -302,12 +302,12 @@ BOOL CUploadTransferBT::ServeRequests()
 		
 		if ( ! m_pDiskFile->Read( m_nOffset + m_nPosition, &pHeader[1], m_nLength, &m_nLength ) ) return FALSE;
 
-		pHeader->nLength	= SWAP_LONG( 1 + 8 + (DWORD)m_nLength );
+		pHeader->nLength	= swapEndianess( 1 + 8 + (DWORD)m_nLength );
 		pHeader->nType		= BT_PACKET_PIECE;
 		pHeader->nPiece		= (DWORD)( m_nOffset / m_pDownload->m_pTorrent.m_nBlockSize );
 		pHeader->nOffset	= (DWORD)( m_nOffset % m_pDownload->m_pTorrent.m_nBlockSize );
-		pHeader->nPiece		= SWAP_LONG( pHeader->nPiece );
-		pHeader->nOffset	= SWAP_LONG( pHeader->nOffset );
+		pHeader->nPiece		= swapEndianess( pHeader->nPiece );
+		pHeader->nOffset	= swapEndianess( pHeader->nOffset );
 		
 		pBuffer->m_nLength += sizeof(BT_PIECE_HEADER) + (DWORD)m_nLength;
 		m_pClient->Send( NULL );

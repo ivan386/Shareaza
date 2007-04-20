@@ -30,7 +30,6 @@
 #include "Schema.h"
 #include "XML.h"
 #include "ID3.h"
-#include "Packet.h"
 #include "CollectionFile.h"
 #include <MsiDefs.h>
 
@@ -286,7 +285,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2(HANDLE hFile)
 	if ( pHeader.nFlags & ~ID3V2_KNOWNMASK ) return FALSE;
 	if ( pHeader.nFlags & ID3V2_UNSYNCHRONISED ) return FALSE;
 	
-	DWORD nBuffer = SWAP_LONG( pHeader.nSize );
+	DWORD nBuffer = swapEndianess( pHeader.nSize );
 	ID3_DESYNC_SIZE( nBuffer );
 	
 	if ( nBuffer > 1024 * 1024 * 2 ) return FALSE;
@@ -313,7 +312,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2(HANDLE hFile)
 		pBuffer += sizeof(ID3V2_EXTENDED_HEADER_1);
 		nBuffer -= sizeof(ID3V2_EXTENDED_HEADER_1);
 		
-		pExtended->nSize = SWAP_LONG( pExtended->nSize );
+		pExtended->nSize = swapEndianess( pExtended->nSize );
 		
 		if ( nBuffer < pExtended->nSize )
 		{
@@ -336,7 +335,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2(HANDLE hFile)
 		pBuffer += sizeof(ID3V2_EXTENDED_HEADER_2);
 		nBuffer -= sizeof(ID3V2_EXTENDED_HEADER_2);
 		
-		pExtended->nSize = SWAP_LONG( pExtended->nSize );
+		pExtended->nSize = swapEndianess( pExtended->nSize );
 		ID3_DESYNC_SIZE( pExtended->nSize );
 		pExtended->nSize -= 6;
 		
@@ -372,8 +371,9 @@ BOOL CLibraryBuilderInternals::ReadID3v2(HANDLE hFile)
 			szFrameTag[3] = pFrame->szID[3];
 			szFrameTag[4] = 0;
 			
-			nFrameSize = SWAP_LONG( pFrame->nSize );
+			nFrameSize = swapEndianess( pFrame->nSize );
 //			DWORD nOldFramesize = nFrameSize;
+
 			if ( pHeader.nMajorVersion >= 4 && ! bBugInFrameSize )
 			{
 				ID3_DESYNC_SIZE( nFrameSize );
@@ -754,7 +754,7 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 	DWORD nRead;
 	ReadFile( hFile, &nHeader, 4, &nRead, NULL );
 	if ( nRead != 4 ) return FALSE;
-	nHeader = SWAP_LONG( nHeader );
+	nHeader = swapEndianess( nHeader );
 
 	for ( DWORD nSeek = 0 ; bVariable || ( nFrameCount < 16 && nSeek < 4096 * 2  ) ; nSeek++ )
 	{
@@ -840,7 +840,7 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 			SetFilePointer( hFile, nFrameSize - 4, NULL, FILE_CURRENT );
 			ReadFile( hFile, &nHeader, 4, &nRead, NULL );
 			if ( nRead != 4 ) break;
-			nHeader = SWAP_LONG( nHeader );
+			nHeader = swapEndianess( nHeader );
 		}
 		else
 		{
@@ -1259,7 +1259,8 @@ BOOL CLibraryBuilderInternals::ReadPNG(HANDLE hFile)
 	
 	DWORD nLength, nIHDR;
 	
-	ReadFile( hFile, &nLength, 4, &nRead, NULL ); nLength = SWAP_LONG( nLength );
+	ReadFile( hFile, &nLength, 4, &nRead, NULL );
+	nLength = swapEndianess( nLength );
 	if ( nRead != 4 || nLength < 10 ) return FALSE;
 	ReadFile( hFile, &nIHDR, 4, &nRead, NULL );
 	if ( nRead != 4 || nIHDR != 'RDHI' ) return FALSE;
@@ -1267,9 +1268,11 @@ BOOL CLibraryBuilderInternals::ReadPNG(HANDLE hFile)
 	DWORD nWidth, nHeight;
 	BYTE nBits, nColors;
 
-	ReadFile( hFile, &nWidth, 4, &nRead, NULL );  nWidth = SWAP_LONG( nWidth );
+	ReadFile( hFile, &nWidth, 4, &nRead, NULL );
+	nWidth = swapEndianess( nWidth );
 	if ( nRead != 4 || nWidth <= 0 || nWidth > 0xFFFF ) return FALSE;
-	ReadFile( hFile, &nHeight, 4, &nRead, NULL ); nHeight = SWAP_LONG( nHeight );
+	ReadFile( hFile, &nHeight, 4, &nRead, NULL );
+	nHeight = swapEndianess( nHeight );
 	if ( nRead != 4 || nHeight <= 0 || nHeight > 0xFFFF ) return FALSE;
 
 	ReadFile( hFile, &nBits, 1, &nRead, NULL );

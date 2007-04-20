@@ -27,7 +27,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Buffer.h"
-#include "Packet.h"
 #include "ZLib.h"
 #include "Statistics.h"
 
@@ -670,8 +669,8 @@ void CBuffer::ReverseBuffer(const void* pInput, void* pOutput, size_t nLength)
 		// Move pInputWords back 4 bytes, then copy the 4 bytes there into nTemp, the fast machine register DWORD
 		nTemp = *--pInputWords;
 
-		// Have SWAP_LONG reverse the order of the 4 bytes, copy them under pOutputWords, and then move that pointer 4 bytes forward
-		*pOutputWords++ = SWAP_LONG( nTemp ); // If nTemp is "ABCD", SWAP_LONG( nTemp ) will be "DCBA", bit order is not changed
+		// Reverse the order of the 4 bytes, copy them under pOutputWords, and then move that pointer 4 bytes forward
+		*pOutputWords++ = swapEndianess( nTemp );
 
 		// We've just reverse 4 bytes, subtract the length to reflect this
 		nLength -= 4;

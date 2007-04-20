@@ -59,7 +59,7 @@ void CBTPacket::ToBuffer(CBuffer* pBuffer) const
 	}
 	else
 	{
-		DWORD nLength = SWAP_LONG( m_nLength + 1 );
+		DWORD nLength = swapEndianess( m_nLength + 1 );
 		pBuffer->Add( &nLength, 4 );
 		pBuffer->Add( &m_nType, 1 );
 		pBuffer->Add( m_pBuffer, m_nLength );

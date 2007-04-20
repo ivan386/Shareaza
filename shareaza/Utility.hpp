@@ -122,7 +122,6 @@ template<> struct SwapEndianess< uint16 >
 {
 	uint16 operator()(uint16 value) const
 	{
-//		return ( value << 8 ) | ( value >> 8 );
 		return _byteswap_ushort( value );
 	}
 };

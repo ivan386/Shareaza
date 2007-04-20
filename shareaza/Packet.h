@@ -29,15 +29,6 @@
 // Only include the lines beneath this one once
 #pragma once
 
-// Reverses the order of 2 bytes, like "12" to "21"
-#define SWAP_SHORT(x) ( ( ( (x) & 0xFF00 ) >> 8 ) + ( ( (x) & 0x00FF ) << 8 ) )
-
-// Reverses the order of 4 bytes, like "1234" to "4321"
-#define SWAP_LONG(x) ( ( ( (x) & 0xFF000000 ) >> 24 ) + ( ( (x) & 0x00FF0000 ) >> 8 ) + ( ( (x) & 0x0000FF00 ) << 8 ) + ( ( (x) & 0x000000FF ) << 24 ) )
-
-// Reverses the order of 8 bytes, like "12345678" to "87654321"
-#define SWAP_64(x) ( ( SWAP_LONG( (x) & 0xFFFFFFFF ) << 32 ) | SWAP_LONG( (x) >> 32 ) )
-
 // When the allocated block of memory needs to be bigger, make it 128 bytes bigger
 const uchar PACKET_GROW = 128u;
 
@@ -241,7 +232,7 @@ public:
 		m_nPosition += 2;                                  // Move the position beyond it
 
 		// If the packet is in big endian, reverse the order of the 2 bytes before returning them in a word
-		return m_bBigEndian ? SWAP_SHORT( nValue ) : nValue;
+		return m_bBigEndian ? swapEndianess( nValue ) : nValue;
 	}
 
 	// Read the next 4 bytes in the packet, moving the position beyond them
@@ -271,7 +262,7 @@ public:
 		m_nPosition += 4;                                    // Move the position beyond it
 
 		// If the packet is in big endian, reverse the order of the 4 bytes before returning them in a DWORD
-		return m_bBigEndian ? SWAP_LONG( nValue ) : nValue;
+		return m_bBigEndian ? swapEndianess( nValue ) : nValue;
 	}
 
 	// Read the next 8 bytes in the packet, moving the position beyond them
@@ -286,7 +277,7 @@ public:
 		m_nPosition += 8;                                    // Move the position beyond it
 
 		// If the packet is in big endian, reverse the order of the 8 bytes before returning them in a QWORD
-		return m_bBigEndian ? SWAP_64( nValue ) : nValue;
+		return m_bBigEndian ? swapEndianess( nValue ) : nValue;
 	}
 
 	// Takes a length of bytes we would like to add to the packet
@@ -395,7 +386,7 @@ public:
 		}
 
 		// Write the 2 bytes as a word at the end of the packet, and record that it is there
-		*(WORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? SWAP_SHORT( nValue ) : nValue; // Reverse their order if necessary
+		*(WORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? swapEndianess( nValue ) : nValue; // Reverse their order if necessary
 		m_nLength += sizeof(nValue);
 	}
 
@@ -425,7 +416,7 @@ public:
 		}
 
 		// Write the 4 bytes as a DWORD at the end of the packet, and record that it is there
-		*(DWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? SWAP_LONG( nValue ) : nValue; // Reverse their order if necessary
+		*(DWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? swapEndianess( nValue ) : nValue; // Reverse their order if necessary
 		m_nLength += sizeof(nValue);
 	}
 
@@ -440,7 +431,7 @@ public:
 		}
 
 		// Write the 8 bytes as a QWORD at the end of the packet, and record that it is there
-		*(QWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? SWAP_64( nValue ) : nValue; // Reverse their order if necessary
+		*(QWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? swapEndianess( nValue ) : nValue; // Reverse their order if necessary
 		m_nLength += sizeof(nValue);
 	}
 

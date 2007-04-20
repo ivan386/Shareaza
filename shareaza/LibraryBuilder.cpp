@@ -31,7 +31,6 @@
 #include "Security.h"
 
 #include "XML.h"
-#include "Packet.h"
 #include "Schema.h"
 #include "SchemaCache.h"
 #include "ID3.h"
@@ -628,7 +627,7 @@ BOOL CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	if ( pHeader.nFlags & ~ID3V2_KNOWNMASK ) return FALSE;
 	if ( pHeader.nFlags & ID3V2_UNSYNCHRONISED ) return FALSE;
 
-	DWORD nTagSize = SWAP_LONG( pHeader.nSize );
+	DWORD nTagSize = swapEndianess( pHeader.nSize );
 	ID3_DESYNC_SIZE( nTagSize );
 
 	if ( pHeader.nFlags & ID3V2_FOOTERPRESENT ) nTagSize += 10;
