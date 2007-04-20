@@ -478,7 +478,7 @@ void CDownloadTask::RunMerge()
 
 	if ( m_pDownload->NeedTigerTree() &&
 		 m_pDownload->NeedHashset() &&
-		! m_pDownload->m_oBTH )
+		! m_pDownload->IsTorrent() )
 	{
 		// No hashsets
 		pLock.Unlock();

@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,6 +72,8 @@ public:
 	void			RemoveUpload(CUploadTransferBT* pUpload);
 	BOOL			SeedTorrent(LPCTSTR pszTarget);
 	inline BOOL		IsSeeding() const { return m_bSeeding; }
+	inline bool		IsTorrent() const { return m_pTorrent.IsAvailable(); }
+	inline bool		IsSingleFileTorrent() const { return IsTorrent() && ( m_pTorrent.m_nFiles == 1 ); }
 	float			GetRatio() const;
 	BOOL			UploadExists(in_addr* pIP) const;
 	BOOL			UploadExists(const Hashes::BtGuid& oGUID) const;

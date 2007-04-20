@@ -151,9 +151,16 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 	
 	ResolveURL();
 
-	if ( m_nProtocol == PROTOCOL_BT && ( pHit->m_nProtocol == PROTOCOL_G1 || pHit->m_nProtocol == PROTOCOL_G2 ) && pHit->m_oBTH )
+	// If we got hit with BitTorrent hash
+	if ( pHit->m_oBTH &&
+	// ... and url now looks like btc://
+		m_nProtocol == PROTOCOL_BT &&
+	// ... but hit was received from G1/G2 search
+		( pHit->m_nProtocol == PROTOCOL_G1 || pHit->m_nProtocol == PROTOCOL_G2 ) &&
+	// ... and download is a single file torrent or isnt a torrent
+		( pDownload->IsSingleFileTorrent() || ! pDownload->IsTorrent() ) )
+	// ... then change (back) hit to G1/G2 protocol
 	{
-		// Dont downgrade protocol from G1/G2 to BitTorrent
 		m_nProtocol = pHit->m_nProtocol;
 
 		m_sURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
@@ -554,9 +561,9 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 			if ( nDelay > 86400000 ) nDelay = 86400000; 
 		}
 	}
-	
+
 	nDelay += GetTickCount();
-	
+
 	// This is not too good because if the source has Uploaded even 1Byte data, Max failure gets set to 40
 	//int nMaxFailures = ( m_bReadContent ? 40 : 3 );
 
@@ -643,7 +650,7 @@ BOOL CDownloadSource::CheckHash(const Hashes::Sha1Hash& oSHA1)
 	}
 	else
 	{
-		if ( m_pDownload->m_pTorrent.IsAvailable() ) return TRUE;
+		if ( m_pDownload->IsTorrent() ) return TRUE;
 		
 		m_pDownload->m_oSHA1 = oSHA1;
 	}
@@ -662,7 +669,7 @@ BOOL CDownloadSource::CheckHash(const Hashes::TigerHash& oTiger)
 	}
 	else
 	{
-		if ( m_pDownload->m_pTorrent.IsAvailable() ) return TRUE;
+		if ( m_pDownload->IsTorrent() ) return TRUE;
 		
 		m_pDownload->m_oTiger = oTiger;
 	}
@@ -681,7 +688,7 @@ BOOL CDownloadSource::CheckHash(const Hashes::Ed2kHash& oED2K)
 	}
 	else
 	{
-		if ( m_pDownload->m_pTorrent.IsAvailable() ) return TRUE;
+		if ( m_pDownload->IsTorrent() ) return TRUE;
 		
 		m_pDownload->m_oED2K = oED2K;
 	}

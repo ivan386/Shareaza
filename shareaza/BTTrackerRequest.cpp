@@ -49,7 +49,7 @@ END_MESSAGE_MAP()
 CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL bProcess, WORD nNumWant)
 {
 	ASSERT( pDownload != NULL );
-	ASSERT( pDownload->m_pTorrent.IsAvailable() ); 
+	ASSERT( pDownload->IsTorrent() ); 
 	
 	m_bAutoDelete	= FALSE;
 	m_pDownload		= pDownload;

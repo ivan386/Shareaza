@@ -963,7 +963,7 @@ void CRemote::PageDownloads()
 		}
 		else if ( nSources > 0 )
 			LoadString( str, IDS_STATUS_PENDING );
-		else if ( pDownload->m_oBTH )
+		else if ( pDownload->IsTorrent() )
 		{
 			if ( pDownload->IsTasking() )
 				LoadString( str, IDS_STATUS_CREATING );

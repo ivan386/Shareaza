@@ -203,7 +203,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	if ( ! CanStartTransfers( tNow ) ) return FALSE;
 	
 	//BitTorrent limiting
-	if ( m_oBTH )
+	if ( static_cast< CDownloadWithTorrent* >( this )->IsTorrent() )
 	{
 		// Max connections
 		if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > Settings.BitTorrent.DownloadConnections ) return FALSE;	
@@ -249,7 +249,8 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 	CDownloadSource* pConnectHead = NULL;
 
 	// If BT preferencing is on, check them first
-	if ( ( m_oBTH ) && ( Settings.BitTorrent.PreferenceBTSources ) )
+	if ( static_cast< CDownloadWithTorrent* >( this )->IsTorrent() &&
+		( Settings.BitTorrent.PreferenceBTSources ) )
 	{
 		for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
 		{

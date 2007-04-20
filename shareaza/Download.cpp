@@ -142,7 +142,7 @@ void CDownload::Resume()
 	m_bTorrentTrackerError	= FALSE;
 	m_nTorrentTrackerErrors = 0;
 
-	if ( m_oBTH )
+	if ( IsTorrent() )
 	{
 		if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents ) 
 			SetStartTimer();
@@ -252,7 +252,7 @@ void CDownload::StopTrying()
 
 	// if m_bTorrentRequested = TRUE, raza sends Stop
 	// CloseTorrent() additionally closes uploads
-	if ( m_oBTH ) CloseTorrent();
+	if ( IsTorrent() ) CloseTorrent();
 
 	CloseTransfers();
 	CloseFile();
@@ -317,7 +317,7 @@ BOOL CDownload::IsTrying() const
 
 BOOL CDownload::IsShared() const
 {
-	return !IsPaused(TRUE) ? m_bShared || ( m_oBTH && ( IsSeeding() || IsStarted() ) ) || ( Settings.eDonkey.EnableToday && m_oED2K ) : m_bShared;
+	return !IsPaused(TRUE) ? m_bShared || ( IsTorrent() && ( IsSeeding() || IsStarted() ) ) || ( Settings.eDonkey.EnableToday && m_oED2K ) : m_bShared;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -343,7 +343,7 @@ void CDownload::OnRun()
 				if (  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 ) )
 				{	//And have had no new data for 5-14 hours	
 
-					if ( m_oBTH )	//If it's a torrent
+					if ( IsTorrent() )	//If it's a torrent
 					{
 						if ( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )
 						{	//If there are other torrents that could start
@@ -417,7 +417,7 @@ void CDownload::OnRun()
 			}
 			if ( Network.IsConnected() )
 			{
-				if ( m_oBTH )
+				if ( IsTorrent() )
 				{	//Torrents only try when 'ready to go'. (Reduce tracker load)
 					if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
 						SetStartTimer();
@@ -538,7 +538,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CANT_MOVE,
 			(LPCTSTR)GetDisplayName(), (LPCTSTR)pTask->m_sPath );
 		
-		if ( m_pTorrent.IsAvailable() )
+		if ( IsTorrent() )
 		{
 			m_bDiskFull = TRUE;
 			return;
@@ -558,7 +558,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 		CloseTransfers();
 		StopSearch();
 	}
-	else if ( m_oBTH ) // Something wrong (?), since we moved the torrent
+	else if ( IsTorrent() ) // Something wrong (?), since we moved the torrent
 	{
 		// Explicitly set the flag to send stop
 		m_bTorrentRequested = TRUE;

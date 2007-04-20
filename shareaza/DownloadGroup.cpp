@@ -111,7 +111,7 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 	{
 		CString strFilter = m_pFilters.GetNext( pos );
 		
-		if ( ( pDownload->m_oBTH && strFilter.CompareNoCase( _T("torrent") ) == 0 ) ||
+		if ( ( pDownload->IsTorrent() && strFilter.CompareNoCase( _T("torrent") ) == 0 ) ||
 				CQuerySearch::WordMatch( pDownload->m_sDisplayName, strFilter ) )
 		{
 			Add( pDownload );

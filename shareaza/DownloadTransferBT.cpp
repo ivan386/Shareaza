@@ -45,7 +45,7 @@ static char THIS_FILE[]=__FILE__;
 
 CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pClient) : CDownloadTransfer( pSource, PROTOCOL_BT )
 {
-	ASSERT( m_pDownload->m_oBTH );
+	ASSERT( m_pDownload->IsTorrent() );
 	ASSERT( m_pDownload->m_nSize != SIZE_UNKNOWN );
 	
 	m_pClient			= pClient;

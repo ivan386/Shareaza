@@ -100,7 +100,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	
 	m_pTorrent.Serialize( ar );
 	
-	if ( ar.IsLoading() && m_pTorrent.IsAvailable() )
+	if ( ar.IsLoading() && IsTorrent() )
 	{
 		m_oBTH = m_pTorrent.m_oBTH;
         m_oBTH.signalTrusted();
@@ -121,7 +121,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 		}
 	}
 
-	if ( nVersion >= 23 && m_pTorrent.IsAvailable() )
+	if ( nVersion >= 23 && IsTorrent() )
 	{
 		if ( ar.IsStoring() )
 		{
@@ -154,7 +154,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 {
 	if ( pTorrent == NULL ) return FALSE;
-	if ( m_pTorrent.IsAvailable() ) return FALSE;
+	if ( IsTorrent() ) return FALSE;
 	if ( ! pTorrent->IsAvailable() ) return FALSE;
 	
 	m_pTorrent.Copy( pTorrent );
@@ -203,7 +203,7 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 
 BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 {
-	if ( ! m_pTorrent.IsAvailable() ) return TRUE;
+	if ( ! IsTorrent() ) return TRUE;
 	if ( m_bDiskFull ) return FALSE;
 	
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000 ) 
@@ -510,7 +510,7 @@ void CDownloadWithTorrent::OnFinishedTorrentBlock(DWORD nBlock)
 
 CBTPacket* CDownloadWithTorrent::CreateBitfieldPacket()
 {
-	ASSERT( m_pTorrent.IsAvailable() );
+	ASSERT( IsTorrent() );
 	
 	CBTPacket* pPacket = CBTPacket::New( BT_PACKET_BITFIELD );
 	int nCount = 0;
@@ -699,7 +699,7 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 {
 	if ( m_pFile != NULL && m_bTorrentRequested )
 	{
-		ASSERT( m_pTorrent.IsAvailable() );
+		ASSERT( IsTorrent() );
 		
 		if ( GetTickCount() - m_tTorrentSources > 15000 )
 		{
@@ -792,7 +792,7 @@ float CDownloadWithTorrent::GetRatio() const
 
 BOOL CDownloadWithTorrent::CheckTorrentRatio() const
 {
-	if ( !m_oBTH ) return TRUE;									// Not a torrent
+	if ( ! IsTorrent() ) return TRUE;									// Not a torrent
 	
 	if ( m_pTorrent.m_nStartDownloads == dtAlways ) return TRUE;// Torrent is set to download as needed
 

@@ -520,7 +520,7 @@ int CLocalSearch::ExecutePartialFiles(INT_PTR /*nMaximum*/)
 			||	validAndEqual( m_pSearch->m_oED2K, pDownload->m_oED2K )
 			||	validAndEqual( m_pSearch->m_oBTH, pDownload->m_oBTH ) )
 		{
-			if ( pDownload->m_oBTH || pDownload->IsStarted() )
+			if ( pDownload->IsTorrent() || pDownload->IsStarted() )
 			{
 				if ( m_pPacket == NULL ) CreatePacketG2();
 				AddHit( pDownload, nCount++ );
@@ -579,9 +579,7 @@ void CLocalSearch::AddHit(CDownload* pDownload, int /*nIndex*/)
 	{
 		nGroup += 5;
 
-		// if ( m_pSearch->m_bBTH && pDownload->m_pTorrent.IsAvailable() && Network.IsListening() )
-		
-		if ( m_pSearch->m_oBTH && pDownload->m_pTorrent.IsAvailable() && Network.m_pHost.sin_addr.S_un.S_addr != 0 )
+		if ( m_pSearch->m_oBTH && pDownload->IsTorrent() && Network.m_pHost.sin_addr.S_un.S_addr != 0 )
 		{
 			strURL.Format( _T("btc://%s:%i/%s/%s/"),
 				(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),

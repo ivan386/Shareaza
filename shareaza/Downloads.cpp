@@ -293,8 +293,8 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
 		(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
 	
-	if ( (  pDownload->m_oBTH && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||
-		 ( !pDownload->m_oBTH && ( GetTryingCount(FALSE) < Settings.Downloads.MaxFiles ) ) )
+	if ( (  pDownload->IsTorrent() && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||
+		 ( !pDownload->IsTorrent() && ( GetTryingCount(FALSE) < Settings.Downloads.MaxFiles ) ) )
 	{
 		pDownload->SetStartTimer();
 		if ( pDownload->GetEffectiveSourceCount() <= 1 ) 
@@ -385,7 +385,7 @@ int CDownloads::GetSeedCount() const
 		
 		if ( pDownload->IsSeeding() )
 			nCount++;		//Manually seeded Torrent
-		else if ( pDownload->IsCompleted() && pDownload->m_oBTH && pDownload->IsFullyVerified() )
+		else if ( pDownload->IsCompleted() && pDownload->IsTorrent() && pDownload->IsFullyVerified() )
 			nCount++;		//Torrent that has completed
 	}
 	
@@ -400,7 +400,7 @@ int CDownloads::GetActiveTorrentCount() const
 	{
 		CDownload* pDownload = GetNext( pos );
 		
-		if ( pDownload->IsDownloading() && pDownload->m_oBTH &&
+		if ( pDownload->IsDownloading() && pDownload->IsTorrent() &&
 			! pDownload->IsSeeding()	&& ! pDownload->IsCompleted() &&
 			! pDownload->IsMoving()		&& ! pDownload->IsPaused() )
 				nCount++;
@@ -449,7 +449,7 @@ int CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
 		
 		if ( ( pDownload->IsTrying() ) && ( ! pDownload->IsCompleted() ) && ( ! pDownload->IsPaused() ) )
 		{
-			if ( ( pDownload->m_oBTH ) || ( ! bTorrentsOnly ) )
+			if ( ( pDownload->IsTorrent() ) || ( ! bTorrentsOnly ) )
 				nCount++;
 		}
 	}

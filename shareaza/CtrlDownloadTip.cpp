@@ -181,7 +181,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		m_bDrawError = FALSE;
 
 
-	if ( pDownload->m_oBTH )
+	if ( pDownload->IsTorrent() )
 	{	//Torrent ratio
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
@@ -387,7 +387,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		LoadString( strVolume, IDS_TIP_NA );
 	}
 
-	if ( pDownload->m_oBTH )
+	if ( pDownload->IsTorrent() )
 	{
 		if ( theApp.m_bRTL )
 		{
@@ -449,7 +449,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		DrawText( pDC, &pt, strVolume, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	if ( pDownload->m_oBTH )
+	if ( pDownload->IsTorrent() )
 	{	// Upload ratio- only for torrents
 		LoadString( strFormat, IDS_DLM_VOLUME_UPLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
@@ -585,7 +585,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 			}
 		}
 
-		if ( pDownload->m_oBTH )
+		if ( pDownload->IsTorrent() )
 			m_sURL = pDownload->m_pTorrent.m_sTracker;
 	}
 

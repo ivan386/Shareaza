@@ -110,7 +110,7 @@ BOOL CDownloadEditDlg::OnInitDialog()
 	m_bTigerTrusted	=	m_pDownload->m_oTiger.isTrusted();
 	m_bED2KTrusted	=	m_pDownload->m_oED2K.isTrusted();
 	
-	m_wndTorrent.EnableWindow( m_pDownload->m_pTorrent.IsAvailable() );
+	m_wndTorrent.EnableWindow( m_pDownload->IsTorrent() );
 
 	UpdateData( FALSE );
 
@@ -203,7 +203,7 @@ void CDownloadEditDlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return;
 		
-		if ( m_pDownload->NeedTigerTree() && m_pDownload->NeedHashset() && !m_pDownload->m_oBTH )
+		if ( m_pDownload->NeedTigerTree() && m_pDownload->NeedHashset() && !m_pDownload->IsTorrent() )
 		{
 			pLock.Unlock();
 			LoadString( strMessage, IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH );
@@ -235,7 +235,7 @@ void CDownloadEditDlg::OnTorrentInfo()
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
 	if ( ! Downloads.Check( m_pDownload ) ) return;
-	if ( ! m_pDownload->m_pTorrent.IsAvailable() ) return;
+	if ( ! m_pDownload->IsTorrent() ) return;
 
 	CTorrentInfoSheet dlg( &m_pDownload->m_pTorrent, m_pDownload->m_pPeerID );
 	pLock.Unlock();
@@ -314,7 +314,7 @@ void CDownloadEditDlg::OnMergeAndVerify()
 	}
 	if ( m_pDownload->NeedTigerTree() &&
 		 m_pDownload->NeedHashset() &&
-		! m_pDownload->m_oBTH )
+		! m_pDownload->IsTorrent() )
 	{
 		// No hashsets
 		pLock.Unlock();

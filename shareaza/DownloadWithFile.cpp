@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "Downloads.h"
 #include "DownloadWithFile.h"
+#include "DownloadWithTorrent.h"
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
 #include "DownloadGroups.h"
@@ -499,7 +500,7 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 	SetModified();
 	m_tReceived = GetTickCount();
 	
-	if ( m_oBTH )	// Hack: Only do this for BitTorrent
+	if ( static_cast< CDownloadWithTorrent* >( this )->IsTorrent() )	// Hack: Only do this for BitTorrent
 	{
 		for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 		{

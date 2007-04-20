@@ -335,7 +335,7 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 					tNow - pDownload->m_tCompleted > Settings.Downloads.ClearDelay )
 				{
 					// We might want to clear this download
-					if ( pDownload->m_pTorrent.IsAvailable() == TRUE )	//If it's a torrent
+					if ( pDownload->IsTorrent() == TRUE )	//If it's a torrent
 					{	
 						// Check the torrent clear settings
 						if ( Settings.BitTorrent.AutoClear )
@@ -525,7 +525,7 @@ void CDownloadsWnd::Prepare()
 				m_bSelBoostable = TRUE;
             if ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_sDisplayName.GetLength() )
 				m_bSelSHA1orTTHorED2KorName = TRUE;
-			if ( pDownload->m_pTorrent.IsAvailable() )
+			if ( pDownload->IsTorrent() )
 				m_bSelTorrent = TRUE;
 			if ( pDownload->IsTrying() )
 				m_bSelTrying = TRUE;
@@ -1337,7 +1337,7 @@ void CDownloadsWnd::OnDownloadsTorrentInfo()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		
-		if ( pDownload->m_bSelected && pDownload->m_pTorrent.IsAvailable() )
+		if ( pDownload->m_bSelected && pDownload->IsTorrent() )
 		{
 			CTorrentInfoSheet dlg( &pDownload->m_pTorrent, pDownload->m_pPeerID );
 			
@@ -1827,7 +1827,7 @@ void CDownloadsWnd::OnDownloadsHelp()
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Searching") );
 	}
-	else if ( pDownload->m_oBTH && pDownload->IsTasking() )
+	else if ( pDownload->IsTorrent() && pDownload->IsTasking() )
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Creating") );
 	}
