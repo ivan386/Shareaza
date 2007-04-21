@@ -86,8 +86,9 @@ BOOL CUploadTransferED2K::Request(const Hashes::Ed2kHash& oED2K)
 	
 	Cleanup( ! bSame );
 	
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( oED2K, TRUE, TRUE ) )
+	CSingleLock oLock( &Library.m_pSection );
+	BOOL bLocked = oLock.Lock( 1000 );
+	if ( CLibraryFile* pFile = ( bLocked ? LibraryMaps.LookupFileByED2K( oED2K, TRUE, TRUE ) : NULL ) )
 	{
 		// Send comments if necessary
 		if ( m_pClient ) m_pClient->SendCommentsPacket( pFile->m_nRating, pFile->m_sComments );
@@ -97,7 +98,9 @@ BOOL CUploadTransferED2K::Request(const Hashes::Ed2kHash& oED2K)
 	}
 	else
 	{
-		oLock.Unlock();
+		if ( bLocked )
+			oLock.Unlock();
+
 		if ( CDownload* pFile = Downloads.FindByED2K( oED2K, TRUE ) )
 		{
 			RequestPartial( pFile );
