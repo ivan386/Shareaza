@@ -893,7 +893,7 @@ void CLibraryThumbView::OnRun()
 		pLock.Lock();
 
 		CLibraryThumbItem** pList = m_pList;
-		for ( int nItem = m_nCount ; nItem && ! m_bThread; nItem--, pList++ )
+		for ( int nItem = m_nCount ; nItem && m_bThread; nItem--, pList++ )
 		{
 			if ( (*pList)->m_nThumb == CLibraryThumbItem::thumbWaiting )
 			{
