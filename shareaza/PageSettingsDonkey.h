@@ -1,7 +1,7 @@
 //
 // PageSettingsDonkey.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,6 +49,7 @@ public:
 	int		m_nLinks;
 	BOOL	m_bEnableToday;
 	BOOL	m_bEnableAlways;
+	BOOL	m_bLearnServers;
 	//}}AFX_DATA
 
 // Overrides
@@ -70,7 +71,6 @@ protected:
 	afx_msg void OnEnableToday();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

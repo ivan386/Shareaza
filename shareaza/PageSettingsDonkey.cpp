@@ -1,7 +1,7 @@
 //
 // PageSettingsDonkey.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,14 +48,13 @@ END_MESSAGE_MAP()
 // CDonkeySettingsPage property page
 
 CDonkeySettingsPage::CDonkeySettingsPage() : CSettingsPage( CDonkeySettingsPage::IDD )
+, m_bLearnServers(FALSE)
+, m_nResults(0)
+, m_bServerWalk(FALSE)
+, m_nLinks(0)
+, m_bEnableToday(FALSE)
+, m_bEnableAlways(FALSE)
 {
-	//{{AFX_DATA_INIT(CDonkeySettingsPage)
-	m_nResults = 0;
-	m_bServerWalk = FALSE;
-	m_nLinks = 0;
-	m_bEnableToday = FALSE;
-	m_bEnableAlways = FALSE;
-	//}}AFX_DATA_INIT
 }
 
 CDonkeySettingsPage::~CDonkeySettingsPage()
@@ -75,6 +74,7 @@ void CDonkeySettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_LINKS, m_nLinks);
 	DDX_Check(pDX, IDC_ENABLE_TODAY, m_bEnableToday);
 	DDX_Check(pDX, IDC_ENABLE_ALWAYS, m_bEnableAlways);
+	DDX_Check(pDX, IDC_LEARN_ED2K_SERVERS, m_bLearnServers);
 	//}}AFX_DATA_MAP
 }
 
@@ -90,6 +90,7 @@ BOOL CDonkeySettingsPage::OnInitDialog()
 	m_nLinks		= Settings.eDonkey.MaxLinks;
 	m_bServerWalk	= Settings.eDonkey.ServerWalk;
 	m_nResults		= Settings.eDonkey.MaxResults;
+	m_bLearnServers = Settings.eDonkey.LearnNewServers;
 
 	UpdateData( FALSE );
 
@@ -161,6 +162,7 @@ void CDonkeySettingsPage::OnOK()
 	Settings.eDonkey.MaxLinks		= m_nLinks;
 	Settings.eDonkey.ServerWalk		= m_bServerWalk;
 	Settings.eDonkey.MaxResults		= m_nResults;
+	Settings.eDonkey.LearnNewServers = m_bLearnServers;
 
 	CSettingsPage::OnOK();
 }
