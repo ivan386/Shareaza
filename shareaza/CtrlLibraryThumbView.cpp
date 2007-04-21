@@ -861,10 +861,12 @@ void CLibraryThumbView::StopThread()
 {
 	// If m_bThread == FALSE it means it has finished its work and will die by itself
 	// No need to stop it.
-	CSingleLock pLock( &m_pSection, TRUE );
+
 	if ( m_hThread == NULL || ! m_bThread ) return;
 
 	m_bThread = FALSE;
+
+	CSingleLock pLock( &m_pSection, TRUE );
 
 	CloseThread( &m_hThread, 10000 );
 }
@@ -891,18 +893,23 @@ void CLibraryThumbView::OnRun()
 		pLock.Lock();
 
 		CLibraryThumbItem** pList = m_pList;
-		for ( int nItem = m_nCount ; nItem ; nItem--, pList++ )
+		for ( int nItem = m_nCount ; nItem && ! m_bThread; nItem--, pList++ )
 		{
 			if ( (*pList)->m_nThumb == CLibraryThumbItem::thumbWaiting )
 			{
-				CQuickLock oLock( Library.m_pSection );
-				if ( CLibraryFile* pFile = Library.LookupFile( (*pList)->m_nIndex ) )
+				CSingleLock oLock( &Library.m_pSection );
+				if ( oLock.Lock( 100 ) )
 				{
-					pThumb	= *pList;
-					nIndex	= pFile->m_nIndex;
-					strPath	= pFile->GetPath();
-					bCache	= pFile->m_bCachedPreview;
-					break;
+					if ( CLibraryFile* pFile = Library.LookupFile( (*pList)->m_nIndex ) )
+					{
+						pThumb	= *pList;
+						nIndex	= pFile->m_nIndex;
+						strPath	= pFile->GetPath();
+						bCache	= pFile->m_bCachedPreview;
+						oLock.Unlock();
+						break;
+					}
+					oLock.Unlock();
 				}
 			}
 		}
