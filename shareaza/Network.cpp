@@ -131,11 +131,17 @@ BOOL CNetwork::IsSelfIP(IN_ADDR nAddress) const
 BOOL CNetwork::IsAvailable() const
 {
 	DWORD dwState = 0;
-	if ( InternetGetConnectedState( &dwState, 0 ) )
+	try
 	{
-		if ( ! ( dwState & INTERNET_CONNECTION_OFFLINE ) ) return TRUE;
+		if ( InternetGetConnectedState( &dwState, 0 ) )
+		{
+			if ( ! ( dwState & INTERNET_CONNECTION_OFFLINE ) ) return TRUE;
+		}
 	}
-
+	catch ( CException* pException )
+	{
+		pException->Delete();
+	}
 	return FALSE;
 }
 
