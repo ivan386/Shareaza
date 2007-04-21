@@ -1,7 +1,7 @@
 //
 // LibraryBuilderPlugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,9 +37,8 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderPlugins construction
 
-CLibraryBuilderPlugins::CLibraryBuilderPlugins(CLibraryBuilder* pBuilder)
+CLibraryBuilderPlugins::CLibraryBuilderPlugins()
 {
-	m_pBuilder	= pBuilder;
 }
 
 CLibraryBuilderPlugins::~CLibraryBuilderPlugins()
@@ -50,7 +49,7 @@ CLibraryBuilderPlugins::~CLibraryBuilderPlugins()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderPlugins extract
 
-BOOL CLibraryBuilderPlugins::ExtractMetadata(CString& strPath, HANDLE hFile)
+BOOL CLibraryBuilderPlugins::ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile)
 {
 	CString strType;
 	
@@ -94,13 +93,13 @@ BOOL CLibraryBuilderPlugins::ExtractMetadata(CString& strPath, HANDLE hFile)
 			if ( pInner && strSchemaURI.GetLength() )
 			{
 				pInner = pInner->Detach();
-				bSuccess = m_pBuilder->SubmitMetadata( strSchemaURI, pInner );
+				bSuccess = CLibraryBuilder::SubmitMetadata( nIndex, strSchemaURI, pInner );
 			}
 		}
 	}
 	else if ( hResult == E_UNEXPECTED )
 	{
-		bSuccess = m_pBuilder->SubmitCorrupted();
+		bSuccess = CLibraryBuilder::SubmitCorrupted( nIndex );
 	}
 	
 	delete pXML;

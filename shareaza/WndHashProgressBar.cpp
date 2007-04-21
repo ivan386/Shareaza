@@ -81,7 +81,8 @@ void CHashProgressBar::Run()
 	{
 		// Update current hashing status
 		m_nTotal = static_cast< int >( LibraryMaps.GetFileCount() );
-		LibraryBuilder.UpdateStatus( m_sCurrent, &m_nRemaining );
+		m_nRemaining = LibraryBuilder.GetRemaining();
+		m_sCurrent = LibraryBuilder.GetCurrent();
 
 		int nPos = m_sCurrent.ReverseFind( '\\' );
 		if ( nPos > 0 ) m_sCurrent = m_sCurrent.Mid( nPos + 1 );

@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,67 +26,54 @@
 
 class CLibraryFile;
 class CXMLElement;
-class CLibraryBuilderInternals;
-class CLibraryBuilderPlugins;
+
 
 class CLibraryBuilder
 {
-// Construction
 public:
 	CLibraryBuilder();
 	virtual ~CLibraryBuilder();
 
-// Attributes
-protected:
-	CCriticalSection	m_pSection;
-	CList< DWORD >		m_pFiles;
-	CList< CString >	m_pPriority;
-	HANDLE				m_hThread;
-	BOOL				m_bThread;
-	BOOL				m_bPriority;
-	DWORD				m_nIndex;
-	CString				m_sPath;
-	DWORD				m_tActive;
-
-	CCriticalSection	m_pDelaySection;
-	LARGE_INTEGER		m_nLastCall;		// (ticks)
-	LARGE_INTEGER		m_nFreq;			// (Hz)
-	QWORD				m_nReaded;			// (bytes)
-	QWORD				m_nElapsed;			// (mks)
-
-protected:
-	CLibraryBuilderInternals*	m_pInternals;
-	CLibraryBuilderPlugins*		m_pPlugins;
-
-// Operations
-public:
 	void		Add(CLibraryFile* pFile);
 	void		Remove(CLibraryFile* pFile);
-	INT_PTR		GetRemaining();
-	CString		GetCurrentFile();
+	int			GetRemaining();
 	void		RequestPriority(LPCTSTR pszPath);
-	void		Clear();
 	BOOL		StartThread();
+	BOOL		IsAlive() const;
 	void		StopThread();
 	void		BoostPriority(BOOL bPriority);
 	BOOL		GetBoostPriority();
-	//BOOL		SanityCheck();
-	void		UpdateStatus(CString& strFileName, int* pRemaining );
-	BOOL		ReadFileWithPriority(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD lpNumberOfBytesRead, BOOL bPriority = TRUE);
+	CString		GetCurrent();
+
+	static BOOL	SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);
+	static BOOL	SubmitCorrupted(DWORD nIndex);
+
 protected:
-	void		ReHashCurrentFile();
+	CMutex						m_pSection;			// Common guarding
+	std::list< DWORD >			m_pFiles;
+	CMutex						m_pPrioritySection;	// m_pPriority guarding
+	std::list< CString >		m_pPriority;
+	HANDLE						m_hThread;
+	BOOL						m_bThread;			// FALSE - termination request
+	BOOL						m_bPriority;
+	CString						m_sPath;			// Hashing filename
+	CMutex						m_pDelaySection;	// m_nLastCall, m_nFreq, m_nReaded, m_nElapsed guarding
+	LARGE_INTEGER				m_nLastCall;		// (ticks)
+	LARGE_INTEGER				m_nFreq;			// (Hz)
+	QWORD						m_nReaded;			// (bytes)
+	QWORD						m_nElapsed;			// (mks)
+
+	void		Remove(LPCTSTR szPath);
+	void		Skip();
+	UINT		GetNextFileToHash();
+	void		Clear();
+	BOOL		ReadFileWithPriority(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD lpNumberOfBytesRead, BOOL bPriority = TRUE);
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
-    BOOL		HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& oSHA1);
-	BOOL		SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML);
-	BOOL		SubmitCorrupted();
-	BOOL		DetectVirtualFile(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
-	BOOL		DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
-	BOOL		DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
-
-	friend class CLibraryBuilderInternals;
-	friend class CLibraryBuilderPlugins;
-
+    BOOL		HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1, DWORD nIndex);
+	static BOOL	DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	static BOOL	DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	static BOOL	DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 };
 
 extern CLibraryBuilder LibraryBuilder;

@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,12 +31,9 @@ class CLibraryBuilderInternals
 {
 // Construction
 public:
-	CLibraryBuilderInternals(CLibraryBuilder* pBuilder);
+	CLibraryBuilderInternals();
 	virtual ~CLibraryBuilderInternals();
 
-// Attributes
-protected:
-	CLibraryBuilder* m_pBuilder;
 protected:
 	BOOL		m_bEnableMP3;
 	BOOL		m_bEnableEXE;
@@ -57,45 +54,42 @@ public:
 // Operations
 public:
 	void		LoadSettings();
-    BOOL		ExtractMetadata(CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1);
-protected:
-	BOOL		SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
-	BOOL		SubmitCorrupted();
+    BOOL		ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1);
 protected:		// ID3v1 and ID3v2 and MP3
-	BOOL		ReadID3v1(HANDLE hFile, CXMLElement* pXML = NULL);
+	BOOL		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);
 	BOOL		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, LPCSTR pszValue, int nLength);
-	BOOL		ReadID3v2(HANDLE hFile);
+	BOOL		ReadID3v2(DWORD nIndex, HANDLE hFile);
 	BOOL		CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, BOOL bSkipLanguage = FALSE);
-	BOOL		ReadMP3Frames(HANDLE hFile);
+	BOOL		ReadMP3Frames(DWORD nIndex, HANDLE hFile);
 	BOOL		ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore);
 protected:		// Module Version
-	BOOL		ReadVersion(LPCTSTR pszPath);
+	BOOL		ReadVersion(DWORD nIndex, LPCTSTR pszPath);
 	BOOL		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId, BOOL bCommaToDot = FALSE);
 	CString		GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId);
 	DWORD		GetBestLanguageId(LPVOID pBuffer);
 	BOOL		GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nLangId, DWORD &nId, bool bOnlyPrimary = false);
 protected:		// Windows Installer
-	BOOL		ReadMSI(LPCTSTR pszPath);
+	BOOL		ReadMSI(DWORD nIndex, LPCTSTR pszPath);
 	CString		GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);
 protected:		// Image Files
-	BOOL		ReadJPEG(HANDLE hFile);
-	BOOL		ReadGIF(HANDLE hFile);
-	BOOL		ReadPNG(HANDLE hFile);
-	BOOL		ReadBMP(HANDLE hFile);
+	BOOL		ReadJPEG(DWORD nIndex, HANDLE hFile);
+	BOOL		ReadGIF(DWORD nIndex, HANDLE hFile);
+	BOOL		ReadPNG(DWORD nIndex, HANDLE hFile);
+	BOOL		ReadBMP(DWORD nIndex, HANDLE hFile);
 protected:		// General Media
-	BOOL		ReadASF(HANDLE hFile);
-	BOOL		ReadAVI(HANDLE hFile);
-	BOOL		ReadMPEG(HANDLE hFile);
-	BOOL		ReadOGG(HANDLE hFile);
+	BOOL		ReadASF(DWORD nIndex, HANDLE hFile);
+	BOOL		ReadAVI(DWORD nIndex, HANDLE hFile);
+	BOOL		ReadMPEG(DWORD nIndex, HANDLE hFile);
+	BOOL		ReadOGG(DWORD nIndex, HANDLE hFile);
 	BYTE*		ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
 	BOOL		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
-	BOOL		ReadAPE(HANDLE hFile, bool bPreferFooter = false);
-	BOOL		ReadMPC(HANDLE hFile);
-	BOOL		ReadPDF(HANDLE hFile, LPCTSTR pszPath);
+	BOOL		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter = false);
+	BOOL		ReadMPC(DWORD nIndex, HANDLE hFile);
+	BOOL		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
 	CString		ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
-    BOOL		ReadCollection(HANDLE hFile, const Hashes::Sha1Hash& oSHA1);
-	BOOL		ReadCHM(HANDLE hFile, LPCTSTR pszPath);
+    BOOL		ReadCollection(DWORD nIndex, HANDLE hFile, const Hashes::Sha1Hash& oSHA1);
+	BOOL		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		DecodePDFText(CString& strInput);
 };
 

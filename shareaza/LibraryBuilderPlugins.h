@@ -1,7 +1,7 @@
 //
 // LibraryBuilderPlugins.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,15 +31,14 @@ interface ILibraryBuilderPlugin;
 class CLibraryBuilderPlugins
 {
 public:
-	CLibraryBuilderPlugins(CLibraryBuilder* pBuilder);
+	CLibraryBuilderPlugins();
 	virtual ~CLibraryBuilderPlugins();
 
 public:
 	CMap< CString, const CString&, ILibraryBuilderPlugin*, ILibraryBuilderPlugin* > m_pMap;
-	CLibraryBuilder*	m_pBuilder;
 
 public:
-	BOOL	ExtractMetadata(CString& strPath, HANDLE hFile);
+	BOOL	ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile);
 	void	Cleanup();
 
 protected:

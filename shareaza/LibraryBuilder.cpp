@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,19 +52,13 @@ CLibraryBuilder LibraryBuilder;
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder construction
 
-CLibraryBuilder::CLibraryBuilder()
+CLibraryBuilder::CLibraryBuilder() :
+	m_hThread( NULL ),
+	m_bThread( FALSE ),
+	m_bPriority( FALSE ),
+	m_nReaded( 0 ),
+	m_nElapsed( 0 )
 {
-	m_pInternals	= new CLibraryBuilderInternals( this );
-	m_pPlugins		= new CLibraryBuilderPlugins( this );
-
-	m_hThread		= NULL;
-	m_bThread		= FALSE;
-	m_bPriority		= FALSE;
-	m_nIndex		= 0;
-	m_tActive		= 0;
-
-	m_nReaded		= 0;
-	m_nElapsed		= 0;
 	QueryPerformanceFrequency( &m_nFreq );
 	QueryPerformanceCounter( &m_nLastCall );
 }
@@ -73,9 +67,6 @@ CLibraryBuilder::~CLibraryBuilder()
 {
 	StopThread();
 	Clear();
-
-	delete m_pPlugins;
-	delete m_pInternals;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -83,72 +74,93 @@ CLibraryBuilder::~CLibraryBuilder()
 
 void CLibraryBuilder::Add(CLibraryFile* pFile)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
-	POSITION pos = m_pFiles.Find( pFile->m_nIndex );
-	if ( pos == NULL ) m_pFiles.AddHead( pFile->m_nIndex );
+	if ( std::find( m_pFiles.begin(), m_pFiles.end(), pFile->m_nIndex ) == m_pFiles.end() )
+		m_pFiles.push_back( pFile->m_nIndex );
 
 	if ( ! m_bThread ) StartThread();
 }
 
-void CLibraryBuilder::Remove(CLibraryFile* pFile)
+int CLibraryBuilder::GetRemaining()
 {
-	m_pSection.Lock();
+	CQuickLock oLock( m_pSection );
 
-	if ( POSITION pos = m_pFiles.Find( pFile->m_nIndex ) )
-	{
-		m_pFiles.RemoveAt( pos );
-
-		if ( pos = m_pPriority.Find( pFile->GetPath() ) )
-		{
-			m_pPriority.RemoveAt( pos );
-		}
-	}
-
-	m_pSection.Unlock();
+	return (int)m_pFiles.size();
 }
 
-INT_PTR CLibraryBuilder::GetRemaining()
+CString CLibraryBuilder::GetCurrent()
 {
-	m_pSection.Lock();
-	INT_PTR nCount = m_pFiles.GetCount();
-	if ( m_bThread ) nCount ++;
-	m_pSection.Unlock();
-	return nCount;
-}
+	CQuickLock oLock( m_pSection );
 
-CString CLibraryBuilder::GetCurrentFile()
-{
-	m_pSection.Lock();
-	CString str = m_sPath;
-	if ( ! m_bThread ) str.Empty();
-	m_pSection.Unlock();
-	return str;
-}
-
-void CLibraryBuilder::UpdateStatus(CString& strFileName, int* pRemaining )
-{
-	m_pSection.Lock();
-		
-	if ( pRemaining != NULL )
-	{
-		*pRemaining = static_cast< int >( m_pFiles.GetCount() );
-		if ( m_bThread ) *pRemaining ++;
-	}
-
-	strFileName = m_sPath;
-	if ( ! m_bThread ) 
-		strFileName.Empty();
-
-	m_pSection.Unlock();
+	return m_sPath;
 }
 
 void CLibraryBuilder::RequestPriority(LPCTSTR pszPath)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pPrioritySection );
 
-	POSITION pos = m_pPriority.Find( pszPath );
-	if ( pos == NULL ) m_pPriority.AddTail( pszPath );
+	m_pPriority.remove( pszPath );
+	m_pPriority.push_front( pszPath );
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilder remove file from processing queue
+
+void CLibraryBuilder::Remove(CLibraryFile* pFile)
+{
+	{
+		CQuickLock oLock( m_pSection );
+
+		m_pFiles.remove( pFile->m_nIndex );
+	}
+	{
+		CQuickLock oLock( m_pPrioritySection );
+
+		m_pPriority.remove( pFile->GetPath() );
+	}
+}
+
+void CLibraryBuilder::Remove(LPCTSTR szPath)
+{
+	ASSERT( szPath );
+
+	CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath );
+	if ( pFile )
+	{
+		CQuickLock oLock( m_pSection );
+		m_pFiles.remove( pFile->m_nIndex );
+	}
+	{
+		CQuickLock oLock( m_pPrioritySection );
+		m_pPriority.remove( szPath );
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilder rotate queue
+
+void CLibraryBuilder::Skip()
+{
+	// Put first file to end
+	DWORD index;
+	{
+		CQuickLock oLock( m_pSection );
+		index = *m_pFiles.begin();
+		if ( m_pFiles.size() > 1 )
+		{
+			m_pFiles.pop_front();
+			m_pFiles.push_back( index );
+		}
+	}
+
+	// Remove it from priority list
+	CLibraryFile* pFile = LibraryMaps.LookupFile( index );
+	if ( pFile )
+	{
+		CQuickLock oLock( m_pPrioritySection );
+		m_pPriority.remove( pFile->GetPath() );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -156,10 +168,15 @@ void CLibraryBuilder::RequestPriority(LPCTSTR pszPath)
 
 void CLibraryBuilder::Clear()
 {
-	m_pSection.Lock();
-	m_pFiles.RemoveAll();
-	m_pPriority.RemoveAll();
-	m_pSection.Unlock();
+	{
+		CQuickLock oLock( m_pSection );
+		m_pFiles.clear();
+		m_sPath.Empty();
+	}
+	{
+		CQuickLock oLock( m_pPrioritySection );
+		m_pPriority.clear();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -167,18 +184,13 @@ void CLibraryBuilder::Clear()
 
 BOOL CLibraryBuilder::StartThread()
 {
-	if ( m_hThread != NULL && m_bThread ) return TRUE;
+	if ( m_hThread || m_bThread ) return TRUE;
 
-	m_pSection.Lock();
-	BOOL bWorkToDo = !m_pFiles.IsEmpty();
-	m_pSection.Unlock();
+	CQuickLock oLock( m_pSection );
 
-	if ( ! bWorkToDo ) return FALSE;
-
-	m_pInternals->LoadSettings();
+	if ( m_pFiles.empty() ) return FALSE;
 
 	m_bThread	= TRUE;
-	m_tActive	= 0;
 
 	m_hThread = BeginThread( "LibraryBuilder", ThreadStart, this, m_bPriority ?
 		THREAD_PRIORITY_NORMAL : THREAD_PRIORITY_BELOW_NORMAL );
@@ -188,13 +200,16 @@ BOOL CLibraryBuilder::StartThread()
 
 void CLibraryBuilder::StopThread()
 {
-	if ( m_hThread == NULL ) return;
+	if ( m_hThread == NULL || ! m_bThread ) return;
 
 	m_bThread = FALSE;
 
 	CloseThread( &m_hThread );
+}
 
-	m_tActive	= 0;
+BOOL CLibraryBuilder::IsAlive() const
+{
+	return m_bThread;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -215,38 +230,6 @@ void CLibraryBuilder::BoostPriority(BOOL bPriority)
 BOOL CLibraryBuilder::GetBoostPriority()
 {
 	return m_bPriority;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilder sanity check
-/*
-BOOL CLibraryBuilder::SanityCheck()
-{
-	if ( ! m_bThread || ! m_tActive ) return TRUE;
-
-	CSingleLock pLock( &m_pSection );
-
-	if ( pLock.Lock( 50 ) )
-	{
-		if ( ! m_tActive || GetTickCount() - m_tActive < 180000 ) return TRUE;
-
-		theApp.Message( MSG_ERROR, _T("CLibraryBuilder sanity check: stuck on \"%s\" (%lu)."),
-			(LPCTSTR)m_sPath, ( GetTickCount() - m_tActive ) / 1000 );
-	}
-
-	return FALSE;
-}
-*/
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilder rehash current file
-
-void CLibraryBuilder::ReHashCurrentFile()
-{
-	m_pSection.Lock();
-	if ( m_pFiles.Find( 0ul ) == NULL ) m_pFiles.AddTail( 0ul );
-	m_pFiles.AddTail( m_nIndex );
-	m_pSection.Unlock();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -276,25 +259,21 @@ BOOL CLibraryBuilder::ReadFileWithPriority(
 	if ( m_nElapsed > 0 && m_nReaded > 0 )
 	{
 		// Calculation of compensation delay
-		QWORD nSpeed = ( m_nReaded * 1000000 ) / m_nElapsed; // B/s
-		QWORD nMaxSpeed = 1024 * 1024 *
-			( bPriority ? Settings.Library.HighPriorityHashing : Settings.Library.LowPriorityHashing);
-		if ( nSpeed > nMaxSpeed )
+		QWORD nSpeed = ( m_nReaded * 1000000 ) / m_nElapsed;	// B/s
+		QWORD nMaxSpeed = 1024 * 1024 * ( bPriority ? Settings.Library.HighPriorityHashing :
+			Settings.Library.LowPriorityHashing);				// B/s
+		if ( nMaxSpeed > 0 && nSpeed > nMaxSpeed )
 		{
 			QWORD nDelay = ( ( nSpeed * m_nElapsed ) / nMaxSpeed ) - m_nElapsed;
-			if ( nDelay > 500000 )
-				// Dont do overcompensation
-				nDelay = 500000;
+			if ( nDelay > 1000000 )
+				// Dont do overcompensation, max 1 sec
+				nDelay = 1000000;
 			if ( nDelay > 1000 )
+			{
 				// Compensation
 				Sleep( (DWORD) ( nDelay / 1000 ) );
+			}
 		}
-	}
-	if ( m_nElapsed > 10000000 ) // 10 s
-	{
-		// Reset statistics
-		m_nElapsed = 0;
-		m_nReaded = 0;
 	}
 
 	return ret;
@@ -305,113 +284,120 @@ BOOL CLibraryBuilder::ReadFileWithPriority(
 
 UINT CLibraryBuilder::ThreadStart(LPVOID pParam)
 {
-	CLibraryBuilder* pBuilder = (CLibraryBuilder*)pParam;
-	pBuilder->OnRun();
+	((CLibraryBuilder*)pParam)->OnRun();
 	return 0;
 }
 
 void CLibraryBuilder::OnRun()
 {
+	CLibraryBuilderInternals Internals;
+	CLibraryBuilderPlugins Plugins;
+	
+	Internals.LoadSettings();
+
 	while ( m_bThread )
 	{
-		if ( m_pSection.Lock() )
-		{
-			m_nIndex	= 0;
-			m_tActive	= 0;
-			m_sPath.Empty();
+		Sleep( 100 );
 
-			if ( m_pFiles.IsEmpty() )
+		DWORD nIndex = 0;
+		CString sPath;
+
+		CSingleLock oLock0( &Library.m_pSection );
+		if ( oLock0.Lock( 100 ) )
+		{
+			CSingleLock oLock1( &m_pSection );
+			if ( oLock1.Lock( 100 ) )
 			{
-				m_pSection.Unlock();
-				break;
-			}
+				if ( m_pFiles.empty() )
+					// No files left
+					break;
 
-			m_nIndex = m_pFiles.RemoveHead();
+				std::list< DWORD >::iterator i = m_pFiles.begin();
 
-			m_pSection.Unlock();
-		}
-
-		if ( m_nIndex == 0 )
-		{
-			Sleep( 250 );
-			continue;
-		}
-
-		{
-			CQuickLock oLock( Library.m_pSection );
-			if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex ) )
-			{
-				m_sPath = pFile->GetPath();
-
-				if ( int nExt = m_sPath.ReverseFind( _T('.') ) + 1 )
+				CSingleLock oLock2( &m_pPrioritySection );
+				if ( oLock2.Lock( 100 ) )
 				{
-					if ( IsIn( Settings.Library.PrivateTypes, (LPCTSTR)m_sPath + nExt ) )
+					if ( ! m_pPriority.empty() )
 					{
-						continue;
+						CString sFoo( *m_pPriority.begin() );
+						m_pPriority.pop_front();
+						CLibraryFile* pFile = LibraryMaps.LookupFileByPath( sFoo );
+						if ( pFile )
+						{
+							i = std::find( m_pFiles.begin(), m_pFiles.end(), pFile->m_nIndex );
+						}
 					}
+					oLock2.Unlock();
 				}
+
+				CLibraryFile* pFile = LibraryMaps.LookupFile( (*i) );
+				if ( pFile )
+				{
+					sPath = pFile->GetPath();
+
+					// Remove private type
+					if ( int nExt = sPath.ReverseFind( _T('.') ) + 1 )
+					{
+						if ( IsIn( Settings.Library.PrivateTypes, (LPCTSTR)sPath + nExt ) )
+						{
+							Remove( sPath );
+							continue;
+						}
+					}
+
+					// Ready to hash
+					nIndex = (*i);
+					m_sPath = sPath;
+				}
+				oLock1.Unlock();
+			}
+			oLock0.Unlock();
+		}
+		if ( nIndex )
+		{
+			HANDLE hFile = CreateFile( sPath, GENERIC_READ,
+				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL,
+				OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
+			VERIFY_FILE_ACCESS( hFile, sPath )
+			if ( hFile != INVALID_HANDLE_VALUE )
+			{
+				theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)sPath );
+
+				Hashes::Sha1Hash oSHA1;
+				if ( HashFile( sPath, hFile, oSHA1, nIndex ) )
+				{
+					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+					if ( Plugins.ExtractMetadata( nIndex, sPath, hFile ) )
+					{
+						// Plugin got it
+					}
+					else if ( Internals.ExtractMetadata( nIndex, sPath, hFile, oSHA1 ) )
+					{
+						// Internal got it
+					}
+					Remove( sPath );
+				}
+				else
+					Skip();
+
+				CloseHandle( hFile );
 			}
 			else
 			{
-				m_nIndex = 0;
-				continue;
+				DWORD err = GetLastError();
+				if ( err == ERROR_FILE_NOT_FOUND || err == ERROR_PATH_NOT_FOUND )
+					// Fatal error
+					Remove( sPath );
+				else
+					Skip();
 			}
 		}
-
-		BOOL bPriority = FALSE;
-
-		if ( m_pSection.Lock() )
-		{
-			if ( POSITION pos = m_pPriority.Find( m_sPath ) )
-			{
-				bPriority = TRUE;
-				m_pPriority.RemoveAt( pos );
-			}
-
-			m_pSection.Unlock();
-		}
-
-		HANDLE hFile = CreateFile( m_sPath, GENERIC_READ,
-			FILE_SHARE_READ, NULL, OPEN_EXISTING,
-			FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-
-		if ( hFile != INVALID_HANDLE_VALUE )
-		{
-			theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)m_sPath );
-
-			Hashes::Sha1Hash oSHA1;
-
-			if ( HashFile( hFile, bPriority, oSHA1 ) )
-			{
-				SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-				m_tActive = GetTickCount();
-
-				if ( m_pPlugins->ExtractMetadata( m_sPath, hFile ) )
-				{
-					// Plugin got it
-				}
-				else if ( m_pInternals->ExtractMetadata( m_sPath, hFile, oSHA1 ) )
-				{
-					// Internal got it
-				}
-			}
-			else
-				ReHashCurrentFile();
-
-			CloseHandle( hFile );
-		}
-		else
-			ReHashCurrentFile();
-
-		m_nIndex	= 0;
 		m_sPath.Empty();
 	}
-	
-	Settings.Live.NewFile = FALSE;
-	m_pPlugins->Cleanup();
 
-	m_tActive	= 0;
+	Settings.Live.NewFile = FALSE;
 	m_bThread	= FALSE;
+	m_hThread	= NULL;
 
 	theApp.Message( MSG_DEBUG, _T("CLibraryBuilder shutting down.") );
 }
@@ -419,9 +405,9 @@ void CLibraryBuilder::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder file hashing (threaded)
 
-#define MAX_HASH_BUFFER_SIZE	20480ul	// 20 Kb
+#define MAX_HASH_BUFFER_SIZE	262144ul	// 256 Kb
 
-BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& oOutSHA1)
+BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& oOutSHA1, DWORD nIndex)
 {
 	char pBuffer [MAX_HASH_BUFFER_SIZE];
 
@@ -433,7 +419,7 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& o
 	BOOL bVirtual = FALSE;
 
 	if ( Settings.Library.VirtualFiles )
-		bVirtual = DetectVirtualFile( hFile, nFileBase, nFileSize );
+		bVirtual = DetectVirtualFile( szPath, hFile, nFileBase, nFileSize );
 
 	nSizeLow	= (DWORD)( nFileBase & 0xFFFFFFFF );
 	nSizeHigh	= (DWORD)( nFileBase >> 32 );
@@ -447,6 +433,10 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& o
 	pTiger.BeginFile( Settings.Library.TigerHeight, nFileSize );
 	pED2K.BeginFile( nFileSize );
 
+	// Reset statistics
+	m_nElapsed = 0;
+	m_nReaded = 0;
+
 	DWORD nBlock;
 	for ( QWORD nLength = nFileSize ; nLength > 0 ; nLength -= nBlock )
 	{
@@ -454,7 +444,7 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& o
 
 		if ( ! m_bThread ) return FALSE;
 
-		if ( ! ReadFileWithPriority( hFile, pBuffer, nBlock, &nBlock, m_bPriority || bPriority ) ) return FALSE;
+		if ( ! ReadFileWithPriority( hFile, pBuffer, nBlock, &nBlock, m_bPriority ) ) return FALSE;
 
 		if ( ! nBlock ) return FALSE;
 
@@ -471,7 +461,7 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& o
 
 	{
 		CQuickLock oLock( Library.m_pSection );
-		CLibraryFile* pFile = Library.LookupFile( m_nIndex );
+		CLibraryFile* pFile = Library.LookupFile( nIndex );
 		if ( pFile == NULL ) return FALSE;
 
 		Library.RemoveFile( pFile );
@@ -491,12 +481,15 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& o
 		
 		// child pornography check
 		bool bHit = false;
-		if ( AdultFilter.IsChildPornography( pFile->GetSearchName() ) )
-			bHit = true;
-		else
+		if ( Settings.Search.AdultFilter )
 		{
-			if ( AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) )
+			if ( AdultFilter.IsChildPornography( pFile->GetSearchName() ) )
 				bHit = true;
+			else
+			{
+				if ( AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) )
+					bHit = true;
+			}
 		}
 		if ( bHit )
 			pFile->m_bVerify = pFile->m_bShared = TS_FALSE;
@@ -504,8 +497,8 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& o
 		Library.Update();
 	}
 
-	LibraryHashDB.StoreTiger( m_nIndex, &pTiger );
-	LibraryHashDB.StoreED2K( m_nIndex, &pED2K );
+	LibraryHashDB.StoreTiger( nIndex, &pTiger );
+	LibraryHashDB.StoreED2K( nIndex, &pED2K );
 
 	return TRUE;
 }
@@ -513,7 +506,7 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, Hashes::Sha1Hash& o
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder metadata submission (threaded)
 
-BOOL CLibraryBuilder::SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML)
+BOOL CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 {
 	CSchema* pSchema = SchemaCache.Get( pszSchemaURI );
 
@@ -536,7 +529,7 @@ BOOL CLibraryBuilder::SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 	delete pBase;
 
 	CQuickLock oLock( Library.m_pSection );
-	if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex ) )
+	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
 		if ( pFile->m_pMetadata == NULL )
 		{
@@ -562,10 +555,10 @@ BOOL CLibraryBuilder::SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder bogus/corrupted state submission (threaded)
 
-BOOL CLibraryBuilder::SubmitCorrupted()
+BOOL CLibraryBuilder::SubmitCorrupted(DWORD nIndex)
 {
 	CQuickLock oLock( Library.m_pSection );
-	if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex ) )
+	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
 		pFile->m_bBogus = TRUE;
 		return TRUE;
@@ -577,11 +570,11 @@ BOOL CLibraryBuilder::SubmitCorrupted()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder virtual file detection (threaded)
 
-BOOL CLibraryBuilder::DetectVirtualFile(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
+BOOL CLibraryBuilder::DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength)
 {
 	BOOL bVirtual = FALSE;
 
-	if ( _tcsistr( m_sPath, _T(".mp3") ) != NULL )
+	if ( _tcsistr( szPath, _T(".mp3") ) != NULL )
 	{
 		bVirtual |= DetectVirtualID3v2( hFile, nOffset, nLength );
 		bVirtual |= DetectVirtualID3v1( hFile, nOffset, nLength );
