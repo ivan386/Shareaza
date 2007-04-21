@@ -185,6 +185,7 @@ CLibraryListItem CLibraryView::GetFolder() const
 void CLibraryView::PostUpdate()
 {
 	GetOwner()->PostMessage( WM_COMMAND, ID_LIBRARY_REFRESH );
+	InvalidateRect( NULL );
 }
 
 CLibraryFrame* CLibraryView::GetFrame() const

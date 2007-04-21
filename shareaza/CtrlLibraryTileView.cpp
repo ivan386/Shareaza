@@ -282,12 +282,8 @@ bool CLibraryTileView::Select(iterator pTile, TRISTATE bSelect)
 	else
 	{
 		m_nSelected--;
-		std::list< iterator >::iterator pos = std::find( m_oSelTile.begin(), m_oSelTile.end(), pTile );
-		if ( pos != m_oSelTile.end() )
-		{
-			m_oSelTile.erase( pos );
-			SelRemove( pTile->m_pFolder );
-		}
+		SelRemove( pTile->m_pFolder );
+		m_oSelTile.remove( pTile );
 	}
 
 	return TRUE;
@@ -1039,7 +1035,7 @@ void CLibraryTileView::OnLibraryAlbumDelete()
 			CAlbumFolder* pFolder = ( *pTile )->m_pFolder;
 			if ( LibraryFolders.CheckAlbum( pFolder ) ) pFolder->Delete();
 		}
-
+		clear();
 	}
 	PostUpdate();
 }
