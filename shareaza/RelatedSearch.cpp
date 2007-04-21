@@ -50,6 +50,8 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 		m_oSHA1		= pFile->m_oSHA1;
 		m_oTiger	= pFile->m_oTiger;
 		m_oED2K		= pFile->m_oED2K;
+		m_oBTH		= pFile->m_oBTH;
+		m_oMD5		= pFile->m_oMD5;
 		m_sName		= pFile->m_sName;
 
 		m_pSchema	= SchemaCache.Get( pFile->GetBestSchemaURI() );
@@ -70,6 +72,8 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
         m_oSHA1.clear();
         m_oTiger.clear();
         m_oED2K.clear();
+		m_oBTH.clear();
+		m_oMD5.clear();
 		m_pSchema = NULL;
 		m_pXML = NULL;
 	}
@@ -82,6 +86,8 @@ CRelatedSearch::CRelatedSearch(CLibraryFile* pFile)
 		m_oSHA1		= pFile->m_oSHA1;
 		m_oTiger	= pFile->m_oTiger;
 		m_oED2K		= pFile->m_oED2K;
+		m_oBTH		= pFile->m_oBTH;
+		m_oMD5		= pFile->m_oMD5;
 		m_sName		= pFile->m_sName;
 		m_pSchema	= pFile->m_pSchema;
 		m_bXML		= ( pFile->m_pMetadata != NULL );
@@ -93,6 +99,8 @@ CRelatedSearch::CRelatedSearch(CLibraryFile* pFile)
         m_oSHA1.clear();
         m_oTiger.clear();
         m_oED2K.clear();
+		m_oBTH.clear();
+		m_oMD5.clear();
 		m_pSchema = NULL;
 		m_pXML = NULL;
 	}
@@ -108,7 +116,7 @@ CRelatedSearch::~CRelatedSearch()
 
 BOOL CRelatedSearch::CanSearchForThis()
 {
-	return m_oSHA1 || m_oTiger || m_oED2K;
+	return m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5;
 }
 
 BOOL CRelatedSearch::RunSearchForThis()
@@ -118,6 +126,8 @@ BOOL CRelatedSearch::RunSearchForThis()
 	pSearch->m_oSHA1	= m_oSHA1;
 	pSearch->m_oTiger	= m_oTiger;
 	pSearch->m_oED2K	= m_oED2K;
+	pSearch->m_oBTH		= m_oBTH;
+	pSearch->m_oMD5		= m_oMD5;
 	return CQuerySearch::OpenWindow( pSearch ) != NULL;
 }
 

@@ -1,7 +1,7 @@
 //
 // Downloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -91,11 +91,13 @@ public:
 	BOOL		Move(CDownload* pDownload, int nDelta);
 	BOOL		Reorder(CDownload* pDownload, CDownload* pBefore);
 	BOOL		Swap(CDownload* p1, CDownload* p2);
+	CDownload*	FindByPath(LPCTSTR szPath) const;
 	CDownload*	FindByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE) const;
     CDownload*	FindBySHA1(const Hashes::Sha1Hash& oSHA1, BOOL bSharedOnly = FALSE) const;
     CDownload*	FindByTiger(const Hashes::TigerHash& oTiger, BOOL bSharedOnly = FALSE) const;
     CDownload*	FindByED2K(const Hashes::Ed2kHash& oED2K, BOOL bSharedOnly = FALSE) const;
     CDownload*	FindByBTH(const Hashes::BtHash& oBTH, BOOL bSharedOnly = FALSE) const;
+	CDownload*	FindByMD5(const Hashes::Md5Hash& oMD5, BOOL bSharedOnly = FALSE) const;
 	CDownload*	FindBySID(DWORD nSerID) const;
 	DWORD		GetFreeSID();
 	QWORD		GetAmountDownloadedFrom(IN_ADDR* pAddress);

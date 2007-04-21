@@ -52,6 +52,8 @@ protected:
 	CString			m_sSHA1;
 	CString			m_sTiger;
 	CString			m_sED2K;
+	CString			m_sBTH;
+	CString			m_sMD5;
 	CString			m_sType;
 	CString			m_sSize;
 	CString			m_sBusy; // Busy status message

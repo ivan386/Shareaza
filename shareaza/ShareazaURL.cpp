@@ -55,6 +55,7 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	Clear();
 	m_nAction	= uriDownload;
 	m_pTorrent	= pTorrent;
+	m_oMD5		= pTorrent->m_oMD5;
 	m_oBTH		= pTorrent->m_oBTH;
 	m_oSHA1     = pTorrent->m_oSHA1;
 	m_oED2K		= pTorrent->m_oED2K;
@@ -77,7 +78,7 @@ void CShareazaURL::Clear()
 	m_nAction	= uriNull;
 	m_oSHA1.clear();
 	m_oTiger.clear();
-    m_oMD5.clear();
+	m_oMD5.clear();
 	m_oED2K.clear();
     m_oBTH.clear();
 	m_bSize		= FALSE;
@@ -177,12 +178,14 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 					_tcsnicmp( strValue, _T("tree:tiger/:"), 12 ) == 0 ||
 					_tcsnicmp( strValue, _T("tree:tiger/1024:"), 16 ) == 0 ||
 					_tcsnicmp( strValue, _T("md5:"), 4 ) == 0 ||
+					_tcsnicmp( strValue, _T("btih:"), 5 ) == 0 ||
 					_tcsnicmp( strValue, _T("ed2k:"), 5 ) == 0 )
 			{
 				if ( !m_oSHA1 ) m_oSHA1.fromUrn( strValue );
 				if ( !m_oTiger ) m_oTiger.fromUrn( strValue );
                 if ( !m_oMD5 ) m_oMD5.fromUrn( strValue );
 				if ( !m_oED2K ) m_oED2K.fromUrn( strValue );
+				if ( !m_oBTH ) m_oBTH.fromUrn( strValue );
 			}
 			else if (	_tcsnicmp( strValue, _T("http://"), 7 ) == 0 ||
 						_tcsnicmp( strValue, _T("http%3A//"), 9 ) == 0 ||
@@ -216,6 +219,10 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		{
 			m_sName = strValue;
 			m_oSHA1.clear();
+			m_oTiger.clear();
+			m_oED2K.clear();
+			m_oMD5.clear();
+			m_oBTH.clear();
 		}
 		else if ( _tcsicmp( strKey, _T("xl") ) == 0 )
 		{
@@ -239,7 +246,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		*/
 	}
 	
-    if ( m_oSHA1 || m_oTiger || m_oMD5 || m_oED2K || m_sURL.GetLength() )
+    if ( m_oSHA1 || m_oTiger || m_oBTH || m_oMD5 || m_oED2K || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;
@@ -351,12 +358,14 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 				_tcsnicmp( strPart, _T("tree:tiger/:"), 12 ) == 0 ||
 				_tcsnicmp( strPart, _T("tree:tiger/1024:"), 16 ) == 0 ||
 				_tcsnicmp( strPart, _T("md5:"), 4 ) == 0 ||
+				_tcsnicmp( strPart, _T("btih:"), 5 ) == 0 ||
 				_tcsnicmp( strPart, _T("ed2k:"), 5 ) == 0 )
 		{
 			if ( !m_oSHA1 ) m_oSHA1.fromUrn( strPart );
 			if ( !m_oTiger ) m_oTiger.fromUrn( strPart );
             if ( !m_oMD5 ) m_oMD5.fromUrn( strPart );
 			if ( !m_oED2K ) m_oED2K.fromUrn( strPart );
+			if ( !m_oBTH ) m_oBTH.fromUrn( strPart );
 		}
 		else if ( _tcsnicmp( strPart, _T("source:"), 7 ) == 0 )
 		{
@@ -394,7 +403,7 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 		}
 	}
 	
-    if ( m_oSHA1 || m_oTiger || m_oMD5 || m_oED2K || m_sURL.GetLength() )
+    if ( m_oSHA1 || m_oTiger || m_oBTH || m_oMD5 || m_oED2K || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;
@@ -674,12 +683,27 @@ auto_ptr< CQuerySearch > CShareazaURL::ToQuery()
 	{
 		pSearch->m_oSHA1 = m_oSHA1;
 	}
+
+	if ( m_oTiger )
+	{
+		pSearch->m_oTiger = m_oTiger;
+	}
 	
 	if ( m_oED2K )
 	{
 		pSearch->m_oED2K = m_oED2K;
 	}
-	
+
+	if ( m_oBTH )
+	{
+		pSearch->m_oBTH = m_oBTH;
+	}
+
+	if ( m_oMD5 )
+	{
+		pSearch->m_oMD5 = m_oMD5;
+	}
+
 	return pSearch;
 }
 

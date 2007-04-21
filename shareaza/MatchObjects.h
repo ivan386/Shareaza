@@ -42,9 +42,11 @@ typedef struct
 	BOOL	bHadSHA1;
 	BOOL	bHadTiger;
 	BOOL	bHadED2K;
+	BOOL	bHadBTH;
+	BOOL	bHadMD5;
 	int		nHadCount;
 	int		nHadFiltered;
-	BOOL	bHad[3];
+	BOOL	bHad[5];
 } FILESTATS;
 
 class CMatchList
@@ -91,6 +93,8 @@ protected:
 	CMatchFile**	m_pMapSHA1;
 	CMatchFile**	m_pMapTiger;
 	CMatchFile**	m_pMapED2K;
+	CMatchFile**	m_pMapBTH;
+	CMatchFile**	m_pMapMD5;
 	LPTSTR			m_pszFilter;
 	CSchemaMember**	m_pColumns;
 	int				m_nColumns;
@@ -101,6 +105,8 @@ protected:
 		fTiger	= 1,
 		fED2K	= 2,
 		fSize	= 3,
+		fBTH	= 4,
+		fMD5	= 5
 	};
 	
 public:
@@ -144,6 +150,8 @@ public:
 	CMatchFile*	m_pNextSHA1;
 	CMatchFile*	m_pNextTiger;
 	CMatchFile*	m_pNextED2K;
+	CMatchFile*	m_pNextBTH;
+	CMatchFile*	m_pNextMD5;
 	CString		m_sSize;
 	TRISTATE	m_bBusy;
 	TRISTATE	m_bPush;

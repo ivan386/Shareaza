@@ -1,11 +1,7 @@
 //
 // DownloadTransferHTTP.cpp
 //
-//	Date:			"$Date: 2006/04/04 23:33:36 $"
-//	Revision:		"$Revision: 1.24 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -370,53 +366,71 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	
 	m_pOutput->Print( "X-Queue: 0.1\r\n" );
 	
-	if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh && ! m_bTigerFetch && ! m_bMetaFetch )
+	if ( ! m_bTigerFetch && ! m_bMetaFetch )
 	{
-		CString strURN = m_pDownload->m_oSHA1.toUrn();
-		
-		m_pOutput->Print( "X-Content-URN: " );
-		m_pOutput->Print( strURN + _T("\r\n") );
-		
-		if ( m_pSource->m_nGnutella < 2 )
-			strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_G1, m_pSource );
-		else
-			strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_HTTP, m_pSource );
-		
-		if ( strLine.GetLength() )
+		if ( m_pDownload->m_oSHA1 )
 		{
-			if ( m_pSource->m_nGnutella < 2 )
-				m_pOutput->Print( "X-Alt: " );
-			else
-				m_pOutput->Print( "Alt-Location: " );
-			m_pOutput->Print( strLine + _T("\r\n") );
+			m_pOutput->Print( "X-Content-URN: " );
+			m_pOutput->Print( m_pDownload->m_oSHA1.toUrn() + _T("\r\n") );
 		}
-		
-		if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
+		if ( m_pDownload->m_oED2K )
+		{
+			m_pOutput->Print( "X-Content-URN: " );
+			m_pOutput->Print( m_pDownload->m_oED2K.toUrn() + _T("\r\n") );
+		}
+		if ( m_pDownload->m_oBTH )
+		{
+			m_pOutput->Print( "X-Content-URN: " );
+			m_pOutput->Print( m_pDownload->m_oBTH.toUrn() + _T("\r\n") );
+		}
+		if ( m_pDownload->m_oMD5 )
+		{
+			m_pOutput->Print( "X-Content-URN: " );
+			m_pOutput->Print( m_pDownload->m_oMD5.toUrn() + _T("\r\n") );
+		}
+		if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh )
 		{
 			if ( m_pSource->m_nGnutella < 2 )
-			{
-				strLine.Format( _T("%s:%i"), (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-					htons( Network.m_pHost.sin_port ) );
-				m_pOutput->Print( "X-Alt: " );
-			}
+				strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_G1, m_pSource );
 			else
-			{
-				strLine.Format( _T("http://%s:%i/uri-res/N2R?%s "),
-					(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-					htons( Network.m_pHost.sin_port ),
-					(LPCTSTR)strURN );
-				strLine += TimeToString( static_cast< DWORD >( time( NULL ) - 180 ) );
-				m_pOutput->Print( "Alt-Location: " );
-			}
-			m_pOutput->Print( strLine + _T("\r\n") );
+				strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_HTTP, m_pSource );
 			
-			if ( m_pSource->m_nGnutella < 2 )
+			if ( strLine.GetLength() )
 			{
-				strLine = m_pDownload->GetTopFailedSources( 15, PROTOCOL_G1 );
-				if ( strLine.GetLength() )
+				if ( m_pSource->m_nGnutella < 2 )
+					m_pOutput->Print( "X-Alt: " );
+				else
+					m_pOutput->Print( "Alt-Location: " );
+				m_pOutput->Print( strLine + _T("\r\n") );
+			}
+			
+			if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
+			{
+				if ( m_pSource->m_nGnutella < 2 )
 				{
-					m_pOutput->Print( "X-NAlt: " + strLine );
-					m_pOutput->Print( _T("\r\n") );
+					strLine.Format( _T("%s:%i"), (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+						htons( Network.m_pHost.sin_port ) );
+					m_pOutput->Print( "X-Alt: " );
+				}
+				else
+				{
+					strLine.Format( _T("http://%s:%i/uri-res/N2R?%s "),
+						(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+						htons( Network.m_pHost.sin_port ),
+						(LPCTSTR)m_pDownload->m_oSHA1.toUrn() );
+					strLine += TimeToString( static_cast< DWORD >( time( NULL ) - 180 ) );
+					m_pOutput->Print( "Alt-Location: " );
+				}
+				m_pOutput->Print( strLine + _T("\r\n") );
+				
+				if ( m_pSource->m_nGnutella < 2 )
+				{
+					strLine = m_pDownload->GetTopFailedSources( 15, PROTOCOL_G1 );
+					if ( strLine.GetLength() )
+					{
+						m_pOutput->Print( "X-NAlt: " + strLine );
+						m_pOutput->Print( _T("\r\n") );
+					}
 				}
 			}
 		}
@@ -736,6 +750,8 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		Hashes::Sha1Hash oSHA1;
 		Hashes::TigerHash oTiger;
 		Hashes::Ed2kHash oED2K;
+		Hashes::BtHash oBTH;
+		Hashes::Md5Hash oMD5;
 		CString strURNs = strValue + ',';
 		for ( int nPos = strURNs.Find( ',' ); nPos >= 0; nPos = strURNs.Find( ',' ) )
 		{
@@ -744,7 +760,9 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			
 			if (   ( !oSHA1 .fromUrn( strValue ) || m_pSource->CheckHash( oSHA1  ) )
 				&& ( !oTiger.fromUrn( strValue ) || m_pSource->CheckHash( oTiger ) )
-				&& ( !oED2K .fromUrn( strValue ) || m_pSource->CheckHash( oED2K  ) ) )
+				&& ( !oED2K .fromUrn( strValue ) || m_pSource->CheckHash( oED2K  ) )
+				&& ( !oMD5  .fromUrn( strValue ) || m_pSource->CheckHash( oMD5   ) )
+				&& ( !oBTH  .fromUrn( strValue ) || ( m_pSource->CheckHash( oBTH   ), TRUE ) ) )
 			{
 				if ( oTiger && Settings.Downloads.VerifyTiger && !m_bTigerIgnore && m_sTigerTree.IsEmpty()
 					&& (   _tcsistr( m_sUserAgent, L"shareaza 2.1.4" ) != NULL
@@ -759,7 +777,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 						Settings.Library.TigerHeight,
 						Settings.Downloads.VerifyED2K );
 				}
-				m_bHashMatch = m_bHashMatch || oSHA1 || oTiger || oED2K;
+				m_bHashMatch = m_bHashMatch || oSHA1 || oTiger || oED2K || oBTH || oMD5;
 				continue;
 			}
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH, (LPCTSTR)m_sAddress,

@@ -223,7 +223,13 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 			if ( m_oED2K != pHit->m_oED2K ) return FALSE;
 			bHash = TRUE;
 		}
-		if ( m_oBTH && pHit->m_oBTH )
+		if ( m_oMD5 && pHit->m_oMD5 )
+		{
+			if ( m_oMD5 != pHit->m_oMD5 ) return FALSE;
+			bHash = TRUE;
+		}
+		// BTH check is a last chance
+		if ( ! bHash && m_oBTH && pHit->m_oBTH )
 		{
 			if ( m_oBTH != pHit->m_oBTH ) return FALSE;
 			bHash = TRUE;
@@ -259,6 +265,11 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 	if ( !m_oBTH && pHit->m_oBTH )
 	{
 		m_oBTH = pHit->m_oBTH;
+		bUpdated = TRUE;
+	}
+	if ( !m_oMD5 && pHit->m_oMD5 )
+	{
+		m_oMD5 = pHit->m_oMD5;
 		bUpdated = TRUE;
 	}
 	
@@ -630,17 +641,17 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
 				pCopy->m_nPort, (LPCTSTR)m_oED2K.toUrn() );
 		}
-		//else if ( m_oBTH )
-		//{
-		//	strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-		//		(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
-		//		pCopy->m_nPort, (LPCTSTR)m_oBTH.toUrn() );
-		//}
 		else if ( m_oMD5 )
 		{
 			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
 				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
 				pCopy->m_nPort, (LPCTSTR)m_oMD5.toUrn() );
+		}
+		else if ( m_oBTH )
+		{
+			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
+				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
+				pCopy->m_nPort, (LPCTSTR)m_oBTH.toUrn() );
 		}
 
 		if ( strURL.GetLength() )
@@ -725,7 +736,7 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 	{
 		if ( pSource != pExcept && pSource->m_bPushOnly == FALSE &&
 			 pSource->m_nFailures == 0 && pSource->m_bReadContent &&
-			 ( pSource->m_bSHA1 || pSource->m_bED2K ) &&
+			 ( pSource->m_bSHA1 || pSource->m_bED2K || pSource->m_bBTH  || pSource->m_bMD5 ) &&
 			 ( pState == NULL || pState->Find( pSource->m_sURL ) == NULL ) )
 		{
 			if ( pState != NULL ) pState->AddTail( pSource->m_sURL );

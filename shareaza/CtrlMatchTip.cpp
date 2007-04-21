@@ -319,12 +319,16 @@ void CMatchTipCtrl::LoadFromFile()
 		m_sSHA1.Empty();
 		m_sTiger.Empty();
 		m_sED2K.Empty();
+		m_sBTH.Empty();
+		m_sMD5.Empty();
 	}
 	else
 	{
 		m_sSHA1 = m_pFile->m_oSHA1.toShortUrn();
 		m_sTiger = m_pFile->m_oTiger.toShortUrn();
 		m_sED2K = m_pFile->m_oED2K.toShortUrn();
+		m_sBTH = m_pFile->m_oBTH.toShortUrn();
+		m_sMD5 = m_pFile->m_oMD5.toShortUrn();
 	}
 
 	m_pFile->GetPartialTip( m_sPartial );
@@ -380,12 +384,16 @@ void CMatchTipCtrl::LoadFromHit()
 		m_sSHA1.Empty();
 		m_sTiger.Empty();
 		m_sED2K.Empty();
+		m_sBTH.Empty();
+		m_sMD5.Empty();
 	}
 	else
 	{
 		m_sSHA1 = m_pHit->m_oSHA1.toShortUrn();
 		m_sTiger = m_pHit->m_oTiger.toShortUrn();
 		m_sED2K = m_pHit->m_oED2K.toShortUrn();
+		m_sBTH = m_pHit->m_oBTH.toShortUrn();
+		m_sMD5 = m_pHit->m_oMD5.toShortUrn();
 	}
 
 	if ( m_pHit->m_nPartial )
@@ -578,7 +586,8 @@ CSize CMatchTipCtrl::ComputeSize()
 	strTest.Append( _T(": ") );
 	ExpandSize( dc, sz, strTest + m_sType, 40 );
 
-	if ( m_sSHA1.GetLength() || m_sTiger.GetLength() || m_sED2K.GetLength() )
+	if ( m_sSHA1.GetLength() || m_sTiger.GetLength() || m_sED2K.GetLength() ||
+		m_sBTH.GetLength() || m_sMD5.GetLength() )
 	{
 		sz.cy += 5 + 6;
 
@@ -597,6 +606,18 @@ CSize CMatchTipCtrl::ComputeSize()
 		if ( m_sED2K.GetLength() )
 		{
 			ExpandSize( dc, sz, m_sED2K );
+			sz.cy += TIP_TEXTHEIGHT;
+		}
+
+		if ( m_sBTH.GetLength() )
+		{
+			ExpandSize( dc, sz, m_sBTH );
+			sz.cy += TIP_TEXTHEIGHT;
+		}
+
+		if ( m_sMD5.GetLength() )
+		{
+			ExpandSize( dc, sz, m_sMD5 );
 			sz.cy += TIP_TEXTHEIGHT;
 		}
 	}
@@ -769,7 +790,8 @@ void CMatchTipCtrl::OnPaint()
 	pt.y += 16;
 
 	//Hashes
-	if ( m_sSHA1.GetLength() || m_sTiger.GetLength() || m_sED2K.GetLength() )
+	if ( m_sSHA1.GetLength() || m_sTiger.GetLength() || m_sED2K.GetLength() ||
+		m_sBTH.GetLength() || m_sMD5.GetLength() )
 	{
 		pt.y += 5;
 		dc.Draw3dRect( rc.left + 2, pt.y, rc.Width() - 4, 1,
@@ -792,6 +814,18 @@ void CMatchTipCtrl::OnPaint()
 		if ( m_sED2K.GetLength() )
 		{
 			DrawText( dc, pt, m_sED2K );
+			pt.y += TIP_TEXTHEIGHT;
+		}
+
+		if ( m_sBTH.GetLength() )
+		{
+			DrawText( dc, pt, m_sBTH );
+			pt.y += TIP_TEXTHEIGHT;
+		}
+
+		if ( m_sMD5.GetLength() )
+		{
+			DrawText( dc, pt, m_sMD5 );
 			pt.y += TIP_TEXTHEIGHT;
 		}
 	}

@@ -1062,7 +1062,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	}
 
 	// Check for excessive source searching
-	if ( pSearch->m_oSHA1 || pSearch->m_oBTH || pSearch->m_oED2K )
+	if ( pSearch->m_oSHA1 || pSearch->m_oED2K || pSearch->m_oBTH || pSearch->m_oMD5 )
 	{
 
 		// Update allowed query operations, check for bad client

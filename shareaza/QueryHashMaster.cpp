@@ -166,8 +166,12 @@ void CQueryHashMaster::Build()
 			
 			if ( pDownload->m_oBTH )
 			{
-				AddExactString( _T("BTIH") );
 				AddExactString( pDownload->m_oBTH.toUrn() );
+			}
+
+			if ( pDownload->m_oMD5 )
+			{
+				AddExactString( pDownload->m_oMD5.toUrn() );
 			}
 		}
 

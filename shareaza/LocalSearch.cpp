@@ -254,6 +254,16 @@ BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex)
 		CString strHash = pFile->m_oED2K.toUrn();
 		m_pPacket->WriteString( strHash );
 	}
+	else if ( pFile->m_oBTH )
+	{
+		CString strHash = pFile->m_oBTH.toUrn();
+		m_pPacket->WriteString( strHash );
+	}
+	else if ( pFile->m_oMD5 )
+	{
+		CString strHash = pFile->m_oMD5.toUrn();
+		m_pPacket->WriteString( strHash );
+	}
 	else
 	{
 		m_pPacket->WriteByte( 0 );
@@ -293,6 +303,16 @@ BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int /*nIndex*/)
 	if ( pFile->m_oED2K )
 	{
         nGroup += 5 + 5 + Hashes::Ed2kHash::byteCount;
+	}
+
+	if ( pFile->m_oBTH )
+	{
+		nGroup += 5 + 5 + Hashes::BtHash::byteCount;
+	}
+
+	if ( pFile->m_oMD5 )
+	{
+		nGroup += 5 + 4 + Hashes::Md5Hash::byteCount;
 	}
 
 	if ( m_pSearch == NULL || m_pSearch->m_bWantDN )
@@ -423,6 +443,20 @@ BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int /*nIndex*/)
 		pPacket->Write( pFile->m_oED2K );
 	}
 
+	if ( pFile->m_oBTH )
+	{
+		pPacket->WritePacket( G2_PACKET_URN, 5 + Hashes::BtHash::byteCount );
+		pPacket->WriteString( "btih" );
+		pPacket->Write( pFile->m_oBTH );
+	}
+
+	if ( pFile->m_oMD5 )
+	{
+		pPacket->WritePacket( G2_PACKET_URN, 4 + Hashes::Md5Hash::byteCount );
+		pPacket->WriteString( "md5" );
+		pPacket->Write( pFile->m_oMD5 );
+	}
+
 	if ( m_pSearch == NULL || m_pSearch->m_bWantDN )
 	{
 		if ( pFile->GetSize() <= 0xFFFFFFFF )
@@ -501,7 +535,7 @@ int CLocalSearch::ExecutePartialFiles(INT_PTR /*nMaximum*/)
 	ASSERT( m_pSearch != NULL );
 	
 	if ( !m_pSearch->m_oTiger && !m_pSearch->m_oSHA1 &&
-		 !m_pSearch->m_oED2K && !m_pSearch->m_oBTH ) return 0;
+		 !m_pSearch->m_oED2K && !m_pSearch->m_oBTH && !m_pSearch->m_oMD5 ) return 0;
 	
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return 0;
@@ -518,6 +552,7 @@ int CLocalSearch::ExecutePartialFiles(INT_PTR /*nMaximum*/)
 		if (	validAndEqual( m_pSearch->m_oTiger, pDownload->m_oTiger )
 			||	validAndEqual( m_pSearch->m_oSHA1, pDownload->m_oSHA1 )
 			||	validAndEqual( m_pSearch->m_oED2K, pDownload->m_oED2K )
+			||	validAndEqual( m_pSearch->m_oMD5, pDownload->m_oMD5 )
 			||	validAndEqual( m_pSearch->m_oBTH, pDownload->m_oBTH ) )
 		{
 			if ( pDownload->IsTorrent() || pDownload->IsStarted() )
@@ -568,6 +603,11 @@ void CLocalSearch::AddHit(CDownload* pDownload, int /*nIndex*/)
 	if ( pDownload->m_oBTH )
 	{
 		nGroup += 5 + 5 + Hashes::BtHash::byteCount;
+	}
+
+	if ( pDownload->m_oMD5 )
+	{
+		nGroup += 5 + 4 + Hashes::Md5Hash::byteCount;
 	}
 
 	if ( m_pSearch->m_bWantDN )
@@ -624,6 +664,13 @@ void CLocalSearch::AddHit(CDownload* pDownload, int /*nIndex*/)
         pPacket->WritePacket( G2_PACKET_URN, 5 + Hashes::BtHash::byteCount );
 		pPacket->WriteString( "btih" );
 		pPacket->Write( pDownload->m_oBTH );
+	}
+
+	if ( pDownload->m_oMD5 )
+	{
+		pPacket->WritePacket( G2_PACKET_URN, 4 + Hashes::Md5Hash::byteCount );
+		pPacket->WriteString( "md5" );
+		pPacket->Write( pDownload->m_oMD5 );
 	}
 
 	if ( m_pSearch->m_bWantDN )

@@ -523,7 +523,7 @@ void CDownloadsWnd::Prepare()
 				m_bSelNotMoving = TRUE;
 			if ( ! pDownload->IsBoosted() )
 				m_bSelBoostable = TRUE;
-            if ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_sDisplayName.GetLength() )
+            if ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sDisplayName.GetLength() )
 				m_bSelSHA1orTTHorED2KorName = TRUE;
 			if ( pDownload->IsTorrent() )
 				m_bSelTorrent = TRUE;

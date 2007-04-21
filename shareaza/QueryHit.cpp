@@ -629,6 +629,16 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 		strTemp.assign( pFirstHit->m_oED2K.toUrn() );
 		pList.push_back( strTemp );
 	}
+	if ( pFirstHit->m_oBTH )
+	{
+		strTemp.assign( pFirstHit->m_oBTH.toUrn() );
+		pList.push_back( strTemp );
+	}
+	if ( pFirstHit->m_oMD5 )
+	{
+		strTemp.assign( pFirstHit->m_oMD5.toUrn() );
+		pList.push_back( strTemp );
+	}
 	
 	for ( CQueryHit* pHit = pFirstHit->m_pNext ; pHit ; pHit = pHit->m_pNext )
 	{
@@ -640,6 +650,16 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 		if ( pHit->m_oED2K )
 		{
 			strTemp.assign( pHit->m_oED2K.toUrn() );
+			pList.push_back( strTemp );
+		}
+		if ( pHit->m_oBTH )
+		{
+			strTemp.assign( pHit->m_oBTH.toUrn() );
+			pList.push_back( strTemp );
+		}
+		if ( pHit->m_oMD5 )
+		{
+			strTemp.assign( pHit->m_oMD5.toUrn() );
 			pList.push_back( strTemp );
 		}
 	}
@@ -680,6 +700,10 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 			strTemp.assign( pHit->m_oSHA1.toUrn() );
 		else if ( pHit->m_oED2K )
 			strTemp.assign( pHit->m_oED2K.toUrn() );
+		else if ( pHit->m_oBTH )
+			strTemp.assign( pHit->m_oBTH.toUrn() );
+		else if ( pHit->m_oMD5 )
+			strTemp.assign( pHit->m_oMD5.toUrn() );
 		else continue;
 
 		if ( std::find( pList.begin(), pList.end(), strTemp ) == pList.end() )
@@ -853,6 +877,8 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 				if ( !m_oSHA1 ) m_oSHA1.fromUrn( strData );
 				if ( !m_oTiger ) m_oTiger.fromUrn( strData );
 				if ( !m_oED2K ) m_oED2K.fromUrn( strData );
+				if ( !m_oBTH ) m_oBTH.fromUrn( pszData );
+				if ( !m_oMD5 ) m_oMD5.fromUrn( pszData );
 			}
 			
 			if ( CGGEPItem* pItem = pGGEP.Find( _T("ALT"), 6 ) )
@@ -872,6 +898,8 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 			if ( !m_oSHA1 ) m_oSHA1.fromUrn( pszData );
 			if ( !m_oTiger ) m_oTiger.fromUrn( pszData );
 			if ( !m_oED2K ) m_oED2K.fromUrn( pszData );
+			if ( !m_oBTH ) m_oBTH.fromUrn( pszData );
+			if ( !m_oMD5 ) m_oMD5.fromUrn( pszData );
 		}
 		else if ( nLength > 4 )
 		{
@@ -881,7 +909,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		if ( pszSep ) pszData = pszSep + 1;
 		else break;
 	}
-	if ( !m_oSHA1 && !m_oTiger && !m_oED2K )
+	if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oBTH && !m_oMD5 )
 		AfxThrowUserException();
 }
 
@@ -952,6 +980,10 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 			{
 				pPacket->Read( m_oBTH );
 				m_oBTH.validate();
+			}
+			else if ( nPacket >= 16 && strURN == _T("md5") )
+			{
+				pPacket->Read( m_oMD5 );
 			}
 		}
 		else if ( nType == G2_PACKET_URL )
@@ -1073,7 +1105,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 		pPacket->m_nPosition = nSkip;
 	}
 	
-	if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oBTH ) AfxThrowUserException();
+	if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oBTH && !m_oMD5 ) AfxThrowUserException();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1416,7 +1448,7 @@ void CQueryHit::Resolve()
 		return;
 	}
 
-	if ( m_nIndex == 0 || m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || Settings.Downloads.RequestHash )
+	if ( m_nIndex == 0 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 || Settings.Downloads.RequestHash )
 	{
 		if ( m_oSHA1 )
 		{
@@ -1444,6 +1476,13 @@ void CQueryHit::Resolve()
 			m_sURL.Format( _T("btc://%s:%i//%s/"),
 				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
 				(LPCTSTR)m_oBTH.toString() );
+			return;
+		}
+		else if ( m_oMD5 )
+		{
+			m_sURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
+				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
+				(LPCTSTR)m_oMD5.toUrn() );
 			return;
 		}
 	}
@@ -1572,6 +1611,8 @@ void CQueryHit::Copy(CQueryHit* pOther)
 	m_oSHA1			= pOther->m_oSHA1;
 	m_oTiger		= pOther->m_oTiger;
 	m_oED2K			= pOther->m_oED2K;
+	m_oBTH			= pOther->m_oBTH;
+	m_oMD5			= pOther->m_oMD5;
 	m_sURL			= pOther->m_sURL;
 	m_sName			= pOther->m_sName;
 	m_nIndex		= pOther->m_nIndex;
@@ -1644,6 +1685,9 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
         SerializeOut( ar, m_oTiger );
         SerializeOut( ar, m_oED2K );
 
+		SerializeOut( ar, m_oBTH );
+		SerializeOut( ar, m_oMD5 );
+
 		ar << m_sURL;
 		ar << m_sName;
 		ar << m_nIndex;
@@ -1694,6 +1738,12 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
         SerializeIn( ar, m_oSHA1, nVersion );
         SerializeIn( ar, m_oTiger, nVersion );
         SerializeIn( ar, m_oED2K, nVersion );
+
+		if ( nVersion >= 13 )
+		{
+			SerializeIn( ar, m_oBTH, nVersion );
+			SerializeIn( ar, m_oMD5, nVersion );
+		}
 
 		ar >> m_sURL;
 		ar >> m_sName;

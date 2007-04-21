@@ -232,6 +232,10 @@ CString CDownloadWithFile::GetDisplayName() const
 		strName = m_oTiger.toShortUrn();
 	else if ( m_oED2K )
 		strName = m_oED2K.toShortUrn();
+	else if ( m_oBTH )
+		strName = m_oBTH.toShortUrn();
+	else if ( m_oMD5 )
+		strName = m_oMD5.toShortUrn();
 	else
 		strName = _T("Unknown File");
 	

@@ -48,6 +48,7 @@ protected:
 	CString			m_sTiger;
 	CString			m_sED2K;
 	CString			m_sBTH;
+	CString			m_sMD5;
 	CString			m_sURL;
 	CString			m_sSize;
 	CString			m_sType;

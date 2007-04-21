@@ -677,7 +677,7 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	m_bTigerTree	= bool( m_oTiger );
 	m_bMetadata		= ( pFile->m_pMetadata != NULL && ( pFile->m_bMetadataAuto == FALSE || pFile->m_nVirtualSize > 0 ) );
 	
-	if ( ! m_oSHA1 && ! m_oTiger && ! m_oED2K ) m_sLocations.Empty();
+	if ( ! m_oSHA1 && ! m_oTiger && ! m_oED2K && ! m_oBTH && ! m_oMD5 ) m_sLocations.Empty();
 	
 	if ( m_nLength == SIZE_UNKNOWN ) m_nLength = m_nFileSize - m_nOffset;
 	
@@ -1005,6 +1005,20 @@ void CUploadTransferHTTP::SendFileHeaders()
             + _T("\r\n");
 		m_pOutput->Print( strHeader );
 	}
+
+	if ( m_oBTH )
+	{
+		strHeader = _T("X-Content-URN: ") + m_oBTH.toUrn()
+			+ _T("\r\n");
+		m_pOutput->Print( strHeader );
+	}
+
+	if ( m_oMD5 )
+	{
+		strHeader = _T("X-Content-URN: ") + m_oMD5.toUrn()
+			+ _T("\r\n");
+		m_pOutput->Print( strHeader );
+	}
 	
 	if ( m_bTigerTree && Settings.Uploads.ShareTiger )
 	{
@@ -1118,7 +1132,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 		m_pOutput->Print( "Content-Encoding: backwards\r\n" );
 	}
 	
-	if ( m_oSHA1 || m_oTiger || m_oED2K ) SendFileHeaders();
+	if ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH  || m_oMD5 ) SendFileHeaders();
 	
 	m_pOutput->Print( "\r\n" );
 	
@@ -1556,6 +1570,8 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	m_oSHA1			= pFile->m_oSHA1;
 	m_oTiger		= pFile->m_oTiger;
 	m_oED2K			= pFile->m_oED2K;
+	m_oBTH			= pFile->m_oBTH;
+	m_oMD5			= pFile->m_oMD5;
 	DWORD nIndex	= pFile->m_nIndex;
 	BOOL bCached	= pFile->m_bCachedPreview;
 	

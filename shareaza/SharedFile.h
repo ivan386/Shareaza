@@ -50,6 +50,8 @@ public:
 	CLibraryFile*	m_pNextSHA1;
 	CLibraryFile*	m_pNextTiger;
 	CLibraryFile*	m_pNextED2K;
+	CLibraryFile*	m_pNextBTH;
+	CLibraryFile*	m_pNextMD5;
 	DWORD			m_nScanCookie;
 	DWORD			m_nUpdateCookie;
 	DWORD			m_nSelectCookie;
@@ -113,7 +115,7 @@ protected:
 	BOOL			LoadMetadata(HANDLE hFile);
 	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TS_UNKNOWN);
 	void			Ghost();
-    BOOL			OnVerifyDownload(const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, LPCTSTR pszSources);
+    BOOL			OnVerifyDownload(const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources);
 	
 // Inlines
 public:

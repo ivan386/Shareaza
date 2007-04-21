@@ -115,7 +115,9 @@ void CTorrentSeedDlg::OnDownload()
 
 		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
 		if ( ( pFile = LibraryMaps.LookupFileBySHA1( pURL->m_oSHA1 ) ) != NULL
-			|| ( pFile = LibraryMaps.LookupFileByED2K( pURL->m_oED2K ) ) != NULL )
+			|| ( pFile = LibraryMaps.LookupFileByED2K( pURL->m_oED2K ) ) != NULL 
+			|| ( pFile = LibraryMaps.LookupFileByBTH( pURL->m_oBTH ) ) != NULL 
+			|| ( pFile = LibraryMaps.LookupFileByMD5( pURL->m_oMD5 ) ) != NULL )
 		{
 			CString strFormat, strMessage;
 			LoadString( strFormat, IDS_URL_ALREADY_HAVE );

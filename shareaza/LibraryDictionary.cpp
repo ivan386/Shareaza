@@ -72,15 +72,28 @@ void CLibraryDictionary::Add(CLibraryFile* pFile)
 {
 	ProcessFile( pFile, TRUE );
 	
-	if ( ( pFile->m_oSHA1 || pFile->m_oED2K ) && ! BuildHashTable() )
+	if ( ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oED2K || pFile->m_oBTH || pFile->m_oMD5 ) &&
+		! BuildHashTable() )
 	{
 		if ( pFile->m_oSHA1 )
 		{
 			m_pTable->AddExactString( pFile->m_oSHA1.toUrn() );
 		}
+		if ( pFile->m_oTiger )
+		{
+			m_pTable->AddExactString( pFile->m_oTiger.toUrn() );
+		}
 		if ( pFile->m_oED2K )
 		{
 			m_pTable->AddExactString( pFile->m_oED2K.toUrn() );
+		}
+		if ( pFile->m_oBTH )
+		{
+			m_pTable->AddExactString( pFile->m_oBTH.toUrn() );
+		}
+		if ( pFile->m_oMD5 )
+		{
+			m_pTable->AddExactString( pFile->m_oMD5.toUrn() );
 		}
 	}
 }
@@ -92,7 +105,7 @@ void CLibraryDictionary::Remove(CLibraryFile* pFile)
 	// TODO: Always invalidate the table when removing a hashed
 	// file... is this wise???  It will happen all the time.
 	
-	if ( pFile->m_oSHA1 || pFile->m_oED2K ) m_bTable = FALSE;
+	if ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oED2K || pFile->m_oBTH || pFile->m_oMD5 ) m_bTable = FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -429,6 +442,14 @@ BOOL CLibraryDictionary::BuildHashTable()
 				{
 					m_pTable->AddExactString( pFile->m_oED2K.toUrn() );
 				}
+				if ( pFile->m_oBTH )
+				{
+					m_pTable->AddExactString( pFile->m_oBTH.toUrn() );
+				}
+				if ( pFile->m_oMD5 )
+				{
+					m_pTable->AddExactString( pFile->m_oMD5.toUrn() );
+				}
 /*
 				CString str;
 				str.Format( _T("File added: %s"), pFile->m_sName );
@@ -559,7 +580,9 @@ CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nM
 					pHit->m_pMetadata,
 					pHit->m_oSHA1,
 					pHit->m_oTiger,
-					pHit->m_oED2K ) )
+					pHit->m_oED2K,
+					pHit->m_oBTH,
+					pHit->m_oMD5 ) )
 			{
 				if ( ! pHits ) pHits = new CList< CLibraryFile* >;
 				pHits->AddTail( pHit );

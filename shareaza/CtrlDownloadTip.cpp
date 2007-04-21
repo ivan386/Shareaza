@@ -158,6 +158,11 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		AddSize( pDC, m_sBTH );
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
+	if ( m_sMD5.GetLength() )
+	{
+		AddSize( pDC, m_sMD5 );
+		m_sz.cy += TIP_TEXTHEIGHT;
+	}
 	if ( m_sTiger.GetLength() )
 	{
 		AddSize( pDC, m_sTiger );
@@ -260,6 +265,11 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	if ( !m_sBTH.IsEmpty() )
 	{
 		DrawText( pDC, &pt, m_sBTH );
+		pt.y += TIP_TEXTHEIGHT;
+	}
+	if ( !m_sMD5.IsEmpty() )
+	{
+		DrawText( pDC, &pt, m_sMD5 );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 
@@ -508,6 +518,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 	m_sED2K.Empty();
 	m_sBTH.Empty();
 	m_sURL.Empty();
+	m_sMD5.Empty();
 	
 	if ( Settings.General.GUIMode != GUI_BASIC )
 	{
@@ -587,6 +598,15 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 
 		if ( pDownload->IsTorrent() )
 			m_sURL = pDownload->m_pTorrent.m_sTracker;
+
+		m_sMD5 = pDownload->m_oMD5.toShortUrn();
+		if ( m_sMD5.GetLength() && Settings.General.Debug )
+		{
+			if ( ! pDownload->m_oMD5.isTrusted() )
+			{
+				m_sMD5+= _T(" (") + strUntrusted + _T(")");
+			}
+		}
 	}
 
 	int nPeriod = m_sName.ReverseFind( '.' );

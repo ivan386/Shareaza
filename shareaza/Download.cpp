@@ -577,15 +577,8 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 
 	LibraryBuilder.RequestPriority( m_sDiskName );
 	
-    if ( m_oSHA1 || m_oED2K )
-	{
-		LibraryHistory.Add( m_sDiskName, m_oSHA1,
-			m_oED2K, GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) );
-	}
-	else
-	{
-        LibraryHistory.Add( m_sDiskName, Hashes::Sha1Hash(), m_oED2K, NULL );
-	}
+	VERIFY( LibraryHistory.Add( m_sDiskName, m_oSHA1, m_oED2K, m_oBTH, m_oMD5,
+		GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) ) );
 	
 	ClearSources();
 	SetModified();

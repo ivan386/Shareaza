@@ -58,8 +58,8 @@ protected:
 // Operations
 public:
 	void			Serialize(CArchive& ar);
-    int				CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K);
-
+    int				CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K,
+    							const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, const QWORD nSize);
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CBaseMatchWnd)

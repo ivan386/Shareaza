@@ -68,6 +68,8 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 	m_pNextSHA1( NULL ),
 	m_pNextTiger( NULL ),
 	m_pNextED2K( NULL ),
+	m_pNextBTH( NULL ),
+	m_pNextMD5( NULL ),
 	m_nScanCookie( 0 ),
 	m_nUpdateCookie( 0 ),
 	m_nSelectCookie( 0 ),
@@ -617,6 +619,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
         SerializeOut( ar, m_oTiger );
         SerializeOut( ar, m_oMD5 );
         SerializeOut( ar, m_oED2K );
+		SerializeOut( ar, m_oBTH );
 		ar << m_bVerify;
 		
 		if ( m_pSchema != NULL && m_pMetadata != NULL )
@@ -716,6 +719,14 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
         {
             m_oED2K.clear();
         }
+		if ( nVersion >= 26 )
+		{
+			SerializeIn( ar, m_oBTH, nVersion );
+		}
+		else
+		{
+			m_oBTH.clear();
+		}
 		
 		if ( nVersion >= 4 ) ar >> m_bVerify;
 		
@@ -817,6 +828,7 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
         m_oTiger.clear();
         m_oMD5.clear();
         m_oED2K.clear();
+		m_oBTH.clear();
 		
 		if ( m_pMetadata != NULL && m_bMetadataAuto )
 		{
@@ -913,6 +925,7 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
             m_oTiger.clear();
             m_oMD5.clear();
             m_oED2K.clear();
+			m_oBTH.clear();
 		}
 		
 		if ( bLocked ) pLock.Unlock();
@@ -1113,7 +1126,7 @@ void CLibraryFile::Ghost()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile download verification
 
-BOOL CLibraryFile::OnVerifyDownload(const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, LPCTSTR pszSources)
+BOOL CLibraryFile::OnVerifyDownload(const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources)
 {
 	if ( m_pFolder == NULL ) return FALSE;
 	
@@ -1126,6 +1139,14 @@ BOOL CLibraryFile::OnVerifyDownload(const Hashes::Sha1Hash& oSHA1, const Hashes:
 		else if ( m_oED2K && oED2K )
 		{
 			m_bVerify = ( m_oED2K == oED2K ) ? TS_TRUE : TS_FALSE;
+		}
+		else if ( m_oMD5 && oMD5 )
+		{
+			m_bVerify = ( m_oMD5 == oMD5 ) ? TS_TRUE : TS_FALSE;
+		}
+		else if ( m_oBTH && oBTH )
+		{
+			m_bVerify = ( m_oBTH == oBTH ) ? TS_TRUE : TS_FALSE;
 		}
 		
 		if ( m_bVerify == TS_TRUE )
@@ -1349,6 +1370,11 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_URN(BSTR sURN, BSTR FAR* psURN)
 	{
 		if ( ! pThis->m_oED2K ) return E_FAIL;
         strURN = pThis->m_oED2K.toUrn();
+	}
+	else if ( strURN.CompareNoCase( _T("urn:btih") ) == 0 )
+	{
+		if ( ! pThis->m_oBTH ) return E_FAIL;
+		strURN = pThis->m_oBTH.toUrn();
 	}
 	else
 	{

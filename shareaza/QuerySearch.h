@@ -130,7 +130,7 @@ private:
 // Operations
 public:
 	BOOL					Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const Hashes::Sha1Hash& oSHA1,
-								const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K);
+								const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5);
 	TRISTATE				MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	BOOL					MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML, bool* bReject=NULL);
 	void					BuildWordList(bool bExpression=true, bool bLocal=false);

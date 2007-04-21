@@ -103,11 +103,13 @@ CCollectionFile::File* CCollectionFile::FindByURN(LPCTSTR pszURN)
     Hashes::TigerHash oTiger;
     Hashes::Md5Hash oMD5;
     Hashes::Ed2kHash oED2K;
+	Hashes::BtHash oBTH;
 	
 	oSHA1.fromUrn( pszURN );
     oMD5.fromUrn( pszURN );
     oTiger.fromUrn( pszURN );
     oED2K.fromUrn( pszURN );
+	oBTH.fromUrn( pszURN );
 	
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
@@ -117,6 +119,7 @@ CCollectionFile::File* CCollectionFile::FindByURN(LPCTSTR pszURN)
 		if ( validAndEqual( oMD5, pFile->m_oMD5 ) ) return pFile;
 		if ( validAndEqual( oTiger, pFile->m_oTiger ) ) return pFile;
 		if ( validAndEqual( oED2K, pFile->m_oED2K ) ) return pFile;
+		if ( validAndEqual( oBTH, pFile->m_oBTH ) ) return pFile;
 	}
 
 	return NULL;
@@ -136,6 +139,7 @@ CCollectionFile::File* CCollectionFile::FindFile(CLibraryFile* pShared, BOOL bAp
 		if ( validAndEqual( pShared->m_oMD5, pFile->m_oMD5 ) ) break;
 		if ( validAndEqual( pShared->m_oTiger, pFile->m_oTiger ) ) break;
 		if ( validAndEqual( pShared->m_oED2K, pFile->m_oED2K ) ) break;
+		if ( validAndEqual( pShared->m_oBTH, pFile->m_oBTH ) ) break;
 		pFile = NULL;
 	}
 
@@ -309,6 +313,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
             if ( !m_oMD5 ) m_oMD5.fromUrn( pXML->GetValue() );
 			if ( !m_oTiger ) m_oTiger.fromUrn( pXML->GetValue() );
 			if ( !m_oED2K ) m_oED2K.fromUrn( pXML->GetValue() );
+			if ( !m_oBTH ) m_oBTH.fromUrn( pXML->GetValue() );
 		}
 		else if ( pXML->IsNamed( _T("description") ) )
 		{
@@ -335,7 +340,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 		}
 	}
 	
-	return m_oSHA1 || m_oMD5 || m_oTiger || m_oED2K;
+	return m_oSHA1 || m_oMD5 || m_oTiger || m_oED2K || m_oBTH;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -345,14 +350,18 @@ BOOL CCollectionFile::File::IsComplete() const
 {
 	return LibraryMaps.LookupFileBySHA1( m_oSHA1, FALSE, TRUE )
 		|| LibraryMaps.LookupFileByTiger( m_oTiger, FALSE, TRUE )
-		|| LibraryMaps.LookupFileByED2K( m_oED2K, FALSE, TRUE );
+		|| LibraryMaps.LookupFileByED2K( m_oED2K, FALSE, TRUE )
+		|| LibraryMaps.LookupFileByBTH( m_oBTH, FALSE, TRUE )
+		|| LibraryMaps.LookupFileByMD5( m_oMD5, FALSE, TRUE );
 }
 
 BOOL CCollectionFile::File::IsDownloading() const
 {
 	return Downloads.FindBySHA1( m_oSHA1 )
 		|| Downloads.FindByTiger( m_oTiger )
-		|| Downloads.FindByED2K( m_oED2K );
+		|| Downloads.FindByED2K( m_oED2K )
+		|| Downloads.FindByMD5( m_oMD5 )
+		|| Downloads.FindByBTH( m_oBTH );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -369,6 +378,7 @@ BOOL CCollectionFile::File::Download()
     pURL.m_oMD5 = m_oMD5;
 	pURL.m_oTiger = m_oTiger;
 	pURL.m_oED2K = m_oED2K;
+	pURL.m_oBTH = m_oBTH;
 	pURL.m_sName	= m_sName;
 	pURL.m_bSize	= ( m_nSize != SIZE_UNKNOWN );
 	pURL.m_nSize	= m_nSize;

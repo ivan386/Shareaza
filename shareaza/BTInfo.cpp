@@ -84,6 +84,7 @@ void CBTInfo::Clear()
 	m_oSHA1.clear();
 	m_oTiger.clear();
 	m_oED2K.clear();
+	m_oMD5.clear();
 	m_nTotalSize	= 0;
 	m_nBlockSize	= 0;
 	m_nBlockCount	= 0;
@@ -118,6 +119,7 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	m_oSHA1				= pSource->m_oSHA1;
 	m_oED2K				= pSource->m_oED2K;
 	m_oTiger			= pSource->m_oTiger;
+	m_oMD5				= pSource->m_oMD5;
 	m_nTotalSize		= pSource->m_nTotalSize;
 	m_nBlockSize		= pSource->m_nBlockSize;
 	m_nBlockCount		= pSource->m_nBlockCount;
@@ -317,6 +319,7 @@ void CBTInfo::CBTFile::Copy(CBTFile* pSource)
 	m_oSHA1			= pSource->m_oSHA1;
 	m_oED2K			= pSource->m_oED2K;
 	m_oTiger		= pSource->m_oTiger;
+	m_oMD5			= pSource->m_oMD5;
 	nFilePriority	= pSource->nFilePriority;
 }
 
@@ -333,6 +336,7 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 		SerializeOut( ar, m_oED2K );
 		SerializeOut( ar, m_oTiger );
 		ar << nFilePriority;
+		SerializeOut( ar, m_oMD5 );
 	}
 	else
 	{
@@ -355,6 +359,11 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 			SerializeIn( ar, m_oED2K, nVersion );
 			SerializeIn( ar, m_oTiger, nVersion );
             ar >> nFilePriority;
+		}
+
+		if ( nVersion >= 6 )
+		{
+			SerializeIn( ar, m_oMD5, nVersion );
 		}
 	}
 }
@@ -652,6 +661,27 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		m_oED2K = *static_cast< const Hashes::Ed2kHash::RawStorage* >( pED2K->m_pValue );
 	}
 
+	if ( CBENode* pMD5 = pInfo->GetNode( "md5sum" ) )
+	{
+		if ( ! pMD5->IsType( CBENode::beString ) )
+		{
+			return FALSE;
+		}
+		else if ( pMD5->m_nValue == Hashes::Md5Hash::byteCount )
+		{
+			m_oMD5 = *static_cast< const Hashes::Md5Hash::RawStorage* >( pMD5->m_pValue );
+		}
+		else if ( pMD5->m_nValue == Hashes::Md5Hash::byteCount * 2 )
+		{
+			CStringA tmp;
+			tmp.Append( (const char*)pMD5->m_pValue, pMD5->m_nValue );
+			m_oMD5.fromString( CA2W( tmp ) );
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
 
 	if ( CBENode* pTiger = pInfo->GetNode( "tiger" ) )
 	{
@@ -673,7 +703,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		m_pFiles[0].m_oSHA1 = m_oSHA1;
 		m_pFiles[0].m_oTiger = m_oTiger;
 		m_pFiles[0].m_oED2K = m_oED2K;
-
+		m_pFiles[0].m_oMD5 = m_oMD5;
 
 		// Add sources from torrents - DWK
 		CBENode* pSources = pRoot->GetNode( "sources" );
@@ -805,6 +835,28 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 					*static_cast< Hashes::Ed2kHash::RawStorage* >( pED2K->m_pValue );
 			}
 
+			if ( CBENode* pMD5 = pInfo->GetNode( "md5sum" ) )
+			{
+				if ( ! pMD5->IsType( CBENode::beString ) )
+				{
+					return FALSE;
+				}
+				else if ( pMD5->m_nValue == Hashes::Md5Hash::byteCount )
+				{
+					m_pFiles[ nFile ].m_oMD5 = *static_cast< const Hashes::Md5Hash::RawStorage* >( pMD5->m_pValue );
+				}
+				else if ( pMD5->m_nValue == Hashes::Md5Hash::byteCount * 2 )
+				{
+					CStringA tmp;
+					tmp.Append( (const char*)pMD5->m_pValue, pMD5->m_nValue );
+					m_pFiles[ nFile ].m_oMD5.fromString( CA2W( tmp ) );
+				}
+				else
+				{
+					return FALSE;
+				}
+			}
+
 			if ( CBENode* pTiger = pInfo->GetNode( "tiger" ) )
 			{
 				if ( ! pTiger->IsType( CBENode::beString ) || pTiger->m_nValue != Hashes::TigerHash::byteCount ) return FALSE;
@@ -839,6 +891,14 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			else if ( m_oED2K )
 			{
 				m_pFiles[0].m_oED2K = m_oED2K;
+			}
+			if ( m_pFiles[0].m_oMD5 )
+			{
+				m_oMD5 = m_pFiles[0].m_oMD5;
+			}
+			else if ( m_oMD5 )
+			{
+				m_pFiles[0].m_oMD5 = m_oMD5;
 			}
 			if ( m_pFiles[0].m_oTiger )
 			{

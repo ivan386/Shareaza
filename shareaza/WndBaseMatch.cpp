@@ -269,7 +269,7 @@ void CBaseMatchWnd::OnSearchDownload()
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K ) )
+		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5, pFile->m_nSize ) )
 		{
 		case 1:
 			pFiles.AddTail( pFile );
@@ -287,7 +287,7 @@ void CBaseMatchWnd::OnSearchDownload()
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K ) )
+		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K, pHit->m_oBTH, pHit->m_oMD5, pHit->m_nSize ) )
 		{
 		case 1:
 			pHits.AddTail( pHit );
@@ -355,7 +355,7 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K ) )
+		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5, pFile->m_nSize ) )
 		{
 		case 1:
 			pFiles.AddTail( pFile );
@@ -373,7 +373,7 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K ) )
+		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K, pHit->m_oBTH, pHit->m_oMD5, pHit->m_nSize ) )
 		{
 		case 1:
 			pHits.AddTail( pHit );
@@ -428,20 +428,14 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 	}
 }
 
-int CBaseMatchWnd::CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K)
+int CBaseMatchWnd::CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K,
+								 const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, const QWORD nSize)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 500 ) ) return 1;
-	
-	CLibraryFile* pFile = NULL;
-	
-	if ( pFile == NULL && oSHA1 )
-		pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
-	if ( pFile == NULL && oTiger )
-		pFile = LibraryMaps.LookupFileByTiger( oTiger );
-	if ( pFile == NULL && oED2K )
-		pFile = LibraryMaps.LookupFileByED2K( oED2K );
-	
+
+	CLibraryFile* pFile = LibraryMaps.LookupFileByHash( oSHA1, oTiger, oED2K, oBTH, oMD5, nSize, nSize );
+
 	if ( pFile == NULL ) return 1;
 	
 	DWORD nIndex = pFile->m_nIndex;

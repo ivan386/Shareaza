@@ -150,10 +150,10 @@ void CDownloadWithSearch::StartAutomaticSearch()
 
 BOOL CDownloadWithSearch::CanSearch() const
 {
-	return m_pFile != NULL && 
+	return ( m_pFile != NULL ) && 
 		( ( m_oSHA1 || m_oTiger ) && ( Settings.Gnutella1.EnableToday || Settings.Gnutella2.EnableToday ) ||
-		  ( m_oED2K && ( Settings.Gnutella2.EnableToday || Settings.eDonkey.EnableToday ) ) || 
-		  m_oBTH );
+		  ( m_oED2K && ( Settings.Gnutella2.EnableToday || Settings.eDonkey.EnableToday ) ) ||
+		  m_oBTH || m_oMD5 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -196,6 +196,10 @@ void CDownloadWithSearch::PrepareSearch()
 	if ( m_oBTH )
 	{
 		pSearch->m_oBTH = m_oBTH;
+	}
+	if ( m_oMD5 )
+	{
+		pSearch->m_oMD5 = m_oMD5;
 	}
 	
 	pSearch->m_bWantURL	= TRUE;

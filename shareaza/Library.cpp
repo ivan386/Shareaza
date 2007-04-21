@@ -34,6 +34,8 @@
 #include "AlbumFolder.h"
 #include "DlgExistingFile.h"
 #include "WndMain.h"
+#include "Downloads.h"
+#include "Download.h"
 
 #include "QuerySearch.h"
 #include "Application.h"
@@ -103,6 +105,16 @@ CAlbumFolder* CLibrary::GetAlbumRoot()
 
 void CLibrary::AddFile(CLibraryFile* pFile)
 {
+	if ( ! pFile->m_oBTH )
+	{
+		// Get BTIH of recently downloaded file
+		CDownload* pDownload = Downloads.FindByPath( pFile->GetPath() );
+		if ( pDownload && pDownload->IsSingleFileTorrent() )
+		{
+			pFile->m_oBTH = pDownload->m_oBTH;
+		}
+	}
+
 	LibraryMaps.OnFileAdd( pFile );
 
 	if ( pFile->m_oSHA1 )
@@ -112,13 +124,13 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 
 	if ( pFile->IsAvailable() )
 	{
-        if ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oMD5 || pFile->m_oED2K )
+        if ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oMD5 || pFile->m_oED2K || pFile->m_oBTH )
 		{
 			LibraryHistory.Submit( pFile );
 			GetAlbumRoot()->OrganiseFile( pFile );
 		}
 
-        if ( !pFile->m_oSHA1 || !pFile->m_oTiger || !pFile->m_oMD5 || !pFile->m_oED2K )
+        if ( !pFile->m_oSHA1 || !pFile->m_oTiger || !pFile->m_oMD5 || !pFile->m_oED2K ) // BTH ignored
 		{
 			LibraryBuilder.Add( pFile ); // hash the file and add it again
 			Settings.Live.NewFile = TRUE;

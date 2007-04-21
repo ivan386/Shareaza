@@ -112,6 +112,7 @@ CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin)
 	m_oTiger	= pOrigin->m_oTiger;
 	m_oED2K		= pOrigin->m_oED2K;
 	m_oBTH		= pOrigin->m_oBTH;
+	m_oMD5		= pOrigin->m_oMD5;
 }
 
 CQuerySearch::~CQuerySearch()
@@ -174,6 +175,14 @@ CG1Packet* CQuerySearch::ToG1Packet()
 	else if ( m_oED2K )
 	{
 		strExtra = m_oED2K.toUrn();
+	}
+	else if ( m_oBTH )
+	{
+		strExtra = m_oBTH.toUrn();
+	}
+	else if ( m_oMD5 )
+	{
+		strExtra = m_oMD5.toUrn();
 	}
 	else
 	{ 
@@ -245,6 +254,13 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		pPacket->Write( m_oBTH );
 	}
 
+	if ( m_oMD5 )
+	{
+		pPacket->WritePacket( G2_PACKET_URN, Hashes::Md5Hash::byteCount + 4 );
+		pPacket->WriteString( "md5" );
+		pPacket->Write( m_oMD5 );
+	}
+	
 	if ( !m_sG2Keywords.IsEmpty() )
 	{
 		short bValue = (short)( 2 * rand() / ( RAND_MAX + 1.0 ) );
@@ -612,6 +628,8 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 				if ( !m_oSHA1 ) m_oSHA1.fromUrn( strData );
 				if ( !m_oTiger ) m_oTiger.fromUrn( strData );
 				if ( !m_oED2K ) m_oED2K.fromUrn( strData );
+				if ( !m_oBTH ) m_oBTH.fromUrn( pszData );
+				if ( !m_oMD5 ) m_oMD5.fromUrn( pszData );
 			}
 			
 			break;
@@ -627,6 +645,8 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 			if ( !m_oSHA1 ) m_oSHA1.fromUrn( pszData );
 			if ( !m_oTiger ) m_oTiger.fromUrn( pszData );
 			if ( !m_oED2K ) m_oED2K.fromUrn( pszData );
+			if ( !m_oBTH ) m_oBTH.fromUrn( pszData );
+			if ( !m_oMD5 ) m_oMD5.fromUrn( pszData );
 		}
 		else if ( nLength > 5 && _tcsncmp( pszData, _T("<?xml"), 5 ) == 0 )
 		{
@@ -733,6 +753,10 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 			{
 				pPacket->Read( m_oBTH );
 			}
+			else if ( nLength >= 16 && strURN == _T("md5") )
+			{
+				pPacket->Read( m_oMD5 );
+			}
 		}
 		else if ( nType == G2_PACKET_DESCRIPTIVE_NAME )
 		{
@@ -802,7 +826,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	bool bHashOk = false;
 
 	// Searches by hash are ok
-	if ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH )
+	if ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 )
 	{
 		if ( m_oURNs.empty() )
 		{
@@ -827,6 +851,12 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 			if ( m_oBTH )
 			{
 				CString strurn = m_oBTH.toUrn();
+				m_oURNs.push_back( CQueryHashTable::HashWord( strurn, 0, strurn.GetLength(), 32 ) );
+			}
+
+			if ( m_oMD5 )
+			{
+				CString strurn = m_oMD5.toUrn();
 				m_oURNs.push_back( CQueryHashTable::HashWord( strurn, 0, strurn.GetLength(), 32 ) );
 			}
 		}
@@ -967,7 +997,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch matching
 
-BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K)
+BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5)
 {
 	if ( nSize == SIZE_UNKNOWN || nSize < m_nMinSize || nSize > m_nMaxSize ) return FALSE;
 	
@@ -983,6 +1013,14 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 	{
 		return validAndEqual( oED2K, m_oED2K );
 	}
+	else if ( m_oBTH )
+	{
+		return validAndEqual( oBTH, m_oBTH );
+	}
+	else if ( m_oMD5 )
+	{
+		return validAndEqual( oMD5, m_oMD5 );
+	}
 	
 	if ( pszSchemaURI && *pszSchemaURI && pXML )
 	{
@@ -996,7 +1034,7 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 			if ( MatchMetadataShallow( pszSchemaURI, pXML, &bReject ) )
 			{
 				// If searching in Local library return true
-				if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oSimilarED2K )
+				if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oBTH && !m_oMD5 && !m_oSimilarED2K )
 					return TRUE;
 
 				// Otherwise, only return WordMatch when negative terms are used
@@ -1229,7 +1267,7 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 	if ( m_sKeywords.IsEmpty() )
 		m_sKeywords = m_sSearch;
 
-	BOOL bHash = ( m_oSHA1 || m_oTiger || m_oED2K ) && m_sSearch.IsEmpty();
+	BOOL bHash = ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 ) && m_sSearch.IsEmpty();
 	
 	if ( 0 == _tcsncmp( m_sSearch, _T("magnet:?"), 8 ) )
 	{
@@ -1263,6 +1301,22 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 		if ( ! m_oED2K )
 		{
 			if ( m_oED2K.fromUrn( m_sSearch ) )
+			{
+				bHash = TRUE;
+			}
+		}
+
+		if ( ! m_oBTH )
+		{
+			if ( m_oBTH.fromUrn( m_sSearch ) )
+			{
+				bHash = TRUE;
+			}
+		}
+
+		if ( ! m_oMD5 )
+		{
+			if ( m_oMD5.fromUrn( m_sSearch ) )
 			{
 				bHash = TRUE;
 			}
@@ -1585,7 +1639,7 @@ void CQuerySearch::BuildWordTable(LPCTSTR pszString)
 
 void CQuerySearch::Serialize(CArchive& ar)
 {
-	int nVersion = 6;
+	int nVersion = 7;
 	CString strURI;
 	
 	if ( ar.IsStoring() )
@@ -1600,6 +1654,7 @@ void CQuerySearch::Serialize(CArchive& ar)
 		SerializeOut( ar, m_oTiger );
 		SerializeOut( ar, m_oED2K );
 		SerializeOut( ar, m_oBTH );
+		SerializeOut( ar, m_oMD5 );
 		
 		if ( m_pSchema != NULL && m_pXML != NULL )
 		{
@@ -1630,7 +1685,12 @@ void CQuerySearch::Serialize(CArchive& ar)
 		SerializeIn( ar, m_oTiger, nVersion );
 		SerializeIn( ar, m_oED2K, nVersion );
 		SerializeIn( ar, m_oBTH, nVersion );
-		
+
+		if ( nVersion >= 7 )
+		{
+			SerializeIn( ar, m_oMD5, nVersion );
+		}
+
 		ar >> strURI;
 		
 		if ( strURI.GetLength() )

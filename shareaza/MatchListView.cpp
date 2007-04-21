@@ -123,6 +123,8 @@ void CMatchListView::GetNext(POSITION& pos, VARIANT* pVar) const
     const Hashes::TigerHash& rTiger = pFile ? pFile->m_oTiger : pHit->m_oTiger;
     const Hashes::Sha1Hash& rSHA1 = pFile ? pFile->m_oSHA1 : pHit->m_oSHA1;
     const Hashes::Ed2kHash& rED2K = pFile ? pFile->m_oED2K : pHit->m_oED2K;
+	const Hashes::BtHash& rBTH = pFile ? pFile->m_oBTH : pHit->m_oBTH;
+	const Hashes::Md5Hash& rMD5 = pFile ? pFile->m_oMD5 : pHit->m_oMD5;
 	
 	CString strURN;
 	VariantClear( pVar );
@@ -144,6 +146,14 @@ void CMatchListView::GetNext(POSITION& pos, VARIANT* pVar) const
 	else if ( rED2K )
 	{
 		strURN = rED2K.toUrn();
+	}
+	else if ( rBTH )
+	{
+		strURN = rBTH.toUrn();
+	}
+	else if ( rMD5 )
+	{
+		strURN = rMD5.toUrn();
 	}
 	else
 	{

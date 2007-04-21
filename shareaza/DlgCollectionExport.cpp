@@ -680,6 +680,11 @@ CXMLElement* CCollectionExportDlg::CreateXML(BOOL bMetadataAll)
 			pFileRoot->AddElement( _T("id") )->SetValue(
                 pFile->m_oED2K.toUrn() );
 		}
+		if ( pFile->m_oBTH )
+		{
+			pFileRoot->AddElement( _T("id") )->SetValue(
+				pFile->m_oBTH.toUrn() );
+		}
 
 		CXMLElement* pDescription = pFileRoot->AddElement( _T("description") );
 		pDescription->AddElement( _T("name") )->SetValue( pFile->m_sName );

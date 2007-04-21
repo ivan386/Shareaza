@@ -168,7 +168,8 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 
 void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 {
-	if ( !pDownload->m_oSHA1 && !pDownload->m_oTiger && !pDownload->m_oED2K ) return;
+	if ( ! pDownload->m_oSHA1 && ! pDownload->m_oTiger && ! pDownload->m_oED2K &&
+		 ! pDownload->m_oBTH && ! pDownload->m_oMD5 ) return;
 
 	CSingleLock oLock( &Library.m_pSection );
 	if ( !oLock.Lock( 500 ) ) return;
@@ -181,6 +182,10 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 		pFile = LibraryMaps.LookupFileByTiger( pDownload->m_oTiger );
 	if ( pFile == NULL && pDownload->m_oED2K )
 		pFile = LibraryMaps.LookupFileByED2K( pDownload->m_oED2K );
+	if ( pFile == NULL && pDownload->m_oBTH )
+		pFile = LibraryMaps.LookupFileByBTH( pDownload->m_oBTH );
+	if ( pFile == NULL && pDownload->m_oMD5 )
+		pFile = LibraryMaps.LookupFileByMD5( pDownload->m_oMD5 );
 	
 	if ( pFile == NULL && m_bCreateGhost && 
 		 ( m_nRateValue > 0 || m_sComments.GetLength() > 0 ) ) // The file is not completed
@@ -191,6 +196,7 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 		pFile->m_oTiger		= pDownload->m_oTiger;
 		pFile->m_oMD5		= pDownload->m_oMD5;
 		pFile->m_oED2K		= pDownload->m_oED2K;
+		pFile->m_oBTH		= pDownload->m_oBTH;
 		pFile->m_bShared	= bShare ? TS_TRUE : TS_FALSE;
 		pFile->Ghost();
 	}

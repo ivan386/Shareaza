@@ -43,8 +43,9 @@ protected:
 	CLibraryFile**		m_pSHA1Map;
 	CLibraryFile**		m_pTigerMap;
 	CLibraryFile**		m_pED2KMap;
+	CLibraryFile**		m_pBTHMap;
+	CLibraryFile**		m_pMD5Map;
 	CList< CLibraryFile* >	m_pDeleted;
-protected:
 	DWORD				m_nNextIndex;
 	DWORD				m_nFiles;
 	QWORD				m_nVolume;
@@ -60,9 +61,14 @@ public:
 	CLibraryFile*	LookupFileByName(LPCTSTR pszName, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByPath(LPCTSTR pszPath, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByHash(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K,
+						const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, QWORD nMinSize = SIZE_UNKNOWN, QWORD nMaxSize = SIZE_UNKNOWN,
+						BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CLibraryFile*	LookupFileBySHA1(const Hashes::Sha1Hash& oSHA1, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByTiger(const Hashes::TigerHash& oTiger, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByED2K(const Hashes::Ed2kHash& oED2K, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByBTH(const Hashes::BtHash& oBTH, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByMD5(const Hashes::Md5Hash& oMD5, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 protected:
 	void			Clear();
 	DWORD			AllocateIndex();

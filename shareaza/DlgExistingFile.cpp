@@ -83,6 +83,16 @@ CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent, bool bDup
 		m_sURN = pFile->m_oED2K.toUrn();
 		m_bAvailable	= 2;
 	}
+	else if ( pFile->m_oBTH )
+	{
+		m_sURN = pFile->m_oBTH.toUrn();
+		m_bAvailable	= 2;
+	}
+	else if ( pFile->m_oMD5 )
+	{
+		m_sURN = pFile->m_oMD5.toUrn();
+		m_bAvailable	= 2;
+	}
 }
 
 void CExistingFileDlg::DoDataExchange(CDataExchange* pDX)

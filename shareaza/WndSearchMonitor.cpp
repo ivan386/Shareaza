@@ -233,6 +233,10 @@ void CSearchMonitorWnd::OnQuerySearch(CQuerySearch* pSearch)
 	{
 		strURN = pSearch->m_oBTH.toShortUrn();
 	}
+	else if ( pSearch->m_oMD5 )
+	{
+		strURN = pSearch->m_oMD5.toShortUrn();
+	}
 
 	if ( pSearch->m_pXML )
 	{

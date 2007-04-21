@@ -117,14 +117,14 @@ CLibraryRecent* CLibraryHistory::GetByPath(LPCTSTR pszPath) const
 //////////////////////////////////////////////////////////////////////
 // CLibraryHistory add new download
 
-CLibraryRecent* CLibraryHistory::Add(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, LPCTSTR pszSources)
+CLibraryRecent* CLibraryHistory::Add(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources)
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
 	CLibraryRecent* pRecent = GetByPath( pszPath );
 	if ( pRecent != NULL ) return pRecent;
 	
-	pRecent = new CLibraryRecent( pszPath, oSHA1, oED2K, pszSources );
+	pRecent = new CLibraryRecent( pszPath, oSHA1, oED2K, oBTH, oMD5, pszSources );
 	m_pList.AddHead( pRecent );
 
 	Prune();
@@ -293,7 +293,7 @@ CLibraryRecent::CLibraryRecent()
 	m_pFile		= NULL;
 }
 
-CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, LPCTSTR pszSources)
+CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources)
 {
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
@@ -304,6 +304,8 @@ CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, c
 	m_sSources	= pszSources;
 	m_oSHA1		= oSHA1;
 	m_oED2K		= oED2K;
+	m_oBTH		= oBTH;
+	m_oMD5		= oMD5;
 	
 }
 
@@ -319,7 +321,7 @@ void CLibraryRecent::RunVerify(CLibraryFile* pFile)
 	if ( m_pFile == NULL )
 	{
 		m_pFile = pFile;
-		m_pFile->OnVerifyDownload( m_oSHA1, m_oED2K, m_sSources );
+		m_pFile->OnVerifyDownload( m_oSHA1, m_oED2K, m_oBTH, m_oMD5, m_sSources );
 	}
 }
 
@@ -347,6 +349,8 @@ void CLibraryRecent::Serialize(CArchive& ar, int /*nVersion*/)
 			m_sPath = m_pFile->GetPath();
 			m_oSHA1 = m_pFile->m_oSHA1;
 			m_oED2K = m_pFile->m_oED2K;
+			m_oBTH = m_pFile->m_oBTH;
+			m_oMD5 = m_pFile->m_oMD5;
 		}
 	}
 }

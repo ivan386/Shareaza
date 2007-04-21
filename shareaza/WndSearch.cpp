@@ -787,6 +787,14 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 		{
 			strCaption += pSearch->m_oED2K.toUrn();
 		}
+		else if ( pSearch->m_oBTH )
+		{
+			strCaption += pSearch->m_oBTH.toUrn();
+		}
+		else if ( pSearch->m_oMD5 )
+		{
+			strCaption += pSearch->m_oMD5.toUrn();
+		}
 		
 		if ( pSearch->m_pSchema )
 		{

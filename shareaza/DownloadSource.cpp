@@ -127,6 +127,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 	m_bTiger	= bool( pHit->m_oTiger );
 	m_bED2K		= bool( pHit->m_oED2K );
 	m_bBTH		= bool( pHit->m_oBTH );
+	m_bMD5		= bool( pHit->m_oMD5 );
 	
 	if ( pHit->m_nProtocol == PROTOCOL_G1 || pHit->m_nProtocol == PROTOCOL_G2 )
 	{
@@ -270,6 +271,7 @@ BOOL CDownloadSource::ResolveURL()
 	m_bSHA1		|= static_cast< BOOL >( bool( pURL.m_oSHA1 ) );
 	m_bED2K		|= static_cast< BOOL >( bool( pURL.m_oED2K ) );
 	m_bBTH		|= static_cast< BOOL >( bool( pURL.m_oBTH ) );
+	m_bMD5		|= static_cast< BOOL >( bool( pURL.m_oMD5 ) );
 
 	m_nProtocol	= pURL.m_nProtocol;
 	m_pAddress	= pURL.m_pAddress;
@@ -696,6 +698,44 @@ BOOL CDownloadSource::CheckHash(const Hashes::Ed2kHash& oED2K)
 	m_bED2K = TRUE;
 	m_pDownload->SetModified();
 	
+	return TRUE;
+}
+
+BOOL CDownloadSource::CheckHash(const Hashes::BtHash& oBTH)
+{
+	if ( m_pDownload->m_oBTH && ! m_bHashAuth )
+	{
+		if ( validAndUnequal( m_pDownload->m_oBTH, oBTH ) ) return FALSE;
+	}
+	else
+	{
+		if ( m_pDownload->IsTorrent() ) return TRUE;
+
+		m_pDownload->m_oBTH = oBTH;
+	}
+
+	m_bBTH = TRUE;
+	m_pDownload->SetModified();
+
+	return TRUE;
+}
+
+BOOL CDownloadSource::CheckHash(const Hashes::Md5Hash& oMD5)
+{
+	if ( m_pDownload->m_oMD5 && ! m_bHashAuth )
+	{
+		if ( validAndUnequal( m_pDownload->m_oMD5, oMD5 ) ) return FALSE;
+	}
+	else
+	{
+		if ( m_pDownload->IsTorrent() ) return TRUE;
+
+		m_pDownload->m_oMD5 = oMD5;
+	}
+
+	m_bMD5 = TRUE;
+	m_pDownload->SetModified();
+
 	return TRUE;
 }
 

@@ -111,6 +111,8 @@ public:
     BOOL		CheckHash(const Hashes::Sha1Hash& oSHA1);
     BOOL		CheckHash(const Hashes::TigerHash& oTiger);
     BOOL		CheckHash(const Hashes::Ed2kHash& oED2K);
+	BOOL		CheckHash(const Hashes::BtHash& oBTH);
+	BOOL		CheckHash(const Hashes::Md5Hash& oMD5);
 public:
 	BOOL		PushRequest();
 	BOOL		CheckPush(const Hashes::Guid& oClientID);

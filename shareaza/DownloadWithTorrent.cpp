@@ -119,6 +119,11 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			m_oED2K = m_pTorrent.m_oED2K;
 			m_oED2K.signalTrusted();
 		}
+		if ( ! m_oMD5 && m_pTorrent.m_oMD5 )
+		{
+			m_oMD5 = m_pTorrent.m_oMD5;
+			m_oMD5.signalTrusted();
+		}
 	}
 
 	if ( nVersion >= 23 && IsTorrent() )
@@ -175,6 +180,11 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 	{
 		m_oED2K = m_pTorrent.m_oED2K;
 		m_oED2K.signalTrusted();
+	}
+	if ( ! m_oMD5 && m_pTorrent.m_oMD5 )
+	{
+		m_oMD5 = m_pTorrent.m_oMD5;
+		m_oMD5.signalTrusted();
 	}
 	
 	m_nTorrentSize	= m_pTorrent.m_nBlockSize;

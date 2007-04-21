@@ -102,7 +102,11 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 		pDownload = FindByTiger( pHit->m_oTiger );
 	if ( pDownload == NULL && pHit->m_oED2K )
 		pDownload = FindByED2K( pHit->m_oED2K );
-	
+	if ( pDownload == NULL && pHit->m_oBTH )
+		pDownload = FindByBTH( pHit->m_oBTH );
+	if ( pDownload == NULL && pHit->m_oMD5 )
+		pDownload = FindByMD5( pHit->m_oMD5 );
+
 	if ( pDownload != NULL )
 	{
 		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pHit->m_sName );
@@ -122,7 +126,9 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 
         if ( pDownload->m_oSHA1 ) pDownload->m_oSHA1.signalTrusted();
-        else if ( pDownload->m_oED2K ) pDownload->m_oED2K.signalTrusted();
+        if ( pDownload->m_oED2K ) pDownload->m_oED2K.signalTrusted();
+		if ( pDownload->m_oBTH ) pDownload->m_oBTH.signalTrusted();
+		if ( pDownload->m_oMD5 ) pDownload->m_oMD5.signalTrusted();
 	}
 
 	pHit->m_bDownload = TRUE;
@@ -151,7 +157,11 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 		pDownload = FindByTiger( pFile->m_oTiger );
 	if ( pDownload == NULL && pFile->m_oED2K )
 		pDownload = FindByED2K( pFile->m_oED2K );
-	
+	if ( pDownload == NULL && pFile->m_oBTH )
+		pDownload = FindByBTH( pFile->m_oBTH );
+	if ( pDownload == NULL && pFile->m_oMD5 )
+		pDownload = FindByMD5( pFile->m_oMD5 );
+
 	if ( pDownload != NULL )
 	{
 		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pFile->m_sName );
@@ -172,7 +182,9 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 
         if ( pDownload->m_oSHA1 ) pDownload->m_oSHA1.signalTrusted();
-        else if ( pDownload->m_oED2K ) pDownload->m_oED2K.signalTrusted();
+        if ( pDownload->m_oED2K ) pDownload->m_oED2K.signalTrusted();
+		if ( pDownload->m_oBTH ) pDownload->m_oBTH.signalTrusted();
+		if ( pDownload->m_oMD5 ) pDownload->m_oMD5.signalTrusted();
 	}
 	
 	pFile->m_bDownload = TRUE;
@@ -185,7 +197,8 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 		pDownload->SetStartTimer();
 
 		if ( ( (pDownload->GetEffectiveSourceCount() <= 1 ) ||
-			( pDownload->m_oED2K && ! pDownload->m_oSHA1 )) )
+			( ( pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 ) &&
+				! pDownload->m_oSHA1 )) )
 		{
 			pDownload->FindMoreSources();
 		}
@@ -213,6 +226,8 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 		pDownload = FindByED2K( pURL->m_oED2K );
 	if ( pDownload == NULL && pURL->m_oBTH )
 		pDownload = FindByBTH( pURL->m_oBTH );
+	if ( pDownload == NULL && pURL->m_oMD5 )
+		pDownload = FindByMD5( pURL->m_oMD5 );
 	
 	if ( pDownload != NULL )
 	{
@@ -236,11 +251,6 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 		pDownload->m_oTiger			= pURL->m_oTiger;
         pDownload->m_oTiger.signalTrusted();
 	}
-    if ( pURL->m_oMD5 )
-	{
-		pDownload->m_oMD5			= pURL->m_oMD5;
-        pDownload->m_oMD5.signalTrusted();
-	}
 	if ( pURL->m_oED2K )
 	{
 		pDownload->m_oED2K			= pURL->m_oED2K;
@@ -251,6 +261,12 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	{
 		pDownload->m_oBTH			= pURL->m_oBTH;
 		pDownload->m_oBTH.signalTrusted();
+		pDownload->Share( TRUE );
+	}
+	if ( pURL->m_oMD5 )
+	{
+		pDownload->m_oMD5			= pURL->m_oMD5;
+		pDownload->m_oMD5.signalTrusted();
 		pDownload->Share( TRUE );
 	}
 	
@@ -504,12 +520,28 @@ BOOL CDownloads::CheckActive(CDownload* pDownload, int nScope) const
 	return FALSE;
 }
 
+CDownload* CDownloads::FindByPath(LPCTSTR szPath) const
+{
+	if ( szPath && *szPath )
+	{
+		for ( POSITION pos = GetIterator() ; pos ; )
+		{
+			CDownload* pDownload = GetNext( pos );
+			if ( pDownload->m_sDiskName.CompareNoCase( szPath ) == 0 )
+				return pDownload;
+		}
+	}
+	return NULL;
+}
+
 CDownload* CDownloads::FindByURN(LPCTSTR pszURN, BOOL bSharedOnly) const
 {
 	CDownload* pDownload;
     Hashes::TigerHash oTiger;
     Hashes::Sha1Hash oSHA1;
     Hashes::Ed2kHash oED2K;
+	Hashes::BtHash oBTH;
+	Hashes::Md5Hash oMD5;
 	
     if ( oSHA1.fromUrn( pszURN ) )
 	{
@@ -524,6 +556,16 @@ CDownload* CDownloads::FindByURN(LPCTSTR pszURN, BOOL bSharedOnly) const
 	if ( oED2K.fromUrn( pszURN ) )
 	{
 		if ( ( pDownload = FindByED2K( oED2K, bSharedOnly ) ) != NULL ) return pDownload;
+	}
+
+	if ( oBTH.fromUrn( pszURN ) )
+	{
+		if ( ( pDownload = FindByBTH( oBTH, bSharedOnly ) ) != NULL ) return pDownload;
+	}
+
+	if ( oMD5.fromUrn( pszURN ) )
+	{
+		if ( ( pDownload = FindByMD5( oMD5, bSharedOnly ) ) != NULL ) return pDownload;
 	}
 	
 	return NULL;
@@ -587,6 +629,21 @@ CDownload* CDownloads::FindByBTH(const Hashes::BtHash& oBTH, BOOL bSharedOnly) c
 		}
 	}
 	
+	return NULL;
+}
+
+CDownload* CDownloads::FindByMD5(const Hashes::Md5Hash& oMD5, BOOL bSharedOnly) const
+{
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDownload* pDownload = GetNext( pos );
+		if ( validAndEqual( pDownload->m_oMD5, oMD5) )
+		{
+			if ( ! bSharedOnly || ( pDownload->IsShared() ) )
+				return pDownload;
+		}
+	}
+
 	return NULL;
 }
 
