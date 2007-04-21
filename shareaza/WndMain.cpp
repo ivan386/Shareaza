@@ -2247,7 +2247,7 @@ void CMainWnd::OnWindowNavBar()
 {
 	ShowControlBar( &m_wndToolBar, FALSE, TRUE );
 	ShowControlBar( &m_wndNavBar, ! m_wndNavBar.IsVisible(), TRUE );
-	if ( ! m_wndNavBar.IsVisible() )
+	if ( m_wndToolBar.IsVisible() )
 	{
 		if ( ! Network.IsConnected() ) m_wndTabBar.SetMessage( IDS_TABBAR_NOT_CONNECTED );
 	}
