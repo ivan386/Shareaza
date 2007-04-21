@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.5.0"
+		version="2.2.5.1"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3411,15 +3411,16 @@
 		<control caption="Leaf to Hub"/>
 		<control caption="Hub to Hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Network:"/>
-		<control caption="Connect to eDonkey2000 today"/>
 		<control caption="Always connect to eDonkey2000"/>
+		<control caption="Connect to eDonkey2000 today"/>
 		<control caption="_Global Searching:"/>
 		<control caption="Search known remote servers in the server cache:"/>
 		<control caption="Stop searching after:"/>
 		<control/><control/>
 		<control caption="search results."/>
+		<control caption="Receive and update server list from the connected server"/>
 		<control caption="_Client Link Connections:"/>
 		<control caption="Connect to no more than:"/>
 		<control/><control/>
