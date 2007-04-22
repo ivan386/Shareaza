@@ -61,6 +61,8 @@ public:
 		{
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
+			if ( !theApp.m_bLive )
+				break;
 		}
 		return m_bAsyncFindRunning;
 	}
