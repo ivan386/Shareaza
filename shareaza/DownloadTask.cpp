@@ -693,7 +693,5 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid()
 	}
 
 	CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
-	if ( pBuffer == NULL ) return NULL;
-
 	return pBuffer;
 }
