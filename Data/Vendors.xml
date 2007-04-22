@@ -65,6 +65,11 @@
 		<capability name="chatFlag"/>
 	</vendor>
 
+	<vendor code="FUST">
+		<title>Fusteeno</title>
+		<link>http://www.fusteeno.com</link>
+	</vendor>
+
 	<vendor code="GIFT">
 		<title>giFT-Gnutella</title>
 		<link>http://gift.sourceforge.net/</link>
