@@ -522,7 +522,6 @@ void CDownloadTask::RunMerge()
 				{
 					pLock.Lock();
 					m_pDownload->SubmitData( qwOffset, Buf, (QWORD) dwReaded );
-					m_pDownload->RunValidation(FALSE);
 					qwOffset += (QWORD) dwReaded;
 					qwLength -= (QWORD) dwReaded;
 					pLock.Unlock();
@@ -532,9 +531,10 @@ void CDownloadTask::RunMerge()
 					// File error or end of file. Not Fatal
 					break;
 				}
-				Sleep( 100 );
+				Sleep( 1 );
 				if ( m_hSelectedFile == INVALID_HANDLE_VALUE ) return;		// Aborting
 			}
+			m_pDownload->RunValidation(FALSE);
 		}
 	}
 
