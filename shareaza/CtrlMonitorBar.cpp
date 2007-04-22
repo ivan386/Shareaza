@@ -79,10 +79,8 @@ int CMonitorBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		SetWindowLongPtr( this->m_hWnd, GWL_EXSTYLE, lpCreateStruct->dwExStyle );
 	}
 
-	m_hTab = (HICON)LoadImage( AfxGetResourceHandle(),
-		MAKEINTRESOURCE(IDI_POINTER_ARROW), IMAGE_ICON, 16, 16, 0 );
-	m_hUpDown = (HICON)LoadImage( AfxGetResourceHandle(),
-		MAKEINTRESOURCE(IDI_UPDOWN_ARROW), IMAGE_ICON, 16, 16, 0 );
+	m_hTab    = CoolInterface.ExtractIcon( IDI_POINTER_ARROW, theApp.m_bRTL );
+	m_hUpDown = CoolInterface.ExtractIcon( IDI_UPDOWN_ARROW, theApp.m_bRTL );
 
 	OnSkinChange();
 
@@ -152,6 +150,9 @@ void CMonitorBarCtrl::OnSkinChange()
 	HBITMAP hWatermark = Skin.GetWatermark( _T("CMonitorBar") );
 	if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
 	if ( hWatermark != NULL ) m_bmWatermark.Attach( hWatermark );
+	
+	m_hTab    = CoolInterface.ExtractIcon( IDI_POINTER_ARROW, theApp.m_bRTL );
+	m_hUpDown = CoolInterface.ExtractIcon( IDI_UPDOWN_ARROW, theApp.m_bRTL );
 
 	m_pRxItem->m_nColour = CoolInterface.m_crMonitorDownloadBar;
 	m_pTxItem->m_nColour = CoolInterface.m_crMonitorUploadBar;
