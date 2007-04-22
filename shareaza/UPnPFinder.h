@@ -51,7 +51,7 @@ public:
 	void OnSearchComplete();
 	inline bool IsAsyncFindRunning() 
 	{
-		if ( m_pDeviceFinder && m_bAsyncFindRunning && GetTickCount() - m_tLastEvent > 10000 )
+		if ( m_pDeviceFinder && m_bAsyncFindRunning && GetTickCount() - m_tLastEvent > 20000 )
 		{
 			m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
 			m_bAsyncFindRunning = false;
