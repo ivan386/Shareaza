@@ -377,7 +377,12 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crCmdText				= GetSysColor( COLOR_MENUTEXT );
 	m_crCmdTextSel			= GetSysColor( COLOR_MENUTEXT );
 	m_crDisabled			= GetSysColor( COLOR_GRAYTEXT );
+	m_crRanges				= RGB( 220, 240, 220 );
 	
+	m_crCompleted			= RGB( 0, 127, 0 );
+	m_crVerifyFail			= RGB( 255, 0, 0 );
+	m_crVerifyPass			= RGB( 0, 0, 127 );
+
 	m_crTipBack				= GetSysColor( COLOR_INFOBK );
 	m_crTipText				= GetSysColor( COLOR_INFOTEXT );
 	m_crTipBorder			= CalculateColour( m_crTipBack, (COLORREF)0, 100 );

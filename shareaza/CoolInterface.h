@@ -42,6 +42,7 @@ public:
 	CFont		m_fntItalic;
 	CFont		m_fntBoldItalic;
 	BOOL		m_bCustom;
+
 	COLORREF	m_crWindow;
 	COLORREF	m_crMidtone;
 	COLORREF	m_crHighlight;
@@ -57,11 +58,19 @@ public:
 	COLORREF	m_crCmdText;
 	COLORREF	m_crCmdTextSel;
 	COLORREF	m_crDisabled;
+	COLORREF	m_crRanges;
+
+	COLORREF	m_crCompleted;
+	COLORREF	m_crVerifyPass;
+	COLORREF	m_crVerifyFail;
+
 	COLORREF	m_crTipBack;
 	COLORREF	m_crTipText;
 	COLORREF	m_crTipBorder;
 	COLORREF	m_crTipWarnings; // Colour of warning messages
+
 	COLORREF	m_crTaskPanelBack;
+
 	COLORREF	m_crTaskBoxCaptionBack;
 	COLORREF	m_crTaskBoxPrimaryBack;
 	COLORREF	m_crTaskBoxCaptionText;

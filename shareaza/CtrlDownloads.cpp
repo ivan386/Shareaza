@@ -901,6 +901,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 {
 	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
 	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
+	COLORREF crText		= CoolInterface.m_crText;
 
 	if ( bDrop )
 	{
@@ -912,20 +913,21 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
 
-	if ( pDownload->m_bVerify == TS_FALSE )
-		dc.SetTextColor( RGB( 255, 0, 0 ) );
-	else if ( pDownload->m_bSelected )
-		dc.SetTextColor( CoolInterface.m_crHiText );
-	else if ( pDownload->m_bVerify == TS_TRUE )
-	{
-		if ( pDownload->IsTorrent() && ( pDownload->m_nTorrentUploaded < pDownload->m_nTorrentDownloaded ) )
-			dc.SetTextColor( CoolInterface.m_crText );
-		else
-			dc.SetTextColor( RGB( 0, 127, 0 ) );
-	}
-	else
-		dc.SetTextColor( CoolInterface.m_crText );
-
+ 	// Modify Text color if required
+ 	if ( pDownload->IsCompleted() )
+  	{
+ 		if ( pDownload->m_bVerify == TS_FALSE )
+ 			crText = CoolInterface.m_crVerifyFail;
+ 		else if ( pDownload->IsSeeding() )
+ 			crText = CoolInterface.m_crVerifyPass;
+  		else
+ 			crText = CoolInterface.m_crCompleted;
+  	}
+ 	else if ( pDownload->m_bSelected )
+ 		crText = CoolInterface.m_crHiText;
+  
+ 	dc.SetTextColor( crText );
+ 
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
 	HDITEM pColumn = {};
 
@@ -1064,11 +1066,17 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			{
 				if ( rcCell.Width() > 50 )
 				{
-					strText.Format( _T("%.2f%%"), pDownload->GetProgress() );
-				}
-				else
-				{
-					strText.Format( _T("%i%%"), pDownload->GetProgress() );
+ 					if ( pDownload->IsSeeding() )
+ 						strText.Format( _T("%.2f%%"), pDownload->GetRatio() );
+ 					else
+ 						strText.Format( _T("%.2f%%"), pDownload->GetProgress() );
+  				}
+  				else
+  				{
+ 					if ( pDownload->IsSeeding() )
+ 						strText.Format( _T("%i%%"), pDownload->GetRatio() );
+ 					else
+ 						strText.Format( _T("%i%%"), pDownload->GetProgress() );
 				}
 			}
 			else
@@ -1243,7 +1251,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			rcCell.DeflateRect( 0, 1 );
 			dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
 			rcCell.DeflateRect( 1, 1 );
-			CFragmentBar::DrawSource( &dc, &rcCell, pSource, RGB( 220, 240, 220 ) );
+			CFragmentBar::DrawSource( &dc, &rcCell, pSource, CoolInterface.m_crRanges );
 			break;
 			
 		case DOWNLOAD_COLUMN_SPEED:
