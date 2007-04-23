@@ -17,7 +17,7 @@
 		description="Tradução para o português do Brasil do Shareaza"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version=""
+		version="2.2.5.2"
 		type="Language"
 		language="pt-br"
 		prompt="Clique aqui para traduzir o Shareaza para o português do Brasil."
@@ -553,6 +553,7 @@
 		<menu text="Ferramentas">
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar Arquivos..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Baixar Arquivo/Torrent..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="Importar downloads parciais do eMule..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Escolher uma Skin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Escolher um Idioma..."/>
@@ -636,6 +637,7 @@
 		<menu text="Ferramentas">
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar Arquivos..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Baixar Arquivo/Torrent..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="Importar download parciais do eMule..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Escolher uma Skin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Escolher um Idioma..."/>
@@ -1339,6 +1341,7 @@
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="Tocar"/>
+		<item id="ID_MEDIA_PROPERTIES" text="Propriedades..."/>
 		<separator/>
 		<item id="ID_MEDIA_ADD" text="Adicionar Arquivo..."/>
 		<item id="ID_MEDIA_ADD_FOLDER" text="Adicionar Pasta..."/>
@@ -2453,6 +2456,7 @@
 <tip id="ID_WINDOW_TILE_HORZ" message="Organizar janelas abertas na horizontal, sem se sobrepôr aos ladrilhos."/>
 <tip id="ID_WINDOW_TILE_VERT" message="Organizar janelas abertas na vertical, sem se sobrepôr aos ladrilhos."/>
 <tip id="ID_WINDOW_TOOLBAR" message="Mostrar ou esconder a Barra de Ferramentas."/>
+	<tip id="ID_WINDOW_TOOLBAR" message="Mostrar ou esconder a barra de ferramentas."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Re-dimensionar a imagem para encaixar dentro da janela."/>
 	<tip id="ImageViewer_ActualSize" message="Mostrar a imagem no seu tamanho natural."/>
@@ -3155,6 +3159,7 @@
 	<string id="20214" value="Bom"/>
 	<string id="20215" value="Muito Bom"/>
 	<string id="20216" value="Excelente"/>
+	<string id="20217" value="Selecione a pasta temporária do eDonkey2000/eMule:"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
@@ -3406,23 +3411,22 @@
 		<control caption="Leaf para Hub"/>
 		<control caption="Hub para Hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="Rede Edonkey2000:"/>
-		<control caption="Conectar a eDonkey2000 hoje"/>
-		<control caption="Sempre conectar a ed2k"/>
+		<control caption="Sempre conectar na eDonkey2000"/>
+		<control caption="Conectar na eDonkey2000 hoje"/>
 		<control caption="Pesquisa Global:"/>
 		<control caption="Pesquisar em servidores remotos conhecidos no cache do servidor:"/>
 		<control caption="Parar de pesquisar após:"/>
 		<control/><control/>
-		<control caption="Resultados da busca."/>
-		<control caption="Conexões com Links do Cliente:"/>
+		<control caption="resultados de busca."/>
+		<control caption="Receber e atualizar a lista de servidores através do servidor conectado"/>
+		<control caption="Conexões com os Links do Clientes:"/>
 		<control caption="Conectar a não mais do que:"/>
 		<control/><control/>
 		<control caption="outros clientes eDonkey."/>
 		<control caption="Ferramentas do eDonkey2000"/>
-		<control caption="Importar arquivos parciais do eDonkey/eMule (.part):"/>
-		<control caption="Importar..."/>
-		<control caption="Baixar lista de servidores do eDonkey2000 da rede:"/>
+		<control caption="Baixar lista de servidores eDonkey2000 da rede:"/>
 		<control caption="Baixar..."/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
@@ -3980,8 +3984,8 @@
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Promova o Shareaza">
 		<control/>
 		<control caption="Ajude-nos a promover o Shareaza"/>
-		<control caption="Nós esperamos que você tenha gostado de usar o Shareaza até agora. Nós acreditamos que seja a melhor aplicação por aí."/>
-		<control caption="Infelizmente, muitos compartilhadores de arquivos não sabem o que eles estão perdendo!"/>
+		<control caption="Nós esperamos que você tenha gostado de usar o Shareaza até agora. Nós acreditamos que seja a melhor aplicação pra compartilhar."/>
+		<control caption="Infelizmente, muitos que compartilham arquivos não sabem o que eles estão perdendo!"/>
 		<control caption="Se você conhece alguém que gostaria do Shareaza, sejam eles um novo usuário ou alguém ainda usando um produto inferior, por que não deixá-los saber que há uma alternativa melhor?"/>
 		<control caption="As chances são de que eles ficarão gratos por você tê-los avisado!"/>
 		<control caption="www.shareaza.com"/>
@@ -4168,7 +4172,7 @@
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
 		<control caption="Por favor selecione o método de recodificação"/>
-		<control caption="Arábico|Báltico|Europeu central|Chinês Simplificado|Chinês Tradicional|Cirílico|Grego|Hebreu|Japonês|Coreano|Tai|Turco|Vietnamita"/>
+		<control caption="Arábe|Báltico|Europeu Central|Chinês Simplificado|Chinês Tradicional|Cirílico|Grego|Hebreu|Japonês|Coreano|Tailândes|Turco|Vietnamita"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
