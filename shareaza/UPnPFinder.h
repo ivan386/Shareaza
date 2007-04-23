@@ -61,8 +61,6 @@ public:
 		{
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
-			if ( !theApp.m_bLive )
-				break;
 		}
 		return m_bAsyncFindRunning;
 	}
@@ -124,6 +122,7 @@ private:
 
 	LONG	m_nAsyncFindHandle;
 	bool	m_bAsyncFindRunning;
+	bool	m_bCOM;
 	bool	m_bPortIsFree;
 	CString m_sLocalIP;
 	CString m_sExternalIP;

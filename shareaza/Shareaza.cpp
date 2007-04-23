@@ -437,10 +437,7 @@ int CShareazaApp::ExitInstance()
 	Skin.Clear();
 	
 	if ( m_bLive )
-	{
 		Settings.Save( TRUE );
-		m_bLive = FALSE;
-	}
 
 	if ( m_hUser32 != NULL ) FreeLibrary( m_hUser32 );
 

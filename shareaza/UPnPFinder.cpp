@@ -33,6 +33,7 @@ static char THIS_FILE[] = __FILE__;
 CUPnPFinder::CUPnPFinder()
 :	m_pDevices(),
 	m_pServices(),
+	m_bCOM( CoInitialize( NULL ) == S_OK ),
 	m_pDeviceFinder( CreateFinderInstance() ),
 	m_nAsyncFindHandle( 0 ),
 	m_bAsyncFindRunning( false ),
@@ -49,7 +50,7 @@ CUPnPFinder::CUPnPFinder()
 FinderPointer CUPnPFinder::CreateFinderInstance()
 {
 	void* pNewDeviceFinder = NULL;
-	if ( FAILED( CoCreateInstance( CLSID_UPnPDeviceFinder, NULL, CLSCTX_ALL,
+	if ( FAILED( CoCreateInstance( CLSID_UPnPDeviceFinder, NULL, CLSCTX_INPROC_SERVER,
 							IID_IUPnPDeviceFinder, &pNewDeviceFinder ) ) )
 	{
 		// Should we ask to disable auto-detection?
@@ -64,6 +65,7 @@ CUPnPFinder::~CUPnPFinder()
 {
 	m_pDevices.clear();
 	m_pServices.clear();
+	if ( m_bCOM ) CoUninitialize();
 }
 
 // Helper function to check if UPnP Device Host service is healthy
