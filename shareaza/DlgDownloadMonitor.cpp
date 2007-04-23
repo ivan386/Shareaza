@@ -288,14 +288,14 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 	{
 		if ( theApp.m_bRTL )
 		{
-			strText.Format( _T("%s %s %.1f%% : Shareaza"),
-				(LPCTSTR)m_pDownload->m_sDisplayName, strOf, m_pDownload->GetProgress() * 100.0 );
+			strText.Format( _T("%s %s %.2f%% : Shareaza"),
+				(LPCTSTR)m_pDownload->m_sDisplayName, strOf, m_pDownload->GetProgress() );
 		}
 		else
 		{
-		strText.Format( _T("%.1f%% %s %s : Shareaza"),
-			m_pDownload->GetProgress() * 100.0, strOf, (LPCTSTR)m_pDownload->m_sDisplayName );
-	}
+			strText.Format( _T("%.2f%% %s %s : Shareaza"),
+				m_pDownload->GetProgress(), strOf, (LPCTSTR)m_pDownload->m_sDisplayName );
+		}
 	}
 	else
 	{
@@ -368,7 +368,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 		strText.Format( _T("%i"), nSourceCount );
 		Update( &m_wndSources, strText );		
 	}
-	else if ( m_pDownload->GetProgress() == 1.0f && m_pDownload->IsStarted() )
+	else if ( m_pDownload->IsStarted() && m_pDownload->GetProgress() == 100.0f )
 	{
 		LoadString( strText, IDS_DLM_VERIFY );
 		Update( &m_wndStatus, strText );
@@ -440,16 +440,16 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 		if ( theApp.m_bRTL )
 		{
 			strText.Format( _T("(%.2f%%) %s %s %s"),
-				m_pDownload->GetProgress() * 100.0,
+				m_pDownload->GetProgress(),
 				(LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ), strOf,
 				(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete(), FALSE ) );
 		}
 		else
 		{
-		strText.Format( _T("%s %s %s (%.2f%%)"),
-			(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete(), FALSE ),
-			strOf, (LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ),
-			m_pDownload->GetProgress() * 100.0 );
+			strText.Format( _T("%s %s %s (%.2f%%)"),
+				(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete(), FALSE ),
+				strOf, (LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ),
+				m_pDownload->GetProgress() );
 		}
 		Update( &m_wndVolume, strText );
 	}

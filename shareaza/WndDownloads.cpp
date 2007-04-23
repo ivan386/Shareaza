@@ -1807,7 +1807,7 @@ void CDownloadsWnd::OnDownloadsHelp()
 		else
 			CHelpDlg::Show( _T("DownloadHelp.Paused") );
 	}
-	else if ( pDownload->GetProgress() == 1.0f && pDownload->IsStarted() )
+	else if ( pDownload->IsStarted() && pDownload->GetProgress() == 100.0f )
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Verifying") );
 	}

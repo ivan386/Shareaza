@@ -181,7 +181,8 @@ void CDownloadWithFile::DeleteFile(BOOL bForce)
 float CDownloadWithFile::GetProgress() const
 {
 	if ( m_nSize == 0 || m_nSize == SIZE_UNKNOWN ) return 0;
-	return (float)GetVolumeComplete() / (float)m_nSize;
+	if ( m_nSize == GetVolumeComplete() ) return 100.0f;
+	return float( GetVolumeComplete() * 10000 / m_nSize ) / 100.0f;
 }
 
 QWORD CDownloadWithFile::GetVolumeComplete() const

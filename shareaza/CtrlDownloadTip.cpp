@@ -380,7 +380,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		if ( theApp.m_bRTL )
 		{
 			strVolume.Format( _T("(%.2f%%) %s %s %s"),
-				pDownload->GetProgress() * 100.0,
+				pDownload->GetProgress(),
 				(LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ), strOf,
 				(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ) );
 		}
@@ -389,7 +389,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 			strVolume.Format( _T("%s %s %s (%.2f%%)"),
 				(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ),
 				strOf, (LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ),
-				pDownload->GetProgress() * 100.0 );
+				pDownload->GetProgress() );
 		}
 	}
 	else
@@ -402,31 +402,18 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		if ( theApp.m_bRTL )
 		{
 			strTorrentUpload.Format( _T("(%.2f%%) %s %s %s"),
-				pDownload->GetRatio() * 100.0,
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ),
+				pDownload->GetRatio(),
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload, FALSE ),
 				strOf,
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentUploaded, FALSE ) );
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload, FALSE ) );
 		}
 		else
 		{
 			strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"),
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentUploaded, FALSE ),
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload, FALSE ),
 				strOf,
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ),
-				pDownload->GetRatio() * 100.0 );
-		}
-	}
-	else
-	{
-		if ( theApp.m_bRTL )
-		{
-			strTorrentUpload.Format( _T("(%.2f%%) %s %s %s"), 0.0, 
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ), strOf, _T("0") );
-		}
-		else
-		{
-			strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"), _T("0"), strOf,
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ), 0.0 );
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload, FALSE ),
+				pDownload->GetRatio() );
 		}
 	}
 

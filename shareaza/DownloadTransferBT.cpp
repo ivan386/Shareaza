@@ -433,7 +433,7 @@ BOOL CDownloadTransferBT::SendRequests()
 	if ( oPossible.empty() && Settings.BitTorrent.Endgame && ! m_pDownload->m_bTorrentEndgame )
 	{
 		// And the torrent is at least 95% complete
-		if ( m_pDownload->GetProgress() > 0.95 )
+		if ( m_pDownload->GetProgress() > 95.0f )
 		{
 			// Then activate endgame
 			m_pDownload->m_bTorrentEndgame = TRUE;

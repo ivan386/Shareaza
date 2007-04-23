@@ -1020,12 +1020,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 					CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
 			}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
-			{
-				strText.Format( _T("%.6f"), pDownload->GetProgress() * 100.0 );
-				strText.ReleaseBuffer( strText.GetLength() - 7 );
-				strText += '%';
-			}
-
+				strText.Format( _T("%.2f%%"), pDownload->GetProgress() );
 			break;
 
 		case DOWNLOAD_COLUMN_SPEED:
@@ -1069,15 +1064,12 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			{
 				if ( rcCell.Width() > 50 )
 				{
-					strText.Format( _T("%.6f"), pDownload->GetProgress() * 100.0 );
-					strText.ReleaseBuffer( strText.GetLength() - 4 );
+					strText.Format( _T("%.2f%%"), pDownload->GetProgress() );
 				}
 				else
 				{
-					strText.Format( _T("%.6f"), pDownload->GetProgress() * 100.0 );
-					strText.ReleaseBuffer( strText.GetLength() - 7 );
+					strText.Format( _T("%i%%"), pDownload->GetProgress() );
 				}
-				strText += '%';
 			}
 			else
 				LoadString( strText, IDS_STATUS_UNKNOWN );
@@ -1503,7 +1495,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 	}
 	else if ( pDownload->IsMoving() )
 		LoadString( strText, IDS_STATUS_MOVING );
-	else if ( pDownload->GetProgress() == 1.0f && pDownload->IsStarted() )
+	else if ( pDownload->IsStarted() && pDownload->GetProgress() == 100.0f )
 		LoadString( strText, IDS_STATUS_VERIFYING );
 	else if ( pDownload->IsDownloading() )
 	{
