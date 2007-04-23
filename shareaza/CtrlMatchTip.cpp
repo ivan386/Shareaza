@@ -151,6 +151,7 @@ void CMatchTipCtrl::Hide()
 {
 	m_pFile	= NULL;
 	m_pHit	= NULL;
+	m_pMetadata.Clear();
 	m_tOpen	= 0;
 
 	if ( m_bVisible )
