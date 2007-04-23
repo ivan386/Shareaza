@@ -351,7 +351,16 @@ void CLibraryDetailView::Update()
 	
 	m_nListCookie++;
 	
-	SortItems();
+	DWORD tNow = GetTickCount();
+	// Reduce flickering while files are hashed
+	if ( Settings.Live.NewFile )
+	{
+		if ( Library.m_nUpdateCookie == Library.m_nUpdateSaved ||  // we just started hashing
+			 ( tNow - Library.m_nScanTime ) <  Library.m_nScanCookie ) // or this condition met :p
+			SortItems();
+	}
+	else
+		SortItems(); // The view is cached, sort it
 }
 
 BOOL CLibraryDetailView::Select(DWORD nObject)
