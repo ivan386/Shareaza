@@ -2294,7 +2294,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		CString strEntry;
 		int nData = 0;
 		nData = strLine.Find( _T(" ") );
-		strEntry = ToLower( strLine.Left( nData ) );
+		strEntry = strLine.Left( nData ).MakeLower();
 		if ( strEntry != _T("h") && nData > 0 )
 		{
 			if ( _stscanf( strLine.Mid( nData + 1 ), _T("%lu"), &nData ) != 1 ) break;
@@ -2359,7 +2359,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 			CString strEntry;
 			DWORD nData = 0;
 			nData = strLine.Find( _T(" ") );
-			strEntry = ToLower( strLine.Left( nData ) );
+			strEntry = strLine.Left( nData ).MakeLower();
 			if ( strEntry == _T("size") ) 
 			{
 				_stscanf( strLine.Mid( nData + 1 ), _T("%lu"), &nData );
@@ -2408,7 +2408,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 			CString strEntry;
 			int nData = 0;
 			nData = strLine.Find( _T(" ") );
-			strEntry = ToLower( strLine.Left( nData ) );
+			strEntry = strLine.Left( nData ).MakeLower();
 			if ( strEntry == _T("size") ) 
 			{
 				_stscanf( strLine.Mid( nData + 1 ), _T("%lu"), &nCount );
@@ -2502,7 +2502,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 			CString strEntry;
 			int nData = 0;
 			nData = strLine.Find( _T(" ") );
-			strEntry = ToLower( strLine.Left( nData ) );
+			strEntry = strLine.Left( nData ).MakeLower();
 			if ( strEntry == _T("info") ) 
 				_stscanf( strLine.Mid( nData + 1 ), _T("%lu"), &nOffsetInfo );
 			else if ( strEntry == _T("prev") ) 
@@ -2567,8 +2567,8 @@ BOOL CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		{
 			if ( ReadLine( hFile, (LPCTSTR)_T("<") ).IsEmpty() &&
 				 ReadLine( hFile, (LPCTSTR)_T("/") ).IsEmpty() &&
-				 ToLower( ReadLine( hFile, (LPCTSTR)_T("/") ) ) == _T("type") &&
-				 ToLower( ReadLine( hFile, (LPCTSTR)_T("/") ) ) == _T("catalog") )
+				 ReadLine( hFile, (LPCTSTR)_T("/") ).MakeLower() == _T("type") &&
+				 ReadLine( hFile, (LPCTSTR)_T("/") ).MakeLower() == _T("catalog") )
 			{
 				strLine = ReadLine( hFile, (LPCTSTR)_T("/>") );
 				while ( !strLine.IsEmpty() )
@@ -2618,9 +2618,9 @@ BOOL CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 			if ( ReadLine( hFile, (LPCTSTR)_T("<") ).IsEmpty() && 
 				 ReadLine( hFile, (LPCTSTR)_T("/") ).IsEmpty() )
 			{
-				if ( ToLower( ReadLine( hFile, (LPCTSTR)_T("/") ) ) == _T("type") )
+				if ( ReadLine( hFile, (LPCTSTR)_T("/") ).MakeLower() == _T("type") )
 				{
-					if ( ToLower( ReadLine( hFile, (LPCTSTR)_T("/") ) ) == _T("page") )
+					if ( ReadLine( hFile, (LPCTSTR)_T("/") ).MakeLower() == _T("page") )
 						nPages++;
 				}
 			}
@@ -2647,7 +2647,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 				int nData = strLine.Find( _T("(") );
 				if ( nData > 0 )
 				{
-					strEntry = ToLower( strLine.Left( nData ) ).Trim();
+					strEntry = strLine.Left( nData ).Trim().MakeLower();
 					strLine = strLine.Mid( nData );
 				}
 				else
@@ -2655,7 +2655,7 @@ BOOL CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 					nData = strLine.Find( _T("<") );
 					if ( nData > 0 )
 					{
-						strEntry = ToLower( strLine.Left( nData ) ).Trim();
+						strEntry = strLine.Left( nData ).Trim().MakeLower();
 						strLine = strLine.Mid( nData );
 					}
 				}

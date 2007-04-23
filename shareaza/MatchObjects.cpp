@@ -241,11 +241,11 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 		}
 		if ( pFile == NULL && pHit->m_oBTH )
 		{
-			pFile = FindFileAndAddHit( pHit, findType::fBTH, &Stats );
+			pFile = FindFileAndAddHit( pHit, fBTH, &Stats );
 		}
 		if ( pFile == NULL && pHit->m_oMD5 )
 		{
-			pFile = FindFileAndAddHit( pHit, findType::fMD5, &Stats );
+			pFile = FindFileAndAddHit( pHit, fMD5, &Stats );
 		}
 		
 		if ( pFile == NULL
@@ -398,12 +398,12 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, findType nFindFlag, F
 	CMatchFile **pMap, *pSeek;
 	CMatchFile* pFile = NULL;
 
-	bool bSHA1	= nFindFlag == findType::fSHA1 && pHit->m_oSHA1;
-	bool bTiger	= nFindFlag == findType::fTiger && pHit->m_oTiger;
-	bool bED2K	= nFindFlag == findType::fED2K && pHit->m_oED2K;
-	bool bBTH	= nFindFlag == findType::fBTH && pHit->m_oBTH;
-	bool bMD5	= nFindFlag == findType::fMD5 && pHit->m_oMD5;
-	bool bSize	= nFindFlag == findType::fSize;
+	bool bSHA1	= nFindFlag == fSHA1 && pHit->m_oSHA1;
+	bool bTiger	= nFindFlag == fTiger && pHit->m_oTiger;
+	bool bED2K	= nFindFlag == fED2K && pHit->m_oED2K;
+	bool bBTH	= nFindFlag == fBTH && pHit->m_oBTH;
+	bool bMD5	= nFindFlag == fMD5 && pHit->m_oMD5;
+	bool bSize	= nFindFlag == fSize;
 
 	if ( bSHA1 )
 		pMap = m_pMapSHA1 + pHit->m_oSHA1[ 0 ];

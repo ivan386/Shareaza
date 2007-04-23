@@ -339,7 +339,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 	CString strIcon( szResult );
 
 	int nIcon, nIndex = strIcon.ReverseFind( ',' );
-	if ( nIndex < 0 && ToLower( strIcon.Right(3) ) != _T("ico") ) return 0;
+	if ( nIndex < 0 && strIcon.Right(3).MakeLower() != _T("ico") ) return 0;
 
 	if ( nIndex != -1 )
 	{

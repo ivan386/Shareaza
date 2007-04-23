@@ -321,7 +321,8 @@ CImageServices::PluginInfo CImageServices::GetService(const CString& strFile)
 	int dotPos = strFile.ReverseFind( '.' );
 	if ( dotPos < 0 )
 		return PluginInfo();
-	CString strType( ToLower( strFile.Mid( dotPos ) ) );
+	CString strType( strFile.Mid( dotPos ) );
+	ToLower( strType );
 
 	{
 		const_iterator pService = m_services.find( strType );

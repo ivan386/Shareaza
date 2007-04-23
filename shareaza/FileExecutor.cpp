@@ -268,7 +268,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 
 	if ( nError <= SE_ERR_DLLNOTFOUND )
 	{
-		CString strExecutable = ToLower( Settings.MediaPlayer.ServicePath.Mid( nBackSlash + 1 ) );
+		CString strExecutable = Settings.MediaPlayer.ServicePath.Mid( nBackSlash + 1 ).MakeLower();
 		CString strParam;
 
 		if ( strExecutable == L"mplayerc.exe" )
