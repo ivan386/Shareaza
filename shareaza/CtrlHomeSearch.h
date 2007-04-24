@@ -1,7 +1,7 @@
 //
 // CtrlHomeSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,6 +65,7 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
 	afx_msg void OnCloseUpText();
+	afx_msg void OnSelChangeText();
 	afx_msg void OnSearchCreate();
 	afx_msg void OnSearchAdvanced();
 	afx_msg void OnSetFocus(CWnd* pOldWnd);

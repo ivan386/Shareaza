@@ -1,7 +1,7 @@
 //
 // CtrlHomeSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,6 +44,7 @@ BEGIN_MESSAGE_MAP(CHomeSearchCtrl, CWnd)
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_CBN_CLOSEUP(IDC_SEARCH_TEXT, OnCloseUpText)
+	ON_CBN_SELCHANGE(IDC_SEARCH_TEXT, OnSelChangeText)
 	ON_BN_CLICKED(IDC_SEARCH_CREATE, OnSearchCreate)
 	ON_BN_CLICKED(IDC_SEARCH_ADVANCED, OnSearchAdvanced)
 	ON_WM_SETFOCUS()
@@ -244,6 +245,11 @@ void CHomeSearchCtrl::OnCloseUpText()
 	{
 		m_wndSchema.Select( (CSchema*)m_wndText.GetItemData( nSel ) );
 	}
+}
+
+void CHomeSearchCtrl::OnSelChangeText()
+{
+	OnCloseUpText();
 }
 
 void CHomeSearchCtrl::OnSearchCreate()
