@@ -3911,7 +3911,7 @@
 		<control caption="Linie siatki"/>
 		<control caption="Pionowa oś"/>
 		<control caption="Legenda"/>
-		<control caption="Częstotliwość prubkowania:"/>
+		<control caption="Częstotliwość próbkowania:"/>
 		<control caption="Okres czasu między prubkami:"/>
 		<control/><control/>
 		<control caption="ms"/>
