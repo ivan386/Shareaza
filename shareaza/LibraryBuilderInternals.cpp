@@ -416,7 +416,17 @@ BOOL CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 		}
 		else if ( strcmp( szFrameTag, "COMM" ) == 0 || strcmp( szFrameTag, "COM" ) == 0 )
 		{
-			CopyID3v2Field( pXML, _T("description"), pBuffer, nFrameSize, TRUE );
+			if ( CopyID3v2Field( pXML, _T("description"), pBuffer, nFrameSize, TRUE ) )
+			{
+				if ( CXMLAttribute* pDescr = pXML->GetAttribute( _T("description") ) )
+				{
+					CString strDescr = pDescr->GetValue();
+					
+					// Remove iTune crap
+					if ( strDescr.GetLength() && _tcsncmp( strDescr, L"iTunNORM", 8 ) == 0 )
+						pXML->RemoveAttribute( pDescr );
+				}
+			}
 		}
 		else if ( strcmp( szFrameTag, "TLEN" ) == 0 || strcmp( szFrameTag, "TLE" ) == 0 )
 		{
