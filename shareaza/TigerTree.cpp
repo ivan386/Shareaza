@@ -267,7 +267,12 @@ void CTigerTree::Serialize(CArchive& ar)
 		if ( m_nHeight == 0 ) return;
 
 		m_nNodeCount = 1;
-		for ( nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
+		for ( nStep = m_nHeight ; nStep ; nStep-- )
+		{
+			m_nNodeCount *= 2;
+			if ( m_nNodeCount > 0xFFFFFFFF / 2 )
+				return;
+		}
 		m_nNodeCount --;
 
 		m_pNode = pNode = new CTigerNode[ m_nNodeCount ];
