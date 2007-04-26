@@ -300,9 +300,10 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		{
 			if ( ! LoadListColumns( pSub ) ) break;
 		}
-		else if ( pSub->IsNamed( _T("commandMap") ) || pSub->IsNamed( _T("tipMap") ) )
+		else if ( pSub->IsNamed( _T("commandMap") ) || pSub->IsNamed( _T("tipMap") ) || 
+				  pSub->IsNamed( _T("resourceMap") ) )
 		{
-			if ( ! LoadCommandMap( pSub ) ) break;
+			if ( ! LoadResourceMap( pSub ) ) break;
 		}
 		else if ( pSub->IsNamed( _T("documents" ) ) )
 		{
@@ -1270,13 +1271,13 @@ UINT CSkin::LookupCommandID(CXMLElement* pXML, LPCTSTR pszName)
 //////////////////////////////////////////////////////////////////////
 // CSkin command map
 
-BOOL CSkin::LoadCommandMap(CXMLElement* pBase)
+BOOL CSkin::LoadResourceMap(CXMLElement* pBase)
 {
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
 
-		if ( pXML->IsNamed( L"command" ) || pXML->IsNamed( L"control" ) )
+		if ( pXML->IsNamed( L"command" ) || pXML->IsNamed( L"control" ) || pXML->IsNamed( L"resource" ) )
 		{
 			CString strTemp = pXML->GetAttributeValue( _T("code") );
 			UINT nID;

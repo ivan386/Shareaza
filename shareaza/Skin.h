@@ -148,7 +148,7 @@ protected:
 public:
 	UINT	LookupCommandID(CXMLElement* pXML, LPCTSTR pszName = NULL);
 protected:
-	BOOL	LoadCommandMap(CXMLElement* pBase);
+	BOOL	LoadResourceMap(CXMLElement* pBase);
 	BOOL	LoadCommandImages(CXMLElement* pBase, const CString& strPath);
 	BOOL	LoadCommandBitmap(CXMLElement* pBase, const CString& strPath);
 
