@@ -2505,7 +2505,7 @@
 		<image id="ID_CHILD_MAXIMISE"/>
 		<image id="ID_CHILD_RESTORE"/>
 		<image id="ID_CHILD_MINIMISE"/>
-		<image id="ID_CHILD_CLOSE"/>
+		<image id="ID_CHILD_CLOSE" id1="ID_NETWORK_EXIT"/>
 	</bitmap>
 	<bitmap id="222">
 		<image id="ID_MEDIA_STATE_STOP"/>
