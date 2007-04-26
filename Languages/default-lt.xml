@@ -3760,7 +3760,7 @@
 		<control caption="Tarnybos _adresas:"/>
 		<control/>
 		<control caption="Tarnybos tipas:"/>
-		<control caption="Gnutella Bootstrap|GWebCache|Server.met nuoroda"/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met nuoroda|Blokuota"/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
 	</dialog>
