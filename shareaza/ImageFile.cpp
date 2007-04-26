@@ -203,7 +203,7 @@ void CImageFile::Serialize(CArchive& ar)
 		int nPitch = ( ( m_nWidth * m_nComponents+ 3 ) & ~3 ) * m_nHeight;
 
 		m_pImage = new BYTE[ nPitch  ];
-		ar.Read( m_pImage, nPitch );
+		ReadArchive( ar, m_pImage, nPitch );
 
 		m_bLoaded = TRUE;
 	}

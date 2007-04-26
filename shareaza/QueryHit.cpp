@@ -1713,13 +1713,13 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 	}
 	else
 	{
-		ar.Read( &m_oSearchID[ 0 ], Hashes::Guid::byteCount );
+		ReadArchive( ar, &m_oSearchID[ 0 ], Hashes::Guid::byteCount );
 		m_oSearchID.validate();
 		
 		if ( nVersion >= 9 ) ar >> m_nProtocol;
-		ar.Read( &m_oClientID[ 0 ], Hashes::Guid::byteCount );
+		ReadArchive( ar, &m_oClientID[ 0 ], Hashes::Guid::byteCount );
 		m_oClientID.validate();
-		ar.Read( &m_pAddress, sizeof(IN_ADDR) );
+		ReadArchive( ar, &m_pAddress, sizeof(IN_ADDR) );
 		ar >> m_nPort;
 		ar >> m_nSpeed;
 		ar >> m_sSpeed;

@@ -453,3 +453,11 @@ struct std::less< CString > : public std::binary_function< CString, CString, boo
 typedef std::set < CString > string_set;
 
 #define IsIn(x,y) ((x.find((y)))!=(x.end()))
+
+inline UINT ReadArchive(CArchive& ar, void* lpBuf, const UINT nMax)
+{
+	UINT nReaded = ar.Read( lpBuf, nMax );
+	if ( nReaded != nMax )
+		AfxThrowArchiveException( CArchiveException::endOfFile );
+	return nReaded;
+}

@@ -766,7 +766,7 @@ void CSecureRule::Serialize(CArchive& ar, int nVersion)
 		if ( nVersion >= 2 ) ar >> m_sComment;
 
 		if ( nVersion >= 4 )
-			ar.Read( &m_pGUID, sizeof(GUID) );
+			ReadArchive( ar, &m_pGUID, sizeof(GUID) );
 		else
 			CoCreateGuid( &m_pGUID );
 
@@ -776,8 +776,8 @@ void CSecureRule::Serialize(CArchive& ar, int nVersion)
 		switch ( m_nType )
 		{
 		case srAddress:
-			ar.Read( m_nIP, 4 );
-			ar.Read( m_nMask, 4 );
+			ReadArchive( ar, m_nIP, 4 );
+			ReadArchive( ar, m_nMask, 4 );
 			MaskFix();				// Make sure old rules are updated to new format
 			break;
 		case srContent:

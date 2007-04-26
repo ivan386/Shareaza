@@ -733,7 +733,7 @@ void CDownloadWithTiger::Serialize(CArchive& ar, int nVersion)
 			ar >> m_nTigerSuccess;
 
 			m_pTigerBlock = new BYTE[ m_nTigerBlock ];
-			ar.Read( m_pTigerBlock, sizeof(BYTE) * m_nTigerBlock );
+			ReadArchive( ar, m_pTigerBlock, sizeof(BYTE) * m_nTigerBlock );
 		}
 	}
 
@@ -755,7 +755,7 @@ void CDownloadWithTiger::Serialize(CArchive& ar, int nVersion)
 				ar >> m_nHashsetSuccess;
 
 				m_pHashsetBlock = new BYTE[ m_nHashsetBlock ];
-				ar.Read( m_pHashsetBlock, sizeof(BYTE) * m_nHashsetBlock );
+				ReadArchive( ar, m_pHashsetBlock, sizeof(BYTE) * m_nHashsetBlock );
 			}
 		}
 	}

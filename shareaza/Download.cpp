@@ -743,7 +743,7 @@ void CDownload::Serialize(CArchive& ar, int nVersion)
 		else
 		{
 			CHAR szID[3];
-			ar.Read( szID, 3 );
+			ReadArchive( ar, szID, 3 );
 			if ( strncmp( szID, "SDL", 3 ) ) AfxThrowUserException();
 			ar >> nVersion;
 			if ( nVersion <= 0 || nVersion > DOWNLOAD_SER_VERSION ) AfxThrowUserException();

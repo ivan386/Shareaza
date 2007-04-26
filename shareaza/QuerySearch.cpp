@@ -1677,7 +1677,7 @@ void CQuerySearch::Serialize(CArchive& ar)
 		ar >> nVersion;
 		if ( nVersion < 4 ) AfxThrowUserException();
 		
-		ar.Read( &m_oGUID[ 0 ], Hashes::Guid::byteCount );
+		ReadArchive( ar, &m_oGUID[ 0 ], Hashes::Guid::byteCount );
 		
 		ar >> m_sSearch;
 		

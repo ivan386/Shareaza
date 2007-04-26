@@ -341,7 +341,7 @@ void CLibraryRecent::Serialize(CArchive& ar, int /*nVersion*/)
 	{
 		DWORD nIndex;
 
-		ar.Read( &m_tAdded, sizeof(FILETIME) );
+		ReadArchive( ar, &m_tAdded, sizeof(FILETIME) );
 		ar >> nIndex;
 
 		if ( ( m_pFile = Library.LookupFile( nIndex ) ) != NULL )

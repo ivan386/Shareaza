@@ -267,7 +267,7 @@ BOOL CTrafficWnd::Serialize(BOOL bSave)
 
 		if ( nVersion >= 1 ) ar >> m_sName;
 
-		ar.Read( &pPos, sizeof(pPos) );
+		ReadArchive( ar, &pPos, sizeof(pPos) );
 		if ( pPos.showCmd == SW_SHOWNORMAL )
 			SetWindowPlacement( &pPos );
 	}

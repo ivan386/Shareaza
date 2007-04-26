@@ -257,7 +257,7 @@ void CBTInfo::Serialize(CArchive& ar)
         m_pBlockBTH = new Hashes::BtPureHash[ (DWORD)m_nBlockCount ];
         for ( DWORD i = 0; i < m_nBlockCount; ++i )
         {
-            ar.Read( m_pBlockBTH[ i ].begin(), Hashes::BtPureHash::byteCount );
+            ReadArchive( ar, m_pBlockBTH[ i ].begin(), Hashes::BtPureHash::byteCount );
         }
 
 		if ( nVersion >= 4 ) ar >> m_nTotalUpload;

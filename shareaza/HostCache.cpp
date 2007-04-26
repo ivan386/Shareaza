@@ -983,7 +983,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 	}
 	else
 	{
-		ar.Read( &m_pAddress, sizeof(m_pAddress) );
+		ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
 		ar >> m_nPort;
 		
 		ar >> m_tAdded;
@@ -995,7 +995,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		
 		if ( szaVendor[0] )
 		{
-			ar.Read( szaVendor + 1, 3 );
+			ReadArchive( ar, szaVendor + 1, 3 );
 			TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
 			m_pVendor = VendorCache.Lookup( szVendor );
 		}

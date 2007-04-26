@@ -279,7 +279,7 @@ void CTigerTree::Serialize(CArchive& ar)
 
 		for ( nStep = m_nNodeCount ; nStep ; nStep--, pNode++ )
 		{
-			ar.Read( pNode->value, TIGER_SIZE );
+			ReadArchive( ar, pNode->value, TIGER_SIZE );
 			ar >> pNode->bValid;
 		}
 	}

@@ -73,13 +73,13 @@ void CED2K::Serialize(CArchive& ar)
 		ar >> m_nList;
 		if ( m_nList == 0 ) return;
 
-		ar.Read( &m_pRoot[ 0 ], sizeof( m_pRoot ) );
+		ReadArchive( ar, &m_pRoot[ 0 ], sizeof( m_pRoot ) );
 		
 		m_pList = new CMD4::MD4Digest[ m_nList ];
 
 		if ( m_nList > 1 )
 		{
-			ar.Read( m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
+			ReadArchive( ar, m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
 		}
 		else if ( m_nList == 1 )
 		{

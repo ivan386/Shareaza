@@ -142,7 +142,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			
 			ar >> m_nTorrentSuccess;
 			m_pTorrentBlock = new BYTE[ m_nTorrentBlock ];
-			ar.Read( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
+			ReadArchive( ar, m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
 			if ( nVersion >= 34 )
 			{
 				ar >> m_bSeeding;

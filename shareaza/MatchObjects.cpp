@@ -1871,7 +1871,7 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 		if ( ( m_nPreview = static_cast< DWORD >( ar.ReadCount() ) ) != 0 )
 		{
 			m_pPreview = new BYTE[ m_nPreview ];
-			ar.Read( m_pPreview, m_nPreview );
+			ReadArchive( ar, m_pPreview, m_nPreview );
 		}
 		
 		m_nTotal = static_cast< DWORD >( ar.ReadCount() );

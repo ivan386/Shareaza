@@ -675,7 +675,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 			m_nSize = nSize;
 		}
 		
-		ar.Read( &m_pTime, sizeof(m_pTime) );
+		ReadArchive( ar, &m_pTime, sizeof(m_pTime) );
 		
 		if ( nVersion >= 5 )
 		{
@@ -736,7 +736,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		if ( strURI.GetLength() )
 		{
 			ar >> m_bMetadataAuto;
-			if ( ! m_bMetadataAuto ) ar.Read( &m_pMetadataTime, sizeof(m_pMetadataTime) );
+			if ( ! m_bMetadataAuto ) ReadArchive( ar, &m_pMetadataTime, sizeof(m_pMetadataTime) );
 			
 			m_pMetadata = new CXMLElement();
 			m_pMetadata->Serialize( ar );
@@ -757,7 +757,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 			
 			if ( m_bMetadataAuto && ( m_nRating || m_sComments.GetLength() ) )
 			{
-				ar.Read( &m_pMetadataTime, sizeof(m_pMetadataTime) );
+				ReadArchive( ar, &m_pMetadataTime, sizeof(m_pMetadataTime) );
 			}
 		}
 		
@@ -1205,7 +1205,7 @@ void CSharedSource::Serialize(CArchive& ar, int nVersion)
 
 		if ( nVersion >= 10 )
 		{
-			ar.Read( &m_pTime, sizeof(FILETIME) );
+			ReadArchive( ar, &m_pTime, sizeof(FILETIME) );
 		}
 		else
 		{

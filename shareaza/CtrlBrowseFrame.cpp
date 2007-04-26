@@ -606,7 +606,7 @@ void CBrowseFrameCtrl::Serialize(CArchive& ar)
 			CG2Packet* pPacket = CG2Packet::New();
 			pPacket->Ensure( nBuffer );
 			ar >> pPacket->m_nLength;
-			ar.Read( pPacket->m_pBuffer, nBuffer );
+			ReadArchive( ar, pPacket->m_pBuffer, nBuffer );
 			m_nTree = 0;
 			OnPhysicalTree( pPacket );
 			pPacket->Release();
@@ -619,7 +619,7 @@ void CBrowseFrameCtrl::Serialize(CArchive& ar)
 			CG2Packet* pPacket = CG2Packet::New();
 			pPacket->Ensure( nBuffer );
 			ar >> pPacket->m_nLength;
-			ar.Read( pPacket->m_pBuffer, nBuffer );
+			ReadArchive( ar, pPacket->m_pBuffer, nBuffer );
 			m_nTree = 1;
 			OnVirtualTree( pPacket );
 			pPacket->Release();

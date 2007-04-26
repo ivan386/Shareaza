@@ -343,9 +343,9 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		SerializeIn( ar, m_oGUID, nVersion);
 		
 		ar >> m_nPort;
-		if ( m_nPort ) ar.Read( &m_pAddress, sizeof(m_pAddress) );
+		if ( m_nPort ) ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
 		ar >> m_nServerPort;
-		if ( m_nServerPort ) ar.Read( &m_pServerAddress, sizeof(m_pServerAddress) );
+		if ( m_nServerPort ) ReadArchive( ar, &m_pServerAddress, sizeof(m_pServerAddress) );
 		
 		ar >> m_sName;
 		ar >> m_nIndex;
@@ -376,7 +376,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		ar >> m_bPushOnly;
 		ar >> m_bCloseConn;
 		ar >> m_bReadContent;
-		ar.Read( &m_tLastSeen, sizeof(FILETIME) );
+		ReadArchive( ar, &m_tLastSeen, sizeof(FILETIME) );
 		
         SerializeIn2( ar, m_oPastFragments, nVersion );
 
@@ -390,7 +390,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 	else
 	{
 		DWORD nIndex;
-		ar.Read( &m_pAddress, sizeof(m_pAddress) );
+		ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
 		ar >> m_nPort;
 		ar >> m_nSpeed;
 		ar >> nIndex;
@@ -416,10 +416,10 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		ar >> m_bPushOnly;
 		ar >> m_bReadContent;
 		if ( nVersion >= 7 ) ar >> m_bCloseConn;
-		if ( nVersion >= 12 ) ar.Read( &m_tLastSeen, sizeof(FILETIME) );
+		if ( nVersion >= 12 ) ReadArchive( ar, &m_tLastSeen, sizeof(FILETIME) );
 		
-		ar.Read( &m_oGUID[ 0 ], Hashes::Guid::byteCount );
-		ar.Read( &m_oGUID[ 0 ], Hashes::Guid::byteCount );
+		ReadArchive( ar, &m_oGUID[ 0 ], Hashes::Guid::byteCount );
+		ReadArchive( ar, &m_oGUID[ 0 ], Hashes::Guid::byteCount );
 		m_oGUID.validate();
 		
         SerializeIn2( ar, m_oPastFragments, nVersion );
