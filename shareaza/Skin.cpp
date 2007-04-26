@@ -333,8 +333,9 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 
 BOOL CSkin::LoadString(CString& str, UINT nStringID)
 {
-	if ( m_pStrings.Lookup( nStringID, str ) ) return TRUE;
-	if ( str.LoadString( nStringID ) ) return TRUE;
+	if ( IS_INTRESOURCE( nStringID ) &&
+		( m_pStrings.Lookup( nStringID, str ) || str.LoadString( nStringID ) ) )
+		return TRUE;
 	str.Empty();
 	return FALSE;
 }
