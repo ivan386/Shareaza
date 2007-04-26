@@ -110,7 +110,7 @@ namespace Hashes
 			CheckingPolicy, Policies::NoValidation >& in, int /*version*/)
 	{
 		ASSERT( ar.IsLoading() );
-		ar.Read( in.begin(), in.byteCount );
+		ReadArchive( ar, in.begin(), in.byteCount );
 	}
 
 	template
@@ -127,7 +127,7 @@ namespace Hashes
 		ar >> bValid;
 		if ( bValid )
 		{
-			ar.Read( in.begin(), in.byteCount );
+			ReadArchive( ar, in.begin(), in.byteCount );
 			in.validate();
 		}
 		else
@@ -150,7 +150,7 @@ namespace Hashes
 		ar >> bValid;
 		if ( bValid )
 		{
-			ar.Read( in.begin(), in.byteCount );
+			ReadArchive( ar, in.begin(), in.byteCount );
 			in.validate();
 		}
 		else
