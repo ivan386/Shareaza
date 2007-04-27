@@ -900,7 +900,7 @@ void CDownloadsCtrl::OnPaint()
 void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDownload, BOOL bFocus, BOOL bDrop)
 {
 	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
-	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
+	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
 	COLORREF crText		= CoolInterface.m_crText;
 
 	if ( bDrop )
@@ -1138,7 +1138,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus)
 {
 	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
-	COLORREF crBack		= pSource->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
+	COLORREF crBack		= pSource->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
 	
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
