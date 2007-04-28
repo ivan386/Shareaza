@@ -69,32 +69,26 @@ BOOL CWizardSheet::RunWizard(CWnd* pParent)
 {
 	BOOL bSuccess = FALSE;
 
-	for ( int nAttempt = 0 ; nAttempt < 2 ; nAttempt ++ )
-	{
-		CWizardSheet pSheet( pParent, nAttempt ? 3 : 0 );
+	CWizardSheet pSheet( pParent );
 
-		CWizardWelcomePage		pWelcome;
-		CWizardConnectionPage	pConnection;
-		CWizardSharePage		pShare;
-		CWizardProfilePage		pProfile;
-		CWizardInterfacePage	pInterface;
-		CWizardNetworksPage		pNetworks;
-		CWizardFinishedPage		pFinished;
+	CWizardWelcomePage		pWelcome;
+	CWizardConnectionPage	pConnection;
+	CWizardSharePage		pShare;
+	CWizardProfilePage		pProfile;
+	CWizardInterfacePage	pInterface;
+	CWizardNetworksPage		pNetworks;
+	CWizardFinishedPage		pFinished;
 
-		pSheet.AddPage( &pWelcome );
-		pSheet.AddPage( &pConnection );
-		pSheet.AddPage( &pShare );
-		pSheet.AddPage( &pProfile );
-		pSheet.AddPage( &pInterface );
-		pSheet.AddPage( &pNetworks );
-		pSheet.AddPage( &pFinished );
+	pSheet.AddPage( &pWelcome );
+	pSheet.AddPage( &pConnection );
+	pSheet.AddPage( &pShare );
+	pSheet.AddPage( &pProfile );
+	pSheet.AddPage( &pInterface );
+	pSheet.AddPage( &pNetworks );
+	pSheet.AddPage( &pFinished );
 
-		bSuccess |= ( pSheet.DoModal() == IDOK );
-		Settings.Save();
-
-		if ( pProfile.m_pWorld != NULL ) break;
-		if ( MyProfile.GetNick().GetLength() && MyProfile.GetLocation().GetLength() ) break;
-	}
+	bSuccess = ( pSheet.DoModal() == IDOK );
+	Settings.Save();
 
 	return bSuccess;
 }
