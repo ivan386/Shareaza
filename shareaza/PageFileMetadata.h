@@ -1,7 +1,7 @@
 //
 // PageFileMetadata.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,48 +28,32 @@
 #include "CtrlSchema.h"
 #include "CtrlSchemaCombo.h"
 
-
 class CFileMetadataPage : public CFilePropertiesPage
 {
-// Construction
 public:
 	CFileMetadataPage();
 	virtual ~CFileMetadataPage();
 
 	DECLARE_DYNCREATE(CFileMetadataPage)
-
-// Dialog Data
-public:
-	//{{AFX_DATA(CFileMetadataPage)
 	enum { IDD = IDD_FILE_METADATA };
+
 	CSchemaCombo	m_wndSchemas;
-	//}}AFX_DATA
+	CSchemaCtrl		m_wndData;
+	CXMLElement*	m_pXML;
 
-	CSchemaCtrl	m_wndData;
+protected:
+	CXMLElement*	m_pSchemaContainer;
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CFileMetadataPage)
-	public:
-	virtual void OnOK();
-	protected:
+	void AddCrossAttributes(CXMLElement* pXML, LPCTSTR pszTargetURI);
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CFileMetadataPage)
+	virtual void OnOK();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelChangeSchemas();
 	afx_msg void OnCloseUpSchemas();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
 
 #define IDC_METADATA	100
 

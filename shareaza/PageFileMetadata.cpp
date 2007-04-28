@@ -48,12 +48,15 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFileMetadataPage property page
 
-CFileMetadataPage::CFileMetadataPage() : CFilePropertiesPage(CFileMetadataPage::IDD)
+CFileMetadataPage::CFileMetadataPage() : CFilePropertiesPage(CFileMetadataPage::IDD),
+m_pXML(NULL), m_pSchemaContainer(NULL)
 {
 }
 
 CFileMetadataPage::~CFileMetadataPage()
 {
+	if ( m_pSchemaContainer )
+		delete m_pSchemaContainer;
 }
 
 void CFileMetadataPage::DoDataExchange(CDataExchange* pDX)
@@ -118,8 +121,8 @@ BOOL CFileMetadataPage::OnInitDialog()
 
 	if ( pSchema != NULL )
 	{
-		CXMLElement* pContainer	= pSchema->Instantiate( TRUE );
-		CXMLElement* pXML		= pContainer->AddElement( pSchema->m_sSingular );
+		m_pSchemaContainer = pSchema->Instantiate( TRUE );
+		m_pXML = m_pSchemaContainer->AddElement( pSchema->m_sSingular );
 
 		{
 			CQuickLock oLock( Library.m_pSection );
@@ -133,18 +136,18 @@ BOOL CFileMetadataPage::OnInitDialog()
 						for ( POSITION pos2 = pSchema->GetMemberIterator() ; pos2 ; )
 						{
 							CSchemaMember* pMember = pSchema->GetNextMember( pos2 );
-							CString strOld = pMember->GetValueFrom( pXML, _T("(~ns~)") );
+							CString strOld = pMember->GetValueFrom( m_pXML, _T("(~ns~)") );
 							CString strNew = pMember->GetValueFrom( pFile->m_pMetadata /* , _T("(~ns~)") */ );
 
 							if ( strNew != _T("(~ns~)") && strOld != _T("(~mt~)") )
 							{
 								if ( strOld == _T("(~ns~)") )
 								{
-									pXML->AddAttribute( pMember->m_sName, strNew );
+									m_pXML->AddAttribute( pMember->m_sName, strNew );
 								}
 								else if ( strOld != strNew )
 								{
-									pXML->AddAttribute( pMember->m_sName, _T("(~mt~)") );
+									m_pXML->AddAttribute( pMember->m_sName, _T("(~mt~)") );
 								}
 							}
 						}
@@ -153,8 +156,7 @@ BOOL CFileMetadataPage::OnInitDialog()
 			}
 		}
 
-		m_wndData.UpdateData( pXML, FALSE );
-		delete pContainer;
+		m_wndData.UpdateData( m_pXML, FALSE );
 	}
 
 	return TRUE;
@@ -163,7 +165,96 @@ BOOL CFileMetadataPage::OnInitDialog()
 void CFileMetadataPage::OnSelChangeSchemas()
 {
 	CSchema* pSchema = m_wndSchemas.GetSelected();
-	m_wndData.SetSchema( pSchema );
+	CString strSelectedURI = m_wndData.GetSchemaURI();
+
+	if ( pSchema && pSchema->m_sURI != strSelectedURI )
+	{
+		if ( strSelectedURI.IsEmpty() )
+		{
+			m_wndData.SetSchema( pSchema );
+			return;
+		}
+
+		CString strBody( ::LoadHTML( GetModuleHandle( NULL ), IDR_XML_SCHEMA_MAPS ) );
+
+		if ( CXMLElement* pXML = CXMLElement::FromString( strBody, TRUE ) )
+		{
+			if ( pXML->IsNamed( L"schemaMappings" ) )
+			{
+				for ( POSITION pos = pXML->GetElementIterator() ; pos ; )
+				{
+					CXMLElement* pMapping = pXML->GetNextElement( pos );
+					if ( pMapping && pMapping->IsNamed( L"schemaMapping" ) )
+					{
+						CXMLAttribute* pSourceURI = pMapping->GetAttribute( L"sourceURI" );
+						if ( pSourceURI && pSourceURI->GetValue() == m_wndData.GetSchemaURI() )
+						{
+							// Add attributes which correspond to other schema
+							// We don't need to delete the old ones because, after
+							// submitting new data, they will be ignored.
+							// It will also allow to save the old ones if we switch schema back.
+							AddCrossAttributes( pMapping, pSchema->m_sURI );
+							break;
+						}
+					}
+				}
+			}
+			delete pXML;
+		}
+
+		m_wndData.SetSchema( pSchema );
+		// Change schema of data
+		m_pXML->SetName( pSchema->m_sSingular );
+
+		m_wndData.UpdateData( m_pXML, FALSE );
+	}
+	else
+		m_wndData.SetSchema( pSchema );
+}
+
+void CFileMetadataPage::AddCrossAttributes(CXMLElement* pXML, LPCTSTR pszTargetURI)
+{
+	if ( pXML == NULL ) return;
+	CXMLElement* pTargetURI = NULL;
+
+	for ( POSITION pos = pXML->GetElementIterator() ; pos ; )
+	{
+		pTargetURI = pXML->GetNextElement( pos );
+		if ( pTargetURI && pTargetURI->IsNamed( L"target" ) )
+		{
+			CXMLAttribute* pURI = pTargetURI->GetAttribute( L"uri" );
+			if ( pURI && _tcscmp( pURI->GetValue(), pszTargetURI ) == 0 )
+				break;
+			else
+				pTargetURI = NULL;
+		}
+		else
+			pTargetURI = NULL;
+	}
+
+	if ( pTargetURI == NULL ) return;
+
+	for ( POSITION pos = pTargetURI->GetElementIterator() ; pos ; )
+	{
+		CXMLElement* pAttribute = pTargetURI->GetNextElement( pos );
+		{
+			if ( pAttribute && pAttribute->IsNamed( L"attribute" ) )
+			{
+				CXMLAttribute* pFrom = pAttribute->GetAttribute( L"from" );
+				CXMLAttribute* pTo = pAttribute->GetAttribute( L"to" );
+				if ( pFrom && pTo )
+				{
+					CString strFrom = pFrom->GetValue();
+					CString strTo = pTo->GetValue();
+					if ( strFrom.IsEmpty() || strTo.IsEmpty() ) continue;
+
+					CString strValue = m_pXML->GetAttributeValue( strFrom );
+					if ( strValue.GetLength() && strValue != L"(~mt~)" )
+						m_pXML->AddAttribute( strTo, strValue );
+				}
+			}
+		}
+	}
 }
 
 void CFileMetadataPage::OnCloseUpSchemas()
@@ -202,20 +293,23 @@ void CFileMetadataPage::OnOK()
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
 			{
-				if ( pSchema->Equals( pFile->m_pSchema ) && pFile->m_pMetadata != NULL )
+				CXMLElement* pContainer	= pSchema->Instantiate( TRUE );
+				if ( pContainer )
 				{
-					CXMLElement* pContainer	= pSchema->Instantiate( TRUE );
-					CXMLElement* pXML		= pContainer->AddElement( pFile->m_pMetadata->Clone() );
+					CXMLElement* pXML = NULL;
+
+					if ( pFile->m_pMetadata != NULL )
+					{
+						pXML = pContainer->AddElement( pFile->m_pMetadata->Clone() );
+						// Change schema
+						pXML->SetName( pSchema->m_sSingular );
+					}
+					else
+						pXML = pContainer->AddElement( pSchema->m_sSingular );
+
+					// Save changed data to pXML
 					m_wndData.UpdateData( pXML, TRUE );
-					if ( pContainer ) pFile->SetMetadata( pContainer );
-					delete pContainer;
-				}
-				else
-				{
-					CXMLElement* pContainer	= pSchema->Instantiate( TRUE );
-					CXMLElement* pXML		= pContainer->AddElement( pSchema->m_sSingular );
-					m_wndData.UpdateData( pXML, TRUE );
-					if ( pContainer ) pFile->SetMetadata( pContainer );
+					pFile->SetMetadata( pContainer );
 					delete pContainer;
 				}
 			}

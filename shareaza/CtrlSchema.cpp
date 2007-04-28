@@ -1,7 +1,7 @@
 //
 // CtrlSchema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,15 +54,15 @@ END_MESSAGE_MAP()
 // CSchemaCtrl construction
 
 CSchemaCtrl::CSchemaCtrl()
+: m_nCaptionWidth(120)
+, m_nItemHeight(32)
+, m_bShowBorder(TRUE)
+, m_pSchema(NULL)
+, m_nScroll(0)
 {
 	CString strText;
 	LoadString( strText, IDS_MULTIPLE_VALUES );
 	strMultipleString = _T("(") + strText + _T(")");
-	m_nCaptionWidth	= 120;
-	m_nItemHeight	= 32;
-	m_bShowBorder	= TRUE;
-	m_pSchema		= NULL;
-	m_nScroll		= 0;
 
 	// Try to get the number of lines to scroll when the mouse wheel is rotated
 	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
@@ -177,6 +177,11 @@ void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
 	
 	Layout();
 	Invalidate();
+}
+
+CString CSchemaCtrl::GetSchemaURI() const
+{
+	return m_pSchema ? m_pSchema->m_sURI : L"";
 }
 
 /////////////////////////////////////////////////////////////////////////////
