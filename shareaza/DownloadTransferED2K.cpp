@@ -998,7 +998,7 @@ BOOL CDownloadTransferED2K::RunQueued(DWORD tNow)
 		return FALSE;
 	}
 	else if ( !( CEDPacket::IsLowID( m_pSource->m_pAddress.S_un.S_addr ) || m_pSource->m_bPushOnly ) &&
-				!Network.IsFirewalled(CHECK_BOTH) && m_pClient->m_nUDP > 0 && ! m_bUDP && tNow > m_tRequest &&
+				/*!Network.IsFirewalled(CHECK_BOTH)*/!Network.IsFirewalled(CHECK_UDP) && m_pClient->m_nUDP > 0 && ! m_bUDP && tNow > m_tRequest && // Temp disable
 				tNow - m_tRequest > Settings.eDonkey.ReAskTime * 1000 - 20000 )
 	{
 		CEDPacket* pPing = CEDPacket::New( ED2K_C2C_UDP_REASKFILEPING, ED2K_PROTOCOL_EMULE );

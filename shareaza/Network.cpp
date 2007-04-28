@@ -169,7 +169,6 @@ BOOL CNetwork::IsStable() const
 
 BOOL CNetwork::IsFirewalled(int nCheck)
 {
-	if ( !IsConnected() ) return FALSE;	// Not connected, so nothing to firewall.
 	if ( Settings.Connection.FirewallState == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP
 		return FALSE;		// We know we are not firewalled on both TCP and UDP
 	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_TCPONLY && nCheck == CHECK_TCP )
@@ -265,7 +264,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
-	if ( IsFirewalled() )
+	if ( /*IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) // Temp disable
 		theApp.Message( MSG_DEFAULT, IDS_NETWORK_FIREWALLED );
 
 	SOCKADDR_IN pOutgoing;

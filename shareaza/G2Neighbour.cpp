@@ -1144,7 +1144,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 
 	Network.OnQuerySearch( pSearch );
 
-	if ( pSearch->m_bUDP && !Network.IsFirewalled() &&
+	if ( pSearch->m_bUDP && /* !Network.IsFirewalled() && */
 		 pSearch->m_pEndpoint.sin_addr.S_un.S_addr != m_pHost.sin_addr.S_un.S_addr )
 	{
 		CLocalSearch pLocal( pSearch, &pSearch->m_pEndpoint );
