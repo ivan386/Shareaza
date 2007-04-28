@@ -330,7 +330,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	int nCount = 0;
 	
 	if ( pPeers->IsType( CBENode::beList )
-		&& ( !m_pDownload->IsMoving() || /*Network.IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) ) // Temp disable
+		&& ( !m_pDownload->IsMoving() || Network.IsFirewalled() ) )
 	{
 		for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
 		{
@@ -366,7 +366,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 		}
 	}
 	else if ( pPeers->IsType( CBENode::beString )
-		&& ( !m_pDownload->IsMoving() || /*Network.IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) ) // Temp disable
+		&& ( !m_pDownload->IsMoving() || Network.IsFirewalled() ) )
 	{
 		if ( 0 == ( pPeers->m_nValue % 6 ) )
 		{
