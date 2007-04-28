@@ -8,8 +8,13 @@
 2 http://groovy.syxy.com/up/skulls.php
 2 http://services.ce3c.be/skulls/skulls.php
 2 http://gwc.frodoslair.net/skulls/skulls
+2 http://www.k33bz.com/g2/bazooka.php
+2 http://silvers.servehttp.com/g2/bazooka.php
 M http://torrent.delvedown.com/cgi-bin/perlgcache.cgi
 M http://jercos.dyndns.org/perlgcache.cgi
+1 http://gwc.glucolene.com:8080
+1 http://gwc.dietpac.com:8080
+1 http://tsubasa.ghostwhitecrab.de
 
 U uhc:yin.cloud.bishopston.net:33558
 U uhc:uhc2.limewire.com:20181
@@ -22,13 +27,6 @@ D http://www.emule-server.de/server.met/min/server.met
 D http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met
 D http://www.esel-paradies.de/server/server.met
 
-X http://gwc.glucolene.com:8080
-X http://gwc.dietpac.com:8080
-X http://tsubasa.ghostwhitecrab.de
-X http://www.k33bz.com/g2/bazooka.php
-X http://silvers.servehttp.com/g2/bazooka.php
-X http://g2.wow-toj.be/bazooka.php
-X http://midian.jayl.de/g2/bazooka.php
 X http://emak.webcindario.com/g2/indice.php
 X http://www.kuwaitcontact.com/g2/bazooka.php
 X http://trancefusionnetwork.org.uk/g2/bazooka.php
