@@ -300,6 +300,9 @@ LRESULT CWizardProfilePage::OnWizardNext()
 		if ( pLocation->GetElementCount() == 0 ) pLocation->Delete();
 	}
 
+	/* These popups are pretty annoying. Since this information is underutilized let's 
+	   not put so much emphasis on it at this time.
+
 	if ( MyProfile.GetNick().IsEmpty() )
 	{
 		LoadString( strMessage, IDS_PROFILE_NO_NICK );
@@ -318,8 +321,9 @@ LRESULT CWizardProfilePage::OnWizardNext()
 		LoadString( strMessage, IDS_PROFILE_NO_LOCATION );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES ) return -1;
 	}
+	*/
 
 	MyProfile.Save();
 
-		return 0;
+	return 0;
 }
