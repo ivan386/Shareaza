@@ -66,31 +66,31 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 		(QWORD)pDownload->m_nTorrentDownloaded,
 		(QWORD)pDownload->GetVolumeRemaining() );
 	
-	// If the IP is valid, add it.
-	if ( Network.m_pHost.sin_addr.S_un.S_addr != 0 )
-	{	
-		strURL += _T("&ip=");
-		strURL += inet_ntoa( Network.m_pHost.sin_addr );
-		// Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
-	}
-	
 	// If an event was specified, add it.
 	if ( pszVerb != NULL )
 	{	
+		// Valid events: started, completed, stopped
 		strURL += _T("&event=");
 		strURL += pszVerb;
-		// Valid events: started, completed, stopped
+
+		// If event is 'started' and the IP is valid, add it.
+		if ( !_tcscmp( pszVerb, _T("started") ) && Network.m_pHost.sin_addr.S_un.S_addr != 0 )
+		{	
+			// Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
+			strURL += _T("&ip=");
+			strURL += inet_ntoa( Network.m_pHost.sin_addr );
+		}
 	}
 
 	// If a (valid) number of peers was specified, request that many.
-	if ( nNumWant < 300 )
+	if ( nNumWant != 0xFFFF )
 	{	
-		CString strNumWant;
-		strNumWant.Format( _T("&numwant=%i"), nNumWant );
-		strURL += strNumWant;
 		// Note: If this is omitted, trackers usually respond with 50, which is a good default.
 		// Generally, it's not worth the bandwidth to send this. However, if we have plenty of 
 		// sources, then ask for a lower number. (EG 5, just to ensure some sources are fresh)
+		CString strNumWant;
+		strNumWant.Format( _T("&numwant=%i"), nNumWant );
+		strURL += strNumWant;
 	}	
 
 	// If the TrackerKey is true and we have a valid key, then use it.
@@ -103,7 +103,6 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	}	
 	
 	m_pRequest.SetURL( strURL );
-	//m_pRequest.AddHeader( _T("Accept"), _T("application/x-bittorrent") ); // This causes problems with some trackers
 	m_pRequest.AddHeader( _T("Accept-Encoding"), _T("gzip") );
 	
 	if ( Settings.BitTorrent.StandardPeerID )
@@ -112,9 +111,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 		m_pRequest.SetUserAgent( strUserAgent );
 	}
 
-	//m_pRequest.AddHeader( _T("Cache-Control"), _T("no-cache") ); // Shouldn't be needed
-
-	//theApp.Message( MSG_DEBUG, _T("Sending announce") );
+	theApp.Message( MSG_DEBUG, _T("Sending announce: %s"), strURL );
 
 	if ( BTClients.Add( this ) )
 	{
@@ -131,28 +128,47 @@ CBTTrackerRequest::~CBTTrackerRequest()
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest actions
 
-void CBTTrackerRequest::SendStarted(CDownloadBase* pDownload, WORD nNumWant)
+void CBTTrackerRequest::SendStarted(CDownload* pDownload, WORD nNumWant)
 {
-	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload, _T("started"), TRUE, nNumWant );
+	if ( pDownload->m_pTorrent.m_sTracker.IsEmpty() ) return;
+
+	theApp.Message( MSG_DEFAULT, _T("Sending initial tracker announce for %s"), pDownload->m_pTorrent.m_sName );
+
+	pDownload->m_bTorrentRequested	= TRUE;
+	pDownload->m_tTorrentTracker	= GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
+	pDownload->m_nTorrentUploaded	= 0;
+	pDownload->m_nTorrentDownloaded	= 0;
+	new CBTTrackerRequest( pDownload, _T("started"), TRUE, nNumWant );
 }
 
-void CBTTrackerRequest::SendUpdate(CDownloadBase* pDownload, WORD nNumWant)
+void CBTTrackerRequest::SendUpdate(CDownload* pDownload, WORD nNumWant)
 {
-	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload,  NULL , TRUE, nNumWant );
+	if ( pDownload->m_pTorrent.m_sTracker.IsEmpty() ) return;
+
+	theApp.Message( MSG_DEFAULT, _T("Sending update tracker announce for %s"), pDownload->m_pTorrent.m_sName );
+
+	pDownload->m_tTorrentTracker	= GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
+	new CBTTrackerRequest( pDownload,  NULL , TRUE, nNumWant );
 }
 
-void CBTTrackerRequest::SendCompleted(CDownloadBase* pDownload)
+void CBTTrackerRequest::SendCompleted(CDownload* pDownload)
 {
-	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload, _T("completed"), TRUE, 0 );
+	if ( pDownload->m_pTorrent.m_sTracker.IsEmpty() ) return;
+
+	theApp.Message( MSG_DEFAULT, _T("Sending completed tracker announce for %s"), pDownload->m_pTorrent.m_sName );
+
+	new CBTTrackerRequest( pDownload, _T("completed"), TRUE, 0 );
 }
 
-void CBTTrackerRequest::SendStopped(CDownloadBase* pDownload)
+void CBTTrackerRequest::SendStopped(CDownload* pDownload)
 {
-	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload, _T("stopped"), FALSE, 0xFFFF );
+	if ( pDownload->m_pTorrent.m_sTracker.IsEmpty() ) return;
+
+	theApp.Message( MSG_DEFAULT, _T("Sending final tracker announce for %s"), pDownload->m_pTorrent.m_sName );
+
+	pDownload->m_bTorrentRequested		= FALSE;
+	pDownload->m_bTorrentStarted		= FALSE;
+	new CBTTrackerRequest( pDownload, _T("stopped"), FALSE, 0xFFFF );
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -386,8 +386,8 @@ public:
 		DWORD		RequestLimit;
 		DWORD		RandomPeriod;
 		DWORD		SourceExchangePeriod;
-		int			UploadCount;
-		int			DownloadConnections;		// Number active torrent connections allowed
+		int			UploadCount;				// Number of active torrent uploads allowed
+		int			DownloadConnections;		// Number of active torrent connections allowed
 		int			DownloadTorrents;			// Number of torrents to download at once
 		BOOL		Endgame;					// Allow endgame mode when completing torrents. (Download same chunk from multiple sources)
 		BOOL		AutoClear;					// Clear completed torrents when they meet the required share ratio

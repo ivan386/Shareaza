@@ -46,10 +46,10 @@ public:
 
 // Operations
 public:
-	static void		SendStarted(CDownloadBase* pDownload, WORD nNumWant = 0xFFFF);
-	static void		SendUpdate(CDownloadBase* pDownload, WORD nNumWant = 0xFFFF);
-	static void		SendCompleted(CDownloadBase* pDownload);
-	static void		SendStopped(CDownloadBase* pDownload);
+	static void		SendStarted(CDownload* pDownload, WORD nNumWant = 0xFFFF);
+	static void		SendUpdate(CDownload* pDownload, WORD nNumWant = 0xFFFF);
+	static void		SendCompleted(CDownload* pDownload);
+	static void		SendStopped(CDownload* pDownload);
     static CString	Escape(const Hashes::BtHash& oBTH);
     static CString	Escape(const Hashes::BtGuid& oGUID);
 protected:

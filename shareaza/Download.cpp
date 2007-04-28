@@ -378,7 +378,6 @@ void CDownload::OnRun()
 								Network.Connect( TRUE );
 
 							m_tBegan = GetTickCount();
-							m_bTorrentStarted = TRUE;
 						}
 					}
 					SetModified();

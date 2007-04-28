@@ -83,7 +83,7 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 CDownloadWithTorrent::~CDownloadWithTorrent()
 {
 	if ( m_bTorrentRequested ) 
-		CBTTrackerRequest::SendStopped( this );
+		CBTTrackerRequest::SendStopped( (CDownload*)this );
 	m_pPeerID.clear();
 	CloseTorrentUploads();
 	if ( m_pTorrentBlock != NULL ) delete [] m_pTorrentBlock;
@@ -232,79 +232,46 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	
 	if ( m_pTask != NULL ) return FALSE;
 	
-	BOOL bLive = ( ! IsPaused() ) && ( IsTrying() );
-
 	if ( !m_pPeerID )
 		GenerateTorrentDownloadID();
 
-	if ( bLive && ! m_bTorrentStarted )
+	WORD wSourcesWanted = 0;
+	if ( !m_bTorrentStarted && !IsPaused() && IsTrying() )
 	{
-		if ( ! m_bTorrentRequested || tNow > m_tTorrentTracker )
+		if ( !m_bTorrentRequested && tNow > m_tTorrentTracker )
 		{
-			theApp.Message( MSG_DEFAULT, _T("Sending initial announce for %s"), m_pTorrent.m_sName );
-
-			m_bTorrentRequested		= TRUE;
-			m_bTorrentStarted		= FALSE;
-			m_tTorrentTracker		= tNow + Settings.BitTorrent.DefaultTrackerPeriod;
-			m_nTorrentUploaded		= 0;
-			m_nTorrentDownloaded	= 0;
+			// Initial announce to tracker
+			wSourcesWanted = WORD( GetBTSourceCount( TRUE ) );
 			
-			if ( GetSourceCount(TRUE, TRUE) < Settings.BitTorrent.DownloadConnections + 10 )
-				CBTTrackerRequest::SendStarted( this, WORD( Settings.BitTorrent.DownloadConnections + 10 ) );
+			// Expect a high failure rate
+			if ( wSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
+				wSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - wSourcesWanted;
 			else
-				CBTTrackerRequest::SendStarted( this );
+				wSourcesWanted = 0;
+			CBTTrackerRequest::SendStarted( (CDownload*)this, wSourcesWanted );
 		}
 	}
-
-	// Why to have it here when the stop is sent in the destructor, in Download::StopTrying 
-	// and in all places around? Stop is needed on pause only, it's not a final announce (Rolandas)
-/*
-	else if ( ! bLive && m_bTorrentRequested && !m_bSeeding )
-	{
-		theApp.Message( MSG_DEFAULT, _T("Sending final announce for %s"), m_pTorrent.m_sName );
-
-		CBTTrackerRequest::SendStopped( this );
-		
-		m_bTorrentRequested = m_bTorrentStarted = FALSE;
-		m_tTorrentTracker = 0;
-		//ZeroMemory(m_pPeerID.n, sizeof m_pPeerID.n );	// Okay to use the same one in a single session
-	}
-*/
 
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
 	{
 		// Regular tracker update
-		theApp.Message( MSG_DEFAULT, _T("Performing tracker update for %s"), m_pTorrent.m_sName );
-
-		int nSources = GetBTSourceCount();
-		int nSourcesWanted = (int)( Settings.BitTorrent.DownloadConnections * 1.5 );
-		nSourcesWanted = max( nSourcesWanted, Settings.Downloads.SourcesWanted / 10 );
-		m_tTorrentTracker = tNow + Settings.BitTorrent.DefaultTrackerPeriod;
-		if ( IsMoving() )
-		{	// We are seeding or completed, base requests on BT uploads
-			// If we're still moving the file, not firewalled, have enough sources or have maxxed out uploads
-			CBTTrackerRequest::SendUpdate( this,
-				!IsCompleted() || !Network.IsFirewalled()
-					|| nSources > nSourcesWanted / 2
-					|| Uploads.GetTorrentUploadCount() >= Settings.BitTorrent.UploadCount
-					? 0					// We don't need to request peers.
-					: 10 );				// We might need more peers to 'push seed' to.
-		}
-		else if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections ) ) 
-		{	// We have enough transfers
-			if ( nSources > nSourcesWanted )
-				CBTTrackerRequest::SendUpdate( this, 0 );	// we have enough sources and transfers, don't get any more.
+		if ( IsSeeding() )
+		{
+			wSourcesWanted = WORD( Uploads.GetTorrentUploadCount() );
+			if ( wSourcesWanted < Settings.BitTorrent.UploadCount * 4 )
+				wSourcesWanted = Settings.BitTorrent.UploadCount * 4 - wSourcesWanted;
 			else
-				CBTTrackerRequest::SendUpdate( this, 10 );	// We should request a few sources, just in case some existing ones drop. 
+				wSourcesWanted = 0;
 		}
 		else
-		{	// We need more transfers
-			if ( nSources > nSourcesWanted )
-				CBTTrackerRequest::SendUpdate( this, 5 );	// We have many sources, but not enough transfers. Get a few new ones, so we have some fresh ones. 
+		{
+			wSourcesWanted = WORD( GetBTSourceCount() );
+			if ( wSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
+				wSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - wSourcesWanted;
 			else
-				CBTTrackerRequest::SendUpdate( this );		// We need source and transfers. Take the tracker default. (It should be an appropriate number.)
+				wSourcesWanted = 0;
 		}
-
+		CBTTrackerRequest::SendUpdate( (CDownload*)this, wSourcesWanted );
 	}
 	
 	return TRUE;
@@ -390,6 +357,7 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 		m_sTorrentTrackerError.Empty();
 		m_nTorrentTrackerErrors ++;
 		
+		m_bTorrentRequested = m_bTorrentStarted = FALSE;
 		
 		if ( m_pTorrent.m_nTrackerMode == tMultiFinding )
 		{
@@ -715,7 +683,7 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 		{
 			m_tTorrentTracker = GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
 			m_tTorrentSources = GetTickCount();
-			CBTTrackerRequest::SendUpdate( this, WORD( min( Settings.BitTorrent.DownloadConnections * 2, 100 ) ) );
+			CBTTrackerRequest::SendUpdate( (CDownload*)this, WORD( min( Settings.BitTorrent.DownloadConnections * 2, 100 ) ) );
 			return TRUE;
 		}
 	}
@@ -760,16 +728,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	m_sDiskName = pszTarget;
 	SetModified();
 	
-	m_tTorrentTracker		= GetTickCount() + ( 60 * 1000 );
-	m_bTorrentRequested		= TRUE;
-	m_bTorrentStarted		= FALSE;
-	m_nTorrentUploaded		= 0;
-	m_nTorrentDownloaded	= 0;
-
-	if ( Network.IsFirewalled() && GetSourceCount() < 40 )
-		CBTTrackerRequest::SendStarted( this );
-	else
-		CBTTrackerRequest::SendStarted( this, 0 );	
+	CBTTrackerRequest::SendStarted( (CDownload*)this, Settings.BitTorrent.UploadCount * 4 );	
 
 	return TRUE;
 }
@@ -780,10 +739,8 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 void CDownloadWithTorrent::CloseTorrent()
 {
 	if ( m_bTorrentRequested ) 
-		CBTTrackerRequest::SendStopped( this );
+		CBTTrackerRequest::SendStopped( (CDownload*)this );
 
-	m_bTorrentRequested		= FALSE;
-	m_bTorrentStarted		= FALSE;
 	CloseTorrentUploads();
 }
 
