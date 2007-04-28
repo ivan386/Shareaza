@@ -56,6 +56,8 @@ BEGIN_MESSAGE_MAP(CMediaListCtrl, CListCtrl)
 	ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDoubleClick)
 	ON_COMMAND(ID_MEDIA_ADD, OnMediaAdd)
+	ON_UPDATE_COMMAND_UI(ID_MEDIA_RATE, OnUpdateMediaRate)
+	ON_COMMAND(ID_MEDIA_RATE, OnMediaRate)
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_PROPERTIES, OnUpdateMediaProperties)
 	ON_COMMAND(ID_MEDIA_PROPERTIES, OnMediaProperties)
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_REMOVE, OnUpdateMediaRemove)
@@ -569,7 +571,7 @@ void CMediaListCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 /////////////////////////////////////////////////////////////////////////////
 // CMediaListCtrl command handlers
 
-void CMediaListCtrl::OnUpdateMediaProperties(CCmdUI* pCmdUI) 
+BOOL CMediaListCtrl::AreSelectedFilesInLibrary()
 {
 	CQuickLock oLock( Library.m_pSection );
 	if ( GetSelectedCount() > 0 )
@@ -579,16 +581,14 @@ void CMediaListCtrl::OnUpdateMediaProperties(CCmdUI* pCmdUI)
 		{
 			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( GetPath( nItem ) ) )
 			{
-				pCmdUI->Enable( TRUE );
-				return;
+				return TRUE;
 			}
 		}
 	}
-
-	pCmdUI->Enable( FALSE );
+	return FALSE;
 }
 
-void CMediaListCtrl::OnMediaProperties() 
+void CMediaListCtrl::ShowFilePropertiesDlg( int nPage )
 {
 	CFilePropertiesSheet dlg;
 
@@ -599,7 +599,27 @@ void CMediaListCtrl::OnMediaProperties()
 			dlg.Add( pFile );
 	}
 
-	dlg.DoModal();
+	dlg.DoModal( nPage );
+}
+
+void CMediaListCtrl::OnUpdateMediaRate(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( AreSelectedFilesInLibrary() );
+}
+
+void CMediaListCtrl::OnMediaRate() 
+{
+	ShowFilePropertiesDlg( 2 );
+}
+
+void CMediaListCtrl::OnUpdateMediaProperties(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( AreSelectedFilesInLibrary() );
+}
+
+void CMediaListCtrl::OnMediaProperties() 
+{
+	ShowFilePropertiesDlg();
 }
 
 void CMediaListCtrl::OnUpdateMediaSelect(CCmdUI* pCmdUI) 

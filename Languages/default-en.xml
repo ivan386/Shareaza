@@ -1341,6 +1341,7 @@
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Play"/>
+		<item id="ID_MEDIA_RATE" text="Ra_te File..."/>
 		<item id="ID_MEDIA_PROPERTIES" text="_Properties..."/>
 		<separator/>
 		<item id="ID_MEDIA_ADD" text="_Add File..."/>
@@ -2325,6 +2326,7 @@
 	<tip id="ID_MEDIA_PREVIOUS" message="Skip back to the previous file in the current playlist." tip="Previous File"/>
 	<tip id="ID_MEDIA_PROPERTIES" message="View and edit the properties of the selected files."/>
 	<tip id="ID_MEDIA_RANDOM" message="Toggle random (shuffle) mode in the current playlist."/>
+	<tip id="ID_MEDIA_RATE" message="Rate the selected files."/>
 	<tip id="ID_MEDIA_REMOVE" message="Remove the selected media file from the playlist."/>
 	<tip id="ID_MEDIA_REPEAT" message="Repeat the current media file."/>
 	<tip id="ID_MEDIA_SAVE" message="Save the current playlist to a file..."/>

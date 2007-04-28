@@ -1715,6 +1715,7 @@
 #define ID_HELP_CONNECTIONFAIL          33132
 #define ID_HELP_DONKEYSERVERS           33133
 #define ID_MEDIA_PROPERTIES             33137
+#define ID_MEDIA_RATE                   33138
 #define ID_MEDIA_STATE_STOP             33200
 #define ID_MEDIA_STATE_PAUSE            33201
 #define ID_MEDIA_STATE_PLAY             33202
@@ -1725,7 +1726,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        282
-#define _APS_NEXT_COMMAND_VALUE         33138
+#define _APS_NEXT_COMMAND_VALUE         33139
 #define _APS_NEXT_CONTROL_VALUE         1443
 #define _APS_NEXT_SYMED_VALUE           104
 #endif

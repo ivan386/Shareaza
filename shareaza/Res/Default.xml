@@ -1295,6 +1295,7 @@
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Play"/>
+		<item id="ID_MEDIA_RATE" text="Ra_te File..."/>
 		<item id="ID_MEDIA_PROPERTIES" text="_Properties..."/>
 		<separator/>
 		<item id="ID_MEDIA_ADD" text="_Add File..."/>
@@ -2412,7 +2413,7 @@
 		<image id="ID_TRANSFERS_DISCONNECT"/>
 		<image id="ID_TRANSFERS_FORGET"/>
 		<image id="ID_DOWNLOADS_FILE_DELETE"/>
-		<image id="ID_DOWNLOADS_RATE"/>
+		<image id="ID_DOWNLOADS_RATE" id1="ID_MEDIA_RATE"/>
 		<image id="ID_DOWNLOADS_MOVE_UP" id1="ID_CHAT_PRIORITY"/>
 		<image id="ID_DOWNLOADS_MOVE_DOWN"/>
 		<image id="ID_LIBRARY_ENQUEUE"/>
