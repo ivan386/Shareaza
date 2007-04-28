@@ -1,251 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <schemaMappings xmlns="http://www.shareaza.com/schemas/SchemaMappings.xsd" version="1.0">
-    <schemaMapping sourceURL="http://www.limewire.com/schemas/book.xsd">
-    	<target url="http://www.shareaza.com/schemas/wordProcessing.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="author" to="author">
-    		<attribute from="publisher" to="copyright">
-    		<attribute from="edition" to="revision">
-    		<attribute from="description" to="abstract">
-    		<attribute from="type" to="type">
-    		<attribute from="format" to="format">
-    		<attribute from="subject" to="subject">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="pages" to="pages">
-    		<attribute from="language" to="language">
-    		<attribute from="link" to="link">
+    <schemaMapping sourceURI="http://www.limewire.com/schemas/book.xsd">
+    	<target uri="http://www.shareaza.com/schemas/wordProcessing.xsd">
+    		<attribute from="publisher" to="copyright"/>
+    		<attribute from="edition" to="revision"/>
+    		<attribute from="description" to="abstract"/>
     	</target>
-    	<target url="http://www.shareaza.com/schemas/spreadsheet.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="author" to="author">
-    		<attribute from="publisher" to="copyright">
-    		<attribute from="edition" to="revision">
-    		<attribute from="description" to="abstract">
-    		<attribute from="type" to="type">
-    		<attribute from="format" to="format">
-    		<attribute from="subject" to="subject">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="language" to="language">
-    		<attribute from="link" to="link">
+    	<target uri="http://www.shareaza.com/schemas/spreadsheet.xsd">
+    		<attribute from="publisher" to="copyright"/>
+    		<attribute from="edition" to="revision"/>
+    		<attribute from="description" to="abstract"/>
+   	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/wordProcessing.xsd">
+    	<target uri="http://www.limewire.com/schemas/book.xsd">
+    		<attribute from="copyright" to="publisher"/>
+    		<attribute from="revision" to="edition"/>
+    		<attribute from="abstract" to="description"/>
     	</target>
     </schemaMapping>
-    <schemaMapping sourceURL="http://www.shareaza.com/schemas/wordProcessing.xsd">
-    	<target url="http://www.limewire.com/schemas/book.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="author" to="author">
-    		<attribute from="copyright" to="publisher">
-    		<attribute from="revision" to="edition">
-    		<attribute from="abstract" to="description">
-    		<attribute from="type" to="type">
-    		<attribute from="format" to="format">
-    		<attribute from="subject" to="subject">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="pages" to="pages">
-    		<attribute from="language" to="language">
-    		<attribute from="link" to="link">
-    	</target>
-    	<target url="http://www.shareaza.com/schemas/spreadsheet.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="author" to="author">
-    		<attribute from="subject" to="subject">
-    		<attribute from="language" to="language">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="abstract" to="abstract">
-    		<attribute from="initials" to="initials">
-    		<attribute from="copyright" to="copyright">
-    		<attribute from="version" to="version">
-    		<attribute from="revision" to="revision">
-    		<attribute from="type" to="type">
-    		<attribute from="format" to="format">
-    		<attribute from="formatVersion" to="formatVersion">
-    		<attribute from="link" to="link">
-    		<attribute from="comments" to="comments">
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/spreadsheet.xsd">
+    	<target uri="http://www.limewire.com/schemas/book.xsd">
+    		<attribute from="copyright" to="publisher"/>
+    		<attribute from="revision" to="edition"/>
+    		<attribute from="abstract" to="description"/>
     	</target>
     </schemaMapping>
-    <schemaMapping sourceURL="http://www.shareaza.com/schemas/spreadsheet.xsd">
-    	<target url="http://www.limewire.com/schemas/book.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="author" to="author">
-    		<attribute from="copyright" to="publisher">
-    		<attribute from="revision" to="edition">
-    		<attribute from="abstract" to="description">
-    		<attribute from="type" to="type">
-    		<attribute from="format" to="format">
-    		<attribute from="subject" to="subject">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="language" to="language">
-    		<attribute from="link" to="link">
-    	</target>
-    	<target url="http://www.shareaza.com/schemas/wordProcessing.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="author" to="author">
-    		<attribute from="subject" to="subject">
-    		<attribute from="language" to="language">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="abstract" to="abstract">
-    		<attribute from="initials" to="initials">
-    		<attribute from="copyright" to="copyright">
-    		<attribute from="version" to="version">
-    		<attribute from="revision" to="revision">
-    		<attribute from="type" to="type">
-    		<attribute from="format" to="format">
-    		<attribute from="formatVersion" to="formatVersion">
-    		<attribute from="link" to="link">
-    		<attribute from="comments" to="comments">
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/rom.xsd">
+    	<target uri="http://www.shareaza.com/schemas/application.xsd">
+    		<attribute from="system" to="OS"/>
+    		<attribute from="comments" to="releaseNotes"/>
     	</target>
     </schemaMapping>
-    <schemaMapping sourceURL="http://www.limewire.com/schemas/video.xsd">
-    	<target url="http://www.shareaza.com/schemas/videoFilm.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="genre" to="genre">
-    		<attribute from="description" to="description">
-    		<attribute from="language" to="language">
-    		<attribute from="source" to="source">
-    		<attribute from="director" to="director">
-    		<attribute from="producer" to="producer">
-    		<attribute from="studio" to="studio">
-    		<attribute from="stars" to="stars">
-    		<attribute from="imdbLink" to="imdbLink">
-    		<attribute from="year" to="year">
-    		<attribute from="subtitles" to="subtitles">
-    		<attribute from="rating" to="rating">
-    		<attribute from="standard" to="standard">
-    		<attribute from="quality" to="quality">
-    		<attribute from="qualityNotes" to="qualityNotes">
-    		<attribute from="distributer" to="distributer">
-    		<attribute from="distributerLink" to="distributerLink">
-    		<attribute from="releasegroup" to="releasegroup">
-    		<attribute from="releasegroupLink" to="releasegroupLink">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="link" to="link">
-    	</target>
-    	<target url="http://www.shareaza.com/schemas/videoSeries.xsd">
-    		<attribute from="title" to="name">
-    		<attribute from="type" to="type">
-    		<attribute from="description" to="description">
-    		<attribute from="language" to="language">
-    		<attribute from="source" to="source">
-    		<attribute from="producer" to="producer">
-    		<attribute from="studio" to="studio">
-    		<attribute from="stars" to="stars">
-    		<attribute from="subtitles" to="subtitles">
-    		<attribute from="rating" to="rating">
-    		<attribute from="qualityNotes" to="qualityNotes">
-    		<attribute from="distributer" to="distributer">
-    		<attribute from="distributerLink" to="distributerLink">
-    		<attribute from="releasegroup" to="releasegroup">
-    		<attribute from="releasegroupLink" to="releasegroupLink">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="link" to="link">
-    	</target>
-    </schemaMapping>
-    <schemaMapping sourceURL="http://www.shareaza.com/schemas/videoFilm.xsd">
-    	<target url="http://www.limewire.com/schemas/video.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="description" to="description">
-    		<attribute from="language" to="language">
-    		<attribute from="source" to="source">
-    		<attribute from="director" to="director">
-    		<attribute from="producer" to="producer">
-    		<attribute from="studio" to="studio">
-    		<attribute from="stars" to="stars">
-    		<attribute from="imdbLink" to="imdbLink">
-    		<attribute from="year" to="year">
-    		<attribute from="subtitles" to="subtitles">
-    		<attribute from="rating" to="rating">
-    		<attribute from="standard" to="standard">
-    		<attribute from="quality" to="quality">
-    		<attribute from="qualityNotes" to="qualityNotes">
-    		<attribute from="distributer" to="distributer">
-    		<attribute from="distributerLink" to="distributerLink">
-    		<attribute from="releasegroup" to="releasegroup">
-    		<attribute from="releasegroupLink" to="releasegroupLink">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="link" to="link">
-    	</target>
-    	<target url="http://www.shareaza.com/schemas/videoSeries.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="description" to="description">
-    		<attribute from="language" to="language">
-    		<attribute from="source" to="source">
-    		<attribute from="producer" to="producer">
-    		<attribute from="studio" to="studio">
-    		<attribute from="stars" to="stars">
-    		<attribute from="year" to="year">
-    		<attribute from="subtitles" to="subtitles">
-    		<attribute from="rating" to="rating">
-    		<attribute from="standard" to="standard">
-    		<attribute from="qualityNotes" to="qualityNotes">
-    		<attribute from="distributer" to="distributer">
-    		<attribute from="distributerLink" to="distributerLink">
-    		<attribute from="releasegroup" to="releasegroup">
-    		<attribute from="releasegroupLink" to="releasegroupLink">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="link" to="link">
-    		<attribute from="collector" to="collector">
-    	</target>
-    </schemaMapping>
-    <schemaMapping sourceURL="http://www.shareaza.com/schemas/videoSeries.xsd">
-    	<target url="http://www.limewire.com/schemas/video.xsd">
-    		<attribute from="name" to="title">
-    		<attribute from="type" to="type">
-    		<attribute from="description" to="description">
-    		<attribute from="language" to="language">
-    		<attribute from="source" to="source">
-    		<attribute from="producer" to="producer">
-    		<attribute from="studio" to="studio">
-    		<attribute from="stars" to="stars">
-    		<attribute from="subtitles" to="subtitles">
-    		<attribute from="rating" to="rating">
-    		<attribute from="qualityNotes" to="qualityNotes">
-    		<attribute from="distributer" to="distributer">
-    		<attribute from="distributerLink" to="distributerLink">
-    		<attribute from="releasegroup" to="releasegroup">
-    		<attribute from="releasegroupLink" to="releasegroupLink">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="link" to="link">
-    	</target>
-    	<target url="http://www.shareaza.com/schemas/videoFilm.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="description" to="description">
-    		<attribute from="language" to="language">
-    		<attribute from="source" to="source">
-    		<attribute from="producer" to="producer">
-    		<attribute from="studio" to="studio">
-    		<attribute from="stars" to="stars">
-    		<attribute from="year" to="year">
-    		<attribute from="subtitles" to="subtitles">
-    		<attribute from="rating" to="rating">
-    		<attribute from="standard" to="standard">
-    		<attribute from="qualityNotes" to="qualityNotes">
-    		<attribute from="distributer" to="distributer">
-    		<attribute from="distributerLink" to="distributerLink">
-    		<attribute from="releasegroup" to="releasegroup">
-    		<attribute from="releasegroupLink" to="releasegroupLink">
-    		<attribute from="keywords" to="keywords">
-    		<attribute from="link" to="link">
-    		<attribute from="collector" to="collector">
-    	</target>
-    </schemaMapping>
-    <schemaMapping sourceURL="http://www.shareaza.com/schemas/rom.xsd">
-    	<target url="http://www.shareaza.com/schemas/application.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="company" to="company">
-    		<attribute from="system" to="OS">
-    		<attribute from="type" to="type">
-    		<attribute from="link" to="link">
-    		<attribute from="comments" to="releaseNotes">
-    	</target>
-    </schemaMapping>
-    <schemaMapping sourceURL="http://www.shareaza.com/schemas/application.xsd">
-    	<target url="http://www.shareaza.com/schemas/rom.xsd">
-    		<attribute from="title" to="title">
-    		<attribute from="company" to="company">
-    		<attribute from="OS" to="system">
-    		<attribute from="type" to="type">
-    		<attribute from="link" to="link">
-    		<attribute from="releaseNotes" to="comments">
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/application.xsd">
+    	<target uri="http://www.shareaza.com/schemas/rom.xsd">
+    		<attribute from="OS" to="system"/>
+    		<attribute from="releaseNotes" to="comments"/>
     	</target>
     </schemaMapping>
 </schemaMappings>
