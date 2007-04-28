@@ -178,6 +178,7 @@
 #define IDC_RIGHT                       279
 #define IDC_LEFT                        280
 #define IDI_UPDOWN_ARROW                281
+#define IDR_XML_SCHEMA_MAPS             282
 #define IDC_CONNECT_HOST                1000
 #define IDC_CONNECT_PORT                1001
 #define IDC_SCHEMAS                     1002
@@ -1725,8 +1726,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        282
-#define _APS_NEXT_COMMAND_VALUE         33139
+#define _APS_NEXT_RESOURCE_VALUE        284
+#define _APS_NEXT_COMMAND_VALUE         33138
 #define _APS_NEXT_CONTROL_VALUE         1443
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
