@@ -3119,6 +3119,23 @@
 				RelativePath="..\shareaza\Res\Scheduler.bmp">
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\SchemaMappings.xml">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						Outputs="$(InputDir)$(InputFileName).gz"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Search.ico">
 			</File>
 			<File
@@ -3213,22 +3230,7 @@
 				RelativePath="..\shareaza\Res\Definitions.xml.gz">
 			</File>
 			<File
-				RelativePath="release\shareaza\Shareaza_i.c">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)/$(InputName)1.obj"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
+				RelativePath="..\shareaza\Res\SchemaMappings.xml.gz">
 			</File>
 			<File
 				RelativePath="debug\shareaza\Shareaza_i.c">
@@ -3244,6 +3246,24 @@
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="release\shareaza\Shareaza_i.c">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"
+						DisableSpecificWarnings="4255;4668;4820"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
