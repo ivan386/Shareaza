@@ -28,6 +28,7 @@
 #include "DownloadTask.h"
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
+#include "DownloadTransferED2K.h"
 #include "DownloadGroups.h"
 #include "EDClient.h"
 #include "EDClients.h"
@@ -508,6 +509,7 @@ void CDownloadsWnd::Prepare()
 	
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	BOOL bFirstShare = TRUE;
+	BOOL bPreviewDone = FALSE;
 	
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
@@ -581,18 +583,18 @@ void CDownloadsWnd::Prepare()
 			}
 
 			// Check if we could get remote previews (only from the connected sources for the efficiency)
-			if ( pDownload->m_bSelected && pSource->IsOnline() )
+			if ( !bPreviewDone && pDownload->m_bSelected && !pDownload->m_bRemotePreviewCapable &&
+				 !pSource->m_bPreviewRequestSent && pSource->IsOnline() )
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
-					CEDClient* pEDClient = EDClients.GetByGUID( pSource->m_oGUID );
-					if ( pEDClient && pEDClient->m_bEmPreview && !pSource->m_bPreviewRequestSent )
+					CDownloadTransferED2K* pEDClient = (CDownloadTransferED2K*)pSource->m_pTransfer;
+					if ( pEDClient->m_pClient->m_bEmPreview )
 					{
 						pDownload->m_bRemotePreviewCapable = TRUE;
 					}
 				}
-				else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bPreview &&
-						  !pSource->m_bPreviewRequestSent )
+				else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bPreview )
 				{
 					pDownload->m_bRemotePreviewCapable = TRUE;
 				}
@@ -602,6 +604,7 @@ void CDownloadsWnd::Prepare()
 		if ( pDownload->m_bSelected )
 		{
 			m_bSelRemotePreviewCapable = pDownload->m_bRemotePreviewCapable || pDownload->m_bGotPreview;
+			bPreviewDone = TRUE;
 		}
 	}
 		
@@ -848,69 +851,58 @@ void CDownloadsWnd::OnUpdateDownloadsRemotePreview(CCmdUI* pCmdUI)
 void CDownloadsWnd::OnDownloadsRemotePreview() 
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CEDClient* pEDClient = NULL;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 
-		if ( pDownload->m_bSelected )
+		if ( !pDownload->m_bSelected ) continue;
+
+		// Check if the saved preview file is available first
+		if ( pDownload->m_bGotPreview )
 		{
-			// Check if the saved preview file is available first
-			if ( !pDownload->m_bGotPreview ) 
+			// OnTimer event will launch it
+			pDownload->m_bWaitingPreview = TRUE;
+			break;
+		}
+
+		// Don't do anything if we are already working on the file
+		if ( pDownload->IsTasking() ) break;
+
+		// Find first client which supports previews
+		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+		{
+			if ( pSource->IsOnline() && !pSource->m_bPreviewRequestSent )
 			{
-				CDownloadSource* pSource = NULL;
-
-				for ( pSource = pDownload->GetFirstSource() ; pSource ; 
-					pSource = pSource->m_pNext )
+				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
-					if ( pSource->IsOnline() && !pSource->m_bPreviewRequestSent )
+					CDownloadTransferED2K* pEDClient = (CDownloadTransferED2K*)pSource->m_pTransfer;
+					if ( pEDClient->m_pClient->m_bEmPreview )
 					{
-						if ( pSource->m_nProtocol == PROTOCOL_ED2K )
-						{
-							pEDClient = EDClients.GetByGUID( pSource->m_oGUID );
-
-							// Find first client which supports previews
-							if ( pEDClient && pEDClient->m_bEmPreview )
-							{
-								pSource->m_bPreviewRequestSent = TRUE;
-								break;
-							}
-						}
-						else if ( pSource->m_nProtocol == PROTOCOL_HTTP && 
-								  pSource->m_bPreview && !pDownload->IsTasking() )
-						{
-							if ( pDownload->m_oSHA1 && pSource->m_sPreview.IsEmpty() )
-							{
-								pSource->m_sPreview.Format( _T("http://%s:%i/gnutella/preview/v1?%s"),
-									(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ), pSource->m_nPort,
-									(LPCTSTR)pDownload->m_oSHA1.toUrn() );
-							}
-
-							if ( pDownload->m_oSHA1 )
-							{
-								pDownload->m_pTask = new CDownloadTask( pDownload, pSource->m_sPreview );
-
-								pDownload->m_bWaitingPreview = TRUE;
-								pSource->m_bPreviewRequestSent = TRUE;
-								break;
-							}
-						}
+						pEDClient->m_pClient->SendPreviewRequest( pDownload );
+						pDownload->m_bWaitingPreview = TRUE;
+						pSource->m_bPreviewRequestSent = TRUE;
+						break;
 					}
 				}
-
-				if ( pEDClient )
+				else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bPreview && pDownload->m_oSHA1 )
 				{
-					pEDClient->SendPreviewRequest( pDownload );
+					if (  pSource->m_sPreview.IsEmpty() )
+					{
+						pSource->m_sPreview.Format( _T("http://%s:%i/gnutella/preview/v1?%s"),
+							(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ), pSource->m_nPort,
+							(LPCTSTR)pDownload->m_oSHA1.toUrn() );
+					}
+					pDownload->m_pTask = new CDownloadTask( pDownload, pSource->m_sPreview );
 					pDownload->m_bWaitingPreview = TRUE;
 					pSource->m_bPreviewRequestSent = TRUE;
+					break;
 				}
 			}
-			else
-			{
-				pDownload->m_bWaitingPreview = TRUE; // OnTimer event will launch it
-			}
 		}
+		// Only one download can get selected at a time for preview
+		// so there's no need to check the rest
+		break;
 	}
 }
 
