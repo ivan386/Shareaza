@@ -196,7 +196,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hu">Ebben a mappában lévő fájlok egyeznek a keresési feltétellel, ami {content} volt.</subtitle>
                <subtitle language="it">Questa cartella contiene i file che corrispondono alla tua ricerca di "{content}"</subtitle>
                <subtitle language="ja">このフォルダーには "{content}" に当てはまるサーチ結果が収録されています</subtitle>
-               <subtitle language="lt">Šiame kataloge yra bylos, surastos pagal ieškinį „{content}“.</subtitle>
+               <subtitle language="lt">Šiame kataloge yra failai, surasti pagal ieškinį „{content}“.</subtitle>
                <subtitle language="nl">Deze map bevat alle bestanden die resulteerden uit je zoekopdracht naar "{content}"</subtitle>
                <subtitle language="no">Denne mappen inneholder resultat som matcher søk etter "{content}"</subtitle>
                <subtitle language="pt-br">Esta pasta contém os arquivos que combinaram na sua busca por "{content}".</subtitle>

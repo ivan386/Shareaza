@@ -124,7 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="hu">Kedvenc fájlok</title>
                <title language="it">I miei file preferiti</title>
                <title language="ja">お気に入り</title>
-               <title language="lt">Mano mėgiamos bylos</title>
+               <title language="lt">Mano mėgiami failai</title>
                <title language="nl">Mijn Favoriete Bestanden</title>
                <title language="no">Mine favorittfiler</title>
                <title language="pt-br">Meus Arquivos Favoritos</title>
@@ -147,7 +147,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hu">Ez a mappa a kedvenc fájljaidat tartalmazza, amit a Shareaza ajánlani fog a fájllistádat lekérőknek.</subtitle>
                <subtitle language="it">Questa cartella contiene i file preferiti che Shareaza raccomanderà agli utenti che esamineranno la tua collezione.</subtitle>
                <subtitle language="ja">このフォルダーにはライブラリー内にある映画の一覧があります</subtitle>
-               <subtitle language="lt">Šiame kataloge yra bylos, kurias „Shareaza“ rekomenduos kitiems vartotojams, naršantiems Jūsų kolekcijoje.</subtitle>
+               <subtitle language="lt">Šiame kataloge yra failai, kuriuos „Shareaza“ rekomenduos kitiems vartotojams, naršantiems Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat favoriete bestanden die Shareaza zal aanbevelen aan andere gebruikers die je verzameling doorzoeken.</subtitle>
                <subtitle language="no">Denne mappen inneholder dine favoritter, som Shareaza vil anbefale til andre brukere som utforsker mine samlinger</subtitle>
                <subtitle language="pt-br">Esta pasta contém os arquivos favoritos os quais o Shareaza recomendará para os outros usuários que navegarem pela sua coleção.</subtitle>

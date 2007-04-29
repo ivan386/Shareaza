@@ -172,7 +172,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="hu">Jelenleg {totoalFiles} fájl van a könyvtárban. Méret: {totalVolume}.</subtitle>
                <subtitle language="it">Tu hai {totalFiles} file che ammontano a {totalVolume} nella tua libreria.</subtitle>
                <subtitle language="ja">あなたのライブラリ内には {totalFiles} ファイルあり、総容量は {totalVolume} です</subtitle>
-               <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}.</subtitle>
+               <subtitle language="lt">Jūs turite {totalFiles} failų, užimančių Jūsų kolekcijoje {totalVolume}.</subtitle>
                <subtitle language="nl">Je hebt {totalFiles} bestanden met een totaal van {totalVolume} in je bibliotheek.</subtitle>
                <subtitle language="no">Du har {totalFiles} filer totalt {totalVolume} i mine filer.</subtitle>
                <subtitle language="pt-br">Você tem {totalFiles} arquivos totalizando {totalVolume} na sua biblioteca.</subtitle>
