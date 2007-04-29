@@ -119,6 +119,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	
 	CancelPreview();
 	ClearReviews();
+	m_pMetadata.Clear();
 	
 	if ( pFile == NULL || ( ! pFile->IsValid() ) )
 	{
