@@ -72,7 +72,6 @@ BOOL CHomeSearchCtrl::PreTranslateMessage(MSG* pMsg)
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN )
 	{
 		PostMessage( WM_COMMAND, MAKELONG( IDC_SEARCH_CREATE, BN_CLICKED ), (LPARAM)m_wndSearch.GetSafeHwnd() );
-		return TRUE;
 	}
 	else if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
 	{
