@@ -28,7 +28,6 @@
 #define IDR_CHATFRAME                   140
 #define IDR_SECURITYFRAME               141
 #define IDD_SCHEMA_COLUMNS              141
-#define IDD_FILE_PROPERTIES             142
 #define IDR_DISCOVERYFRAME              142
 #define IDR_BROWSEHOSTFRAME             143
 #define IDD_SETTINGS_GNUTELLA           143
