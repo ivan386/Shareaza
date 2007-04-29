@@ -141,7 +141,7 @@ BOOL CFileMetadataPage::OnInitDialog()
 
 							if ( strNew != _T("(~ns~)") && strOld != _T("(~mt~)") )
 							{
-								if ( strOld == _T("(~ns~)") )
+								if ( strOld == _T("(~ns~)") || strOld.IsEmpty() )
 								{
 									m_pXML->AddAttribute( pMember->m_sName, strNew );
 								}
