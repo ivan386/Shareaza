@@ -70,7 +70,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeWnd construction
 
-CHomeWnd::CHomeWnd() : CPanelWnd( FALSE )
+CHomeWnd::CHomeWnd() : CPanelWnd( TRUE )
 {
 	Create( IDR_HOMEFRAME );
 }
