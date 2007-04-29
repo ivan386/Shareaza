@@ -677,7 +677,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix)
 		}
 		else if ( pMember->m_bYear )
 		{
-			short nYear = 0;
+			int nYear = 0;
 			if ( _stscanf( str, L"%i", &nYear ) != 1 ) return FALSE;
 			if ( nYear < 1000 || nYear > 9999 ) return FALSE;
 		}

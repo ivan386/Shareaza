@@ -104,7 +104,7 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 	}
 	else if ( m_bYear )
 	{
-		short nYear = 0;
+		int nYear = 0;
 		if ( _stscanf( strValue, L"%i", &nYear ) != 1 ) strValue.Empty();
 		if ( nYear < 1000 || nYear > 9999 ) strValue.Empty();
 	}
