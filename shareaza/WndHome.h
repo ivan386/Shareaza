@@ -1,7 +1,7 @@
 //
 // WndHome.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,6 +65,7 @@ protected:
 	afx_msg void OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd);
 	afx_msg void OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
 	afx_msg void OnPaint();
+	afx_msg void OnDestroy();
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

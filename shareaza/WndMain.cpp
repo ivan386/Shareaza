@@ -1945,14 +1945,29 @@ void CMainWnd::OnTabConnect()
 
 void CMainWnd::OnUpdateTabHome(CCmdUI* pCmdUI) 
 {
-	CChildWnd* pChild = m_pWindows.GetActive();
-	pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CHomeWnd) ) );
+	if ( Settings.General.GUIMode != GUI_WINDOWED )
+	{
+		CChildWnd* pChild = m_pWindows.GetActive();
+		pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CHomeWnd) ) );
+	}
+	else
+	{
+		pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CHomeWnd) ) != NULL );
+	}
 }
 
 void CMainWnd::OnTabHome() 
 {
-	m_pWindows.Open( RUNTIME_CLASS(CHomeWnd) );
-	OpenFromTray();
+	if ( Settings.General.GUIMode != GUI_WINDOWED )
+	{
+		m_pWindows.Open( RUNTIME_CLASS(CHomeWnd) );
+		OpenFromTray();
+	}
+	else
+	{
+		m_pWindows.Open( RUNTIME_CLASS(CHomeWnd), TRUE );
+		OpenFromTray();
+	}
 }
 
 void CMainWnd::OnUpdateTabLibrary(CCmdUI* pCmdUI) 
@@ -2092,7 +2107,7 @@ void CMainWnd::OnToolsImportDownloads()
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
-	
+
 	CString strMessage;
 	LoadString( strMessage, IDS_SELECT_ED2K_TEMP_FOLDER );
 	BROWSEINFO pBI = {};

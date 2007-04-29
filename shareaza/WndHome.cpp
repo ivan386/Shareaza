@@ -1,7 +1,7 @@
 //
 // WndHome.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,6 +60,7 @@ BEGIN_MESSAGE_MAP(CHomeWnd, CPanelWnd)
 	ON_NOTIFY(RVN_CLICK, IDC_HOME_VIEW, OnClickView)
 	ON_NOTIFY(RVN_CLICK, 1, OnClickView)
 	ON_WM_PAINT()
+	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -69,7 +70,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeWnd construction
 
-CHomeWnd::CHomeWnd() : CPanelWnd( TRUE )
+CHomeWnd::CHomeWnd() : CPanelWnd( FALSE )
 {
 	Create( IDR_HOMEFRAME );
 }
@@ -88,9 +89,17 @@ int CHomeWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! m_wndView.Create( rectDefault, this ) ) return -1;
 	if ( ! m_wndPanel.Create( this ) ) return -1;
 
+	LoadState( NULL, TRUE );
+
 	OnSkinChange();
 
 	return 0;
+}
+
+void CHomeWnd::OnDestroy() 
+{
+	SaveState();
+	CPanelWnd::OnDestroy();
 }
 
 void CHomeWnd::OnSkinChange()
