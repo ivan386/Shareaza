@@ -122,6 +122,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 	m_nSpeed	= pHit->m_bMeasured == TS_TRUE ? ( pHit->m_nSpeed * 128 ) : 0;
 	m_sServer	= pHit->m_pVendor->m_sName;
 	m_sName		= pHit->m_sName;
+	m_sNick		= pHit->m_sNick;
 	m_nIndex	= pHit->m_nIndex;
 	m_bSHA1		= bool( pHit->m_oSHA1 );
 	m_bTiger	= bool( pHit->m_oTiger );
