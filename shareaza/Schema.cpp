@@ -672,14 +672,26 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix)
 		if ( pMember->m_bNumeric )
 		{
 			float nNumber = 0.0f;
-			if ( str.GetLength() && _stscanf( str, L"%f", &nNumber ) != 1 ) return FALSE;
-			if ( nNumber < pMember->m_nMinOccurs || nNumber > pMember->m_nMaxOccurs ) return FALSE;
+			bool bValid = true;
+
+			if ( str.GetLength() && _stscanf( str, L"%f", &nNumber ) != 1 ) 
+				bValid = false;
+			if ( nNumber < pMember->m_nMinOccurs || nNumber > pMember->m_nMaxOccurs )
+				bValid = false;
+			if ( !bValid )
+			{
+				if ( !bFix ) return FALSE;
+				pMember->SetValueTo( pBody, L"" );
+			}
 		}
 		else if ( pMember->m_bYear )
 		{
 			int nYear = 0;
-			if ( _stscanf( str, L"%i", &nYear ) != 1 ) return FALSE;
-			if ( nYear < 1000 || nYear > 9999 ) return FALSE;
+			if ( _stscanf( str, L"%i", &nYear ) != 1 || nYear < 1000 || nYear > 9999 )
+			{
+				if ( !bFix ) return FALSE;
+				pMember->SetValueTo( pBody, L"" );
+			}
 		}
 		else if ( pMember->m_nMaxLength > 0 )
 		{
