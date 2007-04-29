@@ -1,7 +1,7 @@
 //
 // DlgFileProperties.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,7 +56,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesDlg dialog
 
-CFilePropertiesDlg::CFilePropertiesDlg(CWnd* pParent, DWORD nIndex) : CSkinDialog( CFilePropertiesDlg::IDD, pParent )
+CFilePropertiesDlg::CFilePropertiesDlg(CWnd* pParent, DWORD nIndex) : CSkinDialog( 0, pParent )
 {
 	m_nIndex	= nIndex;
 	m_bHexHash	= FALSE;

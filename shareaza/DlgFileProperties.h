@@ -1,7 +1,7 @@
 //
 // DlgFileProperties.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,19 +28,13 @@
 #include "CtrlSchema.h"
 #include "CtrlSchemaCombo.h"
 
-
 class CFilePropertiesDlg : public CSkinDialog
 {
-// Construction
 public:
 	CFilePropertiesDlg(CWnd* pParent = NULL, DWORD nIndex = 0);
 
 	DECLARE_DYNAMIC(CFilePropertiesDlg)
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CFilePropertiesDlg)
-	enum { IDD = IDD_FILE_PROPERTIES };
 	CStatic	m_wndHash;
 	CStatic	m_wndIcon;
 	CButton	m_wndCancel;
@@ -53,31 +47,17 @@ public:
 	CString	m_sIndex;
 	CString	m_sSHA1;
 	CString	m_sTiger;
-	//}}AFX_DATA
 
-// Attributes
+	void	Update();
+
 protected:
 	CSchemaCtrl	m_wndSchema;
 	DWORD		m_nIndex;
 	BOOL		m_bHexHash;
 	int			m_nWidth;
 
-// Operations
-public:
-	void	Update();
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CFilePropertiesDlg)
-	public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CFilePropertiesDlg)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI);
@@ -87,7 +67,7 @@ protected:
 	afx_msg void OnCloseUpSchemas();
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
 };
 
