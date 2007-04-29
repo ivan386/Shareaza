@@ -79,8 +79,6 @@
 		<attribute name="releasegroup" type="string"/>
 		<attribute name="releasegroupLink" type="uriReference"/>
 		<attribute name="link" type="uriReference"/>
-		<attribute name="SHA1" type="string"/>	
-		
 	</complexType>
 </schema>
 

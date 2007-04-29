@@ -178,7 +178,6 @@
 			<attribute name="keywords" type="string"/>
 			<attribute name="link" type="uriReference"/>
 			<attribute name="DRM" type="boolean"/>
-			<attribute name="SHA1" type="string"/>
 		</all>
 	</complexType>
 

@@ -24,7 +24,6 @@
 			<attribute name="language" type="string"/>
 			<attribute name="description" type="string"/>
 			<attribute name="comments" type="string"/>
-			<attribute name="SHA1" type="string"/>
 		</all>
 	</complexType>
 

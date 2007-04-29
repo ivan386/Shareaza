@@ -134,7 +134,6 @@
 					<maxInclusive value="100"/>
 				</simpleType>
 			</attribute>
-			<attribute name="SHA1" type="string"/>
 		</all>
 	</complexType>
 
