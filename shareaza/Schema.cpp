@@ -666,14 +666,20 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix)
 	{
 		CSchemaMember* pMember = GetNextMember( pos );
 		
-		CString str = pMember->GetValueFrom( pBody, _T("(~np~)"), FALSE );
-		if ( str == _T("(~np~)") ) continue;
+		CString str = pMember->GetValueFrom( pBody, L"(~np~)", FALSE );
+		if ( str == L"(~np~)" ) continue;
 		
 		if ( pMember->m_bNumeric )
 		{
 			float nNumber = 0.0f;
-			if ( str.GetLength() && _stscanf( str, _T("%f"), &nNumber ) != 1 ) return FALSE;
+			if ( str.GetLength() && _stscanf( str, L"%f", &nNumber ) != 1 ) return FALSE;
 			if ( nNumber < pMember->m_nMinOccurs || nNumber > pMember->m_nMaxOccurs ) return FALSE;
+		}
+		else if ( pMember->m_bYear )
+		{
+			short nYear = 0;
+			if ( _stscanf( str, L"%i", &nYear ) != 1 ) return FALSE;
+			if ( nYear < 1000 || nYear > 9999 ) return FALSE;
 		}
 		else if ( pMember->m_nMaxLength > 0 )
 		{
