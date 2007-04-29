@@ -1074,9 +1074,9 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
   				else
   				{
  					if ( pDownload->IsSeeding() )
- 						strText.Format( _T("%i%%"), pDownload->GetRatio() );
+ 						strText.Format( _T("%i%%"), int( pDownload->GetRatio() ) );
  					else
- 						strText.Format( _T("%i%%"), pDownload->GetProgress() );
+ 						strText.Format( _T("%i%%"), int( pDownload->GetProgress() ) );
 				}
 			}
 			else

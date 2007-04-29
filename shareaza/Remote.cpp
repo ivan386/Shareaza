@@ -908,10 +908,10 @@ void CRemote::PageDownloads()
 		Add( _T("download_filename"), pDownload->GetDisplayName() );
 		LoadString( strStatus1, IDS_STATUS_UNKNOWN );
 		Add( _T("download_size"), pDownload->m_nSize == SIZE_UNKNOWN ? strStatus1 : Settings.SmartVolume( pDownload->m_nSize, FALSE ) );
-		float fProgress = int( pDownload->GetProgress() );
-		str.Format( _T("%i"), fProgress );
+		int nProgress = int( pDownload->GetProgress() );
+		str.Format( _T("%i"), nProgress );
 		Add( _T("download_percent"), str );
-		str.Format( _T("%i"), 100 - fProgress );
+		str.Format( _T("%i"), 100 - nProgress );
 		Add( _T("download_percent_inverse"), str );
 		Add( _T("download_speed"), Settings.SmartVolume( pDownload->GetMeasuredSpeed() * 8, FALSE, TRUE ) );
 		if ( CDownloadsCtrl::IsExpandable( pDownload ) )
