@@ -108,13 +108,13 @@ BOOL CFolderPropertiesDlg::OnInitDialog()
 
 	if ( LibraryFolders.CheckAlbum( m_pFolder ) )
 	{
-		m_bUpdating = TRUE;
 		m_wndTitle.SetWindowText( m_pFolder->m_sName );
 		m_wndSchemas.Load( m_pFolder->m_sSchemaURI, CSchema::stFolder );
 		if ( m_wndSchemas.GetCurSel() < 0 ) m_wndSchemas.SetCurSel( 0 );
 
 		OnSelChangeSchemas();
-
+		
+		m_bUpdating = TRUE;
 		if ( m_pFolder->m_pXML ) m_wndData.UpdateData( m_pFolder->m_pXML, FALSE );
 		m_bUpdating = FALSE;
 	}
