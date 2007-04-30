@@ -1675,11 +1675,8 @@ BEGIN
     CONTROL         "Display simplified download progress bars. (Reduces CPU use)",
                     IDC_DOWNLOADS_SIMPLEBAR,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,14,114,256,10
-    CONTROL         "Display additional torrent interface elements.",
-                    IDC_TORRENT_INTERFACE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,14,127,256,10
     CONTROL         "Handle torrent links.",IDC_URI_TORRENT,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,140,256,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,127,256,10
 END
 
 IDD_URL_COPY DIALOGEX 0, 0, 292, 149

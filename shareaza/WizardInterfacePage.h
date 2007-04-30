@@ -47,7 +47,6 @@ public:
 	CButton	m_wndInterface0;
 	int		m_bExpert;
 	BOOL	m_bSimpleDownloadBars;
-	BOOL	m_bTorrentInterface;
 	BOOL	m_bHandleTorrents;
 	//}}AFX_DATA
 

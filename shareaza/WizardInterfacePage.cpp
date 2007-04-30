@@ -50,7 +50,6 @@ CWizardInterfacePage::CWizardInterfacePage() : CWizardPage(CWizardInterfacePage:
 	//{{AFX_DATA_INIT(CWizardInterfacePage)
 	m_bExpert				= Settings.General.GUIMode != GUI_BASIC;
 	m_bSimpleDownloadBars	= Settings.Downloads.SimpleBar;
-	m_bTorrentInterface		= Settings.BitTorrent.AdvancedInterface;
 	m_bHandleTorrents		= Settings.Web.Torrent;
 	//}}AFX_DATA_INIT
 }
@@ -69,7 +68,6 @@ void CWizardInterfacePage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_INTERFACE_0, m_wndInterface0);
 	DDX_Radio(pDX, IDC_INTERFACE_0, m_bExpert);
 	DDX_Check(pDX, IDC_DOWNLOADS_SIMPLEBAR, m_bSimpleDownloadBars);
-	DDX_Check(pDX, IDC_TORRENT_INTERFACE, m_bTorrentInterface);
 	DDX_Check(pDX, IDC_URI_TORRENT, m_bHandleTorrents);
 	//}}AFX_DATA_MAP
 }
@@ -85,7 +83,6 @@ BOOL CWizardInterfacePage::OnInitDialog()
 
 	m_bExpert = Settings.General.GUIMode != GUI_BASIC;
 	m_bSimpleDownloadBars	= Settings.Downloads.SimpleBar;
-	m_bTorrentInterface		= Settings.BitTorrent.AdvancedInterface;
 	m_bHandleTorrents		= Settings.Web.Torrent;
 
 	UpdateData( FALSE );
@@ -129,8 +126,7 @@ LRESULT CWizardInterfacePage::OnWizardNext()
 {
 	UpdateData( TRUE );
 
-	Settings.Downloads.SimpleBar			= m_bSimpleDownloadBars;
-	Settings.BitTorrent.AdvancedInterface	= m_bTorrentInterface;
+	Settings.Downloads.SimpleBar = m_bSimpleDownloadBars;
 
 	if ( Settings.Web.Torrent != m_bHandleTorrents )
 	{
@@ -144,6 +140,7 @@ LRESULT CWizardInterfacePage::OnWizardNext()
 	if ( m_bExpert && Settings.General.GUIMode == GUI_BASIC )
 	{
 		Settings.General.GUIMode = GUI_TABBED;
+		Settings.BitTorrent.AdvancedInterface = TRUE;
 		pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
 	}
 	else if ( !m_bExpert && Settings.General.GUIMode != GUI_BASIC )
