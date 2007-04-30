@@ -152,10 +152,7 @@ LRESULT CWizardInterfacePage::OnWizardNext()
 	Settings.Save();
 
 	// If this system is capable of handling multiple networks, go to the network settings wizard.
-	if ( ( theApp.m_bNT )													&&	// 9x based systems can't handle enough connections
-		 ( !theApp.m_bLimitedConnections || Settings.General.IgnoreXPsp2 )	&&	// The connection rate limiting (XPsp2) makes multi-network performance awful
-		 ( Settings.Connection.InSpeed > 256 )								&&	// Must have a decent connection to be worth it. (Or extra traffic will slow downloads)
-		 ( Settings.GetOutgoingBandwidth() > 16 ))								// If your outbound bandwidth is too low, the ED2K ratio will throttle you anyway
+	if ( IsConnectionCapable() )
 		return 0;
 	else
 		return IDD_WIZARD_FINISHED;

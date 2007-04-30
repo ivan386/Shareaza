@@ -337,6 +337,10 @@ LRESULT CWizardSheet::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	}
 }
 
+BOOL CWizardSheet::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
+{
+	return FALSE;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardPage
@@ -422,7 +426,10 @@ void CWizardPage::StaticReplace(LPCTSTR pszSearch, LPCTSTR pszReplace)
 	}
 }
 
-BOOL CWizardSheet::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
+BOOL CWizardPage::IsConnectionCapable()
 {
-	return FALSE;
+	return ( theApp.m_bNT )													&&	// 9x based systems can't handle enough connections
+		 ( !theApp.m_bLimitedConnections || Settings.General.IgnoreXPsp2 )	&&	// The connection rate limiting (XPsp2) makes multi-network performance awful
+		 ( Settings.Connection.InSpeed > 256 )								&&	// Must have a decent connection to be worth it. (Or extra traffic will slow downloads)
+		 ( Settings.GetOutgoingBandwidth() > 16 );								// If your outbound bandwidth is too low, the ED2K ratio will throttle you anyway
 }

@@ -84,6 +84,7 @@ public:
 	CWizardSheet*	GetSheet();
 	void			SetWizardButtons(DWORD dwFlags);
 	void			StaticReplace(LPCTSTR pszSearch, LPCTSTR pszReplace);
+	BOOL			IsConnectionCapable();
 
 // Implementation
 protected:
