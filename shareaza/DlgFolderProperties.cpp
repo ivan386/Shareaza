@@ -123,6 +123,7 @@ BOOL CFolderPropertiesDlg::OnInitDialog()
 	else
 	{
 		PostMessage( WM_CLOSE );
+		return TRUE;
 	}
 
 	CString strSchemaURI = m_wndData.GetSchemaURI();
