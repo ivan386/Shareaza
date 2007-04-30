@@ -880,7 +880,9 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 					if ( pEDClient->m_pClient->m_bEmPreview )
 					{
 						pEDClient->m_pClient->SendPreviewRequest( pDownload );
-						pDownload->m_bWaitingPreview = TRUE;
+						// Don't block sending requests for ed2k sources
+						// They are not run in threads, so no harm.
+						// pDownload->m_bWaitingPreview = TRUE;
 						pSource->m_bPreviewRequestSent = TRUE;
 						break;
 					}
