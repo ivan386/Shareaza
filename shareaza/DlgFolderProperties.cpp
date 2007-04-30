@@ -26,6 +26,8 @@
 #include "LibraryFolders.h"
 #include "AlbumFolder.h"
 #include "Schema.h"
+#include "SchemaCache.h"
+#include "SchemaChild.h"
 #include "XML.h"
 #include "ShellIcons.h"
 #include "CoolInterface.h"
@@ -121,6 +123,16 @@ BOOL CFolderPropertiesDlg::OnInitDialog()
 	else
 	{
 		PostMessage( WM_CLOSE );
+	}
+
+	CString strSchemaURI = m_wndData.GetSchemaURI();
+	CSchema* pSchema = SchemaCache.Get( strSchemaURI );
+	if ( pSchema )
+	{
+		CString strChildURI = pSchema->GetContainedURI( CSchema::stFile );
+		CSchemaChild* pContained = pSchema->GetContained( strChildURI );
+		if ( pContained == NULL || pContained->m_pMap.GetCount() == 0 )
+			m_wndApply.ShowWindow( SW_HIDE );
 	}
 
 	return TRUE;
