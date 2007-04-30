@@ -397,7 +397,6 @@ int CShareazaApp::ExitInstance()
 	SplashStep( dlgSplash, L"Clearing Clients", true );	
 	Uploads.Clear( FALSE );
 	EDClients.Clear();
-	BTClients.Clear();
 
 	CFirewall firewall;
 	if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
@@ -433,6 +432,7 @@ int CShareazaApp::ExitInstance()
 	}
 	SplashStep( dlgSplash, L"Finalizing", true );
 	Downloads.Clear( TRUE );
+	BTClients.Clear();
 	Library.Clear();
 	Skin.Clear();
 	
