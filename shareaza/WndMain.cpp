@@ -2406,7 +2406,7 @@ void CMainWnd::OnHelpFaq()
 void CMainWnd::OnHelpConnectiontest()
 {
 	CString strTestUrl;
-	strTestUrl.Format( _T("http://www.shareaza.com/help/test/?port=%d"), Settings.Connection.InPort );
+	strTestUrl.Format( _T("http://www.shareaza.com/help/test/?port=%d&lang=%s"), Settings.Connection.InPort, Settings.General.Language );
 	ShellExecute( GetSafeHwnd(), _T("open"),
 		strTestUrl,
 		NULL, NULL, SW_SHOWNORMAL );
