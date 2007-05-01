@@ -151,14 +151,15 @@ BOOL CWizardSheet::OnInitDialog()
 	if ( GetDlgItem( ID_WIZNEXT ) )
 		GetDlgItem( ID_WIZNEXT )->SetWindowText( strMessage + L" >" );
 
-	GetDlgItem( 2 )->GetWindowRect( &rc );
+	GetDlgItem( IDCANCEL )->GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.OffsetRect( 95 + 170 - rc.left, 0 );
-	GetDlgItem( 2 )->MoveWindow( &rc );
+	GetDlgItem( IDCANCEL )->MoveWindow( &rc );
 	LoadString( strMessage, IDS_WIZARD_EXIT );
-	GetDlgItem( 2 )->SetWindowText( strMessage );
+	GetDlgItem( IDCANCEL )->SetWindowText( strMessage );
 
-	if ( GetDlgItem( 0x0009 ) ) GetDlgItem( 0x0009 )->ShowWindow( SW_HIDE );
+	if ( GetDlgItem( IDHELP ) ) GetDlgItem( IDHELP )->ShowWindow( SW_HIDE );
+	// ATL_IDC_STATIC1?
 	if ( GetDlgItem( 0x3026 ) ) GetDlgItem( 0x3026 )->ShowWindow( SW_HIDE );
 
 	m_bmHeader.LoadBitmap( IDB_WIZARD );
