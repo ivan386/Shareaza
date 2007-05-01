@@ -497,6 +497,7 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& o
 		Library.Update();
 	}
 
+	pTiger.Dump();
 	LibraryHashDB.StoreTiger( nIndex, &pTiger );
 	LibraryHashDB.StoreED2K( nIndex, &pED2K );
 
@@ -506,14 +507,15 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& o
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder metadata submission (threaded)
 
-BOOL CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML)
+int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 {
+	int nAttributeCount = 0;
 	CSchema* pSchema = SchemaCache.Get( pszSchemaURI );
 
 	if ( pSchema == NULL )
 	{
 		delete pXML;
-		return FALSE;
+		return nAttributeCount;
 	}
 
 	CXMLElement* pBase = pSchema->Instantiate( TRUE );
@@ -522,11 +524,13 @@ BOOL CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLEle
 	if ( ! pSchema->Validate( pBase, TRUE ) )
 	{
 		delete pBase;
-		return FALSE;
+		return nAttributeCount;
 	}
 
 	pXML->Detach();
 	delete pBase;
+
+	nAttributeCount = pXML->GetAttributeCount();
 
 	CQuickLock oLock( Library.m_pSection );
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
@@ -542,14 +546,14 @@ BOOL CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLEle
 			Library.AddFile( pFile );
 			Library.Update();
 
-			return TRUE;
+			return nAttributeCount;
 		}
 
 	}
 
 	delete pXML;
 
-	return FALSE;
+	return nAttributeCount;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -45,7 +45,7 @@ public:
 	BOOL		GetBoostPriority();
 	CString		GetCurrent();
 
-	static BOOL	SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);
+	static int	SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);
 	static BOOL	SubmitCorrupted(DWORD nIndex);
 
 protected:
