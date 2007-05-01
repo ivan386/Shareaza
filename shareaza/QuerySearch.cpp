@@ -601,7 +601,7 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 	{
 		if ( nIterations++ > 4 ) break;
 		
-		if ( (BYTE)*pszData == GGEP_MAGIC )
+		if ( (BYTE)( (*pszData) & 0xff ) == GGEP_MAGIC )
 		{
 			if ( ! Settings.Gnutella1.EnableGGEP ) break;
 			

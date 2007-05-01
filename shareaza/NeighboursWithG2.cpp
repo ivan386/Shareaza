@@ -118,9 +118,13 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, CNeighbo
 	// If the caller didn't give us a computer to ignore, make nCount 3, if it did give us an except, make nCount 25
 	int nCount = ( pExcept == NULL ) ? 3 : 25; // Will put up to 3 or 25 IP addresses in the packet
 
+	CQuickLock oLock( HostCache.Gnutella2.m_pSection );
+
 	// Loop, starting with the newest entry in the Gnutella2 host cache, then stepping to the one before that
-	for ( CHostCacheHost* pHost = HostCache.Gnutella2.GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
+	for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ; i != HostCache.Gnutella2.End() ; ++i )
 	{
+		CHostCacheHost* pHost = (*i);
+
 		// If this host cache entry is good
 		if ( pHost->CanQuote( tNow )                             && // If this host cache entry hasn't expired, and
 			 Get( &pHost->m_pAddress ) == NULL                   && // We're connected to that IP address right now, and
@@ -130,7 +134,7 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, CNeighbo
 			pPacket->WritePacket( G2_PACKET_QUERY_SEARCH, 10 );
 			pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
 			pPacket->WriteShortBE( pHost->m_nPort );
-			pPacket->WriteLongBE( pHost->m_tSeen );
+			pPacket->WriteLongBE( pHost->Seen() );
 
 			// Report that the packet will encourage the recipient to try this IP address
 			theApp.Message( MSG_DEBUG, _T("  Try cached hub %s"), (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );

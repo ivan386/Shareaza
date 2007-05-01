@@ -1206,11 +1206,15 @@ void CNeighboursWithConnect::Maintain()
 			// In the loop for eDonkey2000, handle priority eDonkey2000 servers
 			if ( nProtocol == PROTOCOL_ED2K )
 			{
+				CQuickLock oLock( pCache->m_pSection );
+
 				// Loop into the host cache until we have as many handshaking connections as we need hub connections
-				for ( CHostCacheHost* pHost = pCache->GetNewest(); // Get the newest host from the eDonkey2000 host cacheis network's host cache
-					  pHost && nCount[ nProtocol ][0] < nAttempt;  // Loop if we need more eDonkey2000 hubs than we have handshaking connections
-					  pHost = pHost->m_pPrevTime )                 // At the end of the loop, move to the next youngest host cache entry
+				for ( CHostCacheIterator i = pCache->Begin() ;
+					i != pCache->End() && nCount[ nProtocol ][0] < nAttempt;
+					++i )
 				{
+					CHostCacheHost* pHost = (*i);
+
 					// If we can connect to this host, try it, if it works, move into this if block
 					if ( pHost->m_bPriority       && // This host in the host cache is marked as priority (do)
 						pHost->CanConnect( tNow ) && // We can connect to this host now (do)
@@ -1237,11 +1241,15 @@ void CNeighboursWithConnect::Maintain()
 				}
 			}
 
+			CQuickLock oLock( pCache->m_pSection );
+
 			// If we need more connections for this network, get IP addresses from the host cache and try to connect to them
-			for ( CHostCacheHost* pHost = pCache->GetNewest(); // Get the newest entry in the host cache for this network
-				  pHost && nCount[ nProtocol ][0] < nAttempt;  // Loop if we need more hubs that we have handshaking connections
-				  pHost = pHost->m_pPrevTime )                 // At the end of the loop, move to the next youngest host cache entry
+			for ( CHostCacheIterator i = pCache->Begin() ;
+				i != pCache->End() && nCount[ nProtocol ][0] < nAttempt;
+				++i )
 			{
+				CHostCacheHost* pHost = (*i);
+
 				// If we can connect to this IP address from the host cache, try to make the connection
 				if ( pHost->CanConnect( tNow ) && pHost->ConnectTo( TRUE ) ) // Enter the if statement if the connection worked
 				{
@@ -1285,13 +1293,13 @@ void CNeighboursWithConnect::Maintain()
 					if ( nProtocol == PROTOCOL_G2 && Settings.Gnutella2.EnableToday )
 					{
 						// Execute the discovery services (do)
-						if ( pCache->GetOldest() == NULL && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 10 ) )
+						if ( pCache->IsEmpty() && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 10 ) )
 							DiscoveryServices.Execute( TRUE, PROTOCOL_G2, TRUE );
 					} // We're looping for Gnutella right now
 					else if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella1.EnableToday )
 					{
 						// If the Gnutella host cache is empty (do), execute discovery services (do)
-						if ( pCache->GetOldest() == NULL && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 10 ) )
+						if ( pCache->IsEmpty() && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 10 ) )
 							DiscoveryServices.Execute( TRUE, PROTOCOL_G1, TRUE );
 					}
 				}

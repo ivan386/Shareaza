@@ -24,55 +24,6 @@
 
 #pragma once
 
-class CLiveItem;
-
-
-class CLiveList : public CObject
-{
-	DECLARE_DYNAMIC( CLiveList )
-
-public:
-	CLiveList(int nColumns);
-	virtual ~CLiveList();
-
-#ifdef _DEBUG
-	virtual void AssertValid() const
-	{
-		CObject::AssertValid();
-		ASSERT( m_nColumns > 0 && m_nColumns < 100 );
-		ASSERT_VALID( &m_pItems );
-		ASSERT_VALID( &m_pSection );
-		ASSERT_VALID( &m_bmSortAsc );
-		ASSERT_VALID( &m_bmSortDesc );
-	}
-#endif
-
-	CLiveItem*	Add(DWORD_PTR nParam);
-	CLiveItem*	Add(LPVOID pParam);
-	void		Apply(CListCtrl* pCtrl, BOOL bSort = FALSE);
-
-// Sort Helpers
-	static void			Sort(CListCtrl* pCtrl, int nColumn = -1, BOOL bGraphic = TRUE);
-	static int CALLBACK	SortCallback(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
-	static int			SortProc(LPCTSTR sA, LPCTSTR sB, BOOL bNumeric = FALSE);
-	static inline BOOL	IsNumber(LPCTSTR pszString);
-
-// Drag Helpers
-	static HBITMAP		CreateDragImage(CListCtrl* pList, const CPoint& ptMouse, CPoint& ptMiddle);
-	static CImageList*	CreateDragImage(CListCtrl* pList, const CPoint& ptMouse);
-
-protected:
-	typedef CMap< DWORD_PTR, DWORD_PTR, CLiveItem*, CLiveItem*& > CLiveItemMap;
-
-	int					m_nColumns;
-	CLiveItemMap		m_pItems;
-	CCriticalSection	m_pSection;
-	static CBitmap		m_bmSortAsc;
-	static CBitmap		m_bmSortDesc;
-
-	void		Clear();
-};
-
 
 class CLiveItem : public CObject
 {
@@ -92,6 +43,8 @@ public:
 #endif
 
 	void	Set(int nColumn, LPCTSTR pszText);
+	void	SetImage(int nImage);
+	void	SetMaskOverlay(UINT nMaskOverlay);
 	void	Format(int nColumn, LPCTSTR pszFormat, ...);
 	int		Add(CListCtrl* pCtrl, int nItem, int nColumns);
 	BOOL	Update(CListCtrl* pCtrl, int nItem, int nColumns);
@@ -103,7 +56,62 @@ public:
 	UINT		m_nMaskOverlay;
 	UINT		m_nMaskState;
 	CString*	m_pColumn;
+	bool		m_bModified;	// Is data modified?
+	UINT		m_nModified;	// Modified columns (bitmask)
+	bool		m_bOld;			// Is item old? (marked to deletion)
 };
+
+typedef CLiveItem* CLiveItemPtr;
+
+
+class CLiveList : public CObject
+{
+	DECLARE_DYNAMIC( CLiveList )
+
+public:
+	CLiveList(int nColumns, UINT nHash = 0);
+	virtual ~CLiveList();
+
+	static CBitmap		m_bmSortAsc;
+	static CBitmap		m_bmSortDesc;
+
+#ifdef _DEBUG
+	virtual void		AssertValid() const
+	{
+		CObject::AssertValid();
+		ASSERT( m_nColumns > 0 && m_nColumns < 100 );
+		ASSERT_VALID( &m_pItems );
+		ASSERT_VALID( &m_pSection );
+		ASSERT_VALID( &m_bmSortAsc );
+		ASSERT_VALID( &m_bmSortDesc );
+	}
+#endif
+
+	CLiveItem*			Add(DWORD_PTR nParam);
+	CLiveItem*			Add(LPVOID pParam);
+	void				Apply(CListCtrl* pCtrl, BOOL bSort = FALSE);
+
+// Sort Helpers
+	static void			Sort(CListCtrl* pCtrl, int nColumn = -1, BOOL bGraphic = TRUE);
+	static int CALLBACK	SortCallback(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
+	static bool			Less(const CLiveItemPtr& _Left, const CLiveItemPtr& _Right, int nSortColumn);
+	static int			SortProc(LPCTSTR sA, LPCTSTR sB, BOOL bNumeric = FALSE);
+	static inline BOOL	IsNumber(LPCTSTR pszString);
+
+// Drag Helpers
+	static HBITMAP		CreateDragImage(CListCtrl* pList, const CPoint& ptMouse, CPoint& ptMiddle);
+	static CImageList*	CreateDragImage(CListCtrl* pList, const CPoint& ptMouse);
+
+protected:
+	typedef CMap< DWORD_PTR, DWORD_PTR, CLiveItem*, CLiveItem*& > CLiveItemMap;
+
+	int					m_nColumns;
+	CLiveItemMap		m_pItems;
+	CCriticalSection	m_pSection;
+
+	void				Clear();
+};
+
 
 #ifndef CDRF_NOTIFYSUBITEMDRAW
 
@@ -139,5 +147,40 @@ typedef struct tagLVHITTESTINFOEX
 */
 
 #endif
+
+class CLiveListCtrl : public CListCtrl
+{
+	DECLARE_DYNAMIC(CLiveListCtrl)
+
+public:
+	CLiveListCtrl();
+	virtual ~CLiveListCtrl();
+
+	virtual BOOL Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID,
+		int nColumns );
+
+	CLiveItemPtr Add(DWORD_PTR nParam);
+	CLiveItemPtr Add(LPVOID pParam);	
+	void Apply();
+	void Sort(int nColumn = -1);
+
+	DWORD_PTR GetItemData(int nItem) const;
+	UINT GetItemOverlayMask(int nItem) const;
+
+protected:
+	typedef std::map< DWORD_PTR, CLiveItemPtr >		CLiveMap;
+	typedef std::pair< DWORD_PTR, CLiveItemPtr >	CLiveMapPair;
+	typedef std::vector< CLiveItemPtr >				CLiveIndex;
+
+	int					m_nColumns;
+	CLiveMap			m_pItems;
+	CLiveIndex			m_pIndex;
+
+	DECLARE_MESSAGE_MAP()
+
+	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnOdfinditem(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnOdcachehint(NMHDR *pNMHDR, LRESULT *pResult);
+};
 
 #endif // !defined(AFX_LIVELIST_H__D1A833C9_1477_43C7_9644_DB0C85370511__INCLUDED_)

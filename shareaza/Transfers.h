@@ -39,7 +39,7 @@ public:
 
 // Attributes
 public:
-	CMutex			m_pSection;
+	mutable CMutex	m_pSection;
 class Lock
 {
 public:
@@ -65,7 +65,7 @@ protected:
 // Operations
 public:
 	INT_PTR		GetActiveCount() const;
-	BOOL		IsConnectedTo(IN_ADDR* pAddress);
+	BOOL		IsConnectedTo(IN_ADDR* pAddress) const;
 	BOOL		StartThread();
 	void		StopThread();
 protected:

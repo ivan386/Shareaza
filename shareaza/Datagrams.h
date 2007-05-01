@@ -108,8 +108,14 @@ public:
 public:
 	BOOL	Listen();
 	void	Disconnect();
-	BOOL	IsStable();
-	void	SetStable(BOOL bStable = TRUE);
+	inline BOOL IsStable() const	// Avoid using this function directly, use !Network.IsFirewalled(CHECK_UDP) instead
+	{
+		return ( m_hSocket != INVALID_SOCKET ) && m_bStable;
+	}
+	inline void SetStable(BOOL bStable = TRUE)
+	{
+		m_bStable = bStable;
+	}
 	BOOL	Send(IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
 	BOOL	Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
 	void	PurgeToken(LPVOID pToken);

@@ -1,7 +1,7 @@
 //
 // HostCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,86 +24,17 @@
 
 #pragma once
 
-class CHostCacheHost;
 class CNeighbour;
 class CG1Packet;
 class CVendor;
 
 
-class CHostCacheList
-{
-// Construction
-public:
-	CHostCacheList(PROTOCOLID nProtocol);
-	virtual ~CHostCacheList();
-
-// Attributes
-public:
-	PROTOCOLID		m_nProtocol;
-	DWORD			m_nHosts;
-	DWORD			m_nCookie;
-	CHostCacheHost*	m_pNewest;
-	CHostCacheHost*	m_pOldest;
-protected:
-	DWORD			m_nBuffer;
-	CHostCacheHost*	m_pBuffer;
-	CHostCacheHost*	m_pFree;
-	CHostCacheHost*	m_pHash[256];
-
-// Operations
-public:
-	CHostCacheHost*	Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
-	BOOL			Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
-	CHostCacheHost*	Find(IN_ADDR* pAddress) const;
-	BOOL			Check(CHostCacheHost* pHost) const;
-	void			Remove(CHostCacheHost* pHost);
-	void			OnFailure(IN_ADDR* pAddress, WORD nPort, bool bRemove=true);
-	void			OnSuccess(IN_ADDR* pAddress, WORD nPort, bool bUpdate=true);
-	DWORD			CountHosts(BOOL bCountUncheckedLocally = FALSE) const;
-	void			PruneByQueryAck();			// For G2
-	void			PruneOldHosts();			// For G1
-	void			Clear();
-	void			Serialize(CArchive& ar, int nVersion);
-	int				Import(LPCTSTR pszFile);
-	int				ImportMET(CFile* pFile);
-	BOOL			CheckMinimumED2KServers();
-	BOOL			EnoughED2KServers();
-
-private:
-	int				LoadDefaultED2KServers();
-	void			DoED2KServersImport();
-
-protected:
-	CHostCacheHost*	AddInternal(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime = 0);
-	void			RemoveOldest();
-	
-// Inlines
-public:
-
-	inline CHostCacheHost* GetNewest() const
-	{
-		return m_pNewest;
-	}
-
-	inline CHostCacheHost* GetOldest() const
-	{
-		return m_pOldest;
-	}
-
-};
-
 class CHostCacheHost
 {
 public:
-// Construction
-	CHostCacheHost();
-	
-// Attributes : Linkage
-	CHostCacheHost*	m_pNextHash;
-	CHostCacheHost*	m_pPrevTime;
-	CHostCacheHost*	m_pNextTime;
+	CHostCacheHost(PROTOCOLID nProtocol = PROTOCOL_NULL);
 
-// Attributes: Host Information
+	// Attributes: Host Information
 	PROTOCOLID	m_nProtocol;
 	IN_ADDR		m_pAddress;
 	WORD		m_nPort;
@@ -119,9 +50,8 @@ public:
 	BOOL		m_bCheckedLocally;
 	CString		m_sCountry;
 
-// Attributes: Contact Times
+	// Attributes: Contact Times
 	DWORD		m_tAdded;
-	DWORD		m_tSeen;
 	DWORD		m_tRetryAfter;
 	DWORD		m_tConnect;
 	DWORD		m_tQuery;
@@ -132,61 +62,186 @@ public:
 	DWORD		m_nDailyUptime;
 	DWORD		m_tCheckTime;
 
-// Attributes: Query Keys
+	// Attributes: Query Keys
 	DWORD		m_tKeyTime;
 	DWORD		m_nKeyValue;
 	DWORD		m_nKeyHost;
 
-// Operations
-	void		Update(WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
-//	CG1Packet*	ToG1Ping(int nTTL, const Hashes::Guid& oGUID);
 	CString		ToString() const;
 	BOOL		CanConnect(DWORD tNow = 0) const;	// Can we connect to this host now?
 	BOOL		CanQuote(DWORD tNow = 0) const;		// Is this a recently seen host?
 	BOOL		CanQuery(DWORD tNow = 0) const;		// Can we UDP query this host? (G2/ed2k)
-	void		SetKey(DWORD nKey, IN_ADDR* pHost = NULL);
+	void		SetKey(DWORD nKey, const IN_ADDR* pHost = NULL);
+
+	inline DWORD Seen() const throw()
+	{
+		return m_tSeen;
+	}
+
 protected:
+	DWORD		m_tSeen;
+
+	// Return: true - if tSeen cnaged, false - otherwise.
+	bool		Update(WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	void		Serialize(CArchive& ar, int nVersion);
-	void		Reset(IN_ADDR* pAddress);
+
+	inline bool	IsValid() const throw()
+	{
+		return m_nProtocol != PROTOCOL_NULL &&
+			m_pAddress.s_addr != INADDR_ANY && m_pAddress.s_addr != INADDR_NONE &&
+			m_nPort != 0 &&
+			m_tSeen != 0;
+	}
 
 	friend class CHostCacheList;
-	friend class CHostCacheLinks;
+};
+
+typedef CHostCacheHost* CHostCacheHostPtr;
+
+
+template<>
+struct std::less< IN_ADDR > : public std::binary_function< IN_ADDR, IN_ADDR, bool>
+{
+	inline bool operator()(const IN_ADDR& _Left, const IN_ADDR& _Right) const throw()
+	{
+		return ( ntohl( _Left.s_addr ) < ntohl( _Right.s_addr ) );
+	}
+};
+
+typedef std::map< IN_ADDR, CHostCacheHostPtr > CHostCacheMap;
+typedef std::pair< IN_ADDR, CHostCacheHostPtr > CHostCacheMapPair;
+
+template<>
+struct std::less< CHostCacheHostPtr > : public std::binary_function< CHostCacheHostPtr, CHostCacheHostPtr, bool>
+{
+	inline bool operator()(const CHostCacheHostPtr& _Left, const CHostCacheHostPtr& _Right) const throw()
+	{
+		return ( _Left->Seen() > _Right->Seen() );
+	}
+};
+
+typedef std::multiset< CHostCacheHostPtr > CHostCacheIndex;
+typedef std::pair < CHostCacheIndex::iterator, CHostCacheIndex::iterator > CHostCacheTimeItPair;
+typedef CHostCacheIndex::const_iterator CHostCacheIterator;
+
+struct good_host : public std::binary_function< CHostCacheMapPair, BOOL, bool>
+{
+	inline bool operator()(const CHostCacheMapPair& _Pair, const BOOL& _bLocally) const throw()
+	{
+		return ( _Pair.second->m_nFailures == 0 &&
+			( _Pair.second->m_bCheckedLocally || _bLocally ) );
+	}
+};
+
+
+class CHostCacheList
+{
+public:
+	CHostCacheList(PROTOCOLID nProtocol);
+	virtual ~CHostCacheList();
+
+	PROTOCOLID					m_nProtocol;
+	DWORD						m_nCookie;
+	mutable CCriticalSection	m_pSection;
+
+	CHostCacheHostPtr	Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
+	BOOL				Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
+	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
+	void				Remove(CHostCacheHostPtr pHost);
+	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove=true);
+	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate=true);
+	void				PruneByQueryAck();			// For G2
+	void				PruneOldHosts();			// For G1
+	void				Clear();
+	void				Serialize(CArchive& ar, int nVersion);
+	int					Import(LPCTSTR pszFile);
+	int					ImportMET(CFile* pFile);
+	bool				CheckMinimumED2KServers();
+
+	inline bool EnoughED2KServers() const throw()
+	{
+		return ( CountHosts( TRUE ) >= 8 );
+	}
+
+	inline CHostCacheIterator Begin() const throw()
+	{
+		return m_HostsTime.begin();
+	}
+
+	inline CHostCacheIterator End() const throw()
+	{
+		return m_HostsTime.end();
+	}
+
+	inline const CHostCacheHostPtr GetNewest() const throw()
+	{
+		return IsEmpty() ? NULL : *Begin();
+	}
+
+	inline bool IsEmpty() const throw()
+	{
+		return m_HostsTime.empty();
+	}
+
+	inline DWORD GetCount() const throw()
+	{
+		return (DWORD)m_Hosts.size();
+	}
+
+	inline CHostCacheHostPtr Find(const IN_ADDR* pAddress) const throw()
+	{
+		CQuickLock oLock( m_pSection );
+		CHostCacheMap::const_iterator i = m_Hosts.find( *pAddress );
+		return ( i != m_Hosts.end() ) ? (*i).second : NULL;
+	}
+
+	inline bool Check(const CHostCacheHostPtr pHost) const throw()
+	{
+		CQuickLock oLock( m_pSection );
+		return std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost )
+			!= m_HostsTime.end();
+	}
+
+	inline DWORD CountHosts(const BOOL bCountUncheckedLocally = FALSE) const throw()
+	{
+		CQuickLock oLock( m_pSection );
+		return (DWORD)(size_t) std::count_if( m_Hosts.begin(), m_Hosts.end(),
+			std::bind2nd( good_host(), bCountUncheckedLocally ) );
+	}
+
+protected:
+	CHostCacheMap				m_Hosts;		// Hosts map (sorted by IP)
+	CHostCacheIndex				m_HostsTime;	// Host index (sorted from newer to older)
+
+	CHostCacheHostPtr	AddInternal(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime);
+	void				PruneHosts();
+	int					LoadDefaultED2KServers();
+	void				DoED2KServersImport();
 };
 
 
 class CHostCache
 {
 public:
-// Construction
 	CHostCache();
 
-// Attributes
 	CHostCacheList	Gnutella1;
 	CHostCacheList	Gnutella2;
 	CHostCacheList	eDonkey;
 	CHostCacheList	G1DNA;
-	CList< CHostCacheList* > m_pList;
 
-// Operations
-	BOOL		Load();
-	BOOL		Save();
-	void		Clear();
-
-	CHostCacheHost*	Find(IN_ADDR* pAddress) const;
-	BOOL			Check(CHostCacheHost* pHost) const;
-	void			Remove(CHostCacheHost* pHost);
-	void			OnFailure(IN_ADDR* pAddress, WORD nPort, 
+	BOOL				Load();
+	BOOL				Save();
+	CHostCacheHostPtr	Find(const IN_ADDR* pAddress) const;
+	BOOL				Check(const CHostCacheHostPtr pHost) const;
+	void				Remove(CHostCacheHostPtr pHost);
+	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, 
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bRemove=true);
-	void			OnSuccess(IN_ADDR* pAddress, WORD nPort, 
+	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, 
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bUpdate=true);
 
-protected:
-	void		Serialize(CArchive& ar);
-
-// Inlines
-public:
-	inline CHostCacheList* ForProtocol(PROTOCOLID nProtocol)
+	inline CHostCacheList* ForProtocol(PROTOCOLID nProtocol) throw()
 	{
 		switch ( nProtocol )
 		{
@@ -201,6 +256,13 @@ public:
 			return NULL;
 		}
 	}
+
+protected:
+	CList< CHostCacheList* >	m_pList;
+	mutable CCriticalSection	m_pSection;
+
+	void				Serialize(CArchive& ar);
+	void				Clear();
 };
 
 extern CHostCache HostCache;

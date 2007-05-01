@@ -64,10 +64,11 @@ INT_PTR CTransfers::GetActiveCount() const
 	return Downloads.GetCount( TRUE ) + Uploads.GetTransferCount();
 }
 
-BOOL CTransfers::IsConnectedTo(IN_ADDR* pAddress)
+BOOL CTransfers::IsConnectedTo(IN_ADDR* pAddress) const
 {
 	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 100 ) ) return FALSE;
+	if ( ! pLock.Lock( 100 ) )
+		return FALSE;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{

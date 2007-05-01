@@ -36,9 +36,11 @@ static char THIS_FILE[]=__FILE__;
 
 IMPLEMENT_DYNAMIC( CLiveList, CObject )
 
-CLiveList::CLiveList(int nColumns) :
+CLiveList::CLiveList(int nColumns, UINT nHash) :
 	m_nColumns ( nColumns )
 {
+	if ( nHash)
+		m_pItems.InitHashTable( max( nHash | 1, 33u ) );	// MFC default: 17
 }
 
 CLiveList::~CLiveList()
@@ -144,11 +146,14 @@ void CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
 IMPLEMENT_DYNAMIC( CLiveItem, CObject )
 
 CLiveItem::CLiveItem(int nColumns, DWORD_PTR nParam) :
+	m_bModified		( true ),
+	m_nModified		( 0xffffffff ),
 	m_pColumn		( new CString[ nColumns ] ),
 	m_nParam		( nParam ),
 	m_nImage		( 0 ),
 	m_nMaskOverlay	( 0 ),
-	m_nMaskState	( 0 )
+	m_nMaskState	( 0 ),
+	m_bOld			( false )
 {
 }
 
@@ -165,7 +170,28 @@ void CLiveItem::Set(int nColumn, LPCTSTR pszText)
 	ASSERT_VALID( this );
 	ASSERT( pszText );
 
+	if ( m_pColumn[ nColumn ] != pszText )
+	{
+		m_bModified = true;
+		m_nModified = m_nModified | ( 1 << nColumn );
+	}
 	m_pColumn[ nColumn ] = pszText;
+}
+
+void CLiveItem::SetImage(int nImage)
+{
+	ASSERT_VALID( this );
+
+	m_bModified = ( m_nImage != nImage );
+	m_nImage = nImage;
+}
+
+void CLiveItem::SetMaskOverlay(UINT nMaskOverlay)
+{
+	ASSERT_VALID( this );
+
+	m_bModified = ( m_nMaskOverlay != nMaskOverlay );
+	m_nMaskOverlay = nMaskOverlay;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -174,6 +200,8 @@ void CLiveItem::Set(int nColumn, LPCTSTR pszText)
 void CLiveItem::Format(int nColumn, LPCTSTR pszFormat, ...)
 {
 	ASSERT_VALID( this );
+	ASSERT( pszFormat );
+	ASSERT( nColumn >= 0 );
 
 	TCHAR szBuffer[1024];
 	va_list pArgs;
@@ -183,6 +211,11 @@ void CLiveItem::Format(int nColumn, LPCTSTR pszFormat, ...)
 	szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 	va_end( pArgs );
 
+	if ( m_pColumn[ nColumn ] != szBuffer )
+	{
+		m_bModified = true;
+		m_nModified = m_nModified | ( 1 << nColumn );
+	}
 	m_pColumn[ nColumn ] = szBuffer;
 }
 
@@ -389,6 +422,22 @@ int CALLBACK CLiveList::SortCallback(LPARAM lParam1, LPARAM lParam2, LPARAM lPar
 	CString sB( pList->GetItemText( nB, abs( nColumn ) - 1 ) );
 
 	return ( nColumn > 0 ) ? SortProc( sB, sA ) : SortProc( sA, sB );
+}
+
+bool CLiveList::Less(const CLiveItemPtr& _Left, const CLiveItemPtr& _Right, int nSortColumn)
+{
+	if ( nSortColumn < 0 )
+	{
+		return ( CLiveList::SortProc( _Left->m_pColumn[ - nSortColumn - 1 ],
+			_Right->m_pColumn[ - nSortColumn - 1 ] ) < 0 );
+	}
+	else if ( nSortColumn > 0 )
+	{
+		return ( CLiveList::SortProc( _Right->m_pColumn[ nSortColumn - 1 ],
+			_Left->m_pColumn[ nSortColumn - 1 ] ) < 0 );
+	}
+	else
+		return false;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -644,4 +693,220 @@ CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 	pAll->BeginDrag( 0, ptOffset );
 
 	return pAll;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLiveListCtrl
+
+IMPLEMENT_DYNAMIC(CLiveListCtrl, CListCtrl)
+
+CLiveListCtrl::CLiveListCtrl() :
+	m_nColumns( 0 )
+{
+}
+
+CLiveListCtrl::~CLiveListCtrl()
+{
+	for ( CLiveMap::iterator i = m_pItems.begin(); i != m_pItems.end(); ++i )
+	{
+		CLiveItemPtr pItem = (*i).second;
+		delete pItem;
+	}
+}
+
+BEGIN_MESSAGE_MAP(CLiveListCtrl, CListCtrl)
+	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnLvnGetdispinfo)
+	ON_NOTIFY_REFLECT(LVN_ODFINDITEM, OnLvnOdfinditem)
+	ON_NOTIFY_REFLECT(LVN_ODCACHEHINT, OnLvnOdcachehint)
+END_MESSAGE_MAP()
+
+BOOL CLiveListCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, int nColumns)
+{
+	m_nColumns = nColumns;
+
+	return CListCtrl::Create( dwStyle | LVS_OWNERDATA, rect, pParentWnd, nID );
+}
+
+CLiveItemPtr CLiveListCtrl::Add(DWORD_PTR nParam)
+{
+	CLiveItemPtr pItem;
+	CLiveMap::iterator i = m_pItems.find( nParam );
+	if ( i == m_pItems.end() )
+	{
+		// Create new item
+		pItem = new CLiveItem( m_nColumns, nParam );
+		m_pItems.insert( CLiveMapPair( nParam, pItem ) );
+	}
+	else
+	{
+		// Update existing item
+		pItem = (*i).second;
+		pItem->m_bOld = false;
+	}
+	return pItem;
+}
+
+CLiveItemPtr CLiveListCtrl::Add(LPVOID pParam)
+{
+	return Add( (DWORD_PTR)pParam );
+}
+
+void CLiveListCtrl::Apply()
+{
+	// Remove old items
+	for ( CLiveMap::iterator i = m_pItems.begin(); i != m_pItems.end(); )
+	{
+		CLiveItemPtr pItem = (*i).second;
+		if ( pItem->m_bOld )
+		{
+			delete pItem;
+			i = m_pItems.erase( i );
+		}
+		else
+			++i;
+	}
+
+	// Tune virtual list
+	SetItemCountEx( (int)m_pItems.size() );
+
+	// Recreate index
+	m_pIndex.clear();
+	m_pIndex.reserve( m_pItems.size() );
+	for ( CLiveMap::iterator i = m_pItems.begin(); i != m_pItems.end(); ++i )
+	{
+		CLiveItemPtr pItem = (*i).second;
+		pItem->m_bOld = true;
+
+		m_pIndex.push_back( pItem );
+	}
+
+	Sort();
+}
+
+void CLiveListCtrl::Sort(int nColumn)
+{
+	int nOldColumn	= (int)GetWindowLongPtr( GetSafeHwnd(), GWLP_USERDATA );
+	if ( nColumn == -1 )
+	{
+		nColumn = nOldColumn;
+	}
+	else
+	{
+		if ( nColumn == abs( nOldColumn ) - 1 )
+		{
+			if ( nOldColumn > 0 )
+				nColumn = 0 - nOldColumn;
+			else
+				nColumn = 0;
+		}
+		else
+		{
+			nColumn++;
+		}
+		SetWindowLongPtr( GetSafeHwnd(), GWLP_USERDATA, nColumn );
+	}
+
+#ifdef IDB_SORT_ASC
+	if ( CLiveList::m_bmSortAsc.m_hObject == NULL )
+	{
+		CLiveList::m_bmSortAsc.LoadMappedBitmap( IDB_SORT_ASC );
+		CLiveList::m_bmSortDesc.LoadMappedBitmap( IDB_SORT_DESC );
+	}
+
+	CHeaderCtrl* pHeader = GetHeaderCtrl();
+	for ( int nCol = 0 ; ; nCol++ )
+	{
+		HDITEM pColumn = {};
+		pColumn.mask = HDI_BITMAP|HDI_FORMAT;
+
+		if ( ! pHeader->GetItem( nCol, &pColumn ) ) break;
+
+		HBITMAP hbm;
+		int     fmt;
+		if ( nCol == abs( nColumn ) - 1 )
+		{
+			fmt = pColumn.fmt | HDF_BITMAP | HDF_BITMAP_ON_RIGHT;
+			hbm = (HBITMAP)( nColumn > 0 ? CLiveList::m_bmSortAsc.GetSafeHandle() :
+			CLiveList::m_bmSortDesc.GetSafeHandle() );
+		}
+		else
+		{
+			fmt = pColumn.fmt & ~HDF_BITMAP;
+			hbm = NULL;
+		}
+		if ( pColumn.fmt != fmt || pColumn.hbm != hbm )
+		{
+			pColumn.fmt = fmt;
+			pColumn.hbm = hbm;
+			VERIFY( pHeader->SetItem( nCol, &pColumn ) );
+		}
+	}
+#endif
+
+	if ( nColumn )
+	{
+		std::stable_sort( m_pIndex.begin(), m_pIndex.end(),
+			boost::bind( CLiveList::Less, _1, _2, nColumn ) );
+	}
+
+	InvalidateRect( NULL );
+}
+
+DWORD_PTR CLiveListCtrl::GetItemData(int nItem) const
+{
+	return ( nItem >= 0 && nItem < (int)m_pIndex.size() ) ?
+		m_pIndex[ nItem ]->m_nParam : NULL;
+}
+
+UINT CLiveListCtrl::GetItemOverlayMask(int nItem) const
+{
+	return ( nItem >= 0 && nItem < (int)m_pIndex.size() ) ?
+		m_pIndex[ nItem ]->m_nMaskOverlay : 0;
+}
+
+void CLiveListCtrl::OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+
+	ASSERT( pDispInfo->item.iItem >= 0 && pDispInfo->item.iItem < (int)m_pIndex.size() );
+
+	CLiveItemPtr pItem = m_pIndex[ pDispInfo->item.iItem ];
+
+	if ( pDispInfo->item.mask & LVIF_TEXT )
+	{
+		lstrcpyn( pDispInfo->item.pszText, pItem->m_pColumn[ pDispInfo->item.iSubItem ],
+			pDispInfo->item.cchTextMax );
+	}
+
+	if ( pDispInfo->item.mask & LVIF_IMAGE ) 
+	{
+		pDispInfo->item.iImage = pItem->m_nImage;
+	}
+
+	if ( pDispInfo->item.mask & LVIF_STATE ) 
+	{
+		pDispInfo->item.state = INDEXTOOVERLAYMASK( pItem->m_nMaskOverlay ) |
+			INDEXTOSTATEIMAGEMASK( pItem->m_nMaskState );
+	}
+
+	if ( pDispInfo->item.mask & LVFI_PARAM ) 
+	{
+		pDispInfo->item.lParam = pItem->m_nParam;
+	}
+
+	*pResult = 0;
+}
+
+void CLiveListCtrl::OnLvnOdfinditem(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMLVFINDITEM pFindInfo = reinterpret_cast<LPNMLVFINDITEM>(pNMHDR);
+
+	*pResult = 0;
+}
+
+void CLiveListCtrl::OnLvnOdcachehint(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMLVCACHEHINT pCacheHint = reinterpret_cast<LPNMLVCACHEHINT>(pNMHDR);
+
+	*pResult = 0;
 }

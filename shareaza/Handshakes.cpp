@@ -277,7 +277,7 @@ BOOL CHandshakes::PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 // Takes an IP address
 // Searches the list of handshake objects to see if we are connected to it
 // Returns true if its in the list, false if we couldn't find it
-BOOL CHandshakes::IsConnectedTo(IN_ADDR* pAddress)
+BOOL CHandshakes::IsConnectedTo(IN_ADDR* pAddress) const
 {
 	// Make sure only one thread can execute the code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE );

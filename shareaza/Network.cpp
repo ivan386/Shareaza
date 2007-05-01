@@ -167,7 +167,7 @@ BOOL CNetwork::IsStable() const
 	return IsListening() && ( Handshakes.m_nStableCount > 0 );
 }
 
-BOOL CNetwork::IsFirewalled(int nCheck)
+BOOL CNetwork::IsFirewalled(int nCheck) const
 {
 	if ( Settings.Connection.FirewallState == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP
 		return FALSE;		// We know we are not firewalled on both TCP and UDP
@@ -196,14 +196,12 @@ DWORD CNetwork::GetStableTime() const
 	return (DWORD)time( NULL ) - Handshakes.m_tStableTime;
 }
 
-BOOL CNetwork::IsConnectedTo(IN_ADDR* pAddress)
+BOOL CNetwork::IsConnectedTo(IN_ADDR* pAddress) const
 {
-	if ( IsSelfIP( *pAddress ) ) return TRUE;
-	if ( Handshakes.IsConnectedTo( pAddress ) ) return TRUE;
-	if ( Neighbours.Get( pAddress ) != NULL ) return TRUE;
-	if ( Transfers.IsConnectedTo( pAddress ) ) return TRUE;
-	
-	return FALSE;
+	return IsSelfIP( *pAddress ) ||
+		Handshakes.IsConnectedTo( pAddress ) ||
+		Neighbours.Get( pAddress ) ||
+		Transfers.IsConnectedTo( pAddress );
 }
 
 BOOL CNetwork::ReadyToTransfer(DWORD tNow) const
@@ -324,7 +322,6 @@ void CNetwork::Disconnect()
 	m_bTCPListeningReady	= FALSE;
 	m_bUDPListeningReady	= FALSE;
 	m_tStartedConnecting	= 0;
-	Datagrams.SetStable(FALSE);
 
 	Neighbours.Close();
 

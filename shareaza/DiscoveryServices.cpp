@@ -995,15 +995,15 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 	{
 	case PROTOCOL_G1:
 		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::RequestWebCache() seeking gnutella hosts") );
-		nHosts = HostCache.Gnutella1.m_nHosts;
+		nHosts = HostCache.Gnutella1.GetCount();
 		break;
 	case PROTOCOL_G2:
 		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::RequestWebCache() seeking G2 hosts") );
-		nHosts = HostCache.Gnutella2.m_nHosts;
+		nHosts = HostCache.Gnutella2.GetCount();
 		break;
 	case PROTOCOL_ED2K:
 		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::RequestWebCache() seeking ed2k hosts") );
-		nHosts = HostCache.eDonkey.m_nHosts;
+		nHosts = HostCache.eDonkey.GetCount();
 		break;
 	default:
 		theApp.Message( MSG_ERROR, _T("ERROR: CDiscoveryServices::RequestWebCache() was passed an invalid protocol") );

@@ -504,8 +504,8 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
 	pServer->m_nFileLimit	= nFileLimit;
 	pServer->m_nUDPFlags	= nUDPFlags;
 
-	if ( pServer->m_tSeen < pServer->m_tStats ) 
-		pServer->m_tSeen = pServer->m_tStats;
+	if ( pServer->Seen() < pServer->m_tStats )
+		HostCache.eDonkey.Update( pServer, 0, pServer->m_tStats );
 	if ( nUDPFlags & ED2K_SERVER_UDP_UNICODE ) 
 		pServer->m_nTCPFlags |= ED2K_SERVER_TCP_UNICODE;
 	if ( nUDPFlags & ED2K_SERVER_UDP_GETSOURCES2 ) 
@@ -576,9 +576,13 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 		// Get the current time (in seconds)
 		DWORD tSecs	= static_cast< DWORD >( time( NULL ) );
 
+		CQuickLock oLock( HostCache.eDonkey.m_pSection );
+
 		// Loop through servers in the host cache
-		for ( pHost = HostCache.eDonkey.GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
+		for ( CHostCacheIterator i = HostCache.eDonkey.Begin() ; i != HostCache.eDonkey.End(); ++i )
 		{
+			CHostCacheHost* pHost = (*i);
+
 			/*CString strT;
 			strT.Format( _T("  -Name:%s Last Stats:%d UDP flags:%08X"), pHost->m_sName, pHost->m_tStats, pHost->m_nUDPFlags );
 			theApp.Message( MSG_DEFAULT, strT );*/

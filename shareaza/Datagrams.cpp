@@ -231,21 +231,6 @@ void CDatagrams::Disconnect()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDatagrams stable test
-
-BOOL CDatagrams::IsStable()	// Avoid using this function directly, use !Network.IsFirewalled(CHECK_UDP) instead
-{
-	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
-
-	return m_bStable;		// Use detected state
-}
-
-void CDatagrams::SetStable(BOOL bStable)
-{
-	m_bStable = bStable;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CDatagrams send
 
 BOOL CDatagrams::Send(IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
@@ -1055,14 +1040,20 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 		std::sort( pList.begin(), pList.end(), CompareNums() );
 
 		nCount = Settings.Gnutella1.MaxHostsInPongs;
-		CHostCacheHost* pHost = HostCache.Gnutella1.GetNewest();
-		while ( pHost && nCount && !pList.empty() )
+
+		CQuickLock oLock( HostCache.Gnutella1.m_pSection );
+
+		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ;
+			i != HostCache.Gnutella1.End() && nCount && !pList.empty(); ++i )
 		{
+			CHostCacheHost* pHost = (*i);
+
 			nPos = pList.back(); // take the smallest value;
 			pList.pop_back(); // remove it
-			for ( ; pHost && nPos-- ; pHost = pHost->m_pPrevTime );
+			for ( ; i != HostCache.Gnutella1.End() && nPos-- ; ++i ) pHost = (*i);
 
-			if ( pHost && pHost->m_bCheckedLocally && pHost->m_nFailures == 0 )
+			if ( i != HostCache.Gnutella1.End() &&
+				pHost->m_bCheckedLocally && pHost->m_nFailures == 0 )
 			{
 				pItem->Write( (void*)&pHost->m_pAddress, 4 );
 				pItem->Write( (void*)&pHost->m_nPort, 2 );
@@ -1238,7 +1229,7 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	}
 
 	if ( bRelayed && ! Network.IsConnectedTo( &pHost->sin_addr ) )
-		m_bStable = TRUE;
+		SetStable();
 
 	return TRUE;
 }
@@ -1914,34 +1905,39 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	pKHLA->WritePacket( G2_PACKET_TIMESTAMP, 4 );
 	pKHLA->WriteLongBE( tNow );
 
-	for ( CHostCacheHost* pCachedHost = HostCache.Gnutella2.GetNewest() ; pCachedHost && nCount > 0 ;
-			pCachedHost = pCachedHost->m_pPrevTime )
 	{
-		if ( pCachedHost->CanQuote( tNow ) &&
-			Neighbours.Get( &pCachedHost->m_pAddress ) == NULL &&
-			! Network.IsSelfIP( pCachedHost->m_pAddress ) )
+		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
+
+		for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ;
+			i != HostCache.Gnutella2.End() && nCount > 0; ++i )
 		{
+			CHostCacheHost* pCachedHost = (*i);
 
-			BOOL bCompound = ( pCachedHost->m_pVendor && pCachedHost->m_pVendor->m_sCode.GetLength() > 0 );
-			CG2Packet* pCHPacket = CG2Packet::New( G2_PACKET_CACHED_HUB, bCompound );
-
-			if ( bCompound )
+			if ( pCachedHost->CanQuote( tNow ) &&
+				Neighbours.Get( &pCachedHost->m_pAddress ) == NULL &&
+				! Network.IsSelfIP( pCachedHost->m_pAddress ) )
 			{
-				pCHPacket->WritePacket( G2_PACKET_VENDOR, pCachedHost->m_pVendor->m_sCode.GetLength() );
-				pCHPacket->WriteString( pCachedHost->m_pVendor->m_sCode );
+
+				BOOL bCompound = ( pCachedHost->m_pVendor && pCachedHost->m_pVendor->m_sCode.GetLength() > 0 );
+				CG2Packet* pCHPacket = CG2Packet::New( G2_PACKET_CACHED_HUB, bCompound );
+
+				if ( bCompound )
+				{
+					pCHPacket->WritePacket( G2_PACKET_VENDOR, pCachedHost->m_pVendor->m_sCode.GetLength() );
+					pCHPacket->WriteString( pCachedHost->m_pVendor->m_sCode );
+				}
+
+				pCHPacket->WriteLongLE( pCachedHost->m_pAddress.S_un.S_addr );					// 4
+				pCHPacket->WriteShortBE( pCachedHost->m_nPort );								// 2
+				pCHPacket->WriteLongBE( pCachedHost->Seen() );									// 4
+				pKHLA->WritePacket( pCHPacket );
+				pCHPacket->Release();
+
+
+				nCount--;
 			}
-
-			pCHPacket->WriteLongLE( pCachedHost->m_pAddress.S_un.S_addr );					// 4
-			pCHPacket->WriteShortBE( pCachedHost->m_nPort );								// 2
-			pCHPacket->WriteLongBE( pCachedHost->m_tSeen );									// 4
-			pKHLA->WritePacket( pCHPacket );
-			pCHPacket->Release();
-
-
-			nCount--;
 		}
 	}
-
 	Send( pHost, pKHLA );
 
 	return TRUE;

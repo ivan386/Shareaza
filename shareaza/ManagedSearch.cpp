@@ -372,9 +372,13 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 {
 	// Look at all known Gnutella2 hubs, newest first
+
+	CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 	
-	for ( CHostCacheHost* pHost = HostCache.Gnutella2.GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
+	for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ;
+		i != HostCache.Gnutella2.End();	++i )
 	{
+		CHostCacheHost* pHost = (*i);
 		// Must be Gnutella2
 		
 		ASSERT( pHost->m_nProtocol == PROTOCOL_G2 );
@@ -584,8 +588,12 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 
 BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD /*tTicks*/, DWORD tSecs)
 {
-	for ( CHostCacheHost* pHost = HostCache.eDonkey.GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
+	CQuickLock oLock( HostCache.eDonkey.m_pSection );
+
+	for ( CHostCacheIterator i = HostCache.eDonkey.Begin() ; i != HostCache.eDonkey.End();	++i )
 	{
+		CHostCacheHost* pHost = (*i);
+
 		ASSERT( pHost->m_nProtocol == PROTOCOL_ED2K );
 		
 		// If this host is a neighbour, don't UDP to it

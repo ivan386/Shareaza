@@ -192,8 +192,10 @@ public:
 		DWORD		TimeoutTraffic;
 		DWORD		SendBuffer;
 		BOOL		RequireForTransfers;		// Only upload/download to connected networks
-		BOOL		AsyncIO;
+//		BOOL		AsyncIO;
 		DWORD		ConnectThrottle;			// Delay between connection attempts. (Neighbour connections)
+		DWORD		FailurePenalty;				// Delay after connection failure (seconds, default = 300) (Neighbour connections)
+		DWORD		FailureLimit;				// Max allowed connection failures (default = 3) (Neighbour connections)
 		BOOL		DetectConnectionLoss;		// Detect loss of internet connection
 		BOOL		DetectConnectionReset;		// Detect regaining of internet connection
 		BOOL		ForceConnectedState;		// Force WinINet into a connected state on startup. (Put IE into online mode)
@@ -259,7 +261,7 @@ public:
 		DWORD		RouteCache;
 		DWORD		HostCacheSize;
 		DWORD		HostCacheView;
-		DWORD		ConnectThrottle;
+		DWORD		ConnectThrottle;			// Delay between connection attempts (seconds)
 		BOOL		BlockBlankClients;			// Block Ultrapeers with no user agent
 		BOOL		SpecifyProtocol;			// Specify G1 or G2 when initiating a connection
 	} Gnutella;

@@ -697,7 +697,6 @@ void CShakeNeighbour::SendHostHeaders(LPCTSTR pszMessage)
 	// Local variables
 	DWORD nTime = static_cast< DWORD >( time( NULL ) );	// The number of seconds since midnight on January 1, 1970
 	CString strHosts, strHost;	// Text to describe other computers and just one
-	CHostCacheHost* pHost;		// We'll use this to loop through host objects in the host cache
 
 	// If this method was given a message
 	if ( pszMessage )
@@ -719,10 +718,13 @@ void CShakeNeighbour::SendHostHeaders(LPCTSTR pszMessage)
 
 		int nCount = Settings.Gnutella1.PongCount;		// Set max length of list
 
+		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
+
 		// Loop through the Gnutella2 host cache from newest to oldest
-		for ( pHost = HostCache.Gnutella2.GetNewest() ; pHost && nCount > 0 ; pHost = pHost->m_pPrevTime )
+		for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ; i != HostCache.Gnutella2.End() && nCount > 0 ; ++i )
 		{
-			
+			CHostCacheHost* pHost = (*i);
+
 			if ( pHost->CanQuote( nTime ) )		// if host is still recent enough
 			{
 				// Add it to the string
@@ -747,9 +749,13 @@ void CShakeNeighbour::SendHostHeaders(LPCTSTR pszMessage)
 
 		int nCount = Settings.Gnutella1.PongCount;		// Set max length of list
 
+		CQuickLock oLock( HostCache.Gnutella1.m_pSection );
+
 		// Loop through the Gnutella host cache from newest to oldest
-		for ( pHost = HostCache.Gnutella1.GetNewest() ; pHost && nCount > 0 ; pHost = pHost->m_pPrevTime )
+		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ; i != HostCache.Gnutella2.End() ; ++i )
 		{
+			CHostCacheHost* pHost = (*i);
+
 			// This host is still recent enough to tell another computer about
 			if ( pHost->CanQuote( nTime ) )
 			{

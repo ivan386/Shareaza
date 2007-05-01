@@ -55,8 +55,8 @@ protected:
 	CEvent m_pWakeup; // Fire this event when a remote computer calls our listening socket
 
 	// The list of CHandshake objects
-	CList< CHandshake* > m_pList;    // The list of pointers to CHandshake objects
-	CCriticalSection m_pSection; // Use to make sure only one thread accesses the list at a time
+	CList< CHandshake* > m_pList;        // The list of pointers to CHandshake objects
+	mutable CCriticalSection m_pSection; // Use to make sure only one thread accesses the list at a time
 
 public:
 
@@ -66,7 +66,7 @@ public:
 
 	// Connect to an IP, and determine if we are connected to one
 	BOOL PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex = 0); // Connect to the given IP
-	BOOL IsConnectedTo(IN_ADDR* pAddress);                        // Looks for the IP in the handshake objects list
+	BOOL IsConnectedTo(IN_ADDR* pAddress) const;                  // Looks for the IP in the handshake objects list
 
 protected:
 

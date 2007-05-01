@@ -759,8 +759,13 @@ CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner)
 	pPacket->WritePacket( G2_PACKET_TIMESTAMP, 4 );
 	pPacket->WriteLongBE( tNow );
 
-	for ( CHostCacheHost* pHost = HostCache.Gnutella2.GetNewest() ; pHost && nCount > 0 ; pHost = pHost->m_pPrevTime )
+	CQuickLock oLock( HostCache.Gnutella2.m_pSection );
+
+	for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ;
+		i != HostCache.Gnutella2.End() && nCount > 0; ++i )
 	{
+		CHostCacheHost* pHost = (*i);
+
 		if (	pHost->CanQuote( tNow ) &&
 				Neighbours.Get( &pHost->m_pAddress ) == NULL &&
 				! Network.IsSelfIP( pHost->m_pAddress ) )
@@ -792,7 +797,7 @@ CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner)
 
 			pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );			// 4
 			pPacket->WriteShortBE( pHost->m_nPort );						// 2
-			pPacket->WriteLongBE( pHost->m_tSeen );							// 4
+			pPacket->WriteLongBE( pHost->Seen() );							// 4
 
 			nCount--;
 		}

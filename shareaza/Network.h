@@ -87,9 +87,9 @@ public:
 	BOOL		IsListening() const;
 	int			IsWellConnected() const;
 	BOOL		IsStable() const;
-	BOOL		IsFirewalled(int nCheck = CHECK_BOTH);
+	BOOL		IsFirewalled(int nCheck = CHECK_BOTH) const;
 	DWORD		GetStableTime() const;
-	BOOL		IsConnectedTo(IN_ADDR* pAddress);
+	BOOL		IsConnectedTo(IN_ADDR* pAddress) const;
 	BOOL		ReadyToTransfer(DWORD tNow) const;		// Are we ready to start downloading?
 public:
 	BOOL		Connect(BOOL bAutoConnect = FALSE);

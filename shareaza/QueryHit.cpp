@@ -850,7 +850,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 	
 	while ( *pszData && pszData < pszEnd )
 	{
-		if ( (BYTE)*pszData == GGEP_MAGIC )
+		if ( (BYTE)( (*pszData) & 0xff ) == GGEP_MAGIC )
 		{
 			if ( ! Settings.Gnutella1.EnableGGEP ) break;
 			

@@ -176,9 +176,11 @@ void CSettings::Setup()
 	Add( _T("Connection.TimeoutHandshake"), &Connection.TimeoutHandshake, 45000 );
 	Add( _T("Connection.TimeoutTraffic"), &Connection.TimeoutTraffic, 140000 );
 	Add( _T("Connection.SendBuffer"), &Connection.SendBuffer, 2048 );
-	Add( _T("Connection.AsyncIO"), &Connection.AsyncIO, TRUE );
+//	Add( _T("Connection.AsyncIO"), &Connection.AsyncIO, TRUE );
 	Add( _T("Connection.RequireForTransfers"), &Connection.RequireForTransfers, TRUE );
 	Add( _T("Connection.ConnectThrottle"), &Connection.ConnectThrottle, 0 );
+	Add( _T("Connection.FailurePenalty"), &Connection.FailurePenalty, 300 );
+	Add( _T("Connection.FailureLimit"), &Connection.FailureLimit, 3 );
 	Add( _T("Connection.DetectConnectionLoss"), &Connection.DetectConnectionLoss, TRUE );
 	Add( _T("Connection.DetectConnectionReset"), &Connection.DetectConnectionReset, FALSE );
 	Add( _T("Connection.ForceConnectedState"), &Connection.ForceConnectedState, TRUE );

@@ -102,6 +102,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Connection.SendBuffer, 1, 64, 10240 );
 	AddSetting( &Settings.Connection.TimeoutTraffic, 1000, 10, 60*60, _T(" s") );
 	AddSetting( &Settings.Connection.ConnectThrottle, 1, 0, 500, _T(" ms") );
+	AddSetting( &Settings.Connection.FailurePenalty, 1, 30, 3600, _T(" s") );
+	AddSetting( &Settings.Connection.FailureLimit, 1, 1, 512 );
 	AddSetting( &Settings.Connection.DetectConnectionLoss, 1, 0, 1 );
 	AddSetting( &Settings.Connection.DetectConnectionReset, 1, 0, 1 );
 	AddSetting( &Settings.Connection.ForceConnectedState, 1, 0, 1 );
@@ -113,6 +115,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Connection.SkipWANIPSetup, 1, 0, 1 );
 
 	AddSetting( &Settings.Gnutella.ConnectFactor, 1, 1, 20, _T("x") );
+	AddSetting( &Settings.Gnutella.ConnectThrottle, 1, 60, 3600, _T(" s") );
 	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 1000 );
 	AddSetting( &Settings.Gnutella.MaxHits, 1, 0, 4096 );
 	AddSetting( &Settings.Gnutella.HitsPerPacket, 1, 0, 1024 );

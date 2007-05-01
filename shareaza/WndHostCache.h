@@ -1,7 +1,7 @@
 //
 // WndHostCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,7 @@
 #pragma once
 
 #include "WndPanel.h"
+#include "LiveList.h"
 
 class CHostCacheHost;
 
@@ -43,7 +44,7 @@ public:
 	BOOL			m_bAllowUpdates;
 protected:
 	CCoolBarCtrl	m_wndToolBar;
-	CListCtrl		m_wndList;
+	CLiveListCtrl	m_wndList;
 	CLiveListSizer	m_pSizer;
 	CImageList		m_gdiImageList;
 	DWORD			m_nCookie;

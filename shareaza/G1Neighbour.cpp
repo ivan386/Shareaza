@@ -641,21 +641,25 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 
 	nCount = Settings.Gnutella1.MaxHostsInPongs;
 
-	CHostCacheHost* pHost = NULL;
-	if ( bIPP )
-		pHost = HostCache.Gnutella1.GetNewest() ;
-	else
-		pHost = HostCache.G1DNA.GetNewest();
+	CQuickLock oLock( bIPP ? HostCache.Gnutella1.m_pSection : HostCache.G1DNA.m_pSection );
 
-	while ( pHost && nCount && !pList.empty() )
+	for ( CHostCacheIterator i =
+		( bIPP ? HostCache.Gnutella1.Begin() : HostCache.G1DNA.Begin() ) ;
+		( bIPP ? ( i != HostCache.Gnutella1.End() ) : ( i != HostCache.G1DNA.End() ) )
+		&& nCount && !pList.empty() ; ++i )
 	{
+		CHostCacheHost* pHost = (*i);
+
 		nPos = pList.back(); // take the smallest value;
 		pList.pop_back(); // remove it
-		for ( ; pHost && nPos-- ; pHost = pHost->m_pPrevTime );
+		for ( ;
+			( bIPP ? ( i != HostCache.Gnutella1.End() ) : ( i != HostCache.G1DNA.End() ) )
+			&& nPos-- ; ++i ) pHost = (*i);
 
 		// We won't provide Shareaza hosts for G1 cache, since users may disable
 		// G1 and it will pollute the host caches ( ??? )
-		if ( pHost && pHost->m_nFailures == 0 && pHost->m_bCheckedLocally &&
+		if ( ( bIPP ? ( i != HostCache.Gnutella1.End() ) : ( i != HostCache.G1DNA.End() ) ) &&
+			pHost->m_nFailures == 0 && pHost->m_bCheckedLocally &&
 			 ( ( bIPP && ( !pHost->m_pVendor || pHost->m_pVendor->m_sCode != L"GDNA" ) ) || 
 			   ( !bIPP && pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) ) )
 		{
@@ -1134,33 +1138,39 @@ void CG1Neighbour::SendClusterAdvisor()
 	CG1Packet* pPacket = NULL; // A pointer to a Gnutella packet (do)
 	WORD nCount = 0;           // Loop up to 20 times
 
-	// Loop through the Gnutella host cache, 
-	for ( CHostCacheHost* pHost = HostCache.Gnutella1.GetNewest(); // Point pHost at the newest host in the cache
-		pHost && nCount < 20;                                      // Loop until pHost is null or nCount reaches 20
-		pHost = pHost->m_pPrevTime )                               // Change pHost to the previous time (do)
 	{
-		// If this host is running Shareaza, was added recently, and we can connect to it (do)
-		if ( pHost->m_pVendor == VendorCache.m_pShareaza && // If this host is running Shareaza, and
-			 pHost->m_tAdded > m_tClusterHost &&            // It was added before m_tClusterHost was sent (do), and
-			 pHost->CanConnect( tNow ) )                    // We can connect to it now (do)
+		CQuickLock oLock( HostCache.Gnutella1.m_pSection );
+
+		// Loop through the Gnutella host cache, 
+		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ;
+			i != HostCache.Gnutella1.End() && nCount < 20;
+			++i )
 		{
-			// If there isn't a packet yet, start one
-			if ( ! pPacket )
+			CHostCacheHost* pHost = (*i);
+
+			// If this host is running Shareaza, was added recently, and we can connect to it (do)
+			if ( pHost->m_pVendor == VendorCache.m_pShareaza && // If this host is running Shareaza, and
+				pHost->m_tAdded > m_tClusterHost &&            // It was added before m_tClusterHost was sent (do), and
+				pHost->CanConnect( tNow ) )                    // We can connect to it now (do)
 			{
-				// Make a new vendor specific packet
-				pPacket = CG1Packet::New( G1_PACKET_VENDOR, 1 );
-				pPacket->WriteLongBE( 'RAZA' );  // The vendor code is "RAZA" because we are running Shareaza
-				pPacket->WriteShortLE( 0x0003 ); // 3 is the code for a cluster advisor packet
-				pPacket->WriteShortLE( 1 );      // Version number is 1
-				pPacket->WriteShortLE( 0 );      // (do)
+				// If there isn't a packet yet, start one
+				if ( ! pPacket )
+				{
+					// Make a new vendor specific packet
+					pPacket = CG1Packet::New( G1_PACKET_VENDOR, 1 );
+					pPacket->WriteLongBE( 'RAZA' );  // The vendor code is "RAZA" because we are running Shareaza
+					pPacket->WriteShortLE( 0x0003 ); // 3 is the code for a cluster advisor packet
+					pPacket->WriteShortLE( 1 );      // Version number is 1
+					pPacket->WriteShortLE( 0 );      // (do)
+				}
+
+				// Add the IP address and port number to the packet
+				pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
+				pPacket->WriteShortLE( pHost->m_nPort );
+
+				// Increase the count to make sure we only write 20 IP addresses into the packet
+				nCount++;
 			}
-
-			// Add the IP address and port number to the packet
-			pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
-			pPacket->WriteShortLE( pHost->m_nPort );
-
-			// Increase the count to make sure we only write 20 IP addresses into the packet
-			nCount++;
 		}
 	}
 

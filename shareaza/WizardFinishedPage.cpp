@@ -110,7 +110,7 @@ BOOL CWizardFinishedPage::OnWizardFinish()
 
 	if ( Settings.eDonkey.EnableToday )
 	{
-		if ( HostCache.eDonkey.m_nHosts < 3 )
+		if ( HostCache.eDonkey.GetCount() < 3 )
 		{
 			CDonkeyServersDlg dlg;
 			dlg.DoModal();
