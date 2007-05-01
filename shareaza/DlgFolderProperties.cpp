@@ -127,8 +127,7 @@ BOOL CFolderPropertiesDlg::OnInitDialog()
 	}
 
 	CString strSchemaURI = m_wndData.GetSchemaURI();
-	CSchema* pSchema = SchemaCache.Get( strSchemaURI );
-	if ( pSchema )
+	if ( CSchema* pSchema = SchemaCache.Get( strSchemaURI ) )
 	{
 		CString strChildURI = pSchema->GetContainedURI( CSchema::stFile );
 		CSchemaChild* pContained = pSchema->GetContained( strChildURI );
@@ -297,6 +296,18 @@ void CFolderPropertiesDlg::OnLButtonUp(UINT nFlags, CPoint point)
 void CFolderPropertiesDlg::OnSelChangeSchemas()
 {
 	m_wndData.SetSchema( m_wndSchemas.GetSelected() );
+
+	CString strSchemaURI = m_wndData.GetSchemaURI();
+	if ( CSchema* pSchema = SchemaCache.Get( strSchemaURI ) )
+	{
+		CString strChildURI = pSchema->GetContainedURI( CSchema::stFile );
+		CSchemaChild* pContained = pSchema->GetContained( strChildURI );
+		if ( pContained == NULL || pContained->m_pMap.GetCount() == 0 )
+			m_wndApply.ShowWindow( SW_HIDE );
+		else
+			m_wndApply.ShowWindow( SW_SHOW );
+	}
+
 	OnChangeTitle();
 	Invalidate();
 }
