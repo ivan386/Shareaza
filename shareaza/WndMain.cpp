@@ -2260,8 +2260,8 @@ void CMainWnd::OnUpdateWindowNavBar(CCmdUI *pCmdUI)
 
 void CMainWnd::OnWindowNavBar()
 {
-	ShowControlBar( &m_wndToolBar, FALSE, TRUE );
-	ShowControlBar( &m_wndNavBar, ! m_wndNavBar.IsVisible(), TRUE );
+	ShowControlBar( &m_wndToolBar, FALSE, FALSE );
+	ShowControlBar( &m_wndNavBar, ! m_wndNavBar.IsVisible(), FALSE );
 	if ( m_wndToolBar.IsVisible() )
 	{
 		if ( ! Network.IsConnected() ) m_wndTabBar.SetMessage( IDS_TABBAR_NOT_CONNECTED );
@@ -2277,8 +2277,8 @@ void CMainWnd::OnUpdateWindowToolBar(CCmdUI* pCmdUI)
 
 void CMainWnd::OnWindowToolBar() 
 {
-	ShowControlBar( &m_wndNavBar, FALSE, TRUE );
-	ShowControlBar( &m_wndToolBar, ! m_wndToolBar.IsVisible(), TRUE );
+	ShowControlBar( &m_wndNavBar, FALSE, FALSE );
+	ShowControlBar( &m_wndToolBar, ! m_wndToolBar.IsVisible(), FALSE );
 	if ( m_wndToolBar.IsVisible() ) 
 	{
 		if ( ! Network.IsConnected() ) m_wndTabBar.SetMessage( IDS_TABBAR_NOT_CONNECTED );
