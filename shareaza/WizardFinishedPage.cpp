@@ -49,9 +49,9 @@ END_MESSAGE_MAP()
 CWizardFinishedPage::CWizardFinishedPage() : CWizardPage(CWizardFinishedPage::IDD)
 {
 	//{{AFX_DATA_INIT(CWizardFinishedPage)
-	m_bAutoConnect = FALSE;
+	m_bAutoConnect = Settings.Connection.AutoConnect;
 	m_bConnect = FALSE;
-	m_bStartup = FALSE;
+	m_bStartup = Settings.CheckStartup();
 	//}}AFX_DATA_INIT
 }
 
@@ -79,8 +79,8 @@ BOOL CWizardFinishedPage::OnInitDialog()
 	Skin.Apply( _T("CWizardFinishedPage"), this );
 
 	m_bConnect		= TRUE;
-	m_bAutoConnect	= TRUE;
-	m_bStartup		= TRUE;
+	m_bAutoConnect	= Settings.Connection.AutoConnect;
+	m_bStartup		= Settings.CheckStartup();
 
 	UpdateData( FALSE );
 
