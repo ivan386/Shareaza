@@ -497,7 +497,6 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& o
 		Library.Update();
 	}
 
-	pTiger.Dump();
 	LibraryHashDB.StoreTiger( nIndex, &pTiger );
 	LibraryHashDB.StoreED2K( nIndex, &pED2K );
 
