@@ -226,10 +226,10 @@ BOOL CLibraryBuilderInternals::ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement
 	if ( bIsMP3 )
 	{
 		ScanMP3Frame( pXML, hFile, sizeof(pInfo) );
-		return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
+		CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
 	}
 	
-	return TRUE;
+	return pXML->GetAttributeCount() > 0;
 }
 
 BOOL CLibraryBuilderInternals::CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, LPCSTR pszValue, int nLength)
@@ -527,8 +527,9 @@ BOOL CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 	delete [] pRelease;
 	
 	ScanMP3Frame( pXML, hFile, 0 );
-	
-	return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
+	CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
+
+	return pXML->GetAttributeCount() > 0;
 }
 
 BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, BOOL bSkipLanguage)
@@ -685,7 +686,8 @@ BOOL CLibraryBuilderInternals::ReadMP3Frames(DWORD nIndex, HANDLE hFile)
 	
 	if ( ScanMP3Frame( pXML, hFile, 0 ) )
 	{
-		return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
+		CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
+		return pXML->GetAttributeCount() > 0;
 	}
 	else
 	{
@@ -2108,7 +2110,8 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 		if ( pFooter.nFields > 0 && bPreferFooter )
 		{
 			if ( !bValidSignature ) ScanMP3Frame( pXML, hFile, 0 );
-			return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
+			CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
+			return pXML->GetAttributeCount() > 0;
 		}
 		else // No APE footer and no header in MP3 or invalid APE file
 		{
@@ -2156,12 +2159,10 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 	strItem.Format( L"%lu", pAPE.nChannels );
 	pXML->AddAttribute( L"channels", strItem );
 	
-	if ( ReadID3v1( nIndex, hFile, pXML ) )
-	{
-		return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
-	}
+	ReadID3v1( nIndex, hFile, pXML );
+	CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
 	
-	return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
+	return pXML->GetAttributeCount() > 0;
 }
 
 //////////////////////////////////////////////////////////////////////
