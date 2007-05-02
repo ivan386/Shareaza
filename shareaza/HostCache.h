@@ -148,7 +148,7 @@ public:
 	CHostCacheHostPtr	Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	BOOL				Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
-	void				Remove(CHostCacheHostPtr pHost);
+	bool				Remove(CHostCacheHostPtr pHost);
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove=true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate=true);
 	void				PruneByQueryAck();			// For G2

@@ -375,9 +375,8 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 	if ( pHost->Update( nPort, tSeen, pszVendor, nUptime ) )
 	{
 		// Remove host from old and now invalid position
-		CHostCacheIndex::iterator t = std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost );
-		ASSERT( t != m_HostsTime.end() );
-		m_HostsTime.erase( t );
+		m_HostsTime.erase(
+			std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
 
 		// Add host to new sorted position
 		m_HostsTime.insert( pHost );
@@ -391,7 +390,7 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host remove
 
-void CHostCacheList::Remove(CHostCacheHostPtr pHost)
+bool CHostCacheList::Remove(CHostCacheHostPtr pHost)
 {
 	CQuickLock oLock( m_pSection );
 
@@ -399,20 +398,15 @@ void CHostCacheList::Remove(CHostCacheHostPtr pHost)
 	{
 		if ( (*i).second == pHost )
 		{
-			CHostCacheIndex::iterator t = std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost );
-			ASSERT( t != m_HostsTime.end() );
-			m_HostsTime.erase( t );
-
+			m_HostsTime.erase(
+				std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
 			m_Hosts.erase( i );
-
-			ASSERT( m_Hosts.size() == m_HostsTime.size() );
-
 			delete pHost;
-
 			m_nCookie++;
-			break;
+			return true;
 		}
 	}
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -461,9 +455,10 @@ void CHostCacheList::PruneByQueryAck()
 	CQuickLock oLock( m_pSection );
 
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
-	
-	for( CHostCacheMap::const_iterator i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
+
+	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); )
 	{
+		bool bRemoved = false;
 		CHostCacheHostPtr pHost = (*i).second;
 		if ( pHost->m_tAck )
 		{
@@ -471,9 +466,19 @@ void CHostCacheList::PruneByQueryAck()
 			{
 				pHost->m_tAck = 0;
 				if ( pHost->m_nFailures++ > Settings.Connection.FailureLimit )
-					Remove( pHost );
+				{
+					m_HostsTime.erase(
+						std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
+					i = m_Hosts.erase( i );
+					delete pHost;
+					bRemoved = true;
+					m_nCookie++;
+				}
 			}
 		}
+		// Don't increment if host was removed
+		if ( ! bRemoved )
+			++i;
 	}
 }
 
@@ -486,7 +491,7 @@ void CHostCacheList::PruneOldHosts()
 
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	
-	for( CHostCacheMap::const_iterator i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
+	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); )
 	{
 		CHostCacheHostPtr pHost = (*i).second;
 
@@ -512,8 +517,14 @@ void CHostCacheList::PruneOldHosts()
 		// hosts with the DU less than 24 hours with 2 failures;
 		if ( ( nExpire ) && ( tNow - pHost->Seen() > nExpire ) && nProbability < .333 )
 		{
-			Remove( pHost );
+			m_HostsTime.erase(
+				std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
+			i = m_Hosts.erase( i );
+			delete pHost;
+			m_nCookie++;
 		}
+		else
+			++i;
 	}
 }
 
