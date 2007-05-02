@@ -135,7 +135,7 @@ void CURLExportDlg::OnSelChangeUrlPreset()
 	{
 		_T("magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&dn=[NameURI]&xl=[ByteSize]"),
 		_T("ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/"),
-		_T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&dn=[NameURI]&xl=[ByteSize]\">[Name]</a><br>"),
+		_T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;dn=[NameURI]&amp;xl=[ByteSize]\">[Name]</a><br>"),
 		_T("<a href=\"ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/\">[Name]</a>"),
 	};
 
