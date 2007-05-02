@@ -1,7 +1,7 @@
 //
 // WndSecurity.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Security.h"
-#include "Network.h"
 #include "LiveList.h"
 #include "WndSecurity.h"
 #include "DlgSecureRule.h"
@@ -119,16 +118,14 @@ int CSecurityWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	LoadState( _T("CSecurityWnd"), TRUE );
 
-	CSingleLock pLock( &Network.m_pSection );
+	Update();
 
-	if ( pLock.Lock( 50 ) ) Update();
-		
 	return 0;
 }
 
 void CSecurityWnd::OnDestroy() 
 {
-	Security.Save( TRUE );
+	Security.Save();
 
 	Settings.SaveList( _T("CSecurityWnd"), &m_wndList );		
 	SaveState( _T("CSecurityWnd") );
@@ -141,8 +138,9 @@ void CSecurityWnd::OnDestroy()
 
 void CSecurityWnd::Update(int nColumn, BOOL bSort)
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
-	CLiveList pLiveList( 6 );
+	CQuickLock oLock( Security.m_pSection );
+
+	CLiveList pLiveList( 6, Security.GetCount() + Security.GetCount() / 4 );
 
 	CLiveItem* pDefault = pLiveList.Add( (LPVOID)0 );
 	pDefault->Set( 0, _T("Default Policy") );
@@ -319,20 +317,23 @@ void CSecurityWnd::OnUpdateSecurityEdit(CCmdUI* pCmdUI)
 
 void CSecurityWnd::OnSecurityEdit() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
-	
-	CSecureRule* pRule = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
-	if ( ! pRule ) return;
+	CSecureRule* pEditableRule;
+	{
+		CQuickLock oLock( Security.m_pSection );
+		
+		CSecureRule* pRule = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
+		if ( ! pRule ) return;
+		pEditableRule = new CSecureRule( *pRule ); 
+	}
 
-	pLock.Unlock();
-
-	CSecureRuleDlg dlg( NULL, pRule );
-
+	CSecureRuleDlg dlg( NULL, pEditableRule );
 	if ( dlg.DoModal() == IDOK )
 	{
-		Security.Save( TRUE );
+		Security.Save();
 		Update();
 	}
+	else
+		delete pEditableRule;
 }
 
 void CSecurityWnd::OnUpdateSecurityReset(CCmdUI* pCmdUI) 
@@ -342,17 +343,17 @@ void CSecurityWnd::OnUpdateSecurityReset(CCmdUI* pCmdUI)
 
 void CSecurityWnd::OnSecurityReset() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
-
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
+		CQuickLock oLock( Security.m_pSection );
+
 		if ( CSecureRule* pRule = GetItem( nItem ) )
 		{
 			pRule->Reset();
 		}
 	}
 
-	Security.Save( TRUE );
+	Security.Save();
 	Update();
 }
 
@@ -363,17 +364,17 @@ void CSecurityWnd::OnUpdateSecurityRemove(CCmdUI* pCmdUI)
 
 void CSecurityWnd::OnSecurityRemove() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
-
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
+		CQuickLock oLock( Security.m_pSection );
+
 		if ( CSecureRule* pRule = GetItem( nItem ) )
 		{
 			Security.Remove( pRule );
 		}
 	}
 
-	Security.Save( TRUE );
+	Security.Save();
 	Update();
 }
 
@@ -384,17 +385,17 @@ void CSecurityWnd::OnUpdateSecurityMoveUp(CCmdUI* pCmdUI)
 
 void CSecurityWnd::OnSecurityMoveUp() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
-
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
+		CQuickLock oLock( Security.m_pSection );
+
 		if ( CSecureRule* pRule = GetItem( nItem ) )
 		{
 			Security.MoveUp( pRule );
 		}
 	}
 
-	Security.Save( TRUE );
+	Security.Save();
 	Update( 3 );
 }
 
@@ -405,7 +406,8 @@ void CSecurityWnd::OnUpdateSecurityMoveDown(CCmdUI* pCmdUI)
 
 void CSecurityWnd::OnSecurityMoveDown() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CQuickLock oLock( Security.m_pSection );
+
 	CList< CSecureRule* > pList;
 
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
@@ -419,7 +421,7 @@ void CSecurityWnd::OnSecurityMoveDown()
 		if ( pRule ) Security.MoveDown( pRule );
 	}
 
-	Security.Save( TRUE );
+	Security.Save();
 	Update( 3 );
 }
 
@@ -429,7 +431,7 @@ void CSecurityWnd::OnSecurityAdd()
 
 	if ( dlg.DoModal() == IDOK )
 	{
-		Security.Save( TRUE );
+		Security.Save();
 		Update();
 	}
 }
@@ -462,6 +464,8 @@ void CSecurityWnd::OnSecurityExport()
 	{
 		for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 		{
+			CQuickLock oLock( Security.m_pSection );
+
 			if ( CSecureRule* pRule = GetItem( nItem ) )
 			{
 				strText = pRule->ToGnucleusString();
@@ -488,6 +492,8 @@ void CSecurityWnd::OnSecurityExport()
 
 		for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 		{
+			CQuickLock oLock( Security.m_pSection );
+
 			if ( CSecureRule* pRule = GetItem( nItem ) )
 			{
 				pXML->AddElement( pRule->ToXML() );
@@ -519,7 +525,7 @@ void CSecurityWnd::OnSecurityImport()
 
 	if ( Security.Import( dlg.GetPathName() ) )
 	{
-		Security.Save( TRUE );
+		Security.Save();
 	}
 	else
 	{

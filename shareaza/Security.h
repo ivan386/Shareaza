@@ -1,7 +1,7 @@
 //
 // Security.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,40 +37,37 @@ public:
 
 // Attributes
 public:
-	BOOL		m_bDenyPolicy;
+	mutable CCriticalSection	m_pSection;
+	BOOL						m_bDenyPolicy;
+	static LPCTSTR				xmlns;
+
 protected:
-	CList< CSecureRule* >	m_pRules;
-public:
-	static LPCTSTR xmlns;
+	CList< CSecureRule* >		m_pRules;
 
 // Operations
 public:
 	POSITION		GetIterator() const;
 	CSecureRule*	GetNext(POSITION& pos) const;
-	INT_PTR			GetCount();
+	INT_PTR			GetCount() const;
 	BOOL			Check(CSecureRule* pRule) const;
-private:
-	CSecureRule*	GetGUID(const GUID& oGUID) const;
-public:
 	void			Add(CSecureRule* pRule);
 	void			Remove(CSecureRule* pRule);
 	void			MoveUp(CSecureRule* pRule);
 	void			MoveDown(CSecureRule* pRule);
 	void			Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE);
-public:
 	void			Clear();
 	BOOL			IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
 	BOOL			IsAccepted(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
 	void			Expire();
-public:
 	BOOL			Load();
-	BOOL			Save(BOOL bLock = FALSE);
+	BOOL			Save();
 	BOOL			Import(LPCTSTR pszFile);
+
+protected:
+	CSecureRule*	GetGUID(const GUID& oGUID) const;
 	CXMLElement*	ToXML(BOOL bRules = TRUE);
 	BOOL			FromXML(CXMLElement* pXML);
-protected:
 	void			Serialize(CArchive& ar);
-
 };
 
 enum
@@ -83,6 +80,8 @@ class CSecureRule
 // Construction
 public:
 	CSecureRule(BOOL bCreate = TRUE);
+	CSecureRule(const CSecureRule& pRule);
+	CSecureRule& operator=(const CSecureRule& pRule);
 	virtual ~CSecureRule();
 
 // Attributes
@@ -91,14 +90,13 @@ public:
 	BYTE		m_nAction;
 	CString		m_sComment;
 	GUID		m_pGUID;
-public:
 	DWORD		m_nExpire;
 	DWORD		m_nToday;
 	DWORD		m_nEver;
-public:
 	BYTE		m_nIP[4];
 	BYTE		m_nMask[4];
 	TCHAR*		m_pContent;
+	DWORD		m_nContentLength;
 
 	enum { srAddress, srContent };
 	enum { srNull, srAccept, srDeny };

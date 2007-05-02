@@ -1,7 +1,7 @@
 //
 // Security.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Security.h"
-#include "Network.h"
 #include "Buffer.h"
 #include "XML.h"
 
@@ -64,14 +63,16 @@ CSecureRule* CSecurity::GetNext(POSITION& pos) const
 	return m_pRules.GetNext( pos );
 }
 
-INT_PTR CSecurity::GetCount()
+INT_PTR CSecurity::GetCount() const
 {
 	return m_pRules.GetCount();
 }
 
 BOOL CSecurity::Check(CSecureRule* pRule) const
 {
-	return pRule && ( m_pRules.Find( pRule ) != NULL );
+	CQuickLock oLock( m_pSection );
+
+	return pRule != NULL && GetGUID( pRule->m_pGUID ) != NULL;
 }
 
 CSecureRule* CSecurity::GetGUID(const GUID& pGUID) const
@@ -90,14 +91,26 @@ CSecureRule* CSecurity::GetGUID(const GUID& pGUID) const
 
 void CSecurity::Add(CSecureRule* pRule)
 {
+	CQuickLock oLock( m_pSection );
+
 	pRule->MaskFix();
 
-	POSITION pos = m_pRules.Find( pRule );
-	if ( pos == NULL ) m_pRules.AddHead( pRule );
+	CSecureRule* pExistingRule = GetGUID( pRule->m_pGUID );
+	if ( pExistingRule == NULL )
+	{
+		m_pRules.AddHead( pRule );
+	}
+	else if ( pExistingRule != pRule )
+	{
+		*pExistingRule = *pRule;
+		delete pRule;
+	}
 }
 
 void CSecurity::Remove(CSecureRule* pRule)
 {
+	CQuickLock oLock( m_pSection );
+
 	POSITION pos = m_pRules.Find( pRule );
 	if ( pos ) m_pRules.RemoveAt( pos );
 	delete pRule;
@@ -105,6 +118,8 @@ void CSecurity::Remove(CSecureRule* pRule)
 
 void CSecurity::MoveUp(CSecureRule* pRule)
 {
+	CQuickLock oLock( m_pSection );
+
 	POSITION posMe = m_pRules.Find( pRule );
 	if ( posMe == NULL ) return;
 	
@@ -120,6 +135,8 @@ void CSecurity::MoveUp(CSecureRule* pRule)
 
 void CSecurity::MoveDown(CSecureRule* pRule)
 {
+	CQuickLock oLock( m_pSection );
+
 	POSITION posMe = m_pRules.Find( pRule );
 	if ( posMe == NULL ) return;
 	
@@ -135,6 +152,8 @@ void CSecurity::MoveDown(CSecureRule* pRule)
 
 void CSecurity::Clear()
 {
+	CQuickLock oLock( m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		delete GetNext( pos );
@@ -147,8 +166,7 @@ void CSecurity::Clear()
 
 void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 {
-	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return;
+	CQuickLock oLock( m_pSection );
 
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	CString strAddress = inet_ntoa( *pAddress );
@@ -229,8 +247,7 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 
 void CSecurity::SessionBan(IN_ADDR* pAddress, BOOL bMessage)
 {
-	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return;
+	CQuickLock oLock( m_pSection );
 
 	CString strAddress = inet_ntoa( *pAddress );
 
@@ -272,8 +289,7 @@ void CSecurity::SessionBan(IN_ADDR* pAddress, BOOL bMessage)
 
 void CSecurity::TempBlock(IN_ADDR* pAddress)
 {
-	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return;
+	CQuickLock oLock( m_pSection );
 
 	CString strAddress = inet_ntoa( *pAddress );
 
@@ -303,8 +319,7 @@ void CSecurity::TempBlock(IN_ADDR* pAddress)
 
 BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)
 {
-	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 50 ) ) return FALSE;
+	CQuickLock oLock( m_pSection );
 
 	DWORD nNow = static_cast< DWORD >( time( NULL ) );
 
@@ -341,6 +356,8 @@ BOOL CSecurity::IsAccepted(IN_ADDR* pAddress, LPCTSTR pszContent)
 
 void CSecurity::Expire()
 {
+	CQuickLock oLock( m_pSection );
+
 	DWORD nNow = static_cast< DWORD >( time( NULL ) );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -361,6 +378,8 @@ void CSecurity::Expire()
 
 BOOL CSecurity::Load()
 {
+	CQuickLock oLock( m_pSection );
+
 	CFile pFile;
 
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Security.dat");
@@ -383,9 +402,9 @@ BOOL CSecurity::Load()
 	return TRUE;
 }
 
-BOOL CSecurity::Save(BOOL bLock)
+BOOL CSecurity::Save()
 {
-	if ( bLock ) bLock = Network.m_pSection.Lock( 250 );
+	CQuickLock oLock( m_pSection );
 
 	CFile pFile;
 
@@ -397,8 +416,6 @@ BOOL CSecurity::Save(BOOL bLock)
 		Serialize( ar );
 		ar.Close();
 	}
-
-	if ( bLock ) Network.m_pSection.Unlock();
 
 	return TRUE;
 }
@@ -518,9 +535,6 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 
 BOOL CSecurity::Import(LPCTSTR pszFile)
 {
-	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return FALSE;
-
 	CString strText;
 	CBuffer pBuffer;
 	CFile pFile;
@@ -533,6 +547,8 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 	
 	CXMLElement* pXML = CXMLElement::FromBytes( pBuffer.m_pBuffer, pBuffer.m_nLength, TRUE );
 	BOOL bResult = FALSE;
+
+	CQuickLock oLock( m_pSection );
 	
 	if ( pXML != NULL )
 	{
@@ -581,8 +597,40 @@ CSecureRule::CSecureRule(BOOL bCreate)
 	m_nIP[0]	= m_nIP[1] = m_nIP[2] = m_nIP[3] = 0;
 	m_nMask[0]	= m_nMask[1] = m_nMask[2] = m_nMask[3] = 255;
 	m_pContent	= NULL;
+	m_nContentLength = 0;
 
 	if ( bCreate ) CoCreateGuid( &m_pGUID );
+}
+
+CSecureRule::CSecureRule(const CSecureRule& pRule)
+{
+	m_pContent = NULL;
+	*this = pRule;
+}
+
+CSecureRule& CSecureRule::operator=(const CSecureRule& pRule)
+{
+	m_nType		= pRule.m_nType;
+	m_nAction	= pRule.m_nAction;
+	m_sComment	= pRule.m_sComment;
+	m_pGUID		= pRule.m_pGUID;
+	m_nExpire	= pRule.m_nExpire;
+	m_nToday	= pRule.m_nToday;
+	m_nEver		= pRule.m_nEver;
+	m_nIP[0]	= pRule.m_nIP[0];
+	m_nIP[1]	= pRule.m_nIP[1];
+	m_nIP[2]	= pRule.m_nIP[2];
+	m_nIP[3]	= pRule.m_nIP[3];
+	m_nMask[0]	= pRule.m_nMask[0];
+	m_nMask[1]	= pRule.m_nMask[1];
+	m_nMask[2]	= pRule.m_nMask[2];
+	m_nMask[3]	= pRule.m_nMask[3];
+
+	delete [] m_pContent;
+	m_pContent	= pRule.m_nContentLength ? new TCHAR[ pRule.m_nContentLength ] : NULL;
+	m_nContentLength = pRule.m_nContentLength;
+
+	return *this;
 }
 
 CSecureRule::~CSecureRule()
@@ -692,11 +740,12 @@ void CSecureRule::SetContentWords(const CString& strContent)
 	{
 		delete [] m_pContent;
 		m_pContent = NULL;
+		m_nContentLength = 0;
 	}
 
 	if ( pWords.IsEmpty() ) return;
 
-	m_pContent	= new TCHAR[ nTotalLength ];
+	m_pContent	= new TCHAR[ m_nContentLength = nTotalLength ];
 	pszContent	= m_pContent;
 
 	for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )

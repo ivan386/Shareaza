@@ -1,7 +1,7 @@
 //
 // DlgSecureRule.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Security.h"
-#include "Network.h"
 #include "Skin.h"
 #include "DlgSecureRule.h"
 
@@ -105,11 +104,11 @@ BOOL CSecureRuleDlg::OnInitDialog()
 
 	SkinMe( _T("CSecureRuleDlg"), IDR_SECURITYFRAME );
 
-	CSingleLock pLock( &Network.m_pSection, TRUE );
-
-	m_bNew = ! Security.Check( m_pRule );
-	if ( m_bNew ) m_pRule = new CSecureRule();
-
+	if ( ! m_pRule )
+	{
+		m_bNew = TRUE;
+		m_pRule = new CSecureRule();
+	}
 	m_nType		= m_pRule->m_nType;
 	m_sComment	= m_pRule->m_sComment;
 	m_nAction	= m_pRule->m_nAction;
@@ -152,8 +151,6 @@ BOOL CSecureRuleDlg::OnInitDialog()
 		m_nExpireH = ( nTime % 86400 ) / 3600;
 		m_nExpireM = ( nTime % 3600 ) / 60;
 	}
-
-	pLock.Unlock();
 
 	UpdateData( FALSE );
 
@@ -259,10 +256,6 @@ void CSecureRuleDlg::OnOK()
 {
 	UpdateData( TRUE );
 
-	CSingleLock pLock( &Network.m_pSection, TRUE );
-
-	if ( ! m_bNew && ! Security.Check( m_pRule ) ) m_pRule = new CSecureRule();
-
 	m_pRule->m_nType	= m_nType;
 	m_pRule->m_sComment	= m_sComment;
 	m_pRule->m_nAction	= BYTE( m_nAction );
@@ -301,8 +294,6 @@ void CSecureRuleDlg::OnOK()
 
 	Security.Add( m_pRule );
 	m_pRule = NULL;
-
-	pLock.Unlock();
 
 	CSkinDialog::OnOK();
 }
