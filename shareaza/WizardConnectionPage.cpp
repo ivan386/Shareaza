@@ -240,8 +240,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	Settings.OnChangeConnectionSpeed();
 	UploadQueues.CreateDefault();
 
-	if ( theApp.m_bLimitedConnections && !Settings.General.IgnoreXPsp2 ) 
-		CHelpDlg::Show( _T("GeneralHelp.XPsp2") );
+	//if ( theApp.m_bLimitedConnections && !Settings.General.IgnoreXPsp2 )
+	//	CHelpDlg::Show( _T("GeneralHelp.XPsp2") );
 
 	m_nProgressSteps = 0;
 
