@@ -1316,9 +1316,13 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnQueryAck(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	CHostCacheHost* pCache = HostCache.Gnutella2.Add( &pHost->sin_addr, htons( pHost->sin_port ) );
-	if ( pCache ) pCache->m_tAck = pCache->m_nFailures = 0;
-	
+	{
+		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
+
+		CHostCacheHost* pCache = HostCache.Gnutella2.Add( &pHost->sin_addr, htons( pHost->sin_port ) );
+		if ( pCache ) pCache->m_tAck = pCache->m_nFailures = 0;
+	}
+
 	Hashes::Guid oGUID;
 	
 	if ( SearchManager.OnQueryAck( pPacket, pHost, oGUID ) )
@@ -1477,10 +1481,13 @@ BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	theApp.Message( MSG_DEBUG, _T("Got a query key for %s:%lu: 0x%x"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), htons( pHost->sin_port ), nKey );
 
-	CHostCacheHost* pCache = HostCache.Gnutella2.Add(
-		&pHost->sin_addr, htons( pHost->sin_port ) );
+	{
+		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-	if ( pCache != NULL ) pCache->SetKey( nKey );
+		CHostCacheHost* pCache = HostCache.Gnutella2.Add(
+			&pHost->sin_addr, htons( pHost->sin_port ) );
+		if ( pCache != NULL ) pCache->SetKey( nKey );
+	}
 
 	if ( nAddress != 0 && ! Network.IsSelfIP( *(IN_ADDR*)&nAddress ) )
 	{
@@ -1826,8 +1833,6 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 			CHostCacheHost* pCached = HostCache.Gnutella2.Add(
 				(IN_ADDR*)&nAddress, nPort, tSeen, strVendor );
-
-
 			if ( pCached != NULL )
 			{
 				nCount++;

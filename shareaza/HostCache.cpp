@@ -27,7 +27,6 @@
 #include "Neighbours.h"
 #include "Security.h"
 #include "VendorCache.h"
-#include "G1Packet.h"
 #include "EDPacket.h"
 #include "Buffer.h"
 
@@ -409,6 +408,24 @@ bool CHostCacheList::Remove(CHostCacheHostPtr pHost)
 	return false;
 }
 
+bool CHostCacheList::Remove(const IN_ADDR* pAddress)
+{
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheMap::iterator i = m_Hosts.find( *pAddress );
+	if ( i != m_Hosts.end() )
+	{
+		CHostCacheHostPtr pHost = (*i).second;
+		m_HostsTime.erase(
+			std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
+		m_Hosts.erase( i );
+		delete pHost;
+		m_nCookie++;
+		return true;
+	}
+	return false;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList failure processor
 
@@ -417,10 +434,10 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 	CHostCacheHostPtr pHost = Find( pAddress );
 	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
 	{
+		m_nCookie++;
 		pHost->m_nFailures++;
-
-		if ( pHost->m_bPriority ) return;
-
+		if ( pHost->m_bPriority )
+			return;
 		if ( bRemove || pHost->m_nFailures >= Settings.Connection.FailureLimit )
 			Remove( pHost );
 		else
@@ -439,6 +456,7 @@ void CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate
 	CHostCacheHostPtr pHost = Find( pAddress );
 	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
 	{
+		m_nCookie++;
 		pHost->m_tFailure = 0;
 		pHost->m_nFailures = 0;
 		pHost->m_bCheckedLocally = TRUE;

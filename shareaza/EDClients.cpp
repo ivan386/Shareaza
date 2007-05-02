@@ -412,10 +412,11 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		// Correct port value. (UDP port is TCP port + 4)
 		pHost->sin_port = htons( ntohs( pHost->sin_port ) - 4 );
 
+		CQuickLock oLock( HostCache.eDonkey.m_pSection );
+
 		// Check server details in host cache
-		CHostCacheHost *pServer;
 		DWORD nServerFlags = Settings.eDonkey.DefaultServerFlags;
-		pServer = HostCache.eDonkey.Find( &pHost->sin_addr );
+		CHostCacheHost* pServer = HostCache.eDonkey.Find( &pHost->sin_addr );
 		if ( pServer && pServer->m_nUDPFlags )
 		{
 			nServerFlags = pServer->m_nUDPFlags;
@@ -450,6 +451,8 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
 		theApp.Message( MSG_ERROR, _T("Received unexpected server status" ) );
 		return;
 	}
+
+	CQuickLock oLock( HostCache.eDonkey.m_pSection );
 
 	// Got a status update we were expecting.
 	m_nLastServerKey = 0;

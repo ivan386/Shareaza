@@ -752,7 +752,7 @@ void CShakeNeighbour::SendHostHeaders(LPCTSTR pszMessage)
 		CQuickLock oLock( HostCache.Gnutella1.m_pSection );
 
 		// Loop through the Gnutella host cache from newest to oldest
-		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ; i != HostCache.Gnutella2.End() ; ++i )
+		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ; i != HostCache.Gnutella1.End() ; ++i )
 		{
 			CHostCacheHost* pHost = (*i);
 

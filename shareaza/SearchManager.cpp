@@ -185,8 +185,8 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 			if ( nLength >= 8 ) nLeaves += pPacket->ReadShortBE();
 			nHubs ++;
 
-			theApp.Message( MSG_DEBUG, _T("  Done %s"),
-				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ) );
+//			theApp.Message( MSG_DEBUG, _T("  Done %s"),
+//				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ) );
 		}
 		else if ( nType == G2_PACKET_QUERY_SEARCH && nLength >= 6 )
 		{
@@ -194,8 +194,8 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 			WORD nPort		= pPacket->ReadShortBE();
 			DWORD tSeen		= ( nLength >= 10 ) ? pPacket->ReadLongBE() + tAdjust : tNow;
 
-			theApp.Message( MSG_DEBUG, _T("  Try %s:%lu"),
-				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort );
+//			theApp.Message( MSG_DEBUG, _T("  Try %s:%lu"),
+//				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort );
 
 			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && nPort )
 			{
@@ -218,6 +218,8 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 			{
 				nRetryAfter = pPacket->ReadShortBE();
 			}
+
+			CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
 			if ( CHostCacheHost* pHost = HostCache.Gnutella2.Find( (IN_ADDR*)&nFromIP ) )
 			{

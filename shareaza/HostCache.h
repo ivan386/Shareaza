@@ -149,6 +149,7 @@ public:
 	BOOL				Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	bool				Remove(CHostCacheHostPtr pHost);
+	bool				Remove(const IN_ADDR* pAddress);
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove=true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate=true);
 	void				PruneByQueryAck();			// For G2

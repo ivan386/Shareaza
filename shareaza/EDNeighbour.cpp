@@ -448,6 +448,8 @@ BOOL CEDNeighbour::OnServerStatus(CEDPacket* pPacket)
 	m_nUserCount	= pPacket->ReadLongLE();
 	m_nFileCount	= pPacket->ReadLongLE();
 
+	CQuickLock oLock( HostCache.eDonkey.m_pSection );
+
 	if ( CHostCacheHost* pHost = HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) ) )
 	{
 		// pHost->m_nUserCount = max( pHost->m_nUserCount, m_nUserCount );
@@ -507,6 +509,8 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 		m_sUserAgent = _T("eFarm Server");
 	else
 		m_sUserAgent = _T("eDonkey2000 Server");
+
+	CQuickLock oLock( HostCache.eDonkey.m_pSection );
 
 	if ( CHostCacheHost* pHost = HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) ) )
 	{
@@ -621,10 +625,14 @@ void CEDNeighbour::SendSharedFiles()
 	// Set the limits for number of files sent to the ed2k server
 	m_nFileLimit = max( Settings.eDonkey.MaxShareCount, 25u );
 	
-	CHostCacheHost *pServer = HostCache.eDonkey.Find( &m_pHost.sin_addr );
-	if ( pServer && ( pServer->m_nFileLimit > 10 ) )
 	{
-		m_nFileLimit = min( m_nFileLimit, pServer->m_nFileLimit );
+		CQuickLock oLock( HostCache.eDonkey.m_pSection );
+
+		CHostCacheHost *pServer = HostCache.eDonkey.Find( &m_pHost.sin_addr );
+		if ( pServer && ( pServer->m_nFileLimit > 10 ) )
+		{
+			m_nFileLimit = min( m_nFileLimit, pServer->m_nFileLimit );
+		}
 	}
 
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2S_OFFERFILES );

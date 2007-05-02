@@ -881,6 +881,8 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, CG2Neighbour* pOwner)
 			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && 
 				 ! Network.IsReserved( (IN_ADDR*)&nAddress ) )
 			{
+				CQuickLock oLock( HostCache.Gnutella2.m_pSection );
+
 				CHostCacheHost* pCached = HostCache.Gnutella2.Add(
 					(IN_ADDR*)&nAddress, nPort, tSeen, strVendor );
 
@@ -1219,27 +1221,30 @@ BOOL CG2Neighbour::OnQueryKeyReq(CG2Packet* pPacket)
 	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) || 
 		 0 == nPort ||  Network.IsReserved( (IN_ADDR*)&nAddress ) ) return TRUE;
 
-	CHostCacheHost* pCached = bCacheOkay ? HostCache.Gnutella2.Find( (IN_ADDR*)&nAddress ) : NULL;
+	if ( bCacheOkay )
+	{
+		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-	if ( pCached != NULL && pCached->m_nKeyValue != 0 &&
-		 pCached->m_nKeyHost == Network.m_pHost.sin_addr.S_un.S_addr )
-	{
-		CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_KEY_ANS, TRUE );
-		pAnswer->WritePacket( G2_PACKET_QUERY_ADDRESS, 6 );
-		pAnswer->WriteLongLE( nAddress );
-		pAnswer->WriteShortBE( nPort );
-		pAnswer->WritePacket( G2_PACKET_QUERY_KEY, 4 );
-		pAnswer->WriteLongBE( pCached->m_nKeyValue );
-		pAnswer->WritePacket( G2_PACKET_QUERY_CACHED, 0 );
-		Send( pAnswer );
+		CHostCacheHost* pCached = HostCache.Gnutella2.Find( (IN_ADDR*)&nAddress );
+		if ( pCached != NULL && pCached->m_nKeyValue != 0 &&
+			pCached->m_nKeyHost == Network.m_pHost.sin_addr.S_un.S_addr )
+		{
+			CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_KEY_ANS, TRUE );
+			pAnswer->WritePacket( G2_PACKET_QUERY_ADDRESS, 6 );
+			pAnswer->WriteLongLE( nAddress );
+			pAnswer->WriteShortBE( nPort );
+			pAnswer->WritePacket( G2_PACKET_QUERY_KEY, 4 );
+			pAnswer->WriteLongBE( pCached->m_nKeyValue );
+			pAnswer->WritePacket( G2_PACKET_QUERY_CACHED, 0 );
+			Send( pAnswer );
+			return TRUE;
+		}
 	}
-	else
-	{
-		CG2Packet* pRequest = CG2Packet::New( G2_PACKET_QUERY_KEY_REQ, TRUE );
-		pRequest->WritePacket( G2_PACKET_SEND_ADDRESS, 4 );
-		pRequest->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
-		Datagrams.Send( (IN_ADDR*)&nAddress, nPort, pRequest, TRUE, NULL, FALSE );
-	}
+
+	CG2Packet* pRequest = CG2Packet::New( G2_PACKET_QUERY_KEY_REQ, TRUE );
+	pRequest->WritePacket( G2_PACKET_SEND_ADDRESS, 4 );
+	pRequest->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
+	Datagrams.Send( (IN_ADDR*)&nAddress, nPort, pRequest, TRUE, NULL, FALSE );
 
 	return TRUE;
 }
@@ -1284,6 +1289,8 @@ BOOL CG2Neighbour::OnQueryKeyAns(CG2Packet* pPacket)
 
 	if ( Network.IsFirewalledAddress( &nAddress ) || 
 		 0 == nPort || Network.IsReserved( (IN_ADDR*)&nAddress ) ) return TRUE;
+
+	CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
 	CHostCacheHost* pCache = HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort );
 	if ( pCache != NULL ) pCache->SetKey( nKey, &m_pHost.sin_addr );
