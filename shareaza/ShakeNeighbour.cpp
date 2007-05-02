@@ -170,12 +170,13 @@ void CShakeNeighbour::Close(UINT nError)
 			bRemove = true;
 			break;
 		case IDS_CONNECTION_TIMEOUT_CONNECT:
+			break;
 		case IDS_HANDSHAKE_FAIL:
 			bRemove = true;
 			break;
 	}
 
-	if ( bFail && m_bInitiated && m_bAutomatic )
+	if ( bFail && m_bInitiated )
 		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, bRemove );
 
 	// Have CNeighbour remove this object from the list, and put away the socket
@@ -811,10 +812,12 @@ BOOL CShakeNeighbour::ReadResponse()
 			strLine = strLine.Mid( 13 );
 			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 			m_nState = nrsRejected; // Set the neighbour state in this CShakeNeighbour object to rejected
-			if ( strLine == _T("503 Not Good Leaf") || strLine == _T("503 We're Leaves") ||
-				 strLine == _T("503 Service unavailable") )
+			if ( strLine == _T("503 Not Good Leaf") ||
+				 strLine == _T("503 We're Leaves") ||
+				 strLine == _T("503 Service unavailable") ||
+				 strLine == _T("503 Shielded leaf node") )
 			{
-				m_nDelayCloseReason =IDS_HANDSHAKE_REJECTED;
+				m_nDelayCloseReason = IDS_HANDSHAKE_REJECTED;
 				m_bDelayClose = TRUE;
 			}
 		} // It does say "200 OK", and the remote computer contacted us
@@ -1337,6 +1340,11 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		// We are a leaf
 		if ( Neighbours.IsG2Leaf() )
 		{
+			// The remote computer sent us the header "X-Ultrapeer: False"
+			if ( m_bUltraPeerSet == TS_FALSE )
+			{
+				HostCache.Gnutella2.Remove( &m_pHost.sin_addr );
+			}
 			// Tell the remote computer we can't connect because we are a shielded leaf right now
 			SendHostHeaders( _T("GNUTELLA/0.6 503 Shielded leaf node") );
 			DelayClose( IDS_HANDSHAKE_IAMLEAF ); // Send the buffer then close the socket
@@ -1632,6 +1640,11 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		// We are a leaf
 		if ( Neighbours.IsG1Leaf() )
 		{
+			// The remote computer told us it is a leaf
+			if ( m_bUltraPeerSet == TS_FALSE )
+			{
+				HostCache.Gnutella1.Remove( &m_pHost.sin_addr );
+			}
 			// Tell the remote computer we can't connect because we are a shielded leaf right now
 			SendHostHeaders( _T("GNUTELLA/0.6 503 Shielded leaf node") );
 			DelayClose( IDS_HANDSHAKE_IAMLEAF ); // Send the buffer and then close the socket citing our being a leaf as the reason
