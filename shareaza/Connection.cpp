@@ -314,10 +314,7 @@ void CConnection::Close()
 	// The socket is valid
 	if ( m_hSocket != INVALID_SOCKET )
 	{
-		// Set linger period to zero (it will close the socket immediatelly)
-		// Default behaviour is to send data and close or timeout and close
-		//linger ls = {1, 0};
-		//setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
+		// Don't use SO_LINGER here
 
 		// Close it and mark it invalid
 		//shutdown( m_hSocket, SD_RECEIVE );
