@@ -1,7 +1,7 @@
 //
 // WndPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,22 +57,28 @@ BEGIN_MESSAGE_MAP(CPacketWnd, CPanelWnd)
 END_MESSAGE_MAP()
 
 G2_PACKET CPacketWnd::m_nG2[] = {
+	G2_PACKET_CACHED_HUB,
+	G2_PACKET_CRAWL_ANS,
+	G2_PACKET_CRAWL_REQ,
+	G2_PACKET_DISCOVERY,
+	G2_PACKET_HAW,
+	G2_PACKET_HIT,
+	G2_PACKET_HIT_WRAP,
+	G2_PACKET_KHL,
+	G2_PACKET_KHL_ANS,
+	G2_PACKET_KHL_REQ,
+	G2_PACKET_LNI,
 	G2_PACKET_PING,
 	G2_PACKET_PONG,
-	G2_PACKET_LNI,
-	G2_PACKET_KHL,
-	G2_PACKET_HAW,
-	G2_PACKET_QUERY_KEY_REQ,
-	G2_PACKET_QUERY_KEY_ANS,
-	G2_PACKET_QUERY_WRAP,
-	G2_PACKET_HIT_WRAP,
-	G2_PACKET_QUERY,
-	G2_PACKET_HIT,
-	G2_PACKET_QUERY_ACK,
-	G2_PACKET_QHT,
-	G2_PACKET_PUSH,
 	G2_PACKET_PROFILE_CHALLENGE,
 	G2_PACKET_PROFILE_DELIVERY,
+	G2_PACKET_PUSH,
+	G2_PACKET_QHT,
+	G2_PACKET_QUERY,
+	G2_PACKET_QUERY_ACK,
+	G2_PACKET_QUERY_KEY_ANS,
+	G2_PACKET_QUERY_KEY_REQ,
+	G2_PACKET_QUERY_WRAP,
 	G2_PACKET_NULL
 };
 
@@ -131,8 +137,8 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_nOutputFilter	= 0;
 	m_bPaused		= FALSE;
 
-	for ( int nType = 0 ; nType < G1_PACKTYPE_MAX ; nType++ ) m_bTypeG1[ nType ] = TRUE;
-	for ( int nType = 0 ; nType < 16 ; nType++ ) m_bTypeG2[ nType ] = TRUE;
+	for ( int nType = 0 ; nType < nTypeG1Size ; nType++ ) m_bTypeG1[ nType ] = TRUE;
+	for ( int nType = 0 ; nType < nTypeG2Size ; nType++ ) m_bTypeG2[ nType ] = TRUE;
 	m_bTypeED = TRUE;
 
 	SetTimer( 2, 500, NULL );
@@ -288,7 +294,6 @@ void CPacketWnd::OnTimer(UINT_PTR nIDEvent)
 		if ( ! bAny )
 		{
 			bAny = TRUE;
-			m_wndList.ModifyStyle( WS_VISIBLE , 0);
 		}
 
 		if ( (DWORD)m_wndList.GetItemCount() >= Settings.Search.MonitorQueue && Settings.Search.MonitorQueue > 0 )
@@ -304,7 +309,6 @@ void CPacketWnd::OnTimer(UINT_PTR nIDEvent)
 	if ( bAny )
 	{
 		if ( bScroll ) m_wndList.EnsureVisible( m_wndList.GetItemCount() - 1, FALSE );
-		m_wndList.ShowWindow( SW_SHOW );
 	}
 }
 
@@ -434,7 +438,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
-			for ( int nType = 0 ; nType < G1_PACKTYPE_MAX ; nType++ )
+			for ( int nType = 0 ; nType < nTypeG1Size ; nType++ )
 			{
 				m_bTypeG1[ nType ] = ( nCmd == (UINT)nType ) ? TRUE : FALSE;
 			}
@@ -452,7 +456,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
-			for ( int nType = 0 ; nType < 16 ; nType++ )
+			for ( int nType = 0 ; nType < nTypeG2Size ; nType++ )
 			{
 				m_bTypeG2[ nType ] = ( nCmd == (UINT)nType ) ? TRUE : FALSE;
 			}

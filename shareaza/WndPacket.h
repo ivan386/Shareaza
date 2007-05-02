@@ -1,7 +1,7 @@
 //
 // WndPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,6 +32,8 @@ class CNeighbour;
 class CPacket;
 class CCoolMenu;
 
+const int		nTypeG1Size = 16;
+const int		nTypeG2Size = 64;
 
 class CPacketWnd : public CPanelWnd
 {
@@ -47,8 +49,8 @@ public:
 	CChildWnd*		m_pOwner;
 	DWORD			m_nInputFilter;
 	DWORD			m_nOutputFilter;
-	BOOL			m_bTypeG1[16];
-	BOOL			m_bTypeG2[64];
+	BOOL			m_bTypeG1[nTypeG1Size];
+	BOOL			m_bTypeG2[nTypeG2Size];
 	BOOL			m_bTypeED;
 	BOOL			m_bPaused;
 protected:
