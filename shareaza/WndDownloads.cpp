@@ -1785,52 +1785,67 @@ void CDownloadsWnd::OnDownloadsHelp()
 	
 	if ( pDownload == NULL )
 	{
+		pLock.Unlock();
 		CHelpDlg::Show( _T("DownloadHelp.Select") );
 	}
 	else if ( pDownload->IsMoving() )
 	{
-		if ( pDownload->IsCompleted() )
+		BOOL bCompleted = pDownload->IsCompleted();
+		pLock.Unlock();
+		if ( bCompleted )
+		{
 			CHelpDlg::Show( _T("DownloadHelp.Completed") );
+		}
 		else
 			CHelpDlg::Show( _T("DownloadHelp.Moving") );
 	}
 	else if ( pDownload->IsPaused() )
 	{
-		if ( pDownload->m_bDiskFull )
+		BOOL bDiskFull = pDownload->m_bDiskFull;
+		pLock.Unlock();
+		if ( bDiskFull )
 			CHelpDlg::Show( _T("DownloadHelp.DiskFull") );
 		else
 			CHelpDlg::Show( _T("DownloadHelp.Paused") );
 	}
 	else if ( pDownload->IsStarted() && pDownload->GetProgress() == 100.0f )
 	{
+		pLock.Unlock();
 		CHelpDlg::Show( _T("DownloadHelp.Verifying") );
 	}
 	else if ( pDownload->IsDownloading() )
 	{
+		pLock.Unlock();
 		CHelpDlg::Show( _T("DownloadHelp.Downloading") );
 	}
 	else if ( ! pDownload->IsTrying() )
 	{
+		pLock.Unlock();
 		CHelpDlg::Show( _T("DownloadHelp.Queued") );
 	}
 	else if ( pDownload->GetSourceCount() > 0 )
 	{
+		pLock.Unlock();
 		CHelpDlg::Show( _T("DownloadHelp.Pending") );
 	}
 	else if ( pDownload->m_nSize == SIZE_UNKNOWN )
 	{
+		pLock.Unlock();
 		CHelpDlg::Show( _T("DownloadHelp.Searching") );
 	}
 	else if ( pDownload->IsTorrent() && pDownload->IsTasking() )
 	{
+		pLock.Unlock();
 		CHelpDlg::Show( _T("DownloadHelp.Creating") );
 	}
 	else if ( pDownload->m_bTorrentTrackerError )
 	{
+		pLock.Unlock();
 		CHelpDlg::Show( _T("DownloadHelp.Tracker") );
 	}
 	else
 	{
+		pLock.Unlock();
 		CHelpDlg::Show( _T("DownloadHelp.Searching") );
 	}
 }
