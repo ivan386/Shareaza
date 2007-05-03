@@ -233,6 +233,7 @@ void CDownloadGroupDlg::OnOK()
 			{
 				if ( !LibraryFolders.IsShareable( m_sFolder ) )
 				{
+					pLock.Unlock();
 					CHelpDlg::Show( _T("ShareHelp.BadShare") );
 					bAdd = FALSE;
 				}
