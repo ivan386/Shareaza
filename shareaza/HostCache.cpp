@@ -1036,7 +1036,7 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 		( ! nHostExpire  || ( tNow - m_tSeen < nHostExpire ) ) &&
 		// ...and make sure we reconnect not too fast...
 		( tNow - m_tConnect >= max( nHostThrottle, 60u ) );
-		// ...than we can connect!
+		// ...then we can connect!
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1045,7 +1045,16 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 BOOL CHostCacheHost::CanQuote(DWORD tNow) const
 {
 	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
-	return tNow - m_tSeen < Settings.Gnutella2.HostCurrent;
+
+	DWORD nHostExpire = ( m_nProtocol == PROTOCOL_G1 ) ? Settings.Gnutella1.HostExpire :
+		( ( m_nProtocol == PROTOCOL_G2 ) ? Settings.Gnutella2.HostExpire : /* ed2k */ 0 );
+
+	return
+		// A host isn't dead...
+		( m_nFailures == 0 ) &&
+		// ...and host isn't expired...
+		( ! nHostExpire  || ( tNow - m_tSeen < nHostExpire ) );
+		// ...then we can tell about it to others!
 }
 
 //////////////////////////////////////////////////////////////////////

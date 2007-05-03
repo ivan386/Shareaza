@@ -1744,17 +1744,13 @@ BOOL CDatagrams::OnCrawlAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnDiscovery(SOCKADDR_IN* pHost, CG2Packet* /*pPacket*/)
 {
-	HostCache.Gnutella2.Add( &pHost->sin_addr, htons( pHost->sin_port ) );
-
 	Send( pHost, CG2Neighbour::CreateKHLPacket(), TRUE, 0, FALSE );
 
 	return TRUE;
 }
 
-BOOL CDatagrams::OnKHL(SOCKADDR_IN* pHost, CG2Packet* pPacket)
+BOOL CDatagrams::OnKHL(SOCKADDR_IN* /*pHost*/, CG2Packet* pPacket)
 {
-	HostCache.Gnutella2.Add( &pHost->sin_addr, htons( pHost->sin_port ) );
-
 	return CG2Neighbour::ParseKHLPacket( pPacket );
 }
 

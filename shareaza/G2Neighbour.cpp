@@ -1384,5 +1384,17 @@ BOOL CG2Neighbour::OnProfileDelivery(CG2Packet* pPacket)
 		pPacket->m_nPosition = nOffset;
 	}
 
+	if ( m_pProfile )
+	{
+		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
+
+		CHostCacheHost* pHost = HostCache.Gnutella2.Find( &m_pHost.sin_addr );
+		if ( pHost )
+		{
+			pHost->m_sName = m_pProfile->GetNick();
+			HostCache.Gnutella2.m_nCookie ++;
+		}
+	}
+
 	return TRUE;
 }
