@@ -49,6 +49,8 @@ CMonitorBarCtrl::CMonitorBarCtrl()
 	m_nMaximum		= 0;
 	m_nCount		= 0;
 	m_bTab			= FALSE;
+	m_hTab			= NULL;
+	m_hUpDown		= NULL;
 	m_rcTrack.SetRectEmpty();
 }
 
@@ -79,9 +81,6 @@ int CMonitorBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		SetWindowLongPtr( this->m_hWnd, GWL_EXSTYLE, lpCreateStruct->dwExStyle );
 	}
 
-	m_hTab    = CoolInterface.ExtractIcon( IDI_POINTER_ARROW, theApp.m_bRTL );
-	m_hUpDown = CoolInterface.ExtractIcon( IDI_UPDOWN_ARROW, theApp.m_bRTL );
-
 	OnSkinChange();
 
 	SetTimer( 1, 50, NULL );
@@ -92,6 +91,10 @@ int CMonitorBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CMonitorBarCtrl::OnDestroy()
 {
 	KillTimer( 1 );
+
+	if ( m_hTab ) DestroyIcon( m_hTab );
+	if ( m_hUpDown ) DestroyIcon( m_hUpDown );
+
 	CControlBar::OnDestroy();
 }
 
@@ -151,7 +154,9 @@ void CMonitorBarCtrl::OnSkinChange()
 	if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
 	if ( hWatermark != NULL ) m_bmWatermark.Attach( hWatermark );
 	
+	if ( m_hTab ) DestroyIcon( m_hTab );
 	m_hTab    = CoolInterface.ExtractIcon( IDI_POINTER_ARROW, theApp.m_bRTL );
+	if ( m_hUpDown ) DestroyIcon( m_hUpDown );
 	m_hUpDown = CoolInterface.ExtractIcon( IDI_UPDOWN_ARROW, theApp.m_bRTL );
 
 	m_pRxItem->m_nColour = CoolInterface.m_crMonitorDownloadBar;
