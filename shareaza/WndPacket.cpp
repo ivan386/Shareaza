@@ -25,8 +25,6 @@
 #include "Network.h"
 #include "Neighbours.h"
 #include "Neighbour.h"
-#include "G1Packet.h"
-#include "G2Packet.h"
 #include "EDPacket.h"
 #include "WndPacket.h"
 #include "CoolMenu.h"
@@ -56,7 +54,7 @@ BEGIN_MESSAGE_MAP(CPacketWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI_RANGE(1, 3200, OnUpdateBlocker)
 END_MESSAGE_MAP()
 
-G2_PACKET CPacketWnd::m_nG2[] = {
+G2_PACKET CPacketWnd::m_nG2[nTypeG2Size] = {
 	G2_PACKET_CACHED_HUB,
 	G2_PACKET_CRAWL_ANS,
 	G2_PACKET_CRAWL_REQ,
@@ -78,8 +76,7 @@ G2_PACKET CPacketWnd::m_nG2[] = {
 	G2_PACKET_QUERY_ACK,
 	G2_PACKET_QUERY_KEY_ANS,
 	G2_PACKET_QUERY_KEY_REQ,
-	G2_PACKET_QUERY_WRAP,
-	G2_PACKET_NULL
+	G2_PACKET_QUERY_WRAP
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -103,24 +100,14 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	m_wndList.Create( WS_VISIBLE|LVS_ICON|LVS_AUTOARRANGE|LVS_REPORT,
+	m_wndList.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_VISIBLE |
+		LVS_AUTOARRANGE | LVS_REPORT | LVS_SHOWSELALWAYS,
 		rectDefault, this, IDC_PACKETS );
-
 	m_pSizer.Attach( &m_wndList );
 	
-	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
-		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
+	m_wndList.SetExtendedStyle(
 		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
-	
-	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 100, -1 );
-	m_wndList.InsertColumn( 1, _T("Protocol"), LVCFMT_CENTER, 40, 0 );
-    m_wndList.InsertColumn( 2, _T("Type"), LVCFMT_CENTER, 45, 1 );
-	m_wndList.InsertColumn( 3, _T("T/H"), LVCFMT_CENTER, 40, 2 );
-	m_wndList.InsertColumn( 4, _T("Hex"), LVCFMT_LEFT, 200, 3 );
-	m_wndList.InsertColumn( 5, _T("ASCII"), LVCFMT_LEFT, 120, 4 );
-	m_wndList.InsertColumn( 6, _T("G1-ID"), LVCFMT_LEFT, 0, 5 );
-	// 210 for full width ID column
-	
+
 	m_pFont.CreateFontW( -(theApp.m_nDefaultFontSize - 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sPacketDumpFont );
@@ -129,9 +116,21 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CWnd* pWnd = CWnd::FromHandle( (HWND)m_wndList.SendMessage( LVM_GETHEADER ) );
 	pWnd->SetFont( &theApp.m_gdiFont );
-	
+
 	LoadState( _T("CPacketWnd"), TRUE );
 
+	CRect rcList;
+	m_wndList.GetClientRect( &rcList );
+	m_wndList.InsertColumn( 0, _T("Time"), LVCFMT_CENTER, 60, -1 );
+	m_wndList.InsertColumn( 1, _T("Address"), LVCFMT_LEFT, 115, -1 );
+	m_wndList.InsertColumn( 2, _T("Protocol"), LVCFMT_CENTER, 55, 0 );
+    m_wndList.InsertColumn( 3, _T("Type"), LVCFMT_CENTER, 50, 1 );
+	m_wndList.InsertColumn( 4, _T("TTL/Hops"), LVCFMT_CENTER, 60, 2 );
+	m_wndList.InsertColumn( 5, _T("Hex"), LVCFMT_LEFT, 50, 3 );
+	m_wndList.InsertColumn( 6, _T("ASCII"), LVCFMT_LEFT,
+		rcList.Width() - 440 - GetSystemMetrics( SM_CXVSCROLL ) - 1, 4 );
+	m_wndList.InsertColumn( 7, _T("G1-ID"), LVCFMT_LEFT, 50, 5 );
+	
 	m_pCoolMenu		= NULL;
 	m_nInputFilter	= 0;
 	m_nOutputFilter	= 0;
@@ -216,7 +215,7 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 	}
 	else if ( pPacketG2 )
 	{
-		for ( int nType = 0 ; m_nG2[ nType ] ; nType++ )
+		for ( int nType = 0 ; nType < nTypeG2Size ; nType++ )
 		{
 			if ( pPacketG2->IsType( m_nG2[ nType ] ) )
 			{
@@ -235,39 +234,45 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 	
 	if ( m_bPaused ) return;
 	
-	CLiveItem* pItem = new CLiveItem( 7, 0 );
+	CLiveItem* pItem = new CLiveItem( 8, 0 );
 	
 	pItem->m_nParam = bOutgoing;
+
+	CTime pNow( CTime::GetCurrentTime() );
+	CString strNow;
+	strNow.Format( _T("%0.2i:%0.2i:%0.2i"),
+		pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
+	pItem->Set( 0, strNow );
 	
 	if ( ! bUDP )
 	{
-		pItem->Set( 0, CString( inet_ntoa( pAddress->sin_addr ) ) );
+		pItem->Set( 1, CString( inet_ntoa( pAddress->sin_addr ) ) );
 		if ( pPacketG2 )
-			pItem->Set( 1, _T("G2 TCP") );
+			pItem->Set( 2, _T("G2 TCP") );
 		else if ( pPacketG1 )
-			pItem->Set( 1, _T("G1 TCP") );
+			pItem->Set( 2, _T("G1 TCP") );
 		else if ( pPacketED )
-			pItem->Set( 1, _T("ED2K TCP") );
+			pItem->Set( 2, _T("ED2K TCP") );
 	}
 	else
 	{
-		pItem->Set( 0, _T("(") + CString( inet_ntoa( pAddress->sin_addr ) ) + _T(")") );
+		pItem->Set( 1, _T("(") + CString( inet_ntoa( pAddress->sin_addr ) ) + _T(")") );
 		if ( pPacketG2 )
-			pItem->Set( 1, _T("G2 UDP") );
+			pItem->Set( 2, _T("G2 UDP") );
 		else if ( pPacketG1 )
-			pItem->Set( 1, _T("G1 UDP") );
+			pItem->Set( 2, _T("G1 UDP") );
 		else if ( pPacketED )
-			pItem->Set( 1, _T("ED2K UDP") );
+			pItem->Set( 2, _T("ED2K UDP") );
 	}
 	
-	pItem->Set( 2, pPacket->GetType() );
-	pItem->Set( 4, pPacket->ToHex() );
-	pItem->Set( 5, pPacket->ToASCII() );
+	pItem->Set( 3, pPacket->GetType() );
+	pItem->Set( 5, pPacket->ToHex() );
+	pItem->Set( 6, pPacket->ToASCII() );
 	
 	if ( pPacketG1 )
 	{
-		pItem->Format( 3, _T("%u/%u"), unsigned( pPacketG1->m_nTTL ), unsigned( pPacketG1->m_nHops ) );
-		pItem->Set( 6, pPacketG1->GetGUID() );
+		pItem->Format( 4, _T("%u/%u"), unsigned( pPacketG1->m_nTTL ), unsigned( pPacketG1->m_nHops ) );
+		pItem->Set( 7, pPacketG1->GetGUID() );
 	}
 	
 	m_pQueue.AddTail( pItem );
@@ -301,7 +306,7 @@ void CPacketWnd::OnTimer(UINT_PTR nIDEvent)
 			m_wndList.DeleteItem( 0 );
 		}
 
-		/*int nItem =*/ pItem->Add( &m_wndList, -1, 7 );
+		/*int nItem =*/ pItem->Add( &m_wndList, -1, 8 );
 
 		delete pItem;
 	}
@@ -372,7 +377,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	
 	pTypes1.CreatePopupMenu();
 
-	for ( int nType = 0 ; nType < G1_PACKTYPE_MAX ; nType++ )
+	for ( int nType = 0 ; nType < nTypeG1Size ; nType++ )
 	{
 		if ( m_bTypeG1[ nType ] )
 			pTypes1.AppendMenu( MF_STRING|MF_CHECKED, 3000 + nType, CG1Packet::m_pszPackets[ nType ] );
@@ -382,7 +387,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 	pTypes2.CreatePopupMenu();
 
-	for ( int nType = 0 ; m_nG2[ nType ] ; nType++ )
+	for ( int nType = 0 ; nType < nTypeG2Size ; nType++ )
 	{
 		CStringA tmp;
 		tmp.Append( (LPCSTR)&m_nG2[ nType ], G2_TYPE_LEN( m_nG2[ nType ] ) );
@@ -432,7 +437,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		m_wndList.DeleteAllItems();
 		return;
 	}
-	else if ( nCmd >= 3000 && nCmd < 3000 + G1_PACKTYPE_MAX )
+	else if ( nCmd >= 3000 && nCmd < 3000 + nTypeG1Size )
 	{
 		nCmd -= 3000;
 
@@ -450,7 +455,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		return;
 	}
-	else if ( nCmd >= 3100 && nCmd < 3100 + 16 )
+	else if ( nCmd >= 3100 && nCmd < 3100 + nTypeG2Size )
 	{
 		nCmd -= 3100;
 

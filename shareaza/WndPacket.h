@@ -25,6 +25,7 @@
 #pragma once
 
 #include "WndPanel.h"
+#include "G1Packet.h"
 #include "G2Packet.h"
 
 class CLiveItem;
@@ -32,52 +33,39 @@ class CNeighbour;
 class CPacket;
 class CCoolMenu;
 
-const int		nTypeG1Size = 16;
-const int		nTypeG2Size = 64;
+const int		nTypeG1Size = G1_PACKTYPE_MAX;
+const int		nTypeG2Size = 22;
 
 class CPacketWnd : public CPanelWnd
 {
-// Construction
+	DECLARE_SERIAL(CPacketWnd)
+
 public:
 	CPacketWnd(CChildWnd* pOwner = NULL);
 	virtual ~CPacketWnd();
 
-	DECLARE_SERIAL(CPacketWnd)
+	void SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD nNeighbourUnique = 0);
+	virtual void OnSkinChange();
 
-// Attributes
-public:
-	CChildWnd*		m_pOwner;
-	DWORD			m_nInputFilter;
-	DWORD			m_nOutputFilter;
-	BOOL			m_bTypeG1[nTypeG1Size];
-	BOOL			m_bTypeG2[nTypeG2Size];
-	BOOL			m_bTypeED;
-	BOOL			m_bPaused;
+	CChildWnd*			m_pOwner;
+	DWORD				m_nInputFilter;
+	DWORD				m_nOutputFilter;
+	BOOL				m_bPaused;
+
 protected:
+	BOOL				m_bTypeG1[nTypeG1Size];
+	BOOL				m_bTypeG2[nTypeG2Size];
+	BOOL				m_bTypeED;
 	CListCtrl			m_wndList;
 	CLiveListSizer		m_pSizer;
 	CFont				m_pFont;
 	CCoolMenu*			m_pCoolMenu;
 	CList< CLiveItem* >	m_pQueue;
 	CCriticalSection	m_pSection;
+	static G2_PACKET	m_nG2[nTypeG2Size];
 
-	static G2_PACKET m_nG2[];
+	void AddNeighbour(CMenu* pMenus, int nGroup, UINT nID, DWORD nTarget, LPCTSTR pszText);
 
-// Operations
-public:
-	void		SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD nNeighbourUnique = 0);
-	void		OnSkinChange();
-protected:
-	void		AddNeighbour(CMenu* pMenus, int nGroup, UINT nID, DWORD nTarget, LPCTSTR pszText);
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CPacketWnd)
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CPacketWnd)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult);
@@ -87,10 +75,9 @@ protected:
 	afx_msg void OnUpdateSystemClear(CCmdUI* pCmdUI);
 	afx_msg void OnDestroy();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
 	afx_msg void OnUpdateBlocker(CCmdUI* pCmdUI);
-	DECLARE_MESSAGE_MAP()
 
+	DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}
