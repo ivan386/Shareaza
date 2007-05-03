@@ -1137,19 +1137,19 @@ BOOL CLibraryFile::OnVerifyDownload(
 	
 	if ( Settings.Downloads.VerifyFiles && m_bVerify == TS_UNKNOWN && m_nVirtualSize == 0 )
 	{
-		if ( m_oSHA1 && oSHA1 && oSHA1.isTrusted() )
+		if ( (bool)m_oSHA1 && (bool)oSHA1 && oSHA1.isTrusted() )
 		{
 			m_bVerify = ( m_oSHA1 == oSHA1 ) ? TS_TRUE : TS_FALSE;
 		}
-		if ( m_oED2K && oED2K && oED2K.isTrusted() )
+		if ( (bool)m_oED2K && (bool)oED2K && oED2K.isTrusted() )
 		{
 			m_bVerify = ( m_oED2K == oED2K ) ? TS_TRUE : TS_FALSE;
 		}
-		if ( m_oMD5 && oMD5 && oMD5.isTrusted() )
+		if ( (bool)m_oMD5 && (bool)oMD5 && oMD5.isTrusted() )
 		{
 			m_bVerify = ( m_oMD5 == oMD5 ) ? TS_TRUE : TS_FALSE;
 		}
-		if ( m_oBTH && oBTH && oBTH.isTrusted() )
+		if ( (bool)m_oBTH && (bool)oBTH && oBTH.isTrusted() )
 		{
 			m_bVerify = ( m_oBTH == oBTH ) ? TS_TRUE : TS_FALSE;
 		}
