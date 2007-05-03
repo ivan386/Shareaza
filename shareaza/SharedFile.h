@@ -115,7 +115,12 @@ protected:
 	BOOL			LoadMetadata(HANDLE hFile);
 	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TS_UNKNOWN);
 	void			Ghost();
-    BOOL			OnVerifyDownload(const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources);
+    BOOL			OnVerifyDownload(
+						const Hashes::Sha1ManagedHash& oSHA1,
+						const Hashes::Ed2kManagedHash& oED2K,
+						const Hashes::BtManagedHash& oBTH,
+						const Hashes::Md5ManagedHash& oMD5,
+						LPCTSTR pszSources );
 	
 // Inlines
 public:

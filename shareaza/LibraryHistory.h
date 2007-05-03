@@ -65,7 +65,13 @@ public:
 public:
 	BOOL			Check(CLibraryRecent* pRecent, int nScope = 0) const;
 	CLibraryRecent*	GetByPath(LPCTSTR pszPath) const;
-    CLibraryRecent*	Add(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources);
+    CLibraryRecent*	Add(
+						LPCTSTR pszPath,
+						const Hashes::Sha1ManagedHash& oSHA1,
+						const Hashes::Ed2kManagedHash& oED2K,
+						const Hashes::BtManagedHash& oBTH,
+						const Hashes::Md5ManagedHash& oMD5,
+						LPCTSTR pszSources );
 	BOOL			Submit(CLibraryFile* pFile);
 	void			OnFileDelete(CLibraryFile* pFile);
 	void			ClearTodays();
@@ -80,7 +86,13 @@ class CLibraryRecent : public CShareazaFile
 // Construction
 public:
 	CLibraryRecent();
-    CLibraryRecent(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources);
+    CLibraryRecent(
+		LPCTSTR pszPath,
+		const Hashes::Sha1ManagedHash& oSHA1,
+		const Hashes::Ed2kManagedHash& oED2K,
+		const Hashes::BtManagedHash& oBTH,
+		const Hashes::Md5ManagedHash& oMD5,
+		LPCTSTR pszSources );
 	virtual ~CLibraryRecent();
 
 // Attributes
@@ -90,6 +102,12 @@ public:
 public:
 	CLibraryFile*	m_pFile;
 	CString			m_sSources;
+public:
+    Hashes::Sha1ManagedHash m_oSHA1;
+    Hashes::TigerManagedHash m_oTiger;
+    Hashes::Md5ManagedHash m_oMD5;
+    Hashes::Ed2kManagedHash m_oED2K;
+    Hashes::BtManagedHash m_oBTH;
 
 // Operations
 public:

@@ -1126,25 +1126,30 @@ void CLibraryFile::Ghost()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile download verification
 
-BOOL CLibraryFile::OnVerifyDownload(const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources)
+BOOL CLibraryFile::OnVerifyDownload(
+	const Hashes::Sha1ManagedHash& oSHA1,
+	const Hashes::Ed2kManagedHash& oED2K,
+	const Hashes::BtManagedHash& oBTH,
+	const Hashes::Md5ManagedHash& oMD5,
+	LPCTSTR pszSources )
 {
 	if ( m_pFolder == NULL ) return FALSE;
 	
 	if ( Settings.Downloads.VerifyFiles && m_bVerify == TS_UNKNOWN && m_nVirtualSize == 0 )
 	{
-		if ( m_oSHA1 && oSHA1 )
+		if ( m_oSHA1 && oSHA1 && oSHA1.isTrusted() )
 		{
 			m_bVerify = ( m_oSHA1 == oSHA1 ) ? TS_TRUE : TS_FALSE;
 		}
-		else if ( m_oED2K && oED2K )
+		if ( m_oED2K && oED2K && oED2K.isTrusted() )
 		{
 			m_bVerify = ( m_oED2K == oED2K ) ? TS_TRUE : TS_FALSE;
 		}
-		else if ( m_oMD5 && oMD5 )
+		if ( m_oMD5 && oMD5 && oMD5.isTrusted() )
 		{
 			m_bVerify = ( m_oMD5 == oMD5 ) ? TS_TRUE : TS_FALSE;
 		}
-		else if ( m_oBTH && oBTH )
+		if ( m_oBTH && oBTH && oBTH.isTrusted() )
 		{
 			m_bVerify = ( m_oBTH == oBTH ) ? TS_TRUE : TS_FALSE;
 		}

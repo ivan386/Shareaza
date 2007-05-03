@@ -117,7 +117,13 @@ CLibraryRecent* CLibraryHistory::GetByPath(LPCTSTR pszPath) const
 //////////////////////////////////////////////////////////////////////
 // CLibraryHistory add new download
 
-CLibraryRecent* CLibraryHistory::Add(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources)
+CLibraryRecent* CLibraryHistory::Add(
+	LPCTSTR pszPath,
+	const Hashes::Sha1ManagedHash& oSHA1,
+	const Hashes::Ed2kManagedHash& oED2K,
+	const Hashes::BtManagedHash& oBTH,
+	const Hashes::Md5ManagedHash& oMD5,
+	LPCTSTR pszSources )
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
@@ -293,7 +299,13 @@ CLibraryRecent::CLibraryRecent()
 	m_pFile		= NULL;
 }
 
-CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const Hashes::Sha1Hash& oSHA1, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, LPCTSTR pszSources)
+CLibraryRecent::CLibraryRecent(
+	LPCTSTR pszPath,
+	const Hashes::Sha1ManagedHash& oSHA1,
+	const Hashes::Ed2kManagedHash& oED2K,
+	const Hashes::BtManagedHash& oBTH,
+	const Hashes::Md5ManagedHash& oMD5,
+	LPCTSTR pszSources )
 {
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
