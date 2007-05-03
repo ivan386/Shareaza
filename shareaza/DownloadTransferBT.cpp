@@ -98,7 +98,7 @@ void CDownloadTransferBT::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
 	if ( m_pClient != NULL )
 	{
-		theApp.Message( MSG_TEMP, L"Closing BT download connection: %s", (LPCTSTR)m_pClient->m_sAddress );
+//		theApp.Message( MSG_TEMP, L"Closing BT download connection: %s", (LPCTSTR)m_pClient->m_sAddress );
 
 		m_pClient->m_pDownloadTransfer = NULL;
 		if ( m_pClient->IsOnline() )

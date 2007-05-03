@@ -64,7 +64,7 @@ CBTClient::CBTClient()
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 	m_tLastKeepAlive = GetTickCount();
 
-	theApp.Message( MSG_TEMP, L"Adding BT client to collection: %s", (LPCTSTR)m_sAddress );
+//	theApp.Message( MSG_TEMP, L"Adding BT client to collection: %s", (LPCTSTR)m_sAddress );
 	BTClients.Add( this );
 }
 
@@ -75,7 +75,7 @@ CBTClient::~CBTClient()
 	ASSERT( m_pDownload == NULL );
 	ASSERT( m_pUpload == NULL );
 	
-	theApp.Message( MSG_TEMP, L"Removing BT client from collection: %s", (LPCTSTR)m_sAddress );
+//	theApp.Message( MSG_TEMP, L"Removing BT client from collection: %s", (LPCTSTR)m_sAddress );
 	BTClients.Remove( this );
 }
 
@@ -107,7 +107,7 @@ void CBTClient::AttachTo(CConnection* pConnection)
 	ASSERT( m_hSocket == INVALID_SOCKET );
 
 	CTransfer::AttachTo( pConnection );
-	theApp.Message( MSG_TEMP, L"Attaching new BT client connection: %s", (LPCTSTR)m_sAddress );
+//	theApp.Message( MSG_TEMP, L"Attaching new BT client connection: %s", (LPCTSTR)m_sAddress );
 
 	ASSERT( m_mInput.pLimit != NULL );
 	m_tConnected = GetTickCount();
@@ -124,7 +124,7 @@ void CBTClient::Close()
 	if ( m_bClosing ) return;
 	m_bClosing = TRUE;
 	
-	theApp.Message( MSG_TEMP, L"Deleting BT client: %s", (LPCTSTR)m_sAddress );
+//	theApp.Message( MSG_TEMP, L"Deleting BT client: %s", (LPCTSTR)m_sAddress );
 
 	if ( m_pUpload != NULL ) m_pUpload->Close();
 	ASSERT( m_pUpload == NULL );
@@ -492,7 +492,7 @@ BOOL CBTClient::OnHandshake2()
 	}
 	
 	ASSERT( m_pUpload == NULL );
-	theApp.Message( MSG_TEMP, L"Creating new BT upload: %s", (LPCTSTR)m_sAddress );
+//	theApp.Message( MSG_TEMP, L"Creating new BT upload: %s", (LPCTSTR)m_sAddress );
 	m_pUpload = new CUploadTransferBT( this, m_pDownload );
 	
 	m_bOnline = TRUE;
