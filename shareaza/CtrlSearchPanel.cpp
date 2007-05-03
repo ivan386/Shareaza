@@ -193,25 +193,28 @@ void CSearchPanel::ShowSearch(CManagedSearch* pSearch)
 	}
 	
 	CString strURN;
+
+	// The search is based on the priority from the lowest to highest
+
+	if ( pSearch->m_pSearch->m_oMD5 )
+	{
+		strURN = pSearch->m_pSearch->m_oMD5.toUrn();
+	}
+	if ( pSearch->m_pSearch->m_oBTH )
+	{
+		strURN = pSearch->m_pSearch->m_oBTH.toUrn();
+	}
 	if ( pSearch->m_pSearch->m_oTiger )
 	{
 		strURN = pSearch->m_pSearch->m_oTiger.toUrn();
 	}
-	else if ( pSearch->m_pSearch->m_oSHA1 )
-	{
-		strURN = pSearch->m_pSearch->m_oSHA1.toUrn();
-	}
-	else if ( pSearch->m_pSearch->m_oED2K )
+	if ( pSearch->m_pSearch->m_oED2K )
 	{
 		strURN = pSearch->m_pSearch->m_oED2K.toUrn();
 	}
-	else if ( pSearch->m_pSearch->m_oBTH )
+	if ( pSearch->m_pSearch->m_oSHA1 )
 	{
-		strURN = pSearch->m_pSearch->m_oBTH.toUrn();
-	}
-	else if ( pSearch->m_pSearch->m_oMD5 )
-	{
-		strURN = pSearch->m_pSearch->m_oMD5.toUrn();
+		strURN = pSearch->m_pSearch->m_oSHA1.toUrn();
 	}
 
 	if ( ! strURN.IsEmpty() )
