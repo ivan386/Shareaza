@@ -753,8 +753,16 @@ BOOL CBTClient::OnOnline()
 	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_ONLINE, (LPCTSTR)m_sAddress,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
 	
+	if ( !m_pDownload->IsTorrent() ) // perhaps we just finished download; investigate this!
+	{
+		m_pDownload = NULL;
+		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
+		Close();
+		return FALSE;
+	}
+
 	if ( m_bExtended ) SendBeHandshake();
-	
+
 	if ( CBTPacket* pBitfield = m_pDownload->CreateBitfieldPacket() )
 		Send( pBitfield );
 	
