@@ -1783,71 +1783,34 @@ void CDownloadsWnd::OnDownloadsHelp()
 		pDownload = NULL;
 	}
 	
+	CString strHelp;
 	if ( pDownload == NULL )
-	{
-		pLock.Unlock();
-		CHelpDlg::Show( _T("DownloadHelp.Select") );
-	}
+		strHelp = L"DownloadHelp.Select";
 	else if ( pDownload->IsMoving() )
-	{
-		BOOL bCompleted = pDownload->IsCompleted();
-		pLock.Unlock();
-		if ( bCompleted )
-		{
-			CHelpDlg::Show( _T("DownloadHelp.Completed") );
-		}
-		else
-			CHelpDlg::Show( _T("DownloadHelp.Moving") );
-	}
+		strHelp = pDownload->IsCompleted() ? L"DownloadHelp.Completed" 
+										   : L"DownloadHelp.Moving";
 	else if ( pDownload->IsPaused() )
-	{
-		BOOL bDiskFull = pDownload->m_bDiskFull;
-		pLock.Unlock();
-		if ( bDiskFull )
-			CHelpDlg::Show( _T("DownloadHelp.DiskFull") );
-		else
-			CHelpDlg::Show( _T("DownloadHelp.Paused") );
-	}
+		strHelp = pDownload->m_bDiskFull ? L"DownloadHelp.DiskFull" 
+										 : L"DownloadHelp.Paused";
 	else if ( pDownload->IsStarted() && pDownload->GetProgress() == 100.0f )
-	{
-		pLock.Unlock();
-		CHelpDlg::Show( _T("DownloadHelp.Verifying") );
-	}
+		strHelp = L"DownloadHelp.Verifying";
 	else if ( pDownload->IsDownloading() )
-	{
-		pLock.Unlock();
-		CHelpDlg::Show( _T("DownloadHelp.Downloading") );
-	}
+		strHelp = L"DownloadHelp.Downloading";
 	else if ( ! pDownload->IsTrying() )
-	{
-		pLock.Unlock();
-		CHelpDlg::Show( _T("DownloadHelp.Queued") );
-	}
+		strHelp = L"DownloadHelp.Queued";
 	else if ( pDownload->GetSourceCount() > 0 )
-	{
-		pLock.Unlock();
-		CHelpDlg::Show( _T("DownloadHelp.Pending") );
-	}
+		strHelp = L"DownloadHelp.Pending";
 	else if ( pDownload->m_nSize == SIZE_UNKNOWN )
-	{
-		pLock.Unlock();
-		CHelpDlg::Show( _T("DownloadHelp.Searching") );
-	}
+		strHelp = L"DownloadHelp.Searching";
 	else if ( pDownload->IsTorrent() && pDownload->IsTasking() )
-	{
-		pLock.Unlock();
-		CHelpDlg::Show( _T("DownloadHelp.Creating") );
-	}
+		strHelp = L"DownloadHelp.Creating";
 	else if ( pDownload->m_bTorrentTrackerError )
-	{
-		pLock.Unlock();
-		CHelpDlg::Show( _T("DownloadHelp.Tracker") );
-	}
+		strHelp = L"DownloadHelp.Tracker";
 	else
-	{
-		pLock.Unlock();
-		CHelpDlg::Show( _T("DownloadHelp.Searching") );
-	}
+		strHelp = L"DownloadHelp.Searching";
+	
+	pLock.Unlock();
+	CHelpDlg::Show( strHelp );
 }
 
 /////////////////////////////////////////////////////////////////////////////
