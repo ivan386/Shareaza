@@ -900,6 +900,7 @@ void CLiveListCtrl::OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
 void CLiveListCtrl::OnLvnOdfinditem(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLVFINDITEM pFindInfo = reinterpret_cast<LPNMLVFINDITEM>(pNMHDR);
+	UNUSED_ALWAYS( pFindInfo );
 
 	*pResult = 0;
 }
@@ -907,6 +908,7 @@ void CLiveListCtrl::OnLvnOdfinditem(NMHDR *pNMHDR, LRESULT *pResult)
 void CLiveListCtrl::OnLvnOdcachehint(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLVCACHEHINT pCacheHint = reinterpret_cast<LPNMLVCACHEHINT>(pNMHDR);
+	UNUSED_ALWAYS( pCacheHint );
 
 	*pResult = 0;
 }
