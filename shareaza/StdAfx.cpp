@@ -1,7 +1,7 @@
 //
 // StdAfx.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,6 +21,12 @@
 
 #include "StdAfx.h"
 #include "RegExp\regexpr2.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
 
 const CLowerCaseTable ToLower;
 

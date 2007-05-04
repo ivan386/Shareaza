@@ -88,6 +88,12 @@
 #include "DlgCloseMode.h"
 #include "DlgTorrentSeed.h"
 
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
 IMPLEMENT_DYNCREATE(CMainWnd, CMDIFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)

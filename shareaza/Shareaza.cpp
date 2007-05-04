@@ -331,7 +331,7 @@ BOOL CShareazaApp::InitInstance()
 
 	SplashStep( dlgSplash, L"GUI" );
 		if ( m_ocmdInfo.m_bSilentTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
-		m_pMainWnd = new CMainWnd();
+		new CMainWnd();
 		CoolMenu.EnableHook();
 		if ( m_ocmdInfo.m_bSilentTray )
 		{
@@ -747,7 +747,7 @@ void CShareazaApp::InitResources()
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp safe main window
 
-CMainWnd* CShareazaApp::SafeMainWnd()
+CMainWnd* CShareazaApp::SafeMainWnd() const
 {
 	CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd;
 	if ( pMainWnd == NULL ) return NULL;
@@ -758,9 +758,7 @@ CMainWnd* CShareazaApp::SafeMainWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp message
 
-TCHAR CShareazaApp::szMessageBuffer[16384];
-
-void CShareazaApp::Message(int nType, UINT nID, ...) throw()
+void CShareazaApp::Message(int nType, UINT nID, ...) const
 {
 	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
 #ifdef NDEBUG
@@ -768,7 +766,6 @@ void CShareazaApp::Message(int nType, UINT nID, ...) throw()
 #endif
 	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
 	
-	CSingleLock pLock( &m_csMessage, TRUE );
 	CString strFormat;
 	va_list pArgs;
 	
@@ -781,22 +778,26 @@ void CShareazaApp::Message(int nType, UINT nID, ...) throw()
 		if ( ::FormatMessage( FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ALLOCATE_BUFFER,
 			strFormat, 0, 0, (LPTSTR)&lpszTemp, 0, &pArgs ) != 0 && lpszTemp != NULL )
 		{
-			PrintMessage( nType, lpszTemp );
 			if ( Settings.General.DebugLog ) LogMessage( lpszTemp );
+			PrintMessage( nType, _tcsdup( lpszTemp ) );
+
 			LocalFree( lpszTemp );
 		}
 	}
 	else
 	{
-		_vsntprintf( szMessageBuffer, 16380, strFormat, pArgs );
-		PrintMessage( nType, szMessageBuffer );
+		int nLength = _vsctprintf( strFormat, pArgs ) + 1;
+		TCHAR* szMessageBuffer = (TCHAR*)malloc( sizeof( TCHAR ) * nLength );
+		_vsntprintf( szMessageBuffer, nLength, strFormat, pArgs );
+
 		if ( Settings.General.DebugLog ) LogMessage( szMessageBuffer );
+		PrintMessage( nType, szMessageBuffer );
 	}
 
 	va_end( pArgs );
 }
 
-void CShareazaApp::Message(int nType, LPCTSTR pszFormat, ...) throw()
+void CShareazaApp::Message(int nType, LPCTSTR pszFormat, ...) const
 {
 	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
 #ifdef NDEBUG
@@ -804,30 +805,37 @@ void CShareazaApp::Message(int nType, LPCTSTR pszFormat, ...) throw()
 #endif
 	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
 	
-	CSingleLock pLock( &m_csMessage, TRUE );
-	CString strFormat;
 	va_list pArgs;
-	
 	va_start( pArgs, pszFormat );
-	_vsntprintf( szMessageBuffer, 16380, pszFormat, pArgs );
-	va_end( pArgs );
-	
-	PrintMessage( nType, szMessageBuffer );
+
+	int nLength = _vsctprintf( pszFormat, pArgs ) + 1;
+	TCHAR* szMessageBuffer = (TCHAR*)malloc( sizeof( TCHAR ) * nLength );
+	_vsntprintf( szMessageBuffer, nLength, pszFormat, pArgs );
+
 	if ( Settings.General.DebugLog ) LogMessage( szMessageBuffer );
+	PrintMessage( nType, szMessageBuffer );
+
+	va_end( pArgs );
 }
 
-void CShareazaApp::PrintMessage(int nType, LPCTSTR pszLog)
+void CShareazaApp::PrintMessage(int nType, LPCTSTR pszLog) const
 {
-	if ( HWND hWnd = m_pSafeWnd->GetSafeHwnd() )
+	if ( m_pMainWnd && IsWindow( m_pMainWnd->m_hWnd ) && 
+		! ((CMainWnd*)m_pMainWnd)->m_pWindows.m_bClosing )
 	{
-		PostMessage( hWnd, WM_LOG, nType, (LPARAM)_tcsdup( pszLog ) );
+		m_pMainWnd->PostMessage( WM_LOG, nType, (LPARAM)pszLog );
+	}
+	else
+	{
+		free( (void*)pszLog );
 	}
 }
 
-void CShareazaApp::LogMessage(LPCTSTR pszLog)
+void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 {
+	CQuickLock pLock( m_csMessage );
+
 	CFile pFile;
-	
 	if ( pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), CFile::modeReadWrite ) )
 	{
 		if ( ( Settings.General.MaxDebugLogSize ) &&					// If log rotation is on 
@@ -855,35 +863,30 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog)
 	{
 		if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
 			CFile::modeWrite|CFile::modeCreate ) ) return;
-
 		// Unicode marker
 		WORD nByteOrder = 0xFEFF;
 		pFile.Write( &nByteOrder, 2 );
 	}
-	
+
 	if ( Settings.General.ShowTimestamp )
 	{
 		CTime pNow = CTime::GetCurrentTime();
-		CString strLine;
-		
-		strLine.Format( _T("[%.2i:%.2i:%.2i] %s\r\n"),
-			pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond(), pszLog );
-		
+		CString strLine;	
+		strLine.Format( _T("[%.2i:%.2i:%.2i] "),
+			pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
 		pFile.Write( (LPCTSTR)strLine, sizeof(TCHAR) * strLine.GetLength() );
 	}
-	else
-	{
-		pFile.Write( pszLog, static_cast< UINT >( sizeof(TCHAR) * _tcslen(pszLog) ) );
-		pFile.Write( _T("\r\n"), sizeof(TCHAR) * 2 );
-	}
-	
+
+	pFile.Write( pszLog, static_cast< UINT >( sizeof(TCHAR) * _tcslen(pszLog) ) );
+	pFile.Write( _T("\r\n"), sizeof(TCHAR) * 2 );
+
 	pFile.Close();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp get error string
 
-CString CShareazaApp::GetErrorString()
+CString CShareazaApp::GetErrorString() const
 {
 	LPTSTR pszMessage = NULL;
 	CString strMessage;

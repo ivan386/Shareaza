@@ -24,6 +24,7 @@
 #include "Resource.h"
 #include "ComObject.h"
 #include "ShareazaOM.h"
+#include "Buffer.h"
 
 class CUPnPFinder;
 class CMainWnd;
@@ -102,14 +103,13 @@ public:
 	GeoIP_country_name_by_addrFunc m_pfnGeoIP_country_name_by_addr;
 
 public:
-	static CMainWnd*	SafeMainWnd();
-	void				Message(int nType, UINT nID, ...) throw();
-	void				Message(int nType, LPCTSTR pszFormat, ...) throw();
-	CString				GetErrorString();
+	CMainWnd*			SafeMainWnd() const;
+	void				Message(int nType, UINT nID, ...) const;
+	void				Message(int nType, LPCTSTR pszFormat, ...) const;
+	CString				GetErrorString() const;
 	BOOL				InternalURI(LPCTSTR pszURI);
-	void				PrintMessage(int nType, LPCTSTR pszLog);
-	void				LogMessage(LPCTSTR pszLog);
-	void				DebugState(BOOL bState);
+	void				PrintMessage(int nType, LPCTSTR pszLog) const;
+	void				LogMessage(LPCTSTR pszLog) const;
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
@@ -125,8 +125,7 @@ public:
 	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt);
 
 protected:
-	CCriticalSection			m_csMessage;
-	static TCHAR				szMessageBuffer[16384];
+	mutable CCriticalSection	m_csMessage;
 	CShareazaCommandLineInfo	m_ocmdInfo;
 
 	void				GetVersionNumber();
