@@ -407,6 +407,13 @@ void CShakeNeighbour::SendPublicHeaders()
 		m_pOutput->Print( strHeader );
 	}
 
+	strHeader.Format( _T("X-Locale-Pref: %s\r\n"), Settings.General.Language );
+	m_pOutput->Print( strHeader );
+
+	m_pOutput->Print( "X-Requeries: False\r\n" );
+
+	// Header "X-Version: n.n" is part of LimeWire's automatic software update feature. Skip.
+
 	// Tell the remote computer our IP address with a header like "Listen-IP: 67.176.34.172:6346"
 	m_bSentAddress |= SendMyAddress(); // Returns true if the header is sent, set m_bSentAddress true once its sent
 
@@ -414,8 +421,21 @@ void CShakeNeighbour::SendPublicHeaders()
 	strHeader.Format( _T("Remote-IP: %s\r\n"), (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
 	m_pOutput->Print( strHeader );
 
-	// If the settings say connect to Gnutella2 and this function got passed Gnutella2 or the unknown network
+	// Shareaza Settings allow us to exchange compressed data with this computer
+	if ( m_bCanDeflate )
+	{
+		// Tell the remote computer we can accept compressed data
+		m_pOutput->Print( "Accept-Encoding: deflate\r\n" );
 
+		// If the remote computer connected to us and accepts compressed data
+		if ( ! m_bInitiated && m_bDeflateAccept )
+		{
+			// Tell it we will be sending compressed data
+			m_pOutput->Print( "Content-Encoding: deflate\r\n" );
+		}
+	}
+
+	// If the settings say connect to Gnutella2 and this function got passed Gnutella2 or the unknown network
 	if ( m_bInitiated )
 	{
 		if ( m_nProtocol == PROTOCOL_G1 )
@@ -455,20 +475,6 @@ void CShakeNeighbour::SendPublicHeaders()
 		}
 	}
 
-	// Shareaza Settings allow us to exchange compressed data with this computer
-	if ( m_bCanDeflate )
-	{
-		// Tell the remote computer we can accept compressed data
-		m_pOutput->Print( "Accept-Encoding: deflate\r\n" );
-
-		// If the remote computer connected to us and accepts compressed data
-		if ( ! m_bInitiated && m_bDeflateAccept )
-		{
-			// Tell it we will be sending compressed data
-			m_pOutput->Print( "Content-Encoding: deflate\r\n" );
-		}
-	}
-
 	// If the settings say connect to Gnutella and this function got passed Gnutella or the unknown network
 	if ( ( Settings.Gnutella1.EnableToday ) && ( m_nProtocol != PROTOCOL_G2 ) ) // The protocol ID is Gnutella or unknown
 	{
@@ -477,6 +483,8 @@ void CShakeNeighbour::SendPublicHeaders()
 		m_pOutput->Print( "Pong-Caching: 0.1\r\n" );										// We support pong caching
 		if ( Settings.Gnutella1.VendorMsg ) m_pOutput->Print( "Vendor-Message: 0.1\r\n" );	// We support vendor-specific messages
 		m_pOutput->Print( "X-Query-Routing: 0.1\r\n" );										// We support the query routing protocol
+		m_pOutput->Print( "X-Dynamic-Querying: 0.1\r\n" );
+		m_pOutput->Print( "X-Ultrapeer-Query-Routing: 0.1\r\n" );
 	}
 
 	if ( m_nProtocol == PROTOCOL_G1 ) // This protocol ID this method got passed is Gnutella1
@@ -494,6 +502,12 @@ void CShakeNeighbour::SendPublicHeaders()
 			// Tell the remote computer that we are not an ultrapeer, we are just a Gnutella leaf node
 			m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 		}
+
+		strHeader.Format( _T("X-Degree: %d\r\n"), Settings.Gnutella1.NumPeers );
+		m_pOutput->Print( strHeader );
+
+		strHeader.Format( _T("X-Max-TTL: %d\r\n"), Settings.Gnutella1.SearchTTL );
+		m_pOutput->Print( strHeader );
 	}
 	else if ( m_nProtocol == PROTOCOL_G2 ) // This protocol ID this method got passed is Gnutella2
 	{
@@ -649,6 +663,11 @@ void CShakeNeighbour::SendPublicHeaders()
 			}
 		}
 
+		strHeader.Format( _T("X-Degree: %d\r\n"), Settings.Gnutella1.NumPeers );
+		m_pOutput->Print( strHeader );
+
+		strHeader.Format( _T("X-Max-TTL: %d\r\n"), Settings.Gnutella1.SearchTTL );
+		m_pOutput->Print( strHeader );
 	}
 }
 
@@ -1467,29 +1486,6 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			// maybe good idea, but it should not send Host headers if negotiated successfully.
 			//SendHostHeaders();								// Send the "X-Try-Ultrapeers" header with a list of other IP addresses running Gnutella
 
-			// Public header has been sent, this is completely dupricate
-			/*
-			// If this connection is up to a hub or to a hub like us, and we need more hubs
-			if ( m_nNodeType != ntLeaf && Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
-			{
-				// And if we're a hub, so this connection must be to another hub
-				if ( Settings.Gnutella2.ClientMode != MODE_LEAF )
-				{
-					// Tell the remote computer we want more connections to hubs
-					m_pOutput->Print( "X-Ultrapeer-Needed: True\r\n" );
-				}
-
-			} // This connection must be down to a leaf
-			else
-			{
-				// And we're a leaf
-				if ( Settings.Gnutella2.ClientMode != MODE_HUB )
-				{
-					// Tell the remote computer we don't need any more hub connections
-					m_pOutput->Print( "X-Ultrapeer-Needed: False\r\n" );
-				}
-			}
-			*/
 			// End this block of headers with a blank line
 			m_pOutput->Print( "\r\n" );
 			m_nState = nrsHandshake1; // We've finished sending a group of headers, and await the response

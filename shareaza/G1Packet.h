@@ -222,8 +222,7 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #define G1_QHD_GGEP   0x20
 #define G1_QHD_MASK   0x3D
 
-// The byte that tells that a GGEP block follows
-#define GGEP_MAGIC 0xC3
+#define G1_PACKET_HIT_SEP	0x1C // Query hit extension separator
 
 // End the group of lines to only include once, pragma once doesn't require an endif at the bottom
 #endif // !defined(AFX_G1PACKET_H__6B611C29_56C1_4E2A_AA72_249AB7BD76D0__INCLUDED_)

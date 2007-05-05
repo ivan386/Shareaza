@@ -24,6 +24,24 @@
 
 #pragma once
 
+#define GGEP_MAGIC			0xC3 // GGEP extension prefix
+
+#define GGEP_HDR_LAST		0x80 // Last extension in GGEP block
+#define GGEP_HDR_COBS		0x40 // Whether COBS was used on payload
+#define GGEP_HDR_DEFLATE	0x20 // Whether payload was deflated
+#define GGEP_HDR_IDLEN		0x0F // Where ID length is stored
+
+#define GGEP_LEN_MORE		0x80 // Continuation present
+#define GGEP_LEN_LAST		0x40 // Last byte
+#define GGEP_LEN_MASK		0x3F // Value
+
+#define GGEP_H_SHA1			0x01 // Binary SHA1
+#define GGEP_H_BITPRINT		0x02 // Bitprint (SHA1 + Tiger tree root)
+#define GGEP_H_MD5			0x03 // Binary MD5
+#define GGEP_H_UUID			0x04 // Binary UUID (GUID-like)
+#define GGEP_H_MD4			0x05 // Binary MD4
+
+
 class CGGEPBlock;
 class CGGEPItem;
 class CPacket;
@@ -128,17 +146,5 @@ public:
 
 	friend class CGGEPBlock;
 };
-
-//
-// Constants
-//
-
-#define GGEP_HDR_LAST		0x80
-#define GGEP_HDR_COBS		0x40
-#define GGEP_HDR_DEFLATE	0x20
-#define GGEP_HDR_IDLEN		0x0F
-#define GGEP_LEN_MORE		0x80
-#define GGEP_LEN_LAST		0x40
-#define GGEP_LEN_MASK		0x3F
 
 #endif // !defined(AFX_GGEP_H__7081FCAC_A207_412A_BD18_A72F09F89F05__INCLUDED_)

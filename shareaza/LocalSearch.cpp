@@ -154,7 +154,9 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 	CSingleLock oLock( &Library.m_pSection );
 	if ( ! oLock.Lock( 1000 ) ) return 0;
 
-	CList< CLibraryFile* >* pFiles = Library.Search( m_pSearch, static_cast< int >( nMaximum ) );
+	CList< CLibraryFile* >* pFiles = Library.Search( m_pSearch, static_cast< int >( nMaximum ), FALSE,
+		// Ghost files only for G2
+		m_nProtocol != PROTOCOL_G2 );
 	if ( pFiles == NULL ) return 0;
 
 	INT_PTR nHits = pFiles->GetCount();
@@ -208,7 +210,8 @@ BOOL CLocalSearch::AddHit(CLibraryFile* pFile, int nIndex)
 BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex)
 {
 	// Check that the file is actually available. (We must not return ghost hits to G1!)
-	if ( ! pFile->IsAvailable() ) return FALSE;
+	if ( ! pFile->IsAvailable() )
+		return FALSE;
 
 	// Check that a queue that can upload this file exists, and isn't insanely long.
 	if ( UploadQueues.QueueRank( PROTOCOL_HTTP, pFile ) > Settings.Gnutella1.HitQueueLimit ) return FALSE;

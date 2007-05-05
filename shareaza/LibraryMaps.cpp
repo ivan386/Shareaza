@@ -689,7 +689,7 @@ void CLibraryMaps::CullDeletedFiles(CLibraryFile* pMatch)
 //////////////////////////////////////////////////////////////////////
 // CLibraryMaps search
 
-CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
+CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly)
 {
 	CList< CLibraryFile* >* pHits = NULL;
 	if ( pSearch == NULL )
@@ -711,7 +711,7 @@ CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum
 	}
 	else if ( pSearch->m_oSHA1 )
 	{
-		if ( CLibraryFile* pFile = LookupFileBySHA1( pSearch->m_oSHA1, ! bLocal ) )
+		if ( CLibraryFile* pFile = LookupFileBySHA1( pSearch->m_oSHA1, ! bLocal, bAvailableOnly ) )
 		{
 			if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
 			pHits->AddTail( pFile );
@@ -724,7 +724,7 @@ CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum
 	}
 	else if ( pSearch->m_oTiger )
 	{
-		if ( CLibraryFile* pFile = LookupFileByTiger( pSearch->m_oTiger, ! bLocal ) )
+		if ( CLibraryFile* pFile = LookupFileByTiger( pSearch->m_oTiger, ! bLocal, bAvailableOnly ) )
 		{
 			if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
 			pHits->AddTail( pFile );
@@ -737,7 +737,7 @@ CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum
 	}
 	else if ( pSearch->m_oED2K )
 	{
-		if ( CLibraryFile* pFile = LookupFileByED2K( pSearch->m_oED2K, ! bLocal ) )
+		if ( CLibraryFile* pFile = LookupFileByED2K( pSearch->m_oED2K, ! bLocal, bAvailableOnly ) )
 		{
 			if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
 			pHits->AddTail( pFile );
@@ -750,7 +750,7 @@ CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum
 	}
 	else if ( pSearch->m_oBTH )
 	{
-		if ( CLibraryFile* pFile = LookupFileByBTH( pSearch->m_oBTH, ! bLocal ) )
+		if ( CLibraryFile* pFile = LookupFileByBTH( pSearch->m_oBTH, ! bLocal, bAvailableOnly ) )
 		{
 			if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
 			pHits->AddTail( pFile );
@@ -763,7 +763,7 @@ CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum
 	}
 	else if ( pSearch->m_oMD5 )
 	{
-		if ( CLibraryFile* pFile = LookupFileByMD5( pSearch->m_oMD5, ! bLocal ) )
+		if ( CLibraryFile* pFile = LookupFileByMD5( pSearch->m_oMD5, ! bLocal, bAvailableOnly ) )
 		{
 			if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
 			pHits->AddTail( pFile );

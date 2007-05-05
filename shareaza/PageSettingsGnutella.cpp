@@ -249,7 +249,7 @@ void CGnutellaSettingsPage::OnOK()
 	}
 	
 	// Verify good setting to prevent user killing their connection
-	m_nG1Hubs	= min( m_nG1Hubs, 2 );
+	m_nG1Hubs	= min( m_nG1Hubs, 5 );
 	m_nG1Leafs	= min( m_nG1Leafs, 1024 );
 	m_nG1Peers	= min( m_nG1Peers, 64 );
 	m_nG2Hubs	= min( m_nG2Hubs, 3 );
@@ -276,7 +276,7 @@ void CGnutellaSettingsPage::OnOK()
 	if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
 	{	// Enforce some minimum values for G1 ultrapeers
 		Settings.Gnutella1.NumLeafs		= max( Settings.Gnutella1.NumLeafs, 5 );
-		Settings.Gnutella1.NumPeers		= max( Settings.Gnutella1.NumPeers, 4 );
+		Settings.Gnutella1.NumPeers		= max( Settings.Gnutella1.NumPeers, 15 );
 	}
 
 	Settings.Gnutella2.ClientMode = m_wndG2ClientMode.GetCurSel(); // Mode is equal to select position

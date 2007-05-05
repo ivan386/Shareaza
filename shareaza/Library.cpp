@@ -254,17 +254,17 @@ void CLibrary::CheckDuplicates(LPCTSTR pszED2KHash)
 //////////////////////////////////////////////////////////////////////
 // CLibrary search
 
-CList< CLibraryFile* >* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
+CList< CLibraryFile* >* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly)
 {
 	CSingleLock oLock( &m_pSection );
 
 	if ( !oLock.Lock( 50 ) ) return NULL;
 
-	CList< CLibraryFile* >* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal );
+	CList< CLibraryFile* >* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
 
 	if ( pHits == NULL && pSearch != NULL )
 	{
-		pHits = LibraryDictionary.Search( pSearch, nMaximum, bLocal );
+		pHits = LibraryDictionary.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
 	}
 
 	return pHits;

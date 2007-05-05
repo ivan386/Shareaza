@@ -547,7 +547,12 @@ CQuerySearch* CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
 
 BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 {
-	CString strData;
+	Hashes::Sha1Hash	oSHA1;
+	Hashes::TigerHash	oTiger;
+	Hashes::Ed2kHash	oED2K;
+	Hashes::BtHash		oBTH;
+	Hashes::Md5Hash		oMD5;
+
 	m_bWantCOM = m_bWantPFS = FALSE;
 	
 	if ( pPacket->m_nProtocol == PROTOCOL_G2 )
@@ -572,97 +577,115 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 		m_bWantXML	= 0 != ( nFlags & G1_QF_XML );
 	}
 	
-	if ( Settings.Gnutella1.QuerySearchUTF8 ) //Support UTF-8 Query
-	{
-		m_sSearch = pPacket->ReadStringUTF8();
-	}
-	else
-	{
-		m_sSearch = pPacket->ReadStringASCII();
-	}
+	m_sKeywords = m_sSearch = Settings.Gnutella1.QuerySearchUTF8 ?
+		pPacket->ReadStringUTF8() : pPacket->ReadStringASCII();
 
-	m_sKeywords = m_sSearch;
-	// Commenting out below 2 lines. they are called from CheckValid at the end of this function thus
-	// no need to call it here.
-	//ToLower( m_sKeywords );
-	//MakeKeywords( m_sKeywords, false );
-
-	if ( pPacket->GetRemaining() >= 1 )
+	if ( pPacket->GetRemaining() > 1 )
 	{
-		strData = pPacket->ReadStringASCII();
-		if ( strData.GetLength() > 1024 ) strData.Empty();
-	}
-	
-	LPCTSTR pszData	= strData;
-	LPCTSTR pszEnd	= pszData + _tcslen( pszData );
-	int nIterations = 0;
-	
-	while ( *pszData && pszData < pszEnd )
-	{
-		if ( nIterations++ > 4 ) break;
-		
-		if ( (BYTE)( (*pszData) & 0xff ) == GGEP_MAGIC )
+		const char* pszData = (const char*)pPacket->m_pBuffer + pPacket->m_nPosition;
+		int nLength;
+		for ( int nDataLength = pPacket->GetRemaining() - 1; nDataLength; )
 		{
-			if ( ! Settings.Gnutella1.EnableGGEP ) break;
-			
-			CGGEPBlock pGGEP;
-			pGGEP.ReadFromString( pszData );
-			
-			if ( CGGEPItem* pItem = pGGEP.Find( _T("H"), 21 ) )
+			const char* pszSep = strchr( pszData, G1_PACKET_HIT_SEP );
+			nLength = ( pszSep && *pszSep == G1_PACKET_HIT_SEP ) ?
+				( pszSep - pszData ) : nDataLength;
+			if ( nLength >= 4 && memcmp( pszData, "urn:", 4 ) == 0 )
 			{
-				if ( pItem->m_pBuffer[0] > 0 && pItem->m_pBuffer[0] < 3 )
+				CString strURN( pszData, nLength );
+				if ( nLength == 4 );					// Got empty urn
+				else if ( oSHA1.fromUrn(  strURN ) );	// Got SHA1
+				else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
+				else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
+				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
+				else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
+				else
+					theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown URN: \"%s\""), strURN );
+			}
+			else if ( nLength >= 4 && *pszData == '<' )
+			{
+				CString strXML( pszData, nLength );
+				ASSERT( m_pXML == NULL );
+				m_pXML = CXMLElement::FromString( strXML, FALSE );
+				if ( m_pXML == NULL )
 				{
-					m_oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
-						pItem->m_pBuffer[ 1 ] );
+					theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with bad XML: \"%s\""), strXML );
 				}
-				if ( pItem->m_pBuffer[0] == 2 && pItem->m_nLength >= 24 + 20 + 1 )
+				else
 				{
-					m_oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
-						pItem->m_pBuffer[ 21 ] );
+					ASSERT( m_pSchema == NULL );
+					m_pSchema = SchemaCache.Get(
+						m_pXML->GetAttributeValue( CXMLAttribute::schemaName, NULL ) );
+					if ( m_pSchema == NULL )
+					{
+						m_pSchema = SchemaCache.Guess( m_pXML->GetName() );
+						if ( m_pSchema == NULL )
+						{
+							theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown XML schema: \"%s\""), strXML );
+						}
+					}
 				}
 			}
-			else if ( CGGEPItem* pItem = pGGEP.Find( _T("u") ) )
+			else if ( *pszData == GGEP_MAGIC )
 			{
-				strData = pItem->ToString();
+				if ( Settings.Gnutella1.EnableGGEP )
+				{
+					CGGEPBlock pGGEP;
+					pGGEP.ReadFromBuffer( (LPVOID)pszData, nLength );
 
-				if ( !m_oSHA1 ) m_oSHA1.fromUrn( strData );
-				if ( !m_oTiger ) m_oTiger.fromUrn( strData );
-				if ( !m_oED2K ) m_oED2K.fromUrn( strData );
-				if ( !m_oBTH ) m_oBTH.fromUrn( pszData );
-				if ( !m_oMD5 ) m_oMD5.fromUrn( pszData );
+					// TODO: Add multiple GGEP items handling
+
+					if ( CGGEPItem* pItem = pGGEP.Find( _T("H"), 21 ) )
+					{
+						if ( pItem->m_pBuffer[0] == GGEP_H_SHA1 ||
+							pItem->m_pBuffer[0] == GGEP_H_BITPRINT )
+						{
+							m_oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
+								pItem->m_pBuffer[ 1 ] );
+						}
+						if ( pItem->m_pBuffer[0] == GGEP_H_BITPRINT &&
+							pItem->m_nLength >= 24 + 20 + 1 )
+						{
+							m_oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
+								pItem->m_pBuffer[ 21 ] );
+						}
+
+						// TODO: Add GGEP_H_MD5, GGEP_H_UUID, GGEP_H_MD4 handling
+
+					}
+					else if ( CGGEPItem* pItem = pGGEP.Find( _T("u") ) )
+					{
+						CString strURN( pItem->ToString() );
+						if (      oSHA1.fromUrn(  strURN ) );	// Got SHA1
+						else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
+						else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
+						else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
+						else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
+						else
+							theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown GGEP URN: \"%s\""), strURN );
+					}
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("Got GGEP Gnutella query packet, but GGEP disabled") );
 			}
-			
-			break;
+			else
+				theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown part: \"%hs\""), CString( pszData, nLength ) );
+
+			pszData += nLength + 1;
+			nDataLength -= nLength;
 		}
-		
-		LPCTSTR pszSep = _tcschr( pszData, 0x1C );
-		size_t nLength = ( pszSep && *pszSep == 0x1C ) ? pszSep - pszData : _tcslen( pszData );
-		
-		if ( !IsCharacter( *pszData ) ) nLength = 0;
-		
-		if ( nLength >= 4 && _tcsncmp( pszData, _T("urn:"), 4 ) == 0 )
-		{
-			if ( !m_oSHA1 ) m_oSHA1.fromUrn( pszData );
-			if ( !m_oTiger ) m_oTiger.fromUrn( pszData );
-			if ( !m_oED2K ) m_oED2K.fromUrn( pszData );
-			if ( !m_oBTH ) m_oBTH.fromUrn( pszData );
-			if ( !m_oMD5 ) m_oMD5.fromUrn( pszData );
-		}
-		else if ( nLength > 5 && _tcsncmp( pszData, _T("<?xml"), 5 ) == 0 )
-		{
-			m_pXML = CXMLElement::FromString( pszData, TRUE );
-			
-			if ( m_pXML == NULL ) continue;
-			
-			CString strSchemaURI = m_pXML->GetAttributeValue( CXMLAttribute::schemaName, NULL );
-			m_pSchema = SchemaCache.Get( strSchemaURI );
-		}
-		
-		if ( pszSep && *pszSep == 0x1C ) pszData = pszSep + 1;
-		else break;
+
+		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
+		if ( oTiger && ! m_oTiger ) m_oTiger = oTiger;
+		if ( oED2K  && ! m_oED2K )  m_oED2K  = oED2K;
+		if ( oBTH   && ! m_oBTH )   m_oBTH   = oBTH;
+		if ( oMD5   && ! m_oMD5 )   m_oMD5   = oMD5;
+
+		// "Read all"
+		pPacket->m_nPosition = pPacket->m_nLength;
 	}
-	
+
 	m_bAndG1 = TRUE;
+
 	return CheckValid( false );
 }
 

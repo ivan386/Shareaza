@@ -515,7 +515,7 @@ void CLibraryDictionary::Clear()
 //////////////////////////////////////////////////////////////////////
 // CLibraryDictionary search
 
-CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
+CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly)
 {
 	BuildHashTable();
 
@@ -547,7 +547,8 @@ CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nM
 				pLastFile = pFile;
 				
 				if ( ! bLocal && ! pFile->IsShared() ) continue;
-				
+				if ( bAvailableOnly && ! pFile->IsAvailable() ) continue;
+			
 				if ( pFile->m_nSearchCookie == nCookie )
 				{
 					pFile->m_nSearchWords ++;
@@ -595,7 +596,7 @@ CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nM
 
 				if ( pHit->m_nCollIndex )
 				{
-					if ( CLibraryFile* pCollection = LibraryMaps.LookupFile( pHit->m_nCollIndex, ! bLocal, TRUE ) )
+					if ( CLibraryFile* pCollection = LibraryMaps.LookupFile( pHit->m_nCollIndex, ! bLocal, bAvailableOnly ) )
 					{
 						if ( pCollection->m_nSearchCookie != nCookie )
 						{

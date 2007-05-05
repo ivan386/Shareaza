@@ -53,7 +53,7 @@ public:
 	void				RebuildHashTable();					//Force hash table to re-build
 	CQueryHashTable*	GetHashTable();
 	void				Clear();
-	CList< CLibraryFile* >*	Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE);
+	CList< CLibraryFile* >*	Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE, BOOL bAvailableOnly = TRUE);
 protected:
 	void				ProcessFile(CLibraryFile* pFile, BOOL bAdd);
 	int					ProcessPhrase(CLibraryFile* pFile, const CString& strPhrase, BOOL bAdd, BOOL bLowercase = TRUE);
