@@ -241,9 +241,9 @@ void CSettings::Setup()
 
 	Add( _T("Gnutella1.ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
 	Add( _T("Gnutella1.EnableAlways"), &Gnutella1.EnableAlways, FALSE );
-	Add( _T("Gnutella1.NumHubs"), &Gnutella1.NumHubs, 5 );
+	Add( _T("Gnutella1.NumHubs"), &Gnutella1.NumHubs, 2 );
 	Add( _T("Gnutella1.NumLeafs"), &Gnutella1.NumLeafs, 0 );
-	Add( _T("Gnutella1.NumPeers"), &Gnutella1.NumPeers, 15 );
+	Add( _T("Gnutella1.NumPeers"), &Gnutella1.NumPeers, 32 ); // For X-Degree
 	Add( _T("Gnutella1.PacketBufferSize"), &Gnutella1.PacketBufferSize, 64 );
 	Add( _T("Gnutella1.PacketBufferTime"), &Gnutella1.PacketBufferTime, 60000 );
 	Add( _T("Gnutella1.DefaultTTL"), &Gnutella1.DefaultTTL, 5 );
@@ -618,7 +618,7 @@ void CSettings::Load()
 	Gnutella1.SearchTTL			= max( min( Gnutella1.SearchTTL, 4u ), 1u );
 
 	// Set client links
-	Gnutella1.NumHubs			= max( min( Gnutella1.NumHubs,  5    ), 1 );
+	Gnutella1.NumHubs			= max( min( Gnutella1.NumHubs,  2    ), 1 );
 	Gnutella1.NumLeafs			= max( min( Gnutella1.NumLeafs, 1024 ), 5 );
 	Gnutella1.NumPeers			= max( min( Gnutella1.NumPeers, 64   ), 15 );
 	Gnutella2.NumHubs			= max( min( Gnutella2.NumHubs,  3    ), 1 );
