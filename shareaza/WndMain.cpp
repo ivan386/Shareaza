@@ -428,6 +428,9 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	if ( theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
 	{
+		// Turn these both on for the first run and allow them to be disabled during the wizard.
+		Settings.Connection.AutoConnect = TRUE;
+		Settings.SetStartup( TRUE );
 		PostMessage( WM_COMMAND, ID_TOOLS_WIZARD );
 	}
 	else if ( theApp.GetProfileInt( _T("Windows"), _T("RunWarnings"), FALSE ) == FALSE )
