@@ -410,10 +410,6 @@ void CShakeNeighbour::SendPublicHeaders()
 	strHeader.Format( _T("X-Locale-Pref: %s\r\n"), Settings.General.Language );
 	m_pOutput->Print( strHeader );
 
-	m_pOutput->Print( "X-Requeries: False\r\n" );
-
-	// Header "X-Version: n.n" is part of LimeWire's automatic software update feature. Skip.
-
 	// Tell the remote computer our IP address with a header like "Listen-IP: 67.176.34.172:6346"
 	m_bSentAddress |= SendMyAddress(); // Returns true if the header is sent, set m_bSentAddress true once its sent
 
@@ -483,8 +479,6 @@ void CShakeNeighbour::SendPublicHeaders()
 		m_pOutput->Print( "Pong-Caching: 0.1\r\n" );										// We support pong caching
 		if ( Settings.Gnutella1.VendorMsg ) m_pOutput->Print( "Vendor-Message: 0.1\r\n" );	// We support vendor-specific messages
 		m_pOutput->Print( "X-Query-Routing: 0.1\r\n" );										// We support the query routing protocol
-		m_pOutput->Print( "X-Dynamic-Querying: 0.1\r\n" );
-		m_pOutput->Print( "X-Ultrapeer-Query-Routing: 0.1\r\n" );
 	}
 
 	if ( m_nProtocol == PROTOCOL_G1 ) // This protocol ID this method got passed is Gnutella1
