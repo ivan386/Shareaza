@@ -2196,6 +2196,7 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Ha
 		}
 */
 	}
+	else
 	{
 		DWORD nBitsPerSample = ( pNewAPE.nFormatFlags & 1 ) ? 8 : ( pNewAPE.nFormatFlags & 8 ) ? 24 : 16;
 		if ( nBitsPerSample == 0 )
