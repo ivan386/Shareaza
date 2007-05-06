@@ -68,8 +68,6 @@ CCoolTipCtrl::CCoolTipCtrl()
 	m_tOpen		= 0;
 
 	if ( m_hClass == NULL ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
-
-	if ( m_hClass == NULL ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
 }
 
 CCoolTipCtrl::~CCoolTipCtrl()
