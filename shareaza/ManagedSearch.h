@@ -1,7 +1,7 @@
 //
 // ManagedSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,10 @@ public:
 	BOOL			m_bReceive;
 public:
 	DWORD			m_tStarted;					// Time search was started
-	DWORD			m_nHits;					// Hits
+	DWORD			m_nHits;					// Total hits
+	DWORD			m_nG1Hits;					// G1 hits
+	DWORD			m_nG2Hits;					// G2 hits
+	DWORD			m_nEDHits;					// ED2k hits
 	DWORD			m_nHubs;					// Number of G2 hubs searched
 	DWORD			m_nLeaves;					// Number of G2 leaves searched
 	DWORD			m_nQueryCount;				// Total Gnutella2 queries sent
@@ -62,7 +65,8 @@ public:
 	DWORD			m_nEDServers;				// Number of EDonkey servers searched
 	DWORD			m_nEDClients;				// Number of ED2K clients searched (Guess)
 protected:
-	CMap< DWORD, DWORD, DWORD, DWORD > m_pNodes;
+	CMap< DWORD, DWORD, DWORD, DWORD > m_pNodes;	// Pair of IP and query time (s)
+	CMap< DWORD, DWORD, DWORD, DWORD > m_pG1Nodes;	// Pair of IP and last sent packet TTL
 	DWORD			m_tExecute;
 
 // Operations

@@ -1,7 +1,7 @@
 //
 // SearchManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -279,6 +279,12 @@ BOOL CSearchManager::OnQueryHits(CQueryHit* pHits)
 	while ( pHits != NULL )
 	{
 		pSearch->m_nHits ++;
+		if ( pHits->m_nProtocol == PROTOCOL_G1 )
+			pSearch->m_nG1Hits++;
+		else if ( pHits->m_nProtocol == PROTOCOL_G2 )
+			pSearch->m_nG2Hits++;
+		else if ( pHits->m_nProtocol == PROTOCOL_ED2K )
+			pSearch->m_nEDHits++;
 		pHits = pHits->m_pNext;
 	}
 

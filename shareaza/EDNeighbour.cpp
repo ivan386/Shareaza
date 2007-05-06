@@ -927,20 +927,19 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 
 BOOL CEDNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
-	if ( m_nState != nrsConnected || m_nClientID == 0 )
-	{
+	// If the caller didn't give us a packet, or one that isn't for our protocol, leave now
+	if ( pPacket == NULL || pPacket->m_nProtocol != PROTOCOL_ED2K )
+		return FALSE;
+
+	if ( ! bLocal )
+		return FALSE;	// Non local searches disabled
+
+	if ( m_nClientID == 0 )
 		return FALSE;	// We're not ready
-	}
-	else if ( pPacket == NULL || pPacket->m_nProtocol != PROTOCOL_ED2K || ! bLocal )
-	{
-		return FALSE;	// Packet is bad
-	}
 
 	// Don't add the GUID for GetSources
 	if ( ( ! pSearch->m_oED2K ) || ( pSearch->m_bWantDN && Settings.eDonkey.MagnetSearch ) )
 		m_pQueries.AddTail( pSearch->m_oGUID );
-
-	Send( pPacket, FALSE, FALSE );
 	
-	return TRUE;
+	return CNeighbour::SendQuery( pSearch, pPacket, bLocal );
 }

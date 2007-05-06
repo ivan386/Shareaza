@@ -128,10 +128,11 @@ auto_ptr< CQuerySearch > CQuerySearch::clone() const
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch to G1 packet
 
-CG1Packet* CQuerySearch::ToG1Packet()
+CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL)
 {
 	CG1Packet* pPacket = CG1Packet::New( G1_PACKET_QUERY,
-		min( Settings.Gnutella1.SearchTTL, 4ul ), m_oGUID );
+		( nTTL ? min( nTTL, Settings.Gnutella1.SearchTTL ) : Settings.Gnutella1.SearchTTL ),
+		m_oGUID );
 	
 	WORD nFlags = G1_QF_TAG | G1_QF_BIN_HASH | G1_QF_DYNAMIC;
 	if ( ! Network.IsListening() ) nFlags |= G1_QF_FIREWALLED;

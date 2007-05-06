@@ -229,7 +229,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella.DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, TRUE );
 	Add( _T("Gnutella.DeflateLeaf2Hub"), &Gnutella.DeflateLeaf2Hub, FALSE );
 	Add( _T("Gnutella.DeflateHub2Leaf"), &Gnutella.DeflateHub2Leaf, TRUE );
-	Add( _T("Gnutella.MaxResults"), &Gnutella.MaxResults, 100 );
+	Add( _T("Gnutella.MaxResults"), &Gnutella.MaxResults, 150 );
 	Add( _T("Gnutella.MaxHits"), &Gnutella.MaxHits, 64 );
 	Add( _T("Gnutella.HitsPerPacket"), &Gnutella.HitsPerPacket, 64 );
 	Add( _T("Gnutella.RouteCache"), &Gnutella.RouteCache, 600 );
@@ -241,13 +241,13 @@ void CSettings::Setup()
 
 	Add( _T("Gnutella1.ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
 	Add( _T("Gnutella1.EnableAlways"), &Gnutella1.EnableAlways, FALSE );
-	Add( _T("Gnutella1.NumHubs"), &Gnutella1.NumHubs, 2 );
+	Add( _T("Gnutella1.NumHubs"), &Gnutella1.NumHubs, 5 );
 	Add( _T("Gnutella1.NumLeafs"), &Gnutella1.NumLeafs, 0 );
 	Add( _T("Gnutella1.NumPeers"), &Gnutella1.NumPeers, 32 ); // For X-Degree
 	Add( _T("Gnutella1.PacketBufferSize"), &Gnutella1.PacketBufferSize, 64 );
 	Add( _T("Gnutella1.PacketBufferTime"), &Gnutella1.PacketBufferTime, 60000 );
-	Add( _T("Gnutella1.DefaultTTL"), &Gnutella1.DefaultTTL, 5 );
-	Add( _T("Gnutella1.SearchTTL"), &Gnutella1.SearchTTL, 4 );
+	Add( _T("Gnutella1.DefaultTTL"), &Gnutella1.DefaultTTL, 3 );
+	Add( _T("Gnutella1.SearchTTL"), &Gnutella1.SearchTTL, 3 );
 	Add( _T("Gnutella1.TranslateTTL"), &Gnutella1.TranslateTTL, 2 );
 	Add( _T("Gnutella1.MaximumTTL"), &Gnutella1.MaximumTTL, 10 );
 	Add( _T("Gnutella1.MaximumPacket"), &Gnutella1.MaximumPacket, 65535 );
@@ -255,8 +255,8 @@ void CSettings::Setup()
 	Add( _T("Gnutella1.StrictPackets"), &Gnutella1.StrictPackets, FALSE );
 	Add( _T("Gnutella1.EnableGGEP"), &Gnutella1.EnableGGEP, TRUE );
 	Add( _T("Gnutella1.VendorMsg"), &Gnutella1.VendorMsg, TRUE );
-	Add( _T("Gnutella1.QueryThrottle"), &Gnutella1.QueryThrottle, 20*60 );
-	Add( _T("Gnutella1.RequeryDelay"), &Gnutella1.RequeryDelay, 45*60 );
+	Add( _T("Gnutella1.QueryThrottle"), &Gnutella1.QueryThrottle, 30 );
+	Add( _T("Gnutella1.RequeryDelay"), &Gnutella1.RequeryDelay, 30 );
 	Add( _T("Gnutella1.HostExpire"), &Gnutella1.HostExpire, 2 * 24 * 60 * 60 );
 	Add( _T("Gnutella1.PingFlood"), &Gnutella1.PingFlood, 3000 );
 	Add( _T("Gnutella1.PingRate"), &Gnutella1.PingRate, 15000 );
@@ -547,7 +547,7 @@ void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	46
+#define SMART_VERSION	47
 
 void CSettings::Load()
 {
@@ -613,12 +613,14 @@ void CSettings::Load()
 	Downloads.ConnectThrottle	= max( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
 	Downloads.MaxFiles			= min( Downloads.MaxFiles, 100 );
 	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000u );
-	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, 45*60u );
+	Gnutella1.RequeryDelay		= max( min( Gnutella1.RequeryDelay, 60u ), 5u );
 	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, 60*60u );
-	Gnutella1.SearchTTL			= max( min( Gnutella1.SearchTTL, 4u ), 1u );
+	Gnutella1.SearchTTL			= max( min( Gnutella1.SearchTTL, 3u ), 1u );
+	Gnutella1.DefaultTTL		= max( min( Gnutella1.DefaultTTL, 3u ), 1u );
+	Gnutella1.QueryThrottle		= max( min( Gnutella1.QueryThrottle, 60u ), 5u );
 
 	// Set client links
-	Gnutella1.NumHubs			= max( min( Gnutella1.NumHubs,  2    ), 1 );
+	Gnutella1.NumHubs			= max( min( Gnutella1.NumHubs,  5    ), 1 );
 	Gnutella1.NumLeafs			= max( min( Gnutella1.NumLeafs, 1024 ), 5 );
 	Gnutella1.NumPeers			= max( min( Gnutella1.NumPeers, 64   ), 15 );
 	Gnutella2.NumHubs			= max( min( Gnutella2.NumHubs,  3    ), 1 );
@@ -702,7 +704,7 @@ void CSettings::SmartUpgrade()
 	// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
 	if ( nVersion < 20 )
 	{
-		Gnutella1.RequeryDelay			= 45*60;
+		Gnutella1.RequeryDelay			= 30;
 		Gnutella2.UdpOutResend			= 6000;
 		Gnutella2.UdpOutExpire			= 26000;
 		Library.TigerHeight		= 9;
@@ -869,6 +871,15 @@ void CSettings::SmartUpgrade()
 		// ReGet
 		if ( ! IsIn( Library.PrivateTypes, _T("reget") ) )
 			Library.PrivateTypes.insert( _T("reget") );
+	}
+
+	if ( nVersion < 47 )
+	{
+		// Changed from minutes to seconds
+		Gnutella1.QueryThrottle = 30u;
+		Gnutella1.RequeryDelay = 30u;
+
+		Gnutella.MaxResults = 150;
 	}
 }
 

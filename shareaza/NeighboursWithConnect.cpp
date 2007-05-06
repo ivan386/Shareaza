@@ -1120,8 +1120,7 @@ void CNeighboursWithConnect::Maintain()
 	} // We're a leaf on the Gnutella network
 	else if ( m_bG1Leaf )
 	{
-		// Set the limit for Gnutella hub connections as whichever is smaller, the number from settings, or 2
-		nLimit[ PROTOCOL_G1 ][ ntHub ] = min( Settings.Gnutella1.NumHubs, 2 ); // NumHubs is 2 by default
+		nLimit[ PROTOCOL_G1 ][ ntHub ] = min( Settings.Gnutella1.NumHubs, 5 );
 
 	} // We're an ultrapeer on the Gnutella network
 	else

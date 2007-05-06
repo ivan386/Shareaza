@@ -1,7 +1,7 @@
 //
 // Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,6 +78,13 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
 	m_bGGEP( FALSE ),			// The remote computer hasn't told us it supports the GGEP block yet
 	m_bObsoleteClient( FALSE ),	//
 	m_bBadClient( FALSE ),		//
+	m_nDegree( (DWORD)-1 ),
+	m_nMaxTTL( (DWORD)-1 ),
+	m_bDynamicQuerying( FALSE ),
+	m_bUltrapeerQueryRouting( FALSE ),
+	m_sLocalePref( _T("") ),
+	m_bRequeries( TRUE ),
+	m_bExtProbes( FALSE ),
 	// Start out time variables as 0
 	m_tLastQuery( 0 ),			// We'll set these to the current tick or seconds count when we get a query or packet
 	m_tLastPacket( 0 ),			//
@@ -125,6 +132,14 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	, m_bGGEP(             pBase->m_bGGEP )
 	, m_tLastQuery(        pBase->m_tLastQuery )
 	, m_bObsoleteClient(   pBase->m_bObsoleteClient )
+	, m_bBadClient(			pBase->m_bBadClient )
+	, m_nDegree(			pBase->m_nDegree )
+	, m_nMaxTTL(			pBase->m_nMaxTTL )
+	, m_bDynamicQuerying(	pBase->m_bDynamicQuerying )
+	, m_bUltrapeerQueryRouting(	pBase->m_bUltrapeerQueryRouting )
+	, m_sLocalePref(		pBase->m_sLocalePref )
+	, m_bRequeries(			pBase->m_bRequeries )
+	, m_bExtProbes(			pBase->m_bExtProbes )
 	, m_nInputCount(       pBase->m_nInputCount )
 	, m_nOutputCount(      pBase->m_nOutputCount )
 	, m_nDropCount(        pBase->m_nDropCount )
@@ -238,10 +253,35 @@ BOOL CNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 }
 
 // CG1Neighbour, which inherits from CNeighbour, overrides this method with its own version that does something
-BOOL CNeighbour::SendQuery(CQuerySearch* /*pSearch*/, CPacket* /*pPacket*/, BOOL /*bLocal*/)
+BOOL CNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
-	// Always return false (do)
-	return FALSE;
+	// If we're still negotiating the handshake with this remote computer, leave now
+	if ( m_nState != nrsConnected )
+		return FALSE;
+
+	// This neighbour is a hub above us, and this isn't a local search, leave now
+	if ( m_nNodeType == ntHub && ! bLocal )
+		return FALSE;
+
+	// If QHT exsist
+	if ( m_pQueryTableRemote != NULL && m_pQueryTableRemote->m_bLive )
+	{
+		// If QHT disables search, leave now
+		if ( ! m_pQueryTableRemote->Check( pSearch ) )
+			return FALSE;
+
+	} // If QHT doesn't exist and this connection is to a leaf below us, leave now
+	else if ( m_nNodeType == ntLeaf && ! bLocal )
+		return FALSE;
+
+	// If this is local (do), set the last query time this CG1Neighbour object remembers to now
+	if ( bLocal )
+		m_tLastQuery = static_cast< DWORD >( time( NULL ) );
+
+	// Send the packet to the remote computer
+	Send( pPacket, FALSE, ! bLocal ); // Submit !bLocal as the value for bBuffered (do)
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -600,4 +640,10 @@ void CNeighbour::GetCompression(float* pnInRate, float* pnOutRate)
 		if ( *pnOutRate < 0 ) *pnOutRate = 0;
 		else if ( *pnOutRate > 1 ) *pnOutRate = 1;
 	}
+}
+
+DWORD CNeighbour::GetMaxTTL() const
+{
+	return ( m_nMaxTTL != (DWORD)-1 ) ? min( m_nMaxTTL, Settings.Gnutella1.SearchTTL ) :
+		Settings.Gnutella1.SearchTTL;
 }

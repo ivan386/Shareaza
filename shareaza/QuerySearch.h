@@ -1,7 +1,7 @@
 //
 // QuerySearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -120,7 +120,7 @@ private:
 
 // Packet Operations
 public:
-	CG1Packet*				ToG1Packet();
+	CG1Packet*				ToG1Packet(DWORD nTTL = 0);
 	CG2Packet*				ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey);
 	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0);
 private:
@@ -138,7 +138,6 @@ public:
 	BOOL					CheckValid(bool bExpression=true);
 private:
 	void					BuildWordTable(LPCTSTR pszString);
-	void					MakeKeywords(CString& strPhrase, bool bExpression=true);
 	void					SlideKeywords(CString& strPhrase);
 	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP);
 	void					PrepareCheck();
@@ -150,6 +149,7 @@ public:
 	static	BOOL			WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject=NULL);
 	static	BOOL			NumberMatch(const CString& strValue, const CString& strRange);
 	static	void			PrepareCheck(CQuerySearch* pQuerySearch);
+	static	void			MakeKeywords(CString& strPhrase, bool bExpression=true);
 };
 
 #endif // !defined(AFX_QUERYSEARCH_H__2141B926_3F6B_4A5D_9FBD_C67FD0A5C46C__INCLUDED_)

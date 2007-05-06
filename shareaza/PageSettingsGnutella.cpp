@@ -120,7 +120,7 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	
 	m_wndG1Peers.SetRange( 0, 64 );
 	m_wndG1Leafs.SetRange( 0, 1024 );
-	m_wndG1Hubs.SetRange( 0, 2 );
+	m_wndG1Hubs.SetRange( 0, 5 );
 	
 	m_wndG2Peers.SetRange( 0, 64 );
 	m_wndG2Leafs.SetRange( 0, 1024 );
@@ -249,7 +249,7 @@ void CGnutellaSettingsPage::OnOK()
 	}
 	
 	// Verify good setting to prevent user killing their connection
-	m_nG1Hubs	= min( m_nG1Hubs, 2 );
+	m_nG1Hubs	= min( m_nG1Hubs, 5 );
 	m_nG1Leafs	= min( m_nG1Leafs, 1024 );
 	m_nG1Peers	= min( m_nG1Peers, 64 );
 	m_nG2Hubs	= min( m_nG2Hubs, 3 );

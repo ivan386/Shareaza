@@ -1,7 +1,7 @@
 //
 // LocalSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,6 @@ protected:
 	CNeighbour*		m_pNeighbour;
 	SOCKADDR_IN*	m_pEndpoint;
 	CBuffer*		m_pBuffer;
-	DWORD			m_nTTL;
 	Hashes::Guid	m_oGUID;
 	PROTOCOLID		m_nProtocol;
 	BOOL			m_bWrapped;

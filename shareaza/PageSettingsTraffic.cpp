@@ -116,7 +116,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 
 	AddSetting( &Settings.Gnutella.ConnectFactor, 1, 1, 20, _T("x") );
 	AddSetting( &Settings.Gnutella.ConnectThrottle, 1, 60, 3600, _T(" s") );
-	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 1000 );
+	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 300 );
 	AddSetting( &Settings.Gnutella.MaxHits, 1, 0, 4096 );
 	AddSetting( &Settings.Gnutella.HitsPerPacket, 1, 0, 1024 );
 	AddSetting( &Settings.Gnutella.RouteCache, 60, 1, 120, _T(" m") );
@@ -126,8 +126,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 
 	AddSetting( &Settings.Gnutella1.PacketBufferSize, 1, 1, 1024 );
 	AddSetting( &Settings.Gnutella1.PacketBufferTime, 1000, 10, 180, _T(" s") );
-	AddSetting( &Settings.Gnutella1.DefaultTTL, 1, 1, 5 );
-	AddSetting( &Settings.Gnutella1.SearchTTL, 1, 1, 4 );
+	AddSetting( &Settings.Gnutella1.DefaultTTL, 1, 1, 3 );
+	AddSetting( &Settings.Gnutella1.SearchTTL, 1, 1, 3 );
 	AddSetting( &Settings.Gnutella1.TranslateTTL, 1, 1, 2 );
 	AddSetting( &Settings.Gnutella1.MaximumTTL, 1, 1, 10 );
 	AddSetting( &Settings.Gnutella1.MaximumPacket, 1, 32, 262144 );
@@ -135,8 +135,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella1.StrictPackets, 1, 0, 1 );
 	AddSetting( &Settings.Gnutella1.EnableGGEP, 1, 0, 1 );
 	AddSetting( &Settings.Gnutella1.VendorMsg, 1, 0, 1 );
-	AddSetting( &Settings.Gnutella1.QueryThrottle, 60, 5, 2048, _T(" m") );
-	AddSetting( &Settings.Gnutella1.RequeryDelay, 60, 45, 2048, _T(" m") );
+	AddSetting( &Settings.Gnutella1.QueryThrottle, 1, 5, 60, _T(" s") );
+	AddSetting( &Settings.Gnutella1.RequeryDelay, 1, 5, 60, _T(" s") );
 	AddSetting( &Settings.Gnutella1.HostExpire, 24 * 60 * 60, 1, 100, _T(" d") );
 	AddSetting( &Settings.Gnutella1.PingFlood, 1000, 0, 30, _T(" s") );
 	AddSetting( &Settings.Gnutella1.PingRate, 1000, 5, 180, _T(" s") );

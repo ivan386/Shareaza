@@ -1029,30 +1029,11 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 
 BOOL CG2Neighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
-	if ( m_nState != nrsConnected )
-	{
+	// If the caller didn't give us a packet, or one that isn't for our protocol, leave now
+	if ( pPacket == NULL || pPacket->m_nProtocol != PROTOCOL_G2 )
 		return FALSE;
-	}
-	else if ( pPacket == NULL || pPacket->m_nProtocol != PROTOCOL_G2 )
-	{
-		return FALSE;
-	}
-	else if ( m_nNodeType == ntHub && ! bLocal )
-	{
-		return FALSE;
-	}
-	else if ( m_pQueryTableRemote != NULL && m_pQueryTableRemote->m_bLive && ( m_nNodeType == ntLeaf || pSearch->m_bUDP ) )
-	{
-		if ( ! m_pQueryTableRemote->Check( pSearch ) ) return FALSE;
-	}
-	else if ( m_nNodeType == ntLeaf && ! bLocal )
-	{
-		return FALSE;
-	}
 
-	Send( pPacket, FALSE, ! bLocal );
-
-	return TRUE;
+	return CNeighbour::SendQuery( pSearch, pPacket, bLocal );
 }
 
 BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)

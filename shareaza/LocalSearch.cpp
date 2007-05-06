@@ -75,7 +75,6 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, CNeighbour* pNeighbour, BOOL b
 	m_pNeighbour	= pNeighbour;
 	m_pEndpoint		= NULL;
 	m_pBuffer		= NULL;
-	m_nTTL			= Settings.Gnutella1.MaximumTTL - 3;
 	m_nProtocol		= pNeighbour->m_nProtocol;
 	m_bWrapped		= bWrapped;
 	m_pPacket		= NULL;
@@ -89,7 +88,6 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, SOCKADDR_IN* pEndpoint)
 	m_pNeighbour	= NULL;
 	m_pEndpoint		= pEndpoint;
 	m_pBuffer		= NULL;
-	m_nTTL			= Settings.Gnutella1.MaximumTTL - 3;
 	m_nProtocol		= PROTOCOL_G2;
 	m_bWrapped		= FALSE;
 	m_pPacket		= NULL;
@@ -101,7 +99,6 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, CBuffer* pBuffer, PROTOCOLID n
 	m_pNeighbour	= NULL;
 	m_pEndpoint		= NULL;
 	m_pBuffer		= pBuffer;
-	m_nTTL			= Settings.Gnutella1.MaximumTTL - 3;
 	m_nProtocol		= nProtocol;
 	m_bWrapped		= FALSE;
 	m_pPacket		= NULL;
@@ -737,7 +734,8 @@ void CLocalSearch::CreatePacket(int nCount)
 
 void CLocalSearch::CreatePacketG1(int nCount)
 {
-	m_pPacket = CG1Packet::New( G1_PACKET_HIT, m_nTTL, m_oGUID );
+	m_pPacket = CG1Packet::New( G1_PACKET_HIT,
+		( m_pNeighbour ? m_pNeighbour->GetMaxTTL() : Settings.Gnutella1.SearchTTL ), m_oGUID );
 	
 	m_pPacket->WriteByte( BYTE( nCount ) );
 	m_pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );

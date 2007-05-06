@@ -218,7 +218,7 @@ BOOL CG1Neighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
 	BOOL bSuccess = FALSE;
 
 	// If we're done with the handshake, the packet protocol is for Gnutella, and it still has time to live
-	if ( m_nState >= nrsConnected && pPacket->m_nProtocol == PROTOCOL_G1 && pPacketG1->m_nTTL )
+	if ( m_nState >= nrsConnected && pPacket->m_nProtocol == PROTOCOL_G1 )
 	{
 		// Count that we sent one more packet
 		m_nOutputCount++;                        // To this remote computer
@@ -866,7 +866,7 @@ void CG1Neighbour::OnNewPong(CPongItem* pPong)
 	if ( m_nPongNeeded[ pPong->m_nHops ] > 0 )
 	{
 		// Have the CPongItem object make a packet, and send it to the remote computer
-		Send( pPong->ToPacket( m_nLastPingHops, m_pLastPingID ) );
+		CG1Neighbour::Send( pPong->ToPacket( m_nLastPingHops, m_pLastPingID ) );
 		Statistics.Current.Gnutella1.PongsSent++;
 
 		// Record one less pong with that many hops is needed (do)
@@ -1436,52 +1436,19 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 // Returns true if we sent the packet, false if we discovered something wrong with the situation and didn't send it
 BOOL CG1Neighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
-	// If we're still negotiating the handshake with this remote computer, leave now
-	if ( m_nState != nrsConnected ) return FALSE;
+	// If the caller didn't give us a packet, or one that isn't for our protocol, leave now
+	if ( pPacket == NULL || pPacket->m_nProtocol != PROTOCOL_G1 )
+		return FALSE;
 
-	// If the caller didn't give us a packet, or one that isn't for Gnutella, leave now
-	if ( pPacket == NULL || pPacket->m_nProtocol != PROTOCOL_G1 ) return FALSE;
-
-	// The packet is a Gnutella packet, cast it that way
-	CG1Packet* pG1 = (CG1Packet*)pPacket;
+	// If the search object isn't for Gnutella
+	if ( ! pSearch->m_bAndG1 )
+		return FALSE;
 
 	// If the packet's hops count is more than m_nHopsFlow, which is set to 0xFF by the constructor
-	if ( pG1->m_nHops > m_nHopsFlow )
-	{
-		// Leave now
+	if ( static_cast< CG1Packet* >( pPacket )->m_nHops > m_nHopsFlow )
 		return FALSE;
 
-	} // The hops count is low enough, but this neighbour is a hub above us, and this isn't a local search (do)
-	else if ( m_nNodeType == ntHub && ! bLocal )
-	{
-		// Leave now
-		return FALSE;
-
-	} // Hops are OK and hub and local are OK, but the search object isn't for Gnutella also (do)
-	else if ( ! pSearch->m_bAndG1 )
-	{
-		// Leave now
-		return FALSE;
-
-	} // If we have a remote query table and it's live (do)
-	else if ( m_pQueryTableRemote != NULL && m_pQueryTableRemote->m_bLive )
-	{
-		// Check for the search within it, and return false if there is an error (do)
-		if ( ! m_pQueryTableRemote->Check( pSearch ) ) return FALSE;
-
-	} // If this connection is to a leaf below us and (do)
-	else if ( m_nNodeType == ntLeaf && ! bLocal )
-	{
-		// Leave now
-		return FALSE;
-	}
-
-	// If this is local (do), set the last query time this CG1Neighbour object remembers to now
-	if ( bLocal ) m_tLastQuery = static_cast< DWORD >( time( NULL ) ); // The number of seconds since 1970
-
-	// Send the packet to the remote computer
-	Send( pPacket, FALSE, ! bLocal ); // Submit !bLocal as the value for bBuffered (do)
-	return TRUE;
+	return CNeighbour::SendQuery( pSearch, pPacket, bLocal );
 }
 
 //////////////////////////////////////////////////////////////////////

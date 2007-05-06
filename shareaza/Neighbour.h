@@ -1,7 +1,7 @@
 //
 // Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -106,6 +106,14 @@ public:
 	BOOL    m_bObsoleteClient;	// Is the remote client running an 'old' version of software. (An old beta, etc)
 	BOOL    m_bBadClient;		// Is the remote client running a 'bad' client- GPL rip, buggy, etc. (not banned, though)
 
+	DWORD	m_nDegree;					// "X-Degree: n" (-1 if not set)
+	DWORD	m_nMaxTTL;					// "X-Max-TTL: n" (-1 if not set)
+	BOOL	m_bDynamicQuerying;			// "X-Dynamic-Querying: 0.1" (default: false)
+	BOOL	m_bUltrapeerQueryRouting;	// "X-Ultrapeer-Query-Routing: 0.1" (default: false)
+	CString	m_sLocalePref;				// "X-Locale-Pref: en" ("" if not set)
+	BOOL	m_bRequeries;				// "X-Requeries: false" (default: true)
+	BOOL	m_bExtProbes;				// "X-Ext-Probes: 0.1" (default: false)
+
 // Attributes: Statistics
 public:
 
@@ -144,7 +152,7 @@ public:
 	virtual BOOL Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED);
 	void         DelayClose(UINT nError = 0); // Send the buffer then close the socket, record the error given
-	virtual BOOL SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
+	virtual BOOL SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal); // Validate query
 
 protected:
 
@@ -156,7 +164,7 @@ protected:
 	virtual BOOL OnCommonQueryHash(CPacket* pPacket);
 
 public:
-
+	DWORD GetMaxTTL() const;	// Get maximum TTL which is safe for both sides
 	void GetCompression(float* pnInRate, float* pnOutRate);
 };
 

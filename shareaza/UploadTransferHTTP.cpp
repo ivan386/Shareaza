@@ -627,17 +627,9 @@ BOOL CUploadTransferHTTP::IsNetworkDisabled()
 {
 	if ( !Network.IsConnected() ) return TRUE;
 	if ( Settings.Connection.RequireForTransfers == FALSE ) return FALSE;
-	
-	if ( m_nGnutella > 2 )
-	{
-		if ( ! Settings.Gnutella2.EnableToday ) return TRUE;
-	}
-	else if ( m_nGnutella == 1 )
-	{
-		if ( ! Settings.Gnutella1.EnableToday ) return TRUE;
-	}
-	
-	return FALSE;
+	if ( ( m_nGnutella & 2 ) && Settings.Gnutella2.EnableToday ) return FALSE;
+	if ( ( m_nGnutella & 1 ) && Settings.Gnutella1.EnableToday ) return FALSE;
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

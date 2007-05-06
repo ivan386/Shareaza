@@ -62,6 +62,9 @@ CManagedSearch::CManagedSearch(auto_ptr< CQuerySearch > pSearch, int nPriority)
 	m_bReceive		= TRUE;
 	m_tStarted		= 0;
 	m_nHits			= 0;
+	m_nG1Hits		= 0;
+	m_nG2Hits		= 0;
+	m_nEDHits		= 0;
 
 	m_nHubs			= 0;
 	m_nLeaves		= 0;
@@ -72,7 +75,6 @@ CManagedSearch::CManagedSearch(auto_ptr< CQuerySearch > pSearch, int nPriority)
 	m_tMoreResults	= 0;
 	m_nEDServers	= 0;
 	m_nEDClients	= 0;
-
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -206,21 +208,15 @@ BOOL CManagedSearch::Execute()
 
 BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 {
-	BOOL bIsOld = ( tSecs - m_tStarted ) >= 5;
-	
 	int nCount = 0;
-	
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
-		DWORD nPeriod;
 		
-		// Must be connected
-		
+		// Must be connected		
 		if ( pNeighbour->m_nState != nrsConnected ) continue;
 		
 		// Check network flags
-
 		switch ( pNeighbour->m_nProtocol )
 		{
 		case PROTOCOL_G1:
@@ -233,55 +229,38 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			if ( ! m_bAllowED2K ) continue;
 			break;
 		default:
-//			ASSERT( 0 )
-			;
+			continue;
 		}
-		
-		// Must be stable for 15 seconds, or longer for G1 low priority searches
-		
-		nPeriod = bIsOld ? 15 : 5;
-		if ( bIsOld && pNeighbour->m_nProtocol == PROTOCOL_G1 ) nPeriod += 120 + ( 15 * m_nPriority );
-		
-		if ( tTicks - pNeighbour->m_tConnected < nPeriod * 1000 ) continue;
-		
+
+		// Must be stable for 15 seconds
+		if ( tTicks - pNeighbour->m_tConnected < 15000 ) continue;
+
 		// Do not hammer neighbours for search results
-		
-		if ( bIsOld )
+		if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 		{
-			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
-			{
-				if ( tSecs - pNeighbour->m_tLastQuery <
-					 Settings.Gnutella1.QueryThrottle ) continue;
-			}
-			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
-			{
-				if ( tSecs - pNeighbour->m_tLastQuery <
-					 Settings.Gnutella2.QueryHostThrottle / 4 ) continue;
-			}
+			if ( tSecs - pNeighbour->m_tLastQuery <
+					Settings.Gnutella1.QueryThrottle ) continue;
 		}
-		
+		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
+		{
+			if ( tSecs - pNeighbour->m_tLastQuery <
+					Settings.Gnutella2.QueryHostThrottle / 4 ) continue;
+		}
+
 		// Lookup the host
-		
+		DWORD nLastQuery;
 		DWORD nAddress = pNeighbour->m_pHost.sin_addr.S_un.S_addr;
-		
-		if ( m_pNodes.Lookup( nAddress, nPeriod ) )
+		if ( m_pNodes.Lookup( nAddress, nLastQuery ) )
 		{
 			DWORD nFrequency = 0;
-			
 			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
-			{
-				nFrequency = Settings.Gnutella1.RequeryDelay;
-				nFrequency *= ( m_nPriority + 1 );
-			}
+				nFrequency = Settings.Gnutella1.RequeryDelay * ( m_nPriority + 1 );
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
-			{
-				nFrequency = Settings.Gnutella2.RequeryDelay;
-				nFrequency *= ( m_nPriority + 1 );
-			}
+				nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 				nFrequency = 86400;
 			
-			if ( tSecs - nPeriod < nFrequency ) // If we've queried this neighbour 'recently'
+			if ( tSecs - nLastQuery < nFrequency ) // If we've queried this neighbour 'recently'
 			{
 				// Request more ed2k results (if appropriate)
 				if ( ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && pNeighbour->m_oMoreResultsGUID ) // If it's an ed2k server and has more results
@@ -306,17 +285,41 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			}
 		}
 
-		// Set the last query time for this host for this search
-
-		m_pNodes.SetAt( nAddress, tSecs );
-
 		// Create the appropriate packet type
-
 		CPacket* pPacket = NULL;
-
 		if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 		{
-			pPacket = m_pSearch->ToG1Packet();
+			DWORD nTTL;
+			BOOL bKnownHost = m_pG1Nodes.Lookup( nAddress, nTTL );
+			if ( pNeighbour->m_bExtProbes )
+			{
+				// Neighbour supports X-Ext-Probes
+				if ( bKnownHost )
+				{
+					if ( nTTL >= pNeighbour->GetMaxTTL() )
+						// X-Max-TTL reached
+						continue;
+					if ( m_nG1Hits >= Settings.Gnutella.MaxResults )
+						// Maximum hits reached
+						continue;
+					nTTL++;
+				}
+				else
+					// It's first step
+					nTTL = 1;
+			}
+			else
+			{
+				if ( bKnownHost )
+					// We under pledge of X-Requeries
+					continue;
+				else
+					// Single query with max available TTL
+					nTTL = pNeighbour->GetMaxTTL();
+			}
+
+			m_pG1Nodes.SetAt( nAddress, nTTL );
+			pPacket = m_pSearch->ToG1Packet( nTTL );
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 		{
@@ -327,38 +330,39 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		{
 			pPacket = m_pSearch->ToEDPacket( FALSE, ((CEDNeighbour*)pNeighbour)->m_nTCPFlags );
 		}
-		else
-		{
-			ASSERT( FALSE );
-		}
 
 		// Try to send the search
-
-		if ( pPacket != NULL && pNeighbour->SendQuery( m_pSearch.get(), pPacket, TRUE ) )
+		if ( pPacket != NULL )
 		{
-			// Reset the last "search more" sent to this neighbour (if applicable)
-			pNeighbour->m_oMoreResultsGUID.clear();
-			m_tMoreResults = 0;
+			// Set the last query time for this host for this search
+			m_pNodes.SetAt( nAddress, tSecs );
 
-			//Display message in system window
-			theApp.Message( MSG_DEFAULT, IDS_NETWORK_SEARCH_SENT,
-				m_pSearch->m_sSearch.GetLength() ? (LPCTSTR)m_pSearch->m_sSearch : _T("URN"),
-				(LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
-			
-			if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
+			if ( pNeighbour->SendQuery( m_pSearch.get(), pPacket, TRUE ) )
 			{
-				// Add to ED2K search counts
-				m_nEDServers++;
-				m_nEDClients += ((CEDNeighbour*)pNeighbour)->m_nUserCount;
+				// Reset the last "search more" sent to this neighbour (if applicable)
+				pNeighbour->m_oMoreResultsGUID.clear();
+				m_tMoreResults = 0;
 
-				// Set the "last ED2K search" value if we sent a text search (to find the search later).
-				if ( ! m_pSearch->m_oED2K )
+				//Display message in system window
+				theApp.Message( MSG_DEFAULT, IDS_NETWORK_SEARCH_SENT,
+					m_pSearch->m_sSearch.GetLength() ? (LPCTSTR)m_pSearch->m_sSearch : _T("URN"),
+					(LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
+				
+				if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 				{
-					SearchManager.m_oLastED2KSearch = m_pSearch->m_oGUID;
+					// Add to ED2K search counts
+					m_nEDServers++;
+					m_nEDClients += ((CEDNeighbour*)pNeighbour)->m_nUserCount;
+
+					// Set the "last ED2K search" value if we sent a text search (to find the search later).
+					if ( ! m_pSearch->m_oED2K )
+					{
+						SearchManager.m_oLastED2KSearch = m_pSearch->m_oGUID;
+					}
 				}
 			}
+			pPacket->Release();
 		}
-		if ( pPacket ) pPacket->Release();
 		
 		nCount++;
 	}
