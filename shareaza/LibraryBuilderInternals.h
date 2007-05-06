@@ -54,7 +54,7 @@ public:
 // Operations
 public:
 	void		LoadSettings();
-    BOOL		ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1);
+	BOOL		ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1, Hashes::Md5Hash& oMD5);
 protected:		// ID3v1 and ID3v2 and MP3
 	BOOL		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);
 	BOOL		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, LPCSTR pszValue, int nLength);
@@ -83,8 +83,8 @@ protected:		// General Media
 	BOOL		ReadOGG(DWORD nIndex, HANDLE hFile);
 	BYTE*		ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
 	BOOL		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
-	BOOL		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter = false);
-	BOOL		ReadMPC(DWORD nIndex, HANDLE hFile);
+	BOOL		ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Hash& oMD5, bool bPreferFooter = false);
+	BOOL		ReadMPC(DWORD nIndex, HANDLE hFile, Hashes::Md5Hash& oMD5);
 	BOOL		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
 	CString		ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);

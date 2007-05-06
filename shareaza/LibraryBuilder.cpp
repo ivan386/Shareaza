@@ -364,14 +364,16 @@ void CLibraryBuilder::OnRun()
 				theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)sPath );
 
 				Hashes::Sha1Hash oSHA1;
-				if ( HashFile( sPath, hFile, oSHA1, nIndex ) )
+				Hashes::Md5Hash oMD5;
+				// ToDo: We need MD5 hash of the audio file without tags...
+				if ( HashFile( sPath, hFile, oSHA1, oMD5, nIndex ) )
 				{
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 					if ( Plugins.ExtractMetadata( nIndex, sPath, hFile ) )
 					{
 						// Plugin got it
 					}
-					else if ( Internals.ExtractMetadata( nIndex, sPath, hFile, oSHA1 ) )
+					else if ( Internals.ExtractMetadata( nIndex, sPath, hFile, oSHA1, oMD5 ) )
 					{
 						// Internal got it
 					}
@@ -407,7 +409,7 @@ void CLibraryBuilder::OnRun()
 
 #define MAX_HASH_BUFFER_SIZE	262144ul	// 256 Kb
 
-BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& oOutSHA1, DWORD nIndex)
+BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& oOutSHA1, Hashes::Md5Hash& oOutMD5, DWORD nIndex)
 {
 	char pBuffer [MAX_HASH_BUFFER_SIZE];
 
@@ -473,6 +475,7 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& o
 		pSHA1.GetHash( pFile->m_oSHA1 );
 		oOutSHA1 = pFile->m_oSHA1;
 		pMD5.GetHash( pFile->m_oMD5 );
+		oOutMD5 = pFile->m_oMD5;
 		pTiger.GetRoot( pFile->m_oTiger );
 		pED2K.GetRoot( pFile->m_oED2K );
 		

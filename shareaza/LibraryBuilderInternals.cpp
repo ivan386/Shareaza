@@ -83,7 +83,7 @@ void CLibraryBuilderInternals::LoadSettings()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals extract metadata (threaded)
 
-BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1)
+BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1, Hashes::Md5Hash& oMD5)
 {
 	CString strType;
 	
@@ -96,7 +96,7 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, H
 	{
 		if ( ! m_bEnableMP3 ) return FALSE;
 		if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
-		if ( ReadAPE( nIndex, hFile, true ) ) return TRUE;
+		if ( ReadAPE( nIndex, hFile, oMD5, true ) ) return TRUE;
 		if ( ReadID3v1( nIndex, hFile ) ) return TRUE;
 		if ( ReadMP3Frames( nIndex, hFile ) ) return TRUE;
 		return CLibraryBuilder::SubmitCorrupted( nIndex );
@@ -134,13 +134,13 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, H
 	else if ( strType == _T(".ape") || strType == _T(".mac") || strType == _T(".apl") )
 	{
 		if ( ! m_bEnableAPE ) return FALSE;
-		return ReadAPE( nIndex, hFile );
+		return ReadAPE( nIndex, hFile, oMD5 );
 	}
 	else if ( strType == _T(".mpc") || strType == _T(".mpp") || strType == _T(".mp+") )
 	{
 		if ( ! m_bEnableMPC ) return FALSE;
 		if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
-		if ( ReadMPC( nIndex, hFile ) ) return TRUE;
+		if ( ReadMPC( nIndex, hFile, oMD5 ) ) return TRUE;
 		return ReadID3v1( nIndex, hFile );
 	}
 	else if ( strType == _T(".jpg") || strType == _T(".jpeg") )
@@ -1963,15 +1963,15 @@ BOOL CLibraryBuilderInternals::ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& 
 	return TRUE;
 }
 
-BOOL CLibraryBuilderInternals::ReadMPC(DWORD nIndex, HANDLE hFile)
+BOOL CLibraryBuilderInternals::ReadMPC(DWORD nIndex, HANDLE hFile, Hashes::Md5Hash& oMD5)
 {
-	return ReadAPE( nIndex, hFile, true );
+	return ReadAPE( nIndex, hFile, oMD5, true );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals APE Monkey's Audio (threaded)
 
-BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter)
+BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Hash& /*oMD5*/, bool bPreferFooter)
 {
 	DWORD nFileSize = GetFileSize( hFile, NULL );
 	if ( nFileSize < sizeof(APE_TAG_FOOTER) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
@@ -2093,18 +2093,45 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 	}
 
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	APE_HEADER pAPE;
+	APE_HEADER pAPE = {0};
+	APE_HEADER_NEW pNewAPE = {0};
+	int nValidSize = sizeof(pAPE);
 	
-	ReadFile( hFile, &pAPE, sizeof(pAPE), &nRead, NULL );
+	ReadFile( hFile, &pAPE, nValidSize, &nRead, NULL );
+
+	// We checked if the file size is bigger than the footer, so no check is needed
+	// here for the nRead bytes.
 
 	// Signatures we handle although the headers may be invalid.
 	// APE tags usually are placed in footer (it's recommended).
 	bool bMAC = pAPE.cID[0] == 'M' && pAPE.cID[1] == 'A' && pAPE.cID[2] == 'C';
 	bool bMPC = pAPE.cID[0] == 'M' && pAPE.cID[1] == 'P' && pAPE.cID[2] == '+';
+	bool bNewAPE = false;
+
+	if ( bMAC && pAPE.nVersion >= 3980 )
+	{
+		SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+		nValidSize = sizeof(pNewAPE);
+		ReadFile( hFile, &pNewAPE, nValidSize, &nRead, NULL );
+		bNewAPE = true;
+	}
+	else
+	{
+		// just copy data to new format header and we will use it for the tests
+		pNewAPE.nVersion = pAPE.nVersion;
+		pNewAPE.nSampleRate = pAPE.nSampleRate;
+		pNewAPE.nTotalFrames = pAPE.nTotalFrames;
+		pNewAPE.nCompressionLevel = pAPE.nCompressionLevel;
+		pNewAPE.nFormatFlags = pAPE.nFormatFlags;
+		pNewAPE.nFinalFrameBlocks = pAPE.nFinalFrameBlocks;
+		pNewAPE.nChannels = pAPE.nChannels;
+		pNewAPE.nHeaderBytes = pAPE.nHeaderBytes;
+		ZeroMemory( &pAPE, nValidSize ); // just in case if someone messes up the code below
+	}
 
 	bool bValidSignature = bMAC || bMPC;
 
-	if ( nRead != sizeof(pAPE) || !bValidSignature || pAPE.nSampleRate == 0 || bPreferFooter )
+	if ( (int)nRead != nValidSize || !bValidSignature || pNewAPE.nSampleRate == 0 || bPreferFooter )
 	{
 		// APE tags in MP3 or MPC footer
 		if ( pFooter.nFields > 0 && bPreferFooter )
@@ -2119,43 +2146,84 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 		}
 	}
 
-	// Or samples per frame
-	DWORD nSamplesPerFrame = ( pAPE.nVersion >= 3900 || ( pAPE.nVersion >= 3800 &&
-		pAPE.nCompressionLevel == 4000 ) ) ? 73728 : 9216;
-	if ( pAPE.nVersion >= 3950 )
-		nSamplesPerFrame *= 4;
-	
-	DWORD nBitsPerSample = ( pAPE.nFormatFlags & 8 ) ? 24 : ( pAPE.nFormatFlags & 1 ) ? 8 : 16;
-	if ( nBitsPerSample == 0 )
+	DWORD nSamplesPerFrame;
+
+	if ( bNewAPE )
+		nSamplesPerFrame = pNewAPE.nBlocksPerFrame;
+	else
 	{
-		delete pXML;
-		return CLibraryBuilder::SubmitCorrupted( nIndex );
+		nSamplesPerFrame = ( ( pNewAPE.nVersion >= 3900 ) || 
+			( pNewAPE.nVersion >= 3800 && pNewAPE.nCompressionLevel == 4000 ) ) ? 73728 : 9216;
+		if ( pNewAPE.nVersion >= 3950 )
+			nSamplesPerFrame = 73728 * 4;
 	}
-		
-	DWORD nSamples = ( ( pAPE.nTotalFrames - 1 ) * nSamplesPerFrame ) + pAPE.nFinalFrameBlocks;
-	DWORD nDuration	= nSamples / pAPE.nSampleRate;
-	DWORD nUncompressedSize = nSamples * pAPE.nChannels * ( nBitsPerSample / 8 );
-	
-	if ( nUncompressedSize == 0 )
+
+	DWORD nSamples = 0;
+	if ( pNewAPE.nTotalFrames != 0 ) 
+		nSamples = ( pNewAPE.nTotalFrames - 1 ) * nSamplesPerFrame + pNewAPE.nFinalFrameBlocks;
+
+	if ( pNewAPE.nSampleRate == 0 )
 	{
 		delete pXML;
 		return CLibraryBuilder::SubmitCorrupted( nIndex );
 	}
 
-	float nCompressRatio = (float)nFileSize / ( nUncompressedSize + pAPE.nHeaderBytes );
-	DWORD nBitRate = ( ( nSamples * pAPE.nChannels * nBitsPerSample ) / nDuration ) * nCompressRatio;
+	DWORD nDuration = nSamples / pNewAPE.nSampleRate;
+
+	if ( nDuration <= 0.0 )
+	{
+		delete pXML;
+		return CLibraryBuilder::SubmitCorrupted( nIndex );
+	}
+
+	DWORD nBitRate = ( nFileSize * 8 / nDuration + 500 ) / 1000;
+
+	if ( bNewAPE )
+	{
+		Hashes::Md5Hash	oApeMD5;
+		std::memcpy( &oApeMD5, pNewAPE.cFileMD5, sizeof(pNewAPE.cFileMD5) );
+		if ( !oApeMD5.validate() )
+		{
+			delete pXML;
+			return CLibraryBuilder::SubmitCorrupted( nIndex );
+		}
+
+		// ToDo: We need MD5 hash of the file without tags...
+/*		if ( validAndUnequal( oApeMD5, oMD5 ) )
+		{
+			delete pXML;
+			return CLibraryBuilder::SubmitCorrupted( nIndex );
+		}
+*/
+	}
+	{
+		DWORD nBitsPerSample = ( pNewAPE.nFormatFlags & 1 ) ? 8 : ( pNewAPE.nFormatFlags & 8 ) ? 24 : 16;
+		if ( nBitsPerSample == 0 )
+		{
+			delete pXML;
+			return CLibraryBuilder::SubmitCorrupted( nIndex );
+		}
+
+		DWORD nUncompressedSize = nSamples * pNewAPE.nChannels * ( nBitsPerSample / 8 );
+		if ( nUncompressedSize == 0 )
+		{
+			delete pXML;
+			return CLibraryBuilder::SubmitCorrupted( nIndex );
+		}
+	}
+
 	CString strItem;
 	
-	strItem.Format( L"%lu", nBitRate / 1000 );
+	strItem.Format( L"%lu", nBitRate );
 	pXML->AddAttribute( L"bitrate", strItem );
 
 	strItem.Format( L"%lu", nDuration );
 	pXML->AddAttribute( L"seconds", strItem );
 	
-	strItem.Format( L"%lu", pAPE.nSampleRate );
+	strItem.Format( L"%lu", pNewAPE.nSampleRate );
 	pXML->AddAttribute( L"sampleRate", strItem );
 	
-	strItem.Format( L"%lu", pAPE.nChannels );
+	strItem.Format( L"%lu", pNewAPE.nChannels );
 	pXML->AddAttribute( L"channels", strItem );
 	
 	ReadID3v1( nIndex, hFile, pXML );

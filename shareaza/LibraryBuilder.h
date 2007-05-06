@@ -70,7 +70,7 @@ protected:
 	BOOL		ReadFileWithPriority(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD lpNumberOfBytesRead, BOOL bPriority = TRUE);
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
-    BOOL		HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1, DWORD nIndex);
+	BOOL		HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1, Hashes::Md5Hash& oMD5, DWORD nIndex);
 	static BOOL	DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	static BOOL	DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	static BOOL	DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
