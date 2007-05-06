@@ -13,11 +13,11 @@
 <!-- Manifest -->
 <manifest	name="Nederlands"
 		author="Jan-Willem Koornwinder (Thurstydog)"
-		updatedBy="ceceboy"
+		updatedBy="ceceboy, Neglacio"
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.5.0"
+		version="2.2.5.2"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te selecteren."
@@ -553,6 +553,7 @@
 		<menu text="_Hulpmiddelen">
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Bestand/Torrent _downloaden..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="_Importeer gedeeltelijke eMule downloads..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Een _taal kiezen..."/>
@@ -636,6 +637,7 @@
 		<menu text="_Hulpmiddelen">
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Bestand/Torrent _downloaden..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="_Importeer gedeeltelijke eMule downloads..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Een _taal kiezen..."/>
@@ -1338,6 +1340,8 @@
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Afspelen"/>
+		<item id="ID_MEDIA_RATE" text="Beoor_deel bestand..."/>
+		<item id="ID_MEDIA_PROPERTIES" text="_Eigenschappen..."/>
 		<separator/>
 		<item id="ID_MEDIA_ADD" text="_Bestand toevoegen..."/>
 		<item id="ID_MEDIA_ADD_FOLDER" text="_Map toevoegen..."/>
@@ -2317,7 +2321,9 @@
 	<tip id="ID_MEDIA_PLAY" message="Het huidige mediabestand afspelen."/>
 	<tip id="ID_MEDIA_PLAYLIST" message="Toon of verberg de afspeellijst."/>
 	<tip id="ID_MEDIA_PREVIOUS" message="Ga terug naar het vorige bestand van de afspeellijst."/>
+	<tip id="ID_MEDIA_PROPERTIES" message="Bekijk en wijzig de eigenschappen van het gekozen bestand."/>
 	<tip id="ID_MEDIA_RANDOM" message="In- of uitschakelen van het afspelen van afspeellijst in willekeurige volgorde."/>
+	<tip id="ID_MEDIA_RATE" message="Beoordeel de gekozen bestanden."/>
 	<tip id="ID_MEDIA_REMOVE" message="Verwijder de geselecteerde mediabestanden van de afspeellijst."/>
 	<tip id="ID_MEDIA_REPEAT" message="De huidige afspeellijst herhalen."/>
 	<tip id="ID_MEDIA_SAVE" message="De huidige afspeellijst opslaan als een bestand..."/>
@@ -2634,7 +2640,7 @@
 	<string id="16079" value="Weet je zeker dat je de verbinding wilt verbreken?"/>
 	<string id="16081" value="Zoekaanvraag voor &quot;%s&quot; is verzonden naar %s."/>
 	<string id="16083" value="Het forceren van je PC naar hub modes kan nadelige gevolgen hebben op de prestatie en het P2P netwerk. Het is over het algemeen beter om Shareaza te laten beslissen of al dan niet hub modes gebruikt zou moeten worden.\n\nHub modes produceert GEEN betere zoekresultaten, of enige andere voordelen voor jou.\n\nWil je dit echt doen, ondanks deze nadelen?"/>
-	<string id="16084" value="Het uitschakelen van de ondersteuning voor Gnutella-1 protocollen kan je zoekresultaten begrenzen en als je optreedt als hub kan dit ook invloed hebben op de resultaten van andere gebruikers. Weet je zeker dat je dit wilt doen?"/>
+	<string id="16084" value="Het uitschakelen van de ondersteuning voor het Gnutella protocol kan je zoekresultaten begrenzen en als je optreedt als hub kan dit ook invloed hebben op de resultaten van andere gebruikers. Weet je zeker dat je dit wilt doen?"/>
 	<string id="16085" value="Gnutella2 is Shareaza's voornaamste netwerk. Het uitschakelen van de ondersteuning hiervoor kan zowel het aantal als de kwaliteit van je zoekresultaten zwaar begrenzen. Weet je zeker dat je dit wilt doen?"/>
 	<string id="16087" value="Je uitgaande bandbreedte is te laag om dit netwerk aan te kunnen zetten."/>
 	<string id="16128" value="Een binnenkomende verbinding vanaf %s poort %i is geaccepteerd."/>
@@ -3121,6 +3127,7 @@
 	<string id="20214" value="Goed"/>
 	<string id="20215" value="Erg goed"/>
 	<string id="20216" value="Perfect"/>
+	<string id="20217" value="Kies de eMule gedeeltelijke(.part) map:"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
@@ -3369,22 +3376,21 @@
 		<control caption="Leaf naar hub"/>
 		<control caption="Hub naar hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 netwerk:"/>
-		<control caption="Nu verbinden met eDonkey"/>
 		<control caption="Altijd verbinden"/>
+		<control caption="Nu verbinden met eDonkey"/>
 		<control caption="_Globaal zoeken:"/>
 		<control caption="Zoek bekende verre servers in de servercache:"/>
 		<control caption="Stop met zoeken na:"/>
 		<control/><control/>
 		<control caption="Zoekresultaten."/>
+		<control caption="Ontvang en werk de server lijst bij van de verbonden server."/>
 		<control caption="_Cliënt link verbindingen:"/>
 		<control caption="Verbindt met niet meer dan:"/>
 		<control/><control/>
 		<control caption="andere eDonkey cliënten."/>
 		<control caption="eDonkey2000 _hulpmiddelen:"/>
-		<control caption="Gedeeltelijke eDonkey/eMule downloads (.part) importeren:"/>
-		<control caption="Importeren"/>
 		<control caption="eDonkey2000 serverlijst downloaden van het internet:"/>
 		<control caption="Downloaden"/>
 	</dialog>
@@ -3548,7 +3554,7 @@
 		<control caption="Het Gnutella2 netwerk is Shareaza's voornaamste netwerk. Het biedt meer opties en prestatie dan enig ander P2P netwerk."/>
 		<control caption="Verbinden met eDonkey2000"/>
 		<control caption="Het eDonkey2000 netwerk is een populair netwerk, op servers gebaseerd. Hoewel met minder rijk aan opties als Gnutella2, heeft eDonkey2000 een omvangrijke bestandsverzameling."/>
-		<control caption="Verbinden met de originele Gnutella netwerk"/>
+		<control caption="Verbinden met het originele Gnutella netwerk"/>
 		<control caption="Hoewel het originele Gnutella netwerk minder opties heeft dan Gnutella2, en minder bestanden dan eDonkey2000, blijft het toch een waardevolle bron."/>
 	</dialog>
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000 downloads importeren">
@@ -3718,7 +3724,7 @@
 		<control caption="Service_adres:"/>
 		<control/>
 		<control caption="Discovery service type:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
 		<control caption="OK"/>
 		<control caption="Annuleren"/>
 	</dialog>
