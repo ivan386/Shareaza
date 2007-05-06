@@ -2177,6 +2177,7 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Ha
 	}
 
 	DWORD nBitRate = ( nFileSize * 8 / nDuration + 500 ) / 1000;
+	DWORD nBitsPerSample = 0;
 
 	if ( bNewAPE )
 	{
@@ -2188,8 +2189,11 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Ha
 			return CLibraryBuilder::SubmitCorrupted( nIndex );
 		}
 
+		nBitsPerSample = pNewAPE.nBitsPerSample;
+
 		// ToDo: We need MD5 hash of the file without tags...
-/*		if ( validAndUnequal( oApeMD5, oMD5 ) )
+/*
+		if ( validAndUnequal( oApeMD5, oMD5 ) )
 		{
 			delete pXML;
 			return CLibraryBuilder::SubmitCorrupted( nIndex );
@@ -2198,19 +2202,20 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Ha
 	}
 	else
 	{
-		DWORD nBitsPerSample = ( pNewAPE.nFormatFlags & 1 ) ? 8 : ( pNewAPE.nFormatFlags & 8 ) ? 24 : 16;
-		if ( nBitsPerSample == 0 )
-		{
-			delete pXML;
-			return CLibraryBuilder::SubmitCorrupted( nIndex );
-		}
+		nBitsPerSample = ( pNewAPE.nFormatFlags & 1 ) ? 8 : ( pNewAPE.nFormatFlags & 8 ) ? 24 : 16;
+	}
 
-		DWORD nUncompressedSize = nSamples * pNewAPE.nChannels * ( nBitsPerSample / 8 );
-		if ( nUncompressedSize == 0 )
-		{
-			delete pXML;
-			return CLibraryBuilder::SubmitCorrupted( nIndex );
-		}
+	if ( nBitsPerSample == 0 )
+	{
+		delete pXML;
+		return CLibraryBuilder::SubmitCorrupted( nIndex );
+	}
+
+	DWORD nUncompressedSize = nSamples * pNewAPE.nChannels * ( nBitsPerSample / 8 );
+	if ( nUncompressedSize == 0 )
+	{
+		delete pXML;
+		return CLibraryBuilder::SubmitCorrupted( nIndex );
 	}
 
 	CString strItem;
