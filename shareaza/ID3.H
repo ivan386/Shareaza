@@ -99,9 +99,35 @@ typedef struct
 	unsigned __int32 nTerminatingBytes;		// the bytes after that raw data (for extended info)
 	unsigned __int32 nTotalFrames;			// the number of frames in the file
 	unsigned __int32 nFinalFrameBlocks;		// the number of samples in the final frame
+	
+	// That data are optional their availability is stored in the nFormatFlags
+	// Anyway, we suppose that at least 2 __int32's are required for the plain audio :)
 	unsigned __int32 nPeakLevel;
 	unsigned __int32 nSeekElements;
 } APE_HEADER;
+
+typedef struct
+{
+	char cID[4];                             // should equal 'MAC '
+	unsigned __int16 nVersion;               // version number * 1000 (3.81 = 3810)
+	unsigned __int16 nPadding;               // padding/reserved (always empty)
+	unsigned __int32 nDescriptorBytes;       // the number of descriptor bytes (allows later expansion of this header)
+	unsigned __int32 nHeaderBytes;           // the number of header APE_HEADER bytes
+	unsigned __int32 nSeekTableBytes;        // the number of bytes of the seek table
+	unsigned __int32 nHeaderDataBytes;       // the number of header data bytes (from original file)
+	unsigned __int32 nAPEFrameDataBytes;     // the number of bytes of APE frame data
+	unsigned __int32 nAPEFrameDataBytesHigh; // the high order number of APE frame data bytes
+	unsigned __int32 nTerminatingDataBytes;  // the terminating data of the file (not including tag data)
+	char cFileMD5[16];                       // the MD5 hash of the file
+	unsigned __int16 nCompressionLevel;      // the compression level
+	unsigned __int16 nFormatFlags;           // any format flags (for future use)
+	unsigned __int32 nBlocksPerFrame;        // the number of audio blocks in one frame
+	unsigned __int32 nFinalFrameBlocks;      // the number of audio blocks in the final frame
+	unsigned __int32 nTotalFrames;           // the number of frames in the file
+	unsigned __int16 nBitsPerSample;         // the bits per sample (typically 16)
+	unsigned __int16 nChannels;              // the number of channels (1 or 2)
+	unsigned __int32 nSampleRate;            // the sample rate (typically 44100)
+} APE_HEADER_NEW;
 
 typedef struct
 {
