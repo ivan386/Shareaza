@@ -567,7 +567,7 @@
 			<item id="ID_WINDOW_NAVBAR" text="Mostrar Barra de Navegação"/>
 			<item id="ID_WINDOW_TOOLBAR" text="Mostrar Barra de Ferramentas"/>
 			<separator/>
-			<item id="ID_WINDOW_TABBAR" text="Mostrar Barra de Aba"/>
+			<item id="ID_WINDOW_TABBAR" text="Mostrar Barra de Abas"/>
 			<item id="ID_WINDOW_MONITOR" text="Mostrar Monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="Mostrar Remoto"/>
 		</menu>
@@ -655,7 +655,7 @@
 			<item id="ID_WINDOW_NAVBAR" text="Mostrar Barra de Navegação"/>
 			<item id="ID_WINDOW_TOOLBAR" text="Mostrar Barra de Ferramentas"/>
 			<separator/>
-			<item id="ID_WINDOW_TABBAR" text="Mostrar Barra de Aba"/>
+			<item id="ID_WINDOW_TABBAR" text="Mostrar Barra de Abas"/>
 			<item id="ID_WINDOW_MONITOR" text="Mostrar Monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="Mostrar Remoto"/>
 		</menu>
@@ -2838,8 +2838,8 @@
 	<string id="16392" value="Clique no botão Conectar para começar."/>
 	<string id="16393" value="O arquivo &quot;%s&quot; falhou no teste de verificação de hash, e pode não ser o arquivo que você pretendia baixar. Você tem certeza que você quer abrí-lo?"/>
 	<string id="16394" value="Você gostaria de remover o atributo de &quot;potencialmente inseguro&quot; deste arquivo?"/>
-	<string id="16395" value="Sua pasta de downloads &quot;%s&quot; não está ainda na sua biblioteca.\n\nIncluir sua pasta de arquivos baixados na sua biblioteca é um jeito fácil de ver e organizar seus novos downloads, e faz com que você aproveite vantagens avançadas do Shareaza, como verificação de Hash e atualização automática. Colocar arquivos baixados na sua biblioteca não requer necessariamente que você os compartilhe: você pode escolher se quer ou não compartilhar os arquivos independentemente.\n\nVocê gostaria de adicionar a sua pasta de arquivos baixados na sua biblioteca agora?"/>
-	<string id="16396" value="Sua pasta de downloads foi adicionada a sua biblioteca. Você gostaria de compartilhá-la também?"/>
+	<string id="16395" value="Sua pasta de arquivos baixados &quot;%s&quot; não está ainda na sua biblioteca.\n\nIncluir sua pasta de arquivos baixados na sua biblioteca torna mais fácil de ver e organizar novos downloads, e permite a você tomar vantagem das características avançadas do Shareaza tais como verificação de download e atualização automática. Colocar arquivos baixados na sua biblioteca não requer necessariamente que você os compartilhe: você pode escolher se quer ou não compartilhar os arquivos independentemente.\n\nVocê gostaria de adicionar a sua pasta de arquivos baixados na sua biblioteca agora?"/>
+	<string id="16396" value="Sua pasta de arquivos baixados foi adicionada a sua biblioteca. Você gostaria de compartilhá-la também?"/>
 	<string id="16397" value="Você tem certeza que você quer apagar a(s)%i pasta(s) do(s) Álbum(s) selecionada(s) ?\n\nNote que esta ação não apaga os arquivos dentro das pastas do álbum, apenas as próprias pastas."/>
 	<string id="16398" value="O Shareaza não pôde renomear:\n\n%s\npara\n%s"/>
 	<string id="16399" value="O Shareaza não pôde apagar o arquivo:\n\n%s"/>
@@ -3976,7 +3976,7 @@
 	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="O Shareaza Respeita os Seus Usuários">
 		<control/>
 		<control caption="Você sabia que o Shareaza é um produto 100% gratuito?"/>
-		<control caption="O Shareaza NÃO CONTÉM nenhum &quot;spyware&quot;, &quot;adware&quot; ou outro programa junto com o Shareaza. NÃO exibe NENHUMA propaganda ou &quot;popups&quot;,.{n}{n}Se você ver uma propaganda ou um &quot;popups&quot; enquanto usando o Shareaza, esteja assegurado de que eles NÃO estão vindo deste programa."/>
+		<control caption="O Shareaza NÃO CONTÉM nenhum &quot;spyware&quot;, &quot;adware&quot; ou outro programa junto com o Shareaza. NÃO exibe NENHUMA propaganda ou &quot;popups&quot;, jamais.{n}{n}Se você ver uma propaganda ou um &quot;popups&quot; enquanto usando o Shareaza, esteja assegurado de que eles NÃO estão vindo deste programa."/>
 		<control caption="Infelizmente muito outros programas vem com adwares indesejáveis ou spywares, então se você ver algo suspeito você pode desejar verificar o seu PC com um programa de remoção de spywares e propagandas."/>
 		<control caption="Você não tem que pagar para obter o Shareaza. O Shareaza pode ser baixado livremente por qualquer um em www.shareaza.com. Se você pagou algum dinheiro pelo Shareaza, você deve exigir uma restituição completa imediatamente."/>
 		<control caption="O Shareaza respeita os seus usuários!"/>
@@ -3986,7 +3986,7 @@
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Promova o Shareaza">
 		<control/>
 		<control caption="Ajude-nos a promover o Shareaza"/>
-		<control caption="Nós esperamos que você tenha gostado de usar o Shareaza até agora. Nós acreditamos que seja a melhor aplicação pra compartilhar."/>
+		<control caption="Nós esperamos que você tenha gostado de usar o Shareaza até agora. Nós acreditamos que seja o melhor aplicativo para compartilhar."/>
 		<control caption="Infelizmente, muitos que compartilham arquivos não sabem o que eles estão perdendo!"/>
 		<control caption="Se você conhece alguém que gostaria do Shareaza, sejam eles um novo usuário ou alguém ainda usando um produto inferior, por que não deixá-los saber que há uma alternativa melhor?"/>
 		<control caption="As chances são de que eles ficarão gratos por você tê-los avisado!"/>
