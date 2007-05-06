@@ -1,11 +1,7 @@
 //
 // ResultFilters.cpp
 //
-//	Date:			"$Date: 2006/02/03 18:43:23 $"
-//	Revision:		"$Revision: 1.10 $"
-//  Last change by:	"$Author: spooky23 $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,9 +18,7 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-//
-// Author : roo_koo_too@yahoo.com
-//
+
 ///////////////////////////////////////////////////
 // ResultFilters
 // Save the filters used for results

@@ -1,11 +1,7 @@
 //
 // DlgDecodeMetadata.cpp
 //
-//	Date:			"$Date: 2006/02/23 20:45:26 $"
-//	Revision:		"$Revision: 1.5 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it

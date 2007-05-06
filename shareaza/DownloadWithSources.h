@@ -1,11 +1,7 @@
 //
 // DownloadWithSources.h
 //
-//	Date:			"$Date: 2006/04/04 23:54:15 $"
-//	Revision:		"$Revision: 1.11 $"
-//  Last change by:	"$Author: rolandas $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
