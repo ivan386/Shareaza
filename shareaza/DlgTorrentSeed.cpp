@@ -1,7 +1,7 @@
 //
 // DlgTorrentSeed.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,7 @@ BEGIN_MESSAGE_MAP(CTorrentSeedDlg, CSkinDialog)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
-const unsigned BUFFER_SIZE = 2 * 1024 * 1024u;
+const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -428,7 +428,7 @@ BOOL CTorrentSeedDlg::VerifySingle()
 		
 		if ( m_bCancel ) break;
 		tStart = ( GetTickCount() - tStart ) / 2;
-		Sleep( min( tStart, 50u ) );
+		Sleep( min( tStart, 50ul ) );
 		if ( m_bCancel ) break;
 	}
 	
@@ -553,7 +553,7 @@ BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LP
 		
 		if ( m_bCancel ) break;
 		tStart = ( GetTickCount() - tStart ) / 2;
-		Sleep( min( tStart, 50u ) );
+		Sleep( min( tStart, 50ul ) );
 		if ( m_bCancel ) break;
 	}
 	

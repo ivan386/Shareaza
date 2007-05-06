@@ -42,7 +42,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define BUFFER_SIZE		8192
+const DWORD BUFFER_SIZE = 8192;
 
 
 //////////////////////////////////////////////////////////////////////

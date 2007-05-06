@@ -570,7 +570,7 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 		
 		if ( m_pEvent != NULL ) break;
 		tStart = ( GetTickCount() - tStart ) / 2;
-		Sleep( min( tStart, 50u ) );
+		Sleep( min( tStart, 50ul ) );
 		if ( m_pEvent != NULL ) break;
 	}
 	

@@ -1,7 +1,7 @@
 //
 // DlgFilePreview.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,6 +53,7 @@ BEGIN_INTERFACE_MAP(CFilePreviewDlg, CSkinDialog)
 	INTERFACE_PART(CFilePreviewDlg, IID_IDownloadPreviewSite, DownloadPreviewSite)
 END_INTERFACE_MAP()
 
+const DWORD BUFFER_SIZE = 40960u;
 CList< CFilePreviewDlg* > CFilePreviewDlg::m_pWindows;
 
 
@@ -383,8 +384,6 @@ BOOL CFilePreviewDlg::LoadPlugin(LPCTSTR pszType)
 
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg manual execution
-
-const DWORD BUFFER_SIZE = 40960u;
 
 BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 {
