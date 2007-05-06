@@ -407,8 +407,9 @@ void CShakeNeighbour::SendPublicHeaders()
 		m_pOutput->Print( strHeader );
 	}
 
-	strHeader.Format( _T("X-Locale-Pref: %s\r\n"), Settings.General.Language );
-	m_pOutput->Print( strHeader );
+//  ToDO: we currently do not use standard language codes
+//	strHeader.Format( _T("X-Locale-Pref: %s\r\n"), Settings.General.Language );
+//	m_pOutput->Print( strHeader );
 
 	// Tell the remote computer our IP address with a header like "Listen-IP: 67.176.34.172:6346"
 	m_bSentAddress |= SendMyAddress(); // Returns true if the header is sent, set m_bSentAddress true once its sent
