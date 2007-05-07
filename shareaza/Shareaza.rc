@@ -4374,6 +4374,12 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_SECURITY_REMOVE_CONFIRM 
+                            "Are you sure you want to delete the selected security rules?  This cannot be undone."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_FILTER_DELETE_CONFIRM "Are you sure you want to delete this filter ?"
     IDS_SCHEMAS             "&Schemas"
     IDS_MULTIPLE_VALUES     "Multiple Values"

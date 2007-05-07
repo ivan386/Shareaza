@@ -364,6 +364,10 @@ void CSecurityWnd::OnUpdateSecurityRemove(CCmdUI* pCmdUI)
 
 void CSecurityWnd::OnSecurityRemove() 
 {
+	CString strMessage;
+	LoadString( strMessage, IDS_SECURITY_REMOVE_CONFIRM );
+	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
+
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
 		CQuickLock oLock( Security.m_pSection );
