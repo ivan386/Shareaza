@@ -1288,10 +1288,14 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 				strText = Settings.SmartVolume( pSource->m_pTransfer->m_nDownloaded, FALSE );
 			break;
 		case DOWNLOAD_COLUMN_PERCENTAGE:
-			if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) && ( pSource->m_pTransfer ) )
-				strText.Format( _T("%i%%"), ((int) ( (double)( pSource->m_pTransfer->m_nDownloaded ) / (double)( pSource->m_pDownload->m_nSize ) * 100 )) );
-			else
-				strText = _T("-");
+			if ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nDownloaded > 0 &&
+				pDownload->m_nSize < SIZE_UNKNOWN && pDownload->m_nSize > 0 )
+			{
+				if ( rcCell.Width() > 50 )
+					strText.Format( _T("%.2f%%"), float( pSource->m_pTransfer->m_nDownloaded * 10000 / pSource->m_pDownload->m_nSize ) / 100.0f );
+				else
+					strText.Format( _T("%i%%"), int( pSource->m_pTransfer->m_nDownloaded * 100 / pSource->m_pDownload->m_nSize ) );
+			}
 			break;
 		case DOWNLOAD_COLUMN_COUNTRY:
 			dc.FillSolidRect( rcCell.left, rcCell.top, 20, rcCell.Height(), crBack );
