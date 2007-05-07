@@ -76,6 +76,12 @@ public:
 		ToLower( strName );
 
 		CSchema* pSchema = NULL;
+
+		// A quick hack for Limewire documents schema
+		// ToDo: Remove it when the full schema mapping is ready
+		if ( strName == L"document" )
+			return m_pNames.Lookup( L"wordprocessing", pSchema ) ? pSchema : NULL;
+
 		return m_pNames.Lookup( strName, pSchema ) ? pSchema : NULL;
 	}
 
