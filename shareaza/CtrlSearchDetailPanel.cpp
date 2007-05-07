@@ -895,6 +895,13 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 	
 	*pnBuffer = pBuffer->m_nLength;
 	*ppBuffer = (BYTE*)malloc( *pnBuffer );
+	if ( ! *ppBuffer )
+	{
+		*pnBuffer = 0;
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CSearchDetailPanel::ExecuteRequest()") );
+		return FALSE;
+	}
+
 	CopyMemory( *ppBuffer, pBuffer->m_pBuffer, *pnBuffer );
 	
 	return TRUE;

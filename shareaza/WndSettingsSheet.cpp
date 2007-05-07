@@ -201,6 +201,11 @@ void CSettingsSheet::SetModified(BOOL bChanged)
 INT_PTR CSettingsSheet::DoModal()
 {
 	m_pTemplate = (DLGTEMPLATE *)malloc( sizeof(DLGTEMPLATE) + 6 );
+	if ( ! m_pTemplate )
+	{
+		theApp.Message( MSG_ERROR, _T("Memory allocation error in CSettingsSheet::DoModal()") );
+		return IDCANCEL;
+	}
 	ZeroMemory( m_pTemplate, sizeof(DLGTEMPLATE) + 6 );
 
 	DWORD dwExStyle = theApp.m_bRTL ? WS_EX_RTLREADING|WS_EX_RIGHT|WS_EX_LEFTSCROLLBAR|WS_EX_LAYOUTRTL : 
