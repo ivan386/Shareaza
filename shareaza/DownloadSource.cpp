@@ -467,22 +467,28 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 			if ( ! Settings.Gnutella2.EnableToday ) return FALSE;
 			break;
 		case PROTOCOL_ED2K:
-			if ( ! Settings.eDonkey.EnableToday ) return FALSE;
-			if ( ! bNetwork ) return FALSE;
+			if ( ! Settings.eDonkey.EnableToday || ! bNetwork ) return FALSE;
 			break;
 		case PROTOCOL_HTTP:
-			if ( m_nGnutella == 2 )
+			switch( m_nGnutella )
 			{
-				if ( ! Settings.Gnutella2.EnableToday ) return FALSE;
-			}
-			else if ( m_nGnutella == 1 )
-			{
+			case 0:
+				// Pure HTTP source
+				if ( ! bNetwork ) return FALSE;
+				break;
+			case 1:
+				// Pure G1 source
 				if ( ! Settings.Gnutella1.EnableToday ) return FALSE;
-			}
-			else
-			{
+				break;
+			case 2:
+				// Pure G2 source
+				if ( ! Settings.Gnutella2.EnableToday ) return FALSE;
+				break;
+			case 3:
+				// Mixed G1/G2 source
 				if ( ! Settings.Gnutella1.EnableToday &&
 					 ! Settings.Gnutella2.EnableToday ) return FALSE;
+				break;
 			}
 			break;
 		case PROTOCOL_FTP:
@@ -492,7 +498,6 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 			if ( ! bNetwork ) return FALSE;
 			break;
 		default:
-			theApp.Message( MSG_ERROR, _T("Source with invalid protocol found") );
 			return FALSE;
 		}
 	}
