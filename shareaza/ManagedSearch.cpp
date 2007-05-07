@@ -125,11 +125,11 @@ void CManagedSearch::Serialize(CArchive& ar)
 void CManagedSearch::Start()
 {
 	if ( m_bActive ) return;
-	m_bActive = TRUE;
 	
 	CSingleLock pLock( &SearchManager.m_pSection );
-	pLock.Lock( 1000 );
+	if ( !pLock.Lock( 100 ) ) return;
 	
+	m_bActive		= TRUE;
 	m_tStarted		= static_cast< DWORD >( time( NULL ) );
 	m_tExecute		= 0;
 	m_tLastED2K		= 0;
