@@ -618,11 +618,22 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 						m_pXML->GetAttributeValue( CXMLAttribute::schemaName, NULL ) );
 					if ( m_pSchema == NULL )
 					{
-						m_pSchema = SchemaCache.Guess( m_pXML->GetName() );
-						if ( m_pSchema == NULL )
+						// Schemas do not match by URN, get first element to compare
+						// with names map of schemas (which are singulars)
+						bool bFound = false;
+						if ( CXMLElement* pElement = m_pXML->GetFirstElement() )
 						{
-							theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown XML schema: \"%s\""), strXML );
+							m_pSchema = SchemaCache.Guess( pElement->GetName() );
+							if ( m_pSchema ) bFound = true;
 						}
+						else // has no plural envelope
+						{
+							m_pSchema = SchemaCache.Guess( m_pXML->GetName() );
+							if ( m_pSchema ) bFound = true;
+						}
+						
+						if ( !bFound )
+							theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown XML schema: \"%s\""), strXML );
 					}
 				}
 			}
