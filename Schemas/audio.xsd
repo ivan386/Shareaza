@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <schema targetNamespace="http://www.limewire.com/schemas/audio.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
-
 <mapping>
 	<network name="ed2k" value="Audio"/>
 </mapping>
-
 <element name="audios">
   <complexType>
       <element name="audio" type="audioType" minOccurs="1" maxOccurs="unbounded"/>
@@ -15,8 +12,32 @@
 		<all>
 			<attribute name="title" type="string"/>
 			<attribute name="artist" type="string"/>
+            <attribute name="albumArtist" type="string"/>
+            <attribute name="origArtist" type="string"/>
 			<attribute name="album" type="string"/>
-			<attribute name="composer" type="string"/>
+			<attribute name="origAlbum" type="string"/>
+            <attribute name="type">
+            	<simpleType base="string">
+					<enumeration value="Album"/>
+					<enumeration value="Live"/>
+					<enumeration value="Soundtrack"/>
+					<enumeration value="Remix"/>
+					<enumeration value="Single"/>
+					<enumeration value="Compilation"/>
+					<enumeration value="EP"/>
+					<enumeration value="Speech"/>
+					<enumeration value="Audiobook"/>
+					<enumeration value="Non-Album Track"/>
+					<enumeration value="Other"/>
+             	</simpleType>
+            </attribute>
+            <attribute name="albumStatus">
+             	<simpleType base="string">
+					<enumeration value="Official"/>
+					<enumeration value="Bootleg"/>
+					<enumeration value="Advance"/>
+             	</simpleType>
+            </attribute>
 			<attribute name="genre">
 				<simpleType base="string">
 					<enumeration value="Acapella"/>
@@ -61,7 +82,7 @@
 					<enumeration value="Death Metal"/>
 					<enumeration value="Disco"/>
 					<enumeration value="Dream"/>
-					<enumeration value="Drum & Bass"/>
+                    <enumeration value="Drum &amp; Bass"/>
 					<enumeration value="Drum Solo"/>
 					<enumeration value="Duet"/>
 					<enumeration value="Easy Listening"/>
@@ -168,37 +189,44 @@
 					<enumeration value="World"/>
 				</simpleType>
 			</attribute>
-			<attribute name="origArtist" type="string"/>
-			<attribute name="origAlbum" type="string"/>
-			<attribute name="track" type="short"/>
-			<attribute name="disc">
-				<simpleType base="short">
-					<enumeration value="1"/>
-					<enumeration value="2"/>
-					<enumeration value="3"/>
-				</simpleType>
-			</attribute>	
+            <attribute name="track" type="string"/>
+            <attribute name="disc" type="string"/>
 			<attribute name="year" type="year"/>
+            <attribute name="origYear" type="year"/>
 			<attribute name="seconds" type="int"/>
 			<attribute name="bitrate">
 				<simpleType base="short">
+					<enumeration value="32"/>
+					<enumeration value="48"/>
 					<enumeration value="64"/>
+					<enumeration value="80"/>
+					<enumeration value="96"/>
 					<enumeration value="128"/>
 					<enumeration value="192"/>
+					<enumeration value="192"/>
+					<enumeration value="224"/>
 					<enumeration value="256"/>
-					<enumeration value="128-256"/>
+					<enumeration value="320"/>
+					<enumeration value="32-64"/>
+					<enumeration value="64-96"/>
+					<enumeration value="96-128"/>
+					<enumeration value="128-192"/>
 					<enumeration value="192-256"/>
+					<enumeration value="256-320"/>
 				</simpleType>
 			</attribute>
-			<attribute name="sampleRate" type="int"/>
-			<attribute name="type">
-				<simpleType base="string">
-					<enumeration value="Song"/>
-					<enumeration value="Full Album"/>
-					<enumeration value="Speech"/>
-					<enumeration value="Audiobook"/>
+            <attribute name="sampleRate">
+				<simpleType base="int">
+					<enumeration value="8000"/>
+					<enumeration value="11025"/>
+					<enumeration value="16000"/>
+					<enumeration value="22050"/>
+					<enumeration value="44100"/>
+					<enumeration value="48000"/>
+					<enumeration value="96000"/>
+					<enumeration value="192000"/>
 				</simpleType>
-			</attribute>
+            </attribute>
 			<attribute name="channels">
 				<simpleType base="short">
 					 <enumeration value="1"/>
@@ -211,11 +239,14 @@
 					<enumeration value="Stereo"/>
 					<enumeration value="Joint Stereo"/>
 					<enumeration value="Dual Channel"/>
+                    <enumeration value="Multichannel"/>
 				</simpleType>
 			</attribute>
 			<attribute name="language">
 				<simpleType base="string">
+                    <enumeration value="Chinese"/>
 					<enumeration value="Danish"/>
+                    <enumeration value="Dutch"/>
 					<enumeration value="English"/>
 					<enumeration value="French"/>
 					<enumeration value="German"/>
@@ -223,6 +254,7 @@
 					<enumeration value="Korean"/>
 					<enumeration value="Japanese"/>
 					<enumeration value="Mandarin"/>
+                    <enumeration value="None"/>
 					<enumeration value="Russian"/>
 					<enumeration value="Spanish"/>
 				</simpleType>
@@ -231,34 +263,46 @@
 				<simpleType base="string">
 				        <enumeration value="CD Rip"/>
 				        <enumeration value="DVD Audio Rip"/>
-				        <enumeration value="Bootleg"/>
-				        <enumeration value="Live Bootleg"/>
+				        <enumeration value="Online Music Store"/>
+				        <enumeration value="Live Recording"/>
 				        <enumeration value="LP Recording"/>
 				        <enumeration value="Tape Recording"/>
 				        <enumeration value="TV Recording"/>
 				</simpleType>
 			</attribute>
+            <attribute name="composer" type="string"/>
+            <attribute name="publisher" type="string"/>
+            <attribute name="producer" type="string"/>
+            <attribute name="lyricist" type="string"/>
+            <attribute name="origLyricist" type="string"/>
+            <attribute name="arranger" type="string"/>
+            <attribute name="performer" type="string"/>
+            <attribute name="conductor" type="string"/>
+            <attribute name="copyright" type="string"/>
+			<attribute name="encoder" type="string"/>
+            <attribute name="encodedby" type="string"/>
 			<attribute name="description">
 				<simpleType base="string">
 					<maxInclusive value="1024"/>
 				</simpleType>
 			</attribute>
-			<attribute name="standard">
-				<simpleType base="string">
-					<enumeration value="Uberstandard"/>
-				</simpleType>
-			</attribute>
-			<attribute name="copyright" type="string"/>
-			<attribute name="encoder" type="string"/>
-			<attribute name="qualitynotes" type="string"/>
+            <attribute name="qualitynotes" type="string"/>
 			<attribute name="keywords" type="string"/>
+            <attribute name="releasegroup" type="string"/>
+            <attribute name="releasegroupLink" type="uriReference"/>
 			<attribute name="releaseDate" type="string"/>
 			<attribute name="distributer" type="string"/>
 			<attribute name="distributerLink" type="uriReference"/>
-			<attribute name="releasegroup" type="string"/>
-			<attribute name="releasegroupLink" type="uriReference"/>
 			<attribute name="link" type="uriReference"/>
 			<attribute name="DRM" type="boolean"/>
+
+            <attribute name="mbalbumid" type="string"/>
+            <attribute name="mbalbumartistid" type="string"/>
+            <attribute name="mbartistid" type="string"/>
+            <attribute name="mbpuid" type="string"/>
+            <attribute name="mbtrmid" type="string"/>
+            <attribute name="mbuniquefileid" type="string"/>
+            <attribute name="cddb" type="string"/>
 		</all>
 	</complexType>
 </schema>
