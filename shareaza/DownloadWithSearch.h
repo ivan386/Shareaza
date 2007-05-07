@@ -1,7 +1,7 @@
 //
 // DownloadWithSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,7 @@
 #pragma once
 
 #include "DownloadWithTiger.h"
+#include "ManagedSearch.h"
 
 class CManagedSearch;
 
@@ -47,8 +48,9 @@ public:
 
 // Operations
 public:
-	BOOL	FindSourcesAllowed(DWORD tNow) const;
+	BOOL			FindSourcesAllowed(DWORD tNow) const;
 	virtual BOOL	FindMoreSources();
+	inline BOOL		IsSearching() const { return m_pSearch != NULL && m_pSearch->IsActive(); };
 protected:
 	void	RunSearch(DWORD tNow);
 	void	StopSearch();

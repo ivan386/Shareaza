@@ -86,7 +86,9 @@ CDownloadsCtrl::CDownloadsCtrl() :
 	m_bDrag( FALSE ),
 	m_pDeselect1( NULL ),
 	m_pDeselect2( NULL ),
-	m_pbSortAscending( NULL )
+	m_pbSortAscending( NULL ),
+	m_bShowSearching( TRUE ),
+	m_tSwitchTimer( 0 )
 {
 	// Try to get the number of lines to scroll when the mouse wheel is rotated
 	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
@@ -823,6 +825,14 @@ void CDownloadsCtrl::OnPaint()
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CRect rcClient, rcItem;
 	CPaintDC dc( this );
+	DWORD tNow = GetTickCount();
+
+	if ( tNow - m_tSwitchTimer > 1000 )
+	{
+		m_tSwitchTimer = tNow;
+		m_bShowSearching = !m_bShowSearching;
+	}
+
 	if ( theApp.m_bRTL ) dc.SetTextAlign( TA_RTLREADING );
 
 	GetClientRect( &rcClient );
@@ -1034,7 +1044,10 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			break;
 
 		case DOWNLOAD_COLUMN_STATUS:
-			strText = GetDownloadStatus( pDownload );
+			if ( m_bShowSearching && pDownload->IsSearching() )
+				LoadString( strText, IDS_STATUS_SEARCHING );
+			else
+				strText = GetDownloadStatus( pDownload );
 			break;
 
 		case DOWNLOAD_COLUMN_CLIENT:
@@ -1540,7 +1553,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 			LoadString( strText, IDS_STATUS_TORRENT );
 	}
 	else
-		LoadString( strText, IDS_STATUS_SEARCHING );
+		LoadString( strText, IDS_STATUS_QUEUED );
 
 	return strText;
 }

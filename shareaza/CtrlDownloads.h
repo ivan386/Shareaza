@@ -1,7 +1,7 @@
 //
 // CtrlDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,6 +85,8 @@ protected:
 	CDownloadSource*	m_pDeselect2;
 	BOOL*				m_pbSortAscending;
 	int					m_nScrollWheelLines;
+	BOOL				m_bShowSearching;
+	DWORD				m_tSwitchTimer;
 
 // Implementation
 protected:

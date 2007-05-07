@@ -143,15 +143,15 @@ void CManagedSearch::Start()
 
 void CManagedSearch::Stop()
 {
+	CSingleLock pLock( &SearchManager.m_pSection );
+	if ( !pLock.Lock( 100 ) ) return;
+
+	SearchManager.Remove( this );
 	if ( m_bActive )
 	{
 		m_bActive = FALSE;
 	    Datagrams.PurgeToken( this );
 	}
-	
-	CSingleLock pLock( &SearchManager.m_pSection );
-	pLock.Lock( 1000 );
-	SearchManager.Remove( this );
 }
 
 //////////////////////////////////////////////////////////////////////

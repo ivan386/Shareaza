@@ -1,7 +1,7 @@
 //
 // DownloadWithSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -76,7 +76,7 @@ BOOL CDownloadWithSearch::FindMoreSources()
 		if ( tNow - m_tSearchTime > ( Settings.Downloads.SearchPeriod / 4 ) )
 		{
 			m_tSearchTime = tNow;
-			if ( m_pSearch != NULL ) m_pSearch->Stop();
+			if ( IsSearching() ) m_pSearch->Stop();
 			bSuccess = TRUE;
 		}
 	}
@@ -226,5 +226,5 @@ void CDownloadWithSearch::PrepareSearch()
 
 void CDownloadWithSearch::StopSearch()
 {
-	if ( m_pSearch != NULL ) m_pSearch->Stop();
+	if ( IsSearching() ) m_pSearch->Stop();
 }
