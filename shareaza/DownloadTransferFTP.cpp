@@ -29,7 +29,7 @@
 #include "DownloadTransferFTP.h"
 #include "FragmentedFile.h"
 #include "Network.h"
-#include "SourceURL.h"
+#include "ShareazaURL.h"
 #include "GProfile.h"
 
 #ifdef _DEBUG
@@ -711,8 +711,8 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 
 BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 {
-	CSourceURL pURL;
-	if ( !pURL.ParseFTP( m_pSource->m_sURL, TRUE ) )
+	CShareazaURL pURL;
+	if ( !pURL.Parse( m_pSource->m_sURL, FALSE ) || pURL.m_nProtocol != PROTOCOL_FTP )
 		return FALSE;
 
 	CString strLine;

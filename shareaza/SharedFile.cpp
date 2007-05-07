@@ -30,7 +30,7 @@
 #include "Network.h"
 #include "Uploads.h"
 #include "Downloads.h"
-#include "SourceURL.h"
+#include "ShareazaURL.h"
 #include "FileExecutor.h"
 #include "Buffer.h"
 
@@ -516,7 +516,7 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, BOOL /*bForce*/)
 	if ( *pszURL == 0 ) return NULL;
 	
 	CString strURL( pszURL );
-	CSourceURL pURL;
+	CShareazaURL pURL;
 	
 	FILETIME tSeen = { 0, 0 };
 	BOOL bSeen = FALSE;

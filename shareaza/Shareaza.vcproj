@@ -77,7 +77,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="3081"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -169,7 +168,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="3081"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -245,7 +243,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="3081"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -336,7 +333,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="3081"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -848,9 +844,6 @@
 				RelativePath="SkinWindow.cpp">
 			</File>
 			<File
-				RelativePath="SourceURL.cpp">
-			</File>
-			<File
 				RelativePath="Statistics.cpp">
 			</File>
 			<File
@@ -859,37 +852,25 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						UsePrecompiledHeader="1"
-						BrowseInformation="1"/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-						UsePrecompiledHeader="1"
-						BrowseInformation="1"/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						UsePrecompiledHeader="1"
-						BrowseInformation="1"/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release x64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-						UsePrecompiledHeader="1"
-						BrowseInformation="1"/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2604,6 +2585,9 @@
 				RelativePath="ShareazaDataSource.h">
 			</File>
 			<File
+				RelativePath="ShareazaFile.h">
+			</File>
+			<File
 				RelativePath="ShareazaOM.h">
 			</File>
 			<File
@@ -2623,9 +2607,6 @@
 			</File>
 			<File
 				RelativePath="SkinWindow.h">
-			</File>
-			<File
-				RelativePath="SourceURL.h">
 			</File>
 			<File
 				RelativePath="Statistics.h">

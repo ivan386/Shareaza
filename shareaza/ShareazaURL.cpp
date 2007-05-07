@@ -26,7 +26,7 @@
 #include "Transfer.h"
 #include "QuerySearch.h"
 #include "DiscoveryServices.h"
-
+#include "Network.h"
 #include "TigerTree.h"
 #include "SHA.h"
 #include "MD5.h"
@@ -49,6 +49,13 @@ CShareazaURL::CShareazaURL()
 	Clear();
 }
 
+CShareazaURL::CShareazaURL(LPCTSTR pszURL)
+{
+	m_pTorrent = NULL;
+	Clear();
+	if ( pszURL != NULL ) Parse( pszURL );
+}
+
 CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 {
 	m_pTorrent = NULL;
@@ -65,6 +72,34 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	m_nSize		= pTorrent->m_nTotalSize;
 }
 
+CShareazaURL::CShareazaURL(const CShareazaURL& pURL)
+{
+	// CShareazaFile
+	m_sName					= pURL.m_sName;
+	m_nSize					= pURL.m_nSize;
+	m_oSHA1					= pURL.m_oSHA1;
+	m_oTiger				= pURL.m_oTiger;
+	m_oED2K					= pURL.m_oED2K;
+	m_oBTH					= pURL.m_oBTH;
+	m_oMD5					= pURL.m_oMD5;
+	m_sPath					= pURL.m_sPath;
+	m_sURL					= pURL.m_sURL;
+
+	// CShareazaURL
+	m_nProtocol				= pURL.m_nProtocol;
+	m_nAction				= pURL.m_nAction;
+	m_pTorrent				= pURL.m_pTorrent;
+	m_sAddress				= pURL.m_sAddress;
+	m_pAddress.s_addr		= pURL.m_pAddress.s_addr;
+	m_nPort					= pURL.m_nPort;
+	m_pServerAddress.s_addr	= pURL.m_pServerAddress.s_addr;
+	m_nServerPort			= pURL.m_nServerPort;
+	m_bSize					= pURL.m_bSize;
+	m_sLogin				= pURL.m_sLogin;
+	m_sPassword				= pURL.m_sPassword;
+	m_oBTC					= pURL.m_oBTC;
+}
+
 CShareazaURL::~CShareazaURL()
 {
 	Clear();
@@ -75,27 +110,86 @@ CShareazaURL::~CShareazaURL()
 
 void CShareazaURL::Clear()
 {
-	m_nAction	= uriNull;
+	// CShareazaFile
+	m_sName.Empty();
+	m_nSize					= SIZE_UNKNOWN;
 	m_oSHA1.clear();
 	m_oTiger.clear();
 	m_oMD5.clear();
 	m_oED2K.clear();
-    m_oBTH.clear();
-	m_bSize		= FALSE;
-	m_nPort		= GNUTELLA_DEFAULT_PORT;
-	
-	if ( m_pTorrent != NULL ) delete m_pTorrent;
-	m_pTorrent = NULL;
+	m_oBTH.clear();
+	m_sURL.Empty();
+	m_sPath.Empty();
+
+	// CShareazaURL
+	m_nProtocol				= PROTOCOL_NULL;
+	m_nAction				= uriNull;
+	delete m_pTorrent;
+	m_pTorrent				= NULL;
+	m_sAddress.Empty();
+	m_pAddress.s_addr		= 0;
+	m_nPort					= 0; // GNUTELLA_DEFAULT_PORT
+	m_pServerAddress.s_addr = 0;
+	m_nServerPort			= 0;
+	m_bSize					= FALSE;
+	m_sLogin.Empty ();
+	m_sPassword.Empty ();
+	m_oBTC.clear();
+}
+
+BOOL CShareazaURL::Parse(LPCTSTR pszURL, CList< CString >& pURLs, BOOL bResolve)
+{
+	pURLs.RemoveAll();
+
+	CString sBuf( pszURL );
+	sBuf.Replace( _T("\r\n"), _T("\n") );
+	sBuf.Replace( _T("\r"), _T("\n") );
+	sBuf.Replace( _T("\n\n"), _T("\n") );
+	sBuf.Trim();
+
+	int nPos;
+	do
+	{
+		nPos = sBuf.ReverseFind( _T('\n') );
+
+		CString sURL( sBuf.Mid( nPos + 1 ) );
+		sURL.Trim();
+
+		sBuf = sBuf.Left( nPos );
+		sBuf.Trim();
+
+		if ( Parse( sURL, bResolve ) )
+			pURLs.AddTail( sURL );
+		else
+			sBuf += sURL;
+	}
+	while ( nPos != -1 );
+
+	return ! pURLs.IsEmpty();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL root parser
 
-BOOL CShareazaURL::Parse(LPCTSTR pszURL)
+BOOL CShareazaURL::Parse(LPCTSTR pszURL, BOOL bResolve)
 {
-	Clear();
-	
-	if ( _tcsnicmp( pszURL, _T("magnet:?"), 8 ) == 0 )
+	if ( ParseHTTP( pszURL, bResolve ) )			// http://
+	{
+		return TRUE;
+	}
+	else if ( ParseFTP( pszURL, bResolve ) )		// ftp://
+	{	
+		return TRUE;
+	}
+	else if ( ParseED2KFTP( pszURL, bResolve ) )	// ed2kftp://
+	{
+		return TRUE;
+	}
+	else if ( ParseBTC( pszURL, bResolve ) )		// btc://
+	{	
+		return TRUE;
+	}
+	else if ( _tcsnicmp( pszURL, _T("magnet:?"), 8 ) == 0 )
 	{
 		pszURL += 8;
 		return ParseMagnet( pszURL );
@@ -121,18 +215,6 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL)
 		SkipSlashes( pszURL, 5 );
 		return ParsePiolet( pszURL );
 	}
-	else if ( _tcsnicmp( pszURL, _T("http://"), 7 ) == 0 )
-	{
-		m_sURL		= pszURL;
-		m_nAction	= uriSource;
-		return TRUE;
-	}
-	else if ( _tcsnicmp( pszURL, _T("ftp://"), 6 ) == 0 )
-	{
-		m_sURL		= pszURL;
-		m_nAction	= uriSource;
-		return TRUE;
-	}
 	else if (	_tcsnicmp( pszURL, _T("uhc:"), 4 ) == 0 ||
 				_tcsnicmp( pszURL, _T("ukhl:"), 5 ) == 0 ||
 				_tcsnicmp( pszURL, _T("gnutella1:"), 10 ) == 0 ||
@@ -140,8 +222,249 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL)
 	{
 		return ParseShareaza( pszURL );
 	}
-	
+
+	Clear();
+
 	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CShareazaURL HTTP
+
+BOOL CShareazaURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
+{
+	if ( _tcsncmp( pszURL, _T("http://"), 7 ) != 0 ) return FALSE;
+
+	Clear();
+
+	CString strURL = pszURL + 7;
+
+	int nSlash = strURL.Find( _T('/') );
+
+	if ( nSlash >= 0 )
+	{
+		m_sAddress	= strURL.Left( nSlash );
+		m_sPath		= strURL.Mid( nSlash );
+	}
+	else
+	{
+		m_sAddress = strURL;
+		m_sPath = _T("/");
+	}
+
+	int nAt = m_sAddress.Find( _T('@') );
+	if ( nAt >= 0 ) m_sAddress = m_sAddress.Mid( nAt + 1 );
+
+	if ( m_sAddress.IsEmpty() ) return FALSE;
+
+	if ( _tcsnicmp( m_sPath, _T("/uri-res/N2R?"), 13 ) == 0 )
+	{
+		strURL = m_sPath.Mid( 13 );
+		if ( m_oSHA1.fromUrn( strURL ) );
+		else if ( ! m_oTiger.fromUrn( strURL ) );
+		else if ( ! m_oED2K.fromUrn( strURL ) );
+		else if ( ! m_oBTH.fromUrn( strURL ) );
+		else if ( ! m_oMD5.fromUrn( strURL ) );
+		else
+			return FALSE;
+
+		m_nAction	= uriSource;
+	}
+	else
+	{
+		m_nAction	= uriDownload;
+
+		int nPos = m_sPath.ReverseFind( '/' );
+		if ( nPos > 0 )
+		{
+			CString sName( CTransfer::URLDecode(
+				m_sPath.Mid( nPos + 1 ).SpanExcluding( _T("?") ) ) );
+			if ( sName.GetLength() )
+			{
+				m_sName = sName;
+			}
+		}		 
+	}
+
+	SOCKADDR_IN saHost;
+
+	BOOL bResult = Network.Resolve( m_sAddress, INTERNET_DEFAULT_HTTP_PORT, &saHost, bResolve );
+
+	m_pAddress	= saHost.sin_addr;
+	m_nPort		= htons( saHost.sin_port );
+
+	m_sURL		= pszURL;
+	m_nProtocol	= PROTOCOL_HTTP;
+
+	return bResult;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CShareazaURL FTP
+
+BOOL CShareazaURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
+{
+	// URI format
+	// ftp://[user[:password]@]host[:port][/path]
+
+	if ( _tcsncmp( pszURL, _T("ftp://"), 6 ) != 0 ) return FALSE;
+
+	Clear();
+
+	CString strURL ( pszURL + 6 );
+
+	int nSlash = strURL.Find( _T('/') );
+
+	if ( nSlash >= 0 )
+	{
+		m_sAddress	= strURL.Left( nSlash );
+		m_sPath		= strURL.Mid( nSlash );
+	}
+	else
+	{
+		m_sAddress = strURL;
+		m_sPath = _T("/");
+	}
+
+	int nAt = m_sAddress.Find( _T('@') );
+	if ( nAt >= 0 )
+	{
+		m_sLogin = m_sAddress.Left( nAt );
+		m_sAddress = m_sAddress.Mid( nAt + 1 );
+
+		int nColon = m_sLogin.Find( _T(':') );
+		if ( nColon >= 0 )
+		{
+			m_sPassword = m_sLogin.Mid( nColon + 1 );			
+			m_sLogin = m_sLogin.Left( nColon );			
+		}
+	}
+	else
+	{
+		m_sLogin = _T("anonymous");
+		m_sPassword = _T("guest@shareaza.com");
+	}
+
+	if ( m_sAddress.IsEmpty() || m_sLogin.IsEmpty() )
+		return FALSE;
+
+	SOCKADDR_IN saHost;
+
+	BOOL bResult = Network.Resolve( m_sAddress, INTERNET_DEFAULT_FTP_PORT, &saHost, bResolve );
+
+	m_pAddress	= saHost.sin_addr;
+	m_nPort		= htons( saHost.sin_port );
+
+	m_sURL		= pszURL;
+	m_nProtocol	= PROTOCOL_FTP;
+	m_nAction	= uriDownload;
+
+	return bResult;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CShareazaURL ED2KFTP
+
+BOOL CShareazaURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
+{
+	if ( _tcsnicmp( pszURL, _T("ed2kftp://"), 10 ) != 0 ) return FALSE;
+
+	Clear();
+
+	CString strURL = pszURL + 10;
+	BOOL bPush = FALSE;
+
+	int nSlash = strURL.Find( _T('/') );
+	if ( nSlash < 7 ) return FALSE;
+
+	m_sAddress	= strURL.Left( nSlash );
+	strURL		= strURL.Mid( nSlash + 1 );
+
+	nSlash = strURL.Find( _T('/') );
+	if ( nSlash != 32 ) return FALSE;
+
+	CString strHash	= strURL.Left( 32 );
+	strURL			= strURL.Mid( 33 );
+
+	if ( !m_oED2K.fromString( strHash ) ) return FALSE;
+
+	m_bSize = _stscanf( strURL, _T("%I64i"), &m_nSize ) == 1;
+	if ( ! m_bSize ) return FALSE;
+
+	nSlash = m_sAddress.Find( _T('@') );
+
+	if ( nSlash > 0 )
+	{
+		strHash = m_sAddress.Left( nSlash );
+		m_sAddress = m_sAddress.Mid( nSlash + 1 );
+		if ( _stscanf( strHash, _T("%lu"), &m_pAddress.S_un.S_addr ) != 1 ) return FALSE;
+		bPush = TRUE;
+	}
+
+	SOCKADDR_IN saHost;
+	BOOL bResult = Network.Resolve( m_sAddress, ED2K_DEFAULT_PORT, &saHost, bResolve );
+
+	if ( bPush )
+	{
+		m_pServerAddress	= saHost.sin_addr;
+		m_nServerPort		= htons( saHost.sin_port );
+		m_nPort				= 0;
+	}
+	else
+	{
+		m_pAddress	= saHost.sin_addr;
+		m_nPort		= htons( saHost.sin_port );
+	}
+
+	m_sURL		= pszURL;
+	m_nProtocol	= PROTOCOL_ED2K;
+	m_nAction	= uriDownload;
+
+	return bResult;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CShareazaURL BTC
+
+BOOL CShareazaURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
+{
+	if ( _tcsnicmp( pszURL, _T("btc://"), 6 ) != 0 ) return FALSE;
+
+	Clear();
+
+	CString strURL = pszURL + 6;
+
+	int nSlash = strURL.Find( _T('/') );
+	if ( nSlash < 7 ) return FALSE;
+
+	m_sAddress	= strURL.Left( nSlash );
+	strURL		= strURL.Mid( nSlash + 1 );
+
+	nSlash = strURL.Find( _T('/') );
+	m_oBTC.clear();
+
+	if ( nSlash == 32 )
+	{
+		CString strGUID	= strURL.Left( 32 );
+		m_oBTC.fromString( strGUID );
+	}
+	else if ( nSlash < 0 ) return FALSE;
+
+	strURL = strURL.Mid( nSlash + 1 );
+
+	if ( !m_oBTH.fromString( strURL ) ) return FALSE;
+
+	SOCKADDR_IN saHost;
+	BOOL bResult = Network.Resolve( m_sAddress, ED2K_DEFAULT_PORT, &saHost, bResolve );
+
+	m_pAddress	= saHost.sin_addr;
+	m_nPort		= htons( saHost.sin_port );
+
+	m_sURL		= pszURL;
+	m_nProtocol	= PROTOCOL_BT;
+	m_nAction	= uriDownload;
+
+	return bResult;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -149,6 +472,8 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL)
 
 BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 {
+	Clear();
+
 	CString strURL( pszURL );
 	
 	for ( strURL += '&' ; strURL.GetLength() ; )
@@ -265,25 +590,27 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 
 BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 {
+	Clear();
+
 	int nIP[4];
 	
 	if ( _stscanf( pszURL, _T("%i.%i.%i.%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3] ) == 4 )
 	{
-		return ParseShareazaHost( pszURL );
+		return ParseShareazaHost( pszURL, FALSE );
 	}
 	
 	if ( _tcsnicmp( pszURL, _T("host:"), 5 ) == 0 ||
 		 _tcsnicmp( pszURL, _T("node:"), 5 ) == 0 )
 	{
-		return ParseShareazaHost( pszURL + 5 );
+		return ParseShareazaHost( pszURL + 5, FALSE );
 	}
 	else if ( _tcsnicmp( pszURL, _T("hub:"), 4 ) == 0 )
 	{
-		return ParseShareazaHost( pszURL + 4 );
+		return ParseShareazaHost( pszURL + 4, FALSE );
 	}
 	else if ( _tcsnicmp( pszURL, _T("server:"), 7 ) == 0 )
 	{
-		return ParseShareazaHost( pszURL + 7 );
+		return ParseShareazaHost( pszURL + 7, FALSE );
 	}
 	else if ( _tcsnicmp( pszURL, _T("browse:"), 7 ) == 0 )
 	{
@@ -422,6 +749,8 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 
 BOOL CShareazaURL::ParseDonkey(LPCTSTR pszURL)
 {
+	Clear();
+
 	if ( _tcsnicmp( pszURL, _T("|file|"), 6 ) == 0 )
 	{
 		return ParseDonkeyFile( pszURL + 6 );
@@ -575,6 +904,8 @@ BOOL CShareazaURL::ParseDonkeyServer(LPCTSTR pszURL)
 
 BOOL CShareazaURL::ParsePiolet(LPCTSTR pszURL)
 {
+	Clear();
+
 	if ( _tcsnicmp( pszURL, _T("file|"), 5 ) == 0 )
 	{
 		return ParsePioletFile( pszURL + 5 );
@@ -1027,4 +1358,3 @@ BOOL CShareazaURL::RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR
 	
 	return TRUE;
 }
-

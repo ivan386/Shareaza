@@ -35,31 +35,51 @@ class CShareazaURL : public CShareazaFile
 // Construction
 public:
 	CShareazaURL();
+	CShareazaURL(LPCTSTR pszURL);
 	CShareazaURL(CBTInfo* pTorrent);
+	CShareazaURL(const CShareazaURL& pURL);
 	virtual ~CShareazaURL();
 
 // Attributes
 public:
-	int			m_nAction;
-	BOOL		m_bSize;
-	int			m_nPort;
-	CBTInfo*	m_pTorrent;
-
-	enum
+	enum URI_TYPE
 	{
 		uriNull, uriSource, uriDownload, uriSearch, uriHost, uriBrowse,
 		uriDonkeyServer, uriDiscovery
 	};
 
+	PROTOCOLID	m_nProtocol;
+	URI_TYPE	m_nAction;
+	CBTInfo*	m_pTorrent;
+	CString		m_sAddress;
+	IN_ADDR		m_pAddress;
+	WORD		m_nPort;
+	IN_ADDR		m_pServerAddress;
+	WORD		m_nServerPort;
+	BOOL		m_bSize;
+	CString		m_sLogin;
+	CString		m_sPassword;
+	Hashes::BtGuid m_oBTC;
+
 // Operations
 public:
-	void			Clear();
-	BOOL			Parse(LPCTSTR pszURL);
+	// Parse URL list
+	BOOL	Parse(LPCTSTR pszURL, CList< CString >& pURLs, BOOL bResolve = FALSE);
+	// Parse single URL
+	BOOL	Parse(LPCTSTR pszURL, BOOL bResolve = TRUE);
+	// Construct CQuerySearch object
 	auto_ptr< CQuerySearch > ToQuery();
+
 protected:
+	void	Clear();
+
+	BOOL	ParseHTTP(LPCTSTR pszURL, BOOL bResolve);
+	BOOL	ParseFTP(LPCTSTR pszURL, BOOL bResolve);
+	BOOL	ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve);
+	BOOL	ParseBTC(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseMagnet(LPCTSTR pszURL);
 	BOOL	ParseShareaza(LPCTSTR pszURL);
-	BOOL	ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse = FALSE);
+	BOOL	ParseShareazaHost(LPCTSTR pszURL, BOOL bBrows);
 	BOOL	ParseShareazaFile(LPCTSTR pszURL);
 	BOOL	ParseDonkey(LPCTSTR pszURL);
 	BOOL	ParseDonkeyFile(LPCTSTR pszURL);
@@ -67,9 +87,9 @@ protected:
 	BOOL	ParsePiolet(LPCTSTR pszURL);
 	BOOL	ParsePioletFile(LPCTSTR pszURL);
 	BOOL	ParseDiscovery(LPCTSTR pszURL, int nType);
-protected:
-	void	SkipSlashes(LPCTSTR& pszURL, int nAdd = 0);
-	void	SafeString(CString& strInput);
+
+	static void	SkipSlashes(LPCTSTR& pszURL, int nAdd = 0);
+	static void	SafeString(CString& strInput);
 
 // Registration Operations
 public:
@@ -79,7 +99,6 @@ public:
 	static BOOL	IsRegistered(LPCTSTR pszProtocol);
 	static BOOL	UnregisterShellType(LPCTSTR pszProtocol);
 	static void DeleteKey(HKEY hParent, LPCTSTR pszKey);
-
 };
 
 #endif // !defined(AFX_SHAREAZAURL_H__B39B7816_FE18_4843_A10A_C0DB32D96E52__INCLUDED_)

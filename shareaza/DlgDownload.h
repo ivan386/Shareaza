@@ -29,37 +29,27 @@ class CShareazaURL;
 
 class CDownloadDlg : public CSkinDialog
 {
-// Construction
-public:
-	CDownloadDlg(CWnd* pParent = NULL, CDownload* pDownload = NULL);
-	virtual ~CDownloadDlg();
-
 	DECLARE_DYNAMIC(CDownloadDlg)
 
-// Operations
 public:
-	CShareazaURL*	GetURL();
+	CDownloadDlg(CWnd* pParent = NULL, CDownload* pDownload = NULL);
 
-// Attributes
-public:
-	CDownload*		m_pDownload;
-	CShareazaURL*	m_pURL;
-
-// Dialog Data
-public:
 	enum { IDD = IDD_DOWNLOAD };
-	CButton	m_wndTorrentFile;
-	CButton	m_wndOK;
-	CEdit	m_wndURL;
-	CString	m_sURL;
 
-// Implementation
+	CList< CString >	m_pURLs;
+
 protected:
-	DECLARE_MESSAGE_MAP()
+	CDownload*			m_pDownload;
+	CButton				m_wndTorrentFile;
+	CButton				m_wndOK;
+	CEdit				m_wndURL;
+	CString				m_sURL;
+
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 	afx_msg void OnChangeURL();
 	virtual void OnOK();
 	afx_msg void OnTorrentFile();
 
+	DECLARE_MESSAGE_MAP()
 };

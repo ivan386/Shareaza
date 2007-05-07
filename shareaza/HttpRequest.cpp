@@ -25,7 +25,6 @@
 #include "HttpRequest.h"
 #include "Network.h"
 #include "Buffer.h"
-#include "SourceURL.h"
 
 
 //////////////////////////////////////////////////////////////////////

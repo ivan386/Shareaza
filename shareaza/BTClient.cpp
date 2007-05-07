@@ -35,7 +35,7 @@
 #include "DownloadTransferBT.h"
 #include "Uploads.h"
 #include "UploadTransferBT.h"
-#include "SourceURL.h"
+#include "ShareazaURL.h"
 #include "GProfile.h"
 
 #ifdef _DEBUG
@@ -938,7 +938,7 @@ BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 		if ( pSource->m_nProtocol == PROTOCOL_BT )
 		{
 			CBENode* pPeer = pPeers->Add();
-			CSourceURL pURL;
+			CShareazaURL pURL;
 			
 			if ( pURL.Parse( pSource->m_sURL ) && pURL.m_oBTC )
 			{

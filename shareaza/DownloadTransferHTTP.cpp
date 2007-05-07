@@ -30,7 +30,7 @@
 #include "FragmentedFile.h"
 #include "Network.h"
 #include "Buffer.h"
-#include "SourceURL.h"
+#include "ShareazaURL.h"
 #include "GProfile.h"
 #include "SHA.h"
 #include "ED2K.h"
@@ -268,8 +268,8 @@ BOOL CDownloadTransferHTTP::SendRequest()
 {
 	CString strLine;
 	
-	CSourceURL pURL;
-	if ( ! pURL.ParseHTTP( m_pSource->m_sURL, FALSE ) ) return FALSE;
+	CShareazaURL pURL;
+	if ( ! pURL.Parse( m_pSource->m_sURL, FALSE ) || pURL.m_nProtocol != PROTOCOL_HTTP ) return FALSE;
 	
 	if ( m_bTigerFetch )
 	{

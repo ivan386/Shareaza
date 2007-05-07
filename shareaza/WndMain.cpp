@@ -2088,21 +2088,26 @@ void CMainWnd::OnToolsDownload()
 {
 	CDownloadDlg dlg;
 	if ( dlg.DoModal() != IDOK ) return;
+	
+	for ( POSITION pos = dlg.m_pURLs.GetHeadPosition(); pos; )
+	{
+		CShareazaURL pURL( dlg.m_pURLs.GetNext( pos ) );
 
-	if ( dlg.m_pURL->m_nAction == CShareazaURL::uriDownload )
-	{
-		Downloads.Add( dlg.m_pURL );
-		if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
-		m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-	}
-	else if ( dlg.m_pURL->m_nAction == CShareazaURL::uriSource )
-	{
-		Downloads.Add( dlg.m_pURL );
-		m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-	}
-	else
-	{
-		PostMessage( WM_URL, (WPARAM)dlg.GetURL() );
+		if ( pURL.m_nAction == CShareazaURL::uriDownload )
+		{
+			Downloads.Add( &pURL );
+			if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
+			m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+		}
+		else if ( pURL.m_nAction == CShareazaURL::uriSource )
+		{
+			Downloads.Add( &pURL );
+			m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+		}
+		else
+		{
+			PostMessage( WM_URL, (WPARAM)new CShareazaURL( pURL ) );
+		}
 	}
 }
 

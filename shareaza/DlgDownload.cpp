@@ -26,6 +26,13 @@
 #include "DlgDownload.h"
 #include "Settings.h"
 
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+
 IMPLEMENT_DYNAMIC(CDownloadDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CDownloadDlg, CSkinDialog)
@@ -40,12 +47,6 @@ END_MESSAGE_MAP()
 CDownloadDlg::CDownloadDlg(CWnd* pParent, CDownload* pDownload) : CSkinDialog( CDownloadDlg::IDD, pParent )
 {
 	m_pDownload = pDownload;
-	m_pURL = NULL;
-}
-
-CDownloadDlg::~CDownloadDlg()
-{
-	if ( m_pURL != NULL ) delete m_pURL;
 }
 
 void CDownloadDlg::DoDataExchange(CDataExchange* pDX)
@@ -137,11 +138,12 @@ void CDownloadDlg::OnChangeURL()
 			return;
 		}
 	}
-	
+
 	CShareazaURL pURL;
-	
-	m_wndOK.EnableWindow( pURL.Parse( m_sURL ) &&
-		( m_pDownload == NULL || pURL.m_nAction == CShareazaURL::uriSource ) );
+	m_wndOK.EnableWindow( pURL.Parse( m_sURL, m_pURLs ) &&
+		( m_pDownload == NULL ||
+		pURL.m_nAction == CShareazaURL::uriSource ||
+		pURL.m_nAction == CShareazaURL::uriDownload ) );
 }
 
 void CDownloadDlg::OnTorrentFile() 
@@ -173,15 +175,6 @@ void CDownloadDlg::OnOK()
 {
 	UpdateData( TRUE );
 
-	if ( m_pURL != NULL ) delete m_pURL;
-	m_pURL = new CShareazaURL();
-	
-	if ( m_pURL->Parse( m_sURL ) ) CSkinDialog::OnOK();
-}
-
-CShareazaURL* CDownloadDlg::GetURL()
-{
-	CShareazaURL* pURL = m_pURL;
-	m_pURL = NULL;
-	return pURL;
+	CShareazaURL pURL;
+	if ( pURL.Parse( m_sURL, m_pURLs ) ) CSkinDialog::OnOK();
 }

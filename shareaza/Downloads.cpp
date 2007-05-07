@@ -217,6 +217,7 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = NULL;
+	BOOL bNew = TRUE;
 	
 	if ( pDownload == NULL && pURL->m_oSHA1 )
 		pDownload = FindBySHA1( pURL->m_oSHA1 );
@@ -234,55 +235,53 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ALREADY,
 			(LPCTSTR)pDownload->GetDisplayName() );
 		
-		if ( pURL->m_sURL.GetLength() ) pDownload->AddSourceURLs( pURL->m_sURL, FALSE );
-		
-		return pDownload;
+		bNew = FALSE;
 	}
+	else
+		pDownload = new CDownload();
 	
-	pDownload = new CDownload();
-	
-	if ( pURL->m_oSHA1 )
+	if ( ! pDownload->m_oSHA1 && pURL->m_oSHA1 )
 	{
 		pDownload->m_oSHA1			= pURL->m_oSHA1;
         pDownload->m_oSHA1.signalTrusted();
 	}
-	if ( pURL->m_oTiger )
+	if ( ! pDownload->m_oTiger && pURL->m_oTiger )
 	{
 		pDownload->m_oTiger			= pURL->m_oTiger;
         pDownload->m_oTiger.signalTrusted();
 	}
-	if ( pURL->m_oED2K )
+	if ( ! pDownload->m_oED2K && pURL->m_oED2K )
 	{
 		pDownload->m_oED2K			= pURL->m_oED2K;
         pDownload->m_oED2K.signalTrusted();
 		pDownload->Share( TRUE );
 	}
-	if ( pURL->m_oBTH )
+	if ( ! pDownload->m_oBTH && pURL->m_oBTH )
 	{
 		pDownload->m_oBTH			= pURL->m_oBTH;
 		pDownload->m_oBTH.signalTrusted();
 		pDownload->Share( TRUE );
 	}
-	if ( pURL->m_oMD5 )
+	if ( ! pDownload->m_oMD5 && pURL->m_oMD5 )
 	{
 		pDownload->m_oMD5			= pURL->m_oMD5;
 		pDownload->m_oMD5.signalTrusted();
 		pDownload->Share( TRUE );
 	}
 	
-	if ( pURL->m_sName.GetLength() )
+	if ( ! pDownload->m_sDisplayName.GetLength() && pURL->m_sName.GetLength() )
 	{
 		pDownload->m_sDisplayName = pURL->m_sName;
 	}
 	
-	if ( pURL->m_bSize )
+	if ( pDownload->m_nSize == SIZE_UNKNOWN && pURL->m_bSize )
 	{
 		pDownload->m_nSize = pURL->m_nSize;
 	}
 	
 	if ( pURL->m_sURL.GetLength() )
 	{
-		if ( ! pDownload->AddSourceURLs( pURL->m_sURL, FALSE ) )
+		if ( ! pDownload->AddSourceURLs( pURL->m_sURL, FALSE ) && bNew )
 		{
 			if ( pURL->m_nAction == CShareazaURL::uriSource )
 			{
@@ -304,22 +303,25 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 		pURL->m_pTorrent->m_sURLs.RemoveAll();
 	}
 	
-	m_pList.AddTail( pDownload );
-	
-	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
-		(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
-	
-	if ( (  pDownload->IsTorrent() && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||
-		 ( !pDownload->IsTorrent() && ( GetTryingCount(FALSE) < Settings.Downloads.MaxFiles ) ) )
+	if ( bNew )
 	{
-		pDownload->SetStartTimer();
-		if ( pDownload->GetEffectiveSourceCount() <= 1 ) 
-			pDownload->FindMoreSources();
+		m_pList.AddTail( pDownload );
+		
+		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
+			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
+		
+		if ( (  pDownload->IsTorrent() && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||
+			( !pDownload->IsTorrent() && ( GetTryingCount(FALSE) < Settings.Downloads.MaxFiles ) ) )
+		{
+			pDownload->SetStartTimer();
+			if ( pDownload->GetEffectiveSourceCount() <= 1 ) 
+				pDownload->FindMoreSources();
+		}
+		
+		DownloadGroups.Link( pDownload );
+		Transfers.StartThread();
 	}
-	
-	DownloadGroups.Link( pDownload );
-	Transfers.StartThread();
-	
+
 	return pDownload;
 }
 

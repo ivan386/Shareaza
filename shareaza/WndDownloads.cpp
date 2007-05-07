@@ -1183,7 +1183,10 @@ void CDownloadsWnd::OnDownloadsUrl()
 
 				if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) continue;
 
-				pDownload->AddSourceURL( dlg.m_pURL->m_sURL, FALSE );
+				for ( POSITION pos = dlg.m_pURLs.GetHeadPosition(); pos; )
+				{
+					pDownload->AddSourceURL( dlg.m_pURLs.GetNext( pos ), FALSE );
+				}
 			}
 		}
 	}

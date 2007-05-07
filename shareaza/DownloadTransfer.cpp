@@ -31,7 +31,6 @@
 #include "Buffer.h"
 #include "SHA.h"
 #include "ED2K.h"
-#include "SourceURL.h"
 #include "XML.h"
 #include "DownloadTransferBT.h"
 

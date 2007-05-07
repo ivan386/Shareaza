@@ -38,7 +38,7 @@
 #include "EDClients.h"
 #include "EDClient.h"
 #include "EDPacket.h"
-#include "SourceURL.h"
+#include "ShareazaURL.h"
 #include "SHA.h"
 
 #ifdef _DEBUG
@@ -261,7 +261,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL /*bS
 
 BOOL CDownloadSource::ResolveURL()
 {
-	CSourceURL pURL;
+	CShareazaURL pURL;
 	
 	if ( ! pURL.Parse( m_sURL ) )
 	{
