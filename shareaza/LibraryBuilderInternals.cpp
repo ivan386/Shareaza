@@ -537,7 +537,24 @@ BOOL CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 			CopyID3v2Field( pXML, _T("year"), pszYear, nLength );
 			delete [] pszYear;
 		}
-		
+		else if ( strcmp( szFrameTag, "TPUB" ) == 0 )
+		{
+			CopyID3v2Field( pXML, _T("publisher"), pBuffer, nFrameSize );
+		}
+		else if ( strcmp( szFrameTag, "TORY" ) == 0 )
+		{
+			CopyID3v2Field( pXML, _T("origYear"), pBuffer, nFrameSize );
+		}
+		// MusicBrainz.org stuff goes here
+		else if ( strcmp( szFrameTag, "TXXX" ) == 0 )
+		{
+			CopyID3v2Field( pXML, L"", pBuffer, nFrameSize );
+		}
+/*		else
+		{
+			CopyID3v2Field( pXML, _T("temp"), pBuffer, nFrameSize );
+		}
+*/
 		pBuffer += nFrameSize;
 		nBuffer -= nFrameSize;
 	}
@@ -687,6 +704,41 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 			break;
 	}
 	
+	if ( !*pszAttribute )
+	{
+		int nSlash = strResult.Find( '/' );
+		if ( nSlash > 0 )
+		{
+			strValue = strResult.Mid( nSlash + 1 );
+			if ( _tcsnicmp( strResult, L"musicbrainz ", 12 ) == 0 )
+			{
+				CString strField = strResult.Mid( 12, nSlash - 12 );
+				if ( strField.CompareNoCase( L"Artist Id" ) == 0 )
+					pXML->AddAttribute( L"mbartistid", strValue );
+				else if ( strField.CompareNoCase( L"Album Id" ) == 0 )
+					pXML->AddAttribute( L"mbalbumid", strValue );
+				else if ( strField.CompareNoCase( L"Album Type" ) == 0 )
+					pXML->AddAttribute( L"type", strValue );
+				else if ( strField.CompareNoCase( L"Album Status" ) == 0 )
+					pXML->AddAttribute( L"albumStatus", strValue );
+				else if ( strField.CompareNoCase( L"Album Artist Id" ) == 0 )
+					pXML->AddAttribute( L"mbalbumartistid", strValue );
+
+				// "Album Artist", "Album Artist Sortname", "Album Release Country", "Non-Album"
+				// ToDo: find field names for mbtrmid, mbuniquefileid and cddb
+				return TRUE;
+			}
+			else if ( _tcsnicmp( strResult, L"musicip ", 8 ) == 0 )
+			{
+				CString strField = strResult.Mid( 8, nSlash - 8 );
+				if ( strField.CompareNoCase( L"PUID" ) == 0 )
+					pXML->AddAttribute( L"mbpuid", strValue );
+
+				return TRUE;
+			}
+		}
+	}
+
 	pXML->AddAttribute( pszAttribute, strResult );
 	
 	return TRUE;
