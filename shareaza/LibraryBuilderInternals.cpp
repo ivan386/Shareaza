@@ -512,11 +512,11 @@ BOOL CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 		}
 		else if ( strcmp( szFrameTag, "TENC" ) == 0 || strcmp( szFrameTag, "TEN" ) == 0 )
 		{
-			CopyID3v2Field( pXML, _T("releasegroup"), pBuffer, nFrameSize );
+			CopyID3v2Field( pXML, _T("encodedby"), pBuffer, nFrameSize );
 		}
 		else if ( strcmp( szFrameTag, "TSSE" ) == 0 || strcmp( szFrameTag, "TSS" ) == 0 )
 		{
-			CopyID3v2Field( pXML, _T("encoder"), pBuffer, nFrameSize );
+			CopyID3v2Field( pXML, _T("encodedby"), pBuffer, nFrameSize );
 		}
 		else if ( strcmp( szFrameTag, "TCOM" ) == 0 || strcmp( szFrameTag, "TCM" ) == 0 )
 		{
@@ -1757,7 +1757,7 @@ BOOL CLibraryBuilderInternals::ReadOGG(DWORD nIndex, HANDLE hFile)
 	DWORD nComments = *(DWORD*)pOGG;
 	pOGG += 4; nOGG -= 4;
 	
-	CXMLElement* pXML = new CXMLElement( NULL, _T("audio") );
+	CXMLElement* pXML = new CXMLElement( NULL, L"audio" );
 	
 	for ( ; nComments && nOGG > 4 ; nComments-- )
 	{
@@ -1797,61 +1797,61 @@ BOOL CLibraryBuilderInternals::ReadOGG(DWORD nIndex, HANDLE hFile)
 
 		if ( strValue.IsEmpty() ) continue;
 		
-		if ( strKey == _T("TITLE") )
+		if ( strKey == L"TITLE" )
 		{
-			pXML->AddAttribute( _T("title"), strValue );
+			pXML->AddAttribute( L"title", strValue );
 		}
-		else if ( strKey == _T("ALBUM") )
+		else if ( strKey == L"ALBUM" )
 		{
-			pXML->AddAttribute( _T("album"), strValue );
+			pXML->AddAttribute( L"album", strValue );
 		}
-		else if ( strKey == _T("ORIGINALALBUM") )
+		else if ( strKey == L"ORIGINALALBUM" )
 		{
-			pXML->AddAttribute( _T("origAlbum"), strValue );
+			pXML->AddAttribute( L"origAlbum", strValue );
 		}
-		else if ( strKey == _T("TRACKNUMBER") )
+		else if ( strKey == L"TRACKNUMBER" )
 		{
-			pXML->AddAttribute( _T("track"), strValue );
+			pXML->AddAttribute( L"track", strValue );
 		}
-		else if ( strKey == _T("ARTIST") )
+		else if ( strKey == L"ARTIST" )
 		{
-			pXML->AddAttribute( _T("artist"), strValue );
+			pXML->AddAttribute( L"artist", strValue );
 		}
-		else if ( strKey == _T("ORIGINALARTIST") )
+		else if ( strKey == L"ORIGINALARTIST" )
 		{
-			pXML->AddAttribute( _T("origArtist"), strValue );
+			pXML->AddAttribute( L"origArtist", strValue );
 		}
-		else if ( strKey == _T("DESCRIPTION") || strKey == _T("COMMENT") )
+		else if ( strKey == L"DESCRIPTION" || strKey == L"COMMENT" )
 		{
-			pXML->AddAttribute( _T("description"), strValue );
+			pXML->AddAttribute( L"description", strValue );
 		}
-		else if ( strKey == _T("GENRE") )
+		else if ( strKey == L"GENRE" )
 		{
-			pXML->AddAttribute( _T("genre"), strValue );
+			pXML->AddAttribute( L"genre", strValue );
 		}
-		else if ( strKey == _T("DATE") )
+		else if ( strKey == L"DATE" )
 		{
-			pXML->AddAttribute( _T("year"), strValue );
+			pXML->AddAttribute( L"year", strValue );
 		}
-		else if ( strKey == _T("COPYRIGHT") )
+		else if ( strKey == L"COPYRIGHT" )
 		{
-			pXML->AddAttribute( _T("copyright"), strValue );
+			pXML->AddAttribute( L"copyright", strValue );
 		}
-		else if ( strKey == _T("ENCODED-BY") || strKey == _T("ENCODEDBY") || strKey == _T("ENCODED BY") )
+		else if ( strKey == L"ENCODED-BY" || strKey == L"ENCODEDBY" || strKey == L"ENCODED BY" )
 		{
-			pXML->AddAttribute( _T("releasegroup"), strValue );
+			pXML->AddAttribute( L"encodedby", strValue );
 		}
-		else if ( strKey == _T("COMPOSER") )
+		else if ( strKey == L"COMPOSER" )
 		{
-			pXML->AddAttribute( _T("composer"), strValue );
+			pXML->AddAttribute( L"composer", strValue );
 		}
-		else if ( strKey == _T("ENCODERSETTINGS") || strKey == _T("ENCODER") || strKey == _T("ENCODING") )
+		else if ( strKey == L"ENCODERSETTINGS" || strKey == L"ENCODER" || strKey == L"ENCODING" )
 		{
-			pXML->AddAttribute( _T("encoder"), strValue );
+			pXML->AddAttribute( L"qualitynotes", strValue );
 		}
-		else if ( strKey == _T("USERURL") || strKey == _T("USER DEFINED URL LINK") )
+		else if ( strKey == L"USERURL" || strKey == L"USER DEFINED URL LINK" )
 		{
-			pXML->AddAttribute( _T("link"), strValue );
+			pXML->AddAttribute( L"link", strValue );
 		}
 	}
 	
@@ -1883,20 +1883,20 @@ BOOL CLibraryBuilderInternals::ReadOGG(DWORD nIndex, HANDLE hFile)
 	
 	if ( nFrequency > 0 && nLength > 0 && ( nLength / nFrequency ) > 0 )
 	{
-		strComment.Format( _T("%lu"), nLength / nFrequency );
-		pXML->AddAttribute( _T("seconds"), strComment );
+		strComment.Format( L"%lu", nLength / nFrequency );
+		pXML->AddAttribute( L"seconds", strComment );
 
 		nBitrate = GetFileSize( hFile, NULL ) / ( nLength / nFrequency ) * 8;
 	}
 	
-	strComment.Format( _T("%lu"), nBitrate / 1000 );
-	pXML->AddAttribute( _T("bitrate"), strComment );
+	strComment.Format( L"%lu", nBitrate / 1000 );
+	pXML->AddAttribute( L"bitrate", strComment );
 	
-	strComment.Format( _T("%lu"), nFrequency );
-	pXML->AddAttribute( _T("sampleRate"), strComment );
+	strComment.Format( L"%lu", nFrequency );
+	pXML->AddAttribute( L"sampleRate", strComment );
 	
-	strComment.Format( _T("%lu"), nChannels );
-	pXML->AddAttribute( _T("channels"), strComment );
+	strComment.Format( L"%lu", nChannels );
+	pXML->AddAttribute( L"channels", strComment );
 	
 	return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
 }
@@ -2011,6 +2011,11 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Ha
 
 	SetFilePointer( hFile, -(LONG)pFooter.nSize, NULL, FILE_END );
 
+	bool bHasTotalDiscsField = false, bHasDiscField = false;
+	bool bHasTotalTracksField = false, bHasTrackField = false;
+	CString strTotalDiscsField, strTotalTracksField, strKeyWords, strArtist;
+	CString strDiscField, strTrackField;
+
 	for ( int nTag = 0 ; nTag < pFooter.nFields ; nTag++ )
 	{
 		DWORD nLength, nFlags;
@@ -2059,6 +2064,7 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Ha
 			else if ( strKey == L"artist" )
 			{
 				pXML->AddAttribute( L"artist", strValue );
+				strArtist = strValue;
 			}
 			else if ( strKey == L"album" )
 			{
@@ -2070,17 +2076,37 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Ha
 			}
 			else if ( strKey == L"year" )
 			{
-				pXML->AddAttribute( L"year", strValue );
+				if ( strValue.GetLength() > 4 && strValue.Find( L"-" ) != -1 )
+				{
+					pXML->AddAttribute( L"year", strValue.Left( 4 ) );
+					pXML->AddAttribute( L"releaseDate", strValue );
+				}
+				else
+					pXML->AddAttribute( L"year", strValue );
 			}
 			else if ( strKey == L"track" )
 			{
-				pXML->AddAttribute( L"track", strValue );
+				bHasTrackField = true; 
+				int intSlashPosition = strValue.Find( L"/" );
+				if ( strValue.Find( L"/" ) != -1 ) 
+				{
+					bHasTotalTracksField = true;
+					strTrackField = strValue.Left( intSlashPosition );
+					strTotalTracksField = strValue.Right( strValue.GetLength() - intSlashPosition - 1 );
+				}
+				else
+					strTrackField = strValue;
+			}
+			else if ( strKey == L"totaltracks" )
+			{
+				bHasTotalTracksField = true;
+				strTotalTracksField = strValue;
 			}
 			else if ( strKey == L"genre" )
 			{
 				pXML->AddAttribute( L"genre", strValue );
 			}
-			else if ( strKey.Find( L" url" ) > 0 )
+			else if ( strKey.Find( L" url" ) > 0 ) // are there any tag fields containing that?
 			{
 				pXML->AddAttribute( L"link", strValue );
 			}
@@ -2090,7 +2116,31 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Ha
 			}
 			else if ( strKey == L"publisher" )
 			{
+				pXML->AddAttribute( L"publisher", strValue );
+			}
+			else if ( strKey == L"copyright" )
+			{
 				pXML->AddAttribute( L"copyright", strValue );
+			}
+			else if ( strKey == L"producer" )
+			{
+				pXML->AddAttribute( L"producer", strValue );
+			}
+			else if ( strKey == L"lyricist" )
+			{
+				pXML->AddAttribute( L"lyricist", strValue );
+			}
+			else if ( strKey == L"arranger" )
+			{
+				pXML->AddAttribute( L"arranger", strValue );
+			}
+			else if ( strKey == L"performer" )
+			{
+				pXML->AddAttribute( L"performer", strValue );
+			}
+			else if ( strKey == L"conductor" )
+			{
+				pXML->AddAttribute( L"conductor", strValue );
 			}
 			else if ( strKey == L"language" )
 			{
@@ -2098,9 +2148,147 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Ha
 			}
 			else if ( strKey == L"disc" )
 			{
-				pXML->AddAttribute( L"disc", strValue );
+				bHasDiscField = true;
+				int intSlashPosition = strValue.Find( L"/" );
+				if ( intSlashPosition != -1 ) 
+				{
+					bHasTotalDiscsField = true;
+					strDiscField = strValue.Left( intSlashPosition );
+					strTotalDiscsField = strValue.Right( strValue.GetLength() - intSlashPosition - 1 );
+				}
+				else
+					strDiscField = strValue;
+			}
+			else if ( strKey == L"totaldiscs" )
+			{
+				bHasTotalDiscsField = true;
+				strTotalDiscsField = strValue;
+			}
+			else if ( strKey == L"date" )
+			{
+				pXML->AddAttribute( L"releaseDate", strValue );
+			}
+			else if ( strKey == L"encoded-by" || strKey == L"encodedby" || strKey == L"encoded by" )
+			{
+				pXML->AddAttribute( L"encodedby", strValue );
+			}
+			else if ( strKey == L"involvedpeople" )
+			{
+				if ( strKeyWords.GetLength() > 0 )
+					strKeyWords += L"; " + strValue;
+				else
+					strKeyWords = strValue;
+			}
+			else if ( strKey == L"lyrics" || strKey == L"unsyncedlyrics" || strKey == L"unsynced lyrics" )
+			{
+				// pXML->AddAttribute( L"unsyncedlyrics", strValue );
+			}
+			else if ( strValue != strArtist && ( strKey == L"musicbrainz album artist" || strKey == L"musicbrainz albumartist" || strKey == L"album artist" || strKey == L"albumartist" ) )
+			{
+				pXML->AddAttribute( L"albumArtist", strValue );
+			}
+			else if ( strKey == L"musicbrainz album id" )
+			{
+				pXML->AddAttribute( L"mbalbumid", strValue );
+			}
+			else if ( strKey == L"musicbrainz album type" )
+			{
+				pXML->AddAttribute( L"type", strValue );
+			}
+			else if ( strKey == L"musicbrainz album artist id" )
+			{
+				pXML->AddAttribute( L"mbalbumartistid", strValue );
+			}
+			else if ( strKey == L"musicbrainz album status" )
+			{
+				pXML->AddAttribute( L"albumStatus", strValue );
+			}
+			else if ( strKey == L"musicbrainz aritst id" )
+			{
+				pXML->AddAttribute( L"mbartistid", strValue );
+			}
+			else if ( strKey == L"musicbrainz non-album" && strValue == L"1" )
+			{
+				pXML->AddAttribute( L"type", L"Non-Album Track" );
+			}
+			else if ( strKey == L"musicip puid" )
+			{
+				pXML->AddAttribute( L"mbpuid", strValue );
+			}
+			else if ( strKey == L"musicbrainz trm id" )
+			{
+				pXML->AddAttribute( L"mbtrmid", strValue );
+			}
+			else if ( strKey == L"performersortorder" )
+			{
+				if ( strKeyWords.GetLength() > 0 )
+					strKeyWords += L"; " + strValue;
+				else
+					strKeyWords = strValue;
+			}
+			else if ( strKey == L"releasetime" )
+			{
+				pXML->AddAttribute( L"releaseDate", strValue );
+			}
+			else if ( strKey == L"uniquefileid" )
+			{
+				pXML->AddAttribute( L"mbuniquefileid", strValue );
+			}
+			else if ( strKey == L"contentgroup" )
+			{
+				pXML->AddAttribute( L"releasegroup", strValue );
+			}
+			else if ( strKey == L"encodersettings" )
+			{
+				pXML->AddAttribute( L"qualitynotes", strValue );
+			}
+			else if ( strKey == L"origalbum" )
+			{
+				pXML->AddAttribute( L"origAlbum", strValue );
+			}
+			else if ( strKey == L"origartist" )
+			{
+				pXML->AddAttribute( L"origArtist", strValue );
+			}
+			else if ( strKey == L"origfilename" )
+			{
+				pXML->AddAttribute( L"origFilename", strValue );
+			}
+			else if ( strKey == L"origlyricist" )
+			{
+				pXML->AddAttribute( L"origLyricist", strValue );
+			}
+			else if ( strKey == _T("origyear") )
+			{
+				pXML->AddAttribute( L"origYear", strValue );
+			}
+			else if ( strKey == L"wwwaudiosource" || strKey == L"wwwaudiofile" )
+			{
+				pXML->AddAttribute( L"releasegroupLink", strValue );
+			}
+			else if ( strKey == L"cddbdiscid" )
+			{
+				pXML->AddAttribute( L"cddb", strValue );
 			}
 		}
+	}
+
+	pXML->AddAttribute( L"keywords", strKeyWords );
+
+	if ( bHasDiscField )
+	{
+		if ( bHasTotalDiscsField )
+			pXML->AddAttribute( L"disc", strDiscField + "/" + strTotalDiscsField );
+		else
+			pXML->AddAttribute( L"disc", strDiscField );
+	}
+
+	if ( bHasTrackField == true )
+	{
+		if ( bHasTotalTracksField )
+			pXML->AddAttribute( L"track", strTrackField + "/" + strTotalTracksField );
+		else
+			pXML->AddAttribute( L"track", strTrackField );
 	}
 
 	if ( nFileSize < sizeof(APE_HEADER) )
