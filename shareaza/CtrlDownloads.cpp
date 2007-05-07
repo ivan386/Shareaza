@@ -1241,7 +1241,10 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			
 		case DOWNLOAD_COLUMN_SIZE:
 			if ( pSource->m_pTransfer != NULL )
-				strText = Settings.SmartVolume( pSource->m_pTransfer->m_nDownloaded, FALSE );
+				if ( pSource->m_pTransfer->m_nState > dtsHeaders && pSource->m_oAvailable.empty() )
+					strText = Settings.SmartVolume( pSource->m_pDownload->m_nSize, FALSE );
+				else
+					strText = Settings.SmartVolume( pSource->m_oAvailable.length_sum(), FALSE );
 			break;
 			
 		case DOWNLOAD_COLUMN_PROGRESS:
