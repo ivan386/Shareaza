@@ -112,6 +112,7 @@ public:
 		int			HighPriorityHashing;		// desired speed in MB/s when hashing with hi priority
 		int			LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search
+		BOOL		PreferAPETags;				// Read APE tags first and only then ID3 tags from audio files
 	} Library;
 
 	struct sSearch

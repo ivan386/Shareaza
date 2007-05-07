@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "LibraryFolders.h"
 #include "LibraryBuilder.h"
 #include "LibraryBuilderInternals.h"
@@ -95,8 +96,16 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, H
 	if ( strType == _T(".mp3") )
 	{
 		if ( ! m_bEnableMP3 ) return FALSE;
-		if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
-		if ( ReadAPE( nIndex, hFile, oMD5, true ) ) return TRUE;
+		if ( Settings.Library.PreferAPETags )
+		{
+			if ( ReadAPE( nIndex, hFile, oMD5, true ) ) return TRUE;
+			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
+		}
+		else
+		{
+			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
+			if ( ReadAPE( nIndex, hFile, oMD5, true ) ) return TRUE;
+		}
 		if ( ReadID3v1( nIndex, hFile ) ) return TRUE;
 		if ( ReadMP3Frames( nIndex, hFile ) ) return TRUE;
 		return CLibraryBuilder::SubmitCorrupted( nIndex );
@@ -139,8 +148,16 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, H
 	else if ( strType == _T(".mpc") || strType == _T(".mpp") || strType == _T(".mp+") )
 	{
 		if ( ! m_bEnableMPC ) return FALSE;
-		if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
-		if ( ReadMPC( nIndex, hFile, oMD5 ) ) return TRUE;
+		if ( Settings.Library.PreferAPETags )
+		{
+			if ( ReadMPC( nIndex, hFile, oMD5 ) ) return TRUE;
+			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
+		}
+		else
+		{
+			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
+			if ( ReadMPC( nIndex, hFile, oMD5 ) ) return TRUE;
+		}
 		return ReadID3v1( nIndex, hFile );
 	}
 	else if ( strType == _T(".jpg") || strType == _T(".jpeg") )

@@ -103,12 +103,12 @@ void CSettings::Setup()
 	Add( _T("Library.HighPriorityHash"), &Library.HighPriorityHash, FALSE );
 	Add( _T("Library.HashWindow"), &Library.HashWindow, FALSE );
 	Add( _T("Library.CreateGhosts"), &Library.CreateGhosts, TRUE );
-
 	Add( _T("Library.BufferSize"), &Library.BufferSize, 0 );
 	Add( _T("Library.Parallel"), &Library.Parallel, 0 );
 	Add( _T("Library.HighPriorityHashing"), &Library.HighPriorityHashing, 20);
 	Add( _T("Library.LowPriorityHashing"), &Library.LowPriorityHashing, 2 );
 	Add( _T("Library.MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, 1024 );
+	Add( _T("Library.PreferAPETags"), &Library.PreferAPETags, 1 );
 
 	Add( _T("Search.LastSchemaURI"), &Search.LastSchemaURI, _T("") );
 	Add( _T("Search.BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );

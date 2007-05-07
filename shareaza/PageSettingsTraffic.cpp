@@ -291,6 +291,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Library.MaxMaliciousFileSize, 1, 1024, 1024*5, _T(" B") );
 	AddSetting( &Settings.Library.HighPriorityHashing, 1, 1, 100, _T(" MB/s"));
 	AddSetting( &Settings.Library.LowPriorityHashing, 1, 1, 100, _T(" MB/s"));
+	AddSetting( &Settings.Library.PreferAPETags, 1, 0, 1);
 
 	AddSetting( &Settings.MediaPlayer.ShortPaths, 1, 0, 1 );
 
