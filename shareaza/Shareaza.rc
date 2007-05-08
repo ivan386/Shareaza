@@ -4376,6 +4376,7 @@ STRINGTABLE
 BEGIN
     IDS_SECURITY_REMOVE_CONFIRM 
                             "Are you sure you want to delete the selected security rules?  This cannot be undone."
+    IDS_FOLDER_TIP          "Files shared over the Internet"
 END
 
 STRINGTABLE 

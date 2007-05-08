@@ -873,6 +873,7 @@
 #define IDR_XML_DEFINITIONS             12010
 #define IDR_HTML_DISABLED               12011
 #define IDS_SECURITY_REMOVE_CONFIRM     13000
+#define IDS_FOLDER_TIP                  13001
 #define IDS_NETWORK_STARTUP             16064
 #define IDS_NETWORK_CANT_LISTEN         16065
 #define IDS_NETWORK_DISCONNECTING       16066

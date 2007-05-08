@@ -56,6 +56,7 @@ public:
 	CLibraryFolder*	IsFolderShared(LPCTSTR pszPath);
 	CLibraryFolder*	IsSubFolderShared(LPCTSTR pszPath);
 	static BOOL		IsShareable(LPCTSTR pszPath);
+	static void		Maintain(CLibraryFolder* pFolder, BOOL bAdd);
 
 // Virtual Album Operations
 public:
