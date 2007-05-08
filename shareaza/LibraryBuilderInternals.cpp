@@ -709,7 +709,9 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		int nSlash = strResult.Find( '/' );
 		if ( nSlash > 0 )
 		{
-			strValue = strResult.Mid( nSlash + 1 );
+			strValue = strResult.Mid( nSlash + 1 + ( ( nEncoding == 1 ) ? 1 : 0 ) );
+			if ( strValue.IsEmpty() ) return FALSE;
+
 			if ( _tcsnicmp( strResult, L"musicbrainz ", 12 ) == 0 )
 			{
 				CString strField = strResult.Mid( 12, nSlash - 12 );
