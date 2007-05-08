@@ -131,7 +131,11 @@ INT_PTR CFilePropertiesSheet::DoModal(int nPage)
 	}
 
 	m_psh.nStartPage = nPage;
-	return CPropertySheet::DoModal();
+	INT_PTR nRes = CPropertySheet::DoModal();
+
+	Settings.Save();
+
+	return nRes;
 }
 
 void CFilePropertiesSheet::SetTabTitle(CPropertyPage* pPage, CString& strTitle)
