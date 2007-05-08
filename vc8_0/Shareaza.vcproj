@@ -1004,10 +1004,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\SourceURL.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\shareaza\Statistics.cpp"
 				>
 			</File>
@@ -3374,10 +3370,6 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\SkinWindow.h"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\SourceURL.h"
 				>
 			</File>
 			<File
