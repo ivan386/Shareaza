@@ -1017,7 +1017,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			break;
 
 		case DOWNLOAD_COLUMN_PROGRESS:
-			if ( rcCell.Width() > 50 )
+			if ( rcCell.Width() > 75 )
 			{
 				bDisplayText = FALSE;
 				dc.Draw3dRect( &rcCell, crBack, crBack );
@@ -1032,7 +1032,10 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 					CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
 			}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
-				strText.Format( _T("%.2f%%"), pDownload->GetProgress() );
+				if ( rcCell.Width() > 50 )
+					strText.Format( _T("%.2f%%"), pDownload->GetProgress() );
+  				else
+					strText.Format( _T("%i%%"), int( pDownload->GetProgress() ) );
 			break;
 
 		case DOWNLOAD_COLUMN_SPEED:
@@ -1170,6 +1173,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 	{
 		CString strText;
 		CRect rcCell;
+		BOOL bDisplayText	= TRUE;
 		
 		m_wndHeader.GetItemRect( nColumn, &rcCell );
 		rcCell.left		+= rcRow.left;
@@ -1261,13 +1265,25 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			break;
 			
 		case DOWNLOAD_COLUMN_PROGRESS:
-			dc.Draw3dRect( &rcCell, crBack, crBack );
-			rcCell.DeflateRect( 1, 1 );
-			dc.Draw3dRect( &rcCell, crBack, crBack );
-			rcCell.DeflateRect( 0, 1 );
-			dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
-			rcCell.DeflateRect( 1, 1 );
-			CFragmentBar::DrawSource( &dc, &rcCell, pSource, CoolInterface.m_crRanges );
+			if ( rcCell.Width() > 75 )
+			{
+				bDisplayText = FALSE;
+				dc.Draw3dRect( &rcCell, crBack, crBack );
+				rcCell.DeflateRect( 1, 1 );
+				dc.Draw3dRect( &rcCell, crBack, crBack );
+				rcCell.DeflateRect( 0, 1 );
+				dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
+				rcCell.DeflateRect( 1, 1 );
+				CFragmentBar::DrawSource( &dc, &rcCell, pSource, CoolInterface.m_crRanges );
+			}
+			else if ( pSource->m_pTransfer != NULL )
+				if ( pSource->m_pTransfer->m_nState > dtsHeaders && pSource->m_oAvailable.empty() )
+					rcCell.Width() > 50 ? strText = _T("100.00%") : strText = _T("100%");
+				else if ( rcCell.Width() > 50 )
+					strText.Format( _T("%.2f%%"),
+						float( pSource->m_oAvailable.length_sum() * 10000 / pSource->m_pDownload->m_nSize ) / 100 );
+  				else
+					strText.Format( _T("%i%%"), int( pSource->m_oAvailable.length_sum() * 100 / pSource->m_pDownload->m_nSize ) );
 			break;
 			
 		case DOWNLOAD_COLUMN_SPEED:
@@ -1327,7 +1343,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		nTextLeft	= min( nTextLeft, int(rcCell.left) );
 		nTextRight	= max( nTextRight, int(rcCell.right) );
 		
-		if ( pColumn.lParam == DOWNLOAD_COLUMN_PROGRESS ) continue;
+		if ( ! bDisplayText ) continue;
 		
 		if ( rcCell.Width() < 8 ) strText.Empty();
 		
