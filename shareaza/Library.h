@@ -48,13 +48,15 @@ public:
 	DWORD			m_nScanCookie;
 	DWORD			m_nScanTime;
 	DWORD			m_nUpdateSaved;
+	BOOL			(WINAPI* m_pfnGFAEW)(LPCWSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
+	BOOL			(WINAPI* m_pfnGFAEA)(LPCSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
+
+protected:
 	int				m_nFileSwitch;
 	HANDLE			m_hThread;
 	BOOL			m_bThread;
 	CEvent			m_pWakeup;
 	HINSTANCE		m_hKernel;
-	BOOL			(WINAPI* m_pfnGFAEW)(LPCWSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
-	BOOL			(WINAPI* m_pfnGFAEA)(LPCSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
 
 // Sync Operations
 public:
@@ -69,6 +71,7 @@ public:
 public:
 	CLibraryFile*	LookupFile(DWORD nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CAlbumFolder*	GetAlbumRoot();
+
 protected:
 	void			AddFile(CLibraryFile* pFile);
 	void			RemoveFile(CLibraryFile* pFile);
@@ -80,12 +83,12 @@ public:
 	CList< CLibraryFile* >*	Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE, BOOL bAvailableOnly = FALSE);
 	void			Clear();
 	BOOL			Load();
-	void			Save();
+	BOOL			Save();
 	void			StartThread();
 	void			StopThread();
+
 protected:
 	void			Serialize(CArchive& ar);
-private:
 	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
 	BOOL			ThreadScan();

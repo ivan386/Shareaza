@@ -308,8 +308,30 @@ BOOL CLibrary::Load()
 
 	if ( bFile1 || bFile2 )
 	{
-		if ( bFile1 ) bFile1 = pFile1.Read( &pFileTime1, sizeof(FILETIME) ) == sizeof(FILETIME);
-		if ( bFile2 ) bFile2 = pFile2.Read( &pFileTime2, sizeof(FILETIME) ) == sizeof(FILETIME);
+		if ( bFile1 )
+		{
+			try
+			{
+				bFile1 = pFile1.Read( &pFileTime1, sizeof(FILETIME) ) == sizeof(FILETIME);
+			}
+			catch ( CException* pException )
+			{
+				pException->Delete();
+				bFile1 = FALSE;
+			}
+		}
+		if ( bFile2 )
+		{
+			try
+			{
+				bFile2 = pFile2.Read( &pFileTime2, sizeof(FILETIME) ) == sizeof(FILETIME);
+			}
+			catch ( CException* pException )
+			{
+				pException->Delete();
+				bFile2 = FALSE;
+			}
+		}
 	}
 	else
 	{
@@ -319,8 +341,9 @@ BOOL CLibrary::Load()
 
 	if ( bFile1 || bFile2 )
 	{
-		CFile* pNewest	= ( CompareFileTime( &pFileTime1, &pFileTime2 ) >= 0 )
-						? &pFile1 : &pFile2;
+		CFile* pNewest	=  ( bFile1 && bFile2 ) ?
+			( ( CompareFileTime( &pFileTime1, &pFileTime2 ) >= 0 ) ? &pFile1 : &pFile2 ) :
+			( bFile1 ? &pFile1 : &pFile2 );
 
 		try
 		{
@@ -382,7 +405,7 @@ BOOL CLibrary::Load()
 //////////////////////////////////////////////////////////////////////
 // CLibrary save to disk
 
-void CLibrary::Save()
+BOOL CLibrary::Save()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -396,20 +419,32 @@ void CLibrary::Save()
 
 	m_nFileSwitch = ( m_nFileSwitch == 0 ) ? 1 : 0;
 
-	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return;
+	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
 
-	pFile.Write( &pFileTime, sizeof(FILETIME) );
+	try
+	{
+		pFile.Write( &pFileTime, sizeof(FILETIME) );
 
-	CArchive ar( &pFile, CArchive::store, 40960 );
-	Serialize( ar );
-	ar.Close();
-	pFile.Flush();
+		CArchive ar( &pFile, CArchive::store, 40960 );
+		Serialize( ar );
+		ar.Close();
+		pFile.Flush();
 
-	GetSystemTime( &pSystemTime );
-	SystemTimeToFileTime( &pSystemTime, &pFileTime );
-	pFile.Seek( 0, 0 );
-	pFile.Write( &pFileTime, sizeof(FILETIME) );
-	pFile.Close();
+		GetSystemTime( &pSystemTime );
+		SystemTimeToFileTime( &pSystemTime, &pFileTime );
+		pFile.Seek( 0, 0 );
+		pFile.Write( &pFileTime, sizeof(FILETIME) );
+
+		pFile.Close();
+		
+		return TRUE;
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
+
+		return FALSE;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
