@@ -80,6 +80,7 @@ public:
 		return m_pItems.IsEmpty() ? NULL : m_pItems.GetHead();
 	}
 
+	INT_PTR	GetCount(BOOL bVisibleOnly) const;
 };
 
 

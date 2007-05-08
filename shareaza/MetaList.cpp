@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "MetaList.h"
 #include "Schema.h"
+#include "SchemaMember.h"
 #include "XML.h"
 #include "Library.h"
 #include "LibraryFolders.h"
@@ -213,6 +214,7 @@ void CMetaList::ComputeWidth(CDC* pDC, int& nKeyWidth, int& nValueWidth)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CMetaItem* pItem	= GetNext( pos );
+		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
 
 		CSize szKey			= pDC->GetTextExtent( pItem->m_sKey + ':' );
 		CSize szValue		= pDC->GetTextExtent( pItem->m_sValue );
@@ -220,6 +222,22 @@ void CMetaList::ComputeWidth(CDC* pDC, int& nKeyWidth, int& nValueWidth)
 		nKeyWidth			= max( nKeyWidth, int(szKey.cx) );
 		nValueWidth			= max( nValueWidth, int(szValue.cx) );
 	}
+}
+
+INT_PTR CMetaList::GetCount(BOOL bVisibleOnly) const
+{
+	if ( !bVisibleOnly ) return GetCount();
+
+	INT_PTR nTotal = 0;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CMetaItem* pItem = GetNext( pos );
+		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
+		nTotal++;
+	}
+
+	return nTotal;
 }
 
 //////////////////////////////////////////////////////////////////////

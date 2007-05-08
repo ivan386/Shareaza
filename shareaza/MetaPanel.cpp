@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "MetaPanel.h"
 #include "CoolInterface.h"
+#include "SchemaMember.h"
 #include "Skin.h"
 
 #include "Library.h"
@@ -64,6 +65,8 @@ int CMetaPanel::Layout(CDC* pDC, int nWidth)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CMetaItem* pItem = GetNext( pos );
+		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
+
 		CSize sz = pDC->GetTextExtent( pItem->m_sValue );
 		
 		if ( sz.cx <= nSmall )
@@ -72,7 +75,18 @@ int CMetaPanel::Layout(CDC* pDC, int nWidth)
 			pItem->m_nHeight	= 18;
 			
 			if ( CMetaItem* pNext = GetNext( pos ) )
-			{
+			{	
+				ASSERT( pNext->m_pMember );
+				while ( pNext && pNext->m_pMember->m_bHidden )
+					pNext = GetNext( pos );
+
+				if ( pNext == NULL )
+				{
+					pItem->m_bFullWidth = TRUE;
+					m_nHeight += 20;
+					break;
+				}
+
 				sz = pDC->GetTextExtent( pNext->m_sValue );
 				
 				if ( sz.cx <= nSmall )

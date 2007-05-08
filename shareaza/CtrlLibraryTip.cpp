@@ -29,6 +29,7 @@
 #include "SharedFile.h"
 #include "Schema.h"
 #include "SchemaCache.h"
+#include "SchemaMember.h"
 #include "TigerTree.h"
 #include "ThumbCache.h"
 #include "SHA.h"
@@ -188,7 +189,7 @@ void CLibraryTipCtrl::OnCalcSize(CDC* pDC)
 
 	m_sz.cy += TIP_RULE;
 
-	int nMetaHeight = static_cast< int >( m_pMetadata.GetCount() * TIP_TEXTHEIGHT );
+	int nMetaHeight = static_cast< int >( m_pMetadata.GetCount( TRUE ) * TIP_TEXTHEIGHT );
 	int nValueWidth = 0;
 	m_nKeyWidth = 40;
 
@@ -250,6 +251,7 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 	for ( POSITION pos = m_pMetadata.GetIterator() ; pos ; )
 	{
 		CMetaItem* pItem = m_pMetadata.GetNext( pos );
+		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
 
 		DrawText( pDC, &pt, theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':', 100 );
 		DrawText( pDC, &pt, pItem->m_sValue, 100 + m_nKeyWidth );
