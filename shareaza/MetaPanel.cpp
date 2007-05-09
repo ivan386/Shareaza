@@ -37,6 +37,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+#define METAPANEL_KEY_WIDTH 120
 
 //////////////////////////////////////////////////////////////////////
 // CMetaPanel construction
@@ -55,8 +56,8 @@ CMetaPanel::~CMetaPanel()
 
 int CMetaPanel::Layout(CDC* pDC, int nWidth)
 {
-	int nSmall	= ( nWidth >= 400 ) ? nWidth / 2 - 100 - 3 : 0;
-	int nLarge	= nWidth - 100 - 3;
+	int nSmall	= ( nWidth >= 400 ) ? nWidth / 2 - METAPANEL_KEY_WIDTH - 3 : 0;
+	int nLarge	= nWidth - METAPANEL_KEY_WIDTH - 3;
 	
 	m_nHeight = 0;
 	
@@ -172,7 +173,7 @@ void CMetaPanel::Paint(CDC* pDC, const CRect* prcArea)
 				rcValue.right	+= ( nColumn + 1 ) * rcWork.Width() / 2 - 1;
 			}
 			
-			CRect rcKey( rcValue.left, rcValue.top, rcValue.left + 100, rcValue.bottom );
+			CRect rcKey( rcValue.left, rcValue.top, rcValue.left + METAPANEL_KEY_WIDTH, rcValue.bottom );
 			rcValue.left = rcKey.right;
 			
 			pDC->SetTextColor( CoolInterface.m_crText );
