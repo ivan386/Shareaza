@@ -1365,6 +1365,18 @@ BOOL CDatagrams::OnCommonHit(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		return FALSE;
 	}
 
+	// The sender IP of this hit should match the Node Address contained in the packet
+	// If it doesn't we'll drop it.
+	if ( pHits->m_pAddress.S_un.S_addr != pHost->sin_addr.S_un.S_addr )
+	{
+		//pPacket->Debug( _T("UDP Sender IP does not match packet NA") );
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
+			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+		pHits->Delete();
+		Statistics.Current.Gnutella2.Dropped++;
+		return FALSE;
+	}
+
 	if ( Security.IsDenied( &pHits->m_pAddress ) || nHops > (int)Settings.Gnutella1.MaximumTTL )
 	{
 		pHits->Delete();
