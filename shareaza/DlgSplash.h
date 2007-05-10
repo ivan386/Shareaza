@@ -49,6 +49,7 @@ protected:
 
 // Operations
 public:
+	void	IncrMax() { m_nMax++; };
 	void	Step(LPCTSTR pszText, bool bClosing = false);
 	void	Topmost();
 	void	Hide();

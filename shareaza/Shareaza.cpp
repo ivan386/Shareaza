@@ -304,6 +304,7 @@ BOOL CShareazaApp::InitInstance()
 	CFirewall firewall;
 	if ( Settings.Connection.EnableFirewallException && firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
 	{
+		dlgSplash->IncrMax();
 		SplashStep( dlgSplash, L"Windows Firewall Setup" );
 
 		// Add to firewall exception list if necessary
@@ -318,6 +319,7 @@ BOOL CShareazaApp::InitInstance()
 	// If it is the first run we will run the UPnP discovery only in the QuickStart Wizard
 	if ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun )
 	{
+		dlgSplash->IncrMax();
 		SplashStep( dlgSplash, L"Firewall/Router Setup" );
 		try
 		{
@@ -344,6 +346,7 @@ BOOL CShareazaApp::InitInstance()
 				dlgSplash->Topmost();
 			m_pMainWnd->UpdateWindow();
 		}
+
 	// From this point translations are available and LoadString returns correct strings
 	SplashStep( dlgSplash, L"Download Manager" ); 
 		Downloads.Load();
@@ -369,9 +372,8 @@ BOOL CShareazaApp::InitInstance()
 void CShareazaApp::SplashStep(CSplashDlg*& dlg, LPCTSTR pszMessage, bool bClosing)
 {
 	if ( m_ocmdInfo.m_bNoSplash ) return;
-	if ( dlg == NULL )
-		dlg = new CSplashDlg( 19, m_ocmdInfo.m_bSilentTray );
-	dlg->Step( pszMessage, bClosing );
+	if ( dlg != NULL )
+		dlg->Step( pszMessage, bClosing );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -381,7 +383,7 @@ int CShareazaApp::ExitInstance()
 {
 	CWaitCursor pCursor;
 	
-	CSplashDlg* dlgSplash = NULL;
+	CSplashDlg* dlgSplash = new CSplashDlg( 6, m_ocmdInfo.m_bSilentTray );
 	SplashStep( dlgSplash, L"Closing Server Processes", true );
 	DDEServer.Close();
 	IEProtocol.Close();
@@ -401,6 +403,7 @@ int CShareazaApp::ExitInstance()
 	CFirewall firewall;
 	if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
 	{
+		dlgSplash->IncrMax();
 		SplashStep( dlgSplash, L"Closing Windows Firewall Access", true );	
 
 		// Remove application from the firewall exception list
@@ -412,6 +415,7 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_pUPnPFinder )
 	{
+		dlgSplash->IncrMax();
 		SplashStep( dlgSplash, L"Closing Firewall/Router Access", true );
 		m_pUPnPFinder->StopAsyncFind();
 		if ( Settings.Connection.DeleteUPnPPorts )
@@ -421,6 +425,7 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_bLive )
 	{
+		dlgSplash->IncrMax();
 		SplashStep( dlgSplash, L"Saving", true );
 		Downloads.Save();
 		DownloadGroups.Save();
