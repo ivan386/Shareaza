@@ -79,17 +79,17 @@ CHandshakes::~CHandshakes()
 // Returns true if we're listening, false if it didn't work
 BOOL CHandshakes::Listen()
 {
-	// Make sure only one thread can execute the code of this method at a time
-	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released
-
 	// Setup m_hSocket as a new TCP socket
 	if ( m_hSocket != INVALID_SOCKET )	// Make sure the socket hasn't been created yet
 	{
-		theApp.Message( MSG_ERROR, _T("Too fast re-connection, wait 2 sec.") );
+		theApp.Message( MSG_ERROR, _T("Re-connection too fast, waiting 2 seconds.") );
 		Sleep(2000);					// Too fast re-connection after disconnection, wait 2 sec
 		if ( m_hSocket != INVALID_SOCKET )
 			return FALSE;
 	}
+
+	// Make sure only one thread can execute the code of this method at a time
+	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released
 
 	m_hSocket = socket(	// Create a socket
 		PF_INET,		// Specify the Internet address family
@@ -97,7 +97,7 @@ BOOL CHandshakes::Listen()
 		IPPROTO_TCP );
 	if ( m_hSocket == INVALID_SOCKET )	// Now, make sure it has been created
 	{
-		theApp.Message( MSG_ERROR, _T("Creating socket is failed.") );
+		theApp.Message( MSG_ERROR, _T("Failed to create socket. (1st Try)") );
 		// Second attempt
 		m_hSocket = socket(	// Create a socket
 			PF_INET,		// Specify the Internet address family
@@ -105,7 +105,7 @@ BOOL CHandshakes::Listen()
 			IPPROTO_TCP );
 		if ( m_hSocket == INVALID_SOCKET )
 		{
-			theApp.Message( MSG_ERROR, _T("Creating socket is failed a second time.") );
+			theApp.Message( MSG_ERROR, _T("Failed to create socket. (2nd Try)") );
 			return FALSE;
 		}
 	}
@@ -115,7 +115,7 @@ BOOL CHandshakes::Listen()
 
 	// If the program connection settings disallow binding, zero the 4 bytes of the IP address
 	if ( ! Settings.Connection.InBind ) 
-		saListen.sin_addr.S_un.S_addr = 0; // S_addr is the IP address formatted as a single u_long
+		saListen.sin_addr.s_addr = INADDR_ANY; // s_addr is the IP address formatted as a single u_long
 	else
 	{
 		// Set the exclusive address option
@@ -149,8 +149,10 @@ BOOL CHandshakes::Listen()
 		}
 		else // This is still our first time here in this loop
 		{
-			// Zero the 4 numbers of the IP address (do) Why would we want to call bind with a zeroed address?
-			saListen.sin_addr.S_un.S_addr = 0;
+			// We set s_addr to INADDR_ANY, which allows it to be any IP address,
+			// since we don’t really care about the IP address if we are just telling
+			// WinSock which port we want our side of the connection to be.
+			saListen.sin_addr.s_addr = INADDR_ANY;
 		}
 	}
 

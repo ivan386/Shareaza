@@ -260,12 +260,20 @@ BOOL CShareazaApp::InitInstance()
 
 	// ***********
 	
-	CSplashDlg* dlgSplash = NULL;
+	CSplashDlg* dlgSplash = new CSplashDlg( 18, m_ocmdInfo.m_bSilentTray );
 
 	SplashStep( dlgSplash, L"Winsock" );
 		WSADATA wsaData;
-		if ( WSAStartup( 0x0101, &wsaData ) ) return FALSE;
-	
+		for ( int i = 1; i <= 2; i++ )
+		{
+			if ( WSAStartup( MAKEWORD( 1, 1 ), &wsaData ) ) return FALSE;
+			if ( wsaData.wVersion == MAKEWORD( 1, 1 ) ) break;
+			if ( i == 2 ) return FALSE;
+			WSACleanup();
+			dlgSplash->IncrMax();
+			SplashStep( dlgSplash, L"Winsock (trying again)" );
+		}
+
 	SplashStep( dlgSplash, L"Settings Database" );
 		Settings.Load();
 

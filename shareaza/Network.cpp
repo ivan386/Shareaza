@@ -250,7 +250,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 		InternetCloseHandle( hInternet );
 	}
 
-	gethostname( m_sHostName.GetBuffer( 256 ), 256 );
+	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
 	m_sHostName.ReleaseBuffer();
 
 	// If we are already connected exit.
