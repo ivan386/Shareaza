@@ -1,7 +1,7 @@
 //
 // Schema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -524,12 +524,12 @@ void CSchema::LoadDescriptorHeaderContent(CXMLElement* pElement)
 		if ( pXML->IsNamed( _T("title") ) )
 		{
 			if ( bLanguage || m_sHeaderTitle.IsEmpty() )
-				m_sHeaderTitle = pXML->GetValue();
+				m_sHeaderTitle = pXML->GetValue().Trim();
 		}
 		else if ( pXML->IsNamed( _T("subtitle") ) )
 		{
 			if ( bLanguage || m_sHeaderSubtitle.IsEmpty() )
-				m_sHeaderSubtitle = pXML->GetValue();
+				m_sHeaderSubtitle = pXML->GetValue().Trim();
 		}
 	}
 }
@@ -548,12 +548,12 @@ void CSchema::LoadDescriptorViewContent(CXMLElement* pElement)
 		if ( pXML->IsNamed( _T("tileLine1") ) )
 		{
 			if ( bLanguage || m_sTileLine1.IsEmpty() )
-				m_sTileLine1 = pXML->GetValue();
+				m_sTileLine1 = pXML->GetValue().Trim();
 		}
 		else if ( pXML->IsNamed( _T("tileLine2") ) )
 		{
 			if ( bLanguage || m_sTileLine2.IsEmpty() )
-				m_sTileLine2 = pXML->GetValue();
+				m_sTileLine2 = pXML->GetValue().Trim();
 		}
 	}
 }
