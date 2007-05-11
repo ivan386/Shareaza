@@ -177,7 +177,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ee">{name} Muusika</title>
                <title language="es">{name} Música</title>
                <title language="fr">Musique {name}</title>
-               <title language="heb">שירים של {name} </title>
+               <title language="heb">שירים של {name}</title>
                <title language="hr">{name} - Muzika</title>
                <title language="hu">{name} Zene</title>
                <title language="it">Musica {name}</title>
