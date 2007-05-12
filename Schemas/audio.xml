@@ -149,7 +149,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Albumo dailininkas</title>
                        <title language="nl">Album Artist</title>
                        <title language="no">Album Artist</title>
-                       <title language="pt-br">Album Artist</title>
+                       <title language="pt-br">Artista do Álbum</title>
                        <title language="ru">Album Artist</title>
                        <title language="sl-SI">Album Artist</title>
                        <title language="sq">Album Artist</title>
@@ -277,7 +277,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Albumo būklė</title>
                        <title language="nl">Album Status</title>
                        <title language="no">Album Status</title>
-                       <title language="pt-br">Album Status</title>
+                       <title language="pt-br">Status do Álbum</title>
                        <title language="ru">Album Status</title>
                        <title language="sl-SI">Album Status</title>
                        <title language="sq">Album Status</title>
@@ -404,7 +404,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Originalo metai</title>
                        <title language="nl">Original Year</title>
                        <title language="no">Original Year</title>
-                       <title language="pt-br">Original Year</title>
+                       <title language="pt-br">Ano Original</title>
                        <title language="ru">Original Year</title>
                        <title language="sl-SI">Original Year</title>
                        <title language="sq">Original Year</title>
@@ -659,7 +659,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Poetas</title>
                        <title language="nl">Lyricist</title>
                        <title language="no">Lyricist</title>
-                       <title language="pt-br">Lyricist</title>
+                       <title language="pt-br">Compositor</title>
                        <title language="ru">Lyricist</title>
                        <title language="sl-SI">Lyricist</title>
                        <title language="sq">Lyricist</title>
@@ -684,7 +684,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Pirminis poetas</title>
                        <title language="nl">Original Lyricist</title>
                        <title language="no">Original Lyricist</title>
-                       <title language="pt-br">Original Lyricist</title>
+                       <title language="pt-br">Compositor Original</title>
                        <title language="ru">Original Lyricist</title>
                        <title language="sl-SI">Original Lyricist</title>
                        <title language="sq">Original Lyricist</title>
@@ -709,7 +709,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="lt">Aranžuotojas</title>
                       <title language="nl">Arranger</title>
                       <title language="no">Arranger</title>
-                      <title language="pt-br">Arranger</title>
+                      <title language="pt-br">Organizador</title>
                       <title language="ru">Arranger</title>
                       <title language="sl-SI">Arranger</title>
                       <title language="sq">Arranger</title>
@@ -734,7 +734,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="lt">Orkestras</title>
                       <title language="nl">Performer</title>
                       <title language="no">Performer</title>
-                      <title language="pt-br">Performer</title>
+                      <title language="pt-br">Músico(s)</title>
                       <title language="ru">Performer</title>
                       <title language="sl-SI">Performer</title>
                       <title language="sq">Performer</title>
@@ -759,7 +759,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="lt">Dirigentas</title>
                       <title language="nl">Conductor</title>
                       <title language="no">Conductor</title>
-                      <title language="pt-br">Conductor</title>
+                      <title language="pt-br">Condutor</title>
                       <title language="ru">Conductor</title>
                       <title language="sl-SI">Conductor</title>
                       <title language="sq">Conductor</title>
@@ -1059,7 +1059,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Kodavo</title>
                        <title language="nl">Encoded By</title>
                        <title language="no">Encoded By</title>
-                       <title language="pt-br">Encoded By</title>
+                       <title language="pt-br">Codificado Por</title>
                        <title language="ru">Encoded By</title>
                        <title language="sl-SI">Encoded By</title>
                        <title language="sq">Encoded By</title>
@@ -1241,7 +1241,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">CDDB Disc ID</title>
                        <title language="nl">CDDB Disc ID</title>
                        <title language="no">CDDB Disc ID</title>
-                       <title language="pt-br">CDDB Disc ID</title>
+                       <title language="pt-br">ID do Disco no CDDB</title>
                        <title language="ru">CDDB Disc ID</title>
                        <title language="sl-SI">CDDB Disc ID</title>
                        <title language="sq">CDDB Disc ID</title>
