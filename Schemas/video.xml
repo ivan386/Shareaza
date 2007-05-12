@@ -225,7 +225,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Data della prima trasmissione</title>
                        <title language="ja">放送日/放映日</title>
                        <title language="lt">Pasirodė eteryje</title>
-                       <title language="nl">Datum Originele Uitzending</title>
+                       <title language="nl">Datum Oorspronkelijke Uitzending</title>
                        <title language="no">Første gang vist</title>
                        <title language="pt-br">Lançamento Original</title>
                        <title language="ru">Дата выхода</title>
@@ -605,7 +605,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Frame Rate</title>
                        <title language="ja">フレームレート</title>
                        <title language="lt">Kadrų dažnis</title>
-                       <title language="nl">Frame Rate</title>
+                       <title language="nl">Beelden per Seconde</title>
                        <title language="no">Frame Rate</title>
                        <title language="pt-br">Taxa de Frames</title>
                        <title language="ru">Частота кадров</title>
@@ -855,7 +855,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Data di rilascio P2P</title>
                        <title language="ja">P2P配布日</title>
                        <title language="lt">P2P išleidimo data</title>
-                       <title language="nl">Datum P2P distributie</title>
+                       <title language="nl">Datum P2P Verspreiding</title>
                        <title language="no">P2P releasedato</title>
                        <title language="pt-br">Lançamento no P2P</title>
                        <title language="ru">P2P релиз дата</title>
@@ -905,7 +905,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Link del distributore</title>
                        <title language="ja">配布者リンク</title>
                        <title language="lt">Distrib. nuoroda</title>
-                       <title language="nl">Link naar distributeerder</title>
+                       <title language="nl">Link naar Distributeerder</title>
                        <title language="no">Distributørlink</title>
                        <title language="pt-br">Link do Distribuidor</title>
                        <title language="ru">Ссылка агента</title>

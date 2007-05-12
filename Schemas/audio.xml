@@ -122,7 +122,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Artista originale</title>
                        <title language="ja">オリジナル･アーティスト</title>
                        <title language="lt">Pradinis atlikėjas</title>
-                       <title language="nl">Originele artiest</title>
+                       <title language="nl">Oorspronkelijke Artiest</title>
                        <title language="no">Original Artist</title>
                        <title language="pt-br">Artista Original</title>
                        <title language="ru">Первоначальный артист</title>
@@ -147,7 +147,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Album Artist</title>
                        <title language="ja">Album Artist</title>
                        <title language="lt">Albumo dailininkas</title>
-                       <title language="nl">Album Artist</title>
+                       <title language="nl">Album Artiest</title>
                        <title language="no">Album Artist</title>
                        <title language="pt-br">Artista do Álbum</title>
                        <title language="ru">Album Artist</title>
@@ -199,7 +199,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Album originale</title>
                        <title language="ja">オリジナル･アルバム</title>
                        <title language="lt">Pirminis albumas</title>
-                       <title language="nl">Origineel album</title>
+                       <title language="nl">Oorspronkelijk Album</title>
                        <title language="no">Original Album</title>
                        <title language="pt-br">Álbum Original</title>
                        <title language="ru">Альбом-источник</title>
@@ -352,7 +352,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Disco</title>
                        <title language="ja">ディスク</title>
                        <title language="lt">Plokštelė</title>
-                       <title language="nl">CD</title>
+                       <title language="nl">Schijf</title>
                        <title language="no">Disk</title>
                        <title language="pt-br">Disco</title>
                        <title language="ru">Диск</title>
@@ -402,7 +402,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Original Year</title>
                        <title language="ja">Original Year</title>
                        <title language="lt">Originalo metai</title>
-                       <title language="nl">Original Year</title>
+                       <title language="nl">Oorspronkelijk Jaar</title>
                        <title language="no">Original Year</title>
                        <title language="pt-br">Ano Original</title>
                        <title language="ru">Original Year</title>
@@ -454,7 +454,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Velocità in bit</title>
                        <title language="ja">ビットレート</title>
                        <title language="lt">Bitratas</title>
-                       <title language="nl">Bitrate</title>
+                       <title language="nl">Frequentie</title>
                        <title language="no">Bitrate</title>
                        <title language="pt-br">Bitrate</title>
                        <title language="ru">Битрейт</title>
@@ -657,7 +657,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Lyricist</title>
                        <title language="ja">Lyricist</title>
                        <title language="lt">Poetas</title>
-                       <title language="nl">Lyricist</title>
+                       <title language="nl">Schrijver</title>
                        <title language="no">Lyricist</title>
                        <title language="pt-br">Compositor</title>
                        <title language="ru">Lyricist</title>
@@ -682,7 +682,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Original Lyricist</title>
                        <title language="ja">Original Lyricist</title>
                        <title language="lt">Pirminis poetas</title>
-                       <title language="nl">Original Lyricist</title>
+                       <title language="nl">Oorspronkelijke Schrijver</title>
                        <title language="no">Original Lyricist</title>
                        <title language="pt-br">Compositor Original</title>
                        <title language="ru">Original Lyricist</title>
@@ -707,7 +707,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="it">Arranger</title>
                       <title language="ja">Arranger</title>
                       <title language="lt">Aranžuotojas</title>
-                      <title language="nl">Arranger</title>
+                      <title language="nl">Arrangeur</title>
                       <title language="no">Arranger</title>
                       <title language="pt-br">Organizador</title>
                       <title language="ru">Arranger</title>
@@ -732,7 +732,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="it">Performer</title>
                       <title language="ja">Performer</title>
                       <title language="lt">Orkestras</title>
-                      <title language="nl">Performer</title>
+                      <title language="nl">Bespeler</title>
                       <title language="no">Performer</title>
                       <title language="pt-br">Músico(s)</title>
                       <title language="ru">Performer</title>
@@ -757,7 +757,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="it">Conductor</title>
                       <title language="ja">Conductor</title>
                       <title language="lt">Dirigentas</title>
-                      <title language="nl">Conductor</title>
+                      <title language="nl">Dirigent</title>
                       <title language="no">Conductor</title>
                       <title language="pt-br">Condutor</title>
                       <title language="ru">Conductor</title>
@@ -882,7 +882,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Data di rilascio P2P</title>
                        <title language="ja">P2P配布日</title>
                        <title language="lt">P2P išleidimo data</title>
-                       <title language="nl">Datum P2P distributie</title>
+                       <title language="nl">Datum P2P Verspreiding</title>
                        <title language="no">P2P releasedato</title>
                        <title language="pt-br">Lançamento no P2P</title>
                        <title language="ru">P2P релиз дата</title>
@@ -932,7 +932,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Link del distributore</title>
                        <title language="ja">配布者リンク</title>
                        <title language="lt">Distrib. nuoroda</title>
-                       <title language="nl">Link naar distributeerder</title>
+                       <title language="nl">Link naar Distributeerder</title>
                        <title language="no">Distributørlink</title>
                        <title language="pt-br">Link do Distribuidor</title>
                        <title language="ru">Ссылка агента</title>
@@ -1057,7 +1057,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">Encoded By</title>
                        <title language="ja">Encoded By</title>
                        <title language="lt">Kodavo</title>
-                       <title language="nl">Encoded By</title>
+                       <title language="nl">Ge-encodeerd Door</title>
                        <title language="no">Encoded By</title>
                        <title language="pt-br">Codificado Por</title>
                        <title language="ru">Encoded By</title>
@@ -1239,7 +1239,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="it">CDDB Disc ID</title>
                        <title language="ja">CDDB Disc ID</title>
                        <title language="lt">CDDB Disc ID</title>
-                       <title language="nl">CDDB Disc ID</title>
+                       <title language="nl">CDDB Schijf ID</title>
                        <title language="no">CDDB Disc ID</title>
                        <title language="pt-br">ID do Disco no CDDB</title>
                        <title language="ru">CDDB Disc ID</title>
