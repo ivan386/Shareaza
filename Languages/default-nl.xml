@@ -20,7 +20,7 @@
 		version="2.2.5.2"
 		type="Language"
 		language="nl"
-		prompt="Klik hier om Nederlands als taal te selecteren."
+		prompt="Klik hier om Nederlands als taal te kiezen."
 />
 
 <!-- Toolbar Definitions -->
@@ -171,7 +171,7 @@
 		<button id="ID_DOWNLOADS_MONITOR" text="Monitor tonen"/>
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrentinformatie"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Download/Torrent toevoegen..."/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Download-/TorrentURL toevoegen..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Wis voltooide bestanden"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filter"/>
@@ -298,7 +298,7 @@
 		<separator/>
 		<label text="Zoeken:" tip="Zoek naar een positie in het mediabestand"/>
 		<control id="117" width="190" height="22"/>
-		<label text="Volume:" tip="Het audiovolume aanpassen"/>
+		<label text="Volume:" tip="Het geluidsvolume aanpassen"/>
 		<control id="119" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Bestand openen"/>
@@ -317,7 +317,7 @@
 		<control id="117" width="190" height="22"/>
 		<label text="Snelheid:" tip="De snelheid van het mediabestand aanpassen"/>
 		<control id="118" width="40" height="22"/>
-		<label text="Volume:" tip="Het audiovolume aanpassen"/>
+		<label text="Volume:" tip="Het geluidsvolume aanpassen"/>
 		<control id="119" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Openen"/>
@@ -409,7 +409,7 @@
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_BestFit" text="Passende grootte"/>
-		<button id="ImageViewer_ActualSize" text="Actuele grootte"/>
+		<button id="ImageViewer_ActualSize" text="Echte grootte"/>
 		<separator/>
 		<button id="ImageViewer_Refresh" text="Vernieuwen"/>
 		<separator/>
@@ -467,7 +467,7 @@
 		</menu>
 		<menu text="_Hulpmiddelen">
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Bestand/Torrent _downloaden..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Bestand-/TorrentURL _invoegen..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Een _taal kiezen..."/>
@@ -479,7 +479,7 @@
 		</menu>
 		<menu text="_Hulp">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
-			<item id="ID_HELP_TEST" text="_Verbindingstest"/>
+			<item id="ID_HELP_TEST" text="_Verbindingstest(aanbevolen)"/>
 			<separator/>
 			<menu text="_Handleidingen">
 				<item id="ID_HELP_GUIDE" text="Shareaza _gebruikershandleiding"/>
@@ -552,7 +552,7 @@
 		</menu>
 		<menu text="_Hulpmiddelen">
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Bestand/Torrent _downloaden..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Bestand-/TorrentURL _invoegen..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importeer gedeeltelijke eMule downloads..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
@@ -573,7 +573,7 @@
 		</menu>
 		<menu text="_Hulp">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
-			<item id="ID_HELP_TEST" text="_Verbindingstest"/>
+			<item id="ID_HELP_TEST" text="_Verbindingstest(aanbevolen)"/>
 			<separator/>
 			<menu text="_Handleidingen">
 				<item id="ID_HELP_GUIDE" text="Shareaza _gebruikershandleiding"/>
@@ -636,7 +636,7 @@
 		</menu>
 		<menu text="_Hulpmiddelen">
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Bestand/Torrent _downloaden..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Bestand-/TorrentURL _invoegen..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importeer gedeeltelijke eMule downloads..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
@@ -661,7 +661,7 @@
 		</menu>
 		<menu text="_Hulp">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
-			<item id="ID_HELP_TEST" text="_Verbindingstest"/>
+			<item id="ID_HELP_TEST" text="_Verbindingstest(aanbevolen)"/>
 			<separator/>
 			<menu text="_Handleidingen">
 				<item id="ID_HELP_GUIDE" text="Shareaza _gebruikershandleiding"/>
@@ -1168,7 +1168,7 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata downloaden"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="_Torrentbestand maken"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._Torrent maken"/>
 		</menu>
 		<menu text="O_rganiseren">
 			<item id="ID_LIBRARY_RENAME" text="Bestand _hernoemen"/>
@@ -1236,7 +1236,7 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata downloaden"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="_Torrentbestand maken"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._Torrent maken"/>
 		</menu>
 		<menu text="O_rganiseren">
 			<item id="ID_LIBRARY_UNLINK" text="_Bestanden verwijderen"/>
@@ -1409,7 +1409,7 @@
 		<separator/>
 		<item id="ID_TRAFFIC_GRID" text="_Rasterlijnen"/>
 		<item id="ID_TRAFFIC_AXIS" text="_As"/>
-		<item id="ID_TRAFFIC_LEGEND" text="_Legenda"/>
+		<item id="ID_TRAFFIC_LEGEND" text="_Legende"/>
 		<separator/>
 		<item id="ID_TRAFFIC_CLEAR" text="_Wissen"/>
 		<separator/>
@@ -1462,7 +1462,7 @@
 		<separator/>
 		<menu text="_Schriftstijl">
 			<item id="ID_CHAT_BOLD" text="V_et"/>
-			<item id="ID_CHAT_ITALIC" text="_Cursief"/>
+			<item id="ID_CHAT_ITALIC" text="_Schuin"/>
 			<item id="ID_CHAT_UNDERLINE" text="_Onderstrepen"/>
 			<item id="ID_CHAT_COLOUR" text="_Kleur"/>
 			<item id="ID_CHAT_EMOTICONS" text="E_moticons"/>
@@ -1528,7 +1528,7 @@
 		</group>
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">W A A R S C H U W I N G &#160; - &#160; J E &#160; H E B T &#160; E E N &#160; F I R E W A L L</heading>
+			<heading align="middle">W A A R S C H U W I N G &#160; - &#160; J E &#160; H E B T &#160; E E N &#160; S L E C H T &#160; I N G E S T E L D E &#160; R O U T E R &#160; O F &#160; F I R E W A L L</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza heeft gemerkt dat je achter een NAT router of firewall zit,
 			en niet in staat bent om verbindingen te ontvangen van het internet. &#160;</text>
@@ -1539,7 +1539,7 @@
 		</group>
 		<group id="6">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">W A A R S C H U W I N G &#160; - &#160; J E &#160; T C P &#160; P O O R T &#160; I S &#160; G E F I R E W A L L E D</heading>
+			<heading align="middle">W A A R S C H U W I N G &#160; - &#160; J E &#160; T C P &#160; P O O R T &#160; I S &#160; G E B L O K K E E R D &#160; D O O R &#160; J E &#160; R O U T E R &#160; O F &#160; F I R E W A L L</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza heeft gemerkt dat je achter een NAT router of firewall zit,
 			en niet in staat bent om verbindingen te ontvangen van het internet. &#160;</text>
@@ -1550,7 +1550,7 @@
 		</group>
 		<group id="7">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">W A A R S C H U W I N G &#160; - &#160; J E &#160; U D P &#160; P O O R T &#160; I S &#160; G E F I R E W A L L E D</heading>
+			<heading align="middle">W A A R S C H U W I N G &#160; - &#160; J E &#160; U D P &#160; P O O R T &#160; I S &#160; G E B L O K K E E R D &#160; D O O R &#160; J E &#160; R O U T E R &#160; O F &#160; F I R E W A L L</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza heeft gemerkt dat je achter een NAT router of firewall zit,
 			en niet in staat bent om verbindingen te ontvangen van het internet. &#160;</text>
@@ -1636,10 +1636,10 @@
 				<newline gap="8"/>
 			</group>
 			<group id="3">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klik hier om sneller te hashen</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klik hier om sneller te verwerken</link>
 			</group>
 			<group id="4">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klik hier om langzamer te hashen</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klik hier om langzamer te verwerken</link>
 			</group>
 		</para>
 	</document>
@@ -2166,7 +2166,7 @@
 	<tip id="ID_CHAT_CONNECT" message="Verbind met de chatsessie."/>
 	<tip id="ID_CHAT_DISCONNECT" message="De chatsessie afbreken."/>
 	<tip id="ID_CHAT_EMOTICONS" message="Voeg een emoticon toe."/>
-	<tip id="ID_CHAT_ITALIC" message="Maak de tekst cursief (Ctrl+I)"/>
+	<tip id="ID_CHAT_ITALIC" message="Maak de tekst Schuin (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Geef deze gebruiker voorrang met het uploaden."/>
 	<tip id="ID_CHAT_SEND_FILE" message="Een bestand sturen naar de gebruiker..."/>
 	<tip id="ID_CHAT_TIMESTAMP" message="Laat de tijd zien wanneer elke boodschap wordt ontvangen."/>
