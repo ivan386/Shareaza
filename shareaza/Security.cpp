@@ -629,6 +629,7 @@ CSecureRule& CSecureRule::operator=(const CSecureRule& pRule)
 	delete [] m_pContent;
 	m_pContent	= pRule.m_nContentLength ? new TCHAR[ pRule.m_nContentLength ] : NULL;
 	m_nContentLength = pRule.m_nContentLength;
+	CopyMemory( m_pContent, pRule.m_pContent, m_nContentLength * sizeof( TCHAR ) );
 
 	return *this;
 }
