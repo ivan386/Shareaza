@@ -32,7 +32,7 @@
 		<button id="ID_TAB_HOME" text="Lar"/>
 		<button id="ID_TAB_LIBRARY" text="Biblioteca"/>
 		<button id="ID_TAB_MEDIA" text="Mídia"/>
-		<button id="ID_TAB_SEARCH" text="Pesquisar"/>
+		<button id="ID_TAB_SEARCH" text="Procurar"/>
 		<button id="ID_TAB_TRANSFERS" text="Downloads"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Tabbed">
@@ -41,7 +41,7 @@
 		<button id="ID_TAB_HOME" text="Lar"/>
 		<button id="ID_TAB_LIBRARY" text="Biblioteca"/>
 		<button id="ID_TAB_MEDIA" text="Mídia"/>
-		<button id="ID_TAB_SEARCH" text="Pesquisar"/>
+		<button id="ID_TAB_SEARCH" text="Procurar"/>
 		<button id="ID_TAB_TRANSFERS" text="Transferências"/>
 		<button id="ID_TAB_NETWORK" text="Rede"/>
 	</toolbar>
@@ -97,7 +97,7 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
-			<button id="ID_SEARCH_SEARCH" text="Pesquisar Novamente..."/>
+			<button id="ID_SEARCH_SEARCH" text="Procurar Novamente..."/>
 				<button id="ID_SEARCH_STOP" text="Parar"/>
 		<separator/>
 				<button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
@@ -366,7 +366,7 @@
 	<!-- HIT MONITOR WINDOW -->
 	<toolbar name="CHitMonitorWnd">
 		<button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
-		<button id="ID_HITMONITOR_SEARCH" text="Pesquisar Novamente"/>
+		<button id="ID_HITMONITOR_SEARCH" text="Procurar Novamente"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Pausar"/>
 		<button id="ID_HITMONITOR_CLEAR" text="Limpar"/>
@@ -449,7 +449,7 @@
 			<item id="ID_TAB_HOME" text="Lar"/>
 			<item id="ID_TAB_LIBRARY" text="Biblioteca"/>
 			<item id="ID_TAB_MEDIA" text="Media Player"/>
-			<item id="ID_TAB_SEARCH" text="Pesquisar"/>
+			<item id="ID_TAB_SEARCH" text="Procurar"/>
 			<item id="ID_TAB_TRANSFERS" text="Downloads"/>
 			<item id="ID_WINDOW_REMOTE" text="Remoto"/>
 			<separator/>
@@ -521,7 +521,7 @@
 			<item id="ID_TAB_HOME" text="Lar"/>
 			<item id="ID_TAB_LIBRARY" text="Biblioteca"/>
 			<item id="ID_TAB_MEDIA" text="Media Player"/>
-			<item id="ID_TAB_SEARCH" text="Pesquisar"/>
+			<item id="ID_TAB_SEARCH" text="Procurar"/>
 			<item id="ID_TAB_TRANSFERS" text="Transferências"/>
 			<item id="ID_TAB_NETWORK" text="Rede"/>
 			<separator/>
@@ -687,7 +687,7 @@
 		<item id="ID_TAB_HOME" text="Lar"/>
 		<item id="ID_TAB_LIBRARY" text="Biblioteca"/>
 		<item id="ID_TAB_MEDIA" text="Mídia"/>
-		<item id="ID_TAB_SEARCH" text="Pesquisar"/>
+		<item id="ID_TAB_SEARCH" text="Procurar"/>
 		<item id="ID_TAB_TRANSFERS" text="Downloads"/>
 		<separator/>
 		<menu text="Avançado">
@@ -701,7 +701,7 @@
 		<item id="ID_TAB_HOME" text="Lar"/>
 		<item id="ID_TAB_LIBRARY" text="Biblioteca"/>
 		<item id="ID_TAB_MEDIA" text="Mídia"/>
-		<item id="ID_TAB_SEARCH" text="Pesquisar"/>
+		<item id="ID_TAB_SEARCH" text="Procurar"/>
 		<item id="ID_TAB_TRANSFERS" text="Transferências"/>
 		<item id="ID_TAB_NETWORK" text="Rede"/>
 		<separator/>
@@ -772,7 +772,7 @@
 		<item id="ID_TAB_HOME" text="Lar"/>
 		<item id="ID_TAB_LIBRARY" text="Biblioteca"/>
 		<item id="ID_TAB_MEDIA" text="Mídia"/>
-		<item id="ID_TAB_SEARCH" text="Pesquisar"/>
+		<item id="ID_TAB_SEARCH" text="Procurar"/>
 		<item id="ID_TAB_TRANSFERS" text="Downloads"/>
 		<separator/>
 		<menu text="Avançado">
@@ -786,7 +786,7 @@
 		<item id="ID_TAB_HOME" text="Lar"/>
 		<item id="ID_TAB_LIBRARY" text="Biblioteca"/>
 		<item id="ID_TAB_MEDIA" text="Mídia"/>
-		<item id="ID_TAB_SEARCH" text="Pesquisar"/>
+		<item id="ID_TAB_SEARCH" text="Procurar"/>
 		<item id="ID_TAB_TRANSFERS" text="Transferências"/>
 		<item id="ID_TAB_NETWORK" text="Rede"/>
 		<separator/>
@@ -825,7 +825,7 @@
 		<item id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<item id="ID_SEARCH_CHAT" text="Conversar com Usuário"/>
 		<separator/>
-		<menu text="Pesquisar Por">
+		<menu text="Procurar Por">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arquivos Similares"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Músicas do mesmo Artista"/>
@@ -846,7 +846,7 @@
 		<item id="ID_SEARCH_CHAT" text="Conversar com Usuário"/>
 		<item id="ID_SECURITY_BAN" text="Banir Usuário"/>
 		<separator/>
-		<menu text="Pesquisar Por">
+		<menu text="Procurar Por">
 			<item id="ID_SEARCH_FOR_THIS" text="Este Arquivo"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arquivos Similares"/>
 			<separator/>
@@ -871,7 +871,7 @@
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="Conversar com Usuário"/>
 		<separator/>
-		<menu text="Pesquisar Por">
+		<menu text="Procurar Por">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arquivos Similares"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Músicas do mesmo Artista"/>
@@ -890,7 +890,7 @@
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="Conversar com Usuário"/>
 		<separator/>
-		<menu text="Pesquisar Por">
+		<menu text="Procurar Por">
 			<item id="ID_SEARCH_FOR_THIS" text="Este Arquivo"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arquivos Similares"/>
 			<separator/>
@@ -915,7 +915,7 @@
 		<item id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<item id="ID_SEARCH_CHAT" text="Conversar com Usuário"/>
 		<separator/>
-		<menu text="Pesquisar Por">
+		<menu text="Procurar Por">
 			<item id="ID_SEARCH_FOR_THIS" text="Este Arquivo"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arquivos Similares"/>
 			<separator/>
@@ -1125,7 +1125,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_DELETE" text="Apagar"/>
 		<separator/>
-		<menu text="Pesquisar Por">
+		<menu text="Procurar Por">
 			<item id="ID_SEARCH_FOR_THIS" text="Este Arquivo"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arquivos Similares"/>
 			<separator/>
@@ -1157,7 +1157,7 @@
 		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="Apagar"/>
 		<separator/>
-		<menu text="Pesquisar Por">
+		<menu text="Procurar Por">
 			<item id="ID_SEARCH_FOR_THIS" text="Este Arquivo"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arquivos Similares"/>
 			<separator/>
@@ -1191,7 +1191,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_DELETE" text="Apagar"/>
 		<separator/>
-		<menu text="Pesquisar Por">
+		<menu text="Procurar Por">
 			<item id="ID_SEARCH_FOR_THIS" text="Este Arquivo"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arquivos Similares"/>
 			<separator/>
@@ -1225,7 +1225,7 @@
 		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="Apagar"/>
 		<separator/>
-		<menu text="Pesquisar Por">
+		<menu text="Procurar Por">
 			<item id="ID_SEARCH_FOR_THIS" text="Este Arquivo"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arquivos Similares"/>
 			<separator/>
@@ -1399,7 +1399,7 @@
 	</menu>
 	<!-- SEARCH MONITOR WINDOW -->
 	<menu name="CSearchMonitorWnd">
-		<item id="ID_HITMONITOR_SEARCH" text="Pesquisar Por Isto"/>
+		<item id="ID_HITMONITOR_SEARCH" text="Procurar Por Isto"/>
 		<separator/>
 		<item id="ID_SEARCHMONITOR_PAUSE" text="Pausar Exibição"/>
 		<item id="ID_SEARCHMONITOR_CLEAR" text="Limpar Buffer"/>
@@ -2183,7 +2183,7 @@
 <tip id="ID_DISCOVERY_BROWSE" message="Navegar as estatísticas do serviço GWebCache selecionado na rede."/>
 <tip id="ID_DISCOVERY_EDIT" message="Ver as propriedades para o serviço de descobrimento selecionado."/>
 <tip id="ID_DISCOVERY_GNUTELLA" message="Mostrar os serviços de bootstrap na janela de Descobrimento."/>
-<tip id="ID_DISCOVERY_QUERY" message="Pesquisar os serviços de descobrimento selecionados agora."/>
+<tip id="ID_DISCOVERY_QUERY" message="Procurar os serviços de descobrimento selecionados agora."/>
 <tip id="ID_DISCOVERY_REMOVE" message="Remover os serviços de descobrimento selecionado."/>
 <tip id="ID_DISCOVERY_SERVERMET" message="Mostrar os serviços da server.met do eDonkey2000 na janela de Descobrimento."/>
 <tip id="ID_DISCOVERY_WEBCACHE" message="Mostrar os serviços de GWebCache na janela de Descobrimento."/>
@@ -2289,8 +2289,8 @@
 <tip id="ID_LIBRARY_REMOVE" message="Remover as pastas compartilhadas selecionadas."/>
 <tip id="ID_LIBRARY_RENAME" message="Renomear o arquivo selecionado."/>
 <tip id="ID_LIBRARY_SCAN" message="Scanear as pastas ou arquivos selecionados por mudanças."/>
-<tip id="ID_LIBRARY_SEARCH" message="Pesquisar a sua biblioteca de arquivos..."/>
-<tip id="ID_LIBRARY_SEARCH_QUICK" message="Pesquisar a sua biblioteca de arquivos..."/>
+<tip id="ID_LIBRARY_SEARCH" message="Procurar a sua biblioteca de arquivos..."/>
+<tip id="ID_LIBRARY_SEARCH_QUICK" message="Procurar a sua biblioteca de arquivos..."/>
 <tip id="ID_LIBRARY_SEED_TORRENT" message="Fazer seed do Torrent selecionado no BitTorrent."/>
 <tip id="ID_LIBRARY_SELECT_ALL" message="Selecionar e ver toda as pastas na sua biblioteca."/>
 <tip id="ID_LIBRARY_SHARED_FILE" message="Compartilhar ou não compartilhar os arquivos selecionados."/>
@@ -2369,13 +2369,13 @@
 <tip id="ID_SEARCH_FILTER" message="Filtrar o resultados da pesquisa por certas palavras e condições..."/>
 <tip id="ID_SEARCH_FILTER_RAW" message="Filtrar os resultados da pesquisa por certas palavras e condições..."/>
 <tip id="ID_SEARCH_FILTER_REMOVE" message="Remover a filtragem dos resultados."/>
-<tip id="ID_SEARCH_FOR_ALBUM" message="Pesquisar por arquivos de música no mesmo álbum do arquivo selecionado."/>
-<tip id="ID_SEARCH_FOR_ARTIST" message="Pesquisar por arquivos de música do mesmo artista do arquivo selecionado."/>
-<tip id="ID_SEARCH_FOR_SERIES" message="Pesquisar por arquivos de vídeo da mesma série do arquivo selecionado."/>
-<tip id="ID_SEARCH_FOR_SIMILAR" message="Pesquisar por arquivos que são similares ao arquivo selecionado."/>
-<tip id="ID_SEARCH_FOR_THIS" message="Pesquisar por outras cópias do arquivo selecionado."/>
-<tip id="ID_SEARCH_PANEL" message="Exibir o painel de busca rápida no lado esquerdo da janela Pesquisar."/>
-<tip id="ID_SEARCH_SEARCH" message="Pesquisar na rede novamente..."/>
+<tip id="ID_SEARCH_FOR_ALBUM" message="Procurar por arquivos de música no mesmo álbum do arquivo selecionado."/>
+<tip id="ID_SEARCH_FOR_ARTIST" message="Procurar por arquivos de música do mesmo artista do arquivo selecionado."/>
+<tip id="ID_SEARCH_FOR_SERIES" message="Procurar por arquivos de vídeo da mesma série do arquivo selecionado."/>
+<tip id="ID_SEARCH_FOR_SIMILAR" message="Procurar por arquivos que são similares ao arquivo selecionado."/>
+<tip id="ID_SEARCH_FOR_THIS" message="Procurar por outras cópias do arquivo selecionado."/>
+<tip id="ID_SEARCH_PANEL" message="Exibir o painel de busca rápida no lado esquerdo da janela Procurar."/>
+<tip id="ID_SEARCH_SEARCH" message="Procurar na rede novamente..."/>
 <tip id="ID_SEARCH_STOP" message="Parar de receber resultados nesta janela."/>
 <tip id="ID_SEARCHMONITOR_CLEAR" message="Limpar o buffer do monitor de busca."/>
 <tip id="ID_SEARCHMONITOR_PAUSE" message="Pausar a monitoração de busca."/>
@@ -2399,7 +2399,7 @@
 <tip id="ID_TAB_LIBRARY" message="Ver e gerenciar a sua biblioteca de conteúdo local."/>
 <tip id="ID_TAB_MEDIA" message="Tocar arquivos de mídia de áudio e vídeo da sua biblioteca."/>
 <tip id="ID_TAB_NETWORK" message="Ver quão bem você está conectado a Rede."/>
-<tip id="ID_TAB_SEARCH" message="Pesquisar na rede por arquivos para baixar"/>
+<tip id="ID_TAB_SEARCH" message="Procurar na rede por arquivos para baixar"/>
 <tip id="ID_TAB_TRANSFERS" message="Monitorar uploads e downloads que você está fazendo."/>
 <tip id="ID_TOOLS_DOWNLOAD" message="Começar a baixar um novo arquivo ou torrent..."/>
 <tip id="ID_TOOLS_LANGUAGE" message="Selecione o idioma que você deseja usar no Shareaza..."/>
@@ -2473,7 +2473,7 @@
 	<string id="WINDOW_PACKET" value="Pacotes Perdidos"/>
 	<string id="WINDOW_HOSTCACHE" value="Armazenamento de Hosts"/>
 	<string id="WINDOW_SEARCHMONITOR" value="Monitor de Pesquisa"/>
-	<string id="WINDOW_SEARCH" value="Pesquisar"/>
+	<string id="WINDOW_SEARCH" value="Procurar"/>
 	<string id="WINDOW_HITMONITOR" value="Monitor de Acertos"/>
 	<string id="WINDOW_DOWNLOADS" value="Downloads"/>
 	<string id="WINDOW_LIBRARY" value="Biblioteca"/>
@@ -2485,7 +2485,7 @@
 	<string id="WINDOW_BROWSEHOST" value="Navegar"/>
 	<string id="WINDOW_HOME" value="Lar do Shareaza"/>
 	<string id="WINDOW_MEDIA" value="Media Player"/>
-	<string id="WINDOW_SEARCHPAD" value="Pesquisar"/>
+	<string id="WINDOW_SEARCHPAD" value="Procurar"/>
 	<string id="WINDOW_HELP" value="Ajuda do Shareaza"/>
 	<string id="7000" value="Você tem certeza que você quer apagar este filtro?"/>
 	<string id="7001" value="&amp;Schemas"/>
@@ -2557,7 +2557,7 @@
 	<string id="8153" value="Atualmente não procurando"/>
 	<string id="8154" value="Nenhum arquivo encontrado"/>
 	<string id="8155" value="%lu arquivo em %lu acerto|%lu arquivo em %lu acertos|%lu arquivos em %lu acertos"/>
-	<string id="8156" value="Pesquisar"/>
+	<string id="8156" value="Procurar"/>
 	<string id="8157" value="Resultados"/>
 	<string id="8158" value="Limpar"/>
 	<string id="8159" value="Avançado"/>
@@ -2623,8 +2623,8 @@
 	<string id="8321" value="Velocidade:"/>
 	<string id="8322" value="URL:"/>
 	<string id="8323" value="Usuário Agente:"/>
-	<string id="8324" value="Inativo"/>
-	<string id="8325" value="Ativo"/>
+	<string id="8324" value="Inativ(o)a"/>
+	<string id="8325" value="Ativ(o)a"/>
 	<string id="8326" value="Próximo na Linha"/>
 	<string id="8327" value="Total de Arquivos:"/>
 	<string id="8328" value="Volume Total:"/>
@@ -2637,6 +2637,8 @@
 	<string id="8335" value="As fontes para este arquivo estão atrás de um firewall"/>
 	<string id="8336" value="As fontes para este arquivo podem ser instáveis"/>
 	<string id="8337" value="Não confiável"/>
+	<string id="13000" value="Você tem certeza de que você quer apagar as regras de segurança selecionadas?  Isto não pode ser desfeito."/>
+	<string id="13001" value="Arquivos compartilhados pela Internet"/>
 	<string id="16064" value="Iniciando o núcleo de rede do Shareaza..."/>
 	<string id="16065" value="Impossível aceitar conexões de %s na porta %i. Conexões de entrada não serão suportadas."/>
 	<string id="16066" value="Desligando o núcleo de rede do Shareaza..."/>
@@ -3418,7 +3420,7 @@
 		<control caption="Sempre conectar na eDonkey2000"/>
 		<control caption="Conectar na eDonkey2000 hoje"/>
 		<control caption="Pesquisa Global:"/>
-		<control caption="Pesquisar em servidores remotos conhecidos no cache do servidor:"/>
+		<control caption="Procurar em servidores remotos conhecidos no cache do servidor:"/>
 		<control caption="Parar de pesquisar após:"/>
 		<control/><control/>
 		<control caption="resultados de busca."/>
@@ -3722,7 +3724,7 @@
 		<control caption="O Shareaza também baixa arquivos BitTorrent. Um Torrent é descrito por um arquivo .torrent ou um link HTTP para o arquivo .torrent. Para baixar um link HTTP de torrent cole-o na caixa acima. Se você tem um arquivo .torrent, clique em Abrir Torrent:"/>
 		<control caption="Abrir Torrent..."/>
 	</dialog>
-	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Nova Pesquisa|Pesquisar Novamente|Achar na Biblioteca">
+	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Nova Pesquisa|Procurar Novamente|Achar na Biblioteca">
 		<control/><control/>
 		<control caption="Procurar"/>
 		<control caption="Cancelar"/>
