@@ -2701,7 +2701,7 @@
 	<string id="16264" value="正在啟始連線至 %s 連接埠 %i 以下載 &quot;%s&quot;..."/>
 	<string id="16265" value="無法連線至下載主機 %s."/>
 	<string id="16266" value="連到 %s 的下載連線已建立."/>
-	<string id="16267" value="&quot;%s&quot; 的下載分塊(%I64i-%I64i): 正在向 %s 要求."/>
+	<!-- incorrect translation causes a crash <string id="16267" value="&quot;%s&quot; 的下載分塊(%I64i-%I64i): 正在向 %s 要求."/> -->
 	<string id="16268" value="沒有任何可用的下載分塊, 正在與 %s 的關閉連線."/>
 	<string id="16269" value="分塊縮減, 正在關閉與 %s 的連線."/>
 	<string id="16270" value="向 %s 的下載要求已經逾時, 關閉連線中."/>
