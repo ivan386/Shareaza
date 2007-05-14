@@ -755,7 +755,7 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 		else
 			m_pTray.hIcon = AfxGetApp()->LoadIcon( IDI_ICON );
 		
-		_tcscpy( m_pTray.szTip, _T("Shareaza") );
+		_tcscpy( m_pTray.szTip, Settings.SmartAgent() );
 		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );
 	}
 	else if ( m_bTrayIcon && ! bNeedTrayIcon )
@@ -1330,9 +1330,9 @@ void CMainWnd::UpdateMessages()
 		strMessage += strOld;
 	}
 	
-	if ( _tcsistr( strMessage, _T("Shareaza") ) == NULL )
+	if ( _tcsistr( strMessage, _T(CLIENT_NAME) ) == NULL )
 	{
-		strMessage = _T("Shareaza ") + strMessage;
+		strMessage = _T(CLIENT_NAME) _T(" ") + strMessage;
 	}
 	
 	GetWindowText( strOld );

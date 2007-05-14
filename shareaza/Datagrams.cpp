@@ -1629,9 +1629,7 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	if ( bWantREXT )
 	{
 		vendorCode = VENDOR_CODE;
-		currentVersion = CLIENT_NAME;
-		currentVersion += " ";
-		currentVersion += theApp.m_sVersion;
+		currentVersion = Settings.SmartAgent();
 	}
 
 	pPacket->WritePacket(
