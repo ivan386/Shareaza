@@ -264,6 +264,42 @@ typedef struct _POWER_POLICY
 	MACHINE_POWER_POLICY mach;
 } POWER_POLICY, *PPOWER_POLICY;
 
+#pragma pack( push, 1 )
+
+typedef struct _ICONDIRENTRY
+{
+	BYTE        bWidth;          // Width, in pixels, of the image
+	BYTE        bHeight;         // Height, in pixels, of the image
+	BYTE        bColorCount;     // Number of colors in image (0 if >=8bpp)
+	BYTE        bReserved;       // Reserved ( must be 0)
+	WORD        wPlanes;         // Color Planes
+	WORD        wBitCount;       // Bits per pixel
+	DWORD       dwBytesInRes;    // How many bytes in this resource?
+	DWORD       dwImageOffset;   // Where in the file is this image?
+} ICONDIRENTRY, *LPICONDIRENTRY;
+
+typedef struct _GRPICONDIRENTRY
+{
+	BYTE   bWidth;               // Width, in pixels, of the image
+	BYTE   bHeight;              // Height, in pixels, of the image
+	BYTE   bColorCount;          // Number of colors in image (0 if >=8bpp)
+	BYTE   bReserved;            // Reserved
+	WORD   wPlanes;              // Color Planes
+	WORD   wBitCount;            // Bits per pixel
+	DWORD  dwBytesInRes;         // how many bytes in this resource?
+	WORD   nID;                  // the ID
+} GRPICONDIRENTRY, *LPGRPICONDIRENTRY;
+
+typedef struct _ICONDIR
+{
+	WORD           idReserved;   // Reserved (must be 0)
+	WORD           idType;       // Resource Type (1 for icons)
+	WORD           idCount;      // How many images?
+//	ICONDIRENTRY   idEntries[];  // An entry for each image (idCount of 'em)
+} ICONDIR, *LPICONDIR;
+
+#pragma pack( pop )
+
 // Copied from GeoIP.h
 typedef struct GeoIPTag {
   FILE *GeoIPDatabase;

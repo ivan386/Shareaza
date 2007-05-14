@@ -1785,3 +1785,102 @@ CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)
 	}
 	return strBody;
 }
+
+const struct
+{
+	LPCTSTR szPath;
+	UINT	nID;
+	LPCTSTR	szType;
+	LPCTSTR	szContentType;
+} WebResources [] =
+{
+	{ _T("/remote/header_1.png"),	IDR_HOME_HEADER_1,	RT_PNG,			_T("image/png") },
+	{ _T("/remote/header_2.png"),	IDR_HOME_HEADER_2,	RT_PNG,			_T("image/png") },
+	{ _T("/favicon.ico"),			IDR_MAINFRAME,		RT_GROUP_ICON,	_T("image/x-icon") },
+	{ NULL, NULL, NULL, NULL }
+};
+
+bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeader)
+{
+	bool ret = false;
+	for ( int i = 0; WebResources[ i ].szPath; i++ )
+	{
+		if ( strPath.Compare( WebResources[ i ].szPath ) == 0 )
+		{
+			HMODULE hModule = AfxGetResourceHandle();
+			if ( HRSRC hRes = FindResource( hModule,
+				MAKEINTRESOURCE( WebResources[ i ].nID ), WebResources[ i ].szType ) )
+			{
+				DWORD nSize			= SizeofResource( hModule, hRes );
+				HGLOBAL hMemory		= LoadResource( hModule, hRes );
+				if ( hMemory )
+				{
+					BYTE* pSource	= (BYTE*)LockResource( hMemory );
+					if ( pSource )
+					{
+						if ( WebResources[ i ].szType == RT_GROUP_ICON )
+						{
+							// Save main header
+							ICONDIR* piDir = (ICONDIR*)pSource;
+							DWORD dwTotalSize = sizeof( ICONDIR ) +
+								sizeof( ICONDIRENTRY ) * piDir->idCount; 
+							pResponse.EnsureBuffer( dwTotalSize );
+							CopyMemory( pResponse.m_pBuffer, piDir, sizeof( ICONDIR ) );
+
+							GRPICONDIRENTRY* piDirEntry = (GRPICONDIRENTRY*)
+								( pSource + sizeof( ICONDIR ) );
+
+							// Find all subicons
+							for ( WORD i = 0; i < piDir->idCount; i++ )
+							{
+								// pResponse.m_pBuffer may be changed
+								ICONDIRENTRY* piEntry = (ICONDIRENTRY*)
+									( pResponse.m_pBuffer + sizeof( ICONDIR ) );
+
+								// Load subicon
+								HRSRC hResIcon = FindResource( hModule, MAKEINTRESOURCE(
+									piDirEntry[ i ].nID ), RT_ICON );
+								DWORD nSizeIcon = SizeofResource( hModule, hResIcon );
+								HGLOBAL hMemoryIcon = LoadResource( hModule, hResIcon );
+								BITMAPINFOHEADER* piImage = (BITMAPINFOHEADER*)
+									LockResource( hMemoryIcon );
+
+								// Fill subicon header
+								piEntry[ i ].bWidth = piDirEntry[ i ].bWidth;
+								piEntry[ i ].bHeight = piDirEntry[ i ].bHeight;
+								piEntry[ i ].wPlanes = piDirEntry[ i ].wPlanes;
+								piEntry[ i ].bColorCount = piDirEntry[ i ].bColorCount;
+								piEntry[ i ].bReserved = 0;
+								piEntry[ i ].wBitCount = piDirEntry[ i ].wBitCount;
+								piEntry[ i ].dwBytesInRes = nSizeIcon;
+								piEntry[ i ].dwImageOffset = dwTotalSize;
+
+								// Save subicon
+								pResponse.EnsureBuffer( dwTotalSize + nSizeIcon );
+								CopyMemory( pResponse.m_pBuffer + dwTotalSize,
+									piImage, nSizeIcon );
+								dwTotalSize += nSizeIcon;
+
+								FreeResource( hMemoryIcon );
+							}
+							pResponse.m_nLength = dwTotalSize;
+						}
+						else
+						{
+							pResponse.EnsureBuffer( nSize );
+							CopyMemory( pResponse.m_pBuffer, pSource, nSize );
+							pResponse.m_nLength = nSize;
+						}
+						sHeader.Format(
+							_T("Content-Type: %s\r\n"),
+							WebResources[ i ].szContentType);
+						ret = true;
+					}
+					FreeResource( hMemory );
+				}
+			}
+			break;
+		}
+	}
+	return ret;
+}

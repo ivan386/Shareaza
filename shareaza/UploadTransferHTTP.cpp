@@ -367,7 +367,22 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		}
 	}
 
-	if ( m_sRequest == _T("/") || StartsWith( m_sRequest, _T("/gnutella/browse/v1") ) )
+	CBuffer pResponse;
+	CString sHeader;
+	if ( ResourceRequest( m_sRequest, pResponse, sHeader ) )
+	{
+		m_pOutput->Print( "HTTP/1.1 200 OK\r\n" );
+		CString strLength;
+		strLength.Format( _T("Content-Length: %i\r\n"), pResponse.m_nLength );
+		m_pOutput->Print( strLength );
+		if ( ! sHeader.IsEmpty() )
+			m_pOutput->Print( sHeader );
+		m_pOutput->Print( "\r\n" );
+		m_pOutput->AddBuffer( &pResponse );
+		StartSending( upsResponse );
+		return TRUE;
+	}
+	else if ( m_sRequest == _T("/") || StartsWith( m_sRequest, _T("/gnutella/browse/v1") ) )
 	{
 		// Requests for "/" or the browse path are handled the same way
 		
@@ -390,7 +405,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		
 		return TRUE;
 	}
-	else if ( StartsWith( m_sRequest, _T("/remote") ) || StartsWith( m_sRequest, _T("/favicon.ico") ) )
+	else if ( StartsWith( m_sRequest, _T("/remote") ) )
 	{
 		// A web client can start requesting remote pages on the same keep-alive
 		// connection after previously requesting other system objects

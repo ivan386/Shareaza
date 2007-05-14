@@ -417,13 +417,13 @@ void CRemote::PageSwitch(CString& strPath)
 	{
 		PageNetwork();
 	}
-	else if ( strPath == _T("/remote/header_1.png") || strPath == _T("/remote/header_2.png") )
-	{
-		PageBanner( strPath );
-	}
 	else if ( strPath.Find( _T("/remote/images/") ) == 0 )
 	{
 		PageImage( strPath );
+	}
+	else
+	{
+		PageBanner( strPath );
 	}
 }
 
@@ -1410,31 +1410,7 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 
 void CRemote::PageBanner(CString& strPath)
 {
-	HMODULE hModule = GetModuleHandle( NULL );
-	UINT nID = 0;
-	
-	if ( strPath == _T("/remote/header_1.png") )
-		nID = IDR_HOME_HEADER_1;
-	else if ( strPath == _T("/remote/header_2.png") )
-		nID = IDR_HOME_HEADER_2;
-	
-	if ( HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nID ), RT_PNG ) )
-	{
-		DWORD nSize			= SizeofResource( hModule, hRes );
-		HGLOBAL hMemory		= LoadResource( hModule, hRes );
-		if ( hMemory )
-		{
-			LPVOID pSource	= LockResource( hMemory );
-			if ( pSource )
-			{			
-				m_pResponse.EnsureBuffer( nSize );
-				CopyMemory( m_pResponse.m_pBuffer, pSource, nSize );
-				m_pResponse.m_nLength = nSize;
-				m_sHeader = _T("Cache-Control: max-age=259200\r\nContent-Type: image/png\r\n");
-			}
-			FreeResource( hMemory );
-		}
-	}
+	ResourceRequest( strPath, m_pResponse, m_sHeader );
 }
 
 /////////////////////////////////////////////////////////////////////////////
