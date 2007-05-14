@@ -143,7 +143,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="fr">Album Artist</title>
                        <title language="heb">Album Artist</title>
                        <title language="hr">Album Artist</title>
-                       <title language="hu">Album Artist</title>
+                       <title language="hu">Album eladőja</title>
                        <title language="it">Album Artist</title>
                        <title language="ja">Album Artist</title>
                        <title language="lt">Albumo dailininkas</title>
@@ -271,7 +271,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="fr">Album Status</title>
                        <title language="heb">Album Status</title>
                        <title language="hr">Album Status</title>
-                       <title language="hu">Album Status</title>
+                       <title language="hu">Album helyzete</title>
                        <title language="it">Album Status</title>
                        <title language="ja">Album Status</title>
                        <title language="lt">Albumo būklė</title>
@@ -653,7 +653,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="fr">Lyricist</title>
                        <title language="heb">Lyricist</title>
                        <title language="hr">Lyricist</title>
-                       <title language="hu">Lyricist</title>
+                       <title language="hu">Dalszöveg-író</title>
                        <title language="it">Lyricist</title>
                        <title language="ja">Lyricist</title>
                        <title language="lt">Poetas</title>
@@ -703,7 +703,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="fr">Arranger</title>
                       <title language="heb">Arranger</title>
                       <title language="hr">Arranger</title>
-                      <title language="hu">Arranger</title>
+                      <title language="hu">Szervező</title>
                       <title language="it">Arranger</title>
                       <title language="ja">Arranger</title>
                       <title language="lt">Aranžuotojas</title>
@@ -728,7 +728,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="fr">Performer</title>
                       <title language="heb">Performer</title>
                       <title language="hr">Performer</title>
-                      <title language="hu">Performer</title>
+                      <title language="hu">Előadó</title>
                       <title language="it">Performer</title>
                       <title language="ja">Performer</title>
                       <title language="lt">Orkestras</title>
@@ -753,7 +753,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="fr">Conductor</title>
                       <title language="heb">Conductor</title>
                       <title language="hr">Conductor</title>
-                      <title language="hu">Conductor</title>
+                      <title language="hu">Karmester</title>
                       <title language="it">Conductor</title>
                       <title language="ja">Conductor</title>
                       <title language="lt">Dirigentas</title>
@@ -1028,7 +1028,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="fr">Encodeur utilisé</title>
                        <title language="heb">המקודד שנעשה בו שימוש</title>
                        <title language="hr">Korišteni Encoder</title>
-                       <title language="hu">Kódoló használva</title>
+                       <title language="hu">Felhasznált enkódoló</title>
                        <title language="it">Encoder usato</title>
                        <title language="ja">使用エンコーダー</title>
                        <title language="lt">Naudotas koduoklis</title>
@@ -1053,7 +1053,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="fr">Encoded By</title>
                        <title language="heb">Encoded By</title>
                        <title language="hr">Encoded By</title>
-                       <title language="hu">Encoded By</title>
+                       <title language="hu">Kódolva</title>
                        <title language="it">Encoded By</title>
                        <title language="ja">Encoded By</title>
                        <title language="lt">Kodavo</title>
@@ -1235,7 +1235,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="fr">CDDB Disc ID</title>
                        <title language="heb">CDDB Disc ID</title>
                        <title language="hr">CDDB Disc ID</title>
-                       <title language="hu">CDDB Disc ID</title>
+                       <title language="hu">CDDB lemez ID</title>
                        <title language="it">CDDB Disc ID</title>
                        <title language="ja">CDDB Disc ID</title>
                        <title language="lt">CDDB Disc ID</title>
