@@ -84,7 +84,7 @@ namespace augment
 		com_ptr& operator=(const com_ptr< source_interface_type >& p)
 		{
 			reset( p.get() );
-			return *this:
+			return *this;
 		}
 		// implicit copy-assignment operator
 
