@@ -178,8 +178,10 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
-	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnLvnOdfinditem(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnOdfinditemW(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnOdfinditemA(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnOdcachehint(NMHDR *pNMHDR, LRESULT *pResult);
 };
 

@@ -715,8 +715,10 @@ CLiveListCtrl::~CLiveListCtrl()
 }
 
 BEGIN_MESSAGE_MAP(CLiveListCtrl, CListCtrl)
-	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnLvnGetdispinfo)
-	ON_NOTIFY_REFLECT(LVN_ODFINDITEM, OnLvnOdfinditem)
+	ON_NOTIFY_REFLECT(LVN_GETDISPINFOW, OnLvnGetdispinfoW)
+	ON_NOTIFY_REFLECT(LVN_GETDISPINFOA, OnLvnGetdispinfoA)
+	ON_NOTIFY_REFLECT(LVN_ODFINDITEMW, OnLvnOdfinditemW)
+	ON_NOTIFY_REFLECT(LVN_ODFINDITEMA, OnLvnOdfinditemA)
 	ON_NOTIFY_REFLECT(LVN_ODCACHEHINT, OnLvnOdcachehint)
 END_MESSAGE_MAP()
 
@@ -864,7 +866,7 @@ UINT CLiveListCtrl::GetItemOverlayMask(int nItem) const
 		m_pIndex[ nItem ]->m_nMaskOverlay : 0;
 }
 
-void CLiveListCtrl::OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
+void CLiveListCtrl::OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
 
@@ -874,7 +876,8 @@ void CLiveListCtrl::OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if ( pDispInfo->item.mask & LVIF_TEXT )
 	{
-		lstrcpyn( pDispInfo->item.pszText, pItem->m_pColumn[ pDispInfo->item.iSubItem ],
+		lstrcpynW( (LPWSTR)pDispInfo->item.pszText,
+			CT2CW( pItem->m_pColumn[ pDispInfo->item.iSubItem ] ),
 			pDispInfo->item.cchTextMax );
 	}
 
@@ -897,7 +900,49 @@ void CLiveListCtrl::OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CLiveListCtrl::OnLvnOdfinditem(NMHDR *pNMHDR, LRESULT *pResult)
+void CLiveListCtrl::OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+
+	ASSERT( pDispInfo->item.iItem >= 0 && pDispInfo->item.iItem < (int)m_pIndex.size() );
+
+	CLiveItemPtr pItem = m_pIndex[ pDispInfo->item.iItem ];
+
+	if ( pDispInfo->item.mask & LVIF_TEXT )
+	{
+		lstrcpynA( (LPSTR)pDispInfo->item.pszText,
+			CT2A( pItem->m_pColumn[ pDispInfo->item.iSubItem ] ),
+			pDispInfo->item.cchTextMax );
+	}
+
+	if ( pDispInfo->item.mask & LVIF_IMAGE ) 
+	{
+		pDispInfo->item.iImage = pItem->m_nImage;
+	}
+
+	if ( pDispInfo->item.mask & LVIF_STATE ) 
+	{
+		pDispInfo->item.state = INDEXTOOVERLAYMASK( pItem->m_nMaskOverlay ) |
+			INDEXTOSTATEIMAGEMASK( pItem->m_nMaskState );
+	}
+
+	if ( pDispInfo->item.mask & LVFI_PARAM ) 
+	{
+		pDispInfo->item.lParam = pItem->m_nParam;
+	}
+
+	*pResult = 0;
+}
+
+void CLiveListCtrl::OnLvnOdfinditemW(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMLVFINDITEM pFindInfo = reinterpret_cast<LPNMLVFINDITEM>(pNMHDR);
+	UNUSED_ALWAYS( pFindInfo );
+
+	*pResult = 0;
+}
+
+void CLiveListCtrl::OnLvnOdfinditemA(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLVFINDITEM pFindInfo = reinterpret_cast<LPNMLVFINDITEM>(pNMHDR);
 	UNUSED_ALWAYS( pFindInfo );
