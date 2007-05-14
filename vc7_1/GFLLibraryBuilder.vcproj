@@ -43,7 +43,6 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				DelayLoadDLLs="libgfl254.dll"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"/>
 			<Tool
@@ -120,7 +119,6 @@
 				SuppressStartupBanner="TRUE"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				DelayLoadDLLs="libgfl254.dll"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
