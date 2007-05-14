@@ -193,7 +193,7 @@ BOOL CLibraryBuilder::StartThread()
 	m_bThread	= TRUE;
 
 	m_hThread = BeginThread( "LibraryBuilder", ThreadStart, this, m_bPriority ?
-		THREAD_PRIORITY_NORMAL : THREAD_PRIORITY_BELOW_NORMAL );
+		THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
 
 	return TRUE;
 }
@@ -223,7 +223,7 @@ void CLibraryBuilder::BoostPriority(BOOL bPriority)
 	if ( m_bThread && m_hThread != NULL )
 	{
 		SetThreadPriority( m_hThread, m_bPriority ?
-			THREAD_PRIORITY_NORMAL : THREAD_PRIORITY_BELOW_NORMAL );
+			THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
 	}
 }
 
