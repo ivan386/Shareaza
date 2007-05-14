@@ -33,8 +33,7 @@ static char THIS_FILE[] = __FILE__;
 CUPnPFinder::CUPnPFinder()
 :	m_pDevices(),
 	m_pServices(),
-	m_bCOM( CoInitialize( NULL ) == S_OK ),
-	m_pDeviceFinder( CreateFinderInstance() ),
+	m_bCOM( false ),
 	m_nAsyncFindHandle( 0 ),
 	m_bAsyncFindRunning( false ),
 	m_bADSL( false ),
@@ -43,9 +42,57 @@ CUPnPFinder::CUPnPFinder()
 	m_sLocalIP(),
 	m_sExternalIP(),
 	m_tLastEvent( GetTickCount() ),
-	m_pDeviceFinderCallback( new CDeviceFinderCallback( *this ) ),
-	m_pServiceCallback( new CServiceCallback( *this ) )
+	m_bInited( false ),
+	m_hADVAPI32_DLL( 0 ),
+	m_pfnOpenSCManager( 0 ),
+	m_pfnOpenService( 0 ),
+	m_pfnQueryServiceStatusEx( 0 ),
+	m_pfnCloseServiceHandle( 0 ),
+	m_pfnStartService( 0 ),
+	m_bSecondTry( false ),
+	m_pfGetBestInterface( NULL ),
+	m_pfGetIpAddrTable( NULL ),
+	m_pfGetIfEntry( NULL ),
+	m_hIPHLPAPI_DLL( NULL ),
+	m_bDisableWANIPSetup( Settings.Connection.SkipWANIPSetup == TRUE ),
+	m_bDisableWANPPPSetup( Settings.Connection.SkipWANPPPSetup == TRUE )
 {}
+
+void CUPnPFinder::Init()
+{
+	if ( !m_bInited )
+	{
+		m_hADVAPI32_DLL = LoadLibrary( L"Advapi32.dll" );
+		if ( m_hADVAPI32_DLL != 0 ) 
+		{
+			(FARPROC&)m_pfnOpenSCManager = GetProcAddress(	m_hADVAPI32_DLL, "OpenSCManagerW" );
+			(FARPROC&)m_pfnOpenService = GetProcAddress( m_hADVAPI32_DLL, "OpenServiceW" );
+			(FARPROC&)m_pfnQueryServiceStatusEx = GetProcAddress( m_hADVAPI32_DLL, "QueryServiceStatusEx" );
+			(FARPROC&)m_pfnCloseServiceHandle = GetProcAddress( m_hADVAPI32_DLL, "CloseServiceHandle" );
+			(FARPROC&)m_pfnStartService = GetProcAddress( m_hADVAPI32_DLL, "StartServiceW" );
+			(FARPROC&)m_pfnControlService = GetProcAddress( m_hADVAPI32_DLL, "ControlService" );
+		}
+		m_hIPHLPAPI_DLL = LoadLibrary( L"iphlpapi.dll" );
+		if ( m_hIPHLPAPI_DLL != 0 )
+		{
+			(FARPROC&)m_pfGetBestInterface = GetProcAddress(m_hIPHLPAPI_DLL, "GetBestInterface" );
+			(FARPROC&)m_pfGetIpAddrTable = GetProcAddress(m_hIPHLPAPI_DLL, "GetIpAddrTable" );
+			(FARPROC&)m_pfGetIfEntry = GetProcAddress(m_hIPHLPAPI_DLL, "GetIfEntry" );
+		}
+		if ( m_pfGetBestInterface == NULL || m_pfGetIpAddrTable == NULL || m_pfGetIfEntry == NULL )
+		{
+			theApp.Message( MSG_ERROR, L"Failed to load functions from iphlpapi.dll for UPnP" );
+			ASSERT( false );
+		}
+		
+		HRESULT hr = CoInitialize( NULL );
+		m_bCOM = ( hr == S_OK || hr == S_FALSE );
+		m_pDeviceFinder = CreateFinderInstance();
+		m_pServiceCallback = new CServiceCallback( *this );
+		m_pDeviceFinderCallback = new CDeviceFinderCallback( *this );
+		m_bInited = true;
+	}
+}
 
 FinderPointer CUPnPFinder::CreateFinderInstance()
 {
@@ -54,7 +101,7 @@ FinderPointer CUPnPFinder::CreateFinderInstance()
 							IID_IUPnPDeviceFinder, &pNewDeviceFinder ) ) )
 	{
 		// Should we ask to disable auto-detection?
-		// AfxMessageBox( _T("UPnP discovery is not supported or not installed."), MB_OK|MB_ICONEXCLAMATION );
+		theApp.Message( MSG_DEFAULT, L"UPnP discovery is not supported or not installed." );
 
 		throw UPnPError();
 	}
@@ -63,6 +110,16 @@ FinderPointer CUPnPFinder::CreateFinderInstance()
 
 CUPnPFinder::~CUPnPFinder()
 {
+	if ( m_hADVAPI32_DLL != 0 )
+	{
+		FreeLibrary(m_hADVAPI32_DLL);
+		m_hADVAPI32_DLL = 0;
+	}
+	if ( m_hIPHLPAPI_DLL != 0 )
+	{
+		FreeLibrary(m_hIPHLPAPI_DLL);
+		m_hIPHLPAPI_DLL = 0;
+	}
 	m_pDevices.clear();
 	m_pServices.clear();
 	if ( m_bCOM ) CoUninitialize();
@@ -79,64 +136,54 @@ bool CUPnPFinder::AreServicesHealthy()
 	else if ( !theApp.m_bNT )
 		return false;
 
-	HINSTANCE hAdvapi32;
+	Init();
+
 	bool bResult = false;
-
-	//Get pointers to some functions that don't exist under Win9x
-	if ( ( hAdvapi32 = LoadLibrary( _T("Advapi32.dll") ) ) != 0 )
+	if ( m_pfnOpenSCManager && m_pfnOpenService && 
+		 m_pfnQueryServiceStatusEx && m_pfnCloseServiceHandle && m_pfnStartService )
 	{
-		(FARPROC&)m_pfnOpenSCManager = GetProcAddress(	hAdvapi32, "OpenSCManagerW" );
-		(FARPROC&)m_pfnOpenService = GetProcAddress( hAdvapi32, "OpenServiceW" );
-		(FARPROC&)m_pfnQueryServiceStatusEx = GetProcAddress( hAdvapi32, "QueryServiceStatusEx" );
-		(FARPROC&)m_pfnCloseServiceHandle = GetProcAddress( hAdvapi32, "CloseServiceHandle" );
-		(FARPROC&)m_pfnStartService = GetProcAddress( hAdvapi32, "StartServiceW" );
+		SC_HANDLE schSCManager;
+		SC_HANDLE schService;
 
-		if ( m_pfnOpenSCManager && m_pfnOpenService && 
-			 m_pfnQueryServiceStatusEx && m_pfnCloseServiceHandle && m_pfnStartService )
+		// Open a handle to the Service Control Manager database
+		schSCManager = m_pfnOpenSCManager( 
+			NULL,				// local machine 
+			NULL,				// ServicesActive database 
+			GENERIC_READ );		// for enumeration and status lookup 
+
+		if ( schSCManager == NULL )
+			return false;
+
+		schService = m_pfnOpenService( schSCManager, L"upnphost", GENERIC_READ ); 
+		if ( schService == NULL )
 		{
-			SC_HANDLE schSCManager;
-			SC_HANDLE schService;
-
-			// Open a handle to the Service Control Manager database
-			schSCManager = m_pfnOpenSCManager( 
-				NULL,				// local machine 
-				NULL,				// ServicesActive database 
-				GENERIC_READ );		// for enumeration and status lookup 
-
-			if ( schSCManager == NULL )
-				return false;
-
-			schService = m_pfnOpenService( schSCManager, L"upnphost", GENERIC_READ ); 
-			if ( schService == NULL )
-			{
-				m_pfnCloseServiceHandle( schSCManager );
-				return false;
-			}
-
-			SERVICE_STATUS_PROCESS ssStatus; 
-			DWORD nBytesNeeded;
-
-			if ( m_pfnQueryServiceStatusEx( schService, SC_STATUS_PROCESS_INFO,
-				(LPBYTE)&ssStatus, sizeof(SERVICE_STATUS_PROCESS), &nBytesNeeded ) )
-			{
-				if ( ssStatus.dwCurrentState == SERVICE_RUNNING )
-					bResult = true;
-			}
-			m_pfnCloseServiceHandle( schService );
-
-			if ( !bResult )
-			{
-				schService = m_pfnOpenService( schSCManager, L"upnphost", SERVICE_START );
-				if ( schService )
-				{
-					// Power users have only right to start service, thus try to start it here
-					if ( m_pfnStartService( schService, 0, NULL ) )
-						bResult = true;
-					m_pfnCloseServiceHandle( schService );
-				}
-			}
 			m_pfnCloseServiceHandle( schSCManager );
+			return false;
 		}
+
+		SERVICE_STATUS_PROCESS ssStatus; 
+		DWORD nBytesNeeded;
+
+		if ( m_pfnQueryServiceStatusEx( schService, SC_STATUS_PROCESS_INFO,
+			(LPBYTE)&ssStatus, sizeof(SERVICE_STATUS_PROCESS), &nBytesNeeded ) )
+		{
+			if ( ssStatus.dwCurrentState == SERVICE_RUNNING )
+				bResult = true;
+		}
+		m_pfnCloseServiceHandle( schService );
+
+		if ( !bResult )
+		{
+			schService = m_pfnOpenService( schSCManager, L"upnphost", SERVICE_START );
+			if ( schService )
+			{
+				// Power users have only right to start service, thus try to start it here
+				if ( m_pfnStartService( schService, 0, NULL ) )
+					bResult = true;
+				m_pfnCloseServiceHandle( schService );
+			}
+		}
+		m_pfnCloseServiceHandle( schSCManager );
 	}
 
 	if ( !bResult )
@@ -156,7 +203,7 @@ void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 		return theApp.Message( MSG_ERROR, L"DeviceFinderCallback object is not available." );
 
 	if ( FAILED( m_pDeviceFinder->CreateAsyncFind( bsSearchType, NULL,
-				m_pDeviceFinderCallback.get(), &m_nAsyncFindHandle ) ) )
+				 m_pDeviceFinderCallback.get(), &m_nAsyncFindHandle ) ) )
 		return theApp.Message( MSG_ERROR, L"CreateAsyncFind failed in UPnP finder." );
 
 	m_bAsyncFindRunning = true;
@@ -164,24 +211,12 @@ void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 
 	if ( FAILED( m_pDeviceFinder->StartAsyncFind( m_nAsyncFindHandle ) ) )
 	{
-		// Should we ask to disable auto-detection?
-		// AfxMessageBox( _T("Unable to start UPnP discovery.\nPossible reason: SSDP Discovery Service is disabled."), MB_OK|MB_ICONEXCLAMATION );
-
 		if ( FAILED( m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle ) ) )
 			theApp.Message( MSG_ERROR, L"CancelAsyncFind failed in UPnP finder." );
 		
 		m_bAsyncFindRunning = false;
 		return;
 	} 
-
-	// Remove this loop to get results displayed in the system log
-	// The loop allows to do discovery while the splash screen is displayed
-	/*if ( !theApp.m_bLive )
-	{
-		MSG Message;
-		while ( IsAsyncFindRunning() && GetMessage( &Message, NULL, 0, 0 ) == TRUE )
-			DispatchMessage( &Message );
-	}*/
 }
 
 // Helper function for stopping the async find if proceeding
@@ -190,29 +225,42 @@ void CUPnPFinder::StopAsyncFind()
 	// This will stop the async find if it is in progress
 	// ToDo: Locks up in WinME, cancelling is required <- critical
 
-	if ( !theApp.m_bWinME && IsAsyncFindRunning() )
+	if ( m_bInited && !theApp.m_bWinME && IsAsyncFindRunning() )
 	{
 		if ( FAILED( m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle ) ) )
 			theApp.Message( MSG_ERROR, L"Cancel AsyncFind failed in UPnP finder." );
 	}
 	
-	m_bAsyncFindRunning = false;
+	if ( m_bSecondTry )
+		m_bAsyncFindRunning = false;
 }
 
 // Start the discovery of the UPnP gateway devices
-void CUPnPFinder::StartDiscovery() 
+void CUPnPFinder::StartDiscovery(bool bSecondTry) 
 {
-    static const CString strDeviceType( L"urn:schemas-upnp-org:device:WANConnectionDevice:1" );
+	if ( bSecondTry && m_bSecondTry ) // already did 2 tries
+		return;
+
+	Init();
+
+	if ( !bSecondTry )
+		theApp.Message( MSG_DEFAULT, L"Trying to setup port forwardings with UPnP...");
+
+	// On tests, in some cases the search for WANConnectionDevice had no results and only a search for InternetGatewayDevice
+	// showed up the UPnP root Device which contained the WANConnectionDevice as a child. I'm not sure if there are cases
+	// where search for InternetGatewayDevice only would have similar bad effects, but to be sure we do "normal" search first
+	// and one for InternetGateWayDevice as fallback
+    static const CString strDeviceType1( L"urn:schemas-upnp-org:device:WANConnectionDevice:1");
+	static const CString strDeviceType2( L"urn:schemas-upnp-org:device:InternetGatewayDevice:1");
 
     StopAsyncFind();		// If AsyncFind is in progress, stop it
+	m_bSecondTry = bSecondTry;
 
 	m_bPortIsFree = true;
 	theApp.m_bUPnPPortsForwarded = TS_UNKNOWN;
-	//ClearDevices();
-	//ClearServices();
 
 	// We have to process the AsyncFind
-	ProcessAsyncFind( CComBSTR( strDeviceType ) );
+	ProcessAsyncFind( CComBSTR( bSecondTry ? strDeviceType2 : strDeviceType1 ) );
 
 	// We should not release the device finder object
 	return;
@@ -220,8 +268,14 @@ void CUPnPFinder::StartDiscovery()
 
 // Helper function for adding devices to the list
 // This is called by the devicefinder callback object (DeviceAdded func)
-void CUPnPFinder::AddDevice(DevicePointer device)
+void CUPnPFinder::AddDevice(DevicePointer device, bool bAddChilds, int nLevel)
 {
+	if ( nLevel > 10 )
+	{
+		ASSERT( false );
+		return;
+	}
+
 	//We are going to add a device 
 	CComBSTR bsFriendlyName, bsUniqueName;
 
@@ -243,7 +297,48 @@ void CUPnPFinder::AddDevice(DevicePointer device)
 	if ( deviceSet == m_pDevices.end() )
 	{
 		m_pDevices.push_back( device );
-		theApp.Message( MSG_DEBUG, L"Found UPnP device: %s", bsFriendlyName );
+		theApp.Message( MSG_DEBUG, L"Found UPnP device: %s (ChildLevel: %i, UID: %s)", bsFriendlyName, nLevel, bsUniqueName );
+	}
+
+	if ( !bAddChilds )
+		return;
+
+	// Recursive add any child devices, see comment on StartDiscovery
+	IUPnPDevices* pChildDevices_;
+	if ( SUCCEEDED( device->get_Children( &pChildDevices_ ) ) )
+	{
+		com_ptr< IUPnPDevices > pChildDevices( pChildDevices_ );
+		if ( !pChildDevices )
+			return (void)UPnPMessage( hr );
+
+		IUnknown* pEnumVar_;
+		HRESULT hr = S_OK;
+		
+		if ( FAILED( hr = pChildDevices->get__NewEnum( &pEnumVar_ ) ) )
+			return (void)UPnPMessage( hr );
+
+		com_ptr< IEnumVARIANT > pEnumVar( pEnumVar_ );
+		if ( !pEnumVar )
+			return (void)UPnPMessage( hr );
+
+		CComVariant var;
+		ULONG lFetch;
+		IDispatch* pDisp;
+
+		hr = pEnumVar->Next( 1, &var, &lFetch );
+		while ( hr == S_OK )
+		{
+			if ( lFetch == 1 )
+			{
+				pDisp = V_DISPATCH(&var);
+				DevicePointer pChildDevice( pDisp );
+				if ( SUCCEEDED(pChildDevice->get_FriendlyName( &bsFriendlyName )) && 
+					 SUCCEEDED(pChildDevice->get_UniqueDeviceName( &bsUniqueName )) )
+					AddDevice( pChildDevice, true, nLevel + 1 );
+			}
+			
+			hr = pEnumVar->Next( 1, &var, &lFetch );
+		};
 	}
 }
 
@@ -263,15 +358,22 @@ void CUPnPFinder::RemoveDevice(CComBSTR bsUDN)
 	}
 }
 
-void CUPnPFinder::OnSearchComplete()
+bool CUPnPFinder::OnSearchComplete()
 {
     ATLTRACE2( atlTraceCOM, 1, L"CUPnPFinder(%p)->OnSearchComplete\n", this );
 	
 	if ( m_pDevices.empty() )
-	{
-		theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices" );
-		Settings.Connection.EnableUPnP = FALSE;
-		return;
+	{	
+		if ( m_bSecondTry )
+		{
+			theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices" );
+			Settings.Connection.EnableUPnP = FALSE;
+			theApp.m_bUPnPPortsForwarded = TS_FALSE;
+			theApp.m_bUPnPDeviceConnected = TS_FALSE;
+		}
+		else
+			theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices - will retry with different parameters" );
+		return false; // no devices found
 	}
 	
 	for ( std::size_t pos = 0; pos != m_pDevices.size(); ++pos )
@@ -286,6 +388,7 @@ void CUPnPFinder::OnSearchComplete()
 			break;
 		}
 	}
+	return true;
 }
 
 // Function to populate the service list for the device
@@ -400,8 +503,8 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 	bool bPPP = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANPPPConn" ) == -1 );
 	bool bIP  = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANIPConn" ) == -1 );
 
-	if ( Settings.Connection.SkipWANPPPSetup && bPPP ||
-		 Settings.Connection.SkipWANIPSetup && bIP ||
+	if ( ( Settings.Connection.SkipWANPPPSetup || m_bDisableWANPPPSetup ) && bPPP ||
+		 ( Settings.Connection.SkipWANIPSetup || m_bDisableWANIPSetup ) && bIP ||
 		 !bPPP && !bIP )
 		return S_OK;
 
@@ -425,7 +528,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 
 		hr = service->AddCallback( m_pServiceCallback.get() );
 		// Marshaller adds a ref here, so we should release it
-		m_pServiceCallback->Release();
+		// m_pServiceCallback->Release();
 		if ( FAILED( hr ) ) 
 			UPnPMessage( hr );
 		else
@@ -461,10 +564,21 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 void CUPnPFinder::StartPortMapping()
 {
 	std::for_each( m_pServices.begin(), m_pServices.end(), boost::bind( &CUPnPFinder::MapPort, this, _1 ) );
+	if ( m_bADSL && !m_ADSLFailed && theApp.m_bUPnPPortsForwarded == TS_UNKNOWN &&
+		!Settings.Connection.SkipWANIPSetup )
+	{
+		m_ADSLFailed = true;
+		theApp.Message( MSG_DEBUG, L"ADSL device configuration failed. Retrying with WANIPConn setup..." );
+		m_bDisableWANIPSetup = false;
+		m_bDisableWANPPPSetup = true;
+		std::for_each( m_pServices.begin(), m_pServices.end(), boost::bind( &CUPnPFinder::MapPort, this, _1 ) );
+	}
 }
 
 void CUPnPFinder::DeletePorts()
 {
+   if ( !m_bInited )
+	   return;
 	std::for_each( m_pServices.begin(), m_pServices.end(), boost::bind( &CUPnPFinder::DeleteExistingPortMappings, this, _1 ) );
 }
 
@@ -485,12 +599,33 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	DWORD ip = inet_addr( pszExternalIP );
 
 	// Get the interface through which the UPnP device has a route
-	if ( ip == INADDR_NONE || GetBestInterface( ip, &nInterfaceIndex ) != NO_ERROR ) 
+	HRESULT hrRes = -1;
+	if ( m_pfGetBestInterface != NULL )
+	{
+		try {	// just to be sure; another call from iphlpapi used earlier in eMule seemed to crash on some systems according to dumps
+			hrRes = m_pfGetBestInterface( ip, &nInterfaceIndex );
+		}
+		catch (...) {
+			ASSERT( false );
+		}
+	}
+
+	if ( ip == INADDR_NONE || hrRes != NO_ERROR ) 
 		return CString();
 
 	MIB_IFROW ifRow = {};
 	ifRow.dwIndex = nInterfaceIndex;
-	if ( GetIfEntry( &ifRow ) != NO_ERROR )
+	hrRes = -1;
+	if ( m_pfGetIfEntry != NULL )
+	{
+		try {	// just to be sure; another call from iphlpapi used earlier in eMule seemed to crash on some systems according to dumps
+			hrRes = m_pfGetIfEntry( &ifRow );
+		}
+		catch (...) {
+			ASSERT( false );
+		}
+	}
+	if ( hrRes != NO_ERROR )
 		return CString();
 
 	// Take an IP address table
@@ -498,7 +633,17 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	ULONG nSize = sizeof(mib);
 	PMIB_IPADDRTABLE ipAddr = (PMIB_IPADDRTABLE)mib;
 
-	if ( GetIpAddrTable( ipAddr, &nSize, FALSE ) != NO_ERROR )
+	hrRes = -1;
+	if ( m_pfGetIpAddrTable != NULL )
+	{
+		try {	// just to be sure; another call from iphlpapi used earlier in eMule seemed to crash on some systems according to dumps
+			hrRes = m_pfGetIpAddrTable( ipAddr, &nSize, FALSE );
+		}
+		catch (...) {
+			ASSERT( false );
+		}
+	}
+	if ( hrRes != NO_ERROR )
 		return CString();
 
 	DWORD nCount = ipAddr->dwNumEntries;
@@ -547,13 +692,14 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 	GetComputerName( strComputerName.GetBuffer( nMaxLen ), &nMaxLen );
 	strComputerName.ReleaseBuffer();
 
+	CString strActionResult;
 	do
 	{
 		HRESULT hrDel = -1;
-		CString strActionResult;
 		strInArgs.Format( _T("|VT_UI2=%hu|"), nEntry );
 		hr = InvokeAction( pService, 
 			 L"GetGenericPortMappingEntry", strInArgs, strActionResult );
+		
 		if ( SUCCEEDED( hr ) && ! strActionResult.IsEmpty() )
 		{
 			// It returned in the following format and order:
@@ -630,8 +776,15 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 
 		if ( FAILED( hrDel ) )
 			nEntry++; // Entries are pushed from bottom to top after success
+		if ( nEntry > 30 )
+		{
+			// FIXME: this is a sanitize check, since some routers seem to reponse to invalid GetGenericPortMappingEntry numbers
+			// proper way would be to get the actualy portmapping count, but needs testing before
+			theApp.Message( MSG_DEFAULT, L"GetGenericPortMappingEntry maximal count exceeded, quiting." );
+			break;
+		}
 	}
-	while ( SUCCEEDED( hr ) );
+	while ( SUCCEEDED( hr ) && strActionResult.GetLength() );
 }
 
 // Creates TCP and UDP port mappings
@@ -982,7 +1135,7 @@ void CUPnPFinder::DestroyVars(const INT_PTR nCount, VARIANT*** pppVars)
 HRESULT CDeviceFinderCallback::DeviceAdded(LONG /*nFindData*/, IUPnPDevice* pDevice)
 {
 	ATLTRACE2( atlTraceCOM, 1, L"Device Added\n" );
-	m_instance.AddDevice( pDevice );
+	m_instance.AddDevice( pDevice, true );
 	return S_OK;
 }
 
@@ -1001,9 +1154,10 @@ HRESULT CDeviceFinderCallback::SearchComplete(LONG /*nFindData*/)
 	// StopAsyncFind must be here, do not move to OnSearchComplete
 	// Otherwise, "Service died" message is shown, and it means
 	// that the service still was active.
-	m_instance.OnSearchComplete();
+	bool bRetry = !m_instance.OnSearchComplete();
 	m_instance.StopAsyncFind();
-
+	if ( bRetry )
+		m_instance.StartDiscovery( true );
 	return S_OK;
 }
 

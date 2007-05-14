@@ -1,7 +1,7 @@
 //
 // UPnPFinder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,6 +28,20 @@
 typedef com_ptr< IUPnPDeviceFinder > FinderPointer;
 typedef com_ptr< IUPnPDevice > DevicePointer;
 typedef com_ptr< IUPnPService > ServicePointer;
+typedef DWORD (WINAPI* TGetBestInterface) (
+  IPAddr dwDestAddr,
+  PDWORD pdwBestIfIndex
+);
+
+typedef DWORD (WINAPI* TGetIpAddrTable) (
+  PMIB_IPADDRTABLE pIpAddrTable,
+  PULONG pdwSize,
+  BOOL bOrder
+);
+
+typedef DWORD (WINAPI* TGetIfEntry) (
+  PMIB_IFROW pIfRow
+);
 
 CString translateUPnPResult(HRESULT hr);
 HRESULT UPnPMessage(HRESULT hr);
@@ -42,13 +56,14 @@ public:
 	CUPnPFinder();
 	~CUPnPFinder();
 
-	void StartDiscovery();
+	void StartDiscovery(bool bSecondTry=false);
 	void StopAsyncFind();
 	void DeletePorts();
 	bool AreServicesHealthy();
-	void AddDevice(DevicePointer pDevice);
+	void AddDevice(DevicePointer pDevice, bool bAddChilds, int nLevel = 0);
 	void RemoveDevice(CComBSTR bsUDN);
-	void OnSearchComplete();
+	bool OnSearchComplete();
+	void Init();
 	inline bool IsAsyncFindRunning() 
 	{
 		if ( m_pDeviceFinder && m_bAsyncFindRunning && GetTickCount() - m_tLastEvent > 20000 )
@@ -65,15 +80,20 @@ public:
 		return m_bAsyncFindRunning;
 	}
 
+// Implementation
+private:
 	// API functions
 	SC_HANDLE (WINAPI *m_pfnOpenSCManager)(LPCTSTR, LPCTSTR, DWORD);
 	SC_HANDLE (WINAPI *m_pfnOpenService)(SC_HANDLE, LPCTSTR, DWORD);
 	BOOL (WINAPI *m_pfnQueryServiceStatusEx)(SC_HANDLE, SC_STATUS_TYPE, LPBYTE, DWORD, LPDWORD);
 	BOOL (WINAPI *m_pfnCloseServiceHandle)(SC_HANDLE);
 	BOOL (WINAPI *m_pfnStartService)(SC_HANDLE, DWORD, LPCTSTR*);
+	BOOL (WINAPI *m_pfnControlService)(SC_HANDLE, DWORD, LPSERVICE_STATUS);
+ 
+	TGetBestInterface		m_pfGetBestInterface;
+	TGetIpAddrTable			m_pfGetIpAddrTable;
+	TGetIfEntry				m_pfGetIfEntry;
 
-// Implementation
-private:
 	static FinderPointer CreateFinderInstance();
 	struct FindDevice : std::unary_function< DevicePointer, bool >
 	{
@@ -90,6 +110,7 @@ private:
 		}
 		CComBSTR m_udn;
 	};
+	
 	void	ProcessAsyncFind(CComBSTR bsSearchType);
 	HRESULT	GetDeviceServices(DevicePointer pDevice);
 	void	StartPortMapping();
@@ -119,6 +140,8 @@ private:
 	std::vector< DevicePointer >  m_pDevices;
 	std::vector< ServicePointer > m_pServices;
 	FinderPointer m_pDeviceFinder;
+	com_ptr< IUPnPDeviceFinderCallback > m_pDeviceFinderCallback;
+	com_ptr< IUPnPServiceCallback >      m_pServiceCallback;
 
 	LONG	m_nAsyncFindHandle;
 	bool	m_bAsyncFindRunning;
@@ -128,9 +151,13 @@ private:
 	CString m_sExternalIP;
 	bool	m_bADSL;		// Is the device ADSL?
 	bool	m_ADSLFailed;	// Did port mapping failed for the ADSL device?
+	bool	m_bInited;
+	HMODULE m_hADVAPI32_DLL;
+	HMODULE	m_hIPHLPAPI_DLL;
+	bool	m_bSecondTry;
+	bool	m_bDisableWANIPSetup;
+	bool	m_bDisableWANPPPSetup;
 
-	com_ptr< IUPnPDeviceFinderCallback > m_pDeviceFinderCallback;
-	com_ptr< IUPnPServiceCallback >      m_pServiceCallback;
 };
 
 // DeviceFinder Callback
