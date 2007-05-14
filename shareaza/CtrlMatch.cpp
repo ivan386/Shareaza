@@ -135,7 +135,8 @@ int CMatchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( MATCH_COL_COUNT, _T("Host/Count"), HDF_CENTER, 120 );
 	InsertColumn( MATCH_COL_SPEED, _T("Speed"), HDF_CENTER, 60 );
 	InsertColumn( MATCH_COL_CLIENT, _T("Client"), HDF_CENTER, 80 );
-	
+	InsertColumn( MATCH_COL_TIME, _T("Time"), HDF_CENTER, 120 );
+
 	CBitmap bmStar;
 	bmStar.LoadBitmap( IDB_SMALL_STAR );
 	m_pStars.Create( 12, 12, ILC_COLOR32|ILC_MASK, 7, 0 ) ||
@@ -237,6 +238,7 @@ void CMatchCtrl::SetBrowseMode()
 	m_wndHeader.SetItem( MATCH_COL_COUNT, &pZero );
 	m_wndHeader.SetItem( MATCH_COL_SPEED, &pZero );
 	m_wndHeader.SetItem( MATCH_COL_CLIENT, &pZero );
+	m_wndHeader.SetItem( MATCH_COL_TIME, &pZero );
 	LoadColumnState();
 }
 
@@ -680,7 +682,7 @@ void CMatchCtrl::OnPaint()
 
 void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* pHit, BOOL bFocus)
 {
-	static TCHAR szBuffer[64];
+	TCHAR szBuffer[64];
 	
 	int nColumns	= m_wndHeader.GetItemCount();
 	int nHits		= pHit ? 0 : pFile->GetFilteredCount();
@@ -982,6 +984,13 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				if ( ! bSelected && pFile->GetBestBrowseHost() ) dc.SetTextColor( RGB( 0, 127, 0 ) );
 				pszText = pFile->GetBestVendorName();
 			}
+			break;
+
+		case MATCH_COL_TIME:
+			lstrcpyn( szBuffer, pFile->m_pTime.Format( _T("%B %d, %H:%M:%S") ),
+				sizeof( szBuffer ) / sizeof( TCHAR ) );
+			szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
+			pszText = szBuffer;
 			break;
 
 		default:

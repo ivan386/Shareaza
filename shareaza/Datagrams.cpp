@@ -1756,14 +1756,14 @@ BOOL CDatagrams::OnCrawlAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnDiscovery(SOCKADDR_IN* pHost, CG2Packet* /*pPacket*/)
 {
-	Send( pHost, CG2Neighbour::CreateKHLPacket(), TRUE, 0, FALSE );
+	Send( pHost, CG2Neighbour::CreateKHLPacket( NULL, TRUE ), TRUE, 0, FALSE );
 
 	return TRUE;
 }
 
-BOOL CDatagrams::OnKHL(SOCKADDR_IN* /*pHost*/, CG2Packet* pPacket)
+BOOL CDatagrams::OnKHL(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	return CG2Neighbour::ParseKHLPacket( pPacket );
+	return CG2Neighbour::ParseKHLPacket( pPacket, pHost );
 }
 
 // KHLA - KHL(Known Hub List) Answer, go over G2 UDP packet more like Gnutella2 version of UDPHC

@@ -1040,7 +1040,7 @@ void CMatchList::ClearNew()
 
 void CMatchList::Serialize(CArchive& ar)
 {
-	int nVersion = 13;
+	int nVersion = 14;
 	
 	if ( ar.IsStoring() )
 	{
@@ -1164,53 +1164,47 @@ void CMatchList::Serialize(CArchive& ar)
 //////////////////////////////////////////////////////////////////////
 // CMatchFile construction
 
-CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit)
+CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit) :
+	m_pList			( pList ),
+	m_pHits			( NULL ),
+	m_pBest			( NULL ),
+	m_nTotal		( NULL ),
+	m_nFiltered		( 0 ),
+	m_nSources		( 0 ),	
+	m_pNextSize		( NULL ),
+	m_pNextSHA1		( NULL ),
+	m_pNextTiger	( NULL ),
+	m_pNextED2K		( NULL ),
+	m_pNextBTH		( NULL ),
+	m_pNextMD5		( NULL ),
+	m_bBusy			( TS_UNKNOWN ),
+	m_bPush			( TS_UNKNOWN ),
+	m_bStable		( TS_UNKNOWN ),
+	m_bPreview		( FALSE ),
+	m_nSpeed		( 0 ),
+	m_nRating		( 0 ),
+	m_nRated		( 0 ),
+	m_bDRM			( FALSE ),
+	m_bSuspicious	( FALSE ),
+	m_bCollection	( FALSE ),
+	m_bTorrent		( FALSE ),	
+	m_bExpanded		( Settings.Search.ExpandMatches ),
+	m_bSelected		( FALSE ),
+	m_bExisting		( TS_UNKNOWN ),
+	m_bDownload		( FALSE ),
+	m_bNew			( FALSE ),
+	m_bOneValid		( FALSE ),
+	m_nShellIndex	( -1 ),
+	m_pColumns		( NULL ),
+	m_nColumns		( 0 ),
+	m_pPreview		( NULL ),
+	m_nPreview		( 0 ),
+	m_pTime			( CTime::GetCurrentTime() )
 {
-	m_pList		= pList;
-	m_pHits		= NULL;
-	m_pBest		= NULL;
-	m_nTotal	= NULL;
-	m_nFiltered	= 0;
-	m_nSources	= 0;
-	
-	m_pNextSize		= NULL;
-	m_pNextSHA1		= NULL;
-	m_pNextTiger	= NULL;
-	m_pNextED2K		= NULL;
-	m_pNextBTH		= NULL;
-	m_pNextMD5		= NULL;
-	
-//	m_bSHA1		= FALSE;
-//	m_bTiger	= FALSE;
-//	m_bED2K		= FALSE;
 	// TODO: Change to SIZE_UNKNOWN without the size
-	m_nSize		= ( pHit && pHit->m_bSize ) ? pHit->m_nSize : 0;
-	m_sSize		= Settings.SmartVolume( m_nSize, FALSE );
-	
-	m_bBusy			= TS_UNKNOWN;
-	m_bPush			= TS_UNKNOWN;
-	m_bStable		= TS_UNKNOWN;
-	m_bPreview		= FALSE;
-	m_nSpeed		= 0;
-	m_nRating		= 0;
-	m_nRated		= 0;
-	m_bDRM			= FALSE;
-	m_bSuspicious	= FALSE;
-	m_bCollection	= FALSE;
-	m_bTorrent		= FALSE;
-	
-	m_bExpanded		= Settings.Search.ExpandMatches;
-	m_bSelected		= FALSE;
-	m_bExisting		= TS_UNKNOWN;
-	m_bDownload		= FALSE;
-	m_bNew			= FALSE;
-	m_bOneValid		= FALSE;
-	m_nShellIndex	= -1;
-	m_pColumns		= NULL;
-	m_nColumns		= 0;
-	m_pPreview		= NULL;
-	m_nPreview		= 0;
-	
+	m_nSize			= ( pHit && pHit->m_bSize ) ? pHit->m_nSize : 0;
+	m_sSize			= Settings.SmartVolume( m_nSize, FALSE );	
+
 	if ( pHit ) Add( pHit );
 }
 
@@ -1712,6 +1706,9 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 			if ( ! x ) return 0;
 			return x > 0 ? 1 : -1;
 		}
+
+	case MATCH_COL_TIME:
+		return m_pTime == pFile->m_pTime ? 0 : ( m_pTime > pFile->m_pTime ? 1 : -1 );
 		
 	case MATCH_COL_SPEED:
 		x = m_nFiltered ? m_nSpeed / m_nFiltered : 0;
@@ -1833,6 +1830,8 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 			pHit = pHits.GetAt( nHit );
 			pHit->Serialize( ar, nVersion );
 		}
+
+		ar << m_pTime;
 	}
 	else
 	{
@@ -1882,6 +1881,11 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 			pNext->m_pNext = m_pHits;
 			m_pHits = pNext;
 			m_pHits->Serialize( ar, nVersion );
+		}
+		
+		if ( nVersion >= 14 )
+		{
+			ar >> m_pTime;
 		}
 
 		RefreshStatus();

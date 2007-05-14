@@ -175,6 +175,7 @@ public:
 	int			m_nColumns;
 	BYTE*		m_pPreview;
 	DWORD		m_nPreview;
+	CTime		m_pTime;				// Found time
 
 	BOOL		Add(CQueryHit* pHit, BOOL bForce = FALSE);
 	BOOL		Check(CQueryHit* pHit) const;

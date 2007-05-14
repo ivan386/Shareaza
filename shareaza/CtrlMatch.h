@@ -137,8 +137,6 @@ public:
 
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #define MATCH_COL_NAME		0
 #define MATCH_COL_TYPE		1
 #define MATCH_COL_SIZE		2
@@ -147,7 +145,8 @@ public:
 #define MATCH_COL_COUNT		5
 #define MATCH_COL_SPEED		6
 #define MATCH_COL_CLIENT	7
-#define MATCH_COL_MAX		8
+#define MATCH_COL_TIME		8
+#define MATCH_COL_MAX		9
 
 #define IDC_MATCHES			100
 #define IDC_MATCH_HEADER	115

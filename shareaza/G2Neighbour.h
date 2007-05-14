@@ -57,8 +57,8 @@ public:
 	BOOL			OnProfileDelivery(CG2Packet* pPacket);
 
 	static CG2Packet* CreateLNIPacket(CG2Neighbour* pOwner = NULL);
-	static CG2Packet* CreateKHLPacket(CG2Neighbour* pOwner = NULL);
-	static BOOL		ParseKHLPacket(CG2Packet* pPacket, CG2Neighbour* pOwner = NULL);
+	static CG2Packet* CreateKHLPacket(CG2Neighbour* pOwner = NULL, BOOL nIncludeSelf = FALSE);
+	static BOOL		ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost);
 
 public:
 	DWORD				m_nLeafCount;
