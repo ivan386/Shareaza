@@ -534,11 +534,10 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, BOOL /*bForce*/)
 	// if ( ! bSeen && ! bForce ) return NULL;
 	if ( ! pURL.Parse( strURL ) ) return NULL;
 	
-	if ( memcmp( &pURL.m_pAddress, &Network.m_pHost.sin_addr,
-		 sizeof(IN_ADDR) ) == 0 ) return NULL;
+	if ( Network.IsSelfIP( pURL.m_pAddress ) ) return NULL;
 	
 	if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) ||
-		 Network.IsReserved( (IN_ADDR*)&pURL.m_pAddress ) ) return FALSE;
+		 Network.IsReserved( (IN_ADDR*)&pURL.m_pAddress ) ) return NULL;
 	
 	if ( validAndUnequal( pURL.m_oSHA1, m_oSHA1 ) ) return NULL;
 	

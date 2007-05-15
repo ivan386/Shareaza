@@ -870,10 +870,12 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 
 BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 {
-	if ( m_bPaused || m_hWnd == NULL ) return FALSE;
+	if ( m_bPaused || m_hWnd == NULL )
+		return FALSE;
 	
 	CSingleLock pLock( &m_pMatches->m_pSection );
-	if ( ! pLock.Lock( 100 ) || m_bPaused ) return FALSE;
+	if ( ! pLock.Lock( 100 ) || m_bPaused )
+		return FALSE;
 	
 	for ( reverse_iterator pManaged = rbegin(); pManaged != rend(); ++pManaged )
 	{

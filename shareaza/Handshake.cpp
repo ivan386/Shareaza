@@ -250,15 +250,28 @@ BOOL CHandshake::OnRead()
 	theApp.Message( MSG_DEBUG, _T("%s: HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
 	// The first header starts "GET" or "HEAD"
-	if ( _tcsncmp( strLine, _T("GET"), 3 ) == 0 || _tcsncmp( strLine, _T("HEAD"), 4 ) == 0 )
+	if (      memcmp( m_pInput->m_pBuffer, "GET ",    4 ) == 0 ||
+		      memcmp( m_pInput->m_pBuffer, "HEAD ",   5 ) == 0 )
 	{
 		// The remote computer wants a file from us, accept the connection as an upload
-		Uploads.OnAccept( this, strLine );
+		Uploads.OnAccept( this );
 	}
-	else if ( _tcsnicmp( strLine, _T("GNUTELLA"), 8 ) == 0 ) { Neighbours.OnAccept( this ); }	// Gnutella handshake
-	else if ( _tcsnicmp( strLine, _T("PUSH "),    5 ) == 0 ) { OnAcceptPush(); }				// Gnutella2-style push
-	else if ( _tcsnicmp( strLine, _T("GIV "),     4 ) == 0 ) { OnAcceptGive(); }				// Gnutella giv
-	else if ( _tcsnicmp( strLine, _T("CHAT"),     4 ) == 0 )									// Chat
+	else if ( memcmp( m_pInput->m_pBuffer, "GNUTELLA", 8 ) == 0 )
+	{
+		// Gnutella handshake
+		Neighbours.OnAccept( this );
+	}
+	else if ( memcmp( m_pInput->m_pBuffer, "PUSH ",    5 ) == 0 )
+	{
+		// Gnutella2-style push
+		OnAcceptPush();
+	}
+	else if ( memcmp( m_pInput->m_pBuffer, "GIV ",     4 ) == 0 )
+	{
+		// Gnutella giv
+		OnAcceptGive();
+	}
+	else if ( memcmp( m_pInput->m_pBuffer, "CHAT",     4 ) == 0 )									// Chat
 	{
 		// If the user has setup a valid profile and enabeled chat in the program settings
 		if ( MyProfile.IsValid() && Settings.Community.ChatEnable )

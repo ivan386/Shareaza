@@ -25,7 +25,6 @@
 #include "WndSettingsSheet.h"
 #include "PageSettingsNetworks.h"
 #include "PageSettingsGnutella.h"
-#include ".\pagesettingsgnutella.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

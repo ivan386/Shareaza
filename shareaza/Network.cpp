@@ -420,10 +420,10 @@ BOOL CNetwork::IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf, BOOL bFor
 	if ( bIncludeSelf && IsSelfIP( *(IN_ADDR*)pAddress ) ) return TRUE;
 	if ( ! *(DWORD*)pAddress ) return TRUE;							// 0.0.0.0
 	if ( ! bForceCheck && ! Settings.Connection.IgnoreLocalIP ) return FALSE;
-	if ( ( *(DWORD*)pAddress & 0xFFFF ) == 0xA8C0 ) return TRUE;
-	if ( ( *(DWORD*)pAddress & 0xF0AC ) == 0x08AC ) return TRUE;
-	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x0A ) return TRUE;
-	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x7F ) return TRUE;		// 127.*
+	if ( ( *(DWORD*)pAddress & 0xFFFF ) == 0xA8C0 ) return TRUE;	// 192.168.0.0/16
+	if ( ( *(DWORD*)pAddress & 0xF0FF ) == 0x10AC ) return TRUE;	// 172.16.0.0/12
+	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x0A ) return TRUE;		// 10.0.0.0/8
+	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x7F ) return TRUE;		// 127.0.0.0/8
 	return FALSE;
 }
 

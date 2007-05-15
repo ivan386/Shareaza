@@ -288,7 +288,7 @@ void CLibraryFolders::Maintain(CLibraryFolder* pFolder, BOOL bAdd)
 	sPath.MakeLower();
 	BOOL bOur = ( sPath.Find( _T("shareaza") ) != -1 );
 
-	if ( bAdd )
+	if ( bAdd && ( bOur || dwDesktopINIAttr == INVALID_FILE_ATTRIBUTES ) )
 	{
 		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
 		{

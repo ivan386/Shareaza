@@ -54,7 +54,6 @@ public:
 	CMutex			m_pSection;
 	CEvent			m_pWakeup;
 	SOCKADDR_IN		m_pHost;				// Structure (Windows Sockets) which holds address of the local machine
-	CStringA		m_sHostName;
 	BOOL			m_bEnabled;				// If the network "enabled" (Connected or trying)
 	BOOL			m_bAutoConnect;
 	BOOL			m_bTCPListeningReady;
@@ -63,6 +62,7 @@ public:
 	DWORD			m_tLastConnect;			// The last time a neighbour connection attempt was made
 	DWORD			m_tLastED2KServerHop;	// The last time the ed2k server was changed
 protected:
+	CStringA		m_sHostName;
 	HANDLE			m_hThread;
 	DWORD			m_nSequence;
 	struct ResolveStruct

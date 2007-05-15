@@ -269,10 +269,12 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 BOOL CSearchManager::OnQueryHits(CQueryHit* pHits)
 {
 	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 100 ) ) return TRUE;
+	if ( ! pLock.Lock( 100 ) )
+		return TRUE;
 
 	CManagedSearch* pSearch = Find( pHits->m_oSearchID );
-	if ( pSearch == NULL ) return TRUE;
+	if ( pSearch == NULL )
+		return TRUE;
 
 	pSearch->OnHostAcknowledge( *(DWORD*)&pHits->m_pAddress );
 
