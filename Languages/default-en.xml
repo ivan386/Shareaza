@@ -3538,7 +3538,7 @@
 		<control/>
 		<control caption="Get started using Shareaza."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welcome to Shareaza">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Welcome to Shareaza">
 		<control caption="Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time."/>
 		<control caption="Please select user interface:"/>
 		<control caption="Normal Mode"/>
@@ -3546,7 +3546,6 @@
 		<control caption="Simple, easy to use menus and buttons.{n}Familiar to users of other file sharing programs."/>
 		<control caption="Power mode offers expert users lots of extra commands, windows, etc.{n}It may be a little confusing for new users!"/>
 		<control caption="Display simplified download progress bars. (Reduces CPU use)"/>
-		<control caption="Display additional torrent interface elements."/>
 		<control caption="Handle torrent links."/>
 	</dialog>
 	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Welcome to Shareaza [3 of 7]">
