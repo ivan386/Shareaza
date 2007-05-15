@@ -2113,6 +2113,11 @@ LPCTSTR CMatchFile::GetBestVendorName() const
 	return ( ( m_pBest && m_pBest->m_pVendor) ? m_pBest->m_pVendor->m_sName : _T("") );
 }
 
+LPCTSTR CMatchFile::GetBestCountry() const
+{
+	return ( m_pBest ? m_pBest->m_sCountry : _T("") );
+}
+
 LPCTSTR CMatchFile::GetBestSchemaURI() const
 {
 	return ( m_pBest ? m_pBest->m_sSchemaURI : _T("") );

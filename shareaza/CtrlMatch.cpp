@@ -32,6 +32,7 @@
 #include "Schema.h"
 #include "Skin.h"
 #include "WndBaseMatch.h"
+#include "Flags.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -136,6 +137,7 @@ int CMatchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( MATCH_COL_SPEED, _T("Speed"), HDF_CENTER, 60 );
 	InsertColumn( MATCH_COL_CLIENT, _T("Client"), HDF_CENTER, 80 );
 	InsertColumn( MATCH_COL_TIME, _T("Time"), HDF_CENTER, 120 );
+	InsertColumn( MATCH_COL_COUNTRY, _T("Country"), HDF_LEFT, 60 );
 
 	CBitmap bmStar;
 	bmStar.LoadBitmap( IDB_SMALL_STAR );
@@ -239,6 +241,7 @@ void CMatchCtrl::SetBrowseMode()
 	m_wndHeader.SetItem( MATCH_COL_SPEED, &pZero );
 	m_wndHeader.SetItem( MATCH_COL_CLIENT, &pZero );
 	m_wndHeader.SetItem( MATCH_COL_TIME, &pZero );
+	m_wndHeader.SetItem( MATCH_COL_COUNTRY, &pZero );
 	LoadColumnState();
 }
 
@@ -993,6 +996,19 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			pszText = szBuffer;
 			break;
 
+		case MATCH_COL_COUNTRY:
+			if ( pHit )
+			{
+				DrawCountry( dc, rcCol, pHit->m_sCountry, bSelected, crBack );
+				pszText = pHit->m_sCountry;
+			}
+			else if ( nHits == 1 )
+			{
+				DrawCountry( dc, rcCol, pFile->GetBestCountry(), bSelected, crBack );
+				pszText = pFile->GetBestCountry();
+			}
+			break;
+
 		default:
 			if ( pFile->m_pColumns == NULL ) break;
 			pszText = pFile->m_pColumns[ nColumn - MATCH_COL_MAX ];
@@ -1186,6 +1202,21 @@ void CMatchCtrl::DrawRating(CDC& dc, CRect& rcCol, int nRating, BOOL bSelected, 
 	}
 	
 	dc.FillSolidRect( &rcCol, crBack );
+}
+
+void CMatchCtrl::DrawCountry(CDC& dc, CRect& rcCol, CString sCountry, BOOL bSelected, COLORREF crBack)
+{
+	int nFlagIndex = Flags.GetFlagIndex( sCountry );
+	// If the column is very narrow then don't draw the flag.
+	if ( nFlagIndex >= 0 && rcCol.Width() >= 22 )
+	{
+		CPoint pt( rcCol.left, rcCol.top );
+		ImageList_DrawEx( Flags.m_pImage, nFlagIndex, dc,
+			pt.x, pt.y, 18, 18, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
+		dc.ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
+		dc.FillSolidRect( &rcCol, crBack );
+		rcCol.left += 18;
+	}
 }
 
 void CMatchCtrl::DrawEmptyMessage(CDC& dc, CRect& rcClient)

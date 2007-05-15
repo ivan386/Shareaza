@@ -150,6 +150,7 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 			pLastHit = pHit;
 			
 			pHit->m_pAddress	= (IN_ADDR&)nAddress;
+			pHit->m_sCountry	= theApp.GetCountryCode( pHit->m_pAddress );
 			pHit->m_nPort		= nPort;
 			pHit->m_nSpeed		= nSpeed;
 			
@@ -488,6 +489,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			pLastHit->m_oSearchID	= oSearchID;
 			pLastHit->m_oClientID	= oClientID;
 			pLastHit->m_pAddress	= *(IN_ADDR*)&nAddress;
+			pLastHit->m_sCountry	= theApp.GetCountryCode( pLastHit->m_pAddress );
 			pLastHit->m_nPort		= nPort;
 			pLastHit->m_pVendor		= pVendor;
 			pLastHit->m_nSpeed		= nGroupState[ pLastHit->m_nGroup ][3];
@@ -1597,6 +1599,7 @@ void CQueryHit::Copy(CQueryHit* pOther)
 	m_oSearchID		= pOther->m_oSearchID;
 	m_oClientID		= pOther->m_oClientID;
 	m_pAddress		= pOther->m_pAddress;
+	m_sCountry		= pOther->m_sCountry;
 	m_nPort			= pOther->m_nPort;
 	m_nSpeed		= pOther->m_nSpeed;
 	m_sSpeed		= pOther->m_sSpeed;
@@ -1720,6 +1723,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ReadArchive( ar, &m_oClientID[ 0 ], Hashes::Guid::byteCount );
 		m_oClientID.validate();
 		ReadArchive( ar, &m_pAddress, sizeof(IN_ADDR) );
+		m_sCountry = theApp.GetCountryCode( m_pAddress );
 		ar >> m_nPort;
 		ar >> m_nSpeed;
 		ar >> m_sSpeed;

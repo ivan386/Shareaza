@@ -50,6 +50,7 @@ public:
 	PROTOCOLID		m_nProtocol;
 	Hashes::Guid	m_oClientID;
 	IN_ADDR			m_pAddress;
+	CString			m_sCountry;
 	WORD			m_nPort;
 	DWORD			m_nSpeed;
 	CString			m_sSpeed;

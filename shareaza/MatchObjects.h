@@ -259,6 +259,9 @@ public:
 	// Get vendor name of best Hit
 	LPCTSTR		GetBestVendorName() const;
 
+	// Get country code of best Hit
+	LPCTSTR		GetBestCountry() const;
+
 	// Get schema of best Hit
 	LPCTSTR		GetBestSchemaURI() const;
 	
