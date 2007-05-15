@@ -36,6 +36,7 @@
 #include "TigerTree.h"
 #include "SHA.h"
 #include "ED2K.h"
+#include "Flags.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -312,6 +313,16 @@ void CMatchTipCtrl::ShowInternal()
 void CMatchTipCtrl::LoadFromFile()
 {
 	m_sName = m_pFile->m_sName;
+	if ( m_pFile->GetTotalHitsCount() == 1 )
+	{
+		m_sCountryCode = m_pFile->GetBestCountry();
+		m_sCountry = theApp.GetCountryName( m_pFile->GetBestAddress() );
+	}
+	else
+	{
+		m_sCountryCode = _T("");
+		m_sCountry = _T("");
+	}
 	m_sSize = m_pFile->m_sSize;
 	LoadTypeInfo();
 	
@@ -489,6 +500,9 @@ void CMatchTipCtrl::LoadFromHit()
 		}
 	}
 
+	m_sCountryCode = m_pHit->m_sCountry;
+	m_sCountry = theApp.GetCountryName( m_pHit->m_pAddress );
+
 	if (m_pHit->m_bBusy == 2)
 	{
 		LoadString( m_sBusy, IDS_TIP_SOURCE_BUSY );
@@ -564,6 +578,12 @@ CSize CMatchTipCtrl::ComputeSize()
 	if ( m_sUser.GetLength() )
 	{
 		ExpandSize( dc, sz, m_sUser );
+		sz.cy += TIP_TEXTHEIGHT;
+	}
+	
+	if ( m_sCountry.GetLength() )
+	{
+		ExpandSize( dc, sz, m_sCountry, 18 + 2 );
 		sz.cy += TIP_TEXTHEIGHT;
 	}
 
@@ -733,6 +753,26 @@ void CMatchTipCtrl::OnPaint()
 	if ( m_sUser.GetLength() )
 	{
 		DrawText( dc, pt, m_sUser );
+		pt.y += TIP_TEXTHEIGHT;
+	}
+
+	if ( m_sCountry.GetLength() )
+	{
+		int nFlagIndex = Flags.GetFlagIndex( m_sCountryCode );
+		if ( nFlagIndex >= 0 )
+		{
+			ImageList_DrawEx( Flags.m_pImage, nFlagIndex, dc,
+				pt.x, pt.y, 18, 18, m_crBack, m_crBack, ILD_NORMAL );
+			dc.ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
+			pt.x += 20;
+			pt.y += 2;
+		}
+		DrawText( dc, pt, m_sCountry );
+		if ( nFlagIndex >= 0 )
+		{
+			pt.y -= 2;
+			pt.x -= 20;
+		}
 		pt.y += TIP_TEXTHEIGHT;
 	}
 

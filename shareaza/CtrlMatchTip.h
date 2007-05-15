@@ -49,6 +49,8 @@ protected:
 protected:
 	CString			m_sName;
 	CString			m_sUser;
+	CString			m_sCountryCode;
+	CString			m_sCountry;
 	CString			m_sSHA1;
 	CString			m_sTiger;
 	CString			m_sED2K;
