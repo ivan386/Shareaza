@@ -1,7 +1,7 @@
 //
 // CtrlText.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,34 +34,43 @@ BEGIN_MESSAGE_MAP(CTextCtrl, CWnd)
 	ON_WM_VSCROLL()
 	ON_WM_ERASEBKGND()
 	ON_WM_PAINT()
-	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
+	ON_WM_KEYDOWN()
 	ON_WM_MOUSEWHEEL()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-#define LINE_BUFFER_LIMIT		1024
+#define LINE_BUFFER_LIMIT		4096
 #define LINE_BUFFER_BLOCK		64
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CTextCtrl construction
 
-CTextCtrl::CTextCtrl()
+CTextCtrl::CTextCtrl() :
+	m_nPosition( 0 ),
+	m_nTotal( 0 ),
+	m_bProcess( TRUE ),
+	m_nScrollWheelLines( 3 ),
+	m_nLastClicked( -1 )
 {
 	m_crBackground	= GetSysColor( COLOR_WINDOW );
 	m_crText[0]		= RGB( 0, 0, 0 );			// Black		- MSG_DEFAULT
-	m_crText[1]		= RGB( 0, 0, 127 );			// Blue		- MSG_SYSTEM / MSG_DOWNLOAD
-	m_crText[2]		= RGB( 255, 0, 0 );			// Red		- MSG_ERROR
-	m_crText[3]		= RGB( 192, 192, 192 );		// Gray		- MSG_DEBUG
+	m_crText[1]		= RGB( 0, 0, 127 );			// Blue			- MSG_SYSTEM / MSG_DOWNLOAD
+	m_crText[2]		= RGB( 255, 0, 0 );			// Red			- MSG_ERROR
+	m_crText[3]		= RGB( 192, 192, 192 );		// Gray			- MSG_DEBUG
 	m_crText[4]		= RGB( 0, 0, 255 );			// Light Blue	- MSG_TEMP
-	m_crText[5]		= RGB( 255, 0, 0 );			// Red		- MSG_DISPLAYED_ERROR
+	m_crText[5]		= RGB( 255, 0, 0 );			// Red			- MSG_DISPLAYED_ERROR
 
 	m_pFont.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sSystemLogFont );
 	m_cCharacter = CSize( 0, 0 );
+
+	// Try to get the number of lines to scroll when the mouse wheel is rotated
+	SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0);
 }
 
 CTextCtrl::~CTextCtrl()
@@ -74,13 +83,13 @@ CTextCtrl::~CTextCtrl()
 
 BOOL CTextCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
 {
-	dwStyle |= WS_CHILD|WS_VSCROLL;
+	dwStyle |= WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_VSCROLL;
 	return CWnd::Create( NULL, NULL, dwStyle, rect, pParentWnd, nID, NULL );
 }
 
 void CTextCtrl::Add(int nType, LPCTSTR pszText)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 	CString strLine;
 
 	for ( ; *pszText ; pszText++ )
@@ -101,16 +110,22 @@ void CTextCtrl::Add(int nType, LPCTSTR pszText)
 
 void CTextCtrl::AddLine(int nType, LPCTSTR pszLine)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	if ( m_pLines.GetSize() >= LINE_BUFFER_LIMIT )
 	{
 		for ( int nCount = 0 ; nCount < LINE_BUFFER_BLOCK ; nCount++ )
 		{
-			delete m_pLines.GetAt( 0 );
-			m_pLines.RemoveAt( 0 );
+			delete m_pLines.GetAt( nCount );
 		}
+		m_pLines.RemoveAt( 0, LINE_BUFFER_BLOCK );
+
 		m_bProcess = TRUE;
+
+		if ( m_nLastClicked < LINE_BUFFER_BLOCK )
+			m_nLastClicked = -1;
+		else
+			m_nLastClicked -= LINE_BUFFER_BLOCK;
 	}
 
 	m_pLines.Add( new CTextLine( nType, pszLine ) );
@@ -119,7 +134,7 @@ void CTextCtrl::AddLine(int nType, LPCTSTR pszLine)
 
 void CTextCtrl::Clear(BOOL bInvalidate)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	for ( int nLine = 0 ; nLine < m_pLines.GetSize() ; nLine++ )
 	{
@@ -128,6 +143,8 @@ void CTextCtrl::Clear(BOOL bInvalidate)
 	m_pLines.RemoveAll();
 	
 	m_nPosition = m_nTotal = 0;
+
+	m_nLastClicked = -1;
 
 	if ( bInvalidate )
 	{
@@ -170,23 +187,9 @@ CFont* CTextCtrl::GetFont()
 /////////////////////////////////////////////////////////////////////////////
 // CTextCtrl message handlers
 
-int CTextCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
-{
-	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
-	m_nPosition = m_nTotal = 0;
-	m_bProcess = TRUE;
-	
-	// Try to get the number of lines to scroll when the mouse wheel is rotated
-	if ( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
-		m_nScrollWheelLines = 3;
-
-	return 0;
-}
-
 void CTextCtrl::OnVScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* /*pScrollBar*/) 
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 	SCROLLINFO si = {};
 
 	si.cbSize	= sizeof(si);
@@ -233,8 +236,8 @@ BOOL CTextCtrl::OnEraseBkgnd(CDC* /*pDC*/)
 
 void CTextCtrl::OnPaint() 
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-	CRect rcClient, rcLine;
+	CQuickLock pLock( m_pSection );
+	CRect rcClient;
 	CPaintDC dc( this );
 	
 	GetClientRect( &rcClient );
@@ -265,19 +268,19 @@ void CTextCtrl::OnPaint()
 	if ( bModified ) UpdateScroll( TRUE );
 	m_bProcess = FALSE;
 
-	dc.SetTextColor( m_crText[0] );
-	dc.SetBkColor( m_crBackground );
 	dc.SetBkMode( OPAQUE );
 
-	rcLine.CopyRect( &rcClient );
+	CRect rcLine( rcClient );
 	rcLine.bottom += ( m_nTotal - m_nPosition ) * m_cCharacter.cy;
 	rcLine.top = rcLine.bottom - m_cCharacter.cy;
 
 	for ( INT_PTR nLine = m_pLines.GetSize() - 1 ; nLine >= 0 && rcLine.bottom > 0 ; nLine-- )
 	{
 		CTextLine* pLine = m_pLines.GetAt( nLine );
-
-		dc.SetTextColor( m_crText[ pLine->m_nType ] );
+		dc.SetTextColor( pLine->m_bSelected ? GetSysColor( COLOR_HIGHLIGHTTEXT ) :
+			m_crText[ pLine->m_nType ] );
+		dc.SetBkColor( pLine->m_bSelected ? GetSysColor( COLOR_HIGHLIGHT ) :
+			m_crBackground );
 		pLine->Paint( &dc, &rcLine );
 	}
 
@@ -290,15 +293,186 @@ void CTextCtrl::OnPaint()
 	dc.SelectObject( pOldFont );
 }
 
+int CTextCtrl::HitTest(const CPoint& pt) const
+{
+	CQuickLock pLock( m_pSection );
+
+	if ( m_cCharacter.cy != 0 )
+	{
+		CRect rcClient;
+		GetClientRect( &rcClient );
+		CRect rcLine( rcClient );
+		rcLine.bottom += ( m_nTotal - m_nPosition ) * m_cCharacter.cy;
+		for ( int nLine = m_pLines.GetCount() - 1;
+			nLine >= 0 && rcLine.bottom > rcClient.top ; nLine-- )
+		{
+			CTextLine* pLine = m_pLines.GetAt( nLine );
+			rcLine.top = rcLine.bottom - pLine->m_nLine * m_cCharacter.cy;
+			if ( rcLine.PtInRect( pt ) )
+				return nLine;
+			rcLine.bottom -= pLine->m_nLine * m_cCharacter.cy;
+		}
+	}
+	return -1;
+}
+
+void CTextCtrl::CopyText() const
+{
+	CQuickLock pLock( m_pSection );
+
+	CString str;
+	bool bGotIt = false;
+	for ( int i = 0; i < m_pLines.GetCount(); i++ )
+	{
+		CTextLine* pLineTemp = m_pLines.GetAt( i );
+		if ( pLineTemp->m_bSelected )
+		{
+			str += pLineTemp->m_sText + _T("\r\n");
+			bGotIt = true;
+		}
+	}
+
+	if ( ! bGotIt )
+	{
+		if ( m_nLastClicked != -1 )
+		{
+			CTextLine* pLineTemp = m_pLines.GetAt( m_nLastClicked );
+			str = pLineTemp->m_sText;
+			bGotIt = true;
+		}
+	}
+
+	if ( bGotIt && AfxGetMainWnd()->OpenClipboard() )
+	{
+		EmptyClipboard();
+
+		if ( theApp.m_bNT )
+		{
+			LPCWSTR pszWide = CT2CW( (LPCTSTR)str );
+			DWORD nSize = ( lstrlenW(pszWide) + 1 ) * sizeof(WCHAR);
+			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, nSize );
+			LPVOID pMem = GlobalLock( hMem );
+			CopyMemory( pMem, pszWide, nSize );
+			GlobalUnlock( hMem );
+			SetClipboardData( CF_UNICODETEXT, hMem );
+		}
+		else
+		{
+			LPCSTR pszASCII = CT2CA( (LPCTSTR)str );
+			DWORD nSize = lstrlenA(pszASCII) + 1;
+			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, nSize );
+			LPVOID pMem = GlobalLock( hMem );
+			CopyMemory( pMem, pszASCII, nSize );
+			GlobalUnlock( hMem );
+			SetClipboardData( CF_TEXT, hMem );
+		}
+
+		CloseClipboard();
+	}
+}
+
 void CTextCtrl::OnSize(UINT nType, int cx, int cy) 
 {
 	CWnd::OnSize( nType, cx, cy );
 	m_bProcess = TRUE;
 }
 
-void CTextCtrl::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
+void CTextCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
+	CQuickLock pLock( m_pSection );
+
 	SetFocus();
+
+	int nLine = HitTest( point );
+	if ( nLine != -1 )
+	{
+		CTextLine* pLine = m_pLines.GetAt( nLine );
+
+		if ( ( nFlags & MK_CONTROL ) == MK_CONTROL )
+		{
+			// Invert
+			pLine->m_bSelected = ! pLine->m_bSelected;
+			m_nLastClicked = nLine;
+		}
+		else if ( ( nFlags & MK_SHIFT ) == MK_SHIFT )
+		{
+			// Select from m_nLastClicked to nLine
+			if ( m_nLastClicked == -1 )
+			{
+				m_nLastClicked = nLine;
+			}
+			for ( int i = 0; i < m_pLines.GetCount(); i++ )
+			{
+				CTextLine* pLineTemp = m_pLines.GetAt( i );
+				pLineTemp->m_bSelected = ( m_nLastClicked < nLine ) ? 
+					( i >= m_nLastClicked && i <= nLine ) :
+					( i <= m_nLastClicked && i >= nLine );
+			}
+		}
+		else
+		{
+			// Select one, unselect others
+			for ( int i = 0; i < m_pLines.GetCount(); i++ )
+			{
+				CTextLine* pLineTemp = m_pLines.GetAt( i );
+				pLineTemp->m_bSelected = ( pLineTemp == pLine );
+			}
+			m_nLastClicked = nLine;
+		}
+	}
+
+	InvalidateRect( NULL );
+}
+
+void CTextCtrl::OnRButtonDown(UINT /*nFlags*/, CPoint point)
+{
+	CQuickLock pLock( m_pSection );
+
+	if ( m_nLastClicked == -1 )
+	{
+		m_nLastClicked = HitTest( point );
+	}
+}
+
+void CTextCtrl::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
+{
+	CQuickLock pLock( m_pSection );
+
+	if ( GetKeyState( VK_CONTROL ) < 0 )
+	{
+		switch ( nChar )
+		{
+		// Ctrl+C, Ctrl+X or Ctrl+Insert
+		case 'C':
+		case 'X':
+		case VK_INSERT:
+			CopyText();
+			break;
+
+		// Ctrl+A
+		case 'A':
+			// Select all
+			for ( int i = 0; i < m_pLines.GetCount(); i++ )
+			{
+				CTextLine* pLineTemp = m_pLines.GetAt( i );
+				pLineTemp->m_bSelected = TRUE;
+			}
+			InvalidateRect( NULL );
+			break;
+		}
+	}
+
+	// Esc
+	if ( nChar == VK_ESCAPE )
+	{
+		// Unselect all
+		for ( int i = 0; i < m_pLines.GetCount(); i++ )
+		{
+			CTextLine* pLineTemp = m_pLines.GetAt( i );
+			pLineTemp->m_bSelected = FALSE;
+		}
+		InvalidateRect( NULL );
+	}
 }
 
 BOOL CTextCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
@@ -320,7 +494,7 @@ BOOL CTextCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	else
 		nRows = short( nRows * m_nScrollWheelLines );
 
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	m_nPosition-= nRows;
 	m_nPosition = max( 0, min( m_nTotal, m_nPosition ) );
@@ -340,6 +514,7 @@ CTextLine::CTextLine(int nType, LPCTSTR pszText)
 	m_pLine	= NULL;
 	m_nLine	= 0;
 	m_nType = nType;
+	m_bSelected = FALSE;
 }
 
 CTextLine::~CTextLine()

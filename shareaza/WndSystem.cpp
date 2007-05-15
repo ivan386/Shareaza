@@ -1,7 +1,7 @@
 //
 // WndSystem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,7 @@
 #include "WndSystem.h"
 #include "Neighbours.h"
 #include "Skin.h"
+#include "CrawlSession.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -56,10 +57,6 @@ END_MESSAGE_MAP()
 CSystemWnd::CSystemWnd() : CPanelWnd( TRUE, TRUE )
 {
 	Create( IDR_SYSTEMFRAME );
-}
-
-CSystemWnd::~CSystemWnd()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -202,7 +199,10 @@ void CSystemWnd::OnSystemClear()
 	Clear();
 }
 
-#include "CrawlSession.h"
+void CSystemWnd::CopyText() const
+{
+	m_wndText.CopyText();
+}
 
 void CSystemWnd::OnSystemTest()
 {

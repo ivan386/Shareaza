@@ -1,7 +1,7 @@
 //
 // CtrlText.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,8 +43,9 @@ protected:
 	COLORREF			m_crBackground;
 	COLORREF			m_crText[6];
 	BOOL				m_bProcess;
-	CCriticalSection	m_pSection;
-	UINT				m_nScrollWheelLines; // number of lines to scroll when the mouse wheel is rotated
+	mutable CCriticalSection	m_pSection;
+	UINT				m_nScrollWheelLines;	// number of lines to scroll when the mouse wheel is rotated
+	int					m_nLastClicked;			// Index of last clicked item
 
 // Operations
 public:
@@ -52,8 +53,11 @@ public:
 	void	AddLine(int nType, LPCTSTR pszLine);
 	void	Clear(BOOL bInvalidate = TRUE);
 	CFont*	GetFont();
+	void	CopyText() const;
+
 protected:
 	void	UpdateScroll(BOOL bFull = FALSE);
+	int		HitTest(const CPoint& pt) const;
 
 // Overrides
 public:
@@ -68,9 +72,10 @@ protected:
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnPaint();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
@@ -89,6 +94,7 @@ public:
 	int*	m_pLine;
 	int		m_nLine;
 	int		m_nType;
+	BOOL	m_bSelected;
 
 // Operations
 public:
