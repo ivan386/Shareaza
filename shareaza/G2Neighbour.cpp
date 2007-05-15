@@ -729,9 +729,9 @@ CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner, BOOL nIncludeSelf
 	if ( nIncludeSelf && bIsHub )
 	{
 		// For DIS reply
-		pPacket->WritePacket( G2_PACKET_CACHED_HUB, 17, TRUE );			// 4
-		pPacket->WritePacket( G2_PACKET_VENDOR, 3 );					// 3
-		pPacket->WriteString( SHAREAZA_VENDOR_A, FALSE );				// 4
+		pPacket->WritePacket( G2_PACKET_CACHED_HUB, 18, TRUE );			// 4
+		pPacket->WritePacket( G2_PACKET_VENDOR, 4 );					// 3
+		pPacket->WriteString( SHAREAZA_VENDOR_A );						// 5
 		pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );	// 4
 		pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );		// 2
 		pPacket->WriteLongBE( tNow );									// 4
