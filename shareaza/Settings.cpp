@@ -618,6 +618,8 @@ void CSettings::Load()
 	Gnutella1.SearchTTL			= max( min( Gnutella1.SearchTTL, 3u ), 1u );
 	Gnutella1.DefaultTTL		= max( min( Gnutella1.DefaultTTL, 3u ), 1u );
 	Gnutella1.QueryThrottle		= max( min( Gnutella1.QueryThrottle, 60u ), 5u );
+	Gnutella.MaxResults			= max( min( Gnutella.MaxResults, 300u ), 1u );
+	Gnutella.MaxHits			= max( min( Gnutella.MaxHits, 4096u ), 0u );
 
 	// Set client links
 	Gnutella1.NumHubs			= max( min( Gnutella1.NumHubs,  5    ), 1 );
