@@ -88,6 +88,8 @@ extern GFLEXTERN GFL_ERROR GFLAPI gflSepiaEx         ( GFL_BITMAP *src, GFL_BITM
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflReduceNoise     ( GFL_BITMAP *src, GFL_BITMAP ** bdst ); 
 
+extern GFLEXTERN GFL_ERROR GFLAPI gflDropShadow      ( GFL_BITMAP* src, GFL_BITMAP** dst, GFL_INT32 size, GFL_INT32 depth, GFL_INT32 keep_size ); 
+
 /*
  * ~~
  */
