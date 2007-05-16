@@ -24,8 +24,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl254.dll"
-				CommandLine="copy ..\setup\plugins\libgfl254.dll &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\&quot; /y &gt; nul"
+				Description="Copying libgfl267.dll"
+				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\&quot; /y &gt; nul"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -86,7 +86,7 @@
 				AdditionalLibraryDirectories=""
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				DelayLoadDLLs="libgfl254.dll"
+				DelayLoadDLLs="libgfl267.dll"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -130,8 +130,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl254.dll"
-				CommandLine="copy ..\setup\plugins\libgfl254.dll &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y &gt; nul"
+				Description="Copying libgfl267.dll"
+				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y &gt; nul"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -193,7 +193,7 @@
 				SuppressStartupBanner="true"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				DelayLoadDLLs="libgfl254.dll"
+				DelayLoadDLLs="libgfl267.dll"
 				SubSystem="2"
 				OptimizeReferences="2"
 				OptimizeForWindows98="1"
