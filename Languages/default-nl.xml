@@ -3499,16 +3499,15 @@
 		<control/>
 		<control caption="Het gebruik van Shareaza te activeren."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom bij Shareaza [5 van 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Welkom bij Shareaza [5 van 7]">
 		<control caption="Shareaza ondersteund een flexibele gebruikersomgeving, zodat je kunt kiezen wat het meest comfortabele voor jou is. Je kunt deze opties altijd veranderen."/>
-		<control caption="Selecteer alstublieft de gebruikersomgeving:"/>
-		<control caption="Normale modes"/>
+		<control caption="Selecteer alsjeblieft de gebruikersomgeving:"/>
+		<control caption="Normale modus"/>
 		<control caption="Tabbladstijl"/>
 		<control caption="Simpele en gemakkelijk te gebruiken menu's en knoppen.{n}Komt bekend voor bij gebruikers van andere bestanddelingsprogramma's."/>
 		<control caption="Tabblad stijl biedt gebruikers tal van extra commando's, schermen, enz.{n}Het kan een beetje verwarrend zijn voor nieuwe gebruikers!"/>
 		<control caption="Toon simpele downloadvoortgangsbalken (verminderd CPU gebruik)."/>
-		<control caption="Toon additionele torrent gebruikersomgevingselementen."/>
-		<control caption="Open torrentlinks."/>
+		<control caption="Open .torrent ."/>
 	</dialog>
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom bij Shareaza [2 van 7]">
 		<control caption="Voor optimale prestaties moet Shareaza iets meer weten over je verbinding met het internet."/>
