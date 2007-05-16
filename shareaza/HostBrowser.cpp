@@ -422,7 +422,7 @@ BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 			m_nProtocol = PROTOCOL_G2;
 		else if ( strValue.CompareNoCase( _T("application/x-shareaza") ) == 0 )
 			m_nProtocol = PROTOCOL_G2;
-		else if ( strValue.CompareNoCase( _T("text/html") ) == 0 )
+		else if ( strValue.Left(9).CompareNoCase( _T("text/html") ) == 0 )
 			m_nProtocol = PROTOCOL_NULL;
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Encoding") ) == 0 )
@@ -812,6 +812,8 @@ BOOL CHostBrowser::StreamHTML()
 			pHit->m_bPush		= ( m_tPushed ) ? TS_TRUE : TS_FALSE;
 			pHit->m_bBrowseHost	= TRUE;
 			pHit->m_nSize		= nSize;
+			pHit->m_bSize		= TRUE;
+			pHit->m_nSources	= 1;
 			pHit->m_sName		= strName;
 			pHit->m_sURL		= strURI;
 			
