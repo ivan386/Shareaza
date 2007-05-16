@@ -37,7 +37,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="de">Allgemein:Geister-Dateien</title>
               <title language="ee">Üldine:Varifailid</title>
               <title language="es">General:Ghost Files</title>
-              <title language="fr">General:Ghost Files</title>
+              <title language="fr">Général:Fichiers ghost</title>
               <title language="heb">General:Ghost Files</title>
               <title language="hr">General:Ghost Files</title>
               <title language="hu">Általános: Szellemfájlok</title>
@@ -93,7 +93,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Verwalten der Geister-Dateien</title>
                <title language="ee">Varifailid</title>
                <title language="es">Ghost Files</title>
-               <title language="fr">Ghost Files</title>
+               <title language="fr">Fichiers ghost</title>
                <title language="heb">Ghost Files</title>
                <title language="hr">Ghost Files</title>
                <title language="hu">Szellemfájlok</title>
@@ -116,7 +116,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Dieser Ordner enthält Informationen über alle aus der Bibliothek gelöschten Dateien, die Sie kommentiert oder bewertet haben.</subtitle>
                <subtitle language="ee">See kaust sisaldab kõiki faile, mis sa oled oma Raamatukogust ära kustutanud.</subtitle>
                <subtitle language="es">This folder contains every file which you've deleted from the Library.</subtitle>
-               <subtitle language="fr">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="fr">Ce dossier contient des informations pour les fichiers supprimer de votre bibliothèque</subtitle>
                <subtitle language="heb">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="hr">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="hu">Ez a mappa a Könyvtárból törölt fájlokat tartalmazza.</subtitle>

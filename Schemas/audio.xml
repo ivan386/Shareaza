@@ -115,7 +115,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Originalinterpret</title>
                        <title language="ee">Algne Artist</title>
                        <title language="es">Artista Original</title>
-                       <title language="fr">Original Artist</title>
+                       <title language="fr">Artiste d'origine</title>
                        <title language="heb">אמן מקורי</title>
                        <title language="hr">Originalni izvođač</title>
                        <title language="hu">Eredeti előadó</title>
@@ -140,7 +140,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Album Artist</title>
                        <title language="ee">Album Artist</title>
                        <title language="es">Album Artist</title>
-                       <title language="fr">Album Artist</title>
+                       <title language="fr">Album artiste</title>
                        <title language="heb">Album Artist</title>
                        <title language="hr">Album Artist</title>
                        <title language="hu">Album eladőja</title>
@@ -192,7 +192,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Ursprungsalbum</title>
                        <title language="ee">Algne Album</title>
                        <title language="es">Album Original</title>
-                       <title language="fr">Original Album</title>
+                       <title language="fr">Album d'origine</title>
                        <title language="heb">אלבום מקורי</title>
                        <title language="hr">Originalni Album</title>
                        <title language="hu">Eredeti album</title>
@@ -218,7 +218,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Komponist</title>
                        <title language="ee">Helilooja</title>
                        <title language="es">Compositor</title>
-                       <title language="fr">Composer</title>
+                       <title language="fr">Compositeur</title>
                        <title language="heb">מלחין</title>
                        <title language="hr">Kompozitor</title>
                        <title language="hu">Szerző</title>
@@ -268,7 +268,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Album Status</title>
                        <title language="ee">Album Status</title>
                        <title language="es">Album Status</title>
-                       <title language="fr">Album Status</title>
+                       <title language="fr">Album status</title>
                        <title language="heb">Album Status</title>
                        <title language="hr">Album Status</title>
                        <title language="hu">Album helyzete</title>
@@ -395,7 +395,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Original Year</title>
                        <title language="ee">Original Year</title>
                        <title language="es">Original Year</title>
-                       <title language="fr">Original Year</title>
+                       <title language="fr">Année d'origine</title>
                        <title language="heb">Original Year</title>
                        <title language="hr">Original Year</title>
                        <title language="hu">Original Year</title>
@@ -524,7 +524,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Soundtyp</title>
                        <title language="ee">Heli Tüüp</title>
                        <title language="es">Tipo de Sonido</title>
-                       <title language="fr">Sound Type</title>
+                       <title language="fr">Média d'origine</title>
                        <title language="heb">סוג צליל</title>
                        <title language="hr">Vrsta Zvuka</title>
                        <title language="hu">Hang típusa</title>
@@ -650,7 +650,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Lyricist</title>
                        <title language="ee">Lyricist</title>
                        <title language="es">Lyricist</title>
-                       <title language="fr">Lyricist</title>
+                       <title language="fr">Parolier</title>
                        <title language="heb">Lyricist</title>
                        <title language="hr">Lyricist</title>
                        <title language="hu">Dalszöveg-író</title>
@@ -675,7 +675,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Original Lyricist</title>
                        <title language="ee">Original Lyricist</title>
                        <title language="es">Original Lyricist</title>
-                       <title language="fr">Original Lyricist</title>
+                       <title language="fr">Parolier d'origine</title>
                        <title language="heb">Original Lyricist</title>
                        <title language="hr">Original Lyricist</title>
                        <title language="hu">Original Lyricist</title>
@@ -725,7 +725,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="de">Performer</title>
                       <title language="ee">Performer</title>
                       <title language="es">Performer</title>
-                      <title language="fr">Performer</title>
+                      <title language="fr">Interprète</title>
                       <title language="heb">Performer</title>
                       <title language="hr">Performer</title>
                       <title language="hu">Előadó</title>
@@ -750,7 +750,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="de">Conductor</title>
                       <title language="ee">Conductor</title>
                       <title language="es">Conductor</title>
-                      <title language="fr">Conductor</title>
+                      <title language="fr">Chef d'orchestre</title>
                       <title language="heb">Conductor</title>
                       <title language="hr">Conductor</title>
                       <title language="hu">Karmester</title>
@@ -1050,7 +1050,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Encoded By</title>
                        <title language="ee">Encoded By</title>
                        <title language="es">Encoded By</title>
-                       <title language="fr">Encoded By</title>
+                       <title language="fr">Encoder par</title>
                        <title language="heb">Encoded By</title>
                        <title language="hr">Encoded By</title>
                        <title language="hu">Kódolva</title>
