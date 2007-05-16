@@ -57,8 +57,8 @@
 				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl254.dll"
-				CommandLine="copy ..\setup\plugins\libgfl254.dll &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y &gt; nul"/>
+				Description="Copying libgfl267.dll"
+				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y &gt; nul"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -136,8 +136,8 @@
 				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl254.dll"
-				CommandLine="copy ..\setup\plugins\libgfl254.dll &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y &gt; nul"/>
+				Description="Copying libgfl267.dll"
+				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y &gt; nul"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool

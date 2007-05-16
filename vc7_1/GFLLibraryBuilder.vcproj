@@ -60,8 +60,8 @@
 				CommandLine="cd &quot;$(SolutionDir)$(ConfigurationName)\&quot; &amp;&amp; regsvr32 /s /c &quot;plugins\$(TargetFileName)&quot;"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl254.dll"
-				CommandLine="copy ..\setup\plugins\libgfl254.dll &quot;$(SolutionDir)$(ConfigurationName)\plugins\&quot; /y &gt; nul"/>
+				Description="Copying libgfl267.dll"
+				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\plugins\&quot; /y &gt; nul"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -140,8 +140,8 @@
 				CommandLine="cd &quot;$(SolutionDir)$(ConfigurationName)\&quot; &amp;&amp; regsvr32 /s /c &quot;plugins\$(TargetFileName)&quot;"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl254.dll"
-				CommandLine="copy ..\setup\plugins\libgfl254.dll &quot;$(SolutionDir)$(ConfigurationName)\plugins\&quot; /y &gt; nul"/>
+				Description="Copying libgfl267.dll"
+				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\plugins\&quot; /y &gt; nul"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
