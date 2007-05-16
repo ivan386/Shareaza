@@ -147,8 +147,7 @@ public:
 	void	Paint(CLibraryAlbumView* pView, CDC* pDC, const CRect& rcBlock, int nCount);
 	BOOL	HitTestRating(const CRect& rcBlock, const CPoint& point);
 	BOOL	LockRating();
-protected:
-	void	PaintText(CDC* pDC, const CRect& rcTrack, int nFrom, int nTo, const CString* pstr, BOOL bCenter = FALSE);
+	static void	PaintText(CDC* pDC, const CRect& rcTrack, int nFrom, int nTo, const CString* pstr, BOOL bCenter = FALSE);
 
 };
 

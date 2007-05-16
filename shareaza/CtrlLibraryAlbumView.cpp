@@ -455,9 +455,9 @@ BOOL CLibraryAlbumView::SelectTo(CLibraryAlbumTrack* pTrack)
 		GetClientRect( &rcClient );
 		GetItemRect( m_pFocus, &rcItem );
 		
-		if ( rcItem.top < rcClient.top )
+		if ( rcItem.top < rcClient.top + m_szTrack.cy )
 		{
-			ScrollBy( rcItem.top - rcClient.top );
+			ScrollBy( rcItem.top - rcClient.top - m_szTrack.cy );
 		}
 		else if ( rcItem.bottom > rcClient.bottom )
 		{
@@ -504,7 +504,7 @@ void CLibraryAlbumView::OnSize(UINT nType, int cx, int cy)
 	
 	m_szTrack.cx = cx;
 	m_szTrack.cy = 22;
-	m_nRows = cy / m_szTrack.cy;
+	m_nRows = cy / m_szTrack.cy - 1;
 
 	UpdateScroll();
 }
@@ -520,7 +520,7 @@ void CLibraryAlbumView::UpdateScroll()
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
 	pInfo.nMin		= 0;
 	pInfo.nMax		= m_nCount * m_szTrack.cy;
-	pInfo.nPage		= rc.Height();
+	pInfo.nPage		= rc.Height() - m_szTrack.cy;
 	pInfo.nPos		= m_nScroll = max( 0, min( m_nScroll, pInfo.nMax - (int)pInfo.nPage + 1 ) );
 	
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
@@ -606,10 +606,68 @@ void CLibraryAlbumView::OnPaint()
 	GetClientRect( &rcClient );
 	
 	rcTrack = rcBuffer;
-	rcTrack.OffsetRect( rcClient.left, rcClient.top - m_nScroll );
+	rcTrack.OffsetRect( rcClient.left, 0 );
 	
 	CLibraryAlbumTrack** pList = m_pList;
-	
+
+	CString strTrack = _T("Track");
+	CString strTitle = _T("Title");
+	CString strLength = _T("Length");
+	CString strBitrate = _T("Bitrate");
+	CString strAlbum = _T("Album");
+	CString strArtist = _T("Artist");
+	CString strRating = _T("Rating");
+	pBuffer->SelectObject( &CoolInterface.m_fntBold );
+	CRect rcLine(rcTrack);
+	rcLine.left += 22;
+	rcLine.right -= 78;
+	pBuffer->FillSolidRect( &rcBuffer, CoolInterface.m_crWindow );
+	if ( m_pStyle == CSchema::uriMusicAlbum )
+	{
+		// Track, Title, Length, Bitrate
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  0,   5, &strTrack, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  5,  84, &strTitle );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 84,  92, &strLength, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 92, 100, &strBitrate, TRUE );
+		
+		rcLine.left = rcLine.right;
+		rcLine.right += 78;
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 0, 100, &strRating );
+	}
+	else if ( m_pStyle == CSchema::uriMusicArtist )
+	{
+		// Album, Title, Length, Bitrate
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  0,  30, &strAlbum );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 30,  84, &strTitle );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 84,  92, &strLength, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 92, 100, &strBitrate, TRUE );
+
+		rcLine.left = rcLine.right;
+		rcLine.right += 78;
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 0, 100, &strRating );
+	}
+	else
+	{
+		// Artist, Album, Title, Length, Bitrate
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  0,  25, &strArtist );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 25,  50, &strAlbum );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 50,  84, &strTitle );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 84,  92, &strLength, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 92, 100, &strBitrate, TRUE );
+
+		rcLine.left = rcLine.right;
+		rcLine.right += 78;
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 0, 100, &strRating );
+	}
+
+	pBuffer->SelectObject( &CoolInterface.m_fntNormal );
+
+	dc.BitBlt( rcTrack.left, rcTrack.top, rcBuffer.right, rcBuffer.bottom,
+		pBuffer, 0, 0, SRCCOPY );
+	dc.ExcludeClipRect( &rcTrack );
+	rcTrack.OffsetRect( 0, rcClient.top - m_nScroll );
+	rcTrack.OffsetRect( 0, m_szTrack.cy );
+
 	for ( int nItem = 0 ; nItem < m_nCount && rcTrack.top < rcClient.bottom ; nItem++, pList++ )
 	{
 		CLibraryAlbumTrack* pTrack = *pList;
@@ -632,7 +690,7 @@ void CLibraryAlbumView::OnPaint()
 
 CLibraryAlbumTrack* CLibraryAlbumView::HitTest(const CPoint& point, CRect* pRect) const
 {
-	CRect rcClient, rcTrack( 0, 0, m_szTrack.cx, m_szTrack.cy );
+	CRect rcClient, rcTrack( 0, 0, m_szTrack.cx, m_szTrack.cy * 2 );
 	GetClientRect( &rcClient );
 	rcTrack.OffsetRect( rcClient.left, rcClient.top - m_nScroll );
 	
@@ -658,6 +716,7 @@ BOOL CLibraryAlbumView::GetItemRect(CLibraryAlbumTrack* pTrack, CRect* pRect)
 {
 	CRect rcClient, rcTrack( 0, 0, m_szTrack.cx, m_szTrack.cy );
 	GetClientRect( &rcClient );
+	rcClient.top += m_szTrack.cy;
 	rcTrack.OffsetRect( rcClient.left, rcClient.top - m_nScroll );
 	
 	CLibraryAlbumTrack** pList = m_pList;
