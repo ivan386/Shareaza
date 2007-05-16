@@ -65,7 +65,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,6
+ FILEVERSION 1,0,0,7
  PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -82,7 +82,7 @@ BEGIN
         BLOCK "000004b0"
         BEGIN
             VALUE "FileDescription", "GFL Image Service plugin"
-            VALUE "FileVersion", "1, 0, 0, 6"
+            VALUE "FileVersion", "1, 0, 0, 7"
             VALUE "InternalName", "GFLImageServices.dll"
             VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005-2006"
             VALUE "OriginalFilename", "GFLImageServices.dll"
