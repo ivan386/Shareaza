@@ -467,7 +467,7 @@
 		</menu>
 		<menu text="_Hulpmiddelen">
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Bestand-/TorrentURL _invoegen..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Downloadlink _invoegen..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Een _taal kiezen..."/>
@@ -552,7 +552,7 @@
 		</menu>
 		<menu text="_Hulpmiddelen">
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Bestand-/TorrentURL _invoegen..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Downloadlink _invoegen..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importeer gedeeltelijke eMule downloads..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
@@ -636,7 +636,7 @@
 		</menu>
 		<menu text="_Hulpmiddelen">
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Bestand-/TorrentURL _invoegen..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Downloadlink _invoegen..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importeer gedeeltelijke eMule downloads..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
@@ -1347,8 +1347,8 @@
 		<item id="ID_MEDIA_ADD_FOLDER" text="_Map toevoegen..."/>
 		<item id="ID_MEDIA_REMOVE" text="_Verwijderen"/>
 		<separator/>
-		<item id="ID_MEDIA_RANDOM" text="Willekeurige volgordemodes"/>
-		<item id="ID_MEDIA_REPEAT" text="Herhalingsmodes"/>
+		<item id="ID_MEDIA_RANDOM" text="Willekeurige volgordemodus"/>
+		<item id="ID_MEDIA_REPEAT" text="Herhalingsmodus"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="Afspeellijst _openen..."/>
 		<item id="ID_MEDIA_SAVE" text="Afspeellijst op_slaan..."/>
@@ -1474,7 +1474,7 @@
 	<!-- PLUGIN MENUS -->
 	<menu name="ImageViewer_Context">
 		<item id="ImageViewer_BestFit" text="_Passende grootte"/>
-		<item id="ImageViewer_ActualSize" text="_Actuele grootte"/>
+		<item id="ImageViewer_ActualSize" text="_Echte grootte"/>
 		<separator/>
 		<item id="ImageViewer_Refresh" text="_Vernieuwen"/>
 		<separator/>
@@ -2401,7 +2401,7 @@
 	<tip id="ID_TOOLS_DOWNLOAD" message="Download een bestand of torrent met behulp van Shareaza's downloadsysteem..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Selecteer de taal die je voor Shareaza wilt gebruiken..."/>
 	<tip id="ID_TOOLS_PROFILE" message="Je gebruikersprofiel aanpassen..."/>
-	<tip id="ID_TOOLS_RESKIN" message="De actuele skin opnieuw laden en toepassen."/>
+	<tip id="ID_TOOLS_RESKIN" message="De Echte skin opnieuw laden en toepassen."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="De geselecteerde torrent uitzaaien via BitTorrent."/>
 	<tip id="ID_TOOLS_SETTINGS" message="Shareaza instellingen configureren..."/>
 	<tip id="ID_TOOLS_SKIN" message="Selecteer een andere skin voor Shareaza..."/>
@@ -2499,7 +2499,7 @@
 	<string id="8011" value="Als je van stijl verandert, worden alle geopende vensters gesloten. Wil je nu veranderen?"/>
 	<string id="8060" value="Hub/Ultrapeer mode met %lu buurman(nen).  %s in lokale bibliotheek."/>
 	<string id="8061" value="Ultrapeer mode met %lu buurman(nen). %s in lokale bibliotheek."/>
-	<string id="8062" value="Hub modes met %lu buurmannen. %s in lokale bibliotheek."/>
+	<string id="8062" value="Hub modus met %lu buurmannen. %s in lokale bibliotheek."/>
 	<string id="8063" value="Verbonden. %s in lokale bibliotheek."/>
 	<string id="8064" value="Verbonden met %lu gastheren. %s in lokale bibliotheek."/>
 	<string id="8065" value="Bezig te verbinden met het netwerk..."/>
@@ -2641,7 +2641,7 @@
 	<string id="16078" value="Een beveiligingsregel is toegevoegd voor het blokkeren van %s."/>
 	<string id="16079" value="Weet je zeker dat je de verbinding wilt verbreken?"/>
 	<string id="16081" value="Zoekaanvraag voor &quot;%s&quot; is verzonden naar %s."/>
-	<string id="16083" value="Het forceren van je PC naar hub modes kan nadelige gevolgen hebben op de prestatie en het P2P netwerk. Het is over het algemeen beter om Shareaza te laten beslissen of al dan niet hub modes gebruikt zou moeten worden.\n\nHub modes produceert GEEN betere zoekresultaten, of enige andere voordelen voor jou.\n\nWil je dit echt doen, ondanks deze nadelen?"/>
+	<string id="16083" value="Het forceren van je PC naar hub modus kan nadelige gevolgen hebben op de prestatie en het P2P netwerk. Het is over het algemeen beter om Shareaza te laten beslissen of al dan niet hub modus gebruikt zou moeten worden.\n\nHub modus produceert GEEN betere zoekresultaten, of enige andere voordelen voor jou.\n\nWil je dit echt doen, ondanks deze nadelen?"/>
 	<string id="16084" value="Het uitschakelen van de ondersteuning voor het Gnutella protocol kan je zoekresultaten begrenzen en als je optreedt als hub kan dit ook invloed hebben op de resultaten van andere gebruikers. Weet je zeker dat je dit wilt doen?"/>
 	<string id="16085" value="Gnutella2 is Shareaza's voornaamste netwerk. Het uitschakelen van de ondersteuning hiervoor kan zowel het aantal als de kwaliteit van je zoekresultaten zwaar begrenzen. Weet je zeker dat je dit wilt doen?"/>
 	<string id="16087" value="Je uitgaande bandbreedte is te laag om dit netwerk aan te kunnen zetten."/>
@@ -3224,7 +3224,7 @@
 		<control caption="Gnutella (gnutella:)"/>
 		<control caption="eDonkey2000 (ed2k:)"/>
 		<control caption="Piolet (mp2p:)"/>
-		<control caption="BitTorrent (.torrent)"/>
+		<control caption="BitTorrent (Torrent)"/>
 		<control caption="_Downloadbeheerder:"/>
 		<control caption="Gebruik Shareaza voor het beheren van al mijn internetdownloads:"/>
 		<control/>
@@ -3280,7 +3280,7 @@
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 		<control caption="_Opties:"/>
 		<control caption="Deel gedeeltelijke downloads"/>
-		<control caption="Limiteer delen in hubmodes"/>
+		<control caption="Limiteer delen in hubmodus"/>
 		<control caption="Deel nieuwe voorvertoningen"/>
 		<control caption="Limiet per gastheer:"/>
 		<control/><control/>
@@ -3291,7 +3291,7 @@
 		<control caption="_Bandbreedte:"/>
 		<control caption="Limiet:"/>
 		<control/>
-		<control caption="modes:"/>
+		<control caption="modus:"/>
 		<control caption="Maximaal|Gemiddeld"/>
 		<control caption="_Wachtrijen:"/>
 		<control/>
@@ -3352,7 +3352,7 @@
 		<control caption="Gnutella2 netwerk:"/>
 		<control caption="Altijd verbinden met Gnutella2"/>
 		<control caption="Nu verbinden met Gnutella2"/>
-		<control caption="modes:"/>
+		<control caption="modus:"/>
 		<control caption="Optimaal|Leaf|Hub"/>
 		<control caption="G_2 verbindingen:"/>
 		<control caption="Leaf naar hub:"/>
@@ -3364,7 +3364,7 @@
 		<control caption="Gnutella1 netwerk:"/>
 		<control caption="Altijd verbinden met Gnutella1"/>
 		<control caption="Nu verbinden met Gnutella1"/>
-		<control caption="modes:"/>
+		<control caption="modus:"/>
 		<control caption="Optimaal|Leaf|Ultrapeer"/>
 		<control caption="G_1 verbindingen:"/>
 		<control caption="Leaf naar ultrapeer:"/>
@@ -3408,7 +3408,7 @@
 		<control/><control/><control/>
 		<control caption="&#160;Voorkeurs torrentbronnen"/>
 		<control caption="_EndGame:"/>
-		<control caption="Activeer EndGame modes bij het afmaken van torrents"/>
+		<control caption="Activeer EndGame modus bij het afmaken van torrents"/>
 		<control caption="_Bewaar torrents hier:"/>
 		<control/><control/>
 		<control caption="_Torrent maker"/>
@@ -3499,26 +3499,28 @@
 		<control/>
 		<control caption="Het gebruik van Shareaza te activeren."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Welkom bij Shareaza [5 van 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom bij Shareaza [5 van 7]">
 		<control caption="Shareaza ondersteund een flexibele gebruikersomgeving, zodat je kunt kiezen wat het meest comfortabele voor jou is. Je kunt deze opties altijd veranderen."/>
-		<control caption="Selecteer alsjeblieft de gebruikersomgeving:"/>
+		<control caption="Selecteer alstublieft de gebruikersomgeving:"/>
 		<control caption="Normale modus"/>
 		<control caption="Tabbladstijl"/>
 		<control caption="Simpele en gemakkelijk te gebruiken menu's en knoppen.{n}Komt bekend voor bij gebruikers van andere bestanddelingsprogramma's."/>
 		<control caption="Tabblad stijl biedt gebruikers tal van extra commando's, schermen, enz.{n}Het kan een beetje verwarrend zijn voor nieuwe gebruikers!"/>
 		<control caption="Toon simpele downloadvoortgangsbalken (verminderd CPU gebruik)."/>
-		<control caption="Open .torrent ."/>
+		<control caption="Toon additionele torrent gebruikersomgevingselementen."/>
+		<control caption="Open torrentlinks."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom bij Shareaza [2 van 7]">
-		<control caption="Voor optimale prestaties moet Shareaza iets meer weten over je verbinding met het internet."/>
-		<control caption="&#160;( Kies uit )|Ik gebruik internet thuis|Ik gebruik internet via mijn school- of universiteitsnetwerk|Ik gebruik internet via mijn werknetwerk|Ik gebruik internet bij een hotel of vliegveld"/>
-		<control caption="Wordt je netwerk of universiteit beschermd door een firewall of NAT router?"/>
-		<control caption="&#160;Nee, Ik kan alle inkomende verbindingen accepteren|Ja, dus ik kan geen inkomende verbindingen accepteren|Ik weet het niet, detecteer de firewallstatus voor me"/>
-		<control caption="Heb je een firewall of NAT router bij je Internetverbinding thuis?"/>
-		<control caption="&#160;Nee, ik heb volledige toegangtot het internet|Ja, maar ik stel port-forwarding voor Shareaza in|Ja, dus ik kan geen inkomende verbindingen accepteren|Ik weet het niet, detecteer de firewallstatus voor me"/>
-		<control caption="Als de snelheid van je Internet verbinding weet, selecteer dan hieronder de meest toepasselijke optie:"/>
-		<control caption="|Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|Kabel Modem/SDSL|T1|T3|LAN|OC3"/>
-		<control caption="OF, kies:"/>
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Welcome bij Shareaza [2 van 7]">
+		<control caption="Voor optimale snelheid, moet Shareaza meer weten over de snelheid en de connectie van je internet"/>
+		<control caption="Kies je Internet snelheid:"/>
+		<control caption="Dial-up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Kabel Modem/SDSL|T1|T3|LAN|OC3"/>
+		<control caption="Of kies je download snelheid:"/>
+		<control/>
+		<control caption="en je upload snelheid:"/>
+		<control/>
+		<control caption="Wil je automatisch je router forwarden via UPNP?"/>
+		<control/>
+		<control caption="Status:"/>
 		<control/>
 	</dialog>
 	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Welkom bij Shareaza [3 van 7]">
@@ -4144,7 +4146,7 @@
 		<column from="Total" to="Totaal"/>
 		<column from="Flow" to="Stroom"/>
 		<column from="Leaves" to="Leaves"/>
-		<column from="Mode" to="Modes"/>
+		<column from="Mode" to="modus"/>
 		<column from="Client" to="Cliënt"/>
 		<column from="Name" to="Naam"/>
 		<column from="Country" to="Land"/>
@@ -4162,6 +4164,7 @@
 		<column from="Port" to="Poort"/>
 		<column from="Client" to="Cliënt"/>
 		<column from="Last Seen" to="Laatst gezien"/>
+		<column from="Daily Uptime" to="Gemiddeld uur online per dagik heb mede"/>
 		<column from="Name" to="Naam"/>
 		<column from="Description" to="Omschrijving"/>
 		<column from="CurUsers" to="Gebruikers"/>
