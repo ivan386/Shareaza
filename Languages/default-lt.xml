@@ -3531,7 +3531,7 @@
 		<control/>
 		<control caption="pradėti naudotis „Shareaza“ programa."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Sveiki! Čia „Shareaza“">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Sveiki! Čia „Shareaza“">
 		<control caption="„Shareaza“ palaiko dvi skirtingas vartotojo sąsajas, todėl galite pasirinkti, kuri iš jų labiausiai Jums patogi. Jūs galėsite vėliau pakeisti šias nuostatas."/>
 		<control caption="Pasirinkite vieną vartotojo sąsają:"/>
 		<control caption="Įprastinė veiksena"/>
@@ -3539,7 +3539,6 @@
 		<control caption="Paprasta, lengva naudotis meniu ir mygtukais.{n}Vartotojams pažįstama iš daugelio kitų failų dalinimosi programų."/>
 		<control caption="Eksperto veiksena siūlo patyrusiems vartotojams daug papildomų komandų, langų ir t.t. Naujokus gali šiek tiek klaidinti!"/>
 		<control caption="Rodyti supaprastintas eigos juostas. (Sumažina procesoriaus apkrovimą)"/>
-		<control caption="Rodyti papildomus BitTorrent sąsajos elementus."/>
 		<control caption="Susieti torrent nuorodas su programa."/>
 	</dialog>
 	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Sveiki! Čia „Shareaza“ [3 iš 7]">
