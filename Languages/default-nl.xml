@@ -2401,7 +2401,7 @@
 	<tip id="ID_TOOLS_DOWNLOAD" message="Download een bestand of torrent met behulp van Shareaza's downloadsysteem..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Selecteer de taal die je voor Shareaza wilt gebruiken..."/>
 	<tip id="ID_TOOLS_PROFILE" message="Je gebruikersprofiel aanpassen..."/>
-	<tip id="ID_TOOLS_RESKIN" message="De Echte skin opnieuw laden en toepassen."/>
+	<tip id="ID_TOOLS_RESKIN" message="De echte skin opnieuw laden en toepassen."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="De geselecteerde torrent uitzaaien via BitTorrent."/>
 	<tip id="ID_TOOLS_SETTINGS" message="Shareaza instellingen configureren..."/>
 	<tip id="ID_TOOLS_SKIN" message="Selecteer een andere skin voor Shareaza..."/>
@@ -2499,7 +2499,7 @@
 	<string id="8011" value="Als je van stijl verandert, worden alle geopende vensters gesloten. Wil je nu veranderen?"/>
 	<string id="8060" value="Hub/Ultrapeer mode met %lu buurman(nen).  %s in lokale bibliotheek."/>
 	<string id="8061" value="Ultrapeer mode met %lu buurman(nen). %s in lokale bibliotheek."/>
-	<string id="8062" value="Hub modus met %lu buurmannen. %s in lokale bibliotheek."/>
+	<string id="8062" value="Hub modes met %lu buurmannen. %s in lokale bibliotheek."/>
 	<string id="8063" value="Verbonden. %s in lokale bibliotheek."/>
 	<string id="8064" value="Verbonden met %lu gastheren. %s in lokale bibliotheek."/>
 	<string id="8065" value="Bezig te verbinden met het netwerk..."/>
@@ -2641,7 +2641,7 @@
 	<string id="16078" value="Een beveiligingsregel is toegevoegd voor het blokkeren van %s."/>
 	<string id="16079" value="Weet je zeker dat je de verbinding wilt verbreken?"/>
 	<string id="16081" value="Zoekaanvraag voor &quot;%s&quot; is verzonden naar %s."/>
-	<string id="16083" value="Het forceren van je PC naar hub modus kan nadelige gevolgen hebben op de prestatie en het P2P netwerk. Het is over het algemeen beter om Shareaza te laten beslissen of al dan niet hub modus gebruikt zou moeten worden.\n\nHub modus produceert GEEN betere zoekresultaten, of enige andere voordelen voor jou.\n\nWil je dit echt doen, ondanks deze nadelen?"/>
+	<string id="16083" value="Het forceren van je PC naar hub modus kan nadelige gevolgen hebben op de prestatie en het P2P netwerk. Het is over het algemeen beter om Shareaza te laten beslissen of al dan niet hub modus gebruikt zou moeten worden.\n\nHub modes produceert GEEN betere zoekresultaten, of enige andere voordelen voor jou.\n\nWil je dit echt doen, ondanks deze nadelen?"/>
 	<string id="16084" value="Het uitschakelen van de ondersteuning voor het Gnutella protocol kan je zoekresultaten begrenzen en als je optreedt als hub kan dit ook invloed hebben op de resultaten van andere gebruikers. Weet je zeker dat je dit wilt doen?"/>
 	<string id="16085" value="Gnutella2 is Shareaza's voornaamste netwerk. Het uitschakelen van de ondersteuning hiervoor kan zowel het aantal als de kwaliteit van je zoekresultaten zwaar begrenzen. Weet je zeker dat je dit wilt doen?"/>
 	<string id="16087" value="Je uitgaande bandbreedte is te laag om dit netwerk aan te kunnen zetten."/>
@@ -3291,7 +3291,7 @@
 		<control caption="_Bandbreedte:"/>
 		<control caption="Limiet:"/>
 		<control/>
-		<control caption="modus:"/>
+		<control caption="modes:"/>
 		<control caption="Maximaal|Gemiddeld"/>
 		<control caption="_Wachtrijen:"/>
 		<control/>
@@ -3352,7 +3352,7 @@
 		<control caption="Gnutella2 netwerk:"/>
 		<control caption="Altijd verbinden met Gnutella2"/>
 		<control caption="Nu verbinden met Gnutella2"/>
-		<control caption="modus:"/>
+		<control caption="modes:"/>
 		<control caption="Optimaal|Leaf|Hub"/>
 		<control caption="G_2 verbindingen:"/>
 		<control caption="Leaf naar hub:"/>
@@ -3364,7 +3364,7 @@
 		<control caption="Gnutella1 netwerk:"/>
 		<control caption="Altijd verbinden met Gnutella1"/>
 		<control caption="Nu verbinden met Gnutella1"/>
-		<control caption="modus:"/>
+		<control caption="modes:"/>
 		<control caption="Optimaal|Leaf|Ultrapeer"/>
 		<control caption="G_1 verbindingen:"/>
 		<control caption="Leaf naar ultrapeer:"/>
@@ -3499,16 +3499,15 @@
 		<control/>
 		<control caption="Het gebruik van Shareaza te activeren."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom bij Shareaza [5 van 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Welkom bij Shareaza [5 van 7]">
 		<control caption="Shareaza ondersteund een flexibele gebruikersomgeving, zodat je kunt kiezen wat het meest comfortabele voor jou is. Je kunt deze opties altijd veranderen."/>
-		<control caption="Selecteer alstublieft de gebruikersomgeving:"/>
+		<control caption="Selecteer alsjeblieft de gebruikersomgeving:"/>
 		<control caption="Normale modus"/>
 		<control caption="Tabbladstijl"/>
 		<control caption="Simpele en gemakkelijk te gebruiken menu's en knoppen.{n}Komt bekend voor bij gebruikers van andere bestanddelingsprogramma's."/>
 		<control caption="Tabblad stijl biedt gebruikers tal van extra commando's, schermen, enz.{n}Het kan een beetje verwarrend zijn voor nieuwe gebruikers!"/>
 		<control caption="Toon simpele downloadvoortgangsbalken (verminderd CPU gebruik)."/>
 		<control caption="Toon additionele torrent gebruikersomgevingselementen."/>
-		<control caption="Open torrentlinks."/>
 	</dialog>
 	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Welcome bij Shareaza [2 van 7]">
 		<control caption="Voor optimale snelheid, moet Shareaza meer weten over de snelheid en de connectie van je internet"/>
@@ -3893,7 +3892,7 @@
 	</dialog>
 	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Exporteer URIs">
 		<control/>
-		<control caption="Je hebt %lu bestanden geselecteerd om te exporteren als Shareaza-powered URI referencies. Selecteer alstublieft het formaat voor de URIs, en klik op Opslaan:"/>
+		<control caption="Je hebt %lu bestanden geselecteerd om te exporteren als Shareaza-powered URI referencies. Selecteer alsjeblieft het formaat voor de URIs, en klik op Opslaan:"/>
 		<control/>
 		<control caption="Importeer:"/>
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Bestandsnaam|Bestandsnaam (URI)|Basis bestandsnaam|Bestandsextensie|Bestandsgrootte|Bestandsgrootte (bytes)|Pad naar map|Lokale gastheer (localhost)|Lokale poort"/>
