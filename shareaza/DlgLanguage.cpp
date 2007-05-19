@@ -1,7 +1,7 @@
 //
 // DlgLanguage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -113,21 +113,19 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	CRect rc( 0, 0, 438, HEADING_HEIGHT );
 
-	int nLanguagesToDisplay;
-
 	if ( GetSystemMetrics( SM_CYSCREEN ) < 768 )
-		nLanguagesToDisplay = int( min(m_pPaths.GetSize(), 10 ) );
+		m_nLanguagesToDisplay = int( min(m_pPaths.GetSize(), 10 ) );
 	else
-		nLanguagesToDisplay = int( min(m_pPaths.GetSize(), 14 ) );
+		m_nLanguagesToDisplay = int( min(m_pPaths.GetSize(), 14 ) );
 
-	rc.bottom += ( nLanguagesToDisplay ) * ITEM_HEIGHT;
+	rc.bottom += ( m_nLanguagesToDisplay ) * ITEM_HEIGHT;
 
 	SCROLLINFO pScroll = {};
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE|SIF_DISABLENOSCROLL;
 	pScroll.nMin	= 0;
 	pScroll.nMax	= static_cast< int >( m_pPaths.GetSize() );
-	pScroll.nPage	= nLanguagesToDisplay + 1;
+	pScroll.nPage	= m_nLanguagesToDisplay + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
 	//if ( m_pSkin )
@@ -463,7 +461,22 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		{
 			m_nHover--;
 			m_bKeyMode = TRUE;
-			if ( m_nHover < 1 ) m_nHover = static_cast< int >( m_pPaths.GetSize() );
+			SCROLLINFO pInfo;
+			pInfo.cbSize	= sizeof(pInfo);
+			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
+			GetScrollInfo( SB_VERT, &pInfo );
+			if ( m_nHover < 1 )
+			{
+				m_nHover = static_cast< int >( m_pPaths.GetSize() );
+				pInfo.nPos = pInfo.nMax;
+				SetScrollInfo( SB_VERT, &pInfo, TRUE );
+			}
+			else if ( m_nHover < pInfo.nPos + 1 )
+			{
+				pInfo.nPos -= 1;
+				SetScrollInfo( SB_VERT, &pInfo, TRUE );
+			}
+
 			Invalidate();
 		}
 		return;
@@ -472,7 +485,22 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		{
 			m_nHover++;
 			m_bKeyMode = TRUE;
-			if ( m_nHover > m_pPaths.GetSize() ) m_nHover = 1;
+			SCROLLINFO pInfo;
+			pInfo.cbSize	= sizeof(pInfo);
+			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
+			GetScrollInfo( SB_VERT, &pInfo );
+			if ( m_nHover > m_pPaths.GetSize() )
+			{
+				m_nHover = 1;
+				pInfo.nPos = 0;
+				SetScrollInfo( SB_VERT, &pInfo, TRUE );
+			}
+			else if ( m_nHover > pInfo.nPos + m_nLanguagesToDisplay )
+			{
+				pInfo.nPos += 1;
+				SetScrollInfo( SB_VERT, &pInfo, TRUE );
+			}
+
 			Invalidate();
 		}
 		return;
