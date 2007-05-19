@@ -282,7 +282,7 @@ BOOL CHandshake::OnRead()
 		else
 		{
 			// Otherwise, tell the other computer we can't chat
-			m_pOutput->Print( "CHAT/0.2 404 Unavailable\r\n\r\n" );
+			m_pOutput->Print( _P("CHAT/0.2 404 Unavailable\r\n\r\n") );
 			OnWrite();
 		}
 	}

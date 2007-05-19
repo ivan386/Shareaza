@@ -311,23 +311,28 @@ void CHostBrowser::SendRequest()
 
 	if ( m_bNewBrowse )
 	{
-		m_pOutput->Print( "GET /gnutella/browse/v1 HTTP/1.1\r\n" );
+		m_pOutput->Print( _P("GET /gnutella/browse/v1 HTTP/1.1\r\n") );
 	}
 	else
 	{
-		m_pOutput->Print( Settings.Downloads.RequestHTTP11 ? _T("GET / HTTP/1.1\r\n") : _T("GET / HTTP/1.0\r\n") );
+		if ( Settings.Downloads.RequestHTTP11 )
+			m_pOutput->Print( _P("GET / HTTP/1.1\r\n") );
+		else
+			m_pOutput->Print( _P("GET / HTTP/1.0\r\n") );
 	}
 
 	CString strHeader = Settings.SmartAgent();
 
 	if ( strHeader.GetLength() )
 	{
-		m_pOutput->Print( _T("User-Agent: ") + strHeader + _T("\r\n") );
+		m_pOutput->Print( _P("User-Agent: ") );
+		m_pOutput->Print( strHeader );
+		m_pOutput->Print( _P("\r\n") );
 	}
 
-	m_pOutput->Print( "Accept: text/html, application/x-gnutella-packets, application/x-gnutella2\r\n" );
-	m_pOutput->Print( "Accept-Encoding: deflate\r\n" );
-	m_pOutput->Print( "Connection: close\r\n" );
+	m_pOutput->Print( _P("Accept: text/html, application/x-gnutella-packets, application/x-gnutella2\r\n"
+						 "Accept-Encoding: deflate\r\n"
+						 "Connection: close\r\n") );
 
 	strHeader.Format( _T("Host: %s:%lu\r\n\r\n"),
 		(LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );

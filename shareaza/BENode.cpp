@@ -300,44 +300,42 @@ void CBENode::Encode(CBuffer* pBuffer) const
 	
 	if ( m_nType == beString )
 	{
-		sprintf( szBuffer, "%u:", (DWORD)m_nValue );
-		pBuffer->Print( szBuffer );
+		pBuffer->Print( szBuffer, sprintf( szBuffer, "%u:", (DWORD)m_nValue ) );
 		pBuffer->Add( m_pValue, (DWORD)m_nValue );
 	}
 	else if ( m_nType == beInt )
 	{
-		sprintf( szBuffer, "i%I64ie", m_nValue );
-		pBuffer->Print( szBuffer );
+		pBuffer->Print( szBuffer, sprintf( szBuffer, "i%I64ie", m_nValue ) );
 	}
 	else if ( m_nType == beList )
 	{
 		CBENode** pNode = (CBENode**)m_pValue;
 		
-		pBuffer->Print( "l" );
+		pBuffer->Print( _P("l") );
 		
 		for ( DWORD nItem = 0 ; nItem < (DWORD)m_nValue ; nItem++, pNode++ )
 		{
 			(*pNode)->Encode( pBuffer );
 		}
 		
-		pBuffer->Print( "e" );
+		pBuffer->Print( _P("e") );
 	}
 	else if ( m_nType == beDict )
 	{
 		CBENode** pNode = (CBENode**)m_pValue;
 		
-		pBuffer->Print( "d" );
+		pBuffer->Print( _P("d") );
 		
 		for ( DWORD nItem = 0 ; nItem < m_nValue ; nItem++, pNode += 2 )
 		{
 			LPCSTR pszKey = (LPCSTR)pNode[1];
-			sprintf( szBuffer, "%i:", strlen( pszKey ) );
-			pBuffer->Print( szBuffer );
-			pBuffer->Print( pszKey );
+			size_t nKeyLength = strlen( pszKey );
+			pBuffer->Print( szBuffer, sprintf( szBuffer, "%i:", nKeyLength ) );
+			pBuffer->Print( pszKey, nKeyLength );
 			(*pNode)->Encode( pBuffer );
 		}
 		
-		pBuffer->Print( "e" );
+		pBuffer->Print( _P("e") );
 	}
 	else
 	{

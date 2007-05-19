@@ -46,7 +46,21 @@ public:
 public:
 
 	// Add and remove data from the memory block in the CBuffer object
-	void  Add(const void* pData, size_t nLength) throw();			// Add data to the end of the block already in this object
+	inline void Add(const void* pData, const size_t nLength) throw()
+	{
+		// If the text is blank, don't do anything
+		if ( pData == NULL ) return;
+
+		if ( ! EnsureBuffer( nLength ) ) return;
+
+		// Copy the given memory into the end of the memory block
+		CopyMemory( m_pBuffer + m_nLength, pData, nLength );
+
+		// Add the length of the new memory to the total length in the buffer
+		m_nLength += static_cast< DWORD >( nLength );
+	}
+
+	// Add and remove data from the memory block in the CBuffer object
 	template
 	<
 		typename Descriptor,
@@ -58,12 +72,14 @@ public:
 			CheckingPolicy, ValidationPolicy >& oHash) throw()
 	{
 		Add( &oHash[ 0 ], oHash.byteCount );
-	};
-	void  Insert(DWORD nOffset, const void* pData, size_t nLength);	// Insert the data in the middle somewhere
+	}
+
+	// Insert the data in the middle somewhere
+	void  Insert(const DWORD nOffset, const void* pData, const size_t nLength) throw();
 	
 	// Takes a number of bytes
 	// Removes this number from the start of the buffer, shifting the memory after it to the start
-	inline void Remove(size_t nLength) throw()
+	inline void Remove(const size_t nLength) throw()
 	{
 		if ( nLength >= m_nLength )
 		{
@@ -76,30 +92,88 @@ public:
 			MoveMemory( m_pBuffer, m_pBuffer + nLength, m_nLength );
 		}
 	}
+
 	// Clears the memory from the buffer
 	inline void Clear() throw()
 	{
 		m_nLength = 0;
 	}
 
-	// Add text to the buffer, does not add a null terminator
-	void  Print(LPCSTR pszText);                           // Add ASCII text to the buffer
-	void  Print(LPCWSTR pszText, UINT nCodePage = CP_ACP); // Convert Unicode text to ASCII and add it to the buffer
+	// Add ASCII text to the buffer
+	inline void Print(LPCSTR pszText, const size_t nLength) throw()
+	{
+		// Add the characters of the text to the buffer, each ASCII character takes up 1 byte
+		Add( (void*)pszText, nLength );
+	}
+	
+	// Add ASCII text to the buffer
+	inline void Print(const CStringA& strText) throw()
+	{
+		Print( (LPCSTR)strText, strText.GetLength() );
+	}
+	
+	// Convert Unicode text to ASCII and add it to the buffer
+	inline void Print(LPCWSTR pszText, const size_t nLength, const UINT nCodePage = CP_ACP) throw()
+	{
+		// primitive overflow protection (relevant for 64bit)
+		if ( nLength > std::numeric_limits< int >::max() - m_nBuffer ) return;
+
+		// If the text is blank or no memory, don't do anything
+		ASSERT( pszText );
+		if ( pszText == NULL ) return;
+
+		// Find out the required buffer size, in bytes, for the translated string
+		int nBytes = WideCharToMultiByte( nCodePage, 0, pszText,
+			static_cast< int >( nLength ), NULL, 0, NULL, NULL );
+
+		// Make sure the buffer is big enough for this, making it larger if necessary
+		if ( ! EnsureBuffer( nBytes ) ) return;
+
+		// Convert the Unicode string into ASCII characters in the buffer
+		WideCharToMultiByte( nCodePage, 0, pszText, static_cast< int >( nLength ),
+			(LPSTR)( m_pBuffer + m_nLength ), nBytes, NULL, NULL );
+		m_nLength += nBytes;
+	}
+
+	// Convert Unicode text to ASCII and add it to the buffer
+	inline void Print(const CStringW& strText, const UINT nCodePage = CP_ACP) throw()
+	{
+		Print( (LPCWSTR)strText, strText.GetLength(), nCodePage);
+	}
 
 	// Copy all or part of the data in another CBuffer object into this one
-	DWORD AddBuffer(CBuffer* pBuffer, size_t nLength);
-	DWORD AddBuffer(CBuffer* pBuffer) { return AddBuffer( pBuffer, pBuffer->m_nLength ); }
-	void  AddReversed(const void* pData, size_t nLength);           // Add data to this buffer, but with the bytes in reverse order
-	void  Prefix(LPCSTR pszText);                                   // Add ASCII text to the start of this buffer, shifting everything else forward
-	void  EnsureBuffer(size_t nLength);                             // Tell the buffer to prepare to recieve this number of additional bytes
+	DWORD AddBuffer(CBuffer* pBuffer, const size_t nLength) throw();
+
+	// Copy all or part of the data in another CBuffer object into this one
+	inline DWORD AddBuffer(CBuffer* pBuffer) throw()
+	{
+		return AddBuffer( pBuffer, pBuffer->m_nLength );
+	}
+
+	// Add data to this buffer, but with the bytes in reverse order
+	void  AddReversed(const void* pData, const size_t nLength) throw();
+
+	// Add ASCII text to the start of this buffer, shifting everything else forward
+	inline void Prefix(LPCSTR pszText, const size_t nLength) throw()
+	{
+		// Insert the bytes of the text at
+		Insert( 0, (void*)pszText, nLength );
+	}
+
+	// Tell the buffer to prepare to recieve this number of additional bytes
+	bool EnsureBuffer(const size_t nLength) throw();
 
 public:
 
-	DWORD	ReadDWORD() const { return *reinterpret_cast< DWORD* >( m_pBuffer ); }
+	inline DWORD ReadDWORD() const throw()
+	{
+		return ( m_nLength >= 4 ) ? *reinterpret_cast< DWORD* >( m_pBuffer ) : 0;
+	}
+
 	// Read the data in the buffer as text
-	CString ReadString(size_t nBytes, UINT nCodePage = CP_ACP);                      // Reads nBytes of ASCII characters as a string
+	CString ReadString(const size_t nBytes, const UINT nCodePage = CP_ACP);          // Reads nBytes of ASCII characters as a string
 	BOOL    ReadLine(CString& strLine, BOOL bPeek = FALSE, UINT nCodePage = CP_ACP); // Reads until "\r\n"
-	BOOL    StartsWith(LPCSTR pszString, BOOL bRemove = FALSE);                      // Returns true if the buffer starts with this text
+	BOOL    StartsWith(LPCSTR pszString, size_t nLength, BOOL bRemove = FALSE);      // Returns true if the buffer starts with this text
 
 	// Use the buffer with a socket
 	DWORD Receive(SOCKET hSocket); // Move incoming data from the socket to this buffer
@@ -111,7 +185,7 @@ public:
 	BOOL Ungzip();                         // Delete the gzip header and then remove the compression
 
 	// Read and write a DIME message in the buffer
-	void WriteDIME(DWORD nFlags, LPCSTR pszID, LPCSTR pszType, LPCVOID pBody, size_t nBody);
+	void WriteDIME(DWORD nFlags, LPCSTR pszID, size_t nIDLength, LPCSTR pszType, size_t nTypeLength, LPCVOID pBody, size_t nBody);
 	BOOL ReadDIME(DWORD* pnFlags, CString* psID, CString* psType, DWORD* pnBody);
 
 public:

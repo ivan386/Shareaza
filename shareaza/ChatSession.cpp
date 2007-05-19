@@ -267,13 +267,13 @@ BOOL CChatSession::OnConnected()
 	{
 		CConnection::OnConnected();
 
-		m_pOutput->Print( "CHAT CONNECT/0.2\r\n" );
-		m_pOutput->Print( "Accept: text/plain,application/x-gnutella2\r\n" );
-		m_pOutput->Print( "User-Agent: " );
+		m_pOutput->Print( _P("CHAT CONNECT/0.2\r\n"
+							 "Accept: text/plain,application/x-gnutella2\r\n"
+							 "User-Agent: ") );
 		m_pOutput->Print( Settings.SmartAgent() );
-		m_pOutput->Print( "\r\n" );
+		m_pOutput->Print( _P("\r\n") );
 		if ( m_bInitiated ) SendMyAddress();
-		m_pOutput->Print( "\r\n" );
+		m_pOutput->Print( _P("\r\n") );
 		
 		m_nState		= cssRequest2;
 		m_tConnected	= GetTickCount();
@@ -457,24 +457,23 @@ BOOL CChatSession::OnHeadersComplete()
 {
 	if ( m_nState != cssHeaders3 )
 	{
-		m_pOutput->Print( "CHAT/0.2 200 OK\r\n" );
+		m_pOutput->Print( _P("CHAT/0.2 200 OK\r\n") );
 		
 		if ( m_nProtocol == PROTOCOL_G2 )
 		{
-			m_pOutput->Print( "Accept: application/x-gnutella2\r\n" );
-			m_pOutput->Print( "Content-Type: application/x-gnutella2\r\n" );
+			m_pOutput->Print( _P("Accept: application/x-gnutella2\r\n"
+								 "Content-Type: application/x-gnutella2\r\n") );
 		}
 		else if ( MyProfile.IsValid() )
 		{
-			m_pOutput->Print( "X-Nickname: " );
+			m_pOutput->Print( _P("X-Nickname: ") );
 			m_pOutput->Print( MyProfile.GetNick().Left( 255 ) );
-			m_pOutput->Print( "\r\n" );
+			m_pOutput->Print( _P("\r\n") );
 		}
 		
-		m_pOutput->Print( "User-Agent: " );
+		m_pOutput->Print( _P("User-Agent: ") );
 		m_pOutput->Print( Settings.SmartAgent() );
-		m_pOutput->Print( "\r\n" );
-		m_pOutput->Print( "\r\n" );
+		m_pOutput->Print( _P("\r\n\r\n") );
 		
 		OnWrite();
 	}
@@ -735,12 +734,12 @@ BOOL CChatSession::OnChatMessage(CEDPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CChatSession text interface
 
-void CChatSession::Print(LPCTSTR pszString)
+void CChatSession::Print(LPCTSTR pszString, size_t nLength)
 {
 	ASSERT( m_nProtocol != PROTOCOL_G2  );
 	ASSERT( m_nState >= cssHandshake );
 	
-	m_pOutput->Print( pszString );
+	m_pOutput->Print( pszString, nLength );
 	OnWrite();
 }
 
@@ -1177,7 +1176,7 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 		str += strMessage;
 		str += _T("\r\n");
 		
-		Print( str );
+		Print( str, str.GetLength() );
 	}
 
 	return TRUE;

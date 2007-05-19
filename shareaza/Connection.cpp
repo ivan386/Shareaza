@@ -986,7 +986,7 @@ CString CConnection::URLEncode(LPCTSTR pszInputT)
 	LPCSTR pszInput = pszUTF8;
 
 	// Get the character buffer inside the output string, specifying how much larger to make it
-	LPTSTR pszOutput = strOutput.GetBuffer( static_cast< int >( strlen( pszInput ) * 3 + 1 ) ); // Times 3 in case every character gets encoded
+	LPTSTR pszOutput = strOutput.GetBuffer( static_cast< int >( ( nUTF8 - 1 ) * 3 + 1 ) ); // Times 3 in case every character gets encoded
 
 	// Loop for each character of input text
 	for ( ; *pszInput ; pszInput++ )

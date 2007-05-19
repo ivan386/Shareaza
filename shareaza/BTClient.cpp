@@ -318,7 +318,7 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 	if ( bPart1 )
 	{
 		DWORD dwZero = 0;
-		m_pOutput->Print( BT_PROTOCOL_HEADER );
+		m_pOutput->Print( _P(BT_PROTOCOL_HEADER) );
 		m_pOutput->Add( &dwZero, 4 );
 		m_pOutput->Add( &dwZero, 4 );
 		m_pOutput->Add( m_pDownload->m_oBTH );

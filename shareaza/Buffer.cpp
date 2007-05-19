@@ -66,216 +66,100 @@ CBuffer::~CBuffer()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// CBuffer add
-
-// Takes a pointer to memory, and how many bytes are stored there
-// Adds that memory to this buffer
-void CBuffer::Add(const void * pData, size_t nLength_) throw()
-{
-	// primitive overflow protection (relevant for 64bit)
-	if ( nLength_ > std::numeric_limits< int >::max() - m_nBuffer ) return;
-	DWORD nLength = static_cast< DWORD >( nLength_ );
-	// If the buffer isn't big enough to hold the new memory
-	if ( m_nLength + nLength > m_nBuffer )
-	{
-		// Set the buffer size to the size needed
-		m_nBuffer = m_nLength + nLength;
-
-		// Make the size larger to the nearest multiple of 1024 bytes, or 1 KB
-		m_nBuffer = ( m_nBuffer + BLOCK_SIZE - 1 ) & BLOCK_MASK; // 1-1024 becomes 1024, 1025 becomes 2048
-
-		// Allocate more space at the end of the memory block
-		m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // This may move the block, returning a different pointer
-
-	} // If the buffer is larger than 512 KB, but what it needs to hold is less than 256 KB
-	else if ( m_nBuffer > 0x80000 && m_nLength + nLength < 0x40000 )
-	{
-		// Reallocate it to make it half as big
-		m_nBuffer = 0x40000;
-		m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // This may move the block, returning a different pointer
-	}
-
-	if ( m_pBuffer )
-	{
-		// Copy the given memory into the end of the memory block
-		CopyMemory( m_pBuffer + m_nLength, pData, nLength );
-		m_nLength += nLength; // Add the length of the new memory to the total length in the buffer
-	}
-	else
-	{
-		m_nLength = 0;
-		m_nBuffer = 0;
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::Add()") );
-	}
-}
-
-///////////////////////////////////////////////////////////////////////////////
 // CBuffer insert
 
 // Takes offset, a position in the memory block to insert some new memory at
 // Inserts the memory there, shifting anything after it further to the right
-void CBuffer::Insert(DWORD nOffset, const void * pData, size_t nLength_)
+void CBuffer::Insert(const DWORD nOffset, const void * pData, const size_t nLength) throw()
 {
-	// primitive overflow protection (relevant for 64bit)
-	if ( nLength_ > std::numeric_limits< int >::max() - m_nBuffer ) return;
-	DWORD nLength = static_cast< DWORD >( nLength_ );
-	// If the buffer isn't big enough to hold the new memory
-	if ( m_nLength + nLength > m_nBuffer )
-	{
-		// Set the buffer size to the size needed
-		m_nBuffer = m_nLength + nLength;
+	ASSERT( pData );
+	if ( pData == NULL ) return;
 
-		// Make the size larger to the nearest multiple of 1024 bytes, or 1 KB
-		m_nBuffer = ( m_nBuffer + BLOCK_SIZE - 1 ) & BLOCK_MASK; // 1-1024 becomes 1024, 1025 becomes 2048
+	if ( ! EnsureBuffer( nLength ) ) return;
 
-		// Allocate more space at the end of the memory block
-		m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // This may move the block, returning a different pointer
+	// Cut the memory block sitting in the buffer in two, slicing it at offset and shifting that part forward nLength
+	MoveMemory(
+		m_pBuffer + nOffset + nLength, // Destination is the offset plus the length of the memory block to insert
+		m_pBuffer + nOffset,           // Source is at the offset
+		m_nLength - nOffset );         // Length is the size of the memory block beyond the offset
 
-	} // If the buffer is larger than 512 KB, but what it needs to hold is less than 256 KB
-	else if ( m_nBuffer > 0x80000 && m_nLength + nLength < 0x40000 )
-	{
-		// Reallocate it to make it half as big
-		m_nBuffer = 0x40000;
-		m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // This may move the block, returning a different pointer
-	}
+	// Now that there is nLength of free space in the buffer at nOffset, copy the given memory to fill it
+	CopyMemory(
+		m_pBuffer + nOffset, // Destination is at the offset in the buffer
+		pData,               // Source is the given pointer to the memory to insert
+		nLength );           // Length is the length of that memory
 
-	if ( m_pBuffer )
-	{
-		// Cut the memory block sitting in the buffer in two, slicing it at offset and shifting that part forward nLength
-		MoveMemory(
-			m_pBuffer + nOffset + nLength, // Destination is the offset plus the length of the memory block to insert
-			m_pBuffer + nOffset,           // Source is at the offset
-			m_nLength - nOffset );         // Length is the size of the memory block beyond the offset
-
-		// Now that there is nLength of free space in the buffer at nOffset, copy the given memory to fill it
-		CopyMemory(
-			m_pBuffer + nOffset, // Destination is at the offset in the buffer
-			pData,               // Source is the given pointer to the memory to insert
-			nLength );           // Length is the length of that memory
-
-		// Add the length of the new memory to the total length in the buffer
-		m_nLength += nLength;
-	}
-	else
-	{
-		m_nLength = 0;
-		m_nBuffer = 0;
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::Insert()") );
-	}
+	// Add the length of the new memory to the total length in the buffer
+	m_nLength += static_cast< DWORD >( nLength );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer add utilities
 
-// Takes ASCII text
-// Prints it into the buffer, does not write a null terminator
-void CBuffer::Print(LPCSTR pszText)
-{
-	// If the text is blank, don't do anything
-	if ( pszText == NULL ) return;
-
-	// Add the characters of the text to the buffer, each ASCII character takes up 1 byte
-	Add( (void*)pszText, strlen( pszText ) ); // Length is 5 for "hello", this adds the characters without the null terminator
-}
-
-// Takes Unicode text, along with the code page it uses
-// Converts it to ASCII and prints each ASCII character into the buffer, not printing a null terminator
-void CBuffer::Print(LPCWSTR pszText, UINT nCodePage)
-{
-	// If the text is blank or no memory, don't do anything
-	if ( pszText == NULL ) return;
-
-	// Find the number of wide characters in the Unicode text
-	size_t nLength = wcslen(pszText); // Length of "hello" is 5, does not include null terminator
-
-	// Find out the required buffer size, in bytes, for the translated string
-	int nBytes = WideCharToMultiByte( // Bytes required for "hello" is 5, does not include null terminator
-		nCodePage, // Specify the code page used to perform the conversion
-		0,         // No special flags to handle unmapped characters
-		pszText,   // Wide character string to convert
-		static_cast< int >( nLength ),   // The number of wide characters in that string
-		NULL,      // No output buffer given, we just want to know how long it needs to be
-		0,
-		NULL,      // No replacement character given
-		NULL );    // We don't want to know if a character didn't make it through the translation
-
-	// Make sure the buffer is big enough for this, making it larger if necessary
-	EnsureBuffer( (DWORD)nBytes );
-	if ( m_nBuffer < (DWORD)nBytes ) return;
-
-	// Convert the Unicode string into ASCII characters in the buffer
-	WideCharToMultiByte( // Writes 5 bytes "hello", does not write a null terminator after that
-		nCodePage, // Specify the code page used to perform the conversion
-		0,         // No special flags to handle unmapped characters
-		pszText,   // Wide character string to convert
-		static_cast< int >( nLength ),   // The number of wide characters in that string
-		(LPSTR)( m_pBuffer + m_nLength ), // Put the output ASCII characters at the end of the buffer
-		nBytes,                           // There is at least this much space there
-		NULL,      // No replacement character given
-		NULL );    // We don't want to know if a character didn't make it through the translation
-
-	// Add the newly written bytes to the buffer's record of how many bytes it is holding
-	m_nLength += nBytes;
-}
-
 // Takes another CBuffer object, and a number of bytes there to copy, or the default -1 to copy the whole thing
 // Moves the memory from pBuffer into this one
 // Returns the number of bytes moved
-DWORD CBuffer::AddBuffer(CBuffer* pBuffer, size_t nLength_)
+DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength) throw()
 {
+	ASSERT( pBuffer );
+	if ( pBuffer == NULL ) return 0;
+
 	// primitive overflow protection (relevant for 64bit)
-	if ( nLength_ > std::numeric_limits< int >::max() - m_nBuffer ) return 0;
-	DWORD nLength = static_cast< DWORD >( nLength_ );
+	if ( nLength > std::numeric_limits< int >::max() - m_nBuffer ) return 0;
+
 	// If the call specified a length, use it, otherwise use the length of pBuffer
-	nLength = min( pBuffer->m_nLength, nLength );
-
-	// Move nLength bytes from the start of pBuffer into this one
-	Add( pBuffer->m_pBuffer, nLength ); // Copy the memory across
-	pBuffer->Remove( nLength );         // Remove the memory from the source buffer
-
-	// Report how many bytes we moved
-	return nLength;
+	if( pBuffer->m_nLength < nLength )
+	{
+		Add( pBuffer->m_pBuffer, pBuffer->m_nLength );	// Copy the memory across
+		pBuffer->Clear();								// Remove the memory from the source buffer
+		return pBuffer->m_nLength;						// Report how many bytes we moved
+	}
+	else
+	{
+		Add( pBuffer->m_pBuffer, nLength );				// Copy the memory across
+		pBuffer->Remove( nLength );						// Remove the memory from the source buffer
+		return static_cast< DWORD >( nLength );			// Report how many bytes we moved
+	}
 }
 
 // Takes a pointer to some memory, and the number of bytes we can read there
 // Adds them to this buffer, except in reverse order
-void CBuffer::AddReversed(const void *pData, size_t nLength_)
+void CBuffer::AddReversed(const void *pData, const size_t nLength) throw()
 {
-	// primitive overflow protection (relevant for 64bit)
-	if ( nLength_ > std::numeric_limits< int >::max() - m_nBuffer ) return;
-	DWORD nLength = static_cast< DWORD >( nLength_ );
+	ASSERT( pData );
+	if ( pData == NULL ) return;
+
 	// Make sure this buffer has enough memory allocated to hold another nLength bytes
-	EnsureBuffer( nLength );
+	if ( ! EnsureBuffer( nLength ) ) return;
 
 	// Copy nLength bytes from pData to the end of the buffer, except in reverse order
 	ReverseBuffer( pData, m_pBuffer + m_nLength, nLength );
 
 	// Record the new length
-	m_nLength += nLength;
-}
-
-// Takes ASCII text
-// Inserts it at the start of this buffer, shifting what is already here forward, does not write a null terminator
-void CBuffer::Prefix(LPCSTR pszText)
-{
-	// If the text is blank, do nothing
-	if ( NULL == pszText ) return;
-
-	// Insert the bytes of the text at
-	Insert(                  // Insert memory in the middle of the filled block of a buffer, splitting the block to the right
-		0,                   // Insert the bytes at position 0, the start
-		(void*)pszText,      // Insert the bytes of the ASCII text
-		strlen( pszText ) ); // Insert each character byte, like 5 for "hello", does not insert a null terminator
+	m_nLength += static_cast< DWORD >( nLength );
 }
 
 // Takes a number of new bytes we're about to add to this buffer
 // Makes sure the buffer will be big enough to hold them, allocating more memory if necessary
-void CBuffer::EnsureBuffer(size_t nLength)
+bool CBuffer::EnsureBuffer(const size_t nLength) throw()
 {
-	// If the size of the buffer minus the size filled is bigger than or big enough for the given length, do nothing
-	if ( m_nBuffer - m_nLength >= nLength ) return; // There is enough room to write nLength bytes without allocating anything
+	// primitive overflow protection (relevant for 64bit)
+	if ( nLength > std::numeric_limits< int >::max() - m_nBuffer ) return false;
 
-	if ( ULONG_MAX - m_nLength < nLength ) return;
+	// If the size of the buffer minus the size filled is bigger than or big enough for the given length, do nothing
+	if ( m_nBuffer - m_nLength >= nLength )
+	{
+		// There is enough room to write nLength bytes without allocating anything
+
+		// If the buffer is larger than 512 KB, but what it needs to hold is less than 256 KB
+		if ( m_nBuffer > 0x80000 && m_nLength + nLength < 0x40000 )
+		{
+			// Reallocate it to make it half as big
+			m_nBuffer = 0x40000;
+			m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // This may move the block, returning a different pointer
+		}
+		return true;
+	}
 
 	// Make m_nBuffer the size of what's written plus what's requested
 	m_nBuffer = m_nLength + static_cast< DWORD >( nLength );
@@ -285,13 +169,15 @@ void CBuffer::EnsureBuffer(size_t nLength)
 
 	// Reallocate the memory block to this size
 	m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // May return a different pointer
-	
-	if ( !m_pBuffer )
-	{
-		m_nLength = 0;
-		m_nBuffer = 0;
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::EnsureBuffer()") );
-	}
+
+	if ( m_pBuffer )
+		return true;
+
+	// Out of memory
+	m_nLength = 0;
+	m_nBuffer = 0;
+	theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::EnsureBuffer()") );
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -300,7 +186,7 @@ void CBuffer::EnsureBuffer(size_t nLength)
 // Takes a maximum number of bytes to examine at the start of the buffer, and a code page which is ASCII by default
 // Reads the given number of bytes as ASCII characters, copying them into a string
 // Returns the text in a string, which will contain Unicode or ASCII characters depending on the compile
-CString CBuffer::ReadString(size_t nBytes, UINT nCodePage)
+CString CBuffer::ReadString(const size_t nBytes, const UINT nCodePage)
 {
 	// Make a new blank string to hold the text we find
 	CString str;
@@ -383,20 +269,20 @@ BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek, UINT nCodePage)
 // Takes a pointer to ASCII text, and the option to remove these characters from the start of the buffer if they are found there
 // Looks at the bytes at the start of the buffer, and determines if they are the same as the given ASCII text
 // Returns true if the text matches, false if it doesn't
-BOOL CBuffer::StartsWith(LPCSTR pszString, BOOL bRemove)
+BOOL CBuffer::StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRemove)
 {
 	// If the buffer isn't long enough to contain the given string, report the buffer doesn't start with it
-	if ( m_nLength < (int)strlen( pszString ) ) return FALSE;
+	if ( m_nLength < nLength ) return FALSE;
 
 	// If the first characters in the buffer don't match those in the ASCII string, return false
 	if ( strncmp(               // Returns 0 if all the characters are the same
 		(LPCSTR)m_pBuffer,      // Look at the start of the buffer as ASCII text
 		(LPCSTR)pszString,      // The given text
-		strlen( pszString ) ) ) // Don't look too far into the buffer, we know it's long enough to hold the string
+		nLength ) )             // Don't look too far into the buffer, we know it's long enough to hold the string
 		return FALSE;           // If one string would sort above another, the result is positive or negative
 
 	// If we got the option to remove the string if it matched, do it
-	if ( bRemove ) Remove( strlen( pszString ) );
+	if ( bRemove ) Remove( nLength );
 
 	// Report that the buffer does start with the given ASCII text
 	return TRUE;
@@ -591,8 +477,7 @@ BOOL CBuffer::Ungzip()
 	DWORD nLength = m_nLength * 6;
 	for (;;)
 	{
-		pOutput.EnsureBuffer( nLength );
-		if ( ! pOutput.m_nBuffer )
+		if ( ! pOutput.EnsureBuffer( nLength ) )
 		{
 			// Out of memory
 			return FALSE;
@@ -701,20 +586,23 @@ void CBuffer::ReverseBuffer(const void* pInput, void* pOutput, size_t nLength)
 void CBuffer::WriteDIME(
 	DWORD nFlags,   // 0, 1, or 2
 	LPCSTR pszID,   // Blank, or a GUID in hexadecimal encoding
+	size_t nIDLength,
 	LPCSTR pszType, // "text/xml" or a URI to an XML specification
+	size_t nTypeLength,
 	LPCVOID pBody,  // The XML fragment we're wrapping
 	size_t nBody)    // How long it is
 {
 	// Format lengths into the bytes of the DIME header
-	EnsureBuffer( 12 );                                               // Make sure this buffer has at least 12 bytes of space
+	if ( ! EnsureBuffer( 12 ) ) return;
+
 	BYTE* pOut = m_pBuffer + m_nLength;                               // Point pOut at the end of the memory block in this buffer
 	*pOut++ = 0x08 | ( nFlags & 1 ? 4 : 0 ) | ( nFlags & 2 ? 2 : 0 ); // *pOut++ = 0x08 sets the byte at pOut and then moves the pointer forward
 	*pOut++ = strchr( pszType, ':' ) ? 0x20 : 0x10;
 	*pOut++ = 0x00; *pOut++ = 0x00;
-	*pOut++ = BYTE( ( strlen( pszID ) & 0xFF00 ) >> 8 );
-	*pOut++ = BYTE( strlen( pszID ) & 0xFF );
-	*pOut++ = BYTE( ( strlen( pszType ) & 0xFF00 ) >> 8 );
-	*pOut++ = BYTE( strlen( pszType ) & 0xFF );
+	*pOut++ = BYTE( ( nIDLength & 0xFF00 ) >> 8 );
+	*pOut++ = BYTE( nIDLength & 0xFF );
+	*pOut++ = BYTE( ( nTypeLength & 0xFF00 ) >> 8 );
+	*pOut++ = BYTE( nTypeLength & 0xFF );
 	*pOut++ = (BYTE)( ( nBody & 0xFF000000 ) >> 24 );
 	*pOut++ = (BYTE)( ( nBody & 0x00FF0000 ) >> 16 );
 	*pOut++ = (BYTE)( ( nBody & 0x0000FF00 ) >> 8 );
@@ -722,12 +610,12 @@ void CBuffer::WriteDIME(
 	m_nLength += 12;                                                  // Record that we wrote 12 bytes, but we really only wrote 11 (do)
 
 	// Print pszID, which is blank or a GUID in hexadecimal encoding, and bytes of 0 until the total length we added is a multiple of 4
-	Print( pszID );
-	for ( size_t nPad = strlen( pszID ) ; nPad & 3 ; nPad++ ) Add( "", 1 ); // If we added "a", add "000" to get to the next group of 4
+	Print( pszID, nIDLength );
+	for ( size_t nPad = nIDLength ; nPad & 3 ; nPad++ ) Add( "", 1 ); // If we added "a", add "000" to get to the next group of 4
 
 	// Print pszType, which is "text/xml" or a URI to an XML specification, and bytes of 0 until the total length we added is a multiple of 4
-	Print( pszType );
-	for ( size_t nPad = strlen( pszType ) ; nPad & 3 ; nPad++ ) Add( "", 1 ); // If we added "abcdef", add "00" to get to the next group of 4
+	Print( pszType, nTypeLength );
+	for ( size_t nPad = nTypeLength ; nPad & 3 ; nPad++ ) Add( "", 1 ); // If we added "abcdef", add "00" to get to the next group of 4
 
 	// If there is body text
 	if ( pBody != NULL )

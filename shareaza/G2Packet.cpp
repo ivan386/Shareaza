@@ -436,7 +436,9 @@ void CG2Packet::ToBuffer(CBuffer* pBuffer) const
 
 	if ( m_bBigEndian )
 	{
-		pBuffer->EnsureBuffer( nLenLen );
+		if ( ! pBuffer->EnsureBuffer( nLenLen ) )
+			return;
+
 		BYTE* pOut = pBuffer->m_pBuffer + pBuffer->m_nLength;
 		pBuffer->m_nLength += nLenLen;
 

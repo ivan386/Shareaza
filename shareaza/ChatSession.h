@@ -71,7 +71,7 @@ public:
 	BOOL			OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
 	virtual void	Close();
 public:
-	void		Print(LPCTSTR pszString);
+	void		Print(LPCTSTR pszString, size_t nLength);
 	void		Send(CG2Packet* pPacket, BOOL bRelease = TRUE);
 	BOOL		SendPrivateMessage(BOOL bAction, LPCTSTR pszText);
 	BOOL		SendAwayMessage(LPCTSTR pszText);

@@ -382,11 +382,13 @@ BOOL CBTInfo::LoadTorrentFile(LPCTSTR pszFile)
 		if ( nLength < 20 * 1024 * 1024 && nLength != 0 )
 		{
 			m_pSource.Clear();
-			m_pSource.EnsureBuffer( nLength );
-			pFile.Read( m_pSource.m_pBuffer, nLength );
-			m_pSource.m_nLength = nLength;
-			
-			return LoadTorrentBuffer( &m_pSource );
+			if ( m_pSource.EnsureBuffer( nLength ) )
+			{
+				pFile.Read( m_pSource.m_pBuffer, nLength );
+				m_pSource.m_nLength = nLength;
+				
+				return LoadTorrentBuffer( &m_pSource );
+			}
 		}
 	}
 	else
