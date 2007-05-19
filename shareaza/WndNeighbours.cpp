@@ -42,6 +42,8 @@
 #include "DlgURLCopy.h"
 #include "DlgSettingsManager.h"
 #include "CoolInterface.h"
+#include "WindowManager.h"
+#include "WndSystem.h"
 
 #include "Flags.h"
 
@@ -702,4 +704,15 @@ void CNeighboursWnd::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
 {
 	CPanelWnd::OnActivate(nState, pWndOther, bMinimized);
 	Update();
+}
+
+BOOL CNeighboursWnd::PreTranslateMessage(MSG* pMsg)
+{
+	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
+	{
+		GetManager()->Open( RUNTIME_CLASS(CSystemWnd) );
+		return TRUE;
+	}
+
+	return CPanelWnd::PreTranslateMessage(pMsg);
 }

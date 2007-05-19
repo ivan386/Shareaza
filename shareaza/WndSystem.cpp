@@ -26,6 +26,8 @@
 #include "Neighbours.h"
 #include "Skin.h"
 #include "CrawlSession.h"
+#include "WindowManager.h"
+#include "WndNeighbours.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -167,6 +169,11 @@ BOOL CSystemWnd::PreTranslateMessage(MSG* pMsg)
 		else if ( pMsg->wParam == VK_NEXT )
 		{
 			m_wndText.PostMessage( WM_VSCROLL, MAKELONG( SB_PAGEDOWN, 0 ), NULL );
+			return TRUE;
+		}
+		else if ( pMsg->wParam == VK_TAB )
+		{
+			GetManager()->Open( RUNTIME_CLASS(CNeighboursWnd) );
 			return TRUE;
 		}
 	}
