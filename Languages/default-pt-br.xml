@@ -2247,8 +2247,8 @@
 <tip id="ID_HITMONITOR_CLEAR" message="Limpar o buffer do monitor de acerto."/>
 <tip id="ID_HITMONITOR_PAUSE" message="Pausar a monitoração de acerto."/>
 <tip id="ID_HITMONITOR_SEARCH" message="Procurar na rede o termo selecionado."/>
-<tip id="ID_HOSTCACHE_CONNECT" message="Conectar ao(s) Host(s) Selecionado(s)."/>
-<tip id="ID_HOSTCACHE_DISCONNECT" message="Desconectado do(s) Vizinho(s) selecionado(s)."/>
+<tip id="ID_HOSTCACHE_CONNECT" message="Conectar ao(s) host(s) selecionado(s)."/>
+<tip id="ID_HOSTCACHE_DISCONNECT" message="Desconectado do(s) vizinho(s) selecionado(s)."/>
 <tip id="ID_HOSTCACHE_ED2K_CACHE" message="Mostrar servidores do eDonkey2000."/>
 <tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Baixar um arquivo &quot;server.met&quot; para o eDonkey2000..."/>
 <tip id="ID_HOSTCACHE_G1_CACHE" message="Mostrar hosts armazenados da Gnutella 1."/>
@@ -2264,31 +2264,31 @@
 <tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Baixar metadata para o(s) arquivo(s) selecionado(s) do Bitzi(TM)..."/>
 <tip id="ID_LIBRARY_BITZI_WEB" message="Ver na rede o ticket Bitzi(TM) do arquivo selecionado."/>
 <tip id="ID_LIBRARY_COLUMNS" message="Selecionar as colunas de metadata a serem exibidas..."/>
-<tip id="ID_LIBRARY_COPY" message="Copiar os arquivos selecionados para outra pasta da biblioteca..."/>
-<tip id="ID_LIBRARY_CREATETORRENT" message="Cria um arquivo .torrent para este arquivo para fazer upload para um site na rede."/>
+<tip id="ID_LIBRARY_COPY" message="Copiar os arquivos selecionados para outra pasta na biblioteca..."/>
+<tip id="ID_LIBRARY_CREATETORRENT" message="Criar um .torrent para este arquivo para fazer upload para um site."/>
 <tip id="ID_LIBRARY_DELETE" message="Apagar os arquivos selecionados permanentemente."/>
-<tip id="ID_LIBRARY_ENQUEUE" message="Adicionar o(s) arquivo(s) selecionado(s) a sua lista de execuções."/>
+<tip id="ID_LIBRARY_ENQUEUE" message="Adicionar o(s) arquivo(s) selecionado(s) a sua lista de execuções de mídia."/>
 <tip id="ID_LIBRARY_EXPLORE" message="Abrir a(s) pasta(s) selecionada(s)."/>
-<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar a pasta do álbum selecionado para os arquivos de coleções..."/>
+<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar a pasta do álbum selecionado para os arquivos de coleção..."/>
 <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Baixar todos os arquivos na coleção selecionada."/>
-<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Adicionar cada arquivo na(s) pasta(s) do álbum(s) selecionada(s) para a sua lista de execuções."/>
+<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Adicionar cada arquivo na pasta do álbum selecionado para a sua lista de execuções."/>
 <tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Ver e editar as propriedades de todos os arquivos na(s) pasta(s) selecionada(s)..."/>
-<tip id="ID_LIBRARY_FOLDER_METADATA" message="Aplicar metadata comum da pasta do álbum para todos os seus arquivos."/>
+<tip id="ID_LIBRARY_FOLDER_METADATA" message="Aplicar o metadata comum da pasta do álbum para todos os seus arquivos."/>
 <tip id="ID_LIBRARY_FOLDER_NEW" message="Criar uma nova pasta de álbum aqui..."/>
 <tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Ver e editar as propriedades da pasta do álbum selecionado..."/>
 <tip id="ID_LIBRARY_FOLDERS" message="Gerenciar as pastas físicas na sua biblioteca..."/>
-<tip id="ID_LIBRARY_HASH_PRIORITY" message="Acelerar a velocidade de scaneamento de arquivos e hash."/>
-<tip id="ID_LIBRARY_LAUNCH" message="Abrir ou tocar o(s) arquivo(s) selecionado(s)."/>
-<tip id="ID_LIBRARY_MOVE" message="Mover os arquivos selecionados para outra pasta da biblioteca..."/>
-<tip id="ID_LIBRARY_PANEL" message="Mostrar ou esconder o painel de detalhes da biblioteca."/>
-<tip id="ID_LIBRARY_PARENT" message="Mover para a pasta acima."/>
+<tip id="ID_LIBRARY_HASH_PRIORITY" message="Acelera a velocidade do escaneamento e hashing do arquivo."/>
+<tip id="ID_LIBRARY_LAUNCH" message="Abre ou toca o(s) arquivo(s) selecionado(s)."/>
+<tip id="ID_LIBRARY_MOVE" message="Move os arquivos selecionados para outra pasta na biblioteca..."/>
+<tip id="ID_LIBRARY_PANEL" message="Mostra ou esconde o painel de detalhes da biblioteca."/>
+<tip id="ID_LIBRARY_PARENT" message="Move para cima a pasta principal."/>
 <tip id="ID_LIBRARY_PROPERTIES" message="Ver e editar as propriedades dos arquivos selecionados..."/>
-<tip id="ID_LIBRARY_REBUILD" message="Reconstruir metadata e os hashes para as pastas selecionadas ou arquivos."/>
+<tip id="ID_LIBRARY_REBUILD" message="Reconstruir metadata e hashes para os arquivos ou pastas selecionados."/>
 <tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstruir metadata usando outro idioma."/>
-<tip id="ID_LIBRARY_REFRESH" message="Atualizar a visão da biblioteca.."/>
+<tip id="ID_LIBRARY_REFRESH" message="Atualizar a visualização da biblioteca."/>
 <tip id="ID_LIBRARY_REMOVE" message="Remover as pastas compartilhadas selecionadas."/>
-<tip id="ID_LIBRARY_RENAME" message="Renomear o arquivo selecionado."/>
-<tip id="ID_LIBRARY_SCAN" message="Scanear as pastas ou arquivos selecionados por mudanças."/>
+<tip id="ID_LIBRARY_RENAME" message="Renomear o arquivo selecionado no lugar."/>
+<tip id="ID_LIBRARY_SCAN" message="Escanear as pastas selecionadas ou arquivos por mudanças."/>
 <tip id="ID_LIBRARY_SEARCH" message="Procurar a sua biblioteca de arquivos..."/>
 <tip id="ID_LIBRARY_SEARCH_QUICK" message="Procurar a sua biblioteca de arquivos..."/>
 <tip id="ID_LIBRARY_SEED_TORRENT" message="Fazer seed do Torrent selecionado no BitTorrent."/>
@@ -2434,31 +2434,31 @@
 <tip id="ID_UPLOADS_LAUNCH" message="Iniciar o(s) arquivo(s) compartilhado(s) selecionado(s)."/>
 <tip id="ID_UPLOADS_SETTINGS" message="Configurar as opções de upload..."/>
 <tip id="ID_UPLOADS_START" message="Iniciar o(s) upload(s) selecionado(s) da fila de espera."/>
-<tip id="ID_VIEW_BASIC" message="Usar Shareaza no Modo Normal."/>
-<tip id="ID_VIEW_DISCOVERY" message="Mostrar ou esconder a janela dos SERVIÇOS DE DESCOBRIMENTO."/>
-<tip id="ID_VIEW_DOWNLOADS" message="Mostrar ou esconder a janela DOWNLOADS."/>
-<tip id="ID_VIEW_HELP" message="Mostrar ou esconder a janela AJUDA."/>
-<tip id="ID_VIEW_HOSTS" message="Mostrar ou esconder a janela ARMAZENAMENTO DE HOSTS."/>
-<tip id="ID_VIEW_LIBRARY" message="Mostrar ou esconder a janela BIBLIOTECA."/>
-<tip id="ID_VIEW_MEDIA" message="Mostrar ou esconder a janela MEDIA PLAYER."/>
-<tip id="ID_VIEW_NEIGHBOURS" message="Mostrar ou esconder a janela VIZINHOS."/>
-<tip id="ID_VIEW_PACKETS" message="Mostrar ou esconder a janela LIXO DE PACOTES."/>
-<tip id="ID_VIEW_RESULTS_MONITOR" message="Mostrar ou esconder a janela MONITOR DE ACERTOS."/>
-<tip id="ID_VIEW_SEARCH_MONITOR" message="Mostrar ou esconder a janela MONITOR DE PESQUISA."/>
-<tip id="ID_VIEW_SECURITY" message="Mostrar ou esconder a janela SEGURANÇA."/>
-<tip id="ID_VIEW_SYSTEM" message="Mostrar ou esconder a janela SISTEMA."/>
-<tip id="ID_VIEW_TABBED" message="Usar o Shareaza no Modo de Abas (Lar, Biblioteca, Mídia, Transferências, Rede)."/>
-<tip id="ID_VIEW_TRAFFIC" message="Mostrar ou esconder a janela GRÁFICOS."/>
-<tip id="ID_VIEW_UPLOADS" message="Mostrar ou esconder a janela UPLOADS."/>
-<tip id="ID_VIEW_WINDOWED" message="Usar o Shareaza no Modo de Janelas."/>
-<tip id="ID_WINDOW_CASCADE" message="Expandir todas as janelas para preencher a tela."/>
-<tip id="ID_WINDOW_MONITOR" message="Mostrar ou esconder o monitor de banda."/>
-<tip id="ID_WINDOW_NAVBAR" message="Exibir ou esconder a barra de navegação."/>
-<tip id="ID_WINDOW_REMOTE" message="Exibir ou esconder o Controle Remoto do Shareaza"/>
-<tip id="ID_WINDOW_TABBAR" message="Mostrar ou esconder a janela da barra de abas."/>
-<tip id="ID_WINDOW_TILE_HORZ" message="Organizar janelas abertas na horizontal, sem se sobrepôr aos ladrilhos."/>
-<tip id="ID_WINDOW_TILE_VERT" message="Organizar janelas abertas na vertical, sem se sobrepôr aos ladrilhos."/>
-<tip id="ID_WINDOW_TOOLBAR" message="Mostrar ou esconder a Barra de Ferramentas."/>
+	<tip id="ID_VIEW_BASIC" message="Usar Shareaza no modo Normal."/>
+	<tip id="ID_VIEW_DISCOVERY" message="Mostrar ou esconder a janela dos SERVIÇOS DE DESCOBRIMENTO."/>
+	<tip id="ID_VIEW_DOWNLOADS" message="Mostrar ou esconder a janela de DOWNLOADS."/>
+	<tip id="ID_VIEW_HELP" message="Mostrar ou esconder a janela de AJUDA."/>
+	<tip id="ID_VIEW_HOSTS" message="Mostrar ou esconder a janela de CACHE DOS HOSTS."/>
+	<tip id="ID_VIEW_LIBRARY" message="Mostrar ou esconder a janela da BIBLIOTECA."/>
+	<tip id="ID_VIEW_MEDIA" message="Mostrar ou esconder a janela do MEDIA PLAYER."/>
+	<tip id="ID_VIEW_NEIGHBOURS" message="Mostrar ou esconder a janela VIZINHOS."/>
+	<tip id="ID_VIEW_PACKETS" message="Mostrar ou esconder a janela PACOTES PERDIDOS."/>
+	<tip id="ID_VIEW_RESULTS_MONITOR" message="Mostrar ou esconder a janela do MONITOR DE ACERTOS."/>
+	<tip id="ID_VIEW_SEARCH_MONITOR" message="Mostrar ou esconder a janela do MONITOR DE BUSCAS."/>
+	<tip id="ID_VIEW_SECURITY" message="Mostrar ou esconder a janela SEGURANÇA."/>
+	<tip id="ID_VIEW_SYSTEM" message="Mostrar ou esconder a janela SISTEMA."/>
+	<tip id="ID_VIEW_TABBED" message="Usar Shareaza no modo de ABAS (Home, Biblioteca, Media, Transferências, Rede)."/>
+	<tip id="ID_VIEW_TRAFFIC" message="Mostrar ou esconder a janela GRÁFICOS."/>
+	<tip id="ID_VIEW_UPLOADS" message="Mostrar ou esconder a janela UPLOADS."/>
+	<tip id="ID_VIEW_WINDOWED" message="Usar Shareaza no modo de Janelas."/>
+	<tip id="ID_WINDOW_CASCADE" message="Expandir todas as janelas abertas para preencher a tela."/>
+	<tip id="ID_WINDOW_MONITOR" message="Mostrar ou esconder o monitor de banda."/>
+	<tip id="ID_WINDOW_NAVBAR" message="Mostrar ou esconder a barra de navegação."/>
+	<tip id="ID_WINDOW_REMOTE" message="Mostrar ou esconder o Controle Remoto do Shareaza"/>
+	<tip id="ID_WINDOW_TABBAR" message="Mostrar ou esconder a barra de abas em janela."/>
+	<tip id="ID_WINDOW_TILE_HORZ" message="Organizar as janelas abertas como telas não sobrepostas horizontais."/>
+	<tip id="ID_WINDOW_TILE_VERT" message="Organizar as janelas abertas como telas não sobrepostas verticais."/>
+	<tip id="ID_WINDOW_TOOLBAR" message="Mostrar ou esconder a barra de ferramentas."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Re-dimensionar a imagem para encaixar dentro da janela."/>
 	<tip id="ImageViewer_ActualSize" message="Mostrar a imagem no seu tamanho natural."/>
@@ -2501,7 +2501,7 @@
 	<string id="8002" value="Propriedades do Arquivo"/>
 	<string id="8003" value="Editar o Meu Perfil"/>
 	<string id="8004" value="!Bem-vindo ao Shareaza (versão) !\n.\nO Shareaza é um programa completamente gratuito.\nPor favor, use-o de maneira responsável e respeite a lei de propriedade intelectual.\n."/>
-	<string id="8005" value="(fechando após transferências)"/>
+	<string id="8005" value="(fechando após as transferências)"/>
 	<string id="8006" value="Você não está conectado. Clique no botão Conectar para começar."/>
 	<string id="8007" value="Não há pesquisas ativas. Clique aqui para procurar por arquivos."/>
 	<string id="8008" value="O Shareaza terminou de baixar a versão mais recente (%s). Você gostaria de atualizar agora?\n\nSe você escolher Sim, o Shareaza fechará temporariamente enquanto a atualização é instalada."/>
@@ -2549,9 +2549,9 @@
 	<string id="8145" value="Procurar Mais"/>
 	<string id="8146" value="Parar"/>
 	<string id="8147" value="Qualquer Tipo de Arquivo"/>
-	<string id="8148" value="Digite a sua procura aqui:"/>
+	<string id="8148" value="Digite a sua busca aqui:"/>
 	<string id="8149" value="Procurar este tipo de arquivo:"/>
-	<string id="8150" value="Pesquisando:"/>
+	<string id="8150" value="Procurando:"/>
 	<string id="8151" value="Encontrados:"/>
 	<string id="8152" value="%lu hubs, %lu leaves"/>
 	<string id="8153" value="Atualmente não procurando"/>
@@ -3210,22 +3210,22 @@
 		<control caption="Permitir navegar pelos arquivos"/>
 		<control caption="Arquivos Recentes:"/>
 		<control caption="Lembrar de:"/>
-			<control/><control/>
+		<control/><control/>
 		<control caption="arquivos"/>
 		<control caption="Por até:"/>
-			<control/><control/>
+		<control/><control/>
 		<control caption="dias"/>
 		<control caption="Limpar Histórico Agora"/>
 		<control caption="Seguros para abrir:"/>
-			<control/>
+		<control/>
 		<control caption="Adicionar"/>
 		<control caption="Remover"/>
 		<control caption="Nunca Compartilhar:"/>
-			<control/>
+		<control/>
 		<control caption="Adicionar"/>
 		<control caption="Remover"/>
 		<control caption="Guardar Coleções aqui:"/>
-			<control/><control/>
+		<control/><control/>
 		<control caption="Criar arquivos ghost qdo apagar"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
@@ -3538,7 +3538,7 @@
 		<control/>
 		<control caption="Ser iniciado para usar o Shareaza."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Bem-Vindo ao Shareaza [2 de 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Bem-Vindo ao Shareaza">
 		<control caption="O Shareaza suporta uma interface fléxivel de usuário, assim você escolhe a mais confortável para você. Você pode mudar estas opções quando quiser"/>
 		<control caption="Por favor selecione a interface de usuário:"/>
 		<control caption="Modo Normal"/>
@@ -3546,10 +3546,9 @@
 		<control caption="Simples, menus e botões fáceis de usar.{n}Familiar para usuários de programas de compartilhamento de arquivos."/>
 		<control caption="O Modo Power oferece aos usuários muitos comandos extras, janelas, etc.{n}Pode ser um pouco confuso para novos usuários."/>
 		<control caption="Exibir barras de progresso do download simplificadas. (Reduz o uso da CPU)"/>
-		<control caption="Exibir elementos de interface adicionais para o torrent."/>
-		<control caption="Manejar links torrent."/>
+		<control caption="Gerenciar os links de torrent."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Bem Vindo ao Shareaza [3 de 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Bem-Vindo ao Shareaza [3 de 7]">
 		<control caption="Para uma ótima performance, o Shareaza precisa saber um pouco sobre a sua conexão com a internet."/>
 		<control caption="Escolha o tipo da sua conexão com a internet:"/>
 		<control caption="Modem Dial up| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Internet a Cabo/SDSL| T1| T3| LAN| OC3"/>
@@ -3580,7 +3579,7 @@
 		<control caption="0"/>
 		<control caption="Fechar"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Bem Vindo ao Shareaza [5 de 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Bem-Vindo ao Shareaza [5 de 7]">
 		<control caption="O Shareaza é um lugar muito mais amistoso quando todos escrevem alguns detalhes básicos sobre eles mesmos."/>
 		<control caption="Eu uso o nome:"/>
 		<control/>
@@ -3643,13 +3642,13 @@
 		<control caption="Mensagem Instatãnea:"/>
 		<control caption="Passaporte MSN/.NET:"/>
 		<control/>
-		<control caption="Yahoo ID:"/>
+		<control caption="ID do Yahoo:"/>
 		<control/>
-		<control caption="ICQ UIN:"/>
+		<control caption="UIN do ICQ:"/>
 		<control/>
-		<control caption="Apelido AOL:"/>
+		<control caption="Apelido na AOL:"/>
 		<control/>
-		<control caption="Jabber ID:"/>
+		<control caption="ID no Jabber:"/>
 		<control/>
 	</dialog>
 	<dialog name="CProfileProfilePage" cookie="BuStCoStCoBuStEdStEdBuLiBuBuCo" caption="Perfil">
@@ -3705,7 +3704,7 @@
 		<control caption="Gerar Novo"/>
 	</dialog>
 	<dialog name="CLanguageDlg" cookie="" caption="Selecionar um Idioma"/>
-	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Conectar À|Navegar Host">
+	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Conectar A|Navegar Host">
 		<control caption="Iniciar uma nova conexão com um host ou servidor:|Navegar este Host:"/>
 		<control/><control/>
 		<control caption="Protocolo de Rede:"/>
