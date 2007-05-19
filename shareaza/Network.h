@@ -63,6 +63,7 @@ public:
 	DWORD			m_tLastED2KServerHop;	// The last time the ed2k server was changed
 protected:
 	CStringA		m_sHostName;
+	hostent*		m_hHostAddresses;
 	HANDLE			m_hThread;
 	DWORD			m_nSequence;
 	struct ResolveStruct

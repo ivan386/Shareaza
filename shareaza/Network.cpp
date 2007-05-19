@@ -111,17 +111,13 @@ BOOL CNetwork::IsSelfIP(IN_ADDR nAddress) const
 	{
 		return TRUE;
 	}
-	if ( m_sHostName.GetLength() )
+	if ( m_hHostAddresses )
 	{
-		hostent* h = gethostbyname( m_sHostName );
-		if ( h )
+		for ( char** p = m_hHostAddresses->h_addr_list ; *p ; p++ )
 		{
-			for ( char** p = h->h_addr_list ; *p ; p++ )
+			if ( *(ULONG*)*p == nAddress.s_addr )
 			{
-				if ( *(ULONG*)*p == nAddress.s_addr )
-				{
-					return TRUE;
-				}
+				return TRUE;
 			}
 		}
 	}
@@ -250,15 +246,16 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 		InternetCloseHandle( hInternet );
 	}
 
-	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
-	m_sHostName.ReleaseBuffer();
-
 	// If we are already connected exit.
 	if ( m_bEnabled )
 		return TRUE;
 
 	// Begin network startup
 	theApp.Message( MSG_SYSTEM, IDS_NETWORK_STARTUP );
+
+	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
+	m_sHostName.ReleaseBuffer();
+	m_hHostAddresses = gethostbyname( m_sHostName );
 
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
@@ -287,6 +284,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 		theApp.Message( MSG_DISPLAYED_ERROR, _T("The connection process is failed.") );
 		Handshakes.Disconnect();
 		Datagrams.Disconnect();
+		m_hHostAddresses = NULL;
 		return FALSE;
 	}
 
@@ -298,9 +296,6 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	m_bEnabled				= TRUE;
 	m_tStartedConnecting	= GetTickCount();
 	m_hThread				= BeginThread( "Network", ThreadStart, this );
-
-	// It will check if it is needed inside the function
-	DiscoveryServices.Execute(TRUE, PROTOCOL_NULL, FALSE);
 
 	return TRUE;
 }
@@ -353,6 +348,8 @@ void CNetwork::Disconnect()
 
 		m_pLookups.RemoveAll();
 	}
+
+	m_hHostAddresses = NULL;
 
 	pLock.Unlock();
 
@@ -409,22 +406,6 @@ void CNetwork::CreateID(Hashes::Guid& oID)
 {
 	VERIFY( SUCCEEDED( CoCreateGuid( reinterpret_cast<GUID*>( &oID[ 0 ] ) ) ) );
 	VERIFY( oID.validate() );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CNetwork firewalled address checking
-
-BOOL CNetwork::IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf, BOOL bForceCheck)
-{
-	if ( ! pAddress ) return TRUE;
-	if ( bIncludeSelf && IsSelfIP( *(IN_ADDR*)pAddress ) ) return TRUE;
-	if ( ! *(DWORD*)pAddress ) return TRUE;							// 0.0.0.0
-	if ( ! bForceCheck && ! Settings.Connection.IgnoreLocalIP ) return FALSE;
-	if ( ( *(DWORD*)pAddress & 0xFFFF ) == 0xA8C0 ) return TRUE;	// 192.168.0.0/16
-	if ( ( *(DWORD*)pAddress & 0xF0FF ) == 0x10AC ) return TRUE;	// 172.16.0.0/12
-	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x0A ) return TRUE;		// 10.0.0.0/8
-	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x7F ) return TRUE;		// 127.0.0.0/8
-	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -502,6 +483,22 @@ BOOL CNetwork::AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol
 		delete pResolve;
 		return FALSE;
 	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CNetwork firewalled address checking
+
+BOOL CNetwork::IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf, BOOL bForceCheck)
+{
+	if ( ! pAddress ) return TRUE;
+	if ( bIncludeSelf && IsSelfIP( *(IN_ADDR*)pAddress ) ) return TRUE;
+	if ( ! *(DWORD*)pAddress ) return TRUE;							// 0.0.0.0
+	if ( ! bForceCheck && ! Settings.Connection.IgnoreLocalIP ) return FALSE;
+	if ( ( *(DWORD*)pAddress & 0xFFFF ) == 0xA8C0 ) return TRUE;	// 192.168.0.0/16
+	if ( ( *(DWORD*)pAddress & 0xF0FF ) == 0x10AC ) return TRUE;	// 172.16.0.0/12
+	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x0A ) return TRUE;		// 10.0.0.0/8
+	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x7F ) return TRUE;		// 127.0.0.0/8
+	return FALSE;
 }
 
 // Returns TRUE if the IP address is reserved.
@@ -603,6 +600,9 @@ UINT CNetwork::ThreadStart(LPVOID pParam)
 
 void CNetwork::OnRun()
 {
+	// It will check if it is needed inside the function
+	DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );
+
 	while ( m_bEnabled )
 	{
 		Sleep( 50 );
