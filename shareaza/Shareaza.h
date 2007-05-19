@@ -51,7 +51,8 @@ public:
 	HANDLE				m_pMutex;
 	CMutex				m_pSection;
 	WORD				m_nVersion[4];
-	CString				m_sVersion;
+	CString				m_sVersion;					// x.x.x.x
+	CString				m_sSmartAgent;				// Shareaza x.x.x.x
 	CString				m_sBuildDate;
 	CFont				m_gdiFont;
 	CFont				m_gdiFontBold;

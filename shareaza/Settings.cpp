@@ -1234,18 +1234,6 @@ void CSettings::SetStartup(BOOL bStartup)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CSettings configurable user agent (Client Name + Version)
-
-CString CSettings::SmartAgent()
-{
-	CString strAgent = _T( CLIENT_NAME );
-	strAgent += _T(" ");
-	strAgent += theApp.m_sVersion;
-
-	return strAgent;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CSettings volume
 
 CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits, BOOL bTruncate)

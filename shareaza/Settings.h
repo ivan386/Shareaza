@@ -550,7 +550,13 @@ public:
 	void	SaveWindow(LPCTSTR pszName, CWnd* pWindow);
 	BOOL	LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort = 0);
 	void	SaveList(LPCTSTR pszName, CListCtrl* pCtrl);
-	CString	SmartAgent();
+	
+	// CSettings configurable user agent (Client Name + Version)
+	inline const CString& SmartAgent() const throw()
+	{
+		return theApp.m_sSmartAgent;	// TODO
+	}
+
 	CString	SmartVolume(QWORD nVolume, BOOL bInKB, BOOL bRateInBits = FALSE, BOOL bTruncate = FALSE );
 	QWORD	ParseVolume(LPCTSTR psz, BOOL bSpeedInBits);
 	DWORD	GetOutgoingBandwidth();						//Returns available outgoing bandwidth in KB/s

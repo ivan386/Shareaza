@@ -600,6 +600,10 @@ void CShareazaApp::GetVersionNumber()
 	m_sVersion.Format( _T("%i.%i.%i.%i"),
 		m_nVersion[0], m_nVersion[1],
 		m_nVersion[2], m_nVersion[3] );
+
+	m_sSmartAgent = _T( CLIENT_NAME );
+	m_sSmartAgent += _T(" ");
+	m_sSmartAgent += m_sVersion;
 }
 
 /////////////////////////////////////////////////////////////////////////////
