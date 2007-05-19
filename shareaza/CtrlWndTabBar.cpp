@@ -765,6 +765,20 @@ CWndTabBar::TabItem::TabItem(CChildWnd* pWnd, DWORD nCookie, LPCTSTR pszCaption)
 
 CWndTabBar::TabItem::~TabItem()
 {
+	if ( m_bmTabmark.m_hObject )
+		m_bmTabmark.DeleteObject();
+}
+
+void CWndTabBar::TabItem::SetTabmark(HBITMAP hBitmap)
+{
+	m_bTabTest = FALSE;
+	if ( hBitmap != NULL ) 
+	{
+		if ( m_bmTabmark.m_hObject )
+			m_bmTabmark.DeleteObject();
+		m_bmTabmark.Attach( hBitmap );
+		m_bTabTest = TRUE;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -780,7 +794,25 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 		crBack = CoolInterface.m_crBackNormal;
 		pDC->Draw3dRect( &rc, CoolInterface.m_crDisabled, CoolInterface.m_crDisabled );
 	}
-	else if ( bHot || ( bSelected && m_bVisible ) )
+	if ( bHot )
+	{
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active") ) );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
+		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
+	}
+	if ( bSelected )
+	{
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Hover") ) );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
+		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
+	}
+	if ( bHot && bSelected )
+	{
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active.Hover") ) );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
+		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
+	}
+	if ( ( bHot || ( bSelected && m_bVisible ) ) && m_bTabTest != TRUE )
 	{
 		crBack = ( bHot && bSelected ) ? CoolInterface.m_crBackCheckSel : CoolInterface.m_crBackSel;
 		pDC->Draw3dRect( &rc, CoolInterface.m_crBorder, CoolInterface.m_crBorder );

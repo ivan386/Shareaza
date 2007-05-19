@@ -143,6 +143,8 @@ public:
 	COLORREF	m_crText;
 	UINT		m_nCtrlID;
 	int			m_nCtrlHeight;
+	BOOL		m_bButtonTest;
+	CBitmap		m_bmButtonmark;
 protected:
 	CCoolBarCtrl*	m_pBar;
 	BOOL			m_bDirty;
@@ -160,7 +162,7 @@ public:
 protected:
 	void	Paint(CDC* pDC, CRect& rc, BOOL bDown, BOOL bHot, BOOL bMenuGray, BOOL bTransparent);
 public:
-
+	void	SetButtonmark(HBITMAP hBitmap);
 	static CCoolBarItem* FromCmdUI(CCmdUI* pUI);
 
 	friend class CCoolBarCtrl;

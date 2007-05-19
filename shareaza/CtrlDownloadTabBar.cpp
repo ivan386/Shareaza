@@ -514,6 +514,184 @@ void CDownloadTabBar::NotifySelection()
 	GetOwner()->PostMessage( WM_TIMER, 2 );
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// CDownloadTabBar command handlers
+
+void CDownloadTabBar::OnDownloadGroupNew() 
+{
+	CDownloadGroup* pGroup = DownloadGroups.Add( _T("New Group") );
+	NotifySelection();
+
+	CDownloadGroupDlg dlg( pGroup );
+
+	if ( dlg.DoModal() == IDOK )
+	{
+		if ( Transfers.m_pSection.Lock( 300 ) )
+		{
+			if ( DownloadGroups.Check( pGroup ) ) pGroup->LinkAll();
+			Transfers.m_pSection.Unlock();
+		}
+	}
+	else
+	{
+		DownloadGroups.Remove( pGroup );
+	}
+
+	NotifySelection();
+}
+
+void CDownloadTabBar::OnUpdateDownloadGroupRemove(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( GetSelectedCount() == 1 && GetSelectedGroup() != DownloadGroups.GetSuperGroup() );
+}
+
+void CDownloadTabBar::OnDownloadGroupRemove() 
+{
+	DownloadGroups.Remove( GetSelectedGroup() );
+	NotifySelection();
+}
+
+void CDownloadTabBar::OnUpdateDownloadGroupProperties(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( GetSelectedCount() == 1 );
+}
+
+void CDownloadTabBar::OnDownloadGroupProperties() 
+{
+	CDownloadGroup* pGroup = GetSelectedGroup();
+	CDownloadGroupDlg dlg( pGroup );
+	if ( dlg.DoModal() == IDOK )
+	{
+		if ( pGroup != DownloadGroups.GetSuperGroup() )
+		{
+			pGroup->Clear();
+			pGroup->LinkAll();
+		}
+		NotifySelection();
+	}
+}
+
+void CDownloadTabBar::OnUpdateDownloadGroupResume(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( GetSelectedCount( TRUE ) > 0 );
+}
+
+void CDownloadTabBar::OnDownloadGroupResume() 
+{
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CList< CDownload* > pDownloads;
+
+	GetSelectedDownloads( &pDownloads );
+
+	for ( POSITION pos = pDownloads.GetHeadPosition() ; pos ; )
+	{
+		CDownload* pDownload = (CDownload*)pDownloads.GetNext( pos );
+		if ( Downloads.Check( pDownload ) ) pDownload->Resume();
+	}
+}
+
+void CDownloadTabBar::OnUpdateDownloadGroupPause(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( GetSelectedCount( TRUE ) > 0 );
+}
+
+void CDownloadTabBar::OnDownloadGroupPause() 
+{
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CList< CDownload* > pDownloads;
+
+	GetSelectedDownloads( &pDownloads );
+
+	for ( POSITION pos = pDownloads.GetHeadPosition() ; pos ; )
+	{
+		CDownload* pDownload = (CDownload*)pDownloads.GetNext( pos );
+		if ( Downloads.Check( pDownload ) ) pDownload->Pause();
+	}
+}
+
+void CDownloadTabBar::OnUpdateDownloadGroupClear(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( GetSelectedCount( TRUE ) > 0 );
+}
+
+void CDownloadTabBar::OnDownloadGroupClear() 
+{
+	CString strMessage;
+	LoadString( strMessage, IDS_DOWNLOAD_CLEAR_GROUP );
+	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES ) return;
+
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CList< CDownload* > pDownloads;
+
+	GetSelectedDownloads( &pDownloads );
+
+	for ( POSITION pos = pDownloads.GetHeadPosition() ; pos ; )
+	{
+		CDownload* pDownload = (CDownload*)pDownloads.GetNext( pos );
+		if ( Downloads.Check( pDownload ) ) pDownload->Remove();
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CDownloadTabBar drag and drop
+
+BOOL CDownloadTabBar::DropShowTarget(CList< CDownload* >* /*pList*/, const CPoint& ptScreen)
+{
+	CPoint ptLocal( ptScreen );
+	ScreenToClient( &ptLocal );
+
+	TabItem* pItem = HitTest( ptLocal );
+
+	if ( pItem != m_pHot )
+	{
+		m_pHot = pItem;
+		CImageList::DragShowNolock( FALSE );
+		RedrawWindow();
+		CImageList::DragShowNolock( TRUE );
+	}
+
+	return pItem != NULL;
+}
+
+BOOL CDownloadTabBar::DropObjects(CList< CDownload* >* pList, const CPoint& ptScreen)
+{
+	CPoint ptLocal( ptScreen );
+	ScreenToClient( &ptLocal );
+
+	if ( m_pHot != NULL )
+	{
+		m_pHot = NULL;
+		Invalidate();
+	}
+
+	TabItem* pItem = HitTest( ptLocal );
+	if ( pItem == NULL ) return FALSE;
+
+	BOOL bMove = ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0;
+
+	CSingleLock pLock1( &Transfers.m_pSection, TRUE );
+	CSingleLock pLock2( &DownloadGroups.m_pSection, TRUE );
+
+	if ( DownloadGroups.Check( pItem->m_pGroup ) )
+	{
+		for ( POSITION posD = pList->GetHeadPosition() ; posD ; )
+		{
+			CDownload* pDownload = (CDownload*)pList->GetNext( posD );
+
+			if ( Downloads.Check( pDownload ) )
+			{
+				if ( bMove )
+				{
+					DownloadGroups.Unlink( pDownload, FALSE );
+				}
+
+				pItem->m_pGroup->Add( pDownload );
+			}
+		}
+	}
+
+	return TRUE;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTabBar::TabItem construction
@@ -529,6 +707,8 @@ CDownloadTabBar::TabItem::TabItem(CDownloadGroup* pGroup, int nCookie) :
 
 CDownloadTabBar::TabItem::~TabItem()
 {
+	if ( m_bmTabmark.m_hObject ) 
+		m_bmTabmark.DeleteObject();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -578,6 +758,16 @@ BOOL CDownloadTabBar::TabItem::Select(BOOL bSelect)
 	return TRUE;
 }
 
+void CDownloadTabBar::TabItem::SetTabmark(HBITMAP hBitmap)
+{
+	m_bTabTest = FALSE;
+	if ( m_bmTabmark.m_hObject ) 
+		m_bmTabmark.DeleteObject();
+	if ( hBitmap != NULL ) 
+		m_bmTabmark.Attach( hBitmap );
+	if ( hBitmap ) m_bTabTest = TRUE;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTabBar::TabItem paint
 
@@ -593,7 +783,25 @@ void CDownloadTabBar::TabItem::Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRe
 		crBack = CoolInterface.m_crBackNormal;
 		pDC->Draw3dRect( &rc, CoolInterface.m_crDisabled, CoolInterface.m_crDisabled );
 	}
-	else if ( bHot || m_bSelected )
+	if ( bHot )
+	{
+		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Active") ) );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
+		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
+	}
+	if ( m_bSelected )
+	{
+		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Hover") ) );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
+		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
+	}
+	if ( bHot && m_bSelected )
+	{
+		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Active.Hover") ) );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
+		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
+	}
+	if ( ( bHot || m_bSelected ) && m_bTabTest != TRUE )
 	{
 		crBack = ( bHot && m_bSelected ) ? CoolInterface.m_crBackCheckSel : CoolInterface.m_crBackSel;
 		pDC->Draw3dRect( &rc, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
@@ -687,184 +895,5 @@ void CDownloadTabBar::TabItem::Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRe
 		pDC->SetBkMode( TRANSPARENT );
 		pDC->ExtTextOut( rc.left + 20, rc.top + 2, ETO_CLIPPED, &rc, strText, NULL );
 	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDownloadTabBar command handlers
-
-void CDownloadTabBar::OnDownloadGroupNew() 
-{
-	CDownloadGroup* pGroup = DownloadGroups.Add( _T("New Group") );
-	NotifySelection();
-	
-	CDownloadGroupDlg dlg( pGroup );
-	
-	if ( dlg.DoModal() == IDOK )
-	{
-		if ( Transfers.m_pSection.Lock( 300 ) )
-		{
-			if ( DownloadGroups.Check( pGroup ) ) pGroup->LinkAll();
-			Transfers.m_pSection.Unlock();
-		}
-	}
-	else
-	{
-		DownloadGroups.Remove( pGroup );
-	}
-	
-	NotifySelection();
-}
-
-void CDownloadTabBar::OnUpdateDownloadGroupRemove(CCmdUI* pCmdUI) 
-{
-	pCmdUI->Enable( GetSelectedCount() == 1 && GetSelectedGroup() != DownloadGroups.GetSuperGroup() );
-}
-
-void CDownloadTabBar::OnDownloadGroupRemove() 
-{
-	DownloadGroups.Remove( GetSelectedGroup() );
-	NotifySelection();
-}
-
-void CDownloadTabBar::OnUpdateDownloadGroupProperties(CCmdUI* pCmdUI) 
-{
-	pCmdUI->Enable( GetSelectedCount() == 1 );
-}
-
-void CDownloadTabBar::OnDownloadGroupProperties() 
-{
-	CDownloadGroup* pGroup = GetSelectedGroup();
-	CDownloadGroupDlg dlg( pGroup );
-	if ( dlg.DoModal() == IDOK )
-	{
-		if ( pGroup != DownloadGroups.GetSuperGroup() )
-		{
-			pGroup->Clear();
-			pGroup->LinkAll();
-		}
-		NotifySelection();
-	}
-}
-
-void CDownloadTabBar::OnUpdateDownloadGroupResume(CCmdUI* pCmdUI) 
-{
-	pCmdUI->Enable( GetSelectedCount( TRUE ) > 0 );
-}
-
-void CDownloadTabBar::OnDownloadGroupResume() 
-{
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList< CDownload* > pDownloads;
-	
-	GetSelectedDownloads( &pDownloads );
-	
-	for ( POSITION pos = pDownloads.GetHeadPosition() ; pos ; )
-	{
-		CDownload* pDownload = (CDownload*)pDownloads.GetNext( pos );
-		if ( Downloads.Check( pDownload ) ) pDownload->Resume();
-	}
-}
-
-void CDownloadTabBar::OnUpdateDownloadGroupPause(CCmdUI* pCmdUI) 
-{
-	pCmdUI->Enable( GetSelectedCount( TRUE ) > 0 );
-}
-
-void CDownloadTabBar::OnDownloadGroupPause() 
-{
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList< CDownload* > pDownloads;
-	
-	GetSelectedDownloads( &pDownloads );
-	
-	for ( POSITION pos = pDownloads.GetHeadPosition() ; pos ; )
-	{
-		CDownload* pDownload = (CDownload*)pDownloads.GetNext( pos );
-		if ( Downloads.Check( pDownload ) ) pDownload->Pause();
-	}
-}
-
-void CDownloadTabBar::OnUpdateDownloadGroupClear(CCmdUI* pCmdUI) 
-{
-	pCmdUI->Enable( GetSelectedCount( TRUE ) > 0 );
-}
-
-void CDownloadTabBar::OnDownloadGroupClear() 
-{
-	CString strMessage;
-	LoadString( strMessage, IDS_DOWNLOAD_CLEAR_GROUP );
-	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES ) return;
-	
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList< CDownload* > pDownloads;
-	
-	GetSelectedDownloads( &pDownloads );
-	
-	for ( POSITION pos = pDownloads.GetHeadPosition() ; pos ; )
-	{
-		CDownload* pDownload = (CDownload*)pDownloads.GetNext( pos );
-		if ( Downloads.Check( pDownload ) ) pDownload->Remove();
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDownloadTabBar drag and drop
-
-BOOL CDownloadTabBar::DropShowTarget(CList< CDownload* >* /*pList*/, const CPoint& ptScreen)
-{
-	CPoint ptLocal( ptScreen );
-	ScreenToClient( &ptLocal );
-	
-	TabItem* pItem = HitTest( ptLocal );
-	
-	if ( pItem != m_pHot )
-	{
-		m_pHot = pItem;
-		CImageList::DragShowNolock( FALSE );
-		RedrawWindow();
-		CImageList::DragShowNolock( TRUE );
-	}
-	
-	return pItem != NULL;
-}
-
-BOOL CDownloadTabBar::DropObjects(CList< CDownload* >* pList, const CPoint& ptScreen)
-{
-	CPoint ptLocal( ptScreen );
-	ScreenToClient( &ptLocal );
-	
-	if ( m_pHot != NULL )
-	{
-		m_pHot = NULL;
-		Invalidate();
-	}
-	
-	TabItem* pItem = HitTest( ptLocal );
-	if ( pItem == NULL ) return FALSE;
-
-	BOOL bMove = ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0;
-	
-	CSingleLock pLock1( &Transfers.m_pSection, TRUE );
-	CSingleLock pLock2( &DownloadGroups.m_pSection, TRUE );
-	
-	if ( DownloadGroups.Check( pItem->m_pGroup ) )
-	{
-		for ( POSITION posD = pList->GetHeadPosition() ; posD ; )
-		{
-			CDownload* pDownload = (CDownload*)pList->GetNext( posD );
-			
-			if ( Downloads.Check( pDownload ) )
-			{
-				if ( bMove )
-				{
-					DownloadGroups.Unlink( pDownload, FALSE );
-				}
-				
-				pItem->m_pGroup->Add( pDownload );
-			}
-		}
-	}
-	
-	return TRUE;
 }
 

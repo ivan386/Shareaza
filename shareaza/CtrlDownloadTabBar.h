@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTabBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,12 +48,15 @@ public:
 		CString			m_sName;
 		int				m_nCount;
 		BOOL			m_bSelected;
+		BOOL			m_bTabTest;
+		CBitmap			m_bmTabmark;
 
 	// Operations
 	public:
 		BOOL	Update(int nCookie);
 		BOOL	Select(BOOL bSelect);
 		void	Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRect, BOOL bHot, BOOL bTransparent);
+		void	SetTabmark(HBITMAP hBitmap);
 	};
 
 // Attributes

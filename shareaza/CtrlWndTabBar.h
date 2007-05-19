@@ -51,6 +51,8 @@ public:
 		HWND			m_hWnd;
 		CRuntimeClass*	m_pClass;
 		int				m_nImage;
+		BOOL			m_bTabTest;
+		CBitmap			m_bmTabmark;
 	public:
 		CString			m_sCaption;
 		BOOL			m_bVisible;
@@ -60,7 +62,7 @@ public:
 	// Operations
 	public:
 		void	Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL bSelected, BOOL bHot, BOOL bTransparent);
-
+		void	SetTabmark(HBITMAP hBitmap);
 	};
 
 // Attributes
