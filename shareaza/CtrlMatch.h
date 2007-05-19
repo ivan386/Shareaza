@@ -135,6 +135,7 @@ public:
 	afx_msg void OnClickHeader(NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnKillFocus(CWnd* pNewWnd);
+	afx_msg UINT OnGetDlgCode();
 
 };
 

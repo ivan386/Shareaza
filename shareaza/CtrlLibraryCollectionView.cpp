@@ -55,6 +55,7 @@ BEGIN_MESSAGE_MAP(CLibraryCollectionView, CLibraryFileView)
 	ON_NOTIFY(WVN_CONTEXTMENU, AFX_IDW_PANE_FIRST, OnWebContextMenu)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_FOLDER_DOWNLOAD, OnUpdateLibraryFolderDownload)
 	ON_COMMAND(ID_LIBRARY_FOLDER_DOWNLOAD, OnLibraryFolderDownload)
+	ON_WM_GETDLGCODE()
 END_MESSAGE_MAP()
 
 
@@ -85,7 +86,8 @@ BOOL CLibraryCollectionView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	return CWnd::Create( NULL, _T("CLibraryCollectionView"), WS_CHILD, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
+	return CWnd::CreateEx( 0, NULL, _T("CLibraryCollectionView"), WS_CHILD | WS_VSCROLL |
+		WS_TABSTOP | WS_GROUP, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -262,6 +264,11 @@ void CLibraryCollectionView::OnLibraryFolderDownload()
 
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 	PostUpdate();
+}
+
+UINT CLibraryCollectionView::OnGetDlgCode()
+{
+	return DLGC_WANTARROWS;
 }
 
 /////////////////////////////////////////////////////////////////////////////

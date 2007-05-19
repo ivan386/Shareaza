@@ -35,7 +35,6 @@ static char THIS_FILE[] = __FILE__;
 BEGIN_MESSAGE_MAP(CSchemaCtrl, CWnd)
 	//{{AFX_MSG_MAP(CSchemaCtrl)
 	ON_WM_ERASEBKGND()
-	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_PAINT()
 	ON_WM_VSCROLL()
@@ -71,24 +70,14 @@ CSchemaCtrl::CSchemaCtrl()
 	}
 }
 
-CSchemaCtrl::~CSchemaCtrl()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCtrl create and destroy
 
 BOOL CSchemaCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
 {
-	dwStyle |= WS_CHILD|WS_VSCROLL|WS_CLIPCHILDREN;
-	DWORD dwExStyle = theApp.m_bRTL ? WS_EX_LAYOUTRTL : 0;
-	return CWnd::CreateEx( dwExStyle, NULL, NULL, dwStyle, rect, pParentWnd, nID, NULL );
-}
-
-int CSchemaCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
-{
-	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	return 0;
+	return CreateEx( WS_EX_CONTROLPARENT | ( theApp.m_bRTL ? WS_EX_LAYOUTRTL : 0 ),
+		NULL, NULL, dwStyle | WS_CHILD | WS_VSCROLL | WS_TABSTOP | WS_CLIPCHILDREN,
+		rect, pParentWnd, nID );
 }
 
 void CSchemaCtrl::OnDestroy() 
@@ -473,68 +462,6 @@ void CSchemaCtrl::OnPaint()
 	}
 
 	dc.SelectObject( pOldFont );
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CSchemaCtrl focus movement
-
-BOOL CSchemaCtrl::OnTab()
-{
-	CWnd* pFocus	= GetFocus();
-	CWnd* pPrevious	= NULL;
-	
-	BOOL bShift	= GetAsyncKeyState( VK_SHIFT ) & 0x8000;
-	BOOL bNext	= FALSE;
-	
-	if ( pFocus == GetWindow( GW_HWNDPREV ) )
-	{
-		if ( bShift ) return FALSE;
-		bNext = TRUE;
-	}
-	
-	for ( INT_PTR nControl = 0 ; nControl < m_pControls.GetSize() ; nControl++ )
-	{
-		CWnd* pControl = m_pControls.GetAt( nControl );
-		
-		if ( bNext )
-		{
-			SetFocusTo( pControl );
-			return TRUE;
-		}
-		else if ( pControl == pFocus || pControl->GetWindow( GW_CHILD ) == pFocus )
-		{
-			if ( bShift )
-			{
-				if ( pPrevious )
-				{
-					SetFocusTo( pPrevious );
-					return TRUE;
-				}
-				else
-				{
-					pFocus = GetWindow( GW_HWNDPREV );
-					if ( pFocus ) pFocus->SetFocus();
-					return TRUE;
-				}
-			}
-			else
-			{
-				bNext = TRUE;
-			}
-		}
-
-		pPrevious = pControl;
-	}
-	
-	if ( bNext )
-	{
-		pFocus = GetWindow( GW_HWNDNEXT );
-		if ( pFocus == NULL ) GetWindow( GW_HWNDFIRST );
-		if ( pFocus ) pFocus->SetFocus();
-		return TRUE;
-	}
-	
-	return FALSE;
 }
 
 void CSchemaCtrl::SetFocusTo(CWnd* pControl)

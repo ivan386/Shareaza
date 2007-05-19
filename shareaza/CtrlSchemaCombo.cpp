@@ -51,17 +51,13 @@ CSchemaCombo::CSchemaCombo()
 	m_pWndProc			= NULL;
 }
 
-CSchemaCombo::~CSchemaCombo()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCombo operations
 
 BOOL CSchemaCombo::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
 {
-	dwStyle |= WS_CHILD|WS_VSCROLL|CBS_DROPDOWNLIST|CBS_OWNERDRAWVARIABLE|CBS_HASSTRINGS|CBS_SORT;
-	return CComboBox::Create( dwStyle, rect, pParentWnd, nID );
+	return CComboBox::Create( dwStyle|WS_CHILD|WS_TABSTOP|WS_VSCROLL|CBS_DROPDOWNLIST|
+		CBS_OWNERDRAWVARIABLE|CBS_HASSTRINGS|CBS_SORT, rect, pParentWnd, nID );
 }
 
 void CSchemaCombo::SetEmptyString(UINT nID)

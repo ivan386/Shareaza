@@ -212,17 +212,6 @@ void CNewSearchDlg::OnChangeSearch()
 	}
 }
 
-BOOL CNewSearchDlg::PreTranslateMessage(MSG* pMsg)
-{
-	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
-	{
-		/*CWnd* pFocus =*/ GetFocus();
-		if ( m_wndSchema.OnTab() ) return TRUE;
-	}
-
-	return CSkinDialog::PreTranslateMessage( pMsg );
-}
-
 void CNewSearchDlg::OnOK()
 {
 	Settings.SaveWindow( _T("NewSearch"), this );

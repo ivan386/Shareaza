@@ -83,8 +83,8 @@ CRichViewCtrl::~CRichViewCtrl()
 
 BOOL CRichViewCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
 {
-	dwStyle |= WS_CHILD|WS_VSCROLL;
-	return CWnd::Create( NULL, NULL, dwStyle, rect, pParentWnd, nID, NULL );
+	return CWnd::CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CRichViewCtrl"),
+		dwStyle | WS_CHILD | WS_VSCROLL, rect, pParentWnd, nID, NULL );
 }
 
 void CRichViewCtrl::SetSelectable(BOOL bSelectable)

@@ -133,8 +133,6 @@ public:
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CSearchSchemaBox)
-	public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -190,7 +188,7 @@ class CSearchPanel : public CTaskPanel
 // Construction
 public:
 	CSearchPanel();
-	virtual ~CSearchPanel();
+
 	DECLARE_DYNAMIC(CSearchPanel)
 
 // Attributes
@@ -236,7 +234,6 @@ protected:
 
 //{{AFX_INSERT_LOCATION}}
 
-#define IDC_SEARCH_PANEL	111
 #define IDC_SEARCH_START	105
 #define IDC_SEARCH_STOP		106
 #define IDC_SEARCH_NETWORKS	107

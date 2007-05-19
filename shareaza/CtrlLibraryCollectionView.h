@@ -63,6 +63,7 @@ protected:
 	afx_msg void OnWebContextMenu(NMHDR* pNMHDR, LPARAM* pResult);
 	afx_msg void OnUpdateLibraryFolderDownload(CCmdUI *pCmdUI);
 	afx_msg void OnLibraryFolderDownload();
+	afx_msg UINT OnGetDlgCode();
 
 // Object Model
 protected:

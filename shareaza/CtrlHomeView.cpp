@@ -40,7 +40,6 @@ static char THIS_FILE[] = __FILE__;
 
 BEGIN_MESSAGE_MAP(CHomeViewCtrl, CRichViewCtrl)
 	ON_WM_CREATE()
-	ON_WM_DESTROY()
 	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
@@ -61,10 +60,6 @@ CHomeViewCtrl::CHomeViewCtrl()
 	m_peHeader = m_peSearch = m_peUpgrade = NULL;
 }
 
-CHomeViewCtrl::~CHomeViewCtrl()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CHomeViewCtrl system message handlers
 
@@ -82,11 +77,6 @@ int CHomeViewCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	Setup();
 
 	return 0;
-}
-
-void CHomeViewCtrl::OnDestroy()
-{
-	CRichViewCtrl::OnDestroy();
 }
 
 /////////////////////////////////////////////////////////////////////////////

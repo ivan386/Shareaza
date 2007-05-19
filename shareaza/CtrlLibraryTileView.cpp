@@ -61,6 +61,7 @@ BEGIN_MESSAGE_MAP(CLibraryTileView, CLibraryView)
 	ON_COMMAND(ID_LIBRARY_ALBUM_DELETE, OnLibraryAlbumDelete)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_ALBUM_PROPERTIES, OnUpdateLibraryAlbumProperties)
 	ON_COMMAND(ID_LIBRARY_ALBUM_PROPERTIES, OnLibraryAlbumProperties)
+	ON_WM_GETDLGCODE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -97,8 +98,8 @@ BOOL CLibraryTileView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	return CWnd::Create( NULL, _T("CLibraryTileView"),
-		WS_CHILD|WS_TABSTOP|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
+	return CWnd::CreateEx( 0, NULL, _T("CLibraryTileView"), WS_CHILD | WS_VSCROLL |
+		 WS_TABSTOP, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }
 
 int CLibraryTileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -389,11 +390,11 @@ void CLibraryTileView::SelectTo(int nDelta)
 	{
 		if ( nDelta < 0 )
 		{
-			for ( ; nDelta != 0 && pFocus != begin(); --pFocus );
+			for ( ; nDelta != 0 && pFocus != begin(); --pFocus, ++nDelta );
 		}
 		else
 		{
-			for ( ; nDelta != 0 && pFocus != end(); ++pFocus );
+			for ( ; nDelta != 0 && pFocus != end(); ++pFocus, --nDelta );
 			if ( pFocus == end() )
 				--pFocus;
 		}
@@ -1054,4 +1055,9 @@ void CLibraryTileView::OnLibraryAlbumProperties()
 	CFolderPropertiesDlg dlg( NULL, pFolder );
 
 	if ( dlg.DoModal() == IDOK ) GetFrame()->Display( pFolder );
+}
+
+UINT CLibraryTileView::OnGetDlgCode()
+{
+	return DLGC_WANTARROWS | DLGC_WANTCHARS;
 }

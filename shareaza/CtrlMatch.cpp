@@ -65,6 +65,7 @@ BEGIN_MESSAGE_MAP(CMatchCtrl, CWnd)
 	ON_NOTIFY(HDN_ITEMCLICKA, IDC_MATCH_HEADER, OnClickHeader)
 	ON_WM_SETFOCUS()
 	ON_WM_KILLFOCUS()
+	ON_WM_GETDLGCODE()
 END_MESSAGE_MAP()
 
 #define HEADER_HEIGHT	20
@@ -110,8 +111,8 @@ BOOL CMatchCtrl::Create(CMatchList* pMatches, CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	m_pMatches = pMatches;
-	DWORD dwStyle = WS_CHILD|WS_VSCROLL|WS_TABSTOP|WS_VISIBLE;
-	return CWnd::Create( NULL, NULL, dwStyle, rect, pParentWnd, IDC_MATCHES, NULL );
+	return CWnd::CreateEx( 0, NULL, _T("CMatchCtrl"), WS_CHILD|WS_TABSTOP|WS_VSCROLL|
+		WS_VISIBLE, rect, pParentWnd, IDC_MATCHES, NULL );
 }
 
 int CMatchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
@@ -180,6 +181,13 @@ void CMatchCtrl::OnSize(UINT nType, int cx, int cy)
 void CMatchCtrl::Update()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
+
+	// Select first element at begining
+	if ( m_nFocus == 0xFFFFFFFF && m_pMatches->m_pFiles && m_pMatches->m_nFiles )
+	{
+		m_nFocus = 0;
+		m_pMatches->Select( m_pMatches->m_pFiles[ m_nFocus ], NULL );
+	}
 
 	if ( ! m_pMatches->m_bUpdated ) return;
 
@@ -1744,16 +1752,6 @@ void CMatchCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_ADD:
 		DoExpand( TRUE );
 		break;
-	case VK_TAB:
-		// TODO: shift TAB for going back to search result list
-		if ( CBaseMatchWnd* pOwner = (CBaseMatchWnd*)GetOwner() )
-		{
-			if ( pOwner->IsKindOf( RUNTIME_CLASS(CBaseMatchWnd) ) )
-			{
-				pOwner->m_wndFilter.SetFocus();
-			}
-		}
-		break;
 	}
 	
 	CWnd::OnKeyDown( nChar, nRepCnt, nFlags );
@@ -1959,4 +1957,9 @@ void CMatchCtrl::OnKillFocus(CWnd* pNewWnd)
 {
 	CWnd::OnKillFocus( pNewWnd );
 	Invalidate();
+}
+
+UINT CMatchCtrl::OnGetDlgCode()
+{
+	return DLGC_WANTARROWS;
 }

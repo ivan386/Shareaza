@@ -118,12 +118,10 @@ BOOL CLibraryDetailView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	DWORD nStyle = m_nStyle;
-	DWORD dwStyle = theApp.m_bRTL ? WS_EX_RTLREADING : 0;
-
-	return CWnd::CreateEx( dwStyle, WC_LISTVIEW, _T("CLibraryDetailView"),
-		WS_CHILD|LVS_ICON|LVS_AUTOARRANGE|LVS_SHOWSELALWAYS|nStyle|
-		LVS_SHAREIMAGELISTS|LVS_EDITLABELS|LVS_OWNERDATA, rect, pParentWnd, IDC_LIBRARY_VIEW );
+	return CWnd::CreateEx( ( theApp.m_bRTL ? WS_EX_RTLREADING : 0 ), WC_LISTVIEW,
+		_T("CLibraryDetailView"), m_nStyle | WS_CHILD | WS_TABSTOP | WS_GROUP | LVS_ICON |
+		LVS_AUTOARRANGE | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_EDITLABELS |
+		LVS_OWNERDATA, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }
 
 int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
@@ -181,7 +179,7 @@ int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	
 	m_bCreateDragImage	= FALSE;
-	
+
 	return 0;
 }
 
@@ -350,17 +348,8 @@ void CLibraryDetailView::Update()
 	}
 	
 	m_nListCookie++;
-	
-	DWORD tNow = GetTickCount();
-	// Reduce flickering while files are hashed
-	if ( Settings.Live.NewFile )
-	{
-		if ( Library.m_nUpdateCookie == Library.m_nUpdateSaved ||  // we just started hashing
-			 ( tNow - Library.m_nScanTime ) <  Library.m_nScanCookie ) // or this condition met :p
-			SortItems();
-	}
-	else
-		SortItems(); // The view is cached, sort it
+
+	SortItems();
 }
 
 BOOL CLibraryDetailView::Select(DWORD nObject)
@@ -1048,4 +1037,3 @@ void CLibraryDetailView::OnLibraryColumns()
 
 	SetViewSchema( dlg.m_pSchema, &dlg.m_pColumns, TRUE, TRUE );
 }
-

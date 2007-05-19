@@ -35,7 +35,6 @@ class CLibraryThumbView : public CLibraryFileView
 // Construction
 public:
 	CLibraryThumbView();
-	virtual ~CLibraryThumbView();
 
 	DECLARE_DYNCREATE(CLibraryThumbView)
 
@@ -115,10 +114,10 @@ protected:
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg UINT OnGetDlgCode();
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
 
 

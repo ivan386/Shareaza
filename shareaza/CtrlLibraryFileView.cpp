@@ -254,7 +254,7 @@ void CLibraryFileView::OnLibraryLaunch()
 		CString strPath = pFile->GetPath();
 
 		if ( pFile->m_bVerify == TS_FALSE && 
-			 !AdultFilter.IsChildPornography( strPath ) )
+			 ( ! Settings.Search.AdultFilter || ! AdultFilter.IsChildPornography( strPath ) ) )
 		{
 			DWORD nIndex = pFile->m_nIndex;
 			CString strFormat, strMessage;

@@ -59,6 +59,7 @@ BEGIN_MESSAGE_MAP(CDownloadsCtrl, CWnd)
 	ON_WM_RBUTTONUP()
 	ON_WM_SETFOCUS()
 	ON_WM_KILLFOCUS()
+	ON_WM_GETDLGCODE()
 END_MESSAGE_MAP()
 
 #define HEADER_HEIGHT				20
@@ -97,17 +98,14 @@ CDownloadsCtrl::CDownloadsCtrl() :
 	}
 }
 
-CDownloadsCtrl::~CDownloadsCtrl()
-{
-}
-
 //////////////////////////////////////////////////////////////////////////////
 // CDownloadsCtrl operations
 
 BOOL CDownloadsCtrl::Create(CWnd* pParentWnd, UINT nID)
 {
 	CRect rect( 0, 0, 0, 0 );
-	return CWnd::Create( NULL, NULL, WS_CHILD|WS_CLIPSIBLINGS, rect, pParentWnd, nID, NULL );
+	return CWnd::CreateEx( 0, NULL, _T("CDownloadsCtrl"), WS_CHILD | WS_CLIPSIBLINGS |
+		 WS_TABSTOP | WS_GROUP, rect, pParentWnd, nID );
 }
 
 BOOL CDownloadsCtrl::Update()
@@ -2182,4 +2180,9 @@ int CDownloadsCtrl::GetExpandableColumnX() const
 		else nTitleStarts += pColumn.cxy;
 	}
 	return nTitleStarts;
+}
+
+UINT CDownloadsCtrl::OnGetDlgCode()
+{
+	return DLGC_WANTALLKEYS;
 }

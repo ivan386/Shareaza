@@ -46,7 +46,6 @@ protected:
 
 	void AddCrossAttributes(CXMLElement* pXML, LPCTSTR pszTargetURI);
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual void OnOK();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelChangeSchemas();

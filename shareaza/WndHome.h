@@ -37,7 +37,6 @@ class CHomeWnd : public CPanelWnd
 // Construction
 public:
 	CHomeWnd();
-	virtual ~CHomeWnd();
 
 	DECLARE_DYNCREATE(CHomeWnd)
 

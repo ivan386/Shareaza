@@ -149,17 +149,19 @@ CBaseMatchWnd::~CBaseMatchWnd()
 int CBaseMatchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_wndList.Create( m_pMatches, this );
-	
-	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	m_wndList.ModifyStyle( 0, WS_TABSTOP );
+
+	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_TABSTOP|WS_VISIBLE|CBRS_NOALIGN ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
-	
-	if ( ! m_wndFilter.Create( WS_CHILD|ES_AUTOHSCROLL, rectDefault, &m_wndToolBar, IDC_FILTER_BOX ) ) return -1;
+	m_wndToolBar.ModifyStyleEx( 0, WS_EX_CONTROLPARENT );
+
+	if ( ! m_wndFilter.Create( WS_CHILD|WS_TABSTOP|WS_VISIBLE|ES_AUTOHSCROLL, rectDefault, &m_wndToolBar, IDC_FILTER_BOX ) ) return -1;
 	m_wndFilter.SetFont( &theApp.m_gdiFont );
-	
+
 	SetTimer( 2, 500, NULL );
-	
+
 	return 0;
 }
 

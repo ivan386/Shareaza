@@ -32,7 +32,6 @@ class CDownloadsCtrl : public CWnd
 // Construction
 public:
 	CDownloadsCtrl();
-	virtual ~CDownloadsCtrl();
 
 	DECLARE_DYNAMIC(CDownloadsCtrl)
 
@@ -111,6 +110,7 @@ public:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnKillFocus(CWnd* pNewWnd);
+	afx_msg UINT OnGetDlgCode();
 };
 
 #define DLF_ACTIVE		0x01

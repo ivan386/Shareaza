@@ -33,7 +33,6 @@ class CSchemaCtrl : public CWnd
 // Construction
 public:
 	CSchemaCtrl();
-	virtual ~CSchemaCtrl();
 
 // Attributes
 public:
@@ -55,7 +54,6 @@ public:
 	CString		GetSchemaURI() const;
 	void		Disable();
 	void		Enable();
-	BOOL		OnTab();
 	void		ScrollBy(int nDelta);
 protected:
 	void		Layout();
@@ -74,7 +72,6 @@ public:
 protected:
 	//{{AFX_MSG(CSchemaCtrl)
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnPaint();
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);

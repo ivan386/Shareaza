@@ -75,6 +75,7 @@ public:
 	virtual BOOL	OnQueryHits(CQueryHit* pHits);
 	virtual BOOL	OnPush(const Hashes::Guid& pClientID, CConnection* pConnection);
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 // Overrides
 public:
@@ -107,10 +108,6 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#define IDC_PANEL	101
 
 
 #endif // !defined(AFX_WNDCHILD_H__082500C0_14CD_4066_95F9_DA21AD8C7E72__INCLUDED_)

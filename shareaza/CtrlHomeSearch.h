@@ -33,7 +33,6 @@ class CHomeSearchCtrl : public CWnd
 // Construction
 public:
 	CHomeSearchCtrl();
-	virtual ~CHomeSearchCtrl();
 
 // Attributes
 public:
@@ -53,9 +52,8 @@ public:
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CHomeSearchCtrl)
-	public:
 	virtual BOOL Create(CWnd* pParentWnd, UINT nID);
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
+//	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -68,7 +66,6 @@ protected:
 	afx_msg void OnSelChangeText();
 	afx_msg void OnSearchCreate();
 	afx_msg void OnSearchAdvanced();
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

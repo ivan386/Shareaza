@@ -43,6 +43,10 @@ BEGIN_MESSAGE_MAP(CIconButtonCtrl, CWnd)
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
 	ON_WM_ENABLE()
+	ON_WM_SETFOCUS()
+	ON_WM_KILLFOCUS()
+	ON_WM_GETDLGCODE()
+	ON_WM_CREATE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -59,16 +63,13 @@ CIconButtonCtrl::CIconButtonCtrl()
 	m_bCursor	= FALSE;
 }
 
-CIconButtonCtrl::~CIconButtonCtrl()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CIconButtonCtrl operations
 
-BOOL CIconButtonCtrl::Create(const RECT& rect, CWnd* pParentWnd, UINT nControlID)
+BOOL CIconButtonCtrl::Create(const RECT& rect, CWnd* pParentWnd, UINT nControlID, DWORD dwStyle)
 {
-	return CWnd::Create( NULL, NULL, WS_CHILD|WS_VISIBLE, rect, pParentWnd, nControlID );
+	return CWnd::CreateEx( 0, NULL, _T(""), dwStyle | WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		rect, pParentWnd, nControlID );
 }
 
 void CIconButtonCtrl::SetText(LPCTSTR pszText)
@@ -336,5 +337,34 @@ void CIconButtonCtrl::OnPaint()
 void CIconButtonCtrl::OnEnable(BOOL bEnable)
 {
 	CWnd::OnEnable( bEnable );
+
 	Invalidate();
+}
+
+void CIconButtonCtrl::OnSetFocus(CWnd* pOldWnd)
+{
+	CWnd::OnSetFocus( pOldWnd );
+	Invalidate();
+}
+
+void CIconButtonCtrl::OnKillFocus(CWnd* pNewWnd)
+{
+	CWnd::OnKillFocus( pNewWnd );
+	Invalidate();
+}
+
+UINT CIconButtonCtrl::OnGetDlgCode()
+{
+	return DLGC_BUTTON;
+}
+
+int CIconButtonCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if ( CWnd::OnCreate( lpCreateStruct ) == -1 )
+		return -1;
+
+	// Fix
+	IsDlgButtonChecked( GetDlgCtrlID() );
+
+	return 0;
 }

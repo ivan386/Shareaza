@@ -75,10 +75,6 @@ CHomeWnd::CHomeWnd() : CPanelWnd( TRUE )
 	Create( IDR_HOMEFRAME );
 }
 
-CHomeWnd::~CHomeWnd()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CHomeWnd message handlers
 

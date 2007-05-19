@@ -256,7 +256,7 @@ class CHomePanel : public CTaskPanel
 // Construction
 public:
 	CHomePanel();
-	virtual ~CHomePanel();
+
 	DECLARE_DYNAMIC(CHomePanel)
 
 // Attributes

@@ -31,7 +31,6 @@ class CHomeViewCtrl : public CRichViewCtrl
 // Construction
 public:
 	CHomeViewCtrl();
-	virtual ~CHomeViewCtrl();
 
 // Attributes
 public:
@@ -59,9 +58,7 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnDestroy();
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
-
 
 };
 

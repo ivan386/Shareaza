@@ -32,7 +32,6 @@ class CUploadsCtrl : public CWnd
 // Construction
 public:
 	CUploadsCtrl();
-	virtual ~CUploadsCtrl();
 
 	DECLARE_DYNAMIC(CUploadsCtrl)
 
@@ -92,6 +91,7 @@ public:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnKillFocus(CWnd* pNewWnd);
+	afx_msg UINT OnGetDlgCode();
 };
 
 #define ULF_ACTIVE		0x01

@@ -63,8 +63,6 @@ public:
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CNewSearchDlg)
-	public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL

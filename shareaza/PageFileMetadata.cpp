@@ -262,16 +262,6 @@ void CFileMetadataPage::OnCloseUpSchemas()
 	if ( CSchema* pSchema = m_wndSchemas.GetSelected() ) PostMessage( WM_KEYDOWN, VK_TAB );
 }
 
-BOOL CFileMetadataPage::PreTranslateMessage(MSG* pMsg)
-{
-	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
-	{
-		if ( m_wndData.OnTab() ) return TRUE;
-	}
-
-	return CFilePropertiesPage::PreTranslateMessage( pMsg );
-}
-
 void CFileMetadataPage::OnOK()
 {
 	CLibraryList* pFiles = GetList();

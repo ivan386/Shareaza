@@ -144,16 +144,6 @@ void CFolderPropertiesDlg::OnDestroy()
 	CSkinDialog::OnDestroy();
 }
 
-BOOL CFolderPropertiesDlg::PreTranslateMessage(MSG* pMsg)
-{
-	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
-	{
-		if ( m_wndData.OnTab() ) return TRUE;
-	}
-
-	return CSkinDialog::PreTranslateMessage( pMsg );
-}
-
 void CFolderPropertiesDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 {
 	CSkinDialog::OnGetMinMaxInfo( lpMMI );

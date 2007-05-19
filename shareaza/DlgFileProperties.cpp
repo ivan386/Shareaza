@@ -241,16 +241,6 @@ void CFilePropertiesDlg::OnCloseUpSchemas()
 	}
 }
 
-BOOL CFilePropertiesDlg::PreTranslateMessage(MSG* pMsg)
-{
-	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
-	{
-		if ( m_wndSchema.OnTab() ) return TRUE;
-	}
-
-	return CSkinDialog::PreTranslateMessage( pMsg );
-}
-
 void CFilePropertiesDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CRect rc;

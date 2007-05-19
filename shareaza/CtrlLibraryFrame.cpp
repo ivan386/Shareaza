@@ -127,8 +127,8 @@ CLibraryFrame::~CLibraryFrame()
 BOOL CLibraryFrame::Create(CWnd* pParentWnd)
 {
 	CRect rect;
-	return CWnd::Create( NULL, _T("CLibraryFrame"),
-		WS_CHILD|WS_VISIBLE|WS_TABSTOP, rect, pParentWnd, IDC_LIBRARY_FRAME, NULL );
+	return CWnd::CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CLibraryFrame"),
+		WS_CHILD|WS_VISIBLE, rect, pParentWnd, IDC_LIBRARY_FRAME, NULL );
 }
 
 int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -157,7 +157,7 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndViewBottom.SetBarStyle( m_wndViewBottom.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndViewBottom.SetOwner( GetOwner() );
 
-	if ( ! m_wndSearch.Create( WS_CHILD|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
+	if ( ! m_wndSearch.Create( WS_CHILD|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
 
 	m_wndTree.Create( this );
@@ -176,27 +176,6 @@ void CLibraryFrame::OnDestroy()
 	Settings.Library.ShowPanel	= m_bPanelShow;
 
 	CWnd::OnDestroy();
-}
-
-BOOL CLibraryFrame::PreTranslateMessage(MSG* pMsg)
-{
-	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
-	{
-		CWnd* pFocus = GetFocus();
-
-		if ( pFocus == &m_wndTree && m_pView != NULL )
-		{
-			m_pView->SetFocus();
-			return TRUE;
-		}
-		else
-		{
-			m_wndTree.SetFocus();
-			return TRUE;
-		}
-	}
-
-	return CWnd::PreTranslateMessage( pMsg );
 }
 
 /////////////////////////////////////////////////////////////////////////////

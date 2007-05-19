@@ -41,9 +41,9 @@ BEGIN_MESSAGE_MAP(CTaskPanel, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-IMPLEMENT_DYNAMIC(CTaskBox, CWnd)
+IMPLEMENT_DYNAMIC(CTaskBox, CButton)
 
-BEGIN_MESSAGE_MAP(CTaskBox, CWnd)
+BEGIN_MESSAGE_MAP(CTaskBox, CButton)
 	//{{AFX_MSG_MAP(CTaskBox)
 	ON_WM_NCCALCSIZE()
 	ON_WM_NCPAINT()
@@ -72,17 +72,13 @@ CTaskPanel::CTaskPanel()
 	m_bLayout	= FALSE;
 }
 
-CTaskPanel::~CTaskPanel()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CTaskPanel create
 
 BOOL CTaskPanel::Create(LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
 {
-	dwStyle |= WS_CHILD|WS_CLIPCHILDREN;
-	return CWnd::Create( NULL, lpszWindowName, dwStyle, rect, pParentWnd, nID, NULL );
+	return CreateEx( WS_EX_CONTROLPARENT, NULL, lpszWindowName,
+		dwStyle | WS_CHILD | WS_CLIPCHILDREN, rect, pParentWnd, nID, NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -267,7 +263,7 @@ void CTaskPanel::Layout(CRect& rcClient)
 			rcBox.bottom = rcBox.top + nHeight;
 			
 			pBox->SetWindowPos( NULL, rcBox.left, rcBox.top, rcBox.Width(), rcBox.Height(),
-				SWP_SHOWWINDOW|SWP_NOZORDER );
+				SWP_SHOWWINDOW | SWP_NOZORDER | SWP_NOACTIVATE );
 			
 			rcBox.OffsetRect( 0, nHeight + m_nMargin );
 		}
@@ -304,7 +300,7 @@ CTaskBox::~CTaskBox()
 /////////////////////////////////////////////////////////////////////////////
 // CTaskBox operations
 
-BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT nIDIcon)
+BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT nIDIcon, UINT nID)
 {
 	CRect rect( 0, 0, 0, 0 );
 	
@@ -318,9 +314,9 @@ BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT 
 		rect.bottom = 0;
 	}
 	
-	if ( ! CWnd::Create( NULL, pszCaption, WS_CHILD|WS_CLIPCHILDREN|WS_CLIPSIBLINGS,
-		rect, pPanel, 100, NULL ) ) return FALSE;
-	
+	if ( ! CreateEx( WS_EX_CONTROLPARENT, NULL, pszCaption,
+		WS_CHILD | WS_CLIPCHILDREN, rect, pPanel, nID ) ) return FALSE;
+
 	if ( nIDIcon )
 	{
 		CoolInterface.SetIcon( nIDIcon, theApp.m_bRTL, FALSE, this );
@@ -474,7 +470,7 @@ BOOL CTaskBox::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		return TRUE;
 	}
 	
-	return CWnd::OnSetCursor(pWnd, nHitTest, message);
+	return CButton::OnSetCursor(pWnd, nHitTest, message);
 }
 
 void CTaskBox::OnNcLButtonDown(UINT /*nHitTest*/, CPoint /*point*/) 
@@ -551,7 +547,7 @@ void CTaskBox::PaintBorders()
 	
 	CPoint ptIcon( 6, rcc.Height() / 2 - 7 );
 	
-	DrawIconEx( pBuffer->GetSafeHdc(), ptIcon.x, ptIcon.y, GetIcon( FALSE ),
+	DrawIconEx( pBuffer->GetSafeHdc(), ptIcon.x, ptIcon.y, CWnd::GetIcon( FALSE ),
 		16, 16, 0, NULL, DI_NORMAL );
 	
 	GetWindowText( strCaption );

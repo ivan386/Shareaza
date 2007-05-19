@@ -35,7 +35,6 @@ class CLibraryAlbumView : public CLibraryFileView
 // Construction
 public:
 	CLibraryAlbumView();
-	virtual ~CLibraryAlbumView();
 
 	DECLARE_DYNCREATE(CLibraryAlbumView)
 
@@ -106,6 +105,7 @@ protected:
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg UINT OnGetDlgCode();
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

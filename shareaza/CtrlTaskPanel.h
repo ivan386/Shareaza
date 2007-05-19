@@ -32,7 +32,6 @@ class CTaskPanel : public CWnd
 // Construction
 public:
 	CTaskPanel();
-	virtual ~CTaskPanel();
 
 	DECLARE_DYNAMIC(CTaskPanel)
 
@@ -84,7 +83,7 @@ protected:
 };
 
 
-class CTaskBox : public CWnd
+class CTaskBox : public CButton
 {
 public:
 	CTaskBox();
@@ -120,10 +119,8 @@ protected:
 	virtual void OnExpanded(BOOL bOpen);
 
 public:
-	//{{AFX_VIRTUAL(CTaskBox)
-	public:
-	virtual BOOL Create(CTaskPanel* pPanel, int nHeight = 0, LPCTSTR pszCaption = NULL, UINT nIDIcon = 0);
-	//}}AFX_VIRTUAL
+	virtual BOOL Create(CTaskPanel* pPanel, int nHeight = 0, LPCTSTR pszCaption = NULL, UINT nIDIcon = 0, UINT nID = 0);
+	virtual void DrawItem(LPDRAWITEMSTRUCT) {}
 
 protected:
 	//{{AFX_MSG(CTaskBox)

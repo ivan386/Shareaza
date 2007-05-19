@@ -47,7 +47,6 @@ BEGIN_MESSAGE_MAP(CHomeSearchCtrl, CWnd)
 	ON_CBN_SELCHANGE(IDC_SEARCH_TEXT, OnSelChangeText)
 	ON_BN_CLICKED(IDC_SEARCH_CREATE, OnSearchCreate)
 	ON_BN_CLICKED(IDC_SEARCH_ADVANCED, OnSearchAdvanced)
-	ON_WM_SETFOCUS()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -60,42 +59,24 @@ CHomeSearchCtrl::CHomeSearchCtrl() :
 {
 }
 
-CHomeSearchCtrl::~CHomeSearchCtrl()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CHomeSearchCtrl message handlers
 
-BOOL CHomeSearchCtrl::PreTranslateMessage(MSG* pMsg)
+/*BOOL CHomeSearchCtrl::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN )
 	{
 		PostMessage( WM_COMMAND, MAKELONG( IDC_SEARCH_CREATE, BN_CLICKED ), (LPARAM)m_wndSearch.GetSafeHwnd() );
+		return TRUE;
 	}
-	else if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
-	{
-		if ( m_pTextInput == &m_wndText && m_wndText.GetWindowTextLength() > 0 )
-		{
-			m_wndSchema.SetFocus();
-			m_pTextInput = &m_wndSchema;
-			return TRUE;
-		}
-		else
-		{
-			m_wndText.SetFocus();
-			m_pTextInput = &m_wndText;
-			return TRUE;
-		}
-	}
-
 	return CWnd::PreTranslateMessage( pMsg );
-}
+}*/
 
 BOOL CHomeSearchCtrl::Create(CWnd* pParentWnd, UINT nID)
 {
 	CRect rect( 0, 0, 0, 0 );
-	return CWnd::Create( NULL, NULL, WS_CHILD|WS_CLIPCHILDREN, rect, pParentWnd, nID );
+	return CWnd::CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CHomeSearchCtrl"),
+		WS_CHILD|WS_CLIPCHILDREN, rect, pParentWnd, nID );
 }
 
 int CHomeSearchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -116,9 +97,9 @@ int CHomeSearchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	LoadString( m_wndSchema.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 	m_wndSchema.Load( Settings.Search.LastSchemaURI );
 
-	m_wndSearch.Create( rc, this, IDC_SEARCH_CREATE );
+	m_wndSearch.Create( rc, this, IDC_SEARCH_CREATE, WS_TABSTOP | BS_DEFPUSHBUTTON );
 	m_wndSearch.SetHandCursor( TRUE );
-	m_wndAdvanced.Create( rc, this, IDC_SEARCH_ADVANCED );
+	m_wndAdvanced.Create( rc, this, IDC_SEARCH_ADVANCED, WS_TABSTOP );
 	m_wndAdvanced.SetHandCursor( TRUE );
 
 	Setup( CoolInterface.m_crWindow );
@@ -311,22 +292,5 @@ void CHomeSearchCtrl::OnSearchCreate()
 
 void CHomeSearchCtrl::OnSearchAdvanced()
 {
-	/*
-	CNewSearchDlg dlg;
-
-	if ( dlg.DoModal() == IDOK )
-	{
-		if ( CQuerySearch* pSearch = dlg.GetSearch() )
-		{
-			if ( NULL == pSearch->OpenWindow() ) delete pSearch;
-		}
-	}
-	*/
 	AfxGetMainWnd()->PostMessage( WM_COMMAND, ID_TAB_SEARCH );
-}
-
-void CHomeSearchCtrl::OnSetFocus(CWnd* pOldWnd)
-{
-	CWnd::OnSetFocus( pOldWnd );
-	//m_wndText.SetFocus();
 }

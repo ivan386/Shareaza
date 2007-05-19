@@ -97,7 +97,6 @@ public:
 	//{{AFX_VIRTUAL(CLibraryFrame)
 	virtual BOOL Create(CWnd* pParentWnd);
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	//}}AFX_VIRTUAL
 
 // Implementation

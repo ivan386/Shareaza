@@ -110,7 +110,8 @@ CSearchDetailPanel::~CSearchDetailPanel()
 BOOL CSearchDetailPanel::Create(CWnd* pParentWnd) 
 {
 	CRect rect( 0, 0, 0, 0 );
-	return CWnd::Create( NULL, NULL, WS_CHILD|WS_VSCROLL|WS_CLIPCHILDREN, rect, pParentWnd, IDC_DETAIL_PANEL, NULL );
+	return CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CSearchDetailPanel"), WS_CHILD |
+		WS_TABSTOP | WS_VSCROLL | WS_CLIPCHILDREN, rect, pParentWnd, 0, NULL );
 }
 
 void CSearchDetailPanel::Update(CMatchFile* pFile)

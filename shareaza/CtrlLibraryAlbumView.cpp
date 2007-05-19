@@ -59,6 +59,7 @@ BEGIN_MESSAGE_MAP(CLibraryAlbumView, CLibraryFileView)
 	ON_WM_LBUTTONDBLCLK()
 	ON_WM_RBUTTONDOWN()
 	ON_WM_KEYDOWN()
+	ON_WM_GETDLGCODE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -74,10 +75,6 @@ CLibraryAlbumView::CLibraryAlbumView()
 	m_nCommandID = ID_LIBRARY_VIEW_ALBUM;
 }
 
-CLibraryAlbumView::~CLibraryAlbumView()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryAlbumView create and destroy
 
@@ -85,7 +82,8 @@ BOOL CLibraryAlbumView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	return CWnd::Create( NULL, _T("CLibraryAlbumView"), WS_CHILD|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
+	return CWnd::CreateEx( 0, NULL, _T("CLibraryAlbumView"), WS_CHILD | WS_VSCROLL |
+		WS_TABSTOP | WS_GROUP, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }
 
 int CLibraryAlbumView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
@@ -900,6 +898,11 @@ void CLibraryAlbumView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	
 	CLibraryFileView::OnKeyDown( nChar, nRepCnt, nFlags );
+}
+
+UINT CLibraryAlbumView::OnGetDlgCode()
+{
+	return DLGC_WANTARROWS;
 }
 
 /////////////////////////////////////////////////////////////////////////////

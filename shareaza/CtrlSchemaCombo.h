@@ -29,7 +29,6 @@ class CSchemaCombo : public CComboBox
 // Construction
 public:
 	CSchemaCombo();
-	virtual ~CSchemaCombo();
 
 // Attributes
 public:

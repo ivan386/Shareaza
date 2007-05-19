@@ -73,7 +73,8 @@ BOOL CLibraryView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	return CWnd::Create( NULL, NULL, WS_CHILD, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
+	return CWnd::CreateEx( WS_EX_CONTROLPARENT, NULL, NULL, WS_CHILD|WS_TABSTOP, rect, pParentWnd,
+		IDC_LIBRARY_VIEW, NULL );
 }
 
 BOOL CLibraryView::CheckAvailable(CLibraryTreeItem* /*pSel*/)

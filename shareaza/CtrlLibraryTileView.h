@@ -159,6 +159,7 @@ protected:
 	afx_msg void OnLibraryAlbumDelete();
 	afx_msg void OnUpdateLibraryAlbumProperties(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryAlbumProperties();
+	afx_msg UINT OnGetDlgCode();
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

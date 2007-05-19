@@ -99,17 +99,13 @@ CSearchPanel::CSearchPanel()
 	m_bAdvanced		= FALSE;
 }
 
-CSearchPanel::~CSearchPanel()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CSearchPanel message handlers
 
 BOOL CSearchPanel::Create(CWnd* pParentWnd)
 {
-	CRect rect;
-	return CTaskPanel::Create( _T("CSearchPanel"), WS_VISIBLE, rect, pParentWnd, IDC_SEARCH_PANEL );
+	CRect rect( 0, 0, 0, 0 );
+	return CTaskPanel::Create( _T("CSearchPanel"), WS_VISIBLE, rect, pParentWnd, 0 );
 }
 
 int CSearchPanel::OnCreate(LPCREATESTRUCT lpCreateStruct) 
@@ -414,32 +410,6 @@ BOOL CSearchPanel::PreTranslateMessage(MSG* pMsg)
 			ExecuteSearch();
 			return TRUE;
 		}
-		else if ( pMsg->wParam == VK_TAB )
-		{
-			BOOL bShift = GetAsyncKeyState( VK_SHIFT ) & 0x8000;
-			CWnd* pWnd = GetFocus();
-			
-			if ( pWnd == &m_boxSearch.m_wndSearch )
-			{
-				if ( bShift )
-					m_boxSchema.m_wndSchema.SetFocus();
-				else
-					m_boxSearch.m_wndSchemas.SetFocus();
-				return TRUE;
-			}
-			else if ( pWnd == &m_boxSearch.m_wndSchemas )
-			{
-				if ( bShift )
-					m_boxSearch.m_wndSearch.SetFocus();
-				else
-					m_boxSchema.m_wndSchema.SetFocus();
-				return TRUE;
-			}
-			else
-			{
-				m_boxSearch.m_wndSearch.SetFocus();
-			}
-		}
 	}
 	
 	return CTaskPanel::PreTranslateMessage( pMsg );
@@ -495,7 +465,7 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rc( 0, 0, 0, 0 );
 	CString strCaption;
 	
-	if ( ! m_wndSearch.Create( ES_AUTOHSCROLL|WS_TABSTOP|WS_GROUP, rc,
+	if ( ! m_wndSearch.Create( ES_AUTOHSCROLL | WS_TABSTOP, rc,
 		this, IDC_SEARCH ) ) return -1;
 	
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
@@ -507,10 +477,10 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
 	m_wndSchemas.SendMessage( CB_SETDROPPEDWIDTH, 200 );
 
-	m_wndStart.Create( rc, this, IDC_SEARCH_START );
+	m_wndStart.Create( rc, this, IDC_SEARCH_START, WS_TABSTOP | BS_DEFPUSHBUTTON );
 	m_wndStart.SetHandCursor( TRUE );
 
-	m_wndStop.Create( rc, this, IDC_SEARCH_STOP );
+	m_wndStop.Create( rc, this, IDC_SEARCH_STOP, WS_TABSTOP );
 	m_wndStop.SetHandCursor( TRUE );
 
 	OnSkinChange();
@@ -655,9 +625,12 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rc( 0, 0, 0, 0 );
 	CString strCaption;
 
-	if ( ! m_wndCheckBoxG2.Create( L"G2", BS_CHECKBOX, rc, this, IDC_SEARCH_GNUTELLA2 ) ) return -1;
-	if ( ! m_wndCheckBoxG1.Create( L"G1", BS_CHECKBOX, rc, this, IDC_SEARCH_GNUTELLA1 ) ) return -1;
-	if ( ! m_wndCheckBoxED2K.Create( L"eD2K", BS_CHECKBOX, rc, this, IDC_SEARCH_EDONKEY ) ) return -1;
+	if ( ! m_wndCheckBoxG2.Create( L"G2", WS_CHILD | WS_VISIBLE | WS_TABSTOP |
+		BS_CHECKBOX, rc, this, IDC_SEARCH_GNUTELLA2 ) ) return -1;
+	if ( ! m_wndCheckBoxG1.Create( L"G1", WS_CHILD | WS_VISIBLE | WS_TABSTOP |
+		BS_CHECKBOX, rc, this, IDC_SEARCH_GNUTELLA1 ) ) return -1;
+	if ( ! m_wndCheckBoxED2K.Create( L"eD2K", WS_CHILD | WS_VISIBLE | WS_TABSTOP |
+		BS_CHECKBOX, rc, this, IDC_SEARCH_EDONKEY ) ) return -1;
 
 	m_wndCheckBoxG2.SetFont( &theApp.m_gdiFontBold );
 	m_wndCheckBoxG2.SetCheck( BST_CHECKED );
@@ -872,7 +845,7 @@ int CSearchSchemaBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
 	CRect rc;
-	if ( ! m_wndSchema.Create( WS_VISIBLE, rc, this, IDC_SCHEMAS ) ) return -1;
+	if ( ! m_wndSchema.Create( WS_VISIBLE, rc, this, 0 ) ) return -1;
 
 	m_wndSchema.m_nCaptionWidth	= 0;
 	m_wndSchema.m_nItemHeight	= 42;
@@ -884,18 +857,9 @@ int CSearchSchemaBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CSearchSchemaBox::OnSize(UINT nType, int cx, int cy) 
 {
 	CTaskBox::OnSize( nType, cx, cy );
-	m_wndSchema.SetWindowPos( NULL, 0, 1, cx, cy - 1, SWP_NOZORDER );
+	m_wndSchema.SetWindowPos( NULL, 0, 1, cx, cy - 1, SWP_NOZORDER | SWP_NOACTIVATE );
 }
 
-BOOL CSearchSchemaBox::PreTranslateMessage(MSG* pMsg) 
-{
-	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
-	{
-		if ( m_wndSchema.OnTab() ) return TRUE;
-	}
-
-	return CTaskBox::PreTranslateMessage( pMsg );
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // CSearchResultsBox

@@ -140,7 +140,6 @@ protected:
 
 };
 
-#define IDC_DETAIL_PANEL	104
 #define IDC_REVIEW_VIEW		99
 
 //{{AFX_INSERT_LOCATION}}

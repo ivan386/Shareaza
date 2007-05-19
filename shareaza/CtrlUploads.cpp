@@ -60,6 +60,7 @@ BEGIN_MESSAGE_MAP(CUploadsCtrl, CWnd)
 	ON_WM_RBUTTONUP()
 	ON_WM_SETFOCUS()
 	ON_WM_KILLFOCUS()
+	ON_WM_GETDLGCODE()
 END_MESSAGE_MAP()
 
 #define HEADER_HEIGHT			20
@@ -89,17 +90,14 @@ CUploadsCtrl::CUploadsCtrl() :
 	}
 }
 
-CUploadsCtrl::~CUploadsCtrl()
-{
-}
-
 //////////////////////////////////////////////////////////////////////////////
 // CUploadsCtrl operations
 
 BOOL CUploadsCtrl::Create(CWnd* pParentWnd, UINT nID)
 {
 	CRect rect( 0, 0, 0, 0 );
-	return CWnd::Create( NULL, NULL, WS_CHILD|WS_CLIPSIBLINGS, rect, pParentWnd, nID, NULL );
+	return CWnd::CreateEx( 0, NULL, _T("CUploadsCtrl"), WS_CHILD | WS_CLIPSIBLINGS |
+		WS_TABSTOP | WS_GROUP, rect, pParentWnd, nID );
 }
 
 BOOL CUploadsCtrl::Update()
@@ -1435,4 +1433,9 @@ int CUploadsCtrl::GetExpandableColumnX() const
 		else nTitleStarts += pColumn.cxy;
 	}
 	return nTitleStarts;
+}
+
+UINT CUploadsCtrl::OnGetDlgCode()
+{
+	return DLGC_WANTALLKEYS;
 }

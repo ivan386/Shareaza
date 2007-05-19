@@ -69,8 +69,8 @@ CLibraryHeaderPanel::~CLibraryHeaderPanel()
 BOOL CLibraryHeaderPanel::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
-	return CWnd::Create( NULL, _T("CLibraryHeaderPanel"), WS_CHILD, rect,
-		pParentWnd, ID_LIBRARY_HEADER, NULL );
+	return CWnd::CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CLibraryHeaderPanel"), WS_CHILD,
+		rect, pParentWnd, ID_LIBRARY_HEADER, NULL );
 }
 
 int CLibraryHeaderPanel::Update()

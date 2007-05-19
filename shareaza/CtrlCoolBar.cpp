@@ -92,9 +92,9 @@ CCoolBarCtrl::~CCoolBarCtrl()
 
 BOOL CCoolBarCtrl::Create(CWnd* pParentWnd, DWORD dwStyle, UINT nID)
 {
-	CRect rc;
-	dwStyle |= WS_CHILD;
-	return CWnd::Create( NULL, NULL, dwStyle, rc, pParentWnd, nID, NULL );
+	CRect rc( 0, 0, 0, 0);
+	return CWnd::CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CCoolBarCtrl"),
+		dwStyle | WS_CHILD, rc, pParentWnd, nID, NULL );
 }
 
 void CCoolBarCtrl::SetSize(int nHeight, BOOL bStretch)

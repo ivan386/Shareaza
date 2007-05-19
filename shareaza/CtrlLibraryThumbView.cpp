@@ -58,6 +58,8 @@ BEGIN_MESSAGE_MAP(CLibraryThumbView, CLibraryFileView)
 	ON_WM_KEYDOWN()
 	ON_WM_LBUTTONDBLCLK()
 	ON_WM_TIMER()
+	ON_WM_SETFOCUS()
+	ON_WM_GETDLGCODE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -73,10 +75,6 @@ CLibraryThumbView::CLibraryThumbView()
 	m_nCommandID = ID_LIBRARY_VIEW_THUMBNAIL;
 }
 
-CLibraryThumbView::~CLibraryThumbView()
-{
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryThumbView create and destroy
 
@@ -84,7 +82,8 @@ BOOL CLibraryThumbView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	return CWnd::Create( NULL, _T("CLibraryThumbView"), WS_CHILD|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_VIEW, NULL );
+	return CWnd::CreateEx( 0, NULL, _T("CLibraryThumbView"), WS_CHILD | WS_VSCROLL |
+		WS_TABSTOP | WS_GROUP, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }
 
 int CLibraryThumbView::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -1171,3 +1170,7 @@ void CLibraryThumbItem::Paint(CDC* pDC, const CRect& rcBlock, const CSize& szThu
 	}
 }
 
+UINT CLibraryThumbView::OnGetDlgCode()
+{
+	return DLGC_WANTARROWS;
+}

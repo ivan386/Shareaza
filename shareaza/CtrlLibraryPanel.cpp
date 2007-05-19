@@ -58,7 +58,8 @@ CLibraryPanel::~CLibraryPanel()
 BOOL CLibraryPanel::Create(CWnd* pParentWnd)
 {
 	CRect rect;
-	return CWnd::Create( NULL, NULL, WS_CHILD, rect, pParentWnd, IDC_LIBRARY_PANEL, NULL );
+	return CWnd::CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CLibraryPanel"), WS_CHILD,
+		rect, pParentWnd, IDC_LIBRARY_PANEL, NULL );
 }
 
 BOOL CLibraryPanel::CheckAvailable(CLibraryTreeItem* /*pFolders*/, CLibraryList* /*pObjects*/)

@@ -107,11 +107,6 @@ END_MESSAGE_MAP()
 
 CHomePanel::CHomePanel()
 {
-	// SetMargin( 0, 0 );
-}
-
-CHomePanel::~CHomePanel()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////

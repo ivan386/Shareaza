@@ -95,6 +95,8 @@ BEGIN_MESSAGE_MAP(CLibraryTreeView, CWnd)
 	ON_COMMAND(ID_LIBRARY_REBUILD, OnLibraryRebuild)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_EXPORT_COLLECTION, OnUpdateLibraryExportCollection)
 	ON_COMMAND(ID_LIBRARY_EXPORT_COLLECTION, OnLibraryExportCollection)
+	ON_WM_SETFOCUS()
+	ON_WM_GETDLGCODE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -162,8 +164,8 @@ void CLibraryTreeView::PostUpdate()
 BOOL CLibraryTreeView::Create(CWnd* pParentWnd)
 {
 	CRect rect;
-	return CWnd::Create( NULL, _T("CLibraryTreeView"),
-		WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_TREE, NULL );
+	return CWnd::CreateEx( 0, NULL, _T("CLibraryTreeView"), WS_CHILD|WS_VISIBLE|
+		WS_TABSTOP|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_TREE, NULL );
 }
 
 void CLibraryTreeView::SetToolTip(CCoolTipCtrl* pTip)
@@ -2043,4 +2045,23 @@ BOOL CLibraryTreeView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT pt
 	}
 
 	return FALSE;
+}
+
+void CLibraryTreeView::OnSetFocus(CWnd* pOldWnd)
+{
+	CWnd::OnSetFocus( pOldWnd );
+
+	if ( ! m_pFocus && ! m_pRoot->empty() )
+	{
+		m_pFocus = &*m_pRoot->begin();
+		BOOL bChanged = Select( m_pFocus );
+		Highlight( m_pFocus );
+		if ( bChanged )
+			NotifySelection();
+	}
+}
+
+UINT CLibraryTreeView::OnGetDlgCode()
+{
+	return DLGC_WANTARROWS;
 }

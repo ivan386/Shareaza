@@ -31,7 +31,6 @@ class CIconButtonCtrl : public CWnd
 // Construction
 public:
 	CIconButtonCtrl();
-	virtual ~CIconButtonCtrl();
 
 // Attributes
 protected:
@@ -52,9 +51,7 @@ protected:
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CIconButtonCtrl)
-	virtual BOOL Create(const RECT& rect, CWnd* pParentWnd, UINT nControlID);
-	//}}AFX_VIRTUAL
+	virtual BOOL Create(const RECT& rect, CWnd* pParentWnd, UINT nControlID, DWORD dwStyle = 0);
 
 // Implementation
 protected:
@@ -68,6 +65,10 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnEnable(BOOL bEnable);
+	afx_msg void OnSetFocus(CWnd* pOldWnd);
+	afx_msg void OnKillFocus(CWnd* pNewWnd);
+	afx_msg UINT OnGetDlgCode();
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
