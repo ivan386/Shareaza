@@ -1847,9 +1847,6 @@
 					RelativePath="WndSearchMonitor.cpp">
 				</File>
 				<File
-					RelativePath="WndSearchPad.cpp">
-				</File>
-				<File
 					RelativePath="WndSecurity.cpp">
 				</File>
 				<File
@@ -2954,9 +2951,6 @@
 				</File>
 				<File
 					RelativePath="WndSearchMonitor.h">
-				</File>
-				<File
-					RelativePath="WndSearchPad.h">
 				</File>
 				<File
 					RelativePath="WndSecurity.h">
