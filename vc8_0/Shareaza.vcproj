@@ -2307,10 +2307,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\WndSearchPad.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\WndSecurity.cpp"
 					>
 				</File>
@@ -3829,10 +3825,6 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\WndSearchMonitor.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\WndSearchPad.h"
 					>
 				</File>
 				<File

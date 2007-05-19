@@ -62,7 +62,6 @@
 #include "WndHostCache.h"
 #include "WndDiscovery.h"
 #include "WndPacket.h"
-#include "WndSearchPad.h"
 #include "WndSearchMonitor.h"
 #include "WndHitMonitor.h"
 #include "WndSecurity.h"
@@ -2019,7 +2018,6 @@ void CMainWnd::OnTabMedia()
 void CMainWnd::OnUpdateTabSearch(CCmdUI* pCmdUI) 
 {
 	CChildWnd* pChild = m_pWindows.GetActive();
-	// pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CSearchPadWnd) ) );
 	pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CSearchWnd) ) );
 }
 
@@ -2027,7 +2025,6 @@ void CMainWnd::OnTabSearch()
 {
 	if ( Settings.General.GUIMode != GUI_WINDOWED )
 	{
-		// m_pWindows.Open( RUNTIME_CLASS(CSearchPadWnd) );
 		m_pWindows.OpenNewSearchWindow();
 		m_wndTabBar.OnSkinChange();
 		OpenFromTray();
