@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://www.limewire.com/schemas/audio.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
-<mapping>
-	<network name="ed2k" value="Audio"/>
-</mapping>
-<element name="audios">
-  <complexType>
-      <element name="audio" type="audioType" minOccurs="1" maxOccurs="unbounded"/>
-  </complexType>
-</element>     
+	<mapping>
+		<network name="ed2k" value="Audio"/>
+	</mapping>
+	<simpleType name="GUIDType">
+		<restriction base="string">
+			<pattern value="\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}"/>
+		</restriction>
+	</simpleType>
+	<element name="audios">
+		<complexType>
+			<element name="audio" type="audioType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>
 	<complexType name="audioType">
 		<all>
 			<attribute name="title" type="string"/>
 			<attribute name="artist" type="string"/>
-            <attribute name="albumArtist" type="string"/>
-            <attribute name="origArtist" type="string"/>
+			<attribute name="albumArtist" type="string"/>
+			<attribute name="origArtist" type="string"/>
 			<attribute name="album" type="string"/>
 			<attribute name="origAlbum" type="string"/>
-            <attribute name="type">
-            	<simpleType base="string">
+			<attribute name="type">
+				<simpleType base="string">
 					<enumeration value="Album"/>
 					<enumeration value="Live"/>
 					<enumeration value="Soundtrack"/>
@@ -29,15 +34,15 @@
 					<enumeration value="Audiobook"/>
 					<enumeration value="Non-Album Track"/>
 					<enumeration value="Other"/>
-             	</simpleType>
-            </attribute>
-            <attribute name="albumStatus">
-             	<simpleType base="string">
+				</simpleType>
+			</attribute>
+			<attribute name="albumStatus">
+				<simpleType base="string">
 					<enumeration value="Official"/>
 					<enumeration value="Bootleg"/>
 					<enumeration value="Advance"/>
-             	</simpleType>
-            </attribute>
+				</simpleType>
+			</attribute>
 			<attribute name="genre">
 				<simpleType base="string">
 					<enumeration value="Acapella"/>
@@ -82,7 +87,7 @@
 					<enumeration value="Death Metal"/>
 					<enumeration value="Disco"/>
 					<enumeration value="Dream"/>
-                    <enumeration value="Drum &amp; Bass"/>
+					<enumeration value="Drum &amp; Bass"/>
 					<enumeration value="Drum Solo"/>
 					<enumeration value="Duet"/>
 					<enumeration value="Easy Listening"/>
@@ -189,10 +194,10 @@
 					<enumeration value="World"/>
 				</simpleType>
 			</attribute>
-            <attribute name="track" type="string"/>
-            <attribute name="disc" type="string"/>
+			<attribute name="track" type="string"/>
+			<attribute name="disc" type="string"/>
 			<attribute name="year" type="year"/>
-            <attribute name="origYear" type="year"/>
+			<attribute name="origYear" type="year"/>
 			<attribute name="seconds" type="int"/>
 			<attribute name="bitrate">
 				<simpleType base="short">
@@ -215,7 +220,7 @@
 					<enumeration value="256-320"/>
 				</simpleType>
 			</attribute>
-            <attribute name="sampleRate">
+			<attribute name="sampleRate">
 				<simpleType base="int">
 					<enumeration value="8000"/>
 					<enumeration value="11025"/>
@@ -226,11 +231,11 @@
 					<enumeration value="96000"/>
 					<enumeration value="192000"/>
 				</simpleType>
-            </attribute>
+			</attribute>
 			<attribute name="channels">
 				<simpleType base="short">
-					 <enumeration value="1"/>
-					 <enumeration value="2"/>
+					<enumeration value="1"/>
+					<enumeration value="2"/>
 				</simpleType>
 			</attribute>
 			<attribute name="soundType">
@@ -239,14 +244,14 @@
 					<enumeration value="Stereo"/>
 					<enumeration value="Joint Stereo"/>
 					<enumeration value="Dual Channel"/>
-                    <enumeration value="Multichannel"/>
+					<enumeration value="Multichannel"/>
 				</simpleType>
 			</attribute>
 			<attribute name="language">
 				<simpleType base="string">
-                    <enumeration value="Chinese"/>
+					<enumeration value="Chinese"/>
 					<enumeration value="Danish"/>
-                    <enumeration value="Dutch"/>
+					<enumeration value="Dutch"/>
 					<enumeration value="English"/>
 					<enumeration value="French"/>
 					<enumeration value="German"/>
@@ -254,55 +259,66 @@
 					<enumeration value="Korean"/>
 					<enumeration value="Japanese"/>
 					<enumeration value="Mandarin"/>
-                    <enumeration value="None"/>
+					<enumeration value="None"/>
 					<enumeration value="Russian"/>
 					<enumeration value="Spanish"/>
 				</simpleType>
 			</attribute>
 			<attribute name="source">
 				<simpleType base="string">
-				        <enumeration value="CD Rip"/>
-				        <enumeration value="DVD Audio Rip"/>
-				        <enumeration value="Online Music Store"/>
-				        <enumeration value="Live Recording"/>
-				        <enumeration value="LP Recording"/>
-				        <enumeration value="Tape Recording"/>
-				        <enumeration value="TV Recording"/>
+					<enumeration value="CD Rip"/>
+					<enumeration value="DVD Audio Rip"/>
+					<enumeration value="Online Music Store"/>
+					<enumeration value="Live Recording"/>
+					<enumeration value="LP Recording"/>
+					<enumeration value="Tape Recording"/>
+					<enumeration value="TV Recording"/>
 				</simpleType>
 			</attribute>
-            <attribute name="composer" type="string"/>
-            <attribute name="publisher" type="string"/>
-            <attribute name="producer" type="string"/>
-            <attribute name="lyricist" type="string"/>
-            <attribute name="origLyricist" type="string"/>
-            <attribute name="arranger" type="string"/>
-            <attribute name="performer" type="string"/>
-            <attribute name="conductor" type="string"/>
-            <attribute name="copyright" type="string"/>
+			<attribute name="composer" type="string"/>
+			<attribute name="publisher" type="string"/>
+			<attribute name="producer" type="string"/>
+			<attribute name="lyricist" type="string"/>
+			<attribute name="origLyricist" type="string"/>
+			<attribute name="arranger" type="string"/>
+			<attribute name="performer" type="string"/>
+			<attribute name="conductor" type="string"/>
+			<attribute name="copyright" type="string"/>
 			<attribute name="encoder" type="string"/>
-            <attribute name="encodedby" type="string"/>
+			<attribute name="encodedby" type="string"/>
 			<attribute name="description">
 				<simpleType base="string">
 					<maxInclusive value="1024"/>
 				</simpleType>
 			</attribute>
-            <attribute name="qualitynotes" type="string"/>
+			<attribute name="qualitynotes" type="string"/>
 			<attribute name="keywords" type="string"/>
-            <attribute name="releasegroup" type="string"/>
-            <attribute name="releasegroupLink" type="uriReference"/>
+			<attribute name="releasegroup" type="string"/>
+			<attribute name="releasegroupLink" type="uriReference"/>
 			<attribute name="releaseDate" type="string"/>
 			<attribute name="distributer" type="string"/>
 			<attribute name="distributerLink" type="uriReference"/>
 			<attribute name="link" type="uriReference"/>
 			<attribute name="DRM" type="boolean"/>
-
-            <attribute name="mbalbumid" type="string"/>
-            <attribute name="mbalbumartistid" type="string"/>
-            <attribute name="mbartistid" type="string"/>
-            <attribute name="mbpuid" type="string"/>
-            <attribute name="mbtrmid" type="string"/>
-            <attribute name="mbuniquefileid" type="string"/>
-            <attribute name="cddb" type="string"/>
+			<attribute name="mbalbumid">
+				<simpleType base="GUIDType"/>
+			</attribute>
+			<attribute name="mbalbumartistid">
+				<simpleType base="GUIDType"/>
+			</attribute>
+			<attribute name="mbartistid">
+				<simpleType base="GUIDType"/>
+			</attribute>
+			<attribute name="mbpuid">
+				<simpleType base="GUIDType"/>
+			</attribute>
+			<attribute name="mbtrmid">
+				<simpleType base="GUIDType"/>
+			</attribute>
+			<attribute name="mbuniquefileid">
+				<simpleType base="GUIDType"/>
+			</attribute>
+			<attribute name="cddb" type="string"/>
 		</all>
 	</complexType>
 </schema>
