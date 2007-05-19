@@ -43,6 +43,7 @@ public:
 	CString		m_sTitle;
 	BOOL		m_bElement;
 	BOOL		m_bNumeric;
+	BOOL		m_bGUID;
 	BOOL		m_bYear;
 	BOOL		m_bIndexed;
 	BOOL		m_bSearched;

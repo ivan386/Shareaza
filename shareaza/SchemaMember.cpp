@@ -40,6 +40,7 @@ CSchemaMember::CSchemaMember(CSchema* pSchema)
 : m_pSchema(pSchema)
 , m_bNumeric(FALSE)
 , m_bYear(FALSE)
+, m_bGUID(FALSE)
 , m_bIndexed(FALSE)
 , m_bSearched(FALSE)
 , m_nMinOccurs(0)
@@ -106,6 +107,12 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 	{
 		int nYear = 0;
 		if ( _stscanf( strValue, L"%i", &nYear ) != 1 || nYear < 1000 || nYear > 9999 ) 
+			strValue.Empty();
+	}
+	else if ( m_bGUID && strValue.GetLength() )
+	{
+		Hashes::Guid tmp;
+		if ( !( GUIDX::Decode( strValue, &tmp[ 0 ] ) && tmp.validate() ) )
 			strValue.Empty();
 	}
 
@@ -193,7 +200,8 @@ BOOL CSchemaMember::LoadSchema(CXMLElement* pRoot, CXMLElement* pElement)
 
 	m_bNumeric = ( m_sType == L"short" || m_sType == L"int" || m_sType == L"decimal" );
 	m_bYear = m_sType == L"year";
-	
+	m_bGUID = m_sType == L"guidtype";
+
 	CString strValue = pElement->GetAttributeValue( L"minOccurs", L"0" );
 	_stscanf( strValue, L"%i", &m_nMinOccurs );
 	strValue = pElement->GetAttributeValue( L"maxOccurs", L"65536" );
@@ -226,6 +234,7 @@ BOOL CSchemaMember::LoadType(CXMLElement* pType)
 
 	m_bNumeric = ( m_sType == L"short" || m_sType == L"int" || m_sType == L"decimal" );
 	m_bYear = m_sType == L"year";
+	m_bGUID = m_sType == L"guidtype";
 	
 	for ( POSITION pos = pType->GetElementIterator() ; pos ; )
 	{
