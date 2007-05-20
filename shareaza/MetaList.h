@@ -41,6 +41,7 @@ public:
 // Attributes
 protected:
 	CList< CMetaItem* >	m_pItems;
+	BOOL	m_bMusicBrainz;
 
 // Operations
 public:
@@ -57,6 +58,9 @@ public:
 	void		ComputeWidth(CDC* pDC, int& nKeyWidth, int& nValueWidth);
 	CMetaItem*	HitTest(const CPoint& point, BOOL bLinksOnly = FALSE);
 	BOOL		OnSetCursor(CWnd* pWnd);
+
+private:
+	BOOL		IsMusicBrainz() const;
 	
 // Inline Operations
 public:
@@ -95,6 +99,7 @@ public:
 	CSchemaMember*	m_pMember;
 	CString			m_sKey;
 	CString			m_sValue;
+	BOOL			m_bValueDefined;
 	CMap< CString, const CString&, int, int > m_pVote;
 public:
 	CRect			m_rect;
@@ -111,6 +116,7 @@ public:
 	BOOL			Limit(int nMaxLength);
 	BOOL			CreateLink();
 	CAlbumFolder*	GetLinkTarget(BOOL bHTTP = TRUE) const;
+	CString			GetMusicBrainzLink() const;
 
 	inline void SetRect(int x1, int y1, int x2, int y2)
 	{
@@ -119,7 +125,6 @@ public:
 		m_rect.right	= x2;
 		m_rect.bottom	= y2;
 	}
-
 };
 
 

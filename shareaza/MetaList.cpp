@@ -34,14 +34,14 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-CString strMultiple; // Translation string
+CString g_strMultiple; // Translation string
 
 //////////////////////////////////////////////////////////////////////
 // CMetaList construction
 
 CMetaList::CMetaList()
 {
-	LoadString( strMultiple, IDS_MULTIPLE );
+	LoadString( g_strMultiple, IDS_MULTIPLE );
 }
 
 CMetaList::~CMetaList()
@@ -88,6 +88,23 @@ CMetaItem* CMetaList::Find(LPCTSTR pszKey) const
 	return NULL;
 }
 
+BOOL CMetaList::IsMusicBrainz() const
+{
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CMetaItem* pItem = GetNext( pos );
+		if ( pItem->m_pMember && pItem->m_sValue.GetLength() && 
+			 pItem->m_sValue != g_strMultiple )
+		{
+			if ( pItem->m_pMember->m_sName == L"mbalbumid" ||
+				 pItem->m_pMember->m_sName == L"mbartistid" ||
+				 pItem->m_pMember->m_sName == L"mbpuid" )
+				 return TRUE;
+		}
+	}
+	return FALSE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CMetaList remove a key by name
 
@@ -131,6 +148,13 @@ void CMetaList::Setup(CSchema* pSchema, BOOL bClear)
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
 		m_pItems.AddTail( new CMetaItem( pMember ) );
 	}
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CMetaItem* pItem = GetNext( pos );
+		if ( pItem->m_sValue.GetLength() )
+			pItem->m_bValueDefined = TRUE;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -144,6 +168,8 @@ void CMetaList::Combine(CXMLElement* pXML)
 	{
 		GetNext( pos )->Combine( pXML );
 	}
+
+	m_bMusicBrainz = IsMusicBrainz();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -248,6 +274,8 @@ CMetaItem* CMetaList::HitTest(const CPoint& point, BOOL bLinksOnly)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CMetaItem* pItem = GetNext( pos );
+		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
+
 		if ( pItem->m_rect.PtInRect( point ) )
 		{
 			if ( bLinksOnly && ! pItem->m_bLink ) return NULL;
@@ -277,12 +305,13 @@ BOOL CMetaList::OnSetCursor(CWnd* pWnd)
 //////////////////////////////////////////////////////////////////////
 // CMetaItem construction
 
-CMetaItem::CMetaItem(CSchemaMember* pMember) : m_rect( 0, 0, 0, 0 )
+CMetaItem::CMetaItem(CSchemaMember* pMember)
+: m_rect( 0, 0, 0, 0 )
+, m_pMember(pMember)
+, m_bLink(FALSE)
+, m_bValueDefined(FALSE)
+, m_sKey(pMember ? m_pMember->m_sTitle : L"")
 {
-	m_pMember	= pMember;
-	m_bLink		= FALSE;
-	
-	if ( m_pMember ) m_sKey = m_pMember->m_sTitle;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -297,17 +326,16 @@ BOOL CMetaItem::Combine(CXMLElement* pXML)
 	strValue.TrimLeft();
 	strValue.TrimRight();
 	
-	if ( strValue.IsEmpty() ) return FALSE;
-	
-	if ( m_sValue.IsEmpty() )
+	if ( !m_bValueDefined )
 	{
 		m_sValue = strValue;
 	}
 	else if ( m_sValue != strValue )
 	{
-		m_sValue = strMultiple;
+		m_sValue = g_strMultiple;
 	}
 	
+	m_bValueDefined = TRUE;
 	int nVote = 1;
 	if ( m_pVote.Lookup( strValue, nVote ) ) nVote ++;
 	m_pVote.SetAt( strValue, nVote );
@@ -320,7 +348,7 @@ BOOL CMetaItem::Combine(CXMLElement* pXML)
 
 void CMetaItem::Vote()
 {
-	if ( m_sValue != strMultiple ) return;
+	if ( m_sValue != g_strMultiple ) return;
 	
 	int nBest = 0;
 	
@@ -352,7 +380,7 @@ BOOL CMetaItem::Limit(int nMaxLength)
 	}
 	else if ( nMaxLength > 0 && m_sValue.GetLength() > nMaxLength )
 	{
-		m_sValue = m_sValue.Left( nMaxLength ) + _T("...");
+		m_sValue = m_sValue.Left( nMaxLength ) + _T('\x2026');
 	}
 	
 	return TRUE;
@@ -412,4 +440,25 @@ CAlbumFolder* CMetaItem::GetLinkTarget(BOOL bHTTP) const
 	return LibraryFolders.GetAlbumTarget(	m_pMember->m_sLinkURI,
 											m_pMember->m_sLinkName,
 											m_sLink );
+}
+
+CString CMetaItem::GetMusicBrainzLink() const
+{
+	if ( m_pMember == NULL || m_sValue.IsEmpty() ) 
+		return CString();
+
+	if ( m_pMember->m_sName == L"mbalbumid" )
+	{
+		return L"http://musicbrainz.org/release/" + m_sValue + L".html";
+	}
+	else if ( m_pMember->m_sName == L"mbartistid" )
+	{
+		return L"http://musicbrainz.org/artist/" + m_sValue + L".html";
+	}
+	else if ( m_pMember->m_sName == L"mbpuid" )
+	{
+		return L"http://musicbrainz.org/show/puid/?matchesonly=0&amp;puid=" + m_sValue;
+	}
+
+	return CString();
 }
