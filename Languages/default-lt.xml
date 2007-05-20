@@ -2031,16 +2031,6 @@
 		<newline gap="8"/>
 		<text>„Shareaza“ liovėsi bandžiusi jungtis, tam kad nebūtų prarasta adresatų talpykla.</text>
 	</document>
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Aptiktas susijungimų bandymų apribojimas</text>
-		<newline gap="8"/>
-		<text>„Shareaza“ aptiko Windows XP Service Pack 2 ar panašią sistemą, kurioje yra nustatytas susijungimų apribojimas
-		visoms programoms.</text>
-		<newline gap="8"/>
-		<text>„Shareaza“ sumažino tinklo susijungimų skaičių ir nustatė tam tikras numatytąsias reikšmes,
-		kad užtikrintų deramą veikimą, tačiau našumas gali šiek tiek sumažėti. Aplankykite „Shareaza“ forumus,
-		jei reikalinga papildoma informacija ir norite sužinoti paskutines naujienas.</text>
-	</document>
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Turinio suaugusiems filtras yra įgalintas</text>
 		<newline gap="8"/>
