@@ -2045,17 +2045,6 @@
 		<newline gap="8"/>
 		<text>Shareaza tüm host belleklerin yitirilmesine engel olmak için bağlantı girişimlerini kesti.</text>
 	</document>
-	
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Limitli yarı açık bağlantı bulundu</text>
-		<newline gap="8"/>
-		<text>Shareaza Windows XP Service Pack 2 (ya da benzer bir ortam) buldu. 
-		Bağlantı sayısı sınırlama uygulamaları derhal denenebilir.</text>
-		<newline gap="8"/>
-		<text>Shareaza düzgün bir çalışmayı garantilemek için ağ bağlantılarını sınırladı ve 
-		kendine ayrılacak değerleri belirledi, yine de performansta azalma olabilir. Lütfen 
-		daha fazla bilgi için Shareaza forumları ziyaret edin ve yenilikleri öğrenin.</text>
-	</document>
 
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Gelişmiş içerik filtresi etkin kılındı</text>

@@ -2057,17 +2057,6 @@
 		<text>Shareaza se više ne pokušava spojiti da izbjegne mogući gubitak svih hostova u cachu.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Otkriven je limit istovremenih veza</text>
-		<newline gap="8"/>
-		<text>Shareaza je pronašla Windows XP Service Pack 2 ili nešto slično. Broj istovremenih veza
-		na vašem računalu je ograničen.</text>
-		<newline gap="8"/>
-		<text>Shareaza je ograničila broj veza i podesila svoje postavke da osigura
-	siguran rad, međutim može doći do pada brzine. Ukoliko imate problema sa Shareazom, želite
-		saznati više informacija ili pročitati novosti posjetite naš forum.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Filter za sadržaje za odrasle je uključen</text>
 		<newline gap="8"/>

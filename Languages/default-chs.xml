@@ -2060,16 +2060,6 @@
 		<text>Shareaza 已停止连接，以防止丢失已存入缓存的主机。</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">检测半开放连接限制</text>
-		<newline gap="8"/>
-		<text>Shareaza 已经检测到 Windows XP Service Pack 2 (或者一个相似的环境)。它会限制应用程序一次试图连接的数量。</text>
-		<newline gap="8"/>
-		<text>Shareaza 已经限制了网络连接并设置了合适的默认值
-		以保证适当的操作，但是性能可能会降低。请访问 Shareaza
-		论坛以获取更多信息，以及最近新闻。</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">成人内容过滤已启用</text>
 		<newline gap="8"/>

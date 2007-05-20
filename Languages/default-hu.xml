@@ -2036,15 +2036,6 @@
 		<newline gap="8"/>
 		<text>A Shareaza nem próbálkozik tovább a kapcsolódással, hogy meggátolja a letárolt kiszolgálók elvesztését.</text>
 	</document>
-<document name="GeneralHelp.XPsp2">
-	<text format="b">Korlátozott kapcsolatkísérletek</text>
-	<newline gap="8"/>
-	<text>A Shareaza észlelte a Windows XP SP2 jelenlétét (vagy valami hasonló helyzetet). A TCP/IP elérte az egyidejű TCP
-	kapcsolatkísérletek számára vonatkozó korlátot.</text>
-	<newline gap="8"/>
-	<text>A Shareaza csökkentette a kapcsolatok számát és beállította a megfelelő értékeket, de
-	a teljesítmény így csökkenhet. További információkért látogassa meg a Shareaza fórumait.</text>
-	</document>
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Felnőtt tartalom szűrése</text>
 		<newline gap="8"/>

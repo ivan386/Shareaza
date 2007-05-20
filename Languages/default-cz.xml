@@ -2064,17 +2064,6 @@
 		<text>Shareaza zastavila spojení a pokusí se zabránit ztrátám všech načtených hostitelů.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Byla zjištěna jen polovina otevřeného limitu pro připojení</text>
-		<newline gap="8"/>
-		<text>Shareaza objevila Windows XP Service Pack 2. Toto omezí počet spojení
-    které se mohou pokusit připojit najednou.</text>
-		<newline gap="8"/>
-		<text>Shareaza má omezené připojení na síť, nastavením vhodných standardních hodnot
-    zabezpečíte správnou činnost, ale výkon může být snížen. Pro další informace
-    prosím navštivte diskuze Shareazy a aktuální novinky.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Aktivovace filtru pro dospělé-Adult</text>
 		<newline gap="8"/>

@@ -2064,17 +2064,6 @@
 		<text>Shareaza on pysyttnyt yhdistys yritykset jotta kaikkia kyttji jotka ovat vlimuistissa ei hukattaisi.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Windows XP Service Pack 2 tunnistettu</text>
-		<newline gap="8"/>
-		<text>Shareaza on tunnistanut ett sinulla on Windows XP Service Pack 2. Tm rajoittaa yhteyksien
-		mr mit ohjelma voi ottaa kerralla.</text>
-		<newline gap="8"/>
-		<text>Shareaza on rajoittanut verkko yhteyksien mr ja asettanut oikeat arvot
-		varmistaakseen toimivuuden kuitenkin tehoa voidaan vhent. Ole hyv ja ky Shareazan
-		foorumeissa saadaksesi enemmn tietoa ja uusimmat uutiset.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Aikuisviihde suodatus on pll</text>
 		<newline gap="8"/>

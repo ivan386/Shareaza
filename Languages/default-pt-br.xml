@@ -2030,16 +2030,6 @@
 		<newline gap="8"/>
 		<text>O Shareaza parou as tentativas de conexão para evitar perder todos os Hosts armazenados.</text>
 	</document>
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Limite de Conexões meio abertas detectado</text>
-		<newline gap="8"/>
-		<text>O Shareaza detectou o Windows XP Service Pack 2 (ou um meio ambiente similar). Isto
-		restringe o número de conexões que as aplicações podem tentar de uma vez.</text>
-		<newline gap="8"/>
-		<text>O Shareaza limitou as conexões e pôs valores padrões apropriados para
-        garantir o funcionamento normal, entretando a performance pode ser levemente reduzida. Por favor visite os
-		fóruns do Shareaza para mais informações, e notícias atualizadas.</text>
-	</document>
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Filtro de conteúdo adulto ativado</text>
 		<newline gap="8"/>

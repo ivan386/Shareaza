@@ -2060,17 +2060,6 @@
 		<text>Shareaza ha cesado los intentos de conexión para no perder los hosts que estan en el cache.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Windows XP Service Pack 2 detectado</text>
-		<newline gap="8"/>
-		<text>Shareaza ha detectado que tienes Windows XP Service Pack 2.
-		Esto hace una restrición del número de conexiones que puedes hacer al mismo tiempo.</text>
-		<newline gap="8"/>
-		<text>Shareaza ha limitado las conexiones y puesto valores para asegurar una operación propia,
-		de todas maneras el rendimiento es un poco más bajo. Por favor visita los
-		foros de Shareaza para más información, y noticias nuevas..</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Habilitado filtro de contenido solo apto para adultos</text>
 		<newline gap="8"/>

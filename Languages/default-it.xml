@@ -2110,17 +2110,6 @@
 		<text>Shareaza ha cessato i tentativi di connessione per evitare di perdere tutti gli host nella cache.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Rilevato limite dei tentativi di connessione</text>
-		<newline gap="8"/>
-		<text>Shareaza ha rilevato Windows XP Service Pack 2 (o un ambiente simile). Questo riduce il numero di connessioni
-		che l'applicazione può effettuare nello stesso momento.</text>
-		<newline gap="8"/>
-		<text>Shareaza ha connessioni limitate nella rete e seleziona valori appropriati per
-		assicurare corrette operazioni, tuttavia le prestazioni possone essere ridotte. Vai nei forum di Shareaza
-		per ottenere ulteriori informazioni, e novità sull'argomento.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Filtro per contenuto adatto per adulti abilitato</text>
 		<newline gap="8"/>

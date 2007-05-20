@@ -2078,18 +2078,6 @@
 		<newline gap="8"/>
 		<text>Shareaza ha aturat els intents de connexió per a no perdre els servidors que estan al caxè.</text>
 	</document>
-
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Windows XP Service Pack 2 detectat</text>
-		<newline gap="8"/>
-		<text>Shareaza ha detectat que tens instal·lat el Service Pack 2 de Windows XP.
-		Això provoca una restricció del nombre de connexions que pots fer al mateix temps.</text>
-		<newline gap="8"/>
-		<text>Shareaza ha limitat les connexions i posat valors per a assegurar una operació bona,
-		però, de totes formes, el rendiment serà un poc més baix. Si us plau, visita els
-		fòrums de Shareaza per a més informació.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Habilitat filtre de contingut sols apte per a adults</text>
 		<newline gap="8"/>

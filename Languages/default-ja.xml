@@ -2115,17 +2115,6 @@
 		<text>Shareazaは全てのキャッシュ済みホストの損失を避ける為、接続試行を中止しています。</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">半オープン接続制限を検出しました</text>
-		<newline gap="8"/>
-		<text>ShareazaはWindows XP Service Pack 2(又はそれと同等な環境)を検出しました。
-		このSP2が適用されていると、アプリケーションが一度に使用する接続数が制限されます。</text>
-		<newline gap="8"/>
-		<text>Shareazaのネットワーク接続数が制限され、適切に動作するように最適なデフォルト値に
-		設定されました。しかしShareazaの性能はかなり損なわれることになります。
-		詳細はShareazaフォーラムで最新の情報を見て下さい。</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">18禁フィルタが有効になっています</text>
 		<newline gap="8"/>

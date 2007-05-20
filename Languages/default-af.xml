@@ -2061,18 +2061,6 @@
 		<newline gap="8"/>
 		<text>Shareaza het alle konneksies gestaak, sodat bekende gashere nie verlore gaan nie.</text>
 	</document>
-
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Half open konneksie beperking opgemerk</text>
-		<newline gap="8"/>
-		<text>Shareaza het Windows XP Service Pack 2 (of 'n soortgelyke omgewing) raakgesien. Dit
-		beperk die hoeveelheid konneksies wat programme op een slag kan maak.</text>
-		<newline gap="8"/>
-		<text>As gevolg hiervan het Shareaza die hoeveelheid netwerk konneksies beperk en is die
-		instellings outomaties verander om normale uitvoering te verseker, alhoewel werkverrigting
-		daaronder mag ly. Besoek gerus die Shareaza forums vir verdere inligting, en die jongste nuus.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Volwasse inhoud filter aangeskakel</text>
 		<newline gap="8"/>

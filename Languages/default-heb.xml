@@ -2064,15 +2064,6 @@
 		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">‫מערכת הפעלה חלונות XP עם חבילת הרחבה SP2 זוהתה.</text>
-		<newline gap="8"/>
-		<text>‫שרזה זיהתה שמערכת הפעלה חלונות XP עם חבילת שירות SP2 מותקנת על מחשבך, הדבר מגביל את מספר החיבורים שתוכניות יכולות לבצע בו-זמנית.</text>
-		<newline gap="8"/>
-		<text>‫שרזה הגביל את מספר חיבורי הרשת וקבע ערכי ברירת-מחדל מתאימים, בכדי לשמור על פעולה תקינה.
-‫		.עם זאת, הביצועים עלולים להפגע. אנא בקר בפורומים של שרזה למידע נוסף, ועדכונים</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>

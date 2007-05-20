@@ -2060,17 +2060,6 @@
 		gostiteljev.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Zaznana je omejitev omrežnih povezav v operacijskem sistemu</text>
-		<newline gap="8"/>
-		<text>Shareaza je zaznala operacijski sistem Windows XP Service Pack 2 (ali njemu podobno okolje).
-		Ta omejuje število hkratnih omrežnih povezav, ki jih ima lahko posamezna aplikacija.</text>
-		<newline gap="8"/>
-		<text>Shareaza je omejila omrežne povezave s ciljem zagotavljanja ustreznega delovanja sistema.
-		Žal je vse to na ceno nekoliko slabše kvalitete delovanja. Za dodatne informacije in najnovejše novice
-		vas vabimo, da obiščete Shareaza spletne forume.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Omogočeno je filtriranje vsebin za odrasle</text>
 		<newline gap="8"/>

@@ -2057,17 +2057,6 @@
 		<text>Το Shareaza έχει σταματήσει τις προσπάθειες σύνδεσης για να αποφευθεί το χάσιμο όλων των cached hosts.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Το Windows XP Service Pack 2 έχει εντοπιστεί</text>
-		<newline gap="8"/>
-		<text>Το Shareaza έχει εντοπίσει το Windows XP Service Pack 2. Αυτό περιορίζει τον αριθμό των συνδέσεων
-		που οι εφαρμογές δοκιμάζουν κάθε φορά.</text>
-		<newline gap="8"/>
-		<text>Το Shareaza έχει λιγοστές συνδέσεις δικτύου και έβαλε τις κατάλληλες προκαθορισμένες τιμές για να
-		σιγουρέψει την σωστή λειτουργεία, αλλά η απόδοση ίσως χαμηλώσει. Παρακαλώ επισκεφτείτε τα forums
-		του Shareaza για περισσότερες πληροφορίες, και ενημερωμένα νέα.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Το Φίλτρο για ενηλίκους έχει ενεργοποιηθεί</text>
 		<newline gap="8"/>

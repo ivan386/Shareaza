@@ -2040,14 +2040,6 @@
 		<text>Shareaza 已停止嘗試連線以避免失去所有已快取主機.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">偵測到半開連線數限制</text>
-		<newline gap="8"/>
-		<text>Shareaza 偵測到 Windows XP Service Pack 2 (或是類似的環境). SP2 限制程式一次最多可以發出多少連線.</text>
-		<newline gap="8"/>
-		<text>Shareaza 已經限制網路連線並設定適當預設值以確保運作正常, 不過效能可能稍微下降. 請查看 Shareaza 討論區取得更多資訊與最新消息.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">已啟用成人內容過濾</text>
 		<newline gap="8"/>

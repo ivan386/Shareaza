@@ -2026,16 +2026,6 @@
 		<newline gap="8"/>
 		<text>Shareaza po i ndal orvatjet për lidhje që të shmangë humbjen e ndonjë hosti në depo.</text>
 	</document>
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">u Diktua kufi gjysmë i hapur i Lidhjes</text>
-		<newline gap="8"/>
-		<text>Shareaza diktoi Windows XP Service Pack 2 (ose mjedis i ngjashëm). Ky e kufizon 
-		numrin e lidhjeve që aplikimet mund të orvatin në një kohë.</text>
-		<newline gap="8"/>
-		<text>Shareaza ka lidhje të kufizuar me rrjetin dhe vendosi vlerat tipike të duhura për të 
-		siguruar veprimin normal, gjithsesi efektshmëria mund të ulet lehtë. Për më tepër informacion 
-		dhe lajme të ridatuara, ju lutemi vizitoni forumet në Shareaza.</text>
-	</document>
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Filtrimi i përmbajtjeve për të rritur u aktivizua</text>
 		<newline gap="8"/>

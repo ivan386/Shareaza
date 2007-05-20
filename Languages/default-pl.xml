@@ -2054,16 +2054,6 @@
 		<text>Shareaza przerwała próby połączenia, aby zapobiec utracie wszystkich hosatów z cache'u.</text>
 	</document>
 
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Wykryto Windows XP Service Pack 2</text>
-		<newline gap="8"/>
-		<text>Shareaza wykryła Windows XP Service Pack 2. On limituje liczbę połączeń możliwych w danym momencie.</text>
-		<newline gap="8"/>
-		<text>Shareaza zlimitowała liczbę połączeń z siecią, aby zapewnić odpowiednią operatywność,
-		jednak wydajność może ulec zmniejszeniu. Odwiedź forum Shareazy
-		po dalsze informacje i nowe wiadomości.</text>
-	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Filtr treści dla dorosłych włączony</text>
 		<newline gap="8"/>

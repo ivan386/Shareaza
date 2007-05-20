@@ -2014,13 +2014,6 @@ Other:
 		<newline gap="8"/>
 		<text>Shareaza a cessé ses tentatives de connexion afin d'éviter de perdre tous les hôtes de votre cache.</text>
 	</document>
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Limite sur les connexions semi-ouvertes détectée</text>
-		<newline gap="8"/>
-		<text>Shareaza a détecté Windows XP service pack 2 (ou un environnement similaire). Ceci restreint le nombre de connexions que les applications peuvent tenter en même temps.</text>
-		<newline gap="8"/>
-		<text>Shareaza a limité les connexions réseau et a mis en place les valeurs appropriées par défaut pour assurer une bonne opérabilité, cependant les performances peuvent en être légèrement réduites. Merci de visiter les forums Shareaza pour plus d'information, et les nouvelles mises à jour.</text>
-	</document>
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Filtre du contenu adulte activé</text>
 		<newline gap="8"/>
