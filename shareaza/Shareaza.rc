@@ -967,6 +967,7 @@ IDB_SCHEDULER_TIMESLICES BITMAP                  "Res\\TimeSlices.bmp"
 IDB_SHELL_BASE_RTL      BITMAP                  "res\\ShellBaseRTL.bmp"
 IDB_NAVBAR_IMAGE_RTL    BITMAP                  "Res\\NavbarRTL.bmp"
 IDB_NAVBAR_ALPHA_RTL    BITMAP                  "Res\\NavbarAlphaRTL.bmp"
+IDB_MUSICBRAINZ_LOGO    BITMAP                  "Res\\MusicBrainz.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

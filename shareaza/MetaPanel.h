@@ -1,7 +1,7 @@
 //
 // MetaPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,6 +44,8 @@ public:
 public:
 	int		m_nHeight;
 
+protected:
+    CBitmap m_bmMusicBrainz;
 };
 
 #endif // !defined(AFX_METAPANEL_H__D5B8BC2C_86FB_4B82_B0B9_F82623F9CB3F__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // MetaPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,13 +38,16 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 #define METAPANEL_KEY_WIDTH 120
+#define MUSICBRAINZ_HEIGHT 31
+#define MUSICBRAINZ_WIDTH 88
 
 //////////////////////////////////////////////////////////////////////
 // CMetaPanel construction
 
 CMetaPanel::CMetaPanel()
+: m_nHeight(0)
 {
-	m_nHeight = 0;
+	m_bmMusicBrainz.LoadBitmap( IDB_MUSICBRAINZ_LOGO );
 }
 
 CMetaPanel::~CMetaPanel()
@@ -142,8 +145,27 @@ int CMetaPanel::Layout(CDC* pDC, int nWidth)
 
 void CMetaPanel::Paint(CDC* pDC, const CRect* prcArea)
 {
-	POSITION pos = GetIterator();
 	CRect rcWork( prcArea );
+
+	if ( m_bMusicBrainz )
+	{
+		pDC->FillSolidRect( rcWork.left, rcWork.top, rcWork.Width(), MUSICBRAINZ_HEIGHT + 4,
+			CoolInterface.m_crWindow );
+
+		CDC dcMem;
+		dcMem.CreateCompatibleDC( pDC );
+
+		CBitmap* pOld = (CBitmap*)dcMem.SelectObject( &m_bmMusicBrainz );
+		pDC->BitBlt( rcWork.left, rcWork.top, MUSICBRAINZ_WIDTH, MUSICBRAINZ_HEIGHT,
+			&dcMem, 0, 0, SRCCOPY );
+		pDC->ExcludeClipRect( rcWork.left, rcWork.top, rcWork.right, rcWork.top + MUSICBRAINZ_HEIGHT + 4 );
+
+		dcMem.SelectObject( pOld );
+
+		rcWork.top += MUSICBRAINZ_HEIGHT + 4;
+	}
+
+	POSITION pos = GetIterator();
 	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
 	
 	for ( int nRow = 0 ; pos ; nRow++ )
