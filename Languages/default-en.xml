@@ -2030,16 +2030,6 @@
 		<newline gap="8"/>
 		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
 	</document>
-	<document name="GeneralHelp.XPsp2">
-		<text format="b">Half open connection limit detected</text>
-		<newline gap="8"/>
-		<text>Shareaza has detected Windows XP Service Pack 2 (or a similar environment). This
-		restricts the number of connections that applications can attempt at once.</text>
-		<newline gap="8"/>
-		<text>Shareaza has limited network connections and set appropriate default values to
-		ensure proper operation, however performance may be slightly reduced. Please visit the
-		Shareaza forums for further information, and up to date news.</text>
-	</document>
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>
