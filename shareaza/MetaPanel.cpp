@@ -39,7 +39,7 @@ static char THIS_FILE[]=__FILE__;
 
 #define METAPANEL_KEY_WIDTH 120
 #define MUSICBRAINZ_HEIGHT 31
-#define MUSICBRAINZ_WIDTH 88
+#define MUSICBRAINZ_WIDTH 200
 
 //////////////////////////////////////////////////////////////////////
 // CMetaPanel construction
