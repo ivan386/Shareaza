@@ -59,6 +59,7 @@ void CMetaList::Clear()
 		delete GetNext( pos );
 	}
 
+	m_bMusicBrainz = FALSE;
 	m_pItems.RemoveAll();
 }
 
