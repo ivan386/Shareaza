@@ -41,7 +41,6 @@ public:
 protected:
 	CArray< CString >	m_pPaths;
 	CArray< CString >	m_pTitles;
-	CArray< CString >	m_pPrompts;
 	CArray< CString >	m_pGUIDirs;
 	CArray< CString >	m_pLangCodes;
 	CImageList		m_pImages;
@@ -55,7 +54,7 @@ protected:
 	HCURSOR			m_hArrow;
 	HCURSOR			m_hHand;
 	CBitmap			m_bmHeader;
-	int				m_nLanguagesToDisplay;
+	int				m_nLanguagesPerCol;
 
 // Overrides
 public:
@@ -65,9 +64,8 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
-
+protected:
 	void	PaintItem(int nItem, CDC* pDC, CRect* pRect);
-	void	DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText);
 	void	AddEnglishDefault();
 	void	Enumerate(LPCTSTR pszPath = NULL);
 	BOOL	AddSkin(LPCTSTR pszPath, LPCTSTR pszName);

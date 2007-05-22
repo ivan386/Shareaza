@@ -53,6 +53,7 @@ END_MESSAGE_MAP()
 
 #define HEADING_HEIGHT	50
 #define ITEM_HEIGHT		40
+#define ITEM_WIDTH		200
 #define TEXT_MARGIN		0
 
 
@@ -104,28 +105,31 @@ BOOL CLanguageDlg::OnInitDialog()
 	m_pImages.Create( 32, 32, ILC_COLOR24|ILC_MASK, 1, 1 ) ||
 	m_pImages.Create( 32, 32, ILC_COLOR16|ILC_MASK, 1, 1 );
 
+	// Always include English as a choice
 	AddEnglishDefault();
+	// Add any other languages that are available
 	Enumerate();
 
 	m_nHover	= 0;
 	m_nDown		= 0;
 	m_bKeyMode	= FALSE;
 
-	CRect rc( 0, 0, 438, HEADING_HEIGHT );
+	CRect rc( 0, 0, ITEM_WIDTH * 3 + GetSystemMetrics( SM_CXVSCROLL ), HEADING_HEIGHT );
 
+	// Screens smaller than 768px only show 10 rows.
 	if ( GetSystemMetrics( SM_CYSCREEN ) < 768 )
-		m_nLanguagesToDisplay = int( min(m_pPaths.GetSize(), 10 ) );
+		m_nLanguagesPerCol = int( min( static_cast< int >( ceil( (float) m_pPaths.GetSize() / (float) 3 ) ), 10 ) );
 	else
-		m_nLanguagesToDisplay = int( min(m_pPaths.GetSize(), 14 ) );
+		m_nLanguagesPerCol = int( min( static_cast< int >( ceil( (float) m_pPaths.GetSize() / (float) 3 ) ), 14 ) );
 
-	rc.bottom += ( m_nLanguagesToDisplay ) * ITEM_HEIGHT;
+	rc.bottom += ( m_nLanguagesPerCol ) * ITEM_HEIGHT;
 
 	SCROLLINFO pScroll = {};
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE|SIF_DISABLENOSCROLL;
 	pScroll.nMin	= 0;
-	pScroll.nMax	= static_cast< int >( m_pPaths.GetSize() );
-	pScroll.nPage	= m_nLanguagesToDisplay + 1;
+	pScroll.nMax	= static_cast< int >( ceil( (float) m_pPaths.GetSize() / (float) 3 ) );
+	pScroll.nPage	= m_nLanguagesPerCol + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
 	//if ( m_pSkin )
@@ -170,10 +174,10 @@ void CLanguageDlg::OnPaint()
 	mdc.DeleteDC();
 
 	rc.top += HEADING_HEIGHT;
-	
+	rc.right = rc.left + ITEM_WIDTH;
 	CFont* pOldFont = (CFont*)dc.SelectObject( &m_fntNormal );
 
-	for ( int nCount = 0 ; nCount < m_pPaths.GetSize() ; nCount++ )
+	for ( int nCount = 0 ; nCount < m_pPaths.GetSize(); nCount += 3 )
 	{
 		if ( nScroll > 0 )
 		{
@@ -182,6 +186,25 @@ void CLanguageDlg::OnPaint()
 		else
 		{
 			PaintItem( nCount, &dc, &rc );
+			rc.OffsetRect( ITEM_WIDTH, 0 );
+			if ( nCount + 1 < m_pPaths.GetSize() )
+			{
+				PaintItem( nCount + 1, &dc, &rc );
+			}
+			else
+			{
+				dc.FillSolidRect( &rc, CoolInterface.m_crBackNormal );
+			}
+			rc.OffsetRect( ITEM_WIDTH, 0 );
+			if ( nCount + 2 < m_pPaths.GetSize() )
+			{
+				PaintItem( nCount + 2, &dc, &rc );
+			}
+			else
+			{
+				dc.FillSolidRect( &rc, CoolInterface.m_crBackNormal );
+			}
+			rc.OffsetRect( -ITEM_WIDTH * 2, 0 );
 			rc.OffsetRect( 0, rc.Height() );
 		}
 	}
@@ -250,58 +273,14 @@ void CLanguageDlg::PaintItem(int nItem, CDC* pDC, CRect* pRect)
 	CRect rcText(	rc.left + 46, rc.top + TEXT_MARGIN,
 					rc.right - TEXT_MARGIN, rc.top + 20 + TEXT_MARGIN );
 
+	rcText.OffsetRect( 0, 6 );
 	pDC->SetTextColor( bHover || bDown ? CoolInterface.m_crCmdTextSel : CoolInterface.m_crCmdText );
 	pDC->SelectObject( &m_fntBold );
 	pDC->ExtTextOut( rcText.left + 1, rcText.top + 1, ETO_CLIPPED|ETO_OPAQUE, &rcText,
 		m_pTitles.GetAt( nItem ), NULL );
 	pDC->ExcludeClipRect( &rcText );
-
-	rcText.left += 2;
-	rcText.top = rcText.bottom;
-	rcText.bottom = rc.bottom - TEXT_MARGIN;
-
-	pDC->SelectObject( &m_fntSmall );
-	DrawWrappedText( pDC, &rcText, m_pPrompts.GetAt( nItem ) );
-
 	pDC->FillSolidRect( &rc, crBack );
 }
-
-void CLanguageDlg::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText)
-{
-	CPoint pt = pBox->TopLeft();
-
-	LPCTSTR pszWord = pszText;
-	LPCTSTR pszScan = pszText;
-
-	for ( ; ; pszScan++ )
-	{
-		if ( *pszScan != NULL && (unsigned short)*pszScan > 32 ) continue;
-		
-		if ( pszWord < pszScan )
-		{
-			int nLen = static_cast< int >( pszScan - pszWord + ( *pszScan ? 1 : 0 ) );
-			CSize sz = pDC->GetTextExtent( pszWord, nLen );
-
-			if ( pt.x > pBox->left && pt.x + sz.cx > pBox->right )
-			{
-				pt.x = pBox->left;
-				pt.y += sz.cy;
-			}
-
-			CRect rc( pt.x, pt.y, pt.x + sz.cx, pt.y + sz.cy );
-
-			pDC->ExtTextOut( pt.x, pt.y, ETO_CLIPPED|ETO_OPAQUE, &rc,
-				pszWord, nLen, NULL );
-			pDC->ExcludeClipRect( &rc );
-			
-			pt.x += sz.cx;
-		}
-
-		pszWord = pszScan + 1;
-		if ( ! *pszScan ) break;
-	}
-}
-
 
 void CLanguageDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
@@ -365,7 +344,7 @@ void CLanguageDlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	if ( rc.PtInRect( point ) )
 	{
-		int nHover = ( point.y - rc.top ) / ITEM_HEIGHT + 1 + nScroll;
+		int nHover = ( ( point.y - rc.top ) / ITEM_HEIGHT + 1 + nScroll ) * 3 - 2 + ( point.x - rc.left ) / ITEM_WIDTH;
 
 		if ( nHover != m_nHover )
 		{
@@ -456,22 +435,77 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_ESCAPE:
 		PostMessage( WM_CLOSE );
 		return;
-	case VK_UP:
+	case VK_LEFT:
 		if ( ! m_nDown )
 		{
 			m_nHover--;
-			m_bKeyMode = TRUE;
+ 			m_bKeyMode = TRUE;
 			SCROLLINFO pInfo;
 			pInfo.cbSize	= sizeof(pInfo);
 			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
 			GetScrollInfo( SB_VERT, &pInfo );
-			if ( m_nHover < 1 )
+			if ( m_nHover <= 0 )
 			{
 				m_nHover = static_cast< int >( m_pPaths.GetSize() );
 				pInfo.nPos = pInfo.nMax;
 				SetScrollInfo( SB_VERT, &pInfo, TRUE );
 			}
-			else if ( m_nHover < pInfo.nPos + 1 )
+			else if ( m_nHover % 3 == 0 && m_nHover / 3 <= pInfo.nPos )
+			{
+				pInfo.nPos -= 1;
+				SetScrollInfo( SB_VERT, &pInfo, TRUE );
+			}
+
+			Invalidate();
+		}
+		return;
+	case VK_TAB:
+	case VK_RIGHT:
+		if ( ! m_nDown )
+		{
+			m_nHover++;
+ 			m_bKeyMode = TRUE;
+			SCROLLINFO pInfo;
+			pInfo.cbSize	= sizeof(pInfo);
+			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
+			GetScrollInfo( SB_VERT, &pInfo );
+			if ( m_nHover > m_pPaths.GetSize() )
+			{
+				m_nHover = 1;
+				pInfo.nPos = 0;
+				SetScrollInfo( SB_VERT, &pInfo, TRUE );
+			}
+			else if ( ( m_nHover - 1 ) / 3 > pInfo.nPos + m_nLanguagesPerCol - 1 )
+			{
+				pInfo.nPos += 1;
+				SetScrollInfo( SB_VERT, &pInfo, TRUE );
+			}
+
+			Invalidate();
+		}
+		return;
+	case VK_UP:
+		if ( ! m_nDown )
+		{
+			m_nHover -= 3;
+ 			m_bKeyMode = TRUE;
+			SCROLLINFO pInfo;
+			pInfo.cbSize	= sizeof(pInfo);
+			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
+			GetScrollInfo( SB_VERT, &pInfo );
+			if ( m_nHover == -2 )
+			{
+				m_nHover = static_cast< int >( m_pPaths.GetSize() );
+				pInfo.nPos = pInfo.nMax;
+				SetScrollInfo( SB_VERT, &pInfo, TRUE );
+			}
+			else if ( m_nHover < 1 )
+			{
+				m_nHover = static_cast< int >( m_pPaths.GetSize() ) + m_nHover - 1;
+				pInfo.nPos = pInfo.nMax;
+				SetScrollInfo( SB_VERT, &pInfo, TRUE );
+			}
+			else if ( ( m_nHover - 1 ) / 3 <= pInfo.nPos - 1 )
 			{
 				pInfo.nPos -= 1;
 				SetScrollInfo( SB_VERT, &pInfo, TRUE );
@@ -483,19 +517,27 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_DOWN:
 		if ( ! m_nDown )
 		{
-			m_nHover++;
+			if ( m_nHover == 0 )
+			{
+				m_nHover = 1;
+			}
+			else
+			{
+				m_nHover += 3;
+			}
 			m_bKeyMode = TRUE;
 			SCROLLINFO pInfo;
 			pInfo.cbSize	= sizeof(pInfo);
 			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
 			GetScrollInfo( SB_VERT, &pInfo );
-			if ( m_nHover > m_pPaths.GetSize() )
+
+			if ( m_nHover / 3 >= m_pPaths.GetSize() / 3 && m_nHover != m_pPaths.GetSize() )
 			{
-				m_nHover = 1;
+				m_nHover = m_nHover % 3 + 1;
 				pInfo.nPos = 0;
 				SetScrollInfo( SB_VERT, &pInfo, TRUE );
 			}
-			else if ( m_nHover > pInfo.nPos + m_nLanguagesToDisplay )
+			else if ( ( m_nHover - 1 )  / 3 >= pInfo.nPos + m_nLanguagesPerCol )
 			{
 				pInfo.nPos += 1;
 				SetScrollInfo( SB_VERT, &pInfo, TRUE );
@@ -516,10 +558,10 @@ void CLanguageDlg::AddEnglishDefault()
 {
 	m_pPaths.Add( _T("") );
 	m_pTitles.Add( _T("English (Default)") );
-	m_pPrompts.Add( _T("Click here to select English as your natural language.") );
 	m_pImages.Add( theApp.LoadIcon( IDI_FLAG_ENGLISH ) );
 }
 
+// Recursively scans the Skins directory looking for language files.
 void CLanguageDlg::Enumerate(LPCTSTR pszPath)
 {
 	WIN32_FIND_DATA pFind;
@@ -649,7 +691,6 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	}
 	
 	CString	strName		= pManifest->GetAttributeValue( _T("name"), pszName );
-	CString	strPrompt	= pManifest->GetAttributeValue( _T("prompt") );
 	CString strIcon		= pManifest->GetAttributeValue( _T("icon") );
 	CString strGUIDir	= pManifest->GetAttributeValue( _T("dir"), _T("ltr") );
 	CString strLangCode = pManifest->GetAttributeValue( _T("language") );
@@ -661,7 +702,6 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	
 	m_pPaths.Add( strXML );
 	m_pTitles.Add( strName );
-	m_pPrompts.Add( strPrompt );
 	m_pGUIDirs.Add( strGUIDir );
 	m_pLangCodes.Add ( strLangCode );
 	
