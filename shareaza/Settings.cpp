@@ -531,7 +531,7 @@ void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
 	for( LPCTSTR start = pszString; *start; start++ )
 	{
 		LPCTSTR c = _tcschr( start, _T('|') );
-		int len = c ? ( c - start ) : (int) _tcslen( start );
+		int len = c ? (int) ( c - start ) : (int) _tcslen( start );
 		if ( len > 0 )
 		{
 			CString tmp;

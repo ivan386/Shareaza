@@ -24,26 +24,7 @@
 //
 //----------------------------------------------------------------------------
 
-#ifdef _MSC_VER
-// unlimited inline expansion ( compile with /Ob1 or /Ob2 )
-# pragma inline_recursion( on )
-# pragma inline_depth( 255 )
-// warning C4127: conditional expression is constant
-// warning C4355: 'this' : used in base member initializer list
-// warning C4702: unreachable code
-// warning C4710: function 'blah' not inlined
-// warning C4786: identifier was truncated to '255' characters in the debug information
-# pragma warning( push )
-# pragma warning( disable : 4127 4355 4702 4710 4786 )
-#endif
-
-#include <limits>
-#include <cctype>
-#include <cwchar>
-#include <memory>
-#include <cwctype>
-#include <malloc.h>
-#include <algorithm>
+#include "StdAfx.h"
 
 #ifdef __MWERKS__
 # include <alloca.h>
@@ -68,6 +49,23 @@
 // _alloca is not standard
 #ifndef alloca
 # define alloca _alloca
+#endif
+
+#ifdef _MSC_VER
+// unlimited inline expansion ( compile with /Ob1 or /Ob2 )
+# pragma inline_recursion( on )
+# pragma inline_depth( 255 )
+// warning C4127: conditional expression is constant
+// warning C4355: 'this' : used in base member initializer list
+// warning C4702: unreachable code
+// warning C4710: function 'blah' not inlined
+// warning C4786: identifier was truncated to '255' characters in the debug information
+# pragma warning( push )
+# pragma warning( disable : 4127 4355 4702 4710 4786 )
+// warning C4061: enumerate 'x' in switch of enum 'y' is not explicitly handled by a case label
+#pragma warning( disable : 4061 )
+// warning C4640: 'x' : construction of local static object is not thread-safe
+#pragma warning( disable : 4640 )
 #endif
 
 namespace regex
@@ -471,9 +469,6 @@ class slist
     typedef typename rebind<AllocT, cons>::type cons_allocator;
     typedef typename rebind<AllocT, char>::type char_allocator;
 
-#if !defined(_MSC_VER) | 1200 < _MCS_VER
-    // Use the empty base optimization to avoid reserving
-    // space for the allocator if it is empty.
     struct slist_impl : cons_allocator
     {
         cons * m_lst;
@@ -488,23 +483,6 @@ class slist
             return *this;
         }
     };
-#else
-    struct slist_impl
-    {
-		cons_allocator	m_alloc;
-        cons		   *m_lst;
-
-        slist_impl( cons_allocator const & alloc, cons *lst )
-            : m_alloc( alloc )
-            , m_lst( lst )
-        {
-        }
-        cons_allocator & allocator()
-        {
-            return m_alloc;
-        }
-    };
-#endif
 
     slist_impl m_impl;
 

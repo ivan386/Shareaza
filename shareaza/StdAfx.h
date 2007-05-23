@@ -125,6 +125,14 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 #include <natupnp.h>
 #include <iphlpapi.h>
 
+//
+// Standard headers
+//
+
+#include "CommonInclude.hpp"
+
+#include "RegExp\regexpr2.h"
+
 #pragma warning( pop )
 
 
@@ -156,12 +164,6 @@ typedef UINT ONNCHITTESTRESULT;
 #else
 typedef LRESULT ONNCHITTESTRESULT;
 #endif
-
-//
-// Standard headers
-//
-
-#include "CommonInclude.hpp"
 
 //
 // 64-bit type

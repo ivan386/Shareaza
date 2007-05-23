@@ -303,7 +303,7 @@ DWORD CBuffer::Receive(SOCKET hSocket)
 	DWORD nTotal = 0;
 
 	// Loop forever
-	while ( TRUE )
+	for (;;)
 	{
 		// Move up to 4 KB of data from the socket to our pData buffer
 		int nLength = recv( // Read data in from the socket, nLength is how many bytes we got

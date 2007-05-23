@@ -62,7 +62,7 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd);
-	afx_msg void OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
+	afx_msg void OnClickView(NMHDR* pNotify, LRESULT *pResult);
 	afx_msg void OnPaint();
 	afx_msg void OnDestroy();
 	//}}AFX_MSG

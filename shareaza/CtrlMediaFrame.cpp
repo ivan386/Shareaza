@@ -1102,7 +1102,6 @@ void CMediaFrame::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 			break;
 		case TB_PAGEUP:
 		case TB_PAGEDOWN:
-			if ( TRUE )
 			{
 				CRect rc1, rc2;
 				CPoint pt;
@@ -1519,7 +1518,6 @@ BOOL CMediaFrame::Prepare()
 	
 	if ( m_bmLogo.m_hObject ) m_pPlayer->SetLogoBitmap( (HBITMAP)m_bmLogo.m_hObject );
 	
-	if ( TRUE )
 	{
 		HINSTANCE hRes = AfxGetResourceHandle();
 		PrepareVis();

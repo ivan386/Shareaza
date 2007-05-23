@@ -220,6 +220,7 @@ void CNeighboursWnd::Update()
 			else
 				str.Format( _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime / 60 ) % 60, nTime % 60 );
 			break;
+		case nrsNull:
 		default:
 			LoadString ( str,IDS_NEIGHBOUR_UNKNOWN );
 			break;

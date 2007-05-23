@@ -133,7 +133,7 @@ protected:
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg void OnClickReview(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
+	afx_msg void OnClickReview(NMHDR* pNotify, LRESULT *pResult);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

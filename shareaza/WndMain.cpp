@@ -1004,7 +1004,7 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 		m_brshDockbar.DeleteObject();
 		m_brshDockbar.CreateSolidBrush( CoolInterface.m_crMidtone );
 		SetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND,
-			(ULONG_PTR_ARG)(HBRUSH)m_brshDockbar );
+			(LONG)(LONG_PTR)(HBRUSH)m_brshDockbar );
 	}
 	
 	m_pSkin = Skin.GetWindowSkin( this );
@@ -1037,13 +1037,10 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	
 	UpdateMessages();
 	
-	if ( TRUE )
-	{
-		m_wndToolBar.OnUpdated();
-		m_pWindows.PostSkinChange();
-		m_wndTabBar.OnUpdateCmdUI( this, FALSE );
-		RedrawWindow( NULL, NULL, RDW_INVALIDATE|RDW_FRAME|RDW_ALLCHILDREN );
-	}
+	m_wndToolBar.OnUpdated();
+	m_pWindows.PostSkinChange();
+	m_wndTabBar.OnUpdateCmdUI( this, FALSE );
+	RedrawWindow( NULL, NULL, RDW_INVALIDATE|RDW_FRAME|RDW_ALLCHILDREN );
 	
 	CSettingsManagerDlg::OnSkinChange( TRUE );
 	CDownloadMonitorDlg::OnSkinChange( TRUE );

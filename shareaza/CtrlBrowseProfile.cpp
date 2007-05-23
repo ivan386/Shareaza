@@ -476,9 +476,9 @@ void CBrowseProfileCtrl::OnTimer(UINT_PTR nIDEvent)
 	}
 }
 
-void CBrowseProfileCtrl::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
+void CBrowseProfileCtrl::OnClickView(NMHDR* pNotify, LRESULT* /*pResult*/)
 {
-	if ( CRichElement* pElement = pNotify->pElement )
+	if ( CRichElement* pElement = ((RVN_ELEMENTEVENT*) pNotify)->pElement )
 	{
 		theApp.InternalURI( pElement->m_sLink );
 	}

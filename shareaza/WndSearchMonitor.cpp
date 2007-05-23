@@ -264,7 +264,7 @@ void CSearchMonitorWnd::OnTimer(UINT_PTR nIDEvent)
 
 	CSingleLock pLock( &m_pSection );
 
-	while ( TRUE )
+	for (;;)
 	{
 		pLock.Lock();
 

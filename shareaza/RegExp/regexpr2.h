@@ -29,6 +29,11 @@
   // warning C4786: identifier was truncated to '255' characters in the debug information
 # pragma warning( push )
 # pragma warning( disable : 4189 4702 4710 4786 )
+// warning C4061: enumerate 'x' in switch of enum 'y' is not explicitly handled by a case label
+#pragma warning( disable : 4061 )
+// warning C4640: 'x' : construction of local static object is not thread-safe
+#pragma warning( disable : 4640 )
+
 # define REGEX_SEH_STACK_OVERFLOW 0xC00000FDL
 # if 1200 < _MSC_VER
 # include <malloc.h> // for _resetstkoflw
@@ -1249,7 +1254,5 @@ namespace std
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif
-
-#include "regexpr2.cpp"
 
 #endif

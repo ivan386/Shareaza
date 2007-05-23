@@ -156,6 +156,9 @@ protected:
 protected:
 	static LPCTSTR m_pszModeSuffix[3][4];
 
+private:
+	CSkin(const CSkin&);
+	CSkin& operator=(const CSkin&);
 };
 
 

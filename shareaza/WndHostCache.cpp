@@ -94,9 +94,6 @@ CHostCacheWnd::~CHostCacheWnd()
 
 int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	if ( Settings.Gnutella.HostCacheView < PROTOCOL_NULL || Settings.Gnutella.HostCacheView > PROTOCOL_ED2K )
-		 Settings.Gnutella.HostCacheView = PROTOCOL_G2;
-
 	m_nMode = PROTOCOLID( Settings.Gnutella.HostCacheView );
 
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;

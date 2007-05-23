@@ -391,27 +391,27 @@ void CMediaListCtrl::OnSize(UINT nType, int cx, int cy)
 	SetColumn( 0, &pColumn );
 }
 
-void CMediaListCtrl::OnCustomDraw(NMLVCUSTOMDRAW* pNotify, LRESULT* pResult)
+void CMediaListCtrl::OnCustomDraw(NMHDR* pNotify, LRESULT* pResult)
 {
-	if ( pNotify->nmcd.dwDrawStage == CDDS_PREPAINT )
+	if ( ((NMLVCUSTOMDRAW*) pNotify)->nmcd.dwDrawStage == CDDS_PREPAINT )
 	{
 		*pResult = CDRF_NOTIFYITEMDRAW;
 	}
-	else if ( pNotify->nmcd.dwDrawStage == CDDS_ITEMPREPAINT )
+	else if ( ((NMLVCUSTOMDRAW*) pNotify)->nmcd.dwDrawStage == CDDS_ITEMPREPAINT )
 	{
-		if (	GetItemState( static_cast< int >( pNotify->nmcd.dwItemSpec ), LVIS_SELECTED ) == 0 &&
-				GetItemState( static_cast< int >( pNotify->nmcd.dwItemSpec ), STATE_CURRENT ) != 0 )
+		if (	GetItemState( static_cast< int >( ((NMLVCUSTOMDRAW*) pNotify)->nmcd.dwItemSpec ), LVIS_SELECTED ) == 0 &&
+				GetItemState( static_cast< int >( ((NMLVCUSTOMDRAW*) pNotify)->nmcd.dwItemSpec ), STATE_CURRENT ) != 0 )
 		{
-			pNotify->clrText	= CoolInterface.m_crMediaPanelActiveText;
-			pNotify->clrTextBk	= CoolInterface.m_crMediaPanelActive;
+			((NMLVCUSTOMDRAW*) pNotify)->clrText	= CoolInterface.m_crMediaPanelActiveText;
+			((NMLVCUSTOMDRAW*) pNotify)->clrTextBk	= CoolInterface.m_crMediaPanelActive;
 		}
 		else
 		{
-			pNotify->clrText	= CoolInterface.m_crMediaPanelText;
-			pNotify->clrTextBk	= CoolInterface.m_crMediaPanel;
+			((NMLVCUSTOMDRAW*) pNotify)->clrText	= CoolInterface.m_crMediaPanelText;
+			((NMLVCUSTOMDRAW*) pNotify)->clrTextBk	= CoolInterface.m_crMediaPanel;
 		}
 
-		if ( m_bCreateDragImage ) pNotify->clrTextBk = DRAG_COLOR_KEY;
+		if ( m_bCreateDragImage ) ((NMLVCUSTOMDRAW*) pNotify)->clrTextBk = DRAG_COLOR_KEY;
 
 		*pResult = CDRF_DODEFAULT;
 	}
@@ -548,7 +548,7 @@ void CMediaListCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 	CArray< CString > pPaths;
 	CArray< UINT > pStates;
 
-	while ( TRUE )
+	for (;;)
 	{
 		int nItem = GetNextItem( -1, LVNI_SELECTED );
 		if ( nItem < 0 ) break;

@@ -140,7 +140,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 {
 	CQuickLock oLock( Security.m_pSection );
 
-	CLiveList pLiveList( 6, Security.GetCount() + Security.GetCount() / 4 );
+	CLiveList pLiveList( 6, Security.GetCount() + Security.GetCount() / 4u );
 
 	CLiveItem* pDefault = pLiveList.Add( (LPVOID)0 );
 	pDefault->Set( 0, _T("Default Policy") );

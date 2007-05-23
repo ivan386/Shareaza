@@ -727,9 +727,9 @@ void Review::Paint(CDC* pDC, int nScroll)
 	rc.top += 20;
 }
 
-void CSearchDetailPanel::OnClickReview(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
+void CSearchDetailPanel::OnClickReview(NMHDR* pNotify, LRESULT* /*pResult*/)
 {
-	if ( CRichElement* pElement = pNotify->pElement )
+	if ( CRichElement* pElement = ((RVN_ELEMENTEVENT*) pNotify)->pElement )
 	{
 		theApp.InternalURI( pElement->m_sLink );
 	}

@@ -353,7 +353,8 @@ BOOL CLibraryView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT ptScre
 			return CShareazaDataSource::DropToAlbum( pDataObj, grfKeyState,
 				pdwEffect, bDrop, ((CAlbumFolder*)oHit) );
 
-		default:
+		case CLibraryListItem::Empty:
+		case CLibraryListItem::LibraryFile:
 			break;
 	}
 

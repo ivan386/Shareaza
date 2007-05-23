@@ -85,7 +85,7 @@ CPrivateChatFrame* CChatWindows::FindPrivate(const Hashes::Guid& oGUID)
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CPrivateChatFrame* pFrame = reinterpret_cast<CPrivateChatFrame*>( GetNext( pos ) );
+		CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
 		
 		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
 		{
@@ -101,7 +101,7 @@ CPrivateChatFrame* CChatWindows::FindPrivate(IN_ADDR* pAddress)
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CPrivateChatFrame* pFrame = reinterpret_cast<CPrivateChatFrame*>( GetNext( pos ) );
+		CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
 		
 		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
 		{
@@ -129,7 +129,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(SOCKADDR_IN* pAddress)
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CPrivateChatFrame* pFrame = reinterpret_cast<CPrivateChatFrame*>( GetNext( pos ) );
+		CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
 		
 		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
 		{
@@ -157,7 +157,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pSe
 
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
-			CPrivateChatFrame* pFrame = reinterpret_cast<CPrivateChatFrame*>( GetNext( pos ) );
+			CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
 			
 			if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
 			{

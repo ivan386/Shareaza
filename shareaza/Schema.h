@@ -193,6 +193,10 @@ public:
 	static LPCTSTR	uriGhostFolder;
 
 	friend class CSchemaMember;
+
+private:
+	CSchema(const CSchema&);
+	CSchema& operator=(const CSchema&);
 };
 
 

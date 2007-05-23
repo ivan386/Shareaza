@@ -483,7 +483,7 @@ void CBrowseTreeCtrl::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
 	}
 	else if ( ( nChar == VK_LEFT || nChar == VK_SUBTRACT ) && m_pFocus != NULL )
 	{
-		while ( TRUE )
+		for (;;)
 		{
 			if ( m_pFocus->m_bExpanded && m_pFocus->m_nCount )
 			{

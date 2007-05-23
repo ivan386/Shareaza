@@ -252,6 +252,11 @@ public:
 			return &Gnutella2;
 		case PROTOCOL_ED2K:
 			return &eDonkey;
+		case PROTOCOL_NULL:
+		case PROTOCOL_ANY:
+		case PROTOCOL_HTTP:
+		case PROTOCOL_FTP:
+		case PROTOCOL_BT:
 		default:
 			ASSERT(FALSE);
 			return NULL;

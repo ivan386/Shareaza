@@ -104,7 +104,7 @@ protected:
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
-	afx_msg void OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
+	afx_msg void OnClickView(NMHDR* pNotify, LRESULT *pResult);
 	afx_msg void OnUpdateChatTimestamp(CCmdUI* pCmdUI);
 	afx_msg void OnChatTimestamp();
 	//}}AFX_MSG

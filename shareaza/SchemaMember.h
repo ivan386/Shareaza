@@ -77,6 +77,10 @@ protected:
 	BOOL		LoadDisplay(CXMLElement* pXML);
 
 	friend class CSchema;
+
+private:
+	CSchemaMember(const CSchemaMember&);
+	CSchemaMember& operator=(const CSchemaMember&);
 };
 
 enum

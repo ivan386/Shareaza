@@ -99,9 +99,9 @@ BOOL CRichSettingsPage::OnInitDialog()
 	return TRUE;
 }
 
-void CRichSettingsPage::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
+void CRichSettingsPage::OnClickView(NMHDR* pNotify, LRESULT* /*pResult*/)
 {
-	CRichElement* pElement = pNotify->pElement;
+	CRichElement* pElement = ((RVN_ELEMENTEVENT*) pNotify )->pElement;
 	if ( ! pElement ) return;
 
 	if ( _tcsncmp( pElement->m_sLink, _T("raza:page:"), 10 ) == 0 )

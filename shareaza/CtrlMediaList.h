@@ -85,7 +85,7 @@ protected:
 	afx_msg void OnDoubleClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeyDown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnCustomDraw(NMLVCUSTOMDRAW* pNotify, LRESULT* pResult);
+	afx_msg void OnCustomDraw(NMHDR* pNotify, LRESULT* pResult);
 	afx_msg void OnMediaAdd();
 	afx_msg void OnUpdateMediaRate(CCmdUI* pCmdUI);
 	afx_msg void OnMediaRate();

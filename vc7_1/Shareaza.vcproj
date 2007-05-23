@@ -1623,6 +1623,16 @@
 					RelativePath="..\shareaza\PageTorrentTrackers.cpp">
 				</File>
 			</Filter>
+			<Filter
+				Name="RegExp"
+				Filter="">
+				<File
+					RelativePath="..\shareaza\RegExp\regexpr2.cpp">
+				</File>
+				<File
+					RelativePath="..\shareaza\RegExp\syntax2.cpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"

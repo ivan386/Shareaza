@@ -352,16 +352,16 @@ BOOL CSettingsSheet::CreatePage(CSettingsPage* pPage)
 	return pPage->Create( rc, this );
 }
 
-void CSettingsSheet::OnTreeExpanding(NM_TREEVIEW* /*pNotify*/, LRESULT *pResult)
+void CSettingsSheet::OnTreeExpanding(NMHDR* /*pNotify*/, LRESULT *pResult)
 {
 	*pResult = TRUE;
 }
 
-void CSettingsSheet::OnSelectPage(NM_TREEVIEW* pNotify, LRESULT *pResult)
+void CSettingsSheet::OnSelectPage(NMHDR* pNotify, LRESULT *pResult)
 {
 	*pResult = NULL;
 
-	if ( ( pNotify->itemNew.state & TVIS_SELECTED ) == 0 ) return;
+	if ( ( ((NM_TREEVIEW*) pNotify )->itemNew.state & TVIS_SELECTED ) == 0 ) return;
 	CSettingsPage* pPage = (CSettingsPage*)m_wndTree.GetItemData( m_wndTree.GetSelectedItem() );
 	if ( pPage == NULL || pPage == m_pPage ) return;
 

@@ -780,7 +780,7 @@ void CLibraryAlbumView::OnMouseMove(UINT nFlags, CPoint point)
 	
 	if ( CLibraryAlbumTrack* pTrack = HitTest( point, &rcTrack ) )
 	{
-		pTip->Show( (void*)pTrack->m_nIndex );
+		pTip->Show( (void*)(DWORD_PTR)pTrack->m_nIndex );
 		
 		if ( pTrack->HitTestRating( rcTrack, point ) )
 		{

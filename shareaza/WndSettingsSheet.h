@@ -91,8 +91,8 @@ protected:
 	virtual void OnOK();
 	virtual void OnCancel();
 	afx_msg void OnApply();
-	afx_msg void OnTreeExpanding(NM_TREEVIEW* pNotify, LRESULT *pResult);
-	afx_msg void OnSelectPage(NM_TREEVIEW* pNotify, LRESULT *pResult);
+	afx_msg void OnTreeExpanding(NMHDR* pNotify, LRESULT *pResult);
+	afx_msg void OnSelectPage(NMHDR* pNotify, LRESULT *pResult);
 
 };
 

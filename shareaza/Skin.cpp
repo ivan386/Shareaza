@@ -353,7 +353,7 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 			{
 				CString strValue = pXML->GetAttributeValue( _T("value") );
 				
-				while ( TRUE )
+				for (;;)
 				{
 					int nPos = strValue.Find( _T("\\n") );
 					if ( nPos < 0 ) break;

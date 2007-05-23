@@ -41,6 +41,10 @@ public:
 	BOOL m_bNoSplash;
 	BOOL m_bNoAlphaWarning;
 	INT  m_nGUIMode;
+
+private:
+	CShareazaCommandLineInfo(const CShareazaCommandLineInfo&);
+	CShareazaCommandLineInfo& operator=(const CShareazaCommandLineInfo&);
 };
 
 class CShareazaApp : public CWinApp
@@ -325,48 +329,6 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 
 #define ID_PLUGIN_FIRST	27000
 #define ID_PLUGIN_LAST	27999
-
-#undef ON_NOTIFY
-#define ON_NOTIFY(wNotifyCode, id, memberFxn) \
-	{ WM_NOTIFY, (WORD)(int)wNotifyCode, (WORD)id, (WORD)id, AfxSigNotify_v, \
-		(AFX_PMSG) \
-		(reinterpret_cast< void (AFX_MSG_CALL CCmdTarget::*)(NMHDR*, LRESULT*) > \
-		(memberFxn)) },
-
-#undef ON_NOTIFY_RANGE
-#define ON_NOTIFY_RANGE(wNotifyCode, id, idLast, memberFxn) \
-	{ WM_NOTIFY, (WORD)(int)wNotifyCode, (WORD)id, (WORD)idLast, AfxSigNotify_RANGE, \
-		(AFX_PMSG) \
-		(reinterpret_cast< void (AFX_MSG_CALL CCmdTarget::*)(UINT, NMHDR*, LRESULT*) > \
-		(memberFxn)) },
-
-#undef ON_NOTIFY_EX
-#define ON_NOTIFY_EX(wNotifyCode, id, memberFxn) \
-	{ WM_NOTIFY, (WORD)(int)wNotifyCode, (WORD)id, (WORD)id, AfxSigNotify_EX, \
-		(AFX_PMSG) \
-		(reinterpret_cast< BOOL (AFX_MSG_CALL CCmdTarget::*)(UINT, NMHDR*, LRESULT*) > \
-		(memberFxn)) },
-
-#undef ON_NOTIFY_EX_RANGE
-#define ON_NOTIFY_EX_RANGE(wNotifyCode, id, idLast, memberFxn) \
-	{ WM_NOTIFY, (WORD)(int)wNotifyCode, (WORD)id, (WORD)idLast, AfxSigNotify_EX, \
-		(AFX_PMSG) \
-		(reinterpret_cast< BOOL (AFX_MSG_CALL CCmdTarget::*)(UINT, NMHDR*, LRESULT*) > \
-		(memberFxn)) },
-
-#undef ON_NOTIFY_REFLECT
-#define ON_NOTIFY_REFLECT(wNotifyCode, memberFxn) \
-	{ WM_NOTIFY+WM_REFLECT_BASE, (WORD)(int)wNotifyCode, 0, 0, AfxSigNotify_v, \
-		(AFX_PMSG) \
-		(reinterpret_cast<void (AFX_MSG_CALL CCmdTarget::*)(NMHDR*, LRESULT*) > \
-		(memberFxn)) },
-
-#undef ON_NOTIFY_REFLECT_EX
-#define ON_NOTIFY_REFLECT_EX(wNotifyCode, memberFxn) \
-	{ WM_NOTIFY+WM_REFLECT_BASE, (WORD)(int)wNotifyCode, 0, 0, AfxSigNotify_b, \
-		(AFX_PMSG) \
-		(reinterpret_cast<BOOL (AFX_MSG_CALL CCmdTarget::*)(NMHDR*, LRESULT*) > \
-		(memberFxn)) },
 
 
 // Client's name

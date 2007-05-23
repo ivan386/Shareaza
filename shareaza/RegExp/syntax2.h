@@ -1107,6 +1107,4 @@ public:
 #pragma warning( pop )
 #endif
 
-#include "syntax2.cpp"
 #endif
-

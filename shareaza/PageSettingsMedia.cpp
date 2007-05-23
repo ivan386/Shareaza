@@ -224,7 +224,7 @@ void CMediaSettingsPage::OnOK()
 			CString strClass = pPage->GetRuntimeClass()->m_lpszClassName;
 			if ( strClass == _T("CPluginsSettingsPage") )
 			{
-				CPluginsSettingsPage* pPluginPage = reinterpret_cast< CPluginsSettingsPage* >( pPage );
+				CPluginsSettingsPage* pPluginPage = static_cast< CPluginsSettingsPage* >( pPage );
 				pPluginPage->UpdateList();
 				break;
 			}

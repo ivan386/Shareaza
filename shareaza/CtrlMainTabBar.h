@@ -49,6 +49,7 @@ public:
 
 	public:
 		TabItem(CMainTabBarCtrl* pCtrl, LPCTSTR pszName);
+		virtual ~TabItem() {}
 		void	Skin(CSkinWindow* pSkin, CDC* pdcCache, CBitmap* pbmCache);
 		BOOL	Update(CFrameWnd* pTarget);
 		BOOL	HitTest(const CPoint& point) const;

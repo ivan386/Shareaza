@@ -415,7 +415,7 @@ void CWizardPage::StaticReplace(LPCTSTR pszSearch, LPCTSTR pszReplace)
 		CString strText;
 		pChild->GetWindowText( strText );
 
-		while ( TRUE )
+		for (;;)
 		{
 			int nPos = strText.Find( pszSearch );
 			if ( nPos < 0 ) break;

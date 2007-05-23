@@ -49,6 +49,10 @@ protected:
 	STDMETHOD(ComInvoke)(LPUNKNOWN, DISPID, REFIID, LCID, WORD, DISPPARAMS FAR*, VARIANT FAR*, EXCEPINFO FAR*, UINT FAR*);
 
 	DECLARE_OLETYPELIB(CComObject)
+
+private:
+	CComObject(const CComObject&);
+	CComObject& operator=(const CComObject&);
 };
 
 class GUIDX

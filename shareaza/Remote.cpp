@@ -1302,6 +1302,7 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 					str.Format( _T("%i:%.2i:%.2i"), tNow / 3600, ( tNow / 60 ) % 60, tNow % 60 );
 			}
 			break;
+		case nrsNull:
 		default:
 			LoadString( str, IDS_NEIGHBOUR_UNKNOWN );
 			break;
@@ -1330,7 +1331,7 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 		{
-			CG2Neighbour* pG2 = reinterpret_cast<CG2Neighbour*>(pNeighbour);
+			CG2Neighbour* pG2 = static_cast<CG2Neighbour*>(pNeighbour);
 			
 			switch ( pNeighbour->m_nNodeType )
 			{
@@ -1366,7 +1367,7 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
-			CEDNeighbour* pED2K = reinterpret_cast<CEDNeighbour*>(pNeighbour);
+			CEDNeighbour* pED2K = static_cast<CEDNeighbour*>(pNeighbour);
 			
 			if ( pED2K->m_nClientID > 0 )
 			{

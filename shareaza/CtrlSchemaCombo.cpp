@@ -93,7 +93,7 @@ void CSchemaCombo::Load(LPCTSTR pszSelectURI, int nType, int nAvailability, BOOL
 		
 		if ( ! bReset )
 		{
-			int nIndex = FindParam( (DWORD)pSchema );
+			int nIndex = FindSchema( pSchema );
 			
 			if ( nIndex >= 0 )
 			{
@@ -167,11 +167,11 @@ CString CSchemaCombo::GetSelectedURI() const
 	return str;
 }
 
-int CSchemaCombo::FindParam(DWORD nParam)
+int CSchemaCombo::FindSchema(CSchema* pSchema)
 {
 	for ( int nItem = 0 ; nItem < GetCount() ; nItem++ )
 	{
-		if ( GetItemData( nItem ) == nParam ) return nItem;
+		if ( (CSchema*)GetItemData( nItem ) == pSchema ) return nItem;
 	}
 	
 	return -1;

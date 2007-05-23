@@ -123,11 +123,8 @@ void CTrafficWnd::SetUpdateRate()
 {
 	KillTimer( 2 );
 
-	if ( TRUE )
-	{
-		CLineGraph* pGraph = (CLineGraph*)m_pGraph;
-		SetTimer( 2, pGraph->m_nSpeed, NULL );
-	}
+	CLineGraph* pGraph = (CLineGraph*)m_pGraph;
+	SetTimer( 2, pGraph->m_nSpeed, NULL );
 }
 
 void CTrafficWnd::OnSize(UINT nType, int cx, int cy)

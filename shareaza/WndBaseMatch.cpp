@@ -466,7 +466,7 @@ int CBaseMatchWnd::CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::Ti
 void CBaseMatchWnd::OnUpdateSearchCopy(CCmdUI* pCmdUI) 
 {
 	CString strMessage;
-	int bSelected = m_pMatches->m_pSelectedFiles.GetCount() +
+	BOOL bSelected = m_pMatches->m_pSelectedFiles.GetCount() ||
 		m_pMatches->m_pSelectedHits.GetCount();
 	pCmdUI->Enable( bSelected );
 	bSelected > 1 ? LoadString( strMessage, IDS_LIBRARY_EXPORTURIS ) : LoadString( strMessage, IDS_LIBRARY_COPYURI );
@@ -477,7 +477,7 @@ void CBaseMatchWnd::OnSearchCopy()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 
-	int bSelected = m_pMatches->m_pSelectedFiles.GetCount() +
+	INT_PTR bSelected = m_pMatches->m_pSelectedFiles.GetCount() +
 		m_pMatches->m_pSelectedHits.GetCount();
 	if ( bSelected == 1 )
 	{

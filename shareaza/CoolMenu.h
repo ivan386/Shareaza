@@ -78,6 +78,9 @@ protected:
 	static int		m_nEdgeTop;
 	static int		m_nEdgeSize;
 
+private:
+	CCoolMenu(const CCoolMenu&);
+	CCoolMenu& operator=(const CCoolMenu&);
 };
 
 extern CCoolMenu CoolMenu;

@@ -62,7 +62,7 @@ protected:
 	//{{AFX_MSG(CRichSettingsPage)
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
-	afx_msg void OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
+	afx_msg void OnClickView(NMHDR* pNotify, LRESULT *pResult);
 
 	DECLARE_MESSAGE_MAP()
 

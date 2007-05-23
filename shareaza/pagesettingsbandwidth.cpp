@@ -302,7 +302,7 @@ BOOL CBandwidthSettingsPage::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pRe
 	if ( pNotify->hdr.code == UDN_DELTAPOS )
 	{
 		CWnd* pWnd		= CWnd::FromHandle( pNotify->hdr.hwndFrom );
-		CEdit* pEdit	= reinterpret_cast<CEdit*>( pWnd->GetNextWindow( GW_HWNDPREV ) );
+		CEdit* pEdit	= static_cast<CEdit*>( pWnd->GetNextWindow( GW_HWNDPREV ) );
 		CString str;
 
 		pEdit->GetWindowText( str );

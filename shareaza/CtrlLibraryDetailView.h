@@ -103,19 +103,19 @@ protected:
 	afx_msg void OnUpdateLibraryColumns(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 
-	afx_msg void OnCacheHint(NMLVCACHEHINT* pNotify, LRESULT* pResult);
-	afx_msg void OnGetDispInfoW(NMLVDISPINFO* pNotify, LRESULT* pResult);
-	afx_msg void OnGetDispInfoA(NMLVDISPINFO* pNotify, LRESULT* pResult);
-	afx_msg void OnColumnClick(NM_LISTVIEW* pNotify, LRESULT* pResult);
-	afx_msg void OnBeginLabelEdit(LV_DISPINFO* pNotify, LRESULT* pResult);
-	afx_msg void OnEndLabelEditW(LV_DISPINFO* pNotify, LRESULT* pResult);
-	afx_msg void OnEndLabelEditA(LV_DISPINFO* pNotify, LRESULT* pResult);
-	afx_msg void OnBeginDrag(NM_LISTVIEW* pNotify, LRESULT* pResult);
-	afx_msg void OnItemChanged(NM_LISTVIEW* pNotify, LRESULT* pResult);
-	afx_msg void OnItemRangeChanged(NMLVODSTATECHANGE* pNotify, LRESULT* pResult);
-	afx_msg void OnFindItemW(NMLVFINDITEM* pNotify, LRESULT* pResult);
-	afx_msg void OnFindItemA(NMLVFINDITEM* pNotify, LRESULT* pResult);
-	afx_msg void OnCustomDraw(NMLVCUSTOMDRAW* pNotify, LRESULT* pResult);
+	afx_msg void OnCacheHint(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnGetDispInfoW(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnGetDispInfoA(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnColumnClick(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnBeginLabelEdit(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnEndLabelEditW(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnBeginDrag(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnItemChanged(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnItemRangeChanged(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnFindItemW(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnFindItemA(NMHDR* pNotify, LRESULT* pResult);
+	afx_msg void OnCustomDraw(NMHDR* pNotify, LRESULT* pResult);
 	afx_msg void OnDblClk(NMHDR* pNotify, LRESULT* pResult);
 	afx_msg void OnUpdateBlocker(CCmdUI* pCmdUI);
 

@@ -287,7 +287,7 @@ void CPacketWnd::OnTimer(UINT_PTR nIDEvent)
 	CSingleLock pLock( &m_pSection );
 	BOOL bAny = FALSE;
 
-	while ( TRUE )
+	for (;;)
 	{
 		pLock.Lock();
 

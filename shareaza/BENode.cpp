@@ -408,7 +408,7 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 		m_nType = beList;
 		INC( 1 );
 		
-		while ( TRUE )
+		for (;;)
 		{
 			if ( nInput < 1 ) AfxThrowUserException();
 			if ( *pInput == 'e' ) break;
@@ -422,7 +422,7 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 		m_nType = beDict;
 		INC( 1 );
 		
-		while ( TRUE )
+		for (;;)
 		{
 			if ( nInput < 1 ) AfxThrowUserException();
 			if ( *pInput == 'e' ) break;

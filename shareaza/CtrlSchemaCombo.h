@@ -50,7 +50,7 @@ public:
 	CString		GetSelectedURI() const;
 protected:
 	static LRESULT PASCAL ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
-	int			FindParam(DWORD nParam);
+	int			FindSchema(CSchema* pSchema);
 	BOOL		OnClickItem(int nItem, BOOL bDown);
 
 // Overrides

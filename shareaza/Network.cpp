@@ -334,7 +334,6 @@ void CNetwork::Disconnect()
 	NodeRoute->Clear();
 	QueryRoute->Clear();
 
-	if ( TRUE )
 	{
 		for ( POSITION pos = m_pLookups.GetStartPosition() ; pos ; )
 		{

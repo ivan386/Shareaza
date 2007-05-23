@@ -2791,6 +2791,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="RegExp"
+				>
+				<File
+					RelativePath="..\shareaza\RegExp\regexpr2.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\RegExp\syntax2.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"

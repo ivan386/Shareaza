@@ -1132,7 +1132,7 @@ BOOL LoadString(CString& str, UINT nID)
 
 void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace)
 {
-	while ( TRUE )
+	for (;;)
 	{
 		int nPos = strBuffer.Find( pszFind );
 		if ( nPos < 0 ) break;

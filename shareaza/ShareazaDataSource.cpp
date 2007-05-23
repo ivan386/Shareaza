@@ -342,20 +342,20 @@ UINT CShareazaDataSource::DragDropThread(LPVOID param)
 
 HRESULT CShareazaDataSource::DoDragDrop(const CLibraryList* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset)
 {
-	return DoDragDrop < CLibraryList > (pList, pImage, oGUID, ptOffset);
+	return DoDragDropHelper < CLibraryList > (pList, pImage, oGUID, ptOffset);
 }
 
 // Perform CLibraryTreeItem drag operation
 
 HRESULT CShareazaDataSource::DoDragDrop(const CLibraryTreeItem* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset)
 {
-	return DoDragDrop < CLibraryTreeItem > (pList, pImage, oGUID, ptOffset);
+	return DoDragDropHelper < CLibraryTreeItem > (pList, pImage, oGUID, ptOffset);
 }
 
 // Perform universal drag operation
 
 template < typename T >
-HRESULT CShareazaDataSource::DoDragDrop(const T* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset)
+HRESULT CShareazaDataSource::DoDragDropHelper(const T* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset)
 {
 	ASSERT_VALID( pList );
 
@@ -527,22 +527,22 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 					if ( ! pdf->fWide )
 					{	
 						// ANSI -> UNICODE
-						int nWide = MultiByteToWideChar( CP_ACP, 0, (LPCSTR) pFrom, size, NULL, 0 );
-						MultiByteToWideChar( CP_ACP, 0, (LPCSTR) pFrom, size, pAFOP->sFrom.GetBuffer( nWide ), nWide );
+						int nWide = MultiByteToWideChar( CP_ACP, 0, (LPCSTR) pFrom, (int)size, NULL, 0 );
+						MultiByteToWideChar( CP_ACP, 0, (LPCSTR) pFrom, (int)size, pAFOP->sFrom.GetBuffer( nWide ), nWide );
 						pAFOP->sFrom.ReleaseBuffer( nWide );
 					}
 					else
-						pAFOP->sFrom.Append( pFrom, size / sizeof( TCHAR ) );
+						pAFOP->sFrom.Append( pFrom, (int)size / sizeof( TCHAR ) );
 #else
 					if ( pdf->fWide )
 					{
 						// UNICODE -> ANSI
-						int nWide = WideCharToMultiByte( CP_ACP, 0, (LPCWSTR) pFrom, size, NULL, 0 );
+						int nWide = WideCharToMultiByte( CP_ACP, 0, (LPCWSTR) pFrom, (int)size, NULL, 0 );
 						WideCharToMultiByte( CP_ACP, 0, (LPCWSTR) pFrom, size, pAFOP->sFrom.GetBuffer( nWide ), nWide );
 						pAFOP->sFrom.ReleaseBuffer( nWide );
 					}
 					else
-						pAFOP->sFrom.Append( pFrom, size / sizeof( TCHAR ) );
+						pAFOP->sFrom.Append( pFrom, (int)size / sizeof( TCHAR ) );
 #endif // _UNICODE
 					GlobalUnlock( medium.hGlobal );
 
@@ -1295,6 +1295,7 @@ void CShareazaDataSource::GetTotalLength(const CLibraryList* pList, size_t& size
 			}
 			break;
 
+		case CLibraryListItem::Empty:
 		default:
 			break;
 		}
@@ -1396,6 +1397,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 			}
 			break;
 
+		case CLibraryListItem::Empty:
 		default:
 			break;
 		}

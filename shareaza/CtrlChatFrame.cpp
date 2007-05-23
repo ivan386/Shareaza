@@ -637,9 +637,9 @@ void CChatFrame::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 	}
 }
 
-void CChatFrame::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
+void CChatFrame::OnClickView(NMHDR* pNotify, LRESULT* /*pResult*/)
 {
-	if ( CRichElement* pElement = pNotify->pElement )
+	if ( CRichElement* pElement = ((RVN_ELEMENTEVENT*) pNotify)->pElement )
 	{
 		theApp.InternalURI( pElement->m_sLink );
 	}

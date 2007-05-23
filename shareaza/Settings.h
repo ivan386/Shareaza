@@ -588,6 +588,10 @@ protected:
 
 public:
 	void	OnChangeConnectionSpeed();
+
+private:
+	CSettings(const CSettings&);
+	CSettings& operator=(const CSettings&);
 };
 
 extern CSettings Settings;

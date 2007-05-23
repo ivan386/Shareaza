@@ -264,7 +264,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 	}
 
 	// Todo: Doesn't work with partial files
-	int nError = (int)ShellExecute( NULL, _T("Enqueue"), strFile, NULL, strPath, SW_SHOWNORMAL );
+	int nError = (int)(DWORD_PTR)ShellExecute( NULL, _T("Enqueue"), strFile, NULL, strPath, SW_SHOWNORMAL );
 
 	if ( nError <= SE_ERR_DLLNOTFOUND )
 	{

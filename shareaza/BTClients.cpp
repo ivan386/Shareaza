@@ -162,7 +162,7 @@ void CBTClients::ShutdownRequests()
 
 	if ( WaitForSingleObject( m_pShutdown, 5000 ) == WAIT_OBJECT_0 ) return;
 
-	while ( TRUE )
+	for (;;)
 	{
 		pLock.Lock();
 		if ( m_pRequests.GetCount() == 0 ) break;

@@ -2166,6 +2166,16 @@
 					RelativePath="PageTorrentTrackers.cpp">
 				</File>
 			</Filter>
+			<Filter
+				Name="RegExp"
+				Filter="">
+				<File
+					RelativePath="RegExp\regexpr2.cpp">
+				</File>
+				<File
+					RelativePath="RegExp\syntax2.cpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"

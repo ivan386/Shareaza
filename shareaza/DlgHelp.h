@@ -66,7 +66,7 @@ protected:
 	//{{AFX_MSG(CHelpDlg)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
+	afx_msg void OnClickView(NMHDR* pNotify, LRESULT *pResult);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

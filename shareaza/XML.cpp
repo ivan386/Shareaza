@@ -535,7 +535,7 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 	CString strClose = _T("</");
 	strClose += m_sName + '>';
 
-	while ( TRUE )
+	for (;;)
 	{
 		if ( ! *strXML || strXML >= pszEnd ) return FALSE;
 

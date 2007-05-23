@@ -280,17 +280,8 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 	if ( m_pXML != NULL )
 	{
 		CString strXML;
-		
-		if ( true )
-		{
-			if ( CXMLElement* pBody = m_pXML->GetFirstElement() )
-				strXML = pBody->ToString();
-		}
-		else
-		{
-			strXML = m_pXML->ToString( TRUE );
-		}
-		
+		if ( CXMLElement* pBody = m_pXML->GetFirstElement() )
+			strXML = pBody->ToString();
 		pPacket->WritePacket( G2_PACKET_METADATA, pPacket->GetStringLen( strXML ) );
 		pPacket->WriteString( strXML, FALSE );
 	}
@@ -589,7 +580,7 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 		{
 			const char* pszSep = strchr( pszData, G1_PACKET_HIT_SEP );
 			nLength = ( pszSep && *pszSep == G1_PACKET_HIT_SEP ) ?
-				( pszSep - pszData ) : nDataLength;
+				(int)( pszSep - pszData ) : nDataLength;
 			if ( nLength >= 4 && memcmp( pszData, "urn:", 4 ) == 0 )
 			{
 				CString strURN( pszData, nLength );

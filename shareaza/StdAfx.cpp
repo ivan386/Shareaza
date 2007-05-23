@@ -20,7 +20,6 @@
 //
 
 #include "StdAfx.h"
-#include "RegExp\regexpr2.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

@@ -151,9 +151,9 @@ void CHomeWnd::OnPaint()
 	dc.LineTo( rc.right, rc.bottom + 1 );
 }
 
-void CHomeWnd::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
+void CHomeWnd::OnClickView(NMHDR* pNotify, LRESULT* /*pResult*/)
 {
-	if ( CRichElement* pElement = pNotify->pElement )
+	if ( CRichElement* pElement = ((RVN_ELEMENTEVENT*)pNotify)->pElement )
 	{
 		theApp.InternalURI( pElement->m_sLink );
 	}

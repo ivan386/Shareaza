@@ -70,7 +70,7 @@ CChatSession::CChatSession(CChatFrame* pFrame)
 	if ( pFrame != NULL )
 	{
 		m_pWndPrivate = ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
-			? reinterpret_cast<CPrivateChatFrame*>(pFrame) : NULL;
+			? static_cast<CPrivateChatFrame*>(pFrame) : NULL;
 //		m_pWndPublic = ( pFrame->IsKindOf( RUNTIME_CLASS(CPublicChatFrame) ) )
 //			? reinterpret_cast<CPublicChatFrame*>(pFrame) : NULL;
 	}

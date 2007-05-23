@@ -116,9 +116,9 @@ void CHelpDlg::OnSize(UINT nType, int cx, int cy)
 	}
 }
 
-void CHelpDlg::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT* /*pResult*/)
+void CHelpDlg::OnClickView(NMHDR* pNotify, LRESULT* /*pResult*/)
 {
-	if ( CRichElement* pElement = pNotify->pElement )
+	if ( CRichElement* pElement = ((RVN_ELEMENTEVENT*)pNotify)->pElement )
 	{
 		theApp.InternalURI( pElement->m_sLink );
 	}

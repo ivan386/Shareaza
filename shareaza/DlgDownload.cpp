@@ -127,17 +127,6 @@ BOOL CDownloadDlg::OnInitDialog()
 void CDownloadDlg::OnChangeURL() 
 {
 	UpdateData();
-	
-	if ( m_pDownload && FALSE )
-	{
-		int nIP[4];
-		
-		if ( _stscanf( m_sURL, _T("%i.%i.%i.%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3] ) == 4 )
-		{
-			m_wndOK.EnableWindow( TRUE );
-			return;
-		}
-	}
 
 	CShareazaURL pURL;
 	m_wndOK.EnableWindow( pURL.Parse( m_sURL, m_pURLs ) &&
