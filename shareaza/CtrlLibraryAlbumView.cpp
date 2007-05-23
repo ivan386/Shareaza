@@ -608,13 +608,6 @@ void CLibraryAlbumView::OnPaint()
 	
 	CLibraryAlbumTrack** pList = m_pList;
 
-	CString strTrack = _T("Track");
-	CString strTitle = _T("Title");
-	CString strLength = _T("Length");
-	CString strBitrate = _T("Bitrate");
-	CString strAlbum = _T("Album");
-	CString strArtist = _T("Artist");
-	CString strRating = _T("Rating");
 	pBuffer->SelectObject( &CoolInterface.m_fntBold );
 	CRect rcLine(rcTrack);
 	rcLine.left += 22;
@@ -623,39 +616,39 @@ void CLibraryAlbumView::OnPaint()
 	if ( m_pStyle == CSchema::uriMusicAlbum )
 	{
 		// Track, Title, Length, Bitrate
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  0,   5, &strTrack, TRUE );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  5,  84, &strTitle );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 84,  92, &strLength, TRUE );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 92, 100, &strBitrate, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  0,   5, IDS_LIBRARY_ALBUM_TRACK, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  5,  84, IDS_LIBRARY_ALBUM_TITLE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 84,  92, IDS_LIBRARY_ALBUM_LENGTH, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 92, 100, IDS_LIBRARY_ALBUM_BITRATE, TRUE );
 		
 		rcLine.left = rcLine.right;
 		rcLine.right += 78;
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 0, 100, &strRating );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 0, 100, IDS_LIBRARY_ALBUM_RATING );
 	}
 	else if ( m_pStyle == CSchema::uriMusicArtist )
 	{
 		// Album, Title, Length, Bitrate
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  0,  30, &strAlbum );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 30,  84, &strTitle );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 84,  92, &strLength, TRUE );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 92, 100, &strBitrate, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  0,  30, IDS_LIBRARY_ALBUM_ALBUM );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 30,  84, IDS_LIBRARY_ALBUM_TITLE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 84,  92, IDS_LIBRARY_ALBUM_LENGTH, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 92, 100, IDS_LIBRARY_ALBUM_BITRATE, TRUE );
 
 		rcLine.left = rcLine.right;
 		rcLine.right += 78;
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 0, 100, &strRating );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 0, 100, IDS_LIBRARY_ALBUM_RATING );
 	}
 	else
 	{
 		// Artist, Album, Title, Length, Bitrate
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  0,  25, &strArtist );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 25,  50, &strAlbum );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 50,  84, &strTitle );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 84,  92, &strLength, TRUE );
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 92, 100, &strBitrate, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine,  0,  25, IDS_LIBRARY_ALBUM_ARTIST );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 25,  50, IDS_LIBRARY_ALBUM_ALBUM );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 50,  84, IDS_LIBRARY_ALBUM_TITLE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 84,  92, IDS_LIBRARY_ALBUM_LENGTH, TRUE );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 92, 100, IDS_LIBRARY_ALBUM_BITRATE, TRUE );
 
 		rcLine.left = rcLine.right;
 		rcLine.right += 78;
-		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 0, 100, &strRating );
+		CLibraryAlbumTrack::PaintText( pBuffer, rcLine, 0, 100, IDS_LIBRARY_ALBUM_RATING );
 	}
 
 	pBuffer->SelectObject( &CoolInterface.m_fntNormal );
@@ -1239,6 +1232,13 @@ void CLibraryAlbumTrack::PaintText(CDC* pDC, const CRect& rcTrack, int nFrom, in
 	pDC->SetPixel( rcText.right - 1, rcText.top, crOld );
 	pDC->SetPixel( rcText.left, rcText.bottom - 1, crOld );
 	pDC->SetPixel( rcText.right - 1, rcText.bottom - 1, crOld );
+}
+
+void CLibraryAlbumTrack::PaintText(CDC* pDC, const CRect& rcTrack, int nFrom, int nTo, int nID, BOOL bCenter)
+{
+	CString str;
+	LoadString( str, nID );
+	PaintText( pDC, rcTrack, nFrom, nTo, &str, bCenter );
 }
 
 /////////////////////////////////////////////////////////////////////////////

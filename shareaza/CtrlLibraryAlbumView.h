@@ -148,7 +148,7 @@ public:
 	BOOL	HitTestRating(const CRect& rcBlock, const CPoint& point);
 	BOOL	LockRating();
 	static void	PaintText(CDC* pDC, const CRect& rcTrack, int nFrom, int nTo, const CString* pstr, BOOL bCenter = FALSE);
-
+	static void	PaintText(CDC* pDC, const CRect& rcTrack, int nFrom, int nTo, int nID, BOOL bCenter = FALSE);
 };
 
 //{{AFX_INSERT_LOCATION}}

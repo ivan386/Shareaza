@@ -3154,6 +3154,14 @@
 	<string id="20215" value="Very Good"/>
 	<string id="20216" value="Excellent"/>
 	<string id="20217" value="Select the eDonkey2000/eMule temp folder:"/>
+	<!-- Column headers in Library Album View -->
+	<string id="20230" value="#"/><!-- Track number -->
+	<string id="20231" value="Title"/>
+	<string id="20232" value="Length"/>
+	<string id="20233" value="Bitrate"/>
+	<string id="20234" value="Album"/>
+	<string id="20235" value="Artist"/>
+	<string id="20236" value="Rating"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>

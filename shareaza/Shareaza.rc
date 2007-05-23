@@ -5880,6 +5880,17 @@ BEGIN
     ID_MEDIA_RATE           "Rate the selected files."
 END
 
+STRINGTABLE 
+BEGIN
+    IDS_LIBRARY_ALBUM_TRACK "#"
+    IDS_LIBRARY_ALBUM_TITLE "Title"
+    IDS_LIBRARY_ALBUM_LENGTH "Length"
+    IDS_LIBRARY_ALBUM_BITRATE "Bitrate"
+    IDS_LIBRARY_ALBUM_ALBUM "Album"
+    IDS_LIBRARY_ALBUM_ARTIST "Artist"
+    IDS_LIBRARY_ALBUM_RATING "Rating"
+END
+
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
 

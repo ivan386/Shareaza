@@ -1404,6 +1404,13 @@
 #define IDS_RATING_5                    20215
 #define IDS_RATING_6                    20216
 #define IDS_SELECT_ED2K_TEMP_FOLDER     20217
+#define IDS_LIBRARY_ALBUM_TRACK         20230
+#define IDS_LIBRARY_ALBUM_TITLE         20231
+#define IDS_LIBRARY_ALBUM_LENGTH        20232
+#define IDS_LIBRARY_ALBUM_BITRATE       20233
+#define IDS_LIBRARY_ALBUM_ALBUM         20234
+#define IDS_LIBRARY_ALBUM_ARTIST        20235
+#define IDS_LIBRARY_ALBUM_RATING        20236
 #define ID_HELP_ABOUT                   32772
 #define ID_CHECKMARK                    32774
 #define ID_NETWORK_EXIT                 32776
