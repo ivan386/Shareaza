@@ -86,7 +86,9 @@ BOOL CLibraryCollectionView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	return CWnd::CreateEx( 0, NULL, _T("CLibraryCollectionView"), WS_CHILD | WS_VSCROLL |
+	// Do not add WS_VSCROLL here. The IE frame that gets loaded will have
+	// its own scrollbar and will handle its own scrolling.
+	return CWnd::CreateEx( 0, NULL, _T("CLibraryCollectionView"), WS_CHILD |
 		WS_TABSTOP | WS_GROUP, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }
 
