@@ -306,9 +306,11 @@ void CChildWnd::SizeListAndBar(CWnd* pList, CWnd* pBar)
 	rc.bottom -= 28;
 	HDWP hPos = BeginDeferWindowPos( 2 );
 	DeferWindowPos( hPos, pBar->GetSafeHwnd(), NULL,
-		rc.left, rc.bottom, rc.Width(), 28, SWP_NOZORDER|SWP_SHOWWINDOW );
+		rc.left, rc.bottom, rc.Width(), 28,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	DeferWindowPos( hPos, pList->GetSafeHwnd(), NULL,
-		rc.left, rc.top, rc.Width(), rc.Height(), SWP_NOZORDER|SWP_SHOWWINDOW );
+		rc.left, rc.top, rc.Width(), rc.Height(),
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	EndDeferWindowPos( hPos );
 }
 

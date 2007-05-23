@@ -622,7 +622,7 @@ void CWizardCtrl::Layout()
 		}
 		
 		hDWP = DeferWindowPos( hDWP, pControl->GetSafeHwnd(), NULL, rcNew.left, rcNew.top,
-			rcNew.Width(), rcNew.Height(), SWP_SHOWWINDOW|SWP_NOACTIVATE );
+			rcNew.Width(), rcNew.Height(), SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 
 		if ( ! bSameRow )
 		{

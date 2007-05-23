@@ -177,17 +177,21 @@ void CFolderPropertiesDlg::OnSize(UINT nType, int cx, int cy)
 	HDWP hDWP = BeginDeferWindowPos( 4 );
 
 	DeferWindowPos( hDWP, m_wndData, NULL, rc.left, rc.bottom + 18,
-		rc.Width(), cy - 24 - 16 - 16 - ( rc.bottom + 18 ), SWP_NOZORDER );
+		rc.Width(), cy - 24 - 16 - 16 - ( rc.bottom + 18 ),
+		SWP_NOACTIVATE | SWP_NOZORDER );
 
 	m_wndApply.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	DeferWindowPos( hDWP, m_wndApply, NULL, rc.left, cy - 32 - 19, 0, 0, SWP_NOSIZE );
+	DeferWindowPos( hDWP, m_wndApply, NULL, rc.left, cy - 32 - 19, 0, 0,
+		SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER );
 
 	m_wndOK.GetWindowRect( &rc );
 	ScreenToClient( &rc );
 
-	DeferWindowPos( hDWP, m_wndOK, NULL, rc.left, cy - 32, 0, 0, SWP_NOZORDER|SWP_NOSIZE );
-	DeferWindowPos( hDWP, m_wndCancel, NULL, rc.right + 8, cy - 32, 0, 0, SWP_NOZORDER|SWP_NOSIZE );
+	DeferWindowPos( hDWP, m_wndOK, NULL, rc.left, cy - 32, 0, 0,
+		SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndCancel, NULL, rc.right + 8, cy - 32, 0, 0,
+		SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER );
 
 	EndDeferWindowPos( hDWP );
 }
@@ -203,11 +207,6 @@ void CFolderPropertiesDlg::OnPaint()
 	dc.Draw3dRect( &rc, GetSysColor( COLOR_ACTIVECAPTION ), GetSysColor( COLOR_ACTIVECAPTION ) );
 	rc.DeflateRect( 1, 1 );
 
-	if ( FALSE )
-	{
-		// thumbnail
-	}
-	else
 	{
 		CPoint pt = rc.CenterPoint();
 		pt.x -= 24; pt.y -= 24;

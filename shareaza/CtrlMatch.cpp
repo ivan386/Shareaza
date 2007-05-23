@@ -182,13 +182,6 @@ void CMatchCtrl::Update()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 
-	// Select first element at begining
-	if ( m_nFocus == 0xFFFFFFFF && m_pMatches->m_pFiles && m_pMatches->m_nFiles )
-	{
-		m_nFocus = 0;
-		m_pMatches->Select( m_pMatches->m_pFiles[ m_nFocus ], NULL );
-	}
-
 	if ( ! m_pMatches->m_bUpdated ) return;
 
 	m_nCacheItems = m_pMatches->m_nItems;

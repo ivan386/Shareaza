@@ -510,12 +510,16 @@ void CSearchInputBox::OnSize(UINT nType, int cx, int cy)
 	
 	HDWP hDWP = BeginDeferWindowPos( 4 );
 
-	DeferWindowPos( hDWP, m_wndSearch, NULL, BOX_MARGIN, 27, cx - BOX_MARGIN * 2, 19, SWP_SHOWWINDOW|SWP_NOZORDER );
-	DeferWindowPos( hDWP, m_wndSchemas, NULL, BOX_MARGIN, 67, cx - BOX_MARGIN * 2, 256, SWP_SHOWWINDOW|SWP_NOZORDER );
-	
-	DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 102, 90, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
-	DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 60, 102, 60, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
-
+	DeferWindowPos( hDWP, m_wndSearch, NULL, BOX_MARGIN + 10, 27,
+		cx - BOX_MARGIN * 2 - 10, 19,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndSchemas, NULL, BOX_MARGIN, 67,
+		cx - BOX_MARGIN * 2, 256,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );	
+	DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 102, 90, 24,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 60, 102, 60, 24,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	
 	EndDeferWindowPos( hDWP );
 }
@@ -631,7 +635,7 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		BS_CHECKBOX, rc, this, IDC_SEARCH_GNUTELLA1 ) ) return -1;
 	if ( ! m_wndCheckBoxED2K.Create( L"eD2K", WS_CHILD | WS_VISIBLE | WS_TABSTOP |
 		BS_CHECKBOX, rc, this, IDC_SEARCH_EDONKEY ) ) return -1;
-
+	
 	m_wndCheckBoxG2.SetFont( &theApp.m_gdiFontBold );
 	m_wndCheckBoxG2.SetCheck( BST_CHECKED );
 	m_wndCheckBoxG1.SetFont( &theApp.m_gdiFontBold );
@@ -650,7 +654,8 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_gdiImageList.Add( &bmProtocols, RGB( 0, 255, 0 ) );
 
 	// Min combo
-	if ( ! m_wndSizeMin.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_AUTOHSCROLL|CBS_DROPDOWN, rc, this, IDC_SEARCH_SIZEMIN ) ) return -1;
+	if ( ! m_wndSizeMin.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_AUTOHSCROLL|
+		CBS_DROPDOWN, rc, this, IDC_SEARCH_SIZEMIN ) ) return -1;
 	m_wndSizeMin.SetFont( &theApp.m_gdiFont );
 
 	m_wndSizeMin.AddString( _T("") );
@@ -665,7 +670,8 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndSizeMin.AddString( _T("4 GB") );
 
 	// Max combo
-	if ( ! m_wndSizeMax.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_AUTOHSCROLL|CBS_DROPDOWN, rc, this, IDC_SEARCH_SIZEMIN ) ) return -1;
+	if ( ! m_wndSizeMax.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_AUTOHSCROLL|
+		CBS_DROPDOWN, rc, this, IDC_SEARCH_SIZEMAX ) ) return -1;
 	m_wndSizeMax.SetFont( &theApp.m_gdiFont );
 
 	m_wndSizeMax.AddString( _T("") );
@@ -703,21 +709,25 @@ void CSearchAdvancedBox::OnSize(UINT nType, int cx, int cy)
 	HDWP hDWP = BeginDeferWindowPos( 3 );
 
 	if ( m_wndCheckBoxG2.m_hWnd != NULL )
-		DeferWindowPos( hDWP, m_wndCheckBoxG2, NULL, 
-						BOX_MARGIN + 20, 28, 
-						( cx - BOX_MARGIN * 3 ) / 2 - 20, 14, SWP_SHOWWINDOW );
+		DeferWindowPos( hDWP, m_wndCheckBoxG2, NULL, BOX_MARGIN + 20, 28, 
+			( cx - BOX_MARGIN * 3 ) / 2 - 20, 14,
+			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	if ( m_wndCheckBoxG1.m_hWnd != NULL )
-		DeferWindowPos( hDWP, m_wndCheckBoxG1, NULL, 
-						( cx / 2 ) + BOX_MARGIN / 2 + 20, 28, 
-						( cx - BOX_MARGIN * 3 ) / 2 - 20, 14, SWP_SHOWWINDOW );
+		DeferWindowPos( hDWP, m_wndCheckBoxG1, NULL, ( cx / 2 ) + BOX_MARGIN / 2 + 20, 28, 
+			( cx - BOX_MARGIN * 3 ) / 2 - 20, 14,
+			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	if ( m_wndCheckBoxED2K.m_hWnd != NULL )
-		DeferWindowPos( hDWP, m_wndCheckBoxED2K, NULL, 
-						BOX_MARGIN + 20, 48, 
-						( cx - BOX_MARGIN * 3 ) / 2 - 20, 14, SWP_SHOWWINDOW );
+		DeferWindowPos( hDWP, m_wndCheckBoxED2K, NULL, BOX_MARGIN + 20, 48, 
+			( cx - BOX_MARGIN * 3 ) / 2 - 20, 14,
+			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	if ( m_wndSizeMin.m_hWnd != NULL )
 	{
-		DeferWindowPos( hDWP, m_wndSizeMin, NULL, BOX_MARGIN, 81, ( cx - BOX_MARGIN * 4 ) / 2, 219, SWP_SHOWWINDOW|SWP_NOZORDER );
-		DeferWindowPos( hDWP, m_wndSizeMax, NULL, ( cx / 2 ) + BOX_MARGIN, 81, ( cx - BOX_MARGIN * 4 ) / 2, 219, SWP_SHOWWINDOW|SWP_NOZORDER );
+		DeferWindowPos( hDWP, m_wndSizeMin, NULL, BOX_MARGIN, 81,
+			( cx - BOX_MARGIN * 4 ) / 2, 219,
+			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+		DeferWindowPos( hDWP, m_wndSizeMax, NULL, ( cx / 2 ) + BOX_MARGIN, 81,
+			( cx - BOX_MARGIN * 4 ) / 2, 219,
+			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	}
 	
 	EndDeferWindowPos( hDWP );

@@ -33,18 +33,17 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CSchemaCtrl, CWnd)
-	//{{AFX_MSG_MAP(CSchemaCtrl)
 	ON_WM_ERASEBKGND()
 	ON_WM_DESTROY()
 	ON_WM_PAINT()
 	ON_WM_VSCROLL()
 	ON_WM_SIZE()
 	ON_WM_NCPAINT()
-	ON_WM_SETFOCUS()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEWHEEL()
-	//}}AFX_MSG_MAP
+	ON_EN_SETFOCUS(IDC_METADATA_CONTROL, OnControlSetFocus)
 	ON_EN_CHANGE(IDC_METADATA_CONTROL, OnControlEdit)
+	ON_CBN_SETFOCUS(IDC_METADATA_CONTROL, OnControlSetFocus)
 	ON_CBN_SELCHANGE(IDC_METADATA_CONTROL, OnControlEdit)
 	ON_CBN_EDITCHANGE(IDC_METADATA_CONTROL, OnControlEdit)
 END_MESSAGE_MAP()
@@ -76,7 +75,7 @@ CSchemaCtrl::CSchemaCtrl()
 BOOL CSchemaCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
 {
 	return CreateEx( WS_EX_CONTROLPARENT | ( theApp.m_bRTL ? WS_EX_LAYOUTRTL : 0 ),
-		NULL, NULL, dwStyle | WS_CHILD | WS_VSCROLL | WS_TABSTOP | WS_CLIPCHILDREN,
+		NULL, NULL, dwStyle | WS_CHILD | WS_VSCROLL | WS_CLIPCHILDREN,
 		rect, pParentWnd, nID );
 }
 
@@ -120,7 +119,7 @@ void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
 		Invalidate();
 		return;
 	}
-	
+
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
@@ -159,7 +158,7 @@ void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
 		
 		m_pCaptions.Add( strCaption );
 		m_pControls.Add( pControl );
-		
+
 		SetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA, (LONG_PTR_ARG)(LONG_PTR)pMember );
 		pControl->SetFont( &theApp.m_gdiFont );
 	}
@@ -277,7 +276,8 @@ void CSchemaCtrl::Layout()
 		}
 		
 		hDWP = DeferWindowPos( hDWP, pControl->GetSafeHwnd(), NULL, rcNew.left, rcNew.top,
-			rcNew.Width(), rcNew.Height(), SWP_SHOWWINDOW|SWP_NOACTIVATE );
+			rcNew.Width(), rcNew.Height(),
+			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 		
 		pScroll.nMax += m_nItemHeight;
 		nTop += m_nItemHeight;
@@ -464,26 +464,6 @@ void CSchemaCtrl::OnPaint()
 	dc.SelectObject( pOldFont );
 }
 
-void CSchemaCtrl::SetFocusTo(CWnd* pControl)
-{
-	CRect rcClient, rcControl;
-
-	GetClientRect( &rcClient );
-	pControl->GetWindowRect( &rcControl );
-	ScreenToClient( &rcControl );
-
-	if ( rcControl.top < rcClient.top )
-	{
-		ScrollBy( rcControl.top - rcClient.top - 8 );
-	}
-	else if ( rcControl.bottom > rcClient.bottom )
-	{
-		ScrollBy( rcControl.bottom - rcClient.bottom + 8 );
-	}
-
-	pControl->SetFocus();
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCtrl command handler
 
@@ -530,14 +510,28 @@ BOOL CSchemaCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 	return CWnd::OnCommand( wParam, lParam );
 }
 
-void CSchemaCtrl::OnSetFocus(CWnd* pOldWnd) 
+void CSchemaCtrl::OnControlSetFocus()
 {
-	CWnd::OnSetFocus( pOldWnd );
-	
-	if ( !m_pControls.IsEmpty() )
+	CWnd* pFocus = GetFocus();
+	for ( int i = 0; i < m_pControls.GetCount(); i++)
 	{
-		CWnd* pWnd = m_pControls.GetAt( 0 );
-		SetFocusTo( pWnd );
+		CWnd* pControl = m_pControls.GetAt( i );
+		if ( pControl == pFocus || pControl == pFocus->GetParent() )
+		{
+			CRect rcClient, rcControl;
+			GetClientRect( &rcClient );
+			pFocus->GetWindowRect( &rcControl );
+			ScreenToClient( &rcControl );
+			if ( rcControl.top < rcClient.top )
+			{
+				ScrollBy( rcControl.top - rcClient.top - 8 );
+			}
+			else if ( rcControl.bottom > rcClient.bottom )
+			{
+				ScrollBy( rcControl.bottom - rcClient.bottom + 8 );
+			}
+			break;
+		}
 	}
 }
 

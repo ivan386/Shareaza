@@ -140,9 +140,9 @@ void CBrowseFrameCtrl::OnSize(UINT nType, int cx, int cy)
 	if ( m_bTreeVisible )
 	{
 		DeferWindowPos( hDWP, m_wndTreeTop, NULL, rc.left, rc.top, m_nTreeSize,
-			BAR_HEIGHT, SWP_SHOWWINDOW );
+			BAR_HEIGHT, SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 		DeferWindowPos( hDWP, m_wndTree, NULL, rc.left, rc.top + BAR_HEIGHT, m_nTreeSize,
-			rc.Height() - BAR_HEIGHT, SWP_SHOWWINDOW );
+			rc.Height() - BAR_HEIGHT, SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 		rc.left += m_nTreeSize + SPLIT_SIZE;
 	}
 	else
@@ -160,8 +160,9 @@ void CBrowseFrameCtrl::OnSize(UINT nType, int cx, int cy)
 
 	if ( m_bPanelEnable && m_bPanelVisible )
 	{
-		DeferWindowPos( hDWP, m_wndDetails, NULL, rc.left, rc.bottom - m_nPanelSize, rc.Width(),
-			m_nPanelSize, SWP_NOZORDER|SWP_SHOWWINDOW );
+		DeferWindowPos( hDWP, m_wndDetails, NULL, rc.left,
+			rc.bottom - m_nPanelSize, rc.Width(),
+			m_nPanelSize, SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 		rc.bottom -= m_nPanelSize + SPLIT_SIZE;
 	}
 	else
@@ -170,7 +171,7 @@ void CBrowseFrameCtrl::OnSize(UINT nType, int cx, int cy)
 	}
 
 	DeferWindowPos( hDWP, m_wndList->GetSafeHwnd(), NULL, rc.left, rc.top,
-		rc.Width(), rc.Height(), SWP_NOZORDER|SWP_SHOWWINDOW );
+		rc.Width(), rc.Height(), SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 
 	EndDeferWindowPos( hDWP );
 }

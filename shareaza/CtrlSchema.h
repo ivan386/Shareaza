@@ -39,6 +39,7 @@ public:
 	int				m_nCaptionWidth;
 	int				m_nItemHeight;
 	BOOL			m_bShowBorder;
+
 protected:
 	CSchema*		m_pSchema;
 	CArray< CWnd* >	m_pControls;
@@ -55,39 +56,25 @@ public:
 	void		Disable();
 	void		Enable();
 	void		ScrollBy(int nDelta);
+	virtual BOOL Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
+
 protected:
 	void		Layout();
-	void		SetFocusTo(CWnd* pCtrl);
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CSchemaCtrl)
-	public:
-	virtual BOOL Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
-	protected:
 	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
-	//}}AFX_VIRTUAL
 
-// Implementation
-protected:
-	//{{AFX_MSG(CSchemaCtrl)
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnDestroy();
 	afx_msg void OnPaint();
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnNcPaint();
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
-	//}}AFX_MSG
+	afx_msg void OnControlSetFocus();
 	afx_msg void OnControlEdit();
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
 
 #define IDC_METADATA_CONTROL	99
 
