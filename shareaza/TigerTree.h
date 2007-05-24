@@ -1,7 +1,7 @@
 //
 // TigerTree.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,16 +53,16 @@ public:
 	BOOL	FinishBlockTest(DWORD nBlock);
 public:
 	BOOL	ToBytes(BYTE** pOutput, DWORD* pnOutput, DWORD nHeight = 0);
-	BOOL	FromBytes(BYTE* pOutput, DWORD nOutput, DWORD nHeight, uint64 nLength);
+	BOOL	FromBytes(const BYTE* pOutput, DWORD nOutput, DWORD nHeight, uint64 nLength);
 	BOOL	CheckIntegrity();
 	void	Dump();
 
 // Inlines
 public:
-	BOOL	IsAvailable() const { return m_pNode != NULL; }
-	DWORD	GetHeight() const { return m_nHeight; }
-	DWORD	GetBlockLength() const { return 1024 * m_nBlockCount; }
-	DWORD	GetBlockCount() const { return m_nBaseUsed; }
+	inline BOOL		IsAvailable() const { CQuickLock oLock( m_pSection ); return m_pNode != NULL; }
+	inline DWORD	GetHeight() const { CQuickLock oLock( m_pSection ); return m_nHeight; }
+	inline DWORD	GetBlockLength() const { CQuickLock oLock( m_pSection ); return 1024 * m_nBlockCount; }
+	inline DWORD	GetBlockCount() const { CQuickLock oLock( m_pSection ); return m_nBaseUsed; }
 
 // Attributes
 private:
@@ -80,11 +80,13 @@ private:
 	CTigerNode*	m_pStackBase;
 	CTigerNode*	m_pStackTop;
 
+	mutable CCriticalSection	m_pSection;
+
 // Implementation
 private:
 	void	Collapse();
 	void	BlocksToNode();
-	void	Tiger(LPCVOID pInput, uint64 nInput, uint64* pOutput, uint64* pInput1 = NULL, uint64* pInput2 = NULL);
+	static void	Tiger(LPCVOID pInput, uint64 nInput, uint64* pOutput, uint64* pInput1 = NULL, uint64* pInput2 = NULL);
 };
 
 class CTigerNode

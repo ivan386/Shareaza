@@ -1,7 +1,7 @@
 //
 // TigerTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -168,6 +168,8 @@ CTigerTree::~CTigerTree()
 
 void CTigerTree::SetupAndAllocate(DWORD nHeight, uint64 nLength)
 {
+	CQuickLock oLock( m_pSection );
+
 	Clear();
 
 	uint64 nCount = (DWORD)( nLength / BLOCK_SIZE );
@@ -201,6 +203,8 @@ void CTigerTree::SetupAndAllocate(DWORD nHeight, uint64 nLength)
 
 void CTigerTree::SetupParameters(uint64 nLength)
 {
+	CQuickLock oLock( m_pSection );
+
 	uint64 nCount = nLength / BLOCK_SIZE;
 	if ( nLength % BLOCK_SIZE ) nCount++;
 
@@ -229,6 +233,8 @@ void CTigerTree::SetupParameters(uint64 nLength)
 
 void CTigerTree::Clear()
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( m_pNode != NULL ) delete [] m_pNode;
 
 	m_nHeight		= 0;
@@ -241,6 +247,8 @@ void CTigerTree::Clear()
 
 void CTigerTree::Serialize(CArchive& ar)
 {
+	CQuickLock oLock( m_pSection );
+
 	CTigerNode* pNode;
 	DWORD nStep;
 
@@ -287,6 +295,8 @@ void CTigerTree::Serialize(CArchive& ar)
 
 DWORD CTigerTree::GetSerialSize() const
 {
+	CQuickLock oLock( m_pSection );
+
 	return 4 + m_nNodeCount * ( TIGER_SIZE + 1 );
 }
 
@@ -295,6 +305,8 @@ DWORD CTigerTree::GetSerialSize() const
 
 BOOL CTigerTree::GetRoot(Hashes::TigerHash& oTiger) const
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( m_pNode == NULL ) return FALSE;
 	std::copy( &m_pNode->value[ 0 ], &m_pNode->value[ 3 ], oTiger.begin() );
 	oTiger.validate();
@@ -306,6 +318,8 @@ BOOL CTigerTree::GetRoot(Hashes::TigerHash& oTiger) const
 
 void CTigerTree::Assume(CTigerTree* pSource)
 {
+	CQuickLock oLock( m_pSection );
+
 	Clear();
 	if ( pSource->m_pNode == NULL ) return;
 
@@ -323,6 +337,8 @@ void CTigerTree::Assume(CTigerTree* pSource)
 
 void CTigerTree::BeginFile(DWORD nHeight, uint64 nLength)
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( ! IsAvailable() );
 
 	SetupAndAllocate( nHeight, nLength );
@@ -337,6 +353,8 @@ void CTigerTree::BeginFile(DWORD nHeight, uint64 nLength)
 
 void CTigerTree::AddToFile(LPCVOID pInput, DWORD nLength)
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( m_pNode != NULL );
 
 	LPBYTE pBlock = (LPBYTE)pInput;
@@ -371,6 +389,8 @@ void CTigerTree::AddToFile(LPCVOID pInput, DWORD nLength)
 
 BOOL CTigerTree::FinishFile()
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( m_pStackTop == NULL ) return FALSE;
 	if ( m_nBaseUsed == 0 )
 	{
@@ -418,6 +438,8 @@ BOOL CTigerTree::FinishFile()
 
 void CTigerTree::BeginBlockTest()
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( m_pNode != NULL );
 
 	if ( m_pStackBase == NULL ) m_pStackBase = new CTigerNode[ STACK_SIZE ];
@@ -430,6 +452,8 @@ void CTigerTree::BeginBlockTest()
 
 void CTigerTree::AddToTest(LPCVOID pInput, DWORD nLength)
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( m_pNode != NULL );
 
 	LPBYTE pBlock = (LPBYTE)pInput;
@@ -461,6 +485,8 @@ void CTigerTree::AddToTest(LPCVOID pInput, DWORD nLength)
 
 BOOL CTigerTree::FinishBlockTest(DWORD nBlock)
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( nBlock < m_nBaseUsed );
 	if ( nBlock >= m_nBaseUsed ) return FALSE;
 
@@ -480,6 +506,8 @@ BOOL CTigerTree::FinishBlockTest(DWORD nBlock)
 
 BOOL CTigerTree::ToBytes(BYTE** pOutput, DWORD* pnOutput, DWORD nHeight)
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( m_pNode == NULL ) return FALSE;
 
 	if ( nHeight < 1 || nHeight > m_nHeight ) nHeight = m_nHeight;
@@ -514,8 +542,10 @@ BOOL CTigerTree::ToBytes(BYTE** pOutput, DWORD* pnOutput, DWORD nHeight)
 //////////////////////////////////////////////////////////////////////
 // CTigerTree breadth-first serialize
 
-BOOL CTigerTree::FromBytes(BYTE* pInput, DWORD nInput, DWORD nHeight, uint64 nLength)
+BOOL CTigerTree::FromBytes(const BYTE* pInput, DWORD nInput, DWORD nHeight, uint64 nLength)
 {
+	CQuickLock oLock( m_pSection );
+
 	SetupAndAllocate( nHeight, nLength );
 
 	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
@@ -583,6 +613,8 @@ BOOL CTigerTree::FromBytes(BYTE* pInput, DWORD nInput, DWORD nHeight, uint64 nLe
 
 BOOL CTigerTree::CheckIntegrity()
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( m_pNode == NULL ) return FALSE;
 
 	m_nNodeBase = ( m_nNodeCount + 1 ) / 2;
@@ -625,6 +657,8 @@ BOOL CTigerTree::CheckIntegrity()
 void CTigerTree::Dump()
 {
 #ifdef _DEBUG
+	CQuickLock oLock( m_pSection );
+
 	CString strOutput, strLine;
 
 	DWORD nRowPos = 0, nRowCount = 1;

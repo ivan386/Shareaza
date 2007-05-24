@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,11 +68,15 @@ CDownloadWithTiger::~CDownloadWithTiger()
 
 DWORD CDownloadWithTiger::GetValidationCookie() const
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	return m_nVerifyCookie;
 }
 
 QWORD CDownloadWithTiger::GetVerifyLength(int nHash) const
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	if ( nHash == HASH_NULL )
 	{
 		if ( m_pTorrentBlock != NULL ) return m_nTorrentSize;
@@ -97,6 +101,8 @@ QWORD CDownloadWithTiger::GetVerifyLength(int nHash) const
 
 BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL& bSuccess, int nHash) const
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	if ( nOffset >= m_nSize ) return FALSE;
 	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL ) return FALSE;
 
@@ -162,6 +168,8 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 
 BOOL CDownloadWithTiger::IsFullyVerified()
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	if ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock ) return TRUE;
 	if ( m_nTigerBlock > 0 && m_nTigerSuccess >= m_nTigerBlock ) return TRUE;
 	if ( m_nHashsetBlock > 0 && m_nHashsetSuccess >= m_nHashsetBlock ) return TRUE;
@@ -173,11 +181,15 @@ BOOL CDownloadWithTiger::IsFullyVerified()
 
 BOOL CDownloadWithTiger::NeedTigerTree() const
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	return ( m_nSize < SIZE_UNKNOWN && m_pTigerTree.IsAvailable() == FALSE );
 }
 
 BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger)
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	if ( m_nSize == SIZE_UNKNOWN ) return FALSE;
 	if ( m_pTigerTree.IsAvailable() ) return TRUE;
 
@@ -221,6 +233,8 @@ BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger)
 
 CTigerTree* CDownloadWithTiger::GetTigerTree()
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	return m_pTigerTree.IsAvailable() ? &m_pTigerTree : NULL;
 }
 
@@ -229,11 +243,15 @@ CTigerTree* CDownloadWithTiger::GetTigerTree()
 
 BOOL CDownloadWithTiger::NeedHashset() const
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	return ( m_nSize < SIZE_UNKNOWN && m_pHashset.IsAvailable() == FALSE );
 }
 
 BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	if ( m_nSize == SIZE_UNKNOWN ) return FALSE;
 	if ( m_pHashset.IsAvailable() ) return TRUE;
 	
@@ -283,6 +301,8 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 
 CED2K* CDownloadWithTiger::GetHashset()
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	return m_pHashset.IsAvailable() ? &m_pHashset : NULL;
 }
 
@@ -291,6 +311,8 @@ CED2K* CDownloadWithTiger::GetHashset()
 
 BOOL CDownloadWithTiger::ValidationCanFinish() const
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	BOOL bAvailable = FALSE;
 
 	if ( m_pTorrentBlock != NULL )
@@ -323,6 +345,8 @@ BOOL CDownloadWithTiger::ValidationCanFinish() const
 
 void CDownloadWithTiger::RunValidation(BOOL bSeeding)
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL ) return;
 	if ( m_sDiskName.IsEmpty() ) return;
 
@@ -353,6 +377,8 @@ void CDownloadWithTiger::RunValidation(BOOL bSeeding)
 
 BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	if ( nHash == HASH_TIGERTREE && ! Settings.Downloads.VerifyTiger ) return FALSE;
 	if ( nHash == HASH_ED2K && ! Settings.Downloads.VerifyED2K ) return FALSE;
 
@@ -482,6 +508,8 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 
 void CDownloadWithTiger::ContinueValidation()
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	ASSERT( m_nVerifyHash > HASH_NULL );
 	ASSERT( m_nVerifyBlock < 0xFFFFFFFF );
 
@@ -532,6 +560,8 @@ void CDownloadWithTiger::ContinueValidation()
 
 void CDownloadWithTiger::FinishValidation()
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	Fragments::List oCorrupted( m_nSize );
 	
 	if ( m_nVerifyHash == HASH_TIGERTREE )
@@ -611,6 +641,8 @@ void CDownloadWithTiger::FinishValidation()
 
 void CDownloadWithTiger::SubtractHelper(Fragments::List& ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize)
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	QWORD nOffset = 0;
 
 	while ( nBlock-- && !ppCorrupted.empty() )
@@ -629,6 +661,8 @@ void CDownloadWithTiger::SubtractHelper(Fragments::List& ppCorrupted, BYTE* pBlo
 
 CString CDownloadWithTiger::GetAvailableRanges() const
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	CString strRanges, strRange;
 	QWORD nOffset, nLength;
 	BOOL bSuccess;
@@ -659,6 +693,8 @@ CString CDownloadWithTiger::GetAvailableRanges() const
 
 void CDownloadWithTiger::ResetVerification()
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	if ( m_nVerifyHash == HASH_TIGERTREE )
 	{
 		m_pTigerTree.FinishBlockTest( m_nVerifyBlock );
@@ -689,6 +725,8 @@ void CDownloadWithTiger::ResetVerification()
 
 void CDownloadWithTiger::ClearVerification()
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	ResetVerification();
 
 	if ( m_pTigerBlock != NULL ) delete [] m_pTigerBlock;
@@ -711,6 +749,8 @@ void CDownloadWithTiger::ClearVerification()
 
 void CDownloadWithTiger::Serialize(CArchive& ar, int nVersion)
 {
+	CQuickLock oLock( m_pTigerSection );
+
 	CDownloadWithTorrent::Serialize( ar, nVersion );
 
 	m_pTigerTree.Serialize( ar );
