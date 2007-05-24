@@ -213,39 +213,101 @@ CLibraryFile* CLibraryMaps::LookupFileByHash(const Hashes::Sha1Hash& oSHA1, cons
 	CQuickLock oLock( Library.m_pSection );
 
 	CLibraryFile* pFile = NULL;
+	bool bMinSize = false, bMaxSize = false;
 
-	if ( oTiger.isValid() ) pFile = m_pTigerMap[ oTiger[ 0 ] & HASH_MASK ];
-	else if ( oSHA1.isValid() ) pFile = m_pSHA1Map[ oSHA1[ 0 ] & HASH_MASK ];
-	else if ( oED2K.isValid() ) pFile = m_pED2KMap[ oED2K[ 0 ] & HASH_MASK ];
-	else if ( oBTH.isValid() ) pFile = m_pBTHMap[ oBTH[ 0 ] & HASH_MASK ];
-	else if ( oMD5.isValid() ) pFile = m_pMD5Map[ oMD5[ 0 ] & HASH_MASK ];
-	
-	if ( pFile == NULL ) return NULL;
+	bMinSize = !(nMinSize == SIZE_UNKNOWN) && !(nMinSize == 0);
+	bMaxSize = !(nMaxSize == SIZE_UNKNOWN) && !(nMaxSize == 0);
 
-	bool bMinSize = !(nMinSize == SIZE_UNKNOWN) && !(nMinSize == 0);
-	bool bMaxSize = !(nMaxSize == SIZE_UNKNOWN) && !(nMaxSize == 0);
-
-	for ( ; pFile ; pFile = pFile->m_pNextTiger )
+	// Do not make conditions below with "if/else". There is no guarantee that a
+	// Ghost rated file has all the hashes thus look up should go through all the
+	// maps individually.
+	if ( oSHA1.isValid() )
 	{
-		if ( ( ( pFile->m_oSHA1 && oSHA1) ||
-			( pFile->m_oTiger && oTiger) ||
-			( pFile->m_oED2K && oED2K) ||
-			( pFile->m_oBTH && oBTH) ||
-			( pFile->m_oMD5 && oMD5) ) &&
-			( !validAndUnequal( pFile->m_oSHA1, oSHA1 ) ) &&
-			( !validAndUnequal( pFile->m_oTiger, oTiger ) ) &&
-			( !validAndUnequal( pFile->m_oED2K, oED2K ) ) &&
-			( !validAndUnequal( pFile->m_oBTH, oBTH ) ) &&
-			( !validAndUnequal( pFile->m_oMD5, oMD5 ) ) )
+		pFile = m_pSHA1Map[ oSHA1[ 0 ] & HASH_MASK ];
+		if ( pFile != NULL )
 		{
-			if ( ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
+			for ( ; pFile ; pFile = pFile->m_pNextSHA1 )
 			{
-				if ( ( !bMinSize && !bMaxSize ) || 
-					( !bMaxSize && nMinSize <= pFile->m_nSize ) || 
-					( !bMinSize && nMaxSize >= pFile->m_nSize ) || 
-					( nMinSize <= pFile->m_nSize && nMaxSize >= pFile->m_nSize ) )
+				if ( ( ( pFile->m_oSHA1 && oSHA1) ||
+					( pFile->m_oTiger && oTiger) ||
+					( pFile->m_oED2K && oED2K) ||
+					( pFile->m_oMD5 && oMD5) ) &&
+					( !validAndUnequal( pFile->m_oSHA1, oSHA1 ) ) &&
+					( !validAndUnequal( pFile->m_oTiger, oTiger ) ) &&
+					( !validAndUnequal( pFile->m_oED2K, oED2K ) ) &&
+					( !validAndUnequal( pFile->m_oMD5, oMD5 ) ) )
 				{
-					return pFile;
+					if ( CheckFileAttributes( pFile, bMinSize, bMaxSize, nMinSize, nMaxSize, bSharedOnly, bAvailableOnly ) )
+						return pFile;
+				}
+			}
+		}
+	}
+	if ( oED2K.isValid() )
+	{
+		pFile = m_pED2KMap[ oED2K[ 0 ] & HASH_MASK ];
+		if ( pFile != NULL )
+		{
+			for ( ; pFile ; pFile = pFile->m_pNextED2K )
+			{
+				if ( ( ( pFile->m_oED2K && oED2K) ||
+					( pFile->m_oTiger && oTiger) ||
+					( pFile->m_oMD5 && oMD5) ) &&
+					( !validAndUnequal( pFile->m_oED2K, oED2K ) ) &&
+					( !validAndUnequal( pFile->m_oTiger, oTiger ) ) &&
+					( !validAndUnequal( pFile->m_oMD5, oMD5 ) ) )
+				{
+					if ( CheckFileAttributes( pFile, bMinSize, bMaxSize, nMinSize, nMaxSize, bSharedOnly, bAvailableOnly ) )
+						return pFile;
+				}
+			}
+		}
+	}
+	if ( oTiger.isValid() )
+	{
+		pFile = m_pTigerMap[ oTiger[ 0 ] & HASH_MASK ];
+		if ( pFile != NULL )
+		{
+			for ( ; pFile ; pFile = pFile->m_pNextTiger )
+			{
+				if ( ( ( pFile->m_oTiger && oTiger) ||
+					( pFile->m_oMD5 && oMD5) ) &&
+					( !validAndUnequal( pFile->m_oTiger, oTiger ) ) &&
+					( !validAndUnequal( pFile->m_oMD5, oMD5 ) ) )
+				{
+					if ( CheckFileAttributes( pFile, bMinSize, bMaxSize, nMinSize, nMaxSize, bSharedOnly, bAvailableOnly ) )
+						return pFile;
+				}
+			}
+		}
+	}
+	if ( oMD5.isValid() )
+	{
+		pFile = m_pMD5Map[ oMD5[ 0 ] & HASH_MASK ];
+		if ( pFile != NULL )
+		{
+			for ( ; pFile ; pFile = pFile->m_pNextMD5 )
+			{
+				if ( validAndEqual( pFile->m_oMD5, oMD5 ) )
+				{
+					if ( CheckFileAttributes( pFile, bMinSize, bMaxSize, nMinSize, nMaxSize, bSharedOnly, bAvailableOnly ) )
+						return pFile;
+				}
+			}
+		}
+	}
+
+	if ( oBTH.isValid() )
+	{
+		pFile = m_pBTHMap[ oBTH[ 0 ] & HASH_MASK ];
+		if ( pFile != NULL )
+		{
+			for ( ; pFile ; pFile = pFile->m_pNextBTH )
+			{
+				if ( validAndEqual( pFile->m_oBTH, oBTH ) )
+				{
+					if ( CheckFileAttributes( pFile, bMinSize, bMaxSize, nMinSize, nMaxSize, bSharedOnly, bAvailableOnly ) )
+						return pFile;
 				}
 			}
 		}
@@ -775,6 +837,21 @@ CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum
 		}
 	}
 	return pHits;
+}
+
+BOOL CLibraryMaps::CheckFileAttributes(CLibraryFile* pFile, bool bMinSize, bool bMaxSize, QWORD nMinSize, QWORD nMaxSize, BOOL bSharedOnly, BOOL bAvailableOnly) const
+{
+	if ( ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
+	{
+		if ( ( !bMinSize && !bMaxSize ) ||
+			( !bMaxSize && nMinSize <= pFile->m_nSize ) ||
+			( !bMinSize && nMaxSize >= pFile->m_nSize ) ||
+			( nMinSize <= pFile->m_nSize && nMaxSize >= pFile->m_nSize ) )
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
