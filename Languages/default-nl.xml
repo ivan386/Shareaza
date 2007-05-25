@@ -171,7 +171,7 @@
 		<button id="ID_DOWNLOADS_MONITOR" text="Monitor tonen"/>
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrentinformatie"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Download-/TorrentURL toevoegen..."/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Downloadlink toevoegen"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Wis voltooide bestanden"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filter"/>
@@ -344,7 +344,7 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Chatten"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Instellingen"/>
@@ -358,7 +358,7 @@
 		<button id="ID_SECURITY_BAN" text="Gastheer verbannen"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Instellingen"/>
@@ -438,7 +438,7 @@
 			<separator/>
 			<menu text="_Netwerken Kiezen">
 				<item id="ID_NETWORK_G2" text="Verbinden met _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Verbinden met Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -507,7 +507,7 @@
 			<separator/>
 			<menu text="Net_werken kiezen">
 				<item id="ID_NETWORK_G2" text="Verbinden met _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Verbinden met Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -606,7 +606,7 @@
 			<separator/>
 			<menu text="Net_werken kiezen">
 				<item id="ID_NETWORK_G2" text="Verbinden met _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Verbinden met Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -1387,7 +1387,7 @@
 			<item id="ID_NETWORK_DISCONNECT" text="Ver_breek verbinding"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
 		<menu text="_Monitor">
@@ -2053,10 +2053,10 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">De eDonkey serverlijst is leeg.</text>
 		<newline gap="8"/>
-		<text>Er zijn geen servers in je eDonkey2000 serverlijst. Je moet een recente
+		<text>Er zijn geen servers in je eDonkey serverlijst. Je moet een recente
 		serverlijst hebben om te kunnen verbinden met ED2K.</text>
 		<newline gap="8"/>
-		<text>Je kan een serverlijst downloaden van de eDonkey2000 instellingspagina,
+		<text>Je kan een serverlijst downloaden van de eDonkey instellingspagina,
 		of op de discovery services pagina. Druk op F9 om het scherm te openen</text>
 	</document>
 	<document name="GeneralHelp.UploadWarning">
@@ -2172,7 +2172,7 @@
 	<tip id="ID_DISCOVERY_GNUTELLA" message="Bootstrap services in het discovery venster weergeven."/>
 	<tip id="ID_DISCOVERY_QUERY" message="De geselecteerde discovery services nu opvragen."/>
 	<tip id="ID_DISCOVERY_REMOVE" message="Verwijder de geselecteerde discovery services."/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="Toon de eDonkey2000 Server.met services in het Discovery venster."/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="Toon de eDonkey Server.met services in het Discovery venster."/>
 	<tip id="ID_DISCOVERY_WEBCACHE" message="GWebCache services in het discovery venster weergeven."/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Beëindig en verwijder alle downloads van deze groep."/>
 	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Een nieuwe downloadgroep aanmaken..."/>
@@ -2236,8 +2236,8 @@
 	<tip id="ID_HITMONITOR_SEARCH" message="Op het netwerk zoeken naar de geselecteerde term."/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="Verbinden met de geselecteerde gastheren."/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="De verbinding verbreken met de geselecteerde gastheren."/>
-	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Toon eDonkey2000 servers."/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download een eDonkey2000 &quot;server.met&quot; bestand..."/>
+	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Toon eDonkey servers."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download een eDonkey &quot;server.met&quot; bestand..."/>
 	<tip id="ID_HOSTCACHE_G1_CACHE" message="Gnutella1 gecachede gastheren tonen."/>
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="Gnutella2 gecachede gastheren tonen."/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Gnutella2 horizon hubs tonen."/>
@@ -2341,7 +2341,7 @@
 	<tip id="ID_NETWORK_CONNECT" message="Verbinden met het netwerk."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Zelf verbinding maken met een gastheer..."/>
 	<tip id="ID_NETWORK_DISCONNECT" message="De verbinding met het netwerk verbreken."/>
-	<tip id="ID_NETWORK_ED2K" message="Verbinden met het eDonkey2000 netwerk."/>
+	<tip id="ID_NETWORK_ED2K" message="Verbinden met het eDonkey netwerk."/>
 	<tip id="ID_NETWORK_EXIT" message="Shareaza afsluiten."/>
 	<tip id="ID_NETWORK_G1" message="Verbinden met het originele Gnutella netwerk."/>
 	<tip id="ID_NETWORK_G2" message="Verbinden met het Gnutella2 netwerk (zeer aanbevolen)."/>
@@ -2738,12 +2738,12 @@
 	<string id="16308" value="Downloadgastheer %s heeft ongevraagde data gestuurd, verbinding wordt verbroken."/>
 	<string id="16309" value="Metadata voor &quot;%s&quot; is aangevraagd aan %s..."/>
 	<string id="16310" value="Tiger-tree data wordt ontvangen van %s (%s)..."/>
-	<string id="16311" value="eDonkey2000 hashset voor &quot;%s&quot; is aangevraagd aan %s..."/>
-	<string id="16312" value="Een ongeldige eDonkey2000 hashset is ontvangen van %s, bron is geweigerd."/>
-	<string id="16313" value="eDonkey2000 hashset is ontvangen voor &quot;%s&quot;, minimum controleerbare chunk %s."/>
-	<string id="16314" value="De eDonkey2000 hashset van de downloadgastheer is corrupt of inwendig inconsequent, bron is geweigerd."/>
+	<string id="16311" value="eDonkey hashset voor &quot;%s&quot; is aangevraagd aan %s..."/>
+	<string id="16312" value="Een ongeldige eDonkey hashset is ontvangen van %s, bron is geweigerd."/>
+	<string id="16313" value="eDonkey hashset is ontvangen voor &quot;%s&quot;, minimum controleerbare chunk %s."/>
+	<string id="16314" value="De eDonkey hashset van de downloadgastheer is corrupt of inwendig inconsequent, bron is geweigerd."/>
 	<string id="16315" value="Niet mogelijk om de vergroting te initialiseren voor download &quot;%s&quot;."/>
-	<string id="16316" value="Het wachten op de wachtrij update van eDonkey2000 downloadgastheer %s is uitgeteld voor bestand &quot;%s&quot;."/>
+	<string id="16316" value="Het wachten op de wachtrij update van eDonkey downloadgastheer %s is uitgeteld voor bestand &quot;%s&quot;."/>
 	<string id="16317" value="In wachtrij blijven voor &quot;%s&quot;."/>
 	<string id="16318" value="Niet genoeg schijfruimte om &quot;%s&quot; te downloaden (%s)."/>
 	<string id="16319" value="Bron %s (%s) is geweigerd voor het sturen van corrupte delen van &quot;%s&quot; (%I64i-%I64i)."/>
@@ -2789,7 +2789,7 @@
 	<string id="16359" value="Offline wachtrijpositie van uploadgastheer %s is verstreken, wordt verwijderd."/>
 	<string id="16360" value="Uploaden van &quot;%s&quot; naar %s (%s) wordt geweigerd, alle passende wachtrijen zijn vol."/>
 	<string id="16361" value="Uploaden naar %s (%s) wordt geweigerd, netwerk is buiten gebruik."/>
-	<string id="16362" value="eDonkey2000 uploads zouden niet moeten worden afgebroken. Weet je zeker dat je deze upload wilt beëindigen?"/>
+	<string id="16362" value="eDonkey uploads zouden niet moeten worden afgebroken. Weet je zeker dat je deze upload wilt beëindigen?"/>
 	<string id="16363" value="Torrent uploads"/>
 	<string id="16364" value="Volledige uploads"/>
 	<string id="16365" value="Weet je zeker dat je iedere download uit deze groep wilt annuleren/afbreken?"/>
@@ -2958,7 +2958,7 @@
 	<string id="17104" value="Gnutella II: Leaf-naar-hub verbinding"/>
 	<string id="17105" value="Gnutella II: Hub-naar-leaf verbinding"/>
 	<string id="17106" value="eDonkey server verbinding (LOWID: %lu)"/>
-	<string id="17107" value="eDonkey2000 server verbinding"/>
+	<string id="17107" value="eDonkey server verbinding"/>
 	<string id="17108" value="Handschudden"/>
 	<string id="17109" value="Inkomend"/>
 	<string id="17110" value="Uitgaand"/>
@@ -2979,29 +2979,29 @@
 	<string id="17125" value="G2 peer"/>
 	<string id="17126" value="G2 hub"/>
 	<string id="17127" value="G2 leaf"/>
-	<string id="17128" value="eDonkey2000 server"/>
-	<string id="17129" value="eDonkey2000 (LowID)"/>
-	<string id="17130" value="eDonkey2000 (HighID)"/>
-	<string id="17216" value="Verbinding met eDonkey2000 server &quot;%s&quot; wordt aangemaakt..."/>
-	<string id="17217" value="Verbonden met eDonkey2000 server %s, bezig met handschudden..."/>
+	<string id="17128" value="eDonkey server"/>
+	<string id="17129" value="eDonkey (LowID)"/>
+	<string id="17130" value="eDonkey (HighID)"/>
+	<string id="17216" value="Verbinding met eDonkey server &quot;%s&quot; wordt aangemaakt..."/>
+	<string id="17217" value="Verbonden met eDonkey server %s, bezig met handschudden..."/>
 	<string id="17218" value="ED2K [%s] %s"/>
-	<string id="17219" value="eDonkey2000 server %s weigerde de verbinding."/>
-	<string id="17220" value="eDonkey2000 server %s online, cliënt ID is %lu."/>
-	<string id="17221" value="eDonkey2000 server %s veranderde onze cliënt ID van %lu naar %lu."/>
-	<string id="17222" value="eDonkey2000 server %s identificeerde zichzelf als &quot;%s&quot;."/>
-	<string id="17223" value="eDonkey2000 server %s keurde de verbinding af."/>
-	<string id="17224" value="Fout opgetreden bij handschudden met eDonkey2000 cliënt %s."/>
-	<string id="17225" value="eDonkey2000 cliënt verbinding met %s is verloren gegaan."/>
-	<string id="17226" value="Een verkeerd geformatteerd eDonkey2000 pakket is ontvangen van %s (id=%x)."/>
-	<string id="17227" value="Binnenkomende verbinding van %s is een eDonkey2000 cliëntlink."/>
-	<string id="17228" value="eDonkey2000 hashset voor &quot;%s&quot; wordt gestuurd naar %s..."/>
-	<string id="17229" value="eDonkey2000 cliënt verbinding met %s was inactief, gesloten."/>
-	<string id="17230" value="eDonkey2000 cliënt verbinding wordt aangemaakt met %s..."/>
-	<string id="17231" value="eDonkey2000 cliënt %s heeft de verkeerde GUID, handschudden wordt geannuleerd."/>
-	<string id="17232" value="Verbinden met eDonkey2000 cliënt %s is uitgeteld."/>
-	<string id="17233" value="Handschudden met eDonkey2000 cliënt %s is uitgeteld."/>
-	<string id="17234" value="eDonkey2000 cliënt link van %s is geweigerd omdat eDonkey2000 is uitgeschakeld."/>
-	<string id="17248" value="Starten met het proces om gedeeltelijke eDonkey2000 downloads te importeren..."/>
+	<string id="17219" value="eDonkey server %s weigerde de verbinding."/>
+	<string id="17220" value="eDonkey server %s online, cliënt ID is %lu."/>
+	<string id="17221" value="eDonkey server %s veranderde onze cliënt ID van %lu naar %lu."/>
+	<string id="17222" value="eDonkey server %s identificeerde zichzelf als &quot;%s&quot;."/>
+	<string id="17223" value="eDonkey server %s keurde de verbinding af."/>
+	<string id="17224" value="Fout opgetreden bij handschudden met eDonkey cliënt %s."/>
+	<string id="17225" value="eDonkey cliënt verbinding met %s is verloren gegaan."/>
+	<string id="17226" value="Een verkeerd geformatteerd eDonkey pakket is ontvangen van %s (id=%x)."/>
+	<string id="17227" value="Binnenkomende verbinding van %s is een eDonkey cliëntlink."/>
+	<string id="17228" value="eDonkey hashset voor &quot;%s&quot; wordt gestuurd naar %s..."/>
+	<string id="17229" value="eDonkey cliënt verbinding met %s was inactief, gesloten."/>
+	<string id="17230" value="eDonkey cliënt verbinding wordt aangemaakt met %s..."/>
+	<string id="17231" value="eDonkey cliënt %s heeft de verkeerde GUID, handschudden wordt geannuleerd."/>
+	<string id="17232" value="Verbinden met eDonkey cliënt %s is uitgeteld."/>
+	<string id="17233" value="Handschudden met eDonkey cliënt %s is uitgeteld."/>
+	<string id="17234" value="eDonkey cliënt link van %s is geweigerd omdat eDonkey is uitgeschakeld."/>
+	<string id="17248" value="Starten met het proces om gedeeltelijke eDonkey downloads te importeren..."/>
 	<string id="17249" value="Proces afgerond, %i gedeeltelijke downloads succesvol geïmporteerd."/>
 	<string id="17250" value="Bezig met scannen van map: &quot;%s&quot;..."/>
 	<string id="17251" value="Onmogelijk om bestand te importeren."/>
@@ -3045,10 +3045,10 @@
 	<string id="18496" value="Je hebt de bestandsnaam aangepast. Weet je zeker dat je deze download wilt hernoemen?"/>
 	<string id="18497" value="Je hebt een SHA1 waarde ingevoerd, maar het is ongeldig. Controleer het en probeer het nog een keer."/>
 	<string id="18498" value="Je hebt een root tiger-tree waarde ingevoerd, maar het is ongeldig. Controleer het en probeer het nog een keer."/>
-	<string id="18499" value="Je hebt een eDonkey2000 hash waarde ingevoerd, maar het is ongeldig. Controleer het en probeer het nog een keer."/>
+	<string id="18499" value="Je hebt een eDonkey hash waarde ingevoerd, maar het is ongeldig. Controleer het en probeer het nog een keer."/>
 	<string id="18500" value="Je hebt een SHA1 hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd. Weet je zeker dat je de SHA1 hash nu wilt veranderen?"/>
 	<string id="18501" value="Je hebt een root tiger-tree hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd. Weet je zeker dat je de tiger-tree root hash nu wilt veranderen?"/>
-	<string id="18502" value="Je hebt een eDonkey2000 hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd. Weet je zeker dat je de eDonkey2000 hash nu wilt veranderen?"/>
+	<string id="18502" value="Je hebt een eDonkey hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd. Weet je zeker dat je de eDonkey hash nu wilt veranderen?"/>
 	<string id="18503" value="Weet je zeker dat je de huidige verificatie status wilt vergeten? Alle gedownloade data zal als onbetrouwbaar worden beschouwd, en opgeslagen hashtrees en hashsets zullen worden verwijderd."/>
 	<string id="18504" value="Weet je zeker dat je alle bronnen wilt vergeten voor de geselecteerde download?"/>
 	<string id="18505" value="Geef alsjebleift een geldig bereik voor het wissen. Het &quot;van&quot; veld is de eerste byte die moet worden gewist, het &quot;tot&quot; veld is de laatste byte die moet worden gewist."/>
@@ -3120,6 +3120,14 @@
 	<string id="20215" value="Erg goed"/>
 	<string id="20216" value="Perfect"/>
 	<string id="20217" value="Kies de eMule gedeeltelijke(.part) map:"/>
+<!-- Column headers in Library Album View -->
+	<string id="20230" value="#"/><!-- Track number -->
+	<string id="20231" value="Titel"/>
+	<string id="20232" value="Duur"/>
+	<string id="20233" value="Bitrate"/>
+	<string id="20234" value="Album"/>
+	<string id="20235" value="Artiest"/>
+	<string id="20236" value="Beoordeling"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
@@ -3212,7 +3220,7 @@
 		<control caption="Gebruik Shareaza voor het openen van deze soorten koppelingen:"/>
 		<control caption="Magnet (magnet:)"/>
 		<control caption="Gnutella (gnutella:)"/>
-		<control caption="eDonkey2000 (ed2k:)"/>
+		<control caption="eDonkey (ed2k:)"/>
 		<control caption="Piolet (mp2p:)"/>
 		<control caption="BitTorrent (Torrent)"/>
 		<control caption="_Downloadbeheerder:"/>
@@ -3254,11 +3262,11 @@
 		<control caption="Sla tijdelijke\_incomplete bestanden hier op:"/>
 		<control/><control/>
 		<control caption="_Aantal downloads:"/>
-		<control caption="Max. bestanden:"/>
+		<control caption="Max. Bestanden:"/>
 		<control/><control/>
-		<control caption="Max. overdrachten:"/>
+		<control caption="Max. Downloads:"/>
 		<control/><control/>
-		<control caption="Overdrachten per d/l:"/>
+		<control caption="Bronnen per Bestand:"/>
 		<control/><control/>
 		<control caption="_Limieten:"/>
 		<control caption="Totale snelheid:"/>
@@ -3329,12 +3337,12 @@
 		<control caption="Het Gnutella2 netwerk is Shareaza's belangrijkste netwerk, het biedt meer eigenschappen en vermogen dan enig ander P2P-netwerk. Aanbevolen."/>
 		<control caption="Verbinden met Gnutella2 (G2)"/>
 		<control caption="Gnutella2 instellingen"/>
-		<control caption="eDonkey2000 netwerk:"/>
-		<control caption="eDonkey2000 is een populair, op servers gebaseerd netwerk. Het heeft minder opties dan Gnutella2, maar een indrukwekkende bestandencollectie."/>
-		<control caption="Verbinden met eDonkey2000"/>
-		<control caption="eDonkey2000 instellingen"/>
+		<control caption="eDonkey netwerk:"/>
+		<control caption="eDonkey is een populair, op servers gebaseerd netwerk. Het heeft minder opties dan Gnutella2, maar een indrukwekkende bestandencollectie."/>
+		<control caption="Verbinden met eDonkey"/>
+		<control caption="eDonkey instellingen"/>
 		<control caption="Originele Gnutella netwerk:"/>
-		<control caption="Is minder rijk aan eigenschappen dan Gnutella2 en heeft minder bestanden dan eDonkey2000, maar toch blijft dit een waardevolle bron."/>
+		<control caption="Is minder rijk aan eigenschappen dan Gnutella2 en heeft minder bestanden dan eDonkey, maar toch blijft dit een waardevolle bron."/>
 		<control caption="Verbinden met het originele Gnutella"/>
 		<control caption="Gnutella1 instellingen"/>
 	</dialog>
@@ -3368,8 +3376,8 @@
 		<control caption="Leaf naar hub"/>
 		<control caption="Hub naar hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-		<control caption="_eDonkey2000 netwerk:"/>
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
+		<control caption="_eDonkey netwerk:"/>
 		<control caption="Altijd verbinden"/>
 		<control caption="Nu verbinden met eDonkey"/>
 		<control caption="_Globaal zoeken:"/>
@@ -3382,8 +3390,8 @@
 		<control caption="Verbindt met niet meer dan:"/>
 		<control/><control/>
 		<control caption="andere eDonkey cliënten."/>
-		<control caption="eDonkey2000 _hulpmiddelen:"/>
-		<control caption="eDonkey2000 serverlijst downloaden van het internet:"/>
+		<control caption="eDonkey _hulpmiddelen:"/>
+		<control caption="eDonkey serverlijst downloaden van het internet:"/>
 		<control caption="Downloaden"/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
@@ -3544,14 +3552,14 @@
 		<control caption="Shareaza is een programma voor algemeen gebruik om bestanden uit te wisselen. Het kan meerdere P2P netwerken tegelijkertijd bereiken. Hier kun je selecteren welke netwerken je wilt gebruiken. Je kunt later altijd nog je keuze veranderen."/>
 		<control caption="Verbinden met Gnutella2 (zeer aanbevolen)"/>
 		<control caption="Het Gnutella2 netwerk is Shareaza's voornaamste netwerk. Het biedt meer opties en prestatie dan enig ander P2P netwerk."/>
-		<control caption="Verbinden met eDonkey2000"/>
-		<control caption="Het eDonkey2000 netwerk is een populair netwerk, op servers gebaseerd. Hoewel met minder rijk aan opties als Gnutella2, heeft eDonkey2000 een omvangrijke bestandsverzameling."/>
+		<control caption="Verbinden met eDonkey"/>
+		<control caption="Het eDonkey netwerk is een populair netwerk, op servers gebaseerd. Hoewel met minder rijk aan opties als Gnutella2, heeft eDonkey een omvangrijke bestandsverzameling."/>
 		<control caption="Verbinden met het originele Gnutella netwerk"/>
-		<control caption="Hoewel het originele Gnutella netwerk minder opties heeft dan Gnutella2, en minder bestanden dan eDonkey2000, blijft het toch een waardevolle bron."/>
+		<control caption="Hoewel het originele Gnutella netwerk minder opties heeft dan Gnutella2, en minder bestanden dan eDonkey, blijft het toch een waardevolle bron."/>
 	</dialog>
-	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000 downloads importeren">
+	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey downloads importeren">
 		<control/>
-		<control caption="Shareaza heeft ontdekt dat je een ander eDonkey2000 programma op deze computer hebt geïnstalleerd. Wil je de niet afgeronde downloads importeren naar Shareaza?"/>
+		<control caption="Shareaza heeft ontdekt dat je een ander eDonkey programma op deze computer hebt geïnstalleerd. Wil je de niet afgeronde downloads importeren naar Shareaza?"/>
 		<control caption="Ja"/>
 		<control caption="Nee|Annuleren"/>
 		<control/>
@@ -3659,7 +3667,7 @@
 		<control caption="Een nieuwe verbinding met deze gastheer of server aanmaken:|Deze gastheer bekijken:"/>
 		<control/><control/>
 		<control caption="Netwerk_protocol:"/>
-		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey"/>
 		<control caption="Ultrapeer _Ooderdrukken"/>
 		<control caption="Verbinden"/>
 		<control caption="Annuleren"/>
@@ -3670,7 +3678,7 @@
 		<control/>
 		<control caption="Downloaden"/>
 		<control caption="Annuleren"/>
-		<control caption="Shareaza kan bestanden downloaden vanaf het internet (HTTP) en automatisch P2P snelkoppelingen zoeken en downloaden (Magnet, Gnutella, eDonkey2000, mP2P)."/>
+		<control caption="Shareaza kan bestanden downloaden vanaf het internet (HTTP) en automatisch P2P snelkoppelingen zoeken en downloaden (Magnet, Gnutella, eDonkey, mP2P)."/>
 		<control caption="Shareaza kan ook BitTorrent bestanden downloaden. Om een torrent HTTP snelkoppeling te downloaden, plak je het in het veld hierboven. Als je al een torrent bestand hebt, klik dan op &quot;Torrent openen...&quot;"/>
 		<control caption="_Torrent openen..."/>
 	</dialog>
@@ -3952,7 +3960,7 @@
 		<control caption="Annuleren"/>
 		<control caption="Je hebt dit bestand al een keer gedownload en verwijderd. Wat wil je doen?"/>
 	</dialog>
-	<dialog name="CClosemodeDlg" cookie="StStBuBuBuBuBu" caption="Afsluiten knop">
+	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Afsluiten knop">
 		<control/>
 		<control caption="Dit is de eerste keer dat je op de afsluiten knop van Shareaza gedrukt hebt. Selecteer alsjeblieft welke handeling Shareaza vanaf nu zou moeten uitvoeren wanneer op de afsluiten knop gedrukt wordt:"/>
 		<control caption="Verkleinen naar de systeembalk"/>
@@ -3963,7 +3971,7 @@
 	</dialog>
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met bestand downloaden">
 		<control/>
-		<control caption="Je kunt een eDonkey2000 server.met bestand downloaden van het internet om je lokale lijst met servers te verversen."/>
+		<control caption="Je kunt een eDonkey server.met bestand downloaden van het internet om je lokale lijst met servers te verversen."/>
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Annuleren"/>
@@ -4153,7 +4161,7 @@
 		<column from="Port" to="Poort"/>
 		<column from="Client" to="Cliënt"/>
 		<column from="Last Seen" to="Laatst gezien"/>
-		<column from="Daily Uptime" to="Gemiddeld uur online per dagik heb mede"/>
+		<column from="Daily Uptime" to="Gemiddeld uur online per dag"/>
 		<column from="Name" to="Naam"/>
 		<column from="Description" to="Omschrijving"/>
 		<column from="CurUsers" to="Gebruikers"/>
