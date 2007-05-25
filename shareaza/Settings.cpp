@@ -241,7 +241,7 @@ void CSettings::Setup()
 
 	Add( _T("Gnutella1.ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
 	Add( _T("Gnutella1.EnableAlways"), &Gnutella1.EnableAlways, FALSE );
-	Add( _T("Gnutella1.NumHubs"), &Gnutella1.NumHubs, 5 );
+	Add( _T("Gnutella1.NumHubs"), &Gnutella1.NumHubs, 3 );
 	Add( _T("Gnutella1.NumLeafs"), &Gnutella1.NumLeafs, 0 );
 	Add( _T("Gnutella1.NumPeers"), &Gnutella1.NumPeers, 32 ); // For X-Degree
 	Add( _T("Gnutella1.PacketBufferSize"), &Gnutella1.PacketBufferSize, 64 );
