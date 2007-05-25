@@ -510,8 +510,8 @@ void CSearchInputBox::OnSize(UINT nType, int cx, int cy)
 	
 	HDWP hDWP = BeginDeferWindowPos( 4 );
 
-	DeferWindowPos( hDWP, m_wndSearch, NULL, BOX_MARGIN + 10, 27,
-		cx - BOX_MARGIN * 2 - 10, 19,
+	DeferWindowPos( hDWP, m_wndSearch, NULL, BOX_MARGIN, 27,
+		cx - BOX_MARGIN * 2, 19,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	DeferWindowPos( hDWP, m_wndSchemas, NULL, BOX_MARGIN, 67,
 		cx - BOX_MARGIN * 2, 256,
