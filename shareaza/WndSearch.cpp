@@ -1,7 +1,7 @@
 //
 // WndSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -469,7 +469,7 @@ void CSearchWnd::OnSearchSearch()
 		m_bWaitMore = FALSE;
 
 		//Resume G2 search
-		m_nMaxResults = m_pMatches->m_nGnutellaHits + min( 300u, Settings.Gnutella.MaxResults );
+		m_nMaxResults = m_pMatches->m_nGnutellaHits + Settings.Gnutella.MaxResults;
 		m_nMaxQueryCount = m_oSearches.back().m_nQueryCount + min( Settings.Gnutella2.QueryLimit, 10000u );
 
 		//Resume ED2K search
@@ -505,27 +505,6 @@ void CSearchWnd::OnSearchSearch()
 	if ( m_wndPanel.m_bSendSearch )
 	{
 		pSearch = m_wndPanel.GetSearch();
-		if ( pSearch.get() == NULL )
-		{
-			CString strHash( m_sCaption );
-			int nHashStart = strHash.Find( _T("urn:sha1:") );
-
-			if ( nHashStart != -1 )
-			{
-				Hashes::Sha1Hash oSHA1;
-				strHash = strHash.Mid( nHashStart );
-				if ( oSHA1.fromUrn( strHash ) )
-					pSearch = m_wndPanel.GetSearch( strHash );
-			}
-			nHashStart = strHash.Find( _T("urn:ed2khash:") );
-			if ( pSearch.get() == NULL && nHashStart != -1)
-			{
-				Hashes::Ed2kHash oED2K;
-				strHash = strHash.Mid( nHashStart );
-				if ( oED2K.fromUrn( strHash ) )
-					pSearch = m_wndPanel.GetSearch( strHash );
-			}
-		}
 		if ( pSearch.get() == NULL ) //Invalid search, open help window
 		{				
 			// Increment counter
@@ -697,9 +676,6 @@ void CSearchWnd::ExecuteSearch()
 	
 	if ( pManaged )
 	{
-		//pManaged->m_pSearch->m_sKeywords.Empty();
-		//pManaged->m_pSearch->BuildWordList();
-
 		if ( pManaged->m_pSearch->CheckValid() )
 		{
 			if ( AdultFilter.IsSearchFiltered( pManaged->m_pSearch->m_sKeywords ) )
@@ -715,7 +691,7 @@ void CSearchWnd::ExecuteSearch()
 				pManaged->Stop();
 				pManaged->Start();
 
-				m_nMaxResults		= m_pMatches->m_nGnutellaHits + min( 300u, Settings.Gnutella.MaxResults );
+				m_nMaxResults		= m_pMatches->m_nGnutellaHits + Settings.Gnutella.MaxResults;
 				m_nMaxED2KResults	= m_pMatches->m_nED2KHits + min( 201, Settings.eDonkey.MaxResults );
 				m_nMaxQueryCount	= pManaged->m_nQueryCount + min( Settings.Gnutella2.QueryLimit, 10000u );
 
@@ -775,13 +751,13 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 		{
 			strCaption += pSearch->m_sSearch;
 		}
-		else if ( pSearch->m_pSchema != NULL && pSearch->m_pXML != NULL )
-		{
-			strCaption += pSearch->m_pSchema->GetIndexedWords( pSearch->m_pXML->GetFirstElement() );
-		}
 		else if ( pSearch->m_oSHA1 ) 
 		{
 			strCaption += pSearch->m_oSHA1.toUrn();
+		}
+		else if ( pSearch->m_oTiger ) 
+		{
+			strCaption += pSearch->m_oTiger.toUrn();
 		}
 		else if ( pSearch->m_oED2K )
 		{
@@ -794,6 +770,10 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 		else if ( pSearch->m_oMD5 )
 		{
 			strCaption += pSearch->m_oMD5.toUrn();
+		}
+		else if ( pSearch->m_pSchema && pSearch->m_pXML )
+		{
+			strCaption += pSearch->m_pSchema->GetIndexedWords( pSearch->m_pXML->GetFirstElement() );
 		}
 		
 		if ( pSearch->m_pSchema )

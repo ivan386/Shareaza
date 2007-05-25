@@ -56,6 +56,13 @@ BEGIN_MESSAGE_MAP(CSearchInputBox, CTaskBox)
 	ON_CBN_CLOSEUP(IDC_SCHEMAS, OnCloseUpSchemas)
 	ON_COMMAND(IDC_SEARCH_START, OnSearchStart)
 	ON_COMMAND(IDC_SEARCH_STOP, OnSearchStop)
+	ON_COMMAND(IDC_SEARCH_PREFIX, OnSearchPrefix)
+	ON_COMMAND(IDC_SEARCH_PREFIX_SHA1, OnSearchPrefixSHA1)
+	ON_COMMAND(IDC_SEARCH_PREFIX_TIGER, OnSearchPrefixTiger)
+	ON_COMMAND(IDC_SEARCH_PREFIX_SHA1_TIGER, OnSearchPrefixSHA1Tiger)
+	ON_COMMAND(IDC_SEARCH_PREFIX_ED2K, OnSearchPrefixED2K)
+	ON_COMMAND(IDC_SEARCH_PREFIX_BTH, OnSearchPrefixBTH)
+	ON_COMMAND(IDC_SEARCH_PREFIX_MD5, OnSearchPrefixMD5)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -214,8 +221,11 @@ void CSearchPanel::ShowSearch(CManagedSearch* pSearch)
 	}
 
 	if ( ! strURN.IsEmpty() )
-		m_boxSearch.m_wndSearch.SetWindowText( strURN + _T(" ") + pSearch->m_pSearch->m_sSearch );
-	else
+	{
+		m_boxSearch.m_wndSearch.SetWindowText(
+			pSearch->m_pSearch->m_sSearch.IsEmpty() ? strURN :
+			( strURN + _T(" ") + pSearch->m_pSearch->m_sSearch ) );
+	} else
 		m_boxSearch.m_wndSearch.SetWindowText( pSearch->m_pSearch->m_sSearch );
 
 	m_boxSearch.m_wndSchemas.Select( pSearch->m_pSearch->m_pSchema );
@@ -260,17 +270,20 @@ void CSearchPanel::ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWOR
 		{
 			LoadString( strCaption, IDS_SEARCH_PANEL_SEARCHING );
 			m_boxSearch.m_wndStart.EnableWindow( FALSE );
+			m_boxSearch.m_wndPrefix.EnableWindow( FALSE );
 		}
 		else
 		{
 			LoadString( strCaption, IDS_SEARCH_PANEL_MORE );
 			m_boxSearch.m_wndStart.EnableWindow( TRUE );
+			m_boxSearch.m_wndPrefix.EnableWindow( TRUE );
 		}
 	}
 	else
 	{
 		LoadString( strCaption, IDS_SEARCH_PANEL_START ); 
 		m_boxSearch.m_wndStart.EnableWindow( TRUE );
+		m_boxSearch.m_wndPrefix.EnableWindow( TRUE );
 	}
 	m_boxSearch.m_wndStart.SetText( strCaption );
 	
@@ -322,8 +335,32 @@ auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 {
 	auto_ptr< CManagedSearch > pSearch( new CManagedSearch() );
 	
-	m_boxSearch.m_wndSearch.GetWindowText( pSearch->m_pSearch->m_sSearch );
+	CString sSearch;
+	m_boxSearch.m_wndSearch.GetWindowText( sSearch );
 
+	pSearch->m_pSearch->m_oSHA1.fromUrn( sSearch ) ||
+		pSearch->m_pSearch->m_oSHA1.fromString( sSearch );
+	pSearch->m_pSearch->m_oTiger.fromUrn( sSearch ) ||
+		pSearch->m_pSearch->m_oTiger.fromString( sSearch );
+	pSearch->m_pSearch->m_oED2K.fromUrn( sSearch ) ||
+		pSearch->m_pSearch->m_oED2K.fromString( sSearch );
+	pSearch->m_pSearch->m_oBTH.fromUrn( sSearch ) ||
+		pSearch->m_pSearch->m_oBTH.fromString( sSearch );
+	pSearch->m_pSearch->m_oMD5.fromUrn( sSearch ) ||
+		pSearch->m_pSearch->m_oMD5.fromString( sSearch );
+	if ( pSearch->m_pSearch->m_oSHA1 ||
+		pSearch->m_pSearch->m_oTiger ||
+		pSearch->m_pSearch->m_oED2K ||
+		pSearch->m_pSearch->m_oBTH ||
+		pSearch->m_pSearch->m_oMD5 )
+	{
+		// Hash search
+	}
+	else
+	{
+		// Keyword search
+		pSearch->m_pSearch->m_sSearch = sSearch;
+	}
 	if ( CSchema* pSchema = m_boxSearch.m_wndSchemas.GetSelected() )
 	{
 		pSearch->m_pSearch->m_pSchema	= pSchema;
@@ -376,22 +413,15 @@ auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 				pSearch->m_pSearch->m_nMaxSize = SIZE_UNKNOWN;
 		}
 	}
-	
-	CQuerySearch::PrepareCheck( &(*pSearch->m_pSearch) );
-	// why need the code below? these gets executed later again.
-	// pSearch->m_pSearch->BuildWordList();
+
+	pSearch->m_pSearch->PrepareCheck();
+
 	if ( ! pSearch->m_pSearch->CheckValid() )
 	{
 		pSearch.reset();
 	}
 	
 	return pSearch;
-}
-
-auto_ptr< CManagedSearch > CSearchPanel::GetSearch(LPCTSTR pszHash)
-{
-	m_boxSearch.m_wndSearch.SetWindowText( pszHash );
-	return GetSearch();
 }
 
 void CSearchPanel::ExecuteSearch()
@@ -465,7 +495,7 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rc( 0, 0, 0, 0 );
 	CString strCaption;
 	
-	if ( ! m_wndSearch.Create( ES_AUTOHSCROLL | WS_TABSTOP, rc,
+	if ( ! m_wndSearch.Create( ES_AUTOHSCROLL | WS_TABSTOP | WS_GROUP, rc,
 		this, IDC_SEARCH ) ) return -1;
 	
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
@@ -482,6 +512,9 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndStop.Create( rc, this, IDC_SEARCH_STOP, WS_TABSTOP );
 	m_wndStop.SetHandCursor( TRUE );
+
+	m_wndPrefix.Create( rc, this, IDC_SEARCH_PREFIX );
+	m_wndPrefix.SetHandCursor( TRUE );
 
 	OnSkinChange();
 
@@ -502,6 +535,7 @@ void CSearchInputBox::OnSkinChange()
 	m_wndStop.SetWindowText( strCaption );
 	m_wndStop.SetCoolIcon( ID_SEARCH_STOP, FALSE );
 
+	m_wndPrefix.SetIcon( IDI_HASH );
 }
 
 void CSearchInputBox::OnSize(UINT nType, int cx, int cy) 
@@ -511,7 +545,7 @@ void CSearchInputBox::OnSize(UINT nType, int cx, int cy)
 	HDWP hDWP = BeginDeferWindowPos( 4 );
 
 	DeferWindowPos( hDWP, m_wndSearch, NULL, BOX_MARGIN, 27,
-		cx - BOX_MARGIN * 2, 19,
+		cx - BOX_MARGIN * 2 - 10, 19,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	DeferWindowPos( hDWP, m_wndSchemas, NULL, BOX_MARGIN, 67,
 		cx - BOX_MARGIN * 2, 256,
@@ -519,6 +553,8 @@ void CSearchInputBox::OnSize(UINT nType, int cx, int cy)
 	DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 102, 90, 24,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 60, 102, 60, 24,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndPrefix, NULL, cx - BOX_MARGIN - 8, 28, 8, 8,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	
 	EndDeferWindowPos( hDWP );
@@ -605,6 +641,117 @@ void CSearchInputBox::OnSearchStop()
 		pTarget->PostMessage( WM_COMMAND, ID_SEARCH_CLEAR );
 	else
 		pTarget->PostMessage( WM_COMMAND, ID_SEARCH_STOP );
+}
+
+void CSearchInputBox::OnSearchPrefix()
+{
+	if ( m_wndSearch.IsWindowEnabled() )
+	{
+		CMenu mnuPopup;
+		mnuPopup.CreatePopupMenu();
+		mnuPopup.AppendMenu( MF_STRING, IDC_SEARCH_PREFIX_SHA1, _T("SHA1") );
+		mnuPopup.AppendMenu( MF_STRING, IDC_SEARCH_PREFIX_TIGER, _T("Tiger") );
+		mnuPopup.AppendMenu( MF_STRING, IDC_SEARCH_PREFIX_SHA1_TIGER, _T("SHA1 + Tiger") );
+		mnuPopup.AppendMenu( MF_STRING, IDC_SEARCH_PREFIX_ED2K, _T("ED2K") );
+		mnuPopup.AppendMenu( MF_STRING, IDC_SEARCH_PREFIX_BTH, _T("BitTorrent") );
+		mnuPopup.AppendMenu( MF_STRING, IDC_SEARCH_PREFIX_MD5, _T("MD5") );
+		CPoint pt;
+		::GetCursorPos( &pt );
+		mnuPopup.TrackPopupMenu( TPM_LEFTALIGN | TPM_LEFTBUTTON, pt.x, pt.y, this, NULL );
+	}
+}
+
+void CSearchInputBox::OnSearchPrefixSHA1()
+{
+	CString sSearch;
+	m_wndSearch.GetWindowText( sSearch );
+	Hashes::Sha1Hash oSHA1;
+	if ( oSHA1.fromUrn( sSearch ) || oSHA1.fromString( sSearch ) )
+		sSearch = oSHA1.toUrn();
+	else
+		sSearch = _T("urn:sha1:[SHA1]");
+
+	m_wndSearch.SetWindowText( sSearch );
+	m_wndSearch.SetFocus();
+	m_wndSearch.SetSel( 9, -1 );
+}
+
+void CSearchInputBox::OnSearchPrefixTiger()
+{
+	CString sSearch;
+	m_wndSearch.GetWindowText( sSearch );
+	Hashes::TigerHash oTiger;
+	if ( oTiger.fromUrn( sSearch ) || oTiger.fromString( sSearch ) )
+		sSearch = oTiger.toUrn();
+	else
+		sSearch = _T("urn:tree:tiger/:[Tiger]");
+
+	m_wndSearch.SetWindowText( sSearch );
+	m_wndSearch.SetFocus();
+	m_wndSearch.SetSel( 16, -1 );
+}
+
+void CSearchInputBox::OnSearchPrefixSHA1Tiger()
+{
+	CString sSearch;
+	m_wndSearch.GetWindowText( sSearch );
+	Hashes::Sha1Hash oSHA1;
+	Hashes::TigerHash oTiger;	
+	oSHA1.fromUrn( sSearch ) || oSHA1.fromString( sSearch );
+	oTiger.fromUrn( sSearch ) || oTiger.fromString( sSearch );	
+    sSearch = _T("urn:bitprint:");
+	sSearch += oSHA1 ? oSHA1.toString() : _T("[SHA1]");
+	sSearch += _T(".");
+	sSearch += oTiger ? oTiger.toString() : _T("[Tiger]");
+
+	m_wndSearch.SetWindowText( sSearch );
+	m_wndSearch.SetFocus();
+	m_wndSearch.SetSel( 13, -1 );
+}
+
+void CSearchInputBox::OnSearchPrefixED2K()
+{
+	CString sSearch;
+	m_wndSearch.GetWindowText( sSearch );
+	Hashes::Ed2kHash oEd2k;
+	if ( oEd2k.fromUrn( sSearch ) || oEd2k.fromString( sSearch ) )
+		sSearch = oEd2k.toUrn();
+	else
+		sSearch = _T("urn:ed2khash:[ED2K]");
+
+	m_wndSearch.SetWindowText( sSearch );
+	m_wndSearch.SetFocus();
+	m_wndSearch.SetSel( 13, -1 );
+}
+
+void CSearchInputBox::OnSearchPrefixBTH()
+{
+	CString sSearch;
+	m_wndSearch.GetWindowText( sSearch );
+	Hashes::BtHash oBTH;
+	if ( oBTH.fromUrn( sSearch ) || oBTH.fromString( sSearch ) )
+		sSearch = oBTH.toUrn();
+	else
+		sSearch = _T("urn:btih:[BTIH]");
+
+	m_wndSearch.SetWindowText( sSearch );
+	m_wndSearch.SetFocus();
+	m_wndSearch.SetSel( 9, -1 );
+}
+
+void CSearchInputBox::OnSearchPrefixMD5()
+{
+	CString sSearch;
+	m_wndSearch.GetWindowText( sSearch );
+	Hashes::Md5Hash oMD5;
+	if ( oMD5.fromUrn( sSearch ) || oMD5.fromString( sSearch ) )
+		sSearch = oMD5.toUrn();
+	else
+		sSearch = _T("urn:md5:[MD5]");
+
+	m_wndSearch.SetWindowText( sSearch );
+	m_wndSearch.SetFocus();
+	m_wndSearch.SetSel( 8, -1 );
 }
 
 

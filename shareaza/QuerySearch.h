@@ -136,11 +136,11 @@ public:
 	void					BuildWordList(bool bExpression=true, bool bLocal=false);
 	void					Serialize(CArchive& ar);
 	BOOL					CheckValid(bool bExpression=true);
+	void					PrepareCheck();
 private:
 	void					BuildWordTable(LPCTSTR pszString);
 	void					SlideKeywords(CString& strPhrase);
 	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP);
-	void					PrepareCheck();
 
 // Utilities
 public:

@@ -1768,8 +1768,5 @@ void CQuerySearch::PrepareCheck()
 
 void CQuerySearch::PrepareCheck(CQuerySearch* pQuerySearch)
 {
-	pQuerySearch->m_oWords.clear();
-	pQuerySearch->m_oURNs.clear();
-	pQuerySearch->m_oKeywordHashList.clear();
-	pQuerySearch->m_sKeywords.Empty();
+	pQuerySearch->PrepareCheck();
 }

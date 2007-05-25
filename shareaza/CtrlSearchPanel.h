@@ -48,7 +48,8 @@ public:
 	CSchemaCombo	m_wndSchemas;
 	CIconButtonCtrl	m_wndStart;
 	CIconButtonCtrl	m_wndStop;
-	
+	CIconButtonCtrl	m_wndPrefix;
+
 // Operations
 public:
 	void	OnSkinChange();
@@ -68,6 +69,13 @@ protected:
 	afx_msg void OnCloseUpSchemas();
 	afx_msg void OnSearchStart();
 	afx_msg void OnSearchStop();
+	afx_msg void OnSearchPrefix();
+	afx_msg void OnSearchPrefixSHA1();
+	afx_msg void OnSearchPrefixTiger();
+	afx_msg void OnSearchPrefixSHA1Tiger();
+	afx_msg void OnSearchPrefixED2K();
+	afx_msg void OnSearchPrefixBTH();
+	afx_msg void OnSearchPrefixMD5();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -211,7 +219,6 @@ public:
 	void			OnSchemaChange();
 	void			ExecuteSearch();
 	auto_ptr< CManagedSearch > GetSearch();
-	auto_ptr< CManagedSearch >	GetSearch(LPCTSTR pszHash);
 	void			OnSkinChange();
 	void			Disable();
 	void			Enable();
@@ -232,17 +239,22 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-//{{AFX_INSERT_LOCATION}}
+#define IDC_SEARCH_START				105
+#define IDC_SEARCH_STOP					106
+#define IDC_SEARCH_NETWORKS				107
+#define IDC_SEARCH_SIZEMIN				108
+#define IDC_SEARCH_SIZEMAX				109
 
-#define IDC_SEARCH_START	105
-#define IDC_SEARCH_STOP		106
-#define IDC_SEARCH_NETWORKS	107
-#define IDC_SEARCH_SIZEMIN	108
-#define IDC_SEARCH_SIZEMAX	109
+#define IDC_SEARCH_PREFIX				120
+#define IDC_SEARCH_PREFIX_SHA1			121
+#define IDC_SEARCH_PREFIX_TIGER			122
+#define IDC_SEARCH_PREFIX_SHA1_TIGER	123
+#define IDC_SEARCH_PREFIX_ED2K			124
+#define IDC_SEARCH_PREFIX_BTH			125
+#define IDC_SEARCH_PREFIX_MD5			126
 
-#define IDC_SEARCH_GNUTELLA1	277
-#define IDC_SEARCH_GNUTELLA2	278
-#define IDC_SEARCH_EDONKEY		279
-
+#define IDC_SEARCH_GNUTELLA1			277
+#define IDC_SEARCH_GNUTELLA2			278
+#define IDC_SEARCH_EDONKEY				279
 
 #endif // !defined(AFX_CTRLSEARCHPANEL_H__EAFFA7F3_526D_45C3_8C17_17A265ED3240__INCLUDED_)
