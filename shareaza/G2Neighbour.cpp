@@ -974,7 +974,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 
 	if ( bInvalid )
 		theApp.Message( MSG_ERROR, _T("G2: Invalid KHL packet received from %s"), 
-			(LPCTSTR)inet_ntoa( pHost->sin_addr ) );
+			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 
 	return TRUE;
 }
