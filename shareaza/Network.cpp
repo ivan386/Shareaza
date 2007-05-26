@@ -67,22 +67,21 @@ CNetwork Network;
 //////////////////////////////////////////////////////////////////////
 // CNetwork construction
 
-CNetwork::CNetwork()
+CNetwork::CNetwork() :
+	NodeRoute				( new CRouteCache() ),
+	QueryRoute				( new CRouteCache() ),
+	QueryKeys				( new CQueryKeys() ),
+	m_bEnabled				( FALSE ),
+	m_bAutoConnect			( FALSE ),
+	m_bTCPListeningReady	( FALSE ),
+	m_bUDPListeningReady	( FALSE ),
+	m_tStartedConnecting	( 0 ),
+	m_tLastConnect			( 0 ),
+	m_tLastED2KServerHop	( 0 ),
+	m_hHostAddresses		( NULL ),
+	m_hThread				( NULL ),
+	m_nSequence				( 0 )
 {
-	NodeRoute				= new CRouteCache();
-	QueryRoute				= new CRouteCache();
-	QueryKeys				= new CQueryKeys();
-
-	m_bEnabled				= FALSE;
-	m_bAutoConnect			= FALSE;
-	m_bTCPListeningReady	= FALSE;
-	m_bUDPListeningReady	= FALSE;
-	m_tStartedConnecting	= 0;
-	m_tLastConnect			= 0;
-	m_tLastED2KServerHop	= 0;
-
-	m_nSequence				= 0;
-	m_hThread				= NULL;
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
 	m_pHost.sin_family		= AF_INET;
 }
@@ -113,7 +112,7 @@ BOOL CNetwork::IsSelfIP(IN_ADDR nAddress) const
 	}
 	if ( m_hHostAddresses )
 	{
-		for ( char** p = m_hHostAddresses->h_addr_list ; *p ; p++ )
+		for ( char** p = m_hHostAddresses->h_addr_list ; p && *p ; p++ )
 		{
 			if ( *(ULONG*)*p == nAddress.s_addr )
 			{
