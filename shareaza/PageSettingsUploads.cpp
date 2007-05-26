@@ -403,6 +403,10 @@ void CUploadsSettingsPage::OnOK()
 			Settings.Uploads.BlockAgents += '|';
 		}
 	}
+
+	// Initialize it to an empty list ("||") to prevent the default being reloaded.
+	if ( m_wndAgentList.GetCount() == 0 )
+		Settings.Uploads.BlockAgents += "||";
 	
 	// Create/Validate queues
 	if ( UploadQueues.GetCount() == 0 )
