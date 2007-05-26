@@ -78,7 +78,6 @@ CNetwork::CNetwork() :
 	m_tStartedConnecting	( 0 ),
 	m_tLastConnect			( 0 ),
 	m_tLastED2KServerHop	( 0 ),
-	m_hHostAddresses		( NULL ),
 	m_hThread				( NULL ),
 	m_nSequence				( 0 )
 {
@@ -110,17 +109,7 @@ BOOL CNetwork::IsSelfIP(IN_ADDR nAddress) const
 	{
 		return TRUE;
 	}
-	if ( m_hHostAddresses )
-	{
-		for ( char** p = m_hHostAddresses->h_addr_list ; p && *p ; p++ )
-		{
-			if ( *(ULONG*)*p == nAddress.s_addr )
-			{
-				return TRUE;
-			}
-		}
-	}
-	return FALSE;
+	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
 }
 
 BOOL CNetwork::IsAvailable() const
@@ -254,7 +243,13 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 
 	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
 	m_sHostName.ReleaseBuffer();
-	m_hHostAddresses = gethostbyname( m_sHostName );
+	if( hostent* h = gethostbyname( m_sHostName ) )
+	{
+		for ( char** p = h->h_addr_list ; p && *p ; p++ )
+		{
+			m_pHostAddresses.AddTail( *(ULONG*)*p );
+		}
+	}
 
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
@@ -283,7 +278,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 		theApp.Message( MSG_DISPLAYED_ERROR, _T("The connection process is failed.") );
 		Handshakes.Disconnect();
 		Datagrams.Disconnect();
-		m_hHostAddresses = NULL;
+		m_pHostAddresses.RemoveAll();
 		return FALSE;
 	}
 
@@ -347,7 +342,7 @@ void CNetwork::Disconnect()
 		m_pLookups.RemoveAll();
 	}
 
-	m_hHostAddresses = NULL;
+	m_pHostAddresses.RemoveAll();
 
 	pLock.Unlock();
 
