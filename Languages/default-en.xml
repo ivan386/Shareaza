@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.5.1"
+		version="2.2.5.2"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -344,7 +344,7 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Chat to User"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
@@ -358,7 +358,7 @@
 		<button id="ID_SECURITY_BAN" text="Ban Host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
@@ -438,7 +438,7 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -507,7 +507,7 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -606,7 +606,7 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -1388,7 +1388,7 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
 		<menu text="_Monitor">
@@ -2055,7 +2055,7 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Your eDonkey server list is empty</text>
 		<newline gap="8"/>
-		<text>There are no servers in your eDonkey2000 server list. You need to download an
+		<text>There are no servers in your eDonkey server list. You need to download an
 		up to date server list (met file) to connect to ED2K.</text>
 		<newline gap="8"/>
 		<text>You can download a server list from the ed2k setting page, or the discovery
@@ -2175,7 +2175,7 @@
 	<tip id="ID_DISCOVERY_GNUTELLA" message="Show bootstrap services in the Discovery window."/>
 	<tip id="ID_DISCOVERY_QUERY" message="Query the selected discovery services now."/>
 	<tip id="ID_DISCOVERY_REMOVE" message="Remove the selected discovery services."/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="Show eDonkey2000 Server.met services in the Discovery window."/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="Show eDonkey Server.met services in the Discovery window."/>
 	<tip id="ID_DISCOVERY_WEBCACHE" message="Show GWebCache services in the Discovery window."/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Cancel and remove all downloads in this group."/>
 	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Create a new download group..."/>
@@ -2239,8 +2239,8 @@
 	<tip id="ID_HITMONITOR_SEARCH" message="Search the network for the selected term."/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="Connect to the selected host(s)."/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="Disconnect from the selected neighbour(s)."/>
-	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Show eDonkey2000 servers."/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download an eDonkey2000 &quot;server.met&quot; file..."/>
+	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Show eDonkey servers."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download an eDonkey &quot;server.met&quot; file..."/>
 	<tip id="ID_HOSTCACHE_G1_CACHE" message="Show Gnutella1 cached hosts."/>
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="Show Gnutella2 cached hosts."/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Show Gnutella2 horizon hubs."/>
@@ -2344,7 +2344,7 @@
 	<tip id="ID_NETWORK_CONNECT" message="Connect to selected networks."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Manually connect to a host..."/>
 	<tip id="ID_NETWORK_DISCONNECT" message="Disconnect from all networks, this will also stop all downloads and uploads."/>
-	<tip id="ID_NETWORK_ED2K" message="Connect to the eDonkey2000 network."/>
+	<tip id="ID_NETWORK_ED2K" message="Connect to the eDonkey network."/>
 	<tip id="ID_NETWORK_EXIT" message="Exit Shareaza"/>
 	<tip id="ID_NETWORK_G1" message="Connect to the original Gnutella network."/>
 	<tip id="ID_NETWORK_G2" message="Connect to the Gnutella2 network (highly recommended)."/>
@@ -2751,12 +2751,12 @@
 	<string id="16308" value="Download host %s sent unsolicited data, closing connection."/>
 	<string id="16309" value="Requesting metadata for &quot;%s&quot; from %s..."/>
 	<string id="16310" value="Receiving tiger-tree data from %s (%s)..."/>
-	<string id="16311" value="Requesting eDonkey2000 hashset for &quot;%s&quot; from %s..."/>
-	<string id="16312" value="Received an invalid eDonkey2000 hashset from %s, dropping source."/>
-	<string id="16313" value="Received eDonkey2000 hashset for &quot;%s&quot;, minimum verifiable chunk %s."/>
-	<string id="16314" value="Download host's eDonkey2000 hashset is corrupt or internally inconsistent, dropping source."/>
+	<string id="16311" value="Requesting eDonkey hashset for &quot;%s&quot; from %s..."/>
+	<string id="16312" value="Received an invalid eDonkey hashset from %s, dropping source."/>
+	<string id="16313" value="Received eDonkey hashset for &quot;%s&quot;, minimum verifiable chunk %s."/>
+	<string id="16314" value="Download host's eDonkey hashset is corrupt or internally inconsistent, dropping source."/>
 	<string id="16315" value="Unable to initialize inflate for download &quot;%s&quot;."/>
-	<string id="16316" value="Timed out waiting for queue update from eDonkey2000 download host %s for file &quot;%s&quot;."/>
+	<string id="16316" value="Timed out waiting for queue update from eDonkey download host %s for file &quot;%s&quot;."/>
 	<string id="16317" value="Staying in queue for &quot;%s&quot;."/>
 	<string id="16318" value="Insufficient disk space to download &quot;%s&quot; (%s)."/>
 	<string id="16319" value="Dropping source %s (%s) for sending corrupted parts of &quot;%s&quot; (%I64i-%I64i)."/>
@@ -2802,7 +2802,7 @@
 	<string id="16359" value="Offline queued upload host %s expired, removing."/>
 	<string id="16360" value="Refusing upload of &quot;%s&quot; to %s (%s), all matching queues are full."/>
 	<string id="16361" value="Refusing upload to %s (%s), network disabled."/>
-	<string id="16362" value="eDonkey2000 uploads should not be cancelled. Are you sure you want to cancel this upload?"/>
+	<string id="16362" value="eDonkey uploads should not be cancelled. Are you sure you want to cancel this upload?"/>
 	<string id="16363" value="Torrent Uploads"/>
 	<string id="16364" value="Completed Uploads"/>
 	<string id="16365" value="Are you sure you want to cancel/abort every download in this group?"/>
@@ -2913,7 +2913,7 @@
 	<string id="16811" value="Automatic"/>
 	<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
 	<string id="16813" value="Please wait: Updating discovery services..."/>
-	<string id="16814" value="Please wait: Updating eDonkey2000 server list..."/>
+	<string id="16814" value="Please wait: Updating eDonkey server list..."/>
 	<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windows doesn't support filepaths longer than 256 characters.\nPlease select a folder with a shorter path."/>
@@ -2978,7 +2978,7 @@
 	<string id="17104" value="Gnutella II: Leaf-to-Hub Connection"/>
 	<string id="17105" value="Gnutella II: Hub-to-Leaf Connection"/>
 	<string id="17106" value="eDonkey Server Connection (LOWID: %lu)"/>
-	<string id="17107" value="eDonkey2000 Server Connection"/>
+	<string id="17107" value="eDonkey Server Connection"/>
 	<string id="17108" value="Handshake"/>
 	<string id="17109" value="Inbound"/>
 	<string id="17110" value="Outbound"/>
@@ -2999,29 +2999,29 @@
 	<string id="17125" value="G2 Peer"/>
 	<string id="17126" value="G2 Hub"/>
 	<string id="17127" value="G2 Leaf"/>
-	<string id="17128" value="eDonkey2000 Server"/>
-	<string id="17129" value="eDonkey2000 (LowID)"/>
-	<string id="17130" value="eDonkey2000 (HighID)"/>
-	<string id="17216" value="Initiating connection to eDonkey2000 server at %s..."/>
-	<string id="17217" value="Connected to eDonkey2000 server %s, handshaking..."/>
+	<string id="17128" value="eDonkey Server"/>
+	<string id="17129" value="eDonkey (LowID)"/>
+	<string id="17130" value="eDonkey (HighID)"/>
+	<string id="17216" value="Initiating connection to eDonkey server at %s..."/>
+	<string id="17217" value="Connected to eDonkey server %s, handshaking..."/>
 	<string id="17218" value="ED2K[%s] %s"/>
-	<string id="17219" value="eDonkey2000 server %s refused connection."/>
-	<string id="17220" value="eDonkey2000 server %s online, client ID is %lu."/>
-	<string id="17221" value="eDonkey2000 server %s changed our client ID from %lu to %lu."/>
-	<string id="17222" value="eDonkey2000 server %s identified itself as &quot;%s&quot;."/>
-	<string id="17223" value="eDonkey2000 server %s rejected the connection."/>
-	<string id="17224" value="Error exchanging handshake with eDonkey2000 client %s."/>
-	<string id="17225" value="eDonkey2000 client connection to %s was closed."/>
-	<string id="17226" value="Received a malformatted eDonkey2000 packet from %s (id=%x)."/>
-	<string id="17227" value="Incoming connection from %s is an eDonkey2000 client link."/>
-	<string id="17228" value="Sending eDonkey2000 hashset for &quot;%s&quot; to %s..."/>
-	<string id="17229" value="eDonkey2000 client connection to %s was idle, closed."/>
-	<string id="17230" value="Initiating eDonkey2000 client connection to %s..."/>
-	<string id="17231" value="eDonkey2000 client %s has the wrong GUID, aborting handshake."/>
-	<string id="17232" value="Timed out connecting to eDonkey2000 client %s."/>
-	<string id="17233" value="Timed out handshaking with eDonkey2000 client %s."/>
-	<string id="17234" value="Refusing eDonkey2000 client link from %s because eDonkey2000 is disabled."/>
-	<string id="17248" value="Starting eDonkey2000 partial download import process..."/>
+	<string id="17219" value="eDonkey server %s refused connection."/>
+	<string id="17220" value="eDonkey server %s online, client ID is %lu."/>
+	<string id="17221" value="eDonkey server %s changed our client ID from %lu to %lu."/>
+	<string id="17222" value="eDonkey server %s identified itself as &quot;%s&quot;."/>
+	<string id="17223" value="eDonkey server %s rejected the connection."/>
+	<string id="17224" value="Error exchanging handshake with eDonkey client %s."/>
+	<string id="17225" value="eDonkey client connection to %s was closed."/>
+	<string id="17226" value="Received a malformatted eDonkey packet from %s (id=%x)."/>
+	<string id="17227" value="Incoming connection from %s is an eDonkey client link."/>
+	<string id="17228" value="Sending eDonkey hashset for &quot;%s&quot; to %s..."/>
+	<string id="17229" value="eDonkey client connection to %s was idle, closed."/>
+	<string id="17230" value="Initiating eDonkey client connection to %s..."/>
+	<string id="17231" value="eDonkey client %s has the wrong GUID, aborting handshake."/>
+	<string id="17232" value="Timed out connecting to eDonkey client %s."/>
+	<string id="17233" value="Timed out handshaking with eDonkey client %s."/>
+	<string id="17234" value="Refusing eDonkey client link from %s because eDonkey is disabled."/>
+	<string id="17248" value="Starting eDonkey partial download import process..."/>
 	<string id="17249" value="Process complete, %i partial downloads imported successfully."/>
 	<string id="17250" value="Scanning folder: &quot;%s&quot;..."/>
 	<string id="17251" value="Unable to import file."/>
@@ -3073,10 +3073,10 @@
 	<string id="18496" value="You have made changes to the name field. Are you sure you want to rename this download?"/>
 	<string id="18497" value="You have typed a SHA1 value, however it is invalid. Please check it and try again."/>
 	<string id="18498" value="You have typed a root tiger-tree value, however it is invalid. Please check it and try again."/>
-	<string id="18499" value="You have typed an eDonkey2000 hash value, however it is invalid. Please check it and try again."/>
+	<string id="18499" value="You have typed an eDonkey hash value, however it is invalid. Please check it and try again."/>
 	<string id="18500" value="You have provided a SHA1 hash value which is different to the one currently associated with this download. Are you sure you want to change the SHA1 hash now?"/>
 	<string id="18501" value="You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"/>
-	<string id="18502" value="You have provided an eDonkey2000 hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey2000 hash now?"/>
+	<string id="18502" value="You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"/>
 	<string id="18503" value="Are you sure you want to forget the current verification status? All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."/>
 	<string id="18504" value="Are you sure you want to forget all sources for the selected download?"/>
 	<string id="18505" value="Please enter a valid range to erase. The &quot;from&quot; field is the first byte to erase, the &quot;last&quot; field is the last byte to erase."/>
@@ -3153,7 +3153,7 @@
 	<string id="20214" value="Good"/>
 	<string id="20215" value="Very Good"/>
 	<string id="20216" value="Excellent"/>
-	<string id="20217" value="Select the eDonkey2000/eMule temp folder:"/>
+	<string id="20217" value="Select the eDonkey/eMule temp folder:"/>
 	<!-- Column headers in Library Album View -->
 	<string id="20230" value="#"/><!-- Track number -->
 	<string id="20231" value="Title"/>
@@ -3256,7 +3256,7 @@
 		<control caption="Use Shareaza to open these types of links:"/>
 		<control caption="Magnet ( magnet: )"/>
 		<control caption="Gnutella ( gnutella: )"/>
-		<control caption="eDonkey2000 ( ed2k: )"/>
+		<control caption="eDonkey ( ed2k: )"/>
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="_Download Manager:"/>
@@ -3301,9 +3301,9 @@
 		<control caption="_Number of Downloads:"/>
 		<control caption="Maximum Files:"/>
 		<control/><control/>
-		<control caption="Maximum Transfers:"/>
+		<control caption="Maximum Downloads:"/>
 		<control/><control/>
-		<control caption="Transfers per File:"/>
+		<control caption="Sources per file:"/>
 		<control/><control/>
 		<control caption="_Limits:"/>
 		<control caption="Total Download Bandwidth:"/>
@@ -3374,12 +3374,12 @@
 		<control caption="The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net. Highly recommended."/>
 		<control caption="Connect to Gnutella2 (G2)"/>
 		<control caption="Configure Gnutella2"/>
-		<control caption="eDonkey2000 Network:"/>
-		<control caption="The eDonkey2000 network is a popular server-based network. While not as feature-rich as Gnutella2, eDonkey2000 has an impressive file collection."/>
-		<control caption="Connect to eDonkey2000"/>
-		<control caption="Configure eDonkey2000"/>
+		<control caption="eDonkey Network:"/>
+		<control caption="The eDonkey network is a popular server-based network. While not as feature-rich as Gnutella2, eDonkey has an impressive file collection."/>
+		<control caption="Connect to eDonkey"/>
+		<control caption="Configure eDonkey"/>
 		<control caption="Original Gnutella Network:"/>
-		<control caption="Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey2000, it remains a valuable resource."/>
+		<control caption="Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource."/>
 		<control caption="Connect to Original Gnutella"/>
 		<control caption="Configure Gnutella1"/>
 	</dialog>
@@ -3413,10 +3413,10 @@
 		<control caption="Leaf to Hub"/>
 		<control caption="Hub to Hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-		<control caption="_eDonkey2000 Network:"/>
-		<control caption="Always connect to eDonkey2000"/>
-		<control caption="Connect to eDonkey2000 today"/>
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
+		<control caption="_eDonkey Network:"/>
+		<control caption="Always connect to eDonkey"/>
+		<control caption="Connect to eDonkey today"/>
 		<control caption="_Global Searching:"/>
 		<control caption="Search known remote servers in the server cache:"/>
 		<control caption="Stop searching after:"/>
@@ -3427,8 +3427,8 @@
 		<control caption="Connect to no more than:"/>
 		<control/><control/>
 		<control caption="other eDonkey clients."/>
-		<control caption="eDonkey2000 _Tools:"/>
-		<control caption="Download eDonkey2000 serverlist from the web:"/>
+		<control caption="eDonkey _Tools:"/>
+		<control caption="Download eDonkey serverlist from the web:"/>
 		<control caption="Download..."/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
@@ -3591,14 +3591,14 @@
 		<control caption="Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time. Here you can select which networks you'd like to access. Note that you can always select different networks later."/>
 		<control caption="Connect to Gnutella2 (Highly Recommended)"/>
 		<control caption="The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net."/>
-		<control caption="Connect to eDonkey2000"/>
-		<control caption="The eDonkey2000 network is a popular server-based network. While not as feature-rich as Gnutella2, eDonkey2000 has an impressive file collection."/>
+		<control caption="Connect to eDonkey"/>
+		<control caption="The eDonkey network is a popular server-based network. While not as feature-rich as Gnutella2, eDonkey has an impressive file collection."/>
 		<control caption="Connect to Original Gnutella"/>
-		<control caption="Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey2000, it remains a valuable resource."/>
+		<control caption="Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource."/>
 	</dialog>
-	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Import eDonkey2000 Downloads">
+	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Import eDonkey Downloads">
 		<control/>
-		<control caption="Shareaza has detected that you have another eDonkey2000 program installed on your computer. Would you like to import any unfinished downloads into Shareaza?"/>
+		<control caption="Shareaza has detected that you have another eDonkey program installed on your computer. Would you like to import any unfinished downloads into Shareaza?"/>
 		<control caption="Yes"/>
 		<control caption="No|Cancel"/>
 		<control/>
@@ -3706,7 +3706,7 @@
 		<control caption="Initiate a new connection to host or server:|Browse this host:"/>
 		<control/><control/>
 		<control caption="Network _Protocol:"/>
-		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey"/>
 		<control caption="_Suppress Ultrapeer"/>
 		<control caption="Connect"/>
 		<control caption="Cancel"/>
@@ -3717,7 +3717,7 @@
 		<control/>
 		<control caption="Download"/>
 		<control caption="Cancel"/>
-		<control caption="Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey2000, mP2P)."/>
+		<control caption="Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P)."/>
 		<control caption="Shareaza can also download BitTorrent files. A torrent can be described by an xyz.torrent file, or a HTTP link to the .torrent file. To download a torrent HTTP link, paste it in the box above. If you already have a .torrent file, click Open Torrent:"/>
 		<control caption="Open _Torrent..."/>
 	</dialog>
@@ -4014,7 +4014,7 @@
 	</dialog>
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Download Server.met File">
 		<control/>
-		<control caption="You can download an eDonkey2000 server.met file from the web to refresh your local list of servers."/>
+		<control caption="You can download an eDonkey server.met file from the web to refresh your local list of servers."/>
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Cancel"/>
