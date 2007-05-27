@@ -181,7 +181,7 @@ BEGIN
         MENUITEM "&Browse User...",             ID_NETWORK_BROWSE_TO
         MENUITEM SEPARATOR
         MENUITEM "Connect to &Gnutella2",       ID_NETWORK_G2
-        MENUITEM "Connect to &eDonkey2000",     ID_NETWORK_ED2K
+        MENUITEM "Connect to &eDonkey",     	ID_NETWORK_ED2K
         MENUITEM "Connect to Gnutella&1",       ID_NETWORK_G1
         MENUITEM SEPARATOR
         MENUITEM "Close &After Transfers",      ID_NETWORK_AUTO_CLOSE
@@ -325,7 +325,7 @@ BEGIN
             MENUITEM "&Disconnect",                 ID_NETWORK_DISCONNECT
             MENUITEM SEPARATOR
             MENUITEM "&Gnutella2",                  ID_NETWORK_G2
-            MENUITEM "&eDonkey2000",                ID_NETWORK_ED2K
+            MENUITEM "&eDonkey",             	   ID_NETWORK_ED2K
             MENUITEM "Gnutella&1",                  ID_NETWORK_G1
         END
         MENUITEM SEPARATOR
@@ -352,7 +352,7 @@ BEGIN
             MENUITEM "&Disconnect",                 ID_NETWORK_DISCONNECT
             MENUITEM SEPARATOR
             MENUITEM "&Gnutella2",                  ID_NETWORK_G2
-            MENUITEM "&eDonkey2000",                ID_NETWORK_ED2K
+            MENUITEM "&eDonkey",             	   ID_NETWORK_ED2K
             MENUITEM "Gnutella&1",                  ID_NETWORK_G1
         END
         POPUP "&Monitor"
@@ -1523,7 +1523,7 @@ BEGIN
     EDITTEXT        IDC_URL,6,66,276,30,ES_MULTILINE | ES_AUTOVSCROLL
     DEFPUSHBUTTON   "Download",IDOK,179,102,50,14,WS_DISABLED
     PUSHBUTTON      "Cancel",IDCANCEL,233,102,50,14
-    LTEXT           "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey2000, mP2P).",
+    LTEXT           "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P).",
                     IDC_STATIC,6,125,276,18
     LTEXT           "Shareaza can also download BitTorrent files.  A torrent can be described by an xyz.torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:",
                     IDC_STATIC,6,149,276,26
@@ -2166,7 +2166,7 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,20,35,105,12
     CONTROL         "Gnutella ( gnutella: )",IDC_URI_GNUTELLA,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,20,50,105,12
-    CONTROL         "eDonkey2000 ( ed2k: )",IDC_URI_ED2K,"Button",
+    CONTROL         "eDonkey ( ed2k: )",IDC_URI_ED2K,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,20,65,105,12
     CONTROL         "Piolet ( mp2p: )",IDC_URI_PIOLET,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,150,35,105,12
@@ -2541,13 +2541,13 @@ END
 
 IDD_SETTINGS_DONKEY DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "eDonkey2000"
+CAPTION "eDonkey"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "&eDonkey2000 Network:",IDC_STATIC,5,5,270,50,WS_GROUP
-    CONTROL         "Always connect to eDonkey2000",IDC_ENABLE_ALWAYS,"Button",
+    GROUPBOX        "&eDonkey Network:",IDC_STATIC,5,5,270,50,WS_GROUP
+    CONTROL         "Always connect to eDonkey",IDC_ENABLE_ALWAYS,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,20,126,12
-    CONTROL         "Connect to eDonkey2000 today",IDC_ENABLE_TODAY,"Button",
+    CONTROL         "Connect to eDonkey today",IDC_ENABLE_TODAY,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,34,125,12
     GROUPBOX        "&Global Searching:",IDC_STATIC,5,58,270,65,WS_GROUP
     CONTROL         "Search known remote servers in the server cache:",
@@ -2573,8 +2573,8 @@ BEGIN
                     UDS_NOTHOUSANDS,156,142,8,12
     LTEXT           "other eDonkey clients.",IDC_STATIC,165,142,100,12,
                     SS_CENTERIMAGE
-    GROUPBOX        "eDonkey2000 &Tools:",IDC_STATIC,5,167,270,48,WS_GROUP
-    LTEXT           "Download eDonkey2000 serverlist from the web:",
+    GROUPBOX        "eDonkey &Tools:",IDC_STATIC,5,167,270,48,WS_GROUP
+    LTEXT           "Download eDonkey serverlist from the web:",
                     IDC_STATIC,15,190,190,15,SS_CENTERIMAGE
     PUSHBUTTON      "Download...",IDC_DISCOVERY_GO,213,190,53,15
 END
@@ -2592,15 +2592,15 @@ BEGIN
     CONTROL         "Connect to Gnutella2 (G2)",IDC_G2_ENABLE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,73,145,10
     RTEXT           "Configure Gnutella2",IDC_G2_SETUP,165,73,100,10
-    GROUPBOX        "eDonkey2000 Network:",IDC_STATIC,5,95,270,55,WS_GROUP
-    LTEXT           "The eDonkey2000 network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey2000 has an impressive file collection.",
+    GROUPBOX        "eDonkey Network:",IDC_STATIC,5,95,270,55,WS_GROUP
+    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",
                     IDC_STATIC,15,110,250,18
-    CONTROL         "Connect to eDonkey2000",IDC_ED2K_ENABLE,"Button",
+    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,132,145,10
-    RTEXT           "Configure eDonkey2000",IDC_ED2K_SETUP,165,132,100,10
+    RTEXT           "Configure eDonkey",IDC_ED2K_SETUP,165,132,100,10
     GROUPBOX        "Original Gnutella Network:",IDC_STATIC,5,155,270,55,
                     WS_GROUP
-    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey2000, it remains a valuable resource.",
+    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",
                     IDC_STATIC,15,170,250,18
     CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,193,145,10
@@ -2703,7 +2703,7 @@ CAPTION "Download Server.met File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
-    LTEXT           "You can download an eDonkey2000 server.met file from the web to refresh your local list of servers.",
+    LTEXT           "You can download an eDonkey server.met file from the web to refresh your local list of servers.",
                     IDC_STATIC,10,40,270,20
     EDITTEXT        IDC_URL,10,65,270,12,ES_AUTOHSCROLL
     CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
@@ -2724,13 +2724,13 @@ BEGIN
                     45,260,10
     LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.",
                     IDC_STATIC,25,57,250,18
-    CONTROL         "Connect to eDonkey2000",IDC_ED2K_ENABLE,"Button",
+    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,10,79,260,10
-    LTEXT           "The eDonkey2000 network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey2000 has an impressive file collection.",
+    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",
                     IDC_STATIC,25,91,250,18
     CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,10,113,260,10
-    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey2000, it remains a valuable resource.",
+    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",
                     IDC_STATIC,25,126,250,18
 END
 
@@ -2764,11 +2764,11 @@ END
 
 IDD_DONKEY_IMPORT DIALOGEX 0, 0, 292, 169
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Import eDonkey2000 Downloads"
+CAPTION "Import eDonkey Downloads"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
-    LTEXT           "Shareaza has detected that you have another eDonkey2000 program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?",
+    LTEXT           "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?",
                     IDC_STATIC,15,40,260,30
     DEFPUSHBUTTON   "Yes",IDC_IMPORT,15,75,50,14
     PUSHBUTTON      "No|Cancel",IDCANCEL,70,75,50,14
@@ -4838,17 +4838,17 @@ BEGIN
     IDS_DOWNLOAD_METADATA_REQUEST "Requesting metadata for ""%s"" from %s..."
     IDS_DOWNLOAD_METADATA_RECV "Receiving tiger-tree data from %s (%s)..."
     IDS_DOWNLOAD_HASHSET_REQUEST 
-                            "Requesting eDonkey2000 hashset for ""%s"" from %s..."
+                            "Requesting eDonkey hashset for ""%s"" from %s..."
     IDS_DOWNLOAD_HASHSET_ERROR 
-                            "Received an invalid eDonkey2000 hashset from %s, dropping source."
+                            "Received an invalid eDonkey hashset from %s, dropping source."
     IDS_DOWNLOAD_HASHSET_READY 
-                            "Received eDonkey2000 hashset for ""%s"", minimum verifiable chunk %s."
+                            "Received eDonkey hashset for ""%s"", minimum verifiable chunk %s."
     IDS_DOWNLOAD_HASHSET_CORRUPT 
-                            "Download host's eDonkey2000 hashset is corrupt or internally inconsistent, dropping source."
+                            "Download host's eDonkey hashset is corrupt or internally inconsistent, dropping source."
     IDS_DOWNLOAD_INFLATE_ERROR 
                             "Unable to initialize inflate for download ""%s""."
     IDS_DOWNLOAD_QUEUE_TIMEOUT 
-                            "Timed out waiting for queue update from eDonkey2000 download host %s for file ""%s""."
+                            "Timed out waiting for queue update from eDonkey download host %s for file ""%s""."
     IDS_DOWNLOAD_QUEUE_DROP "Staying in queue for ""%s""."
     IDS_DOWNLOAD_DISK_SPACE "Insufficient disk space to download ""%s"" (%s)."
     IDS_DOWNLOAD_VERIFY_DROP 
@@ -4917,7 +4917,7 @@ BEGIN
                             "Offline queued upload host %s expired, removing."
     IDS_UPLOAD_BUSY_QUEUE   "Refusing upload of ""%s"" to %s (%s), all matching queues are full."
     IDS_UPLOAD_DISABLED     "Refusing upload to %s (%s), network disabled."
-    IDS_UPLOAD_CANCEL_ED2K  "eDonkey2000 uploads should not be cancelled.  Are you sure you want to cancel this upload?"
+    IDS_UPLOAD_CANCEL_ED2K  "eDonkey uploads should not be cancelled.  Are you sure you want to cancel this upload?"
     IDS_UPLOAD_QUEUE_TORRENT "Torrent Uploads"
     IDS_UPLOAD_QUEUE_HISTORY "Completed Uploads"
     IDS_DOWNLOAD_CLEAR_GROUP 
@@ -5058,7 +5058,7 @@ BEGIN
     IDS_SETTINGS_AUTOMATIC_IP "Automatic"
     IDS_WIZARD_UPNP_SETUP   "Please wait: Finding UPnP devices and setting them up..."
     IDS_WIZARD_DISCOVERY    "Please wait: Updating discovery services..."
-    IDS_WIZARD_ED2K         "Please wait: Updating eDonkey2000 server list..."
+    IDS_WIZARD_ED2K         "Please wait: Updating eDonkey server list..."
     IDS_UPNP_SERVICES_ERROR "UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."
 END
 
@@ -5144,7 +5144,7 @@ BEGIN
     IDS_NEIGHBOUR_G2LH      "Gnutella II: Leaf-to-Hub Connection"
     IDS_NEIGHBOUR_G2HL      "Gnutella II: Hub-to-Leaf Connection"
     IDS_NEIGHBOUR_ED2K_LOW  "eDonkey Server Connection (LOWID: %lu)"
-    IDS_NEIGHBOUR_ED2K_HIGH "eDonkey2000 Server Connection"
+    IDS_NEIGHBOUR_ED2K_HIGH "eDonkey Server Connection"
     IDS_NEIGHBOUR_HANDSHAKE "Handshake"
     IDS_NEIGHBOUR_INBOUND   "Inbound"
     IDS_NEIGHBOUR_OUTBOUND  "Outbound"
@@ -5169,9 +5169,9 @@ BEGIN
     IDS_NEIGHBOUR_G2PEER    "G2 Peer"
     IDS_NEIGHBOUR_G2HUB     "G2 Hub"
     IDS_NEIGHBOUR_G2LEAF    "G2 Leaf"
-    IDS_NEIGHBOUR_ED2K_SERVER "eDonkey2000 Server"
-    IDS_NEIGHBOUR_ED2K_LOWID "eDonkey2000 (LowID)"
-    IDS_NEIGHBOUR_ED2K_HIGHID "eDonkey2000 (HighID)"
+    IDS_NEIGHBOUR_ED2K_SERVER "eDonkey Server"
+    IDS_NEIGHBOUR_ED2K_LOWID "eDonkey (LowID)"
+    IDS_NEIGHBOUR_ED2K_HIGHID "eDonkey (HighID)"
 END
 
 STRINGTABLE 
@@ -5208,45 +5208,45 @@ END
 STRINGTABLE 
 BEGIN
     IDS_ED2K_SERVER_CONNECTING 
-                            "Initiating connection to eDonkey2000 server at %s..."
+                            "Initiating connection to eDonkey server at %s..."
     IDS_ED2K_SERVER_CONNECTED 
-                            "Connected to eDonkey2000 server %s, handshaking..."
+                            "Connected to eDonkey server %s, handshaking..."
     IDS_ED2K_SERVER_MESSAGE "ED2K[%s] %s"
-    IDS_ED2K_SERVER_REFUSED "eDonkey2000 server %s refused connection."
-    IDS_ED2K_SERVER_ONLINE  "eDonkey2000 server %s online, client ID is %lu."
+    IDS_ED2K_SERVER_REFUSED "eDonkey server %s refused connection."
+    IDS_ED2K_SERVER_ONLINE  "eDonkey server %s online, client ID is %lu."
     IDS_ED2K_SERVER_IDCHANGE 
-                            "eDonkey2000 server %s changed our client ID from %lu to %lu."
-    IDS_ED2K_SERVER_IDENT   "eDonkey2000 server %s identified itself as ""%s""."
-    IDS_ED2K_SERVER_REJECTED "eDonkey2000 server %s rejected the connection."
+                            "eDonkey server %s changed our client ID from %lu to %lu."
+    IDS_ED2K_SERVER_IDENT   "eDonkey server %s identified itself as ""%s""."
+    IDS_ED2K_SERVER_REJECTED "eDonkey server %s rejected the connection."
     IDS_ED2K_CLIENT_HANDSHAKE_FAIL 
-                            "Error exchanging handshake with eDonkey2000 client %s."
-    IDS_ED2K_CLIENT_DROPPED "eDonkey2000 client connection to %s was closed."
+                            "Error exchanging handshake with eDonkey client %s."
+    IDS_ED2K_CLIENT_DROPPED "eDonkey client connection to %s was closed."
     IDS_ED2K_CLIENT_BAD_PACKET 
-                            "Received a malformatted eDonkey2000 packet from %s (id=%x)."
+                            "Received a malformatted eDonkey packet from %s (id=%x)."
     IDS_ED2K_CLIENT_ACCEPTED 
-                            "Incoming connection from %s is an eDonkey2000 client link."
+                            "Incoming connection from %s is an eDonkey client link."
     IDS_ED2K_CLIENT_SENT_HASHSET 
-                            "Sending eDonkey2000 hashset for ""%s"" to %s..."
-    IDS_ED2K_CLIENT_CLOSED  "eDonkey2000 client connection to %s was idle, closed."
+                            "Sending eDonkey hashset for ""%s"" to %s..."
+    IDS_ED2K_CLIENT_CLOSED  "eDonkey client connection to %s was idle, closed."
     IDS_ED2K_CLIENT_CONNECTING 
-                            "Initiating eDonkey2000 client connection to %s..."
+                            "Initiating eDonkey client connection to %s..."
     IDS_ED2K_CLIENT_WRONG_GUID 
-                            "eDonkey2000 client %s has the wrong GUID, aborting handshake."
+                            "eDonkey client %s has the wrong GUID, aborting handshake."
 END
 
 STRINGTABLE 
 BEGIN
     IDS_ED2K_CLIENT_CONNECT_TIMEOUT 
-                            "Timed out connecting to eDonkey2000 client %s."
+                            "Timed out connecting to eDonkey client %s."
     IDS_ED2K_CLIENT_HANDSHAKE_TIMEOUT 
-                            "Timed out handshaking with eDonkey2000 client %s."
+                            "Timed out handshaking with eDonkey client %s."
     IDS_ED2K_CLIENT_DISABLED 
-                            "Refusing eDonkey2000 client link from %s because eDonkey2000 is disabled."
+                            "Refusing eDonkey client link from %s because eDonkey is disabled."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ED2K_EPI_START      "Starting eDonkey2000 partial download import process..."
+    IDS_ED2K_EPI_START      "Starting eDonkey partial download import process..."
     IDS_ED2K_EPI_FINISHED   "Process complete, %i partial downloads imported successfully."
     IDS_ED2K_EPI_FOLDER     "Scanning folder: ""%s""..."
     IDS_ED2K_EPI_FILE_FAILED "  Unable to import file."
@@ -5329,13 +5329,13 @@ BEGIN
     IDS_DOWNLOAD_EDIT_BAD_TIGER 
                             "You have typed a root tiger-tree value, however it is invalid.  Please check it and try again."
     IDS_DOWNLOAD_EDIT_BAD_ED2K 
-                            "You have typed an eDonkey2000 hash value, however it is invalid.  Please check it and try again."
+                            "You have typed an eDonkey hash value, however it is invalid.  Please check it and try again."
     IDS_DOWNLOAD_EDIT_CHANGE_SHA1 
                             "You have provided a SHA1 hash value which is different to the one currently associated with this download.  Are you sure you want to change the SHA1 hash now?"
     IDS_DOWNLOAD_EDIT_CHANGE_TIGER 
                             "You have provided a root tiger-tree hash value which is different to the one currently associated with this download.  Are you sure you want to change the tiger-tree root hash now?"
     IDS_DOWNLOAD_EDIT_CHANGE_ED2K 
-                            "You have provided an eDonkey2000 hash value which is different to the one currently associated with this download.  Are you sure you want to change the eDonkey2000 hash now?"
+                            "You have provided an eDonkey hash value which is different to the one currently associated with this download.  Are you sure you want to change the eDonkey hash now?"
     IDS_DOWNLOAD_EDIT_FORGET_VERIFY 
                             "Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
     IDS_DOWNLOAD_EDIT_FORGET_SOURCES 
@@ -5449,7 +5449,7 @@ BEGIN
     IDS_RATING_4            "Good"
     IDS_RATING_5            "Very Good"
     IDS_RATING_6            "Excellent"
-    IDS_SELECT_ED2K_TEMP_FOLDER "Select the eDonkey2000/eMule temp folder:"
+    IDS_SELECT_ED2K_TEMP_FOLDER "Select the eDonkey/eMule temp folder:"
 END
 
 STRINGTABLE 
@@ -5797,14 +5797,14 @@ BEGIN
     ID_SEARCH_FOR_SERIES    "Search for video files in the same series as the selected file."
     ID_CHAT_TIMESTAMP       "Show the time when each message was received."
     ID_MEDIA_STATUS         "Show or hide the media status line."
-    ID_HOSTCACHE_ED2K_CACHE "Show eDonkey2000 servers."
+    ID_HOSTCACHE_ED2K_CACHE "Show eDonkey servers."
     ID_HOSTCACHE_IMPORT     "Import a list of known hosts, such as a ""server.met"" file..."
     ID_HOSTCACHE_ED2K_DOWNLOAD 
-                            "Download an eDonkey2000 ""server.met"" file..."
-    ID_DISCOVERY_SERVERMET  "Show eDonkey2000 Server.met services in the Discovery window."
+                            "Download an eDonkey ""server.met"" file..."
+    ID_DISCOVERY_SERVERMET  "Show eDonkey Server.met services in the Discovery window."
     ID_NETWORK_G2           "Connect to the Gnutella2 network (highly recommended)."
     ID_NETWORK_G1           "Connect to the original Gnutella network."
-    ID_NETWORK_ED2K         "Connect to the eDonkey2000 network."
+    ID_NETWORK_ED2K         "Connect to the eDonkey network."
     ID_HOSTCACHE_PRIORITY   "Try to connect to this server before other servers."
     ID_VIEW_BASIC           "Use Shareaza in Normal mode."
 END
