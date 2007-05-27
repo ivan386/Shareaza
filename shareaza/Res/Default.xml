@@ -323,7 +323,7 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Chat to User"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
@@ -337,7 +337,7 @@
 		<button id="ID_SECURITY_BAN" text="Ban Host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
@@ -409,7 +409,7 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -478,7 +478,7 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -577,7 +577,7 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -1342,7 +1342,7 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
 		<menu text="_Monitor">
@@ -2089,7 +2089,7 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Your eDonkey server list is empty</text>
 		<newline gap="8"/>
-		<text>There are no servers in your eDonkey2000 server list. You need to download an
+		<text>There are no servers in your eDonkey server list. You need to download an
 		up to date server list (met file) to connect to ED2K.</text>
 		<newline gap="8"/>
 		<text>You can download a server list from the ed2k setting page, or the discovery
