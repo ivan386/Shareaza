@@ -236,6 +236,17 @@ void CCoolMenu::SetWatermark(HBITMAP hBitmap)
 	}
 }
 
+void CCoolMenu::SetSelectmark(HBITMAP hBitmap)
+{
+	m_bSelectTest = FALSE;
+	if ( hBitmap != NULL ) 
+	{
+		if ( m_bmSelectmark.m_hObject )
+			m_bmSelectmark.DeleteObject();
+		m_bmSelectmark.Attach( hBitmap );
+		m_bSelectTest = TRUE;
+	}
+}
 //////////////////////////////////////////////////////////////////////
 // CCoolMenu measure item
 
@@ -333,7 +344,12 @@ void CCoolMenu::OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	if ( bSelected )
 	{
-		if ( ! bDisabled )
+		SetSelectmark( Skin.GetWatermark( L"CCoolMenu.Hover" ) );
+		if ( m_bSelectTest && ( !bDisabled || bKeyboard ) )
+		{
+			CoolInterface.DrawWatermark( pDC, &rcItem, &m_bmSelectmark );
+		}
+		else if ( ! bDisabled )
 		{
 			pDC->Draw3dRect( rcItem.left + 1, rcItem.top + 1,
 				rcItem.Width() - 2, rcItem.Height() - 1 - bEdge,

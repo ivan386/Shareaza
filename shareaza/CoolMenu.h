@@ -42,6 +42,7 @@ public:
 protected:
 	void		DrawMenuText(CDC* pDC, CRect* pRect, const CString& strText);
 	void		DrawWatermark(CDC* pDC, CRect* pRect, int nOffX, int nOffY);
+	void		SetSelectmark(HBITMAP hBitmap);
 
 // Attributes
 protected:
@@ -51,6 +52,8 @@ protected:
 	//   or template instantiation - in that case it's a false warning and should be supressed
 	CMap< DWORD_PTR, DWORD_PTR&, CString, CString& >	m_pStrings;
 protected:
+	BOOL		m_bSelectTest;
+	CBitmap		m_bmSelectmark;
 	CBitmap		m_bmWatermark;
 	CDC			m_dcWatermark;
 	CSize		m_czWatermark;
