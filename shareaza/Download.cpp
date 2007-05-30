@@ -79,12 +79,22 @@ CDownload::~CDownload()
 		CloseTransfers();
 		CloseTorrentUploads();
 		Uploads.OnRename( m_sDiskName, NULL );
-		if ( m_bSeeding && Settings.BitTorrent.AutoSeed )
+		if ( m_bSeeding )
 		{
-			// do nothing
+			// Auto-clear activated or we don't want to seed
+			if ( Settings.BitTorrent.AutoClear && 
+				 Settings.BitTorrent.ClearRatio <= GetRatio() ||
+				 !Settings.BitTorrent.AutoClear && 
+				 !Settings.BitTorrent.AutoSeed )
+			{
+				if ( ! ::DeleteFile( m_sDiskName ) )
+					theApp.WriteProfileString( L"Delete", m_sDiskName, L"" );
+				if ( ! ::DeleteFile( m_sDiskName + ".sd" ) )
+					theApp.WriteProfileString( L"Delete", m_sDiskName + L".sd", L"" );
+			}
 		}
 		else if ( ! ::DeleteFile( m_sDiskName ) )
-			theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
+			theApp.WriteProfileString( L"Delete", m_sDiskName, L"" );
 	}
 }
 
