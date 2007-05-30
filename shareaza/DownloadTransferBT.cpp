@@ -188,21 +188,21 @@ BOOL CDownloadTransferBT::OnConnected()
 	ASSERT( m_pClient != NULL );
 	ASSERT( m_pSource != NULL );
 
+	SetState( dtsTorrent );
+	m_pHost		= m_pClient->m_pHost;
+	m_sAddress	= m_pClient->m_sAddress;
+	UpdateCountry();
+
+	// not deleting source for source exchange.
 	if ( m_pDownload->IsCompleted() )
 	{
 		// This source is only here to push start torrent uploads. (We don't want to download)
+		m_bInterested = FALSE;
 		theApp.Message( MSG_DEFAULT, _T("Initiated push start for upload to %s"), (LPCTSTR)m_sAddress );
-		Close( TS_FALSE );
-		return FALSE;
 	}
 	else
 	{
 		// Regular download
-		SetState( dtsTorrent );
-		m_pHost		= m_pClient->m_pHost;
-		m_sAddress	= m_pClient->m_sAddress;
-		UpdateCountry();
-		m_pSource->SetLastSeen();
 		m_pClient->m_mInput.pLimit = &m_nBandwidth;
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
 		if ( ! m_pDownload->PrepareFile() )
@@ -210,8 +210,11 @@ BOOL CDownloadTransferBT::OnConnected()
 			Close( TS_TRUE );
 			return FALSE;
 		}
-		return TRUE;
+		m_pClient->m_mInput.pLimit = &m_nBandwidth;
 	}
+
+	m_pSource->SetLastSeen();
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
