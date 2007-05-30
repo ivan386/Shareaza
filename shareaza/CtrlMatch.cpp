@@ -1211,7 +1211,7 @@ void CMatchCtrl::DrawCountry(CDC& dc, CRect& rcCol, CString sCountry, BOOL bSele
 	// If the column is very narrow then don't draw the flag.
 	if ( nFlagIndex >= 0 && rcCol.Width() >= 22 )
 	{
-		CPoint pt( rcCol.left, rcCol.top );
+		CPoint pt( rcCol.left, rcCol.top - 1 );
 		ImageList_DrawEx( Flags.m_pImage, nFlagIndex, dc,
 			pt.x, pt.y, 18, 18, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
 		dc.ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
