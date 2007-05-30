@@ -1127,24 +1127,22 @@ void CCoolBarItem::Paint(CDC* pDC, CRect& rc, BOOL bDown, BOOL bHot, BOOL bMenuG
 		rc.DeflateRect( 1, 1 );
 	}
 
-	BOOL MenuBarTest = FALSE;
-
 	if ( m_bEnabled ) 
 		SetButtonmark( Skin.GetWatermark( L"CCoolbar.Up" ) );
 	if ( m_bChecked ) 
 		SetButtonmark( Skin.GetWatermark( L"CCoolbar.Checked" ) );
-	if ( bHot && !MenuBarTest ) 
+	if ( bHot && m_nImage >= 1 ) 
 		SetButtonmark( Skin.GetWatermark( L"CCoolbar.Hover" ) );
-	if ( bDown && !MenuBarTest ) 
+	if ( bDown && m_nImage >= 1 ) 
 		SetButtonmark( Skin.GetWatermark( L"CCoolbar.Down" ) );
-	if ( bHot && MenuBarTest ) 
+	if ( bHot && m_nImage <= 0 ) 
 		SetButtonmark( Skin.GetWatermark( L"CCoolMenuBar.Hover" ) );
-	if ( bDown && MenuBarTest ) 
+	if ( bDown && m_nImage <= 0 ) 
 		SetButtonmark( Skin.GetWatermark( L"CCoolMenuBar.Down" ) );
 	if ( !m_bEnabled ) 
 		SetButtonmark( Skin.GetWatermark( L"CCoolbar.Disabled" ) );
 
-	if ( m_bButtonTest )
+	if ( m_bButtonTest && !m_nCtrlID )
 	{
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmButtonmark );
 		pDC->SetBkMode( TRANSPARENT );
