@@ -106,9 +106,35 @@ void CSkin::Clear()
 		delete m_pSkins.GetNext( pos );
 	}
 	
-	for ( pos = m_pFontPaths.GetHeadPosition() ; pos ; )
+	BOOL bSuccess = FALSE;
+	// First try to remove the fonts using RemoveFontResourceEx
+	if ( HINSTANCE hGDI = LoadLibrary( _T("gdi32") ) )
 	{
-		RemoveFontResource( m_pFontPaths.GetNext( pos ) );
+		int (WINAPI *pfnRemoveFontResourceEx)(LPCTSTR, DWORD, PVOID);
+		
+		(FARPROC&)pfnRemoveFontResourceEx = GetProcAddress( hGDI, "RemoveFontResourceExW" );
+		
+		if ( pfnRemoveFontResourceEx != NULL )
+		{
+			bSuccess = TRUE;
+			for ( pos = m_pFontPaths.GetHeadPosition() ; pos ; )
+			{
+				bSuccess &= (*pfnRemoveFontResourceEx)( m_pFontPaths.GetNext( pos ), FR_PRIVATE, NULL );
+				ASSERT( bSuccess );
+			}
+			
+		}
+		
+		FreeLibrary( hGDI );
+	}
+
+	// Second try removing the fonts using RemoveFontResource
+	if ( !bSuccess )
+	{
+		for ( pos = m_pFontPaths.GetHeadPosition() ; pos ; )
+		{
+			ASSERT( RemoveFontResource( m_pFontPaths.GetNext( pos ) ) );
+		}
 	}
 	
 	m_pStrings.RemoveAll();
