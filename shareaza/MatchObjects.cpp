@@ -1714,7 +1714,16 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 		x = m_nFiltered ? m_nSpeed / m_nFiltered : 0;
 		y = pFile->m_nFiltered ? pFile->m_nSpeed / pFile->m_nFiltered : 0;
 		return x == y ? 0 : ( x > y ? 1 : -1 );
-		
+	case MATCH_COL_COUNTRY:
+		{
+			LPCTSTR pszType1 = ( m_nFiltered == 1 ) ? (LPCTSTR)m_pHits->m_sCountry : NULL;
+			LPCTSTR pszType2 = ( pFile->m_nFiltered == 1 ) ? (LPCTSTR)pFile->m_pHits->m_sCountry : NULL;
+			if ( ! pszType1 ) return ( pszType2 ? -1 : 0 );
+			if ( ! pszType2 ) return 1;
+			x = _tcsicmp( pszType1, pszType2 );
+			if ( ! x ) return 0;
+			return x > 0 ? 1 : -1;
+		}
 	default:
 		if ( ! m_pColumns ) return ( pFile->m_pColumns ? -1 : 0 );
 		else if ( ! pFile->m_pColumns ) return 1;
