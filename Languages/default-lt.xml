@@ -337,7 +337,7 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Kalbėtis su vartotoju"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Nuostatos"/>
@@ -351,7 +351,7 @@
 		<button id="ID_SECURITY_BAN" text="Užkirsti adresato prieigą"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Nuostatos"/>
@@ -431,7 +431,7 @@
 			<separator/>
 			<menu text="_Rinktis tinklus">
 				<item id="ID_NETWORK_G2" text="Jungtis prie _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Jungtis prie _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Jungtis prie _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Jungtis prie Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -500,7 +500,7 @@
 			<separator/>
 			<menu text="_Rinktis tinklus">
 				<item id="ID_NETWORK_G2" text="Jungtis prie _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Jungtis prie _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Jungtis prie _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Jungtis prie Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -599,7 +599,7 @@
 			<separator/>
 			<menu text="_Rinktis tinklus">
 				<item id="ID_NETWORK_G2" text="Jungtis prie _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Jungtis prie _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Jungtis prie _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Jungtis prie Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -1381,7 +1381,7 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Atsijungti"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
 		<menu text="_Monitorius">
@@ -2055,10 +2055,10 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">eDonkey serverių sąrašas tuščias</text>
 		<newline gap="8"/>
-		<text>eDonkey2000 serverių sąraše nėra nė vieno serverio. Jums reikėtų parsisiųsti
+		<text>eDonkey serverių sąraše nėra nė vieno serverio. Jums reikėtų parsisiųsti
 		naują serverių sąrašą (met failą), kad galėtumėte prisijungti prie ED2K.</text>
 		<newline gap="8"/>
-		<text>Jūs galite parsisiųsti šį sąrašą iš edonkey2000 nuostatų puslapio arba iš
+		<text>Jūs galite parsisiųsti šį sąrašą iš edonkey nuostatų puslapio arba iš
 		paslaugų radimo tarnybų lango. (Paspauskite F9, jei norite atverti šį langą)</text>
 	</document>
 	<document name="GeneralHelp.UploadWarning">
@@ -2170,7 +2170,7 @@
 	<tip id="ID_DISCOVERY_GNUTELLA" message="Rodyti savikėlos („bootstrap“) tarnybas paslaugų radimo tarnybų lange."/>
 	<tip id="ID_DISCOVERY_QUERY" message="Nusiųsti tuoj pat užklausą pasirinktai paslaugų radimo tarnybai."/>
 	<tip id="ID_DISCOVERY_REMOVE" message="Pašalinti pasirinktas paslaugų radimo tarnybas."/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="Rodyti eDonkey2000 Server.met tarnybas paslaugų radimo tarnybų lange."/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="Rodyti eDonkey Server.met tarnybas paslaugų radimo tarnybų lange."/>
 	<tip id="ID_DISCOVERY_WEBCACHE" message="Rodyti GWebCache tarnybas paslaugų radimo tarnybų lange."/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Atšaukti visų šios grupės failų parsisiuntimą ir pašalinti failus."/>
 	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Sukurti naują parsisiuntimų grupę..."/>
@@ -2234,8 +2234,8 @@
 	<tip id="ID_HITMONITOR_SEARCH" message="Ieškoti tinkle pasirinkto termino."/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="Jungtis prie pasirinkto adresato(-ų)."/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="Atsijungti nuo pasirinkto kaimyno(-ų)."/>
-	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Rodyti eDonkey2000 serverius."/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Parsisiųsti eDonkey2000 „server.met“ failą..."/>
+	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Rodyti eDonkey serverius."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Parsisiųsti eDonkey „server.met“ failą..."/>
 	<tip id="ID_HOSTCACHE_G1_CACHE" message="Rodyti Gnutella1 tinklo adresatus, esančius laikinoje talpykloje."/>
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="Rodyti Gnutella2 tinklo adresatus, esančius laikinoje talpykloje."/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Rodyti Gnutella2 tinklo kertinius mazgus."/>
@@ -2339,7 +2339,7 @@
 	<tip id="ID_NETWORK_CONNECT" message="Jungtis prie pasirinktų tinklų."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Jungtis prie adresato rankiniu būdu..."/>
 	<tip id="ID_NETWORK_DISCONNECT" message="Atsijungti nuo tinklų. Tai sustabdys visus išsiuntimus ir atsisiuntimus."/>
-	<tip id="ID_NETWORK_ED2K" message="Jungtis prie eDonkey2000 tinklo."/>
+	<tip id="ID_NETWORK_ED2K" message="Jungtis prie eDonkey tinklo."/>
 	<tip id="ID_NETWORK_EXIT" message="Baigti darbą su „Shareaza“"/>
 	<tip id="ID_NETWORK_G1" message="Jungtis prie pirminio Gnutella tinklo."/>
 	<tip id="ID_NETWORK_G2" message="Jungtis prie Gnutella2 tinklo (labai rekomenduojama)."/>
@@ -2744,12 +2744,12 @@
 	<string id="16308" value="Parsisiunčiant, adresatas %s atsiuntė neprašytų duomenų, ryšys nutraukiamas."/>
 	<string id="16309" value="Siunčiama užklausa failo „%s“ meta duomenims gauti adresatui %s..."/>
 	<string id="16310" value="Gaunami dryžinės (tiger-tree) maišos duomenys iš %s (%s)..."/>
-	<string id="16311" value="Siunčiama užklausa failo „%s“ eDonkey2000 maišos rinkiniui gauti adresatui %s..."/>
-	<string id="16312" value="Gautas neteisingas eDonkey2000 maišos rinkinys iš %s, šaltinis atmetamas."/>
-	<string id="16313" value="Gautas eDonkey2000 maišos rinkinys failui „%s“, mažiausias gabalas, kurį galima patikrinti, yra %s."/>
+	<string id="16311" value="Siunčiama užklausa failo „%s“ eDonkey maišos rinkiniui gauti adresatui %s..."/>
+	<string id="16312" value="Gautas neteisingas eDonkey maišos rinkinys iš %s, šaltinis atmetamas."/>
+	<string id="16313" value="Gautas eDonkey maišos rinkinys failui „%s“, mažiausias gabalas, kurį galima patikrinti, yra %s."/>
 	<string id="16314" value="Parsisiunčiant aptikta, jog Donkey2000 maišos rinkinys yra sugadintas arba prieštaringas, šaltinis atmetamas."/>
 	<string id="16315" value="Neįmanoma pradėti parsisiunčiamo failo „%s“ išpakavimo."/>
-	<string id="16316" value="Baigėsi laiko limitas atnaujinant eilę eDonkey2000 adresate %s (failas „%s“)."/>
+	<string id="16316" value="Baigėsi laiko limitas atnaujinant eilę eDonkey adresate %s (failas „%s“)."/>
 	<string id="16317" value="Stovima eilėje failui „%s“ gauti."/>
 	<string id="16318" value="Nepakanka vietos diske failui „%s“ parsisiųsti (%s)."/>
 	<string id="16319" value="Šaltinis %s (%s) atmetamas, nes siunčia sugadintas failo „%s“ dalis (%I64i-%I64i)."/>
@@ -2795,7 +2795,7 @@
 	<string id="16359" value="Atsijungusio adresato %s buvimo išsiuntimų eilėje laikas baigėsi, pašalinama."/>
 	<string id="16360" value="Atsakoma išsiųsti failą „%s“ adresatui %s (%s), visos eilės perpildytos."/>
 	<string id="16361" value="Atsakyta išsiųsti failą adresatui %s (%s), tinklas neįgalintas."/>
-	<string id="16362" value="eDonkey2000 išsiuntimų nederėtų atšaukti. Ar tikrai norite atšaukti šio failo išsiuntimą?"/>
+	<string id="16362" value="eDonkey išsiuntimų nederėtų atšaukti. Ar tikrai norite atšaukti šio failo išsiuntimą?"/>
 	<string id="16363" value="Torrent išsiuntimai"/>
 	<string id="16364" value="Baigta siųsti"/>
 	<string id="16365" value="Ar tikrai norite nutraukti visus atsisiuntimus šioje grupėje?"/>
@@ -2906,7 +2906,7 @@
 	<string id="16811" value="Automatinis"/>
 	<string id="16812" value="Prašome palaukti: Ieškomi ir konfigūruojami UPnP įrenginiai..."/>
 	<string id="16813" value="Prašome palaukti: Atnaujinamos paslaugų radimo tarnybos..."/>
-	<string id="16814" value="Prašome palaukti: Atnaujinamas eDonkey2000 serverių sąrašas..."/>
+	<string id="16814" value="Prašome palaukti: Atnaujinamas eDonkey serverių sąrašas..."/>
 	<string id="16815" value="UPnP Device Host tarnyba neveikia. Ši tarnyba yra reikalinga derinimo atlikimui.\nJums reikėtų nustatyti šios tarnybos startavimo tipą į automatinį."/>
 	<string id="16816" value="eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\nAr įsitikinę, kad norite apriboti eilės numerius?"/>
 	<string id="16817" value="Windows nepalaiko kelių, ilgesnių už 256 simbolius.\nPasirinkite aplanką, kurio kelias yra trumpesnis."/>
@@ -2971,7 +2971,7 @@
 	<string id="17104" value="Gnutella II: Ryšys atšaka-mazgas"/>
 	<string id="17105" value="Gnutella II: Ryšys mazgas-atšaka"/>
 	<string id="17106" value="eDonkey serverio ryšys (LOWID: %lu)"/>
-	<string id="17107" value="eDonkey2000 serverio ryšys"/>
+	<string id="17107" value="eDonkey serverio ryšys"/>
 	<string id="17108" value="Patvirtinimas"/>
 	<string id="17109" value="Įeinantis"/>
 	<string id="17110" value="Išeinantis"/>
@@ -2992,29 +2992,29 @@
 	<string id="17125" value="G2 partneris"/>
 	<string id="17126" value="G2 mazgas"/>
 	<string id="17127" value="G2 atšaka"/>
-	<string id="17128" value="eDonkey2000 serveris"/>
-	<string id="17129" value="eDonkey2000 (žemas ID)"/>
-	<string id="17130" value="eDonkey2000 (aukštas ID)"/>
-	<string id="17216" value="Užmezgamas ryšys su eDonkey2000 serveriu %s..."/>
-	<string id="17217" value="Ryšys su eDonkey2000 serveriu %s užmegztas, patvirtinama..."/>
+	<string id="17128" value="eDonkey serveris"/>
+	<string id="17129" value="eDonkey (žemas ID)"/>
+	<string id="17130" value="eDonkey (aukštas ID)"/>
+	<string id="17216" value="Užmezgamas ryšys su eDonkey serveriu %s..."/>
+	<string id="17217" value="Ryšys su eDonkey serveriu %s užmegztas, patvirtinama..."/>
 
-	<string id="17219" value="eDonkey2000 serveris %s atsakė ryšio."/>
-	<string id="17220" value="eDonkey2000 serveris %s atsiliepė, kliento ID yra %lu."/>
-	<string id="17221" value="eDonkey2000 serveris %s pakeitė mūsų kliento ID iš %lu į %lu."/>
-	<string id="17222" value="eDonkey2000 serveris %s prisistatė kaip „%s“."/>
-	<string id="17223" value="eDonkey2000 serveris %s atmetė ryšį."/>
-	<string id="17224" value="Klaida patvirtinant ryšį su eDonkey2000 klientu %s."/>
-	<string id="17225" value="eDonkey2000 kliento ryšys su %s nutrūko."/>
-	<string id="17226" value="Gautas neteisingo formato eDonkey2000 paketas iš %s (id=%x)."/>
-	<string id="17227" value="Įeinantis ryšys iš %s identifikuotas kaip eDonkey2000 kliento."/>
-	<string id="17228" value="Siunčiamas failo „%s“ eDonkey2000 maišos rinkinys adresatui %s..."/>
-	<string id="17229" value="eDonkey2000 kliento ryšys su %s buvo nenaudojamas, ryšys nutrauktas."/>
-	<string id="17230" value="Užmezgamas eDonkey2000 kliento ryšys su %s..."/>
-	<string id="17231" value="eDonkey2000 klientas %s turi neteisingą GUID, ryšio patvirtinimas atšaukiamas."/>
-	<string id="17232" value="Baigėsi susijungimo su eDonkey2000 klientu %s laiko limitas."/>
-	<string id="17233" value="Baigėsi ryšio su eDonkey2000 klientu %s patvirtinimo laiko limitas."/>
-	<string id="17234" value="Atsakoma susijungimo su eDonkey2000 klientu %s, nes eDonkey2000 yra neįgalintas."/>
-	<string id="17248" value="Pradedamas eDonkey2000 dalinių failų importas..."/>
+	<string id="17219" value="eDonkey serveris %s atsakė ryšio."/>
+	<string id="17220" value="eDonkey serveris %s atsiliepė, kliento ID yra %lu."/>
+	<string id="17221" value="eDonkey serveris %s pakeitė mūsų kliento ID iš %lu į %lu."/>
+	<string id="17222" value="eDonkey serveris %s prisistatė kaip „%s“."/>
+	<string id="17223" value="eDonkey serveris %s atmetė ryšį."/>
+	<string id="17224" value="Klaida patvirtinant ryšį su eDonkey klientu %s."/>
+	<string id="17225" value="eDonkey kliento ryšys su %s nutrūko."/>
+	<string id="17226" value="Gautas neteisingo formato eDonkey paketas iš %s (id=%x)."/>
+	<string id="17227" value="Įeinantis ryšys iš %s identifikuotas kaip eDonkey kliento."/>
+	<string id="17228" value="Siunčiamas failo „%s“ eDonkey maišos rinkinys adresatui %s..."/>
+	<string id="17229" value="eDonkey kliento ryšys su %s buvo nenaudojamas, ryšys nutrauktas."/>
+	<string id="17230" value="Užmezgamas eDonkey kliento ryšys su %s..."/>
+	<string id="17231" value="eDonkey klientas %s turi neteisingą GUID, ryšio patvirtinimas atšaukiamas."/>
+	<string id="17232" value="Baigėsi susijungimo su eDonkey klientu %s laiko limitas."/>
+	<string id="17233" value="Baigėsi ryšio su eDonkey klientu %s patvirtinimo laiko limitas."/>
+	<string id="17234" value="Atsakoma susijungimo su eDonkey klientu %s, nes eDonkey yra neįgalintas."/>
+	<string id="17248" value="Pradedamas eDonkey dalinių failų importas..."/>
 	<string id="17249" value="Veiksmas baigtas, sėkmingai importuoti %i daliniai failai(-ų)."/>
 	<string id="17250" value="Skenuojamas aplankas: „%s“..."/>
 	<string id="17251" value="  Neįmanoma importuoti failo."/>
@@ -3066,10 +3066,10 @@
 	<string id="18496" value="Jūs pakeitėte vardą. Ar tikrai norite pervardinti šį parsisiunčiamą failą?"/>
 	<string id="18497" value="Jūs įrašėte SHA1 reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
 	<string id="18498" value="Jūs įrašėte šakninę dryžinės maišos (tiger-tree) reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
-	<string id="18499" value="Jūs įrašėte eDonkey2000 maišos reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
+	<string id="18499" value="Jūs įrašėte eDonkey maišos reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
 	<string id="18500" value="Jūs pateikėte SHA1 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti SHA1 maišą?"/>
 	<string id="18501" value="Jūs pateikėte šakninę dryžinės (tiger-tree) maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti šakninę dryžinę maišą?"/>
-	<string id="18502" value="Jūs pateikėte eDonkey2000 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti eDonkey2000 maišą?"/>
+	<string id="18502" value="Jūs pateikėte eDonkey maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti eDonkey maišą?"/>
 	<string id="18503" value="Ar tikrai norite, kad būtų užmiršta esamos patikros būklė? Visi parsisiųsti duomenys bus laikomi nepatikimais, o talpykla su maišų medžiais ir rinkiniais bus išvalyta."/>
 	<string id="18504" value="Ar tikrai norite, kad būtų užmiršti visi šaltiniai pažymėtam failui?"/>
 	<string id="18505" value="Įveskite teisingus trinimo rėžius. „Nuo“ lauke nurodomas pirmasis trinamas baitas, o „iki“ lauke — paskutinis."/>
@@ -3146,7 +3146,7 @@
 	<string id="20214" value="Gera"/>
 	<string id="20215" value="Labai gera"/>
 	<string id="20216" value="Puiki"/>
-	<string id="20217" value="Pasirinkite eDonkey2000/eMule temp aplanką:"/>
+	<string id="20217" value="Pasirinkite eDonkey/eMule temp aplanką:"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
@@ -3241,7 +3241,7 @@
 		<control caption="Naudoti „Shareaza“ šių tipų nuorodoms atverti:"/>
 		<control caption="Magnet ( magnet: )"/>
 		<control caption="Gnutella ( gnutella: )"/>
-		<control caption="eDonkey2000 ( ed2k: )"/>
+		<control caption="eDonkey ( ed2k: )"/>
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="_Parsisiuntimų tvarkytuvė:"/>
@@ -3359,12 +3359,12 @@
 		<control caption="Gnutella2 tinklas - tai pagrindinis „Shareaza“ tinklas, siūlantis daugiau galimybių ir našumo nei kiti P2P tinklai. Ypač rekomenduojama."/>
 		<control caption="Jungtis prie Gnutella2 (G2)"/>
 		<control caption="Konfigūruoti Gnutella2"/>
-		<control caption="eDonkey2000 tinklas:"/>
-		<control caption="eDonkey2000 tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey2000 tinkle yra įspūdinga failų kolekcija."/>
-		<control caption="Jungtis prie eDonkey2000"/>
-		<control caption="Konfigūruoti eDonkey2000"/>
+		<control caption="eDonkey tinklas:"/>
+		<control caption="eDonkey tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey tinkle yra įspūdinga failų kolekcija."/>
+		<control caption="Jungtis prie eDonkey"/>
+		<control caption="Konfigūruoti eDonkey"/>
 		<control caption="Pirminis Gnutella tinklas:"/>
-		<control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau failų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
+		<control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau failų, nei eDonkey, šis tinklas pasilieka vertingu ištekliumi."/>
 		<control caption="Jungtis prie Gnutella"/>
 		<control caption="Konfigūruoti Gnutella1"/>
 	</dialog>
@@ -3398,10 +3398,10 @@
 		<control caption="Atšakos į mazgą"/>
 		<control caption="Mazgo į mazgą"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-		<control caption="_eDonkey2000 tinklas:"/>
-		<control caption="Visada jungtis prie eDonkey2000"/>
-		<control caption="Jungtis prie eDonkey2000 šiandien"/>
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
+		<control caption="_eDonkey tinklas:"/>
+		<control caption="Visada jungtis prie eDonkey"/>
+		<control caption="Jungtis prie eDonkey šiandien"/>
 		<control caption="_Globalinė paieška:"/>
 		<control caption="Ieškoti žinomų nutolusių serverių serverio laikinojoje talpykloje:"/>
 		<control caption="Stabdyti paieška po:"/>
@@ -3412,8 +3412,8 @@
 		<control caption="Jungtis nedaugiau kaip prie:"/>
 		<control/><control/>
 		<control caption="kitų eDonkey klientų(-o)."/>
-		<control caption="eDonkey2000 į_rankiai:"/>
-		<control caption="eDonkey2000 serverių sąrašo parsisiuntimas iš interneto:"/>
+		<control caption="eDonkey į_rankiai:"/>
+		<control caption="eDonkey serverių sąrašo parsisiuntimas iš interneto:"/>
 		<control caption="Parsisiųsti..."/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
@@ -3576,14 +3576,14 @@
 		<control caption="„Shareaza“ - tai bendros paskirties failų apsikeitimo programa, kuri gali prisijungti prie kelių lygiaverčio tarptinklinio susijungimo (P2P) tinklų vienu metu. Pasirinkite, prie kurių P2P tinklų norite jungtis, o po to derinkite kiekvieną tinklą atskirai."/>
 		<control caption="Jungtis prie Gnutella2 (Labai rekomenduojama)"/>
 		<control caption="Gnutella2 tinklas - tai pagrindinis „Shareaza“ tinklas, siūlantis daugiau galimybių ir našumo nei kiti P2P tinklai. Ypač rekomenduojama."/>
-		<control caption="Jungtis prie eDonkey2000"/>
-		<control caption="eDonkey2000 tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey2000 tinkle yra įspūdinga failų kolekcija."/>
+		<control caption="Jungtis prie eDonkey"/>
+		<control caption="eDonkey tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey tinkle yra įspūdinga failų kolekcija."/>
 		<control caption="Jungtis prie pirminio Gnutella"/>
-		<control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau failų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
+		<control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau failų, nei eDonkey, šis tinklas pasilieka vertingu ištekliumi."/>
 	</dialog>
-	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000 dalinių failų importas">
+	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey dalinių failų importas">
 		<control/>
-		<control caption="„Shareaza“ aptiko, kad Jūs turite įsidiegę dar vieną, eDonkey2000, programą. Ar norėtumėte importuoti nebaigtus siųstis failus į „Shareaza“?"/>
+		<control caption="„Shareaza“ aptiko, kad Jūs turite įsidiegę dar vieną, eDonkey, programą. Ar norėtumėte importuoti nebaigtus siųstis failus į „Shareaza“?"/>
 		<control caption="Taip"/>
 		<control caption="Ne|Atšaukti"/>
 		<control/>
@@ -3691,7 +3691,7 @@
 		<control caption="Užmegzti naują ryšį su kompiuteriu ar serveriu:|Naršyti šį kompiuterį:"/>
 		<control/><control/>
 		<control caption="Tinklo _protokolas:"/>
-		<control caption="Gnutella1 (auto)|Gnutella2 (аuto)|eDonkey2000"/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (аuto)|eDonkey"/>
 		<control caption="_Slopinti vedančiuosius"/>
 		<control caption="Jungtis"/>
 		<control caption="Atšaukti"/>
@@ -3702,7 +3702,7 @@
 		<control/>
 		<control caption="_Parsisiųsti"/>
 		<control caption="_Atšaukti"/>
-		<control caption="„Shareaza“ gali parsiųsti failus iš žiniatinklio (HTTP) ir automatiškai surasti ir parsisiųsti P2P nuorodas (Magnet, Gnutella, eDonkey2000, mP2P)."/>
+		<control caption="„Shareaza“ gali parsiųsti failus iš žiniatinklio (HTTP) ir automatiškai surasti ir parsisiųsti P2P nuorodas (Magnet, Gnutella, eDonkey, mP2P)."/>
 		<control caption="Jūs taip pat galite parsisiųsti BitTorrent failus. Tai gali būti failas su .torrent plėtiniu arba HTTP nuoroda į tokį failą. Torrent atsisiuntimui įterpkite nukopijuotą nuorodą į aukščiau esantį langelį. Jei Jūs jau turite .torrent failą, spauskite „Atverti Torrent:“"/>
 		<control caption="Atverti _Torrent..."/>
 	</dialog>
@@ -3999,7 +3999,7 @@
 	</dialog>
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met failo parsisiuntimas">
 		<control/>
-		<control caption="Jūs galite parsisiųsti eDonkey2000 server.met failą iš interneto, jei norite atnaujinti vietinį serverių sąrašą."/>
+		<control caption="Jūs galite parsisiųsti eDonkey server.met failą iš interneto, jei norite atnaujinti vietinį serverių sąrašą."/>
 		<control/><control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
