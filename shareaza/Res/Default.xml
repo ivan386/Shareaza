@@ -198,7 +198,7 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Share Files..."/>
 		<rightAlign/>
-		<label text="Find:" tip="Type some words to search your library"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
@@ -206,7 +206,7 @@
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Create Album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Delete Album"/>
 		<rightAlign/>
-		<label text="Find:" tip="Type some words to search your library"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
@@ -214,7 +214,7 @@
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Create Album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Delete Album"/>
 		<rightAlign/>
-		<label text="Find:" tip="Type some words to search your library"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
@@ -222,7 +222,7 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Open or Play"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Add to Playlist"/>
 		<rightAlign/>
-		<label text="Find:" tip="Type some words to search your library"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
@@ -236,7 +236,7 @@
 		<button id="ID_LIBRARY_COPY" text="Copy"/>
 		<button id="ID_LIBRARY_DELETE" text="Delete"/>
 		<rightAlign/>
-		<label text="Find:" tip="Type some words to search your library"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
@@ -245,7 +245,7 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Add to Playlist"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play Album"/>
 		<rightAlign/>
-		<label text="Find:" tip="Type some words to search your library"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
@@ -256,7 +256,7 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
 		<rightAlign/>
-		<label text="Find:" tip="Type some words to search your library"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
@@ -265,7 +265,7 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Download All Files"/>
 		<rightAlign/>
-		<label text="Find:" tip="Type some words to search your library"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
