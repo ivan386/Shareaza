@@ -572,8 +572,6 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	{
 		for ( CDownloadSource* pExisting = m_pSourceFirst ; pExisting ; )
 		{	
-			bool bSkip = false;
-
 			if ( pExisting->Equals( pSource ) ) // IPs and ports are equal
 			{	
 				if ( !bExistingIsRaza )
@@ -605,7 +603,6 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 						// Set connection delay the same as for the old source
 						pSource->m_tAttempt = pExisting->m_tAttempt;
 						pCopy = NULL;	// We are adding HTTP source, thus no need to make G2
-						bSkip = true;	// Don't go to the next source
 
 						if ( pExisting->m_pNext )
 						{
@@ -617,12 +614,12 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 							pExisting->Remove( TRUE, FALSE );
 							pExisting = NULL;
 						}
+						// We are already pointing to the next existing source, continue loop
+						continue;
 					}
 				}
 			}
-
-			if ( !bSkip )
-				pExisting = pExisting->m_pNext;
+			pExisting = pExisting->m_pNext;
 		}
 	}
 

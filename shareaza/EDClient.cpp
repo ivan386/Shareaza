@@ -428,14 +428,10 @@ BOOL CEDClient::OnRun()
 
 void CEDClient::OnRunEx(DWORD tNow)
 {
-	if ( m_pDownload != NULL )
+	if ( m_pDownload || m_pUpload )
 	{
-		m_pDownload->OnRunEx( tNow );
-		if ( m_pUpload != NULL ) m_pUpload->OnRunEx( tNow );
-	}
-	else if ( m_pUpload != NULL )
-	{
-		m_pUpload->OnRunEx( tNow );
+		if ( m_pDownload ) m_pDownload->OnRunEx( tNow );
+		if ( m_pUpload ) m_pUpload->OnRunEx( tNow );
 	}
 	else if ( m_hSocket == INVALID_SOCKET )
 	{
