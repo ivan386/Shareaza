@@ -47,13 +47,12 @@ static char THIS_FILE[]=__FILE__;
 
 // Takes access to a DWORD that is not used (do)
 // Makes a new blank CBuffer object with no memory block allocated yet
-CBuffer::CBuffer(DWORD* /*pLimit*/)
+CBuffer::CBuffer(DWORD* /*pLimit*/) :
+	m_pNext   ( NULL )	// This object isn't in a list yet
+,	m_pBuffer ( NULL )	// No memory block has been allocated for this object yet
+,	m_nBuffer ( 0 )		// The size of the memory block is 0
+,	m_nLength ( 0 )		// No bytes have been written here yet
 {
-	// Null pointers and zero counts
-	m_pNext   = NULL; // This object isn't in a list yet
-	m_pBuffer = NULL; // No memory block has been allocated for this object yet
-	m_nBuffer = 0;    // The size of the memory block is 0
-	m_nLength = 0;    // No bytes have been written here yet
 }
 
 // Delete this CBuffer object

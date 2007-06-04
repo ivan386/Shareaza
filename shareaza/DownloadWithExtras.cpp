@@ -40,15 +40,17 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithExtras construction
 
-CDownloadWithExtras::CDownloadWithExtras()
-: m_pMonitorWnd(NULL)
-, m_pPreviewWnd(NULL)
-, m_pReviewFirst(NULL)
-, m_pReviewLast(NULL)
-, m_nReviewCount(0)
-, m_bWaitingPreview(FALSE)
-, m_bGotPreview(FALSE)
-, m_bRemotePreviewCapable(FALSE)
+CDownloadWithExtras::CDownloadWithExtras() :
+	m_pMonitorWnd			( NULL )
+,	m_pPreviewWnd			( NULL )
+
+,	m_pReviewFirst			( NULL )
+,	m_pReviewLast			( NULL )
+,	m_nReviewCount			( 0 )
+
+,	m_bWaitingPreview		( FALSE )
+,	m_bGotPreview			( FALSE )
+,	m_bRemotePreviewCapable	( FALSE )
 {
 }
 

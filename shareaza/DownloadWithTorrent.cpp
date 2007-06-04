@@ -51,26 +51,24 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent construction
 
-CDownloadWithTorrent::CDownloadWithTorrent()
+CDownloadWithTorrent::CDownloadWithTorrent() :
+	m_bTorrentRequested		( FALSE )
+,	m_bTorrentStarted		( FALSE )
+,	m_tTorrentTracker		( 0 )
+,	m_nTorrentUploaded		( 0 )
+,	m_nTorrentDownloaded	( 0 )
+,	m_bTorrentEndgame		( FALSE )
+,	m_bTorrentTrackerError	( FALSE )
+	
+,	m_pTorrentBlock			( NULL )
+,	m_nTorrentBlock			( 0 )
+,	m_nTorrentSize			( 0 )
+,	m_nTorrentSuccess		( 0 )
+,	m_bSeeding				( FALSE )
+	
+,	m_tTorrentChoke			( 0 )
+,	m_tTorrentSources		( 0 )
 {
-	m_bTorrentRequested		= FALSE;
-	m_bTorrentStarted		= FALSE;
-	m_tTorrentTracker		= 0;
-	m_nTorrentUploaded		= 0;
-	m_nTorrentDownloaded	= 0;
-	m_bTorrentEndgame		= FALSE;
-	m_bTorrentTrackerError	= FALSE;
-	m_nTorrentTrackerErrors = 0;
-	
-	m_pTorrentBlock			= NULL;
-	m_nTorrentBlock			= 0;
-	m_nTorrentSize			= 0;
-	m_nTorrentSuccess		= 0;
-	m_bSeeding				= FALSE;
-	
-	m_tTorrentChoke			= 0;
-	m_tTorrentSources		= 0;
-
 	// Generate random Key value
 	m_sKey = _T("");
 

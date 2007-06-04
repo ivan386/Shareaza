@@ -42,19 +42,19 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTiger construction
 
-CDownloadWithTiger::CDownloadWithTiger()
+CDownloadWithTiger::CDownloadWithTiger() :
+	m_pTigerBlock		( NULL )
+,	m_nTigerBlock		( 0 )
+,	m_nTigerSuccess		( 0 )
+
+,	m_pHashsetBlock		( NULL )
+,	m_nHashsetBlock		( 0 )
+,	m_nHashsetSuccess	( 0 )
+
+,	m_nVerifyCookie		( 0 )
+,	m_nVerifyHash		( HASH_NULL )
+,	m_nVerifyBlock		( 0xFFFFFFFF )
 {
-	m_pTigerBlock		= NULL;
-	m_nTigerBlock		= 0;
-	m_nTigerSuccess		= 0;
-
-	m_pHashsetBlock		= NULL;
-	m_nHashsetBlock		= 0;
-	m_nHashsetSuccess	= 0;
-
-	m_nVerifyCookie		= 0;
-	m_nVerifyHash		= HASH_NULL;
-	m_nVerifyBlock		= 0xFFFFFFFF;
 }
 
 CDownloadWithTiger::~CDownloadWithTiger()

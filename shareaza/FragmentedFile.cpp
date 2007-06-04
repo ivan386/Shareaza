@@ -37,9 +37,12 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile construction
 
-CFragmentedFile::CFragmentedFile()
-: m_pFile( NULL ), m_nUnflushed( 0 ), m_oFList( 0 )
-{ }
+CFragmentedFile::CFragmentedFile() :
+	m_pFile			( NULL )
+,	m_nUnflushed	( 0 )
+,	m_oFList		( 0 )
+{
+}
 
 CFragmentedFile::~CFragmentedFile()
 {

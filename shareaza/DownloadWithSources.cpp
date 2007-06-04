@@ -51,17 +51,19 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources construction
 
-CDownloadWithSources::CDownloadWithSources()
-: m_pSourceFirst(NULL)
-, m_pSourceLast(NULL)
-, m_nSourceCount(0)
-, m_pXML(NULL)
-, m_nBTSourceCount(0)
-, m_nG1SourceCount(0)
-, m_nG2SourceCount(0)
-, m_nEdSourceCount(0)
-, m_nHTTPSourceCount(0)
-, m_nFTPSourceCount(0)
+CDownloadWithSources::CDownloadWithSources() :
+	m_pSourceFirst		( NULL )
+,	m_pSourceLast		( NULL )
+
+,	m_nSourceCount		( 0 )
+,	m_pXML				( NULL )
+
+,	m_nBTSourceCount	( 0 )
+,	m_nG1SourceCount	( 0 )
+,	m_nG2SourceCount	( 0 )
+,	m_nEdSourceCount	( 0 )
+,	m_nHTTPSourceCount	( 0 )
+,	m_nFTPSourceCount	( 0 )
 {
 }
 

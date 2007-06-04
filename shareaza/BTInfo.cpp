@@ -38,24 +38,25 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CBTInfo construction
 
-CBTInfo::CBTInfo() 
-: m_bEncodingError(FALSE)
-, m_nTotalSize(0)
-, m_nBlockSize(0)
-, m_nBlockCount(0)
-, m_pBlockBTH(NULL)
-, m_nTotalUpload(0)
-, m_nTotalDownload(0)
-, m_nFiles(0)
-, m_pFiles(NULL)
-, m_pAnnounceTracker(NULL)
-, m_nTrackerIndex(-1)
-, m_nTrackerMode(tNull)
-, m_nEncoding(Settings.BitTorrent.TorrentCodePage)
-, m_tCreationDate(0)
-, m_bPrivate(FALSE)
-, m_nStartDownloads(dtAlways)
-, m_nTestByte(0)
+CBTInfo::CBTInfo() :
+	m_bEncodingError	( FALSE )
+,	m_nTotalSize		( 0 )
+,	m_nBlockSize		( 0 )
+,	m_nBlockCount		( 0 )
+,	m_pBlockBTH			( NULL )
+,	m_nTotalUpload		( 0 )
+,	m_nTotalDownload	( 0 )
+,	m_nFiles			( 0 )
+,	m_pFiles			( NULL )
+,	m_pAnnounceTracker	( NULL )
+,	m_nTrackerIndex		( -1 )
+,	m_nTrackerMode		( tNull )
+,	m_nEncoding			( Settings.BitTorrent.TorrentCodePage )
+,	m_tCreationDate		( 0 )
+,	m_bPrivate			( FALSE )
+,	m_nStartDownloads	( dtAlways )
+
+,	m_nTestByte			( 0 )
 {
 }
 
@@ -64,10 +65,10 @@ CBTInfo::~CBTInfo()
 	Clear();
 }
 
-CBTInfo::CBTFile::CBTFile()
+CBTInfo::CBTFile::CBTFile() :
+	nFilePriority	( prNormal )
 {
-	m_nSize			= 0;
-	nFilePriority	= prNormal;
+	m_nSize	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////

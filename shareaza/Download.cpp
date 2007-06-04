@@ -48,23 +48,24 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownload construction
 
-CDownload::CDownload()
-: m_nSerID(Downloads.GetFreeSID())
-, m_bExpanded(Settings.Downloads.AutoExpand)
-, m_bSelected(FALSE)
-, m_bVerify(TS_UNKNOWN)
-, m_nRunCookie(0)
-, m_nSaveCookie(0)
-, m_nGroupCookie(0)
-, m_bPaused(FALSE)
-, m_bBoosted(FALSE)
-, m_bShared(Settings.Uploads.SharePartials)
-, m_bComplete(FALSE)
-, m_tCompleted(0)
-, m_tSaved(0)
-, m_tBegan(0)
-, m_bDownloading(FALSE)
-, m_bTempPaused(FALSE)
+CDownload::CDownload() :
+	m_nSerID		( Downloads.GetFreeSID() )
+,	m_bExpanded		( Settings.Downloads.AutoExpand )
+,	m_bSelected		( FALSE )
+,	m_bVerify		( TS_UNKNOWN )
+,	m_nRunCookie	( 0 )
+,	m_nSaveCookie	( 0 )
+,	m_nGroupCookie	( 0 )
+
+,	m_bPaused		( FALSE )
+,	m_bBoosted		( FALSE )
+,	m_bShared		( Settings.Uploads.SharePartials )
+,	m_bComplete		( FALSE )
+,	m_tCompleted	( 0 )
+,	m_tSaved		( 0 )
+,	m_tBegan		( 0 )
+,	m_bDownloading	( FALSE )
+,	m_bTempPaused	( FALSE )
 {
 	DownloadGroups.Link( this );
 }

@@ -146,14 +146,14 @@ namespace
 
 #endif
 
-CTigerTree::CTigerTree()
-{
-	m_nHeight		= 0;
-	m_pNode			= NULL;
-	m_nNodeCount	= 0;
+CTigerTree::CTigerTree() :
+	m_nHeight		( 0 )
+,	m_pNode			( NULL )
+,	m_nNodeCount	( 0 )
 
-	m_pStackBase	= NULL;
-	m_pStackTop		= NULL;
+,	m_pStackBase	( NULL )
+,	m_pStackTop		( NULL )
+{
 }
 
 CTigerTree::~CTigerTree()

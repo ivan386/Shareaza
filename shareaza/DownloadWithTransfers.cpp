@@ -44,12 +44,12 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers construction
 
-CDownloadWithTransfers::CDownloadWithTransfers()
+CDownloadWithTransfers::CDownloadWithTransfers() :
+	m_pTransferFirst	( NULL )
+,	m_pTransferLast		( NULL )
+,	m_nTransferCount	( 0 )
+,	m_tTransferStart	( 0 )
 {
-	m_pTransferFirst	= NULL;
-	m_pTransferLast		= NULL;
-	m_nTransferCount	= 0;
-	m_tTransferStart	= 0;
 }
 
 CDownloadWithTransfers::~CDownloadWithTransfers()

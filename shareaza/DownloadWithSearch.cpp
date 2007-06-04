@@ -37,13 +37,14 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSearch construction
 
-CDownloadWithSearch::CDownloadWithSearch()
+CDownloadWithSearch::CDownloadWithSearch() :
+	m_pSearch			( NULL )
+,	m_tSearchTime		( 0 )
+,	m_tSearchCheck		( 0 )
+
+,	m_tLastED2KGlobal	( 0 )
+,	m_tLastED2KLocal	( 0 )
 {
-	m_pSearch			= NULL;
-	m_tSearchTime		= 0;
-	m_tSearchCheck		= 0;
-	m_tLastED2KGlobal	= 0;
-	m_tLastED2KLocal	= 0;
 }
 
 CDownloadWithSearch::~CDownloadWithSearch()

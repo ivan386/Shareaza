@@ -49,11 +49,11 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile construction
 
-CDownloadWithFile::CDownloadWithFile()
+CDownloadWithFile::CDownloadWithFile() :
+	m_pFile		( new CFragmentedFile() )
+,	m_tReceived	( GetTickCount() )
+,	m_bDiskFull	( FALSE )
 {
-	m_pFile		= new CFragmentedFile();
-	m_tReceived	= GetTickCount();
-	m_bDiskFull	= FALSE;
 }
 
 CDownloadWithFile::~CDownloadWithFile()

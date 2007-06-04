@@ -34,8 +34,11 @@ static char THIS_FILE[]=__FILE__;
 // CED2K construction
 
 CED2K::CED2K() :
-m_pList( NULL ), m_nList( 0 ), m_bNullBlock( false )
-{ }
+	m_pList			( NULL )
+,	m_nList			( 0 )
+,	m_bNullBlock	( FALSE )
+{
+}
 
 CED2K::~CED2K()
 {
