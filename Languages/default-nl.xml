@@ -171,7 +171,7 @@
 		<button id="ID_DOWNLOADS_MONITOR" text="Monitor tonen"/>
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrentinformatie"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Downloadlink toevoegen"/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Downloadlink invoegen"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Wis voltooide bestanden"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filter"/>
@@ -219,7 +219,7 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Bestanden delen..."/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Voer enkele woorden in om de bibliotheek te doorzoeken"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -227,7 +227,7 @@
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Album maken..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Album verwijderen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Voer enkele woorden in om de bibliotheek te doorzoeken"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -235,7 +235,7 @@
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Album maken..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Album verwijderen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Voer enkele woorden in om de bibliotheek te doorzoeken"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -243,7 +243,7 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Openen of afspelen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan afspeellijst"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Voer enkele woorden in om de bibliotheek te doorzoeken"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -257,7 +257,7 @@
 		<button id="ID_LIBRARY_COPY" text="Kopiëren"/>
 		<button id="ID_LIBRARY_DELETE" text="Verwijderen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Voer enkele woorden in om de bibliotheek te doorzoeken"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -266,7 +266,7 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan afspeellijst"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album afspelen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Voer enkele woorden in om de bibliotheek te doorzoeken"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -277,7 +277,7 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschappen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Voer enkele woorden in om de bibliotheek te doorzoeken"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -286,7 +286,7 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Alle bestanden downloaden"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Voer enkele woorden in om de bibliotheek te doorzoeken"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -976,7 +976,7 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Naar b_oven"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Naar b_eneden"/>
-			<item id="ID_DOWNLOADS_BOOST" text="_Snelheid verhogen"/>
+			<item id="ID_DOWNLOADS_BOOST" text="_Negeer snelheidslimiet"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 	</menu>
@@ -2954,9 +2954,9 @@
 	<string id="17100" value="Gnutella: Peer-naar-peer verbinding"/>
 	<string id="17101" value="Gnutella: Leaf-naar-ultrapeer verbinding"/>
 	<string id="17102" value="Gnutella: Ultrapeer-naar-leaf verbinding"/>
-	<string id="17103" value="Gnutella II: Hub-naar-hub verbinding"/>
-	<string id="17104" value="Gnutella II: Leaf-naar-hub verbinding"/>
-	<string id="17105" value="Gnutella II: Hub-naar-leaf verbinding"/>
+	<string id="17103" value="Gnutella2: Hub-naar-hub verbinding"/>
+	<string id="17104" value="Gnutella2: Leaf-naar-hub verbinding"/>
+	<string id="17105" value="Gnutella2: Hub-naar-leaf verbinding"/>
 	<string id="17106" value="eDonkey server verbinding (LOWID: %lu)"/>
 	<string id="17107" value="eDonkey server verbinding"/>
 	<string id="17108" value="Handschudden"/>
@@ -3069,7 +3069,7 @@
 	<string id="20006" value="Ja"/>
 	<string id="20007" value="Auto"/>
 	<string id="20100" value="Verbindt..."/>
-	<string id="20101" value="Vraagt aan..."/>
+	<string id="20101" value="Toelating vragen..."/>
 	<string id="20102" value="Antwoordt..."/>
 	<string id="20103" value="Downloadt..."/>
 	<string id="20104" value="TigerTree"/>
