@@ -51,7 +51,6 @@ public:
 	QWORD		m_nTorrentDownloaded;
 	BOOL		m_bTorrentTrackerError;
 	CString		m_sTorrentTrackerError;
-	int			m_nTorrentTrackerErrors;
     Hashes::BtGuid m_pPeerID;
 	CString		m_sKey;
     BOOL		m_bTorrentEndgame;

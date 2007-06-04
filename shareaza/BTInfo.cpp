@@ -94,16 +94,15 @@ void CBTInfo::Clear()
 	m_pFiles		= NULL;
 
 	// Delete trackers
-	if ( m_pAnnounceTracker != NULL ) 
-	{
-		delete m_pAnnounceTracker;
-		m_pAnnounceTracker = NULL;
-	}
-
 	while ( ! m_pTrackerList.IsEmpty() )
 	{
 		delete m_pTrackerList.GetAt( 0 );
 		m_pTrackerList.RemoveAt( 0 );
+	}
+	if ( m_pAnnounceTracker != NULL ) 
+	{
+		delete m_pAnnounceTracker;
+		m_pAnnounceTracker = NULL;
 	}
 }
 
@@ -1002,24 +1001,12 @@ void CBTInfo::SetTrackerAccess(DWORD tNow)
 	{
 		// Can't do anything with user-entered trackers
 	}
-	else if ( m_nTrackerMode == tSingle )
+	else
 	{
 		ASSERT ( m_pAnnounceTracker );
 
 		m_pAnnounceTracker->m_tLastAccess = tNow;
 	}
-	else
-	{
-		ASSERT ( IsMultiTracker() );
-
-		CBTTracker* pTracker;
-
-		pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
-		ASSERT ( pTracker );
-
-		pTracker->m_tLastAccess = tNow;
-	}
-
 	return;
 }
 
@@ -1034,24 +1021,13 @@ void CBTInfo::SetTrackerSucceeded(DWORD tNow)
 	{
 		// Can't do anything with user-entered trackers
 	}
-	else if ( m_nTrackerMode == tSingle )
+	else
 	{
 		ASSERT ( m_pAnnounceTracker );
 
 		m_pAnnounceTracker->m_tLastSuccess = tNow;
+		m_pAnnounceTracker->m_nFailures = 0;
 	}
-	else
-	{
-		ASSERT ( IsMultiTracker() );
-
-		CBTTracker* pTracker;
-
-		pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
-		ASSERT ( pTracker );
-
-		pTracker->m_tLastSuccess = tNow;
-	}
-
 	return;
 }
 
@@ -1066,26 +1042,13 @@ void CBTInfo::SetTrackerFailed(DWORD tNow)
 	{
 		// Can't do anything with user-entered trackers
 	}
-	else if ( m_nTrackerMode == tSingle )
+	else
 	{
 		ASSERT ( m_pAnnounceTracker );
 
 		m_pAnnounceTracker->m_tLastFail = tNow;
 		m_pAnnounceTracker->m_nFailures ++;
 	}
-	else
-	{
-		ASSERT ( IsMultiTracker() );
-
-		CBTTracker* pTracker;
-
-		pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
-		ASSERT ( pTracker );
-
-		pTracker->m_nFailures++;
-		pTracker->m_tLastFail = tNow;
-	}
-
 	return;
 }
 
@@ -1098,57 +1061,45 @@ void CBTInfo::SetTrackerNext()
 	m_nTrackerMode = tMultiFinding;
 
 	// Get the next tracker to try
-	CBTTracker* pTracker;
 	m_nTrackerIndex ++;
 
 	if ( m_nTrackerIndex >= m_pTrackerList.GetCount() )
 		m_nTrackerIndex = 0;
 
-	pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
-	ASSERT ( pTracker );
+	m_pAnnounceTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+	ASSERT ( m_pAnnounceTracker );
 
 	// Set the tracker address as the one we are using
-	m_sTracker = pTracker->m_sAddress;
+	m_sTracker = m_pAnnounceTracker->m_sAddress;
 
 	return;
 }
 
-DWORD CBTInfo::GetTrackerFailures()
+INT CBTInfo::GetTrackerFailures()
 {
 	if ( m_nTrackerMode == tNull )
 		return 0;
 	else if ( m_nTrackerMode == tCustom )
 		return 0;
-	else if ( m_nTrackerMode == tSingle )
+	else
 	{
 		ASSERT ( m_pAnnounceTracker );
 		return m_pAnnounceTracker->m_nFailures;
-	}
-	else
-	{
-		ASSERT ( IsMultiTracker() );
-		CBTTracker* pTracker;
-		pTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
-		ASSERT ( pTracker );
-
-		return pTracker->m_nFailures;
-
 	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CBTInfo::CBTTracker construction and destruction
 
-CBTInfo::CBTTracker::CBTTracker()
+CBTInfo::CBTTracker::CBTTracker() :
+	m_tLastAccess		( 0 )
+,	m_tLastSuccess		( 0 )
+,	m_tLastFail			( 0 )
+,	m_nFailures			( 0 )
+,	m_nTier				( 0 )
+,	m_nType				( 0 )
 {
 	m_sAddress.Empty();
-	m_tLastAccess		= 0;
-	m_tLastSuccess		= 0;
-	m_tLastFail			= 0;
-	m_nFailures			= 0;
-	m_nTier				= 0;
-	m_nTier				= 0;
-	m_nType				= 0;
 }
 
 CBTInfo::CBTTracker::~CBTTracker()

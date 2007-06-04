@@ -151,7 +151,6 @@ void CDownload::Resume()
 	m_bDiskFull				= FALSE;
 	m_tReceived				= GetTickCount();
 	m_bTorrentTrackerError	= FALSE;
-	m_nTorrentTrackerErrors = 0;
 
 	if ( IsTorrent() )
 	{
@@ -165,7 +164,6 @@ void CDownload::Resume()
 	}
 
 	SetModified();
-	CloseTorrentUploads();
 }
 
 //////////////////////////////////////////////////////////////////////

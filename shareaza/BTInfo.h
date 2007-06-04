@@ -68,9 +68,9 @@ public:
 		DWORD		m_tLastAccess;
 		DWORD		m_tLastSuccess;
 		DWORD		m_tLastFail;
-		DWORD		m_nFailures;
-		int			m_nTier;
-		int			m_nType;
+		INT			m_nFailures;
+		INT			m_nTier;
+		INT			m_nType;
 	};
 	
 // Attributes
@@ -121,7 +121,7 @@ public:
 	void		SetTrackerSucceeded(DWORD tNow);
 	void		SetTrackerFailed(DWORD tNow);
 	void		SetTrackerNext();
-	DWORD		GetTrackerFailures();
+	INT			GetTrackerFailures();
 protected:
 	BOOL		CheckFiles();
 
