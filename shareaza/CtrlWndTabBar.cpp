@@ -796,13 +796,13 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 	}
 	if ( bHot )
 	{
-		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active") ) );
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Hover") ) );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
 		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
 	}
 	if ( bSelected )
 	{
-		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Hover") ) );
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active") ) );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
 		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
 	}

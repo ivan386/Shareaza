@@ -785,13 +785,13 @@ void CDownloadTabBar::TabItem::Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRe
 	}
 	if ( bHot )
 	{
-		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Active") ) );
+		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Hover") ) );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
 		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
 	}
 	if ( m_bSelected )
 	{
-		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Hover") ) );
+		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Active") ) );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
 		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
 	}
