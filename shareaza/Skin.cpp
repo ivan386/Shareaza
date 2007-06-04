@@ -1374,6 +1374,32 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
 					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 					DEFAULT_PITCH|FF_DONTCARE, strFace );
+
+				if ( strName.CompareNoCase( _T("system.plain") ) == 0 )
+				{
+					pFont = &CoolInterface.m_fntUnder;
+					if ( pFont->m_hObject ) pFont->DeleteObject();
+
+					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, TRUE, FALSE,
+							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+							DEFAULT_PITCH|FF_DONTCARE, strFace );
+
+					pFont = &CoolInterface.m_fntItalic;
+					if ( pFont->m_hObject ) pFont->DeleteObject();
+
+					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
+							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+							DEFAULT_PITCH|FF_DONTCARE, strFace );
+				}
+				else if ( strName.CompareNoCase( _T("system.bold") ) == 0 )
+				{
+					pFont = &CoolInterface.m_fntBoldItalic;
+					if ( pFont->m_hObject ) pFont->DeleteObject();
+
+					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
+							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+							DEFAULT_PITCH|FF_DONTCARE, strFace );
+				}
 			}
 		}
 		else if ( pXML->IsNamed( _T("import") ) )
