@@ -825,7 +825,7 @@ void CDownloadsCtrl::OnPaint()
 	CPaintDC dc( this );
 	DWORD tNow = GetTickCount();
 
-	if ( tNow - m_tSwitchTimer > 1000 )
+	if ( tNow - m_tSwitchTimer > 10000 )
 	{
 		m_tSwitchTimer = tNow;
 		m_bShowSearching = !m_bShowSearching;

@@ -151,10 +151,15 @@ void CDownloadWithSearch::StartAutomaticSearch()
 
 BOOL CDownloadWithSearch::CanSearch() const
 {
-	return ( m_pFile != NULL ) && 
-		( ( m_oSHA1 || m_oTiger ) && ( Settings.Gnutella1.EnableToday || Settings.Gnutella2.EnableToday ) ||
-		  ( m_oED2K && ( Settings.Gnutella2.EnableToday || Settings.eDonkey.EnableToday ) ) ||
-		  m_oBTH || m_oMD5 );
+	if ( !m_pFile ) return FALSE;
+	if ( ( m_oSHA1 || m_oTiger ) && ( Settings.Gnutella1.EnableToday || Settings.Gnutella2.EnableToday ) )
+		return TRUE;
+	if ( m_oED2K && ( Settings.Gnutella2.EnableToday || Settings.eDonkey.EnableToday ) )
+		return TRUE;
+	if ( ( m_oBTH || m_oMD5 ) && Settings.Gnutella2.EnableToday )
+		return TRUE;
+
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
