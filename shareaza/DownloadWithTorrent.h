@@ -46,6 +46,7 @@ public:
 	BOOL		m_bTorrentRequested;
 	BOOL		m_bTorrentStarted;
 	DWORD		m_tTorrentTracker;
+	DWORD		m_tTorrentSources;
 	QWORD		m_nTorrentUploaded;
 	QWORD		m_nTorrentDownloaded;
 	BOOL		m_bTorrentTrackerError;
@@ -64,7 +65,6 @@ protected:
 private:
 	CList< CUploadTransferBT* > m_pTorrentUploads;
 	DWORD		m_tTorrentChoke;
-	DWORD		m_tTorrentSources;
 
 // Operations
 public:

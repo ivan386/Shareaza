@@ -234,9 +234,9 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		GenerateTorrentDownloadID();
 
 	WORD wSourcesWanted = 0;
-	if ( !m_bTorrentStarted && !IsPaused() && IsTrying() )
+	if ( !m_bTorrentStarted )
 	{
-		if ( !m_bTorrentRequested && tNow > m_tTorrentTracker )
+		if ( !IsPaused() && IsTrying() && !m_bTorrentRequested && tNow > m_tTorrentTracker )
 		{
 			// Initial announce to tracker
 			wSourcesWanted = WORD( GetBTSourceCount( TRUE ) );
@@ -249,8 +249,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			CBTTrackerRequest::SendStarted( (CDownload*)this, wSourcesWanted );
 		}
 	}
-
-	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
+	else if ( tNow > m_tTorrentTracker )
 	{
 		// Regular tracker update
 		if ( IsSeeding() )
@@ -271,7 +270,29 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		}
 		CBTTrackerRequest::SendUpdate( (CDownload*)this, wSourcesWanted );
 	}
-	
+	else if ( tNow - m_tTorrentSources > Settings.BitTorrent.DefaultTrackerPeriod )
+	{
+		// Check for source starvation and send tracker update if required
+		if ( IsSeeding() )
+		{
+			wSourcesWanted = WORD( Uploads.GetTorrentUploadCount() );
+			if ( wSourcesWanted < Settings.BitTorrent.UploadCount )
+				wSourcesWanted = Settings.BitTorrent.UploadCount * 4 - wSourcesWanted;
+			else
+				wSourcesWanted = 0;
+		}
+		else
+		{
+			wSourcesWanted = WORD( GetBTSourceCount() );
+			if ( wSourcesWanted < Settings.BitTorrent.DownloadConnections )
+				wSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - wSourcesWanted;
+			else
+				wSourcesWanted = 0;
+		}
+		if ( wSourcesWanted )
+			CBTTrackerRequest::SendUpdate( (CDownload*)this, wSourcesWanted );
+		m_tTorrentSources = tNow;
+	}
 	return TRUE;
 }
 

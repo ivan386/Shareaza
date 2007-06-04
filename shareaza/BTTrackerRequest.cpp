@@ -136,6 +136,7 @@ void CBTTrackerRequest::SendStarted(CDownload* pDownload, WORD nNumWant)
 
 	pDownload->m_bTorrentRequested	= TRUE;
 	pDownload->m_tTorrentTracker	= GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
+	pDownload->m_tTorrentSources	= GetTickCount();
 	pDownload->m_nTorrentUploaded	= 0;
 	pDownload->m_nTorrentDownloaded	= 0;
 	new CBTTrackerRequest( pDownload, _T("started"), TRUE, nNumWant );
@@ -148,6 +149,7 @@ void CBTTrackerRequest::SendUpdate(CDownload* pDownload, WORD nNumWant)
 	theApp.Message( MSG_DEFAULT, _T("Sending update tracker announce for %s"), pDownload->m_pTorrent.m_sName );
 
 	pDownload->m_tTorrentTracker	= GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
+	pDownload->m_tTorrentSources	= GetTickCount();
 	new CBTTrackerRequest( pDownload,  NULL , TRUE, nNumWant );
 }
 
