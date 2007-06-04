@@ -551,17 +551,16 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke < 2000 ) return;
 	m_tTorrentChoke = tNow;
 
-	// Check if a firewalled seeding client needs to start some new connections
-	if ( IsCompleted() && /*Network.IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) // Temp disable
+	// Check if a seeding torrent needs to start some new connections
+	if ( IsSeeding() )
 	{
 		// We might need to 'push' a connection if we don't have enough upload connections
-		if ( m_pTorrentUploads.GetCount() < max( Settings.BitTorrent.UploadCount * 2, 5 ) )
+		if ( m_pTorrentUploads.GetCount() < Settings.BitTorrent.UploadCount * 2 &&
+			m_pTorrentUploads.GetCount() != GetBTSourceCount() &&
+			CanStartTransfers( tNow ) )
 		{
-			if ( CanStartTransfers( tNow ) )
-			{
-				theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload")  ); 
-				StartNewTransfer( tNow );
-			}
+			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload")  ); 
+			StartNewTransfer( tNow );
 		}
 	}
 

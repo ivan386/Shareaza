@@ -294,6 +294,7 @@ BOOL CDownloadsCtrl::IsFiltered(CDownload* pDownload)
 
 BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
 {
+	if ( pDownload->IsSeeding() ) return FALSE;
 	if ( Settings.Downloads.ShowSources )
 	{
 		return ( pDownload->GetSourceCount() > 0 );
@@ -307,9 +308,8 @@ BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
 				return TRUE;
 			}
 		}
-
-		return FALSE;
 	}
+	return FALSE;
 }
 
 void CDownloadsCtrl::SelectTo(int nIndex)
@@ -865,7 +865,7 @@ void CDownloadsCtrl::OnPaint()
 
 		nIndex ++;
 
-		if ( ! pDownload->m_bExpanded ) continue;
+		if ( !pDownload->m_bExpanded || pDownload->IsSeeding() ) continue;
 
 		if ( Settings.Downloads.ShowSources )
 		{

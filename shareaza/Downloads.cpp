@@ -401,10 +401,7 @@ int CDownloads::GetSeedCount() const
 	{
 		CDownload* pDownload = GetNext( pos );
 		
-		if ( pDownload->IsSeeding() )
-			nCount++;		//Manually seeded Torrent
-		else if ( pDownload->IsCompleted() && pDownload->IsTorrent() && pDownload->IsFullyVerified() )
-			nCount++;		//Torrent that has completed
+		if ( pDownload->IsSeeding() ) nCount++;
 	}
 	
 	return nCount;
@@ -1082,8 +1079,10 @@ void CDownloads::OnRun()
 		} 	// End of transfers section lock
 
 		// Update limit assigned to new transfers
-		if ( nBandwidthAvailable > nTotalBandwidth ) m_nLimitNew = nBandwidthAvailable - nTotalBandwidth;
-		else m_nLimitNew = Settings.Bandwidth.Request;
+		if ( nBandwidthAvailable > nTotalBandwidth )
+			m_nLimitNew = nBandwidthAvailable - nTotalBandwidth;
+		else
+			m_nLimitNew = Settings.Bandwidth.Request;
 
 		// Save bandwidth stats, Update allows
 		m_nTransfers = nActiveTransfers;
