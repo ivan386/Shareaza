@@ -86,7 +86,8 @@ BOOL CRemote::OnRun()
 {
 	DWORD tNow = GetTickCount();
 	
-	if ( ( tNow - m_mOutput.tLast > 180000 ) || ( ! Network.IsConnected() ) )
+	// 3 minute timeout
+	if ( ( tNow - m_mOutput.tLast > 3 * 60 * 1000 ) || ( ! Network.IsConnected() ) )
 	{
 		Close();
 		delete this;
@@ -256,6 +257,36 @@ BOOL CRemote::CheckCookie()
 	return TRUE;
 }
 
+// Determines what session ID is currently being used by the logged in user
+// and removes it from the cookie list.
+BOOL CRemote::RemoveCookie()
+{
+	for ( INT_PTR nHeader = 0 ; nHeader < m_pHeaderName.GetSize() ; nHeader ++ )
+	{
+		if ( m_pHeaderName.GetAt( nHeader ).CompareNoCase( _T("Cookie") ) == 0 )
+		{
+			CString strValue( m_pHeaderValue.GetAt( nHeader ) );
+			ToLower( strValue );
+			
+			int nPos = strValue.Find( _T("shareazaremote=") );
+			
+			if ( nPos >= 0 )
+			{
+				int nCookie = 0;
+				_stscanf( strValue.Mid( nPos + 15 ), _T("%i"), &nCookie );
+				POSITION pos = m_pCookies.Find( nCookie );
+				if ( pos != NULL ) 
+				{
+					m_pCookies.RemoveAt( pos );
+					return FALSE;
+				}
+			}
+		}
+	}
+	
+	return TRUE;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CRemote prepare to output a HTML segment
 
@@ -389,6 +420,10 @@ void CRemote::PageSwitch(CString& strPath)
 	{
 		PageLogin();
 	}
+	else if ( strPath == _T("/remote/logout") )
+	{
+		PageLogout();
+	}
 	else if ( strPath == _T("/remote/home") )
 	{
 		PageHome();
@@ -460,6 +495,15 @@ void CRemote::PageLogin()
 		if ( GetKey( _T("submit") ).GetLength() > 0 ) Add( _T("failure"), _T("true") );
 		Output( _T("login") );
 	}
+}
+
+void CRemote::PageLogout()
+{
+	// Clear the server-side session cookie
+	RemoveCookie();
+	// Clear the client-side session cookie
+	m_sHeader.Format( _T("Set-Cookie: ShareazaRemote=0; path=/remote; Max-Age=0\r\n") );
+	m_sRedirect.Format( _T("/remote/") );
 }
 
 /////////////////////////////////////////////////////////////////////////////

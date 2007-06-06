@@ -53,6 +53,7 @@ public:
 protected:
 	CString			GetKey(LPCTSTR pszName);
 	BOOL			CheckCookie();
+	BOOL			RemoveCookie();
 	void			Prepare(LPCTSTR pszPrefix = NULL);
 	void			Add(LPCTSTR pszKey, LPCTSTR pszValue);
 	void			Output(LPCTSTR pszName);
@@ -61,6 +62,7 @@ protected:
 protected:
 	void	PageSwitch(CString& strPath);
 	void	PageLogin();
+	void	PageLogout();
 	void	PageHome();
 	void	PageSearch();
 	void	PageNewSearch();
