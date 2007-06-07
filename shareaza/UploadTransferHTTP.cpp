@@ -1831,7 +1831,7 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 			strReplace = m_oSHA1.toUrn();
 		else if ( strReplace.CompareNoCase( _T("Version") ) == 0 )
 			strReplace = theApp.m_sVersion;
-		else if ( strReplace.CompareNoCase( _T("Neighbours") ) == 0 )
+		else if ( strReplace.Find( _T("Neighbours") ) == 0 )
 			GetNeighbourList( strReplace );
 		else if ( strReplace.CompareNoCase( _T("ListenIP") ) == 0 )
 		{
@@ -1876,6 +1876,8 @@ void CUploadTransferHTTP::GetNeighbourList(CString& strOutput)
 		{ _T("eDonkey2000"), _T("eDonkey2000"), _T("eDonkey2000") }
 	};
 	
+	// Strip off the leading "Neighbours " (length 11) and use the rest as a format string
+	CString strFormat = strOutput.Right( strOutput.GetLength() - 11 );
 	strOutput.Empty();
 	
 	CSingleLock pLock( &Network.m_pSection );
@@ -1893,7 +1895,7 @@ void CUploadTransferHTTP::GetNeighbourList(CString& strOutput)
 			
 			DWORD nTime = ( tNow - pNeighbour->m_tConnected ) / 1000;
 			
-			strNode.Format( _T("<tr><td class=\"lrow\"><a href=\"gnutella:host:%s:%lu\">%s:%lu</a></td><td>%i:%.2i:%.2i</td><td>%s</td><td>%s</td><td class=\"rrow\"><a href=\"http://%s:%lu/\">Browse</a></td></tr>\r\n"),
+			strNode.Format( strFormat,
 				(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ),
 				(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ),
 				nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60,

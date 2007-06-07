@@ -106,7 +106,14 @@ table.nodeinfo tr td {
 				  <th width="80" align="center" valign="top" class="text2">&nbsp;</th>
 				</tr>	
 			  
-		<% Neighbours %>
+				<% Neighbours 
+				<tr>
+					<td class="lrow"><a href="gnutella:host:%s:%lu">%s:%lu</a></td>
+					<td>%i:%.2i:%.2i</td><td>%s</td>
+					<td>%s</td>
+					<td class="rrow"><a href="http://%s:%lu/">Browse</a></td>
+				</tr> 
+				%>
 				
 		 	</table>
 		</td>
