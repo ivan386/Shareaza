@@ -1893,7 +1893,7 @@ void CUploadTransferHTTP::GetNeighbourList(CString& strOutput)
 			
 			DWORD nTime = ( tNow - pNeighbour->m_tConnected ) / 1000;
 			
-			strNode.Format( _T("<tr><td class=\"lrow\"><a href=\"gnutella:host:%s:%lu\">%s:%lu</a></td><td>%i:%.2i:%.2i</td><td>%s</td><td class=\"fi\">%s</td><td class=\"rrow\"><a href=\"http://%s:%lu/\">Browse</a></td></tr>\r\n"),
+			strNode.Format( _T("<tr><td class=\"lrow\"><a href=\"gnutella:host:%s:%lu\">%s:%lu</a></td><td>%i:%.2i:%.2i</td><td>%s</td><td>%s</td><td class=\"rrow\"><a href=\"http://%s:%lu/\">Browse</a></td></tr>\r\n"),
 				(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ),
 				(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ),
 				nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60,
