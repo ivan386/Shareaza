@@ -539,6 +539,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                </member>
        </members>
        <typeFilter>
-               <type extension="collection"/>
+              <type extension="co"/> 
+              <type extension="collection"/>
        </typeFilter>
 </schemaDescriptor>
