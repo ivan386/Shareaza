@@ -931,7 +931,21 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		m_pSource->SetGnutella( 1 );
 	}
-	
+	else if ( strHeader.CompareNoCase( _T("Content-Disposition") ) == 0 )
+	{
+		if (m_pDownload->GetSourceCount() <= 1) 
+		{ 
+			// First source
+			CString strFilename;
+			int nPos = strValue.Find( _T("filename=") );
+			if ( nPos >= 0 ) 
+			{
+				strFilename = strValue.Mid( nPos + 9 );
+				theApp.Message( MSG_DEBUG, _T("Content-Disposition filename: %s"), (LPCTSTR)strFilename);
+				m_pDownload->Rename(strFilename);
+			}		
+		}
+	}	
 	return CTransfer::OnHeaderLine( strHeader, strValue );
 }
 
