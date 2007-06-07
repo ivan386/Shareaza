@@ -45,20 +45,48 @@ a:active {
 	border: 1px solid #999999;
 }
 .text1 {color: #333333}
-.text2 {font-size: 12px; font-weight: bold; color: #333333; }
-.text3 {color: #000000; font-size: 14px; }
-.text4 {color: #000000; font-size: 11px; }
+.text2 {
+	font-size: 12px;
+	font-weight: bold;
+	color: #333333;
+	padding: 4px;
+	}
+.text3 {
+	color: #000000;
+	font-size: 14px;
+	}
+.text4 {
+	color: #000000;
+	font-size: 11px;
+	}
 .blacktext {color: #000000}
+
+table.nodeinfo { border-bottom: solid #999999 1px;}
+th	{
+	border-bottom: solid #999999 1px;
+	padding-bottom: 8px;
+	background-color: white;
+	}
+.lrow { border-left: solid #999999 1px;}
+.rrow { border-right: solid #999999 1px;}
+
+table.nodeinfo tr td {
+	background-color: #F7F7F7;
+	padding: 11px 0 10px 12px;
+	text-align: center;
+	}
 </style>
 </head>
 <body>
+
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="headerborder" style="background-image:url(/remote/header_2.png)">
   <tr>
 	<td><img src="/remote/header_1.png" width="624" height="172" alt="Shareaza header" /></td>
   </tr>
 </table>
+
 <div align="center"><br />
-  <table width="800" border="0" cellspacing="4" cellpadding="6">
+  <table width="800" border="0" cellspacing="4" cellpadding="6"> <!-- NODE BOX START-->
 	<tr align="center" bgcolor="#999999">
 	  <td colspan="2" bgcolor="#CCCCCC" class="solidborder blacktext">This node is powered by <a href="http://www.shareaza.com/download/" target="_top"><strong>Shareaza <% Version %></strong></a></td>
 	</tr>
@@ -68,30 +96,23 @@ a:active {
 	</tr>
 	<tr>
 	  <td colspan="2" align="center" valign="top">
-		<table width="630" border="0" cellspacing="0" cellpadding="0">
-		  <tr>
-			<td><table width="630" border="0" cellpadding="4" cellspacing="0">
+
+			<table width="630" border="0" cellspacing="0" class="nodeinfo">
 				<tr>
-				  <td width="170" align="center" valign="top" class="text2">Neighbor Address</td>
-				  <td width="100" align="center" valign="top" class="text2">Uptime</td>
-				  <td width="100" align="center" valign="top" class="text2">Mode</td>
-				  <td width="170" align="center" valign="top" class="text2">User Agent</td>
-				  <td width="80" align="center" valign="top" class="text2">&nbsp;</td>
-				</tr>
-			</table></td>
-		  </tr>
-		</table>
-		  <table width="630" border="0" cellpadding="0" cellspacing="0" class="solidborder">
-			<tr>
-			  <td>
-		<table width="630" border="0" cellpadding="8" cellspacing="4" bgcolor="#F7F7F7" class="text4">
-			<% Neighbours %>
-		 </table>
+				  <th width="170" align="center" valign="top" class="text2">Neighbor Address</th>
+				  <th width="100" align="center" valign="top" class="text2">Uptime</th>
+				  <th width="100" align="center" valign="top" class="text2">Mode</th>
+				  <th width="170" align="center" valign="top" class="text2">User Agent</th>
+				  <th width="80" align="center" valign="top" class="text2">&nbsp;</th>
+				</tr>	
+			  
+		<% Neighbours %>
+				
+		 	</table>
 		</td>
-			</tr>
-		</table></td>
 	</tr>
-  </table>
+  </table> <!-- NODE BOX END -->
+
   <br />
   <table width="800" border="0" cellpadding="4" cellspacing="0" bgcolor="#F8F8F8" class="solidborder">
 	<tr align="center" valign="top">
