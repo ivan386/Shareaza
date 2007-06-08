@@ -3029,7 +3029,7 @@
 	<string id="17485" value="Antwoord BitTorrent tracker ontvangen voor &quot;%s&quot;, %i nieuwe bronnen."/>
 	<string id="17486" value="BitTorrent cliënt koppeling met %s wordt aangemaakt..."/>
 	<string id="17487" value="BitTorrent koppeling met %s vastgelegd, bezig met handschudden..."/>
-	<string id="17488" value="Je hebt de tracker URL van deze torrent veranderd. Weet je zeker dat je deze aanpassing wilt bewaren?\n\nEen foutieve tracker URL zou de voortgang van het downloaden kunnen verhinderen."/>
+	<string id="17488" value="Je hebt de tracker URL van deze torrent veranderd. Weet je zeker dat je deze aanpassing wilt bewaren?\n\nEen foutieve tracker URL zou de vooruitgang van het downloaden kunnen verhinderen."/>
 	<string id="17489" value="BitTorrent verbinding met %s is uitgebreid protocol, geïdentificeerd als &quot;%s&quot;."/>
 	<string id="17490" value="%i nieuwe BitTorrent bronnen ontvangen van %s."/>
 	<string id="17491" value="De torrent &quot;%s&quot; is al in je downloadlijst, en kan niet worden uitgezaaid."/>
@@ -3148,7 +3148,7 @@
 		<control caption="bits/seconde|bytes/seconde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Downloads:"/>
 		<control caption="Vouw nieuwe downloads standaard uit"/>
-		<control caption="Toon een simpele voortgangsbalk"/>
+		<control caption="Toon een simpele vooruitgangsbalk"/>
 		<control caption="_Zoeken:"/>
 		<control caption="Multibron bestanden altijd uitbreiden"/>
 		<control caption="Ga bij nieuwe d/l naar het venster Verkeer"/>
@@ -3231,8 +3231,8 @@
 		<control caption="De plugin voor de downloadbeheerder zal alleen de bestandstypes uit deze lijst proberen te downloaden. Andere bestandstypes zullen worden behandeld door je internetbrowser. Shareaza moet wel werkend zijn om downloads te kunnen beheren."/>
 	</dialog>
 	<dialog name="CInternetSettingsGroup" caption="Verkeer"/>
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Verbinding">
-		<control caption="_Ingaand adres:"/>
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Verbinding">
+		<control caption="_Inkomend adres:"/>
 		<control caption="Adres:"/>
 		<control caption="Automatisch"/>
 		<control caption="Snelheid:"/>
@@ -3247,10 +3247,10 @@
 		<control caption="Snelheid:"/>
 		<control/>
 		<control caption="O_pties:"/>
-		<control caption="Kan ingaande verbindingen ontvangen"/>
+		<control caption="Kan inkomende verbindingen ontvangen"/>
 		<control/>
 		<control caption="Negeer privé/lokale IP adressen"/>
-		<control caption="_Pauzes:"/>
+		<control caption="Gebruik automatische UPnP instellingen:"/>
 		<control caption="Verbinding:"/>
 		<control/><control/>
 		<control caption="Handdruk:"/>
@@ -3504,7 +3504,7 @@
 		<control caption="Tabbladstijl"/>
 		<control caption="Simpele en gemakkelijk te gebruiken menu's en knoppen.{n}Komt bekend voor bij gebruikers van andere bestanddelingsprogramma's."/>
 		<control caption="Tabblad stijl biedt gebruikers tal van extra commando's, schermen, enz.{n}Het kan een beetje verwarrend zijn voor nieuwe gebruikers!"/>
-		<control caption="Toon simpele downloadvoortgangsbalken (verminderd CPU gebruik)."/>
+		<control caption="Toon simpele downloadvooruitgangsbalken (verminderd CPU gebruik)."/>
 		<control caption="Toon additionele torrent gebruikersomgevingselementen."/>
 	</dialog>
 	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Welcome bij Shareaza [2 van 7]">
@@ -4001,7 +4001,7 @@
 		<control caption="Exporteren..."/>
 		<control caption="Annuleren"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Download aanpassen (uitgebreid)">
+	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Download aanpassen (uitgebreid)">
 		<control caption="WAARSCHUWING: De hier weergegeven opties zijn alleen voor gevorderde gebruikers. Bij incorrect gebruik is de kans op datacorruptie zeer groot."/>
 		<control caption="Bestands_naam:"/>
 		<control/>
@@ -4016,7 +4016,7 @@
 		<control caption="Vergeet de huidige controlestatus (en controleer opnieuw)"/>
 		<control caption="Veronderstel bestand is 100% voltooid en controleer opnieuw"/>
 		<control caption="Vergeet alle bekende bronnen"/>
-		<control caption="Data_verwijderaar:"/>
+		<control caption="Data _verwijderaar:"/>
 		<control caption="Wis bytes:"/>
 		<control/>
 		<control caption="tot"/>
@@ -4116,7 +4116,7 @@
 	<list name="CDownloadCtrl">
 		<column from="Downloaded File" to="Bestandsnaam"/>
 		<column from="Size" to="Grootte"/>
-		<column from="Progress" to="Voortgang"/>
+		<column from="Progress" to="Vooruitgang"/>
 		<column from="Speed" to="Snelheid"/>
 		<column from="Status" to="Status"/>
 		<column from="Client" to="Cliënt"/>
@@ -4128,7 +4128,7 @@
 		<column from="Remote User" to="Gebruiker"/>
 		<column from="Uploaded File" to="Bestandsnaam"/>
 		<column from="Size" to="Grootte"/>
-		<column from="Progress" to="Voortgang"/>
+		<column from="Progress" to="Vooruitgang"/>
 		<column from="Speed" to="Snelheid"/>
 		<column from="Client" to="Cliënt"/>
 		<column from="Rating" to="Beoordeling"/>
