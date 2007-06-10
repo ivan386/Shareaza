@@ -420,7 +420,7 @@ void CShakeNeighbour::SendPublicHeaders()
 	m_bSentAddress |= SendMyAddress(); // Returns true if the header is sent, set m_bSentAddress true once its sent
 
 	// Tell the remote computer what IP address it has from here with a header like "Remote-IP: 81.103.192.245"
-	m_pOutput->Print( _P("Remote-IP: %s\r\n") );
+	m_pOutput->Print( _P("Remote-IP: ") );
 	m_pOutput->Print( CString( inet_ntoa( m_pHost.sin_addr ) ) );
 	m_pOutput->Print( _P("\r\n") );
 
