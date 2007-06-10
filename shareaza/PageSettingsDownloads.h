@@ -73,6 +73,7 @@ public:
 
 // Implementation
 protected:
+	void CalculateMaxValues();
 	BOOL IsNotLimited(LPCTSTR pText);
 	//{{AFX_MSG(CDownloadsSettingsPage)
 	virtual BOOL OnInitDialog();

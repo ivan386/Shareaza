@@ -103,23 +103,7 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_nMaxFileTransfers		= Settings.Downloads.MaxFileTransfers;
 	m_bRequireConnect		= Settings.Connection.RequireForTransfers;
 	
-
-	// Apply range limits to spin control
-	if ( ! theApp.m_bNT )
-	{
-		m_wndMaxDownFiles.SetRange( 1, 80 );
-		m_wndMaxDownTransfers.SetRange( 1, 80 );
-		m_wndMaxFileTransfers.SetRange( 1, 80 );
-	}
-	else
-	{
-		m_wndMaxDownFiles.SetRange( 1, 100 );
-		if ( Settings.GetOutgoingBandwidth() >= 16 ) 
-			m_wndMaxDownTransfers.SetRange( 1, 250 );
-		else 
-			m_wndMaxDownTransfers.SetRange( 1, 200 );
-		m_wndMaxFileTransfers.SetRange( 1, 100 );
-	}
+	CalculateMaxValues();
 	
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );
@@ -256,6 +240,38 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 	return CSettingsPage::OnKillActive();
 }
 
+void CDownloadsSettingsPage::CalculateMaxValues()
+{
+	// Apply limits to display
+	if ( ! theApp.m_bNT )
+	{
+		// Win9x is unable to handle high numbers of connections
+		m_nMaxDownFiles = min ( m_nMaxDownFiles, 80 );
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 80 );
+		m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 80 );
+	}
+	else
+	{
+		// For other systems we can guesstimate a good value based on available bandwidth
+		m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
+		if ( Settings.GetOutgoingBandwidth() < 16 )
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
+		else if ( Settings.GetOutgoingBandwidth() <= 32 )
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
+		else if ( Settings.GetOutgoingBandwidth() <= 64 )
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 400 );
+		else if ( Settings.GetOutgoingBandwidth() <= 128 )
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 600 );
+		else
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
+		m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
+	}
+
+	m_wndMaxDownFiles.SetRange( 1, (short)m_nMaxDownFiles );
+	m_wndMaxDownTransfers.SetRange( 1, (short)m_nMaxDownTransfers );
+	m_wndMaxFileTransfers.SetRange( 1, (short)m_nMaxFileTransfers );
+}
+
 void CDownloadsSettingsPage::OnOK() 
 {
 	DWORD nQueueLimit = 0;
@@ -308,30 +324,7 @@ void CDownloadsSettingsPage::OnOK()
 	else
 		m_sQueueLimit = _T("MAX");
 
-	// Apply limits to display
-	if ( ! theApp.m_bNT )
-	{
-		// Win9x is unable to handle high numbers of connections
-		m_nMaxDownFiles = min ( m_nMaxDownFiles, 80 );
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 80 );
-		m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 80 );
-	}
-	else
-	{
-		// For other systems we can guestimate a good value based on available bandwidth
-	m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
-	if ( Settings.GetOutgoingBandwidth() < 16 )
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
-		else if ( Settings.GetOutgoingBandwidth() <= 32 )
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
-		else if ( Settings.GetOutgoingBandwidth() <= 64 )
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 400 );
-		else if ( Settings.GetOutgoingBandwidth() <= 128 )
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 600 );
-	else
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
-	m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
-	}
+	CalculateMaxValues();
 
 	// Display any data changes
 	UpdateData( FALSE );
@@ -346,8 +339,6 @@ void CDownloadsSettingsPage::OnOK()
 	Settings.Bandwidth.Downloads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit, TRUE ) / 8;
 	Settings.Connection.RequireForTransfers	= m_bRequireConnect;
 	
-
-
 	CreateDirectory( m_sDownloadsPath, NULL );
 	CreateDirectory( m_sIncompletePath, NULL );
 	//CreateDirectory( m_sTorrentPath, NULL );
