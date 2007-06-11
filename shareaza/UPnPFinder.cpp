@@ -1228,7 +1228,12 @@ CString translateUPnPResult(HRESULT hr)
 	static std::map<HRESULT, std::string> messages;
 
 	if ( hr >= UPNP_E_ACTION_SPECIFIC_BASE && hr <= UPNP_E_ACTION_SPECIFIC_MAX )
-		return "Action Specific Error";
+	{
+		CString strResult;
+		strResult.Format( L"Non-Standard Device Error: %i",
+						 ( hr - UPNP_E_ACTION_SPECIFIC_BASE ) + FAULT_ACTION_SPECIFIC_BASE );
+		return strResult;
+	}
 
 	messages[ 0 ] = "";
 	messages[ UPNP_E_ROOT_ELEMENT_EXPECTED ] =      "Root Element Expected";
