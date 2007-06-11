@@ -244,9 +244,17 @@ void CDownloadTask::RunAllocate()
 		return;
 	}
 	
-	DWORD dwOut = 0;
-	DeviceIoControl( hFile, FSCTL_SET_SPARSE, NULL, 0, NULL, 0, &dwOut, NULL );
-	
+	if ( Settings.Downloads.SparseThreshold > 0 && theApp.m_bNT &&
+		m_nSize >= Settings.Downloads.SparseThreshold * 1024 )
+	{
+		DWORD dwOut = 0;
+		if ( ! DeviceIoControl( hFile, FSCTL_SET_SPARSE, NULL, 0, NULL, 0, &dwOut, NULL ) )
+		{
+			DWORD nError = GetLastError();
+			theApp.Message( MSG_ERROR, _T("Unable to set sparse file: \"%s\", Win32 error %x."), m_sFilename, nError );
+		}
+	}
+
 	if ( m_nSize > 0 )
 	{
 		DWORD nOffsetLow	= (DWORD)( ( m_nSize - 1 ) & 0x00000000FFFFFFFF );
