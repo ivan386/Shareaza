@@ -116,20 +116,16 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	CRect rc( 0, 0, ITEM_WIDTH * 3 + GetSystemMetrics( SM_CXVSCROLL ), HEADING_HEIGHT );
 
-	// Screens smaller than 768px only show 10 rows.
-	if ( GetSystemMetrics( SM_CYSCREEN ) < 768 )
-		m_nLanguagesPerCol = int( min( static_cast< int >( (float) m_pPaths.GetSize() / (float) 3 ), 10 ) );
-	else
-		m_nLanguagesPerCol = int( min( static_cast< int >( (float) m_pPaths.GetSize() / (float) 3 ), 14 ) );
+	m_nRows = 10;
 
-	rc.bottom += ( m_nLanguagesPerCol ) * ITEM_HEIGHT;
+	rc.bottom += ( m_nRows ) * ITEM_HEIGHT;
 
 	SCROLLINFO pScroll = {};
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE|SIF_DISABLENOSCROLL;
 	pScroll.nMin	= 0;
-	pScroll.nMax	= static_cast< int >( (float) m_pPaths.GetSize() / (float) 3 );
-	pScroll.nPage	= m_nLanguagesPerCol + 1;
+	pScroll.nMax	= 10 ;
+	pScroll.nPage	= m_nRows + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
 	//if ( m_pSkin )
@@ -162,9 +158,11 @@ void CLanguageDlg::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
+	CRect rcDlg;
 	int nScroll = GetScrollPos( SB_VERT );
 
 	GetClientRect( &rc );
+	GetClientRect( &rcDlg );
 
 	CDC mdc;
 	mdc.CreateCompatibleDC( &dc );
@@ -208,7 +206,9 @@ void CLanguageDlg::OnPaint()
 			rc.OffsetRect( 0, rc.Height() );
 		}
 	}
-
+	
+	rcDlg.top = rc.top;
+	dc.FillSolidRect( &rcDlg, CoolInterface.m_crBackNormal );
 	dc.SelectObject( pOldFont );
 }
 
@@ -372,7 +372,7 @@ BOOL CLanguageDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		GetCursorPos( &pt );
 		ScreenToClient( &pt );
 
-		SetCursor( pt.y > HEADING_HEIGHT ? m_hHand : m_hArrow );
+		SetCursor( pt.y > HEADING_HEIGHT && m_nHover - 2 < m_pGUIDirs.GetSize() ? m_hHand : m_hArrow );
 		return TRUE;
 	}
 	
@@ -436,6 +436,7 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		PostMessage( WM_CLOSE );
 		return;
 	case VK_LEFT:
+	case VK_UP:
 		if ( ! m_nDown )
 		{
 			m_nHover--;
@@ -461,6 +462,7 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		return;
 	case VK_TAB:
 	case VK_RIGHT:
+	case VK_DOWN:
 		if ( ! m_nDown )
 		{
 			m_nHover++;
@@ -475,69 +477,7 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 				pInfo.nPos = 0;
 				SetScrollInfo( SB_VERT, &pInfo, TRUE );
 			}
-			else if ( ( m_nHover - 1 ) / 3 > pInfo.nPos + m_nLanguagesPerCol - 1 )
-			{
-				pInfo.nPos += 1;
-				SetScrollInfo( SB_VERT, &pInfo, TRUE );
-			}
-
-			Invalidate();
-		}
-		return;
-	case VK_UP:
-		if ( ! m_nDown )
-		{
-			m_nHover -= 3;
- 			m_bKeyMode = TRUE;
-			SCROLLINFO pInfo;
-			pInfo.cbSize	= sizeof(pInfo);
-			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
-			GetScrollInfo( SB_VERT, &pInfo );
-			if ( m_nHover == -2 )
-			{
-				m_nHover = static_cast< int >( m_pPaths.GetSize() );
-				pInfo.nPos = pInfo.nMax;
-				SetScrollInfo( SB_VERT, &pInfo, TRUE );
-			}
-			else if ( m_nHover < 1 )
-			{
-				m_nHover = static_cast< int >( m_pPaths.GetSize() ) + m_nHover - 1;
-				pInfo.nPos = pInfo.nMax;
-				SetScrollInfo( SB_VERT, &pInfo, TRUE );
-			}
-			else if ( ( m_nHover - 1 ) / 3 <= pInfo.nPos - 1 )
-			{
-				pInfo.nPos -= 1;
-				SetScrollInfo( SB_VERT, &pInfo, TRUE );
-			}
-
-			Invalidate();
-		}
-		return;
-	case VK_DOWN:
-		if ( ! m_nDown )
-		{
-			if ( m_nHover == 0 )
-			{
-				m_nHover = 1;
-			}
-			else
-			{
-				m_nHover += 3;
-			}
-			m_bKeyMode = TRUE;
-			SCROLLINFO pInfo;
-			pInfo.cbSize	= sizeof(pInfo);
-			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
-			GetScrollInfo( SB_VERT, &pInfo );
-
-			if ( m_nHover / 3 >= m_pPaths.GetSize() / 3 && m_nHover != m_pPaths.GetSize() )
-			{
-				m_nHover = m_nHover % 3 + 1;
-				pInfo.nPos = 0;
-				SetScrollInfo( SB_VERT, &pInfo, TRUE );
-			}
-			else if ( ( m_nHover - 1 )  / 3 >= pInfo.nPos + m_nLanguagesPerCol )
+			else if ( ( m_nHover - 1 ) / 3 > pInfo.nPos + m_nRows - 1 )
 			{
 				pInfo.nPos += 1;
 				SetScrollInfo( SB_VERT, &pInfo, TRUE );
