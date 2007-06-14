@@ -118,9 +118,9 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	// Screens smaller than 768px only show 10 rows.
 	if ( GetSystemMetrics( SM_CYSCREEN ) < 768 )
-		m_nLanguagesPerCol = int( min( static_cast< int >( ceil( (float) m_pPaths.GetSize() / (float) 3 ) ), 10 ) );
+		m_nLanguagesPerCol = int( min( static_cast< int >( (float) m_pPaths.GetSize() / (float) 3 ), 10 ) );
 	else
-		m_nLanguagesPerCol = int( min( static_cast< int >( ceil( (float) m_pPaths.GetSize() / (float) 3 ) ), 14 ) );
+		m_nLanguagesPerCol = int( min( static_cast< int >( (float) m_pPaths.GetSize() / (float) 3 ), 14 ) );
 
 	rc.bottom += ( m_nLanguagesPerCol ) * ITEM_HEIGHT;
 
@@ -128,7 +128,7 @@ BOOL CLanguageDlg::OnInitDialog()
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE|SIF_DISABLENOSCROLL;
 	pScroll.nMin	= 0;
-	pScroll.nMax	= static_cast< int >( ceil( (float) m_pPaths.GetSize() / (float) 3 ) );
+	pScroll.nMax	= static_cast< int >( (float) m_pPaths.GetSize() / (float) 3 );
 	pScroll.nPage	= m_nLanguagesPerCol + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
