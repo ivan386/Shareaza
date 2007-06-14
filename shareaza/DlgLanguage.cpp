@@ -739,6 +739,8 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 
 void CLanguageDlg::Execute(int nSelected)
 {
+	// Don't try to process selections past the end of the list
+	if ( nSelected - 2 >= m_pGUIDirs.GetSize() ) return;
 	BOOL bRTL = ( nSelected > 1 ) ? ( m_pGUIDirs.GetAt( nSelected - 2 ) == "rtl" ) : FALSE;
 
 	if ( bRTL && theApp.m_dwWindowsVersion < 5 )
