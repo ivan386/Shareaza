@@ -54,7 +54,7 @@ protected:
 	HCURSOR			m_hArrow;
 	HCURSOR			m_hHand;
 	CBitmap			m_bmHeader;
-	int				m_nLanguagesPerCol;
+	int				m_nRows;
 
 // Overrides
 public:
