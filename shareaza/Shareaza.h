@@ -29,6 +29,7 @@
 class CUPnPFinder;
 class CMainWnd;
 class CSplashDlg;
+class CFontManager;
 
 class CShareazaCommandLineInfo : public CCommandLineInfo
 {
@@ -118,6 +119,8 @@ public:
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
+
+	CFontManager*		m_pFontManager;
 
 	virtual BOOL		InitInstance();
 	virtual int			ExitInstance();
@@ -346,7 +349,7 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 #define ED2K_CLIENT_ID		4
 
 // 2 Character BT peer-id code
-// SZ = Raza, AZ = Azerus, etc
+// SZ = Raza, AZ = Azureus, etc
 #define BT_ID1				'S'
 #define BT_ID2				'~'
 
@@ -361,3 +364,8 @@ extern const LPCTSTR RT_BMP;
 extern const LPCTSTR RT_JPEG;
 extern const LPCTSTR RT_PNG;
 extern const LPCTSTR RT_GZIP;
+
+extern double scaleX;
+extern double scaleY;
+#define SCALEX(argX) ((int) ((argX) * scaleX))
+#define SCALEY(argY) ((int) ((argY) * scaleY))

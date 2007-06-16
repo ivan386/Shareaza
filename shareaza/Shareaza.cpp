@@ -59,6 +59,7 @@
 #include "WndSystem.h"
 #include "DlgSplash.h"
 #include "DlgHelp.h"
+#include "FontManager.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -70,6 +71,8 @@ const LPCTSTR RT_BMP = _T("BMP");
 const LPCTSTR RT_JPEG = _T("JPEG");
 const LPCTSTR RT_PNG = _T("PNG");
 const LPCTSTR RT_GZIP = _T("GZIP");
+double scaleX = 1;
+double scaleY = 1;
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
@@ -139,12 +142,13 @@ CShareazaApp theApp;
 // CShareazaApp construction
 
 CShareazaApp::CShareazaApp()
+: m_pMutex( NULL )
+, m_pSafeWnd( NULL )
+, m_bLive( FALSE )
+, m_bUPnPPortsForwarded( TS_UNKNOWN )
+, m_bUPnPDeviceConnected( TS_UNKNOWN )
+, m_pFontManager( NULL )
 {
-	m_pMutex = NULL;
-	m_pSafeWnd	= NULL;
-	m_bLive		= FALSE;
-	m_bUPnPPortsForwarded = TS_UNKNOWN;
-	m_bUPnPDeviceConnected = TS_UNKNOWN;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -161,7 +165,8 @@ BOOL CShareazaApp::InitInstance()
 	InitResources();
 
 	AfxOleInit();
-	AfxEnableControlContainer();
+	m_pFontManager = new CFontManager();
+	AfxEnableControlContainer( m_pFontManager );
 
 	LoadStdProfileSettings();
 	EnableShellOpen();
@@ -465,6 +470,8 @@ int CShareazaApp::ExitInstance()
 	if ( dlgSplash )
 		dlgSplash->Hide();
 
+	delete m_pFontManager;
+
 	UnhookWindowsHookEx( m_hHookKbd );
 	UnhookWindowsHookEx( m_hHookMouse );
 
@@ -733,10 +740,17 @@ void CShareazaApp::InitResources()
 		m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
 
+	HDC screen = GetDC( 0 );
+	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
+	scaleY = GetDeviceCaps( screen, LOGPIXELSY ) / 96.0;
+	ReleaseDC( 0, screen );
+
 	// Get the fonts from the registry
-	theApp.m_sDefaultFont		= theApp.GetProfileString( _T("Fonts"), _T("DefaultFont"), _T("Tahoma") );
+	CString strFont = ( m_dwWindowsVersion == 6 && m_dwWindowsVersionMinor == 0 ) ?
+					  L"Segoe UI" : L"Tahoma" ;
+	theApp.m_sDefaultFont		= theApp.GetProfileString( _T("Fonts"), _T("DefaultFont"), strFont );
 	theApp.m_sPacketDumpFont	= theApp.GetProfileString( _T("Fonts"), _T("PacketDumpFont"), _T("Lucida Console") );
-	theApp.m_sSystemLogFont		= theApp.GetProfileString( _T("Fonts"), _T("SystemLogFont"), _T("Tahoma") );
+	theApp.m_sSystemLogFont		= theApp.GetProfileString( _T("Fonts"), _T("SystemLogFont"), strFont );
 	theApp.m_nDefaultFontSize	= theApp.GetProfileInt( _T("Fonts"), _T("FontSize"), 11 );
 	
 	// Set up the default font
