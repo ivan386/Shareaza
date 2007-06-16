@@ -518,6 +518,9 @@
 				RelativePath="Flags.cpp">
 			</File>
 			<File
+				RelativePath="FontManager.cpp">
+			</File>
+			<File
 				RelativePath="FragmentBar.cpp">
 			</File>
 			<File
@@ -2349,6 +2352,9 @@
 				RelativePath="Flags.h">
 			</File>
 			<File
+				RelativePath="FontManager.h">
+			</File>
+			<File
 				RelativePath="FragmentBar.h">
 			</File>
 			<File
@@ -3380,32 +3386,28 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -3427,32 +3429,28 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -3513,32 +3511,28 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
@@ -3551,32 +3545,28 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release x64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;
-"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"/>
 				</FileConfiguration>
 			</File>
