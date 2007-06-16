@@ -1187,6 +1187,12 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("system.text"), &CoolInterface.m_crCmdText );
 	pColours.SetAt( _T("system.text.selected"), &CoolInterface.m_crCmdTextSel );
 	pColours.SetAt( _T("system.disabled"), &CoolInterface.m_crDisabled );
+
+	pColours.SetAt( _T("transfer.ranges"), &CoolInterface.m_crRanges );
+	pColours.SetAt( _T("transfer.completed"), &CoolInterface.m_crCompleted );
+	pColours.SetAt( _T("transfer.verify.fail"), &CoolInterface.m_crVerifyFail );
+	pColours.SetAt( _T("transfer.verify.pass"), &CoolInterface.m_crVerifyPass );
+
 	pColours.SetAt( _T("tooltip.back"), &CoolInterface.m_crTipBack );
 	pColours.SetAt( _T("tooltip.text"), &CoolInterface.m_crTipText );
 	pColours.SetAt( _T("tooltip.border"), &CoolInterface.m_crTipBorder );
