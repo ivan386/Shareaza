@@ -93,13 +93,19 @@ void CBTInfo::Clear()
 	m_nFiles		= 0;
 	m_pFiles		= NULL;
 
+	bool bAnnTrackerInList = false;
+
 	// Delete trackers
 	while ( ! m_pTrackerList.IsEmpty() )
 	{
-		delete m_pTrackerList.GetAt( 0 );
+		CBTTracker* pTracker = m_pTrackerList.GetAt( 0 );
+		if (m_pAnnounceTracker == pTracker)
+			bAnnTrackerInList = true;
+		delete pTracker;
 		m_pTrackerList.RemoveAt( 0 );
 	}
-	if ( m_pAnnounceTracker != NULL ) 
+
+	if ( !bAnnTrackerInList && m_pAnnounceTracker != NULL ) 
 	{
 		delete m_pAnnounceTracker;
 		m_pAnnounceTracker = NULL;
