@@ -4,6 +4,7 @@
 	Version="8,00"
 	Name="Shareaza"
 	ProjectGUID="{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}"
+	RootNamespace="Shareaza"
 	>
 	<Platforms>
 		<Platform
@@ -629,6 +630,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Flags.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\FontManager.cpp"
 				>
 			</File>
 			<File
@@ -2382,7 +2387,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2392,7 +2397,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2401,7 +2406,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2411,7 +2416,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2428,7 +2433,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2438,7 +2443,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2447,7 +2452,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2457,7 +2462,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2474,7 +2479,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2484,7 +2489,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2493,7 +2498,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2503,7 +2508,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2516,7 +2521,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2526,7 +2531,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2535,7 +2540,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -2545,7 +2550,7 @@
 						>
 						<Tool
 							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;"
 							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 						/>
 					</FileConfiguration>
@@ -3030,6 +3035,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Flags.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\FontManager.h"
 				>
 			</File>
 			<File
@@ -5051,7 +5060,8 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\UpDownArrow.ico">
+				RelativePath="..\shareaza\Res\UpDownArrow.ico"
+				>
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Uploads.ico"
@@ -5096,54 +5106,6 @@
 			<File
 				RelativePath="..\shareaza\Res\SchemaMappings.xml.gz"
 				>
-			</File>
-			<File
-				RelativePath="releasex64\shareaza\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="debugx64\shareaza\Shareaza_i.c"
@@ -5279,6 +5241,54 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="releasex64\shareaza\Shareaza_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)\$(InputName)3.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
