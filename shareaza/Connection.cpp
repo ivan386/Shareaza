@@ -442,8 +442,9 @@ BOOL CConnection::OnRead()
 	DWORD nTotal	= 0;				// Start the total at 0
 
 	// If we need to worry about throttling bandwidth, calculate nLimit, the number of bytes we are allowed to read now
-	if ( m_mInput.pLimit							// If the input bandwidth memter points to a limit
-		&& *m_mInput.pLimit							// And that limit isn't 0
+	DWORD* pInputLimit = m_mInput.pLimit;
+	if ( pInputLimit							// If the input bandwidth memter points to a limit
+		&& *pInputLimit							// And that limit isn't 0
 		&& ( Settings.Live.BandwidthScale <= 100 ) )// And either the bandwidth meter in program settings is (do)
 	{
 		// tCutoff is the tick count 1 second ago
@@ -477,7 +478,7 @@ _ignore:	inc		ebx
 		}
 #endif
 		// nActual is the speed limit, set by the input bandwidth meter and the bandwidth scale in settings
-		DWORD nActual = *m_mInput.pLimit; // Get the speed limit from the input bandwidth meter
+		DWORD nActual = *pInputLimit; // Get the speed limit from the input bandwidth meter
 		if ( Settings.Live.BandwidthScale < 100 ) // The scale is turned down and we should use it
 		{
 			// Adjust actual based on the scale
@@ -572,8 +573,9 @@ BOOL CConnection::OnWrite()
 	DWORD nLimit	= 0xFFFFFFFF;		// Make the limit huge
 
 	// If we need to worry about throttling bandwidth, calculate nLimit, the number of bytes we are allowed to write now
-	if ( m_mOutput.pLimit							// If the output bandwidth meter points to a limit
-		&& *m_mOutput.pLimit						// And that limit isn't 0
+	DWORD* pOutputLimit =  m_mOutput.pLimit;
+	if ( pOutputLimit							// If the output bandwidth meter points to a limit
+		&& *pOutputLimit						// And that limit isn't 0
 		&& ( Settings.Live.BandwidthScale <= 100 ) )// And either the bandwidth meter in program settings is (do)
 	{
 		// tCutoff is the tick count 1 second ago
@@ -606,7 +608,7 @@ _ignore:	inc		ebx
 		}
 #endif
 		// nLimit is the speed limit, set by the output bandwidth meter and the bandwidth scale in settings
-		nLimit = *m_mOutput.pLimit; // Get the speed limit from the output bandwidth meter
+		nLimit = *pOutputLimit; // Get the speed limit from the output bandwidth meter
 		if ( Settings.Live.BandwidthScale < 100 ) // The scale is turned down and we should use it
 		{
 			// Adjust the limit lower based on the scale

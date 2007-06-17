@@ -64,6 +64,10 @@ CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pC
 CDownloadTransferBT::~CDownloadTransferBT()
 {
 	ASSERT( m_pClient == NULL );
+
+	// This never happens
+	if ( m_pClient ) m_pClient->m_mInput.pLimit = m_pClient->m_mOutput.pLimit = NULL;
+
 	if ( m_pAvailable != NULL ) delete [] m_pAvailable;
 }
 

@@ -66,6 +66,9 @@ CDownloadTransferED2K::CDownloadTransferED2K(CDownloadSource* pSource) : CDownlo
 
 CDownloadTransferED2K::~CDownloadTransferED2K()
 {
+	// This never happens
+	if ( m_pClient ) m_pClient->m_mInput.pLimit = m_pClient->m_mOutput.pLimit = NULL;
+
 	ClearRequests();
 	delete m_pInflateBuffer;
 	
