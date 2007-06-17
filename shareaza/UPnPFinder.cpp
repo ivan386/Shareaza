@@ -647,6 +647,7 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 		return CString();
 
 	DWORD nCount = ipAddr->dwNumEntries;
+	DWORD nSearchIP = 0;
 	CString strLocalIP;
 
 	// Look for IP associated with the interface in the address table
@@ -655,11 +656,12 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	{
 		if ( ipAddr->table[ nIf ].dwIndex == nInterfaceIndex )
 		{
-			ip = ipAddr->table[ nIf ].dwAddr;
-			strLocalIP.Format( L"%d.%d.%d.%d", ( ip & 0x0000ff ),
-                ( ( ip & 0x00ff00 ) >> 8 ), ( ( ip & 0xff0000 ) >> 16 ),
-                ( ip >> 24 ) );
-			theApp.m_sUPnPExternalIP = strExternalIP;
+			nSearchIP = ipAddr->table[ nIf ].dwAddr;
+			strLocalIP.Format( L"%d.%d.%d.%d", ( nSearchIP & 0x0000ff ),
+                ( ( nSearchIP & 0x00ff00 ) >> 8 ), ( ( nSearchIP & 0xff0000 ) >> 16 ),
+                ( nSearchIP >> 24 ) );
+
+			theApp.m_nUPnPExternalAddress = ip;
 			break;
 		}
 	}
@@ -1196,7 +1198,10 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 						: TS_UNKNOWN;
 		}
 		else if ( _wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
-					theApp.m_sUPnPExternalIP = strValue.Trim();
+		{
+			USES_CONVERSION;
+			theApp.m_nUPnPExternalAddress = inet_addr( T2CA( strValue.Trim() ) );
+		}
 	}
 
 	theApp.Message( MSG_DEBUG, L"UPnP device state variable %s changed to %s in %s",

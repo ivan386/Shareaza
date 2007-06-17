@@ -148,6 +148,7 @@ CShareazaApp::CShareazaApp()
 , m_bUPnPPortsForwarded( TS_UNKNOWN )
 , m_bUPnPDeviceConnected( TS_UNKNOWN )
 , m_pFontManager( NULL )
+, m_nUPnPExternalAddress( 0 )
 {
 }
 

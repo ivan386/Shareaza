@@ -80,7 +80,7 @@ public:
 	boost::scoped_ptr< CUPnPFinder > m_pUPnPFinder;
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
-	CString				m_sUPnPExternalIP;
+	DWORD				m_nUPnPExternalAddress;
 	DWORD				m_dwLastInput;				// Time of last input event	in secs
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;

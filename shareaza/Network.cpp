@@ -97,6 +97,10 @@ CNetwork::~CNetwork()
 
 BOOL CNetwork::IsSelfIP(IN_ADDR nAddress) const
 {
+	IN_ADDR* nUPnPAddr = (IN_ADDR*)&theApp.m_nUPnPExternalAddress;
+	if ( nUPnPAddr->S_un.S_addr == nAddress.S_un.S_addr )
+		return TRUE;
+
 	if ( nAddress.s_addr == INADDR_ANY || nAddress.s_addr == INADDR_NONE )
 	{
 		return FALSE;
