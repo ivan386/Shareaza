@@ -594,7 +594,7 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 		else
 		{
 			// Add to the bad sources list (X-NAlt)
-			m_pDownload->RemoveSource( this, TRUE );
+			m_pDownload->RemoveSource( this, !m_pDownload->IsSeeding() );
 		}
 	}
 }
