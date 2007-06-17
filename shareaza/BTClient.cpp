@@ -84,6 +84,7 @@ CBTClient::~CBTClient()
 
 BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 {
+	if ( m_bClosing ) return FALSE;
 	ASSERT( m_hSocket == INVALID_SOCKET );
 	ASSERT( m_pDownload == NULL );
 	
@@ -104,6 +105,7 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 
 void CBTClient::AttachTo(CConnection* pConnection)
 {
+	if ( m_bClosing ) return;
 	ASSERT( m_hSocket == INVALID_SOCKET );
 
 	CTransfer::AttachTo( pConnection );
@@ -120,7 +122,10 @@ void CBTClient::AttachTo(CConnection* pConnection)
 void CBTClient::Close()
 {
 	ASSERT( this != NULL );
-	
+
+	m_mInput.pLimit = NULL;
+	m_mOutput.pLimit = NULL;
+
 	if ( m_bClosing ) return;
 	m_bClosing = TRUE;
 	
@@ -141,8 +146,6 @@ void CBTClient::Close()
 	m_pDownload = NULL;
 	
 	CTransfer::Close();
-	m_mInput.pLimit = NULL;
-	m_mOutput.pLimit = NULL;
 
 	delete this;
 }
@@ -252,6 +255,7 @@ void CBTClient::OnDropped(BOOL /*bError*/)
 
 BOOL CBTClient::OnWrite()
 {
+	if ( m_bClosing ) return FALSE;
 	CTransfer::OnWrite();
 	return TRUE;
 }
@@ -262,7 +266,8 @@ BOOL CBTClient::OnWrite()
 BOOL CBTClient::OnRead()
 {
 	BOOL bSuccess = TRUE;
-	
+	if ( m_bClosing ) return FALSE;
+
 	CTransfer::OnRead();
 	
 	if ( m_bOnline )
@@ -313,6 +318,7 @@ BOOL CBTClient::OnRead()
 
 void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 {
+	if ( m_bClosing ) return;
 	ASSERT( m_pDownload != NULL );
 	
 	if ( bPart1 )
@@ -333,7 +339,10 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 }
 
 BOOL CBTClient::OnHandshake1()
-{	//First part of the handshake
+{	
+	//First part of the handshake
+	if ( m_bClosing ) return FALSE;
+
 	ASSERT( ! m_bOnline );
 	ASSERT( ! m_bShake );
 	
@@ -436,7 +445,10 @@ BOOL CBTClient::OnHandshake1()
 }
 
 BOOL CBTClient::OnHandshake2()
-{	// Second part of the handshake - Peer ID
+{	
+	if ( m_bClosing ) return FALSE;
+
+	// Second part of the handshake - Peer ID
 	m_oGUID = reinterpret_cast< const Hashes::BtGuid::RawStorage& >( *m_pInput->m_pBuffer );
 	m_pInput->Remove( Hashes::BtGuid::byteCount );
 	
@@ -746,6 +758,7 @@ void CBTClient::DetermineUserAgent()
 
 BOOL CBTClient::OnOnline()
 {
+	if ( m_bClosing ) return FALSE;
 	ASSERT( m_bOnline );
 	ASSERT( m_pDownload != NULL );
 	ASSERT( m_pUpload != NULL );
@@ -782,6 +795,8 @@ BOOL CBTClient::OnOnline()
 
 BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 {
+	if ( m_bClosing ) return FALSE;
+
 	switch ( pPacket->m_nType )
 	{
 	case BT_PACKET_KEEPALIVE:
@@ -831,7 +846,9 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 // CBTClient advanced handshake
 
 void CBTClient::SendBeHandshake()
-{	// Send extended handshake (for G2 capable clients)
+{	
+	if ( m_bClosing ) return;
+	// Send extended handshake (for G2 capable clients)
 	CBENode pRoot;
 	
 	CString strNick = MyProfile.GetNick().Left( 255 ); // Truncate to 255 characters
@@ -853,7 +870,9 @@ void CBTClient::SendBeHandshake()
 }
 
 BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
-{	// On extended handshake (for G2 capable clients)
+{	
+	if ( m_bClosing ) return TRUE;
+	// On extended handshake (for G2 capable clients)
 	if ( pPacket->GetRemaining() > 1024 ) return TRUE;
 	
 	CBuffer pInput;
@@ -925,6 +944,7 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 
 BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 {
+	if ( m_bClosing ) return TRUE;
 	if ( ( m_pDownload == NULL ) || ( m_pDownload->m_pTorrent.m_bPrivate ) ) return TRUE;
 	
 	CBENode pRoot;

@@ -180,6 +180,12 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 		}
 	}
 
+	// Delete the input and output CBuffer objects if they exist, and then create new ones
+	if ( m_pInput ) delete m_pInput;
+	if ( m_pOutput ) delete m_pOutput;
+	m_pInput = NULL;
+	m_pOutput = NULL;
+
 	// Try to connect to the remote computer
 	if ( WSAConnect(
 		m_hSocket,					// Our socket
@@ -207,9 +213,6 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 		}
 	}
 
-	// Delete the input and output CBuffer objects if they exist, and then create new ones
-	if ( m_pInput ) delete m_pInput;
-	if ( m_pOutput ) delete m_pOutput;
 	m_pInput		= new CBuffer( &Settings.Bandwidth.PeerIn );
 	m_pOutput		= new CBuffer( &Settings.Bandwidth.PeerOut );
 

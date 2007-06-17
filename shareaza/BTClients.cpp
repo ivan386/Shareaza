@@ -160,7 +160,8 @@ void CBTClients::ShutdownRequests()
 	m_bShutdown = TRUE;
 	pLock.Unlock();
 
-	if ( WaitForSingleObject( m_pShutdown, 5000 ) == WAIT_OBJECT_0 ) return;
+	if ( WaitForSingleObject( m_pShutdown, 5000 ) == WAIT_OBJECT_0 ) 
+		return;
 
 	for (;;)
 	{
