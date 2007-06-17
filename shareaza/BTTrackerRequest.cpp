@@ -372,11 +372,14 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 			{
 				Hashes::BtGuid tmp( *static_cast< Hashes::BtGuid::RawStorage* >(
 					pID->m_pValue ) );
-				nCount += m_pDownload->AddSourceBT( tmp,
-					&saPeer.sin_addr, ntohs( saPeer.sin_port ) );
+				if ( validAndUnequal( tmp, m_pDownload->m_pPeerID ) )
+					nCount += m_pDownload->AddSourceBT( tmp,
+						&saPeer.sin_addr, ntohs( saPeer.sin_port ) );
 			}
 			else
 			{
+				// Self IP is checked later although if bount to 0.0.0.0 
+				// this will add self too
 				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(),
 					&saPeer.sin_addr, ntohs( saPeer.sin_port ) );
 			}
