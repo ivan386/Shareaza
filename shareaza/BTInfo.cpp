@@ -93,23 +93,23 @@ void CBTInfo::Clear()
 	m_nFiles		= 0;
 	m_pFiles		= NULL;
 
-	bool bAnnTrackerInList = false;
-
 	// Delete trackers
-	while ( ! m_pTrackerList.IsEmpty() )
+	if ( IsMultiTracker() )
 	{
-		CBTTracker* pTracker = m_pTrackerList.GetAt( 0 );
-		if (m_pAnnounceTracker == pTracker)
-			bAnnTrackerInList = true;
-		delete pTracker;
-		m_pTrackerList.RemoveAt( 0 );
+		while ( !m_pTrackerList.IsEmpty() )
+		{
+			CBTTracker* pTracker = m_pTrackerList.GetAt( 0 );
+			delete pTracker;
+			m_pTrackerList.RemoveAt( 0 );
+		}
 	}
-
-	if ( !bAnnTrackerInList && m_pAnnounceTracker != NULL ) 
+	else if ( m_pAnnounceTracker != NULL )
 	{
 		delete m_pAnnounceTracker;
-		m_pAnnounceTracker = NULL;
 	}
+	m_pAnnounceTracker	= NULL;
+	m_nTrackerIndex		= -1;
+	m_nTrackerMode		= tNull;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -162,19 +162,21 @@ void CBTInfo::Copy(CBTInfo* pSource)
 			m_pFiles[ nFile ].Copy( &pSource->m_pFiles[ nFile ] );
 	}
 
-	// Copy announce tracker
-	if ( pSource->m_pAnnounceTracker != NULL ) 
+	// Copy announce trackers
+	if ( pSource->IsMultiTracker() )
+	{
+		for ( int nCount = 0 ; nCount < pSource->m_pTrackerList.GetCount() ; nCount++ )
+		{
+			CBTTracker* pTracker = new CBTTracker;
+			pTracker->Copy( pSource->m_pTrackerList.GetAt( nCount ) );
+			m_pTrackerList.Add( pTracker );
+		}
+		m_pAnnounceTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+	}
+	else if ( pSource->m_pAnnounceTracker != NULL ) 
 	{
 		m_pAnnounceTracker = new CBTTracker;
 		m_pAnnounceTracker->Copy( pSource->m_pAnnounceTracker );
-	}
-
-	// Copy trackers (multitracker)
-	for ( int nCount = 0 ; nCount < pSource->m_pTrackerList.GetCount() ; nCount++ )
-	{
-		CBTTracker* pTracker = new CBTTracker;
-		pTracker->Copy( pSource->m_pTrackerList.GetAt( nCount ) );
-		m_pTrackerList.Add( pTracker );
 	}
 }
 
@@ -221,14 +223,14 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar << m_nTrackerMode;
 
 
-		if ( m_pAnnounceTracker ) 
+		if ( IsMultiTracker() ) 
 		{
-			ar.WriteCount( 1 );
-			m_pAnnounceTracker->Serialize( ar, nVersion );
+			ar.WriteCount( 0 );
 		}
 		else 
 		{
-			ar.WriteCount( 0 );
+			ar.WriteCount( 1 );
+			m_pAnnounceTracker->Serialize( ar, nVersion );
 		}
 
 		int nTrackers = (int)m_pTrackerList.GetCount();
@@ -310,6 +312,7 @@ void CBTInfo::Serialize(CArchive& ar)
 					pTracker->Serialize( ar, nVersion );
 					m_pTrackerList.Add( pTracker );
 				}
+				m_pAnnounceTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
 			}
 		}
 	}
@@ -579,20 +582,13 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 						pTracker->m_sAddress	= pTrackers.GetNext( pos );
 						pTracker->m_nTier		= nTier;
 						m_pTrackerList.Add( pTracker );
-	
-						if ( m_nTrackerMode == tNull )
-						{
-							// Set the torrent to be a multi-tracker torrent
-							m_nTrackerMode = tMultiFinding;
-							m_sTracker = pTracker->m_sAddress;
-							m_nTrackerIndex = 0;
-						}
 					}
 					// Delete temporary storage
 					pTrackers.RemoveAll();
 				}
 			}
 		}
+		if ( IsMultiTracker() ) SetTrackerNext();
 	}
 
 	// Get announce
@@ -605,16 +601,15 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		// Store it if it's valid. (Some torrents have invalid trackers)
 		if ( strTracker.Find( _T("http") ) == 0 ) 
 		{
-			if ( m_nTrackerMode == tNull ) 
+			// Announce node is ignored by multi-tracker torrents
+			if ( !IsMultiTracker() )
 			{
 				// Set the torrent to be a single-tracker torrent
 				m_nTrackerMode = tSingle;
 				m_sTracker = strTracker;
-				m_nTrackerIndex = -1;
+				m_pAnnounceTracker = new CBTTracker;
+				m_pAnnounceTracker->m_sAddress = strTracker;
 			}
-			// Create the announce tracker object
-			m_pAnnounceTracker = new CBTTracker;
-			m_pAnnounceTracker->m_sAddress = strTracker;
 		}
 		else 
 		{

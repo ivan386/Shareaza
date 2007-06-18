@@ -139,7 +139,7 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		m_wndTrackers.SetItemText( pItem.iItem, 2, sType );
 	}
 
-	if ( m_pInfo->m_pAnnounceTracker )
+	if ( !m_pInfo->IsMultiTracker() && m_pInfo->m_pAnnounceTracker )
 	{
 		nTracker ++;
 
