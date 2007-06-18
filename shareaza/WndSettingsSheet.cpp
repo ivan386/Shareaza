@@ -155,6 +155,10 @@ BOOL CSettingsSheet::SetActivePage(CSettingsPage* pPage)
 	m_pPage = pPage;
 	m_pPage->ShowWindow( SW_SHOW );
 
+	CString strCaption;
+	m_pPage->GetWindowText( strCaption );
+	SetWindowText( m_sCaption + _T(" - ") + strCaption );
+
 	for ( HTREEITEM hGroup = m_wndTree.GetRootItem() ; hGroup ; hGroup = m_wndTree.GetNextItem( hGroup, TVGN_NEXT ) )
 	{
 		if ( m_wndTree.GetItemData( hGroup ) == (DWORD_PTR)m_pPage )
