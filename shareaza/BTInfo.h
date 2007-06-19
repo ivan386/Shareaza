@@ -121,7 +121,7 @@ public:
 	void		SetTrackerSucceeded(DWORD tNow);
 	void		SetTrackerFailed(DWORD tNow);
 	void		SetTrackerNext();
-	INT			GetTrackerFailures();
+	INT			GetTrackerFailures() const;
 protected:
 	BOOL		CheckFiles();
 

@@ -993,63 +993,42 @@ BOOL CBTInfo::FinishBlockTest(DWORD nBlock)
 
 void CBTInfo::SetTrackerAccess(DWORD tNow)
 {
-	if ( m_nTrackerMode == tNull )
-	{
-		// Shouldn't happen
-		ASSERT ( 0 );
-	}
-	else if ( m_nTrackerMode == tCustom )
-	{
-		// Can't do anything with user-entered trackers
-	}
-	else
-	{
-		ASSERT ( m_pAnnounceTracker );
+	ASSERT ( m_nTrackerMode != tNull );
+	
+	// Can't do anything with user-entered trackers
+	if ( m_nTrackerMode == tCustom ) return;
 
-		m_pAnnounceTracker->m_tLastAccess = tNow;
-	}
+	ASSERT ( m_pAnnounceTracker );
+	m_pAnnounceTracker->m_tLastAccess = tNow;
+
 	return;
 }
 
 void CBTInfo::SetTrackerSucceeded(DWORD tNow)
 {
-	if ( m_nTrackerMode == tNull )
-	{
-		// Shouldn't happen
-		ASSERT ( 0 );
-	}
-	else if ( m_nTrackerMode == tCustom )
-	{
-		// Can't do anything with user-entered trackers
-	}
-	else
-	{
-		ASSERT ( m_pAnnounceTracker );
+	ASSERT ( m_nTrackerMode != tNull );
+	
+	// Can't do anything with user-entered trackers
+	if ( m_nTrackerMode == tCustom ) return;
 
-		m_pAnnounceTracker->m_tLastSuccess = tNow;
-		m_pAnnounceTracker->m_nFailures = 0;
-	}
+	ASSERT ( m_pAnnounceTracker );
+	m_pAnnounceTracker->m_tLastSuccess = tNow;
+	m_pAnnounceTracker->m_nFailures = 0;
+
 	return;
 }
 
 void CBTInfo::SetTrackerFailed(DWORD tNow)
 {
-	if ( m_nTrackerMode == tNull )
-	{
-		// Shouldn't happen
-		ASSERT ( 0 );
-	}
-	else if ( m_nTrackerMode == tCustom )
-	{
-		// Can't do anything with user-entered trackers
-	}
-	else
-	{
-		ASSERT ( m_pAnnounceTracker );
+	ASSERT ( m_nTrackerMode != tNull );
+	
+	// Can't do anything with user-entered trackers
+	if ( m_nTrackerMode == tCustom ) return;
 
-		m_pAnnounceTracker->m_tLastFail = tNow;
-		m_pAnnounceTracker->m_nFailures ++;
-	}
+	ASSERT ( m_pAnnounceTracker );
+	m_pAnnounceTracker->m_tLastFail = tNow;
+	m_pAnnounceTracker->m_nFailures++;
+
 	return;
 }
 
@@ -1076,17 +1055,12 @@ void CBTInfo::SetTrackerNext()
 	return;
 }
 
-INT CBTInfo::GetTrackerFailures()
+INT CBTInfo::GetTrackerFailures() const
 {
-	if ( m_nTrackerMode == tNull )
-		return 0;
-	else if ( m_nTrackerMode == tCustom )
-		return 0;
-	else
-	{
-		ASSERT ( m_pAnnounceTracker );
-		return m_pAnnounceTracker->m_nFailures;
-	}
+	if ( m_nTrackerMode <= tCustom ) return 0;
+
+	ASSERT ( m_pAnnounceTracker );
+	return m_pAnnounceTracker->m_nFailures;
 }
 
 //////////////////////////////////////////////////////////////////////
