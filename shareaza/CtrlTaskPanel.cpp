@@ -466,7 +466,7 @@ BOOL CTaskBox::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 			SetTimer( 1, 50, NULL );
 		}
 		
-		SetCursor( theApp.LoadCursor( IDC_HAND ) );
+		::SetCursor( theApp.LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
 	
