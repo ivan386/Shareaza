@@ -315,7 +315,7 @@ BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT 
 	}
 	
 	if ( ! CreateEx( WS_EX_CONTROLPARENT, NULL, pszCaption,
-		WS_CHILD | WS_CLIPCHILDREN, rect, pPanel, nID ) ) return FALSE;
+		WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, pPanel, nID ) ) return FALSE;
 
 	if ( nIDIcon )
 	{
