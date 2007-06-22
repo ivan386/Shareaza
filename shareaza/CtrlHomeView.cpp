@@ -184,8 +184,10 @@ void CHomeViewCtrl::OnLayoutComplete()
 		GetElementRect( m_peSearch, &rcAnchor );
 		rcAnchor.OffsetRect( 0, -GetScrollPos( SB_VERT ) );
 
-		rcAnchor.left = rcClient.left + 55;
-		rcAnchor.right = rcClient.right - 55;
+		rcAnchor.left = rcClient.left;
+		rcAnchor.right = rcClient.right;
+
+		rcAnchor.DeflateRect( m_pDocument.m_szMargin.cx + 39, 0 );
 
 		BOOL bShowed = m_wndSearch.IsWindowVisible() == FALSE;
 
