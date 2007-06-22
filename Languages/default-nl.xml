@@ -4220,6 +4220,8 @@
 		<column from="Host/Count" to="Bron/aantal"/>
 		<column from="Speed" to="Snelheid"/>
 		<column from="Client" to="Cliënt"/>
+		<column from="Time" to="Tijd"/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Naam"/>
