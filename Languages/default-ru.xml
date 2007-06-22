@@ -4436,6 +4436,8 @@
 		<column from="Host/Count" to="Кол-во хостов"/>
 		<column from="Speed" to="Скорость"/>
 		<column from="Client" to="Клиент"/>
+		<column from="Time" to="Время"/>
+		<column from="Country" to="Страна"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Название"/>

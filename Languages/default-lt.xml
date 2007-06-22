@@ -4257,6 +4257,8 @@
 		<column from="Host/Count" to="Adresatas/Kiekis"/>
 		<column from="Speed" to="Sparta"/>
 		<column from="Client" to="Klientas"/>
+		<column from="Time" to="Laikas"/>
+		<column from="Country" to="Šalis"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Pavadinimas"/>
