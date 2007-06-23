@@ -374,57 +374,46 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 		// There was a problem with the tracker
 		m_bTorrentTrackerError = TRUE;
 		m_sTorrentTrackerError.Empty();
-		m_pTorrent.SetTrackerFailed(tNow);
+		m_pTorrent.m_pAnnounceTracker->m_nFailures++;
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
 		
-		if ( m_pTorrent.m_nTrackerMode == tMultiFound )
-		{
-			// Start looking for another tracker
-			m_pTorrent.m_nTrackerMode = tMultiFinding;
-		}
-		else if ( pszReason != NULL )
+		if ( pszReason != NULL )
 		{
 			// If the tracker responded with an error, don't bother retrying
 			// Display reason, and back off for an hour
-			m_sTorrentTrackerError = pszReason;
 			m_tTorrentTracker = tNow + 60 * 60 * 1000;
+			m_pTorrent.m_pAnnounceTracker->m_nFailures = 0;
+			m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
+			m_sTorrentTrackerError = pszReason;
+		}
+		else if ( m_pTorrent.GetTrackerFailures() >= Settings.BitTorrent.MaxTrackerRetry )
+		{
+			// This tracker is probably down. Don't hammer it. Back off for an hour.
+			m_tTorrentTracker = tNow + 60 * 60 * 1000;
+			m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
+			LoadString( m_sTorrentTrackerError, IDS_BT_TRACKER_DOWN );
 		}
 		else
 		{
-			// If we couldn't contact the tracker, check if we should re-try
-			if ( m_pTorrent.GetTrackerFailures() <= Settings.BitTorrent.MaxTrackerRetry )
-			{
-				// Tracker or connection may have just glitched. Re-try in 20-120 seconds.
-				DWORD tRetryTime = pow( (float)m_pTorrent.GetTrackerFailures() / 3 + 1, 2);
-				tRetryTime += int( m_pTorrent.GetTrackerFailures() / 3 + 1 );
-				tRetryTime *= 10000;
-				m_tTorrentTracker = tNow + tRetryTime;
+			// Tracker or connection may have just glitched. Re-try in 20-3600 seconds.
+			m_tTorrentTracker = tNow + GetRetryTime();
+			m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
 
-				// Load the error message string
-				CString strErrorMessage;
-				LoadString( strErrorMessage, IDS_BT_TRACKER_RETRY );
-				m_sTorrentTrackerError.Format( strErrorMessage, m_pTorrent.GetTrackerFailures(), Settings.BitTorrent.MaxTrackerRetry );
-			}
-			else
-			{
-				// This tracker is probably down. Don't hammer it.
-				// back off for an hour
-				m_tTorrentTracker = tNow + 60 * 60 * 1000;
-				LoadString( m_sTorrentTrackerError, IDS_BT_TRACKER_DOWN );
-			}
+			// Load the error message string
+			CString strErrorMessage;
+			LoadString( strErrorMessage, IDS_BT_TRACKER_RETRY );
+			m_sTorrentTrackerError.Format( strErrorMessage, m_pTorrent.GetTrackerFailures() + 1, Settings.BitTorrent.MaxTrackerRetry );
 		}
+		theApp.Message( MSG_ERROR, m_sTorrentTrackerError );
 
-		if ( m_pTorrent.m_nTrackerMode == tMultiFinding )
+		if ( m_pTorrent.IsMultiTracker() &&
+			( pszReason != NULL || m_pTorrent.GetTrackerFailures() >= Settings.BitTorrent.MaxTrackerRetry ) )
 		{
-			ASSERT ( m_pTorrent.IsMultiTracker() );
+			// Try the next one
+			m_pTorrent.SetTrackerNext( tNow );
 
-			// This is a multitracker torrent and we're finding, then try the next one.
-			m_pTorrent.SetTrackerNext();
-
-			DWORD tRetryTime = pow( (float)m_pTorrent.GetTrackerFailures() / 3 + 1, 2);
-			tRetryTime += int( m_pTorrent.GetTrackerFailures() / 3 + 1 );
-			tRetryTime *= 10000;
-			m_tTorrentTracker = tNow + tRetryTime;
+			// Set retry time
+			m_tTorrentTracker = m_pTorrent.m_pAnnounceTracker->m_tNextTry;
 			
 			// Load the error message string
 			CString strErrorMessage;
@@ -433,6 +422,17 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 			theApp.Message( MSG_ERROR, m_sTorrentTrackerError );
 		}
 	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTorrent tracker retry calculation
+
+DWORD CDownloadWithTorrent::GetRetryTime() const
+{
+	DWORD tRetryTime = pow( (float)m_pTorrent.GetTrackerFailures() / 3 + 1, 2 );
+	tRetryTime += int( m_pTorrent.GetTrackerFailures() / 3 + 1 );
+	tRetryTime *= 10000;
+	return tRetryTime > 60 * 60 * 1000 ? 60 * 60 * 1000 : tRetryTime;
 }
 
 //////////////////////////////////////////////////////////////////////

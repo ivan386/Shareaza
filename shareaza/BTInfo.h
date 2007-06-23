@@ -67,7 +67,7 @@ public:
 		CString		m_sAddress;
 		DWORD		m_tLastAccess;
 		DWORD		m_tLastSuccess;
-		DWORD		m_tLastFail;
+		DWORD		m_tNextTry;
 		INT			m_nFailures;
 		INT			m_nTier;
 		INT			m_nType;
@@ -119,8 +119,8 @@ public:
 public:
 	void		SetTrackerAccess(DWORD tNow);
 	void		SetTrackerSucceeded(DWORD tNow);
-	void		SetTrackerFailed(DWORD tNow);
-	void		SetTrackerNext();
+	void		SetTrackerRetry(DWORD tNow);
+	void		SetTrackerNext(DWORD tNow = 0);
 	INT			GetTrackerFailures() const;
 protected:
 	BOOL		CheckFiles();

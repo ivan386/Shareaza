@@ -588,7 +588,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				}
 			}
 		}
-		if ( IsMultiTracker() ) SetTrackerNext();
+		SetTrackerNext();
 	}
 
 	// Get announce
@@ -1018,7 +1018,7 @@ void CBTInfo::SetTrackerSucceeded(DWORD tNow)
 	return;
 }
 
-void CBTInfo::SetTrackerFailed(DWORD tNow)
+void CBTInfo::SetTrackerRetry(DWORD tNow)
 {
 	ASSERT ( m_nTrackerMode != tNull );
 	
@@ -1026,27 +1026,35 @@ void CBTInfo::SetTrackerFailed(DWORD tNow)
 	if ( m_nTrackerMode == tCustom ) return;
 
 	ASSERT ( m_pAnnounceTracker );
-	m_pAnnounceTracker->m_tLastFail = tNow;
-	m_pAnnounceTracker->m_nFailures++;
+	m_pAnnounceTracker->m_tNextTry = tNow;
 
 	return;
 }
 
-void CBTInfo::SetTrackerNext()
+void CBTInfo::SetTrackerNext(DWORD tNow)
 {
 	// Make sure this is a multitracker torrent
 	if ( ! IsMultiTracker() ) return;
+
+	// Get Current time
+	if ( !tNow ) tNow = GetTickCount();
 
 	// Set us as searching for a new one
 	m_nTrackerMode = tMultiFinding;
 
 	// Get the next tracker to try
-	m_nTrackerIndex ++;
-
-	if ( m_nTrackerIndex >= m_pTrackerList.GetCount() )
-		m_nTrackerIndex = 0;
-
+	m_nTrackerIndex = 0;
 	m_pAnnounceTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+	for ( int nTracker = 0 ; nTracker < m_pTrackerList.GetCount() ; nTracker++ )
+	{
+		CBTTracker* pTracker = m_pTrackerList.GetAt( nTracker );
+		if ( pTracker->m_tNextTry < tNow ) pTracker->m_tNextTry = 0;
+		if ( m_pAnnounceTracker->m_tNextTry > pTracker->m_tNextTry )
+		{
+			m_pAnnounceTracker = pTracker;
+			m_nTrackerIndex = nTracker;
+		}
+	}
 	ASSERT ( m_pAnnounceTracker );
 
 	// Set the tracker address as the one we are using
@@ -1069,12 +1077,11 @@ INT CBTInfo::GetTrackerFailures() const
 CBTInfo::CBTTracker::CBTTracker() :
 	m_tLastAccess		( 0 )
 ,	m_tLastSuccess		( 0 )
-,	m_tLastFail			( 0 )
+,	m_tNextTry			( 0 )
 ,	m_nFailures			( 0 )
 ,	m_nTier				( 0 )
 ,	m_nType				( 0 )
 {
-	m_sAddress.Empty();
 }
 
 CBTInfo::CBTTracker::~CBTTracker()
@@ -1090,7 +1097,7 @@ void CBTInfo::CBTTracker::Copy(CBTTracker* pSource)
 	m_sAddress			= pSource->m_sAddress;
 	m_tLastAccess		= pSource->m_tLastAccess;
 	m_tLastSuccess		= pSource->m_tLastSuccess;
-	m_tLastFail			= pSource->m_tLastFail;
+	m_tNextTry			= pSource->m_tNextTry;
 	m_nFailures			= pSource->m_nFailures;
 	m_nTier				= pSource->m_nTier;
 	m_nType				= pSource->m_nType;
@@ -1106,7 +1113,7 @@ void CBTInfo::CBTTracker::Serialize(CArchive& ar, int /*nVersion*/)
 		ar << m_sAddress;
 		ar << m_tLastAccess;
 		ar << m_tLastSuccess;
-		ar << m_tLastFail;
+		ar << m_tNextTry;
 		ar << m_nFailures;
 		ar << m_nTier;
 		ar << m_nType;
@@ -1116,7 +1123,7 @@ void CBTInfo::CBTTracker::Serialize(CArchive& ar, int /*nVersion*/)
 		ar >> m_sAddress;
 		ar >> m_tLastAccess;
 		ar >> m_tLastSuccess;
-		ar >> m_tLastFail;
+		ar >> m_tNextTry;
 		ar >> m_nFailures;
 		ar >> m_nTier;
 		ar >> m_nType;

@@ -124,9 +124,9 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 
 		// Display status
 		CString sStatus;
-		if ( ( pTrack->m_tLastFail == 0 ) && ( pTrack->m_tLastSuccess == 0 ) )
+		if ( ( pTrack->m_tNextTry == 0 ) && ( pTrack->m_tLastSuccess == 0 ) )
 			LoadString( sStatus, IDS_STATUS_UNKNOWN );
-		else if ( pTrack->m_tLastFail > pTrack->m_tLastSuccess )
+		else if ( pTrack->m_tNextTry > pTrack->m_tLastSuccess )
 			LoadString( sStatus, IDS_STATUS_TRACKERDOWN );
 		else
 			LoadString( sStatus, IDS_STATUS_ACTIVE );
@@ -153,9 +153,9 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		
 		// Display status
 		CString sStatus;
-		if ( ( m_pInfo->m_pAnnounceTracker->m_tLastFail == 0 ) && ( m_pInfo->m_pAnnounceTracker->m_tLastSuccess == 0 ) )
+		if ( ( m_pInfo->m_pAnnounceTracker->m_tNextTry == 0 ) && ( m_pInfo->m_pAnnounceTracker->m_tLastSuccess == 0 ) )
 			LoadString( sStatus, IDS_STATUS_UNKNOWN );
-		else if ( m_pInfo->m_pAnnounceTracker->m_tLastFail > m_pInfo->m_pAnnounceTracker->m_tLastSuccess )
+		else if ( m_pInfo->m_pAnnounceTracker->m_tNextTry > m_pInfo->m_pAnnounceTracker->m_tLastSuccess )
 			LoadString( sStatus, IDS_STATUS_TRACKERDOWN );
 		else
 			LoadString( sStatus, IDS_STATUS_ACTIVE );
