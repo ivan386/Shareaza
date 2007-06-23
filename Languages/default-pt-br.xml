@@ -4275,6 +4275,8 @@
 		<column from="Host/Count" to="Host/Contagem"/>
 		<column from="Speed" to="Velocidade"/>
 		<column from="Client" to="Cliente"/>
+		<column from="Time" to="Data/Hora"/>
+		<column from="Country" to="País"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Nome"/>
