@@ -106,11 +106,7 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 			{
 				CString strType;
 
-				if ( pszType == RT_BITMAP || _tcscmp( pszType, RT_BMP ) == 0 )
-				{
-					pszType = _T(".bmp");
-				}
-				else if ( _tcscmp( pszType, RT_JPEG ) == 0 )
+				if ( _tcscmp( pszType, RT_JPEG ) == 0 )
 				{
 					pszType = _T(".jpg");
 				}
