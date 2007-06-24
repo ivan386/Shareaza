@@ -28,6 +28,7 @@
 
 #include "CoolInterface.h"
 #include "ImageServices.h"
+#include "ImageFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -219,10 +220,13 @@ void CRichElement::PrePaintBitmap(CDC* /*pDC*/)
 	}
 	else
 	{
+		CBitmap pBitmap;
+		CImageFile pFile;
+
 		CString strFile = Settings.General.Path + '\\' + m_sText;
-		HBITMAP hBitmap = (HBITMAP)LoadImage( AfxGetResourceHandle(),
-			strFile, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );
-		m_hImage = theApp.m_bRTL ? CreateMirroredBitmap( hBitmap ) : hBitmap;
+		if ( ! pFile.LoadFromFile( strFile ) ) return;
+		if ( ! pFile.EnsureRGB() ) return;
+		m_hImage = pFile.CreateBitmap();
 	}
 }
 
