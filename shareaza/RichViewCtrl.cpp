@@ -371,14 +371,6 @@ void CRichViewCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 		{
 			ReleaseCapture();
 
-			if ( m_bDefaultLink && pFrag->m_pElement->m_sLink.Find( _T("http://") ) == 0 )
-			{
-				// CShareazaApp::InternalURI intercepts it
-
-				//ShellExecute( GetSafeHwnd(), _T("open"), pFrag->m_pElement->m_sLink,
-				//	NULL, NULL, SW_SHOWNORMAL );
-			}
-
 			if ( m_pHover == pFrag->m_pElement && m_pHover->m_nType == retLink )
 			{
 				KillTimer( 1 );
