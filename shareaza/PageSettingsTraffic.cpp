@@ -221,6 +221,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Discovery.DefaultUpdate, 60, 1, 60 * 24, _T(" m") );
 	AddSetting( &Settings.Discovery.BootstrapCount, 1, 0, 20 );
 	AddSetting( &Settings.Discovery.CacheCount, 1, 1, 256 );
+	AddSetting( &Settings.Discovery.DisableG1GWC, 1, 0, 1 );
 
 	AddSetting( &Settings.Search.HighlightNew, 1, 0, 1);
 	AddSetting( &Settings.Search.SchemaTypes, 1, 0, 1 );

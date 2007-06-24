@@ -248,8 +248,9 @@ public:
 		CString		G2DAddress;
 		DWORD		G2DRetryAfter;
 		int			CacheCount;					// Limit ability to learn new caches
+		BOOL		DisableG1GWC;
 	} Discovery;
-	
+
 	struct sGnutella
 	{
 		DWORD		ConnectFactor;
