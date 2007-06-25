@@ -49,7 +49,7 @@ SetupIconFile=setup\misc\install.ico
 ShowComponentSizes=no
 WizardImageFile=setup\misc\sidebar.bmp
 WizardSmallImageFile=setup\misc\corner.bmp
-;AppModifyPath="{app}\Uninstall\repair.exe"
+AppModifyPath="{app}\Uninstall\setup.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
 OutputManifestFile=Manifest.txt
@@ -310,13 +310,16 @@ Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Sharea
 Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
 Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
 
-Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
-Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{app}\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
-Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
-Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
+Name: "{ini:{param:SETTINGS|},Locations,UserPath|{reg:HKCU\Software\Shareaza\Shareaza,UserPath|{userappdata}\Shareaza}}\Data"; Flags: uninsalwaysuninstall; Tasks: multiuser
+Name: "{ini:{param:SETTINGS|},Locations,Path|{reg:HKCU\Software\Shareaza\Shareaza,Path|{app}}}\Data"; Flags: uninsalwaysuninstall; Tasks: multiuser
 
-Name: "{userappdata}\Shareaza\Data"; Flags: uninsalwaysuninstall; Tasks: multiuser
 
+Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
+Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{app}\Incomplete}}"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
+Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}}"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
+Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}}"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
+
+Name: "{ini:{param:SETTINGS|},Locations,Path|{reg:HKCU\Software\Shareaza\Shareaza,Path|{app}}}\Data"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
 
 [InstallDelete]
 ; Clean up old files from Shareaza
@@ -329,8 +332,8 @@ Type: files; Name: "{app}\LICENSE.txt"
 Type: files; Name: "{app}\uninstall.exe"
 Type: files; Name: "{app}\Uninstall\repair.exe"
 Type: files; Name: "{app}\Plugins\DivFix.dll"
-Type: files; Name: "{app}\Plugins\libgfl240.dll"
-Type: files; Name: "{app}\Plugins\libgfl254.dll"
+Type: files; Name: "{app}\Plugins\libgfl*.dll"
+Type: files; Name: "{app}\libgfl*.dll"
 Type: files; Name: "{app}\Skins\skin.exe"
 Type: files; Name: "{app}\*.dat"
 Type: files; Name: "{app}\*.xml"
