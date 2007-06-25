@@ -224,7 +224,7 @@ void CSettings::Setup()
 	Add( _T("Discovery.G2DAddress"), &Discovery.G2DAddress, _T("stats.shareaza.com:6446") );
 	Add( _T("Discovery.G2DRetryAfter"), &Discovery.G2DRetryAfter, 0 );
 	Add( _T("Discovery.CacheCount"), &Discovery.CacheCount, 50 );
-	Add( _T("Discovery.DisableG1GWC"), &Discovery.DisableG1GWC, TRUE );
+	Add( _T("Discovery.EnableG1GWC"), &Discovery.EnableG1GWC, FALSE );
 
 	Add( _T("Gnutella.ConnectFactor"), &Gnutella.ConnectFactor, 4 );
 	Add( _T("Gnutella.DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, TRUE );

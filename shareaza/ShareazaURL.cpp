@@ -1010,7 +1010,7 @@ BOOL CShareazaURL::ParseDiscovery(LPCTSTR pszURL, int nType)
 		}
 		else if ( bG1 )
 		{
-			if ( !Settings.Discovery.DisableG1GWC )
+			if ( Settings.Discovery.EnableG1GWC )
 				m_nProtocol = PROTOCOL_G1;
 			else
 				return FALSE;

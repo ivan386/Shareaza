@@ -890,7 +890,7 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 		switch ( nProtocol )
 		{
 		case PROTOCOL_G1:
-			if ( !Settings.Discovery.DisableG1GWC &&
+			if ( Settings.Discovery.EnableG1GWC &&
 				( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella1 ) &&
 				( tNow - pService->m_tAccessed > pService->m_nAccessPeriod ) )
 				pServices.Add( pService );
