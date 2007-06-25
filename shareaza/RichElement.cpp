@@ -220,7 +220,6 @@ void CRichElement::PrePaintBitmap(CDC* /*pDC*/)
 	}
 	else
 	{
-		CBitmap pBitmap;
 		CImageFile pFile;
 
 		CString strFile = Settings.General.Path + '\\' + m_sText;
