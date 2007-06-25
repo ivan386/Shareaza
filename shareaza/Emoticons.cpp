@@ -400,7 +400,7 @@ BOOL CEmoticons::LoadTrillian(LPCTSTR pszFile)
 
 void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNewlines)
 {
-	static LPCTSTR pszURLs[] = { _T("\r\n"), _T("http://"), _T("magnet:?"), _T("gnutella:"), _T("gnet:"), _T("ftp://"), _T("raza:"), _T("shareaza:"), _T("ed2k://"), _T("sig2dat:"), _T("www."), NULL };
+	static LPCTSTR pszURLs[] = { _T("\r\n"), _T("http://"), _T("https://"), _T("ftp://"), _T("mailto:"), _T("aim:"), _T("magnet:?"), _T("gnutella:"), _T("gnet:"), _T("raza:"), _T("shareaza:"), _T("gwc:"), _T("uhc:"), _T("ukhl:"), _T("gnutella1:"), _T("gnutella2:"), _T("mp2p:"), _T("ed2k://"), _T("sig2dat:"), _T("www."), NULL };
 	BOOL bBold = FALSE, bItalic = FALSE, bUnderline = FALSE;
 	COLORREF cr = 0;
 	CString str;

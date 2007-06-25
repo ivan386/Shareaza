@@ -990,13 +990,20 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 		}
 	}
 	else if (	strURI.Find( _T("http://") ) == 0 ||
+				strURI.Find( _T("https://") ) == 0 ||
 				strURI.Find( _T("ftp://") ) == 0 ||
 				strURI.Find( _T("mailto:") ) == 0 ||
 				strURI.Find( _T("aim:") ) == 0 ||
 				strURI.Find( _T("magnet:") ) == 0 ||
 				strURI.Find( _T("gnutella:") ) == 0 ||
-				strURI.Find( _T("shareaza:") ) == 0 ||
 				strURI.Find( _T("gnet:") ) == 0 ||
+				strURI.Find( _T("shareaza:") ) == 0 ||
+				strURI.Find( _T("gwc:") ) == 0 ||
+				strURI.Find( _T("uhc:") ) == 0 ||
+				strURI.Find( _T("ukhl:") ) == 0 ||
+				strURI.Find( _T("gnutella1:") ) == 0 ||
+				strURI.Find( _T("gnutella2:") ) == 0 ||
+				strURI.Find( _T("mp2p:") ) == 0 ||
 				strURI.Find( _T("ed2k:") ) == 0 ||
 				strURI.Find( _T("sig2dat:") ) == 0 )
 	{

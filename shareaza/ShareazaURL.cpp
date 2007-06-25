@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -197,6 +197,14 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL, BOOL bResolve)
 	else if (	_tcsnicmp( pszURL, _T("shareaza:"), 9 ) == 0 ||
 				_tcsnicmp( pszURL, _T("gnutella:"), 9 ) == 0 )
 	{
+		SkipSlashes( pszURL, 9 );
+		return ParseShareaza( pszURL );
+	}
+	else if ( _tcsnicmp( pszURL, _T("gwc:"), 4 ) == 0 )
+	{
+		CString strTemp;
+		strTemp.Format( _T("shareaza:%s"), pszURL );
+		pszURL = strTemp;
 		SkipSlashes( pszURL, 9 );
 		return ParseShareaza( pszURL );
 	}
@@ -966,11 +974,55 @@ BOOL CShareazaURL::ParseDiscovery(LPCTSTR pszURL, int nType)
 		 _tcsncmp( pszURL, _T("ukhl:"), 5 ) != 0 &&
 		 _tcsncmp( pszURL, _T("gnutella1:host:"), 15 ) != 0 &&
 		 _tcsncmp( pszURL, _T("gnutella2:host:"), 15 ) != 0 ) return FALSE;
-	
+
+	int nPos;
+	CString strURL, strNets, strTemp = pszURL;
+	m_nProtocol = PROTOCOL_NULL;
+
+	nPos = strTemp.Find( '?' );
+
+	if ( nPos >= 0 )
+	{
+		strURL = strTemp.Left( nPos );
+		strNets = strTemp.Mid( nPos + 1 );
+	}
+	else
+		strURL = strTemp;
+
+	if ( _tcsnicmp( strNets, _T("nets="), 5 ) == 0 )
+	{
+		BOOL bG1 = FALSE, bG2 = FALSE;
+
+		if ( _tcsistr( strNets, (LPCTSTR)_T("gnutella2") ) )
+		{
+			bG2 = TRUE;
+			strNets.Replace( _T("gnutella2"), _T("") );
+		}
+
+		if ( _tcsistr( strNets, (LPCTSTR)_T("gnutella") ) )
+			bG1 = TRUE;
+
+		if ( bG1 && bG2 )
+			;
+		else if ( bG2 )
+		{
+			m_nProtocol = PROTOCOL_G2;
+		}
+		else if ( bG1 )
+		{
+			if ( !Settings.Discovery.DisableG1GWC )
+				m_nProtocol = PROTOCOL_G1;
+			else
+				return FALSE;
+		}
+		else
+			return FALSE;
+	}
+
 	m_nAction	= uriDiscovery;
-	m_sURL		= pszURL;
+	m_sURL		= strURL;
 	m_nSize		= nType;
-	
+
 	return TRUE;
 }
 
@@ -1045,7 +1097,7 @@ void CShareazaURL::Register(BOOL bOnStartup)
 {
 	RegisterShellType( _T("shareaza"), _T("URL:Shareaza P2P"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 	RegisterMagnetHandler( _T("Shareaza"), _T("Shareaza Peer to Peer"), _T("Shareaza can automatically search for and download the selected content its peer-to-peer networks."), _T("Shareaza"), IDR_MAINFRAME );
-	
+
 	if ( Settings.Web.Magnet )
 	{
 		RegisterShellType( _T("magnet"), _T("URL:Magnet Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
@@ -1054,7 +1106,7 @@ void CShareazaURL::Register(BOOL bOnStartup)
 	{
 		UnregisterShellType( _T("magnet") );
 	}
-	
+
 	if ( Settings.Web.Gnutella )
 	{
 		RegisterShellType( _T("gnutella"), _T("URL:Gnutella Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
@@ -1063,6 +1115,7 @@ void CShareazaURL::Register(BOOL bOnStartup)
 		RegisterShellType( _T("ukhl"), _T("URL:Gnutella2 UDP known Hub Cache"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 		RegisterShellType( _T("gnutella1"), _T("URL:Gnutella1 Bootstrap"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 		RegisterShellType( _T("gnutella2"), _T("URL:Gnutella2 Bootstrap"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("gwc"), _T("URL:GWC Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 	}
 	else
 	{
@@ -1072,8 +1125,9 @@ void CShareazaURL::Register(BOOL bOnStartup)
 		UnregisterShellType( _T("ukhl") );
 		UnregisterShellType( _T("gnutella1") );
 		UnregisterShellType( _T("gnutella2") );
+		UnregisterShellType( _T("gwc") );
 	}
-	
+
 	if ( Settings.Web.ED2K )
 	{
 		RegisterShellType( _T("ed2k"), _T("URL:eDonkey2000 Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
@@ -1082,7 +1136,7 @@ void CShareazaURL::Register(BOOL bOnStartup)
 	{
 		UnregisterShellType( _T("ed2k") );
 	}
-	
+
 	if ( Settings.Web.Piolet )
 	{
 		RegisterShellType( _T("mp2p"), _T("URL:Piolet Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
@@ -1091,7 +1145,7 @@ void CShareazaURL::Register(BOOL bOnStartup)
 	{
 		UnregisterShellType( _T("mp2p") );
 	}
-	
+
 	if ( ( ! bOnStartup ) || ( ! Settings.Live.FirstRun ) )
 	{
 		if ( Settings.Web.Torrent )
@@ -1104,10 +1158,10 @@ void CShareazaURL::Register(BOOL bOnStartup)
 			UnregisterShellType( _T("bittorrent") );
 		}
 	}
-	
+
 	RegisterShellType( _T("Shareaza.Collection"), _T("Shareaza Collection File"),
 		_T(".co"), _T("Shareaza"), _T("COLLECTION"), IDI_COLLECTION );
-	
+
 	RegisterShellType( _T("Shareaza.Collection"), _T("Shareaza Collection File"),
 		_T(".collection"), _T("Shareaza"), _T("COLLECTION"), IDI_COLLECTION );
 
