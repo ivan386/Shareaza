@@ -312,7 +312,7 @@ void CBTInfo::Serialize(CArchive& ar)
 					pTracker->Serialize( ar, nVersion );
 					m_pTrackerList.Add( pTracker );
 				}
-				m_pAnnounceTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+				SetTrackerNext();
 			}
 		}
 	}
