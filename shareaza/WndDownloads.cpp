@@ -216,6 +216,7 @@ int CDownloadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CDownloadsWnd::OnDestroy() 
 {
 	CancelDrag();
+	KillTimer( 6 );
 	KillTimer( 4 );
 	KillTimer( 2 );
 	SaveState();
@@ -233,6 +234,8 @@ void CDownloadsWnd::OnSkinChange()
 
 void CDownloadsWnd::Update()
 {
+	if ( !IsWindow( m_hWnd ) ) return;
+
 	if ( m_bMouseCaptured )
 	{
 		ClipCursor( NULL );
