@@ -591,7 +591,7 @@ BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource*
 			return TRUE;
 		}
 
-		if ( ! pDownload->m_bExpanded ) continue;
+		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.Debug ) ) continue;
 
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 		{
