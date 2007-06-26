@@ -107,6 +107,7 @@ void CDownloadTransferBT::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 		m_pClient->m_pDownloadTransfer = NULL;
 		if ( m_pClient->IsOnline() )
 		{
+			m_pClient->m_mInput.pLimit = &Settings.Bandwidth.Request;
 			m_pClient->Send( CBTPacket::New( BT_PACKET_NOT_INTERESTED ) );
 		}
 		else
