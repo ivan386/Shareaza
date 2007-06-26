@@ -936,13 +936,16 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		if (m_pDownload->GetSourceCount() <= 1) 
 		{ 
 			// First source
-			CString strFilename;
+			CString strPhrase, strFilename;
 			int nPos = strValue.Find( _T("filename=") );
 			if ( nPos >= 0 ) 
 			{
-				strFilename = strValue.Mid( nPos + 9 );
+				// If exactly, it should follow RFC 2184 rules
+				strPhrase = URLDecode( strValue.Mid( nPos + 9 ) );
+				int nLength = strPhrase.GetLength();
+				strFilename = strPhrase.Mid( 1 , nLength - 2 );
 				theApp.Message( MSG_DEBUG, _T("Content-Disposition filename: %s"), (LPCTSTR)strFilename);
-				m_pDownload->Rename(strFilename);
+				m_pDownload->Rename( strFilename );
 			}		
 		}
 	}	
