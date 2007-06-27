@@ -31,7 +31,7 @@
 #include "ShellIcons.h"
 #include "XML.h"
 #include "Skin.h"
-#include "WndBaseMatch.h"
+#include "WndSearch.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -265,7 +265,6 @@ void CSearchPanel::ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWOR
 
 	if ( bStarted )
 	{
-		//LoadString( strCaption,  bSearching? IDS_SEARCH_PANEL_SEARCHING : IDS_SEARCH_PANEL_MORE );
 		if ( bSearching )
 		{
 			LoadString( strCaption, IDS_SEARCH_PANEL_SEARCHING );
@@ -503,9 +502,9 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	if ( ! m_wndSchemas.Create( WS_TABSTOP, rc, this, IDC_SCHEMAS ) ) return -1;
 	
+	m_wndSchemas.SetDroppedWidth( 200 );
 	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
-	m_wndSchemas.SendMessage( CB_SETDROPPEDWIDTH, 200 );
 
 	m_wndStart.Create( rc, this, IDC_SEARCH_START, WS_TABSTOP | BS_DEFPUSHBUTTON );
 	m_wndStart.SetHandCursor( TRUE );
@@ -526,12 +525,17 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CSearchInputBox::OnSkinChange()
 {
 	CString strCaption;
+	CSearchWnd* pwndSearch = static_cast< CSearchWnd* >( GetParent()->GetParent() );
+	BOOL bStarted = ! pwndSearch->IsPaused();
+	BOOL bSearching = ! pwndSearch->m_bWaitMore;
 
-	LoadString( strCaption, IDS_SEARCH_PANEL_START );
+	LoadString( strCaption, bStarted ?
+		( bSearching? IDS_SEARCH_PANEL_SEARCHING : IDS_SEARCH_PANEL_MORE ) :
+		IDS_SEARCH_PANEL_START );
 	m_wndStart.SetWindowText( strCaption );
 	m_wndStart.SetCoolIcon( ID_SEARCH_SEARCH, FALSE );
 
-	LoadString( strCaption, IDS_SEARCH_PANEL_STOP );
+	LoadString( strCaption, bStarted ? IDS_SEARCH_PANEL_STOP : IDS_SEARCH_PANEL_CLEAR );
 	m_wndStop.SetWindowText( strCaption );
 	m_wndStop.SetCoolIcon( ID_SEARCH_STOP, FALSE );
 
