@@ -71,13 +71,20 @@ BOOL CBrowseHeaderCtrl::Create(CWnd* pParentWnd)
 void CBrowseHeaderCtrl::Update(CHostBrowser* pBrowser)
 {
 	CGProfile* pProfile = pBrowser->m_pProfile;
-	CString strValue, strFormat, strItem;
+	CString strValue, strFormat, strNick;
 
-	if ( pProfile->IsValid() )
+	bool bNickIsPresent = false;
+
+	if ( pProfile != NULL )
 	{
-		strItem = pProfile->GetNick();
+		strNick = pProfile->GetNick();
+		bNickIsPresent = !strNick.IsEmpty();
+	}
+
+	if ( bNickIsPresent )
+	{
 		LoadString( strFormat, IDS_BROWSE_TITLE_FORMAT );
-		strValue.Format( strFormat, (LPCTSTR)strItem );
+		strValue.Format( strFormat, (LPCTSTR)strNick );
 	}
 	else
 	{
@@ -89,6 +96,7 @@ void CBrowseHeaderCtrl::Update(CHostBrowser* pBrowser)
 
 	if ( nProgress > 0.0f && nProgress < 1.0f )
 	{
+		CString strItem;
 		nProgress *= 100.0f;
 		strItem.Format( _T(" (%.1f%%)"), double( nProgress ) );
 		strValue += strItem;
@@ -105,8 +113,8 @@ void CBrowseHeaderCtrl::Update(CHostBrowser* pBrowser)
 	if ( pBrowser->m_nHits > 0 )
 	{
 		LoadString( strFormat, IDS_BROWSE_INTRO_FORMAT );
-		strValue.Format( strFormat, pBrowser->m_nHits, pProfile->IsValid()
-			? (LPCTSTR)pProfile->GetNick() : (LPCTSTR)CString( inet_ntoa( pBrowser->m_pAddress ) ) );
+		strValue.Format( strFormat, pBrowser->m_nHits, bNickIsPresent
+			? (LPCTSTR)strNick : (LPCTSTR)CString( inet_ntoa( pBrowser->m_pAddress ) ) );
 	}
 
 	if ( m_sIntro != strValue )

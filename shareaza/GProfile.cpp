@@ -60,10 +60,11 @@ BOOL CGProfile::IsValid() const
 {
 	if ( this == NULL ) return FALSE;
 	if ( m_pXML == NULL ) return FALSE;
+
+	// The whole identity and location tags are deleted if no attributes are present
 	CXMLElement* pIdentity = m_pXML->GetElementByName( _T("identity") );
 	CXMLElement* pLocation = m_pXML->GetElementByName( _T("location") );
-	return pIdentity != NULL && pIdentity->GetValue().GetLength() || 
-		   pLocation != NULL && pLocation->GetValue().GetLength();
+	return pIdentity != NULL || pLocation != NULL;
 }
 
 CXMLElement* CGProfile::GetXML(LPCTSTR pszElement, BOOL bCreate)
