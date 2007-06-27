@@ -62,7 +62,8 @@ BOOL CGProfile::IsValid() const
 	if ( m_pXML == NULL ) return FALSE;
 	CXMLElement* pIdentity = m_pXML->GetElementByName( _T("identity") );
 	CXMLElement* pLocation = m_pXML->GetElementByName( _T("location") );
-	return pIdentity != NULL || pLocation != NULL;
+	return pIdentity != NULL && pIdentity->GetValue().GetLength() || 
+		   pLocation != NULL && pLocation->GetValue().GetLength();
 }
 
 CXMLElement* CGProfile::GetXML(LPCTSTR pszElement, BOOL bCreate)
