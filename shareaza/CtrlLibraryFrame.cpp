@@ -128,7 +128,7 @@ BOOL CLibraryFrame::Create(CWnd* pParentWnd)
 {
 	CRect rect;
 	return CWnd::CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CLibraryFrame"),
-		WS_CHILD|WS_VISIBLE, rect, pParentWnd, IDC_LIBRARY_FRAME, NULL );
+		WS_CHILD|WS_VISIBLE, rect, pParentWnd, 0, NULL );
 }
 
 int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)

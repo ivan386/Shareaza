@@ -38,39 +38,38 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+IMPLEMENT_DYNAMIC(CHomeSearchCtrl, CWnd)
+
 BEGIN_MESSAGE_MAP(CHomeSearchCtrl, CWnd)
-	//{{AFX_MSG_MAP(CHomeSearchCtrl)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_CBN_CLOSEUP(IDC_SEARCH_TEXT, OnCloseUpText)
 	ON_CBN_SELCHANGE(IDC_SEARCH_TEXT, OnSelChangeText)
-	ON_BN_CLICKED(IDC_SEARCH_CREATE, OnSearchCreate)
-	ON_BN_CLICKED(IDC_SEARCH_ADVANCED, OnSearchAdvanced)
-	//}}AFX_MSG_MAP
+	ON_COMMAND(IDC_SEARCH_START, OnSearchStart)
+	ON_COMMAND(IDC_SEARCH_ADVANCED, OnSearchAdvanced)
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CHomeSearchCtrl construction
 
-CHomeSearchCtrl::CHomeSearchCtrl() :
-	m_pTextInput( NULL )
+CHomeSearchCtrl::CHomeSearchCtrl()
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CHomeSearchCtrl message handlers
 
-/*BOOL CHomeSearchCtrl::PreTranslateMessage(MSG* pMsg)
+BOOL CHomeSearchCtrl::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN )
 	{
-		PostMessage( WM_COMMAND, MAKELONG( IDC_SEARCH_CREATE, BN_CLICKED ), (LPARAM)m_wndSearch.GetSafeHwnd() );
+		PostMessage( WM_COMMAND, MAKELONG( IDC_SEARCH_START, BN_CLICKED ), (LPARAM)m_wndSearch.GetSafeHwnd() );
 		return TRUE;
 	}
 	return CWnd::PreTranslateMessage( pMsg );
-}*/
+}
 
 BOOL CHomeSearchCtrl::Create(CWnd* pParentWnd, UINT nID)
 {
@@ -90,24 +89,25 @@ int CHomeSearchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndText.SetFont( &theApp.m_gdiFont );
 
-	if ( ! m_wndSchema.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP, rc, this, IDC_SEARCH_SCHEMAS ) )
+	if ( ! m_wndSchema.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP, rc, this, IDC_SCHEMAS ) )
 		return -1;
 
 	m_wndSchema.SetDroppedWidth( 200 );
 	LoadString( m_wndSchema.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 	m_wndSchema.Load( Settings.Search.LastSchemaURI );
 
-	m_wndSearch.Create( rc, this, IDC_SEARCH_CREATE, WS_TABSTOP | BS_DEFPUSHBUTTON );
+	m_wndSearch.Create( rc, this, IDC_SEARCH_START, WS_TABSTOP | BS_DEFPUSHBUTTON );
 	m_wndSearch.SetHandCursor( TRUE );
+
 	m_wndAdvanced.Create( rc, this, IDC_SEARCH_ADVANCED, WS_TABSTOP );
 	m_wndAdvanced.SetHandCursor( TRUE );
 
-	Setup( CoolInterface.m_crWindow );
+	OnSkinChange( CoolInterface.m_crWindow );
 
 	return 0;
 }
 
-void CHomeSearchCtrl::Setup(COLORREF crWindow)
+void CHomeSearchCtrl::OnSkinChange(COLORREF crWindow)
 {
 	CString strCaption;
 
@@ -232,7 +232,7 @@ void CHomeSearchCtrl::OnSelChangeText()
 	OnCloseUpText();
 }
 
-void CHomeSearchCtrl::OnSearchCreate()
+void CHomeSearchCtrl::OnSearchStart()
 {
 	CString strText, strURI, strEntry, strClear;
 

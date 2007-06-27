@@ -524,18 +524,9 @@ BOOL CChildWnd::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
 
 BOOL CChildWnd::PreTranslateMessage(MSG* pMsg)
 {
-	// Hack to enable TAB-navigation
-	if ( ( pMsg->message == WM_KEYDOWN ||
-		   pMsg->message == WM_KEYUP ||
-		   pMsg->message == WM_CHAR ) &&
-		( pMsg->wParam == VK_UP ||
-		  pMsg->wParam == VK_DOWN ||
-		  pMsg->wParam == VK_LEFT ||
-		  pMsg->wParam == VK_RIGHT || 
-		  pMsg->wParam == VK_TAB ) )
-	{
-		if ( IsDialogMessage( pMsg ) )
-			return TRUE;
-	}
-	return CMDIChildWnd::PreTranslateMessage( pMsg );
+	// Hack to enable dialog-like navigation
+	if ( IsDialogMessage( pMsg ) )
+		return TRUE;
+	else
+		return CMDIChildWnd::PreTranslateMessage( pMsg );
 }

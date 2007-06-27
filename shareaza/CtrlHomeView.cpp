@@ -74,7 +74,7 @@ int CHomeViewCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndSearch.Create( this, IDC_HOME_SEARCH );
 
-	Setup();
+	OnSkinChange();
 
 	return 0;
 }
@@ -82,7 +82,7 @@ int CHomeViewCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 /////////////////////////////////////////////////////////////////////////////
 // CHomeViewCtrl operations
 
-void CHomeViewCtrl::Setup()
+void CHomeViewCtrl::OnSkinChange()
 {
 	m_pDocument.Clear();
 	m_peHeader = m_peSearch = m_peUpgrade = m_peRemote1 = m_peRemote2 = NULL;
@@ -96,7 +96,7 @@ void CHomeViewCtrl::Setup()
 	if ( pXML == NULL || ! m_pDocument.LoadXML( pXML, &pMap ) )
 	{
 		SetDocument( &m_pDocument );
-		m_wndSearch.Setup( m_pDocument.m_crBackground );
+		m_wndSearch.OnSkinChange( m_pDocument.m_crBackground );
 		return;
 	}
 
@@ -106,7 +106,7 @@ void CHomeViewCtrl::Setup()
 	pMap.Lookup( _T("RemoteAccessURL1"), m_peRemote1 );
 	pMap.Lookup( _T("RemoteAccessURL2"), m_peRemote2 );
 
-	m_wndSearch.Setup( m_pDocument.m_crBackground );
+	m_wndSearch.OnSkinChange( m_pDocument.m_crBackground );
 
 	SetDocument( &m_pDocument );
 	Update();

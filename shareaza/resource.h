@@ -3,7 +3,13 @@
 // Used by Shareaza.rc
 //
 #define IDC_SETUP                       3
+#define IDC_SEARCH_START                105
+#define IDC_SEARCH_STOP                 106
 #define IDD_SETTINGS_CONNECTION         107
+#define IDC_FILTER_BOX                  107
+#define IDC_SEARCH_BOX                  108
+#define IDC_SEARCH_ADVANCED             112
+#define IDC_SEARCH_TEXT                 113
 #define IDR_POPUPS                      126
 #define IDB_MENUBAR                     127
 #define IDR_MAINFRAME                   128

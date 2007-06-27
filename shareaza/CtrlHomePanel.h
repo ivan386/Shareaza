@@ -71,7 +71,7 @@ protected:
 
 // Operations
 public:
-	void	Setup();
+	void	OnSkinChange();
 	void	Update();
 	Item*	HitTest(const CPoint& point) const;
 	BOOL	ExecuteDownload(CDownload* pDownload);
@@ -128,7 +128,7 @@ protected:
 
 // Operations
 public:
-	void	Setup();
+	void	OnSkinChange();
 	void	Update();
 	Item*	HitTest(const CPoint& point) const;
 
@@ -172,7 +172,7 @@ protected:
 
 // Operations
 public:
-	void		Setup();
+	void		OnSkinChange();
 	void		Update();
 
 	//{{AFX_VIRTUAL(CHomeUploadsBox)
@@ -204,7 +204,7 @@ protected:
 
 // Operations
 public:
-	void	Setup();
+	void	OnSkinChange();
 	void	Update();
 
 	//{{AFX_VIRTUAL(CHomeConnectionBox)
@@ -237,7 +237,7 @@ protected:
 
 // Operations
 public:
-	void	Setup();
+	void	OnSkinChange();
 	void	Update();
 
 	//{{AFX_VIRTUAL(CHomeTorrentsBox)
@@ -269,7 +269,7 @@ public:
 
 // Operations
 public:
-	void	Setup();
+	void	OnSkinChange();
 	void	Update();
 
 // Overrides
@@ -286,10 +286,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
-
-
-
-//{{AFX_INSERT_LOCATION}}
 
 #define IDC_HOME_PANEL	111
 

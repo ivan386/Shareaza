@@ -100,9 +100,10 @@ void CHomeWnd::OnDestroy()
 
 void CHomeWnd::OnSkinChange()
 {
-	m_wndView.Setup();
-	m_wndPanel.Setup();
-	CChildWnd::OnSkinChange();
+	CPanelWnd::OnSkinChange();
+
+	m_wndView.OnSkinChange();
+	m_wndPanel.OnSkinChange();
 }
 
 void CHomeWnd::OnSize(UINT nType, int cx, int cy)

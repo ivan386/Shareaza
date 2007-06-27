@@ -24,43 +24,33 @@
 
 #pragma once
 
-
 class CIconButtonCtrl : public CWnd
 {
 	DECLARE_DYNAMIC(CIconButtonCtrl)
-// Construction
+
 public:
 	CIconButtonCtrl();
 
-// Attributes
+	void	SetText(LPCTSTR pszText);
+	void	SetIcon(HICON hIcon, BOOL bMirrored = FALSE);
+	void	SetCoolIcon(UINT nIconID, BOOL bMirrored = FALSE);
+	void	SetIcon(UINT nIconID, BOOL bMirrored = FALSE);
+	void	SetHandCursor(BOOL bCursor);
+
+	virtual BOOL Create(const RECT& rect, CWnd* pParentWnd, UINT nControlID, DWORD dwStyle = 0);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+
 protected:
 	CImageList	m_pImageList;
 	BOOL		m_bCapture;
 	BOOL		m_bDown;
 	BOOL		m_bCursor;
 
-// Operations
-public:
-	void	SetText(LPCTSTR pszText);
-	void	SetIcon(HICON hIcon, BOOL bMirrored = FALSE);
-	void	SetCoolIcon(UINT nIconID, BOOL bMirrored = FALSE);
-	void	SetIcon(UINT nIconID, BOOL bMirrored = FALSE);
-	void	SetHandCursor(BOOL bCursor);
-protected:
 	BOOL	RemoveStyle();
 
-// Overrides
-public:
-	virtual BOOL Create(const RECT& rect, CWnd* pParentWnd, UINT nControlID, DWORD dwStyle = 0);
-
-// Implementation
-protected:
-	//{{AFX_MSG(CIconButtonCtrl)
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnPaint();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
@@ -68,13 +58,9 @@ protected:
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnKillFocus(CWnd* pNewWnd);
 	afx_msg UINT OnGetDlgCode();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 
+	DECLARE_MESSAGE_MAP()
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #endif // !defined(AFX_CTRLICONBUTTON_H__5E629D93_681A_4631_BD16_166C2E025871__INCLUDED_)
-

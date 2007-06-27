@@ -142,16 +142,16 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CHomePanel::Setup()
+void CHomePanel::OnSkinChange()
 {
 	SetWatermark( Skin.GetWatermark( _T("CHomePanel") ) );
 	SetFooter( Skin.GetWatermark( _T("CHomePanel.Footer") ), TRUE );
 	
-	m_boxDownloads.Setup();
-	m_boxUploads.Setup();
-	m_boxConnection.Setup();
-	m_boxLibrary.Setup();
-	m_boxTorrents.Setup();
+	m_boxDownloads.OnSkinChange();
+	m_boxUploads.OnSkinChange();
+	m_boxConnection.OnSkinChange();
+	m_boxLibrary.OnSkinChange();
+	m_boxTorrents.OnSkinChange();
 	
 	Update();
 	Invalidate();
@@ -206,7 +206,7 @@ int CHomeDownloadsBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CHomeDownloadsBox::Setup()
+void CHomeDownloadsBox::OnSkinChange()
 {
 	if ( m_pDocument ) delete m_pDocument;
 	m_pDocument = NULL;
@@ -640,7 +640,7 @@ int CHomeLibraryBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CHomeLibraryBox::Setup()
+void CHomeLibraryBox::OnSkinChange()
 {
 	if ( m_pDocument ) delete m_pDocument;
 	m_pDocument = NULL;
@@ -998,7 +998,7 @@ CHomeUploadsBox::~CHomeUploadsBox()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeUploadsBox message handlers
 
-void CHomeUploadsBox::Setup()
+void CHomeUploadsBox::OnSkinChange()
 {
 	if ( m_pDocument ) delete m_pDocument;
 	m_pDocument = NULL;
@@ -1124,7 +1124,7 @@ CHomeConnectionBox::~CHomeConnectionBox()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeConnectionBox message handlers
 
-void CHomeConnectionBox::Setup()
+void CHomeConnectionBox::OnSkinChange()
 {
 	if ( m_pDocument ) delete m_pDocument;
 	m_pDocument = NULL;
@@ -1327,7 +1327,7 @@ CHomeTorrentsBox::~CHomeTorrentsBox()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeTorrentsBox message handlers
 
-void CHomeTorrentsBox::Setup()
+void CHomeTorrentsBox::OnSkinChange()
 {
 	if ( m_pDocument ) delete m_pDocument;
 	m_pDocument = NULL;

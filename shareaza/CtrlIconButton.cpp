@@ -33,21 +33,16 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CIconButtonCtrl, CWnd)
 
 BEGIN_MESSAGE_MAP(CIconButtonCtrl, CWnd)
-	//{{AFX_MSG_MAP(CIconButtonCtrl)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDBLCLK()
-	ON_WM_RBUTTONDOWN()
-	ON_WM_RBUTTONUP()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
 	ON_WM_ENABLE()
 	ON_WM_SETFOCUS()
 	ON_WM_KILLFOCUS()
 	ON_WM_GETDLGCODE()
-	ON_WM_CREATE()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -68,8 +63,14 @@ CIconButtonCtrl::CIconButtonCtrl()
 
 BOOL CIconButtonCtrl::Create(const RECT& rect, CWnd* pParentWnd, UINT nControlID, DWORD dwStyle)
 {
-	return CWnd::CreateEx( 0, NULL, _T(""), dwStyle | WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-		rect, pParentWnd, nControlID );
+	if ( CWnd::CreateEx( 0, NULL, _T(""), dwStyle | WS_CHILD | WS_VISIBLE,
+		rect, pParentWnd, nControlID ) )
+	{
+		// Fix
+		GetParent()->IsDlgButtonChecked( nControlID );
+		return TRUE;
+	}
+	return FALSE;
 }
 
 void CIconButtonCtrl::SetText(LPCTSTR pszText)
@@ -206,16 +207,6 @@ void CIconButtonCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 	OnLButtonDown( nFlags, point );
 }
 
-void CIconButtonCtrl::OnRButtonDown(UINT /*nFlags*/, CPoint /*point*/)
-{
-
-}
-
-void CIconButtonCtrl::OnRButtonUp(UINT /*nFlags*/, CPoint /*point*/)
-{
-
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CIconButtonCtrl paint message handlers
 
@@ -337,7 +328,6 @@ void CIconButtonCtrl::OnPaint()
 void CIconButtonCtrl::OnEnable(BOOL bEnable)
 {
 	CWnd::OnEnable( bEnable );
-
 	Invalidate();
 }
 
@@ -355,16 +345,15 @@ void CIconButtonCtrl::OnKillFocus(CWnd* pNewWnd)
 
 UINT CIconButtonCtrl::OnGetDlgCode()
 {
-	return DLGC_BUTTON;
+	return ( GetStyle() & BS_DEFPUSHBUTTON ) ? DLGC_DEFPUSHBUTTON : DLGC_UNDEFPUSHBUTTON;
 }
 
-int CIconButtonCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
+BOOL CIconButtonCtrl::PreTranslateMessage(MSG* pMsg)
 {
-	if ( CWnd::OnCreate( lpCreateStruct ) == -1 )
-		return -1;
-
-	// Fix
-	IsDlgButtonChecked( GetDlgCtrlID() );
-
-	return 0;
+	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_SPACE )
+	{
+		GetParent()->PostMessage( WM_COMMAND, MAKELONG( GetDlgCtrlID(), BN_CLICKED ), (LPARAM)GetSafeHwnd() );
+		return TRUE;
+	}
+	return CWnd::PreTranslateMessage( pMsg );
 }

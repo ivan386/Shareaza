@@ -133,9 +133,4 @@ protected:
 	friend class CLibraryView;
 };
 
-//{{AFX_INSERT_LOCATION}}
-
-#define IDC_LIBRARY_FRAME	130
-#define IDC_SEARCH_BOX		108
-
 #endif // !defined(AFX_CTRLLIBRARYFRAME_H__C39BE20E_4746_4FA8_B96D_B94ADC1F4ABA__INCLUDED_)

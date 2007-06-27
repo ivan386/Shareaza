@@ -239,9 +239,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-#define IDC_SEARCH_START				105
-#define IDC_SEARCH_STOP					106
-#define IDC_SEARCH_NETWORKS				107
 #define IDC_SEARCH_SIZEMIN				108
 #define IDC_SEARCH_SIZEMAX				109
 

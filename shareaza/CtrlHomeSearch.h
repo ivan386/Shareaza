@@ -27,58 +27,36 @@
 #include "CtrlSchemaCombo.h"
 #include "CtrlIconButton.h"
 
-
 class CHomeSearchCtrl : public CWnd
 {
-// Construction
 public:
 	CHomeSearchCtrl();
 
-// Attributes
-public:
+	DECLARE_DYNAMIC(CHomeSearchCtrl)
+
+	void	OnSkinChange(COLORREF crWindow);
+
+	virtual BOOL Create(CWnd* pParentWnd, UINT nID);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+
+protected:
 	CComboBox		m_wndText;
 	CSchemaCombo	m_wndSchema;
 	CIconButtonCtrl	m_wndSearch;
 	CIconButtonCtrl	m_wndAdvanced;
 	COLORREF		m_crWindow;
-private:
-	CWnd*			m_pTextInput; // Holds pointer to window that receives text input
 
-// Operations
-public:
-	void	Setup(COLORREF crWindow);
 	void	FillHistory();
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CHomeSearchCtrl)
-	virtual BOOL Create(CWnd* pParentWnd, UINT nID);
-//	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CHomeSearchCtrl)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
 	afx_msg void OnCloseUpText();
 	afx_msg void OnSelChangeText();
-	afx_msg void OnSearchCreate();
+	afx_msg void OnSearchStart();
 	afx_msg void OnSearchAdvanced();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#define IDC_SEARCH_TEXT		121
-#define IDC_SEARCH_SCHEMAS	122
-#ifndef IDC_SEARCH_CREATE
-#define IDC_SEARCH_CREATE	123
-#endif
-#define IDC_SEARCH_ADVANCED	124
 
 #endif // !defined(AFX_CTRLHOMESEARCH_H__40DC2FFE_0FF6_4A72_A7C5_74DC32305269__INCLUDED_)

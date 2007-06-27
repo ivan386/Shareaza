@@ -47,7 +47,7 @@ public:
 // Operations
 public:
 	virtual BOOL	Create(const RECT& rect, CWnd* pParentWnd);
-	void			Setup();
+	void			OnSkinChange();
 	void			Update();
 protected:
 	virtual void	OnLayoutComplete();
