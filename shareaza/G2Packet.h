@@ -90,6 +90,7 @@ const G2_PACKET G2_PACKET_DISCOVERY_LOG		= MAKE_G2_PACKET( 'D', 'I', 'S', 'C', '
 const G2_PACKET G2_PACKET_DISCOVERY_REQ		= MAKE_G2_PACKET( 'D', 'I', 'S', 'C', 'R',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_FILES				= MAKE_G2_PACKET( 'F', 'I', 'L', 'E', 'S',  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_FROM_ADDRESS		= MAKE_G2_PACKET( 'F', 'R',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_FW				= MAKE_G2_PACKET( 'F', 'W',  0 ,  0 ,  0 ,  0 ,  0 ,  0  ); // Extension. LNI Firewall Flag. From GnucDNAR3
 const G2_PACKET G2_PACKET_G1				= MAKE_G2_PACKET( 'G', '1',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_GPS				= MAKE_G2_PACKET( 'G', 'P', 'S',  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_GROUP_ID			= MAKE_G2_PACKET( 'G',  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0  );

@@ -98,6 +98,7 @@ protected:
 	int					m_nQueryLimiter;		// Counter for query limiting
 	DWORD				m_tQueryTimer;			// Timer for query limiting
 	BOOL				m_bBlacklisted;			// Has this client been over-querying.
+	BOOL				m_bFirewalled;			// Is the client reporting they are firewalled from /LNI/FW
 
 protected:
 	virtual BOOL	OnRead();

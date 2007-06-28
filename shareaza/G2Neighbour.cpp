@@ -529,6 +529,7 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 				CG2Neighbour* pNeighbour2 = static_cast< CG2Neighbour* >( pNeighbour );
 				if ( pNeighbour2->m_nState == nrsConnected &&
 					 pNeighbour2 != this &&
+					 !pNeighbour2->m_bFirewalled &&
 					 tNow - pNeighbour2->m_tLastRelayedPingOut >= Settings.Gnutella1.PingRate )
 				{
 					pG2Nodes.Add(  pNeighbour2 );
@@ -631,6 +632,11 @@ CG2Packet* CG2Neighbour::CreateLNIPacket(CG2Neighbour* pOwner)
 	pPacket->WritePacket( G2_PACKET_LIBRARY_STATUS, 8 );
 	pPacket->WriteLongBE( (DWORD)nMyFiles );
 	pPacket->WriteLongBE( (DWORD)nMyVolume );
+	if (Network.IsFirewalled())
+	{
+		theApp.Message( MSG_DEBUG, _T("Sending LNI/FW") );
+		pPacket->WritePacket( G2_PACKET_FW, 0 );
+	}
 
 	if ( ! Neighbours.IsG2Leaf() )
 	{
@@ -656,6 +662,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 
 	G2_PACKET nType;
 	DWORD nLength;
+	m_bFirewalled = FALSE; // Node may report /LNI/FW flag initially and later discover firewall status and not send it.
 
 	m_nLeafCount = 0;
 
@@ -688,6 +695,19 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 			m_nLeafCount = pPacket->ReadShortBE();
 			if ( nLength >= 4 )
 				m_nLeafLimit = pPacket->ReadShortBE();
+		}
+		else if ( nType == G2_PACKET_FW && nLength == 0 )
+		{
+			theApp.Message( MSG_DEFAULT, _T("Received /LNI/FW from %s:%lu"),
+				(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ),
+				htons( m_pHost.sin_port ) );
+
+			if ( m_nNodeType == ntHub )
+				theApp.Message( MSG_ERROR, _T("Hub %s:%lu sent LNI with firewall flag"),
+				(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ),
+				htons( m_pHost.sin_port ) );
+
+			m_bFirewalled = TRUE;
 		}
 		else if ( nType == G2_PACKET_QUERY_KEY )
 		{
