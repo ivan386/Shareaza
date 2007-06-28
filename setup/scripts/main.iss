@@ -1,5 +1,5 @@
 ; Comment the next line if you don't compile an alpha build
-#define alpha
+;#define alpha
 
 ; Uncomment the next line to compile a debug build without any files.
 ;#define debug
@@ -72,7 +72,7 @@ Name: "multiuser"; Description: "{cm:tasks_multisetup}"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 ;Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 0,5.01sp2
-Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 0,5.01; Check: CanUserModifyServices
+Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 0,5.01; Check: CanUserModifyServices; Flags: unchecked
 #ifndef alpha
 Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
 #endif
