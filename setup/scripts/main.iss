@@ -1,5 +1,5 @@
 ; Comment the next line if you don't compile an alpha build
-;#define alpha
+#define alpha
 
 ; Uncomment the next line to compile a debug build without any files.
 ;#define debug
