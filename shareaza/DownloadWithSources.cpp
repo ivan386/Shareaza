@@ -346,11 +346,16 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAd
 	if ( ( Settings.Connection.IgnoreOwnIP ) && Network.IsSelfIP( *pAddress ) ) 
 		return FALSE;
 
-	CDownloadWithTorrent* pDownload = (CDownloadWithTorrent*)this;
-	// Don't add sources received from the tracker if seeding. numwant parameter is optional
-	// and some trackers send the default 50 sources in spite that we specified it zero.
-	if ( pDownload->IsSeeding() )
-		return TRUE;
+	if ( !Settings.General.DebugBTSources )
+	{
+		CDownloadWithTorrent* pDownload = (CDownloadWithTorrent*)this;
+		if ( pDownload->IsSeeding() )
+			return TRUE;
+		else
+		{
+			// razacore.Debug + razacore.DebugBTSources have to be on
+		}
+	}
 
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
 }

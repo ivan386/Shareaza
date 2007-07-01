@@ -56,6 +56,7 @@ public:
 		CString		Language;
 		BOOL		IgnoreXPsp2;				// Ignore the presence of Windows XPsp2 limits
 		// BOOL		DebugUPnP;
+		BOOL		DebugBTSources;				// Display received sources for BT download when seeding
 		BOOL		ItWasLimited;				// If the user path the half-open connection limit we change the settings back to gain full speed
 	} General;
 
