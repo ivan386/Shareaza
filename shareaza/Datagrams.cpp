@@ -1251,7 +1251,7 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		return FALSE;
 	}
 
-	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
+	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) || !Settings.Gnutella2.EnableToday )
 	{
 		delete pSearch;
 		Statistics.Current.Gnutella2.Dropped++;
