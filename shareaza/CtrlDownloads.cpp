@@ -925,7 +925,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
   	{
  		if ( pDownload->m_bVerify == TS_FALSE )
  			crText = CoolInterface.m_crVerifyFail;
- 		else if ( pDownload->IsSeeding() )
+ 		else if ( pDownload->IsSeeding() && pDownload->m_nTorrentUploaded <= pDownload->m_nSize )
  			crText = CoolInterface.m_crVerifyPass;
   		else
  			crText = CoolInterface.m_crCompleted;
