@@ -325,21 +325,30 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 BOOL CSchemaCombo::PreTranslateMessage(MSG* pMsg)
 {
-	if ( pMsg->message == WM_KEYDOWN &&
-		( pMsg->wParam == VK_SPACE || pMsg->wParam == VK_RETURN ) )
+	if ( pMsg->message == WM_KEYDOWN )
 	{
-		if ( GetDroppedState() )
+		if ( pMsg->wParam == VK_SPACE || pMsg->wParam == VK_RETURN )
 		{
-			if ( ! OnClickItem( GetCurSel(), FALSE ) )
+			if ( GetDroppedState() )
 			{
-				ShowDropDown( FALSE );
+				if ( ! OnClickItem( GetCurSel(), TRUE ) )
+				{
+					ShowDropDown( FALSE );
+				}
+				return TRUE;
 			}
-			return TRUE;
+			else if ( pMsg->wParam == VK_SPACE )
+			{
+				ShowDropDown();
+				return TRUE;
+			}
 		}
-		else if ( pMsg->wParam == VK_SPACE )
+		else if ( pMsg->wParam == VK_DOWN )
 		{
-			ShowDropDown();
-			return TRUE;
+			if ( OnClickItem( GetCurSel() + 1, TRUE ) )
+			{
+				return TRUE;
+			}
 		}
 	}
 	return CComboBox::PreTranslateMessage( pMsg );
@@ -406,23 +415,22 @@ LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LP
 
 BOOL CSchemaCombo::OnClickItem(int nItem, BOOL bDown)
 {
-	if ( nItem != CB_ERR && GetItemData( nItem ) == 0 )
+	if ( nItem > 0 && GetItemData( nItem ) == 0 )
 	{
-		if ( ! bDown )
+		if ( bDown )
 		{
 			int nOldTop = GetTopIndex();
 			int nDelta = ( nOldTop != CB_ERR && nItem > nOldTop ) ? ( nItem - nOldTop ) : 0;
 			DeleteString( nItem );
 			Load( m_sPreDrop, m_nType, CSchema::saMax, FALSE );
 			int nCurSel = GetCurSel();
-			if ( nCurSel == CB_ERR )
+			if ( nCurSel != CB_ERR )
 			{
-				SetCurSel( 0 );
-				SetTopIndex( 0 );
-			}
-			else if ( nCurSel >= nDelta )
-			{
-				SetTopIndex( nCurSel - nDelta );
+				if ( nCurSel >= nDelta )
+				{
+					SetTopIndex( nCurSel - nDelta );
+				}
+				SetCurSel( nCurSel );
 			}
 		}		
 		return TRUE;
