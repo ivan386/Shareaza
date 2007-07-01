@@ -144,10 +144,6 @@ void CBTTrackerRequest::SendStarted(CDownload* pDownload, WORD nNumWant)
 
 void CBTTrackerRequest::SendUpdate(CDownload* pDownload, WORD nNumWant)
 {
-	// Shut up the bug here completely when the numwant not zero if seeding.
-	// It needs to track the bug down.
-	if ( pDownload->IsSeeding() )
-		nNumWant = 0;
 	if ( pDownload->m_pTorrent.m_sTracker.IsEmpty() ) return;
 
 	theApp.Message( MSG_DEFAULT, _T("Sending update tracker announce for %s"), pDownload->m_pTorrent.m_sName );
