@@ -506,7 +506,7 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 	{
 		// Don't try to connect to sources which we determined were bad
 		// We will check them later after 2 hours cleanup
-		m_pDownload->RemoveSource( (CDownloadSource*)this, TRUE );
+		m_pDownload->RemoveSource( (CDownloadSource*)this, !m_pDownload->IsSeeding() );
 		return FALSE;
 	}
 
@@ -535,7 +535,7 @@ void CDownloadSource::Remove(BOOL bCloseTransfer, BOOL bBan)
 		}
 	}
 	
-	m_pDownload->RemoveSource( this, bBan );
+	m_pDownload->RemoveSource( this, m_pDownload->IsSeeding() ? FALSE : bBan );
 }
 
 //////////////////////////////////////////////////////////////////////
