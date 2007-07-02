@@ -188,7 +188,7 @@ void CSettings::Setup()
 	Add( _T("Connection.SlowConnect"), &Connection.SlowConnect, FALSE );
 	Add( _T("Connection.EnableFirewallException"), &Connection.EnableFirewallException, TRUE );
 	Add( _T("Connection.DeleteFirewallException"), &Connection.DeleteFirewallException, FALSE );
-	Add( _T("Connection.EnableUPnP"), &Connection.EnableUPnP, TRUE );
+	Add( _T("Connection.EnableUPnP"), &Connection.EnableUPnP, FALSE );
 	Add( _T("Connection.DeleteUPnPPorts"), &Connection.DeleteUPnPPorts, TRUE );
 	Add( _T("Connection.SkipWANPPPSetup"), &Connection.SkipWANPPPSetup, FALSE );
 	Add( _T("Connection.SkipWANIPSetup"), &Connection.SkipWANIPSetup, FALSE );
@@ -549,7 +549,7 @@ void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	47
+#define SMART_VERSION	48
 
 void CSettings::Load()
 {
@@ -885,6 +885,10 @@ void CSettings::SmartUpgrade()
 
 		Gnutella.MaxResults = 150;
 	}
+
+	if ( nVersion < 48 )
+		Connection.EnableUPnP = FALSE;
+
 }
 
 void CSettings::OnChangeConnectionSpeed()
