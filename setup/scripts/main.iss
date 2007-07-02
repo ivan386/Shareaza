@@ -241,45 +241,83 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; V
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "IncompletePath"; ValueData: "{ini:{param:SETTINGS|},Locations,IncompletePath|{localappdata}\Shareaza\Incomplete}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: multiuser
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "TorrentPath"; ValueData: "{ini:{param:SETTINGS|},Locations,TorrentPath|{userappdata}\Shareaza\Torrents}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: multiuser
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CollectionPath"; ValueData: "{ini:{param:SETTINGS|},Locations,CollectionPath|{userappdata}\Shareaza\Collections}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: multiuser
+
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CompletePath"; ValueData: "{ini:{param:SETTINGS|},Locations,CompletePath|{app}\Downloads}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "IncompletePath"; ValueData: "{ini:{param:SETTINGS|},Locations,IncompletePath|{app}\Incomplete}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "TorrentPath"; ValueData: "{ini:{param:SETTINGS|},Locations,TorrentPath|{app}\Torrents}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CollectionPath"; ValueData: "{ini:{param:SETTINGS|},Locations,CollectionPath|{app}\Collections}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
 
+; Set permissions on registry keys
+Root: HKLM; Subkey: "SOFTWARE\Classes\.co"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\.collection"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\.torrent"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\bittorrent"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\ed2k"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\gnet"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella1"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella2"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\uhc"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\ukhl"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\magnet"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\mp2p"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\gwc"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\shareaza"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\Shareaza.Collection"; Permissions: users-modify; Tasks: not multiuser
+
 ; Delete keys at uninstall
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
+Root: HKU; Subkey: ".DEFAULT\Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: "Shareaza"; Flags: dontcreatekey uninsdeletevalue
-Root: HKCR; Subkey: ".co"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: ".collection"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: ".sks"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "ed2k"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "gnet"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "gnutella"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "magnet"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "mp2p"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "shareaza"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "Shareaza.*"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "Applications\shareaza.exe"; Flags: dontcreatekey uninsdeletekey
-Root: HKCR; Subkey: "Applications\skin.exe"; Flags: dontcreatekey uninsdeletekey
+
+Root: HKLM; Subkey: "SOFTWARE\Classes\.co"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\.collection"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\.torrent"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\bittorrent"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\.sks"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\ed2k"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\gnet"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella1"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella2"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\uhc"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\ukhl"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\magnet"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\mp2p"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\gwc"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\shareaza"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\Shareaza.*"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\Applications\Shareaza.exe"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\Applications\skin.exe"; Flags: dontcreatekey uninsdeletekey
+
+Root: HKCU; Subkey: "SOFTWARE\Classes\.co"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\.collection"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\.torrent"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\bittorrent"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\.sks"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\ed2k"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\gnet"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\gnutella"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\gnutella1"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\gnutella2"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\uhc"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\ukhl"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\magnet"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\mp2p"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\gwc"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\shareaza"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\Shareaza.*"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\Applications\Shareaza.exe"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\Applications\skin.exe"; Flags: dontcreatekey uninsdeletekey
+
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.sks"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.torrent"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\App Management\ARPCache\Shareaza_is1"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Microsoft\Windows\ShellNoRoam\MUICache"; ValueName:"{app}\Shareaza.exe"; Flags: dontcreatekey uninsdeletevalue
-Root: HKLM; Subkey: "SOFTWARE\Classes\.co"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\.collection"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\.sks"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\bittorrent"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\ed2k"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\gnet"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\magnet"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\mp2p"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\shareaza"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\Applications\Shareaza.exe"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\Applications\skin.exe"; Flags: dontcreatekey uninsdeletekey
+
 Root: HKLM; Subkey: "SOFTWARE\Magnet"; Flags: dontcreatekey uninsdeletekey
-Root: HKU; Subkey: ".DEFAULT\Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
+
 ; How did we end up inhere?
 Root: HKCU; Subkey: "Software\Intervideo\Common\AudioDec\Shareaza"; Flags: dontcreatekey uninsdeletekey
 
