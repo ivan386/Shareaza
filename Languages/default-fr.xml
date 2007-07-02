@@ -220,7 +220,7 @@ Other:
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Partager des fichiers..."/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -228,7 +228,7 @@ Other:
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Créer un album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Supprimer l'album"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -236,7 +236,7 @@ Other:
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Créer un album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Supprimer l'album"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -244,7 +244,7 @@ Other:
 		<button id="ID_LIBRARY_LAUNCH" text="Ouvrir ou lire"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Ajouter à la liste de lecture"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -258,7 +258,7 @@ Other:
 		<button id="ID_LIBRARY_COPY" text="Copier"/>
 		<button id="ID_LIBRARY_DELETE" text="Supprimer"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -267,7 +267,7 @@ Other:
 		<button id="ID_LIBRARY_ENQUEUE" text="Ajouter à la liste de lecture"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Lire l'album"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -278,7 +278,7 @@ Other:
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriétés"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -287,7 +287,7 @@ Other:
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Téléch. tous les fichiers"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
+		<separator/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -416,7 +416,6 @@ Other:
 		<button id="ImageViewer_Close" text="Fermer"/>
 	</toolbar>
 </toolbars>
-
 <!-- Menu Definitions -->
 <menus>
 	<!-- SIMPLE POPUP MENU -->
@@ -1480,18 +1479,14 @@ Other:
 		<item id="ImageViewer_Close" text="_Fermer"/>
 	</menu>
 </menus>
-
 <!-- Watermarks -->
 <watermarks>
 	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
 	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
 </watermarks>
-
 <!-- Documents -->
 <documents>
-
 	<!-- Home View -->
-
 	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
@@ -1728,9 +1723,7 @@ Other:
 			</group>
 		</para>
 	</document>
-
 	<!-- Settings Pages -->
-
 	<document name="CGeneralSettingsGroup" title="Général" leftMargin="8" topMargin="8">
 		<styles>
 			<style name="default">
@@ -1746,7 +1739,7 @@ Other:
 		<text>
 			sont liés aux habitudes de l'utilisateur.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Général:</link>
 		<gap size="4"/>
 		<text>Réglages communs de l'interface utilisateur comme l'aide contextuelle, le comportement du mode réduit, l'affichage des unités de tranferts, les notifications, etc.</text>
@@ -1783,7 +1776,7 @@ Other:
 		<text>
 			indiquent à Shareaza comment interagir avec les autres "nodes" présentes sur les réseaux distribués p2p.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Connexion:</link>
 		<gap size="4"/>
 		<text>Vitesses et caractéristiques de votre connexion Internet.</text>
@@ -1801,9 +1794,7 @@ Other:
 		<text>Configurer le contrôle à distance de Shareaza à partir d'un navigateur web.</text>
 		<newline gap="10"/>
 	</document>
-
 	<!-- Browse User Profile -->
-
 	<document name="CBrowseHostProfile.1">
 		<heading>Profil de </heading>
 		<heading id="Nick"/>
@@ -1899,9 +1890,7 @@ Other:
 		</group>
 		<newline gap="16" indent="0"/>
 	</document>
-
 	<!-- Download help documents -->
-
 	<document name="DownloadHelp.Select">
 		<text format="b">Zone de téléchargement</text>
 		<newline gap="8"/>
@@ -1979,17 +1968,13 @@ Other:
 		<newline gap="8"/>
 		<text>Le serveur du traqueur BitTorrent de ce téléchargement semble être hors ligne ou rencontrer des difficultés techniques. Shareaza est dans l'incapacité de le contacter et de recevoir une liste de participants au téléchargement.</text>
 	</document>
-	
 	<!-- Upload help documents -->
-
 	<document name="UploadHelp">
 		<text format="b">Zone des envois</text>
 		<newline gap="8"/>
 		<text>Ici sont affichés les files d'attentes et les envois. Vous pouvez expandre chaque file avec un petit + sur la gauche, et filtrer ce qui sera affiché avec le boutton sur la droite de la barre d'outil de la fenêtre.</text>
 	</document>
-
 	<!-- General help documents -->
-
 	<document name="GeneralHelp.DiskSpace">
 		<text format="b">L'espace disque est faible</text>
 		<newline gap="8"/>
@@ -2047,9 +2032,7 @@ Other:
 		<newline gap="8"/>
 		<text>Par défaut, votre limite d'envoi est mis à environ 85% de votre bande passante montante disponible, tandis que les téléchargements sont illimités. Cette configuration devrait vous donner les téléchargements disponibles les plus rapides possible.</text>
 	</document>
-
 	<!-- Search help documents -->
-
 	<document name="SearchHelp.BadSearch1">
 		<text format="b">Merci de reformuler votre recherche</text>
 		<newline gap="8"/>
@@ -2083,9 +2066,7 @@ Other:
 		<newline gap="8"/>
 		<text>Pour désactiver ce filtre, allez dans Outils &gt; Réglages de Shareaza &gt; Général et décocher le filtre du contenu adulte.</text>
 	</document>
-
 	<!-- Share help documents -->
-
 	<document name="ShareHelp.AlreadyShared">
 		<text format="b">Déjà partagé</text>
 		<newline gap="8"/>
@@ -2105,7 +2086,6 @@ Other:
 		<text>Le dossier 'Imcomplete' de Shareaza ne devrait également pas être partagé dans la bibliothèque car le hachage d'un téléchargement en progression peut avoir un impact négatif sur les performances.</text>
 	</document>
 </documents>
-
 <!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="Voir les fichiers partagés par l'utilisateur."/>
@@ -2416,7 +2396,6 @@ Other:
 	<tip id="ImageViewer_Refresh" message="Rafraîchir l'image."/>
 	<tip id="ImageViewer_Close" message="Fermer cette image."/>
 </commandTips>
-
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
@@ -2923,7 +2902,7 @@ Other:
 	<string id="17029" value="Échec de la poignée de main, l'hôte ne supporte peut-être pas la discussion."/>
 	<string id="17030" value="Poignée de main terminée, protocole de discussion version %s."/>
 	<string id="17031" value="Échange l'information du profil..."/>
-	<string id="17032" value="Utilisateur authentifié"/>
+	<string id="17032" value="Utilisateur authentifié "/>
 	<string id="17033" value="Demande une conversation privée avec l'utilisateur..."/>
 	<string id="17034" value="Conversation privée établie, vous discutez avec %s."/>
 	<string id="17035" value="%s n'accepte pas les conversations privées, dommage."/>
@@ -3127,7 +3106,6 @@ Other:
 	<string id="20235" value="Artiste"/>
 	<string id="20236" value="Evaluation"/>
 </strings>
-
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Réglages Shareaza">
@@ -4143,7 +4121,6 @@ Other:
 		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
 	</dialog>
 </dialogs>
-
 <!-- Columns Definitions -->
 <listColumns>
 	<list name="CLibraryWnd">
@@ -4243,6 +4220,8 @@ Other:
 		<column from="Host/Count" to="Hôte/Nombre"/>
 		<column from="Speed" to="Vitesse"/>
 		<column from="Client" to=""/>
+		<column from="Time" to="Temps"/>
+		<column from="Country" to="Pays"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Nom"/>
@@ -4281,21 +4260,21 @@ Other:
 </listColumns>
 <!-- Tips displayed when mouse is moved over controls in the dialogs  -->
 <tipMap>
- <control code="1228" id="IDC_AGENT_LIST"/>
- <control code="1050" id="IDC_MAX_TRANSFERS"/>
- <!--1374, idc_throttle_mode is already included in Shareaza-->
- <control code="1389" id="IDC_TORRENT_CLIENTLINKS"/>
- <control code="1394" id="IDC_TORRENT_AUTOCLEAR"/>
- <control code="1397" id="IDC_G2_CLIENTMODE"/>
- <control code="1409" id="IDC_G2_ALWAYS"/>
+<control code="1050" id="IDC_MAX_TRANSFERS"/>
+<control code="1228" id="IDC_AGENT_LIST"/>
+<!--1374, idc_throttle_mode is already included in Shareaza-->
+<control code="1389" id="IDC_TORRENT_CLIENTLINKS"/>
+<control code="1394" id="IDC_TORRENT_AUTOCLEAR"/>
+<control code="1397" id="IDC_G2_CLIENTMODE"/>
+<control code="1409" id="IDC_G2_ALWAYS"/>
 </tipMap>
 <controlTips>
-<tip id="IDC_AGENT_LIST" message="Liste d'agents que vous ne voulez jamais connecter."/> <!--This shows up. GROUPBOX-->
-<tip id="IDC_MAX_TRANSFERS" message="20 à 60 devra être suffissant: c'est rarement le cas qu'une connexion peut soutenir un nombre trop haussé."/><!--This doesn't show up.  LTEXT-->
-<tip id="IDC_THROTTLE_MODE" message="Sur maximum, la bande passante ne dépassera la limite. Sur moyen, elle se varie autour la limite."/><!--1374. Shows up. LTEXT -->
-<tip id="IDC_TORRENT_CLIENTLINKS" message="15 à 40 connexions devra être suffissante."/> <!--This shows. LTEXT-->
-<tip id="IDC_TORRENT_AUTOCLEAR" message="Quand le ratio d'envoi est dépasser pour un torrent en seed, Shareaza va terminer les envois pour ce torrent."/> <!--This shows. CONTROL-->
-<tip id="IDC_G2_CLIENTMODE" message="Sur Auto, Shareaza peut decider si votre noeud sera un hub. Si vous ne voulez jamais être un hub, choisissez leaf"/> <!--I don't think this shows up. LTEXT-->
-<tip id="IDC_G2_ALWAYS" message="G2 va connecter de façon automatique. On peut le prévenir avec la règle avancée: Gnutella2.EnableAlways=false."/> <!--This shows up. CONTROL-->
+<tip id="IDC_MAX_TRANSFERS" message="20 à 60 devra être suffissant: c'est rarement le cas qu'une connexion peut soutenir un nombre trop haussé."/>
+<tip id="IDC_AGENT_LIST" message="Liste d'agents que vous ne voulez jamais connecter."/>
+<tip id="IDC_THROTTLE_MODE" message="Sur maximum, la bande passante ne dépassera la limite. Sur moyen, elle se varie autour la limite."/>
+<tip id="IDC_TORRENT_CLIENTLINKS" message="15 à 40 connexions devra être suffissante."/>
+<tip id="IDC_TORRENT_AUTOCLEAR" message="Quand le ratio d'envoi est dépasser pour un torrent en seed, Shareaza va terminer les envois pour ce torrent."/>
+<tip id="IDC_G2_CLIENTMODE" message="Sur Auto, Shareaza peut decider si votre noeud sera un hub. Si vous ne voulez jamais être un hub, choisissez leaf"/>
+<tip id="IDC_G2_ALWAYS" message="G2 va connecter de façon automatique. On peut le prévenir avec la règle avancée: Gnutella2.EnableAlways=false."/>
 </controlTips>
 </skin>
