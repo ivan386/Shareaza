@@ -1,24 +1,25 @@
 					<h4><%= network_caption %></h4>
 <%? !network_connected %>
-					<p style="font-size: 7pt;">
+					<p>
 					Ce r&eacute;seau <b>n'est pas</b> activ&eacute; -
-					<a href="?connect=<%= network_id %>"><b>Se connecter &agrave; <%= network_caption %></b></a>
+					<a href="?connect=<%= network_id %>"><strong>Se connecter &agrave; <%= network_caption %></strong></a>
 					</p>
                     <%?%><%? network_connected %>
-					<p style="font-size: 7pt;">
+					<p>
 					Ce r&eacute;seau est activ&eacute; -
-					<a href="?disconnect=<%= network_id %>"><b>D&eacute;sactiver <%= network_caption %></b></a>
+					<a href="?disconnect=<%= network_id %>"><strong>D&eacute;sactiver <%= network_caption %></strong></a>
 					</p>
-					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
-						<tr>
-							<td class="viewheader">Adresse</td>
-							<td class="viewheader" align="center">Temps</td>
-							<td class="viewheader" align="center">Packets</td>
-							<td class="viewheader" align="center">Bande passante</td>
-							<td class="viewheader" align="center">Total</td>
-							<td class="viewheader" align="center">Mode</td>
-							<td class="viewheader" align="center">Leaves</td>
-							<td class="viewheader">User-Agent</td>
-							<td class="viewheader"></td>
-						</tr>
+					<div class="centertable">
+						<table>
+							<tr>
+								<th>Adresse</th>
+								<th>Temps</th>
+								<th>Packets</th>
+								<th>Bande passante</th>
+								<th>Total</th>
+								<th>Mode</th>
+								<th>Leaves</th>
+								<th>Client</th>
+								<th></th>
+							</tr>
 <%?%>
