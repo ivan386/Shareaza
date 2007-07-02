@@ -6,10 +6,10 @@
 <!-- Manifest -->
 <manifest	name="Clean Blue"
 			author="Michael Stokes"
+			updatedBy="dcat"
 			description="A sexy, clean blue theme"
 			link="http://www.shareaza.com/"
-			email="contact@shareaza.com"
-			version="1.0"
+			version="1.1"
 			type="Skin"
 			/>
 
@@ -28,6 +28,14 @@
 	<colour name="ToolTip.Back" value="FAFAFF"/>
 	<colour name="ToolTip.Text" value="000080"/>
 	<colour name="ToolTip.Border" value="8080FF"/>
+  
+	<colour name="TaskPanel.Back"               value="AAAAFF"/>
+	<colour name="TaskBox.Primary.Back"         value="CCCCFF"/>
+	<colour name="TaskBox.Primary.Text"         value="404080"/>
+	<colour name="TaskBox.Caption.Back"         value="CCCCFF"/>
+	<colour name="TaskBox.Caption.Text"         value="404080"/>
+	<colour name="TaskBox.Caption.Hover"        value="2020C0"/>
+	<colour name="TaskBox.Client"               value="FEFEFE"/>
 </colourScheme>
 
 <!-- Watermarks -->
