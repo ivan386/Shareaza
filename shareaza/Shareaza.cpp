@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Registry.h"
 #include "CoolInterface.h"
 #include "Network.h"
 #include "Firewall.h"
@@ -619,6 +620,10 @@ void CShareazaApp::GetVersionNumber()
 
 void CShareazaApp::InitResources()
 {
+	CRegistry pRegistry;
+
+	m_bMultiUserInstallation = pRegistry.GetInt( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
+
 	//Determine the version of Windows
 	OSVERSIONINFOEX pVersion;
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
