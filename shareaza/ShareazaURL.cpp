@@ -1173,26 +1173,20 @@ void CShareazaURL::Register(BOOL bOnStartup)
 
 BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTSTR pszType, LPCTSTR pszApplication, LPCTSTR pszTopic, UINT nIDIcon, BOOL bOverwrite)
 {
-	HKEY hMainKey, hKey, hSub1, hSub2, hSub3, hSub4;
-	CString strProgram, strSubKey, strValue;
+	HKEY hKey, hSub1, hSub2, hSub3, hSub4;
+	CString strProgram, strValue;
 	DWORD nDisposition;
 	TCHAR szPath[MAX_PATH];
-
-	if ( theApp.m_dwWindowsVersion >= 5 && theApp.m_bMultiUserInstallation == TRUE )	
-		hMainKey = HKEY_CURRENT_USER;
-	else
-		hMainKey = HKEY_LOCAL_MACHINE;
-
-	strSubKey.Format( _T("Software\\Classes\\%s"), pszProtocol );
-	if ( RegCreateKeyEx( hMainKey, (LPCTSTR)strSubKey, 0, NULL, 0,
+	
+	if ( RegCreateKeyEx( HKEY_CLASSES_ROOT, pszProtocol, 0, NULL, 0,
 		KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) ) return FALSE;
-
+	
 	if ( nDisposition == REG_OPENED_EXISTING_KEY && ! bOverwrite )
 	{
 		RegCloseKey( hKey );
 		return FALSE;
 	}
-
+	
 	BOOL bProtocol = _tcsncmp( pszName, _T("URL:"), 4 ) == 0;
 	GetModuleFileName( NULL, szPath, MAX_PATH );
 	strProgram = szPath;
@@ -1259,8 +1253,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 	
 	if ( pszType != NULL )
 	{
-		strSubKey.Format( _T("Software\\Classes\\%s"), pszType );
-		if ( !	RegCreateKeyEx( hMainKey, (LPCTSTR)strSubKey, 0, NULL, 0,
+		if ( !	RegCreateKeyEx( HKEY_CLASSES_ROOT, pszType, 0, NULL, 0,
 				KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) )
 		{
 			RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszProtocol,
@@ -1268,18 +1261,16 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 			RegCloseKey( hKey );
 		}
 	}
-
+	
 	return TRUE;
 }
 
-BOOL CShareazaURL::IsRegistered(LPCTSTR pszProtocol, HKEY hMainKey)
+BOOL CShareazaURL::IsRegistered(LPCTSTR pszProtocol)
 {
 	HKEY hKey[4];
-	CString strSubKey;
-
-	strSubKey.Format( _T("Software\\Classes\\%s"), pszProtocol );
-	if ( RegOpenKeyEx( hMainKey, (LPCTSTR)strSubKey, 0, KEY_READ, &hKey[0] ) ) return FALSE;
-
+	
+	if ( RegOpenKeyEx( HKEY_CLASSES_ROOT, pszProtocol, 0, KEY_READ, &hKey[0] ) ) return FALSE;
+	
 	TCHAR szApp[MAX_PATH];
 	szApp[0] = 0;
 	
@@ -1310,25 +1301,11 @@ BOOL CShareazaURL::IsRegistered(LPCTSTR pszProtocol, HKEY hMainKey)
 
 BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszProtocol)
 {
-	BOOL bRegisteredUser = IsRegistered( pszProtocol, HKEY_CURRENT_USER );
-	BOOL bRegisteredMachine = IsRegistered( pszProtocol, HKEY_LOCAL_MACHINE );
-
-	if ( !bRegisteredUser && !bRegisteredMachine ) return FALSE;
-
-	CString strSubKey;
-	strSubKey.Format( _T("Software\\Classes\\%s"), pszProtocol );
-
-	if ( bRegisteredUser )
-	{
-		DeleteKey( HKEY_CURRENT_USER, (LPCTSTR)strSubKey );
-		RegDeleteKey( HKEY_CURRENT_USER, (LPCTSTR)strSubKey );
-	}
-	if ( bRegisteredMachine )
-	{
-		DeleteKey( HKEY_LOCAL_MACHINE, (LPCTSTR)strSubKey );
-		RegDeleteKey( HKEY_LOCAL_MACHINE, (LPCTSTR)strSubKey );
-	}
-
+	if ( ! IsRegistered( pszProtocol ) ) return FALSE;
+	
+	DeleteKey( HKEY_CLASSES_ROOT, pszProtocol );
+	RegDeleteKey( HKEY_CLASSES_ROOT, pszProtocol );
+	
 	return TRUE;
 }
 

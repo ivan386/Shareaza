@@ -1,7 +1,7 @@
 //
 // Registry.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,13 +31,13 @@ public:
 
 // Operations
 public:
-	CString GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault = NULL, HKEY hMainKey = HKEY_CURRENT_USER, LPCTSTR pszSubKey = NULL);
-	int		GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault = 0, HKEY hMainKey = HKEY_CURRENT_USER, LPCTSTR pszSubKey = NULL);
+	CString GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault = NULL);
+	int		GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault = 0);
 	DWORD	GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD dwDefault = 0);
 	double	GetFloat(LPCTSTR pszSection, LPCTSTR pszName, double fDefault = 0.0f);
 public:
-	BOOL	SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue, HKEY hMainKey = HKEY_CURRENT_USER, LPCTSTR pszSubKey = NULL);
-	BOOL	SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue, HKEY hMainKey = HKEY_CURRENT_USER, LPCTSTR pszSubKey = NULL);
+	BOOL	SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue);
+	BOOL	SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue);
 
 // Implementation
 protected:

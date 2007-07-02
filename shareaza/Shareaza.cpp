@@ -22,7 +22,6 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Registry.h"
 #include "CoolInterface.h"
 #include "Network.h"
 #include "Firewall.h"
@@ -243,7 +242,7 @@ BOOL CShareazaApp::InitInstance()
 	// Beta expiry. Remember to re-compile to update the time, and remove this 
 	// section for final releases and public betas.
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
-	COleDateTimeSpan tTimeOut( 28, 0, 0, 0);
+	COleDateTimeSpan tTimeOut( 31, 0, 0, 0);
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		CString strMessage;
@@ -251,7 +250,7 @@ BOOL CShareazaApp::InitInstance()
 		AfxMessageBox( strMessage, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_OK );
 		//return FALSE;
 	}
-
+/*
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( ! m_ocmdInfo.m_bNoAlphaWarning )
 	if ( AfxMessageBox( 
@@ -266,7 +265,7 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 
 	// ***********
-	
+	*/
 	CSplashDlg* dlgSplash = new CSplashDlg( 18, m_ocmdInfo.m_bSilentTray );
 
 	SplashStep( dlgSplash, L"Winsock" );
@@ -620,10 +619,6 @@ void CShareazaApp::GetVersionNumber()
 
 void CShareazaApp::InitResources()
 {
-	CRegistry pRegistry;
-
-	m_bMultiUserInstallation = pRegistry.GetInt( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
-
 	//Determine the version of Windows
 	OSVERSIONINFOEX pVersion;
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
