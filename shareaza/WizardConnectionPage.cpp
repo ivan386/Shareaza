@@ -129,7 +129,7 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	m_wndUPnP.AddString(strTemp);
 	LoadString( strTemp, IDS_GENERAL_NO );
 	m_wndUPnP.AddString(strTemp);
-	m_wndUPnP.SetCurSel( 0 );
+	m_wndUPnP.SetCurSel( (Settings.Connection.EnableUPnP) ? 0 : 1 );
 	OnSelChangeUPnP();
 
 	// 3 steps with 30 sub-steps each
