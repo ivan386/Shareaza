@@ -67,7 +67,7 @@ protected:
 	INT_PTR		ExecuteSharedFiles(INT_PTR nMaximum);
 	BOOL		AddHit(CLibraryFile* pFile, int nIndex, bool bSimulate);
 	BOOL		AddHitG1(CLibraryFile* pFile, int nIndex, bool bSimulate);
-	BOOL		AddHitG2(CLibraryFile* pFile, int nIndex);
+	BOOL		AddHitG2(CLibraryFile* pFile, int nIndex, bool bSimulate);
 	int			ExecutePartialFiles(INT_PTR nMaximum);
 	void		AddHit(CDownload* pDownload, int nIndex);
 protected:

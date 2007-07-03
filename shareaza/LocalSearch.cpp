@@ -216,7 +216,7 @@ BOOL CLocalSearch::AddHit(CLibraryFile* pFile, int nIndex, bool bSimulate)
 	}
 	else
 	{
-		return AddHitG2( pFile, nIndex );
+		return AddHitG2( pFile, nIndex, bSimulate );
 	}
 
 	return TRUE;
@@ -297,8 +297,14 @@ BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex, bool bSimulate)
 	return TRUE;
 }
 
-BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int /*nIndex*/)
+BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int /*nIndex*/, bool bSimulate)
 {
+	if ( m_pSearch != NULL && !m_pSearch->m_bWantCOM && !pFile->IsAvailable() )
+		return FALSE;
+
+	if ( bSimulate ) 
+		return TRUE;
+
 	CG2Packet* pPacket = (CG2Packet*)m_pPacket;
 	CString strMetadata, strComment;
 	BOOL bCollection = FALSE;
@@ -422,10 +428,6 @@ BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int /*nIndex*/)
 		}
 
 		if ( pFile->m_bBogus ) nGroup += 7;
-	}
-	else
-	{
-		if ( ! pFile->IsAvailable() ) return FALSE;
 	}
 
 	if ( m_pSearch == NULL ) nGroup += 8;
