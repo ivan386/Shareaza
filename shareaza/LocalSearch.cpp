@@ -154,6 +154,8 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 	CList< CLibraryFile* >* pFiles = Library.Search( m_pSearch, static_cast< int >( nMaximum ), FALSE,
 		// Ghost files only for G2
 		m_nProtocol != PROTOCOL_G2 );
+	CList< CLibraryFile* >* pFilesCopy = pFiles;
+
 	if ( pFiles == NULL ) return 0;
 
 	INT_PTR nHits = pFiles->GetCount();
@@ -162,17 +164,32 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 	{
 		int nInThisPacket = (int)min( pFiles->GetCount(), (int)Settings.Gnutella.HitsPerPacket );
 
+		int nHitsTested = 0;
+		int nHitsBad = 0;
+		for ( POSITION pos = pFilesCopy->GetHeadPosition() ; pos ; )
+		{
+			CLibraryFile* pFile = (CLibraryFile*)pFilesCopy->GetNext( pos );
+			if ( !AddHit( pFile, nHitsTested++, true ) ) nHitsBad++;
+			if ( nHitsTested - nHitsBad == nInThisPacket ) break;
+		}
+
+		if ( nHitsTested - nHitsBad < nInThisPacket )
+			nInThisPacket = nHitsTested - nHitsBad;
+		nHits -= nHitsBad;
+
 		CreatePacket( nInThisPacket );
 
-		int nHitB = 0;
-		for ( int nHitA = 0 ; nHitA < nInThisPacket ; nHitA++ )
+		int nHitIndex = 0;
+		for ( int nHit = 0; nHit < nInThisPacket ; nHit++ )
 		{
 			CLibraryFile* pFile = (CLibraryFile*)pFiles->RemoveHead();
-			if ( AddHit( pFile, nHitB ) ) nHitB ++;
+			if ( AddHit( pFile, nHitIndex, false ) ) nHitIndex++;
 		}
 
 		WriteTrailer();
-		if ( nHitB > 0 ) DispatchPacket(); else DestroyPacket();
+
+		if ( nHitIndex > 0 ) DispatchPacket(); else DestroyPacket();
+		pFilesCopy = pFiles;
 	}
 
 	delete pFiles;
@@ -183,9 +200,10 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch add file hit
 
-BOOL CLocalSearch::AddHit(CLibraryFile* pFile, int nIndex)
+BOOL CLocalSearch::AddHit(CLibraryFile* pFile, int nIndex, bool bSimulate)
 {
-	ASSERT( m_pPacket != NULL );
+	if ( !bSimulate )
+		ASSERT( m_pPacket != NULL );
 
 	if ( m_nProtocol == PROTOCOL_G1 )
 	{
@@ -194,17 +212,17 @@ BOOL CLocalSearch::AddHit(CLibraryFile* pFile, int nIndex)
 			theApp.Message( MSG_ERROR, _T("CLocalSearch::AddHit() dropping G1 hit - G1 network not enabled") );
 			return FALSE;
 		}
-		if ( ! AddHitG1( pFile, nIndex ) ) return FALSE;
+		return AddHitG1( pFile, nIndex, bSimulate );
 	}
 	else
 	{
-		if ( ! AddHitG2( pFile, nIndex ) ) return FALSE;
+		return AddHitG2( pFile, nIndex );
 	}
 
 	return TRUE;
 }
 
-BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex)
+BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex, bool bSimulate)
 {
 	// Check that the file is actually available. (We must not return ghost hits to G1!)
 	if ( ! pFile->IsAvailable() )
@@ -216,6 +234,8 @@ BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex)
 	// never be activated. However, sometimes users configure bad settings, such as a 2000 user HTTP
 	// queue. Although the remote client could/should handle this by itself, we really should give
 	// Gnutella some protection against 'extreme' settings (if only to reduce un-necessary traffic.)
+
+	if ( bSimulate ) return TRUE;
 
 	m_pPacket->WriteLongLE( pFile->m_nIndex );
 	m_pPacket->WriteLongLE( (DWORD)min( pFile->GetSize(), 0xFFFFFFFF ) );

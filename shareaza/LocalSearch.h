@@ -65,8 +65,8 @@ public:
 	void		WriteVirtualTree();
 protected:
 	INT_PTR		ExecuteSharedFiles(INT_PTR nMaximum);
-	BOOL		AddHit(CLibraryFile* pFile, int nIndex);
-	BOOL		AddHitG1(CLibraryFile* pFile, int nIndex);
+	BOOL		AddHit(CLibraryFile* pFile, int nIndex, bool bSimulate);
+	BOOL		AddHitG1(CLibraryFile* pFile, int nIndex, bool bSimulate);
 	BOOL		AddHitG2(CLibraryFile* pFile, int nIndex);
 	int			ExecutePartialFiles(INT_PTR nMaximum);
 	void		AddHit(CDownload* pDownload, int nIndex);
