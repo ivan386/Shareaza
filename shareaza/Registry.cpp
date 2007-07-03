@@ -1,7 +1,7 @@
 //
 // Registry.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,16 +38,21 @@ CRegistry::~CRegistry()
 //////////////////////////////////////////////////////////////////////
 // CRegistry read a string value
 
-CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault)
+CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault, HKEY hMainKey, LPCTSTR pszSubKey)
 {
-	CString strKey, strValue;
+	CString strTemp, strValue;
 	DWORD nErrorCode;
 	HKEY hKey;
 
 	if ( pszDefault != NULL ) strValue = pszDefault;
-	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
 
-	nErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER, strKey, 0, KEY_READ, &hKey );
+	if ( pszSubKey == NULL )
+		strTemp.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	else
+		strTemp.Format( _T("%s\\%s"), pszSubKey, pszSection );
+
+	pszSubKey = strTemp;
+	nErrorCode = RegOpenKeyEx( hMainKey, pszSubKey, 0, KEY_READ, &hKey );
 
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
@@ -74,16 +79,20 @@ CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDef
 //////////////////////////////////////////////////////////////////////
 // CRegistry read an integer value
 
-int CRegistry::GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault)
+int CRegistry::GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault, HKEY hMainKey, LPCTSTR pszSubKey)
 {
 	int nValue = nDefault;
 	DWORD nErrorCode;
-	CString strKey;
+	CString strTemp;
 	HKEY hKey;
 
-	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	if ( pszSubKey == NULL )
+		strTemp.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	else
+		strTemp.Format( _T("%s\\%s"), pszSubKey, pszSection );
 
-	nErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER, strKey, 0, KEY_READ, &hKey );
+	pszSubKey = strTemp;
+	nErrorCode = RegOpenKeyEx( hMainKey, pszSubKey, 0, KEY_READ, &hKey );
 
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
@@ -125,15 +134,19 @@ double CRegistry::GetFloat(LPCTSTR pszSection, LPCTSTR pszName, double fDefault)
 //////////////////////////////////////////////////////////////////////
 // CRegistry write a string value
 
-BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue)
+BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue, HKEY hMainKey, LPCTSTR pszSubKey)
 {
 	DWORD nErrorCode;
-	CString strKey;
+	CString strTemp;
 	HKEY hKey;
 
-	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	if ( pszSubKey == NULL )
+		strTemp.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	else
+		strTemp.Format( _T("%s\\%s"), pszSubKey, pszSection );
 
-	nErrorCode = RegCreateKeyEx( HKEY_CURRENT_USER, strKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
+	pszSubKey = strTemp;
+	nErrorCode = RegCreateKeyEx( hMainKey, pszSubKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
 
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
@@ -157,15 +170,19 @@ BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue)
 //////////////////////////////////////////////////////////////////////
 // CRegistry write an int value
 
-BOOL CRegistry::SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue)
+BOOL CRegistry::SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue, HKEY hMainKey, LPCTSTR pszSubKey)
 {
 	DWORD nErrorCode;
-	CString strKey;
+	CString strTemp;
 	HKEY hKey;
 
-	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	if ( pszSubKey == NULL )
+		strTemp.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	else
+		strTemp.Format( _T("%s\\%s"), pszSubKey, pszSection );
 
-	nErrorCode = RegCreateKeyEx( HKEY_CURRENT_USER, strKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
+	pszSubKey = strTemp;
+	nErrorCode = RegCreateKeyEx( hMainKey, pszSubKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
 
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
