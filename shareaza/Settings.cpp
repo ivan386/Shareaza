@@ -549,7 +549,7 @@ void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	48
+#define SMART_VERSION	47
 
 void CSettings::Load()
 {
@@ -885,9 +885,6 @@ void CSettings::SmartUpgrade()
 
 		Gnutella.MaxResults = 150;
 	}
-
-	if ( nVersion < 48 )
-		Connection.EnableUPnP = FALSE;
 
 }
 
