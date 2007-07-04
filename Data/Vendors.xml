@@ -210,13 +210,6 @@
 		<link>http://qtella.sourceforge.net/</link>
 	</vendor>
 	
-	<vendor code="RZCB">
-		<title>Shareaza Plus</title>
-		<link>sourceforge.net/projects/shareazaplus/</link>
-		<capability name="htmlHostBrowse"/>
-		<capability name="chatFlag"/>
-	</vendor>
-
 	<vendor code="SNOW">
 		<title>FrostWire</title>
 		<link>http://www.frostwire.com/</link>
