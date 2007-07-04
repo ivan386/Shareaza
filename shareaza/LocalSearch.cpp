@@ -965,6 +965,7 @@ void CLocalSearch::WriteTrailerG1()
 
 		pCompressed = CZLib::Compress( pszXML, nXML, &nCompressed );
 
+		// 9 = "{deflate}", 11 = "{plaintext}"
 		if ( nCompressed + 9 < (DWORD)nXML + 11 && pCompressed.get() != NULL )
 		{
 			m_pPacket->WriteShortLE( (WORD)( nCompressed + 9 + 1 ) );
