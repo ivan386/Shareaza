@@ -31,8 +31,7 @@
 // CHttpRequest construction
 
 CHttpRequest::CHttpRequest()
-: m_sUserAgent(Settings.SmartAgent())
-, m_hInternet(NULL)
+: m_hInternet(NULL)
 , m_hThread(NULL)
 , m_nLimit(0)
 , m_nStatusCode(0)
@@ -285,6 +284,8 @@ int CHttpRequest::Run()
 {
 	CSingleLock pLock( &m_pSection, FALSE );
 	
+	if ( m_sUserAgent.GetLength() == 0 ) m_sUserAgent = Settings.SmartAgent();
+
 	HINTERNET hInternet = InternetOpen( m_sUserAgent, INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
 	
 	if ( hInternet != NULL )
