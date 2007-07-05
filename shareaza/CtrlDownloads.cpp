@@ -910,6 +910,8 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
 	COLORREF crText		= CoolInterface.m_crText;
 
+	CFont* pfOld	= (CFont*)dc.SelectObject( &theApp.m_gdiFontBold );
+
 	if ( bDrop )
 	{
 		CRect rcDrop( rcRow.left, rcRow.top, rcRow.right, rcRow.top + 2 );
@@ -1146,6 +1148,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		CRect rcFocus( nTextLeft, rcRow.top, max( int(rcRow.right), nTextRight ), rcRow.bottom );
 		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
 	}
+	dc.SelectObject( pfOld );
 }
 
 void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus)
