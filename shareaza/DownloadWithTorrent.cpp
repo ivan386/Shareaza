@@ -242,7 +242,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			wSourcesWanted = WORD( GetBTSourceCount( TRUE ) );
 			
 			// Expect a high failure rate
-			if ( !IsSeeding() && wSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
+			if ( wSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
 				wSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - wSourcesWanted;
 			else
 				wSourcesWanted = 0;
