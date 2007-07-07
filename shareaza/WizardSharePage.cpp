@@ -88,6 +88,9 @@ BOOL CWizardSharePage::OnInitDialog()
 	m_wndList.InsertColumn( 0, _T("Folder"), LVCFMT_LEFT, rc.Width() - GetSystemMetrics( SM_CXVSCROLL ) );
 	m_wndList.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndList.EnableToolTips( TRUE );
+	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
+		LVS_EX_FULLROWSELECT|LVS_EX_LABELTIP,
+		LVS_EX_FULLROWSELECT|LVS_EX_LABELTIP );
 
 	{
 		CQuickLock oLock( Library.m_pSection );
