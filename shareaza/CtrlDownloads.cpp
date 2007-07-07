@@ -294,7 +294,7 @@ BOOL CDownloadsCtrl::IsFiltered(CDownload* pDownload)
 
 BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
 {
-	if ( pDownload->IsSeeding() && !Settings.General.Debug ) return FALSE;
+	if ( pDownload->IsSeeding() && !Settings.General.DebugBTSources ) return FALSE;
 	if ( Settings.Downloads.ShowSources )
 	{
 		return ( pDownload->GetSourceCount() > 0 );
@@ -528,7 +528,7 @@ BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownl
 		}
 
 		nIndex ++;
-		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.Debug ) ) continue;
+		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.DebugBTSources ) ) continue;
 
 		if ( Settings.Downloads.ShowSources )
 		{
@@ -591,7 +591,7 @@ BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource*
 			return TRUE;
 		}
 
-		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.Debug ) ) continue;
+		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.DebugBTSources ) ) continue;
 
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 		{
@@ -781,7 +781,7 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 
 		nHeight ++;
 
-		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.Debug ) ) continue;
+		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.DebugBTSources ) ) continue;
 
 		if ( Settings.Downloads.ShowSources )
 		{
@@ -864,7 +864,7 @@ void CDownloadsCtrl::OnPaint()
 
 		nIndex ++;
 
-		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.Debug ) ) continue;
+		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.DebugBTSources ) ) continue;
 
 		if ( Settings.Downloads.ShowSources )
 		{

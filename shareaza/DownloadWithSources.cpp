@@ -40,7 +40,6 @@
 #include "MD4.h"
 #include "TigerTree.h"
 #include "QueryHashMaster.h"
-#include "DownloadWithTorrent.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -345,17 +344,6 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAd
 	// Check for own IP, in case IgnoreLocalIP is not set
 	if ( ( Settings.Connection.IgnoreOwnIP ) && Network.IsSelfIP( *pAddress ) ) 
 		return FALSE;
-
-	if ( !Settings.General.DebugBTSources )
-	{
-		CDownloadWithTorrent* pDownload = (CDownloadWithTorrent*)this;
-		if ( pDownload->IsSeeding() )
-			return TRUE;
-		else
-		{
-			// razacore.Debug + razacore.DebugBTSources have to be on
-		}
-	}
 
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
 }
