@@ -218,8 +218,6 @@ BOOL CLocalSearch::AddHit(CLibraryFile* pFile, int nIndex, bool bSimulate)
 	{
 		return AddHitG2( pFile, nIndex, bSimulate );
 	}
-
-	return TRUE;
 }
 
 BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex, bool bSimulate)
