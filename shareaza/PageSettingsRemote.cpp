@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "CoolInterface.h"
 #include "Network.h"
 #include "Handshakes.h"
 #include "PageSettingsRemote.h"
@@ -167,7 +168,7 @@ HBRUSH CRemoteSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	if ( pWnd == &m_wndURL && m_wndURL.IsWindowEnabled() )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontLine );
-		pDC->SetTextColor( RGB( 0, 0, 255 ) );
+		pDC->SetTextColor( CoolInterface.m_crTextLink );
 	}
 
 	return hbr;

@@ -354,7 +354,7 @@ void CLibraryMetaPanel::OnPaint()
 	else
 	{
 		dc.SelectObject( &CoolInterface.m_fntUnder );
-		dc.SetTextColor( RGB( 0, 0, 255 ) );
+		dc.SetTextColor( CoolInterface.m_crTextLink );
 		LoadString( str, IDS_LIBPANEL_RATE_FILE );
 		CSize szText = dc.GetTextExtent( str );
 		DrawText( &dc, rcWork.right - szText.cx, rcWork.top, str, &m_rcRating );
@@ -381,7 +381,7 @@ void CLibraryMetaPanel::OnPaint()
 	if ( m_sFolder.Find( '\\' ) >= 0 )
 	{
 		dc.SelectObject( &CoolInterface.m_fntUnder );
-		dc.SetTextColor( RGB( 0, 0, 255 ) );
+		dc.SetTextColor( CoolInterface.m_crTextLink );
 		str = m_sFolder;
 		long nTextLength = dc.GetTextExtent( str + _T('\x2026') ).cx;
 		const long nLimit = rcWork.Width() - 125 - 68 - 10;
@@ -714,4 +714,5 @@ void CLibraryMetaPanel::OnRun()
 
 	m_bThread = FALSE;
 }
+
 

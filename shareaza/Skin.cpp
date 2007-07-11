@@ -1173,10 +1173,10 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 
 	pColours.SetAt( _T("system.base.window"), &CoolInterface.m_crWindow );
 	pColours.SetAt( _T("system.base.midtone"), &CoolInterface.m_crMidtone );
-	pColours.SetAt( _T("system.base.highlight"), &CoolInterface.m_crHighlight );
 	pColours.SetAt( _T("system.base.text"), &CoolInterface.m_crText );
 	pColours.SetAt( _T("system.base.hitext"), &CoolInterface.m_crHiText );
-
+	pColours.SetAt( _T("system.base.hiborder"), &CoolInterface.m_crHiBorder );
+	pColours.SetAt( _T("system.base.highlight"), &CoolInterface.m_crHighlight );
 	pColours.SetAt( _T("system.back.normal"), &CoolInterface.m_crBackNormal );
 	pColours.SetAt( _T("system.back.selected"), &CoolInterface.m_crBackSel );
 	pColours.SetAt( _T("system.back.checked"), &CoolInterface.m_crBackCheck );
@@ -1187,11 +1187,6 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("system.text"), &CoolInterface.m_crCmdText );
 	pColours.SetAt( _T("system.text.selected"), &CoolInterface.m_crCmdTextSel );
 	pColours.SetAt( _T("system.disabled"), &CoolInterface.m_crDisabled );
-
-	pColours.SetAt( _T("transfer.ranges"), &CoolInterface.m_crRanges );
-	pColours.SetAt( _T("transfer.completed"), &CoolInterface.m_crCompleted );
-	pColours.SetAt( _T("transfer.verify.fail"), &CoolInterface.m_crVerifyFail );
-	pColours.SetAt( _T("transfer.verify.pass"), &CoolInterface.m_crVerifyPass );
 
 	pColours.SetAt( _T("tooltip.back"), &CoolInterface.m_crTipBack );
 	pColours.SetAt( _T("tooltip.text"), &CoolInterface.m_crTipText );
@@ -1238,6 +1233,74 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("monitor.upload.line"), &CoolInterface.m_crMonitorUploadLine );
 	pColours.SetAt( _T("monitor.download.bar"), &CoolInterface.m_crMonitorDownloadBar );
 	pColours.SetAt( _T("monitor.upload.bar"), &CoolInterface.m_crMonitorUploadBar );
+
+	pColours.SetAt( _T("schema.rating"), &CoolInterface.m_crRatingNull );
+	pColours.SetAt( _T("schema.rating0"), &CoolInterface.m_crRating0 );
+	pColours.SetAt( _T("schema.rating1"), &CoolInterface.m_crRating1 );
+	pColours.SetAt( _T("schema.rating2"), &CoolInterface.m_crRating2 );
+	pColours.SetAt( _T("schema.rating3"), &CoolInterface.m_crRating3 );
+	pColours.SetAt( _T("schema.rating4"), &CoolInterface.m_crRating4 );
+	pColours.SetAt( _T("schema.rating5"), &CoolInterface.m_crRating5 );
+
+	pColours.SetAt( _T("richdoc.back"), &CoolInterface.m_crRichdocBack );
+	pColours.SetAt( _T("richdoc.text"), &CoolInterface.m_crRichdocText );
+	pColours.SetAt( _T("richdoc.heading"), &CoolInterface.m_crRichdocHeading );
+
+	pColours.SetAt( _T("system.textalert"), &CoolInterface.m_crTextAlert );
+	pColours.SetAt( _T("system.textstatus"), &CoolInterface.m_crTextStatus );
+	pColours.SetAt( _T("system.textlink"), &CoolInterface.m_crTextLink );
+	pColours.SetAt( _T("system.textlink.selected"), &CoolInterface.m_crTextLinkHot );
+
+	pColours.SetAt( _T("system.base.chat.in"), &CoolInterface.m_crChatIn );
+	pColours.SetAt( _T("system.base.chat.out"), &CoolInterface.m_crChatOut );
+	pColours.SetAt( _T("system.base.chat.null"), &CoolInterface.m_crChatNull );
+	pColours.SetAt( _T("system.base.search.null"), &CoolInterface.m_crSearchNull );
+	pColours.SetAt( _T("system.base.search.exists"), &CoolInterface.m_crSearchExists );
+	pColours.SetAt( _T("system.base.search.exists.hit"), &CoolInterface.m_crSearchExistsHit );
+	pColours.SetAt( _T("system.base.search.queued"), &CoolInterface.m_crSearchQueued );
+	pColours.SetAt( _T("system.base.search.queued.hit"), &CoolInterface.m_crSearchQueuedHit );
+	pColours.SetAt( _T("system.base.search.ghostrated"), &CoolInterface.m_crSearchGhostrated );
+	pColours.SetAt( _T("system.base.search.highrated"), &CoolInterface.m_crSearchHighrated );
+	pColours.SetAt( _T("system.base.search.collection"), &CoolInterface.m_crSearchCollection );
+	pColours.SetAt( _T("system.base.search.torrent"), &CoolInterface.m_crSearchTorrent );
+	pColours.SetAt( _T("system.base.transfer.source"), &CoolInterface.m_crTransferSource );
+	pColours.SetAt( _T("system.base.transfer.ranges"), &CoolInterface.m_crTransferRanges );
+	pColours.SetAt( _T("system.base.transfer.completed"), &CoolInterface.m_crTransferCompleted );
+	pColours.SetAt( _T("system.base.transfer.verify.fail"), &CoolInterface.m_crTransferVerifyFail );
+	pColours.SetAt( _T("system.base.transfer.verify.pass"), &CoolInterface.m_crTransferVerifyPass );
+	pColours.SetAt( _T("system.base.network.null"), &CoolInterface.m_crNetworkNull );
+	pColours.SetAt( _T("system.base.network.g1"), &CoolInterface.m_crNetworkG1 );
+	pColours.SetAt( _T("system.base.network.g2"), &CoolInterface.m_crNetworkG2 );
+	pColours.SetAt( _T("system.base.network.ed2k"), &CoolInterface.m_crNetworkED2K );
+	pColours.SetAt( _T("system.base.network.up"), &CoolInterface.m_crNetworkUp );
+	pColours.SetAt( _T("system.base.network.down"), &CoolInterface.m_crNetworkDown );
+	pColours.SetAt( _T("system.base.security.allow"), &CoolInterface.m_crSecurityAllow );
+	pColours.SetAt( _T("system.base.security.deny"), &CoolInterface.m_crSecurityDeny );
+
+	pColours.SetAt( _T("dropdownbox.back"), &CoolInterface.m_crDropdownBox );
+	pColours.SetAt( _T("dropdownbox.text"), &CoolInterface.m_crDropdownText );
+	pColours.SetAt( _T("resizebar.edge"), &CoolInterface.m_crResizebarEdge );
+	pColours.SetAt( _T("resizebar.face"), &CoolInterface.m_crResizebarFace );
+	pColours.SetAt( _T("resizebar.shadow"), &CoolInterface.m_crResizebarShadow );
+	pColours.SetAt( _T("resizebar.highlight"), &CoolInterface.m_crResizebarHighlight );
+	pColours.SetAt( _T("fragmentbar.shaded"), &CoolInterface.m_crFragmentShaded );
+	pColours.SetAt( _T("fragmentbar.complete"), &CoolInterface.m_crFragmentComplete );
+	pColours.SetAt( _T("fragmentbar.source1"), &CoolInterface.m_crFragmentSource1 );
+	pColours.SetAt( _T("fragmentbar.source2"), &CoolInterface.m_crFragmentSource2 );
+	pColours.SetAt( _T("fragmentbar.source3"), &CoolInterface.m_crFragmentSource3 );
+	pColours.SetAt( _T("fragmentbar.source4"), &CoolInterface.m_crFragmentSource4 );
+	pColours.SetAt( _T("fragmentbar.source5"), &CoolInterface.m_crFragmentSource5 );
+	pColours.SetAt( _T("fragmentbar.source6"), &CoolInterface.m_crFragmentSource6 );
+	pColours.SetAt( _T("fragmentbar.pass"), &CoolInterface.m_crFragmentPass );
+	pColours.SetAt( _T("fragmentbar.fail"), &CoolInterface.m_crFragmentFail );
+	pColours.SetAt( _T("fragmentbar.request"), &CoolInterface.m_crFragmentRequest );
+	pColours.SetAt( _T("fragmentbar.border"), &CoolInterface.m_crFragmentBorder );
+
+	pColours.SetAt( _T("system.environment.window"), &CoolInterface.m_crSysWindow );
+	pColours.SetAt( _T("system.environment.btnface"), &CoolInterface.m_crSysBtnFace );
+	pColours.SetAt( _T("system.environment.3dshadow"), &CoolInterface.m_crSys3DShadow );
+	pColours.SetAt( _T("system.environment.3dhighlight"), &CoolInterface.m_crSys3DHighlight );
+	pColours.SetAt( _T("system.environment.activecaption"), &CoolInterface.m_crSysActiveCaption );
 
 	BOOL bSystem = FALSE, bNonBase = FALSE;
 	

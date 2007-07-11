@@ -217,7 +217,7 @@ void CMonitorBarCtrl::PaintHistory(CDC* pDC, CRect* prc)
 {
 	CRect rc( prc );
 
-	pDC->Draw3dRect( &rc, GetSysColor( COLOR_3DSHADOW ), GetSysColor( COLOR_3DHIGHLIGHT ) );
+	pDC->Draw3dRect( &rc, CoolInterface.m_crSys3DShadow, CoolInterface.m_crSys3DHighlight );
 	rc.DeflateRect( 1, 1 );
 	pDC->FillSolidRect( &rc, Settings.Live.BandwidthScale > 100 ? CoolInterface.m_crMonitorHistoryBackMax : CoolInterface.m_crMonitorHistoryBack );
 
@@ -292,7 +292,7 @@ void CMonitorBarCtrl::PaintCurrent(CDC* pDC, CRect* prc, CGraphItem* pItem)
 {
 	CRect rc( prc );
 
-	pDC->Draw3dRect( &rc, GetSysColor( COLOR_3DSHADOW ), GetSysColor( COLOR_3DHIGHLIGHT ) );
+	pDC->Draw3dRect( &rc, CoolInterface.m_crSys3DShadow, CoolInterface.m_crSys3DHighlight );
 	rc.DeflateRect( 1, 1 );
 	pDC->FillSolidRect( &rc, Settings.Live.BandwidthScale > 100 ? CoolInterface.m_crMonitorHistoryBackMax : CoolInterface.m_crMonitorHistoryBack );
 

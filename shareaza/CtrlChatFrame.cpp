@@ -358,12 +358,12 @@ void CChatFrame::AddText(BOOL bSelf, BOOL bAction, LPCTSTR pszNick, LPCTSTR pszB
 
 		str.Format( _T("[%.2i:%.2i] "),
 			tNow.GetHour(), tNow.GetMinute() );
-		m_pContent.Add( retText, str, NULL, retfColour )->m_cColour = RGB( 128, 128, 128 );
+		m_pContent.Add( retText, str, NULL, retfColour )->m_cColour = CoolInterface.m_crChatNull;
 	}
 	
 	str.Format( bAction ? _T("* %s ") : _T("%s: "), pszNick );
 	m_pContent.Add( retText, str, NULL, retfBold | retfColour )->m_cColour
-		= ( bSelf ? RGB( 255, 0, 0 ) : RGB( 0, 0, 255 ) );
+		= ( bSelf ? CoolInterface.m_crChatOut : CoolInterface.m_crChatIn );
 	
 	Emoticons.FormatText( &m_pContent, pszBody );
 	
@@ -377,7 +377,7 @@ void CChatFrame::AddText(BOOL bSelf, BOOL bAction, LPCTSTR pszNick, LPCTSTR pszB
 void CChatFrame::OnStatusMessage(int nFlags, LPCTSTR pszText)
 {
 	m_pContent.Add( retText, pszText, NULL, retfColour )->m_cColour
-		= nFlags == 1 ? RGB( 255, 0, 0 ) : RGB( 128, 128, 128 );
+		= nFlags == 1 ? CoolInterface.m_crChatOut : CoolInterface.m_crChatNull;
 	m_pContent.Add( retNewline, NEWLINE_FORMAT );
 	m_wndView.InvalidateIfModified();
 }

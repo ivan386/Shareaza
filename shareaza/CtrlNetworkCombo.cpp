@@ -144,20 +144,20 @@ void CNetworkCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CFont* pOldFont = (CFont*)dc.SelectObject( lpDrawItemStruct->itemData == 0 ?
 		&theApp.m_gdiFontBold : &theApp.m_gdiFont );
 
-	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
-		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
+	dc.SetTextColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
+		? CoolInterface.m_crHiText : CoolInterface.m_crText );
 
 	/*dc.FillSolidRect( &rcItem, GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 			? COLOR_HIGHLIGHT : COLOR_WINDOW ) );*/
 	if ( IsWindowEnabled() )
 	{
 		if ( lpDrawItemStruct->itemState & ODS_SELECTED )
-			dc.FillSolidRect( &rcItem, GetSysColor( COLOR_HIGHLIGHT ) );
+			dc.FillSolidRect( &rcItem, CoolInterface.m_crHighlight );
 		else
-			dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW));
+			dc.FillSolidRect( &rcItem, CoolInterface.m_crWindow );
 	}
 	else
-		dc.FillSolidRect( &rcItem, GetBkColor(lpDrawItemStruct->hDC) );
+		dc.FillSolidRect( &rcItem, CoolInterface.m_crWindow /*GetBkColor(lpDrawItemStruct->hDC)*/ );
 
 	dc.SetBkMode( TRANSPARENT );
 

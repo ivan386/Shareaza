@@ -26,7 +26,6 @@
 
 #include "Skin.h"
 
-
 class CCoolInterface
 {
 // Construction
@@ -45,9 +44,10 @@ public:
 
 	COLORREF	m_crWindow;
 	COLORREF	m_crMidtone;
-	COLORREF	m_crHighlight;
 	COLORREF	m_crText;
 	COLORREF	m_crHiText;
+	COLORREF	m_crHiBorder;
+	COLORREF	m_crHighlight;
 	COLORREF	m_crBackNormal;
 	COLORREF	m_crBackSel;
 	COLORREF	m_crBackCheck;
@@ -58,11 +58,6 @@ public:
 	COLORREF	m_crCmdText;
 	COLORREF	m_crCmdTextSel;
 	COLORREF	m_crDisabled;
-	COLORREF	m_crRanges;
-
-	COLORREF	m_crCompleted;
-	COLORREF	m_crVerifyPass;
-	COLORREF	m_crVerifyFail;
 
 	COLORREF	m_crTipBack;
 	COLORREF	m_crTipText;
@@ -100,6 +95,74 @@ public:
 	COLORREF	m_crMonitorUploadLine;
 	COLORREF	m_crMonitorDownloadBar;
 	COLORREF	m_crMonitorUploadBar;
+
+	COLORREF	m_crRatingNull;
+	COLORREF	m_crRating0;
+ 	COLORREF	m_crRating1;
+ 	COLORREF	m_crRating2;
+ 	COLORREF	m_crRating3;
+ 	COLORREF	m_crRating4;
+ 	COLORREF	m_crRating5;
+
+ 	COLORREF	m_crRichdocBack;
+ 	COLORREF	m_crRichdocText;
+	COLORREF	m_crRichdocHeading;
+	COLORREF	m_crTextAlert;
+	COLORREF	m_crTextStatus;
+	COLORREF	m_crTextLink;
+ 	COLORREF	m_crTextLinkHot;
+
+ 	COLORREF	m_crChatIn;
+	COLORREF	m_crChatOut;
+	COLORREF	m_crChatNull;
+	COLORREF	m_crSearchNull;
+	COLORREF	m_crSearchExists;
+	COLORREF	m_crSearchExistsHit;
+	COLORREF	m_crSearchQueued;
+	COLORREF	m_crSearchQueuedHit;
+	COLORREF	m_crSearchGhostrated;
+	COLORREF	m_crSearchHighrated;
+	COLORREF	m_crSearchCollection;
+	COLORREF	m_crSearchTorrent;
+	COLORREF	m_crTransferSource;
+	COLORREF	m_crTransferRanges;
+	COLORREF	m_crTransferCompleted;
+	COLORREF	m_crTransferVerifyPass;
+	COLORREF	m_crTransferVerifyFail;
+	COLORREF	m_crNetworkNull;
+	COLORREF	m_crNetworkG1;
+	COLORREF	m_crNetworkG2;
+	COLORREF	m_crNetworkED2K;
+	COLORREF	m_crNetworkUp;
+	COLORREF	m_crNetworkDown;
+	COLORREF	m_crSecurityAllow;
+	COLORREF	m_crSecurityDeny;
+
+	COLORREF	m_crDropdownBox;
+	COLORREF	m_crDropdownText;
+ 	COLORREF	m_crResizebarEdge;
+	COLORREF	m_crResizebarFace;
+	COLORREF	m_crResizebarShadow;
+	COLORREF	m_crResizebarHighlight;
+	COLORREF	m_crFragmentShaded;
+	COLORREF	m_crFragmentComplete;
+	COLORREF	m_crFragmentSource1;
+	COLORREF	m_crFragmentSource2;
+	COLORREF	m_crFragmentSource3;
+	COLORREF	m_crFragmentSource4;
+	COLORREF	m_crFragmentSource5;
+	COLORREF	m_crFragmentSource6;
+	COLORREF	m_crFragmentPass;
+	COLORREF	m_crFragmentFail;
+	COLORREF	m_crFragmentRequest;
+	COLORREF	m_crFragmentBorder;
+
+	COLORREF	m_crSysWindow;
+	COLORREF	m_crSysBtnFace;
+	COLORREF	m_crSys3DShadow;
+	COLORREF	m_crSys3DHighlight;
+	COLORREF	m_crSysActiveCaption;	
+
 
 	void		Clear();
 	void		NameCommand(UINT nID, LPCTSTR pszName);

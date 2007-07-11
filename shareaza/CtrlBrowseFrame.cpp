@@ -30,6 +30,7 @@
 #include "CtrlBrowseFrame.h"
 #include "CtrlMatch.h"
 #include "DlgHitColumns.h"
+#include "CoolInterface.h"
 #include "Skin.h"
 
 #ifdef _DEBUG
@@ -190,16 +191,16 @@ void CBrowseFrameCtrl::OnPaint()
 
 	if ( m_wndTree.IsWindowVisible() )
 	{
-		dc.FillSolidRect( rcBar.left, rcBar.top, 1, rcBar.Height(), GetSysColor( COLOR_BTNFACE ) );
-		dc.FillSolidRect( rcBar.left + 1, rcBar.top, 1, rcBar.Height(), GetSysColor( COLOR_3DHIGHLIGHT ) );
-		dc.FillSolidRect( rcBar.right - 1, rcBar.top, 1, rcBar.Height(), GetSysColor( COLOR_3DSHADOW ) );
-		dc.FillSolidRect( rcBar.left + 2, rcBar.top, rcBar.Width() - 3, rcBar.Height(), GetSysColor( COLOR_BTNFACE ) );
+		dc.FillSolidRect( rcBar.left, rcBar.top, 1, rcBar.Height(), CoolInterface.m_crResizebarEdge );
+		dc.FillSolidRect( rcBar.left + 1, rcBar.top, 1, rcBar.Height(), CoolInterface.m_crResizebarHighlight );
+		dc.FillSolidRect( rcBar.right - 1, rcBar.top, 1, rcBar.Height(), CoolInterface.m_crResizebarShadow );
+		dc.FillSolidRect( rcBar.left + 2, rcBar.top, rcBar.Width() - 3, rcBar.Height(), CoolInterface.m_crResizebarFace );
 		dc.ExcludeClipRect( &rcBar );
-		dc.FillSolidRect( rcBar.left, rcBar.top, rcClient.right - rcBar.left, 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
+		dc.FillSolidRect( rcBar.left, rcBar.top, rcClient.right - rcBar.left, 1, CoolInterface.m_crResizebarHighlight );
 	}
 	else
 	{
-		dc.FillSolidRect( rcClient.left, rcClient.top, rcClient.Width(), 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
+		dc.FillSolidRect( rcClient.left, rcClient.top, rcClient.Width(), 1, CoolInterface.m_crSys3DHighlight );
 	}
 
 	rcBar.SetRect(	rcClient.left,
@@ -211,11 +212,10 @@ void CBrowseFrameCtrl::OnPaint()
 	{
 		if ( m_wndTree.IsWindowVisible() ) rcBar.left += m_nTreeSize + SPLIT_SIZE;
 
-		dc.FillSolidRect( rcBar.left, rcBar.top, rcBar.Width(), 1, GetSysColor( COLOR_BTNFACE ) );
-		dc.FillSolidRect( rcBar.left, rcBar.top + 1, rcBar.Width(), 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
-		dc.FillSolidRect( rcBar.left, rcBar.bottom - 1, rcBar.Width(), 1, GetSysColor( COLOR_3DSHADOW ) );
-		dc.FillSolidRect( rcBar.left, rcBar.top + 2, rcBar.Width(), rcBar.Height() - 3,
-			GetSysColor( COLOR_BTNFACE ) );
+		dc.FillSolidRect( rcBar.left, rcBar.top, rcBar.Width(), 1, CoolInterface.m_crResizebarEdge );
+		dc.FillSolidRect( rcBar.left, rcBar.top + 1, rcBar.Width(), 1, CoolInterface.m_crResizebarHighlight );
+		dc.FillSolidRect( rcBar.left, rcBar.bottom - 1, rcBar.Width(), 1, CoolInterface.m_crResizebarShadow );
+		dc.FillSolidRect( rcBar.left, rcBar.top + 2, rcBar.Width(), rcBar.Height() - 3,	CoolInterface.m_crResizebarFace );
 		dc.ExcludeClipRect( &rcBar );
 	}
 }

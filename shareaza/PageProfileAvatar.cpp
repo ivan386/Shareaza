@@ -26,6 +26,7 @@
 #include "ImageServices.h"
 #include "ImageFile.h"
 #include "PageProfileAvatar.h"
+#include "CoolInterface.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -115,7 +116,7 @@ void CAvatarProfilePage::OnPaint()
 	else
 	{
 		rc.InflateRect( 1, 1 );
-		dc.Draw3dRect( &rc, GetSysColor( COLOR_ACTIVECAPTION ), GetSysColor( COLOR_ACTIVECAPTION ) );
+		dc.Draw3dRect( &rc, CoolInterface.m_crSysActiveCaption, CoolInterface.m_crSysActiveCaption );
 	}
 }
 

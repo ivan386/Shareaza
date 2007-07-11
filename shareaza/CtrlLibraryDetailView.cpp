@@ -899,9 +899,9 @@ void CLibraryDetailView::OnCustomDraw(NMHDR* pNotify, LRESULT* pResult)
 			((NMLVCUSTOMDRAW*) pNotify)->clrText = CoolInterface.m_crHiText;
 			((NMLVCUSTOMDRAW*) pNotify)->clrTextBk = CoolInterface.m_crHighlight;
 		}
-		else if ( pItem->nState & LDVI_UNSAFE )		((NMLVCUSTOMDRAW*) pNotify)->clrText = RGB( 255, 0, 0 );
+		else if ( pItem->nState & LDVI_UNSAFE )		((NMLVCUSTOMDRAW*) pNotify)->clrText = CoolInterface.m_crTextAlert;
 		else if ( pItem->nState & LDVI_UNSCANNED )	((NMLVCUSTOMDRAW*) pNotify)->clrText = CoolInterface.m_crDisabled;
-		else if ( pItem->nState & LDVI_PRIVATE )	((NMLVCUSTOMDRAW*) pNotify)->clrText = CoolInterface.m_crHighlight;
+		else if ( pItem->nState & LDVI_PRIVATE )	((NMLVCUSTOMDRAW*) pNotify)->clrText = CoolInterface.m_crNetworkNull;
 
 		if ( m_bCreateDragImage )
 		{

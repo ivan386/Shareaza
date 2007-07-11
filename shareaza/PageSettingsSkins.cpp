@@ -27,6 +27,7 @@
 #include "LiveList.h"
 #include "Skin.h"
 #include "PageSettingsSkins.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -362,7 +363,7 @@ HBRUSH CSkinsSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		{
 			if ( m_wndList.GetItemText( m_nSelected, 4 ).GetLength() )
 			{
-				pDC->SetTextColor( RGB( 0, 0, 255 ) );
+				pDC->SetTextColor( CoolInterface.m_crTextLink );
 				pDC->SelectObject( &theApp.m_gdiFontLine );
 			}
 		}
@@ -370,7 +371,7 @@ HBRUSH CSkinsSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		{
 			if ( m_wndList.GetItemText( m_nSelected, 5 ).GetLength() )
 			{
-				pDC->SetTextColor( RGB( 0, 0, 255 ) );
+				pDC->SetTextColor( CoolInterface.m_crTextLink );
 				pDC->SelectObject( &theApp.m_gdiFontLine );
 			}
 		}
@@ -553,4 +554,5 @@ void CSkinsSettingsPage::OnSkinsDelete()
 	m_wndDelete.EnableWindow( FALSE );
 	m_nSelected = -1;
 }
+
 

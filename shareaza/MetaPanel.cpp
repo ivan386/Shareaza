@@ -206,7 +206,7 @@ void CMetaPanel::Paint(CDC* pDC, const CRect* prcArea)
 			
 			if ( pItem->m_bLink )
 			{
-				pDC->SetTextColor( RGB( 0, 0, 255 ) );
+				pDC->SetTextColor( CoolInterface.m_crTextLink );
 				pDC->SelectObject( &CoolInterface.m_fntUnder );
 			}
 			else

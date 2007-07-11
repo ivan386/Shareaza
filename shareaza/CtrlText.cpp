@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "CtrlText.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -56,13 +57,13 @@ CTextCtrl::CTextCtrl() :
 	m_nScrollWheelLines( 3 ),
 	m_nLastClicked( -1 )
 {
-	m_crBackground	= GetSysColor( COLOR_WINDOW );
-	m_crText[0]		= RGB( 0, 0, 0 );			// Black		- MSG_DEFAULT
-	m_crText[1]		= RGB( 0, 0, 127 );			// Blue			- MSG_SYSTEM / MSG_DOWNLOAD
-	m_crText[2]		= RGB( 255, 0, 0 );			// Red			- MSG_ERROR
-	m_crText[3]		= RGB( 192, 192, 192 );		// Gray			- MSG_DEBUG
-	m_crText[4]		= RGB( 0, 0, 255 );			// Light Blue	- MSG_TEMP
-	m_crText[5]		= RGB( 255, 0, 0 );			// Red			- MSG_DISPLAYED_ERROR
+	m_crBackground	= CoolInterface.m_crWindow ;
+	m_crText[0]		= CoolInterface.m_crText ;			// Black		- MSG_DEFAULT
+	m_crText[1]		= CoolInterface.m_crNetworkDown ;	// Blue			- MSG_SYSTEM / MSG_DOWNLOAD
+	m_crText[2]		= CoolInterface.m_crTextAlert ;		// Red			- MSG_ERROR
+	m_crText[3]		= CoolInterface.m_crNetworkNull ;	// Gray			- MSG_DEBUG
+	m_crText[4]		= CoolInterface.m_crTextLink ;		// Light Blue	- MSG_TEMP
+	m_crText[5]		= CoolInterface.m_crTextAlert ;		// Red			- MSG_DISPLAYED_ERROR
 
 	m_pFont.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
@@ -277,9 +278,9 @@ void CTextCtrl::OnPaint()
 	for ( INT_PTR nLine = m_pLines.GetSize() - 1 ; nLine >= 0 && rcLine.bottom > 0 ; nLine-- )
 	{
 		CTextLine* pLine = m_pLines.GetAt( nLine );
-		dc.SetTextColor( pLine->m_bSelected ? GetSysColor( COLOR_HIGHLIGHTTEXT ) :
+		dc.SetTextColor( pLine->m_bSelected ? CoolInterface.m_crHiText :
 			m_crText[ pLine->m_nType ] );
-		dc.SetBkColor( pLine->m_bSelected ? GetSysColor( COLOR_HIGHLIGHT ) :
+		dc.SetBkColor( pLine->m_bSelected ? CoolInterface.m_crHighlight :
 			m_crBackground );
 		pLine->Paint( &dc, &rcLine );
 	}

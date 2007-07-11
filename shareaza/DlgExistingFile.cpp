@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "CoolInterface.h"
 #include "Library.h"
 #include "SharedFile.h"
 #include "DlgExistingFile.h"
@@ -149,9 +150,9 @@ HBRUSH CExistingFileDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	if ( pWnd == &m_wndName || pWnd == &m_wndMessageAvailable || pWnd == &m_wndMessageDeleted )
 		pDC->SelectObject( &theApp.m_gdiFontBold );
 	if ( pWnd == &m_wndComments && ! m_bAvailable )
-		pDC->SetTextColor( RGB( 255, 0, 0 ) );
+		pDC->SetTextColor( CoolInterface.m_crTextAlert );
 	if ( pWnd == &m_wndMessageDuplicates )
-		pDC->SetTextColor( RGB( 255, 0, 0 ) );
+		pDC->SetTextColor( CoolInterface.m_crTextAlert );
 
 	return hbr;
 }

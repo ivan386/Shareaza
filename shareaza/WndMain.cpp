@@ -1896,7 +1896,7 @@ void CMainWnd::OnUpdateTabConnect(CCmdUI* /*pCmdUI*/)
 	else if ( Network.IsConnected() )
 	{
 		if ( pItem ) pItem->SetCheck( TRUE );
-		if ( pItem ) pItem->SetTextColour( CoolInterface.m_crCmdText == 0 ? RGB( 0, 127, 0 ) : CoolInterface.m_crCmdText );
+		if ( pItem ) pItem->SetTextColour( CoolInterface.m_crCmdText == 0 ?  CoolInterface.m_crTextStatus : CoolInterface.m_crCmdText );
 		m_wndTabBar.SetMessage( (UINT)0 );
 		nTextID	= IDS_NETWORK_CONNECTING;
 		nTipID	= ID_NETWORK_DISCONNECT;
@@ -1904,7 +1904,7 @@ void CMainWnd::OnUpdateTabConnect(CCmdUI* /*pCmdUI*/)
 	else
 	{
 		if ( pItem ) pItem->SetCheck( FALSE );
-		if ( pItem ) pItem->SetTextColour( CoolInterface.m_crCmdText == 0 ? RGB( 0, 127, 0 ) : CoolInterface.m_crCmdText );
+		if ( pItem ) pItem->SetTextColour( CoolInterface.m_crCmdText == 0 ?  CoolInterface.m_crTextStatus : CoolInterface.m_crCmdText );
 		if ( m_wndToolBar.IsVisible() ) m_wndTabBar.SetMessage( IDS_TABBAR_NOT_CONNECTED );
 		nTextID	= IDS_NETWORK_CONNECT;
 		nTipID	= ID_NETWORK_CONNECT;
@@ -1996,7 +1996,7 @@ void CMainWnd::OnUpdateTabMedia(CCmdUI* pCmdUI)
 	{
 		if ( ( pChild = (CMediaWnd*)m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) ) != NULL )
 		{
-			pItem->SetTextColour( pChild->IsPlaying() ? RGB( 0, 0x80, 0 ) : CoolInterface.m_crCmdText );
+			pItem->SetTextColour( pChild->IsPlaying() ? CoolInterface.m_crTextStatus : CoolInterface.m_crCmdText );
 		}
 		else
 		{
@@ -2400,7 +2400,7 @@ void CMainWnd::OnHelpWeb5()
 
 void CMainWnd::OnHelpWeb6() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link6"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://browse.deviantart.com/customization/skins/filesharing/shareaza/"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 

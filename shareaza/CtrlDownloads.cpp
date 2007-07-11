@@ -31,6 +31,7 @@
 #include "ShellIcons.h"
 #include "FragmentBar.h"
 #include "Skin.h"
+#include "CoolInterface.h"
 #include "CtrlDownloads.h"
 #include "WndDownloads.h"
 #include "Flags.h"
@@ -927,11 +928,11 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
  	if ( pDownload->IsCompleted() )
   	{
  		if ( pDownload->m_bVerify == TS_FALSE )
- 			crText = CoolInterface.m_crVerifyFail;
- 		else if ( pDownload->IsSeeding() && pDownload->m_nTorrentUploaded <= pDownload->m_nSize )
- 			crText = CoolInterface.m_crVerifyPass;
+ 			crText = CoolInterface.m_crTransferVerifyFail;
+ 		else if ( pDownload->IsSeeding() && ( pDownload->m_nSize > pDownload->m_nTorrentUploaded ) )
+ 			crText = CoolInterface.m_crTransferVerifyPass;
   		else
- 			crText = CoolInterface.m_crCompleted;
+ 			crText = CoolInterface.m_crTransferCompleted;
   	}
  	else if ( pDownload->m_bSelected )
  		crText = CoolInterface.m_crHiText;
@@ -1026,7 +1027,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 0, 1 );
-				dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
+				dc.Draw3dRect( &rcCell, CoolInterface.m_crFragmentBorder, CoolInterface.m_crFragmentBorder );
 				rcCell.DeflateRect( 1, 1 );
 				if ( Settings.Downloads.SimpleBar )
 					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
@@ -1149,7 +1150,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	if ( bFocus )
 	{
 		CRect rcFocus( nTextLeft, rcRow.top, max( int(rcRow.right), nTextRight ), rcRow.bottom );
-		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
+		dc.Draw3dRect( &rcFocus, CoolInterface.m_crHiBorder, CoolInterface.m_crHiBorder );
 	}
 
 	dc.SelectObject( &theApp.m_gdiFont ) ;
@@ -1158,15 +1159,16 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus)
 {
 	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
-	COLORREF crBack		= pSource->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
-	
+	COLORREF crBack		= pSource->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
+	COLORREF crLeftAligned = crBack ;
+
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
 	
 	if ( pSource->m_bSelected )
 		dc.SetTextColor( CoolInterface.m_crHiText );
 	else
-		dc.SetTextColor( CoolInterface.m_crText );
+		dc.SetTextColor( CoolInterface.m_crTransferSource );
 	
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
 	HDITEM pColumn = {};
@@ -1185,16 +1187,18 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		rcCell.top		= rcRow.top;
 		rcCell.bottom	= rcRow.bottom;
 		
+		crLeftAligned = ( rcRow.left == rcCell.left ? crNatural : crBack ) ;
+
 		switch ( pColumn.lParam )
 		{
 		case DOWNLOAD_COLUMN_TITLE:
-			dc.FillSolidRect( rcCell.left, rcCell.top, 24, rcCell.Height(), crBack );
+			dc.FillSolidRect( rcCell.left, rcCell.top, 24, rcCell.Height(), crLeftAligned );
 			rcCell.left += 24;
-			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 16, 1, crBack );
+			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 16, 1, crLeftAligned );
 			ImageList_DrawEx( m_pProtocols, pSource->m_nProtocol, dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, pSource->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+					rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, pSource->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			rcCell.left += 16;
-			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crBack );
+			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crLeftAligned );
 			rcCell.left += 1;
 			
 			if ( pSource->m_pTransfer != NULL )
@@ -1276,9 +1280,9 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 0, 1 );
-				dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
+				dc.Draw3dRect( &rcCell, CoolInterface.m_crFragmentBorder, CoolInterface.m_crFragmentBorder );
 				rcCell.DeflateRect( 1, 1 );
-				CFragmentBar::DrawSource( &dc, &rcCell, pSource, CoolInterface.m_crRanges );
+				CFragmentBar::DrawSource( &dc, &rcCell, pSource, CoolInterface.m_crTransferRanges );
 			}
 			else if ( pSource->m_pTransfer != NULL )
 				if ( pSource->m_pTransfer->m_nState > dtsHeaders && pSource->m_oAvailable.empty() )
@@ -1391,7 +1395,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 	if ( bFocus )
 	{
 		CRect rcFocus( nTextLeft, rcRow.top, max( int(rcRow.right), nTextRight ), rcRow.bottom );
-		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
+		dc.Draw3dRect( &rcFocus, CoolInterface.m_crHiBorder, CoolInterface.m_crHiBorder );
 	}
 }
 

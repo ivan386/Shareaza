@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "CoolInterface.h"
 #include "RichDocument.h"
 #include "RichElement.h"
 #include "XML.h"
@@ -38,11 +39,11 @@ static char THIS_FILE[]=__FILE__;
 CRichDocument::CRichDocument() : m_szMargin( 8, 8 )
 {
 	m_nCookie		= 0;
-	m_crBackground	= RGB( 255, 255, 255 );
-	m_crText		= RGB( 0, 0, 0 );
-	m_crLink		= RGB( 0, 0, 255 );
-	m_crHover		= RGB( 255, 0, 0 );
-	m_crHeading		= RGB( 0x80, 0, 0 );
+	m_crBackground	= CoolInterface.m_crRichdocBack;
+	m_crText		= CoolInterface.m_crRichdocText;
+	m_crLink		= CoolInterface.m_crTextLink;
+	m_crHover		= CoolInterface.m_crTextLinkHot;
+	m_crHeading		= CoolInterface.m_crRichdocHeading;
 }
 
 CRichDocument::~CRichDocument()
@@ -215,6 +216,12 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 		strTemp = pBase->GetAttributeValue( _T("fontFace") );
 		if ( strTemp.GetLength() ) CreateFonts( strTemp );
 		
+		m_crBackground	= CoolInterface.m_crRichdocBack;
+		m_crText		= CoolInterface.m_crRichdocText;
+		m_crLink		= CoolInterface.m_crTextLink;
+		m_crHover		= CoolInterface.m_crTextLinkHot;
+		m_crHeading		= CoolInterface.m_crRichdocHeading;
+
 		LoadXMLColour( pBase, _T("crBackground"), &m_crBackground );
 		LoadXMLColour( pBase, _T("crText"), &m_crText );
 		LoadXMLColour( pBase, _T("crLink"), &m_crLink );

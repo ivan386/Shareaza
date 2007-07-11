@@ -655,16 +655,16 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		switch ( nImage )
 		{
 		case PROTOCOL_NULL:
-			pDraw->clrText = RGB( 192, 192, 192 );
+			pDraw->clrText = CoolInterface.m_crNetworkNull ;
 			break;
 		case PROTOCOL_G1:
-			pDraw->clrText = RGB( 80, 80, 80 );
+			pDraw->clrText = CoolInterface.m_crNetworkG1 ;
 			break;
 		case PROTOCOL_G2:
-			pDraw->clrText = RGB( 100, 100, 255 );
+			pDraw->clrText = CoolInterface.m_crNetworkG2 ;
 			break;
 		case PROTOCOL_ED2K:
-			pDraw->clrText = RGB( 127, 127, 0 );
+			pDraw->clrText = CoolInterface.m_crNetworkED2K ;
 			break;
 		}
 		
@@ -691,7 +691,7 @@ void CNeighboursWnd::DrawEmptyMessage(CDC* pDC)
 	
 	pDC->SetBkMode( TRANSPARENT );
 	pDC->SelectObject( &theApp.m_gdiFont );
-	pDC->SetTextColor( GetSysColor( COLOR_WINDOWTEXT ) );
+	pDC->SetTextColor( CoolInterface.m_crText );
 	LoadString( strText, IDS_NEIGHBOURS_NOT_CONNECTED );
 	pDC->DrawText( strText, &rcText, DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX );
 	

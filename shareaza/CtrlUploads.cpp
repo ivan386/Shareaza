@@ -902,7 +902,7 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 	if ( bFocus )
 	{
 		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
-		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
+		dc.Draw3dRect( &rcFocus, CoolInterface.m_crHiBorder, CoolInterface.m_crHiBorder );
 	}
 }
 
@@ -974,7 +974,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			rcCell.DeflateRect( 1, 1 );
 			dc.Draw3dRect( &rcCell, crBack, crBack );
 			rcCell.DeflateRect( 0, 1 );
-			dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
+			dc.Draw3dRect( &rcCell, CoolInterface.m_crFragmentBorder, CoolInterface.m_crFragmentBorder );
 			rcCell.DeflateRect( 1, 1 );
 			CFragmentBar::DrawUpload( &dc, &rcCell, pFile, crNatural );
 			break;
@@ -1071,7 +1071,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 	if ( bFocus )
 	{
 		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
-		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
+		dc.Draw3dRect( &rcFocus, CoolInterface.m_crHiBorder, CoolInterface.m_crHiBorder );
 	}
 }
 

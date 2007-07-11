@@ -32,6 +32,7 @@
 
 #include "CtrlLibraryFrame.h"
 #include "DlgNewSearch.h"
+#include "CoolInterface.h"
 #include "Skin.h"
 
 #include "CtrlLibraryView.h"
@@ -334,25 +335,24 @@ void CLibraryFrame::OnPaint()
 				rcClient.left + m_nTreeSize + SPLIT_SIZE,
 				rcClient.bottom );
 
-	dc.FillSolidRect( rc.left, rc.top, 1, rc.Height(), GetSysColor( COLOR_BTNFACE ) );
-	dc.FillSolidRect( rc.left + 1, rc.top, 1, rc.Height(), GetSysColor( COLOR_3DHIGHLIGHT ) );
-	dc.FillSolidRect( rc.right - 1, rc.top, 1, rc.Height(), GetSysColor( COLOR_3DSHADOW ) );
-	dc.FillSolidRect( rc.left + 2, rc.top, rc.Width() - 3, rc.Height(),
-		GetSysColor( COLOR_BTNFACE ) );
+	dc.FillSolidRect( rc.left, rc.top, 1, rc.Height(), CoolInterface.m_crResizebarEdge );
+	dc.FillSolidRect( rc.left + 1, rc.top, 1, rc.Height(), CoolInterface.m_crResizebarHighlight );
+	dc.FillSolidRect( rc.right - 1, rc.top, 1, rc.Height(), CoolInterface.m_crResizebarShadow );
+	dc.FillSolidRect( rc.left + 2, rc.top, rc.Width() - 3, rc.Height(),	CoolInterface.m_crResizebarFace );
 
 	if ( m_nHeaderSize > 0 )
 	{
 		dc.FillSolidRect( rc.right, rcClient.top + BAR_HEIGHT - 1 + m_nHeaderSize,
-			rcClient.right - rc.right, 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
+			rcClient.right - rc.right, 1, CoolInterface.m_crSys3DHighlight );
 	}
 
 	if ( Settings.Library.ShowVirtual == FALSE )
 	{
 		rc.SetRect( rcClient.left, rcClient.bottom - BAR_HEIGHT,
 			rcClient.left + m_nTreeSize, rcClient.bottom - m_nTreeTypesHeight );
-		dc.FillSolidRect( rc.left, rc.top, rc.Width(), 1, GetSysColor( COLOR_3DSHADOW ) );
-		dc.FillSolidRect( rc.left, rc.top + 1, rc.Width(), 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
-		dc.FillSolidRect( rc.left, rc.top + 2, rc.Width(), rc.Height() - 2, GetSysColor( COLOR_BTNFACE ) );
+		dc.FillSolidRect( rc.left, rc.top, rc.Width(), 1, CoolInterface.m_crSys3DShadow );
+		dc.FillSolidRect( rc.left, rc.top + 1, rc.Width(), 1, CoolInterface.m_crSys3DHighlight );
+		dc.FillSolidRect( rc.left, rc.top + 2, rc.Width(), rc.Height() - 2, CoolInterface.m_crSysBtnFace );
 	}
 
 	if ( m_pPanel != NULL )
@@ -362,11 +362,10 @@ void CLibraryFrame::OnPaint()
 					rcClient.right,
 					rcClient.bottom - BAR_HEIGHT - m_nPanelSize );
 
-		dc.FillSolidRect( rc.left, rc.top, rc.Width(), 1, GetSysColor( COLOR_BTNFACE ) );
-		dc.FillSolidRect( rc.left, rc.top + 1, rc.Width(), 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
-		dc.FillSolidRect( rc.left, rc.bottom - 1, rc.Width(), 1, GetSysColor( COLOR_3DSHADOW ) );
-		dc.FillSolidRect( rc.left, rc.top + 2, rc.Width(), rc.Height() - 3,
-			GetSysColor( COLOR_BTNFACE ) );
+		dc.FillSolidRect( rc.left, rc.top, rc.Width(), 1, CoolInterface.m_crResizebarEdge );
+		dc.FillSolidRect( rc.left, rc.top + 1, rc.Width(), 1, CoolInterface.m_crResizebarHighlight );
+		dc.FillSolidRect( rc.left, rc.bottom - 1, rc.Width(), 1, CoolInterface.m_crResizebarShadow );
+		dc.FillSolidRect( rc.left, rc.top + 2, rc.Width(), rc.Height() - 3,	CoolInterface.m_crResizebarFace );
 	}
 }
 

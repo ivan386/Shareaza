@@ -300,7 +300,7 @@ void CHostCacheWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 	else if ( pDraw->nmcd.dwDrawStage == CDDS_ITEMPREPAINT )
 	{
 		if ( m_wndList.GetItemOverlayMask( (int)pDraw->nmcd.dwItemSpec ) )
-			pDraw->clrText = GetSysColor( COLOR_ACTIVECAPTION );
+			pDraw->clrText = CoolInterface.m_crSysActiveCaption ;
 		
 		*pResult = CDRF_DODEFAULT;
 	}

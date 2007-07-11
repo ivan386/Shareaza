@@ -288,11 +288,10 @@ void CSearchWnd::OnPaint()
 		
 		if ( m_bPanel ) rcBar.left += PANEL_WIDTH;
 		
-		dc.FillSolidRect( rcBar.left, rcBar.top, rcBar.Width(), 1, GetSysColor( COLOR_BTNFACE ) );
-		dc.FillSolidRect( rcBar.left, rcBar.top + 1, rcBar.Width(), 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
-		dc.FillSolidRect( rcBar.left, rcBar.bottom - 1, rcBar.Width(), 1, GetSysColor( COLOR_3DSHADOW ) );
-		dc.FillSolidRect( rcBar.left, rcBar.top + 2, rcBar.Width(), rcBar.Height() - 3,
-			GetSysColor( COLOR_BTNFACE ) );
+		dc.FillSolidRect( rcBar.left, rcBar.top, rcBar.Width(), 1, CoolInterface.m_crResizebarEdge );
+		dc.FillSolidRect( rcBar.left, rcBar.top + 1, rcBar.Width(), 1, CoolInterface.m_crResizebarHighlight );
+		dc.FillSolidRect( rcBar.left, rcBar.bottom - 1, rcBar.Width(), 1, CoolInterface.m_crResizebarShadow );
+		dc.FillSolidRect( rcBar.left, rcBar.top + 2, rcBar.Width(), rcBar.Height() - 3, CoolInterface.m_crResizebarFace );
 	}
 	
 	if ( m_bPaused || m_bWaitMore) return;

@@ -451,29 +451,29 @@ void CMatchTipCtrl::LoadFromHit()
 	if ( m_pFile->GetLibraryStatus() == TS_FALSE )
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_LIBRARY );
-		m_crStatus = RGB( 0, 128, 0 );
+		m_crStatus = CoolInterface.m_crTextStatus ;
 	}
 	else if ( m_pFile->m_bDownload || m_pHit->m_bDownload )
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_DOWNLOAD );
-		m_crStatus = RGB( 0, 128, 0 );
+		m_crStatus = CoolInterface.m_crTextStatus ;
 	}
 	else if ( m_pHit->m_bBogus )
 	{
 		LoadString( m_sStatus, IDS_TIP_BOGUS );
-		m_crStatus = RGB( 255, 0, 0 );
+		m_crStatus = CoolInterface.m_crTextAlert ;
 	}
 	else if ( m_pHit->m_sComments.GetLength() )
 	{
 		if ( m_pHit->m_nRating == 1 ) 
 			LoadString( m_sStatus, IDS_TIP_EXISTS_BLACKLISTED );
 		m_sStatus += m_pHit->m_sComments;
-		m_crStatus = RGB( 255, 0, 0 );
+		m_crStatus = CoolInterface.m_crTextAlert ;
 	}
 	else if ( m_pFile->GetLibraryStatus() == TS_TRUE )  // ghost rated
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_DELETED );
-		m_crStatus = RGB( 255, 0, 0 );
+		m_crStatus = CoolInterface.m_crTextAlert ;
 	}
 
 	if ( m_pHit->m_sNick.GetLength() )

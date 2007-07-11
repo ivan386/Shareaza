@@ -895,7 +895,7 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 
 	if ( m_bAlert )
 	{
-		pDC->SetTextColor( RGB( 255, 0, 0 ) );
+		pDC->SetTextColor( CoolInterface.m_crTextAlert );
 	}
 	else if ( ! m_bVisible && ! bHot )
 	{

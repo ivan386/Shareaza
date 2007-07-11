@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "Skin.h"
 #include "SkinWindow.h"
+#include "CoolInterface.h"
 #include "GProfile.h"
 
 #include "WizardSheet.h"
@@ -250,7 +251,7 @@ void CWizardSheet::OnPaint()
 	dc.Draw3dRect( 0, rc.bottom - 48, rc.Width() + 1, 2,
 		RGB( 128, 128, 128 ), RGB( 255, 255, 255 ) );
 
-	dc.FillSolidRect( rc.left, rc.bottom - 46, rc.Width(), 46, GetSysColor( COLOR_BTNFACE ) );
+	dc.FillSolidRect( rc.left, rc.bottom - 46, rc.Width(), 46, CoolInterface.m_crSysBtnFace );
 }
 
 /////////////////////////////////////////////////////////////////////////////

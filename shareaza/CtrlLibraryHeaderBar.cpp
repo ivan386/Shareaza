@@ -112,7 +112,7 @@ void CLibraryHeaderBar::PrepareRect(CRect* pRect) const
 void CLibraryHeaderBar::DoPaint(CDC* pDC, CRect& rcBar, BOOL bTransparent)
 {
 	pDC->FillSolidRect( rcBar.left, rcBar.bottom - 1, rcBar.Width(), 1,
-		GetSysColor( COLOR_3DSHADOW ) );
+		CoolInterface.m_crSys3DShadow );
 	rcBar.bottom --;
 
 	if ( m_czLast.cx < rcBar.Width() - 22 )

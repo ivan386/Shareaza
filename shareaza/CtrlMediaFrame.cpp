@@ -517,10 +517,10 @@ void CMediaFrame::OnPaint()
 						rcClient.right - m_nListSize,
 						rcClient.bottom );
 		
-		dc.FillSolidRect( rcBar.left, rcBar.top, 1, rcBar.Height(), GetSysColor( COLOR_BTNFACE ) );
-		dc.FillSolidRect( rcBar.left + 1, rcBar.top, 1, rcBar.Height(), GetSysColor( COLOR_3DHIGHLIGHT ) );
-		dc.FillSolidRect( rcBar.right - 1, rcBar.top, 1, rcBar.Height(), GetSysColor( COLOR_3DSHADOW ) );
-		dc.FillSolidRect( rcBar.left + 2, rcBar.top, rcBar.Width() - 3, rcBar.Height(), GetSysColor( COLOR_BTNFACE ) );
+		dc.FillSolidRect( rcBar.left, rcBar.top, 1, rcBar.Height(), CoolInterface.m_crResizebarEdge );
+		dc.FillSolidRect( rcBar.left + 1, rcBar.top, 1, rcBar.Height(), CoolInterface.m_crResizebarHighlight );
+		dc.FillSolidRect( rcBar.right - 1, rcBar.top, 1, rcBar.Height(), CoolInterface.m_crResizebarShadow );
+		dc.FillSolidRect( rcBar.left + 2, rcBar.top, rcBar.Width() - 3, rcBar.Height(), CoolInterface.m_crResizebarFace );
 		dc.ExcludeClipRect( &rcBar );
 
 		rcBar.SetRect( rcBar.right, rcClient.top,

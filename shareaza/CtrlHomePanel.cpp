@@ -399,8 +399,8 @@ void CHomeDownloadsBox::OnPaint()
 	rcIcon.DeflateRect( 0, 2 );
 
 	dc.SetBkMode( OPAQUE );
-	dc.SetBkColor( CoolInterface.m_crWindow );
-	dc.SetTextColor( RGB( 0, 0, 255 ) );
+	dc.SetBkColor( CoolInterface.m_crRichdocBack );
+	dc.SetTextColor( CoolInterface.m_crTextLink );
 	
 	CFont* pOldFont = (CFont*)dc.SelectObject( &m_pFont );
 	
@@ -418,8 +418,8 @@ void CHomeDownloadsBox::OnPaint()
 		}
 		else
 		{
-			COLORREF cr = pItem->m_bPaused ? RGB( 192, 192, 192 ) : crAlt[ nItem % 3 ];
-			dc.Draw3dRect( &rcIcon, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
+			COLORREF cr = pItem->m_bPaused ? CoolInterface.m_crNetworkNull : crAlt[ nItem % 3 ];
+			dc.Draw3dRect( &rcIcon, CoolInterface.m_crFragmentBorder, CoolInterface.m_crFragmentBorder );
 			rcIcon.DeflateRect( 1, 1 );
 			CFragmentBar::DrawFragment( &dc, &rcIcon, pItem->m_nSize, 0, pItem->m_nComplete, cr, TRUE );
 			dc.FillSolidRect( &rcIcon, CoolInterface.m_crWindow );
@@ -438,7 +438,7 @@ void CHomeDownloadsBox::OnPaint()
 			str += _T('\x2026');
 		}
 		
-		dc.SetTextColor( m_pHover == pItem ? RGB( 255, 0, 0 ) : RGB( 0, 0, 255 ) );
+		dc.SetTextColor( m_pHover == pItem ? CoolInterface.m_crTextLinkHot : CoolInterface.m_crTextLink );
 		dc.ExtTextOut( rcText.left + 4, rcText.top + 2, ETO_CLIPPED|ETO_OPAQUE,
 			&rcText, str, NULL );
 		
@@ -841,7 +841,7 @@ void CHomeLibraryBox::OnPaint()
 	
 	dc.SetBkMode( OPAQUE );
 	dc.SetBkColor( CoolInterface.m_crWindow );
-	dc.SetTextColor( RGB( 0, 0, 255 ) );
+	dc.SetTextColor( CoolInterface.m_crTextLink );
 	
 	CFont* pOldFont = (CFont*)dc.SelectObject( &m_pFont );
 	
@@ -863,7 +863,7 @@ void CHomeLibraryBox::OnPaint()
 			str += _T('\x2026');
 		}
 		
-		dc.SetTextColor( m_pHover == pItem ? RGB( 255, 0, 0 ) : RGB( 0, 0, 255 ) );
+		dc.SetTextColor( m_pHover == pItem ? CoolInterface.m_crTextLinkHot : CoolInterface.m_crTextLink );
 		dc.ExtTextOut( rcText.left + 4, rcText.top + 2, ETO_CLIPPED|ETO_OPAQUE,
 			&rcText, str, NULL );
 		
@@ -1423,5 +1423,6 @@ void CHomeTorrentsBox::Update()
 	
 	CRichTaskBox::Update();
 }
+
 
 

@@ -362,11 +362,12 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	{
 		m_crWindow		= GetSysColor( COLOR_WINDOW );
 		m_crMidtone		= GetSysColor( COLOR_BTNFACE );
-		m_crHighlight	= GetSysColor( COLOR_HIGHLIGHT );
 		m_crText		= GetSysColor( COLOR_WINDOWTEXT );
 		m_crHiText		= GetSysColor( COLOR_HIGHLIGHTTEXT );
+		m_crHiBorder	= GetSysColor( COLOR_HIGHLIGHT );
+		m_crHighlight	= GetSysColor( COLOR_HIGHLIGHT );
 	}
-	
+
 	m_crBackNormal			= CalculateColour( m_crMidtone, m_crWindow, 215 );
 	m_crBackSel				= CalculateColour( m_crHighlight, m_crWindow, 178 );
 	m_crBackCheck			= CalculateColour( m_crHighlight, m_crWindow, 200 );
@@ -377,11 +378,6 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crCmdText				= GetSysColor( COLOR_MENUTEXT );
 	m_crCmdTextSel			= GetSysColor( COLOR_MENUTEXT );
 	m_crDisabled			= GetSysColor( COLOR_GRAYTEXT );
-	m_crRanges				= RGB( 220, 240, 220 );
-	
-	m_crCompleted			= RGB( 0, 127, 0 );
-	m_crVerifyFail			= RGB( 255, 0, 0 );
-	m_crVerifyPass			= RGB( 0, 0, 127 );
 
 	m_crTipBack				= GetSysColor( COLOR_INFOBK );
 	m_crTipText				= GetSysColor( COLOR_INFOTEXT );
@@ -396,28 +392,94 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crTaskBoxCaptionHover	= RGB( 84, 143, 255 );
 	m_crTaskBoxClient		= RGB( 214, 223, 247 );
 
-	m_crMediaWindow		= RGB( 0, 0, 0 );
-	m_crMediaWindowText	= RGB( 200, 200, 255 );
-	m_crMediaStatus		= RGB( 0, 0, 0x60 );
-	m_crMediaStatusText	= RGB( 0xF0, 0xF0, 0xFF );
-	m_crMediaPanel  	= RGB( 0, 0, 0x30 );
+	m_crMediaWindow			= RGB( 0, 0, 0 );
+	m_crMediaWindowText		= RGB( 200, 200, 255 );
+	m_crMediaStatus			= RGB( 0, 0, 0x60 );
+	m_crMediaStatusText		= RGB( 0xF0, 0xF0, 0xFF );
+	m_crMediaPanel  		= RGB( 0, 0, 0x30 );
 	m_crMediaPanelText  	= RGB( 255, 255, 255 );
 	m_crMediaPanelActive  	= RGB( 128, 0, 0 );
 	m_crMediaPanelActiveText = RGB( 255, 255, 255 );
 	m_crMediaPanelCaption	= RGB( 0x00, 0x00, 0x80 );
 	m_crMediaPanelCaptionText = RGB( 0xFF, 0xFF, 0 );
 
-	m_crTrafficWindowBack = RGB( 0, 0, 0 );
-	m_crTrafficWindowText = RGB( 193, 196, 255 );
-	m_crTrafficWindowGrid = RGB( 0, 0, 128 );
+	m_crTrafficWindowBack	= RGB( 0, 0, 0 );
+	m_crTrafficWindowText	= RGB( 193, 196, 255 );
+	m_crTrafficWindowGrid	= RGB( 0, 0, 128 );
 
-	m_crMonitorHistoryBack = RGB( 0, 0, 0 );
+	m_crMonitorHistoryBack	= RGB( 0, 0, 0 );
 	m_crMonitorHistoryBackMax = RGB( 80, 0, 0 );
-	m_crMonitorHistoryText = RGB( 255, 0, 0 );
-	m_crMonitorDownloadLine = RGB( 0, 0xFF, 0 );
-	m_crMonitorUploadLine = RGB( 0xFF, 0xFF, 0 );
-	m_crMonitorDownloadBar = RGB( 0, 0xBB, 0 );
-	m_crMonitorUploadBar = RGB( 0xBB, 0xBB, 0 );
+	m_crMonitorHistoryText	= RGB( 255, 0, 0 );
+	m_crMonitorDownloadLine	= RGB( 0, 0xFF, 0 );
+	m_crMonitorUploadLine	= RGB( 0xFF, 0xFF, 0 );
+	m_crMonitorDownloadBar	= RGB( 0, 0xBB, 0 );
+	m_crMonitorUploadBar	= RGB( 0xBB, 0xBB, 0 );
+
+	m_crRatingNull			= RGB( 0, 0, 0 );
+ 	m_crRating0				= RGB( 255, 0, 0 );
+	m_crRating1	 			= RGB( 128, 128, 128 );
+	m_crRating2				= RGB( 80, 80, 80 );
+	m_crRating3				= RGB( 0, 0, 0 );
+	m_crRating4				= RGB( 0, 128, 0 );
+	m_crRating5				= RGB( 0, 0, 255 );
+
+	m_crRichdocBack			= RGB( 255, 255, 255 );
+	m_crRichdocText  		= RGB( 0, 0, 0 );
+	m_crRichdocHeading 		= RGB( 0x80, 0, 0 );
+	m_crTextAlert 			= RGB( 255, 0, 0 );
+	m_crTextStatus 			= RGB( 0, 128, 0 );
+	m_crTextLink  			= RGB( 0, 0, 255 );
+	m_crTextLinkHot			= RGB( 255, 0, 0 );
+
+ 	m_crChatIn				= RGB( 0, 0, 255 );
+	m_crChatOut				= RGB( 255, 0, 0 );
+	m_crChatNull	  		= RGB( 128, 128, 128 );
+	m_crSearchExists  		= RGB( 0, 127, 0 );
+	m_crSearchExistsHit		= RGB( 0, 64, 0 ); 
+	m_crSearchQueued 		= RGB( 0, 0, 160 ); 
+	m_crSearchQueuedHit		= RGB( 0, 0, 100 );
+	m_crSearchGhostrated	= RGB( 200, 90, 0 );
+	m_crSearchNull  		= GetSysColor( COLOR_3DSHADOW ); 
+	m_crTransferSource		= RGB( 30, 30, 30 );
+	m_crTransferRanges		= RGB( 220, 240, 220 );
+	m_crTransferCompleted	= RGB( 0, 127, 0 );
+	m_crTransferVerifyFail	= RGB( 255, 0, 0 );
+	m_crTransferVerifyPass	= RGB( 0, 0, 127 );
+
+	m_crNetworkNull  		= RGB( 192, 192, 192 );
+	m_crNetworkG1  			= RGB( 80, 80, 80 );
+	m_crNetworkG2  			= RGB( 100, 100, 255 );
+	m_crNetworkED2K  		= RGB( 128, 128, 0 );
+	m_crNetworkUp			= RGB( 127, 0, 0 );
+	m_crNetworkDown			= RGB( 0, 0, 127 );
+	m_crSecurityAllow		= RGB( 0, 127, 0 );
+	m_crSecurityDeny		= RGB( 255, 0, 0 );
+
+	m_crDropdownText		= GetSysColor( COLOR_MENUTEXT );
+	m_crDropdownBox			= GetSysColor( COLOR_WINDOW );
+	m_crResizebarEdge		= GetSysColor( COLOR_BTNFACE );
+	m_crResizebarFace		= GetSysColor( COLOR_BTNFACE );
+	m_crResizebarShadow		= GetSysColor( COLOR_3DSHADOW );
+	m_crResizebarHighlight	= GetSysColor( COLOR_3DHIGHLIGHT );
+	m_crFragmentShaded		= GetSysColor( COLOR_BTNFACE );
+	m_crFragmentComplete	= GetSysColor( COLOR_ACTIVECAPTION );
+	m_crFragmentSource1		= RGB( 0, 153, 255 );
+	m_crFragmentSource2 	= RGB( 0, 153, 0 );
+	m_crFragmentSource3 	= RGB( 255, 51, 0 );
+	m_crFragmentSource4 	= RGB( 255, 204, 0 );
+	m_crFragmentSource5 	= RGB( 153, 153, 255 );
+	m_crFragmentSource6 	= RGB( 204, 153, 0 );
+	m_crFragmentPass		= RGB( 0, 220, 0 );
+	m_crFragmentFail		= RGB( 220, 0, 0 );
+	m_crFragmentRequest		= RGB( 255, 255, 0 );
+	m_crFragmentBorder		= RGB( 50, 50, 50 );
+
+	m_crSysWindow			= GetSysColor( COLOR_WINDOW );
+	m_crSysBtnFace			= GetSysColor( COLOR_BTNFACE );
+	m_crSys3DShadow 		= GetSysColor( COLOR_3DSHADOW );
+	m_crSys3DHighlight		= GetSysColor( COLOR_3DHIGHLIGHT );
+	m_crSysActiveCaption	= GetSysColor( COLOR_ACTIVECAPTION );
+
 }
 
 void CCoolInterface::OnSysColourChange()

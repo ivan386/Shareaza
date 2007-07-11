@@ -405,7 +405,7 @@ void CSearchDetailPanel::OnPaint()
 	if ( m_pReviews.GetCount() )
 	{
 		dc.SelectObject( &CoolInterface.m_fntUnder );
-		dc.SetTextColor( RGB( 0, 0, 255 ) );
+		dc.SetTextColor( CoolInterface.m_crTextLink );
 	}
 	DrawText( &dc, rcWork.left, rcWork.top, m_sStatus, &m_rcStatus );
 	rcWork.top += 18;
@@ -515,7 +515,7 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 			LoadString( str, m_bIsPreviewing ? IDS_SEARCH_DETAILS_PREVIEWING : IDS_SEARCH_DETAILS_PREVIEW );
 			
 			pDC->SetBkColor( m_crLight );
-			pDC->SetTextColor( m_bIsPreviewing ? RGB( 255, 0, 0 ) : RGB( 0, 0, 255 ) );
+			pDC->SetTextColor( m_bIsPreviewing ? CoolInterface.m_crTextAlert : CoolInterface.m_crTextLink );
 			pDC->SelectObject( m_bIsPreviewing ? &theApp.m_gdiFontBold : &theApp.m_gdiFontLine );
 			
 			CSize sz = pDC->GetTextExtent( str );
@@ -957,4 +957,5 @@ BOOL CSearchDetailPanel::CachePreviewImage(const Hashes::Sha1Hash& /*oSHA1*/, LP
 	
 	return FALSE;
 }
+
 

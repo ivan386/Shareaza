@@ -857,7 +857,7 @@ void CDownloadTipCtrl::DrawProgressBar(CDC* pDC, CPoint* pPoint, CDownloadSource
 	pDC->Draw3dRect( &rcCell, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
 	rcCell.DeflateRect( 1, 1 );
 
-	CFragmentBar::DrawSource( pDC, &rcCell, pSource, CoolInterface.m_crRanges );
+	CFragmentBar::DrawSource( pDC, &rcCell, pSource, CoolInterface.m_crTransferRanges );
 
 	rcCell.InflateRect( 1, 1 );
 	pDC->ExcludeClipRect( &rcCell );

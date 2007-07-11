@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "CoolInterface.h"
 #include "DlgURLCopy.h"
 #include "Transfer.h"
 #include "Network.h"
@@ -213,7 +214,7 @@ HBRUSH CURLCopyDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 		if ( ! _tcsicmp( szName, _T("Static") ) )
 		{
-			pDC->SetTextColor( RGB( 0, 0, 255 ) );
+			pDC->SetTextColor( CoolInterface.m_crTextLink );
 			pDC->SelectObject( &theApp.m_gdiFontLine );
 		}
 	}
@@ -316,4 +317,5 @@ BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 
 	return TRUE;
 }
+
 

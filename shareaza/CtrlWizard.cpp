@@ -28,6 +28,7 @@
 #include "XML.h"
 #include "Settings.h"
 #include "Skin.h"
+#include "CoolInterface.h"
 #include "CtrlIconButton.h"
 
 #include "SHA.h"
@@ -170,7 +171,7 @@ void CWizardCtrl::OnPaint()
 		
 	GetClientRect( &rcClient );
 	rcItem.CopyRect( &rcClient );
-	dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW ) );
+	dc.FillSolidRect( &rcItem, CoolInterface.m_crWindow );
 	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
 	dc.SetBkMode( OPAQUE );
 
@@ -265,11 +266,9 @@ void CWizardCtrl::OnNcPaint()
 		CWindowDC dc( this );
 		CRect rc;
 
-		COLORREF crBorder = GetSysColor( COLOR_ACTIVECAPTION );
-
 		GetWindowRect( &rc );
 		rc.OffsetRect( -rc.left, -rc.top );
-		dc.Draw3dRect( &rc, crBorder, crBorder );
+		dc.Draw3dRect( &rc, CoolInterface.m_crSysActiveCaption, CoolInterface.m_crSysActiveCaption );
 	}
 }
 

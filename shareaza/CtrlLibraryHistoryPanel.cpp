@@ -228,7 +228,7 @@ void CLibraryHistoryPanel::OnPaint()
 					ETO_CLIPPED|ETO_OPAQUE, &rcText, pItem->m_sTime, NULL );
 				dc.ExcludeClipRect( &rcText );
 				
-				dc.SetTextColor( RGB( 0, 0, 255 ) );
+				dc.SetTextColor( CoolInterface.m_crTextLink );
 				dc.SelectObject( &CoolInterface.m_fntUnder );
 				
 				rcText.right	= rcText.left;

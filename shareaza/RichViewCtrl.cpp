@@ -25,7 +25,7 @@
 #include "RichDocument.h"
 #include "RichElement.h"
 #include "RichFragment.h"
-
+#include "CoolInterface.h"
 #include "Emoticons.h"
 
 #ifdef _DEBUG
@@ -201,7 +201,7 @@ void CRichViewCtrl::OnPaint()
 
 	if ( m_pDocument == NULL )
 	{
-		dc.FillSolidRect( &rc, GetSysColor( COLOR_WINDOW ) );
+		dc.FillSolidRect( &rc, CoolInterface.m_crSysWindow );
 		return;
 	}
 

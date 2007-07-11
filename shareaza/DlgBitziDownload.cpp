@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "ShellIcons.h"
+#include "CoolInterface.h"
 #include "BitziDownloader.h"
 #include "DlgBitziDownload.h"
 
@@ -160,7 +161,7 @@ HBRUSH CBitziDownloadDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	if ( pWnd == &m_wndWeb )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontLine );
-		pDC->SetTextColor( RGB( 0, 0, 255 ) );
+		pDC->SetTextColor( CoolInterface.m_crTextLink );
 	}
 
 	return hbr;
@@ -197,4 +198,5 @@ void CBitziDownloadDlg::OnLButtonDown(UINT /*nFlags*/, CPoint point)
 			NULL, NULL, SW_SHOWNORMAL );
 	}
 }
+
 

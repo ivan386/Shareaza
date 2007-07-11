@@ -29,6 +29,7 @@
 #include "XML.h"
 #include "Settings.h"
 #include "LiveList.h"
+#include "CoolInterface.h"
 
 #include "SHA.h"
 #include "MD5.h"
@@ -856,7 +857,7 @@ HBRUSH CCollectionExportDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		{
 			if ( m_wndList.GetItemText( m_nSelected, 4 ).GetLength() )
 			{
-				pDC->SetTextColor( RGB( 0, 0, 255 ) );
+				pDC->SetTextColor( CoolInterface.m_crTextLink );
 				pDC->SelectObject( &theApp.m_gdiFontLine );
 			}
 		}
@@ -864,7 +865,7 @@ HBRUSH CCollectionExportDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		{
 			if ( m_wndList.GetItemText( m_nSelected, 5 ).GetLength() )
 			{
-				pDC->SetTextColor( RGB( 0, 0, 255 ) );
+				pDC->SetTextColor( CoolInterface.m_crTextLink );
 				pDC->SelectObject( &theApp.m_gdiFontLine );
 			}
 		}

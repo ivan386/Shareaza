@@ -25,6 +25,7 @@
 #include "Schema.h"
 #include "XML.h"
 #include "Skin.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -416,7 +417,7 @@ void CSchemaCtrl::OnNcPaint()
 		CWindowDC dc( this );
 		CRect rc;
 
-		COLORREF crBorder = GetSysColor( COLOR_ACTIVECAPTION );
+		COLORREF crBorder = CoolInterface.m_crSysActiveCaption ;
 
 		GetWindowRect( &rc );
 		rc.OffsetRect( -rc.left, -rc.top );
@@ -458,7 +459,7 @@ void CSchemaCtrl::OnPaint()
 	if ( rcItem.top < rcClient.bottom )
 	{
 		rcItem.SetRect( rcClient.left, rcItem.top, rcClient.right, rcClient.bottom );
-		dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW ) );
+		dc.FillSolidRect( &rcItem, CoolInterface.m_crDropdownBox );
 	}
 
 	dc.SelectObject( pOldFont );

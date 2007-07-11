@@ -204,7 +204,7 @@ void CFolderPropertiesDlg::OnPaint()
 	COLORREF crBack =  CCoolInterface::CalculateColour(
 						CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 );
 
-	dc.Draw3dRect( &rc, GetSysColor( COLOR_ACTIVECAPTION ), GetSysColor( COLOR_ACTIVECAPTION ) );
+	dc.Draw3dRect( &rc, CoolInterface.m_crSysActiveCaption, CoolInterface.m_crSysActiveCaption );
 	rc.DeflateRect( 1, 1 );
 
 	{
@@ -244,7 +244,7 @@ HBRUSH CFolderPropertiesDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 	if ( pWnd == &m_wndApply )
 	{
-		pDC->SetTextColor( RGB( 0, 0, 255 ) );
+		pDC->SetTextColor( CoolInterface.m_crTextLink );
 		pDC->SelectObject( &theApp.m_gdiFontLine );
 	}
 

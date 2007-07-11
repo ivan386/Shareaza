@@ -26,6 +26,7 @@
 #include "LiveList.h"
 #include "WndSecurity.h"
 #include "DlgSecureRule.h"
+#include "CoolInterface.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -281,10 +282,10 @@ void CSecurityWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		switch ( theApp.m_bRTL ? 2 - pItem.iImage : pItem.iImage )
 		{
 		case CSecureRule::srAccept:
-			pDraw->clrText = RGB( 0, 127, 0 );
+			pDraw->clrText = CoolInterface.m_crSecurityAllow ;
 			break;
 		case CSecureRule::srDeny:
-			pDraw->clrText = RGB( 255, 0, 0 );
+			pDraw->clrText = CoolInterface.m_crSecurityDeny ;
 			break;
 		}
 
@@ -600,4 +601,5 @@ BOOL CSecurityWnd::PreTranslateMessage(MSG* pMsg)
 
 	return CPanelWnd::PreTranslateMessage( pMsg );
 }
+
 

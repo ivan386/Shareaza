@@ -25,6 +25,7 @@
 #include "Plugins.h"
 #include "PageSettingsPlugins.h"
 #include "DlgPluginExtSetup.h"
+#include "CoolInterface.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -185,11 +186,11 @@ void CPluginsSettingsPage::OnCustomDrawPlugins(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		if ( pDraw->nmcd.lItemlParam != 0 )
 		{
-			pDraw->clrText = GetSysColor( COLOR_ACTIVECAPTION );
+			pDraw->clrText = CoolInterface.m_crText ;			//Interface Elements (Temp Color, was ACTIVECAPTION)
 		}
 		else
 		{
-			pDraw->clrText = GetSysColor( COLOR_3DDKSHADOW );
+			pDraw->clrText = CoolInterface.m_crNetworkNull ;	//Hidden Plugin (Temp Color, was 3DDKSHADOW)
 		}
 	}
 }

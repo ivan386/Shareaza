@@ -698,17 +698,20 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	BOOL bSelected	= pHit ? pHit->m_bSelected : pFile->m_bSelected;
 	BOOL bGrayed	= FALSE;
 	COLORREF crWnd	= CoolInterface.m_crWindow;
+
 	COLORREF crText	= bSelected ? CoolInterface.m_crHiText : CoolInterface.m_crText ;
-	COLORREF crBack	= crWnd;
+	COLORREF crBack	= crWnd ;
 	COLORREF crLeftAligned = crBack ;
 
 	if ( pFile->m_bCollection )
 	{	// Pale blue background for collections
-		crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 0, 0, 255 ), 25 );
+		if ( CoolInterface.m_crSearchCollection ) crWnd = crBack = CoolInterface.m_crSearchCollection ;
+		else crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 0, 0, 255 ), 25 );
 	}
 	else if ( Settings.BitTorrent.AdvancedInterface && pFile->m_bTorrent )
 	{	// Pale red background for torrents, if the extra torrent options are enabled
-		crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 255, 0, 0 ), 10 );
+		if ( CoolInterface.m_crSearchTorrent ) crWnd = crBack = CoolInterface.m_crSearchTorrent ;
+		else crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 255, 0, 0 ), 10 );
 	}/*
 	else if ( pFile->m_bDRM )
 	{	// Pale gree background if DRM
@@ -716,23 +719,25 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	}*/
 	else if ( ( pFile->m_nRated > 1 ) && ( ( pFile->m_nRating / pFile->m_nRated ) >= 5 ) )
 	{	// Gold highlight for highly rated files
-		crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 255, 255, 0 ), 20 );
+		if ( CoolInterface.m_crSearchHighrated ) crWnd = crBack = CoolInterface.m_crSearchHighrated ;
+		else crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 255, 255, 0 ), 20 );
 	}
 
 	if ( pFile->GetLibraryStatus() == TS_FALSE )
 	{
 		// Green if already in the library
-		crText = pHit ? RGB( 0, 64, 0 ) : RGB( 0, 127, 0 );
+		crText = pHit ? CoolInterface.m_crSearchExistsHit : CoolInterface.m_crSearchExists;
 	}
 	else if ( pFile->GetLibraryStatus() == TS_TRUE )
 	{
 		// Brown/Orange if a ghost rating is in the library
-		crText = RGB( 200, 90, 0 );
+		crText = CoolInterface.m_crSearchGhostrated;
 	}
 	else if ( pFile->m_bDownload || ( pHit && pHit->m_bDownload ) )
 	{
 		// Blue if chosen for download
-		crText = pHit ? RGB( 0, 0, 100 ) : RGB( 0, 0, 160 );
+		crText = pHit ? CoolInterface.m_crSearchQueuedHit : CoolInterface.m_crSearchQueued;
+		if ( bSelected && CoolInterface.m_crHighlight == GetSysColor( COLOR_HIGHLIGHT ) ) crText = CoolInterface.m_crHiText ;
 	}
 
 	if ( bSelected )
@@ -743,7 +748,8 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			  ( ! pHit && ! pFile->m_bOneValid ) ||
 			  ( pHit && pHit->m_bPush == TS_TRUE && Network.IsStable() == FALSE ) )
 	{
-		crText = pFile->GetLibraryStatus() == TS_TRUE ? RGB( 150, 90, 0 ) : GetSysColor( COLOR_3DSHADOW );
+		// Greyed Out if Unstable (or Brown if also Ghostrated)
+		crText = pFile->GetLibraryStatus() == TS_TRUE ? CoolInterface.m_crSearchGhostrated : CoolInterface.m_crSearchNull;
 		bGrayed = TRUE;
 	}
 	
@@ -779,8 +785,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 
 			pszText = pszName;
 			nText	= nNameLen;
-			crLeftAligned = ( rcRow.left == rcCol.left ? crWnd : crBack ) ;
 
+			crLeftAligned = ( rcRow.left == rcCol.left ? crWnd : crBack ) ;
+			
 			nIconStyle = bSelected ? ILD_SELECTED : ( bGrayed ? ILD_BLEND50 : ILD_NORMAL );
 			if ( pFile->m_bDRM ) nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_COMMERCIAL );
 			
@@ -829,7 +836,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			{
 				CRect rcFocus( &rcRow );
 				rcFocus.left = rcCol.left;
-				dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
+				dc.Draw3dRect( &rcFocus, CoolInterface.m_crHiBorder, CoolInterface.m_crHiBorder );
 				dc.ExcludeClipRect( rcFocus.left, rcFocus.top, rcFocus.right, rcFocus.top + 1 );
 				dc.ExcludeClipRect( rcFocus.left, rcFocus.bottom - 1, rcFocus.right, rcFocus.bottom );
 				dc.ExcludeClipRect( rcFocus.left, rcFocus.top + 1, rcFocus.left + 1, rcFocus.bottom - 1 );
@@ -967,12 +974,12 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		case MATCH_COL_SPEED:
 			if ( pHit )
 			{
-				if ( ! bSelected && pHit->m_bMeasured == TS_TRUE ) dc.SetTextColor( RGB( 0, 127, 0 ) );
+				if ( ! bSelected && pHit->m_bMeasured == TS_TRUE ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pHit->m_sSpeed;
 			}
 			else
 			{
-				if ( ! bSelected && pFile->GetBestMeasured() == TS_TRUE ) dc.SetTextColor( RGB( 0, 127, 0 ) );
+				if ( ! bSelected && pFile->GetBestMeasured() == TS_TRUE ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pFile->m_sSpeed;
 			}
 			break;
@@ -980,12 +987,12 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		case MATCH_COL_CLIENT:
 			if ( pHit )
 			{
-				if ( ! bSelected && pHit->m_bBrowseHost ) dc.SetTextColor( RGB( 0, 127, 0 ) );
+				if ( ! bSelected && pHit->m_bBrowseHost ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pHit->m_pVendor->m_sName;
 			}
 			else if ( nHits == 1 )
 			{
-				if ( ! bSelected && pFile->GetBestBrowseHost() ) dc.SetTextColor( RGB( 0, 127, 0 ) );
+				if ( ! bSelected && pFile->GetBestBrowseHost() ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pFile->GetBestVendorName();
 			}
 			break;
@@ -1252,7 +1259,7 @@ void CMatchCtrl::DrawEmptyMessage(CDC& dc, CRect& rcClient)
 		rcText.OffsetRect( 0, rcText.Height() );
 
 		dc.SelectObject( &theApp.m_gdiFontLine );
-		dc.SetTextColor( RGB( 0, 0, 255 ) );
+		dc.SetTextColor( CoolInterface.m_crTextLink );
 
 		szText		= dc.GetTextExtent( strText );
 		ptText.x	= ( rcText.left + rcText.right ) / 2 - szText.cx / 2;

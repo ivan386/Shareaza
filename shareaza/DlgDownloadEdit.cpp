@@ -28,6 +28,7 @@
 #include "DlgDownloadEdit.h"
 #include "DlgTorrentInfoSheet.h"
 #include "FragmentedFile.h"
+#include "CoolInterface.h"
 
 #include "SHA.h"
 #include "ED2K.h"
@@ -125,7 +126,7 @@ HBRUSH CDownloadEditDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		pWnd == &m_wndCompleteVerify || pWnd == &m_wndMergeVerify )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontLine );
-		pDC->SetTextColor( RGB( 0, 0, 255 ) );
+		pDC->SetTextColor( CoolInterface.m_crTextLink );
 	}
 
 	return hbr;

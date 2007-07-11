@@ -218,8 +218,8 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	dc.Attach( lpDrawItemStruct->hDC );
 	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	
-	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
-		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
+	dc.SetTextColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
+		? CoolInterface.m_crHiText : CoolInterface.m_crDropdownText );
 	
 	CSchema* pSchema = (CSchema*)lpDrawItemStruct->itemData;
 
@@ -230,9 +230,9 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		if ( IsWindowEnabled() )
 		{
 			if ( lpDrawItemStruct->itemState & ODS_SELECTED ) 
-				dc.FillSolidRect( &rcItem, GetSysColor( COLOR_HIGHLIGHT ) );
+				dc.FillSolidRect( &rcItem, CoolInterface.m_crHighlight );
 			else 
-				dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW));
+				dc.FillSolidRect( &rcItem, CoolInterface.m_crDropdownBox );
 		}
 		else 
 			dc.FillSolidRect( &rcItem, GetBkColor(lpDrawItemStruct->hDC) );
@@ -278,9 +278,9 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		if ( IsWindowEnabled() )
 		{
 			if ( lpDrawItemStruct->itemState & ODS_SELECTED ) 
-				dc.FillSolidRect( &rcItem, GetSysColor( COLOR_HIGHLIGHT ) );
+				dc.FillSolidRect( &rcItem, CoolInterface.m_crHighlight );
 			else 
-				dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW));
+				dc.FillSolidRect( &rcItem, CoolInterface.m_crDropdownBox );
 		}
 		else 
 			dc.FillSolidRect( &rcItem, GetBkColor(lpDrawItemStruct->hDC) );
@@ -297,7 +297,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	}
 	else
 	{
-		dc.Draw3dRect( &rcItem, GetSysColor( COLOR_WINDOW ), GetSysColor( COLOR_WINDOW ) );
+		dc.Draw3dRect( &rcItem, CoolInterface.m_crDropdownBox , CoolInterface.m_crDropdownBox );
 		rcItem.DeflateRect( 1, 1 );
 		
 		if ( lpDrawItemStruct->itemState & ODS_SELECTED )
@@ -308,7 +308,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}
 		else
 		{
-			dc.FillSolidRect( &rcItem, GetSysColor( /* COLOR_BTNFACE */ COLOR_WINDOW ) );
+			dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW /* COLOR_BTNFACE */ ) );
 		}
 		
 		dc.SetBkMode( TRANSPARENT );

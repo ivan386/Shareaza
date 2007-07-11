@@ -162,7 +162,7 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 	for ( nvOffset = 0 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, bvSuccess ) ; )
 	{
 		DrawStateBar( pDC, prcBar, pDownload->m_nSize, nvOffset, nvLength,
-			bvSuccess ? RGB( 0, 220, 0 ) : RGB( 220, 0, 0 ) );
+			bvSuccess ? CoolInterface.m_crFragmentPass : CoolInterface.m_crFragmentFail );
 		nvOffset += nvLength;
 	}
 		
@@ -178,7 +178,7 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 		DrawSourceImpl( pDC, prcBar, pSource );
 	}
 
-	pDC->FillSolidRect( prcBar, pDownload->IsStarted() ? GetSysColor( COLOR_ACTIVECAPTION ) : crNatural );
+	pDC->FillSolidRect( prcBar, pDownload->IsStarted() ? CoolInterface.m_crFragmentComplete : crNatural );
 }
 
 
@@ -189,7 +189,7 @@ void CFragmentBar::DrawDownloadSimple(CDC* pDC, CRect* prcBar, CDownload* pDownl
 	if ( pDownload->IsStarted() )
 	{
 		DrawFragment( pDC, prcBar, pDownload->m_nSize,0, pDownload->GetVolumeComplete(), 
-			GetSysColor( COLOR_ACTIVECAPTION ), FALSE );
+			CoolInterface.m_crFragmentComplete, FALSE );
 	}
 }
 
@@ -205,7 +205,7 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 		{
 			DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
 				pSource->m_pTransfer->m_nOffset, pSource->m_pTransfer->m_nLength,
-				RGB( 255, 255, 0 ), TRUE );
+				CoolInterface.m_crFragmentRequest, TRUE );
 		}
 
 		switch( pSource->m_pTransfer->m_nProtocol )
@@ -223,7 +223,7 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 				++pRequested )
 			{
 				DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-					pRequested->begin(), pRequested->size(), RGB( 255, 255, 0 ), TRUE );
+					pRequested->begin(), pRequested->size(), CoolInterface.m_crFragmentRequest, TRUE );
 			}
 			break;
 		case PROTOCOL_BT:
@@ -234,7 +234,7 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 				++pRequested )
 			{
 				DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-					pRequested->begin(), pRequested->size(), RGB( 255, 255, 0 ), TRUE );
+					pRequested->begin(), pRequested->size(), CoolInterface.m_crFragmentRequest, TRUE );
 			}
 		default: 
 //			ASSERT ( 0 )
@@ -269,8 +269,8 @@ void CFragmentBar::DrawSourceImpl(CDC* pDC, CRect* prcBar, CDownloadSource* pSou
 {
 	static COLORREF crFill[] =
 	{
-		RGB( 0, 153, 255 ), RGB( 0, 153, 0 ), RGB( 255, 51, 0 ),
-		RGB( 255, 204, 0 ), RGB( 153, 153, 255 ), RGB( 204, 153, 0 )
+		CoolInterface.m_crFragmentSource1, CoolInterface.m_crFragmentSource2, CoolInterface.m_crFragmentSource3,
+		CoolInterface.m_crFragmentSource4, CoolInterface.m_crFragmentSource5, CoolInterface.m_crFragmentSource6
 	};
 	
 	COLORREF crTransfer;
@@ -281,7 +281,7 @@ void CFragmentBar::DrawSourceImpl(CDC* pDC, CRect* prcBar, CDownloadSource* pSou
 	}
 	else
 	{
-		crTransfer = GetSysColor( COLOR_ACTIVECAPTION );
+		crTransfer = CoolInterface.m_crFragmentComplete;
 	}
 	
 	crTransfer = CCoolInterface::CalculateColour( crTransfer, CoolInterface.m_crHighlight, 90 );
@@ -326,7 +326,7 @@ void CFragmentBar::DrawUpload(CDC* pDC, CRect* prcBar, CUploadFile* pFile, COLOR
 		pFragment != pFile->m_oFragments.end(); ++pFragment  )
 	{
 		DrawFragment( pDC, prcBar, pFile->m_nSize, pFragment->begin(),
-			pFragment->size(), GetSysColor( COLOR_ACTIVECAPTION ), TRUE );
+			pFragment->size(), CoolInterface.m_crFragmentComplete, TRUE );
 	}
 	
 	if ( pFile == pUpload->m_pBaseFile )
@@ -335,7 +335,7 @@ void CFragmentBar::DrawUpload(CDC* pDC, CRect* prcBar, CUploadFile* pFile, COLOR
 		{
 			DrawFragment( pDC, prcBar, pFile->m_nSize,
 				pUpload->m_nOffset + pUpload->m_nLength - pUpload->m_nPosition,
-				pUpload->m_nPosition, GetSysColor( COLOR_ACTIVECAPTION ), TRUE );
+				pUpload->m_nPosition, CoolInterface.m_crFragmentComplete, TRUE );
 			
 			DrawFragment( pDC, prcBar, pFile->m_nSize,
 				pUpload->m_nOffset,
@@ -345,7 +345,7 @@ void CFragmentBar::DrawUpload(CDC* pDC, CRect* prcBar, CUploadFile* pFile, COLOR
 		{
 			DrawFragment( pDC, prcBar, pFile->m_nSize,
 				pUpload->m_nOffset, pUpload->m_nPosition,
-				GetSysColor( COLOR_ACTIVECAPTION ), TRUE );
+				CoolInterface.m_crFragmentComplete, TRUE );
 			
 			DrawFragment( pDC, prcBar, pFile->m_nSize,
 				pUpload->m_nOffset + pUpload->m_nPosition,
@@ -354,6 +354,7 @@ void CFragmentBar::DrawUpload(CDC* pDC, CRect* prcBar, CUploadFile* pFile, COLOR
 	}
 	
 	pDC->FillSolidRect( prcBar, ( pFile == pUpload->m_pBaseFile )
-		? GetSysColor( COLOR_BTNFACE ) : crNatural );
+		? CoolInterface.m_crFragmentShaded : crNatural );
 }
+
 

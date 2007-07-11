@@ -330,7 +330,7 @@ void CRemoteWnd::OnPaint()
 
 	if ( m_pSkin == NULL )
 	{
-		dc.FillSolidRect( &rcClient, GetSysColor( COLOR_BTNFACE ) );
+		dc.FillSolidRect( &rcClient, CoolInterface.m_crSysBtnFace );
 		return;
 	}
 

@@ -136,7 +136,7 @@ HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	}
 	else if ( pWnd == &m_wndWeb )
 	{
-		pDC->SetTextColor( RGB( 0, 0, 255 ) );
+		pDC->SetTextColor( CoolInterface.m_crTextLink );
 		pDC->SelectObject( &theApp.m_gdiFontLine );
 	}
 
