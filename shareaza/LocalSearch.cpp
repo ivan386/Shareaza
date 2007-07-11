@@ -205,6 +205,7 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 
 		if ( nHitIndex > 0 ) DispatchPacket(); else DestroyPacket();
 		pFilesCopy = pFiles;
+		pExcludedFiles.RemoveAll();
 	}
 
 	delete pFiles;
