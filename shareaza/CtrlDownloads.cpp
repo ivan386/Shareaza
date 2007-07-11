@@ -909,8 +909,9 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
 	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
 	COLORREF crText		= CoolInterface.m_crText;
+	COLORREF crLeftAligned = crBack ;
 
-	CFont* pfOld	= (CFont*)dc.SelectObject( &theApp.m_gdiFontBold );
+	if ( IsExpandable( pDownload ) ) dc.SelectObject( &theApp.m_gdiFontBold ) ;
 
 	if ( bDrop )
 	{
@@ -967,14 +968,16 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		rcCell.top		= rcRow.top;
 		rcCell.bottom	= rcRow.bottom;
 
+		crLeftAligned = ( rcRow.left == rcCell.left ? crNatural : crBack ) ;
+
 		switch ( pColumn.lParam )
 		{
 		case DOWNLOAD_COLUMN_TITLE:
-			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crBack );
+			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crLeftAligned );
 			if ( IsExpandable( pDownload ) )
 			{
 				ImageList_DrawEx( ShellIcons.GetHandle( 16 ), pDownload->m_bExpanded ? SHI_MINUS : SHI_PLUS, dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, ILD_NORMAL );
+					rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, ILD_NORMAL );
 			}
 			else
 				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crBack );
@@ -1000,9 +1003,9 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			}
 
 			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pDownload->m_sDisplayName, 16 ), dc.GetSafeHdc(),
-				rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, nIconStyle );
+				rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, nIconStyle );
 			rcCell.left += 16;
-			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crBack );
+			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crLeftAligned );
 			rcCell.left += 1;
 
 			strText = pDownload->GetDisplayName();
@@ -1148,7 +1151,8 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		CRect rcFocus( nTextLeft, rcRow.top, max( int(rcRow.right), nTextRight ), rcRow.bottom );
 		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
 	}
-	dc.SelectObject( pfOld );
+
+	dc.SelectObject( &theApp.m_gdiFont ) ;
 }
 
 void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus)

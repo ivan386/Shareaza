@@ -700,7 +700,8 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	COLORREF crWnd	= CoolInterface.m_crWindow;
 	COLORREF crText	= bSelected ? CoolInterface.m_crHighlight : CoolInterface.m_crText ;
 	COLORREF crBack	= crWnd;
-	
+	COLORREF crLeftAligned = crBack ;
+
 	if ( pFile->m_bCollection )
 	{	// Pale blue background for collections
 		crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 0, 0, 255 ), 25 );
@@ -778,7 +779,8 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 
 			pszText = pszName;
 			nText	= nNameLen;
-			
+			crLeftAligned = ( rcRow.left == rcCol.left ? crWnd : crBack ) ;
+
 			nIconStyle = bSelected ? ILD_SELECTED : ( bGrayed ? ILD_BLEND50 : ILD_NORMAL );
 			if ( pFile->m_bDRM ) nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_COMMERCIAL );
 			
@@ -787,21 +789,20 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
 					pFile->m_bExpanded ? SHI_MINUS : SHI_PLUS,
 					dc.GetSafeHdc(), rcCol.left, rcCol.top, 16, 16,
-					crWnd, CLR_NONE, ILD_NORMAL );
+					crLeftAligned, CLR_NONE, ILD_NORMAL );
 
 				ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
 					pFile->m_nShellIndex, dc.GetSafeHdc(), rcCol.left + 16, rcCol.top, 16, 16,
-					crWnd, bSelected ? CLR_DEFAULT : crText,
-					nIconStyle );
+					crLeftAligned, bSelected ? CLR_DEFAULT : crText, nIconStyle );
 
-				dc.FillSolidRect( rcCol.left, rcCol.top + 16, 32, ITEM_HEIGHT - 16, crWnd );
+				dc.FillSolidRect( rcCol.left, rcCol.top + 16, 32, ITEM_HEIGHT - 16, crLeftAligned );
 				
 				rcCol.left += 32;
 			}
 			else
 			{
 				dc.FillSolidRect( rcCol.left, rcCol.top, ( pHit ? 24 : 16 ),
-					ITEM_HEIGHT, crWnd );
+					ITEM_HEIGHT, crLeftAligned );
 				rcCol.left += ( pHit ? 24 : 16 );
 				
 				if ( ! pFile->m_bDRM )
@@ -814,15 +815,14 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				
 				ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
 					pFile->m_nShellIndex, dc.GetSafeHdc(), rcCol.left, rcCol.top, 16, 16,
-					crWnd, bSelected ? CLR_DEFAULT : crText,
-					nIconStyle );
+					crLeftAligned, bSelected ? CLR_DEFAULT : crText, nIconStyle );
 
-				dc.FillSolidRect( rcCol.left, rcCol.top + 16, 16, ITEM_HEIGHT - 16, crWnd );
+				dc.FillSolidRect( rcCol.left, rcCol.top + 16, 16, ITEM_HEIGHT - 16, crLeftAligned );
 
 				rcCol.left += 16;
 			}
 
-			dc.FillSolidRect( rcCol.left, rcCol.top, 1, ITEM_HEIGHT, crWnd );
+			dc.FillSolidRect( rcCol.left, rcCol.top, 1, ITEM_HEIGHT, crLeftAligned );
 			rcCol.left += 1;
 			
 			if ( bSelected && bFocus )
