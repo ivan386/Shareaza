@@ -236,7 +236,7 @@ bool CLocalSearch::IsValidForHit(CLibraryFile const * const pFile) const
 		if ( ! Settings.Gnutella1.EnableToday ) 
 		{
 			theApp.Message( MSG_ERROR, _T("CLocalSearch::AddHit() dropping G1 hit - G1 network not enabled") );
-			return FALSE;
+			return false;
 		}
 		return IsValidForHitG1( pFile );
 	}
