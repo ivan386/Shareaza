@@ -907,7 +907,7 @@ void CDownloadsCtrl::OnPaint()
 void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDownload, BOOL bFocus, BOOL bDrop)
 {
 	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
-	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crBackSel : crNatural;
+	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
 	COLORREF crText		= CoolInterface.m_crText;
 	COLORREF crLeftAligned = crBack ;
 
@@ -980,7 +980,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 					rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, ILD_NORMAL );
 			}
 			else
-				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crBack );
+				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crLeftAligned );
 			rcCell.left += 16;
 			nIconStyle = pDownload->m_bSelected ? ILD_SELECTED : ILD_NORMAL;
 

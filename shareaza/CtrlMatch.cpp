@@ -698,7 +698,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	BOOL bSelected	= pHit ? pHit->m_bSelected : pFile->m_bSelected;
 	BOOL bGrayed	= FALSE;
 	COLORREF crWnd	= CoolInterface.m_crWindow;
-	COLORREF crText	= bSelected ? CoolInterface.m_crHighlight : CoolInterface.m_crText ;
+	COLORREF crText	= bSelected ? CoolInterface.m_crHiText : CoolInterface.m_crText ;
 	COLORREF crBack	= crWnd;
 	COLORREF crLeftAligned = crBack ;
 
@@ -737,7 +737,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 
 	if ( bSelected )
 	{
-		crBack = CoolInterface.m_crBackSel;
+		crBack = CoolInterface.m_crHighlight;
 	}
 	else if ( ( pHit && ( pHit->m_bBogus || pHit->m_sURL.IsEmpty() || ! pHit->m_bMatched ) ) ||
 			  ( ! pHit && ! pFile->m_bOneValid ) ||
