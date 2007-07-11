@@ -195,12 +195,12 @@ BOOL CUploadQueues::Reorder(CUploadQueue* pQueue, CUploadQueue* pBefore)
 //////////////////////////////////////////////////////////////////////
 // CUploadQueues queue selection
 
-CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, CLibraryFile* pFile)
+CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, CLibraryFile const * const pFile)
 {
 	return SelectQueue( nProtocol, pFile->m_sName, pFile->GetSize(), CUploadQueue::ulqLibrary, pFile->m_sShareTags );
 }
 
-CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, CDownload* pFile)
+CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, CDownload const * const pFile)
 {
 	return SelectQueue( nProtocol, pFile->m_sDisplayName, pFile->m_nSize, CUploadQueue::ulqPartial );
 }
@@ -362,7 +362,7 @@ DWORD CUploadQueues::GetCurrentDonkeyBandwidth()
 	return nBandwidth;
 }
 
-BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bCanQueue )
+BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile const * const pFile, BOOL bCanQueue )
 { 	// Can the specified file be uploaded with the current queue setup?
 
 	// Don't bother with 0 byte files
@@ -394,7 +394,7 @@ BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bC
 	return FALSE;	//This file is not uploadable with the current queue setup
 }
 
-int CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile *pFile )
+int CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile const * const pFile )
 { 	// if the specified file was requested now, what queue position would it be in?
 	// 0x7FFF (max int) indicates the file cannot be downloaded
 

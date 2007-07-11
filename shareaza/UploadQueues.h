@@ -55,8 +55,8 @@ public:
 	CUploadQueue*	Create(LPCTSTR pszName = NULL, BOOL bTop = FALSE);
 	void			Delete(CUploadQueue* pQueue);
 	BOOL			Reorder(CUploadQueue* pQueue, CUploadQueue* pBefore);
-	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, CLibraryFile* pFile);
-	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, CDownload* pFile);
+	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, CLibraryFile const * const pFile);
+	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, CDownload const * const pFile);
 	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, DWORD nFileState, LPCTSTR pszShareTags = NULL);
 public:
 	int		GetTotalBandwidthPoints( BOOL ActiveOnly = FALSE );
@@ -67,8 +67,8 @@ public:
 	BOOL	IsTransferAvailable();
 	DWORD	GetMinimumDonkeyBandwidth();
 	DWORD	GetCurrentDonkeyBandwidth();
-	BOOL	CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bCanQueue = FALSE );	// Can this file be uploaded with the current queue setup?
-	int		QueueRank(PROTOCOLID nProtocol, CLibraryFile *pFile );	// What queue position would this file be in?
+	BOOL	CanUpload(PROTOCOLID nProtocol, CLibraryFile const * const pFile, BOOL bCanQueue = FALSE );	// Can this file be uploaded with the current queue setup?
+	int		QueueRank(PROTOCOLID nProtocol, CLibraryFile const * const pFile );	// What queue position would this file be in?
 
 public:
 	void	Clear();
