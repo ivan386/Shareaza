@@ -65,14 +65,11 @@ public:
 	void		WriteVirtualTree();
 protected:
 	INT_PTR		ExecuteSharedFiles(INT_PTR nMaximum);
+	BOOL		AddHit(CLibraryFile* pFile, int nIndex);
+	BOOL		AddHitG1(CLibraryFile* pFile, int nIndex);
+	BOOL		AddHitG2(CLibraryFile* pFile, int nIndex);
 	int			ExecutePartialFiles(INT_PTR nMaximum);
-	void		AddHit(CLibraryFile const * const pFile, int nIndex);
-	void		AddHit(CDownload const * const pDownload, int nIndex);
-	void		AddHitG1(CLibraryFile const * const pFile, int nIndex);
-	void		AddHitG2(CLibraryFile const * const pFile, int nIndex);
-	inline bool	IsValidForHit(CLibraryFile const * const pFile) const;
-	inline bool	IsValidForHitG1(CLibraryFile const * const pFile) const;
-	inline bool	IsValidForHitG2(CLibraryFile const * const pFile) const;
+	void		AddHit(CDownload* pDownload, int nIndex);
 protected:
 	void		CreatePacket(int nCount);
 	void		CreatePacketG1(int nCount);
