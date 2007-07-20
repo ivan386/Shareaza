@@ -641,6 +641,47 @@ void CRemoteWnd::PaintStatus(CDC* pDC)
 {
 	if ( m_bsStatusText && ! m_bStatus )
 	{
+		if ( m_pSkin->m_crCaptionOutline != CLR_NONE )
+		{
+			pDC->SetTextColor( m_pSkin->m_crCaptionOutline );
+			m_rcsStatusText.OffsetRect( 1 , 0 );
+			pDC->DrawText( m_sStatus, m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+			m_rcsStatusText.OffsetRect( 0 , 1 );
+			pDC->DrawText( m_sStatus, m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+			m_rcsStatusText.OffsetRect( -1 , 0 );
+			pDC->DrawText( m_sStatus, m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+			m_rcsStatusText.OffsetRect( -1 , 0 );
+			pDC->DrawText( m_sStatus, m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+			m_rcsStatusText.OffsetRect( 0 , -1 );
+			pDC->DrawText( m_sStatus, m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+			m_rcsStatusText.OffsetRect( 0 , -1 );
+			pDC->DrawText( m_sStatus, m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+			m_rcsStatusText.OffsetRect( 1 , 0 );
+			pDC->DrawText( m_sStatus, m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+			m_rcsStatusText.OffsetRect( 1 , 0 );
+			pDC->DrawText( m_sStatus, m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+			m_rcsStatusText.OffsetRect( -1 , 1 );
+			pDC->SetTextColor( m_pSkin->m_crCaptionText );
+		}
+
+		if ( m_pSkin->m_crCaptionShadow != CLR_NONE )
+		{
+			pDC->SetTextColor( m_pSkin->m_crCaptionShadow );
+			m_rcsStatusText.OffsetRect( 1 , 1 );
+			pDC->DrawText( m_sStatus, &m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+			m_rcsStatusText.OffsetRect( -1 , -1 );
+			pDC->SetTextColor( m_pSkin->m_crCaptionText );
+		}
+
 		pDC->DrawText( m_sStatus, &m_rcsStatusText, 
 			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
 
