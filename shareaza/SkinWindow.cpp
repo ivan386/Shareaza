@@ -388,6 +388,8 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 		else if ( pGroup->IsNamed( _T("maximiseCrop") ) )
 		{
 			ParseRect( pGroup, &m_rcMaximise );
+			m_rcMaximise.right -= m_rcMaximise.left;
+			m_rcMaximise.bottom -= m_rcMaximise.top;
 		}
 		else if ( pGroup->IsNamed( _T("resizeBorder") ) )
 		{
@@ -477,20 +479,6 @@ void CSkinWindow::CalcWindowRect(RECT* pRect, BOOL bToClient, BOOL /*bZoomed*/)
 	if ( m_bPart[ SKINPART_BOTTOM_RIGHT ] )
 		rcAdjust.bottom = max( rcAdjust.bottom, m_rcPart[ SKINPART_BOTTOM_RIGHT ].Height() );
 
-//	if ( bZoomed && bToClient) 
-//	{
-//		pRect->left		+= ( rcAdjust.left - m_rcMaximise.left );
-//		pRect->top		+= ( rcAdjust.top - m_rcMaximise.top );
-//		pRect->right	-= ( rcAdjust.right - m_rcMaximise.right - m_rcMaximise.left );
-//		pRect->bottom	-= ( rcAdjust.bottom - m_rcMaximise.bottom - m_rcMaximise.top );
-//	}
-//	if ( bZoomed && !bToClient ) 
-//	{
-//		pRect->left		-= ( rcAdjust.left - m_rcMaximise.left );
-//		pRect->top		-= ( rcAdjust.top - m_rcMaximise.top );
-//		pRect->right	+= ( rcAdjust.right - m_rcMaximise.right - m_rcMaximise.left );
-//		pRect->bottom	+= ( rcAdjust.bottom - m_rcMaximise.bottom - m_rcMaximise.top );
-//	} else
 	if ( bToClient )
 	{
 		pRect->left		+= rcAdjust.left;
@@ -532,25 +520,25 @@ void CSkinWindow::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 	CRect rcAdjusted( &rcWork );
 	CalcWindowRect( &rcAdjusted, FALSE, TRUE );
 	
-	if ( m_rcMaximise.left > 0 )
-		rcWork.left = rcAdjusted.left + m_rcMaximise.left;
+	if ( m_rcMaximise.left < 0 )
+		rcWork.left = rcAdjusted.left;
 	else
-		rcWork.left = rcAdjusted.left;		
-
-	if ( m_rcMaximise.top > 0 )
-		rcWork.top = rcAdjusted.top + m_rcMaximise.top;
-	else
+		rcWork.left -= m_rcMaximise.left;
+	
+	if ( m_rcMaximise.top < 0 )
 		rcWork.top = rcAdjusted.top;
-
-	if ( m_rcMaximise.right < 0 )
-		rcWork.right = m_rcMaximise.right + m_rcMaximise.right;
 	else
+		rcWork.top -= m_rcMaximise.top;
+	
+	if ( m_rcMaximise.right < 0 )
 		rcWork.right = rcAdjusted.right;
+	else
+		rcWork.right += m_rcMaximise.right;
 	
 	if ( m_rcMaximise.bottom < 0 )
-		rcWork.bottom = rcAdjusted.bottom + m_rcMaximise.bottom;
-	else
 		rcWork.bottom = rcAdjusted.bottom;
+	else
+		rcWork.bottom += m_rcMaximise.bottom;
 	
 	lpMMI->ptMaxPosition.x	= rcWork.left;
 	lpMMI->ptMaxPosition.y	= rcWork.top;
@@ -1226,7 +1214,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		ptCap.y = ( rcItem.top + rcItem.bottom ) / 2 - sz.cy / 2;
 		
 		pDC->SetBkMode( TRANSPARENT );
-		
+
 		if ( m_crCaptionOutline != CLR_NONE )
 		{
 			pDC->SetTextColor( m_crCaptionOutline );
@@ -1239,7 +1227,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			pDC->ExtTextOut( ptCap.x, ptCap.y + 1, ETO_CLIPPED, &rcItem, strCaption, NULL );
 			pDC->ExtTextOut( ptCap.x + 1, ptCap.y + 1, ETO_CLIPPED, &rcItem, strCaption, NULL );
 		}
-
+		
 		if ( m_crCaptionShadow != CLR_NONE )
 		{
 			pDC->SetTextColor( m_crCaptionShadow );
