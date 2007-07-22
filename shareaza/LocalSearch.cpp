@@ -182,7 +182,16 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 
 		if ( nHitsTested - nHitsBad < nInThisPacket )
 			nInThisPacket = nHitsTested - nHitsBad;
-		nHits -= nHitsBad;
+
+		nHits -= nHitsBad;		
+		if ( nInThisPacket == 0 )
+		{
+			while ( nHitsTested-- )
+				pFiles->RemoveHead();
+			pExcludedFiles.RemoveAll();
+			pFilesCopy = pFiles;
+			continue;
+		}
 
 		CreatePacket( nInThisPacket );
 
