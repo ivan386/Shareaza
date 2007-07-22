@@ -3194,19 +3194,20 @@
 		<control/><control/>
 		<control caption="Maak een ghost bestand aan tijdens verwijderen"/>
 	</dialog>
-	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Mediaspeler">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
 		<control caption="_Opties:"/>
-		<control caption="De onderstaande bestandstypen AFSPELEN met de Shareaza mediaspeler"/>
-		<control caption="De onderstaande bestandstypen BIJVOEGEN met behulp van de mediaspeler"/>
-		<control caption="_Bestandstypen:"/>
+		<control/>
+		<control caption="Gebruik de Shareaza Mediaspeler om volgende extensies AF TE SPELEN"/>
+		<control caption="Gebruik de Shareaza Mediaspeler om volgende extensies AF TE WACHTEN"/>
+		<control caption="_Extensies:"/>
 		<control/>
 		<control caption="_Toevoegen"/>
-		<control caption="_Verwijderen"/>
-		<control caption="_Audiovisualisatieplugin:"/>
-		<control caption="_Selecteer plugin..."/>
-		<control caption="_Media Afspelen"/>
-		<control caption="Kies Mediaspeler:"/>
-		<control caption="Waarschuwing: Een externe Mediaspeler kiezen schakelt alle Media- en Visualisatieplugins uit!"/>
+		<control caption="_Verwijdernen"/>
+		<control caption="Audio _Visualisatie Plugin:"/>
+		<control caption="_Selecteer Plugin..."/>
+		<control caption="_Mediaspeler"/>
+		<control caption="Kies een Mediaspeler:"/>
+		<control caption="Opgepast: Een externe Mediaspeler kiezen zal alle Media en Visualisate Plugins uitschakelen!"/>
 	</dialog>
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Gemeenschap">
 		<control caption="Gnutella gebruikersprofiel:"/>
@@ -3691,7 +3692,7 @@
 		<control caption="Zoeken"/>
 		<control caption="Annuleren"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filter resultaten">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filter resultaten">
 		<control caption="Alleen resultaten tonen die deze _woorden bevatten:"/>
 		<control/>
 		<control caption="( je kunt ook woorden uitsluiten met &quot;-woord&quot; )"/>
@@ -3704,9 +3705,9 @@
 		<control/><control/>
 		<control caption="bronnen."/>
 		<control caption="_Verbergen:"/>
-		<control caption="Bezette gastheren"/>
-		<control caption="Firewall/push gastheren"/>
-		<control caption="Onstabiele gastheren"/>
+		<control caption="Bezette bronnen"/>
+		<control caption="Gefirewalde bronnen"/>
+		<control caption="Onstabiele bronnen"/>
 		<control caption="Ongeschikte bestanden"/>
 		<control caption="Bestanden die je al hebt"/>
 		<control caption="Nepresultaten"/>
@@ -3717,6 +3718,9 @@
 		<control caption="_Opslaan als"/>
 		<control caption="_Verwijder"/>
 		<control caption="Filters:"/>
+		<control caption="DRM bestanden"/>
+		<control caption="Verdachte bestanden"/>
+		<control caption="16+ resultaten"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filter opslaan als">
 		<control/>
