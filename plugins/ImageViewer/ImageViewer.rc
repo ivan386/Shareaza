@@ -65,7 +65,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,1,6
+ FILEVERSION 1,2,1,7
  PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -84,9 +84,9 @@ BEGIN
             VALUE "Comments", "Shareaza Image Viewer Plugin"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Image Viewer Plugin"
-            VALUE "FileVersion", "1, 2, 1, 6"
+            VALUE "FileVersion", "1, 2, 1, 7"
             VALUE "InternalName", "ImageViewer"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2007."
             VALUE "OriginalFilename", "ImageViewer.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 3, 0, 0"
@@ -144,7 +144,7 @@ IDB_COMMANDS            BITMAP                  "Commands.bmp"
 STRINGTABLE 
 BEGIN
     IDS_PROJNAME            "ImageViewer"
-    IDS_ABOUT               "Shareaza Image Viewer Plugin\nCopyright © Shareaza Development Team, 2002-2005."
+    IDS_ABOUT               "Shareaza Image Viewer Plugin\nCopyright © Shareaza Development Team, 2002-2007."
 END
 
 #endif    // English (Australia) resources
