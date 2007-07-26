@@ -223,7 +223,7 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar << m_nTrackerMode;
 
 
-		if ( IsMultiTracker() ) 
+		if ( IsMultiTracker() || m_pAnnounceTracker == NULL )
 		{
 			ar.WriteCount( 0 );
 		}
