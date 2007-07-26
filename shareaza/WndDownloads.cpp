@@ -53,6 +53,7 @@
 #include "DlgFilePropertiesSheet.h"
 #include "DlgTorrentInfoSheet.h"
 #include "DlgURLCopy.h"
+#include "DlgURLExport.h"
 #include "DlgHelp.h"
 #include "Skin.h"
 #include "Network.h"
@@ -1238,33 +1239,53 @@ void CDownloadsWnd::OnUpdateDownloadsCopy(CCmdUI* pCmdUI)
 void CDownloadsWnd::OnDownloadsCopy() 
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CDownload*> pList;
+	CList<CShareazaFile*> pList;
 	
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
-	}
-	
-	while ( ! pList.IsEmpty() )
-	{
-		CDownload* pDownload = pList.RemoveHead();
-		
-        if ( Downloads.Check( pDownload ) && ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sDisplayName.GetLength() ) )
+		if ( pDownload->m_bSelected && Downloads.Check( pDownload ) && ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sDisplayName.GetLength() ) )
 		{
-			CURLCopyDlg dlg;
-			CShareazaFile file;
-			file.m_sName		= pDownload->m_sDisplayName;
-			file.m_oSHA1		= pDownload->m_oSHA1;
-			file.m_oTiger		= pDownload->m_oTiger;
-			file.m_oED2K		= pDownload->m_oED2K;
-			file.m_oBTH			= pDownload->m_oBTH;
-			file.m_oMD5			= pDownload->m_oMD5;
-			file.m_nSize		= pDownload->m_nSize;
-			dlg.Add( &file );
-			dlg.DoModal();
+			CShareazaFile* pFile = new CShareazaFile();
+			pFile->m_sName		= pDownload->m_sDisplayName;
+			pFile->m_oSHA1		= pDownload->m_oSHA1;
+			pFile->m_oTiger		= pDownload->m_oTiger;
+			pFile->m_oED2K		= pDownload->m_oED2K;
+			pFile->m_oBTH		= pDownload->m_oBTH;
+			pFile->m_oMD5		= pDownload->m_oMD5;
+			pFile->m_nSize		= pDownload->m_nSize;
+			
+			pList.AddTail( pFile );
 		}
 	}
+	
+	if ( pList.GetCount() == 1 )
+	{
+		CURLCopyDlg dlg;
+		POSITION pos = pList.GetHeadPosition();
+		CShareazaFile* pFile = pList.GetNext( pos );
+		dlg.Add( pFile );
+		dlg.DoModal();
+	}
+	else if ( pList.GetCount() > 1 )
+	{
+		CURLExportDlg dlg;
+
+		POSITION pos = pList.GetHeadPosition();
+		while ( pos )
+		{
+			CShareazaFile* pFile = pList.GetNext( pos );
+			dlg.Add( pFile );
+		}
+		dlg.DoModal();
+	}
+
+	for ( POSITION pos = pList.GetHeadPosition() ; pos ; )
+	{
+		CShareazaFile* pFile = pList.GetNext( pos );
+		delete pFile;
+	}
+	pList.RemoveAll();
 }
 
 void CDownloadsWnd::OnUpdateDownloadsShare(CCmdUI* pCmdUI) 
