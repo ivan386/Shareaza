@@ -45,6 +45,7 @@ protected:
 	CTipListCtrl		m_wndList;
 	CNeighbourTipCtrl	m_wndTip;
 	CImageList			m_gdiImageList;
+	CImageList			m_gdiImageListFix;
 	CLiveListSizer		m_pSizer;
 	DWORD				m_tLastUpdate;
 private:

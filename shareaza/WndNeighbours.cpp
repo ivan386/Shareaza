@@ -120,6 +120,13 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
 	if ( theApp.m_bRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
+
+	//Redrawn Protocol Icon Workaround
+	m_gdiImageListFix.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
+	m_gdiImageListFix.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
+	m_gdiImageListFix.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
+	m_gdiImageListFix.Add( &bmImages, RGB( 0, 255, 0 ) );
+
 	m_gdiImageList.Create( 17, 17, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
 	m_gdiImageList.Create( 17, 17, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
 	m_gdiImageList.Create( 17, 17, ILC_COLOR16|ILC_MASK, 7, 1 );
@@ -668,6 +675,32 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 			break;
 		}
 		
+		*pResult = CDRF_NOTIFYPOSTPAINT;
+	}
+
+	// Redrawn Protocol Icon Workaround
+	else if ( CDDS_ITEMPOSTPAINT == pDraw->nmcd.dwDrawStage )
+	{
+        LVITEM rItem;
+        int    nItem = static_cast<int>( pDraw->nmcd.dwItemSpec );
+
+		ZeroMemory ( &rItem, sizeof(LVITEM) );
+		rItem.mask  = LVIF_IMAGE | LVIF_STATE;
+		rItem.iItem = nItem;
+		rItem.stateMask = LVIS_SELECTED;
+		m_wndList.GetItem ( &rItem );
+
+		CRect rcIcon;
+		m_wndList.GetItemRect ( nItem, &rcIcon, LVIR_ICON );
+		CDC* pDC = CDC::FromHandle ( pDraw->nmcd.hdc );
+
+		pDC->FillSolidRect( rcIcon.left, rcIcon.top, 17, 17, CoolInterface.m_crWindow );
+
+		if ( rItem.state & LVIS_SELECTED )
+            m_gdiImageListFix.Draw ( pDC, rItem.iImage, rcIcon.TopLeft(), ILD_SELECTED );
+		else
+			m_gdiImageListFix.Draw ( pDC, rItem.iImage, rcIcon.TopLeft(), ILD_TRANSPARENT );
+
 		*pResult = CDRF_DODEFAULT;
 	}
 }
