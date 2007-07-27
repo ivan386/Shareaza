@@ -41,16 +41,16 @@
     	<target uri="http://www.limewire.com/schemas/application.xsd">
     		<attribute from="title" to="name"/>
     		<attribute from="company" to="publisher"/>
-   		<attribute from="OS" to="platform"/>
-   		<attribute from="copyright" to="licensetype"/>
+    		<attribute from="OS" to="platform"/>
+    		<attribute from="copyright" to="licensetype"/>
     	</target>
     </schemaMapping>
     <schemaMapping sourceURI="http://www.limewire.com/schemas/application.xsd">
     	<target uri="http://www.shareaza.com/schemas/application.xsd">
     		<attribute from="name" to="title"/>
     		<attribute from="publisher" to="company"/>
-   		<attribute from="platform" to="OS"/>
-   		<attribute from="licensetype" to="copyright"/>
+    		<attribute from="platform" to="OS"/>
+    		<attribute from="licensetype" to="copyright"/>
     	</target>
     </schemaMapping>
     <schemaMapping sourceURI="http://www.shareaza.com/schemas/image.xsd">
