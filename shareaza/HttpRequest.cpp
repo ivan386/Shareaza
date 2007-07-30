@@ -314,9 +314,11 @@ int CHttpRequest::Run()
 
 void CHttpRequest::RunRequest()
 {
+	m_pSection.Lock();
 	HINTERNET hURL = InternetOpenUrl( m_hInternet, m_sURL, m_sRequestHeaders,
 		m_sRequestHeaders.GetLength(), INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_RELOAD | 
 		INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_NO_CACHE_WRITE , NULL );
+	m_pSection.Unlock();
 	
 	if ( hURL != NULL )
 	{
