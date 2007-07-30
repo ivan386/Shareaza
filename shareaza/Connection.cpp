@@ -446,7 +446,7 @@ BOOL CConnection::OnRead()
 
 	// If we need to worry about throttling bandwidth, calculate nLimit, the number of bytes we are allowed to read now
 	DWORD* pInputLimit = m_mInput.pLimit;
-	if ( pInputLimit							// If the input bandwidth memter points to a limit
+	if ( pInputLimit							// If the input bandwidth meter points to a limit
 		&& *pInputLimit							// And that limit isn't 0
 		&& ( Settings.Live.BandwidthScale <= 100 ) )// And either the bandwidth meter in program settings is (do)
 	{
@@ -454,32 +454,21 @@ BOOL CConnection::OnRead()
 		DWORD tCutoff = tNow - METER_SECOND; // METER_SECOND is 1 second
 
 		// nLimit is the number of bytes we've read in the last second
-		// This part of the code has been translated into assembly language to make it faster
-#ifdef SHAREAZA_USE_ASM
-		// Here is the assembly language which does the same thing
-		__asm
+		// Loop across the times and histories stored in the input bandwidth meter
+		// Granularity is 1/10th of a second, so at the most we only need to read
+		// 12 records instead of all of them
+		nLimit = 0;										// Count up the limit from 0
+		DWORD slot = METER_LENGTH;						// Start at the last slot
+		while ( slot-- )
 		{
-			mov		ecx, this
-			mov		ebx, -METER_LENGTH
-			mov		edx, tCutoff
-			xor		eax, eax
-_loop:		cmp		edx, [ ecx + ebx * 4 ]CConnection.m_mInput.pTimes + METER_LENGTH * 4
-			jnbe	_ignore
-			add		eax, [ ecx + ebx * 4 ]CConnection.m_mInput.pHistory + METER_LENGTH * 4
-_ignore:	inc		ebx
-			jnz		_loop
-			mov		nLimit, eax
+			if ( m_mInput.pTimes[ slot ] >= tCutoff )	// Is this within the last second
+				nLimit += m_mInput.pHistory[ slot ];	//   It was, add it to the limit
+			else if ( slot > m_mInput.nPosition )		// It wasn't, did we start with the latest reading
+				slot = m_mInput.nPosition + 1;			//   We didn't, jump to our latest reading and continue
+			else
+				break;									//   We did, no need to check the rest
 		}
-#else
-		// Loop across the first 24 times and histories stored in the input bandwidth meter
-		nLimit = 0;					// Count up the limit from 0
-		for ( std::ptrdiff_t slot = -METER_LENGTH; slot; ++slot )
-		{
-			// If this time is within the last second, add its bytes to the limit
-			if ( m_mInput.pTimes[ METER_LENGTH + slot ] >= tCutoff )
-				nLimit += m_mInput.pHistory[ METER_LENGTH + slot ];
-		}
-#endif
+
 		// nActual is the speed limit, set by the input bandwidth meter and the bandwidth scale in settings
 		DWORD nActual = *pInputLimit; // Get the speed limit from the input bandwidth meter
 		if ( Settings.Live.BandwidthScale < 100 ) // The scale is turned down and we should use it
