@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
- <assemblyIdentity name="Shareaza.Shareaza" version="2.2.3.0" processorArchitecture="AMD64" type="win32"/>
+ <assemblyIdentity name="Shareaza.Shareaza" version="2.2.6.0" processorArchitecture="AMD64" type="win32"/>
  <description>Shareaza P2P</description>
  <dependency>
   <dependentAssembly>
@@ -10,7 +10,7 @@
    <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2"> 
       <security>
         <requestedPrivileges>
-         <requestedExecutionLevel level="asInvoker" uiAccess="false"/>
+          <requestedExecutionLevel level="asInvoker" uiAccess="false"/>
         </requestedPrivileges>
       </security>
    </trustInfo>
