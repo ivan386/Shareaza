@@ -1233,7 +1233,7 @@ void CDownloadsWnd::OnDownloadsBoost()
 void CDownloadsWnd::OnUpdateDownloadsCopy(CCmdUI* pCmdUI) 
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelSHA1orTTHorED2KorName );
+	pCmdUI->Enable( m_bSelSHA1orTTHorED2KorName || m_bSelSource );
 }
 
 void CDownloadsWnd::OnDownloadsCopy() 
@@ -1256,6 +1256,23 @@ void CDownloadsWnd::OnDownloadsCopy()
 			pFile->m_nSize		= pDownload->m_nSize;
 			
 			pList.AddTail( pFile );
+		}
+		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+		{
+			if ( pSource->m_bSelected )
+			{
+				CShareazaFile* pFile = new CShareazaFile();
+				pFile->m_sName		= pDownload->m_sDisplayName;
+				pFile->m_oSHA1		= pDownload->m_oSHA1;
+				pFile->m_oTiger		= pDownload->m_oTiger;
+				pFile->m_oED2K		= pDownload->m_oED2K;
+				pFile->m_oBTH		= pDownload->m_oBTH;
+				pFile->m_oMD5		= pDownload->m_oMD5;
+				pFile->m_nSize		= pDownload->m_nSize;
+				pFile->m_sURL		= pSource->m_sURL;
+				
+				pList.AddTail( pFile );
+			}
 		}
 	}
 	

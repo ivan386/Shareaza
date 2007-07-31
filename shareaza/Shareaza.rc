@@ -511,6 +511,7 @@ BEGIN
         MENUITEM "&Access",                     ID_TRANSFERS_CONNECT
         MENUITEM "Bro&wse",                     ID_BROWSE_LAUNCH
         MENUITEM "&Chat",                       ID_TRANSFERS_CHAT
+        MENUITEM "Copy &URI",                   ID_DOWNLOADS_COPY
         MENUITEM SEPARATOR
         MENUITEM "&Disconnect",                 ID_TRANSFERS_DISCONNECT
         MENUITEM "&Forget",                     ID_TRANSFERS_FORGET

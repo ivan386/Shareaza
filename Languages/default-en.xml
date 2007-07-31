@@ -986,6 +986,7 @@
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Chat to User"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Disconnect"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Forget"/>
