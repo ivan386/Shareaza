@@ -56,8 +56,8 @@ CLowerCaseTable::CLowerCaseTable()
 	// convert japanese halfwidth sound marks to fullwidth
 	// all forms should be mapped; we need NFKD here
 	cTable[ 65392 ] = TCHAR( 12540 );
-	cTable[ 65438 ] = TCHAR( 12441 );
-	cTable[ 65439 ] = TCHAR( 12442 );
+	cTable[ 65438 ] = TCHAR( 12443 );
+	cTable[ 65439 ] = TCHAR( 12444 );
 }
 
 CString& CLowerCaseTable::operator()(CString& strSource) const
