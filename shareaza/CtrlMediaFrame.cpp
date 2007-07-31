@@ -50,6 +50,8 @@
 
 #endif
 
+#define VOLUME_KEY_MULTIPLIER 5
+
 IMPLEMENT_DYNAMIC(CMediaFrame, CWnd)
 
 BEGIN_MESSAGE_MAP(CMediaFrame, CWnd)
@@ -1034,7 +1036,7 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 	case APPCOMMAND_VOLUME_DOWN:
 	case APPCOMMAND_VOLUME_UP:
 		KillTimer( 1 );
-		nVolumeTick = m_wndVolume.GetPos() + nVolumeDir;
+		nVolumeTick = m_wndVolume.GetPos() + (nVolumeDir * VOLUME_KEY_MULTIPLIER);
 		if ( nVolumeDir == -1 && nVolumeTick >= 0 ||
 			 nVolumeDir == 1 && nVolumeTick <= 100 )
 			 m_wndVolume.SetPos( nVolumeTick );
