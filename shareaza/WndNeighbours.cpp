@@ -723,7 +723,7 @@ void CNeighboursWnd::DrawEmptyMessage(CDC* pDC)
 	rcText.top = rcText.bottom - rcText.top;
 	
 	pDC->SetBkMode( TRANSPARENT );
-	pDC->SelectObject( &theApp.m_gdiFont );
+	CFont* pOldFont = (CFont*)pDC->SelectObject( &theApp.m_gdiFont );
 	pDC->SetTextColor( CoolInterface.m_crText );
 	LoadString( strText, IDS_NEIGHBOURS_NOT_CONNECTED );
 	pDC->DrawText( strText, &rcText, DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX );
@@ -732,6 +732,8 @@ void CNeighboursWnd::DrawEmptyMessage(CDC* pDC)
 	
 	LoadString( strText, IDS_NEIGHBOURS_CONNECT );
 	pDC->DrawText( strText, &rcText, DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX );
+
+	pDC->SelectObject( pOldFont );
 }
 
 void CNeighboursWnd::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)

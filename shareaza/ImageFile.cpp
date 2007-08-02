@@ -253,7 +253,11 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 		}
 	}
 
-	if ( hDC != hUseDC ) ReleaseDC( 0, hDC );
+	if ( hDC != hUseDC )
+	{
+		SelectObject( hDC, GetStockObject( ANSI_VAR_FONT ) ); // font leak fix
+		ReleaseDC( 0, hDC );
+	}
 
 	return hBitmap;
 }

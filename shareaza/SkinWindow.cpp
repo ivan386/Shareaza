@@ -629,6 +629,7 @@ void CSkinWindow::OnNcPaint(CWnd* pWnd)
 	CWindowDC dc( pWnd );
 	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 	Paint( pWnd, dc, FALSE );
+	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 }
 
 BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
@@ -636,6 +637,7 @@ BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
 	CWindowDC dc( pWnd );
 	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 	Paint( pWnd, dc, TRUE, bActive ? TS_TRUE : TS_FALSE );
+	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 	return FALSE;
 }
 
@@ -644,6 +646,7 @@ void CSkinWindow::OnSetText(CWnd* pWnd)
 	CWindowDC dc( pWnd );
 	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 	Paint( pWnd, dc, TRUE );
+	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 }
 
 void CSkinWindow::OnSize(CWnd* pWnd)
@@ -732,6 +735,7 @@ void CSkinWindow::OnNcMouseMove(CWnd* pWnd, UINT nHitTest, CPoint /*point*/)
 		CWindowDC dc( pWnd );
 		if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 		Paint( pWnd, dc, TRUE );
+		dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 	}	
 }
 
@@ -783,6 +787,7 @@ BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
 	CWindowDC dc( pWnd );
 	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
+	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 
 	return TRUE;
 }
@@ -813,6 +818,7 @@ BOOL CSkinWindow::OnNcLButtonUp(CWnd* pWnd, UINT /*nHitTest*/, CPoint /*point*/)
 	CWindowDC dc( pWnd );
 	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
+	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 
 	return FALSE;
 }
