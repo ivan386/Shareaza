@@ -1264,7 +1264,6 @@ void CMainWnd::UpdateMessages()
 			if( !m_bNoNetWarningShowed )
 			{
 				m_bNoNetWarningShowed = TRUE;
-				AfxMessageBox( _T("All networks except BitTorrent are disabled."), MB_ICONEXCLAMATION|MB_OK );
 			}
 		}
 		else	//Trying to connect
