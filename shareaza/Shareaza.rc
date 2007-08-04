@@ -1690,11 +1690,11 @@ BEGIN
     LTEXT           "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:",
                     IDC_MESSAGE,10,40,270,30
     CONTROL         "...",IDC_URL_MAGNET,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_WORDELLIPSIS | WS_GROUP,10,70,270,10
+                    SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,70,270,10
     CONTROL         "...",IDC_URL_ED2K,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_WORDELLIPSIS | WS_GROUP,10,85,270,10
+                    SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,85,270,10
     CONTROL         "...",IDC_URL_HOST,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_WORDELLIPSIS | WS_GROUP,10,100,270,10
+                    SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,100,270,10
     CONTROL         "Include &myself as a fixed source in the URL",
                     IDC_INCLUDE_SELF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
                     10,130,160,14
