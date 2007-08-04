@@ -11,7 +11,7 @@
 		author="dAbserver"
 		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
-		version="2.2.5.4"
+		version="2.2.5.5"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -963,6 +963,7 @@
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Чат с юзером"/>
+		<item id="ID_DOWNLOADS_COPY" text="Копировать _ссылку"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Разъединить"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Забыть"/>
@@ -2624,6 +2625,8 @@
 	<string id="8335" value="Источники этого файла находятся за брандмауэром"/>
 	<string id="8336" value="Источники этого файла могут выгружать нестабильно"/>
 	<string id="8337" value="Недоверяемый"/>
+	<string id="13000" value="Уверены, что хотите удалить выбранные правила безопасности? Действие будет необратимое."/>
+	<string id="13001" value="Файлы, разделяемые в интернете"/>
 	<string id="16064" value="Старт ядра сети Shareaza..."/>
 	<string id="16065" value="Не могу использовать  %s порт %i для входящих соединений.  Входящие соединения не будут поддерживаться."/>
 	<string id="16066" value="Закрытие ядра сети Shareaza..."/>
@@ -3149,6 +3152,14 @@
 	<string id="20215" value="Очень хороший"/>
 	<string id="20216" value="Отменный"/>
 	<string id="20217" value="Выберите папку с частичными загузками eDonkey/eMule:"/>
+	<!-- Column headers in Library Album View -->
+	<string id="20230" value="№"/><!-- Track number -->
+	<string id="20231" value="Название"/>
+	<string id="20232" value="Время"/>
+	<string id="20233" value="Битрат"/>
+	<string id="20234" value="Альбом"/>
+	<string id="20235" value="Артист"/>
+	<string id="20236" value="Оценка"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
