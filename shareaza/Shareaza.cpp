@@ -316,19 +316,21 @@ BOOL CShareazaApp::InitInstance()
 		Emoticons.Load();
 		Flags.Load();
 
-	CFirewall firewall;
-	if ( Settings.Connection.EnableFirewallException && firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
 	{
-		dlgSplash->IncrMax();
-		SplashStep( dlgSplash, L"Windows Firewall Setup" );
+		CFirewall firewall;
+		if ( Settings.Connection.EnableFirewallException && firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
+		{
+			dlgSplash->IncrMax();
+			SplashStep( dlgSplash, L"Windows Firewall Setup" );
 
-		// Add to firewall exception list if necessary
-		// and enable UPnP Framework if disabled
-		CString strBinaryPath;
-		GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
-		strBinaryPath.ReleaseBuffer( MAX_PATH );
-		firewall.SetupService( NET_FW_SERVICE_UPNP );
-		firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
+			// Add to firewall exception list if necessary
+			// and enable UPnP Framework if disabled
+			CString strBinaryPath;
+			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
+			strBinaryPath.ReleaseBuffer( MAX_PATH );
+			firewall.SetupService( NET_FW_SERVICE_UPNP );
+			firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
+		}
 	}
 
 	// If it is the first run we will run the UPnP discovery only in the QuickStart Wizard
@@ -415,17 +417,19 @@ int CShareazaApp::ExitInstance()
 	Uploads.Clear( FALSE );
 	EDClients.Clear();
 
-	CFirewall firewall;
-	if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
 	{
-		dlgSplash->IncrMax();
-		SplashStep( dlgSplash, L"Closing Windows Firewall Access", true );	
+		CFirewall firewall;
+		if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
+		{
+			dlgSplash->IncrMax();
+			SplashStep( dlgSplash, L"Closing Windows Firewall Access", true );	
 
-		// Remove application from the firewall exception list
-		CString strBinaryPath;
-		GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
-		strBinaryPath.ReleaseBuffer( MAX_PATH );
-		firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
+			// Remove application from the firewall exception list
+			CString strBinaryPath;
+			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
+			strBinaryPath.ReleaseBuffer( MAX_PATH );
+			firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
+		}
 	}
 
 	if ( m_pUPnPFinder )
