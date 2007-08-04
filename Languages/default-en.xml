@@ -2630,6 +2630,7 @@
 	<string id="8337" value="Untrusted"/>
 	<string id="13000" value="Are you sure you want to delete the selected security rules?  This cannot be undone."/>
 	<string id="13001" value="Files shared over the Internet"/>
+	<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
 	<string id="16064" value="Starting Shareaza network core..."/>
 	<string id="16065" value="Can't bind to %s port %i for incoming connections. Incoming connections will not be supported."/>
 	<string id="16066" value="Shutting down Shareaza network core..."/>

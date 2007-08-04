@@ -883,6 +883,7 @@
 #define IDR_HTML_DISABLED               12011
 #define IDS_SECURITY_REMOVE_CONFIRM     13000
 #define IDS_FOLDER_TIP                  13001
+#define IDS_NETWORK_UPNP_FAILED         16063
 #define IDS_NETWORK_STARTUP             16064
 #define IDS_NETWORK_CANT_LISTEN         16065
 #define IDS_NETWORK_DISCONNECTING       16066
@@ -1742,7 +1743,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                1
+#define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        287
 #define _APS_NEXT_COMMAND_VALUE         33138
 #define _APS_NEXT_CONTROL_VALUE         1535

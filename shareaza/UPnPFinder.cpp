@@ -384,7 +384,9 @@ bool CUPnPFinder::OnSearchComplete()
 		if ( ! m_bPortIsFree ) // warn only once
 		{
 			// Add more descriptive explanation!!!
-			AfxMessageBox( _T("UPnP port mapping failed after 10 attempts."), MB_OK|MB_ICONEXCLAMATION );
+			CString strMessage;
+			LoadString( strMessage, IDS_NETWORK_UPNP_FAILED );
+			AfxMessageBox( strMessage, MB_OK|MB_ICONEXCLAMATION );
 			break;
 		}
 	}
