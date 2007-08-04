@@ -1224,22 +1224,16 @@ CMatchFile::~CMatchFile()
 
 void CMatchFile::RefreshStatus()
 {
-	CMapStringToPtr oNameRatings;
-	LPVOID nVote;
+	CMap< CString, LPCTSTR, DWORD, DWORD > oNameRatings;
 	DWORD nBestVote = 0;
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
 	{
-		if ( oNameRatings.Lookup( pHit->m_sName, nVote ) )
+		DWORD nVote = 0;
+		oNameRatings.Lookup( pHit->m_sName, nVote );
+		oNameRatings [pHit->m_sName] = ++nVote;
+		if ( nVote > nBestVote )
 		{
-			oNameRatings [pHit->m_sName] = nVote = (LPVOID)( (DWORD)nVote + 1 );
-		}
-		else
-		{
-			oNameRatings [pHit->m_sName] = nVote = (LPVOID)1;
-		}
-		if ( (DWORD)nVote > nBestVote )
-		{
-			nBestVote = (DWORD)nVote;
+			nBestVote = nVote;
 			m_sName = pHit->m_sName;
 			m_sURL = pHit->m_sURL;
 		}
