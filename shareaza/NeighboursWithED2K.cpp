@@ -43,9 +43,10 @@ static char THIS_FILE[]=__FILE__;
 // CNeighboursWithED2K construction
 
 // CNeighboursWithED2K adds two arrays that need to be filled with 0s when the program creates its CNeighbours object
-CNeighboursWithED2K::CNeighboursWithED2K()
+CNeighboursWithED2K::CNeighboursWithED2K() :
 // Zero the memory of the sources array
-: m_tEDSources()
+	m_tEDSources()
+,	m_oEDSources()
 {
 }
 
