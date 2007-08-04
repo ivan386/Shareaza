@@ -2595,7 +2595,7 @@
 	<string id="8316" value="Hits"/>
 	<string id="8317" value="Uploads"/>
 	<string id="8318" value="%lu nu, %lu totaal"/>
-	<string id="8319" value="&#160;(Geen hashset)"/>
+	<string id="8319" value="Geen hashset"/>
 	<string id="8320" value="Status:"/>
 	<string id="8321" value="Snelheid:"/>
 	<string id="8322" value="URL:"/>
@@ -2613,7 +2613,7 @@
 	<string id="8334" value="Bronnen voor dit bestand zijn op dit moment bezig"/>
 	<string id="8335" value="Bronnen voor dit bestand zitten achter een firewall"/>
 	<string id="8336" value="Bronnen voor dit bestand kunnen instabiel zijn"/>
-	<string id="8337" value="Niet zeker"/>
+	<string id="8337" value="Niet betrouwbaar"/>
 	<string id="13000" value="Ben je zeker dat je deze veiligheidsregels wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
 	<string id="13001" value="Bestanden gedeeld over het internet"/>
 	<string id="16064" value="Opstarten van het netwerkcentrum van Shareaza..."/>
@@ -4028,7 +4028,7 @@
 		<control caption="Grootte in Bytes:"/>
 		<control/>
 		<control caption="_URNs:"/>
-		<control caption="Zeker"/>
+		<control caption="Betrouwbaar"/>
 		<control caption="SHA1:"/>
 		<control/><control/>
 		<control caption="Tiger-root:"/>

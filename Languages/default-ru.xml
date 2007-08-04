@@ -2605,7 +2605,7 @@
 	<string id="8316" value="Обращений"/>
 	<string id="8317" value="Выгрузок"/>
 	<string id="8318" value="%lu сегодня, %lu в сумме"/>
-	<string id="8319" value="&#160;(Без набора хеша)"/>
+	<string id="8319" value="Без набора хеша"/>
 	<string id="8320" value="Статус:"/>
 	<string id="8321" value="Скорость:"/>
 	<string id="8322" value="Ссылка:"/>
