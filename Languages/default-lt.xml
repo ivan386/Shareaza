@@ -10,7 +10,7 @@
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.5.1"
+		version="2.2.5.5"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -979,6 +979,7 @@
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Kalbėtis su vartotoju"/>
+		<item id="ID_DOWNLOADS_COPY" text="Kopijuoti _nuorodą"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Atsijungti"/>
 		<item id="ID_TRANSFERS_FORGET" text="Už_miršti"/>
@@ -2622,6 +2623,8 @@
 	<string id="8335" value="Šio failo šaltiniai yra už užkardos"/>
 	<string id="8336" value="Šio failo šaltiniai gali siųsti nestabiliai"/>
 	<string id="8337" value="Patikimas"/>
+	<string id="13000" value="Ar tikrai norite ištrinti pasirinktas saugos taisykles? Šio žingsnio negalėsite atšaukti."/>
+	<string id="13001" value="Failai, bendrinami internetu"/>
 	<string id="16064" value="Startuojamas „Shareaza“ tinklo branduolys..."/>
 	<string id="16065" value="Neįmanoma susieti %s adreso %i prievado įeinantiems susijungimams. Įeinantys susijungimai nebus palaikomi."/>
 	<string id="16066" value="Stabdomas „Shareaza“ tinklo branduolys..."/>
@@ -3147,6 +3150,14 @@
 	<string id="20215" value="Labai gera"/>
 	<string id="20216" value="Puiki"/>
 	<string id="20217" value="Pasirinkite eDonkey/eMule temp aplanką:"/>
+	<!-- Column headers in Library Album View -->
+	<string id="20230" value="Nr."/><!-- Track number -->
+	<string id="20231" value="Pavadinimas"/>
+	<string id="20232" value="Trukmė"/>
+	<string id="20233" value="Bitratas"/>
+	<string id="20234" value="Albumas"/>
+	<string id="20235" value="Atlikėjas"/>
+	<string id="20236" value="Įvertinimas"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
