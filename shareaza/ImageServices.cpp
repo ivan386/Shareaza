@@ -67,19 +67,23 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 	pInput->rgsabound[ 0 ].cElements = nLength;
 	SafeArrayAllocData( pInput );
 	
-	if ( FAILED( SafeArrayAccessData( pInput, (void HUGEP* FAR*)&pTarget ) ) ) return FALSE;
+	if ( FAILED( SafeArrayAccessData( pInput, (void HUGEP* FAR*)&pTarget ) ) )
+	{
+		SafeArrayDestroyDescriptor( pInput );
+		return FALSE;
+	}
 	
 	CopyMemory( pTarget, pData, nLength );
 	SafeArrayUnaccessData( pInput );
 	
 	SAFEARRAY* pArray = NULL;
 	HINSTANCE hRes = AfxGetResourceHandle();
-	BSTR bstrType = SysAllocString ( CT2CW (pszType));
+	BSTR bstrType = SysAllocString( CT2CW(pszType));
 	BOOL bSuccess = SUCCEEDED( pService->LoadFromMemory( bstrType, pInput, &pParams, &pArray ) );
-	SysFreeString (bstrType);
+	SysFreeString( bstrType );
 	AfxSetResourceHandle( hRes );
 	
-	SafeArrayDestroy( pInput );
+	SafeArrayDestroyDescriptor( pInput );
 	
 	return PostLoad( pFile, &pParams, pArray, bSuccess );
 }
