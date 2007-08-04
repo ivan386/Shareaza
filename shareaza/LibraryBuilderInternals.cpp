@@ -1204,7 +1204,7 @@ BOOL CLibraryBuilderInternals::ReadJPEG(DWORD nIndex, HANDLE hFile)
 		}
 		
 		ReadFile( hFile, &wMagic, 2, &nRead, NULL );
-		wMagic = ( wMagic >> 8 ) | ( wMagic << 8 );
+		wMagic = swapEndianess( wMagic );
 		if ( nRead != 2 || wMagic < 2 ) return FALSE;
 
 		switch ( nByte )
@@ -1215,10 +1215,10 @@ BOOL CLibraryBuilderInternals::ReadJPEG(DWORD nIndex, HANDLE hFile)
 			if ( nRead != 1 ) return FALSE;
 			ReadFile( hFile, &nHeight, 2, &nRead, NULL );
 			if ( nRead != 2 ) return FALSE;
-			nHeight = ( nHeight >> 8 ) | ( nHeight << 8 );
+			nHeight = swapEndianess( nHeight );
 			ReadFile( hFile, &nWidth, 2, &nRead, NULL );
 			if ( nRead != 2 ) return FALSE;
-			nWidth = ( nWidth >> 8 ) | ( nWidth << 8 );
+			nWidth = swapEndianess( nWidth );
 			ReadFile( hFile, &nComponents, 1, &nRead, NULL );
 			if ( nRead != 1 ) return FALSE;
 			if ( wMagic < 8 ) return FALSE;
