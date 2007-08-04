@@ -54,11 +54,11 @@ END_MESSAGE_MAP()
 // CConnectToDlg dialog
 
 CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) :
-	CSkinDialog( CConnectToDlg::IDD, pParent ),
-	m_bNoUltraPeer( FALSE ),
-	m_nPort( GNUTELLA_DEFAULT_PORT ),
-	m_nProtocol( PROTOCOL_G2 ),
-	m_bBrowseHost( bBrowseHost )
+	CSkinDialog		( CConnectToDlg::IDD, pParent )
+,	m_bNoUltraPeer	( FALSE )
+,	m_nPort			( GNUTELLA_DEFAULT_PORT )
+,	m_nProtocol		( 1 )							// G2 Protocol
+,	m_bBrowseHost	( bBrowseHost )
 {
 }
 
@@ -148,7 +148,7 @@ BOOL CConnectToDlg::OnInitDialog()
 			{
 				int nIndex = m_wndHost.AddString( pData->sHost );
 				ASSERT( nIndex != CB_ERR );
-				VERIFY( m_wndHost.SetItemData( nIndex, (DWORD_PTR)pData ) != CB_ERR );
+				VERIFY( m_wndHost.SetItemDataPtr( nIndex, pData ) != CB_ERR );
 			}
 			else
 			{
@@ -176,9 +176,9 @@ void CConnectToDlg::LoadItem(int nItem)
 	{
 		m_wndHost.SetCurSel( nItem );
 	}
-	CONNECT_HOST_DATA* pData = (CONNECT_HOST_DATA*)m_wndHost.GetItemData( nItem );
+	CONNECT_HOST_DATA* pData = static_cast< CONNECT_HOST_DATA* >( m_wndHost.GetItemDataPtr( nItem ) );
 	ASSERT( pData != NULL );
-	if ( (int)pData != CB_ERR )
+	if ( reinterpret_cast< INT_PTR >( pData ) != -1 )
 	{
 		m_sHost		= pData->sHost;
 		m_nPort		= pData->nPort;
@@ -285,8 +285,8 @@ BOOL CConnectToDlg::UpdateItems()
 	if ( nItem != CB_ERR )
 	{
 		// Edit existing item
-		CONNECT_HOST_DATA* pData = (CONNECT_HOST_DATA*)m_wndHost.GetItemData( nItem );
-		ASSERT( pData != NULL && (int)pData != CB_ERR );
+		CONNECT_HOST_DATA* pData = static_cast< CONNECT_HOST_DATA* >( m_wndHost.GetItemDataPtr( nItem ) );
+		ASSERT( pData != NULL && reinterpret_cast< INT_PTR >( pData ) != -1 );
 		pData->nPort = m_nPort;
 		pData->nProtocol = (PROTOCOLID)( m_nProtocol + 1 );
 		if( m_wndHost.GetCurSel() != nItem ) m_wndHost.SetCurSel( nItem );
@@ -303,7 +303,7 @@ BOOL CConnectToDlg::UpdateItems()
 			pData->nProtocol = (PROTOCOLID)( m_nProtocol + 1 );
 			nItem = m_wndHost.AddString( pData->sHost );
 			ASSERT( nItem != CB_ERR );
-			VERIFY( m_wndHost.SetItemData( nItem, (DWORD_PTR)pData ) != CB_ERR );
+			VERIFY( m_wndHost.SetItemDataPtr( nItem, pData ) != CB_ERR );
 			VERIFY( m_wndHost.SetCurSel( nItem ) != CB_ERR );
 		}
 	}
@@ -323,8 +323,8 @@ void CConnectToDlg::SaveItems()
 
 	for( nItem = 0; nItem < nCount; nItem++ )
 	{
-		CONNECT_HOST_DATA* pData = (CONNECT_HOST_DATA*)m_wndHost.GetItemData( nItem );
-		ASSERT( pData != NULL && (int)pData != CB_ERR );
+		CONNECT_HOST_DATA* pData = static_cast< CONNECT_HOST_DATA* >( m_wndHost.GetItemDataPtr( nItem ) );
+		ASSERT( pData != NULL && reinterpret_cast< INT_PTR >( pData ) != -1 );
 
 		CString strItem;
 		strItem.Format( _T("%.3i.Host"), nItem + 1 );
@@ -340,8 +340,8 @@ void CConnectToDlg::OnDestroy()
 {
 	while( m_wndHost.GetCount() )
 	{
-		CONNECT_HOST_DATA* pData = (CONNECT_HOST_DATA*)m_wndHost.GetItemData( 0 );
-		ASSERT( pData != NULL && (int)pData != CB_ERR );
+		CONNECT_HOST_DATA* pData = static_cast< CONNECT_HOST_DATA* >( m_wndHost.GetItemDataPtr( 0 ) );
+		ASSERT( pData != NULL && reinterpret_cast< INT_PTR >( pData ) != -1 );
 
 		m_wndHost.DeleteString( 0 );
 		delete pData;
