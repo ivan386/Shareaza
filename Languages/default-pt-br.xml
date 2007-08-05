@@ -986,6 +986,7 @@
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<item id="ID_TRANSFERS_CHAT" text="Conversar com Usuário"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copiar_URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="Desconectar"/>
 		<item id="ID_TRANSFERS_FORGET" text="Esquecer"/>
@@ -2570,8 +2571,8 @@
 	<string id="8224" value="O Shareaza está baixando:"/>
 	<string id="8225" value="Este download está pausado:"/>
 	<string id="8226" value="O Shareaza completou o download:"/>
-	<string id="8227" value="%i horas and %i minutos"/>
-	<string id="8228" value="%i minutos and %i segundos"/>
+	<string id="8227" value="%i horas e %i minutos"/>
+	<string id="8228" value="%i minutos e %i segundos"/>
 	<string id="8229" value="%i segundos"/>
 	<string id="8230" value="O Shareaza está procurando por fontes para:"/>
 	<string id="8231" value="Sem fontes"/>
@@ -2594,7 +2595,7 @@
 	<string id="8293" value="Nenhum dos arquivos estão selecionados"/>
 	<string id="8294" value="Adições Recentes"/>
 	<string id="8295" value="Classifique este Arquivo"/>
-	<string id="8304" value="N/A"/>
+	<string id="8304" value="N/D"/>
 	<string id="8306" value="Local"/>
 	<string id="8307" value="Tipo"/>
 	<string id="8308" value="Tamanho"/>
@@ -2629,6 +2630,7 @@
 	<string id="8337" value="Não confiável"/>
 	<string id="13000" value="Você tem certeza de que você quer apagar as regras de segurança selecionadas?  Isto não pode ser desfeito."/>
 	<string id="13001" value="Arquivos compartilhados pela Internet"/>
+	<string id="16063" value="O mapamento de portas UPnP falhou após 10 tentativas."/>
 	<string id="16064" value="Iniciando o núcleo de rede do Shareaza..."/>
 	<string id="16065" value="Impossível aceitar conexões de %s na porta %i. Conexões de entrada não serão suportadas."/>
 	<string id="16066" value="Desligando o núcleo de rede do Shareaza..."/>
