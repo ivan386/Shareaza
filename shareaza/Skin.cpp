@@ -1268,6 +1268,9 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("system.base.transfer.completed"), &CoolInterface.m_crTransferCompleted );
 	pColours.SetAt( _T("system.base.transfer.seeding"), &CoolInterface.m_crTransferVerifyPass );
 	pColours.SetAt( _T("system.base.transfer.failed"), &CoolInterface.m_crTransferVerifyFail );
+	pColours.SetAt( _T("system.base.transfer.completed.selected"), &CoolInterface.m_crTransferCompletedSelected );
+	pColours.SetAt( _T("system.base.transfer.seeding.selected"), &CoolInterface.m_crTransferVerifyPassSelected );
+	pColours.SetAt( _T("system.base.transfer.failed.selected"), &CoolInterface.m_crTransferVerifyFailSelected );
 	pColours.SetAt( _T("system.base.network.null"), &CoolInterface.m_crNetworkNull );
 	pColours.SetAt( _T("system.base.network.g1"), &CoolInterface.m_crNetworkG1 );
 	pColours.SetAt( _T("system.base.network.g2"), &CoolInterface.m_crNetworkG2 );

@@ -129,6 +129,9 @@ public:
 	COLORREF	m_crTransferCompleted;
 	COLORREF	m_crTransferVerifyPass;
 	COLORREF	m_crTransferVerifyFail;
+	COLORREF	m_crTransferCompletedSelected;
+	COLORREF	m_crTransferVerifyPassSelected;
+	COLORREF	m_crTransferVerifyFailSelected;
 	COLORREF	m_crNetworkNull;
 	COLORREF	m_crNetworkG1;
 	COLORREF	m_crNetworkG2;

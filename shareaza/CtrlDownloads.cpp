@@ -924,21 +924,33 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
 
- 	// Modify Text color if required
- 	if ( pDownload->IsCompleted() )
-  	{
- 		if ( pDownload->m_bVerify == TS_FALSE )
- 			crText = CoolInterface.m_crTransferVerifyFail;
- 		else if ( pDownload->IsSeeding() && ( pDownload->m_nSize > pDownload->m_nTorrentUploaded ) )
- 			crText = CoolInterface.m_crTransferVerifyPass;
-  		else
- 			crText = CoolInterface.m_crTransferCompleted;
-  	}
- 	else if ( pDownload->m_bSelected )
- 		crText = CoolInterface.m_crHiText;
-  
- 	dc.SetTextColor( crText );
- 
+	// Modify Text color if required
+	if ( pDownload->IsCompleted() )
+	{
+		if ( pDownload->m_bSelected )
+		{
+ 			if ( pDownload->m_bVerify == TS_FALSE )
+ 				crText = CoolInterface.m_crTransferVerifyFailSelected;
+			else if ( pDownload->IsSeeding() && ( pDownload->m_nSize > pDownload->m_nTorrentUploaded ) )
+	 			crText = CoolInterface.m_crTransferVerifyPassSelected;
+	  		else
+	 			crText = CoolInterface.m_crTransferCompletedSelected;
+		}
+		else
+		{
+ 			if ( pDownload->m_bVerify == TS_FALSE )
+ 				crText = CoolInterface.m_crTransferVerifyFail;
+	 		else if ( pDownload->IsSeeding() && ( pDownload->m_nSize > pDownload->m_nTorrentUploaded ) )
+	 			crText = CoolInterface.m_crTransferVerifyPass;
+	  		else
+	 			crText = CoolInterface.m_crTransferCompleted;
+		}
+	}
+	else if ( pDownload->m_bSelected )
+		crText = CoolInterface.m_crHiText;
+
+	dc.SetTextColor( crText );
+
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
 	HDITEM pColumn = {};
 
