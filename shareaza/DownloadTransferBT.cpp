@@ -386,7 +386,11 @@ BOOL CDownloadTransferBT::SendRequests()
 	}
 	if ( m_oRequested.size() >= (int)Settings.BitTorrent.RequestPipe )
 	{
-		if ( m_nState != dtsDownloading ) SetState( dtsRequesting );
+		if ( m_nState != dtsDownloading ) 
+		{
+			theApp.Message( MSG_DEBUG, L"Too many requests per host, staying in the requested state" );
+			SetState( dtsRequesting );
+		}
 		return TRUE;
 	}
 	QWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize;
@@ -449,8 +453,13 @@ BOOL CDownloadTransferBT::SendRequests()
 		}
 	}
 	
-	if ( !m_oRequested.empty() && m_nState != dtsDownloading ) SetState( dtsRequesting );
-	if ( m_oRequested.empty() ) SetState( dtsTorrent );
+	if ( !m_oRequested.empty() && m_nState != dtsDownloading )
+	{
+		theApp.Message( MSG_DEBUG, L"Request for piece sent, switching to the requested state" );
+		SetState( dtsRequesting );
+	}
+	if ( m_oRequested.empty() ) 
+		SetState( dtsTorrent );
 	return TRUE;
 }
 
@@ -475,14 +484,16 @@ BOOL CDownloadTransferBT::SelectFragment(const Fragments::List& oPossible, QWORD
 
 BOOL CDownloadTransferBT::SubtractRequested(Fragments::List& ppFragments)
 {
-	if ( m_oRequested.empty() || m_bChoked ) return FALSE;
+	if ( m_oRequested.empty() || m_bChoked ) 
+		return FALSE;
 	ppFragments.erase( m_oRequested.begin(), m_oRequested.end() );
 	return TRUE;
 }
 
 BOOL CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength)
 {
-	if ( m_oRequested.empty() ) return FALSE;
+	if ( m_oRequested.empty() ) 
+		return FALSE;
 	ASSERT( m_pDownload->m_pTorrent.m_nBlockSize != 0 );
 	if ( m_pDownload->m_pTorrent.m_nBlockSize == 0 ) return FALSE;
 
