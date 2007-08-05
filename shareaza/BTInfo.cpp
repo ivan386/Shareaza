@@ -656,6 +656,12 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	{
 		if ( ! pSHA1->IsType( CBENode::beString ) || pSHA1->m_nValue != Hashes::Sha1Hash::byteCount ) return FALSE;
 		m_oSHA1 = *static_cast< const Hashes::BtHash::RawStorage* >( pSHA1->m_pValue );
+	} 
+	else if ( CBENode* pSHA1Base16 = pInfo->GetNode( "filehash" ) )
+	{
+		if ( ! pSHA1Base16->IsType( CBENode::beString ) || 
+			pSHA1Base16->m_nValue != Hashes::BtGuid::byteCount ) return FALSE;
+		m_oSHA1 = *static_cast< const Hashes::BtGuid::RawStorage* >( pSHA1Base16->m_pValue );
 	}
 	
 	if ( CBENode* pED2K = pInfo->GetNode( "ed2k" ) )
