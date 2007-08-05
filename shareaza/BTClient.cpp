@@ -554,6 +554,7 @@ void CBTClient::DetermineUserAgent()
 			{ 'F', 'C', L"FileCroc" },
 			{ 'H', 'L', L"Halite" },
 			{ 'K', 'T', L"KTorrent" },
+			{ 'L', 'H', L"LH-ABC" },
 			{ 'L', 'P', L"Lphant" },
 			{ 'L', 'T', L"libtorrent" },
 			{ 'l', 't', L"rTorrent" },
@@ -566,6 +567,8 @@ void CBTClient::DetermineUserAgent()
 			{ 'S', 'B', L"SwiftBit" },
 			{ 'S', 'N', L"ShareNet" },
 			{ 'S', 'S', L"Swarmscope" },
+			{ 's', 't', L"Sharktorrent" },
+			{ 'S', 'T', L"SymTorrent" },
 		// Shareaza versions don't always 'fit' into the BT numbering, so skip that for now
 		//	{ 'S', 'Z', L"Shareaza" },
 			{ 'S', '~', L"Sbeta" },		// Shareaza alpha/beta versions
@@ -574,6 +577,7 @@ void CBTClient::DetermineUserAgent()
 			{ 'T', 'S', L"Torrentstorm" },
 			{ 'U', 'L', L"uLeecher!" },
 			{ 'U', 'T', L"\x00B5Torrent" },
+			{ 'X', 'L', L"Xunlei" },
 			{ 'X', 'T', L"XanTorrent" },
 			{ 'X', 'X', L"xTorrent" },
 			{ 'Z', 'T', L"ZipTorrent" }
