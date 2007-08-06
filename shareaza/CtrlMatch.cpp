@@ -727,6 +727,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	{
 		// Green if already in the library
 		crText = pHit ? CoolInterface.m_crSearchExistsHit : CoolInterface.m_crSearchExists;
+		if ( bSelected ) crText = CoolInterface.m_crSearchExistsSelected;
 	}
 	else if ( pFile->GetLibraryStatus() == TS_TRUE )
 	{
@@ -737,7 +738,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	{
 		// Blue if chosen for download
 		crText = pHit ? CoolInterface.m_crSearchQueuedHit : CoolInterface.m_crSearchQueued;
-		if ( bSelected && CoolInterface.m_crHighlight == GetSysColor( COLOR_HIGHLIGHT ) ) crText = CoolInterface.m_crHiText ;
+		if ( bSelected ) crText = CoolInterface.m_crSearchQueuedSelected;
 	}
 
 	if ( bSelected )

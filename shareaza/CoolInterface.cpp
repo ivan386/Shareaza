@@ -436,8 +436,10 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crChatNull	  		= RGB( 128, 128, 128 );
 	m_crSearchExists  		= RGB( 0, 127, 0 );
 	m_crSearchExistsHit		= RGB( 0, 64, 0 ); 
+	m_crSearchExistsSelected	= RGB( 0, 255, 0 );
 	m_crSearchQueued 		= RGB( 0, 0, 160 ); 
 	m_crSearchQueuedHit		= RGB( 0, 0, 100 );
+	m_crSearchQueuedSelected	= m_crHiText;
 	m_crSearchGhostrated	= RGB( 200, 90, 0 );
 	m_crSearchNull  		= GetSysColor( COLOR_3DSHADOW ); 
 	m_crTransferSource		= RGB( 30, 30, 30 );
@@ -446,8 +448,8 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crTransferVerifyPass	= RGB( 0, 0, 127 );
 	m_crTransferVerifyFail	= RGB( 255, 0, 0 );
 	m_crTransferCompletedSelected	= RGB( 0, 255, 0 );
-	m_crTransferVerifyFailSelected	= RGB( 255, 0, 0 );
 	m_crTransferVerifyPassSelected	= RGB( 0, 255, 0 );
+	m_crTransferVerifyFailSelected	= RGB( 255, 0, 0 );
 	m_crNetworkNull  		= RGB( 192, 192, 192 );
 	m_crNetworkG1  			= RGB( 80, 80, 80 );
 	m_crNetworkG2  			= RGB( 100, 100, 255 );

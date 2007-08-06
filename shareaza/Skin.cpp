@@ -1257,8 +1257,10 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("system.base.search.null"), &CoolInterface.m_crSearchNull );
 	pColours.SetAt( _T("system.base.search.exists"), &CoolInterface.m_crSearchExists );
 	pColours.SetAt( _T("system.base.search.exists.hit"), &CoolInterface.m_crSearchExistsHit );
+	pColours.SetAt( _T("system.base.search.exists.selected"), &CoolInterface.m_crSearchExistsSelected );
 	pColours.SetAt( _T("system.base.search.queued"), &CoolInterface.m_crSearchQueued );
 	pColours.SetAt( _T("system.base.search.queued.hit"), &CoolInterface.m_crSearchQueuedHit );
+	pColours.SetAt( _T("system.base.search.queued.selected"), &CoolInterface.m_crSearchQueuedSelected );
 	pColours.SetAt( _T("system.base.search.ghostrated"), &CoolInterface.m_crSearchGhostrated );
 	pColours.SetAt( _T("system.base.search.highrated"), &CoolInterface.m_crSearchHighrated );
 	pColours.SetAt( _T("system.base.search.collection"), &CoolInterface.m_crSearchCollection );

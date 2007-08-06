@@ -118,8 +118,10 @@ public:
 	COLORREF	m_crSearchNull;
 	COLORREF	m_crSearchExists;
 	COLORREF	m_crSearchExistsHit;
+	COLORREF	m_crSearchExistsSelected;
 	COLORREF	m_crSearchQueued;
 	COLORREF	m_crSearchQueuedHit;
+	COLORREF	m_crSearchQueuedSelected;
 	COLORREF	m_crSearchGhostrated;
 	COLORREF	m_crSearchHighrated;
 	COLORREF	m_crSearchCollection;
