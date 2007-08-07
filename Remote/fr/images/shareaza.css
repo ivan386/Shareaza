@@ -1,4 +1,4 @@
-			h3	{margin-top:0px; padding-top: 0px;}
+			h3	{margin-top:0px; padding-top: 0px; font-size: 12px}
 			h4	{margin-top:1em; padding-top: 2px; width:35em; border-top:1px dotted #333;font-family: verdana;font-size: 8pt;}
 			.progcontainer {width:100%; height:14px;text-align: left; white-space: nowrap;}
 			.progbar {float: left; background: #9999FF; white-space: nowrap; height: 100%;margin-bottom: -1.3em;}
@@ -7,7 +7,7 @@
 			td.filename	{white-space: normal;overflow: hidden; width: auto;}
 			td.filename div	{white-space: nowrap; overflow: hidden; width: auto;}
 			td	{white-space: nowrap; background: #fff; border: 1px #bbb solid; padding: 2px;}
-			th { padding: 2px; border: solid 1px gray; background: #E0E0E0; white-space: nowrap; text-align: center;}		
+			th { padding: 2px; border: solid 1px gray; background: #E0E0E0; white-space: nowrap; text-align: center; font-size: 11px;}		
 			.noline	{ text-decoration: none;}
 			.regularinput	{width:15em; margin-bottom: 3px;}
 			.bold {font-weight: 800;}
