@@ -984,6 +984,7 @@ Other:
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Parcourir l'utilisateur"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Discuter avec l'util."/>
+		<item id="ID_DOWNLOADS_COPY" text="_Copier l'URI"
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="Déco_nnecter"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Oublier"/>
@@ -1490,19 +1491,17 @@ Other:
 	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="12"/>
 				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				<colours text="800000"/>
-			</style>
+				</style>
 		</styles>
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">C O N N E C T E Z - V O U S</heading>
+			<heading align="middle">C&#160;O&#160;N&#160;N&#160;E&#160;C&#160;T&#160;E&#160;Z&#160;-&#160;V&#160;O&#160;U&#160;S</heading>
 			<newline gap="8" indent="42"/>
 			<text>Shareaza vous souhaite la bienvenue!  Vous n'êtes actuellement connecté à aucun réseau p2p.  </text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Cliquez ici pour commencer!</link>
@@ -1510,14 +1509,14 @@ Other:
 		</group>
 		<group id="2">
 			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">R E C H E R C H E Z &#160; D A N S &#160; S H A R E A Z A</heading>
+			<heading align="middle">R&#160;E&#160;C&#160;H&#160;E&#160;R&#160;C&#160;H&#160;E&#160;Z&#160;&#160;&#160;D&#160;A&#160;N&#160;S&#160;&#160;&#160;S&#160;H&#160;A&#160;R&#160;E&#160;A&#160;Z&#160;A</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
 		</group>
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">M I S E &#160; À &#160; J O U R &#160; D I S P O N I B L E</heading>
+			<heading align="middle">M&#160;I&#160;S&#160;E&#160;&#160;&#160;À&#160;&#160;&#160;J&#160;O&#160;U&#160;R&#160;&#160;&#160;D&#160;I&#160;S&#160;P&#160;O&#160;N&#160;I&#160;B&#160;L&#160;E</heading>
 			<newline gap="8" indent="42"/>
 			<text id="Mise à jour"/>
 			<newline gap="6"/>
@@ -1526,7 +1525,7 @@ Other:
 		</group>
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">A T T E N T I O N &#160; - &#160; V O U S   Ê T E S &#160; D E R R I È R E &#160; U N &#160; P A R E - F E U</heading>
+			<heading align="middle">A&#160;T&#160;T&#160;E&#160;N&#160;T&#160;I&#160;O&#160;N&#160;&#160;- &#160; V&#160;O&#160;U&#160;S&#160;&#160;&#160;Ê&#160;T&#160;E&#160;S &#160; D&#160;E&#160;R&#160;R&#160;I&#160;È&#160;R&#160;E &#160; U&#160;N&#160;&#160;&#160;P&#160;A&#160;R&#160;E&#160;-&#160;F&#160;E&#160;U</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza a détecté un routeur NAT ou un pare-feu,
 			et est dans l'incapacité actuelle de recevoir des connexions entrantes depuis Internet.  </text>
@@ -1537,7 +1536,7 @@ Other:
 		</group>
 		<group id="6">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">A T T E N T I O N &#160; - &#160; V O T R E &#160; P O R T &#160; T C P &#160; E S T &#160; D E R R I È R E &#160; UN &#160; P A R E - F E U</heading>
+			<heading align="middle">A&#160;T&#160;T&#160;E&#160;N&#160;T&#160;I&#160;O&#160;N&#160;&#160;&#160;- &#160; V&#160;O&#160;T&#160;R&#160;E &#160; P&#160;O&#160;R&#160;T&#160;&#160;&#160;T&#160;C&#160;P &#160; E&#160;S&#160;T &#160; D&#160;E&#160;R&#160;R&#160;I&#160;È&#160;R&#160;E&#160;&#160;&#160;U&#160;N&#160;&#160;&#160;P&#160;A&#160;R&#160;E&#160;-&#160;F&#160;E&#160;U</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza a détecté que vous êtes derrière un fare-feu ou un routeur NAT,
 			et est dans l'incapacité actuelle de recevoir des connexions TCP entrantes depuis internet.  </text>
@@ -1548,9 +1547,9 @@ Other:
 		</group>
 		<group id="7">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">A T T E N T I O N &#160; - &#160; V O T R E &#160; P O R T &#160; U D P &#160; E S T &#160; D E R R I È R E &#160; U N &#160; P A R E - F E U</heading>
+			<heading align="middle">A&#160;T&#160;T&#160;E&#160;N&#160;T&#160;I&#160;O&#160;N&#160;&#160;- &#160; V&#160;O&#160;T&#160;R&#160;E&#160;&#160;&#160;P&#160;O&#160;R&#160;T&#160;&#160;&#160;U&#160;D&#160;P &#160; E&#160;S&#160;T &#160; D&#160;E&#160;R&#160;R&#160;I&#160;È&#160;R&#160;E &#160; U&#160;N &#160; P&#160;A&#160;R&#160;E&#160;-&#160;F&#160;E&#160;U</heading>
 			<newline gap="8" indent="42"/>
-			<text colour="FF0000">Shareaza a détecté que vous êtes derrière un fare-feu ou un routeur NAT,
+			<text colour="FF0000">Shareaza a détecté que vous êtes derrière un pare-feu ou un routeur NAT,
 			et est dans l'incapacité actuelle de recevoir des connexions UDP entrantes depuis internet.  </text>
 			<text colour="FF0000" format="b">Ceci peut entraîner une faible performance en cherchant.</text>
 			<newline gap="6"/>
@@ -1558,7 +1557,7 @@ Other:
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">P E R S O N N A L I S E Z &#160; S H A R E A Z A</heading>
+		<heading align="middle">P&#160;E&#160;R&#160;S&#160;O&#160;N&#160;N&#160;A&#160;L&#160;I&#160;S&#160;E&#160;Z&#160;&#160;&#160;S&#160;H&#160;A&#160;R&#160;E&#160;A&#160;Z&#160;A</heading>
 		<newline gap="12" indent="42"/>
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
@@ -1577,7 +1576,7 @@ Other:
 		<newline gap="18" indent="0"/>
 		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
 		<gap size="8"/>
-		<heading align="middle">M E S &#160; T É L É C H A R G E M E N T S</heading>
+		<heading align="middle">M&#160;E&#160;S&#160;&#160;&#160;T&#160;É&#160;L&#160;É&#160;C&#160;H&#160;A&#160;R&#160;G&#160;E&#160;M&#160;E&#160;N&#160;T&#160;S</heading>
 		<newline gap="8" indent="42"/>
 		<text>Pour ouvrir le dossier de vos telechargements </text>
 		<link target="raza:shell:downloads">cliquez ici</link>
@@ -1585,7 +1584,7 @@ Other:
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">L' A C C È S &#160; À &#160; D I S T A N C E &#160; E S T &#160; A C T I V É</heading>
+			<heading align="middle">L'&#160;A&#160;C&#160;C&#160;È&#160;S&#160;&#160;&#160;À&#160;&#160;&#160;D&#160;I&#160;S&#160;T&#160;A&#160;N&#160;C&#160;E&#160;&#160;&#160;E&#160;S&#160;T&#160;&#160;&#160;A&#160;C&#160;T&#160;I&#160;V&#160;É</heading>
 			<newline gap="8" indent="42"/>
 			<text>L'accès à distance de shareaza est activé. Prenez le contrôle de Shareaza depuis votre navigateur Web à partir de l'adresse:</text>
 			<newline gap="6"/>
@@ -2565,11 +2564,12 @@ Other:
 	<string id="8332" value="Cette source est derrière un pare-feu"/>
 	<string id="8333" value="Cette source est peut-être instable"/>
 	<string id="8334" value="Les sources pour ce fichier sont actuellement occupées"/>
-	<string id="8335" value="Les sources pour ce fichier sont derrière des pares-feu"/>
+	<string id="8335" value="Les sources pour ce fichier sont derrière un pare-feu"/>
 	<string id="8336" value="Les sources pour ce fichier sont peut-être instables"/>
 	<string id="8337" value="Infiable"/>
 	<string id="13000" value="Etes-vous certain de vouloir supprimer ces règles?"/>
 	<string id="13001" value="Fichiers partager sur l'internet"/>
+	<string id="16063" value="Après dix essaies, Shareaza a faillit avec UPnP de configurer votre pare-feu ou routeur"/>
 	<string id="16064" value="Démarrage du noyau réseau Shareaza..."/>
 	<string id="16065" value="Impossible de se relier au %s port %i pour les connexions entrantes. Les connexions entrantes ne seront pas supportées."/>
 	<string id="16066" value="Fermeture du noyau réseau Shareaza..."/>
@@ -2892,8 +2892,8 @@ Other:
 	<string id="16995" value="Le fichier est endommagé, ou vous n'avez pas les bons codecs pour le lire."/>
 	<string id="16996" value="Une partie de ce fichier ne peut être jouée, vous devriez télécharger des codecs additionnels."/>
 	<string id="16997" value="Aucun fichier en lecture. Double-cliquez un fichier média dans votre bibliothèque pour le lire."/>
-	<string id="16998" value="L    E    C    T    E    U    R            M    U    L    T    I    M    E    D    I    A           S     H     A     R     E     A     Z     A"/> <!-- on one line -->
-	<string id="16999" value="Liste de lecture"/>
+	<string id="16998" value="L&#160;&#160;E&#160;&#160;C&#160;&#160;T&#160;&#160;E&#160;&#160;U&#160;&#160;R&#160;&#160;&#160;&#160;&#160;&#160;M&#160;&#160;U&#160;&#160;L&#160;&#160;T&#160;&#160;I&#160;&#160;M&#160;&#160;E&#160;&#160;D&#160;&#160;I&#160;&#160;A&#160;&#160;&#160;&#160;&#160;&#160;S&#160;&#160;H&#160;&#160;A&#160;&#160;R&#160;&#160;E&#160;&#160;A&#160;&#160;Z&#160;&#160;A"/> <!-- on one line -->
+	<string id="16999" value="L&#160;i&#160;s&#160;t&#160;e&#160;&#160;&#160;d&#160;e&#160;&#160;&#160;l&#160;e&#160;c&#160;t&#160;u&#160;r&#160;e"/>
 	<string id="17024" value="Initialisation d'une connexion vers %s..."/>
 	<string id="17025" value="Impossible de créer une connexion vers %s."/>
 	<string id="17026" value="Demande une connexion poussée depuis derrière un pare-feu de %s..."/>
@@ -3108,7 +3108,7 @@ Other:
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Réglages Shareaza">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Réglages Shareaza"> <!--This can be is ignored or removed. Also there is some business unique to win98 I think. Try changing cookie to SyBuBuBu#3 if you're on that os. -->
 		<control/>
 		<control caption="Valider"/>
 		<control caption="Annuler"/>
@@ -3487,7 +3487,7 @@ Other:
 		<control caption="Mode Expert"/>
 		<control caption="Simple, facile d'utilisation. Il sera familier aux utilisateurs d'autres clients P2P."/>
 		<control caption="Le mode Expert propose aux utilisateurs initiés plus de fonctionnalités."/>
-		<control caption="Afficher des barres de progression simplifiées des téléchargements. (Reduit l'utilisation du CPU)"/>
+		<control caption="Afficher des barres de progression simplifiées. (Reduit CPU)"/>
 		<control caption="Prendre en charge les liens torrent."/>
 	</dialog>
 	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Shareaza vous souhaite la bienvenue [3 de 7]">
