@@ -439,7 +439,7 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crSearchExistsSelected	= RGB( 0, 255, 0 );
 	m_crSearchQueued 		= RGB( 0, 0, 160 ); 
 	m_crSearchQueuedHit		= RGB( 0, 0, 100 );
-	m_crSearchQueuedSelected	= m_crHiText;
+	m_crSearchQueuedSelected	= GetSysColor( COLOR_HIGHLIGHTTEXT );
 	m_crSearchGhostrated	= RGB( 200, 90, 0 );
 	m_crSearchNull  		= GetSysColor( COLOR_3DSHADOW ); 
 	m_crTransferSource		= RGB( 30, 30, 30 );
@@ -477,6 +477,9 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crFragmentFail		= RGB( 220, 0, 0 );
 	m_crFragmentRequest		= RGB( 255, 255, 0 );
 	m_crFragmentBorder		= RGB( 50, 50, 50 );
+	m_crFragmentBorderSelected	= RGB( 50, 50, 50 );
+	m_crFragmentBorderSimpleBar	= RGB( 50, 50, 50 );
+	m_crFragmentBorderSimpleBarSelected	= RGB( 255, 255, 255 );
 
 	m_crSysWindow			= GetSysColor( COLOR_WINDOW );
 	m_crSysBtnFace			= GetSysColor( COLOR_BTNFACE );

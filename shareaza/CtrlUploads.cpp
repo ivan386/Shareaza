@@ -910,9 +910,10 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 {
 	CUploadTransfer* pTransfer = pFile->GetActive();
 	
-	COLORREF crNatural	= CoolInterface.m_crWindow;
-	COLORREF crBack		= pFile->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
-	COLORREF crLeftAligned = crBack ;
+	COLORREF crNatural		= CoolInterface.m_crWindow;
+	COLORREF crBack			= pFile->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
+	COLORREF crLeftAligned	= crBack;
+	COLORREF crBorder		= pFile->m_bSelected ? CoolInterface.m_crFragmentBorderSelected : CoolInterface.m_crFragmentBorder;
 
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
@@ -974,7 +975,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			rcCell.DeflateRect( 1, 1 );
 			dc.Draw3dRect( &rcCell, crBack, crBack );
 			rcCell.DeflateRect( 0, 1 );
-			dc.Draw3dRect( &rcCell, CoolInterface.m_crFragmentBorder, CoolInterface.m_crFragmentBorder );
+			dc.Draw3dRect( &rcCell, crBorder, crBorder );
 			rcCell.DeflateRect( 1, 1 );
 			CFragmentBar::DrawUpload( &dc, &rcCell, pFile, crNatural );
 			break;

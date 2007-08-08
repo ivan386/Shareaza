@@ -161,6 +161,9 @@ public:
 	COLORREF	m_crFragmentFail;
 	COLORREF	m_crFragmentRequest;
 	COLORREF	m_crFragmentBorder;
+	COLORREF	m_crFragmentBorderSelected;
+	COLORREF	m_crFragmentBorderSimpleBar;
+	COLORREF	m_crFragmentBorderSimpleBarSelected;
 
 	COLORREF	m_crSysWindow;
 	COLORREF	m_crSysBtnFace;

@@ -907,10 +907,12 @@ void CDownloadsCtrl::OnPaint()
 
 void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDownload, BOOL bFocus, BOOL bDrop)
 {
-	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
-	COLORREF crBack		= pDownload->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
-	COLORREF crText		= CoolInterface.m_crText;
-	COLORREF crLeftAligned = crBack ;
+	COLORREF crNatural		= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
+	COLORREF crBack			= pDownload->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
+	COLORREF crText			= CoolInterface.m_crText;
+	COLORREF crLeftAligned	= crBack ;
+	COLORREF crBorder		= pDownload->m_bSelected ? CoolInterface.m_crFragmentBorderSelected : CoolInterface.m_crFragmentBorder;
+	COLORREF crBorderSimple	= pDownload->m_bSelected ? CoolInterface.m_crFragmentBorderSimpleBarSelected : CoolInterface.m_crFragmentBorderSimpleBar;
 
 	if ( IsExpandable( pDownload ) ) dc.SelectObject( &theApp.m_gdiFontBold ) ;
 
@@ -1039,12 +1041,19 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 0, 1 );
-				dc.Draw3dRect( &rcCell, CoolInterface.m_crFragmentBorder, CoolInterface.m_crFragmentBorder );
-				rcCell.DeflateRect( 1, 1 );
+
 				if ( Settings.Downloads.SimpleBar )
+				{
+					dc.Draw3dRect( &rcCell, crBorderSimple, crBorderSimple );
+					rcCell.DeflateRect( 1, 1 );
 					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
+				}
 				else
+				{
+					dc.Draw3dRect( &rcCell, crBorder, crBorder );
+					rcCell.DeflateRect( 1, 1 );
 					CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
+				}
 			}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 				if ( rcCell.Width() > 50 )
@@ -1170,9 +1179,10 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 
 void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus)
 {
-	COLORREF crNatural	= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
-	COLORREF crBack		= pSource->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
-	COLORREF crLeftAligned = crBack ;
+	COLORREF crNatural		= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
+	COLORREF crBack			= pSource->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
+	COLORREF crLeftAligned	= crBack;
+	COLORREF crBorder		= pSource->m_bSelected ? CoolInterface.m_crFragmentBorderSelected : CoolInterface.m_crFragmentBorder;
 
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
@@ -1292,7 +1302,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 0, 1 );
-				dc.Draw3dRect( &rcCell, CoolInterface.m_crFragmentBorder, CoolInterface.m_crFragmentBorder );
+				dc.Draw3dRect( &rcCell, crBorder, crBorder );
 				rcCell.DeflateRect( 1, 1 );
 				CFragmentBar::DrawSource( &dc, &rcCell, pSource, CoolInterface.m_crTransferRanges );
 			}

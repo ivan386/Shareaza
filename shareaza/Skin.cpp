@@ -1300,6 +1300,9 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("fragmentbar.fail"), &CoolInterface.m_crFragmentFail );
 	pColours.SetAt( _T("fragmentbar.request"), &CoolInterface.m_crFragmentRequest );
 	pColours.SetAt( _T("fragmentbar.border"), &CoolInterface.m_crFragmentBorder );
+	pColours.SetAt( _T("fragmentbar.border.selected"), &CoolInterface.m_crFragmentBorderSelected );
+	pColours.SetAt( _T("fragmentbar.border.simplebar"), &CoolInterface.m_crFragmentBorderSimpleBar );
+	pColours.SetAt( _T("fragmentbar.border.simplebar.selected"), &CoolInterface.m_crFragmentBorderSimpleBarSelected );
 
 	pColours.SetAt( _T("system.environment.window"), &CoolInterface.m_crSysWindow );
 	pColours.SetAt( _T("system.environment.btnface"), &CoolInterface.m_crSysBtnFace );
