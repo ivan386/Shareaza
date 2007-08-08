@@ -378,6 +378,10 @@ void CDownload::OnRun()
 				
 				if ( m_bSeeding )
 				{
+					// Mark as collapsed to get correct heights when dragging files
+					if ( !Settings.General.DebugBTSources && m_bExpanded )
+						m_bExpanded = FALSE;
+
 					RunValidation( TRUE );
 					if ( Settings.BitTorrent.AutoSeed )
 					{
