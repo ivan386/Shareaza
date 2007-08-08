@@ -635,6 +635,10 @@ void CSettings::Load()
 	Gnutella1.HostExpire		= max( Gnutella1.HostExpire, 24 * 60 * 60u );
 	Gnutella2.HostExpire		= max( Gnutella2.HostExpire, 24 * 60 * 60u );
 
+	// Get TorrentCreatorPath from HKEY_LOCAL_MACHINE if that value in HKEY_CURRENT_USER is empty or too short.
+	if ( BitTorrent.TorrentCreatorPath.GetLength() <= 5 )
+		BitTorrent.TorrentCreatorPath = pRegistry.GetString( _T("BitTorrent"), _T("TorrentCreatorPath"), _T(""), HKEY_LOCAL_MACHINE );
+	
 	// Make sure download/incomplete folders aren't the same
 	if ( _tcsicmp( Downloads.IncompletePath, Downloads.CompletePath ) == 0 )
 	{
