@@ -1,24 +1,40 @@
 2 http://cache.trillinux.org/g2/bazooka.php
-2 http://gwc.eod.cc/skulls.php
 2 http://gwc2.wodi.org/skulls.php
-2 http://delelisten.no/gwc/skulls.php
-2 http://gwc.snack-donation.com/skulls.php
-2 http://skulls.mi-cha-el.org/skulls.php
 2 http://groovy.syxy.com/up/skulls.php
-2 http://gwc.frodoslair.net/skulls/skulls
 2 http://www.k33bz.com/g2/bazooka.php
+2 http://unlimitedxl.nl/skulls/skulls.php
 2 http://silvers.servehttp.com/g2/bazooka.php
+2 http://midian.jayl.de/g2/bazooka.php
+2 http://crm.infojpg.com/skull/skulls.php
+2 http://ns1.ikado.ca/webcache/skulls.php
+2 http://10fc2.ath.cx/skulls/skulls.php
+2 http://savs.biz/g2/bazooka.php
+2 http://forfeit.phpnet.us/g2/bazooka.php
+2 http://karma.cloud.bishopston.net:33559/
+2 http://dogma.cloud.bishopston.net:33559/
+M http://services.ce3c.be/skulls/skulls.php
+M http://skulls.mi-cha-el.org/skulls.php
+M http://www.mp3g.net/betacache/skulls.php
+M http://gwc.eod.cc/skulls.php
+M http://gwc.frodoslair.net/skulls/skulls.php
 M http://torrent.delvedown.com/cgi-bin/perlgcache.cgi
-M http://jercos.dyndns.org/perlgcache.cgi
-1 http://gwc.glucolene.com:8080
-1 http://gwc.dietpac.com:8080
-1 http://tsubasa.ghostwhitecrab.de
+M http://gwebcache1.sexshare2k.info/
+M http://gwebcache2.sexshare2k.info/
+M http://gwebcache3.sexshare2k.info/
+M http://gwebcache4.sexshare2k.info/
+M http://gwebcache5.sexshare2k.info/
+1 http://gwc.glucolene.com:8080/
+1 http://gwc.dietpac.com:8080/
+1 http://tsubasa.ghostwhitecrab.de/
 
 U uhc:yin.cloud.bishopston.net:33558
 U uhc:uhc2.limewire.com:20181
 U uhc:yang.cloud.bishopston.net:33558
 U uhc:guruz.udp-host-cache.com:6666
 U uhc:uhc.udp-host-cache.com:9999
+U uhc:g6.6dns.org:1337
+U uhc:secondary.udp-host-cache.com:9999
+U ukhl:mylene.dynu.net:6602
 
 D http://www.gruk.org/server.met
 D http://www.emule-server.de/server.met/min/server.met
@@ -79,9 +95,23 @@ X http://www.taco-land.net/g2/bazooka.php
 X http://www29.brinkster.com/bankroller/g2/bazooka.asp
 X http://www29.brinkster.com/monsoonera/g2/bazooka.asp
 X http://zafir.gratishost.com/gwc/bazooka.php
+X http://www-dr-ag-the-best-server-a-k-a.rapidshit.de/skulls.php
+X http://gwc.frodoslair.net/skulls/skulls
+X http://delelisten.no/gwc/skulls.php
+X http://delelisten.no/gwc2/skulls.php
+X http://delelisten.no/gwc3/skulls.php
+X http://delelisten.no/gwc4/skulls.php
+X http://fischaleck.net/cache/mcache.php
+X http://jercos.dyndns.org/perlgcache.cgi
+
+# A bugged GWC
+X http://g2.sbicomputing.com/g2/bazooka.php
+# Outdated Hosts
+X http://mirror.farrugiafamily.com/g2/bazooka.php
+
 #
 # Keep these comments at the end
-# Last updated 1st - June, 2007
+# Last updated 8th - August, 2007
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
