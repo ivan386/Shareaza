@@ -1,7 +1,7 @@
 //
 // WizardSharePage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -103,18 +103,26 @@ BOOL CWizardSharePage::OnInitDialog()
 				pFolder->m_sPath, 0, 0, SHI_FOLDER_OPEN, 0 );
 		}
 
+		CString strPrograms( GetProgramFilesFolder() ), strFolder;
+
 		CreateDirectory( Settings.Downloads.CompletePath, NULL );
 		AddPhysicalFolder( Settings.Downloads.CompletePath );
 
 		CreateDirectory( Settings.Downloads.CollectionPath, NULL );
 		AddPhysicalFolder( Settings.Downloads.CollectionPath );
 
-		AddPhysicalFolder( _T("C:\\Program Files\\Piolet\\My Shared Folder") );
-		AddPhysicalFolder( _T("C:\\Program Files\\eMule\\Incoming") );
-		AddPhysicalFolder( _T("C:\\Program Files\\eDonkey2000\\incoming") );
-		AddPhysicalFolder( _T("C:\\Program Files\\Ares\\My Shared Folder") );
-		AddPhysicalFolder( _T("C:\\Program Files\\morpheus\\My Shared Folder") );
-
+		strFolder = strPrograms + _T("\\Piolet\\My Shared Folder");
+		AddPhysicalFolder( strFolder );
+		strFolder = strPrograms + _T("\\eMule\\Incoming");
+		AddPhysicalFolder( strFolder );
+		strFolder = strPrograms + _T("\\Neo Mule\\Incoming");
+		AddPhysicalFolder( strFolder );
+		strFolder = strPrograms + _T("\\eDonkey2000\\incoming");
+		AddPhysicalFolder( strFolder );
+		strFolder = strPrograms + _T("\\Ares\\My Shared Folder");
+		AddPhysicalFolder( strFolder );
+		strFolder = strPrograms + _T("\\morpheus\\My Shared Folder");
+		AddPhysicalFolder( strFolder );
 
 		AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Kazaa\\Transfer"), _T("DlDir0") );
 		AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Xolox"), _T("completedir") );

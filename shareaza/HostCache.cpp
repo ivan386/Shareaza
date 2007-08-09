@@ -786,7 +786,7 @@ void CHostCacheList::DoED2KServersImport()
 	strFolder = strPrograms + _T("\\eMule\\config\\server.met");
 	Import( strFolder );
 
-	strFolder = strPrograms + _T("\\Neomule\\config\\server.met");
+	strFolder = strPrograms + _T("\\Neo Mule\\config\\server.met");
 	Import( strFolder );
 }
 
