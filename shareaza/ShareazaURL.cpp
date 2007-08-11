@@ -137,6 +137,9 @@ void CShareazaURL::Clear()
 	m_oBTC.clear();
 }
 
+//////////////////////////////////////////////////////////////////////
+// Parse URL list
+
 BOOL CShareazaURL::Parse(LPCTSTR pszURL, CList< CString >& pURLs, BOOL bResolve)
 {
 	pURLs.RemoveAll();
@@ -169,9 +172,22 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL, CList< CString >& pURLs, BOOL bResolve)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CShareazaURL root parser
+// Parse single URL
 
 BOOL CShareazaURL::Parse(LPCTSTR pszURL, BOOL bResolve)
+{
+	// Parse "good" URL
+	if ( ParseRoot( pszURL, bResolve ) )
+		return TRUE;
+	else
+		// Parse "bad" URL
+		return ParseRoot( CTransfer::URLDecode( pszURL ), bResolve );
+}
+
+//////////////////////////////////////////////////////////////////////
+// CShareazaURL root parser
+
+BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 {
 	if ( ParseHTTP( pszURL, bResolve ) )			// http://
 	{

@@ -73,6 +73,7 @@ public:
 protected:
 	void	Clear();
 
+	BOOL	ParseRoot(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseHTTP(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseFTP(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve);
