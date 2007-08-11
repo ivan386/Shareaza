@@ -984,7 +984,7 @@ Other:
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Parcourir l'utilisateur"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Discuter avec l'util."/>
-		<item id="ID_DOWNLOADS_COPY" text="_Copier l'URI"
+		<item id="ID_DOWNLOADS_COPY" text="_Copier l'URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="Déco_nnecter"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Oublier"/>
