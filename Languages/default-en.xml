@@ -2961,7 +2961,7 @@
 	<string id="17029" value="Handshake failed, host may not support chatting."/>
 	<string id="17030" value="Handshake complete, chat protocol version %s."/>
 	<string id="17031" value="Exchanging profile information..."/>
-	<string id="17032" value="Authenticated user"/>
+	<string id="17032" value="Authenticated user "/>
 	<string id="17033" value="Requesting private conversation with user..."/>
 	<string id="17034" value="Private conversation granted, you are now chatting with %s."/>
 	<string id="17035" value="%s is not accepting private conversations, sorry."/>

@@ -2953,7 +2953,7 @@
 	<string id="17029" value="Negoziazione fallita, l'host potrebbe non supportare la chat."/>
 	<string id="17030" value="Negoziazione completata, la versione del protocollo di chat è %s."/>
 	<string id="17031" value="Scambio delle informazioni sul profilo..."/>
-	<string id="17032" value="Utente autenticato"/>
+	<string id="17032" value="Utente autenticato "/>
 	<string id="17033" value="Richiesta di conversazione privata con l'utente in corso..."/>
 	<string id="17034" value="Conversazione privata concessa, stai conversando con %s."/>
 	<string id="17035" value="%s non accetta conversazioni private."/>
