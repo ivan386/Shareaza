@@ -438,7 +438,7 @@
 			<separator/>
 			<menu text="Escolha as Redes">
 				<item id="ID_NETWORK_G2" text="Conectar na Gnutella 2"/>
-				<item id="ID_NETWORK_ED2K" text="Conectar na eDonkey"/>
+				<item id="ID_NETWORK_ED2K" text="Conectar no eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Conectar na Gnutella 1"/>
 			</menu>
 			<separator/>
@@ -507,7 +507,7 @@
 			<separator/>
 			<menu text="Escolha as Redes">
 				<item id="ID_NETWORK_G2" text="Conectar na Gnutella 2"/>
-				<item id="ID_NETWORK_ED2K" text="Conectar na eDonkey"/>
+				<item id="ID_NETWORK_ED2K" text="Conectar no eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Conectar na Gnutella 1"/>
 			</menu>
 			<separator/>
@@ -606,7 +606,7 @@
 			<separator/>
 			<menu text="Escolha as Redes">
 				<item id="ID_NETWORK_G2" text="Conectar na Gnutella 2"/>
-				<item id="ID_NETWORK_ED2K" text="Conectar na eDonkey"/>
+				<item id="ID_NETWORK_ED2K" text="Conectar no eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Conectar na Gnutella 1"/>
 			</menu>
 			<separator/>
@@ -2557,11 +2557,11 @@
 	<string id="8162" value="Conectado, requisitando navegação..."/>
 	<string id="8163" value="Baixando resposta de navegação (%2.f%%)..."/>
 	<string id="8164" value="Incapaz de conectar ao host para navegar o usuário."/>
-	<string id="8165" value="Incapaz de baixar lista de arquivos. Este host pode não suportar a navegação."/>
+	<string id="8165" value="Incapaz de baixar a lista de arquivos. Este host pode não suportar a navegação."/>
 	<string id="8166" value="Procurar nesta rede:"/>
 	<string id="8167" value="Todas as redes"/>
 	<string id="8176" value="Procurar no Shareaza"/>
-	<string id="8177" value="Digite algumas palavras-chave para pesquisar:"/>
+	<string id="8177" value="Digite algumas palavras-chave para procurar:"/>
 	<string id="8178" value="Qual é o tipo de arquivo?"/>
 	<string id="8179" value="(Limpar Histórico de Busca)"/>
 	<string id="8180" value="O tamanho do arquivo deve ser"/>
@@ -3378,8 +3378,8 @@
 		<control caption="Configurar a Gnutella 2"/>
 		<control caption="Rede eDonkey:"/>
 		<control caption="A rede eDonkey é uma rede baseada em servidores. Enqto não tão rica em funções como Gnutella 2, ed2k tem uma grande coleção de arquivos."/>
-		<control caption="Conectar na eDonkey"/>
-		<control caption="Configurar a eDonkey"/>
+		<control caption="Conectar no eDonkey"/>
+		<control caption="Configurar o eDonkey"/>
 		<control caption="Rede Gnutella original:"/>
 		<control caption="Embora a rede Gnutella original é menos rica em funções que a Gnutella 2 e tenha menos arquivos que a eDonkey, ela é um recurso valioso."/>
 		<control caption="Conectar na Gnutella Original"/>
@@ -3417,11 +3417,11 @@
 	</dialog>
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
 		<control caption="Rede eDonkey:"/>
-		<control caption="Sempre conectar na eDonkey"/>
-		<control caption="Conectar na eDonkey hoje"/>
+		<control caption="Sempre conectar no eDonkey"/>
+		<control caption="Conectar no eDonkey hoje"/>
 		<control caption="Pesquisa Global:"/>
 		<control caption="Procurar em servidores remotos conhecidos no cache do servidor:"/>
-		<control caption="Parar de pesquisar após:"/>
+		<control caption="Parar de procurar após:"/>
 		<control/><control/>
 		<control caption="resultados de busca."/>
 		<control caption="Receber e atualizar a lista de servidores através do servidor conectado"/>
