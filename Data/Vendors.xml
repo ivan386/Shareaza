@@ -20,7 +20,7 @@
 
 	<vendor code="RZCB">
 		<title>ShareazaPlus</title>
-		<link>http://sourceforge.net/Projects/ShareazaPlus</link>
+		<link>http://sourceforge.net/projects/ShareazaPlus/</link>
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
 		<capability name="extended"/>
