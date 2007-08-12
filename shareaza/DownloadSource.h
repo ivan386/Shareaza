@@ -35,14 +35,14 @@ class CDownloadSource
 {
 // Construction
 public:
-	CDownloadSource(CDownload* pDownload);
-	CDownloadSource(CDownload* pDownload, CQueryHit* pHit);
-	CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
-    CDownloadSource(CDownload* pDownload, const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
-	CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA1 = FALSE, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0);
+	CDownloadSource(const CDownload* pDownload);
+	CDownloadSource(const CDownload* pDownload, CQueryHit* pHit);
+	CDownloadSource(const CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
+    CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
+	CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA1 = FALSE, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0);
 	virtual ~CDownloadSource();
 private:
-	inline void Construct(CDownload* pDownload);
+	inline void Construct(const CDownload* pDownload);
 
 // Attributes
 public:

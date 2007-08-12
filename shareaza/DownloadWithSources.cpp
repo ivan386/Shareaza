@@ -360,6 +360,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 	if ( nRedirectionCount > 5 ) return FALSE; // No more than 5 redirections
 	
 	BOOL bHashAuth = FALSE;
+	BOOL bValidated = FALSE;
 	CShareazaURL pURL;
 	
 	if ( *pszURL == '@' )
@@ -401,30 +402,77 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 	if ( pURL.m_oSHA1 && m_oSHA1 )
 	{
 		if ( m_oSHA1 != pURL.m_oSHA1 ) return FALSE;
+		bValidated = TRUE;
 	}
 	// Validate Tiger
 	if ( pURL.m_oTiger && m_oTiger )
 	{
 		if ( m_oTiger != pURL.m_oTiger ) return FALSE;
+		bValidated = TRUE;
 	}
 	// Validate ED2K
 	if ( pURL.m_oED2K && m_oED2K )
 	{
 		if ( m_oED2K != pURL.m_oED2K ) return FALSE;
+		bValidated = TRUE;
 	}
 	// Validate MD5
 	if ( pURL.m_oMD5 && m_oMD5 )
 	{
 		if ( m_oMD5 != pURL.m_oMD5 ) return FALSE;
+		bValidated = TRUE;
 	}
-	// BTH skipped
+	// Validate BTH
+	if ( pURL.m_oBTH && m_oBTH && ! bValidated )
+	{
+		if ( m_oBTH != pURL.m_oBTH ) return FALSE;
+		bValidated = TRUE;
+	}
+	// Validate size
+	if ( m_nSize != SIZE_UNKNOWN && pURL.m_bSize && pURL.m_nSize != SIZE_UNKNOWN )
+	{
+		if ( m_nSize != pURL.m_nSize ) return FALSE;
+	}
 
+	// Get SHA1
+	if ( pURL.m_oSHA1 && ! m_oSHA1 )
+	{
+		m_oSHA1 = pURL.m_oSHA1;
+	}
+	// Get Tiger
+	if ( pURL.m_oTiger && ! m_oTiger )
+	{
+		m_oTiger = pURL.m_oTiger;
+	}
+	// Get ED2K
+	if ( pURL.m_oED2K && ! m_oED2K )
+	{
+		m_oED2K = pURL.m_oED2K;
+	}
+	// Get MD5
+	if ( pURL.m_oMD5 && ! m_oMD5 )
+	{
+		m_oMD5 = pURL.m_oMD5;
+	}
+	// Get BTH
+	if ( pURL.m_oBTH && ! m_oBTH )
+	{
+		m_oBTH = pURL.m_oBTH;
+	}
+	// Get size
+	if ( m_nSize == SIZE_UNKNOWN &&
+		pURL.m_bSize && pURL.m_nSize && pURL.m_nSize != SIZE_UNKNOWN )
+	{
+		m_nSize = pURL.m_nSize;
+	}
+	// Get name
 	if ( m_sDisplayName.IsEmpty() && pURL.m_sName.GetLength() )
 	{
 		m_sDisplayName = pURL.m_sName;
 	}
-	
-	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pszURL, bURN, bHashAuth, pLastSeen, nRedirectionCount ) );
+
+	return AddSourceInternal( new CDownloadSource( static_cast< const CDownload* >( this ),
+		pszURL, bURN, bHashAuth, pLastSeen, nRedirectionCount ) );
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -51,20 +51,20 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction
 
-CDownloadSource::CDownloadSource(CDownload* pDownload)
+CDownloadSource::CDownloadSource(const CDownload* pDownload)
 : m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
 }
 
-void CDownloadSource::Construct(CDownload* pDownload)
+void CDownloadSource::Construct(const CDownload* pDownload)
 {
 	ASSERT( pDownload != NULL );
 
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
 
-	m_pDownload		= pDownload;
+	m_pDownload		= const_cast< CDownload* >( pDownload );
 	m_pPrev			= NULL;
 	m_pNext			= NULL;
 	m_pTransfer		= NULL;
@@ -109,7 +109,7 @@ CDownloadSource::~CDownloadSource()
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from a query hit
 
-CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
+CDownloadSource::CDownloadSource(const CDownload* pDownload, CQueryHit* pHit)
 : m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
@@ -175,7 +175,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from eDonkey source transfer
 
-CDownloadSource::CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID)
+CDownloadSource::CDownloadSource(const CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID)
 : m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
@@ -205,7 +205,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nCl
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from BitTorrent
 
-CDownloadSource::CDownloadSource(CDownload* pDownload, const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort)
+CDownloadSource::CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort)
 : m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
@@ -234,7 +234,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, const Hashes::BtGuid& oGU
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from URL
 
-CDownloadSource::CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL /*bSHA1*/, BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
+CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL, BOOL /*bSHA1*/, BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
 : m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
