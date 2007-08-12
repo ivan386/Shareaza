@@ -566,7 +566,8 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD
 			// Enable chat for ed2k hits
 			pHit->m_bChat = TRUE;
 			
-			pHit->m_pVendor = VendorCache.m_pED2K;
+			pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
+			if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
 			if ( ! pHit->ReadEDPacket( pPacket, pServer, m_nServerFlags ) ) break;
 			pHit->Resolve();
 
@@ -596,7 +597,8 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD
 			pHit->m_bChat = TRUE;
 
 			pHit->m_oED2K = oHash;
-			pHit->m_pVendor = VendorCache.m_pED2K;
+			pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
+			if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
 			pHit->ReadEDAddress( pPacket, pServer );
 			pHit->Resolve();
 		}
@@ -1727,8 +1729,10 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar >> m_nPort;
 		ar >> m_nSpeed;
 		ar >> m_sSpeed;
-		ar >> m_sSchemaURI;
-		m_pVendor = VendorCache.Lookup( m_sSchemaURI );
+		CString sCode;
+		ar >> sCode;
+		m_pVendor = VendorCache.Lookup( sCode );
+		if ( ! m_pVendor ) m_pVendor = VendorCache.m_pNull;
 
 		ar >> m_bPush;
 		ar >> m_bBusy;

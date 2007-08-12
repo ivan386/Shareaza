@@ -1,7 +1,7 @@
 //
 // VendorCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,12 +37,12 @@ CVendorCache VendorCache;
 //////////////////////////////////////////////////////////////////////
 // CVendorCache construction
 
-CVendorCache::CVendorCache()
+CVendorCache::CVendorCache() :
+	m_pNull( new CVendor() )
 {
-	m_pNull = new CVendor();
-	m_pNull->m_bAuto = TRUE;
-	
-	m_pShareaza = m_pED2K = m_pNull;
+	// Prime number bigger than vendor amount + 20%
+	m_pCodeMap.InitHashTable( 83 );
+	m_pNameMap.InitHashTable( 83 );
 }
 
 CVendorCache::~CVendorCache()
@@ -52,63 +52,26 @@ CVendorCache::~CVendorCache()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CVendorCache list access
-
-POSITION CVendorCache::GetIterator() const
-{
-	return m_pMap.GetStartPosition();
-}
-
-CVendor* CVendorCache::GetNext(POSITION& pos) const
-{
-	CVendor* pItem = NULL;
-	CString strCode;
-	m_pMap.GetNextAssoc( pos, strCode, pItem );
-	return pItem;
-}
-
-INT_PTR CVendorCache::GetCount() const
-{
-	return m_pMap.GetCount();
-}
-
-//////////////////////////////////////////////////////////////////////
 // CVendorCache lookup
-
-CVendor* CVendorCache::Lookup(LPCSTR pszCode, BOOL bCreate)
-{
-	WCHAR szCode[5] = { pszCode[0], pszCode[1], pszCode[2], pszCode[3], 0 };
-	return Lookup( szCode, bCreate );
-}
-
-CVendor* CVendorCache::Lookup(LPCWSTR pszCode, BOOL bCreate)
-
-{
-	CVendor* pVendor = NULL;
-
-	if ( m_pMap.Lookup( pszCode, pVendor ) ) return pVendor;
-	if ( ! bCreate ) return NULL;
-
-	if ( ! pszCode[0] || ! pszCode[1] || ! pszCode[2] || ! pszCode[3] ) return m_pNull;
-	if ( ! _istalpha( pszCode[0] ) || ! _istalpha( pszCode[1] ) ) return m_pNull;
-	if ( ! _istalpha( pszCode[2] ) || ! _istalpha( pszCode[3] ) ) return m_pNull;
-
-	pVendor = new CVendor( pszCode );
-	m_pMap.SetAt( pszCode, pVendor );
-
-	return pVendor;
-}
 
 CVendor* CVendorCache::LookupByName(LPCTSTR pszName) const
 {
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CVendor* pVendor = GetNext( pos );
+	ASSERT( pszName );
 
-		if ( _tcsstr( pszName, pVendor->m_sName ) != NULL ) return pVendor;
-	}
+	if ( ! pszName || ! *pszName )
+		return NULL;
 
-	return NULL;
+	CString sName( pszName );
+	int n = sName.FindOneOf( _T("/ \t\r\n\\") );
+	if ( n > 0 )
+		sName = sName.Left( n );
+	sName.MakeLower();
+
+	CVendor* pVendor;
+	if ( m_pNameMap.Lookup( sName, pVendor ) )
+		return pVendor;
+	else
+		return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -116,12 +79,15 @@ CVendor* CVendorCache::LookupByName(LPCTSTR pszName) const
 
 void CVendorCache::Clear()
 {
-	for ( POSITION pos = GetIterator() ; pos ; )
+	CVendor* pItem;
+	CString strCode;
+	for ( POSITION pos = m_pCodeMap.GetStartPosition() ; pos ; )
 	{
-		delete GetNext( pos );
+		m_pCodeMap.GetNextAssoc( pos, strCode, pItem );
+		delete pItem;
 	}
-	m_pMap.RemoveAll();
-	m_pShareaza = NULL;
+	m_pCodeMap.RemoveAll();
+	m_pNameMap.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -137,8 +103,12 @@ BOOL CVendorCache::Load()
 	{
 		bSuccess = LoadFrom( pXML );
 		delete pXML;
+		if ( ! bSuccess )
+			theApp.Message( MSG_ERROR, _T("Invalid Vendors.xml file") );
 	}
-	
+	else
+		theApp.Message( MSG_ERROR, _T("Missed Vendors.xml file") );
+
 	return bSuccess;
 }
 
@@ -149,6 +119,7 @@ BOOL CVendorCache::LoadFrom(CXMLElement* pXML)
 {
 	if ( ! pXML->IsNamed( _T("vendorCache") ) ) return FALSE;
 
+	CVendor* pFoo;
 	for ( POSITION pos = pXML->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pKey = pXML->GetNextElement( pos );
@@ -159,45 +130,69 @@ BOOL CVendorCache::LoadFrom(CXMLElement* pXML)
 			
 			if ( pVendor->LoadFrom( pKey ) )
 			{
-				CVendor* pOld = NULL;
-				
-				if ( m_pMap.Lookup( pVendor->m_sCode, pOld ) )
+				if ( m_pCodeMap.Lookup( pVendor->m_sCode, pFoo ) )
 				{
-					theApp.Message( MSG_ERROR, _T("Duplicate Vendors.xml key for \"%s\"."),
+					theApp.Message( MSG_ERROR, _T("Duplicate Vendors.xml code for \"%s\""),
 						(LPCTSTR)pVendor->m_sCode );
-					delete pOld;
+					delete pVendor;
 				}
-				
-				m_pMap.SetAt( pVendor->m_sCode, pVendor );
-				
-				if ( pVendor->m_sCode == _T("RAZA") ) m_pShareaza = pVendor;
-				if ( pVendor->m_sCode == _T("ED2K") ) m_pED2K = pVendor;
+				else
+				{
+					m_pCodeMap.SetAt( pVendor->m_sCode, pVendor );
+					m_pNameMap.SetAt( CString ( pVendor->m_sName ).MakeLower(), pVendor );
+				}
 			}
 			else
 			{
+				theApp.Message( MSG_ERROR, _T("Invalid Vendors.xml entry") );
 				delete pVendor;
 			}
 		}
 	}
 	
-	return GetCount() > 0;
+	return m_pCodeMap.GetCount() > 0;
 }
 
+bool CVendorCache::IsExtended(LPCTSTR pszCode) const
+{
+	ASSERT( pszCode );
+
+	// Find by product name (Server or User-Agent HTTP-headers)
+	CVendor* pVendor = LookupByName( pszCode );
+	if ( ! pVendor )
+	{
+		// Find by vendor code
+		pVendor = Lookup( pszCode );
+	}
+	if ( pVendor )
+		return pVendor->m_bExtended;
+
+	// Unknown vendor code
+	return false;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CVendor construciton
 
-CVendor::CVendor(LPCTSTR pszCode)
+CVendor::CVendor() :
+	m_bChatFlag		( false ),
+	m_bHTMLBrowse	( false ),
+	m_bExtended		( false )
 {
-	if ( ( m_bAuto = ( pszCode != NULL ) ) != FALSE )
-	{
-		m_sCode = m_sName = pszCode;
-		while ( m_sCode.GetLength() < 4 ) m_sCode += ' ';
-		if ( m_sCode.GetLength() > 4 ) m_sCode = m_sCode.Left( 4 );
-	}
+}
 
-	m_bChatFlag		= FALSE;
-	m_bHTMLBrowse	= FALSE;
+CVendor::CVendor(LPCTSTR pszCode) :
+	m_sCode			( pszCode ),
+	m_sName			( pszCode ),
+	m_bChatFlag		( false ),
+	m_bHTMLBrowse	( false ),
+	m_bExtended		( false )
+{
+	if ( m_sCode.GetLength() > 4 )
+		m_sCode = m_sCode.Left( 4 );
+	else
+		while ( m_sCode.GetLength() < 4 )
+			m_sCode += ' ';
 }
 
 CVendor::~CVendor()
@@ -231,16 +226,18 @@ BOOL CVendor::LoadFrom(CXMLElement* pXML)
 			CString strCap = pKey->GetAttributeValue( _T("name") );
 			ToLower( strCap );
 
-			BOOL bValue = TRUE;
-			
 			if ( strCap == _T("chatflag") )
 			{
-				m_bChatFlag = bValue;
+				m_bChatFlag = true;
 			}
 			else if ( strCap == _T("htmlhostbrowse") )
 			{
-				m_bHTMLBrowse = bValue;
+				m_bHTMLBrowse = true;
 			}
+			else if ( strCap == _T("extended") )
+			{
+				m_bExtended = true;
+			}			
 		}
 	}
 

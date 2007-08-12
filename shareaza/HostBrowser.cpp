@@ -414,10 +414,9 @@ BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 
 	if ( strHeader.CompareNoCase( _T("Server") ) == 0 )
 	{
+		m_pVendor = VendorCache.LookupByName( strValue );
 		m_sServer = strValue;
 		if ( m_sServer.GetLength() > 64 ) m_sServer = m_sServer.Left( 64 );
-
-		m_pVendor = VendorCache.LookupByName( m_sServer );
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Type") ) == 0 )
 	{

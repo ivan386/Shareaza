@@ -78,6 +78,11 @@ public:
 	BOOL				m_bCloseConn;
 	BOOL				m_bReadContent;
 	FILETIME			m_tLastSeen;
+	// Gnutella functionality:
+	// 0 - Pure HTTP
+	// 1 - Pure G1
+	// 2 - Pure G2
+	// 3 - Mixed G1/G2
 	int					m_nGnutella;
 	BOOL				m_bClientExtended;		// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
 public:

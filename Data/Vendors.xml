@@ -7,13 +7,23 @@
 		<link>http://www.shareaza.com/</link>
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
+		<capability name="extended"/>
 	</vendor>
 
 	<vendor code="RAZB">
-		<title>Shareaza Beta</title>
+		<title>ShareazaBeta</title>
 		<link>http://www.shareaza.com/beta/</link>
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
+		<capability name="extended"/>
+	</vendor>
+
+	<vendor code="RZCB">
+		<title>ShareazaPlus</title>
+		<link>http://sourceforge.net/Projects/ShareazaPlus</link>
+		<capability name="htmlHostBrowse"/>
+		<capability name="chatFlag"/>
+		<capability name="extended"/>
 	</vendor>
 
 	<vendor code="ACQL">

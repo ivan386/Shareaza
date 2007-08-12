@@ -36,6 +36,7 @@
 #include "Buffer.h"
 #include "Schema.h"
 #include "XML.h"
+#include "VendorCache.h"
 
 #include "Network.h"
 #include "Library.h"
@@ -321,7 +322,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 {
 	if ( Uploads.EnforcePerHostLimit( this, TRUE ) ) return FALSE;
 	
-	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) != NULL )
+	if ( VendorCache.IsExtended( m_sUserAgent ) )
 	{
 		// Assume certain capabilitites for various Shareaza versions
 		m_nGnutella |= 3;
@@ -1810,7 +1811,7 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 	strResponse	= strBody.Left( nBreak + ( bWindowsEOL ? 2 : 1 ) );
 	strBody		= strBody.Mid( nBreak + ( bWindowsEOL ? 2 : 1 ) );
 	
-	while ( TRUE )
+	for (;;)
 	{
 		int nStart = strBody.Find( _T("<%") );
 		if ( nStart < 0 ) break;

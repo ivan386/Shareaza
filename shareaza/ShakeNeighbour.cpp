@@ -36,6 +36,7 @@
 #include "G1Neighbour.h"
 #include "G2Neighbour.h"
 #include "Packet.h"
+#include "VendorCache.h"
 
 // If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
@@ -905,12 +906,8 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		// Save the name and version of the remote program
 		m_sUserAgent = strValue;
 
-		// If the text contains "Shareaza"
-		if ( _tcsistr( m_sUserAgent, _T("Shareaza") ) ) 
-		{
-			// Record that the remote computer is running Shareaza
-			m_bShareaza = TRUE;
-		} 
+		// Record that the remote computer is running Shareaza
+		m_bShareaza = VendorCache.IsExtended( m_sUserAgent );
 
 		// Check if it's an old version of Shareaza
 		if ( IsClientObsolete() )

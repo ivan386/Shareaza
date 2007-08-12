@@ -382,11 +382,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
         SerializeIn2( ar, m_oPastFragments, nVersion );
 
 		// Should probably save this instead...
-		if ( _tcsncmp( m_sServer, _T("Shareaza"), 8 ) == 0 )
-			m_bClientExtended = TRUE;
-		if ( _tcsncmp( m_sServer, _T("RAZA"), 4 ) == 0 )
-			m_bClientExtended = TRUE;
-		//
+		m_bClientExtended = VendorCache.IsExtended( m_sServer );
 	}
 	else
 	{
@@ -444,6 +440,8 @@ CDownloadTransfer* CDownloadSource::CreateTransfer()
 	case PROTOCOL_HTTP:	return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
 	case PROTOCOL_FTP:	return ( m_pTransfer = new CDownloadTransferFTP( this ) );
 	case PROTOCOL_BT:	return ( m_pTransfer = new CDownloadTransferBT( this, NULL ) );
+	case PROTOCOL_NULL:
+	case PROTOCOL_ANY:
 	default:			theApp.Message( MSG_ERROR, _T("Invalid protocol in CDownloadSource::CreateTransfer()") );
 						return ( NULL );
 	}
@@ -497,6 +495,8 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 		case PROTOCOL_BT:
 			if ( ! bNetwork ) return FALSE;
 			break;
+		case PROTOCOL_NULL:
+		case PROTOCOL_ANY:
 		default:
 			return FALSE;
 		}

@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Downloads.h"
+#include "Download.h"
 #include "DownloadWithSources.h"
 #include "DownloadTransfer.h"
 #include "DownloadSource.h"
@@ -40,6 +41,7 @@
 #include "MD4.h"
 #include "TigerTree.h"
 #include "QueryHashMaster.h"
+#include "VendorCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -394,7 +396,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 		VoteSource( pszURL, false );
 		return TRUE;
 	}
-	
+
 	// Validate SHA1
 	if ( pURL.m_oSHA1 && m_oSHA1 )
 	{
@@ -575,7 +577,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			if ( pExisting->Equals( pSource ) ) // IPs and ports are equal
 			{	
 				if ( !bExistingIsRaza )
-					bExistingIsRaza = ( _tcsncmp( pExisting->m_sServer, _T("Shareaza"), 8 ) == 0 );
+					bExistingIsRaza = VendorCache.IsExtended( pExisting->m_sServer );
 
 				if ( !bG2Exists )
 					bG2Exists = ( pExisting->m_nProtocol == PROTOCOL_HTTP || pExisting->m_nProtocol == PROTOCOL_G2 );

@@ -571,7 +571,7 @@ void CBTClient::DetermineUserAgent()
 			{ 'S', 'T', L"SymTorrent" },
 		// Shareaza versions don't always 'fit' into the BT numbering, so skip that for now
 		//	{ 'S', 'Z', L"Shareaza" },
-			{ 'S', '~', L"Shareaza Beta" },		// Shareaza alpha/beta versions
+			{ 'S', '~', L"ShareazaBeta" },		// Shareaza alpha/beta versions
 			{ 'T', 'N', L"TorrentDotNET" },
 			{ 'T', 'R', L"Transmission" },
 			{ 'T', 'S', L"Torrentstorm" },

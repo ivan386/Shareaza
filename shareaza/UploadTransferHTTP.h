@@ -53,6 +53,11 @@ protected:
 	BOOL		m_bRange;
 	BOOL		m_bQueueMe;
 	BOOL		m_bNotShareaza;
+	// Gnutella functionality:
+	// 0 - Pure HTTP
+	// 1 - Pure G1
+	// 2 - Pure G2
+	// 3 - Mixed G1/G2
 	int			m_nGnutella;
 	int			m_nReaskMultiplier; //Last re-ask time multiplier used
 protected:

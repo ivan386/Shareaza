@@ -1149,9 +1149,9 @@ void CG1Neighbour::SendClusterAdvisor()
 			CHostCacheHost* pHost = (*i);
 
 			// If this host is running Shareaza, was added recently, and we can connect to it (do)
-			if ( pHost->m_pVendor == VendorCache.m_pShareaza && // If this host is running Shareaza, and
-				pHost->m_tAdded > m_tClusterHost &&            // It was added before m_tClusterHost was sent (do), and
-				pHost->CanConnect( tNow ) )                    // We can connect to it now (do)
+			if ( pHost->m_pVendor && pHost->m_pVendor->m_bExtended &&	// If this host is running Shareaza, and
+				pHost->m_tAdded > m_tClusterHost &&						// It was added before m_tClusterHost was sent (do), and
+				pHost->CanConnect( tNow ) )								// We can connect to it now (do)
 			{
 				// If there isn't a packet yet, start one
 				if ( ! pPacket )

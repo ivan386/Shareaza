@@ -1,7 +1,7 @@
 //
 // VendorCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,58 +30,80 @@ class CXMLElement;
 
 class CVendorCache
 {
-// Construction
 public:
 	CVendorCache();
 	virtual ~CVendorCache();
 
-// Attributes
 public:
 	CVendor*		m_pNull;
-	CVendor*		m_pShareaza;
-	CVendor*		m_pED2K;
-protected:
-	CMap< CString, const CString&, CVendor*, CVendor* > m_pMap;
 
-// Operations
 public:
-	POSITION		GetIterator() const;
-	CVendor*		GetNext(POSITION& pos) const;
-	INT_PTR			GetCount() const;
-	CVendor*		Lookup(LPCSTR pszCode, BOOL bCreate = TRUE);
-	CVendor*		Lookup(LPCWSTR pszCode, BOOL bCreate = TRUE);
-	CVendor*		LookupByName(LPCTSTR pszName) const;
-	void			Clear();
-	BOOL			Load();
-protected:
-	BOOL			LoadFrom(CXMLElement* pXML);
+	// Lookup 4-bytes vendor code (ASCII without terminating null)
+	inline CVendor* Lookup(LPCSTR pszCode) const
+	{
+		ASSERT( pszCode );
+		if ( pszCode )
+		{
+			WCHAR szCode[5] = { pszCode[0], pszCode[1], pszCode[2], pszCode[3], 0 };
+			return Lookup( szCode );
+		}
+		return NULL;
+	}
 
+	// Lookup 4-chars vendor code (with terminating null)
+	inline CVendor* Lookup(LPCWSTR pszCode) const
+	{
+		ASSERT( pszCode );
+		if ( pszCode && pszCode[0] && pszCode[1] && pszCode[2] && pszCode[3] && ! pszCode[4] )
+		{
+			CVendor* pVendor;
+			if ( m_pCodeMap.Lookup( pszCode, pVendor ) )
+				return pVendor;
+			else
+				return NULL;
+		}
+		return NULL;
+	}
+
+	// Lookup by code or by name
+	CVendor*		LookupByName(LPCTSTR pszName) const;
+
+	// Load data from Vendors.xml
+	BOOL			Load();
+
+	// Is specified vendor a Shareaza-powered vendor?
+	bool			IsExtended(LPCTSTR pszCode) const;
+
+protected:
+	// Vendor code map
+	CMap< CString, const CString&, CVendor*, CVendor* > m_pCodeMap;
+	// Name map (lowercased)
+	CMap< CString, const CString&, CVendor*, CVendor* > m_pNameMap;
+
+	void			Clear();
+	BOOL			LoadFrom(CXMLElement* pXML);
 };
 
 
 class CVendor
 {
-// Construction
 public:
-	CVendor(LPCTSTR pszCode = NULL);
+	CVendor();
+	CVendor(LPCTSTR pszCode);
 	virtual ~CVendor();
 
-// Attributes
 public:
 	CString		m_sCode;
 	CString		m_sName;
 	CString		m_sLink;
-	BOOL		m_bAuto;
-public:
-	BOOL		m_bChatFlag;
-	BOOL		m_bHTMLBrowse;
+	bool		m_bChatFlag;
+	bool		m_bHTMLBrowse;
+	bool		m_bExtended;		// Shareaza-powered
 
-// Operations
 protected:
 	BOOL		LoadFrom(CXMLElement* pXML);
 
 	friend class CVendorCache;
-
 };
 
 extern CVendorCache VendorCache;
