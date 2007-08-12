@@ -15,6 +15,7 @@
 M http://skulls.mi-cha-el.org/skulls.php
 M http://gwc.eod.cc/skulls.php
 M http://gwc.frodoslair.net/skulls/skulls.php
+M http://www.mp3g.net/kp2pcache/skulls.php
 M http://torrent.delvedown.com/cgi-bin/perlgcache.cgi
 M http://gwebcache1.sexshare2k.info/
 M http://gwebcache2.sexshare2k.info/
@@ -106,6 +107,9 @@ X http://jercos.dyndns.org/perlgcache.cgi
 X http://g2.sbicomputing.com/g2/bazooka.php
 # Outdated Hosts
 X http://mirror.farrugiafamily.com/g2/bazooka.php
+# It doesn't support net parameter so it mix G1 and G2
+X http://bbs.robertwoolley.co.uk/GWebCache/gcache.php
+X http://bbs.robertwoolley.co.uk/gwebcache/gcache.php
 
 #
 # Keep these comments at the end
