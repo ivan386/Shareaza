@@ -746,7 +746,7 @@ void CEDClient::SendHello(BYTE nType)
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
 
 	// 4 - Feature Versions. 
-	BYTE nExtendedRequests = min ( Settings.eDonkey.ExtendedRequest, (DWORD)ED2K_VERSION_EXTENDEDREQUEST );
+	BYTE nExtendedRequests = (BYTE)min ( Settings.eDonkey.ExtendedRequest, (DWORD)ED2K_VERSION_EXTENDEDREQUEST );
 	nVersion = ( ( ED2K_VERSION_AICH << 29) |			// AICH
 				 ( TRUE << 28) |						// Unicode
 				 ( ED2K_VERSION_UDP << 24) |			// UDP version

@@ -213,6 +213,7 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 		case PROTOCOL_G1:
 		case PROTOCOL_G2:
 		case PROTOCOL_HTTP:
+		case PROTOCOL_FTP:
 			// Do nothing more
 			break;
 		case PROTOCOL_ED2K:
@@ -236,8 +237,10 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 				DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
 					pRequested->begin(), pRequested->size(), CoolInterface.m_crFragmentRequest, TRUE );
 			}
-		default: 
-//			ASSERT ( 0 )
+			break;
+		case PROTOCOL_NULL:
+		case PROTOCOL_ANY:
+		default:
 			;
 		}
 	}

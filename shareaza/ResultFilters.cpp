@@ -113,7 +113,7 @@ int CResultFilters::Search(const CString& strName)
 
 void CResultFilters::Remove(DWORD index)
 {
-	if ( ( index >= 0 ) && ( index < m_nFilters ) )
+	if ( index < m_nFilters )
 	{
 		delete m_pFilters[index];
 		CopyMemory(&m_pFilters[index], &m_pFilters[index + 1], sizeof(CFilterOptions *) * (m_nFilters - index));

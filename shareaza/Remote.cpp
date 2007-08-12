@@ -543,18 +543,18 @@ void CRemote::PageSearch()
 	{
 		Prepare();
 		
-		if ( nCloseID == (int)pFindWnd )
+		if ( nCloseID == (int)(INT_PTR)pFindWnd )
 		{
 			pFindWnd->PostMessage( WM_CLOSE );
 			continue;
 		}
-		else if ( nSearchID == (int)pFindWnd )
+		else if ( nSearchID == (int)(INT_PTR)pFindWnd )
 		{
 			pSearchWnd = pFindWnd;
 			Add( _T("search_selected"), _T("true") );
 		}
 		
-		str.Format( _T("%i"), (int)pFindWnd );
+		str.Format( _T("%i"), (int)(INT_PTR)pFindWnd );
 		Add( _T("search_id"), str );
 		str = pFindWnd->m_sCaption;
 		if ( str.Find( _T("Search : ") ) == 0 ) str = str.Mid( 9 ).SpanExcluding( _T("[") );

@@ -382,7 +382,7 @@ BOOL CDownloadTransferED2K::OnHashsetAnswer(CEDPacket* pPacket)
 	
 	DWORD nBlocks = pPacket->ReadShortLE();
 	bool bNullBlock = ( m_pDownload->m_nSize % ED2K_PART_SIZE == 0 && m_pDownload->m_nSize );
-	DWORD nBlocksFromSize = ( m_pDownload->m_nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE;
+	QWORD nBlocksFromSize = ( m_pDownload->m_nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE;
 
 	if ( bNullBlock )
 		nBlocksFromSize++;
@@ -637,7 +637,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 		}
 		while ( pStream->avail_out == 0 );
 
-		if ( pStream->avail_in >= 0 && pStream->avail_in < m_pInflateBuffer->m_nLength )
+		if ( pStream->avail_in < m_pInflateBuffer->m_nLength )
 		{
 			m_nInflateRead += ( m_pInflateBuffer->m_nLength - pStream->avail_in );
 			m_pInflateBuffer->Remove( m_pInflateBuffer->m_nLength - pStream->avail_in );
@@ -1203,7 +1203,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 		}
 		while ( pStream->avail_out == 0 );
 
-		if ( pStream->avail_in >= 0 && pStream->avail_in < m_pInflateBuffer->m_nLength )
+		if ( pStream->avail_in < m_pInflateBuffer->m_nLength )
 		{
 			m_nInflateRead += ( m_pInflateBuffer->m_nLength - pStream->avail_in );
 			m_pInflateBuffer->Remove( m_pInflateBuffer->m_nLength - pStream->avail_in );

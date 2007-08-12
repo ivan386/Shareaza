@@ -43,6 +43,7 @@ protected:
 	{
 	public:
 		CmdButton(LPCTSTR pszName);
+		virtual ~CmdButton() {}
 		BOOL HitTest(const CPoint& point, BOOL bAll = FALSE) const;
 		void Paint(CDC* pdcWindow, CRect& rcWindow, CSkinWindow* pSkin, CmdButton* pHover, CmdButton* pDown);
 	public:

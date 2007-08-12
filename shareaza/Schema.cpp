@@ -750,7 +750,7 @@ CString CSchema::GetIndexedWords(CXMLElement* pXML) const
 
 void CSchema::ResolveTokens(CString& str, CXMLElement* pXML) const
 {
-	while ( TRUE )
+	for ( ;; )
 	{
 		int nOpen = str.Find( '{' );
 		if ( nOpen < 0 ) break;

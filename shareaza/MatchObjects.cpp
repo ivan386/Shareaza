@@ -282,19 +282,29 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			
 			if ( Stats.nHadCount )
 			{
+				ASSERT( m_nItems >= Stats.nHadCount );
 				m_nItems -= Stats.nHadCount;
+				ASSERT( m_nFilteredFiles );
 				m_nFilteredFiles --;
+				ASSERT( m_nFilteredHits >= Stats.nHadFiltered );
 				m_nFilteredHits -= Stats.nHadFiltered;
 
 				switch ( nProtocol )
 				{
 				case PROTOCOL_G1:
 				case PROTOCOL_G2:
+					ASSERT( m_nGnutellaHits >= Stats.nHadFiltered );
 					m_nGnutellaHits -= Stats.nHadFiltered;
 					break;
 				case PROTOCOL_ED2K:
+					ASSERT( m_nED2KHits >= Stats.nHadFiltered );
 					m_nED2KHits -= Stats.nHadFiltered;
 					break;
+				case PROTOCOL_BT:
+				case PROTOCOL_FTP:
+				case PROTOCOL_HTTP:
+				case PROTOCOL_NULL:
+				case PROTOCOL_ANY:
 				default:
 //					ASSERT( 0 )
 					;
@@ -383,6 +393,11 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			case PROTOCOL_ED2K:
 				m_nED2KHits += pFile->m_nFiltered;
 				break;
+			case PROTOCOL_BT:
+			case PROTOCOL_FTP:
+			case PROTOCOL_HTTP:
+			case PROTOCOL_NULL:
+			case PROTOCOL_ANY:
 			default:
 //				ASSERT( 0 )
 				;

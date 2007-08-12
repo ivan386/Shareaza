@@ -105,11 +105,9 @@ public:
 		BOOL		HighPriorityHash;			// Use high priority hashing
 		BOOL		HashWindow;					// Display annoying hashing window
 		BOOL		CreateGhosts;				// Default action in the delete file dialog
-
-		//Not used at the moment
-		DWORD		BufferSize;					// I/O buffer for hash operation in MB, ignored if Parallel = 1; 0 use 1/4 of phys ram
+//		DWORD		BufferSize;					// I/O buffer for hash operation in MB, ignored if Parallel = 1; 0 use 1/4 of phys ram
 												// if buffer allocation fails hashing will run with Parallel = 1
-		DWORD		Parallel;					// how many files to hash parallel: 1..6; 0 for autoselect
+//		DWORD		Parallel;					// how many files to hash parallel: 1..6; 0 for autoselect
 		int			HighPriorityHashing;		// desired speed in MB/s when hashing with hi priority
 		int			LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search

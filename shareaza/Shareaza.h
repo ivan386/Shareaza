@@ -192,12 +192,6 @@ CString LoadHTML(HINSTANCE hInstance, UINT nResourceID);
 // Loads well-known resource for HTTP-uploading
 bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeader);
 
-#ifdef _DEBUG
-#define MLOG(x) theApp.Message( MSG_DEBUG, x )
-#else
-#define MLOG(x)
-#endif
-
 typedef enum
 {
 	sNone = 0,
