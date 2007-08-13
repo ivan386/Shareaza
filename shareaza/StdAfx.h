@@ -28,7 +28,6 @@
 //! Includes MFC header files. Contains several global definitions.
 
 #pragma once
-#include "Resource.h"
 
 //
 // Configuration
@@ -97,12 +96,14 @@ const bool SHAREAZA_RESTRICT_WP64 = true;
 // allow min to return the smaller type if called with unsigned arguments ?
 const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 
-#define WINVER			0x0500		//!< Windows Version
-#define _WIN32_WINDOWS	0x0500		//!< Windows Version
-#define _WIN32_WINNT	0x0500		//!< NT Version
-#define _WIN32_IE		0x0500		//!< IE Version
-#define _WIN32_DCOM					//!< DCOM
-#define _AFX_NO_RICHEDIT_SUPPORT	//!< No RichEdit
+#define WINVER			0x0500		// Windows 95,98,ME,NT,2000
+#define _WIN32_WINDOWS	0x0400		// Windows 95
+#define _WIN32_WINNT	0x0500		// Windows NT,2000
+#define _WIN32_IE		0x0500		// Internet Explorer 5.0
+#define _WIN32_DCOM					// Windows 95,98,ME DCOM
+
+#define VC_EXTRALEAN
+#define _ATL_NO_COM_SUPPORT
 
 //
 // MFC
@@ -118,29 +119,24 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 #include <afxole.h>			// MFC OLE
 #include <afxocc.h>			// MDC OCC
 #include <afxhtml.h>		// MFC HTML
+#include <afxpriv.h>
+#include <../src/mfc/afximpl.h>
 
 //
 // WIN32
 //
 
 #include <winsock2.h>		// Windows sockets V2
-#include <objbase.h>		// OLE
-#include <shlobj.h>			// Shell objects
 #include <wininet.h>		// Internet
 #include <ddeml.h>			// DDE
 #include <math.h>			// Math
-
-#undef IDC_HAND
-
-#include <afxpriv.h>
-#include <..\src\mfc\afximpl.h>
-#include <shlwapi.h>
-#include <shlobj.h>
-#include <exdispid.h>
-#include <mmsystem.h>
-#include <winioctl.h>
-#include <zlib.h>
-#include <atltime.h>
+#include <winsvc.h>			// Services (excluded by VC_EXTRALEAN)
+#include <shlwapi.h>		// Windows Shell API
+#include <exdispid.h>		// Internet Explorer DISPIDs
+#include <mmsystem.h>		// Multimedia
+#include <winioctl.h>		// Sparse files support
+#include <atltime.h>		// Time classes
+#include <atlenc.h>			// Base64Encode, UUEncode etc.
 
 // If this header is not found, you'll need to install the Windows XP SP2 Platform SDK (or later)
 // from http://www.microsoft.com/msdownload/platformsdk/sdkupdate/
@@ -156,7 +152,13 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 
 #include "CommonInclude.hpp"
 
-#include "RegExp\regexpr2.h"
+#include "zlib/zlib.h"
+
+#include "RegExp/regexpr2.h"
+
+#undef IDC_HAND		// Defined in Windows.h->WinUser.h and in Resource.h
+
+#include "Resource.h"
 
 #pragma warning( pop )
 
