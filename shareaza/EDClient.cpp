@@ -846,7 +846,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 				m_bEmRequest	= (pTag.m_nValue >> 8 ) & 0x0F;
 				m_bEmComments	= (pTag.m_nValue >> 4 ) & 0x0F;
 				m_bEmPeerCache	= (pTag.m_nValue >> 3 ) & 0x01;
-				m_bEmBrowse		=!(pTag.m_nValue >> 2 ) & 0x01;
+				m_bEmBrowse		=!( ( pTag.m_nValue >> 2 ) & 0x01 );
 				m_bEmMultiPacket= (pTag.m_nValue >> 1 ) & 0x01;
 				m_bEmPreview	= (pTag.m_nValue) & 0x01;
 			}
