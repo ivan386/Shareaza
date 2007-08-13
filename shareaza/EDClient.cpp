@@ -259,7 +259,7 @@ void CEDClient::Merge(CEDClient* pClient)
 	if ( ! m_bEmPeerCache )		m_bEmPeerCache = pClient->m_bEmPeerCache;
 	if ( ! m_bEmBrowse )		m_bEmBrowse = pClient->m_bEmBrowse;
 	if ( ! m_bEmMultiPacket )	m_bEmMultiPacket = pClient->m_bEmMultiPacket;	
-	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview && m_bEmBrowse;
+	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview;
 	if ( ! m_bEmLargeFile )		m_bEmLargeFile = pClient->m_bEmLargeFile;
 }
 
@@ -752,7 +752,7 @@ void CEDClient::SendHello(BYTE nType)
 				 ( ED2K_VERSION_UDP << 24) |			// UDP version
 				 ( ED2K_VERSION_COMPRESSION << 20) |	// Compression
 			     ( ED2K_VERSION_SECUREID << 16) |		// Secure ID
-				 ( ED2K_VERSION_SOURCEEXCHANGE << 12) | // Source exchange
+				 ( ED2K_VERSION_SOURCEEXCHANGE << 12) |	// Source exchange
 				 ( nExtendedRequests << 8) |			// Extended requests
 				 ( ED2K_VERSION_COMMENTS << 4) |		// Comments
 				 ( FALSE << 3) |						// Peer Cache
@@ -848,7 +848,11 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 				m_bEmPeerCache	= (pTag.m_nValue >> 3 ) & 0x01;
 				m_bEmBrowse		=!( ( pTag.m_nValue >> 2 ) & 0x01 );
 				m_bEmMultiPacket= (pTag.m_nValue >> 1 ) & 0x01;
-				m_bEmPreview	= ( (pTag.m_nValue) & 0x01 ) && m_bEmBrowse;
+				m_bEmPreview	= (pTag.m_nValue) & 0x01;
+				if ( m_pDownload && m_pDownload->m_pSource && m_pDownload->m_pSource->m_bClientExtended )
+					;
+				else
+					m_bEmPreview = m_bEmPreview && m_bEmBrowse;
 			}
 			break;
 		case ED2K_CT_SOFTWAREVERSION:
