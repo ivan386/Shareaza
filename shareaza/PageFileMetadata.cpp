@@ -203,10 +203,12 @@ void CFileMetadataPage::OnSelChangeSchemas()
 		}
 
 		m_wndData.SetSchema( pSchema );
-		// Change schema of data
-		m_pXML->SetName( pSchema->m_sSingular );
-
-		m_wndData.UpdateData( m_pXML, FALSE );
+		if ( m_pXML )
+		{
+			// Change schema of data
+			m_pXML->SetName( pSchema->m_sSingular );
+			m_wndData.UpdateData( m_pXML, FALSE );
+		}
 	}
 	else
 		m_wndData.SetSchema( pSchema );
