@@ -259,7 +259,7 @@ void CEDClient::Merge(CEDClient* pClient)
 	if ( ! m_bEmPeerCache )		m_bEmPeerCache = pClient->m_bEmPeerCache;
 	if ( ! m_bEmBrowse )		m_bEmBrowse = pClient->m_bEmBrowse;
 	if ( ! m_bEmMultiPacket )	m_bEmMultiPacket = pClient->m_bEmMultiPacket;	
-	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview;
+	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview && m_bEmBrowse;
 	if ( ! m_bEmLargeFile )		m_bEmLargeFile = pClient->m_bEmLargeFile;
 }
 
@@ -848,7 +848,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 				m_bEmPeerCache	= (pTag.m_nValue >> 3 ) & 0x01;
 				m_bEmBrowse		=!( ( pTag.m_nValue >> 2 ) & 0x01 );
 				m_bEmMultiPacket= (pTag.m_nValue >> 1 ) & 0x01;
-				m_bEmPreview	= (pTag.m_nValue) & 0x01;
+				m_bEmPreview	= ( (pTag.m_nValue) & 0x01 ) && m_bEmBrowse;
 			}
 			break;
 		case ED2K_CT_SOFTWAREVERSION:
