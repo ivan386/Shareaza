@@ -16,6 +16,8 @@ M http://skulls.mi-cha-el.org/skulls.php
 M http://gwc.eod.cc/skulls.php
 M http://gwc.frodoslair.net/skulls/skulls.php
 M http://www.mp3g.net/kp2pcache/skulls.php
+M http://g2.tjtech.org/g2/
+M http://g2.admpva.com/gwcii.php
 M http://torrent.delvedown.com/cgi-bin/perlgcache.cgi
 M http://gwebcache1.sexshare2k.info/
 M http://gwebcache2.sexshare2k.info/
@@ -102,6 +104,8 @@ X http://delelisten.no/gwc3/skulls.php
 X http://delelisten.no/gwc4/skulls.php
 X http://fischaleck.net/cache/mcache.php
 X http://jercos.dyndns.org/perlgcache.cgi
+X http://admpva.com/g2/gwcii.php
+X http://g2.tjtech.org/g2/index.php
 
 # A bugged GWC
 X http://g2.sbicomputing.com/g2/bazooka.php
