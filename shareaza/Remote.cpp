@@ -526,8 +526,8 @@ void CRemote::PageSearch()
 	
 	CSingleLock pLock( &theApp.m_pSection );
 	if ( ! pLock.Lock( 1000 ) ) return;
-	CMainWnd* pMainWnd = dynamic_cast< CMainWnd* >( theApp.m_pMainWnd );
-	if ( pMainWnd == NULL ) return;
+	CMainWnd* pMainWnd = static_cast< CMainWnd* >( theApp.m_pMainWnd );
+	if ( pMainWnd == NULL || ! pMainWnd->IsKindOf( RUNTIME_CLASS(CMainWnd) ) ) return;
 	
 	INT_PTR nSearchID = NULL;
 	INT_PTR nCloseID = NULL;
@@ -540,7 +540,7 @@ void CRemote::PageSearch()
 	Prepare();
 	Output( _T("searchHeader") );
 	
-	for ( CSearchWnd* pFindWnd = NULL ; ( pFindWnd = dynamic_cast< CSearchWnd* >( pMainWnd->m_pWindows.Find( RUNTIME_CLASS(CSearchWnd), pFindWnd ) ) ) != NULL ; )
+	for ( CSearchWnd* pFindWnd = NULL ; ( pFindWnd = static_cast< CSearchWnd* >( pMainWnd->m_pWindows.Find( RUNTIME_CLASS(CSearchWnd), pFindWnd ) ) ) != NULL ; )
 	{
 		Prepare();
 		INT_PTR nFindWnd = reinterpret_cast< INT_PTR >( pFindWnd );
