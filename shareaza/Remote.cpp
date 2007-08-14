@@ -526,35 +526,36 @@ void CRemote::PageSearch()
 	
 	CSingleLock pLock( &theApp.m_pSection );
 	if ( ! pLock.Lock( 1000 ) ) return;
-	CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pMainWnd;
-	if ( pMainWnd == NULL || ! pMainWnd->IsKindOf( RUNTIME_CLASS(CMainWnd) ) ) return;
+	CMainWnd* pMainWnd = dynamic_cast< CMainWnd* >( theApp.m_pMainWnd );
+	if ( pMainWnd == NULL ) return;
 	
-	int nSearchID = 0, nCloseID = 0;
+	INT_PTR nSearchID = NULL;
+	INT_PTR nCloseID = NULL;
 	CSearchWnd* pSearchWnd = NULL;
 	CString str;
 	
-	_stscanf( GetKey( _T("id") ), _T("%i"), &nSearchID );
-	_stscanf( GetKey( _T("close") ), _T("%i"), &nCloseID );
+	_stscanf( GetKey( _T("id") ), _T("%Ii"), &nSearchID );
+	_stscanf( GetKey( _T("close") ), _T("%Ii"), &nCloseID );
 	
 	Prepare();
 	Output( _T("searchHeader") );
 	
-	for ( CSearchWnd* pFindWnd = NULL ; ( pFindWnd = (CSearchWnd*)pMainWnd->m_pWindows.Find( RUNTIME_CLASS(CSearchWnd), pFindWnd ) ) != NULL ; )
+	for ( CSearchWnd* pFindWnd = NULL ; ( pFindWnd = dynamic_cast< CSearchWnd* >( pMainWnd->m_pWindows.Find( RUNTIME_CLASS(CSearchWnd), pFindWnd ) ) ) != NULL ; )
 	{
 		Prepare();
-		
-		if ( nCloseID == (int)(INT_PTR)pFindWnd )
+		INT_PTR nFindWnd = reinterpret_cast< INT_PTR >( pFindWnd );
+		if ( nCloseID == nFindWnd )
 		{
 			pFindWnd->PostMessage( WM_CLOSE );
 			continue;
 		}
-		else if ( nSearchID == (int)(INT_PTR)pFindWnd )
+		else if ( nSearchID == nFindWnd )
 		{
 			pSearchWnd = pFindWnd;
 			Add( _T("search_selected"), _T("true") );
 		}
 		
-		str.Format( _T("%i"), (int)(INT_PTR)pFindWnd );
+		str.Format( _T("%Ii"), nFindWnd );
 		Add( _T("search_id"), str );
 		str = pFindWnd->m_sCaption;
 		if ( str.Find( _T("Search : ") ) == 0 ) str = str.Mid( 9 ).SpanExcluding( _T("[") );
@@ -655,7 +656,7 @@ void CRemote::PageSearch()
 	}
 	
 	Prepare();
-	str.Format( _T("%i"), nSearchID );
+	str.Format( _T("%Ii"), nSearchID );
 	Add( _T("search_id"), str );
 	str.Format( _T("%i"), rand() );
 	Add( _T("random"), str );

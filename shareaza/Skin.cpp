@@ -253,10 +253,10 @@ BOOL CSkin::LoadFromFile(LPCTSTR pszFile)
 
 BOOL CSkin::LoadFromResource(HINSTANCE hInstance, UINT nResourceID)
 {
-	HMODULE hModule = ( hInstance != NULL ) ? (HMODULE)hInstance : GetModuleHandle( NULL );
+	HMODULE hModule = ( hInstance != NULL ) ? hInstance : GetModuleHandle( NULL );
 	CString strBody( ::LoadHTML( hModule, nResourceID ) );
 	CString strPath;
-	strPath.Format( _T("%lu$"), (DWORD)(DWORD_PTR)hModule );
+	strPath.Format( _T("%Iu$"), reinterpret_cast< HANDLE_PTR >( hModule ) );
 	return LoadFromString( strBody, strPath );
 }
 
