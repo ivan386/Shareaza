@@ -1,7 +1,7 @@
 //
 // QueryHit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -174,7 +174,7 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 			nPublicSize	= pPacket->ReadByte();
 		}
 		
-		if ( pVendor->m_bHTMLBrowse ) bBrowseHost = TRUE;
+		if ( pVendor && pVendor->m_bHTMLBrowse ) bBrowseHost = TRUE;
 		
 		if ( nPublicSize > pPacket->GetRemaining() - 16 ) 
 			AfxThrowUserException();
@@ -193,30 +193,34 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 			if ( nPublicSize + nXMLSize > pPacket->GetRemaining() - 16 ) 
 				AfxThrowUserException();
 		}
-		
+
 		while ( nPublicSize-- ) pPacket->ReadByte();
-		
-		if ( pVendor->m_bChatFlag && pPacket->GetRemaining() >= 16 + nXMLSize + 1 )
+
+		if ( pVendor && pVendor->m_bChatFlag && pPacket->GetRemaining() >= 16 + nXMLSize + 1 )
 		{
 			bChat = pPacket->PeekByte() == 1;
 		}
-		
+
 		if ( pPacket->GetRemaining() < 16 + nXMLSize ) nXMLSize = 0;
-		
+
 		if ( ( nFlags[0] & G1_QHD_GGEP ) && ( nFlags[1] & G1_QHD_GGEP ) &&
 			 Settings.Gnutella1.EnableGGEP )
 		{
 			ReadGGEP( pPacket, &bBrowseHost, &bChat );
 		}
-		
+
 		if ( nXMLSize > 0 )
 		{
 			pPacket->Seek( 16 + nXMLSize, CG1Packet::seekEnd );
 			pXML = ReadXML( pPacket, nXMLSize );
 			if ( pXML == NULL && nXMLSize > 1 )
-				theApp.Message( MSG_DEBUG, L"Invalid compressed metadata. Vendor: %s", pVendor->m_sName );
+			{
+				CString strVendorName;
+				if ( pVendor ) strVendorName = pVendor->m_sName;
+				theApp.Message( MSG_DEBUG, L"Invalid compressed metadata. Vendor: %s", strVendorName );
+			}
 		}
-		
+
 		if ( ! nPort || Network.IsFirewalledAddress( &nAddress ) )
 		{
 			nFlags[0] |= G1_QHD_PUSH;
