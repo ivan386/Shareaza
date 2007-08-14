@@ -122,6 +122,16 @@ void CURLCopyDlg::OnIncludeSelf()
 		strURN += m_pFile->m_oED2K.toUrn();
 	}
 
+	if ( m_pFile->m_oMD5 )
+	{
+		if ( strURN.GetLength() )
+		{
+			strURN	+= _T("&xt=");
+		}
+
+		strURN += m_pFile->m_oMD5.toUrn();
+	}
+
 	m_sMagnet = _T("magnet:?");
 
 	if ( strURN.GetLength() )

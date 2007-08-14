@@ -712,7 +712,6 @@ void CSettings::SmartUpgrade()
 	// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
 	if ( nVersion < 20 )
 	{
-		Gnutella1.RequeryDelay			= 30;
 		Gnutella2.UdpOutResend			= 6000;
 		Gnutella2.UdpOutExpire			= 26000;
 		Library.TigerHeight		= 9;
@@ -763,8 +762,6 @@ void CSettings::SmartUpgrade()
 	{
 		Downloads.MinSources	= 1;		// Lower Max value- should reset it in case
 		Downloads.StarveTimeout = 2700;		// Increased due to ed2k queues (Tripping too often)
-
-		Gnutella.MaxResults		= 100;		// No longer includes ed2k max files
 
 		Gnutella2.RequeryDelay	= 4*3600;	// Longer delay between sending same search to G2 hub
 	}

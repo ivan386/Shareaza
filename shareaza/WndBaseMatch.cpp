@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -648,6 +648,9 @@ void CBaseMatchWnd::OnLibraryBitziWeb()
 
 		if ( pFile->m_oED2K && ! strURN.GetLength() )
 			strURN = _T("ed2k:") + pFile->m_oED2K.toString();
+
+		if ( pFile->m_oMD5 && ! strURN.GetLength() )
+			strURN = _T("md5:") + pFile->m_oMD5.toString();
 	}
 	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
@@ -666,6 +669,9 @@ void CBaseMatchWnd::OnLibraryBitziWeb()
 
 		if ( pHit->m_oED2K && ! strURN.GetLength() )
 			strURN = _T("ed2k:") + pHit->m_oED2K.toString();
+
+		if ( pHit->m_oMD5 && ! strURN.GetLength() )
+			strURN = _T("md5:") + pHit->m_oMD5.toString();
 	}
 
 	if ( strURN.IsEmpty() ) return;

@@ -1,7 +1,7 @@
 //
 // DlgURLExport.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,7 +90,7 @@ BOOL CURLExportDlg::OnInitDialog()
 
 	if ( m_sFormat.IsEmpty() )
 		m_sFormat = _T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]")
-		_T("&xt=urn:ed2khash:[ED2K]&dn=[NameURI]&xl=[ByteSize]\">[Name]</a><br>");
+		_T("&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;dn=[NameURI]&amp;xl=[ByteSize]\">[Name]</a><br>");
 
 	UpdateData( FALSE );
 
@@ -133,9 +133,9 @@ void CURLExportDlg::OnSelChangeUrlPreset()
 
 	LPCTSTR pszPresets[] =
 	{
-		_T("magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&dn=[NameURI]&xl=[ByteSize]"),
+		_T("magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&xt=urn:md5:[MD5]&dn=[NameURI]&xl=[ByteSize]"),
 		_T("ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/"),
-		_T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;dn=[NameURI]&amp;xl=[ByteSize]\">[Name]</a><br>"),
+		_T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;dn=[NameURI]&amp;xl=[ByteSize]\">[Name]</a><br>"),
 		_T("<a href=\"ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/\">[Name]</a>"),
 	};
 

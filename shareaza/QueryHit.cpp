@@ -1671,8 +1671,11 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
+		ASSERT( m_pVendor );
+		if (m_pVendor == NULL) AfxThrowUserException();
+
 		ar.Write( &m_oSearchID[ 0 ], Hashes::Guid::byteCount );
-		
+
 		ar << m_nProtocol;
 		ar.Write( &m_oClientID[ 0 ], Hashes::Guid::byteCount );
 		ar.Write( &m_pAddress, sizeof(IN_ADDR) );
@@ -1680,7 +1683,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar << m_nSpeed;
 		ar << m_sSpeed;
 		ar << m_pVendor->m_sCode;
-		
+
 		ar << m_bPush;
 		ar << m_bBusy;
 		ar << m_bStable;
@@ -1689,7 +1692,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar << m_nUpQueue;
 		ar << m_bChat;
 		ar << m_bBrowseHost;
-		
+
         SerializeOut( ar, m_oSHA1 );
         SerializeOut( ar, m_oTiger );
         SerializeOut( ar, m_oED2K );
@@ -1707,14 +1710,14 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar << m_bPreview;
 		ar << m_sPreview;
 		ar << m_bCollection;
-		
+
 		if ( m_pXML == NULL ) m_sSchemaURI.Empty();
 		ar << m_sSchemaURI;
 		ar << m_sSchemaPlural;
 		if ( m_sSchemaURI.GetLength() ) m_pXML->Serialize( ar );
 		ar << m_nRating;
 		ar << m_sComments;
-		
+
 		ar << m_bMatched;
 		ar << m_bExactMatch;
 		ar << m_bBogus;
