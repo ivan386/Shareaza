@@ -425,12 +425,13 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		// Decode packet and create hits
 		if ( CQueryHit* pHits = CQueryHit::FromPacket( pPacket, pHost, nServerFlags ) )
 		{
-			Downloads.OnQueryHits( pHits );
-			
 			if ( pPacket->m_nType == ED2K_S2CG_SEARCHRESULT )
 				Network.OnQueryHits( pHits );
 			else
+			{
+				Downloads.OnQueryHits( pHits );
 				pHits->Delete();
+			}
 		}
 		break;
 	}
