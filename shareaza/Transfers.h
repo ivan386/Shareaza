@@ -40,19 +40,6 @@ public:
 // Attributes
 public:
 	mutable CMutex	m_pSection;
-class Lock
-{
-public:
-	Lock() { Transfers.m_pSection.Lock(); }
-	~Lock() { Transfers.m_pSection.Unlock(); }
-private:
-	Lock(const Lock&);
-	Lock& operator=(const Lock&);
-	static void* operator new(std::size_t);
-	static void* operator new[](std::size_t);
-	static void operator delete(void*);
-	static void operator delete[](void*);
-};
 	DWORD			m_nBuffer;
 	BYTE*			m_pBuffer;
 protected:

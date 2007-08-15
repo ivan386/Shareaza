@@ -920,7 +920,7 @@ void CDownloads::OnRun()
 	if ( ( ( tNow - m_tBandwidthLastCalc ) < 250 ) && ( tNow > m_tBandwidthLastCalc ) )
 	{
 		// Just run the downloads, don't bother re-calulating bandwidth
-		CTransfers::Lock oLock;
+		CQuickLock oLock( Transfers.m_pSection );
 
 		m_nValidation = 0;
 		++m_nRunCookie;
@@ -950,7 +950,7 @@ void CDownloads::OnRun()
 		BOOL bDonkeyRatioActive		= FALSE;
 
 		{	// Lock transfers section
-			CTransfers::Lock oLock;
+			CQuickLock oLock( Transfers.m_pSection );
 			CList<CDownloadTransfer*> pTransfersToLimit;
 			m_nValidation = 0;
 			++m_nRunCookie;

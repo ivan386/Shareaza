@@ -135,7 +135,7 @@ void CTransfers::Remove(CTransfer* pTransfer)
 	if ( pTransfer->m_hSocket != INVALID_SOCKET )
 		WSAEventSelect( pTransfer->m_hSocket, m_pWakeup, 0 );
 
-	CTransfers::Lock oLock;
+	CQuickLock oLock( m_pSection );
 	if ( POSITION pos = m_pList.Find( pTransfer ) )
 		m_pList.RemoveAt( pos );
 }
@@ -157,7 +157,10 @@ void CTransfers::OnRun()
 		Sleep( Settings.General.MinTransfersRest );
 		WaitForSingleObject( m_pWakeup, 50 );
 
-		CTransfers::Lock(), EDClients.OnRun();
+		{
+			CQuickLock oLock( m_pSection );
+			EDClients.OnRun();
+		}
 		if ( ! m_bThread ) break;
 
 		OnRunTransfers();
@@ -165,7 +168,11 @@ void CTransfers::OnRun()
 		Downloads.OnRun();
 		if ( ! m_bThread ) break;
 
-		CTransfers::Lock(), Uploads.OnRun(), OnCheckExit();
+		{
+			CQuickLock oLock( m_pSection );
+			Uploads.OnRun();
+			OnCheckExit();
+		}
 
 		TransferFiles.CommitDeferred();
 	}
@@ -176,7 +183,8 @@ void CTransfers::OnRun()
 
 void CTransfers::OnRunTransfers()
 {
-	CTransfers::Lock oLock;
+	CQuickLock oLock( m_pSection );
+
 	++m_nRunCookie;
 
 	while ( !m_pList.IsEmpty()

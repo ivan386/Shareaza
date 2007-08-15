@@ -296,7 +296,7 @@ void CDownloadTask::RunCopySimple()
 		pOp.pTo    = szOpTo;
 		pOp.fFlags = FOF_MULTIDESTFILES|FOF_NOERRORUI|FOF_SILENT;
 		
-		CTransfers::Lock oLock;
+		CQuickLock oLock( Transfers.m_pSection );
 
 		// Disconnect all uploads for that file (i.e. close the file handle)
 		Uploads.OnRename( m_sFilename );
@@ -377,7 +377,7 @@ void CDownloadTask::RunCopySimple()
 		pOp.pTo			= szOpTo;
 		pOp.fFlags		= FOF_MULTIDESTFILES|FOF_NOERRORUI|FOF_SILENT;
 
-		CTransfers::Lock oLock;
+		CQuickLock oLock( Transfers.m_pSection );
 
 		Uploads.OnRename( m_sFilename );
 
@@ -394,9 +394,9 @@ void CDownloadTask::RunCopySimple()
 	
 	if ( m_bSuccess )
 	{
-		CTransfers::Lock(),
-			Uploads.OnRename( m_sFilename, NULL ),
-			Uploads.OnRename( m_sFilename, strTarget );
+		CQuickLock oLock( Transfers.m_pSection );
+		Uploads.OnRename( m_sFilename, NULL );
+		Uploads.OnRename( m_sFilename, strTarget );
 		
 		if ( ! DeleteFile( m_sFilename ) )
 			theApp.WriteProfileString( _T("Delete"), m_sFilename, _T("") );
