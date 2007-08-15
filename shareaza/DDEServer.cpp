@@ -192,9 +192,18 @@ BOOL CDDEServer::CheckAccept(LPCTSTR pszTopic)
 BOOL CDDEServer::Execute(LPCTSTR pszTopic, HDDEDATA hData)
 {
 	DWORD nLength = 0;
+	BOOL bResult = FALSE;
+
 	LPVOID pData = DdeAccessData( hData, &nLength );
-	BOOL bResult = Execute( pszTopic, pData, nLength );
-	DdeUnaccessData( hData );
+	ASSERT( pData );
+	ASSERT( nLength );
+
+	if ( pData )
+	{
+		bResult = Execute( pszTopic, pData, nLength );
+		DdeUnaccessData( hData );
+	}
+
 	return bResult;
 }
 
@@ -204,6 +213,8 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, HDDEDATA hData)
 BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength)
 {
 	CString str;
+	ASSERT( pData );
+	ASSERT( nLength );
 
 	if ( theApp.m_bNT )
 	{
@@ -232,6 +243,8 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength)
 
 BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 {
+	ASSERT( pszMessage );
+
 	if ( _tcscmp( pszTopic, _T("URL") ) == 0 )
 	{
 		return CShareazaApp::OpenURL( pszMessage, TRUE );
