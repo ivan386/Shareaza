@@ -49,138 +49,169 @@ CImageServices::~CImageServices()
 
 BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly, BOOL bPartialOk)
 {
-	IImageServicePlugin* pService = GetService( pszType ).first;
-	if ( pService == NULL ) return FALSE;
+	ASSERT( pFile );
+	ASSERT( pszType );
+	ASSERT( pData );
 
-	IMAGESERVICEDATA pParams = {};
-	pParams.cbSize		= sizeof(pParams);
-	if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
-	if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
-	
-	SAFEARRAY* pInput;
-	LPBYTE pTarget;
-	
-	if ( FAILED( SafeArrayAllocDescriptor( 1, &pInput ) ) || pInput == NULL ) return FALSE;
-	
-	pInput->cbElements = 1;
-	pInput->rgsabound[ 0 ].lLbound = 0;
-	pInput->rgsabound[ 0 ].cElements = nLength;
-	SafeArrayAllocData( pInput );
-	
-	if ( FAILED( SafeArrayAccessData( pInput, (void HUGEP* FAR*)&pTarget ) ) )
+	BOOL bSuccess = FALSE;
+
+	IImageServicePlugin* pService = GetService( pszType ).first;
+	if ( pService )
 	{
-		SafeArrayDestroyDescriptor( pInput );
-		return FALSE;
+		SAFEARRAY* pInput;
+		if ( SUCCEEDED( SafeArrayAllocDescriptor( 1, &pInput ) ) && pInput )
+		{
+			pInput->cbElements = 1;
+			pInput->rgsabound[ 0 ].lLbound = 0;
+			pInput->rgsabound[ 0 ].cElements = nLength;
+			if ( SUCCEEDED( SafeArrayAllocData( pInput ) ) )
+			{
+				LPBYTE pTarget;
+				if ( SUCCEEDED( SafeArrayAccessData( pInput, (void HUGEP* FAR*)&pTarget ) ) )
+				{
+					CopyMemory( pTarget, pData, nLength );
+					VERIFY( SUCCEEDED( SafeArrayUnaccessData( pInput ) ) );
+					
+					BSTR bstrType = SysAllocString( CT2CW( pszType ) );
+					if ( bstrType )
+					{
+						HINSTANCE hRes = AfxGetResourceHandle();
+
+						SAFEARRAY* pArray = NULL;
+						IMAGESERVICEDATA pParams = {};
+						pParams.cbSize = sizeof( pParams );
+						if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
+						if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
+						if ( SUCCEEDED( pService->LoadFromMemory( bstrType, pInput,
+							&pParams, &pArray ) ) )
+						{
+							bSuccess = PostLoad( pFile, &pParams, pArray );
+						}
+						if ( pArray )
+						{
+							VERIFY( SUCCEEDED( SafeArrayDestroy( pArray ) ) );
+						}
+
+						AfxSetResourceHandle( hRes );
+
+						SysFreeString( bstrType );
+					}
+				}
+				VERIFY( SUCCEEDED( SafeArrayDestroyData( pInput ) ) );
+			}
+			VERIFY( SUCCEEDED( SafeArrayDestroyDescriptor( pInput ) ) );
+		}
 	}
-	
-	CopyMemory( pTarget, pData, nLength );
-	SafeArrayUnaccessData( pInput );
-	
-	SAFEARRAY* pArray = NULL;
-	HINSTANCE hRes = AfxGetResourceHandle();
-	BSTR bstrType = SysAllocString( CT2CW(pszType));
-	BOOL bSuccess = SUCCEEDED( pService->LoadFromMemory( bstrType, pInput, &pParams, &pArray ) );
-	SysFreeString( bstrType );
-	AfxSetResourceHandle( hRes );
-	
-	SafeArrayDestroyDescriptor( pInput );
-	
-	return PostLoad( pFile, &pParams, pArray, bSuccess );
+
+	return bSuccess;
 }
 
 BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly, BOOL bPartialOk)
 {
-	PluginInfo service = GetService( szFilename );
-	if ( !service.first )
-		return FALSE;
+	ASSERT( pFile );
+	ASSERT( szFilename );
 
-	IMAGESERVICEDATA pParams = {};
-	pParams.cbSize		= sizeof(pParams);
-	if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
-	if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
+	BOOL bSuccess = FALSE;
 
-	SAFEARRAY* pArray	= NULL;
-	HINSTANCE hRes		= AfxGetResourceHandle();
-	BSTR sFile			= SysAllocString (CT2CW (szFilename));
-	HRESULT hr			= service.first->LoadFromFile( sFile, &pParams, &pArray );
-	SysFreeString (sFile);
-	AfxSetResourceHandle( hRes );
-	
-	if ( hr != E_NOTIMPL ) return PostLoad( pFile, &pParams, pArray, SUCCEEDED( hr ) );
-	
-	// Second chance - load from memory
-	pFile->Clear();
-	if ( pArray != NULL ) SafeArrayDestroy( pArray );
-	
-	BOOL bMapped = FALSE;	
-	HANDLE hFile = CreateFile( szFilename, GENERIC_READ,
-		FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
-		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	VERIFY_FILE_ACCESS( hFile, szFilename )
-	if ( hFile != INVALID_HANDLE_VALUE )
+	IImageServicePlugin* pService = GetService( szFilename ).first;
+	if ( pService )
 	{
-		HANDLE hMap = CreateFileMapping( hFile, NULL, PAGE_READONLY, 0, 0, NULL );
-		if ( hMap )
-		{		
-			LPCVOID pBuffer = MapViewOfFile( hMap, FILE_MAP_READ, 0, 0, 0 );
-			if ( pBuffer )
+		BSTR bstrFile = SysAllocString( CT2CW( szFilename ) );
+		if ( bstrFile )
+		{
+			HINSTANCE hRes = AfxGetResourceHandle();
+
+			SAFEARRAY* pArray = NULL;
+			IMAGESERVICEDATA pParams = {};
+			pParams.cbSize = sizeof( pParams );
+			if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
+			if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
+			if ( SUCCEEDED( pService->LoadFromFile( bstrFile, &pParams, &pArray ) ) )
 			{
-				bMapped = LoadFromMemory( pFile, szFilename, pBuffer,
-					GetFileSize (hFile, NULL), bScanOnly, bPartialOk );
-				UnmapViewOfFile( pBuffer );
+				bSuccess = PostLoad( pFile, &pParams, pArray );
 			}
-			CloseHandle( hMap );
+			if ( pArray )
+			{
+				VERIFY( SUCCEEDED( SafeArrayDestroy( pArray ) ) );
+			}
+
+			AfxSetResourceHandle( hRes );
+
+			SysFreeString( bstrFile );
 		}
-		CloseHandle( hFile );
+
+		// Second chance - load from memory
+		if ( ! bSuccess )
+		{
+			HANDLE hFile = CreateFile( szFilename, GENERIC_READ,
+				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+			VERIFY_FILE_ACCESS( hFile, szFilename )
+			if ( hFile != INVALID_HANDLE_VALUE )
+			{
+				HANDLE hMap = CreateFileMapping( hFile, NULL, PAGE_READONLY, 0, 0, NULL );
+				if ( hMap )
+				{		
+					LPCVOID pBuffer = MapViewOfFile( hMap, FILE_MAP_READ, 0, 0, 0 );
+					if ( pBuffer )
+					{
+						bSuccess = LoadFromMemory( pFile, szFilename, pBuffer,
+							GetFileSize( hFile, NULL ), bScanOnly, bPartialOk );
+
+						VERIFY( UnmapViewOfFile( pBuffer ) );
+					}
+					VERIFY( CloseHandle( hMap ) );
+				}
+				VERIFY( CloseHandle( hFile ) );
+			}
+		}
 	}
-	return bMapped;
+	return bSuccess;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CImageServices post load
 
-BOOL CImageServices::PostLoad(CImageFile* pFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pArray, BOOL bSuccess)
+BOOL CImageServices::PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray)
 {
-	pFile->Clear();
-
-	if ( ! bSuccess )
-	{
-		if ( pArray != NULL ) SafeArrayDestroy( pArray );
-		return FALSE;
-	}
+	ASSERT( pFile );
+	ASSERT( pParams );
 
 	pFile->m_bScanned		= TRUE;
 	pFile->m_nWidth			= pParams->nWidth;
 	pFile->m_nHeight		= pParams->nHeight;
 	pFile->m_nComponents	= pParams->nComponents;
-
-	if ( pArray == NULL ) return TRUE;
-	
-	pFile->m_bLoaded = TRUE;
-	
-	LONG nArray = 0;
-	SafeArrayGetUBound( pArray, 1, &nArray );
-	nArray++;
-	
-	LONG nFullSize = pParams->nWidth * pParams->nComponents;
-	while ( nFullSize & 3 ) nFullSize++;
-	nFullSize *= pParams->nHeight;
-	
-	if ( nArray != nFullSize )
+	if ( pArray == NULL )
 	{
-		SafeArrayDestroy( pArray );
-		return FALSE;
+		// Scanned only
+		return TRUE;
 	}
-	
-	pFile->m_pImage = new BYTE[ nArray ];
-	
-	LPBYTE pData;
-	SafeArrayAccessData( pArray, (VOID**)&pData );
-	CopyMemory( pFile->m_pImage, pData, nArray );
-	SafeArrayUnaccessData( pArray );
-	SafeArrayDestroy( pArray );
-	
-	return TRUE;
+
+	LONG nArray = 0;
+	if ( SUCCEEDED( SafeArrayGetUBound( pArray, 1, &nArray ) ) )
+	{
+		nArray++;
+		LONG nFullSize = pParams->nWidth * pParams->nComponents;
+		while ( nFullSize & 3 ) nFullSize++;
+		nFullSize *= pParams->nHeight;
+		if ( nArray == nFullSize )
+		{
+			pFile->m_pImage = new BYTE[ nArray ];
+			if ( pFile->m_pImage )
+			{
+				LPBYTE pData;
+				if ( SUCCEEDED( SafeArrayAccessData( pArray, (VOID**)&pData ) ) )
+				{
+					CopyMemory( pFile->m_pImage, pData, nArray );
+					pFile->m_bLoaded = TRUE;
+
+					VERIFY( SUCCEEDED( SafeArrayUnaccessData( pArray ) ) );
+				}
+			}
+		}
+	}
+
+	return pFile->m_bLoaded;
 }
 
 /////////////////////////////////////////////////////////////////////////////
