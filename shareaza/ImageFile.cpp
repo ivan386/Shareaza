@@ -336,7 +336,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 	return TRUE;
 }
 
-BOOL CImageFile::FastResample(int nNewWidth, int nNewHeight)
+/*BOOL CImageFile::FastResample(int nNewWidth, int nNewHeight)
 {
 	if ( ! m_bLoaded ) return FALSE;
 	if ( m_nComponents != 3 ) return FALSE;
@@ -371,7 +371,7 @@ BOOL CImageFile::FastResample(int nNewWidth, int nNewHeight)
 	m_nHeight	= nNewHeight;
 
 	return TRUE;
-}
+}*/
 
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile image component modification

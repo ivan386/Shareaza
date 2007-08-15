@@ -365,8 +365,6 @@ void CBrowseProfileCtrl::OnHeadPacket(CG2Packet* pPacket)
 		}
 		else if ( nType == G2_PACKET_BODY )
 		{
-			m_imgHead.Clear();
-
 			if ( m_imgHead.LoadFromMemory( strFile,
 				 (LPCVOID)( pPacket->m_pBuffer + pPacket->m_nPosition ), nLength ) &&
 				 m_imgHead.EnsureRGB( CoolInterface.m_crWindow ) &&

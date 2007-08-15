@@ -45,7 +45,6 @@ public:
 
 // Operations
 public:
-	void	Clear();
 	BOOL	LoadFromMemory(LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL	LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL	LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
@@ -56,9 +55,12 @@ public:
 	void	Serialize(CArchive& ar);
 	HBITMAP	CreateBitmap(HDC hUseDC = 0);
 	BOOL	Resample(int nNewWidth, int nNewHeight);
-	BOOL	FastResample(int nNewWidth, int nNewHeight);
+//	BOOL	FastResample(int nNewWidth, int nNewHeight);
 	BOOL	EnsureRGB(COLORREF crBack = 0xFFFFFFFF);
+	BOOL	SwapRGB();
+
+protected:
+	void	Clear();
 	BOOL	MonoToRGB();
 	BOOL	AlphaToRGB(COLORREF crBack);
-	BOOL	SwapRGB();
 };
