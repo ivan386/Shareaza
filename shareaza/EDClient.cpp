@@ -244,6 +244,13 @@ void CEDClient::Merge(CEDClient* pClient)
 	if ( ! m_bOpenChat )		m_bOpenChat = pClient->m_bOpenChat;
 	if ( ! m_bCommentSent )		m_bCommentSent = pClient->m_bCommentSent;
 
+	CopyCapabilities( pClient );
+}
+
+void CEDClient::CopyCapabilities(CEDClient* pClient)
+{
+	ASSERT( pClient != NULL );
+
 	// Copy client capabilities. (This should not be necessary)
 	if ( ! m_nEmVersion )		m_nEmVersion = pClient->m_nEmVersion;
 	if ( ! m_nEmCompatible )	m_nEmCompatible = pClient->m_nEmCompatible;
@@ -259,7 +266,7 @@ void CEDClient::Merge(CEDClient* pClient)
 	if ( ! m_bEmPeerCache )		m_bEmPeerCache = pClient->m_bEmPeerCache;
 	if ( ! m_bEmBrowse )		m_bEmBrowse = pClient->m_bEmBrowse;
 	if ( ! m_bEmMultiPacket )	m_bEmMultiPacket = pClient->m_bEmMultiPacket;	
-	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview;
+	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview ;
 	if ( ! m_bEmLargeFile )		m_bEmLargeFile = pClient->m_bEmLargeFile;
 }
 
