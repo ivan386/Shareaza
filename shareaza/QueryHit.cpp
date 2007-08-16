@@ -170,7 +170,8 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 			pPacket->Read( szaVendor, 4 );
 			TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
 			
-			pVendor		= VendorCache.Lookup( szVendor );
+			pVendor = VendorCache.Lookup( szVendor );
+			if ( ! pVendor ) pVendor = VendorCache.m_pNull;
 			nPublicSize	= pPacket->ReadByte();
 		}
 		
@@ -390,6 +391,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			{
 				CString strVendor = pPacket->ReadString( 4 );
 				pVendor = VendorCache.Lookup( strVendor );
+				if ( ! pVendor ) pVendor = VendorCache.m_pNull;
 			}
 			else if ( nType == G2_PACKET_METADATA )
 			{
@@ -927,7 +929,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost)
 {
 	m_oClientID		= oClientID;
-	m_pVendor		= pVendor;
+	m_pVendor		= pVendor ? pVendor : VendorCache.m_pNull;
 	m_bChat			= bChat;
 	m_bBrowseHost	= bBrowseHost;
 	
