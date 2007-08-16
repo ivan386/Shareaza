@@ -41,9 +41,6 @@ typedef QWORD G2_PACKET;
 	( ! ( (G2_PACKET)((p)) & 0xff00000000000000ui64 ) ) ? 7 : ( \
 	8 )))))))))
 
-// #define	MAKEWORD(a,b)	(( WORD) (((a)) | (( WORD) ((b))) << 8 )) <- already defined
-#define	MAKEDWORD(a,b)	((DWORD) (((a)) | ((DWORD) ((b))) << 16))
-#define	MAKEQWORD(a,b)	((QWORD) (((a)) | ((QWORD) ((b))) << 32))
 #define	MAKE_G2_PACKET(a,b,c,d,e,f,g,h) \
 	MAKEQWORD(	MAKEDWORD(MAKEWORD(((a)),((b))),MAKEWORD(((c)),((d)))), \
 				MAKEDWORD(MAKEWORD(((e)),((f))),MAKEWORD(((g)),((h)))) \

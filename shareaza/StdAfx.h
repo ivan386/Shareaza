@@ -198,6 +198,9 @@ typedef LRESULT ONNCHITTESTRESULT;
 
 typedef unsigned __int64 QWORD;
 
+#define	MAKEDWORD(a,b)	((DWORD) (((a)) | ((DWORD) ((b))) << 16))
+#define	MAKEQWORD(a,b)	((QWORD) (((a)) | ((QWORD) ((b))) << 32))
+
 //
 // Tristate type
 //
