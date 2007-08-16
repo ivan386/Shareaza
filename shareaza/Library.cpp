@@ -60,23 +60,20 @@ CLibrary Library;
 //////////////////////////////////////////////////////////////////////
 // CLibrary construction
 
-CLibrary::CLibrary()
+CLibrary::CLibrary() :
+	m_nUpdateSaved	( GetTickCount() ),
+	m_nScanCount	( 0 ),
+	m_hThread		( NULL ),
+	m_bThread		( TRUE ),
+	m_nScanCookie	( 1 ),
+	m_nScanTime		( 0 ),
+	m_nUpdateCookie	( 0 ),
+	m_nFileSwitch	( 0 ),
+	m_hKernel		( NULL ),
+	m_pfnGFAEW		( NULL ),
+	m_pfnGFAEA		( NULL )
 {
 	EnableDispatch( IID_ILibrary );
-
-	m_nUpdateSaved	= 0;
-	m_nScanCount	= 0;
-
-	m_hThread		= NULL;
-	m_bThread		= TRUE;
-	m_nScanCookie	= 1;
-	m_nScanTime		= 0;
-	m_nUpdateCookie	= 0;
-	m_nUpdateSaved	= 0;
-	m_nFileSwitch	= 0;
-
-	m_pfnGFAEW		= NULL;
-	m_pfnGFAEA		= NULL;
 
 	if ( ( m_hKernel = LoadLibrary( _T("kernel32") ) ) != 0 )
 	{
@@ -481,8 +478,6 @@ void CLibrary::StartThread()
 		m_bThread = TRUE;
 		m_hThread = BeginThread( "Library", ThreadStart, this, THREAD_PRIORITY_BELOW_NORMAL );
 	}
-
-	LibraryBuilder.StartThread();
 }
 
 void CLibrary::StopThread()
@@ -563,6 +558,46 @@ BOOL CLibrary::ThreadScan()
 	}
 
 	return bChanged;
+}
+
+BOOL CLibrary::IsBadFile(LPCTSTR pszFilenameOnly, LPCTSTR pszPathOnly, DWORD dwFileAttributes)
+{
+	ASSERT( pszFilenameOnly );
+
+	// Ignore files or folders begins from dot
+	if ( pszFilenameOnly[0] == _T('.') ) return TRUE;
+	// Ignore hidden or system files or folders
+	if ( dwFileAttributes & (FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM) ) return TRUE;
+	// Ignore metadata file or folder
+	if ( _tcsicmp( pszFilenameOnly, _T("Metadata") ) == 0 ) return TRUE;
+
+	if ( ! ( dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) )
+	{
+		// Ignore encrypted files
+		if ( dwFileAttributes & (FILE_ATTRIBUTE_ENCRYPTED) ) return TRUE;
+		// Ignore our thumbnail database
+		if ( _tcsicmp( pszFilenameOnly, _T("SThumbs.dat") ) == 0 ) return TRUE;
+		// Ignore windows thumbnail database
+		if ( _tcsicmp( pszFilenameOnly, _T("Thumbs.db") ) == 0 ) return TRUE;
+		// Ignore video tag-file
+		if ( _tcsicmp( pszFilenameOnly, _T("dxva_sig.txt") ) == 0 ) return TRUE;
+		// Ignore WinMX partial files
+		if ( _tcsnicmp( pszFilenameOnly, _T("__INCOMPLETE___"), 15 ) == 0 ) return TRUE;
+
+		LPCTSTR pszExt = _tcsrchr( pszFilenameOnly, _T('.') );
+		if ( pszExt++ )
+		{
+			// Ignore private type files
+			if ( IsIn( Settings.Library.PrivateTypes, pszExt ) )
+				return TRUE;
+			// Ignore .dat files in Kazaa folder
+			if ( pszPathOnly && _tcsistr( pszPathOnly, _T("kazaa") ) != NULL &&
+				_tcsicmp( pszExt, _T("dat") ) == 0 )
+				return TRUE;
+		}
+	}
+
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -87,6 +87,8 @@ public:
 	void			StartThread();
 	void			StopThread();
 
+	static BOOL		IsBadFile(LPCTSTR szFilenameOnly, LPCTSTR szPathOnly = NULL, DWORD dwFileAttributes = 0);
+
 protected:
 	void			Serialize(CArchive& ar);
 	static UINT		ThreadStart(LPVOID pParam);

@@ -318,7 +318,7 @@ void CLibraryFolder::PathToName()
 BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 {
 	CSingleLock pLock( &Library.m_pSection );
-	CString strPath, strMetaData;
+	CString strMetaData;
 	LPCTSTR pszMetaData = NULL;
 	WIN32_FIND_DATA pFind;
 	HANDLE hSearch;
@@ -346,18 +346,14 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 	nScanCookie		= ++Library.m_nScanCookie;
 	pLock.Unlock();
 	
-	BOOL bKazaaFolder = _tcsistr( m_sPath, _T("kazaa") ) != NULL;
 	BOOL bChanged = FALSE;
 	
 	if ( hSearch != INVALID_HANDLE_VALUE )
 	{
 		do
 		{
-			strPath.Format( _T("%s\\%s"), (LPCTSTR)m_sPath, pFind.cFileName );
-			
-			if ( pFind.cFileName[0] == '.' ) continue;
-			if ( pFind.dwFileAttributes & (FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM) ) continue;
-			if ( _tcsicmp( pFind.cFileName, _T("Metadata") ) == 0 ) continue;
+			if ( CLibrary::IsBadFile( pFind.cFileName, m_sPath,
+				pFind.dwFileAttributes )  ) continue;
 
 			if ( pFind.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
 			{
@@ -375,7 +371,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 						pLock.Lock();
 						m_pFolders.RemoveKey( strNameLC );
 						pFolder->OnDelete();
-						pFolder = new CLibraryFolder( this, strPath );
+						pFolder = new CLibraryFolder( this, m_sPath + _T("\\") + pFind.cFileName );
 						m_pFolders.SetAt( pFolder->m_sNameLC, pFolder );
 						bChanged = TRUE;
 						m_nUpdateCookie++;
@@ -384,7 +380,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 				}
 				else
 				{
-					pFolder = new CLibraryFolder( this, strPath );
+					pFolder = new CLibraryFolder( this, m_sPath + _T("\\") + pFind.cFileName );
 					pLock.Lock();
 					m_pFolders.SetAt( pFolder->m_sNameLC, pFolder );
 					bChanged = TRUE;
@@ -399,16 +395,6 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			}
 			else
 			{
-				if ( pFind.dwFileAttributes & (FILE_ATTRIBUTE_ENCRYPTED) ) continue;
-				if ( _tcsicmp( pFind.cFileName, _T("SThumbs.dat") ) == 0 ) continue;
-				if ( _tcsicmp( pFind.cFileName, _T("Thumbs.db") ) == 0 ) continue;
-				LPCTSTR pszExt = _tcsrchr( pFind.cFileName, '.' );
-				if ( pszExt )
-				{
-					if ( IsIn( Settings.Library.PrivateTypes, pszExt + 1 ) )
-						continue;
-				}			
-
 				CLibraryFile* pFile = GetFile( pFind.cFileName );
 				if ( pFile != NULL )
 				{
@@ -424,16 +410,6 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 						pLock.Unlock();
 					}
 				}
-				else if ( bKazaaFolder && pszExt && _tcsicmp( pszExt, _T(".dat") ) == 0 )
-				{
-					// Ignore .dat files in Kazaa folder
-					continue;
-				}
-				else if ( _tcsnicmp( pFind.cFileName, _T("__INCOMPLETE___"), 15 ) == 0 )
-				{
-					// Ignore WinMX partial files
-					continue;
-				}
 				else
 				{
 					pFile = new CLibraryFile( this, pFind.cFileName );
@@ -443,12 +419,13 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 					bChanged = TRUE;
 					pLock.Unlock();
 				}
-				
-				QWORD nLongSize = (QWORD)pFind.nFileSizeLow | ( (QWORD)pFind.nFileSizeHigh << 32 );
-				
-				bChanged |= pFile->ThreadScan(	pLock, nScanCookie, nLongSize,
-												&pFind.ftLastWriteTime, pszMetaData );
-				
+
+				QWORD nLongSize = (QWORD)pFind.nFileSizeLow |
+					( (QWORD)pFind.nFileSizeHigh << 32 );
+
+				bChanged |= pFile->ThreadScan( pLock, nScanCookie, nLongSize,
+					&pFind.ftLastWriteTime, pszMetaData );
+
 				m_nVolume += pFile->m_nSize / 1024;
 			}
 		}

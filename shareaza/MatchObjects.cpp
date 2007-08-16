@@ -1576,6 +1576,12 @@ void CMatchFile::Added(CQueryHit* pHit)
 	// Mark/unmark a file as suspicious depending on the percentage of the spam hits
 	m_bSuspicious = (float)nBogusCount / nTotal > Settings.Search.SpamFilterThreshold / 100.0f;
 
+	// Unshared files are suspicious. (A user is assumed to want to exclude these entirely)
+	if ( CLibrary::IsBadFile( m_sName ) )
+	{
+		m_bSuspicious = TRUE;
+	}
+
 	// Get extention
 	if ( int nExt = pHit->m_sName.ReverseFind( _T('.') ) + 1 )
 	{
@@ -1587,12 +1593,6 @@ void CMatchFile::Added(CQueryHit* pHit)
 		// Check if file is suspicious
 		if ( ! m_bSuspicious )
 		{
-			// Unshared types are suspicious. (A user is assumed to want to exclude these entirely)
-			if ( IsIn( Settings.Library.PrivateTypes, pszExt ) )
-			{
-				m_bSuspicious = TRUE;
-			}
-
 			// These are basically always viral or useless
 			if ( ( _tcsicmp( pszExt, _T("vbs") ) == 0 ) ||
 				 ( _tcsicmp( pszExt, _T("lnk") ) == 0 ) ||

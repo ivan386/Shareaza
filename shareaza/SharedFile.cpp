@@ -164,14 +164,6 @@ CString CLibraryFile::GetSearchName() const
 
 BOOL CLibraryFile::IsShared() const
 {
-	if ( int nExt = m_sName.ReverseFind( _T('.') ) + 1 )
-	{
-		if ( IsIn( Settings.Library.PrivateTypes, (LPCTSTR)m_sName + nExt ) )
-		{
-			return FALSE;
-		}
-	}
-	
 	if ( m_bShared )
 	{
 		if ( m_bShared == TS_TRUE ) return TRUE;
