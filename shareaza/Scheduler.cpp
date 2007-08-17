@@ -19,14 +19,18 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-
-
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
 #include "DlgHelp.h"
 #include "Scheduler.h"
 #include "Network.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
 
 CScheduler Schedule;
 

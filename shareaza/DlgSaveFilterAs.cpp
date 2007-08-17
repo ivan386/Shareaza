@@ -27,6 +27,12 @@
 #include "DlgFilterSearch.h"
 #include "ResultFilters.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 // CSaveFilterAsDlg dialog
 
 CSaveFilterAsDlg::CSaveFilterAsDlg( CWnd* pParent /*=NULL*/ )

@@ -37,6 +37,12 @@
 
 #include "LibraryHistory.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 IMPLEMENT_DYNAMIC(CTorrentSeedDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CTorrentSeedDlg, CSkinDialog)

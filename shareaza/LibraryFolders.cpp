@@ -35,6 +35,12 @@
 #include "Schema.h"
 #include "SchemaCache.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 IMPLEMENT_DYNAMIC(CLibraryFolders, CComObject)
 
 BEGIN_INTERFACE_MAP(CLibraryFolders, CComObject)

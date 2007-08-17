@@ -24,6 +24,12 @@
 #include "StdAfx.h"
 #include "SHA.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 void CSHA::Reset()
 {
 	m_State.m_nCount = 0;

@@ -33,6 +33,12 @@
 #include "ED2K.h"
 #include "TigerTree.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 IMPLEMENT_DYNAMIC(CLibraryMaps, CComObject)
 
 BEGIN_INTERFACE_MAP(CLibraryMaps, CComObject)

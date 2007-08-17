@@ -27,6 +27,12 @@
 #include "CtrlMonitorBar.h"
 #include "Skin.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 BEGIN_MESSAGE_MAP(CMonitorBarCtrl, CControlBar)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()

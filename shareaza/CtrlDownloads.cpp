@@ -36,6 +36,12 @@
 #include "WndDownloads.h"
 #include "Flags.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 IMPLEMENT_DYNAMIC(CDownloadsCtrl, CWnd)
 
 BEGIN_MESSAGE_MAP(CDownloadsCtrl, CWnd)

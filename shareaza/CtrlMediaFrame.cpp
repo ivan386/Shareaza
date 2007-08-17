@@ -35,6 +35,12 @@
 #include "DlgMediaVis.h"
 #include "CoolInterface.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 #ifndef WM_APPCOMMAND
 
 #define WM_APPCOMMAND					0x319

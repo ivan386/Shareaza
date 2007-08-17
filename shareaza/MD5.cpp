@@ -24,6 +24,12 @@
 #include "StdAfx.h"
 #include "MD5.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 //////////////////////////////////////////////////////////////////////
 // CMD5 reset m_nState
 

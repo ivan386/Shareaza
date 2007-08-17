@@ -26,6 +26,12 @@
 #include "CoolMenu.h"
 #include "Skin.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 IMPLEMENT_DYNAMIC(CWebCtrl, CWnd)
 
 BEGIN_INTERFACE_MAP(CWebCtrl::DocSite, COleControlSite)

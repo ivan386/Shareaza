@@ -27,6 +27,12 @@
 #include "Skin.h"
 #include "SkinWindow.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 IMPLEMENT_DYNAMIC(CMainTabBarCtrl, CControlBar)
 
 BEGIN_MESSAGE_MAP(CMainTabBarCtrl, CControlBar)

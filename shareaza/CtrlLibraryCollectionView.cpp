@@ -42,6 +42,12 @@
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryCollectionView.h"
 
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
 IMPLEMENT_DYNCREATE(CLibraryCollectionView, CLibraryFileView)
 
 BEGIN_INTERFACE_MAP(CLibraryCollectionView::External, CComObject)
