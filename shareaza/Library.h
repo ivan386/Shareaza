@@ -69,7 +69,7 @@ public:
 
 // File and Folder Operations
 public:
-	CLibraryFile*	LookupFile(DWORD nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFile(DWORD_PTR nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CAlbumFolder*	GetAlbumRoot();
 
 protected:

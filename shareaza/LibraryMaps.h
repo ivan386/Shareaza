@@ -1,7 +1,7 @@
 //
 // LibraryMaps.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,7 +37,7 @@ public:
 
 // Attributes
 protected:
-	CMap< DWORD, DWORD, CLibraryFile*, CLibraryFile* > m_pIndexMap;
+	CMap< DWORD_PTR, DWORD_PTR, CLibraryFile*, CLibraryFile* > m_pIndexMap;
 	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > m_pNameMap;
 	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > m_pPathMap;
 	CLibraryFile**		m_pSHA1Map;
@@ -57,7 +57,7 @@ public:
 	INT_PTR			GetFileCount() const { return m_pIndexMap.GetCount(); }
 	void			GetStatistics(DWORD* pnFiles, QWORD* pnVolume);
 public:
-	CLibraryFile*	LookupFile(DWORD nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFile(DWORD_PTR nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CLibraryFile*	LookupFileByName(LPCTSTR pszName, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByPath(LPCTSTR pszPath, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);

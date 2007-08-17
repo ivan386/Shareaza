@@ -76,7 +76,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 {
 	{
 		CQuickLock oLock( Library.m_pSection );
-		CLibraryFile* pFile = Library.LookupFile( (DWORD)m_pContext );
+		CLibraryFile* pFile = Library.LookupFile( reinterpret_cast< DWORD_PTR >( m_pContext ) );
 		if ( pFile == NULL ) return FALSE;
 
 		CSingleLock pLock( &m_pSection, TRUE );

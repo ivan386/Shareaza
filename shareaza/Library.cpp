@@ -90,7 +90,7 @@ CLibrary::~CLibrary()
 //////////////////////////////////////////////////////////////////////
 // CLibrary file and folder operations
 
-CLibraryFile* CLibrary::LookupFile(DWORD nIndex, BOOL bSharedOnly, BOOL bAvailableOnly)
+CLibraryFile* CLibrary::LookupFile(DWORD_PTR nIndex, BOOL bSharedOnly, BOOL bAvailableOnly) const
 {
 	return LibraryMaps.LookupFile( nIndex, bSharedOnly, bAvailableOnly );
 }
