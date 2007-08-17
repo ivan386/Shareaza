@@ -1738,12 +1738,13 @@
 #define ID_MEDIA_STATE_STOP             33200
 #define ID_MEDIA_STATE_PAUSE            33201
 #define ID_MEDIA_STATE_PLAY             33202
+#define AFX_IDS_IDLEMESSAGE             57345
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                     1
+#define _APS_3D_CONTROLS                1
 #define _APS_NEXT_RESOURCE_VALUE        287
 #define _APS_NEXT_COMMAND_VALUE         33138
 #define _APS_NEXT_CONTROL_VALUE         1535

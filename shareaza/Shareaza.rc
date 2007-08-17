@@ -4607,6 +4607,10 @@ END
 STRINGTABLE 
 BEGIN
     IDS_NETWORK_UPNP_FAILED "UPnP port mapping failed after 10 attempts."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_NETWORK_STARTUP     "Starting Shareaza network core..."
     IDS_NETWORK_CANT_LISTEN "Can't bind to %s port %i for incoming connections.  Incoming connections will not be supported."
     IDS_NETWORK_DISCONNECTING "Shutting down Shareaza network core..."
@@ -5857,6 +5861,7 @@ END
 STRINGTABLE 
 BEGIN
     AFX_IDS_APP_TITLE       "Shareaza"
+    AFX_IDS_IDLEMESSAGE     "Ready"
 END
 
 STRINGTABLE 
