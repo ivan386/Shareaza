@@ -1,7 +1,7 @@
 //
 // DlgGraphList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -117,7 +117,7 @@ BOOL CGraphListDlg::OnInitDialog()
 
 CLiveItem* CGraphListDlg::PrepareItem(CGraphItem* pItem)
 {
-	CLiveItem* pLive = new CLiveItem( LIST_COLUMNS, (DWORD)pItem );
+	CLiveItem* pLive = new CLiveItem( LIST_COLUMNS, reinterpret_cast< DWORD_PTR>( pItem ) );
 	pLive->m_nImage = I_IMAGECALLBACK;
 
 	pLive->Set( 0, pItem->m_sName );

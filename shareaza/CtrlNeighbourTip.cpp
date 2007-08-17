@@ -1,7 +1,7 @@
 //
 // CtrlNeighbourTip.cpp : implementation file
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,7 +69,7 @@ BOOL CNeighbourTipCtrl::OnPrepare()
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return FALSE;
 
-	CNeighbour* pNeighbour = Neighbours.Get( (DWORD)m_pContext );
+	CNeighbour* pNeighbour = Neighbours.Get( reinterpret_cast< DWORD_PTR >( m_pContext ) );
 	if ( pNeighbour == NULL ) return FALSE;
 
 	CalcSizeHelper();
@@ -103,7 +103,7 @@ void CNeighbourTipCtrl::OnHide()
 
 void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 {
-	CNeighbour* pNeighbour = Neighbours.Get( (DWORD)m_pContext );
+	CNeighbour* pNeighbour = Neighbours.Get( reinterpret_cast< DWORD_PTR>( m_pContext ) );
 	CString str;
 
 	if ( pNeighbour->m_pProfile && pNeighbour->m_pProfile->IsValid() )
@@ -173,7 +173,7 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
 
-	CNeighbour* pNeighbour = Neighbours.Get( (DWORD)m_pContext );
+	CNeighbour* pNeighbour = Neighbours.Get( reinterpret_cast< DWORD_PTR>( m_pContext ) );
 	if ( pNeighbour == NULL ) return;
 
 	CPoint pt( 0, 0 );
@@ -377,7 +377,7 @@ void CNeighbourTipCtrl::OnTimer(UINT_PTR nIDEvent)
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
 
-	CNeighbour* pNeighbour = Neighbours.Get( (DWORD)m_pContext );
+	CNeighbour* pNeighbour = Neighbours.Get( reinterpret_cast< DWORD_PTR>( m_pContext ) );
 	if ( pNeighbour == NULL ) return;
 
 	pNeighbour->Measure();
