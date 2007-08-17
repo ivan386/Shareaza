@@ -1,7 +1,7 @@
 //
 // BENode.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -341,6 +341,61 @@ void CBENode::Encode(CBuffer* pBuffer) const
 	{
 		ASSERT( FALSE );
 	}
+}
+
+const CString CBENode::Encode() const
+{
+	CString sOutput, sTmp;
+	switch ( m_nType )
+	{
+	case beNull:
+		sOutput += _T("(null)");
+		break;
+	case beString:
+		{
+			sOutput += _T('\"');
+			for ( QWORD n = 0; n < m_nValue; n++ )
+				sOutput += ( ( ( (LPSTR)m_pValue )[ n ] < ' ' ) ?
+				'.' : ( (LPSTR)m_pValue )[ n ] );
+			sOutput += _T('\"');
+			sTmp.Format( _T("[%I64i]"), m_nValue );
+			sOutput += sTmp;
+		}
+		break;
+	case beInt:
+		sTmp.Format( _T("%I64i"), m_nValue );
+		sOutput += sTmp;
+		break;
+	case beList:
+		sOutput += _T("{ ");
+		{
+			CBENode** pNode = (CBENode**)m_pValue;
+			for (QWORD n = 0 ; n < m_nValue ; n++, pNode++ )
+			{
+				if ( n )
+					sOutput += _T(", ");
+				sOutput += (*pNode)->Encode();
+			}
+		}
+		sOutput += _T(" }");
+		break;
+	case beDict:
+		sOutput += _T("{ ");
+		{
+			CBENode** pNode = (CBENode**)m_pValue;
+			for (QWORD n = 0 ; n < m_nValue ; n++, pNode += 2 )
+			{
+				if ( n )
+					sOutput += _T(", ");
+				sTmp.Format( _T("\"%s\" = "), CA2T( (LPCSTR)( *( pNode + 1 ) ) ) );
+				sOutput += sTmp;
+				sOutput += (*pNode)->Encode();
+			}
+		}
+		sOutput += _T(" }");
+		break;
+	}
+	return sOutput;
 }
 
 #define INC(x) { pInput += (x); nInput -= (x); }

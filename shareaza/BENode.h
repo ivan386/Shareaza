@@ -1,7 +1,7 @@
 //
 // BENode.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -167,7 +167,7 @@ public:
 		SetString( psz, strlen(psz), TRUE );
 	}
 	
-	void SetString(LPCWSTR psz)
+	inline void SetString(LPCWSTR psz)
 	{
 		USES_CONVERSION;
 		LPCSTR pszASCII = W2CA(psz);
@@ -201,6 +201,9 @@ public:
 		if ( nItem < 0 || nItem >= (int)m_nValue ) return NULL;
 		return *( (CBENode**)m_pValue + nItem );
 	}
+
+	// Encode node to human readable string
+	const CString Encode() const;
 };
 
 #endif // !defined(AFX_BENODE_H__8E447816_68F5_461A_A032_09A0CB97F3CB__INCLUDED_)
