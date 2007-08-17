@@ -47,6 +47,7 @@ protected:
 	CBrowseProfileCtrl	m_wndProfile;
 	CBrowseFrameCtrl	m_wndFrame;
 	BOOL				m_bOnFiles;
+	BOOL				m_bAutoBrowse;
 
 // Operations
 public:
