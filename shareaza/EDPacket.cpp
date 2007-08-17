@@ -1,7 +1,7 @@
 //
 // EDPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -159,7 +159,7 @@ CEDPacket* CEDPacket::ReadBuffer(CBuffer* pBuffer, BYTE nEdProtocol)
 	ED2K_TCP_HEADER* pHeader = reinterpret_cast<ED2K_TCP_HEADER*>(pBuffer->m_pBuffer);
 	if ( pHeader->nProtocol != ED2K_PROTOCOL_EDONKEY &&
 		 pHeader->nProtocol != ED2K_PROTOCOL_EMULE &&
-		 pHeader->nProtocol != ED2K_PROTOCOL_PACKED ) return NULL;
+		 pHeader->nProtocol != ED2K_PROTOCOL_EMULE_PACKED ) return NULL;
 	if ( pBuffer->m_nLength - sizeof(*pHeader) + 1 < pHeader->nLength ) return NULL;
 	CEDPacket* pPacket = CEDPacket::New( pHeader );
 	pBuffer->Remove( sizeof(*pHeader) + pHeader->nLength - 1 );
@@ -184,7 +184,7 @@ BOOL CEDPacket::Deflate()
 	if ( nOutput >= m_nLength )
 		return FALSE;
 
-	m_nEdProtocol = ED2K_PROTOCOL_PACKED;
+	m_nEdProtocol = ED2K_PROTOCOL_EMULE_PACKED;
 
 	memcpy( m_pBuffer, pOutput.get(), nOutput );
 	m_nLength = nOutput;
@@ -194,7 +194,10 @@ BOOL CEDPacket::Deflate()
 
 BOOL CEDPacket::InflateOrRelease(BYTE nEdProtocol)
 {
-	if ( m_nEdProtocol != ED2K_PROTOCOL_PACKED ) return FALSE;
+	if ( m_nEdProtocol != ED2K_PROTOCOL_EMULE_PACKED &&
+		 m_nEdProtocol != ED2K_PROTOCOL_KAD_PACKED &&
+		 m_nEdProtocol != ED2K_PROTOCOL_REVCONNECT_PACKED )
+		return FALSE;
 
 	DWORD nOutput = 0;
 	auto_array< BYTE > pOutput( CZLib::Decompress( m_pBuffer, m_nLength, &nOutput ) );

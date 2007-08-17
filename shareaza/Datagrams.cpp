@@ -654,7 +654,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 	if ( nLength > sizeof(*pMULE) && (
 		 pMULE->nProtocol == ED2K_PROTOCOL_EDONKEY ||
 		 pMULE->nProtocol == ED2K_PROTOCOL_EMULE ||
-		 pMULE->nProtocol == ED2K_PROTOCOL_PACKED ) )
+		 pMULE->nProtocol == ED2K_PROTOCOL_EMULE_PACKED ) )
 	{
 		CEDPacket* pPacket = CEDPacket::New( pMULE, nLength );
 

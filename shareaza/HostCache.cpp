@@ -633,7 +633,9 @@ int CHostCacheList::ImportMET(CFile* pFile)
 {
 	BYTE nVersion = 0;
 	pFile->Read( &nVersion, sizeof(nVersion) );
-	if ( nVersion != 0xE0 && nVersion != 0x0E ) return FALSE;
+	if ( nVersion != 0xE0 &&
+		 nVersion != ED2K_MET &&
+		 nVersion != ED2K_MET_I64TAGS ) return FALSE;
 	
 	int nServers = 0;
 	UINT nCount = 0;

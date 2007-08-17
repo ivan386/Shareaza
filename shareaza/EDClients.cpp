@@ -360,6 +360,10 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 // UDP packet received
 BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 {
+	if ( pPacket->m_nEdProtocol != ED2K_PROTOCOL_EDONKEY &&
+		 pPacket->m_nEdProtocol != ED2K_PROTOCOL_EMULE )
+		 return FALSE;
+
 	CSingleLock pLock( &Transfers.m_pSection );
 	
 	switch ( pPacket->m_nType )

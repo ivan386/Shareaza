@@ -1,7 +1,7 @@
 //
 // EDPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,12 +66,20 @@ typedef struct
 	LPCTSTR	pszName;
 } ED2K_PACKET_DESC;
 
-#define	ED2K_VERSION			0x3D
-#define ED2K_PROTOCOL_EDONKEY	0xE3
-#define ED2K_PROTOCOL_PACKED	0xD4
-#define ED2K_PROTOCOL_EMULE		0xC5
-#define ED2K_PROTOCOL_MLDONKEY	0x00
-#define	ED2K_PROTOCOL_MET		0x0E
+#define	ED2K_VERSION					0x3D
+
+#define ED2K_PROTOCOL_EDONKEY			0xE3	// eDonkey, Overnet, MLDonkey and other
+#define ED2K_PROTOCOL_KAD				0xE4	// eMule KAD
+#define ED2K_PROTOCOL_KAD_PACKED		0xE5	// eMule KAD compressed
+#define ED2K_PROTOCOL_REVCONNECT		0xD0	// RevConnect KAD
+#define ED2K_PROTOCOL_REVCONNECT_PACKED	0xD1	// RevConnect KAD compressed
+#define ED2K_PROTOCOL_EMULE_PACKED		0xD4	// eMule compressed
+#define ED2K_PROTOCOL_EMULE				0xC5	// eMule
+//#define ED2K_PROTOCOL_MLDONKEY		0x00
+//#define ED2K_PROTOCOL_LANCAST			0xC6	// eMule Plus LANCast
+
+#define ED2K_MET						0x0E	// First byte of .met-file
+#define ED2K_MET_I64TAGS				0x0F	// First byte of .met-file with "Large File" support
 
 class CBuffer;
 
@@ -97,6 +105,8 @@ public:
 	CString				ReadLongEDString(BOOL bUnicode);
 	void				WriteLongEDString(LPCTSTR psz, BOOL bUnicode);
 	BOOL				Deflate();
+	// Unzip packet if any.
+	//	Returns: FALSE - ok; TRUE - unzip error and packed was released
 	BOOL				InflateOrRelease(BYTE nEdProtocol);
 public:
 	virtual	void		ToBuffer(CBuffer* pBuffer) const;
