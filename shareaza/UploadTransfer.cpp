@@ -190,7 +190,10 @@ DWORD CUploadTransfer::GetMaxSpeed() const
 
 DWORD CUploadTransfer::GetMeasuredSpeed()
 {
-	Measure();
+	// Calculate Output
+	MeasureOut();
+
+	// Return calculated speed
 	return m_mOutput.nMeasure;
 }
 

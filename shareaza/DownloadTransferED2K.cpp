@@ -164,8 +164,13 @@ DWORD CDownloadTransferED2K::GetAverageSpeed()
 
 DWORD CDownloadTransferED2K::GetMeasuredSpeed()
 {
+	// Return if there is no client
 	if ( m_pClient == NULL ) return 0;
-	m_pClient->Measure();
+
+	// Calculate Input
+	m_pClient->MeasureIn();
+
+	// Return calculated speed
 	return m_pClient->m_mInput.nMeasure;
 }
 

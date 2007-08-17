@@ -183,9 +183,12 @@ DWORD CDownloadTransferFTP::GetAverageSpeed()
 
 DWORD CDownloadTransferFTP::GetMeasuredSpeed()
 {
-	Measure();
-	m_LIST.Measure();
-	m_RETR.Measure();
+	// Calculate Input
+	MeasureIn();		
+	m_LIST.MeasureIn();
+	m_RETR.MeasureIn();
+
+	// Return calculated speed
 	return m_mInput.nMeasure + m_LIST.m_mInput.nMeasure + m_RETR.m_mInput.nMeasure;
 }
 

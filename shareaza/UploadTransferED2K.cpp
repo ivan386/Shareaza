@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -314,8 +314,13 @@ void CUploadTransferED2K::OnQueueKick()
 
 DWORD CUploadTransferED2K::GetMeasuredSpeed()
 {
+	// Return if there is no client
 	if ( m_pClient == NULL ) return 0;
-	m_pClient->Measure();
+
+	// Calculate Output
+	m_pClient->MeasureOut();
+
+	// Return calculated speed
 	return m_pClient->m_mOutput.nMeasure;
 }
 
