@@ -227,7 +227,6 @@ void CDatagrams::Disconnect()
 	m_nInBandwidth	= m_nInFrags	= m_nInPackets	= 0;
 	m_nOutBandwidth	= m_nOutFrags	= m_nOutPackets	= 0;
 	m_bStable = FALSE;
-
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -350,8 +349,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 	pPacket->SmartDump( pHost, TRUE, TRUE );
 
 #ifdef DEBUG_UDP
-	pPacket->Debug( _T("UDP Out") );
-	theApp.Message( MSG_DEBUG, _T("UDP: Queued (#%i) x%i for %s:%lu"),
+	theApp.Message( MSG_DEBUG, _T("UDP: Queued SGP (#%i) x%i for %s:%lu"),
 		pDG->m_nSequence, pDG->m_nCount,
 		(LPCTSTR)CString( inet_ntoa( pDG->m_pHost.sin_addr ) ),
 		htons( pDG->m_pHost.sin_port ) );
@@ -708,7 +706,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLength)
 {
 #ifdef DEBUG_UDP
-	theApp.Message( MSG_DEBUG, _T("UDP: Received (#%i) %i of %i from %s"),
+	theApp.Message( MSG_DEBUG, _T("UDP: Received SGP (#%i) %i of %i from %s"),
 		pHeader->nSequence, pHeader->nPart, pHeader->nCount,
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 #endif
@@ -836,7 +834,7 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 BOOL CDatagrams::OnAcknowledgeSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD /*nLength*/)
 {
 #ifdef DEBUG_UDP
-	theApp.Message( MSG_DEBUG, _T("UDP: Received ack (#%i) %i from %s"),
+	theApp.Message( MSG_DEBUG, _T("UDP: Received SGP ack (#%i) %i from %s"),
 		pHeader->nSequence, pHeader->nPart, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 #endif
 
@@ -929,6 +927,7 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),pHost->sin_port );
 
 	m_nInPackets++;
+
 	switch ( pPacket->m_nType )
 	{
 		case G1_PACKET_PING:		return OnPing( pHost, pPacket );			// Ping
