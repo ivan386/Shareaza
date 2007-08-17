@@ -1,7 +1,7 @@
 //
 // Connection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,68 +31,51 @@
 
 // Tell the compiler these classes exist, and it will find out more about them soon
 class CBuffer;
-class CConnection;
-
-// Keep track of how fast we are reading or writing bytes to a socket
-typedef struct
-{
-	// Options to limit bandwidth
-	DWORD* pLimit;			// Points to a DWORD that holds the limit for this bandwidth meter
-
-	// Transfer statistics
-	DWORD	nTotal;			// The total number of bytes read or written
-	DWORD	tLast;			// The time the last read or write happened
-	DWORD	nMeasure;		// The average speed in bytes per second over the last 6 seconds (see METER_PERIOD)
-
-	// The arrays of byte counts and times
-	DWORD	pHistory[64];	// 64 records of a number of bytes transferred
-	DWORD	pTimes[64];		// The times each of these transfers happened
-	DWORD	nPosition;		// The next spot in the array to use
-	DWORD	tLastAdd;		// When we last recorded a transfer of some bytesThe last time something was recorded into pHistory and pTimes
-	DWORD	tLastSlot;		// When we started using this time slot
-
-} TCPBandwidthMeter;
 
 // A socket connection to a remote compueter on the Internet running peer-to-peer software
 class CConnection
 {
 
+// Construction
 public:
-
-	// Make a new CConnection object, and delete one
 	CConnection();
 	CConnection(CConnection& other);
 	virtual ~CConnection();
 
+// Attributes
 public:
-
 	// The remote computer's IP address, who connected to the other, are we connected, and when it happened
-	SOCKADDR_IN m_pHost;        // The remote computer's IP address in Windows Sockets format
-	CString     m_sAddress;     // The same IP address in a string like "1.2.3.4"
-	CString		m_sCountry;     // The two letter country code of this host
-	CString		m_sCountryName; // The full name of the country
-	BOOL        m_bInitiated;   // True if we initiated the connection, false if the remote computer connected to us
-	BOOL        m_bConnected;   // True when the socket is connected
-	DWORD       m_tConnected;   // The tick count when the socket connection was made
-
-public:
+	SOCKADDR_IN	m_pHost;		// The remote computer's IP address in Windows Sockets format
+	CString		m_sAddress;		// The same IP address in a string like "1.2.3.4"
+	CString		m_sCountry;		// The two letter country code of this host
+	CString		m_sCountryName;	// The full name of the country
+	BOOL		m_bInitiated;	// True if we initiated the connection, false if the remote computer connected to us
+	BOOL		m_bConnected;	// True when the socket is connected
+	DWORD		m_tConnected;	// The tick count when the socket connection was made
 
 	// The actual socket, buffers for reading and writing bytes, and some headers from the other computer
-	SOCKET   m_hSocket;     // The actual Windows socket for the Internet connection to the remote computer
-	CBuffer* m_pInput;      // Data from the remote computer, will be compressed if the remote computer is sending compressed data
-	CBuffer* m_pOutput;     // Data to send to the remote computer, will be compressed if we are sending the remote computer compressed data
-	CString  m_sUserAgent;  // The name of the program the remote computer is running
-	CString  m_sLastHeader; // The handshake header that ReadHeaders most recently read
+	SOCKET		m_hSocket;		// The actual Windows socket for the Internet connection to the remote computer
+	CBuffer*	m_pInput;		// Data from the remote computer, will be compressed if the remote computer is sending compressed data
+	CBuffer*	m_pOutput;		// Data to send to the remote computer, will be compressed if we are sending the remote computer compressed data
+	CString		m_sUserAgent;	// The name of the program the remote computer is running
+	CString		m_sLastHeader;	// The handshake header that ReadHeaders most recently read
+	int			m_nQueuedRun;	// The queued run state of 0, 1, or 2 (do)
 
+// Operations
 public:
+	// Exchange data with the other computer, measure bandwidth, and work with headers
+	BOOL DoRun();			// Communicate with the other computer, reading and writing everything we can right now
+	void QueueRun();		// (do) may no longer be in use
+	void Measure();			// Measure the bandwidth, setting nMeasure in the bandwidth meters for each direction
+	void MeasureIn();		// Measure the incoming bandwidth, setting nMeasure in the bandwidth meter
+	void MeasureOut();		// Measure the outgoing bandwidth, setting nMeasure in the bandwidth meter
+	BOOL ReadHeaders();		// Read text headers sitting in the input buffer
+	BOOL SendMyAddress();	// If we are listening on a port, tell the other computer our IP address and port number
+	BOOL IsAgentBlocked();	// Check the other computer's software title against our list of programs not to talk to
+	void UpdateCountry();	// Call whenever the IP address is set
 
-	// Structures to control bandwidth in each direction
-	TCPBandwidthMeter m_mInput;     // Input and output TCP bandwidth meters
-	TCPBandwidthMeter m_mOutput;
-	int               m_nQueuedRun; // The queued run state of 0, 1, or 2 (do)
-
+// Overrides
 public:
-
 	// Make a connection, accept a connection, copy a connection, and close a connection
 	virtual BOOL ConnectTo(SOCKADDR_IN* pHost);                  // Connect to an IP address and port number
 	virtual BOOL ConnectTo(IN_ADDR* pAddress, WORD nPort);
@@ -100,19 +83,7 @@ public:
 	virtual void AttachTo(CConnection* pConnection);             // Copy a connection (do)
 	virtual void Close();                                        // Disconnect from the remote computer
 
-public:
-
-	// Exchange data with the other computer, measure bandwidth, and work with headers
-	BOOL DoRun();          // Communicate with the other computer, reading and writing everything we can right now
-	void QueueRun();       // (do) may no longer be in use
-	void Measure();        // Measure the bandwidth, setting nMeasure in the bandwidth meters for each direction
-	BOOL ReadHeaders();    // Read text headers sitting in the input buffer
-	BOOL SendMyAddress();  // If we are listening on a port, tell the other computer our IP address and port number
-	BOOL IsAgentBlocked(); // Check the other computer's software title against our list of programs not to talk to
-	
-	void UpdateCountry();  // Call whenever the IP address is set
 protected:
-
 	// Read and write data through the socket, and look at headers
 	virtual BOOL OnRun();                // (do) just returns true
 	virtual BOOL OnConnected();          // (do) just returns true
@@ -123,13 +94,48 @@ protected:
 	virtual BOOL OnHeadersComplete();    // (do) just returns true
 
 public:
-
 	// Encode and decode URL text, and see if a string starts with a tag
 	static CString URLEncode(LPCTSTR pszInput);                   // Encode "hello world" into "hello%20world"
 	static CString URLDecode(LPCTSTR pszInput);                   // Decode "hello%20world" back to "hello world"
 	static CString URLDecodeANSI(LPCTSTR pszInput);               // Decodes properly encoded URLs
 	static CString URLDecodeUnicode(LPCTSTR pszInput);            // Decodes URLs with extended characters
 	static BOOL    StartsWith(LPCTSTR pszInput, LPCTSTR pszText); // StartsWith("hello world", "hello") is true
+
+	// Hard-coded settings for socket data transfer
+	static const DWORD	TEMP_BUFFER_SIZE = 1024ul * 10ul;	// 10KB local buffer for data
+
+	// Hard-coded settings for the bandwidth transfer meter
+	static const DWORD	METER_SECOND	= 1000ul;						// 1000 milliseconds is 1 second
+	static const DWORD	METER_MINIMUM	= METER_SECOND / 10ul;			// Granuality of bandwidth meter, 1/10th of a second
+	static const DWORD	METER_LENGTH	= 60ul;							// Number of slots in the bandwidth meter
+	static const DWORD	METER_PERIOD	= METER_MINIMUM * METER_LENGTH;	// The time that the bandwidth meter keeps information for
+
+	// Keep track of how fast we are reading or writing bytes to a socket
+	typedef struct
+	{
+		// Options to limit bandwidth
+		DWORD*	pLimit;		// Points to a DWORD that holds the limit for this bandwidth meter
+
+		// Transfer statistics
+		DWORD	nTotal;		// The total number of bytes read or written
+		DWORD	tLast;		// The time the last read or write happened
+		DWORD	nMeasure;	// The average speed in bytes per second over the last METER_PERIOD
+
+		// The arrays of byte counts and times
+		DWORD			pHistory[METER_LENGTH];	// Records of a number of bytes transferred
+		DWORD			pTimes[METER_LENGTH];	// The times each of these transfers happened
+		DWORD			nPosition;				// The next spot in the array to use
+		mutable DWORD	tLastAdd;				// When we last calculated the limit
+		DWORD			tLastSlot;				// When we started using this time slot
+
+		DWORD	CalculateLimit (DWORD tNow, bool bMaxMode = true) const;	// Work out the limit
+		DWORD	CalculateUsage (DWORD tTime) const;							// Work out the meter usage from a given time
+		void	Add(const DWORD nBytes, const DWORD tNow);					// Add to History and Time arrays
+	} TCPBandwidthMeter;
+
+	// Structures to control bandwidth in each direction
+	TCPBandwidthMeter m_mInput;		// Input TCP bandwidth meter
+	TCPBandwidthMeter m_mOutput;	// Output TCP bandwidth meter
 };
 
 // End the group of lines to only include once, pragma once doesn't require an endif at the bottom

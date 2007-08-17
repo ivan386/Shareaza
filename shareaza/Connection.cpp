@@ -39,15 +39,6 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-// Hard-coded settings for socket data transfer
-#define TEMP_BUFFER 10240u // Transfer data between the socket and a local 10 KB buffer of space
-
-// Hard-coded settings for the bandwidth transfer meter
-#define METER_SECOND  1000  // Used by the bandwidth transfer meter, 1000 milliseconds is 1 second
-#define METER_MINIMUM 100   // If the current slot is less than a tenth of a second old, record more bytes transferred there
-#define METER_LENGTH  64    // Number of slots in the bandwidth meter, used to be 24, now 64
-#define METER_PERIOD  6000  // The bandwidth meter holds onto information for 6 seconds, used to be 2000, now 6000
-
 //////////////////////////////////////////////////////////////////////
 // CConnection construction
 
@@ -194,7 +185,7 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 		NULL, NULL, NULL, NULL ) )	// No advanced features
 	{
 		// If no error occurs, WSAConnect returns 0, so if we're here an error happened
-		UINT nError = WSAGetLastError(); // Get the last Windows Sockets error number
+		int nError = WSAGetLastError(); // Get the last Windows Sockets error number
 
 		// An error of "would block" is normal because connections can't be made instantly and this is a non-blocking socket
 		if ( nError != WSAEWOULDBLOCK )
@@ -417,7 +408,7 @@ BOOL CConnection::OnConnected()
 }
 
 // Objects that inherit from CConnection have OnDropped methods that do things, unlike this one
-void CConnection::OnDropped(BOOL) // Changed from BOOL bError (do)
+void CConnection::OnDropped(BOOL /*bError*/)
 {
 	// Do nothing
 }
@@ -438,115 +429,53 @@ BOOL CConnection::OnRead()
 	// Make sure the socket is valid
 	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
 
-	// Setup local variables
-	BYTE pData[TEMP_BUFFER];			// Make a 10 KB data buffer called pData
 	DWORD tNow		= GetTickCount();	// The time right now
-	DWORD nLimit	= 0xFFFFFFFF;		// Make the limit huge
-	DWORD nTotal	= 0;				// Start the total at 0
+	DWORD nLimit	= ~0ul;				// Make the limit huge
 
 	// If we need to worry about throttling bandwidth, calculate nLimit, the number of bytes we are allowed to read now
-	DWORD* pInputLimit = m_mInput.pLimit;
-	if ( pInputLimit							// If the input bandwidth meter points to a limit
-		&& *pInputLimit							// And that limit isn't 0
-		&& ( Settings.Live.BandwidthScale <= 100 ) )// And either the bandwidth meter in program settings is (do)
+	if ( m_mInput.pLimit							// If there is a limit
+		&& *m_mInput.pLimit							// And that limit isn't 0
+		&& Settings.Live.BandwidthScale <= 100 )	// And the bandwidth scale isn't at MAX
 	{
-		// tCutoff is the tick count 1 second ago
-		DWORD tCutoff = tNow - METER_SECOND; // METER_SECOND is 1 second
-
-		// nLimit is the number of bytes we've read in the last second
-		// Loop across the times and histories stored in the input bandwidth meter
-		// Granularity is 1/10th of a second, so at the most we only need to read
-		// 12 records instead of all of them
-		nLimit = 0;										// Count up the limit from 0
-		DWORD slot = METER_LENGTH;						// Start at the last slot
-		while ( slot-- )
-		{
-			if ( m_mInput.pTimes[ slot ] >= tCutoff )	// Is this within the last second
-				nLimit += m_mInput.pHistory[ slot ];	//   It was, add it to the limit
-			else if ( slot > m_mInput.nPosition )		// It wasn't, did we start with the latest reading
-				slot = m_mInput.nPosition + 1;			//   We didn't, jump to our latest reading and continue
-			else
-				break;									//   We did, no need to check the rest
-		}
-
-		// nActual is the speed limit, set by the input bandwidth meter and the bandwidth scale in settings
-		DWORD nActual = *pInputLimit; // Get the speed limit from the input bandwidth meter
-		if ( Settings.Live.BandwidthScale < 100 ) // The scale is turned down and we should use it
-		{
-			// Adjust actual based on the scale
-			nActual = nActual * Settings.Live.BandwidthScale / 100; // If the settings scale is 50, this cuts actual in half
-		}
-
-		// tCutoff is the number of bytes we can read now, multiply the speed limit with the elapsed time to get it
-		tCutoff = nActual * ( tNow - m_mInput.tLastAdd ) / 1000; // Subtract tick counts and divide by 1000 to get seconds
-		m_mInput.tLastAdd = tNow; // Record that the last add in the input bandwidth meter happened now
-
-		// nActual is the speed limit in bytes per second
-		// nLimit is how many bytes we read in the last second
-		// So, nActual - nLimit is the number of bytes we can still read this second
-		// Set nLimit to this, or 0 if we're over the limit
-		nLimit = ( nLimit >= nActual ) ? 0 : ( nActual - nLimit );
-
-		// If the cutoff is even more restrictive than the limit, make it the limit instead
-		// nLimit = speed limit in bytes per second - bytes we read in the last second
-		// tCutoff = speed limit in bytes per second * elapsed time
-		nLimit = min( nLimit, tCutoff );
+		// Work out what the bandwitdh limit is
+		nLimit = m_mInput.CalculateLimit( tNow );
 	}
 
-	// Loop until the limit has run out
+	char pData[TEMP_BUFFER_SIZE]	= "";	// Make a temp buffer
+	DWORD nTotal					= 0ul;	// Start the total at 0
+
+	// Read bytes from the socket until the limit has run out
 	while ( nLimit )
 	{
-		// Set nLength to nLimit or 4 KB, whichever is smaller
-		int nLength = min( ( nLimit & 0xFFFFF ), TEMP_BUFFER );
+		// Limit nLength to the size of the temp buffer
+		int nLength = static_cast< int >( min( nLimit, TEMP_BUFFER_SIZE ) );
 
 		// Read the bytes from the socket
 		nLength = recv(		// nLength is the number of bytes we received from the socket
 			m_hSocket,		// Use the socket in this CConnection object
-			(char*)pData,	// Tell recv to write the data here
+			pData,			// Tell recv to write the data here
 			nLength,		// The size of the buffer, and how many bytes recv should write there
 			0 );			// No special options
-		if ( nLength <= 0 ) break; // Loop until nothing is left or an error occurs
 
-		// Record the time of this read in the input bandwidth meter
-		m_mInput.tLast = tNow;
+		// Exit loop if nothing is left or an error occurs
+		if ( nLength <= 0 ) break;
 
-		// If the length is positive and up to 4 KB
-		if ( nLength > 0 && nLength <= TEMP_BUFFER )
-		{
-			// Add the data to the input buffer in the connection object
-			m_pInput->Add( pData, nLength );
-		}
-
-		// Include these new bytes in the total
-		nTotal += nLength;
-
-		// If we are keeping track of the limit, subtract the bytes we just read from it
-		if ( nLimit != 0xFFFFFFFF ) nLimit -= nLength;
+		m_pInput->Add( pData, static_cast< UINT >( nLength ) );	// Add data to the input buffer
+		nTotal += nLength;										// Add to the total
+		nLimit -= nLength;										// Adjust the limit
 	}
 
-	// If we are keeping track of history and we just read some bytes
-	if ( m_mInput.pHistory && nTotal )
+	// If some bytes were read
+	if ( nTotal )
 	{
-		// If it's less than 1/10 of a second since we last wrote some history information
-		if ( tNow - m_mInput.tLastSlot < METER_MINIMUM )
-		{
-			// Use the same place in the array as before
-			m_mInput.pHistory[ m_mInput.nPosition ] += nTotal;
+		// Add # bytes to bandwidth meter
+		m_mInput.Add( nTotal, tNow );
 
-		} // It's been more than a tenth of a second since we last recorded a read
-		else
-		{
-			// Store the time and total in a new array slot
-			m_mInput.nPosition = ( m_mInput.nPosition + 1 ) % METER_LENGTH;	// Move to the next position in the array
-			m_mInput.pTimes[ m_mInput.nPosition ] = tNow;					// Record the new time
-			m_mInput.pHistory[ m_mInput.nPosition ]	= nTotal;				// Store the bytes read next to it
-			m_mInput.tLastSlot = tNow;										// We just wrote some history information
-		}
+		// Add the total to statistics
+		Statistics.Current.Bandwidth.Incoming += nTotal;
 	}
 
-	// Add the bytes we read to the total in the bandwidth meter and the total in statistics
-	m_mInput.nTotal += nTotal;
-	Statistics.Current.Bandwidth.Incoming += nTotal;
+	// Report success
 	return TRUE;
 }
 
@@ -556,136 +485,61 @@ BOOL CConnection::OnRead()
 // Call to send the contents of the output buffer to the remote computer
 BOOL CConnection::OnWrite()
 {
-	// Make sure the socket is valid and there is something to send
+	// Make sure the socket is valid
 	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
-	if ( m_pOutput->m_nLength == 0 ) return TRUE; // There is nothing to send, so we succeed without doing anything
 
-	// Setup local variables
+	// If there is nothing to send, we succeed without doing anything
+	if ( m_pOutput->m_nLength == 0 ) return TRUE;
+
 	DWORD tNow		= GetTickCount();	// The time right now
-	DWORD nLimit	= 0xFFFFFFFF;		// Make the limit huge
+	DWORD nLimit	= ~0ul;				// Make the limit huge
 
 	// If we need to worry about throttling bandwidth, calculate nLimit, the number of bytes we are allowed to write now
-	DWORD* pOutputLimit =  m_mOutput.pLimit;
-	if ( pOutputLimit							// If the output bandwidth meter points to a limit
-		&& *pOutputLimit						// And that limit isn't 0
-		&& ( Settings.Live.BandwidthScale <= 100 ) )// And either the bandwidth meter in program settings is (do)
+	if ( m_mOutput.pLimit							// If there is a limit
+		&& *m_mOutput.pLimit						// And that limit isn't 0
+		&& Settings.Live.BandwidthScale <= 100 )	// And the bandwidth scale isn't at MAX
 	{
-		// tCutoff is the tick count 1 second ago
-		DWORD tCutoff = tNow - METER_SECOND; // METER_SECOND is 1 second
-
-		// nUsed is the number of bytes we've written in the last second
-		// This part of the code has been translated into assembly language to make it faster
-		// Here is the assembly language which does the same thing
-#ifdef SHAREAZA_USE_ASM
-		DWORD nUsed;
-		__asm
-		{
-			mov		ecx, this
-			mov		ebx, -METER_LENGTH
-			mov		edx, tCutoff
-			xor		eax, eax
-_loop:		cmp		edx, [ ecx + ebx * 4 ]CConnection.m_mOutput.pTimes + METER_LENGTH * 4
-			jnbe	_ignore
-			add		eax, [ ecx + ebx * 4 ]CConnection.m_mOutput.pHistory + METER_LENGTH * 4
-_ignore:	inc		ebx
-			jnz		_loop
-			mov		nUsed, eax
-		}
-#else
-		DWORD nUsed = 0;
-		for ( std::ptrdiff_t slot = -METER_LENGTH; slot; ++slot )
-		{
-			if ( m_mOutput.pTimes[ METER_LENGTH + slot ] >= tCutoff )
-				nUsed += m_mOutput.pHistory[ METER_LENGTH + slot ];
-		}
-#endif
-		// nLimit is the speed limit, set by the output bandwidth meter and the bandwidth scale in settings
-		nLimit = *pOutputLimit; // Get the speed limit from the output bandwidth meter
-		if ( Settings.Live.BandwidthScale < 100 ) // The scale is turned down and we should use it
-		{
-			// Adjust the limit lower based on the scale
-			nLimit = nLimit * Settings.Live.BandwidthScale / 100;
-		}
-
-		// The program is running in throttle mode
-		if ( Settings.Uploads.ThrottleMode )
-		{
-			// Set nLimit to the remaining bytes we're allowd to write this second
-			nLimit = ( nUsed >= nLimit ) ? 0 : ( nLimit - nUsed );
-
-		} // The program is not running in throttle mode
-		else
-		{
-			// tCutoff is the number of bytes we can write now, multiply the speed limit with the elapsed time to get it
-			tCutoff = nLimit * ( tNow - m_mOutput.tLastAdd ) / 1000;
-
-			// Set nLimit to the remaining bytes we're allowd to write this second
-			nLimit = ( nUsed >= nLimit ) ? 0 : ( nLimit - nUsed );
-
-			// If the cutoff is even more restrictive than the limit, make it the limit instead
-			// nLimit = speed limit in bytes per second - bytes we read in the last second
-			// tCutoff = speed limit in bytes per second * elapsed time
-			nLimit = min( nLimit, tCutoff );
-
-			// Record that the last add in the input bandwidth meter happened now
-			m_mOutput.tLastAdd = tNow;
-		}
+		// Work out what the bandwitdh limit is
+		nLimit = m_mOutput.CalculateLimit( tNow, Settings.Uploads.ThrottleMode == 0 );
 	}
 
-	// Point pBuffer at the start of the output buffer, and set nBuffer to its length
-	BYTE* pBuffer = m_pOutput->m_pBuffer;
-	DWORD nBuffer = m_pOutput->m_nLength;
+	// Adjust limit if there isn't enough data to send
+	nLimit = min( nLimit, m_pOutput->m_nLength );
 
-	// Loop while we're under our limit and there are still bytes to write
-	while ( nLimit && nBuffer )
+	char* pData		= reinterpret_cast< char* >( m_pOutput->m_pBuffer );	// Point to the data to write
+	DWORD nTotal	= 0ul;													// Start the total at 0
+
+	// Write bytes to the socket until our limit has run out
+	while ( nLimit )
 	{
-		// nLength is the number of bytes we will write, set it to the limit or the length, whichever is smaller
-		int nLength = (int)min( nLimit, nBuffer );
+		// Limit nLength to the size of the temp buffer
+		int nLength = static_cast< int >( nLimit );
 
-		// Send the bytes to the other computer through the socket
+		// Send the bytes to the socket
 		nLength = send(		// The send function returns how many bytes it sent
 			m_hSocket,		// Use the socket in this CConnection object
-			(char*)pBuffer,	// Tell send to read the data here
+			pData,			// Tell send to read the data here
 			nLength,		// This is how many bytes are there to send
 			0 );			// No special options
-		if ( nLength <= 0 ) break; // Loop until nothing is left or an error occurs
 
-		// Move the pointer forward past the sent bytes, and subtract their size from the length
-		pBuffer += nLength;
-		nBuffer -= nLength;
+		// Exit loop if nothing is left or an error occurs
+		if ( nLength <= 0 ) break;
 
-		// If we are keeping track of bandwidth, subtract the size of what we wrote from the limit
-		if ( nLimit != 0xFFFFFFFF ) nLimit -= nLength;
+		pData += nLength;	// Move forward past the sent data
+		nTotal += nLength;	// Add to the total
+		nLimit -= nLength;	// Adjust the limit
 	}
 
-	// The total number of bytes written is the length of the output buffer minus any bytes left still to write
-	DWORD nTotal = ( m_pOutput->m_nLength - nBuffer );
-
-	// We wrote some bytes into the socket
+	// If some bytes were sent
 	if ( nTotal )
 	{
-		// Remove them from the output buffer, otherwise they would sit there and get sent again the next time
+		// Remove them from the output buffer so they don't get sent again
 		m_pOutput->Remove( nTotal );
-		m_mOutput.tLast = tNow; // Record that we last wrote now
 
-		// If it's less than 1/10 of a second since we last wrote some bandwidth history information
-		if ( tNow - m_mOutput.tLastSlot < METER_MINIMUM )
-		{
-			// Just add the bytes in the same time slot as before
-			m_mOutput.pHistory[ m_mOutput.nPosition ] += nTotal;
+		// Add # bytes to bandwidth meter
+		m_mOutput.Add( nTotal, tNow );
 
-		} // It's been more than a tenth of a second since we last recorded a write
-		else
-		{
-			// Store the time and total in a new array slot
-			m_mOutput.nPosition = ( m_mOutput.nPosition + 1 ) % METER_LENGTH;	// Move to the next position in the array
-			m_mOutput.pTimes[ m_mOutput.nPosition ] = tNow;						// Record the new time
-			m_mOutput.pHistory[ m_mOutput.nPosition ] = nTotal;					// Store the bytes written next to it
-			m_mOutput.tLastSlot = tNow;											// Mark down when we did this
-		}
-
-		// Add the bytes we read to the total in the bandwidth meter and the total in statistics
-		m_mOutput.nTotal += nTotal;
+		// Add the total to statistics
 		Statistics.Current.Bandwidth.Outgoing += nTotal;
 	}
 
@@ -699,50 +553,32 @@ _ignore:	inc		ebx
 // Calculate the input and output speeds for this connection
 void CConnection::Measure()
 {
+	// Time period for bytes
 	DWORD tCutoff = GetTickCount() - METER_PERIOD;
-#if defined SHAREAZA_USE_ASM && !defined _WIN64
-	__asm
-	{
-		mov		ebx, this
-		mov		edx, tCutoff
-		xor		eax, eax
-		xor		esi, esi
-		mov		ecx, -METER_LENGTH
-_loop:	cmp		edx, [ ebx + ecx * 4 ]CConnection.m_mInput.pTimes + METER_LENGTH * 4
-		jnbe	_ignoreIn
-		add		eax, [ ebx + ecx * 4 ]CConnection.m_mInput.pHistory + METER_LENGTH * 4
-_ignoreIn:cmp	edx, [ ebx + ecx * 4 ]CConnection.m_mOutput.pTimes + METER_LENGTH * 4
-		jnbe	_ignoreOut
-		add		esi, [ ebx + ecx * 4 ]CConnection.m_mOutput.pHistory + METER_LENGTH * 4
-_ignoreOut:inc	ecx
-		jnz		_loop
-		xor		edx, edx
-		mov		ecx, METER_PERIOD / 1000
-		div		ecx
-		mov		[ ebx ]CConnection.m_mInput.nMeasure, eax
-		xor		edx, edx
-		mov		eax, esi
-		div		ecx
-		mov		[ ebx ]CConnection.m_mOutput.nMeasure, eax
-	}
-#else
-	// Start counts at zero
-	DWORD nInput  = 0;
-	DWORD nOutput = 0;
+	
+	// Calculate Input and Output seperately
+	m_mInput.nMeasure  = m_mInput.CalculateUsage( tCutoff )  / ( METER_PERIOD / METER_SECOND );
+	m_mOutput.nMeasure = m_mOutput.CalculateUsage( tCutoff ) / ( METER_PERIOD / METER_SECOND );
+}
 
-	// Loop down the arrays
-	for ( std::ptrdiff_t slot = -METER_LENGTH; slot; ++slot )
-	{
-		// If this record is from the last 6 seconds, add it to the input or output total
-		if ( m_mInput.pTimes[ METER_LENGTH + slot ] >= tCutoff )
-			nInput += m_mInput.pHistory[ METER_LENGTH + slot ];
-		if ( m_mOutput.pTimes[ METER_LENGTH + slot ] >= tCutoff )
-			nOutput += m_mOutput.pHistory[ METER_LENGTH + slot ];
-	}
-	// Set nMeasure for input and output as the average bytes read and written per second over the last METER_PERIOD seconds
-	m_mInput.nMeasure  = nInput  * 1000 / METER_PERIOD;
-	m_mOutput.nMeasure = nOutput * 1000 / METER_PERIOD;
-#endif
+// Calculate the input speed for this connection
+void CConnection::MeasureIn()
+{
+	// Time period for bytes
+	DWORD tCutoff = GetTickCount() - METER_PERIOD;
+	
+	// Calculate input speed
+	m_mInput.nMeasure  = m_mInput.CalculateUsage( tCutoff )  / ( METER_PERIOD / METER_SECOND );
+}
+
+// Calculate the output speed for this connection
+void CConnection::MeasureOut()
+{
+	// Time period for bytes
+	DWORD tCutoff = GetTickCount() - METER_PERIOD;
+	
+	// Calculate output speed
+	m_mOutput.nMeasure = m_mOutput.CalculateUsage( tCutoff ) / ( METER_PERIOD / METER_SECOND );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -970,7 +806,7 @@ CString CConnection::URLEncode(LPCTSTR pszInputT)
 	if ( nUTF8 < 2 ) return strOutput;
 
 	// Make a new array of CHARs which is nUTF8 bytes long
-	LPSTR pszUTF8 = new CHAR[ nUTF8 ];
+	LPSTR pszUTF8 = new CHAR[ static_cast< UINT>( nUTF8 ) ];
 
 	// Call WideCharToMultiByte again, this time it has the output buffer and will actually do the conversion
 	WideCharToMultiByte( CP_UTF8, 0, pszInputT, -1, pszUTF8, nUTF8, NULL, NULL );
@@ -1163,4 +999,88 @@ BOOL CConnection::StartsWith(LPCTSTR pszInput, LPCTSTR pszText)
 		pszText,				// With text
 		_tcslen( pszText ) )	// But just the first text-length part of both
 		== 0;					// Return true if it matches, false if not
+}
+
+//////////////////////////////////////////////////////////////////////
+// TCPBandwidthMeter Utility routines
+
+// Calculate the number of bytes available for use
+inline DWORD CConnection::TCPBandwidthMeter::CalculateLimit( DWORD tNow, bool bMaxMode ) const
+{
+	// Loop across the times and histories stored
+	// Granularity is 1/10th (METER_MINIMUM/METER_SECOND) of a second,
+	// so at the most we only need to read 12 records instead of all of them
+	DWORD tCutoff = tNow - METER_SECOND;		// Time period for bytes
+	if ( bMaxMode ) tCutoff += METER_MINIMUM;	// Adjust time period for Max mode
+	DWORD nData = CalculateUsage( tCutoff );	// #bytes in the time period
+
+	// nLimit is the speed limit (bytes/second)
+	DWORD nLimit = *pLimit;						// Get the speed limit
+	if ( Settings.Live.BandwidthScale < 100 )	// The scale is turned down and we should use it
+	{
+		// Adjust limit based on the scale percentage
+		nLimit = nLimit * Settings.Live.BandwidthScale / 100;
+	}
+
+	// nLimit - nData is the number of bytes still available for this time period
+	// Set nData to this, or 0 if we're over the limit
+	nData >= nLimit ? nData = 0 : nData = nLimit - nData;
+
+	// Is this running in max mode
+	if ( bMaxMode )
+	{
+		// Adjust limit for the time elapsed since last time
+		nLimit = nLimit * ( tNow - tLastAdd ) / 1000;
+
+		// nData = speed limit in bytes per second - bytes we read in the last second
+		// nLimit = speed limit in bytes per second * elapsed time
+		// return the smaller of the two
+		nLimit = min( nLimit, nData );
+	}
+	else
+	{
+		// Set limit to the number of bytes still available for this time period
+		nLimit = nData;
+	}
+	tLastAdd = tNow;	// The time of this limit calculation
+	return nLimit;		// Return the new limit
+}
+
+// Count the #bytes used for a given time period
+inline DWORD CConnection::TCPBandwidthMeter::CalculateUsage( DWORD tTime ) const
+{
+	DWORD nData = 0;			// #bytes in the time period
+	DWORD slot = METER_LENGTH;	// Start at the last slot
+	while ( slot-- )
+	{
+		if ( pTimes[ slot ] > tTime )	// Is this within the time period
+			nData += pHistory[ slot ];	//   It was, add it to #bytes
+		else if ( slot > nPosition )	// It wasn't, did we start with the latest reading
+			slot = nPosition + 1;		//   We didn't, jump to our latest reading and continue
+		else
+			break;						//   We did, no need to check the rest
+	}
+	return nData;
+}
+
+// Add #bytes to history
+inline void CConnection::TCPBandwidthMeter::Add( const DWORD nBytes, const DWORD tNow )
+{
+	if ( tNow - tLastSlot < METER_MINIMUM )
+	{
+		// Less than the minimum time interval
+		// Use the same place in the array as before
+		pHistory[ nPosition ] += nBytes;
+	}
+	else
+	{
+		// More than the minimum time interval
+		// Store the time and total in a new array slot
+		nPosition = ( nPosition + 1 ) % METER_LENGTH;	// Move to the next position in the array
+		pTimes	[ nPosition ]	= tNow;					// Record the new time
+		pHistory[ nPosition ]	= nBytes;				// Store the bytes read next to it
+		tLastSlot = tNow;								// We just wrote some history information
+	}
+	nTotal += nBytes;	// Add the bytes we read to the total
+	tLast = tNow;		// The time of this read
 }
