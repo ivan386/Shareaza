@@ -153,27 +153,29 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 
 	case CDiscoveryService::dsGnutella:
 		if ( CheckWebCacheValid( pszAddress ) )
+		{
 			pService = new CDiscoveryService( CDiscoveryService::dsGnutella, strAddress );
 
-		if ( _tcsnicmp( strAddress, _T("gnutella1:host:"),  15 ) == 0 )
-		{
-			nProtocol = PROTOCOL_G1;
-			pService->m_nSubType = 1;
-		}
-		else if ( _tcsnicmp( strAddress, _T("gnutella2:host:"), 15 ) == 0 )
-		{
-			nProtocol = PROTOCOL_G2;
-			pService->m_nSubType = 2;
-		}
-		else if ( _tcsnicmp( strAddress, _T("uhc:"), 4 )  == 0 )
-		{
-			nProtocol = PROTOCOL_G1;
-			pService->m_nSubType = 3;
-		}
-		else if ( _tcsnicmp( strAddress, _T("ukhl:"), 5 )  == 0 )
-		{
-			nProtocol = PROTOCOL_G2;
-			pService->m_nSubType = 4;
+			if ( _tcsnicmp( strAddress, _T("gnutella1:host:"),  15 ) == 0 )
+			{
+				nProtocol = PROTOCOL_G1;
+				pService->m_nSubType = 1;
+			}
+			else if ( _tcsnicmp( strAddress, _T("gnutella2:host:"), 15 ) == 0 )
+			{
+				nProtocol = PROTOCOL_G2;
+				pService->m_nSubType = 2;
+			}
+			else if ( _tcsnicmp( strAddress, _T("uhc:"), 4 )  == 0 )
+			{
+				nProtocol = PROTOCOL_G1;
+				pService->m_nSubType = 3;
+			}
+			else if ( _tcsnicmp( strAddress, _T("ukhl:"), 5 )  == 0 )
+			{
+				nProtocol = PROTOCOL_G2;
+				pService->m_nSubType = 4;
+			}
 		}
 		break;
 
