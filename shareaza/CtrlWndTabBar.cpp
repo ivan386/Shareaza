@@ -828,40 +828,43 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 
 	CPoint ptImage( rc.left + 2, rc.top + 1 );
 
-	if ( bSelected )
+	if ( m_nImage != -1 )
 	{
-		ImageList_DrawEx( pBar->m_pImages.GetSafeHandle(), m_nImage, pDC->GetSafeHdc(),
-			ptImage.x, ptImage.y, 0, 0, crBack, CLR_NONE, ILD_NORMAL );
-		pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
-	}
-	else if ( bHot )
-	{
-		ptImage.Offset( -1, -1 );
-
-		if ( crBack != CLR_NONE )
+		if ( bSelected )
 		{
-			pDC->FillSolidRect( ptImage.x, ptImage.y, 18, 2, crBack );
-			pDC->FillSolidRect( ptImage.x, ptImage.y + 2, 2, 16, crBack );
+			ImageList_DrawEx( pBar->m_pImages.GetSafeHandle(), m_nImage, pDC->GetSafeHdc(),
+				ptImage.x, ptImage.y, 0, 0, crBack, CLR_NONE, ILD_NORMAL );
+			pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
 		}
+		else if ( bHot )
+		{
+			ptImage.Offset( -1, -1 );
 
-		ptImage.Offset( 2, 2 );
-		pDC->SetTextColor( CoolInterface.m_crShadow );
-		ImageList_DrawEx( pBar->m_pImages.GetSafeHandle(), m_nImage, pDC->GetSafeHdc(),
-			ptImage.x, ptImage.y, 0, 0, crBack, CLR_NONE, ILD_MASK );
+			if ( crBack != CLR_NONE )
+			{
+				pDC->FillSolidRect( ptImage.x, ptImage.y, 18, 2, crBack );
+				pDC->FillSolidRect( ptImage.x, ptImage.y + 2, 2, 16, crBack );
+			}
 
-		ptImage.Offset( -2, -2 );
-		ImageList_DrawEx( pBar->m_pImages.GetSafeHandle(), m_nImage, pDC->GetSafeHdc(),
-			ptImage.x, ptImage.y, 0, 0, CLR_NONE, CLR_NONE, ILD_NORMAL );
+			ptImage.Offset( 2, 2 );
+			pDC->SetTextColor( CoolInterface.m_crShadow );
+			ImageList_DrawEx( pBar->m_pImages.GetSafeHandle(), m_nImage, pDC->GetSafeHdc(),
+				ptImage.x, ptImage.y, 0, 0, crBack, CLR_NONE, ILD_MASK );
 
-		pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 18, ptImage.y + 18 );
+			ptImage.Offset( -2, -2 );
+			ImageList_DrawEx( pBar->m_pImages.GetSafeHandle(), m_nImage, pDC->GetSafeHdc(),
+				ptImage.x, ptImage.y, 0, 0, CLR_NONE, CLR_NONE, ILD_NORMAL );
 
-		ptImage.Offset( 1, 1 );
-	}
-	else
-	{
-		ImageList_DrawEx( pBar->m_pImages.GetSafeHandle(), m_nImage, pDC->GetSafeHdc(),
-			ptImage.x, ptImage.y, 0, 0, crBack, CoolInterface.m_crShadow, ILD_BLEND50 );
-		pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
+			pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 18, ptImage.y + 18 );
+
+			ptImage.Offset( 1, 1 );
+		}
+		else
+		{
+			ImageList_DrawEx( pBar->m_pImages.GetSafeHandle(), m_nImage, pDC->GetSafeHdc(),
+				ptImage.x, ptImage.y, 0, 0, crBack, CoolInterface.m_crShadow, ILD_BLEND50 );
+			pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
+		}
 	}
 
 	rc.left += 20;

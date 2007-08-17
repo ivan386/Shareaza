@@ -915,7 +915,7 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue*/, CUploadFile* pFile, int nPosition, BOOL bFocus)
 {
 	CUploadTransfer* pTransfer = pFile->GetActive();
-	
+	int nFlagImage = Flags.GetFlagIndex( pTransfer->m_sCountry );
 	COLORREF crNatural		= CoolInterface.m_crWindow;
 	COLORREF crBack			= pFile->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
 	COLORREF crLeftAligned	= crBack;
@@ -1021,8 +1021,9 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 		case UPLOAD_COLUMN_COUNTRY:
 			dc.FillSolidRect( rcCell.left, rcCell.top, 20, rcCell.Height(), crBack );
 			rcCell.left += 2;
-			ImageList_DrawEx( Flags.m_pImage, Flags.GetFlagIndex(pTransfer->m_sCountry), dc.GetSafeHdc(),
-					rcCell.left, rcCell.top - 1, 18, 18, CLR_NONE, CLR_DEFAULT, pFile->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+			if ( nFlagImage != -1 )
+				ImageList_DrawEx( Flags.m_pImage, nFlagImage, dc.GetSafeHdc(),
+						rcCell.left, rcCell.top - 1, 18, 18, CLR_NONE, CLR_DEFAULT, pFile->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 
 			rcCell.left += 18;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
