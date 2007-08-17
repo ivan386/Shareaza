@@ -63,7 +63,6 @@ static char THIS_FILE[]=__FILE__;
 #define HASH_SIZE		32
 #define HASH_MASK		31
 
-#define TEMP_BUFFER		4096
 #define METER_MINIMUM	100
 #define METER_LENGTH	24
 #define METER_PERIOD	2000
@@ -201,13 +200,7 @@ void CDatagrams::Disconnect()
 {
 	if ( m_hSocket == INVALID_SOCKET ) return;
 
-	// Set linger period to zero (it will close the socket immediatelly)
-	// Default behaviour is to send data and close or timeout and close
-	linger ls = {1, 0};
-	int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
-
-	shutdown( m_hSocket, SD_RECEIVE );
-	ret = closesocket( m_hSocket );
+	closesocket( m_hSocket );
 	m_hSocket = INVALID_SOCKET;
 
 	delete [] m_pOutputBuffer;
@@ -585,24 +578,25 @@ void CDatagrams::Remove(CDatagramOut* pDG)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams read datagram
 
-#define TEMP_BUFFER 4096
-
 BOOL CDatagrams::TryRead()
 {
-	static BYTE pBuffer[ TEMP_BUFFER ];
-	int nLength, nFromLen;
-	SOCKADDR_IN pFrom;
+	if ( m_hSocket == INVALID_SOCKET )
+		return FALSE;
 
-	nFromLen = sizeof(pFrom);
-	nLength	= recvfrom( m_hSocket, (LPSTR)pBuffer, TEMP_BUFFER, 0,
-						(SOCKADDR*)&pFrom, &nFromLen );
+	std::vector< BYTE > pBuffer( 65536 );	// Maximal UDP size 64KB
+	SOCKADDR_IN pFrom = {};
+	int nFromLen = sizeof( pFrom );
+	int nLength	= recvfrom( m_hSocket, (char*)&pBuffer[ 0 ], (int)pBuffer.size(), 0,
+		(SOCKADDR*)&pFrom, &nFromLen );
 
-	if ( nLength < 1 ) return FALSE;
+	if ( nLength < 1 )
+		return FALSE;
 
-	if ( m_mInput.pHistory && nLength > 0 )
+	pBuffer.resize( nLength );
+
+	if ( m_mInput.pHistory )
 	{
 		DWORD tNow = GetTickCount();
-
 		if ( tNow - m_mInput.tLastSlot < METER_MINIMUM )
 		{
 			m_mInput.pHistory[ m_mInput.nPosition ] += nLength;
@@ -622,7 +616,7 @@ BOOL CDatagrams::TryRead()
 	if ( Security.IsAccepted( &pFrom.sin_addr ) &&
 		 ! Network.IsFirewalledAddress( &pFrom.sin_addr, TRUE ) )
 	{
-		OnDatagram( &pFrom, pBuffer, nLength );
+		OnDatagram( &pFrom, &pBuffer [ 0 ], nLength );
 	}
 
 	return TRUE;
@@ -930,9 +924,15 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 
 	switch ( pPacket->m_nType )
 	{
-		case G1_PACKET_PING:		return OnPing( pHost, pPacket );			// Ping
-		case G1_PACKET_PONG:		return OnPong( pHost, pPacket );			// Pong, response to a ping
+		case G1_PACKET_PING:
+			return OnPing( pHost, pPacket );
+		case G1_PACKET_PONG:
+			return OnPong( pHost, pPacket );
+		default:
+			theApp.Message( MSG_DEBUG, _T("G1UDP: Received unexpected packet %s from %s"),
+				pPacket->GetType(), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 	}
+
 	return FALSE;
 }
 
