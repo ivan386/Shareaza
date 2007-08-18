@@ -179,7 +179,7 @@ BOOL CMediaFrame::Create(CWnd* pParentWnd)
 {
 	CRect rect;
 	return CWnd::Create( NULL, _T("CMediaFrame"), WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,
-		rect, pParentWnd, IDC_MEDIA_FRAME, NULL );
+		rect, pParentWnd, 0, NULL );
 }
 
 int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) 

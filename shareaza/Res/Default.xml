@@ -61,7 +61,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Show Details"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Type some words to filter the results with"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -72,7 +72,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Show Details"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Type some words to filter the results with"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -86,7 +86,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Show Details"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Type some words to filter the results with"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -105,7 +105,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Show Details"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Type some words to filter the results with"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -118,7 +118,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Show Details"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Type some words to filter the results with"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -199,7 +199,7 @@
 		<button id="ID_LIBRARY_FOLDERS" text="Share Files..."/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
@@ -207,7 +207,7 @@
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Delete Album"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
@@ -215,7 +215,7 @@
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Delete Album"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
@@ -223,7 +223,7 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Add to Playlist"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -237,7 +237,7 @@
 		<button id="ID_LIBRARY_DELETE" text="Delete"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -246,7 +246,7 @@
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play Album"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -257,7 +257,7 @@
 		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -266,7 +266,7 @@
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Download All Files"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -276,9 +276,9 @@
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
 		<label text="Seek:" tip="Seek to a position in the media file"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Volume:" tip="Adjust the audio volume"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Open File"/>
 		<rightAlign/>
@@ -293,11 +293,11 @@
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
 		<label text="Seek:" tip="Seek to a position in the media file"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Speed:" tip="Adjust the speed of the media file"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Volume:" tip="Adjust the audio volume"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Open"/>
 		<separator/>
@@ -351,7 +351,7 @@
 		<button id="ID_HITMONITOR_CLEAR" text="Clear"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Type some words to filter the results with"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -2357,7 +2357,7 @@
 
 <!-- Command Images -->
 <commandImages>
-	<bitmap id="127">
+	<bitmap id="IDB_MENUBAR">
 		<image id="ID_CHECKMARK"/>
 		<image id="ID_NETWORK_SEARCH" id1="ID_TAB_SEARCH"/>
 		<image id="ID_NETWORK_CONNECT" id1="ID_TAB_CONNECT" id2="ID_CHAT_CONNECT"/>
@@ -2490,18 +2490,18 @@
 		<image id="ID_LIBRARY_VIEW_ALBUM"/>
 		<image id="ID_LIBRARY_VIEW_COLLECTION" id1="ID_LIBRARY_EXPORT_COLLECTION" id2="ID_MEDIA_EXPORT_COLLECTION"/>
 	</bitmap>
-	<bitmap id="159">
+	<bitmap id="IDB_CHILDFRAME">
 		<image id="ID_CHILD_MAXIMISE"/>
 		<image id="ID_CHILD_RESTORE"/>
 		<image id="ID_CHILD_MINIMISE"/>
 		<image id="ID_CHILD_CLOSE" id1="ID_NETWORK_EXIT"/>
 	</bitmap>
-	<bitmap id="222">
+	<bitmap id="IDB_MEDIA_STATES">
 		<image id="ID_MEDIA_STATE_STOP"/>
 		<image id="ID_MEDIA_STATE_PAUSE"/>
 		<image id="ID_MEDIA_STATE_PLAY"/>
 	</bitmap>
-	<bitmap id="227">
+	<bitmap id="IDB_PROTOCOLS">
 		<image id="ID_NETWORK_NULL"/>
 		<image id="ID_NETWORK_G1"/>
 		<image id="ID_NETWORK_G2"/>
@@ -2510,9 +2510,9 @@
 		<image id="ID_NETWORK_FTP"/>
 		<image id="ID_NETWORK_BT" id1="ID_DOWNLOADS_TORRENT_INFO"/>
 	</bitmap>
-	<icon res="261" id="ID_TRAY_OPEN"/>
-	<icon res="203" id="ID_DOWNLOADS_MONITOR"/>
-	<icon res="261" id="ID_HELP_HOMEPAGE"/>
+	<icon res="IDI_ICON" id="ID_TRAY_OPEN"/>
+	<icon res="IDI_DOWNLOAD_MONITOR" id="ID_DOWNLOADS_MONITOR"/>
+	<icon res="IDI_ICON" id="ID_HELP_HOMEPAGE"/>
 </commandImages>
 
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->

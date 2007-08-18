@@ -1,7 +1,7 @@
 //
 // Skin.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,21 +68,22 @@ protected:
 
 // Menus
 public:
-	CMenu*	GetMenu(LPCTSTR pszName, bool bChild = false);
-	UINT	TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID = 0, UINT nFlags = 0);
-	CMap< CString, const CString&, CMenu*, CMenu* > m_pMenus;
+	CMenu*	GetMenu(LPCTSTR pszName) const;
+	UINT	TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID = 0, UINT nFlags = 0) const;
+	CMenu*	CreatePopupMenu(LPCTSTR pszName);
 protected:
+	CMap< CString, const CString&, CMenu*, CMenu* > m_pMenus;
 	BOOL	LoadMenus(CXMLElement* pBase);
 	BOOL	LoadMenu(CXMLElement* pXML);
 	BOOL	CreateMenu(CXMLElement* pXML, HMENU hMenu);
-	CMenu	m_mnuDefault;
-	CMenu	m_mnuChild;
 
 // Toolbars
 public:
-	BOOL	CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar);
-	CMap< CString, const CString&, CCoolBarCtrl*, CCoolBarCtrl* > m_pToolbars;
+	BOOL			CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar);
+	CCoolBarCtrl*	CreateToolBar(LPCTSTR pszName);
+	CCoolBarCtrl*	GetToolBar(LPCTSTR pszName) const;
 protected:
+	CMap< CString, const CString&, CCoolBarCtrl*, CCoolBarCtrl* > m_pToolbars;
 	BOOL	LoadToolbars(CXMLElement* pBase);
 	BOOL	CreateToolBar(CXMLElement* pElement);
 
@@ -146,7 +147,7 @@ protected:
 
 // Other
 public:
-	UINT	LookupCommandID(CXMLElement* pXML, LPCTSTR pszName = NULL);
+	UINT	LookupCommandID(CXMLElement* pXML, LPCTSTR pszName = NULL) const;
 protected:
 	BOOL	LoadResourceMap(CXMLElement* pBase);
 	BOOL	LoadCommandImages(CXMLElement* pBase, const CString& strPath);

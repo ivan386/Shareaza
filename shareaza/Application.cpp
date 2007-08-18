@@ -251,9 +251,7 @@ STDMETHODIMP CApplication::XUserInterface::GetMenu(BSTR bsName, VARIANT_BOOL bCr
 	if ( pMenu == NULL )
 	{
 		if ( bCreate == VARIANT_FALSE ) return E_FAIL;
-		pMenu = new CMenu();
-		pMenu->CreatePopupMenu();
-		Skin.m_pMenus.SetAt( CString( bsName ), pMenu );
+		pMenu = Skin.CreatePopupMenu( CString( bsName ) );
 	}
 
 	*ppMenu = CComMenu::Wrap( pMenu->GetSafeHmenu() );
@@ -268,15 +266,12 @@ STDMETHODIMP CApplication::XUserInterface::GetToolbar(BSTR bsName, VARIANT_BOOL 
 	if ( bsName == NULL || ppToolbar == NULL ) return E_INVALIDARG;
 	*ppToolbar = NULL;
 
-	CCoolBarCtrl* pBar = NULL;
-
-	Skin.m_pToolbars.Lookup( CString( bsName ), pBar );
+	CCoolBarCtrl* pBar = Skin.GetToolBar( CString( bsName ) );
 
 	if ( pBar == NULL )
 	{
 		if ( bCreate == VARIANT_FALSE ) return E_FAIL;
-		pBar = new CCoolBarCtrl();
-		Skin.m_pToolbars.SetAt( CString( bsName ), pBar );
+		pBar = Skin.CreateToolBar( CString( bsName ) );
 	}
 
 	*ppToolbar = CComToolbar::Wrap( pBar );

@@ -139,9 +139,6 @@ int CWndTabBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 );
 
-	m_mnuChild.LoadMenu( IDR_CHILDFRAME );
-	CoolMenu.AddMenu( &m_mnuChild );
-
 	m_dwStyle |= CBRS_BORDER_3D;
 
 	ENABLE_DROP()
@@ -174,50 +171,6 @@ CSize CWndTabBar::CalcFixedLayout(BOOL /*bStretch*/, BOOL /*bHorz*/)
 
 void CWndTabBar::OnSkinChange()
 {
-	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
-	{
-		TabItem* pItem = m_pItems.GetNext( pos );
-		CChildWnd* pChild = (CChildWnd*)CWnd::FromHandle( pItem->m_hWnd );
-
-		CMenu* pOldMenu = m_mnuChild.GetSubMenu( pChild->m_bPanelMode ? 1 : 0 );
-		CMenu* pNewMenu = Skin.GetMenu( pChild->m_bPanelMode ? L"Simple" : L"Child", true );
-
-		for ( UINT i = 0 ; i < pOldMenu->GetMenuItemCount() ; i++ )
-		{
-			TCHAR szBuffer[128] = {};
-			MENUITEMINFO mii = {};
-			mii.cbSize = sizeof(mii);
-			mii.fMask = MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING;
-			mii.dwTypeData = szBuffer;
-			mii.cch	= sizeof(szBuffer) / sizeof(TCHAR);
-
-			if ( GetMenuItemInfo( pOldMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii ) )
-			{
-				if ( !( mii.fType & MF_SEPARATOR ) )
-				{
-					// Copy CommandID
-					mii.wID = pNewMenu->GetMenuItemID( i );
-
-					// Replace item text with the translation
-					pNewMenu->GetMenuString( i, szBuffer, sizeof(szBuffer), MF_BYPOSITION );
-					CoolMenu.ReplaceMenuText( pOldMenu, i, &mii, (LPCTSTR)szBuffer );
-
-					// Ensure type and data integrity
-					mii.fType |= MF_OWNERDRAW;
-					mii.dwItemData = ( (DWORD_PTR)pOldMenu->GetSafeHmenu() << 16 ) | ( mii.wID & 0xFFFF );
-
-					// Set new data
-					mii.cch	= sizeof(szBuffer) / sizeof(TCHAR);
-					SetMenuItemInfo( pOldMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
-				}
-			}
-		}
-		// We need to translate m_mnuChild only once.
-		// However, it might be needed in the future, if something changes.
-		// So, for now just break the loop.
-		break; 
-	}
-	
 	SetWatermark( Skin.GetWatermark( _T("CWndTabBar") ) );
 }
 
@@ -636,7 +589,7 @@ void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 
 		ClientToScreen( &rcItem );
 
-		CMenu* pMenu = m_mnuChild.GetSubMenu( pChild->m_bPanelMode ? 1 : 0 );
+		CMenu* pMenu = Skin.GetMenu( pChild->m_bPanelMode ? L"Simple" : L"Child" );
 
 		BOOL bCanRestore	= pChild->IsIconic() || pChild->IsZoomed();
 		UINT nCommand		= 0;
@@ -660,11 +613,12 @@ void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 		m_bMenuGray = TRUE;
 		Invalidate();
 
+		CoolMenu.AddMenu( pMenu, TRUE );
 		if ( rcItem.bottom > GetSystemMetrics( SM_CYSCREEN ) / 2 )
 		{
 			nCommand = pMenu->TrackPopupMenu( TPM_RETURNCMD|TPM_RIGHTBUTTON|
 				TPM_LEFTALIGN|TPM_BOTTOMALIGN, theApp.m_bRTL ? rcItem.right : rcItem.left, 
-				rcItem.top + 1, this, NULL );
+				rcItem.top + 1, this );
 		}
 		else
 		{
@@ -672,7 +626,7 @@ void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 				rcItem.bottom - 1, rcItem.Width() );
 			nCommand = pMenu->TrackPopupMenu( TPM_RETURNCMD|TPM_RIGHTBUTTON|
 				TPM_LEFTALIGN|TPM_TOPALIGN, theApp.m_bRTL ? rcItem.right : rcItem.left, 
-				rcItem.bottom - 1, this, NULL );
+				rcItem.bottom - 1, this );
 		}
 
 		m_bMenuGray = FALSE;

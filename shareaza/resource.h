@@ -10,7 +10,9 @@
 #define IDC_SEARCH_BOX                  108
 #define IDC_SEARCH_ADVANCED             112
 #define IDC_SEARCH_TEXT                 113
-#define IDR_POPUPS                      126
+#define IDC_MEDIA_POSITION              117
+#define IDC_MEDIA_SPEED                 118
+#define IDC_MEDIA_VOLUME                119
 #define IDB_MENUBAR                     127
 #define IDR_MAINFRAME                   128
 #define IDR_SYSTEMFRAME                 129
@@ -57,7 +59,7 @@
 #define IDD_WIZARD_SHARING              154
 #define IDD_WIZARD_FINISHED             155
 #define IDB_WIZARD_DOT                  158
-#define IDR_CHILDFRAME                  159
+#define IDB_CHILDFRAME                  159
 #define IDD_FOLDER_SCAN                 160
 #define IDB_SECURITY                    160
 #define IDI_BROWSE                      160

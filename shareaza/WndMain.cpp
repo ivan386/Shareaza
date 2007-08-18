@@ -616,8 +616,7 @@ void CMainWnd::OnUpdatePluginRange(CCmdUI* pCmdUI)
 void CMainWnd::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu) 
 {
 	CMDIFrameWnd::OnInitMenuPopup( pPopupMenu, nIndex, bSysMenu );
-	UINT nID = pPopupMenu->GetMenuItemID( 0 );
-	if ( nID != SC_RESTORE ) CoolMenu.AddMenu( pPopupMenu, TRUE );
+	if ( ! bSysMenu ) CoolMenu.AddMenu( pPopupMenu, TRUE );
 }
 
 void CMainWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 

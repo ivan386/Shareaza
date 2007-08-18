@@ -445,36 +445,23 @@ BOOL CSkin::LoadControlTips(CXMLElement* pBase)
 //////////////////////////////////////////////////////////////////////
 // CSkin menus
 
-CMenu* CSkin::GetMenu(LPCTSTR pszName, bool bChild)
+CMenu* CSkin::GetMenu(LPCTSTR pszName) const
 {
 	ASSERT( Settings.General.GUIMode == GUI_WINDOWED || 
 		Settings.General.GUIMode == GUI_TABBED ||
 		Settings.General.GUIMode == GUI_BASIC );
-	LPCTSTR* pszModeSuffix = m_pszModeSuffix[ Settings.General.GUIMode ];
 	ASSERT( pszName != NULL ); 
 	CString strName( pszName );
 	CMenu* pMenu = NULL;
-	CMenu* pWorkingMenu = bChild ? &m_mnuChild : &m_mnuDefault;
-
-	for ( int nModeTry = 0 ; nModeTry < 3 && pszModeSuffix[ nModeTry ] ; nModeTry++ )
+	for ( int nModeTry = 0 ;
+		m_pszModeSuffix[ Settings.General.GUIMode ][ nModeTry ] ; nModeTry++ )
 	{
-		if ( m_pMenus.Lookup( strName + pszModeSuffix[ nModeTry ], pMenu ) )
-			return pMenu;
-		
-		for ( UINT nItem = 0 ; nItem < pWorkingMenu->GetMenuItemCount() ; nItem++ )
-		{
-			CString strItem;
-			
-			pWorkingMenu->GetMenuString( nItem, strItem, MF_BYPOSITION );
-			
-			if ( strItem.CompareNoCase( strName + pszModeSuffix[ nModeTry ] ) == 0 )
-			{
-				return pWorkingMenu->GetSubMenu( nItem );
-			}
-		}
+		if ( m_pMenus.Lookup( strName +
+			m_pszModeSuffix[ Settings.General.GUIMode ][ nModeTry ], pMenu ) )
+			break;
 	}
-	
-	return NULL;
+	ASSERT( pMenu != NULL && ::IsMenu( pMenu->m_hMenu ) );	
+	return pMenu;
 }
 
 BOOL CSkin::LoadMenus(CXMLElement* pBase)
@@ -524,6 +511,21 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 	}
 }
 
+CMenu* CSkin::CreatePopupMenu(LPCTSTR pszName)
+{
+	CMenu* pMenu = new CMenu();
+	if ( pMenu )
+	{
+		if ( pMenu->CreatePopupMenu() )
+		{
+			m_pMenus.SetAt( pszName, pMenu );
+			return pMenu;
+		}
+		delete pMenu;
+	}
+	return NULL;
+}
+
 BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 {
 	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
@@ -542,12 +544,12 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 				
 				if ( strKeys.GetLength() ) strText += '\t' + strKeys;
 				
-				AppendMenu( hMenu, MF_STRING, nID, strText );
+				VERIFY( AppendMenu( hMenu, MF_STRING, nID, strText ) );
 			}
 		}
 		else if ( pXML->IsNamed( _T("menu") ) )
 		{
-			HMENU hSubMenu = CreatePopupMenu();
+			HMENU hSubMenu = ::CreatePopupMenu();
 			
 			if ( ! CreateMenu( pXML, hSubMenu ) )
 			{
@@ -555,11 +557,11 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 				return FALSE;
 			}
 			
-			AppendMenu( hMenu, MF_STRING|MF_POPUP, (UINT_PTR)hSubMenu, strText );
+			VERIFY( AppendMenu( hMenu, MF_STRING|MF_POPUP, (UINT_PTR)hSubMenu, strText ) );
 		}
 		else if ( pXML->IsNamed( _T("separator") ) )
 		{
-			AppendMenu( hMenu, MF_SEPARATOR, ID_SEPARATOR, NULL );
+			VERIFY( AppendMenu( hMenu, MF_SEPARATOR, ID_SEPARATOR, NULL ) );
 		}
 	}
 
@@ -617,6 +619,12 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 	}
 }
 
+CCoolBarCtrl* CSkin::GetToolBar(LPCTSTR pszName) const
+{
+	CCoolBarCtrl* pBar;
+	return m_pToolbars.Lookup( pszName, pBar ) ? pBar : NULL;
+}
+
 BOOL CSkin::LoadToolbars(CXMLElement* pBase)
 {
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
@@ -626,6 +634,17 @@ BOOL CSkin::LoadToolbars(CXMLElement* pBase)
 	}
 
 	return TRUE;
+}
+
+CCoolBarCtrl* CSkin::CreateToolBar(LPCTSTR pszName)
+{
+	CCoolBarCtrl* pBar = new CCoolBarCtrl();
+	if ( pBar )
+	{
+		m_pToolbars.SetAt( pszName, pBar );
+		return pBar;
+	}
+	return NULL;
 }
 
 BOOL CSkin::CreateToolBar(CXMLElement* pBase)
@@ -669,11 +688,11 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 		}
 		else if ( pXML->IsNamed( _T("control") ) )
 		{
-			UINT nID, nWidth, nHeight = 0;
+			UINT nWidth, nHeight = 0;
 			CString strTemp;
 			
-			strTemp = pXML->GetAttributeValue( _T("id") );
-			if ( _stscanf( strTemp, _T("%lu"), &nID ) == 1 )
+			UINT nID = LookupCommandID( pXML );
+			if ( nID )
 			{
 				strTemp = pXML->GetAttributeValue( _T("width") );
 				
@@ -1354,21 +1373,10 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 //////////////////////////////////////////////////////////////////////
 // CSkin command lookup helper
 
-UINT CSkin::LookupCommandID(CXMLElement* pXML, LPCTSTR pszName)
+UINT CSkin::LookupCommandID(CXMLElement* pXML, LPCTSTR pszName) const
 {
-	CString strID = pXML->GetAttributeValue( pszName ? pszName : _T("id") );
-	UINT nID = 0;
-	
-	if ( _istdigit( *(LPCTSTR)strID ) )
-	{
-		_stscanf( strID, _T("%lu"), &nID );
-	}
-	else
-	{
-		nID = CoolInterface.NameToID( strID );
-	}
-	
-	return nID;
+	return CoolInterface.NameToID(
+		pXML->GetAttributeValue( pszName ? pszName : _T("id") ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1388,9 +1396,7 @@ BOOL CSkin::LoadResourceMap(CXMLElement* pBase)
 			if ( _stscanf( strTemp, _T("%lu"), &nID ) != 1 )
 				return FALSE;
 
-			strTemp = pXML->GetAttributeValue( _T("id") );
-
-			CoolInterface.NameCommand( nID, strTemp );
+			CoolInterface.NameCommand( nID, pXML->GetAttributeValue( _T("id") ) );
 		}
 	}
 
@@ -1568,9 +1574,11 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 
 BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 {
-	CString strFile = strPath;
-	strFile += pBase->GetAttributeValue( _T("id") );
-	strFile += pBase->GetAttributeValue( _T("path") );
+	CString strFile;
+	strFile.Format( _T("%s%lu%s"),
+		strPath,
+		LookupCommandID( pBase ),
+		pBase->GetAttributeValue( _T("path") ) );
 
 	HBITMAP hBitmap = LoadBitmap( strFile );
 	if ( hBitmap == NULL ) return TRUE;
@@ -1636,11 +1644,6 @@ void CSkin::CreateDefault()
 	CMenu* pMenuBar = new CMenu();
 	pMenuBar->LoadMenu( IDR_MAINFRAME );
 	m_pMenus.SetAt( _T("CMainWnd"), pMenuBar );
-	if ( m_mnuDefault.m_hMenu == NULL )
-	{
-		m_mnuDefault.LoadMenu( IDR_POPUPS );
-		m_mnuChild.LoadMenu( IDR_CHILDFRAME );
-	}
 	
 	// Load Definitions
 	
@@ -1682,7 +1685,7 @@ void CSkin::Finalise()
 //////////////////////////////////////////////////////////////////////
 // CSkin popup menu helper
 
-UINT CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID, UINT nFlags)
+UINT CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID, UINT nFlags) const
 {
 	CMenu* pPopup = GetMenu( pszMenu );
 	if ( pPopup == NULL ) return 0;

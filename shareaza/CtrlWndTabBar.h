@@ -77,7 +77,6 @@ protected:
 	CImageList		m_pImages;
 	CMap< void*, void*, int, int > m_pIcons;
 	int				m_nCloseImage;
-	CMenu			m_mnuChild;
 	int				m_nMaximumWidth;
 	UINT			m_nMessage;
 	CString			m_sMessage;

@@ -3614,6 +3614,9 @@
 				RelativePath="Res\Hand.cur">
 			</File>
 			<File
+				RelativePath="Res\Hash.ico">
+			</File>
+			<File
 				RelativePath="Res\HashMismatch.htm">
 			</File>
 			<File
@@ -3671,6 +3674,9 @@
 				RelativePath="Res\Move.cur">
 			</File>
 			<File
+				RelativePath="Res\MusicBrainz.bmp">
+			</File>
+			<File
 				RelativePath="Res\Navbar.bmp">
 			</File>
 			<File
@@ -3716,7 +3722,7 @@
 				RelativePath="Res\Scheduler.bmp">
 			</File>
 			<File
-				RelativePath=".\Res\SchemaMappings.xml">
+				RelativePath="Res\SchemaMappings.xml">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
