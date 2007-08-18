@@ -53,6 +53,7 @@ CConnectionSettingsPage::CConnectionSettingsPage() : CSettingsPage(CConnectionSe
 {
 	//{{AFX_DATA_INIT(CConnectionSettingsPage)
 	m_bIgnoreLocalIP = FALSE;
+	m_bEnableUPnP = FALSE;
 	m_bInBind = FALSE;
 	m_sInHost = _T("");
 	m_nInPort = 0;

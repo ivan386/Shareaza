@@ -1738,7 +1738,6 @@
 #define ID_MEDIA_STATE_STOP             33200
 #define ID_MEDIA_STATE_PAUSE            33201
 #define ID_MEDIA_STATE_PLAY             33202
-#define AFX_IDS_IDLEMESSAGE             57345
 
 // Next default values for new objects
 // 
