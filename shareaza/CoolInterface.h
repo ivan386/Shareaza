@@ -174,7 +174,7 @@ public:
 
 	void		Clear();
 	void		NameCommand(UINT nID, LPCTSTR pszName);
-	UINT		NameToID(LPCTSTR pszName);
+	UINT		NameToID(LPCTSTR pszName) const;
 	int			ImageForID(UINT nID, int nImageListType = LVSIL_SMALL);
 	void		AddIcon(UINT nID, HICON hIcon, int nImageListType = LVSIL_SMALL);
 	void		CopyIcon(UINT nFromID, UINT nToID, int nImageListType = LVSIL_SMALL);

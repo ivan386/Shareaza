@@ -95,11 +95,11 @@ void CCoolInterface::NameCommand(UINT nID, LPCTSTR pszName)
 	m_pNameMap.SetAt( pszName, nID );
 }
 
-UINT CCoolInterface::NameToID(LPCTSTR pszName)
+UINT CCoolInterface::NameToID(LPCTSTR pszName) const
 {
 	UINT nID = 0;
 	if ( m_pNameMap.Lookup( pszName, nID ) ) return nID;
-	if ( _stscanf( pszName, _T("%u"), &nID ) == 1 ) return nID;
+	if ( _stscanf( pszName, _T("%lu"), &nID ) == 1 ) return nID;
 	return 0;
 }
 
