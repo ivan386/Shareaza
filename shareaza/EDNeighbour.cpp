@@ -499,9 +499,9 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 */
 		default:
 			CString str;
-			str.Format( _T("Unrecognised packet - IP: %s - opcode: 0x%x - in CEDNeighbour::OnServerIdent"),
-				LPCTSTR( m_sAddress ), int( pTag.m_nKey ) );
-			theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
+			str.Format( _T("Unrecognised packet opcode (in CEDNeighbour::OnServerIdent) IP: %s Opcode: 0x%x:0x%x"),
+				LPCTSTR( m_sAddress ), int( pTag.m_nKey ), int( pTag.m_nType ) );
+			pPacket->Debug( str );
 		}
 	}
 

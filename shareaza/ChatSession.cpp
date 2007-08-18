@@ -554,9 +554,9 @@ BOOL CChatSession::ReadPacketsED2K()
 			else
 			{
 				CString str;
-				str.Format( _T("Unrecognised packet - IP: %s - protocol: 0x%x - opcode: 0x%x - in CChatSession::ReadPacketsED2K"), int( pPacket->m_nEdProtocol ), int( pPacket->m_nType ) );
-					LPCTSTR( m_sAddress ), 
-				theApp.Message( MSG_ERROR, LPCTSTR( str ) );
+				str.Format( _T("Unrecognised packet - IP: %s - in CChatSession::ReadPacketsED2K"),
+					LPCTSTR( m_sAddress ) );
+				pPacket->Debug( str );
 			}
 		}
 		catch ( CException* pException )

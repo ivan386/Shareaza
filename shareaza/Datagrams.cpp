@@ -916,10 +916,6 @@ void CDatagrams::Remove(CDatagramIn* pDG, BOOL bReclaimOnly)
 
 BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 {
-	theApp.Message( MSG_DEBUG, _T("G1UDP: Received Type(0x%x) TTL(%i) Hops(%i) size(%i) from %s:%i"),
-		pPacket->m_nType, pPacket->m_nTTL, pPacket->m_nHops, pPacket->m_nLength,
-		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),pHost->sin_port );
-
 	m_nInPackets++;
 
 	switch ( pPacket->m_nType )
@@ -929,8 +925,8 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 		case G1_PACKET_PONG:
 			return OnPong( pHost, pPacket );
 		default:
-			theApp.Message( MSG_DEBUG, _T("G1UDP: Received unexpected packet %s from %s"),
-				pPacket->GetType(), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+			pPacket->Debug( CString( _T("Received unexpected UDP packet from ") ) + 
+				CString( inet_ntoa( pHost->sin_addr ) ) );
 	}
 
 	return FALSE;
@@ -992,8 +988,8 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	case G2_PACKET_KHL:
 		return OnKHL( pHost, pPacket );
 	default:
-		theApp.Message( MSG_DEBUG, _T("UDP: Received unexpected packet %s from %s"),
-			pPacket->GetType(), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+		pPacket->Debug( CString( _T("Received unexpected UDP packet from ") ) + 
+			CString( inet_ntoa( pHost->sin_addr ) ) );
 	}
 
 	return FALSE;

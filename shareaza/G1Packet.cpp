@@ -245,7 +245,7 @@ void CG1Packet::Debug(LPCTSTR pszReason) const
 
 	// Local objects
 	CString strOutput; // We'll compose text that describes what happened here
-	strOutput.Format( L"[G1]: '%s' %s [%i/%i] %s", pszReason, GetType(), m_nTTL, m_nHops, (LPCTSTR)ToASCII() );
+	strOutput.Format( L"[G1] %s Type: %s [%i/%i]", pszReason, GetType(), m_nTTL, m_nHops );
 	CPacket::Debug( strOutput );
 #else
 	pszReason;

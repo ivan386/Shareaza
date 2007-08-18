@@ -470,9 +470,10 @@ CString CPacket::ToASCII() const
 void CPacket::Debug(LPCTSTR pszReason) const
 {
 #ifdef _DEBUG
-	CString strOutput;
-	strOutput.Format( _T("%s : '%s' %s"), pszReason, ToASCII(), ToHex() );
-	theApp.Message( MSG_DEBUG, _T("%s"), LPCTSTR( strOutput ) );
+	if ( m_nLength )
+		theApp.Message( MSG_DEBUG, _T("%s Size: %u bytes ASCII: %s HEX: %s"), pszReason, m_nLength, (LPCTSTR)ToASCII(), (LPCTSTR)ToHex() );
+	else
+		theApp.Message( MSG_DEBUG, _T("%s Size: %u bytes"), pszReason, m_nLength );
 #else
 	UNUSED_ALWAYS(pszReason);
 #endif

@@ -608,12 +608,6 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 		// Misc
 		case ED2K_C2C_MESSAGE:
 			return OnMessage( pPacket );
-
-		default:
-			CString str;
-			str.Format( _T("Unrecognised packet - IP: %s - edonkey - type: 0x%x - in CEDClient::OnPacket"),
-				LPCTSTR( m_sAddress ), int( pPacket->m_nType ) );
-			theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
 		}
 	}
 	else if ( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EMULE )
@@ -657,15 +651,14 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 		case ED2K_C2C_COMPRESSEDPART_I64:
 			if ( m_pDownload != NULL ) m_pDownload->OnCompressedPart64( pPacket );
 			return TRUE;
-
-		default:
-			CString str;
-			str.Format( _T("Unrecognised packet - IP: %s - emule - type: 0x%x - in CEDClient::OnPacket"),
-				LPCTSTR( m_sAddress ), int( pPacket->m_nType ) );
-			theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
 		}
 	}
 	
+	CString str;
+	str.Format( _T("Unrecognised packet type (in CEDClient::OnPacket) IP: %s"),
+		LPCTSTR( m_sAddress ) );
+	pPacket->Debug( str );
+
 	return TRUE;
 }
 
@@ -891,9 +884,9 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 			else
 			{
 				CString str;
-				str.Format( _T("Unrecognised packet - IP: %s - opcode: 0x%x - in CEDClient::OnHello"),
-					LPCTSTR( m_sAddress ), int( pTag.m_nKey ) );
-				theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
+				str.Format( _T("Unrecognised packet opcode (in CEDClient::OnHello) IP: %s Opcode: 0x%x:0x%x"),
+					LPCTSTR( m_sAddress ), int( pTag.m_nKey ), int( pTag.m_nType ) );
+				pPacket->Debug( str );
 			}
 		}
 	}
@@ -1036,9 +1029,9 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 			break;
 		default:
 			CString str;
-			str.Format( _T("Unrecognised packet - IP: %s - opcode: 0x%x - in CEDClient::OnEmuleInfo"),
-				LPCTSTR( m_sAddress ), int( pTag.m_nKey ) );
-			theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
+			str.Format( _T("Unrecognised packet opcode (in CEDClient::OnEmuleInfo) IP: %s Opcode: 0x%x:0x%x"),
+				LPCTSTR( m_sAddress ), int( pTag.m_nKey ), int( pTag.m_nType ) );
+			pPacket->Debug( str );
 		}
 	}
 	

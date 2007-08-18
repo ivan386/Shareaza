@@ -255,7 +255,7 @@ void CEDPacket::Debug(LPCTSTR pszReason) const
 	if ( m_nType == ED2K_C2C_COMPRESSEDPART ) return;
 
 	CString strOutput;
-	strOutput.Format( L"[ED2K]: '%s' %s %s", pszReason, GetType(), (LPCTSTR)ToASCII() );
+	strOutput.Format( L"[ED2K] %s Proto: 0x%x Type: %s", pszReason, int( m_nEdProtocol ), GetType() );
 	CPacket::Debug( strOutput );
 #else
 	pszReason;
