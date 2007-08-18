@@ -1,7 +1,7 @@
 //
 // WndChild.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -139,7 +139,14 @@ BOOL CChildWnd::TestPoint(const CPoint& ptScreen)
 	if ( pHit == NULL ) return FALSE;
 	if ( pHit == this ) return TRUE;
 	if ( ! ::IsWindow( pHit->m_hWnd ) || ! ::IsWindow( m_hWnd ) ) return FALSE;
-	if ( pHit->GetAncestor( GA_ROOT ) != GetAncestor( GA_ROOT ) ) return FALSE;
+	if( theApp.m_bNT && theApp.m_dwWindowsVersion >= 5 )
+	{
+		if ( pHit->GetAncestor( GA_ROOT ) != GetAncestor( GA_ROOT ) ) return FALSE;
+	}
+	else
+	{
+		if ( pHit->GetTopLevelParent() != GetTopLevelParent() ) return FALSE;
+	}
 
 	CPoint ptChild( ptScreen );
 	pHit->ScreenToClient( &ptChild );
