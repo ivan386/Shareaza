@@ -325,7 +325,7 @@ BOOL CCoolTipCtrl::WindowFromPointBelongsToOwner(const CPoint& point)
 		if ( pWnd == GetOwner() ) return TRUE;
 		if ( m_hAltWnd != NULL && pWnd->GetSafeHwnd() == m_hAltWnd ) return TRUE;
 		if ( !IsWindow( pWnd->m_hWnd ) ) return FALSE;
-		pWnd = pWnd->GetAncestor( GA_PARENT );
+		pWnd = pWnd->GetParent();
 	}
 
 	return FALSE;
