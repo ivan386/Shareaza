@@ -17,7 +17,7 @@
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.5.2"
+		version="2.2.5.5"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te kiezen."
@@ -372,7 +372,7 @@
 		<button id="ID_SEARCH_CLEAR" text="Wissen"/>
 		<rightAlign/>
 		<label text="Filteren:" tip="Geef een paar woorden op om het resultaat mee te filteren"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -479,7 +479,7 @@
 		</menu>
 		<menu text="_Hulp">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
-			<item id="ID_HELP_TEST" text="_Verbindingstest(aanbevolen)"/>
+			<item id="ID_HELP_TEST" text="_Verbindingstest (Aanbevolen)"/>
 			<separator/>
 			<menu text="_Handleidingen">
 				<item id="ID_HELP_GUIDE" text="Shareaza _gebruikershandleiding"/>
@@ -2866,6 +2866,9 @@
 	<string id="16533" value="Totale TCP verzendbandbreedte"/>
 	<string id="16534" value="Totale UDP ontvangstbandbreedte"/>
 	<string id="16535" value="Totale UDP verzendbandbreedte"/>
+	<string id="16536" value="Gnutella Ratio van Ontvangen/Verzonden Pings"/>
+	<string id="16537" value="Gnutella Ratio van Ontvangen/Verzonden Pongs"/>
+	<string id="16538" value="Connectie Problemen (%)"/>
 	<string id="16768" value="Ontvangen URL &quot;%s&quot;"/>
 	<string id="16769" value="Niet mogelijk om URL te ontleden omdat Shareaza deze URL niet begrijpt."/>
 	<string id="16770" value="Niet mogelijk het URL actiescherm weer te geven omdat Shareaza het druk heeft."/>
@@ -3830,12 +3833,13 @@
 		<control caption="OK"/>
 		<control caption="Annuleren"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Eigenschappen van grafiekonderdelen">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Eigenschappen van grafiekonderdelen">
 		<control caption="OK"/>
 		<control caption="Annuleren"/>
 		<control caption="_Bron:"/>
-		<control/><control/>
-		<control caption="Parameter:"/>
+		<control/>
+		<control caption="Vermenigvuldiger:"/>
+		<control/>
 		<control caption="Eenheden:"/>
 		<control/>
 		<control caption="_Weergave:"/>
