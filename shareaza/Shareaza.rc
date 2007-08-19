@@ -4386,6 +4386,7 @@ BEGIN
     IDS_GRAPH_TOTAL_BANDWIDTH_UDP_OUT "Total UDP Transmit Bandwidth"
     IDS_GRAPH_GNUTELLA_PINGS "Gnutella Ratio of Received/Sent Pings"
     IDS_GRAPH_GNUTELLA_PONGS "Gnutella Ratio of Received/Sent Pongs"
+    IDS_GRAPH_CONNECTION_ERRORS "Connection Errors (%)"
 END
 
 STRINGTABLE 

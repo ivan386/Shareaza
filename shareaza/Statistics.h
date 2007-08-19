@@ -47,6 +47,7 @@ public:
 		{
 			QWORD	Outgoing;
 			QWORD	Incoming;
+			QWORD	Errors;
 		} Connections;
 
 		struct

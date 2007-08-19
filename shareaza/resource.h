@@ -1140,6 +1140,7 @@
 #define IDS_GRAPH_TOTAL_BANDWIDTH_UDP_OUT 16535
 #define IDS_GRAPH_GNUTELLA_PINGS        16536
 #define IDS_GRAPH_GNUTELLA_PONGS        16537
+#define IDS_GRAPH_CONNECTION_ERRORS     16538
 #define IDS_URL_RECEIVED                16768
 #define IDS_URL_PARSE_ERROR             16769
 #define IDS_URL_BUSY                    16770
@@ -1745,7 +1746,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                1
+#define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        287
 #define _APS_NEXT_COMMAND_VALUE         33138
 #define _APS_NEXT_CONTROL_VALUE         1535

@@ -200,6 +200,9 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 			shutdown( m_hSocket, SD_RECEIVE );
 			ret = closesocket( m_hSocket );
 			m_hSocket = INVALID_SOCKET;
+
+			if ( nError != 0 ) 
+				Statistics.Current.Connections.Errors++;
 			return FALSE;
 		}
 	}
@@ -343,6 +346,8 @@ BOOL CConnection::DoRun()
 		if ( pEvents.iErrorCode[ FD_CONNECT_BIT ] != 0 )
 		{
 			theApp.Message( MSG_DEBUG, _T("socket connect() error %i"), pEvents.iErrorCode[ FD_CONNECT_BIT ] );
+			Statistics.Current.Connections.Errors++;
+
 			// This connection was dropped
 			OnDropped( TRUE );
 			return FALSE;

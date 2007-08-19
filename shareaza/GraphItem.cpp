@@ -336,6 +336,12 @@ QWORD CGraphItem::GetValue(DWORD nCode, DWORD /*nParam*/)
 					 ( Statistics.Last.Gnutella1.PongsSent + Statistics.Last.Gnutella2.PongsSent ) * 100;
 		Network.m_pSection.Unlock();
 		break;
+	case GRC_CONNECTION_ERRORS:
+		if ( ! Network.m_pSection.Lock( 20 ) ) break;
+		Statistics.Update();
+		nValue = (float)Statistics.Ever.Connections.Errors / 
+			( Statistics.Ever.Connections.Incoming + Statistics.Ever.Connections.Outgoing ) * 100;
+		Network.m_pSection.Unlock();
 	};
 
 	return nValue;
@@ -376,6 +382,8 @@ GRAPHITEM CGraphItem::m_pItemDesc[] =
 
 	{ GRC_GNUTELLA_PINGS, IDS_GRAPH_GNUTELLA_PINGS, 0 },
 	{ GRC_GNUTELLA_PONGS, IDS_GRAPH_GNUTELLA_PONGS, 0 },
+
+	{ GRC_CONNECTION_ERRORS, IDS_GRAPH_CONNECTION_ERRORS, 0 },
 
 	{ 0, 0, 0 }
 };
