@@ -93,7 +93,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Details anzeigen"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Schreiben Sie ein paar Wörter, um die Ergebnisse zu filtern"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Erweitert..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -104,7 +104,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Details anzeigen"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Schreiben Sie ein paar Wörter, um die Ergebnisse zu filtern"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Erweitert..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -118,7 +118,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Details anzeigen"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Schreiben Sie ein paar Wörter, um die Ergebnisse zu filtern"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Erweitert..."/>
 	</toolbar>
 <!-- BROWSE HOST WINDOW -->
@@ -137,7 +137,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Details anzeigen"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Schreiben Sie ein paar Wörter, um die Ergebnisse zu filtern"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Erweitert..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -150,7 +150,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Details anzeigen"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Schreiben Sie ein paar Wörter, um die Ergebnisse zu filtern"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Erweitert..."/>
 	</toolbar>
 <!-- DOWNLOADS WINDOW -->
@@ -230,32 +230,32 @@ Other:
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Ordner freigeben..."/>
 		<rightAlign/>
-		<label text="Suchen:" tip="Geben Sie einige Wörter ein, um ihre Bibliothek zu durchsuchen"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Album erstellen..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Löschen"/>
 		<rightAlign/>
-		<label text="Suchen:" tip="Geben Sie einige Wörter ein, um ihre Bibliothek zu durchsuchen"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Album erstellen..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Löschen"/>
 		<rightAlign/>
-		<label text="Suchen:" tip="Geben Sie einige Wörter ein, um ihre Bibliothek zu durchsuchen"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Öffnen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
 		<rightAlign/>
-		<label text="Suchen:" tip="Geben Sie einige Wörter ein, um ihre Bibliothek zu durchsuchen"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -268,8 +268,8 @@ Other:
 		<button id="ID_LIBRARY_COPY" text="Kopieren"/>
 		<button id="ID_LIBRARY_DELETE" text="löschen"/>
 		<rightAlign/>
-		<label text="Suchen:" tip="Geben Sie einige Wörter ein, um ihre Bibliothek zu durchsuchen"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -277,8 +277,8 @@ Other:
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album wiedergeben"/>
 		<rightAlign/>
-		<label text="Suchen:" tip="Geben Sie einige Wörter ein, um ihre Bibliothek zu durchsuchen"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -288,8 +288,8 @@ Other:
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschaften"/>
 		<rightAlign/>
-		<label text="Suchen:" tip="Geben Sie einige Wörter ein, um ihre Bibliothek zu durchsuchen"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -297,8 +297,8 @@ Other:
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Alle Dateien herunterladen"/>
 		<rightAlign/>
-		<label text="Find:" tip="Geben Sie einige Wörter ein, um ihre Bibliothek zu durchsuchen"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 <!-- MEDIA WINDOW -->
@@ -308,9 +308,9 @@ Other:
 		<button id="ID_MEDIA_STOP" text="Stopp"/>
 		<separator/>
 		<label text="Position:" tip="Zu einer Position in der Datei springen"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Lautstärke:" tip="Lautstärke anpassen"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Datei öffnen"/>
 		<rightAlign/>
@@ -325,11 +325,11 @@ Other:
 		<button id="ID_MEDIA_STOP" text="Stopp"/>
 		<separator/>
 		<label text="Position:" tip="Zu einer Position in der Datei springen"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Geschw.:" tip="Abspielgeschwindigkeit anpassen"/>
-		<control id="118" width="50" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Lautstärke:" tip="Lautstärke anpassen"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Öffnen"/>
 		<separator/>
@@ -383,7 +383,7 @@ Other:
 		<button id="ID_HITMONITOR_CLEAR" text="Anzeige löschen"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Schreiben Sie ein paar Wörter um die Ergebnisse zu filtern"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Erweitert..."/>
 	</toolbar>
 <!-- HOST CACHE WINDOW -->
@@ -1477,23 +1477,17 @@ Other:
 <documents>
 
 	<!-- Home View -->
-
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
-
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="12"/>
-				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				<colours text="800000"/>
 			</style>
 		</styles>
-
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
-
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">V E R B I N D E N</heading>
@@ -1740,7 +1734,7 @@ Other:
 		<text>
 				   kann das Verhalten von Shareaza gegenüber dem Benutzer angepasst werden.
 		   </text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">Allgemein:</link>
 		<gap size="4"/>
@@ -1788,7 +1782,7 @@ Other:
 		<text>
 				   können Sie festlegen, wie sich Shareaza in P2P-Netzen verhält.
 		   </text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">Verbindung:</link>
 		<gap size="4"/>

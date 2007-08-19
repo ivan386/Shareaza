@@ -75,7 +75,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Podrobno"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Vnesite nekaj besed za filtriranje iskalnih rezultatov"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Več..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -86,7 +86,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Podrobno"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Vnesite nekaj besed za filtriranje iskalnih rezultatov"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Več..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -100,7 +100,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Podrobno"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Vnesite nekaj besed za filtriranje iskalnih rezultatov"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Več..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -119,7 +119,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Podrobno"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Vnesite nekaj besed za filtriranje iskalnih rezultatov"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Več..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -132,7 +132,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Podrobno"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Vnesite nekaj besed za filtriranje iskalnih rezultatov"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Več..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -212,32 +212,32 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Deli datoteke z drugimi..."/>
 		<rightAlign/>
-		<label text="Iskanje:" tip="Vnesite nekaj besed za iskanje po knjižnici"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Poišči"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Ustvari album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Brisanje albuma"/>
 		<rightAlign/>
-		<label text="Iskanje:" tip="Vnesite nekaj besed za iskanje po knjižnici"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Poišči"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Ustvari album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Brisanje albuma"/>
 		<rightAlign/>
-		<label text="Iskanje:" tip="Vnesite nekaj besed za iskanje po knjižnici"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Poišči"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Odpri ali predvajaj"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Dodaj v predvajalni seznam"/>
 		<rightAlign/>
-		<label text="Iskanje:" tip="Vnesite nekaj besed za iskanje po knjižnici"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Poišči"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -250,8 +250,8 @@
 		<button id="ID_LIBRARY_COPY" text="Kopiraj"/>
 		<button id="ID_LIBRARY_DELETE" text="Briši"/>
 		<rightAlign/>
-		<label text="Iskanje:" tip="Vnesite nekaj besed za iskanje po knjižnici"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Poišči"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -259,8 +259,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Dodaj v predvajalni seznam"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Predvajanje albuma"/>
 		<rightAlign/>
-		<label text="Iskanje:" tip="Vnesite nekaj besed za iskanje po knjižnici"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Poišči"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -270,8 +270,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Lastnosti"/>
 		<rightAlign/>
-		<label text="Iskanje:" tip="Vnesite nekaj besed za iskanje po knjižnici"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Poišči"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -279,8 +279,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Prenos vseh datotek"/>
 		<rightAlign/>
-		<label text="Iskanje:" tip="Vnesite nekaj besed za iskanje po knjižnici"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Išči"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -290,9 +290,9 @@
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
 		<label text="Išči v mediju:" tip="Išči določeno mesto v medijski datoteki"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Volume:" tip="Nastavi jakost zvoka"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Odpri datoteko"/>
 		<rightAlign/>
@@ -307,11 +307,11 @@
 		<button id="ID_MEDIA_STOP" text="Ustavi"/>
 		<separator/>
 		<label text="Išči v mediju:" tip="Išči določeno mesto v medijski datoteki"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Hitrost:" tip="Nastavi hitrost medijske datoteke"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Jakost zvoka:" tip="Nastavi jakost zvoka"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Odpri"/>
 		<separator/>
@@ -362,10 +362,10 @@
 		<button id="ID_HITMONITOR_SEARCH" text="Ponovna poizvedba"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Premor"/>
-		<button id="ID_SEARCH_CLEAR" text="Počisti"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Počisti"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Vnesite nekaj besed za filtriranje iskalnih rezultatov"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Več..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -1459,23 +1459,17 @@
 <documents>
 
 	<!-- Home View -->
-
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
-
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="12"/>
-				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				<colours text="800000"/>
 			</style>
 		</styles>
-
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
-
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">P O V E Ž I T E &#160; S E</heading>
@@ -1720,7 +1714,7 @@
 		<text>
 		 sekciji se nanaša na uporabnikovo doživljanje programa.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">Splošno:</link>
 		<gap size="4"/>
@@ -1768,7 +1762,7 @@
 		<text>
 			sekciji upravlja način medsebojnega delovanja med Shareazo in drugimi vozli (nodes) znotraj P2P omrežij.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">Povezava:</link>
 		<gap size="4"/>

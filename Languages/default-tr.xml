@@ -82,7 +82,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Ayrıntıları Göster"/>
 		<rightAlign/>
 		<label text="Filtre:" tip="Filtrelenen sonuçlarla bazı kelime türleri "/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Dahası..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -93,7 +93,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Ayrıntıları Göster"/>
 		<rightAlign/>
 		<label text="Filtre:" tip="Filtrelenen sonuçlarla bazı kelime türleri "/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Dahası..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -107,7 +107,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Ayrıntıları Göster"/>
 		<rightAlign/>
 		<label text="Filtre:" tip="Filtrelenen sonuçlarla bazı kelime türleri "/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Dahası..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -126,7 +126,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Ayrıntıları Göster"/>
 		<rightAlign/>
 		<label text="Filtre:" tip="Filtrelenen sonuçlarla bazı kelime türleri "/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Dahası..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -139,7 +139,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Ayrıntıları Göster"/>
 		<rightAlign/>
 		<label text="Filtre:" tip="Filtrelenen sonuçlarla bazı kelime türleri "/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Dahası..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -219,32 +219,32 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Dosya Paylaşımı..."/>
 		<rightAlign/>
-		<label text="Bul:" tip="Kütüphanenizde Aranan Kelimeler"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Album Yarat..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Album Sil"/>
 		<rightAlign/>
-		<label text="Bul:" tip="Kütüphanenizde Aranan Kelimeler"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Album Oluştur..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Album Sil"/>
 		<rightAlign/>
-		<label text="Bul:" tip="Kütüphanenizde Aranan Kelimeler"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Aç/Oynat"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Oynatma Listesine Ekle"/>
 		<rightAlign/>
-		<label text="Bul:" tip="Kütüphanenizde Aranan Kelimeler"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -257,8 +257,8 @@
 		<button id="ID_LIBRARY_COPY" text="Kopyala"/>
 		<button id="ID_LIBRARY_DELETE" text="Sil"/>
 		<rightAlign/>
-		<label text="Bul:" tip="Kütüphanenizde Aranan Kelimeler"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -266,8 +266,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Oynatma Listesine Ekle"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Albüm Oynat"/>
 		<rightAlign/>
-		<label text="Bul:" tip="Kütüphanenizde Aranan Kelimeler"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -277,8 +277,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Özellikler"/>
 		<rightAlign/>
-		<label text="Bul:" tip="Kütüphanenizde Aranan Kelimeler"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -286,8 +286,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Tüm Dosyaları İndir"/>
 		<rightAlign/>
-		<label text="Bul:" tip="Kütüphanenizde Aranan Kelimeler"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -297,9 +297,9 @@
 		<button id="ID_MEDIA_STOP" text="Durdur"/>
 		<separator/>
 		<label text="Ara:" tip="Ortam Dosyasında Konum Ara"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Ses:" tip="Sesi Ayarla"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Dosya Aç"/>
 		<rightAlign/>
@@ -314,11 +314,11 @@
 		<button id="ID_MEDIA_STOP" text="Durdur"/>
 		<separator/>
 		<label text="Ara:" tip="Ortam Dosyasında Konum Ara"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Hız:" tip="Ortam Dosyasının Hızını Ayarla"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Ses:" tip="Sesi Ayarla"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Aç"/>
 		<separator/>
@@ -369,10 +369,10 @@
 		<button id="ID_HITMONITOR_SEARCH" text="Sorgula"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Duraklat"/>
-		<button id="ID_SEARCH_CLEAR" text="Temizle"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Temizle"/>
 		<rightAlign/>
 		<label text="Filtre:" tip="Filtrede Sorgulanmış Kelimeler"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Dahası..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -1465,23 +1465,17 @@
 <documents>
 
 	<!-- Home View -->
-
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
-
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="12"/>
-				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				<colours text="800000"/>
 			</style>
 		</styles>
-
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
-
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">B A Ğ L A N T I &#160; A L</heading>
@@ -1724,7 +1718,7 @@
 		<text>
 			sekmesi kullanıcı olaylarını kapsar.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">Genel:</link>
 		<gap size="4"/>
@@ -1771,7 +1765,7 @@
 		<text>
 			sekmesi karşılıklı ağlardaki diğer düğümlerle etkileşimini kontrol eder.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">Bağlantı:</link>
 		<gap size="4"/>

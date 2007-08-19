@@ -82,7 +82,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
 		<rightAlign/>
 		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -93,7 +93,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
 		<rightAlign/>
 		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -107,7 +107,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
 		<rightAlign/>
 		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -126,7 +126,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
 		<rightAlign/>
 		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -139,7 +139,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
 		<rightAlign/>
 		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -219,32 +219,32 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Del filer..."/>
 		<rightAlign/>
-		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Ny mappe"/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Slett mappe"/>
 		<rightAlign/>
-		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Ny mappe"/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Slett mappe"/>
 		<rightAlign/>
-		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Åpne / spill av"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
 		<rightAlign/>
-		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -257,8 +257,8 @@
 		<button id="ID_LIBRARY_COPY" text="Kopier"/>
 		<button id="ID_LIBRARY_DELETE" text="Slett"/>
 		<rightAlign/>
-		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -266,8 +266,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
 		<rightAlign/>
-		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -277,8 +277,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Egenskaper"/>
 		<rightAlign/>
-		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -286,8 +286,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Last ned alle filene"/>
 		<rightAlign/>
-		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -297,9 +297,9 @@
 		<button id="ID_MEDIA_STOP" text="Stopp"/>
 		<separator/>
 		<label text="Søk" tip="Søk til bestemt posisjon"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Volum:" tip="Juster volum"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Åpne fil"/>
 		<rightAlign/>
@@ -314,11 +314,11 @@
 		<button id="ID_MEDIA_STOP" text="Stopp"/>
 		<separator/>
 		<label text="Søk" tip="Søk til bestemt posisjon"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Hastighet" tip="Juster hastighet"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Volum:" tip="Juster volum"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Åpne"/>
 		<separator/>
@@ -369,10 +369,10 @@
 		<button id="ID_HITMONITOR_SEARCH" text="Oppdater"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Pause"/>
-		<button id="ID_SEARCH_CLEAR" text="Fjern"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Fjern"/>
 		<rightAlign/>
 		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -1465,23 +1465,17 @@
 <documents>
 
 	<!-- Home View -->
-
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
-
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="12"/>
-				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				<colours text="800000"/>
 			</style>
 		</styles>
-
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
-
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">K O B L E &#160; T I L</heading>
@@ -1726,7 +1720,7 @@
 		<text>
 			-vinduet er relatert til brukeropplevelsen.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">Generelt:</link>
 		<gap size="4"/>
@@ -1775,7 +1769,7 @@
 			-viduet bestemmer hvordan Shareaza arbeider med andre noder på
 			nettverket
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">Linjetype:</link>
 		<gap size="4"/>

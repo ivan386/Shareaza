@@ -82,7 +82,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -93,7 +93,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -107,7 +107,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Digite algumas palavras para filtras os resultados com"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -126,7 +126,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -139,7 +139,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -219,32 +219,32 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Compartilhar Arquivos..."/>
 		<rightAlign/>
-		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Criar Álbum..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Apagar Álbum"/>
 		<rightAlign/>
-		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Criar Álbum..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Apagar Álbum"/>
 		<rightAlign/>
-		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<rightAlign/>
-		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -257,8 +257,8 @@
 		<button id="ID_LIBRARY_COPY" text="Copiar"/>
 		<button id="ID_LIBRARY_DELETE" text="Apagar"/>
 		<rightAlign/>
-		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -266,8 +266,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
 		<rightAlign/>
-		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -277,8 +277,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 		<rightAlign/>
-		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -286,8 +286,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Baixar Todos Os Arquivos"/>
 		<rightAlign/>
-		<label text="Encontrar:" tip="Digite algumas palavras para procurar na sua Biblioteca"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -297,9 +297,9 @@
 		<button id="ID_MEDIA_STOP" text="Parar"/>
 		<separator/>
 		<label text="Procurar:" tip="Procurar uma posição no arquivo de mídia"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Volume:" tip="Ajustar o volume do áudio"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Abrir Arquivo"/>
 		<rightAlign/>
@@ -314,11 +314,11 @@
 		<button id="ID_MEDIA_STOP" text="Parar"/>
 		<separator/>
 		<label text="Procurar:" tip="Procurar uma posição no arquivo de mídia"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Velocidade:" tip="Ajustar a velocidade do arquivo de mídia"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Volume:" tip="Ajustar o volume do áudio"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Abrir"/>
 		<separator/>
@@ -372,7 +372,7 @@
 		<button id="ID_HITMONITOR_CLEAR" text="Limpar"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -1491,15 +1491,13 @@
 <!-- Documents -->
 <documents>
 	<!-- Home View -->
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="12"/>
-				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				<colours text="800000"/>
 			</style>
 		</styles>
 		<anchor id="Header" width="32" height="172"/>
@@ -1743,7 +1741,7 @@
 		<text>
 			relatam a experiência do usuário.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Geral:</link>
 		<gap size="4"/>
 		<text>As Configurações comuns de interface do usuário como dicas, comportamento ao minimizar, formato dos números, avisos, etc.</text>
@@ -1782,7 +1780,7 @@
 			controlam como o Shareaza interage com outros nodes dentro das
 			redes peer-to-peer.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Conexão:</link>
 		<gap size="4"/>
 		<text>As velocidades e capacidades da sua conexão de Internet.</text>

@@ -75,7 +75,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Detalles"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Filtrar resultados con"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Más..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -86,7 +86,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Detalles"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Filtrar resultados con"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Más..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -100,7 +100,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Búsqueda"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Filtrar resultados con:"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Más..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -119,7 +119,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Detalles"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Filtrar resultados con"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Más..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -132,7 +132,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Detalles"/>
 		<rightAlign/>
 		<label text="Filtro:" tip="Filtrar resultados con"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Más..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -212,32 +212,32 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Compartir Archivos..."/>
 		<rightAlign/>
-		<label text="Find:" tip="Teclea algunas palabras para buscar en Mi Colección"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Crear Album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Borrar Album"/>
 		<rightAlign/>
-		<label text="Find:" tip="Teclea algunas palabras para buscar en Mi Colección"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Crear Album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Borrar Album"/>
 		<rightAlign/>
-		<label text="Find:" tip="Teclea algunas palabras para buscar en Mi Colección"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir o Reproducir"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Agregar a la lista de reproducción"/>
 		<rightAlign/>
-		<label text="Find:" tip="Teclea algunas palabras para buscar en "/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -250,8 +250,8 @@
 		<button id="ID_LIBRARY_COPY" text="Copiar"/>
 		<button id="ID_LIBRARY_DELETE" text="Eliminar"/>
 		<rightAlign/>
-		<label text="Find:" tip="Teclea algunas palabras para buscar en Mi Colección"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -259,8 +259,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Agregar a la lista de reproducción"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir Album"/>
 		<rightAlign/>
-		<label text="Find:" tip="Teclea algunas palabras para buscar en Mi Colección"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -270,8 +270,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Información del Archivo..."/>
 		<rightAlign/>
-		<label text="Find:" tip="Teclea algunas palabras para buscar en tu librera"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -279,8 +279,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Descargar Todos Los Archivos"/>
 		<rightAlign/>
-		<label text="Find:" tip="Teclea algunas palabras para buscar en Mi Colección"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -290,9 +290,9 @@
 		<button id="ID_MEDIA_STOP" text="Detener"/>
 		<separator/>
 		<label text="Posición:" tip="Ir a una posición en el archivo"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Volumen:" tip="Ajustar el volumen"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Abrir Archivo"/>
 		<rightAlign/>
@@ -307,11 +307,11 @@
 		<button id="ID_MEDIA_STOP" text="Detener"/>
 		<separator/>
 		<label text="Posición:" tip="Ir a una posición en el archivo"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Velocidad:" tip="Ajustar la velocidad de reproducción (Pitch)"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Volumen:" tip="Ajustar el volumen"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Abrir"/>
 		<separator/>
@@ -362,10 +362,10 @@
 		<button id="ID_HITMONITOR_SEARCH" text="Reacceder"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Pausar"/>
-		<button id="ID_SEARCH_CLEAR" text="Limpiar"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Limpiar"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Filtrar resultados con"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Más..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -1463,23 +1463,17 @@
 <documents>
 
 	<!-- Home View -->
-
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
-
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="12"/>
-				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				<colours text="800000"/>
 			</style>
 		</styles>
-
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
-
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">C O N E C T A T E</heading>
@@ -1724,7 +1718,7 @@
 		<text>
 			es relacionada con la experiencia del usuario.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">General:</link>
 		<gap size="4"/>
@@ -1772,7 +1766,7 @@
 		<text>
 			permite configurar la interacción de Shareaza con las redes peer-to-peer.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">Conexión:</link>
 		<gap size="4"/>

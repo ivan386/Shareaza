@@ -77,7 +77,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vertoon Inligtingspaneel"/>
 		<rightAlign/>
 		<label text="Filtreer:" tip="Sleutel woorde in om resultate mee te filtreer"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -88,7 +88,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vertoon Inligtingspaneel"/>
 		<rightAlign/>
 		<label text="Filtreer:" tip="Sleutel woorde in om resultate mee te filtreer"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -102,7 +102,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vertoon Inligtingspaneel"/>
 		<rightAlign/>
 		<label text="Filtreer:" tip="Sleutel woorde in om resultate mee te filtreer"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -121,7 +121,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vertoon Inligtingspaneel"/>
 		<rightAlign/>
 		<label text="Filtreer:" tip="Sleutel woorde in om resultate mee te filtreer"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -134,7 +134,7 @@
 		<button id="ID_SEARCH_DETAILS" text="Vertoon Inligtingspaneel"/>
 		<rightAlign/>
 		<label text="Filtreer:" tip="Sleutel woorde in om resultate mee te filtreer"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -214,32 +214,32 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Deel Lêers..."/>
 		<rightAlign/>
-		<label text="Soek:" tip="Sleutel woorde in om deur jou biblioteek te soek"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Skep Album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Verwyder Album"/>
 		<rightAlign/>
-		<label text="Soek:" tip="Sleutel woorde in om deur jou biblioteek te soek"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Skep Album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Verwyder Album"/>
 		<rightAlign/>
-		<label text="Soek:" tip="Sleutel woorde in om deur jou biblioteek te soek"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Open of Speel"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Voeg by Medialys"/>
 		<rightAlign/>
-		<label text="Soek:" tip="Sleutel woorde in om deur jou biblioteek te soek"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -252,8 +252,8 @@
 		<button id="ID_LIBRARY_COPY" text="Kopieer"/>
 		<button id="ID_LIBRARY_DELETE" text="Skrap"/>
 		<rightAlign/>
-		<label text="Soek:" tip="Sleutel woorde in om deur jou biblioteek te soek"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -261,8 +261,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Voeg by Medialys"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Speel Album"/>
 		<rightAlign/>
-		<label text="Soek:" tip="Sleutel woorde in om deur jou biblioteek te soek"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -272,8 +272,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eienskappe"/>
 		<rightAlign/>
-		<label text="Soek:" tip="Sleutel woorde in om deur jou biblioteek te soek"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -281,8 +281,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Laai Alle Lêers Af"/>
 		<rightAlign/>
-		<label text="Soek:" tip="Sleutel woorde in om deur jou biblioteek te soek"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -292,9 +292,9 @@
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
 		<label text="Posisie:" tip="Soek 'n posisie in die medialêer"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Volume:" tip="Verstel die volume"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Open Lêer"/>
 		<rightAlign/>
@@ -309,11 +309,11 @@
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
 		<label text="Posisie:" tip="Soek 'n posisie in die medialêer"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Spoed:" tip="Verander die spoed van die medialêer"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Volume:" tip="Verstel die volume"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Open"/>
 		<separator/>
@@ -364,10 +364,10 @@
 		<button id="ID_HITMONITOR_SEARCH" text="Hervra"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Vries"/>
-		<button id="ID_SEARCH_CLEAR" text="Verwyder"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Verwyder"/>
 		<rightAlign/>
 		<label text="Filtreer:" tip="Sleutel woorde in om resultate mee te filtreer"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -1460,23 +1460,17 @@
 <documents>
 
 	<!-- Home View -->
-
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
-
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="12"/>
-				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				<colours text="800000"/>
 			</style>
 		</styles>
-
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
-
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">K O N N E K T E E R &#160; N O U</heading>
@@ -1721,7 +1715,7 @@
 		<text>
 			afdeling hou verband met die gebruikerskoppelvlak.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">Algemeen:</link>
 		<gap size="4"/>
@@ -1770,8 +1764,7 @@
 			afdeling beheer hoe Shareaza met ander nodusse binne verspreide persoon-tot-persoon
 			netwerke kommunikeer.
 		</text>
-		<newline gap="16" margin="16"/>
-
+		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Konneksie:</link>
 		<gap size="4"/>
 		<text>Die spoed en vermoëns van jou Internet konneksie.</text>

@@ -87,7 +87,7 @@
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
 		<label text="过滤:" tip="键入需要过滤的文字"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -98,7 +98,7 @@
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
 		<label text="过滤:" tip="键入需要过滤的文字"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -112,7 +112,7 @@
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
 		<label text="过滤:" tip="键入需要过滤的文字"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -131,7 +131,7 @@
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
 		<label text="过滤:" tip="键入需要过滤的文字"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -144,7 +144,7 @@
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
 		<label text="过滤:" tip="键入需要过滤的文字"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -224,32 +224,32 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="共享文件..."/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="创建专辑..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="删除专辑"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="创建专辑..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="删除专辑"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="打开或播放"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="加入播放列表"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -262,8 +262,8 @@
 		<button id="ID_LIBRARY_COPY" text="复制"/>
 		<button id="ID_LIBRARY_DELETE" text="删除"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -271,8 +271,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="加入播放列表"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放专辑"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -282,8 +282,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="属性"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -291,8 +291,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="下载所有文件"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -302,9 +302,9 @@
 		<button id="ID_MEDIA_STOP" text="停止"/>
 		<separator/>
 		<label text="搜索:" tip="查询在媒体文件中的位置"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="音量:" tip="调节音量"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="打开文件"/>
 		<rightAlign/>
@@ -319,11 +319,11 @@
 		<button id="ID_MEDIA_STOP" text="停止"/>
 		<separator/>
 		<label text="搜索:" tip="查找在媒体文件中的位置"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="速度:" tip="调整媒体文件的播放速度"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="音量:" tip="调节音量"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="打开"/>
 		<separator/>
@@ -374,10 +374,10 @@
 		<button id="ID_HITMONITOR_SEARCH" text="再查询"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="暂停"/>
-		<button id="ID_SEARCH_CLEAR" text="清除"/>
+		<button id="ID_HITMONITOR_CLEAR" text="清除"/>
 		<rightAlign/>
 		<label text="过滤:" tip="键入需要过滤的文字"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -1471,23 +1471,17 @@
 <documents>
 
 	<!-- Home View -->
-
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
-
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
 				<font face="Tahoma" size="11"/>
-				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Tahoma" size="16" weight="800"/>
-				<colours text="800000"/>
 			</style>
 		</styles>
-
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
-
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">准 备 &#160; 连 接</heading>
@@ -1731,7 +1725,7 @@
 		<text>
 			部分的设置与用户的经验存在密切关系。
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">常规:</link>
 		<gap size="4"/>
@@ -1778,7 +1772,7 @@
 		<text>
 			部分的设置决定 Shareaza 如何与其他 P2P 网络交换信息。
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">连接:</link>
 		<gap size="4"/>

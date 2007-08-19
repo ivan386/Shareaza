@@ -83,7 +83,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
 		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -94,7 +94,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
 		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -108,7 +108,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
 		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -127,7 +127,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
 		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -140,7 +140,7 @@ Other:
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
 		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -221,7 +221,7 @@ Other:
 		<button id="ID_LIBRARY_FOLDERS" text="Partager des fichiers..."/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
@@ -229,7 +229,7 @@ Other:
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Supprimer l'album"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
@@ -237,7 +237,7 @@ Other:
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Supprimer l'album"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
@@ -245,7 +245,7 @@ Other:
 		<button id="ID_LIBRARY_ENQUEUE" text="Ajouter à la liste de lecture"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -259,7 +259,7 @@ Other:
 		<button id="ID_LIBRARY_DELETE" text="Supprimer"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -268,7 +268,7 @@ Other:
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Lire l'album"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -279,7 +279,7 @@ Other:
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriétés"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -288,7 +288,7 @@ Other:
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Téléch. tous les fichiers"/>
 		<rightAlign/>
 		<separator/>
-		<control id="108" width="120"/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -298,9 +298,9 @@ Other:
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
 		<label text="Position:" tip="Se déplacer dans le fichier média"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Volume:" tip="Ajuster le volume audio"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Ouvrir le fichier"/>
 		<rightAlign/>
@@ -315,11 +315,11 @@ Other:
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
 		<label text="Position:" tip="Se déplacer dans le fichier média"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="Vitesse:" tip="Ajuster la vitesse du fichier média"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Volume:" tip="Ajuster le volume audio"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Ouvrir"/>
 		<separator/>
@@ -566,6 +566,7 @@ Other:
 		<menu text="_Fenêtre">
 			<item id="ID_WINDOW_NAVBAR" text="Afficher la barre de _navigation"/>
 			<item id="ID_WINDOW_TOOLBAR" text="Afficher la barre d'ou_tils"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="Afficher la _barre de tabulation"/>
 			<item id="ID_WINDOW_MONITOR" text="Afficher le _moniteur"/>
 			<item id="ID_WINDOW_REMOTE" text="Affiche_r la télécommande"/>
@@ -653,6 +654,7 @@ Other:
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="Afficher la barre de _navigation"/>
 			<item id="ID_WINDOW_TOOLBAR" text="Afficher la barre d'ou_tils"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="Afficher la _barre de tabulation"/>
 			<item id="ID_WINDOW_MONITOR" text="Afficher le _moniteur"/>
 			<item id="ID_WINDOW_REMOTE" text="Affiche_r la télécommande"/>
@@ -1488,10 +1490,10 @@ Other:
 <!-- Documents -->
 <documents>
 	<!-- Home View -->
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
-				<colours text="000000" link="0000FF" hover="FF0000"/>
+				<font face="Verdana" size="12"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>

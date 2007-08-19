@@ -91,7 +91,7 @@
 		<button id="ID_SEARCH_DETAILS" text="顯示詳細內容"/>
 		<rightAlign/>
 		<label text="過濾:" tip="請鍵入要過濾的關鍵字"/>
-		<control id="107" width="130"/>
+		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
@@ -102,7 +102,7 @@
 		<button id="ID_SEARCH_DETAILS" text="顯示詳細內容"/>
 		<rightAlign/>
 		<label text="過濾:" tip="請鍵入要過濾的關鍵字"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
@@ -116,7 +116,7 @@
 		<button id="ID_SEARCH_DETAILS" text="顯示詳細內容"/>
 		<rightAlign/>
 		<label text="過濾:" tip="請鍵入要過濾的關鍵字"/>
-		<control id="107" width="150"/>
+		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
@@ -135,7 +135,7 @@
 		<button id="ID_SEARCH_DETAILS" text="顯示詳細內容"/>
 		<rightAlign/>
 		<label text="過濾:" tip="請鍵入要過濾的關鍵字"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
@@ -148,7 +148,7 @@
 		<button id="ID_SEARCH_DETAILS" text="顯示詳細內容"/>
 		<rightAlign/>
 		<label text="過濾:" tip="請鍵入要過濾的關鍵字"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
@@ -228,32 +228,32 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="分享檔案..."/>
 		<rightAlign/>
-		<label text="尋找:" tip="請鍵入關鍵字搜尋收藏"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="尋找"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="新增專輯..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="刪除專輯"/>
 		<rightAlign/>
-		<label text="尋找:" tip="請鍵入關鍵字搜尋收藏"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="尋找"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="新增專輯..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="刪除專輯"/>
 		<rightAlign/>
-		<label text="尋找:" tip="請鍵入關鍵字搜尋收藏"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="尋找"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="開啟或播放"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="新增至播放清單"/>
 		<rightAlign/>
-		<label text="尋找:" tip="請鍵入關鍵字搜尋收藏"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="尋找"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
@@ -266,8 +266,8 @@
 		<button id="ID_LIBRARY_COPY" text="複製"/>
 		<button id="ID_LIBRARY_DELETE" text="刪除"/>
 		<rightAlign/>
-		<label text="尋找:" tip="請鍵入關鍵字搜尋收藏"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="尋找"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
@@ -275,8 +275,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="新增至播放清單"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放專輯"/>
 		<rightAlign/>
-		<label text="尋找:" tip="請鍵入關鍵字搜尋收藏"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="尋找"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
@@ -286,8 +286,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="屬性"/>
 		<rightAlign/>
-		<label text="尋找:" tip="請輸入關鍵字搜尋您的收藏"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="尋找"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
@@ -295,8 +295,8 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="下載所有檔案"/>
 		<rightAlign/>
-		<label text="尋找:" tip="請鍵入關鍵字搜尋收藏"/>
-		<control id="108" width="120"/>
+		<separator/>
+		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="搜尋"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
@@ -306,9 +306,9 @@
 		<button id="ID_MEDIA_STOP" text="停止"/>
 		<separator/>
 		<label text="跳躍:" tip="跳躍至這個多媒體檔案的一處"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="音量:" tip="調整音訊音量"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="開啟檔案"/>
 		<rightAlign/>
@@ -323,11 +323,11 @@
 		<button id="ID_MEDIA_STOP" text="停止"/>
 		<separator/>
 		<label text="搜尋:" tip="跳躍至多媒體檔案的一處"/>
-		<control id="117" width="190" height="22"/>
+		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
 		<label text="速度:" tip="調整多媒體檔案的播放速度"/>
-		<control id="118" width="40" height="22"/>
+		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="音量:" tip="調整音量"/>
-		<control id="119" width="50" height="22"/>
+		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="開啟"/>
 		<separator/>
@@ -378,10 +378,10 @@
 		<button id="ID_HITMONITOR_SEARCH" text="Requery"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="暫停"/>
-		<button id="ID_SEARCH_CLEAR" text="清除"/>
+		<button id="ID_HITMONITOR_CLEAR" text="清除"/>
 		<rightAlign/>
 		<label text="過濾:" tip="請鍵入要過濾的關鍵字"/>
-		<control id="107" width="160"/>
+		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
@@ -1464,34 +1464,25 @@
 		<item id="ID_CHAT_CLEAR" text="清除視窗"/>
 	</menu>
 </menus>
-
 <!-- Watermarks -->
 <watermarks>
 	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
 	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
 </watermarks>
-
 <!-- Documents -->
 <documents>
-
 	<!-- Home View -->
-
-	<document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
-
+	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
 				<font face="新細明體" size="16"/>
-				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				<colours text="800000"/>
 			</style>
 		</styles>
-
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
-
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">請連線!</heading>
@@ -1735,7 +1726,7 @@
 		<text>
 			使用者的習慣.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">一般:</link>
 		<gap size="4"/>
@@ -1783,7 +1774,7 @@
 		<text>
 			在分散式 P2P 網路中 Shareaza 如何與其他結點互動.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">連線:</link>
 		<gap size="4"/>
