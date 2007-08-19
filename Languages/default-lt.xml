@@ -1742,7 +1742,7 @@
 		<text>
 			tereikia turėti tik patirties.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Bendra:</link>
 		<gap size="4"/>
 		<text>Bendros vartotojo sąsajos nuostatos tokios, kaip patarimų kortelės, lango sumažinimo elgesys, skaičių formatai, užuominos ir t.t.</text>
@@ -1781,7 +1781,7 @@
 			leidžia kontroliuoti, kaip „Shareaza“ sąveikauja su kitais adresatais lygiaverčio susijungimo
 			tinkluose.
 		</text>
-		<newline gap="16" margin="16"/>
+		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Ryšys:</link>
 		<gap size="4"/>
 		<text>Jūsų interneto ryšio sparta ir pajėgumai.</text>
