@@ -160,6 +160,9 @@ void CGraphItemDlg::OnSelChangeGraphSource()
 	case 2:
 		m_wndUnits.SetWindowText( _T("Volume (B/KB/MB/GB/TB") );
 		break;
+	case 3:
+		m_wndUnits.SetWindowText( _T("Percentage (%)") );
+		break;
 	default:
 		m_wndUnits.SetWindowText( _T("") );
 		break;
