@@ -339,21 +339,20 @@ Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: stri
 [Dirs]
 ; Make complete, incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied but we create also here to be sure
+Name: "{ini:{param:SETTINGS|},Locations,UserPath|{reg:HKCU\Software\Shareaza\Shareaza,UserPath|{userappdata}\Shareaza}}\Data"; Flags: uninsalwaysuninstall; Tasks: multiuser
+Name: "{ini:{param:SETTINGS|},Locations,Path|{reg:HKCU\Software\Shareaza\Shareaza,Path|{app}}}\Data"; Flags: uninsalwaysuninstall; Tasks: multiuser
 Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
 Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{localappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
 Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
 Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
 
-Name: "{ini:{param:SETTINGS|},Locations,UserPath|{reg:HKCU\Software\Shareaza\Shareaza,UserPath|{userappdata}\Shareaza}}\Data"; Flags: uninsalwaysuninstall; Tasks: multiuser
-Name: "{ini:{param:SETTINGS|},Locations,Path|{reg:HKCU\Software\Shareaza\Shareaza,Path|{app}}}\Data"; Flags: uninsalwaysuninstall; Tasks: multiuser
-
-
+Name: "{ini:{param:SETTINGS|},Locations,Path|{reg:HKCU\Software\Shareaza\Shareaza,Path|{app}}}\Data"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
 Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
 Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{app}\Incomplete}}"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
 Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}}"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
 Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}}"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
 
-Name: "{ini:{param:SETTINGS|},Locations,Path|{reg:HKCU\Software\Shareaza\Shareaza,Path|{app}}}\Data"; Flags: uninsalwaysuninstall; Permissions: users-modify; Tasks: not multiuser
+Name: "{app}\Skins"; Flags: uninsalwaysuninstall; Permissions: users-modify
 
 [InstallDelete]
 ; Clean up old files from Shareaza
@@ -397,7 +396,7 @@ Type: files; Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Share
 ; Delete extra components so installer can "uninstall" them
 Type: filesandordirs; Name: "{app}\Remote"
 Type: filesandordirs; Name: "{app}\Skins\Languages"; Components: not language
-Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins\Languages"; Components: not language
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins\Languages"
 
 ; Delete old Shareaza installers
 #ifndef alpha
