@@ -2625,6 +2625,7 @@
 	<string id="8337" value="Недоверяемый"/>
 	<string id="13000" value="Уверены, что хотите удалить выбранные правила безопасности? Действие будет необратимое."/>
 	<string id="13001" value="Файлы, разделяемые в интернете"/>
+	<string id="16063" value="После 10 попыток переадресация порта при помощи UPnP, была неуспешна."/>
 	<string id="16064" value="Старт ядра сети Shareaza..."/>
 	<string id="16065" value="Не могу использовать  %s порт %i для входящих соединений.  Входящие соединения не будут поддерживаться."/>
 	<string id="16066" value="Закрытие ядра сети Shareaza..."/>
@@ -2878,6 +2879,7 @@
 	<string id="16535" value="Общая UDP полоса пропускания посылок"/>
 	<string id="16536" value="Соотношение получ./высланных пингов Gnutella"/>
 	<string id="16537" value="Соотношение получ./высланных понгов Gnutella"/>
+	<string id="16538" value="Ошибки соединений (%)"/>
 	<string id="16768" value="Получена ссылка «%s»"/>
 	<string id="16769" value="Невозможно разобрать ссылку: Shareaza не понимает этой ссылки."/>
 	<string id="16770" value="Невозможно показать диалог действий со ссылками, так как Shareaza занята."/>
@@ -3863,12 +3865,13 @@
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Свойства элемента графика">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Свойства элемента графика">
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
 		<control caption="_Источник:"/>
-		<control/><control/>
-		<control caption="Параметр:"/>
+		<control/>
+		<control caption="Множитель:"/>
+		<control/>
 		<control caption="Единицы:"/>
 		<control/>
 		<control caption="_Отображение:"/>
