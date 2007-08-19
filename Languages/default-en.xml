@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.5.2"
+		version="2.2.5.5"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2882,6 +2882,7 @@
 	<string id="16535" value="Total UDP Transmit Bandwidth"/>
 	<string id="16536" value="Gnutella Ratio of Received/Sent Pings"/>
 	<string id="16537" value="Gnutella Ratio of Received/Sent Pongs"/>
+	<string id="16538" value="Connection Errors (%)"/>
 	<string id="16768" value="Received URL &quot;%s&quot;"/>
 	<string id="16769" value="Unable to parse URL: Shareaza does not understand this URL."/>
 	<string id="16770" value="Unable to display URL action dialog because Shareaza is busy."/>
@@ -3866,12 +3867,13 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Graph Item Properties">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Graph Item Properties">
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 		<control caption="_Source:"/>
-		<control/><control/>
-		<control caption="Parameter:"/>
+		<control/>
+		<control caption="Multiplier:"/>
+		<control/>
 		<control caption="Units:"/>
 		<control/>
 		<control caption="_Display:"/>
