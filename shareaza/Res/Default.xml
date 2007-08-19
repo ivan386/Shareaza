@@ -386,7 +386,6 @@
 		<button id="ID_CHAT_DISCONNECT" text="Disconnect"/>
 	</toolbar>
 </toolbars>
-
 <!-- Menu Definitions -->
 <menus>
 	<!-- SIMPLE POPUP MENU -->
@@ -450,7 +449,7 @@
 		</menu>
 		<menu text="_Help">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
-			<item id="ID_HELP_TEST" text="Connection Test"/>
+			<item id="ID_HELP_TEST" text="_Connection Test"/>
 			<separator/>
 			<menu text="_Guides">
 				<item id="ID_HELP_GUIDE" text="Shareaza _Users Guide"/>
@@ -544,7 +543,7 @@
 		</menu>
 		<menu text="_Help">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
-			<item id="ID_HELP_TEST" text="Connection Test"/>
+			<item id="ID_HELP_TEST" text="_Connection Test"/>
 			<separator/>
 			<menu text="_Guides">
 				<item id="ID_HELP_GUIDE" text="Shareaza _Users Guide"/>
@@ -632,7 +631,7 @@
 		</menu>
 		<menu text="_Help">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
-			<item id="ID_HELP_TEST" text="Connection Test"/>
+			<item id="ID_HELP_TEST" text="_Connection Test"/>
 			<separator/>
 			<menu text="_Guides">
 				<item id="ID_HELP_GUIDE" text="Shareaza _Users Guide"/>
@@ -780,11 +779,11 @@
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
 		<separator/>
 		<menu text="_Search For">
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
@@ -793,7 +792,7 @@
 	</menu>
 	<menu name="CSearchWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Download Now"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
 		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Bro_wse User"/>
@@ -801,12 +800,12 @@
 		<item id="ID_SECURITY_BAN" text="_Ban User"/>
 		<separator/>
 		<menu text="_Search For">
-			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
@@ -826,11 +825,11 @@
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
 		<separator/>
 		<menu text="_Search For">
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web File Info">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
@@ -845,12 +844,12 @@
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
 		<separator/>
 		<menu text="_Search For">
-			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
@@ -870,12 +869,12 @@
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
 		<separator/>
 		<menu text="_Search For">
-			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
@@ -958,7 +957,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
@@ -1020,19 +1019,19 @@
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Clear"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
-		<item id="ID_UPLOADS_FILTER_ALL" text="Show All"/>
+		<item id="ID_UPLOADS_FILTER_ALL" text="Show _All"/>
 		<separator/>
-		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Show Active"/>
-		<item id="ID_UPLOADS_FILTER_QUEUED" text="Show Queued"/>
-		<item id="ID_UPLOADS_FILTER_TORRENT" text="Show BitTorrent"/>
-		<item id="ID_UPLOADS_FILTER_HISTORY" text="Show History"/>
+		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Show A_ctive"/>
+		<item id="ID_UPLOADS_FILTER_QUEUED" text="Show _Queued"/>
+		<item id="ID_UPLOADS_FILTER_TORRENT" text="Show _BitTorrent"/>
+		<item id="ID_UPLOADS_FILTER_HISTORY" text="Show _History"/>
 	</menu>
 	<!-- LIBRARY FRAME -->
 	<menu name="CLibraryTree.Physical.Basic">
 		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Shared"/>
 		<item id="ID_LIBRARY_REMOVE" text="_Remove"/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDERS" text="Share Files..."/>
+		<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
 	</menu>
 	<menu name="CLibraryTree.Physical">
 		<item id="ID_LIBRARY_EXPLORE" text="_Explore"/>
@@ -1042,7 +1041,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SCAN" text="S_can"/>
 		<item id="ID_LIBRARY_REBUILD" text="Re_build"/>
-		<item id="ID_LIBRARY_FOLDERS" text="Share Files..."/>
+		<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
 		<separator/>
 		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="File _Properties"/>
 	</menu>
@@ -1081,12 +1080,12 @@
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
-			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
@@ -1113,18 +1112,18 @@
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
-			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Create .torrent File"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Create ._torrent File"/>
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1147,12 +1146,12 @@
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
-			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
@@ -1181,18 +1180,18 @@
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
-			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Create .torrent File"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Create ._torrent File"/>
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_UNLINK" text="Remove _Files"/>
@@ -1215,7 +1214,7 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Open Media File..."/>
 		<separator/>
-		<menu text="Playlist">
+		<menu text="Play_list">
 			<item id="ID_MEDIA_PREVIOUS" text="Pre_vious"/>
 			<item id="ID_MEDIA_NEXT" text="_Next"/>
 			<item id="ID_MEDIA_RANDOM" text="_Random"/>
@@ -1236,7 +1235,7 @@
 			<separator/>
 			<item id="ID_MEDIA_FULLSCREEN" text="_Full Screen"/>
 		</menu>
-		<menu text="Settings">
+		<menu text="Setti_ngs">
 			<item id="ID_MEDIA_VIS" text="Choose _Visualisation..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Show _Playlist"/>
@@ -1253,7 +1252,7 @@
 		<item id="ID_MEDIA_OPEN" text="_Open Media File..."/>
 		<item id="ID_MEDIA_CLOSE" text="_Close File"/>
 		<separator/>
-		<menu text="Playlist">
+		<menu text="Play_list">
 			<item id="ID_MEDIA_PREVIOUS" text="Pre_vious"/>
 			<item id="ID_MEDIA_NEXT" text="_Next"/>
 			<item id="ID_MEDIA_RANDOM" text="_Random"/>
@@ -1274,7 +1273,7 @@
 			<separator/>
 			<item id="ID_MEDIA_FULLSCREEN" text="_Full Screen"/>
 		</menu>
-		<menu text="Settings">
+		<menu text="Setti_ngs">
 			<item id="ID_MEDIA_VIS" text="Choose _Visualisation..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Show _Playlist"/>
@@ -1303,8 +1302,8 @@
 		<item id="ID_MEDIA_ADD_FOLDER" text="Add _Folder..."/>
 		<item id="ID_MEDIA_REMOVE" text="_Remove"/>
 		<separator/>
-		<item id="ID_MEDIA_RANDOM" text="Random Mode"/>
-		<item id="ID_MEDIA_REPEAT" text="Repeat Mode"/>
+		<item id="ID_MEDIA_RANDOM" text="Ra_ndom Mode"/>
+		<item id="ID_MEDIA_REPEAT" text="Rep_eat Mode"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Open Playlist..."/>
 		<item id="ID_MEDIA_SAVE" text="_Save Playlist..."/>
@@ -1434,14 +1433,10 @@
 	<watermark target="CHomeViewCtrl.Header1" path="257.PNG"/>
 	<watermark target="CHomeViewCtrl.Header2" path="258.PNG"/>
 </watermarks>
-
 <!-- Documents -->
 <documents>
-	
 	<!-- Home View -->
-	
 	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
-		
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="12"/>
@@ -1450,10 +1445,8 @@
 				<font face="Trebuchet MS" size="16" weight="800"/>
 			</style>
 		</styles>
-		
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
-		
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">G E T &#160; C O N N E C T E D</heading>
@@ -1462,7 +1455,6 @@
 			<link target="raza:command:ID_NETWORK_CONNECT">Click here to start!</link>
 			<newline gap="18" indent="0"/>
 		</group>
-		
 		<group id="2">
 			<icon res="134" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">S E A R C H &#160; S H A R E A Z A</heading>
@@ -1470,7 +1462,6 @@
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
 		</group>
-		
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">U P G R A D E &#160; N O T I C E</heading>
@@ -1480,7 +1471,6 @@
 			<link target="raza:upgrade">Click here to upgrade</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">W A R N I N G &#160; - &#160; Y O U &#160; A R E &#160; F I R E W A L L E D</heading>
@@ -1492,7 +1482,6 @@
 			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<group id="6">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; T C P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
@@ -1504,7 +1493,6 @@
 			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<group id="7">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; U D P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
@@ -1516,29 +1504,24 @@
 			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">C U S T O M I S E &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
-
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Skins</link>
 		<text align="middle">&#160;- Change Shareaza's look &amp; feel</text>
 		<newline gap="8"/>
-		
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Settings Wizard</link>
 		<text align="middle">&#160;- Edit Shareaza Settings</text>
 		<newline gap="8"/>
-		
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Quick Help</link>
 		<text align="middle">&#160;- Get some basic help using Shareaza</text>
 		<newline gap="18" indent="0"/>
-
 		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
 		<gap size="8"/>
 		<heading align="middle">M Y &#160; D O W N L O A D S</heading>
@@ -1546,7 +1529,6 @@
 		<text>To open the folder with your downloads </text>
 		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
-
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">R E M O T E &#160; A C C E S S &#160; I S &#160; E N A B L E D</heading>
@@ -1558,9 +1540,7 @@
 			<link id="RemoteAccessURL2"/>
 			<newline gap="16" indent="0"/>
 		</group>
-		
 	</document>
-	
 	<document name="CHomeDownloadsBox" title="My Downloads" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1577,7 +1557,6 @@
 			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Go to Downloads (%i)</link>
 		</para>
 	</document>
-
 	<document name="CHomeLibraryBox" title="My Library" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1609,7 +1588,6 @@
 			</group>
 		</para>
 	</document>
-
 	<document name="CHomeConnectionBox" title="Connection" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1623,7 +1601,6 @@
 				<link target="raza:command:ID_NETWORK_CONNECT">Click here to connect</link>
 			</para>
 		</group>
-		
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
 		<text group="20" align="middle" format="b">Gnutella2: </text>
 		<text group="21" align="middle">Disconnected</text>
@@ -1632,21 +1609,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i hubs</text>
 		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
-		
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
 		<text group="30" align="middle" format="b">eDonkey: </text>
 		<text group="31" align="middle">Disconnected</text>
 		<text group="32" align="middle">Connecting...</text>
 		<text group="33" align="middle">Connected</text>
 		<newline group="30" gap="2"/>
-		
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Disconnected</text>
 		<text group="12" align="middle">Connecting...</text>
 		<text group="13" align="middle">Connected</text>
 		<newline group="10" gap="2"/>
-		
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
@@ -1658,7 +1632,6 @@
 			</para>
 		</group>
 	</document>
-	
 	<document name="CHomeUploadsBox" title="Uploads" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1669,15 +1642,12 @@
 			<text id="UploadsNone" format="b">No active uploads</text>
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 active upload</link>
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i active uploads</link>
-			
 			<newline gap="4"/>
-			
 			<text id="UploadedNone">You have not uploaded any files today.</text>
 			<text id="UploadedOne">You have uploaded 1 file (%s).</text>
 			<text id="UploadedMany">You have uploaded %i files (%s).</text>
 		</para>
 	</document>
-
 	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1698,22 +1668,16 @@
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed a torrent</link>
 			</group>
 		</para>
-
 	</document>
-	
 	<!-- Settings Pages -->
-
 	<document name="CGeneralSettingsGroup" title="General" leftMargin="8" topMargin="8">
-		
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
 			</style>
 		</styles>
-		
 		<text format="b">Welcome to Shareaza's Settings Manager</text>
 		<newline gap="16"/>
-		
 		<text>
 			The Shareaza Settings Manager allows advanced users to completely customise how
 			Shareaza works. The settings in the 
@@ -1723,45 +1687,35 @@
 			section relate to the user experience.
 		</text>
 		<newline gap="16" indent="16"/>
-		
 		<link target="raza:page:CGeneralSettingsPage" format="b">General:</link>
 		<gap size="4"/>
 		<text>Common user interface settings like tooltips, minimise behaviour, number formats, prompts, etc.</text>
 		<newline gap="10"/>
-		
 		<link target="raza:page:CLibrarySettingsPage" format="b">Library:</link>
 		<gap size="4"/>
 		<text>Presentation and management of the file library, and opening files.</text>
 		<newline gap="10"/>
-		
 		<link target="raza:page:CMediaSettingsPage" format="b">Media Player:</link>
 		<gap size="4"/>
 		<text>When and where to use the built-in Shareaza Media Centre.</text>
 		<newline gap="10"/>
-		
 		<link target="raza:page:CCommunitySettingsPage" format="b">Community:</link>
 		<gap size="4"/>
 		<text>Your profile, chat and instant messaging settings.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
 		<text>Integrate Shareaza with your web browser to accept peer-to-peer links and download content.</text>
 		<newline gap="10"/>
-	
 	</document>
-
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
-		
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
 			</style>
 		</styles>
-		
 		<text format="b">Welcome to Shareaza's Settings Manager</text>
 		<newline gap="16"/>
-		
 		<text>
 			The Shareaza Settings Manager allows advanced users to completely customise how
 			Shareaza works. The settings in the 
@@ -1772,51 +1726,40 @@
 			networks.
 		</text>
 		<newline gap="16" indent="16"/>
-		
 		<link target="raza:page:CConnectionSettingsPage" format="b">Connection:</link>
 		<gap size="4"/>
 		<text>The speeds and capabilities of your Internet connection.</text>
 		<newline gap="10"/>
-		
 		<link target="raza:page:CDownloadsSettingsPage" format="b">Downloads:</link>
 		<gap size="4"/>
 		<text>Download throughput, scheduling, verification, timeouts and management.</text>
 		<newline gap="10"/>
-		
 		<link target="raza:page:CUploadsSettingsPage" format="b">Uploads:</link>
 		<gap size="4"/>
 		<text>Upload capacity, queuing, banning, timeouts and special requests.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CRemoteSettingsPage" format="b">Remote:</link>
 		<gap size="4"/>
 		<text>Set up the ability to control Shareaza remotely through a web browser.</text>
 		<newline gap="10"/>
-		
 	</document>
-	
 	<!-- Browse User Profile -->
-	
 	<document name="CBrowseHostProfile.1">
-		
 		<heading id="Nick"/>
 		<heading>'s Profile</heading>
 		<newline gap="8"/>
-		
 		<group id="1">
 			<newline gap="8" indent="0"/>
 			<text format="b">Name</text>
 			<newline gap="2" indent="8"/>
 			<text id="FullName"/>
 		</group>
-		
 		<group id="2">
 			<newline gap="8" indent="0"/>
 			<text format="b">Location</text>
 			<newline gap="2" indent="8"/>
 			<text id="FullLocation"/>
 		</group>
-		
 		<group id="3">
 			<newline gap="8" indent="0"/>
 			<text format="b">Demographic</text>
@@ -1826,7 +1769,6 @@
 			<text>, </text>
 			<text id="Age"/>
 		</group>
-		
 		<group id="4">
 			<newline gap="8" indent="0"/>
 			<text format="b">Contact Information</text>
@@ -1862,31 +1804,25 @@
 			<icon res="207"/><gap size="5"/>
 			<link id="ContactJabber"/>
 		</group>
-		
 		<group id="5">
 			<newline gap="8" indent="0"/>
 			<text format="b">Interests</text>
 			<newline gap="2" indent="8"/>
 			<text id="Interests"/>
 		</group>
-		
 		<group id="6">
 			<newline gap="8" indent="0"/>
 			<text format="b">Bio</text>
 			<newline gap="2" indent="8"/>
 			<text id="BioText"/>
 		</group>
-		
 	</document>
-	
 	<document name="CBrowseHostProfile.2">
-		
 		<newline gap="40" indent="0"/>
 		<text format="b">Shared Files</text>
 		<newline gap="4" indent="8"/>
 		<icon res="137" target="raza:command:ID_BROWSE_FILES"/><gap size="5"/>
 		<link target="raza:command:ID_BROWSE_FILES" align="middle">View Shared Files</link>
-		
 		<group id="2">
 			<newline gap="16" indent="0"/>
 			<text format="b">Community</text>
@@ -1895,19 +1831,14 @@
 			<gap size="5"/>
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Chat to User</link>
 		</group>
-		
 		<group id="3">
 			<newline gap="16" indent="0"/>
 			<text format="b">Favourite Web Links</text>
 			<newline gap="4" indent="8" id="Bookmarks"/>
 		</group>
-		
 		<newline gap="16" indent="0"/>
-		
 	</document>
-	
 	<!-- Download help documents -->
-	
 	<document name="DownloadHelp.Select">
 		<text format="b">Downloads Area</text>
 		<newline gap="8"/>
@@ -1917,28 +1848,24 @@
 		<text>You can also use this command to get help information on a specific download.
 		Simply select a download and choose this command again.</text>
 	</document>
-	
 	<document name="DownloadHelp.Completed">
 		<text format="b">This Download has Completed</text>
 		<newline gap="8"/>
 		<text>Shareaza has finished downloading this file, and has verified that it
 		is 100% correct. It has also moved the file to your downloads folder.</text>
 	</document>
-
 	<document name="DownloadHelp.Moving">
 		<text format="b">This Download is Moving</text>
 		<newline gap="8"/>
 		<text>Shareaza has finished downloading this file, and has verified that
 		it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 	</document>
-	
 	<document name="DownloadHelp.Paused">
 		<text format="b">This Download is Paused</text>
 		<newline gap="8"/>
 		<text>You have paused this download. If you want it to resume downloading, you
 		can click the '</text><text format="b">Resume Download</text><text>' command.</text>
 	</document>
-	
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">The Disk is Full</text>
 		<newline gap="8"/>
@@ -1948,7 +1875,6 @@
 		to make sure the incomplete file folder is accessible, and then resume the
 		download.</text>
 	</document>
-	
 	<document name="DownloadHelp.Verifying">
 		<text format="b">This Download is Verifying</text>
 		<newline gap="8"/>
@@ -1956,7 +1882,6 @@
 		that it is exactly the same as the original file. If any damaged parts are
 		found, Shareaza will repair them automatically.</text>
 	</document>
-	
 	<document name="DownloadHelp.Downloading">
 		<text format="b">This Download is Active!</text>
 		<newline gap="8"/>
@@ -1966,7 +1891,6 @@
 		improve it may be due to limited upload speeds of the users you are downloading 
 		from. Download speed usually increases over time.</text>
 	</document>
-	
 	<document name="DownloadHelp.Pending">
 		<text format="b">This Download is Pending</text>
 		<newline gap="8"/>
@@ -1977,7 +1901,6 @@
 		see each queue you are waiting in. If you are sharing files yourself, it may
 		improve the chances of a download transfer starting quickly.</text>
 	</document>
-	
 	<document name="DownloadHelp.Queued">
 		<text format="b">This Download is Queued</text>
 		<newline gap="8"/>
@@ -1987,7 +1910,6 @@
 		bandwidth. You can change these settings via Tools, Shareaza Settings.
 		Alternatively, you may manually start this download with the resume command.</text>
 	</document>
-	
 	<document name="DownloadHelp.Searching">
 		<text format="b">This Download is Searching</text>
 		<newline gap="8"/>
@@ -2002,14 +1924,12 @@
 		someone to come online, or cancel it and try to find a similar file which is
 		more widely available.</text>
 	</document>
-	
 	<document name="DownloadHelp.Creating">
 		<text format="b">This Download is Creating</text>
 		<newline gap="8"/>
 		<text>Shareaza is pre-allocating a file in which to store this download, to
 		save time later.</text>
 	</document>
-	
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent Tracker Down</text>
 		<newline gap="8"/>
@@ -2017,9 +1937,7 @@
 		down or malfunctioning. Shareaza is unable to contact it to receive
 		a list of downloader peers.</text>
 	</document>
-
 	<!-- Upload help documents -->
-	
 	<document name="UploadHelp">
 		<text format="b">Uploads Area</text>
 		<newline gap="8"/>
@@ -2027,9 +1945,7 @@
 		with the small + on the left, and filter what is displayed with the button on the
 		right of the window's toolbar.</text>
 	</document>
-
 	<!-- General help documents -->
-	
 	<document name="GeneralHelp.DiskSpace">
 		<text format="b">Disk Space is Low</text>
 		<newline gap="8"/>
@@ -2039,7 +1955,6 @@
 		can become unstable if the drives become full, and temporary files may be lost. You should 
 		run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
 	</document>
-
 	<document name="GeneralHelp.DiskWriteFail">
 		<text format="b">A Required Directory is Non-writable</text>
 		<newline gap="8"/>
@@ -2049,7 +1964,6 @@
 		to a selected directory. Please check directories and permissions, or change the
 		temporary files location.</text>
 	</document>
-
 	<document name="GeneralHelp.ConnectionFail">
 		<text format="b">Internet Connection Has Been Lost</text>
 		<newline gap="8"/>
@@ -2060,7 +1974,6 @@
 		<newline gap="8"/>
 		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
 	</document>
-	
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>
@@ -2070,7 +1983,6 @@
 		<newline gap="8"/>
 		<text>Children's Internet use (including P2P file sharing) should always be under parental 				supervision.</text>
 	</document>
-
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">This torrent appears to have an encoding error</text>
 		<newline gap="8"/>
@@ -2084,7 +1996,6 @@
 		<link target="http://www.shareaza.com/help/?torrentencoding">Click here for additional help</link>
 		<text>, or to download software to repair the torrent.</text>
 	</document>
-
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Your eDonkey server list is empty</text>
 		<newline gap="8"/>
@@ -2094,7 +2005,6 @@
 		<text>You can download a server list from the ed2k setting page, or the discovery
 		services window. (Press F9 to open the discovery services window)</text> 
 	</document>
-
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Limiting uploads may slow downloads</text>
 		<newline gap="8"/>
@@ -2109,9 +2019,7 @@
 		while downloads are unlimited. That configuration should give you the fastest possible 
 		downloads that are available.</text>
 	</document>
-
 	<!-- Search help documents -->
-	
 	<document name="SearchHelp.BadSearch1">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
@@ -2123,7 +2031,6 @@
 		<text>Most clients on the network will ignore a search for all MP3 files, for example, 
 		because it is not specific enough, and would generate too many results.</text>
 	</document>
-
 	<document name="SearchHelp.BadSearch2">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
@@ -2134,7 +2041,6 @@
 		other terms as well when creating the search. Punctuation and wildcards are not used 
 		in searches, just the text you enter.</text>
 	</document>
-
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
@@ -2150,7 +2056,6 @@
 		<newline gap="8"/>
 		<text>Further help is available on the Shareaza web site.</text>
 	</document>
-	
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">This search cannot be started</text>
 		<newline gap="8"/>
@@ -2161,9 +2066,7 @@
 		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the
 		adult content filter.</text>
 	</document>
-
 	<!-- Share help documents -->
-	
 	<document name="ShareHelp.AlreadyShared">
 		<text format="b">Already Shared</text>
 		<newline gap="8"/>
@@ -2171,7 +2074,6 @@
 		<newline gap="8"/>
 		<text> %s </text>
 	</document>
-
 	<document name="ShareHelp.BadShare">
 		<text format="b">This folder should not be shared</text>
 		<newline gap="8"/>
@@ -2186,7 +2088,6 @@
 		<text>The Shareaza 'incomplete' folder should also not be shared through the
 		library, since attempting to hash downloads in progress may impact on performance.</text>
 	</document>
-	
 </documents>
 
 <!-- Navigation Bar -->
