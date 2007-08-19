@@ -692,7 +692,7 @@ void CShareazaApp::InitResources()
 	}
 
 	if ( m_nPhysicalMemory == 0 )
-	{	//Fall back to GlobalMemoryStatusEx (always available)
+	{	//Fall back to GlobalMemoryStatus (always available)
 		MEMORYSTATUS pMemory;
 		GlobalMemoryStatus( &pMemory ); 
 		m_nPhysicalMemory = pMemory.dwTotalPhys;
@@ -712,13 +712,17 @@ void CShareazaApp::InitResources()
 
 		(FARPROC&)m_pfnMonitorFromWindow = GetProcAddress( 
 			m_hUser32, "MonitorFromWindow" ); 
+
+		(FARPROC&)m_pfnGetAncestor = GetProcAddress( 
+			m_hUser32, "GetAncestor" ); 
 	}
 	else
 	{
 		m_pfnSetLayeredWindowAttributes = NULL;
 		m_pfnGetMonitorInfoA = NULL; 
-        m_pfnMonitorFromRect = NULL; 
+		m_pfnMonitorFromRect = NULL; 
 		m_pfnMonitorFromWindow = NULL;
+		m_pfnGetAncestor = NULL;
 	}
 
 	if ( ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) ) != 0 )

@@ -139,9 +139,9 @@ BOOL CChildWnd::TestPoint(const CPoint& ptScreen)
 	if ( pHit == NULL ) return FALSE;
 	if ( pHit == this ) return TRUE;
 	if ( ! ::IsWindow( pHit->m_hWnd ) || ! ::IsWindow( m_hWnd ) ) return FALSE;
-	if( theApp.m_bNT && theApp.m_dwWindowsVersion >= 5 )
+	if( theApp.m_bNT && theApp.m_pfnGetAncestor )
 	{
-		if ( pHit->GetAncestor( GA_ROOT ) != GetAncestor( GA_ROOT ) ) return FALSE;
+		if ( theApp.m_pfnGetAncestor( pHit->m_hWnd, GA_ROOT ) != theApp.m_pfnGetAncestor( m_hWnd, GA_ROOT ) ) return FALSE;
 	}
 	else
 	{
