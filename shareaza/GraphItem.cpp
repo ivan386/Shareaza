@@ -1,7 +1,7 @@
 //
 // GraphItem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,10 +45,10 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CGraphItem construction
 
-CGraphItem::CGraphItem(DWORD nCode, DWORD nParam, COLORREF nColour)
+CGraphItem::CGraphItem(DWORD nCode, float nMultiplier, COLORREF nColour)
 {
 	m_nCode		= nCode;
-	m_nParam	= nParam;
+	m_nMultiplier = nMultiplier;
 	m_nColour	= nColour;
 
 	m_nData		= 64;
@@ -159,7 +159,7 @@ void CGraphItem::SetHistory(DWORD nSize, BOOL bMax)
 
 DWORD CGraphItem::Update()
 {
-	return Add( (DWORD)GetValue( m_nCode, m_nParam ) );
+	return Add( (DWORD)GetValue( m_nCode, m_nMultiplier ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -170,13 +170,13 @@ void CGraphItem::Serialize(CArchive& ar)
 	if ( ar.IsStoring() )
 	{
 		ar << m_nCode;
-		ar << m_nParam;
+		ar << m_nMultiplier;
 		ar << m_nColour;
 	}
 	else
 	{
 		ar >> m_nCode;
-		ar >> m_nParam;
+		ar >> m_nMultiplier;
 		ar >> m_nColour;
 
 		SetCode( m_nCode );
@@ -212,11 +212,11 @@ void CGraphItem::MakeGradient(COLORREF crBack)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CGraphItem value retreival
+// CGraphItem value retrieval
 
-QWORD CGraphItem::GetValue(DWORD nCode, DWORD /*nParam*/)
+QWORD CGraphItem::GetValue(DWORD nCode, float nMultiplier)
 {
-	QWORD nValue = 0;
+	long double nValue = 0;
 
 	switch ( nCode )
 	{
@@ -225,16 +225,16 @@ QWORD CGraphItem::GetValue(DWORD nCode, DWORD /*nParam*/)
 		break;
 
 	case GRC_TOTAL_BANDWIDTH_IN:
-		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_IN, 0 ) + GetValue( GRC_DOWNLOADS_BANDWIDTH, 0 ) + Datagrams.m_nInBandwidth * 8;
+		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_IN ) + GetValue( GRC_DOWNLOADS_BANDWIDTH ) + Datagrams.m_nInBandwidth * 8;
 		break;
 	case GRC_TOTAL_BANDWIDTH_OUT:
-		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_OUT, 0 ) + GetValue( GRC_UPLOADS_BANDWIDTH, 0 ) + Datagrams.m_nOutBandwidth * 8;
+		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_OUT ) + GetValue( GRC_UPLOADS_BANDWIDTH ) + Datagrams.m_nOutBandwidth * 8;
 		break;
 	case GRC_TOTAL_BANDWIDTH_TCP_IN:
-		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_IN, 0 ) + GetValue( GRC_DOWNLOADS_BANDWIDTH, 0 );
+		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_IN ) + GetValue( GRC_DOWNLOADS_BANDWIDTH );
 		break;
 	case GRC_TOTAL_BANDWIDTH_TCP_OUT:
-		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_OUT, 0 ) + GetValue( GRC_UPLOADS_BANDWIDTH, 0 );
+		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_OUT ) + GetValue( GRC_UPLOADS_BANDWIDTH );
 		break;
 	case GRC_TOTAL_BANDWIDTH_UDP_IN:
 		nValue = Datagrams.m_nInBandwidth * 8;
@@ -344,7 +344,8 @@ QWORD CGraphItem::GetValue(DWORD nCode, DWORD /*nParam*/)
 		Network.m_pSection.Unlock();
 	};
 
-	return nValue;
+	QWORD result = nValue * nMultiplier;
+	return result;
 }
 
 //////////////////////////////////////////////////////////////////////

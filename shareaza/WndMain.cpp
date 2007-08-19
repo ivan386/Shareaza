@@ -1292,8 +1292,8 @@ void CMainWnd::UpdateMessages()
 	strMessage.Format( strFormat,
 		(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), FALSE, TRUE ),
 		(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), FALSE, TRUE ),
-		(int)CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS, 0 ),
-		(int)CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS, 0 ) );
+		(int)CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS, 1.0f ),
+		(int)CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS, 1.0f ) );
 
 	m_wndStatusBar.GetPaneText( 1, strOld );
 	if ( strOld != strMessage ) m_wndStatusBar.SetPaneText( 1, strMessage );
@@ -1302,7 +1302,7 @@ void CMainWnd::UpdateMessages()
 	{
 		LoadString( strFormat, IDS_TRAY_TIP );
 		strMessage.Format( strFormat,
-			(int)CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS, 0 ),
+			(int)CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS, 1.0f ),
 			(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), FALSE, TRUE ),
 			(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), FALSE, TRUE ),
 			(int)CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),

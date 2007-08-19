@@ -1,7 +1,7 @@
 //
 // DlgGraphItem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,6 +47,7 @@ END_MESSAGE_MAP()
 // CGraphItemDlg dialog
 
 CGraphItemDlg::CGraphItemDlg(CWnd* pParent, CGraphItem* pItem) : CSkinDialog(CGraphItemDlg::IDD, pParent)
+, m_nMultiplier(1.0f)
 {
 	//{{AFX_DATA_INIT(CGraphItemDlg)
 	//}}AFX_DATA_INIT
@@ -61,7 +62,7 @@ void CGraphItemDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_GRAPH_UNITS, m_wndUnits);
 	DDX_Control(pDX, IDC_GRAPH_SOURCE, m_wndSource);
 	DDX_Control(pDX, IDC_GRAPH_REMOVE, m_wndRemove);
-	DDX_Control(pDX, IDC_GRAPH_PARAM, m_wndParam);
+	DDX_Float(pDX, IDC_GRAPH_PARAM, m_nMultiplier);
 	DDX_Control(pDX, IDC_GRAPH_COLOUR_BOX, m_wndColourBox);
 	//}}AFX_DATA_MAP
 }
@@ -91,6 +92,7 @@ BOOL CGraphItemDlg::OnInitDialog()
 	}
 
 	m_crColour = m_pItem->m_nColour;
+	m_nMultiplier = m_pItem->m_nMultiplier;
 
 	OnSelChangeGraphSource();
 
@@ -168,6 +170,8 @@ void CGraphItemDlg::OnSelChangeGraphSource()
 		break;
 	}
 
+	UpdateData( FALSE );
+
 	m_wndOK.EnableWindow( TRUE );
 }
 
@@ -204,8 +208,44 @@ void CGraphItemDlg::OnOK()
 	GRAPHITEM* pItem = (GRAPHITEM*)m_wndSource.GetItemData( nItem );
 	if ( ! pItem ) return;
 
+	UpdateData( TRUE );
 	m_pItem->SetCode( pItem->m_nCode );
 	m_pItem->m_nColour = m_crColour;
+	m_pItem->m_nMultiplier = m_nMultiplier;
 
 	CSkinDialog::OnOK();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CGraphItemDlg custom dialog data exchange
+
+void PASCAL DDX_Float(CDataExchange* pDX, int nIDC, float& nValue)
+{
+	HWND hWndCtrl = pDX->PrepareCtrl( nIDC );
+	_ASSERTE( hWndCtrl != NULL );
+
+	CWnd* pWnd = CWnd::FromHandle( hWndCtrl );	
+	// data from control
+
+	if ( pDX->m_bSaveAndValidate )
+	{
+		CString str;
+		pWnd->GetWindowText( str );
+		nValue = 1.0f;
+		if ( str.IsEmpty() )
+			return;
+
+		float nNumber;
+		if ( _stscanf( str, L"%f", &nNumber ) == 1 )
+			nValue = nNumber;
+	}
+	else //data to control
+	{
+		CString str;
+		if ( nValue <= 0 )
+			nValue = 1.0;
+
+		str.Format( L"%f", nValue );
+		pWnd->SetWindowText( (LPCTSTR)str );
+	}
 }

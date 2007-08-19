@@ -1,7 +1,7 @@
 //
 // GraphItem.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,7 @@ typedef struct
 	DWORD	m_nCode;
 	UINT	m_nStringID;
 	UINT	m_nUnits;
+	float	m_nMultiplier;
 } GRAPHITEM;
 
 
@@ -36,13 +37,13 @@ class CGraphItem
 {
 // Construction
 public:
-	CGraphItem(DWORD nCode = 0, DWORD nParam = 0, COLORREF nColour = RGB(255,255,255));
+	CGraphItem(DWORD nCode = 0, float nMultiplier = 1.0f, COLORREF nColour = RGB(255,255,255));
 	virtual ~CGraphItem();
 
 // Attributes
 public:
 	DWORD		m_nCode;
-	DWORD		m_nParam;
+	float		m_nMultiplier;
 	COLORREF	m_nColour;
 public:
 	CString		m_sName;
@@ -68,7 +69,7 @@ public:
 	void		Serialize(CArchive& ar);
 	void		MakeGradient(COLORREF crBack);
 public:
-	static QWORD		GetValue(DWORD nCode, DWORD nParam = 0);
+	static QWORD		GetValue(DWORD nCode, float nMultiplier = 1.0f);
 	static GRAPHITEM*	GetItemDesc(DWORD nCode);
 
 };

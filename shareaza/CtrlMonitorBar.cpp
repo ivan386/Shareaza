@@ -50,8 +50,8 @@ CMonitorBarCtrl::CMonitorBarCtrl()
 {
 	m_pSnapBar[0]	= NULL;
 	m_pSnapBar[1]	= NULL;
-	m_pTxItem		= new CGraphItem( GRC_TOTAL_BANDWIDTH_OUT, 0, CoolInterface.m_crMonitorUploadBar );
-	m_pRxItem		= new CGraphItem( GRC_TOTAL_BANDWIDTH_IN, 0, CoolInterface.m_crMonitorDownloadBar );
+	m_pTxItem		= new CGraphItem( GRC_TOTAL_BANDWIDTH_OUT, 1.0f, CoolInterface.m_crMonitorUploadBar );
+	m_pRxItem		= new CGraphItem( GRC_TOTAL_BANDWIDTH_IN, 1.0f, CoolInterface.m_crMonitorDownloadBar );
 	m_nMaximum		= 0;
 	m_nCount		= 0;
 	m_bTab			= FALSE;

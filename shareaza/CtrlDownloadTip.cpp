@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -102,7 +102,7 @@ void CDownloadTipCtrl::OnShow()
 	if ( m_pGraph ) delete m_pGraph;
 
 	m_pGraph	= CreateLineGraph();
-	m_pItem		= new CGraphItem( 0, 0, RGB( 0, 0, 0xFF ) );
+	m_pItem		= new CGraphItem( 0, 1.0f, RGB( 0, 0, 0xFF ) );
 	m_pGraph->AddItem( m_pItem );
 }
 

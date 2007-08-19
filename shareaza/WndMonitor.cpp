@@ -1,7 +1,7 @@
 //
 // WndMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -198,7 +198,7 @@ void CRemoteWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 		CString strFormat;
 		LoadString( strFormat, IDS_TRAY_TIP );
 		m_sStatus.Format( strFormat,
-			(int)CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS, 0 ),
+			(int)CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS, 1.0f ),
 			(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), FALSE, TRUE ),
 			(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), FALSE, TRUE ),
 			(int)CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),

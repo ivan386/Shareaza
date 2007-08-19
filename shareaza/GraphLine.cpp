@@ -1,7 +1,7 @@
 //
 // GraphLine.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -99,8 +99,8 @@ void CLineGraph::ClearItems()
 
 void CLineGraph::CreateDefaults()
 {
-	AddItem( new CGraphItem( GRC_TOTAL_BANDWIDTH_IN, 0, RGB( 0, 255, 0 ) ) );
-	AddItem( new CGraphItem( GRC_TOTAL_BANDWIDTH_OUT, 0, RGB( 255, 0, 0 ) ) );
+	AddItem( new CGraphItem( GRC_TOTAL_BANDWIDTH_IN, 1.0f, RGB( 0, 255, 0 ) ) );
+	AddItem( new CGraphItem( GRC_TOTAL_BANDWIDTH_OUT, 1.0f, RGB( 255, 0, 0 ) ) );
 }
 
 //////////////////////////////////////////////////////////////////////

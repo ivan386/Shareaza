@@ -85,8 +85,8 @@ void CNeighbourTipCtrl::OnShow()
 	if ( m_pGraph ) delete m_pGraph;
 
 	m_pGraph	= CreateLineGraph();
-	m_pItemIn	= new CGraphItem( 0, 0, RGB( 0, 0, 0xFF ) );
-	m_pItemOut	= new CGraphItem( 0, 0, RGB( 0xFF, 0, 0 ) );
+	m_pItemIn	= new CGraphItem( 0, 1.0f, RGB( 0, 0, 0xFF ) );
+	m_pItemOut	= new CGraphItem( 0, 1.0f, RGB( 0xFF, 0, 0 ) );
 
 	m_pGraph->AddItem( m_pItemIn );
 	m_pGraph->AddItem( m_pItemOut );

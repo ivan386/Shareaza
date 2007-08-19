@@ -1,7 +1,7 @@
 //
 // DlgGraphItem.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,7 @@ public:
 	CEdit	m_wndUnits;
 	CComboBox	m_wndSource;
 	CButton	m_wndRemove;
-	CComboBox	m_wndParam;
+	float m_nMultiplier;
 	CStatic	m_wndColourBox;
 	//}}AFX_DATA
 
@@ -70,8 +70,9 @@ protected:
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };
+
+void PASCAL DDX_Float(CDataExchange* pDX, int nIDC, float& nValue);
 
 //{{AFX_INSERT_LOCATION}}
 

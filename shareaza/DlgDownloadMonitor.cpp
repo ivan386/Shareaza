@@ -1,7 +1,7 @@
 //
 // DlgDownloadMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -205,7 +205,7 @@ BOOL CDownloadMonitorDlg::OnInitDialog()
 	pLock.Unlock();
 
 	m_pGraph	= new CLineGraph();
-	m_pItem		= new CGraphItem( 0, 0, RGB( 0xFF, 0, 0 ) );
+	m_pItem		= new CGraphItem( 0, 1.0f, RGB( 0xFF, 0, 0 ) );
 
 	m_pGraph->m_bShowLegend		= FALSE;
 	m_pGraph->m_bShowAxis		= FALSE;
