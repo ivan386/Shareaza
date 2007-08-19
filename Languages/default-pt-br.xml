@@ -2876,12 +2876,13 @@
 	<string id="16526" value="Pacotes Gnutella Descartados"/>
 	<string id="16527" value="Pacotes Gnutella Perdidos"/>
 	<string id="16528" value="Pesquisas Locais Gnutella"/>
-	<string id="16532" value="Banda TCP Total Recebida"/>
-	<string id="16533" value="Banda TCP Total Transmitida"/>
-	<string id="16534" value="Banda UDP Total Recebida"/>
-	<string id="16535" value="Banda UDP Total Transmitida"/>
+	<string id="16532" value="Total de Banda TCP Recebida"/>
+	<string id="16533" value="Total de Banda TCP Transmitida"/>
+	<string id="16534" value="Total de Banda UDP Recebida"/>
+	<string id="16535" value="Total de Banda UDP Transmitida"/>
 	<string id="16536" value="Ratio Gnutella de Pings Recebidos/Enviados"/>
 	<string id="16537" value="Ratio Gnutella de Pongs Recebidos/Enviados"/>
+	<string id="16538" value="Erros de Conexão (%)"/>
 	<string id="16768" value="Recebida URL &quot;%s&quot;"/>
 	<string id="16769" value="Impossível analisar URL: Shareaza não entende esta URL."/>
 	<string id="16770" value="Incapaz de exibir diálogo de ação da URL porque o Shareaza está ocupado."/>
@@ -3866,16 +3867,17 @@
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Propriedades dos Itens do Gráfico">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Propriedades dos Itens do Gráfico">
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
 		<control caption="Fonte:"/>
-		<control/><control/>
-		<control caption="Parâmetro:"/>
+		<control/>
+		<control caption="Exibir:"/>
+		<control/>
 		<control caption="Unidades:"/>
 		<control/>
 		<control caption="Exibir:"/>
-		<control caption="Selecionar Cor..."/>
+		<control caption="Selecionar a Cor..."/>
 		<control/>
 		<control caption="Remover"/>
 	</dialog>
