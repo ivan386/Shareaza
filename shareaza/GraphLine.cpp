@@ -337,6 +337,13 @@ void CLineGraph::PaintLegend(CDC* pDC, CRect* pRect)
 	{
 		CGraphItem* pItem = GetNextItem( pos );
 		pDC->SetTextColor( pItem->m_nColour );
-		pDC->ExtTextOut( nLeft, nTop, 0, NULL, _T("\x2022 ") + pItem->m_sName, NULL );
+
+		CString strText;
+		if ( pItem->m_nMultiplier != 1.0f )
+			strText.Format( L"%s (\x00D7%f)", pItem->m_sName, pItem->m_nMultiplier );
+		else
+			strText = pItem->m_sName;
+
+		pDC->ExtTextOut( nLeft, nTop, 0, NULL, _T("\x2022 ") + strText, NULL );
 	}
 }

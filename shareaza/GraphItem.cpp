@@ -177,6 +177,8 @@ void CGraphItem::Serialize(CArchive& ar)
 	{
 		ar >> m_nCode;
 		ar >> m_nMultiplier;
+		if ( m_nMultiplier == 0.0f )
+			m_nMultiplier = 1.0f;
 		ar >> m_nColour;
 
 		SetCode( m_nCode );
