@@ -44,8 +44,8 @@ typedef struct
 	BOOL	bHadED2K;
 	BOOL	bHadBTH;
 	BOOL	bHadMD5;
-	int		nHadCount;
-	int		nHadFiltered;
+	DWORD	nHadCount;
+	DWORD	nHadFiltered;
 	BOOL	bHad[5];
 } FILESTATS;
 

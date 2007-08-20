@@ -577,6 +577,8 @@ void CMatchList::Clear()
 	m_nItems			= 0;
 	m_nFilteredFiles	= 0;
 	m_nFilteredHits		= 0;
+	m_nGnutellaHits		= 0;
+	m_nED2KHits			= 0;
 
 	m_pSelectedFiles.RemoveAll();
 	m_pSelectedHits.RemoveAll();
@@ -1128,6 +1130,27 @@ void CMatchList::Serialize(CArchive& ar)
 			CMatchFile* pFile = new CMatchFile( this );
 			m_pFiles[ nFile ] = pFile;
 			pFile->Serialize( ar, nVersion );
+			
+			for ( CQueryHit* pHit = pFile->GetHits(); pHit; pHit = pHit->m_pNext )
+			{
+				switch ( pHit->m_nProtocol )
+				{
+				case PROTOCOL_G1:
+				case PROTOCOL_G2:
+					m_nGnutellaHits++;
+					break;
+				case PROTOCOL_ED2K:
+					m_nED2KHits++;
+					break;
+				case PROTOCOL_BT:
+				case PROTOCOL_FTP:
+				case PROTOCOL_HTTP:
+				case PROTOCOL_NULL:
+				case PROTOCOL_ANY:
+				default:
+					;
+				}
+			}
 			
 			CMatchFile** pMap = m_pSizeMap + (DWORD)( pFile->m_nSize & 0xFF );
 			pFile->m_pNextSize = *pMap;
