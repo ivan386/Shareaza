@@ -1,7 +1,7 @@
 //
 // DlgSplash.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,7 +60,6 @@ CSplashDlg::CSplashDlg(int nMax, BOOL bSilent) : CDialog( CSplashDlg::IDD, NULL 
 	m_bSilent	= bSilent;
 	m_sState	= _T("Version ") + theApp.m_sVersion + _T("...");
 
-	m_hUser32			= NULL;
 	m_pfnAnimateWindow	= NULL;
 
 #ifdef _DEBUG
@@ -72,7 +71,6 @@ CSplashDlg::CSplashDlg(int nMax, BOOL bSilent) : CDialog( CSplashDlg::IDD, NULL 
 
 CSplashDlg::~CSplashDlg()
 {
-	if ( m_hUser32 != NULL ) FreeLibrary( m_hUser32 );
 }
 
 void CSplashDlg::DoDataExchange(CDataExchange* pDX)
@@ -100,10 +98,10 @@ BOOL CSplashDlg::OnInitDialog()
 	SetWindowPos( NULL, 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, SWP_NOMOVE );
 	CenterWindow();
 
-	if ( theApp.m_bNT && ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != 0 && 
+	if ( theApp.m_bNT && theApp.m_hUser32 != 0 && 
 		 theApp.m_dwWindowsVersion >= 5 && GetSystemMetrics( SM_REMOTESESSION ) == 0 )
 	{
-		(FARPROC&)m_pfnAnimateWindow = GetProcAddress( m_hUser32, "AnimateWindow" );
+		(FARPROC&)m_pfnAnimateWindow = GetProcAddress( theApp.m_hUser32, "AnimateWindow" );
 
 		if ( m_pfnAnimateWindow != NULL )
 		{

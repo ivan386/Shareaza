@@ -473,6 +473,8 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_hPowrProf != NULL ) FreeLibrary( m_hPowrProf );
 
+	if ( m_hShlWapi != NULL ) FreeLibrary( m_hShlWapi );
+
 	if ( m_hGeoIP != NULL ) FreeLibrary( m_hGeoIP );
 
 	if ( dlgSplash )
@@ -717,25 +719,29 @@ void CShareazaApp::InitResources()
 
 		(FARPROC&)m_pfnGetAncestor = GetProcAddress( 
 			m_hUser32, "GetAncestor" ); 
+
+		(FARPROC&)m_pfnPrivateExtractIconsW = GetProcAddress( 
+			m_hUser32, "PrivateExtractIconsW" ); 
 	}
 	else
 	{
 		m_pfnSetLayeredWindowAttributes = NULL;
-		m_pfnGetMonitorInfoA = NULL; 
-		m_pfnMonitorFromRect = NULL; 
+		m_pfnGetMonitorInfoA = NULL;
+		m_pfnMonitorFromRect = NULL;
 		m_pfnMonitorFromWindow = NULL;
 		m_pfnGetAncestor = NULL;
+		m_pfnPrivateExtractIconsW = NULL;
 	}
-
-	if ( ( m_hTheme = LoadLibrary( _T("UxTheme.dll") ) ) != 0 )
-		(FARPROC&)m_pfnSetWindowTheme = GetProcAddress( m_hTheme, "SetWindowTheme" );
-	else
-		m_pfnSetWindowTheme = NULL;
 
 	if ( ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) ) != 0 )
 		(FARPROC&)m_pfnSetLayout = GetProcAddress( m_hGDI32, "SetLayout" );
 	else
 		m_pfnSetLayout = NULL;
+
+	if ( ( m_hTheme = LoadLibrary( _T("UxTheme.dll") ) ) != 0 )
+		(FARPROC&)m_pfnSetWindowTheme = GetProcAddress( m_hTheme, "SetWindowTheme" );
+	else
+		m_pfnSetWindowTheme = NULL;
 
 	if ( ( m_hPowrProf = LoadLibrary( _T("PowrProf.dll") ) ) != 0 )
 	{
@@ -750,9 +756,11 @@ void CShareazaApp::InitResources()
 		m_pfnSetActivePwrScheme = NULL;
 	}
 
+	m_hShlWapi = LoadLibrary( _T("shlwapi.dll") );
+
 	// Load the GeoIP library for mapping IPs to countries
 	m_hGeoIP = LoadLibrary( _T("geoip.dll") );
-    if ( m_hGeoIP )
+	if ( m_hGeoIP )
 	{
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
 		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_addr" );

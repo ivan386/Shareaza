@@ -1,7 +1,7 @@
 //
 // ShellIcons.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,10 +85,6 @@ protected:
 	CMap< CString, const CString&, int, int > m_m16;
 	CMap< CString, const CString&, int, int > m_m32;
 	CMap< CString, const CString&, int, int > m_m48;
-
-	HINSTANCE m_hUser;
-	UINT (WINAPI *m_pfnPrivate)(LPCTSTR, int, int, int, HICON*, UINT*, UINT, UINT);
-
 };
 
 extern CShellIcons ShellIcons;

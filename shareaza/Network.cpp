@@ -118,18 +118,35 @@ BOOL CNetwork::IsSelfIP(IN_ADDR nAddress) const
 
 BOOL CNetwork::IsAvailable() const
 {
-	DWORD dwState = 0;
-	__try
+	BOOL bIsAvailable = FALSE;
+	HINSTANCE hWininet = LoadLibrary( _T("wininet.dll") );
+	BOOL (WINAPI *pfnInternetGetConnectedState)(LPDWORD, DWORD);
+	pfnInternetGetConnectedState = NULL;
+
+	if ( hWininet != NULL )
+		(FARPROC&)pfnInternetGetConnectedState = GetProcAddress( hWininet, "InternetGetConnectedState" );
+
+	if ( pfnInternetGetConnectedState )
 	{
-		if ( InternetGetConnectedState( &dwState, 0 ) )
+		DWORD dwState = 0;
+
+		__try
 		{
-			if ( ! ( dwState & INTERNET_CONNECTION_OFFLINE ) ) return TRUE;
+			if ( (*pfnInternetGetConnectedState)( &dwState, 0 ) )
+			{
+				if ( ! ( dwState & INTERNET_CONNECTION_OFFLINE ) ) bIsAvailable = TRUE;
+			}
+		}
+		__except( EXCEPTION_CONTINUE_EXECUTION )
+		{
 		}
 	}
-	__except( EXCEPTION_CONTINUE_EXECUTION )
-	{
-	}
-	return FALSE;
+	else
+		bIsAvailable = TRUE; // Return always TRUE if the version of IE installed is too old and it doesn't support InternetGetConnectedState()
+
+	if ( hWininet != NULL ) FreeLibrary( hWininet );
+
+	return bIsAvailable;
 }
 
 BOOL CNetwork::IsConnected() const

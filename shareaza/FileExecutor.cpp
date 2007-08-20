@@ -232,33 +232,42 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 	{
 		CString strCommand;
 		DWORD nBufferSize = MAX_PATH;
+		HRESULT (WINAPI *pfnAssocQueryStringW)(ASSOCF, ASSOCSTR, LPCTSTR, LPCTSTR, LPTSTR, DWORD*);
 
-		// Sometimes ShellExecute doesn't work, so we find the verb stuff manually
-		HRESULT hr = AssocQueryString( ASSOCF_OPEN_BYEXENAME, ASSOCSTR_COMMAND, 
-			Settings.MediaPlayer.ServicePath, _T("Enqueue"), 
-			strCommand.GetBuffer( MAX_PATH ), &nBufferSize );
-		strCommand.ReleaseBuffer();
-		
-		if ( SUCCEEDED( hr ) )
+		if ( theApp.m_hShlWapi != NULL )
+			(FARPROC&)pfnAssocQueryStringW = GetProcAddress( theApp.m_hShlWapi, "AssocQueryStringW" );
+		else
+			pfnAssocQueryStringW = NULL;
+
+		if ( pfnAssocQueryStringW )
 		{
-			int nFind = strCommand.Find( _T("%1") );
-			if ( nFind != -1 )
-			{
-				strCommand.SetString( strCommand.Left( nFind ) + strFile + strCommand.Mid( nFind + 2 ) );
-				ToLower( strCommand );
-				
-				CString strServiceLC = Settings.MediaPlayer.ServicePath;
-				ToLower( strServiceLC );
-				
-				nFind = strCommand.Find( strServiceLC );
-				strCommand.SetString( strCommand.Mid( strServiceLC.GetLength() + nFind ) );
-				if ( strCommand.Left( 1 ) == _T("\"") ) 
-					strCommand.SetString( strCommand.Mid( 1 ).Trim() );
+			// Sometimes ShellExecute doesn't work, so we find the verb stuff manually
+			HRESULT hr = (*pfnAssocQueryStringW)( ASSOCF_OPEN_BYEXENAME, ASSOCSTR_COMMAND, 
+				Settings.MediaPlayer.ServicePath, _T("Enqueue"), 
+				strCommand.GetBuffer( MAX_PATH ), &nBufferSize );
+			strCommand.ReleaseBuffer();
 
-				strExecPath = Settings.MediaPlayer.ServicePath.Left( nBackSlash );
-				ShellExecute( NULL, NULL, Settings.MediaPlayer.ServicePath, 
-					strCommand, strExecPath, SW_SHOWNORMAL );
-				return TRUE;
+			if ( SUCCEEDED( hr ) )
+			{
+				int nFind = strCommand.Find( _T("%1") );
+				if ( nFind != -1 )
+				{
+					strCommand.SetString( strCommand.Left( nFind ) + strFile + strCommand.Mid( nFind + 2 ) );
+					ToLower( strCommand );
+					
+					CString strServiceLC = Settings.MediaPlayer.ServicePath;
+					ToLower( strServiceLC );
+					
+					nFind = strCommand.Find( strServiceLC );
+					strCommand.SetString( strCommand.Mid( strServiceLC.GetLength() + nFind ) );
+					if ( strCommand.Left( 1 ) == _T("\"") ) 
+						strCommand.SetString( strCommand.Mid( 1 ).Trim() );
+
+					strExecPath = Settings.MediaPlayer.ServicePath.Left( nBackSlash );
+					ShellExecute( NULL, NULL, Settings.MediaPlayer.ServicePath, 
+						strCommand, strExecPath, SW_SHOWNORMAL );
+					return TRUE;
+				}
 			}
 		}
 	}

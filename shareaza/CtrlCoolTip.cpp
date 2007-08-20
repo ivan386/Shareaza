@@ -231,7 +231,7 @@ void CCoolTipCtrl::ShowImpl()
 	else
 	{
 		ModifyStyleEx( 0, WS_EX_LAYERED );
-		(*theApp.m_pfnSetLayeredWindowAttributes)( GetSafeHwnd(),
+		theApp.m_pfnSetLayeredWindowAttributes( GetSafeHwnd(),
 			0, (BYTE)Settings.Interface.TipAlpha, LWA_ALPHA );
 	}
 

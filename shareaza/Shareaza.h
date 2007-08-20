@@ -93,6 +93,7 @@ public:
 	HMONITOR	(WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
 	HMONITOR	(WINAPI *m_pfnMonitorFromWindow)(HWND, DWORD);
 	HWND		(WINAPI *m_pfnGetAncestor)(HWND, UINT);
+	UINT		(WINAPI *m_pfnPrivateExtractIconsW)(LPCTSTR, int, int, int, HICON*, UINT*, UINT, UINT);
 
 	// For RTL layout support
 	HINSTANCE	m_hGDI32;
@@ -107,7 +108,9 @@ public:
 	BOOLEAN		(WINAPI *m_pfnGetActivePwrScheme)(PUINT);
 	BOOLEAN		(WINAPI *m_pfnGetCurrentPowerPolicies)(PGLOBAL_POWER_POLICY, PPOWER_POLICY);
 	BOOLEAN		(WINAPI *m_pfnSetActivePwrScheme)(UINT, PGLOBAL_POWER_POLICY, PPOWER_POLICY);
-	
+
+	HINSTANCE	m_hShlWapi;
+
 	// GeoIP - IP to Country lookup
 	HINSTANCE m_hGeoIP;
 	GeoIP* m_pGeoIP;

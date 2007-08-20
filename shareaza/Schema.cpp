@@ -565,30 +565,17 @@ BOOL CSchema::LoadIcon()
 {
 	HICON hIcon16 = NULL, hIcon32 = NULL, hIcon48 = NULL;
 
-	if ( HINSTANCE hUser = LoadLibrary( _T("User32.dll") ) )
+	if ( theApp.m_pfnPrivateExtractIconsW )
 	{
-		UINT (WINAPI *pfnPrivate)(LPCTSTR, int, int, int, HICON*, UINT*, UINT, UINT);
+		UINT nLoadedID;
+		theApp.m_pfnPrivateExtractIconsW( m_sIcon, 0, 48, 48, &hIcon48, &nLoadedID, 1, 0 );
 
-#ifdef UNICODE
-		(FARPROC&)pfnPrivate = GetProcAddress( hUser, "PrivateExtractIconsW" );
-#else
-		(FARPROC&)pfnPrivate = GetProcAddress( hUser, "PrivateExtractIconsA" );
-#endif
-
-		if ( pfnPrivate )
+		if ( hIcon48 )
 		{
-			UINT nLoadedID;
-			(*pfnPrivate)( m_sIcon, 0, 48, 48, &hIcon48, &nLoadedID, 1, 0 );
-
-			if ( hIcon48 )
-			{
-				if ( theApp.m_bRTL ) hIcon48 = CreateMirroredIcon( hIcon48 );
-				m_nIcon48 = ShellIcons.Add( hIcon48, 48 );
-				DestroyIcon( hIcon48 );
-			}
+			if ( theApp.m_bRTL ) hIcon48 = CreateMirroredIcon( hIcon48 );
+			m_nIcon48 = ShellIcons.Add( hIcon48, 48 );
+			DestroyIcon( hIcon48 );
 		}
-		
-		FreeLibrary( hUser );
 	}
 
 	if ( ExtractIconEx( m_sIcon, 0, &hIcon32, &hIcon16, 1 ) )

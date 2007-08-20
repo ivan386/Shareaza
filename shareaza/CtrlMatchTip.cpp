@@ -76,16 +76,6 @@ CMatchTipCtrl::CMatchTipCtrl()
 	m_tOpen		= 0;
 	m_nIcon		= 0;
 
-	if ( ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != 0 )
-	{
-		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
-			m_hUser32, "SetLayeredWindowAttributes" );
-	}
-	else
-	{
-		m_pfnSetLayeredWindowAttributes = NULL;
-	}
-
 	if ( ! m_hClass ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
 
 	m_crBack	= CoolInterface.m_crTipBack;
@@ -99,7 +89,6 @@ CMatchTipCtrl::CMatchTipCtrl()
 
 CMatchTipCtrl::~CMatchTipCtrl()
 {
-	if ( m_hUser32 ) FreeLibrary( m_hUser32 );
 }
 
 LPCTSTR		CMatchTipCtrl::m_hClass = NULL;
@@ -291,14 +280,14 @@ void CMatchTipCtrl::ShowInternal()
 		rc.OffsetRect( 0, -sz.cy - TIP_OFFSET_Y - 4 );
 	}*/
 
-	if ( Settings.Interface.TipAlpha == 255 || m_pfnSetLayeredWindowAttributes == NULL )
+	if ( Settings.Interface.TipAlpha == 255 || theApp.m_pfnSetLayeredWindowAttributes == NULL )
 	{
 		ModifyStyleEx( WS_EX_LAYERED, 0 );
 	}
 	else
 	{
 		ModifyStyleEx( 0, WS_EX_LAYERED );
-		(*m_pfnSetLayeredWindowAttributes)( GetSafeHwnd(),
+		theApp.m_pfnSetLayeredWindowAttributes( GetSafeHwnd(),
 			0, (BYTE)Settings.Interface.TipAlpha, LWA_ALPHA );
 	}
 

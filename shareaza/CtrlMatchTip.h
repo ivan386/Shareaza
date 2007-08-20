@@ -1,7 +1,7 @@
 //
 // CtrlMatchTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,9 +70,6 @@ protected:
 	CMetaList		m_pMetadata;
 	int				m_nKeyWidth;
 	int				m_nRating;
-protected:
-	HINSTANCE m_hUser32;
-	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
 protected:
 	static LPCTSTR	m_hClass;
 	static CBrush	m_brBack;

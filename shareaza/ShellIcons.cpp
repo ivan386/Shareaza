@@ -1,7 +1,7 @@
 //
 // ShellIcons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,22 +36,10 @@ CShellIcons ShellIcons;
 
 CShellIcons::CShellIcons()
 {
-	m_hUser			= LoadLibrary( _T("User32.dll") );
-	m_pfnPrivate	= NULL;
-
-	if ( m_hUser != NULL )
-	{
-#ifdef UNICODE
-		(FARPROC&)m_pfnPrivate = GetProcAddress( m_hUser, "PrivateExtractIconsW" );
-#else
-		(FARPROC&)m_pfnPrivate = GetProcAddress( m_hUser, "PrivateExtractIconsA" );
-#endif
-	}
 }
 
 CShellIcons::~CShellIcons()
 {
-	if ( m_hUser ) FreeLibrary( m_hUser );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -370,11 +358,11 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 		}
 	}
 
-	if ( m_pfnPrivate && phHugeIcon )
+	if ( theApp.m_pfnPrivateExtractIconsW && phHugeIcon )
 	{
 		UINT nLoadedID;
 
-		if ( (*m_pfnPrivate)( strIcon, nIcon, 48, 48, phHugeIcon, &nLoadedID, 1, 0 ) )
+		if ( theApp.m_pfnPrivateExtractIconsW( strIcon, nIcon, 48, 48, phHugeIcon, &nLoadedID, 1, 0 ) )
 		{
 			bSuccess = TRUE;
 			if ( phHugeIcon && *phHugeIcon && theApp.m_bRTL )

@@ -1,7 +1,7 @@
 //
 // CtrlChatFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -579,12 +579,12 @@ void CChatFrame::OnTimer(UINT_PTR nIDEvent)
 		if ( GetForegroundWindow() != GetTopLevelParent() )
 		{
 			CWnd* pParentWnd = GetTopLevelParent();
-			
-			if ( HINSTANCE hUser = LoadLibrary( _T("User32") ) )
+
+			if ( theApp.m_hUser32 != 0 )
 			{
 				BOOL (WINAPI *pfnFlashWindowEx)(PFLASHWINFO pfwi);
 				
-				(FARPROC&)pfnFlashWindowEx = GetProcAddress( hUser, "FlashWindowEx" );
+				(FARPROC&)pfnFlashWindowEx = GetProcAddress( theApp.m_hUser32, "FlashWindowEx" );
 				if ( pfnFlashWindowEx )
 				{
 					FLASHWINFO pFWX;
@@ -597,8 +597,6 @@ void CChatFrame::OnTimer(UINT_PTR nIDEvent)
 					
 					(*pfnFlashWindowEx)( &pFWX );
 				}
-				
-				FreeLibrary( hUser );
 			}
 		}
 	}
