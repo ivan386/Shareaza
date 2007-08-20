@@ -110,7 +110,7 @@ protected:
 	};
 	
 public:
-	void		AddHits(CQueryHit* pHits, CQuerySearch* pFilter = NULL, BOOL bRequire = FALSE);
+	void		AddHits(CQueryHit* pHits, CQuerySearch* pFilter = NULL);
 	DWORD		FileToItem(CMatchFile* pFile);
 	void		Clear();
 	BOOL		Select(CMatchFile* pFile, CQueryHit* pHit, BOOL bSelected = TRUE);

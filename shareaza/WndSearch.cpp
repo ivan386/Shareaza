@@ -90,7 +90,21 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSearchWnd construction
 
-CSearchWnd::CSearchWnd(auto_ptr< CQuerySearch > pSearch)
+CSearchWnd::CSearchWnd(auto_ptr< CQuerySearch > pSearch) :
+	m_bPanel( Settings.Search.SearchPanel ),
+	m_bSetFocus( TRUE ),
+	m_bDetails( Settings.Search.DetailPanelVisible ),
+	m_nDetails( Settings.Search.DetailPanelSize ),
+	m_nLastSearchHelp( 0 ),
+	m_tSearch( 0 ),
+	m_nCacheHits( 0 ),
+	m_nCacheHubs( 0 ),
+	m_nCacheLeaves( 0 ),
+	m_sCaption( _T("") ),
+	m_bWaitMore( FALSE ),
+	m_nMaxResults( 0 ),
+	m_nMaxED2KResults( 0 ),
+	m_nMaxQueryCount( 0 )
 {
 	if ( pSearch.get() ) 
 	{
@@ -131,21 +145,7 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 		m_wndList.SelectSchema( pSchema, &pColumns );
 	}
-	
-	m_nCacheHubs		= 0;
-	m_nCacheLeaves		= 0;
-	m_bPanel			= Settings.Search.SearchPanel;
-	m_bDetails			= Settings.Search.DetailPanelVisible;
-	m_nDetails			= Settings.Search.DetailPanelSize;
-	m_nLastSearchHelp	= 0;
 
-	m_bPaused			= TRUE;
-	m_bSetFocus			= TRUE;
-	m_bWaitMore			= FALSE;
-	m_nMaxResults		= 0;
-	m_nMaxED2KResults	= 0;
-	m_nMaxQueryCount	= 0;
-	
 	LoadState( _T("CSearchWnd"), TRUE );
 	
 	ExecuteSearch();
@@ -851,21 +851,19 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 {
 	if ( m_bPaused || m_hWnd == NULL )
 		return FALSE;
-	
+
 	CSingleLock pLock( &m_pMatches->m_pSection );
-	if ( ! pLock.Lock( 100 ) || m_bPaused )
+	if ( ! pLock.Lock( 250 ) || m_bPaused )
 		return FALSE;
-	
+
 	for ( reverse_iterator pManaged = rbegin(); pManaged != rend(); ++pManaged )
 	{
-		BOOL bNull = FALSE;
-		
 		if ( pManaged->m_bReceive )
 		{
 			if ( validAndEqual( pManaged->m_pSearch->m_oGUID, pHits->m_oSearchID ) ||	// The hits GUID matches the search
 				 ( !pHits->m_oSearchID && ( pManaged->IsLastED2KSearch() ) ) )	// The hits have no GUID and the search is the most recent ED2K text search
 			{
-				m_pMatches->AddHits( pHits, pManaged->m_pSearch.get(), bNull );
+				m_pMatches->AddHits( pHits, pManaged->m_pSearch.get() );
 				m_bUpdate = TRUE;
 				
 				if ( ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults ) && ( pManaged->m_tLastED2K != 0xFFFFFFFF ) )

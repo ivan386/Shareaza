@@ -159,7 +159,7 @@ CMatchList::~CMatchList()
 //////////////////////////////////////////////////////////////////////
 // CMatchList add hits
 
-void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
+void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CMatchFile **pMap;
@@ -194,13 +194,6 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 				pHit->m_oED2K,
 				pHit->m_oBTH,
 				pHit->m_oMD5);
-			
-			if ( bRequire && ! pHit->m_bMatched )
-			{
-				delete pHit;
-				pHit = pNext;
-				continue;
-			}
 			
 			// ToDo: Change to pHit->m_bMatched when we will be able to get folder name
 			// from hits. Raza sends hits if folder name matches the search keywords too.

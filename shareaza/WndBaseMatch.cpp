@@ -124,16 +124,16 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CBaseMatchWnd construction
 
-CBaseMatchWnd::CBaseMatchWnd()
+CBaseMatchWnd::CBaseMatchWnd() :
+	m_pMatches( new CMatchList() ),
+	m_pCoolMenu( NULL ),
+	m_bContextMenu( FALSE ),
+	m_tContextMenu( 0 ),
+	m_bPaused( TRUE ),
+	m_bUpdate( FALSE ),
+	m_bBMWActive( TRUE ),
+	m_nCacheFiles( 0 )
 {
-	m_pMatches		= new CMatchList();
-	m_pCoolMenu		= NULL;
-	m_bContextMenu	= FALSE;
-	m_tContextMenu	= 0;
-	m_bPaused		= FALSE;
-	m_bUpdate		= FALSE;
-	m_bBMWActive	= TRUE;
-	m_nCacheFiles	= 0;
 }
 
 CBaseMatchWnd::~CBaseMatchWnd()
