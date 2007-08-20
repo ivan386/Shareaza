@@ -98,6 +98,10 @@ public:
 	HINSTANCE	m_hGDI32;
 	DWORD		(WINAPI *m_pfnSetLayout)(HDC, DWORD);
 
+	// For themes functions
+	HINSTANCE	m_hTheme;
+	HRESULT		(WINAPI *m_pfnSetWindowTheme)(HWND, LPCWSTR, LPCWSTR);
+
 	// Power schemes management
 	HINSTANCE	m_hPowrProf;
 	BOOLEAN		(WINAPI *m_pfnGetActivePwrScheme)(PUINT);

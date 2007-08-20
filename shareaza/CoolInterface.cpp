@@ -525,28 +525,19 @@ BOOL CCoolInterface::IsNewWindows()
 
 BOOL CCoolInterface::EnableTheme(CWnd* pWnd, BOOL bEnable)
 {
-	HINSTANCE hTheme = LoadLibrary( _T("UxTheme.dll") );
-	if ( ! hTheme ) return FALSE;
-
-	HRESULT (WINAPI *pfnSetWindowTheme)(HWND, LPCWSTR, LPCWSTR);
-
-	(FARPROC&)pfnSetWindowTheme = GetProcAddress( hTheme, "SetWindowTheme" );
-
 	BOOL bResult = FALSE;
 
-	if ( pfnSetWindowTheme )
+	if ( theApp.m_pfnSetWindowTheme )
 	{
 		if ( bEnable )
 		{
-			bResult = SUCCEEDED( (*pfnSetWindowTheme)( pWnd->GetSafeHwnd(), NULL, NULL ) );
+			bResult = SUCCEEDED( theApp.m_pfnSetWindowTheme( pWnd->GetSafeHwnd(), NULL, NULL ) );
 		}
 		else
 		{
-			bResult = SUCCEEDED( (*pfnSetWindowTheme)( pWnd->GetSafeHwnd(), L" ", L" " ) );
+			bResult = SUCCEEDED( theApp.m_pfnSetWindowTheme( pWnd->GetSafeHwnd(), L" ", L" " ) );
 		}
 	}
-
-	FreeLibrary( hTheme );
 
 	return bResult;
 }

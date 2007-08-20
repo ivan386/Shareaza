@@ -123,15 +123,10 @@ void CIconButtonCtrl::SetHandCursor(BOOL bCursor)
 
 BOOL CIconButtonCtrl::RemoveStyle()
 {
-	HINSTANCE hLibrary = LoadLibrary( _T("uxtheme") );
-	if ( !hLibrary ) return FALSE;
+	BOOL bSuccess = FALSE;
 
-	HRESULT (WINAPI *pfnSetWindowTheme)(HWND, LPCWSTR, LPCWSTR);
-
-	(FARPROC&)pfnSetWindowTheme = GetProcAddress( hLibrary, "SetWindowTheme" );
-	BOOL bSuccess = SUCCEEDED( (*pfnSetWindowTheme)( GetSafeHwnd(), L" ", L" " ) );
-
-	FreeLibrary( hLibrary );
+	if ( theApp.m_pfnSetWindowTheme )
+		bSuccess = SUCCEEDED( theApp.m_pfnSetWindowTheme( GetSafeHwnd(), L" ", L" " ) );
 
 	return bSuccess;
 }

@@ -469,6 +469,8 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_hGDI32 != NULL ) FreeLibrary( m_hGDI32 );
 
+	if ( m_hTheme != NULL ) FreeLibrary( m_hTheme );
+
 	if ( m_hPowrProf != NULL ) FreeLibrary( m_hPowrProf );
 
 	if ( m_hGeoIP != NULL ) FreeLibrary( m_hGeoIP );
@@ -697,16 +699,16 @@ void CShareazaApp::InitResources()
 		GlobalMemoryStatus( &pMemory ); 
 		m_nPhysicalMemory = pMemory.dwTotalPhys;
 	}
-	
+
 	//Get pointers to some functions that don't exist under 95/NT
 	if ( m_hUser32 != 0 )
 	{
 		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
 			m_hUser32, "SetLayeredWindowAttributes" );
-		   
+
 		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress( 
 			m_hUser32, "GetMonitorInfoA" ); 
-    
+
 		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress( 
 			m_hUser32, "MonitorFromRect" ); 
 
@@ -724,6 +726,11 @@ void CShareazaApp::InitResources()
 		m_pfnMonitorFromWindow = NULL;
 		m_pfnGetAncestor = NULL;
 	}
+
+	if ( ( m_hTheme = LoadLibrary( _T("UxTheme.dll") ) ) != 0 )
+		(FARPROC&)m_pfnSetWindowTheme = GetProcAddress( m_hTheme, "SetWindowTheme" );
+	else
+		m_pfnSetWindowTheme = NULL;
 
 	if ( ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) ) != 0 )
 		(FARPROC&)m_pfnSetLayout = GetProcAddress( m_hGDI32, "SetLayout" );
