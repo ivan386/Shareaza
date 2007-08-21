@@ -1,7 +1,7 @@
 //
 // XML.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -200,11 +200,7 @@ void CXMLNode::ValueToString(LPCTSTR pszValue, CString& strXML)
 
 	for ( ; *pszValue ; pszValue++ )
 	{
-#ifdef UNICODE
 		int nChar = (int)(unsigned short)*pszValue;
-#else
-		int nChar = (int)(unsigned char)*pszValue;
-#endif
 
 		switch ( nChar )
 		{
@@ -288,11 +284,7 @@ void CXMLNode::UniformString(CString& str)
 
 	for ( int nPos = 0 ; nPos < str.GetLength() ; nPos++ )
 	{
-#ifdef UNICODE
 		int nChar = (int)(unsigned short)str.GetAt( nPos );
-#else
-		int nChar = (int)(unsigned char)str.GetAt( nPos );
-#endif
 
 		if ( nChar <= 32 )
 		{

@@ -854,38 +854,29 @@ void CDownloads::SetPerHostLimit(IN_ADDR* pAddress, int nLimit)
 BOOL CDownloads::IsSpaceAvailable(QWORD nVolume, int nPath)
 {
 	QWORD nMargin = 10485760;
-	
-	if ( HINSTANCE hKernel = GetModuleHandle( _T("KERNEL32.DLL") ) )
+
+	if ( theApp.m_pfnGetDiskFreeSpaceExW != NULL )
 	{
-		 BOOL (WINAPI *pfnGetDiskFreeSpaceEx)(LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER); 
-#ifdef UNICODE
-		(FARPROC&)pfnGetDiskFreeSpaceEx = GetProcAddress( hKernel, "GetDiskFreeSpaceExW" );
-#else
- 		(FARPROC&)pfnGetDiskFreeSpaceEx = GetProcAddress( hKernel, "GetDiskFreeSpaceExA" );
-#endif	
-		if ( pfnGetDiskFreeSpaceEx != NULL )
+		ULARGE_INTEGER nFree, nNull;
+
+		if ( ( ! nPath || nPath == dlPathIncomplete ) && theApp.m_pfnGetDiskFreeSpaceExW( Settings.Downloads.IncompletePath, &nFree, &nNull, &nNull ) )
 		{
-			ULARGE_INTEGER nFree, nNull;
-			
-			if ( ( ! nPath || nPath == dlPathIncomplete ) && (*pfnGetDiskFreeSpaceEx)( Settings.Downloads.IncompletePath, &nFree, &nNull, &nNull ) )
-			{
-				if ( nFree.QuadPart < nVolume + nMargin ) return FALSE;
-			}
-
-			if ( ( ! nPath || nPath == dlPathComplete ) && (*pfnGetDiskFreeSpaceEx)( Settings.Downloads.CompletePath, &nFree, &nNull, &nNull ) )
-			{
-				if ( nFree.QuadPart < nVolume + nMargin ) return FALSE;
-			}
-
-			return TRUE;
+			if ( nFree.QuadPart < nVolume + nMargin ) return FALSE;
 		}
+
+		if ( ( ! nPath || nPath == dlPathComplete ) && theApp.m_pfnGetDiskFreeSpaceExW( Settings.Downloads.CompletePath, &nFree, &nNull, &nNull ) )
+		{
+			if ( nFree.QuadPart < nVolume + nMargin ) return FALSE;
+		}
+
+		return TRUE;
 	}
 
 	DWORD nSPC, nBPS, nFree, nTotal;
 	if ( ! nPath || nPath == dlPathIncomplete )
 	{
 		CString str = Settings.Downloads.IncompletePath.SpanExcluding( _T("\\") ) + '\\';
-	
+
 		if ( GetDiskFreeSpace( str, &nSPC, &nBPS, &nFree, &nTotal ) )
 		{
 			QWORD nBytes = (QWORD)nSPC * (QWORD)nBPS * (QWORD)nFree;

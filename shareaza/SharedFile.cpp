@@ -838,18 +838,18 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 	{
 		CString strMetaData = pszMetaData + m_sName + _T(".xml");
 		
-		if ( Library.m_pfnGFAEW != NULL && theApp.m_bNT )
+		if ( Library.m_pfnGetFileAttributesExW != NULL && theApp.m_bNT )
 		{
 			USES_CONVERSION;
 			WIN32_FILE_ATTRIBUTE_DATA pInfo = { 0 };
-			bMetaData = (*Library.m_pfnGFAEW)( T2CW( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
+			bMetaData = (*Library.m_pfnGetFileAttributesExW)( T2CW( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
 			pMetaDataTime = pInfo.ftLastWriteTime;
 		}
-		else if ( Library.m_pfnGFAEA != NULL )
+		else if ( Library.m_pfnGetFileAttributesExA != NULL )
 		{
 			USES_CONVERSION;
 			WIN32_FILE_ATTRIBUTE_DATA pInfo = { 0 };
-			bMetaData = (*Library.m_pfnGFAEA)( T2CA( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
+			bMetaData = (*Library.m_pfnGetFileAttributesExA)( T2CA( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
 			pMetaDataTime = pInfo.ftLastWriteTime;
 		}
 		else

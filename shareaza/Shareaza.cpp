@@ -459,13 +459,15 @@ int CShareazaApp::ExitInstance()
 	BTClients.Clear();
 	Library.Clear();
 	Skin.Clear();
-	
+
 	if ( m_bLive )
 		Settings.Save( TRUE );
 
 	if ( m_hUser32 != NULL ) FreeLibrary( m_hUser32 );
 
 	WSACleanup();
+
+	if ( m_hKernel != NULL ) FreeLibrary( m_hKernel );
 
 	if ( m_hGDI32 != NULL ) FreeLibrary( m_hGDI32 );
 
@@ -680,19 +682,16 @@ void CShareazaApp::InitResources()
 
 	//Get the amount of installed memory.
 	m_nPhysicalMemory = 0;
-	if ( ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != 0 )
+	if ( ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != NULL )
 	{	//Use GlobalMemoryStatusEx if possible (WinXP)
-		void (WINAPI *m_pfnGlobalMemoryStatus)( LPMEMORYSTATUSEX );
+		BOOL (WINAPI *m_pfnGlobalMemoryStatusEx)( LPMEMORYSTATUSEX );
 		MEMORYSTATUSEX pMemory;
 
-		(FARPROC&)m_pfnGlobalMemoryStatus = GetProcAddress(
+		(FARPROC&)m_pfnGlobalMemoryStatusEx = GetProcAddress(
 			m_hUser32, "GlobalMemoryStatusEx" );
 
-		if ( m_pfnGlobalMemoryStatus )
-		{
-			m_pfnGlobalMemoryStatus( &pMemory ); 
+		if ( m_pfnGlobalMemoryStatusEx && (*m_pfnGlobalMemoryStatusEx)( &pMemory ) )
 			m_nPhysicalMemory = pMemory.ullTotalPhys;
-		}
 	}
 
 	if ( m_nPhysicalMemory == 0 )
@@ -703,7 +702,7 @@ void CShareazaApp::InitResources()
 	}
 
 	//Get pointers to some functions that don't exist under 95/NT
-	if ( m_hUser32 != 0 )
+	if ( m_hUser32 != NULL )
 	{
 		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
 			m_hUser32, "SetLayeredWindowAttributes" );
@@ -733,17 +732,22 @@ void CShareazaApp::InitResources()
 		m_pfnPrivateExtractIconsW = NULL;
 	}
 
-	if ( ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) ) != 0 )
+	if ( ( m_hKernel = LoadLibrary( _T("kernel32.dll") ) ) != NULL )
+		(FARPROC&)m_pfnGetDiskFreeSpaceExW = GetProcAddress( m_hKernel, "GetDiskFreeSpaceExW" );
+	else
+		m_pfnGetDiskFreeSpaceExW = NULL;
+
+	if ( ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) ) != NULL )
 		(FARPROC&)m_pfnSetLayout = GetProcAddress( m_hGDI32, "SetLayout" );
 	else
 		m_pfnSetLayout = NULL;
 
-	if ( ( m_hTheme = LoadLibrary( _T("UxTheme.dll") ) ) != 0 )
+	if ( ( m_hTheme = LoadLibrary( _T("UxTheme.dll") ) ) != NULL )
 		(FARPROC&)m_pfnSetWindowTheme = GetProcAddress( m_hTheme, "SetWindowTheme" );
 	else
 		m_pfnSetWindowTheme = NULL;
 
-	if ( ( m_hPowrProf = LoadLibrary( _T("PowrProf.dll") ) ) != 0 )
+	if ( ( m_hPowrProf = LoadLibrary( _T("PowrProf.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnGetActivePwrScheme = GetProcAddress( m_hPowrProf, "GetActivePwrScheme" );
 		(FARPROC&)m_pfnGetCurrentPowerPolicies = GetProcAddress( m_hPowrProf, "GetCurrentPowerPolicies" );
@@ -1773,13 +1777,15 @@ CString GetWindowsFolder()
 CString GetProgramFilesFolder()
 {
 	TCHAR pszProgramsPath[ MAX_PATH ] = { 0 };
-	if ( HINSTANCE hShell = LoadLibrary( _T("shfolder.dll") ) )
+	HINSTANCE hShell;
+
+	if ( ( hShell = LoadLibrary( _T("shfolder.dll") ) ) != NULL )
 	{
-		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPWSTR);
-		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathW" );
-		if ( pfnSHGetFolderPath )
+		HRESULT (WINAPI *pfnSHGetFolderPathW)(HWND, int, HANDLE, DWORD, LPWSTR);
+		(FARPROC&)pfnSHGetFolderPathW = GetProcAddress( hShell, "SHGetFolderPathW" );
+		if ( pfnSHGetFolderPathW )
 		{
-			(*pfnSHGetFolderPath)( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath );
+			(*pfnSHGetFolderPathW)( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath );
 		}
 		FreeLibrary( hShell );
 	}

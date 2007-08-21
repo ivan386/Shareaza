@@ -232,7 +232,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bForce*/, LPCTSTR pszExt)
 	{
 		CString strCommand;
 		DWORD nBufferSize = MAX_PATH;
-		HRESULT (WINAPI *pfnAssocQueryStringW)(ASSOCF, ASSOCSTR, LPCTSTR, LPCTSTR, LPTSTR, DWORD*);
+		HRESULT (WINAPI *pfnAssocQueryStringW)(ASSOCF, ASSOCSTR, LPCWSTR, LPCWSTR, LPWSTR, DWORD*);
 
 		if ( theApp.m_hShlWapi != NULL )
 			(FARPROC&)pfnAssocQueryStringW = GetProcAddress( theApp.m_hShlWapi, "AssocQueryStringW" );

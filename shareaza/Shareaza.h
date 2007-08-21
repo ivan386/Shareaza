@@ -82,7 +82,7 @@ public:
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
 	DWORD				m_nUPnPExternalAddress;
-	DWORD				m_dwLastInput;				// Time of last input event	in secs
+	DWORD				m_dwLastInput;				// Time of last input event (in secs)
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;
 
@@ -93,7 +93,10 @@ public:
 	HMONITOR	(WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
 	HMONITOR	(WINAPI *m_pfnMonitorFromWindow)(HWND, DWORD);
 	HWND		(WINAPI *m_pfnGetAncestor)(HWND, UINT);
-	UINT		(WINAPI *m_pfnPrivateExtractIconsW)(LPCTSTR, int, int, int, HICON*, UINT*, UINT, UINT);
+	UINT		(WINAPI *m_pfnPrivateExtractIconsW)(LPCWSTR, int, int, int, HICON*, UINT*, UINT, UINT);
+
+	HINSTANCE	m_hKernel;
+	BOOL		(WINAPI *m_pfnGetDiskFreeSpaceExW)(LPCWSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER);
 
 	// For RTL layout support
 	HINSTANCE	m_hGDI32;

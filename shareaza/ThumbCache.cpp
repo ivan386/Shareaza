@@ -330,18 +330,18 @@ BOOL CThumbCache::GetFileTime(LPCTSTR pszPath, FILETIME* pTime)
 {
 	BOOL bSuccess = FALSE;
 
-	if ( Library.m_pfnGFAEW != NULL )
+	if ( Library.m_pfnGetFileAttributesExW != NULL )
 	{
 		USES_CONVERSION;
 		WIN32_FILE_ATTRIBUTE_DATA pInfo;
-		bSuccess = (*Library.m_pfnGFAEW)( T2CW(pszPath), GetFileExInfoStandard, &pInfo );
+		bSuccess = (*Library.m_pfnGetFileAttributesExW)( T2CW(pszPath), GetFileExInfoStandard, &pInfo );
 		*pTime = pInfo.ftLastWriteTime;
 	}
-	else if ( Library.m_pfnGFAEA != NULL )
+	else if ( Library.m_pfnGetFileAttributesExA != NULL )
 	{
 		USES_CONVERSION;
 		WIN32_FILE_ATTRIBUTE_DATA pInfo;
-		bSuccess = (*Library.m_pfnGFAEA)( T2CA(pszPath), GetFileExInfoStandard, &pInfo );
+		bSuccess = (*Library.m_pfnGetFileAttributesExA)( T2CA(pszPath), GetFileExInfoStandard, &pInfo );
 		*pTime = pInfo.ftLastWriteTime;
 	}
 	else

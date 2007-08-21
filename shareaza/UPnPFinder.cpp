@@ -43,17 +43,18 @@ CUPnPFinder::CUPnPFinder()
 	m_sExternalIP(),
 	m_tLastEvent( GetTickCount() ),
 	m_bInited( false ),
-	m_hADVAPI32_DLL( 0 ),
-	m_pfnOpenSCManager( 0 ),
-	m_pfnOpenService( 0 ),
-	m_pfnQueryServiceStatusEx( 0 ),
-	m_pfnCloseServiceHandle( 0 ),
-	m_pfnStartService( 0 ),
+	m_hADVAPI32_DLL( NULL ),
+	m_pfnOpenSCManagerW( NULL ),
+	m_pfnOpenServiceW( NULL ),
+	m_pfnQueryServiceStatusEx( NULL ),
+	m_pfnCloseServiceHandle( NULL ),
+	m_pfnStartServiceW( NULL ),
+	m_pfnControlService( NULL ),
 	m_bSecondTry( false ),
+	m_hIPHLPAPI_DLL( NULL ),
 	m_pfGetBestInterface( NULL ),
 	m_pfGetIpAddrTable( NULL ),
 	m_pfGetIfEntry( NULL ),
-	m_hIPHLPAPI_DLL( NULL ),
 	m_bDisableWANIPSetup( Settings.Connection.SkipWANIPSetup == TRUE ),
 	m_bDisableWANPPPSetup( Settings.Connection.SkipWANPPPSetup == TRUE )
 {}
@@ -63,17 +64,17 @@ void CUPnPFinder::Init()
 	if ( !m_bInited )
 	{
 		m_hADVAPI32_DLL = LoadLibrary( L"Advapi32.dll" );
-		if ( m_hADVAPI32_DLL != 0 ) 
+		if ( m_hADVAPI32_DLL != NULL ) 
 		{
-			(FARPROC&)m_pfnOpenSCManager = GetProcAddress(	m_hADVAPI32_DLL, "OpenSCManagerW" );
-			(FARPROC&)m_pfnOpenService = GetProcAddress( m_hADVAPI32_DLL, "OpenServiceW" );
+			(FARPROC&)m_pfnOpenSCManagerW = GetProcAddress(	m_hADVAPI32_DLL, "OpenSCManagerW" );
+			(FARPROC&)m_pfnOpenServiceW = GetProcAddress( m_hADVAPI32_DLL, "OpenServiceW" );
 			(FARPROC&)m_pfnQueryServiceStatusEx = GetProcAddress( m_hADVAPI32_DLL, "QueryServiceStatusEx" );
 			(FARPROC&)m_pfnCloseServiceHandle = GetProcAddress( m_hADVAPI32_DLL, "CloseServiceHandle" );
-			(FARPROC&)m_pfnStartService = GetProcAddress( m_hADVAPI32_DLL, "StartServiceW" );
+			(FARPROC&)m_pfnStartServiceW = GetProcAddress( m_hADVAPI32_DLL, "StartServiceW" );
 			(FARPROC&)m_pfnControlService = GetProcAddress( m_hADVAPI32_DLL, "ControlService" );
 		}
 		m_hIPHLPAPI_DLL = LoadLibrary( L"iphlpapi.dll" );
-		if ( m_hIPHLPAPI_DLL != 0 )
+		if ( m_hIPHLPAPI_DLL != NULL )
 		{
 			(FARPROC&)m_pfGetBestInterface = GetProcAddress(m_hIPHLPAPI_DLL, "GetBestInterface" );
 			(FARPROC&)m_pfGetIpAddrTable = GetProcAddress(m_hIPHLPAPI_DLL, "GetIpAddrTable" );
@@ -139,14 +140,14 @@ bool CUPnPFinder::AreServicesHealthy()
 	Init();
 
 	bool bResult = false;
-	if ( m_pfnOpenSCManager && m_pfnOpenService && 
-		 m_pfnQueryServiceStatusEx && m_pfnCloseServiceHandle && m_pfnStartService )
+	if ( m_pfnOpenSCManagerW && m_pfnOpenServiceW && 
+		 m_pfnQueryServiceStatusEx && m_pfnCloseServiceHandle && m_pfnStartServiceW )
 	{
 		SC_HANDLE schSCManager;
 		SC_HANDLE schService;
 
 		// Open a handle to the Service Control Manager database
-		schSCManager = m_pfnOpenSCManager( 
+		schSCManager = m_pfnOpenSCManagerW( 
 			NULL,				// local machine 
 			NULL,				// ServicesActive database 
 			GENERIC_READ );		// for enumeration and status lookup 
@@ -154,7 +155,7 @@ bool CUPnPFinder::AreServicesHealthy()
 		if ( schSCManager == NULL )
 			return false;
 
-		schService = m_pfnOpenService( schSCManager, L"upnphost", GENERIC_READ ); 
+		schService = m_pfnOpenServiceW( schSCManager, L"upnphost", GENERIC_READ ); 
 		if ( schService == NULL )
 		{
 			m_pfnCloseServiceHandle( schSCManager );
@@ -174,11 +175,11 @@ bool CUPnPFinder::AreServicesHealthy()
 
 		if ( !bResult )
 		{
-			schService = m_pfnOpenService( schSCManager, L"upnphost", SERVICE_START );
+			schService = m_pfnOpenServiceW( schSCManager, L"upnphost", SERVICE_START );
 			if ( schService )
 			{
 				// Power users have only right to start service, thus try to start it here
-				if ( m_pfnStartService( schService, 0, NULL ) )
+				if ( m_pfnStartServiceW( schService, 0, NULL ) )
 					bResult = true;
 				m_pfnCloseServiceHandle( schService );
 			}

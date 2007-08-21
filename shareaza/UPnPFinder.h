@@ -83,11 +83,11 @@ public:
 // Implementation
 private:
 	// API functions
-	SC_HANDLE (WINAPI *m_pfnOpenSCManager)(LPCTSTR, LPCTSTR, DWORD);
-	SC_HANDLE (WINAPI *m_pfnOpenService)(SC_HANDLE, LPCTSTR, DWORD);
+	SC_HANDLE (WINAPI *m_pfnOpenSCManagerW)(LPCWSTR, LPCWSTR, DWORD);
+	SC_HANDLE (WINAPI *m_pfnOpenServiceW)(SC_HANDLE, LPCWSTR, DWORD);
 	BOOL (WINAPI *m_pfnQueryServiceStatusEx)(SC_HANDLE, SC_STATUS_TYPE, LPBYTE, DWORD, LPDWORD);
 	BOOL (WINAPI *m_pfnCloseServiceHandle)(SC_HANDLE);
-	BOOL (WINAPI *m_pfnStartService)(SC_HANDLE, DWORD, LPCTSTR*);
+	BOOL (WINAPI *m_pfnStartServiceW)(SC_HANDLE, DWORD, LPCWSTR*);
 	BOOL (WINAPI *m_pfnControlService)(SC_HANDLE, DWORD, LPSERVICE_STATUS);
  
 	TGetBestInterface		m_pfGetBestInterface;

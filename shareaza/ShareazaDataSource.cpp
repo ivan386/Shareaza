@@ -523,7 +523,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 					pAFOP->sTo = pszDest;
 					pAFOP->sTo.Append( _T(""), 1 );							// must be double null terminated
 					LPCTSTR pFrom = (LPCTSTR)( (char*)pdf + pdf->pFiles );	// must be double null terminated
-#ifdef _UNICODE
+
 					if ( ! pdf->fWide )
 					{	
 						// ANSI -> UNICODE
@@ -533,17 +533,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 					}
 					else
 						pAFOP->sFrom.Append( pFrom, (int)size / sizeof( TCHAR ) );
-#else
-					if ( pdf->fWide )
-					{
-						// UNICODE -> ANSI
-						int nWide = WideCharToMultiByte( CP_ACP, 0, (LPCWSTR) pFrom, (int)size, NULL, 0 );
-						WideCharToMultiByte( CP_ACP, 0, (LPCWSTR) pFrom, size, pAFOP->sFrom.GetBuffer( nWide ), nWide );
-						pAFOP->sFrom.ReleaseBuffer( nWide );
-					}
-					else
-						pAFOP->sFrom.Append( pFrom, (int)size / sizeof( TCHAR ) );
-#endif // _UNICODE
+
 					GlobalUnlock( medium.hGlobal );
 
 					HANDLE hThread = BeginThread( "SHFileOperation",

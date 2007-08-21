@@ -108,24 +108,22 @@ void CSkin::Clear()
 	
 	BOOL bSuccess = FALSE;
 	// First try to remove the fonts using RemoveFontResourceEx
-	if ( HINSTANCE hGDI = LoadLibrary( _T("gdi32") ) )
+	if ( theApp.m_hGDI32 != NULL )
 	{
-		int (WINAPI *pfnRemoveFontResourceEx)(LPCTSTR, DWORD, PVOID);
+		int (WINAPI *pfnRemoveFontResourceExW)(LPCWSTR, DWORD, PVOID);
 		
-		(FARPROC&)pfnRemoveFontResourceEx = GetProcAddress( hGDI, "RemoveFontResourceExW" );
+		(FARPROC&)pfnRemoveFontResourceExW = GetProcAddress( theApp.m_hGDI32, "RemoveFontResourceExW" );
 		
-		if ( pfnRemoveFontResourceEx != NULL )
+		if ( pfnRemoveFontResourceExW != NULL )
 		{
 			bSuccess = TRUE;
 			for ( pos = m_pFontPaths.GetHeadPosition() ; pos ; )
 			{
-				bSuccess &= (*pfnRemoveFontResourceEx)( m_pFontPaths.GetNext( pos ), FR_PRIVATE, NULL );
+				bSuccess &= (*pfnRemoveFontResourceExW)( m_pFontPaths.GetNext( pos ), FR_PRIVATE, NULL );
 				ASSERT( bSuccess );
 			}
 			
 		}
-		
-		FreeLibrary( hGDI );
 	}
 
 	// Second try removing the fonts using RemoveFontResource
@@ -1489,19 +1487,17 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 		{
 			CString strFile = strPath + pXML->GetAttributeValue( _T("path") );
 			BOOL bSuccess = FALSE;
-			
-			if ( HINSTANCE hGDI = LoadLibrary( _T("gdi32") ) )
+
+			if ( theApp.m_hGDI32 != NULL )
 			{
-				int (WINAPI *pfnAddFontResourceEx)(LPCTSTR, DWORD, PVOID);
+				int (WINAPI *pfnAddFontResourceExW)(LPCWSTR, DWORD, PVOID);
 				
-				(FARPROC&)pfnAddFontResourceEx = GetProcAddress( hGDI, "AddFontResourceExW" );
+				(FARPROC&)pfnAddFontResourceExW = GetProcAddress( theApp.m_hGDI32, "AddFontResourceExW" );
 				
-				if ( pfnAddFontResourceEx != NULL )
+				if ( pfnAddFontResourceExW != NULL )
 				{
-					bSuccess = (*pfnAddFontResourceEx)( strFile, FR_PRIVATE, NULL );
+					bSuccess = (*pfnAddFontResourceExW)( strFile, FR_PRIVATE, NULL );
 				}
-				
-				FreeLibrary( hGDI );
 			}
 			
 			if ( ! bSuccess )

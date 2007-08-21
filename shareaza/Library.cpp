@@ -67,30 +67,28 @@ CLibrary Library;
 // CLibrary construction
 
 CLibrary::CLibrary() :
-	m_nUpdateSaved	( GetTickCount() ),
-	m_nScanCount	( 0 ),
-	m_hThread		( NULL ),
-	m_bThread		( TRUE ),
-	m_nScanCookie	( 1 ),
-	m_nScanTime		( 0 ),
-	m_nUpdateCookie	( 0 ),
-	m_nFileSwitch	( 0 ),
-	m_hKernel		( NULL ),
-	m_pfnGFAEW		( NULL ),
-	m_pfnGFAEA		( NULL )
+	m_nUpdateSaved				( GetTickCount() ),
+	m_nScanCount				( 0 ),
+	m_hThread					( NULL ),
+	m_bThread					( TRUE ),
+	m_nScanCookie				( 1 ),
+	m_nScanTime					( 0 ),
+	m_nUpdateCookie				( 0 ),
+	m_nFileSwitch				( 0 ),
+	m_pfnGetFileAttributesExW	( NULL ),
+	m_pfnGetFileAttributesExA	( NULL )
 {
 	EnableDispatch( IID_ILibrary );
 
-	if ( ( m_hKernel = LoadLibrary( _T("kernel32") ) ) != 0 )
+	if ( theApp.m_hKernel != NULL )
 	{
-		(FARPROC&)m_pfnGFAEW = GetProcAddress( m_hKernel, "GetFileAttributesExW" );
-		(FARPROC&)m_pfnGFAEA = GetProcAddress( m_hKernel, "GetFileAttributesExA" );
+		(FARPROC&)m_pfnGetFileAttributesExW = GetProcAddress( theApp.m_hKernel, "GetFileAttributesExW" );
+		(FARPROC&)m_pfnGetFileAttributesExA = GetProcAddress( theApp.m_hKernel, "GetFileAttributesExA" );
 	}
 }
 
 CLibrary::~CLibrary()
 {
-	if ( m_hKernel != NULL ) FreeLibrary( m_hKernel );
 }
 
 //////////////////////////////////////////////////////////////////////

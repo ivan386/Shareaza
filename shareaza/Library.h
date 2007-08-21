@@ -48,15 +48,14 @@ public:
 	DWORD			m_nScanCookie;
 	DWORD			m_nScanTime;
 	DWORD			m_nUpdateSaved;
-	BOOL			(WINAPI* m_pfnGFAEW)(LPCWSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
-	BOOL			(WINAPI* m_pfnGFAEA)(LPCSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
+	BOOL			(WINAPI* m_pfnGetFileAttributesExW)(LPCWSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
+	BOOL			(WINAPI* m_pfnGetFileAttributesExA)(LPCSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
 
 protected:
 	int				m_nFileSwitch;
 	HANDLE			m_hThread;
 	BOOL			m_bThread;
 	CEvent			m_pWakeup;
-	HINSTANCE		m_hKernel;
 
 // Sync Operations
 public:

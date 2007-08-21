@@ -1,7 +1,7 @@
 //
 // DlgFileCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -451,33 +451,26 @@ BOOL CFileCopyDlg::ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget)
 {
 	if ( ! CheckTarget( pszTarget ) ) return FALSE;
 
-	HINSTANCE hKernel = LoadLibrary( _T("kernel32.dll") );
-
-	if ( hKernel != NULL )
+	if ( theApp.m_hKernel != NULL )
 	{
-		BOOL (WINAPI *pfnCopyFileEx)(LPCTSTR, LPCTSTR, LPPROGRESS_ROUTINE_X, LPVOID, LPBOOL, DWORD);
+		BOOL (WINAPI *pfnCopyFileExW)(LPCWSTR, LPCWSTR, LPPROGRESS_ROUTINE_X, LPVOID, LPBOOL, DWORD);
+		(FARPROC&)pfnCopyFileExW = GetProcAddress( theApp.m_hKernel, "CopyFileExW" );
 
-		(FARPROC&)pfnCopyFileEx = GetProcAddress( hKernel, "CopyFileExW" );
-
-		if ( pfnCopyFileEx != NULL )
+		if ( pfnCopyFileExW != NULL )
 		{
 			m_wndFileProg.SetPos( 0 );
 			m_nFileProg = 0;
 
-			BOOL bResult = (*pfnCopyFileEx)( pszSource, pszTarget, CopyCallback, this,
-				&m_bCancel, 1 );	// COPY_FILE_FAIL_IF_EXISTS
-
-			FreeLibrary( hKernel );
+			BOOL bResult = pfnCopyFileExW( pszSource, pszTarget, CopyCallback, this,
+				&m_bCancel, COPY_FILE_FAIL_IF_EXISTS );
 
 			if ( ! bResult && ! m_bThread ) DeleteFile( pszTarget );
 
 			return bResult;
 		}
-
-		FreeLibrary( hKernel );
 	}
 
-	return CopyFile( pszSource, pszTarget, TRUE );
+	return CopyFile( pszSource, pszTarget, TRUE ); // bFailIfExists = TRUE
 }
 
 DWORD WINAPI CFileCopyDlg::CopyCallback(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER /*StreamSize*/, LARGE_INTEGER /*StreamBytesTransferred*/, DWORD /*dwStreamNumber*/, DWORD /*dwCallbackReason*/, HANDLE /*hSourceFile*/, HANDLE /*hDestinationFile*/, LPVOID lpData)
