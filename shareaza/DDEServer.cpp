@@ -220,7 +220,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength)
 	{
 		// Copy data info a buffer
 		LPWSTR pszData = new WCHAR[ nLength + 1 ];
-		CopyMemory( pszData, pData, nLength * sizeof( WCHAR ) );
+		CopyMemory( pszData, pData, nLength );
 		// Ensure it has a null terminator
 		pszData[ nLength ] = 0;
 		// Assign it to the Cstring and remove buffer
