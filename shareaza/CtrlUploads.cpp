@@ -1021,7 +1021,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 		case UPLOAD_COLUMN_COUNTRY:
 			dc.FillSolidRect( rcCell.left, rcCell.top, 20, rcCell.Height(), crBack );
 			rcCell.left += 2;
-			if ( nFlagImage != -1 )
+			if ( nFlagImage >= 0 )
 				ImageList_DrawEx( Flags.m_pImage, nFlagImage, dc.GetSafeHdc(),
 						rcCell.left, rcCell.top - 1, 18, 18, CLR_NONE, CLR_DEFAULT, pFile->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 

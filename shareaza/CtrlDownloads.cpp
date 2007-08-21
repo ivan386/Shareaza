@@ -1185,6 +1185,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 
 void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus)
 {
+	int nFlagImage = Flags.GetFlagIndex(pSource->m_sCountry);
 	COLORREF crNatural		= m_bCreateDragImage ? DRAG_COLOR_KEY : CoolInterface.m_crWindow;
 	COLORREF crBack			= pSource->m_bSelected ? CoolInterface.m_crHighlight : crNatural;
 	COLORREF crLeftAligned	= crBack;
@@ -1365,8 +1366,9 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		case DOWNLOAD_COLUMN_COUNTRY:
 			dc.FillSolidRect( rcCell.left, rcCell.top, 20, rcCell.Height(), crBack );
 			rcCell.left += 2;
-			ImageList_DrawEx( Flags.m_pImage, Flags.GetFlagIndex(pSource->m_sCountry), dc.GetSafeHdc(),
-					rcCell.left, rcCell.top - 1, 18, 18, CLR_NONE, CLR_DEFAULT, pSource->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+			if ( nFlagImage >= 0 )
+				ImageList_DrawEx( Flags.m_pImage, nFlagImage, dc.GetSafeHdc(),
+						rcCell.left, rcCell.top - 1, 18, 18, CLR_NONE, CLR_DEFAULT, pSource->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 
 			rcCell.left += 18;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
