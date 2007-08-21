@@ -534,3 +534,7 @@ inline UINT ReadArchive(CArchive& ar, void* lpBuf, const UINT nMax)
 // and second argument is a string length without null terminator
 #define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
 #define _PT(x)	_P(_T(x))
+
+// The GetMicroCount function retrieves the number of microseconds that have elapsed
+// since the application was started.
+__int64 GetMicroCount();

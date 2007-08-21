@@ -94,3 +94,33 @@ CString& CLowerCaseTable::operator()(CString& strSource) const
 
 	return strSource;
 }
+
+__int64 GetMicroCount()
+{
+	static __int64 Freq = 0;
+	static __int64 FirstCount = 0;
+	if ( Freq < 0 )
+	{
+		return GetTickCount() * 1000;
+	}
+	if ( Freq == 0 )
+	{
+		if ( ! QueryPerformanceFrequency( (LARGE_INTEGER*)&Freq ) )
+		{
+			Freq = -1;
+			return GetMicroCount();
+		}
+		QueryPerformanceCounter( (LARGE_INTEGER*)&FirstCount );
+	}
+	__int64 Count = 0;
+	QueryPerformanceCounter( (LARGE_INTEGER*)&Count );
+	return ( 1000000 * ( Count - FirstCount ) ) / Freq;
+}
+
+class InitGetMicroCount
+{
+public:
+	inline InitGetMicroCount() throw() { GetMicroCount(); }
+};
+
+InitGetMicroCount initGetMicroCount;

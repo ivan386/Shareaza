@@ -1,7 +1,7 @@
 //
 // SchemaCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,6 +56,10 @@ int CSchemaCache::Load()
 	HANDLE hSearch;
 	int nCount;
 
+#ifdef _DEBUG
+	__int64 nStartTotal = GetMicroCount();
+#endif
+
 	Clear();
 
 	strPath.Format( _T("%s\\Schemas\\*.xsd"), (LPCTSTR)Settings.General.Path );
@@ -65,11 +69,13 @@ int CSchemaCache::Load()
 
 	do
 	{
+#ifdef _DEBUG
+		__int64 nStart = GetMicroCount();
+#endif
 		strPath.Format( _T("%s\\Schemas\\%s"), (LPCTSTR)Settings.General.Path, pFind.cFileName );
 		
 		CSchema* pSchema = new CSchema();
-
-		if ( pSchema->Load( strPath ) )
+		if ( pSchema && pSchema->Load( strPath ) )
 		{
 			CString strURI( pSchema->m_sURI );
 			ToLower( strURI );
@@ -84,11 +90,24 @@ int CSchemaCache::Load()
 		else
 		{
 			delete pSchema;
+			pSchema = NULL;
 		}
+
+#ifdef _DEBUG
+		__int64 nEnd = GetMicroCount();
+		TRACE( _T("Schema \"%s\" load time : %I64i ms : %s\n"), strPath,
+			( nEnd - nStart ) / 1000, pSchema ? _T("SUCCESS") : _T("FAILED") );
+#endif
 	}
 	while ( FindNextFile( hSearch, &pFind ) );
 
 	FindClose( hSearch );
+
+#ifdef _DEBUG
+	__int64 nEndTotal = GetMicroCount();
+	TRACE( _T("Schemas load time : %I64i ms\n"),
+		( nEndTotal - nStartTotal ) / 1000 );
+#endif
 
 	return nCount;
 }
