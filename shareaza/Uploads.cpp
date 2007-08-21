@@ -309,7 +309,6 @@ void CUploads::OnRun()
 	for ( pos = GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pTransfer = GetNext( pos );
-		DWORD nMeasured = pTransfer->GetMeasuredSpeed();
 
 		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) && ( pTransfer->m_nState != upsNull ) )	
 		{
@@ -323,9 +322,14 @@ void CUploads::OnRun()
 			else
 			{
 				// Active torrent. (Uploading or requesting)
+
+				// Only call this when we are going to use the returned value
+				DWORD nMeasured = pTransfer->GetMeasuredSpeed();
+
 				// Increment normal counters
 				m_nCount ++;
 				m_nBandwidth += nMeasured;
+
 				// Increment torrent counters
 				nCountTorrent ++;
 				UploadQueues.m_pTorrentQueue->m_nMinTransfers ++;
@@ -338,6 +342,10 @@ void CUploads::OnRun()
 		else if ( pTransfer->m_nState == upsUploading )
 		{
 			// Regular transfer that's uploading
+
+			// Only call this when we are going to use the returned value
+			DWORD nMeasured = pTransfer->GetMeasuredSpeed();
+
 			m_nCount ++;
 			m_nBandwidth += nMeasured;
 
