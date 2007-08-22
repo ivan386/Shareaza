@@ -337,20 +337,23 @@ BOOL CThumbCache::GetFileTime(LPCTSTR pszPath, FILETIME* pTime)
 		bSuccess = (*Library.m_pfnGetFileAttributesExW)( T2CW(pszPath), GetFileExInfoStandard, &pInfo );
 		*pTime = pInfo.ftLastWriteTime;
 	}
-	else if ( Library.m_pfnGetFileAttributesExA != NULL )
+	if ( !bSuccess && Library.m_pfnGetFileAttributesExA != NULL )
 	{
 		USES_CONVERSION;
 		WIN32_FILE_ATTRIBUTE_DATA pInfo;
 		bSuccess = (*Library.m_pfnGetFileAttributesExA)( T2CA(pszPath), GetFileExInfoStandard, &pInfo );
 		*pTime = pInfo.ftLastWriteTime;
 	}
-	else
+	if ( !bSuccess )
 	{
-		HANDLE hFile = CreateFile( pszPath, 0, FILE_SHARE_READ|FILE_SHARE_WRITE,
+		HANDLE hFile = CreateFile( pszPath, GENERIC_READ,
+			FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+		VERIFY_FILE_ACCESS( hFile, pszPath )
 
 		if ( hFile != INVALID_HANDLE_VALUE )
 		{
+			bSuccess = TRUE;
 			::GetFileTime( hFile, NULL, NULL, pTime );
 			CloseHandle( hFile );
 		}

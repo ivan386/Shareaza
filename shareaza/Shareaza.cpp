@@ -467,8 +467,6 @@ int CShareazaApp::ExitInstance()
 
 	WSACleanup();
 
-	if ( m_hKernel != NULL ) FreeLibrary( m_hKernel );
-
 	if ( m_hGDI32 != NULL ) FreeLibrary( m_hGDI32 );
 
 	if ( m_hTheme != NULL ) FreeLibrary( m_hTheme );
@@ -732,7 +730,8 @@ void CShareazaApp::InitResources()
 		m_pfnPrivateExtractIconsW = NULL;
 	}
 
-	if ( ( m_hKernel = LoadLibrary( _T("kernel32.dll") ) ) != NULL )
+	// It is not necessary to call LoadLibrary on Kernel32.dll, because it is already loaded into every process address space.
+	if ( ( m_hKernel = GetModuleHandle( _T("kernel32.dll") ) ) != NULL )
 		(FARPROC&)m_pfnGetDiskFreeSpaceExW = GetProcAddress( m_hKernel, "GetDiskFreeSpaceExW" );
 	else
 		m_pfnGetDiskFreeSpaceExW = NULL;

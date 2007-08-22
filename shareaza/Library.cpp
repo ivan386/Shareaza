@@ -80,10 +80,14 @@ CLibrary::CLibrary() :
 {
 	EnableDispatch( IID_ILibrary );
 
-	if ( theApp.m_hKernel != NULL )
+	// theApp.m_hKernel cannot be used because this code is executed before CShareazaApp::InitResources()
+	HINSTANCE hKernel;
+
+	// It is not necessary to call LoadLibrary on Kernel32.dll, because it is already loaded into every process address space.
+	if ( ( hKernel = GetModuleHandle( _T("kernel32.dll") ) ) != NULL )
 	{
-		(FARPROC&)m_pfnGetFileAttributesExW = GetProcAddress( theApp.m_hKernel, "GetFileAttributesExW" );
-		(FARPROC&)m_pfnGetFileAttributesExA = GetProcAddress( theApp.m_hKernel, "GetFileAttributesExA" );
+		(FARPROC&)m_pfnGetFileAttributesExW = GetProcAddress( hKernel, "GetFileAttributesExW" );
+		(FARPROC&)m_pfnGetFileAttributesExA = GetProcAddress( hKernel, "GetFileAttributesExA" );
 	}
 }
 
