@@ -26,6 +26,8 @@
 #include "ShareazaOM.h"
 #include "Buffer.h"
 
+static HMODULE __stdcall LoadUnicows();
+
 class CUPnPFinder;
 class CMainWnd;
 class CSplashDlg;

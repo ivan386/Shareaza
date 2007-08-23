@@ -62,6 +62,8 @@
 #include "DlgHelp.h"
 #include "FontManager.h"
 
+extern "C" HMODULE (__stdcall *_PfnLoadUnicows)(void) = &LoadUnicows;
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -74,6 +76,20 @@ const LPCTSTR RT_PNG = _T("PNG");
 const LPCTSTR RT_GZIP = _T("GZIP");
 double scaleX = 1;
 double scaleY = 1;
+
+HMODULE __stdcall LoadUnicows()
+{
+	HMODULE hUnicows = LoadLibraryA("unicows.dll");
+
+	if ( !hUnicows )
+	{
+		// If the load is failed, then exit.
+		MessageBoxA(NULL, "Unicode wrapper not found.", NULL, MB_ICONSTOP | MB_OK);
+		_exit(-1);
+	}
+
+	return hUnicows;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
@@ -151,6 +167,7 @@ CShareazaApp::CShareazaApp()
 , m_pFontManager( NULL )
 , m_nUPnPExternalAddress( 0 )
 {
+	MessageBoxA(NULL, "Test 1.", NULL, MB_ICONSTOP | MB_OK);
 }
 
 /////////////////////////////////////////////////////////////////////////////
