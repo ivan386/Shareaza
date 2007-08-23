@@ -3,6 +3,9 @@
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="content-type">
   <title>Shareaza collection example</title>
+<script>
+function doDownload(sMagnet) { window.external.download(sMagnet); window.location.reload(); }
+</script>
 </head>
 <body>
 <span style="font-weight: bold;">SHAREAZA COLLECTION<br>

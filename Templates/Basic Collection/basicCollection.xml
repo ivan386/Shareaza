@@ -2,7 +2,7 @@
 <template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
 <manifest	name="Basic Collection"
 			author="Tom Higginson"
-			version="0.5"
+			version="0.6"
 			link="http://www.shareaza.com/"
 			email="higgy@soundnet.co.uk"
 			description="A .collection can be edited just like a webpage - this template creates a .htm file is just something to get you started. Be creative and have fun!"
