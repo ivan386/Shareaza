@@ -2,7 +2,7 @@
 <template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
 <manifest	name="Template for Video"
 			author="Rolandas Rudomanskis"
-			version="1.1"
+			version="1.2"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
 			description="The template for video collections. Enter titles, descriptions and times in metadata for each file."
