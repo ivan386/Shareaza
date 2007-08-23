@@ -678,29 +678,8 @@ void CShareazaApp::InitResources()
 		m_bLimitedConnections = TRUE;
 	}
 
-	//Get the amount of installed memory.
-	m_nPhysicalMemory = 0;
-	if ( ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != NULL )
-	{	//Use GlobalMemoryStatusEx if possible (WinXP)
-		BOOL (WINAPI *m_pfnGlobalMemoryStatusEx)( LPMEMORYSTATUSEX );
-		MEMORYSTATUSEX pMemory;
-
-		(FARPROC&)m_pfnGlobalMemoryStatusEx = GetProcAddress(
-			m_hUser32, "GlobalMemoryStatusEx" );
-
-		if ( m_pfnGlobalMemoryStatusEx && (*m_pfnGlobalMemoryStatusEx)( &pMemory ) )
-			m_nPhysicalMemory = pMemory.ullTotalPhys;
-	}
-
-	if ( m_nPhysicalMemory == 0 )
-	{	//Fall back to GlobalMemoryStatus (always available)
-		MEMORYSTATUS pMemory;
-		GlobalMemoryStatus( &pMemory ); 
-		m_nPhysicalMemory = pMemory.dwTotalPhys;
-	}
-
 	//Get pointers to some functions that don't exist under 95/NT
-	if ( m_hUser32 != NULL )
+	if ( ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
 			m_hUser32, "SetLayeredWindowAttributes" );
@@ -731,7 +710,30 @@ void CShareazaApp::InitResources()
 	}
 
 	// It is not necessary to call LoadLibrary on Kernel32.dll, because it is already loaded into every process address space.
-	if ( ( m_hKernel = GetModuleHandle( _T("kernel32.dll") ) ) != NULL )
+	m_hKernel = GetModuleHandle( _T("kernel32.dll") );
+
+	//Get the amount of installed memory.
+	m_nPhysicalMemory = 0;
+	if ( m_hKernel != NULL )
+	{	//Use GlobalMemoryStatusEx if possible (WinXP)
+		BOOL (WINAPI *m_pfnGlobalMemoryStatusEx)( LPMEMORYSTATUSEX );
+		MEMORYSTATUSEX pMemory;
+
+		pMemory.dwLength = sizeof(pMemory);
+		(FARPROC&)m_pfnGlobalMemoryStatusEx = GetProcAddress( m_hKernel, "GlobalMemoryStatusEx" );
+
+		if ( m_pfnGlobalMemoryStatusEx && (*m_pfnGlobalMemoryStatusEx)( &pMemory ) )
+			m_nPhysicalMemory = pMemory.ullTotalPhys;
+	}
+
+	if ( m_nPhysicalMemory == 0 )
+	{	//Fall back to GlobalMemoryStatus (always available)
+		MEMORYSTATUS pMemory;
+		GlobalMemoryStatus( &pMemory ); 
+		m_nPhysicalMemory = pMemory.dwTotalPhys;
+	}
+
+	if ( m_hKernel != NULL )
 		(FARPROC&)m_pfnGetDiskFreeSpaceExW = GetProcAddress( m_hKernel, "GetDiskFreeSpaceExW" );
 	else
 		m_pfnGetDiskFreeSpaceExW = NULL;
