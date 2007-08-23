@@ -167,7 +167,6 @@ CShareazaApp::CShareazaApp()
 , m_pFontManager( NULL )
 , m_nUPnPExternalAddress( 0 )
 {
-	MessageBoxA(NULL, "Test 1.", NULL, MB_ICONSTOP | MB_OK);
 }
 
 /////////////////////////////////////////////////////////////////////////////
