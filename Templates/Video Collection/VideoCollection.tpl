@@ -29,7 +29,6 @@
 		}
 	.BorderTable {
 		border: 1px dotted #FF0000;
-		align: center;
 		}
 	.release {
 		font-family: "Courier New", Courier, mono;
@@ -50,24 +49,32 @@
 	function doDownload(sMagnet) { window.external.download(sMagnet); window.location.reload(); }
 	function writeFile(sURN)
 	{
-		var sState = window.external.detect( sURN );
-		if ( sState == "Complete" )
+		if ( window.external && typeof(window.external.detect) != "undefined" )
 		{
-			document.writeln( "<a href='javascript:doPlay(\"" + sURN + "\")' title='$1$'>$1$</a>" );
-		}
-		else if ( sState == "0.00%" )
-		{
-			document.writeln( "$2$" );
-		}
-		else if ( sState.indexOf( "%" ) >= 0 )
-		{
-			var nBarSize = 100;
-			var nBarUsed = Math.round( parseFloat( sState ) / 100 * nBarSize );
-			document.writeln( "<img src='bar_on.gif' width='" + nBarUsed + "' height='12' alt='" + sState + "'/><img src='bar_off.gif' width='" + ( nBarSize - nBarUsed ) + "' height='12' alt='" + sState + "'/>" );
+			var sState = window.external.detect( sURN );
+			if ( sState == "Complete" )
+			{
+				document.writeln( "<a href='javascript:doPlay(\"" + sURN + "\")' title='$1$'>$1$</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" );
+				document.writeln( "<a href='javascript:doEnqueue(\"" + sURN + "\")' title='$10$'>$10$</a>" );
+			}
+			else if ( sState == "0.00%" )
+			{
+				document.writeln( "$2$" );
+			}
+			else if ( sState.indexOf( "%" ) >= 0 )
+			{
+				var nBarSize = 100;
+				var nBarUsed = Math.round( parseFloat( sState ) / 100 * nBarSize );
+				document.writeln( "<img src='images\/bar_on.gif' width='" + nBarUsed + "' height='12' alt='" + sState + "'/><img src='images\/bar_off.gif' width='" + ( nBarSize - nBarUsed ) + "' height='12' alt='" + sState + "'/>" );
+			}
+			else
+			{
+				document.writeln( "<a href='javascript:doDownload(\"" + sURN + "\")' title='$3$'>$3$</a>" );
+			}
 		}
 		else
 		{
-			document.writeln( "<a href='javascript:doDownload(\"" + sURN + "\")' title='$3$'>$3$</a>" );
+			document.writeln( "<a href='magnet:?xt=" + sURN + "' title='$3$'>$3$</a>" );
 		}
 	}
 -->
@@ -79,11 +86,8 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tbody>
 		<tr>
-			<td style="background-image: url('images/bg.png');" align="left" valign="top">
-				<img src="images/Top.png" width="650" height="84" alt="Top image"/>
-			</td>
-			<td style="background: url('images/top-tile.jpg') repeat-x;" width="100%">&nbsp;
-			</td>
+			<td style="background-image: url('images/bg.png');" align="left" valign="top"><img src="images/Top.png" width="650" height="84" alt="Shareaza P2P"/></td>
+			<td style="background: url('images/top-tile.jpg') repeat-x;" width="100%">&nbsp;</td>
 		</tr>
 		<tr>
 			<td align="left" valign="top" bgcolor="#EEEEEE" colspan="2">
@@ -96,7 +100,7 @@
 					</tr>
 					<tr>
 						<td width="50px" align="left" valign="middle" style="padding-top: 2px;">
-							<img src="images/res.gif" width="23" height="23" alt=""/>
+							<img src="images/res.gif" width="23" height="23" alt="$5$"/>
 						</td>
 						<td width="100%" style="padding-left: 5px; padding-top: 0px;">$5$</td>
 					</tr>
@@ -105,7 +109,7 @@
 			</td>
 		</tr>
 		<tr>
-				<td height="1" bgcolor="#999999" colspan="2"></td>
+			<td height="1" bgcolor="#999999" colspan="2"></td>
 		</tr>
 		<tr>
 			<td height="0" align="center" valign="top" colspan="2">

@@ -2,7 +2,7 @@
 <template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
 <manifest	name="Template for Video"
 			author="Rolandas Rudomanskis"
-			version="1.2"
+			version="1.3"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
 			description="The template for video collections. Enter titles, descriptions and times in metadata for each file."
@@ -28,6 +28,7 @@
 		<item id="1" type="textbox" value="Atveriant bylą" default="Atverti bylą"/>
 		<item id="2" type="textbox" value="Bylai siunčiantis" default="Siunčiama"/>
 		<item id="3" type="textbox" value="Atsisiuntimo veiksmas" default="Atsisiųsti dabar"/>
+		<item id="10" type="textbox" value="File enqueuing action" default="Enqueue File"/>
 		<item id="4" type="textbox" value="Rinkinio aprašymas"/>
 		<item id="5" type="textbox" value="Web resurso aprašymas"/>
 		<item id="6" type="colorpicker" value="Nelyginių eilučių spalva" default="#FFFFFF"/>
@@ -39,10 +40,11 @@
 		<item id="1" type="textbox" value="”開く”の表示" default="開く"/>
 		<item id="2" type="textbox" value="ダウンロード中の表示" default="ダウンロード中"/>
 		<item id="3" type="textbox" value="”ダウンロード”の表示" default="今すぐダウンロード"/>
+		<item id="10" type="textbox" value="File enqueuing action" default="Enqueue File"/>
 		<item id="4" type="textbox" value="アルバム詳細"/>
 		<item id="5" type="textbox" value="Webリソースの説明"/>
-		<item id="6" type="colorpicker" value="遇数行の色" default="#FFFFFF"/>
-		<item id="7" type="colorpicker" value="奇数行の色" default="#E9EDEF"/>
+		<item id="6" type="colorpicker" value="奇数行の色" default="#FFFFFF"/>
+		<item id="7" type="colorpicker" value="遇数行の色" default="#E9EDEF"/>
 		<item id="8" type="textbox" value="リリースグループ詳細"/>
 		<item id="9" type="multi-filepicker" value="スクリーンショット" default="images/Screenshot_Part.png"/>
 	</text>
@@ -50,6 +52,7 @@
 		<item id="1" type="textbox" value="Ação ao abrir arquivo" default="Abrir Arquivo"/>
 		<item id="2" type="textbox" value="Enquanto baixando" default="Baixando"/>
 		<item id="3" type="textbox" value="Ação de download" default="Baixar Agora"/>
+		<item id="10" type="textbox" value="File enqueuing action" default="Enqueue File"/>
 		<item id="4" type="textbox" value="Descrição do álbum"/>
 		<item id="5" type="textbox" value="Descrição do Recurso da Rede"/>
 		<item id="6" type="colorpicker" value="Colorir fileiras ímpares" default="#FFFFFF"/>
@@ -57,15 +60,28 @@
 		<item id="8" type="textbox" value="Sobre o grupo de lançamento"/>
 		<item id="9" type="multi-filepicker" value="Imagem para o arquivo" default="imagens/Screenshot_Part.png"/>
 	</text>
+	<text language="it">
+		<item id="1" type="textbox" value="Azione di apertura file" default="Apri file"/>
+		<item id="2" type="textbox" value="Durante lo scaricamento" default="Scaricamento"/>
+		<item id="3" type="textbox" value="Azione di scaricamento" default="Scarica ora"/>
+		<item id="10" type="textbox" value="Azione di accodamento file" default="Accoda file"/>
+		<item id="4" type="textbox" value="Descrizione dell'album"/>
+		<item id="5" type="textbox" value="Descrizione della risorsa Web"/>
+		<item id="6" type="colorpicker" value="Colore per le righe dispari" default="#FFFFFF"/>
+		<item id="7" type="colorpicker" value="Colore per le righe pari" default="#E9EDEF"/>
+		<item id="8" type="textbox" value="Gruppo di rilascio"/>
+		<item id="9" type="multi-filepicker" value="Immagine per il file" default="images/Screenshot_Part.png"/>
+	</text>
 	<!-- It's better to place english translation at the end to exit data collection immediately when language specific data already loaded -->
 	<text language="en">
 		<item id="1" type="textbox" value="File opening action" default="Open File"/>
 		<item id="2" type="textbox" value="While downloading" default="Downloading"/>
 		<item id="3" type="textbox" value="Download action" default="Download Now"/>
+		<item id="10" type="textbox" value="File enqueuing action" default="Enqueue File"/>
 		<item id="4" type="textbox" value="Album description"/>
 		<item id="5" type="textbox" value="Description of Web Resource"/>
-		<item id="6" type="colorpicker" value="Color for even rows" default="#FFFFFF"/>
-		<item id="7" type="colorpicker" value="Color for odd rows" default="#E9EDEF"/>
+		<item id="6" type="colorpicker" value="Color for odd rows" default="#FFFFFF"/>
+		<item id="7" type="colorpicker" value="Color for even rows" default="#E9EDEF"/>
 		<item id="8" type="textbox" value="About the release group"/>
 		<item id="9" type="multi-filepicker" value="Image for the file" default="images/Screenshot_Part.png"/>
 	</text>
