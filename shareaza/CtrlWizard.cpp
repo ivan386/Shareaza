@@ -1,7 +1,7 @@
 //
 // CtrlWizard.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -376,7 +376,7 @@ void CWizardCtrl::OnShowWindow(BOOL bShow, UINT /*nStatus*/)
 			int nFileCount = 1;
 			for ( std::size_t pos = 0; pos != pList.size(); ++pos )
 			{
-				PrepareDoc( pList[ pos ], nFileCount % 2 ? m_sEvenFilePath : m_sOddFilePath );
+				PrepareDoc( pList[ pos ], nFileCount % 2 == 0 ? m_sEvenFilePath : m_sOddFilePath );
 				++nFileCount;
 			}
 		}
@@ -544,7 +544,7 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 								if ( strType == "multi-filepicker" ) 
 								{
 									if ( nFileCount > m_pFileDocs.GetCount() ) 
-										PrepareDoc( pList[ pos ], nFileCount % 2 ? m_sEvenFilePath : m_sOddFilePath );
+										PrepareDoc( pList[ pos ], nFileCount % 2 == 0 ? m_sEvenFilePath : m_sOddFilePath );
 								}
 								else break;
 							} // for
