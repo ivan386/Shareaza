@@ -64,7 +64,11 @@
 #pragma warning ( disable : 4263 )	// (Level 4)	'function' : member function does not override any base class virtual member function
 #pragma warning ( disable : 4266 )	// (Level 4)	'function' : no override available for virtual member function from base 'type'; function is hidden
 #pragma warning ( disable : 4296 )	// (Level 4)	'operator' : expression is always false
+
+#ifndef WIN64
 #pragma warning ( disable : 4365 )	// (Level 4)	'action' : conversion from 'type_1' to 'type_2', signed/unsigned mismatch
+#endif
+
 #pragma warning ( disable : 4514 )	// (Level 4)	'function' : unreferenced inline function has been removed
 #pragma warning ( disable : 4571 )	// (Level 4)	Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
 #pragma warning ( disable : 4625 )	// (Level 4)	'derived class' : copy constructor could not be generated because a base class copy constructor is inaccessible

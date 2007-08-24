@@ -26,7 +26,9 @@
 #include "ShareazaOM.h"
 #include "Buffer.h"
 
+#ifndef WIN64
 static HMODULE __stdcall LoadUnicows();
+#endif
 
 class CUPnPFinder;
 class CMainWnd;

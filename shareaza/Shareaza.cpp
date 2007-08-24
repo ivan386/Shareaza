@@ -62,7 +62,9 @@
 #include "DlgHelp.h"
 #include "FontManager.h"
 
+#ifndef WIN64
 extern "C" HMODULE (__stdcall *_PfnLoadUnicows)(void) = &LoadUnicows;
+#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -77,6 +79,7 @@ const LPCTSTR RT_GZIP = _T("GZIP");
 double scaleX = 1;
 double scaleY = 1;
 
+#ifndef WIN64
 HMODULE __stdcall LoadUnicows()
 {
 	HMODULE hUnicows = LoadLibraryA("unicows.dll");
@@ -90,6 +93,7 @@ HMODULE __stdcall LoadUnicows()
 
 	return hUnicows;
 }
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo

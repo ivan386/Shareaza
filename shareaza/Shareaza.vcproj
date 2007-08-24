@@ -279,7 +279,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="3"
-				GlobalOptimizations="TRUE"
+				GlobalOptimizations="FALSE"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
