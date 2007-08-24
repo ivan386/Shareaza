@@ -39,7 +39,7 @@
 			div.odd {
 				background: #eee;
 			}
-			
+			span.trackState { position: relative; right: -100px; }
 			#footer {
 			}
 			#footer p {
