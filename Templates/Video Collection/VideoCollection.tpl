@@ -44,37 +44,49 @@
 
 <script type="text/javascript" language="javascript">
 <!--
+	var bIsShareaza = false;
+	if ( window.external && typeof(window.external.detect) != "undefined" )	bIsShareaza = true;
+
+	function IsShareaza() { return bIsShareaza; }
 	function doPlay(sURN) { window.external.open(sURN); }
 	function doEnqueue(sURN) { window.external.enqueue(sURN); }
-	function doDownload(sMagnet) { window.external.download(sMagnet); window.location.reload(); }
-	function writeFile(sURN)
+	function doDownload(sBitprint, sEd2kHash, sMD5, nSize, sName) { window.external.download(sBitprint); doUpdateStatus(); }
+	function doMagnetDownload(sBitprint, sEd2kHash, sMD5, nSize, sName) { document.location.href = "magnet:?xt=" + sBitprint + "&xt=" + sEd2kHash + "&xt=" + sMD5 /*+ "&xl=" + nSize*/ + "&dn=" + sName; }
+	function writeFile(id, sBitprint, sEd2kHash, sMD5, nSize, sName)
 	{
-		if ( window.external && typeof(window.external.detect) != "undefined" )
+		sName = escape(sName);
+
+		if ( IsShareaza() )
 		{
-			var sState = window.external.detect( sURN );
+			var span = null;
+
+			if(document.getElementById) span = document.getElementById(id);
+			if(!span) { alert("Your version of Internet Explorer is too old, please update it."); document.body.innerHTML = ""; return; }
+
+			var sState = window.external.detect( sBitprint );
 			if ( sState == "Complete" )
 			{
-				document.writeln( "<a href='javascript:doPlay(\"" + sURN + "\")' title='$1$'>$1$</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" );
-				document.writeln( "<a href='javascript:doEnqueue(\"" + sURN + "\")' title='$10$'>$10$</a>" );
+				span.innerHTML = "<a href='javascript:doPlay(\"" + sBitprint + "\")' title='$1$'>$1$</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+				span.innerHTML += "<a href='javascript:doEnqueue(\"" + sBitprint + "\")' title='$10$'>$10$</a>";
 			}
 			else if ( sState == "0.00%" )
 			{
-				document.writeln( "$2$" );
+				span.innerHTML = "$2$";
 			}
 			else if ( sState.indexOf( "%" ) >= 0 )
 			{
 				var nBarSize = 100;
 				var nBarUsed = Math.round( parseFloat( sState ) / 100 * nBarSize );
-				document.writeln( "<img src='images\/bar_on.gif' width='" + nBarUsed + "' height='12' alt='" + sState + "'/><img src='images\/bar_off.gif' width='" + ( nBarSize - nBarUsed ) + "' height='12' alt='" + sState + "'/>" );
+				span.innerHTML = "<img src='images\/bar_on.gif' width='" + nBarUsed + "' height='12' alt='" + sState + "'/><img src='images\/bar_off.gif' width='" + ( nBarSize - nBarUsed ) + "' height='12' alt='" + sState + "'/>";
 			}
 			else
 			{
-				document.writeln( "<a href='javascript:doDownload(\"" + sURN + "\")' title='$3$'>$3$</a>" );
+				span.innerHTML = "<a class='DLLink' href='javascript:doDownload(\"" + sBitprint + "," + sEd2kHash + "," + sMD5 + "," + nSize + "," + sName + "\")' title='$3$'>$3$</a>";
 			}
 		}
 		else
 		{
-			document.writeln( "<a href='magnet:?xt=" + sURN + "' title='$3$'>$3$</a>" );
+			document.writeln( "<a class='DLLink' href='magnet:?xt=" + sBitprint + "&xt=" + sEd2kHash + "&xt=" + sMD5 /*+ "&xl=" + nSize*/ + "&dn=" + sName + "' title='$3$'>$3$</a>" );
 		}
 	}
 -->
@@ -86,7 +98,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tbody>
 		<tr>
-			<td style="background-image: url('images/bg.png');" align="left" valign="top"><img src="images/Top.png" width="650" height="84" alt="Shareaza P2P"/></td>
+			<td style="background-image: url('images/bg.png');" align="left" valign="top"><a href="http://www.shareaza.com"><img src="images/Top.png" width="650" height="84" border="0" alt="Shareaza P2P"/></a></td>
 			<td style="background: url('images/top-tile.jpg') repeat-x;" width="100%">&nbsp;</td>
 		</tr>
 		<tr>
@@ -119,9 +131,22 @@
 <!-- Start data from oddfile.tpl and evenfile.tpl -->
 $data$
 <!-- End data from oddfile.tpl and evenfile.tpl -->
+
+						<tr>
+							<td width="173"></td>
+							<td width="100%" align="left" valign="top">
+								<br/>
+								<span class="nfo">
+									<strong>
+										<a href="javascript:doDownloadAll()" title="$11$">$11$</a>
+									</strong>
+								</span>
+							</td>
+						</tr>
+
 					</tbody>
 				</table>
-				<br />
+				<br/>
 
 				<table width="95%" cellpadding="10" cellspacing="0" class="BorderTable" align="center">
 					<tbody>
@@ -131,7 +156,7 @@ $data$
 										<a>release information</a>
 								</span>
 								<a>
-									<br />
+									<br/>
 									<span class="releaseinfo">$8$</span>
 								</a>
 							</td>
@@ -139,11 +164,82 @@ $data$
 					</tbody>
 				</table>
 
-				<br />
+				<br/>
 			</td>
 		</tr>
 	</tbody>
 </table>
+
+<script type="text/javascript" language="javascript">
+<!--
+	var update_timer = null;
+	var scripts = document.getElementsByTagName("script");
+	var scripts_count = scripts.length;
+
+	function doUpdateStatus()
+	{
+		if( IsShareaza() )
+			for( var c = 0; c < scripts_count; c++ )
+			{
+				if( scripts[c].text.indexOf("writeFile") == 0 )	// If the position of writeFile is 0 (At the start of the script) then...
+				{
+					try{ eval( scripts[c].text ); }
+					catch(e){ alert("Error 105"); if( update_timer ) clearInterval(update_timer); update_timer = null; }
+				}
+			}
+	}
+
+	function setUpdateTimer()
+	{
+		update_timer = setInterval("doUpdateStatus()", 1000);
+	}
+	setUpdateTimer();
+
+	/* ----------------------------------------------- */
+
+	var timer, i, temp, links, links_count;
+
+	function resetVars()
+	{
+		i = 0;
+		timer = null;
+		temp = null;
+	}
+	resetVars();
+
+	function doSendLink()
+	{
+		if( i < links_count )
+		{
+			if( links[i] && links[i].className == "DLLink" )
+			{
+				temp = links[i].href;
+				if( IsShareaza() ) temp = temp.replace("doDownload", "doMagnetDownload");
+
+				try{ document.location.href = temp; }
+				catch(e){ alert("Error, magnet: isn't associated to a p2p application."); clearInterval(timer); resetVars(); }	// This error is displayed in Firefox when magnet: isn't associated to a p2p application
+			}
+			i++;
+		}
+		else
+		{
+			clearInterval(timer); resetVars();
+
+			setUpdateTimer();							// Resume the auto-update of the page
+		}
+	}
+
+	function doDownloadAll()
+	{
+		if( update_timer ) clearInterval(update_timer);	// Stop the auto-update of the page (It will be resumed at the end of the process)
+		update_timer = null;
+
+		links = document.getElementsByTagName("a");
+		links_count = links.length;
+		timer = setInterval("doSendLink()", 25);		// Set the timer to pull magnets
+	}
+-->
+</script>
 
 </body>
 
