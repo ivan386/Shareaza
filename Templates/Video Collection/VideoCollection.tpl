@@ -86,7 +86,7 @@
 		}
 		else
 		{
-			document.writeln( "<a class='DLLink' href='magnet:?xt=" + sBitprint + "&xt=" + sEd2kHash + "&xt=" + sMD5 /*+ "&xl=" + nSize*/ + "&dn=" + sName + "' title='$3$'>$3$</a>" );
+			document.writeln( "<a class='DLLink' href=\"magnet:?xt=" + sBitprint + "&xt=" + sEd2kHash + "&xt=" + sMD5 /*+ "&xl=" + nSize*/ + "&dn=" + sName + "\" title='$3$'>$3$</a>" );
 		}
 	}
 -->
@@ -98,7 +98,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tbody>
 		<tr>
-			<td style="background-image: url('images/bg.png');" align="left" valign="top"><a href="http://www.shareaza.com"><img src="images/Top.png" width="650" height="84" border="0" alt="Shareaza P2P"/></a></td>
+			<td style="background-image: url('images/bg.png');" align="left" valign="top"><a href="http://www.shareaza.com/"><img src="images/Top.png" width="650" height="84" border="0" alt="Shareaza P2P"/></a></td>
 			<td style="background: url('images/top-tile.jpg') repeat-x;" width="100%">&nbsp;</td>
 		</tr>
 		<tr>
@@ -172,9 +172,12 @@ $data$
 
 <script type="text/javascript" language="javascript">
 <!--
-	var update_timer = null;
-	var scripts = document.getElementsByTagName("script");
-	var scripts_count = scripts.length;
+	var scripts = null, scripts_count = 0, update_timer = null;
+	if( document.getElementsByTagName )
+	{
+		scripts = document.getElementsByTagName("script");
+		scripts_count = scripts.length;
+	}
 
 	function doUpdateStatus()
 	{
@@ -195,13 +198,14 @@ $data$
 	}
 	setUpdateTimer();
 
-	/* ----------------------------------------------- */
+	/* -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- */
 
-	var timer, i, temp, links, links_count;
+	var timer = null, i, temp, links, links_count;
 
 	function resetVars()
 	{
 		i = 0;
+		if(timer) clearInterval(timer);
 		timer = null;
 		temp = null;
 	}
@@ -217,13 +221,13 @@ $data$
 				if( IsShareaza() ) temp = temp.replace("doDownload", "doMagnetDownload");
 
 				try{ document.location.href = temp; }
-				catch(e){ alert("Error, magnet: isn't associated to a p2p application."); clearInterval(timer); resetVars(); }	// This error is displayed in Firefox when magnet: isn't associated to a p2p application
+				catch(e){ alert("Error, magnet: isn't associated to a p2p application."); resetVars(); setUpdateTimer(); }	// This error is displayed in Firefox when magnet: isn't associated to a p2p application
 			}
 			i++;
 		}
 		else
 		{
-			clearInterval(timer); resetVars();
+			resetVars();
 
 			setUpdateTimer();							// Resume the auto-update of the page
 		}
@@ -231,10 +235,16 @@ $data$
 
 	function doDownloadAll()
 	{
+		if( document.links )
+			links = document.links;
+		else if( document.getElementsByTagName )
+			links = document.getElementsByTagName("a");
+		else
+			{ alert("The version of your browser is too old, please update it."); return; }
+
 		if( update_timer ) clearInterval(update_timer);	// Stop the auto-update of the page (It will be resumed at the end of the process)
 		update_timer = null;
 
-		links = document.getElementsByTagName("a");
 		links_count = links.length;
 		timer = setInterval("doSendLink()", 25);		// Set the timer to pull magnets
 	}
