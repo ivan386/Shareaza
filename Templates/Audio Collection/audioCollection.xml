@@ -19,13 +19,13 @@
 </images>
 <wizardText>
 	<text language="ja">
-		<item id="1" type="textbox" value="コレクションタイトル"/>
-		<item id="2" type="textbox" value="�?開�??�?�?�表示" default="開�??"/>
-		<item id="3" type="textbox" value="ダウンロード中�?�表示" default="ダウンロード中"/>
-		<item id="4" type="textbox" value="�?ダウンロード�?�?�表示" default="今�?��??ダウンロード"/>
-		<item id="6" type="textbox" value="Webリソース�?�説明"/>
-		<item id="7" type="colorpicker" value="�?�数行�?�色" default="#FFFFFF"/>
-		<item id="8" type="colorpicker" value="奇数行�?�色" default="#E9EDEF"/>
+		<item id="1" type="textbox" value="ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒˆãƒ«"/>
+		<item id="2" type="textbox" value="â€�é–‹ã��â€�ã�®è¡¨ç¤º" default="é–‹ã��"/>
+		<item id="3" type="textbox" value="ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ä¸­ã�®è¡¨ç¤º" default="ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ä¸­"/>
+		<item id="4" type="textbox" value="â€�ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰â€�ã�®è¡¨ç¤º" default="ä»Šã�™ã��ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰"/>
+		<item id="6" type="textbox" value="Webãƒªã‚½ãƒ¼ã‚¹ã�®èª¬æ˜Ž"/>
+		<item id="7" type="colorpicker" value="é�‡æ•°è¡Œã�®è‰²" default="#FFFFFF"/>
+		<item id="8" type="colorpicker" value="å¥‡æ•°è¡Œã�®è‰²" default="#E9EDEF"/>
 	</text>
 	<text language="pt-br">
 		<item id="1" type="textbox" value="Título da coleção"/>
