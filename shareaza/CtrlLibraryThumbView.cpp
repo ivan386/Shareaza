@@ -924,7 +924,7 @@ void CLibraryThumbView::OnRun()
 		BOOL bSuccess = FALSE;
 		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
 
-		if ( pCache.Load( strPath, &Size, nIndex, &pFile ) && pFile.m_nWidth > 0 && pFile.m_nHeight > 0 )
+		if ( pCache.Load( strPath, &Size, nIndex, &pFile ) )
 		{
 			int nSize = m_szThumb.cy * pFile.m_nWidth / pFile.m_nHeight;
 
@@ -940,7 +940,7 @@ void CLibraryThumbView::OnRun()
 
 			bSuccess = TRUE;
 		}
-		else if ( pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB() && pFile.m_nWidth > 0 && pFile.m_nHeight > 0 )
+		else if ( pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB() )
 		{
 			int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
 

@@ -204,7 +204,10 @@ BOOL CThumbCache::Load(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFil
 		return FALSE;
 	}
 
-	return TRUE;
+	if ( pImage && pImage->m_nWidth > 0 && pImage->m_nHeight > 0 )
+		return TRUE;
+	else
+		return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
