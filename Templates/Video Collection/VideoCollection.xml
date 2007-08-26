@@ -25,17 +25,17 @@
 </images>
 <wizardText>
 	<text language="lt">
-		<item id="1" type="textbox" value="Atveriant bylą" default="Atverti bylą"/>
-		<item id="10" type="textbox" value="File enqueuing action" default="Enqueue File"/>
-		<item id="2" type="textbox" value="Bylai siunčiantis" default="Siunčiama"/>
+		<item id="1" type="textbox" value="Atveriant failą" default="Atverti failą"/>
+		<item id="10" type="textbox" value="Failo įtraukimo į eilę veiksmas" default="Įtraukti į eilę"/>
+		<item id="2" type="textbox" value="Failui siunčiantis" default="Siunčiama"/>
 		<item id="3" type="textbox" value="Atsisiuntimo veiksmas" default="Atsisiųsti dabar"/>
-		<item id="11" type="textbox" value="Download all files action" default="Download All Files"/>
+		<item id="11" type="textbox" value="Veiksmas atsisiunčiant viską" default="Atsisiųsti visus failus"/>
 		<item id="4" type="textbox" value="Rinkinio aprašymas"/>
 		<item id="5" type="textbox" value="Web resurso aprašymas"/>
 		<item id="6" type="colorpicker" value="Lyginių eilučių spalva" default="#FFFFFF"/>
 		<item id="7" type="colorpicker" value="Nelyginių eilučių spalva" default="#E9EDEF"/>
 		<item id="8" type="textbox" value="Apie leidėjų grupę"/>
-		<item id="9" type="multi-filepicker" value="Paveikslėlis prie bylos" default="images/Screenshot_Part.png"/>
+		<item id="9" type="multi-filepicker" value="Paveikslėlis prie failo" default="images/Screenshot_Part.png"/>
 	</text>
 	<text language="ja">
 		<item id="1" type="textbox" value="”開く”の表示" default="開く"/>
