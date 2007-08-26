@@ -432,6 +432,7 @@ BOOL CSkin::LoadControlTips(CXMLElement* pBase)
 			if ( UINT nID = LookupCommandID( pXML ) )
 			{
 				CString strMessage = pXML->GetAttributeValue( _T("message") );
+				Replace( strMessage, _T("{n}"), _T("\r\n") );
 				m_pControlTips.SetAt( nID, strMessage );
 			}
 		}
