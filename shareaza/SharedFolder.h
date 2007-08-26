@@ -1,7 +1,7 @@
 //
 // SharedFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,23 +39,24 @@ public:
 
 // Attributes
 public:
-	DWORD			m_nScanCookie;
 	DWORD			m_nUpdateCookie;
 	DWORD			m_nSelectCookie;
-public:
 	CLibraryFolder*	m_pParent;
 	CString			m_sName;
-	CString			m_sNameLC;
 	CString			m_sPath;
-	TRISTATE		m_bShared;
 	BOOL			m_bExpanded;
 	DWORD			m_nFiles;
 	QWORD			m_nVolume;
-public:
-	CMap< CString, const CString&, CLibraryFolder*, CLibraryFolder* >	m_pFolders;
 	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* >	m_pFiles;
+
+protected:
+	DWORD			m_nScanCookie;
+	CString			m_sNameLC;
+	TRISTATE		m_bShared;
+	CMap< CString, const CString&, CLibraryFolder*, CLibraryFolder* >	m_pFolders;
 	HANDLE			m_hMonitor;
 	BOOL			m_bMonitor;
+	BOOL			m_bOffline;			// TRUE - if folder absent
 
 // Operations
 public:
@@ -65,29 +66,32 @@ public:
 	CLibraryFolder*	GetFolderByPath(LPCTSTR pszPath) const;
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
 	INT_PTR			GetFolderCount() const;
-public:
+
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
 	CLibraryFile*	GetFile(LPCTSTR pszName) const;
 	INT_PTR			GetFileCount() const;
 	int				GetFileList(CLibraryList* pList, BOOL bRecursive) const;
 	int				GetSharedCount() const;
-public:
+
 	void			Scan();
-	BOOL			IsShared();
-protected:
+	BOOL			IsShared() const;
+	// Set to TRUE if shared, to FALSE if not, and leave unchanged if unknown
+	void			GetShared(BOOL& bShared) const;
+	void			SetShared(TRISTATE bShared);
+	BOOL			IsOffline() const;
+	BOOL			SetOffline();
+	BOOL			SetOnline();
 	void			Serialize(CArchive& ar, int nVersion);
 	BOOL			ThreadScan(DWORD nScanCookie = 0);
 	BOOL			SetMonitor();
 	BOOL			CheckMonitor();
 	void			OnDelete(TRISTATE bCreateGhost = TS_UNKNOWN);
 	void			OnFileRename(CLibraryFile* pFile);
+
+protected:
 	void			Clear();
 	void			PathToName();
-
-	friend class CLibrary;
-	friend class CLibraryFolders;
-	friend class CLibraryFile;
 
 // Automation
 protected:

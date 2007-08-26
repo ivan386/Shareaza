@@ -164,21 +164,18 @@ CString CLibraryFile::GetSearchName() const
 
 BOOL CLibraryFile::IsShared() const
 {
+	if ( m_pFolder && m_pFolder->IsOffline() )
+		return FALSE;
+
 	if ( m_bShared )
 	{
 		if ( m_bShared == TS_TRUE ) return TRUE;
 		if ( m_bShared == TS_FALSE ) return FALSE;
 	}
-	
-	for ( CLibraryFolder* pFolder = m_pFolder ; pFolder ; pFolder = pFolder->m_pParent )
-	{
-		if ( pFolder->m_bShared )
-		{
-			if ( pFolder->m_bShared == TS_TRUE ) return TRUE;
-			if ( pFolder->m_bShared == TS_FALSE ) return FALSE;
-		}
-	}
-	
+
+	if ( m_pFolder && ! m_pFolder->IsShared() )
+		return FALSE;
+
 	return TRUE;
 }
 

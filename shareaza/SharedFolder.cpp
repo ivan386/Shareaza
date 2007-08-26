@@ -45,31 +45,25 @@ END_INTERFACE_MAP()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolder construction
 
-CLibraryFolder::CLibraryFolder(CLibraryFolder* pParent, LPCTSTR pszPath)
+CLibraryFolder::CLibraryFolder(CLibraryFolder* pParent, LPCTSTR pszPath) :
+	m_nScanCookie( 0 ),
+	m_nUpdateCookie( 0 ),
+	m_nSelectCookie( 0 ),
+	m_pParent( pParent ),
+	m_sPath( pszPath ),
+	m_bShared( pParent ? TS_UNKNOWN : TS_TRUE ),
+	m_bExpanded( pParent ? FALSE : TRUE ),
+	m_nFiles( 0 ),
+	m_nVolume( 0 ),
+	m_hMonitor( INVALID_HANDLE_VALUE ),
+	m_bMonitor( FALSE ),
+	m_bOffline( FALSE )
 {
 	EnableDispatch( IID_ILibraryFolder );
 	EnableDispatch( IID_ILibraryFolders );
 	EnableDispatch( IID_ILibraryFiles );
-	
-	m_pParent	= pParent;
-	
-	m_nFiles	= 0;
-	m_nVolume	= 0;
-	m_bShared	= pParent ? TS_UNKNOWN : TS_TRUE;
-	m_bExpanded	= pParent ? FALSE : TRUE;
-	
-	m_nScanCookie	= 0;
-	m_nUpdateCookie	= 0;
-	m_nSelectCookie	= 0;
-	
-	m_hMonitor		= INVALID_HANDLE_VALUE;
-	m_bMonitor		= FALSE;
 
-	if ( pszPath )
-	{
-		m_sPath = pszPath;
-		PathToName();
-	}
+	PathToName();
 }
 
 CLibraryFolder::~CLibraryFolder()
@@ -536,20 +530,81 @@ void CLibraryFolder::Scan()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CLibraryFolder shared check
+// CLibraryFolder shared status managing
 
-BOOL CLibraryFolder::IsShared()
+BOOL CLibraryFolder::IsShared() const
 {
-	for ( CLibraryFolder* pFolder = this ; pFolder ; pFolder = pFolder->m_pParent )
+	if ( m_bOffline )
+		return FALSE;
+
+	for ( const CLibraryFolder* pFolder = this ; pFolder ; pFolder = pFolder->m_pParent )
 	{
 		if ( pFolder->m_bShared )
 		{
-			if ( pFolder->m_bShared == TS_TRUE ) return TRUE;
-			if ( pFolder->m_bShared == TS_FALSE ) return FALSE;
+			if ( pFolder->m_bShared == TS_TRUE )
+				return TRUE;
+			if ( pFolder->m_bShared == TS_FALSE )
+				return FALSE;
 		}
 	}
 
 	return TRUE;
+}
+
+void CLibraryFolder::GetShared(BOOL& bShared) const
+{
+	if ( m_bOffline )
+		bShared = FALSE;
+	else if ( m_bShared == TS_TRUE )
+		bShared = TRUE;
+	else if ( m_bShared == TS_FALSE )
+		bShared = FALSE;
+}
+
+void CLibraryFolder::SetShared(TRISTATE bShared)
+{
+	m_bShared = bShared;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryFolder offline status managing
+
+BOOL CLibraryFolder::IsOffline() const
+{
+	return m_bOffline;
+}
+
+BOOL CLibraryFolder::SetOffline()
+{
+	if ( ! m_bOffline )
+	{
+		m_bOffline = TRUE;
+		m_nUpdateCookie++;
+
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
+		{
+			GetNextFolder( pos )->SetOffline();
+		}
+		return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL CLibraryFolder::SetOnline()
+{
+	if ( m_bOffline )
+	{
+		m_bOffline = FALSE;
+		m_nUpdateCookie++;
+
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
+		{
+			GetNextFolder( pos )->SetOnline();
+		}
+
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

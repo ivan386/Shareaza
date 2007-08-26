@@ -1,7 +1,7 @@
 //
 // DlgDownloadGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -248,7 +248,7 @@ void CDownloadGroupDlg::OnOK()
 
 					CQuickLock oLock( Library.m_pSection );
 					if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
-						pFolder->m_bShared = bShare ? TS_TRUE : TS_FALSE;
+						pFolder->SetShared( bShare ? TS_TRUE : TS_FALSE );
 					Library.Update();
 				}
 			}

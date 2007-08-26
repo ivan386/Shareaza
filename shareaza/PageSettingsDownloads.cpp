@@ -368,7 +368,7 @@ void CDownloadsSettingsPage::OnOK()
 					
 					CQuickLock oLock( Library.m_pSection );
 					if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
-						pFolder->m_bShared = bShare ? TS_TRUE : TS_FALSE;
+						pFolder->SetShared( bShare ? TS_TRUE : TS_FALSE );
 					Library.Update();
 				}
 			}

@@ -151,12 +151,7 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath, BOOL bShared)
 	CLibraryFolder* pFolder = AddFolder( pszPath );
 
 	if( pFolder )
-	{
-		if( bShared )
-			pFolder->m_bShared = TS_TRUE;
-		else
-			pFolder->m_bShared = TS_FALSE;
-	}
+		pFolder->SetShared( bShared ? TS_TRUE : TS_FALSE );
 
 	return pFolder;
 }
@@ -536,8 +531,10 @@ BOOL CLibraryFolders::ThreadScan(BOOL* pbContinue, BOOL bForce)
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
 		
-		if ( GetFileAttributes( pFolder->m_sPath ) != 0xFFFFFFFF )
+		if ( GetFileAttributes( pFolder->m_sPath ) != INVALID_FILE_ATTRIBUTES )
 		{
+			if ( pFolder->SetOnline() ) bChanged = TRUE;
+
 			if ( bForce || pFolder->CheckMonitor() )
 			{
 				if ( pFolder->ThreadScan() ) bChanged = TRUE;
@@ -545,6 +542,8 @@ BOOL CLibraryFolders::ThreadScan(BOOL* pbContinue, BOOL bForce)
 			
 			pFolder->SetMonitor();
 		}
+		else
+			if ( pFolder->SetOffline() ) bChanged = TRUE;
 	}
 	
 	return bChanged;

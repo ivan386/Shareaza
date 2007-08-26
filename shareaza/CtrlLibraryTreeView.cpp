@@ -1281,8 +1281,7 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 {
 	BOOL bChanged = FALSE;
 
-	if ( pFolder->m_bShared == TS_TRUE ) bShared = TRUE;
-	else if ( pFolder->m_bShared == TS_FALSE ) bShared = FALSE;
+	pFolder->GetShared( bShared );
 
 	if ( pItem == NULL )
 	{
@@ -1677,12 +1676,12 @@ void CLibraryTreeView::OnLibraryShared()
 			if ( LibraryFolders.CheckFolder( pItem->m_pPhysical, TRUE ) )
 			{
 				BOOL bShared = pItem->m_pPhysical->IsShared();
-				pItem->m_pPhysical->m_bShared = TS_UNKNOWN;
+				pItem->m_pPhysical->SetShared( TS_UNKNOWN );
 
 				if ( bShared )
-					pItem->m_pPhysical->m_bShared = pItem->m_pPhysical->IsShared() ? TS_FALSE : TS_UNKNOWN;
+					pItem->m_pPhysical->SetShared( pItem->m_pPhysical->IsShared() ? TS_FALSE : TS_UNKNOWN );
 				else
-					pItem->m_pPhysical->m_bShared = pItem->m_pPhysical->IsShared() ? TS_UNKNOWN : TS_TRUE;
+					pItem->m_pPhysical->SetShared( pItem->m_pPhysical->IsShared() ? TS_UNKNOWN : TS_TRUE );
 				pItem->m_pPhysical->m_nUpdateCookie++;
 			}
 		}
