@@ -2445,6 +2445,11 @@
 	<tip id="ID_WINDOW_TILE_VERT" message="Rangschik geopende vensters verticaal, zonder elkaar te overlappen."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Toon of verberg de knoppenbalk."/>
 </commandTips>
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="In de maximale modus, zal de uploadsnelheid de ingevulde waarde nooit voorbijgaan. Wanneer de modus Ongeveer is, zal de uploadsnelheid rond de ingevulde snelheid schommelen.."/>
+	<tip id="IDC_SHARE_PARTIALS" message="Deze instelling heeft geen effect op reeds gestarte downloads, bestanden waarvan men de eDonkeyhash weet en op torrents.{n}Maar toch wordt deze instelling gerespecteerd als je download gepauzeerd is.{n}{n}WAARSCHUWING: Gebruik deze optie alleen als het echt nodig is. Misbruik hiervan kan ervoor zorgen dat u wordt uitgesloten."/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
