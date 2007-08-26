@@ -93,7 +93,7 @@
 		<button id="ID_SEARCH_SEARCH" text="Buscar de Nuevo..."/>
 		<button id="ID_SEARCH_STOP" text="Detener"/>
 		<separator/>
-	    <button id="ID_SEARCH_DOWNLOAD" text="Descargar"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Descargar"/>
 		<button id="ID_BROWSE_LAUNCH" text="Explorar Usuario"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Mostrar Búsqueda"/>
@@ -554,7 +554,7 @@
 			<item id="ID_WINDOW_REMOTE" text="Mostrar Control Remoto"/>
 		</menu>
 
-        <menu text="_Ayuda">
+		<menu text="_Ayuda">
 			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
 
 			<separator/>
@@ -565,7 +565,7 @@
 			<item id="ID_HELP_CODEC" text="_Ayuda con Codecs"/>
 			</menu>
 			<separator/>
-	            <menu text="_Sitios">
+			<menu text="_Sitios">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
@@ -574,8 +574,8 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
-<item id="ID_HELP_ABOUT" text="_Acerca de Shareaza..."/>
-	    </menu>
+			<item id="ID_HELP_ABOUT" text="_Acerca de Shareaza..."/>
+		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
 		<menu text="_Red">
@@ -640,7 +640,7 @@
 			<item id="ID_WINDOW_MONITOR" text="Show _Monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="Mostrar Control Remoto"/>
 		</menu>
-      <menu text="_Ayuda">
+		<menu text="_Ayuda">
 			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
 
 			<separator/>
@@ -651,7 +651,7 @@
 			<item id="ID_HELP_CODEC" text="_Ayuda con Codecs"/>
 			</menu>
 			<separator/>
-	            <menu text="_Sitios">
+			<menu text="_Sitios">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
@@ -847,7 +847,7 @@
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Descargar"/>
-        <item id="ID_SEARCH_DOWNLOADNOW" text="Descargar _Ahora"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Descargar _Ahora"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Platicar con Usuario"/>
 		<separator/>
@@ -865,7 +865,7 @@
 	</menu>
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Descargar"/>
-        <item id="ID_SEARCH_DOWNLOADNOW" text="Descargar _Ahora"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Descargar _Ahora"/>
 		<item id="ID_SEARCH_COPY" text="Copiar _URI (enlace)"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Platicar con Usuario"/>
@@ -1970,15 +1970,15 @@
 		El número de transferencias activas en cualquier momento es limitado por la opción
 		que se encuentra en la parte de descargas de la configuración, esto es para asegurar
 		el buen uso del ancho de banda.  Esto se puede cambiar en Herramientas, Configurar Shareaza. O estas en cola con las fuentes.</text>
-		</document>
-		 <document name="DownloadHelp.Queued">
+	</document>
+	<document name="DownloadHelp.Queued">
 		<text format="b">Esta descarga esta en cola</text>
 		<newline gap="8"/>
 		<text>Esta descarga esta esperando para que una de tus descargas continue.
 		Tu configuracin limita el nmero de descargas que pueden estar activos
 		al mismo tiempo, para asegurarse de que cada descarga tenga una cantidad buena de banda
 		ancha. Puedes cambiar esta configuracin en Herramientas, Configuracin de Shareaza.</text>
-        </document>
+	</document>
 
 	<document name="DownloadHelp.Searching">
 		<text format="b">Buscando Más fuentes</text>
@@ -2083,7 +2083,7 @@
 		una lista actualizada (archivo met) para conectarte a ED2K.</text>
 		<newline gap="8"/>
 		<text>Puedes bajar una lista de servidores desde la configuración de ed2k, o de la lista
-        de descubrimientos.</text>
+		de descubrimientos.</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
@@ -2135,7 +2135,7 @@
 		<newline gap="8"/>
 		<text>Si estas teniendo problemas creando búsquedas, recuerda que es muy similar a una búsqueda
 		de Internet. Terminos especificos y frases son los mejores - Nombres únicos, titulos
-        y palabras clave.</text>
+		y palabras clave.</text>
 		<newline gap="8"/>
 		<text>Terminos generales no pueden ser buscados con eficiencía y puede resultar
 		en búsquedas pobres, y también como alta banda ancha utilizada en la búsqueda.</text>
@@ -2254,14 +2254,14 @@
 	<tip id="ID_DOWNLOADS_SOURCES" message="Buscar más fuentes para este archivo en la red."/>
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Ver información de la descarga BitTorrent seleccionado..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Agregar fuente (URI)..."/>
-    <tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Ver reviews para la descarga seleccionada"/>
-    <tip id="ID_HELP_ABOUT" message="Información acerca de Shareaza..."/>
+	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Ver reviews para la descarga seleccionada"/>
+	<tip id="ID_HELP_ABOUT" message="Información acerca de Shareaza..."/>
 	<tip id="ID_HELP_CODEC" message="Todo sobre codecs y problemas de video."/>
-    <tip id="ID_HELP_FAQ" message="Visitar los Forums de Shareaza, donde puedes solicitar ayuda. Si deseas pregunta en Español!"/>
+	<tip id="ID_HELP_FAQ" message="Visitar los Forums de Shareaza, donde puedes solicitar ayuda. Si deseas pregunta en Español!"/>
 	<tip id="ID_HELP_ROUTER" message="Consigue ayuda para configurar tu Router Y/O Firewall."/>
 	<tip id="ID_HELP_FORUMS" message="Visitar las foros de Shareaza, para soporte técnico y discusiones."/>
 	<tip id="ID_HELP_GUIDE" message="Visita la Gua de Usuarios Shareaza."/>
-    <tip id="ID_HELP_HOMEPAGE" message="Visitar Shareaza.com."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Visitar Shareaza.com."/>
 	<tip id="ID_HELP_SECURITY" message="Ayuda protegiendo tu sistema de programas hostiles"/>
 	<tip id="ID_HELP_UPDATE" message="Checar noticias y actualizaciones."/>
 	<tip id="ID_HELP_WEB_1" message="Visitar este sitio"/>
@@ -2310,8 +2310,8 @@
 	<tip id="ID_LIBRARY_PARENT" message="Mover a la carpeta anterior."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Ver y editar las propiedades del archivo..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Reconstruir Mi Colección, escaneandolo, y adquiriendo la metadata de nuevo."/>
-    <tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstrir metadata utilizando otro lenguaje."/>
-    <tip id="ID_LIBRARY_REFRESH" message="Actualizar la vista de Mi Colección."/>
+	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstrir metadata utilizando otro lenguaje."/>
+	<tip id="ID_LIBRARY_REFRESH" message="Actualizar la vista de Mi Colección."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Eliminar esta carpeta de Mi Colección."/>
 	<tip id="ID_LIBRARY_RENAME" message="Renombrar el archivo."/>
 	<tip id="ID_LIBRARY_SCAN" message="Escanear para cambio en los archivos."/>
@@ -2508,15 +2508,15 @@
 	<string id="WINDOW_SEARCHPAD" value="Buscar"/>
 	<string id="WINDOW_HELP" value="Ayuda de Shareaza"/>
 	<string id="7000" value="¿Estás seguro que deseas quitar este filtro ?"/>
-    <string id="7001" value="&amp;Schemas"/>
-    <string id="7002" value="Valores Multiple"/>
+	<string id="7001" value="&amp;Schemas"/>
+	<string id="7002" value="Valores Multiple"/>
 	<string id="7003" value="Múltiple"/>
-    <string id="7004" value="Ya hay un filtro llamado &quot;%s&quot;, deseas remplazarlo?"/>
+	<string id="7004" value="Ya hay un filtro llamado &quot;%s&quot;, deseas remplazarlo?"/>
 	<string id="7005" value="Por favor dale un nombre al filtro."/>
-    <string id="7100" value="Este template es invalido."/>
+	<string id="7100" value="Este template es invalido."/>
 	<string id="7101" value="Este template no tiene ningn cambio."/>
 	<string id="7102" value="Ests seguro que deseas borrar el template &quot;%s&quot;?\nEso no se puede deshacer."/>
-    <string id="8000" value="Configuración de Shareaza"/>
+	<string id="8000" value="Configuración de Shareaza"/>
 	<string id="8001" value="Bienvenido a Shareaza"/>
 	<string id="8002" value="Propiedades del Archivo"/>
 	<string id="8003" value="Editar Mi Perfil"/>
@@ -2529,10 +2529,10 @@
 	<string id="8010" value="Esta es una versión pre-release de Shareaza, y el periodo de Beta Testing ha terminado.  Por favor descarga la versión completa de www.shareaza.com."/>
 	<string id="8011" value="Cambiado de vista va a cerrar todas las ventanas que tienes abiertas.  ¿Deseas cambiar ahora?"/>
 	<string id="8012" value="Informacin Torrent"/>
-    <string id="8060" value="Modo Hub %lu en red(s).  %s en Mi Colección."/>
-	<string id="8061" value="Modo Ultrapeer en %lu vecino(s) .  %s en Mi Coleccin."/>
-    <string id="8062" value="Modo Hub/Ultrapeer %lu en red(s).  %s en Mi Colección."/>
-    <string id="8063" value="Conectado. %s en Mi Colección."/>
+	<string id="8060" value="Modo Hub %lu en red(s).  %s en Mi Colección."/>
+	<string id="8061" value="Modo Ultrapeer en %lu vecino(s) .  %s en Mi Colección."/>
+	<string id="8062" value="Modo Hub/Ultrapeer %lu en red(s).  %s en Mi Colección."/>
+	<string id="8063" value="Conectado. %s en Mi Colección."/>
 	<string id="8064" value="Conectado a %lu vecino(s).  Tienes %s en Mi Colección."/>
 	<string id="8065" value="Conectando a la red..."/>
 	<string id="8066" value="Shareaza no esta conectado a la red."/>
@@ -2561,8 +2561,8 @@
 	<string id="8134" value="Se va a iniciar una nueva búsqueda.  ¿Quieres eliminar los resltados actuales?"/>
 	<string id="8135" value="No Hay Metadata"/>
 	<string id="8136" value="Búsqueda de texto puro"/>
-    <string id="8137" value="No Columnas de Schema "/>
-    <string id="8141" value="Mostrar el panel de búsqueda"/>
+	<string id="8137" value="No Columnas de Schema "/>
+	<string id="8141" value="Mostrar el panel de búsqueda"/>
 	<string id="8142" value="Esconder el panel de búsqueda"/>
 	<string id="8143" value="Buscando..."/>
 	<string id="8144" value="Buscar"/>
@@ -2595,9 +2595,9 @@
 	<string id="8179" value="(Limpiar Historía de Búsqueda)"/>
 	<string id="8180" value="El tamaño debe ser"/>
 	<string id="8181" value="&#160;a"/><!-- size from xx TO xx-->
-    <string id="8208" value="Shareaza esta creando hashes para %i archivo(s):"/>
+	<string id="8208" value="Shareaza esta creando hashes para %i archivo(s):"/>
 	<string id="8223" value="%i dias y %i horas"/>
-    <string id="8224" value="Shareaza esta descargando:"/>
+	<string id="8224" value="Shareaza esta descargando:"/>
 	<string id="8225" value="Esta descarga esta en pausa:"/>
 	<string id="8226" value="Shareaza ha terminado de bajar:"/>
 	<string id="8227" value="%i horas y %i minutos"/>
@@ -2616,7 +2616,7 @@
 	<string id="8241" value="Shareaza esta verificando el archivo descargado:"/>
 	<string id="8243" value="Volumen Subido:"/>
 	<string id="8244" value="Nmero de reviews:"/>
-    <string id="8288" value="Explorando Mi Colección de Shareaza"/>
+	<string id="8288" value="Explorando Mi Colección de Shareaza"/>
 	<string id="8289" value="Explorando "/>
 	<string id="8290" value="Explorando los contenidos de las carpetas %i "/>
 	<string id="8291" value="Carpetas Multiples"/>
@@ -2657,7 +2657,7 @@
 	<string id="8335" value="Las fuentes estan firewalled"/>
 	<string id="8336" value="Las fuentes pueden ser inestables"/>
 	<string id="8337" value="No confiado"/>
-    <string id="16064" value="Iniciando el nucleo de la red..."/>
+	<string id="16064" value="Iniciando el nucleo de la red..."/>
 	<string id="16065" value="Imposible asociar %s con el puerto %i para conexiones entrantes.  Conexiones entrantes no van a ser soportadas."/>
 	<string id="16066" value="Cerrando el nucleo de la red..."/>
 	<string id="16067" value="Desconectado de la red."/>
@@ -2705,7 +2705,7 @@
 	<string id="16156" value="El vecino %s quiere actuar como hub cerrando conexión."/>
 	<string id="16157" value="El vecino %s no es un hub, cerrando conexión."/>
 	<string id="16158" value="Gnutella][ conexion con vecino %s ha sido establecido (%s)."/>
-  	<string id="16159" value="Cerrando conexión con no vecino Gnutella2 %s."/>
+	<string id="16159" value="Cerrando conexión con no vecino Gnutella2 %s."/>
 	<string id="16192" value="El vecino %s remitio un paquete con tama o excesivo, cerrando conexión."/>
 	<string id="16193" value="El veicno %s remitio un paquete con zero TTL, ignorando."/>
 	<string id="16194" value="Neighbour %s remitio un paquete con excesivo TTL, tirando paquete (TTL=%i, Hops=%i)."/>
@@ -2846,8 +2846,8 @@
 	<string id="16375" value="Parciales"/>
 	<string id="16376" value="Todos Los Archivos"/>
 	<string id="16377" value="HTTP Guard"/>
-    <string id="16379" value="Archivos de librera"/>
-    <string id="16384" value="Estás seguro(a) que quieres ejecutar el archivo %s?{n}nAlgunos archivos pueden ser peligrosos para la computadora, y es recomendado tener el antivirus funcionando y actualizado."/>
+	<string id="16379" value="Archivos de librera"/>
+	<string id="16384" value="Estás seguro(a) que quieres ejecutar el archivo %s?{n}nAlgunos archivos pueden ser peligrosos para la computadora, y es recomendado tener el antivirus funcionando y actualizado."/>
 	<string id="16385" value="Estas a punto de modificar la metadata de %i archivos. ¿Estás seguro(a) en continuar?"/>
 	<string id="16386" value="Editando metadata de %i archivos."/>
 	<string id="16387" value="El archivo %s no ha sido escaneado.  Por favor espere a que sea escaneado, e intente más tarde."/>
@@ -2873,7 +2873,7 @@
 	<string id="16407" value="¿Deseas prevenit que esta colección te pregunte si deseas descargar otra cosa de esta?"/>
 	<string id="16408" value="Copiar &amp;URI"/>
 	<string id="16409" value="Exportar &amp;URIs..."/>
-    <string id="16410" value="Las carpetas Completas e Incompletas deben de no ser las mismas"/>
+	<string id="16410" value="Las carpetas Completas e Incompletas deben de no ser las mismas"/>
 
 	<string id="16448" value="Conectando a %s, handshaking..."/>
 	<string id="16449" value="Chateando con %s (%s)."/>
@@ -2910,7 +2910,7 @@
 	<string id="16535" value="Ancho de banda total de transmición UDP"/>
 	<string id="16536" value="Gnutella Ratio of Received/Sent Pings"/>
 	<string id="16537" value="Gnutella Ratio of Received/Sent Pongs"/>
-    <string id="16768" value="URL &quot;%s&quot; recibido"/>
+	<string id="16768" value="URL &quot;%s&quot; recibido"/>
 	<string id="16769" value="Shareaza no entendió el URL."/>
 	<string id="16770" value="La ventana de URL no pudo ser mostrada, Shareaza está ocupado."/>
 	<string id="16771" value="El archivo &quot;%s&quot; ya está en Mi Colección.  ¿Quieres descagarlo de todos modos?"/>
@@ -2923,7 +2923,7 @@
 	<string id="16778" value="URL:"/>
 	<string id="16779" value="Tipo:"/>
 	<string id="16780" value="No "/>
-    <string id="16781" value="Pidiendo..."/>
+	<string id="16781" value="Pidiendo..."/>
 	<string id="16782" value="Suceso!"/>
 	<string id="16783" value="Terminado, haz click a cerrar"/>
 	<string id="16784" value="&amp;Cerrar"/>
@@ -2940,15 +2940,15 @@
 	<string id="16809" value="Sa&amp;lir"/>
 	<string id="16810" value="años"/>
 	<string id="16811" value="Automatico"/>
-    <string id="16812" value="Por favor espera: Encontrando dispositivos UPnP y configurandolos..."/>
+	<string id="16812" value="Por favor espera: Encontrando dispositivos UPnP y configurandolos..."/>
 	<string id="16813" value="Por favor espera: Actualizando servicios de descubrimiento..."/>
 	<string id="16814" value="Please wait: Actualizando lista de servidor eDonkey2000..."/>
-    <string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>
-    <string id="16816" value="La red eDonkey utiliza largas colas con tiempos largos de espera. Limitando tu máxima cola de posición puede que te de problemas para iniciar las descargas.\nEstas seguro que deseas limitar las posiciones de cola que vas a aceptar?"/>
-    <string id="16817" value="Windows no soporta nomres ms grandes que 256 caracteres.\nPlor favor selecciona un nombre con un tamao ms pequeo."/>
-    <string id="16818" value="La carpeta de archivos incompletos no debe de estar en la librera, porque reduce velocidad. Archivos incompletos pueden ser compartidos directamente de la ventana de transferencias."/>
+	<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>
+	<string id="16816" value="La red eDonkey utiliza largas colas con tiempos largos de espera. Limitando tu máxima cola de posición puede que te de problemas para iniciar las descargas.\nEstas seguro que deseas limitar las posiciones de cola que vas a aceptar?"/>
+	<string id="16817" value="Windows no soporta nomres ms grandes que 256 caracteres.\nPlor favor selecciona un nombre con un tamao ms pequeo."/>
+	<string id="16818" value="La carpeta de archivos incompletos no debe de estar en la librera, porque reduce velocidad. Archivos incompletos pueden ser compartidos directamente de la ventana de transferencias."/>
 	<string id="16819" value="Una subcarpeta de la carpeta seleccionada &quot;%s&quot; ya es parte de tu librera. \n\nDeseas agregar la carpeta seleccionada a tu librera ?\n\n La carpeta existente va a ser un subfolder de la nueva carpeta. Esto va a causar re-hashing re-hashing de todos los archivos en esta carpeta."/>
-    <string id="16864" value="Accesando servicios de descubrimiento..."/>
+	<string id="16864" value="Accesando servicios de descubrimiento..."/>
 	<string id="16865" value="Accesando el servicio de descubrimiento en &quot;%s&quot;..."/>
 	<string id="16866" value="Transacción con el GWebCache (&quot;%s&quot;) fué completada."/>
 	<string id="16867" value="Falla del servicio de descubrimiento &quot;%s&quot; número %i."/>
@@ -2972,12 +2972,12 @@
 	<string id="16943" value="Explorando usuario %s"/>
 	<string id="16944" value="Encontrados %i archivos compartdios en Mi Colección de %s."/>
 	<string id="16991" value="Shareaza Media Player"/>
-    <string id="16992" value="Shareaza no pudo iniciar los servicias de reproducción.  Por favor reinstale Shareaza, y confirme que tiene todos los codecs, filtros y controladores necesarios.."/>
+	<string id="16992" value="Shareaza no pudo iniciar los servicias de reproducción.  Por favor reinstale Shareaza, y confirme que tiene todos los codecs, filtros y controladores necesarios.."/>
 	<string id="16993" value="Todos los archivos de Media|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"/>
 	<string id="16994" value="El archivo &quot;%s&quot;, no se pudo cargar."/>
 	<string id="16995" value="Puede estar corrupto, o usted no tiene los Codecs necesarios para su reproducción."/>
 	<string id="16996" value="Parte de este archivo no pudo ser reproducido. Usted puede necesitar Codecs adicionales."/>
-    <string id="16997" value="No hay ningún archivo reproduciendose.  Haz doble click a un archivo de media en tu librería para reproducirlo."/>
+	<string id="16997" value="No hay ningún archivo reproduciendose.  Haz doble click a un archivo de media en tu librería para reproducirlo."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/> <!-- on one line -->
 	<string id="16999" value="P L A Y L I S T"/>
 	<string id="17024" value="Iniciando conexión a %s..."/>
@@ -3033,7 +3033,7 @@
 	<string id="17130" value="eDonkey2000 (HighID)"/>
 	<string id="17216" value="Iniciando conexión a servidor eDonkey2000 en %s..."/>
 	<string id="17217" value="Conectado en servidor eDonkey2000 %s, handshaking..."/>
-    <string id="17218" value="ED2K[%s] %s"/>
+	<string id="17218" value="ED2K[%s] %s"/>
 	<string id="17219" value="El servidor eDonkey2000 %s no aceptó la conexión."/>
 	<string id="17220" value="El servidor eDonkey2000 %s nos dió %lu como número de identificación."/>
 	<string id="17221" value="El servidor eDonkey2000 %s cambió nuestro número de identificación de %lu a %lu."/>
@@ -3091,7 +3091,7 @@
 	<string id="17498" value="Hubo un error con el archivo &quot;%s&quot;."/>
 	<string id="17500" value="El tracker no respondio, tratando otra vez"/>
 	<string id="17501" value="No se pudo comunicar al tracker"/>
-    <string id="17503" value="Tracker failed- Trying next tracker (%i of %i)"/>
+	<string id="17503" value="Tracker failed- Trying next tracker (%i of %i)"/>
 	<string id="17505" value="BitTorrent connection to %s was dropped."/>
 	<string id="17506" value="BitTorrent handshake with %s was dropped."/>
 	<string id="17507" value="BitTorrent coupling with %s was dropped."/>
@@ -3099,13 +3099,13 @@
 	<string id="17511" value="BitTorrent coupling with %s not accepted, maximum connections reached."/>
 	<string id="17512" value="Private torrent"/>
 	<string id="17513" value="Encoding error"/>
-    <string id="18496" value="Usted ha cambiado el nombre del archivo.  ¿Está seguro de cambiarlo?"/>
+	<string id="18496" value="Usted ha cambiado el nombre del archivo.  ¿Está seguro de cambiarlo?"/>
 	<string id="18497" value="El valor de SHA1 que le asignó a la descarga no es válido.  Pro favor revíselo."/>
 	<string id="18498" value="El valor de root tiger-tree asignado no es válido."/>
 	<string id="18499" value="El valor del hash de eDonkey2000 asignado no es válido."/>
 	<string id="18500" value="¿Estás seguro de cambiar el SHA1?"/>
 	<string id="18501" value="¿Estás seguro de cambiar el root tiger-tree hash?"/>
-    <string id="18502" value="¿Estás seguro de cambiar el hash de eDonkey?"/>
+	<string id="18502" value="¿Estás seguro de cambiar el hash de eDonkey?"/>
 	<string id="18503" value="¿Estás seguro de olvidar el estado actual de verificación? Toda la información de la descarga va a ser tratada como inseguro, para reverificarla."/>
 	<string id="18504" value="¿Estás seguro de olvidar todas las fuentes de esta descarga?"/>
 	<string id="18505" value="Por favor entre un rango válido."/>
@@ -3115,24 +3115,24 @@
 	<string id="18509" value="Esta descarga no se puede asumir completa, porque falta información sobre el hash, que es necesaria para verificarla."/>
 	<string id="18510" value="¿Estás seguro de asumir esta descara como completa y reverificarla? Shareaza reverificará el archivo, y aceptará las partes correctas, y descarga de nuevo aquellas incorrectas."/>
 	<string id="18511" value="Has hecho cambios en el tamao del archivo.  Estas seguro que quieres cambiar el tamao de esta descarga?"/>
-    <string id="19000" value="El Acceso Remoto esta deshabilitado."/>
+	<string id="19000" value="El Acceso Remoto esta deshabilitado."/>
 	<string id="19001" value="Debes Seleccionar un nombre de usuario y contraseña."/>
 	<string id="19002" value="No se puede aceptar conexiones, URL no disponible."/>
 	<string id="20000" value="No hay URN disponible"/>
 	<string id="20001" value="Cerrar"/>
-    <string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
+	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
 	<string id="20003" value="Cambiando la direccin de interface requiere reiniciar. \nVas a necesitar reiniciar Shareaza manualmente. Salir ahora?"/>
 	<string id="20004" value="Lenguajes de Derecha-Izquierda no se soportan en tu SO."/>
 	<string id="20005" value="No"/>
 	<string id="20006" value="Sì"/>
 	<string id="20007" value="Auto"/>
-    <string id="20008" value="Por defecto"/>
+	<string id="20008" value="Por defecto"/>
 	<string id="20009" value="Custom"/>
 	<string id="20010" value="&amp;Atrs"/>
 	<string id="20011" value="&amp;Siguiente"/>
-    <string id="20100" value="Conectando"/>
+	<string id="20100" value="Conectando"/>
 	<string id="20101" value="Pidiendo"/>
-    <string id="20102" value="Respuesta"/>
+	<string id="20102" value="Respuesta"/>
 	<string id="20103" value="Descargando"/>
 	<string id="20104" value="TigerTree"/>
 	<string id="20105" value="Hashset"/>
@@ -3168,7 +3168,7 @@
 	<string id="20135" value="Siguiente"/>
 	<string id="20136" value="C"/>
 	<string id="20137" value="fuentes"/><!-- 3/10 sources, for e.g. -->
-    <string id="20200" value="Domingo"/>
+	<string id="20200" value="Domingo"/>
 	<string id="20201" value="Lunes"/>
 	<string id="20202" value="Martes"/>
 	<string id="20203" value="Miércoles"/>
@@ -3204,7 +3204,7 @@
 		<control caption="Mostrar tasa de transferencia en:"/>
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="Cuadros informativos(tooltips):"/>
-        <control caption="Expandir nuevas transferencias por defecto"/>
+		<control caption="Expandir nuevas transferencias por defecto"/>
 		<control caption="Mostrar barra simple de proceso"/>
 		<control caption="_Buscar:"/>
 		<control caption="Expandir multiples fuentes por defecto"/>
@@ -3485,8 +3485,8 @@
 		<control caption="_EndGame:"/>
 		<control caption="Habilitar modo EndGame al completar torrents"/>
 		<control caption="_Empieza torrents aquí "/>
-	    <control/><control/>
-        <control caption="_Creador de Torrent"/>
+		<control/><control/>
+		<control caption="_Creador de Torrent"/>
 		<control/><control/>
 		<control caption="_Tracker por defecto:"/>
 	<control/><control/>
@@ -4022,14 +4022,14 @@
 		<control caption="Ha seleccionado %lu archivos para exportar como referencias de URI para Shareaza.  Por favor seleccione el formato, y haz click en Guardar:"/>
 		<control/>
 		<control caption="Insertar campo:"/>
-        <control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Nombre de Archivo|Archivo (URI)|Nombre de Archivo Base|Extensión de Archivo|Tamaño de Archivo|Tamaño de Archivo (bytes)|Ruta de carpeta|Host Local|Puerto Local"/>
+		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Nombre de Archivo|Archivo (URI)|Nombre de Archivo Base|Extensión de Archivo|Tamaño de Archivo|Tamaño de Archivo (bytes)|Ruta de carpeta|Host Local|Puerto Local"/>
 		<control caption="Predefinidos:"/>
-        <control/>
-        <control caption="Cancelar"/>
-		<control caption="Guardar..."/>
-        <control/>
+		<control/>
 		<control caption="Cancelar"/>
-        </dialog>
+		<control caption="Guardar..."/>
+		<control/>
+		<control caption="Cancelar"/>
+	</dialog>
 
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Manejador de URIs de Shareaza">
 		<control/>
@@ -4146,11 +4146,11 @@
 		<control caption="Nombre:"/>
 		<control/>
 		
-        <control caption="Autor:"/>
+		<control caption="Autor:"/>
 		
 		<control/> 
-        <control caption="Descripcin:"/> 
-        <control/>
+		<control caption="Descripcin:"/> 
+		<control/>
 		<control caption="Eliminar|_Regresar"/>
 		<control caption="_Siguiente|Exportar..."/>
 		<control caption="_Cancelar"/>
@@ -4176,8 +4176,8 @@
 		<control caption="Asumir completados y reverificar (para recuperar descargas)"/>
 		<control caption="Olvidar todas las fuentes"/>
 		<control caption="Juntar con archivo local y verificar"/>
-        <control caption="_Eliminar de Data:"/>
-        <control caption="Eliminar bytes:"/>
+		<control caption="_Eliminar de Data:"/>
+		<control caption="Eliminar bytes:"/>
 		<control/>
 		<control caption="_a:"/>
 
@@ -4236,12 +4236,12 @@
 		<control/>
 		<control caption="Incompleto:"/>
 		<control/>
-        <control caption="_Actualizar"/>
-        
+		<control caption="_Actualizar"/>
+		
 		<control caption="_Actualizar"/>
 		<control/>
 		
-		control caption="Tracker Mode:"/>
+		<control caption="Tracker Mode:"/>
 		<control caption="Deshabilitado|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
 
