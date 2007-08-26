@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 52 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 53 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2454,6 +2454,11 @@
 	<tip id="ImageViewer_Refresh" message="Aggiorna l'immagine."/>
 	<tip id="ImageViewer_Close" message="Chiudi la finestra del visualizzatore di immagini."/>
 </commandTips>
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="Nella modalità Massimo la larghezza di banda non supererà il valore specificato. Nella modalità Medio oscillerà intorno al valore in entrambi i lati."/>
+	<tip id="IDC_SHARE_PARTIALS" message="Questa opzione non ha effetto sui download iniziati precedentemente, inoltre è ignorata se il file ha l'hash eDonkey e la rete eDonkey è abilitata o se è un torrent.{n}Tuttavia questa opzione non è ignorata se il download è in pausa.{n}{n}ATTENZIONE: Usa questa opzione soltanto in caso di reale necessità, se abusi dell'opzione puoi essere bannato."/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
