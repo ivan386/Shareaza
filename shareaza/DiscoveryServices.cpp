@@ -190,6 +190,7 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 				if ( pItem->m_nType != CDiscoveryService::dsBlocked )
 				{
 					pItem->m_nType = CDiscoveryService::dsBlocked;
+					delete pService;
 					return NULL;
 				}
 			}
