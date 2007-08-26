@@ -607,8 +607,8 @@ int CLibraryDetailView::ListCompare(LPCVOID pA, LPCVOID pB)
 		{
 			LPCTSTR pszA = _tcsrchr( pfA->m_sName, '.' );
 			LPCTSTR pszB = _tcsrchr( pfB->m_sName, '.' );
-			if ( ! pszA || ! pszB ) return 0;
-			nTest = _tcsicoll( pszA, pszB );
+			nTest = ( pszA && pszB ) ?
+				_tcsicoll( pszA, pszB ) : ( pszA ? 1 : ( pszB ? -1 : 0 ) );
 			break;
 		}
 	case 2:
