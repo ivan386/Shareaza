@@ -131,20 +131,16 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 	if ( nSlash >= 0 ) strFile = strFile.Left( nSlash );
 
 	if ( ! LoadSchema( strFile + _T(".xsd") ) ) return FALSE;
-	
-	m_sIcon = strFile + _T(".ico");
 
 	LoadDescriptor( strFile + _T(".xml") );
 
-	m_sIcon = m_sIcon.Left( m_sIcon.GetLength() - 4 );
-	m_sIcon += _T("XP.ico");
+	m_sIcon = strFile + _T("XP.ico");
 
 	//LoadIcon() causes bad registry reads
 	//CCoolInterface::IsNewWindows() causes several reapeat ones.
 	if ( ! CCoolInterface::IsNewWindows() || ! LoadIcon() )
 	{
-		m_sIcon = m_sIcon.Left( m_sIcon.GetLength() - 6 );
-		m_sIcon += _T(".ico");
+		m_sIcon = strFile + _T(".ico");
 		LoadIcon();
 	}
 
