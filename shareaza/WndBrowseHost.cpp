@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,7 +107,7 @@ int CBrowseHostWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	LoadState( _T("CBrowseHostWnd"), TRUE );
 
 	if ( m_bAutoBrowse )
-		m_pBrowser->Browse();
+		m_bPaused = ! m_pBrowser->Browse();
 
 	OnSkinChange();
 
@@ -223,19 +223,23 @@ void CBrowseHostWnd::OnUpdateBrowseHostStop(CCmdUI* pCmdUI)
 void CBrowseHostWnd::OnBrowseHostStop()
 {
 	m_pBrowser->Stop();
+	m_bPaused = TRUE;
 }
 
 void CBrowseHostWnd::OnBrowseHostRefresh()
 {
 	m_pBrowser->Stop();
-	m_pBrowser->Browse();
+	m_bPaused = TRUE;
 
-	m_wndList.DestructiveUpdate();
-	m_pMatches->Clear();
+	if ( m_pBrowser->Browse() )
+	{
+		m_wndList.DestructiveUpdate();
+		m_pMatches->Clear();
 
-	m_bPaused = FALSE;
-	m_bUpdate = TRUE;
-	PostMessage( WM_TIMER, 2 );
+		m_bPaused = FALSE;
+		m_bUpdate = TRUE;
+		PostMessage( WM_TIMER, 2 );
+	}
 }
 
 void CBrowseHostWnd::OnUpdateSearchChat(CCmdUI* pCmdUI)
