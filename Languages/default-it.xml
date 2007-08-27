@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 53 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 54 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2949,7 +2949,7 @@
 	<string id="16943" value="Scansione di %s"/>
 	<string id="16944" value="%i file condivisi trovati nella libreria di %s."/>
 	<string id="16991" value="Lettore multimediale di Shareaza"/>
-	<string id="16992" value="Shareaza non riesce ad instanziare il plugin MediaServices. Reinstalla Shareaza e assicurati di avere i codec multimediali e i driver di uscita installati."/>
+	<string id="16992" value="Shareaza non riesce ad instanziare il plugin MediaServices. Reinstalla Shareaza e assicurati di avere i codec multimediali e i driver necessari installati."/>
 	<string id="16993" value="Tutti i file multimediali|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlist|*.asx;*.wax;*.m3u;*.wvx;*.wmx|File audio|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|File video|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Tracce CD audio|*.cda|File MIDI|*.mid;*.rmi;*.midi|Tutti i file|*.*||"/>
 	<string id="16994" value="Impossibile caricare il file multimediale &quot;%s&quot;"/>
 	<string id="16995" value="Il file potrebbe essere danneggiato, o potresti aver bisogno dei codec necessari per eseguirlo."/>
