@@ -66,7 +66,7 @@ CDownloadWithFile::~CDownloadWithFile()
 
 BOOL CDownloadWithFile::OpenFile()
 {
-	if ( m_pFile == NULL || m_sDisplayName.IsEmpty() || m_nSize == SIZE_UNKNOWN ) return FALSE;
+	if ( m_pFile == NULL || m_sDisplayName.IsEmpty() ) return FALSE;
 	if ( m_pFile->IsOpen() ) return TRUE;
 	
 	SetModified();
@@ -76,7 +76,7 @@ BOOL CDownloadWithFile::OpenFile()
 		if ( m_pFile->Open( m_sDiskName ) ) return TRUE;
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)m_sDiskName );
 	}
-	else if ( ! Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
+	else if ( m_nSize != SIZE_UNKNOWN && ! Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
 	{
 		theApp.Message( MSG_DISPLAYED_ERROR, IDS_DOWNLOAD_DISK_SPACE,
 			(LPCTSTR)m_sDisplayName,
@@ -194,10 +194,7 @@ QWORD CDownloadWithFile::GetVolumeComplete() const
 		else
 			return 0;
 	}
-	else
-	{
-		return m_nSize;
-	}
+	return m_nSize;
 }
 
 QWORD CDownloadWithFile::GetVolumeRemaining() const
@@ -206,10 +203,9 @@ QWORD CDownloadWithFile::GetVolumeRemaining() const
 	{
 		if ( m_pFile->IsValid() )
 			return m_pFile->GetRemaining();
-		else if ( m_nSize != SIZE_UNKNOWN )
+		else
 			return m_nSize;
 	}
-	
 	return 0;
 }
 
@@ -217,7 +213,7 @@ DWORD CDownloadWithFile::GetTimeRemaining() const
 {
 	QWORD nRemaining	= GetVolumeRemaining();
 	DWORD nSpeed		= GetAverageSpeed();
-	if ( nSpeed == 0 ) return 0xFFFFFFFF;
+	if ( nSpeed == 0 || nRemaining == SIZE_UNKNOWN ) return 0xFFFFFFFF;
 	return (DWORD)( nRemaining / nSpeed );
 }
 

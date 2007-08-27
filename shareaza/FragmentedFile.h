@@ -73,14 +73,15 @@ public:
 		return m_pFile != NULL;// && this != NULL
 	}
 
-	inline QWORD GetTotal() const
-	{
-		return m_oFList.limit();
-	}
+//	inline QWORD GetTotal() const
+//	{
+//		return m_oFList.limit();
+//	}
 	
 	inline QWORD GetRemaining() const
 	{
-		return m_oFList.length_sum();
+		return ( m_oFList.limit() == SIZE_UNKNOWN && m_oFList.length_sum() ) ?
+			SIZE_UNKNOWN : m_oFList.length_sum();
 	}
 	
 	inline QWORD GetCompleted() const
@@ -93,15 +94,15 @@ public:
 		return m_oFList;
 	}
 	
-	inline QWORD GetEmptyFragmentCount() const
-	{
-		return m_oFList.size();
-	}
+//	inline QWORD GetEmptyFragmentCount() const
+//	{
+//		return m_oFList.size();
+//	}
 	
-	inline BOOL IsFlushNeeded() const
-	{
-		return ( m_pFile != NULL ) && ( m_nUnflushed > 0 );
-	}
+//	inline BOOL IsFlushNeeded() const
+//	{
+//		return ( m_pFile != NULL ) && ( m_nUnflushed > 0 );
+//	}
 
 	friend class CEDPartImporter;
 };

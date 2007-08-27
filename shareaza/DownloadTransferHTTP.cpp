@@ -48,22 +48,32 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP construction
 
-CDownloadTransferHTTP::CDownloadTransferHTTP(CDownloadSource* pSource) : CDownloadTransfer( pSource, PROTOCOL_HTTP )
+CDownloadTransferHTTP::CDownloadTransferHTTP(CDownloadSource* pSource) :
+	CDownloadTransfer( pSource, PROTOCOL_HTTP ),
+	m_nRequests( 0 ),
+	m_tRequest( 0 ),
+	m_tContent( 0 ),
+	m_bBadResponse( FALSE ),
+	m_bBusyFault( FALSE ),
+	m_bRangeFault( FALSE ),
+	m_bKeepAlive( FALSE ),
+	m_bHashMatch( FALSE ),
+	m_bTigerFetch( FALSE ),
+	m_bTigerIgnore( FALSE ),
+	m_bMetaFetch( FALSE ),
+	m_bMetaIgnore( FALSE ),
+	m_bGotRange( FALSE ),
+	m_bGotRanges( FALSE ),
+	m_nContentLength( SIZE_UNKNOWN ),
+	m_nRetryDelay( Settings.Downloads.RetryDelay ),
+	m_bRedirect( FALSE ),
+	m_bGzip( FALSE ),
+	m_bCompress( FALSE ),
+	m_bDeflate( FALSE ),
+	m_bChunked( FALSE ),
+	m_ChunkState( ChunkState::Header ),
+	m_nChunkLength( SIZE_UNKNOWN )
 {
-	m_nRequests		= 0;
-	m_tContent		= 0;
-	
-	m_bBadResponse	= FALSE;
-	m_bBusyFault	= FALSE;
-	m_bRangeFault	= FALSE;
-	m_bHashMatch	= FALSE;
-	m_bTigerFetch	= FALSE;
-	m_bTigerIgnore	= FALSE;
-	m_bMetaFetch	= FALSE;
-	m_bMetaIgnore	= FALSE;
-	m_bRedirect		= FALSE;
-	
-	m_nRetryDelay	= Settings.Downloads.RetryDelay;
 }
 
 CDownloadTransferHTTP::~CDownloadTransferHTTP()
@@ -293,7 +303,8 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	}
 	else
 	{
-		strLine.Format( _T("GET %s HTTP/1.0\r\n"), (LPCTSTR)pURL.m_sPath );
+		strLine.Format( _T("GET %s HTTP/1.0\r\n"), (LPCTSTR)m_pSource->m_sURL );
+		m_pOutput->Print( strLine );
 	}
 	
 	theApp.Message( MSG_DEBUG, _T("%s: DOWNLOAD REQUEST: %s"),
@@ -460,7 +471,13 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	m_bQueueFlag		= FALSE;
 	m_nContentLength	= SIZE_UNKNOWN;
 	m_sContentType.Empty();
-	
+	m_bGzip				= FALSE;
+	m_bCompress			= FALSE;
+	m_bDeflate			= FALSE;
+	m_bChunked			= FALSE;
+	m_ChunkState		= ChunkState::Header;
+	m_nChunkLength		= SIZE_UNKNOWN;
+
 	m_sTigerTree.Empty();
 	m_nRequests++;
 	
@@ -689,62 +706,62 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Range") ) == 0 )
 	{
-		QWORD nFirst = 0, nLast = 0, nTotal = 0;
-		
-		if ( _stscanf( strValue, _T("bytes %I64i-%I64i/%I64i"), &nFirst, &nLast, &nTotal ) != 3 )
-			_stscanf( strValue, _T("bytes=%I64i-%I64i/%I64i"), &nFirst, &nLast, &nTotal );
-		
-		if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
+		QWORD nFirst, nLast, nTotal;
+		if ( _stscanf( strValue, _T("bytes %I64i-%I64i/%I64i"), &nFirst, &nLast, &nTotal ) == 3 ||
+			 _stscanf( strValue, _T("bytes=%I64i-%I64i/%I64i"), &nFirst, &nLast, &nTotal ) == 3 )
 		{
-			m_pDownload->m_nSize = nTotal;
-		}
-		else if ( m_bTigerFetch || m_bMetaFetch )
-		{
-			m_nOffset = nFirst;
-			m_nLength = nLast + 1 - nFirst;
+			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
+			{
+				m_pDownload->m_nSize = nTotal;
+			}
+			else if ( m_bTigerFetch || m_bMetaFetch )
+			{
+				m_nOffset = nFirst;
+				m_nLength = nLast + 1 - nFirst;
+				if ( m_nContentLength == SIZE_UNKNOWN ) m_nContentLength = m_nLength;
+				return TRUE;
+			}
+			else if ( m_pDownload->m_nSize != nTotal )
+			{
+				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE, (LPCTSTR)m_sAddress,
+					(LPCTSTR)m_pDownload->GetDisplayName() );
+				Close( TS_FALSE );
+				return FALSE;
+			}
+			
+			if ( m_nOffset == SIZE_UNKNOWN && ! m_pDownload->GetFragment( this ) )
+			{
+				Close( TS_TRUE );
+				return FALSE;
+			}
+			
+			BOOL bUseful = m_pDownload->IsPositionEmpty( nFirst );
+			// BOOL bUseful = m_pDownload->IsRangeUseful( nFirst, nLast - nFirst + 1 );
+			
+			if ( nFirst == m_nOffset && nLast == m_nOffset + m_nLength - 1 && bUseful )
+			{
+				// Perfect match, good
+			}
+			else if ( nFirst >= m_nOffset && nFirst < m_nOffset + m_nLength && bUseful )
+			{
+				m_nOffset = nFirst;
+				m_nLength = nLast - nFirst + 1;
+				
+				theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_USEFUL_RANGE, (LPCTSTR)m_sAddress,
+					m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_pDownload->GetDisplayName() );
+			}
+			else
+			{
+				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_RANGE, (LPCTSTR)m_sAddress,
+					(LPCTSTR)m_pDownload->GetDisplayName() );
+				Close( TS_TRUE );
+				
+				return FALSE;
+			}
+			
 			if ( m_nContentLength == SIZE_UNKNOWN ) m_nContentLength = m_nLength;
-			return TRUE;
+			m_bGotRange = TRUE;
 		}
-		else if ( m_pDownload->m_nSize != nTotal )
-		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE, (LPCTSTR)m_sAddress,
-				(LPCTSTR)m_pDownload->GetDisplayName() );
-			Close( TS_FALSE );
-			return FALSE;
-		}
-		
-		if ( m_nOffset == SIZE_UNKNOWN && ! m_pDownload->GetFragment( this ) )
-		{
-			Close( TS_TRUE );
-			return FALSE;
-		}
-		
-		BOOL bUseful = m_pDownload->IsPositionEmpty( nFirst );
-		// BOOL bUseful = m_pDownload->IsRangeUseful( nFirst, nLast - nFirst + 1 );
-		
-		if ( nFirst == m_nOffset && nLast == m_nOffset + m_nLength - 1 && bUseful )
-		{
-			// Perfect match, good
-		}
-		else if ( nFirst >= m_nOffset && nFirst < m_nOffset + m_nLength && bUseful )
-		{
-			m_nOffset = nFirst;
-			m_nLength = nLast - nFirst + 1;
-			
-			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_USEFUL_RANGE, (LPCTSTR)m_sAddress,
-				m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_pDownload->GetDisplayName() );
-		}
-		else
-		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_RANGE, (LPCTSTR)m_sAddress,
-				(LPCTSTR)m_pDownload->GetDisplayName() );
-			Close( TS_TRUE );
-			
-			return FALSE;
-		}
-		
-		if ( m_nContentLength == SIZE_UNKNOWN ) m_nContentLength = m_nLength;
-		m_bGotRange = TRUE;
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Type") ) == 0 )
 	{
@@ -752,7 +769,52 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Encoding") ) == 0 )
 	{
-		if ( Settings.Downloads.AllowBackwards && _tcsistr( strValue, _T("backwards") ) ) m_bRecvBackwards = TRUE;
+		if ( _tcsistr( strValue, _T("backwards") ) )
+		{
+			m_bRecvBackwards = TRUE;
+			if ( ! Settings.Downloads.AllowBackwards )
+			{
+				theApp.Message( MSG_DEBUG, _T( "Backwards encoding disabled" ) );
+				Close( TS_FALSE );
+				return FALSE;
+			}
+		}
+		if ( _tcsistr( strValue, _T("gzip") ) )		// gzip or x-gzip
+		{
+			m_bGzip = TRUE;
+			theApp.Message( MSG_DEBUG, _T( "Gzip encoding not supported" ) );
+			Close( TS_FALSE );
+			return FALSE;
+		}
+		if ( _tcsistr( strValue, _T("compress") ) )	// compress or x-compress
+		{
+			m_bCompress = TRUE;
+			theApp.Message( MSG_DEBUG, _T( "Compress encoding not supported" ) );
+			Close( TS_FALSE );
+			return FALSE;
+		}
+		if ( _tcsistr( strValue, _T("deflate") ) )	// deflate
+		{
+			m_bDeflate = TRUE;
+			theApp.Message( MSG_DEBUG, _T( "Deflate encoding not supported" ) );
+			Close( TS_FALSE );
+			return FALSE;
+		}
+	}
+	else if ( strHeader.CompareNoCase( _T("Transfer-Encoding") ) == 0 )
+	{
+		if ( _tcsistr( strValue, _T("chunked") ) )
+		{
+			m_bChunked = TRUE;
+			m_ChunkState = ChunkState::Header;
+			m_nChunkLength = SIZE_UNKNOWN;
+		}
+		else
+		{
+			theApp.Message( MSG_DEBUG, _T( "Unknown transfer encoding: %s" ), strValue );
+			Close( TS_FALSE );
+			return FALSE;
+		}
 	}
 	else if (	strHeader.CompareNoCase( _T("X-Gnutella-Content-URN") ) == 0 ||
 				strHeader.CompareNoCase( _T("X-Content-URN") ) == 0 ||
@@ -950,6 +1012,12 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			}		
 		}
 	}	
+	else if ( strHeader.CompareNoCase( _T("Content-MD5") ) == 0 )
+	{
+		Hashes::Md5Hash oMD5;
+		oMD5.fromString( strValue );
+		theApp.Message( MSG_DEBUG, _T("Content-MD5: %s"), (LPCTSTR)oMD5.toString() );
+	}
 	return CTransfer::OnHeaderLine( strHeader, strValue );
 }
 
@@ -1034,13 +1102,6 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		
 		return ReadFlush();
 	}
-	else if ( m_nContentLength == SIZE_UNKNOWN && m_bKeepAlive )
-	{
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE, (LPCTSTR)m_sAddress,
-			(LPCTSTR)m_pDownload->GetDisplayName() );
-		Close( TS_FALSE );
-		return FALSE;
-	}
 	else if ( m_bTigerFetch )
 	{
 		if ( m_nContentLength == SIZE_UNKNOWN && !m_bKeepAlive )
@@ -1099,18 +1160,20 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	}
 	else if ( ! m_bGotRange )
 	{
-		if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
+		if ( m_nContentLength != SIZE_UNKNOWN )
 		{
-			m_pDownload->m_nSize = m_nContentLength;
+			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
+			{
+				m_pDownload->m_nSize = m_nContentLength;
+			}
+			else if ( m_pDownload->m_nSize != m_nContentLength )
+			{
+				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE, (LPCTSTR)m_sAddress,
+					(LPCTSTR)m_pDownload->GetDisplayName() );
+				Close( TS_FALSE );
+				return FALSE;
+			}
 		}
-		else if ( m_pDownload->m_nSize != m_nContentLength )
-		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE, (LPCTSTR)m_sAddress,
-				(LPCTSTR)m_pDownload->GetDisplayName() );
-			Close( TS_FALSE );
-			return FALSE;
-		}
-		
 		if ( m_nOffset == SIZE_UNKNOWN && ! m_pDownload->GetFragment( this ) )
 		{
 			Close( TS_TRUE );
@@ -1171,13 +1234,127 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 
 BOOL CDownloadTransferHTTP::ReadContent()
 {
-	if ( m_pInput->m_nLength > 0 )
+	while ( m_pInput->m_nLength > 0 )
 	{
 		m_pSource->SetValid();
-		
+
 		DWORD nLength	= min( m_pInput->m_nLength, m_nLength - m_nPosition );
 		BOOL bSubmit	= FALSE;
-		
+
+		if ( m_bChunked )
+		{
+			BOOL bBreak	= FALSE;
+			switch( m_ChunkState )
+			{
+			case ChunkState::Header:
+				if ( m_pInput->m_nLength >= 3 )
+				{
+					// Looking for "Length<CR><LF>"
+					DWORD i = 1;
+					for ( ; i < m_pInput->m_nLength - 1; i++ )
+					{
+						if ( m_pInput->m_pBuffer[ i ]     == 0x0d &&
+							 m_pInput->m_pBuffer[ i + 1 ] == 0x0a )
+						{
+							break;
+						}
+					}
+					if ( i < m_pInput->m_nLength - 1 )
+					{
+						if ( sscanf( (LPCSTR)m_pInput->m_pBuffer, "%I64x",
+							&m_nChunkLength ) == 1 )
+						{
+							if ( m_nChunkLength == 0 )
+							{
+								// Got last chunk "0<CR><LF>"
+								m_ChunkState = ChunkState::Footer;
+								
+								// Now file size is known
+								if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
+								{
+									m_pDownload->m_nSize = m_nDownloaded;
+									m_pDownload->MakeComplete();
+								}
+							}
+							else
+								m_ChunkState = ChunkState::Body;
+	                        
+							// Cut header
+							m_pInput->Remove( i + 2 );
+
+							// Process rest of data
+							continue;
+						}
+						else
+						{
+							// Bad format
+							m_pInput->Clear();
+							Close( TS_FALSE );
+							return FALSE;
+						}
+						break;
+					}
+				}
+				bBreak = TRUE;
+				break;
+
+			case ChunkState::Body:
+				ASSERT( m_nChunkLength != 0 );
+				ASSERT( m_nChunkLength != SIZE_UNKNOWN );
+
+				if ( nLength > m_nChunkLength )
+				{
+					nLength = m_nChunkLength;
+				}
+				m_nChunkLength -= nLength;
+				if ( m_nChunkLength == 0 )
+				{
+					// Whole chunk readed
+					m_ChunkState = ChunkState::BodyEnd;
+					m_nChunkLength = SIZE_UNKNOWN;
+				}
+				break;
+
+			case ChunkState::BodyEnd:
+				ASSERT( m_nChunkLength == SIZE_UNKNOWN );
+
+				// Looking for "<CR><LF>"
+				if ( m_pInput->m_nLength >= 2 )
+				{
+					if ( m_pInput->m_pBuffer[ 0 ] == 0x0d &&
+						 m_pInput->m_pBuffer[ 1 ] == 0x0a )
+					{
+						m_ChunkState = ChunkState::Header;
+						
+						// Cut <CR><LF>
+						m_pInput->Remove( 2 );
+
+						// Process rest of data
+						continue;
+					}
+					else
+					{
+						// Bad Format
+						m_pInput->Clear();
+						Close( TS_FALSE );
+						return FALSE;
+					}
+				}
+				bBreak = TRUE;
+				break;
+
+			case ChunkState::Footer:
+				ASSERT( m_nChunkLength == 0 );
+
+				// Bypass footer
+				m_pInput->Clear();
+				bBreak = TRUE;
+				break;
+			}
+			if ( bBreak )
+				break;
+		}
+
 		if ( m_bRecvBackwards )
 		{
 			BYTE* pBuffer = new BYTE[ nLength ];
@@ -1189,19 +1366,22 @@ BOOL CDownloadTransferHTTP::ReadContent()
 		else
 		{
 			bSubmit = m_pDownload->SubmitData(
-						m_nOffset + m_nPosition, m_pInput->m_pBuffer, nLength );
+				m_nOffset + m_nPosition, m_pInput->m_pBuffer, nLength );
 		}
-		
-		m_pInput->Clear();	// Clear the buffer, we don't want any crap
+
+		if ( m_bChunked )
+			m_pInput->Remove( nLength );
+		else
+			m_pInput->Clear();
+
 		m_nPosition += nLength;
 		m_nDownloaded += nLength;
-		
+
 		if ( ! bSubmit )
 		{
 			BOOL bUseful = m_pDownload->IsRangeUsefulEnough( this,
 				m_bRecvBackwards ? m_nOffset : m_nOffset + m_nPosition,
 				m_nLength - m_nPosition );
-			
 			if ( /* m_bInitiated || */ ! bUseful )
 			{
 				theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_OVERLAP, (LPCTSTR)m_sAddress );
@@ -1210,13 +1390,13 @@ BOOL CDownloadTransferHTTP::ReadContent()
 			}
 		}
 	}
-	
+
 	if ( m_nPosition >= m_nLength )
 	{
 		m_pSource->AddFragment( m_nOffset, m_nLength );
 		return StartNextFragment();
 	}
-	
+
 	return TRUE;
 }
 
@@ -1425,6 +1605,14 @@ void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
 		Close( TS_TRUE );
+	}
+	else if ( m_nState == dtsDownloading && m_nContentLength == SIZE_UNKNOWN &&
+		m_pDownload->m_nSize == SIZE_UNKNOWN )
+	{
+		// Set file size as is
+		Close( TS_TRUE );
+		m_pDownload->m_nSize = m_nDownloaded;
+		m_pDownload->MakeComplete();
 	}
 	else
 	{

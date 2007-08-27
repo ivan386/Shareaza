@@ -58,6 +58,19 @@ protected:
 	DWORD			m_nRetryDelay;
 	BOOL			m_bRedirect;
 	CString			m_sRedirectionURL;
+	BOOL			m_bGzip;			// Got "Content-Encoding: gzip" or x-gzip
+	BOOL			m_bCompress;		// Got "Content-Encoding: compress" or x-compress
+	BOOL			m_bDeflate;			// Got "Content-Encoding: deflate"
+	BOOL			m_bChunked;			// Got "Transfer-Encoding: chunked"
+	enum ChunkState
+	{
+		Header,							// Reading chunk header "Length<CR><LF>"
+		Body,							// Reading chunk body
+		BodyEnd,						// Waiting for chunk body ending "<CR><LF>"
+		Footer							// Bypassing data after last chunk
+	};
+	ChunkState		m_ChunkState;
+	QWORD			m_nChunkLength;
 
 // Operations
 public:

@@ -141,11 +141,10 @@ BOOL CFragmentedFile::MakeComplete()
 	if ( m_oFList.empty() ) return FALSE;
 
     m_oFList.clear();
-	
-	if ( m_pFile != NULL )
+
+	if ( m_pFile != NULL && m_oFList.limit() != SIZE_UNKNOWN )
 	{
 		HANDLE hFile = m_pFile->GetHandle( TRUE );
-		
 		if ( hFile != INVALID_HANDLE_VALUE )
 		{
 			DWORD nSizeHigh	= (DWORD)( m_oFList.limit() >> 32 );
@@ -154,7 +153,7 @@ BOOL CFragmentedFile::MakeComplete()
 			SetEndOfFile( hFile );
 		}
 	}
-	
+
 	return TRUE;
 }
 

@@ -57,7 +57,7 @@ public:
 	QWORD		m_nDownloaded;
 public:
 	BOOL		m_bWantBackwards;
-	BOOL		m_bRecvBackwards;
+	BOOL		m_bRecvBackwards;		// Got "Content-Encoding: backwards"
 
 // Operations
 public:

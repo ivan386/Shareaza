@@ -375,7 +375,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		strReviews.Format( _T("%i"), nReviewCount );
 	}
 
-	if ( pDownload->IsStarted() )
+	if ( pDownload->IsStarted() && pDownload->m_nSize < SIZE_UNKNOWN )
 	{
 		if ( theApp.m_bRTL )
 		{
