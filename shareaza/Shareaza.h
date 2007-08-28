@@ -344,6 +344,9 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 #define ID_PLUGIN_LAST	27999
 
 
+#define THUMB_STORE_SIZE	128
+
+
 // Client's name
 #define CLIENT_NAME			"Shareaza"
 

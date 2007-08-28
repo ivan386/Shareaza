@@ -1588,15 +1588,43 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 			CSize szThumb( 0, 0 );
 			CString sFilePath = pFile->GetPath();
 			DWORD nIndex = pFile->m_nIndex;
+			BOOL bSuccess = FALSE;
 
-			if ( pCache.Load( sFilePath, &szThumb, nIndex, &pImage ) )
+			if ( ! pCache.Load( sFilePath, &szThumb, nIndex, &pImage ) )
 			{
-				// Got a cached copy
+				bSuccess = Settings.Uploads.DynamicPreviews && pImage.LoadFromFile( sFilePath, FALSE, TRUE ) && pImage.EnsureRGB();
+				if ( bSuccess )
+				{
+					int nSize = THUMB_STORE_SIZE * pImage.m_nWidth / pImage.m_nHeight;
+					
+					if ( nSize > THUMB_STORE_SIZE )
+					{
+						nSize = THUMB_STORE_SIZE * pImage.m_nHeight / pImage.m_nWidth;
+						pImage.Resample( THUMB_STORE_SIZE, nSize );
+					}
+					else
+					{
+						pImage.Resample( nSize, THUMB_STORE_SIZE );
+					}
+
+					if ( ! pCache.Store( sFilePath, &szThumb, nIndex, &pImage ) )
+						theApp.Message( MSG_DEBUG, _T("THUMBNAIL: pCache.Store failed in CEDClient::OnRequestPreview()") );
+
+					if ( pImage.m_nWidth <= 0 || pImage.m_nHeight <= 0 )
+					{
+						bSuccess = FALSE;
+						theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CEDClient::OnRequestPreview()") );
+					}
+				}
 			}
-			else if ( Settings.Uploads.DynamicPreviews && pImage.LoadFromFile( sFilePath, FALSE, TRUE ) && pImage.EnsureRGB() )
+			else
+				bSuccess = TRUE;	// Got a cached copy
+
+			if ( bSuccess )
 			{
 				theApp.Message( MSG_DEFAULT, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)pFile->m_sName, (LPCTSTR)m_sAddress );
 
+				// Resample now to display dimensions
 				int nSize = szThumb.cy * pImage.m_nWidth / pImage.m_nHeight;
 
 				if ( nSize > szThumb.cx )
@@ -1608,8 +1636,6 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 				{
 					pImage.Resample( nSize, szThumb.cy );
 				}
-
-				pCache.Store( sFilePath, &szThumb, nIndex, &pImage );
 			}
 			else
 			{

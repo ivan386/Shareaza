@@ -1604,12 +1604,39 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	CImageFile pImage;
 	CThumbCache pCache;
 	CSize szThumb( 0, 0 );
-	
-	if ( pCache.Load( m_sFilePath, &szThumb, nIndex, &pImage ) )
+	BOOL bSuccess = FALSE;
+
+	if ( ! pCache.Load( m_sFilePath, &szThumb, nIndex, &pImage ) )
 	{
-		// Got a cached copy
+		bSuccess = Settings.Uploads.DynamicPreviews && pImage.LoadFromFile( m_sFilePath, FALSE, TRUE ) && pImage.EnsureRGB();
+		if ( bSuccess )
+		{
+			int nSize = THUMB_STORE_SIZE * pImage.m_nWidth / pImage.m_nHeight;
+			
+			if ( nSize > THUMB_STORE_SIZE )
+			{
+				nSize = THUMB_STORE_SIZE * pImage.m_nHeight / pImage.m_nWidth;
+				pImage.Resample( THUMB_STORE_SIZE, nSize );
+			}
+			else
+			{
+				pImage.Resample( nSize, THUMB_STORE_SIZE );
+			}
+
+			if ( ! pCache.Store( m_sFilePath, &szThumb, nIndex, &pImage ) )
+				theApp.Message( MSG_DEBUG, _T("THUMBNAIL: pCache.Store failed in CUploadTransferHTTP::RequestPreview()") );
+
+			if ( pImage.m_nWidth <= 0 || pImage.m_nHeight <= 0 )
+			{
+				bSuccess = FALSE;
+				theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CUploadTransferHTTP::RequestPreview()") );
+			}
+		}
 	}
-	else if ( Settings.Uploads.DynamicPreviews && pImage.LoadFromFile( m_sFilePath, FALSE, TRUE ) && pImage.EnsureRGB() )
+	else
+		bSuccess = TRUE;	// Got a cached copy
+
+	if ( bSuccess )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 		
@@ -1624,8 +1651,6 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 		{
 			pImage.Resample( nSize, szThumb.cy );
 		}
-		
-		pCache.Store( m_sFilePath, &szThumb, nIndex, &pImage );
 	}
 	else
 	{
@@ -1633,7 +1658,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 		SendResponse( IDR_HTML_FILENOTFOUND );
 		return TRUE;
 	}
-	
+
 	if ( ! bCached )
 	{
 		CQuickLock oLock( Library.m_pSection );
@@ -1643,7 +1668,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 			Library.Update();
 		}
 	}
-	
+
 	BYTE* pBuffer = NULL;
 	DWORD nLength = 0;
 	

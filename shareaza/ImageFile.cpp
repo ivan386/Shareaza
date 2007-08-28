@@ -267,6 +267,16 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 
 BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 {
+	if ( m_nWidth <= 0 || m_nHeight <= 0 )
+	{
+		theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CImageFile::Resample()") );
+		return FALSE;
+	}
+	if ( nNewWidth <= 0 || nNewHeight <= 0 )
+	{
+		theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid new width or new height in CImageFile::Resample()") );
+		return FALSE;
+	}
 	if ( ! m_bLoaded ) return FALSE;
 	if ( m_nComponents != 3 ) return FALSE;
 	if ( nNewWidth == m_nWidth && nNewHeight == m_nHeight ) return TRUE;

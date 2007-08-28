@@ -64,8 +64,6 @@ BEGIN_MESSAGE_MAP(CLibraryThumbView, CLibraryFileView)
 END_MESSAGE_MAP()
 
 #define THUMB_ICON			48
-#define THUMB_STORE_SIZE	128
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryThumbView construction
@@ -921,11 +919,46 @@ void CLibraryThumbView::OnRun()
 //		DWORD tNow = GetTickCount();
 
 		CImageFile pFile;
-		BOOL bSuccess = FALSE;
 		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
+		BOOL bSuccess = FALSE;
 
-		if ( pCache.Load( strPath, &Size, nIndex, &pFile ) )
+		if ( ! pCache.Load( strPath, &Size, nIndex, &pFile ) )
 		{
+			bSuccess = pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB();
+			if ( bSuccess )
+			{
+				int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
+
+				if ( ! m_bThread ) break;
+
+				if ( nSize > THUMB_STORE_SIZE )
+				{
+					nSize = THUMB_STORE_SIZE * pFile.m_nHeight / pFile.m_nWidth;
+					pFile.Resample( THUMB_STORE_SIZE, nSize );
+				}
+				else
+				{
+					pFile.Resample( nSize, THUMB_STORE_SIZE );
+				}
+
+				if ( ! m_bThread ) break;
+
+				if ( ! pCache.Store( strPath, &Size, nIndex, &pFile ) )
+					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: pCache.Store failed in CLibraryThumbView::OnRun()") );
+
+				if ( pFile.m_nWidth <= 0 || pFile.m_nHeight <= 0 )
+				{
+					bSuccess = FALSE;
+					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CLibraryThumbView::OnRun()") );
+				}
+			}
+		}
+		else
+			bSuccess = TRUE;
+
+		if ( bSuccess )
+		{
+			// Resample now to display dimensions
 			int nSize = m_szThumb.cy * pFile.m_nWidth / pFile.m_nHeight;
 
 			if ( nSize > m_szThumb.cx )
@@ -937,43 +970,6 @@ void CLibraryThumbView::OnRun()
 			{
 				pFile.Resample( nSize, m_szThumb.cy );
 			}
-
-			bSuccess = TRUE;
-		}
-		else if ( pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB() )
-		{
-			int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
-
-			if ( ! m_bThread ) break;
-
-			if ( nSize > THUMB_STORE_SIZE )
-			{
-				nSize = THUMB_STORE_SIZE * pFile.m_nHeight / pFile.m_nWidth;
-				pFile.Resample( THUMB_STORE_SIZE, nSize );
-			}
-			else
-			{
-				pFile.Resample( nSize, THUMB_STORE_SIZE );
-			}
-
-			if ( ! m_bThread ) break;
-
-			pCache.Store( strPath, &Size, nIndex, &pFile );
-
-			// Resample now to display dimensions
-			nSize = m_szThumb.cy * pFile.m_nWidth / pFile.m_nHeight;
-
-			if ( nSize > m_szThumb.cx )
-			{
-				nSize = m_szThumb.cx * pFile.m_nHeight / pFile.m_nWidth;
-				pFile.Resample( m_szThumb.cx, nSize );
-			}
-			else
-			{
-				pFile.Resample( nSize, m_szThumb.cy );
-			}
-
-			bSuccess = TRUE;
 		}
 
 		pLock.Lock();

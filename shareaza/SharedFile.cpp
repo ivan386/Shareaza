@@ -872,9 +872,9 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 			
 			if ( hFile == INVALID_HANDLE_VALUE )
 			{
-				hFile = CreateFile( pszMetaData + m_sName + _T(".xml"),
-					GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
-					FILE_ATTRIBUTE_NORMAL, NULL );
+				hFile = CreateFile( pszMetaData + m_sName + _T(".xml"), GENERIC_READ,
+					FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+					NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 				VERIFY_FILE_ACCESS( hFile, pszMetaData + m_sName + _T(".xml") )
 			}
 			

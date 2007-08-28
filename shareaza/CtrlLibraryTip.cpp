@@ -53,8 +53,6 @@ BEGIN_MESSAGE_MAP(CLibraryTipCtrl, CCoolTipCtrl)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-#define THUMB_STORE_SIZE	128
-
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTipCtrl construction
 
@@ -378,10 +376,10 @@ void CLibraryTipCtrl::OnRun()
 		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
 		BOOL bSuccess = FALSE;
 
-		if ( !pCache.Load( strPath, &Size, m_nIndex, &pFile ) )
+		if ( ! pCache.Load( strPath, &Size, m_nIndex, &pFile ) )
 		{
 			bSuccess = pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB();
-			if ( bSuccess ) 
+			if ( bSuccess )
 			{
 				int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
 				
@@ -394,13 +392,23 @@ void CLibraryTipCtrl::OnRun()
 				{
 					pFile.Resample( nSize, THUMB_STORE_SIZE );
 				}
-				pCache.Store( strPath, &Size, m_nIndex, &pFile );
+
+				if ( ! pCache.Store( strPath, &Size, m_nIndex, &pFile ) )
+					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: pCache.Store failed in CLibraryTipCtrl::OnRun()") );
+
+				if ( pFile.m_nWidth <= 0 || pFile.m_nHeight <= 0 )
+				{
+					bSuccess = FALSE;
+					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CLibraryTipCtrl::OnRun()") );
+				}
 			}
 		}
-		else bSuccess = TRUE;
+		else
+			bSuccess = TRUE;
 
 		if ( bSuccess )
 		{
+			// Resample now to display dimensions
 			int nSize = 94 * pFile.m_nWidth / pFile.m_nHeight;
 
 			if ( nSize > 94 )

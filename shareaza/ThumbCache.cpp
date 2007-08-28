@@ -204,10 +204,14 @@ BOOL CThumbCache::Load(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFil
 		return FALSE;
 	}
 
+	ASSERT( pImage );
 	if ( pImage && pImage->m_nWidth > 0 && pImage->m_nHeight > 0 )
 		return TRUE;
 	else
+	{
+		theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CThumbCache::Load()") );
 		return FALSE;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -217,6 +221,12 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFi
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
+	ASSERT( pImage );
+	if ( ! pImage || pImage->m_nWidth <= 0 || pImage->m_nHeight <= 0 )
+	{
+		theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CThumbCache::Store()") );
+		return FALSE;
+	}
 	if ( ! Prepare( pszPath, pszThumb, TRUE ) ) return FALSE;
 
 	DWORD nBlock = pImage->GetSerialSize();
@@ -350,7 +360,7 @@ BOOL CThumbCache::GetFileTime(LPCTSTR pszPath, FILETIME* pTime)
 	if ( !bSuccess )
 	{
 		HANDLE hFile = CreateFile( pszPath, GENERIC_READ,
-			FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+			FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 		VERIFY_FILE_ACCESS( hFile, pszPath )
 
