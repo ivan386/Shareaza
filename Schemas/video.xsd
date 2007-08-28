@@ -112,8 +112,8 @@
 			<attribute name="stars" type="string" minOccurs="0" maxOccurs="3"/>
 			<attribute name="imdbLink" type="uriReference"/>
 			<attribute name="minutes" type="decimal"/>
-			<attribute name="width" type="int"/>
-			<attribute name="height" type="int"/>
+			<attribute name="width" type="int" minOccurs="1" maxOccurs="64000"/>
+			<attribute name="height" type="int" minOccurs="1" maxOccurs="48000"/>
 			<attribute name="codec" type="string"/>
 			<attribute name="year" type="year"/>
 			<attribute name="artist" type="string"/>

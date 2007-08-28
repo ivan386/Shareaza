@@ -23,8 +23,8 @@
 					<maxInclusive value="1024"/>
 				</simpleType>
 			</attribute>
-			<attribute name="width" type="int"/>
-			<attribute name="height" type="int"/>
+			<attribute name="width" type="int" minOccurs="1" maxOccurs="64000"/>
+			<attribute name="height" type="int" minOccurs="1" maxOccurs="48000"/>
 			<attribute name="colors">
 				<simpleType base="string">
 					<enumeration value="Greyscale"/>
