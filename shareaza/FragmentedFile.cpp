@@ -68,6 +68,7 @@ BOOL CFragmentedFile::Create(LPCTSTR pszFile, QWORD nLength)
 	m_oFList.insert( Fragments::Fragment( 0, nLength ) );
 	
 	if ( Settings.Downloads.SparseThreshold > 0 && theApp.m_bNT &&
+		 nLength != SIZE_UNKNOWN &&
 		 nLength >= Settings.Downloads.SparseThreshold * 1024 )
 	{
 		DWORD dwOut = 0;

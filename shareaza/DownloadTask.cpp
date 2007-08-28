@@ -245,7 +245,8 @@ void CDownloadTask::RunAllocate()
 	}
 	
 	if ( Settings.Downloads.SparseThreshold > 0 && theApp.m_bNT &&
-		m_nSize >= Settings.Downloads.SparseThreshold * 1024 )
+		 m_nSize != SIZE_UNKNOWN &&
+		 m_nSize >= Settings.Downloads.SparseThreshold * 1024 )
 	{
 		DWORD dwOut = 0;
 		if ( ! DeviceIoControl( hFile, FSCTL_SET_SPARSE, NULL, 0, NULL, 0, &dwOut, NULL ) )
@@ -255,7 +256,7 @@ void CDownloadTask::RunAllocate()
 		}
 	}
 
-	if ( m_nSize > 0 )
+	if ( m_nSize > 0 && m_nSize != SIZE_UNKNOWN )
 	{
 		DWORD nOffsetLow	= (DWORD)( ( m_nSize - 1 ) & 0x00000000FFFFFFFF );
 		DWORD nOffsetHigh	= (DWORD)( ( ( m_nSize - 1 ) & 0xFFFFFFFF00000000 ) >> 32 );
