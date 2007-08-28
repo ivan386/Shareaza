@@ -64,6 +64,8 @@ BOOL CPropertyPageAdv::OnInitDialog()
 	m_wndToolTip.Create( this );
 	m_wndToolTip.Activate( TRUE );
 	m_wndToolTip.SetMaxTipWidth( 200 );
+	// Show the tooltip for 20 seconds
+	m_wndToolTip.SetDelayTime( TTDT_AUTOPOP, 20 * 1000 );
 
 	Skin.Apply( NULL, this, 0, &m_wndToolTip );
 

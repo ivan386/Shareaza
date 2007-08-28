@@ -306,6 +306,8 @@ BOOL CSkinDialog::OnInitDialog()
 	m_wndToolTip.Create( this );
 	m_wndToolTip.Activate( TRUE );
 	m_wndToolTip.SetMaxTipWidth( 200 );
+	// Show the tooltip for 20 seconds
+	m_wndToolTip.SetDelayTime( TTDT_AUTOPOP, 20 * 1000 );
 
 	if ( theApp.m_bRTL )
 	{
