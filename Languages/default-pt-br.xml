@@ -2454,6 +2454,11 @@
 	<tip id="ImageViewer_Refresh" message="Atualizar a imagem."/>
 	<tip id="ImageViewer_Close" message="Fechar a janela do visualizador de imagens."/>
 </commandTips>
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="No modo máximo a banda não excederá o valor especificado. No modo médio flutuará em volta do valor para ambos os lados."/>
+	<tip id="IDC_SHARE_PARTIALS" message="Esta opção não tem efeito em downloads iniciados anteriormente, esta opção também é ignorada se o arquivo tem o hash eDonkey e a rede eDonkey está ativada ou se é um torrent.{n}Contudo esta opção não é ignorada se o download está pausado.{n}{n}ATENÇÃO: Use esta opção só em caso de necessidade real, se você abusar desta opção você pode ser banido."/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
