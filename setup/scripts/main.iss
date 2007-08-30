@@ -378,7 +378,6 @@ Type: files; Name: "{userappdata}\Shareaza\Data\DefaultAvatar.png"
 Type: files; Name: "{app}\Skins\Languages\default-es-mx.xml"
 Type: files; Name: "{app}\Skins\Languages\default-es-mx.ico"
 Type: files; Name: "{app}\Skins\Languages\default-en.xml"
-
 Type: files; Name: "{app}\unicows.dll"
 Type: files; Name: "{app}\Plugins\unicows.dll"
 
@@ -409,11 +408,23 @@ Type: files; Name: "{app}\Data\Discovery.dat"
 Type: files; Name: "{userappdata}\Shareaza\Data\Discovery.dat"; Tasks: multiuser
 
 [UninstallDelete]
+; Leftover from old Shareaza
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
+
 ; Clean up files created after installation
 Type: filesandordirs; Name: "{app}\Data"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Data"
 Type: filesandordirs; Name: "{app}\Skins"
 Type: filesandordirs; Name: "{app}\Templates"
+Type: filesandordirs; Name: "{app}\Schemas"
+
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}\desktop.ini"; Tasks: multiuser
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}\desktop.ini"; Tasks: multiuser
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}\desktop.ini"; Tasks: multiuser
+
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\desktop.ini"; Tasks: not multiuser
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}\desktop.ini"; Tasks: not multiuser
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}\desktop.ini"; Tasks: not multiuser
 
 ; Pull in languages and localized files
 #include "languages.iss"
