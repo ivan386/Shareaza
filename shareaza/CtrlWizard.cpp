@@ -699,53 +699,76 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 		}
 	}
 
-	CString strSHA1 = pFile->m_oSHA1.toString();
-	CString strTiger = pFile->m_oTiger.toString();
-	CString strED2K = pFile->m_oED2K.toString();
-	CString strFileName, strNameURI, strSize;
+	CString strSHA1, strTiger, strFileName, strNameURI, strSize, strMagnet;
 
-	strFileName = pFile->m_sName;
-	strNameURI = CTransfer::URLEncode( strFileName );
-	strSize.Format( _T("%d"), pFile->m_nSize ); // bytes
+	if ( pFile->m_sName )
+	{
+		strFileName = pFile->m_sName;
+		strNameURI = CTransfer::URLEncode( strFileName );
+	}
+
+	if ( pFile->m_nSize )
+	{
+		strSize.Format( _T("%d"), pFile->m_nSize ); // bytes
+		ReplaceNoCase( strDoc, _T("$meta:sizebytes$"), strSize );
+	}
 
 	if ( pFile->m_oSHA1 ) 
 	{
-		ReplaceNoCase( strDoc, _T("$meta:SHA1$"), strSHA1 );
+		strSHA1 = pFile->m_oSHA1.toString();
+		strMagnet = "xt=urn:sha1:" + strSHA1;
+
+		ReplaceNoCase( strDoc, _T("$meta:sha1$"), strSHA1 );
+
 		strReplace = _T("gnutella://urn:sha1:") + strSHA1 + '/' + strNameURI + '/';
 		ReplaceNoCase( strDoc, _T("$meta:gnutella$"), strReplace );
 	}
 	if ( pFile->m_oTiger ) 
 	{
+		strTiger = pFile->m_oTiger.toString();
+		strMagnet = "xt=urn:tree:tiger/:" + strTiger;
+
 		ReplaceNoCase( strDoc, _T("$meta:tiger$"), strTiger );
 	}
 	if ( pFile->m_oSHA1 && pFile->m_oTiger )
 	{
 		strReplace = strSHA1 + '.' + strTiger;
+		strMagnet = "xt=urn:bitprint:" + strReplace;
+
 		ReplaceNoCase( strDoc, _T("$meta:bitprint$"), strReplace );
-		strReplace = _T("magnet:?xt=urn:bitprint:") + strReplace;
-		if ( pFile->m_oED2K )
-		{
-			strReplace +=  _T("&amp;xt=urn:ed2khash:") + strED2K;
-		}
-		strReplace += _T("&amp;dn=") + strNameURI + _T("&amp;xl=") + strSize;
-		ReplaceNoCase( strDoc, _T("$meta:magnet$"), strReplace );
-	}
-	if ( pFile->m_oMD5 )
-	{
-		ReplaceNoCase( strDoc, _T("$meta:md5$"), pFile->m_oMD5.toString() );
 	}
 	if ( pFile->m_oED2K )
 	{
-		ReplaceNoCase( strDoc, _T("$meta:ed2khash$"), strED2K );
-		strReplace = _T("ed2k://|file|") + strNameURI + '|' +
-			strSize + '|' + strED2K + _T("|/");
-		ReplaceNoCase( strDoc, _T("$meta:ed2k$"), strReplace );
+		strReplace = pFile->m_oED2K.toString();
+		if ( strMagnet.GetLength() ) strMagnet += _T("&amp;");
+		strMagnet += "xt=urn:ed2khash:" + strReplace;
+
+		ReplaceNoCase( strDoc, _T("$meta:ed2khash$"), strReplace );
+
+		strReplace = _T("ed2k://|file|") + strNameURI + '|' + strSize + '|' + strReplace + _T("|/");
+		if ( strSize.GetLength() ) ReplaceNoCase( strDoc, _T("$meta:ed2k$"), strReplace );
 	}
-	if ( pFile->m_nSize / ( 1024*1024 ) > 1 )
-		strSize.Format( _T("%.2f MB"), (float)pFile->m_nSize / 1024 / 1024 );
-	else
-		strSize.Format( _T("%.2f KB"), (float)pFile->m_nSize / 1024 );
-    ReplaceNoCase( strDoc, _T("$meta:size$"), strSize ); 
+	if ( pFile->m_oMD5 )
+	{
+		strReplace = pFile->m_oMD5.toString();
+		if ( strMagnet.GetLength() ) strMagnet += _T("&amp;");
+		strMagnet += "xt=urn:md5:" + strReplace;
+
+		ReplaceNoCase( strDoc, _T("$meta:md5$"), strReplace );
+	}
+
+	if ( strSize.GetLength() ) strMagnet += _T("&amp;xl=") + strSize;
+	strMagnet = _T("magnet:?") + strMagnet + _T("&amp;dn=") + strNameURI;
+	ReplaceNoCase( strDoc, _T("$meta:magnet$"), strMagnet );
+
+	if ( pFile->m_nSize )
+	{
+		if ( pFile->m_nSize / ( 1024*1024 ) > 1 )
+			strSize.Format( _T("%.2f MB"), (float)pFile->m_nSize / 1024 / 1024 );
+		else
+			strSize.Format( _T("%.2f KB"), (float)pFile->m_nSize / 1024 );
+		ReplaceNoCase( strDoc, _T("$meta:size$"), strSize ); 
+	}
 
 	ReplaceNoCase( strDoc, _T("$meta:name$"), strFileName );
 	if ( ! pFile->m_sComments.IsEmpty() ) 
