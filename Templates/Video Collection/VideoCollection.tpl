@@ -51,7 +51,7 @@
 	function doPlay(sURN) { window.external.open(sURN); }
 	function doEnqueue(sURN) { window.external.enqueue(sURN); }
 	function doDownload(sBitprint, sEd2kHash, sMD5, nSize, sName) { window.external.download(sBitprint); doUpdateStatus(); }
-	function doMagnetDownload(sBitprint, sEd2kHash, sMD5, nSize, sName) { document.location.href = "magnet:?xt=" + sBitprint + "&xt=" + sEd2kHash + "&xt=" + sMD5 /*+ "&xl=" + nSize*/ + "&dn=" + sName; }
+	function doMagnetDownload(sBitprint, sEd2kHash, sMD5, nSize, sName) { document.location.href = "magnet:?xt=" + sBitprint + "&xt=" + sEd2kHash + "&xt=" + sMD5 + "&xl=" + nSize + "&dn=" + sName; }
 	function writeFile(id, sBitprint, sEd2kHash, sMD5, nSize, sName)
 	{
 		sName = escape(sName);
@@ -86,7 +86,7 @@
 		}
 		else
 		{
-			document.writeln( "<a class='DLLink' href=\"magnet:?xt=" + sBitprint + "&xt=" + sEd2kHash + "&xt=" + sMD5 /*+ "&xl=" + nSize*/ + "&dn=" + sName + "\" title='$3$'>$3$</a>" );
+			document.writeln( "<a class='DLLink' href=\"magnet:?xt=" + sBitprint + "&xt=" + sEd2kHash + "&xt=" + sMD5 + "&xl=" + nSize + "&dn=" + sName + "\" title='$3$'>$3$</a>" );
 		}
 	}
 -->

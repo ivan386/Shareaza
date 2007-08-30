@@ -12,7 +12,7 @@
 								<span class="nfo">
 									<strong>
 										<span id="link$meta:number$"></span>
-										<script type="text/javascript" language="javascript">writeFile( "link$meta:number$", "urn:bitprint:$meta:bitprint$", "urn:ed2khash:$meta:ed2khash$", "urn:md5:$meta:md5$", "$meta:size$", "$meta:name$" );</script>
+										<script type="text/javascript" language="javascript">writeFile( "link$meta:number$", "urn:bitprint:$meta:bitprint$", "urn:ed2khash:$meta:ed2khash$", "urn:md5:$meta:md5$", "$meta:sizebytes$", "$meta:name$" );</script>
 									</strong>&nbsp;&nbsp;($meta:size$) <strong>/</strong> Time: $meta:minutes$ Minutes, $meta:seconds$ Seconds
 								</span>
 							</td>
