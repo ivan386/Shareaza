@@ -1,7 +1,7 @@
 //
 // WizardFinishedPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -117,7 +117,7 @@ BOOL CWizardFinishedPage::OnWizardFinish()
 		}
 	}
 
-	if ( m_bConnect ) Network.Connect( TRUE );
+	if ( m_bConnect && !Network.IsConnected() ) Network.Connect( TRUE );
 	Settings.SetStartup( m_bStartup );
 
 	return CWizardPage::OnWizardFinish();
