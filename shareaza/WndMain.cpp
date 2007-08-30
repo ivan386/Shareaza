@@ -422,14 +422,14 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_pWindows.SetOwner( this );
 	SetGUIMode( Settings.General.GUIMode, FALSE );
-	
+
 	// Boot
-	
+
 	if ( theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
 	{
-		// Turn these both on for the first run and allow them to be disabled during the wizard.
-		Settings.Connection.AutoConnect = TRUE;
-		Settings.SetStartup( TRUE );
+		// Turn this on for the first run and allow it to be disabled during the wizard.
+		if ( Settings.Live.FirstRun )
+			Settings.SetStartup( TRUE );
 		PostMessage( WM_COMMAND, ID_TOOLS_WIZARD );
 	}
 	else if ( theApp.GetProfileInt( _T("Windows"), _T("RunWarnings"), FALSE ) == FALSE )
@@ -440,10 +440,11 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	{
 		PostMessage( WM_COMMAND, ID_HELP_PROMOTE );
 	}
-	
-	if ( Settings.Connection.AutoConnect )
+
+	// If it is the first run we will connect only in the QuickStart Wizard
+	if ( Settings.Connection.AutoConnect && !Settings.Live.FirstRun )
 		PostMessage( WM_COMMAND, ID_NETWORK_CONNECT );
-	
+
 	Settings.Live.LoadWindowState = TRUE;
 		
 	// Go
