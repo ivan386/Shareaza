@@ -63,11 +63,8 @@ AppPublisherURL=http://www.shareaza.com/
 AppSupportURL=http://www.shareaza.com/?id=support
 AppUpdatesURL=http://www.shareaza.com/?id=download
 
-[Components]
-; Ask user wich components to install
-Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: disablenouninstallwarning
-
 [Tasks]
+Name: "language"; Description: "{cm:tasks_languages}";
 Name: "multiuser"; Description: "{cm:tasks_multisetup}"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
@@ -128,7 +125,7 @@ Source: "Templates\General Purple Collection\*"; DestDir: "{app}\Templates\Gener
 Source: "Templates\Video Collection\*"; DestDir: "{app}\Templates\Video Collection"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Languages
-Source: "Languages\*"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: "language"; Excludes: "default-en.xml,*.bak"
+Source: "Languages\*"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: "language"; Excludes: "default-en.xml,*.bak"
 
 ; Copy skins back from {userappdata}\Shareaza\Skins
 Source: "{userappdata}\Shareaza\Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteFolder('{userappdata}\Shareaza\Skins')
@@ -374,6 +371,7 @@ Type: files; Name: "{app}\*.png"
 Type: files; Name: "{app}\*.bmp"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
 Type: files; Name: "{userappdata}\Shareaza\Data\DefaultAvatar.png"
 Type: files; Name: "{app}\Skins\Languages\default-es-mx.xml"
 Type: files; Name: "{app}\Skins\Languages\default-es-mx.ico"
@@ -394,8 +392,7 @@ Type: files; Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Share
 
 ; Delete extra components so installer can "uninstall" them
 Type: filesandordirs; Name: "{app}\Remote"
-Type: filesandordirs; Name: "{app}\Skins\Languages"; Components: not language
-Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins\Languages"
+Type: filesandordirs; Name: "{app}\Skins\Languages"; Tasks: not language
 
 ; Delete old Shareaza installers
 #ifndef alpha
@@ -408,9 +405,6 @@ Type: files; Name: "{app}\Data\Discovery.dat"
 Type: files; Name: "{userappdata}\Shareaza\Data\Discovery.dat"; Tasks: multiuser
 
 [UninstallDelete]
-; Leftover from old Shareaza
-Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
-
 ; Clean up files created after installation
 Type: filesandordirs; Name: "{app}\Data"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Data"
