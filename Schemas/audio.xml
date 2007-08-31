@@ -144,7 +144,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Album Artist</title>
                        <title language="hr">Album Artist</title>
                        <title language="hu">Album eladőja</title>
-                       <title language="it">Album Artist</title>
+                       <title language="it">Artista dell'album</title>
                        <title language="ja">Album Artist</title>
                        <title language="lt">Albumo dailininkas</title>
                        <title language="nl">Album Artiest</title>
@@ -272,7 +272,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Album Status</title>
                        <title language="hr">Album Status</title>
                        <title language="hu">Album helyzete</title>
-                       <title language="it">Album Status</title>
+                       <title language="it">Stato dell'album</title>
                        <title language="ja">Album Status</title>
                        <title language="lt">Albumo būklė</title>
                        <title language="nl">Album Status</title>
@@ -399,7 +399,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Original Year</title>
                        <title language="hr">Original Year</title>
                        <title language="hu">Original Year</title>
-                       <title language="it">Original Year</title>
+                       <title language="it">Anno originale</title>
                        <title language="ja">Original Year</title>
                        <title language="lt">Originalo metai</title>
                        <title language="nl">Oorspronkelijk Jaar</title>
@@ -654,7 +654,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Lyricist</title>
                        <title language="hr">Lyricist</title>
                        <title language="hu">Dalszöveg-író</title>
-                       <title language="it">Lyricist</title>
+                       <title language="it">Autore del testo</title>
                        <title language="ja">Lyricist</title>
                        <title language="lt">Poetas</title>
                        <title language="nl">Schrijver</title>
@@ -679,7 +679,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Original Lyricist</title>
                        <title language="hr">Original Lyricist</title>
                        <title language="hu">Original Lyricist</title>
-                       <title language="it">Original Lyricist</title>
+                       <title language="it">Autore del testo originale</title>
                        <title language="ja">Original Lyricist</title>
                        <title language="lt">Pirminis poetas</title>
                        <title language="nl">Oorspronkelijke Schrijver</title>
@@ -704,7 +704,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="heb">Arranger</title>
                       <title language="hr">Arranger</title>
                       <title language="hu">Szervező</title>
-                      <title language="it">Arranger</title>
+                      <title language="it">Arrangiatore</title>
                       <title language="ja">Arranger</title>
                       <title language="lt">Aranžuotojas</title>
                       <title language="nl">Arrangeur</title>
@@ -729,7 +729,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="heb">Performer</title>
                       <title language="hr">Performer</title>
                       <title language="hu">Előadó</title>
-                      <title language="it">Performer</title>
+                      <title language="it">Esecutore</title>
                       <title language="ja">Performer</title>
                       <title language="lt">Orkestras</title>
                       <title language="nl">Bespeler</title>
@@ -754,7 +754,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                       <title language="heb">Conductor</title>
                       <title language="hr">Conductor</title>
                       <title language="hu">Karmester</title>
-                      <title language="it">Conductor</title>
+                      <title language="it">Conduttore</title>
                       <title language="ja">Conductor</title>
                       <title language="lt">Dirigentas</title>
                       <title language="nl">Dirigent</title>
@@ -1054,7 +1054,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Encoded By</title>
                        <title language="hr">Encoded By</title>
                        <title language="hu">Kódolva</title>
-                       <title language="it">Encoded By</title>
+                       <title language="it">Codificato da</title>
                        <title language="ja">Encoded By</title>
                        <title language="lt">Kodavo</title>
                        <title language="nl">Ge-encodeerd Door</title>
@@ -1080,7 +1080,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">MB AlbumID</title>
                        <title language="hr">MB AlbumID</title>
                        <title language="hu">MB AlbumID</title>
-                       <title language="it">MB AlbumID</title>
+                       <title language="it">AlbumID MB</title>
                        <title language="ja">MB AlbumID</title>
                        <title language="lt">MB AlbumID</title>
                        <title language="nl">MB AlbumID</title>
@@ -1106,7 +1106,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">MB AlbumArtistID</title>
                        <title language="hr">MB AlbumArtistID</title>
                        <title language="hu">MB AlbumArtistID</title>
-                       <title language="it">MB AlbumArtistID</title>
+                       <title language="it">AlbumArtistID MB</title>
                        <title language="ja">MB AlbumArtistID</title>
                        <title language="lt">MB AlbumArtistID</title>
                        <title language="nl">MB AlbumArtistID</title>
@@ -1132,7 +1132,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">MB ArtistID</title>
                        <title language="hr">MB ArtistID</title>
                        <title language="hu">MB ArtistID</title>
-                       <title language="it">MB ArtistID</title>
+                       <title language="it">ArtistID MB</title>
                        <title language="ja">MB ArtistID</title>
                        <title language="lt">MB ArtistID</title>
                        <title language="nl">MB ArtistID</title>
@@ -1158,7 +1158,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">MB PUID</title>
                        <title language="hr">MB PUID</title>
                        <title language="hu">MB PUID</title>
-                       <title language="it">MB PUID</title>
+                       <title language="it">PUID MB</title>
                        <title language="ja">MB PUID</title>
                        <title language="lt">MB PUID</title>
                        <title language="nl">MB PUID</title>
@@ -1184,7 +1184,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">MB TRM ID</title>
                        <title language="hr">MB TRM ID</title>
                        <title language="hu">MB TRM ID</title>
-                       <title language="it">MB TRM ID</title>
+                       <title language="it">TRM ID MB</title>
                        <title language="ja">MB TRM ID</title>
                        <title language="lt">MB TRM ID</title>
                        <title language="nl">MB TRM ID</title>
@@ -1210,7 +1210,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">MB FileID</title>
                        <title language="hr">MB FileID</title>
                        <title language="hu">MB FileID</title>
-                       <title language="it">MB FileID</title>
+                       <title language="it">FileID MB</title>
                        <title language="ja">MB FileID</title>
                        <title language="lt">MB FileID</title>
                        <title language="nl">MB FileID</title>
@@ -1236,7 +1236,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">CDDB Disc ID</title>
                        <title language="hr">CDDB Disc ID</title>
                        <title language="hu">CDDB lemez ID</title>
-                       <title language="it">CDDB Disc ID</title>
+                       <title language="it">ID disco CDDB</title>
                        <title language="ja">CDDB Disc ID</title>
                        <title language="lt">CDDB Disc ID</title>
                        <title language="nl">CDDB Schijf ID</title>

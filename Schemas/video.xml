@@ -602,7 +602,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">קצב פריימים</title>
                        <title language="hr">Sličica u sekundi</title>
                        <title language="hu">Kép/másodperc</title>
-                       <title language="it">Frame Rate</title>
+                       <title language="it">Frame rate</title>
                        <title language="ja">フレームレート</title>
                        <title language="lt">Kadrų dažnis</title>
                        <title language="nl">Beelden per Seconde</title>
@@ -1040,5 +1040,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="wm"/>
                <type extension="wmv"/>
                <type extension="xvid"/>
+               <type extension="flv"/>
+               <type extension="gvi"/>
        </typeFilter>
 </schemaDescriptor>
