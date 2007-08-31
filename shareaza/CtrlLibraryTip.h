@@ -57,6 +57,7 @@ protected:
 protected:
 	CCriticalSection	m_pSection;
 	CEvent				m_pWakeup;
+	CSize				m_szThumbSize;
 	HANDLE				m_hThread;
 	BOOL				m_bThread;
 	CSize				m_szThumb;

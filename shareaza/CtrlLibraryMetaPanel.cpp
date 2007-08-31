@@ -66,7 +66,7 @@ END_MESSAGE_MAP()
 // CLibraryMetaPanel construction
 
 CLibraryMetaPanel::CLibraryMetaPanel()
-: m_nThumbSize(96)
+: m_nThumbSize( Settings.Library.ThumbSize )
 , m_crLight(CCoolInterface::CalculateColour( CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 ))
 , m_bNewFile(TRUE)
 {

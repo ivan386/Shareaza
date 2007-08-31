@@ -61,6 +61,8 @@ CLibraryTipCtrl::CLibraryTipCtrl()
 	m_hThread = NULL;
 	m_bThread = FALSE;
 	m_crLight = CCoolInterface::CalculateColour( CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 );
+
+	m_szThumbSize = CSize( Settings.Library.ThumbSize, Settings.Library.ThumbSize );
 }
 
 CLibraryTipCtrl::~CLibraryTipCtrl()
@@ -409,16 +411,16 @@ void CLibraryTipCtrl::OnRun()
 		if ( bSuccess )
 		{
 			// Resample now to display dimensions
-			int nSize = 94 * pFile.m_nWidth / pFile.m_nHeight;
+			int nSize = m_szThumbSize.cy * pFile.m_nWidth / pFile.m_nHeight;
 
-			if ( nSize > 94 )
+			if ( nSize > m_szThumbSize.cx )
 			{
-				nSize = 94 * pFile.m_nHeight / pFile.m_nWidth;
-				pFile.Resample( 94, nSize );
+				nSize = m_szThumbSize.cx * pFile.m_nHeight / pFile.m_nWidth;
+				pFile.Resample( m_szThumbSize.cx, nSize );
 			}
 			else
 			{
-				pFile.Resample( nSize, 94 );
+				pFile.Resample( nSize, m_szThumbSize.cy );
 			}
 
 			m_pSection.Lock();
