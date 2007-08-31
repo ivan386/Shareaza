@@ -119,12 +119,17 @@ public:
 	HINSTANCE	m_hShlWapi;
 
 	// GeoIP - IP to Country lookup
-	HINSTANCE m_hGeoIP;
-	GeoIP* m_pGeoIP;
-	GeoIP_country_code_by_addrFunc m_pfnGeoIP_country_code_by_addr;
-	GeoIP_country_name_by_addrFunc m_pfnGeoIP_country_name_by_addr;
+	HINSTANCE	m_hGeoIP;
+	GeoIP*		m_pGeoIP;
+	GeoIP_country_code_by_addrFunc	m_pfnGeoIP_country_code_by_addr;
+	GeoIP_country_name_by_addrFunc	m_pfnGeoIP_country_name_by_addr;
+
+	HINSTANCE	m_hLibGFL;
+
+	CString		m_sGeneralPath;
 
 public:
+	HINSTANCE			CustomLoadLibrary(LPCTSTR);
 	CMainWnd*			SafeMainWnd() const;
 	void				Message(int nType, UINT nID, ...) const;
 	void				Message(int nType, LPCTSTR pszFormat, ...) const;

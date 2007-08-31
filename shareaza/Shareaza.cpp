@@ -497,6 +497,8 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_hGeoIP != NULL ) FreeLibrary( m_hGeoIP );
 
+	if ( m_hLibGFL != NULL ) FreeLibrary( m_hLibGFL );
+
 	if ( dlgSplash )
 		dlgSplash->Hide();
 
@@ -651,6 +653,7 @@ void CShareazaApp::InitResources()
 	CRegistry pRegistry;
 
 	m_bMultiUserInstallation = pRegistry.GetInt( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
+	m_sGeneralPath = pRegistry.GetString( _T(""), _T("Path"), _T("") );
 
 	//Determine the version of Windows
 	OSVERSIONINFOEX pVersion;
@@ -784,7 +787,7 @@ void CShareazaApp::InitResources()
 	m_hShlWapi = LoadLibrary( _T("shlwapi.dll") );
 
 	// Load the GeoIP library for mapping IPs to countries
-	m_hGeoIP = LoadLibrary( _T("geoip.dll") );
+	m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") );
 	if ( m_hGeoIP )
 	{
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
@@ -793,6 +796,9 @@ void CShareazaApp::InitResources()
 
 		m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
+
+	// We load it in a custom way, so Shareaza plugins can use this library also when it isn't in its search path but loaded by CustomLoadLibrary (very useful when running Shareaza inside Visual Studio)
+	m_hLibGFL = CustomLoadLibrary( _T("libgfl267.dll") );
 
 	HDC screen = GetDC( 0 );
 	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
@@ -827,6 +833,17 @@ void CShareazaApp::InitResources()
 	m_hHookKbd   = SetWindowsHookEx( WH_KEYBOARD, KbdHook, NULL, AfxGetThread()->m_nThreadID );
 	m_hHookMouse = SetWindowsHookEx( WH_MOUSE, MouseHook, NULL, AfxGetThread()->m_nThreadID );
 	m_dwLastInput = (DWORD)time( NULL );
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CShareazaApp custom library loader
+
+HINSTANCE CShareazaApp::CustomLoadLibrary(LPCTSTR pszFileName)
+{
+	if ( HINSTANCE hLibrary = LoadLibrary( pszFileName ) )
+		return hLibrary;
+	else
+		return LoadLibrary( m_sGeneralPath + _T("\\") + pszFileName );
 }
 
 /////////////////////////////////////////////////////////////////////////////
