@@ -43,9 +43,10 @@ CGProfile	MyProfile;
 //////////////////////////////////////////////////////////////////////
 // CGProfile construction
 
-CGProfile::CGProfile()
+CGProfile::CGProfile() :
+	m_pXML( NULL )
 {
-	m_pXML = NULL;
+	Create();
 }
 
 CGProfile::~CGProfile()
