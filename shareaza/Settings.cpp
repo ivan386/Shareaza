@@ -454,12 +454,14 @@ void CSettings::Setup()
 CSettings::CSettings()
 {
 	TCHAR szPath[260];
+	CRegistry pRegistry;
 	GetModuleFileName( NULL, szPath, 260 );
 
 	// Set default program and user paths
 	General.Path = szPath;
 	if ( General.Path.ReverseFind( '\\' ) >= 0 )
 		General.Path = General.Path.Left( General.Path.ReverseFind( '\\' ) );
+	General.Path = pRegistry.GetString( _T(""), _T("Path"), General.Path );	// This line is needed otherwise the value is readed too late.
 	General.UserPath = General.Path;
 
 	// Reset 'live' values.

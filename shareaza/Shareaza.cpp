@@ -653,7 +653,6 @@ void CShareazaApp::InitResources()
 	CRegistry pRegistry;
 
 	m_bMultiUserInstallation = pRegistry.GetInt( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
-	m_sGeneralPath = pRegistry.GetString( _T(""), _T("Path"), _T("") );
 
 	//Determine the version of Windows
 	OSVERSIONINFOEX pVersion;
@@ -843,7 +842,7 @@ HINSTANCE CShareazaApp::CustomLoadLibrary(LPCTSTR pszFileName)
 	if ( HINSTANCE hLibrary = LoadLibrary( pszFileName ) )
 		return hLibrary;
 	else
-		return LoadLibrary( m_sGeneralPath + _T("\\") + pszFileName );
+		return LoadLibrary( Settings.General.Path + _T("\\") + pszFileName );
 }
 
 /////////////////////////////////////////////////////////////////////////////

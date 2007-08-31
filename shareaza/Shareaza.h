@@ -126,8 +126,6 @@ public:
 
 	HINSTANCE	m_hLibGFL;
 
-	CString		m_sGeneralPath;
-
 public:
 	HINSTANCE			CustomLoadLibrary(LPCTSTR);
 	CMainWnd*			SafeMainWnd() const;
