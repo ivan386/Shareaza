@@ -711,6 +711,9 @@ void CSettings::SmartUpgrade()
 		}
 	}
 
+	if ( nVersion != SMART_VERSION )
+		Uploads.SharePartials = TRUE;
+
 	// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
 	if ( nVersion < 20 )
 	{
