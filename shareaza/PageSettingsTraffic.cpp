@@ -276,7 +276,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Uploads.ClearDelay, 1000, 1, 1800, _T(" s") );
 	AddSetting( &Settings.Uploads.AllowBackwards, 1, 0, 1 );
 	AddSetting( &Settings.Uploads.DynamicPreviews, 1, 0, 1 );
-	AddSetting( &Settings.Uploads.PreviewQuality, 1, 0, 100, _T("%") );
+	AddSetting( &Settings.Uploads.PreviewQuality, 1, 5, 100, _T("%") );
 	AddSetting( &Settings.Uploads.PreviewTransfers, 1, 1, 64 );
 	AddSetting( &Settings.Uploads.RewardQueuePercentage, 1, 0, 99, _T("%") );
 
