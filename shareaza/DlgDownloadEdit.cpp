@@ -57,6 +57,9 @@ END_MESSAGE_MAP()
 CDownloadEditDlg::CDownloadEditDlg(CDownload* pDownload, CWnd* pParent) : CSkinDialog( CDownloadEditDlg::IDD, pParent )
 {
 	m_pDownload = pDownload;
+	m_bSHA1Trusted = FALSE;
+	m_bTigerTrusted = FALSE;
+	m_bED2KTrusted = FALSE;
 }
 
 CDownloadEditDlg::~CDownloadEditDlg()
