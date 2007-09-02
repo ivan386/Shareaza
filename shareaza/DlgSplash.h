@@ -24,46 +24,37 @@
 
 class CSplashDlg : public CDialog
 {
-// Construction
 public:
-	CSplashDlg(int nMax = 0, BOOL bSilent = FALSE);
+	CSplashDlg(int nMax = 0);
 	virtual ~CSplashDlg();
 
 	enum { IDD = IDD_SPLASH };
+
 	DECLARE_DYNAMIC(CSplashDlg)
 
-// Attributes
-protected:
-	int			m_nPos;
-	int			m_nMax;
-	BOOL		m_bSilent;
-	CString		m_sState;
-protected:
-	CBitmap		m_bmSplash;
-	CBitmap		m_bmBuffer;
-	CDC			m_dcBuffer1;
-	CDC			m_dcBuffer2;
-protected:
-	BOOL		(WINAPI *m_pfnAnimateWindow)(HWND, DWORD, DWORD);
-
-// Operations
 public:
 	void	IncrMax() { m_nMax++; };
 	void	Step(LPCTSTR pszText, bool bClosing = false);
 	void	Topmost();
 	void	Hide();
-protected:
-	void	DoPaint(CDC* pDC);
 
-// Overrides
-public:
+protected:
+	int			m_nPos;
+	int			m_nMax;
+	CString		m_sState;
+	CBitmap		m_bmSplash;
+	CBitmap		m_bmBuffer;
+	CDC			m_dcBuffer1;
+	CDC			m_dcBuffer2;
+
+	void		DoPaint(CDC* pDC);
+	BOOL		(WINAPI *m_pfnAnimateWindow)(HWND, DWORD, DWORD);
+
+	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
-// Implementation
-protected:
-	DECLARE_MESSAGE_MAP()
-	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
 	afx_msg LRESULT OnPrintClient(WPARAM wParam, LPARAM lParam);
 
+	DECLARE_MESSAGE_MAP()
 };

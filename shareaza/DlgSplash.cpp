@@ -52,20 +52,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSplashDlg construction
 
-CSplashDlg::CSplashDlg(int nMax, BOOL bSilent) : CDialog( CSplashDlg::IDD, NULL )
+CSplashDlg::CSplashDlg(int nMax) :
+	CDialog( CSplashDlg::IDD, NULL ),
+	m_nPos( 0 ),
+	m_nMax( nMax ),
+	m_sState( theApp.m_sSmartAgent ),
+	m_pfnAnimateWindow( NULL )
 {
-	m_nPos		= 0;
-	m_nMax		= nMax;
-
-	m_bSilent	= bSilent;
-	m_sState	= _T("Version ") + theApp.m_sVersion + _T("...");
-
-	m_pfnAnimateWindow	= NULL;
-
-#ifdef _DEBUG
-	// m_bSilent = TRUE;
-#endif
-
 	Create( IDD );
 }
 
@@ -85,6 +78,8 @@ BOOL CSplashDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
+	SetWindowText( m_sState );
+
 	CClientDC dcScreen( this );
 
 	CImageServices::LoadBitmap( &m_bmSplash, IDR_SPLASH, RT_PNG );
@@ -92,8 +87,6 @@ BOOL CSplashDlg::OnInitDialog()
 	m_bmBuffer.CreateCompatibleBitmap( &dcScreen, SPLASH_WIDTH, SPLASH_HEIGHT );
 	m_dcBuffer1.CreateCompatibleDC( &dcScreen );
 	m_dcBuffer2.CreateCompatibleDC( &dcScreen );
-
-	if ( m_bSilent ) return TRUE;
 
 	SetWindowPos( NULL, 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, SWP_NOMOVE );
 	CenterWindow();
@@ -119,6 +112,7 @@ void CSplashDlg::Step(LPCTSTR pszText, bool bClosing)
 {
 	m_nPos ++;
 	m_sState.Format( bClosing ? _T("%s...") : _T("Starting %s..."), pszText );
+	SetWindowText( m_sState );
 
 	CClientDC dc( this );
 	DoPaint( &dc );
@@ -135,6 +129,7 @@ void CSplashDlg::Topmost()
 void CSplashDlg::Hide()
 {
 	m_sState = _T("Ready");
+	SetWindowText( m_sState );
 	Invalidate();
 
 	if ( m_pfnAnimateWindow != NULL )

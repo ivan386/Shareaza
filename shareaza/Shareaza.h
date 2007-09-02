@@ -42,7 +42,7 @@ public:
 
 	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
 
-	BOOL m_bSilentTray;
+	BOOL m_bTray;
 	BOOL m_bNoSplash;
 	BOOL m_bNoAlphaWarning;
 	INT  m_nGUIMode;
@@ -157,7 +157,7 @@ protected:
 
 	void				GetVersionNumber();
 	void				InitResources();
-	void				SplashStep(CSplashDlg*& dlg, LPCTSTR pszMessage, bool bClosing = false);
+	void				SplashStep(CSplashDlg* dlg, LPCTSTR pszMessage, bool bClosing = false);
 
 	DECLARE_MESSAGE_MAP()
 };

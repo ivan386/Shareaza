@@ -99,7 +99,7 @@ HMODULE __stdcall LoadUnicows()
 // CShareazaCommandLineInfo
 
 CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
-	m_bSilentTray( FALSE ),
+	m_bTray( FALSE ),
 	m_bNoSplash( FALSE ),
 	m_bNoAlphaWarning( FALSE ),
 	m_nGUIMode( -1 )
@@ -112,7 +112,8 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 	{
 		if ( ! lstrcmpi( pszParam, _T("tray") ) )
 		{
-			m_bSilentTray = TRUE;
+			m_bTray = TRUE;
+			m_bNoSplash = TRUE;
 			return;
 		}
 		else if ( ! lstrcmpi( pszParam, _T("nosplash") ) )
@@ -310,7 +311,7 @@ BOOL CShareazaApp::InitInstance()
 
 	// ***********
 	*/
-	CSplashDlg* dlgSplash = new CSplashDlg( 18, m_ocmdInfo.m_bSilentTray );
+	CSplashDlg* dlgSplash = m_ocmdInfo.m_bNoSplash ? NULL : new CSplashDlg( 19 );
 
 	SplashStep( dlgSplash, L"Winsock" );
 		WSADATA wsaData;
@@ -320,7 +321,7 @@ BOOL CShareazaApp::InitInstance()
 			if ( wsaData.wVersion == MAKEWORD( 1, 1 ) ) break;
 			if ( i == 2 ) return FALSE;
 			WSACleanup();
-			dlgSplash->IncrMax();
+			if ( dlgSplash ) dlgSplash->IncrMax();
 			SplashStep( dlgSplash, L"Winsock (trying again)" );
 		}
 
@@ -363,7 +364,7 @@ BOOL CShareazaApp::InitInstance()
 		CFirewall firewall;
 		if ( Settings.Connection.EnableFirewallException && firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
 		{
-			dlgSplash->IncrMax();
+			if ( dlgSplash ) dlgSplash->IncrMax();
 			SplashStep( dlgSplash, L"Windows Firewall Setup" );
 
 			// Add to firewall exception list if necessary
@@ -379,7 +380,7 @@ BOOL CShareazaApp::InitInstance()
 	// If it is the first run we will run the UPnP discovery only in the QuickStart Wizard
 	if ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun )
 	{
-		dlgSplash->IncrMax();
+		if ( dlgSplash ) dlgSplash->IncrMax();
 		SplashStep( dlgSplash, L"Firewall/Router Setup" );
 		try
 		{
@@ -392,10 +393,10 @@ BOOL CShareazaApp::InitInstance()
 	}
 
 	SplashStep( dlgSplash, L"GUI" );
-		if ( m_ocmdInfo.m_bSilentTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
+		if ( m_ocmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
 		new CMainWnd();
 		CoolMenu.EnableHook();
-		if ( m_ocmdInfo.m_bSilentTray )
+		if ( m_ocmdInfo.m_bTray )
 		{
 			((CMainWnd*)m_pMainWnd)->CloseToTray();
 		}
@@ -429,9 +430,8 @@ BOOL CShareazaApp::InitInstance()
 	return TRUE;
 }
 
-void CShareazaApp::SplashStep(CSplashDlg*& dlg, LPCTSTR pszMessage, bool bClosing)
+void CShareazaApp::SplashStep(CSplashDlg* dlg, LPCTSTR pszMessage, bool bClosing)
 {
-	if ( m_ocmdInfo.m_bNoSplash ) return;
 	if ( dlg != NULL )
 		dlg->Step( pszMessage, bClosing );
 }
@@ -443,7 +443,7 @@ int CShareazaApp::ExitInstance()
 {
 	CWaitCursor pCursor;
 	
-	CSplashDlg* dlgSplash = new CSplashDlg( 6, m_ocmdInfo.m_bSilentTray );
+	CSplashDlg* dlgSplash = m_ocmdInfo.m_bNoSplash ? NULL : new CSplashDlg( 6 );
 	SplashStep( dlgSplash, L"Closing Server Processes", true );
 	DDEServer.Close();
 	IEProtocol.Close();
@@ -464,7 +464,7 @@ int CShareazaApp::ExitInstance()
 		CFirewall firewall;
 		if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
 		{
-			dlgSplash->IncrMax();
+			if ( dlgSplash ) dlgSplash->IncrMax();
 			SplashStep( dlgSplash, L"Closing Windows Firewall Access", true );	
 
 			// Remove application from the firewall exception list
@@ -477,7 +477,7 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_pUPnPFinder )
 	{
-		dlgSplash->IncrMax();
+		if ( dlgSplash ) dlgSplash->IncrMax();
 		SplashStep( dlgSplash, L"Closing Firewall/Router Access", true );
 		m_pUPnPFinder->StopAsyncFind();
 		if ( Settings.Connection.DeleteUPnPPorts )
@@ -487,7 +487,7 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_bLive )
 	{
-		dlgSplash->IncrMax();
+		if ( dlgSplash ) dlgSplash->IncrMax();
 		SplashStep( dlgSplash, L"Saving", true );
 		Downloads.Save();
 		DownloadGroups.Save();
