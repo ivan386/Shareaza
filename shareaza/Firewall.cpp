@@ -1,7 +1,7 @@
 //
 // Firewall.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,40 +35,14 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 // Make a new WindowsFirewall object
-CFirewall::CFirewall()
+CFirewall::CFirewall() :
+	m_bInitialized( FALSE )
 {
-	// Set the COM interface pointers to NULL so we'll know if we've initialized them
-	Manager     = NULL;
-	Policy      = NULL;
-	Profile     = NULL;
-	ServiceList = NULL;
-	ProgramList = NULL;
-	PortList    = NULL;
-	Service     = NULL;
-	Program     = NULL;
-	Port        = NULL;
-	Nat         = NULL;
-	Collection  = NULL;
-	Mapping     = NULL;
-	m_bInitialized = FALSE;
 }
 
 // Delete the WindowsFirewall object
 CFirewall::~CFirewall()
 {
-	// Release the COM interfaces that we got access to
-	if ( Port )        { Port->Release();        Port        = NULL; }
-	if ( Program )     { Program->Release();     Program     = NULL; }
-	if ( Service )     { Service->Release();     Service     = NULL; }
-	if ( PortList )    { PortList->Release();    PortList    = NULL; }
-	if ( ProgramList ) { ProgramList->Release(); ProgramList = NULL; }
-	if ( ServiceList ) { ServiceList->Release(); ServiceList = NULL; }
-	if ( Profile )     { Profile->Release();     Profile     = NULL; }
-	if ( Policy )      { Policy->Release();      Policy      = NULL; }
-	if ( Manager )     { Manager->Release();     Manager     = NULL; }
-	if ( Mapping )     { Mapping->Release();     Mapping     = NULL; }
-	if ( Collection )  { Collection->Release();  Collection  = NULL; }
-	if ( Nat )         { Nat->Release();         Nat         = NULL; }
 }
 
 // Takes a service type, like NET_FW_SERVICE_UPNP, which is listed in Windows Firewall and can't be removed
@@ -96,7 +70,7 @@ BOOL CFirewall::SetupService( NET_FW_SERVICE_TYPE service )
 // Makes sure the program is listed in Windows Firewall and its listing is checked, adding and checking it as necessary
 // Returns true if the program is listed and checked, false if we weren't able to do it
 // When bRemove is TRUE, it removes the application from the exception list
-BOOL CFirewall::SetupProgram( CString path, CString name, BOOL bRemove )
+BOOL CFirewall::SetupProgram( const CString& path, const CString& name, BOOL bRemove )
 {
 	// Make sure the COM interfaces have been accessed
 	if ( ! Manager ) if ( ! m_bInitialized ) return FALSE;
@@ -134,7 +108,7 @@ BOOL CFirewall::AccessWindowsFirewall()
 	HRESULT result;
 
 	// Create an instance of the firewall settings manager
-	result = CoCreateInstance( __uuidof( NetFwMgr ), NULL, CLSCTX_ALL, __uuidof( INetFwMgr ), ( void** )&Manager );
+	result = Manager.CoCreateInstance( __uuidof( NetFwMgr ) );
 	if ( FAILED( result ) || ! Manager ) return FALSE;
 
 	// Retrieve the local firewall policy
@@ -165,10 +139,10 @@ BOOL CFirewall::AccessWindowsFirewall()
 // Takes a program path and file name, like "C:\Folder\Program.exe"
 // Determines if it's listed in Windows Firewall
 // Returns true if it works, and writes the answer in listed
-BOOL CFirewall::IsProgramListed( CString path, BOOL* listed )
+BOOL CFirewall::IsProgramListed( const CString& path, BOOL* listed )
 {
 	// Look for the program in the list
-	if ( Program ) { Program->Release(); Program = NULL; }
+	Program.Release();
 
 	// Try to get the interface for the program with the given name
 	HRESULT result = ProgramList->Item( CComBSTR( path ), &Program );
@@ -203,7 +177,7 @@ BOOL CFirewall::IsProgramListed( CString path, BOOL* listed )
 BOOL CFirewall::IsServiceEnabled( NET_FW_SERVICE_TYPE service, BOOL* enabled )
 {
 	// Look for the service in the list
-	if ( Service ) { Service->Release(); Service = NULL; }
+	Service.Release();
 	HRESULT result = ServiceList->Item( service, &Service );
 	if ( FAILED( result ) ) return FALSE; // Services can't be removed from the list
 
@@ -228,7 +202,7 @@ BOOL CFirewall::IsServiceEnabled( NET_FW_SERVICE_TYPE service, BOOL* enabled )
 // Takes a program path and file name like "C:\Folder\Program.exe"
 // Determines if the listing for that program in Windows Firewall is checked or unchecked
 // Returns true if it works, and writes the answer in enabled
-BOOL CFirewall::IsProgramEnabled( CString path, BOOL* enabled )
+BOOL CFirewall::IsProgramEnabled( const CString& path, BOOL* enabled )
 {
 	// First, make sure the program is listed
 	BOOL listed;
@@ -270,12 +244,11 @@ BOOL CFirewall::AreExceptionsAllowed()
 // Takes a path and file name like "C:\Folder\Program.exe" and a name like "My Program"
 // Lists and checks the program on Windows Firewall, so now it can listed on a socket without a warning popping up
 // Returns false on error
-BOOL CFirewall::AddProgram( CString path, CString name )
+BOOL CFirewall::AddProgram( const CString& path, const CString& name )
 {
 	// Create an instance of an authorized application, we'll use this to add our new application
-	if ( Program ) { Program->Release(); Program = NULL; }
-	HRESULT result = CoCreateInstance( __uuidof( NetFwAuthorizedApplication ), NULL, CLSCTX_ALL,
-		__uuidof( INetFwAuthorizedApplication ), ( void** )&Program );
+	Program.Release();
+	HRESULT result = Program.CoCreateInstance( __uuidof( NetFwAuthorizedApplication ) );
 	if ( FAILED( result ) ) return FALSE;
 
 	result = Program->put_ProcessImageFileName( CComBSTR( path ) ); // Set the process image file name
@@ -290,7 +263,7 @@ BOOL CFirewall::AddProgram( CString path, CString name )
 	return TRUE;
 }
 
-BOOL CFirewall::RemoveProgram( CString path )
+BOOL CFirewall::RemoveProgram( const CString& path )
 {
 	if ( ! ProgramList || ! m_bInitialized ) return FALSE;
 
@@ -305,7 +278,7 @@ BOOL CFirewall::RemoveProgram( CString path )
 BOOL CFirewall::EnableService( NET_FW_SERVICE_TYPE service )
 {
 	// Look for the service in the list
-	if ( Service ) { Service->Release(); Service = NULL; }
+	Service.Release();
 	HRESULT result = ServiceList->Item( service, &Service );
 	if ( FAILED( result ) ) return FALSE; // Services can't be removed from the list
 
@@ -319,7 +292,7 @@ BOOL CFirewall::EnableService( NET_FW_SERVICE_TYPE service )
 // Takes a program path and file name like "C:\Folder\Program.exe"
 // Checks the checkbox next to its listing in Windows Firewall
 // Returns false on error
-BOOL CFirewall::EnableProgram( CString path )
+BOOL CFirewall::EnableProgram( const CString& path )
 {
 	// First, make sure the program is listed
 	BOOL listed;

@@ -1,7 +1,7 @@
 //
 // Firewall.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,23 +36,23 @@ class CFirewall
 public:
 
 	// Windows Firewall COM interfaces accessed with the object
-    INetFwMgr*                    Manager;
-    INetFwPolicy*                 Policy;
-	INetFwProfile*                Profile;
-	INetFwServices*               ServiceList;
-	INetFwAuthorizedApplications* ProgramList;
-    INetFwOpenPorts*              PortList;
+    CComPtr< INetFwMgr >					Manager;
+    CComPtr< INetFwPolicy >					Policy;
+	CComPtr< INetFwProfile >				Profile;
+	CComPtr< INetFwServices >				ServiceList;
+	CComPtr< INetFwAuthorizedApplications >	ProgramList;
+    CComPtr< INetFwOpenPorts >				PortList;
 
 	// Windows Firewall COM interfaces accessed in methods
-	INetFwService*                Service;
-	INetFwAuthorizedApplication*  Program;
-    INetFwOpenPort*               Port;
+	CComPtr< INetFwService >				Service;
+	CComPtr< INetFwAuthorizedApplication >	Program;
+    CComPtr< INetFwOpenPort >				Port;
 
 	// UPnP COM interfaces
-	IUPnPNAT*                     Nat;
-	IStaticPortMappingCollection* Collection;
-	IStaticPortMapping*           Mapping;
-	BOOL						  m_bInitialized;
+	CComPtr< IUPnPNAT >						Nat;
+	CComPtr< IStaticPortMappingCollection >	Collection;
+	CComPtr< IStaticPortMapping >			Mapping;
+	BOOL									m_bInitialized;
 
 	// Constructor and destructor
 	CFirewall();
@@ -69,16 +69,16 @@ public:
 
 	// Windows Firewall Methods
 	BOOL SetupService( NET_FW_SERVICE_TYPE service );                    // Check a box for a service on the Windows Firewall exceptions list
-	BOOL SetupProgram( CString path, CString name, BOOL bRemove = FALSE);// List a program and check its box
+	BOOL SetupProgram( const CString& path, const CString& name, BOOL bRemove = FALSE);// List a program and check its box
 	BOOL AccessWindowsFirewall();                                        // Access the Windows Firewall COM objects, call before calling the methods below
-	BOOL IsProgramListed( CString path, BOOL* listed );                  // Determine if a program is on the exceptions list
+	BOOL IsProgramListed( const CString& path, BOOL* listed );           // Determine if a program is on the exceptions list
 	BOOL IsServiceEnabled( NET_FW_SERVICE_TYPE service, BOOL* enabled ); // Determine if a service is checked
-	BOOL IsProgramEnabled( CString path, BOOL* enabled );                // Determine if a listed program is checked
+	BOOL IsProgramEnabled( const CString& path, BOOL* enabled );         // Determine if a listed program is checked
 	BOOL AreExceptionsAllowed();										 // Find out if the system is in no-exceptions mode
-	BOOL AddProgram( CString path, CString name );                       // Add a program to the list with a checked box
-	BOOL RemoveProgram( CString path );									 // Add a program to the list with a checked box
+	BOOL AddProgram( const CString& path, const CString& name );         // Add a program to the list with a checked box
+	BOOL RemoveProgram( const CString& path );							 // Add a program to the list with a checked box
 	BOOL EnableService( NET_FW_SERVICE_TYPE service );                   // Check the box for a service
-	BOOL EnableProgram( CString path );                                  // Check the box for a program
+	BOOL EnableProgram( const CString& path );                           // Check the box for a program
 };
 
 #endif //#ifndef FIREWALL_H_INCLUDED
