@@ -238,7 +238,9 @@ void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost)
 	UpdateCountry();
 
 	// Make new input and output buffer objects
+	ASSERT( m_pInput == NULL );
 	m_pInput		= new CBuffer( &Settings.Bandwidth.PeerIn );
+	ASSERT( m_pOutput == NULL );
 	m_pOutput		= new CBuffer( &Settings.Bandwidth.PeerOut );
 
 	// Facts about the connection
@@ -275,7 +277,9 @@ void CConnection::AttachTo(CConnection* pConnection)
 	m_bInitiated	= pConnection->m_bInitiated;
 	m_bConnected	= pConnection->m_bConnected;
 	m_tConnected	= pConnection->m_tConnected;
+	ASSERT( m_pInput == NULL );
 	m_pInput		= pConnection->m_pInput;
+	ASSERT( m_pOutput == NULL );
 	m_pOutput		= pConnection->m_pOutput;
 	m_sUserAgent	= pConnection->m_sUserAgent; // But, we don't also copy across m_mInput and m_mOutput
 
