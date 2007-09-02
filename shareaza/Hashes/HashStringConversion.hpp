@@ -2,7 +2,7 @@
 //                                                                            //
 // Hashes/HashStringConversion.hpp                                            //
 //                                                                            //
-// Copyright (C) 2005 Shareaza Development Team.                              //
+// Copyright (c) Shareaza Development Team, 2005-2007.
 // This file is part of SHAREAZA (www.shareaza.com).                          //
 //                                                                            //
 // Shareaza is free software; you can redistribute it                         //
@@ -52,10 +52,18 @@ namespace Hashes
 		base32Encoding = 5  //!< Uses Base32 encoding.
 	};
 
+	//! \brief Encodes a uchar array as guid string without "{}".
+	StringType toGuid(const uchar* hash);
+	//! \brief Encodes a CLSID as guid string with or without "{}".
+	StringType toGuid(REFCLSID hash, bool enclosed = true);
 	//! \brief Encodes a uchar array of given range as hex string.
 	StringType toBase16(const uchar* hash, size_t byteCount);
 	//! \brief Encodes a uchar array of given range as Base32 string.
 	StringType toBase32(const uchar* hash, size_t byteCount);
+	//! \brief Reads from a guid encoded string with or without "{}" into a uchar array.
+	bool fromGuid(uchar* hash, const wchar* input);
+	//! \brief Reads from a guid encoded string with or without "{}" into a CLSID.
+	bool fromGuid(LPCTSTR input, LPVOID hash);
 	//! \brief Reads from a hex encoded string into a uchar array.
 	bool fromBase16(uchar* hash, const wchar* input, size_t byteCount);
 	//! \brief Reads from a Base32 encoded string into a uchar array.
@@ -70,14 +78,9 @@ namespace Hashes
 	struct HashToString< guidEncoding, byteCount >
 	{
 		BOOST_STATIC_ASSERT( byteCount <= maxByteCount );
-		StringType operator()(const uchar* hash) const
+		inline StringType operator()(const uchar* hash) const
 		{
-			wchar result[ byteCount * 2 + 7 ];
-			StringFromGUID2( reinterpret_cast< REFGUID >( hash[ 0 ] ),
-					result, byteCount * 2 + 7 );
-			// strip enclosing braces
-			result[ byteCount * 2 + 7 - 2 ] = 0;
-			return result + 1;
+			return toGuid( hash );
 		}
 	};
 
@@ -87,7 +90,7 @@ namespace Hashes
 	struct HashToString< base16Encoding, byteCount >
 	{
 		BOOST_STATIC_ASSERT( byteCount <= maxByteCount );
-		StringType operator()(const uchar* hash) const
+		inline StringType operator()(const uchar* hash) const
 		{
 			return toBase16( hash, byteCount );
 		}
@@ -99,9 +102,20 @@ namespace Hashes
 	struct HashToString< base32Encoding, byteCount >
 	{
 		BOOST_STATIC_ASSERT( byteCount <= maxByteCount );
-		StringType operator()(const uchar* hash) const
+		inline StringType operator()(const uchar* hash) const
 		{
 			return toBase32( hash, byteCount );
+		}
+	};
+
+	//! \brief Helper template to forward calls to the guid encoding
+	//!        function.
+	template<size_t byteCount>
+	struct HashFromString< guidEncoding, byteCount >
+	{
+		inline bool operator()(uchar* hash, const wchar* input) const
+		{
+			return fromGuid( hash, input );
 		}
 	};
 
@@ -110,7 +124,7 @@ namespace Hashes
 	template<size_t byteCount>
 	struct HashFromString< base16Encoding, byteCount >
 	{
-		bool operator()(uchar* hash, const wchar* input) const
+		inline bool operator()(uchar* hash, const wchar* input) const
 		{
 			return fromBase16( hash, input, byteCount );
 		}
@@ -121,7 +135,7 @@ namespace Hashes
 	template<size_t byteCount>
 	struct HashFromString< base32Encoding, byteCount >
 	{
-		bool operator()(uchar* hash, const wchar* input) const
+		inline bool operator()(uchar* hash, const wchar* input) const
 		{
 			return fromBase32( hash, input, byteCount );
 		}

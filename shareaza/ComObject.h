@@ -55,16 +55,6 @@ private:
 	CComObject& operator=(const CComObject&);
 };
 
-class GUIDX
-{
-public:
-	static const CString Encode(REFCLSID pGUID);
-	static bool Decode(LPCTSTR pszIn, LPVOID pOutGUID);
-	static bool Unhex(LPCTSTR psz, LPBYTE pOut);
-};
-
-//{{AFX_INSERT_LOCATION}}
-
 #define DECLARE_DISPATCH() \
     STDMETHOD(GetTypeInfoCount)(UINT FAR*); \
     STDMETHOD(GetTypeInfo)(UINT, LCID, LPTYPEINFO FAR*); \

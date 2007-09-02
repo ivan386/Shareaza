@@ -2,7 +2,7 @@
 //                                                                            //
 // Hashes/HashStringConversion.cpp                                            //
 //                                                                            //
-// Copyright (C) 2005 Shareaza Development Team.                              //
+// Copyright (c) Shareaza Development Team, 2005-2007.
 // This file is part of SHAREAZA (www.shareaza.com).                          //
 //                                                                            //
 // Shareaza is free software; you can redistribute it                         //
@@ -32,6 +32,93 @@ namespace Hashes
 
 	const wchar base16[] = L"0123456789abcdef";
 	const wchar base32[] = L"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567=";
+
+	bool Unhex(LPCTSTR psz, uchar* pOut)
+	{
+		register TCHAR c = *psz++;
+		if ( c >= '0' && c <= '9' )
+			*pOut = uchar( ( c - '0' ) << 4 );
+		else if ( c >= 'A' && c <= 'F' )
+			*pOut = uchar( ( c - 'A' + 10 ) << 4 );
+		else if ( c >= 'a' && c <= 'f' )
+			*pOut = uchar( ( c - 'a' + 10 ) << 4 );
+		else
+			return false;
+		c = *psz;
+		if ( c >= '0' && c <= '9' )
+			*pOut |= ( c - '0' );
+		else if ( c >= 'A' && c <= 'F' )
+			*pOut |= ( c - 'A' + 10 );
+		else if ( c >= 'a' && c <= 'f' )
+			*pOut |= ( c - 'a' + 10 );
+		else
+			return false;
+		return true;
+	}
+
+	StringType toGuid(const uchar* hash)
+	{
+		return toGuid( *reinterpret_cast< const CLSID* >( hash ), false );
+	}
+
+	StringType toGuid(REFCLSID hash, bool enclosed)
+	{
+		StringType str;
+		if ( enclosed )
+			str.Format( _T("{%.8X-%.4X-%.4X-%.2X%.2X-%.2X%.2X%.2X%.2X%.2X%.2X}"),
+			hash.Data1, hash.Data2, hash.Data3,
+			hash.Data4[0], hash.Data4[1], hash.Data4[2], hash.Data4[3],
+			hash.Data4[4], hash.Data4[5], hash.Data4[6], hash.Data4[7] );
+		else
+			str.Format( _T("%.8X-%.4X-%.4X-%.2X%.2X-%.2X%.2X%.2X%.2X%.2X%.2X"),
+			hash.Data1, hash.Data2, hash.Data3,
+			hash.Data4[0], hash.Data4[1], hash.Data4[2], hash.Data4[3],
+			hash.Data4[4], hash.Data4[5], hash.Data4[6], hash.Data4[7] );
+		return str;
+	}
+
+	bool fromGuid(uchar* hash, LPCTSTR input)
+	{
+		if ( input == NULL ) return false;
+
+		switch ( _tcslen( input ) )
+		{
+		case 38:
+			// {xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}
+			if ( input[0] != L'{' || input[37] != L'}' ) return false;
+			input ++;
+			break;
+		case 36:
+			// xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+			break;
+		default:
+			return false;
+		}
+
+		if ( ! Unhex( input + 0, hash + 3 ) ) return false;
+		if ( ! Unhex( input + 2, hash + 2 ) ) return false;
+		if ( ! Unhex( input + 4, hash + 1 ) ) return false;
+		if ( ! Unhex( input + 6, hash + 0 ) ) return false;
+		if ( ! Unhex( input + 9, hash + 5 ) ) return false;
+		if ( ! Unhex( input + 11, hash + 4 ) ) return false;
+		if ( ! Unhex( input + 14, hash + 7 ) ) return false;
+		if ( ! Unhex( input + 16, hash + 6 ) ) return false;
+		if ( ! Unhex( input + 19, hash + 8 ) ) return false;
+		if ( ! Unhex( input + 21, hash + 9 ) ) return false;
+		if ( ! Unhex( input + 24, hash + 10 ) ) return false;
+		if ( ! Unhex( input + 26, hash + 11 ) ) return false;
+		if ( ! Unhex( input + 28, hash + 12 ) ) return false;
+		if ( ! Unhex( input + 30, hash + 13 ) ) return false;
+		if ( ! Unhex( input + 32, hash + 14 ) ) return false;
+		if ( ! Unhex( input + 34, hash + 15 ) ) return false;
+
+		return true;
+	}
+
+	bool fromGuid(LPCTSTR input, LPVOID hash)
+	{
+		return fromGuid( reinterpret_cast< uchar* >( hash ), input );
+	}
 
 	StringType toBase16(const uchar* hash, size_t byteCount)
 	{

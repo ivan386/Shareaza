@@ -447,7 +447,7 @@ void CPluginsSettingsPage::AddMiscPlugin(LPCTSTR /*pszType*/, LPCTSTR pszCLSID, 
 		if ( ERROR_SUCCESS == RegQueryValueEx( hClass, NULL, NULL, &nType,
 			(LPBYTE)szValue, &nValue ) )
 		{
-			if ( GUIDX::Decode( pszCLSID, &pCLSID ) )
+			if ( Hashes::fromGuid( pszCLSID, &pCLSID ) )
 			{
 				TRISTATE bEnabled = TS_UNKNOWN;
 				bEnabled = Plugins.LookupEnable( pCLSID, TRUE ) ? TS_TRUE : TS_FALSE;

@@ -123,7 +123,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 		strPureExtension.Replace( _T("|"), _T("") );
 		strPureExtension.Insert( 0, '.' );
 		bPreviewEnabled = Plugins.LookupCLSID( _T("ImageService"), strPureExtension, clsid );
-		GUIDX::Decode( _T("{2EE9D739-7726-41cf-8F18-4B1B8763BC63}"), &clsid );
+		Hashes::fromGuid( _T("{2EE9D739-7726-41cf-8F18-4B1B8763BC63}"), &clsid );
 
 		// We won't care if extensions are disabled for the partial files
 		// A workaround to get Image Viewer executed for image partials

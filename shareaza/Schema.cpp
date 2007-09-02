@@ -683,7 +683,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix)
 		else if ( pMember->m_bGUID )
 		{
 			Hashes::Guid tmp;
-			if ( !(GUIDX::Decode( str, &tmp[ 0 ] ) && tmp.validate() ) )
+			if ( !(Hashes::fromGuid( str, &tmp[ 0 ] ) && tmp.validate() ) )
 			{
 				if ( !bFix ) return FALSE;
 				pMember->SetValueTo( pBody, L"" );

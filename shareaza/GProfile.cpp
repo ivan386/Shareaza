@@ -173,14 +173,14 @@ BOOL CGProfile::FromXML(CXMLElement* pXML)
 	if ( pXML->GetAttributeValue( _T("xmlns") ).CompareNoCase( xmlns ) ) return FALSE;
 	if ( pXML->IsNamed( _T("gProfile") ) == FALSE ) return FALSE;
 
+	// Loading Gnutella GUID
 	CXMLElement* pGnutella = pXML->GetElementByName( _T("gnutella") );
 	if ( pGnutella == NULL ) return FALSE;
 
 	CString strGUID = pGnutella->GetAttributeValue( _T("guid") );
-	
+
 	Hashes::Guid tmp;
-	if ( ! GUIDX::Decode( strGUID, &tmp[ 0 ] ) ) return FALSE;
-	tmp.validate();
+	if ( ! tmp.fromString( strGUID ) ) return FALSE;
 	oGUID = tmp;
 
 	m_pXML = pXML;

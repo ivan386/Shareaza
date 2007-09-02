@@ -500,7 +500,7 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 			BOOL bExisting		= FALSE;
 			GUID pGUID;
 			
-			if ( GUIDX::Decode( strGUID, &pGUID ) )
+			if ( Hashes::fromGuid( strGUID, &pGUID ) )
 			{
 				if ( ( pRule = GetGUID( pGUID ) ) != NULL ) bExisting = TRUE;
 				

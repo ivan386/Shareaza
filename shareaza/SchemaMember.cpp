@@ -112,7 +112,7 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 	else if ( m_bGUID && strValue.GetLength() )
 	{
 		Hashes::Guid tmp;
-		if ( !( GUIDX::Decode( strValue, &tmp[ 0 ] ) && tmp.validate() ) )
+		if ( !( Hashes::fromGuid( strValue, &tmp[ 0 ] ) && tmp.validate() ) )
 			strValue.Empty();
 	}
 

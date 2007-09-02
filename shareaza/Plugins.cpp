@@ -72,7 +72,7 @@ void CPlugins::Enumerate()
 		szCLSID[ 38 ] = 0;
 
 		CLSID pCLSID;
-		if ( ! GUIDX::Decode( szCLSID, &pCLSID ) ) continue;
+		if ( ! Hashes::fromGuid( szCLSID, &pCLSID ) ) continue;
 
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
@@ -132,7 +132,7 @@ BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL
 		{
 			szCLSID[ 38 ] = 0;
 
-			return	GUIDX::Decode( szCLSID, &pCLSID ) &&
+			return	Hashes::fromGuid( szCLSID, &pCLSID ) &&
 					LookupEnable( pCLSID, bEnableDefault, pszKey );
 		}
 	}
@@ -144,7 +144,7 @@ BOOL CPlugins::LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt) cons
 {
 	HKEY hPlugins = NULL;
 
-	CString strCLSID = GUIDX::Encode( pCLSID );
+	CString strCLSID = Hashes::toGuid( pCLSID );
 
 	if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_CURRENT_USER,
 		_T("Software\\Shareaza\\Shareaza\\Plugins"), 0, KEY_ALL_ACCESS, &hPlugins ) )
@@ -447,7 +447,7 @@ BOOL CPlugin::StartIfEnabled()
 
 CString CPlugin::GetStringCLSID() const
 {
-	return GUIDX::Encode( m_pCLSID );
+	return Hashes::toGuid( m_pCLSID );
 }
 
 //////////////////////////////////////////////////////////////////////

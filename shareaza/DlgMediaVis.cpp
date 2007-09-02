@@ -132,7 +132,7 @@ void CMediaVisDlg::Enumerate()
 		szCLSID[ 38 ] = 0;
 
 		CLSID pCLSID;
-		if ( ! GUIDX::Decode( szCLSID, &pCLSID ) ) continue;
+		if ( ! Hashes::fromGuid( szCLSID, &pCLSID ) ) continue;
 		if ( ! Plugins.LookupEnable( pCLSID, TRUE ) ) continue;
 
 		if ( _tcsistr( szName, _T("wrap") ) )
@@ -247,7 +247,7 @@ void CMediaVisDlg::OnSetup()
 	CString strPath		= m_wndList.GetItemText( nItem, 2 );
 
 	CLSID pCLSID;
-	if ( ! GUIDX::Decode( strCLSID, &pCLSID ) ) return;
+	if ( ! Hashes::fromGuid( strCLSID, &pCLSID ) ) return;
 	if ( ! Plugins.LookupEnable( pCLSID, TRUE ) ) return;
 
 	IAudioVisPlugin* pPlugin = NULL;
