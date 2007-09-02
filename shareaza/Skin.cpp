@@ -337,19 +337,31 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		{
 			CString strType = pSub->GetAttributeValue( _T("type") );
 			ToLower( strType );
-			
+
 			if ( strType == _T("language") )
 			{
 				Settings.General.Language = pSub->GetAttributeValue( _T("language"), _T("en") );
 				theApp.m_bRTL = ( pSub->GetAttributeValue( _T("dir"), _T("ltr") ) == "rtl" );
 				theApp.WriteProfileInt( _T("Settings"), _T("LanguageRTL"), theApp.m_bRTL );
+				TRACE( _T("Loading language: %s\r\n"), Settings.General.Language );
+				TRACE( _T("RTL: %d\r\n"), theApp.m_bRTL );
 			}
-			
+			else if ( strType == _T("skin") )
+			{
+				CString strSkinName = pSub->GetAttributeValue( _T("name"), _T("") );
+
+				TRACE( _T("Loading skin: %s\r\n"), strSkinName );
+			}
+			else
+				ASSERT( FALSE );
 		}
-		
+		else
+			ASSERT( FALSE );
+
 		bSuccess = TRUE;
 	}
-	
+
+	ASSERT( bSuccess );
 	return bSuccess;
 }
 
@@ -395,6 +407,8 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 				
 				m_pStrings.SetAt( nID, strValue );
 			}
+			else
+				ASSERT( FALSE );
 		}
 		else if ( pXML->IsNamed( _T("tip") ) )
 		{
@@ -405,9 +419,13 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 				if ( strTip.GetLength() ) strMessage += '\n' + strTip;
 				m_pStrings.SetAt( nID, strMessage );
 			}
+			else
+				TRACE( _T("LookupCommandID failed in CSkin::LoadStrings\r\n") );
 		}
+		else
+			ASSERT( FALSE );
 	}
-	
+
 	return TRUE;
 }
 
@@ -629,7 +647,10 @@ BOOL CSkin::LoadToolbars(CXMLElement* pBase)
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-		if ( pXML->IsNamed( _T("toolbar") ) && ! CreateToolBar( pXML ) ) return FALSE;
+		BOOL bToolbar = pXML->IsNamed( _T("toolbar") );
+
+		ASSERT( bToolbar );
+		if ( bToolbar && ! CreateToolBar( pXML ) ) return FALSE;
 	}
 
 	return TRUE;
