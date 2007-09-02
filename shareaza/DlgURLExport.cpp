@@ -90,7 +90,7 @@ BOOL CURLExportDlg::OnInitDialog()
 
 	if ( m_sFormat.IsEmpty() )
 		m_sFormat = _T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]")
-		_T("&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;dn=[NameURI]&amp;xl=[ByteSize]\">[Name]</a><br>");
+		_T("&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;xl=[ByteSize]&amp;dn=[NameURI]\">[Name]</a><br>");
 
 	UpdateData( FALSE );
 
@@ -133,9 +133,9 @@ void CURLExportDlg::OnSelChangeUrlPreset()
 
 	LPCTSTR pszPresets[] =
 	{
-		_T("magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&xt=urn:md5:[MD5]&dn=[NameURI]&xl=[ByteSize]"),
+		_T("magnet:?xt=urn:bitprint:[SHA1].[TIGER]&xt=urn:ed2khash:[ED2K]&xt=urn:md5:[MD5]&xl=[ByteSize]&dn=[NameURI]"),
 		_T("ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/"),
-		_T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;dn=[NameURI]&amp;xl=[ByteSize]\">[Name]</a><br>"),
+		_T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;xl=[ByteSize]&amp;dn=[NameURI]\">[Name]</a><br>"),
 		_T("<a href=\"ed2k://|file|[NameURI]|[ByteSize]|[ED2K]|/\">[Name]</a>"),
 	};
 

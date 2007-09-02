@@ -94,74 +94,61 @@ BOOL CURLCopyDlg::OnInitDialog()
 void CURLCopyDlg::OnIncludeSelf()
 {
 	CString strURN = _T("");
-	
+
 	if ( m_pFile->m_oTiger && m_pFile->m_oSHA1 )
 	{
-		strURN	= _T("urn:bitprint:")
-                + m_pFile->m_oSHA1.toString() + '.'
+		strURN	= _T("xt=urn:bitprint:")
+				+ m_pFile->m_oSHA1.toString() + '.'
 				+ m_pFile->m_oTiger.toString();
 	}
 
 	if ( m_pFile->m_oSHA1 && ! strURN.GetLength() )
 	{
-		strURN = m_pFile->m_oSHA1.toUrn();
+		strURN = _T("xt=") + m_pFile->m_oSHA1.toUrn();
 	}
 
 	if ( m_pFile->m_oTiger && ! strURN.GetLength() )
 	{
-		strURN = m_pFile->m_oTiger.toUrn();
+		strURN = _T("xt=") + m_pFile->m_oTiger.toUrn();
 	}
 
 	if ( m_pFile->m_oED2K )
 	{
-		if ( strURN.GetLength() )
-		{
-			strURN	+= _T("&xt=");
-		}
-
-		strURN += m_pFile->m_oED2K.toUrn();
+		if ( strURN.GetLength() ) strURN += _T("&");
+		strURN += _T("xt=") + m_pFile->m_oED2K.toUrn();
 	}
 
 	/*if ( m_pFile->m_oMD5 )
 	{
-		if ( strURN.GetLength() )
-		{
-			strURN	+= _T("&xt=");
-		}
-
-		strURN += m_pFile->m_oMD5.toUrn();
+		if ( strURN.GetLength() ) strURN += _T("&");
+		strURN += _T("xt=") + m_pFile->m_oMD5.toUrn();
 	}*/
 
-	m_sMagnet = _T("magnet:?");
+	m_sMagnet = strURN;
 
-	if ( strURN.GetLength() )
+	if ( m_pFile->m_nSize != 0 && m_pFile->m_nSize != SIZE_UNKNOWN )
 	{
-		m_sMagnet += _T("xt=") + strURN;
+		CString strSize;
+
+		strSize.Format( _T("xl=%I64i"),
+			m_pFile->m_nSize );
+
+		if ( m_sMagnet.GetLength() ) m_sMagnet += _T("&");
+		m_sMagnet += strSize;
 	}
 
 	if ( m_pFile->m_sName.GetLength() )
 	{
 		CString strName = CTransfer::URLEncode( m_pFile->m_sName );
 
+		if ( m_sMagnet.GetLength() ) m_sMagnet += _T("&");
 		if ( strURN.GetLength() )
-		{
-			m_sMagnet += _T("&dn=") + strName;
-		}
+			m_sMagnet += _T("dn=") + strName;
 		else
-		{
 			m_sMagnet += _T("kt=") + strName;
-		}
 	}
 
-	if ( m_pFile->m_nSize != 0 && m_pFile->m_nSize != SIZE_UNKNOWN )
-	{
-		CString strSize;
-
-		strSize.Format( _T("&xl=%I64i"),
-			m_pFile->m_nSize );
-
-		m_sMagnet += strSize;
-	}
+	m_sMagnet = _T("magnet:?") + m_sMagnet;
 
 	if ( m_wndIncludeSelf.GetCheck() && strURN.GetLength() )
 	{

@@ -716,7 +716,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 	if ( pFile->m_oSHA1 ) 
 	{
 		strSHA1 = pFile->m_oSHA1.toString();
-		strMagnet = "xt=urn:sha1:" + strSHA1;
+		strMagnet = _T("xt=urn:sha1:") + strSHA1;
 
 		ReplaceNoCase( strDoc, _T("$meta:sha1$"), strSHA1 );
 
@@ -726,14 +726,14 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 	if ( pFile->m_oTiger ) 
 	{
 		strTiger = pFile->m_oTiger.toString();
-		strMagnet = "xt=urn:tree:tiger/:" + strTiger;
+		strMagnet = _T("xt=urn:tree:tiger/:") + strTiger;
 
 		ReplaceNoCase( strDoc, _T("$meta:tiger$"), strTiger );
 	}
 	if ( pFile->m_oSHA1 && pFile->m_oTiger )
 	{
 		strReplace = strSHA1 + '.' + strTiger;
-		strMagnet = "xt=urn:bitprint:" + strReplace;
+		strMagnet = _T("xt=urn:bitprint:") + strReplace;
 
 		ReplaceNoCase( strDoc, _T("$meta:bitprint$"), strReplace );
 	}
@@ -741,7 +741,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 	{
 		strReplace = pFile->m_oED2K.toString();
 		if ( strMagnet.GetLength() ) strMagnet += _T("&amp;");
-		strMagnet += "xt=urn:ed2khash:" + strReplace;
+		strMagnet += _T("xt=urn:ed2khash:") + strReplace;
 
 		ReplaceNoCase( strDoc, _T("$meta:ed2khash$"), strReplace );
 
@@ -752,7 +752,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 	{
 		strReplace = pFile->m_oMD5.toString();
 		if ( strMagnet.GetLength() ) strMagnet += _T("&amp;");
-		strMagnet += "xt=urn:md5:" + strReplace;
+		strMagnet += _T("xt=urn:md5:") + strReplace;
 
 		ReplaceNoCase( strDoc, _T("$meta:md5$"), strReplace );
 	}
