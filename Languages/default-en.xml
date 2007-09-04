@@ -3091,7 +3091,7 @@
 	<string id="18508" value="Dropping download source %s for &quot;%s&quot; because queue position %i is too high."/>
 	<string id="18509" value="You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset. Without verification information the download cannot be reverified."/>
 	<string id="18510" value="Are you sure you want to assume this download is complete and reverify it? The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."/>
-	<string id="18511" value="You have made changes to the file size. Are you sure you want to change file size for this download?"/>
+	<string id="18511" value="You have made changes to the file size. Are you sure you want to change the file size for this download?"/>
 	<string id="19000" value="Remote access is disabled."/>
 	<string id="19001" value="You must choose a username and password."/>
 	<string id="19002" value="Unable to accept connections, URL unavailable."/>

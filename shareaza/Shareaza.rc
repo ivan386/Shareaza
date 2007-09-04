@@ -899,7 +899,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,233,102,50,14
     LTEXT           "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P).",
                     IDC_STATIC,6,125,276,18
-    LTEXT           "Shareaza can also download BitTorrent files.  A torrent can be described by an xyz.torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:",
+    LTEXT           "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:",
                     IDC_STATIC,6,149,276,26
     PUSHBUTTON      "Open &Torrent...",IDC_TORRENT_FILE,213,180,70,14
 END
@@ -1944,7 +1944,7 @@ BEGIN
     LTEXT           "other eDonkey clients.",IDC_STATIC,165,142,100,12,
                     SS_CENTERIMAGE
     GROUPBOX        "eDonkey &Tools:",IDC_STATIC,5,167,270,48,WS_GROUP
-    LTEXT           "Download eDonkey serverlist from the web:",IDC_STATIC,
+    LTEXT           "Download eDonkey server list from the web:",IDC_STATIC,
                     15,190,190,15,SS_CENTERIMAGE
     PUSHBUTTON      "Download...",IDC_DISCOVERY_GO,213,190,53,15
 END
@@ -2269,7 +2269,7 @@ BEGIN
     LTEXT           "Filename:",IDC_STATIC,14,42,50,10
     EDITTEXT        IDC_NAME,69,40,186,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_DISKNAME,14,58,110,12,ES_AUTOHSCROLL | ES_READONLY
-    RTEXT           "Filesize (Byte):",IDC_STATIC,128,59,60,11
+    RTEXT           "File size (Byte):",IDC_STATIC,128,59,60,11
     EDITTEXT        IDC_FILESIZE,191,58,64,12,ES_RIGHT | ES_AUTOHSCROLL
     GROUPBOX        "&URNs:",IDC_STATIC,6,80,258,74,WS_GROUP
     RTEXT           "Trusted",IDC_STATIC,162,85,97,11
@@ -4181,8 +4181,8 @@ BEGIN
                             "The file ""%s"" has not yet been hashed.  Please wait for the file to be hashed, and then try again."
     IDS_LIBRARY_BITZI_MESSAGE 
                             "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"
-    IDS_LIBRARY_DELETE      "Are you sure you want to permenantly delete the %i selected file(s) ?\n\nThe files will be moved to your ""recycle bin"" if it is enabled."
-    IDS_LIBRARY_ENQUEUE     "You have not yet selected a media player to enqueue files with, such as Nullsoft WinAmp.  Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the ""/ADD"" argument."
+    IDS_LIBRARY_DELETE      "Are you sure you want to permanently delete the %i selected file(s) ?\n\nThe files will be moved to your ""recycle bin"" if it is enabled."
+    IDS_LIBRARY_ENQUEUE     "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp.  Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the ""/ADD"" argument."
     IDS_NEIGHBOURS_NOT_CONNECTED "You're not connected to the network."
     IDS_NEIGHBOURS_CONNECT  "Click the Connect button to get started."
     IDS_LIBRARY_VERIFY_FAIL "The file ""%s"" failed a hash verification test, and might not be the file you intended to download.  Are you sure you want to open it?"
@@ -4723,7 +4723,7 @@ BEGIN
     IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY 
                             "Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."
     IDS_DOWNLOAD_EDIT_CHANGE_SIZE 
-                            "You have made changes to the filesize.  Are you sure you want to change filesize for this download?"
+                            "You have made changes to the file size.  Are you sure you want to change the file size for this download?"
 END
 
 STRINGTABLE 
@@ -4970,7 +4970,7 @@ BEGIN
     ID_LIBRARY_REFRESH      "Refresh the library view."
     ID_LIBRARY_MOVE         "Move the selected files to another library folder..."
     ID_LIBRARY_COPY         "Copy the selected files to another library folder..."
-    ID_LIBRARY_DELETE       "Delete the selected files permenantly."
+    ID_LIBRARY_DELETE       "Delete the selected files permanently."
     ID_LIBRARY_ENQUEUE      "Add the selected file(s) to your media playlist."
     ID_DOWNLOADS_ENQUEUE    "Add the selected download(s) to your media playlist."
 END
