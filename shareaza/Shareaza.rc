@@ -4845,6 +4845,7 @@ BEGIN
     ID_VIEW_PACKETS         "Show or hide the PACKET DUMP window."
     ID_NEIGHBOURS_DISCONNECT "Disconnect the selected neighbour(s)."
     ID_SYSTEM_CLEAR         "Clear the status log."
+	ID_SYSTEM_COPY          "Copy selected line(s) of status log."
     ID_NEIGHBOURS_VIEW_ALL  "Open a new Packet Dump window monitoring this neighbour."
     ID_NEIGHBOURS_VIEW_INCOMING 
                             "Open a new Packet Dump window monitoring incoming traffic from this neighbour."

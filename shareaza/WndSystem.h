@@ -46,7 +46,6 @@ public:
 	void		Clear();
 	void		ShowStartupText();
 	void		OnSkinChange();
-	void		CopyText() const;
 
 // Overrides
 public:
@@ -62,6 +61,7 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnSystemClear();
+	afx_msg void OnSystemCopy();
 	afx_msg void OnDestroy();
 	afx_msg void OnUpdateSystemVerbose(CCmdUI* pCmdUI);
 	afx_msg void OnSystemVerbose();

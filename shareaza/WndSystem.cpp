@@ -43,6 +43,7 @@ BEGIN_MESSAGE_MAP(CSystemWnd, CPanelWnd)
 	ON_WM_SIZE()
 	ON_WM_CONTEXTMENU()
 	ON_COMMAND(ID_SYSTEM_CLEAR, OnSystemClear)
+	ON_COMMAND(ID_SYSTEM_COPY, OnSystemCopy)
 	ON_WM_DESTROY()
 	ON_UPDATE_COMMAND_UI(ID_SYSTEM_VERBOSE, OnUpdateSystemVerbose)
 	ON_COMMAND(ID_SYSTEM_VERBOSE, OnSystemVerbose)
@@ -206,7 +207,7 @@ void CSystemWnd::OnSystemClear()
 	Clear();
 }
 
-void CSystemWnd::CopyText() const
+void CSystemWnd::OnSystemCopy()
 {
 	m_wndText.CopyText();
 }

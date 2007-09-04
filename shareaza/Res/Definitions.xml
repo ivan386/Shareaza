@@ -62,6 +62,7 @@
 	<resource code="32789" id="ID_VIEW_PACKETS"/>
 	<resource code="32790" id="ID_NEIGHBOURS_DISCONNECT"/>
 	<resource code="32791" id="ID_SYSTEM_CLEAR"/>
+	<resource code="32792" id="ID_SYSTEM_COPY"/>
 	<resource code="32793" id="ID_NEIGHBOURS_VIEW_ALL"/>
 	<resource code="32794" id="ID_NEIGHBOURS_VIEW_INCOMING"/>
 	<resource code="32795" id="ID_NEIGHBOURS_VIEW_OUTGOING"/>

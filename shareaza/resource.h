@@ -1439,6 +1439,7 @@
 #define ID_VIEW_PACKETS                 32789
 #define ID_NEIGHBOURS_DISCONNECT        32790
 #define ID_SYSTEM_CLEAR                 32791
+#define ID_SYSTEM_COPY                  32792
 #define ID_NEIGHBOURS_VIEW_ALL          32793
 #define ID_NEIGHBOURS_VIEW_INCOMING     32794
 #define ID_NEIGHBOURS_VIEW_OUTGOING     32795

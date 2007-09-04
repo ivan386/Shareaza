@@ -1317,6 +1317,8 @@
 		<item id="ID_SYSTEM_VERBOSE" text="_Verbose Mode"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Timestam_p"/>
 		<separator/>
+		<item id="ID_SYSTEM_COPY" text="_Copy" shortcut="Ctrl+C"/>
+		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="Clear _Buffer"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
@@ -2309,7 +2311,7 @@
 		<image id="ID_LIBRARY_URL"/>
 		<image id="ID_LIBRARY_RENAME"/>
 		<image id="ID_LIBRARY_MOVE"/>
-		<image id="ID_LIBRARY_COPY"/>
+		<image id="ID_LIBRARY_COPY" id1="ID_SYSTEM_COPY"/>
 		<image id="ID_LIBRARY_DELETE" id1="ID_DOWNLOAD_GROUP_REMOVE"/>
 		<image id="ID_LIBRARY_BITZI_WEB"/>
 		<image id="ID_LIBRARY_COLUMNS"/>
