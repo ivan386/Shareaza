@@ -1897,7 +1897,7 @@
 		<text>This download is waiting for someone to start uploading.
 		Shareaza is ready to start downloading this file, but no-one is sending it at
 		the moment. You are probably waiting in other user's queues, and the download
-		may start transfering at any time. You can examine the individual sources to 
+		may start transferring at any time. You can examine the individual sources to 
 		see each queue you are waiting in. If you are sharing files yourself, it may
 		improve the chances of a download transfer starting quickly.</text>
 	</document>
@@ -1935,7 +1935,7 @@
 		<newline gap="8"/>
 		<text>The BitTorrent tracker server for this download appears to be
 		down or malfunctioning. Shareaza is unable to contact it to receive
-		a list of downloader peers.</text>
+		a list of peers.</text>
 	</document>
 	<!-- Upload help documents -->
 	<document name="UploadHelp">
@@ -1953,7 +1953,7 @@
 		<newline gap="8"/>
 		<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
 		can become unstable if the drives become full, and temporary files may be lost. You should 
-		run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
+		run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 	</document>
 	<document name="GeneralHelp.DiskWriteFail">
 		<text format="b">A Required Directory is Non-writable</text>
@@ -2037,14 +2037,14 @@
 		<text>This search does not contain enough terms to function properly. All searches need
 		a minimum number of valid, alphabetic characters to be able to start.</text>
 		<newline gap="8"/>
-		<text>While common file extentions (and numbers) can be searched for, you must enter
+		<text>While common file extensions (and numbers) can be searched for, you must enter
 		other terms as well when creating the search. Punctuation and wildcards are not used 
 		in searches, just the text you enter.</text>
 	</document>
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
-		<text>This search seems to contain only common file extentions, or no searchable
+		<text>This search seems to contain only common file extensions, or no searchable
 		words.</text>
 		<newline gap="8"/>
 		<text>If you are having trouble creating searches, keep in mind that it's quite similar
@@ -2063,7 +2063,7 @@
 		content, and this has been turned off in the settings. You should either re-phrase the 
 		search, or disable the filter.</text>
 		<newline gap="8"/>
-		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the
+		<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
 		adult content filter.</text>
 	</document>
 	<!-- Share help documents -->
