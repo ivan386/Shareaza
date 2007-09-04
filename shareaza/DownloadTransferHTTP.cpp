@@ -1610,9 +1610,9 @@ void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 		m_pDownload->m_nSize == SIZE_UNKNOWN )
 	{
 		// Set file size as is
-		Close( TS_TRUE );
 		m_pDownload->m_nSize = m_nDownloaded;
 		m_pDownload->MakeComplete();
+		Close( TS_TRUE );
 	}
 	else
 	{
