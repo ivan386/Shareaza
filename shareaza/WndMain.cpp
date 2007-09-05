@@ -2399,7 +2399,7 @@ void CMainWnd::OnHelpWeb5()
 
 void CMainWnd::OnHelpWeb6() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://browse.deviantart.com/customization/skins/filesharing/shareaza/"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link6"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
