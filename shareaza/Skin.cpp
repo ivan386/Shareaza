@@ -1593,10 +1593,22 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 {
 	CString strFile;
+	UINT nID = LookupCommandID( pBase );
+	// If nID is 0 then we don't want to include it in strFile because
+	// strFile must be a file system path rather than a resource path.
+	if ( nID )
+	{
 	strFile.Format( _T("%s%lu%s"),
 		strPath,
-		LookupCommandID( pBase ),
+		nID,
 		pBase->GetAttributeValue( _T("path") ) );
+	}
+	else
+	{
+	strFile.Format( _T("%s%s"),
+		strPath,
+		pBase->GetAttributeValue( _T("path") ) );
+	}
 
 	HBITMAP hBitmap = LoadBitmap( strFile );
 	if ( hBitmap == NULL ) return TRUE;
