@@ -386,6 +386,7 @@ void CNeighboursWnd::OnSkinChange()
 		if ( hIcon )
 		{
 			m_gdiImageList.Replace( theApp.m_bRTL ? m_nProtocolRev - nImage : nImage, hIcon );
+			m_gdiImageListFix.Replace( theApp.m_bRTL ? m_nProtocolRev - nImage : nImage, hIcon );
 			DestroyIcon( hIcon );
 		}
 	}
