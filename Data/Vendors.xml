@@ -75,9 +75,19 @@
 		<capability name="chatFlag"/>
 	</vendor>
 
+	<vendor code="FOXY">
+		<title>Foxy</title>
+		<link>http://www.gofoxy.net/</link>
+	</vendor>
+
 	<vendor code="FUST">
 		<title>Fusteeno</title>
 		<link>http://www.fusteeno.com/</link>
+	</vendor>
+
+	<vendor code="GDNA">
+		<title>GnucDNA</title>
+		<link>http://www.gnucleus.com/GnucDNA/</link>
 	</vendor>
 
 	<vendor code="GIFT">
@@ -124,6 +134,7 @@
 	<vendor code="GTKG">
 		<title>Gtk-Gnutella</title>
 		<link>http://gtk-gnutella.sourceforge.net/</link>
+		<capability name="htmlHostBrowse"/>
 	</vendor>
 	
 	<vendor code="HSLG">
