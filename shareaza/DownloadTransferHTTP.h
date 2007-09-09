@@ -55,7 +55,8 @@ protected:
 	BOOL			m_bQueueFlag;
 	QWORD			m_nContentLength;
 	CString			m_sContentType;
-	DWORD			m_nRetryDelay;
+	DWORD			m_nRetryDelay;      // Delay for queuing
+	DWORD			m_nRetryAfter;      // Got "Retry-After: x" seconds
 	BOOL			m_bRedirect;
 	CString			m_sRedirectionURL;
 	BOOL			m_bGzip;			// Got "Content-Encoding: gzip" or x-gzip

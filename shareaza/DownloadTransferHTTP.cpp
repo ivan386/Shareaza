@@ -64,8 +64,10 @@ CDownloadTransferHTTP::CDownloadTransferHTTP(CDownloadSource* pSource) :
 	m_bMetaIgnore( FALSE ),
 	m_bGotRange( FALSE ),
 	m_bGotRanges( FALSE ),
+	m_bQueueFlag( FALSE ),
 	m_nContentLength( SIZE_UNKNOWN ),
 	m_nRetryDelay( Settings.Downloads.RetryDelay ),
+	m_nRetryAfter( 0 ),
 	m_bRedirect( FALSE ),
 	m_bGzip( FALSE ),
 	m_bCompress( FALSE ),
@@ -956,6 +958,15 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			else if ( m_sQueueName == _T("l") ) m_sQueueName = _T("Large Queue");
 		}
 	}
+	else if ( strHeader.CompareNoCase( _T("Retry-After") ) == 0 )
+	{
+		DWORD nLimit = 0;
+
+		if ( _stscanf( strValue, _T("%u"), &nLimit ) == 1 )
+		{
+			m_nRetryAfter = nLimit;
+		}
+	}
 	else if (	strHeader.CompareNoCase( _T("X-PerHost") ) == 0 ||
 				strHeader.CompareNoCase( _T("X-Gnutella-maxSlotsPerHost") ) == 0 )
 	{
@@ -1585,7 +1596,7 @@ void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 	else if ( m_nState == dtsBusy )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
-		Close( TS_TRUE );
+		Close( TS_TRUE, m_nRetryAfter );
 	}
 	else if ( m_nState == dtsTiger )
     {
@@ -1604,7 +1615,7 @@ void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 	else if ( m_bBusyFault || m_bQueueFlag )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
-		Close( TS_TRUE );
+		Close( TS_TRUE, m_nRetryAfter );
 	}
 	else if ( m_nState == dtsDownloading && m_nContentLength == SIZE_UNKNOWN &&
 		m_pDownload->m_nSize == SIZE_UNKNOWN )
