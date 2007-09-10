@@ -309,7 +309,7 @@ void CLibraryFolder::PathToName()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolder threaded scan
 
-BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
+BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	CString strMetaData;
@@ -382,7 +382,8 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 					pLock.Unlock();
 				}
 				
-				bChanged |= pFolder->ThreadScan( nScanCookie );
+				if ( pFolder->ThreadScan( pbContinue, nScanCookie ) )
+					bChanged = TRUE;
 				
 				m_nFiles	+= pFolder->m_nFiles;
 				m_nVolume	+= pFolder->m_nVolume;
@@ -417,18 +418,19 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 				QWORD nLongSize = (QWORD)pFind.nFileSizeLow |
 					( (QWORD)pFind.nFileSizeHigh << 32 );
 
-				bChanged |= pFile->ThreadScan( pLock, nScanCookie, nLongSize,
-					&pFind.ftLastWriteTime, pszMetaData );
+				if ( pFile->ThreadScan( pLock, nScanCookie, nLongSize,
+					&pFind.ftLastWriteTime, pszMetaData ) )
+					bChanged = TRUE;
 
 				m_nVolume += pFile->m_nSize / 1024;
 			}
 		}
-		while ( Library.m_bThread && FindNextFile( hSearch, &pFind ) );
+		while ( *pbContinue && FindNextFile( hSearch, &pFind ) );
 		
 		FindClose( hSearch );
 	}
 	
-	if ( ! Library.m_bThread ) return FALSE;
+	if ( ! *pbContinue ) return FALSE;
 	
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
@@ -526,7 +528,7 @@ void CLibraryFolder::Scan()
     CLibraryFolder* pFolder = this;
 	for ( ; pFolder->m_pParent ; pFolder = pFolder->m_pParent );
 	if ( pFolder ) pFolder->m_bMonitor = FALSE;
-	Library.m_pWakeup.SetEvent();
+	Library.Wakeup();
 }
 
 //////////////////////////////////////////////////////////////////////

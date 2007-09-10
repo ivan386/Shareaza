@@ -43,38 +43,42 @@ public:
 // Attributes
 public:
 	CMutex			m_pSection;
-	DWORD			m_nUpdateCookie;
-	DWORD			m_nScanCount;
-	DWORD			m_nScanCookie;
-	DWORD			m_nScanTime;
-	DWORD			m_nUpdateSaved;
+	volatile DWORD	m_nUpdateCookie;		// Last library change time (ticks)
+	volatile DWORD	m_nForcedUpdateCookie;	// Last time when library scan was forced (ticks)
+	volatile DWORD	m_nScanCount;			// Library scan counter
+	volatile DWORD	m_nScanCookie;			// Used by CLibraryFolder::ThreadScan()
+	volatile DWORD	m_nScanTime;			// Last library scan time (ticks)
+	volatile DWORD	m_nUpdateSaved;			// Last library save time (ticks)
 	BOOL			(WINAPI* m_pfnGetFileAttributesExW)(LPCWSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
 	BOOL			(WINAPI* m_pfnGetFileAttributesExA)(LPCSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
 
 protected:
 	int				m_nFileSwitch;
 	HANDLE			m_hThread;
-	BOOL			m_bThread;
+	volatile BOOL	m_bThread;
 	CEvent			m_pWakeup;
 
 // Sync Operations
 public:
 	inline void		Update()
 	{
-		CQuickLock oLock( m_pSection );
-		m_nUpdateCookie = GetTickCount();
+		InterlockedExchange( (volatile LONG*)&m_nUpdateCookie, GetTickCount() );
 	}
-	void			CheckDuplicates(LPCTSTR pszEd2kHash);
+	inline void		Wakeup()
+	{
+		m_pWakeup.SetEvent();
+	}
 
 // File and Folder Operations
 public:
+	void			CheckDuplicates(LPCTSTR pszEd2kHash);
 	CLibraryFile*	LookupFile(DWORD_PTR nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CAlbumFolder*	GetAlbumRoot();
-
-protected:
 	void			AddFile(CLibraryFile* pFile);
 	void			RemoveFile(CLibraryFile* pFile);
 	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
+
+protected:
 	void			CheckDuplicates(CLibraryFile* pFile, bool bForce = false);
 
 // General Operations
@@ -94,10 +98,6 @@ protected:
 	void			OnRun();
 	BOOL			ThreadScan();
 
-	friend class CLibraryFolder;
-	friend class CLibraryFile;
-	friend class CLibraryBuilder;
-
 // Automation
 protected:
 	BEGIN_INTERFACE_PART(Library, ILibrary)
@@ -114,7 +114,6 @@ protected:
 	END_INTERFACE_PART(Library)
 
 	DECLARE_INTERFACE_MAP()
-
 };
 
 extern CLibrary Library;

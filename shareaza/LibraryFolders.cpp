@@ -141,7 +141,6 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 
 		Library.Update();
 	}
-	Library.StartThread();
 	
 	return pFolder;
 }
@@ -523,7 +522,7 @@ void CLibraryFolders::Clear()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders thread scan
 
-BOOL CLibraryFolders::ThreadScan(BOOL* pbContinue, BOOL bForce)
+BOOL CLibraryFolders::ThreadScan(volatile BOOL* pbContinue, BOOL bForce)
 {
 	BOOL bChanged = FALSE;
 
@@ -537,7 +536,7 @@ BOOL CLibraryFolders::ThreadScan(BOOL* pbContinue, BOOL bForce)
 
 			if ( bForce || pFolder->CheckMonitor() )
 			{
-				if ( pFolder->ThreadScan() ) bChanged = TRUE;
+				if ( pFolder->ThreadScan( pbContinue ) ) bChanged = TRUE;
 			}
 			
 			pFolder->SetMonitor();

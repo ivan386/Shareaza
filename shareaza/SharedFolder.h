@@ -83,7 +83,7 @@ public:
 	BOOL			SetOffline();
 	BOOL			SetOnline();
 	void			Serialize(CArchive& ar, int nVersion);
-	BOOL			ThreadScan(DWORD nScanCookie = 0);
+	BOOL			ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie = 0);
 	BOOL			SetMonitor();
 	BOOL			CheckMonitor();
 	void			OnDelete(TRISTATE bCreateGhost = TS_UNKNOWN);

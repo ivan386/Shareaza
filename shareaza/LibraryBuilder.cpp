@@ -462,7 +462,7 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& o
 	pED2K.FinishFile();
 
 	{
-		CQuickLock oLock( Library.m_pSection );
+		CQuickLock oLibraryLock( Library.m_pSection );
 		CLibraryFile* pFile = Library.LookupFile( nIndex );
 		if ( pFile == NULL ) return FALSE;
 
@@ -481,21 +481,16 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& o
 		
 		LibraryMaps.CullDeletedFiles( pFile );
 		Library.AddFile( pFile );
-		
+
 		// child pornography check
-		bool bHit = false;
-		if ( Settings.Search.AdultFilter )
+		if ( Settings.Search.AdultFilter &&
+			( AdultFilter.IsChildPornography( pFile->GetSearchName() ) ||
+			  AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) ) )
 		{
-			if ( AdultFilter.IsChildPornography( pFile->GetSearchName() ) )
-				bHit = true;
-			else
-			{
-				if ( AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) )
-					bHit = true;
-			}
-		}
-		if ( bHit )
 			pFile->m_bVerify = pFile->m_bShared = TS_FALSE;
+		}
+
+		theApp.Message( MSG_DEBUG, _T("Hashing completed: %s"), szPath );
 
 		Library.Update();
 	}
@@ -534,7 +529,7 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 
 	nAttributeCount = pXML->GetAttributeCount();
 
-	CQuickLock oLock( Library.m_pSection );
+	CQuickLock oLibraryLock( Library.m_pSection );
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
 		if ( pFile->m_pMetadata == NULL )
@@ -563,7 +558,7 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 
 BOOL CLibraryBuilder::SubmitCorrupted(DWORD nIndex)
 {
-	CQuickLock oLock( Library.m_pSection );
+	CQuickLock oLibraryLock( Library.m_pSection );
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
 		pFile->m_bBogus = TRUE;

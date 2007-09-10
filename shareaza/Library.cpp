@@ -67,14 +67,15 @@ CLibrary Library;
 // CLibrary construction
 
 CLibrary::CLibrary() :
-	m_nUpdateSaved				( GetTickCount() ),
+	m_nUpdateCookie				( 0 ),
+	m_nForcedUpdateCookie		( 0 ),
 	m_nScanCount				( 0 ),
-	m_hThread					( NULL ),
-	m_bThread					( TRUE ),
 	m_nScanCookie				( 1 ),
 	m_nScanTime					( 0 ),
-	m_nUpdateCookie				( 0 ),
+	m_nUpdateSaved				( 0 ),
 	m_nFileSwitch				( 0 ),
+	m_hThread					( NULL ),
+	m_bThread					( TRUE ),
 	m_pfnGetFileAttributesExW	( NULL ),
 	m_pfnGetFileAttributesExA	( NULL )
 {
@@ -288,8 +289,6 @@ void CLibrary::Clear()
 	LibraryDictionary.Clear();
 	LibraryFolders.Clear();
 	LibraryMaps.Clear();
-
-	m_nUpdateCookie++;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -399,10 +398,13 @@ BOOL CLibrary::Load()
 
 	LibraryFolders.CreateAlbumTree();
 	LibraryHashDB.Create();
-	StartThread();
 	LibraryDictionary.BuildHashTable();
-
 	LibraryBuilder.BoostPriority( Settings.Library.HighPriorityHash );
+
+	Update();
+	m_nUpdateSaved = GetTickCount();
+
+	StartThread();
 
 	return TRUE;
 }
@@ -442,6 +444,7 @@ BOOL CLibrary::Save()
 
 		pFile.Close();
 		
+		theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), strFile );
 		return TRUE;
 	}
 	catch ( CException* pException )
@@ -493,7 +496,7 @@ void CLibrary::StopThread()
 	LibraryBuilder.StopThread();
 
 	m_bThread = FALSE;
-	m_pWakeup.SetEvent();
+	Wakeup();
 
 	CloseThread( &m_hThread );
 }
@@ -525,43 +528,40 @@ BOOL CLibrary::ThreadScan()
 	// Do not start scanning until app is loaded
 	if ( ! theApp.m_bLive ) return FALSE;
 
-	BOOL bChanged = FALSE;
-
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 100 ) )
 	{
-		m_pWakeup.SetEvent();	// skip default delay
+		Wakeup();	// skip default delay
 		return FALSE;
 	}
 
-	// Determine if the call was due to Library::Update(), for e.g. when file was deleted
-	DWORD tTime = GetTickCount();
-	bool bForcedScan = ( m_nUpdateCookie > tTime - Settings.Library.WatchFoldersTimeout * 1000 );
+	BOOL bChanged = FALSE;
+	DWORD tNow = GetTickCount();
+	BOOL bPeriodicScan = ( m_nScanTime < tNow - Settings.Library.WatchFoldersTimeout * 1000 );
+	BOOL bForcedScan = ( m_nForcedUpdateCookie < m_nUpdateCookie ) &&
+		( m_nUpdateCookie > tNow - Settings.Library.WatchFoldersTimeout * 1000 );
+	if ( bForcedScan )
+		m_nForcedUpdateCookie = m_nUpdateCookie;
 
-	if ( tTime - m_nScanTime > Settings.Library.WatchFoldersTimeout * 1000 || bForcedScan )
+	if ( bPeriodicScan || bForcedScan )
 	{
 		bChanged = LibraryFolders.ThreadScan( &m_bThread, FALSE );
 		m_nScanTime = GetTickCount();
 
-		// If it was the Library update we saved the file few lines below during the previous scan.
-		// So, reset m_nUpdateCookie and m_nUpdateSaved values to the previous scheduled scan time.
-		// The next time we won't get the bForcedScan set to "true"
-		if ( bForcedScan && !bChanged )
-			m_nUpdateCookie = m_nUpdateSaved = tTime - Settings.Library.WatchFoldersTimeout * 1000;
+		if ( bChanged )
+			Update();
 	}
 
 	m_nScanCount++;
-	if ( bChanged ) m_nUpdateCookie = GetTickCount();
 
-	if ( m_nUpdateCookie - m_nUpdateSaved > 5000 )
+	if ( m_nUpdateCookie > m_nUpdateSaved && tNow - m_nUpdateSaved > 30000 )
 	{
-		Save();
-		m_nUpdateSaved = m_nUpdateCookie = GetTickCount();
+		if ( Save() )
+			m_nUpdateSaved = GetTickCount();
 
 		if ( bChanged )
 		{
 			LibraryDictionary.BuildHashTable();
-			StartThread();
 		}
 	}
 
