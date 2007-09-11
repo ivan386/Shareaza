@@ -68,7 +68,7 @@ public:
 public:
 	CSchema*		m_pSchema;
 	CXMLElement*	m_pMetadata;
-	BOOL			m_bMetadataAuto;
+	BOOL			m_bMetadataAuto;		// Metadata is auto-generated
 	FILETIME		m_pMetadataTime;
 	int				m_nRating;
 	CString			m_sComments;
@@ -96,6 +96,7 @@ public:
 	inline BOOL		IsGhost() const { return m_pFolder == NULL; }
 	inline BOOL		IsAvailable() const { return m_pFolder != NULL; }
 	BOOL			IsSchemaURI(LPCTSTR pszURI) const;
+	BOOL			IsRatedOnly() const;	// File rated but have no metadata
 public:
 	BOOL			Rebuild();
 	BOOL			Rename(LPCTSTR pszName);

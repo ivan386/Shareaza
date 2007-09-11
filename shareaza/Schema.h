@@ -159,7 +159,6 @@ public:
 	static LPCTSTR	uriDocument;
 	static LPCTSTR	uriSpreadsheet;
 	static LPCTSTR	uriPresentation;
-public:
 	static LPCTSTR	uriLibrary;
 	static LPCTSTR	uriFolder;
 	static LPCTSTR	uriCollectionsFolder;
@@ -191,6 +190,7 @@ public:
 	static LPCTSTR	uriDocumentRoot;
 	static LPCTSTR	uriDocumentAll;
 	static LPCTSTR	uriGhostFolder;
+	static LPCTSTR	uriComments;
 
 	friend class CSchemaMember;
 

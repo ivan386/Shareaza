@@ -195,6 +195,15 @@ BOOL CLibraryFile::IsSchemaURI(LPCTSTR pszURI) const
 }
 
 //////////////////////////////////////////////////////////////////////
+// CLibraryFile rated but have no metadata
+
+BOOL CLibraryFile::IsRatedOnly() const
+{
+	return ( m_nRating > 0 || m_sComments.GetLength() > 0 ) &&
+		( m_pSchema == NULL || m_pMetadata == NULL || m_bMetadataAuto );
+}
+
+//////////////////////////////////////////////////////////////////////
 // CLibraryFile rebuild hashes and metadata
 
 BOOL CLibraryFile::Rebuild()
@@ -614,7 +623,11 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		{
 			ar << m_pSchema->m_sURI;
 			ar << m_bMetadataAuto;
-			if ( ! m_bMetadataAuto ) ar.Write( &m_pMetadataTime, sizeof(m_pMetadataTime) );
+			if ( ! m_bMetadataAuto )
+			{
+				ASSERT( m_pMetadataTime.dwLowDateTime || m_pMetadataTime.dwHighDateTime );
+				ar.Write( &m_pMetadataTime, sizeof(m_pMetadataTime) );
+			}
 			m_pMetadata->Serialize( ar );
 		}
 		else
@@ -724,7 +737,11 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		if ( strURI.GetLength() )
 		{
 			ar >> m_bMetadataAuto;
-			if ( ! m_bMetadataAuto ) ReadArchive( ar, &m_pMetadataTime, sizeof(m_pMetadataTime) );
+			if ( ! m_bMetadataAuto )
+			{
+				ReadArchive( ar, &m_pMetadataTime, sizeof(m_pMetadataTime) );
+				ASSERT( m_pMetadataTime.dwLowDateTime || m_pMetadataTime.dwHighDateTime );
+			}
 			
 			m_pMetadata = new CXMLElement();
 			m_pMetadata->Serialize( ar );
@@ -827,29 +844,27 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 		}
 	}
 	
-	HANDLE hFile	= INVALID_HANDLE_VALUE;
 	BOOL bMetaData	= FALSE;
-	FILETIME pMetaDataTime = { 0 };
 	
 	if ( pszMetaData != NULL )
 	{
 		CString strMetaData = pszMetaData + m_sName + _T(".xml");
+		HANDLE hFile = INVALID_HANDLE_VALUE;
+		FILETIME pMetaDataTime = { 0 };
 
 		if ( Library.m_pfnGetFileAttributesExW != NULL )
 		{
-			USES_CONVERSION;
 			WIN32_FILE_ATTRIBUTE_DATA pInfo = { 0 };
-			bMetaData = (*Library.m_pfnGetFileAttributesExW)( T2CW( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
+			bMetaData = (*Library.m_pfnGetFileAttributesExW)( CT2CW( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
 			pMetaDataTime = pInfo.ftLastWriteTime;
 		}
-		if ( !bMetaData && Library.m_pfnGetFileAttributesExA != NULL )
+		if ( ! bMetaData && Library.m_pfnGetFileAttributesExA != NULL )
 		{
-			USES_CONVERSION;
 			WIN32_FILE_ATTRIBUTE_DATA pInfo = { 0 };
-			bMetaData = (*Library.m_pfnGetFileAttributesExA)( T2CA( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
+			bMetaData = (*Library.m_pfnGetFileAttributesExA)( CT2CA( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
 			pMetaDataTime = pInfo.ftLastWriteTime;
 		}
-		if ( !bMetaData )
+		if ( ! bMetaData )
 		{
 			hFile = CreateFile( strMetaData, GENERIC_READ,
 				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
@@ -862,38 +877,40 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 				GetFileTime( hFile, NULL, NULL, &pMetaDataTime );
 			}
 		}
-	}
-	
-	if ( bMetaData )
-	{
-		if ( CompareFileTime( &m_pMetadataTime, &pMetaDataTime ) != 0 )
+		if ( bMetaData )
 		{
-			CopyMemory( &m_pMetadataTime, &pMetaDataTime, sizeof(FILETIME) );
-			
-			if ( hFile == INVALID_HANDLE_VALUE )
+			if ( CompareFileTime( &m_pMetadataTime, &pMetaDataTime ) )
 			{
-				hFile = CreateFile( pszMetaData + m_sName + _T(".xml"), GENERIC_READ,
-					FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
-					NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-				VERIFY_FILE_ACCESS( hFile, pszMetaData + m_sName + _T(".xml") )
-			}
-			
-			if ( hFile != INVALID_HANDLE_VALUE )
-			{
-				if ( ! bChanged )
+				// Ignore metadata time difference if file rated only
+				if ( ! IsRatedOnly() )
 				{
-					bChanged = TRUE;
-					pLock.Lock();
-					Library.RemoveFile( this );
+					// Reload new metadata
+					if ( hFile == INVALID_HANDLE_VALUE )
+					{
+						hFile = CreateFile( strMetaData, GENERIC_READ,
+							FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+							NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+						VERIFY_FILE_ACCESS( hFile, strMetaData )
+					}				
+					if ( hFile != INVALID_HANDLE_VALUE )
+					{
+						if ( ! bChanged )
+						{
+							bChanged = TRUE;
+							pLock.Lock();
+							Library.RemoveFile( this );
+						}					
+						LoadMetadata( hFile );
+					}
 				}
-				
-				LoadMetadata( hFile );
-			}
+
+				CopyMemory( &m_pMetadataTime, &pMetaDataTime, sizeof( FILETIME ) );
+			}		
 		}
-		
 		if ( hFile != INVALID_HANDLE_VALUE ) CloseHandle( hFile );
 	}
-	else if ( m_pMetadata != NULL && ! m_bMetadataAuto )
+
+	if ( ! bMetaData && m_pMetadata != NULL && ! m_bMetadataAuto )
 	{
 		BOOL bLocked = ! bChanged;
 		if ( bLocked ) pLock.Lock();
@@ -911,15 +928,15 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 			LoadMetadata( INVALID_HANDLE_VALUE );
 			
 			m_oSHA1.clear();
-            m_oTiger.clear();
-            m_oMD5.clear();
-            m_oED2K.clear();
+			m_oTiger.clear();
+			m_oMD5.clear();
+			m_oED2K.clear();
 			m_oBTH.clear();
 		}
 		
 		if ( bLocked ) pLock.Unlock();
 	}
-	
+
 	if ( bChanged )
 	{
 		Library.AddFile( this );
@@ -1007,6 +1024,8 @@ BOOL CLibraryFile::SaveMetadata()
 		if ( pXML == NULL )
 		{
 			pXML = new CXMLElement( NULL, _T("comments") );
+			pXML->AddAttribute( _T("xmlns:xsi"), CXMLAttribute::xmlnsInstance );
+			pXML->AddAttribute( CXMLAttribute::schemaName, CSchema::uriComments );
 		}
 		
 		CXMLElement* pComment = pXML->AddElement( _T("comment") );
@@ -1031,8 +1050,6 @@ BOOL CLibraryFile::SaveMetadata()
 	
 	if ( pXML != NULL )
 	{
-		pXML->AddAttribute( _T("xmlns:xsi"), CXMLAttribute::xmlnsInstance );
-		
 		HANDLE hFile = CreateFile( strMetaFile, GENERIC_WRITE, 0, NULL,
 			CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
 		VERIFY_FILE_ACCESS( hFile, strMetaFile )	
@@ -1054,11 +1071,12 @@ BOOL CLibraryFile::SaveMetadata()
 		int nASCII = WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), NULL, 0, NULL, NULL );
 		LPSTR pszASCII = new CHAR[ nASCII ];
 		WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszASCII, nASCII, NULL, NULL );
-		WriteFile( hFile, pszASCII, nASCII, &nWritten, NULL );
+		VERIFY( WriteFile( hFile, pszASCII, nASCII, &nWritten, NULL ) );
 		delete [] pszASCII;
-		
-		GetFileTime( hFile, NULL, NULL, &m_pMetadataTime );
-		CloseHandle( hFile );
+
+		VERIFY( GetFileTime( hFile, NULL, NULL, &m_pMetadataTime ) );
+		ASSERT( m_pMetadataTime.dwLowDateTime || m_pMetadataTime.dwHighDateTime );
+		VERIFY( CloseHandle( hFile ) );
 	}
 	else
 	{

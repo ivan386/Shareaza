@@ -631,7 +631,7 @@ CXMLElement* CSchema::Instantiate(BOOL bNamespace) const
 {
 	CXMLElement* pElement = new CXMLElement( NULL, m_sPlural );
 	pElement->AddAttribute( CXMLAttribute::schemaName, m_sURI );
-	if ( bNamespace ) pElement->AddAttribute( _T("xmlns:xsi"), _T("http://www.w3.org/2001/XMLSchema-instance") );
+	if ( bNamespace ) pElement->AddAttribute( _T("xmlns:xsi"), CXMLAttribute::xmlnsInstance );
 	return pElement;
 }
 
@@ -826,3 +826,5 @@ LPCTSTR	CSchema::uriDocumentRoot			= _T("http://www.shareaza.com/schemas/documen
 LPCTSTR	CSchema::uriDocumentAll				= _T("http://www.shareaza.com/schemas/documentAll.xsd");
 
 LPCTSTR	CSchema::uriGhostFolder				= _T("http://www.shareaza.com/schemas/ghostFolder.xsd");
+
+LPCTSTR CSchema::uriComments				= _T("http://www.shareaza.com/schemas/comments.xsd");
