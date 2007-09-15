@@ -45,7 +45,8 @@ typedef struct
 	BOOL	bHadBTH;
 	BOOL	bHadMD5;
 	DWORD	nHadCount;
-	DWORD	nHadFiltered;
+	DWORD	nHadFilteredGnutella;
+	DWORD	nHadFilteredED2K;
 	BOOL	bHad[5];
 } FILESTATS;
 
@@ -99,7 +100,7 @@ protected:
 	CSchemaMember**	m_pColumns;
 	int				m_nColumns;
 
-	static enum findType
+	enum findType
 	{
 		fSHA1	= 0,
 		fTiger	= 1,
@@ -126,7 +127,7 @@ public:
 	void		ClearNew();
 	void		Serialize(CArchive& ar);
 protected:
-	CMatchFile* FindFileAndAddHit(CQueryHit* pHit, findType nFindFlag, FILESTATS FAR* Stats);
+	CMatchFile* FindFileAndAddHit(CQueryHit* pHit, const findType nFindFlag, FILESTATS* Stats);
 	void		InsertSorted(CMatchFile* pFile);
 	BOOL		FilterHit(CQueryHit* pHit);
 	

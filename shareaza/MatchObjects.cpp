@@ -279,27 +279,20 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 				m_nItems -= Stats.nHadCount;
 				ASSERT( m_nFilteredFiles );
 				m_nFilteredFiles --;
-				ASSERT( m_nFilteredHits >= (UINT)Stats.nHadFiltered );
-				m_nFilteredHits -= Stats.nHadFiltered;
-
+				ASSERT( m_nFilteredHits >= (UINT)Stats.nHadFilteredGnutella + Stats.nHadFilteredED2K );
+				m_nFilteredHits -= ( Stats.nHadFilteredGnutella + Stats.nHadFilteredED2K );
 				switch ( nProtocol )
 				{
 				case PROTOCOL_G1:
 				case PROTOCOL_G2:
-					ASSERT( m_nGnutellaHits >= (UINT)Stats.nHadFiltered );
-					m_nGnutellaHits -= Stats.nHadFiltered;
+					if ( m_nGnutellaHits >= (UINT)Stats.nHadFilteredGnutella )
+						m_nGnutellaHits -= Stats.nHadFilteredGnutella;
 					break;
 				case PROTOCOL_ED2K:
-					ASSERT( m_nED2KHits >= (UINT)Stats.nHadFiltered );
-					m_nED2KHits -= Stats.nHadFiltered;
+					if ( m_nED2KHits >= (UINT)Stats.nHadFilteredED2K )
+						m_nED2KHits -= Stats.nHadFilteredED2K;
 					break;
-				case PROTOCOL_BT:
-				case PROTOCOL_FTP:
-				case PROTOCOL_HTTP:
-				case PROTOCOL_NULL:
-				case PROTOCOL_ANY:
 				default:
-//					ASSERT( 0 )
 					;
 				}
 			}
@@ -402,60 +395,79 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 	}
 }
 
-CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, findType nFindFlag, FILESTATS FAR* Stats)
+CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindFlag, FILESTATS* Stats)
 {
-	CMatchFile **pMap, *pSeek;
-	CMatchFile* pFile = NULL;
+	CMatchFile** pMap = NULL;
 
-	bool bSHA1	= nFindFlag == fSHA1 && pHit->m_oSHA1;
-	bool bTiger	= nFindFlag == fTiger && pHit->m_oTiger;
-	bool bED2K	= nFindFlag == fED2K && pHit->m_oED2K;
-	bool bBTH	= nFindFlag == fBTH && pHit->m_oBTH;
-	bool bMD5	= nFindFlag == fMD5 && pHit->m_oMD5;
-	bool bSize	= nFindFlag == fSize;
-
-	if ( bSHA1 )
-		pMap = m_pMapSHA1 + pHit->m_oSHA1[ 0 ];
-	else if ( bTiger )
-		pMap = m_pMapTiger + pHit->m_oTiger[ 0 ];
-	else if ( bED2K )
-		pMap = m_pMapED2K + ( pHit->m_oED2K[ 0 ] );
-	else if ( bBTH )
-		pMap = m_pMapBTH + ( pHit->m_oBTH[ 0 ] );
-	else if ( bMD5 )
-		pMap = m_pMapMD5 + ( pHit->m_oMD5[ 0 ] );
-	else if ( bSize )
-		pMap = m_pSizeMap + (DWORD)( pHit->m_nSize & 0xFF );
-	else
+	switch( nFindFlag )
 	{
-		ZeroMemory( Stats, sizeof(Stats) );
-		return NULL;
+	case fSHA1:
+		pMap = m_pMapSHA1 + pHit->m_oSHA1[ 0 ];
+		break;
+	case fTiger:
+		pMap = m_pMapTiger + pHit->m_oTiger[ 0 ];
+		break;
+	case fED2K:
+		pMap = m_pMapED2K + pHit->m_oED2K[ 0 ];
+		break;
+	case fBTH:
+		pMap = m_pMapBTH + pHit->m_oBTH[ 0 ];
+		break;
+	case fMD5:
+		pMap = m_pMapMD5 + pHit->m_oMD5[ 0 ];
+		break;
+	case fSize:
+		pMap = m_pSizeMap + (DWORD)( pHit->m_nSize & 0xFF );
+		break;
 	}
 
-	bool bValid = false;
-
-	for ( pSeek = *pMap ; pSeek ; )
+	for ( CMatchFile* pSeek = *pMap ; pSeek ; )
 	{
-		if ( bSHA1 )
+		bool bValid = false;
+
+		switch( nFindFlag )
+		{
+		case fSHA1:
 			bValid = validAndEqual( pSeek->m_oSHA1, pHit->m_oSHA1 );
-		else if ( bTiger )
+			break;
+		case fTiger:
 			bValid = validAndEqual( pSeek->m_oTiger, pHit->m_oTiger );
-		else if ( bED2K )
+			break;
+		case fED2K:
 			bValid = validAndEqual( pSeek->m_oED2K, pHit->m_oED2K );
-		else if ( bBTH )
+			break;
+		case fBTH:
 			bValid = validAndEqual( pSeek->m_oBTH, pHit->m_oBTH );
-		else if ( bMD5 )
+			break;
+		case fMD5:
 			bValid = validAndEqual( pSeek->m_oMD5, pHit->m_oMD5 );
-		else if ( bSize )
-			bValid = pSeek->m_nSize == pHit->m_nSize;
+			break;
+		case fSize:
+			bValid = pSeek->m_nSize && pHit->m_bSize && ( pSeek->m_nSize == pHit->m_nSize );
+			break;
+		}
 
 		if ( bValid )
 		{
+			ASSERT( Stats->nHadCount == 0 );
+			Stats->nHadCount = pSeek->GetItemCount();
+			
+			switch ( pHit->m_nProtocol )
+			{
+			case PROTOCOL_G1:
+			case PROTOCOL_G2:
+				ASSERT( Stats->nHadFilteredGnutella == 0 );
+				Stats->nHadFilteredGnutella	= pSeek->m_nFiltered;
+				break;
+			case PROTOCOL_ED2K:
+				ASSERT( Stats->nHadFilteredED2K	== 0 );
+				Stats->nHadFilteredED2K	= pSeek->m_nFiltered;
+				break;
+			default:
+				;
+			}			
 
-			Stats->nHadCount	= pSeek->GetItemCount();
-			Stats->nHadFiltered	= pSeek->m_nFiltered;
-
-			if ( bSize )
+			if ( nFindFlag == fSize )
 			{
 				Stats->bHadSHA1		= bool( pSeek->m_oSHA1 );
 				Stats->bHadTiger	= bool( pSeek->m_oTiger );
@@ -468,8 +480,7 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, findType nFindFlag, F
 				// Dangerous!!!
 				if ( pSeek->Add( pHit ) )
 				{
-					pFile = pSeek;
-					break;
+					return pSeek;
 				}
 			}
 			else
@@ -482,35 +493,49 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, findType nFindFlag, F
 
 				if ( pSeek->Add( pHit, TRUE ) )
 				{
-					pFile = pSeek;
 					Stats->bHadSHA1	 |= Stats->bHad[0];
 					Stats->bHadTiger |= Stats->bHad[1];
 					Stats->bHadED2K	 |= Stats->bHad[2];
 					Stats->bHadBTH	 |= Stats->bHad[3];
 					Stats->bHadMD5	 |= Stats->bHad[4];
-					break;
+					return pSeek;
 				}
 			}
 		}
 
-		if ( bSize && !pFile ) 
-			Stats->bHadSHA1 = Stats->bHadTiger = Stats->bHadED2K = Stats->bHadBTH = Stats->bHadMD5 = FALSE;
+		if ( nFindFlag == fSize )
+		{
+			Stats->bHadSHA1 = FALSE;
+			Stats->bHadTiger = FALSE;
+			Stats->bHadED2K = FALSE;
+			Stats->bHadBTH = FALSE;
+			Stats->bHadMD5 = FALSE;
+		}
 
-		if ( bSHA1 )
+		switch( nFindFlag )
+		{
+		case fSHA1:
 			pSeek = pSeek->m_pNextSHA1;
-		else if ( bTiger )
+			break;
+		case fTiger:
 			pSeek = pSeek->m_pNextTiger;
-		else if ( bED2K )
+			break;
+		case fED2K:
 			pSeek = pSeek->m_pNextED2K;
-		else if ( bBTH )
+			break;
+		case fBTH:
 			pSeek = pSeek->m_pNextBTH;
-		else if ( bMD5 )
+			break;
+		case fMD5:
 			pSeek = pSeek->m_pNextMD5;
-		else if ( bSize )
+			break;
+		case fSize:
 			pSeek = pSeek->m_pNextSize;
+			break;
+		}
 	}
 
-	return pFile;
+	return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1369,23 +1394,23 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 		
 		if ( pLock2.Lock( 50 ) )
 		{
-			if ( m_oSHA1 && Downloads.FindBySHA1( m_oSHA1 ) != NULL )
+			if ( ! m_bDownload && m_oSHA1 && Downloads.FindBySHA1( m_oSHA1 ) != NULL )
 			{
 				m_bDownload = TRUE;
 			}
-			else if ( m_oTiger && Downloads.FindByTiger( m_oTiger ) != NULL )
+			if ( ! m_bDownload && m_oTiger && Downloads.FindByTiger( m_oTiger ) != NULL )
 			{
 				m_bDownload = TRUE;
 			}
-			else if ( m_oED2K && Downloads.FindByED2K( m_oED2K ) != NULL )
+			if ( ! m_bDownload && m_oED2K && Downloads.FindByED2K( m_oED2K ) != NULL )
 			{
 				m_bDownload = TRUE;
 			}
-			else if ( m_oBTH && Downloads.FindByBTH( m_oBTH ) != NULL )
+			if ( ! m_bDownload && m_oBTH && Downloads.FindByBTH( m_oBTH ) != NULL )
 			{
 				m_bDownload = TRUE;
 			}
-			else if ( m_oMD5 && Downloads.FindByMD5( m_oMD5 ) != NULL )
+			if ( ! m_bDownload && m_oMD5 && Downloads.FindByMD5( m_oMD5 ) != NULL )
 			{
 				m_bDownload = TRUE;
 			}
