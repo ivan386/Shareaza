@@ -575,11 +575,10 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 	if ( pPacket->GetRemaining() > 1 )
 	{
 		const char* pszData = (const char*)pPacket->m_pBuffer + pPacket->m_nPosition;
-		int nLength;
-		for ( int nDataLength = pPacket->GetRemaining() - 1; nDataLength; )
+		for ( int nDataLength = pPacket->GetRemaining() - 1; nDataLength > 0; )
 		{
-			const char* pszSep = strchr( pszData, G1_PACKET_HIT_SEP );
-			nLength = ( pszSep && *pszSep == G1_PACKET_HIT_SEP ) ?
+			const char* pszSep = (const char*)memchr( pszData, G1_PACKET_HIT_SEP, nDataLength );
+			int nLength = ( pszSep && *pszSep == G1_PACKET_HIT_SEP ) ?
 				(int)( pszSep - pszData ) : nDataLength;
 			if ( nLength >= 4 && memcmp( pszData, "urn:", 4 ) == 0 )
 			{
