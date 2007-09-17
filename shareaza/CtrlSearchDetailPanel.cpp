@@ -132,6 +132,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 		return;
 	}
 	
+	bool bFileChanged = m_pFile != pFile;
 	m_pMatches	= pFile->m_pList;
 	m_bValid	= TRUE;
 	m_pFile		= pFile;
@@ -151,7 +152,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	m_pMetadata.CreateLinks();
 	m_pMetadata.Clean( 4096 );
 	
-	if ( IsWindowVisible() )
+	if ( IsWindowVisible() || bFileChanged )
 	{
 		CString strFormat, strPart;
 		m_sStatus.Empty();
