@@ -291,7 +291,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 			m_pFiles.SetAt( pFile->GetNameLC(), pFile );
 
 			m_nFiles	++;
-			m_nVolume	+= pFile->m_nSize / 1024;
+			m_nVolume	+= pFile->m_nSize;
 		}
 	}
 }
@@ -392,7 +392,7 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 				CLibraryFile* pFile = GetFile( pFind.cFileName );
 				if ( pFile != NULL )
 				{
-					m_nVolume -= pFile->m_nSize / 1024;
+					m_nVolume -= pFile->m_nSize;
 					
 					if ( pFile->m_sName != pFind.cFileName )
 					{
@@ -421,7 +421,7 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 					&pFind.ftLastWriteTime, pszMetaData ) )
 					bChanged = TRUE;
 
-				m_nVolume += pFile->m_nSize / 1024;
+				m_nVolume += pFile->m_nSize;
 			}
 		}
 		while ( *pbContinue && FindNextFile( hSearch, &pFind ) );
@@ -463,7 +463,7 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 			ToLower( strNameLC );
 			
 			m_nFiles	--;
-			m_nVolume	-= pFile->m_nSize / 1024;
+			m_nVolume	-= pFile->m_nSize;
 			
 			if ( ! pLock.IsLocked() ) pLock.Lock();
 			

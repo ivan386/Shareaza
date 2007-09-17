@@ -69,7 +69,7 @@ BOOL CFolderTipCtrl::OnPrepare()
 	m_sPath		= pFolder->m_sPath;
 
 	m_sFiles.Format( _T("%lu"), pFolder->m_nFiles );
-	m_sVolume = Settings.SmartVolume( pFolder->m_nVolume, TRUE );
+	m_sVolume = Settings.SmartVolume( pFolder->m_nVolume, FALSE );
 
 	QWORD nTotal;
 	CString strText;
@@ -77,7 +77,7 @@ BOOL CFolderTipCtrl::OnPrepare()
 
 	LoadString( strText, IDS_TIP_LIBRARY_PERCENT );
 	m_sPercentage.Format( _T("%.2f%% %s"),
-		100.0 * pFolder->m_nVolume / nTotal, strText );
+		100.0 * ( pFolder->m_nVolume >> 10 ) / nTotal, strText );
 
 	CalcSizeHelper();
 

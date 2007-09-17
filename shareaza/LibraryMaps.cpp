@@ -105,7 +105,7 @@ CLibraryFile* CLibraryMaps::GetNextFile(POSITION& pos) const
 void CLibraryMaps::GetStatistics(DWORD* pnFiles, QWORD* pnVolume)
 {
 	if ( pnFiles ) *pnFiles = m_nFiles;
-	if ( pnVolume ) *pnVolume = m_nVolume;
+	if ( pnVolume ) *pnVolume = m_nVolume >> 10;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -527,7 +527,7 @@ void CLibraryMaps::OnFileAdd(CLibraryFile* pFile)
 
 	if ( ( pFile->m_pFolder != NULL ) && ( ! bSkipStats ) )
 	{
-		m_nVolume += ( pFile->m_nSize >> 10 );
+		m_nVolume += pFile->m_nSize;
 		m_nFiles ++;
 	}
 	
@@ -598,7 +598,7 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 			if ( pOld->m_pFolder != NULL )
 			{
 				m_nFiles --;
-				m_nVolume -= ( pFile->m_nSize >> 10 );
+				m_nVolume -= pFile->m_nSize;
 			}
 		}
 	}
