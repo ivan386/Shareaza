@@ -73,7 +73,7 @@ CDownloadTransferHTTP::CDownloadTransferHTTP(CDownloadSource* pSource) :
 	m_bCompress( FALSE ),
 	m_bDeflate( FALSE ),
 	m_bChunked( FALSE ),
-	m_ChunkState( ChunkState::Header ),
+	m_ChunkState( Header ),
 	m_nChunkLength( SIZE_UNKNOWN )
 {
 }
@@ -477,7 +477,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	m_bCompress			= FALSE;
 	m_bDeflate			= FALSE;
 	m_bChunked			= FALSE;
-	m_ChunkState		= ChunkState::Header;
+	m_ChunkState		= Header;
 	m_nChunkLength		= SIZE_UNKNOWN;
 
 	m_sTigerTree.Empty();
@@ -808,7 +808,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		if ( _tcsistr( strValue, _T("chunked") ) )
 		{
 			m_bChunked = TRUE;
-			m_ChunkState = ChunkState::Header;
+			m_ChunkState = Header;
 			m_nChunkLength = SIZE_UNKNOWN;
 		}
 		else
@@ -1257,7 +1257,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 			BOOL bBreak	= FALSE;
 			switch( m_ChunkState )
 			{
-			case ChunkState::Header:
+			case Header:
 				if ( m_pInput->m_nLength >= 3 )
 				{
 					// Looking for "Length<CR><LF>"
@@ -1278,7 +1278,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 							if ( m_nChunkLength == 0 )
 							{
 								// Got last chunk "0<CR><LF>"
-								m_ChunkState = ChunkState::Footer;
+								m_ChunkState = Footer;
 								
 								// Now file size is known
 								if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
@@ -1288,7 +1288,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 								}
 							}
 							else
-								m_ChunkState = ChunkState::Body;
+								m_ChunkState = Body;
 	                        
 							// Cut header
 							m_pInput->Remove( i + 2 );
@@ -1309,7 +1309,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 				bBreak = TRUE;
 				break;
 
-			case ChunkState::Body:
+			case Body:
 				ASSERT( m_nChunkLength != 0 );
 				ASSERT( m_nChunkLength != SIZE_UNKNOWN );
 
@@ -1321,12 +1321,12 @@ BOOL CDownloadTransferHTTP::ReadContent()
 				if ( m_nChunkLength == 0 )
 				{
 					// Whole chunk readed
-					m_ChunkState = ChunkState::BodyEnd;
+					m_ChunkState = BodyEnd;
 					m_nChunkLength = SIZE_UNKNOWN;
 				}
 				break;
 
-			case ChunkState::BodyEnd:
+			case BodyEnd:
 				ASSERT( m_nChunkLength == SIZE_UNKNOWN );
 
 				// Looking for "<CR><LF>"
@@ -1335,7 +1335,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 					if ( m_pInput->m_pBuffer[ 0 ] == 0x0d &&
 						 m_pInput->m_pBuffer[ 1 ] == 0x0a )
 					{
-						m_ChunkState = ChunkState::Header;
+						m_ChunkState = Header;
 						
 						// Cut <CR><LF>
 						m_pInput->Remove( 2 );
@@ -1354,7 +1354,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 				bBreak = TRUE;
 				break;
 
-			case ChunkState::Footer:
+			case Footer:
 				ASSERT( m_nChunkLength == 0 );
 
 				// Bypass footer
