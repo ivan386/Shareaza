@@ -679,8 +679,8 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		pHeader->nType		= ED2K_C2C_SENDINGPART_I64;
 		pHeader->nLength	= 1 + Hashes::Ed2kHash::byteCount + 16 + (DWORD)nChunk;
 		std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, &pHeader->pMD4[ 0 ] );
-		pHeader->nOffset1	= (QWORD)( m_nOffset + m_nPosition );
-		pHeader->nOffset2	= (QWORD)( m_nOffset + m_nPosition + nChunk );
+		pHeader->nOffset1	= (QWORD)m_nOffset + m_nPosition;
+		pHeader->nOffset2	= (QWORD)m_nOffset + m_nPosition + nChunk;
 
 		pBuffer->m_nLength += sizeof(ED2K_PART_HEADER_I64) + (DWORD)nChunk;
 		m_pClient->Send( NULL );
