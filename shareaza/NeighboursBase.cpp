@@ -1,7 +1,7 @@
 //
 // NeighboursBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -274,16 +274,17 @@ void CNeighboursBase::OnRun()
 	DWORD nBandwidthOut = 0;
 
 	// Have the loop test each neighbour's run cookie count against the next number
-	m_nRunCookie++; // The first time this runs, it will take the value from 5 to 6
+	m_nRunCookie++;			// The first time this runs, it will take the value from 5 to 6
+	bool bUpdated = true;	// Indicate if stats were updated
 
-	// Loop forever
-	while ( TRUE )
+	// Loop until all updates have been processed
+	while ( bUpdated )
 	{
 		// Make sure this thread is the only one accessing the network object
 		Network.m_pSection.Lock();
 
-		// Used to stay in the loop, or break out of it (do)
-		BOOL bWorked = FALSE;
+		// Indicate if stats were updated
+		bUpdated = false;
 
 		// Loop through the neighbours in the list
 		for ( POSITION pos = GetIterator() ; pos ; )
@@ -319,16 +320,14 @@ void CNeighboursBase::OnRun()
 				pNeighbour->DoRun(); // Calls CConnection::DoRun
 
 				// We found a neighbour with a nonmatching run cookie count, updated it, and processed it
-				bWorked = TRUE; // Set bWorked to true
-				break;          // Break out of the for loop
+				// Defer any other updates until next run through the loop, allowing the network object to be unlocked
+				bUpdated = true;	// Set bUpdated to true
+				break;				// Break out of the for loop
 			}
 		}
 
 		// We're done with the network object for right now, let another thread access it
 		Network.m_pSection.Unlock();
-
-		// If we found a neighbour with a nonmatching run cookie count, stay in the while loop
-		if ( ! bWorked ) break;
 	}
 
 	// Save the values we calculated in local variables into the corresponding member variables
