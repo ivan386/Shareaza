@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Download.h"
 #include "Downloads.h"
 #include "DownloadWithTiger.h"
 #include "FragmentedFile.h"
@@ -44,16 +45,16 @@ static char THIS_FILE[]=__FILE__;
 
 CDownloadWithTiger::CDownloadWithTiger() :
 	m_pTigerBlock		( NULL )
-,	m_nTigerBlock		( 0 )
-,	m_nTigerSuccess		( 0 )
+,	m_nTigerBlock		( 0ul )
+,	m_nTigerSuccess		( 0ul )
 
 ,	m_pHashsetBlock		( NULL )
-,	m_nHashsetBlock		( 0 )
-,	m_nHashsetSuccess	( 0 )
+,	m_nHashsetBlock		( 0ul )
+,	m_nHashsetSuccess	( 0ul )
 
-,	m_nVerifyCookie		( 0 )
+,	m_nVerifyCookie		( 0ul )
 ,	m_nVerifyHash		( HASH_NULL )
-,	m_nVerifyBlock		( 0xFFFFFFFF )
+,	m_nVerifyBlock		( ~0ul )
 {
 }
 
@@ -294,7 +295,7 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 		(LPCTSTR)GetDisplayName(),
 		(LPCTSTR)Settings.SmartVolume( ED2K_PART_SIZE, FALSE ) );
 
-	Neighbours.SendDonkeyDownload( reinterpret_cast<CDownload*>( this ) );
+	Neighbours.SendDonkeyDownload( static_cast< CDownload * >( this ) );
 
 	return TRUE;
 }
