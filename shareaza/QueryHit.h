@@ -125,6 +125,10 @@ public:
 		return ( m_nProtocol == PROTOCOL_ED2K )
 			? m_nSources : ( m_nSources ? 1 : 0 );
 	}
+	inline BOOL IsRated() const
+	{
+		return ( m_nRating || m_sComments.GetLength() );
+	}
 };
 
 #define HITEQUALS_NOT		0

@@ -195,12 +195,19 @@ BOOL CLibraryFile::IsSchemaURI(LPCTSTR pszURI) const
 }
 
 //////////////////////////////////////////////////////////////////////
+// CLibraryFile rated (or commented)
+
+BOOL CLibraryFile::IsRated() const
+{
+	return ( m_nRating || m_sComments.GetLength() );
+}
+
+//////////////////////////////////////////////////////////////////////
 // CLibraryFile rated but have no metadata
 
 BOOL CLibraryFile::IsRatedOnly() const
 {
-	return ( m_nRating > 0 || m_sComments.GetLength() > 0 ) &&
-		( m_pSchema == NULL || m_pMetadata == NULL || m_bMetadataAuto );
+	return IsRated() && ( m_pSchema == NULL || m_pMetadata == NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -760,7 +767,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 			ar >> m_sComments;
 			if ( nVersion >= 16 ) ar >> m_sShareTags;
 			
-			if ( m_bMetadataAuto && ( m_nRating || m_sComments.GetLength() ) )
+			if ( m_bMetadataAuto && IsRated() )
 			{
 				ReadArchive( ar, &m_pMetadataTime, sizeof(m_pMetadataTime) );
 			}
@@ -1098,7 +1105,7 @@ void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 	{
 		if ( bCreateGhost == TS_TRUE )
 		{
-			if ( m_nRating == 0 && m_sComments.IsEmpty() )
+			if ( ! IsRated() )
 			{
 				m_bShared = TS_FALSE;
 				m_sComments = L"Ghost File";
@@ -1106,7 +1113,7 @@ void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 			Ghost();
 			return;
 		}
-		else if ( ( m_nRating > 0 || m_sComments.GetLength() > 0 ) && bCreateGhost != TS_FALSE )
+		else if ( IsRated() && bCreateGhost != TS_FALSE )
 		{
 			Ghost();
 			return;

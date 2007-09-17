@@ -322,7 +322,7 @@ void CBaseMatchWnd::OnSearchDownload()
 		{
 			CDownload *pDownload = Downloads.Add( pHit );
 			// Send any reviews to the download, so they can be viewed later
-			if ( pDownload && ( pHit->m_nRating || ! pHit->m_sComments.IsEmpty() ) )
+			if ( pDownload && pHit->IsRated() )
 			{
 				pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
 			}
@@ -413,7 +413,7 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 		{
 			CDownload *pDownload = Downloads.Add( pHit );
 			// Send any reviews to the download, so they can be viewed later
-			if ( pDownload && ( pHit->m_nRating || ! pHit->m_sComments.IsEmpty() ) )
+			if ( pDownload && pHit->IsRated() )
 			{
 				pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
 			}

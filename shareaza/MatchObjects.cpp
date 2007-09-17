@@ -2025,7 +2025,7 @@ void CMatchFile::AddHitsToDownload(CDownload* pDownload, BOOL bForce) const
 		}
 
 		// Send any reviews to the download, so they can be viewed later
-		if ( pHit->m_nRating || ! pHit->m_sComments.IsEmpty() )
+		if ( pHit->IsRated() )
 		{
 			pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
 		}
@@ -2112,7 +2112,7 @@ void CMatchFile::AddHitsToReviews(CList < Review* >& oReviews) const
 {
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
 	{
-		if ( pHit->m_nRating > 0 || pHit->m_sComments.GetLength() > 0 )
+		if ( pHit->IsRated() )
 		{
 			oReviews.AddTail( new Review( pHit->m_oClientID,
 				&pHit->m_pAddress, pHit->m_sNick, pHit->m_nRating, pHit->m_sComments ) );

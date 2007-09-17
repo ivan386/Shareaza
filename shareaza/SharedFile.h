@@ -96,6 +96,7 @@ public:
 	inline BOOL		IsGhost() const { return m_pFolder == NULL; }
 	inline BOOL		IsAvailable() const { return m_pFolder != NULL; }
 	BOOL			IsSchemaURI(LPCTSTR pszURI) const;
+	BOOL			IsRated() const;		// File rated (or commented)
 	BOOL			IsRatedOnly() const;	// File rated but have no metadata
 public:
 	BOOL			Rebuild();
