@@ -262,7 +262,11 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 
 		PathToName();
 
-		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+		DWORD_PTR nCount = ar.ReadCount();
+
+		m_pFolders.InitHashTable( GetBestHashTableSize( nCount ) );
+
+		for ( ; nCount > 0 ; nCount-- )
 		{
 			CLibraryFolder* pFolder = new CLibraryFolder( this );
 			if ( pFolder == NULL )
@@ -277,8 +281,11 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 			m_nFiles	+= pFolder->m_nFiles;
 			m_nVolume	+= pFolder->m_nVolume;
 		}
+	
+		nCount = ar.ReadCount();
+		m_pFiles.InitHashTable( GetBestHashTableSize( nCount ) );
 
-		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+		for ( ; nCount > 0 ; nCount-- )
 		{
 			CLibraryFile* pFile = new CLibraryFile( this );
 			if ( pFile == NULL )

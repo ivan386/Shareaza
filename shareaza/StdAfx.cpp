@@ -124,3 +124,20 @@ public:
 };
 
 InitGetMicroCount initGetMicroCount;
+
+static const UINT primes[] = 
+{
+	31,			61,			127,		251,		347,		509,
+	631,		761,		887,		1021,		1531,		2039,
+	3067,		4093,		5119,		6143,		7159,		8191,
+	9209,		10223,		11261,		12227,		13309,		14327,
+	16381,		20479,		24571,		28669,		32749,		49139,
+	65521,		98299,		131071,		196597,		262139,		327673
+};
+
+UINT GetBestHashTableSize(UINT nCount)
+{
+	return * std::lower_bound( primes,
+		primes + ( sizeof( primes ) / sizeof( primes[ 0 ] ) - 1 ),
+		( nCount + nCount / 5 ), std::less< UINT >() );	// + 20%
+}

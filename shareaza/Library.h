@@ -29,9 +29,11 @@ class CLibraryFile;
 class CLibraryFolder;
 class CAlbumFolder;
 
-#define LIBRARY_SER_VERSION	27
+#define LIBRARY_SER_VERSION	29
 // History:
 // 27 - Changed CLibraryFile metadata saving order (ryo-oh-ki)
+// 28 - Added CLibraryMaps m_pIndexMap, m_pNameMap and m_pPathMap counts (ryo-oh-ki)
+// 29 - Added CLibraryDictionary serialize (ryo-oh-ki)
 
 class CLibrary : public CComObject
 {

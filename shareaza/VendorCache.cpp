@@ -40,7 +40,7 @@ CVendorCache VendorCache;
 CVendorCache::CVendorCache() :
 	m_pNull( new CVendor() )
 {
-	// Prime number bigger than vendor amount + 20%
+	// experimental values
 	m_pCodeMap.InitHashTable( 83 );
 	m_pNameMap.InitHashTable( 83 );
 }

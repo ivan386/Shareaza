@@ -48,6 +48,14 @@ CSkin Skin;
 
 CSkin::CSkin()
 {
+	// experimental values
+	m_pStrings.InitHashTable( 1531 );
+	m_pMenus.InitHashTable( 83 );
+	m_pToolbars.InitHashTable( 61 );
+	m_pDocuments.InitHashTable( 61 );
+	m_pWatermarks.InitHashTable( 31 );
+	m_pLists.InitHashTable( 31 );
+	m_pDialogs.InitHashTable( 127 );
 }
 
 CSkin::~CSkin()

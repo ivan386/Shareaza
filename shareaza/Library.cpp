@@ -473,6 +473,7 @@ void CLibrary::Serialize(CArchive& ar)
 		if ( nVersion < 1 || nVersion > LIBRARY_SER_VERSION ) AfxThrowUserException();
 	}
 
+	LibraryDictionary.Serialize( ar, nVersion );
 	LibraryMaps.Serialize1( ar, nVersion );
 	LibraryFolders.Serialize( ar, nVersion );
 	LibraryHistory.Serialize( ar, nVersion );

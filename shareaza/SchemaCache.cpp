@@ -39,6 +39,9 @@ CSchemaCache SchemaCache;
 
 CSchemaCache::CSchemaCache()
 {
+	// experimental values
+	m_pURIs.InitHashTable( 61 );
+	m_pNames.InitHashTable( 61 );
 }
 
 CSchemaCache::~CSchemaCache()

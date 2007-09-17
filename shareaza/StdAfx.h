@@ -542,3 +542,6 @@ inline UINT ReadArchive(CArchive& ar, void* lpBuf, const UINT nMax)
 // The GetMicroCount function retrieves the number of microseconds that have elapsed
 // since the application was started.
 __int64 GetMicroCount();
+
+// Produces the best hash table size for CMap::InitHashTable use
+UINT GetBestHashTableSize(UINT nCount);

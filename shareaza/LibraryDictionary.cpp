@@ -618,6 +618,23 @@ CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nM
 	return pHits;
 }
 
+void CLibraryDictionary::Serialize(CArchive& ar, int nVersion)
+{
+	if ( ar.IsStoring() )
+	{
+		ar << (UINT)m_pWords.GetCount();
+	}
+	else
+	{
+		if ( nVersion >= 29 )
+		{
+			UINT nWordsCount = 0;
+			ar >> nWordsCount;
+			m_pWords.InitHashTable( GetBestHashTableSize( nWordsCount ) );
+		}
+	}
+}
+
 BOOL CLibraryDictionary::IsValidKeyword(CString& strKeyword)
 {
 	LPCTSTR szKeyword = (LPCTSTR)strKeyword;

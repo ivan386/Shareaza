@@ -54,6 +54,7 @@ public:
 	CQueryHashTable*	GetHashTable();
 	void				Clear();
 	CList< CLibraryFile* >*	Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE, BOOL bAvailableOnly = TRUE);
+	void				Serialize(CArchive& ar, int nVersion);
 protected:
 	void				ProcessFile(CLibraryFile* pFile, BOOL bAdd);
 	int					ProcessPhrase(CLibraryFile* pFile, const CString& strPhrase, BOOL bAdd, BOOL bLowercase = TRUE);

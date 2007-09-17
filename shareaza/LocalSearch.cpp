@@ -434,7 +434,7 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 
 	if ( m_pSearch == NULL || m_pSearch->m_bWantCOM )
 	{
-		if ( pFile->m_nRating > 0 || pFile->m_sComments.GetLength() > 0 )
+		if ( pFile->IsRated() )
 		{
 			if ( pFile->m_nRating > 0 )
 			{

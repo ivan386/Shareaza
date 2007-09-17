@@ -42,6 +42,12 @@ CCoolInterface::CCoolInterface()
 	CalculateColours();
 	
 	m_czBuffer = CSize( 0, 0 );
+
+	// experimental values
+	m_pNameMap.InitHashTable( 509 );
+	m_pImageMap16.InitHashTable( 347 );
+	m_pImageMap32.InitHashTable( 17 );
+	m_pWindowIcons.InitHashTable( 61 );
 }
 
 CCoolInterface::~CCoolInterface()

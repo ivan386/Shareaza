@@ -36,6 +36,10 @@ CShellIcons ShellIcons;
 
 CShellIcons::CShellIcons()
 {
+	// experimental values
+	m_m16.InitHashTable( 31 );
+	m_m32.InitHashTable( 31 );
+	m_m48.InitHashTable( 17 );
 }
 
 CShellIcons::~CShellIcons()

@@ -863,17 +863,36 @@ BOOL CLibraryMaps::CheckFileAttributes(CLibraryFile* pFile, bool bMinSize, bool 
 //////////////////////////////////////////////////////////////////////
 // CLibraryMaps serialize
 
-void CLibraryMaps::Serialize1(CArchive& ar, int /*nVersion*/)
+void CLibraryMaps::Serialize1(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
-		ar << static_cast< DWORD >( m_nNextIndex );
+		ar << m_nNextIndex;
+
+		ar << (UINT)m_pIndexMap.GetCount();
+		ar << (UINT)m_pNameMap.GetCount();
+		ar << (UINT)m_pPathMap.GetCount();
 	}
 	else
 	{
-		DWORD nNextIndex;
+		DWORD nNextIndex = 0;
 		ar >> nNextIndex;
 		m_nNextIndex = nNextIndex;
+
+		if ( nVersion >= 28 )
+		{
+			UINT nIndexMapCount = 0;
+			ar >> nIndexMapCount;
+			m_pIndexMap.InitHashTable( GetBestHashTableSize( nIndexMapCount ) );
+
+			UINT nNameMapCount = 0;
+			ar >> nNameMapCount;
+			m_pNameMap.InitHashTable( GetBestHashTableSize( nNameMapCount ) );
+
+			UINT nPathMapCount = 0;
+			ar >> nPathMapCount;
+			m_pPathMap.InitHashTable( GetBestHashTableSize( nPathMapCount ) );
+		}
 	}
 }
 

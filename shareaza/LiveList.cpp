@@ -39,8 +39,7 @@ IMPLEMENT_DYNAMIC( CLiveList, CObject )
 CLiveList::CLiveList(int nColumns, UINT nHash) :
 	m_nColumns ( nColumns )
 {
-	if ( nHash)
-		m_pItems.InitHashTable( max( nHash | 1, 31u ) );	// MFC default: 17
+	m_pItems.InitHashTable( GetBestHashTableSize( nHash ) );
 }
 
 CLiveList::~CLiveList()
