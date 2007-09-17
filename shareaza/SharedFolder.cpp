@@ -41,7 +41,6 @@ BEGIN_INTERFACE_MAP(CLibraryFolder, CComObject)
 	INTERFACE_PART(CLibraryFolder, IID_ILibraryFiles, LibraryFiles)
 END_INTERFACE_MAP()
 
-
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolder construction
 
@@ -56,7 +55,7 @@ CLibraryFolder::CLibraryFolder(CLibraryFolder* pParent, LPCTSTR pszPath) :
 	m_nFiles( 0 ),
 	m_nVolume( 0 ),
 	m_hMonitor( INVALID_HANDLE_VALUE ),
-	m_bMonitor( FALSE ),
+	m_bForceScan( TRUE ),
 	m_bOffline( FALSE )
 {
 	EnableDispatch( IID_ILibraryFolder );
@@ -484,40 +483,56 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolder monitor
 
-BOOL CLibraryFolder::SetMonitor()
+BOOL CLibraryFolder::IsChanged()
 {
-	if ( ! m_bMonitor )
+	BOOL bChanged = FALSE;
+
+	if ( m_bForceScan )
 	{
-		m_bMonitor = TRUE;
-
-		if ( m_hMonitor != INVALID_HANDLE_VALUE ) FindCloseChangeNotification( m_hMonitor );
-		m_hMonitor = INVALID_HANDLE_VALUE;
-
-		if ( ! Settings.Library.WatchFolders ) return FALSE;
-
-		m_hMonitor = FindFirstChangeNotification( m_sPath, TRUE,
-			FILE_NOTIFY_CHANGE_FILE_NAME|FILE_NOTIFY_CHANGE_DIR_NAME|
-			FILE_NOTIFY_CHANGE_LAST_WRITE );
+		// Change status forced
+		bChanged = TRUE;
+		m_bForceScan = FALSE;
 	}
 
-	return ( m_hMonitor != INVALID_HANDLE_VALUE );
-}
-
-BOOL CLibraryFolder::CheckMonitor()
-{
-	if ( ! m_bMonitor ) return TRUE;
-
-	if ( m_hMonitor == INVALID_HANDLE_VALUE ) return FALSE;
-
-	if ( WaitForSingleObject( m_hMonitor, 0 ) != WAIT_OBJECT_0 ) return FALSE;
-	
-	if ( ! FindNextChangeNotification( m_hMonitor ) )
+	// Monitor changes
+	if ( m_hMonitor != INVALID_HANDLE_VALUE )
 	{
+		switch ( WaitForSingleObject( m_hMonitor, 0 ) )
+		{
+		case WAIT_TIMEOUT:
+			// No changes
+			break;
+
+		case WAIT_OBJECT_0:
+			// Changes detected
+			bChanged = TRUE;
+
+			// Reset monitor
+			if ( FindNextChangeNotification( m_hMonitor ) )
+				break;
+
+		default:
+			// Errors
+			FindCloseChangeNotification( m_hMonitor );
+			m_hMonitor = INVALID_HANDLE_VALUE;
+		}
+	}
+
+	if ( m_hMonitor == INVALID_HANDLE_VALUE && Settings.Library.WatchFolders )
+	{
+		// Enable monitor
+		m_hMonitor = FindFirstChangeNotification( m_sPath, TRUE,
+			FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME|
+			FILE_NOTIFY_CHANGE_LAST_WRITE );
+	}
+	else if ( m_hMonitor != INVALID_HANDLE_VALUE && ! Settings.Library.WatchFolders )
+	{
+		// Disable monitor
 		FindCloseChangeNotification( m_hMonitor );
 		m_hMonitor = INVALID_HANDLE_VALUE;
 	}
 
-	return TRUE;
+	return bChanged;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -527,7 +542,7 @@ void CLibraryFolder::Scan()
 {
     CLibraryFolder* pFolder = this;
 	for ( ; pFolder->m_pParent ; pFolder = pFolder->m_pParent );
-	if ( pFolder ) pFolder->m_bMonitor = FALSE;
+	if ( pFolder ) pFolder->m_bForceScan = TRUE;
 	Library.Wakeup();
 }
 

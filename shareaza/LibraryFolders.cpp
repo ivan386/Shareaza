@@ -522,7 +522,7 @@ void CLibraryFolders::Clear()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders thread scan
 
-BOOL CLibraryFolders::ThreadScan(volatile BOOL* pbContinue, BOOL bForce)
+BOOL CLibraryFolders::ThreadScan(volatile BOOL* pbContinue, const BOOL bForce)
 {
 	BOOL bChanged = FALSE;
 
@@ -534,12 +534,10 @@ BOOL CLibraryFolders::ThreadScan(volatile BOOL* pbContinue, BOOL bForce)
 		{
 			if ( pFolder->SetOnline() ) bChanged = TRUE;
 
-			if ( bForce || pFolder->CheckMonitor() )
+			if ( pFolder->IsChanged() || bForce )
 			{
 				if ( pFolder->ThreadScan( pbContinue ) ) bChanged = TRUE;
 			}
-			
-			pFolder->SetMonitor();
 		}
 		else
 			if ( pFolder->SetOffline() ) bChanged = TRUE;

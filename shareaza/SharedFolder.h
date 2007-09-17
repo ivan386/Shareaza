@@ -55,8 +55,8 @@ protected:
 	TRISTATE		m_bShared;
 	CMap< CString, const CString&, CLibraryFolder*, CLibraryFolder* >	m_pFolders;
 	HANDLE			m_hMonitor;
-	BOOL			m_bMonitor;
-	BOOL			m_bOffline;			// TRUE - if folder absent
+	BOOL			m_bForceScan;		// TRUE - next scan forced (root folder only)
+	BOOL			m_bOffline;			// TRUE - folder absent (root folder only)
 
 // Operations
 public:
@@ -84,8 +84,8 @@ public:
 	BOOL			SetOnline();
 	void			Serialize(CArchive& ar, int nVersion);
 	BOOL			ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie = 0);
-	BOOL			SetMonitor();
-	BOOL			CheckMonitor();
+	// Manage filesystem change notification. Returns TRUE if changes detected.
+	BOOL			IsChanged();
 	void			OnDelete(TRISTATE bCreateGhost = TS_UNKNOWN);
 	void			OnFileRename(CLibraryFile* pFile);
 
