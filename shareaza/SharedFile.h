@@ -69,7 +69,8 @@ public:
 	CSchema*		m_pSchema;
 	CXMLElement*	m_pMetadata;
 	BOOL			m_bMetadataAuto;		// Metadata is auto-generated
-	FILETIME		m_pMetadataTime;
+	FILETIME		m_pMetadataTime;		// Metadata time
+
 	int				m_nRating;
 	CString			m_sComments;
 	CString			m_sShareTags;

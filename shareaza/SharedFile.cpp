@@ -332,7 +332,6 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 
 BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
 {
-	// if ( m_pFolder == NULL ) return FALSE;
 	if ( m_pMetadata == NULL && pXML == NULL ) return TRUE;
 	
 	CSchema* pSchema = NULL;
@@ -629,12 +628,6 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		if ( m_pSchema != NULL && m_pMetadata != NULL )
 		{
 			ar << m_pSchema->m_sURI;
-			ar << m_bMetadataAuto;
-			if ( ! m_bMetadataAuto )
-			{
-				ASSERT( m_pMetadataTime.dwLowDateTime || m_pMetadataTime.dwHighDateTime );
-				ar.Write( &m_pMetadataTime, sizeof(m_pMetadataTime) );
-			}
 			m_pMetadata->Serialize( ar );
 		}
 		else
@@ -647,10 +640,8 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		ar << m_sComments;
 		ar << m_sShareTags;
 		
-		if ( m_bMetadataAuto && ( m_nRating || m_sComments.GetLength() ) )
-		{
-			ar.Write( &m_pMetadataTime, sizeof(m_pMetadataTime) );
-		}
+		ar << m_bMetadataAuto;
+		ar.Write( &m_pMetadataTime, sizeof( m_pMetadataTime ) );
 		
 		ar << m_nHitsTotal;
 		ar << m_nUploadsTotal;
@@ -743,17 +734,17 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		
 		if ( strURI.GetLength() )
 		{
-			ar >> m_bMetadataAuto;
-			if ( ! m_bMetadataAuto )
+			if ( nVersion < 27 )
 			{
-				ReadArchive( ar, &m_pMetadataTime, sizeof(m_pMetadataTime) );
-				ASSERT( m_pMetadataTime.dwLowDateTime || m_pMetadataTime.dwHighDateTime );
+				ar >> m_bMetadataAuto;
+				if ( ! m_bMetadataAuto )
+				{
+					ReadArchive( ar, &m_pMetadataTime, sizeof(m_pMetadataTime) );
+				}
 			}
-			
 			m_pMetadata = new CXMLElement();
 			m_pMetadata->Serialize( ar );
 			m_pSchema = SchemaCache.Get( strURI );
-			
 			if ( m_pSchema == NULL )
 			{
 				delete m_pMetadata;
@@ -766,10 +757,17 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 			ar >> m_nRating;
 			ar >> m_sComments;
 			if ( nVersion >= 16 ) ar >> m_sShareTags;
-			
-			if ( m_bMetadataAuto && IsRated() )
+			if ( nVersion >= 27 )
 			{
+				ar >> m_bMetadataAuto;
 				ReadArchive( ar, &m_pMetadataTime, sizeof(m_pMetadataTime) );
+			}
+			else
+			{
+				if ( m_bMetadataAuto && IsRated() )
+				{
+					ReadArchive( ar, &m_pMetadataTime, sizeof(m_pMetadataTime) );
+				}
 			}
 		}
 		
@@ -831,11 +829,12 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 	{
 		bChanged = TRUE;
 		pLock.Lock();
+
 		Library.RemoveFile( this );
-		
+
 		CopyMemory( &m_pTime, pTime, sizeof(FILETIME) );
 		m_nSize = nSize;
-		
+
         m_oSHA1.clear();
         m_oTiger.clear();
         m_oMD5.clear();
