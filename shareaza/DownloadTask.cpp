@@ -404,8 +404,17 @@ void CDownloadTask::RunCopySimple()
 		CQuickLock oLock( Transfers.m_pSection );
 		Uploads.OnRename( m_sFilename, NULL );
 		Uploads.OnRename( m_sFilename, strTarget );
-		
-		if ( ! DeleteFile( m_sFilename ) )
+
+		BOOL m_bDeleteSuccess = FALSE;
+
+		for ( int nDelete = 0; !m_bDeleteSuccess && nDelete < 5; ++nDelete )
+		{
+			theApp.Message( MSG_DEBUG, _T("Deleting \"%s\"..."), (LPCTSTR)m_sFilename );
+
+			m_bDeleteSuccess = DeleteFile( m_sFilename );
+		}
+
+		if ( !m_bDeleteSuccess )
 			theApp.WriteProfileString( _T("Delete"), m_sFilename, _T("") );
 		m_sFilename = strTarget;
 	}
