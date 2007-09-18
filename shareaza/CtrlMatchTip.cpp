@@ -465,29 +465,25 @@ void CMatchTipCtrl::LoadFromHit()
 		m_crStatus = CoolInterface.m_crTextAlert ;
 	}
 
-	if ( m_pHit->m_sNick.GetLength() )
+	// Is this a firewalled eDonkey client
+	if ( ( m_pHit->m_nProtocol == PROTOCOL_ED2K ) && ( m_pHit->m_bPush == TS_TRUE ) )
 	{
-		m_sUser.Format( _T("%s (%s - %s)"),
-			(LPCTSTR)m_pHit->m_sNick,
-			(LPCTSTR)CString( inet_ntoa( m_pHit->m_pAddress ) ),
+		m_sUser.Format( _T("%lu@%s - %s"),
+			m_pHit->m_oClientID.begin()[2], 
+			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*m_pHit->m_oClientID.begin() ) ),
 			(LPCTSTR)m_pHit->m_pVendor->m_sName );
 	}
 	else
 	{
-		if ( ( m_pHit->m_nProtocol == PROTOCOL_ED2K ) && ( m_pHit->m_bPush == TS_TRUE ) )
-		{
-			m_sUser.Format( _T("%lu@%s - %s"),
-				m_pHit->m_oClientID.begin()[2], 
-				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*m_pHit->m_oClientID.begin() ) ),
-				(LPCTSTR)m_pHit->m_pVendor->m_sName );
-		}
-		else
-		{
-			m_sUser.Format( _T("%s - %s"),
-				(LPCTSTR)CString( inet_ntoa( m_pHit->m_pAddress ) ),
-				(LPCTSTR)m_pHit->m_pVendor->m_sName );
-		}
+		m_sUser.Format( _T("%s:%u - %s"),
+			(LPCTSTR)CString( inet_ntoa( m_pHit->m_pAddress ) ),
+			m_pHit->m_nPort,
+			(LPCTSTR)m_pHit->m_pVendor->m_sName );
 	}
+
+	// Add the Nickname if there is one and they are being shown
+	if ( Settings.Search.ShowNames && !m_pHit->m_sNick.IsEmpty() )
+		m_sUser = m_pHit->m_sNick + _T(" (") + m_sUser + _T(")");
 
 	m_sCountryCode = m_pHit->m_sCountry;
 	m_sCountry = theApp.GetCountryName( m_pHit->m_pAddress );

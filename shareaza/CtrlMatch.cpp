@@ -890,43 +890,28 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			if ( nHits == 1 || pHit != NULL )
 			{
 				CQueryHit* ppHit = ( nHits == 1 || pHit == NULL ) ? pFile->GetBest() : pHit;
-				
-				if ( Settings.Search.ShowNames && ppHit->m_sNick.GetLength() )
+				CString strTemp;
+
+				if ( Settings.Search.ShowNames && !ppHit->m_sNick.IsEmpty() )
 				{
+					strTemp = ppHit->m_sNick;
+
 					if ( ppHit->m_nSources > 1 )
-					{
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"),
-							(LPCTSTR)ppHit->m_sNick,
-							ppHit->m_nSources - 1 );
-						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
-						pszText = szBuffer;
-					}
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), strTemp, ppHit->m_nSources - 1 );
 					else
-					{
-						pszText = ppHit->m_sNick;
-					}
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), strTemp );
+					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 				}
 				else if ( ( ppHit->m_nProtocol == PROTOCOL_ED2K ) && ( ppHit->m_bPush == TS_TRUE ) )
 				{
+					/* strText.Format( _T("%lu@%s"), ppHit->m_oClientID.begin()[2], (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ) ); */
+					strTemp.Format( _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ) );
+
 					if ( ppHit->m_nSources > 1 )
-					{
-						/*_stprintf( szBuffer, _T("%lu@%s+%lu"), ppHit->m_pClientID.w[2], 
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ), 
-							ppHit->m_nSources - 1 );*/
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("(%s)+%u"),
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ), ppHit->m_nSources - 1 );
-						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
-					}
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), strTemp, ppHit->m_nSources - 1 );
 					else
-					{
-						/*_stprintf( szBuffer, _T("%lu@%s"), ppHit->m_pClientID.w[2], 
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ) );*/
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("(%s)"),
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ) );
-						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
-					}
-					pszText = szBuffer;
-					
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), strTemp );
+					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 				}
 				else if ( ppHit->m_pAddress.S_un.S_addr )
 				{
@@ -936,12 +921,10 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 							(LPCTSTR)CString( inet_ntoa( ppHit->m_pAddress ) ),
 							ppHit->m_nSources - 1 );
 						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
-						pszText = szBuffer;
 					}
 					else
 					{
 						MultiByteToWideChar( CP_ACP, 0, inet_ntoa( ppHit->m_pAddress ), -1, szBuffer, 64 );
-						pszText = szBuffer;
 					}
 				}
 				else
@@ -957,7 +940,8 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					else
 					{
 						// Not used?
-						pszText = _T("(Firewalled)");
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("(Firewalled)") );
+						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 					}
 				}
 			}
@@ -968,8 +952,8 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				strText.Format( _T("(%u %s)"), pFile->m_nSources, strSource );
 				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nSources );
 				szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
-				pszText = szBuffer;
 			}
+			pszText = szBuffer;
 			break;
 			
 		case MATCH_COL_SPEED:
