@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 54 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 55 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2921,7 +2921,7 @@
 	<string id="16813" value="Attendere: Aggiornamento dei servizi di connessione..."/>
 	<string id="16814" value="Attendere: Aggiornamento della lista dei server eDonkey..."/>
 	<string id="16815" value="Il servizio Host di periferiche Plug and Play universali non è attivo. Questo servizio è richiesto per effettuare la configurazione.\nDevi impostare il tipo di avvio del servizio su automatico."/>
-	<string id="16816" value="La rete eDonkey usa grandi code con lunghi tempi di attesa. Limitando la posizione massima in coda accetti questo, puoi avere problemi nella partenza dei download.\nSei sicuro di voler limitare la posizione in coda da accettare?"/>
+	<string id="16816" value="La rete eDonkey usa grandi code con lunghi tempi di attesa. Limitando la posizione massima in coda puoi avere problemi nella partenza dei download.\nSei sicuro di voler limitare la posizione massima in coda da accettare?"/>
 	<string id="16817" value="Windows non supporta i percorsi più lunghi di 256 caratteri.\nSeleziona una cartella con un percorso più corto."/>
 	<string id="16818" value="Le cartelle dei file completi e incompleti non dovrebbero essere la stessa"/>
 	<string id="16819" value="La cartella dei file incompleti non dovrebbe essere nella libreria, poichè questo riduce le prestazioni. I file incompleti possono essere condivisi direttamente dalla finestra di trasferimenti."/>
