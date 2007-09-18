@@ -424,7 +424,7 @@ void CLibraryDetailView::CacheItem(int nItem)
 	else
 		pText->SetAt( 1, _T("") );
 	
-	pText->SetAt( 2, Settings.SmartVolume( pFile->GetSize(), FALSE ) );
+	pText->SetAt( 2, Settings.SmartVolume( pFile->GetSize() ) );
 	if ( pFile->m_pFolder != NULL ) pText->SetAt( 3, pFile->m_pFolder->m_sPath );
 	
 	CString str;

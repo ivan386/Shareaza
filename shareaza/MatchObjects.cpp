@@ -852,7 +852,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	}
 	
 	if ( pHit->m_nSpeed )
-		pHit->m_sSpeed = Settings.SmartVolume( pHit->m_nSpeed, TRUE, TRUE );
+		pHit->m_sSpeed = Settings.SmartSpeed( pHit->m_nSpeed, KiloBytes );
 	else
 		pHit->m_sSpeed.Empty();
 
@@ -1260,7 +1260,7 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit) :
 {
 	// TODO: Change to SIZE_UNKNOWN without the size
 	m_nSize			= ( pHit && pHit->m_bSize ) ? pHit->m_nSize : 0;
-	m_sSize			= Settings.SmartVolume( m_nSize, FALSE );	
+	m_sSize			= Settings.SmartVolume( m_nSize );	
 
 	if ( pHit ) Add( pHit );
 }
@@ -1522,7 +1522,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 	m_nSpeed += pHit->m_nSpeed;
 	
 	if ( m_nFiltered && m_nSpeed )
-		m_sSpeed = Settings.SmartVolume( m_nFiltered ? m_nSpeed / m_nFiltered : 0, TRUE, TRUE );
+		m_sSpeed = Settings.SmartSpeed( m_nSpeed / m_nFiltered, KiloBytes );
 	else
 		m_sSpeed.Empty();
 	

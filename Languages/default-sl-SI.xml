@@ -2535,8 +2535,8 @@
 	<string id="8064" value="Povezan s sosedi: %lu. V lokalni knjižnici: %s."/>
 	<string id="8065" value="Povezujem na omrežje..."/>
 	<string id="8066" value="Ni povezave v omrežje."/>
-	<string id="8067" value="%s not : %s ven [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s not : %s ven [D:%i/U:%i]"/>
+	<string id="8067" value="%s not : %s ven [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s not : %s ven [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Poveži se"/>
 	<string id="8070" value="Povezujem..."/>
 	<string id="8071" value="Povezan"/>

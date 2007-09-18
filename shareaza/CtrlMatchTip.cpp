@@ -377,7 +377,7 @@ void CMatchTipCtrl::LoadFromFile()
 void CMatchTipCtrl::LoadFromHit()
 {
 	m_sName = m_pHit->m_sName;
-	m_sSize = Settings.SmartVolume( m_pHit->m_nSize, FALSE );
+	m_sSize = Settings.SmartVolume( m_pHit->m_nSize );
 	LoadTypeInfo();
 	
 	if ( Settings.General.GUIMode == GUI_BASIC )

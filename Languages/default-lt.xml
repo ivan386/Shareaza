@@ -2500,8 +2500,8 @@
 	<string id="8064" value="Prisijungta prie %lu kaimynų(-o). %s asmeninėje kolekcijoje."/>
 	<string id="8065" value="Jungiamasi prie tinklo..."/>
 	<string id="8066" value="Neprisijungta prie tinklo."/>
-	<string id="8067" value="%s įein. : %s išein. [A:%i/I:%i]"/>
-	<string id="8068" value="[M:%i] %s įein. : %s išein. [A:%i/I:%i]"/>
+	<string id="8067" value="%s įein. : %s išein. [A:%I64i/I:%I64i]"/>
+	<string id="8068" value="[M:%I64i] %s įein. : %s išein. [A:%I64i/I:%I64i]"/>
 	<string id="8069" value="Jungtis"/>
 	<string id="8070" value="Jungiamasi..."/>
 	<string id="8071" value="Prisijungta"/>

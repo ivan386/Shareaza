@@ -43,7 +43,7 @@ public:
 	CString		m_sSafeName;				// The name, with invalid characters removed. (A meaningful local disk name)
 	CString		m_sDiskName;				// The name and path of the incomplete file on disk (the .partial). 
 											// The .sd will be the same as above with ".sd" on the end
-	QWORD		m_nSize;
+	QWORD		m_nSize;					// Size of download in Bytes
 public:
     Hashes::Sha1ManagedHash m_oSHA1;
     Hashes::TigerManagedHash m_oTiger;

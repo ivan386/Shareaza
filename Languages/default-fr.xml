@@ -2448,8 +2448,8 @@ Other:
 	<string id="8064" value="Connecté à %lu voisin(s). %s dans votre bibliothèque locale."/>
 	<string id="8065" value="Connexion au réseau..."/>
 	<string id="8066" value="Non connecté au réseau."/>
-	<string id="8067" value="%s entrant : %s s. [T:%i/E:%i]"/>
-	<string id="8068" value="[H:%i] %s entrant : %s s. [T:%i/E:%i]"/>
+	<string id="8067" value="%s entrant : %s s. [T:%I64i/E:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s entrant : %s s. [T:%I64i/E:%I64i]"/>
 	<string id="8069" value="Se connecter"/>
 	<string id="8070" value="Connexion..."/>
 	<string id="8071" value="Connecté"/>

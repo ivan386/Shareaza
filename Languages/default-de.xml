@@ -2556,8 +2556,8 @@ Other:
 	<string id="8064" value="Verbunden mit %lu Host(s), %s in der lokalen Bibliothek."/>
 	<string id="8065" value="Verbindung mit Netzwerken herstellen..."/>
 	<string id="8066" value="Mit keinem Netzwerk verbunden."/>
-	<string id="8067" value="%s ein : %s aus [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s ein : %s aus [D:%i/U:%i]"/>
+	<string id="8067" value="%s ein : %s aus [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s ein : %s aus [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Verbinden"/>
 	<string id="8070" value="Verbinden..."/>
 	<string id="8071" value="Verbunden"/>

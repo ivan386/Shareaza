@@ -2379,8 +2379,8 @@
 	<string id="8064" value="Ansluten till %lu grannar. %s i ditt lokala bibliotek." />
 	<string id="8065" value="Ansluter till nätverket…" />
 	<string id="8066" value="Ej ansluten till nätverket." />
-	<string id="8067" value="%s in : %s ut [D:%i/U:%i]" />
-	<string id="8068" value="[H:%i] %s in : %s ut [D:%i/U:%i]" />
+	<string id="8067" value="%s in : %s ut [D:%I64i/U:%I64i]" />
+	<string id="8068" value="[H:%I64i] %s in : %s ut [D:%I64i/U:%I64i]" />
 	<string id="8069" value="Anslut" />
 	<string id="8070" value="Ansluter…" />
 	<string id="8071" value="Ansluten" />

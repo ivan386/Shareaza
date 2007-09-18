@@ -506,11 +506,10 @@ BOOL CTorrentSeedDlg::BuildFiles(HANDLE hTarget)
 		if ( nSize != pFile->m_nSize )
 		{
 			CloseHandle( hSource );
-			CString strFormat;
-			LoadString(strFormat, IDS_BT_SEED_SOURCE_SIZE );
-			m_sMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath,
-				(LPCTSTR)Settings.SmartVolume( pFile->m_nSize, FALSE ),
-				(LPCTSTR)Settings.SmartVolume( nSize, FALSE ) );
+			m_sMessage.Format( IDS_BT_SEED_SOURCE_SIZE,
+				pFile->m_sPath,
+				Settings.SmartVolume( pFile->m_nSize ),
+				Settings.SmartVolume( nSize ) );
 			return FALSE;
 		}
 		

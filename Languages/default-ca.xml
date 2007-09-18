@@ -2562,8 +2562,8 @@
 	<string id="8064" value="Connectat a %lu veí(ïns).  Tens %s a La meva Col·lecció."/>
 	<string id="8065" value="Conectant a la xarxa..."/>
 	<string id="8066" value="Shareaza no està connectat a la xarxa."/>
-	<string id="8067" value="%s Entra : %s Surt [D:%i/U:%i]"/>
-	<string id="8068" value="[C:%i] %s Entra : %s Surt [D:%i/U:%i]"/>
+	<string id="8067" value="%s Entra : %s Surt [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[C:%I64i] %s Entra : %s Surt [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Connectar"/>
 	<string id="8070" value="Connectant..."/>
 	<string id="8071" value="Connectat"/>

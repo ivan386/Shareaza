@@ -79,8 +79,8 @@ BOOL CDownloadWithFile::OpenFile()
 	else if ( m_nSize != SIZE_UNKNOWN && ! Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
 	{
 		theApp.Message( MSG_DISPLAYED_ERROR, IDS_DOWNLOAD_DISK_SPACE,
-			(LPCTSTR)m_sDisplayName,
-			(LPCTSTR)Settings.SmartVolume( m_nSize, FALSE ) );
+			m_sDisplayName,
+			Settings.SmartVolume( m_nSize ) );
 	}
 	else
 	{

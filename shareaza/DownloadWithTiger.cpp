@@ -226,8 +226,8 @@ BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger)
 	SetModified();
 
 	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_READY,
-		(LPCTSTR)GetDisplayName(), m_pTigerTree.GetHeight(),
-		(LPCTSTR)Settings.SmartVolume( m_nTigerSize, FALSE ) );
+		GetDisplayName(), m_pTigerTree.GetHeight(),
+		Settings.SmartVolume( m_nTigerSize ) );
 
 	return TRUE;
 }
@@ -292,8 +292,7 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 	SetModified();
 
 	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_HASHSET_READY,
-		(LPCTSTR)GetDisplayName(),
-		(LPCTSTR)Settings.SmartVolume( ED2K_PART_SIZE, FALSE ) );
+		GetDisplayName(), Settings.SmartVolume( ED2K_PART_SIZE ) );
 
 	Neighbours.SendDonkeyDownload( static_cast< CDownload * >( this ) );
 

@@ -21,9 +21,14 @@
 
 #pragma once
 
+enum
+{
+	bits = 1, Bytes = 8, Kilobits = 1024, KiloBytes = 8192
+};
+
 class CSettingsItem;
 
-class CSettings  
+class CSettings : private boost::noncopyable
 {
 // Construction
 public:
@@ -50,8 +55,8 @@ public:
 		BOOL		ShowTimestamp;
 		BOOL		SizeLists;
 		BOOL		HashIntegrity;
-		BOOL		RatesInBytes;
-		DWORD		RatesUnit;
+		BOOL		RatesInBytes;				// Show speeds in Bytes/second
+		DWORD		RatesUnit;					// Units that the rates are to be displayed in
 		BOOL		AlwaysOpenURLs;
 		CString		Language;
 		BOOL		IgnoreXPsp2;				// Ignore the presence of Windows XPsp2 limits
@@ -183,8 +188,8 @@ public:
 		DWORD		InPort;
 		BOOL		InBind;
 		BOOL		RandomPort;
-		DWORD		InSpeed;
-		DWORD		OutSpeed;
+		DWORD		InSpeed;					// Inbound internet connection speed in Kilobits/seconds
+		DWORD		OutSpeed;					// Outbound internet connection speed in Kilobits/seconds
 		BOOL		IgnoreLocalIP;				// Ingnore all 'local' (LAN) IPs
 		BOOL		IgnoreOwnIP;				// Do not accept any ports on your external IP as a source
 		DWORD		TimeoutConnect;
@@ -550,31 +555,15 @@ public:
 	void	SaveWindow(LPCTSTR pszName, CWnd* pWindow);
 	BOOL	LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort = 0);
 	void	SaveList(LPCTSTR pszName, CListCtrl* pCtrl);
-	
-	// CSettings configurable user agent (Client Name + Version)
-	inline const CString& SmartAgent() const throw()
-	{
-		return theApp.m_sSmartAgent;	// TODO
-	}
 
-	CString	SmartVolume(QWORD nVolume, BOOL bInKB, BOOL bRateInBits = FALSE, BOOL bTruncate = FALSE );
-	QWORD	ParseVolume(LPCTSTR psz, BOOL bSpeedInBits);
-	DWORD	GetOutgoingBandwidth();						//Returns available outgoing bandwidth in KB/s
+	CString	SmartSpeed(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert speeds into formatted strings
+	CString	SmartVolume(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert sizes into formatted strings
+	QWORD	ParseVolume(LPCTSTR pszSize, bool bSpeedInBits) const;								// Convert size string into number
+	DWORD	GetOutgoingBandwidth() const;														// Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);
 
-	inline bool	IsG1Allowed()
-	{
-		return Gnutella1.EnableToday || !Connection.RequireForTransfers;
-	}
-	inline bool	IsG2Allowed()
-	{
-		return Gnutella2.EnableToday || !Connection.RequireForTransfers;
-	}
-	inline bool	IsEdAllowed()
-	{
-		return eDonkey.EnableToday || !Connection.RequireForTransfers;
-	}
+	void	OnChangeConnectionSpeed();
 
 protected:
 	void	Setup();
@@ -586,12 +575,14 @@ protected:
 	void	SmartUpgrade();
 	static void LoadSet(string_set* pSet, LPCTSTR pszString);
 
+// Inlines
 public:
-	void	OnChangeConnectionSpeed();
+	// CSettings configurable user agent (Client Name + Version)
+	const	CString& SmartAgent() const { return theApp.m_sSmartAgent; }	// TODO
 
-private:
-	CSettings(const CSettings&);
-	CSettings& operator=(const CSettings&);
+	bool	IsG1Allowed() const { return Gnutella1.EnableToday || !Connection.RequireForTransfers; }
+	bool	IsG2Allowed() const { return Gnutella2.EnableToday || !Connection.RequireForTransfers; }
+	bool	IsEdAllowed() const { return eDonkey.EnableToday || !Connection.RequireForTransfers; }
 };
 
 extern CSettings Settings;

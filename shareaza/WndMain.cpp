@@ -1233,8 +1233,7 @@ void CMainWnd::UpdateMessages()
 
 		if ( Settings.General.GUIMode == GUI_BASIC )
 		{	//In the basic GUI, don't bother with mode details or neighbour count.
-			LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_SIMPLE );
-			strMessage.Format( strFormat, (LPCTSTR)Settings.SmartVolume( nLocalVolume, TRUE ) );
+			strMessage.Format( IDS_STATUS_BAR_CONNECTED_SIMPLE, Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 		}
 		else
 		{	//Display node type and number of neighbours
@@ -1252,8 +1251,7 @@ void CMainWnd::UpdateMessages()
 				else
 					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
 			}
-			strMessage.Format( strFormat, nCount,
-								(LPCTSTR)Settings.SmartVolume( nLocalVolume, TRUE ) );
+			strMessage.Format( strFormat, nCount, Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 		}
 	}
 	else if ( Network.IsConnected() )
@@ -1289,25 +1287,23 @@ void CMainWnd::UpdateMessages()
 
 	m_sMsgStatus = strMessage;
 
-	LoadString( strFormat, IDS_STATUS_BAR_BANDWIDTH );
-	strMessage.Format( strFormat,
-		(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), FALSE, TRUE ),
-		(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), FALSE, TRUE ),
-		(int)CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS, 1.0f ),
-		(int)CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS, 1.0f ) );
+	strMessage.Format( IDS_STATUS_BAR_BANDWIDTH,
+		Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
+		Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
+		CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
+		CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
 
 	m_wndStatusBar.GetPaneText( 1, strOld );
 	if ( strOld != strMessage ) m_wndStatusBar.SetPaneText( 1, strMessage );
 
 	if ( m_bTrayIcon )
 	{
-		LoadString( strFormat, IDS_TRAY_TIP );
-		strMessage.Format( strFormat,
-			(int)CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS, 1.0f ),
-			(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), FALSE, TRUE ),
-			(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), FALSE, TRUE ),
-			(int)CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
-			(int)CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
+		strMessage.Format( IDS_TRAY_TIP,
+			CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS ),
+			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
+			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
+			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
+			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
 
 		if ( strMessage != m_pTray.szTip )
 		{

@@ -86,7 +86,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 		m_sName = pFile->m_sName;
 		m_sPath = pFile->GetPath();
 		m_nIndex = pFile->m_nIndex;
-		m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
+		m_sSize = Settings.SmartVolume( pFile->GetSize() );
 		m_nIcon = 0;
 
 		if ( pFile->m_pFolder != NULL ) 

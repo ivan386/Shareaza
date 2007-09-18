@@ -95,7 +95,7 @@ BOOL CTorrentFilesPage::OnInitDialog()
 		pItem.pszText	= (LPTSTR)(LPCTSTR)pFile->m_sPath;
 		pItem.iItem		= m_wndFiles.InsertItem( &pItem );
 		
-		m_wndFiles.SetItemText( pItem.iItem, 1, Settings.SmartVolume( pFile->m_nSize, FALSE ) );
+		m_wndFiles.SetItemText( pItem.iItem, 1, Settings.SmartVolume( pFile->m_nSize ) );
 	}
 
 	UpdateData( FALSE );

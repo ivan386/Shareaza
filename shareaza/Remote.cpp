@@ -698,7 +698,7 @@ void CRemote::PageSearch()
 		}
 		Output( _T("searchRowStart") );
 		
-		PageSearchRowColumn( MATCH_COL_SIZE, pFile, Settings.SmartVolume( pFile->m_nSize, FALSE ) );
+		PageSearchRowColumn( MATCH_COL_SIZE, pFile, Settings.SmartVolume( pFile->m_nSize ) );
 		
 		str.Empty();
 		for ( INT_PTR nStar = pFile->m_nRating / max( 1, pFile->m_nRated ) ; nStar > 1 ; nStar -- ) str += _T("*");
@@ -739,7 +739,7 @@ void CRemote::PageSearch()
 				Add( _T("row_source"), _T("true") );
 				Output( _T("searchRowStart") );
 				
-				PageSearchRowColumn( MATCH_COL_SIZE, pFile, Settings.SmartVolume( pHit->m_nSize, FALSE ) );
+				PageSearchRowColumn( MATCH_COL_SIZE, pFile, Settings.SmartVolume( pHit->m_nSize ) );
 				str.Empty();
 				for ( int nStar = pHit->m_nRating ; nStar > 1 ; nStar -- ) str += _T("*");
 				PageSearchRowColumn( MATCH_COL_RATING, pFile, str );
@@ -952,13 +952,13 @@ void CRemote::PageDownloads()
 		Add( _T("download_id"), str );
 		Add( _T("download_filename"), pDownload->GetDisplayName() );
 		LoadString( strStatus1, IDS_STATUS_UNKNOWN );
-		Add( _T("download_size"), pDownload->m_nSize == SIZE_UNKNOWN ? strStatus1 : Settings.SmartVolume( pDownload->m_nSize, FALSE ) );
+		Add( _T("download_size"), pDownload->m_nSize == SIZE_UNKNOWN ? strStatus1 : Settings.SmartVolume( pDownload->m_nSize ) );
 		int nProgress = int( pDownload->GetProgress() );
 		str.Format( _T("%i"), nProgress );
 		Add( _T("download_percent"), str );
 		str.Format( _T("%i"), 100 - nProgress );
 		Add( _T("download_percent_inverse"), str );
-		Add( _T("download_speed"), Settings.SmartVolume( pDownload->GetMeasuredSpeed() * 8, FALSE, TRUE ) );
+		Add( _T("download_speed"), Settings.SmartSpeed( pDownload->GetMeasuredSpeed() ) );
 		if ( CDownloadsCtrl::IsExpandable( pDownload ) )
 		{
 			if ( pDownload->m_bExpanded ) Add( _T("download_is_expanded"), _T("true") );
@@ -1081,9 +1081,10 @@ void CRemote::PageDownloads()
 					if ( pSource->m_pTransfer != NULL )
 					{
 						Add( _T("source_status"), pSource->m_pTransfer->GetStateText( FALSE ) );
-						Add( _T("source_volume"), Settings.SmartVolume( pSource->m_pTransfer->m_nDownloaded, FALSE ) );
-						if ( DWORD nSpeed = pSource->m_pTransfer->GetMeasuredSpeed() * 8 )
-							Add( _T("source_speed"), Settings.SmartVolume( nSpeed, FALSE, TRUE ) );
+						Add( _T("source_volume"), Settings.SmartVolume( pSource->m_pTransfer->m_nDownloaded ) );
+						DWORD nSpeed = pSource->m_pTransfer->GetMeasuredSpeed();
+						if ( nSpeed )
+							Add( _T("source_speed"), Settings.SmartSpeed( nSpeed ) );
 						Add( _T("source_address"), pSource->m_pTransfer->m_sAddress );
 						Add( _T("source_caption"), pSource->m_pTransfer->m_sAddress + _T(" - ") + pSource->m_sNick );
 					}
@@ -1168,7 +1169,7 @@ void CRemote::PageUploads()
 			Add( _T("queue_transfers"), str );
 			str.Format( _T("%i"), pQueue->GetQueuedCount() );
 			Add( _T("queue_queued"), str );
-			Add( _T("queue_bandwidth"), Settings.SmartVolume( pQueue->GetMeasuredSpeed() * 8, FALSE, TRUE ) );
+			Add( _T("queue_bandwidth"), Settings.SmartSpeed( pQueue->GetMeasuredSpeed() ) );
 		}
 		
 		Output( _T("uploadsQueueStart") );
@@ -1192,7 +1193,7 @@ void CRemote::PageUploads()
 				
 				Add( _T("file_id"), str );
 				Add( _T("file_filename"), pFile->m_sName );
-				Add( _T("file_size"), Settings.SmartVolume( pFile->m_nSize, FALSE ) );
+				Add( _T("file_size"), Settings.SmartVolume( pFile->m_nSize ) );
 				
 				if ( pTransfer != NULL )
 				{
@@ -1214,18 +1215,26 @@ void CRemote::PageUploads()
 						LoadString( str, IDS_STATUS_UNINTERESTED );
 					else if ( pBT->m_bChoked )
 						LoadString( str, IDS_STATUS_CHOKED );
-					else if ( DWORD nSpeed = pTransfer->GetMeasuredSpeed() * 8 )
-						str = Settings.SmartVolume( nSpeed, FALSE, TRUE );
+					else
+					{
+						DWORD nSpeed = pTransfer->GetMeasuredSpeed();
+						if ( nSpeed )
+							str = Settings.SmartSpeed( nSpeed );
+					}
 				}
 				else if ( nPosition > 0 )
 				{
 					LoadString( str, IDS_STATUS_Q );
 					str.Format( _T("%s %i"), str, nPosition );
 				}
-				else if ( DWORD nSpeed = pTransfer->GetMeasuredSpeed() * 8 )
-					str = Settings.SmartVolume( nSpeed, FALSE, TRUE );
 				else
-					LoadString( str, IDS_STATUS_NEXT );
+				{
+					DWORD nSpeed = pTransfer->GetMeasuredSpeed();
+					if ( nSpeed )
+						str = Settings.SmartSpeed( nSpeed );
+					else
+						LoadString( str, IDS_STATUS_NEXT );
+				}
 				Add( _T("file_speed"), str );
 				Add( _T("file_status"), str );
 				
@@ -1317,9 +1326,9 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 		Add( _T("row_agent"), pNeighbour->m_sUserAgent );
 		str.Format( _T("%i -/- %i"), pNeighbour->m_nInputCount, pNeighbour->m_nOutputCount );
 		Add( _T("row_packets"), str );
-		str.Format( _T("%s -/- %s"), (LPCTSTR)Settings.SmartVolume( pNeighbour->m_mInput.nMeasure * 8, FALSE, TRUE ), (LPCTSTR)Settings.SmartVolume( pNeighbour->m_mOutput.nMeasure * 8, FALSE, TRUE ) );
+		str.Format( _T("%s -/- %s"), Settings.SmartSpeed( pNeighbour->m_mInput.nMeasure ), Settings.SmartSpeed( pNeighbour->m_mOutput.nMeasure ) );
 		Add( _T("row_bandwidth"), str );
-		str.Format( _T("%s -/- %s"), (LPCTSTR)Settings.SmartVolume( pNeighbour->m_mInput.nTotal, FALSE ), (LPCTSTR)Settings.SmartVolume( pNeighbour->m_mOutput.nTotal, FALSE ) );
+		str.Format( _T("%s -/- %s"), Settings.SmartVolume( pNeighbour->m_mInput.nTotal ), Settings.SmartVolume( pNeighbour->m_mOutput.nTotal ) );
 		Add( _T("row_total"), str );
 		
 		switch ( pNeighbour->m_nState )

@@ -187,7 +187,7 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 
 CString CConnectionSettingsPage::FormatSpeed(DWORD nSpeed)
 {
-	return Settings.SmartVolume( nSpeed, TRUE, TRUE );
+	return Settings.SmartSpeed( nSpeed, Kilobits );
 }
 
 DWORD CConnectionSettingsPage::ParseSpeed(LPCTSTR psz)

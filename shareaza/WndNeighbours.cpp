@@ -237,20 +237,14 @@ void CNeighboursWnd::Update()
 		
 		pNeighbour->Measure();
 		
-		pItem->Format( 3, _T("%u/%u"), pNeighbour->m_nInputCount, pNeighbour->m_nOutputCount );
-		pItem->Format( 5, _T("%s/%s"), (LPCTSTR)Settings.SmartVolume( pNeighbour->m_mInput.nTotal, FALSE ), (LPCTSTR)Settings.SmartVolume( pNeighbour->m_mOutput.nTotal, FALSE ) );
+		pItem->Format( 3, _T("%u - %u"), pNeighbour->m_nInputCount, pNeighbour->m_nOutputCount );
+		pItem->Format( 4, _T("%s - %s"),
+			Settings.SmartSpeed( pNeighbour->m_mInput.nMeasure ),
+			Settings.SmartSpeed( pNeighbour->m_mOutput.nMeasure ) );
+		pItem->Format( 5, _T("%s - %s"),
+			Settings.SmartVolume( pNeighbour->m_mInput.nTotal ),
+			Settings.SmartVolume( pNeighbour->m_mOutput.nTotal ) );
 		pItem->Format( 6, _T("%u (%u)"), pNeighbour->m_nOutbound, pNeighbour->m_nLostCount );
-		
-		if ( Settings.General.RatesInBytes )
-		{
-			pItem->Format( 4, _T("%.3f/%.3f"), pNeighbour->m_mInput.nMeasure / 1024.0, 
-				pNeighbour->m_mOutput.nMeasure / 1024.0 );
-		}
-		else
-		{
-			pItem->Format( 4, _T("%.3f/%.3f"), pNeighbour->m_mInput.nMeasure / 128.0,
-				pNeighbour->m_mOutput.nMeasure / 128.0 );
-		}
 		
 		pItem->Set( 9, pNeighbour->m_sUserAgent );
 		

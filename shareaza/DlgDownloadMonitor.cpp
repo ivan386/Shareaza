@@ -272,7 +272,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 	if ( m_bCompleted ) return;
 	
 	BOOL bCompleted	= m_pDownload->IsCompleted();
-	DWORD nSpeed	= m_pDownload->GetMeasuredSpeed() * 8;
+	DWORD nSpeed	= m_pDownload->GetMeasuredSpeed();
 	CString strText, strFormat, strOf;
 
 	LoadString( strOf, IDS_GENERAL_OF );
@@ -409,7 +409,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 
 		Update( &m_wndTime, strText );
 
-		strText = Settings.SmartVolume( m_pDownload->GetAverageSpeed() * 8, FALSE, TRUE );
+		strText = Settings.SmartSpeed( m_pDownload->GetAverageSpeed() );
 		Update( &m_wndSpeed, strText );
 
 		strText.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
@@ -441,14 +441,16 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 		{
 			strText.Format( _T("(%.2f%%) %s %s %s"),
 				m_pDownload->GetProgress(),
-				(LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ), strOf,
-				(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete(), FALSE ) );
+				Settings.SmartVolume( m_pDownload->m_nSize ),
+				strOf,
+				Settings.SmartVolume( m_pDownload->GetVolumeComplete() ) );
 		}
 		else
 		{
 			strText.Format( _T("%s %s %s (%.2f%%)"),
-				(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete(), FALSE ),
-				strOf, (LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ),
+				Settings.SmartVolume( m_pDownload->GetVolumeComplete() ),
+				strOf,
+				Settings.SmartVolume( m_pDownload->m_nSize ),
 				m_pDownload->GetProgress() );
 		}
 		Update( &m_wndVolume, strText );

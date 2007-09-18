@@ -192,23 +192,17 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 		m_wndBoth.SetCheck(BST_CHECKED);
 	}
 
-	if ( ( m_bMinSize = ( m_pQueue->m_nMinSize > 0 ) ) != FALSE )
-	{
-		m_sMinSize = Settings.SmartVolume( m_pQueue->m_nMinSize, FALSE );
-	}
+	m_bMinSize = m_pQueue->m_nMinSize > 0;
+	if ( m_bMinSize )
+		m_sMinSize = Settings.SmartVolume( m_pQueue->m_nMinSize );
 	else
-	{
-		m_sMinSize = Settings.SmartVolume( 0, FALSE );
-	}
+		m_sMinSize = Settings.SmartVolume( 0 );
 
-	if ( ( m_bMaxSize = ( m_pQueue->m_nMaxSize < SIZE_UNKNOWN ) ) != FALSE )
-	{
-		m_sMaxSize = Settings.SmartVolume( m_pQueue->m_nMaxSize, FALSE );
-	}
+	m_bMaxSize = m_pQueue->m_nMaxSize < SIZE_UNKNOWN;
+	if ( m_bMaxSize )
+		m_sMaxSize = Settings.SmartVolume( m_pQueue->m_nMaxSize );
 	else
-	{
-		m_sMaxSize = Settings.SmartVolume( 0, FALSE );
-	}
+		m_sMaxSize = Settings.SmartVolume( 0 );
 
 	m_bMarked = ( m_pQueue->m_sShareTag.GetLength() > 0 );
 	m_sMarked = m_pQueue->m_sShareTag;
@@ -350,7 +344,7 @@ void CQueuePropertiesDlg::OnHScroll(UINT /*nSBCode*/, UINT /*nPos*/, CScrollBar*
 		nLocalPoints, nTotalPoints );
 
 	m_wndBandwidthPoints.SetWindowText( str );
-	m_wndBandwidthValue.SetWindowText( Settings.SmartVolume( nBandwidth * 8, FALSE, TRUE ) + '+' );
+	m_wndBandwidthValue.SetWindowText( Settings.SmartSpeed( nBandwidth ) + '+' );
 }
 
 void CQueuePropertiesDlg::OnOK()

@@ -2510,8 +2510,8 @@
 	<string id="8064" value="Connesso con %lu host. %s nella libreria locale."/>
 	<string id="8065" value="Connessione alla rete in corso..."/>
 	<string id="8066" value="Non connesso alla rete."/>
-	<string id="8067" value="%s in : %s out [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s in : %s out [D:%i/U:%i]"/>
+	<string id="8067" value="%s in : %s out [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s in : %s out [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Connetti"/>
 	<string id="8070" value="Connessione..."/>
 	<string id="8071" value="Connesso"/>

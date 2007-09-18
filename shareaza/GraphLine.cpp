@@ -315,7 +315,7 @@ void CLineGraph::PaintGrid(CDC* pDC, CRect* pRect)
 		{
 			CString strValue;
 			if ( bVolume )
-				strValue = Settings.SmartVolume( nScale * nPos, FALSE, TRUE );
+				strValue = Settings.SmartSpeed( nScale * nPos, bits );
 			else
 				strValue.Format( _T("%lu"), nScale * nPos );
 			pDC->ExtTextOut( pRect->left + 4, nY + 1, 0, NULL, strValue, NULL );

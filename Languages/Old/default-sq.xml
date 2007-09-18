@@ -2538,8 +2538,8 @@
 	<string id="8064" value="Jam lidhur tek %lu të afërm.  %s në librarinë lokale."/>
 	<string id="8065" value="Po lidhem në rrjet..."/>
 	<string id="8066" value="i Palidhur në Rrjet."/>
-	<string id="8067" value="%s brenda : %s jashtë [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s brenda : %s jashtë [D:%i/U:%i]"/>
+	<string id="8067" value="%s brenda : %s jashtë [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s brenda : %s jashtë [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Lidhu"/>
 	<string id="8070" value="Po lidhem..."/>
 	<string id="8071" value="Jam Lidhur"/>

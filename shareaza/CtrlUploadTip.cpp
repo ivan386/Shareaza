@@ -160,8 +160,6 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC)
 
 void CUploadTipCtrl::OnPaint(CDC* pDC)
 {
-	CString strText;
-
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
 
@@ -200,21 +198,17 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 
 	DrawRule( pDC, &pt );
 
+	CString strStatus, strSpeed, strText;
+	CString strOf;
+	LoadString( strOf, IDS_GENERAL_OF );
+
+	strSpeed.Format( _T("%s %s %s (%s)"),
+		Settings.SmartSpeed( pUpload->GetMeasuredSpeed() ),
+		strOf,
+		Settings.SmartSpeed( pUpload->m_nBandwidth ),
+		Settings.SmartSpeed( pUpload->GetMaxSpeed() ) );
+
 	int nQueue = UploadQueues.GetPosition( pUpload, FALSE );
-	CString strStatus, strSpeed;
-
-	if ( pUpload->m_nProtocol != PROTOCOL_BT )
-	{
-		strSpeed.Format( _T("%s of %s (%s)"),
-			(LPCTSTR)Settings.SmartVolume( pUpload->GetMeasuredSpeed() * 8, FALSE, TRUE ),
-			(LPCTSTR)Settings.SmartVolume( pUpload->m_nBandwidth * 8, FALSE, TRUE ),
-			(LPCTSTR)Settings.SmartVolume( pUpload->GetMaxSpeed() * 8, FALSE, TRUE ) );
-	}
-	else
-	{
-		strSpeed = Settings.SmartVolume( pUpload->GetMeasuredSpeed() * 8, FALSE, TRUE );
-	}
-
 	if ( pFile != pUpload->m_pBaseFile || pUpload->m_nState == upsNull )
 	{
 		LoadString( strStatus, IDS_TIP_INACTIVE );
@@ -236,9 +230,9 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	}
 	else if ( nQueue > 0 )
 	{
-		strStatus.Format( _T("%s: %i of %i"),
+		strStatus.Format( _T("%s: %i %s %i"),
 			(LPCTSTR)pUpload->m_pQueue->m_sName,
-			nQueue, pUpload->m_pQueue->GetQueuedCount() );
+			nQueue, strOf, pUpload->m_pQueue->GetQueuedCount() );
 	}
 	else
 	{
@@ -321,7 +315,7 @@ void CUploadTipCtrl::OnTimer(UINT_PTR nIDEvent)
 
 	if ( CUploadTransfer* pUpload = pFile->GetActive() )
 	{
-		DWORD nSpeed = pUpload->GetMeasuredSpeed() * 8;
+		DWORD nSpeed = pUpload->GetMeasuredSpeed();
 		m_pItem->Add( nSpeed );
 		m_pGraph->m_nUpdates++;
 		m_pGraph->m_nMaximum = max( m_pGraph->m_nMaximum, nSpeed );

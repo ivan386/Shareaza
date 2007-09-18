@@ -2538,8 +2538,8 @@
 	<string id="8064" value="Koblet til %lu nabo(er).  %s lokalt."/>
 	<string id="8065" value="Kobler til nettverket..."/>
 	<string id="8066" value="Ikke koblet til nettverket."/>
-	<string id="8067" value="%s inn : %s ut [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s inn : %s ut [D:%i/U:%i]"/>
+	<string id="8067" value="%s inn : %s ut [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s inn : %s ut [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Koble til"/>
 	<string id="8070" value="Kobler til..."/>
 	<string id="8071" value="Koblet til"/>

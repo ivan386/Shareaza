@@ -152,7 +152,7 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 
 	// Update value in limit combo box
 	if ( Settings.Bandwidth.Uploads )
-		m_sBandwidthLimit = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
+		m_sBandwidthLimit = Settings.SmartSpeed( Settings.Bandwidth.Uploads );
 	else
 		m_sBandwidthLimit	= _T("MAX");
 
@@ -201,7 +201,7 @@ void CUploadsSettingsPage::UpdateQueues()
 		if ( ( pQueue->m_bEnable ) && ( ! bDonkeyOnlyDisabled ) )
 		{
 			DWORD nBandwidth = nLimit * pQueue->m_nBandwidthPoints / max( 1, UploadQueues.GetTotalBandwidthPoints( TRUE ) );
-			pItem->Set( 2, Settings.SmartVolume( nBandwidth * 8, FALSE, TRUE ) + '+' );
+			pItem->Set( 2, Settings.SmartSpeed( nBandwidth ) + '+' );
 			pItem->Format( 3, _T("%i-%i"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers );
 
 			pItem->m_nImage = CoolInterface.ImageForID( ID_VIEW_UPLOADS );
@@ -444,10 +444,12 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Remove any existing strings
 		while ( m_wndBandwidthLimit.GetCount() ) m_wndBandwidthLimit.DeleteString( 0 );
 		// Add the new ones
-		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.OutSpeed / 4, TRUE, TRUE ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.OutSpeed / 2, TRUE, TRUE ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartVolume( (Settings.Connection.OutSpeed/2)+(Settings.Connection.OutSpeed/4), TRUE, TRUE ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.OutSpeed, TRUE, TRUE ) );
+		DWORD nHalfSpeed = Settings.Connection.OutSpeed / 2;
+		DWORD nQuarterSpeed = Settings.Connection.OutSpeed / 4;
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nQuarterSpeed, Kilobits ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed, Kilobits ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed + nQuarterSpeed, Kilobits ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( Settings.Connection.OutSpeed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( _T("MAX") );
 
 		UpdateData( FALSE );

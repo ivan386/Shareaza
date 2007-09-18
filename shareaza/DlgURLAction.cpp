@@ -266,11 +266,7 @@ void CURLActionDlg::Update()
 			m_sNameValue = pURL->m_sName;
 
 			if ( pURL->m_bSize )
-			{
-				m_sNameValue += _T(" (");
-				m_sNameValue += Settings.SmartVolume( pURL->m_nSize, FALSE );
-				m_sNameValue += _T(")");
-			}
+				m_sNameValue += _T(" (") + Settings.SmartVolume( pURL->m_nSize ) + _T(")");
 		}
 		else
 		{

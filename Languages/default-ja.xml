@@ -2596,8 +2596,8 @@
 	<string id="8064" value="近隣接続 %lu, 共有 %s"/>
 	<string id="8065" value="ネットワークに接続中..."/>
 	<string id="8066" value="ネットワーク未接続です"/>
-	<string id="8067" value="入 %s : 出 %s [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] 入 %s : 出 %s [D:%i/U:%i]"/>
+	<string id="8067" value="入 %s : 出 %s [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] 入 %s : 出 %s [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="接続"/>
 	<string id="8070" value="接続中..."/>
 	<string id="8071" value="接続済み"/>

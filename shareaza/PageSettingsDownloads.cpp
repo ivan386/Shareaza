@@ -117,7 +117,7 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 
 	// Update the text in the bandwidth limit combo
 	if ( Settings.Bandwidth.Downloads )
-		m_sBandwidthLimit = Settings.SmartVolume( Settings.Bandwidth.Downloads * 8, FALSE, TRUE );
+		m_sBandwidthLimit = Settings.SmartSpeed( Settings.Bandwidth.Downloads );
 	else
 		m_sBandwidthLimit	= _T("MAX");
 
@@ -388,10 +388,12 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Remove any existing strings
 		while ( m_wndBandwidthLimit.GetCount() ) m_wndBandwidthLimit.DeleteString( 0 );
 		// Add the new ones
-		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.InSpeed / 4, TRUE, TRUE ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.InSpeed / 2, TRUE, TRUE ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartVolume( (Settings.Connection.InSpeed/2)+(Settings.Connection.InSpeed/4), TRUE, TRUE ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.InSpeed, TRUE, TRUE ) );
+		DWORD nHalfSpeed = Settings.Connection.InSpeed / 2;
+		DWORD nQuarterSpeed = Settings.Connection.InSpeed / 4;
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nQuarterSpeed, Kilobits ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed, Kilobits ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed + nQuarterSpeed, Kilobits ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( Settings.Connection.InSpeed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( _T("MAX") );
 
 		// Update the queue limit combo values

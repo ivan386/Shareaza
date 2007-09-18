@@ -743,7 +743,7 @@ void CHomeLibraryBox::Update()
 	
 	if ( m_pdLibraryVolume )
 	{
-		str = Settings.SmartVolume( nVolume, TRUE ) + ' ';
+		str = Settings.SmartVolume( nVolume, KiloBytes ) + ' ';
 		if ( m_pdLibraryVolume->m_sText.Compare( str ) != 0 )
 		{
 			m_pdLibraryVolume->SetText( str );
@@ -1077,7 +1077,7 @@ void CHomeUploadsBox::Update()
 	}
 	else if ( Statistics.Today.Uploads.Files == 1 )
 	{
-		str.Format( m_sUploadedOne, (LPCTSTR)Settings.SmartVolume( Statistics.Today.Uploads.Volume, TRUE ) );
+		str.Format( m_sUploadedOne, Settings.SmartVolume( Statistics.Today.Uploads.Volume, KiloBytes ) );
 
 		if ( m_pdUploadedNone ) m_pdUploadedNone->Show( FALSE );
 		if ( m_pdUploadedMany ) m_pdUploadedMany->Show( FALSE );
@@ -1091,7 +1091,7 @@ void CHomeUploadsBox::Update()
 	else
 	{
 		str.Format( m_sUploadedMany, (int)Statistics.Today.Uploads.Files,
-			(LPCTSTR)Settings.SmartVolume( Statistics.Today.Uploads.Volume, TRUE ) );
+			Settings.SmartVolume( Statistics.Today.Uploads.Volume, KiloBytes ) );
 		
 		if ( m_pdUploadedNone ) m_pdUploadedNone->Show( FALSE );
 		if ( m_pdUploadedOne )  m_pdUploadedOne->Show( FALSE );

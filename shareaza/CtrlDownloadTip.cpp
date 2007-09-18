@@ -352,7 +352,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 			}
 		}
 
-		strSpeed = Settings.SmartVolume( pDownload->GetAverageSpeed() * 8, FALSE, TRUE );
+		strSpeed = Settings.SmartSpeed( pDownload->GetAverageSpeed() );
 
 		strSources.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
 		if ( theApp.m_bRTL ) strSources = _T("\x202B") + strSources;
@@ -381,14 +381,16 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		{
 			strVolume.Format( _T("(%.2f%%) %s %s %s"),
 				pDownload->GetProgress(),
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ), strOf,
-				(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ) );
+				Settings.SmartVolume( pDownload->m_nSize ),
+				strOf,
+				Settings.SmartVolume( pDownload->GetVolumeComplete() ) );
 		}
 		else
 		{
 			strVolume.Format( _T("%s %s %s (%.2f%%)"),
-				(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ),
-				strOf, (LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ),
+				Settings.SmartVolume( pDownload->GetVolumeComplete() ),
+				strOf,
+				Settings.SmartVolume( pDownload->m_nSize ),
 				pDownload->GetProgress() );
 		}
 	}
@@ -403,16 +405,16 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		{
 			strTorrentUpload.Format( _T("(%.2f%%) %s %s %s"),
 				pDownload->GetRatio(),
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload, FALSE ),
+				Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload ),
 				strOf,
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload, FALSE ) );
+				Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload ) );
 		}
 		else
 		{
 			strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"),
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload, FALSE ),
+				Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalUpload ),
 				strOf,
-				(LPCTSTR)Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload, FALSE ),
+				Settings.SmartVolume( pDownload->m_pTorrent.m_nTotalDownload ),
 				pDownload->GetRatio() );
 		}
 	}
@@ -497,7 +499,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 {
 	m_sName = pDownload->m_sDisplayName;
-	m_sSize = Settings.SmartVolume( pDownload->m_nSize, FALSE );
+	m_sSize = Settings.SmartVolume( pDownload->m_nSize );
 	if ( pDownload->m_nSize == SIZE_UNKNOWN ) m_sSize = _T("?");
 
 	m_sSHA1.Empty();
@@ -729,7 +731,6 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 
 void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 {
-//	CDownload* pDownload = pSource->m_pDownload;
 	CPoint pt( 0, 0 );
 
 	DrawText( pDC, &pt, m_sName );
@@ -755,25 +756,25 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 	DrawRule( pDC, &pt );
 
 	CString strStatus, strSpeed, strText;
+	CString strOf;
+	LoadString( strOf, IDS_GENERAL_OF );
 
 	if ( pSource->m_pTransfer != NULL )
 	{
-		DWORD nLimit = pSource->m_pTransfer->m_mInput.pLimit != NULL ?
-			*pSource->m_pTransfer->m_mInput.pLimit : 0;
+		CDownloadTransfer* pDownload = pSource->m_pTransfer;
 
-		strStatus = pSource->m_pTransfer->GetStateText( TRUE );
+		strStatus = pDownload->GetStateText( TRUE );
 
-		if ( nLimit > 0 )
+		if ( pDownload->m_mInput.pLimit != NULL )
 		{
-			CString strOf;
-			LoadString( strOf, IDS_GENERAL_OF );
- 			strSpeed.Format( _T("%s %s %s"),
-				(LPCTSTR)Settings.SmartVolume( pSource->m_pTransfer->GetMeasuredSpeed() * 8, FALSE, TRUE ),
-				strOf, (LPCTSTR)Settings.SmartVolume( nLimit * 8, FALSE, TRUE ) );
+			strSpeed.Format( _T("%s %s %s"),
+				Settings.SmartSpeed( pDownload->GetMeasuredSpeed() ),
+				strOf,
+				Settings.SmartSpeed( *pDownload->m_mInput.pLimit ) );
 		}
 		else
 		{
-			strSpeed = Settings.SmartVolume( pSource->m_pTransfer->GetMeasuredSpeed() * 8, FALSE, TRUE );
+			strSpeed = Settings.SmartSpeed( pSource->m_pTransfer->GetMeasuredSpeed() );
 		}
 	}
 	else
@@ -873,7 +874,7 @@ void CDownloadTipCtrl::OnTimer(UINT_PTR nIDEvent)
 	if ( Downloads.Check( (CDownload*)m_pContext ) )
 	{
 		CDownload* pDownload = (CDownload*)m_pContext;
-		DWORD nSpeed = pDownload->GetMeasuredSpeed() * 8;
+		DWORD nSpeed = pDownload->GetMeasuredSpeed();
 		m_pItem->Add( nSpeed );
 		m_pGraph->m_nUpdates++;
 		m_pGraph->m_nMaximum = max( m_pGraph->m_nMaximum, nSpeed );
@@ -885,7 +886,7 @@ void CDownloadTipCtrl::OnTimer(UINT_PTR nIDEvent)
 
 		if ( pSource->m_pTransfer )
 		{
-			DWORD nSpeed = pSource->m_pTransfer->GetMeasuredSpeed() * 8;
+			DWORD nSpeed = pSource->m_pTransfer->GetMeasuredSpeed();
 			m_pItem->Add( nSpeed );
 			m_pGraph->m_nUpdates++;
 			m_pGraph->m_nMaximum = max( m_pGraph->m_nMaximum, nSpeed );

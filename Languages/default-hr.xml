@@ -2528,8 +2528,8 @@
 	<string id="8064" value="Spojeno na %lu susjeda.%s u vašoj kolekciji."/>
 	<string id="8065" value="Spajam se na mrežu..."/>
 	<string id="8066" value="Nije spojeno."/>
-	<string id="8067" value="%s primljeno : %s poslano [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s primljeno : %s poslano [D:%i/U:%i]"/>
+	<string id="8067" value="%s primljeno : %s poslano [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s primljeno : %s poslano [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Spoji"/>
 	<string id="8070" value="Spajam..."/>
 	<string id="8071" value="Spojeno"/>

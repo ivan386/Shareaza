@@ -2541,8 +2541,8 @@
 	<string id="8064" value="‪‏&#8234;‏שכנים‎ %lu ‏אל‎ ‏מחובר‎ , %s ‏מקומית‎ ‏בספריה"/>
 	<string id="8065" value="‪...מתחבר לרשת"/>
 	<string id="8066" value="‪.לא מחובר לרשת"/>
-	<string id="8067" value="‪‪%s :‏נכנס‎ %s :‏יוצא‎ [D:%i/U:%i]"/>
-	<string id="8068" value="‪‪[H:%i] %s :‏נכנס‎ %s :‏יוצא‎ [D:%i/U:%i]"/>
+	<string id="8067" value="‪‪%s :‏נכנס‎ %s :‏יוצא‎ [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="‪‪[H:%I64i] %s :‏נכנס‎ %s :‏יוצא‎ [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="‪התחבר"/>
 	<string id="8070" value="‪...מתחבר"/>
 	<string id="8071" value="‪מחובר"/>

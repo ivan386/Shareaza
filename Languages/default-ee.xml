@@ -2541,8 +2541,8 @@ Umlauts:
 	<string id="8064" value="Ühendatud %lu naabriga.  %s kohalikus raamatukogus."/>
 	<string id="8065" value="Ühendan võrku..."/>
 	<string id="8066" value="Ei ole võrguga ühendust."/>
-	<string id="8067" value="%s sisse : %s välja [A:%i/Ü:%i]"/>
-	<string id="8068" value="[H:%i] %s alla : %s üles [A:%i/Ü:%i]"/>
+	<string id="8067" value="%s sisse : %s välja [A:%I64i/Ü:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s alla : %s üles [A:%I64i/Ü:%I64i]"/>
 	<string id="8069" value="Ühenda"/>
 	<string id="8070" value="Ühendan..."/>
 	<string id="8071" value="Ühendatud"/>

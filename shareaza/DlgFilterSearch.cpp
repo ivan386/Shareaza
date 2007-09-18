@@ -205,12 +205,12 @@ void CFilterSearchDlg::UpdateFields()
 	m_nSources			= m_pMatches->m_nFilterSources;
 
 	if ( m_pMatches->m_nFilterMinSize > 0 )
-		m_sMinSize	= Settings.SmartVolume( m_pMatches->m_nFilterMinSize, FALSE );
+		m_sMinSize	= Settings.SmartVolume( m_pMatches->m_nFilterMinSize );
 	else
 		m_sMinSize.Empty();
 
 	if ( m_pMatches->m_nFilterMaxSize > 0 )
-		m_sMaxSize	= Settings.SmartVolume( m_pMatches->m_nFilterMaxSize, FALSE );
+		m_sMaxSize	= Settings.SmartVolume( m_pMatches->m_nFilterMaxSize );
 	else
 		m_sMaxSize.Empty();
 
@@ -261,12 +261,12 @@ void CFilterSearchDlg::OnCbnSelChangeFilters()
 		m_nSources			= pOptions->m_nFilterSources;
 
 		if ( pOptions->m_nFilterMinSize > 0 )
-			m_sMinSize	= Settings.SmartVolume( pOptions->m_nFilterMinSize, FALSE );
+			m_sMinSize	= Settings.SmartVolume( pOptions->m_nFilterMinSize );
 		else
 			m_sMinSize.Empty();
 
 		if ( pOptions->m_nFilterMaxSize > 0 )
-			m_sMaxSize	= Settings.SmartVolume( pOptions->m_nFilterMaxSize, FALSE );
+			m_sMaxSize	= Settings.SmartVolume( pOptions->m_nFilterMaxSize );
 		else
 			m_sMaxSize.Empty();
 

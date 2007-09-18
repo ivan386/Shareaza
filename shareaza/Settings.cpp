@@ -453,9 +453,9 @@ void CSettings::Setup()
 
 CSettings::CSettings()
 {
-	TCHAR szPath[260];
+	TCHAR szPath[MAX_PATH];
 	CRegistry pRegistry;
-	GetModuleFileName( NULL, szPath, 260 );
+	GetModuleFileName( NULL, szPath, MAX_PATH );
 
 	// Set default program and user paths
 	General.Path = szPath;
@@ -1243,156 +1243,150 @@ void CSettings::SetStartup(BOOL bStartup)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CSettings volume
+// CSettings speed
+//
+//	Returns a nicely formatted string displaying a given transfer speed
 
-CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits, BOOL bTruncate)
-{	//Returns a nicely formatted string displaying a given transfer speed
-	LPCTSTR pszUnit = _T("B");
+CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTruncate) const
+{
 	CString strVolume;
 
-	if ( bRateInBits )
+	if ( General.RatesInBytes && ( nVolumeUnits == bits || nVolumeUnits == Kilobits ) )
+		nVolume /= Bytes;
+
+	if ( General.RatesUnit )
 	{
-		if ( General.RatesInBytes )
+		CString strUnit = _T("B/s");
+		if ( !General.RatesInBytes )
+			strUnit = _T("b/s");
+		switch ( General.RatesUnit )
 		{
-			nVolume /= 8;
-			pszUnit = _T("B/s");
+		case 1:	// bits - Bytes
+			strVolume.Format( _T("%I64i %s"), nVolume * nVolumeUnits, strUnit );
+			break;
+		case 2:	// Kilobits - KiloBytes
+			strVolume.Format( _T("%.2lf K%s"), nVolume / 1024.0f, strUnit );
+			break;
+		case 3:	// Megabits - MegaBytes
+			strVolume.Format( _T("%.2lf M%s"), nVolume / pow( 1024.0f, 2 ), strUnit );
+			break;
+		default:
+			TRACE( _T("Unknown RatesUnit - %i"), General.RatesUnit );
+			break;
 		}
-		else
-		{
-			pszUnit = _T("b/s");
-		}
-
-		if ( General.RatesUnit > 0 )
-		{
-			if ( bKB ) nVolume *= 1024;
-
-			switch ( General.RatesUnit )
-			{
-			case 1:
-				strVolume.Format( _T("%I64i %s"), nVolume, pszUnit );
-				return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
-			case 2:
-				strVolume.Format( _T("%.2lf K%s"), (double)nVolume / 1024, pszUnit );
-				return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
-			case 3:
-				strVolume.Format( _T("%.2lf M%s"), (double)nVolume / (1024*1024), pszUnit );
-				return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
-			}
-
-			if ( bKB ) nVolume /= 1024;
-		}
+		return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 	}
 
-	if ( ! bKB )
+	strVolume = SmartVolume( nVolume, nVolumeUnits, bTruncate ) + _T("/s");
+	return strVolume;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CSettings volume
+//
+//	Returns a nicely formatted string displaying a given volume
+
+CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTruncate) const
+{
+	CString strUnit = _T("B");
+	CString strVolume;
+	CString strTruncate = _T("%.0f");
+
+	if ( !General.RatesInBytes && ( nVolumeUnits == bits || nVolumeUnits == Kilobits ) )
+		strUnit = _T("b");
+
+	switch ( nVolumeUnits )
 	{
-		if ( nVolume < 1024 )
+	// nVolume is in bits - Bytes
+	case bits:
+	case Bytes:
+		if ( nVolume < 1024 )						// bits - Bytes
 		{
-			strVolume.Format( _T("%I64i %s"), nVolume, pszUnit );
-			return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
+			strVolume.Format( _T("%I64i %s"), nVolume, strUnit );
+			break;
 		}
-		else if ( nVolume < 10*1024 )
+		else if ( nVolume < 10 * 1024 )				// 10 Kilobits - KiloBytes
 		{
-			if ( bTruncate )
-				strVolume.Format( _T("%.0lf K%s"), (double)nVolume / 1024, pszUnit );
-			else
-				strVolume.Format( _T("%.2lf K%s"), (double)nVolume / 1024, pszUnit );
-			return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
+			if ( !bTruncate )
+				strTruncate = _T("%.2f");
+			strVolume.Format( strTruncate + _T(" K%s"), nVolume / 1024.0f, strUnit );
+			break;
 		}
 
+		// Convert to KiloBytes and drop through to next case
 		nVolume /= 1024;
-	}
 
-
-	if ( nVolume < 1024 )							// Kilo
-	{
-		strVolume.Format( _T("%I64i K%s"), nVolume, pszUnit );
-	}
-	else if ( nVolume < 1024*1024 )					// Mega
-	{
-		if ( bTruncate )
-			strVolume.Format( _T("%.0lf M%s"), (double)nVolume / 1024, pszUnit );
+	// nVolume is in Kilobits - Kilobytes
+	case Kilobits:
+	case KiloBytes:
+		if ( nVolume < 1024 )						// Kilo
+			strVolume.Format( _T("%I64i K%s"), nVolume, strUnit );
+		else if ( nVolume < pow( 1024.0f, 2 ) )		// Mega
+		{
+			if ( !bTruncate )
+				strTruncate = _T("%.2f");
+			strVolume.Format( strTruncate + _T(" M%s"), nVolume / 1024.0f, strUnit );
+		}
 		else
-			strVolume.Format( _T("%.2lf M%s"), (double)nVolume / 1024, pszUnit );
-	}
-	else if ( nVolume < 1024*1024*1024 )			// Giga
-	{
-		if ( bTruncate )
-			strVolume.Format( _T("%.0lf G%s"), (double)nVolume / (1024*1024), pszUnit );
-		else
-			strVolume.Format( _T("%.3lf G%s"), (double)nVolume / (1024*1024), pszUnit );
-	}
-	else if ( nVolume < 1099511627776.0f )			// Tera
-	{
-		if ( bTruncate )
-			strVolume.Format( _T("%.0lf T%s"), (double)nVolume / (1024*1024*1024), pszUnit );
-		else
-			strVolume.Format( _T("%.3lf T%s"), (double)nVolume / (1024*1024*1024), pszUnit );
-	}
-	else  if ( nVolume < 1125899906842624.0f )		// Peta
-	{
-		if ( bTruncate )
-			strVolume.Format( _T("%.0lf P%s"), (double)nVolume / (1099511627776.0f), pszUnit );
-		else
-			strVolume.Format( _T("%.3lf P%s"), (double)nVolume / (1099511627776.0f), pszUnit );
-	}
-	else											// Exa
-	{
-		if ( bTruncate )
-			strVolume.Format( _T("%.0lf E%s"), (double)nVolume / (1125899906842624.0f), pszUnit );
-		else
-			strVolume.Format( _T("%.3lf E%s"), (double)nVolume / (1125899906842624.0f), pszUnit );
+		{
+			if ( !bTruncate )
+				strTruncate = _T("%.2f");
+			if ( nVolume < pow( 1024.0f, 3 ) )		// Giga
+				strVolume.Format( strTruncate + _T(" G%s"), nVolume / pow( 1024.0f, 2 ), strUnit );
+			else if ( nVolume < pow( 1024.0f, 4 ) )	// Tera
+				strVolume.Format( strTruncate + _T(" T%s"), nVolume / pow( 1024.0f, 3 ), strUnit );
+			else if ( nVolume < pow( 1024.0f, 5 ) )	// Peta
+				strVolume.Format( strTruncate + _T(" P%s"), nVolume / pow( 1024.0f, 4 ), strUnit );
+			else									// Exa
+				strVolume.Format( strTruncate + _T(" E%s"), nVolume / pow( 1024.0f, 5 ), strUnit );
+		}
 	}
 
 	return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 }
 
-QWORD CSettings::ParseVolume(LPCTSTR psz, BOOL bSpeedInBits)
+QWORD CSettings::ParseVolume(LPCTSTR pszSize, bool bSpeedInBits) const
 {
 	double val = 0;
+	CString strSize(pszSize);
 
-	CString strTmp(psz);
-	if ( strTmp.Left( 1 ) == _T("\x200E") ) strTmp = strTmp.Mid( 1 );
-    const TCHAR* psz1 = strTmp;
+	if ( strSize.Left( 1 ) == _T("\x200E") ) strSize = strSize.Mid( 1 );
 
-	if ( _stscanf( psz1 , _T("%lf"), &val ) != 1 ) return 0;
+	// Return early if there is no number in the string
+	if ( _stscanf( strSize, _T("%lf"), &val ) != 1 ) return 0ul;
 
-	if ( _tcsstr( psz1, _T("K") ) ) val *= 1024;						// Kilo
-	if ( _tcsstr( psz1, _T("k") ) ) val *= 1024;
-
-	if ( _tcsstr( psz1, _T("M") ) ) val *= 1024*1024;					// Mega
-	if ( _tcsstr( psz1, _T("m") ) ) val *= 1024*1024;
-
-	if ( _tcsstr( psz1, _T("G") ) ) val *= 1024*1024*1024;				// Giga
-	if ( _tcsstr( psz1, _T("g") ) ) val *= 1024*1024*1024;
-
-	if ( _tcsstr( psz1, _T("T") ) ) val *= 1099511627776.0f;			// Tera
-	if ( _tcsstr( psz1, _T("t") ) ) val *= 1099511627776.0f;
-
-	if ( _tcsstr( psz1, _T("P") ) ) val *= 1125899906842624.0f;			// Peta
-	if ( _tcsstr( psz1, _T("p") ) ) val *= 1125899906842624.0f;
-
-	if ( _tcsstr( psz1, _T("E") ) ) val *= 1152921504606846976.0f;		// Exa
-	if ( _tcsstr( psz1, _T("e") ) ) val *= 1152921504606846976.0f;
+	// Work out what units are represented in the string
+	if ( _tcsstr( strSize, _T("K") ) || _tcsstr( strSize, _T("k") ) )		// Kilo
+		val *= 1024.0f;
+	else if ( _tcsstr( strSize, _T("M") ) || _tcsstr( strSize, _T("m") ) )	// Mega
+		val *= pow( 1024.0f, 2 );
+	else if ( _tcsstr( strSize, _T("G") ) || _tcsstr( strSize, _T("g") ) )	// Giga
+		val *= pow( 1024.0f, 3 );
+	else if ( _tcsstr( strSize, _T("T") ) || _tcsstr( strSize, _T("t") ) )	// Tera
+		val *= pow( 1024.0f, 4 );
+	else if ( _tcsstr( strSize, _T("P") ) || _tcsstr( strSize, _T("p") ) )	// Peta
+		val *= pow( 1024.0f, 5 );
+	else if ( _tcsstr( strSize, _T("E") ) || _tcsstr( strSize, _T("e") ) )	// Exa
+		val *= pow( 1024.0f, 6 );
 
 	if ( bSpeedInBits )
 	{
-		if ( _tcschr( psz1, 'b' ) )
-			return (QWORD)val;
-		else if ( _tcschr( psz1, 'B' ) )
-			return (QWORD)( val * 8 );
-		else
-			return 0;
+		if ( _tcschr( strSize, 'B' ) )
+			val *= 8.0f;
 	}
 	else
 	{
-		return (QWORD)val;
+		if ( _tcschr( strSize, 'b' ) )
+			val /= 8.0f;
 	}
+
+	return static_cast< QWORD >( val );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CSettings::CheckBandwidth
 
-DWORD CSettings::GetOutgoingBandwidth()
+DWORD CSettings::GetOutgoingBandwidth() const
 {	// This returns the available (Affected by limit) outgoing bandwidth in KB/s
 	if ( Settings.Bandwidth.Uploads == 0 )
 		return ( Settings.Connection.OutSpeed / 8 );

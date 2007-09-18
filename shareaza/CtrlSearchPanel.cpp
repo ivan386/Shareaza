@@ -238,14 +238,14 @@ void CSearchPanel::ShowSearch(CManagedSearch* pSearch)
 
 		CString strSize;
 		if ( pSearch->m_pSearch->m_nMinSize > 0 )
-			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMinSize, FALSE, FALSE, TRUE );
+			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMinSize, Bytes, true );
 		else
 			strSize.Empty();
 		if ( m_boxAdvanced.m_wndSizeMin.m_hWnd != NULL ) m_boxAdvanced.m_wndSizeMin.SetWindowText( strSize );
 
 
 		if ( pSearch->m_pSearch->m_nMaxSize < SIZE_UNKNOWN )
-			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMaxSize, FALSE, FALSE, TRUE );
+			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMaxSize, Bytes, true );
 		else
 			strSize.Empty();
 		if ( m_boxAdvanced.m_wndSizeMax.m_hWnd != NULL ) m_boxAdvanced.m_wndSizeMax.SetWindowText( strSize );

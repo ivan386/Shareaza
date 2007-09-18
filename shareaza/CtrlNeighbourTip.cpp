@@ -318,17 +318,17 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 
 	LoadString( str, IDS_NEIGHBOUR_CURRENT );
 	DrawText( pDC, &pt, str );
-	str = Settings.SmartVolume( pNeighbour->m_mInput.nMeasure * 8, FALSE, TRUE );
+	str = Settings.SmartSpeed( pNeighbour->m_mInput.nMeasure );
 	DrawText( pDC, &pt, str, 128 );
-	str = Settings.SmartVolume( pNeighbour->m_mOutput.nMeasure * 8, FALSE, TRUE );
+	str = Settings.SmartSpeed( pNeighbour->m_mOutput.nMeasure );
 	DrawText( pDC, &pt, str, 128 + 80 );
 	pt.y += TIP_TEXTHEIGHT;
 
 	LoadString( str, IDS_NEIGHBOUR_TOTAL );
 	DrawText( pDC, &pt, str );
-	str = Settings.SmartVolume( pNeighbour->m_mInput.nTotal, FALSE );
+	str = Settings.SmartVolume( pNeighbour->m_mInput.nTotal );
 	DrawText( pDC, &pt, str, 128 );
-	str = Settings.SmartVolume( pNeighbour->m_mOutput.nTotal, FALSE );
+	str = Settings.SmartVolume( pNeighbour->m_mOutput.nTotal );
 	DrawText( pDC, &pt, str, 128 + 80 );
 	pt.y += TIP_TEXTHEIGHT;
 
@@ -382,8 +382,8 @@ void CNeighbourTipCtrl::OnTimer(UINT_PTR nIDEvent)
 
 	pNeighbour->Measure();
 
-	DWORD nIn	= pNeighbour->m_mInput.nMeasure * 8;
-	DWORD nOut	= pNeighbour->m_mOutput.nMeasure * 8;
+	DWORD nIn	= pNeighbour->m_mInput.nMeasure;
+	DWORD nOut	= pNeighbour->m_mOutput.nMeasure;
 
 	m_pItemIn->Add( nIn );
 	m_pItemOut->Add( nOut );

@@ -2504,8 +2504,8 @@
 	<string id="8064" value="Komşu(lar)ya %lu bağlandı.  %s yerel kütüphane."/>
 	<string id="8065" value="Ağa bağlanıyor..."/>
 	<string id="8066" value="Ağa bağlanmadı."/>
-	<string id="8067" value="%s içeride : %s dışarıda [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s içeride : %s dışarıda [D:%i/U:%i]"/>
+	<string id="8067" value="%s içeride : %s dışarıda [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s içeride : %s dışarıda [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Bağlan"/>
 	<string id="8070" value="Bağlanıyor..."/>
 	<string id="8071" value="Bağlandı"/>

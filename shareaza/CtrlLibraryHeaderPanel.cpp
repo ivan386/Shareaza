@@ -93,7 +93,7 @@ int CLibraryHeaderPanel::Update()
 		LibraryMaps.GetStatistics( &nTotalFiles, &nTotalVolume );
 		str.Format( _T("%lu"), nTotalFiles );
 		Replace( m_sSubtitle, _T("{totalFiles}"), str );
-		str = Settings.SmartVolume( nTotalVolume, TRUE );
+		str = Settings.SmartVolume( nTotalVolume, KiloBytes );
 		Replace( m_sSubtitle, _T("{totalVolume}"), str );
 	}
 

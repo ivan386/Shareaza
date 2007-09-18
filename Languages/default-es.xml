@@ -2536,8 +2536,8 @@
 	<string id="8064" value="Conectado a %lu vecino(s).  Tienes %s en Mi Colección."/>
 	<string id="8065" value="Conectando a la red..."/>
 	<string id="8066" value="Shareaza no esta conectado a la red."/>
-	<string id="8067" value="%s entra : %s sale [D:%i/U:%i]"/>
-	<string id="8068" value="[C:%i] %s entra : %s sale [D:%i/U:%i]"/>
+	<string id="8067" value="%s entra : %s sale [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[C:%I64i] %s entra : %s sale [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Conectar"/>
 	<string id="8070" value="Conectando..."/>
 	<string id="8071" value="Conectado"/>

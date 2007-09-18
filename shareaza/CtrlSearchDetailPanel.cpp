@@ -154,27 +154,29 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	
 	if ( IsWindowVisible() || bFileChanged )
 	{
-		CString strFormat, strPart;
+		CString strPart;
 		m_sStatus.Empty();
 		
 		if ( pFile->m_nSources == 1 )
 		{
-			LoadString( strFormat, IDS_SEARCH_DETAILS_SOURCES_ONE );
-			strPart.Format( strFormat, (LPCTSTR)Settings.SmartVolume( nSpeed, TRUE, TRUE ) );
+			strPart.Format( IDS_SEARCH_DETAILS_SOURCES_ONE,
+				Settings.SmartVolume( nSpeed, KiloBytes ) );
 			m_sStatus += strPart;
 		}
 		else
 		{
-			if ( pFile->m_nSources == 0 ) nSpeed = 0;
-			LoadString( strFormat, IDS_SEARCH_DETAILS_SOURCES_MANY );
-			strPart.Format( strFormat, pFile->m_nSources, (LPCTSTR)Settings.SmartVolume( nSpeed, TRUE, TRUE ) );
+			if ( pFile->m_nSources == 0 )
+				nSpeed = 0;
+			strPart.Format( IDS_SEARCH_DETAILS_SOURCES_MANY,
+				pFile->m_nSources,
+				Settings.SmartVolume( nSpeed, KiloBytes ) );
 			m_sStatus += strPart;
 		}
 		
 		if ( m_pReviews.GetCount() > 1 )
 		{
-			LoadString( strFormat, IDS_SEARCH_DETAILS_REVIEWS_MANY );
-			strPart.Format( strFormat, m_pReviews.GetCount() );
+			strPart.Format( IDS_SEARCH_DETAILS_REVIEWS_MANY,
+				m_pReviews.GetCount() );
 			m_sStatus += strPart;
 		}
 		else if ( m_pReviews.GetCount() == 1 )

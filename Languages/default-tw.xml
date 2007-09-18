@@ -2486,8 +2486,8 @@
 	<string id="8064" value="已連線至 %lu 鄰居.  %s 在本地收藏."/>
 	<string id="8065" value="連線到網路中..."/>
 	<string id="8066" value="還沒連線到網路."/>
-	<string id="8067" value="%s in : %s out [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s in : %s out [D:%i/U:%i]"/>
+	<string id="8067" value="%s in : %s out [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s in : %s out [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="連線"/>
 	<string id="8070" value="連線中"/>
 	<string id="8071" value="已連線"/>

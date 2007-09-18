@@ -2577,8 +2577,8 @@
 	<string id="8064" value="Connected to %lu neighbour(s).  %s in local library."/>
 	<string id="8065" value="Connecting to the network..."/>
 	<string id="8066" value="Not connected to the network."/>
-	<string id="8067" value="%s in : %s out [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s in : %s out [D:%i/U:%i]"/>
+	<string id="8067" value="%s in : %s out [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s in : %s out [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="اتصال"/>
 	<string id="8070" value="اتصال..."/>
 	<string id="8071" value="متصل"/>

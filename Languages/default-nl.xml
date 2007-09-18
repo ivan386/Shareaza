@@ -2497,8 +2497,8 @@
 	<string id="8064" value="Verbonden met %lu gastheren. %s in lokale bibliotheek."/>
 	<string id="8065" value="Bezig te verbinden met het netwerk..."/>
 	<string id="8066" value="Niet verbonden met het netwerk."/>
-	<string id="8067" value="%s in: %s uit [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s in: %s uit [D:%i/U:%i]"/>
+	<string id="8067" value="%s in: %s uit [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s in: %s uit [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Verbinden"/>
 	<string id="8070" value="Verbindt..."/>
 	<string id="8071" value="Verbonden"/>

@@ -2529,8 +2529,8 @@
 	<string id="8064" value="Σύνδεση σε %lu γείτονα(ες).  %s σε τοπικές βιβλιοθήκες."/>
 	<string id="8065" value="Σύνδεση με το δίκτυο..."/>
 	<string id="8066" value="Δεν έχετε συνδεθεί με το δίκτυο."/>
-	<string id="8067" value="%s μέσα : %s έξω [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s μέσα : %s έξω [D:%i/U:%i]"/>
+	<string id="8067" value="%s μέσα : %s έξω [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s μέσα : %s έξω [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Σύνδεση"/>
 	<string id="8070" value="Σύνδεση..."/>
 	<string id="8071" value="Συνδέθηκε"/>

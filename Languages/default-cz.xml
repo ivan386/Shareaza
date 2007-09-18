@@ -2540,8 +2540,8 @@
   <string id="8064" value="Připojeno ke %lu uzlům.  %s v místní knihovně."/>
   <string id="8065" value="Připojuji se do sítě..."/>
   <string id="8066" value="Nejste připojeni do sítě."/>
-  <string id="8067" value="%s přích : %s odch [St:%i/Od:%i]"/>
-  <string id="8068" value="[H:%i] %s přích : %s odch [St:%i/Od:%i]"/>
+  <string id="8067" value="%s přích : %s odch [St:%I64i/Od:%I64i]"/>
+  <string id="8068" value="[H:%I64i] %s přích : %s odch [St:%I64i/Od:%I64i]"/>
   <string id="8069" value="Připojit"/>
   <string id="8070" value="Připojuji..."/>
   <string id="8071" value="Připojit"/>

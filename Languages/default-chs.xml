@@ -2528,8 +2528,8 @@
 	<string id="8064" value="连接到 %lu 个邻居。%s 处于本地收藏中。"/>
 	<string id="8065" value="连接网络..."/>
 	<string id="8066" value="尚未连接网络。"/>
-	<string id="8067" value="%s传入:%s传出[下载:%i/上传:%i]"/>
-	<string id="8068" value="[活动:%i]%s传入:%s传出[下载:%i/上传:%i]"/>
+	<string id="8067" value="%s传入:%s传出[下载:%I64i/上传:%I64i]"/>
+	<string id="8068" value="[活动:%I64i]%s传入:%s传出[下载:%I64i/上传:%I64i]"/>
 	<string id="8069" value="连接"/>
 	<string id="8070" value="连接中..."/>
 	<string id="8071" value="连接完毕"/>

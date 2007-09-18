@@ -287,9 +287,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		if ( nStop > nSize || nStop <= nStart ) return FALSE;
 	}
 
-	Message( IDS_ED2K_EPI_DETECTED,
-		(LPCTSTR)strName,
-		(LPCTSTR)Settings.SmartVolume( nSize, FALSE ) );
+	Message( IDS_ED2K_EPI_DETECTED, strName, Settings.SmartVolume( nSize ) );
 
 	if ( ! Downloads.IsSpaceAvailable( nSize, Downloads.dlPathIncomplete ) )
 	{
@@ -366,7 +364,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	Transfers.m_pSection.Unlock();
 
 	Message( IDS_ED2K_EPI_FILE_CREATED,
-		(LPCTSTR)Settings.SmartVolume( pDownload->m_pFile->m_oFList.length_sum(), FALSE ) );
+		Settings.SmartVolume( pDownload->m_pFile->m_oFList.length_sum() ) );
 	
 	return TRUE;
 }

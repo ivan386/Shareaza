@@ -857,7 +857,7 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 			
 		case UPLOAD_COLUMN_SPEED:
 			if ( pQueue != UploadQueues.m_pHistoryQueue )
-				strText = Settings.SmartVolume( pQueue->GetMeasuredSpeed() * 8, FALSE, TRUE );
+				strText = Settings.SmartSpeed( pQueue->GetMeasuredSpeed() );
 			break;
 		}
 		
@@ -973,7 +973,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			break;
 			
 		case UPLOAD_COLUMN_SIZE:
-			strText = Settings.SmartVolume( pFile->m_nSize, FALSE );
+			strText = Settings.SmartVolume( pFile->m_nSize );
 			break;
 			
 		case UPLOAD_COLUMN_PROGRESS:
@@ -997,8 +997,12 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 					LoadString( strText, IDS_STATUS_UNINTERESTED );
 				else if ( pBT->m_bChoked )
 					LoadString( strText, IDS_STATUS_CHOKED );
-				else if ( DWORD nSpeed = pTransfer->GetMeasuredSpeed() * 8 )
-					strText = Settings.SmartVolume( nSpeed, FALSE, TRUE );
+				else
+				{
+					DWORD nSpeed = pTransfer->GetMeasuredSpeed();
+					if ( nSpeed )
+						strText = Settings.SmartSpeed( nSpeed );
+				}
 			}
 			else if ( nPosition > 0 )
 			{
@@ -1006,10 +1010,14 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 				LoadString( strQ, IDS_STATUS_Q );
 				strText.Format( _T("%s %i"), strQ, nPosition );
 			}
-			else if ( DWORD nSpeed = pTransfer->GetMeasuredSpeed() * 8 )
-				strText = Settings.SmartVolume( nSpeed, FALSE, TRUE );
 			else
-				LoadString( strText, IDS_STATUS_NEXT );
+			{
+				DWORD nSpeed = pTransfer->GetMeasuredSpeed();
+				if ( nSpeed )
+					strText = Settings.SmartSpeed( nSpeed );
+				else
+					LoadString( strText, IDS_STATUS_NEXT );
+			}
 			break;
 			
 		case UPLOAD_COLUMN_CLIENT:

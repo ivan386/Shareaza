@@ -149,7 +149,7 @@ void CFolderScanDlg::InstanceUpdate(LPCTSTR pszName, DWORD nVolume)
 		strItem.Format( _T("%lu"), m_nFiles );
 		m_wndFiles.SetWindowText( strItem );
 
-		strItem = Settings.SmartVolume( m_nVolume, TRUE );
+		strItem = Settings.SmartVolume( m_nVolume, KiloBytes );
 		m_wndVolume.SetWindowText( strItem );
 
 		RedrawWindow();

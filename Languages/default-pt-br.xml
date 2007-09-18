@@ -2510,8 +2510,8 @@
 	<string id="8064" value="Conectado com %lu vizinho(s). %s na biblioteca local."/>
 	<string id="8065" value="Conectando a rede..."/>
 	<string id="8066" value="Não conectado a rede."/>
-	<string id="8067" value="%s entram : %s saem [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s entram : %s saem [D:%i/U:%i]"/>
+	<string id="8067" value="%s entram : %s saem [D:%I64i/U:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s entram : %s saem [D:%I64i/U:%I64i]"/>
 	<string id="8069" value="Conectar"/>
 	<string id="8070" value="Conectando..."/>
 	<string id="8071" value="Conectado"/>

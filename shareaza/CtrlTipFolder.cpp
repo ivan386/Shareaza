@@ -69,7 +69,7 @@ BOOL CFolderTipCtrl::OnPrepare()
 	m_sPath		= pFolder->m_sPath;
 
 	m_sFiles.Format( _T("%lu"), pFolder->m_nFiles );
-	m_sVolume = Settings.SmartVolume( pFolder->m_nVolume, FALSE );
+	m_sVolume = Settings.SmartVolume( pFolder->m_nVolume, KiloBytes );
 
 	QWORD nTotal;
 	CString strText;

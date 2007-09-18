@@ -137,7 +137,7 @@ void CLibraryMetaPanel::Update()
 			m_sFolder = pFirst->m_pFolder->m_sPath;
 		else
 			m_sFolder.Empty();
-		m_sSize		= Settings.SmartVolume( pFirst->GetSize(), FALSE );
+		m_sSize		= Settings.SmartVolume( pFirst->GetSize() );
 		m_sType		= ShellIcons.GetTypeString( m_sName );
 		m_nIcon32	= ShellIcons.Get( m_sName, 32 );
 		m_nIcon48	= ShellIcons.Get( m_sName, 48 );
@@ -188,7 +188,7 @@ void CLibraryMetaPanel::Update()
 			if ( nIcon != m_nIcon32 ) m_nIcon32 = -1;
 		}
 		
-		m_sSize = Settings.SmartVolume( nSize, TRUE );
+		m_sSize = Settings.SmartVolume( nSize );
 		m_sPath.Empty();
 		m_sType.Empty();
 	}

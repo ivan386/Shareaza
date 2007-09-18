@@ -240,7 +240,7 @@ void CMonitorBarCtrl::PaintHistory(CDC* pDC, CRect* prc)
 			DWORD nRate = max( Settings.Connection.InSpeed, Settings.Connection.OutSpeed );
 			nRate = nRate * Settings.Live.BandwidthScale / 100;
 			str.Format( _T("%s (%i%%)"),
-				(LPCTSTR)Settings.SmartVolume( nRate, TRUE, TRUE ),
+				Settings.SmartSpeed( nRate, Kilobits ),
 				Settings.Live.BandwidthScale );
 		}
 

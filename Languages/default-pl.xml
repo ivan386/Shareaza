@@ -2526,8 +2526,8 @@
 	<string id="8064" value="Połączony do %lu host(ów).  %s w lokalnych zasobach."/>
 	<string id="8065" value="Łączenie do sieci..."/>
 	<string id="8066" value="Nie połączony do sieci."/>
-	<string id="8067" value="%s do : %s z [Pob:%i/Wys:%i]"/>
-	<string id="8068" value="[Z:%i] %s do : %s z [Pob:%i/Wys:%i]"/>
+	<string id="8067" value="%s do : %s z [Pob:%I64i/Wys:%I64i]"/>
+	<string id="8068" value="[Z:%I64i] %s do : %s z [Pob:%I64i/Wys:%I64i]"/>
 	<string id="8069" value="Połącz"/>
 	<string id="8070" value="Łączenie..."/>
 	<string id="8071" value="Połączony"/>

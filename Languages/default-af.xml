@@ -2536,8 +2536,8 @@
 	<string id="8064" value="Gekonnekteer aan %lu gashere.  %s in lokale biblioteek."/>
 	<string id="8065" value="Besig om aan die netwerk te konnekteer..."/>
 	<string id="8066" value="Nie aan die netwerk gekonnekteer nie."/>
-	<string id="8067" value="%s in : %s uit [A:%i/O:%i]"/>
-	<string id="8068" value="[H:%i] %s in : %s uit [A:%i/O:%i]"/>
+	<string id="8067" value="%s in : %s uit [A:%I64i/O:%I64i]"/>
+	<string id="8068" value="[H:%I64i] %s in : %s uit [A:%I64i/O:%I64i]"/>
 	<string id="8069" value="Konnekteer"/>
 	<string id="8070" value="Besig om te konnekteer..."/>
 	<string id="8071" value="Gekonnekteer"/>

@@ -195,14 +195,12 @@ void CRemoteWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 			if ( HitTestButtons( point ) != m_pCmdHover ) m_pCmdHover = NULL;
 		}
 
-		CString strFormat;
-		LoadString( strFormat, IDS_TRAY_TIP );
-		m_sStatus.Format( strFormat,
-			(int)CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS, 1.0f ),
-			(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), FALSE, TRUE ),
-			(LPCTSTR)Settings.SmartVolume( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), FALSE, TRUE ),
-			(int)CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
-			(int)CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
+		m_sStatus.Format( IDS_TRAY_TIP,
+			CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS ),
+			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
+			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
+			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
+			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
 	}
 
 	Invalidate();

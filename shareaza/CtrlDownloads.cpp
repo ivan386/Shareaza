@@ -1034,7 +1034,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 
 		case DOWNLOAD_COLUMN_SIZE:
 			if ( pDownload->m_nSize < SIZE_UNKNOWN )
-				strText = Settings.SmartVolume( pDownload->m_nSize, FALSE );
+				strText = Settings.SmartVolume( pDownload->m_nSize );
 			else
 				LoadString( strText, IDS_STATUS_UNKNOWN );
 			break;
@@ -1069,10 +1069,11 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			break;
 
 		case DOWNLOAD_COLUMN_SPEED:
-			if ( ! pDownload->IsMoving() )
- 			{
-				if ( DWORD nSpeed = pDownload->GetAverageSpeed() * 8 )
-					strText = Settings.SmartVolume( nSpeed, FALSE, TRUE );
+			if ( pDownload->IsTrying() )
+			{
+				DWORD nSpeed = pDownload->GetAverageSpeed();
+				if ( nSpeed )
+					strText = Settings.SmartSpeed( nSpeed );
 			}
 			break;
 
@@ -1105,7 +1106,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			}
 			break;
 		case DOWNLOAD_COLUMN_DOWNLOADED:
-			strText = Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE );
+			strText = Settings.SmartVolume( pDownload->GetVolumeComplete() );
 			break;
 		case DOWNLOAD_COLUMN_PERCENTAGE:
 			if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
@@ -1268,9 +1269,9 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		case DOWNLOAD_COLUMN_SIZE:
 			if ( pSource->m_pTransfer != NULL )
 				if ( pSource->m_pTransfer->m_nState > dtsHeaders && pSource->m_oAvailable.empty() )
-					strText = Settings.SmartVolume( pSource->m_pDownload->m_nSize, FALSE );
+					strText = Settings.SmartVolume( pSource->m_pDownload->m_nSize );
 				else
-					strText = Settings.SmartVolume( pSource->m_oAvailable.length_sum(), FALSE );
+					strText = Settings.SmartVolume( pSource->m_oAvailable.length_sum() );
 			break;
 			
 		case DOWNLOAD_COLUMN_PROGRESS:
@@ -1298,8 +1299,9 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		case DOWNLOAD_COLUMN_SPEED:
 			if ( pSource->m_pTransfer != NULL )
 			{
-				if ( DWORD nSpeed = pSource->m_pTransfer->GetMeasuredSpeed() * 8 )
-					strText = Settings.SmartVolume( nSpeed, FALSE, TRUE );
+				DWORD nSpeed = pSource->m_pTransfer->GetMeasuredSpeed();
+				if ( nSpeed )
+					strText = Settings.SmartSpeed( nSpeed );
 			}
 			break;
 			
@@ -1323,7 +1325,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			break;
 		case DOWNLOAD_COLUMN_DOWNLOADED:
 			if ( pSource->m_pTransfer != NULL )
-				strText = Settings.SmartVolume( pSource->m_pTransfer->m_nDownloaded, FALSE );
+				strText = Settings.SmartVolume( pSource->m_pTransfer->m_nDownloaded );
 			break;
 		case DOWNLOAD_COLUMN_PERCENTAGE:
 			if ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nDownloaded > 0 &&
