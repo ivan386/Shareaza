@@ -57,6 +57,7 @@ protected:
 	HANDLE			m_hMonitor;
 	BOOL			m_bForceScan;		// TRUE - next scan forced (root folder only)
 	BOOL			m_bOffline;			// TRUE - folder absent (root folder only)
+	Hashes::Guid	m_oGUID;
 
 // Operations
 public:
@@ -90,8 +91,12 @@ public:
 	void			OnFileRename(CLibraryFile* pFile);
 
 protected:
+	// Disable change notification monitor
+	void			CloseMonitor();
 	void			Clear();
 	void			PathToName();
+	bool			operator==(const CLibraryFolder& val) const;
+	void			RenewGUID();
 
 // Automation
 protected:

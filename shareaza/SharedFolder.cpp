@@ -63,13 +63,34 @@ CLibraryFolder::CLibraryFolder(CLibraryFolder* pParent, LPCTSTR pszPath) :
 	EnableDispatch( IID_ILibraryFiles );
 
 	PathToName();
+
+	RenewGUID();
 }
 
 CLibraryFolder::~CLibraryFolder()
 {
-	if ( m_hMonitor != INVALID_HANDLE_VALUE ) FindCloseChangeNotification( m_hMonitor );
-
 	Clear();
+}
+
+void CLibraryFolder::CloseMonitor()
+{
+	if ( m_hMonitor != INVALID_HANDLE_VALUE )
+	{
+		FindCloseChangeNotification( m_hMonitor );
+		m_hMonitor = INVALID_HANDLE_VALUE;
+		m_bForceScan = TRUE;
+	}
+}
+
+bool CLibraryFolder::operator==(const CLibraryFolder& val) const
+{
+	return ( m_oGUID == val.m_oGUID );
+}
+
+void CLibraryFolder::RenewGUID()
+{
+	CoCreateGuid( reinterpret_cast< GUID* > ( m_oGUID.begin() ) );
+	m_oGUID.validate();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -199,6 +220,8 @@ int CLibraryFolder::GetSharedCount() const
 
 void CLibraryFolder::Clear()
 {
+	CloseMonitor();
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		delete GetNextFolder( pos );
@@ -494,13 +517,6 @@ BOOL CLibraryFolder::IsChanged()
 {
 	BOOL bChanged = FALSE;
 
-	if ( m_bForceScan )
-	{
-		// Change status forced
-		bChanged = TRUE;
-		m_bForceScan = FALSE;
-	}
-
 	// Monitor changes
 	if ( m_hMonitor != INVALID_HANDLE_VALUE )
 	{
@@ -520,8 +536,7 @@ BOOL CLibraryFolder::IsChanged()
 
 		default:
 			// Errors
-			FindCloseChangeNotification( m_hMonitor );
-			m_hMonitor = INVALID_HANDLE_VALUE;
+			CloseMonitor();
 		}
 	}
 
@@ -535,8 +550,14 @@ BOOL CLibraryFolder::IsChanged()
 	else if ( m_hMonitor != INVALID_HANDLE_VALUE && ! Settings.Library.WatchFolders )
 	{
 		// Disable monitor
-		FindCloseChangeNotification( m_hMonitor );
-		m_hMonitor = INVALID_HANDLE_VALUE;
+		CloseMonitor();
+	}
+
+	if ( m_bForceScan )
+	{
+		// Change status forced
+		bChanged = TRUE;
+		m_bForceScan = FALSE;
 	}
 
 	return bChanged;
@@ -884,4 +905,3 @@ STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Count(LONG FAR* pnCount)
 	*pnCount = static_cast< LONG >( pThis->GetFileCount() );
 	return S_OK;
 }
-
