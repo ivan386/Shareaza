@@ -148,12 +148,15 @@ INT_PTR CLocalSearch::Execute(INT_PTR nMaximum)
 
 INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 {
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 1000 ) )
+	{
+		return 0;
+	}
+
 	CList< CLibraryFile* >* pFiles = Library.Search( m_pSearch, static_cast< int >( nMaximum ), FALSE,
 		// Ghost files only for G2
 		m_nProtocol != PROTOCOL_G2 );
-
-	CSingleLock oLock( &Library.m_pSection );
-	if ( ! oLock.Lock( 1000 ) ) return 0;
 
 	CList< CLibraryFile* >* pFilesCopy = pFiles;
 	CList< CLibraryFile* > pExcludedFiles;
