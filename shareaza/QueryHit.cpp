@@ -274,7 +274,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 	CXMLElement* pXML		= NULL;
 	
 	Hashes::Guid oSearchID;
-	Hashes::Guid oClientID, oIncrID;
+	Hashes::Guid oClientID;
 	
 	DWORD		nAddress	= 0;
 	WORD		nPort		= 0;
@@ -377,7 +377,6 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			{
 				pPacket->Read( oClientID );
 				oClientID.validate();
-				oIncrID		= oClientID;
 			}
 			else if ( ( nType == G2_PACKET_NODE_ADDRESS || nType == G2_PACKET_NODE_INFO ) && nLength >= 6 )
 			{
