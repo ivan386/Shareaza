@@ -296,7 +296,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 		bool bSpam = false;
 		DWORD nPrevHubAddress = 0;
 		WORD nPrevHubPort = 0;
-
+		
 		while ( pPacket->ReadPacket( nType, nLength, &bCompound ) )
 		{
 			DWORD nSkip = pPacket->m_nPosition + nLength;
@@ -361,7 +361,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				pHub.sin_addr.S_un.S_addr	= pPacket->ReadLongLE();
 				pHub.sin_port				= htons( pPacket->ReadShortBE() );
 				
-				// ToDo: We should check if ALL hubs are unique
+				// ToDo: We should check if ALL hubs in the packet are unique
 				if ( nPrevHubAddress == pHub.sin_addr.S_un.S_addr && nPrevHubPort == pHub.sin_port)
 				{
 					bSpam = true;
@@ -381,9 +381,9 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			else if ( ( nType == G2_PACKET_NODE_ADDRESS || nType == G2_PACKET_NODE_INFO ) && nLength >= 6 )
 			{
 				nAddress	= pPacket->ReadLongLE();
-				if ( Network.IsReserved( (IN_ADDR*)&nAddress ), false )
+				if ( Network.IsReserved( (IN_ADDR*)&nAddress , false ) )
 					AfxThrowUserException();
-				if ( Security.IsDenied( (IN_ADDR*)&nAddress ), false )
+				if ( Security.IsDenied( (IN_ADDR*)&nAddress , false ) )
 					AfxThrowUserException();
 				nPort		= pPacket->ReadShortBE();
 			}
