@@ -288,14 +288,18 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 	CString		strNick;
 	DWORD		nGroupState[8][4] = {};
 	
+	typedef std::pair< DWORD, u_short > AddrPortPair;
+	typedef std::map< DWORD, u_short >::iterator NodeIter;
+
+	std::map< DWORD, u_short > pTestNodeList;
+	std::pair< NodeIter, bool > nodeTested;
+
 	try
 	{
-		BOOL bCompound;
+		BOOL bCompound; 
 		G2_PACKET nType;
 		DWORD nLength;
 		bool bSpam = false;
-		DWORD nPrevHubAddress = 0;
-		WORD nPrevHubPort = 0;
 		
 		while ( pPacket->ReadPacket( nType, nLength, &bCompound ) )
 		{
@@ -361,16 +365,13 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				pHub.sin_addr.S_un.S_addr	= pPacket->ReadLongLE();
 				pHub.sin_port				= htons( pPacket->ReadShortBE() );
 				
-				// ToDo: We should check if ALL hubs in the packet are unique
-				if ( nPrevHubAddress == pHub.sin_addr.S_un.S_addr && nPrevHubPort == pHub.sin_port)
+				nodeTested = pTestNodeList.insert( AddrPortPair( pHub.sin_addr.S_un.S_addr,
+					                                             pHub.sin_port ) );
+				if ( !nodeTested.second )
 				{
+					// Not a unique IP and port pair
 					bSpam = true;
 				}
-				nPrevHubAddress = pHub.sin_addr.S_un.S_addr;
-				nPrevHubPort = pHub.sin_port;
-				oIncrID[15]++;
-				oIncrID.validate();
-				Network.NodeRoute->Add( oIncrID, &pHub );
 			}
 			else if ( nType == G2_PACKET_NODE_GUID && nLength == 16 )
 			{
@@ -381,9 +382,9 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			else if ( ( nType == G2_PACKET_NODE_ADDRESS || nType == G2_PACKET_NODE_INFO ) && nLength >= 6 )
 			{
 				nAddress	= pPacket->ReadLongLE();
-				if ( Network.IsReserved( (IN_ADDR*)&nAddress , false ) )
+				if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) )
 					AfxThrowUserException();
-				if ( Security.IsDenied( (IN_ADDR*)&nAddress , false ) )
+				if ( Security.IsDenied( (IN_ADDR*)&nAddress, false ) )
 					AfxThrowUserException();
 				nPort		= pPacket->ReadShortBE();
 			}
@@ -519,15 +520,32 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			if ( pXML ) pLastHit->ParseXML( pXML, nIndex );
 		}
 		
-		if ( bSpam == true && pFirstHit )
+		if ( bSpam )
 		{
-			for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
+			if ( pFirstHit )
 			{
-				pHit->m_bBogus = TRUE;
-			}			
+				for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
+				{
+					pHit->m_bBogus = TRUE;
+				}	
+			}
 		}
-		else
-			CheckBogus( pFirstHit );
+		else if ( !CheckBogus( pFirstHit ) )
+		{
+			// Now add all hub list to the route cache
+			for ( NodeIter iter = pTestNodeList.begin( ) ; 
+				  iter != pTestNodeList.end( ) ; iter++ )
+			{
+				SOCKADDR_IN pHub;
+
+				pHub.sin_addr.S_un.S_addr	= iter->first;
+				pHub.sin_port				= iter->second;
+
+				oClientID[15]++;
+				oClientID.validate();
+				Network.NodeRoute->Add( oClientID, &pHub );
+			}
+		}
 	}
 	catch ( CException* pException )
 	{
