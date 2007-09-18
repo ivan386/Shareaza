@@ -210,6 +210,15 @@ CString LoadHTML(HINSTANCE hInstance, UINT nResourceID);
 // Loads well-known resource for HTTP-uploading
 bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeader);
 
+// Mark file as downloaded from Internet (using NTFS stream)
+bool MarkFileAsDownload(const CString& sFilename);
+
+// Load GUID from NTFS stream of file
+bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID);
+
+// Save GUID to NTFS stream of file
+bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID);
+
 typedef enum
 {
 	sNone = 0,

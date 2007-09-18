@@ -323,6 +323,8 @@ void CDownloadTask::RunCopySimple()
 			if ( GetFileAttributes( strTarget ) == 0xFFFFFFFF &&
 				SHFileOperation( &pOp ) == 0 )
 			{
+				MarkFileAsDownload( strTarget );
+
 				Uploads.OnRename( m_sFilename, strTarget );
 				m_bSuccess	= TRUE;
 				m_sFilename	= strTarget;
@@ -384,6 +386,8 @@ void CDownloadTask::RunCopySimple()
 
 		if ( SHFileOperation( &pOp ) == 0 )
 		{
+			MarkFileAsDownload( strTarget );
+
 			Uploads.OnRename( m_sFilename, strTarget );
 			m_bSuccess	= TRUE;
 			m_sFilename	= strTarget;
@@ -395,6 +399,8 @@ void CDownloadTask::RunCopySimple()
 	
 	if ( m_bSuccess )
 	{
+		MarkFileAsDownload( strTarget );
+
 		CQuickLock oLock( Transfers.m_pSection );
 		Uploads.OnRename( m_sFilename, NULL );
 		Uploads.OnRename( m_sFilename, strTarget );
@@ -458,6 +464,8 @@ void CDownloadTask::RunCopyTorrent()
 				return; // try again later ( m_bSuccess is still FALSE )
 			}
 		}
+
+		MarkFileAsDownload( strPath );
 		
 		if ( m_pEvent != NULL )
 		{

@@ -2004,3 +2004,88 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 	}
 	return ret;
 }
+
+bool MarkFileAsDownload(const CString& sFilename)
+{
+	bool bSuccess = false;
+	if ( theApp.m_bNT )
+	{
+		// Temporary clear R/O attribute
+		BOOL bChanged = FALSE;
+		DWORD dwOrigAttr = GetFileAttributes( sFilename );
+		if ( dwOrigAttr != 0xffffffff && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
+			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
+
+		HANDLE hFile = CreateFile( sFilename + _T(":Zone.Identifier"),
+			GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+			NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+		if ( hFile != INVALID_HANDLE_VALUE )
+		{
+			DWORD dwWritten = 0;
+			bSuccess = ( WriteFile( hFile, "[ZoneTransfer]\r\nZoneID=3\r\n", 26,
+				&dwWritten, NULL ) && dwWritten == 26 );
+			CloseHandle( hFile );
+		}
+		else
+			TRACE( "MarkFileAsDownload() : CreateFile \"%s\" error %d\n", sFilename, GetLastError() );
+
+		if ( bChanged )
+			SetFileAttributes( sFilename, dwOrigAttr );
+	}
+	return bSuccess;
+}
+
+bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
+{
+	bool bSuccess = false;
+	if ( theApp.m_bNT )
+	{
+		HANDLE hFile = CreateFile( sFilename + _T(":Shareaza.GUID"),
+			GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+		if ( hFile != INVALID_HANDLE_VALUE )
+		{
+			Hashes::Guid oTmpGUID;
+			DWORD dwReaded = 0;
+			bSuccess = ( ReadFile( hFile, oTmpGUID.begin(), oTmpGUID.byteCount,
+				&dwReaded, NULL ) && dwReaded == oTmpGUID.byteCount );
+			if ( bSuccess )
+			{
+				oTmpGUID.validate();
+				oGUID = oTmpGUID;
+			}
+			CloseHandle( hFile );
+		}
+	}
+	return bSuccess;
+}
+
+bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
+{
+	bool bSuccess = false;
+	if ( theApp.m_bNT )
+	{
+		// Temporary clear R/O attribute
+		BOOL bChanged = FALSE;
+		DWORD dwOrigAttr = GetFileAttributes( sFilename );
+		if ( dwOrigAttr != 0xffffffff && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
+			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
+
+		HANDLE hFile = CreateFile( sFilename + _T(":Shareaza.GUID"),
+			GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+			NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+		if ( hFile != INVALID_HANDLE_VALUE )
+		{
+			DWORD dwWritten = 0;
+			bSuccess = ( WriteFile( hFile, oGUID.begin(), oGUID.byteCount,
+				&dwWritten, NULL ) && dwWritten == oGUID.byteCount );
+			CloseHandle( hFile );
+		}
+		else
+			TRACE( "SaveGUID() : CreateFile \"%s\" error %d\n", sFilename, GetLastError() );
+
+		if ( bChanged )
+			SetFileAttributes( sFilename, dwOrigAttr );
+	}
+	return bSuccess;
+}
