@@ -446,9 +446,11 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Add the new ones
 		DWORD nHalfSpeed = Settings.Connection.OutSpeed / 2;
 		DWORD nQuarterSpeed = Settings.Connection.OutSpeed / 4;
+		DWORD n85Speed = Settings.Connection.OutSpeed * 8.5 / 10;	// 85%
 		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nQuarterSpeed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed + nQuarterSpeed, Kilobits ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( n85Speed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( Settings.Connection.OutSpeed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( _T("MAX") );
 

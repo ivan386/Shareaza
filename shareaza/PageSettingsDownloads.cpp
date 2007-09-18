@@ -390,9 +390,11 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Add the new ones
 		DWORD nHalfSpeed = Settings.Connection.InSpeed / 2;
 		DWORD nQuarterSpeed = Settings.Connection.InSpeed / 4;
+		DWORD n85Speed = Settings.Connection.InSpeed * 8.5 / 10;	// 85%
 		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nQuarterSpeed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed + nQuarterSpeed, Kilobits ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( n85Speed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( Settings.Connection.InSpeed, Kilobits ) );
 		m_wndBandwidthLimit.AddString( _T("MAX") );
 
