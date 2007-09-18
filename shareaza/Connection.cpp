@@ -1014,14 +1014,11 @@ BOOL CConnection::StartsWith(LPCTSTR pszInput, LPCTSTR pszText)
 // TCPBandwidthMeter Utility routines
 
 // Calculate the number of bytes available for use
-inline DWORD CConnection::TCPBandwidthMeter::CalculateLimit( DWORD tNow, bool bMaxMode ) const
+DWORD CConnection::TCPBandwidthMeter::CalculateLimit( DWORD tNow, bool bMaxMode ) const
 {
-	// Loop across the times and histories stored
-	// Granularity is 1/10th (METER_MINIMUM/METER_SECOND) of a second,
-	// so at the most we only need to read 12 records instead of all of them
-	DWORD tCutoff = tNow - METER_SECOND;		// Time period for bytes
-	if ( bMaxMode ) tCutoff += METER_MINIMUM;	// Adjust time period for Max mode
-	DWORD nData = CalculateUsage( tCutoff );	// #bytes in the time period
+	DWORD tCutoff = tNow - METER_SECOND;			// Time period for bytes
+	if ( bMaxMode ) tCutoff += METER_MINIMUM;		// Adjust time period for Max mode
+	DWORD nData = CalculateUsage( tCutoff, true );	// #bytes in the time period
 
 	// nLimit is the speed limit (bytes/second)
 	DWORD nLimit = *pLimit;						// Get the speed limit
@@ -1039,7 +1036,7 @@ inline DWORD CConnection::TCPBandwidthMeter::CalculateLimit( DWORD tNow, bool bM
 	if ( bMaxMode )
 	{
 		// Adjust limit for the time elapsed since last time
-		nLimit = nLimit * ( tNow - tLastAdd ) / 1000;
+		nLimit = nLimit * ( tNow - tLastLimit ) / 1000;
 
 		// nData = speed limit in bytes per second - bytes we read in the last second
 		// nLimit = speed limit in bytes per second * elapsed time
@@ -1051,13 +1048,49 @@ inline DWORD CConnection::TCPBandwidthMeter::CalculateLimit( DWORD tNow, bool bM
 		// Set limit to the number of bytes still available for this time period
 		nLimit = nData;
 	}
-	tLastAdd = tNow;	// The time of this limit calculation
+	tLastLimit = tNow;	// The time of this limit calculation
 	return nLimit;		// Return the new limit
 }
 
-// Count the #bytes used for a given time period
-inline DWORD CConnection::TCPBandwidthMeter::CalculateUsage( DWORD tTime ) const
+// Count the #bytes used for a given time period ( optimal for time periods more than METER_LENGTH / 2 )
+DWORD CConnection::TCPBandwidthMeter::CalculateUsage( DWORD tTime ) const
 {
+	// Exit early if the last slot used is older than the time limit
+	if ( tLastSlot <= tTime ) return 0;
+
+	// Loop across the times and histories stored
+	DWORD nData = 0;	// #bytes in the time period
+	DWORD slot = 0;		// Start at the first slot
+	
+	// Find the first reading in the time limit
+	while ( slot <= nPosition && pTimes[ slot ] <= tTime ) slot++;
+
+	// Add history up to the latest reading
+	while ( slot <= nPosition ) nData += pHistory[ slot++ ];
+
+	// Did we start with a reading inside the time limit
+	if ( pTimes[ 0 ] > tTime )
+	{
+		// Find the next reading in the time limit
+		while ( slot < METER_LENGTH && pTimes[ slot ] <= tTime ) slot++;
+
+		// Add history up to the end of the meter
+		while ( slot < METER_LENGTH ) nData += pHistory[ slot++ ];
+	}
+	
+	// return the #bytes in time period
+	return nData;
+}
+
+// Count the #bytes used for a given time period ( optimal for time periods less than METER_LENGTH / 2 )
+DWORD CConnection::TCPBandwidthMeter::CalculateUsage( DWORD tTime, bool /*bShortPeriod*/ ) const
+{
+	// Exit early if the last slot used is older than the time limit
+	if ( tLastSlot <= tTime ) return 0;
+
+	// Loop across the times and histories stored
+	// Granularity is 1/10th ( METER_MINIMUM ) of a second, so at the most we only
+	// need to read 12 ( METER_MINIMUM / METER_SECOND + 2 )records instead of all of them
 	DWORD nData = 0;			// #bytes in the time period
 	DWORD slot = METER_LENGTH;	// Start at the last slot
 	while ( slot-- )
@@ -1069,11 +1102,13 @@ inline DWORD CConnection::TCPBandwidthMeter::CalculateUsage( DWORD tTime ) const
 		else
 			break;						//   We did, no need to check the rest
 	}
+
+	// return the #bytes in time period
 	return nData;
 }
 
 // Add #bytes to history
-inline void CConnection::TCPBandwidthMeter::Add( const DWORD nBytes, const DWORD tNow )
+void CConnection::TCPBandwidthMeter::Add( const DWORD nBytes, const DWORD tNow )
 {
 	if ( tNow - tLastSlot < METER_MINIMUM )
 	{
@@ -1087,9 +1122,9 @@ inline void CConnection::TCPBandwidthMeter::Add( const DWORD nBytes, const DWORD
 		// Store the time and total in a new array slot
 		nPosition = ( nPosition + 1 ) % METER_LENGTH;	// Move to the next position in the array
 		pTimes	[ nPosition ]	= tNow;					// Record the new time
-		pHistory[ nPosition ]	= nBytes;				// Store the bytes read next to it
+		pHistory[ nPosition ]	= nBytes;				// Store the #bytes next to it
 		tLastSlot = tNow;								// We just wrote some history information
 	}
-	nTotal += nBytes;	// Add the bytes we read to the total
-	tLast = tNow;		// The time of this read
+	nTotal += nBytes;	// Add the #bytes to the total
+	tLast = tNow;		// The time of this add
 }

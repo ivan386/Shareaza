@@ -125,12 +125,15 @@ public:
 		DWORD			pHistory[METER_LENGTH];	// Records of a number of bytes transferred
 		DWORD			pTimes[METER_LENGTH];	// The times each of these transfers happened
 		DWORD			nPosition;				// The next spot in the array to use
-		mutable DWORD	tLastAdd;				// When we last calculated the limit
+		mutable DWORD	tLastLimit;				// When we last calculated the limit
 		DWORD			tLastSlot;				// When we started using this time slot
 
-		DWORD	CalculateLimit (DWORD tNow, bool bMaxMode = true) const;	// Work out the limit
-		DWORD	CalculateUsage (DWORD tTime) const;							// Work out the meter usage from a given time
 		void	Add(const DWORD nBytes, const DWORD tNow);					// Add to History and Time arrays
+		DWORD	CalculateLimit (DWORD tNow, bool bMaxMode = true) const;	// Work out the limit
+		DWORD	CalculateUsage (DWORD tTime ) const;						// Work out the meter usage from a given time
+																			// ( optimal for time periods more than METER_LENGTH / 2 )
+		DWORD	CalculateUsage (DWORD tTime, bool bShortPeriod ) const;		// Work out the meter usage from a given time
+																			// ( optimal for time periods less than METER_LENGTH / 2 )
 	} TCPBandwidthMeter;
 
 	// Structures to control bandwidth in each direction
