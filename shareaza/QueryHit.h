@@ -62,6 +62,7 @@ public:
 	BOOL			m_bChat;
 	BOOL			m_bBrowseHost;
 	CString			m_sNick;
+	CString			m_sKeywords;
 public:
 	int				m_nGroup;
 	DWORD			m_nIndex;

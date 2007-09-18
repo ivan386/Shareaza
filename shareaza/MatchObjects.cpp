@@ -184,6 +184,22 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 		
 		if ( pFilter != NULL )
 		{
+			// TODO: pHit->m_bExactMatch is broken anyway, since it m_sKeywords 
+			// has no punctuation marks.
+			// Consider this:
+			// 
+			// pHit->m_sKeywords = pHit->m_sName;
+			// pFilter->MakeKeywords( pHit->m_sKeywords, false );
+			// 
+			// Then we can tokenize strings to word lists by using space
+			// as a separator, sort 2 lists and compare.
+			//
+			// Spammers abuse hits using such technique:
+			// "Your keywords (bla-blah)" and also "Your keywords [bla-blah]"
+			//
+			// Thus, we can filter them if we get two or more the same keyword
+			// lists from one user.
+
 			if ( BOOL bName = _tcsistr( pFilter->m_sKeywords, pHit->m_sName ) == 0 )
 				pHit->m_bExactMatch = TRUE;
 
