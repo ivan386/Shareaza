@@ -590,8 +590,6 @@ BOOL CLibrary::IsBadFile(LPCTSTR pszFilenameOnly, LPCTSTR pszPathOnly, DWORD dwF
 		if ( _tcsicmp( pszFilenameOnly, _T("Thumbs.db") ) == 0 ) return TRUE;
 		// Ignore video tag-file
 		if ( _tcsicmp( pszFilenameOnly, _T("dxva_sig.txt") ) == 0 ) return TRUE;
-		// Ignore WinMX partial files
-		if ( _tcsnicmp( pszFilenameOnly, _T("__INCOMPLETE___"), 15 ) == 0 ) return TRUE;
 
 		LPCTSTR pszExt = _tcsrchr( pszFilenameOnly, _T('.') );
 		if ( pszExt++ )
