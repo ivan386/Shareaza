@@ -628,43 +628,38 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 
 void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 {
-//	CDownload* pDownload = pSource->m_pDownload;
-
-	if ( pSource->m_sNick.GetLength() > 0 )
+	// Is this a firewalled eDonkey client
+	if ( pSource->m_nProtocol == PROTOCOL_ED2K && pSource->m_bPushOnly == TRUE )
 	{
-		m_sName = pSource->m_sNick;
-		if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
-		{
-			m_sName.AppendFormat( _T(" (%lu@%s:%u)"), pSource->m_pAddress.S_un.S_addr, 
-				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
-		}
-		else if ( pSource->m_bPushOnly )
-		{
-			m_sName.AppendFormat( _T(" (%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pAddress ) ) );
-		}
-		else
-		{
-			m_sName.AppendFormat( _T(" (%s:%u)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pAddress ) ), pSource->m_nPort );
-		}
+		m_sName.Format( _T("%lu@%s:%u"),
+			pSource->m_pAddress.S_un.S_addr,
+			CString( inet_ntoa( pSource->m_pServerAddress ) ),
+			pSource->m_nServerPort );
 	}
+
+	// Or an active transfer
+	else if ( pSource->m_pTransfer != NULL )
+	{
+		m_sName.Format( _T("%s:%u"),
+			pSource->m_pTransfer->m_sAddress,
+			ntohs( pSource->m_pTransfer->m_pHost.sin_port ) );
+	}
+
+	// Or just queued
 	else
 	{
-		if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
-		{
-			m_sName.Format( _T("%lu@%s:%u"), (DWORD)pSource->m_pAddress.S_un.S_addr,
-				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
-		}
-		else
-		{
-			m_sName = inet_ntoa( pSource->m_pAddress );
-			m_sName.AppendFormat( _T(":%u"), pSource->m_nPort );
-		}
+		m_sName.Format( _T("%s:%u"),
+			CString( inet_ntoa( pSource->m_pAddress ) ),
+			pSource->m_nPort );
 	}
 
+	// Add the Nickname if there is one and they are being shown
+	if ( Settings.Search.ShowNames && !pSource->m_sNick.IsEmpty() )
+		m_sName = pSource->m_sNick + _T(" (") + m_sName + _T(")");
+
+	// Indicate if this is a firewalled client
 	if ( pSource->m_bPushOnly )
-	{
 		m_sName += _T(" (push)");
-	}
 
 	m_sCountryName = pSource->m_sCountryName;
 
@@ -772,7 +767,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 		{
 			CString strOf;
 			LoadString( strOf, IDS_GENERAL_OF );
-			strSpeed.Format( _T("%s %s %s"),
+ 			strSpeed.Format( _T("%s %s %s"),
 				(LPCTSTR)Settings.SmartVolume( pSource->m_pTransfer->GetMeasuredSpeed() * 8, FALSE, TRUE ),
 				strOf, (LPCTSTR)Settings.SmartVolume( nLimit * 8, FALSE, TRUE ) );
 		}

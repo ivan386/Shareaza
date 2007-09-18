@@ -1070,7 +1070,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 
 		case DOWNLOAD_COLUMN_SPEED:
 			if ( ! pDownload->IsMoving() )
-			{
+ 			{
 				if ( DWORD nSpeed = pDownload->GetAverageSpeed() * 8 )
 					strText = Settings.SmartVolume( nSpeed, FALSE, TRUE );
 			}
@@ -1229,70 +1229,42 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			rcCell.left += 16;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crLeftAligned );
 			rcCell.left += 1;
-			
-			if ( pSource->m_pTransfer != NULL )
+
+			// Is this a firewalled eDonkey client
+			if ( pSource->m_nProtocol == PROTOCOL_ED2K && pSource->m_bPushOnly == TRUE )
 			{
-				if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
-				{
-					if ( Settings.Search.ShowNames && pSource->m_sNick.GetLength() )
-					{
-						strText = pSource->m_sNick;
-						strText.AppendFormat( _T(" (%lu@%s:%u)"), pSource->m_pAddress.S_un.S_addr, 
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
-					}
-					else
-					{
-						strText.Format( _T("%lu@%s:%u"), pSource->m_pAddress.S_un.S_addr, 
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
-					}
-				}
-				else if ( Settings.Search.ShowNames && pSource->m_sNick.GetLength() )
-				{
-					strText = pSource->m_sNick + _T(" (") + pSource->m_pTransfer->m_sAddress;
-					strText.AppendFormat( _T(":%u)"), ntohs( pSource->m_pTransfer->m_pHost.sin_port ) );
-				}
-				else 
-				{
-					strText = pSource->m_pTransfer->m_sAddress;
-					strText.AppendFormat( _T(":%u"), ntohs( pSource->m_pTransfer->m_pHost.sin_port ) );
-				}
+				strText.Format( _T("%lu@%s:%u"),
+					pSource->m_pAddress.S_un.S_addr,
+					CString( inet_ntoa( pSource->m_pServerAddress ) ),
+					pSource->m_nServerPort );
 			}
+
+			// Or an active transfer
+			else if ( pSource->m_pTransfer != NULL )
+			{
+				strText.Format( _T("%s:%u"),
+					pSource->m_pTransfer->m_sAddress,
+					ntohs( pSource->m_pTransfer->m_pHost.sin_port ) );
+			}
+
+			// Or just queued
 			else
 			{
-				if ( Settings.Search.ShowNames && pSource->m_sNick.GetLength() )
-				{
-					if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
-					{
-						strText = pSource->m_sNick;
-						strText.AppendFormat( _T(" (%lu@%s:%u)"), pSource->m_pAddress.S_un.S_addr, 
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
-					}
-					else
-					{
-						strText = pSource->m_sNick + _T(" (") + inet_ntoa( pSource->m_pAddress );
-						strText.AppendFormat( _T(":%u)"), pSource->m_nPort );
-					}
-				}
-				else
-				{
-					if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
-					{
-						strText.Format( _T("%lu@%s:%u"), pSource->m_pAddress.S_un.S_addr, 
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ), pSource->m_nServerPort );
-					}
-					else
-					{
-						strText = inet_ntoa( pSource->m_pAddress );
-						strText.AppendFormat( _T(":%u"), pSource->m_nPort );
-					}
-				}
+				strText.Format( _T("%s:%u"),
+					CString( inet_ntoa( pSource->m_pAddress ) ),
+					pSource->m_nPort );
 			}
+
+			// Add the Nickname if there is one and they are being shown
+			if ( Settings.Search.ShowNames && !pSource->m_sNick.IsEmpty() )
+				strText = pSource->m_sNick + _T(" (") + strText + _T(")");
+
+			// Indicate if this is a firewalled client
 			if ( pSource->m_bPushOnly )
-			{
 				strText += _T(" (push)");
-			}
+
 			break;
-			
+
 		case DOWNLOAD_COLUMN_SIZE:
 			if ( pSource->m_pTransfer != NULL )
 				if ( pSource->m_pTransfer->m_nState > dtsHeaders && pSource->m_oAvailable.empty() )
