@@ -317,7 +317,7 @@ BOOL CUploadQueue::Start(CUploadTransfer* pUpload, BOOL bPeek)
 		StartImpl( pUpload );
 		pUpload->SetSpeedLimit( nAvailable );
 		theApp.Message( MSG_DEBUG, _T("Starting upload to %s because there is %s available."),
-			(LPCTSTR)pUpload->m_sAddress, (LPCTSTR)Settings.SmartVolume( nAvailable * 8, FALSE, TRUE ) );
+			pUpload->m_sAddress, Settings.SmartSpeed( nAvailable ) );
 		return TRUE;
 	}
 	
