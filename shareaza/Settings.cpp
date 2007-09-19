@@ -1259,6 +1259,11 @@ CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTruncate) c
 		CString strUnit = _T("B/s");
 		if ( !General.RatesInBytes )
 			strUnit = _T("b/s");
+		
+		// Adjust units to bits or Bytes
+		if ( nVolumeUnits == Kilobits || nVolumeUnits == KiloBytes )
+			nVolume *= 1024;
+
 		switch ( General.RatesUnit )
 		{
 		case 1:	// bits - Bytes
