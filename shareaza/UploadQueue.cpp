@@ -1,7 +1,7 @@
 //
 // UploadQueue.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,28 +41,28 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CUploadQueue construction
 
-CUploadQueue::CUploadQueue()
+CUploadQueue::CUploadQueue() :
+	m_nIndex			( 0 )
+,	m_bEnable			( TRUE )
+
+,	m_nProtocols		( 0ul )
+,	m_nMinSize			( 0ull )
+,	m_nMaxSize			( ~0ull )
+,	m_nFileStateFlag	( ulqBoth )
+
+,	m_nCapacity			( 20 )
+,	m_nMinTransfers		( 1 )
+,	m_nMaxTransfers		( 10 )
+,	m_nBandwidthPoints	( 10 )
+,	m_bRotate			( FALSE )
+,	m_nRotateTime		( 300ul )
+,	m_nRotateChunk		( 0ul )
+,	m_bRewardUploaders	( FALSE )
+
+,	m_bExpanded			( TRUE )
+,	m_bSelected			( FALSE )
+,	m_nMeasured			( 0ul )
 {
-	m_nIndex			= 0;
-	m_bEnable			= TRUE;
-	
-	m_nProtocols		= 0;
-	m_nMinSize			= 0;
-	m_nMaxSize			= 0xFFFFFFFFFFFFFFFF;
-	m_nFileStateFlag	= ulqBoth;
-	
-	m_nCapacity			= 20;
-	m_nMinTransfers		= 1;
-	m_nMaxTransfers		= 10;
-	m_nBandwidthPoints	= 10;
-	m_bRotate			= FALSE;
-	m_nRotateTime		= 300;
-	m_nRotateChunk		= 0;
-	m_bRewardUploaders	= FALSE;
-	
-	m_bExpanded			= TRUE;
-	m_bSelected			= FALSE;
-	m_nMeasured			= 0;
 }
 
 CUploadQueue::~CUploadQueue()
@@ -104,14 +104,14 @@ CString CUploadQueue::GetCriteriaString() const
 	if ( m_nMinSize > 0 )
 	{
 		if ( str1.GetLength() ) str1 += _T(", ");
-		str2.Format( _T(">=%s"), (LPCTSTR)Settings.SmartVolume( m_nMinSize, FALSE ) );
+		str2.Format( _T(">=%s"), Settings.SmartVolume( m_nMinSize ) );
 		str1 += str2;
 	}
 	
-	if ( m_nMaxSize < 0xFFFFFFFFFFFFFFFF )
+	if ( m_nMaxSize < ~0ull )
 	{
 		if ( str1.GetLength() ) str1 += _T(", ");
-		str2.Format( _T("<=%s"), (LPCTSTR)Settings.SmartVolume( m_nMaxSize, FALSE ) );
+		str2.Format( _T("<=%s"), Settings.SmartVolume( m_nMaxSize ) );
 		str1 += str2;
 	}
 	
