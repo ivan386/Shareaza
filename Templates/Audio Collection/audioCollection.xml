@@ -2,7 +2,7 @@
 <template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
 <manifest	name="Audio Collection"
 			author="Tom Higginson"
-			version="1.1"
+			version="1.2"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
 			description="Audio collection export template."
