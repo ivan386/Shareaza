@@ -17,5 +17,4 @@
 			#content table{text-align: left;margin-left: auto;margin-right: auto;}
 			#filters{text-align: left;}
 			#functions{float: right;}
-			#frame{border-top:1px solid #000;padding: 20px 5px 0px 5px;}
 			.active	{ background: #fff; border: 1px solid #000;border-bottom-color: #fff;}
