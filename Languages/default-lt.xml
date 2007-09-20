@@ -2842,6 +2842,7 @@
 	<string id="16409" value="Eksportuoti &amp;nuorodas..."/>
 	<string id="16410" value="Pasirinkto aplanko „%s“ poaplankis jau yra Jūsų kolekcijoje.\nPridėjus šį aplanką, kai kurių failų maišos bus perskaičiuotos.\n\n\n\nAr norite tęsti?"/>
 	<string id="16411" value="Neįmanoma perkelti failo „%s“. Failą turbūt naudoja kita programa.\nAr norėtumėte šį failą nukopijuoti užuot perkėlus?"/>
+	<string id="16412" value="Šešėlinis failas"/>
 	<string id="16448" value="Susijungta su %s, patvirtinama..."/>
 	<string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
 	<string id="16450" value="Ryšys su %s nutrauktas."/>
