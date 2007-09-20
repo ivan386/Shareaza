@@ -403,7 +403,7 @@ BOOL CNeighbour::OnRead()
 		inflate( pStream, Z_SYNC_FLUSH ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
 
 		// Zlib decompressed something
-		if ( pStream->avail_in >= 0 && pStream->avail_in < m_pInput->m_nLength ) // We set avail_in to nLength, but zlib shrunk it smaller
+		if ( pStream->avail_in < m_pInput->m_nLength ) // We set avail_in to nLength, but zlib shrunk it smaller
 		{
 			// Remove the portion in the start of the input buffer that zlib decompressed
 			m_pInput->Remove( m_pInput->m_nLength - pStream->avail_in ); // nLength - avail_in is the size of the block that zlib decompressed
