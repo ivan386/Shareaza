@@ -30,13 +30,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-// This detects ICL and makes necessary changes for proper compilation
-#if __INTEL_COMPILER > 0
-#define asm_m_nWidth CImageFile.m_nWidth
-#else
-#define asm_m_nWidth CImageFile::m_nWidth
-#endif
-
 IMPLEMENT_DYNAMIC(CImageFile, CComObject)
 
 /////////////////////////////////////////////////////////////////////////////
