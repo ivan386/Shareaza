@@ -4339,6 +4339,7 @@ BEGIN
     IDS_LIBRARY_SUBFOLDER_IN_LIBRARY 
                             "A subfolder of the selected folder ""%s"" is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"
     IDS_LIBRARY_MOVE_FAIL   "Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"
+    IDS_LIBRARY_GHOST_FILE  "Ghost File"
 END
 
 STRINGTABLE 
@@ -4845,7 +4846,7 @@ BEGIN
     ID_VIEW_PACKETS         "Show or hide the PACKET DUMP window."
     ID_NEIGHBOURS_DISCONNECT "Disconnect the selected neighbour(s)."
     ID_SYSTEM_CLEAR         "Clear the status log."
-	ID_SYSTEM_COPY          "Copy selected line(s) of status log."
+    ID_SYSTEM_COPY          "Copy selected line(s) of status log."
     ID_NEIGHBOURS_VIEW_ALL  "Open a new Packet Dump window monitoring this neighbour."
     ID_NEIGHBOURS_VIEW_INCOMING 
                             "Open a new Packet Dump window monitoring incoming traffic from this neighbour."

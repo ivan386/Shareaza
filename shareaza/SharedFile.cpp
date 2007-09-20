@@ -1107,7 +1107,18 @@ void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 			if ( ! IsRated() )
 			{
 				m_bShared = TS_FALSE;
-				m_sComments = L"Ghost File";
+
+				CString strTransl;
+				CString strUntransl = L"Ghost File";
+				LoadString( strTransl, IDS_LIBRARY_GHOST_FILE );
+				if ( strTransl == strUntransl )
+				{
+					m_sComments = strUntransl;
+				}
+				else
+				{
+					m_sComments = strTransl + L" (" + strUntransl + L")";
+				}
 			}
 			Ghost();
 			return;

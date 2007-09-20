@@ -166,7 +166,17 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 	}
 	else if ( m_bCreateGhost )
 	{
-		pFile->m_sComments	= m_sComments = L"Ghost File";
+		CString strTransl;
+		CString strUntransl = L"Ghost File";
+		LoadString( strTransl, IDS_LIBRARY_GHOST_FILE );
+		if ( strTransl == strUntransl )
+		{
+			pFile->m_sComments	= m_sComments = strUntransl;
+		}
+		else
+		{
+			pFile->m_sComments	= m_sComments = strTransl + L" (" + strUntransl + L")";
+		}
 		pFile->m_bShared = TS_FALSE;
 		pFile->SaveMetadata();
 	}
