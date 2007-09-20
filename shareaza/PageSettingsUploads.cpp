@@ -347,7 +347,7 @@ BOOL CUploadsSettingsPage::OnKillActive()
 {
 	UpdateData();
 	
-	if ( ( ! IsNotLimited( m_sBandwidthLimit ) ) && Settings.ParseVolume( m_sBandwidthLimit ) == 0 )
+	if ( IsLimited( m_sBandwidthLimit ) && Settings.ParseVolume( m_sBandwidthLimit ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
@@ -461,12 +461,12 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 	}
 }
 
-BOOL CUploadsSettingsPage::IsNotLimited(LPCTSTR pText)
+bool CUploadsSettingsPage::IsLimited(CString& sText) const
 {
-	if ( ( _tcslen( pText ) == 0 ) ||
-		 ( _tcsistr( pText, _T("MAX") ) != NULL ) || 
-		 ( _tcsistr( pText, _T("NONE") ) != NULL ) )
-		return TRUE;
+	if ( ( _tcslen( sText ) == 0 ) ||
+		 ( _tcsistr( sText, _T("MAX") ) != NULL ) || 
+		 ( _tcsistr( sText, _T("NONE") ) != NULL ) )
+		return false;
 	else
-		return FALSE;
+		return true;
 }

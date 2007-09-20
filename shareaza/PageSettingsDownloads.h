@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,7 +74,7 @@ public:
 // Implementation
 protected:
 	void CalculateMaxValues();
-	BOOL IsNotLimited(LPCTSTR pText);
+	bool IsLimited(CString& sText) const;
 	//{{AFX_MSG(CDownloadsSettingsPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDownloadsBrowse();

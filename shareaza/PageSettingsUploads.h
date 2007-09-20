@@ -1,7 +1,7 @@
 //
 // PageSettingsUploads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,7 +69,7 @@ public:
 
 // Implementation
 protected:
-	BOOL IsNotLimited(LPCTSTR pText);
+	bool IsLimited(CString& sText) const;
 	DECLARE_MESSAGE_MAP()
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelChangeAgentList();

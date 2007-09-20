@@ -228,7 +228,7 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 {
 	UpdateData();
 	
-	if ( ( ! IsNotLimited( m_sBandwidthLimit ) ) && Settings.ParseVolume( m_sBandwidthLimit ) == 0 )
+	if ( IsLimited( m_sBandwidthLimit ) && Settings.ParseVolume( m_sBandwidthLimit ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
@@ -278,12 +278,7 @@ void CDownloadsSettingsPage::OnOK()
 	UpdateData( TRUE );
 
 	// Figure out what the text in the queue limit box means
-	if ( IsNotLimited( m_sQueueLimit ) )
-	{
-		// Max queue is not limited
-		nQueueLimit = 0;
-	}
-	else
+	if ( IsLimited( m_sQueueLimit ) )
 	{
 		// Max queue is limited, calculate number
 		int nPosition = 1, nCount = m_sQueueLimit.GetLength();
@@ -297,6 +292,11 @@ void CDownloadsSettingsPage::OnOK()
 				nPosition *= 10;
 			}
 		}
+	}
+	else
+	{
+		// Max queue is not limited
+		nQueueLimit = 0;
 	}
 
 	// Check the queue limit value is okay
@@ -422,12 +422,12 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 	}
 }
 
-BOOL CDownloadsSettingsPage::IsNotLimited(LPCTSTR pText)
+bool CDownloadsSettingsPage::IsLimited(CString& sText) const
 {
-	if ( ( _tcslen( pText ) == 0 ) ||
-		 ( _tcsistr( pText, _T("MAX") ) != NULL ) || 
-		 ( _tcsistr( pText, _T("NONE") ) != NULL ) )
-		return TRUE;
+	if ( ( _tcslen( sText ) == 0 ) ||
+		 ( _tcsistr( sText, _T("MAX") ) != NULL ) || 
+		 ( _tcsistr( sText, _T("NONE") ) != NULL ) )
+		return false;
 	else
-		return FALSE;
+		return true;
 }
