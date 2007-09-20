@@ -694,7 +694,7 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 
 BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 {
-	CDownload* pDownload = reinterpret_cast<CDownload*>(this);
+	CDownload* pDownload = static_cast< CDownload* >( this );
 	
 	if ( IsMoving() || IsCompleted() ) return FALSE;
 	if ( m_sDiskName == pszTarget ) return FALSE;
