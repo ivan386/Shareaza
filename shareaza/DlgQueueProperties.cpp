@@ -368,7 +368,7 @@ void CQueuePropertiesDlg::OnOK()
 
 	if ( m_bMinSize )
 	{
-		m_pQueue->m_nMinSize = Settings.ParseVolume( m_sMinSize, FALSE );
+		m_pQueue->m_nMinSize = Settings.ParseVolume( m_sMinSize );
 	}
 	else
 	{
@@ -377,7 +377,7 @@ void CQueuePropertiesDlg::OnOK()
 
 	if ( m_bMaxSize )
 	{
-		m_pQueue->m_nMaxSize = Settings.ParseVolume( m_sMaxSize, FALSE );
+		m_pQueue->m_nMaxSize = Settings.ParseVolume( m_sMaxSize );
 		if ( m_pQueue->m_nMaxSize == 0 ) m_pQueue->m_nMaxSize = SIZE_UNKNOWN;
 	}
 	else

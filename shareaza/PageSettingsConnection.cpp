@@ -192,7 +192,7 @@ CString CConnectionSettingsPage::FormatSpeed(DWORD nSpeed)
 
 DWORD CConnectionSettingsPage::ParseSpeed(LPCTSTR psz)
 {
-	return (DWORD)Settings.ParseVolume( psz, TRUE ) / 1024;
+	return (DWORD)Settings.ParseVolume( psz, false ) / 1024;
 }
 
 void CConnectionSettingsPage::OnEditChangeInboundHost()

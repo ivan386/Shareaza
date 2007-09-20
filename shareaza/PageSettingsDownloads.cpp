@@ -228,7 +228,7 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 {
 	UpdateData();
 	
-	if ( ( ! IsNotLimited( m_sBandwidthLimit ) ) && Settings.ParseVolume( m_sBandwidthLimit, TRUE ) == 0 )
+	if ( ( ! IsNotLimited( m_sBandwidthLimit ) ) && Settings.ParseVolume( m_sBandwidthLimit ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
@@ -336,7 +336,7 @@ void CDownloadsSettingsPage::OnOK()
 	Settings.Downloads.MaxTransfers			= m_nMaxDownTransfers;
 	Settings.Downloads.MaxFileTransfers		= m_nMaxFileTransfers;
 	Settings.Downloads.QueueLimit			= nQueueLimit;
-	Settings.Bandwidth.Downloads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit, TRUE ) / 8;
+	Settings.Bandwidth.Downloads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit );
 	Settings.Connection.RequireForTransfers	= m_bRequireConnect;
 	
 	CreateDirectory( m_sDownloadsPath, NULL );

@@ -558,7 +558,7 @@ public:
 
 	CString	SmartSpeed(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert speeds into formatted strings
 	CString	SmartVolume(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert sizes into formatted strings
-	QWORD	ParseVolume(LPCTSTR pszSize, bool bSpeedInBits) const;								// Convert size string into number
+	QWORD	ParseVolume(LPCTSTR pszSize, bool bReturnBytes = true) const;						// Convert size string into number
 	DWORD	GetOutgoingBandwidth() const;														// Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);

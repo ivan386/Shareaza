@@ -133,8 +133,8 @@ void CFilterSearchDlg::OnOK()
 		m_pMatches->m_bFilterDRM		= m_bHideDRM;
 		m_pMatches->m_bFilterAdult		= m_bHideAdult;
 		m_pMatches->m_bFilterSuspicious	= m_bHideSuspicious;
-		m_pMatches->m_nFilterMinSize	= Settings.ParseVolume( m_sMinSize, FALSE );
-		m_pMatches->m_nFilterMaxSize	= Settings.ParseVolume( m_sMaxSize, FALSE );
+		m_pMatches->m_nFilterMinSize	= Settings.ParseVolume( m_sMinSize );
+		m_pMatches->m_nFilterMaxSize	= Settings.ParseVolume( m_sMaxSize );
 		m_pMatches->m_nFilterSources	= m_nSources;
 	}
 
@@ -172,8 +172,8 @@ void CFilterSearchDlg::OnBnClickedSaveFilter()
 		pOptions->m_bFilterDRM			= m_bHideDRM;
 		pOptions->m_bFilterAdult		= m_bHideAdult;
 		pOptions->m_bFilterSuspicious	= m_bHideSuspicious;
-		pOptions->m_nFilterMinSize		= Settings.ParseVolume( m_sMinSize, FALSE );
-		pOptions->m_nFilterMaxSize		= Settings.ParseVolume( m_sMaxSize, FALSE );
+		pOptions->m_nFilterMinSize		= Settings.ParseVolume( m_sMinSize );
+		pOptions->m_nFilterMaxSize		= Settings.ParseVolume( m_sMaxSize );
 		pOptions->m_nFilterSources		= m_nSources;
 
 		if ( nExistingFilter < 0 )

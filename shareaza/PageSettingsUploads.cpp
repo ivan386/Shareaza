@@ -172,7 +172,7 @@ void CUploadsSettingsPage::UpdateQueues()
 	UpdateData( TRUE );
 	
 	DWORD nTotal = Settings.Connection.OutSpeed * 1024 / 8;
-	DWORD nLimit = (DWORD)Settings.ParseVolume( m_sBandwidthLimit, TRUE ) / 8;
+	DWORD nLimit = (DWORD)Settings.ParseVolume( m_sBandwidthLimit );
 	
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
 	
@@ -347,7 +347,7 @@ BOOL CUploadsSettingsPage::OnKillActive()
 {
 	UpdateData();
 	
-	if ( ( ! IsNotLimited( m_sBandwidthLimit ) ) && Settings.ParseVolume( m_sBandwidthLimit, TRUE ) == 0 )
+	if ( ( ! IsNotLimited( m_sBandwidthLimit ) ) && Settings.ParseVolume( m_sBandwidthLimit ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
@@ -369,7 +369,7 @@ void CUploadsSettingsPage::OnOK()
 	Settings.Uploads.SharePartials		= m_bSharePartials;
 	Settings.Uploads.SharePreviews		= m_bSharePreviews;
 	Settings.Uploads.HubUnshare			= m_bHubUnshare;
-	Settings.Bandwidth.Uploads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit, TRUE ) / 8;
+	Settings.Bandwidth.Uploads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit );
 	Settings.Uploads.ThrottleMode		= m_bThrottleMode;
 
 	/*
