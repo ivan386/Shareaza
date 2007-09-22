@@ -210,6 +210,14 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 			ReadGGEP( pPacket, &bBrowseHost, &bChat );
 		}
 
+		// Read first 2 bytes of private data
+		if ( pPacket->GetRemaining() - 16 >= 2 )
+		{
+			WORD nID = pPacket->ReadShortLE();
+			if ( nID > 0 )
+				theApp.Message( MSG_DEBUG, L"Private ID: 0x%x", nID );
+		}
+
 		if ( nXMLSize > 0 )
 		{
 			pPacket->Seek( 16 + nXMLSize, CG1Packet::seekEnd );
