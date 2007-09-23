@@ -422,11 +422,11 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 	}
 }
 
-bool CDownloadsSettingsPage::IsLimited(CString& sText) const
+bool CDownloadsSettingsPage::IsLimited(CString& strText) const
 {
-	if ( ( _tcslen( sText ) == 0 ) ||
-		 ( _tcsistr( sText, _T("MAX") ) != NULL ) || 
-		 ( _tcsistr( sText, _T("NONE") ) != NULL ) )
+	if ( ( _tcslen( strText ) == 0 ) ||
+		 ( _tcsistr( strText, _T("MAX") ) != NULL ) || 
+		 ( _tcsistr( strText, _T("NONE") ) != NULL ) )
 		return false;
 	else
 		return true;

@@ -69,7 +69,7 @@ public:
 
 // Implementation
 protected:
-	bool IsLimited(CString& sText) const;
+	bool IsLimited(CString& strText) const;
 	DECLARE_MESSAGE_MAP()
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelChangeAgentList();

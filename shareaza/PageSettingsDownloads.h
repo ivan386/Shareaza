@@ -74,7 +74,7 @@ public:
 // Implementation
 protected:
 	void CalculateMaxValues();
-	bool IsLimited(CString& sText) const;
+	bool IsLimited(CString& strText) const;
 	//{{AFX_MSG(CDownloadsSettingsPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDownloadsBrowse();
