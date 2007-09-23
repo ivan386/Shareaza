@@ -1250,40 +1250,44 @@ void CSettings::SetStartup(BOOL bStartup)
 CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTruncate) const
 {
 	CString strVolume;
+	CString strUnit( _T("b/s") );
+	int nUnits = bits;
 
-	if ( General.RatesInBytes && ( nVolumeUnits == bits || nVolumeUnits == Kilobits ) )
-		nVolume /= Bytes;
-
-	if ( General.RatesUnit )
+	// Convert to bits or bytes
+	nVolume *= nVolumeUnits;
+	if ( General.RatesInBytes )
 	{
-		CString strUnit = _T("B/s");
-		if ( !General.RatesInBytes )
-			strUnit = _T("b/s");
-		
-		// Adjust units to bits or Bytes
-		if ( nVolumeUnits == Kilobits || nVolumeUnits == KiloBytes )
-			nVolume *= 1024;
-
-		switch ( General.RatesUnit )
-		{
-		case 1:	// bits - Bytes
-			strVolume.Format( _T("%I64i %s"), nVolume * nVolumeUnits, strUnit );
-			break;
-		case 2:	// Kilobits - KiloBytes
-			strVolume.Format( _T("%.2lf K%s"), nVolume / 1024.0f, strUnit );
-			break;
-		case 3:	// Megabits - MegaBytes
-			strVolume.Format( _T("%.2lf M%s"), nVolume / pow( 1024.0f, 2 ), strUnit );
-			break;
-		default:
-			TRACE( _T("Unknown RatesUnit - %i"), General.RatesUnit );
-			break;
-		}
-		return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
+		strUnit = _T("B/s");
+		nVolume /= Bytes;
+		nUnits = Bytes;
 	}
 
-	strVolume = SmartVolume( nVolume, nVolumeUnits, bTruncate ) + _T("/s");
-	return strVolume;
+	switch ( General.RatesUnit )
+	{
+	// smart units
+	case 0:
+		return SmartVolume( nVolume, nUnits, bTruncate ) + _T("/s");
+
+	// bits - Bytes
+	case 1:
+		strVolume.Format( _T("%I64i %s"), nVolume, strUnit );
+		break;
+
+	// Kilobits - KiloBytes
+	case 2:
+		strVolume.Format( _T("%.2lf K%s"), nVolume / 1024.0f, strUnit );
+		break;
+
+	// Megabits - MegaBytes
+	case 3:
+		strVolume.Format( _T("%.2lf M%s"), nVolume / pow( 1024.0f, 2 ), strUnit );
+		break;
+
+	default:
+		TRACE( _T("Unknown RatesUnit - %i"), General.RatesUnit );
+		break;
+	}
+	return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1293,11 +1297,11 @@ CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTruncate) c
 
 CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTruncate) const
 {
-	CString strUnit = _T("B");
+	CString strUnit( _T("B") );
 	CString strVolume;
-	CString strTruncate = _T("%.0f");
+	CString strTruncate( _T("%.0f") );
 
-	if ( !General.RatesInBytes && ( nVolumeUnits == bits || nVolumeUnits == Kilobits ) )
+	if ( !General.RatesInBytes && nVolumeUnits == bits )
 		strUnit = _T("b");
 
 	switch ( nVolumeUnits )
