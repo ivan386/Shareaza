@@ -2852,6 +2852,7 @@
 	<string id="16409" value="Exportar &amp;URIs..."/>
 	<string id="16410" value="Uma sub-pasta do diretório selecionado &quot;%s&quot; já é parte da sua biblioteca.\nAdicionar esta pasta causará o re-hashing de alguns arquivos.\n\nVocê quer continuar ?"/>
 	<string id="16411" value="Incapaz de mover o arquivo %s. O arquivo pode estar sendo usado por outra aplicação.\n\nVocê deseja tentar copiar o arquivo ao invés disto?"/>
+	<string id="16412" value="Arquivo Ghost"/>
 	<string id="16448" value="Conectado a %s, inicializando..."/>
 	<string id="16449" value="Agora conversando com %s (%s)."/>
 	<string id="16450" value="A conexão com %s foi fechada."/>
