@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 55 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 56 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2852,6 +2852,7 @@
 	<string id="16409" value="Esporta &amp;URI..."/>
 	<string id="16410" value="Una sottocartella della cartella selezionata &quot;%s&quot; è già parte della tua libreria.\nAggiungere questa cartella causerà il re-hashing di alcuni file.\n\nVuoi continuare?"/>
 	<string id="16411" value="Impossibile spostare il file %s. Il file può essere in uso da un'altra applicazione.\n\nVuoi provare a copiarlo invece di spostarlo?"/>
+	<string id="16412" value="File fantasma"/>
 	<string id="16448" value="Connesso a %s, negoziazione in corso..."/>
 	<string id="16449" value="Stai chattando con %s (%s)."/>
 	<string id="16450" value="Connessione con %s chiusa."/>
