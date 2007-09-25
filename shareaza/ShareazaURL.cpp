@@ -372,6 +372,18 @@ BOOL CShareazaURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
 	if ( m_sAddress.IsEmpty() || m_sLogin.IsEmpty() )
 		return FALSE;
 
+	//add fix set name
+	int nPos = m_sPath.ReverseFind( '/' );
+	if ( !m_sName.GetLength() && nPos > 0 )
+	{
+		CString sName( CTransfer::URLDecode(
+			m_sPath.Mid( nPos + 1 ).SpanExcluding( _T("?") ) ) );
+		if ( sName.GetLength() )
+		{
+			m_sName = sName;
+		}
+	}
+
 	SOCKADDR_IN saHost;
 
 	BOOL bResult = Network.Resolve( m_sAddress, INTERNET_DEFAULT_FTP_PORT, &saHost, bResolve );
