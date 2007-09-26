@@ -93,8 +93,7 @@ BOOL CURLCopyDlg::OnInitDialog()
 
 void CURLCopyDlg::OnIncludeSelf()
 {
-	CString strURN = _T("");
-	// ATTENTION: strURN is used also with m_wndIncludeSelf
+	CString strURN, strIncludeSelfURN, strTemp;
 
 	if ( m_pFile->m_oTiger && m_pFile->m_oSHA1 )
 	{
@@ -102,28 +101,31 @@ void CURLCopyDlg::OnIncludeSelf()
 				+ m_pFile->m_oSHA1.toString() + '.'
 				+ m_pFile->m_oTiger.toString();
 	}
-
-	if ( m_pFile->m_oSHA1 && ! strURN.GetLength() )
+	else if ( m_pFile->m_oSHA1 )
 	{
 		strURN = _T("xt=") + m_pFile->m_oSHA1.toUrn();
 	}
-
-	if ( m_pFile->m_oTiger && ! strURN.GetLength() )
+	else if ( m_pFile->m_oTiger )
 	{
 		strURN = _T("xt=") + m_pFile->m_oTiger.toUrn();
 	}
+	if ( strURN.GetLength() ) strIncludeSelfURN = strURN.Mid( 3 );
 
 	if ( m_pFile->m_oED2K )
 	{
+		strTemp = _T("xt=") + m_pFile->m_oED2K.toUrn();
 		if ( strURN.GetLength() ) strURN += _T("&");
-		strURN += _T("xt=") + m_pFile->m_oED2K.toUrn();
+		strURN += strTemp;
+		if ( !strIncludeSelfURN.GetLength() ) strIncludeSelfURN = strURN.Mid( 3 );
 	}
 
-	/*if ( m_pFile->m_oMD5 )
+	if ( m_pFile->m_oMD5 )
 	{
-		if ( strURN.GetLength() ) strURN += _T("&");
-		strURN += _T("xt=") + m_pFile->m_oMD5.toUrn();
-	}*/
+		strTemp = _T("xt=") + m_pFile->m_oMD5.toUrn();
+		/*if ( strURN.GetLength() ) strURN += _T("&");
+		strURN += strTemp;*/
+		if ( !strIncludeSelfURN.GetLength() ) strIncludeSelfURN = strURN.Mid( 3 );
+	}
 
 	m_sMagnet = strURN;
 
@@ -151,14 +153,14 @@ void CURLCopyDlg::OnIncludeSelf()
 
 	m_sMagnet = _T("magnet:?") + m_sMagnet;
 
-	if ( m_wndIncludeSelf.GetCheck() && strURN.GetLength() )
+	if ( m_wndIncludeSelf.GetCheck() && strIncludeSelfURN.GetLength() )
 	{
 		CString strURL;
 
 		strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 			htons( Network.m_pHost.sin_port ),
-			(LPCTSTR)strURN.Mid( 3 ) );
+			(LPCTSTR)strIncludeSelfURN );
 
 		m_sMagnet += _T("&xs=") + CTransfer::URLEncode( strURL );
 	}
