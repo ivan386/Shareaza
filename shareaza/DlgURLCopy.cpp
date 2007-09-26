@@ -94,6 +94,7 @@ BOOL CURLCopyDlg::OnInitDialog()
 void CURLCopyDlg::OnIncludeSelf()
 {
 	CString strURN = _T("");
+	// ATTENTION: strURN is used also with m_wndIncludeSelf
 
 	if ( m_pFile->m_oTiger && m_pFile->m_oSHA1 )
 	{
@@ -157,7 +158,7 @@ void CURLCopyDlg::OnIncludeSelf()
 		strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 			htons( Network.m_pHost.sin_port ),
-			(LPCTSTR)strURN );
+			(LPCTSTR)strURN.Mid( 3 ) );
 
 		m_sMagnet += _T("&xs=") + CTransfer::URLEncode( strURL );
 	}
