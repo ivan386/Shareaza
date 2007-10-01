@@ -133,7 +133,7 @@ DWORD CDownloadTransfer::GetAverageSpeed()
 
 DWORD CDownloadTransfer::GetMeasuredSpeed()
 {
-	// Calculate Output
+	// Calculate Input
 	MeasureIn();
 
 	// Return calculated speed
