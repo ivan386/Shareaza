@@ -1639,9 +1639,10 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	if ( bSuccess )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
-		
+
+		// Resample now to display dimensions
 		int nSize = szThumb.cy * pImage.m_nWidth / pImage.m_nHeight;
-		
+
 		if ( nSize > szThumb.cx )
 		{
 			nSize = szThumb.cx * pImage.m_nHeight / pImage.m_nWidth;
@@ -1671,9 +1672,9 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 
 	BYTE* pBuffer = NULL;
 	DWORD nLength = 0;
-	
+
 	int nQuality = Settings.Uploads.PreviewQuality;
-	
+
 	if ( LPCTSTR pszQuality = _tcsistr( m_sRequest, _T("&quality=") ) )
 	{
 		_stscanf( pszQuality + 9, _T("%i"), &nQuality );
