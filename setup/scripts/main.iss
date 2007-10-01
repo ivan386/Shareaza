@@ -73,6 +73,7 @@ Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 0,5.01; Check: CanUser
 #ifndef alpha
 Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
 #endif
+Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache}"; Flags: unchecked
 
 [Files]
 #ifndef debug
@@ -402,9 +403,11 @@ Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Soft
 Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}\Shareaza*.exe"; Tasks: deleteoldsetup and not multiuser
 #endif
 
-; Delete Discovery.dat because of G1 problems (remove in some future)
-Type: files; Name: "{app}\Data\Discovery.dat"
-Type: files; Name: "{userappdata}\Shareaza\Data\Discovery.dat"; Tasks: multiuser
+; Delete Discovery.dat and HostCache.dat
+Type: files; Name: "{app}\Data\Discovery.dat"; Tasks: resetdiscoveryhostcache
+Type: files; Name: "{app}\Data\HostCache.dat"; Tasks: resetdiscoveryhostcache
+Type: files; Name: "{userappdata}\Shareaza\Data\Discovery.dat"; Tasks: resetdiscoveryhostcache and multiuser
+Type: files; Name: "{userappdata}\Shareaza\Data\HostCache.dat"; Tasks: resetdiscoveryhostcache and multiuser
 
 [UninstallDelete]
 ; Clean up files created after installation
