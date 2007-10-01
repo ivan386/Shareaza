@@ -336,10 +336,15 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		else
 		{
 			CDownloadTransfer* pTransfer = pConnectHead->CreateTransfer();
-			return ( pTransfer != NULL && pTransfer->Initiate() );
+			if ( pTransfer && pTransfer->Initiate() )
+			{
+				pTransfer->m_pSource->m_sCountry = pTransfer->m_sCountry;
+				pTransfer->m_pSource->m_sCountryName = pTransfer->m_sCountryName;
+				return TRUE;
+			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
