@@ -594,28 +594,32 @@ BOOL CDownloadTransferHTTP::OnRead()
 BOOL CDownloadTransferHTTP::ReadResponseLine()
 {
 	CString strLine, strCode, strMessage;
-	
+
 	if ( ! m_pInput->ReadLine( strLine ) ) return TRUE;
 	if ( strLine.IsEmpty() ) return TRUE;
 
 	if ( strLine.GetLength() > 512 ) strLine = _T("#LINE_TOO_LONG#");
-	
+
 	theApp.Message( MSG_DEBUG, _T("%s: DOWNLOAD RESPONSE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
-	
+
 	if ( strLine.GetLength() >= 12 && strLine.Left( 9 ) == _T("HTTP/1.1 ") )
 	{
 		strCode		= strLine.Mid( 9, 3 );
 		strMessage	= strLine.Mid( 12 );
+		m_bKeepAlive = TRUE;
 	}
 	else if ( strLine.GetLength() >= 12 && strLine.Left( 9 ) == _T("HTTP/1.0 ") )
 	{
 		strCode		= strLine.Mid( 9, 3 );
 		strMessage	= strLine.Mid( 12 );
+		m_bKeepAlive = FALSE;
 	}
 	else if ( strLine.GetLength() >= 8 && strLine.Left( 4 ) == _T("HTTP") )
 	{
 		strCode		= strLine.Mid( 5, 3 );
 		strMessage	= strLine.Mid( 8 );
+		theApp.Message( MSG_DEBUG, _T("HTTP with unknown version: %s"), strLine );
+		m_bKeepAlive = FALSE;
 	}
 	else
 	{
@@ -623,7 +627,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 		Close( TS_FALSE );
 		return FALSE;
 	}
-	
+
 	if ( strCode == _T("200") || strCode == _T("206") )
 	{
 		SetState( dtsHeaders );
@@ -701,6 +705,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	else if ( strHeader.CompareNoCase( _T("Connection") ) == 0 )
 	{
 		if ( strValue.CompareNoCase( _T("Keep-Alive") ) == 0 ) m_bKeepAlive = TRUE;
+		if ( strValue.CompareNoCase( _T("close") ) == 0 ) m_bKeepAlive = FALSE;
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Length") ) == 0 )
 	{
@@ -802,6 +807,10 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			Close( TS_FALSE );
 			return FALSE;
 		}
+	}
+	else if ( strHeader.CompareNoCase( _T("Content-Language") ) == 0 )
+	{
+		// It would be nice to show in the future
 	}
 	else if ( strHeader.CompareNoCase( _T("Transfer-Encoding") ) == 0 )
 	{
