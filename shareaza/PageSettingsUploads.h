@@ -53,7 +53,7 @@ public:
 	BOOL			m_bSharePreviews;
 	DWORD			m_nMaxPerHost;
 	CString			m_sBandwidthLimit;
-	int				m_bThrottleMode;
+	BOOL			m_bThrottleMode;
 
 //
 public:

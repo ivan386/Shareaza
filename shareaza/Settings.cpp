@@ -1354,10 +1354,10 @@ CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTruncate) 
 	return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 }
 
-QWORD CSettings::ParseVolume(LPCTSTR pszSize, bool bReturnBytes) const
+QWORD CSettings::ParseVolume(CString& strVolume, int nReturnUnits) const
 {
 	double val = 0;
-	CString strSize(pszSize);
+	CString strSize( strVolume );
 
 	if ( strSize.Left( 1 ) == _T("\x200E") ) strSize = strSize.Mid( 1 );
 
@@ -1378,16 +1378,12 @@ QWORD CSettings::ParseVolume(LPCTSTR pszSize, bool bReturnBytes) const
 	else if ( _tcsstr( strSize, _T("E") ) || _tcsstr( strSize, _T("e") ) )	// Exa
 		val *= pow( 1024.0f, 6 );
 
-	if ( bReturnBytes )
-	{
-		if ( _tcschr( strSize, 'b' ) )
-			val /= 8.0f;
-	}
-	else
-	{
-		if ( _tcschr( strSize, 'B' ) )
-			val *= 8.0f;
-	}
+	// Convert to bits
+	if ( _tcschr( strSize, 'B' ) )
+		val *= 8.0f;
+
+	// Convert to required Units
+	val /= nReturnUnits;
 
 	return static_cast< QWORD >( val );
 }

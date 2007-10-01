@@ -223,8 +223,8 @@ public:
 		DWORD		PeerIn;
 		DWORD		PeerOut;
 		DWORD		UdpOut;
-		DWORD		Downloads;
-		DWORD		Uploads;
+		DWORD		Downloads;					// Inbound speed limit in Bytes/seconds
+		DWORD		Uploads;					// Outbound speed limit in Bytes/seconds
 		DWORD		HubUploads;
 	} Bandwidth;
 
@@ -558,7 +558,7 @@ public:
 
 	CString	SmartSpeed(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert speeds into formatted strings
 	CString	SmartVolume(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert sizes into formatted strings
-	QWORD	ParseVolume(LPCTSTR pszSize, bool bReturnBytes = true) const;						// Convert size string into number
+	QWORD	ParseVolume(CString& strVolume, int nReturnUnits = Bytes) const;					// Convert size string into desired units
 	DWORD	GetOutgoingBandwidth() const;														// Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);

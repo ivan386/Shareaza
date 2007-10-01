@@ -49,17 +49,13 @@ END_MESSAGE_MAP()
 // CDownloadsSettingsPage property page
 
 CDownloadsSettingsPage::CDownloadsSettingsPage() : CSettingsPage(CDownloadsSettingsPage::IDD)
-{
 	//{{AFX_DATA_INIT(CDownloadsSettingsPage)
-	m_sDownloadsPath = _T("");
-	m_sIncompletePath = _T("");
-	m_nMaxDownFiles = 0;
-	m_nMaxFileTransfers = 0;
-	m_nMaxDownTransfers = 0;
-	m_sBandwidthLimit = _T("");
-	m_sQueueLimit = _T("");
-	m_bRequireConnect = FALSE;
+,	m_nMaxDownFiles		( 0 )
+,	m_nMaxFileTransfers	( 0 )
+,	m_nMaxDownTransfers	( 0 )
+,	m_bRequireConnect	( FALSE )
 	//}}AFX_DATA_INIT
+{
 }
 
 CDownloadsSettingsPage::~CDownloadsSettingsPage()
@@ -228,7 +224,7 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 {
 	UpdateData();
 	
-	if ( IsLimited( m_sBandwidthLimit ) && Settings.ParseVolume( m_sBandwidthLimit ) == 0 )
+	if ( IsLimited( m_sBandwidthLimit ) && !Settings.ParseVolume( m_sBandwidthLimit ) )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
@@ -336,7 +332,7 @@ void CDownloadsSettingsPage::OnOK()
 	Settings.Downloads.MaxTransfers			= m_nMaxDownTransfers;
 	Settings.Downloads.MaxFileTransfers		= m_nMaxFileTransfers;
 	Settings.Downloads.QueueLimit			= nQueueLimit;
-	Settings.Bandwidth.Downloads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit );
+	Settings.Bandwidth.Downloads			= static_cast< DWORD >( Settings.ParseVolume( m_sBandwidthLimit ) );
 	Settings.Connection.RequireForTransfers	= m_bRequireConnect;
 	
 	CreateDirectory( m_sDownloadsPath, NULL );
@@ -385,17 +381,30 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 	{
 		// Update the bandwidth limit combo values
 
+		// Update speed units
+		m_sBandwidthLimit	= Settings.SmartSpeed( Settings.Bandwidth.Downloads );
+
 		// Remove any existing strings
-		while ( m_wndBandwidthLimit.GetCount() ) m_wndBandwidthLimit.DeleteString( 0 );
+		m_wndBandwidthLimit.ResetContent();
+
 		// Add the new ones
-		DWORD nHalfSpeed = Settings.Connection.InSpeed / 2;
-		DWORD nQuarterSpeed = Settings.Connection.InSpeed / 4;
-		DWORD n85Speed = Settings.Connection.InSpeed * 8.5 / 10;	// 85%
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nQuarterSpeed, Kilobits ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed, Kilobits ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed + nQuarterSpeed, Kilobits ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( n85Speed, Kilobits ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( Settings.Connection.InSpeed, Kilobits ) );
+		const DWORD nSpeeds[] =
+		{
+			Settings.Connection.InSpeed / 4,		//  25%
+			Settings.Connection.InSpeed / 2,		//  50%
+			Settings.Connection.InSpeed * 0.75f,	//  75%
+			Settings.Connection.InSpeed * 0.85f,	//  85%
+			Settings.Connection.InSpeed				// 100%
+		};
+		for ( int nSpeed = 0 ; nSpeed < sizeof( nSpeeds ) / sizeof( DWORD ) ; nSpeed++ )
+		{
+			CString strSpeed = Settings.SmartSpeed( nSpeeds[ nSpeed ], Kilobits );
+			if ( Settings.ParseVolume( strSpeed, Kilobits )
+				&& m_wndBandwidthLimit.FindStringExact( -1, strSpeed ) == CB_ERR )
+			{
+				m_wndBandwidthLimit.AddString( strSpeed );
+			}
+		}
 		m_wndBandwidthLimit.AddString( _T("MAX") );
 
 		// Update the queue limit combo values

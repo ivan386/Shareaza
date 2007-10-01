@@ -61,12 +61,12 @@ END_MESSAGE_MAP()
 // CUploadsSettingsPage property page
 
 CUploadsSettingsPage::CUploadsSettingsPage() : CSettingsPage( CUploadsSettingsPage::IDD )
+,	m_bSharePartials	( FALSE )
+,	m_bHubUnshare		( FALSE )
+,	m_bSharePreviews	( FALSE )
+,	m_nMaxPerHost		( 0ul )
+,	m_bThrottleMode		( FALSE )
 {
-	m_bSharePartials = FALSE;
-	m_nMaxPerHost = 0;
-	m_bHubUnshare = FALSE;
-	m_bSharePreviews = FALSE;
-	m_bThrottleMode = FALSE;
 }
 
 CUploadsSettingsPage::~CUploadsSettingsPage()
@@ -171,8 +171,8 @@ void CUploadsSettingsPage::UpdateQueues()
 {
 	UpdateData( TRUE );
 	
-	DWORD nTotal = Settings.Connection.OutSpeed * 1024 / 8;
-	DWORD nLimit = (DWORD)Settings.ParseVolume( m_sBandwidthLimit );
+	QWORD nTotal = Settings.Connection.OutSpeed * Kilobits / Bytes;
+	QWORD nLimit = Settings.ParseVolume( m_sBandwidthLimit );
 	
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
 	
@@ -200,7 +200,7 @@ void CUploadsSettingsPage::UpdateQueues()
 		
 		if ( ( pQueue->m_bEnable ) && ( ! bDonkeyOnlyDisabled ) )
 		{
-			DWORD nBandwidth = nLimit * pQueue->m_nBandwidthPoints / max( 1, UploadQueues.GetTotalBandwidthPoints( TRUE ) );
+			QWORD nBandwidth = nLimit * pQueue->m_nBandwidthPoints / max( 1, UploadQueues.GetTotalBandwidthPoints( TRUE ) );
 			pItem->Set( 2, Settings.SmartSpeed( nBandwidth ) + '+' );
 			pItem->Format( 3, _T("%i-%i"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers );
 
@@ -347,7 +347,7 @@ BOOL CUploadsSettingsPage::OnKillActive()
 {
 	UpdateData();
 	
-	if ( IsLimited( m_sBandwidthLimit ) && Settings.ParseVolume( m_sBandwidthLimit ) == 0 )
+	if ( IsLimited( m_sBandwidthLimit ) && !Settings.ParseVolume( m_sBandwidthLimit ) )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
@@ -369,24 +369,16 @@ void CUploadsSettingsPage::OnOK()
 	Settings.Uploads.SharePartials		= m_bSharePartials;
 	Settings.Uploads.SharePreviews		= m_bSharePreviews;
 	Settings.Uploads.HubUnshare			= m_bHubUnshare;
-	Settings.Bandwidth.Uploads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit );
+	Settings.Bandwidth.Uploads			= static_cast< DWORD >( Settings.ParseVolume( m_sBandwidthLimit ) );
 	Settings.Uploads.ThrottleMode		= m_bThrottleMode;
 
-	/*
-	// Upload limit cannot exceed upload capacity
-	if ( Settings.Bandwidth.Uploads )
-	{
-		Settings.Bandwidth.Uploads = min ( Settings.Bandwidth.Uploads, ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
-	}
-	*/
-	
 	// Warn the user about the effects of upload limiting
-	if ( ( ! Settings.Live.UploadLimitWarning ) && ( Settings.Bandwidth.Uploads > 0 ) && ( Settings.Bandwidth.Uploads != nOldLimit ) )
+	if ( !Settings.Live.UploadLimitWarning && Settings.Bandwidth.Uploads > 0 && Settings.Bandwidth.Uploads != nOldLimit )
 	{
-		DWORD nDownload = max( Settings.Bandwidth.Downloads, ( ( Settings.Connection.InSpeed  / 8 ) * 1024 ) );
-		DWORD nUpload	= min( Settings.Bandwidth.Uploads,   ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
+		QWORD nDownload = max( Settings.Bandwidth.Downloads, Settings.Connection.InSpeed  * Kilobits / Bytes );
+		QWORD nUpload	= min( Settings.Bandwidth.Uploads,   Settings.Connection.OutSpeed * Kilobits / Bytes );
 		
-		if ( ( nUpload * 16 ) < ( nDownload ) )
+		if ( nUpload * 16 < nDownload )
 		{
 			CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
 			Settings.Live.UploadLimitWarning = TRUE;
@@ -441,17 +433,30 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 	{
 		// Update the bandwidth limit combo values
 
+		// Update speed units
+		m_sBandwidthLimit	= Settings.SmartSpeed( Settings.Bandwidth.Uploads );
+
 		// Remove any existing strings
-		while ( m_wndBandwidthLimit.GetCount() ) m_wndBandwidthLimit.DeleteString( 0 );
+		m_wndBandwidthLimit.ResetContent();
+
 		// Add the new ones
-		DWORD nHalfSpeed = Settings.Connection.OutSpeed / 2;
-		DWORD nQuarterSpeed = Settings.Connection.OutSpeed / 4;
-		DWORD n85Speed = Settings.Connection.OutSpeed * 8.5 / 10;	// 85%
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nQuarterSpeed, Kilobits ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed, Kilobits ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( nHalfSpeed + nQuarterSpeed, Kilobits ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( n85Speed, Kilobits ) );
-		m_wndBandwidthLimit.AddString( Settings.SmartSpeed( Settings.Connection.OutSpeed, Kilobits ) );
+		const DWORD nSpeeds[] =
+		{
+			Settings.Connection.OutSpeed / 4,		//  25%
+			Settings.Connection.OutSpeed / 2,		//  50%
+			Settings.Connection.OutSpeed * 0.75f,	//  75%
+			Settings.Connection.OutSpeed * 0.85f,	//  85%
+			Settings.Connection.OutSpeed			// 100%
+		};
+		for ( int nSpeed = 0 ; nSpeed < sizeof( nSpeeds ) / sizeof( DWORD ) ; nSpeed++ )
+		{
+			CString strSpeed = Settings.SmartSpeed( nSpeeds[ nSpeed ], Kilobits );
+			if ( Settings.ParseVolume( strSpeed, Kilobits )
+				&& m_wndBandwidthLimit.FindStringExact( -1, strSpeed ) == CB_ERR )
+			{
+				m_wndBandwidthLimit.AddString( strSpeed );
+			}
+		}
 		m_wndBandwidthLimit.AddString( _T("MAX") );
 
 		UpdateData( FALSE );

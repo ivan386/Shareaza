@@ -50,20 +50,16 @@ END_MESSAGE_MAP()
 // CConnectionSettingsPage property page
 
 CConnectionSettingsPage::CConnectionSettingsPage() : CSettingsPage(CConnectionSettingsPage::IDD)
-{
 	//{{AFX_DATA_INIT(CConnectionSettingsPage)
-	m_bIgnoreLocalIP = FALSE;
-	m_bEnableUPnP = FALSE;
-	m_bInBind = FALSE;
-	m_sInHost = _T("");
-	m_nInPort = 0;
-	m_sOutHost = _T("");
-	m_nTimeoutConnection = 0;
-	m_nTimeoutHandshake = 0;
-	m_sOutSpeed = _T("");
-	m_sInSpeed = _T("");
-	m_bInRandom = FALSE;
+,	m_bInBind				( FALSE )
+,	m_nInPort				( 0 )
+,	m_bIgnoreLocalIP		( FALSE )
+,	m_bEnableUPnP			( FALSE )
+,	m_nTimeoutConnection	( 0ul )
+,	m_nTimeoutHandshake		( 0ul )
+,	m_bInRandom				( FALSE )
 	//}}AFX_DATA_INIT
+{
 }
 
 CConnectionSettingsPage::~CConnectionSettingsPage()
@@ -185,16 +181,6 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	return TRUE;
 }
 
-CString CConnectionSettingsPage::FormatSpeed(DWORD nSpeed)
-{
-	return Settings.SmartSpeed( nSpeed, Kilobits );
-}
-
-DWORD CConnectionSettingsPage::ParseSpeed(LPCTSTR psz)
-{
-	return (DWORD)Settings.ParseVolume( psz, false ) / 1024;
-}
-
 void CConnectionSettingsPage::OnEditChangeInboundHost()
 {
 	CString strAutomatic = GetInOutHostTranslation();
@@ -240,7 +226,7 @@ BOOL CConnectionSettingsPage::OnKillActive()
 {
 	UpdateData();
 
-	if ( ParseSpeed( m_sInSpeed ) == 0 )
+	if ( !Settings.ParseVolume( m_sInSpeed, Kilobits ) )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
@@ -249,7 +235,7 @@ BOOL CConnectionSettingsPage::OnKillActive()
 		return FALSE;
 	}
 
-	if ( ParseSpeed( m_sOutSpeed ) == 0 )
+	if ( !Settings.ParseVolume( m_sOutSpeed, Kilobits ) )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
@@ -308,32 +294,23 @@ void CConnectionSettingsPage::OnOK()
 	Settings.Connection.EnableUPnP			= m_bEnableUPnP;
 	Settings.Connection.InBind				= m_bInBind;
 	Settings.Connection.OutHost				= m_sOutHost;
-	Settings.Connection.InSpeed				= ParseSpeed( m_sInSpeed );
-	Settings.Connection.OutSpeed			= ParseSpeed( m_sOutSpeed );
+	Settings.Connection.InSpeed				= Settings.ParseVolume( m_sInSpeed, Kilobits );
+	Settings.Connection.OutSpeed			= Settings.ParseVolume( m_sOutSpeed, Kilobits );
 	Settings.Connection.IgnoreLocalIP		= m_bIgnoreLocalIP;
 	Settings.Connection.TimeoutConnect		= m_nTimeoutConnection * 1000;
 	Settings.Connection.TimeoutHandshake	= m_nTimeoutHandshake  * 1000;
 
-	/*
-	// Correct the upload limit (if required)
-	if ( Settings.Bandwidth.Uploads )
-	{
-		Settings.Bandwidth.Uploads = min ( Settings.Bandwidth.Uploads, ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
-	}
-	*/
-
-
 	UpdateData();
 
 	// Warn the user about upload limiting and ed2k/BT downloads
-	if ( ( ! Settings.Live.UploadLimitWarning ) &&
-		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface || Settings.BitTorrent.AdvancedInterfaceSet ) ) 
+	if ( !Settings.Live.UploadLimitWarning &&
+		( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface || Settings.BitTorrent.AdvancedInterfaceSet ) ) 
 	{
-		DWORD nDownload = max ( Settings.Bandwidth.Downloads, ( ( Settings.Connection.InSpeed  / 8 ) * 1024 ) );
-		DWORD nUpload = ( ( Settings.Connection.OutSpeed / 8 ) * 1024 );
+		QWORD nDownload = max( Settings.Bandwidth.Downloads, Settings.Connection.InSpeed * Kilobits / Bytes );
+		QWORD nUpload   = Settings.Connection.OutSpeed * Kilobits / Bytes;
 		if ( Settings.Bandwidth.Uploads > 0 ) nUpload =  min( Settings.Bandwidth.Uploads, nUpload );
 		
-		if ( ( nUpload * 16 ) < ( nDownload ) )
+		if ( nUpload * 16 < nDownload )
 		{
 			CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
 			Settings.Live.UploadLimitWarning = TRUE;
@@ -362,19 +339,32 @@ void CConnectionSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 	CSettingsPage::OnShowWindow(bShow, nStatus);
 	if ( bShow )
 	{
-		// Update speed units
-		m_sOutSpeed	= FormatSpeed( Settings.Connection.OutSpeed );
-		m_sInSpeed	= FormatSpeed( Settings.Connection.InSpeed );
+		// Update the bandwidth combo values
 
-		// Dropdown
+		// Update speed units
+		m_sOutSpeed	= Settings.SmartSpeed( Settings.Connection.OutSpeed, Kilobits );
+		m_sInSpeed	= Settings.SmartSpeed( Settings.Connection.InSpeed, Kilobits );
+
+		// Remove any existing strings
 		m_wndInSpeed.ResetContent();
 		m_wndOutSpeed.ResetContent();
-		const double nSpeeds[] = { 28.8, 33.6, 56, 64, 128, 256, 384, 512, 640, 768, 1024, 1536, 1544, 1550, 2048, 3072, 4096, 5120, 8192, 10240, 12288, 24576, 45000, 102400, 155000, 0 };
-		for ( int nSpeed = 0 ; nSpeeds[ nSpeed ] ; nSpeed++ )
+
+		// Add the new ones
+		const DWORD nSpeeds[] =
 		{
-			CString str = FormatSpeed( (DWORD)nSpeeds[ nSpeed ] );
-			m_wndInSpeed.AddString( str );
-			m_wndOutSpeed.AddString( str );
+			28.8, 33.6, 56, 64, 128, 256, 384, 512, 640, 768, 1024, 1536, 1544,
+			1550, 2048, 3072, 4096, 5120, 8192, 10240, 12288, 24576, 45000,
+			102400, 155000
+		};
+		for ( int nSpeed = 0 ; nSpeed < sizeof( nSpeeds ) / sizeof( DWORD ) ; nSpeed++ )
+		{
+			CString strSpeed = Settings.SmartSpeed( nSpeeds[ nSpeed ], Kilobits );
+			if ( Settings.ParseVolume( strSpeed, Kilobits )
+				&& m_wndInSpeed.FindStringExact( -1, strSpeed ) == CB_ERR )
+			{
+				m_wndInSpeed.AddString( strSpeed );
+				m_wndOutSpeed.AddString( strSpeed );
+			}
 		}
 
 		UpdateData( FALSE );

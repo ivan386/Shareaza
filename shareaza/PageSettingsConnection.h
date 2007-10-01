@@ -1,7 +1,7 @@
 //
 // PageSettingsConnection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,10 +62,6 @@ public:
 	BOOL	m_bInRandom;
 	//}}AFX_DATA
 
-	CString	FormatSpeed(DWORD nSpeed);
-	DWORD	ParseSpeed(LPCTSTR psz);
-	CString GetInOutHostTranslation();
-
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CConnectionSettingsPage)
@@ -78,6 +74,8 @@ public:
 
 // Implementation
 protected:
+	CString GetInOutHostTranslation();
+
 	//{{AFX_MSG(CConnectionSettingsPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnEditChangeInboundHost();

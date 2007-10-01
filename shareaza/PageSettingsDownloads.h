@@ -59,7 +59,7 @@ public:
 	BOOL			m_bRequireConnect;
 	//}}AFX_DATA
 
-	BOOL m_bDownloadsChanged;
+	BOOL	m_bDownloadsChanged;
 
 // Overrides
 public:
@@ -73,8 +73,9 @@ public:
 
 // Implementation
 protected:
-	void CalculateMaxValues();
-	bool IsLimited(CString& strText) const;
+	bool	IsLimited(CString& strText) const;
+	void	CalculateMaxValues();
+
 	//{{AFX_MSG(CDownloadsSettingsPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDownloadsBrowse();
