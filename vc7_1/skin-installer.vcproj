@@ -27,10 +27,13 @@
 				BufferSecurityCheck="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="skin.h"
+				AssemblerListingLocation="$(IntDir)/"
 				ProgramDataBaseFileName="$(IntDir)/"
+				BrowseInformation="1"
+				BrowseInformationFile="$(IntDir)/"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"
+				DebugInformationFormat="4"
 				DisableSpecificWarnings="4100;4201;4255;4668;4820"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -38,11 +41,12 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="unicows.lib comctl32.lib msvcrt.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)/shareaza/Skin.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories=""
 				IgnoreDefaultLibraryNames="libcmtd.lib"
 				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -93,9 +97,13 @@
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="skin.h"
+				AssemblerListingLocation="$(IntDir)/"
 				ProgramDataBaseFileName="$(IntDir)/"
+				BrowseInformation="1"
+				BrowseInformationFile="$(IntDir)/"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="TRUE"
+				DebugInformationFormat="3"
 				DisableSpecificWarnings="4100;4201;4255;4668;4711;4820"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -106,6 +114,8 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;secur32.lib;oleacc.lib"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
