@@ -382,7 +382,10 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Update the bandwidth limit combo values
 
 		// Update speed units
-		m_sBandwidthLimit	= Settings.SmartSpeed( Settings.Bandwidth.Downloads );
+		if ( Settings.Bandwidth.Downloads )
+			m_sBandwidthLimit	= Settings.SmartSpeed( Settings.Bandwidth.Downloads );
+		else
+			m_sBandwidthLimit	= _T("MAX");
 
 		// Remove any existing strings
 		m_wndBandwidthLimit.ResetContent();
