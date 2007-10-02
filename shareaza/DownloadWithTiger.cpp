@@ -433,15 +433,17 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		DWORD nRetry = 0xFFFFFFFF;
 		QWORD nPrevious = 0;
 		
+		Fragments::List::const_iterator pEnd = m_pFile->GetEmptyFragmentList().end();
 		for ( Fragments::List::const_iterator pFragment = m_pFile->GetEmptyFragmentList().begin();
-			pFragment != m_pFile->GetEmptyFragmentList().end(); ++pFragment )
+			pFragment != pEnd; ++pFragment )
 		{
 			if ( pFragment->begin() - nPrevious >= nBlockSize )
 			{
 				DWORD nBlock = (DWORD)( ( nPrevious + nBlockSize - 1 ) / nBlockSize );
 				nPrevious = nBlockSize * (QWORD)nBlock + nBlockSize;
 
-				for ( ; nPrevious <= pFragment->begin() ; nBlock ++, nPrevious += nBlockSize )
+				QWORD nFragmentBegin = pFragment->begin();
+				for ( ; nPrevious <= nFragmentBegin ; nBlock ++, nPrevious += nBlockSize )
 				{
 					if ( pBlockPtr[ nBlock ] == TS_UNKNOWN )
 					{
