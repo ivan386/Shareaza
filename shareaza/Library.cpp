@@ -34,8 +34,6 @@
 #include "AlbumFolder.h"
 #include "DlgExistingFile.h"
 #include "WndMain.h"
-#include "Downloads.h"
-#include "Download.h"
 
 #include "QuerySearch.h"
 #include "Application.h"
@@ -111,16 +109,6 @@ CAlbumFolder* CLibrary::GetAlbumRoot()
 
 void CLibrary::AddFile(CLibraryFile* pFile)
 {
-	if ( ! pFile->m_oBTH )
-	{
-		// Get BTIH of recently downloaded file
-		CDownload* pDownload = Downloads.FindByPath( pFile->GetPath() );
-		if ( pDownload && pDownload->IsSingleFileTorrent() )
-		{
-			pFile->m_oBTH = pDownload->m_oBTH;
-		}
-	}
-
 	LibraryMaps.OnFileAdd( pFile );
 
 	if ( pFile->m_oSHA1 )

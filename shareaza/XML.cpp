@@ -698,6 +698,43 @@ BOOL CXMLElement::Equals(CXMLElement* pXML) const
 }
 
 //////////////////////////////////////////////////////////////////////
+// CXMLElement Metadata merge
+
+BOOL CXMLElement::Merge(CXMLElement* pInput)
+{
+	if ( ! this || ! pInput ) return FALSE;
+	if ( this == pInput ) return TRUE;
+	if ( m_sName != pInput->m_sName ) return FALSE;
+
+	TRACE( _T("Merging XML:%sand XML:%s"),
+		ToString( FALSE, TRUE ), pInput->ToString( FALSE, TRUE ) );
+
+	for ( POSITION pos = pInput->GetElementIterator() ; pos ; )
+	{
+		CXMLElement* pElement	= pInput->GetNextElement( pos );
+		CXMLElement* pTarget	= GetElementByName( pElement->m_sName );
+
+		if ( pTarget == NULL )
+			AddElement( pElement->Clone() );
+		else
+			pTarget->Merge( pElement );
+	}
+
+	for ( POSITION pos = pInput->GetAttributeIterator() ; pos ; )
+	{
+		CXMLAttribute* pAttribute	= pInput->GetNextAttribute( pos );
+		CXMLAttribute* pTarget		= GetAttribute( pAttribute->m_sName );
+
+		if ( pTarget == NULL )
+			AddAttribute( pAttribute->Clone() );
+	}
+
+	TRACE( _T("resulting XML:%s"), ToString( FALSE, TRUE ) );
+
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CXMLElement recursive word accumulation
 
 CString CXMLElement::GetRecursiveWords()

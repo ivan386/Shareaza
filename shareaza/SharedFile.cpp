@@ -29,6 +29,7 @@
 
 #include "Network.h"
 #include "Uploads.h"
+#include "Download.h"
 #include "Downloads.h"
 #include "ShareazaURL.h"
 #include "FileExecutor.h"
@@ -83,6 +84,7 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 	m_pSchema( NULL ),
 	m_pMetadata( NULL ),
 	m_bMetadataAuto( FALSE ),
+	m_bMetadataModified( FALSE ),
 	m_nRating( 0 ),
 	m_nHitsToday( 0 ),
 	m_nHitsTotal( 0 ),
@@ -102,6 +104,30 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 		m_sName = pszName;
 	if ( pFolder )
 		m_sPath = pFolder->m_sPath;
+
+	if ( pFolder && pszName )
+	{
+		CDownload* pDownload = Downloads.FindByPath( GetPath() );
+		if ( pDownload )
+		{
+			// Get BTIH of recently downloaded file
+			if ( pDownload->IsSingleFileTorrent() )
+			{
+				m_oBTH = pDownload->m_oBTH;
+			}
+
+			// Get metadata of recently downloaded file
+			if ( pDownload->m_pXML && pDownload->m_pXML->GetFirstElement() )
+			{
+				m_bMetadataAuto = TRUE;
+				m_pSchema = SchemaCache.Get(
+					pDownload->m_pXML->GetAttributeValue( CXMLAttribute::schemaName ) );
+				m_pMetadata = pDownload->m_pXML->GetFirstElement()->Clone();
+				ModifyMetadata();
+			}
+		}
+	}
+
 	EnableDispatch( IID_ILibraryFile );
 }
 
@@ -350,13 +376,7 @@ BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
 	
 	Library.RemoveFile( this );
 	
-	if ( m_pMetadata != NULL )
-	{
-		delete m_pMetadata;
-		m_pSchema		= NULL;
-		m_pMetadata		= NULL;
-		m_bMetadataAuto	= FALSE;
-	}
+	delete m_pMetadata;
 	
 	m_pSchema		= pSchema;
 	m_pMetadata		= pXML ? pXML->GetFirstElement()->Detach() : NULL;
@@ -369,12 +389,20 @@ BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
         m_oMD5.clear();
         m_oED2K.clear();
 	}
-	
+
+	ModifyMetadata();
+
 	Library.AddFile( this );
 	
 	SaveMetadata();
 	
 	return TRUE;
+}
+
+void CLibraryFile::ModifyMetadata()
+{
+	m_bMetadataModified = TRUE;
+	GetSystemTimeAsFileTime( &m_pMetadataTime );
 }
 
 CString CLibraryFile::GetMetadataWords() const
@@ -642,6 +670,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		
 		ar << m_bMetadataAuto;
 		ar.Write( &m_pMetadataTime, sizeof( m_pMetadataTime ) );
+		m_bMetadataModified = FALSE;
 		
 		ar << m_nHitsTotal;
 		ar << m_nUploadsTotal;
@@ -770,6 +799,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 				}
 			}
 		}
+		m_bMetadataModified = FALSE;
 		
 		ar >> m_nHitsTotal;
 		ar >> m_nUploadsTotal;
@@ -839,7 +869,6 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
         m_oTiger.clear();
         m_oMD5.clear();
         m_oED2K.clear();
-		m_oBTH.clear();
 		
 		if ( m_pMetadata != NULL && m_bMetadataAuto )
 		{
@@ -937,7 +966,6 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 			m_oTiger.clear();
 			m_oMD5.clear();
 			m_oED2K.clear();
-			m_oBTH.clear();
 		}
 		
 		if ( bLocked ) pLock.Unlock();
@@ -956,7 +984,7 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 		CFolderScanDlg::Update( m_sName,
 			( m_nSize == SIZE_UNKNOWN ) ? 0 : (DWORD)( m_nSize / 1024 ) );
 	}
-	
+
 	return bChanged;
 }
 

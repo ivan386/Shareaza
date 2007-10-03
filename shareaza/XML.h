@@ -124,6 +124,8 @@ public:
 	void			ToString(CString& strXML, BOOL bNewline = FALSE);
 	BOOL			ParseString(LPCTSTR& strXML);
 	BOOL			Equals(CXMLElement* pXML) const;
+	// Add missing elements and attributes from pInput, preserve existing
+	BOOL			Merge(CXMLElement* pInput);
 	CString			GetRecursiveWords();
 	void			AddRecursiveWords(CString& strWords);
 #ifdef _AFX
@@ -134,7 +136,6 @@ public:
 	static CXMLElement* FromBytes(BYTE* pByte, DWORD nByte, BOOL bHeader = FALSE);
 	static CXMLElement* FromFile(LPCTSTR pszPath, BOOL bHeader = FALSE);
 	static CXMLElement* FromFile(HANDLE hFile, BOOL bHeader = FALSE);
-
 };
 
 

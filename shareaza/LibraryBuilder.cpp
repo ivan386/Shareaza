@@ -369,14 +369,12 @@ void CLibraryBuilder::OnRun()
 				if ( HashFile( sPath, hFile, oSHA1, oMD5, nIndex ) )
 				{
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-					if ( Plugins.ExtractMetadata( nIndex, sPath, hFile ) )
-					{
-						// Plugin got it
-					}
-					else if ( Internals.ExtractMetadata( nIndex, sPath, hFile, oSHA1, oMD5 ) )
-					{
-						// Internal got it
-					}
+					Internals.ExtractMetadata( nIndex, sPath, hFile, oSHA1, oMD5 );
+
+					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+					Plugins.ExtractMetadata( nIndex, sPath, hFile );
+
+					// Done
 					Remove( sPath );
 				}
 				else
@@ -532,20 +530,26 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 	CQuickLock oLibraryLock( Library.m_pSection );
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
-		if ( pFile->m_pMetadata == NULL )
-		{
-			Library.RemoveFile( pFile );
-
-			pFile->m_pSchema		= pSchema;
-			pFile->m_pMetadata		= pXML;
+		if ( pFile->m_pMetadata )
+			// Merge new with old metadata
+			pXML->Merge( pFile->m_pMetadata );
+		else
 			pFile->m_bMetadataAuto	= TRUE;
 
-			Library.AddFile( pFile );
-			Library.Update();
+		Library.RemoveFile( pFile );
 
-			return nAttributeCount;
-		}
+		// Delete old one
+		delete pFile->m_pMetadata;
 
+		// Set new matadata
+		pFile->m_pSchema		= pSchema;
+		pFile->m_pMetadata		= pXML;
+		pFile->ModifyMetadata();
+
+		Library.AddFile( pFile );
+		Library.Update();
+
+		return nAttributeCount;
 	}
 
 	delete pXML;

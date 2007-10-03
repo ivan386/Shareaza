@@ -462,41 +462,16 @@ BOOL CBitziDownloader::SubmitMetaData(CXMLElement* pXML)
 		return FALSE;
 	}
 
-	if ( pFile->m_pMetadata != NULL ) MergeMetaData( pXML, pFile->m_pMetadata );
+	if ( pFile->m_pMetadata != NULL )
+	{
+		CXMLElement* pXMLBody = pXML->GetFirstElement();
+		if ( pXMLBody )
+			pXMLBody->Merge( pFile->m_pMetadata );
+	}
 
 	BOOL bSuccess = pFile->SetMetadata( pXML );
 
 	delete pXML;
 
 	return bSuccess;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CBitziDownloader metadata merge
-
-BOOL CBitziDownloader::MergeMetaData(CXMLElement* pOutput, CXMLElement* pInput)
-{
-	if ( ! pOutput || ! pInput ) return FALSE;
-
-	pOutput	= pOutput->GetFirstElement();
-
-	if ( ! pOutput || pOutput->GetName() != pInput->GetName() ) return FALSE;
-
-	for ( POSITION pos = pInput->GetElementIterator() ; pos ; )
-	{
-		CXMLElement* pElement	= pInput->GetNextElement( pos );
-		CXMLElement* pTarget	= pOutput->GetElementByName( pElement->GetName() );
-
-		if ( pTarget == NULL ) pOutput->AddElement( pElement->Clone() );
-	}
-
-	for ( POSITION pos = pInput->GetAttributeIterator() ; pos ; )
-	{
-		CXMLAttribute* pAttribute	= pInput->GetNextAttribute( pos );
-		CXMLAttribute* pTarget		= pOutput->GetAttribute( pAttribute->GetName() );
-
-		if ( pTarget == NULL ) pOutput->AddAttribute( pAttribute->Clone() );
-	}
-
-	return TRUE;
 }

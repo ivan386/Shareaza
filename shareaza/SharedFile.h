@@ -70,7 +70,7 @@ public:
 	CXMLElement*	m_pMetadata;
 	BOOL			m_bMetadataAuto;		// Metadata is auto-generated
 	FILETIME		m_pMetadataTime;		// Metadata time
-
+	BOOL			m_bMetadataModified;	// Metadata must be saved
 	int				m_nRating;
 	CString			m_sComments;
 	CString			m_sShareTags;
@@ -105,6 +105,7 @@ public:
 	BOOL			Delete(BOOL bDeleteGhost = FALSE);
 	BOOL			SetMetadata(CXMLElement* pXML);
 	CString			GetMetadataWords() const;
+	void			ModifyMetadata();		// Mark metadata as modified
 	BOOL			SaveMetadata();
 	CTigerTree*		GetTigerTree();
 	CED2K*			GetED2K();
