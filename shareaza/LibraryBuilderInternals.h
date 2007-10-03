@@ -91,6 +91,7 @@ protected:		// General Media
     BOOL		ReadCollection(DWORD nIndex, HANDLE hFile, const Hashes::Sha1Hash& oSHA1);
 	BOOL		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		DecodePDFText(CString& strInput);
+	BOOL		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 };
 
 #endif // !defined(AFX_LIBRARYBUILDERINTERNALS_H__5CAE40BD_1963_4A30_A333_89DBB6899803__INCLUDED_)

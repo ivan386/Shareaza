@@ -33,6 +33,7 @@
 #include "ID3.h"
 #include "CollectionFile.h"
 #include <MsiDefs.h>
+#include "BTInfo.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -193,6 +194,10 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, H
 	{
 		if ( ! m_bEnableCHM ) return FALSE;
 		return ReadCHM( nIndex, hFile, strPath );
+	}
+	else if ( strType == _T(".torrent") )
+	{
+		return ReadTorrent( nIndex, hFile, strPath );
 	}
 	return FALSE;
 }
@@ -3634,4 +3639,37 @@ BOOL CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		strTemp = CSchema::uriDocument;
 
 	return CLibraryBuilder::SubmitMetadata( nIndex, strTemp, pXML );
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilderInternals TORRENT
+
+BOOL CLibraryBuilderInternals::ReadTorrent(DWORD nIndex, HANDLE /*hFile*/, LPCTSTR pszPath)
+{
+	CBTInfo oTorrent;
+	if ( oTorrent.LoadTorrentFile( pszPath ) && ! oTorrent.HasEncodingError() )
+	{
+		CXMLElement* pXML = new CXMLElement( NULL, L"torrent" );
+		pXML->AddAttribute( L"hash", oTorrent.m_oBTH.toString() );
+		if ( oTorrent.m_sTracker.GetLength() )
+			pXML->AddAttribute( L"tracker", oTorrent.m_sTracker );	
+		if ( oTorrent.m_nEncoding )
+		{
+			CString sEncoding;
+			sEncoding.Format( _T("CP%u"), oTorrent.m_nEncoding );
+			pXML->AddAttribute( L"encoding", sEncoding );
+		}
+		if ( oTorrent.m_tCreationDate )
+		{
+			CTime oTime( (time_t)oTorrent.m_tCreationDate );
+			pXML->AddAttribute( L"creationdate", oTime.Format( _T("%Y-%m-%d  %H:%M") ) );
+		}
+		if ( oTorrent.m_sCreatedBy.GetLength() )
+			pXML->AddAttribute( L"createdby", oTorrent.m_sCreatedBy );
+		if ( oTorrent.m_sComment.GetLength() )
+			pXML->AddAttribute( L"comments", oTorrent.m_sComment );
+		return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriBitTorrent, pXML );
+	}
+	return FALSE;
 }
