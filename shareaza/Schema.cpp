@@ -828,3 +828,5 @@ LPCTSTR	CSchema::uriDocumentAll				= _T("http://www.shareaza.com/schemas/documen
 LPCTSTR	CSchema::uriGhostFolder				= _T("http://www.shareaza.com/schemas/ghostFolder.xsd");
 
 LPCTSTR CSchema::uriComments				= _T("http://www.shareaza.com/schemas/comments.xsd");
+
+LPCTSTR CSchema::uriBitTorrent				= _T("http://www.shareaza.com/schemas/BitTorrent.xsd");

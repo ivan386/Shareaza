@@ -191,6 +191,7 @@ public:
 	static LPCTSTR	uriDocumentAll;
 	static LPCTSTR	uriGhostFolder;
 	static LPCTSTR	uriComments;
+	static LPCTSTR	uriBitTorrent;
 
 	friend class CSchemaMember;
 
