@@ -157,6 +157,23 @@ void CDownloadGroup::SetSchema(LPCTSTR pszURI)
 	if ( CSchema* pSchema = SchemaCache.Get( pszURI ) )
 	{
 		m_nImage = pSchema->m_nIcon16;
+
+		for ( LPCTSTR start = pSchema->m_sTypeFilter; *start; start++ )
+		{
+			LPCTSTR c = _tcschr( start, _T('|') );
+			int len = c ? (int) ( c - start ) : (int) _tcslen( start );
+			if ( len > 0 )
+			{
+				CString tmp;
+				tmp.Append( start, len );
+				ASSERT( tmp.GetLength() > 1 );
+				ASSERT( tmp[0] == _T('.') );
+				AddFilter( tmp );
+			}
+			if ( ! c )
+				break;
+			start = c;
+		}
 	}
 	else
 	{

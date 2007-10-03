@@ -40,12 +40,12 @@ CDownloadGroups DownloadGroups;
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroups construction
 
-CDownloadGroups::CDownloadGroups()
+CDownloadGroups::CDownloadGroups() :
+	m_pSuper		( NULL ),
+	m_nBaseCookie	( 1 ),
+	m_nSaveCookie	( 0 ),
+	m_nGroupCookie	( 0 )
 {
-	m_pSuper		= NULL;
-	m_nBaseCookie	= 1;
-	m_nSaveCookie	= 0;
-	m_nGroupCookie	= 0;
 }
 
 CDownloadGroups::~CDownloadGroups()
@@ -58,7 +58,7 @@ CDownloadGroups::~CDownloadGroups()
 
 CDownloadGroup* CDownloadGroups::GetSuperGroup()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	if ( m_pSuper != NULL ) return m_pSuper;
 
@@ -70,7 +70,7 @@ CDownloadGroup* CDownloadGroups::GetSuperGroup()
 
 CDownloadGroup* CDownloadGroups::Add(LPCTSTR pszName)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	CDownloadGroup* pGroup = new CDownloadGroup();
 	if ( pszName != NULL ) pGroup->m_sName = pszName;
@@ -87,7 +87,7 @@ CDownloadGroup* CDownloadGroups::Add(LPCTSTR pszName)
 
 void CDownloadGroups::Remove(CDownloadGroup* pGroup)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	if ( POSITION pos = m_pList.Find( pGroup ) )
 	{
@@ -105,7 +105,7 @@ void CDownloadGroups::Remove(CDownloadGroup* pGroup)
 
 void CDownloadGroups::Link(CDownload* pDownload)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	GetSuperGroup()->Add( pDownload );
 
@@ -121,7 +121,7 @@ void CDownloadGroups::Link(CDownload* pDownload)
 
 void CDownloadGroups::Unlink(CDownload* pDownload, BOOL bAndSuper)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -135,30 +135,18 @@ void CDownloadGroups::Unlink(CDownload* pDownload, BOOL bAndSuper)
 
 void CDownloadGroups::CreateDefault()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	CDownloadGroup* pGroup	= GetSuperGroup();
 
 	pGroup = Add( _T("Audio") );
-	pGroup->AddFilter( _T(".mp3") );
-	pGroup->AddFilter( _T(".ogg") );
-	pGroup->AddFilter( _T(".wav") );
-	pGroup->AddFilter( _T(".wma") );
-	pGroup->SetSchema( CSchema::uriMusicAlbum );
+	pGroup->SetSchema( CSchema::uriAudio );
 
 	pGroup = Add( _T("Video") );
-	pGroup->AddFilter( _T(".asf") );
-	pGroup->AddFilter( _T(".avi") );
-	pGroup->AddFilter( _T(".mov") );
-	pGroup->AddFilter( _T(".mpg") );
-	pGroup->AddFilter( _T(".mpeg") );
-	pGroup->AddFilter( _T(".ogm") );
-	pGroup->AddFilter( _T(".wmv") );
 	pGroup->SetSchema( CSchema::uriVideo );
 
 	pGroup = Add( _T("BitTorrent") );
-	pGroup->AddFilter( _T("torrent") );
-	pGroup->SetSchema( CSchema::uriROM );
+	pGroup->SetSchema( CSchema::uriBitTorrent );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -166,7 +154,7 @@ void CDownloadGroups::CreateDefault()
 
 CString CDownloadGroups::GetCompletedPath(CDownload* pDownload)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -186,7 +174,7 @@ CString CDownloadGroups::GetCompletedPath(CDownload* pDownload)
 
 void CDownloadGroups::Clear()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; ) delete GetNext( pos );
 	m_pList.RemoveAll();
@@ -201,7 +189,7 @@ void CDownloadGroups::Clear()
 
 BOOL CDownloadGroups::Load()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	CFile pFile;
 	CString strPath = Settings.General.UserPath + _T("\\Data\\DownloadGroups.dat");
@@ -225,7 +213,7 @@ BOOL CDownloadGroups::Load()
 
 BOOL CDownloadGroups::Save(BOOL bForce)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
 	if ( ! bForce && m_nBaseCookie == m_nSaveCookie ) return FALSE;
 	m_nSaveCookie = m_nBaseCookie;
