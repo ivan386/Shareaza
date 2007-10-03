@@ -1020,27 +1020,31 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="3gpp"/>
                <type extension="3g2"/>
                <type extension="asf"/>
+               <type extension="asx"/>
                <type extension="avi"/>
                <type extension="divx"/>
                <type extension="dv"/>
+               <type extension="flv"/>
                <type extension="ivf"/>
+               <type extension="gvi"/>
+               <type extension="m2v"/>
+               <type extension="m2p"/>
                <type extension="mkv"/>
                <type extension="mov"/>
-               <type extension="mp1"/>
-               <type extension="mp2"/>
+               <type extension="mp4"/>
                <type extension="mpe"/>
                <type extension="mpeg"/>
                <type extension="mpg"/>
                <type extension="nsv"/>
                <type extension="ogm"/>
+               <type extension="qt"/>
                <type extension="ratdvd"/>
+               <type extension="ram"/>
                <type extension="rm"/>
                <type extension="rmvb"/>
-               <type extension="ram"/>
+               <type extension="vob"/>
                <type extension="wm"/>
                <type extension="wmv"/>
                <type extension="xvid"/>
-               <type extension="flv"/>
-               <type extension="gvi"/>
        </typeFilter>
 </schemaDescriptor>

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/bittorrent.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="file" availability="advanced"/>
+       <titles>
+               <title language="en">BitTorrent</title>
+       </titles>
+       <members>
+              <member name="hash">
+                       <title language="en">Info Hash</title>
+              </member>
+              <member name="tracker">
+                       <title language="en">Tracker</title>
+              </member>
+              <member name="encoding">
+                       <title language="en">Encoding</title>
+              </member>
+              <member name="creationdate">
+                       <title language="en">Creation Date</title>
+              </member>
+              <member name="createdby">
+                       <title language="en">Created By</title>
+              </member>
+              <member name="comments">
+                       <title language="en">Comments</title>
+                       <title language="af">Kommentaar</title>
+                       <title language="ca">Comentaris</title>
+                       <title language="chs">注释</title>
+                       <title language="cht">注釋</title>
+                       <title language="de">Kommentar</title>
+                       <title language="ee">Arvamused</title>
+                       <title language="es">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
+                       <title language="hu">Megjegyzés</title>
+                       <title language="it">Commenti</title>
+                       <title language="ja">コメント</title>
+                       <title language="lt">Komentarai</title>
+                       <title language="nl">Opmerkingen</title>
+                       <title language="no">Kommentar</title>
+                       <title language="pt-br">Comentários</title>
+                       <title language="ru">Коментарии</title>
+                       <title language="sl-SI">Komentarji</title>
+                       <title language="sq">Komente</title>
+                       <title language="sr">Komentari</title>
+                       <title language="tr">Yorumlar</title>
+               </member>
+       </members>
+       <typeFilter>
+               <type extension="torrent"/>
+       </typeFilter>
+
+</schemaDescriptor>
