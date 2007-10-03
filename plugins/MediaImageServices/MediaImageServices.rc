@@ -13,6 +13,76 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1251)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,7
+ PRODUCTVERSION 2,3,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004b0"
+        BEGIN
+            VALUE "CompanyName", "Shareaza Development Team"
+            VALUE "FileDescription", "Media Image Services plugin"
+            VALUE "FileVersion", "1, 0, 0, 7"
+            VALUE "InternalName", "MediaImageServices.dll"
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2005-2007. All rights reserved."
+            VALUE "OriginalFilename", "MediaImageServices.dll"
+            VALUE "ProductName", "Shareaza P2P"
+            VALUE "ProductVersion", "2, 3, 0, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_MEDIAIMAGESERVICES  REGISTRY                "MediaImageServices.rgs"
+IDR_VIDEOREADER         REGISTRY                "VideoReader.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "MediaImageServices"
+END
+
+#endif    // Neutral resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
 // Russian resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
@@ -47,75 +117,6 @@ END
 #endif    // APSTUDIO_INVOKED
 
 #endif    // Russian resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// Neutral resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
-#ifdef _WIN32
-LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
-#pragma code_page(1257)
-#endif //_WIN32
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Version
-//
-
-VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,5
- PRODUCTVERSION 2,3,0,0
- FILEFLAGSMASK 0x3fL
-#ifdef _DEBUG
- FILEFLAGS 0x1L
-#else
- FILEFLAGS 0x0L
-#endif
- FILEOS 0x4L
- FILETYPE 0x2L
- FILESUBTYPE 0x0L
-BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "000004b0"
-        BEGIN
-            VALUE "FileDescription", "Media Image Services plugin"
-            VALUE "FileVersion", "1, 0, 0, 5"
-            VALUE "InternalName", "MediaImageServices.dll"
-            VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005-2006"
-            VALUE "OriginalFilename", "MediaImageServices.dll"
-            VALUE "ProductName", "Shareaza P2P"
-            VALUE "ProductVersion", "2, 3, 0, 0"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x0, 1200
-    END
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// REGISTRY
-//
-
-IDR_MEDIAIMAGESERVICES  REGISTRY                "MediaImageServices.rgs"
-IDR_VIDEOREADER         REGISTRY                "VideoReader.rgs"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
-STRINGTABLE 
-BEGIN
-    IDS_PROJNAME            "MediaImageServices"
-END
-
-#endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
 

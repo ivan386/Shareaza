@@ -20,46 +20,88 @@
 //
 
 #include "stdafx.h"
-#include <algorithm>
 #include "VideoReader.h"
 
-HRESULT CVideoReader::FinalConstruct() throw()
+void CopyBitmap(char* pDestination, const char* pSource,
+	const int width, const int height, const int line_size)
 {
-	return CoCreateFreeThreadedMarshaler(
-		GetControllingUnknown(), &m_pUnkMarshaler.p);
-}
-
-void CVideoReader::FinalRelease() throw()
-{
-	m_pUnkMarshaler.Release();
-}
-
-void CopyBitmap (char* pDestination, const char* pSource,
-	int width, int height, int line_size)
-{
-	// Down-up bitmap copying
-	//char* dst = pDestination;
-	const char* src = pSource + sizeof (BITMAPINFOHEADER);// +
-		//line_size * (height - 1);
-	std::reverse_copy( src, src + height * line_size, pDestination );
-/*	for (LONG j = 0; j < height;
-		++j, dst += line_size, src -= line_size) {
-		__asm {
-			mov edi, dst
-			mov esi, src
-			mov ecx, width
-		loop1:
-			mov ax, [esi]
-			mov bl, [esi+2]
-			mov [edi+1], ah
-			mov [edi+2], al
-			mov [edi], bl
-			add esi, 3
-			add edi, 3
-			dec ecx
-			jnz loop1
+	// Down-up bitmap copying and BGR -> RGB converting
+	// (it is not a simple reverse copy!)
+	char* dst = pDestination;
+	const char* src = pSource + sizeof( BITMAPINFOHEADER ) +
+		line_size * ( height - 1 );
+	for ( LONG j = 0; j < height; ++j, dst += line_size, src -= line_size )
+	{
+		for ( LONG i = 0; i < width * 3; i += 3 )
+		{
+			dst[i + 0] = src[i + 2];
+			dst[i + 1] = src[i + 1];
+			dst[i + 2] = src[i + 0];
 		}
-	}*/
+	}
+}
+
+HRESULT LoadFrame(IMediaDet* pDet, double total_time,
+	const IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
+{
+	ULONG line_size = ((pParams->nWidth * pParams->nComponents) + 3) & (-4);
+	ULONG total_size = line_size * pParams->nHeight;
+	HRESULT hr = E_OUTOFMEMORY;
+	*ppImage = SafeArrayCreateVector (VT_UI1, 0, total_size);
+	if (*ppImage)
+	{
+		char* pDestination = NULL;
+		hr = SafeArrayAccessData (*ppImage, (void**) &pDestination);
+		if ( SUCCEEDED( hr ) )
+		{
+			hr = E_OUTOFMEMORY;
+			char* buf =
+				new char [ total_size +sizeof( BITMAPINFOHEADER ) ];
+			if (buf)
+			{
+				// Getting first frame
+				HRESULT hr0 = E_FAIL;
+				__try {
+					hr0 = pDet->GetBitmapBits ( 0.0,
+						NULL, buf, pParams->nWidth,
+						pParams->nHeight );
+					if ( SUCCEEDED( hr0 ) )
+					{
+						CopyBitmap( pDestination, buf,
+							pParams->nWidth, pParams->nHeight,
+							line_size );
+					}
+				} __except ( EXCEPTION_EXECUTE_HANDLER )
+				{
+				}
+				// Getting 25% frame
+				HRESULT hr1 = E_FAIL;
+				__try {
+					hr1 = pDet->GetBitmapBits ( total_time / 4.0,
+						NULL, buf, pParams->nWidth, pParams->nHeight);
+					if ( SUCCEEDED( hr1 ) )
+					{
+						CopyBitmap( pDestination, buf,
+							pParams->nWidth, pParams->nHeight,
+							line_size );
+					}
+				} __except ( EXCEPTION_EXECUTE_HANDLER )
+				{
+				}
+				if ( SUCCEEDED( hr0 ) || SUCCEEDED( hr1 ) )
+				{
+					hr = S_OK;
+				}
+				else
+				{
+					hr = E_FAIL;
+				}
+				delete [] buf;
+			}
+			SafeArrayUnaccessData (*ppImage);
+		}
+	}
+	return hr;
 }
 
 STDMETHODIMP CVideoReader::LoadFromFile (
@@ -81,9 +123,8 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : ""),
 		pParams->nComponents, pParams->nQuality);
 
-	IMediaDet* pDet = NULL;
-	HRESULT hr = CoCreateInstance( CLSID_MediaDet, NULL, CLSCTX_ALL,
-		IID_IMediaDet, (void**)&pDet );
+	CComPtr< IMediaDet > pDet;
+	HRESULT hr = pDet.CoCreateInstance( CLSID_MediaDet );
 	if ( SUCCEEDED( hr ) )
 	{
 		hr = pDet->put_Filename (sFile);
@@ -97,15 +138,16 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 				AM_MEDIA_TYPE mt = {};
 				for ( long i = 0; i < lStreams; i++ )
 				{
-					GUID major_type;
 					hr = pDet->put_CurrentStream( i );
 					if ( SUCCEEDED( hr ) )
 					{
+						GUID major_type = {};
 						hr = pDet->get_StreamType( &major_type );
 						if ( major_type == MEDIATYPE_Video )
 						{
 							hr = pDet->get_StreamMediaType( &mt );
-							if ( SUCCEEDED( hr ) && mt.formattype == FORMAT_VideoInfo && 
+							if ( SUCCEEDED( hr ) &&
+								 mt.formattype == FORMAT_VideoInfo && 
 								 mt.cbFormat >= sizeof(VIDEOINFOHEADER) &&
 								 mt.pbFormat != NULL )
 							{
@@ -126,36 +168,35 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 				if ( bFound )
 				{
 					VIDEOINFOHEADER *pVih = (VIDEOINFOHEADER*)mt.pbFormat;
-					LPWSTR clsid;
+					LPWSTR clsid = NULL;
 					StringFromCLSID( mt.subtype, &clsid );
 					if ( mt.subtype == MEDIASUBTYPE_Y41P )
 					{
 						ATLTRACE ("Video format: MPEG %ls\n", clsid);
 					}
-					else
+					else if (
+						mt.subtype.Data2 == 0x0000 &&
+						mt.subtype.Data3 == 0x0010 &&
+						mt.subtype.Data4[0] == 0x80 &&
+						mt.subtype.Data4[1] == 0x00 &&
+						mt.subtype.Data4[2] == 0x00 &&
+						mt.subtype.Data4[3] == 0xAA &&
+						mt.subtype.Data4[4] == 0x00 &&
+						mt.subtype.Data4[5] == 0x38 &&
+						mt.subtype.Data4[6] == 0x9B &&
+						mt.subtype.Data4[7] == 0x71 )
 					{
-						if ( mt.subtype.Data2 == 0x0000 &&
-							mt.subtype.Data3 == 0x0010 &&
-							mt.subtype.Data4[0] == 0x80 &&
-							mt.subtype.Data4[1] == 0x00 &&
-							mt.subtype.Data4[2] == 0x00 &&
-							mt.subtype.Data4[3] == 0xAA &&
-							mt.subtype.Data4[4] == 0x00 &&
-							mt.subtype.Data4[5] == 0x38 &&
-							mt.subtype.Data4[6] == 0x9B &&
-							mt.subtype.Data4[7] == 0x71 )
-						{
-							ATLTRACE ("Video format: %c%c%c%c %ls\n",
-								LOBYTE (LOWORD (mt.subtype.Data1)),
-								HIBYTE (LOWORD (mt.subtype.Data1)),
-								LOBYTE (HIWORD (mt.subtype.Data1)),
-								HIBYTE (HIWORD (mt.subtype.Data1)),
-								clsid);
-						}
-						else
-							ATLTRACE ("Video format: Unknown %ls\n", clsid);
+						ATLTRACE ("Video format: %c%c%c%c %ls\n",
+							LOBYTE (LOWORD (mt.subtype.Data1)),
+							HIBYTE (LOWORD (mt.subtype.Data1)),
+							LOBYTE (HIWORD (mt.subtype.Data1)),
+							HIBYTE (HIWORD (mt.subtype.Data1)),
+							clsid);
 					}
+					else
+						ATLTRACE ("Video format: Unknown %ls\n", clsid);
 					CoTaskMemFree( clsid );
+
 					ATLTRACE ("Video size: %dx%dx%d\n",
 						pVih->bmiHeader.biWidth, pVih->bmiHeader.biHeight,
 						pVih->bmiHeader.biBitCount);							
@@ -164,87 +205,30 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 					if ( pParams->nHeight < 0 )
 						pParams->nHeight = -pParams->nHeight;
 					pParams->nComponents = 3; // 24-bit RGB only
-					double total_time = 0;
+
+					double total_time = 0.0;
 					hr = pDet->get_StreamLength( &total_time );
 					if ( SUCCEEDED( hr ) )
 					{
-						double fps = 0;
+						double fps = 0.0;
 						hr = pDet->get_FrameRate( &fps );
 						ATLTRACE ("Video time: %02d:%02d:%02d, %.5g fps\n",
 							(int) (total_time / 3600) % 60,
 							(int) (total_time / 60) % 60,
-							(int) total_time % 60, fps);							
+							(int) total_time % 60, fps);
 						if (pParams->nFlags & IMAGESERVICE_SCANONLY)
 						{
 							// OK
 						}
 						else
 						{
-							ULONG line_size = ((pParams->nWidth * pParams->nComponents) + 3) & (-4);
-							ULONG total_size = line_size * pParams->nHeight;
-							hr = E_OUTOFMEMORY;
-							*ppImage = SafeArrayCreateVector (VT_UI1, 0, total_size);
-							if (*ppImage)
-							{
-								char* pDestination = NULL;
-								hr = SafeArrayAccessData (*ppImage, (void**) &pDestination);
-								if ( SUCCEEDED( hr ) )
-								{
-									hr = E_OUTOFMEMORY;
-									char* buf =
-										new char [ total_size +sizeof( BITMAPINFOHEADER ) ];
-									if (buf)
-									{
-										// Getting first frame
-										HRESULT hr0 = E_FAIL;
-										__try {
-											hr0 = pDet->GetBitmapBits ( 0.0,
-												NULL, buf, pParams->nWidth, pParams->nHeight );
-											if ( SUCCEEDED( hr0 ) )
-											{
-												CopyBitmap( pDestination, buf,
-													pParams->nWidth, pParams->nHeight,
-													line_size );
-											}
-										} __except ( EXCEPTION_EXECUTE_HANDLER )
-										{
-											ATLTRACE ("GetBitmapBits(%ls) exception\n", sFile);
-										}
-										// Getting 25% frame
-										HRESULT hr1 = E_FAIL;
-										__try {
-											hr1 = pDet->GetBitmapBits ( total_time / 4.0,
-												NULL, buf, pParams->nWidth, pParams->nHeight);
-											if ( SUCCEEDED( hr1 ) )
-											{
-												CopyBitmap( pDestination, buf,
-													pParams->nWidth, pParams->nHeight,
-													line_size );
-											}
-										} __except ( EXCEPTION_EXECUTE_HANDLER )
-										{
-											ATLTRACE ("GetBitmapBits(%ls) exception\n", sFile);
-										}
-										if ( SUCCEEDED( hr0 ) || SUCCEEDED( hr1 ) )
-										{
-											hr = S_OK;
-										}
-										else
-										{
-											ATLTRACE ("GetBitmapBits(%ls) error : 0x%08x, 0x%08x\n", sFile, hr0, hr1);
-											hr = E_FAIL;
-										}
-										delete [] buf;
-									}
-									SafeArrayUnaccessData (*ppImage);
-								}
-							}
+							hr = LoadFrame( pDet, total_time, pParams, ppImage );
 						}
 					}
 				}
-				if ( mt.cbFormat != 0 )
+				if ( mt.cbFormat )
 					CoTaskMemFree ( mt.pbFormat );
-				if ( mt.pUnk != NULL )
+				if ( mt.pUnk )
 					mt.pUnk->Release();
 			}
 			else
@@ -252,7 +236,6 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 		}
 		else
 			ATLTRACE ("Cannot open file: 0x%08x\n", hr);
-		pDet->Release ();
 	}
 	else
 		ATLTRACE ("Cannot instante MediaDet object: 0x%08x\n", hr);

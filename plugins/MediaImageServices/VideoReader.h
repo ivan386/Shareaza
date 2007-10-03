@@ -32,23 +32,13 @@ class ATL_NO_VTABLE CVideoReader :
 public:
 	CVideoReader () throw()
 	{
-		m_pUnkMarshaler = NULL;
 	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_VIDEOREADER)
 
 BEGIN_COM_MAP(CVideoReader)
 	COM_INTERFACE_ENTRY(IImageServicePlugin)
-	COM_INTERFACE_ENTRY_AGGREGATE(IID_IMarshal, m_pUnkMarshaler.p)
 END_COM_MAP()
-
-DECLARE_PROTECT_FINAL_CONSTRUCT()
-DECLARE_GET_CONTROLLING_UNKNOWN()
-
-	HRESULT FinalConstruct() throw();
-	void FinalRelease() throw();
-
-	CComPtr<IUnknown> m_pUnkMarshaler;
 
 // IImageServicePlugin
 public:

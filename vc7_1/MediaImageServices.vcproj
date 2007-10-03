@@ -13,7 +13,8 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
-			ConfigurationType="2">
+			ConfigurationType="2"
+			ATLMinimizesCRunTimeLibraryUsage="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -22,7 +23,7 @@
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				TreatWChar_tAsBuiltInType="TRUE"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
@@ -79,7 +80,7 @@
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			UseOfMFC="0"
-			UseOfATL="1"
+			UseOfATL="0"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="1"
 			WholeProgramOptimization="TRUE">
@@ -95,7 +96,6 @@
 				AdditionalIncludeDirectories="$(IntDir)"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
-				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
 				TreatWChar_tAsBuiltInType="TRUE"
 				ForceConformanceInForLoopScope="TRUE"
@@ -237,6 +237,21 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\debug\plugins\mediaimageservices\MediaImageServices_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\release\plugins\mediaimageservices\MediaImageServices_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -251,21 +266,6 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\plugins\mediaimageservices\MediaImageServices_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
