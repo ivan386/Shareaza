@@ -374,7 +374,7 @@ BOOL CShareazaURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
 
 	//add fix set name
 	int nPos = m_sPath.ReverseFind( '/' );
-	if ( !m_sName.GetLength() && nPos > 0 )
+	if ( !m_sName.GetLength() && nPos >= 0 )
 	{
 		CString sName( CTransfer::URLDecode(
 			m_sPath.Mid( nPos + 1 ).SpanExcluding( _T("?") ) ) );
