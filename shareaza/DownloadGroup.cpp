@@ -144,7 +144,8 @@ int CDownloadGroup::LinkAll()
 
 void CDownloadGroup::AddFilter(LPCTSTR pszFilter)
 {
-	m_pFilters.AddTail( pszFilter );
+	if ( m_pFilters.Find( pszFilter ) == NULL )
+		m_pFilters.AddTail( pszFilter );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -219,7 +220,7 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 			{
 				CString strFilter;
 				ar >> strFilter;
-				m_pFilters.AddTail( strFilter );
+				AddFilter( strFilter );
 			}
 		}
 		else
@@ -232,7 +233,7 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 				CString strFilter = strFilters.SpanExcluding( _T(" |") );
 				strFilters = strFilters.Mid( strFilter.GetLength() + 1 );
 				strFilter.TrimLeft(); strFilter.TrimRight();
-				if ( strFilter.GetLength() ) m_pFilters.AddTail( strFilter );
+				if ( strFilter.GetLength() ) AddFilter( strFilter );
 			}
 		}
 
