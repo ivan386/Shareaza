@@ -299,7 +299,7 @@ BOOL CShareazaURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 		m_nAction	= uriDownload;
 
 		int nPos = m_sPath.ReverseFind( '/' );
-		if ( nPos > 0 )
+		if ( nPos >= 0 )
 		{
 			CString sName( CTransfer::URLDecode(
 				m_sPath.Mid( nPos + 1 ).SpanExcluding( _T("?") ) ) );
