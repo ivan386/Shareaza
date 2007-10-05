@@ -69,10 +69,10 @@ protected:
 	afx_msg void OnSelChangeFilterList();
 	virtual void OnOK();
 	afx_msg void OnBrowse();
+	afx_msg void OnLvnItemchangingIconList(NMHDR *pNMHDR, LRESULT *pResult);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

@@ -48,19 +48,17 @@ BEGIN_MESSAGE_MAP(CDownloadGroupDlg, CSkinDialog)
 	ON_CBN_SELCHANGE(IDC_FILTER_LIST, OnSelChangeFilterList)
 	ON_BN_CLICKED(IDC_DOWNLOADS_BROWSE, OnBrowse)
 	//}}AFX_MSG_MAP
+	ON_NOTIFY(LVN_ITEMCHANGING, IDC_ICON_LIST, OnLvnItemchangingIconList)
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadGroupDlg dialog
 
-CDownloadGroupDlg::CDownloadGroupDlg(CDownloadGroup* pGroup, CWnd* pParent) : CSkinDialog(CDownloadGroupDlg::IDD, pParent)
+CDownloadGroupDlg::CDownloadGroupDlg(CDownloadGroup* pGroup, CWnd* pParent) :
+	CSkinDialog( CDownloadGroupDlg::IDD, pParent ),
+	m_pGroup( pGroup )
 {
-	//{{AFX_DATA_INIT(CDownloadGroupDlg)
-	m_sName = _T("");
-	m_sFolder = _T("");
-	//}}AFX_DATA_INIT
-	m_pGroup = pGroup;
 }
 
 void CDownloadGroupDlg::DoDataExchange(CDataExchange* pDX)
@@ -88,6 +86,8 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 	SkinMe( _T("CDownloadGroupDlg") );
 
 	m_wndImages.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
+	m_wndImages.SetColumnWidth( 0, 36 );
+	m_wndImages.SetExtendedStyle( LVS_EX_CHECKBOXES );
 	m_wndBrowse.SetCoolIcon( IDI_BROWSE, theApp.m_bRTL );
 
 	CSingleLock pLock( &DownloadGroups.m_pSection, TRUE );
@@ -107,25 +107,29 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 	}
 
 	CList<CString>	pUsedIcons;
-
+	int nSelectedIndex = 0;
 	for ( POSITION pos = SchemaCache.GetIterator() ; pos ; )
 	{
 		CSchema* pSchema = SchemaCache.GetNext( pos );
 
-		if ( pUsedIcons.Find( pSchema->m_sIcon ) == NULL || pSchema->m_sURI == m_pGroup->m_sSchemaURI )
+		if ( pUsedIcons.Find( pSchema->m_sIcon ) == NULL ||
+			 pSchema->m_sURI == m_pGroup->m_sSchemaURI )
 		{
 			pUsedIcons.AddTail( pSchema->m_sIcon );
 
-			int nIndex = m_wndImages.InsertItem( LVIF_IMAGE|LVIF_PARAM|LVIF_TEXT,
-				m_wndImages.GetItemCount(), _T("Icon"), 0, 0, pSchema->m_nIcon16,
+			int nIndex = m_wndImages.InsertItem( LVIF_IMAGE|LVIF_PARAM,
+				m_wndImages.GetItemCount(), NULL, 0, 0, pSchema->m_nIcon16,
 				(LPARAM)pSchema );
 
 			if ( pSchema->m_sURI == m_pGroup->m_sSchemaURI )
 			{
 				m_wndImages.SetItemState( nIndex, LVIS_SELECTED, LVIS_SELECTED );
+				m_wndImages.SetCheck( nIndex );
+				nSelectedIndex = nIndex;
 			}
 		}
 	}
+	m_wndImages.EnsureVisible( nSelectedIndex, FALSE );
 
 	UpdateData( FALSE );
 
@@ -300,4 +304,45 @@ void CDownloadGroupDlg::OnBrowse()
 	UpdateData( TRUE );
 	m_sFolder = szPath;
 	UpdateData( FALSE );
+}
+
+void CDownloadGroupDlg::OnLvnItemchangingIconList(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+	*pResult = 0;
+	
+	int nLength = m_wndImages.GetItemCount();
+
+	// Set check and selection states on first mouse click
+	if ( ( pNMLV->uOldState == 0x1000 && pNMLV->uNewState == 0x2000 ) ||
+		 ( pNMLV->uOldState == 0x0000 && pNMLV->uNewState == 0x0003 ) )
+	{
+		int nOldIndex = -1;
+		for ( int nIndex = 0; nIndex < nLength; ++nIndex )
+		{
+			if ( pNMLV->iItem != nIndex && m_wndImages.GetCheck( nIndex ) )
+			{
+				nOldIndex = nIndex;
+				break;
+			}
+		}
+		m_wndImages.SetCheck( pNMLV->iItem );
+		if ( nOldIndex != -1 )
+			m_wndImages.SetCheck( nOldIndex, FALSE );
+		m_wndImages.SetItemState( pNMLV->iItem, LVIS_SELECTED, LVIS_SELECTED );
+	}
+	// Disable removing check on other mouse clicks
+	else if ( pNMLV->uOldState == 0x2000 && pNMLV->uNewState == 0x1000 )
+	{
+		int nCount = 0;
+		for ( int nIndex = 0; nIndex < nLength; ++nIndex )
+		{
+			if ( m_wndImages.GetCheck( nIndex ) )
+			{
+				nCount++;
+			}
+		}
+		if ( nCount == 1 )
+			*pResult = 1;
+	}
 }
