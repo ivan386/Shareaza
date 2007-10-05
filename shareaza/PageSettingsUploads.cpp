@@ -434,7 +434,7 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Update the bandwidth limit combo values
 
 		// Update speed units
-		if ( Settings.Bandwidth.Downloads )
+		if ( Settings.Bandwidth.Uploads )
 			m_sBandwidthLimit	= Settings.SmartSpeed( Settings.Bandwidth.Uploads );
 		else
 			m_sBandwidthLimit	= _T("MAX");
