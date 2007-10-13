@@ -1882,6 +1882,9 @@ BOOL CShakeNeighbour::IsClientObsolete()
 
 		// Check for fakes / version hacks.
 		if (( _tcsistr( m_sUserAgent, _T("Shareaza 3.0"  ) ) ) ||	// Fakes
+			( _tcsistr( m_sUserAgent, _T("Shareaza 3.1"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("Shareaza 3.2"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("Shareaza 3.3"  ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 6."   ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 7."   ) ) ) )
 			return TRUE;
@@ -1943,7 +1946,10 @@ BOOL CShakeNeighbour::IsClientBad()
 	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )	
 	{
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 1.") ) )	return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.") ) )	return TRUE;
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.0") ) )	return TRUE;
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.1") ) )	return TRUE;
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.2") ) )	return TRUE;
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.3") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 6.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 7.") ) )	return TRUE;
 		// Current versions okay
