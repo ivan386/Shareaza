@@ -592,8 +592,8 @@ void CDownloadsWnd::Prepare()
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
-					CDownloadTransferED2K* pEDClient = (CDownloadTransferED2K*)pSource->m_pTransfer;
-					if ( pEDClient->m_pClient->m_bEmPreview )
+					CDownloadTransferED2K* pEDTransfer = (CDownloadTransferED2K*)pSource->m_pTransfer;
+					if ( pEDTransfer->m_pClient->m_bEmPreview )
 					{
 						pDownload->m_bRemotePreviewCapable = TRUE;
 					}
@@ -880,10 +880,10 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
-					CDownloadTransferED2K* pEDClient = (CDownloadTransferED2K*)pSource->m_pTransfer;
-					if ( pEDClient->m_pClient->m_bEmPreview )
+					CDownloadTransferED2K* pEDTransfer = (CDownloadTransferED2K*)pSource->m_pTransfer;
+					if ( pEDTransfer->m_pClient->m_bEmPreview )
 					{
-						pEDClient->m_pClient->SendPreviewRequest( pDownload );
+						pEDTransfer->m_pClient->SendPreviewRequest( pDownload );
 						// Don't block sending requests for ed2k sources
 						// They are not run in threads, so no harm.
 						// pDownload->m_bWaitingPreview = TRUE;
