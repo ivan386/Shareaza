@@ -592,8 +592,8 @@ void CDownloadsWnd::Prepare()
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
-					CDownloadTransferED2K* pEDTransfer = (CDownloadTransferED2K*)pSource->m_pTransfer;
-					if ( pEDTransfer->m_pClient->m_bEmPreview )
+					// m_pTransfer is checked for validity by pSource->IsOnline()
+					if ( static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer )->m_pClient->m_bEmPreview )
 					{
 						pDownload->m_bRemotePreviewCapable = TRUE;
 					}
@@ -876,11 +876,12 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 		// Find first client which supports previews
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 		{
-			if ( pSource->IsOnline() && !pSource->m_bPreviewRequestSent )
+			if ( !pSource->m_bPreviewRequestSent && pSource->IsOnline() )
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
-					CDownloadTransferED2K* pEDTransfer = (CDownloadTransferED2K*)pSource->m_pTransfer;
+					// m_pTransfer is checked for validity by pSource->IsOnline()
+					CDownloadTransferED2K* pEDTransfer = static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer );
 					if ( pEDTransfer->m_pClient->m_bEmPreview )
 					{
 						pEDTransfer->m_pClient->SendPreviewRequest( pDownload );
