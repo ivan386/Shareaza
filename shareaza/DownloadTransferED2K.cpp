@@ -195,8 +195,8 @@ BOOL CDownloadTransferED2K::OnRunEx(DWORD tNow)
 	case dtsConnecting:
 		if ( tNow > m_tConnected && tNow - m_tConnected > Settings.Connection.TimeoutConnect * 2 )
 		{
-			theApp.Message( MSG_ERROR, IDS_CONNECTION_TIMEOUT_CONNECT, (LPCTSTR)m_sAddress );
-			Close( TS_TRUE );
+			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_CONNECT_TIMEOUT, m_sAddress );
+			Close( TS_UNKNOWN );
 			return FALSE;
 		}
 		break;
@@ -204,7 +204,7 @@ BOOL CDownloadTransferED2K::OnRunEx(DWORD tNow)
 	case dtsEnqueue:
 		if ( tNow > m_tRequest && tNow - m_tRequest > Settings.Connection.TimeoutHandshake * 2 )
 		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_REQUEST_TIMEOUT, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_HANDSHAKE_TIMEOUT, m_sAddress );
 			Close( TS_UNKNOWN );
 			return FALSE;
 		}
@@ -216,7 +216,7 @@ BOOL CDownloadTransferED2K::OnRunEx(DWORD tNow)
 		if ( tNow > m_pClient->m_mInput.tLast &&
 			 tNow - m_pClient->m_mInput.tLast > Settings.Connection.TimeoutTraffic * 2 )
 		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_TRAFFIC_TIMEOUT, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_CLOSED, m_sAddress );
 			Close( TS_TRUE );
 			return FALSE;
 		}
