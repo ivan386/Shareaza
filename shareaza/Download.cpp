@@ -418,7 +418,7 @@ void CDownload::OnRun()
 			}
 
 			// Calculate the currently downloading state
-			if( GetTransferCount() > 0 ) bDownloading = TRUE;
+			if( HasActiveTransfers() ) bDownloading = TRUE;
 
 		}
 		else if ( ! m_bComplete && m_bVerify != TS_TRUE )

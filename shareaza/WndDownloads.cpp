@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -1220,7 +1220,7 @@ void CDownloadsWnd::OnDownloadsBoost()
 		
 		if ( pDownload->m_bSelected )
 		{
-			if ( pDownload->GetTransferCount() && ! pDownload->IsBoosted() )
+			if ( pDownload->HasActiveTransfers() && ! pDownload->IsBoosted() )
 			{
 				pDownload->Boost();
 			}

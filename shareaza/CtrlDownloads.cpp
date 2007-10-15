@@ -964,7 +964,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
 
-	/*int nTransfers		=*/ pDownload->GetTransferCount();
+	/*int nTransfers		= pDownload->GetTransferCount();*/
 	int nSources		= pDownload->GetEffectiveSourceCount();
 	int nTotalSources	= pDownload->GetSourceCount();
 	int nRating			= pDownload->GetReviewAverage();

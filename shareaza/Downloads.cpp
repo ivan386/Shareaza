@@ -462,9 +462,9 @@ int CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
 	{
 		CDownload* pDownload = GetNext( pos );
 		
-		if ( ( pDownload->IsTrying() ) && ( ! pDownload->IsCompleted() ) && ( ! pDownload->IsPaused() ) )
+		if ( !bTorrentsOnly || pDownload->IsTorrent() )
 		{
-			if ( ( pDownload->IsTorrent() ) || ( ! bTorrentsOnly ) )
+			if ( !pDownload->IsCompleted() && pDownload->IsTrying() && !pDownload->IsPaused() )
 				nCount++;
 		}
 	}
@@ -816,7 +816,8 @@ BOOL CDownloads::AllowMoreDownloads() const
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		if ( GetNext( pos )->GetTransferCount() ) nCount++;
+		if ( GetNext( pos )->HasActiveTransfers() )
+			nCount++;
 	}
 	
 	return nCount < Settings.Downloads.MaxFiles;
