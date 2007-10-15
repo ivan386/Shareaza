@@ -286,7 +286,7 @@ BOOL CBuffer::StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRem
 	// Report that the buffer does start with the given ASCII text
 	return TRUE;
 }
-/*
+
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer socket receive
 
@@ -325,7 +325,7 @@ DWORD CBuffer::Receive(SOCKET hSocket)
 	Statistics.Current.Bandwidth.Incoming += nTotal;
 	return nTotal;
 }
-/*
+
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer socket send
 
@@ -361,7 +361,7 @@ DWORD CBuffer::Send(SOCKET hSocket)
 	Statistics.Current.Bandwidth.Outgoing += nTotal;
 	return nTotal;
 }
-*/
+
 //////////////////////////////////////////////////////////////////////
 // CBuffer deflate and inflate compression
 

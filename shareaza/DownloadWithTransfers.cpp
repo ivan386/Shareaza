@@ -1,7 +1,7 @@
 //
 // DownloadWithTransfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,35 +60,22 @@ CDownloadWithTransfers::~CDownloadWithTransfers()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers counting
 
-bool CDownloadWithTransfers::HasActiveTransfers() const
-{
-	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
-	{
-		if ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-			|| ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
-				&& static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
-		{
-			return true;
-		}
-	}
-	return false;
-}
+int CDownloadWithTransfers::GetTransferCount() const 
+{ 
+	int nCount = 0; 
+    
+	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext ) 
+	{ 
+		if ( ( pTransfer->m_nProtocol != PROTOCOL_ED2K ) || 
+		     ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient && 
+			   static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) ) 
+		{ 
+			++nCount; 
+		} 
+	} 
+	return nCount; 
+} 
 
-int CDownloadWithTransfers::GetTransferCount() const
-{
-	int nCount = 0;
-
-	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
-	{
-		if ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-			|| ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
-				&& static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
-		{
-			++nCount;
-		}
-	}
-	return nCount;
-}
 
 // This macro is used to clean up the function below and make it more readable. It's the first 
 // condition in any IF statement that checks if the current transfer should be counted

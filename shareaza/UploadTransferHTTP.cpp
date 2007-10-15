@@ -767,7 +767,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 			return TRUE;
 		}
 	}
-	else if ( pDownload->HasActiveTransfers() )
+	else if ( pDownload->GetTransferCount() )
 	{
 		m_pOutput->Print( _P("HTTP/1.1 503 Range Temporarily Unavailable\r\n") );
 	}

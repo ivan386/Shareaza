@@ -1,7 +1,7 @@
 //
 // DownloadWithTransfers.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,6 +26,7 @@
 
 #include "DownloadWithSources.h"
 
+class CDownloadTransfer;
 class CConnection;
 class CEDClient;
 
@@ -46,7 +47,6 @@ private:
 
 // Operations
 public:
-	bool		HasActiveTransfers() const;
 	int			GetTransferCount() const;
 	int			GetTransferCount(int nState, IN_ADDR* pAddress = NULL) const;
 	QWORD		GetAmountDownloadedFrom(IN_ADDR* pAddress) const;
@@ -65,8 +65,11 @@ private:
 
 // Inlines
 public:
-	CDownloadTransfer*	GetFirstTransfer() const { return m_pTransferFirst; }
-
+	CDownloadTransfer* GetFirstTransfer() const
+	{
+		return m_pTransferFirst;
+	}
+	
 	friend class CDownloadTransfer; // AddTransfer && RemoveTransfer
 };
 

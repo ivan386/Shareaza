@@ -108,8 +108,7 @@ void CUploadTransferBT::Close(BOOL bMessage)
 {
 	if ( m_pClient != NULL )
 	{
-		if ( Settings.General.DebugBTSources )
-			theApp.Message( MSG_DEBUG, L"Closing BT upload connection: %s", m_pClient->m_sAddress );
+//		theApp.Message( MSG_TEMP, L"Closing BT upload connection: %s", (LPCTSTR)m_pClient->m_sAddress );
 		m_pClient->m_pUpload = NULL;
 		m_pClient->Close();
 		m_pClient = NULL;

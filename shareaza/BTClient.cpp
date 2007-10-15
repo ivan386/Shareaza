@@ -1,7 +1,7 @@
 //
 // BTClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,25 +48,23 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CBTClient construction
 
-CBTClient::CBTClient() :
-	m_bExtended			( FALSE )
-,	m_bExchange			( FALSE )
-
-,	m_pUpload			( NULL )
-,	m_pDownload			( NULL )
-,	m_pDownloadTransfer	( NULL )
-
-,	m_bShake			( FALSE )
-,	m_bOnline			( FALSE )
-,	m_bClosing			( FALSE )
-
-,	m_tLastKeepAlive	( GetTickCount() )
+CBTClient::CBTClient()
 {
+	m_bExtended			= FALSE;
+	m_pUpload			= NULL;
+	m_pDownload			= NULL;
+	m_pDownloadTransfer	= NULL;
+	
+	m_bShake			= FALSE;
+	m_bOnline			= FALSE;
+	m_bClosing			= FALSE;
+	m_bExchange			= FALSE;
+	
 	m_sUserAgent = _T("BitTorrent");
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
+	m_tLastKeepAlive = GetTickCount();
 
-	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Adding BT client to collection: %s", m_sAddress );
+//	theApp.Message( MSG_TEMP, L"Adding BT client to collection: %s", (LPCTSTR)m_sAddress );
 	BTClients.Add( this );
 }
 
@@ -76,9 +74,8 @@ CBTClient::~CBTClient()
 	ASSERT( m_pDownloadTransfer == NULL );
 	ASSERT( m_pDownload == NULL );
 	ASSERT( m_pUpload == NULL );
-
-	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Removing BT client from collection: %s", m_sAddress );
+	
+//	theApp.Message( MSG_TEMP, L"Removing BT client from collection: %s", (LPCTSTR)m_sAddress );
 	BTClients.Remove( this );
 }
 
@@ -90,16 +87,16 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 	if ( m_bClosing ) return FALSE;
 	ASSERT( m_hSocket == INVALID_SOCKET );
 	ASSERT( m_pDownload == NULL );
-
+	
 	CDownloadSource* pSource = pDownloadTransfer->m_pSource;
-
+	
 	if ( ! CTransfer::ConnectTo( &pSource->m_pAddress, pSource->m_nPort ) ) return FALSE;
 	
 	m_pDownload			= pDownloadTransfer->m_pDownload;
 	m_pDownloadTransfer	= pDownloadTransfer;
-
-	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_CONNECTING, m_sAddress );
-
+	
+	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_CONNECTING, (LPCTSTR)m_sAddress );
+	
 	return TRUE;
 }
 
@@ -112,12 +109,11 @@ void CBTClient::AttachTo(CConnection* pConnection)
 	ASSERT( m_hSocket == INVALID_SOCKET );
 
 	CTransfer::AttachTo( pConnection );
-	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Attaching new BT client connection: %s", m_sAddress );
+//	theApp.Message( MSG_TEMP, L"Attaching new BT client connection: %s", (LPCTSTR)m_sAddress );
 
 	ASSERT( m_mInput.pLimit != NULL );
 	m_tConnected = GetTickCount();
-	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_ACCEPTED, m_sAddress );
+	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_ACCEPTED, (LPCTSTR)m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -132,14 +128,13 @@ void CBTClient::Close()
 
 	if ( m_bClosing ) return;
 	m_bClosing = TRUE;
-
-	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Deleting BT client: %s", m_sAddress );
+	
+//	theApp.Message( MSG_TEMP, L"Deleting BT client: %s", (LPCTSTR)m_sAddress );
 
 	if ( m_pUpload != NULL ) m_pUpload->Close();
 	ASSERT( m_pUpload == NULL );
-
-	if ( m_pDownloadTransfer != NULL )
+	
+	if ( m_pDownloadTransfer != NULL ) 
 	{
 		if ( ( m_pDownload == NULL ) || ( m_pDownload->IsCompleted() ) )
 			m_pDownloadTransfer->Close( TS_FALSE );
@@ -147,9 +142,9 @@ void CBTClient::Close()
 			m_pDownloadTransfer->Close( TS_UNKNOWN );
 	}
 	ASSERT( m_pDownloadTransfer == NULL );
-
+	
 	m_pDownload = NULL;
-
+	
 	CTransfer::Close();
 
 	delete this;
@@ -450,22 +445,22 @@ BOOL CBTClient::OnHandshake1()
 }
 
 BOOL CBTClient::OnHandshake2()
-{
+{	
 	if ( m_bClosing ) return FALSE;
 
 	// Second part of the handshake - Peer ID
 	m_oGUID = reinterpret_cast< const Hashes::BtGuid::RawStorage& >( *m_pInput->m_pBuffer );
 	m_pInput->Remove( Hashes::BtGuid::byteCount );
-
+	
 	m_bExtended = isExtendedBtGuid( m_oGUID );
-
+	
 	ASSERT( m_pDownload != NULL );
-
+	
 	if ( m_bInitiated )
 	{
 		ASSERT( m_pDownloadTransfer != NULL );
 		m_pDownloadTransfer->m_pSource->m_oGUID = transformGuid( m_oGUID );
-
+		
 		/*
 
 		//ToDo: This seems to trip when it shouldn't. Should be investigated...
@@ -481,7 +476,7 @@ BOOL CBTClient::OnHandshake2()
 	{
 		if ( m_pDownload->UploadExists( m_oGUID ) )
 		{
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DUPLICATE, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DUPLICATE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
@@ -489,35 +484,34 @@ BOOL CBTClient::OnHandshake2()
 		if ( ! m_pDownload->IsMoving() && ! m_pDownload->IsPaused() )
 		{
 			ASSERT( m_pDownloadTransfer == NULL );
-
+			
 			// Download from uploaders, unless the user has turned off downloading for this torrent
 			if ( m_pDownload->m_pTorrent.m_nStartDownloads != dtNever )
 			{
 				// This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
 				// May just be clients sending duplicate connection requests, though...
 				m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
-
+	
 				if ( m_pDownloadTransfer == NULL )
 				{
 					m_pDownload = NULL;
-					theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, m_sAddress );
+					theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
 					Close();
 					return FALSE;
 				}
 			}
 		}
 	}
-
+	
 	ASSERT( m_pUpload == NULL );
-	if ( Settings.General.DebugBTSources )
-		theApp.Message( MSG_DEBUG, L"Creating new BT upload: %s", m_sAddress );
+//	theApp.Message( MSG_TEMP, L"Creating new BT upload: %s", (LPCTSTR)m_sAddress );
 	m_pUpload = new CUploadTransferBT( this, m_pDownload );
-
+	
 	m_bOnline = TRUE;
-
+	
 	DetermineUserAgent();
 	if ( m_bExtended ) m_sUserAgent = _T("Shareaza");
-
+	
 	return OnOnline();
 }
 
