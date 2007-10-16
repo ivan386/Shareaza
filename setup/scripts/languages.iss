@@ -250,6 +250,7 @@ icons_tabbedmode=Tabbed Mode
 icons_windowedmode=Windowed Mode
 dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
 dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+dialog_malwaredetected=A malware has been detected on your system at %1, please remove it before installing Shareaza. Do you want to exit now?
 page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
 page_viruswarning_title=Virus Warning
 page_viruswarning_subtitle=Do you have an AntiVirus program installed?

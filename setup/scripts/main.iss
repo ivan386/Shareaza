@@ -627,6 +627,13 @@ Function InitializeSetup: Boolean;
 Begin
   Result := True;
   Installed := (RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc1, KeyName) or RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc2, KeyName)) and DoesPathExist();
+
+  // Malware check
+  if FileExists(ExpandConstant('{win}\vgraph.dll')) then Begin
+    if MsgBox(ExpandConstant('{cm:dialog_malwaredetected,{win}\vgraph.dll}'), mbConfirmation, MB_OKCANCEL) = IDOK then begin
+      Result := False;
+    End;
+  End;
 End;
 
 Function EnableDeleteOldSetup: Boolean;
