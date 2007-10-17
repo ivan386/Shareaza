@@ -38,7 +38,6 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 // Define memory sizes to use in these methods
-#define TEMP_BUFFER 4096       // Use a 4 KB buffer as a temporary store between a socket and the buffer object
 #define BLOCK_SIZE  1024       // Change the allocated size of the buffer in 1 KB sized blocks
 #define BLOCK_MASK  0xFFFFFC00 // Aids in rounding to the next biggest KB of size
 
@@ -353,36 +352,43 @@ BOOL CBuffer::StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRem
 // Takes a handle to a socket
 // Reads in data from the socket, moving it into the buffer
 // Returns the number of bytes we got
-DWORD CBuffer::Receive(SOCKET hSocket)
+DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
 {
-	// Make a local 4 KB buffer
-	BYTE pData[TEMP_BUFFER];
+	// Start the total at 0
+	DWORD nTotal = 0ul;
 
-	// Record how many bytes we get from the socket in this call to this method
-	DWORD nTotal = 0;
-
-	// Loop forever
-	for (;;)
+	// Read bytes from the socket until the limit has run out
+	while ( nSpeedLimit )
 	{
-		// Move up to 4 KB of data from the socket to our pData buffer
-		int nLength = recv( // Read data in from the socket, nLength is how many bytes we got
-			hSocket,        // The socket that is connected to a remote computer
-			(char *)pData,  // Put the data in our little local 4 KB buffer
-			TEMP_BUFFER,    // Tell recv that it has 4 KB of space there
-			0 );            // No advanced options
+		// Limit nLength to the maximum recieve size
+		int nLength = static_cast< int >( min( nSpeedLimit, MAX_RECV_SIZE ) );
 
-		// If we got 0 bytes, or SOCKET_ERROR -1, exit the loop
+		// Exit loop if the buffer isn't big enough to hold the data
+		if ( !EnsureBuffer( nLength ) ) break;
+
+		// Pointer into buffer
+		// This needs to be done after EnsureBuffer() is called as it may have changed m_pBuffer
+		char * pData = reinterpret_cast< char * >( m_pBuffer ) + m_nLength;
+
+		// Read the bytes from the socket
+		nLength = recv(	// nLength is the number of bytes we received from the socket
+			hSocket,	// Use the socket in this CConnection object
+			pData,		// Tell recv to write the data here
+			nLength,	// The size of the buffer, and how many bytes recv should write there
+			0 );		// No special options
+
+		// Exit loop if nothing is left or an error occurs
 		if ( nLength <= 0 ) break;
 
-		// Copy the data from the 4 KB buffer into this CBuffer object
-		Add( pData, nLength );
-
-		// Record this method has read nLength more bytes
-		nTotal += nLength;
+		m_nLength	+= nLength;	// Add to the buffer size
+		nTotal		+= nLength;	// Add to the total
+		nSpeedLimit	-= nLength;	// Adjust the limit
 	}
 
-	// Add the amount we read to the incoming bandwidth statistic, and return it
+	// Add the total to the statistics
 	Statistics.Current.Bandwidth.Incoming += nTotal;
+
+	// Return the total number of bytes read
 	return nTotal;
 }
 
@@ -392,7 +398,7 @@ DWORD CBuffer::Receive(SOCKET hSocket)
 // Takes a handle to a socket
 // Sends all the data in this buffer to the remote computer at the other end of it
 // Returns how many bytes were sent
-DWORD CBuffer::Send(SOCKET hSocket)
+DWORD CBuffer::Send(SOCKET hSocket, DWORD /*nSpeedLimit*/)
 {
 	// Record the total bytes we send in this call to this method
 	DWORD nTotal = 0;

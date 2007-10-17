@@ -61,8 +61,8 @@ public:
 	BOOL	StartsWith(LPCSTR pszString, size_t nLength, BOOL bRemove = FALSE);			// Returns true if the buffer starts with this text
 
 	// Use the buffer with a socket
-	DWORD	Receive(SOCKET hSocket);	// Move incoming data from the socket to this buffer
-	DWORD	Send(SOCKET hSocket);		// Send the contents of this buffer to the computer on the far end of the socket
+	DWORD	Receive(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);	// Move incoming data from the socket to this buffer
+	DWORD	Send(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);		// Send the contents of this buffer to the computer on the far end of the socket
 
 	// Use the buffer with the ZLib compression library
 	BOOL	Deflate(BOOL bIfSmaller = FALSE);	// Compress the data in this buffer
@@ -110,6 +110,8 @@ public:
 
 // Statics
 public:
+	static const DWORD	MAX_RECV_SIZE = 1024ul * 16ul;	// Recieve up to 16KB blocks from the socket
+
 	// Static means you can call CBuffer::ReverseBuffer without having a CBuffer object at all
 	static void ReverseBuffer(const void* pInput, void* pOutput, size_t nLength);
 };
