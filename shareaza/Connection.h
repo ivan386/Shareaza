@@ -93,6 +93,7 @@ protected:
 	virtual BOOL OnHeaderLine(CString& strHeader, CString& strValue); // Processes a single line from the headers
 	virtual BOOL OnHeadersComplete();    // (do) just returns true
 
+// Statics
 public:
 	// Encode and decode URL text, and see if a string starts with a tag
 	static CString URLEncode(LPCTSTR pszInput);                   // Encode "hello world" into "hello%20world"
@@ -100,9 +101,6 @@ public:
 	static CString URLDecodeANSI(LPCTSTR pszInput);               // Decodes properly encoded URLs
 	static CString URLDecodeUnicode(LPCTSTR pszInput);            // Decodes URLs with extended characters
 	static BOOL    StartsWith(LPCTSTR pszInput, LPCTSTR pszText); // StartsWith("hello world", "hello") is true
-
-	// Hard-coded settings for socket data transfer
-	static const DWORD	TEMP_BUFFER_SIZE = 1024ul * 10ul;	// 10KB local buffer for data
 
 	// Hard-coded settings for the bandwidth transfer meter
 	static const DWORD	METER_SECOND	= 1000ul;						// 1000 milliseconds is 1 second

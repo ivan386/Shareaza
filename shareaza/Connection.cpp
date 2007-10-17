@@ -450,39 +450,11 @@ BOOL CConnection::OnRead()
 		nLimit = m_mInput.CalculateLimit( tNow );
 	}
 
-	char pData[TEMP_BUFFER_SIZE]	= "";	// Make a temp buffer
-	DWORD nTotal					= 0ul;	// Start the total at 0
+	// Read from the socket and record the # bytes read
+	DWORD nTotal = m_pInput->Receive( m_hSocket, nLimit );
 
-	// Read bytes from the socket until the limit has run out
-	while ( nLimit )
-	{
-		// Limit nLength to the size of the temp buffer
-		int nLength = static_cast< int >( min( nLimit, TEMP_BUFFER_SIZE ) );
-
-		// Read the bytes from the socket
-		nLength = recv(		// nLength is the number of bytes we received from the socket
-			m_hSocket,		// Use the socket in this CConnection object
-			pData,			// Tell recv to write the data here
-			nLength,		// The size of the buffer, and how many bytes recv should write there
-			0 );			// No special options
-
-		// Exit loop if nothing is left or an error occurs
-		if ( nLength <= 0 ) break;
-
-		m_pInput->Add( pData, static_cast< UINT >( nLength ) );	// Add data to the input buffer
-		nTotal += nLength;										// Add to the total
-		nLimit -= nLength;										// Adjust the limit
-	}
-
-	// If some bytes were read
-	if ( nTotal )
-	{
-		// Add # bytes to bandwidth meter
-		m_mInput.Add( nTotal, tNow );
-
-		// Add the total to statistics
-		Statistics.Current.Bandwidth.Incoming += nTotal;
-	}
+	// If some bytes were read, add # bytes to bandwidth meter
+	if ( nTotal ) m_mInput.Add( nTotal, tNow );
 
 	// Report success
 	return TRUE;
