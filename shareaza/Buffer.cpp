@@ -65,11 +65,29 @@ CBuffer::~CBuffer()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// CBuffer add
+
+// Add data to the buffer
+void CBuffer::Add(const void* pData, const size_t nLength)
+{
+	// If the text is blank, don't do anything
+	if ( pData == NULL ) return;
+
+	if ( ! EnsureBuffer( nLength ) ) return;
+
+	// Copy the given memory into the end of the memory block
+	CopyMemory( m_pBuffer + m_nLength, pData, nLength );
+
+	// Add the length of the new memory to the total length in the buffer
+	m_nLength += static_cast< DWORD >( nLength );
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // CBuffer insert
 
 // Takes offset, a position in the memory block to insert some new memory at
 // Inserts the memory there, shifting anything after it further to the right
-void CBuffer::Insert(const DWORD nOffset, const void * pData, const size_t nLength) throw()
+void CBuffer::Insert(const DWORD nOffset, const void * pData, const size_t nLength)
 {
 	ASSERT( pData );
 	if ( pData == NULL ) return;
@@ -93,12 +111,31 @@ void CBuffer::Insert(const DWORD nOffset, const void * pData, const size_t nLeng
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// CBuffer remove
+
+// Takes a number of bytes
+// Removes this number from the start of the buffer, shifting the memory after it to the start
+inline void CBuffer::Remove(const size_t nLength)
+{
+	if ( nLength >= m_nLength )
+	{
+		ASSERT( nLength == m_nLength );
+		m_nLength = 0;
+	}
+	else if ( nLength )
+	{
+		m_nLength -= static_cast< DWORD >( nLength );
+		MoveMemory( m_pBuffer, m_pBuffer + nLength, m_nLength );
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // CBuffer add utilities
 
 // Takes another CBuffer object, and a number of bytes there to copy, or the default -1 to copy the whole thing
 // Moves the memory from pBuffer into this one
 // Returns the number of bytes moved
-DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength) throw()
+DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength)
 {
 	ASSERT( pBuffer );
 	if ( pBuffer == NULL ) return 0;
@@ -123,7 +160,7 @@ DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength) throw()
 
 // Takes a pointer to some memory, and the number of bytes we can read there
 // Adds them to this buffer, except in reverse order
-void CBuffer::AddReversed(const void *pData, const size_t nLength) throw()
+void CBuffer::AddReversed(const void *pData, const size_t nLength)
 {
 	ASSERT( pData );
 	if ( pData == NULL ) return;
@@ -140,7 +177,7 @@ void CBuffer::AddReversed(const void *pData, const size_t nLength) throw()
 
 // Takes a number of new bytes we're about to add to this buffer
 // Makes sure the buffer will be big enough to hold them, allocating more memory if necessary
-bool CBuffer::EnsureBuffer(const size_t nLength) throw()
+bool CBuffer::EnsureBuffer(const size_t nLength)
 {
 	// primitive overflow protection (relevant for 64bit)
 	if ( nLength > std::numeric_limits< int >::max() - m_nBuffer ) return false;
@@ -177,6 +214,29 @@ bool CBuffer::EnsureBuffer(const size_t nLength) throw()
 	m_nBuffer = 0;
 	theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::EnsureBuffer()") );
 	return false;
+}
+
+// Convert Unicode text to ASCII and add it to the buffer
+void CBuffer::Print(const LPCWSTR pszText, const size_t nLength, const UINT nCodePage)
+{
+	// primitive overflow protection (relevant for 64bit)
+	if ( nLength > std::numeric_limits< int >::max() - m_nBuffer ) return;
+
+	// If the text is blank or no memory, don't do anything
+	ASSERT( pszText );
+	if ( pszText == NULL ) return;
+
+	// Find out the required buffer size, in bytes, for the translated string
+	int nBytes = WideCharToMultiByte( nCodePage, 0, pszText,
+		static_cast< int >( nLength ), NULL, 0, NULL, NULL );
+
+	// Make sure the buffer is big enough for this, making it larger if necessary
+	if ( ! EnsureBuffer( nBytes ) ) return;
+
+	// Convert the Unicode string into ASCII characters in the buffer
+	WideCharToMultiByte( nCodePage, 0, pszText, static_cast< int >( nLength ),
+		(LPSTR)( m_pBuffer + m_nLength ), nBytes, NULL, NULL );
+	m_nLength += nBytes;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
