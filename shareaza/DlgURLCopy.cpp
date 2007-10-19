@@ -100,6 +100,7 @@ void CURLCopyDlg::OnIncludeSelf()
 		strURN	= _T("xt=urn:bitprint:")
 				+ m_pFile->m_oSHA1.toString() + '.'
 				+ m_pFile->m_oTiger.toString();
+		strIncludeSelfURN = m_pFile->m_oSHA1.toUrn();
 	}
 	else if ( m_pFile->m_oSHA1 )
 	{
@@ -109,7 +110,7 @@ void CURLCopyDlg::OnIncludeSelf()
 	{
 		strURN = _T("xt=") + m_pFile->m_oTiger.toUrn();
 	}
-	if ( strURN.GetLength() ) strIncludeSelfURN = strURN.Mid( 3 );
+	if ( !strIncludeSelfURN.GetLength() && strURN.GetLength() ) strIncludeSelfURN = strURN.Mid( 3 );
 
 	if ( m_pFile->m_oED2K )
 	{
