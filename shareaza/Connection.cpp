@@ -484,45 +484,11 @@ BOOL CConnection::OnWrite()
 		nLimit = m_mOutput.CalculateLimit( tNow, Settings.Uploads.ThrottleMode == 0 );
 	}
 
-	// Adjust limit if there isn't enough data to send
-	nLimit = min( nLimit, m_pOutput->m_nLength );
+	// Read from the socket and record the # bytes sent
+	DWORD nTotal = m_pOutput->Send( m_hSocket, nLimit );
 
-	char* pData		= reinterpret_cast< char* >( m_pOutput->m_pBuffer );	// Point to the data to write
-	DWORD nTotal	= 0ul;													// Start the total at 0
-
-	// Write bytes to the socket until our limit has run out
-	while ( nLimit )
-	{
-		// Limit nLength to the size of the temp buffer
-		int nLength = static_cast< int >( nLimit );
-
-		// Send the bytes to the socket
-		nLength = send(		// The send function returns how many bytes it sent
-			m_hSocket,		// Use the socket in this CConnection object
-			pData,			// Tell send to read the data here
-			nLength,		// This is how many bytes are there to send
-			0 );			// No special options
-
-		// Exit loop if nothing is left or an error occurs
-		if ( nLength <= 0 ) break;
-
-		pData += nLength;	// Move forward past the sent data
-		nTotal += nLength;	// Add to the total
-		nLimit -= nLength;	// Adjust the limit
-	}
-
-	// If some bytes were sent
-	if ( nTotal )
-	{
-		// Remove them from the output buffer so they don't get sent again
-		m_pOutput->Remove( nTotal );
-
-		// Add # bytes to bandwidth meter
-		m_mOutput.Add( nTotal, tNow );
-
-		// Add the total to statistics
-		Statistics.Current.Bandwidth.Outgoing += nTotal;
-	}
+	// If some bytes were sent, add # bytes to bandwidth meter
+	if ( nTotal ) m_mOutput.Add( nTotal, tNow );
 
 	// Report success
 	return TRUE;
