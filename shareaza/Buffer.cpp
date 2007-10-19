@@ -366,15 +366,15 @@ DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
 		// Exit loop if the buffer isn't big enough to hold the data
 		if ( !EnsureBuffer( nLength ) ) break;
 
-		// Pointer into buffer
+		// Point where the data is to be stored
 		// This needs to be done after EnsureBuffer() is called as it may have changed m_pBuffer
 		char * pData = reinterpret_cast< char * >( m_pBuffer ) + m_nLength;
 
 		// Read the bytes from the socket
-		nLength = recv(	// nLength is the number of bytes we received from the socket
-			hSocket,	// Use the socket in this CConnection object
+		nLength = recv(	// Store the number of bytes read from the socket
+			hSocket,	// Use the passed in socket
 			pData,		// Tell recv to write the data here
-			nLength,	// The size of the buffer, and how many bytes recv should write there
+			nLength,	// Maximum # bytes to read
 			0 );		// No special options
 
 		// Exit loop if nothing is left or an error occurs
@@ -388,7 +388,7 @@ DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
 	// Add the total to the statistics
 	Statistics.Current.Bandwidth.Incoming += nTotal;
 
-	// Return the total number of bytes read
+	// Return the total # bytes read
 	return nTotal;
 }
 
@@ -398,33 +398,45 @@ DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
 // Takes a handle to a socket
 // Sends all the data in this buffer to the remote computer at the other end of it
 // Returns how many bytes were sent
-DWORD CBuffer::Send(SOCKET hSocket, DWORD /*nSpeedLimit*/)
+DWORD CBuffer::Send(SOCKET hSocket, DWORD nSpeedLimit)
 {
-	// Record the total bytes we send in this call to this method
-	DWORD nTotal = 0;
+	// Adjust limit if there isn't enough data to send
+	nSpeedLimit = min( nSpeedLimit, m_nLength );
 
-	// Loop until this buffer is empty
-	while ( m_nLength )
+	// Point to the data to write
+	char* pData = reinterpret_cast< char* >( m_pBuffer );
+
+	// Start the total at 0
+	DWORD nTotal = 0ul;
+
+	// Write bytes to the socket until our limit has run out
+	while ( nSpeedLimit )
 	{
-		// Copy the contents of this buffer into the socket
-		int nLength = send(    // Send data out through the socket, nLength will be how much was sent
-			hSocket,           // The socket that is connected to the remote computer
-			(char *)m_pBuffer, // Send data from the start of this buffer
-			static_cast< int >( m_nLength ),         // Try to send all the data in the buffer
-			0 );               // No advanced options
+		// Limit nLength to the speed limit
+		int nLength = static_cast< int >( nSpeedLimit );
 
-		// If no data was sent, or send returned SOCKET_ERROR -1, exit the loop
+		// Send the bytes to the socket
+		nLength = send(		// Store the # bytes sent to the socket
+			hSocket,		// Use the passed in socket
+			pData,			// Tell send to read the data here
+			nLength,		// Maximum # bytes to send
+			0 );			// No special options
+
+		// Exit loop if nothing is left or an error occurs
 		if ( nLength <= 0 ) break;
 
-		// Remove the bytes that we copied into the socket from this buffer
-		Remove( nLength );
-
-		// Record that we sent these bytes
-		nTotal += nLength;
+		pData		+= nLength;	// Move forward past the sent data
+		nTotal		+= nLength;	// Add to the total
+		nSpeedLimit	-= nLength;	// Adjust the limit
 	}
 
-	// Add the amount we sent to the outgoing bandwidth statistic, and return it
+	// Remove sent bytes from the buffer
+	Remove( nTotal );
+
+	// Add the total to statistics
 	Statistics.Current.Bandwidth.Outgoing += nTotal;
+
+	// Return the total # bytes sent
 	return nTotal;
 }
 
