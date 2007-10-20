@@ -374,8 +374,14 @@ BOOL CBTClient::OnHandshake1()
 	{
 		ASSERT( m_pDownload != NULL );
 		ASSERT( m_pDownloadTransfer != NULL );
-		
-		if ( validAndUnequal( oFileHash, m_pDownload->m_oBTH ) || !m_pDownload->IsShared() )
+
+		if ( m_pDownload == NULL || m_pDownloadTransfer == NULL )
+		{	//Display and error and exit
+			theApp.Message( MSG_ERROR, _T("Error m_pDownload or m_pDownloadTransfer is null in CBTClient::OnHandshake1, ToDO: Fix the cause"), (LPCTSTR)m_sAddress );
+			Close();
+			return FALSE;
+		}
+		else if ( validAndUnequal( oFileHash, m_pDownload->m_oBTH ) || !m_pDownload->IsShared() )
 		{	//Display and error and exit
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_FILE, (LPCTSTR)m_sAddress );
 			Close();
