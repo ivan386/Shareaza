@@ -218,7 +218,7 @@ void CPluginsSettingsPage::OnPluginsSetup()
 void CPluginsSettingsPage::OnPluginsWeb()
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://www.shareaza.com/plugins/?Version=") + theApp.m_sVersion,
+		_T("http://shareaza.sourceforge.net/plugins/?Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 

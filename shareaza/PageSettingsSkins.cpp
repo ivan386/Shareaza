@@ -465,7 +465,7 @@ void CSkinsSettingsPage::OnSkinsBrowse()
 void CSkinsSettingsPage::OnSkinsWeb()
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://www.shareaza.com/skins/?Version=") + theApp.m_sVersion,
+		_T("http://shareaza.sourceforge.net/skins/?Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 

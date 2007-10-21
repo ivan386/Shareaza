@@ -247,7 +247,7 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "&Websites"
         BEGIN
-            MENUITEM "&Shareaza.com",               ID_HELP_HOMEPAGE
+            MENUITEM "&Shareaza site",              ID_HELP_HOMEPAGE
             MENUITEM "File Sharing Portal",         ID_HELP_WEB_1
             MENUITEM "P2PForums.com",               ID_HELP_WEB_2
             MENUITEM "Slyck.com",                   ID_HELP_WEB_3
@@ -715,7 +715,7 @@ BEGIN
                     IDC_STATIC,20,75,262,24
     LTEXT           "Logo by Kid at designhazard.com",IDC_STATIC,20,105,262,
                     12
-    LTEXT           "www.shareaza.com",IDC_WEB,20,142,65,10
+    LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,20,142,125,10
     DEFPUSHBUTTON   "OK",IDOK,246,141,39,14
     LTEXT           "This product includes GeoLite data created by MaxMind, available from http://maxmind.com/",
                     IDC_STATIC,20,120,262,18
@@ -1834,10 +1834,10 @@ BEGIN
                     IDC_STATIC,15,56,265,50
     LTEXT           "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program.",
                     IDC_STATIC,15,107,265,33
-    LTEXT           "You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from www.shareaza.com.  If you paid someone money for Shareaza, you should demand a full refund immediately.",
+    LTEXT           "You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/.  If you paid someone money for Shareaza, you should demand a full refund immediately.",
                     IDC_STATIC,15,143,265,35
     LTEXT           "Shareaza respects its users!",IDC_RESPECT,15,178,232,13
-    LTEXT           "www.shareaza.com",IDC_WEB,15,195,65,10
+    LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,15,195,125,10
     DEFPUSHBUTTON   "Close",IDOK,245,190,39,14
 END
 
@@ -1857,7 +1857,7 @@ BEGIN
                     IDC_STATIC,15,110,260,30
     LTEXT           "This is the last message that will appear when starting Shareaza.",
                     IDC_STATIC,15,145,260,10
-    LTEXT           "www.shareaza.com",IDC_WEB,15,165,65,10
+    LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,15,165,125,10
     DEFPUSHBUTTON   "OK",IDOK,245,165,39,14
 END
 
@@ -3781,7 +3781,7 @@ BEGIN
     IDS_TABBAR_CONNECTED    "There are no active searches.  Click here to search for files."
     IDS_UPGRADE_LAUNCH      "Shareaza has finished downloading the next Shareaza version (%s).  Would you like to upgrade now?\n\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
     IDS_SKIN_DELETE         "Are you sure you want to delete the ""%s"" skin?  This cannot be undone."
-    IDS_BETA_EXPIRED        "This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."
+    IDS_BETA_EXPIRED        "This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from http://shareaza.sourceforge.net/."
     IDS_VIEW_MODE_CONFIRM   "Changing view will close any windows you have open.  Would you like to change now?"
     IDS_TORRENT_INFO        "Torrent Information"
 END
@@ -4876,7 +4876,7 @@ STRINGTABLE
 BEGIN
     ID_TRANSFERS_DISCONNECT "Disconnect the selected download transfer(s)."
     ID_TRANSFERS_FORGET     "Disconnect and forget the selected download source(s)."
-    ID_HELP_HOMEPAGE        "Visit the Shareaza.com web site."
+    ID_HELP_HOMEPAGE        "Visit the Shareaza web site."
     ID_HELP_WEB_1           "Visit this website"
     ID_HELP_WEB_2           "Visit this website"
     ID_HELP_WEB_3           "Visit this website"
@@ -5229,11 +5229,11 @@ END
 STRINGTABLE 
 BEGIN
     ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
-    ID_HELP_UPDATE          "Check for news and updates"
+    ID_HELP_UPDATE          "Check for news and updates."
     ID_HELP_ROUTER          "Get help configuring your router or firewall."
-    ID_HELP_SECURITY        "Help protecting your system from hostile programs"
-    ID_HELP_CODEC           "All about codecs and video problems"
-    ID_HELP_TEST            "Run the connection test"
+    ID_HELP_SECURITY        "Help protecting your system from hostile programs."
+    ID_HELP_CODEC           "All about codecs and video problems."
+    ID_HELP_TEST            "Run the connection test."
 END
 
 STRINGTABLE 

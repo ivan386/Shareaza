@@ -2359,57 +2359,57 @@ void CMainWnd::OnHelpAbout()
 void CMainWnd::OnHelpHomepage() 
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://www.shareaza.com/?Version=") + theApp.m_sVersion,
+		_T("http://shareaza.sourceforge.net/?Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb1() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link1"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link1"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb2() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link2"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link2"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb3() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link3"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link3"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb4() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link4"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link4"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb5() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link5"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link5"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb6() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link6"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link6"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpFaq() 
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://www.shareaza.com/help/?faq"),
+		_T("http://shareaza.sourceforge.net/help/?faq"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpConnectiontest()
 {
 	CString strTestUrl;
-	strTestUrl.Format( _T("http://www.shareaza.com/help/test/?port=%d&lang=%s"), Settings.Connection.InPort, Settings.General.Language );
+	strTestUrl.Format( _T("http://shareaza.sourceforge.net/help/test/?port=%d&lang=%s&Version=") + theApp.m_sVersion, Settings.Connection.InPort, Settings.General.Language );
 	ShellExecute( GetSafeHwnd(), _T("open"),
 		strTestUrl,
 		NULL, NULL, SW_SHOWNORMAL );
@@ -2418,39 +2418,39 @@ void CMainWnd::OnHelpConnectiontest()
 void CMainWnd::OnHelpGuide() 
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://www.shareaza.com/help/?guide"),
+		_T("http://shareaza.sourceforge.net/help/?guide"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpForums() 
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://forums.shareaza.com/"),
+		_T("http://shareaza.sourceforge.net/help/?forum"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpUpdate() 
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://www.shareaza.com/help/update/?Version=") + theApp.m_sVersion,
+		_T("http://shareaza.sourceforge.net/help/update/?Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpRouter()
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/?router"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/?router"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpSecurity()
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/?security"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/?security"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpCodec()
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/?codec"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/?codec"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 

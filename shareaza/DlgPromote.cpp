@@ -133,7 +133,7 @@ void CPromoteDlg::OnLButtonUp(UINT nFlags, CPoint point)
 	if ( rc.PtInRect( point ) )
 	{
 		ShellExecute( GetSafeHwnd(), _T("open"),
-			_T("http://www.shareaza.com/?Version=") + theApp.m_sVersion,
+			_T("http://shareaza.sourceforge.net/?Version=") + theApp.m_sVersion,
 			NULL, NULL, SW_SHOWNORMAL );
 	}
 }
