@@ -104,6 +104,9 @@ HRESULT LoadFrame(IMediaDet* pDet, double total_time,
 	return hr;
 }
 
+# pragma warning( push )
+# pragma warning( disable : 4509 )
+
 STDMETHODIMP CVideoReader::LoadFromFile (
 	/* [in] */ BSTR sFile,
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
@@ -127,7 +130,15 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 	HRESULT hr = pDet.CoCreateInstance( CLSID_MediaDet );
 	if ( SUCCEEDED( hr ) )
 	{
-		hr = pDet->put_Filename (sFile);
+		__try
+		{
+			hr = pDet->put_Filename(sFile);
+		}
+		__except( GetExceptionCode() != EXCEPTION_CONTINUE_EXECUTION )
+		{
+			return E_FAIL;
+		}
+
 		if ( SUCCEEDED( hr ) )
 		{
 			long lStreams = 0;
@@ -248,6 +259,8 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 
 	return hr;
 }
+
+# pragma warning( pop )
 
 STDMETHODIMP CVideoReader::LoadFromMemory (
 	/* [in] */ BSTR sType,
