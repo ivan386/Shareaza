@@ -461,7 +461,6 @@ BOOL CBTClient::OnHandshake2()
 
 	if ( m_pDownloadTransfer != NULL )	// Transfer exist, so must be initiated from this side
 	{
-		ASSERT( m_pDownloadTransfer != NULL );
 		m_pDownloadTransfer->m_pSource->m_oGUID = transformGuid( m_oGUID );
 
 		/*
