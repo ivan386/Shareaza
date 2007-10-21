@@ -26,26 +26,157 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/bittorrent.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
-
        <object type="file" availability="advanced"/>
        <titles>
                <title language="en">BitTorrent</title>
+               <title language="af">BitTorrent</title>
+               <title language="ca">BitTorrent</title>
+               <title language="chs">BitTorrent</title>
+               <title language="cht">BitTorrent</title>
+               <title language="de">BitTorrent</title>
+               <title language="ee">BitTorrent</title>
+               <title language="es">BitTorrent</title>
+               <title language="fr">BitTorrent</title>
+               <title language="heb">BitTorrent</title>
+               <title language="hr">BitTorrent</title>
+               <title language="hu">BitTorrent</title>
+               <title language="it">BitTorrent</title>
+               <title language="ja">BitTorrent</title>
+               <title language="lt">BitTorrent</title>
+               <title language="nl">BitTorrent</title>
+               <title language="no">BitTorrent</title>
+               <title language="pt-br">BitTorrent</title>
+               <title language="ru">BitTorrent</title>
+               <title language="sl-SI">BitTorrent</title>
+               <title language="sq">BitTorrent</title>
+               <title language="sr">BitTorrent</title>
+               <title language="tr">BitTorrent</title>
        </titles>
        <members>
               <member name="hash">
                        <title language="en">Info Hash</title>
+                       <title language="af">Info Hash</title>
+                       <title language="ca">Info Hash</title>
+                       <title language="chs">Info Hash</title>
+                       <title language="cht">Info Hash</title>
+                       <title language="de">Info Hash</title>
+                       <title language="ee">Info Hash</title>
+                       <title language="es">Info Hash</title>
+                       <title language="fr">Info Hash</title>
+                       <title language="heb">Info Hash</title>
+                       <title language="hr">Info Hash</title>
+                       <title language="hu">Info Hash</title>
+                       <title language="it">Info Hash</title>
+                       <title language="ja">Info Hash</title>
+                       <title language="lt">Informacijos maiša</title>
+                       <title language="nl">Info Hash</title>
+                       <title language="no">Info Hash</title>
+                       <title language="pt-br">Info Hash</title>
+                       <title language="ru">Инфохеш</title>
+                       <title language="sl-SI">Info Hash</title>
+                       <title language="sq">Info Hash</title>
+                       <title language="sr">Info Hash</title>
+                       <title language="tr">Info Hash</title>
               </member>
               <member name="tracker">
                        <title language="en">Tracker</title>
+                       <title language="af">Tracker</title>
+                       <title language="ca">Tracker</title>
+                       <title language="chs">Tracker</title>
+                       <title language="cht">Tracker</title>
+                       <title language="de">Tracker</title>
+                       <title language="ee">Tracker</title>
+                       <title language="es">Tracker</title>
+                       <title language="fr">Tracker</title>
+                       <title language="heb">Tracker</title>
+                       <title language="hr">Tracker</title>
+                       <title language="hu">Tracker</title>
+                       <title language="it">Tracker</title>
+                       <title language="ja">Tracker</title>
+                       <title language="lt">Seklys</title>
+                       <title language="nl">Tracker</title>
+                       <title language="no">Tracker</title>
+                       <title language="pt-br">Tracker</title>
+                       <title language="ru">Трекер</title>
+                       <title language="sl-SI">Tracker</title>
+                       <title language="sq">Tracker</title>
+                       <title language="sr">Tracker</title>
+                       <title language="tr">Tracker</title>
               </member>
               <member name="encoding">
                        <title language="en">Encoding</title>
+                       <title language="af">Encoding</title>
+                       <title language="ca">Encoding</title>
+                       <title language="chs">Encoding</title>
+                       <title language="cht">Encoding</title>
+                       <title language="de">Encoding</title>
+                       <title language="ee">Encoding</title>
+                       <title language="es">Encoding</title>
+                       <title language="fr">Encoding</title>
+                       <title language="heb">Encoding</title>
+                       <title language="hr">Encoding</title>
+                       <title language="hu">Encoding</title>
+                       <title language="it">Encoding</title>
+                       <title language="ja">Encoding</title>
+                       <title language="lt">Koduotė</title>
+                       <title language="nl">Encoding</title>
+                       <title language="no">Encoding</title>
+                       <title language="pt-br">Encoding</title>
+                       <title language="ru">Кодировка</title>
+                       <title language="sl-SI">Encoding</title>
+                       <title language="sq">Encoding</title>
+                       <title language="sr">Encoding</title>
+                       <title language="tr">Encoding</title>
               </member>
               <member name="creationdate">
                        <title language="en">Creation Date</title>
+                       <title language="af">Creation Date</title>
+                       <title language="ca">Creation Date</title>
+                       <title language="chs">Creation Date</title>
+                       <title language="cht">Creation Date</title>
+                       <title language="de">Creation Date</title>
+                       <title language="ee">Creation Date</title>
+                       <title language="es">Creation Date</title>
+                       <title language="fr">Creation Date</title>
+                       <title language="heb">Creation Date</title>
+                       <title language="hr">Creation Date</title>
+                       <title language="hu">Creation Date</title>
+                       <title language="it">Creation Date</title>
+                       <title language="ja">Creation Date</title>
+                       <title language="lt">Sukūrimo data</title>
+                       <title language="nl">Creation Date</title>
+                       <title language="no">Creation Date</title>
+                       <title language="pt-br">Creation Date</title>
+                       <title language="ru">Дата создания</title>
+                       <title language="sl-SI">Creation Date</title>
+                       <title language="sq">Creation Date</title>
+                       <title language="sr">Creation Date</title>
+                       <title language="tr">Creation Date</title>
               </member>
               <member name="createdby">
                        <title language="en">Created By</title>
+                       <title language="af">Created By</title>
+                       <title language="ca">Created By</title>
+                       <title language="chs">Created By</title>
+                       <title language="cht">Created By</title>
+                       <title language="de">Created By</title>
+                       <title language="ee">Created By</title>
+                       <title language="es">Created By</title>
+                       <title language="fr">Created By</title>
+                       <title language="heb">Created By</title>
+                       <title language="hr">Created By</title>
+                       <title language="hu">Created By</title>
+                       <title language="it">Created By</title>
+                       <title language="ja">Created By</title>
+                       <title language="lt">Programa</title>
+                       <title language="nl">Created By</title>
+                       <title language="no">Created By</title>
+                       <title language="pt-br">Created By</title>
+                       <title language="ru">Программа</title>
+                       <title language="sl-SI">Created By</title>
+                       <title language="sq">Created By</title>
+                       <title language="sr">Created By</title>
+                       <title language="tr">Created By</title>
               </member>
               <member name="comments">
                        <title language="en">Comments</title>
@@ -76,5 +207,4 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <typeFilter>
                <type extension="torrent"/>
        </typeFilter>
-
 </schemaDescriptor>
