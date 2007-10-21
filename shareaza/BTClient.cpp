@@ -350,9 +350,9 @@ BOOL CBTClient::OnHandshake1()
 
 	ASSERT( ! m_bOnline );
 	ASSERT( ! m_bShake );
-	
+
 	LPBYTE pIn = m_pInput->m_pBuffer;
-	
+
 	// Read in the BT protocol header
 	if ( memcmp( pIn, BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) != 0 )
 	{
@@ -360,56 +360,48 @@ BOOL CBTClient::OnHandshake1()
 		Close();
 		return FALSE;
 	}
-	
+
 	pIn += BT_PROTOCOL_HEADER_LEN + 8;
-	
+
 	// Read in the file ID
 	Hashes::BtHash oFileHash( reinterpret_cast<
 			const Hashes::BtHash::RawStorage& >( *pIn ) );
 	pIn += Hashes::BtHash::byteCount;
-	
+
 	m_pInput->Remove( BT_PROTOCOL_HEADER_LEN + 8 + Hashes::Sha1Hash::byteCount );
-	
-	if ( m_bInitiated )		// If we initiated the connection
+
+	if ( m_pDownload != NULL )	// If we initiated download (download has associated, which means we initiated download)
 	{
-		ASSERT( m_pDownload != NULL );
 		ASSERT( m_pDownloadTransfer != NULL );
 
-		if ( m_pDownload == NULL || m_pDownloadTransfer == NULL )
-		{	//Display and error and exit
-			theApp.Message( MSG_ERROR, _T("Error m_pDownload or m_pDownloadTransfer is null in CBTClient::OnHandshake1, ToDO: Fix the cause"), (LPCTSTR)m_sAddress );
-			Close();
-			return FALSE;
-		}
-		else if ( validAndUnequal( oFileHash, m_pDownload->m_oBTH ) || !m_pDownload->IsShared() )
-		{	//Display and error and exit
+		if ( validAndUnequal( oFileHash, m_pDownload->m_oBTH ) )
+		{	//Display an error and exit
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_FILE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
-		else if ( ! m_pDownload->IsTrying() )
-		{	//Display and error and exit
+		else if ( ! m_pDownload->IsTrying() && ! m_pDownload->IsSeeding() )
+		{	//Display an error and exit
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
 	}
-	else					// If we didn't initiate the connection
+	else	// otherwise download has initiated from other side (no download has associated, which means connection initiated by G2 PUSH)
 	{
-		ASSERT( m_pDownload == NULL );
 		ASSERT( m_pDownloadTransfer == NULL );
-		
+
 		// Find the requested file
 		m_pDownload = Downloads.FindByBTH( oFileHash, TRUE );
 
 		if ( m_pDownload == NULL )				// If we can't find the file
-		{	//Display and error and exit
+		{	//Display an error and exit
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
 		else if ( ! m_pDownload->IsTrying() && ! m_pDownload->IsSeeding() )	// If the file isn't active
-		{	//Display and error and exit
+		{	//Display an error and exit
 			m_pDownload = NULL;
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
 			Close();
@@ -417,15 +409,15 @@ BOOL CBTClient::OnHandshake1()
 		}
 		else if ( m_pDownload->UploadExists( &m_pHost.sin_addr ) )	// If there is already an upload of this file to this client
 		{
-			// Display and error and exit
+			// Display an error and exit
 			m_pDownload = NULL;
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DUPLICATE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
 		// The file isn't verified yet, close the connection
-		else if ( m_pDownload->IsMoving() && !m_pDownload->m_bVerify || 
-				  m_pDownload->IsCompleted() && !m_pDownload->m_bVerify )
+		else if ( m_pDownload->IsMoving() || 
+				  ( m_pDownload->IsCompleted() && m_pDownload->m_bVerify != TS_TRUE ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
 			Close();
@@ -443,15 +435,15 @@ BOOL CBTClient::OnHandshake1()
 		}
 
 	}
-	
+
 	// Verify a download and hash
 	ASSERT( m_pDownload != NULL );
 	ASSERT( validAndEqual( m_pDownload->m_oBTH, oFileHash ) );
-	
+
 	// If we didn't start the connection, then send a handshake
-	if ( ! m_bInitiated ) SendHandshake( TRUE, TRUE );
+	if ( !m_bShake ) SendHandshake( TRUE, TRUE );
 	m_bShake = TRUE;
-	
+
 	return TRUE;
 }
 
@@ -467,13 +459,12 @@ BOOL CBTClient::OnHandshake2()
 
 	ASSERT( m_pDownload != NULL );
 
-	if ( m_bInitiated )
+	if ( m_pDownloadTransfer != NULL )	// Transfer exist, so must be initiated from this side
 	{
 		ASSERT( m_pDownloadTransfer != NULL );
 		m_pDownloadTransfer->m_pSource->m_oGUID = transformGuid( m_oGUID );
 
 		/*
-
 		//ToDo: This seems to trip when it shouldn't. Should be investigated...
 		if ( memcmp( &m_pGUID, &m_pDownloadTransfer->m_pSource->m_pGUID, 16 ) != 0 )
 		{
@@ -483,7 +474,7 @@ BOOL CBTClient::OnHandshake2()
 		}
 		*/
 	}
-	else 
+	else	// no transfer exist, so must be initiated from other side.
 	{
 		if ( m_pDownload->UploadExists( m_oGUID ) )
 		{
@@ -558,6 +549,7 @@ void CBTClient::DetermineUserAgent()
 			{ 'B', 'R', L"BitRocket" },
 			{ 'B', 'S', L"BitSlave" },
 			{ 'B', 'X', L"Bittorrent X" },
+			{ 'C', 'B', L"ShareazaPlus" },		// ShareazaPlus with RazaCB core.
 			{ 'C', 'D', L"Enhanced CTorrent" },
 			{ 'C', 'T', L"CTorrent" },
 			{ 'D', 'E', L"DelugeTorrent" },
