@@ -489,7 +489,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Siti web">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Sito di _Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
@@ -583,7 +583,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Siti web">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Sito di _Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
@@ -671,7 +671,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Siti web">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Sito di _Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
@@ -2048,7 +2048,7 @@
 		<text>Molti programmi di creazione dovrebbero permettere di riparare questo torrent,
 		assicurando che esso funzioni correttamente in tutte le applicazioni BitTorrent.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Clicca qui per ulteriore aiuto</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Clicca qui per ulteriore aiuto</link>
 		<text>, o per scaricare programmi per riparare il torrent.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2224,9 +2224,10 @@
 	<tip id="ID_HELP_ROUTER" message="Visualizza la guida per configurare il tuo router o firewall."/>
 	<tip id="ID_HELP_FORUMS" message="Visita il forum di discussioni di Shareaza."/>
 	<tip id="ID_HELP_GUIDE" message="Visita la guida per utenti di Shareaza."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Visita il sito Shareaza.com."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Visita il sito di Shareaza."/>
 	<tip id="ID_HELP_SECURITY" message="Aiuta il tuo sistema a proteggersi da programmi pericolosi."/>
 	<tip id="ID_HELP_UPDATE" message="Controlla notizie e aggiornamenti."/>
+	<tip id="ID_HELP_TEST" message="Lancia il test della connessione."/>
 	<tip id="ID_HELP_WEB_1" message="Visita questo sito web"/>
 	<tip id="ID_HELP_WEB_2" message="Visita questo sito web"/>
 	<tip id="ID_HELP_WEB_3" message="Visita questo sito web"/>
@@ -2500,7 +2501,7 @@
 	<string id="8007" value="Nessuna ricerca attiva. Clicca su Nuova ricerca per iniziare."/>
 	<string id="8008" value="Shareaza ha finito di scaricare la versione di Shareaza più recente (%s). Desideri effettuare l'aggiornamento ora?\n\nSe selezioni Si, Shareaza si chiuderà temporaneamente mentre l'aggiornamento sarà installato."/>
 	<string id="8009" value="Desideri eliminare la skin &quot;%s&quot;? Quest'azione non potrà essere annullata."/>
-	<string id="8010" value="Questa è una versione pre-release di Shareaza e il periodo di beta testing è scaduto. Scarica la versione completa e ufficiale da www.shareaza.com."/>
+	<string id="8010" value="Questa è una versione pre-release di Shareaza e il periodo di beta testing è terminato. Scarica la versione completa e ufficiale da http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Cambiando la visualizzazione qualsiasi finestra aperta si chiuderà. Desideri cambiare ora?"/>
 	<string id="8012" value="Informazioni sul torrent"/>
 	<string id="8060" value="Modalità Hub/Ultrapeer con %lu vicino(i). %s nella libreria locale."/>
@@ -3985,9 +3986,9 @@
 		<control caption="Sai che Shareaza è un prodotto gratuito al 100%?"/>
 		<control caption="Shareaza NON contiene nessun &quot;spyware&quot;, &quot;adware&quot; o altro software aggiuntivo. NON mostra mai messaggi pubblicitari o &quot;popup&quot;.{n}{n}Se dovessi vedere messaggi pubblicitari o &quot;popup&quot; mentre usi Shareaza, sicuramente NON provengono da questo programma."/>
 		<control caption="Sfortunatamente molti software contengono adware o spyware, di modo che l'utente diventa sospettoso e desidera verificare se il suo PC contiene software aggiuntivi con un programma di rimozione."/>
-		<control caption="Non dovete pagare nulla per scaricare Shareaza. Shareaza può essere scaricato da www.shareaza.com. Se pagate a qualcuno per Shareaza, potete richiedere un pieno rimborso di quanto pagato."/>
+		<control caption="Non dovete pagare nulla per scaricare Shareaza. Shareaza può essere scaricato da http://shareaza.sourceforge.net/. Se pagate a qualcuno per Shareaza, potete richiedere un pieno rimborso di quanto pagato."/>
 		<control caption="Shareaza rispetta i suoi utenti!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Chiudi"/>
 	</dialog>
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Diffondilo nel mondo">
@@ -3997,7 +3998,7 @@
 		<control caption="Sfortunatamente molti utenti non lo conoscono!"/>
 		<control caption="Se conosci qualcuno a cui piace o un utente che utilizza un programma di qualità inferiore, perchè non dargli un'alternativa?"/>
 		<control caption="Ti ringrazierà del consiglio"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Download di un file esistente">
