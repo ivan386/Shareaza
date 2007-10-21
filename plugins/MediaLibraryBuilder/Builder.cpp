@@ -23,6 +23,9 @@
 #include "Builder.h"
 #include <strsafe.h>
 
+# pragma warning( push )
+# pragma warning( disable : 4509 )
+
 STDMETHODIMP CBuilder::Process (
 	/* [in] */ HANDLE /* hFile */,
 	/* [in] */ BSTR sFile,
@@ -67,7 +70,15 @@ STDMETHODIMP CBuilder::Process (
 	hr = pDet.CoCreateInstance( CLSID_MediaDet );
 	if ( SUCCEEDED( hr ) )
 	{
-		hr = pDet->put_Filename (sFile);
+		__try
+		{
+			hr = pDet->put_Filename(sFile);
+		}
+		__except( GetExceptionCode() != EXCEPTION_CONTINUE_EXECUTION )
+		{
+			return E_FAIL;
+		}
+
 		if ( SUCCEEDED( hr ) )
 		{
 			long lStreams = 0;
@@ -220,3 +231,5 @@ STDMETHODIMP CBuilder::Process (
 
 	return hr;
 }
+
+# pragma warning( pop )
