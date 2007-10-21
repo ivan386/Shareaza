@@ -93,7 +93,7 @@ Source: "setup\builds\Shareaza.pdb"; DestDir: "{app}"; Flags: skipifsourcedoesnt
 Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Set up data dir in {app}
-Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Excludes: "*.bak"
+Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Excludes: "*.bak,*.url"
 
 ; Copy repair installer
 ;Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; Check: not WizardSilent
@@ -372,6 +372,7 @@ Type: files; Name: "{app}\*.dat"
 Type: files; Name: "{app}\*.xml"
 Type: files; Name: "{app}\*.png"
 Type: files; Name: "{app}\*.bmp"
+Type: files; Name: "{app}\Data\*.url"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
