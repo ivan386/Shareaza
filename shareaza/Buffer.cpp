@@ -675,7 +675,8 @@ void CBuffer::WriteDIME(
 	BYTE* pOut = m_pBuffer + m_nLength;                               // Point pOut at the end of the memory block in this buffer
 	*pOut++ = 0x08 | ( nFlags & 1 ? 4 : 0 ) | ( nFlags & 2 ? 2 : 0 ); // *pOut++ = 0x08 sets the byte at pOut and then moves the pointer forward
 	*pOut++ = strchr( pszType, ':' ) ? 0x20 : 0x10;
-	*pOut++ = 0x00; *pOut++ = 0x00;
+	*pOut++ = 0x00;
+	*pOut++ = 0x00;
 	*pOut++ = BYTE( ( nIDLength & 0xFF00 ) >> 8 );
 	*pOut++ = BYTE( nIDLength & 0xFF );
 	*pOut++ = BYTE( ( nTypeLength & 0xFF00 ) >> 8 );
@@ -684,7 +685,7 @@ void CBuffer::WriteDIME(
 	*pOut++ = (BYTE)( ( nBody & 0x00FF0000 ) >> 16 );
 	*pOut++ = (BYTE)( ( nBody & 0x0000FF00 ) >> 8 );
 	*pOut++ = (BYTE)( nBody & 0x000000FF );
-	m_nLength += 12;                                                  // Record that we wrote 12 bytes, but we really only wrote 11 (do)
+	m_nLength += 12;                                                  // Record that we wrote 12 bytes
 
 	// Print pszID, which is blank or a GUID in hexadecimal encoding, and bytes of 0 until the total length we added is a multiple of 4
 	Print( pszID, nIDLength );
