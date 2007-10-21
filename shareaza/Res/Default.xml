@@ -459,7 +459,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -553,7 +553,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -641,7 +641,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -1995,7 +1995,7 @@
 		<text>Most torrent creation programs should allow you to repair this torrent, which
 		will ensure it works properly in all BitTorrent applications.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Click here for additional help</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Click here for additional help</link>
 		<text>, or to download software to repair the torrent.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
