@@ -723,7 +723,6 @@ void CSettings::SmartUpgrade()
 
 		Downloads.AutoExpand			= FALSE;
 
-		Uploads.SharePartials			= TRUE;
 		Uploads.MaxPerHost				= 2;
 		Uploads.ShareTiger				= TRUE;
 
