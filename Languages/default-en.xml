@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.5.5"
+		version="2.3.0.0"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -554,6 +554,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Download File/Torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Choose a S_kin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Choose a _Language..."/>
@@ -638,6 +639,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Download File/Torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Choose a S_kin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Choose a _Language..."/>
@@ -1628,6 +1630,8 @@
 			<text id="LibraryVolume" format="b">%s</text>
 			<newline gap="0"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Go to My Library</link>
+			<newline gap="4"/>
+			<link format="bu" target="raza:shell:downloads">Open my Downloads folder</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>Shareaza is scanning and processing </text>
