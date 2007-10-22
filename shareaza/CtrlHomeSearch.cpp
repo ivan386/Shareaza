@@ -241,6 +241,13 @@ void CHomeSearchCtrl::OnSearchStart()
 	strText.TrimRight();
 	if ( strText.IsEmpty() ) return;
 
+	// Check if user mistakenly pasted download link to search input box
+	if ( CShareazaApp::OpenURL( strText, TRUE ) )
+	{
+		m_wndText.SetWindowText( _T("") );
+		return;
+	}
+
 	LoadString( strClear, IDS_SEARCH_PAD_CLEAR_HISTORY );
 	if ( _tcscmp ( strClear , strText ) == 0 ) return;
 

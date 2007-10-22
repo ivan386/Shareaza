@@ -202,11 +202,8 @@ public:
 // Attributes
 public:
 	BOOL				m_bSendSearch;
-protected:
 	CSearchInputBox		m_boxSearch;
-public:
 	CSearchAdvancedBox	m_boxAdvanced;
-protected:
 	CSearchSchemaBox	m_boxSchema;
 	CSearchResultsBox	m_boxResults;
 	BOOL				m_bAdvanced;
