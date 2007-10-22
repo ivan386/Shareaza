@@ -1,17 +1,13 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Default FinnishSkin File -->
-
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
 <!-- which you changed!  Including sections you did not edit will reduce performance and limit  -->
 <!-- compatibility with future versions and other skins.  -->
-
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
-
 <!-- Manifest -->
-<manifest	name="Suomi"
+<manifest	name="Suomi" 
 		author="Toni Kaija"
 		description="Shareaza Default Finnish Skin File"
 		link="http://www.gamerfactory.co.nr/"
@@ -19,14 +15,13 @@
 		version="2.1.3.7"
 		type="Language"
 		language="fi"
-		prompt="Klikkaa t&#228;h&#228;n valitaksesi Suomen k&#228;ytt&#246;kieleksi."
+		prompt="Klikkaa tähän valitaksesi Suomen käyttökieleksi."
 />
-
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->
 	<toolbar name="CMainWnd.Basic">
-		<button id="ID_NETWORK_CONNECT" text="Yhdist&#228;"/>
+		<button id="ID_NETWORK_CONNECT" text="Yhdistä"/>
 		<separator/>
 		<button id="ID_TAB_HOME" text="Koti"/>
 		<button id="ID_TAB_LIBRARY" text="Kirjasto"/>
@@ -35,7 +30,7 @@
 		<button id="ID_TAB_TRANSFERS" text="Lataukset"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Tabbed">
-		<button id="ID_TAB_CONNECT" text="Yhdist&#228;"/>
+		<button id="ID_TAB_CONNECT" text="Yhdistä"/>
 		<separator/>
 		<button id="ID_TAB_HOME" text="Koti"/>
 		<button id="ID_TAB_LIBRARY" text="Kirjasto"/>
@@ -45,7 +40,7 @@
 		<button id="ID_TAB_NETWORK" text="Verkko"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
-		<button id="ID_NETWORK_CONNECT" text="Yhdist&#228;"/>
+		<button id="ID_NETWORK_CONNECT" text="Yhdistä"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
 		<button id="ID_TAB_HOME"/>
@@ -75,39 +70,39 @@
 	<!-- SEARCH WINDOW -->
 	<toolbar name="CSearchWnd.Panel.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Lataa"/>
-		<button id="ID_BROWSE_LAUNCH" text="Selaa K&#228;ytt&#228;j&#228;&#228;"/>
+		<button id="ID_BROWSE_LAUNCH" text="Selaa Käyttäjää"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="N&#228;yt&#228; Haku"/>
-		<button id="ID_SEARCH_DETAILS" text="N&#228;yt&#228; Tiedot"/>
+		<button id="ID_SEARCH_PANEL" text="Näytä Haku"/>
+		<button id="ID_SEARCH_DETAILS" text="Näytä Tiedot"/>
 		<rightAlign/>
 		<label text="Suodatin" tip="Kirjoita sanoja joilla haluat suodattaa hakuasi"/>
 		<control id="IDC_FILTER_BOX" width="130"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Lis&#228;&#228;..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Lisää..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
 		<button id="ID_SEARCH_DOWNLOAD" text="Lataa"/>
-		<button id="ID_BROWSE_LAUNCH" text="Selaa K&#228;ytt&#228;j&#228;&#228;"/>
+		<button id="ID_BROWSE_LAUNCH" text="Selaa Käyttäjää"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="N&#228;yt&#228; Haku"/>
-		<button id="ID_SEARCH_DETAILS" text="N&#228;yt&#228; Tiedot"/>
+		<button id="ID_SEARCH_PANEL" text="Näytä Haku"/>
+		<button id="ID_SEARCH_DETAILS" text="Näytä Tiedot"/>
 		<rightAlign/>
 		<label text="Suodatin" tip="Kirjoita sanoja joilla haluat suodattaa hakuasi"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Lis&#228;&#228;..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Lisää..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
 		<button id="ID_SEARCH_SEARCH" text="Etsi Uudestaan..."/>
-		<button id="ID_SEARCH_STOP" text="Pys&#228;yt&#228; Haku"/>
+		<button id="ID_SEARCH_STOP" text="Pysäytä Haku"/>
 		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Lataa"/>
-		<button id="ID_BROWSE_LAUNCH" text="Selaa K&#228;ytt&#228;j&#228;&#228;"/>
+		<button id="ID_BROWSE_LAUNCH" text="Selaa Käyttäjää"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="N&#228;yt&#228; Haku"/>
-		<button id="ID_SEARCH_DETAILS" text="N&#228;yt&#228; Tiedot"/>
+		<button id="ID_SEARCH_PANEL" text="Näytä Haku"/>
+		<button id="ID_SEARCH_DETAILS" text="Näytä Tiedot"/>
 		<rightAlign/>
 		<label text="Suodatin" tip="Kirjoita sanoja joilla haluat suodattaa hakuasi"/>
 		<control id="IDC_FILTER_BOX" width="150"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Lis&#228;&#228;..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Lisää..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
 	<toolbar name="CBrowseHeaderCtrl">
@@ -116,30 +111,30 @@
 	</toolbar>
 	<toolbar name="CBrowseTree.Top">
 		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Kansiot"/>
-		<button id="ID_LIBRARY_TREE_VIRTUAL" text="J&#228;rjestelij&#228;"/>
+		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Järjestelijä"/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Lataa Tiedosto"/>
-		<button id="ID_SEARCH_CHAT" text="Keskustele K&#228;ytt&#228;j&#228;n kanssa"/>
+		<button id="ID_SEARCH_CHAT" text="Keskustele Käyttäjän kanssa"/>
 		<separator/>
-		<button id="ID_SEARCH_DETAILS" text="N&#228;yt&#228; Tiedot"/>
+		<button id="ID_SEARCH_DETAILS" text="Näytä Tiedot"/>
 		<rightAlign/>
 		<label text="Suodatin" tip="Kirjoita sanoja joilla haluat suodattaa hakuasi"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Lis&#228;&#228;..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Lisää..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
 		<button id="ID_SEARCH_DOWNLOAD" text="Lataa Tiedosto"/>
-		<button id="ID_SEARCH_CHAT" text="Keskustele K&#228;ytt&#228;j&#228;n kanssa"/>
+		<button id="ID_SEARCH_CHAT" text="Keskustele Käyttäjän kanssa"/>
 		<separator/>
-		<button id="ID_BROWSE_STOP" text="Pys&#228;yt&#228;"/>
-		<button id="ID_BROWSE_REFRESH" text="Virkist&#228;"/>
+		<button id="ID_BROWSE_STOP" text="Pysäytä"/>
+		<button id="ID_BROWSE_REFRESH" text="Virkistä"/>
 		<separator/>
-		<button id="ID_SEARCH_DETAILS" text="N&#228;yt&#228; Tiedot"/>
+		<button id="ID_SEARCH_DETAILS" text="Näytä Tiedot"/>
 		<rightAlign/>
 		<label text="Suodatin" tip="Kirjoita sanoja joilla haluat suodattaa hakuasi"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Lis&#228;&#228;..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Lisää..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd.Basic">
@@ -148,13 +143,13 @@
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Poista Tiedosto"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Palaa Lataukseen"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Pys&#228;yt&#228; Lataus"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Pysäytä Lataus"/>
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Peruuta Lataus"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Poista Latauslistalta"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_MONITOR" text="N&#228;yt&#228; Monitori"/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Näytä Monitori"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Lis&#228;&#228; Lataus/Torrentti..."/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Lisää Lataus/Torrentti..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Poista Valmiit listalta"/>
 	</toolbar>
 	<toolbar name="CDownloadsWnd">
@@ -163,22 +158,22 @@
 		<button id="ID_DOWNLOADS_LAUNCH" text="Esikatsele Tiedosto"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Palaa Lataukseen"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Pys&#228;yt&#228; Lataus"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Pysäytä Lataus"/>
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Peruuta Lataus"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Poista Latauslistalta"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_MONITOR" text="N&#228;yt&#228; Monitori"/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Näytä Monitori"/>
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrentin Tiedot"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Lis&#228;&#228; Lataus/Torrentti..."/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Lisää Lataus/Torrentti..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Poista Valmiit listalta"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Suodatin"/>
 	</toolbar>
 	<!-- UPLOADS WINDOW -->
 	<toolbar name="CUploadsWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<button id="ID_UPLOADS_CHAT" text="Keskustele K&#228;ytt&#228;j&#228;n kanssa"/>
+		<button id="ID_BROWSE_LAUNCH" text="Selaa Käyttäjää"/>
+		<button id="ID_UPLOADS_CHAT" text="Keskustele Käyttäjän kanssa"/>
 		<rightAlign/>
 		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Poista valmiit listalta"/>
 	</toolbar>
@@ -186,11 +181,11 @@
 		<button id="ID_UPLOADS_LAUNCH" text="Avaa tai Toista"/>
 		<separator/>
 		<button id="ID_UPLOADS_START" text="Aloita Nyt"/>
-		<button id="ID_UPLOADS_CLEAR" text="Poista L&#228;hetys"/>
+		<button id="ID_UPLOADS_CLEAR" text="Poista Lähetys"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<button id="ID_UPLOADS_CHAT" text="Keskustele K&#228;ytt&#228;j&#228;n kanssa"/>
-		<button id="ID_SECURITY_BAN" text="Est&#228; K&#228;ytt&#228;j&#228;"/>
+		<button id="ID_BROWSE_LAUNCH" text="Selaa Käyttäjää"/>
+		<button id="ID_UPLOADS_CHAT" text="Keskustele Käyttäjän kanssa"/>
+		<button id="ID_SECURITY_BAN" text="Estä Käyttäjä"/>
 		<rightAlign/>
 		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Poista valmiit listalta"/>
 		<separator/>
@@ -199,20 +194,20 @@
 	<!-- LIBRARY FRAME -->
 	<toolbar name="CLibraryTree.Top">
 		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Kansiot"/>
-		<button id="ID_LIBRARY_TREE_VIRTUAL" text="J&#228;rjestelij&#228;"/>
+		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Järjestelijä"/>
 	</toolbar>
 	<toolbar name="CLibraryTree.Virtual">
 		<button id="ID_LIBRARY_FOLDERS" text="Jaa tiedostoja..."/>
 	</toolbar>
 	<toolbar name="CLibraryHeaderBar.Physical">
-		<button id="ID_LIBRARY_VIEW" text="N&#228;yt&#228;"/>
-		<button id="ID_LIBRARY_PANEL" text="N&#228;yt&#228; Tiedot"/>
-		<button id="ID_LIBRARY_PARENT" text="Yl&#246;s"/>
+		<button id="ID_LIBRARY_VIEW" text="Näytä"/>
+		<button id="ID_LIBRARY_PANEL" text="Näytä Tiedot"/>
+		<button id="ID_LIBRARY_PARENT" text="Ylös"/>
 	</toolbar>
 	<toolbar name="CLibraryHeaderBar.Virtual">
-		<button id="ID_LIBRARY_VIEW" text="N&#228;yt&#228;"/>
-		<button id="ID_LIBRARY_PANEL" text="N&#228;yt&#228; Tiedot"/>
-		<button id="ID_LIBRARY_PARENT" text="Yl&#246;s"/>
+		<button id="ID_LIBRARY_VIEW" text="Näytä"/>
+		<button id="ID_LIBRARY_PANEL" text="Näytä Tiedot"/>
+		<button id="ID_LIBRARY_PARENT" text="Ylös"/>
 	</toolbar>
 	<!-- LIBRARY VIEWS -->
 	<toolbar name="CLibraryHomeView.Physical">
@@ -240,7 +235,7 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Avaa tai Toista"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Lis&#228;&#228; Soittolistaan"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Lisää Soittolistaan"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -248,11 +243,11 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
 		<button id="ID_LIBRARY_LAUNCH" text="Avaa tai Toista"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Lis&#228;&#228; Soittolistaan"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Lisää Soittolistaan"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Ominaisuudet"/>
 		<separator/>
-		<button id="ID_LIBRARY_MOVE" text="Siirr&#228;"/>
+		<button id="ID_LIBRARY_MOVE" text="Siirrä"/>
 		<button id="ID_LIBRARY_COPY" text="Kopioi"/>
 		<button id="ID_LIBRARY_DELETE" text="Poista"/>
 		<rightAlign/>
@@ -262,7 +257,7 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Avaa tai Toista"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Lis&#228;&#228; Soittolistaan"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Lisää Soittolistaan"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Toista Albumi"/>
 		<rightAlign/>
 		<separator/>
@@ -271,7 +266,7 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
 		<button id="ID_LIBRARY_LAUNCH" text="Avaa tai Toista"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Lis&#228;&#228; Soittolistaan"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Lisää Soittolistaan"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Toista Albumi"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Ominaisuudet"/>
@@ -292,12 +287,12 @@
 	<!-- MEDIA WINDOW -->
 	<toolbar name="CMediaFrame.Basic">
 		<button id="ID_MEDIA_PLAY" text="Toista"/>
-		<button id="ID_MEDIA_PAUSE" text="Keskeyt&#228;" visible="false"/>
-		<button id="ID_MEDIA_STOP" text="Pys&#228;yt&#228;"/>
+		<button id="ID_MEDIA_PAUSE" text="Keskeytä" visible="false"/>
+		<button id="ID_MEDIA_STOP" text="Pysäytä"/>
 		<separator/>
 		<label text="Hae:" tip="Hae kohtaan media tiedostossa"/>
 		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
-		<label text="Voimakkuus" tip="S&#228;&#228;d&#228; &#228;&#228;nen voimakkuuta"/>
+		<label text="Voimakkuus" tip="Säädä äänen voimakkuuta"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Avaa Tiedosto"/>
@@ -309,14 +304,14 @@
 	</toolbar>
 	<toolbar name="CMediaFrame">
 		<button id="ID_MEDIA_PLAY" text="Toista"/>
-		<button id="ID_MEDIA_PAUSE" text="Keskeyt&#228;" visible="false"/>
-		<button id="ID_MEDIA_STOP" text="Pys&#228;yt&#228;"/>
+		<button id="ID_MEDIA_PAUSE" text="Keskeytä" visible="false"/>
+		<button id="ID_MEDIA_STOP" text="Pysäytä"/>
 		<separator/>
 		<label text="Hae:" tip="Hae kohtaan media tiedostossa"/>
 		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
-		<label text="Nopeus:" tip="S&#228;&#228;d&#228; mediatiedoston toisto nopeutta"/>
+		<label text="Nopeus:" tip="Säädä mediatiedoston toisto nopeutta"/>
 		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
-		<label text="Voimakkuus" tip="S&#228;&#228;d&#228; &#228;&#228;nen voimakkuuta"/>
+		<label text="Voimakkuus" tip="Säädä äänen voimakkuuta"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Avaa"/>
@@ -334,13 +329,13 @@
 		<button id="ID_MEDIA_ADD"/>
 		<button id="ID_MEDIA_REMOVE"/>
 		<rightAlign/>
-		<button id="ID_MEDIA_CLEAR" text="Tyhjenn&#228;"/>
+		<button id="ID_MEDIA_CLEAR" text="Tyhjennä"/>
 		<button id="ID_MEDIA_SAVE" text="Tallenna"/>
 	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
+		<button id="ID_BROWSE_LAUNCH" text="Selaa Käyttäjää"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Keskustele Käyttäjän Kanssa"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
@@ -349,12 +344,12 @@
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Asetukset"/>
 	</toolbar>
 	<toolbar name="CNeighboursWnd">
-		<button id="ID_NETWORK_CONNECT_TO" text="Yhdist&#228;..."/>
+		<button id="ID_NETWORK_CONNECT_TO" text="Yhdistä..."/>
 		<button id="ID_NEIGHBOURS_DISCONNECT" text="Kataise Yhteys"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
-		<button id="ID_SECURITY_BAN" text="Est&#228; K&#228;ytt&#228;j&#228;"/>
+		<button id="ID_BROWSE_LAUNCH" text="Selaa Käyttäjää"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Keskustele Käyttäjän Kanssa"/>
+		<button id="ID_SECURITY_BAN" text="Estä Käyttäjä"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
@@ -367,28 +362,28 @@
 		<button id="ID_SEARCH_DOWNLOAD" text="Lataa"/>
 		<button id="ID_HITMONITOR_SEARCH" text="Kysy Uudelleen"/>
 		<separator/>
-		<button id="ID_HITMONITOR_PAUSE" text="Keskeyt&#228;"/>
-		<button id="ID_HITMONITOR_CLEAR" text="Tyhjenn&#228;"/>
+		<button id="ID_HITMONITOR_PAUSE" text="Keskeytä"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Tyhjennä"/>
 		<rightAlign/>
 		<label text="Suodatin" tip="Kirjoita sanoja joilla haluat suodattaa hakuasi"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Lis&#228;&#228;..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Lisää..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
 	<toolbar name="CHostCacheWnd.Basic">
-		<button id="ID_HOSTCACHE_CONNECT" text="Yhdist&#228;..."/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Yhdistä..."/>
 		<button id="ID_HOSTCACHE_DISCONNECT" text="Katkaise Yhteys"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Poista"/>
 	</toolbar>
 	<toolbar name="CHostCacheWnd">
-		<button id="ID_HOSTCACHE_CONNECT" text="Yhdist&#228;..."/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Yhdistä..."/>
 		<button id="ID_HOSTCACHE_DISCONNECT" text="Katkaise Yhteys"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Poista"/>
 		<rightAlign/>
 		<button id="ID_HOSTCACHE_G2_HORIZON" text="G2 Cluster"/>
-		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 V&#228;limuisti"/>
-		<button id="ID_HOSTCACHE_G1_CACHE" text="G1 V&#228;limuisti"/>
-		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey V&#228;limuisti"/>
+		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 Välimuisti"/>
+		<button id="ID_HOSTCACHE_G1_CACHE" text="G1 Välimuisti"/>
+		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Välimuisti"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -398,15 +393,14 @@
 		<button id="ID_CHAT_COLOUR" text="C"/>
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
-		<button id="ID_CHAT_BROWSE" text="Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<!--<button id="ID_CHAT_SEND_FILE" text="L&#228;het&#228; Tiedosto"/> -->
+		<button id="ID_CHAT_BROWSE" text="Selaa Käyttäjää"/>
+		<!--<button id="ID_CHAT_SEND_FILE" text="Lähetä Tiedosto"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Anna Prioriteetti"/>
 		<separator/>
-		<button id="ID_CHAT_CONNECT" text="Yhdist&#228;" visible="false"/>
+		<button id="ID_CHAT_CONNECT" text="Yhdistä" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Katkaise Yhteys"/>
 	</toolbar>
 </toolbars>
-
 <!-- Menu Definitions -->
 <menus>
 	<!-- SIMPLE POPUP MENU -->
@@ -425,43 +419,43 @@
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="_Verkko">
-			<item id="ID_NETWORK_CONNECT" text="_Yhdist&#228;" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_CONNECT" text="_Yhdistä" shortcut="Ctrl+G"/>
 			<separator/>
 			<menu text="Valitse _Verkot">
-				<item id="ID_NETWORK_G2" text="Yhdist&#228; _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Yhdist&#228; _eDonkey2000"/>
-				<item id="ID_NETWORK_G1" text="Yhdist&#228; Gnutella_1"/>
+				<item id="ID_NETWORK_G2" text="Yhdistä _Gnutella2"/>
+				<item id="ID_NETWORK_ED2K" text="Yhdistä _eDonkey2000"/>
+				<item id="ID_NETWORK_G1" text="Yhdistä Gnutella_1"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Poistu Siirtojen J&#228;lkeen"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Poistu Siirtojen Jälkeen"/>
 			<item id="ID_NETWORK_EXIT" text="P_oistu"/>
 		</menu>
-		<menu text="_N&#228;yt&#228;">
+		<menu text="_Näytä">
 			<item id="ID_TAB_HOME" text="_Koti"/>
 			<item id="ID_TAB_LIBRARY" text="_Kirjasto"/>
 			<item id="ID_TAB_MEDIA" text="_Media Soitin"/>
 			<item id="ID_TAB_SEARCH" text="_Hae"/>
 			<item id="ID_TAB_TRANSFERS" text="_Lataukset"/>
-			<item id="ID_WINDOW_REMOTE" text="N&#228;yt&#228; _Kauko-ohjain"/>
+			<item id="ID_WINDOW_REMOTE" text="Näytä _Kauko-ohjain"/>
 			<separator/>
-			<menu text="_Lis&#228;&#228;">
+			<menu text="_Lisää">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Naapurit"/>
-				<item id="ID_VIEW_UPLOADS" text="_L&#228;hetykset"/>
+				<item id="ID_VIEW_UPLOADS" text="_Lähetykset"/>
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Tu_rvallisuus"/>
-				<item id="ID_VIEW_HOSTS" text="K_&#228;ytt&#228;j&#228; V&#228;limuisti"/>
+				<item id="ID_VIEW_HOSTS" text="K_äyttäjä Välimuisti"/>
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="_Normaali Tila"/>
 			<item id="ID_VIEW_TABBED" text="_Teho Tila"/>
 		</menu>
-		<menu text="_Ty&#246;kalut">
+		<menu text="_Työkalut">
 			<item id="ID_LIBRARY_FOLDERS" text="Jaa _Tiedostoja"/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Lataa Tiedosto/Torrentti..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Valitse U_lkoasu"/>
-			<item id="ID_TOOLS_LANGUAGE" text="Valitse _K&#228;ytt&#246;kieli"/>
+			<item id="ID_TOOLS_LANGUAGE" text="Valitse _Käyttökieli"/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editoi _Profiiliani"/>
 			<item id="ID_TOOLS_WIZARD" text="QuickStart _Aloitus..."/>
@@ -472,7 +466,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza _UKK (en)"/>
 			<separator/>
 			<menu text="_Ohjeet">
-				<item id="ID_HELP_GUIDE" text="Shareaza _K&#228;ytt&#228;j&#228;n Ohje (en)"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _Käyttäjän Ohje (en)"/>
 				<item id="ID_HELP_ROUTER" text="_Reititin Apu (en)"/>
 				<item id="ID_HELP_SECURITY" text="_Turvallisuus Ohje (en)"/>
 				<item id="ID_HELP_CODEC" text="_Koodekki Apu (en)"/>
@@ -482,7 +476,7 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimmät uutiset (en)"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com (en)"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/> -->
 			</menu>
@@ -492,22 +486,22 @@
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
 		<menu text="_Verkko">
-			<item id="ID_NETWORK_CONNECT" text="_Yhdist&#228;" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_CONNECT" text="_Yhdistä" shortcut="Ctrl+G"/>
 			<item id="ID_NETWORK_DISCONNECT" text="_Katkaise Yhteys"/>
 			<separator/>
 			<menu text="Valitse _Verkot">
-				<item id="ID_NETWORK_G2" text="Yhdist&#228; _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Yhdist&#228; _eDonkey2000"/>
-				<item id="ID_NETWORK_G1" text="Yhdist&#228; Gnutella1"/>
+				<item id="ID_NETWORK_G2" text="Yhdistä _Gnutella2"/>
+				<item id="ID_NETWORK_ED2K" text="Yhdistä _eDonkey2000"/>
+				<item id="ID_NETWORK_G1" text="Yhdistä Gnutella1"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Yhdist&#228;..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Yhdistä..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Selaa Käyttäjää"/>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Poistu _Siirtojen J&#228;lkeen"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Poistu _Siirtojen Jälkeen"/>
 			<item id="ID_NETWORK_EXIT" text="P_oistu"/>
 		</menu>
-		<menu text="_N&#228;yt&#228;">
+		<menu text="_Näytä">
 			<item id="ID_TAB_HOME" text="_Koti"/>
 			<item id="ID_TAB_LIBRARY" text="_Kirjasto"/>
 			<item id="ID_TAB_MEDIA" text="_Media Soitin"/>
@@ -516,18 +510,18 @@
 			<item id="ID_TAB_NETWORK" text="_Verkko"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Tu_rvallisuus"/>
-			<item id="ID_VIEW_HOSTS" text="K_&#228;ytt&#228;j&#228; V&#228;limuisti"/>
+			<item id="ID_VIEW_HOSTS" text="K_äyttäjä Välimuisti"/>
 			<separator/>
-			<menu text="L_is&#228;&#228;">
-				<item id="ID_VIEW_SYSTEM" text="J_&#228;rjestelm&#228;" shortcut="F11"/>
+			<menu text="L_isää">
+				<item id="ID_VIEW_SYSTEM" text="J_ärjestelmä" shortcut="F11"/>
 				<item id="ID_VIEW_NEIGHBOURS" text="N_aapurit" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="_Lataukset" shortcut="F3"/>
-				<item id="ID_VIEW_UPLOADS" text="_L&#228;hetykset" shortcut="F4"/>
+				<item id="ID_VIEW_UPLOADS" text="_Lähetykset" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Kirjasto" shortcut="F5"/>
 				<item id="ID_VIEW_MEDIA" text="_Media" shortcut="F6"/>
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Tu_rvallisuus" shortcut="F7"/>
-				<item id="ID_VIEW_HOSTS" text="K_&#228;ytt&#228;j&#228; V&#228;limuisti" shortcut="F8"/>
+				<item id="ID_VIEW_HOSTS" text="K_äyttäjä Välimuisti" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="_Grafiikka" shortcut="F10"/>
 				<separator/>
@@ -537,15 +531,15 @@
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="N_ormaali Tila"/>
-			<item id="ID_VIEW_TABBED" text="V_&#228;lilehti Tila"/>
+			<item id="ID_VIEW_TABBED" text="V_älilehti Tila"/>
 			<item id="ID_VIEW_WINDOWED" text="_Ikkunoitu Tila"/>
 		</menu>
-		<menu text="_Ty&#246;kalut">
+		<menu text="_Työkalut">
 			<item id="ID_LIBRARY_FOLDERS" text="Jaa _Tiedostoja"/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Lataa Tiedosto/Torrentti..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Valitse U_lkoasu"/>
-			<item id="ID_TOOLS_LANGUAGE" text="Valitse _K&#228;ytt&#246;kieli"/>
+			<item id="ID_TOOLS_LANGUAGE" text="Valitse _Käyttökieli"/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editoi _Profiiliani..."/>
 			<item id="ID_TOOLS_WIZARD" text="QuickStart _Aloitus..."/>
@@ -553,17 +547,17 @@
 			<item id="ID_TOOLS_SETTINGS" text="_Shareazan Asetukset..."/>
 		</menu>
 		<menu text="_Ikkuna">
-			<item id="ID_WINDOW_NAVBAR" text="N&#228;yt&#228; _Navigaatio Palkki"/>
-			<item id="ID_WINDOW_TOOLBAR" text="N&#228;yt&#228; _Ty&#246;kalu Palkki"/>
-			<item id="ID_WINDOW_TABBAR" text="N&#228;yt&#228; V&#228;lilehti _Palkki"/>
-			<item id="ID_WINDOW_MONITOR" text="N&#228;yt&#228; _Monitori"/>
-			<item id="ID_WINDOW_REMOTE" text="N&#228;yt&#228; _Kauko-ohjain"/>
+			<item id="ID_WINDOW_NAVBAR" text="Näytä _Navigaatio Palkki"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Näytä _Työkalu Palkki"/>
+			<item id="ID_WINDOW_TABBAR" text="Näytä Välilehti _Palkki"/>
+			<item id="ID_WINDOW_MONITOR" text="Näytä _Monitori"/>
+			<item id="ID_WINDOW_REMOTE" text="Näytä _Kauko-ohjain"/>
 		</menu>
 		<menu text="_Ohje">
 			<item id="ID_HELP_FAQ" text="Shareaza _UKK (en)"/>
 			<separator/>
 			<menu text="_Ohjeet">
-				<item id="ID_HELP_GUIDE" text="Shareaza _K&#228;ytt&#228;j&#228;n Ohje (en)"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _Käyttäjän Ohje (en)"/>
 				<item id="ID_HELP_ROUTER" text="_Reititin Apu (en)"/>
 				<item id="ID_HELP_SECURITY" text="_Turvallisuus Ohje (en)"/>
 				<item id="ID_HELP_CODEC" text="_Koodekki Apu (en)"/>
@@ -573,7 +567,7 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimmät uutiset (en)"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com (en)"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/> -->
 			</menu>
@@ -585,31 +579,31 @@
 		<menu text="_Verkko">
 			<item id="ID_NETWORK_SEARCH" text="Uusi _Haku" shortcut="Ctrl+S"/>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT" text="_Yhdist&#228;" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_CONNECT" text="_Yhdistä" shortcut="Ctrl+G"/>
 			<item id="ID_NETWORK_DISCONNECT" text="_Katkaise Yhteys"/>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Yhdist&#228;.." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Yhdistä.." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Selaa Käyttäjää"/>
 			<separator/>
 			<menu text="Valitse _Verkot">
-				<item id="ID_NETWORK_G2" text="Yhdist&#228; _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Yhdist&#228; _eDonkey2000"/>
-				<item id="ID_NETWORK_G1" text="Yhdist&#228; Gnutella_1"/>
+				<item id="ID_NETWORK_G2" text="Yhdistä _Gnutella2"/>
+				<item id="ID_NETWORK_ED2K" text="Yhdistä _eDonkey2000"/>
+				<item id="ID_NETWORK_G1" text="Yhdistä Gnutella_1"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Sulje _Siirtojen J&#228;lkeen"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Sulje _Siirtojen Jälkeen"/>
 			<item id="ID_NETWORK_EXIT" text="P_oistu"/>
 		</menu>
-		<menu text="_N&#228;yt&#228;">
-			<item id="ID_VIEW_SYSTEM" text="_J&#228;rjestelm&#228;" shortcut="F11"/>
+		<menu text="_Näytä">
+			<item id="ID_VIEW_SYSTEM" text="_Järjestelmä" shortcut="F11"/>
 			<item id="ID_VIEW_NEIGHBOURS" text="_Naapurit" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Lataukset" shortcut="F3"/>
-			<item id="ID_VIEW_UPLOADS" text="_L&#228;hetykset" shortcut="F4"/>
+			<item id="ID_VIEW_UPLOADS" text="_Lähetykset" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_Kirjasto" shortcut="F5"/>
 			<item id="ID_VIEW_MEDIA" text="_Media" shortcut="F6"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Tu_rvallisuus" shortcut="F7"/>
-			<item id="ID_VIEW_HOSTS" text="K_&#228;ytt&#228;j&#228; V&#228;limuisti" shortcut="F8"/>
+			<item id="ID_VIEW_HOSTS" text="K_äyttäjä Välimuisti" shortcut="F8"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Grafiikka" shortcut="F10"/>
 			<separator/>
@@ -618,15 +612,15 @@
 			<item id="ID_VIEW_RESULTS_MONITOR" text="O_suma Monitori" shortcut="Ctrl+F3"/>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Normaali Tila"/>
-			<item id="ID_VIEW_TABBED" text="V&#228;lilehti Tila"/>
+			<item id="ID_VIEW_TABBED" text="Välilehti Tila"/>
 			<item id="ID_VIEW_WINDOWED" text="Ikkunoitu Tila"/>
 		</menu>
-		<menu text="_Ty&#246;kalut">
+		<menu text="_Työkalut">
 			<item id="ID_LIBRARY_FOLDERS" text="Jaa _Tiedostoja"/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Lataa Tiedosto/Torrentti..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Valitse U_koasu"/>
-			<item id="ID_TOOLS_LANGUAGE" text="Valitse _K&#228;ytt&#246;kieli"/>
+			<item id="ID_TOOLS_LANGUAGE" text="Valitse _Käyttökieli"/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editoi _Profiiliani"/>
 			<separator/>
@@ -634,21 +628,21 @@
 			<item id="ID_TOOLS_SETTINGS" text="_Shareazan Asetukset"/>
 		</menu>
 		<menu text="_Ikkuna">
-			<item id="ID_WINDOW_CASCADE" text="_Koko N&#228;ytt&#246;"/>
-			<item id="ID_WINDOW_TILE_HORZ" text="Kasaa _Vierekk&#228;in"/>
+			<item id="ID_WINDOW_CASCADE" text="_Koko Näyttö"/>
+			<item id="ID_WINDOW_TILE_HORZ" text="Kasaa _Vierekkäin"/>
 			<item id="ID_WINDOW_TILE_VERT" text="Kasaa _Allekkain"/>
 			<separator/>
-			<item id="ID_WINDOW_NAVBAR" text="N&#228;yt&#228; _Navigaatio Palkki"/>
-			<item id="ID_WINDOW_TOOLBAR" text="N&#228;yt&#228; _Ty&#246;kalu Palkki"/>
-			<item id="ID_WINDOW_TABBAR" text="N&#228;yt&#228; V&#228;lilehti _Palkki"/>
-			<item id="ID_WINDOW_MONITOR" text="N&#228;yt&#228; _Monitori"/>
-			<item id="ID_WINDOW_REMOTE" text="N&#228;yt&#228; _Kauko-ohjain"/>
+			<item id="ID_WINDOW_NAVBAR" text="Näytä _Navigaatio Palkki"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Näytä _Työkalu Palkki"/>
+			<item id="ID_WINDOW_TABBAR" text="Näytä Välilehti _Palkki"/>
+			<item id="ID_WINDOW_MONITOR" text="Näytä _Monitori"/>
+			<item id="ID_WINDOW_REMOTE" text="Näytä _Kauko-ohjain"/>
 		</menu>
 		<menu text="_Ohje">
 			<item id="ID_HELP_FAQ" text="Shareaza _UKK (en)"/>
 			<separator/>
 			<menu text="_Ohjeet">
-				<item id="ID_HELP_GUIDE" text="Shareaza _K&#228;ytt&#228;j&#228;n Ohje (en)"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _Käyttäjän Ohje (en)"/>
 				<item id="ID_HELP_ROUTER" text="_Reititin Apu (en)"/>
 				<item id="ID_HELP_SECURITY" text="_Turvallisuus Ohje (en)"/>
 				<item id="ID_HELP_CODEC" text="_Koodekki Apu (en)"/>
@@ -658,7 +652,7 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimmät uutiset (en)"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com (en)"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/> -->
 			</menu>
@@ -674,11 +668,11 @@
 		<item id="ID_TAB_SEARCH" text="_Hae"/>
 		<item id="ID_TAB_TRANSFERS" text="_Lataukset"/>
 		<separator/>
-		<menu text="_Lis&#228;&#228;">
+		<menu text="_Lisää">
 			<item id="ID_VIEW_NEIGHBOURS" text="_Naapurit"/>
-			<item id="ID_VIEW_UPLOADS" text="_L&#228;hetykset"/>
+			<item id="ID_VIEW_UPLOADS" text="_Lähetykset"/>
 			<item id="ID_VIEW_SECURITY" text="_Turvallisuus"/>
-			<item id="ID_VIEW_HOSTS" text="_K&#228;ytt&#228;j&#228; V&#228;limuisti"/>
+			<item id="ID_VIEW_HOSTS" text="_Käyttäjä Välimuisti"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.View.Tabbed">
@@ -690,7 +684,7 @@
 		<item id="ID_TAB_NETWORK" text="_Verkko"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Tu_rvallisuus"/>
-		<item id="ID_VIEW_HOSTS" text="_K&#228;ytt&#228;j&#228; V&#228;limuisti"/>
+		<item id="ID_VIEW_HOSTS" text="_Käyttäjä Välimuisti"/>
 		<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Grafiikka"/>
 		<separator/>
@@ -701,15 +695,15 @@
 	<menu name="CMainWnd.View.Windowed">
 		<item id="ID_NETWORK_SEARCH" text="Uusi _Haku"/>
 		<separator/>
-		<item id="ID_VIEW_SYSTEM" text="J_&#228;rjestelm&#228;"/>
+		<item id="ID_VIEW_SYSTEM" text="J_ärjestelmä"/>
 		<item id="ID_VIEW_NEIGHBOURS" text="N_aapurit"/>
 		<item id="ID_VIEW_DOWNLOADS" text="_Lataukset"/>
-		<item id="ID_VIEW_UPLOADS" text="_L&#228;hetykset"/>
+		<item id="ID_VIEW_UPLOADS" text="_Lähetykset"/>
 		<item id="ID_VIEW_LIBRARY" text="_Kirjasto"/>
 		<item id="ID_VIEW_MEDIA" text="_Media Toistin"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Tu_rvallisuus"/>
-		<item id="ID_VIEW_HOSTS" text="_K&#228;ytt&#228;j&#228; V&#228;limuisti"/>
+		<item id="ID_VIEW_HOSTS" text="_Käyttäjä Välimuisti"/>
 		<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Grafiikka"/>
 		<separator/>
@@ -725,13 +719,13 @@
 		<item id="ID_TOOLS_DOWNLOAD" text="_Lataa Tiedosto"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAY" text="_Toista Media"/>
-		<item id="ID_MEDIA_PAUSE" text="Ke_skeyt&#228; Media"/>
-		<item id="ID_MEDIA_STOP" text="_Pys&#228;yt&#228; Media"/>
+		<item id="ID_MEDIA_PAUSE" text="Ke_skeytä Media"/>
+		<item id="ID_MEDIA_STOP" text="_Pysäytä Media"/>
 		<separator/>
 		<item id="ID_MEDIA_PREVIOUS" text="E_dellinen Raita"/>
 		<item id="ID_MEDIA_NEXT" text="_Seuraava Raita"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Poistu Siirtojen _J&#228;lkeen"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Poistu Siirtojen _Jälkeen"/>
 		<item id="ID_NETWORK_EXIT" text="P_oistu"/>
 	</menu>
 	<!--  REMOTE MENU -->
@@ -742,13 +736,13 @@
 		<item id="ID_TOOLS_DOWNLOAD" text="_Lataa Tiedosto"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAY" text="_Toista Media"/>
-		<item id="ID_MEDIA_PAUSE" text="Ke_skeyt&#228; Media"/>
-		<item id="ID_MEDIA_STOP" text="_Pys&#228;yt&#228; Media"/>
+		<item id="ID_MEDIA_PAUSE" text="Ke_skeytä Media"/>
+		<item id="ID_MEDIA_STOP" text="_Pysäytä Media"/>
 		<separator/>
 		<item id="ID_MEDIA_PREVIOUS" text="E_dellinen Raita"/>
 		<item id="ID_MEDIA_NEXT" text="_Seuraava Raita"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Poistu Siirtojen _J&#228;lkeen"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Poistu Siirtojen _Jälkeen"/>
 		<item id="ID_NETWORK_EXIT" text="P_oistu"/>
 	</menu>
 	<!-- HOME MENU -->
@@ -759,11 +753,11 @@
 		<item id="ID_TAB_SEARCH" text="_Hae"/>
 		<item id="ID_TAB_TRANSFERS" text="_Lataukset"/>
 		<separator/>
-		<menu text="_Lis&#228;&#228;">
+		<menu text="_Lisää">
 			<item id="ID_VIEW_NEIGHBOURS" text="_Naapurit"/>
-			<item id="ID_VIEW_UPLOADS" text="_L&#228;hetykset"/>
+			<item id="ID_VIEW_UPLOADS" text="_Lähetykset"/>
 			<item id="ID_VIEW_SECURITY" text="_Turvallisuus"/>
-			<item id="ID_VIEW_HOSTS" text="_K&#228;ytt&#228;j&#228; V&#228;limuisti"/>
+			<item id="ID_VIEW_HOSTS" text="_Käyttäjä Välimuisti"/>
 		</menu>
 	</menu>
 	<menu name="CHomeWnd.Tabbed">
@@ -775,7 +769,7 @@
 		<item id="ID_TAB_NETWORK" text="_Verkko"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Tu_rvallisuus"/>
-		<item id="ID_VIEW_HOSTS" text="_K&#228;ytt&#228;j&#228; V&#228;limuisti"/>
+		<item id="ID_VIEW_HOSTS" text="_Käyttäjä Välimuisti"/>
 		<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Grafiikka"/>
 		<separator/>
@@ -785,16 +779,16 @@
 	</menu>
 	<!-- HOST CACHE WINDOW -->
 	<menu name="CHostCacheWnd">
-		<item id="ID_HOSTCACHE_CONNECT" text="_Yhdist&#228; Nyt"/>
+		<item id="ID_HOSTCACHE_CONNECT" text="_Yhdistä Nyt"/>
 		<item id="ID_HOSTCACHE_DISCONNECT" text="_Katkaise Yhteys"/>
 		<item id="ID_HOSTCACHE_PRIORITY" text="_Prioritetti Palvelin"/>
 		<separator/>
-		<item id="ID_HOSTCACHE_REMOVE" text="Poista K&#228;ytt&#228;j&#228;(t)"/>
+		<item id="ID_HOSTCACHE_REMOVE" text="Poista Käyttäjä(t)"/>
 		<separator/>
 		<menu text="_Suodatin">
 			<item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2 Cl_uster"/>
-			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 V&#228;limuisti"/>
-			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 V&#228;limuisti"/>
+			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 Välimuisti"/>
+			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 Välimuisti"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Palvelimet"/>
 		</menu>
 		<separator/>
@@ -805,8 +799,8 @@
 	<menu name="CSearchWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Lataa"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<item id="ID_SEARCH_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Selaa Käyttäjää"/>
+		<item id="ID_SEARCH_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
 		<separator/>
 		<menu text="_Etsi...">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia Tiedostoja"/>
@@ -816,7 +810,7 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 		</menu>
 		<menu text="_Web Palvelut">
-			<item id="ID_LIBRARY_BITZI_WEB" text="N&#228;yt&#228; _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Näytä _Bitzi Ticket"/>
 			<item id="ID_SEARCH_COPY" text="Kopioi _URI..."/>
 		</menu>
 	</menu>
@@ -825,12 +819,12 @@
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Lataa Nyt"/>
 		<item id="ID_SEARCH_COPY" text="Kopioi _URI"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Sel_aa K&#228;ytt&#228;j&#228;&#228;"/>
-		<item id="ID_SEARCH_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
-		<item id="ID_SECURITY_BAN" text="_Est&#228; K&#228;ytt&#228;j&#228;"/>
+		<item id="ID_BROWSE_LAUNCH" text="Sel_aa Käyttäjää"/>
+		<item id="ID_SEARCH_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
+		<item id="ID_SECURITY_BAN" text="_Estä Käyttäjä"/>
 		<separator/>
 		<menu text="_Etsi...">
-			<item id="ID_SEARCH_FOR_THIS" text="T&#228;m&#228; Tiedosto"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Tämä Tiedosto"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia Tiedostoja"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Musiikkia samalta Artistilta"/>
@@ -838,12 +832,12 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 		</menu>
 		<menu text="_Web Palvelut">
-			<item id="ID_LIBRARY_BITZI_WEB" text="N&#228;yt&#228; _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Näytä _Bitzi Ticket"/>
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Suodata Tuloksia..."/>
 		<item id="ID_SEARCH_FILTER_REMOVE" text="_Poista Suodatin"/>
-		<item id="ID_SEARCH_CLEAR" text="T_yhjenn&#228; Tulokset"/>
+		<item id="ID_SEARCH_CLEAR" text="T_yhjennä Tulokset"/>
 		<separator/>
 		<item id="ID_SEARCH_COLUMNS" text="Editoi K_olumneja"/>
 	</menu>
@@ -852,7 +846,7 @@
 		<item id="ID_SEARCH_DOWNLOAD" text="_Lataa"/>
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Lataa _Nyt"/>
 		<separator/>
-		<item id="ID_SEARCH_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
+		<item id="ID_SEARCH_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
 		<separator/>
 		<menu text="_Etsi...">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia Tiedostoja"/>
@@ -862,7 +856,7 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 		</menu>
 		<menu text="_Web Tiedosto Informaatio">
-			<item id="ID_LIBRARY_BITZI_WEB" text="N&#228;yt&#228; _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Näytä _Bitzi Ticket"/>
 			<item id="ID_SEARCH_COPY" text="Kopioi _URI..."/>
 		</menu>
 	</menu>
@@ -871,10 +865,10 @@
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Lataa _Nyt"/>
 		<item id="ID_SEARCH_COPY" text="Kopioi _URI"/>
 		<separator/>
-		<item id="ID_SEARCH_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
+		<item id="ID_SEARCH_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
 		<separator/>
 		<menu text="_Etsi...">
-			<item id="ID_SEARCH_FOR_THIS" text="T&#228;m&#228; Tiedosto"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Tämä Tiedosto"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia Tiedostoja"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Musiikkia samalta Artistilta"/>
@@ -882,7 +876,7 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 		</menu>
 		<menu text="_Web Palvelut">
-			<item id="ID_LIBRARY_BITZI_WEB" text="N&#228;yt&#228; _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Näytä _Bitzi Ticket"/>
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Suodata Tuloksia..."/>
@@ -895,11 +889,11 @@
 		<item id="ID_SEARCH_DOWNLOAD" text="_Lataa"/>
 		<item id="ID_SEARCH_COPY" text="Kopioi _URI"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<item id="ID_SEARCH_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Selaa Käyttäjää"/>
+		<item id="ID_SEARCH_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
 		<separator/>
 		<menu text="_Etsi...">
-			<item id="ID_SEARCH_FOR_THIS" text="T&#228;m&#228; Tiedosto"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Tämä Tiedosto"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia Tiedostoja"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Musiikkia samalta Artistilta"/>
@@ -907,14 +901,14 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 		</menu>
 		<menu text="_Web Palvelut">
-			<item id="ID_LIBRARY_BITZI_WEB" text="N&#228;yt&#228; _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Näytä _Bitzi Ticket"/>
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Suodata Tuloksia..."/>
 		<item id="ID_SEARCH_FILTER_REMOVE" text="_Poista Suodatin"/>
 		<separator/>
-		<item id="ID_HITMONITOR_PAUSE" text="_Keskeyt&#228; N&#228;ytt&#246;"/>
-		<item id="ID_HITMONITOR_CLEAR" text="Tyhjenn&#228; N&#228;ytt&#246;"/>
+		<item id="ID_HITMONITOR_PAUSE" text="_Keskeytä Näyttö"/>
+		<item id="ID_HITMONITOR_CLEAR" text="Tyhjennä Näyttö"/>
 		<separator/>
 		<item id="ID_SEARCH_COLUMNS" text="Editoi K_olumneja"/>
 	</menu>
@@ -922,15 +916,15 @@
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Esikatsele"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_N&#228;yt&#228; Arvostelut"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Näytä Arvostelut"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Palaa"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="K_eskeyt&#228;"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="K_eskeytä"/>
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Peruuta"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_SOURCES" text="_Etsi Lis&#228;&#228; L&#228;hteit&#228;"/>
+		<item id="ID_DOWNLOADS_SOURCES" text="_Etsi Lisää Lähteitä"/>
 		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="T_yhjenn&#228; Valmiit"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="T_yhjennä Valmiit"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_utomaattinen Tyhjennys"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="_Ohje..."/>
@@ -939,51 +933,51 @@
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Esikatsele"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Esi_katsele Kopio"/> -->
-		<item id="ID_DOWNLOADS_ENQUEUE" text="Lis&#228;&#228; Soi_ttolistaan"/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_N&#228;yt&#228; Arvostelut"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Lisää Soi_ttolistaan"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Näytä Arvostelut"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Palaa"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="K_eskeyt&#228;"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="K_eskeytä"/>
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Peruuta"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_SOURCES" text="_Etsi Lis&#228;&#228; L&#228;hteit&#228;"/>
+		<item id="ID_DOWNLOADS_SOURCES" text="_Etsi Lisää Lähteitä"/>
 		<separator/>
-		<menu text="_Lis&#228;&#228;">
+		<menu text="_Lisää">
 			<item id="ID_DOWNLOADS_SHARE" text="_Jaa Tiedosto"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_COPY" text="_Kopioi URI"/>
-			<item id="ID_DOWNLOADS_URL" text="_Lis&#228;&#228; L&#228;hde..."/>
+			<item id="ID_DOWNLOADS_URL" text="_Lisää Lähde..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Monitori _Ikkuna"/>
 			<item id="ID_DOWNLOADS_EDIT" text="Kehittynyt _Editointi"/>
 			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrentti Info..."/>
 			<separator/>
-			<item id="ID_DOWNLOADS_MOVE_UP" text="Siirr&#228; _Yl&#246;s"/>
-			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Siirr&#228; _Alas"/>
-			<item id="ID_DOWNLOADS_BOOST" text="_Hylk&#228;&#228; Kaista Rajoitus"/>
+			<item id="ID_DOWNLOADS_MOVE_UP" text="Siirrä _Ylös"/>
+			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Siirrä _Alas"/>
+			<item id="ID_DOWNLOADS_BOOST" text="_Hylkää Kaista Rajoitus"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Ohje..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
-		<item id="ID_TRANSFERS_CONNECT" text="_Yhdist&#228;"/>
+		<item id="ID_TRANSFERS_CONNECT" text="_Yhdistä"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<item id="ID_TRANSFERS_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Selaa Käyttäjää"/>
+		<item id="ID_TRANSFERS_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Katkaise Yhteys"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Unohda"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Avaa tai Toista"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="_Lis&#228;&#228; Soittolistaan"/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Tyhjenn&#228;"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="_Lisää Soittolistaan"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Tyhjennä"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Poista Tiedostot"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Avaa tai Toista"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="_Lis&#228;&#228; Soittolistaan"/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Tyhjenn&#228;"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="_Lisää Soittolistaan"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Tyhjennä"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopioi _URl"/>
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrentti Info"/>
@@ -998,62 +992,62 @@
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Ohje..."/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="T_yhjenn&#228; Valmiit"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="T_yhjennä Valmiit"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_omaattinen Tyhjennys"/>
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Jatka Kaikkia"/>
-		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="K_eskeyt&#228; Kaikki"/>
-		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="_Tyhjenn&#228; Kaikki"/>
+		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="K_eskeytä Kaikki"/>
+		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="_Tyhjennä Kaikki"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_NEW" text="_Uusi Ryhm&#228;..."/>
-		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="Poista _Ryhm&#228;"/>
+		<item id="ID_DOWNLOAD_GROUP_NEW" text="_Uusi Ryhmä..."/>
+		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="Poista _Ryhmä"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_N&#228;yt&#228; Ryhm&#228;t"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Näytä Ryhmät"/>
 		<separator/>
 		<item id="ID_DOWNLOAD_GROUP_PROPERTIES" text="_Ominaisuudet"/>
 	</menu>
 	<menu name="CDownloadsWnd.Filter">
-		<item id="ID_DOWNLOADS_FILTER_ALL" text="N&#228;yt&#228; _Kaikki"/>
+		<item id="ID_DOWNLOADS_FILTER_ALL" text="Näytä _Kaikki"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="N&#228;yt&#228; A_ktiiviset"/>
-		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="N&#228;yt&#228; P_yyt&#228;v&#228;t"/>
-		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="N&#228;yt&#228; _L&#228;hteet&#246;m&#228;t"/>
-		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="N&#228;yt&#228; _Keskeytetyt"/>
+		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="Näytä A_ktiiviset"/>
+		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="Näytä P_yytävät"/>
+		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="Näytä _Lähteetömät"/>
+		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Näytä _Keskeytetyt"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="N&#228;yt&#228; Kaikki _L&#228;hteet"/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="N&#228;yt&#228; _Ryhm&#228;t"/>
+		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Näytä Kaikki _Lähteet"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Näytä _Ryhmät"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
 	<menu name="CUploadsWnd.Upload.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<item id="ID_UPLOADS_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Selaa Käyttäjää"/>
+		<item id="ID_UPLOADS_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
 	</menu>
 	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="_Aloita Nyt"/>
-		<item id="ID_UPLOADS_CLEAR" text="_Tyhjenn&#228;"/>
+		<item id="ID_UPLOADS_CLEAR" text="_Tyhjennä"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<item id="ID_UPLOADS_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
-		<item id="ID_SECURITY_BAN" text="E_st&#228; K&#228;ytt&#228;j&#228;"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Selaa Käyttäjää"/>
+		<item id="ID_UPLOADS_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
+		<item id="ID_SECURITY_BAN" text="E_stä Käyttäjä"/>
 	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Jonotus Asetukset"/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="T_yhjenn&#228; Valmiit"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="T_yhjennä Valmiit"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_omaattinen Tyhjennys"/>
 	</menu>
 	<menu name="CUploadsWnd.Nothing">
 		<item id="ID_UPLOADS_HELP" text="_Ohje..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="T_yhjenn&#228; Valmiit"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="T_yhjennä Valmiit"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_omaattinen Tyhjennys"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
-		<item id="ID_UPLOADS_FILTER_ALL" text="N&#228;yt&#228; Kaikki"/>
+		<item id="ID_UPLOADS_FILTER_ALL" text="Näytä Kaikki"/>
 		<separator/>
-		<item id="ID_UPLOADS_FILTER_ACTIVE" text="N&#228;yt&#228; Aktiiviset"/>
-		<item id="ID_UPLOADS_FILTER_QUEUED" text="N&#228;yt&#228; Jonottavat"/>
-		<item id="ID_UPLOADS_FILTER_TORRENT" text="N&#228;yt&#228; BitTorrent"/>
-		<item id="ID_UPLOADS_FILTER_HISTORY" text="N&#228;yt&#228; Historia"/>
+		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Näytä Aktiiviset"/>
+		<item id="ID_UPLOADS_FILTER_QUEUED" text="Näytä Jonottavat"/>
+		<item id="ID_UPLOADS_FILTER_TORRENT" text="Näytä BitTorrent"/>
+		<item id="ID_UPLOADS_FILTER_HISTORY" text="Näytä Historia"/>
 	</menu>
 	<!-- LIBRARY FRAME -->
 	<menu name="CLibraryTree.Physical.Basic">
@@ -1102,14 +1096,14 @@
 	</menu>
 	<menu name="CLibraryFileView.Physical.Basic">
 		<item id="ID_LIBRARY_LAUNCH" text="_Avaa tai Toista"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="_Lis&#228;&#228; Soittolistaan"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="_Lisää Soittolistaan"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Jaettu"/>
 		<separator/>
 		<item id="ID_LIBRARY_DELETE" text="_Poista"/>
 		<separator/>
 		<menu text="E_tsi...">
-			<item id="ID_SEARCH_FOR_THIS" text="T&#228;m&#228; Tiedosto"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Tämä Tiedosto"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia Tiedostoja"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Musiikkia samalta Artistilta"/>
@@ -1117,14 +1111,14 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 		</menu>
 		<menu text="_Web Palvelut">
-			<item id="ID_LIBRARY_BITZI_WEB" text="N&#228;yt&#228; _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Näytä _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Lataa Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
-		<menu text="J_&#228;rjest&#228;">
-			<item id="ID_LIBRARY_RENAME" text="_Nime&#228; Uudelleen"/>
-			<item id="ID_LIBRARY_MOVE" text="_Siirr&#228; Tiedostoja..."/>
+		<menu text="J_ärjestä">
+			<item id="ID_LIBRARY_RENAME" text="_Nimeä Uudelleen"/>
+			<item id="ID_LIBRARY_MOVE" text="_Siirrä Tiedostoja..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopioi Tiedostoja..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Paikallista Metadata"/>
@@ -1133,7 +1127,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Physical">
 		<item id="ID_LIBRARY_LAUNCH" text="_Avaa tai Toista"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Lis&#228;&#228; Soi_ttolistaan"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Lisää Soi_ttolistaan"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Jaettu"/>
 		<separator/>
@@ -1141,7 +1135,7 @@
 		<item id="ID_LIBRARY_DELETE" text="_Poista"/>
 		<separator/>
 		<menu text="E_tsi...">
-			<item id="ID_SEARCH_FOR_THIS" text="T&#228;m&#228; Tiedosto"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Tämä Tiedosto"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia Tiedostoja"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Musiikkia samalta Artistilta"/>
@@ -1149,14 +1143,14 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 		</menu>
 		<menu text="_Web Palvelut">
-			<item id="ID_LIBRARY_BITZI_WEB" text="N&#228;yt&#228; _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Näytä _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Hanki Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Luo .torrent Tiedosto"/>
 		</menu>
-		<menu text="J_&#228;rjest&#228;">
-			<item id="ID_LIBRARY_RENAME" text="_Nime&#228; Uudelleen"/>
-			<item id="ID_LIBRARY_MOVE" text="_Siirr&#228; Tiedostoja..."/>
+		<menu text="J_ärjestä">
+			<item id="ID_LIBRARY_RENAME" text="_Nimeä Uudelleen"/>
+			<item id="ID_LIBRARY_MOVE" text="_Siirrä Tiedostoja..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopioi Tiedostoja..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Paikallista Metadata"/>
@@ -1167,7 +1161,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
 		<item id="ID_LIBRARY_LAUNCH" text="_Avaa tai Toista"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Lis&#228;&#228; Soi_ttolistaan"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Lisää Soi_ttolistaan"/>
 		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Toista _Albumi"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Jaettu"/>
@@ -1175,7 +1169,7 @@
 		<item id="ID_LIBRARY_DELETE" text="_Poista"/>
 		<separator/>
 		<menu text="E_tsi...">
-			<item id="ID_SEARCH_FOR_THIS" text="T&#228;m&#228; Tiedosto"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Tämä Tiedosto"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia Tiedostoja"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Musiikkia samalta Artistilta"/>
@@ -1183,16 +1177,16 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 		</menu>
 		<menu text="_Web Palvelut">
-			<item id="ID_LIBRARY_BITZI_WEB" text="N&#228;yt&#228; _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Näytä _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Hanki Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
-		<menu text="J_&#228;rjest&#228;">
-			<item id="ID_LIBRARY_RENAME" text="_Nime&#228; Uudelleen"/>
+		<menu text="J_ärjestä">
+			<item id="ID_LIBRARY_RENAME" text="_Nimeä Uudelleen"/>
 			<item id="ID_LIBRARY_UNLINK" text="Poista _Tiedostot"/>
 			<separator/>
-			<item id="ID_LIBRARY_MOVE" text="_Siirr&#228; Tiedostoja..."/>
+			<item id="ID_LIBRARY_MOVE" text="_Siirrä Tiedostoja..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopioi Tiedostoja..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Paikallista Metadata"/>
@@ -1201,7 +1195,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
 		<item id="ID_LIBRARY_LAUNCH" text="_Avaa tai Toista"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Lis&#228;&#228; Soi_ttolistaan"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Lisää Soi_ttolistaan"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Jaettu"/>
 		<separator/>
@@ -1209,7 +1203,7 @@
 		<item id="ID_LIBRARY_DELETE" text="_Poista"/>
 		<separator/>
 		<menu text="E_tsi...">
-			<item id="ID_SEARCH_FOR_THIS" text="T&#228;m&#228; Tiedosto"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Tämä Tiedosto"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia Tiedostoja"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Musiikkia samalta Artistilta"/>
@@ -1217,16 +1211,16 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta Sarjasta"/>
 		</menu>
 		<menu text="_Web Palvelut">
-			<item id="ID_LIBRARY_BITZI_WEB" text="N&#228;yt&#228; _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Näytä _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Hanki Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Luo .torrent Tiedosto"/>
 		</menu>
-		<menu text="J_&#228;rjest&#228;">
+		<menu text="J_ärjestä">
 			<item id="ID_LIBRARY_UNLINK" text="Poista _Tiedostot"/>
 			<separator/>
-			<item id="ID_LIBRARY_RENAME" text="_Nime&#228; Uudelleen"/>
-			<item id="ID_LIBRARY_MOVE" text="_Siirr&#228; Tiedostoja..."/>
+			<item id="ID_LIBRARY_RENAME" text="_Nimeä Uudelleen"/>
+			<item id="ID_LIBRARY_MOVE" text="_Siirrä Tiedostoja..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopioi Tiedostoja..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Paikallista Metadata"/>
@@ -1238,8 +1232,8 @@
 	<!-- MEDIA WINDOW -->
 	<menu name="CMediaFrame.Basic">
 		<item id="ID_MEDIA_PLAY" text="_Toista"/>
-		<item id="ID_MEDIA_PAUSE" text="Ke_skeyt&#228;"/>
-		<item id="ID_MEDIA_STOP" text="_Pys&#228;yt&#228;"/>
+		<item id="ID_MEDIA_PAUSE" text="Ke_skeytä"/>
+		<item id="ID_MEDIA_STOP" text="_Pysäytä"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Avaa Media Tiedosto..."/>
 		<separator/>
@@ -1249,34 +1243,34 @@
 			<item id="ID_MEDIA_RANDOM" text="_Sattumanvarainen"/>
 			<item id="ID_MEDIA_REPEAT" text="J_atkuva Toisto"/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="N&#228;yt&#228; _Soittolista"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Näytä _Soittolista"/>
 		</menu>
 		<menu text="Videon Ko_ko">
-			<item id="ID_MEDIA_SIZE_ONE" text="_Alkuper&#228;inen Koko"/>
+			<item id="ID_MEDIA_SIZE_ONE" text="_Alkuperäinen Koko"/>
 			<item id="ID_MEDIA_SIZE_TWO" text="_Kaksinkertainen Koko"/>
 			<item id="ID_MEDIA_SIZE_THREE" text="_Kolminkertainen Koko"/>
 			<item id="ID_MEDIA_SIZE_FILL" text="_Suurin"/>
-			<item id="ID_MEDIA_SIZE_DISTORT" text="_T&#228;yt&#228; Ikkuna"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="_Täytä Ikkuna"/>
 			<separator/>
 			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Oletus _Suhde"/>
 			<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 Suhde (TV)"/>
 			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Elokuva)"/>
 			<separator/>
-			<item id="ID_MEDIA_FULLSCREEN" text="_Koko N&#228;ytt&#246;"/>
+			<item id="ID_MEDIA_FULLSCREEN" text="_Koko Näyttö"/>
 		</menu>
 		<menu text="Asetukset">
 			<item id="ID_MEDIA_VIS" text="Valitse _Visualisointi..."/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="N&#228;yt&#228; _Soittolista"/>
-			<item id="ID_MEDIA_STATUS" text="N&#228;yt&#228; _Status Linja"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Näytä _Soittolista"/>
+			<item id="ID_MEDIA_STATUS" text="Näytä _Status Linja"/>
 			<separator/>
 			<item id="ID_MEDIA_SETTINGS" text="_Media Asetukset..."/>
 		</menu>
 	</menu>
 	<menu name="CMediaFrame">
 		<item id="ID_MEDIA_PLAY" text="_Toista"/>
-		<item id="ID_MEDIA_PAUSE" text="Ke_skeyt&#228;"/>
-		<item id="ID_MEDIA_STOP" text="_Pys&#228;yt&#228;"/>
+		<item id="ID_MEDIA_PAUSE" text="Ke_skeytä"/>
+		<item id="ID_MEDIA_STOP" text="_Pysäytä"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Avaa Media Tiedosto..."/>
 		<item id="ID_MEDIA_CLOSE" text="_Sulje Tiedosto"/>
@@ -1287,36 +1281,36 @@
 			<item id="ID_MEDIA_RANDOM" text="_Sattumanvarainen"/>
 			<item id="ID_MEDIA_REPEAT" text="J_atkuva Toisto"/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="N&#228;yt&#228; _Soittolista"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Näytä _Soittolista"/>
 		</menu>
 		<menu text="Videon Ko_ko">
-			<item id="ID_MEDIA_SIZE_ONE" text="_Alkuper&#228;inen Koko"/>
+			<item id="ID_MEDIA_SIZE_ONE" text="_Alkuperäinen Koko"/>
 			<item id="ID_MEDIA_SIZE_TWO" text="_Kaksinkertainen Koko"/>
 			<item id="ID_MEDIA_SIZE_THREE" text="_Kolminkertainen Koko"/>
 			<item id="ID_MEDIA_SIZE_FILL" text="_Suurin"/>
-			<item id="ID_MEDIA_SIZE_DISTORT" text="_T&#228;yt&#228; Ikkuna"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="_Täytä Ikkuna"/>
 			<separator/>
 			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Oletus _Suhde"/>
 			<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 Suhde (TV)"/>
 			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Elokuva)"/>
 			<separator/>
-			<item id="ID_MEDIA_FULLSCREEN" text="_Koko N&#228;ytt&#246;"/>
+			<item id="ID_MEDIA_FULLSCREEN" text="_Koko Näyttö"/>
 		</menu>
 		<menu text="Asetukset">
 			<item id="ID_MEDIA_VIS" text="Valitse _Visualisointi..."/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="N&#228;yt&#228; _Soittolista"/>
-			<item id="ID_MEDIA_STATUS" text="N&#228;yt&#228; _Status Linja"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Näytä _Soittolista"/>
+			<item id="ID_MEDIA_STATUS" text="Näytä _Status Linja"/>
 			<separator/>
 			<item id="ID_MEDIA_SETTINGS" text="_Media Asetukset..."/>
 		</menu>
 	</menu>
 	<menu name="CMediaFrame.Zoom">
-		<item id="ID_MEDIA_SIZE_ONE" text="_Alkuper&#228;inen Koko"/>
+		<item id="ID_MEDIA_SIZE_ONE" text="_Alkuperäinen Koko"/>
 		<item id="ID_MEDIA_SIZE_TWO" text="_Kaksinkertainen Koko"/>
 		<item id="ID_MEDIA_SIZE_THREE" text="_Kolminkertainen Koko"/>
 		<item id="ID_MEDIA_SIZE_FILL" text="_Suurin"/>
-		<item id="ID_MEDIA_SIZE_DISTORT" text="_T&#228;yt&#228; Ikkuna"/>
+		<item id="ID_MEDIA_SIZE_DISTORT" text="_Täytä Ikkuna"/>
 		<separator/>
 		<item id="ID_MEDIA_ASPECT_DEFAULT" text="Oletus _Suhde"/>
 		<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 Suhde (TV)"/>
@@ -1325,8 +1319,8 @@
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Toista"/>
 		<separator/>
-		<item id="ID_MEDIA_ADD" text="_Lis&#228;&#228; Tiedosto"/>
-		<item id="ID_MEDIA_ADD_FOLDER" text="Lis&#228;&#228; _Kansio..."/>
+		<item id="ID_MEDIA_ADD" text="_Lisää Tiedosto"/>
+		<item id="ID_MEDIA_ADD_FOLDER" text="Lisää _Kansio..."/>
 		<item id="ID_MEDIA_REMOVE" text="_Poista"/>
 		<separator/>
 		<item id="ID_MEDIA_RANDOM" text="Sattumanvarainen Tila"/>
@@ -1334,37 +1328,37 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Avaa Soittolista..."/>
 		<item id="ID_MEDIA_SAVE" text="_Tallenna Soittolista..."/>
-		<item id="ID_MEDIA_CLEAR" text="_Tyhjenn&#228; Soittolista"/>
+		<item id="ID_MEDIA_CLEAR" text="_Tyhjennä Soittolista"/>
 		<separator/>
-		<item id="ID_MEDIA_PLAYLIST" text="N&#228;yt&#228; Soi_ttolista"/>
+		<item id="ID_MEDIA_PLAYLIST" text="Näytä Soi_ttolista"/>
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
 		<item id="ID_SYSTEM_VERBOSE" text="_Laaja Tila"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Aikaleim_a"/>
 		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Tyhjenn&#228; _Puskuri"/>
+		<item id="ID_SYSTEM_CLEAR" text="Tyhjennä _Puskuri"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Selaa Käyttäjää"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Katkaise Yhteys"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_COPY" text="Kopioi _URl"/>
 	</menu>
 	<menu name="CNeighboursWnd">
-		<item id="ID_BROWSE_LAUNCH" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="_Keskustele K&#228;ytt&#228;j&#228;n Kanssa"/>
-		<item id="ID_SECURITY_BAN" text="E_st&#228; K&#228;ytt&#228;j&#228;"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Selaa Käyttäjää"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Keskustele Käyttäjän Kanssa"/>
+		<item id="ID_SECURITY_BAN" text="E_stä Käyttäjä"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Katkaise Yhteys"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_COPY" text="Kopioi _URl"/>
 		<separator/>
 		<menu text="_Verkot">
-			<item id="ID_NETWORK_CONNECT" text="_Yhdist&#228;"/>
+			<item id="ID_NETWORK_CONNECT" text="_Yhdistä"/>
 			<item id="ID_NETWORK_DISCONNECT" text="_Katkaise Yhteys"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
@@ -1372,17 +1366,17 @@
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
 		<menu text="_Monitori">
-			<item id="ID_NEIGHBOURS_VIEW_ALL" text="N&#228;yt&#228; _Kaikki Liikenne"/>
-			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="N&#228;yt&#228; Sis&#228;&#228;ntuleva Liikenne"/>
-			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="N&#228;yt&#228; _Ulosmenev&#228; Liikenne"/>
+			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Näytä _Kaikki Liikenne"/>
+			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="Näytä Sisääntuleva Liikenne"/>
+			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="Näytä _Ulosmenevä Liikenne"/>
 		</menu>
 	</menu>
 	<!-- SEARCH MONITOR WINDOW -->
 	<menu name="CSearchMonitorWnd">
-		<item id="ID_HITMONITOR_SEARCH" text="_Etsi T&#228;t&#228;"/>
+		<item id="ID_HITMONITOR_SEARCH" text="_Etsi Tätä"/>
 		<separator/>
-		<item id="ID_SEARCHMONITOR_PAUSE" text="_Keskeyt&#228; N&#228;ytt&#246;"/>
-		<item id="ID_SEARCHMONITOR_CLEAR" text="_Tyhjenn&#228; Puskuri"/>
+		<item id="ID_SEARCHMONITOR_PAUSE" text="_Keskeytä Näyttö"/>
+		<item id="ID_SEARCHMONITOR_CLEAR" text="_Tyhjennä Puskuri"/>
 	</menu>
 	<!-- GRAPH/TRAFFIC WINDOW -->
 	<menu name="CTrafficWnd">
@@ -1392,26 +1386,26 @@
 		<item id="ID_TRAFFIC_AXIS" text="_Axis"/>
 		<item id="ID_TRAFFIC_LEGEND" text="_Merkkien Selitys"/>
 		<separator/>
-		<item id="ID_TRAFFIC_CLEAR" text="_Tyhjenn&#228;"/>
+		<item id="ID_TRAFFIC_CLEAR" text="_Tyhjennä"/>
 		<separator/>
 		<item id="ID_TRAFFIC_WINDOW" text="_Uusi Ikkuna"/>
 	</menu>
 	<!-- SECURITY WINDOW -->
 	<menu name="CSecurityWnd">
-		<item id="ID_SECURITY_ADD" text="_Lis&#228;&#228; S&#228;&#228;nt&#246;..."/>
+		<item id="ID_SECURITY_ADD" text="_Lisää Sääntö..."/>
 		<separator/>
 		<item id="ID_SECURITY_REMOVE" text="_Poista"/>
 		<item id="ID_SECURITY_RESET" text="Rese_toi"/>
 		<separator/>
-		<item id="ID_SECURITY_MOVE_UP" text="Siir&#228; _Yl&#246;s"/>
-		<item id="ID_SECURITY_MOVE_DOWN" text="Siirr&#228; _Alas"/>
+		<item id="ID_SECURITY_MOVE_UP" text="Siirä _Ylös"/>
+		<item id="ID_SECURITY_MOVE_DOWN" text="Siirrä _Alas"/>
 		<separator/>
 		<item id="ID_SECURITY_IMPORT" text="_Tuo..."/>
 		<item id="ID_SECURITY_EXPORT" text="V_ie..."/>
 		<separator/>
-		<menu text="Oletus K_&#228;yt&#228;nt&#246;">
+		<menu text="Oletus K_äytäntö">
 			<item id="ID_SECURITY_POLICY_ACCEPT" text="_Salli"/>
-			<item id="ID_SECURITY_POLICY_DENY" text="_Est&#228;"/>
+			<item id="ID_SECURITY_POLICY_DENY" text="_Estä"/>
 		</menu>
 		<separator/>
 		<item id="ID_SECURITY_EDIT" text="_Ominaisuudet"/>
@@ -1424,9 +1418,9 @@
 		<separator/>
 		<item id="ID_DISCOVERY_BROWSE" text="Selaa _Statistiikkaa"/>
 		<separator/>
-		<item id="ID_DISCOVERY_GNUTELLA" text="N&#228;yt&#228; _Booststraps"/>
-		<item id="ID_DISCOVERY_WEBCACHE" text="N&#228;yt&#228; _GWebCaches"/>
-		<item id="ID_DISCOVERY_SERVERMET" text="N&#228;yt&#228; Pal_velin.met:it"/>
+		<item id="ID_DISCOVERY_GNUTELLA" text="Näytä _Booststraps"/>
+		<item id="ID_DISCOVERY_WEBCACHE" text="Näytä _GWebCaches"/>
+		<item id="ID_DISCOVERY_SERVERMET" text="Näytä Pal_velin.met:it"/>
 		<separator/>
 		<item id="ID_DISCOVERY_ADD" text="_Lisaa Palvelu..."/>
 		<separator/>
@@ -1434,35 +1428,32 @@
 	</menu>
 	<!-- PRIVATE CHAT FRAME -->
 	<menu name="CPrivateChatFrame">
-		<item id="ID_CHAT_CONNECT" text="_Yhdist&#228;"/>
+		<item id="ID_CHAT_CONNECT" text="_Yhdistä"/>
 		<item id="ID_CHAT_DISCONNECT" text="_Katkaise Yhteys"/>
 		<separator/>
-		<item id="ID_CHAT_BROWSE" text="_Selaa K&#228;ytt&#228;j&#228;&#228;"/>
-		<!-- <item id="ID_CHAT_SEND_FILE" text="_L&#228;het&#228; tiedosto..."/> -->
+		<item id="ID_CHAT_BROWSE" text="_Selaa Käyttäjää"/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="_Lähetä tiedosto..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Anna _Prioriteetti"/>
 		<separator/>
 		<menu text="_Formatoi">
 			<item id="ID_CHAT_BOLD" text="Aseta _Lihavointi"/>
 			<item id="ID_CHAT_ITALIC" text="Aseta _Kursiivointi"/>
 			<item id="ID_CHAT_UNDERLINE" text="Aseta _Alleviivaus"/>
-			<item id="ID_CHAT_COLOUR" text="Aseta _V&#228;ri"/>
-			<item id="ID_CHAT_EMOTICONS" text="_Hymi&#246;t"/>
+			<item id="ID_CHAT_COLOUR" text="Aseta _Väri"/>
+			<item id="ID_CHAT_EMOTICONS" text="_Hymiöt"/>
 		</menu>
 		<separator/>
 		<item id="ID_CHAT_TIMESTAMP" text="_Aikaleima"/>
-		<item id="ID_CHAT_CLEAR" text="T_yhjenn&#228; Ikkuna"/>
+		<item id="ID_CHAT_CLEAR" text="T_yhjennä Ikkuna"/>
 	</menu>
 </menus>
-
 <!-- Watermarks -->
 <watermarks>
 	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
 	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
 </watermarks>
-
 <!-- Documents -->
 <documents>
-
 	<!-- Home View -->
 	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
@@ -1477,13 +1468,12 @@
 		<newline gap="0"/>
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">Y H D I S T &#196; &#160; N Y T</heading>
+			<heading align="middle">Y H D I S T Ä &#160; N Y T</heading>
 			<newline gap="8" indent="42"/>
-			<text>Tervetuloa Shareazaan! &#160;Sin&#228; et ole t&#228;ll&#228; hetkell&#228; yhteydess&#228; mihink&#228;&#228;n p2p verkkoon. &#160;</text>
-			<link target="raza:command:ID_NETWORK_CONNECT">Klikkaa t&#228;h&#228;n aloittaaksesi!</link>
+			<text>Tervetuloa Shareazaan! &#160;Sinä et ole tällä hetkellä yhteydessä mihinkään p2p verkkoon. &#160;</text>
+			<link target="raza:command:ID_NETWORK_CONNECT">Klikkaa tähän aloittaaksesi!</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<group id="2">
 			<icon res="134" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">E T S I &#160; S H A R E A Z A L L A</heading>
@@ -1491,51 +1481,44 @@
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
 		</group>
-
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">P &#196; I V I T Y S &#160; H U O M A U T U S</heading>
+			<heading align="middle">P Ä I V I T Y S &#160; H U O M A U T U S</heading>
 			<newline gap="8" indent="42"/>
-			<text id="P&#228;ivit&#228;"/>
+			<text id="Päivitä"/>
 			<newline gap="6"/>
-			<link target="raza:upgrade">Klikkaa t&#228;h&#228;n p&#228;ivitt&#228;&#228;ksesi</link>
+			<link target="raza:upgrade">Klikkaa tähän päivittääksesi</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">V A R O I T U S &#160; - &#160; S I N U T &#160; O N &#160; P A L O M U U R I T E T T U</heading>
 			<newline gap="8" indent="42"/>
-			<text colour="FF0000">Shareaza on huomannut ett&#228; olet NAT reitittimen tai palomuurin takana,
-			  ja sin&#228; et voi ottaa yhteyksi&#228; netist&#228;. &#160;</text>
-			<text colour="FF0000" format="b">T&#228;m&#228; saattaa aiheuttaa huonon lataus tehon.</text>
+			<text colour="FF0000">Shareaza on huomannut että olet NAT reitittimen tai palomuurin takana,
+			ja sinä et voi ottaa yhteyksiä netistä. &#160;</text>
+			<text colour="FF0000" format="b">Tämä saattaa aiheuttaa huonon lataus tehon.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_ROUTER">Klikkaa t&#228;h&#228;n kunika konfiguroida reitittimesi tai palomuurisi</link>
+			<link target="raza:command:ID_HELP_ROUTER">Klikkaa tähän kunika konfiguroida reitittimesi tai palomuurisi</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">K U S T O M O I &#160; S H A R E A Z A A</heading>
 		<newline gap="12" indent="42"/>
-
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Ulkoasut</link>
-		<text align="middle">&#160;- Muuta Shareazan ulkon&#228;k&#246;&#228;</text>
+		<text align="middle">&#160;- Muuta Shareazan ulkonäköä</text>
 		<newline gap="8"/>
-
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Asetus Velho</link>
 		<text align="middle">&#160;- Editoi Shareaza:n Asetuksia</text>
 		<newline gap="8"/>
-
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Pika Apu</link>
-		<text align="middle">&#160;- Hanki joitain perus ohjeita Shareazan k&#228;ytt&#228;miseen</text>
+		<text align="middle">&#160;- Hanki joitain perus ohjeita Shareazan käyttämiseen</text>
 		<newline gap="18" indent="0"/>
-
 		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
 		<gap size="8"/>
 		<heading align="middle">O M A T &#160; L A T A U K S E T</heading>
@@ -1543,21 +1526,19 @@
 		<text>To open the folder with your downloads </text>
 		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
-
 		<group id="5">
-			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">K A U K O &#160; O H J A U S &#160; O N &#160; K &#196; Y T &#214; S S &#196;</heading>
+			<icon res="128" width="32" height="32"/>
+			<gap size="8"/>
+			<heading align="middle">K A U K O &#160; O H J A U S &#160; O N &#160; K Ä Y T Ö S S Ä</heading>
 			<newline gap="8" indent="42"/>
-			<text>Shareazan Kauko Ohjaus on p&#228;&#228;ll&#228;. Voit kontrolloida Shareazaa nettiselaimellasi osoitteessa:</text>
+			<text>Shareazan Kauko Ohjaus on päällä. Voit kontrolloida Shareazaa nettiselaimellasi osoitteessa:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
 			<text>&#160;- tai -&#160;</text>
 			<link id="RemoteAccessURL2"/>
 			<newline gap="16" indent="0"/>
 		</group>
-
 	</document>
-
 	<document name="CHomeDownloadsBox" title="Omat Lataukset" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1566,7 +1547,7 @@
 		</styles>
 		<para align="center">
 			<group id="1">
-				<text>Sin&#228; et ole viel&#228; lataamassa yht&#228;&#228;n tiedostoa.</text>
+				<text>Sinä et ole vielä lataamassa yhtään tiedostoa.</text>
 				<newline gap="4"/>
 			</group>
 			<link id="DownloadsNone" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Mene Latauksiin</link>
@@ -1574,7 +1555,6 @@
 			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Mene Latauksiin (%i)</link>
 		</para>
 	</document>
-
 	<document name="CHomeLibraryBox" title="Oma Kirjasto" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1583,7 +1563,7 @@
 		</styles>
 		<para align="center">
 			<group id="2">
-				<text>Sin&#228; et ole ladannut yht&#228;&#228;n tiedostoa viime aikoina.</text>
+				<text>Sinä et ole ladannut yhtään tiedostoa viime aikoina.</text>
 				<newline gap="8"/>
 			</group>
 			<text id="LibraryFiles" format="b">%lu </text>
@@ -1599,14 +1579,13 @@
 				<newline gap="8"/>
 			</group>
 			<group id="3">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klikkaa t&#228;h&#228;n k&#228;sitell&#228;ksesi nopeammin</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klikkaa tähän käsitelläksesi nopeammin</link>
 			</group>
 			<group id="4">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klikkaa t&#228;h&#228;n k&#228;sitell&#228;ksesi hitaammin</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klikkaa tähän käsitelläksesi hitaammin</link>
 			</group>
 		</para>
 	</document>
-
 	<document name="CHomeConnectionBox" title="Yhteys" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1617,37 +1596,33 @@
 			<para align="center">
 				<text format="b">Ei yhdistetty</text>
 				<newline gap="4"/>
-				<link target="raza:command:ID_NETWORK_CONNECT">Klikkaa t&#228;h&#228;n yhdist&#228;&#228;ksesi</link>
+				<link target="raza:command:ID_NETWORK_CONNECT">Klikkaa tähän yhdistääksesi</link>
 			</para>
 		</group>
-
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
 		<text group="20" align="middle" format="b">Gnutella2:</text>
 		<text group="21" align="middle">Ei Yhdistetty</text>
-		<text group="22" align="middle">Yhdistet&#228;&#228;n...</text>
+		<text group="22" align="middle">Yhdistetään...</text>
 		<text group="23" align="middle">Yhdistetty</text>
 		<text group="24" align="middle" id="G2Hubs">%i hubia</text>
-		<text group="25" align="middle" id="G2Leaves">%i lehte&#228;</text>
+		<text group="25" align="middle" id="G2Leaves">%i lehteä</text>
 		<newline group="20" gap="2"/>
-
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
 		<text group="30" align="middle" format="b">eDonkey:</text>
 		<text group="31" align="middle">Ei Yhdistetty</text>
-		<text group="32" align="middle">Yhdistet&#228;&#228;n...</text>
+		<text group="32" align="middle">Yhdistetään...</text>
 		<text group="33" align="middle">Yhdistetty</text>
 		<newline group="30" gap="2"/>
-
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1:</text>
 		<text group="11" align="middle">Ei Yhdistetty</text>
-		<text group="12" align="middle">Yhdistet&#228;&#228;n...</text>
+		<text group="12" align="middle">Yhdistetään...</text>
 		<text group="13" align="middle">Yhdistetty</text>
 		<newline group="10" gap="2"/>
-
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
-				<text>Olet ollut yhteydess&#228; </text>
+				<text>Olet ollut yhteydessä </text>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>tuntia ja </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
@@ -1655,26 +1630,22 @@
 			</para>
 		</group>
 	</document>
-
-	<document name="CHomeUploadsBox" title="L&#228;hetykset" leftMargin="6" topMargin="6">
+	<document name="CHomeUploadsBox" title="Lähetykset" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="9"/>
 			</style>
 		</styles>
 		<para align="center">
-			<text id="UploadsNone" format="b">Ei aktiivisia l&#228;hetyksi&#228;</text>
-			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 aktiivinen l&#228;hetys</link>
-			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i aktiivista l&#228;hetyst&#228;</link>
-
+			<text id="UploadsNone" format="b">Ei aktiivisia lähetyksiä</text>
+			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 aktiivinen lähetys</link>
+			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i aktiivista lähetystä</link>
 			<newline gap="4"/>
-
-			<text id="UploadedNone">Sin&#228; et ole l&#228;hett&#228;nyt yht&#228;&#228;n tiedostoa t&#228;n&#228;&#228;n.</text>
-			<text id="UploadedOne">Sin&#228; olet l&#228;hett&#228;nyt 1 tiedoston (%s).</text>
-			<text id="UploadedMany">Sin&#228; olet l&#228;hett&#228;nyt %i tiedostoa (%s).</text>
+			<text id="UploadedNone">Sinä et ole lähettänyt yhtään tiedostoa tänään.</text>
+			<text id="UploadedOne">Sinä olet lähettänyt 1 tiedoston (%s).</text>
+			<text id="UploadedMany">Sinä olet lähettänyt %i tiedostoa (%s).</text>
 		</para>
 	</document>
-
 	<document name="CHomeTorrentsBox" title="Torrentit" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1689,131 +1660,104 @@
 			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Jaa uudelleen %s</link>
 			<newline gap="4"/>
 			<group id="1">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Jaa toinen torrentti</link>
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Jaa toinen torrentti</link>
 			</group>
 			<group id="2">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Jaa torrentti</link>
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Jaa torrentti</link>
 			</group>
 		</para>
-
 	</document>
-
 	<!-- Settings Pages -->
-
 	<document name="CGeneralSettingsGroup" title="Yleiset" leftMargin="8" topMargin="8">
-
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
 			</style>
 		</styles>
-
 		<text format="b">Tervetuloa Shareazan Asetus Manageriin</text>
 		<newline gap="16"/>
-
 		<text>
-			Shareaza Asetus Manageri antaa  k&#228;ytt&#228;jien kustomoida t&#228;ysin kuinka
+			Shareaza Asetus Manageri antaa  käyttäjien kustomoida täysin kuinka
 			Shareaza toimii.  Asetukset
 		</text>
 		<text format="b">Yleiset</text>
 		<text>
-			alue joka liittyy k&#228;ytt&#246; kokemukseen.
+			alue joka liittyy käyttö kokemukseen.
 		</text>
 		<newline gap="16" indent="16"/>
-
 		<link target="raza:page:CGeneralSettingsPage" format="b">Yleinen:</link>
 		<gap size="4"/>
-		<text>Yleiset k&#228;ytt&#246;liitym&#228;n asetukset kuten ty&#246;kaluvihjeet, pienennys k&#228;ytt&#228;ytyminen, formaattien m&#228;&#228;r&#228;, kyselyt, jne.</text>
+		<text>Yleiset käyttöliitymän asetukset kuten työkaluvihjeet, pienennys käyttäytyminen, formaattien määrä, kyselyt, jne.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CLibrarySettingsPage" format="b">Kirjasto:</link>
 		<gap size="4"/>
-		<text>Kirjaston n&#228;ytt&#246; ja managerointi, ja tiedostojen avaus.</text>
+		<text>Kirjaston näyttö ja managerointi, ja tiedostojen avaus.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CMediaSettingsPage" format="b">Media Toistin:</link>
 		<gap size="4"/>
-		<text>Miss&#228; ja milloin k&#228;ytt&#228;&#228; sis&#228;&#228;n rakennettuaShareazan Media Keskusta.</text>
+		<text>Missä ja milloin käyttää sisään rakennettuaShareazan Media Keskusta.</text>
 		<newline gap="10"/>
-
-		<link target="raza:page:CCommunitySettingsPage" format="b">Yhteis&#246;:</link>
+		<link target="raza:page:CCommunitySettingsPage" format="b">Yhteisö:</link>
 		<gap size="4"/>
 		<text>Sinun profiilisi, chat ja pikaviesti asetukset.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
-		<text>Integroi Shareaza sinun nettiselaimeesi hyv&#228;ksy&#228;ksesi p2p linkkej&#228; ja ladata sis&#228;lt&#246;&#228;.</text>
+		<text>Integroi Shareaza sinun nettiselaimeesi hyväksyäksesi p2p linkkejä ja ladata sisältöä.</text>
 		<newline gap="10"/>
-
 	</document>
-
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
-
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
 			</style>
 		</styles>
-
 		<text format="b">Tervetuloa Shareazan Asetus Manageriin</text>
 		<newline gap="16"/>
-
 		<text>
-			Shareaza Asetus Manageri antaa  k&#228;ytt&#228;jien kustomoida t&#228;ysin kuinka
+			Shareaza Asetus Manageri antaa  käyttäjien kustomoida täysin kuinka
 			Shareaza toimii.  Asetukset
 		</text>
 		<text format="b">Internet </text>
 		<text>
-			alue joka kontrolloi kuinka Shareaza k&#228;ytt&#228;ytyy toisien koneiden kanssa jaetuissa p2p
+			alue joka kontrolloi kuinka Shareaza käyttäytyy toisien koneiden kanssa jaetuissa p2p
 			verkoissa.
 		</text>
 		<newline gap="16" indent="16"/>
-
 		<link target="raza:page:CConnectionSettingsPage" format="b">Yhteys:</link>
 		<gap size="4"/>
 		<text>Internet yhteytesi nopeus ja toimivuus.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CDownloadsSettingsPage" format="b">Lataukset:</link>
 		<gap size="4"/>
 		<text>Latauksen tuotos, ajastus, varmistus, aikakatkaisut ja managerointi.</text>
 		<newline gap="10"/>
-
-		<link target="raza:page:CUploadsSettingsPage" format="b">L&#228;hetykset:</link>
+		<link target="raza:page:CUploadsSettingsPage" format="b">Lähetykset:</link>
 		<gap size="4"/>
-		<text>L&#228;hetys kyky, jonotus, est&#228;minen, aikakatkaisut ja erikois pyynn&#246;t.</text>
+		<text>Lähetys kyky, jonotus, estäminen, aikakatkaisut ja erikois pyynnöt.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CRemoteSettingsPage" format="b">Kauko-ohjaus:</link>
 		<gap size="4"/>
 		<text>Aseta mahdollisuus kontrolloida Shareazaa nettiselaimellasi.</text>
 		<newline gap="10"/>
-
 	</document>
-
 	<!-- Browse User Profile -->
-
 	<document name="CBrowseHostProfile.1">
-
 		<heading id="Nick"/>
 		<heading>n Profiili</heading>
 		<newline gap="8"/>
-
 		<group id="1">
 			<newline gap="8" indent="0"/>
 			<text format="b">Nimi</text>
 			<newline gap="2" indent="8"/>
 			<text id="FullName"/>
 		</group>
-
 		<group id="2">
 			<newline gap="8" indent="0"/>
 			<text format="b">Sijainti</text>
 			<newline gap="2" indent="8"/>
 			<text id="FullLocation"/>
 		</group>
-
 		<group id="3">
 			<newline gap="8" indent="0"/>
 			<text format="b">Kuvaus</text>
@@ -1823,7 +1767,6 @@
 			<text>,</text>
 			<text id="Age"/>
 		</group>
-
 		<group id="4">
 			<newline gap="8" indent="0"/>
 			<text format="b">Yhteydenotto info</text>
@@ -1859,194 +1802,166 @@
 			<icon res="207"/><gap size="5"/>
 			<link id="ContactJabber"/>
 		</group>
-
 		<group id="5">
 			<newline gap="8" indent="0"/>
 			<text format="b">Kiinostukset</text>
 			<newline gap="2" indent="8"/>
 			<text id="Interests"/>
 		</group>
-
 		<group id="6">
 			<newline gap="8" indent="0"/>
 			<text format="b">Bio</text>
 			<newline gap="2" indent="8"/>
 			<text id="BioText"/>
 		</group>
-
 	</document>
-
 	<document name="CBrowseHostProfile.2">
-
 		<newline gap="40" indent="0"/>
 		<text format="b">Jaetut Tiedostot</text>
 		<newline gap="4" indent="8"/>
 		<icon res="137" target="raza:command:ID_BROWSE_FILES"/><gap size="5"/>
-		<link target="raza:command:ID_BROWSE_FILES" align="middle">N&#228;yt&#228; Jaetut Tiedostot</link>
-
+		<link target="raza:command:ID_BROWSE_FILES" align="middle">Näytä Jaetut Tiedostot</link>
 		<group id="2">
 			<newline gap="16" indent="0"/>
-			<text format="b">Yhteis&#246;</text>
+			<text format="b">Yhteisö</text>
 			<newline gap="4" indent="8"/>
 			<icon res="140" target="raza:command:ID_SEARCH_CHAT"/>
 			<gap size="5"/>
-			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Keskustele K&#228;ytt&#228;j&#228;n Kanssa</link>
+			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Keskustele Käyttäjän Kanssa</link>
 		</group>
-
 		<group id="3">
 			<newline gap="16" indent="0"/>
 			<text format="b">Suosikki Netti Linkit</text>
 			<newline gap="4" indent="8" id="Bookmarks"/>
 		</group>
-
 		<newline gap="16" indent="0"/>
-
 	</document>
-
 	<!-- Download help documents -->
-
 	<document name="DownloadHelp.Select">
 		<text format="b">Lataus Alue</text>
 		<newline gap="8"/>
-		<text>T&#228;m&#228; on miss&#228; t&#228;ll&#228; hetkell&#228; latauksessa olevat tiedostot vat n&#228;ytill&#228;. Sin&#228; voit katsoa
-		yksitt&#228;isi&#228; l&#228;hteit&#228; laajentamalla jokaisen tiedoston miss&#228; on vasemmalla puolella + merkki.</text>
+		<text>Tämä on missä tällä hetkellä latauksessa olevat tiedostot vat näytillä. Sinä voit katsoa
+		yksittäisiä lähteitä laajentamalla jokaisen tiedoston missä on vasemmalla puolella + merkki.</text>
 		<newline gap="8"/>
-		<text>Sin&#228; voit k&#228;ytt&#228;&#228; t&#228;t&#228; komentoa saadaksesi tietoa tietyst&#228; latauksesta.
-		Valitse vain lataus ja valitse t&#228;m&#228; komento uudelleen.</text>
+		<text>Sinä voit käyttää tätä komentoa saadaksesi tietoa tietystä latauksesta.
+		Valitse vain lataus ja valitse tämä komento uudelleen.</text>
 	</document>
-
 	<document name="DownloadHelp.Completed">
-		<text format="b">T&#228;m&#228; lataus on valmis</text>
+		<text format="b">Tämä lataus on valmis</text>
 		<newline gap="8"/>
-		<text>Shareaza on lopettanut t&#228;m&#228;n tiedoston lataamisen ja varmistanut, ett&#228;
-		se 100% ladattu.  Se on my&#246;s siirt&#228;nyt tiedoston sinun lataukset kansioon.</text>
+		<text>Shareaza on lopettanut tämän tiedoston lataamisen ja varmistanut, että
+		se 100% ladattu.  Se on myös siirtänyt tiedoston sinun lataukset kansioon.</text>
 	</document>
-
 	<document name="DownloadHelp.Moving">
-		<text format="b">T&#228;t&#228; latausta siirret&#228;&#228;n</text>
+		<text format="b">Tätä latausta siirretään</text>
 		<newline gap="8"/>
-		<text>Shareaza on lopettanut t&#228;m&#228;n tiedoston lataamisen ja varmistanut, ett&#228;
-		se on ladattu kokonaan.  Sit&#228; ollaan nyt siirt&#228;m&#228;ss&#228; ja/tai purkamassa lataukset kansioosi.</text>
+		<text>Shareaza on lopettanut tämän tiedoston lataamisen ja varmistanut, että
+		se on ladattu kokonaan.  Sitä ollaan nyt siirtämässä ja/tai purkamassa lataukset kansioosi.</text>
 	</document>
-
 	<document name="DownloadHelp.Paused">
-		<text format="b">T&#228;m&#228; lataus on pys&#228;ytetty</text>
+		<text format="b">Tämä lataus on pysäytetty</text>
 		<newline gap="8"/>
-		<text>Sin&#228; olet pys&#228;ytt&#228;nyt t&#228;m&#228;n latauksen. Jos haluat, ett&#228; sit&#228; aletaan taas lataamaan sinun
+		<text>Sinä olet pysäyttänyt tämän latauksen. Jos haluat, että sitä aletaan taas lataamaan sinun
 		klikata</text><text format="b"> Jatka Latausta</text><text> komentoa.</text>
 	</document>
-
 	<document name="DownloadHelp.DiskFull">
-		<text format="b">Levy on t&#228;ynn&#228;</text>
+		<text format="b">Levy on täynnä</text>
 		<newline gap="8"/>
-		<text>Shareaza on pys&#228;ytt&#228;nyt latauksen automaattisesti koska kovalevy
-		n&#228;ytt&#228;&#228; olevan t&#228;ynn&#228;, tai lataus tiedostoa ei voida kirjoittaa. Jos haluat
-		jatkaa latausta, ole hyv&#228; ja vapauta tilaa kovalevylt&#228;si ja/tai tarkista
-		ett&#228; keskener&#228;iset kansion on luettavissa, sitten jatka
+		<text>Shareaza on pysäyttänyt latauksen automaattisesti koska kovalevy
+		näyttää olevan täynnä, tai lataus tiedostoa ei voida kirjoittaa. Jos haluat
+		jatkaa latausta, ole hyvä ja vapauta tilaa kovalevyltäsi ja/tai tarkista
+		että keskeneräiset kansion on luettavissa, sitten jatka
 		latausta.</text>
 	</document>
-
 	<document name="DownloadHelp.Verifying">
-		<text format="b">T&#228;t&#228; latausta ollaan varmistamassa</text>
+		<text format="b">Tätä latausta ollaan varmistamassa</text>
 		<newline gap="8"/>
-		<text>T&#228;m&#228; lataus on valmis ja Shareaza tarkistaa varmistaakseen
-		ett&#228; se on sama kuin alkuper&#228;inen tiedosto. Jos vahingoittuneita osia
-		l&#246;ydet&#228;&#228;n, Shareaza korjaa ne automaattisesti.</text>
+		<text>Tämä lataus on valmis ja Shareaza tarkistaa varmistaakseen
+		että se on sama kuin alkuperäinen tiedosto. Jos vahingoittuneita osia
+		löydetään, Shareaza korjaa ne automaattisesti.</text>
 	</document>
-
 	<document name="DownloadHelp.Downloading">
-		<text format="b">T&#228;m&#228; lataus on aktiivinen!</text>
+		<text format="b">Tämä lataus on aktiivinen!</text>
 		<newline gap="8"/>
-		<text>T&#228;m&#228; tiedosto on nyt latauksessa.  Jos tiedosto latautuu liian hitaasti,
-		sin&#228; voit yritt&#228;&#228; etsi&#228; verkosta lis&#228;&#228; l&#228;hteit&#228;</text>
-		<text format="b"> Etsi Lis&#228;&#228; L&#228;hteit&#228;</text><text> komennolla.  Jos nopeus ei
-		parannu se voi johtua rajoitetusta l&#228;hetys nopeudesta jota k&#228;ytt&#228;j&#228; jolta lataat k&#228;ytt&#228;&#228;.
-		Lataus nopeus yleens&#228; nopeentuu ajan kuluessa.</text>
+		<text>Tämä tiedosto on nyt latauksessa.  Jos tiedosto latautuu liian hitaasti,
+		sinä voit yrittää etsiä verkosta lisää lähteitä</text>
+		<text format="b"> Etsi Lisää Lähteitä</text><text> komennolla.  Jos nopeus ei
+		parannu se voi johtua rajoitetusta lähetys nopeudesta jota käyttäjä jolta lataat käyttää.
+		Lataus nopeus yleensä nopeentuu ajan kuluessa.</text>
 	</document>
-
 	<document name="DownloadHelp.Pending">
-		<text format="b">T&#228;m&#228; lataus on Pyynn&#246;ss&#228;</text>
+		<text format="b">Tämä lataus on Pyynnössä</text>
 		<newline gap="8"/>
-		<text>T&#228;m&#228; lataus odottaa jotakuta alkamaan l&#228;hett&#228;m&#228;&#228;n sit&#228;.
-		Shareaza on valmis aloittamaan latauksen, mutta kukaan ei ole l&#228;hett&#228;m&#228;ss&#228; sit&#228;
-		t&#228;ll&#228; hetkell&#228;. Sin&#228; olet varmaan odottamassa k&#228;ytt&#228;j&#228;n jonoissa, ja lataus
-		voi alkaa miloin tahansa. Sin&#228; voit tarkastella yksitt&#228;isi&#228; l&#228;hteit&#228;
-		n&#228;hd&#228;ksesi jokaisen jonossa olevan. Jos jaat tiedostoja itse, se saattaa
+		<text>Tämä lataus odottaa jotakuta alkamaan lähettämään sitä.
+		Shareaza on valmis aloittamaan latauksen, mutta kukaan ei ole lähettämässä sitä
+		tällä hetkellä. Sinä olet varmaan odottamassa käyttäjän jonoissa, ja lataus
+		voi alkaa miloin tahansa. Sinä voit tarkastella yksittäisiä lähteitä
+		nähdäksesi jokaisen jonossa olevan. Jos jaat tiedostoja itse, se saattaa
 		parantaa mahdollisuuksia aloittaa lataus nopeasti.</text>
 	</document>
-
 	<document name="DownloadHelp.Queued">
-		<text format="b">T&#228;m&#228; lataus on jonossa</text>
+		<text format="b">Tämä lataus on jonossa</text>
 		<newline gap="8"/>
-		<text>T&#228;m&#228; lataus odottaa, ett&#228; joku muu sinun latauksistasi valmistuisi.
-		Sinu lataus rajoituksesi m&#228;&#228;ritt&#228;v&#228;t kuinka monta latausta sinulla voi olla aktiivisena
-		mihink&#228; annettuna aikana tahansa, varmistakseen ett&#228; jokaine lataus saa hyv&#228;n nopeuden saatavasta
-		 lataus nopeudesta.  Voit muuttaa n&#228;it&#228; asetuksia Ty&#246;kalu, Shareazan Asetukset.
+		<text>Tämä lataus odottaa, että joku muu sinun latauksistasi valmistuisi.
+		Sinu lataus rajoituksesi määrittävät kuinka monta latausta sinulla voi olla aktiivisena
+		mihinkä annettuna aikana tahansa, varmistakseen että jokaine lataus saa hyvän nopeuden saatavasta
+		lataus nopeudesta.  Voit muuttaa näitä asetuksia Työkalu, Shareazan Asetukset.
 		Kuitenkin voit manuaalisesti aloittaa latauksen jatka komennolla.</text>
 	</document>
-
 	<document name="DownloadHelp.Searching">
-		<text format="b">T&#228;m&#228; lataus on Hakee</text>
+		<text format="b">Tämä lataus on Hakee</text>
 		<newline gap="8"/>
-		<text>T&#228;lle lataukselle ei ole olemassa tunnettuja l&#228;hteit&#228;, joten Shareaza etsii
-		kaikista yhdistetyist&#228; P2P verkoista uusia l&#228;hteit&#228;. Kun l&#228;hteet on l&#246;ydetty
-		lataus alkaa automaattisesti.  Shareaza etsii l&#228;hteit&#228; automaattisesti,
-		kuitenkin voit nopeuttaa prosessia k&#228;ytt&#228;m&#228;ll&#228;</text>
-		<text format="b"> Etsi Lis&#228;&#228; L&#228;hteit&#228;</text><text> komennolla.</text>
+		<text>Tälle lataukselle ei ole olemassa tunnettuja lähteitä, joten Shareaza etsii
+		kaikista yhdistetyistä P2P verkoista uusia lähteitä. Kun lähteet on löydetty
+		lataus alkaa automaattisesti.  Shareaza etsii lähteitä automaattisesti,
+		kuitenkin voit nopeuttaa prosessia käyttämällä</text>
+		<text format="b"> Etsi Lisää Lähteitä</text><text> komennolla.</text>
 		<newline gap="8"/>
-		<text>Valitettavasti monissa tapauksissa kukaan k&#228;yttj&#228;j ei ole online tilassa jolla olisi
+		<text>Valitettavasti monissa tapauksissa kukaan käyttjäj ei ole online tilassa jolla olisi
 		tiedosto jota etsit. Ainut toiminta on odottaa
-		jonkun tulevan online tilaan, tai peruuttaa sen ja yritt&#228;&#228; l&#246;yt&#228;&#228; smanlaisen tiedoston mik&#228; on
+		jonkun tulevan online tilaan, tai peruuttaa sen ja yrittää löytää smanlaisen tiedoston mikä on
 		paremmin saatavilla.</text>
 	</document>
-
 	<document name="DownloadHelp.Creating">
-		<text format="b">T&#228;t&#228; latausta luodaan</text>
+		<text format="b">Tätä latausta luodaan</text>
 		<newline gap="8"/>
-		<text>Shareaza on luomassa v&#228;liaikais tiedostoa mihink&#228; tallentaa lataus
-		s&#228;&#228;st&#228;&#228;kseen aikaa my&#246;hemmin.</text>
+		<text>Shareaza on luomassa väliaikais tiedostoa mihinkä tallentaa lataus
+		säästääkseen aikaa myöhemmin.</text>
 	</document>
-
 	<document name="DownloadHelp.Tracker">
-		<text format="b">BitTorrent J&#228;jitin Alhaalla</text>
+		<text format="b">BitTorrent Jäjitin Alhaalla</text>
 		<newline gap="8"/>
-		<text>The BitTorrent j&#228;ljitys palvelin t&#228;lle lataukselle n&#228;ytt&#228;&#228; olevan
-		suljettu tai ep&#228;kunnossa.  Shareaza ei voi ottaa siihen yhteytt&#228; saadakseen
-		listan peereist&#228;.</text>
+		<text>The BitTorrent jäljitys palvelin tälle lataukselle näyttää olevan
+		suljettu tai epäkunnossa.  Shareaza ei voi ottaa siihen yhteyttä saadakseen
+		listan peereistä.</text>
 	</document>
-
 	<!-- Upload help documents -->
-
 	<document name="UploadHelp">
-		<text format="b">L&#228;hetykset Alue</text>
+		<text format="b">Lähetykset Alue</text>
 		<newline gap="8"/>
-		<text>T&#228;m&#228; on miss&#228; konot jal&#228;hetykset n&#228;kyv&#228;t. Sin&#228; voit laajentaa jokaisen jonon
-		miss&#228; on pieni + vasemmalla puolella ja voit my&#246;s suodattaa mit&#228; n&#228;ytet&#228;&#228;n painikkeella
-		oikealla ikkunan ty&#246;kalu palkissa.</text>
+		<text>Tämä on missä konot jalähetykset näkyvät. Sinä voit laajentaa jokaisen jonon
+		missä on pieni + vasemmalla puolella ja voit myös suodattaa mitä näytetään painikkeella
+		oikealla ikkunan työkalu palkissa.</text>
 	</document>
-
 	<!-- General help documents -->
-
 	<document name="GeneralHelp.DiskSpace">
-		<text format="b">V&#228;h&#228;inen kovalevy tila</text>
+		<text format="b">Vähäinen kovalevy tila</text>
 		<newline gap="8"/>
-		<text>Vapaa kovalevy tila yhdell&#228; tai monella kovalevyll&#228; joita Shareaza k&#228;ytt&#228;&#228; on v&#228;hiss&#228;.</text>
+		<text>Vapaa kovalevy tila yhdellä tai monella kovalevyllä joita Shareaza käyttää on vähissä.</text>
 		<newline gap="8"/>
 		<text>You should always attempt to keep a reasonable amount of disk space free. Ohjelmat
-		voivat tulla ep&#228;vakaiksi jos kovalevy tulee t&#228;yteen ja v&#228;liaikais tiedostot voivat h&#228;vit&#228;. Sinun tulisi
+		voivat tulla epävakaiksi jos kovalevy tulee täyteen ja väliaikais tiedostot voivat hävitä. Sinun tulisi
 		ajaa levyn puhdistus, poistaa tiedostoja tai poistaa ohjelmat joita et tarvitse.</text>
 	</document>
-
 	<document name="GeneralHelp.DiskWriteFail">
 		<text format="b">Tarvittava kansio ei ole kirjoitettavissa</text>
 		<newline gap="8"/>
-		<text>Levy tai kansio mit&#228; Shareaza k&#228;ytt&#228;&#228; ei voida kirjoittaa.</text>
+		<text>Levy tai kansio mitä Shareaza käyttää ei voida kirjoittaa.</text>
 		<newline gap="8"/>
 		<text>Verkko kovalevy voi olla offline tilassa, tai sinulla ei ole kirjoitus lupaa
-		hakemistoon. Ole hyv&#228; ja tarkista hakemistot ja luvat, tai vaihda
-		v&#228;liaikais tiedostojen sijaintia.</text>
+		hakemistoon. Ole hyvä ja tarkista hakemistot ja luvat, tai vaihda
+		väliaikais tiedostojen sijaintia.</text>
 	</document>
-
 	<document name="GeneralHelp.ConnectionFail">
 		<text format="b">Internet yhteys on hvitetty</text>
 		<newline gap="8"/>
@@ -2057,7 +1972,6 @@
 		<newline gap="8"/>
 		<text>Shareaza on pysyttnyt yhdistys yritykset jotta kaikkia kyttji jotka ovat vlimuistissa ei hukattaisi.</text>
 	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Aikuisviihde suodatus on pll</text>
 		<newline gap="8"/>
@@ -2067,7 +1981,6 @@
 		<newline gap="8"/>
 		<text>Lasten internetin kytt (mukaan lukien P2P tiedoston jako)  tulisi aina olla vanhemman valvonnassa.</text>
 	</document>
-
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">Tm torrentti nytt sisltv koodaus virheen</text>
 		<newline gap="8"/>
@@ -2080,8 +1993,7 @@
 		<newline gap="8"/>
 		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klikkaa thn saadaksesi lis apua (en)</link>
 		<text>, tai lataa ohjelma jolla voit korjata torrentin.</text>
-</document>
-
+	</document>
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Sinun eDonkey palvelin lista on tyhj</text>
 		<newline gap="8"/>
@@ -2091,7 +2003,6 @@
 		<text>Sin voit ladata palvelin listan ed2k asetukset sivulla tai discovery
 		palvelu ikkunassa. (Paina F9 avataksesi discovery palvelut ikkunan)</text>
 	</document>
-
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Rajoitetut letys paikat saattavat hidastaa latauksia</text>
 		<newline gap="8"/>
@@ -2106,9 +2017,7 @@
 		kun lataukset ovat rajoittamattomat. Tuon konfiguraation  tulisi antaa sinulle mahdollisimman nopean
 		lataus nopuden kuin mahdollista.</text>
 	</document>
-
 	<!-- Search help documents -->
-
 	<document name="SearchHelp.BadSearch1">
 		<text format="b">Ole hyv ja jrjest hakusi uudelleen</text>
 		<newline gap="8"/>
@@ -2120,7 +2029,6 @@
 		<text>Suurin osa p2p ohjelmista hylk MP3 tiedosto haun esimerkiksi
 		koska se ei ole liian tarkka ja tuottaisi liian monta tulosta.</text>
 	</document>
-
 	<document name="SearchHelp.BadSearch2">
 		<text format="b">Ole hyv ja jrjest hakusi uudelleen</text>
 		<newline gap="8"/>
@@ -2131,7 +2039,6 @@
 		toisia termej aloittaessasi hakua. Pilkutuksia ja jokerimerkkej ei kytet
 		hauissa joten vain se teksti mink annat.</text>
 	</document>
-
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
@@ -2147,7 +2054,6 @@
 		<newline gap="8"/>
 		<text>Further help is available on the Shareaza web site.</text>
 	</document>
-
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">This search cannot be started</text>
 		<newline gap="8"/>
@@ -2158,9 +2064,7 @@
 		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the
 		adult content filter.</text>
 	</document>
-
 	<!-- Share help documents -->
-
 	<document name="ShareHelp.AlreadyShared">
 		<text format="b">Already Shared</text>
 		<newline gap="8"/>
@@ -2168,7 +2072,6 @@
 		<newline gap="8"/>
 		<text>%s</text>
 	</document>
-
 	<document name="ShareHelp.BadShare">
 		<text format="b">This folder should not be shared</text>
 		<newline gap="8"/>
@@ -2183,9 +2086,7 @@
 		<text>The Shareaza 'incomplete' folder should also not be shared through the
 		library, since attempting to hash downloads in progress may impact on performance.</text>
 	</document>
-
 </documents>
-
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="View the user's shared files"/>
@@ -2489,7 +2390,6 @@
 	<tip id="ID_WINDOW_TILE_VERT" message="Arrange open windows as vertical, non-overlapping tiles."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Show or hide the toolbar."/>
 </commandTips>
-
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
@@ -3188,7 +3088,6 @@
 	<string id="20215" value="Very Good"/>
 	<string id="20216" value="Excellent"/>
 </strings>
-
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza Settings">
@@ -3198,9 +3097,7 @@
 		<control caption="Apply"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="General"/>
-
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="General">
 		<control caption="_General:"/>
 		<control caption="Auto-connect on Shareaza startup"/>
@@ -3228,7 +3125,6 @@
 		<control caption="When I click minimise:"/>
 		<control caption="Normal|Minimise to Tray"/>
 	</dialog>
-
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Library">
 		<control caption="_Options:"/>
 		<control caption="Remember folder views"/>
@@ -3255,7 +3151,6 @@
 		<control/><control/>
 		<control caption="Create ghost files when deleting"/>
 	</dialog>
-
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
 		<control caption="_Options:"/>
 		<control/>
@@ -3271,7 +3166,6 @@
 		<control caption="Choose Media Handler:"/>
 		<control caption="Warning: Choosing an external Media Handler will automatically disable all Media and Visualisation Plugins!"/>
 	</dialog>
-
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Community">
 		<control caption="My _Profile:"/>
 		<control caption="You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others."/>
@@ -3282,7 +3176,6 @@
 		<control caption="Filter chat messages for spam"/>
 		<control caption="Censor profanity in chat"/>
 	</dialog>
-
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 		<control caption="_Peer to Peer Link Handling:"/>
 		<control caption="Use Shareaza to open these types of links:"/>
@@ -3298,9 +3191,7 @@
 		<control caption="_Remove"/>
 		<control caption="The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads."/>
 	</dialog>
-
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
-
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connection">
 		<control caption="_Inbound Address:"/>
 		<control caption="Address:"/>
@@ -3327,7 +3218,6 @@
 		<control caption="Handshake:"/>
 		<control/><control/>
 	</dialog>
-
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">
 		<control caption="Save _Completed Files Here:"/>
 		<control/><control/>
@@ -3347,7 +3237,6 @@
 		<control/><control/>
 		<control caption="Only download and upload to networks which are connected."/>
 	</dialog>
-
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 		<control caption="_Options:"/>
 		<control caption="Share NEW partial downloads"/>
@@ -3371,7 +3260,6 @@
 		<control caption="_Delete"/>
 		<control caption="(changes take effect immediately)"/>
 	</dialog>
-
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Remote Access">
 		<control caption="_Guide:"/>
 		<control caption="Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc)."/>
@@ -3384,7 +3272,6 @@
 		<control caption="Choose a Password:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
 		<control caption="_Options:"/>
 		<control caption="_Enable Scheduler"/>
@@ -3406,7 +3293,6 @@
 		<control caption="Help"/>
 		<control caption="The scheduler is designed to allow you to set times when Shareaza will connect and download files. {n}{n}{n}Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!-"/>
 	</dialog>
-
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
 		<control caption="Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  On this page you can select which P2P networks you want to connect to, and then adjust specific settings for each network."/>
 		<control caption="Gnutella2 Network:"/>
@@ -3422,7 +3308,6 @@
 		<control caption="Connect to Original Gnutella"/>
 		<control caption="Configure Gnutella1"/>
 	</dialog>
-
 	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Gnutella2 Network:"/>
 		<control caption="Always connect to Gnutella2"/>
@@ -3453,7 +3338,6 @@
 		<control caption="Leaf to Hub"/>
 		<control caption="Hub to Hub"/>
 	</dialog>
-
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Network:"/>
 		<control caption="Connect to eDonkey2000 today"/>
@@ -3473,7 +3357,6 @@
 		<control caption="Download eDonkey2000 serverlist from the web:"/>
 		<control caption="Download..."/>
 	</dialog>
-
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="_Interface:"/>
 		<control caption="Display additional BitTorrent interface elements"/>
@@ -3494,12 +3377,10 @@
 		<control caption="Default Tracker: "/>
 		<control/>
 	</dialog>
-
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocols">
 		<control caption="Shareaza Common Architecture Protocol Explorer:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Skins">
 		<control/>
 		<control caption="Skin Information:"/>
@@ -3513,7 +3394,6 @@
 		<control caption="Install..."/>
 		<control caption="Get More"/>
 	</dialog>
-
 	<dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="Plugins">
 		<control/>
 		<control caption="Plugin Information:"/>
@@ -3524,7 +3404,6 @@
 		<control caption="_Setup..."/>
 		<control caption="Get More"/>
 	</dialog>
-
 	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Advanced">
 		<control/>
 		<control caption="Setting Properties:"/>
@@ -3533,7 +3412,6 @@
 		<control caption="Description:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Upload Queue Properties">
 		<control caption="_Name:"/>
 		<control/>
@@ -3570,7 +3448,6 @@
 		<control caption="Cancel"/>
 		<control caption="Reward uploaders"/>
 	</dialog>
-
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Welcome to Shareaza">
 		<control caption="Welcome to Shareaza!"/>
 		<control caption="If you haven't used Shareaza or another P2P client before, this QuickStart wizard can help you configure your copy in a few simple steps."/>
@@ -3585,7 +3462,6 @@
 		<control/>
 		<control caption="Get started using Shareaza."/>
 	</dialog>
-
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welcome to Shareaza">
 		<control caption="Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time."/>
 		<control caption="Please select user interface:"/>
@@ -3597,7 +3473,6 @@
 		<control caption="Display additional torrent interface elements."/>
 		<control caption="Handle torrent links."/>
 	</dialog>
-
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Welcome to Shareaza [3 of 7]">
 		<control caption="For optimum performance, Shareaza needs to know a little bit about your connection to the Internet."/>
 		<control caption="&#160;( please select )| I am using the Internet at home| I am using the Internet on a college LAN| I am using the Internet on a office LAN| I am using the Internet at a hotel or airport"/>
@@ -3612,7 +3487,6 @@
 		<control caption="Status:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Welcome to Shareaza [4 of 7]">
 		<control caption="P2P networks are only as good as the people who use them.  All of the content available for download is being shared by another user."/>
 		<control caption="You do not have to share content to use Shareaza, however some software will behave differently to users who are not sharing anything."/>
@@ -3622,7 +3496,6 @@
 		<control caption="_Remove"/>
 		<control caption="WARNING: Distributing copyrighted works is an offence in most countries."/>
 	</dialog>
-
 	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Scanning Folder...">
 		<control/>
 		<control caption="..."/>
@@ -3632,7 +3505,6 @@
 		<control caption="0"/>
 		<control caption="Close"/>
 	</dialog>
-
 	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Welcome to Shareaza [5 of 7]">
 		<control caption="Shareaza is a much friendlier place when everyone writes a few basic details about themselves."/>
 		<control caption="I use the name:"/>
@@ -3643,7 +3515,6 @@
 		<control caption="from:"/>
 		<control/><control/>
 	</dialog>
-
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Welcome to Shareaza [6 of 7]">
 		<control caption="Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later."/>
 		<control caption="Connect to Gnutella2 (Highly Recommended)"/>
@@ -3653,7 +3524,6 @@
 		<control caption="Connect to Original Gnutella"/>
 		<control caption="Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey2000, it remains a valuable resource."/>
 	</dialog>
-
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Import eDonkey2000 Downloads">
 		<control/>
 		<control caption="Shareaza has detected that you have another eDonkey2000 program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?"/>
@@ -3662,7 +3532,6 @@
 		<control/>
 		<control caption="Close"/>
 	</dialog>
-
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Welcome to Shareaza [7 of 7]">
 		<control caption="That's it!  Shareaza has been configured to work with your computer."/>
 		<control caption="If you ever need to change your settings, you can re-run this QuickStart wizard by selecting it from the Tools menu."/>
@@ -3672,7 +3541,6 @@
 		<control caption="Start Shareaza every time Windows starts"/>
 		<control caption="Enjoy using Shareaza!"/>
 	</dialog>
-
 	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Edit My Profile">
 		<control/>
 		<control caption="OK"/>
@@ -3680,7 +3548,6 @@
 		<control caption="Apply"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Identity">
 		<control caption="_Name:"/>
 		<control caption="Screen Name:"/>
@@ -3694,7 +3561,6 @@
 		<control caption="Age:"/>
 		<control caption="Allow others to browse my user profile"/>
 	</dialog>
-
 	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Contact">
 		<control caption="_Email Addresses:"/>
 		<control caption="Primary:"/>
@@ -3711,7 +3577,6 @@
 		<control caption="Jabber ID:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CProfileProfilePage" cookie="BuStCoStCoBuStEdStEdBuLiBuBuCo" caption="Profile">
 		<control caption="_Location:"/>
 		<control caption="Country:"/>
@@ -3729,11 +3594,9 @@
 		<control caption="Remove &gt;"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CBioProfilePage" cookie="Ed" caption="Bio">
 		<control/>
 	</dialog>
-
 	<dialog name="CAvatarProfilePage" cookie="BuStBuStBuBu" caption="Avatar">
 		<control caption="_Preview:"/>
 		<control/>
@@ -3742,7 +3605,6 @@
 		<control caption="_Browse..."/>
 		<control caption="_Remove"/>
 	</dialog>
-
 	<dialog name="CFavouritesProfilePage" cookie="SyBuStEdStEdBuBu" caption="Favourites">
 		<control/>
 		<control caption="_Edit:"/>
@@ -3753,13 +3615,11 @@
 		<control caption="New"/>
 		<control caption="Remove"/>
 	</dialog>
-
 	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Files">
 		<control caption="_Favourite Files:"/>
 		<control caption="Favourite files are recommended to users who browse your profile.  You can create favourite files by adding them to the &quot;Favourites&quot; library folder."/>
 		<control/>
 	</dialog>
-
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Certificate">
 		<control caption="Gnutella users are identified by a globally unique identifier and a corresponding public and private key pair.  Normally there is no need to generate a new ID, however Shareaza provides this option for advanced users."/>
 		<control caption="_Gnutella Globally Unique Identification Certificate:"/>
@@ -3769,9 +3629,7 @@
 		<control/>
 		<control caption="Generate New"/>
 	</dialog>
-
 	<dialog name="CLanguageDlg" cookie="" caption="Select Language"/>
-
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse Host">
 		<control caption="Initiate a new connection to host or server:|Browse this host:"/>
 		<control/><control/>
@@ -3781,7 +3639,6 @@
 		<control caption="Connect"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Download File or Torrent">
 		<control/><control/>
 		<control caption="Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."/>
@@ -3792,13 +3649,11 @@
 		<control caption="Shareaza can also download BitTorrent files.  A torrent can be described by an xyz.torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:"/>
 		<control caption="Open _Torrent..."/>
 	</dialog>
-
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="New Search|Search Again|Find in Library">
 		<control/><control/>
 		<control caption="Search"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filter Matches">
 		<control caption="Only show matches which include the _words:"/>
 		<control/>
@@ -3829,14 +3684,12 @@
 		<control caption="Suspicious files"/>
 		<control caption="Adult results"/>
 	</dialog>
-
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Save filter as">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 		<control caption="Save the current filter as"/>
 	</dialog>
-
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery Service">
 		<control caption="Service _Address:"/>
 		<control/>
@@ -3845,7 +3698,6 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download : Shareaza">
 		<control caption="Shareaza is downloading:"/>
 		<control caption="..."/>
@@ -3864,7 +3716,6 @@
 		<control caption="Cancel Download"/>
 		<control caption="Hide"/>
 	</dialog>
-
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="General">
 		<control caption="Universal Resource Names (URNs)"/>
 		<control/><control/><control/><control/>
@@ -3878,11 +3729,9 @@
 		<control caption="Size:"/>
 		<control/><control/><control/>
 	</dialog>
-
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadata">
 		<control/><control/>
 	</dialog>
-
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="My Review">
 		<control caption="My Rating"/>
 		<control caption="I rate this file:"/>
@@ -3890,7 +3739,6 @@
 		<control caption="My Review and Comments"/>
 		<control/><control/>
 	</dialog>
-
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Sharing">
 		<control caption="Simple Sharing"/>
 		<control caption="Share this file if the parent folder is shared"/>
@@ -3901,7 +3749,6 @@
 		<control caption="-Networks to Share On"/>
 		<control/><control/>
 	</dialog>
-
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Sources">
 		<control caption="Known Sources"/>
 		<control caption="Add New Source"/>
@@ -3910,7 +3757,6 @@
 		<control caption="_Remove"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Copy Files|Move Files">
 		<control caption="You have selected %i file(s) to copy to the following folder:"/>
 		<control/><control/>
@@ -3920,7 +3766,6 @@
 		<control caption="Ready..."/>
 		<control caption="You have selected %i file(s) to move to the following folder:"/>
 	</dialog>
-
 	<dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="Album Folder Properties">
 		<control caption="Album Folder Title:"/>
 		<control/>
@@ -3931,7 +3776,6 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CGraphListDlg" cookie="SyBuBuBuBuBuBuBuBuStEdmsStBuEdBuBu" caption="Traffic Graphs">
 		<control/>
 		<control caption="_Add..."/>
@@ -3950,7 +3794,6 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Graph Item Properties">
 		<control caption="OK"/>
 		<control caption="Cancel"/>
@@ -3964,14 +3807,12 @@
 		<control/>
 		<control caption="_Remove"/>
 	</dialog>
-
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Select Columns from Schema">
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 		<control caption="Select a schema from the list, then select the fields to display as columns."/>
 	</dialog>
-
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Security Rule">
 		<control caption="_Rule:"/>
 		<control caption="Type:"/>
@@ -4001,7 +3842,6 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Shared Folder Manager">
 		<control/>
 		<control caption="This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish."/>
@@ -4011,7 +3851,6 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copy URI">
 		<control/>
 		<control caption="You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"/>
@@ -4019,7 +3858,6 @@
 		<control caption="Include _myself as a fixed source in the URL"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Export URIs">
 		<control/>
 		<control caption="You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"/>
@@ -4033,7 +3871,6 @@
 		<control/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI Manager">
 		<control/>
 		<control caption="You have clicked on a Shareaza-powered URI which links to the following content on the network:"/>
@@ -4048,7 +3885,6 @@
 		<control caption="Open a download _monitor window"/>
 		<control caption="You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."/>
 	</dialog>
-
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Downloading Metadata...">
 		<control/>
 		<control caption="Shareaza is attempting to download metadata from Bitzi(TM)..."/>
@@ -4057,7 +3893,6 @@
 		<control/>
 		<control caption="www.bitzi.com"/>
 	</dialog>
-
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Smart Download Preview...">
 		<control/>
 		<control caption="Shareaza is creating a preview of the download:"/>
@@ -4065,7 +3900,6 @@
 		<control caption="(copying downloaded chunks to a new preview file)"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza Respects its Users">
 		<control/>
 		<control caption="Did you know Shareaza is a 100% free product?"/>
@@ -4076,7 +3910,6 @@
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Close"/>
 	</dialog>
-
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Spread the Word">
 		<control/>
 		<control caption="Help Us Spread the Word"/>
@@ -4087,7 +3920,6 @@
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
-
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Existing File">
 		<control/><control/><control/><control/>
 		<control caption="You already have this file in your file library.  What would you like to do?"/>
@@ -4099,7 +3931,6 @@
 		<control caption="You have downloaded and deleted this file before.  What would you like to do?"/>
 		<control caption="Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."/>
 	</dialog>
-
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Close Button">
 		<control/>
 		<control caption="This is the first time you have clicked Shareaza's close button.  Please choose what action you would like Shareaza to take when clicking the close button from now on:"/>
@@ -4109,7 +3940,6 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Download Server.met File">
 		<control/>
 		<control caption="You can download an eDonkey2000 server.met file from the web to refresh your local list of servers."/>
@@ -4117,13 +3947,11 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza Help">
 		<control/>
 		<control caption="Close"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Delete File">
 		<control caption="Are you sure that you want to delete:"/>
 		<control/>
@@ -4139,7 +3967,6 @@
 		<control caption="You can type a short note describing why this file is bad:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Collection Export">
 		<control caption="This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data below."/>
 		<control/>
@@ -4154,7 +3981,6 @@
 		<control caption="_Next|Export..."/>
 		<control caption="_Cancel"/>
 	</dialog>
-
 	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Edit Download">
 		<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
 		<control caption="Filename and Si_ze:"/>
@@ -4185,7 +4011,6 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Open Torrent File">
 		<control/>
 		<control caption="You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?"/>
@@ -4195,7 +4020,6 @@
 		<control caption="To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."/>
 		<control/>
 	</dialog>
-
 	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="General">
 		<control caption="Torrent _Information:"/>
 		<control caption="Name:"/>
@@ -4214,7 +4038,6 @@
 		<control caption="Notes:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Files">
 		<control caption="Torrent _Information:"/>
 		<control caption="Name:"/>
@@ -4222,7 +4045,6 @@
 		<control caption="_Files:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
 		<control caption="Torrent _Information:"/>
 		<control caption="Name:"/>
@@ -4240,7 +4062,6 @@
 		<control caption="Tracker Mode:"/>
 		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Properties">
 		<control caption="_Name:"/>
 		<control/><control/>
@@ -4253,7 +4074,6 @@
 		<control caption="Completed File _Folder:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Select Visualisation">
 		<control/>
 		<control caption="Select an audio visualisation from the list:"/>
@@ -4263,7 +4083,6 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
-
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Upgrade Alert">
 		<control/>
 		<control caption="A new version of Shareaza is now available.  Would you like to upgrade?"/>
@@ -4272,13 +4091,11 @@
 		<control caption="Don't check for new versions"/>
 		<control caption="Don't Upgrade"/>
 	</dialog>
-
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Download Reviews">
 		<control/>
 		<control caption="OK"/>
 		<control/><control/>
 	</dialog>
-
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Localisation">
 		<control caption="OK"/>
 		<control caption="Cancel"/>
@@ -4286,7 +4103,6 @@
 		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
 	</dialog>
 </dialogs>
-
 <!-- Columns Definitions -->
 <listColumns>
 	<list name="CLibraryWnd">
