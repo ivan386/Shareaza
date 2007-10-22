@@ -257,8 +257,8 @@ page_viruswarning_subtitle=Do you have an AntiVirus program installed?
 CreateDesktopIcon=Display a &desktop icon
 CreateQuickLaunchIcon=Display a &Quick Launch icon
 PathNotExist=Error, the path of the %1 folder doesn't exist
-page_viruswarning_link=http://www.shareaza.com/securityhelp
-page_viruswarning_destination=http://www.shareaza.com/securityhelp/
+page_viruswarning_link=http://shareaza.sourceforge.net/securityhelp
+page_viruswarning_destination=http://shareaza.sourceforge.net/securityhelp/
 ; Don't copy these last 2 messages, they are just links.
 ; Dutch
 nl.components_plugins=Plugins
