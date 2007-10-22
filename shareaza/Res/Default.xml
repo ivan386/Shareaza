@@ -1450,16 +1450,24 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">G E T &#160; C O N N E C T E D</heading>
 			<newline gap="8" indent="42"/>
-			<text>Welcome to Shareaza! &#160;You are not currently connected to any peer to peer networks. &#160;</text>
+			<text>Welcome to Shareaza!</text>
+			<newline gap="8" indent="42"/>
+			<text>You are not currently connected to any peer to peer networks. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Click here to start!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">S E A R C H &#160; S H A R E A Z A</heading>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">S T A R T &#160; D O W N L O A D</heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Click here to start</link>
+			<text align="middle">&#160; direct downloading a new file or torrent.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
+			<heading align="middle">S E A R C H &#160; F O R &#160; F I L E</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
@@ -1524,13 +1532,6 @@
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Quick Help</link>
 		<text align="middle">&#160;- Get some basic help using Shareaza</text>
 		<newline gap="18" indent="0"/>
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">M Y &#160; D O W N L O A D S</heading>
-		<newline gap="8" indent="42"/>
-		<text>To open the folder with your downloads </text>
-		<link target="raza:shell:downloads">click here</link>
-		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">R E M O T E &#160; A C C E S S &#160; I S &#160; E N A B L E D</heading>
@@ -1573,8 +1574,10 @@
 			<text id="LibraryFiles" format="b">%lu </text>
 			<text>files, </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Go to My Library</link>
+			<newline gap="4"/>
+			<link format="bu" target="raza:shell:downloads">Explore My Library</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>Shareaza is scanning and processing </text>
