@@ -98,7 +98,7 @@ function onMouseOut(el)
 	<body text="white" bgColor="#300000" leftMargin="0" topMargin="0">
 		<table width="100%" cellpadding="0" cellspacing="0" height="56" background="title_back.gif">
 			<tr>
-				<td width="78"><a href="http://www.shareaza.com/download"><img src="icon.gif" width="72" height="72" border="0" alt="Download Shareaza"></a></td>
+				<td width="78"><a href="http://shareaza.sourceforge.net/?id=download"><img src="icon.gif" width="72" height="72" border="0" alt="Download Shareaza"></a></td>
 				<td align="center" valign="top" style="padding: 3px"><b>$1$</b></td>
 			</tr>
 		</table>

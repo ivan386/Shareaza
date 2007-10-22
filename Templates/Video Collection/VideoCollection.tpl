@@ -98,7 +98,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tbody>
 		<tr>
-			<td style="background-image: url('images/bg.png');" align="left" valign="top"><a href="http://www.shareaza.com/"><img src="images/Top.png" width="650" height="84" border="0" alt="Shareaza P2P"/></a></td>
+			<td style="background-image: url('images/bg.png');" align="left" valign="top"><a href="http://shareaza.sourceforge.net/?id=download"><img src="images/Top.png" width="650" height="84" border="0" alt="Shareaza P2P"/></a></td>
 			<td style="background: url('images/top-tile.jpg') repeat-x;" width="100%">&nbsp;</td>
 		</tr>
 		<tr>
