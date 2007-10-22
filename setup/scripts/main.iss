@@ -59,9 +59,9 @@ MinVersion=4.0,4.0sp6
 SourceDir=..\..
 
 ; links to website for software panel
-AppPublisherURL=http://www.shareaza.com/
-AppSupportURL=http://www.shareaza.com/?id=support
-AppUpdatesURL=http://www.shareaza.com/?id=download
+AppPublisherURL=http://shareaza.sourceforge.net/
+AppSupportURL=http://shareaza.sourceforge.net/?id=support
+AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
 
 [Tasks]
 Name: "language"; Description: "{cm:tasks_languages}";

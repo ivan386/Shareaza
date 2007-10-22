@@ -33,9 +33,9 @@ WizardSmallImageFile=setup\misc\WizardImages\Small\OtherModernSmall01.bmp
 SourceDir=..\..
 
 ; links to website for software panel
-AppPublisherURL=http://www.shareaza.com/TorrentAid/
-AppSupportURL=http://www.shareaza.com/?id=support
-AppUpdatesURL=http://www.shareaza.com/TorrentAid/?id=download
+AppPublisherURL=http://shareaza.sourceforge.net/TorrentAid/
+AppSupportURL=http://shareaza.sourceforge.net/?id=support
+AppUpdatesURL=http://shareaza.sourceforge.net/TorrentAid/?id=download
 
 [Files]
 ; Install unicows.dll on Win 9X
