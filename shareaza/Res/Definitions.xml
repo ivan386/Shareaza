@@ -88,6 +88,7 @@
 	<resource code="32822" id="ID_HOSTCACHE_G1_CACHE"/>
 	<resource code="32823" id="ID_SEARCH_COLUMNS"/>
 	<resource code="32824" id="ID_SEARCH_DOWNLOADNOW"/>
+	<resource code="32825" id="ID_OPEN_DOWNLOADS_FOLDER"/>
 	<resource code="32826" id="ID_DOWNLOADS_RESUME"/>
 	<resource code="32828" id="ID_DOWNLOADS_CLEAR_COMPLETED"/>
 	<resource code="32829" id="ID_DOWNLOADS_SOURCES"/>

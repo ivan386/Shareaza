@@ -179,6 +179,8 @@ protected:
 	afx_msg void OnToolsDownload();
 	afx_msg void OnUpdateToolsImportDownloads(CCmdUI* pCmdUI);
 	afx_msg void OnToolsImportDownloads();
+	afx_msg void OnUpdateOpenDownloadsFolder(CCmdUI* pCmdUI);
+	afx_msg void OnOpenDownloadsFolder();
 	afx_msg void OnUpdateViewSecurity(CCmdUI* pCmdUI);
 	afx_msg void OnViewSecurity();
 	afx_msg void OnUpdateWindowCascade(CCmdUI* pCmdUI);

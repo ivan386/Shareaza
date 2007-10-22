@@ -190,6 +190,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_TOOLS_DOWNLOAD, OnToolsDownload)
 	ON_UPDATE_COMMAND_UI(IDC_IMPORT_DOWNLOADS, OnUpdateToolsImportDownloads)
 	ON_COMMAND(IDC_IMPORT_DOWNLOADS, OnToolsImportDownloads)
+	ON_UPDATE_COMMAND_UI(ID_OPEN_DOWNLOADS_FOLDER, OnUpdateOpenDownloadsFolder)
+	ON_COMMAND(ID_OPEN_DOWNLOADS_FOLDER, OnOpenDownloadsFolder)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SECURITY, OnUpdateViewSecurity)
 	ON_COMMAND(ID_VIEW_SECURITY, OnViewSecurity)
 	ON_UPDATE_COMMAND_UI(ID_WINDOW_CASCADE, OnUpdateWindowCascade)
@@ -2131,6 +2133,19 @@ void CMainWnd::OnToolsImportDownloads()
 	CDonkeyImportDlg dlg;
 	dlg.m_pImporter.AddFolder( szPath );
 	dlg.DoModal();
+}
+
+void CMainWnd::OnUpdateOpenDownloadsFolder(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( IsWindowEnabled() );
+}
+
+void CMainWnd::OnOpenDownloadsFolder() 
+{
+	CMainWnd* pMainWnd = theApp.SafeMainWnd();
+
+	if ( pMainWnd )
+		ShellExecute( pMainWnd->GetSafeHwnd(), _T("open"), Settings.Downloads.CompletePath, NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnToolsSkin() 
