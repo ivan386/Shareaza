@@ -1,29 +1,22 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Default French Skin File -->
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
 <!-- which you changed! Including sections you did not edit will reduce performance and limit -->
 <!-- compatibility with future versions and other skins. -->
-<!-- Special characters used in French:
-Umlauts:
-	&#156; œ	&#140; Œ
-	&#224; à	&#192; À
-	&#232; è	&#200; È
-	&#233; é	&#201; É
-	&#234; ê	&#202; Ê
-	&#238; î	&#206; Î
-	&#244; ô	&#212; Ô
-	&#249; ù	&#217; Ù
-
-Other:
-	&#231; ç	&#199; Ç
--->
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
-
 <!-- Manifest -->
-<manifest name="Français" author="Antoine Martin-Lalande (Sensi)" updateBy="CRF" description="Shareaza French Skin File" link="http://www.shareaza.com/" email="shareaza.fr(at)gmail.com" version="2.2.5.1" type="Language" language="fr" prompt="Cliquez ici pour utiliser Shareaza en Français."/>
-
+<manifest name="Français" author="Antoine Martin-Lalande (Sensi)"
+	updateBy="CRF"
+	description="Shareaza French Skin File"
+	link="http://www.shareaza.com/"
+	email="shareaza.fr(at)gmail.com"
+	version="2.2.5.1"
+	type="Language"
+	language="fr"
+	prompt="Cliquez ici pour utiliser Shareaza en Français."
+/>
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->
@@ -479,7 +472,7 @@ Other:
 		</menu>
 		<menu text="Ai_de">
 			<item id="ID_HELP_FAQ" text="_FAQ Shareaza"/>
-			 <item id="ID_HELP_TEST" text="Test de _connexion"/>
+			<item id="ID_HELP_TEST" text="Test de _connexion"/>
 			<separator/>
 			<menu text="_Guides">
 				<item id="ID_HELP_GUIDE" text="_Guide utilisateurs Shareaza"/>
@@ -494,7 +487,7 @@ Other:
 				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_A propos de Shareaza..."/>
@@ -573,7 +566,7 @@ Other:
 		</menu>
 		<menu text="Ai_de">
 			<item id="ID_HELP_FAQ" text="_FAQ Shareaza"/>
-			 <item id="ID_HELP_TEST" text="Test de _connexion"/>
+			<item id="ID_HELP_TEST" text="Test de _connexion"/>
 			<separator/>
 			<menu text="_Guides">
 				<item id="ID_HELP_GUIDE" text="_Guide utilisateurs Shareaza"/>
@@ -588,7 +581,7 @@ Other:
 				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_A propos de Shareaza..."/>
@@ -661,7 +654,7 @@ Other:
 		</menu>
 		<menu text="Ai_de">
 			<item id="ID_HELP_FAQ" text="_FAQ Shareaza"/>
-			 <item id="ID_HELP_TEST" text="Test de _connexion"/>
+			<item id="ID_HELP_TEST" text="Test de _connexion"/>
 			<separator/>
 			<menu text="_Guides">
 				<item id="ID_HELP_GUIDE" text="_Guide utilisateurs Shareaza"/>
@@ -676,7 +669,7 @@ Other:
 				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_A propos de Shareaza..."/>
@@ -938,7 +931,7 @@ Other:
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Prévisualiser"/>
-		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Télé-prévisualis_er"/> <!-- I invented this word! (crf) -->
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Télé-prévisualis_er"/><!-- I invented this word! (crf) -->
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Voir les revues"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Reprendre le téléchargement"/>
@@ -1497,7 +1490,7 @@ Other:
 			</style>
 			<style name="heading">
 				<font face="Trebuchet MS" size="16" weight="800"/>
-				</style>
+			</style>
 		</styles>
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
@@ -1717,10 +1710,10 @@ Other:
 			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Re-seed %s</link>
 			<newline gap="4"/>
 			<group id="1">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed d'un autre torrent</link>
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed d'un autre torrent</link>
 			</group>
 			<group id="2">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed d'un torrent</link>
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed d'un torrent</link>
 			</group>
 		</para>
 	</document>
@@ -1936,16 +1929,16 @@ Other:
 		<newline gap="4"/>
 		<text>Si la vitesse n'augmente pas, cela est peut être dû à la vitesse d'envoi limitée des utilisateurs desquels vous téléchargez. La vitesse peut s'augmenter au cours du temps.</text>
 	</document>
-<document name="DownloadHelp.Pending">
-	<text format="b">Ce téléchargement est en suspens</text>
-	<newline gap="8"/>
-	<text>Ce téléchargement attend que quelqu'un commence l'envoi du fichier. Shareaza est prêt à commencer à télécharger ce fichier, mais personne ne l'envoi en ce moment.</text>
-	<newline gap="8"/>
-	<text>Vous êtes probablement en attente dans les files d'autres utilisateurs, et le téléchargement peut débuter à tout moment.
+	<document name="DownloadHelp.Pending">
+		<text format="b">Ce téléchargement est en suspens</text>
+		<newline gap="8"/>
+		<text>Ce téléchargement attend que quelqu'un commence l'envoi du fichier. Shareaza est prêt à commencer à télécharger ce fichier, mais personne ne l'envoi en ce moment.</text>
+		<newline gap="8"/>
+		<text>Vous êtes probablement en attente dans les files d'autres utilisateurs, et le téléchargement peut débuter à tout moment.
 	Vous pouvez examiner les sources individuelles afin de voir chacune des files dans lesquelles vous êtes en attente.
 	Si vous partagez vous même des fichiers, cela peut améliorer vos chances de commencer un transfert de téléchargement rapidement.
 	</text>
-</document>
+	</document>
 	<document name="DownloadHelp.Queued">
 		<text format="b">Ce téléchargement est en attente dans une file</text>
 		<newline gap="8"/>
@@ -2256,7 +2249,7 @@ Other:
 	<tip id="ID_MEDIA_PLAY" message="Lancer la lecture du fichier media actuel." tip="Lecture"/>
 	<tip id="ID_MEDIA_PLAYLIST" message="Afficher ou masquer l'éditeur de liste de lecture."/>
 	<tip id="ID_MEDIA_PREVIOUS" message="Revenir au fichier précédent dans la liste de lecture actuelle." tip="Fichier précédent"/>
-	<tip id="ID_MEDIA_PROPERTIES" message="Voir ou éditer les propriétés des fichiers sélectionner." />
+	<tip id="ID_MEDIA_PROPERTIES" message="Voir ou éditer les propriétés des fichiers sélectionner."/>
 	<tip id="ID_MEDIA_RANDOM" message="Basculer la liste de lecture actuelle en mode lecture aléatoire."/>
 	<tip id="ID_MEDIA_RATE" message="Ecriver des evaluations pour les fichiers sélectionner."/>
 	<tip id="ID_MEDIA_REMOVE" message="Enlever le fichier média sélectionné de la liste de lecture."/>
@@ -2391,7 +2384,7 @@ Other:
 	<tip id="ID_WINDOW_TILE_HORZ" message="Arrange les fenêtres ouvertes en tuiles horizontales."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Arrange les fenêtres ouvertes en tuiles verticales."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Afficher ou masquer la barre d'outils."/>
-		<!-- PLUGIN TIPS -->
+	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Mettre l'image à la taille de la fenêtre."/>
 	<tip id="ImageViewer_ActualSize" message="Mettre l'image à sa taille réelle."/>
 	<tip id="ImageViewer_Refresh" message="Rafraîchir l'image."/>
@@ -2894,7 +2887,7 @@ Other:
 	<string id="16995" value="Le fichier est endommagé, ou vous n'avez pas les bons codecs pour le lire."/>
 	<string id="16996" value="Une partie de ce fichier ne peut être jouée, vous devriez télécharger des codecs additionnels."/>
 	<string id="16997" value="Aucun fichier en lecture. Double-cliquez un fichier média dans votre bibliothèque pour le lire."/>
-	<string id="16998" value="L&#160;&#160;E&#160;&#160;C&#160;&#160;T&#160;&#160;E&#160;&#160;U&#160;&#160;R&#160;&#160;&#160;&#160;&#160;&#160;M&#160;&#160;U&#160;&#160;L&#160;&#160;T&#160;&#160;I&#160;&#160;M&#160;&#160;E&#160;&#160;D&#160;&#160;I&#160;&#160;A&#160;&#160;&#160;&#160;&#160;&#160;S&#160;&#160;H&#160;&#160;A&#160;&#160;R&#160;&#160;E&#160;&#160;A&#160;&#160;Z&#160;&#160;A"/> <!-- on one line -->
+	<string id="16998" value="L&#160;&#160;E&#160;&#160;C&#160;&#160;T&#160;&#160;E&#160;&#160;U&#160;&#160;R&#160;&#160;&#160;&#160;&#160;&#160;M&#160;&#160;U&#160;&#160;L&#160;&#160;T&#160;&#160;I&#160;&#160;M&#160;&#160;E&#160;&#160;D&#160;&#160;I&#160;&#160;A&#160;&#160;&#160;&#160;&#160;&#160;S&#160;&#160;H&#160;&#160;A&#160;&#160;R&#160;&#160;E&#160;&#160;A&#160;&#160;Z&#160;&#160;A"/><!-- on one line -->
 	<string id="16999" value="L&#160;i&#160;s&#160;t&#160;e&#160;&#160;&#160;d&#160;e&#160;&#160;&#160;l&#160;e&#160;c&#160;t&#160;u&#160;r&#160;e"/>
 	<string id="17024" value="Initialisation d'une connexion vers %s..."/>
 	<string id="17025" value="Impossible de créer une connexion vers %s."/>
@@ -3036,7 +3029,7 @@ Other:
 	<string id="19002" value="Incapable d'accepter des connexions, URL indisponible."/>
 	<string id="20000" value="Pas d'URN disponible"/>
 	<string id="20001" value="Fermer"/>
-	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
+	<string id="20002" value="de"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Changer la direction de l'interface exige un redémarrage. \nVous aurez besoin de redémarrer manuellement. Sortir maintenant?"/>
 	<string id="20004" value="Les langues écrites de droite vers la gauche ne sont pas supportées dans votre OS."/>
 	<string id="20005" value="Non"/>
@@ -3075,10 +3068,10 @@ Other:
 	<string id="20126" value="Non vérifié"/>
 	<string id="20127" value="source"/>
 	<string id="20128" value="sources"/>
-	<string id="20129" value="sources"/> <!-- tens -->
-	<string id="20130" value="sources"/> <!-- from 11 to 19 -->
-	<string id="20131" value="sources"/> <!-- from 2 to 4 -->
-	<string id="20132" value="sources"/> <!-- from 5 to 9 -->
+	<string id="20129" value="sources"/><!-- tens -->
+	<string id="20130" value="sources"/><!-- from 11 to 19 -->
+	<string id="20131" value="sources"/><!-- from 2 to 4 -->
+	<string id="20132" value="sources"/><!-- from 5 to 9 -->
 	<string id="20133" value="Non intéressé"/>
 	<string id="20134" value="Occupé"/>
 	<string id="20135" value="Suivant"/>
@@ -3110,7 +3103,7 @@ Other:
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Réglages Shareaza"> <!--This can be is ignored or removed. Also there is some business unique to win98 I think. Try changing cookie to SyBuBuBu#3 if you're on that os. -->
+	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Réglages Shareaza"><!--This can be is ignored or removed. Also there is some business unique to win98 I think. Try changing cookie to SyBuBuBu#3 if you're on that os. -->
 		<control/>
 		<control caption="Valider"/>
 		<control caption="Annuler"/>
@@ -4040,7 +4033,7 @@ Other:
 		<control caption="Pour partager des fichiers complets avec BitTorrent il faut les mettre en seed. Une fois ce processus terminé le Torrent apparaitra dans votre liste de téléchargements."/>
 		<control/>
 	</dialog>
-		<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Général">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Général">
 		<control caption="_Information Torrent:"/>
 		<control caption="Nom:"/>
 		<control/>
@@ -4110,7 +4103,7 @@ Other:
 		<control caption="_Mettre à Jour"/>
 		<control caption="Ne pas vérifier les MàJ"/>
 		<control caption="Ne pas MàJ"/>
-		</dialog>
+	</dialog>
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Télécharger les Revues">
 		<control/>
 		<control caption="Valider"/>
@@ -4262,21 +4255,21 @@ Other:
 </listColumns>
 <!-- Tips displayed when mouse is moved over controls in the dialogs  -->
 <tipMap>
-<control code="1050" id="IDC_MAX_TRANSFERS"/>
-<control code="1228" id="IDC_AGENT_LIST"/>
-<!--1374, idc_throttle_mode is already included in Shareaza-->
-<control code="1389" id="IDC_TORRENT_CLIENTLINKS"/>
-<control code="1394" id="IDC_TORRENT_AUTOCLEAR"/>
-<control code="1397" id="IDC_G2_CLIENTMODE"/>
-<control code="1409" id="IDC_G2_ALWAYS"/>
+	<control code="1050" id="IDC_MAX_TRANSFERS"/>
+	<control code="1228" id="IDC_AGENT_LIST"/>
+	<!--1374, idc_throttle_mode is already included in Shareaza-->
+	<control code="1389" id="IDC_TORRENT_CLIENTLINKS"/>
+	<control code="1394" id="IDC_TORRENT_AUTOCLEAR"/>
+	<control code="1397" id="IDC_G2_CLIENTMODE"/>
+	<control code="1409" id="IDC_G2_ALWAYS"/>
 </tipMap>
 <controlTips>
-<tip id="IDC_MAX_TRANSFERS" message="20 à 60 devra être suffissant: c'est rarement le cas qu'une connexion peut soutenir un nombre trop haussé."/>
-<tip id="IDC_AGENT_LIST" message="Liste d'agents que vous ne voulez jamais connecter."/>
-<tip id="IDC_THROTTLE_MODE" message="Sur maximum, la bande passante ne dépassera la limite. Sur moyen, elle se varie autour la limite."/>
-<tip id="IDC_TORRENT_CLIENTLINKS" message="15 à 40 connexions devra être suffissante."/>
-<tip id="IDC_TORRENT_AUTOCLEAR" message="Quand le ratio d'envoi est dépasser pour un torrent en seed, Shareaza va terminer les envois pour ce torrent."/>
-<tip id="IDC_G2_CLIENTMODE" message="Sur Auto, Shareaza peut decider si votre noeud sera un hub. Si vous ne voulez jamais être un hub, choisissez leaf"/>
-<tip id="IDC_G2_ALWAYS" message="G2 va connecter de façon automatique. On peut le prévenir avec la règle avancée: Gnutella2.EnableAlways=false."/>
+	<tip id="IDC_MAX_TRANSFERS" message="20 à 60 devra être suffissant: c'est rarement le cas qu'une connexion peut soutenir un nombre trop haussé."/>
+	<tip id="IDC_AGENT_LIST" message="Liste d'agents que vous ne voulez jamais connecter."/>
+	<tip id="IDC_THROTTLE_MODE" message="Sur maximum, la bande passante ne dépassera la limite. Sur moyen, elle se varie autour la limite."/>
+	<tip id="IDC_TORRENT_CLIENTLINKS" message="15 à 40 connexions devra être suffissante."/>
+	<tip id="IDC_TORRENT_AUTOCLEAR" message="Quand le ratio d'envoi est dépasser pour un torrent en seed, Shareaza va terminer les envois pour ce torrent."/>
+	<tip id="IDC_G2_CLIENTMODE" message="Sur Auto, Shareaza peut decider si votre noeud sera un hub. Si vous ne voulez jamais être un hub, choisissez leaf"/>
+	<tip id="IDC_G2_ALWAYS" message="G2 va connecter de façon automatique. On peut le prévenir avec la règle avancée: Gnutella2.EnableAlways=false."/>
 </controlTips>
 </skin>
