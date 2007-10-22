@@ -550,14 +550,33 @@ CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
 BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
 {
 	int nLength = lstrlen( lpszFileName );
-	if ( nLength > 8 && lstrcmpi ( lpszFileName + nLength - 8, _T(".torrent") ) == 0 )
+	if ( nLength > 8 && ! lstrcmpi( lpszFileName + nLength - 8, _T(".torrent") ) )
 		return OpenTorrent( lpszFileName, bDoIt );
-	else if ( nLength > 3 && lstrcmpi ( lpszFileName + nLength - 3, _T(".co") ) == 0 )
+	else if ( nLength > 3 && ! lstrcmpi( lpszFileName + nLength - 3, _T(".co") ) )
 		return OpenCollection( lpszFileName, bDoIt );
-	else if ( nLength > 11 && lstrcmpi ( lpszFileName + nLength - 11, _T(".collection") ) == 0 )
+	else if ( nLength > 11 && ! lstrcmpi( lpszFileName + nLength - 11, _T(".collection") ) )
 		return OpenCollection( lpszFileName, bDoIt );
+	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".url") ) )
+		return OpenInternetShortcut( lpszFileName, bDoIt );
+	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".lnk") ) )
+		return OpenShellShortcut( lpszFileName, bDoIt );
 	else
 		return OpenURL( lpszFileName, bDoIt );
+}
+
+BOOL CShareazaApp::OpenShellShortcut(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	CString sPath( ResolveShortcut( lpszFileName ) );
+	return sPath.GetLength() && Open( sPath, bDoIt );
+}
+
+BOOL CShareazaApp::OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	CString sURL;
+	BOOL bResult = ( GetPrivateProfileString( _T("InternetShortcut"), _T("URL"),
+		_T(""), sURL.GetBuffer( MAX_PATH ), MAX_PATH, lpszFileName ) > 3 );
+	sURL.ReleaseBuffer();
+	return bResult && sURL.GetLength() && OpenURL( sURL, bDoIt );
 }
 
 BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
@@ -2088,4 +2107,27 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 			SetFileAttributes( sFilename, dwOrigAttr );
 	}
 	return bSuccess;
+}
+
+CString ResolveShortcut(LPCTSTR lpszFileName)
+{
+	CComPtr< IShellLink > pIShellLink;
+	if ( SUCCEEDED( pIShellLink.CoCreateInstance( CLSID_ShellLink ) ) )
+	{
+		CComPtr< IPersistFile > pIPersistFile;
+		pIPersistFile = pIShellLink;
+		if ( pIPersistFile &&
+			SUCCEEDED( pIPersistFile->Load( CComBSTR( lpszFileName ), STGM_READ ) ) &&
+			SUCCEEDED( pIShellLink->Resolve( AfxGetMainWnd()->GetSafeHwnd(), SLR_NO_UI |
+			SLR_NOUPDATE | SLR_NOSEARCH | SLR_NOTRACK | SLR_NOLINKINFO ) ) )
+		{
+			CString sPath;
+			BOOL bResult = SUCCEEDED( pIShellLink->GetPath( sPath.GetBuffer( MAX_PATH ),
+				MAX_PATH, NULL, 0 ) );
+			sPath.ReleaseBuffer();
+			if ( bResult )
+				return sPath;
+		}
+	}
+	return CString();
 }

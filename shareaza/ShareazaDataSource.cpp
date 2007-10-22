@@ -448,9 +448,20 @@ HRESULT CShareazaDataSource::ObjectToFiles(IDataObject* pIDataObject, CList < CS
 				UINT nCount = DragQueryFile( hDropInfo, 0xFFFFFFFF, NULL, 0 );
 				for ( UINT nFile = 0 ; nFile < nCount ; nFile++ )
 				{
-					TCHAR szFile[MAX_PATH * 2];
-					DragQueryFile( hDropInfo, nFile, szFile, MAX_PATH * 2 );
-					oFiles.AddTail( szFile );
+					CString sFile;
+					DragQueryFile( hDropInfo, nFile, sFile.GetBuffer( MAX_PATH ), MAX_PATH );
+					sFile.ReleaseBuffer();
+
+					if ( sFile.GetLength() > 4 && ! lstrcmpi( (LPCTSTR)sFile +
+						sFile.GetLength() - 4, _T(".lnk") ) )
+					{
+						 sFile = ResolveShortcut( sFile );
+					}
+
+					if ( sFile.GetLength() )
+					{
+						oFiles.AddTail( sFile );
+					}
 				}
 				hr = ( oFiles.GetCount() > 0 ) ? S_OK : S_FALSE;
 				GlobalUnlock( medium.hGlobal );
@@ -520,19 +531,48 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 					ASSERT( pAFOP );
 					pAFOP->hWnd = AfxGetMainWnd()->GetSafeHwnd();
 					pAFOP->dwEffect = *pdwEffect;
+
 					pAFOP->sTo = pszDest;
-					pAFOP->sTo.Append( _T(""), 1 );							// must be double null terminated
-					LPCTSTR pFrom = (LPCTSTR)( (char*)pdf + pdf->pFiles );	// must be double null terminated
+					pAFOP->sTo.Append( _T(""), 1 );		// must be double null terminated
 
 					if ( ! pdf->fWide )
 					{	
-						// ANSI -> UNICODE
-						int nWide = MultiByteToWideChar( CP_ACP, 0, (LPCSTR) pFrom, (int)size, NULL, 0 );
-						MultiByteToWideChar( CP_ACP, 0, (LPCSTR) pFrom, (int)size, pAFOP->sFrom.GetBuffer( nWide ), nWide );
-						pAFOP->sFrom.ReleaseBuffer( nWide );
+						// ANSI
+						for ( LPCSTR pFrom = (LPCSTR)( (char*)pdf + pdf->pFiles );
+							*pFrom; pFrom += lstrlenA( pFrom ) + 1 )
+						{
+							// ANSI -> UNICODE
+							CString sFile( pFrom );
+							if ( sFile.GetLength() > 4 && ! lstrcmpi( (LPCTSTR)sFile +
+								sFile.GetLength() - 4, _T(".lnk") ) )
+							{
+								sFile = ResolveShortcut( sFile );
+							}
+							if ( sFile.GetLength() )
+							{
+								pAFOP->sFrom.Append( sFile, sFile.GetLength() + 1 );
+							}
+						}
 					}
 					else
-						pAFOP->sFrom.Append( pFrom, (int)size / sizeof( TCHAR ) );
+					{
+						// UNICODE
+						for ( LPCWSTR pFrom = (LPCWSTR)( (char*)pdf + pdf->pFiles );
+							*pFrom; pFrom += lstrlenW( pFrom ) + 1 )
+						{
+							CString sFile( pFrom );
+							if ( sFile.GetLength() > 4 && ! lstrcmpi( (LPCTSTR)sFile +
+								sFile.GetLength() - 4, _T(".lnk") ) )
+							{
+								sFile = ResolveShortcut( sFile );
+							}
+							if ( sFile.GetLength() )
+							{
+								pAFOP->sFrom.Append( sFile, sFile.GetLength() + 1 );
+							}
+						}
+					}
+					pAFOP->sFrom.Append( _T(""), 1 );	// must be double null terminated
 
 					GlobalUnlock( medium.hGlobal );
 

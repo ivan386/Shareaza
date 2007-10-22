@@ -140,20 +140,29 @@ public:
 	CString				GetCountryName(IN_ADDR pAddress) const;
 
 	CFontManager*		m_pFontManager;
-
-	virtual BOOL		InitInstance();
-	virtual int			ExitInstance();
-	virtual void		WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
+	
+	// Open file or url. Returns NULL always.
 	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);
-
+	// Open file or url (generic function)
 	static BOOL			Open(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open .lnk file
+	static BOOL			OpenShellShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open .url file
+	static BOOL			OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open .torrent file
 	static BOOL			OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open .co or .collection file
 	static BOOL			OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open url
 	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt);
 
 protected:
 	mutable CCriticalSection	m_csMessage;
 	CShareazaCommandLineInfo	m_ocmdInfo;
+
+	virtual BOOL		InitInstance();
+	virtual int			ExitInstance();
+	virtual void		WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
 
 	void				GetVersionNumber();
 	void				InitResources();
@@ -218,6 +227,9 @@ bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID);
 
 // Save GUID to NTFS stream of file
 bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID);
+
+// Resolve shell shortcut (.lnk file)
+CString ResolveShortcut(LPCTSTR lpszFileName);
 
 typedef enum
 {
