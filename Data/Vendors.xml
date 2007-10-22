@@ -4,7 +4,7 @@
 	
 	<vendor code="RAZA">
 		<title>Shareaza</title>
-		<link>http://www.shareaza.com/</link>
+		<link>http://shareaza.sourceforge.net/</link>
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
 		<capability name="extended"/>
@@ -12,7 +12,7 @@
 
 	<vendor code="RAZB">
 		<title>ShareazaBeta</title>
-		<link>http://www.shareaza.com/beta/</link>
+		<link>http://shareaza.sourceforge.net/beta/</link>
 		<capability name="htmlHostBrowse"/>
 		<capability name="chatFlag"/>
 		<capability name="extended"/>
