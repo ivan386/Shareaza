@@ -480,7 +480,7 @@
 			</menu>
 			<separator/>
 			<menu text="Strony www">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Forum Shareazy"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -571,7 +571,7 @@
 			</menu>
 			<separator/>
 			<menu text="Strony www">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Forum Shareazy"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -656,7 +656,7 @@
 			</menu>
 			<separator/>
 			<menu text="Strony www">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Forum Shareazy"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Najświeższe wiadomości"/>
@@ -2066,7 +2066,7 @@
 		<text>Większość programów do tworzenia torrentów powinna pozwolić ci naprawić ten problem,
 		co sprawi, że będzie można pobierać ten torrent poprawnie w prawie wszystkich programach.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Kliknij tutaj po dodatkową pomoc</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Kliknij tutaj po dodatkową pomoc</link>
 		<text>, lub aby pobrać program do naprawy torrentów.</text>
 </document>
 
@@ -2517,7 +2517,7 @@
 	<string id="8007" value="Brak aktywnych wyszukiwań. Kliknij tutaj, aby wyszukać pliki."/>
 	<string id="8008" value="Shareaza zakończyła pobieranie nowej wersji programu (%s).  Czy chciałbyś upgradeować teraz?\n\nJeżeli wybierzesz tak, Shareaza zamknie się na czas instalacji aktualizacji."/>
 	<string id="8009" value="Czy jesteś pewien że chcesz usunąć skórę ? &quot;%s&quot;  Ta operacja jest nieodwracalna."/>
-	<string id="8010" value="To jest wersja beta Shareazy wydana tylko na czas testów.  Proszę ściągnąć pełną oficjalną wersje ze strony www.shareaza.com."/>
+	<string id="8010" value="To jest wersja beta Shareazy wydana tylko na czas testów.  Proszę ściągnąć pełną oficjalną wersje ze strony http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Zmiana widoku spowoduje zamknięcie wszystkich okien .  Czy chciałbyś zrobić to teraz?"/>
 	<string id="8060" value="Tryb Hub/Ultrapeer z %lu Sąsiadem(ami).  %s w lokalnej bibliotece."/>
 	<string id="8061" value="Tryb Ultrapeer z %lu Sąsiadem(ami).  %s w lokalnej bibliotece."/>
@@ -4024,9 +4024,9 @@
 		<control caption="Did you know Shareaza is a 100% free product?"/>
 		<control caption="Shareaza does NOT contain ANY &quot;spyware&quot;, &quot;adware&quot; or other bundled software. It does NOT display any advertisements or &quot;popups&quot;, ever.{n}{n}If you ever see advertising or &quot;popups&quot; while using Shareaza, be assured that they are NOT coming from this program."/>
 		<control caption="Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."/>
-		<control caption="You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from www.shareaza.com.  If you paid someone money for Shareaza, you should demand a full refund immediately."/>
+		<control caption="You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/.  If you paid someone money for Shareaza, you should demand a full refund immediately."/>
 		<control caption="Shareaza respects its users!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Zamknij"/>
 	</dialog>
 
@@ -4037,7 +4037,7 @@
 		<control caption="Unfortunately, a lot of file sharers don't know what they're missing!"/>
 		<control caption="If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"/>
 		<control caption="Chances are they'll be grateful you rescued them!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 

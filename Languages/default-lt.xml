@@ -482,7 +482,7 @@
 			</menu>
 			<separator/>
 			<menu text="Tinkla_lapiai">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
@@ -576,7 +576,7 @@
 			</menu>
 			<separator/>
 			<menu text="Tinkla_lapiai">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
@@ -664,7 +664,7 @@
 			</menu>
 			<separator/>
 			<menu text="Tinkla_lapiai">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
@@ -2048,7 +2048,7 @@
 		<text>Dauguma torrent failų kūrimo programų turėtų leisti pataisyti šį torrent failą. Pataisymas garantuotų,
 		kad jis deramai dirbs visose BitTorrent programose.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/torrentencoding">Spauskite čia, jei reikalinga pagalba</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Spauskite čia, jei reikalinga pagalba</link>
 		<text>&#160;arba jei norite parsisiųsti torrent failų taisymo programų.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2219,7 +2219,7 @@
 	<tip id="ID_HELP_ROUTER" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
 	<tip id="ID_HELP_FORUMS" message="Apsilankyti „Shareaza“ diskusijų forumuose."/>
 	<tip id="ID_HELP_GUIDE" message="Atverti naršyklėje „Shareaza“ vartotojo vadovą."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Aplankyti Shareaza.com tinklalapį."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Aplankyti Shareaza site tinklalapį."/>
 	<tip id="ID_HELP_SECURITY" message="Sužinokite, kaip apsisaugoti nuo kenkėjų tinkluose."/>
 	<tip id="ID_HELP_UPDATE" message="Sužinokite naujienas ir apie atnaujinimus."/>
 	<tip id="ID_HELP_WEB_1" message="Aplankyti šią svetainę"/>
@@ -2490,7 +2490,7 @@
 	<string id="8007" value="Nėra aktyvių paieškos procesų. Pradėkite paiešką paspaudę čia."/>
 	<string id="8008" value="„Shareaza“ baigė parsisiųsti naujesnę „Shareaza“ versiją (%s). Ar norite dabar atnaujinti?\n\nJei pasirinksite „Taip“, „Shareaza“ laikinai baigs savo darbą, kol vyks atnaujinimas."/>
 	<string id="8009" value="Ar tikrai norite ištrinti „%s“ apvalkalą? Atstatyti vėliau bus neįmanoma."/>
-	<string id="8010" value="Tai priešišleidžiamoji „Shareaza“ versija, beta testavimo periodas baigėsi. Parsisiųskite pilną oficialią programos laidą iš www.shareaza.com."/>
+	<string id="8010" value="Tai priešišleidžiamoji „Shareaza“ versija, beta testavimo periodas baigėsi. Parsisiųskite pilną oficialią programos laidą iš http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Pakeitus peržiūros būdą, visi atverti langai bus uždaryti. Ar norite keisti tuoj pat?"/>
 	<string id="8012" value="Torrent informacija"/>
 	<string id="8060" value="Mazgas/Vedančiojo veiksena su %lu kaimynais(-ų). %s asmeninėje kolekcijoje."/>
@@ -3975,9 +3975,9 @@
 		<control caption="Ar žinote, kad „Shareaza“ yra visiškai nemokamas produktas?"/>
 		<control caption="„Shareaza“ NETURI JOKIŲ šnipinėjimo programų, reklaminių priedų ar kitokios kartu supakuotos programinės įrangos. Ji NIEKADA nerodo jokių reklamų ir joje nėra „iššokinėjančių“ langų.{n}Jei Jūs kada nors pamatysite reklamą ar „iššokinėjančius“ langus besinaudodami „Shareaza“, būkite tikri - jie ne iš šios programos."/>
 		<control caption="Deja, daug kitų programinių produktų įdiegia kartu nepageidaujamus šnipinėjimo ar reklaminius priedus, todėl, jei pamatysite ką nors įtartino, patikrinkite savo kompiuterį kokia nors šių priedų pašalinimo programa."/>
-		<control caption="Jums nereikėjo sumokėti jokių pinigų, įsigyjant „Shareaza“. „Shareazą“ gali parsisiųsti kiekvienas iš www.shareaza.com. Jei Jūs kam nors sumokėjote pinigus už „Shareaza“, Jus turėtumėte tuoj pat pareikalauti grąžinti juos."/>
+		<control caption="Jums nereikėjo sumokėti jokių pinigų, įsigyjant „Shareaza“. „Shareazą“ gali parsisiųsti kiekvienas iš http://shareaza.sourceforge.net/. Jei Jūs kam nors sumokėjote pinigus už „Shareaza“, Jus turėtumėte tuoj pat pareikalauti grąžinti juos."/>
 		<control caption="„Shareaza“ gerbia savo vartotojus!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Užverti"/>
 	</dialog>
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Pliskime Pasaulyje">
@@ -3987,7 +3987,7 @@
 		<control caption="Deja, dauguma vartotojų, besidalijančių failais, nežino, ką jie praranda!"/>
 		<control caption="Jei Jūs pažįstate ką nors, kam patiktų „Shareaza“, nesvarbu, ar jie - naujokai, ar taikstosi menkesniais produktais, tai kodėl jiems neduoti susipažinti su geresne alternatyva?"/>
 		<control caption="Tikimybė yra didelė, kad jie dėkos Jums už tai, kad juos išgelbėjote!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Gerai"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Esamo failo parsisiuntimas">

@@ -494,7 +494,7 @@
 			</menu>
 			<separator/>
 			<menu text="ウェブサイト(_W)">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazaフォーラム(_F)"/>
 				<!-- <item id="ID_HELP_UPDATE" text="最新ニュース"/>
@@ -585,7 +585,7 @@
 			</menu>
 			<separator/>
 			<menu text="ウェブサイト(_W)">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazaフォーラム(_F)"/>
 				<!-- <item id="ID_HELP_UPDATE" text="最新ニュース"/>
@@ -671,7 +671,7 @@
 			</menu>
 			<separator/>
 			<menu text="ウェブサイト(_W)">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazaフォーラム(_F)"/>
 				<!-- <item id="ID_HELP_UPDATE" text="最新ニュース"/>
@@ -2129,7 +2129,7 @@
 		<text>全てのBitTorrentアプリケーションで適切に動作するのを確実にするには、
 		Torrent生成アプリケーションでこのTorrentを修復するべきです。</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">ここで追加のヘルプを参照</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">ここで追加のヘルプを参照</link>
 		<text>するか、Torrentを修復するソフトウェアをダウンロードして下さい。</text>
 	</document>
 
@@ -2586,7 +2586,7 @@
 	<string id="8007" value="アクティブな検索はありません。ここをクリックすればファイルを検索できます"/>
 	<string id="8008" value="新しいShareazaのバージョン (%s) のダウンロードが完了しました。今すぐアップロードしますか?\n\n「はい」を選択すれば、Shareazaはアップグレードのために一時的に終了します"/>
 	<string id="8009" value="&quot;%s&quot; スキンを削除してよろしいですか?  この作業は元に戻せません"/>
-	<string id="8010" value="これはShareazaのプレリリースバージョンで、ベータテスト期間は終了しています。www.shareaza.comからオフィシャルリリースをダウンロードして下さい"/>
+	<string id="8010" value="これはShareazaのプレリリースバージョンで、ベータテスト期間は終了しています。http://shareaza.sourceforge.net/からオフィシャルリリースをダウンロードして下さい"/>
 	<string id="8011" value="画面表示の変更は現在開いている全てのウィンドウを閉じます。今すぐ変更しますか?"/>
 	<string id="8012" value="Torrent情報"/>
 	<string id="8060" value="ハブ/ウルトラピアモード 近隣接続 %lu, 共有 %s"/>
@@ -4124,9 +4124,9 @@
 		<control caption="Shareazaが100%フリーな製品であることを知っていますか?"/>
 		<control caption="Shareazaはどのような種類の &quot;スパイウェア&quot;や&quot;アドウェア&quot; も含んでいませんし、 どんな広告・ &quot;ポップアップ&quot; も表示されません。{n}{n}もしShareazaを使用中に広告や&quot;ポップアップ&quot;が表示されたとしても、 それはこのプログラムが原因ではありませんので安心して下さい。"/>
 		<control caption="残念ながら他の多くのソフトウェアは望まれていないアドウェアやスパイウェアを含んでいることがあります。 もし疑わしいものを発見したら、スパイウェア削除プログラムであなたのマシンをチェックした方が良いでしょう"/>
-		<control caption="Shareazaを取得するには一銭もかかりません。 Shareazaは誰でもwww.shareaza.comからダウンロードすることができます。 もしあなたがShareazaの為に誰かにお金を支払っていたら、今すぐ全額払い戻しを請求して下さい。"/>
+		<control caption="Shareazaを取得するには一銭もかかりません。 Shareazaは誰でもhttp://shareaza.sourceforge.net/からダウンロードすることができます。 もしあなたがShareazaの為に誰かにお金を支払っていたら、今すぐ全額払い戻しを請求して下さい。"/>
 		<control caption="Shareazaはそのユーザを尊敬しています!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="閉じる"/>
 	</dialog>
 
@@ -4137,7 +4137,7 @@
 		<control caption="残念ながら、多くのファイル共有者はShareazaの存在を知りません!"/>
 		<control caption="Shareazaの新しいユーザーになってくれるかどうかに関係なく、 出来の悪いファイル共有ソフトを使用していている人でShareazaを気に入ってくれそうな人がいれば、 Shareazaの存在を教えてあげてくれませんか?"/>
 		<control caption="きっとその人はあなたに感謝することになるでしょう!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 

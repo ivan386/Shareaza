@@ -480,7 +480,7 @@
 			</menu>
 				<separator/>
 			<menu text="Nettsider">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Siste nytt"/>
@@ -571,7 +571,7 @@
 			</menu>
 				<separator/>
 			<menu text="Nettsider">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Siste nytt"/>
@@ -656,7 +656,7 @@
 			</menu>
 				<separator/>
 			<menu text="Nettsider">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Siste nytt"/>
@@ -2079,7 +2079,7 @@
 		<text>De fleste programmer for å lage torrenter vil la deg reparere denne torrenten, noe som vil
 		sørge for at den fungerer korrekt i alle BitTorrent-programmer.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Klikk her for mer hjelp</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klikk her for mer hjelp</link>
 		<text>, eller for å laste ned programvare for å reparere torrenten.</text>
 	</document>
 
@@ -2529,7 +2529,7 @@
 	<string id="8007" value="Det er ingen aktive søk. Klikk her for å søke etter filer."/>
 	<string id="8008" value="Shareaza er ferdig med å laste ned den nyeste Shareaza versjonen (%s). Vil du oppgradere nå?\n\nHvis du velger JA, vil Shareaza lukkes for å fullføre oppgraderingen."/>
 	<string id="8009" value="Er du sikker på at du vil slette dette &quot;%s&quot; skinnet? Det kan ikke gjenopprettes."/>
-	<string id="8010" value="Dette er en test-versjon av Shareaza, beta test perioden er over. Vennligst last ned den offisielle fullversjonen fra www.shareaza.com."/>
+	<string id="8010" value="Dette er en test-versjon av Shareaza, beta test perioden er over. Vennligst last ned den offisielle fullversjonen fra http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Når du endrer utseende vil alle åpne vinduer lukkes. Vil du endre nå?"/>
 	<string id="8060" value="Hub/Ultrapeer-modus med %lu nabo(er).  %s in local library."/>
 	<string id="8061" value="Ultrapeer-modus med %lu nabo(er).  %s in local library."/>
@@ -4037,9 +4037,9 @@
 		<control caption="Visste du at Shareaza er et 100% gratis produkt?"/>
 		<control caption="Shareaza inneholder IKKE &quot;spyware&quot;, &quot;adware&quot; eller annet software. Det viser ingen reklamer eller &quot;popups&quot;,.{n}{n}Hvis du ser reklame eller &quot;popups&quot; når du bruker Shareaza, ær sikker det kommer IKKE fra Shareaza."/>
 		<control caption="Uheldigvis kommer mye programvare med uønsket adware eller spyware, så hvis du ser noe suspekt kan det være lurt å sjekke pc-en med et reklame eller spyware fjerningsprogram."/>
-		<control caption="Du skal ikke betale penger for Shareaza.  Shareaza kan lastes ned helt gratis på www.shareaza.com.  Hvis du har betalt noen for Shareaza, skal du kreve pengene tilbake øyeblikkelig."/>
+		<control caption="Du skal ikke betale penger for Shareaza.  Shareaza kan lastes ned helt gratis på http://shareaza.sourceforge.net/.  Hvis du har betalt noen for Shareaza, skal du kreve pengene tilbake øyeblikkelig."/>
 		<control caption="Shareaza respekterer sine brukere!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Lukk"/>
 	</dialog>
 
@@ -4050,7 +4050,7 @@
 		<control caption="Uheldigvis vet ikke alle fildelere hva de går glipp av!"/>
 		<control caption="Hvis du kjenner noen som vil like Shareaza, selv om de er nye brukere, eller fortsatt bruker et annet middelmådig program, la dem få vite at det finns noe mye bedre!"/>
 		<control caption="De blir sikkert veldig takknemlige for at du reddet dem!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 

@@ -491,7 +491,7 @@ Other:
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
@@ -582,7 +582,7 @@ Other:
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
@@ -667,7 +667,7 @@ Other:
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
@@ -2094,7 +2094,7 @@ Other:
 		<text>Die meisten .torrent-Erstellungsprogramme erlauben es, Torrents zu reparieren, sodass sie in
 		allen BitTorrent-Programmen richtig funktionieren.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Klicken Sie hier für weitere Informationen.</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klicken Sie hier für weitere Informationen.</link>
 	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2281,7 +2281,7 @@ Other:
 	<tip id="ID_HELP_ROUTER" message="Finden Sie Hilfe Ihren Router / Ihre Firewall zu konfigurieren."/>
 	<tip id="ID_HELP_FORUMS" message="Das Shareaza-Forum besuchen."/>
 	<tip id="ID_HELP_GUIDE" message="Das Shareaza-Handbuch anzeigen."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com besuchen." tip="Shareaza.com"/>
+	<tip id="ID_HELP_HOMEPAGE" message="Shareaza site besuchen." tip="Shareaza site"/>
 	<tip id="ID_HELP_SECURITY" message="Hinweise, wie Sie ihren Computer vor schädlichen Programmen (Viren, Spyware) schützen können."/>
 	<tip id="ID_HELP_UPDATE" message="Neueste Nachrichten und Updates."/>
 	<tip id="ID_HELP_WEB_1" message="Webseite1 besuchen"/>
@@ -2546,7 +2546,7 @@ Other:
 	<string id="8007" value="Es läuft kein Suche. Klicken Sie auf &quot;Suchen&quot; um nach Dateien zu suchen."/>
 	<string id="8008" value="Die neuste Shareaza-Version wurde heruntergeladen (%s).  Wollen Sie das Update jetzt installieren?\n\nWenn Sie auf Ja klicken wird Shareaza kurzzeitig beendet, um das Update zu installieren."/>
 	<string id="8009" value="Wollen Sie den Skin &quot;%s&quot; wirklich löschen?  Dies kann nicht rückgängig gemacht werden."/>
-	<string id="8010" value="Das ist eine Vorabversion von Shareaza. Die Betatest-Periode ist abgelaufen. Bitte laden Sie die offizielle Version von www.shareaza.com herunter."/>
+	<string id="8010" value="Das ist eine Vorabversion von Shareaza. Die Betatest-Periode ist abgelaufen. Bitte laden Sie die offizielle Version von http://shareaza.sourceforge.net/ herunter."/>
 	<string id="8011" value="Das Wechseln der Ansicht schließt alle offenen Fenster.  Wollen Sie die Ansicht jetzt wechseln?"/>
 	<string id="8012" value="Torrent-Informationen"/>
 	<string id="8060" value="Hub/Ultrapeer-Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
@@ -4084,9 +4084,9 @@ Other:
 		<control caption="Wussten Sie, dass Shareaza 100%ig kostenlose Software ist"/>
 		<control caption="Shareaza enthält KEINE &quot;spyware&quot;, &quot;adware&quot; oder andere zusätzliche Software. Es zeigt keine Werbung oder &quot;popups&quot; an.{n}{n}Wenn Sie Werbung oder &quot;popups&quot; sehen während Sie Shareaza benutzen, können Sie sicher sein, dass diese nicht von Shareaza stammen."/>
 		<control caption="Leider installieren viele andere Programme unerwünschte Adware oder Spyware. Falls Sie etwas Verdächtiges beobachten, können Sie ihren PC mit einem Anti-Spyware-Programm überprüfen."/>
-		<control caption="Shareaza kostet nichts und kann von jedem kostenlos von www.shareaza.com heruntergeladen werden.  Wenn Sie jemandem Geld für Shareaza bezahlt haben, sollten Sie sofort ihr Geld zurückverlangen."/>
+		<control caption="Shareaza kostet nichts und kann von jedem kostenlos von http://shareaza.sourceforge.net/ heruntergeladen werden.  Wenn Sie jemandem Geld für Shareaza bezahlt haben, sollten Sie sofort ihr Geld zurückverlangen."/>
 		<control caption="Shareaza respektiert seine Benutzer!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Schließen"/>
 	</dialog>
 
@@ -4097,7 +4097,7 @@ Other:
 		<control caption="Leider wissen viele nicht, was sie verpassen!"/>
 		<control caption="Wenn Sie also jemanden kennen, dem Shareaza auch gefallen könnte, empfehlen Sie Shareaza doch weiter."/>
 		<control caption="Ihre Freunde werden ihnen dankbar sein!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 

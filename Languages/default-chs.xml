@@ -485,7 +485,7 @@
 			</menu>
 			<separator/>
 			<menu text="网站(_W)">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
 				<!-- <item id="ID_HELP_UPDATE" text="最新消息"/>
@@ -576,7 +576,7 @@
 			</menu>
 			<separator/>
 			<menu text="网站(_W)">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
 				<!-- <item id="ID_HELP_UPDATE" text="最新消息"/>
@@ -661,7 +661,7 @@
 			</menu>
 			<separator/>
 			<menu text="网站(_W)">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site(_S)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
 				<!-- <item id="ID_HELP_UPDATE" text="最新消息"/>
@@ -2073,7 +2073,7 @@
 		<text>大多数 Torrent 制作程序允许您修复此 Torrent，以便保证其在所有的
 		BitTorrent 客户端中正常工作。</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">单击这里以获得额外的帮助</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">单击这里以获得额外的帮助</link>
 		<text>&#160;或下载软件修复此 Torrent 文件。</text>
 	</document>
 
@@ -2518,7 +2518,7 @@
 	<string id="8007" value="没有活动的搜索。请单击搜索开始。"/>
 	<string id="8008" value="Shareaza 已经完成下载新的 Shareaza 版本 (%s)。您要立即升级吗？\n\n如果您选择是，Shareaza 将暂时关闭并安装升级程序。"/>
 	<string id="8009" value="您确定要删除 &quot;%s&quot; 皮肤吗？ 此操作不可逆。"/>
-	<string id="8010" value="这是 Shareaza 的内部测试版本， beta 测试期已经结束。请下载 www.shareaza.com 完整的官方版本。"/>
+	<string id="8010" value="这是 Shareaza 的内部测试版本， beta 测试期已经结束。请下载 http://shareaza.sourceforge.net/ 完整的官方版本。"/>
 	<string id="8011" value="更改显示模式将关闭您已经打开的窗口。您要立即更改吗？"/>
 	<string id="8012" value="Torrent 信息"/>
 	<string id="8060" value="集端/超对等模式有 %lu 个邻居。%s 处于本地收藏中。"/>
@@ -4053,9 +4053,9 @@
 		<control caption="您知道 Shareaza 是 100% 免费的软件吗？"/>
 		<control caption="Shareaza 不包含任何 &quot;间谍软件&quot;，&quot;广告软件&quot;，或者其他任何绑定的软件。它也不会显示任何广告或者 &quot;弹出窗口&quot;，{n}{n}如果使用 Shareaza 时，您看到任何&quot;弹出窗口&quot;，请确定它们不是来自此程序。"/>
 		<control caption="不幸的是多数同类软件都隐藏着广告软件或间谍软件，如果您对看到的现象产生怀疑，您可以使用特定的软件检查并且移除广告和间谍软件。"/>
-		<control caption="您不必为获取 Shareaza 而付费。Shareaza 可以从 www.shareaza.com 免费下载。如果您付钱给 Shareaza 的某人，您可以要求马上取回。"/>
+		<control caption="您不必为获取 Shareaza 而付费。Shareaza 可以从 http://shareaza.sourceforge.net/ 免费下载。如果您付钱给 Shareaza 的某人，您可以要求马上取回。"/>
 		<control caption="Shareaza 以用户至上！"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="关闭"/>
 	</dialog>
 
@@ -4066,7 +4066,7 @@
 		<control caption="遗憾的是，多数文件共享用户还不知道他们错过了什么！"/>
 		<control caption="如果您知道有人打算使用 Shareaza ，无论他们是新用户还是使用其他比较差的软件的用户，为什么不让他们知道这里有更好的选择呢？"/>
 		<control caption="机会来自于您的把握！"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="确定"/>
 	</dialog>
 

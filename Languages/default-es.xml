@@ -473,7 +473,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Sitios">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
@@ -566,7 +566,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Sitios">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
@@ -652,7 +652,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Sitios">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
@@ -2526,7 +2526,7 @@
 	<string id="8007" value="No hay búsquedas activas.  Haz click aquí para empezar."/>
 	<string id="8008" value="Shareaza ha terminado de bajar Shareaza versión (%s).  ¿Deseas actualizar ahora?\n\nSi seleccionas si, Shareaza se va a cerrar temporalmente para poder instalar la nueva versión."/>
 	<string id="8009" value="¿Estas seguro que deseas eliminar &quot;%s&quot; skin?  Esto no se puede deshacer."/>
-	<string id="8010" value="Esta es una versión pre-release de Shareaza, y el periodo de Beta Testing ha terminado.  Por favor descarga la versión completa de www.shareaza.com."/>
+	<string id="8010" value="Esta es una versión pre-release de Shareaza, y el periodo de Beta Testing ha terminado.  Por favor descarga la versión completa de http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Cambiado de vista va a cerrar todas las ventanas que tienes abiertas.  ¿Deseas cambiar ahora?"/>
 	<string id="8012" value="Informacin Torrent"/>
 	<string id="8060" value="Modo Hub %lu en red(s).  %s en Mi Colección."/>
@@ -3253,11 +3253,11 @@
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuStSt" caption="Reproductor">
 		<control caption="_Opciones:"/>
-		
+
 		<control/>
 		<control caption="Usar el reproductor de Shareaza para reproducir los archivos"/>
 		<control caption="Usar el reproductor de Shareaza para poner con cola"/>
-		
+
 		<control caption="_Tipos de archivos:"/>
 		<control/>
 		<control caption="_Agregar"/>
@@ -4068,9 +4068,9 @@
 		<control caption="Shareaza es 100% gratuito"/>
 		<control caption="No contiene ningún &quot;spyware&quot;, &quot;adware&quot; o cualquier otro tipo de programas deshonestos. Shareaza no tiene ni propagandas, ni &quot;popups&quot;, nunca.{n}{n}Si en algún momento ve una propaganda o un &quot;popup&quot; puedes tener por seguro que no fué causado por Shareaza."/>
 		<control caption="Desafortunadamente, muchos softwares están incluyendo este tipo de aplicaciones que consumen recursos, y no son amigables. Si crees que tu pc está infectada con uno de estos programas, chequeela con programas especializados en quitar este tipo de software."/>
-		<control caption="Usted no debe pagar para obtener Shareaza.  Shareaza se puede distribuir libremente, y descargar de www.shareaza.com.  Si usted pagó por Shareaza, pida un reembolso de inmediato."/>
+		<control caption="Usted no debe pagar para obtener Shareaza.  Shareaza se puede distribuir libremente, y descargar de http://shareaza.sourceforge.net/.  Si usted pagó por Shareaza, pida un reembolso de inmediato."/>
 		<control caption="Shareaza respeta sus usuarios!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Cerrar"/>
 	</dialog>
 
@@ -4081,7 +4081,7 @@
 		<control caption="Desafortunadamente, hay muchos usuarios que no lo conocen todavía!"/>
 		<control caption="Si conoces a alguien que le pueda gustar Shareaza, hazlos saber sobre esta mejor alternativa..."/>
 		<control caption="Es la última vez que este mensaje va aparecer"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Cerrar"/>
 	</dialog>
 
@@ -4139,17 +4139,17 @@
 
 	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Exportar Carpeta">
 		<control caption="Esto le ayuda a exportar el contenido de un album o carpeta a una colección de Shareaza."/>
-		
-		
+
+
 		<control/>
 		<control caption="Autor:"/>
 		<control caption="Nombre:"/>
 		<control/>
-		
+
 		<control caption="Autor:"/>
-		
-		<control/> 
-		<control caption="Descripcin:"/> 
+
+		<control/>
+		<control caption="Descripcin:"/>
 		<control/>
 		<control caption="Eliminar|_Regresar"/>
 		<control caption="_Siguiente|Exportar..."/>
@@ -4237,10 +4237,10 @@
 		<control caption="Incompleto:"/>
 		<control/>
 		<control caption="_Actualizar"/>
-		
+
 		<control caption="_Actualizar"/>
 		<control/>
-		
+
 		<control caption="Tracker Mode:"/>
 		<control caption="Deshabilitado|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>

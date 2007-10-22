@@ -474,7 +474,7 @@
 			</menu>
 			<separator/>
 			<menu text="‪א_תרי אינטרנט">
-				<item id="ID_HELP_HOMEPAGE" text="‪_Shareaza.com אתר הבית"/>
+				<item id="ID_HELP_HOMEPAGE" text="‪_Shareaza אתר הבית"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="‪_פורומים"/>
 				<!-- <item id="ID_HELP_UPDATE" text="‪חדשות אחרונות"/>
@@ -565,7 +565,7 @@
 			</menu>
 			<separator/>
 			<menu text="‪_אתרי אינטרנט">
-				<item id="ID_HELP_HOMEPAGE" text="‪_Shareaza.com אתר הבית"/>
+				<item id="ID_HELP_HOMEPAGE" text="‪_Shareaza אתר הבית"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="‪_פורומים"/>
 				<!-- <item id="ID_HELP_UPDATE" text="‪חדשות אחרונות"/>
@@ -650,7 +650,7 @@
 			</menu>
 			<separator/>
 			<menu text="‪_אתרי אינטרנט">
-				<item id="ID_HELP_HOMEPAGE" text="‪_Shareaza.com אתר הבית"/>
+				<item id="ID_HELP_HOMEPAGE" text="‪_Shareaza אתר הבית"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="‪_פורומים"/>
 				<!-- <item id="ID_HELP_UPDATE" text="‪חדשות אחרונות"/>
@@ -2082,7 +2082,7 @@
 		<text>Most torrent creation programs should allow you to repair this torrent, which
 		will ensure it works properly in all BitTorrent applications.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Click here for additional help</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Click here for additional help</link>
 		<text>, or to download software to repair the torrent.</text>
 </document>
 
@@ -2270,7 +2270,7 @@
 	<tip id="ID_HELP_ROUTER" message="קבל עזרה בהגדרת חומת האש או הראוטר"/>
 	<tip id="ID_HELP_FORUMS" message="בקר בפורומים של שרזה"/>
 	<tip id="ID_HELP_GUIDE" message="בקר את מדריך המשתמש של שרזה"/>
-	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com בקר באתר של שרזה"/>
+	<tip id="ID_HELP_HOMEPAGE" message="Shareaza בקר באתר של שרזה"/>
 	<tip id="ID_HELP_SECURITY" message="עזרה בהגנה על קבצי המערכת שלך מתוכניות זדוניות"/>
 	<tip id="ID_HELP_UPDATE" message="בדוק אם יש חדשות ועדכונים"/>
 	<tip id="ID_HELP_WEB_1" message="בקר את אתר זה"/>
@@ -2532,7 +2532,7 @@
 	<string id="8007" value="‪.אין חיפושים פעילים, אנא לחץ כאן בכדי לחפש"/>
 	<string id="8008" value="‪?האם אתה מעוניין לשדרג כעת .(%s) שרזה סיים להוריד את הגרסא החדשה\n\nאם תבחר כן, שרזה תסגר באופן זמני, למהלך ההתקנה"/>
 	<string id="8009" value="‪.המעטפת תימחק לקיבעון &quot;%s&quot; האם אתה בטוח שברצונך למחוק את המעטפת"/>
-	<string id="8010" value="‪&#8234;‏הסתיימה‎ ‏הנסיון‎ תקופת‎ ‏שרזה‎ ‏של‎ ‏נסיונית‎ ‏גרסה‎ ‏&#13;&#10;זוהי www.shareaza.com ‏מהאתר‎ ‏והרשמית‎ ‏המלאה‎ ‏הגרסא‎ ‏את‎ ‏הורד‎ ‏אנא‎"/>
+	<string id="8010" value="‪&#8234;‏הסתיימה‎ ‏הנסיון‎ תקופת‎ ‏שרזה‎ ‏של‎ ‏נסיונית‎ ‏גרסה‎ ‏&#13;&#10;זוהי http://shareaza.sourceforge.net/ ‏מהאתר‎ ‏והרשמית‎ ‏המלאה‎ ‏הגרסא‎ ‏את‎ ‏הורד‎ ‏אנא‎"/>
 	<string id="8011" value="‪שינוי התצוגה יסגור את כל החלונות הפתוחים, אתה רוצה לשנות את התצוגה כעת?"/>
 	<string id="8060" value="‪‏&#8234;‏מצב‎ ULTRAPEER/‏מוקד‎ ‏עם‎ %lu ‏שכנים‎: , %s ‏מקומית‎ ‏בספריה"/>
 	<string id="8061" value="‪‏&#8234;ULTRAPEER ‏עם‎ %lu ‏שכנים‎: , %s ‏מקומית‎ ‏בספריה"/>
@@ -4043,9 +4043,9 @@
 		<control caption="?הידעת ששרזה היא תוכנה חינמית לחלוטין"/>
 		<control caption="שרזה לא מכילה רוגלות, תוספי פרסומות או תוכנה כלשהי נוספת בתוכה. שרזה לא מציגה פרסומות קופצות אף פעם {n}{n} אם אי פעם תראי פרסומות &quot;פרסומות קופצות&quot; בעת שאתה משתמש בשרזה, .הינך יכול להיות בטוח שהם אינם מגיעים משרזה"/>
 		<control caption="לצערנו הרבה תוכנות אחרות כן מגיעות עם תוספי פרסומות ורוגלות, לכן אם הינך רואה משהו חשוד כדאי שתבדוק את המחשב עם תוכנה לניקוי רוגלות ותוספי פרסומות"/>
-		<control caption="אינך אמור לשלם כלום בכדי לקבל את שרזה. שרזה ניתנת להורדה בחינם על ידי כל אחד מהאתר  www.shareaza.com.  אם נדרשת לשלם למישהו תמורת שרזה.עלייך לבקש החזר מלא לכספך באופן מיידי"/>
+		<control caption="אינך אמור לשלם כלום בכדי לקבל את שרזה. שרזה ניתנת להורדה בחינם על ידי כל אחד מהאתר  http://shareaza.sourceforge.net/.  אם נדרשת לשלם למישהו תמורת שרזה.עלייך לבקש החזר מלא לכספך באופן מיידי"/>
 		<control caption="!שרזה מכבדת את משתמשיה"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="סגור"/>
 	</dialog>
 
@@ -4056,7 +4056,7 @@
 		<control caption="!לצערנו הרב, הרבה מאוד משתפי קבצים לא יודעים מה הם מפסידים"/>
 		<control caption=" גם אם הוא משתמש חדש או משתמש בתוכנה נחותה יותר, למה לא לעזור לו ולכולנו וליידע אותם שיש אלטרנטיבה טובה יותר"/>
 		<control caption=":) !רוב הסיכויים שהם יהיו אסירי-תודה לכם שהצלתם אותם"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="אישור"/>
 	</dialog>
 

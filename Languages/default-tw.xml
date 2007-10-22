@@ -489,7 +489,7 @@
 			</menu>
 			<separator/>
 			<menu text="網站">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 討論區"/>
 				<item id="ID_HELP_UPDATE" text="最新消息"/>
@@ -580,7 +580,7 @@
 			</menu>
 			<separator/>
 			<menu text="網站">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 討論區"/>
 				<item id="ID_HELP_UPDATE" text="最新消息"/>
@@ -665,7 +665,7 @@
 			</menu>
 			<separator/>
 			<menu text="網站">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 討論區"/>
 				<item id="ID_HELP_UPDATE" text="最新消息"/>
@@ -2047,7 +2047,7 @@
 		<newline gap="8"/>
 		<text>大部分的 torrent 製作程式允許您修復這個 torrent, 讓它能夠正確地在所有的 BT 程式運作.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">點選這裡取得更多說明</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">點選這裡取得更多說明</link>
 		<text>, 或是下載軟體修復 torrent.</text>
 </document>
 
@@ -2210,7 +2210,7 @@
 	<tip id="ID_HELP_ROUTER" message="取得設定路由器或是防火牆的說明."/>
 	<tip id="ID_HELP_FORUMS" message="訪問 Shareaza 討論區."/>
 	<tip id="ID_HELP_GUIDE" message="翻閱 Shareaza 使用指南."/>
-	<tip id="ID_HELP_HOMEPAGE" message="訪問 Shareaza.com 網站."/>
+	<tip id="ID_HELP_HOMEPAGE" message="訪問 Shareaza 網站."/>
 	<tip id="ID_HELP_SECURITY" message="幫助您保護系統, 抵擋惡意程式."/>
 	<tip id="ID_HELP_UPDATE" message="查看最新消息與更新檔."/>
 	<tip id="ID_HELP_WEB_1" message="瀏覽這個網站"/>
@@ -2476,7 +2476,7 @@
 	<string id="8007" value="目前沒有活躍中的搜尋.  點選這裡搜尋檔案."/>
 	<string id="8008" value="Shareaza 已經完成下載最新的Shareaza 版本(%s).  您要立刻升級嗎?\n\n如果您選擇Yes, 在安裝升級版時會暫時關閉 Shareaza."/>
 	<string id="8009" value="您確定要刪除 &quot;%s&quot; 外觀嗎?  這個動作將不能回復."/>
-	<string id="8010" value="這是一個 Shareaza 的測試版. 測試期已經結束. 請從 www.shareaza.com 下載完整的官方版本."/>
+	<string id="8010" value="這是一個 Shareaza 的測試版. 測試期已經結束. 請從 http://shareaza.sourceforge.net/ 下載完整的官方版本."/>
 	<string id="8011" value="切換檢視方式將關閉任何已開啟的視窗. 您確定要切換嗎?"/>
 	<string id="8012" value="Torrent 資訊"/>
 	<string id="8060" value="結點/超級用戶模式 with %lu 鄰居.  %s 在本地的收藏."/>
@@ -3996,9 +3996,9 @@
 		<control caption="您知道 Shareaza 是完全免費的產品嗎?"/>
 		<control caption="Shareaza 沒有包含任何 &quot;間碟軟體&quot;, &quot;廣告軟體&quot; 或是其他 bundled 軟體. It does NOT display any advertisements or &quot;popups&quot;, ever.{n}{n}If you ever see advertising or &quot;popups&quot; while using Shareaza, be assured that they are NOT coming from this program."/>
 		<control caption="不幸地, 很多軟體包含討人厭的廣告軟體或是間諜軟體; 因此, 如果您查覺任何可疑的活動, 您可能想要使用反廣告/反間諜軟體."/>
-		<control caption="您不應該付錢取得 Shareaza. 任何人都可以從 www.shareaza.com 免費下載. 如果您付費取得Shareaza, 請立刻要求全額退費."/>
+		<control caption="您不應該付錢取得 Shareaza. 任何人都可以從 http://shareaza.sourceforge.net/ 免費下載. 如果您付費取得Shareaza, 請立刻要求全額退費."/>
 		<control caption="Shareaza 尊重它的使用者!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="關閉"/>
 	</dialog>
 
@@ -4009,7 +4009,7 @@
 		<control caption="天不從人願, 眾多檔案分享者不知道他們遺漏了什麼好東西!"/>
 		<control caption="如果你知道某個人可能愛上 Shareaza, 不論是新手或是某個仍舊為了不良的軟體苦惱, 為什麼不讓他們知道有更好的替代品呢?"/>
 		<control caption="他們可能感激你幫了他們一個大忙!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="確定"/>
 	</dialog>
 

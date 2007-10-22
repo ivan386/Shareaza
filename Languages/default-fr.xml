@@ -489,7 +489,7 @@ Other:
 			</menu>
 			<separator/>
 			<menu text="Sites _Web">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
@@ -583,7 +583,7 @@ Other:
 			</menu>
 			<separator/>
 			<menu text="Sites _Web">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
@@ -671,7 +671,7 @@ Other:
 			</menu>
 			<separator/>
 			<menu text="Sites _Web">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Dernières nouvelles"/>
@@ -1918,7 +1918,7 @@ Other:
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Le disque est plein</text>
 		<newline gap="8"/>
-		<text>Shareaza a automatiquement mis en pause ce téléchargement car le disque dur semble être plein, ou le fichier téléchargé ne peut pas être écrit. 
+		<text>Shareaza a automatiquement mis en pause ce téléchargement car le disque dur semble être plein, ou le fichier téléchargé ne peut pas être écrit.
 		Si vous souhaitez poursuivre le téléchargement, liberez de l'espace sur votre disque dur et/ou assurez-vous que le répertoire des fichiers incomplets est accessible, puis reprenez le téléchargement.</text>
 	</document>
 	<document name="DownloadHelp.Verifying">
@@ -2014,7 +2014,7 @@ Other:
 		<newline gap="8"/>
 		<text>Si vous auriez des difficultées a faire un reseed du torrent, vous pouvez essayer de changer, dans les réglages avancées, BitTorrent.TorrentIgnoreErrors à vrai.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Cliquez ici pour une aide additionnelle</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Cliquez ici pour une aide additionnelle</link>
 		<text>, ou pour télécharger un logiciel pour réparer le torrent.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2438,7 +2438,7 @@ Other:
 	<string id="8007" value="Il n'y a pas de recherche active. Cliquez ici pour rechercher des fichiers."/>
 	<string id="8008" value="Shareaza a fini de télécharger la nouvelle version (%s) de Shareaza. Voulez-vous mettre à jour maintenant?\n\nSi vous choisissez &quot;Oui&quot;, Shareaza va se fermer temporairement durant l'installation de la mise à jour."/>
 	<string id="8009" value="Êtes-vous certain de vouloir supprimer le thème &quot;%s&quot;? Ceci est irréversible."/>
-	<string id="8010" value="Ceci est une pré-distribution de Shareaza, et la période de test est terminée. Merci de télécharger la version complète et officielle à partir de www.shareaza.com."/>
+	<string id="8010" value="Ceci est une pré-distribution de Shareaza, et la période de test est terminée. Merci de télécharger la version complète et officielle à partir de http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Changer de vue fermera toutes les fenêtres ouvertes actuellement. Voulez-vous changer la vue maintenant?"/>
 	<string id="8012" value="Information Torrent"/>
 	<string id="8060" value="En mode Hub/Ultrapeer avec %lu voisin(s). %s dans votre bibliothèque locale."/>
@@ -3923,9 +3923,9 @@ Other:
 		<control caption="Saviez-vous que Shareaza était un produit totalement libre et gratuit?"/>
 		<control caption="Shareaza ne contient AUCUN &quot;spyware&quot;, &quot;adware&quot; ou autre logiciel de ce type. Il n'affiche JAMAIS de publicité ou &quot;popup&quot;.{n}{n}Si vous rencontrez des publicités ou &quot;popups&quot; en utilisant Shareaza, vous pouvez être sûr qu'ils ne proviennent pas de ce logiciel."/>
 		<control caption="Malheureusement, beaucoup d'autres logiciels contiennent des &quot;adware&quot; ou &quot;spyware&quot;, donc si vous suspectez quelque chose, vous devriez désinfecter votre PC avec un logiciel spécialisé."/>
-		<control caption="Il n'est pas nécessaire de payer quoique ce soit pour Shareaza. Shareaza peut être téléchargé librement sur www.shareaza.com. Si vous payez quelqu'un pour Shareaza, demandez son remboursement immédiatement."/>
+		<control caption="Il n'est pas nécessaire de payer quoique ce soit pour Shareaza. Shareaza peut être téléchargé librement sur http://shareaza.sourceforge.net/. Si vous payez quelqu'un pour Shareaza, demandez son remboursement immédiatement."/>
 		<control caption="Shareaza respecte ses utilisateurs!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Fermer"/>
 	</dialog>
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Passer le mot!">
@@ -3935,7 +3935,7 @@ Other:
 		<control caption="Malheureusement, beaucoup ne savent pas ce qu'ils ratent!"/>
 		<control caption="Si vous connaissez quelqu'un qui apprécierait Shareaza, qu'il soit déjà ou pas utilisateur de logiciel P2P, pourquoi ne pas lui faire savoir qu'il existe une meilleure alternative?"/>
 		<control caption="Il y a des chances qu'il vous soit reconnaissant de l'avoir sauvé!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Valider"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Téléchargement d'un fichier existant">

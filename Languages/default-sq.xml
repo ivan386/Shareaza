@@ -489,7 +489,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Uebsite">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forume në Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -582,7 +582,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Uebsite">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forume në Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -669,7 +669,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Uebsite">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forume në Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Lajme të Reja"/>
@@ -1947,7 +1947,7 @@
 		<text>Kjo shkarkesë po pret që dikush të nisë ngarkimin.
 		Shareaza është gati ta nisë shkarkimin e kësaj skede, por askush nuk po e dërgon atë në
 		këtë çast. Mbase po prisni në radhët e ndonjërit prej përdoruesve, ndaj dhe shkarkimi
-		mund të nisë në çdo kohë. Ju mund të ekzaminoni burimet individuale për të parë 
+		mund të nisë në çdo kohë. Ju mund të ekzaminoni burimet individuale për të parë
 		secilën prej radhëve ku po prisni. Nëse po shpërndani skeda, shanset që transferimi i
 		shkarkesës të nisë më shpejt mund të rriten.</text>
 	</document>
@@ -2010,7 +2010,7 @@
 		<newline gap="8"/>
 		<text>Tek disku ose direktoria që nevojitet nga Shareaza nuk mund të shkruhet.</text>
 		<newline gap="8"/>
-		<text>Një disk në rrjet mund të jetë shkëputur, ose mbase nuk keni të drejta shkrimi tek 
+		<text>Një disk në rrjet mund të jetë shkëputur, ose mbase nuk keni të drejta shkrimi tek
 		direktoria e zgjedhur. Ju lutemi zgjidhni direktorinë dhe të drejtat, ose ndryshoni vendin
 		e skedave të përkohshme.</text>
 	</document>
@@ -2028,7 +2028,7 @@
 		<text format="b">Filtrimi i përmbajtjeve për të rritur u aktivizua</text>
 		<newline gap="8"/>
 		<text>Ju lutemi vëreni se (si me çdo filtër automatik) mund të mos jetë 100% efektiv në
-		ekranizimin e përmbajtjes. Ai është ndërtuar thjesht për të filtruar rezultatet të tepërta 
+		ekranizimin e përmbajtjes. Ai është ndërtuar thjesht për të filtruar rezultatet të tepërta
 		të padëshiruara, sesa të veprojë si një bllokues me siguri 100%.</text>
 		<newline gap="8"/>
 		<text>Përdorimi i Internetit nga fëmijët (përfshirë shpërndarjen P2P)  gjithmonë duhet të kryhet nën vëzhgimin e prindërve.</text>
@@ -2043,7 +2043,7 @@
 		<text>Shumica e programeve për krijimin e torrenteve ju lejojnë ta riparoni këtë torrent, i cili
 		do të sigurojë që të punojë siç duhet në gjithë aplikimet BitTorrent.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Klikoni për ndihmë shtesë</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klikoni për ndihmë shtesë</link>
 		<text>, ose për të shkarkuar softuere për riparimin e torrenteve.</text>
 </document>
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2053,7 +2053,7 @@
 		duhet të shkarkoni një listë serverash të ridatuar (skedë met).</text>
 		<newline gap="8"/>
 		<text>Listën e serverave mund ta shkarkoni nga faqja e kuadrove ed2k, ose në dritaren
-		për zbulimin e shërbimeve. (Shtypni F9 për të hapur dritaren për zbulimin e shërbimeve)</text> 
+		për zbulimin e shërbimeve. (Shtypni F9 për të hapur dritaren për zbulimin e shërbimeve)</text>
 	</document>
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Kufizimi i ngarkesave mund t'i ngadalësojë shkarkesat</text>
@@ -2062,11 +2062,11 @@
 		klientë që nuk shpërndajnë, ose thjesht parapëlqejnë ngarkim tek shpërndarësit e njohur.</text>
 		<newline/>
 		<text>Për fat të keq, lidhjet me bandë të gjerë DSL janë si një rrugë me dy korsi: ka caktime
-		të ndryshme për ngarkimin dhe shkarkimin. Nëse klienti juaj është konfiguruar siç duhet, 
+		të ndryshme për ngarkimin dhe shkarkimin. Nëse klienti juaj është konfiguruar siç duhet,
 		do të jeni i aftë të ngarkoni me një raport të mirë, ndërkohë që mbani kapacitet të plotë shkarkues.</text>
 		<newline gap="8"/>
 		<text>Normalisht, kufiri i shkarkimit vendoset rreth 85% nga shtrirja e bandës së mbirrymës së vlefshme,
-		kurse shkarkesat janë pa kufij. Ky konfigurim do t'ju japë shkarkesat më të shpejta 
+		kurse shkarkesat janë pa kufij. Ky konfigurim do t'ju japë shkarkesat më të shpejta
 		të mundshme.</text>
 	</document>
 	<!-- Search help documents -->
@@ -2078,7 +2078,7 @@
 		(lloj skede). Për më tepër, kërkimi nuk duhet kufizuar vetëm në numra a terma
 		negativë, pra duhet t'i shmangni hetimet mjaft të përgjithshme.</text>
 		<newline gap="8"/>
-		<text>Shumica e klientëve në rrjet, për shembull, do ta përbuznin kërkimin për skedat MP3, 
+		<text>Shumica e klientëve në rrjet, për shembull, do ta përbuznin kërkimin për skedat MP3,
 		pasi nuk është aq i mirëpërcaktuar dhe do të gjeneronte shumë rezultate.</text>
 	</document>
 	<document name="SearchHelp.BadSearch2">
@@ -2487,7 +2487,7 @@
 	<string id="8007" value="Nuk ka asnjë kërkim aktiv.  Klikoni që të kërkoni për një skedë."/>
 	<string id="8008" value="Shareaza e mbaroi shkarkimin e versionit të ri (%s).  A doni ta përmirësoni tani?\n\nNëse zgjidhni Po, Shareaza do të mbyllet përkohësisht derisa përmirësimi të jetë instaluar."/>
 	<string id="8009" value="A jeni i sigurt se doni ta fshini lëvoren &quot;%s&quot;? Këtë nuk mund ta ktheni."/>
-	<string id="8010" value="Ky është një version i paralëshuar i Shareaza, dhe periudha beta e testimit ka përfunduar. Ju lutemi shkarkoni lëshimin e plotë, zyrtar, në www.shareaza.com."/>
+	<string id="8010" value="Ky është një version i paralëshuar i Shareaza, dhe periudha beta e testimit ka përfunduar. Ju lutemi shkarkoni lëshimin e plotë, zyrtar, në http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Ndryshimi i pamjes do të mbyllë gjithë dritaret e hapura. A jeni i sigurt për këtë?"/>
 	<string id="8012" value="Informacion mbi Torrentin"/>
 	<string id="8060" value="Mënyrë Nyje/Ultrapikë me %lu hoste.  %s në librarinë lokale."/>
@@ -3959,9 +3959,9 @@
 		<control caption="A e dinit që Shareaza është një produkt 100% falas?"/>
 		<control caption="Shareaza NUK përmban ASNJË &quot;spiunues&quot;, &quot;reklamues&quot; apo softuere të tjera të paketuara. Ai NUK shfaq kurrë asnjë reklamë ose &quot;kërcyese&quot;.{n}{n}Nëse shikoni ndonjë reklamë ose &quot;kërcyese&quot; gjatë përdorimit të Shareaza-s, të jeni të sigurt se ato NUK vijnë nga ky program."/>
 		<control caption="Për fat të keq, mjaft softuere të tjera bartin reklamuesa apo spiunuesa të padëshirueshëm, ndaj nëse ju shfaqet diçka e dyshimtë verifikoni PC-në tuaj me një program që heq reklamuesat dhe spiunuesat."/>
-		<control caption="Për Shareaza-n nuk duhet të paguani para. Shareaza mund të shkarkohet lirshëm nga kushdo në www.shareaza.com. Nëse keni paguar për të, duhet të kërkoni menjëherë një kthim të plotë parash."/>
+		<control caption="Për Shareaza-n nuk duhet të paguani para. Shareaza mund të shkarkohet lirshëm nga kushdo në http://shareaza.sourceforge.net/. Nëse keni paguar për të, duhet të kërkoni menjëherë një kthim të plotë parash."/>
 		<control caption="Shareaza i respekton përdoruesit!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Mbylle"/>
 	</dialog>
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Ngrini Zërin">
@@ -3971,7 +3971,7 @@
 		<control caption="Për fat të keq, shumë shpërdarës skedash nuk e dinë se sa shumë u duhet!"/>
 		<control caption="Nëse njihni ndokënd që do t'i pëlqente Shareaza, qoftë një përdorues i ri apo dikush që vendos të marrë një produkt me çmim të ulët, pse të mos i tregoni se ka një alternativë më të mirë?"/>
 		<control caption="Ka shanse që ata t'ju jenë mirënjohës që i shpëtuat!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Skedë Ekzistuese">

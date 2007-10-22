@@ -473,7 +473,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Spletišča">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _forumi"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -564,7 +564,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Spletišča">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _forumi"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -649,7 +649,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Spletišča">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _forumi"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -2074,7 +2074,7 @@
 		<text>Večina programov za ustvarjanje torrentov vam bo omogočala popravilo tega torrenta, kar
 		vam bo na koncu zagotovilo pravilno delovanje v vseh BitTorrent programih.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Kliknite sem za dodatno pomoč</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Kliknite sem za dodatno pomoč</link>
 		<text> ali za iskanje programov za popravilo torrenta.</text>
 </document>
 
@@ -2525,7 +2525,7 @@
 	<string id="8007" value="Trenutno ni aktivnih iskanj. Kliknite sem za iskanje datotek."/>
 	<string id="8008" value="Shareaza je končala prenos različice (%s).  Želite posodobiti takoj?\n\nV primeru, da izberete Da(Yes), se bo Shareaza, medtem, ko se bo posodabljala, začasno zaprla"/>
 	<string id="8009" value="Ste prepričani, da želite brisati preobleko &quot;%s&quot;?  Dejanja ne bo mogoče razveljaviti."/>
-	<string id="8010" value="To je pred-izdaja različice Shareaza. Obdobje beta testiranja je končano. Prenesite si celotno, uradno izdajo s spletne strani www.shareaza.com."/>
+	<string id="8010" value="To je pred-izdaja različice Shareaza. Obdobje beta testiranja je končano. Prenesite si celotno, uradno izdajo s spletne strani http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Spreminjanje pogleda bo zaprlo morebitna okna, ki jim imate odprte. Želite spremeniti takoj?"/>
 	<string id="8012" value="Informacije o torrent-u"/>
 	<string id="8060" value="Način Hub/Ultrapeer s številom sosedov: %lu.  V lokalni knjižnici: %s."/>
@@ -4046,9 +4046,9 @@
 		<control caption="Ste vedeli, da je Shareaza 100% brezplačen izdelek?"/>
 		<control caption="Shareaza NE vsebuje &quot;spyware&quot;, &quot;adware&quot; ali drugo neželjeno programje. Nikoli NE prikazuje reklam ali &quot;pop-up&quot; oken.{n}{n}Če boste slučajno naleteli na reklame ali &quot;pop-up&quot; okna med uporabo tega programa ste lahko prepričani, da ne izvirajo od Shareaze."/>
 		<control caption="Na žalost je veliko drugim programskim opremam dodano neželjeno adware ali spyware programje. Če boste opazili kaj sumljivega vam priporočamo, da uporabite programe, ki bodo počistili z vašega računalnika neželjeno programje."/>
-		<control caption="Za to, da namestite program Shareaza, vam ni potrebno plačati niti tolarja/centa. Shareazo lahko svobdno prenesete s spletne strani www.shareaza.com. Če ste komurkoli plačali za Shareazo, zahtevajte svoj denar takoj nazaj."/>
+		<control caption="Za to, da namestite program Shareaza, vam ni potrebno plačati niti tolarja/centa. Shareazo lahko svobdno prenesete s spletne strani http://shareaza.sourceforge.net/. Če ste komurkoli plačali za Shareazo, zahtevajte svoj denar takoj nazaj."/>
 		<control caption="Shareaza spoštuje svoje uporabnike!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Zapri"/>
 	</dialog>
 
@@ -4059,7 +4059,7 @@
 		<control caption="Na žalost se veliko ljudi, ki deli datoteke po medmrežju, ne ve kaj zamuja!"/>
 		<control caption="Če poznate kogarkoli, ki bi ga zanimala Shareaza, bodisi novega uporabnika ali iskušenega uporabnika, ki se matra z nekim precej slabšim izdelkom, mu sporočite, da obstaja veliko boljša rešitev?"/>
 		<control caption="Zelo verjetno vam bodo za vaš nasvet zelo hvaležni!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="V redu"/>
 	</dialog>
 

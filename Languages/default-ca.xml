@@ -474,7 +474,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Llocs Web">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fòrums de _Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Darreres Notícies"/>
@@ -568,7 +568,7 @@
 			</menu>
 			<separator/>
 	            <menu text="_Llocs Web">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fòrums de _Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Darreres Notícies"/>
@@ -656,7 +656,7 @@
 			</menu>
 			<separator/>
 	            <menu text="_Llocs Web">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fòrums de _Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Darreres Notícies"/>
@@ -1553,11 +1553,11 @@
 <!--new adition-->
 		<icon res="185" width="25" height="25"/><gap size="8"/>
             <heading align="middle">E L &#160; C A T A L À &#160; A &#160; L A &#160; X A R X A</heading>
-            <newline gap="8" indent="42"/>		
+            <newline gap="8" indent="42"/>
 	<gap size="8"/>
        		<link target="http://www.racocatala.cat/" format="bu" align="middle">Racó Català</link>
         	<text align="middle">&#160;- Punt d’informació dels Països Catalans a la xarxa.</text>
-	   <newline gap="8" indent="42"/>		
+	   <newline gap="8" indent="42"/>
 	<gap size="8"/>
        		<link target="http://www.softcatala.cat" format="bu" align="middle">SoftCatalà</link>
        		<text align="middle">&#160;- Associació sense ànim de lucre que fomenta l'ús del català a les noves tecnologies.</text>
@@ -1574,8 +1574,8 @@
        		<link target="http://www.acpv.net" format="bu" align="middle">ACPV - Acció Cultural del País Valencià</link>
        		<text align="middle">&#160;- Associació d'àmbit nacional l'objecte de la qual és l'estudi, la defensa i la promoció del patrimoni cultural, artístic i natural del País Valencià, a més de campanyes de promoció i defensa de l'ús del valencià, el català parlat al País Valencià.</text>
 	<newline gap="8" indent="42"/>
-	
-	
+
+
 	<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -2036,7 +2036,7 @@
 		<text format="b">Tracker de BitTorrent fora de servei</text>
 		<newline gap="8"/>
 		<text>El tracker de BitTorrent per a aquesta transferència sembla estar
-		desconnectat o té problemes.  Shareaza no ha pogut contactar per 
+		desconnectat o té problemes.  Shareaza no ha pogut contactar per
 		rebre la informació de la transferència.</text>
 	</document>
 
@@ -2078,7 +2078,7 @@
 		<newline gap="8"/>
 		<text>Windows diu que no hi ha cap Connexió d'Internet disponible.</text>
 		<newline gap="8"/>
-		<text>És molt posible que un modem o un router s'ha caigut, significant que no es pugui accedir a internet. 
+		<text>És molt posible que un modem o un router s'ha caigut, significant que no es pugui accedir a internet.
 		Pots necessitar reconnectar-te manualment o reiniciar la teva Connexió.</text>
 		<newline gap="8"/>
 		<text>Shareaza ha aturat els intents de connexió per a no perdre els servidors que estan al caxè.</text>
@@ -2120,11 +2120,11 @@
 		<text>Algunes xarxes a què Shareaza es connecta recolcen igualtats, limitant pujades
 		a clients que no comparteixen, o simplement preferència a pujar a clients que comparteixen.
 		</text><text>
-		Afortunadament, les connexions DSL són com una carretera de 2 vies. Has de configurar un 
-		ample de banda per a la pujada i altre per a la baixada. Si el teu client està pròpiament configurat, 
+		Afortunadament, les connexions DSL són com una carretera de 2 vies. Has de configurar un
+		ample de banda per a la pujada i altre per a la baixada. Si el teu client està pròpiament configurat,
 		deus poder pujar a una bona velocitat i al mateix temps estar descarregant al màxim.</text>
 		<newline gap="8"/>
-		<text>Per defecte, el teu límit de descàrrega està configurat com el 85% de la teua pujada disponible. 
+		<text>Per defecte, el teu límit de descàrrega està configurat com el 85% de la teua pujada disponible.
 		Aqueixa configuració t'hauria de donar la velocitat més ràpida.</text>
 	</document>
 
@@ -2552,7 +2552,7 @@
 	<string id="8007" value="No hi ha recerques actives.  Fes clic aquí per a començar."/>
 	<string id="8008" value="Shareaza ha acabat de baixar el Shareaza versió (%s).  ¿Vols actualitzar ara?\n\nSi seleccions sí, Shareaza es tancarà temporalment per a poder instal·lar la nova versió."/>
 	<string id="8009" value="Estàs segur que vols esborrar l'interfície &quot;%s&quot; ?  Aquesta decisió no es pot desfer."/>
-	<string id="8010" value="Aquesta és una versió pre-llançament de Shareaza, i el període de Proves Beta s'ha acabat. Si us plau descarrega la versió completa de www.shareaza.com."/>
+	<string id="8010" value="Aquesta és una versió pre-llançament de Shareaza, i el període de Proves Beta s'ha acabat. Si us plau descarrega la versió completa de http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="El canvi de vista tancarà totes les finestres que tens obertes.  ¿vols canviar ara?"/>
 	<string id="8012" value="Informació del Torrent"/>
 	<string id="8060" value="Mode Hub %lu a la xarxa(es).  %s a La meva Col·lecció."/>
@@ -3146,7 +3146,7 @@
 	<string id="20001" value="Tancar"/>
 	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
 	<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
-    <string id="20004" value="Els llenguatges amb lectura de dreta a esquerra no estan suportats al seu sistema operatiu."/> 
+    <string id="20004" value="Els llenguatges amb lectura de dreta a esquerra no estan suportats al seu sistema operatiu."/>
 	<string id="20005" value="No"/>
 	<string id="20006" value="Sí"/>
 	<string id="20007" value="Automàtic"/>
@@ -4087,9 +4087,9 @@
 		<control caption="Shareaza és 100% gratuït"/>
 		<control caption="No conté cap &quot;spyware&quot;, &quot;adware&quot; o qualsevol un altre tipus de programes . Shareaza no té ni propagandes, ni &quot;popups&quot;, mai.{n}{n}Si apareix alguna cosa, ja et diem que no és causa de Shareaza."/>
 		<control caption="Per desgràcia hi ha programes que sí ho fan. Si us plau, comprova-ho amb programes especialitzats i neteja el teu ordinador."/>
-		<control caption="No has de pagar per a obtindre Shareaza.  Shareaza es pot distribuir lliurement, i descarregar de www.shareaza.com.  Si has pagat, demana que et tornin els diners."/>
+		<control caption="No has de pagar per a obtindre Shareaza.  Shareaza es pot distribuir lliurement, i descarregar de http://shareaza.sourceforge.net/.  Si has pagat, demana que et tornin els diners."/>
 		<control caption="Shareaza respecta els seus usuaris!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Tancar"/>
 	</dialog>
 
@@ -4100,7 +4100,7 @@
 		<control caption="Desafortunadament, hi ha molts usuaris que no el coneixen encara!"/>
 		<control caption="Si coneixes a algú que li pugui agradar Shareaza, fes-nos-ho saber sobre aquesta millor alternativa..."/>
 		<control caption="És la darrera vegada que aquest missatge apareixerà"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Tancar"/>
 	</dialog>
 

@@ -474,7 +474,7 @@
 			</menu>
 			<separator/>
 			<menu text="_WebStranice">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazin _Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Novosti"/>
@@ -565,7 +565,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Web stranice">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazin _Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Novosti"/>
@@ -650,7 +650,7 @@
 			</menu>
 			<separator/>
 			<menu text="_WebStranice">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazin _Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Novosti"/>
@@ -2070,7 +2070,7 @@
 		<text>Most torrent creation programs should allow you to repair this torrent, which
 		will ensure it works properly in all BitTorrent applications.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Click here for additional help</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Click here for additional help</link>
 		<text>, or to download software to repair the torrent.</text>
 	</document>
 
@@ -2257,7 +2257,7 @@
 	<tip id="ID_HELP_ROUTER" message="Konfigurišite Vaš router ili firewall - pomoć."/>
 	<tip id="ID_HELP_FORUMS" message="Posetite Shareazine Forume."/>
 	<tip id="ID_HELP_GUIDE" message="Pogledajte Shareazine Upute."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Posetite Shareaza.com web stranicu."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Posetite Shareaza web stranicu."/>
 	<tip id="ID_HELP_SECURITY" message="Zaštite Vaš sistem od neprijateljskih programa - pomoć."/>
 	<tip id="ID_HELP_UPDATE" message="Pogledajte novosti."/>
 	<tip id="ID_HELP_WEB_1" message="Poseti ovu web stranicu"/>
@@ -2519,7 +2519,7 @@
 	<string id="8007" value="Nema aktivnih traženja. Stisni ovde ako želiš započeti traženje"/>
 	<string id="8008" value="Shareaza je završila skidanje nove Shareazine verzije (%s).Želite li odmah unaprediti u novu verziju?\n\nAko želite, Shareaza će se privremeno(dok se ne obavi instalacija) zatvoriti."/>
 	<string id="8009" value="Jeste li sigurni da želite izbrisati &quot;%s&quot; skin?Ne može se povratiti."/>
-	<string id="8010" value="Ovo je test verzija Shareaze, i period beta testiranja je završio.Molimo vas da skinete celo, službeno izdanje sa www.shareaza.com."/>
+	<string id="8010" value="Ovo je test verzija Shareaze, i period beta testiranja je završio.Molimo vas da skinete celo, službeno izdanje sa http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Menjanje pogleda zatvara sve otvorene prozore. Želite li nastaviti s promenom pogleda?"/>
 	<string id="8060" value="Hub/Ultrapeer način sa %lu suseda.%s u vašoj kolekciji."/>
 	<string id="8061" value="Ultrapeer način sa %lu suseda.%s u vašoj kolekciji."/>
@@ -4027,9 +4027,9 @@
 		<control caption="Jeste li znali da je Shareaza 100% besplatni proizvod?"/>
 		<control caption="Shareaza NE SADRŽI &quot;spyware&quot;, &quot;adware&quot; ili ostali loši software. NE prikazuje nikakve reklame ili &quot;popupove&quot;, nikada.{n}{n}Ako ikada vidite reklamu ili &quot;popup&quot; dok koristite Shareazu, možete biti uvereni da ju NE PRIKAZUJE ovaj program."/>
 		<control caption="Na žalost dosta ostalog softwarea stvarno dolazi sa neželjenim adware ili spyware delovima, ako vidite nešto sumljivo obavezno proverite vaš PC sa advertising ili spyware removal programom."/>
-		<control caption="Niko Vam nebi smeo naplatiti za Shareazu.Shareazu možete besplatno skinuti sa www.shareaza.com.Ako ste nekome platili Shareazu, trebali bi ste odmah tražiti potpuni povrat novca."/>
+		<control caption="Niko Vam nebi smeo naplatiti za Shareazu.Shareazu možete besplatno skinuti sa http://shareaza.sourceforge.net/.Ako ste nekome platili Shareazu, trebali bi ste odmah tražiti potpuni povrat novca."/>
 		<control caption="Shareaza Poštuje Svoje Korisnike!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Zatvori"/>
 	</dialog>
 
@@ -4040,7 +4040,7 @@
 		<control caption="Nažalost, puno ljudi nezna šta propušta koristeći zastarele programe!"/>
 		<control caption="Ako znate nekoga za koga mislite da bi mu Shareaza dobro došla, bilo da je novi u deljenju, ili već koristi neki od lošijih proizvoda, zašto ga nebi upoznali sa Shareazom i pokazali da ima boljih alternativa?"/>
 		<control caption="Verovatno če vam biti zahvalni što ste im pokazali pravi put!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 

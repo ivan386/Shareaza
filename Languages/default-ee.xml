@@ -481,7 +481,7 @@ Umlauts:
 			</menu>
 			<separator/>
 			<menu text="_Weebilehed">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -572,7 +572,7 @@ Umlauts:
 			</menu>
 			<separator/>
 			<menu text="_Weebilehed">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -657,7 +657,7 @@ Umlauts:
 			</menu>
 			<separator/>
 			<menu text="_Weebilehed">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -2078,7 +2078,7 @@ Umlauts:
 		<text>Enamus torrentitegemise programme peaksid olema suutelised seda torrentit
 		parandama, et kõik BitTorrenti programmid oleksid suutelised seda lugema.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Kliki lisaabi saamiseks siia</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Kliki lisaabi saamiseks siia</link>
 		<text>, või tõmba torrenti parandamiseks vastav tarkvara.</text>
     </document>
 
@@ -2265,7 +2265,7 @@ Umlauts:
 	<tip id="ID_HELP_ROUTER" message="Leia abi ruuteri ja tulemüüri seadistamiseks."/>
 	<tip id="ID_HELP_FORUMS" message="Külasta Shareaza Foorumit."/>
 	<tip id="ID_HELP_GUIDE" message="Külasta Shareaza Kasutusõpetust."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Külasta Shareaza.com kodulehte."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Külasta Shareaza kodulehte."/>
 	<tip id="ID_HELP_SECURITY" message="Abi arvuti kaitsmiseks pahade programmide eest."/>
 	<tip id="ID_HELP_UPDATE" message="Kontrolli uuendusi."/>
 	<tip id="ID_HELP_WEB_1" message="Mine kodulehele"/>
@@ -2531,7 +2531,7 @@ Umlauts:
 	<string id="8007" value="Siin ei ole ühtegi aktiivset otsingut.  Klikka siia, et alustada otsingut."/>
 	<string id="8008" value="Shareaza on lõpetanud uue Shareaza versiooni (%s) allalaadimise.  Kas soovid kohe uuendada?\n\nKui valid Jah, Shareaza peab ajutiselt sulguma, kuni uuendus on lõpetatud."/>
 	<string id="8009" value="Oled kindel, et tahad kustutada &quot;%s&quot; naha?  Seda ei saa enam tagasi võtta."/>
-	<string id="8010" value="See on Shareaza eelversioon ja beta testid on lõppenud.  Tõmba täis-, ametlik versioon www.shareaza.com."/>
+	<string id="8010" value="See on Shareaza eelversioon ja beta testid on lõppenud.  Tõmba täis-, ametlik versioon http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Vaadete muutmine sulgeb kõik avatud aknad.  Kas soovid kohe muuta?"/>
 	<string id="8012" value="Torrenti Informatsioon"/>
 	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s kohalikus raamatukogus."/>
@@ -4053,9 +4053,9 @@ Umlauts:
 		<control caption="Kas teadsid, et Shareaza on 100% vabavara?"/>
 		<control caption="Shareaza ei sisalda &quot;spyware&quot;, &quot;adware&quot; ega mõnda muud lisaprogramme. Ta kuva mingeid reklaame ega   &quot;hüpikaknaid&quot;, mitte kunagi.{n}{n}Kui peaksid reklaami nägema &quot;hüpikaknaid&quot; kasutades Shareazat, võid kindel olla, et need ei tule sellest programmist."/>
 		<control caption="Kahjuks paljud teised programmid tulevad koos adware'i või spyware'iga, nii et kui näed midagi kahtlast siis peaksid oma arvutit kontrollima spyware eemaldus programmiga (nt.ad-aware)."/>
-		<control caption="Sa ei pea maksma raha Shareaza omandamise eest.  Shareaza on vabalt saadaval kodulehel www.shareaza.com.  Kui sa oled oma programmi eest maksnud siis peaksid koheselt raha tagasi nõudma."/>
+		<control caption="Sa ei pea maksma raha Shareaza omandamise eest.  Shareaza on vabalt saadaval kodulehel http://shareaza.sourceforge.net/.  Kui sa oled oma programmi eest maksnud siis peaksid koheselt raha tagasi nõudma."/>
 		<control caption="Shareaza austab oma kasutajaid!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Sule"/>
 	</dialog>
 
@@ -4066,7 +4066,7 @@ Umlauts:
 		<control caption="Kahjuks paljud jagajad ei tea millest nad ilma jäävad!"/>
 		<control caption="Kui sa tead kedagi kellele Shareaza võiks meeldida, siis anna talle sellest teada."/>
 		<control caption="Tõenäoliselt on nad sulle tänulikud!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 

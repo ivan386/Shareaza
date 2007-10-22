@@ -483,7 +483,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Вэб сайты">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Последние новости"/>
@@ -577,7 +577,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Вэб сайты">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Последние новости"/>
@@ -665,7 +665,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Вэб сайты">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Последние новости"/>
@@ -2047,7 +2047,7 @@
 		<text>Большинство программ для создания торрентов должно исправить этот файл торрента. Исправление гарантировало бы,
 		что он бутет работать со всеми программами BitTorrent.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/torrentencoding/">Щелкните здесь, если Вам нужна помощь</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Щелкните здесь, если Вам нужна помощь</link>
 		<text>&#160;или если хотите загрузить ПО для правки файлов torrent.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2492,7 +2492,7 @@
 	<string id="8007" value="Нет активных процессов поиска.  Щелкните здесь, чтобы начать поиск файлов."/>
 	<string id="8008" value="Shareaza закончила загрузку новой версии Shareaza (%s).  Хотите ли сейчас обновить?\n\nЕсли выберите «Да», то Shareaza временно окончит работу, пока она будет обновляться."/>
 	<string id="8009" value="Уверены, что хотите удалить шкурку «%s»?  Действие будет необратимое."/>
-	<string id="8010" value="Это предвыпускная версия Shareaza, и период бета тестирования закончился.  Пожалуйста загрузите полную, официальную версию с www.shareaza.com."/>
+	<string id="8010" value="Это предвыпускная версия Shareaza, и период бета тестирования закончился.  Пожалуйста загрузите полную, официальную версию с http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="При смене вида все открытые Вами окна будут закрыты.  Хотите ли переключить сейчас?"/>
 	<string id="8012" value="Информация о торренте"/>
 	<string id="8060" value="Узел/режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
@@ -3978,9 +3978,9 @@
 		<control caption="Знаете ли Вы, что Shareaza на 100% бесплатный продукт?"/>
 		<control caption="Shareaza не содержит никаких «шпионов», «навесок» или других рекламных программ. Она никогда не показывает никаких баннеров или «всплывающих окон».{n}Если Вы видели рекламу или «всплывающие окна» используя Shareaza, будьте уверенны  - они к вам попали НЕ с Shareaza."/>
 		<control caption="К сожалению много других программ идет со «шпионами» и «навесками», если Вы заметили что-то подобное - проверьте Вашу систему с помощью специальных программ для удаления шпионов и навесков."/>
-		<control caption="Вам не надо платить денег чтобы получить Shareaza.  Любой может загрузить её с www.shareaza.com.  Если Вы кому-то заплатили деньги за Shareaza - Потребуйте Немедленно Вернуть Их!"/>
+		<control caption="Вам не надо платить денег чтобы получить Shareaza.  Любой может загрузить её с http://shareaza.sourceforge.net/.  Если Вы кому-то заплатили деньги за Shareaza - Потребуйте Немедленно Вернуть Их!"/>
 		<control caption="Shareaza уважает Вас!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Закрыть"/>
 	</dialog>
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Распространение">
@@ -3990,7 +3990,7 @@
 		<control caption="К сожалению многие пользователи P2P не знают что они пропускают!"/>
 		<control caption="Если знаете кого-то, кто хотел бы попробовать Shareaza, неважно новые они пользователи или нет, почему бы не дать им возможнось узнать о лучшей альтернативной P2P программе?"/>
 		<control caption="Возможно они будут благодарны, что Вы спасли их!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="ДА"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Загрузка имеющегося файла">

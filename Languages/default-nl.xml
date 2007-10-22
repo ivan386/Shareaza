@@ -489,7 +489,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
@@ -583,7 +583,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
@@ -671,7 +671,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
@@ -2045,7 +2045,7 @@
 		<text>De meeste programma's die torrents maken kunnen dit bestand herstellen, zodat je
 		zeker bent dat het werkt in alle BitTorrent programma's.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Klik hier voor extra hulp</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klik hier voor extra hulp</link>
 		<text>, of om software te downloaden om de torrent te herstellen.</text>
 </document>
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2488,7 +2488,7 @@
 	<string id="8007" value="Er zijn geen actieve zoekopdrachten. Klik hier om naar bestanden te zoeken."/>
 	<string id="8008" value="Shareaza is klaar met het downloaden van versie (%s). Wil je nu upgraden?\n\nAls je Ja kiest, zal Shareaza tijdelijk worden afgesloten terwijl de upgrade wordt geïnstalleerd."/>
 	<string id="8009" value="Weet je zeker dat je de skin &quot;%s&quot; wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
-	<string id="8010" value="Dit is een voor-distributie versie van Shareaza en de beta periode is afgelopen. Download alsjeblieft de volledige, officiële distributie vanaf www.shareaza.com."/>
+	<string id="8010" value="Dit is een voor-distributie versie van Shareaza en de beta periode is afgelopen. Download alsjeblieft de volledige, officiële distributie vanaf http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Als je van stijl verandert, worden alle geopende vensters gesloten. Wil je nu veranderen?"/>
 	<string id="8060" value="Hub/Ultrapeer Modus met %lu buurman(nen).  %s in lokale bibliotheek."/>
 	<string id="8061" value="Ultrapeer Modus met %lu buurman(nen). %s in lokale bibliotheek."/>
@@ -3026,7 +3026,7 @@
 	<string id="17473" value="Verbinden met BitTorrent cliënt %s is uitgeteld."/>
 	<string id="17474" value="Handschudden met BitTorrent cliënt %s is uitgeteld."/>
 	<string id="17475" value="BitTorrent verbinding met %s wordt gesloten vanwege een gebrek aan verkeer."/>
-	<string id="17476" value="BitTorrent verbinding met %s is mislukt omdat de andere cliënt een andere Peer ID heeft."/> 
+	<string id="17476" value="BitTorrent verbinding met %s is mislukt omdat de andere cliënt een andere Peer ID heeft."/>
 	<string id="17477" value="BitTorrent verbinding met %s antwoordde met het verkeerde bestand."/>
 	<string id="17478" value="BitTorrent verbinding met %s vroeg een onbekend bestand aan."/>
 	<string id="17479" value="BitTorrent verbinding met %s tot stand gekomen voor &quot;%s&quot;."/>
@@ -3069,7 +3069,7 @@
 	<string id="19001" value="Je moet een gebruikersnaam en wachtwoord kiezen."/>
 	<string id="19002" value="Niet mogelijk om verbindingen te accepteren, de URL is niet beschikbaar."/>
 	<string id="20000" value="Geen URN beschikbaar"/>
-	<string id="20001" value="Sluiten"/> 
+	<string id="20001" value="Sluiten"/>
 	<string id="20002" value="van"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Veranderen van leesrichting vereist het heropstarten van Shareaza.\nJe zal Shareaza zelf opnieuw moeten starten. Nu afsluiten?"/>
 	<string id="20004" value="Rechts-naar links talen worden niet ondersteund door dit besturingssysteem."/>
@@ -3950,9 +3950,9 @@
 		<control caption="Wist je al dat Shareaza een 100% gratis product is?"/>
 		<control caption="Shareaza bevat GEEN ENKELE &quot;spyware&quot;, &quot;adware&quot; of andere verpakte/verborgen software. Het laat GEEN advertenties of &quot;popups&quot; zien, niets daarvan.{n}{n}Als je ooit een advertentie of &quot;popup&quot; krijgt tijdens het gebruiken van Shareaza, kun je er gegarandeerd vanuit gaan dat ze NIET afkomstig zijn van dit programma."/>
 		<control caption="Helaas komt een heleboel andere software met ongewenste adware of spyware, dus als je iets verdachts ziet doe je er goed aan om je PC na te kijken met een programma dat reclame of spyware verwijdert."/>
-		<control caption="Als het goed is heb je niets hoeven te betalen voor Shareaza. Het kan door iedereen gratis worden gedownload vanaf www.shareaza.com. Als je toch iemand hebt moeten betalen voor Shareaza, moet je meteen een volledige terugbetaling eisen."/>
+		<control caption="Als het goed is heb je niets hoeven te betalen voor Shareaza. Het kan door iedereen gratis worden gedownload vanaf http://shareaza.sourceforge.net/. Als je toch iemand hebt moeten betalen voor Shareaza, moet je meteen een volledige terugbetaling eisen."/>
 		<control caption="Shareaza respecteert zijn gebruikers!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Sluiten"/>
 	</dialog>
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Verspreid het nieuws">
@@ -3962,7 +3962,7 @@
 		<control caption="Helaas weten een heleboel mensen niet wat ze missen!"/>
 		<control caption="Misschien ken jij nog wel een paar mensen die geïnteresseerd zouden kunnen zijn in Shareaza, of ze nu nieuwe gebruikers zijn, of het nog steeds proberen met andere minderwaardige producten. Waarom vertel je ze niet dat er een beter alternatief bestaat?"/>
 		<control caption="De kans is groot dat ze je dankbaar zullen zijn dat je ze hebt gered!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Bestaand bestand downloaden">

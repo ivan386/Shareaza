@@ -480,7 +480,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websiteleri">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forumlar"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Son Haberler"/>
@@ -571,7 +571,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websiteleri">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forumlar"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Son Haberler"/>
@@ -617,7 +617,7 @@
 			<item id="ID_VIEW_PACKETS" text="Çö_p Kutusu" shortcut="Ctrl+F1"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Ekra_n Ara" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="Sevi_len Ekranlar" shortcut="Ctrl+F3"/>
-			<separator/>			
+			<separator/>
 			<item id="ID_VIEW_BASIC" text="Normal Mod"/>
 			<item id="ID_VIEW_TABBED" text="Sekmeli Mod"/>
 			<item id="ID_VIEW_WINDOWED" text="Pencereli Mod"/>
@@ -656,7 +656,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websiteleri">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forumları"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Son Haberler"/>
@@ -1906,16 +1906,16 @@
 		<text format="b">İndirme Alanı</text>
 		<newline gap="8"/>
 		<text>Dosyaların nereye indirildiğini gösterir. Kişisel kaynakları ayrıntılarıyla görüntüleyebilirsiniz.</text>
-	
+
 		<newline gap="8"/>
-		<text>Belirli bir İndirme sırasında yardım bilgisi almak için bu komutu kullanabilirsiniz. 
+		<text>Belirli bir İndirme sırasında yardım bilgisi almak için bu komutu kullanabilirsiniz.
 		İndirmeyi seçmek ve karar vermek de bu komutla yapılır.</text>
 	</document>
 
 	<document name="DownloadHelp.Completed">
 		<text format="b">İndirme Tamamlandı</text>
 		<newline gap="8"/>
-		<text>Shareaza dosyanın indirilmesi tamamladı ve yanlışsız aktarımı doğruladı. Dosya İndirilenler klasörüne taşındı. 
+		<text>Shareaza dosyanın indirilmesi tamamladı ve yanlışsız aktarımı doğruladı. Dosya İndirilenler klasörüne taşındı.
 		</text>
 	</document>
 
@@ -1936,8 +1936,8 @@
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Disk Dolu</text>
 		<newline gap="8"/>
-		<text>Shareaza İndirmeyi otomatik olarak durdurdu çünkü harddiskiniz dolu olabilir ya da dosya yazılamıyor. 
-		Eğer indirmeye devam etmek istiyorsanız harddiskinizde boş alan oluşturun ya da dosyanın tam ulaşılabilir 
+		<text>Shareaza İndirmeyi otomatik olarak durdurdu çünkü harddiskiniz dolu olabilir ya da dosya yazılamıyor.
+		Eğer indirmeye devam etmek istiyorsanız harddiskinizde boş alan oluşturun ya da dosyanın tam ulaşılabilir
 		olduğuna emin olun ve indirmeye devam edin.</text>
 	</document>
 
@@ -1951,8 +1951,8 @@
 	<document name="DownloadHelp.Downloading">
 		<text format="b">İndirim Etkin!</text>
 		<newline gap="8"/>
-		<text>İndirme şu an devam ediyor. Eğer İndirim çok yavaşsa, daha fazla kaynak için 
-		</text>		<text format="b"> Daha Fazla Kaynak Bul</text><text> butonunu tıklayın. Eğer hızınız artmıyorsa 
+		<text>İndirme şu an devam ediyor. Eğer İndirim çok yavaşsa, daha fazla kaynak için
+		</text>		<text format="b"> Daha Fazla Kaynak Bul</text><text> butonunu tıklayın. Eğer hızınız artmıyorsa
 		indirdiğiniz kullanıcının aktarım hız limiti yeterli olmayabilir
 		indirim hızınız zamanla artacaktır.</text>
 	</document>
@@ -1970,7 +1970,7 @@
 		<text format="b">İndirim Sırada</text>
 		<newline gap="8"/>
 		<text>Bu indirme başka bir indirmenizin tamamlanmasını bekliyor.
-		   Mevcut bant genişliğinizin iyi bir şekilde paylaşılmasını sağlamak için belirli 
+		   Mevcut bant genişliğinizin iyi bir şekilde paylaşılmasını sağlamak için belirli
 		   bir zaman da aktif olan Download limit sayınızı ayarlayın.
 		   Shareaza ayarlarını Araçlar aracılığıyla değiştirebilirsiniz.
 		   Alternatif olarak devam et komutuyla indirmeyi başlatabilirsiniz.</text>
@@ -1979,12 +1979,12 @@
 	<document name="DownloadHelp.Searching">
 		<text format="b">İndirme Arama</text>
 		<newline gap="8"/>
-		<text>Bu indirme için bilinmeyen kaynaklar var, Shareaza yeni kaynaklar için tüm bağlı P2P ağlarını arıyor. Kaynaklar bulundu, indirme otomatik başlayacaktır. 
+		<text>Bu indirme için bilinmeyen kaynaklar var, Shareaza yeni kaynaklar için tüm bağlı P2P ağlarını arıyor. Kaynaklar bulundu, indirme otomatik başlayacaktır.
 		 Shareaza kaynakları otomatik arar, yine de </text>
 		<text format="b"> Daha Fazla Kaynak Bul</text><text> komutunu kullanarak işe hız verebilirsiniz.</text>
 		<newline gap="8"/>
 		<text>Maalesef aradığınız dosyaya sahip olan kimse online durumda değil.
-		Tek çare birinin online duruma gelmesini beklemek ya da vazgeçmek ve daha 
+		Tek çare birinin online duruma gelmesini beklemek ya da vazgeçmek ve daha
 		geniş bir alanda bulabileceğiniz benzer bir dosya aramak. 	</text>
 	</document>
 
@@ -1997,12 +1997,12 @@
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent Tracker Bozuk</text>
 		<newline gap="8"/>
-		<text>BitTorrent tracker server, indirme için aksaklık ya da bozukluk olabileceği görünüyor. Shareaza 
+		<text>BitTorrent tracker server, indirme için aksaklık ya da bozukluk olabileceği görünüyor. Shareaza
 		alınacak listesini ya da indirme eşlemesini içeremez.</text>
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">Aktarım Alanı</text>
 		<newline gap="8"/>
@@ -2015,8 +2015,8 @@
 		<newline gap="8"/>
 		<text> Shareaza tarafından, bir ya da daha fazla sürücüde kullanılan boş alan azdır.</text>
 		<newline gap="8"/>
-		<text>Diskte sürekli olarak yeterli bir boş alan korumaya çalışmalısınız. Sürücüler dolu olursa programlar 
-		dengesiz olabilir ve geçici dosyalar kaybolabilir. Bir disk temizleyici kullanmalı, istenmeyen dosyaları silmeli ya da 
+		<text>Diskte sürekli olarak yeterli bir boş alan korumaya çalışmalısınız. Sürücüler dolu olursa programlar
+		dengesiz olabilir ve geçici dosyalar kaybolabilir. Bir disk temizleyici kullanmalı, istenmeyen dosyaları silmeli ya da
 		fazla ihtiyaç duymadığınız yazılımları kaldırmalısınız.</text>
 	</document>
 
@@ -2052,13 +2052,13 @@
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">Torrent kodlama hatası olduğunu görür</text>
 		<newline gap="8"/>
-		<text>Windows, bu torrentda metin şifre çözümünde bir çeviri hatası bildirdi. 
+		<text>Windows, bu torrentda metin şifre çözümünde bir çeviri hatası bildirdi.
 		Torrent bozuk ya da sadece yanlış kodlanmış olması mümkündür. Bazı dosya isimleri yanlış olsa da torrent hala düzgün indirebilir.</text>
 		<newline gap="8"/>
 		<text>
 		Gelişmiş torrent oluşturma programları, torrentın tüm BitTorrent uygulamalarında düzgün çalışmasını garantileyecek hale getirmek için size izin vermelidir.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Ek yardım için burayı tıklayınız</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Ek yardım için burayı tıklayınız</link>
 		<text>, ya da torrent onarım  yazılımını indiriniz.</text>
 </document>
 
@@ -2067,16 +2067,16 @@
 		<newline gap="8"/>
 		<text>eDonkey2000 server listenizde hiç server yer almıyor. ED2K ya bağlanarak server listenizi güncel olarak(met dosyası) indirmeye ihtiyacınız var</text>
 		<newline gap="8"/>
-		<text>Keşif servisleri penceresi ya da ed2k ayarlar sayfasından server listesi indirebilirsiniz(Keşif servisleri penceresini açmak için F9 'a basın).</text> 
+		<text>Keşif servisleri penceresi ya da ed2k ayarlar sayfasından server listesi indirebilirsiniz(Keşif servisleri penceresini açmak için F9 'a basın).</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Limitli aktarımlar, yavaş İndirebilir</text>
 		<newline gap="8"/>
-		<text>Birçok Shareaza ağı bağlantı oranları uygular, istemcilerin paylaşılmayan aktarımını kısıtlar ya da sadece 
+		<text>Birçok Shareaza ağı bağlantı oranları uygular, istemcilerin paylaşılmayan aktarımını kısıtlar ya da sadece
 		bilinen paylaştırıcıların aktarımını tercih eder.</text>
 		<newline/>
-		<text>Neyse ki, genişbant  DSL bağlantıları iki şeritli yola benzer: aktarım ve indirme için ayrılmış bölümlere sahipsiniz. 
+		<text>Neyse ki, genişbant  DSL bağlantıları iki şeritli yola benzer: aktarım ve indirme için ayrılmış bölümlere sahipsiniz.
 		Eğer istemciniz düzgün yapılandırıldıysa, tam indirme kapasitesine sahip olduğu sürece yüksek oranda aktarım yapabilirsiniz.</text>
 		<newline gap="8"/>
 		<text>Varsayılan, indirmeler limitsiz olduğunda aktarım limitiniz mevcut bant genişliğinin %85 'idir.
@@ -2104,7 +2104,7 @@
 		<text> Genel dosya kapsamları (ve numaraları) aratıldığında, aramayı yaratıyorken iyi olarak diğer şarta girebilirsin.
 		 Noktalama ve özel sembollar aramalarda kullanılmazlar, sadece metin girin.</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Lütfen anlamlı sözcüklerle arayın</text>
 		<newline gap="8"/>
@@ -2122,7 +2122,7 @@
 		<text format="b">Arama Başlayamadı</text>
 		<newline gap="8"/>
 		<text>Belirilen aramalar büyük ihtimalle gelişmiş içerikle çok sayıda sonuç dönebilir, bunu ayarlardan kapatabilirsiniz. Ya anlamlı arama yapabilir ya da filtreyi engelleyebilirsiniz.</text>
-		 
+
 		<newline gap="8"/>
 		<text>Filtre engellemek için araç çubuğundaki &gt; Ayarlar &gt;içinde Genel ve kontrol edilmemiş gelişmiş içerik filtresine gidilir.</text>
 	</document>
@@ -2230,7 +2230,7 @@
 	<tip id="ID_HELP_ROUTER" message="Yönlendirici ve güvenlik duvarı yapılandırma yardımı."/>
 	<tip id="ID_HELP_FORUMS" message="Shareaza Tartışma Forumlarını Ziyaret et."/>
 	<tip id="ID_HELP_GUIDE" message="Shareaza Kullanıcı Yardımcısını Ziyaret et."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com Ziyaret et."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Shareaza Ziyaret et."/>
 	<tip id="ID_HELP_SECURITY" message="Zararlı programlardan sisteminizi korumak için yardım."/>
 	<tip id="ID_HELP_UPDATE" message="Yenilikleri ve güncelleştirmeleri kontrol et."/>
 	<tip id="ID_HELP_WEB_1" message="Web sitesini ziyaret et"/>
@@ -2495,7 +2495,7 @@
 	<string id="8007" value="Etkin bir arama yok. Dosya aramak için tıklayınız."/>
 	<string id="8008" value="Shareaza bi sonraki Shareaza versiyonunun (%s) İndirilmesi tamamlandı .  Şimdi güncelemek ister misiniz?\n\nEvet ise, Shareaza güncelleme kurulana kadar geçici olarak kapatılacaktır."/>
 	<string id="8009" value=" &quot;%s&quot; arayüzünü silmek istediğinizden emin misiniz? Bu yapılamaz."/>
-	<string id="8010" value="Bu Shareaza'nın değiştirme öncesi programıdır, ve bu beta deneme aşaması sonlanmıştır. Lütfen www.shareaza.com adresinden programın tamamını yükleyiniz."/>
+	<string id="8010" value="Bu Shareaza'nın değiştirme öncesi programıdır, ve bu beta deneme aşaması sonlanmıştır. Lütfen http://shareaza.sourceforge.net/ adresinden programın tamamını yükleyiniz."/>
 	<string id="8011" value="Görüntü Değiştirme açıldığında pencereler kapanacaktır. Şimdi değiştirmek ister misin?"/>
 	<string id="8060" value="%lu komşusu ile Hub/Ultrapeer mod.  %s yerel kütüphanede."/>
 	<string id="8061" value="%lu komşusu ile Ultrapeer mod.  %s yerel kütüphanede."/>
@@ -2623,7 +2623,7 @@
 	<string id="8335" value="Bu dosya için kaynaklar güvenlik duvarında"/>
 	<string id="8336" value="Bu dosya için kaynaklar değişken olabilir"/>
 	<string id="16064" value="Shareaza ağ merkezi başlıyor..."/>
-	<string id="16065" value="Gelen bağlantılar için %s  port %i'den bağlanamaz. Gelen bağlantılar desteklenmeyecektir."/> 
+	<string id="16065" value="Gelen bağlantılar için %s  port %i'den bağlanamaz. Gelen bağlantılar desteklenmeyecektir."/>
 	<string id="16066" value="Shareaza ağ merkezi kapatılıyor..."/>
 	<string id="16067" value="Ağdan bağlantı kesiliyor."/>
 	<string id="16068" value="%s porttan %i gelmekte olan TCP bağlantıları kabul ediliyor ."/>
@@ -2699,10 +2699,10 @@
 	<string id="16261" value="İndirme için &quot;%s&quot; dosyası yaratılıyor."/>
 	<string id="16262" value="İndirme için &quot;%s&quot; yerel dosyası yaratılamaz, başarısızlıkla sonuçlandı."/>
 	<string id="16263" value="İndirme için &quot;%s&quot; yerel dosyası açılamaz, başarısızlıkla sonuçlandı."/>
-	<string id="16264" value="%s'e baglantı %i portundan &quot;%s&quot; indirme için başlatılıyor ..."/> 
+	<string id="16264" value="%s'e baglantı %i portundan &quot;%s&quot; indirme için başlatılıyor ..."/>
 	<string id="16265" value="%s Hosta indirme için bağlanılamaz."/>
 	<string id="16266" value="%s indirme bağlantısı kuruldu."/>
-	<string id="16267" value="(%I64i-%I64i) indirme parçaları &quot;%s&quot; için %s' den isteniyor."/> 
+	<string id="16267" value="(%I64i-%I64i) indirme parçaları &quot;%s&quot; için %s' den isteniyor."/>
 	<string id="16268" value="Daha fazla indirme parçası bulunamadı,%s bağlantısı kapatılıyor ."/>
 	<string id="16269" value="İndirme parçaları kısaldı, %s bağlantısı kapatılıyor."/>
 	<string id="16270" value="%s indirme isteği zaman aşımına uğradı, bağlantı kapatılıyor."/>
@@ -2723,7 +2723,7 @@
 	<string id="16285" value="%s'den gereksiz sıkıştırılmış bir bağlantı alınıyor."/>
 	<string id="16286" value="Host %s &quot;%s&quot; indirmesini gönderiyor,kabul ediliyor."/>
 	<string id="16287" value="&quot;%s&quot; indirmesi için kaynak edinemezsin çünkü ağ bağlantısı yok."/>
-	<string id="16288" value="&quot;%s&quot; indirmesi için %i bağlantısında kaynak sorgulanıyor..."/> 
+	<string id="16288" value="&quot;%s&quot; indirmesi için %i bağlantısında kaynak sorgulanıyor..."/>
 	<string id="16289" value="&quot;%s&quot; indirmesi için istek gönderiliyor..."/>
 	<string id="16290" value="%s download Hostu farklı fakat yararlı bir (%I64i-%I64i) dağılım yanıtı verdi, &quot;%s&quot;'den."/>
 	<string id="16291" value="&quot;%s&quot; dan &quot;%s&quot;'a taşındı, indirme tamamlandı."/>
@@ -2733,7 +2733,7 @@
 	<string id="16295" value="Ayrılan genişletilmiş bant genişliği &quot;%s&quot; indirimini destekliyor."/>
 	<string id="16296" value="&quot;%s&quot; indirmenin başarıyla doğruluğu kanıtlandı."/>
 	<string id="16297" value="UYARI: indirme &quot;%s&quot; doğrulaması başarılamadı, bu indirmeyi planladığın dosya olmayabilir!"/>
-	<string id="16298" value="%s indirme hostu meşgul, #%i %i den durum sırasında bekliyor(&quot;%s&quot;)."/> 
+	<string id="16298" value="%s indirme hostu meşgul, #%i %i den durum sırasında bekliyor(&quot;%s&quot;)."/>
 	<string id="16299" value="Duraklatılmış tüm indirmeleri temizlemek istediğinizden emin misiniz? Bir indirme, indirme penceresinden temizlendi, geri alınamaz."/>
 	<string id="16300" value="&quot;%s&quot; indirmeyi silmek istediğinizden emin misiniz?"/>
 	<string id="16301" value="%s'den &quot;%s&quot; için tiger-tree bölümü isteniyor..."/>
@@ -2754,7 +2754,7 @@
 	<string id="16316" value="&quot;%s&quot; dosyası için %s eDonkey2000 indirme hostundan güncelleme sırası zaman aşımına uğradı."/>
 	<string id="16317" value="&quot;%s&quot; için sıra bekleniyor."/>
 	<string id="16318" value="&quot;%s&quot; (%s) indirmesi için yetersiz disk alanı."/>
-	<string id="16319" value="%s (%s) kaynağı &quot;%s&quot; (%I64i-%I64i)'in bozulan parçalarının gönderimi için  kapatılıyor."/> 
+	<string id="16319" value="%s (%s) kaynağı &quot;%s&quot; (%I64i-%I64i)'in bozulan parçalarının gönderimi için  kapatılıyor."/>
 	<string id="16320" value="%s aktarım hostu geçersiz bir HTTP isteği gönderdi."/>
 	<string id="16321" value="%s. %s 'e sıkıştırılmış bağlantı başlatılıyor"/>
 	<string id="16322" value="%s hostuna sıkıştırma için bağlantı kurulamaz."/>
@@ -2765,10 +2765,10 @@
 	<string id="16327" value="&quot;%s&quot; 'dan %s (%s) 'e aktarım kabul edilmiyor, meşgul ve istemci sırasını desteklemiyor."/>
 	<string id="16328" value="%s 'e sıkıştırılmış bağlantı kurmak için anlaşma bekleniyor..."/>
 	<string id="16329" value="%s hostunda aktarım için &quot;%s&quot; açılamıyor, disk/dosya hatası."/>
-	<string id="16330" value="%I64i-%I64i oranında aktarım içeriği &quot;%s&quot;'dan, %s (%s) hostu için gönderiliyor."/> 
+	<string id="16330" value="%I64i-%I64i oranında aktarım içeriği &quot;%s&quot;'dan, %s (%s) hostu için gönderiliyor."/>
 	<string id="16331" value="&quot;%s&quot; 'nun %s' e aktarılan parçaları tamamlandı."/>
 	<string id="16332" value="%s 'den gelen bağlantı, bir HTTP aktarım isteğidir."/>
-	<string id="16333" value="&quot;%s&quot;'in %s'a aktarımı fazla yoğun, #%i 'den %i 'ye (&quot;%s&quot;) sıralandı."/> 
+	<string id="16333" value="&quot;%s&quot;'in %s'a aktarımı fazla yoğun, #%i 'den %i 'ye (&quot;%s&quot;) sıralandı."/>
 	<string id="16334" value="%s 'den kalan sıkıştırma isteği bilinmeyen bir dosya istedi, yine de bağlanıyor..."/>
 	<string id="16335" value="&quot;%s&quot; 'dan %s 'e aktarım kaldırıldı."/>
 	<string id="16336" value="%s aktarım hostu kullanıcının engel listesinde, istek yok sayılıyor."/>
@@ -2781,7 +2781,7 @@
 	<string id="16343" value="%s 'deki eski aktarımlar kapatılıyor çünkü yeni bağlantı yapıldı."/>
 	<string id="16344" value="%s'ye yeni aktarım reddediliyor çünkü önceki bağlantı hala askıda."/>
 	<string id="16345" value="%s'ye &quot;%s&quot; aktarımı durdu çünkü dosya silindi."/>
-	<string id="16346" value="%I64i-%I64i oranında aktarım içeriği &quot;%s&quot; dosya parçasından, %s (%s) hostu için gönderiliyor."/> 
+	<string id="16346" value="%I64i-%I64i oranında aktarım içeriği &quot;%s&quot; dosya parçasından, %s (%s) hostu için gönderiliyor."/>
 	<string id="16347" value="Sıradaki %s altarımı isteğini çok hızlı yineliyor, bağlantı kapatılıyor."/>
 	<string id="16348" value="%s'de istek reddediliyor çünkü çok fazla aktarım bağlantısı var."/>
 	<string id="16349" value="%s'e &quot;%s&quot; için tiger-tree veri aktarılıyor."/>
@@ -2930,7 +2930,7 @@
 	<string id="16941" value="Trafik yoğunluğundan dolayı %s kullanıcı bağlantısı kapatılıyor."/>
 	<string id="16942" value="%s'ye gözatan kullanıcı bağlantısı kapatılıyor."/>
 	<string id="16943" value="Göz atılıyor %s"/>
-	<string id="16944" value="%i paylaşılan dosya %s'nin kütüphanesinde  bulundu."/> 
+	<string id="16944" value="%i paylaşılan dosya %s'nin kütüphanesinde  bulundu."/>
 	<string id="16992" value="Shareaza MedyaServisleri plugin'ini desteklenemedi.  lütfen Shareazayı tekrar yükleyin ve zorunlu ortam codeclerinin ve çıkış sürücülerinin yüklendiğini doğrulayın."/>
 	<string id="16993" value="Tüm ortam dosyaları|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Oynatma Listeleri|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Ses Dosyaları|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Dosyaları|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Ses Trackleri|*.cda|MIDI Dosyalar|*.mid;*.rmi;*.midi|Tüm Dosyalar|*.*||"/>
 	<string id="16994" value="&quot;%s&quot; ortam dosyası yüklenemez"/>
@@ -3039,7 +3039,7 @@
 	<string id="17487" value="BitTorrent %s birleştirilmesi doğrulandı, anlaşma sağlanıyor..."/>
 	<string id="17488" value="Bu torrent için URL trackerını değiştirdiniz. Bu değişikliği kaydetmek istediğinize emin misiniz?\n\nGeçersiz bir URL trackerı daha fazla downloadı engelleyebilir."/>
 	<string id="17489" value="BitTorrent ile %s birleştirilmesi yaygın bir protokoldür, &quot;%s&quot; tanındı."/>
-	<string id="17490" value="%i yeni BitTorrent kaynağı %s'den alındı."/> 
+	<string id="17490" value="%i yeni BitTorrent kaynağı %s'den alındı."/>
 	<string id="17491" value="&quot;%s&quot; torrent insirme listenizde ve oluşturulamıyor."/>
 	<string id="17492" value="&quot;%s&quot; torrent dosyasında yükleme hatası. Bu geçerli bir torrent olmayabilir."/>
 	<string id="17493" value="&quot;%s&quot; BitTorrent paylaşım dosyası yaratılamaz."/>
@@ -4004,9 +4004,9 @@
 		<control caption="Shareaza'nın 100% özgür bir ürün olduğunu biliyor muydunuz?"/>
 		<control caption="Shareaza &quot;spyware&quot;, &quot;adware&quot; ya da diğer sıkıştırılmış yazılımları içermez. Reklam yada &quot;popupları&quot; asla görüntülemez{n}{n}Shareaza'yı kullanırken reklam ya da &quot;popuplar&quot; görürseniz , emin olunki bu programdan gelmemiştir."/>
 		<control caption="Maalesef diğer yazılımlar adware ya da spyware ile birlikte gelir, bu yüzden eğer şüpheli birşey görürseniz, spyware kaldırma ya da bildiri programı ile PC'nizin kontrol edilmesini isteyebilirsiniz."/>
-		<control caption="Shareaza'yı elde etmek için hiç para ödemeye gerek yok.  Shareaza www.shareaza.com adresinden serbestçe download edilebilir. Eğer Shareaza için para ödediyseniz, acilen parayı geri ödeme isteğinde bulunun."/>
+		<control caption="Shareaza'yı elde etmek için hiç para ödemeye gerek yok.  Shareaza http://shareaza.sourceforge.net/ adresinden serbestçe download edilebilir. Eğer Shareaza için para ödediyseniz, acilen parayı geri ödeme isteğinde bulunun."/>
 		<control caption="Shareaza kullanıcılarına saygı duyar!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Kapat"/>
 	</dialog>
 
@@ -4017,7 +4017,7 @@
 		<control caption="Maalesef, bazı dosya paylaştırıcılar ne kaybettiklerini bilmiyorlar!"/>
 		<control caption="Shareaza gibi bildiğiniz varsa, onlar yeni kullanıcılar ya da alt ürüne katlanıyor, neden daha iyi bir seceneğin olduğunu tanıtmıyorlar??"/>
 		<control caption="Bu denemeler onları kurtarmanız onları mutlu edecektir!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Tamam"/>
 	</dialog>
 

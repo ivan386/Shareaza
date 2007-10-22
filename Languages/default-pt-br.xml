@@ -489,7 +489,7 @@
 			</menu>
 			<separator/>
 			<menu text="Sites na Rede">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fóruns do Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Últimas Notícias"/>
@@ -583,7 +583,7 @@
 			</menu>
 			<separator/>
 			<menu text="Sites na Rede">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fóruns do Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Últimas Notícias"/>
@@ -671,7 +671,7 @@
 			</menu>
 			<separator/>
 			<menu text="Sites na Rede">
-				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fóruns do Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Últimas Notícias"/>
@@ -1924,7 +1924,7 @@
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">O disco está cheio</text>
 		<newline gap="8"/>
-		<text>O Shareaza pausou este download automaticamente porque o disco rígido 
+		<text>O Shareaza pausou este download automaticamente porque o disco rígido
 		aparenta estar cheio, ou o arquivo de download não pode ser escrito. Se você deseja
 		continuar baixando, por favor libere um pouco de espaço no seu disco rígido e/ou verifique
 		pra ter certeza de que a pasta do arquivo incompleto está acessível, e então resuma o
@@ -1952,7 +1952,7 @@
 		<text>Este download está esperando por alguém começar a fazer upload.
 		O Shareaza está pronto para começar a baixar este arquivo, mas ninguém o está enviando
 		no momento. Você provavelmente está esperando na(s) fila(s) de espera de outros usuário(s), e o download
-		pode começar a qualquer hora. Você pode examinar as fontes individuais para 
+		pode começar a qualquer hora. Você pode examinar as fontes individuais para
 		ver cada fila de espera em que você está esperando. Se você está compartilhando arquivos você mesmo, pode
 		melhorar as chances de uma transferência de download iniciar rapidamente.</text>
 		</document>
@@ -1975,7 +1975,7 @@
 		<text format="b">Encontrar mais fontes </text><text>.</text>
 		<newline gap="8"/>
 		<text>Infelizmente em muitos casos podem não haver usuários online que tenham o
-		arquivo que você está procurando. O único curso de ação aqui é esperar 
+		arquivo que você está procurando. O único curso de ação aqui é esperar
 		alguém vir online, ou cancelá-lo e tentar achar um arquivo similar o qual está
 		mais amplamente disponível.</text>
 	</document>
@@ -1997,7 +1997,7 @@
 		<text format="b">Área de Uploads</text>
 		<newline gap="8"/>
 		<text>Aqui é aonde as filas e uploads são exibidos. Você pode expandir cada fila
-		com o + na esquerda, e filtrar o que é exibido com o botão 
+		com o + na esquerda, e filtrar o que é exibido com o botão
 		a direita da barra de ferramentas da janela.</text>
 	</document>
 	<!-- General help documents -->
@@ -2048,7 +2048,7 @@
 		<text>A maioria dos programas de criação de Torrents permite a você reparar este torrent, o que
 		irá garantir que funcione apropriadamente em todas as aplicações BitTorrent.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Clique aqui para uma ajuda adicional</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Clique aqui para uma ajuda adicional</link>
 		<text>, ou para baixar um software para reparar o torrent.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2140,7 +2140,7 @@
 		sub-pastas localizadas </text><text format="i"> dentro </text>
 		<text> destas pastas. Por favor compartilhe-as em vez das outras.</text>
 		<newline gap="8"/>
-		<text>A pasta 'incompletos' do Shareaza também não deve ser compartilhada pela 
+		<text>A pasta 'incompletos' do Shareaza também não deve ser compartilhada pela
 		biblioteca, já que a tentativa de fazer o hash dos downloads em progresso pode ter um impacto na performance.</text>
 	</document>
 </documents>
@@ -2500,7 +2500,7 @@
 	<string id="8007" value="Não há pesquisas ativas. Clique aqui para procurar por arquivos."/>
 	<string id="8008" value="O Shareaza terminou de baixar a versão mais recente (%s). Você gostaria de atualizar agora?\n\nSe você escolher Sim, o Shareaza fechará temporariamente enquanto a atualização é instalada."/>
 	<string id="8009" value="Você tem certeza que você quer apagar a &quot;%s&quot; skin? Isto não pode ser desfeito."/>
-	<string id="8010" value="Esta é uma versão de pré-lançamento do Shareaza e o período de testes beta acabou. Por favor baixar a versão completa oficial de www.shareaza.com."/>
+	<string id="8010" value="Esta é uma versão de pré-lançamento do Shareaza e o período de testes beta acabou. Por favor baixar a versão completa oficial de http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Mudar a visualização fechará quaisquer janelas que estejam abertas. Você gostaria de mudar agora?"/>
 	<string id="8012" value="Informação do Torrent"/>
 	<string id="8060" value="Modo Hub/Ultrapeer com %lu vizinho(s). %s na sua bilioteca local."/>
@@ -2990,7 +2990,7 @@
 	<string id="17109" value="Entrada"/>
 	<string id="17110" value="Saída"/>
 	<string id="17111" value="Atualmente:"/>
-	<string id="17112" value="Total:"/>	   
+	<string id="17112" value="Total:"/>
 	<string id="17113" value="Compressão:"/>
     <string id="17114" value="Ratio:"/>
 	<string id="17115" value="Desinflar"/>
@@ -3985,9 +3985,9 @@
 		<control caption="Você sabia que o Shareaza é um produto 100% gratuito?"/>
 		<control caption="O Shareaza NÃO CONTÉM nenhum &quot;spyware&quot;, &quot;adware&quot; ou outro programa junto com o Shareaza. NÃO exibe NENHUMA propaganda ou &quot;popups&quot;, jamais.{n}{n}Se você ver uma propaganda ou um &quot;popups&quot; enquanto usando o Shareaza, esteja assegurado de que eles NÃO estão vindo deste programa."/>
 		<control caption="Infelizmente muito outros programas vem com adwares indesejáveis ou spywares, então se você ver algo suspeito você pode desejar verificar o seu PC com um programa de remoção de spywares e propagandas."/>
-		<control caption="Você não tem que pagar para obter o Shareaza. O Shareaza pode ser baixado livremente por qualquer um em www.shareaza.com. Se você pagou algum dinheiro pelo Shareaza, você deve exigir uma restituição completa imediatamente."/>
+		<control caption="Você não tem que pagar para obter o Shareaza. O Shareaza pode ser baixado livremente por qualquer um em http://shareaza.sourceforge.net/. Se você pagou algum dinheiro pelo Shareaza, você deve exigir uma restituição completa imediatamente."/>
 		<control caption="O Shareaza respeita os seus usuários!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Fechar"/>
 	</dialog>
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Promova o Shareaza">
@@ -3997,7 +3997,7 @@
 		<control caption="Infelizmente, muitos que compartilham arquivos não sabem o que eles estão perdendo!"/>
 		<control caption="Se você conhece alguém que gostaria do Shareaza, sejam eles um novo usuário ou alguém ainda usando um produto inferior, por que não deixá-los saber que há uma alternativa melhor?"/>
 		<control caption="As chances são de que eles ficarão gratos por você tê-los avisado!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Arquivo Existente">
@@ -4095,7 +4095,7 @@
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Abrir Arquivo Torrent">
 		<control/>
 		<control caption="Você abriu um arquivo Torrent de BitTorrent. Você gostaria de baixar o seu conteúdo ou fazer o seed novamente?"/>
-		<control caption="Download"/>			  
+		<control caption="Download"/>
 		<control caption="Fazer Seed"/>
 		<control caption="Cancelar"/>
 		<control caption="Para compartilhar arquivos completados usando BitTorrent, eles devem primeiro virar seeds. Uma vez que este processo está completo,o Torrent aparecerá como um novo item na sua lista de downloads."/>

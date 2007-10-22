@@ -479,7 +479,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Sivustot">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com (en)"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
@@ -570,7 +570,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Sivustot">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com (en)"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
@@ -655,7 +655,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Sivustot">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com (en)"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimm&#228;t uutiset (en)"/>
@@ -2078,7 +2078,7 @@
 		<text>Suurin osa torrent teko ohjelmista antaa mahdollisuuden korjata tm torrentti, mik
 		varmistaa ett se toimii oikein kaikissa BitTorrent ohjemissa.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Klikkaa thn saadaksesi lis apua (en)</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klikkaa thn saadaksesi lis apua (en)</link>
 		<text>, tai lataa ohjelma jolla voit korjata torrentin.</text>
 </document>
 
@@ -2266,7 +2266,7 @@
 	<tip id="ID_HELP_ROUTER" message="Get help configuring your router or firewall."/>
 	<tip id="ID_HELP_FORUMS" message="Visit the Shareaza Discussion Forums."/>
 	<tip id="ID_HELP_GUIDE" message="Visit the Shareaza Users Guide."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Visit the Shareaza.com web site."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Visit the Shareaza web site."/>
 	<tip id="ID_HELP_SECURITY" message="Help protecting your system from hostile programs."/>
 	<tip id="ID_HELP_UPDATE" message="Check for news and updates."/>
 	<tip id="ID_HELP_WEB_1" message="Visit this website"/>
@@ -2531,7 +2531,7 @@
 	<string id="8007" value="There are no active searches.  Click here to search for files."/>
 	<string id="8008" value="Shareaza has finished downloading the next Shareaza version (%s).  Would you like to upgrade now?\n\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."/>
 	<string id="8009" value="Are you sure you want to delete the &quot;%s&quot; skin?  This cannot be undone."/>
-	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."/>
+	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Changing view will close any windows you have open.  Would you like to change now?"/>
 	<string id="8012" value="Torrent Information"/>
 	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
@@ -4071,9 +4071,9 @@
 		<control caption="Did you know Shareaza is a 100% free product?"/>
 		<control caption="Shareaza does NOT contain ANY &quot;spyware&quot;, &quot;adware&quot; or other bundled software. It does NOT display any advertisements or &quot;popups&quot;, ever.{n}{n}If you ever see advertising or &quot;popups&quot; while using Shareaza, be assured that they are NOT coming from this program."/>
 		<control caption="Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."/>
-		<control caption="You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from www.shareaza.com.  If you paid someone money for Shareaza, you should demand a full refund immediately."/>
+		<control caption="You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/.  If you paid someone money for Shareaza, you should demand a full refund immediately."/>
 		<control caption="Shareaza respects its users!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Close"/>
 	</dialog>
 
@@ -4084,7 +4084,7 @@
 		<control caption="Unfortunately, a lot of file sharers don't know what they're missing!"/>
 		<control caption="If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"/>
 		<control caption="Chances are they'll be grateful you rescued them!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 

@@ -490,7 +490,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Weboldalak">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza hivatalos _fórum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -584,7 +584,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Weboldalak">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza hivatalos _fórum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -672,7 +672,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Weboldalak">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza hivatalos _fórum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -954,7 +954,7 @@
 		<item id="ID_DOWNLOADS_HELP" text="_Súgó..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Előnézet"/>	 
+		<item id="ID_DOWNLOADS_LAUNCH" text="_Előnézet"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Képes előnézet"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Másolat előnézete"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Listához ad"/>
@@ -2036,7 +2036,7 @@
 		<text>A legtöbb torrentkészítő program ki tudja javítani ezt a hibát, így bármelyik BitTorrent programmal működni fog.
 		Ha segítség kell, látogassa meg a Shareaza fórumait.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Kattintson ide, ha további segítségre van szüksége</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Kattintson ide, ha további segítségre van szüksége</link>
 		<text>vagy töltse le innen a megfelelő szoftvert.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2188,7 +2188,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="A kiválasztott letöltés(ek) feljebb tolása az elsőbbségi listán."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Szünetelteti a kiválasztott letöltés(ek)et.."/>
 	<tip id="ID_DOWNLOADS_RATE" message="A letöltés osztályozása."/>
-	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Előnézetként letölt egy képet a letöltésből."/>	
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Előnézetként letölt egy képet a letöltésből."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="A kiválasztott letöltés(ek) folytatása."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Letöltési beállítások..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Ezt a félig letöltött fájlt ossza meg másokkal."/>
@@ -2203,7 +2203,7 @@
 	<tip id="ID_HELP_ROUTER" message="Router és tűzfal beállítási segítség."/>
 	<tip id="ID_HELP_FORUMS" message="Látogassa meg a Shareaza hivatalos fórumait."/>
 	<tip id="ID_HELP_GUIDE" message="A Shareaza használati utasításához vezet el."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Látogassa meg a Shareaza.com hivatalos weboldalát."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Látogassa meg a Shareaza hivatalos weboldalát."/>
 	<tip id="ID_HELP_SECURITY" message="Veszélyes programok elleni védekezés."/>
 	<tip id="ID_HELP_UPDATE" message="Frissítések és új hírek ellenőrzése."/>
 	<tip id="ID_HELP_WEB_1" message="Ellátogat a Zeropaid.com-ra."/>
@@ -2294,7 +2294,7 @@
 	<tip id="ID_MEDIA_PREVIOUS" message="Visszamegy az előző fájlra." tip="Előző"/>
 	<tip id="ID_MEDIA_PROPERTIES" message="A kiválasztott fájl tulajdonságainak szerkesztése."/>
 	<tip id="ID_MEDIA_RANDOM" message="Véletlenszerű lejátszás kapcsolgatása."/>
-	<tip id="ID_MEDIA_RATE" message="Kiválasztott fájl osztályozása."/>	
+	<tip id="ID_MEDIA_RATE" message="Kiválasztott fájl osztályozása."/>
 	<tip id="ID_MEDIA_REMOVE" message="Eltávolítja a lejátszólistából."/>
 	<tip id="ID_MEDIA_REPEAT" message="Ismételt lejátszás kapcsolgatása."/>
 	<tip id="ID_MEDIA_SAVE" message="A jelenlegi list mentése..."/>
@@ -2474,7 +2474,7 @@
 	<string id="8007" value="Nincsen aktív keresés. Kattintson ide a fájlok kereséséhez."/>
 	<string id="8008" value="A Shareaza letöltötte a legújabb, Shareaza (%s) verziót. Szeretné most frissíteni a proramot?\n\nHa igen, a Shareaza a telepítés idejére bezárja magát."/>
 	<string id="8009" value="Biztos, hogy törölni akarja a(z) &quot;%s&quot; kinézetet? Ezt már nem lehet később visszavonni."/>
-	<string id="8010" value="Ez a Shareaza béta verziója. Töltse le a legújabb stabil verziót a www.shareaza.com -ról."/>
+	<string id="8010" value="Ez a Shareaza béta verziója. Töltse le a legújabb stabil verziót a http://shareaza.sourceforge.net/ -ról."/>
 	<string id="8011" value="A kinézet megváltoztatása bezár minden megnyitott ablakot. Most akarja megvátoztatni?"/>
 	<string id="8012" value="Torrent adatok"/>
 	<string id="8060" value="Hub/Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>
@@ -3117,7 +3117,7 @@
 	<string id="20133" value="Érdektelen"/>
 	<string id="20134" value="Elakadva"/>
 	<string id="20135" value="Következő"/>
-	<string id="20136" value="S"/> 
+	<string id="20136" value="S"/>
 	<string id="20137" value="forrás"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Vasárnap"/>
 	<string id="20201" value="Hétfő"/>
@@ -3470,7 +3470,7 @@
 		<control caption="_Név"/>
 		<control/>
 		<control caption="_Feltételek"/>
-		<control caption="Csak részben letöltött fájlok"/> 
+		<control caption="Csak részben letöltött fájlok"/>
 		<control caption="Csak a Könyvtárban megosztott fájlok"/>
 		<control caption="Részben és a Könyvtárban is megosztott fájlok"/>
 		<control caption="Minimális fájlméret:"/>
@@ -3958,9 +3958,9 @@
 		<control caption="Tudta, hogy a Shareaza egy teljesen ingyenes termék?"/>
 		<control caption="A Shareaza SEMMILYEN &quot;kémprogramot&quot;, &quot;reklámot&quot; és hasonló programot NEM tartalmaz. SEMMILYEN &quot;felugró ablak&quot; NEM található benne.{n}{n}Ha mégis megjelenne ilyesmi, akkor az nem a Shareazától származik!"/>
 		<control caption="Ellenben más programok tartalmazhatnak reklámot és/vagy kémprogramot. Ha ilyenekkel találkozik, futtasson le egy reklám- és kémprogram írtó programot."/>
-		<control caption="Soha nem kell pénzt kiadnia a Shareazáért. Innen letöltető ingyen: www.shareaza.com. Ha valahol fizett érte, akkor biztosan átvágták és kérje vissza a pénzét."/>
+		<control caption="Soha nem kell pénzt kiadnia a Shareazáért. Innen letöltető ingyen: http://shareaza.sourceforge.net/. Ha valahol fizett érte, akkor biztosan átvágták és kérje vissza a pénzét."/>
 		<control caption="A Shareaza tiszteli a felhasználóit!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Bezár"/>
 	</dialog>
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Terjesztés">
@@ -3970,7 +3970,7 @@
 		<control caption="Sajnos sokan nem tudják, hogy miből maradnak ki!"/>
 		<control caption="Ezért, ha ismer valakit, akinek pont egy ilyen programra lenne szüksége, nyugodtan ajánlja neki a Shareazát."/>
 		<control caption="Nem fog köszönet nélkül maradni!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Létező fájl letöltése">

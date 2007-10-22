@@ -475,7 +475,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Webtuistes">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Jongste nuus"/>
@@ -566,7 +566,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Webtuistes">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Jongste nuus"/>
@@ -651,7 +651,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Webtuistes">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Jongste nuus"/>
@@ -2074,7 +2074,7 @@
 		<text>Meeste programme wat torrents skep sal jou toelaat om hierdie torrent te
 		herstel, wat sal verseker dat dit reg werk in alle BitTorrent programme.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Kliek hier vir addisionele hulp</link>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Kliek hier vir addisionele hulp</link>
 		<text>, of om sagteware af te laai om die torrent mee reg te maak.</text>
 	</document>
 
@@ -2265,7 +2265,7 @@
 	<tip id="ID_HELP_ROUTER" message="Kry hulp met die opstelling van jou roeteerder of netskans."/>
 	<tip id="ID_HELP_FORUMS" message="Besoek die Shareaza Besprekingsforum."/>
 	<tip id="ID_HELP_GUIDE" message="Besoek die Shareaza Gebruikersgids."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Besoek die Shareaza.com webtuiste."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Besoek die Shareaza webtuiste."/>
 	<tip id="ID_HELP_SECURITY" message="Hulp met die beskerming van jou stelsel teen gevaarlike programme."/>
 	<tip id="ID_HELP_UPDATE" message="Kyk vir nuus en opdaterings."/>
 	<tip id="ID_HELP_WEB_1" message="Besoek hierdie webtuiste"/>
@@ -2527,7 +2527,7 @@
 	<string id="8007" value="Daar is geen aktiewe soektogte nie.  Kliek hier om vir lêers te soek."/>
 	<string id="8008" value="Shareaza het die aflaai van die volgende weergawe van Shareaza voltooi (%s).  Wil jy nou opgradeer?\n\nAs jy Ja selekteer, sal jy Shareaza tydelik verlaat terwyl die opgradering installeer."/>
 	<string id="8009" value="Is jy seker jy wil die &quot;%s&quot; omslag skrap?  Dit kan nie herroep word nie."/>
-	<string id="8010" value="Hierdie is 'n voorvrysteluitgawe van Shareaza en die beta toetsingsperiode het ge-ëindig. Laai asseblief die volle, offisiële weergawe af vanaf www.shareaza.com."/>
+	<string id="8010" value="Hierdie is 'n voorvrysteluitgawe van Shareaza en die beta toetsingsperiode het ge-ëindig. Laai asseblief die volle, offisiële weergawe af vanaf http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Verandering van die aansig sal enige oop vensters toemaak.  Wil jy nou verander?"/>
 	<string id="8060" value="Hub/Ultrapeer modus met %lu kliënt(e).  %s in lokale biblioteek."/>
 	<string id="8061" value="Ultrapeer modus met %lu kliënt(e).  %s in lokale biblioteek."/>
@@ -4036,9 +4036,9 @@
 		<control caption="Het jy geweet Shareaza is 'n 100% gratis program?"/>
 		<control caption="Shareaza bevat GEEN &quot;spioenware&quot;, &quot;advertensieware&quot; of enige ander ongewenste sagteware nie. Dit vertoon ook GEEN advertensies of &quot;opspringboodskappe&quot; ooit nie.{n}{n}As jy ooit advertensies of &quot;opspringboodskappe&quot; sien terwyl jy Shareaza gebruik, wees gerus dat hulle NIE van hierdie program afkomstig is nie."/>
 		<control caption="Ongelukkig kom 'n groot aantal ander sagteware met spioen- of advertensieware uit, so as jy iets verdags sien, word jy aangeraai om jou rekenaar met 'n spioen- of advertensieware verwyderaarsprogram te laat deursoek."/>
-		<control caption="Jy moes nie enige geld betaal het vir Shareaza nie.  Shareaza kan gratis afgelaai word deur enige iemand vanaf www.shareaza.com.  As jy iemand geld betaal het vir Shareaza, moet jy 'n volle terugbetaling onmiddellik eis."/>
+		<control caption="Jy moes nie enige geld betaal het vir Shareaza nie.  Shareaza kan gratis afgelaai word deur enige iemand vanaf http://shareaza.sourceforge.net/.  As jy iemand geld betaal het vir Shareaza, moet jy 'n volle terugbetaling onmiddellik eis."/>
 		<control caption="Shareaza respekteer sy gebruikers!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Maak toe"/>
 	</dialog>
 
@@ -4049,7 +4049,7 @@
 		<control caption="Ongelukkig weet 'n groot aantal lêerdelers nie wat hulle mis nie!"/>
 		<control caption="As jy van iemand weet wat van Shareaza sal hou, of hulle 'n nuwe gebruiker is, of iemand wat steeds probeer uithou met 'n ondergeskikte program, hoekom hulle nie laat weet dat daar 'n beter alternatief is nie?"/>
 		<control caption="Die kanse is goed dat hulle dankbaar sal wees dat jy hulle gered het!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 
