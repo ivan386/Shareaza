@@ -1095,7 +1095,7 @@ void CEDClient::DeriveSoftwareVersion()
 					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
 					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) );
 				break;
-			case 4:
+			case 4:		// Shareaza alpha/beta/mod/fork versions
 				if ( m_bEmAICH || m_bEmSecureID )
 				{
 					if ( m_sUserAgent.IsEmpty() ) 
@@ -1133,7 +1133,7 @@ void CEDClient::DeriveSoftwareVersion()
 					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
 					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 				break;
-			case 40:
+			case 40:		// Shareaza
 				if ( m_bEmAICH || m_bEmSecureID )
 				{
 					if ( m_sUserAgent.IsEmpty() ) 
@@ -1145,6 +1145,16 @@ void CEDClient::DeriveSoftwareVersion()
 
 				//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
 				m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
+					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
+					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
+
+				//Client allows G2 browse, etc
+				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+				break;
+			case 203:		// ShareazaPlus with RazaCB core
+				//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
+				m_sUserAgent.Format( _T("ShareazaPlus %i.%i.%i.%i"), 
 					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
 					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 
@@ -1193,7 +1203,7 @@ void CEDClient::DeriveVersion()
 			case 3:
 				m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 				break;
-			case 4:
+			case 4:		// Shareaza alpha/beta/mod/fork versions
 				if ( m_bEmAICH || m_bEmSecureID )
 				{
 					if ( m_sUserAgent.IsEmpty() )
@@ -1212,7 +1222,7 @@ void CEDClient::DeriveVersion()
 			case 20:
 				m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 				break;
-			case 40:
+			case 40:		// Shareaza
 				if ( m_bEmAICH || m_bEmSecureID )
 				{
 					if ( m_sUserAgent.IsEmpty() )
@@ -1221,6 +1231,12 @@ void CEDClient::DeriveVersion()
 				}
 
 				m_sUserAgent.Format( _T("Shareaza") );
+				//Client allows G2 browse, etc
+				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+				break;
+			case 203:		// ShareazaPlus with RazaCB core
+				m_sUserAgent.Format( _T("ShareazaPlus") );
 				//Client allows G2 browse, etc
 				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
 				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;

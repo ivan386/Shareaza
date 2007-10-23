@@ -548,7 +548,7 @@ void CBTClient::DetermineUserAgent()
 			{ 'B', 'R', L"BitRocket" },
 			{ 'B', 'S', L"BitSlave" },
 			{ 'B', 'X', L"Bittorrent X" },
-			{ 'C', 'B', L"ShareazaPlus" },		// ShareazaPlus with RazaCB core.
+			{ 'C', 'B', L"ShareazaPlus" },		// ShareazaPlus with RazaCB core
 			{ 'C', 'D', L"Enhanced CTorrent" },
 			{ 'C', 'T', L"CTorrent" },
 			{ 'D', 'E', L"DelugeTorrent" },
