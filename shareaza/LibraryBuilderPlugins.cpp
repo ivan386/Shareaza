@@ -83,7 +83,7 @@ BOOL CLibraryBuilderPlugins::ExtractMetadata(DWORD nIndex, CString& strPath, HAN
 	
 	BOOL bSuccess = FALSE;
 	
-	if ( hResult == S_OK )
+	if ( SUCCEEDED( hResult ) )
 	{
 		if ( CXMLElement* pOuter = pXML->GetFirstElement() )
 		{
