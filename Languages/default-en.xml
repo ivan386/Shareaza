@@ -400,7 +400,7 @@
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
 		<button id="ID_CHAT_BROWSE" text="Browse User"/>
-		<!--<button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
+		<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Grant Priority"/>
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="Connect" visible="false"/>
@@ -1366,6 +1366,8 @@
 		<item id="ID_SYSTEM_VERBOSE" text="_Verbose Mode"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Timestam_p"/>
 		<separator/>
+		<item id="ID_SYSTEM_COPY" text="_Copy" shortcut="Ctrl+C"/>
+		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="Clear _Buffer"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
@@ -1485,10 +1487,11 @@
 		<item id="ImageViewer_Close" text="_Close"/>
 	</menu>
 </menus>
+
 <!-- Watermarks -->
 <watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
+	<watermark target="CHomeViewCtrl.Header1" path="257.PNG"/>
+	<watermark target="CHomeViewCtrl.Header2" path="258.PNG"/>
 </watermarks>
 <!-- Documents -->
 <documents>
@@ -1505,16 +1508,24 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">G E T &#160; C O N N E C T E D</heading>
 			<newline gap="8" indent="42"/>
-			<text>Welcome to Shareaza! &#160;You are not currently connected to any peer to peer networks. &#160;</text>
+			<text>Welcome to Shareaza!</text>
+			<newline gap="8" indent="42"/>
+			<text>You are not currently connected to any peer to peer networks. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Click here to start!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">S E A R C H &#160; S H A R E A Z A</heading>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">S T A R T &#160; D O W N L O A D</heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Click here to start</link>
+			<text align="middle">&#160; downloading a new file or torrent.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
+			<heading align="middle">S E A R C H &#160; F O R &#160; A &#160; F I L E</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
@@ -1579,13 +1590,6 @@
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Quick Help</link>
 		<text align="middle">&#160;- Get some basic help using Shareaza</text>
 		<newline gap="18" indent="0"/>
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">M Y &#160; D O W N L O A D S</heading>
-		<newline gap="8" indent="42"/>
-		<text>To open the folder with your downloads </text>
-		<link target="raza:shell:downloads">click here</link>
-		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">R E M O T E &#160; A C C E S S &#160; I S &#160; E N A B L E D</heading>
@@ -1628,14 +1632,14 @@
 			<text id="LibraryFiles" format="b">%lu </text>
 			<text>files, </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Go to My Library</link>
 			<newline gap="4"/>
 			<link format="bu" target="raza:shell:downloads">Open my Downloads folder</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>Shareaza is scanning and processing </text>
-				<text id="LibraryHashRemaining" format="b">%lu</text>
+				<text id="LibraryHashRemaining" format="b">%lu </text>
 				<text>files.</text>
 				<newline gap="8"/>
 			</group>
@@ -1661,7 +1665,7 @@
 			</para>
 		</group>
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
-		<text group="20" align="middle" format="b">Gnutella2:</text>
+		<text group="20" align="middle" format="b">Gnutella2: </text>
 		<text group="21" align="middle">Disconnected</text>
 		<text group="22" align="middle">Connecting...</text>
 		<text group="23" align="middle">Connected</text>
@@ -1669,13 +1673,13 @@
 		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey:</text>
+		<text group="30" align="middle" format="b">eDonkey: </text>
 		<text group="31" align="middle">Disconnected</text>
 		<text group="32" align="middle">Connecting...</text>
 		<text group="33" align="middle">Connected</text>
 		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
-		<text group="10" align="middle" format="b">Gnutella1:</text>
+		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Disconnected</text>
 		<text group="12" align="middle">Connecting...</text>
 		<text group="13" align="middle">Connected</text>
@@ -1739,9 +1743,9 @@
 		<newline gap="16"/>
 		<text>
 			The Shareaza Settings Manager allows advanced users to completely customise how
-			Shareaza works. The settings in the
+			Shareaza works. The settings in the 
 		</text>
-		<text format="b">General</text>
+		<text format="b">General </text>
 		<text>
 			section relate to the user experience.
 		</text>
@@ -1777,7 +1781,7 @@
 		<newline gap="16"/>
 		<text>
 			The Shareaza Settings Manager allows advanced users to completely customise how
-			Shareaza works. The settings in the
+			Shareaza works. The settings in the 
 		</text>
 		<text format="b">Internet </text>
 		<text>
@@ -1825,7 +1829,7 @@
 			<newline gap="2" indent="8"/>
 			<text id="GenderMale">Male</text>
 			<text id="GenderFemale">Female</text>
-			<text>,</text>
+			<text>, </text>
 			<text id="Age"/>
 		</group>
 		<group id="4">
@@ -1946,8 +1950,8 @@
 		<newline gap="8"/>
 		<text>This download is currently in progress. If it is downloading too slowly,
 		you could try searching the network for more sources with the '</text>
-		<text format="b">Find More Sources</text><text>' command. If the speed does not
-		improve it may be due to limited upload speeds of the users you are downloading
+		<text format="b">Find More Sources</text><text>' command. If the speed does not 
+		improve it may be due to limited upload speeds of the users you are downloading 
 		from. Download speed usually increases over time.</text>
 	</document>
 	<document name="DownloadHelp.Pending">
@@ -1956,7 +1960,7 @@
 		<text>This download is waiting for someone to start uploading.
 		Shareaza is ready to start downloading this file, but no-one is sending it at
 		the moment. You are probably waiting in other user's queues, and the download
-		may start transferring at any time. You can examine the individual sources to
+		may start transferring at any time. You can examine the individual sources to 
 		see each queue you are waiting in. If you are sharing files yourself, it may
 		improve the chances of a download transfer starting quickly.</text>
 	</document>
@@ -1975,8 +1979,8 @@
 		<text>There are no known sources for this download, so Shareaza is searching
 		all connected P2P networks for new sources. Once sources are found, the
 		download will start automatically. Shareaza searches for sources automatically,
-		however you can speed up the process using the</text>
-		<text format="b"> Find More Sources</text><text> command.</text>
+		however you can speed up the process using the </text>
+		<text format="b">Find More Sources </text><text>command.</text>
 		<newline gap="8"/>
 		<text>Unfortunately in many cases there may be no users online who have the
 		file you are looking for. The only course of action here is to wait for
@@ -2010,8 +2014,8 @@
 		<newline gap="8"/>
 		<text>The amount of free space on one or more drives used by Shareaza is low.</text>
 		<newline gap="8"/>
-		<text>You should always attempt to keep a reasonable amount of disk space free. Programs
-		can become unstable if the drives become full, and temporary files may be lost. You should
+		<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+		can become unstable if the drives become full, and temporary files may be lost. You should 
 		run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 	</document>
 	<document name="GeneralHelp.DiskWriteFail">
@@ -2019,7 +2023,7 @@
 		<newline gap="8"/>
 		<text>A disk or directory Shareaza needs cannot be written to.</text>
 		<newline gap="8"/>
-		<text>A network drive may have been disconnected, or you may not have write permission
+		<text>A network drive may have been disconnected, or you may not have write permission 
 		to a selected directory. Please check directories and permissions, or change the
 		temporary files location.</text>
 	</document>
@@ -2037,10 +2041,10 @@
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>
 		<text>Please note that (as with any automated filter) it may not be 100% effective at
-		screening content. It is designed simply to filter out excess unwanted results, rather than
+		screening content. It is designed simply to filter out excess unwanted results, rather than 
 		as a 100% safe block.</text>
 		<newline gap="8"/>
-		<text>Children's Internet use (including P2P file sharing) should always be under parental supervision.</text>
+		<text>Children's Internet use (including P2P file sharing) should always be under parental 				supervision.</text>
 	</document>
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">This torrent appears to have an encoding error</text>
@@ -2062,7 +2066,7 @@
 		up to date server list (met file) to connect to ED2K.</text>
 		<newline gap="8"/>
 		<text>You can download a server list from the ed2k setting page, or the discovery
-		services window. (Press F9 to open the discovery services window)</text>
+		services window. (Press F9 to open the discovery services window)</text> 
 	</document>
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Limiting uploads may slow downloads</text>
@@ -2071,23 +2075,23 @@
 		clients that do not share, or simply preference uploading to known sharers.</text>
 		<newline/>
 		<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
-		separate allocations for upload and download. If your client is properly configured,
+		separate allocations for upload and download. If your client is properly configured, 
 		you should be able to upload at a good rate while retaining full download capacity.</text>
 		<newline gap="8"/>
 		<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
-		while downloads are unlimited. That configuration should give you the fastest possible
+		while downloads are unlimited. That configuration should give you the fastest possible 
 		downloads that are available.</text>
 	</document>
 	<!-- Search help documents -->
 	<document name="SearchHelp.BadSearch1">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
-		<text>This search is poorly formatted, and may not function correctly.
-		Searches should include several terms where possible, and should specify a schema
+		<text>This search is poorly formatted, and may not function correctly. 
+		Searches should include several terms where possible, and should specify a schema 
 		(file type). Furthermore, searches must not be limited to numbers or negative
 		terms only, and you should avoid overly general queries.</text>
 		<newline gap="8"/>
-		<text>Most clients on the network will ignore a search for all MP3 files, for example,
+		<text>Most clients on the network will ignore a search for all MP3 files, for example, 
 		because it is not specific enough, and would generate too many results.</text>
 	</document>
 	<document name="SearchHelp.BadSearch2">
@@ -2097,7 +2101,7 @@
 		a minimum number of valid, alphabetic characters to be able to start.</text>
 		<newline gap="8"/>
 		<text>While common file extensions (and numbers) can be searched for, you must enter
-		other terms as well when creating the search. Punctuation and wildcards are not used
+		other terms as well when creating the search. Punctuation and wildcards are not used 
 		in searches, just the text you enter.</text>
 	</document>
 	<document name="SearchHelp.BadSearch3">
@@ -2118,8 +2122,8 @@
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">This search cannot be started</text>
 		<newline gap="8"/>
-		<text>The specified search would probably return a large number of results with adult
-		content, and this has been turned off in the settings. You should either re-phrase the
+		<text>The specified search would probably return a large number of results with adult 
+		content, and this has been turned off in the settings. You should either re-phrase the 
 		search, or disable the filter.</text>
 		<newline gap="8"/>
 		<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
@@ -2131,7 +2135,7 @@
 		<newline gap="8"/>
 		<text>The folder you have selected is already being shared as part of an existing share.</text>
 		<newline gap="8"/>
-		<text>%s</text>
+		<text> %s </text>
 	</document>
 	<document name="ShareHelp.BadShare">
 		<text format="b">This folder should not be shared</text>

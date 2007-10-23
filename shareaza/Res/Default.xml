@@ -1466,10 +1466,10 @@
 			<heading align="middle">S T A R T &#160; D O W N L O A D</heading>
 			<newline gap="8" indent="42"/>
 			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Click here to start</link>
-			<text align="middle">&#160; direct downloading a new file or torrent.</text>
+			<text align="middle">&#160; downloading a new file or torrent.</text>
 			<newline gap="24" indent="0"/>
 			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
-			<heading align="middle">S E A R C H &#160; F O R &#160; F I L E</heading>
+			<heading align="middle">S E A R C H &#160; F O R &#160; A &#160; F I L E</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
