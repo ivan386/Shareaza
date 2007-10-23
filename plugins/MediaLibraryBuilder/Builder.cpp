@@ -204,21 +204,28 @@ STDMETHODIMP CBuilder::Process (
 				hr = pDet->get_StreamLength (&total_time);
 				if ( SUCCEEDED( hr ) )
 				{
-					StringCbPrintf( tmp.GetBuffer( 32 ), 32 * sizeof( TCHAR ),
-						_T("%.3f"), total_time / 60.0 );
-					tmp.ReleaseBuffer();
-					pISXMLAttributes->Add (CComBSTR ("minutes"), CComBSTR (tmp));
+					if ( total_time != .0 ) 
+					{
+						StringCbPrintf( tmp.GetBuffer( 32 ), 32 * sizeof( TCHAR ),
+							_T("%.3f"), total_time / 60.0 );
+						tmp.ReleaseBuffer();
+						pISXMLAttributes->Add (CComBSTR ("minutes"), CComBSTR (tmp));
+					}
 				}
 
 				double fps = 0.0;
 				hr = pDet->get_FrameRate (&fps);
 				if ( SUCCEEDED( hr ) )
 				{
-					StringCbPrintf( tmp.GetBuffer( 32 ), 32 * sizeof( TCHAR ),
-						_T("%.2f"), fps );
-					tmp.ReleaseBuffer();
-					pISXMLAttributes->Add (CComBSTR ("frameRate"), CComBSTR (tmp));						
+					if ( fps != .0 )
+					{
+						StringCbPrintf( tmp.GetBuffer( 32 ), 32 * sizeof( TCHAR ),
+							_T("%.2f"), fps );
+						tmp.ReleaseBuffer();
+						pISXMLAttributes->Add (CComBSTR ("frameRate"), CComBSTR (tmp));
+					}
 				}
+				return S_OK;
 			}
 			else
 				ATLTRACE ("Cannot get streams: 0x%08x\n", hr);
