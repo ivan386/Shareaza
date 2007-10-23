@@ -1296,7 +1296,9 @@ CMatchFile::~CMatchFile()
 
 void CMatchFile::RefreshStatus()
 {
-	CMap< CString, LPCTSTR, DWORD, DWORD > oNameRatings;
+	CMap< CString, const CString&, DWORD, DWORD > oNameRatings;
+	oNameRatings.InitHashTable( GetBestHashTableSize( m_nTotal ) );
+
 	DWORD nBestVote = 0;
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
 	{
