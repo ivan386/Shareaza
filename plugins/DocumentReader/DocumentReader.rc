@@ -53,7 +53,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,5
+ FILEVERSION 1,0,0,6
  PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -72,9 +72,9 @@ BEGIN
             VALUE "Comments", "Shareaza Document Reader Plugin"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Document Reader Plugin"
-            VALUE "FileVersion", "1.0.0.4"
+            VALUE "FileVersion", "1.0.0.6"
             VALUE "InternalName", "DocumentReader"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2007. All rights reserved."
             VALUE "OriginalFilename", "DocumentReader.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2.3.0.0"

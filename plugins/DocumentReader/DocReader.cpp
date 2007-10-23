@@ -123,7 +123,7 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	if ( FAILED(hr) || bMSDoc == VARIANT_FALSE )
 	{
 		m_pDocProps->Close( VARIANT_FALSE );
-		return S_FALSE;
+		return E_FAIL;
 	}
 
 	pszSingular = wcsrchr( pszSchema, '/' ) + 1;
@@ -288,13 +288,13 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	// Close the file
 	unzClose( pFile );
 
-	if ( ! sXML.Length() ) return S_FALSE;
+	if ( ! sXML.Length() ) return E_FAIL;
 
 	ISXMLElement* pInputXML = NULL;
 
 	if ( FAILED( pXML->FromString( sXML, &pInputXML ) ) || pInputXML == NULL )
 	{
-		return S_FALSE;
+		return E_FAIL;
 	}
 	
 	ISXMLElements* pElements;
@@ -303,7 +303,7 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	{
 		pInputXML->Delete();
 		pInputXML->Release();
-		return S_FALSE;
+		return E_FAIL;
 	}
 	
 	ISXMLElement* pMeta;
@@ -314,7 +314,7 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 		pElements->Release();
 		pInputXML->Delete();
 		pInputXML->Release();
-		return S_FALSE;
+		return E_FAIL;
 	}
 
 	ISXMLElements* pMetaElements;
