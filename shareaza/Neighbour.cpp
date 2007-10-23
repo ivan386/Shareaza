@@ -538,7 +538,7 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 	
 	if ( pHits == NULL )
 	{
-		pPacket->Debug( _T("BadHit") );
+		pPacket->Debug( _T("Malformed Hit") );
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)m_sAddress );
 		m_nDropCount++;
 		if ( m_nProtocol == PROTOCOL_G1 )
@@ -547,15 +547,30 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 			Statistics.Current.Gnutella2.Dropped++;
 		return TRUE;
 	}
-	
-	if ( Security.IsDenied( &pHits->m_pAddress ) || nHops > (int)Settings.Gnutella1.MaximumTTL )
+
+	if ( Security.IsDenied( &pHits->m_pAddress ) )
 	{
-		pHits->Delete();
+		pPacket->Debug( _T("Security manager denied Hit") );
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)m_sAddress );
 		m_nDropCount++;
 		if ( m_nProtocol == PROTOCOL_G1 )
 			Statistics.Current.Gnutella1.Dropped++;
 		else if ( m_nProtocol == PROTOCOL_G2 )
 			Statistics.Current.Gnutella2.Dropped++;
+		pHits->Delete();
+		return FALSE;
+	}
+
+	if ( nHops > (int)Settings.Gnutella1.MaximumTTL )
+	{
+		pPacket->Debug( _T("Hit with excessive TTL") );
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)m_sAddress );
+		m_nDropCount++;
+		if ( m_nProtocol == PROTOCOL_G1 )
+			Statistics.Current.Gnutella1.Dropped++;
+		else if ( m_nProtocol == PROTOCOL_G2 )
+			Statistics.Current.Gnutella2.Dropped++;
+		pHits->Delete();
 		return TRUE;
 	}
 	

@@ -848,11 +848,10 @@ BOOL CDatagrams::OnAcknowledgeSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD
 				pDG->m_nSequence == pHeader->nSequence )
 		{
 			if ( pDG->Acknowledge( pHeader->nPart ) ) Remove( pDG );
-			return TRUE;
 		}
 	}
 
-	return FALSE;
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1354,7 +1353,7 @@ BOOL CDatagrams::OnCommonHit(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 	if ( pHits == NULL )
 	{
-		pPacket->Debug( _T("BadHit") );
+		pPacket->Debug( _T("Malformed Hit") );
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
@@ -1365,18 +1364,31 @@ BOOL CDatagrams::OnCommonHit(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	// If it doesn't we'll drop it.
 	if ( pHits->m_pAddress.S_un.S_addr != pHost->sin_addr.S_un.S_addr )
 	{
-		//pPacket->Debug( _T("UDP Sender IP does not match packet NA") );
+		pPacket->Debug( _T("Hit sender IP does not match \"NA\"") );
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
-		pHits->Delete();
 		Statistics.Current.Gnutella2.Dropped++;
+		pHits->Delete();
 		return FALSE;
 	}
 
-	if ( Security.IsDenied( &pHits->m_pAddress ) || nHops > (int)Settings.Gnutella1.MaximumTTL )
+	if ( Security.IsDenied( &pHits->m_pAddress ) )
 	{
-		pHits->Delete();
+		pPacket->Debug( _T("Security manager denied Hit") );
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
+			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
+		pHits->Delete();
+		return FALSE;
+	}
+
+	if ( nHops > (int)Settings.Gnutella1.MaximumTTL )
+	{
+		pPacket->Debug( _T("Hit with excessive TTL") );
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
+			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+		Statistics.Current.Gnutella2.Dropped++;
+		pHits->Delete();
 		return FALSE;
 	}
 	

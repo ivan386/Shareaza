@@ -389,10 +389,9 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			else if ( ( nType == G2_PACKET_NODE_ADDRESS || nType == G2_PACKET_NODE_INFO ) && nLength >= 6 )
 			{
 				nAddress	= pPacket->ReadLongLE();
-				if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) )
-					AfxThrowUserException();
-				if ( Security.IsDenied( (IN_ADDR*)&nAddress, false ) )
-					AfxThrowUserException();
+				if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) ||
+					 Security.IsDenied( (IN_ADDR*)&nAddress, false ) )
+					bSpam = true;
 				nPort		= pPacket->ReadShortBE();
 			}
 			else if ( nType == G2_PACKET_VENDOR && nLength >= 4 )
