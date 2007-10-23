@@ -61,8 +61,12 @@ void CFileExecutor::GetFileComponents(LPCTSTR pszFile, CString& strPath, CString
 		strShortPath.SetString( pszShortPath );
 	else strShortPath.Empty();
 
+	if ( GetFileAttributes( pszFile ) & FILE_ATTRIBUTE_DIRECTORY )
+		return;
+
 	int nPos = strFile.ReverseFind( '\\' );
 	if ( nPos >= 0 ) strPath = strFile.Left( nPos );
+
 	nPos = strFile.ReverseFind( '.' );
 	if ( nPos >= 0 ) strType = strFile.Mid( nPos + 1 );
 	if ( strType.GetLength() ) strType = _T("|") + ToLower( strType ) + _T("|");
