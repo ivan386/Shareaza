@@ -366,11 +366,11 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	CString strExt = strName.Right( nExtLen );
 	strExt.Trim().MakeUpper();
 
-	Replace( strURL, _T("(NAME)"), CConnection::URLEncode( strName ) );
+	Replace( strURL, _T("(NAME)"), URLEncode( strName ) );
 	Replace( strURL, _T("(SHA1)"), pFile->m_oSHA1.toString() );
 	Replace( strURL, _T("(TTH)"), pFile->m_oTiger.toString() );
 	Replace( strURL, _T("(ED2K)"), pFile->m_oED2K.toString() );
-	Replace( strURL, _T("(AGENT)"), CConnection::URLEncode( Settings.SmartAgent() ) );
+	Replace( strURL, _T("(AGENT)"), URLEncode( Settings.SmartAgent() ) );
 
 	str.Format( _T("%I64i"), pFile->GetSize() );
 	Replace( strURL, _T("(SIZE)"), str );
@@ -380,7 +380,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	if ( pFile->m_oMD5 )
 		strINFO += _T("&tag.md5.md5=") + pFile->m_oMD5.toString();
 	if ( pFile->m_sComments.Trim().GetLength() )
-		strINFO += _T("&tag.subjective.comment=") + CConnection::URLEncode( pFile->m_sComments );
+		strINFO += _T("&tag.subjective.comment=") + URLEncode( pFile->m_sComments );
 
 	if ( pFile->m_pMetadata != NULL && pFile->m_pSchema != NULL )
 	{
@@ -396,17 +396,17 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 			strReplace = pNode->GetValue();
 
 			if ( str == "link" )
-				strINFO += _T("&tag.url.url=") + CConnection::URLEncode( strReplace );
+				strINFO += _T("&tag.url.url=") + URLEncode( strReplace );
 			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriAudio ) == 0 )
 			{
 				if ( str == "description" )
-					strINFO += _T("&tag.objective.description=") + CConnection::URLEncode( strReplace.Trim() );
+					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
 				else if ( str == "title" )
-					strINFO += _T("&tag.audiotrack.title=") + CConnection::URLEncode( strReplace.Trim() );
+					strINFO += _T("&tag.audiotrack.title=") + URLEncode( strReplace.Trim() );
 				else if ( str == "artist" )
-					strINFO += _T("&tag.audiotrack.artist=") + CConnection::URLEncode( strReplace.Trim() );
+					strINFO += _T("&tag.audiotrack.artist=") + URLEncode( strReplace.Trim() );
 				else if ( str == "album" )
-					strINFO += _T("&tag.audiotrack.album=") + CConnection::URLEncode( strReplace.Trim() );
+					strINFO += _T("&tag.audiotrack.album=") + URLEncode( strReplace.Trim() );
 				else if ( str == "track" )
 				{
 					nTemp = _ttoi( strReplace );
@@ -545,14 +545,14 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 							strReplace.Empty();
 
 						if ( strReplace.GetLength() )
-							strMP3orOGGorWAVTag += CConnection::URLEncode( strReplace );
+							strMP3orOGGorWAVTag += URLEncode( strReplace );
 					}
 				}
 			}
 			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriImage ) == 0 )
 			{
 				if ( str == "description" )
-					strINFO += _T("&tag.objective.description=") + CConnection::URLEncode( strReplace.Trim() );
+					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
 				else if ( str == "width" )
 				{
 					nTemp = _ttoi( strReplace );
@@ -588,7 +588,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriVideo ) == 0 )
 			{
 				if ( str == "realdescription" )
-					strINFO += _T("&tag.objective.description=") + CConnection::URLEncode( strReplace.Trim() );
+					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
 				else if ( str == "width" )
 				{
 					nTemp = _ttoi( strReplace );
@@ -628,20 +628,20 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 				else if ( str == "codec" )
 				{
 					strReplace.MakeUpper();
-					strINFO += _T("&tag.video.codec=") + CConnection::URLEncode( strReplace );
+					strINFO += _T("&tag.video.codec=") + URLEncode( strReplace );
 				}
 			}
 			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriApplication ) == 0 )
 			{
 				if ( str == "fileDescription" )
-					strDescription = CConnection::URLEncode( strReplace.Trim() );
+					strDescription = URLEncode( strReplace.Trim() );
 				else if ( str == "title" )
-					strTitle = CConnection::URLEncode( strReplace.Trim() );
+					strTitle = URLEncode( strReplace.Trim() );
 			}
 			else
 			{
 				if ( str == "description" )
-					strINFO += _T("&tag.objective.description=") + CConnection::URLEncode( strReplace.Trim() );
+					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
 			}
 		}
 
@@ -695,7 +695,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	else if ( strExt == "IVF" )
 		strINFO += _T("&tag.video.format=Indeo Video");
 	else if ( pFile->m_pSchema != NULL && pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriVideo ) == 0 && strExt.GetLength() )
-		strINFO += _T("&tag.video.format=") + CConnection::URLEncode( strExt );
+		strINFO += _T("&tag.video.format=") + URLEncode( strExt );
 
 	Replace( strURL, _T("&(INFO)"), strINFO );
 

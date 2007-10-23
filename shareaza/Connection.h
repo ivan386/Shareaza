@@ -22,20 +22,14 @@
 // CConnection holds a socket used to communicate with a remote computer, and is the root of a big inheritance tree
 // http://wiki.shareaza.com/static/Developers.Code.CConnection
 
-// Make the compiler only include the lines here once, this is the same thing as pragma once
-#if !defined(AFX_CONNECTION_H__6312EF26_B2C8_431F_93EF_243EA5E1A3DF__INCLUDED_)
-#define AFX_CONNECTION_H__6312EF26_B2C8_431F_93EF_243EA5E1A3DF__INCLUDED_
-
-// Only include the lines beneath this one once
 #pragma once
 
-// Tell the compiler these classes exist, and it will find out more about them soon
-class CBuffer;
+#include "Buffer.h"
+#include "Packet.h"
 
 // A socket connection to a remote compueter on the Internet running peer-to-peer software
 class CConnection
 {
-
 // Construction
 public:
 	CConnection();
@@ -44,7 +38,6 @@ public:
 
 // Attributes
 public:
-	// The remote computer's IP address, who connected to the other, are we connected, and when it happened
 	SOCKADDR_IN	m_pHost;		// The remote computer's IP address in Windows Sockets format
 	CString		m_sAddress;		// The same IP address in a string like "1.2.3.4"
 	CString		m_sCountry;		// The two letter country code of this host
@@ -52,8 +45,6 @@ public:
 	BOOL		m_bInitiated;	// True if we initiated the connection, false if the remote computer connected to us
 	BOOL		m_bConnected;	// True when the socket is connected
 	DWORD		m_tConnected;	// The tick count when the socket connection was made
-
-	// The actual socket, buffers for reading and writing bytes, and some headers from the other computer
 	SOCKET		m_hSocket;		// The actual Windows socket for the Internet connection to the remote computer
 	CBuffer*	m_pInput;		// Data from the remote computer, will be compressed if the remote computer is sending compressed data
 	CBuffer*	m_pOutput;		// Data to send to the remote computer, will be compressed if we are sending the remote computer compressed data
@@ -95,13 +86,6 @@ protected:
 
 // Statics
 public:
-	// Encode and decode URL text, and see if a string starts with a tag
-	static CString URLEncode(LPCTSTR pszInput);                   // Encode "hello world" into "hello%20world"
-	static CString URLDecode(LPCTSTR pszInput);                   // Decode "hello%20world" back to "hello world"
-	static CString URLDecodeANSI(LPCTSTR pszInput);               // Decodes properly encoded URLs
-	static CString URLDecodeUnicode(LPCTSTR pszInput);            // Decodes URLs with extended characters
-	static BOOL    StartsWith(LPCTSTR pszInput, LPCTSTR pszText); // StartsWith("hello world", "hello") is true
-
 	// Hard-coded settings for the bandwidth transfer meter
 	static const DWORD	METER_SECOND	= 1000ul;						// 1000 milliseconds is 1 second
 	static const DWORD	METER_MINIMUM	= METER_SECOND / 10ul;			// Granuality of bandwidth meter, 1/10th of a second
@@ -138,6 +122,3 @@ public:
 	TCPBandwidthMeter m_mInput;		// Input TCP bandwidth meter
 	TCPBandwidthMeter m_mOutput;	// Output TCP bandwidth meter
 };
-
-// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
-#endif // !defined(AFX_CONNECTION_H__6312EF26_B2C8_431F_93EF_243EA5E1A3DF__INCLUDED_)

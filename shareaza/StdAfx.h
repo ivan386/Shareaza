@@ -534,7 +534,7 @@ inline UINT ReadArchive(CArchive& ar, void* lpBuf, const UINT nMax)
 	return nReaded;
 }
 
-// Produces two arguments devided by comma, where first argument is a string itself
+// Produces two arguments divided by comma, where first argument is a string itself
 // and second argument is a string length without null terminator
 #define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
 #define _PT(x)	_P(_T(x))
@@ -545,3 +545,15 @@ __int64 GetMicroCount();
 
 // Produces the best hash table size for CMap::InitHashTable use
 UINT GetBestHashTableSize(UINT nCount);
+
+// Encode and decode URL text, and see if a string starts with a tag
+CString URLEncode(LPCTSTR pszInput);                   // Encode "hello world" into "hello%20world"
+CString URLDecode(LPCTSTR pszInput);                   // Decode "hello%20world" back to "hello world"
+CString URLDecodeANSI(LPCTSTR pszInput);               // Decodes properly encoded URLs
+CString URLDecodeUnicode(LPCTSTR pszInput);            // Decodes URLs with extended characters
+
+// StartsWith("hello world", "hello") is true
+inline BOOL StartsWith(const CString& sInput, LPCTSTR pszText, const int len)
+{
+	return ( sInput.GetLength() >= len ) && ! _tcsnicmp( (LPCTSTR)sInput, pszText, len );
+}

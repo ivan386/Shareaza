@@ -220,7 +220,7 @@ CString CRemote::GetKey(LPCTSTR pszName)
 		if ( strName.CompareNoCase( pszName ) == 0 )
 		{
 			strName = strPair.Mid( strName.GetLength() + 1 );
-			return CConnection::URLDecode( strName );
+			return URLDecode( strName );
 		}
 		
 		strPair = m_sHandshake.Tokenize( _T("&?"), nStart );

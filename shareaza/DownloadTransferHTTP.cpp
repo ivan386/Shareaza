@@ -890,7 +890,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		if ( Settings.Downloads.VerifyTiger && ! m_bTigerIgnore )
 		{
-			if ( StartsWith( strValue, _T("/") ) )
+			if ( strValue[ 0 ] == _T('/') )
 			{
 				m_sTigerTree = strValue.SpanExcluding( _T("; ") );
 				Replace( m_sTigerTree, _T("ed2k=0"), _T("ed2k=1") );

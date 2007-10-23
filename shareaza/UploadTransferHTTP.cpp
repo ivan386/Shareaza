@@ -383,7 +383,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		StartSending( upsResponse );
 		return TRUE;
 	}
-	else if ( m_sRequest == _T("/") || StartsWith( m_sRequest, _T("/gnutella/browse/v1") ) )
+	else if ( m_sRequest == _T("/") || ::StartsWith( m_sRequest, _PT("/gnutella/browse/v1") ) )
 	{
 		// Requests for "/" or the browse path are handled the same way
 		
@@ -406,7 +406,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		
 		return TRUE;
 	}
-	else if ( StartsWith( m_sRequest, _T("/remote") ) )
+	else if ( ::StartsWith( m_sRequest, _PT("/remote") ) )
 	{
 		// A web client can start requesting remote pages on the same keep-alive
 		// connection after previously requesting other system objects
@@ -433,7 +433,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	{
 		// Network isn't active- Check if we should send 404 or 403
 
-		if ( StartsWith( m_sRequest, _T("/uri-res/N2R?urn:") ) )
+		if ( ::StartsWith( m_sRequest, _PT("/uri-res/N2R?urn:") ) )
 		{
 			LPCTSTR pszURN = (LPCTSTR)m_sRequest + 13;
 		
@@ -468,7 +468,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		Remove( FALSE );
 		return FALSE;
 	}
-	else if ( StartsWith( m_sRequest, _T("/gnutella/metadata/v1?urn:") ) && Settings.Uploads.ShareMetadata )
+	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/metadata/v1?urn:") ) && Settings.Uploads.ShareMetadata )
 	{
 		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 22;
 		CXMLElement* pMetadata = NULL;
@@ -499,7 +499,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		
 		if ( pMetadata != NULL ) return RequestMetadata( pMetadata );
 	}
-	else if ( StartsWith( m_sRequest, _T("/gnutella/tigertree/v3?urn:") ) && Settings.Uploads.ShareTiger )
+	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/tigertree/v3?urn:") ) && Settings.Uploads.ShareTiger )
 	{
 		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 23;
 		
@@ -521,7 +521,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			}
 		}
 	}
-	else if ( StartsWith( m_sRequest, _T("/gnutella/thex/v1?urn:") ) && Settings.Uploads.ShareTiger )
+	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/thex/v1?urn:") ) && Settings.Uploads.ShareTiger )
 	{
 		LPCTSTR pszURN	= (LPCTSTR)m_sRequest + 18;
 		DWORD nDepth	= 0;
@@ -555,14 +555,14 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			}
 		}
 	}
-	else if ( StartsWith( m_sRequest, _T("/gnutella/preview/v1?urn:") ) && Settings.Uploads.SharePreviews )
+	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/preview/v1?urn:") ) && Settings.Uploads.SharePreviews )
 	{
 		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 21;
 		CSingleLock oLock( &Library.m_pSection, TRUE );
 		CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE );
 		if ( pShared != NULL ) return RequestPreview( pShared, oLock );
 	}
-	else if ( StartsWith( m_sRequest, _T("/uri-res/N2R?urn:") ) )
+	else if ( ::StartsWith( m_sRequest, _PT("/uri-res/N2R?urn:") ) )
 	{
 		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 13;
 		
@@ -582,7 +582,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			return RequestPartialFile( pDownload );
 		}
 	}
-	else if ( StartsWith( m_sRequest, _T("/get/") ) )
+	else if ( ::StartsWith( m_sRequest, _PT("/get/") ) )
 	{
 		DWORD nIndex = 0;
 		

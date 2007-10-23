@@ -226,12 +226,12 @@ void CURLExportDlg::MakeURL(const CShareazaFile* pFile, CString& strLine)
 	CString strItem;
 
 	Replace( strLine, _T("[Name]"), pFile->m_sName );
-	Replace( strLine, _T("[NameURI]"), CTransfer::URLEncode( pFile->m_sName ) );
+	Replace( strLine, _T("[NameURI]"), URLEncode( pFile->m_sName ) );
 	
 	if ( pFile->m_sURL.GetLength() )
 	{
 		Replace( strLine, _T("[Link]"), pFile->m_sURL );
-		Replace( strLine, _T("[LinkURI]"), CTransfer::URLEncode( pFile->m_sURL ) );
+		Replace( strLine, _T("[LinkURI]"), URLEncode( pFile->m_sURL ) );
 	}
 	else
 	{

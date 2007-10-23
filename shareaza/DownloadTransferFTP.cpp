@@ -756,7 +756,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 	case ftpSIZE:
 		// Listing file size
 		strLine = _T("SIZE ");
-		strLine += CConnection::URLDecode( pURL.m_sPath );
+		strLine += URLDecode( pURL.m_sPath );
 		break;
 
 	case ftpLIST_TYPE:
@@ -767,7 +767,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 	case ftpLIST:
 		// Listing file attributes
 		strLine = _T("LIST ");
-		strLine += CConnection::URLDecode( pURL.m_sPath );
+		strLine += URLDecode( pURL.m_sPath );
 		break;
 
 	case ftpSIZE_TYPE:
@@ -804,7 +804,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 	case ftpRETR:
 		// Retriving file
 		strLine = _T("RETR ");
-		strLine += CConnection::URLDecode( pURL.m_sPath );
+		strLine += URLDecode( pURL.m_sPath );
 		break;
 
 	case ftpABOR:

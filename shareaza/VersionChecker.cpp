@@ -186,7 +186,7 @@ BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 		
 		CString strKey = strItem.SpanExcluding( _T("=") );
 		if ( strKey.GetLength() == strItem.GetLength() ) continue;
-		strItem = CTransfer::URLDecode( strItem.Mid( strKey.GetLength() + 1 ) );
+		strItem = URLDecode( strItem.Mid( strKey.GetLength() + 1 ) );
 
 		strItem.TrimLeft();
 		strItem.TrimRight();

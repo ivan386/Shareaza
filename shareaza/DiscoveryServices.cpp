@@ -1397,7 +1397,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 			}
 		}
 		
-		strURL += CConnection::URLEncode( strSubmit );
+		strURL += URLEncode( strSubmit );
 	}
 	
 	if ( m_nLastUpdateProtocol == PROTOCOL_G2 ) strURL += _T("&net=gnutella2");

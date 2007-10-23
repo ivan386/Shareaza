@@ -143,7 +143,7 @@ void CURLCopyDlg::OnIncludeSelf()
 
 	if ( m_pFile->m_sName.GetLength() )
 	{
-		CString strName = CTransfer::URLEncode( m_pFile->m_sName );
+		CString strName = URLEncode( m_pFile->m_sName );
 
 		if ( m_sMagnet.GetLength() ) m_sMagnet += _T("&");
 		if ( strURN.GetLength() )
@@ -163,7 +163,7 @@ void CURLCopyDlg::OnIncludeSelf()
 			htons( Network.m_pHost.sin_port ),
 			(LPCTSTR)strIncludeSelfURN );
 
-		m_sMagnet += _T("&xs=") + CTransfer::URLEncode( strURL );
+		m_sMagnet += _T("&xs=") + URLEncode( strURL );
 	}
 
 	if ( m_pFile->m_oSHA1 )
@@ -173,7 +173,7 @@ void CURLCopyDlg::OnIncludeSelf()
 
 		if ( m_pFile->m_sName.GetLength() )
 		{
-			m_sGnutella += CTransfer::URLEncode( m_pFile->m_sName )
+			m_sGnutella += URLEncode( m_pFile->m_sName )
 						+ _T("/");
 		}
 	}
@@ -183,7 +183,7 @@ void CURLCopyDlg::OnIncludeSelf()
 		m_pFile->m_sName.GetLength() )
 	{
 		m_sED2K.Format( _T("ed2k://|file|%s|%I64i|%s|/"),
-			(LPCTSTR)CConnection::URLEncode( m_pFile->m_sName ),
+			(LPCTSTR)URLEncode( m_pFile->m_sName ),
 			m_pFile->m_nSize,
 			(LPCTSTR)m_pFile->m_oED2K.toString() );
 

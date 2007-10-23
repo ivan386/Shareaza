@@ -427,7 +427,7 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString*
 	if ( validAndUnequal( m_oCollSHA1, oSHA1 ) ) return INET_E_OBJECT_NOT_FOUND;
 	
 	CString strPath( pszURL + 32 );
-	strPath = CConnection::URLDecode( strPath );
+	strPath = URLDecode( strPath );
 	if ( strPath.Right( 1 ) == _T("/") ) strPath += _T("index.htm");
 
 	CZIPFile::File* pFile = m_pCollZIP->GetFile( strPath.Mid( 1 ) );

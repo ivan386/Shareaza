@@ -534,7 +534,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
 				{
 					pHit->m_bBogus = TRUE;
-				}	
+				}
 			}
 		}
 		else if ( !CheckBogus( pFirstHit ) )
@@ -1526,7 +1526,7 @@ void CQueryHit::Resolve()
 	{
 		m_sURL.Format( _T("http://%s:%i/get/%lu/%s"),
 			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort, m_nIndex,
-			(LPCTSTR)CTransfer::URLEncode( m_sName ) );
+			(LPCTSTR)URLEncode( m_sName ) );
 	}
 	else
 	{

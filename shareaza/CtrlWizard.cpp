@@ -704,7 +704,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 	if ( pFile->m_sName )
 	{
 		strFileName = pFile->m_sName;
-		strNameURI = CTransfer::URLEncode( strFileName );
+		strNameURI = URLEncode( strFileName );
 	}
 
 	if ( pFile->m_nSize )

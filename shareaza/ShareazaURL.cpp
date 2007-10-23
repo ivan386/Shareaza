@@ -181,7 +181,7 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL, BOOL bResolve)
 		return TRUE;
 	else
 		// Parse "bad" URL
-		return ParseRoot( CTransfer::URLDecode( pszURL ), bResolve );
+		return ParseRoot( URLDecode( pszURL ), bResolve );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -301,7 +301,7 @@ BOOL CShareazaURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 		int nPos = m_sPath.ReverseFind( '/' );
 		if ( nPos >= 0 )
 		{
-			CString sName( CTransfer::URLDecode(
+			CString sName( URLDecode(
 				m_sPath.Mid( nPos + 1 ).SpanExcluding( _T("?") ) ) );
 			if ( sName.GetLength() )
 			{
@@ -376,7 +376,7 @@ BOOL CShareazaURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
 	int nPos = m_sPath.ReverseFind( '/' );
 	if ( !m_sName.GetLength() && nPos >= 0 )
 	{
-		CString sName( CTransfer::URLDecode(
+		CString sName( URLDecode(
 			m_sPath.Mid( nPos + 1 ).SpanExcluding( _T("?") ) ) );
 		if ( sName.GetLength() )
 		{
@@ -520,8 +520,8 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		int nEquals = strPart.Find( '=' );
 		if ( nEquals < 0 ) continue;
 		
-		CString strKey		= CTransfer::URLDecode( strPart.Left( nEquals ) );
-		CString strValue	= CTransfer::URLDecode( strPart.Mid( nEquals + 1 ) );
+		CString strKey		= URLDecode( strPart.Left( nEquals ) );
+		CString strValue	= URLDecode( strPart.Mid( nEquals + 1 ) );
 		
 		SafeString( strKey );
 		SafeString( strValue );
@@ -732,23 +732,23 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 		}
 		else if ( _tcsnicmp( strPart, _T("source:"), 7 ) == 0 )
 		{
-			CString strSource = CTransfer::URLDecode( strPart.Mid( 7 ) );
+			CString strSource = URLDecode( strPart.Mid( 7 ) );
 			SafeString( strSource );
 
 			if ( m_sURL.GetLength() ) m_sURL += ',';
 			m_sURL += _T("http://");
-			m_sURL += CTransfer::URLEncode( strSource );
+			m_sURL += URLEncode( strSource );
 			m_sURL += _T("/(^name^)");
 		}
 		else if (	_tcsnicmp( strPart, _T("name:"), 5 ) == 0 ||
 					_tcsnicmp( strPart, _T("file:"), 5 ) == 0 )
 		{
-			m_sName = CTransfer::URLDecode( strPart.Mid( 5 ) );
+			m_sName = URLDecode( strPart.Mid( 5 ) );
 			SafeString( m_sName );
 		}
 		else if ( _tcschr( strPart, ':' ) == NULL )
 		{
-			m_sName = CTransfer::URLDecode( strPart );
+			m_sName = URLDecode( strPart );
 			SafeString( m_sName );
 		}
 	}
@@ -757,7 +757,7 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 	{
 		if ( m_sName.GetLength() )
 		{
-			Replace( m_sURL, _T("(^name^)"), CTransfer::URLEncode( m_sName ) );
+			Replace( m_sURL, _T("(^name^)"), URLEncode( m_sName ) );
 			Replace( m_sURL, _T("\\"), _T("/") );
 		}
 		else
@@ -819,7 +819,7 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
 	
-	m_sName = CTransfer::URLDecode( strPart );
+	m_sName = URLDecode( strPart );
 	SafeString( m_sName );
 	if ( m_sName.IsEmpty() ) return FALSE;
 	
@@ -969,7 +969,7 @@ BOOL CShareazaURL::ParsePioletFile(LPCTSTR pszURL)
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
 	
-	m_sName = CTransfer::URLDecode( strPart );
+	m_sName = URLDecode( strPart );
 	SafeString( m_sName );
 	if ( m_sName.IsEmpty() ) return FALSE;
 	

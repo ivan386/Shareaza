@@ -377,12 +377,12 @@ BOOL CChatSession::ReadHandshake()
 	
 	m_bOld = strLine.Find( _T("/0.1") ) > 0;
 	
-	if ( StartsWith( strLine, _T("CHAT CONNECT/") ) && m_nState == cssRequest1 )
+	if ( ::StartsWith( strLine, _PT("CHAT CONNECT/") ) && m_nState == cssRequest1 )
 	{
 		m_nState = cssHeaders1;
 		return TRUE;
 	}
-	else if ( StartsWith( strLine, _T("CHAT/") ) )
+	else if ( ::StartsWith( strLine, _PT("CHAT/") ) )
 	{
 		if ( _tcsistr( strLine, _T("200 OK") ) )
 		{
@@ -765,7 +765,7 @@ BOOL CChatSession::OnText(const CString& str)
 	
 	if ( m_bOld )
 	{
-		if ( StartsWith( str, _T("\001ACTION ") ) )
+		if ( ::StartsWith( str, _PT("\001ACTION ") ) )
 		{
 			m_pWndPrivate->OnRemoteMessage( TRUE, str.Mid( 8 ) );
 		}
@@ -774,9 +774,9 @@ BOOL CChatSession::OnText(const CString& str)
 			m_pWndPrivate->OnRemoteMessage( FALSE, str );
 		}
 	}
-	else if ( StartsWith( str, _T("MESSAGE ") ) )
+	else if ( ::StartsWith( str, _PT("MESSAGE ") ) )
 	{
-		if ( StartsWith( str, _T("MESSAGE \001ACTION ") ) )
+		if ( ::StartsWith( str, _PT("MESSAGE \001ACTION ") ) )
 		{
 			m_pWndPrivate->OnRemoteMessage( TRUE, str.Mid( 16 ) );
 		}
@@ -785,7 +785,7 @@ BOOL CChatSession::OnText(const CString& str)
 			m_pWndPrivate->OnRemoteMessage( FALSE, str.Mid( 8 ) );
 		}
 	}
-	else if ( StartsWith( str, _T("NICK ") ) )
+	else if ( ::StartsWith( str, _PT("NICK ") ) )
 	{
 		// New nick is : str.Mid( 5 )
 	}
