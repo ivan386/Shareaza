@@ -896,11 +896,6 @@ void CSettings::SmartUpgrade()
 		eDonkey.SendPortServer = FALSE;
 	}
 
-	if ( nVersion < 49 )
-	{
-		eDonkey.SendPortServer = FALSE;
-	}
-
 	if ( nVersion < 50 )
 	{
 		CString strExts;
