@@ -326,7 +326,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.DequeueTime"), &eDonkey.DequeueTime, 3610 );
 	Add( _T("eDonkey.TagNames"), &eDonkey.TagNames, TRUE );
 	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, 2 );
-	Add( _T("eDonkey.SendPortServer"), &eDonkey.SendPortServer, TRUE );
+	Add( _T("eDonkey.SendPortServer"), &eDonkey.SendPortServer, FALSE );
 	Add( _T("eDonkey.MagnetSearch"), &eDonkey.MagnetSearch, TRUE );
 	Add( _T("eDonkey.MinServerFileSize"), &eDonkey.MinServerFileSize, 0 );
 	Add( _T("eDonkey.DefaultServerFlags"), &eDonkey.DefaultServerFlags, 0xFFFFFFFF );
@@ -551,7 +551,7 @@ void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	47
+#define SMART_VERSION	49
 
 void CSettings::Load()
 {
@@ -891,6 +891,10 @@ void CSettings::SmartUpgrade()
 		Gnutella.MaxResults = 150;
 	}
 
+	if ( nVersion < 49 )
+	{
+		eDonkey.SendPortServer = FALSE;
+	}
 }
 
 void CSettings::OnChangeConnectionSpeed()
