@@ -40,12 +40,11 @@ public:
 	DECLARE_DYNAMIC(CLibraryTreeView)
 
 // Attributes
-protected:
+private:
 	CLibraryTreeItem*	m_pRoot;
 	size_t				m_nTotal;
 	int					m_nVisible;
 	int					m_nScroll;
-protected:
 	int					m_nSelected;
 	CLibraryTreeItem*	m_pSelFirst;
 	CLibraryTreeItem*	m_pSelLast;
@@ -58,6 +57,7 @@ protected:
 	BOOL				m_bVirtual;
 	CFolderTipCtrl		m_wndFolderTip;
 	CAlbumTipCtrl		m_wndAlbumTip;
+	DWORD				m_tClickTime;
 
 // Operations
 public:

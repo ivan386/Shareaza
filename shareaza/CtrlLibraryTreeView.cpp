@@ -65,7 +65,6 @@ BEGIN_MESSAGE_MAP(CLibraryTreeView, CWnd)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
 	ON_WM_CONTEXTMENU()
-	ON_WM_LBUTTONDBLCLK()
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_PARENT, OnUpdateLibraryParent)
 	ON_COMMAND(ID_LIBRARY_PARENT, OnLibraryParent)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_EXPLORE, OnUpdateLibraryExplore)
@@ -106,21 +105,22 @@ END_MESSAGE_MAP()
 // CLibraryTreeView construction
 
 CLibraryTreeView::CLibraryTreeView()
+: m_pRoot( new CLibraryTreeItem() )
+, m_nTotal( 0 )
+, m_nVisible( 0 )
+, m_nScroll( 0 )
+, m_nSelected( 0 )
+, m_nCleanCookie( 0 )
+, m_tClickTime( 0 )
+, m_pTip( NULL )
+, m_pSelFirst( NULL )
+, m_pSelLast( NULL )
+, m_pFocus( NULL )
+, m_pDropItem( NULL )
+, m_bVirtual( -1 )
+, m_bDrag( FALSE )
 {
-	m_pRoot			= new CLibraryTreeItem();
 	m_pRoot->m_bExpanded = TRUE;
-	m_nTotal		= 0;
-	m_nVisible		= 0;
-	m_nScroll		= 0;
-	m_nSelected		= 0;
-	m_pSelFirst		= NULL;
-	m_pSelLast		= NULL;
-	m_pFocus		= NULL;
-	m_bDrag			= FALSE;
-	m_pDropItem		= NULL;
-	m_nCleanCookie	= 0;
-	m_pTip			= NULL;
-	m_bVirtual		= -1;
 }
 
 CLibraryTreeView::~CLibraryTreeView()
@@ -536,7 +536,10 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	else
 	{
 		if ( ( nFlags & MK_RBUTTON ) == 0 || ( pHit && pHit->m_bSelected == FALSE ) )
+		{
 			bChanged = DeselectAll( pHit );
+			m_tClickTime = GetTickCount();
+		}
 		if ( pHit ) bChanged |= Select( pHit );
 	}
 
@@ -559,22 +562,18 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 void CLibraryTreeView::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	OnLButtonDown( nFlags, point );
+	m_tClickTime = 0;
 
-	if ( m_pFocus != NULL && !m_pFocus->empty() )
-	{
-		if ( Expand( m_pFocus, TS_UNKNOWN ) )
-			NotifySelection();
-	}
-	if ( m_pFocus == NULL && ! m_bVirtual )
-	{
-		SelectAll();
+	if ( !m_bVirtual ) 
+		OnLibraryExplore();
+	else if ( m_pFocus != NULL && !m_pFocus->empty() && Expand( m_pFocus, TS_UNKNOWN ) )
 		NotifySelection();
-	}
 }
 
 void CLibraryTreeView::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	OnLButtonDown( nFlags, point );
+	m_tClickTime = 0;
 
 	CWnd::OnRButtonDown( nFlags, point );
 }
@@ -612,6 +611,21 @@ void CLibraryTreeView::OnMouseMove(UINT nFlags, CPoint point)
 void CLibraryTreeView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	m_bDrag = FALSE;
+
+	if ( m_tClickTime != 0 && !m_bVirtual && GetTickCount() - m_tClickTime > 300 )
+	{
+		if ( m_pFocus != NULL && !m_pFocus->empty() )
+		{
+			if ( Expand( m_pFocus, TS_UNKNOWN ) )
+				NotifySelection();
+		}
+		if ( m_pFocus == NULL )
+		{
+			SelectAll();
+			NotifySelection();
+		}
+	}
+	m_tClickTime = 0;
 
 	CWnd::OnLButtonUp( nFlags, point );
 }
