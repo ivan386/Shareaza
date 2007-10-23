@@ -88,7 +88,9 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_bPushOnly		= FALSE;
 	m_bCloseConn	= FALSE;
 	m_bReadContent	= FALSE;
-	SystemTimeToFileTime( &pTime, &m_tLastSeen );
+
+	ASSERT( SystemTimeToFileTime( &pTime, &m_tLastSeen ) );
+
 	m_nGnutella		= 0;
 	m_bClientExtended=FALSE;
 	
