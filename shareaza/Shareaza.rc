@@ -216,7 +216,7 @@ BEGIN
         MENUITEM "&Download URL...\tCtrl+D",    ID_TOOLS_DOWNLOAD
         MENUITEM "Seed Torrent...",             ID_TOOLS_SEEDTORRENT
         MENUITEM "Import eMule partial downloads...", IDC_IMPORT_DOWNLOADS
-		MENUITEM "&Open my folder of completed Downloads", ID_OPEN_DOWNLOADS_FOLDER
+        MENUITEM "&Open my folder of completed Downloads", ID_OPEN_DOWNLOADS_FOLDER
         MENUITEM SEPARATOR
         MENUITEM "My &Profile...",              ID_TOOLS_PROFILE
         MENUITEM "S&kin Shareaza...",           ID_TOOLS_SKIN
