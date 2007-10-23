@@ -873,10 +873,32 @@ HRESULT CShareazaDataSource::AddFiles(IDataObject* pIDataObject, const T* pSelFi
 	}
 	LPBYTE buf_Files = oFiles;
 
-	// Fill structures
-	FillBuffer( pSelFirst, buf_HDROP, buf_Archive, buf_Files, TRUE, oGUID );
+	CString buf_Text;
 
-	// Finalize CF_HDROP
+	// Fill structures
+	FillBuffer( pSelFirst, buf_HDROP, buf_Archive, buf_Files, buf_Text, TRUE, oGUID );
+
+	// Finalize CF_TEXT
+	if ( buf_Text.GetLength() )
+	{
+		STGMEDIUM medium_Text = { TYMED_HGLOBAL, NULL, NULL };
+		FORMATETC formatetc_Text = { CF_TEXT, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
+		size_t size_Text = ( buf_Text.GetLength() + 1 ) * sizeof( CHAR );
+		CHGlobal < TCHAR > oText( size_Text );
+		if ( ! oText.IsValid() )
+		{
+			return E_OUTOFMEMORY;
+		}
+		CopyMemory( (LPTSTR)oText, (LPCSTR)CT2CA( buf_Text ), size_Text );
+		medium_Text.hGlobal = oText;
+		HRESULT hr = pIDataObject->SetData( &formatetc_Text, &medium_Text, FALSE );
+		if ( FAILED ( hr ) )
+		{
+			return hr;
+		}
+	}
+
+	// Finalize CF_HDROP and optional CFSTR_PREFERREDDROPEFFECT
 	if ( size_HDROP ) 
 	{
 		STGMEDIUM medium_HDROP = { TYMED_HGLOBAL, NULL, NULL };
@@ -887,6 +909,17 @@ HRESULT CShareazaDataSource::AddFiles(IDataObject* pIDataObject, const T* pSelFi
 		{
 			return hr;
 		}
+
+		STGMEDIUM medium_PDS = { TYMED_HGLOBAL, NULL, NULL };
+		FORMATETC formatetc_PDS = { (CLIPFORMAT) RegisterClipboardFormat( CFSTR_PREFERREDDROPEFFECT ), NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
+		CHGlobal < DWORD > oPDS;
+		if ( ! oPDS.IsValid() )
+		{
+			return E_OUTOFMEMORY;
+		}
+		*(DWORD*)oPDS = DROPEFFECT_NONE; // Let's Explorer choose
+		medium_PDS.hGlobal = oPDS;
+		pIDataObject->SetData( &formatetc_PDS, &medium_PDS, FALSE );
 	}
 
 	// Finalize CF_SHAREAZA_ALBUMS
@@ -1053,7 +1086,10 @@ STDMETHODIMP CShareazaDataSource::XDataObject::GetData(FORMATETC *pformatetc, ST
     }
 
 #ifdef _DEBUG
-	if ( FAILED ( hr ) ) TRACE("0x%08x : GetData( {%ls, %d, %d, 0x%08x, %d}, 0x%08x ) : 0x%08x\n", this, GetFORMATLIST( pformatetc->cfFormat ), pformatetc->dwAspect, pformatetc->lindex, pformatetc->ptd, pformatetc->tymed, pmedium, hr);
+	if ( FAILED ( hr ) )
+		TRACE("0x%08x : GetData( {%ls, %d, %d, 0x%08x, %d}, 0x%08x ) : 0x%08x\n",
+			this, GetFORMATLIST( pformatetc->cfFormat ), pformatetc->dwAspect,
+			pformatetc->lindex, pformatetc->ptd, pformatetc->tymed, pmedium, hr);
 #endif
 	return hr;
 }
@@ -1079,7 +1115,10 @@ STDMETHODIMP CShareazaDataSource::XDataObject::QueryGetData (FORMATETC* pformate
 	if ( SUCCEEDED( hr ) ) hr = S_OK;
 
 #ifdef _DEBUG
-	if ( FAILED ( hr ) ) TRACE("0x%08x : QueryGetData( {%ls, %d, %d, 0x%08x, %d} ) : 0x%08x\n", this, GetFORMATLIST( pformatetc->cfFormat ), pformatetc->dwAspect, pformatetc->lindex, pformatetc->ptd, pformatetc->tymed, hr);
+	if ( FAILED ( hr ) )
+		TRACE("0x%08x : QueryGetData( {%ls, %d, %d, 0x%08x, %d} ) : 0x%08x\n",
+			this, GetFORMATLIST( pformatetc->cfFormat ), pformatetc->dwAspect,
+			pformatetc->lindex, pformatetc->ptd, pformatetc->tymed, hr);
 #endif
 
 	return hr;
@@ -1363,7 +1402,7 @@ void CShareazaDataSource::GetTotalLength(const CLibraryTreeItem* pSelFirst, size
 
 // Fill buffer by files names and albums
 
-void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDROP, CArchive& buf_Archive, LPBYTE& buf_Files, BOOL bRoot, const Hashes::Guid& oGUID)
+void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDROP, CArchive& buf_Archive, LPBYTE& buf_Files, CString& buf_Text, BOOL bRoot, const Hashes::Guid& oGUID)
 {
 	ASSERT_VALID( pList );
 
@@ -1379,6 +1418,23 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 				ASSERT( pFile != NULL );
 				if ( pFile )
 				{
+					if ( pFile->m_oSHA1 && pFile->m_oTiger && pFile->m_oED2K &&
+						pFile->m_nSize != 0 && pFile->m_nSize != SIZE_UNKNOWN &&
+						pFile->m_sName )
+					{
+						CString sTemp;
+						sTemp.Format(
+							_T("magnet:?xt=urn:bitprint:%s.%s&xt=%s&xl=%I64i&dn=%s"),
+							pFile->m_oSHA1.toString(),
+							pFile->m_oTiger.toString(),
+							pFile->m_oED2K.toUrn(),
+							pFile->m_nSize,
+							URLEncode( pFile->m_sName ) );
+						if ( buf_Text.GetLength() )
+							buf_Text += _T("\r\n\r\n");
+						buf_Text += sTemp;
+					}
+
 					int len = pFile->GetPath().GetLength();
 					if ( len )
 					{
@@ -1404,7 +1460,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 				{
 					CLibraryList List;
 					pAlbum->GetFileList( &List, TRUE );
-					FillBuffer( &List, buf_HDROP, buf_Archive, buf_Files, FALSE, pAlbum->m_oGUID );
+					FillBuffer( &List, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pAlbum->m_oGUID );
 
 					pAlbum->Serialize( buf_Archive, LIBRARY_SER_VERSION );
 				}
@@ -1436,7 +1492,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 
 // Fill buffer by files names and albums
 
-void CShareazaDataSource::FillBuffer(const CLibraryTreeItem* pSelFirst, LPTSTR& buf_HDROP, CArchive& buf_Archive, LPBYTE& buf_Files, BOOL bRoot, const Hashes::Guid& /*oGUID*/)
+void CShareazaDataSource::FillBuffer(const CLibraryTreeItem* pSelFirst, LPTSTR& buf_HDROP, CArchive& buf_Archive, LPBYTE& buf_Files, CString& buf_Text, BOOL bRoot, const Hashes::Guid& /*oGUID*/)
 {
 	ASSERT_VALID( pSelFirst );
 
@@ -1447,7 +1503,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryTreeItem* pSelFirst, LPTSTR& 
 			// Add all files within virtual folder (recursively)
 			CLibraryList List;
 			pItem->GetFileList( &List, TRUE );
-			FillBuffer( &List, buf_HDROP, buf_Archive, buf_Files, FALSE, pItem->m_pVirtual->m_oGUID );
+			FillBuffer( &List, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pItem->m_pVirtual->m_oGUID );
 
 			// Add virtual folder
 			pItem->m_pVirtual->Serialize( buf_Archive, LIBRARY_SER_VERSION );
