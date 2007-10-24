@@ -58,7 +58,6 @@ HKLM
 						ForceRemove val '.nsv' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.ogm' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.qt' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
-						ForceRemove val '.ratdvd' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.ram' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.rm' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'
 						ForceRemove val '.rmvb' = s '{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}'

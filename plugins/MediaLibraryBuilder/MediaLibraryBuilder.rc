@@ -65,7 +65,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,9
+ FILEVERSION 1,0,0,10
  PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -83,7 +83,7 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Media Library Builder plugin"
-            VALUE "FileVersion", "1, 0, 0, 9"
+            VALUE "FileVersion", "1, 0, 0, 10"
             VALUE "InternalName", "MediaLibraryBuilder.dll"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2005-2007. All rights reserved."
             VALUE "OriginalFilename", "MediaLibraryBuilder.dll"
