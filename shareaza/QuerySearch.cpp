@@ -580,7 +580,10 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 			const char* pszSep = (const char*)memchr( pszData, G1_PACKET_HIT_SEP, nDataLength );
 			int nLength = ( pszSep && *pszSep == G1_PACKET_HIT_SEP ) ?
 				(int)( pszSep - pszData ) : nDataLength;
-			if ( nLength >= 4 && memcmp( pszData, "urn:", 4 ) == 0 )
+
+			if ( nLength == 0 )
+				theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with empty part") );
+			else if ( nLength >= 4 && memcmp( pszData, "urn:", 4 ) == 0 )
 			{
 				CString strURN( pszData, nLength );
 				if ( nLength == 4 );					// Got empty urn
