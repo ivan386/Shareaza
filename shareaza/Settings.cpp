@@ -898,55 +898,73 @@ void CSettings::SmartUpgrade()
 
 	if ( nVersion < 50 )
 	{
-		CString strExts;
-		theApp.GetProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}", strExts );
-		if ( _tcsistr( strExts, L"|.3gp|" ) == NULL && _tcsistr( strExts, L"|-.3gp|" ) == NULL )
-			strExts += L"|.3gp|";
-		if ( _tcsistr( strExts, L"|.3gpp|" ) == NULL && _tcsistr( strExts, L"|-.3gpp|" ) == NULL )
-			strExts += L"|.3gpp|";
-		if ( _tcsistr( strExts, L"|.3g2|" ) == NULL && _tcsistr( strExts, L"|-.3g2|" ) == NULL )
-			strExts += L"|.3g2|";
-		if ( _tcsistr( strExts, L"|.dv|" ) == NULL && _tcsistr( strExts, L"|-.dv|" ) == NULL )
-			strExts += L"|.dv|";
-		if ( _tcsistr( strExts, L"|.flv|" ) == NULL && _tcsistr( strExts, L"|-.flv|" ) == NULL )
-			strExts += L"|.flv|";
-		if ( _tcsistr( strExts, L"|.ivf|" ) == NULL && _tcsistr( strExts, L"|-.ivf|" ) == NULL )
-			strExts += L"|.ivf|";
-		if ( _tcsistr( strExts, L"|.gvi|" ) == NULL && _tcsistr( strExts, L"|-.gvi|" ) == NULL )
-			strExts += L"|.gvi|";
-		if ( _tcsistr( strExts, L"|.mpe|" ) == NULL && _tcsistr( strExts, L"|-.mpe|" ) == NULL )
-			strExts += L"|.mpe|";
-		if ( _tcsistr( strExts, L"|.wm|" ) == NULL && _tcsistr( strExts, L"|-.wm|" ) == NULL )
-			strExts += L"|.wm|";
-		if ( _tcsistr( strExts, L"|.rmvb|" ) == NULL && _tcsistr( strExts, L"|-.rmvb|" ) == NULL )
-			strExts += L"|.rmvb|";
-		if ( _tcsistr( strExts, L"|.mp4|" ) == NULL && _tcsistr( strExts, L"|-.mp4|" ) == NULL )
-			strExts += L"|.mp4|";
-		theApp.WriteProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}", strExts );
-		theApp.GetProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}", strExts );
-		if ( _tcsistr( strExts, L"|.3gp|" ) == NULL && _tcsistr( strExts, L"|-.3gp|" ) == NULL )
-			strExts += L"|.3gp|";
-		if ( _tcsistr( strExts, L"|.3gpp|" ) == NULL && _tcsistr( strExts, L"|-.3gpp|" ) == NULL )
-			strExts += L"|.3gpp|";
-		if ( _tcsistr( strExts, L"|.3g2|" ) == NULL && _tcsistr( strExts, L"|-.3g2|" ) == NULL )
-			strExts += L"|.3g2|";
-		if ( _tcsistr( strExts, L"|.dv|" ) == NULL && _tcsistr( strExts, L"|-.dv|" ) == NULL )
-			strExts += L"|.dv|";
-		if ( _tcsistr( strExts, L"|.flv|" ) == NULL && _tcsistr( strExts, L"|-.flv|" ) == NULL )
-			strExts += L"|.flv|";
-		if ( _tcsistr( strExts, L"|.ivf|" ) == NULL && _tcsistr( strExts, L"|-.ivf|" ) == NULL )
-			strExts += L"|.ivf|";
-		if ( _tcsistr( strExts, L"|.gvi|" ) == NULL && _tcsistr( strExts, L"|-.gvi|" ) == NULL )
-			strExts += L"|.gvi|";
-		if ( _tcsistr( strExts, L"|.mpe|" ) == NULL && _tcsistr( strExts, L"|-.mpe|" ) == NULL )
-			strExts += L"|.mpe|";
-		if ( _tcsistr( strExts, L"|.wm|" ) == NULL && _tcsistr( strExts, L"|-.wm|" ) == NULL )
-			strExts += L"|.wm|";
-		if ( _tcsistr( strExts, L"|.rmvb|" ) == NULL && _tcsistr( strExts, L"|-.rmvb|" ) == NULL )
-			strExts += L"|.rmvb|";
-		if ( _tcsistr( strExts, L"|.mp4|" ) == NULL && _tcsistr( strExts, L"|-.mp4|" ) == NULL )
-			strExts += L"|.mp4|";
-		theApp.WriteProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}", strExts );
+		CString strExts =
+			theApp.GetProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}" );
+		if ( strExts.GetLength() > 0 && strExts.GetAt( 0 ) == '|' )
+		{
+			if ( _tcsistr( strExts, L"|.3gp|" ) == NULL && _tcsistr( strExts, L"|-.3gp|" ) == NULL )
+				strExts += L"|.3gp|";
+			if ( _tcsistr( strExts, L"|.3gpp|" ) == NULL && _tcsistr( strExts, L"|-.3gpp|" ) == NULL )
+				strExts += L"|.3gpp|";
+			if ( _tcsistr( strExts, L"|.3g2|" ) == NULL && _tcsistr( strExts, L"|-.3g2|" ) == NULL )
+				strExts += L"|.3g2|";
+			if ( _tcsistr( strExts, L"|.dv|" ) == NULL && _tcsistr( strExts, L"|-.dv|" ) == NULL )
+				strExts += L"|.dv|";
+			if ( _tcsistr( strExts, L"|.flv|" ) == NULL && _tcsistr( strExts, L"|-.flv|" ) == NULL )
+				strExts += L"|.flv|";
+			if ( _tcsistr( strExts, L"|.ivf|" ) == NULL && _tcsistr( strExts, L"|-.ivf|" ) == NULL )
+				strExts += L"|.ivf|";
+			if ( _tcsistr( strExts, L"|.gvi|" ) == NULL && _tcsistr( strExts, L"|-.gvi|" ) == NULL )
+				strExts += L"|.gvi|";
+			if ( _tcsistr( strExts, L"|.mpe|" ) == NULL && _tcsistr( strExts, L"|-.mpe|" ) == NULL )
+				strExts += L"|.mpe|";
+			if ( _tcsistr( strExts, L"|.wm|" ) == NULL && _tcsistr( strExts, L"|-.wm|" ) == NULL )
+				strExts += L"|.wm|";
+			if ( _tcsistr( strExts, L"|.rmvb|" ) == NULL && _tcsistr( strExts, L"|-.rmvb|" ) == NULL )
+				strExts += L"|.rmvb|";
+			if ( _tcsistr( strExts, L"|.mp4|" ) == NULL && _tcsistr( strExts, L"|-.mp4|" ) == NULL )
+				strExts += L"|.mp4|";
+			theApp.WriteProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}", strExts );
+		}
+		else
+		{
+			// the value is missing or it was REG_DWORD as in earlier versions
+			strExts = L"|.asf||.asx||.avi||.divx||.m2v||.m2p||.mkv||.mov||.mpeg||.mpg||.ogm||.qt||.ram||.rm||.vob||.wmv||.xvid||.mp4||.rmvb||.3gp||.3gpp||.3g2||.dv||.flv||.ivf||.gvi||.mpe||.nsv||.wm|";
+			theApp.WriteProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}", strExts );
+		}
+		strExts =
+			theApp.GetProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}" );
+		if ( strExts.GetLength() > 0 && strExts.GetAt( 0 ) == '|' )
+		{
+			if ( _tcsistr( strExts, L"|.3gp|" ) == NULL && _tcsistr( strExts, L"|-.3gp|" ) == NULL )
+				strExts += L"|.3gp|";
+			if ( _tcsistr( strExts, L"|.3gpp|" ) == NULL && _tcsistr( strExts, L"|-.3gpp|" ) == NULL )
+				strExts += L"|.3gpp|";
+			if ( _tcsistr( strExts, L"|.3g2|" ) == NULL && _tcsistr( strExts, L"|-.3g2|" ) == NULL )
+				strExts += L"|.3g2|";
+			if ( _tcsistr( strExts, L"|.dv|" ) == NULL && _tcsistr( strExts, L"|-.dv|" ) == NULL )
+				strExts += L"|.dv|";
+			if ( _tcsistr( strExts, L"|.flv|" ) == NULL && _tcsistr( strExts, L"|-.flv|" ) == NULL )
+				strExts += L"|.flv|";
+			if ( _tcsistr( strExts, L"|.ivf|" ) == NULL && _tcsistr( strExts, L"|-.ivf|" ) == NULL )
+				strExts += L"|.ivf|";
+			if ( _tcsistr( strExts, L"|.gvi|" ) == NULL && _tcsistr( strExts, L"|-.gvi|" ) == NULL )
+				strExts += L"|.gvi|";
+			if ( _tcsistr( strExts, L"|.mpe|" ) == NULL && _tcsistr( strExts, L"|-.mpe|" ) == NULL )
+				strExts += L"|.mpe|";
+			if ( _tcsistr( strExts, L"|.wm|" ) == NULL && _tcsistr( strExts, L"|-.wm|" ) == NULL )
+				strExts += L"|.wm|";
+			if ( _tcsistr( strExts, L"|.rmvb|" ) == NULL && _tcsistr( strExts, L"|-.rmvb|" ) == NULL )
+				strExts += L"|.rmvb|";
+			if ( _tcsistr( strExts, L"|.mp4|" ) == NULL && _tcsistr( strExts, L"|-.mp4|" ) == NULL )
+				strExts += L"|.mp4|";
+			theApp.WriteProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}", strExts );
+		}
+		else
+		{
+			strExts = L"|.asf||.asx||.avi||.divx||.m2v||.m2p||.mkv||.mov||.mpeg||.mpg||.ogm||.qt||.ram||.rm||.vob||.wmv||.xvid||.mp4||.rmvb||.3gp||.3gpp||.3g2||.dv||.flv||.ivf||.gvi||.mpe||.nsv||.wm|";
+			theApp.WriteProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}", strExts );
+		}
 	}
 }
 
