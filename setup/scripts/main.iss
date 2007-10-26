@@ -376,6 +376,8 @@ Type: files; Name: "{app}\Data\*.url"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}\Thumbs.db"; Tasks: multiuser
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\Thumbs.db"
 Type: files; Name: "{userappdata}\Shareaza\Data\DefaultAvatar.png"
 Type: files; Name: "{app}\Skins\Languages\default-es-mx.xml"
 Type: files; Name: "{app}\Skins\Languages\default-es-mx.ico"
@@ -417,14 +419,21 @@ Type: filesandordirs; Name: "{userappdata}\Shareaza\Data"
 Type: filesandordirs; Name: "{app}\Skins"
 Type: filesandordirs; Name: "{app}\Templates"
 Type: filesandordirs; Name: "{app}\Schemas"
+Type: filesandordirs; Name: "{app}\Plugins"
 
+Type: filesandordirs; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}\Metadata"; Tasks: multiuser
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}\Thumbs.db"; Tasks: multiuser
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}\SThumbs.dat"; Tasks: multiuser
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}\desktop.ini"; Tasks: multiuser
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}\desktop.ini"; Tasks: multiuser
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}\desktop.ini"; Tasks: multiuser
 
-Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\desktop.ini"; Tasks: not multiuser
-Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}\desktop.ini"; Tasks: not multiuser
-Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}\desktop.ini"; Tasks: not multiuser
+Type: filesandordirs; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\Metadata"
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\Thumbs.db"
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\SThumbs.dat"
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\desktop.ini"
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}\desktop.ini"
+Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}\desktop.ini"
 
 ; Pull in languages and localized files
 #include "languages.iss"
