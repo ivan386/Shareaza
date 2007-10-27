@@ -488,7 +488,7 @@ void CSearchWnd::OnSearchSearch()
 	// Check if user mistakenly pasted download link to search input box
 	CString sText;
 	m_wndPanel.m_boxSearch.m_wndSearch.GetWindowText( sText );
-	if ( CShareazaApp::OpenURL( sText, TRUE ) )
+	if ( CShareazaApp::OpenURL( sText, TRUE, TRUE ) )
 	{
 		m_wndPanel.m_boxSearch.m_wndSearch.SetWindowText( _T("") );
 		return;

@@ -154,7 +154,7 @@ public:
 	// Open .co or .collection file
 	static BOOL			OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open url
-	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt);
+	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent = FALSE);
 
 protected:
 	mutable CCriticalSection	m_csMessage;

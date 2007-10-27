@@ -625,9 +625,9 @@ BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)
 	return FALSE;
 }
 
-BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt)
+BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 {
-	if ( bDoIt )
+	if ( bDoIt && ! bSilent )
 		theApp.Message( MSG_SYSTEM, IDS_URL_RECEIVED, lpszFileName );
 
 	CShareazaURL* pURL = new CShareazaURL();
@@ -639,7 +639,7 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt)
 	}
 	delete pURL;
 
-	if ( bDoIt )
+	if ( bDoIt && ! bSilent )
 		theApp.Message( MSG_SYSTEM, IDS_URL_PARSE_ERROR );
 
 	return FALSE;

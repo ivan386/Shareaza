@@ -242,7 +242,7 @@ void CHomeSearchCtrl::OnSearchStart()
 	if ( strText.IsEmpty() ) return;
 
 	// Check if user mistakenly pasted download link to search input box
-	if ( CShareazaApp::OpenURL( strText, TRUE ) )
+	if ( CShareazaApp::OpenURL( strText, TRUE, TRUE ) )
 	{
 		m_wndText.SetWindowText( _T("") );
 		return;
