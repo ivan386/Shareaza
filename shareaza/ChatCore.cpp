@@ -166,9 +166,8 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 	pSession->m_bMustPush	= ( ( pClient->m_nClientID > 0 ) && ( pClient->m_nClientID < 16777216 ) );
 
 	// Make new input and output buffer objects
-	DWORD nLimit = 0;
-	pSession->m_pInput		= new CBuffer( &nLimit );
-	pSession->m_pOutput		= new CBuffer( &nLimit );
+	pSession->m_pInput		= new CBuffer();
+	pSession->m_pOutput		= new CBuffer();
 
 	Add( pSession );
 

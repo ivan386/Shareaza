@@ -220,16 +220,19 @@ CString CG1Packet::GetGUID() const
 void CG1Packet::ToBuffer(CBuffer* pBuffer) const
 {
 	// Compose a Gnutella packet header with values from this CG1Packet object
-	GNUTELLAPACKET pHeader;              // Make a local GNUTELLAPACKET structure called pHeader
-	pHeader.m_oGUID   = m_oGUID.storage();         // Copy in the GUID
-	pHeader.m_nType   = m_nType;         // Copy in the type byte
-	pHeader.m_nTTL    = m_nTTL;          // Copy in the TTL and hops counts
-	pHeader.m_nHops   = m_nHops;
-	pHeader.m_nLength = (LONG)m_nLength; // Copy in the payload length number of bytes
+	GNUTELLAPACKET pHeader;						// Make a local GNUTELLAPACKET structure called pHeader
+	pHeader.m_oGUID		= m_oGUID.storage();	// Copy in the GUID
+	pHeader.m_nType		= m_nType;				// Copy in the type byte
+	pHeader.m_nTTL		= m_nTTL;				// Copy in the TTL and hops counts
+	pHeader.m_nHops		= m_nHops;
+	pHeader.m_nLength	= (LONG)m_nLength;		// Copy in the payload length number of bytes
+
+	// Abort if the buffer isn't big enough for the packet
+	if ( !pBuffer->EnsureBuffer( sizeof(pHeader) + m_nLength ) ) return;
 
 	// Add the Gnutella packet header and packet payload to the buffer
-	pBuffer->Add( &pHeader, sizeof(pHeader) ); // First, copy the bytes of the Gnutella packet header structure we made right here
-	pBuffer->Add( m_pBuffer, m_nLength );      // This packet object's buffer is the payload, copy that in after the header
+	pBuffer->Add( &pHeader, sizeof(pHeader) );	// First, copy the bytes of the Gnutella packet header structure we made right here
+	pBuffer->Add( m_pBuffer, m_nLength );		// This packet object's buffer is the payload, copy that in after the header
 }
 
 //////////////////////////////////////////////////////////////////////

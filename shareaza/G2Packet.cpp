@@ -432,13 +432,14 @@ void CG2Packet::ToBuffer(CBuffer* pBuffer) const
 	if ( m_bCompound ) nFlags |= G2_FLAG_COMPOUND;
 	if ( m_bBigEndian ) nFlags |= G2_FLAG_BIG_ENDIAN;
 
+	// Abort if the buffer isn't big enough for the packet
+	if ( !pBuffer->EnsureBuffer( 1 + nLenLen + nTypeLen + 1 + m_nLength ) )
+		return;
+
 	pBuffer->Add( &nFlags, 1 );
 
 	if ( m_bBigEndian )
 	{
-		if ( ! pBuffer->EnsureBuffer( nLenLen ) )
-			return;
-
 		BYTE* pOut = pBuffer->m_pBuffer + pBuffer->m_nLength;
 		pBuffer->m_nLength += nLenLen;
 

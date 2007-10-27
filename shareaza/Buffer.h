@@ -26,14 +26,14 @@
 #pragma once
 
 // A buffer of memory that takes care of allocating and freeing itself, and has methods for compression and encoding
-class CBuffer
+class CBuffer : private boost::noncopyable
 {
 
 // Construction
 public:
 	// Make a new CBuffer object, and delete one
-	CBuffer(DWORD* pLimit = NULL);	// The argument is not used (do)
-	virtual ~CBuffer();				// The virtual keyword indicates a class that inherits from this one may override this
+	CBuffer();			// Construct a CBuffer object
+	virtual ~CBuffer();	// The virtual keyword indicates a class that inherits from this one may override this
 
 // Attributes
 public:

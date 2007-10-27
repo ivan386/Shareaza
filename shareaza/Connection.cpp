@@ -205,8 +205,8 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 		}
 	}
 
-	m_pInput		= new CBuffer( &Settings.Bandwidth.PeerIn );
-	m_pOutput		= new CBuffer( &Settings.Bandwidth.PeerOut );
+	m_pInput		= new CBuffer();
+	m_pOutput		= new CBuffer();
 
 	// Record that we initiated this connection, and when it happened
 	m_bInitiated	= TRUE;
@@ -237,9 +237,9 @@ void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost)
 
 	// Make new input and output buffer objects
 	ASSERT( m_pInput == NULL );
-	m_pInput		= new CBuffer( &Settings.Bandwidth.PeerIn );
+	m_pInput		= new CBuffer();
 	ASSERT( m_pOutput == NULL );
-	m_pOutput		= new CBuffer( &Settings.Bandwidth.PeerOut );
+	m_pOutput		= new CBuffer();
 
 	// Facts about the connection
 	m_bInitiated	= FALSE;			// We didn't initiate this connection

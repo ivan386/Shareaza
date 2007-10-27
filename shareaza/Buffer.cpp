@@ -44,13 +44,12 @@ static char THIS_FILE[]=__FILE__;
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer construction
 
-// Takes access to a DWORD that is not used (do)
 // Makes a new blank CBuffer object with no memory block allocated yet
-CBuffer::CBuffer(DWORD* /*pLimit*/) :
-	m_pNext   ( NULL )	// This object isn't in a list yet
-,	m_pBuffer ( NULL )	// No memory block has been allocated for this object yet
-,	m_nBuffer ( 0 )		// The size of the memory block is 0
-,	m_nLength ( 0 )		// No bytes have been written here yet
+CBuffer::CBuffer() :
+	m_pNext		( NULL )	// This object isn't in a list yet
+,	m_pBuffer	( NULL )	// No memory block has been allocated for this object yet
+,	m_nBuffer	( 0 )		// The size of the memory block is 0
+,	m_nLength	( 0 )		// No bytes have been written here yet
 {
 }
 
@@ -178,7 +177,7 @@ void CBuffer::AddReversed(const void *pData, const size_t nLength)
 // Makes sure the buffer will be big enough to hold them, allocating more memory if necessary
 bool CBuffer::EnsureBuffer(const size_t nLength)
 {
-	// primitive overflow protection (relevant for 64bit)
+	// Limit buffer size to a signed int. This is the most that can be sent/received from a socket in one call.
 	if ( nLength > std::numeric_limits< int >::max() - m_nBuffer ) return false;
 
 	// If the size of the buffer minus the size filled is bigger than or big enough for the given length, do nothing
@@ -205,8 +204,8 @@ bool CBuffer::EnsureBuffer(const size_t nLength)
 	// Reallocate the memory block to this size
 	m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // May return a different pointer
 
-	if ( m_pBuffer )
-		return true;
+	// Memory allocation succeeded, new buffer created
+	if ( m_pBuffer ) return true;
 
 	// Out of memory
 	m_nLength = 0;
@@ -360,11 +359,20 @@ DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
 	// Read bytes from the socket until the limit has run out
 	while ( nSpeedLimit )
 	{
-		// Limit nLength to the maximum recieve size
-		int nLength = static_cast< int >( min( nSpeedLimit, MAX_RECV_SIZE ) );
+		// Calculate how much free buffer space there is
+		int nLength = m_nBuffer - m_nLength;
 
-		// Exit loop if the buffer isn't big enough to hold the data
-		if ( !EnsureBuffer( nLength ) ) break;
+		if ( nLength )
+			// Limit nLength to the speed limit
+			nLength = static_cast< int >( min( static_cast< DWORD >( nLength ), nSpeedLimit ) );
+		else
+		{
+			// Limit nLength to the maximum recieve size
+			nLength = static_cast< int >( min( nSpeedLimit, MAX_RECV_SIZE ) );
+			
+			// Exit loop if the buffer isn't big enough to hold the data
+			if ( !EnsureBuffer( nLength ) ) break;
+		}
 
 		// Point where the data is to be stored
 		// This needs to be done after EnsureBuffer() is called as it may have changed m_pBuffer
@@ -476,7 +484,7 @@ BOOL CBuffer::Inflate()
 {
 	// The bytes in this buffer are compressed, decompress them
 	DWORD nCompress = 0; // Decompress will write the size of the buffer it allocates and returns in this variable
-	auto_array< BYTE > pCompress( CZLib::Decompress( m_pBuffer, static_cast< DWORD >( m_nLength ), &nCompress ) );
+	auto_array< BYTE > pCompress( CZLib::Decompress( m_pBuffer, m_nLength, &nCompress ) );
 	if ( !pCompress.get() )
 		return FALSE; // Decompress had an error
 
@@ -509,10 +517,10 @@ BOOL CBuffer::Ungzip()
 		if ( m_nLength < 2 ) return FALSE;
 
 		// Look at the first 2 bytes in the buffer as a word, this says how long the data it beyond it
-		WORD nLen = *(WORD*)m_pBuffer;
+		WORD nLen = *reinterpret_cast< WORD* >( m_pBuffer );
 
 		// If the buffer has less data than it should, return false
-		if ( (int)m_nLength - 2 < (int)nLen ) return FALSE;
+		if ( m_nLength - 2 < nLen ) return FALSE;
 
 		// Remove the length word and the length it describes from the front of the buffer
 		Remove( nLen + 2 );
@@ -571,10 +579,10 @@ BOOL CBuffer::Ungzip()
 		}
 
 		// Tell the z_stream structure where to work
-		pStream.next_in   = m_pBuffer;         // Decompress the memory here
-		pStream.avail_in  = static_cast< uInt >( m_nLength );         // There is this much of it
-		pStream.next_out  = pOutput.m_pBuffer; // Write decompressed data here
-		pStream.avail_out = static_cast< uInt >( pOutput.m_nBuffer ); // Tell ZLib it has this much space, it make this smaller to show how much space is left
+		pStream.next_in   = m_pBuffer;									// Decompress the memory here
+		pStream.avail_in  = static_cast< uInt >( m_nLength );			// There is this much of it
+		pStream.next_out  = pOutput.m_pBuffer;							// Write decompressed data here
+		pStream.avail_out = static_cast< uInt >( pOutput.m_nBuffer );	// Tell ZLib it has this much space, it makes this smaller to show how much space is left
 
 		// Call ZLib inflate to decompress all the data, and see if it returns Z_STREAM_END
 		int nRes = inflate( &pStream, Z_FINISH );
