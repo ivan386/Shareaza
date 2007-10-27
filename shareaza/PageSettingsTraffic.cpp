@@ -294,6 +294,9 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Library.HighPriorityHashing, 1, 1, 100, _T(" MB/s"));
 	AddSetting( &Settings.Library.LowPriorityHashing, 1, 1, 100, _T(" MB/s"));
 	AddSetting( &Settings.Library.PreferAPETags, 1, 0, 1);
+	AddSetting( &Settings.Library.UseFolderGUID, 1, 0, 1);
+	AddSetting( &Settings.Library.MarkFileAsDownload, 1, 0, 1);
+	AddSetting( &Settings.Library.UseCustomFolders, 1, 0, 1);
 
 	AddSetting( &Settings.MediaPlayer.ShortPaths, 1, 0, 1 );
 

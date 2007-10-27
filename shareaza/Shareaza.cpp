@@ -2027,7 +2027,7 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 bool MarkFileAsDownload(const CString& sFilename)
 {
 	bool bSuccess = false;
-	if ( theApp.m_bNT )
+	if ( theApp.m_bNT && Settings.Library.MarkFileAsDownload )
 	{
 		// Temporary clear R/O attribute
 		BOOL bChanged = FALSE;
@@ -2057,7 +2057,7 @@ bool MarkFileAsDownload(const CString& sFilename)
 bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
 {
 	bool bSuccess = false;
-	if ( theApp.m_bNT )
+	if ( theApp.m_bNT && Settings.Library.UseFolderGUID )
 	{
 		HANDLE hFile = CreateFile( sFilename + _T(":Shareaza.GUID"),
 			GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
@@ -2082,7 +2082,7 @@ bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
 bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 {
 	bool bSuccess = false;
-	if ( theApp.m_bNT )
+	if ( theApp.m_bNT && Settings.Library.UseFolderGUID )
 	{
 		// Temporary clear R/O attribute
 		BOOL bChanged = FALSE;

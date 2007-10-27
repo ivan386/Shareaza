@@ -117,6 +117,9 @@ public:
 		int			LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search
 		BOOL		PreferAPETags;				// Read APE tags first and only then ID3 tags from audio files
+		BOOL		UseFolderGUID;				// Save/Load folder GUID using NTFS stream
+		BOOL		MarkFileAsDownload;			// Mark downloaded file using NTFS stream as Internet Explorer
+		BOOL		UseCustomFolders;			// Use desktop.ini
 	} Library;
 
 	struct sSearch

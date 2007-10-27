@@ -110,6 +110,9 @@ void CSettings::Setup()
 	Add( _T("Library.LowPriorityHashing"), &Library.LowPriorityHashing, 2 );
 	Add( _T("Library.MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, 1024 );
 	Add( _T("Library.PreferAPETags"), &Library.PreferAPETags, 1 );
+	Add( _T("Library.UseFolderGUID"), &Library.UseFolderGUID, 1 );
+	Add( _T("Library.MarkFileAsDownload"), &Library.MarkFileAsDownload, 1 );
+	Add( _T("Library.UseCustomFolders"), &Library.UseCustomFolders, 1 );
 
 	Add( _T("Search.LastSchemaURI"), &Search.LastSchemaURI, _T("") );
 	Add( _T("Search.BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );
