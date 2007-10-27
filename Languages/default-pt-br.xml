@@ -13,7 +13,7 @@
 	description="Tradução para o português do Brasil do Shareaza"
 	link="http://www.shareaza.com/"
 	email="contact@shareaza.com"
-	version="2.2.5.2"
+	version="2.2.5.6"
 	type="Language"
 	language="pt-br"
 	prompt="Clique aqui para traduzir o Shareaza para o português do Brasil."
@@ -66,17 +66,17 @@
 		<button id="ID_WINDOW_TILE_HORZ"/>
 		<button id="ID_WINDOW_TILE_VERT"/>
 		<separator/>
-		<button id="ID_NETWORK_SEARCH" text="Nova Pesquisa"/>
+		<button id="ID_NETWORK_SEARCH" text="Nova Busca"/>
 	</toolbar>
 	<!-- SEARCH WINDOW -->
 	<toolbar name="CSearchWnd.Panel.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
 		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Mostrar Pesquisa"/>
+		<button id="ID_SEARCH_PANEL" text="Mostrar Busca"/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
-		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
+		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com elas"/>
 		<control id="IDC_FILTER_BOX" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -84,10 +84,10 @@
 		<button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
 		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Mostrar Pesquisa"/>
+		<button id="ID_SEARCH_PANEL" text="Mostrar Busca"/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
-		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
+		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com elas"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -98,10 +98,10 @@
 		<button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
 		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Mostrar Pesquisa"/>
+		<button id="ID_SEARCH_PANEL" text="Mostrar Busca"/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
-		<label text="Filtro:" tip="Digite algumas palavras para filtras os resultados com"/>
+		<label text="Filtro:" tip="Digite algumas palavras para filtras os resultados com elas"/>
 		<control id="IDC_FILTER_BOX" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -120,7 +120,7 @@
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
-		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
+		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com elas"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -133,7 +133,7 @@
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
-		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
+		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com elas"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -151,7 +151,7 @@
 		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar Monitor"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Adicionar Download/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Completados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar os Terminados"/>
 	</toolbar>
 	<toolbar name="CDownloadsWnd">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir ou Tocar"/>
@@ -167,7 +167,7 @@
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Info do Torrent"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Adicionar Download/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Completados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar os Terminados"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filtrar"/>
 	</toolbar>
@@ -176,7 +176,7 @@
 		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<button id="ID_UPLOADS_CHAT" text="Conversar com Usuário"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Completados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar os Terminados"/>
 	</toolbar>
 	<toolbar name="CUploadsWnd">
 		<button id="ID_UPLOADS_LAUNCH" text="Abrir ou Tocar"/>
@@ -188,7 +188,7 @@
 		<button id="ID_UPLOADS_CHAT" text="Conversar com Usuário"/>
 		<button id="ID_SECURITY_BAN" text="Banir Usuário"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Completados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar os Terminados"/>
 		<separator/>
 		<button id="ID_UPLOADS_FILTER_MENU" text="Filtrar"/>
 	</toolbar>
@@ -366,7 +366,7 @@
 		<button id="ID_HITMONITOR_PAUSE" text="Pausar"/>
 		<button id="ID_HITMONITOR_CLEAR" text="Limpar"/>
 		<rightAlign/>
-		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com"/>
+		<label text="Filtro:" tip="Digite algumas palavras para filtrar os resultados com elas"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -549,6 +549,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar Arquivos..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Baixar Arquivo/Torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="Importar downloads parciais do eMule..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="Abrir a minha pasta de Downloads terminados"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Escolher uma Skin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Escolher um Idioma..."/>
@@ -589,7 +590,7 @@
 			<item id="ID_HELP_ABOUT" text="Sobre o Shareaza..."/>
 		</menu>
 	</menu>
-	<menu name="CMainWnd.Windowed" type="barra">
+	<menu name="CMainWnd.Windowed" type="bar">
 		<menu text="Rede">
 			<item id="ID_NETWORK_SEARCH" text="Nova Pesquisa..." shortcut="Ctrl+S"/>
 			<separator/>
@@ -633,6 +634,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar Arquivos..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Baixar Arquivo/Torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="Importar download parciais do eMule..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="Abrir minha pasta de Downloads terminados"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Escolher uma Skin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Escolher um Idioma..."/>
@@ -1359,6 +1361,8 @@
 		<item id="ID_SYSTEM_VERBOSE" text="Modo Verboso"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Horário"/>
 		<separator/>
+		<item id="ID_SYSTEM_COPY" text="Copiar" shortcut="Ctrl+C"/>
+		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="Limpar Buffer"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
@@ -1501,13 +1505,21 @@
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">S E J A &#160; C O N E C T A D O</heading>
 			<newline gap="8" indent="42"/>
-			<text>Bem-vindo ao Shareaza! &#160;Você não está conectado no momento a qualquer rede P2P. &#160;</text>
+			<text>Bem-vindo ao Shareaza! 
+			<newline gap="8" indent="42"/>
+			<text>Você não está conectado atualmente a quaisquer redes peer to peer. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Clique aqui para começar!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">P E S Q U I S A R &#160; N O &#160; S H A R E A Z A</heading>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">I N I C I A R &#160; D O W N L O A D</heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Clique aqui para iniciar</link>
+			<text align="middle">&#160; baixar um novo arquivo ou torrent.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
+			<heading align="middle">P R O C U R A R &#160; P O R &#160; U M &#160; A R Q U I V O</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
@@ -1572,13 +1584,6 @@
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Ajuda Rápida</link>
 		<text align="middle">&#160;- Obtenha um pouco de ajuda básica sobre como usar o Shareaza</text>
 		<newline gap="18" indent="0"/>
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">M E U S &#160; D O W N L O A D S</heading>
-		<newline gap="8" indent="42"/>
-		<text>Para abrir a pasta com os seus downloads </text>
-		<link target="raza:shell:downloads">clique aqui</link>
-		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">O &#160; A C E S S O &#160; R E M O T O &#160; E S T Á &#160; A T I V A D O</heading>
@@ -1621,8 +1626,10 @@
 			<text id="LibraryFiles" format="b">%lu </text>
 			<text>arquivos, </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Ir para a Minha Biblioteca</link>
+			<newline gap="4"/>
+			<link format="bu" target="raza:shell:downloads">Abrir a minha pasta de Downloads</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>O Shareaza está scaneando e processando </text>
@@ -2222,6 +2229,7 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Visitar o site Shareaza.com."/>
 	<tip id="ID_HELP_SECURITY" message="Ajuda para proteger o seu sistema de programas hostis"/>
 	<tip id="ID_HELP_UPDATE" message="Checar por novidades e atualizações."/>
+	<tip id="ID_HELP_TEST" message="Execute o teste de conexão."/>
 	<tip id="ID_HELP_WEB_1" message="Visite este site"/>
 	<tip id="ID_HELP_WEB_2" message="Visite este site"/>
 	<tip id="ID_HELP_WEB_3" message="Visite este site"/>
@@ -3423,7 +3431,7 @@
 		<control caption="Procurar em servidores remotos conhecidos no cache do servidor:"/>
 		<control caption="Parar de procurar após:"/>
 		<control/><control/>
-		<control caption="resultados de busca."/>
+		<control caption="resultados da busca."/>
 		<control caption="Receber e atualizar a lista de servidores através do servidor conectado"/>
 		<control caption="Conexões com os Links do Clientes:"/>
 		<control caption="Conectar a não mais do que:"/>
@@ -3445,7 +3453,7 @@
 		<control/><control/><control/>
 		<control caption="&#160;Preferir fontes torrent"/>
 		<control caption="EndGame:"/>
-		<control caption="Acionar modo EndGame quando estiver terminando de baixar os torrents"/>
+		<control caption="Ativar modo EndGame quando estiver terminando de baixar os torrents"/>
 		<control caption="Guardar Torrents aqui:"/>
 		<control/><control/>
 		<control caption="Criador de Torrents"/>
