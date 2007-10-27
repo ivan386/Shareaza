@@ -1555,7 +1555,7 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 		{
 			UINT nID = LookupCommandID( pXML );
 			if ( nID == 0 ) continue;
-			
+
 			CString strFile = strPath;
 			strFile += pXML->GetAttributeValue( _T("res") );
 			strFile += pXML->GetAttributeValue( _T("path") );
@@ -1575,11 +1575,12 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 			else
 			{
 				HINSTANCE hInstance = NULL;
-				UINT nIconID = 0;
+				UINT nIconID = LookupCommandID( pXML, L"res" );
 				
-				if ( _stscanf( strFile.Left( nPos ), _T("%lu"), &hInstance ) != 1 ) return TRUE;
-				if ( _stscanf( strFile.Mid( nPos + 1 ), _T("%lu"), &nIconID ) != 1 ) return TRUE;
-				
+				if ( _stscanf( strFile.Left( nPos ), _T("%Iu"), &hInstance ) != 1 ) return TRUE;
+				// if ( _stscanf( strFile.Mid( nPos + 1 ), _T("%lu"), &nIconID ) != 1 ) continue;
+
+
 				hIcon = (HICON)LoadImage( hInstance, MAKEINTRESOURCE(nIconID), IMAGE_ICON, 16, 16, 0 );
 				if ( hIcon != NULL )
 				{
