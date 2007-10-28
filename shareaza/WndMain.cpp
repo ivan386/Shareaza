@@ -127,6 +127,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_MESSAGE(WM_OPENCHAT, OnOpenChat)
 	ON_MESSAGE(WM_OPENSEARCH, OnOpenSearch)
 	ON_MESSAGE(WM_TRAY, OnTray)
+	ON_MESSAGE(WM_SETALPHA, OnChangeAlpha)
 	ON_MESSAGE(WM_LOG, OnLog)
 	ON_MESSAGE(WM_SKINCHANGED, OnSkinChanged)
 	ON_MESSAGE(WM_AFX_SETMESSAGESTRING, OnSetMessageString)
@@ -262,7 +263,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_MEDIA_ADD_FOLDER, OnMediaCommand)
 	ON_COMMAND(ID_HELP, OnHelpFaq)
 	ON_COMMAND(ID_HELP_TEST, OnHelpConnectiontest)
-END_MESSAGE_MAP()
+	END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -277,6 +278,7 @@ CMainWnd::CMainWnd()
 	m_pURLDialog	= NULL;
 	m_tURLTime		= 0;
 	m_bNoNetWarningShowed = FALSE;
+	m_nAlpha		= 255;
 
 	LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS );
 
@@ -313,6 +315,8 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 
 int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
+	lpCreateStruct->dwExStyle |= WS_EX_LAYERED;
+
 	if ( theApp.m_bRTL )
 	{
 		lpCreateStruct->dwExStyle |= WS_EX_LAYOUTRTL;
@@ -320,7 +324,12 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	if ( CMDIFrameWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
+	if ( theApp.m_pfnSetLayeredWindowAttributes != NULL )
+	{
+		theApp.m_pfnSetLayeredWindowAttributes( GetSafeHwnd(), 0, 255, LWA_ALPHA );
+	}
+
 	// Icon
 	
 	SetIcon( AfxGetApp()->LoadIcon( IDI_SMALL ), FALSE );
@@ -902,6 +911,41 @@ LRESULT CMainWnd::OnTray(WPARAM /*wParam*/, LPARAM lParam)
 void CMainWnd::OnTrayOpen() 
 {
 	OpenFromTray();
+}
+
+LRESULT CMainWnd::OnChangeAlpha(WPARAM wParam, LPARAM /*lParam*/)
+{
+	if ( theApp.m_pfnSetLayeredWindowAttributes == NULL ) return -1;
+
+	if ( wParam == 1 ) // Increase transparency
+	{
+		m_nAlpha += 5;
+		m_nAlpha = min( 255ul, m_nAlpha );
+	}
+	else if ( m_nAlpha > 0 )
+	{
+		m_nAlpha -= 5;
+		m_nAlpha = max( 0ul, m_nAlpha );
+	}
+
+	ModifyStyleEx( 0, WS_EX_LAYERED );
+	theApp.m_pfnSetLayeredWindowAttributes( GetSafeHwnd(), 0, (BYTE)m_nAlpha, LWA_ALPHA );
+
+	CWnd* pWndPopup = (CWnd*)GetWindow( GW_ENABLEDPOPUP );
+	if ( pWndPopup == NULL ) return 0;
+
+	if ( m_nAlpha == 0 )
+	{
+		pWndPopup->ModifyStyleEx( WS_EX_LAYERED, 0 );
+		pWndPopup->RedrawWindow( NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_FRAME | RDW_ALLCHILDREN );
+	}
+	else
+	{
+		pWndPopup->ModifyStyleEx( 0, WS_EX_LAYERED );
+		theApp.m_pfnSetLayeredWindowAttributes( pWndPopup->GetSafeHwnd(), 0, (BYTE)m_nAlpha, LWA_ALPHA );
+	}
+
+	return 0;
 }
 
 void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam) 

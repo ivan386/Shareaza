@@ -65,6 +65,7 @@ public:
 	CSkinWindow*		m_pSkin;
 	CURLActionDlg*		m_pURLDialog;
 	DWORD				m_tURLTime;
+	DWORD				m_nAlpha;
 
 private:
 	BOOL				m_bNoNetWarningShowed;
@@ -115,6 +116,7 @@ protected:
 	afx_msg LRESULT OnOpenChat(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnOpenSearch(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnTray(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnChangeAlpha(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnLog(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnSkinChanged(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnSetMessageString(WPARAM wParam, LPARAM lParam);

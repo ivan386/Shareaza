@@ -359,6 +359,7 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 #define WM_LIBRARYSEARCH (WM_USER+110)
 #define WM_PLAYFILE		(WM_USER+111)
 #define WM_ENQUEUEFILE	(WM_USER+112)
+#define WM_SETALPHA		(WM_USER+113)
 
 #define WM_AFX_SETMESSAGESTRING 0x0362
 #define WM_AFX_POPMESSAGESTRING 0x0375

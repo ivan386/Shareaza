@@ -871,8 +871,8 @@ void CShareazaApp::InitResources()
 
 	srand( GetTickCount() );
 
-	m_hHookKbd   = SetWindowsHookEx( WH_KEYBOARD, KbdHook, NULL, AfxGetThread()->m_nThreadID );
-	m_hHookMouse = SetWindowsHookEx( WH_MOUSE, MouseHook, NULL, AfxGetThread()->m_nThreadID );
+	m_hHookKbd   = SetWindowsHookEx( WH_KEYBOARD, (HOOKPROC)KbdHook, NULL, AfxGetThread()->m_nThreadID );
+	m_hHookMouse = SetWindowsHookEx( WH_MOUSE, (HOOKPROC)MouseHook, NULL, AfxGetThread()->m_nThreadID );
 	m_dwLastInput = (DWORD)time( NULL );
 }
 
@@ -1829,7 +1829,19 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam)
 {
 	if ( nCode == HC_ACTION )
+	{
 		theApp.m_dwLastInput = (DWORD)time( NULL );
+
+		BOOL bAlt = (WORD)( lParam >> 16 ) & KF_ALTDOWN;
+		// BOOL bCtrl = GetAsyncKeyState( VK_CONTROL ) & 0x80000000;
+		if ( bAlt )
+		{
+			if ( wParam == VK_DOWN )
+				SendMessage( AfxGetMainWnd()->GetSafeHwnd(), WM_SETALPHA, (WPARAM)0, 0 );
+			if ( wParam == VK_UP )
+				SendMessage( AfxGetMainWnd()->GetSafeHwnd(), WM_SETALPHA, (WPARAM)1, 0 );
+		}
+	}
 
 	return ::CallNextHookEx( theApp.m_hHookKbd, nCode, wParam, lParam );
 }
