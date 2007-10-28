@@ -1441,6 +1441,13 @@ QWORD CSettings::ParseVolume(CString& strVolume, int nReturnUnits) const
 	// Return early if there is no number in the string
 	if ( _stscanf( strSize, _T("%lf"), &val ) != 1 ) return 0ul;
 
+	if ( _tcsstr( strSize, _T("B") ) )
+		// Convert to bits if Bytes were passed in
+		val *= 8.0f;
+	else if ( !_tcsstr( strSize, _T("b") ) )
+		// If bits or Bytes are not indicated return 0
+		return 0ul;
+
 	// Work out what units are represented in the string
 	if ( _tcsstr( strSize, _T("K") ) || _tcsstr( strSize, _T("k") ) )		// Kilo
 		val *= 1024.0f;
@@ -1455,13 +1462,10 @@ QWORD CSettings::ParseVolume(CString& strVolume, int nReturnUnits) const
 	else if ( _tcsstr( strSize, _T("E") ) || _tcsstr( strSize, _T("e") ) )	// Exa
 		val *= pow( 1024.0f, 6 );
 
-	// Convert to bits
-	if ( _tcschr( strSize, 'B' ) )
-		val *= 8.0f;
-
 	// Convert to required Units
 	val /= nReturnUnits;
 
+	// Convert double to DWORD and return
 	return static_cast< QWORD >( val );
 }
 
