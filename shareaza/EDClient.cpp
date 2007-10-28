@@ -1096,12 +1096,12 @@ void CEDClient::DeriveSoftwareVersion()
 					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) );
 				break;
 			case 4:		// Shareaza alpha/beta/mod/fork versions
-				if ( m_bEmAICH || m_bEmSecureID )
+				if ( m_bEmAICH )
 				{
 					if ( m_sUserAgent.IsEmpty() ) 
-						m_sUserAgent.Format( _T("eMule mod (4) %i.%i%c"), 
-							( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-							( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+						m_sUserAgent.Format( _T("eMule mod (4) %i.%i.%i.%i"),	// Their version is always 2.1.1.0 or 2.2.1.0
+							( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
+							( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 					break;
 				}
 
@@ -1134,12 +1134,12 @@ void CEDClient::DeriveSoftwareVersion()
 					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 				break;
 			case 40:		// Shareaza
-				if ( m_bEmAICH || m_bEmSecureID )
+				if ( m_bEmAICH )
 				{
 					if ( m_sUserAgent.IsEmpty() ) 
-						m_sUserAgent.Format( _T("eMule mod (40) %i.%i%c"), 
-							( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-							( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+						m_sUserAgent.Format( _T("eMule mod (40) %i.%i.%i.%i"), 
+							( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
+							( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 					break;
 				}
 
@@ -1204,7 +1204,7 @@ void CEDClient::DeriveVersion()
 				m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 				break;
 			case 4:		// Shareaza alpha/beta/mod/fork versions
-				if ( m_bEmAICH || m_bEmSecureID )
+				if ( m_bEmAICH )
 				{
 					if ( m_sUserAgent.IsEmpty() )
 						m_sUserAgent.Format( _T("eMule mod (4) v%i"), m_nEmVersion );
@@ -1223,7 +1223,7 @@ void CEDClient::DeriveVersion()
 				m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 				break;
 			case 40:		// Shareaza
-				if ( m_bEmAICH || m_bEmSecureID )
+				if ( m_bEmAICH )
 				{
 					if ( m_sUserAgent.IsEmpty() )
 						m_sUserAgent.Format( _T("eMule mod (40) v%i"), m_nEmVersion );
