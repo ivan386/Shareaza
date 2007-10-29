@@ -1,0 +1,45 @@
+HKCR
+{
+	ForceRemove #PROJECT#.#PROJECT#.1 = s '#PROJECTNAME#'
+	{
+		CLSID = s '{#GUID#}'
+	}
+	ForceRemove #PROJECT#.#PROJECT# = s '#PROJECTNAME#'
+	{
+		CLSID = s '{#GUID#}'
+		CurVer = s '#PROJECT#.#PROJECT#.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {#GUID#} = s '#PROJECTNAME#'
+		{
+			ProgID = s '#PROJECT#.#PROJECT#.1'
+			VersionIndependentProgID = s '#PROJECT#.#PROJECT#'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{#GUIDLIB#}'
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove LibraryBuilder
+					{
+						ForceRemove val '.tmp' = s '{#GUID#}'
+					}
+				}
+			}
+		}
+	}
+}
