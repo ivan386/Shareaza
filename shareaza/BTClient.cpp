@@ -416,8 +416,8 @@ BOOL CBTClient::OnHandshake1()
 			return FALSE;
 		}
 		// The file isn't verified yet, close the connection
-		else if ( m_pDownload->IsMoving() || 
-				  ( m_pDownload->IsCompleted() && m_pDownload->m_bVerify != TS_TRUE ) )
+		else if ( m_pDownload->m_bVerify != TS_TRUE
+			&& ( m_pDownload->IsMoving() ||  m_pDownload->IsCompleted() ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
 			Close();
