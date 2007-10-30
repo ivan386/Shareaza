@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="GFLLibraryBuilder"
-	ProjectGUID="{5D001F1C-729C-48EA-B4BF-F98B95AE2A47}">
+	ProjectGUID="{5D001F1C-729C-48EA-B4BF-F98B95AE2A47}"
+	RootNamespace="GFLLibraryBuilder">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -38,7 +39,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="FALSE"
+				RegisterOutput="TRUE"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -55,13 +56,12 @@
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
 				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				Description="Registering $(TargetFileName)"
-				CommandLine="cd &quot;$(SolutionDir)$(ConfigurationName)\&quot; &amp;&amp; regsvr32 /s /c &quot;plugins\$(TargetFileName)&quot;"/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll"
-				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\plugins\&quot; /y &gt; nul"/>
+				Description="Copying libgfl267.dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
+copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -112,7 +112,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="FALSE"
+				RegisterOutput="TRUE"
 				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
@@ -135,13 +135,12 @@
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
 				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				Description="Registering $(TargetFileName)"
-				CommandLine="cd &quot;$(SolutionDir)$(ConfigurationName)\&quot; &amp;&amp; regsvr32 /s /c &quot;plugins\$(TargetFileName)&quot;"/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll"
-				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\plugins\&quot; /y &gt; nul"/>
+				Description="Copying libgfl267.dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
+copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool

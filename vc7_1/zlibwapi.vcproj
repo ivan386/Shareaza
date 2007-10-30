@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="zlibwapi"
-	ProjectGUID="{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}">
+	ProjectGUID="{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}"
+	RootNamespace="zlibwapi">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -30,7 +31,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName).dll"
+				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				ModuleDefinitionFile="../shareaza/zlib/zlib.def"
@@ -39,7 +40,9 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Copying $(TargetFileName)..."
+				CommandLine="xcopy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)$(ConfigurationName)&quot; /y /q"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -63,7 +66,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="1"
+			UseOfMFC="0"
 			CharacterSet="0"
 			ManagedExtensions="FALSE"
 			WholeProgramOptimization="TRUE">
@@ -77,6 +80,7 @@
 				OmitFramePointers="TRUE"
 				OptimizeForProcessor="2"
 				PreprocessorDefinitions="WIN32;NDEBUG;WIN32;ZLIB_WINAPI;ASMV;ASMINF"
+				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
 				ProgramDataBaseFileName="$(IntDir)/"
@@ -85,16 +89,20 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName).dll"
+				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				ModuleDefinitionFile="../shareaza/zlib/zlib.def"
 				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
 				ImportLibrary="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName).lib"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Copying $(TargetFileName)..."
+				CommandLine="xcopy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)$(ConfigurationName)&quot; /y /q"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool

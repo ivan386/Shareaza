@@ -1,4 +1,13 @@
-#define version GetFileVersion("..\builds\TorrentWizard.exe")
+
+; Select file source root
+#ifexist "..\..\vc7_1\release\Shareaza.exe"
+  #define root "vc7_1\release"
+  #define version GetFileVersion("..\..\vc7_1\release\TorrentWizard.exe")
+#endif
+#ifexist "..\..\vc8_0\release\Shareaza.exe"
+  #define root "vc8_0\release"
+  #define version GetFileVersion("..\..\vc8_0\release\TorrentWizard.exe")
+#endif
 
 [Setup]
 AppName=TorrentAid
@@ -42,7 +51,7 @@ AppUpdatesURL=http://shareaza.sourceforge.net/TorrentAid/?id=download
 Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
 
 ; Main file
-Source: "setup\builds\TorrentWizard.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "{#root}\TorrentWizard.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Uninstall icon for software panel
 Source: "torrentaid\Res\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion sortfilesbyextension

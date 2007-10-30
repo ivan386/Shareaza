@@ -5,7 +5,15 @@
   #error PreProcessor version 5.1.2 or higher is needed for this script
 #endif
 
-#define version GetFileVersion("..\builds\Shareaza.exe")
+; Select file source root
+#ifexist "..\..\vc7_1\release\Shareaza.exe"
+  #define root "vc7_1\release"
+  #define version GetFileVersion("..\..\vc7_1\release\Shareaza.exe")
+#endif
+#ifexist "..\..\vc8_0\release\Shareaza.exe"
+  #define root "vc8_0\release"
+  #define version GetFileVersion("..\..\vc8_0\release\Shareaza.exe")
+#endif
 
 [Setup]
 AppName=Shareaza

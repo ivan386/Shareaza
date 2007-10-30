@@ -1,5 +1,5 @@
 ; Comment the next line if you don't compile an alpha build
-#define alpha
+;#define alpha
 
 ; Uncomment the next line to compile a debug build without any files.
 ;#define debug
@@ -17,7 +17,15 @@
   #define name "Shareaza"
 #endif
 
-#define version GetFileVersion("..\builds\Shareaza.exe")
+; Select file source root
+#ifexist "..\..\vc7_1\release\Shareaza.exe"
+  #define root "vc7_1\release"
+  #define version GetFileVersion("..\..\vc7_1\release\Shareaza.exe")
+#endif
+#ifexist "..\..\vc8_0\release\Shareaza.exe"
+  #define root "vc8_0\release"
+  #define version GetFileVersion("..\..\vc8_0\release\Shareaza.exe")
+#endif
 
 [Setup]
 AppComments=Shareaza Ultimate File Sharing
@@ -34,8 +42,8 @@ AllowNoIcons=yes
 OutputDir=setup\builds
 OutputBaseFilename=Shareaza_{#version}
 SolidCompression=yes
-Compression=lzma/max
-InternalCompressLevel=max
+Compression=lzma/ultra
+InternalCompressLevel=ultra
 VersionInfoCompany=Shareaza Development Team
 VersionInfoDescription=Shareaza Ultimate File Sharing
 PrivilegesRequired=poweruser
@@ -81,15 +89,14 @@ Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache
 Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension sharedfile uninsnosharedfileprompt; MinVersion: 4.0,0
 
 ; Main files
-Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "setup\plugins\libgfl267.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "setup\plugins\libgfl267.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "setup\builds\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#endif
-Source: "setup\builds\skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "setup\builds\Shareaza.pdb"; DestDir: "{app}"; Flags: skipifsourcedoesntexist overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#ifndef debug
+Source: "{#root}\plugins\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
+Source: "{#root}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\plugins\libgfl267.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
+Source: "{#root}\libgfl267.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\sqlite3.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\Shareaza.pdb"; DestDir: "{app}"; Flags: skipifsourcedoesntexist overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Set up data dir in {app}
@@ -105,7 +112,7 @@ Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion o
 
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl*.dll"
+Source: "{#root}\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl*.dll,zlibwapi.dll"
 Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Uninstall icon for software panel

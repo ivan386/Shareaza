@@ -2,7 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="GFLImageServices">
+	Name="GFLImageServices"
+	RootNamespace="GFLImageServices">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -57,8 +58,9 @@
 				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll"
-				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y &gt; nul"/>
+				Description="Copying libgfl267.dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
+copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -136,8 +138,9 @@
 				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll"
-				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y &gt; nul"/>
+				Description="Copying libgfl267.dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
+copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool

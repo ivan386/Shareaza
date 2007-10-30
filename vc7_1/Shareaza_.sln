@@ -41,10 +41,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shareaza", "Shareaza.vcproj
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CopyFiles", "CopyFiles.vcproj", "{13C7CBBC-B681-4D81-8878-E2EA1F47022D}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "skin-installer", "skin-installer.vcproj", "{CAA6FCC8-27B1-42B9-B647-976E7BE79C70}"
 	ProjectSection(ProjectDependencies) = postProject
 		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5} = {39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}
@@ -58,10 +54,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RatDVDReader", "RatDVDReade
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GeoIP", "GeoIP.vcproj", "{13C7CBBC-B681-4D81-8878-E2EA1F47022D}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
 		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
 		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Debug.ActiveCfg = Debug|Win32
@@ -104,10 +109,6 @@ Global
 		{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}.Debug.Build.0 = Debug|Win32
 		{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}.Release.ActiveCfg = Release|Win32
 		{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}.Release.Build.0 = Release|Win32
-		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Debug.ActiveCfg = Debug|Win32
-		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Debug.Build.0 = Debug|Win32
-		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.ActiveCfg = Release|Win32
-		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.Build.0 = Release|Win32
 		{CAA6FCC8-27B1-42B9-B647-976E7BE79C70}.Debug.ActiveCfg = Debug|Win32
 		{CAA6FCC8-27B1-42B9-B647-976E7BE79C70}.Debug.Build.0 = Debug|Win32
 		{CAA6FCC8-27B1-42B9-B647-976E7BE79C70}.Release.ActiveCfg = Release|Win32
@@ -120,6 +121,10 @@ Global
 		{9FD49A08-2D98-4CF1-AEEB-0D42EA382331}.Debug.Build.0 = Debug|Win32
 		{9FD49A08-2D98-4CF1-AEEB-0D42EA382331}.Release.ActiveCfg = Release|Win32
 		{9FD49A08-2D98-4CF1-AEEB-0D42EA382331}.Release.Build.0 = Release|Win32
+		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Debug.ActiveCfg = Debug|Win32
+		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Debug.Build.0 = Debug|Win32
+		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.ActiveCfg = Release|Win32
+		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
