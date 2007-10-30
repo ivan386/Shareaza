@@ -247,9 +247,6 @@
 				RelativePath="..\plugins\ImageViewer\image.ico">
 			</File>
 			<File
-				RelativePath="..\plugins\ImageViewer\ImageViewer.opt">
-			</File>
-			<File
 				RelativePath="..\plugins\ImageViewer\ImageViewer.rc">
 			</File>
 			<File
@@ -262,6 +259,21 @@
 		<Filter
 			Name="Generated Files"
 			Filter="">
+			<File
+				RelativePath=".\debug\plugins\imageviewer\Shareaza_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath=".\release\plugins\imageviewer\Shareaza_i.c">
 				<FileConfiguration
@@ -277,21 +289,6 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\plugins\imageviewer\Shareaza_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
