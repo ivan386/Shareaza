@@ -1,7 +1,7 @@
 //
 // CtrlCoolMenuBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "CoolInterface.h"
 #include "CoolMenu.h"
 #include "CtrlCoolMenuBar.h"
@@ -271,7 +272,10 @@ void CCoolMenuBarCtrl::ShiftMenu(int nOffset)
 		if ( nIndex >= GetCount() ) nIndex = 0;
 	}
 
-	SendMessage( WM_CANCELMODE, 0, 0 );
+	if ( Settings.WINE.MenuFix )
+		PostMessage( WM_CANCELMODE, 0, 0 );
+	else
+		SendMessage( WM_CANCELMODE, 0, 0 );
 	m_pSelect = GetIndex( static_cast< int >( nIndex ) );
 	m_pHot = m_pDown = NULL;
 	PostMessage( WM_TIMER, 5 );
@@ -383,7 +387,10 @@ BOOL CCoolMenuBarCtrl::OnMenuMessage(MSG* pMsg)
 
 			if ( pHit && pHit != m_pDown )
 			{
-				SendMessage( WM_CANCELMODE, 0, 0 );
+				if ( Settings.WINE.MenuFix )
+					PostMessage( WM_CANCELMODE, 0, 0 );
+				else
+					SendMessage( WM_CANCELMODE, 0, 0 );
 				m_pHot	= pHit;
 				m_pDown	= NULL;
 				PostMessage( WM_TIMER, 4 );
@@ -412,7 +419,10 @@ BOOL CCoolMenuBarCtrl::OnMenuMessage(MSG* pMsg)
 			if ( pHit == NULL )
 			{
 				m_pHot = m_pDown = NULL;
-				SendMessage( WM_CANCELMODE, 0, 0 );
+				if ( Settings.WINE.MenuFix )
+					PostMessage( WM_CANCELMODE, 0, 0 );
+				else
+					SendMessage( WM_CANCELMODE, 0, 0 );
 				return TRUE;
 			}
 			else if ( pHit == m_pDown )

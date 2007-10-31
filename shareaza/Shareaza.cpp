@@ -287,7 +287,7 @@ BOOL CShareazaApp::InitInstance()
 	// Beta expiry. Remember to re-compile to update the time, and remove this 
 	// section for final releases and public betas.
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
-	COleDateTimeSpan tTimeOut( 31, 0, 0, 0);
+	COleDateTimeSpan tTimeOut( 31 * 2, 0, 0, 0);
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		CString strMessage;

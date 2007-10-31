@@ -528,6 +528,11 @@ public:
 		BOOL		EnableDIPPSupport;			// Handle GDNA host cache exchange
 	} Experimental;
 
+	struct sWINE
+	{
+		BOOL		MenuFix;
+	} WINE;
+
 // Attributes : Item List
 public:
 	class Item

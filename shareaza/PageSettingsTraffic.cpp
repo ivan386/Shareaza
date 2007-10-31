@@ -312,6 +312,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 
 	AddSetting( &Settings.Experimental.EnableDIPPSupport, 1, 0, 1 );
 
+	AddSetting( &Settings.WINE.MenuFix, 1, 0, 1 );
+
 	CLiveList::Sort( &m_wndList, 0 );
 	CLiveList::Sort( &m_wndList, 0 );
 
