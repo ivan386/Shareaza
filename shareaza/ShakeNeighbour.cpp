@@ -1881,17 +1881,19 @@ BOOL CShakeNeighbour::IsClientObsolete()
 		// Shareaza client
 
 		// Check for fakes / version hacks.
-		if (( _tcsistr( m_sUserAgent, _T("Shareaza 3.0"  ) ) ) ||	// Fakes
+		if (( _tcsistr( m_sUserAgent, _T("Shareaza 0."   ) ) ) ||	// Fakes
+			( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||	// There can be some 1.x versions of the real Shareaza but most are fakes
+			( _tcsistr( m_sUserAgent, _T("Shareaza 3.0"  ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 3.1"  ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 3.2"  ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 3.3"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("Shareaza 3.4"  ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 6."   ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 7."   ) ) ) )
 			return TRUE;
 
 		// Check for old version and betas
-		if (( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||	// Old versions
-			( _tcsistr( m_sUserAgent, _T("Shareaza 2.0"  ) ) ) ||
+		if (( _tcsistr( m_sUserAgent, _T("Shareaza 2.0"  ) ) ) ||	// Old versions
 			( _tcsistr( m_sUserAgent, _T("Shareaza 2.1"  ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 2.2.0") ) ) )
 			return TRUE;
@@ -1941,15 +1943,17 @@ BOOL CShakeNeighbour::IsClientBad()
 	if ( _tcsistr( m_sUserAgent, _T("adagio") ) )		return FALSE;
 	
 	if ( _tcsistr( m_sUserAgent, _T("trustyfiles") ) )	return FALSE;
-	
+
 	// Really obsolete versions of Shareaza should be blocked. (they may have bad settings)
 	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )	
 	{
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 0.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 1.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.0") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.1") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.2") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.3") ) )	return TRUE;
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.4") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 6.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 7.") ) )	return TRUE;
 		// Current versions okay
