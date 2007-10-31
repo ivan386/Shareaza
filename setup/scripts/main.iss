@@ -1,5 +1,5 @@
 ; Comment the next line if you don't compile an alpha build
-;#define alpha
+#define alpha
 
 ; Uncomment the next line to compile a debug build without any files.
 ;#define debug
@@ -42,8 +42,8 @@ AllowNoIcons=yes
 OutputDir=setup\builds
 OutputBaseFilename=Shareaza_{#version}
 SolidCompression=yes
-Compression=lzma/ultra
-InternalCompressLevel=ultra
+Compression=lzma/max
+InternalCompressLevel=max
 VersionInfoCompany=Shareaza Development Team
 VersionInfoDescription=Shareaza Ultimate File Sharing
 PrivilegesRequired=poweruser
@@ -89,8 +89,8 @@ Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache
 Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension sharedfile uninsnosharedfileprompt; MinVersion: 4.0,0
 
 ; Main files
-Source: "{#root}\plugins\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "{#root}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
+Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\plugins\libgfl267.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 Source: "{#root}\libgfl267.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\sqlite3.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -113,6 +113,7 @@ Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion o
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
 Source: "{#root}\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl*.dll,zlibwapi.dll"
+Source: "setup\plugins\MediaPlayer.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Uninstall icon for software panel
@@ -360,6 +361,10 @@ Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Sharea
 Name: "{app}\Skins"; Flags: uninsalwaysuninstall; Permissions: users-modify
 
 [InstallDelete]
+; Very basic malware removal
+Type: files; Name: "{app}\Shareaza.exe"; Check: IsMalwareDetected
+Type: files; Name: "{app}\vc2.dll"
+
 ; Clean up old files from Shareaza
 Type: files; Name: "{app}\Shareaza.pdb"
 Type: files; Name: "{app}\zlib.dll"
@@ -481,6 +486,7 @@ const
 var
   CurrentPath: string;
   Installed: Boolean;
+  MalwareDetected: Boolean;
   FirewallFailed: string;
   HasUserPrivileges: Boolean;
 
@@ -640,17 +646,31 @@ begin
   end;
 end;
 
+Function MalwareCheck(MalwareFile: string): Boolean;
+Begin
+  Result := True;
+  if FileExists( MalwareFile ) then Begin
+    if MsgBox(ExpandConstant( '{cm:dialog_malwaredetected,' + MalwareFile + '}' ), mbConfirmation, MB_OKCANCEL) = IDOK then begin
+      Result := False;
+    End;
+    MalwareDetected := True;
+  End;
+End;
+
 Function InitializeSetup: Boolean;
 Begin
   Result := True;
   Installed := (RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc1, KeyName) or RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc2, KeyName)) and DoesPathExist();
+  MalwareDetected := False;
 
   // Malware check
-  if FileExists(ExpandConstant('{win}\vgraph.dll')) then Begin
-    if MsgBox(ExpandConstant('{cm:dialog_malwaredetected,{win}\vgraph.dll}'), mbConfirmation, MB_OKCANCEL) = IDOK then begin
-      Result := False;
-    End;
-  End;
+  Result := MalwareCheck( ExpandConstant('{win}\vgraph.dll') );
+  if Result then Begin Result := MalwareCheck( ExpandConstant('{pf}\Shareaza\vc2.dll') ); End;
+End;
+
+Function IsMalwareDetected: Boolean;
+Begin
+  Result := MalwareDetected;
 End;
 
 Function EnableDeleteOldSetup: Boolean;

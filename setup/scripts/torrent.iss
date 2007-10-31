@@ -1,10 +1,10 @@
 
 ; Select file source root
-#ifexist "..\..\vc7_1\release\Shareaza.exe"
+#ifexist "..\..\vc7_1\release\TorrentWizard.exe"
   #define root "vc7_1\release"
   #define version GetFileVersion("..\..\vc7_1\release\TorrentWizard.exe")
 #endif
-#ifexist "..\..\vc8_0\release\Shareaza.exe"
+#ifexist "..\..\vc8_0\release\TorrentWizard.exe"
   #define root "vc8_0\release"
   #define version GetFileVersion("..\..\vc8_0\release\TorrentWizard.exe")
 #endif
