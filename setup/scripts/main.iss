@@ -1,7 +1,7 @@
 ; Comment the next line if you don't compile an alpha build
 #define alpha
 
-; Uncomment the next line to compile a debug build without any files.
+; Uncomment the next line to compile the setup with the debug version of shareaza (It is no longer used to debug the setup).
 ;#define debug
 
 #if VER < 0x05010700
@@ -11,20 +11,29 @@
   #error PreProcessor version 5.1.2 or higher is needed for this script
 #endif
 
+#define date GetDateTimeString('yyyy/mm/dd', '-', '')
+
 #ifdef debug
   #define name "Shareaza debug build"
+  #define type "debug"
 #else
   #define name "Shareaza"
+  #define type "release"
 #endif
 
 ; Select file source root
-#ifexist "..\..\vc7_1\release\Shareaza.exe"
-  #define root "vc7_1\release"
-  #define version GetFileVersion("..\..\vc7_1\release\Shareaza.exe")
+#ifexist "..\..\vc7_1\" + type + "\Shareaza.exe"
+  #define root "vc7_1\" + type
+  #define version GetFileVersion("..\..\vc7_1\" + type + "\Shareaza.exe")
 #endif
-#ifexist "..\..\vc8_0\release\Shareaza.exe"
-  #define root "vc8_0\release"
-  #define version GetFileVersion("..\..\vc8_0\release\Shareaza.exe")
+
+#ifexist "..\..\vc8_0\" + type + "\Shareaza.exe"
+  #define root "vc8_0\" + type
+  #define version GetFileVersion("..\..\vc8_0\" + type + "\Shareaza.exe")
+#endif
+
+#ifndef root
+  #error You must compile Shareaza, skin-installer and all plugins before compile the setup
 #endif
 
 [Setup]
@@ -40,7 +49,11 @@ DirExistsWarning=no
 DefaultGroupName=Shareaza
 AllowNoIcons=yes
 OutputDir=setup\builds
+#ifndef debug
 OutputBaseFilename=Shareaza_{#version}
+#else
+OutputBaseFilename=Shareaza_Debug_{#date}
+#endif
 SolidCompression=yes
 Compression=lzma/max
 InternalCompressLevel=max
@@ -84,19 +97,30 @@ Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableD
 Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache}"; Flags: unchecked
 
 [Files]
-#ifndef debug
 ; Install unicows.dll on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension sharedfile uninsnosharedfileprompt; MinVersion: 4.0,0
+#ifdef debug
+Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
+#endif
 
 ; Main files
+#ifndef debug
 Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#else
+Source: "{#root}\plugins\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
+Source: "{#root}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#endif
 Source: "{#root}\plugins\libgfl267.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 Source: "{#root}\libgfl267.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\sqlite3.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\Shareaza.pdb"; DestDir: "{app}"; Flags: skipifsourcedoesntexist overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#ifdef debug
+Source: "{#root}\Shareaza\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\skin-installer\skin-installer.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\zlibwapi\zlibwapi.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#endif
 Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Set up data dir in {app}
@@ -180,7 +204,6 @@ Source: "{ini:{param:SETTINGS|},Locations,UserPath|{reg:HKCU\Software\Shareaza\S
 Source: "{ini:{param:SETTINGS|},Locations,UserPath|{reg:HKCU\Software\Shareaza\Shareaza,UserPath|{userappdata}\Shareaza}}\Data\Searches.dat"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: not multiuser
 Source: "{ini:{param:SETTINGS|},Locations,UserPath|{reg:HKCU\Software\Shareaza\Shareaza,UserPath|{userappdata}\Shareaza}}\Data\Schedule.dat"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: not multiuser
 Source: "{ini:{param:SETTINGS|},Locations,UserPath|{reg:HKCU\Software\Shareaza\Shareaza,UserPath|{userappdata}\Shareaza}}\Data\Profile.xml"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: not multiuser
-#endif
 
 ; Copy installer into download and uninstall dir
 #ifndef alpha
@@ -367,6 +390,8 @@ Type: files; Name: "{app}\vc2.dll"
 
 ; Clean up old files from Shareaza
 Type: files; Name: "{app}\Shareaza.pdb"
+Type: files; Name: "{app}\skin-installer.pdb"
+Type: files; Name: "{app}\zlibwapi.pdb"
 Type: files; Name: "{app}\zlib.dll"
 Type: files; Name: "{app}\zlib1.dll"
 Type: files; Name: "{app}\Plugins\zlib.dll"
