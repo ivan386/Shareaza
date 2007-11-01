@@ -4,6 +4,7 @@
 	Version="8,00"
 	Name="GFLImageServices"
 	ProjectGUID="{E99CA8F9-D6F6-440C-B6EF-47F02DFAD891}"
+	RootNamespace="GFLImageServices"
 	>
 	<Platforms>
 		<Platform
@@ -24,8 +25,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll"
-				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\&quot; /y &gt; nul"
+				Description="Copying libgfl267.dll.."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -130,8 +131,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll"
-				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y &gt; nul"
+				Description="Copying libgfl267.dll.."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -343,26 +344,6 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\debugwin32\plugins\gflimageservices\GFLImageServices_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\releasewin32\plugins\gflimageservices\GFLImageServices_i.c"
 				>
 				<FileConfiguration
@@ -383,6 +364,26 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debugwin32\plugins\gflimageservices\GFLImageServices_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>

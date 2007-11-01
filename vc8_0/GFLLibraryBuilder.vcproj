@@ -4,6 +4,7 @@
 	Version="8,00"
 	Name="GFLLibraryBuilder"
 	ProjectGUID="{5D001F1C-729C-48EA-B4BF-F98B95AE2A47}"
+	RootNamespace="GFLLibraryBuilder"
 	>
 	<Platforms>
 		<Platform
@@ -25,8 +26,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll"
-				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\&quot; /y &gt; nul"
+				Description="Copying libgfl267.dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -127,8 +128,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll"
-				CommandLine="copy ..\setup\plugins\libgfl267.dll &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\&quot; /y &gt; nul"
+				Description="Copying libgfl267.dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -340,6 +341,26 @@
 			Name="Generated Files"
 			>
 			<File
+				RelativePath=".\debugwin32\plugins\gfllibrarybuilder\GFLLibraryBuilder_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\releasewin32\plugins\gfllibrarybuilder\GFLLibraryBuilder_i.c"
 				>
 				<FileConfiguration
@@ -360,26 +381,6 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debugwin32\plugins\gfllibrarybuilder\GFLLibraryBuilder_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>

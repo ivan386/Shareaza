@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="8,00"
+	Name="GeoIP"
+	ProjectGUID="{DFAB04E0-9275-42FB-BCBB-2F153EB7D253}"
+	RootNamespace="GeoIP"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+		<Platform
+			Name="x64"
+		/>
+	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
+			ConfigurationType="10"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying Files..."
+				CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)&quot; &gt; nul&#x0D;&#x0A;"
+				Outputs="&quot;$(SolutionDir)$(ConfigurationName)\geoip.dll&quot;;&quot;$(SolutionDir)$(ConfigurationName)\GeoIP.dat&quot;"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy GeoIP..."
+				CommandLine="copy &quot;$(SolutionDir)\..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)\..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
+			ConfigurationType="10"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy GeoIP..."
+				CommandLine="copy &quot;$(SolutionDir)\..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)\..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug|x64"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
+			ConfigurationType="10"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying Files..."
+				CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)&quot; &gt; nul&#x0D;&#x0A;"
+				Outputs="&quot;$(SolutionDir)$(ConfigurationName)\geoip.dll&quot;;&quot;$(SolutionDir)$(ConfigurationName)\GeoIP.dat&quot;"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy GeoIP..."
+				CommandLine="copy &quot;$(SolutionDir)\..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)\..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|x64"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
+			ConfigurationType="10"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy GeoIP..."
+				CommandLine="copy &quot;$(SolutionDir)\..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)\..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

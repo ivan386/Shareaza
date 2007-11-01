@@ -4,6 +4,7 @@
 	Version="8,00"
 	Name="skin-installer"
 	ProjectGUID="{CAA6FCC8-27B1-42B9-B647-976E7BE79C70}"
+	RootNamespace="skin-installer"
 	>
 	<Platforms>
 		<Platform
@@ -67,7 +68,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="unicows.lib comctl32.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/shareaza/Skin.exe"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=""
@@ -100,8 +101,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying zlibwapi.dll..."
-				CommandLine="copy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\zlibwapi.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\shareaza&quot; &gt; nul"
+				Description="Installing $(TargetFileName)..."
+				CommandLine="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
@@ -156,7 +157,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/shareaza/Skin.exe"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=""
@@ -188,8 +189,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying zlibwapi.dll..."
-				CommandLine="copy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\zlibwapi.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\shareaza&quot; &gt; nul"
+				Description="Installing $(TargetFileName)..."
+				CommandLine="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
@@ -247,7 +248,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="unicows.lib comctl32.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/shareaza/Skin.exe"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=""
@@ -283,8 +284,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying zlibwapi.dll..."
-				CommandLine="copy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\zlibwapi.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\shareaza&quot; &gt; nul"
+				Description="Installing $(TargetFileName)..."
+				CommandLine="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
@@ -342,7 +343,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/shareaza/Skin.exe"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				IgnoreDefaultLibraryNames=""
@@ -372,8 +373,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying zlibwapi.dll..."
-				CommandLine="copy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\zlibwapi.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\shareaza&quot; &gt; nul"
+				Description="Installing $(TargetFileName)..."
+				CommandLine="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe&quot; /install"
 			/>
 		</Configuration>
 	</Configurations>

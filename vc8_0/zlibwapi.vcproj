@@ -4,6 +4,7 @@
 	Version="8,00"
 	Name="zlibwapi"
 	ProjectGUID="{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}"
+	RootNamespace="zlibwapi"
 	>
 	<Platforms>
 		<Platform
@@ -21,7 +22,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="1"
+			UseOfMFC="0"
 			UseOfATL="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
@@ -63,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName).dll"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ModuleDefinitionFile="../shareaza/zlib/zlib.def"
@@ -93,6 +94,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying $(TargetFileName)..."
+				CommandLine="xcopy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)&quot; /y /q"
 			/>
 		</Configuration>
 		<Configuration
@@ -100,7 +103,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="1"
+			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			>
 			<Tool
@@ -142,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName).dll"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ModuleDefinitionFile="../shareaza/zlib/zlib.def"
@@ -173,6 +176,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying $(TargetFileName)..."
+				CommandLine="xcopy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)&quot; /y /q"
 			/>
 		</Configuration>
 		<Configuration
@@ -180,7 +185,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="1"
+			UseOfMFC="0"
 			CharacterSet="0"
 			ManagedExtensions="0"
 			WholeProgramOptimization="1"
@@ -208,6 +213,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;WIN32;ZLIB_WINAPI,_CRT_SECURE_NO_DEPRECATE"
+				StringPooling="true"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
 				ProgramDataBaseFileName="$(IntDir)/"
@@ -225,12 +231,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName).dll"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ModuleDefinitionFile="../shareaza/zlib/zlib.def"
 				DelayLoadDLLs="$(NOINHERIT)"
 				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -255,6 +262,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying $(TargetFileName)..."
+				CommandLine="xcopy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)&quot; /y /q"
 			/>
 		</Configuration>
 		<Configuration
@@ -262,7 +271,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="1"
+			UseOfMFC="0"
 			CharacterSet="0"
 			ManagedExtensions="0"
 			WholeProgramOptimization="1"
@@ -291,6 +300,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;WIN32;ZLIB_WINAPI,_CRT_SECURE_NO_DEPRECATE"
+				MinimalRebuild="true"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
 				ProgramDataBaseFileName="$(IntDir)/"
@@ -308,12 +318,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName).dll"
+				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ModuleDefinitionFile="../shareaza/zlib/zlib.def"
 				DelayLoadDLLs="$(NOINHERIT)"
 				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -339,6 +350,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying $(TargetFileName)..."
+				CommandLine="xcopy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)&quot; /y /q"
 			/>
 		</Configuration>
 	</Configurations>
