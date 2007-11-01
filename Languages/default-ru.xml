@@ -11,7 +11,7 @@
 		author="dAbserver"
 		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
-		version="2.2.5.5"
+		version="2.3.0.0"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -338,7 +338,7 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Чат с юзером"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Установки"/>
@@ -352,7 +352,7 @@
 		<button id="ID_SECURITY_BAN" text="Блокировать хост"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Установки"/>
@@ -432,7 +432,7 @@
 			<separator/>
 			<menu text="Выберите _сеть">
 				<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -501,7 +501,7 @@
 			<separator/>
 			<menu text="Выбор _Сетей">
 				<item id="ID_NETWORK_G2" text="Подключиться к _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Подключиться к _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Подключиться к _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Подключиться к Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -548,6 +548,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="Разделять _файлы..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Внести загрузку/Torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Импорт частичных загрузок eMule..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Открыть папку с загузками"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
@@ -600,7 +601,7 @@
 			<separator/>
 			<menu text="_Выбор сетей">
 				<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey2000"/>
+				<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
 			</menu>
 			<separator/>
@@ -632,6 +633,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="Разделять _файлы..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Внести загрузку/Torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Импорт частичных загрузок eMule..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Открыть папку с загузками"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
@@ -1341,6 +1343,8 @@
 		<item id="ID_SYSTEM_VERBOSE" text="_Информативный режим"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="_Временной штамп"/>
 		<separator/>
+		<item id="ID_SYSTEM_COPY" text="_Копировать" shortcut="Ctrl+C"/>
+		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="_Очистить буфер"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
@@ -1366,7 +1370,7 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Разъединить"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
 		<menu text="_Монитор">
@@ -1483,13 +1487,21 @@
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">У С Т А Н О В И Т Е  &#160; С О Е Д И Н Е Н И Е</heading>
 			<newline gap="8" indent="42"/>
-			<text>Добро пожаловать в Shareaza! &#160;В настоящее время Вы не соединены ни с одной пиринговой сетью. &#160;</text>
+			<text>Добро пожаловать в Shareaza!</text>
+			<newline gap="8" indent="42"/>
+			<text>В настоящее время Вы не соединены ни с одной пиринговой сетью. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Щелкните здесь для старта!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">П О И С К  &#160; S H A R E A Z A</heading>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">Н А Ч И Н А Й Т Е &#160; З А Г Р У Ж А Т Ь</heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Щелкните здесь</link>
+			<text align="middle">, чтобы начать загрузку файла или торрента.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
+			<heading align="middle">П О И С К &#160; Ф А Й Л А</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
@@ -1548,15 +1560,6 @@
 			если вы ограничиваете трафик программами типа NetLimiter или DuSuperControler). </text>
 			<newline gap="18" indent="0"/>
 		</group>
-
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">М О И &#160; З А Г Р У З К И</heading>
-		<newline gap="8" indent="42"/>
-		<text>Чтобы открыть папку с Вашими загрузками, </text>
-		<link target="raza:shell:downloads">щелкните здесь</link>
-		<newline gap="18" indent="0"/>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">H A C T P O Й T E  &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
@@ -1627,8 +1630,10 @@
 			<text id="LibraryFiles" format="b">%lu</text>
 			<text>файла(ов), </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Перейти в хранилище</link>
+			<newline gap="4"/>
+			<link format="bu" target="raza:shell:downloads">Открыть папку с загрузками</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>Shareaza просматривает и обрабатывает </text>
@@ -1699,7 +1704,6 @@
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 выгрузка активна</link>
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i выгрузка(и) активна(ы)</link>
 			<newline gap="4"/>
-
 			<text id="UploadedNone">Вы ничего сегодня не выгружали.</text>
 			<text id="UploadedOne">Вы выгрузили 1 файл (%s).</text>
 			<text id="UploadedMany">Вы выгрузили %i файла(ов) (%s).</text>
@@ -1771,7 +1775,6 @@
 				<colours link="000080"/>
 			</style>
 		</styles>
-
 		<text format="b">Добро пожаловать в менеджер установок Shareaza</text>
 		<newline gap="16"/>
 		<text>
@@ -2053,10 +2056,10 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Пустой список eDonkey серверов</text>
 		<newline gap="8"/>
-		<text>В списке eDonkey2000 серверов нет ни одного сервера. Вам необходимо скачать
-		новый список серверов (файл met), чтобы Вы смогли подключиться к ED2K.</text>
+		<text>В списке eDonkey серверов нет ни одного сервера. Вам необходимо скачать
+		новый список серверов (файл met), чтобы Вы смогли подключиться к eDonkey.</text>
 		<newline gap="8"/>
-		<text>Вы можете скачать этот список со страницы опций edonkey2000 или с окна
+		<text>Вы можете скачать этот список со страницы опций eDonkey или с окна
 		служб ресурсов. (Нажмите F9, если хотите открыть это окно)</text>
 	</document>
 	<document name="GeneralHelp.UploadWarning">
@@ -2171,7 +2174,7 @@
 	<tip id="ID_DISCOVERY_GNUTELLA" message="Показывать bootstrap службы в окне Ресурсов Соединений."/>
 	<tip id="ID_DISCOVERY_QUERY" message="Запросить помеченную службу соединений ресурсов сейчас."/>
 	<tip id="ID_DISCOVERY_REMOVE" message="Удалить помеченную службу ресурсов соединений."/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="Показывать службы eDonkey2000 Server.met в окне Ресурсов Соединений."/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="Показывать службы eDonkey Server.met в окне Ресурсов Соединений."/>
 	<tip id="ID_DISCOVERY_WEBCACHE" message="Показывать GWebCache службы в окне Ресурсов Соединений."/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Отменить и удалить все загрузки из этой группы."/>
 	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Создать новую группу загрузок..."/>
@@ -2224,6 +2227,7 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Посетить сайт Shareaza.com."/>
 	<tip id="ID_HELP_SECURITY" message="Узнайте как защититься от вредителей в сетях."/>
 	<tip id="ID_HELP_UPDATE" message="Узнайте новости и об обновлениях."/>
+	<tip id="ID_HELP_TEST" message="Произвести тест соединения."/>
 	<tip id="ID_HELP_WEB_1" message="Посетить этот сайт"/>
 	<tip id="ID_HELP_WEB_2" message="Посетить этот сайт"/>
 	<tip id="ID_HELP_WEB_3" message="Посетить этот сайт"/>
@@ -2235,8 +2239,8 @@
 	<tip id="ID_HITMONITOR_SEARCH" message="Искать в сети указанную фразу."/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="Соединится с помеченным хостом(и)."/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="Отключиться от помеченного хоста(ов)."/>
-	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Показать eDonkey2000 серверы."/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Загрузить файл eDonkey2000 «server.met»..."/>
+	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Показать eDonkey серверы."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Загрузить файл eDonkey «server.met»..."/>
 	<tip id="ID_HOSTCACHE_G1_CACHE" message="Показать кэшированные хосты Gnutella1."/>
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="Показать кэшированные хосты Gnutella2."/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Показать верхние узлы Gnutella2."/>
@@ -2340,7 +2344,7 @@
 	<tip id="ID_NETWORK_CONNECT" message="Соединиться с выбранными сетями."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Вручную присоединиться к хосту..."/>
 	<tip id="ID_NETWORK_DISCONNECT" message="Отсоединиться от сетей. Это также остановит все загрузки и выгрузки."/>
-	<tip id="ID_NETWORK_ED2K" message="Соединиться с сетью eDonkey2000."/>
+	<tip id="ID_NETWORK_ED2K" message="Соединиться с сетью eDonkey."/>
 	<tip id="ID_NETWORK_EXIT" message="Выйти из Shareaza"/>
 	<tip id="ID_NETWORK_G1" message="Соединиться с оригинальной сетью Gnutella."/>
 	<tip id="ID_NETWORK_G2" message="Соединиться с сетью Gnutella2 (крайне рекомендуется)."/>
@@ -2451,6 +2455,11 @@
 	<tip id="ImageViewer_Refresh" message="Обновить картинку."/>
 	<tip id="ImageViewer_Close" message="Закрыть окно просмотра картинки."/>
 </commandTips>
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="В режиме максимума скорость будет не превышать указанного значения. В среднем режиме она будет колебаться в обе стороны от этого значения."/>
+	<tip id="IDC_SHARE_PARTIALS" message="Эта настройка не имеет никакого эффекта на уже загружаемые файлы, а также игнорируется, если у файла есть хеш eDonkey и он активен в сети eDonkey, или если это торрент.{n}Но эта настройка не игнорируется, если загрузка приостановлена.{n}{n}ВНИМАНИЕ: Пользуйтесь этой настройкой в крайнем случае, иначе Вас могут заблокировать."/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
@@ -2748,12 +2757,12 @@
 	<string id="16308" value="Хост загрузки %s послал незатребованные данные, закрываю соединение."/>
 	<string id="16309" value="Запрашиваю мета данные о «%s» у %s..."/>
 	<string id="16310" value="Получаю данные tiger-tree с %s (%s)..."/>
-	<string id="16311" value="Запрашиваю набор eDonkey2000 хеша для «%s» у %s..."/>
-	<string id="16312" value="Получен ошибочный набор eDonkey2000 хеша с %s, удаляю источник."/>
-	<string id="16313" value="Получен набор eDonkey2000 хеша с «%s», минимальная поддающяяся проверке часть - %s."/>
-	<string id="16314" value="Набор eDonkey2000 хеша с хоста загрузки испорчен или противоречивый, удаляю источник."/>
+	<string id="16311" value="Запрашиваю набор eDonkey хеша для «%s» у %s..."/>
+	<string id="16312" value="Получен ошибочный набор eDonkey хеша с %s, удаляю источник."/>
+	<string id="16313" value="Получен набор eDonkey хеша с «%s», минимальная поддающяяся проверке часть - %s."/>
+	<string id="16314" value="Набор eDonkey хеша с хоста загрузки испорчен или противоречивый, удаляю источник."/>
 	<string id="16315" value="Невозможно инициализировать распаковку загрузки «%s»."/>
-	<string id="16316" value="Вышло время для ожидания обновления очереди с eDonkey2000 хоста загрузки %s для файла «%s»."/>
+	<string id="16316" value="Вышло время для ожидания обновления очереди с eDonkey хоста загрузки %s для файла «%s»."/>
 	<string id="16317" value="Стою в очереди для получения «%s»."/>
 	<string id="16318" value="Недостаточно дискового пострансва для загрузки «%s» (%s)."/>
 	<string id="16319" value="Удаляю источник %s (%s) из-за пересылок испорченных частей «%s» (%I64i-%I64i)."/>
@@ -2799,7 +2808,7 @@
 	<string id="16359" value="Вышло время для отключившегося, стоячего в очереди хоста выгрузки %s, удаляю."/>
 	<string id="16360" value="Отказываю выгрузить «%s» на %s (%s), все соответствующие очереди переполнены."/>
 	<string id="16361" value="Отказываю выгрузить на %s (%s), сеть блокирована."/>
-	<string id="16362" value="eDonkey2000 загрузок отменять не рекомендуем.  Уверены, что хотите отменить эту загрузку?"/>
+	<string id="16362" value="eDonkey загрузок отменять не рекомендуем.  Уверены, что хотите отменить эту загрузку?"/>
 	<string id="16363" value="Выгрузки Torrent"/>
 	<string id="16364" value="Законченные выгрузки"/>
 	<string id="16365" value="Вы уверенны что хотите отменить каждую загрузку в этой группе?"/>
@@ -2912,7 +2921,7 @@
 	<string id="16811" value="Автоматический"/>
 	<string id="16812" value="Подождите: Обнаруживаются и настраиваются UPnP устройства..."/>
 	<string id="16813" value="Подождите: Обновляются ресурсы соединений..."/>
-	<string id="16814" value="Подождите: Обновляется список серверов eDonkey2000..."/>
+	<string id="16814" value="Подождите: Обновляется список серверов eDonkey..."/>
 	<string id="16815" value="Служба «UPnP Device Host Service» не запущена. Эта служба необходима для настройки.\nВам нужно установить тип загрузки этой службы на автоматический."/>
 	<string id="16816" value="В сети eDonkey используются длинные очереди, и в них приходится ждать долго. Если уменьшите величину, Вы начнете принимать соединения очень ограниченно и у Вас могут возникнуть проблемы с загрузкой.\nУверены, что хотите уменьшить число очередей?"/>
 	<string id="16817" value="Windows не поддерживает путей длиннее чем 256 знаков.\nВыберите другую папку, с более коротким путем."/>
@@ -2977,7 +2986,7 @@
 	<string id="17104" value="Gnutella II: Связь ветвь к узлу"/>
 	<string id="17105" value="Gnutella II: Связь узел к ветви"/>
 	<string id="17106" value="Связь с eDonkey сервером (LOWID: %lu)"/>
-	<string id="17107" value="Связь с eDonkey2000 сервером"/>
+	<string id="17107" value="Связь с eDonkey сервером"/>
 	<string id="17108" value="Подтверждение"/>
 	<string id="17109" value="Входящий"/>
 	<string id="17110" value="Выходящий"/>
@@ -2998,29 +3007,29 @@
 	<string id="17125" value="G2 партнер"/>
 	<string id="17126" value="G2 узел"/>
 	<string id="17127" value="G2 ветвь"/>
-	<string id="17128" value="eDonkey2000 сервер"/>
-	<string id="17129" value="eDonkey2000 (низкий ID)"/>
-	<string id="17130" value="eDonkey2000 (высокий ID)"/>
-	<string id="17216" value="Инициализация соединения с eDonkey2000 сервером %s..."/>
-	<string id="17217" value="Соединение с eDonkey2000 сервером %s установлено, посылаю подтверждение..."/>
+	<string id="17128" value="eDonkey сервер"/>
+	<string id="17129" value="eDonkey (низкий ID)"/>
+	<string id="17130" value="eDonkey (высокий ID)"/>
+	<string id="17216" value="Инициализация соединения с eDonkey сервером %s..."/>
+	<string id="17217" value="Соединение с eDonkey сервером %s установлено, посылаю подтверждение..."/>
 
-	<string id="17219" value="eDonkey2000 сервер %s отказал соединению."/>
-	<string id="17220" value="eDonkey2000 сервер %s доступен, ИД клиента - %lu."/>
-	<string id="17221" value="eDonkey2000 сервер %s сменил свой ИД клиента с %lu в %lu."/>
-	<string id="17222" value="eDonkey2000 сервер %s представился как «%s»."/>
-	<string id="17223" value="eDonkey2000 сервер %s отбросил соединение."/>
-	<string id="17224" value="Ошибка во время подтверждения соединения с eDonkey2000 клиентом %s."/>
-	<string id="17225" value="Соединение с eDonkey2000 клентом %s закрыто."/>
-	<string id="17226" value="Получен плохо сформатирован пакет от eDonkey2000 клиента %s (ИД=%x)."/>
-	<string id="17227" value="Входящее соединение c %s является связью eDonkey2000 клиента."/>
-	<string id="17228" value="Пересылаю набор eDonkey2000 хеша файла «%s» к %s..."/>
-	<string id="17229" value="Соединение с eDonkey2000 клиентом %s в простое, закрываю."/>
-	<string id="17230" value="Инициализация соединения с eDonkey2000 клиентом %s..."/>
-	<string id="17231" value="eDonkey2000 клиент %s имеет плохой GUID, прерываю подтверждение соединения."/>
-	<string id="17232" value="Вышло время для соединения с eDonkey2000 клиентом %s."/>
-	<string id="17233" value="Вышло время для подтверждения соединения с eDonkey2000 клиентом %s."/>
-	<string id="17234" value="Отклоняю связь с eDonkey2000 клиентом %s, потому что eDonkey2000 отключен."/>
-	<string id="17248" value="Идет процесс импорта частичных файлов загрузок eDonkey2000..."/>
+	<string id="17219" value="eDonkey сервер %s отказал соединению."/>
+	<string id="17220" value="eDonkey сервер %s доступен, ИД клиента - %lu."/>
+	<string id="17221" value="eDonkey сервер %s сменил свой ИД клиента с %lu в %lu."/>
+	<string id="17222" value="eDonkey сервер %s представился как «%s»."/>
+	<string id="17223" value="eDonkey сервер %s отбросил соединение."/>
+	<string id="17224" value="Ошибка во время подтверждения соединения с eDonkey клиентом %s."/>
+	<string id="17225" value="Соединение с eDonkey клентом %s закрыто."/>
+	<string id="17226" value="Получен плохо сформатирован пакет от eDonkey клиента %s (ИД=%x)."/>
+	<string id="17227" value="Входящее соединение c %s является связью eDonkey клиента."/>
+	<string id="17228" value="Пересылаю набор eDonkey хеша файла «%s» к %s..."/>
+	<string id="17229" value="Соединение с eDonkey клиентом %s в простое, закрываю."/>
+	<string id="17230" value="Инициализация соединения с eDonkey клиентом %s..."/>
+	<string id="17231" value="eDonkey клиент %s имеет плохой GUID, прерываю подтверждение соединения."/>
+	<string id="17232" value="Вышло время для соединения с eDonkey клиентом %s."/>
+	<string id="17233" value="Вышло время для подтверждения соединения с eDonkey клиентом %s."/>
+	<string id="17234" value="Отклоняю связь с eDonkey клиентом %s, потому что eDonkey отключен."/>
+	<string id="17248" value="Идет процесс импорта частичных файлов загрузок eDonkey..."/>
 	<string id="17249" value="Процесс окончен, успешно импортированно %i загрузок(и)."/>
 	<string id="17250" value="Сканирую папку: «%s»..."/>
 	<string id="17251" value=" Невозможно импортировать файл."/>
@@ -3072,10 +3081,10 @@
 	<string id="18496" value="Вы сделали изменения в поле имени.  Уверены, что хотите переименовать эту загрузку?"/>
 	<string id="18497" value="Вы ввели неправильное значение SHA1.  Проверьте и попробуйте снова."/>
 	<string id="18498" value="Вы ввели неправильное корневое значение tiger-tree.   Проверьте и попробуйте снова."/>
-	<string id="18499" value="Вы ввели неправильное значение eDonkey2000 хеша.   Проверьте и попробуйте снова."/>
+	<string id="18499" value="Вы ввели неправильное значение eDonkey хеша.   Проверьте и попробуйте снова."/>
 	<string id="18500" value="Вы ввели значение SHA1 хеша, не совпадающее с текущим значением у загрузки.  Уверены, что хотите изменить SHA1 хеш сейчас?"/>
 	<string id="18501" value="Вы ввели корневое значение tiger-tree хеша, не совпадающее с текущим значением у загрузки.  Уверены, что хотите изменить корневой tiger-tree хеш сейчас?"/>
-	<string id="18502" value="Вы ввели значение eDonkey2000 хеша, не совпадающее с текущим значением у загрузки.  Уверены, что хотите изменить eDonkey2000 хеш сейчас?"/>
+	<string id="18502" value="Вы ввели значение eDonkey хеша, не совпадающее с текущим значением у загрузки.  Уверены, что хотите изменить eDonkey хеш сейчас?"/>
 	<string id="18503" value="Уверены, что хотите забыть текущее состояние проверки?  Все загруженные данные будут считаться недостоверными, и все деревья и наборы хешов будут сброшены."/>
 	<string id="18504" value="Уверены, что хотите забыть все источники помеченной загрузки?"/>
 	<string id="18505" value="Введите правильный промежуток для стирания.  «С» поле должно содержать первый, а «по» - последний байт стирания."/>
@@ -3255,7 +3264,7 @@
 		<control caption="Использовать Shareaza для перехвата следующих типов ссылок:"/>
 		<control caption="Magnet ( magnet: )"/>
 		<control caption="Gnutella ( gnutella: )"/>
-		<control caption="eDonkey2000 ( ed2k: )"/>
+		<control caption="eDonkey ( ed2k: )"/>
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="_Менеджер загрузок:"/>
@@ -3374,12 +3383,12 @@
 		<control caption="Gnutella2 - основная сеть Shareaza, она предлагает больше особенностей и опций работы чем любая другая P2P сеть.  Крайне рекомендуется."/>
 		<control caption="Соединяться с  Gnutella2 (G2)"/>
 		<control caption="Настроить Gnutella2"/>
-		<control caption="Сеть eDonkey2000:"/>
-		<control caption="eDonkey2000 популярная сеть с использованием серверов.  Не столь богата возможностями как Gnutella2, но содержит больше файлов."/>
-		<control caption="Соединяться с eDonkey2000"/>
-		<control caption="Настроить eDonkey2000"/>
+		<control caption="Сеть eDonkey:"/>
+		<control caption="eDonkey популярная сеть с использованием серверов.  Не столь богата возможностями как Gnutella2, но содержит больше файлов."/>
+		<control caption="Соединяться с eDonkey"/>
+		<control caption="Настроить eDonkey"/>
 		<control caption="Сеть оригинальной Gnutella:"/>
-		<control caption="Хотя оригинальная Gnutella менее богата возможностями чем Gnutella2, и имеет меньше файлов чем eDonkey2000, всё равно это ценный ресурс."/>
+		<control caption="Хотя оригинальная Gnutella менее богата возможностями чем Gnutella2, и имеет меньше файлов чем eDonkey, всё равно это ценный ресурс."/>
 		<control caption="Соединяться с оригинальной Gnutella"/>
 		<control caption="Настроить Gnutella1"/>
 	</dialog>
@@ -3414,21 +3423,21 @@
 		<control caption="Узел к узлу"/>
 	</dialog>
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
-		<control caption="_Сеть eDonkey2000:"/>
-		<control caption="Соединиться с ED2K сегодня"/>
-		<control caption="Всегда соединяться с ED2K"/>
+		<control caption="_Сеть eDonkey:"/>
+		<control caption="Соединиться с eDonkey сегодня"/>
+		<control caption="Всегда соединяться с eDonkey"/>
 		<control caption="_Глобальный поиск:"/>
 		<control caption="Поиск в кэше известных удаленных серверов:"/>
 		<control caption="Стоп поиска после:"/>
 		<control/><control/>
 		<control caption="результатов."/>
 		<control caption="Получать и обновлять список серверов с соединенного сервера"/>
-		<control caption="С_оединения с клиентами ED2K:"/>
+		<control caption="С_оединения с клиентами:"/>
 		<control caption="Соединять не более чем с:"/>
 		<control/><control/>
-		<control caption="другими ED2K клиентами."/>
-		<control caption="eDonkey2000 _утилиты:"/>
-		<control caption="Загрузить список серверов ED2K из вэба:"/>
+		<control caption="другими eDonkey клиентами."/>
+		<control caption="eDonkey _утилиты:"/>
+		<control caption="Загрузить список серверов из вэба:"/>
 		<control caption="Загрузить..."/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
@@ -3591,14 +3600,14 @@
 		<control caption="Shareaza - многоцелевая программа обмена файлами, с доступом ко многим P2P сетям одновременно. Здесь Вы можете выбрать, какие P2P сети Вы хотите использовать. Отметьте, что Вы можете выбрать их позже."/>
 		<control caption="Соединяться с Gnutella2 (крайне рекомендуется)"/>
 		<control caption="Gnutella2 - основная сеть Shareaza, она предлагает больше особенностей и опций работы чем любая другая P2P сеть."/>
-		<control caption="Соединяться с eDonkey2000"/>
-		<control caption="eDonkey2000 популярная сеть с использованием серверов.  Не столь богата возможностями как Gnutella2, но содержит больше файлов."/>
+		<control caption="Соединяться с eDonkey"/>
+		<control caption="eDonkey популярная сеть с использованием серверов.  Не столь богата возможностями как Gnutella2, но содержит больше файлов."/>
 		<control caption="Соединяться с оригинальной Gnutella"/>
-		<control caption="Хотя оригинальная Gnutella менее богата возможностями чем Gnutella2, и имеет меньше файлов чем eDonkey2000, всё равно это ценный ресурс."/>
+		<control caption="Хотя оригинальная Gnutella менее богата возможностями чем Gnutella2, и имеет меньше файлов чем eDonkey, всё равно это ценный ресурс."/>
 	</dialog>
-	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Импорт eDonkey2000 Загрузок">
+	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Импорт eDonkey Загрузок">
 		<control/>
-		<control caption="Shareaza обнаружила, что у Вас установлена другая, eDonkey2000, программа. Хотели бы Вы импортировать любые незаконченные загрузки в Shareaza?"/>
+		<control caption="Shareaza обнаружила, что у Вас установлена другая, eDonkey, программа. Хотели бы Вы импортировать любые незаконченные загрузки в Shareaza?"/>
 		<control caption="ДА"/>
 		<control caption="Нет|Отмена"/>
 		<control/>
@@ -3706,7 +3715,7 @@
 		<control caption="Инициализировать новое соединене с хостом или сервером:|Просмотр этого хоста:"/>
 		<control/><control/>
 		<control caption="Протокол _сети:"/>
-		<control caption="Gnutella1 (авто)|Gnutella2 (авто)|eDonkey2000"/>
+		<control caption="Gnutella1 (авто)|Gnutella2 (авто)|eDonkey"/>
 		<control caption="Подавить _ведущего"/>
 		<control caption="Соединиться"/>
 		<control caption="Отмена"/>
@@ -3717,7 +3726,7 @@
 		<control/>
 		<control caption="Загрузить"/>
 		<control caption="Отмена"/>
-		<control caption="Shareaza может загружать файлы из вэб'а (HTTP), и автоматически искать и загружать файлы по P2P ссылкам (Magnet, Gnutella, eDonkey2000, mP2P)."/>
+		<control caption="Shareaza может загружать файлы из вэб'а (HTTP), и автоматически искать и загружать файлы по P2P ссылкам (Magnet, Gnutella, eDonkey, mP2P)."/>
 		<control caption="Shareaza может загружать и BitTorrent файлы. Torrent представляет собой xyz.torrent файл или HTTP ссылку на '.torrent' файл.  Для загрузки HTTP Torrent ссылки введите её выше.  Если у Вас уже есть '.torrent' файл, нажмите кнопку"/>
 		<control caption="Открыть _Torrent..."/>
 	</dialog>
@@ -4015,7 +4024,7 @@
 	</dialog>
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Загрузить Server.met файл">
 		<control/>
-		<control caption="Вы можете загрузить eDonkey2000 server.met файл из вэба, чтобы обновить Ваш список серверов."/>
+		<control caption="Вы можете загрузить eDonkey server.met файл из вэба, чтобы обновить Ваш список серверов."/>
 		<control/><control/>
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
