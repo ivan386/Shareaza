@@ -1,75 +1,57 @@
-		<table width="95%" align="center" cellspacing="0" cellpadding="0">
-			<tr>
-				<td align="center">
-					<table width="100%" cellspacing="0">
-						<tr>
-							<td class="tabedg">&nbsp;</td>
-							<td class="tabsel">Домой</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a class="tab" href="search">Поиск</a></td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a class="tab" href="downloads">Загрузки</a></td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a class="tab" href="uploads">Выгрузки</a></td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a class="tab" href="network">Сети</a></td>
-							<td class="tabedg">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td class="frame">
-					<p>
-						Приветствуем в <b>Shareaza Удаленный Доступ</b>.
-					</p>
-					<p>
-						Эта веб консоль позволяет полностью управлять процессами поиска, загрузками,
-						выгрузками и соединениями сетей.
-					</p>
-					<br>
-					<table cellspacing="8">
-						<tr>
-							<td width="4"/>
-							<td><a href="search"><b>Поиск</b></a> - Поиск файлов, работа с результатами поиска, выбор файлов для загрузки.</td>
-						</tr>
-						<tr>
-							<td width="4"/>
-							<td><a href="downloads"><b>Загрузки</b></a> - Управление загрузок, остановка, возобновление, очистка завершенных.</td>
-						</tr>
-						<tr>
-							<td width="4"/>
-							<td><a href="uploads"><b>Выгрузки</b></a> - Просмотр выгрузок.</td>
-						</tr>
-						<tr>
-							<td width="4"/>
-							<td><a href="network"><b>Сети</b></a> - Просмотр и управление сетевых соединений, соединение к и разъединение от разных P2P сетей, отключение Shareaza'ы.</td>
-						</tr>
-					</table>
-					<br>
-					<table align="center">
-						<form method="get" action="newsearch">
-							<tr>
-								<td>Быстрый поиск:</td>
-								<td><input type="text" name="search" size="30"></td>
-								<td>
-									<input type="submit" value="Вперёд">
-								</td>
-							</tr>
-						</form>
-					</table>
-					<br>
-					<table align="center">
-						<form method="get" action="newdownload">
-							<tr>
-								<td>Загрузить Magnet:</td>
-								<td><input type="text" name="uri" size="50"></td>
-								<td>
-									<input type="submit" value="Вперёд">
-								</td>
-							</tr>
-						</form>
-					</table>
-				</td>
-			</tr>
-		</table>
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Домой</a></li>
+				<li class="inactive"><a href="search" class="noline">Поиск</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Загрузки</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Выгрузки</a></li>
+				<li class="inactive"><a href="network" class="noline">Сети</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Приветствуем в <b>Shareaza Удаленный Доступ</b>.</p>
+			<p>Эта веб консоль позволяет полностью управлять процессами поиска, загрузками, выгрузками и соединениями сетей.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Начинайте загружать:</h3>
+				<div style="text-align: right;">
+				<form method="get" action="newsearch" ID="Form1">
+					<label>Быстрый поиск:</label>
+					<input type="text" name="search" size="20">
+					<select name="schema">
+						<option value="">Любой тип файла</option>
+						<option value="http://www.limewire.com/schemas/audio.xsd">Аудио</option>
+						<option value="http://www.limewire.com/schemas/video.xsd">Видео</option>
+						<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Исходный код</option>
+						<option value="http://www.shareaza.com/schemas/image.xsd">Картинка</option>
+						<option value="http://www.limewire.com/schemas/book.xsd">Книга</option>
+						<option value="http://www.shareaza.com/schemas/collection.xsd">Коллекция</option>
+						<option value="http://www.shareaza.com/schemas/rom.xsd">Образ ROM</option>
+						<option value="http://www.shareaza.com/schemas/presentation.xsd">Презентация</option>
+						<option value="http://www.shareaza.com/schemas/application.xsd">Приложение</option>
+						<option value="http://www.shareaza.com/schemas/subtitle.xsd">Субтитры</option>
+						<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Таблица</option>
+						<option value="http://www.shareaza.com/schemas/bittorent.xsd">Торрент</option>
+						<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Форматир. текст</option>
+						<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Шкурка</option>
+					</select>
+					<input type="submit" value="Вперёд">
+				</form><br />
+				<form method="get" action="newdownload" ID="Form2">
+					<label>Загрузить Magnet/Torrent:</label>
+					<input type="text" name="uri" size="35">
+					<input type="submit" value="Вперёд">
+				</form>
+				</div>
+			</div>
+			<h3>Полезные ссылки:</h3>
+			<ul>
+				<li><a href="http://www.peerweb.org/">Peerweb.org</a></li>
+				<li><a href="http://www.freebase.be/">Freebase.be</a></li>
+				<li><a href="http://www.g24u.net/">g24u.net</a></li>
+				<li><a href="http://www.bittorrent.com/">Bittorrent.com</a></li>
+				<li><a href="http://www.legaltorrents.com/">LegalTorrents.com</a></li>
+				<li><a href="http://content.emule-project.net/">eMule content DB</a></li>
+			</ul>
+		</div>

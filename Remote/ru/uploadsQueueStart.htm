@@ -1,22 +1,25 @@
+﻿<!-- uploadsQueueStart -->
 <%? !queue_expanded %>
-					<h4><a class="emblink" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
+					<h4><a class="noline" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
 <%? queue_transfers %>
-					<small>(<%= queue_transfers %> активные / <%= queue_queued %> в очереди, используется <%= queue_bandwidth %>)</small>
+					(<%= queue_transfers %> активные / <%= queue_queued %> в очереди, используется <%= queue_bandwidth %>)
 <%?%>
 					</h4>
 <%?%><%? queue_expanded %>
-					<h4><a class="emblink" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
+					<h4><a class="noline" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
 <%? queue_transfers %>
-					<small>(<%= queue_transfers %> активные / <%= queue_queued %> в очереди, используется <%= queue_bandwidth %>)</small>
+					(<%= queue_transfers %> активные / <%= queue_queued %> в очереди, используется <%= queue_bandwidth %>)
 <%?%>
 					</h4>
-					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+				<div class="centertable">
+					<table>
 						<tr>
-							<td class="viewheader">Файл</td>
-							<td class="viewheader">Пользователь</td>
-							<td class="viewheader" align="center">Размер</td>
-							<td class="viewheader" align="center">Скорость</td>
-							<td class="viewheader">Юзер-Агент</td>
-							<td class="viewheader"></td>
+							<th>Файл</th>
+							<th>Пользователь</th>
+							<th>Размер</th>
+							<th>Скорость</th>
+							<th>Юзер-Агент</th>
+							<th></th>
 						</tr>
 <%?%>
+<!-- /uploadsQueueStart -->
