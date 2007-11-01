@@ -15,9 +15,9 @@
 		author="Jan-Willem Koornwinder (Thurstydog)"
 		updatedBy="ceceboy, Neglacio"
 		description="Shareaza Dutch Skin File"
-		link="http://www.shareaza.com/"
+		link="http://shareaza.sourceforge.net/"
 		email="contact@shareaza.com"
-		version="2.2.5.5"
+		version="2.3.0.0"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te kiezen."
@@ -554,6 +554,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Downloadlink _invoegen..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importeer gedeeltelijke eMule downloads..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open mijn map met complete downloads"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Een _taal kiezen..."/>
@@ -638,6 +639,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Downloadlink _invoegen..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importeer gedeeltelijke eMule downloads..."/>
+			 <item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open mijn map met complete downloads"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Een _skin kiezen..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Een _taal kiezen..."/>
@@ -1362,6 +1364,8 @@
 		<item id="ID_SYSTEM_VERBOSE" text="_Verbose Modus"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="_Tijdstempel"/>
 		<separator/>
+		<item id="ID_SYSTEM_COPY" text="_Kopieer" shortcut="Ctrl+C"/>
+		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="_Wis buffer"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
@@ -1481,6 +1485,7 @@
 		<item id="ImageViewer_Close" text="_Sluiten"/>
 	</menu>
 </menus>
+
 <!-- Watermarks -->
 <watermarks>
 	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
@@ -1501,16 +1506,25 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">V E R B I N D I N G &#160; M A K E N</heading>
 			<newline gap="8" indent="42"/>
-			<text>Welkom bij Shareaza! &#160;Je bent momenteel niet verbonden met één van de P2P-netwerken. &#160;</text>
+			<text>Welcome bij Shareaza!</text>
+			
+			<newline gap="8" indent="42"/>
+			<text>Je bent momenteel niet verbonden met één van de peer-to-peer netwerken. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Klik hier om te starten!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">Z O E K E N</heading>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">S T A R T &#160; D O W N L O A D</heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Klik hier om te starten</link>
+			<text align="middle">&#160; bezig aan het downloaden.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
+			<heading align="middle">Z O E K &#160; V O O R &#160; E E N &#160; B E S T A N D</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
@@ -1575,14 +1589,6 @@
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Help</link>
 		<text align="middle">&#160;- Shareaza's gebruikerhandleiding en FAQ</text>
 		<newline gap="18" indent="0"/>
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">M I J N &#160; D O W N L O A D S</heading>
-		<newline gap="8" indent="42"/>
-		<text>Om je map met downloads te openen </text>
-		<link target="raza:shell:downloads">klik hier</link>
-		<newline gap="18" indent="0"/>
-		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">B E S T U R I N G &#160; V I A &#160; I N T E R N E T &#160; I S &#160; I N G E S C H A K E L D</heading>
 			<newline gap="8" indent="42"/>
@@ -1624,8 +1630,10 @@
 			<text id="LibraryFiles" format="b">%lu </text>
 			<text>bestanden, </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Ga naar mijn bibliotheek</link>
+			<newline gap="4"/>
+			<link format="bu" target="raza:shell:downloads">Open mijn Download map</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>Shareaza is </text>
@@ -2223,6 +2231,7 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Bezoek de Shareaza website."/>
 	<tip id="ID_HELP_SECURITY" message="Helpt je systeem te beschermen tegen kwaadaardige programma's."/>
 	<tip id="ID_HELP_UPDATE" message="Controleer op nieuws of updates."/>
+	<tip id="ID_HELP_TEST" message="Voer de verbindings test uit."/>
 	<tip id="ID_HELP_WEB_1" message="Bezoek deze website"/>
 	<tip id="ID_HELP_WEB_2" message="Bezoek deze website"/>
 	<tip id="ID_HELP_WEB_3" message="Bezoek deze website"/>
@@ -2838,6 +2847,7 @@
 	<string id="16409" value="Exporteer &amp;URIs..."/>
 	<string id="16410" value="De complete en incomplete mappen mogen niet dezelfde zijn"/>
 	<string id="16411" value="Niet in staat om bestand %s te verplaatsen. Het bestand is mogelijk in gebruik door een andere toepassing.\n\nWil je proberen om het bestand te kopiëren in plaats van te verplaatsen?"/>
+	<string id="16412" value="Spookbestand"/>
 	<string id="16448" value="Verbonden met %s, bezig met handschudden..."/>
 	<string id="16449" value="Nu aan het chatten met %s (%s)."/>
 	<string id="16450" value="Verbinding met %s is afgebroken."/>
@@ -3198,7 +3208,7 @@
 		<control caption="_Verwijder"/>
 		<control caption="_Verzamelingen hier opslaan:"/>
 		<control/><control/>
-		<control caption="Maak een ghost bestand aan tijdens verwijderen"/>
+		<control caption="Maak een spookbestand aan tijdens verwijderen"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
 		<control caption="_Opties:"/>
@@ -4004,8 +4014,8 @@
 		<control caption="Alles wissen"/>
 		<control caption="Annuleren"/>
 		<control/>
-<control caption="Shareaza kan dit bestand onthouden en je waarschuwen als je ergens dit bestand weer tegenkomt. Het zal een Ghost-bastand maken die je commentaar en beoordeling bevat."/>
-		<control caption="Maak een Ghost-Bestand"/>
+<control caption="Shareaza kan dit bestand onthouden en je waarschuwen als je ergens dit bestand weer tegenkomt. Het zal een spookbastand maken die je commentaar en beoordeling bevat."/>
+		<control caption="Maak een spookbestand"/>
 		<control caption="Waarom verwijder je dit bestand:"/>
 		<control caption="Enkel verwijderen, geen commentaar|Dit bestand is verkeerd benoemd en kan misleidend zijn|Dit bestand is van heel slechte kwaliteit|Dit bestand is corrupt en/of onbruikbaar|Vervang mijn commentaar met nieuwere"/>
 		<control caption="Beoordeling:"/>
