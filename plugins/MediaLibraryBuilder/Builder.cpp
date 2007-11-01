@@ -23,13 +23,24 @@
 #include "Builder.h"
 #include <strsafe.h>
 
-# pragma warning( push )
-# pragma warning( disable : 4509 )
-
 STDMETHODIMP CBuilder::Process (
 	/* [in] */ HANDLE /* hFile */,
 	/* [in] */ BSTR sFile,
 	/* [in] */ ISXMLElement* pXML)
+{
+	HRESULT hr = E_FAIL;
+	__try
+	{
+		hr = SafeProcess( sFile, pXML );
+	}
+	__except( GetExceptionCode() != EXCEPTION_CONTINUE_EXECUTION )
+	{
+		return E_FAIL;
+	}
+	return hr;
+}
+
+HRESULT CBuilder::SafeProcess(BSTR sFile, ISXMLElement* pXML)
 {
 	CString tmp;
 
@@ -70,14 +81,7 @@ STDMETHODIMP CBuilder::Process (
 	hr = pDet.CoCreateInstance( CLSID_MediaDet );
 	if ( SUCCEEDED( hr ) )
 	{
-		__try
-		{
-			hr = pDet->put_Filename(sFile);
-		}
-		__except( GetExceptionCode() != EXCEPTION_CONTINUE_EXECUTION )
-		{
-			return E_FAIL;
-		}
+		hr = pDet->put_Filename(sFile);
 
 		if ( SUCCEEDED( hr ) )
 		{
@@ -98,9 +102,9 @@ STDMETHODIMP CBuilder::Process (
 						{
 							hr = pDet->get_StreamMediaType (&mt);
 							if ( SUCCEEDED( hr ) &&
-								 mt.formattype == FORMAT_VideoInfo && 
-								 mt.cbFormat >= sizeof(VIDEOINFOHEADER) &&
-								 mt.pbFormat != NULL )
+								mt.formattype == FORMAT_VideoInfo && 
+								mt.cbFormat >= sizeof(VIDEOINFOHEADER) &&
+								mt.pbFormat != NULL )
 							{
 								bFound = true;
 								break;
@@ -184,7 +188,7 @@ STDMETHODIMP CBuilder::Process (
 					}
 
 					pISXMLAttributes->Add (CComBSTR ("codec"), CComBSTR (codec));
-					
+
 					int nWidth = pVih->bmiHeader.biWidth;
 					int nHeight = pVih->bmiHeader.biHeight;				    
 					if (nHeight < 0)
@@ -234,9 +238,7 @@ STDMETHODIMP CBuilder::Process (
 			ATLTRACE ("Cannot open file: 0x%08x\n", hr);
 	}
 	else
-		ATLTRACE ("Cannot instante MediaDet object: 0x%08x\n", hr);
+		ATLTRACE ("Cannot instantiate MediaDet object: 0x%08x\n", hr);
 
 	return hr;
 }
-
-# pragma warning( pop )

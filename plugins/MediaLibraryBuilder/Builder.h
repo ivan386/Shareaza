@@ -46,6 +46,8 @@ public:
 		/* [in] */ HANDLE hFile,
 		/* [in] */ BSTR sFile,
 		/* [in] */ ISXMLElement* pXML);
+private:
+	HRESULT SafeProcess(BSTR sFile, ISXMLElement* pXML);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Builder), CBuilder)
