@@ -1,75 +1,55 @@
-<table width="95%" align="center" cellspacing="0" cellpadding="0">
-    <tr>
-        <td align="center">
-            <table width="100%" cellspacing="0">
-                <tr>
-                    <td class="tabedg">&nbsp;</td>
-                    <td class="tabsel">Pradžia</td>
-                    <td class="tabfil">&nbsp;</td>
-                    <td class="tab"><a class="tab" href="search">Paieška</a></td>
-                    <td class="tabfil">&nbsp;</td>
-                    <td class="tab"><a class="tab" href="downloads">Atsisiuntimai</a></td>
-                    <td class="tabfil">&nbsp;</td>
-                    <td class="tab"><a class="tab" href="uploads">Išsiuntimai</a></td>
-                    <td class="tabfil">&nbsp;</td>
-                    <td class="tab"><a class="tab" href="network">Tinklai</a></td>
-                    <td class="tabedg">&nbsp;</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td class="frame">
-            <p>
-                Sveiki! Čia <b>„Shareaza“ nuotolinė prieiga</b>.
-            </p>
-            <p>
-                Ši konsolė leidžia pilnai valdyti paieškas, atsisiuntimus,
-                išsiuntimus ir tinklų susijungimus.
-            </p>
-            <br>
-            <table cellspacing="8">
-                <tr>
-                    <td width="4"/>
-                    <td><a href="search"><b>Paieška</b></a> - Ieškoti bylų, dirbti su radiniais, pasirinkti bylas atsisiuntimui.</td>
-                </tr>
-                <tr>
-                    <td width="4"/>
-                    <td><a href="downloads"><b>Atsisiuntimai</b></a> - Tvarkyti atsisiuntimus, pristabdyti ar tęsti atsisiuntimą, ištrinti atsiųstas bylas iš sąrašo.</td>
-                </tr>
-                <tr>
-                    <td width="4"/>
-                    <td><a href="uploads"><b>Išsiuntimai</b></a> - Peržiūrėti išsiuntimus.</td>
-                </tr>
-                <tr>
-                    <td width="4"/>
-                    <td><a href="network"><b>Tinklai</b></a> - Peržvelgti ir tvarkyti tinklo susijungimus, jungtis prie skirtingų P2P tinklų ar atsijungti nuo jų, baigti darbą su „Shareaza“.</td>
-                </tr>
-            </table>
-            <br>
-            <form method="get" action="newsearch" ID="Form1">
-                <table align="center">
-                    <tr>
-                        <td>Greita paieška:</td>
-                        <td><input type="text" name="search" size="30"></td>
-                        <td>
-                            <input type="submit" value="Pirmyn">
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br>
-			<form method="get" action="newdownload" ID="Form2">
-                <table align="center">
-                    <tr>
-                        <td>Parsisiųsti <i>Magnet</i>:</td>
-                        <td><input type="text" name="uri" size="50"></td>
-                        <td>
-                            <input type="submit" value="Pirmyn">
-                        </td>
-                    </tr>
-                </table>
-			</form>
-		</td>
-	</tr>
-</table>
+		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Pradžia</a></li>
+				<li class="inactive"><a href="search" class="noline">Paieška</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Atsisiuntimai</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Išsiuntimai</a></li>
+				<li class="inactive"><a href="network" class="noline">Tinklai</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Sveiki! Čia <b>„Shareaza“ nuotolinė prieiga</b>.</p>
+			<p>Ši konsolė leidžia pilnai valdyti paieškas, atsisiuntimus, išsiuntimus ir tinklų susijungimus.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Pradėti siųstis:</h3>
+				<div style="text-align: right;">
+				<form method="get" action="newsearch" ID="Form1">
+					<label>Greita paieška:</label>
+					<input type="text" name="search" size="20">
+					<select name="schema">
+						<option value="">Bet kokio tipo</option>
+						<option value="http://www.limewire.com/schemas/audio.xsd">Audio</option>
+						<option value="http://www.limewire.com/schemas/video.xsd">Video</option>
+						<option value="http://www.shareaza.com/schemas/application.xsd">Programa</option>
+						<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Pirminis kodas</option>
+						<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Apvalkalas</option>
+						<option value="http://www.shareaza.com/schemas/image.xsd">Paveikslėlis</option>
+						<option value="http://www.limewire.com/schemas/book.xsd">Knyga</option>
+						<option value="http://www.shareaza.com/schemas/subtitle.xsd">Subtitrai</option>
+						<option value="http://www.shareaza.com/schemas/rom.xsd">ROM atvaizdis</option>
+						<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Skaičiuoklė</option>
+						<option value="http://www.shareaza.com/schemas/presentation.xsd">Pateiktis</option>
+						<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Dokumentas</option>
+					</select>
+					<input type="submit" value="Pirmyn">
+				</form><br />
+				<form method="get" action="newdownload" ID="Form2">
+					<label>Magnet/Torrent atsisiuntimas:</label>
+					<input type="text" name="uri" size="35">
+					<input type="submit" value="Pirmyn">
+				</form>
+				</div>
+			</div>
+			<h3>Naudingos nuorodos:</h3>
+			<ul>
+				<li><a href="http://www.peerweb.org/">Peerweb.org</a></li>
+				<li><a href="http://www.freebase.be/">Freebase.be</a></li>
+				<li><a href="http://www.g24u.net/">g24u.net</a></li>
+				<li><a href="http://www.bittorrent.com/">Bittorrent.com</a></li>
+				<li><a href="http://www.legaltorrents.com/">LegalTorrents.com</a></li>
+				<li><a href="http://content.emule-project.net/">eMule content DB</a></li>
+			</ul>
+		</div>
