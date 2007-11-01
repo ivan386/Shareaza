@@ -10,7 +10,7 @@
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.2.5.5"
+		version="2.3.0.0"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -547,6 +547,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="_Bendrinti failus..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Atsisiųsti failą/Torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importuoti eMule dalinius failus..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Atverti atsisiųstų failų _katalogą"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Pasirinkti ap_valkalą..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Pasirinkti _kalbą..."/>
@@ -631,6 +632,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="_Bendrinti failai..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Atsisiųsti failą/Torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importuoti eMule dalinius failus..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Atverti atsisiųstų failų _katalogą"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Pasirinkti ap_valkalą..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Pasirinkti _kalbą..."/>
@@ -1357,6 +1359,8 @@
 		<item id="ID_SYSTEM_VERBOSE" text="_Išsamiai"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="_Rodyti laiką"/>
 		<separator/>
+		<item id="ID_SYSTEM_COPY" text="_Kopijuoti" shortcut="Ctrl+C"/>
+		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="_Valyti buferį"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
@@ -1496,16 +1500,24 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">P R I S I J U N K I T E</heading>
 			<newline gap="8" indent="42"/>
-			<text>Sveiki, „Shareaza“ vartotojau! &#160;Jūs šiuo metu nesate prijungę prie jokio lygiaverčio susijungimo tinklo. &#160;</text>
+			<text>Sveiki, „Shareaza“ naudotojau!</text>
+			<newline gap="8" indent="42"/>
+			<text>Jūs šiuo metu nesate prijungę prie jokio lygiaverčio susijungimo tinklo. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Startuokite paspaudę čia!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">„S H A R E A Z A“ &#160; P A I E Š K A</heading>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">P R A D Ė T I &#160; S I Ų S T I S</heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Paspauskite čia</link>
+			<text align="middle">, jei norite pradėti siųstis failą ar torentą.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
+			<heading align="middle">I E Š K O T I &#160; F A I L O</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
@@ -1577,13 +1589,6 @@
 		<newline indent="82"/>
 		<text align="middle">Čia rasite taisyklingą „MS Trebuchet“ ir kitus šriftus.</text>
 		<newline gap="18" indent="0"/>
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">M A N O &#160; A T S I S I U N T I M A I</heading>
-		<newline gap="8" indent="42"/>
-		<text>Atverkite aplanką su savo atsisiųstais failais </text>
-		<link target="raza:shell:downloads">spūstelėję čia</link>
-		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">N U O T O L I N Ė &#160; P R I E I G A &#160; Y R A &#160; Į G A L I N T A</heading>
@@ -1627,8 +1632,10 @@
 			<text id="LibraryFiles" format="b">%lu</text>
 			<text>, </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Eiti į savo kolekciją</link>
+			<newline gap="4"/>
+			<link format="bu" target="raza:shell:downloads">Atverti atsisiuntimų katalogą</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>„Shareaza“ skenuoja ir apdoroja </text>
@@ -2222,6 +2229,7 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Aplankyti Shareaza site tinklalapį."/>
 	<tip id="ID_HELP_SECURITY" message="Sužinokite, kaip apsisaugoti nuo kenkėjų tinkluose."/>
 	<tip id="ID_HELP_UPDATE" message="Sužinokite naujienas ir apie atnaujinimus."/>
+	<tip id="ID_HELP_TEST" message="Atlikite susijungimo testą."/>
 	<tip id="ID_HELP_WEB_1" message="Aplankyti šią svetainę"/>
 	<tip id="ID_HELP_WEB_2" message="Aplankyti šią svetainę"/>
 	<tip id="ID_HELP_WEB_3" message="Aplankyti šią svetainę"/>
@@ -2449,6 +2457,11 @@
 	<tip id="ImageViewer_Refresh" message="Atnaujinti paveikslėlį."/>
 	<tip id="ImageViewer_Close" message="Užverti pavekslėlių žiūryklės langą."/>
 </commandTips>
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="Maksimalioje veiksenoje greitaveika bus ribojama iki nurodytos reikšmės. Vidurkio veiksenoje greitaveika svyruos į abi puses nuo šios reikšmės."/>
+	<tip id="IDC_SHARE_PARTIALS" message="Ši nuostata neturi įtakos anksčiau pradėtiems siųstis failams, o taip pat ji nepaisoma, jei failas turi eDonkey maišą ir aktyvus eDonkey tinkle, arba jei tai torrent failas.{n}Tačiau ši nuostata yra paisoma, jei atsiunčiamas failas pristabdytas.{n}{n}DĖMESIO: Naudokitės šia nuostata, jei tai tikrai būtina, nes priešingu atveju jus gali užblokuoti."/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
