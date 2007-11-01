@@ -69,7 +69,7 @@
 	<!-- SEARCH WINDOW -->
 	<toolbar name="CSearchWnd.Panel.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Parsisiųsti"/>
-		<button id="ID_BROWSE_LAUNCH" text="Rodyti vartotojo duomenis"/>
+		<button id="ID_BROWSE_LAUNCH" text="Rodyti naudotojo duomenis"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Paieškos skydelis"/>
 		<button id="ID_SEARCH_DETAILS" text="Išsamus aprašas"/>
@@ -80,7 +80,7 @@
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
 		<button id="ID_SEARCH_DOWNLOAD" text="Parsisiųsti"/>
-		<button id="ID_BROWSE_LAUNCH" text="Rodyti vartotojo duomenis"/>
+		<button id="ID_BROWSE_LAUNCH" text="Rodyti naudotojo duomenis"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Paieškos skydelis"/>
 		<button id="ID_SEARCH_DETAILS" text="Išsamus aprašas"/>
@@ -94,7 +94,7 @@
 		<button id="ID_SEARCH_STOP" text="Stabdyti"/>
 		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Siųstis"/>
-		<button id="ID_BROWSE_LAUNCH" text="Rodyti vartotojo duomenis"/>
+		<button id="ID_BROWSE_LAUNCH" text="Rodyti naudotojo duomenis"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Paieškos skydelis"/>
 		<button id="ID_SEARCH_DETAILS" text="Išsamus aprašas"/>
@@ -114,7 +114,7 @@
 	</toolbar>
 	<toolbar name="CBrowseHostWnd.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Parsisiųsti failą"/>
-		<button id="ID_SEARCH_CHAT" text="Kalbėtis su vartotoju"/>
+		<button id="ID_SEARCH_CHAT" text="Kalbėtis su naudotoju"/>
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Išsamus aprašas"/>
 		<rightAlign/>
@@ -124,7 +124,7 @@
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
 		<button id="ID_SEARCH_DOWNLOAD" text="Parsisiųsti failą"/>
-		<button id="ID_SEARCH_CHAT" text="Kalbėtis su vartotoju"/>
+		<button id="ID_SEARCH_CHAT" text="Kalbėtis su naudotoju"/>
 		<separator/>
 		<button id="ID_BROWSE_STOP" text="Stabdyti"/>
 		<button id="ID_BROWSE_REFRESH" text="Atnaujinti"/>
@@ -171,8 +171,8 @@
 	</toolbar>
 	<!-- UPLOADS WINDOW -->
 	<toolbar name="CUploadsWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Rodyti vartotojo duomenis"/>
-		<button id="ID_UPLOADS_CHAT" text="Kalbėtis su vartotoju"/>
+		<button id="ID_BROWSE_LAUNCH" text="Rodyti naudotojo duomenis"/>
+		<button id="ID_UPLOADS_CHAT" text="Kalbėtis su naudotoju"/>
 		<rightAlign/>
 		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Šalinti baigtus"/>
 	</toolbar>
@@ -182,8 +182,8 @@
 		<button id="ID_UPLOADS_START" text="Leisti dabar"/>
 		<button id="ID_UPLOADS_CLEAR" text="Atšaukti"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Rodyti vartotojo duomenis"/>
-		<button id="ID_UPLOADS_CHAT" text="Kalbėtis su vartotoju"/>
+		<button id="ID_BROWSE_LAUNCH" text="Rodyti naudotojo duomenis"/>
+		<button id="ID_UPLOADS_CHAT" text="Kalbėtis su naudotoju"/>
 		<button id="ID_SECURITY_BAN" text="Užkirsti prieigą"/>
 		<rightAlign/>
 		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Valyti sąrašą"/>
@@ -333,8 +333,8 @@
 	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Rodyti vartotojo duomenis"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Kalbėtis su vartotoju"/>
+		<button id="ID_BROWSE_LAUNCH" text="Rodyti naudotojo duomenis"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Kalbėtis su naudotoju"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
@@ -346,8 +346,8 @@
 		<button id="ID_NETWORK_CONNECT_TO" text="Jungtis prie..."/>
 		<button id="ID_NEIGHBOURS_DISCONNECT" text="Atsijungti"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Rodyti vartotojo duomenis"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Kalbėtis su vartotoju"/>
+		<button id="ID_BROWSE_LAUNCH" text="Rodyti naudotojo duomenis"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Kalbėtis su naudotoju"/>
 		<button id="ID_SECURITY_BAN" text="Užkirsti adresato prieigą"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
@@ -392,7 +392,7 @@
 		<button id="ID_CHAT_COLOUR" text="C"/>
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
-		<button id="ID_CHAT_BROWSE" text="Rodyti vartotojo duomenis"/>
+		<button id="ID_CHAT_BROWSE" text="Rodyti naudotojo duomenis"/>
 		<!-- <button id="ID_CHAT_SEND_FILE" text="Siųsti failą"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Suteikti prioritetą"/>
 		<separator/>
@@ -475,7 +475,7 @@
 			<item id="ID_HELP_TEST" text="Ryšio testas"/>
 			<separator/>
 			<menu text="_Vadovai">
-				<item id="ID_HELP_GUIDE" text="„Shareaza“ _vartotojo vadovas"/>
+				<item id="ID_HELP_GUIDE" text="„Shareaza“ _naudotojo vadovas"/>
 				<item id="ID_HELP_ROUTER" text="Pagalba apie _maršrutizatorius"/>
 				<item id="ID_HELP_SECURITY" text="_Pagalba apie apsaugą"/>
 				<item id="ID_HELP_CODEC" text="Pagalba apie _kodekus"/>
@@ -570,7 +570,7 @@
 			<item id="ID_HELP_TEST" text="Ryšio testas"/>
 			<separator/>
 			<menu text="_Vadovai">
-				<item id="ID_HELP_GUIDE" text="„Shareaza“ _vartotojo vadovas"/>
+				<item id="ID_HELP_GUIDE" text="„Shareaza“ _naudotojo vadovas"/>
 				<item id="ID_HELP_ROUTER" text="Pagalba apie _maršrutizatorius"/>
 				<item id="ID_HELP_SECURITY" text="_Pagalba apie apsaugą"/>
 				<item id="ID_HELP_CODEC" text="Pagalba apie _kodekus"/>
@@ -659,7 +659,7 @@
 			<item id="ID_HELP_TEST" text="Ryšio testas"/>
 			<separator/>
 			<menu text="_Vadovai">
-				<item id="ID_HELP_GUIDE" text="„Shareaza“ _vartotojo vadovas"/>
+				<item id="ID_HELP_GUIDE" text="„Shareaza“ _naudotojo vadovas"/>
 				<item id="ID_HELP_ROUTER" text="Pagalba apie _maršrutizatorius"/>
 				<item id="ID_HELP_SECURITY" text="_Pagalba apie apsaugą"/>
 				<item id="ID_HELP_CODEC" text="Pagalba apie _kodekus"/>
@@ -817,8 +817,8 @@
 	<menu name="CSearchWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
-		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Rodyti naudotojo duomenis"/>
+		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su naudotoju"/>
 		<separator/>
 		<menu text="_Ieškoti">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Panašių failų"/>
@@ -837,9 +837,9 @@
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Parsisiųsti _dabar"/>
 		<item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
-		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
-		<item id="ID_SECURITY_BAN" text="Užkirsti vartotojo priei_gą"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Rodyti naudotojo duomenis"/>
+		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su naudotoju"/>
+		<item id="ID_SECURITY_BAN" text="Užkirsti naudotojo priei_gą"/>
 		<separator/>
 		<menu text="_Ieškoti">
 			<item id="ID_SEARCH_FOR_THIS" text="Šio failo"/>
@@ -864,7 +864,7 @@
 		<item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Parsisiųsti _dabar"/>
 		<separator/>
-		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
+		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su naudotoju"/>
 		<separator/>
 		<menu text="_Ieškoti">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Panašių failų"/>
@@ -883,7 +883,7 @@
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Parsisiųsti _dabar"/>
 		<item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą"/>
 		<separator/>
-		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
+		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su naudotoju"/>
 		<separator/>
 		<menu text="_Ieškoti">
 			<item id="ID_SEARCH_FOR_THIS" text="Šio failo"/>
@@ -907,8 +907,8 @@
 		<item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
 		<item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
-		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Rodyti naudotojo duomenis"/>
+		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su naudotoju"/>
 		<separator/>
 		<menu text="_Ieškoti">
 			<item id="ID_SEARCH_FOR_THIS" text="Šio failo"/>
@@ -979,8 +979,8 @@
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Užklausti šaltinio"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
-		<item id="ID_TRANSFERS_CHAT" text="_Kalbėtis su vartotoju"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Rodyti naudotojo duomenis"/>
+		<item id="ID_TRANSFERS_CHAT" text="_Kalbėtis su naudotoju"/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopijuoti _nuorodą"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Atsijungti"/>
@@ -1039,16 +1039,16 @@
 	</menu>
 	<!-- UPLOADS WINDOW -->
 	<menu name="CUploadsWnd.Upload.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
-		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su vartotoju"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Rodyti naudotojo duomenis"/>
+		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su naudotoju"/>
 	</menu>
 	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="_Leisti dabar"/>
 		<item id="ID_UPLOADS_CLEAR" text="Š_alinti"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
-		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su vartotoju"/>
-		<item id="ID_SECURITY_BAN" text="Užkirsti _vartotojo prieigą"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Rodyti naudotojo duomenis"/>
+		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su naudotoju"/>
+		<item id="ID_SECURITY_BAN" text="Užkirsti _naudotojo prieigą"/>
 	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Eilės nuostatos"/>
@@ -1365,17 +1365,17 @@
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="_Kalbėtis su vartotoju"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Rodyti naudotojo duomenis"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Kalbėtis su naudotoju"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Atsijungti"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_COPY" text="Kopijuoti _nuorodą"/>
 	</menu>
 	<menu name="CNeighboursWnd">
-		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="_Kalbėtis su vartotoju"/>
-		<item id="ID_SECURITY_BAN" text="Užkirsti vartotojo priei_gą"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Rodyti naudotojo duomenis"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Kalbėtis su naudotoju"/>
+		<item id="ID_SECURITY_BAN" text="Užkirsti naudotojo priei_gą"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Atsijungti"/>
 		<separator/>
@@ -1455,7 +1455,7 @@
 		<item id="ID_CHAT_CONNECT" text="_Jungtis"/>
 		<item id="ID_CHAT_DISCONNECT" text="_Atsijungti"/>
 		<separator/>
-		<item id="ID_CHAT_BROWSE" text="Rodyti vartotojo _duomenis"/>
+		<item id="ID_CHAT_BROWSE" text="Rodyti naudotojo _duomenis"/>
 		<!-- <item id="ID_CHAT_SEND_FILE" text="_Siųsti failą..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Suteikti _prioritetą"/>
 		<separator/>
@@ -1742,7 +1742,7 @@
 		<text format="b">Sveiki. Čia „Shareaza“ nuostatų tvarkytuvė</text>
 		<newline gap="16"/>
 		<text>
-			„Shareaza“ nuostatų tvarkytuvė leidžia patyrusiems vartotojams pilnai priderinti
+			„Shareaza“ nuostatų tvarkytuvė leidžia patyrusiems naudotojams pilnai priderinti
 			„Shareaza“ darbą prie savęs. Nuostatoms keisti skyriuje
 		</text>
 		<text format="b">Bendra </text>
@@ -1752,7 +1752,7 @@
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Bendra:</link>
 		<gap size="4"/>
-		<text>Bendros vartotojo sąsajos nuostatos tokios, kaip patarimų kortelės, lango sumažinimo elgesys, skaičių formatai, užuominos ir t.t.</text>
+		<text>Bendros naudotojo sąsajos nuostatos tokios, kaip patarimų kortelės, lango sumažinimo elgesys, skaičių formatai, užuominos ir t.t.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CLibrarySettingsPage" format="b">Kolekcija:</link>
 		<gap size="4"/>
@@ -1780,7 +1780,7 @@
 		<text format="b">Sveiki. Čia „Shareaza“ nuostatų tvarkytuvė</text>
 		<newline gap="16"/>
 		<text>
-			„Shareaza“ nuostatų tvarkytuvė leidžia patyrusiems vartotojams pilnai priderinti
+			„Shareaza“ nuostatų tvarkytuvė leidžia patyrusiems naudotojams pilnai priderinti
 			„Shareaza“ darbą prie savęs. Nuostatų skyrius
 		</text>
 		<text format="b">Internetas </text>
@@ -1892,7 +1892,7 @@
 			<newline gap="4" indent="8"/>
 			<icon res="140" target="raza:command:ID_SEARCH_CHAT"/>
 			<gap size="5"/>
-			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Kalbėtis su vartotoju</link>
+			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Kalbėtis su naudotoju</link>
 		</group>
 		<group id="3">
 			<newline gap="16" indent="0"/>
@@ -1951,7 +1951,7 @@
 		<text>Šiuo metu failas yra siunčiamas. Jei parsisiuntimas vyksta per lėtai,
 		galite pamėginti paieškoti tinkle daugiau šaltinių įvykdę komandą </text>
 		<text format="b">„Rasti daugiau šaltinių“</text><text>. Jei sparta nepagerės,
-		tai galėtų reikšti, jog vartotojai, iš kurių siunčiamasi, yra apriboję
+		tai galėtų reikšti, jog naudotojai, iš kurių siunčiamasi, yra apriboję
 		išsiuntimo spartą. Parsisiuntimo sparta paprastai su laiku didėja.</text>
 	</document>
 	<document name="DownloadHelp.Pending">
@@ -1959,7 +1959,7 @@
 		<newline gap="8"/>
 		<text>Laukiama, kol kas nors pradės siųsti.
 		„Shareaza“ pasiruošusi siųstis failą, bet niekas šiuo metu jos nesiunčia.
-		Jūs tikriausiai laukiate kitų vartotojų eilėse, taigi failo siuntimas gali
+		Jūs tikriausiai laukiate kitų naudotojų eilėse, taigi failo siuntimas gali
 		prasidėti bet kuriuo metu. Galite panagrinėti atskirus šaltinius ir pažiūrėti,
 		kokį numerį turite kiekvieno eilėje. Jei Jūs irgi dalinatės failais, tada šansai,
 		kad failo parsisiuntimas prasidės greičiau, bus didesni.</text>
@@ -1982,7 +1982,7 @@
 		tačiau Jūs galite paspartinti procesą įvykdę komandą </text>
 		<text format="b">„Rasti daugiau šaltinių“</text><text>.</text>
 		<newline gap="8"/>
-		<text>Deja, daugeliu atvejų vartotojai, kurie turi šį failą, gali būti
+		<text>Deja, daugeliu atvejų naudotojai, kurie turi šį failą, gali būti
 		atsijungę. Jums belieka tik laukti, kol kas nors prisijungs, arba galite atšaukti
 		parsisiuntimą ir pamėginti surasti panašų, labiau paplitusį failą.</text>
 	</document>
@@ -2148,21 +2148,21 @@
 </documents>
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
-	<tip id="ID_BROWSE_FILES" message="Peržiūrėti vartotojo bendrintus failus."/>
-	<tip id="ID_BROWSE_LAUNCH" message="Peržiūrėti pasirinkto vartotojo profilį ir bendrintus failus."/>
-	<tip id="ID_BROWSE_PROFILE" message="Peržiūrėti vartotojo profilį."/>
+	<tip id="ID_BROWSE_FILES" message="Peržiūrėti naudotojo bendrintus failus."/>
+	<tip id="ID_BROWSE_LAUNCH" message="Peržiūrėti pasirinkto naudotojo profilį ir bendrintus failus."/>
+	<tip id="ID_BROWSE_PROFILE" message="Peržiūrėti naudotojo profilį."/>
 	<tip id="ID_BROWSE_REFRESH" message="Atnaujinti šio adresato siūlomų failų sąrašą."/>
 	<tip id="ID_BROWSE_STOP" message="Sustabdyti šio adresato failų peržiūrą."/>
 	<tip id="ID_CHAT_BOLD" message="Paryškinti pusjuodžiu šriftu (Ctrl+B)"/>
-	<tip id="ID_CHAT_BROWSE" message="Peržiūrėti vartotojo profilį ir bendrintus failus."/>
+	<tip id="ID_CHAT_BROWSE" message="Peržiūrėti naudotojo profilį ir bendrintus failus."/>
 	<tip id="ID_CHAT_CLEAR" message="Išvalyti pranešimo langą (panaikinti tekstą)."/>
 	<tip id="ID_CHAT_COLOUR" message="Pasirinkti teksto spalvą (Ctrl+K)"/>
 	<tip id="ID_CHAT_CONNECT" message="Jungtis pokalbiui."/>
 	<tip id="ID_CHAT_DISCONNECT" message="Nutraukti pokalbį."/>
 	<tip id="ID_CHAT_EMOTICONS" message="Įterpti emociją."/>
 	<tip id="ID_CHAT_ITALIC" message="Išskirti kursyvu (Ctrl+I)"/>
-	<tip id="ID_CHAT_PRIORITY" message="Suteikti vartotojui parsisiuntimo prioritetą."/>
-	<!-- <tip id="ID_CHAT_SEND_FILE" message="Siųsti failą vartotojui..."/> -->
+	<tip id="ID_CHAT_PRIORITY" message="Suteikti naudotojui parsisiuntimo prioritetą."/>
+	<!-- <tip id="ID_CHAT_SEND_FILE" message="Siųsti failą naudotojui..."/> -->
 	<tip id="ID_CHAT_TIMESTAMP" message="Rodyti laiką, kada buvo gautas kiekvienas pranešimas."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Rašyti su pabraukimu (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Užverti aktyvų langą."/>
@@ -2225,7 +2225,7 @@
 	<tip id="ID_HELP_FAQ" message="Atverti naršyklėje „Shareaza“ DUK puslapį."/>
 	<tip id="ID_HELP_ROUTER" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
 	<tip id="ID_HELP_FORUMS" message="Apsilankyti „Shareaza“ diskusijų forumuose."/>
-	<tip id="ID_HELP_GUIDE" message="Atverti naršyklėje „Shareaza“ vartotojo vadovą."/>
+	<tip id="ID_HELP_GUIDE" message="Atverti naršyklėje „Shareaza“ naudotojo vadovą."/>
 	<tip id="ID_HELP_HOMEPAGE" message="Aplankyti Shareaza site tinklalapį."/>
 	<tip id="ID_HELP_SECURITY" message="Sužinokite, kaip apsisaugoti nuo kenkėjų tinkluose."/>
 	<tip id="ID_HELP_UPDATE" message="Sužinokite naujienas ir apie atnaujinimus."/>
@@ -2334,7 +2334,7 @@
 	<tip id="ID_MEDIA_VIS" message="Pasirinkti muzikos vaizdo papildinį..."/>
 	<tip id="ID_MEDIA_ZOOM" message="Derinti vaizdo mastelį ir matmenų santykį."/>
 	<tip id="ID_MONITOR_CLOSE" message="Užverti monitoriaus langą."/>
-	<tip id="ID_NEIGHBOURS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
+	<tip id="ID_NEIGHBOURS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu naudotoju."/>
 	<tip id="ID_NEIGHBOURS_COPY" message="Kopijuoti pasirinkto adresato prieigos nuorodą."/>
 	<tip id="ID_NEIGHBOURS_DISCONNECT" message="Atjungti pasirinktą kaimyną(-us)."/>
 	<tip id="ID_NEIGHBOURS_SETTINGS" message="Konfigūruoti tinklą..."/>
@@ -2342,7 +2342,7 @@
 	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Atverti naują „Paketų išvesties“ langą šio kaimyno įeinačiam srautui stebėti."/>
 	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Atverti naują „Paketų išvesties“ langą šio kaimyno išeinačiam srautui stebėti."/>
 	<tip id="ID_NETWORK_AUTO_CLOSE" message="Automatiškai išeiti iš „Shareaza“ programos, kai bus baigti visi atsisiuntimai/išsiuntimai."/>
-	<tip id="ID_NETWORK_BROWSE_TO" message="Peržiūrėti vartotojo profilį ir bendrintus failus..."/>
+	<tip id="ID_NETWORK_BROWSE_TO" message="Peržiūrėti naudotojo profilį ir bendrintus failus..."/>
 	<tip id="ID_NETWORK_CONNECT" message="Jungtis prie pasirinktų tinklų."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Jungtis prie adresato rankiniu būdu..."/>
 	<tip id="ID_NETWORK_DISCONNECT" message="Atsijungti nuo tinklų. Tai sustabdys visus išsiuntimus ir atsisiuntimus."/>
@@ -2351,7 +2351,7 @@
 	<tip id="ID_NETWORK_G1" message="Jungtis prie pirminio Gnutella tinklo."/>
 	<tip id="ID_NETWORK_G2" message="Jungtis prie Gnutella2 tinklo (labai rekomenduojama)."/>
 	<tip id="ID_NETWORK_SEARCH" message="Pradėti naują paiešką tinkle..."/>
-	<tip id="ID_SEARCH_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
+	<tip id="ID_SEARCH_CHAT" message="Pradėti pokalbio sesiją su pasirinktu naudotoju."/>
 	<tip id="ID_SEARCH_CLEAR" message="Išvalyti radinius."/>
 	<tip id="ID_SEARCH_COLUMNS" message="Pasirinkti meta duomenų stulpelius, kuriuos rodyti..."/>
 	<tip id="ID_SEARCH_COPY" message="Kopijuoti pasirinkto failo nuorodą."/>
@@ -2386,7 +2386,7 @@
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Registruoti laiką kiekvienoje eilutėje."/>
 	<tip id="ID_SYSTEM_VERBOSE" message="Rodyti išsamų sistemos aktyvumo žurnalą."/>
 	<tip id="ID_TAB_CONNECT" message="Jungtis ar atsijungti nuo tinklo."/>
-	<tip id="ID_TAB_HELP" message="Skaityti „Shareaza“ vartotojo instrukciją."/>
+	<tip id="ID_TAB_HELP" message="Skaityti „Shareaza“ naudotojo instrukciją."/>
 	<tip id="ID_TAB_HOME" message="Grįžti į „Shareaza“ pradžios puslapį"/>
 	<tip id="ID_TAB_LIBRARY" message="Peržiūrėkite ir keiskite savo kolekcijos failus."/>
 	<tip id="ID_TAB_MEDIA" message="Grokite savo kolekcijos garso ir vaizdo failus."/>
@@ -2395,7 +2395,7 @@
 	<tip id="ID_TAB_TRANSFERS" message="Stebėkite, kaip vyksta failų atsisiuntimas ir išsiuntimas."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Parsisiųsti naują ar BitTorrent tinklo torrent failą..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Pasirinkti „Shareaza“ grafinės sąsajos kalbą..."/>
-	<tip id="ID_TOOLS_PROFILE" message="Taisyti savo vartotojo profilį..."/>
+	<tip id="ID_TOOLS_PROFILE" message="Taisyti savo naudotojo profilį..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Perkrauti ir pritaikyti pasirinktą apvalkalą."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Skleisti pasirinktą Torrent failą BitTorrent tinkle."/>
 	<tip id="ID_TOOLS_SETTINGS" message="Keisti „Shareaza“ nuostatas..."/>
@@ -2407,13 +2407,13 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Rodyti legendą."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Pasirinkti ir konfigūruoti grafiko elementus..."/>
 	<tip id="ID_TRAFFIC_WINDOW" message="Atverti naują grafiko langą..."/>
-	<tip id="ID_TRANSFERS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
+	<tip id="ID_TRANSFERS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu naudotoju."/>
 	<tip id="ID_TRANSFERS_CONNECT" message="Susijungti su pasirinktu šaltiniu(-ais) ir pamėginti parsisiųsti failą."/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="Atjungti pasirinktą atsisiuntimo srautą(-us)."/>
 	<tip id="ID_TRANSFERS_FORGET" message="Atsijungti nuo ir užmiršti pasirinktą atsisiuntimo šaltinį(-ius)."/>
 	<tip id="ID_TRAY_OPEN" message="Atverti „Shareaza“ langą."/>
 	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatiškai šalinti užbaigtus failus iš išsiunčiamų failų sąrašo."/>
-	<tip id="ID_UPLOADS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
+	<tip id="ID_UPLOADS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu naudotoju."/>
 	<tip id="ID_UPLOADS_CLEAR" message="Pašalinti iš išsiunčiamų failų sąrašo pasirinktą failą(-us)."/>
 	<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Pašalinti iš sąrašo failus, kurių išsiuntimas baigtas."/>
 	<tip id="ID_UPLOADS_DISCONNECT" message="Nutraukti pasirinktą išsiuntimą(-us)."/>
@@ -2439,10 +2439,10 @@
 	<tip id="ID_VIEW_SEARCH_MONITOR" message="Rodyti arba paslėpti „PAIEŠKOS UŽKLAUSŲ MONITORIAUS“ langą."/>
 	<tip id="ID_VIEW_SECURITY" message="Rodyti ar paslėpti „APSAUGOS“ langą."/>
 	<tip id="ID_VIEW_SYSTEM" message="Rodyti arba paslėpti „SISTEMOS“ langą."/>
-	<tip id="ID_VIEW_TABBED" message="Perjunkite „Shareaza“ į kortelių veikseną (Pradžia, Kolekcija, Grotuvas, Siuntimai, Tinklas), skirtą patyrusiems vartotojams."/>
+	<tip id="ID_VIEW_TABBED" message="Perjunkite „Shareaza“ į kortelių veikseną (Pradžia, Kolekcija, Grotuvas, Siuntimai, Tinklas), skirtą patyrusiems naudotojams."/>
 	<tip id="ID_VIEW_TRAFFIC" message="Rodyti arba paslėpti „GRAFIKŲ“ langą."/>
 	<tip id="ID_VIEW_UPLOADS" message="Rodyti arba paslėpti „IŠSIUNTIMŲ“ langą."/>
-	<tip id="ID_VIEW_WINDOWED" message="Perjunkite „Shareaza“ į langų veikseną, skirtą patyrusiems vartotojams."/>
+	<tip id="ID_VIEW_WINDOWED" message="Perjunkite „Shareaza“ į langų veikseną, skirtą patyrusiems naudotojams."/>
 	<tip id="ID_WINDOW_CASCADE" message="Išdidinti visus atvertus langus, užpildant visą ekraną."/>
 	<tip id="ID_WINDOW_MONITOR" message="Rodyti ar paslėpti siuntimo srauto monitorių."/>
 	<tip id="ID_WINDOW_NAVBAR" message="Rodyti ar paslėpti naršymo juostą."/>
@@ -2562,7 +2562,7 @@
 	<string id="8161" value="Nusiųsta įstūmiančiojo susijungimo užklausa, laukiama ryšio..."/>
 	<string id="8162" value="Prisijungta, prašoma peržiūros..."/>
 	<string id="8163" value="Gaunamas peržiūros atsakymas (%2.f%%)..."/>
-	<string id="8164" value="Neįmanoma susisiekti su adresatu vartotojo duomenims peržiūrėti."/>
+	<string id="8164" value="Neįmanoma susisiekti su adresatu naudotojo duomenims peržiūrėti."/>
 	<string id="8165" value="Neįmanoma parsisiųsti failų sąrašo. Šis adresatas galbūt nepalaiko peržiūros."/>
 	<string id="8166" value="Ieškoti šiame tinkle:"/>
 	<string id="8167" value="Visuose tinkluose"/>
@@ -2655,7 +2655,7 @@
 	<string id="16079" value="Ar tikrai norite atsijungti?"/>
 	<string id="16081" value="Siunčiama užklausa failui „%s“ adresatui %s."/>
 	<string id="16083" value="Dirbtinis Jūsų kompiuterio veiksenos pakeitimas į mazgo veikseną gali sukelti nepageidaujamą poveikį našumui ir P2P tinklui. Geriau leisti, kad „Shareaza“ pati nuspręstų, ar tapti mazgu, ar ne.\n\nMazgo veiksena NEDUODA daugiau radinių ir nesuteikia Jums jokių pranašumų.\n\nAr tikrai norite tęsti, nežiūrint į visas kliūtis, kurias tai gali sukelti?"/>
-	<string id="16084" value="Atjungus Gnutella-1 protokolų palaikymą, radinių gali sumažėti, ir, jei Jūs veiksite kaip mazgas, tai gali paveikti ir kitų vartotojų paiešką. Ar tikrai norite tęsti?"/>
+	<string id="16084" value="Atjungus Gnutella-1 protokolų palaikymą, radinių gali sumažėti, ir, jei Jūs veiksite kaip mazgas, tai gali paveikti ir kitų naudotojų paiešką. Ar tikrai norite tęsti?"/>
 	<string id="16085" value="Gnutella2 - tai „Shareaza“ programos pagrindinis tinklas. Atjungus jo palaikymą, gali labai sumažėti tiek radinių skaičius, tiek ir jų kokybė. Ar TIKRAI norite tęsti?"/>
 	<string id="16087" value="Jūsų išeinanti greitaveika yra per maža šio tinklo įgalinimui"/>
 	<string id="16128" value="Priimtas įeinantis susijungimas su %s per %i prievadą."/>
@@ -2784,12 +2784,12 @@
 	<string id="16333" value="Per daug užimtas išsiųsti failą „%s“ adresatui %s, pastatyta į eilę Nr. %i iš %i vietų („%s“)."/>
 	<string id="16334" value="Pasenusi įstūmiančiojo ryšio užklausa iš adresato %s nežinomam failui išsiųsti, leidžiama jungtis..."/>
 	<string id="16335" value="Failas „%s“, skirta adresatui %s, pašalintas iš išsiutimų sąrašo."/>
-	<string id="16336" value="Adresatas %s yra blokuojamų vartotojo agentų sąraše, užklausa neleidžiama."/>
+	<string id="16336" value="Adresatas %s yra blokuojamų naudotojo agentų sąraše, užklausa neleidžiama."/>
 	<string id="16337" value="Išsiunčiamo failo „%s“ antraštės adresatui %s (%s)."/>
 	<string id="16338" value="Adresatas %s užklausė išsiųsti netenkinamą failo „%s“ atkarpą."/>
 	<string id="16339" value="Išsiunčiamas įprastas HTML atsakymas parsisiųsti norinčiam adresatui %s (%s)."/>
-	<string id="16340" value="Adresatui %s atsakyta rodyti vartotojo duomenis."/>
-	<string id="16341" value="Adresatas %s (%s) atsiuntė užklausą rodyti vartotojo duomenis, siunčiamas atsakymas..."/>
+	<string id="16340" value="Adresatui %s atsakyta rodyti naudotojo duomenis."/>
+	<string id="16341" value="Adresatas %s (%s) atsiuntė užklausą rodyti naudotojo duomenis, siunčiamas atsakymas..."/>
 	<string id="16342" value="Nutraukiamas išsiuntimo ryšys su %s dėl siuntimų srauto kamščio."/>
 	<string id="16343" value="Nutraukiamas senesnis išsiuntimas adresatui %s, nes jis užmezgė naują ryšį."/>
 	<string id="16344" value="Adresatui %s atsakyta sukurti naują išsiuntimo ryšį, nes ankstesnis susijungimas vis dar yra laukiančiųjų sąraše."/>
@@ -2804,7 +2804,7 @@
 	<string id="16353" value="Atsakoma išsiųsti failo „%s“ peržiūros turinį adresatui %s, per daug peržiūros susijungimų."/>
 	<string id="16354" value="Adresatas %s užklausė failo „%s“ peržiūros turinio, bet failas jo neturi."/>
 	<string id="16355" value="Failo „%s“ dinaminė peržiūra ir išsiuntimas adresatui %s įtraukti į planinių užduočių sąrašą."/>
-	<string id="16356" value="Atsakoma išsiųsti vartotojo duomenis adresatui %s, per daug vartotojo duomenų išsiuntimų."/>
+	<string id="16356" value="Atsakoma išsiųsti naudotojo duomenis adresatui %s, per daug naudotojo duomenų išsiuntimų."/>
 	<string id="16357" value="Siunčiamas failas „%s“ adresatui %s..."/>
 	<string id="16358" value="Išsiunčiant failą, ryšys su %s nutrūko, išsaugoma vieta eilėje."/>
 	<string id="16359" value="Atsijungusio adresato %s buvimo išsiuntimų eilėje laikas baigėsi, pašalinama."/>
@@ -2914,7 +2914,7 @@
 	<string id="16802" value="Jūs nenurodėte, kokius aplankus bendrinti. Ar tikrai tęsti?"/>
 	<string id="16803" value="Aplankas, kurį norite bendrinti, aplankų medyje yra žemiau kito, jau bendrinto, aplanko:\n\n%s"/>
 	<string id="16804" value="Jūs neįvedėte slapyvardžio savo profilyje."/>
-	<string id="16805" value="Jūs neįvedėte vietovės savo profilyje.\n\nSavo vietovės įvedimo tikslas - leisti kitiems vartotojams matyti, iš kur Jūs esate.\n\nĮsidėmėkite, kad įvedę vietovę Jūs neatskleisite jokios konfidencialios informacijos.\n\nAr tikrai norite tęsti, neįvedę savo vietovės?"/>
+	<string id="16805" value="Jūs neįvedėte vietovės savo profilyje.\n\nSavo vietovės įvedimo tikslas - leisti kitiems naudotojams matyti, iš kur Jūs esate.\n\nĮsidėmėkite, kad įvedę vietovę Jūs neatskleisite jokios konfidencialios informacijos.\n\nAr tikrai norite tęsti, neįvedę savo vietovės?"/>
 	<string id="16806" value="Shareaza nesugebėjo nukreipti prievado į Jūsų NAT maršrutizatorių ar užkardą.\n\nSukonfigūruokite savo tinklą TCP ir UDP prievado %i nukreipimui į savo vietinį kompiuterį."/>
 	<string id="16807" value="Įveskite norimą greitaveikos limitą „123 kb/s“ pavidalu, jei spartą renkatės kilobitais per sekundę, arba „123 KB/s“, jei renkatės kilobaitais per sekundę."/>
 	<string id="16808" value="Jūs nenurodėte savo amžiaus ir lyties. Ar tikrai norite tęsti be šių duomenų?"/>
@@ -2936,17 +2936,17 @@
 	<string id="16868" value="Nesėkmingų užklausų į paslaugų radimo tarnybą „%s“ skaičius - %i kartų, tarnyba pašalinama."/>
 	<string id="16870" value="Siunčiamas GWebCache atnaujinimas į „%s“ tarnybą..."/>
 	<string id="16871" value="Siunčiama GWebCache „%s“ atsitiktinai parinktai GWebCache..."/>
-	<string id="16928" value="Užmezgamas ryšys su %s vartotojo duomenims gauti..."/>
-	<string id="16929" value="Neįmanoma užmegzti ryšio su %s vartotojo duomenims gauti."/>
-	<string id="16930" value="Nusiųsta įstūmiančiojo susijungimo užklausa adresatui %s vartotojo duomenims gauti."/>
-	<string id="16931" value="Neįmanoma nusiųsti įstūmiančiojo susijungimo užklausos adresatui %s vartotojo duomenims gauti."/>
-	<string id="16932" value="Adresatui %s nusiųsta užklausa peržiūrėti vartotojo duomenis..."/>
+	<string id="16928" value="Užmezgamas ryšys su %s naudotojo duomenims gauti..."/>
+	<string id="16929" value="Neįmanoma užmegzti ryšio su %s naudotojo duomenims gauti."/>
+	<string id="16930" value="Nusiųsta įstūmiančiojo susijungimo užklausa adresatui %s naudotojo duomenims gauti."/>
+	<string id="16931" value="Neįmanoma nusiųsti įstūmiančiojo susijungimo užklausos adresatui %s naudotojo duomenims gauti."/>
+	<string id="16932" value="Adresatui %s nusiųsta užklausa peržiūrėti naudotojo duomenis..."/>
 	<string id="16933" value="Nusiuntus peržiūros užklausą, adresatas %s grąžino neteisingą HTTP atsakymą."/>
 	<string id="16934" value="Nusiuntus peržiūros užklausą, adresatas %s atsiuntė atsakymą, kurio kodas - %s (%s)."/>
-	<string id="16935" value="Nusiuntus peržiūros užklausą, adresatas %s atsiuntė neatpažįstamą atsakymą ir galbūt nepalaiko vartotojo/adresato duomenų peržiūros."/>
+	<string id="16935" value="Nusiuntus peržiūros užklausą, adresatas %s atsiuntė neatpažįstamą atsakymą ir galbūt nepalaiko naudotojo/adresato duomenų peržiūros."/>
 	<string id="16936" value="Gaunamas peržiūros turinys iš adresato %s (%s)"/>
 	<string id="16938" value="Klaida iškoduojant Gnutella paketus, gautus iš peržiūrimo adresato %s."/>
-	<string id="16939" value="Vartotojo duomenys iš %s gauti, rastas(-i) %i failų(-ai)."/>
+	<string id="16939" value="Naudotojo duomenys iš %s gauti, rastas(-i) %i failų(-ai)."/>
 	<string id="16940" value="Ryšys su peržiūrimuoju adresatu %s prarastas."/>
 	<string id="16941" value="Ryšys su peržiūrimuoju adresatu %s nutrauktas dėl siuntimų srauto kamščio."/>
 	<string id="16942" value="Nutraukiamas ryšys su peržiūrimuoju adresatu %s."/>
@@ -2969,8 +2969,8 @@
 	<string id="17029" value="Ryšio patvirtinimas buvo nesėkmingas, adresatas galbūt nepalaiko pokalbių."/>
 	<string id="17030" value="Ryšio patvirtinimas baigtas, pokalbių protokolo versija %s."/>
 	<string id="17031" value="Apsikeičiama profilių informacija..."/>
-	<string id="17032" value="Paliudytasis vartotojas "/>
-	<string id="17033" value="Prašoma privataus pokalbio su vartotoju..."/>
+	<string id="17032" value="Paliudytasis naudotojas "/>
+	<string id="17033" value="Prašoma privataus pokalbio su naudotoju..."/>
 	<string id="17034" value="Leidimas privačiam pokalbiui duotas, Jūs dabar kalbatės su %s."/>
 	<string id="17035" value="Deja, %s nepriima privatiems pokalbiams."/>
 	<string id="17036" value="%s nėra vietoje: %s"/>
@@ -2979,7 +2979,7 @@
 	<string id="17039" value="Neįmanoma užklausti įstūmiančiojo ryšio su %s, nėra prieinamo maršruto."/>
 	<string id="17040" value="Neįmanoma nusiųsti žinutės, Jūs nesate prisijungę. „Shareaza“ mėgina užmegzti ryšį..."/>
 	<string id="17041" value="Neįmanoma nusiųsti žinutės, ryšys dar nėra užmegztas."/>
-	<string id="17042" value="Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį vartotojams prieš kalbantis su jais.\n\nAr norėtumėte dabar užpildyti savo profilį?"/>
+	<string id="17042" value="Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį naudotojams prieš kalbantis su jais.\n\nAr norėtumėte dabar užpildyti savo profilį?"/>
 	<string id="17043" value="Suteikta išsiuntimo pirmenybė adresatui %s."/>
 	<string id="17100" value="Gnutella: Ryšys partneris-partneris"/>
 	<string id="17101" value="Gnutella: Ryšys atšaka-vedantysis"/>
@@ -3097,7 +3097,7 @@
 	<string id="18510" value="Ar tikrai norite nustatyti, kad šio failo parsisiuntimas baigtas ir atlikti jos patikrą? Bus peržiūrimas visas failas, ir „Shareaza“ priims tas dalis, kurios praeis patikrą, o tas dalis, kurios nepraeis patikros, atsiųs iš naujo."/>
 	<string id="18511" value="Jūs pakeitėte failo dydį. Ar tikrai norite jį pakeisti šiam parsisiunčiamam failui?"/>
 	<string id="19000" value="Nuotolinė prieiga neįgalinta."/>
-	<string id="19001" value="Jūs privalote įrašyti vartotojo vardą ir slaptažodį."/>
+	<string id="19001" value="Jūs privalote įrašyti naudotojo vardą ir slaptažodį."/>
 	<string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>
 	<string id="20000" value="Nėra universalių šaltinių vardų."/>
 	<string id="20001" value="Užverti"/>
@@ -3253,7 +3253,7 @@
 	</dialog>
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Bendrija">
 		<control caption="Mano _profilis:"/>
-		<control caption="Jūs galite naudoti savo Gnutella vartotojo profilį dalinantis su kitais informacija apie save, savo interesus ir rekomenduotinus failus bei tinklalapius."/>
+		<control caption="Jūs galite naudoti savo Gnutella naudotojo profilį dalinantis su kitais informacija apie save, savo interesus ir rekomenduotinus failus bei tinklalapius."/>
 		<control caption="Taisyti profilį"/>
 		<control caption="Po_kalbiai:"/>
 		<control caption="Įgalinti lygiaverčio tarptinklinio ryšio pakalbius su suderinamais klientais"/>
@@ -3329,7 +3329,7 @@
 		<control caption="Bendrinti failų peržiūros turinį"/>
 		<control caption="Limitas unikaliam IP:"/>
 		<control/><control/>
-		<control caption="_Vartotojų agentų filtras:"/>
+		<control caption="_Naudotojų agentų filtras:"/>
 		<control/>
 		<control caption="+"/>
 		<control caption="-"/>
@@ -3352,7 +3352,7 @@
 		<control caption="Įgalinti nuotolinę prieigą prie „Shareaza“ programos"/>
 		<control/>
 		<control caption="Autentifikacijos _duomenys:"/>
-		<control caption="Vartotojo vardas:"/>
+		<control caption="Naudotojo vardas:"/>
 		<control/>
 		<control caption="Slaptažodis:"/>
 		<control/>
@@ -3535,10 +3535,10 @@
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="">
 		<control caption="Sveiki! Čia „Shareaza“!"/>
 		<control caption="Jei Jūs iki šiol nesate nuodojęsi „Shareaza“ ar kita P2P programa, šis Nuostatų vedlys Jums padės sukonfigūruoti programą per kelis paprastus žingsnius."/>
-		<control caption="Jei esate labiau patyręs vartotojas, Jūs galite pasiekti visas „Shareaza“ parinktis per meniu „Įrankiai“. Paspauskite „Išeiti“, jei norėsite bet kada uždaryti šį vedlį."/>
+		<control caption="Jei esate labiau patyręs naudotojas, Jūs galite pasiekti visas „Shareaza“ parinktis per meniu „Įrankiai“. Paspauskite „Išeiti“, jei norėsite bet kada uždaryti šį vedlį."/>
 		<control caption="Šis vedlys Jums padės:"/>
 		<control/>
-		<control caption="pasirinkti vartotojo sąsają, kuri Jums patogiausia,"/>
+		<control caption="pasirinkti naudotojo sąsają, kuri Jums patogiausia,"/>
 		<control/>
 		<control caption="nupasakoti „Shareaza“ programai, koks Jūsų interneto ryšys,"/>
 		<control/>
@@ -3547,12 +3547,12 @@
 		<control caption="pradėti naudotis „Shareaza“ programa."/>
 	</dialog>
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Sveiki! Čia „Shareaza“">
-		<control caption="„Shareaza“ palaiko dvi skirtingas vartotojo sąsajas, todėl galite pasirinkti, kuri iš jų labiausiai Jums patogi. Jūs galėsite vėliau pakeisti šias nuostatas."/>
-		<control caption="Pasirinkite vieną vartotojo sąsają:"/>
+		<control caption="„Shareaza“ palaiko dvi skirtingas naudotojo sąsajas, todėl galite pasirinkti, kuri iš jų labiausiai Jums patogi. Jūs galėsite vėliau pakeisti šias nuostatas."/>
+		<control caption="Pasirinkite vieną naudotojo sąsają:"/>
 		<control caption="Įprastinė veiksena"/>
 		<control caption="Eksperto veiksena"/>
-		<control caption="Paprasta, lengva naudotis meniu ir mygtukais.{n}Vartotojams pažįstama iš daugelio kitų failų dalinimosi programų."/>
-		<control caption="Eksperto veiksena siūlo patyrusiems vartotojams daug papildomų komandų, langų ir t.t. Naujokus gali šiek tiek klaidinti!"/>
+		<control caption="Paprasta, lengva naudotis meniu ir mygtukais.{n}Naudotojams pažįstama iš daugelio kitų failų dalinimosi programų."/>
+		<control caption="Eksperto veiksena siūlo patyrusiems naudotojams daug papildomų komandų, langų ir t.t. Naujokus gali šiek tiek klaidinti!"/>
 		<control caption="Rodyti supaprastintas eigos juostas. (Sumažina procesoriaus apkrovimą)"/>
 		<control caption="Susieti torrent nuorodas su programa."/>
 	</dialog>
@@ -3570,8 +3570,8 @@
 		<control/>
 	</dialog>
 	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Sveiki! Čia „Shareaza“ [4 iš 7]">
-		<control caption="Lygiaverčio tarptinklinio susijungimo (P2P) tinklai yra geri tiek, kiek patys žmonės, kurie juo naudojasi. Parsisiųsti failus galite dėl to, kad kiti vartotojai dalinasi."/>
-		<control caption="Kad naudotumėtės „Shareaza“, Jūs nebūtinai turite dalintis failais, tačiau kai kuri progr. įranga gali elgtis skirtingai su tais vartotojais, kurie niekuo nesidalina."/>
+		<control caption="Lygiaverčio tarptinklinio susijungimo (P2P) tinklai yra geri tiek, kiek patys žmonės, kurie juo naudojasi. Parsisiųsti failus galite dėl to, kad kiti naudotojai dalinasi."/>
+		<control caption="Kad naudotumėtės „Shareaza“, Jūs nebūtinai turite dalintis failais, tačiau kai kuri progr. įranga gali elgtis skirtingai su tais naudotojais, kurie niekuo nesidalina."/>
 		<control caption="Nurodykite, jei norite, aplankus, kurių turinį norite bendrinti. Paprasčiausiai paspauskite mygtuką „Pridėti“ kiekvieno naujo aplanko bendrinimui."/>
 		<control/>
 		<control caption="_Pridėti..."/>
@@ -3641,7 +3641,7 @@
 		<control caption="Lytis:"/>
 		<control/>
 		<control caption="Amžius:"/>
-		<control caption="Rodyti kitiems vartotojams mano profilį"/>
+		<control caption="Rodyti kitiems naudotojams mano profilį"/>
 	</dialog>
 	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Adresai kontaktams">
 		<control caption="_El. pašto adresai:"/>
@@ -3683,7 +3683,7 @@
 		<control caption="_Peržiūra:"/>
 		<control/>
 		<control caption="Pasi_rinkti:"/>
-		<control caption="Kiti Gnutella vartotojai, peržiūrinėdami Jūsų profilį ir bendrintus failus, matys Jūsų atvaizdą. Savo sukurti atvaizdai turi būti 128x128 pikselių ir gali būti bet koks vaizdo failas, kurį palaiko Jūsų kompiuteris."/>
+		<control caption="Kiti Gnutella naudotojai, peržiūrinėdami Jūsų profilį ir bendrintus failus, matys Jūsų atvaizdą. Savo sukurti atvaizdai turi būti 128x128 pikselių ir gali būti bet koks vaizdo failas, kurį palaiko Jūsų kompiuteris."/>
 		<control caption="Perž_velgti..."/>
 		<control caption="Š_alinti"/>
 	</dialog>
@@ -3699,11 +3699,11 @@
 	</dialog>
 	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Failai">
 		<control caption="_Pamėgti failai:"/>
-		<control caption="Pamėgti failai - tai tie, kuriuos Jūs siūlote kitiems vartotojams. Jūs galite sukurti mėgiamus failus, juos pridėję į savo kolekcijos „Mėgiamybės“ katalogą."/>
+		<control caption="Pamėgti failai - tai tie, kuriuos Jūs siūlote kitiems naudotojams. Jūs galite sukurti mėgiamus failus, juos pridėję į savo kolekcijos „Mėgiamybės“ katalogą."/>
 		<control/>
 	</dialog>
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Sertifikatas">
-		<control caption="Gnutella vartotojai yra atpažįstami pagal globaliai unikalų identifikatorių ir pagal atitinkamą viešojo ir privataus raktų porą. Paprastai nėra prasmės generuoti naujo ID, tačiau Shareaza suteikia tokią galimybę patyrusiems vartotojams."/>
+		<control caption="Gnutella naudotojai yra atpažįstami pagal globaliai unikalų identifikatorių ir pagal atitinkamą viešojo ir privataus raktų porą. Paprastai nėra prasmės generuoti naujo ID, tačiau Shareaza suteikia tokią galimybę patyrusiems naudotojams."/>
 		<control caption="_Gnutella Globaliai Unikalaus Indentifikavimo Sertifikatas:"/>
 		<control caption="GUID:"/>
 		<control/>
@@ -3825,7 +3825,7 @@
 		<control caption="Paprastas bendrinimas"/>
 		<control caption="Bendrinti šį failą(-us), jei aplankas, kuriame jis yra, yra bendrintas"/>
 		<control caption="Nustatyti šio failo(-ų) bendrinimą rankiniu būdu:"/>
-		<control caption="Tegul šis failas būna pasiekiamas(-i) kitiems vartotojams"/>
+		<control caption="Tegul šis failas būna pasiekiamas(-i) kitiems naudotojams"/>
 		<control caption="Žymė(s) išsiuntimų eilės parinkimui"/>
 		<control/>
 		<control caption="-Bendrinti šiuose tinkluose"/>
@@ -3983,13 +3983,13 @@
 		<control caption="(kopijuojami parsisiųsti gabalai į naują pežiūros failą)"/>
 		<control caption="_Atšaukti"/>
 	</dialog>
-	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="„Shareaza“ gerbia savo vartotojus">
+	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="„Shareaza“ gerbia savo naudotojus">
 		<control/>
 		<control caption="Ar žinote, kad „Shareaza“ yra visiškai nemokamas produktas?"/>
 		<control caption="„Shareaza“ NETURI JOKIŲ šnipinėjimo programų, reklaminių priedų ar kitokios kartu supakuotos programinės įrangos. Ji NIEKADA nerodo jokių reklamų ir joje nėra „iššokinėjančių“ langų.{n}Jei Jūs kada nors pamatysite reklamą ar „iššokinėjančius“ langus besinaudodami „Shareaza“, būkite tikri - jie ne iš šios programos."/>
 		<control caption="Deja, daug kitų programinių produktų įdiegia kartu nepageidaujamus šnipinėjimo ar reklaminius priedus, todėl, jei pamatysite ką nors įtartino, patikrinkite savo kompiuterį kokia nors šių priedų pašalinimo programa."/>
 		<control caption="Jums nereikėjo sumokėti jokių pinigų, įsigyjant „Shareaza“. „Shareazą“ gali parsisiųsti kiekvienas iš http://shareaza.sourceforge.net/. Jei Jūs kam nors sumokėjote pinigus už „Shareaza“, Jus turėtumėte tuoj pat pareikalauti grąžinti juos."/>
-		<control caption="„Shareaza“ gerbia savo vartotojus!"/>
+		<control caption="„Shareaza“ gerbia savo naudotojus!"/>
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Užverti"/>
 	</dialog>
@@ -3997,7 +3997,7 @@
 		<control/>
 		<control caption="Padėkite plisti Pasaulyje"/>
 		<control caption="Mes viliamės, jog Jums ligi šiol buvo malonu naudotis „Shareaza“. Mes tikime, jog tai pati geriausia Jūsų sutikta failų apsikeitimo programa."/>
-		<control caption="Deja, dauguma vartotojų, besidalijančių failais, nežino, ką jie praranda!"/>
+		<control caption="Deja, dauguma naudotojų, besidalijančių failais, nežino, ką jie praranda!"/>
 		<control caption="Jei Jūs pažįstate ką nors, kam patiktų „Shareaza“, nesvarbu, ar jie - naujokai, ar taikstosi menkesniais produktais, tai kodėl jiems neduoti susipažinti su geresne alternatyva?"/>
 		<control caption="Tikimybė yra didelė, kad jie dėkos Jums už tai, kad juos išgelbėjote!"/>
 		<control caption="http://shareaza.sourceforge.net/"/>
@@ -4066,7 +4066,7 @@
 		<control caption="Atšaukti"/>
 	</dialog>
 	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Išplėstinė failo taisa">
-		<control caption="DĖMESIO: Šiame dialogo lange patyrę vartotojai gali taisyti failo informaciją, bet neteisingi pakeitimai gali sugadinti failą."/>
+		<control caption="DĖMESIO: Šiame dialogo lange patyrę naudotojai gali taisyti failo informaciją, bet neteisingi pakeitimai gali sugadinti failą."/>
 		<control caption="_Failo vardas ir dydis:"/>
 		<control caption="Failo vardas:"/>
 		<control/><control/>
@@ -4210,7 +4210,7 @@
 		<column from="Country" to="Šalis"/>
 	</list>
 	<list name="CUploadCtrl">
-		<column from="Remote User" to="Nutolęs vartotojas"/>
+		<column from="Remote User" to="Nutolęs naudotojas"/>
 		<column from="Uploaded File" to="Išsiunčiamas failas"/>
 		<column from="Size" to="Dydis"/>
 		<column from="Progress" to="Eiga"/>
@@ -4249,8 +4249,8 @@
 		<column from="Daily Uptime" to="Darbingas laikas"/>
 		<column from="Name" to="Pavadinimas"/>
 		<column from="Description" to="Aprašas"/>
-		<column from="CurUsers" to="Vartotojų skč."/>
-		<column from="MaxUsers" to="Maks. vartotojų"/>
+		<column from="CurUsers" to="Naudotojų skč."/>
+		<column from="MaxUsers" to="Maks. naudotojų"/>
 		<column from="Failures" to="Nesėkmių"/>
 		<column from="Country" to="Šalis"/>
 	</list>
@@ -4315,7 +4315,7 @@
 		<column from="Type" to="Tipas"/>
 	</list>
 	<list name="CReviewList">
-		<column from="User" to="Vartotojas"/>
+		<column from="User" to="Naudotojas"/>
 		<column from="Rating" to="Įvertinimas"/>
 		<column from="Comments" to="Komentarai"/>
 		<column from="Order" to="Eilė"/>
