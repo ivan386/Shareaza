@@ -1,7 +1,7 @@
 //
 // Remote.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,6 +51,7 @@
 #include "EDPacket.h"
 #include "GProfile.h"
 #include "ShareazaURL.h"
+#include "Skin.h"
 
 #include "WndMain.h"
 #include "WndSearch.h"
@@ -664,13 +665,13 @@ void CRemote::PageSearch()
 	Add( _T("search_filter"), pSearchWnd->m_pMatches->m_sFilter );
 	Output( _T("searchTop") );
 	
-	PageSearchHeaderColumn( MATCH_COL_NAME, _T("Filename"), _T("left") );
-	PageSearchHeaderColumn( MATCH_COL_SIZE, _T("Size"), _T("center") );
-	PageSearchHeaderColumn( MATCH_COL_RATING, _T("Rating"), _T("center") );
-	PageSearchHeaderColumn( MATCH_COL_STATUS, _T("Status"), _T("center") );
-	PageSearchHeaderColumn( MATCH_COL_COUNT, _T("Host/Count"), _T("center") );
-	PageSearchHeaderColumn( MATCH_COL_SPEED, _T("Speed"), _T("center") );
-	PageSearchHeaderColumn( MATCH_COL_CLIENT, _T("Client"), _T("center") );
+	PageSearchHeaderColumn( MATCH_COL_NAME, Skin.GetHeaderTranslation( L"CMatchCtrl", L"File" ), L"left" );
+	PageSearchHeaderColumn( MATCH_COL_SIZE, Skin.GetHeaderTranslation( L"CMatchCtrl", L"Size" ), L"center" );
+	PageSearchHeaderColumn( MATCH_COL_RATING, Skin.GetHeaderTranslation( L"CMatchCtrl", L"Rating" ), L"center" );
+	PageSearchHeaderColumn( MATCH_COL_STATUS, Skin.GetHeaderTranslation( L"CMatchCtrl", L"Status" ), L"center" );
+	PageSearchHeaderColumn( MATCH_COL_COUNT, Skin.GetHeaderTranslation( L"CMatchCtrl", L"Host/Count" ), L"center" );
+	PageSearchHeaderColumn( MATCH_COL_SPEED, Skin.GetHeaderTranslation( L"CMatchCtrl", L"Speed" ), L"center" );
+	PageSearchHeaderColumn( MATCH_COL_CLIENT, Skin.GetHeaderTranslation( L"CMatchCtrl", L"Client" ), L"center" );
 	
 	Output( _T("searchMiddle") );
 	
@@ -1281,7 +1282,7 @@ void CRemote::PageNetwork()
 	
 	PageNetworkNetwork( PROTOCOL_G2, &Settings.Gnutella2.EnableToday, _T("Gnutella2") );
 	PageNetworkNetwork( PROTOCOL_G1, &Settings.Gnutella1.EnableToday, _T("Gnutella1") );
-	PageNetworkNetwork( PROTOCOL_ED2K, &Settings.eDonkey.EnableToday, _T("eDonkey2000") );
+	PageNetworkNetwork( PROTOCOL_ED2K, &Settings.eDonkey.EnableToday, _T("eDonkey") );
 	
 	Output( _T("networkFooter") );
 }

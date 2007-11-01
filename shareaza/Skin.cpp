@@ -862,6 +862,26 @@ BOOL CSkin::Translate(LPCTSTR pszName, CHeaderCtrl* pCtrl)
 	return TRUE;
 }
 
+CString CSkin::GetHeaderTranslation(LPCTSTR pszClassName, LPCTSTR pszHeaderName)
+{
+	CString strEdit;
+	if ( ! m_pLists.Lookup( pszClassName, strEdit ) ) 
+		return CString( pszHeaderName );
+
+	CString strOriginal( pszHeaderName );
+	strOriginal += L"=";
+	LPCTSTR pszFind = _tcsistr( strEdit, strOriginal );
+
+	if ( pszFind )
+	{
+		pszFind += strOriginal.GetLength();
+		CString strNew = pszFind;
+		strNew = strNew.SpanExcluding( _T("|") );
+		return strNew;
+	}
+	return CString( pszHeaderName );
+}
+
 BOOL CSkin::LoadListColumns(CXMLElement* pBase)
 {
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )

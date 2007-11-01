@@ -105,6 +105,7 @@ protected:
 // Translate
 public:
 	BOOL	Translate(LPCTSTR pszName, CHeaderCtrl* pCtrl);
+	CString GetHeaderTranslation(LPCTSTR pszClassName, LPCTSTR pszHeaderName);
 protected:
 	BOOL	LoadListColumns(CXMLElement* pBase);
 	CMap< CString, const CString&, CString, CString& > m_pLists;
