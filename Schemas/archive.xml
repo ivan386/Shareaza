@@ -15,7 +15,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
@@ -29,6 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <object type="file" availability="default"/>
        <titles>
                <title language="en">Archive</title>
+			   <title language="nl">Archief</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -59,6 +60,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               </member>
               <member name="files" search="generic">
                        <title language="en">Files</title>
+					   <title language="nl">Bestanden</title>
               </member>
               <member name="comments" search="generic">
                        <title language="en">Comments</title>
@@ -88,10 +90,12 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="encrypted">
                        <display defaultColumn="true" columnAlign="center"/>
                        <title language="en">Encrypted</title>
+					   <title language="nl">Beveiligd</title>
                </member>
                <member name="unpackedsize">
                        <display defaultColumn="true" columnAlign="center"/>
                        <title language="en">Unpacked Size</title>
+					   <title language="nl">Echte grootte</title>
                </member>
       </members>
        <typeFilter>
