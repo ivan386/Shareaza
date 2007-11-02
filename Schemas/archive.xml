@@ -201,6 +201,20 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                </member>
       </members>
        <typeFilter>
+               <type extension="7z"/>
+               <type extension="ace"/>
+               <type extension="arj"/>
+               <type extension="bz2"/>
+               <type extension="cab"/>
+               <type extension="jar"/>
+               <type extension="gz"/>
+               <type extension="gzip"/>
                <type extension="rar"/>
+               <type extension="tar"/>
+               <type extension="tar.gz"/>
+               <type extension="tar.gzip"/>
+               <type extension="tar.z"/>
+               <type extension="tgz"/>
+               <type extension="zip"/>
        </typeFilter>
 </schemaDescriptor>
