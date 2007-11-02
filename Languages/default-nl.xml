@@ -1589,6 +1589,7 @@
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Help</link>
 		<text align="middle">&#160;- Shareaza's gebruikerhandleiding en FAQ</text>
 		<newline gap="18" indent="0"/>
+		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">B E S T U R I N G &#160; V I A &#160; I N T E R N E T &#160; I S &#160; I N G E S C H A K E L D</heading>
 			<newline gap="8" indent="42"/>
