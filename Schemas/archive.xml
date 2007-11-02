@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/archive.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+       <object type="file" availability="default"/>
+       <titles>
+               <title language="en">Archive</title>
+       </titles>
+       <members>
+               <member name="title" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
+              </member>
+              <member name="files" search="generic">
+                       <title language="en">Files</title>
+              </member>
+              <member name="comments" search="generic">
+                       <title language="en">Comments</title>
+                       <title language="af">Kommentaar</title>
+                       <title language="ca">Comentaris</title>
+                       <title language="chs">注释</title>
+                       <title language="cht">注釋</title>
+                       <title language="de">Kommentar</title>
+                       <title language="ee">Arvamused</title>
+                       <title language="es">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
+                       <title language="hu">Megjegyzés</title>
+                       <title language="it">Commenti</title>
+                       <title language="ja">コメント</title>
+                       <title language="lt">Komentarai</title>
+                       <title language="nl">Opmerkingen</title>
+                       <title language="no">Kommentar</title>
+                       <title language="pt-br">Comentários</title>
+                       <title language="ru">Коментарии</title>
+                       <title language="sl-SI">Komentarji</title>
+                       <title language="sq">Komente</title>
+                       <title language="sr">Komentari</title>
+                       <title language="tr">Yorumlar</title>
+               </member>
+               <member name="encrypted">
+                       <display defaultColumn="true" columnAlign="center"/>
+                       <title language="en">Encrypted</title>
+               </member>
+               <member name="unpackedsize">
+                       <display defaultColumn="true" columnAlign="center"/>
+                       <title language="en">Unpacked Size</title>
+               </member>
+      </members>
+       <typeFilter>
+               <type extension="rar"/>
+       </typeFilter>
+</schemaDescriptor>
