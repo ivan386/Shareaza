@@ -1,0 +1,45 @@
+HKCR
+{
+	ForceRemove RARBuilder.RARBuilder.1 = s 'RAR Builder'
+	{
+		CLSID = s '{F801DAD7-F08D-48EF-B0DF-6B120377E835}'
+	}
+	ForceRemove RARBuilder.RARBuilder = s 'RAR Builder'
+	{
+		CLSID = s '{F801DAD7-F08D-48EF-B0DF-6B120377E835}'
+		CurVer = s 'RARBuilder.RARBuilder.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {F801DAD7-F08D-48EF-B0DF-6B120377E835} = s 'RAR Builder'
+		{
+			ProgID = s 'RARBuilder.RARBuilder.1'
+			VersionIndependentProgID = s 'RARBuilder.RARBuilder'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{EDB05406-0D3F-49F1-8ABC-9B53758008A0}'
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove LibraryBuilder
+					{
+						ForceRemove val '.rar' = s '{F801DAD7-F08D-48EF-B0DF-6B120377E835}'
+					}
+				}
+			}
+		}
+	}
+}

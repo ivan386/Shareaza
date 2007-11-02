@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'RARBuilder'
+		'RARBuilder.dll'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}
