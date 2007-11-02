@@ -456,7 +456,6 @@ Type: filesandordirs; Name: "{userappdata}\Shareaza\Data"
 Type: filesandordirs; Name: "{app}\Skins"
 Type: filesandordirs; Name: "{app}\Templates"
 Type: filesandordirs; Name: "{app}\Schemas"
-Type: filesandordirs; Name: "{app}\Plugins"
 
 Type: filesandordirs; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}\Metadata"; Tasks: multiuser
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}\Thumbs.db"; Tasks: multiuser
