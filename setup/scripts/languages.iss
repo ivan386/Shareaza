@@ -255,9 +255,10 @@ page_viruswarning_subtitle=Do you have an AntiVirus program installed?
 CreateDesktopIcon=Display a &desktop icon
 CreateQuickLaunchIcon=Display a &Quick Launch icon
 PathNotExist=Error, the path of the %1 folder doesn't exist
+; Don't copy these last 2 messages, they are just links.
 page_viruswarning_link=http://shareaza.sourceforge.net/securityhelp
 page_viruswarning_destination=http://shareaza.sourceforge.net/securityhelp/
-; Don't copy these last 2 messages, they are just links.
+
 ; Dutch
 nl.components_plugins=Plugins
 nl.components_skins=Skins
@@ -627,8 +628,6 @@ hu.page_viruswarning_subtitle=Van feltelepített antivírus programja?
 hu.CreateDesktopIcon=Ikon létrehozása az &Asztalon
 hu.CreateQuickLaunchIcon=Ikon létrehozása a &Gyorsindítás eszköztáron
 hu.PathNotExist=Hiba, a megadott %1 mappa nem létezik
-hu.page_viruswarning_link=http://shareaza.sourceforge.net/securityhelp
-hu.page_viruswarning_destination=http://shareaza.sourceforge.net/securityhelp/
 ; Chinese Simp
 chs.components_plugins=²å¼þ
 chs.components_skins=Æ¤·ô
