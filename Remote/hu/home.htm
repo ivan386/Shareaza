@@ -1,82 +1,55 @@
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <table width="95%" align="center" cellspacing="0" cellpadding="0">
-			<tr>
-				<td align="center">
-					<table width="100%" cellspacing="0">
-						<tr>
-							<td class="tabedg">&nbsp;</td>
-							<td class="tabsel">Kezdőlap</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a href="search">Keresés</a></td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a href="downloads">Letöltések</a></td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a href="uploads">Feltöltések</a></td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a href="network">Hálózatok</a></td>
-							<td class="tabedg">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td class="frame">
-					<p>
-						Üdvözöllek a <b>Shareaza távoli használat</b> 
-                        webkonzolban.
-					</p>
-					<p>
-						Ezzel a webes eléréssel ugyanazokat a fő funkciókat el 
-                        tudod érni, mint a Shareazában.</p>
-					<br>
-					<table cellspacing="8">
-						<tr>
-							<td width="4"/>
-							<td><a href="search"><b>Keresés</b></a> - Fájlok 
-                            keresése, szűrése és letöltések kiválasztása.</td>
-						</tr>
-						<tr>
-							<td width="4"/>
-							<td><a href="downloads"><b>Letöltések</b></a> - 
-                            Letöltések rendezése; leállítás, szüneteltetés és 
-                            folytatás.</td>
-						</tr>
-						<tr>
-							<td width="4"/>
-							<td><a href="uploads"><b>Feltöltések</b></a> - 
-                            Feltöltések megfigyelése.</td>
-						</tr>
-						<tr>
-							<td width="4"/>
-							<td><a href="network"><b>Hálózatok</b></a> - A 
-                            hálózatokhoz való kapcsolódás figyelése, fel- és 
-                            lekapcsolódás.</td>
-						</tr>
-					</table>
-					<br>
-					<table align="center">
-						<form method="get" action="newsearch">
-							<tr>
-								<td>Gyorskereső:</td>
-								<td><input type="text" name="search" size="30"></td>
-								<td>
-									<input type="submit" value="Keres">
-								</td>
-							</tr>
-						</form>
-					</table>
-					<br>
-					<table align="center">
-						<form method="get" action="newdownload">
-							<tr>
-								<td>Magnet letöltés:</td>
-								<td><input type="text" name="uri" size="50"></td>
-								<td>
-									<input type="submit" value="Indít">
-								</td>
-							</tr>
-						</form>
-					</table>
-				</td>
-			</tr>
-		</table>
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Kezdőlap</a></li>
+				<li class="inactive"><a href="search" class="noline">Keresés</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Letöltések</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Feltöltések</a></li>
+				<li class="inactive"><a href="network" class="noline">Hálózat</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Üdvözlöm a <b>Shareaza távoli webes elérés</b> felületen.</p>
+			<p>Ezen keresztül vezérelheti a kereséseit, a le- és feltöltéseit és a hálózati kapcsolatait.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Letöltés kezdése:</h3>
+				<div style="text-align: right;">
+				<form method="get" action="newsearch" ID="Form1">
+					<label>Gyorskeresés:</label>
+					<input type="text" name="search" size="20">
+					<select name="schema">
+						<option value="">Bármilyen</option>
+						<option value="http://www.limewire.com/schemas/audio.xsd">Audio</option>
+						<option value="http://www.limewire.com/schemas/video.xsd">Videó</option>
+						<option value="http://www.shareaza.com/schemas/application.xsd">Program</option>
+						<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Forráskód</option>
+						<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Kinézet</option>
+						<option value="http://www.shareaza.com/schemas/image.xsd">Kép</option>
+						<option value="http://www.limewire.com/schemas/book.xsd">Könyv</option>
+						<option value="http://www.shareaza.com/schemas/subtitle.xsd">Felirat</option>
+						<option value="http://www.shareaza.com/schemas/rom.xsd">Image fájl</option>
+						<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Munkafüzet</option>
+						<option value="http://www.shareaza.com/schemas/presentation.xsd">Prezentáció</option>
+						<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Dokumentum</option>
+					</select>
+					<input type="submit" value="Keres">
+				</form><br />
+				<form method="get" action="newdownload" ID="Form2">
+					<label>Magnet/Torrent letöltés:</label>
+					<input type="text" name="uri" size="35">
+					<input type="submit" value="Letölt">
+				</form>
+				</div>
+			</div>
+			<h3>Hasznos linkek:</h3>
+			<ul>
+				<li><a href="http://www.peerweb.org/">Peerweb.org</a></li>
+				<li><a href="http://www.freebase.be/">Freebase.be</a></li>
+				<li><a href="http://www.g24u.net/">g24u.net</a></li>
+				<li><a href="http://www.bittorrent.com/">Bittorrent.com</a></li>
+				<li><a href="http://www.legaltorrents.com/">LegalTorrents.com</a></li>
+				<li><a href="http://content.emule-project.net/">eMule content DB</a></li>
+			</ul>
+		</div>

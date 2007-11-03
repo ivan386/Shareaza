@@ -1,25 +1,25 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+﻿<!-- uploadsQueueStart -->
 <%? !queue_expanded %>
-					<h4><a class="emblink" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
+					<h4><a class="noline" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
 <%? queue_transfers %>
-					<small>(<%= queue_transfers %> aktív / <%= queue_queued %> 
-                    sorban áll, használ)</small>
+					(<%= queue_transfers %> aktív / <%= queue_queued %> sorbanáll, Sebesség: <%= queue_bandwidth %>)
 <%?%>
 					</h4>
 <%?%><%? queue_expanded %>
-					<h4><a class="emblink" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
+					<h4><a class="noline" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
 <%? queue_transfers %>
-					<small>(<%= queue_transfers %> aktív / <%= queue_queued %>&nbsp; 
-                    sorban áll, használ)</small>
+					(<%= queue_transfers %> aktív / <%= queue_queued %> sorbanáll, Sebesség: <%= queue_bandwidth %>)
 <%?%>
 					</h4>
-					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+				<div class="centertable">
+					<table>
 						<tr>
-							<td class="viewheader">Fájl</td>
-							<td class="viewheader">Felhasználó</td>
-							<td class="viewheader" align="center">Méret</td>
-							<td class="viewheader" align="center">Sebesség</td>
-							<td class="viewheader">Kliensprogram</td>
-							<td class="viewheader"></td>
+							<th>Fájl</th>
+							<th>Felhasználó</th>
+							<th>Méret</th>
+							<th>Sebesség</th>
+							<th>Kliensprogram</th>
+							<th></th>
 						</tr>
 <%?%>
+<!-- /uploadsQueueStart -->

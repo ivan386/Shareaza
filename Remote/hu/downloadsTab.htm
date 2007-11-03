@@ -1,7 +1,5 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<%? group_selected %>
-										<td class="tabsel" nowrap><a class="tab" href="?group_exclusive=<%= group_id %>"><%= group_caption %></a><a class="tab" href="?group_deselect=<%= group_id %>">*</a></td>
-<%?%><%? !group_selected %>
-										<td class="tab" nowrap><a class="tab" href="?group_exclusive=<%= group_id %>"><%= group_caption %></a><a class="tab" href="?group_select=<%= group_id %>">*</a></td>
-<%?%>
-										<td class="tabfil">&nbsp;</td>
+﻿
+				<!-- downloadsTab-->
+				<%? group_selected %><li class="active"><a href="?group_exclusive=<%= group_id %>" class="noline"><%= group_caption %></a><a href="?group_deselect=<%= group_id %>" class="noline"> *</a></li>
+				<%?%><%? !group_selected %><li class="inactive"><a href="?group_exclusive=<%= group_id %>" class="noline"><%= group_caption %></a><a href="?group_select=<%= group_id %>" class="noline"> *</a></li><%?%>
+				<!--/ downloadsTab-->

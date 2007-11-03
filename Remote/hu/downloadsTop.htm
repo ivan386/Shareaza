@@ -1,66 +1,34 @@
-										<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-                                        <td class="tabedg">&nbsp;</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td class="frame">
-								<table width="100%">
-									<tr>
-										<form method="get">
-											<input type="hidden" name="filter_set" value="1">
-											<td nowrap style="font-size: 7pt">
-                                            <font size="2"><b>Szűrő</b></font><b><font size="2">:</font></b></td>
-											<td/>
-											<td><input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %>></td>
-											<td nowrap style="font-size: 7pt">
-                                            <label for="filter_active">
-                                            <font size="2">Aktív</font></label></td>
-											<td/>
-											<td><input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %>></td>
-											<td nowrap style="font-size: 7pt">
-                                            <label for="filter_queued">
-                                            <font size="2">Sorban áll</font></label></td>
-											<td/>
-											<td><input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %>></td>
-											<td nowrap style="font-size: 7pt">
-                                            <label for="filter_sources">
-                                            <font size="2">Nincs forrás</font></label></td>
-											<td/>
-											<td><input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %>></td>
-											<td nowrap style="font-size: 7pt">
-                                            <label for="filter_paused">
-                                            <font size="2">Szüneteltetve</font></label></td>
-											<td/>
-											<td><input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %>></td>
-											<td nowrap style="font-size: 7pt">
-                                            <label for="filter_show_all">
-                                            <font size="2">Minden forrást mutat</font></label></td>
-											<td/>
-											<td nowrap>
-                                            <input type="submit" value="Beállít"></td>
-											<td width="100%"/>
-											<td nowrap align="right" style="font-size: 7pt">
-                                            <a href="?refresh=<%= random %>">
-                                            <font size="2">Oldal frissítése</font></a></td>
-										</form>
-									</tr>
-								</table>
-								<br>
-								<table width="100%" cellspacing="0" style="border-collapse: collapse">
-									<tr>
-										<td class="viewheader">Letöltendő fájl</td>
-										<td class="viewheader" align="center">
-                                        Méret</td>
-										<td class="viewheader" align="center">
-                                        Állapot</td>
-										<td class="viewheader" align="center">
-                                        Sebesség</td>
-										<td class="viewheader" align="center">
-                                        Források</td>
-										<td class="viewheader" align="center">
-                                        Helyzet</td>
-										<td class="viewheader" align="center">
-                                        Beállítások</td>
-									</tr>
+﻿
+<!-- downloadsTop-->
+</ul>
+<div  id="content">
+	<div id="functions"><a href="?refresh=<%= random %>">Lap frissítése</a></div>
+		<div id="filters">	
+			<form method="get" action="" ID="Form1">
+						<input type="hidden" name="filter_set" value="1" ID="Hidden1">
+						<b>Szűrő:</b>
+						<input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %>>
+						<label for="filter_active">Aktív</label>
+						<input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %>>
+						<label for="filter_queued">Sorbanáll</label>
+						<input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %>>
+						<label for="filter_sources">Nincs forrás</label>
+						<input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %>>
+						<label for="filter_paused">Szüneteltetve</label>
+						<input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %>>
+						<label for="filter_show_all">Minden forrás</label>
+						<input type="submit" value=" Beállít "><br />
+			</form>
+		</div>
+		<br />
+<table>
+	<tr>
+				<th>Fájlnév</th>
+				<th>Méret</th>
+				<th>Állapot</th>
+				<th>Sebesség</th>
+				<th>Források</th>
+				<th>Helyzet</th>
+				<th>Lehetőségek</th>
+			</tr>
+<!-- /downloadsTop-->
