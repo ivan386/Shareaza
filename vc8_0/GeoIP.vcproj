@@ -19,9 +19,9 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
-			ConfigurationType="10"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)"
+			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			>
 			<Tool
@@ -29,46 +29,66 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying Files..."
-				CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)&quot; &gt; nul&#x0D;&#x0A;"
-				Outputs="&quot;$(SolutionDir)$(ConfigurationName)\geoip.dll&quot;;&quot;$(SolutionDir)$(ConfigurationName)\GeoIP.dat&quot;"
+				Description="Copying $(ProjectName) files..."
+				CommandLine="copy &quot;$(SolutionDir)..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+				Outputs="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot;;&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot;"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
 			/>
 			<Tool
 				Name="VCMIDLTool"
 			/>
 			<Tool
+				Name="VCCLCompilerTool"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy GeoIP..."
-				CommandLine="copy &quot;$(SolutionDir)\..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)\..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
-			ConfigurationType="10"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				Description="Copy GeoIP..."
-				CommandLine="copy &quot;$(SolutionDir)\..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)\..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
-			ConfigurationType="10"
+			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			>
 			<Tool
@@ -76,25 +96,134 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying Files..."
-				CommandLine="call CopyFiles.bat &quot;$(ConfigurationName)&quot; &gt; nul&#x0D;&#x0A;"
-				Outputs="&quot;$(SolutionDir)$(ConfigurationName)\geoip.dll&quot;;&quot;$(SolutionDir)$(ConfigurationName)\GeoIP.dat&quot;"
+				Description="Copying $(ProjectName) files..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+				Outputs="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot;;&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot;"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
 			/>
 			<Tool
 				Name="VCMIDLTool"
 				TargetEnvironment="3"
 			/>
 			<Tool
+				Name="VCCLCompilerTool"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy GeoIP..."
-				CommandLine="copy &quot;$(SolutionDir)\..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)\..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+				Description=""
+				CommandLine=""
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying $(ProjectName) files..."
+				CommandLine="copy &quot;$(SolutionDir)..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+				Outputs="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot;;&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot;"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName)"
-			ConfigurationType="10"
+			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			>
 			<Tool
@@ -102,15 +231,60 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				Description="Copying $(ProjectName) files..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+				Outputs="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot;;&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot;"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
 			/>
 			<Tool
 				Name="VCMIDLTool"
 				TargetEnvironment="3"
 			/>
 			<Tool
+				Name="VCCLCompilerTool"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy GeoIP..."
-				CommandLine="copy &quot;$(SolutionDir)\..\GeoIP\geoip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot; /y&#x0D;&#x0A;copy &quot;$(SolutionDir)\..\GeoIP\data\GeoIP.dat&quot; &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\GeoIP.dat&quot; /y"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
