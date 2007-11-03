@@ -24,6 +24,7 @@ AppName=Shareaza
 AppVerName=Shareaza {#version}
 AppPublisher=Shareaza Development Team
 AppId=Shareaza
+AppMutex=Shareaza
 Compression=lzma/ultra
 InternalCompressLevel=Ultra
 SolidCompression=yes

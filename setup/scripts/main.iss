@@ -44,6 +44,7 @@ AppName={#name}
 AppPublisher=Shareaza Development Team
 AppVersion={#version}
 AppVerName={#name} {#version}
+AppMutex=Shareaza
 VersionInfoVersion={#version}
 DefaultDirName={ini:{param:SETTINGS|},Locations,Path|{reg:HKLM\SOFTWARE\Shareaza,|{pf}\Shareaza}}
 DirExistsWarning=no
