@@ -1505,7 +1505,7 @@
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">S E J A &#160; C O N E C T A D O</heading>
 			<newline gap="8" indent="42"/>
-			<text>Bem-vindo ao Shareaza! 
+			<text>Bem-vindo ao Shareaza!</text>
 			<newline gap="8" indent="42"/>
 			<text>Você não está conectado atualmente a quaisquer redes peer to peer. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Clique aqui para começar!</link>
