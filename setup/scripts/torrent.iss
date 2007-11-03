@@ -1,4 +1,3 @@
-
 ; Select file source root
 #ifexist "..\..\vc7_1\release\TorrentWizard.exe"
   #define root "vc7_1\release"
@@ -7,6 +6,10 @@
 #ifexist "..\..\vc8_0\release\TorrentWizard.exe"
   #define root "vc8_0\release"
   #define version GetFileVersion("..\..\vc8_0\release\TorrentWizard.exe")
+#endif
+
+#ifndef root
+  #error You must compile TorrentWizard before compile the setup
 #endif
 
 [Setup]

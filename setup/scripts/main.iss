@@ -8,7 +8,7 @@
   #error Inno Setup version 5.1.7 or higher is needed for this script
 #endif
 #if PREPROCVER < 0x05020000
-  #error PreProcessor version 5.2.2.0 or higher is needed for this script
+  #error PreProcessor version 5.2.0.0 or higher is needed for this script
 #endif
 
 ; Not supported by ISPP 5.1.2

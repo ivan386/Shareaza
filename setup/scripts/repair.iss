@@ -1,8 +1,8 @@
-#if VER < 0x05010000
+#if VER < 0x05010400
   #error Inno Setup version 5.1.4 or higher is needed for this script
 #endif
-#if PREPROCVER < 0x05010000
-  #error PreProcessor version 5.1.2 or higher is needed for this script
+#if PREPROCVER < 0x05010200
+  #error PreProcessor version 5.1.2.0 or higher is needed for this script
 #endif
 
 ; Select file source root
@@ -13,6 +13,10 @@
 #ifexist "..\..\vc8_0\release\Shareaza.exe"
   #define root "vc8_0\release"
   #define version GetFileVersion("..\..\vc8_0\release\Shareaza.exe")
+#endif
+
+#ifndef root
+  #error You must compile Shareaza before compile the repair
 #endif
 
 [Setup]
