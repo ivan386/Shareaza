@@ -208,7 +208,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה רשימה של המוזיקה שלך לפי {name}</subtitle>
                <subtitle language="hr">Ova mapa sadrži popis vaših pjesama od {name}.</subtitle>
-               <subtitle language="hu">Ez a mappa az összes zenédet tartalmazza {name} szerint rendezve.</subtitle>
+               <subtitle language="hu">Ez a mappa {name} szerint rendezve tartalmazza az összes zenét.</subtitle>
                <subtitle language="it">Questa cartella contiene tutta la musica di {name}.</subtitle>
                <subtitle language="ja">このフォルダーにはあなたの所有する "{name}" の音楽が収録されています</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa „{name}“ muzika.</subtitle>
