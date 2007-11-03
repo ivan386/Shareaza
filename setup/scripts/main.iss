@@ -7,7 +7,7 @@
 #if VER < 0x05010700
   #error Inno Setup version 5.1.7 or higher is needed for this script
 #endif
-#if PREPROCVER < 0x05020200
+#if PREPROCVER < 0x05020000
   #error PreProcessor version 5.2.2.0 or higher is needed for this script
 #endif
 
