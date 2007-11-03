@@ -1,18 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Shareaza Catalan Skin File -->
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Shareaza Default Catalan Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+
+<!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
+<!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
+<!-- which you changed! Including sections you did not edit will reduce performance and limit -->
+<!-- compatibility with future versions and other skins. -->
+
+<!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
 <!-- Manifest -->
-<manifest name="Català"
-	author="Daniel Olivares Giménez (actualitzat d&apos;una versió de el.libre@gmail.com)"
-	updatedBy=""
-	description="Traducció de Shareaza al Català"
-	link="http://www.shareaza.com/"
-	email="dani88elx@gmail.com"
-	version="2.2.2.28"
-	type="Language"
-	language="ca"
-	prompt="Selecciona ací per fer servir Shareaza en Català"
+<manifest	name="Català"
+		author="Daniel Olivares Giménez (actualitzat d&apos;una versió de el.libre@gmail.com)"
+		updatedBy=""
+		description="Shareaza Default Catalan Skin File"
+		link="http://shareaza.sourceforge.net/"
+		email="dani88elx(at)gmail(dot)com"
+		version="2.2.2.28"
+		type="Language"
+		language="ca"
+		prompt="Selecciona ací per fer servir Shareaza en Català"
 />
+
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->

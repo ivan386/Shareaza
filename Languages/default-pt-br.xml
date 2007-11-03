@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Shareaza Default Brazilian Portuguese Skin File -->
+
+<!-- Shareaza Default Brazilian Portuguese Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
 <!-- which you changed! Including sections you did not edit will reduce performance and limit -->
 <!-- compatibility with future versions and other skins. -->
+
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
 <!-- Manifest -->
-<manifest name="Português"
-	author="Lukas Taves"
-	updatedBy="Felipe"
-	description="Tradução para o português do Brasil do Shareaza"
-	link="http://www.shareaza.com/"
-	email="contact@shareaza.com"
-	version="2.2.5.6"
-	type="Language"
-	language="pt-br"
-	prompt="Clique aqui para traduzir o Shareaza para o português do Brasil."
+<manifest	name="Português"
+		author="Lukas Taves"
+		updatedBy="Felipe"
+		description="Shareaza Default Brazilian Portuguese Skin File"
+		link="http://shareaza.sourceforge.net/"
+		email=""
+		version="2.2.5.6"
+		type="Language"
+		language="pt-br"
+		prompt="Clique aqui para traduzir o Shareaza para o português do Brasil."
 />
+
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->

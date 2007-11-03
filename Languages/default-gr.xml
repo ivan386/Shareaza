@@ -1,18 +1,26 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<!-- Shareaza Greek Skin File -->
+
+<!-- Shareaza Default Greek Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+
+<!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
+<!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
+<!-- which you changed! Including sections you did not edit will reduce performance and limit -->
+<!-- compatibility with future versions and other skins. -->
+
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
 <!-- Manifest -->
-<manifest name="Ελλάδα"
-	author="Δημήτρης Πετσαλάκης"
-	updatedBy="Δημήτρης Πετσαλάκης"
-	description="Shareaza Default Greek Skin File"
-	link="http://www.shareaza.com/"
-	email="contact@shareaza.com"
+<manifest	name="Ελλάδα"
+		author="Δημήτρης Πετσαλάκης"
+		updatedBy="Δημήτρης Πετσαλάκης"
+		description="Shareaza Default Greek Skin File"
+		link="http://shareaza.sourceforge.net/"
+		email=""
 		version="2.2.0.2"
-	type="Language"
-	language="gr"
-	prompt="Πατήστε εδώ για να διαλέξετε τα Ελληνικά ως γλώσσα επιλογής σας."
+		type="Language"
+		language="gr"
+		prompt="Πατήστε εδώ για να διαλέξετε τα Ελληνικά ως γλώσσα επιλογής σας."
 />
 
 <!-- Toolbar Definitions -->

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 56 -->
+<!-- Shareaza Default Italian Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx --> <!-- Revisione 57 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -15,8 +15,8 @@
 		author="Salvatore Scirè, Francesco Gabrielli"
 		updatedBy="ale5000"
 		description="Shareaza Default Italian Skin File"
-		link="http://www.shareaza.com/"
-		email="contact@shareaza.com"
+		link="http://shareaza.sourceforge.net/"
+		email=""
 		version="2.3.0.0"
 		type="Language"
 		language="it"

@@ -1,14 +1,22 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<!-- Shareaza Hebrew Skin File -->
+
+<!-- Shareaza Default Hebrew Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+
+<!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
+<!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
+<!-- which you changed! Including sections you did not edit will reduce performance and limit -->
+<!-- compatibility with future versions and other skins. -->
+
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
 <!-- Manifest -->
-<manifest name="עברית"
+<manifest	name="עברית"
 		author="David Aravon"
 		updatedBy="_peer_ (la. Han)"
 		description="Shareaza Default Hebrew Skin File"
-		link="http://www.shareaza.com/"
-		email="peer_l_ (at) hotmail (dot) com"
+		link="http://shareaza.sourceforge.net/"
+		email="peer_l_(at)hotmail(dot)com"
 		version="2.2.0.2"
 		type="Language"
 		language="heb"

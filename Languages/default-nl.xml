@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Dutch Skin File -->
+<!-- Shareaza Default Dutch Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -14,9 +14,9 @@
 <manifest	name="Nederlands"
 		author="Jan-Willem Koornwinder (Thurstydog)"
 		updatedBy="ceceboy, Neglacio"
-		description="Shareaza Dutch Skin File"
+		description="Shareaza Default Dutch Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email="contact@shareaza.com"
+		email=""
 		version="2.3.0.0"
 		type="Language"
 		language="nl"
