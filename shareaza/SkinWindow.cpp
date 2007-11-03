@@ -508,7 +508,7 @@ void CSkinWindow::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 		MONITORINFO oMonitor = {};
 		oMonitor.cbSize = sizeof(oMonitor);
 		theApp.m_pfnGetMonitorInfoA( theApp.m_pfnMonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
-		
+
 		rcWork = oMonitor.rcWork;
 	}
 	else
@@ -516,35 +516,35 @@ void CSkinWindow::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 		SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWork, 0 );
 	}
 	rcWork.OffsetRect( -rcWork.left, -rcWork.top );
-	
+
 	CRect rcAdjusted( &rcWork );
 	CalcWindowRect( &rcAdjusted, FALSE, TRUE );
-	
+
 	if ( m_rcMaximise.left < 0 )
 		rcWork.left = rcAdjusted.left;
 	else
 		rcWork.left -= m_rcMaximise.left;
-	
+
 	if ( m_rcMaximise.top < 0 )
 		rcWork.top = rcAdjusted.top;
 	else
 		rcWork.top -= m_rcMaximise.top;
-	
+
 	if ( m_rcMaximise.right < 0 )
 		rcWork.right = rcAdjusted.right;
 	else
 		rcWork.right += m_rcMaximise.right;
-	
+
 	if ( m_rcMaximise.bottom < 0 )
 		rcWork.bottom = rcAdjusted.bottom;
 	else
 		rcWork.bottom += m_rcMaximise.bottom;
-	
+
 	lpMMI->ptMaxPosition.x	= rcWork.left;
 	lpMMI->ptMaxPosition.y	= rcWork.top;
 	lpMMI->ptMaxSize.x		= rcWork.right;
 	lpMMI->ptMaxSize.y		= rcWork.bottom;
-	
+
 	lpMMI->ptMinTrackSize.x	= max( lpMMI->ptMinTrackSize.x, m_szMinSize.cx );
 	lpMMI->ptMinTrackSize.y	= max( lpMMI->ptMinTrackSize.y, m_szMinSize.cy );
 }
@@ -560,37 +560,37 @@ UINT CSkinWindow::OnNcHitTest(CWnd* pWnd, CPoint point, BOOL bResizable)
 		nPointX = point.x;
 		point.x = 2 * rc.left + rc.Width() - point.x;
 	}
-		
+
 	if ( m_bAnchor[ SKINANCHOR_SYSTEM ] )
 	{
 		ResolveAnchor( rc, rcAnchor, SKINANCHOR_SYSTEM );
 		if ( rcAnchor.PtInRect( point ) ) return HTSYSMENU;
 	}
-	
+
 	if ( m_bAnchor[ SKINANCHOR_MINIMISE ] )
 	{
 		ResolveAnchor( rc, rcAnchor, SKINANCHOR_MINIMISE );
 		if ( rcAnchor.PtInRect( point ) ) return HTREDUCE;
 	}
-	
+
 	if ( m_bAnchor[ SKINANCHOR_MAXIMISE ] )
 	{
 		ResolveAnchor( rc, rcAnchor, SKINANCHOR_MAXIMISE );
 		if ( rcAnchor.PtInRect( point ) ) return HTZOOM;
 	}
-	
+
 	if ( m_bAnchor[ SKINANCHOR_CLOSE ] )
 	{
 		ResolveAnchor( rc, rcAnchor, SKINANCHOR_CLOSE );
 		if ( rcAnchor.PtInRect( point ) ) return HTCLOSE;
 	}
-	
+
 	if ( theApp.m_bRTL ) point.x = nPointX;
 	if ( bResizable && ! pWnd->IsZoomed() )
 	{
 		if ( point.x >= rc.right - SIZEBOX_WIDTH && point.y >= rc.bottom - SIZEBOX_WIDTH )
 			return HTBOTTOMRIGHT;
-		
+
 		if ( point.x < rc.left + m_rcResize.left )
 		{
 			if ( point.y < rc.top + m_rcResize.top ) return HTTOPLEFT;
@@ -616,11 +616,11 @@ UINT CSkinWindow::OnNcHitTest(CWnd* pWnd, CPoint point, BOOL bResizable)
 			return HTBOTTOM;
 		}
 	}
-	
+
 	OnNcCalcSize( pWnd, FALSE, (NCCALCSIZE_PARAMS*)&rc );
-	
+
 	if ( point.y < rc.top ) return HTCAPTION;
-	
+
 	return rc.PtInRect( point ) ? HTCLIENT : HTBORDER;
 }
 
@@ -652,14 +652,14 @@ void CSkinWindow::OnSetText(CWnd* pWnd)
 void CSkinWindow::OnSize(CWnd* pWnd)
 {
 	if ( pWnd->IsIconic() ) return;
-	
+
 	if ( pWnd->IsZoomed() )
 	{
 		if ( theApp.m_pfnGetMonitorInfoA != NULL )
 		{
- 			CRect rcWnd;
- 			SystemParametersInfo( SPI_GETWORKAREA, 0, rcWnd, 0 );
-			
+			CRect rcWnd;
+			SystemParametersInfo( SPI_GETWORKAREA, 0, rcWnd, 0 );
+
 			HMONITOR hMonitor = theApp.m_pfnMonitorFromWindow( pWnd->GetSafeHwnd(), MONITOR_DEFAULTTONEAREST );
 			MONITORINFO mi;
 			memset( &mi, 0, sizeof(MONITORINFO) );
@@ -668,9 +668,9 @@ void CSkinWindow::OnSize(CWnd* pWnd)
 
 			if ( mi.dwFlags & MONITORINFOF_PRIMARY )
 				SetWindowPos( pWnd->m_hWnd, HWND_TOP, rcWnd.left, rcWnd.top, rcWnd.Width(), 
-					rcWnd.Height(), 0 );
+				rcWnd.Height(), 0 );
 		}
- 		pWnd->SetWindowRgn( NULL, TRUE );
+		pWnd->SetWindowRgn( NULL, TRUE );
 	}
 	else if ( m_pRegionXML )
 	{
@@ -679,11 +679,11 @@ void CSkinWindow::OnSize(CWnd* pWnd)
 	else if ( CoolInterface.IsNewWindows() )
 	{
 		CRect rcWnd;
-		
+
 		pWnd->GetWindowRect( &rcWnd );
-			rcWnd.OffsetRect( -rcWnd.left, -rcWnd.top );
-			rcWnd.right++; rcWnd.bottom++;
-		
+		rcWnd.OffsetRect( -rcWnd.left, -rcWnd.top );
+		rcWnd.right++; rcWnd.bottom++;
+
 		HRGN hRgn = CreateRectRgnIndirect( &rcWnd );
 		pWnd->SetWindowRgn( hRgn, TRUE );
 	}
@@ -692,16 +692,16 @@ void CSkinWindow::OnSize(CWnd* pWnd)
 BOOL CSkinWindow::OnEraseBkgnd(CWnd* pWnd, CDC* pDC)
 {
 	if ( m_bmWatermark.m_hObject == NULL ) return FALSE;
-	
+
 	if ( ! m_dcSkin.m_hDC ) m_dcSkin.CreateCompatibleDC( pDC );
 	CBitmap* pOldImage = (CBitmap*)m_dcSkin.SelectObject( &m_bmWatermark );
-	
+
 	BITMAP pWatermark;
 	CRect rc;
-	
+
 	pWnd->GetClientRect( &rc );
 	m_bmWatermark.GetBitmap( &pWatermark );
-	
+
 	for ( int nY = rc.top ; nY < rc.bottom ; nY += pWatermark.bmHeight )
 	{
 		for ( int nX = rc.left ; nX < rc.right ; nX += pWatermark.bmWidth )
@@ -709,7 +709,7 @@ BOOL CSkinWindow::OnEraseBkgnd(CWnd* pWnd, CDC* pDC)
 			pDC->BitBlt( nX, nY, pWatermark.bmWidth, pWatermark.bmHeight, &m_dcSkin, 0, 0, SRCCOPY );
 		}
 	}
-	
+
 	m_dcSkin.SelectObject( pOldImage );
 	return TRUE;
 }
@@ -814,7 +814,7 @@ BOOL CSkinWindow::OnNcLButtonUp(CWnd* pWnd, UINT /*nHitTest*/, CPoint /*point*/)
 
 	m_nHoverAnchor = 0;
 	m_nDownAnchor = 0;
-	
+
 	CWindowDC dc( pWnd );
 	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
@@ -851,9 +851,9 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 	HICON hIcon = NULL;
 	CString strCaption;
 	CRect rc, rcItem;
-	
+
 	Prepare( &dc );
-	
+
 	pWnd->GetWindowRect( &rc );
 	rc.OffsetRect( -rc.left, -rc.top );
 
@@ -869,9 +869,9 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			bActive = CWnd::GetForegroundWindow() == pWnd ? TS_TRUE : TS_FALSE;
 		}
 	}
-	
-//	BOOL bZoomed = pWnd->IsZoomed();
-	
+
+	//	BOOL bZoomed = pWnd->IsZoomed();
+
 	if ( m_bCaption )
 	{
 		pWnd->GetWindowText( strCaption );
@@ -881,31 +881,31 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			strCaption.ReleaseBuffer();
 		}
 	}
-	
+
 	if ( m_bAnchor[ SKINANCHOR_ICON ] )
 	{
 		hIcon = pWnd->GetIcon( FALSE );
 		if ( hIcon == NULL ) hIcon = pWnd->GetIcon( TRUE );
 	}
 	int nCaptionHeight = 0;
-	
+
 	if ( m_bPart[ SKINPART_TOP_LEFT ] ) nCaptionHeight = max( nCaptionHeight, m_rcPart[ SKINPART_TOP_LEFT ].Height() );
 	if ( m_bPart[ SKINPART_TOP ] ) nCaptionHeight = max( nCaptionHeight, m_rcPart[ SKINPART_TOP ].Height() );
 	if ( m_bPart[ SKINPART_TOP_RIGHT ] ) nCaptionHeight = max( nCaptionHeight, m_rcPart[ SKINPART_TOP_RIGHT ].Height() );
 	CSize size( rc.Width(), nCaptionHeight );
 	CDC* pDC = CoolInterface.GetBuffer( dc, size );
-	
+
 	for ( int nAnchor = SKINANCHOR_SYSTEM ; nAnchor <= SKINANCHOR_CLOSE ; nAnchor++ )
 	{
 		if ( m_bAnchor[ nAnchor ] )
 		{
 			int nPart = ( nAnchor - SKINANCHOR_SYSTEM ) * 3 + SKINPART_SYSTEM;
-			
+
 			if ( m_nHoverAnchor == nAnchor )
 				nPart += ( m_nDownAnchor == nAnchor ? 2 : 1 );
 			else
 				nPart += ( m_nDownAnchor == nAnchor ? 0 : 0 );
-			
+
 			if ( m_bPart[ nPart ] )
 			{
 				ResolveAnchor( rc, rcItem, nAnchor );
@@ -916,20 +916,20 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 				// they are barely noticeable.
 				if ( m_bPart[ SKINPART_TOP ] && theApp.m_bRTL && nAnchor == SKINANCHOR_CLOSE )
 					pDC->StretchBlt( m_rcPart[ nPart ].Width() + rcItem.left - 1, rcItem.top,
-						-m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(),
-						&m_dcSkin, m_rcPart[ nPart ].left, m_rcPart[ nPart ].top,
-						m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(), SRCCOPY );
+					-m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(),
+					&m_dcSkin, m_rcPart[ nPart ].left, m_rcPart[ nPart ].top,
+					m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(), SRCCOPY );
 				else
 					pDC->BitBlt( rcItem.left, rcItem.top,
-						m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(), &m_dcSkin,
-						m_rcPart[ nPart ].left, m_rcPart[ nPart ].top, SRCCOPY );
+					m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(), &m_dcSkin,
+					m_rcPart[ nPart ].left, m_rcPart[ nPart ].top, SRCCOPY );
 				pDC->ExcludeClipRect( rcItem.left, rcItem.top,
 					rcItem.left + m_rcPart[ nPart ].Width(),
 					rcItem.top + m_rcPart[ nPart ].Height() );
 			}
 		}
 	}
-	
+
 	CRect rcLeft( &rc ), rcTop( &rc ), rcRight( &rc ), rcBottom( &rc );
 	int nTotalWidth, nCaptionWidth, nSystemOffset;
 	int nSystemWidth, nCaptionOffset, nRestOffset;
@@ -958,10 +958,10 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 				m_rcPart[ SKINPART_IA_TOP_LEFT ].Height(), SRCCOPY );
 			if ( m_nMirror == 2 )
 				pDC->StretchBlt( nRestOffset + nSystemWidth, 0, -nSystemWidth,
-					m_rcPart[ SKINPART_IA_TOP_LEFT ].Height(), &m_dcSkin,
-					m_rcPart[ SKINPART_IA_TOP_LEFT ].left + nRestOffset,
-					m_rcPart[ SKINPART_IA_TOP_LEFT ].top, nSystemWidth,
-					m_rcPart[ SKINPART_IA_TOP_LEFT ].Height(), SRCCOPY );
+				m_rcPart[ SKINPART_IA_TOP_LEFT ].Height(), &m_dcSkin,
+				m_rcPart[ SKINPART_IA_TOP_LEFT ].left + nRestOffset,
+				m_rcPart[ SKINPART_IA_TOP_LEFT ].top, nSystemWidth,
+				m_rcPart[ SKINPART_IA_TOP_LEFT ].Height(), SRCCOPY );
 		}
 		rcLeft.top += m_rcPart[ SKINPART_IA_TOP_LEFT ].Height();
 		rcTop.left += m_rcPart[ SKINPART_IA_TOP_LEFT ].Width();
@@ -985,15 +985,15 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 				m_rcPart[ SKINPART_TOP_LEFT ].Height(), SRCCOPY );
 			if ( m_nMirror == 2 )
 				pDC->StretchBlt( nRestOffset + nSystemWidth, 0, -nSystemWidth,
-					m_rcPart[ SKINPART_TOP_LEFT ].Height(), &m_dcSkin,
-					m_rcPart[ SKINPART_TOP_LEFT ].left + nRestOffset,
-					m_rcPart[ SKINPART_TOP_LEFT ].top, nSystemWidth,
-					m_rcPart[ SKINPART_TOP_LEFT ].Height(), SRCCOPY );
+				m_rcPart[ SKINPART_TOP_LEFT ].Height(), &m_dcSkin,
+				m_rcPart[ SKINPART_TOP_LEFT ].left + nRestOffset,
+				m_rcPart[ SKINPART_TOP_LEFT ].top, nSystemWidth,
+				m_rcPart[ SKINPART_TOP_LEFT ].Height(), SRCCOPY );
 		}
 		rcLeft.top += m_rcPart[ SKINPART_TOP_LEFT ].Height();
 		rcTop.left += m_rcPart[ SKINPART_TOP_LEFT ].Width();
 	}
-	
+
 	if ( bActive == TS_FALSE && m_bPart[ SKINPART_IA_TOP_RIGHT ] )
 	{
 		pDC->BitBlt( rc.Width() - m_rcPart[ SKINPART_IA_TOP_RIGHT ].Width(), 0,
@@ -1014,7 +1014,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcTop.right -= m_rcPart[ SKINPART_TOP_RIGHT ].Width();
 		rcRight.top += m_rcPart[ SKINPART_TOP_RIGHT ].Height();
 	}
-	
+
 	if ( m_bPart[ SKINPART_BOTTOM_LEFT ] && ! bCaption )
 	{
 		dc.BitBlt( 0, rc.Height() - m_rcPart[ SKINPART_BOTTOM_LEFT ].Height(),
@@ -1025,7 +1025,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcBottom.left += m_rcPart[ SKINPART_BOTTOM_LEFT ].Width();
 		rcLeft.bottom -= m_rcPart[ SKINPART_BOTTOM_LEFT ].Height();
 	}
-	
+
 	if ( m_bPart[ SKINPART_BOTTOM_RIGHT ] && ! bCaption )
 	{
 		dc.BitBlt( rc.Width() - m_rcPart[ SKINPART_BOTTOM_RIGHT ].Width(),
@@ -1037,7 +1037,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcRight.bottom -= m_rcPart[ SKINPART_BOTTOM_RIGHT ].Height();
 		rcBottom.right -= m_rcPart[ SKINPART_BOTTOM_RIGHT ].Width();
 	}
-	
+
 	if ( m_bPart[ SKINPART_LEFT_TOP ] && ! bCaption )
 	{
 		dc.BitBlt( 0, rcLeft.top, m_rcPart[ SKINPART_LEFT_TOP ].Width(),
@@ -1046,7 +1046,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			m_rcPart[ SKINPART_LEFT_TOP ].top, SRCCOPY );
 		rcLeft.top += m_rcPart[ SKINPART_LEFT_TOP ].Height();
 	}
-	
+
 	if ( m_bPart[ SKINPART_LEFT_BOTTOM ] && ! bCaption )
 	{
 		dc.BitBlt( 0, rcLeft.bottom - m_rcPart[ SKINPART_LEFT_BOTTOM ].Height(),
@@ -1056,7 +1056,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			m_rcPart[ SKINPART_LEFT_BOTTOM ].top, SRCCOPY );
 		rcLeft.bottom -= m_rcPart[ SKINPART_LEFT_BOTTOM ].Height();
 	}
-	
+
 	if ( m_bPart[ SKINPART_RIGHT_TOP ] && ! bCaption )
 	{
 		dc.BitBlt( rcRight.right - m_rcPart[ SKINPART_RIGHT_TOP ].Width(),
@@ -1066,7 +1066,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			m_rcPart[ SKINPART_RIGHT_TOP ].top, SRCCOPY );
 		rcRight.top += m_rcPart[ SKINPART_RIGHT_TOP ].Height();
 	}
-	
+
 	if ( m_bPart[ SKINPART_RIGHT_BOTTOM ] && ! bCaption )
 	{
 		dc.BitBlt( rcRight.right - m_rcPart[ SKINPART_RIGHT_BOTTOM ].Width(),
@@ -1077,11 +1077,11 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			m_rcPart[ SKINPART_RIGHT_BOTTOM ].top, SRCCOPY );
 		rcRight.bottom -= m_rcPart[ SKINPART_RIGHT_BOTTOM ].Height();
 	}
-	
+
 	if ( m_bPart[ SKINPART_LEFT ] && rcLeft.top < rcLeft.bottom && ! bCaption )
 	{
 		CRect* pRect = &m_rcPart[ SKINPART_LEFT ];
-		
+
 		if ( m_nPart[ SKINPART_LEFT ] == SKINPARTMODE_STRETCH )
 		{
 			dc.SetStretchBltMode( STRETCH_DELETESCANS );
@@ -1098,11 +1098,11 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			}
 		}
 	}
-	
+
 	if ( bActive == TS_FALSE && m_bPart[ SKINPART_IA_TOP ] && rcTop.left < rcTop.right )
 	{
 		CRect* pRect = &m_rcPart[ SKINPART_IA_TOP ];
-		
+
 		if ( m_nPart[ SKINPART_IA_TOP ] == SKINPARTMODE_STRETCH )
 		{
 			pDC->SetStretchBltMode( STRETCH_DELETESCANS );
@@ -1139,11 +1139,11 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			}
 		}
 	}
-	
+
 	if ( m_bPart[ SKINPART_RIGHT ] && rcRight.top < rcRight.bottom && ! bCaption )
 	{
 		CRect* pRect = &m_rcPart[ SKINPART_RIGHT ];
-		
+
 		if ( m_nPart[ SKINPART_RIGHT ] == SKINPARTMODE_STRETCH )
 		{
 			dc.SetStretchBltMode( STRETCH_DELETESCANS );
@@ -1161,11 +1161,11 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			}
 		}
 	}
-	
+
 	if ( m_bPart[ SKINPART_BOTTOM ] && rcTop.left < rcTop.right && ! bCaption )
 	{
 		CRect* pRect = &m_rcPart[ SKINPART_BOTTOM ];
-		
+
 		if ( m_nPart[ SKINPART_TOP ] == SKINPARTMODE_STRETCH )
 		{
 			dc.SetStretchBltMode( STRETCH_DELETESCANS );
@@ -1184,21 +1184,24 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			}
 		}
 	}
-	
+
 	if ( hIcon != NULL )
 	{
 		ResolveAnchor( rc, rcItem, SKINANCHOR_ICON );
 		DrawIconEx( pDC->GetSafeHdc(), rcItem.left, rcItem.top, hIcon, 16, 16, 0, NULL, DI_NORMAL );
 	}
-	
+
 	if ( m_bCaption && strCaption.GetLength() )
 	{
 		CFont* pOldFont	= (CFont*)pDC->SelectObject( &m_fnCaption );
 		CSize sz		= pDC->GetTextExtent( strCaption );
 		CPoint ptCap;
-		
+
 		rcItem.left		= m_rcCaption.left + ( m_rcCaption.left >= 0 ? rc.left : rc.right );
-		rcItem.right	= m_rcCaption.Width() + ( m_rcCaption.Width() >= 0 ? rc.left : rc.right );
+		if ( m_rcPart[ SKINPART_TOP_RIGHT ] )
+			rcItem.right = rc.right - m_rcPart[ SKINPART_TOP_RIGHT ].left;
+		else
+			rcItem.right = m_rcCaption.Width() + ( m_rcCaption.Width() >= 0 ? rc.left : rc.right );
 		rcItem.top		= rc.top + m_rcCaption.top;
 		rcItem.bottom	= rc.top + m_rcCaption.bottom;
 		
