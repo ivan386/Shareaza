@@ -391,6 +391,7 @@ Type: files; Name: "{app}\vc2.dll"
 ; Clean up old files from Shareaza
 Type: files; Name: "{app}\Shareaza.pdb"
 Type: files; Name: "{app}\skin-installer.pdb"
+Type: files; Name: "{app}\skin.pdb"
 Type: files; Name: "{app}\zlibwapi.pdb"
 Type: files; Name: "{app}\zlib.dll"
 Type: files; Name: "{app}\zlib1.dll"
