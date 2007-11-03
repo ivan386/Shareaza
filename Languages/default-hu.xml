@@ -4,20 +4,20 @@
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
-<!-- which you changed! Including sections you did not edit will reduce performance and limit -->
-<!-- compatibility with future versions and other skins. -->
+<!-- which you changed!  Including sections you did not edit will reduce performance and limit  -->
+<!-- compatibility with future versions and other skins.  -->
 
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <!-- Manifest -->
-<manifest	name="Magyar"
+	<manifest	name="Magyar"
 		author="Yuri"
 		updatedBy="Yuri"
 		description="Shareaza Default Hungarian Skin File"
 		link="http://totenkopf.uw.hu"
-		email="yurielvtars(at)gmail(dot)com"
-		version="2.2.5.5"
+		email="yurielvtars(AT)gmail(DOT)com"
+		version="2.3.0.0"
 		type="Language"
 		language="hu"
 		prompt="Kattintson ide a magyar nyelvhez."
@@ -413,7 +413,7 @@
 		<separator/>
 		<button id="ImageViewer_Refresh" text="Frissít"/>
 		<separator/>
-		<button id="ImageViewer_Close" text="Bezár"/>
+		<button id="ImageViewer_Close" text="Bezárás"/>
 	</toolbar>
 </toolbars>
 <!-- Menu Definitions -->
@@ -489,7 +489,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Weboldalak">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza hivatalos honlap"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza hivatalos _fórum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -554,6 +554,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="_Fájlok megosztása..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Torrent/Fájl letöltése..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_eMule félkész letöltések importálása..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="A kész _letöltések mappa megnyitása..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="_Kinézet kiválasztása..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="_Nyelv kiválasztása..."/>
@@ -583,7 +584,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Weboldalak">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza hivatalos honlap"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza hivatalos _fórum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -638,6 +639,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="_Fájlok megosztása..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Torrent/Fájl letöltése..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_eMule félkész letöltések importálása..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="A kész _letöltések mappa megnyitása..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="_Kinézet kiválasztása..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="_Nyelv kiválasztása..."/>
@@ -671,7 +673,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Weboldalak">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza hivatalos honlap"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza hivatalos _fórum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -953,7 +955,7 @@
 		<item id="ID_DOWNLOADS_HELP" text="_Súgó..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Előnézet"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="_Előnézet"/>	 
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Képes előnézet"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Másolat előnézete"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Listához ad"/>
@@ -972,7 +974,7 @@
 			<item id="ID_DOWNLOADS_URL" text="Forrás _hozzáadása"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="_Monitorablak"/>
-			<item id="ID_DOWNLOADS_EDIT" text="F_ejlett szerkesztés..."/>
+			<item id="ID_DOWNLOADS_EDIT" text="L_etöltés szerkesztése..."/>
 			<item id="ID_DOWNLOADS_TORRENT_INFO" text="T_orrent infó..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="_Fel"/>
@@ -992,14 +994,14 @@
 		<item id="ID_TRANSFERS_FORGET" text="_Elfelejt"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Megnyitás-Lejátszás"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Megnyitás és Lejátszás"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Listához ad"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Töröl"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Fájl törlése"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Megnyitás-Lejátszás"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Megnyitás és Lejátszás"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Listához ad"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Töröl"/>
 		<separator/>
@@ -1119,7 +1121,7 @@
 		<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="_Tulajdonságok"/>
 	</menu>
 	<menu name="CLibraryFileView.Physical.Basic">
-		<item id="ID_LIBRARY_LAUNCH" text="_Megnyitás-Lejátszás"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Megnyitás és Lejátszás"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="_Listához ad"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Megosztott"/>
@@ -1150,7 +1152,7 @@
 		<item id="ID_LIBRARY_PROPERTIES" text="_Tulajdonságok"/>
 	</menu>
 	<menu name="CLibraryFileView.Physical">
-		<item id="ID_LIBRARY_LAUNCH" text="_Megnyitás-Lejátszás"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Megnyitás és Lejátszás"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="_Listához ad"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="M_egosztott"/>
@@ -1184,7 +1186,7 @@
 		<item id="ID_LIBRARY_PROPERTIES" text="_Tulajdonságok"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
-		<item id="ID_LIBRARY_LAUNCH" text="_Megnyitás-Lejátszás"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Megnyitás és Lejátszás"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="_Listához ad"/>
 		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Album lejátszása"/>
 		<separator/>
@@ -1218,7 +1220,7 @@
 		<item id="ID_LIBRARY_PROPERTIES" text="_Tulajdonságok"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
-		<item id="ID_LIBRARY_LAUNCH" text="_Megnyitás-Lejátszás"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Megnyitás és Lejátszás"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="_Listához ad"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="M_egosztott"/>
@@ -1364,7 +1366,9 @@
 		<item id="ID_SYSTEM_VERBOSE" text="_Részletes napló"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="_Időbélyeg"/>
 		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Nepló _törlése"/>
+		<item id="ID_SYSTEM_COPY" text="_Másolás" shortcut="Ctrl+C"/>
+		<separator/>
+		<item id="ID_SYSTEM_CLEAR" text="Napló _törlése"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
@@ -1480,9 +1484,10 @@
 		<separator/>
 		<item id="ImageViewer_Refresh" text="_Frissít"/>
 		<separator/>
-		<item id="ImageViewer_Close" text="_Bezár"/>
+		<item id="ImageViewer_Close" text="_Bezárás"/>
 	</menu>
 </menus>
+
 <!-- Watermarks -->
 <watermarks>
 	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
@@ -1506,12 +1511,20 @@
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">K A P C S O L Ó D J O N !</heading>
 			<newline gap="8" indent="42"/>
-			<text>Üdvözlöm a Shareazában! &#160;Jelenleg egyik p2p hálózathoz sem csatlakozik. &#160;</text>
+			<text>Üdvözlöm a Shareazában!</text>
+			<newline gap="8" indent="42"/>
+			<text>Jelenleg egyik p2p hálózathoz sem csatlakozik. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Az indításhoz kattintson ide.</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">L E T Ö L T É S &#160; I N D Í T Á S A</heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Kattintson ide</link>
+			<text align="middle">&#160;egy új fájl vagy torrent letöltéséhez.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
 			<heading align="middle">K E R E S É S</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
@@ -1577,18 +1590,11 @@
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Súgó</link>
 		<text align="middle">&#160;- Segítség a program használatához.</text>
 		<newline gap="18" indent="0"/>
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">L E T Ö L T É S E K</heading>
-		<newline gap="8" indent="42"/>
-		<text>A letöltések mappa megnyitásához </text>
-		<link target="raza:shell:downloads">kattintson ide.</link>
-		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">T Á V O L I &#160; I R Á N Y Í T Á S &#160; B E K A P C S O L V A</heading>
+			<heading align="middle">T Á V O L I &#160; E L É R É S &#160; B E K A P C S O L V A</heading>
 			<newline gap="8" indent="42"/>
-			<text>A távoli irányítás be van kapcsolva. Használja a Shareazát a böngésződön keresztül:</text>
+			<text>A távoli használat be van kapcsolva. Használja a Shareazát a böngészőjén keresztül. Címek:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
 			<text>&#160;- vagy -&#160;</text>
@@ -1626,8 +1632,10 @@
 			<text id="LibraryFiles" format="b">%lu </text>
 			<text>fájl, </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Menjen a könyvtárba</link>
+			<newline gap="4"/>
+			<link format="bu" target="raza:shell:downloads">Letöltések mappa megnyitása</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>Hashelés: </text>
@@ -2169,7 +2177,7 @@
 	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="A félkész letöltés(ek) törlése."/>
 	<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Szüneteltetett letöltések törlése."/>
 	<tip id="ID_DOWNLOADS_COPY" message="URI másolása."/>
-	<tip id="ID_DOWNLOADS_EDIT" message="A fejlett letöltésszerkesztő mutatása..."/>
+	<tip id="ID_DOWNLOADS_EDIT" message="Letöltésszerkesztő mutatása..."/>
 	<tip id="ID_DOWNLOADS_ENQUEUE" message="A kiválasztott letöltés(ek) hozzáadása a lejátszólistához."/>
 	<tip id="ID_DOWNLOADS_FILE_DELETE" message="A kiválasztott kész fájl(ok) törlése."/>
 	<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Minden aktív letöltés mutatása."/>
@@ -2187,7 +2195,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="A kiválasztott letöltés(ek) feljebb tolása az elsőbbségi listán."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Szünetelteti a kiválasztott letöltés(ek)et.."/>
 	<tip id="ID_DOWNLOADS_RATE" message="A letöltés osztályozása."/>
-	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Előnézetként letölt egy képet a letöltésből."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Előnézetként letölt egy képet a letöltésből."/>	
 	<tip id="ID_DOWNLOADS_RESUME" message="A kiválasztott letöltés(ek) folytatása."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Letöltési beállítások..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Ezt a félig letöltött fájlt ossza meg másokkal."/>
@@ -2205,6 +2213,7 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Látogassa meg a Shareaza hivatalos weboldalát."/>
 	<tip id="ID_HELP_SECURITY" message="Veszélyes programok elleni védekezés."/>
 	<tip id="ID_HELP_UPDATE" message="Frissítések és új hírek ellenőrzése."/>
+	<tip id="ID_HELP_TEST" message="Kapcsolódási teszt lefuttatása."/>
 	<tip id="ID_HELP_WEB_1" message="Ellátogat a Zeropaid.com-ra."/>
 	<tip id="ID_HELP_WEB_2" message="Ellátogat a P2PForums.com-ra."/>
 	<tip id="ID_HELP_WEB_3" message="Ellátogat a Slyck.com-ra."/>
@@ -2293,7 +2302,7 @@
 	<tip id="ID_MEDIA_PREVIOUS" message="Visszamegy az előző fájlra." tip="Előző"/>
 	<tip id="ID_MEDIA_PROPERTIES" message="A kiválasztott fájl tulajdonságainak szerkesztése."/>
 	<tip id="ID_MEDIA_RANDOM" message="Véletlenszerű lejátszás kapcsolgatása."/>
-	<tip id="ID_MEDIA_RATE" message="Kiválasztott fájl osztályozása."/>
+	<tip id="ID_MEDIA_RATE" message="Kiválasztott fájl osztályozása."/>	
 	<tip id="ID_MEDIA_REMOVE" message="Eltávolítja a lejátszólistából."/>
 	<tip id="ID_MEDIA_REPEAT" message="Ismételt lejátszás kapcsolgatása."/>
 	<tip id="ID_MEDIA_SAVE" message="A jelenlegi list mentése..."/>
@@ -2357,7 +2366,8 @@
 	<tip id="ID_SECURITY_POLICY_DENY" message="Beállítja az alapértelmezett biztonsági szabályt, ami mindenhol tiltva van."/>
 	<tip id="ID_SECURITY_REMOVE" message="A kiválasztott biztonsági szabály eltávolítása."/>
 	<tip id="ID_SECURITY_RESET" message="A kiválasztott biztonsági szabály számlálójának nullázása."/>
-	<tip id="ID_SYSTEM_CLEAR" message="A log törlése."/>
+	<tip id="ID_SYSTEM_CLEAR" message="A napló törlése."/>
+	<tip id="ID_SYSTEM_COPY" message="Kijelölt sorok másolása."/>
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Minden sorhoz időbélyeget ad."/>
 	<tip id="ID_SYSTEM_VERBOSE" message="Részletes napló mutatása."/>
 	<tip id="ID_TAB_CONNECT" message="Le- és felkapcsolódás a hálózatokra."/>
@@ -2432,6 +2442,11 @@
 	<tip id="ImageViewer_Refresh" message="Frissíti a képet."/>
 	<tip id="ImageViewer_Close" message="Bezárja a képnézegető ablakot."/>
 </commandTips>
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="Maximum módban a sávszél nem fogja túllépni a megadott értéket. Átlagos módban csak a megadott érték körül fog ingadozni."/>
+	<tip id="IDC_SHARE_PARTIALS" message="This setting have no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned."/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
@@ -2473,7 +2488,7 @@
 	<string id="8007" value="Nincsen aktív keresés. Kattintson ide a fájlok kereséséhez."/>
 	<string id="8008" value="A Shareaza letöltötte a legújabb, Shareaza (%s) verziót. Szeretné most frissíteni a proramot?\n\nHa igen, a Shareaza a telepítés idejére bezárja magát."/>
 	<string id="8009" value="Biztos, hogy törölni akarja a(z) &quot;%s&quot; kinézetet? Ezt már nem lehet később visszavonni."/>
-	<string id="8010" value="Ez a Shareaza béta verziója. Töltse le a legújabb stabil verziót a http://shareaza.sourceforge.net/ -ról."/>
+	<string id="8010" value="Ez a Shareaza tesztverziója és a tesztelési időszak lejárt. Töltse le a legújabb stabil verziót a http://shareaza.sourceforge.net -ről."/>
 	<string id="8011" value="A kinézet megváltoztatása bezár minden megnyitott ablakot. Most akarja megvátoztatni?"/>
 	<string id="8012" value="Torrent adatok"/>
 	<string id="8060" value="Hub/Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>
@@ -2521,8 +2536,8 @@
 	<string id="8150" value="Keresés:"/>
 	<string id="8151" value="Találat:"/>
 	<string id="8152" value="%lu hub, %lu leaf"/>
-	<string id="8153" value="Jelenleg nincs keresés"/>
-	<string id="8154" value="Nem találtam semmit"/>
+	<string id="8153" value="Jelenleg nincs keresés."/>
+	<string id="8154" value="Nem találtam semmit."/>
 	<string id="8155" value="%lu fájl %lu találat|%lu fájl %lu találat|%lu fájl %lu találat"/>
 	<string id="8156" value="Keresés"/>
 	<string id="8157" value="Eredmények"/>
@@ -2538,7 +2553,7 @@
 	<string id="8167" value="Minden hálózat"/>
 	<string id="8176" value="Shareaza keresés"/>
 	<string id="8177" value="Írja ide a keresendő szót vagy szavakat:"/>
-	<string id="8178" value="Milyen típusú a fájl?"/>
+	<string id="8178" value="Fájltípus:"/>
 	<string id="8179" value="(előzmények törlése)"/>
 	<string id="8180" value="Fájlméret"/>
 	<string id="8181" value="&#160;-"/><!-- size from xx TO xx-->
@@ -2606,9 +2621,9 @@
 	<string id="8337" value="Megbízhatatlan"/>
 	<string id="13000" value="Biztosan törölni akarja a kiválasztott biztonsági szabályokat? Később már nem lehet visszavonni."/>
 	<string id="13001" value="Az interneten megosztott fájlok"/>
-	<string id="16063" value="UPnP port hozzárendelés a 10 próbálkozás után sem sikerült."/>
+	<string id="16063" value="Az UPnP port hozzárendelés a 10 próbálkozás után sem sikerült."/>
 	<string id="16064" value="Shareaza hálózati mag indítása..."/>
-	<string id="16065" value="Nem tudok kacsolódni: %s port %i A bejövő kacsolatok nem támogatottak."/>
+	<string id="16065" value="Nem tudok kacsolódni: %s port %i A bejövő kapcsolatok nem támogatottak."/>
 	<string id="16066" value="Shareaza hálózati mag leállítása..."/>
 	<string id="16067" value="Lekapcsolódtam a hálózatról."/>
 	<string id="16068" value="Bejövő TCP kapcsolat elfogadása: %s port %i."/>
@@ -2825,6 +2840,7 @@
 	<string id="16409" value="URI exportálása..."/>
 	<string id="16410" value="A kész és a félkész fájlok ne legyenek azonos mappában!"/>
 	<string id="16411" value="Nem tudom mozgatni: %s. Talán egy másik program használja.\n\nInkább másolni akarja?"/>
+	<string id="16412" value="Szellemfájl"/>
 	<string id="16448" value="Kapcsolódva: %s, viszontválaszra várva..."/>
 	<string id="16449" value="Jelenleg vele beszélget: %s (%s)."/>
 	<string id="16450" value="Kapcsolat bezárva: %s."/>
@@ -2877,7 +2893,7 @@
 	<string id="16781" value="Kérés..."/>
 	<string id="16782" value="Siker!"/>
 	<string id="16783" value="Kész, zárd be"/>
-	<string id="16784" value="Bezár"/>
+	<string id="16784" value="Bezárás"/>
 	<string id="16785" value="(Nincs képi megjelenítés)"/>
 	<string id="16800" value="Nem választott ki kapcsolatot. Válasszon egy kapcsolattípust vagy írja be a kapcsolata sebességét."/>
 	<string id="16802" value="Nem választott ki megosztani való mappákat. Biztos, hogy ezt akarja?"/>
@@ -2970,7 +2986,7 @@
 	<string id="17117" value="Kapcsolódás"/>
 	<string id="17118" value="Viszontválasz"/>
 	<string id="17119" value="Megtagadva"/>
-	<string id="17120" value="Bezár"/>
+	<string id="17120" value="Bezárás"/>
 	<string id="17121" value="Ismeretlen"/>
 	<string id="17122" value="G1 Peer"/>
 	<string id="17123" value="G1 Ultrapeer"/>
@@ -3069,7 +3085,7 @@
 	<string id="19001" value="Egy felhasználónevet és egy jelszót kell választania."/>
 	<string id="19002" value="Nem tudom fogadni a kapcsolatokat, URL érvénytelen."/>
 	<string id="20000" value="Nincs elérhető URN"/>
-	<string id="20001" value="Bezár"/>
+	<string id="20001" value="Bezárás"/>
 	<string id="20002" value="/"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="A szövegirány megváltoztatásához újra kell indítani a programot. \nEzt kézzel kell megtennie. Be akarja most zárni a Shareazát?"/>
 	<string id="20004" value="Az ön operációs rendszere nem támogatja a jobbról balra való írásmódot."/>
@@ -3116,7 +3132,7 @@
 	<string id="20133" value="Érdektelen"/>
 	<string id="20134" value="Elakadva"/>
 	<string id="20135" value="Következő"/>
-	<string id="20136" value="S"/>
+	<string id="20136" value="S"/> 
 	<string id="20137" value="forrás"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Vasárnap"/>
 	<string id="20201" value="Hétfő"/>
@@ -3277,7 +3293,7 @@
 		<control/><control/>
 		<control caption="_Félkész letöltések mappája"/>
 		<control/><control/>
-		<control caption="Letöltések _száma:"/>
+		<control caption="Letöltések _száma"/>
 		<control caption="Max fájlok:"/>
 		<control/><control/>
 		<control caption="Max forgalom:"/>
@@ -3318,7 +3334,7 @@
 		<control caption="_Leírás"/>
 		<control caption="Ezzel a szolgáltatással egy webböngészőn keresztül távolról is irányíthatja a Shareazát. Ehhez azonban a Shareazát futtató gépnek tudnia kell fogadni a bejövő kapcsolatokat."/>
 		<control caption="_Engedélyezés"/>
-		<control caption="Engedélyezi a távoli használatot"/>
+		<control caption="Távoli használat engedélyezése"/>
 		<control/>
 		<control caption="_Belépési adatok"/>
 		<control caption="Felhasználó neve:"/>
@@ -3406,7 +3422,7 @@
 		<control caption="Maximum"/>
 		<control/><control/>
 		<control caption="másik klienshez kapcsolódhat."/>
-		<control caption="eDonkey eszközök"/>
+		<control caption="eDonkey e_szközök"/>
 		<control caption="eDonkey szerverlista letöltése az internetről:"/>
 		<control caption="Letöltés..."/>
 	</dialog>
@@ -3469,7 +3485,7 @@
 		<control caption="_Név"/>
 		<control/>
 		<control caption="_Feltételek"/>
-		<control caption="Csak részben letöltött fájlok"/>
+		<control caption="Csak részben letöltött fájlok"/> 
 		<control caption="Csak a Könyvtárban megosztott fájlok"/>
 		<control caption="Részben és a Könyvtárban is megosztott fájlok"/>
 		<control caption="Minimális fájlméret:"/>
@@ -3554,7 +3570,7 @@
 		<control caption="0"/>
 		<control caption="Lemez:"/>
 		<control caption="0"/>
-		<control caption="Bezár"/>
+		<control caption="Bezárás"/>
 	</dialog>
 	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Köszöntöm a Shareazában [5/7]">
 		<control caption="A Shareaza használata során találkozhat hasonló érdeklődési körű emberekkel. Megnézheti mások profilját és megosztását."/>
@@ -3581,7 +3597,7 @@
 		<control caption="Igen"/>
 		<control caption="Nem|Mégse"/>
 		<control/>
-		<control caption="Bezár"/>
+		<control caption="Bezárás"/>
 	</dialog>
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Köszöntöm a Shareazában [7/7]">
 		<control caption="Ennyi volt! A Shareaza kész a használatra."/>
@@ -3878,8 +3894,8 @@
 		<control/><control/><control/><control/>
 		<control caption="_Tartalomszűrő:"/>
 		<control/>
-		<control caption="logikai ÉS"/>
-		<control caption="logikai VAGY"/>
+		<control caption="Bármilyen egyezés"/>
+		<control caption="Pontos egyezés"/>
 		<control caption="_Beállítások"/>
 		<control caption="Feladat:"/>
 		<control caption="Semmi|Elfogad|Blokkol"/>
@@ -3957,10 +3973,10 @@
 		<control caption="Tudta, hogy a Shareaza egy teljesen ingyenes termék?"/>
 		<control caption="A Shareaza SEMMILYEN &quot;kémprogramot&quot;, &quot;reklámot&quot; és hasonló programot NEM tartalmaz. SEMMILYEN &quot;felugró ablak&quot; NEM található benne.{n}{n}Ha mégis megjelenne ilyesmi, akkor az nem a Shareazától származik!"/>
 		<control caption="Ellenben más programok tartalmazhatnak reklámot és/vagy kémprogramot. Ha ilyenekkel találkozik, futtasson le egy reklám- és kémprogram írtó programot."/>
-		<control caption="Soha nem kell pénzt kiadnia a Shareazáért. Innen letöltető ingyen: http://shareaza.sourceforge.net/. Ha valahol fizett érte, akkor biztosan átvágták és kérje vissza a pénzét."/>
+		<control caption="Soha nem kell pénzt kiadnia a Shareazáért. Innen letöltető ingyen: http://shareaza.sourceforge.net. Ha valahol fizetett érte, akkor biztosan átvágták és kérje vissza a pénzét."/>
 		<control caption="A Shareaza tiszteli a felhasználóit!"/>
 		<control caption="http://shareaza.sourceforge.net/"/>
-		<control caption="Bezár"/>
+		<control caption="Bezárás"/>
 	</dialog>
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Terjesztés">
 		<control/>
@@ -4001,7 +4017,7 @@
 	</dialog>
 	<dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza súgó">
 		<control/>
-		<control caption="Bezár"/>
+		<control caption="Bezárás"/>
 		<control/>
 	</dialog>
 	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Fájl törlése">
@@ -4031,7 +4047,7 @@
 		<control caption="Leírás:"/>
 		<control/>
 		<control caption="Törlés|Vissza"/>
-		<control caption="_Következő|Export"/>
+		<control caption="_Következő|Exportálás..."/>
 		<control caption="_Mégse"/>
 	</dialog>
 	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Letöltés szerkesztése">
