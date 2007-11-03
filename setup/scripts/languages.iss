@@ -36,7 +36,6 @@ Name: "ca"; MessagesFile: "setup\isl\catalan.isl"; LicenseFile: "setup/license/c
 Name: "sq"; MessagesFile: "setup\isl\albanian.isl"; LicenseFile: "setup/license/albanian.rtf"
 
 [Files]
-#ifndef debug
 ; Install default remote
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Tasks: not language
 ; Install localized remote
@@ -222,7 +221,6 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ca; Tasks: language
 ; Albanian
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sq; Tasks: language
-#endif
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
