@@ -16,63 +16,22 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)"
-			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			OutputDirectory="$(SolutionDir)../setup/builds"
+			IntermediateDirectory="$(SolutionDir)../setup/builds"
+			ConfigurationType="10"
+			BuildLogFile=""
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Making Installer..."
-				CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &gt; nul&#x0D;&#x0A;"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
+				Description=""
+				CommandLine="&#x0D;&#x0A;"
+				Outputs=""
 			/>
 			<Tool
 				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -80,16 +39,19 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)../setup/builds"
+			IntermediateDirectory="$(SolutionDir)../setup/builds"
 			ConfigurationType="10"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			BuildLogFile=""
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				Description=""
+				CommandLine="&#x0D;&#x0A;"
+				Outputs=""
 			/>
 			<Tool
 				Name="VCMIDLTool"
@@ -117,17 +79,18 @@
 					Name="VCCustomBuildTool"
 					Description="Making Installer..."
 					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)$(PlatformName)&quot; &gt; nul"
-					Outputs="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot;"
+					Outputs="$(SolutionDir)../setup/builds/Shareaza.exe"
 				/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32"
+				ExcludedFromBuild="true"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Making Installer..."
 					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)$(PlatformName)&quot; &gt; nul"
-					Outputs="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\geoip.dll&quot;"
+					Outputs="$(SolutionDir)../setup/builds/Shareaza.exe"
 				/>
 			</FileConfiguration>
 		</File>
