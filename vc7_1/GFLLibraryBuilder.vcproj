@@ -12,7 +12,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="0"
@@ -61,7 +61,8 @@
 				Name="VCPreBuildEventTool"
 				Description="Copying libgfl267.dll..."
 				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
-copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"/>
+copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -81,7 +82,7 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="1"
@@ -140,7 +141,8 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 				Name="VCPreBuildEventTool"
 				Description="Copying libgfl267.dll..."
 				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
-copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y"/>
+copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -250,6 +252,21 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\debug\plugins\gfllibrarybuilder\GFLLibraryBuilder_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\release\plugins\gfllibrarybuilder\GFLLibraryBuilder_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -264,21 +281,6 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\plugins\gfllibrarybuilder\GFLLibraryBuilder_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

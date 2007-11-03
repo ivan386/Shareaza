@@ -11,7 +11,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE">
@@ -76,7 +76,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			UseOfMFC="0"
@@ -237,21 +237,6 @@
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath=".\debug\plugins\mediaimageservices\MediaImageServices_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\release\plugins\mediaimageservices\MediaImageServices_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -266,6 +251,21 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debug\plugins\mediaimageservices\MediaImageServices_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

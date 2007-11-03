@@ -78,8 +78,7 @@
 					Outputs="&quot;$(SolutionDir)$(ConfigurationName)\geoip.dll&quot;"/>
 			</FileConfiguration>
 			<FileConfiguration
-				Name="Release|Win32"
-				ExcludedFromBuild="TRUE">
+				Name="Release|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
 					Description="Making Installer..."

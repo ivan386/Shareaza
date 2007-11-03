@@ -11,7 +11,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="1">
@@ -74,7 +74,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			UseOfMFC="0"

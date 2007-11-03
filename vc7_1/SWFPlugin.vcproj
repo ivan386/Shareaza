@@ -11,7 +11,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2">
 			<Tool
@@ -75,7 +75,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="1"
@@ -244,21 +244,6 @@
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath=".\release\plugins\swfplugin\SWFPlugin_i.c">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\debug\plugins\swfplugin\SWFPlugin_i.c">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -273,6 +258,21 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\release\plugins\swfplugin\SWFPlugin_i.c">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
