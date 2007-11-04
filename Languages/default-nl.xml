@@ -2267,7 +2267,6 @@
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exporteer de geselecteerde albummap naar een collectie bestand..."/>
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download alle bestanden in de geselecteerde collectie."/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Alle bestanden uit het geselecteerde album toevoegen aan je afspeellijst."/>
-	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Exporteer de geselecteerde albummap naar een collectie bestand..."/>
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Toon en wijzig de eigenschappen van alle bestanden in de geselecteerde mappen..."/>
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="De gemeenschappelijke metadata van het album overnemen naar al zijn bestanden."/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="Hier een nieuw album aanmaken..."/>
@@ -2311,6 +2310,7 @@
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Gebruik de basis breedte-hoogte verhouding van de video."/>
 	<tip id="ID_MEDIA_CLEAR" message="De afspeellijst compleet wissen."/>
 	<tip id="ID_MEDIA_CLOSE" message="Het huidige mediabestand afsluiten, waardoor geheugen vrijgemaakt wordt."/>
+
 	<tip id="ID_MEDIA_FULLSCREEN" message="In- of uitschakelen van het afspelen van de video in het volledige beeldscherm."/>
 	<tip id="ID_MEDIA_MUTE" message="Het geluid stilzetten"/>
 	<tip id="ID_MEDIA_NEXT" message="Ga naar het volgende bestand van de afspeellijst."/>
@@ -2454,6 +2454,11 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Rangschik geopende vensters horizontaal, zonder elkaar te overlappen."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Rangschik geopende vensters verticaal, zonder elkaar te overlappen."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Toon of verberg de knoppenbalk."/>
+
+
+
+
+
 </commandTips>
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
