@@ -1487,6 +1487,7 @@
 		<item id="ImageViewer_Close" text="Fechar"/>
 	</menu>
 </menus>
+
 <!-- Watermarks -->
 <watermarks>
 	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
@@ -1507,8 +1508,8 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">S E J A &#160; C O N E C T A D O</heading>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
+			<heading align="middle">S E &#160; C O N E C T E</heading>
 			<newline gap="8" indent="42"/>
 			<text>Bem-vindo ao Shareaza!</text>
 			<newline gap="8" indent="42"/>
@@ -3116,6 +3117,7 @@
 	<string id="20009" value="Customizar"/>
 	<string id="20010" value="&amp;Voltar"/>
 	<string id="20011" value="&amp;Próximo"/>
+	<string id="20012" value="Terminar"/>
 	<string id="20100" value="Conectando"/>
 	<string id="20101" value="Pedindo"/>
 	<string id="20102" value="Resposta"/>
