@@ -1016,19 +1016,51 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Disposition") ) == 0 )
 	{
-		if (m_pDownload->GetSourceCount() <= 1) 
+		BOOL bIsP2P = m_pSource->m_bSHA1 || m_pSource->m_bTiger || m_pSource->m_bED2K || m_pSource->m_bMD5 || m_pSource->m_bBTH;
+
+		// Accept Content-Disposition only if the current display name is empty or if it came from Web Servers and the current display name is shorter than 13 chars (Is likely to be default.html, default.asp, etc.).
+		if ( m_pDownload->m_sDisplayName.GetLength() == 0 || ( !bIsP2P && m_pDownload->m_sDisplayName.GetLength() < 13 ) )
 		{ 
-			// First source
 			CString strPhrase, strFilename;
 			int nPos = strValue.Find( _T("filename=") );
-			if ( nPos >= 0 ) 
+
+			if ( nPos >= 0 )
 			{
 				// If exactly, it should follow RFC 2184 rules
 				strPhrase = URLDecode( strValue.Mid( nPos + 9 ) );
 				int nLength = strPhrase.GetLength();
 				strFilename = strPhrase.Mid( 1 , nLength - 2 );
-				theApp.Message( MSG_DEBUG, _T("Content-Disposition filename: %s"), (LPCTSTR)strFilename);
-				m_pDownload->Rename( strFilename );
+
+				// If the filenames contain an invalid character (because web servers or P2P clients are evil or because sometimes non-ascii chars, specially Japanese chars, are encoded as "?" (%3F) by a faulty coding)
+				if ( strFilename.Find( _T('\\') ) >= 0 || strFilename.Find( _T('/') ) >= 0 || strFilename.Find( _T(':') ) >= 0
+					|| strFilename.Find( _T('*') ) >= 0 || strFilename.Find( _T('?') ) >= 0 || strFilename.Find( _T('"') ) >= 0
+					|| strFilename.Find( _T('<') ) >= 0 || strFilename.Find( _T('>') ) >= 0 || strFilename.Find( _T('|') ) >= 0 )
+				{
+					// And if the source is only one, and it isn't a P2P client replace bad chars with _
+					if( m_pDownload->GetSourceCount() <= 1 && !bIsP2P )
+					{
+						strFilename.Replace( _T('\\'), _T('_') );
+						strFilename.Replace( _T('/'), _T('_') );
+						strFilename.Replace( _T(':'), _T('_') );
+						strFilename.Replace( _T('*'), _T('_') );
+						strFilename.Replace( _T('?'), _T('_') );
+						strFilename.Replace( _T('"'), _T('_') );
+						strFilename.Replace( _T('<'), _T('_') );
+						strFilename.Replace( _T('>'), _T('_') );
+						strFilename.Replace( _T('|'), _T('_') );
+					}
+					// Else ignore it, the name will be acquired in another way
+					else
+					{
+						strFilename = _T("");
+					}
+				}
+
+				if ( strFilename.GetLength() )
+				{
+					theApp.Message( MSG_DEBUG, _T("Content-Disposition filename: %s"), (LPCTSTR)strFilename);
+					m_pDownload->Rename( strFilename );
+				}
 			}		
 		}
 	}	
