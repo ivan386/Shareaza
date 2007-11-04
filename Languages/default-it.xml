@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx --> <!-- Revisione 57 -->
+<!-- Shareaza Default Italian Skin File --> <!-- This translation is based on default-en.xml SVN rev.6069 --> <!-- Revisione 58 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -1363,10 +1363,12 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="Modalità discorsiva"/>
-		<item id="ID_SYSTEM_TIMESTAMP" text="Registra orario"/>
+		<item id="ID_SYSTEM_VERBOSE" text="Modalità _discorsiva"/>
+		<item id="ID_SYSTEM_TIMESTAMP" text="Registra _orario"/>
 		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Svuota buffer"/>
+		<item id="ID_SYSTEM_COPY" text="_Copia" shortcut="Ctrl+C"/>
+		<separator/>
+		<item id="ID_SYSTEM_CLEAR" text="Svuota _buffer"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
@@ -1485,6 +1487,7 @@
 		<item id="ImageViewer_Close" text="_Chiudi"/>
 	</menu>
 </menus>
+
 <!-- Watermarks -->
 <watermarks>
 	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
@@ -1505,16 +1508,24 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">C O N N E S S I O N E</heading>
 			<newline gap="8" indent="42"/>
-			<text>Benvenuto su Shareaza! &#160;Attualmente non sei connesso a nessuna delle reti peer to peer. &#160;</text>
+			<text>Benvenuto su Shareaza!</text>
+			<newline gap="8" indent="42"/>
+			<text>Attualmente non sei connesso a nessuna delle reti peer to peer. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Clicca qui per iniziare!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">C E R C A &#160; S U &#160; S H A R E A Z A</heading>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">A V V I A &#160; I L &#160; D O W N L O A D</heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Fai click qui per iniziare</link>
+			<text align="middle">&#160; il download di un nuovo file o torrent.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
+			<heading align="middle">C E R C A &#160; U N &#160; F I L E</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
@@ -1579,13 +1590,6 @@
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Aiuto veloce</link>
 		<text align="middle">&#160;- Aiuti fondamentali per usare Shareaza</text>
 		<newline gap="18" indent="0"/>
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">D O W N L O A D</heading>
-		<newline gap="8" indent="42"/>
-		<text>Per aprire la cartella con i tuoi download fai click </text>
-		<link target="raza:shell:downloads">qui</link>
-		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">A C C E S S O &#160; R E M O T O &#160; A B I L I T A T O</heading>
@@ -1628,7 +1632,7 @@
 			<text id="LibraryFiles" format="b">%lu </text>
 			<text>file, </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">La mia libreria</link>
 			<newline gap="4"/>
 			<link format="bu" target="raza:shell:downloads">Apri la cartella dei download completati</link>
