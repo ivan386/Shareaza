@@ -2488,6 +2488,9 @@
 	<string id="7003" value="Meerdere"/>
 	<string id="7004" value="Er is al een filter met de bestandsnaam &quot;%s&quot;, wil je deze vervangen?"/>
 	<string id="7005" value="Geef je filter een naam."/>
+
+
+
 	<string id="8000" value="Shareaza instellingen"/>
 	<string id="8001" value="Welkom bij Shareaza"/>
 	<string id="8002" value="Bestandseigenschappen"/>
@@ -2500,6 +2503,7 @@
 	<string id="8009" value="Weet je zeker dat je de skin &quot;%s&quot; wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
 	<string id="8010" value="Dit is een voor-distributie versie van Shareaza en de beta periode is afgelopen. Download alsjeblieft de volledige, officiële distributie vanaf http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Als je van stijl verandert, worden alle geopende vensters gesloten. Wil je nu veranderen?"/>
+
 	<string id="8060" value="Hub/Ultrapeer Modus met %lu buurman(nen).  %s in lokale bibliotheek."/>
 	<string id="8061" value="Ultrapeer Modus met %lu buurman(nen). %s in lokale bibliotheek."/>
 	<string id="8062" value="Hub Modus met %lu buurmannen. %s in lokale bibliotheek."/>
@@ -2532,6 +2536,7 @@
 	<string id="8134" value="Je staat op het punt om een nieuwe zoekopdracht uit te voeren. Wil je de resultaten van je vorige zoekopdracht wissen?"/>
 	<string id="8135" value="Geen metadata"/>
 	<string id="8136" value="Platte tekst zoeken"/>
+
 	<string id="8141" value="Toon het zoekpaneel"/>
 	<string id="8142" value="Verberg het zoekpaneel"/>
 	<string id="8143" value="Zoekend..."/>
@@ -2629,6 +2634,7 @@
 	<string id="8337" value="Niet betrouwbaar"/>
 	<string id="13000" value="Ben je zeker dat je deze veiligheidsregels wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
 	<string id="13001" value="Bestanden gedeeld over het internet"/>
+
 	<string id="16064" value="Opstarten van het netwerkcentrum van Shareaza..."/>
 	<string id="16065" value="Kan geen contact maken met %s poort %i voor binnenkomende verbindingen. Binnenkomende verbindingen zijn niet mogelijk."/>
 	<string id="16066" value="Afsluiten van Shareaza's netwerkcentrum..."/>
@@ -2662,14 +2668,12 @@
 	<string id="16137" value="Een dubbele verbinding vanaf %s is geweigerd."/>
 	<string id="16138" value="Al verbonden met %s, ga niet nog een tweede verbinding aanmaken."/>
 	<string id="16139" value="Bron %s heeft de verbinding verbroken (%i : %s)."/>
-	<string id="16140" value="Bron %s heeft kruipende verbindingen."/>
 	<string id="16141" value="Verbinding met bron %s is verbroken, omdat het geen hub is."/>
 	<string id="16144" value="De wachttijd voor het handen schudden met %s is verstreken."/>
 	<string id="16145" value="De Gnutella-verbinding met bron %s is succesvol tot stand gebracht (G%i.%i : %s)."/>
 	<string id="16146" value="Het handen schudden met %s is mislukt vanwege ongeldige data op het netwerk."/>
 	<string id="16147" value="Overbodige verbinding vanaf %s wordt gesloten met een bron hint (%s port %i)."/>
 	<string id="16148" value="De verbinding met %s is geweigerd (%s)."/>
-	<string id="16149" value="Gnutella 0.6 handdruk met %s is mislukt, probeer het opnieuw met 0.4."/>
 	<string id="16150" value="Overbodige verbinding vanaf %s wordt gesloten."/>
 	<string id="16151" value="De verbinding met %s wordt geweigerd omdat het een beschermde leaf node is."/>
 	<string id="16152" value="Hub bron %s accepteert ons niet als hub, de verbinding wordt gesloten."/>
@@ -2819,7 +2823,8 @@
 	<string id="16374" value="Nieuwe wachtrij"/>
 	<string id="16375" value="Gedeeltelijke"/>
 	<string id="16376" value="Alle bestanden"/>
-	<string id="16377" value="HTTP bescherming"/>
+	<string id="16377" value="HTTP bescherming"/> 
+
 	<string id="16384" value="Weet je zeker dat je het bestand &quot;%s&quot; wilt openen?\n\nSommige bestanden kunnen kunnen je computer beschadigen. Ga eerst na wat voor soort bestand het is voordat je het opent."/>
 	<string id="16385" value="Je staat op het punt om de metadata van %i bestanden te wijzigen, weet je zeker dat je door wilt gaan?"/>
 	<string id="16386" value="Metadata van %i bestanden worden gewijzigd."/>
@@ -2904,7 +2909,6 @@
 	<string id="16784" value="&amp;Sluiten"/>
 	<string id="16785" value="(Geen visualisatie)"/>
 	<string id="16800" value="Je hebt geen verbindingssnelheid aangegeven. Kies voordat je verdergaat alsjeblieft ofwel je soort internetverbinding, of vul een verbindingssnelheid in."/>
-	<string id="16801" value="Kies voordat je verdergaat alsjeblieft het type internetverbinding dat je gebruikt."/>
 	<string id="16802" value="Je hebt geen mappen aangegeven om vrij te geven. Weet je het zeker?"/>
 	<string id="16803" value="De map die je wilt delen is al vrijgegeven als deel van een andere vrijgegeven map:\n\n%s"/>
 	<string id="16804" value="Je hebt geen schuilnaam ingevuld in je gebruikersprofiel."/>
@@ -2915,6 +2919,10 @@
 	<string id="16809" value="&amp;Sluiten"/>
 	<string id="16810" value="jaar oude"/>
 	<string id="16811" value="Automatisch"/>
+
+
+
+
 	<string id="16816" value="Het eDonkey netwerk gebruikt grote wachtrijen met grote wachttijden. Door de maximum rijpositie te beperken zal u zo strikt goedkeuren, dat u problemen kunt ondervinden bij downloads om te beginnen.\nWeet u zeker dat u de maximale rijpositie die u wilt goedkeuren, beperken?"/>
 	<string id="16817" value="Windows ondersteund geen locaties met meer dan 256 karakters.\nSelecteer een map met een kortere locatie."/>
 	<string id="16818" value="De incomplete map mag niet in de bibliotheek omdat dit de prestaties nadelig beïnvloed. Incomplete bestanden deel je rechtstreeks in het downloadvenster."/>
@@ -2942,6 +2950,7 @@
 	<string id="16942" value="De verbinding met %s voor het bekijken van de gebruiker is gesloten."/>
 	<string id="16943" value="Bezig met het bekijken van %s"/>
 	<string id="16944" value="%i gedeelde bestanden gevonden in %s's bibliotheek."/>
+
 	<string id="16992" value="Shareaza kon de MediaServices plugin niet opstarten. Installeer Shareaza alsjeblieft opnieuw en kijk na of je de benodigde mediacodecs en outputdrivers hebt geïnstalleerd."/>
 	<string id="16993" value="Alle mediabestanden|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Afspeellijsten|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audiobestanden|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Videobestanden|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD audiobestanden|*.cda|MIDI bestanden|*.mid;*.rmi;*.midi|Alle bestanden|*.*||"/>
 	<string id="16994" value="Niet mogelijk om mediabestand &quot;%s&quot; te laden"/>
@@ -3061,6 +3070,14 @@
 	<string id="17498" value="Er is een fout ontdekt in het bestand &quot;%s&quot;."/>
 	<string id="17500" value="Tracker reageerde niet - Aankondiging opnieuw proberen (%i van %i)"/>
 	<string id="17501" value="Communicatie met tracker is onmogelijk"/>
+
+
+
+
+
+
+
+
 	<string id="18496" value="Je hebt de bestandsnaam aangepast. Weet je zeker dat je deze download wilt hernoemen?"/>
 	<string id="18497" value="Je hebt een SHA1 waarde ingevoerd, maar het is ongeldig. Controleer het en probeer het nog een keer."/>
 	<string id="18498" value="Je hebt een root tiger-tree waarde ingevoerd, maar het is ongeldig. Controleer het en probeer het nog een keer."/>
@@ -3076,6 +3093,7 @@
 	<string id="18508" value="De downloadbron %s voor &quot;%s&quot; is genegeerd, omdat de wachtrijpositie %i te hoog is."/>
 	<string id="18509" value="Je kunt deze download niet als volledig beschouwen en opnieuw controleren want je hebt nog geen gedeeltelijke verificatie data, zoals het tiger-tree volume, de eDonkey hashset of de BitTorrent hashset.  Zonder deze verificatiegegevens kan de download niet opnieuw worden gecontroleerd."/>
 	<string id="18510" value="Weet je zeker dat je deze download als volledig wilt beschouwen en het opnieuw controleren?  Het gehele bestand zal worden beschouwd, en Shareaza zal delen accepteren die de controle zullen doorstaan.  Delen die de controle niet doorstaan zullen opnieuw worden gedownload."/>
+
 	<string id="19000" value="Web Interface is uitgeschakeld."/>
 	<string id="19001" value="Je moet een gebruikersnaam en wachtwoord kiezen."/>
 	<string id="19002" value="Niet mogelijk om verbindingen te accepteren, de URL is niet beschikbaar."/>
@@ -3087,6 +3105,11 @@
 	<string id="20005" value="Nee"/>
 	<string id="20006" value="Ja"/>
 	<string id="20007" value="Auto"/>
+	<string id="20008" value="Standaard"/>
+	<string id="20009" value="Aangepast"/>
+	<string id="20010" value="&amp;Terug"/>
+	<string id="20011" value="&amp;Volgende"/>
+	<string id="20012" value="Beëindig"/>
 	<string id="20100" value="Verbindt..."/>
 	<string id="20101" value="Toelating vragen..."/>
 	<string id="20102" value="Antwoordt..."/>
@@ -3124,6 +3147,7 @@
 	<string id="20134" value="Versperd"/>
 	<string id="20135" value="Volgende"/>
 	<string id="20136" value="Q"/>
+
 	<string id="20200" value="Zondag"/>
 	<string id="20201" value="Maandag"/>
 	<string id="20202" value="Dinsdag"/>
