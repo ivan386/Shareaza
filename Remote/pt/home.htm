@@ -1,78 +1,56 @@
-<table width="95%" align="center" cellspacing="0" cellpadding="0">
-	<tr>
-		<td align="center">
-			<table width="100%" cellspacing="0">
-				<tr>
-					<td class="tabedg">&nbsp;</td>
-					<td class="tabsel">Lar</td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="search">Pesquisar</a></td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="downloads">Downloads</a></td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="uploads">Uploads</a></td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="network">Rede</a></td>
-					<td class="tabedg">&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td class="frame">
-			<p>
-				Bem vindo ao <b>Acesso Remotdo do Shareaza</b>.
-			</p>
-			<p>
-				Este web-console permite controle total sobre as suas pesquisas, downloads, uploads 
-				e conex&#245;es de rede.
-			</p>
-			<br>
-			<table cellspacing="8">
-				<tr>
-					<td width="4" />
-					<td><a href="search"><b>Pesquisar</b></a> - Pesquise por arquivos, olhe os resultados das 
-						buscas, selecione os arquivos para baixar.</td>
-				</tr>
-				<tr>
-					<td width="4" />
-					<td><a href="downloads"><b>Downloads</b></a> - Controle os downloads, pause e resuma, 
-						limpe os completados.</td>
-				</tr>
-				<tr>
-					<td width="4" />
-					<td><a href="uploads"><b>Uploads</b></a> - Veja os uploads.</td>
-				</tr>
-				<tr>
-					<td width="4" />
-					<td><a href="network"><b>Rede</b></a> - Analize e controle as suas conex&#245;es de rede, 
-						conecte-se ou desconecte-se de diferentes redes P2P, ou desligue o Shareaza.</td>
-				</tr>
-			</table>
-			<br>
-			<form method="get" action="newsearch" ID="Form1">
-				<table align="center">
-					<tr>
-						<td>Pesquisa R&#225;pida:</td>
-						<td><input type="text" name="search" size="30"></td>
-						<td>
-							<input type="submit" value=" Ir ">
-						</td>
-					</tr>
-				</table>
-			</form>
-			<br>
-			<form method="get" action="newdownload" ID="Form2">
-				<table align="center">
-					<tr>
-						<td>Baixar Magnet:</td>
-						<td><input type="text" name="uri" size="50"></td>
-						<td>
-							<input type="submit" value=" Ir ">
-						</td>
-					</tr>
-				</table>
-			</form>
-		</td>
-	</tr>
-</table>
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Home</a></li>
+				<li class="inactive"><a href="search" class="noline">Procurar</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Downloads</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Uploads</a></li>
+				<li class="inactive"><a href="network" class="noline">Redes</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Bem-Vindo a <b>Interface Web do Shareaza</b>.<p>Esta interface web permite a você controlar as buscas, downloads, uploads e conexões de rede.</p>.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Iniciar o Download:</h3>
+				<div style="text-align: right;">
+				<form method="get" action="newsearch" ID="Form1">
+					<label>Busca rápida</label>
+					<input type="text" name="search" size="20">
+					<select name="schema">
+						<option value="">Qualquer arquivo</option>
+						<option value="http://www.shareaza.com/schemas/application.xsd">Aplicação</option>
+						<option value="http://www.limewire.com/schemas/audio.xsd">Áudio</option>
+						<option value="http://www.shareaza.com/schemas/bittorent.xsd">Bit Torrent</option>
+						<option value="http://www.limewire.com/schemas/book.xsd">Livro</option>
+						<option value="http://www.shareaza.com/schemas/collection.xsd">Coleção</option>
+						<option value="http://www.shareaza.com/schemas/image.xsd">Imagem</option>
+						<option value="http://www.shareaza.com/schemas/presentation.xsd">Apresentação</option>
+						<option value="http://www.shareaza.com/schemas/rom.xsd">Imagem de ROM</option>
+						<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Skin</option>
+						<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Código Fonte</option>
+						<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Spreadsheet</option>
+						<option value="http://www.shareaza.com/schemas/subtitle.xsd">Legenda</option>
+						<option value="http://www.limewire.com/schemas/video.xsd">Vídeo</option>
+						<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Processamento de Palavras</option>
+					</select>
+					<input type="submit" value="Pirmyn">
+				</form><br />
+				<form method="get" action="newdownload" ID="Form2">
+					<label>Download Magnet/Torrent</label>
+					<input type="text" name="uri" size="35">
+					<input type="submit" value="Pirmyn">
+				</form>
+				</div>
+			</div>
+			<h3>Links Úteis:</h3>
+			<ul>
+				<li><a href="http://www.peerweb.org/">Peerweb.org</a></li>
+				<li><a href="http://www.freebase.be/">Freebase.be</a></li>
+				<li><a href="http://www.g24u.net/">g24u.net</a></li>
+				<li><a href="http://www.bittorrent.com/">Bittorrent.com</a></li>
+				<li><a href="http://www.legaltorrents.com/">LegalTorrents.com</a></li>
+				<li><a href="http://content.emule-project.net/">eMule content DB</a></li>
+			</ul>
+		</div>

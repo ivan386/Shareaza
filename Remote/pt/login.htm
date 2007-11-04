@@ -1,56 +1,34 @@
-		<table width="95%" align="center" cellspacing="0" cellpadding="0">
-			<tr>
-				<td align="center">
-					<table width="100%" cellspacing="0">
-						<tr>
-							<td class="tabedg">&nbsp;</td>
-							<td class="tab">Lar</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Pesquisar</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Downloads</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Uploads</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Rede</td>
-							<td class="tabedg">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td class="frame">
-					<div>
-						Bem-vindo ao <b>Acesso Remoto do Shareaza.</b>
-						Se esta c�pia do Shareaza est&#225; rodando em seu PC, por favor
-						digite o seu nome de usu&#225;rio e senha de acesso, e ent&#227;o clique em <b>Fazer Login</b>.
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Home</li>
+				<li class="inactive">Procurar</li>
+				<li class="inactive">Downloads</li>
+				<li class="inactive">Uploads</li>
+				<li class="inactive">Redes</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+					<div class="padding left">
+						Bem-Vindo a <b>Interface Web do Shareaza.</b>
+       se este é o endereço do seu cliente Shareaza, por favor insira o seu nome de usuário e senha, e clique em <b>Login</b>
 					</div>
-					<%? failure %>
-					<div align="center" style="color: red; font-weight: bold;">
-						<br>
-						O nome de usu&#225;rio e senha digitados est&#227;o incorretos.
-						<br>
-						Por favor tente novamente.
+					
+					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+					<%? failure %>	O nome de usuário ou senha estava incorreto, Por favor tente de novo.<%?%>
 					</div>
-					<%?%>
+					
+					<div style="text-align: right; width: 24em; margin: 0 auto;">
 					<form method="get" action="">
 					<input type="hidden" name="submit" value="1">
-					<table align="center">
-						<tr>
-							<td>Nome de usu&#225;rio:</td>
-							<td><input type="text" name="username" size="20"></td>
-						</tr>
-						<tr>
-							<td>Senha:</td>
-							<td><input type="password" name="password" size="20" ID="Text1"></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center">
-								<input type="submit" value="Fazer Login">
-							</td>
-						</tr>
-					</table>
+						<label>Nome de usuário:</label>
+						<input type="text" name="username" size="20" /><br />
+						<label>Senha:</label>
+						<input type="password" name="password" size="20" ID="Text1" /><br />
+								<input type="submit" value="Login">
 					</form>
-				</td>
-			</tr>
-		</table>
+					</div>
+	</div>
+<!-- /main body -->
