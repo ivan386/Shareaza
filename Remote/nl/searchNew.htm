@@ -1,36 +1,21 @@
-<td class="tabsel">Nieuwe Zoekopdracht</td>
-<td class="tabedg">&nbsp;</td>
-</tr> </table> </td> </tr>
-<tr>
-	<td class="frame">
-		<div>
-			Om een nieuwe zoekopdracht te starten, type een zoekterm
-			in het veld hier beneden en klik op <b>Start Zoeken</b>.
-			Als je je zoekopdracht wilt beperken tot een bepaald
-			bestandstype, selecteer het dan uit de lijst.
-		</div>
+										<li class="active"><a class="noline" href="?id=0">Nieuwe Zoekopdracht</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+			<p>Om een nieuwe zoekopdracht te starten, type een zoekterm
+			in het veld hier beneden en klik op <strong>Start Zoeken</strong>. Als je je zoekopdracht wilt beperken tot een bepaald bestandstype, selecteer het dan uit de lijst.</p>
+	
+	<div style="text-align:right; width: 30em;">		
 		<form method="get" action="newsearch">
-			<table align="center">
-				<tr>
-					<td>Zoeken naar:</td>
-					<td><input type="text" name="search" size="30"></td>
-				</tr>
-				<tr>
-					<td>Soort bestand:</td>
-					<td>
-						<select name="schema">
+
+			<label>Zoeken naar:</label>
+					<input type="text" name="search" class="regularinput" /><br />
+			<label>Soort bestand:</label>
+					
+						<select name="schema" class="regularinput">
 							<option value="">Elk Bestandstype</option>
 							<%= schema_option_list %>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
+				<br />
 						<input type="submit" value="Start Zoeken">
-					</td>
-				</tr>
-			</table>
 		</form>
+	</div>

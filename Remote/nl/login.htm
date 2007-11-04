@@ -1,56 +1,36 @@
-		<table width="95%" align="center" cellspacing="0" cellpadding="0">
-			<tr>
-				<td align="center">
-					<table width="100%" cellspacing="0">
-						<tr>
-							<td class="tabedg">&nbsp;</td>
-							<td class="tab">Home</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Zoeken</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Downloads</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Uploads</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Netwerken</td>
-							<td class="tabedg">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td class="frame">
-					<div>
+<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Home</li>
+				<li class="inactive">Zoeken</li>
+				<li class="inactive">Downloads</li>
+				<li class="inactive">Uploads</li>
+				<li class="inactive">Netwerken</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+					<div class="padding left">
 						Welkom op <b>Shareaza's Web Interface.</b>
 						Als dit exemplaar van Shareaza op jouw PC draait, voer dan
 						alsjeblieft je gebruikersnaam en wachtwoord in, en klik vervolgens op <b>Login</b>.
 					</div>
-					<%? failure %>
-					<div align="center" style="color: red; font-weight: bold;">
-						<br>
-						De ingegeven gebruikersnaam en wachtwoord waren incorrect.
-						<br>
-						Probeer het alsjeblieft nog een keer.
+					
+					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+					<%? failure %>	De ingegeven gebruikersnaam en wachtwoord waren incorrect.
+						Probeer het alsjeblieft nog een keer.<%?%>
 					</div>
-					<%?%>
+					
+					<div style="text-align: right; width: 24em; margin: 0 auto;">
 					<form method="get" action="">
 					<input type="hidden" name="submit" value="1">
-					<table align="center">
-						<tr>
-							<td>Gebruikersnaam:</td>
-							<td><input type="text" name="username" size="20"></td>
-						</tr>
-						<tr>
-							<td>Wachtwoord:</td>
-							<td><input type="password" name="password" size="20" ID="Text1"></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center">
+						<label>Gebruikersnaam:</label>
+						<input type="text" name="username" size="20" /><br />
+						<label>Wachtwoord:</label>
+						<input type="password" name="password" size="20" ID="Text1" /><br />
 								<input type="submit" value="Login">
-							</td>
-						</tr>
-					</table>
 					</form>
-				</td>
-			</tr>
-		</table>
+					</div>
+	</div>
+<!-- /main body -->

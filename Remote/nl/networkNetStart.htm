@@ -1,24 +1,25 @@
 					<h4><%= network_caption %></h4>
 <%? !network_connected %>
-					<p style="font-size: 7pt;">
+					<p>
 					Je bent <b>niet</b> verbonden met dit netwerk -
-					<a href="?connect=<%= network_id %>"><b>Verbinden met <%= network_caption %></b></a>
+					<a href="?connect=<%= network_id %>"><strong>Verbinden met <%= network_caption %></strong></a>
 					</p>
 <%?%><%? network_connected %>
-					<p style="font-size: 7pt;">
+					<p>
 					Je bent verbonden met dit netwerk -
-					<a href="?disconnect=<%= network_id %>"><b>Verbinding Verbreken met <%= network_caption %></b></a>
+					<a href="?disconnect=<%= network_id %>"><strong>Verbinding Verbreken met <%= network_caption %></strong></a>
 					</p>
-					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+				<div class="centertable">
+					<table>
 						<tr>
-							<td class="viewheader">Adres</td>
-							<td class="viewheader" align="center">Tijd</td>
-							<td class="viewheader" align="center">Pakketten</td>
-							<td class="viewheader" align="center">Bandbreedte</td>
-							<td class="viewheader" align="center">Totaal</td>
-							<td class="viewheader" align="center">Modus</td>
-							<td class="viewheader" align="center">Leaves</td>
-							<td class="viewheader">Cli&#233;nt</td>
-							<td class="viewheader"></td>
+							<th>Adres</th>
+							<th>Tijd</th>
+							<th>Pakketten</th>
+							<th>Bandbreedte</th>
+							<th>Totaal</th>
+							<th>Modus</th>
+							<th>Leaves</th>
+							<th>Cli&#233;nt</th>
+							<th></th>
 						</tr>
 <%?%>
