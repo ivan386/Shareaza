@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- This translation is based on default-en.xml SVN rev.6069 --> <!-- Revisione 58 -->
+<!-- Shareaza Default Italian Skin File --> <!-- This translation is based on default-en.xml SVN rev.6092 --> <!-- Revisione 59 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -3117,6 +3117,7 @@
 	<string id="20009" value="Personalizzato"/>
 	<string id="20010" value="&amp;Indietro"/>
 	<string id="20011" value="&amp;Avanti"/>
+	<string id="20012" value="Fine"/>
 	<string id="20100" value="Connessione"/>
 	<string id="20101" value="Richiesta"/>
 	<string id="20102" value="Risposta"/>
