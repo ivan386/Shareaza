@@ -1,4 +1,4 @@
-; *** Inno Setup version 5.1.0+ Lithuanian messages ***
+; *** Inno Setup version 5.1.11+ Lithuanian messages ***
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -272,7 +272,7 @@ ErrorReplacingExistingFile=Klaida ávyko perraðant egzistuojanèià bylà:
 ErrorRestartReplace=Perkrovimas/Perraðymas nepavyko:
 ErrorRenamingTemp=Klaida ávyko pervadinant bylà pasirinktame kataloge:
 ErrorRegisterServer=Nepavyko uþregistruoti DLL/OCX bibliotekos: %1
-ErrorRegisterServerMissingExport=DllRegisterServer eksporto funkcija nerasta
+ErrorRegSvr32Failed=RegSvr32 registracijos klaida %1
 ErrorRegisterTypeLib=Nepavyko uþregistruoti tipø bibliotekos: %1
 
 ; *** Post-installation errors

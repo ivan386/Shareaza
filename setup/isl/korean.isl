@@ -1,4 +1,4 @@
-; *** Inno Setup version 4.2.2+ Korean messages ***
+; *** Inno Setup version 5.1.11+ Korean messages ***
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -8,28 +8,29 @@
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
 ;
-; translated : yang young-mo(yym05 at hanmir.com) // "at"을 "@"로 바꿔주시기 바랍니다. 스팸메일 방지책의 한가지로 양해해주시기 바랍니다.
-; modified : Woong-Jae Ahn(a183393 at hanmail.net) //  "at"을 "@"로 바꿔주시기 바랍니다. 스팸메일 방지책의 한가지로 양해해주시기 바랍니다.
-;
-; 번역은 좀 더 알아보기 쉽도록, 최소한 "직역"이 아닌, "의역"으로 하도록 노렸하였습니다.
-; 만약에 제가 번역한 문장들이 원본과 뜻이 상이하거나 좀더 매끈한 표현으로 바꿨으면 하는 부분, 그 밖의 건의사항이나 질문이 있으시다면 주저마시고 메일 주시기 바랍니다. (modified 부분이 접니다.)
-;
-; $jrsoftware: issrc/Files/Default.isl,v 1.58 2004/04/07 20:17:13 jr Exp $
+; translated : Woong-Jae An (a183393@hanmail.net, Cyworld: http://cyworld.nate.com/nuclear_mine; for Korean Users Only)
+; 
+; 번역은 기본적으로 직역이 원칙이나, 한글로 직역 시 어색하거나 매끄럽지 않은 부분은 의역을 하였습니다.
+; 제가 번역한 문장들이 원본과 뜻이 상이하거나 좀 더 매끈한 표현으로 바꿨으면 하는 부분, 그 밖에 건의 사항이나 질문이 있으시다면 제 싸이월드에 방문하셔서 방명록에 글을 남겨주시기 바랍니다.
+; 단, 이 Translation File에 대한 문의만 받으며, 그 밖에 Inno Setup 사용 중 생긴 문제는 제가 프로그래머가 아닌 관계로 답변하여 드리지 못할 수도 있습니다.
+; 스팸 메일(Spam Mail) 때문에 메일은 더 이상 확인하지 않으니 양해하여 주시기 바랍니다.
 
 [LangOptions]
-LanguageName=한국어
+; The following three entries are very important. Be sure to read and 
+; understand the '[LangOptions] section' topic in the help file.
+LanguageName=<D55C><AD6D><C5B4>
 LanguageID=$0412
-LanguageCodePage=0
+LanguageCodePage=949
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
 ;DialogFontName=
-;DialogFontSize=9
+;DialogFontSize=8
 ;WelcomeFontName=Verdana
 ;WelcomeFontSize=12
 ;TitleFontName=Arial
 ;TitleFontSize=29
-;CopyrightFontName=굴림체
-;CopyrightFontSize=9
+;CopyrightFontName=Arial
+;CopyrightFontSize=8
 
 [Messages]
 
@@ -56,6 +57,8 @@ SetupFileCorrupt=설치 파일이 손상되었습니다. 새로운 설치 프로그램을 구해보십시오
 SetupFileCorruptOrWrongVer=설치 파일이 손상되었거나 이 버전의 설치 프로그램과 호환이 되지 않습니다. 문제를 해결해 주시거나 새로운 설치 프로그램을 구해보십시오.
 NotOnThisPlatform=이 프로그램은 %1 에서 설치되지 않습니다.
 OnlyOnThisPlatform=이 프로그램은 %1 에서만 설치됩니다.
+OnlyOnTheseArchitectures=이 프로그램은 다음과 같은 프로세서 아키텍처에 맞게 디자인된 Windows 에서만 설치됩니다:%n%n%1
+MissingWOW64APIs=실행 중인 Windows 가 설치 프로그램이 64비트 설치를 수행하기 위한 기능을 포함하고 있지 않습니다. 이 문제를 해결하시려면, 서비스 팩 %1 을(를) 설치하십시오.
 WinVersionTooLowError=이 프로그램은 %1 %2 (이)나 그 이상의 Windows 에서만 설치됩니다.
 WinVersionTooHighError=이 프로그램은 %1 %2 (이)나 그 이상의 Windows 에서는 설치되지 않습니다.
 AdminPrivilegesRequired=이 프로그램을 설치하기 위해서는 Administrator 권한이 필요합니다.
@@ -74,6 +77,7 @@ AboutSetupMenuItem=설치에 대하여(&A)...
 AboutSetupTitle=설치에 대하여
 AboutSetupMessage=%1 %2%n%3%n%n%1 홈페이지:%n%4
 AboutSetupNote=
+TranslatorNote=이 번역문은 안웅재에 의해 만들어 졌습니다. 이 번역문에 대한 문의 사항은 Cyworld: http://cyworld.nate.com/nuclear_mine 으로 해 주시기 바랍니다.
 
 ; *** Buttons
 ButtonBack=< 뒤로(&B)
@@ -169,18 +173,17 @@ ComponentSize2=%1 MB
 ComponentsDiskSpaceMBLabel=선택한 구성 요소 설치에 필요한 최소 용량: [mb] MB
 
 ; *** "Select Additional Tasks" wizard page
-WizardSelectTasks=선택적 기능 적용
-SelectTasksDesc=어떤 옵션을 추가로 적용하시겠습니까?
-SelectTasksLabel2=[name] 의 설치에 추가로 적용할 옵션을 선택하시고, "다음"을 클릭하십시오.
+WizardSelectTasks=추가 사항 적용
+SelectTasksDesc=어떤 사항을 추가로 적용하시겠습니까?
+SelectTasksLabel2=[name] 의 설치 과정에서 추가로 적용하고자 하는 사항을 선택하시고, "다음"을 클릭하십시오.
 
 ; *** "Select Start Menu Folder" wizard page
 WizardSelectProgramGroup=시작 메뉴 폴더 선택
 SelectStartMenuFolderDesc=어느 곳에 프로그램의 바로 가기를 만드시겠습니까?
-SelectStartMenuFolderLabel3=설치 프로그램은 프로그램의 바로가기를 다음 시작 메뉴 폴더에 만들 것입니다.
+SelectStartMenuFolderLabel3=설치 프로그램은 프로그램의 바로 가기를 다음 시작 메뉴 폴더에 만들 것입니다.
 SelectStartMenuFolderBrowseLabel=계속하시려면 "다음"을 클릭하십시오. 다른 폴더를 선택하시려면 "찾아보기"를 클릭하십시오.
-NoIconsCheck=바로 가기를 만들지 않음(&D)
 MustEnterGroupName=폴더 이름을 입력해야 합니다.
-GroupNameTooLong=폴더 이름이나 경로가 너무 깁니다.
+GroupNameTooLong=폴더 이름 또는 경로가 너무 깁니다.
 InvalidGroupName=폴더 이름이 정확하지 않습니다.
 BadGroupName=폴더 이름에는 다음의 문자들을 포함할 수 없습니다.%n%n%1
 NoProgramGroupCheck2=시작 메뉴 폴더를 만들지 않음(&D)
@@ -224,7 +227,7 @@ RunEntryShellExec=%1 읽어보기
 
 ; *** "Setup Needs the Next Disk" stuff
 ChangeDiskTitle=다음 디스크가 필요
-SelectDiskLabel2=디스크 %1 을(를) 넣고 "확인" 단추를 클릭하십시오.%n%n만약 다음 디스크가 아래에 표시된 경로와 다른 폴더에 있다면, 올바른 경로를 입력하시거나 "찾아보기" 단추를 클릭해 올바른 경로를 지정해 주십시오.
+SelectDiskLabel2=디스크 %1 을(를) 넣고 "확인" 단추를 클릭하십시오.%n%n만약 다음 디스크가 아래에 표시된 경로와 다른 폴더에 있다면 올바른 경로를 입력하시거나 "찾아보기" 단추를 클릭해 올바른 경로를 지정해 주십시오.
 PathLabel=경로(&P):
 FileNotInDir2="%1" 파일이 "%2" 에 존재하지 않습니다. 올바른 디스크를 넣거나 다른 폴더를 선택하십시오.
 SelectDirectoryLabel=다음 디스크가 있는 경로를 지정하십시오.
@@ -263,7 +266,7 @@ ErrorIniEntry="%1" 파일에 INI 엔트리 생성 중 오류 발생.
 FileAbortRetryIgnore=다시 시도하시려면 "다시 시도"를, 무시하시려면 "무시"를 (권장하지 않음), 설치를 종료하시려면 "취소"를 클릭하십시오.
 FileAbortRetryIgnore2=다시 시도하시려면 "다시 시도"를, 무시하시려면 "무시"를 (권장하지 않음), 설치를 종료하시려면 "취소"를 클릭하십시오.
 SourceIsCorrupted=원본 파일이 손상되었습니다
-SourceDoesntExist=원본 파일 "%1" 이 존재하지 않습니다
+SourceDoesntExist=원본 파일 "%1" 이(가) 존재하지 않습니다
 ExistingFileReadOnly=다음 파일은 읽기 전용입니다.%n%n읽기 전용 속성을 제거하고 다시 시도하시려면 "다시 시도"를, 이 파일을 무시하시려면 "무시"를, 설치를 종료하시려면 "취소"를 클릭하십시오.
 ErrorReadingExistingDest=파일 읽는 도중 오류 발생:
 FileExists=이미 존재하는 파일입니다.%n%n파일을 덮어쓰시겠습니까?
@@ -276,7 +279,7 @@ ErrorReplacingExistingFile=파일 덮어쓰는 중 오류 발생:
 ErrorRestartReplace=RestartReplace 실패:
 ErrorRenamingTemp=대상 폴더 내의 파일 이름 변경 도중 오류 발생:
 ErrorRegisterServer=다음 DLL/OCX 을(를) 등록할 수 없음: %1
-ErrorRegisterServerMissingExport=DllRegisterServer export 발견되지 않음
+ErrorRegSvr32Failed=종료 코드 %1 로 RegSvr32 실패함
 ErrorRegisterTypeLib=다음 파일 형식을 등록할 수 없음: %1
 
 ; *** Post-installation errors
@@ -286,9 +289,10 @@ ErrorRestartingComputer=설치 프로그램이 시스템을 재시작 할 수 없습니다. 수동으로
 ; *** Uninstaller messages
 UninstallNotFound="%1" 파일이 존재하지 않습니다. 프로그램을 제거할 수 없습니다.
 UninstallOpenError="%1" 파일을 열 수 없습니다. 프로그램을 제거할 수 없습니다
-UninstallUnsupportedVer=프로그램 제거 정보 파일인 "%1" 이(가) 이 버전의 제거 프로그램이 인식할 수 없는 형식입니다. 프로그램을 제거할 수 없습니다
+UninstallUnsupportedVer=프로그램 제거 정보 파일인 "%1" 이(가) 이 버전의 제거 프로그램이 인식할 수 없는 형식으로 되어 있습니다. 프로그램을 제거할 수 없습니다
 UninstallUnknownEntry=알 수 없는 엔트리 (%1) 가 프로그램 제거 정보 파일에 기록되어 있습니다
 ConfirmUninstall=정말로 %1 와(과) 그 구성 요소들을 완전히 제거하시겠습니까?
+UninstallOnlyOnWin64=이 프로그램은 64비트 Windows 에서만 제거됩니다.
 OnlyAdminCanUninstall=이 프로그램은 Administrator 권한이 있는 사용자만 제거하실 수 있습니다.
 UninstallStatusLabel=%1 이(가) 제거되는 동안 기다려 주십시오.
 UninstalledAll=%1 이(가) 완전히 제거되었습니다.
@@ -298,7 +302,7 @@ UninstallDataCorrupted="%1" 파일이 손상되었습니다. 프로그램을 제거할 수 없습니다
 
 ; *** Uninstallation phase messages
 ConfirmDeleteSharedFileTitle=공유 파일을 삭제하시겠습니까?
-ConfirmDeleteSharedFile2=시스템은 다음 공유 파일이 어떤 프로그램에서도 사용되지 않음을 발견했습니다. 다음 공유 파일을 삭제하시겠습니까?%n%n만약 이 공유 파일들이 다른 프로그램들에 의해서 사용된다면, 이 공유 파일 삭제 후 다른 프로그램들이 제대로 작동하지 않을 수 있습니다. 확실하지 않다면 "아니요"를 클릭하십시오. 파일을 남겨두어도 시스템에 영향을 끼치지 않습니다.
+ConfirmDeleteSharedFile2=시스템은 다음 공유 파일이 어떤 프로그램에서도 사용되지 않음을 발견했습니다. 다음 공유 파일을 삭제하시겠습니까?%n%n만약 이 공유 파일들이 다른 프로그램들에 의해서 사용된다면, 이 공유 파일 삭제 후 다른 프로그램들이 제대로 작동하지 않을 수 있습니다. 확실하지 않다면 "아니요" 를 클릭하십시오. 파일을 남겨두어도 시스템에 영향을 끼치지 않습니다.
 SharedFileNameLabel=파일 이름:
 SharedFileLocationLabel=경로:
 WizardUninstalling=설치 제거 상태
@@ -309,7 +313,7 @@ StatusUninstalling=%1 제거 중...
 
 [CustomMessages]
 
-NameAndVersion=%1 %2
+NameAndVersion=%1 버전 %2
 AdditionalIcons=아이콘 생성:
 CreateDesktopIcon=바탕 화면에 아이콘 생성(&D)
 CreateQuickLaunchIcon=빠른 실행에 아이콘 생성(&Q)

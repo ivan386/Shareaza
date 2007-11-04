@@ -1,4 +1,6 @@
-; *** Inno Setup version 4.1.8+ Galician messages ***
+; *** Inno Setup version 5.1.11+ Galician messages ***
+;
+; Translated by José Antonio Cidre Bardelás (Medulio) - (medulio@ciberirmandade.org)
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -7,22 +9,21 @@
 ; messages that didn't have them already, because on those messages Inno
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
-;
-; $jrsoftware: issrc/Files/Default.isl,v 1.53 2004/02/25 01:55:24 jr Exp $
-; Traducido por Medulio, Barcelona (10-03-2004)
 
 [LangOptions]
+; The following three entries are very important. Be sure to read and 
+; understand the '[LangOptions] section' topic in the help file.
 LanguageName=Galego
 LanguageID=$0456
+LanguageCodePage=1252
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
 ;DialogFontName=
 ;DialogFontSize=8
-;DialogFontStandardHeight=13
-;TitleFontName=Arial
-;TitleFontSize=29
 ;WelcomeFontName=Verdana
 ;WelcomeFontSize=12
+;TitleFontName=Arial
+;TitleFontSize=29
 ;CopyrightFontName=Arial
 ;CopyrightFontSize=8
 
@@ -40,7 +41,7 @@ ConfirmTitle=Confirmación
 ErrorTitle=Erro
 
 ; *** SetupLdr messages
-SetupLdrStartupMessage=Vaise instalar %1. ¿Queres continuar?
+SetupLdrStartupMessage=Vaise instalar %1. Queres continuar?
 LdrCannotCreateTemp=Non se puido crear un arquivo temporal. Instalación cancelada
 LdrCannotExecTemp=Non se puido executa-lo arquivo no directorio temporal. Instalación cancelada
 
@@ -51,6 +52,8 @@ SetupFileCorrupt=Os arquivos de instalación están danados. Por favor, consegue u
 SetupFileCorruptOrWrongVer=Os arquivos de instalación están danados ou sonche incompatibles con esta versión do Instalador. Por favor, corrixe o problema ou consegue unha nova copia do programa.
 NotOnThisPlatform=Este programa non funcionará baixo %1.
 OnlyOnThisPlatform=Este programa só funcionará baixo %1.
+OnlyOnTheseArchitectures=Este programa só se pode instalar en versións do Windows deseñadas para as seguintes arquitecturas de procesadores:%n%n%1
+MissingWOW64APIs=A versión do Windows que estás a utilizar non inclúe as funcionalidades requeridas polo Instalador para efectuar unha instalación de 64 bits. Para corrixir este problema, por favor, instala o Service Pack %1.
 WinVersionTooLowError=Este programa require %1 versión %2 ou posterior.
 WinVersionTooHighError=Este programa non se pode instalar baixo %1 versión %2 ou posterior.
 AdminPrivilegesRequired=Tés que entrar no sistema coma administrador para poder instalar este programa.
@@ -64,14 +67,15 @@ ErrorTooManyFilesInDir=Non se puido crear un arquivo no directorio "%1" xa que c
 
 ; *** Setup common messages
 ExitSetupTitle=Sair do Instalador
-ExitSetupMessage=A instalación non se completou. Se saes agora o programa non será instalado.%n%nPodes voltar a executar o programa de Instalación noutro intre para completa-la mesma.%n%n¿Queres sair do Instalador?
-AboutSetupMenuItem=&Encol do Instalador...
-AboutSetupTitle=Encol do Instalador
+ExitSetupMessage=A instalación non se completou. Se saes agora o programa non será instalado.%n%nPodes volver executa-lo programa de Instalación noutro intre para completa-la mesma.%n%nQueres sair do Instalador?
+AboutSetupMenuItem=&Verbo do Instalador...
+AboutSetupTitle=Verbo do Instalador
 AboutSetupMessage=%1 versión %2%n%3%n%nPáxina web de %1:%n%4
 AboutSetupNote=
+TranslatorNote=
 
 ; *** Buttons
-ButtonBack=< &Voltar
+ButtonBack=< &Volver
 ButtonNext=&Seguinte >
 ButtonInstall=&Instalar
 ButtonOK=Aceptar
@@ -82,21 +86,21 @@ ButtonNo=&Non
 ButtonNoToAll=N&on a Todo
 ButtonFinish=&Rematar
 ButtonBrowse=&Explorar...
-
-; *** "Select Language" dialog messages
 ButtonWizardBrowse=Explo&rar...
 ButtonNewFolder=&Crear Novo Cartafol
-SelectLanguageTitle=Elixir o Idioma de Instalación
+
+; *** "Select Language" dialog messages
+SelectLanguageTitle=Escolle-lo Idioma de Instalación
 SelectLanguageLabel=Selecciona o Idioma a usar durante a Instalación:
 
 ; *** Common wizard text
 ClickNext=Preme Seguinte para continuar, ou Cancelar para sair do Instalador.
 BeveledLabel=
-
-; *** "Welcome" wizard page
 BrowseDialogTitle=Explorar Cartafol
 BrowseDialogLabel=Selecciona un cartafol da seguinte lista e pulsa Aceptar.
 NewFolderName=Novo Cartafol
+
+; *** "Welcome" wizard page
 WelcomeLabel1=Benvido ó asistente de instalación de [name]
 WelcomeLabel2=Vaise instalar [name/ver] no teu ordenador.%n%nÉ recomendable que peches tódalas outras aplicacións que se estean a executar denantes de inicia-la Instalación.
 
@@ -130,9 +134,9 @@ UserInfoOrg=&Organización:
 UserInfoSerial=Número de &Serie:
 UserInfoNameRequired=Tés que introducir un nome.
 
-; *** "Select Destination Directory" wizard page
+; *** "Select Destination Location" wizard page
 WizardSelectDir=Selecciona o Directorio de Destiño
-SelectDirDesc=¿Onde queres instalar [name]?
+SelectDirDesc=Onde queres instalar [name]?
 SelectDirLabel3=O Instalador vai instalar [name] no seguinte cartafol.
 SelectDirBrowseLabel=Para continuar, preme Seguinte. Se queres seleccionar outro cartafol, preme Explorar.
 DiskSpaceMBLabel=O programa require polo menos [mb] MB de espazo ceibe no disco.
@@ -140,40 +144,39 @@ ToUNCPathname=O Instalador non pode instala-lo programa nun nome de directorio U
 InvalidPath=Tés que introducir un enderezo completo con letra da unidade de disco; por exemplo:%n%nC:\Aplicación%n%nou ben unha ruta UNC do seguinte xeito:%n%n\\servidor\compartido
 InvalidDrive=O disco ou enderezo UNC de rede que seleccionaches non é accesible. Por favor, selecciona outro.
 DiskSpaceWarningTitle=Non hai Espazo dabondo no Disco
-DiskSpaceWarning=O Instalador require polo menos %1 KB de espazo ceibe para a instalación, pero o disco que escolleches só ten %2 KB dispoñibles.%n%n¿Queres continuar de tódolos xeitos?
+DiskSpaceWarning=O Instalador require polo menos %1 KB de espazo ceibe para a instalación, pero o disco que escolleches só ten %2 KB dispoñibles.%n%nQueres continuar de tódolos xeitos?
 DirNameTooLong=O nome do cartafol ou da ruta e longo de máis.
 InvalidDirName=O nome de cartafol non é válido.
 BadDirName32=Os nomes de directorio non poden incluir calquera dos caracteis seguintes:%n%n%1
 DirExistsTitle=O Directorio Xa Existe
-DirExists=O directorio:%n%n%1%n%nxa existe. ¿Queres instala-lo programa neste directorio de tódolos xeitos?
+DirExists=O directorio:%n%n%1%n%nxa existe. Queres instala-lo programa neste directorio de tódolos xeitos?
 DirDoesntExistTitle=O Directorio Non Existe
-DirDoesntExist=O directorio:%n%n%1%n%nnon existe. ¿Queres crealo?
+DirDoesntExist=O directorio:%n%n%1%n%nnon existe. Queres crealo?
 
 ; *** "Select Components" wizard page
 WizardSelectComponents=Elixir Compoñentes
-SelectComponentsDesc=¿Cáles dos compoñentes queres instalar?
+SelectComponentsDesc=Cáles dos compoñentes queres instalar?
 SelectComponentsLabel2=Selecciona únicamente os compoñentes que queres instalar. Preme seguinte para continuar.
 FullInstallation=Instalación Completa
 ; if possible don't translate 'Compact' as 'Minimal' (I mean 'Minimal' in your language)
 CompactInstallation=Instalación Compacta
 CustomInstallation=Instalación Persoalizada
 NoUninstallWarningTitle=Os Compoñentes Xa Existen
-NoUninstallWarning=O Instalador detectou que os seguintes compoñentes xa están instalados no teu ordenador:%n%n%1%n%nDeseleciona-los compoñentes non os vai desinstalar.%n%n¿Queres continuar de tódolos xeitos?
+NoUninstallWarning=O Instalador detectou que os seguintes compoñentes xa están instalados no teu ordenador:%n%n%1%n%nDeseleciona-los compoñentes non os vai desinstalar.%n%nQueres continuar de tódolos xeitos?
 ComponentSize1=%1 KB
 ComponentSize2=%1 MB
 ComponentsDiskSpaceMBLabel=A selección que fixeches require polo menos [mb] MB de espazo ceibe no disco.
 
 ; *** "Select Additional Tasks" wizard page
 WizardSelectTasks=Seleccionar Procesos Adicionais
-SelectTasksDesc=¿Que procesos adicionais deben efectuarse?
+SelectTasksDesc=Que procesos adicionais deben efectuarse?
 SelectTasksLabel2=Selecciona os procesos adicionais que queres que o Instalador leve a cabo durante a instalación de [name], logo preme Seguinte.
 
 ; *** "Select Start Menu Folder" wizard page
 WizardSelectProgramGroup=Seleccionar Cartafol do Menú de Inicio
-SelectStartMenuFolderDesc=¿Onde queres que o Instalador xere as ligazóns do programa?
+SelectStartMenuFolderDesc=Onde queres que o Instalador xere as ligazóns do programa?
 SelectStartMenuFolderLabel3=O Instalador vai crea-las ligazóns ós programas no seguinte cartafol do Menú de Inicio.
 SelectStartMenuFolderBrowseLabel=Para continuar, preme Seguinte. Se queres seleccionar outro cartafol, preme Explorar.
-NoIconsCheck=&Non crear ningunha icona
 MustEnterGroupName=Tés que introducir un nome de cartafol.
 GroupNameTooLong=O nome do cartafol ou da ruta e longo de máis.
 InvalidGroupName=O nome de cartafol non é válido.
@@ -182,8 +185,8 @@ NoProgramGroupCheck2=&Non crear cartafol no Menú de Inicio
 
 ; *** "Ready to Install" wizard page
 WizardReady=Preparado para Instalar
-ReadyLabel1=O Instalador está preparado para comezar a instalar [name] no teu ordenador.
-ReadyLabel2a=Preme Instalar para continuar coa instalación ou preme Voltar se queres revisar ou trocar as opcións escollidas.
+ReadyLabel1=O Instalador está preparado para comezar instalar [name] no teu ordenador.
+ReadyLabel2a=Preme Instalar para continuar coa instalación ou preme Volver se queres revisar ou troca-las opcións escollidas.
 ReadyLabel2b=Preme Instalar para continuar coa instalación.
 ReadyMemoUserInfo=Información de Usuario:
 ReadyMemoDir=Directorio de destiño:
@@ -207,8 +210,8 @@ FinishedHeadingLabel=Rematando o Asistente de Instalación de [name]
 FinishedLabelNoIcons=O Instalador rematou de instalar [name] no teu ordenador.
 FinishedLabel=O Instalador rematou de instalar [name] no teu ordenador. Podes executa-la aplicación seleccionado as iconas instaladas.
 ClickFinish=Preme Rematar para sair do Instalador.
-FinishedRestartLabel=Para completa-la instalación de [name] o Instalador tén que reinicia-lo teu ordenador. ¿Queres reinicialo agora?
-FinishedRestartMessage=Para completa-la instalación de [name] o Instalador tén que reinicia-lo teu ordenador. %n%n¿Queres reinicialo agora?
+FinishedRestartLabel=Para completa-la instalación de [name] o Instalador tén que reinicia-lo teu ordenador. Queres reinicialo agora?
+FinishedRestartMessage=Para completa-la instalación de [name] o Instalador tén que reinicia-lo teu ordenador. %n%nQueres reinicialo agora?
 ShowReadmeCheck=Si, quero ve-lo arquivo LEME agora
 YesRadio=&Si, quero reinicia-lo ordenador agora
 NoRadio=&Non, reiniciarei o ordenador logo
@@ -261,8 +264,8 @@ SourceIsCorrupted=O arquivo de orixe está corrupto
 SourceDoesntExist=O arquivo de orixe "%1" non existe
 ExistingFileReadOnly=O arquivo existente é só de lectura.%n%nPreme Reintentar para tira-lo atributo de só lectura e tentalo de novo, Ignorar para saltar este arquivo, ou Abortar para cancela-la instalación.
 ErrorReadingExistingDest=Houbo un erro ó tentar le-lo arquivo:
-FileExists=O arquivo xa existe.%n%n¿Queres sobreescribilo?
-ExistingFileNewer=O arquivo existente é máis novo que o que estás tentando instalar. Recoméndase que conserves o arquivo existente.%n%n¿Queres mante-lo arquivo existente?
+FileExists=O arquivo xa existe.%n%nQueres sobreescribilo?
+ExistingFileNewer=O arquivo existente é máis novo que o que estás tentando instalar. Recoméndase que conserves o arquivo existente.%n%nQueres mante-lo arquivo existente?
 ErrorChangingAttr=Houbo un erro o tentar de muda-los atributos do arquivo:
 ErrorCreatingTemp=Houbo un erro o tentar crea-lo arquivo no directorio de destiño:
 ErrorReadingSource=Houbo un erro o tentar le-lo arquivo de orixe:
@@ -271,7 +274,7 @@ ErrorReplacingExistingFile=Houbo un erro o tentar de reemplaza-lo arquivo:
 ErrorRestartReplace=Reemplazar fallou:
 ErrorRenamingTemp=Houbo un erro o tentar renomea-lo arquivo no directorio de destiño:
 ErrorRegisterServer=Non se puido rexistra-lo DLL/OCX: %1
-ErrorRegisterServerMissingExport=Non se atopou o exportador DllRegisterServer
+ErrorRegSvr32Failed=O RegSvr32 fallou indicando este código de saída: %1
 ErrorRegisterTypeLib=Non se puido rexistra-la libraría de tipo: %1
 
 ; *** Post-installation errors
@@ -283,18 +286,34 @@ UninstallNotFound=O arquivo "%1" non existe. Non se pode desinstalar.
 UninstallOpenError=O arquivo "%1" non se puido abrir. Non se pode desinstalar
 UninstallUnsupportedVer=O arquivo de desinstalación "%1" está nun formato non recoñecible por esta versión no desinstalador. Non se pode desinstalar
 UninstallUnknownEntry=Atopouse unha entrada descoñecida (%1) no arquivo de desinstalación
-ConfirmUninstall=¿Seguro que queres desinstalar completamente %1 e tódolos seus compoñentes?
+ConfirmUninstall=Seguro que queres desinstalar completamente %1 e tódolos seus compoñentes?
+UninstallOnlyOnWin64=Esta instalación só pode desinstalarse nun Windows de 64 bits.
 OnlyAdminCanUninstall=Esta instalación só a pode desinstalar un usuario con privilexios de administrador.
 UninstallStatusLabel=Por favor, agarda mentres se elimina %1 do teu ordenador.
 UninstalledAll=%1 foi correctamente desinstalado do teu ordenador.
 UninstalledMost=Desinstalación de %1 completa.%n%nAlgúns elementos non puideron ser eliminados. Terás que borralos manualmente.
-UninstalledAndNeedsRestart=Para completa-la desinstalación de %1, terás que reinicia-lo teu ordenador.%n%n¿Queres reinicia-lo agora?
+UninstalledAndNeedsRestart=Para completa-la desinstalación de %1, terás que reinicia-lo teu ordenador.%n%nQueres reinicia-lo agora?
 UninstallDataCorrupted=O arquivo "%1" está corrupto. Non se pode desinstalar
 
 ; *** Uninstallation phase messages
-ConfirmDeleteSharedFileTitle=¿Queres elimina-lo arquivo compartido?
-ConfirmDeleteSharedFile2=O sistema indica que o seguinte arquivo compartido xa non se usa por parte de ningún programa. ¿Queres que o desinstalador elimine este arquivo compartido?%n%nSe algún programa necesita este arquivo e o eliminas, eses programas poden non funcionar correctamente. Se non estás seguro escolle Non. Deixa-lo arquivo no teu sistema non causará problemas.
+ConfirmDeleteSharedFileTitle=Queres elimina-lo arquivo compartido?
+ConfirmDeleteSharedFile2=O sistema indica que o seguinte arquivo compartido xa non se usa por parte de ningún programa. Queres que o desinstalador elimine este arquivo compartido?%n%nSe algún programa necesita este arquivo e o eliminas, eses programas poden non funcionar correctamente. Se non estás seguro escolle Non. Deixa-lo arquivo no teu sistema non causará problemas.
 SharedFileNameLabel=Nome do arquivo:
 SharedFileLocationLabel=Localización:
 WizardUninstalling=Estado da Desinstalación
 StatusUninstalling=Desinstalando %1...
+
+; The custom messages below aren't used by Setup itself, but if you make
+; use of them in your scripts, you'll want to translate them.
+
+[CustomMessages]
+
+NameAndVersion=%1 versión %2
+AdditionalIcons=Iconas adicionais:
+CreateDesktopIcon=Crear unha icona no &escritorio
+CreateQuickLaunchIcon=Crear unha icona no Inicio &Rápido
+ProgramOnTheWeb=%1 na Web
+UninstallProgram=Desinstalar %1
+LaunchProgram=Iniciar %1
+AssocFileExtension=&Asociar %1 coa extensión de arquivo %2
+AssocingFileExtension=Asociando %1 coa extensión de arquivo %2...

@@ -1,14 +1,14 @@
-; *** Inno Setup version 5.1.0+ Dutch messages ***
+; *** Inno Setup version 5.1.11+ Dutch messages ***
 ;
-; This file is based on a user-contributed translations by various authors
+; This file is based on user-contributed translations by various authors
 ;
 ; Maintained by Martijn Laan (mlaan@wintax.nl)
 ;
-; $jrsoftware: issrc/Files/Languages/Dutch.isl,v 1.18 2005/02/25 23:07:04 mlaan Exp $
-
-[LangOptions]
-LanguageName=Nederlands
-LanguageID=$0413
+; $jrsoftware: issrc/Files/Languages/Dutch.isl,v 1.21 2007/03/06 12:56:38 mlaan Exp $
+                                     
+[LangOptions]                
+LanguageName=Nederlands      
+LanguageID=$0413 
 LanguageCodePage=1252
 
 [Messages]
@@ -161,7 +161,7 @@ SelectStartMenuFolderDesc=Waar moeten de snelkoppelingen van het programma gepla
 SelectStartMenuFolderLabel3=Setup plaatst de snelkoppelingen van het programma in de volgende menu Start map.
 SelectStartMenuFolderBrowseLabel=Klik op Volgende om door te gaan. Klik op Bladeren om een andere map te kiezen.
 MustEnterGroupName=U moet een mapnaam invoeren.
-GroupNameTooLong=De mapnaam of het pad is te lang.
+GroupNameTooLong=De mapnaam of het pad is te lang. 
 InvalidGroupName=De mapnaam is ongeldig.
 BadGroupName=De mapnaam mag geen van de volgende tekens bevatten:%n%n%1
 NoProgramGroupCheck2=&Geen menu Start map maken
@@ -255,7 +255,7 @@ ErrorReplacingExistingFile=Er is een fout opgetreden bij het vervangen van het b
 ErrorRestartReplace=Vervangen na opnieuw starten is mislukt:
 ErrorRenamingTemp=Er is een fout opgetreden bij het hernoemen van een bestand in de doelmap:
 ErrorRegisterServer=Kan de DLL/OCX niet registreren: %1
-ErrorRegisterServerMissingExport=DllRegisterServer export niet gevonden
+ErrorRegSvr32Failed=RegSvr32 mislukt met afsluitcode %1
 ErrorRegisterTypeLib=Kan de type library niet registreren: %1
 
 ; *** Post-installation errors
@@ -288,8 +288,8 @@ StatusUninstalling=Verwijderen van %1...
 
 NameAndVersion=%1 versie %2
 AdditionalIcons=Extra snelkoppelingen:
-CreateDesktopIcon=Toon een snelkoppeling op het &bureaublad
-CreateQuickLaunchIcon=Toon een snelkoppeling op de &Snel starten werkbalk
+CreateDesktopIcon=Maak een snelkoppeling op het &bureaublad
+CreateQuickLaunchIcon=Maak een snelkoppeling op de &Snel starten werkbalk
 ProgramOnTheWeb=%1 op het Web
 UninstallProgram=Verwijder %1
 LaunchProgram=&Start %1

@@ -1,4 +1,4 @@
-; *** Inno Setup version 5.1.0+ Hebrew messages ***
+; *** Inno Setup version 5.1.11+ Hebrew messages (stilgar(at)divrei-tora.com) ***
 ;
 ;
 ;	Translated by Stilgar (stilgar(at)divrei-tora.com) (c) 2005
@@ -268,7 +268,7 @@ ErrorReplacingExistingFile=שגיאה בעת נסיון להחליף את הקובץ הקיים:
 ErrorRestartReplace=כשל ב-RestartReplace:
 ErrorRenamingTemp=שגיאה בעת נסיון לשנות שם קובץ בתיקיית היעד:
 ErrorRegisterServer=שגיאה בעת רישום DLL/OCX: %1
-ErrorRegisterServerMissingExport=ייצוא DllRegisterServer לא נמצא
+ErrorRegSvr32Failed=RegSvr32 כשל עם קוד יציאה %1
 ErrorRegisterTypeLib=לא ניתן לרשום את ספריית הטיפוס: %1
 
 ; *** Post-installation errors

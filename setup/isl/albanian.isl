@@ -1,5 +1,12 @@
-; *** Inno Setup version 5.1.0+ Albanian messages *** - translated by Flakron Bytyqi 
-; email : flakron_19@yahoo.com
+; ******************************************************
+; ***                                                ***
+; *** Inno Setup version 5.1.11+ Albanian messages   ***
+; ***                                                ***
+; *** Original Author:                               ***
+; ***                                                ***
+; ***   Besmir Godole (bgodole@gmail.com)            ***
+; ***                                                ***
+; ******************************************************
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -13,8 +20,8 @@
 ; The following three entries are very important. Be sure to read and 
 ; understand the '[LangOptions] section' topic in the help file.
 LanguageName=Albanian
-LanguageID=$041c
-LanguageCodePage=0
+LanguageID=$041C
+LanguageCodePage=1252
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
 ;DialogFontName=
@@ -29,290 +36,290 @@ LanguageCodePage=0
 [Messages]
 
 ; *** Application titles
-SetupAppTitle=Instalimi
-SetupWindowTitle=Instalimi i - %1
-UninstallAppTitle=Uninstalimi
-UninstallAppFullTitle=Uninstalimi i %1
+SetupAppTitle=Ndërtoni
+SetupWindowTitle=Ndërtoni - %1
+UninstallAppTitle=Çinstaloni
+UninstallAppFullTitle=Çinstaloni %1
 
 ; *** Misc. common
 InformationTitle=Informacion
-ConfirmTitle=Konfirmo
+ConfirmTitle=Miratimi
 ErrorTitle=Gabim
 
 ; *** SetupLdr messages
-SetupLdrStartupMessage=Kjo do të instaloj %1. A dëshiron të vazhdosh?
-LdrCannotCreateTemp=Nuk mund të krijohej një fajll i përkohshëm. Instalimi u ndal
-LdrCannotExecTemp=Nuk mund të ekzekutohej një fajll në direktoriumin e përkohshem. Instalimi u ndal
+SetupLdrStartupMessage=Kjo do të instalojë %1. A doni të vijoni?
+LdrCannotCreateTemp=Nuk mund të krijoj një skedë të përkohshme. Ndërtimi u ndërpre
+LdrCannotExecTemp=Nuk mund të ekzekutoj skedën në direktorinë e përkohshme. Ndërtimi u ndërpre
 
 ; *** Startup error messages
 LastErrorMessage=%1.%n%nGabim %2: %3
-SetupFileMissing=Fajlli %1 po mungon prej direktoriumit instalues. Ju lutem rregollone problemin ose merrni një kopje të re të programit.
-SetupFileCorrupt=Fajllat instalues janë të korruptuar. Ju lutem merrni një kopje të re të programit.
-SetupFileCorruptOrWrongVer=Fajllat instalues janë të korruptuar, ose janë inkompaktibil me këtë verzion të instaluesit. Ju lutem rregullone problemin ose merrni një kopje të re të programit.
-NotOnThisPlatform=Ky program nuk do të punoj në %1.
-OnlyOnThisPlatform=Ky program duhet të punoj në  %1.
-OnlyOnTheseArchitectures=Ky program mund të instalohet vetëm në verzionet e Windows të dizajnuara për këtë arkitekturë të procesorëve:%n%n%1
-MissingWOW64APIs=Ky verzion i Windows që po e përdorni nuk i kryen funksionet që i kërkon Instalimi për të bërë Instalim 64-bitësh. Për ta rregulluar këtë problem, ju lutem instalone Service Pack %1.
-WinVersionTooLowError=Këti programi i nevojitet %1 verzioni %2 ose mëtej.
-WinVersionTooHighError=Ky program nuk mund të instalohet në %1 verzioni %2 ose mëtej.
-AdminPrivilegesRequired=Ju duhet të jeni Administrator që ta instaloni këtë program.
-PowerUserPrivilegesRequired=Ju duhet të jeni Administrator ose Power User për ta instaluar këtë program.
-SetupAppRunningError=Instalimi ka detektuar që %1 momentalisht është duke punuar.%n%nJu lutem ndalni të gjitha punët, pastaj klikoni Mirë që të vazhdoni, ose Anulo që ta ndalni Instalimin.
-UninstallAppRunningError=Instalimi ka detektuar që %1 momentalisht është duke punuar.%n%nJu lutem ndalni të gjitha punët, pastaj klikoni Mirë që të vazhdoni, ose Anulo që ta ndalni Instalimin.
+SetupFileMissing=Skeda %1 mungon nga direktori e instalimit. Ju lutemi korrigjoni problemin ose merrni një kopje të re të programit.
+SetupFileCorrupt=Skedat e ndërtimit janë korruptuar. Ju lutemi merrni një kopje të re të programit.
+SetupFileCorruptOrWrongVer=Skedat e ndërtimit janë korruptuar, ose nuk pajtohen me këtë version të Ndërtimit. Ju lutemi korrigjoni problemin ose merrni një kopje të re të programit.
+NotOnThisPlatform=Ky program nuk do të veprojë në %1.
+OnlyOnThisPlatform=Ky program duhet të veprojë në %1.
+OnlyOnTheseArchitectures=Ky program mund të instalohet vetëm në versionet e Windows të modeluar me arkitekturën e procesorëve më poshtë:%n%n%1
+MissingWOW64APIs=Versioni i Windows ku po punoni nuk e përfshin funksionin e kërkuar nga Ndërtimi për të kryer një instalim 64-bit. Që të korrigjoni problemin, ju lutemi instaloni Service Pack %1.
+WinVersionTooLowError=Ky program kërkon %1 version %2 e më tej.
+WinVersionTooHighError=Ky program nuk mund të instalohet në %1 version %2 e më tej.
+AdminPrivilegesRequired=Ju duhet të hyni si administrues kur instaloni këtë program.
+PowerUserPrivilegesRequired=Ju duhet të hyni si administrues ose si anëtar i grupit Përdorues në Fuqi kur instaloni këtë program.
+SetupAppRunningError=Ndërtimi diktoi se %1 po vepron aktualisht.%n%nJu lutemi mbyllni tani gjithë rastet e tij, pastaj klikoni OK për të vijuar, ose Anulo që të dilni.
+UninstallAppRunningError=Çinstalimi diktoi se %1 po vepron aktualisht.%n%nJu lutem mbyllni tani gjithë rastet e tij, pastaj klikoni OK për të vijuar, ose Anulo që të dilni.
 
 ; *** Misc. errors
-ErrorCreatingDir=Instalimi nuk mundi të krijoi direktoriumin "%1"
-ErrorTooManyFilesInDir=E pamundur të krijohet fajlli në direktoriumin "%1" sepse ka shumë fajlla në të
+ErrorCreatingDir=Ndërtimi nuk arriti të krijojë direktorinë "%1"
+ErrorTooManyFilesInDir=Nuk mund të krijoj një skedë në direktorinë "%1" sepse përmban shumë skeda
 
 ; *** Setup common messages
-ExitSetupTitle=Ndale Instalimin
-ExitSetupMessage=Instalimi nuk është kompletuar. Në qoftë se e ndalni tani, programi nuk do të instalohet.%n%nJu mundeni tjera herë ta lëshoni instalimin që ta përfundoni instalimin.%n%nTë ndalet Instalimi?
-AboutSetupMenuItem=&Për Instalimin...
-AboutSetupTitle=Për Instalimin
-AboutSetupMessage=%1 verzioni %2%n%3%n%n%1 web faqja:%n%4
+ExitSetupTitle=Dilni nga Ndërtimi
+ExitSetupMessage=Ndërtimi nuk ka përfunduar. Nëse dilni tani, programi nuk do të instalohet.%n%nJu mund ta ngarkoni përsëri një herë tjetër që instalimi të përfundojë.%n%nDoni të dilni nga Ndërtimi?
+AboutSetupMenuItem=&Mbi Ndërtimin...
+AboutSetupTitle=Mbi Ndërtimin
+AboutSetupMessage=%1 version %2%n%3%n%n%1 faqe zyrtare:%n%4
 AboutSetupNote=
-TranslatorNote= Translated from Flakron Bytyqi (flakron_19@yahoo.com)
+TranslatorNote=Albanian translation by Besmir Godole (bgodole@gmail.com)
 
 ; *** Buttons
-ButtonBack=< &Prapa
-ButtonNext=&Vazhdo >
+ButtonBack=< &Pas
+ButtonNext=&Tjetër >
 ButtonInstall=&Instalo
-ButtonOK=Mirë
+ButtonOK=OK
 ButtonCancel=Anulo
 ButtonYes=&Po
-ButtonYesToAll=PO të &gjithave
+ButtonYesToAll=Po, &Gjithçka
 ButtonNo=&Jo
-ButtonNoToAll=J&O të gjithave
+ButtonNoToAll=J&o, Asgjë
 ButtonFinish=&Përfundo
-ButtonBrowse=&Lokalizo...
-ButtonWizardBrowse=L&okalizo...
-ButtonNewFolder=&Krijo follder të ri
+ButtonBrowse=&Shfleto...
+ButtonWizardBrowse=S&hfleto...
+ButtonNewFolder=&Krijo Dosje të Re
 
 ; *** "Select Language" dialog messages
-SelectLanguageTitle=Zgjedhe gjuhën e instalimit
-SelectLanguageLabel=Zgjedhe gjuhën që do të përdoret gjatë instalimit:
+SelectLanguageTitle=Zgjidhni Gjuhën e Ndërtimit
+SelectLanguageLabel=Zgjidhni gjuhën që do të përdorni gjatë instalimit:
 
 ; *** Common wizard text
-ClickNext=Kliko Vazhdo për të vazhduar, ose Anulo për ta ndalur Instalimin.
+ClickNext=Klikoni Tjetër për të vijuar, ose Anulo që të dilni nga Ndërtimi.
 BeveledLabel=
-BrowseDialogTitle=Lokalizo për follderin
-BrowseDialogLabel=Zgjedhe follderin në këtë listë, pastaj kliko Mirë.
-NewFolderName=Follderi i ri
+BrowseDialogTitle=Shfletoni Dosjen
+BrowseDialogLabel=Zgjidhni një dosje në këtë listë, pastaj klikoni OK.
+NewFolderName=Dosje e Re
 
 ; *** "Welcome" wizard page
-WelcomeLabel1=Mirë se vini në Magjistarin e Instalimit të [name]
-WelcomeLabel2=Kjo do të instaloj [name/ver] në kompjuterin tënd.%n%nËshtë e rekomanduar që t'i mbyllni të gjtiha programet para se të vazhdoni.
+WelcomeLabel1=Mirë se erdhët në Uizardin Ndërtues të [name]
+WelcomeLabel2=[name/ver] do të instalohet në kompjuter.%n%nPara se të vijoni rekomandohet të mbyllni aplikimet e tjera.
 
 ; *** "Password" wizard page
 WizardPassword=Fjalëkalimi
-PasswordLabel1=Ky Instalim është i mbrojtur me Fjalëkalim.
-PasswordLabel3=Ju lutem shkruane fjalëkalimin, pastaj klikoni Vazhdo për të vazhduar. Fjalëkalimet janë të ndijshme ndaj madhësisë së shkronjave (p.sh. A dhe a).
+PasswordLabel1=Ky instalim mbrohet me fjalëkalim.
+PasswordLabel3=Ju lutemi shkruani fjalëkalimin, pastaj klikoni Tjetër për të vijuar. Fjalëkalimet janë rast i ndjeshëm.
 PasswordEditLabel=&Fjalëkalimi:
-IncorrectPassword=Fjalëkalimin që e dhatë nuk është korrekt. Ju lutem provoni përsëri.
+IncorrectPassword=Fjalëkalimi që shkruat nuk është korrekt. Ju lutemi provoni përsëri.
 
 ; *** "License Agreement" wizard page
-WizardLicense=Liçenca
-LicenseLabel=Ju lutem lexoni këto informacione të rëndësishme para se të vazhdoni.
-LicenseLabel3=Ju lutem lexone këtë Liçencë. Ju duhet të pajtoheni me kushtet e Liçencës para se të vazhdoni me instalimin.
-LicenseAccepted=Unë e &pranoj Liçencën
-LicenseNotAccepted=Unë &nuk e pranoj Liçencën
+WizardLicense=Marrëveshje License
+LicenseLabel=Ju lutemi lexoni informacionin e rëndësishëm më poshtë para se të vijoni.
+LicenseLabel3=Ju lutemi lexoni Marrëveshjen e Licensës më poshtë. Para se të vijoni, duhet të pranoni termat e kësaj marrëveshjeje.
+LicenseAccepted=Unë &pranoj marrëveshjen
+LicenseNotAccepted=Unë &nuk pranoj marrëveshjen
 
 ; *** "Information" wizard pages
 WizardInfoBefore=Informacion
-InfoBeforeLabel=Ju lutem lexoni këto informacione të rëndësishme para se të vazhdoni.
-InfoBeforeClickLabel=Kur të jeni të gatshëm me Instalimin, kliko Vazhdo.
+InfoBeforeLabel=Ju lutemi lexoni informacionin e rëndësishëm më poshtë para se të vijoni.
+InfoBeforeClickLabel=Kur të jeni gati për të vijuar me Ndërtimin, klikoni Tjetër.
 WizardInfoAfter=Informacion
-InfoAfterLabel=Ju lutem lexoni këto informacione të rëndësishme para se të vazhdoni.
-InfoAfterClickLabel=Kur të jeni të gatshëm me Instalimin, kliko Vazhdo.
+InfoAfterLabel=Ju lutemi lexoni informacionin e rëndësishëm më poshtë para se të vijoni.
+InfoAfterClickLabel=Kur të jeni gati për të vijuar me Ndërtimin, klikoni Tjetër.
 
 ; *** "User Information" wizard page
-WizardUserInfo=Informacionet e përdoruesit
-UserInfoDesc=Ju lutem shkruani informacionet tuaja.
-UserInfoName=&Emri i përdoruesit:
+WizardUserInfo=Informacion Përdoruesi
+UserInfoDesc=Ju lutemi shkruani informacionin tuaj.
+UserInfoName=&Përdoruesi:
 UserInfoOrg=&Organizata:
-UserInfoSerial=&Numri serial:
-UserInfoNameRequired=Ju duhet të shkruani një emër.
+UserInfoSerial=Numri i &Serisë:
+UserInfoNameRequired=Duhet të shkruani një emër.
 
 ; *** "Select Destination Location" wizard page
-WizardSelectDir=Zgjedhe destinacionin
-SelectDirDesc=Ku duhet [name] të instalohet?
-SelectDirLabel3=Instalimi do të instaloj [name] në këtë follder.
-SelectDirBrowseLabel=Që të vazhdosh, kliko Vazhdo. Nëse dëshiron të zgjedhësh një follder tjetër, kliko Lokalizo.
-DiskSpaceMBLabel=Së paku [mb] MB të lirë të diskut nevojiten.
-ToUNCPathname=Instalimi nuk mund të instaloj në një UNC shteg. Nëse jeni duke u munduar që të instaloni në një rrjetë, juve ju duhet një hartë e diskut të rrjetës.
-InvalidPath=Ju duhet ta shkruani tërë shtegun me shkronjën e diskut; p.sh:%n%nC:\APP%n%nose një UNC shteg në formën:%n%n\\server\share
-InvalidDrive=Disku ose UNC e ndarë e zgjedhur nga ju, nuk ekziston ose nuk është e arritshme. Ju lutem zgjedheni një tjetër.
-DiskSpaceWarningTitle=Nuk ka mjaft hapësirë në disk
-DiskSpaceWarning=Instalimit i duhen së paku %1 KB të hapësirës së lirë që të instaloj, por disku i zgjedhur ka vetëm %2 KB në dispozicion.%n%nA dëshironi të vazhdoni edhe ashtu?
-DirNameTooLong=Emri i follderit ose shtegut është shumë i gjatë.
-InvalidDirName=Emri i follderit nuk është valid.
-BadDirName32=Emri i follderit nuk mund të ketë asnjërën nga këto karaktere:%n%n%1
-DirExistsTitle=Follderi ekziston
-DirExists=Follderi:%n%n%1%n%ntanimë ekziston. A dëshironi edhe ashtu të instaloni në atë follder?
-DirDoesntExistTitle=Follderi nuk ekziston
-DirDoesntExist=Follderi:%n%n%1%n%nnuk ekziston. A dëshironi që follderi të krijohet?
+WizardSelectDir=Zgjidhni Vend-Destinacionin
+SelectDirDesc=Ku doni të instaloni [name]?
+SelectDirLabel3=Ndërtimi do të instalojë [name] në këtë dosje.
+SelectDirBrowseLabel=Për të vijuar, klikoni Tjetër. Nëse doni të zgjidhni një dosje ndryshe, klikoni Shfleto.
+DiskSpaceMBLabel=Kërkohet jo më pak se [mb] MB hapësirë e lirë e diskut.
+ToUNCPathname=Ndërtimi nuk mund të instalojë në një emër-shteg UNC. Nëse po provoni të instaloni në rrjet, duhet të zbuloni diskun e rrjetit.
+InvalidPath=Ju duhet të shkruani shtegun e plotë me shkronjën e diskut; për shembull:%n%nC:\APP%n%nose një shteg UNC sipas formës:%n%n\\server\share
+InvalidDrive=Disku ose shpërndarësi UNC që zgjodhët nuk ekziston ose nuk mund të hapet. Ju lutemi zgjidhni një tjetër.
+DiskSpaceWarningTitle=Hapësirë Disku e Pamjaftueshme
+DiskSpaceWarning=Ndërtimi kërkon jo më pak se %1 KB hapësirë të lirë që të instalojë, por disku i zgjedhur ka vetëm %2 KB të vlefshëm.%n%nGjithsesi, a doni të vijoni?
+DirNameTooLong=Emri ose shtegu i dosjes është tepër i gjatë.
+InvalidDirName=Emri i dosjes nuk është i vlefshëm.
+BadDirName32=Emrat e dosjes nuk mund të përmbajnë asnjë nga këto shkronja:%n%n%1
+DirExistsTitle=Dosja Ekziston
+DirExists=Dosja:%n%n%1%n%nekziston që më parë. Gjithsesi, a doni të instaloni në këtë dosje?
+DirDoesntExistTitle=Dosja Nuk Ekziston
+DirDoesntExist=Dosja:%n%n%1%n%nnuk ekziston. A doni të krijoni dosjen?
 
 ; *** "Select Components" wizard page
-WizardSelectComponents=Zgjedhi komponentet
-SelectComponentsDesc=Cilat komponente duhet të instalohen?
-SelectComponentsLabel2=Zgjedhi komponentet që dëshironi të instalohen; pastroj komponentet që nuk dëshironi të instalohen. Kliko Vazhdo kur të jeni gati të vazhdoni.
-FullInstallation=Instalimi i plotë
+WizardSelectComponents=Zgjidhni Përbërësit
+SelectComponentsDesc=Cilët përbërës doni të instaloni?
+SelectComponentsLabel2=Zgjidhni përbërësit që doni të instaloni; pastroni përbërësit që nuk doni të instaloni. Klikoni Tjetër kur të jeni gati të vijoni.
+FullInstallation=Instalim i Plotë
 ; if possible don't translate 'Compact' as 'Minimal' (I mean 'Minimal' in your language)
-CompactInstallation=Instalimi kompakt
-CustomInstallation=Instalimi profesional
-NoUninstallWarningTitle=Komponenta ekziston
-NoUninstallWarning=Instalimi ka detektuar që këta komponenta tashmë janë të instaluar në kompjuterin tuaj:%n%n%1%n%nMoszgjedhja e tyre nuk do t'i uninstaloj ato.%n%nA dëshironi edhe ashtu të vazhdoni?
+CompactInstallation=Instalim Kompakt
+CustomInstallation=Instalim Porositës
+NoUninstallWarningTitle=Përbërësit Ekzistojnë
+NoUninstallWarning=Ndërtimi diktoi se këta përbërës janë instaluar që më parë në kompjuter:%n%n%1%n%nLëshimi i këtyre përbërësve nuk do të çinstalojë ata.%n%nGjithsesi, a doni të vijoni?
 ComponentSize1=%1 KB
 ComponentSize2=%1 MB
-ComponentsDiskSpaceMBLabel=Zgjedhjes aktuale i nevojiten se paku [mb] MB të hapësirës së lirë të diskut.
+ComponentsDiskSpaceMBLabel=Zgjedhja aktuale kërkon jo më pak se [mb] MB hapësirë disku.
 
 ; *** "Select Additional Tasks" wizard page
-WizardSelectTasks=Zgjedhi punët shtesë
-SelectTasksDesc=Cilat punët shtesë duhet të bëhen?
-SelectTasksLabel2=Zgjedhi punët të cilat dëshiron që Instalimi t'i bëjë gjatë instalimit të [name], pastaj kliko Vazhdo.
+WizardSelectTasks=Zgjidhni Detyrat Shtesë
+SelectTasksDesc=Cilat detyra shtesë doni të kryeni?
+SelectTasksLabel2=Zgjidhni detyrat shtesë që doni të kryejë Ndërtimi gjatë instalimit të [name], pastaj klikoni Tjetër.
 
 ; *** "Select Start Menu Folder" wizard page
-WizardSelectProgramGroup=Zgjedhe follderin e menus Start
-SelectStartMenuFolderDesc=Ku duhet Instalimi t'i vendos shkurtesat e programit?
-SelectStartMenuFolderLabel3=Instalimi do t'i vendos shkrutesat në follderin vijues të menus Start.
-SelectStartMenuFolderBrowseLabel=Që të vazhdosh, kliko Vazhdo. Nëse dëshiron të zgjedhësh një follder tjetër, kliko Lokalizo.
-MustEnterGroupName=Ju duhet ta shkruani emrin e follderit.
-GroupNameTooLong=Shtegu ose emri i follderit është shumë i gjatë.
-InvalidGroupName=Emri i follderit nuk është valid.
-BadGroupName=Emri i follderit nuk mund t'i ketë karakteret vijuese:%n%n%1
-NoProgramGroupCheck2=&Mos krijo follder në menun Start
+WizardSelectProgramGroup=Zgjidhni Dosjen në Menunë Start
+SelectStartMenuFolderDesc=Ku duhet të vendosë Ndërtimi shkurtesat e programit?
+SelectStartMenuFolderLabel3=Ndërtimi do të krijojë shkurtesat e programit në këtë dosje të Menusë Start.
+SelectStartMenuFolderBrowseLabel=Për të vijuar, klikoni Tjetër. Nëse doni të zgjidhni një dosje ndryshe, klikoni Shfleto.
+MustEnterGroupName=Duhet të shkruani emrin e dosjes.
+GroupNameTooLong=Emri ose shtegu i dosjes është tepër i gjatë.
+InvalidGroupName=Emri i dosjes është i pavlefshëm.
+BadGroupName=Emri i dosjes nuk mund të përmbajë asnjë nga këto shkronja:%n%n%1
+NoProgramGroupCheck2=&Mos krijo Dosje në Menunë Start
 
 ; *** "Ready to Install" wizard page
-WizardReady=I gatshëm për të instaluar
-ReadyLabel1=Instalimi është i gatshëm që ta instaloj [name] në komjuterin tuaj.
-ReadyLabel2a=Kliko Instalo që të vazhdosh me instalimin, ose kliko Prapa nëse dëshiron t'i ndryshosh vendimet tuaja.
-ReadyLabel2b=Kliko Instalo që të vazhdosh me instalimin.
-ReadyMemoUserInfo=Informacione të përdoruesit:
-ReadyMemoDir=Destinacioni:
-ReadyMemoType=Lloji i instalimit:
-ReadyMemoComponents=Zgjedhi komponentet:
-ReadyMemoGroup=Follderi i menus Start:
-ReadyMemoTasks=Punët shtesë:
+WizardReady=Gati të Instaloni
+ReadyLabel1=Ndërtimi tani është gati të nisë të instalojë [name] në kompjuter.
+ReadyLabel2a=Klikoni Instalo për të vijuar me instalimin, ose klikoni Pas që të rishikoni apo ndryshoni ndonjë kuadro.
+ReadyLabel2b=Klikoni Instalo për të vijuar me instalimin.
+ReadyMemoUserInfo=Informacion i Përdoruesit:
+ReadyMemoDir=Vend-Destinacioni:
+ReadyMemoType=Lloji i Ndërtimit:
+ReadyMemoComponents=Përbërësit e Zgjedhur:
+ReadyMemoGroup=Dosja në Menunë Start:
+ReadyMemoTasks=Detyra shtesë:
 
 ; *** "Preparing to Install" wizard page
-WizardPreparing=Duke u pregaditur për të instaluar
-PreparingDesc=Instalimi është duke u pregaditur që të instaloj [name] në kompjuterin tuaj.
-PreviousInstallNotCompleted=Instalimi/Uninstalimi i një programi nuk është mbaruar. Ju duhet ta ristartoni kompjuterin tuaj që të përfundohet ai instalim.%n%nPas ristartimit të kompjuterit tuaj, lëshone Instalimin që të kompletohet instalimi i [name].
-CannotContinue=Instalimi nuk mund të vazhdoj. Ju lutem klikoni Anulo që të dilni nga programi.
+WizardPreparing=Përgatitje për Instalim
+PreparingDesc=Ndërtimi po përgatitet të instalojë [name] në kompjuter.
+PreviousInstallNotCompleted=Instalimi/heqja e një programi të mëparshëm nuk përfundoi. Ju duhet të rinisni kompjuterin që të plotësoni instalimin.%n%nPas rinisjes së kompjuterit, ngarkoni përsëri Ndërtimin që të plotësoni instalimin e [name].
+CannotContinue=Ndërtimi nuk mund të vijojë. Ju lutemi klikoni Anulo që të dilni.
 
 ; *** "Installing" wizard page
-WizardInstalling=Duke instaluar
-InstallingLabel=ju lutem pritni derisa Instalimi ta instaloj [name] në kompjuterin tuaj.
+WizardInstalling=Po Instaloj
+InstallingLabel=Ju lutemi prisni ndërkohë që Ndërtimi instalon [name] në kompjuter.
 
 ; *** "Setup Completed" wizard page
-FinishedHeadingLabel=Duke kompletuar [name] Magjistarin Instalimi
-FinishedLabelNoIcons=Instalimi ka përfunduar instalimin e [name] në kompjuterin tuaj.
-FinishedLabel=Instalimi ka përfunduar instalimin e [name] në kompjuterin tuaj. Aplikacioni mund të lëshohet duke i zgjedhur ikonat e instaluar.
-ClickFinish=Kliko Përfundo që të dalësh nga Instalimi.
-FinishedRestartLabel=Që të përfundoj instalimi i [name], Instalimi duhet ta ristartoj kompjuterin tuaj. A dëshironi ta ristartorni kompjuterin tani?
-FinishedRestartMessage=Që të kompletohet instalimi i [name], Instalimi duhet ta ristartoj kompjuterin tuaj.%n%nA dëshironi ta ristartoni kompjuterin tani?
-ShowReadmeCheck=Po, dua ta shoh fajllin MË LEXO
-YesRadio=&Po, ristartoje kompjuterin tani
-NoRadio=&Jo, do ta ristartoj kompjuterin më vonë
+FinishedHeadingLabel=Po Plotësoj Uizardin Ndërtues të [name]
+FinishedLabelNoIcons=Ndërtimi përfundoi së instaluari [name] në kompjuter.
+FinishedLabel=Ndërtimi përfundoi së instaluari [name] në kompjuter. Aplikimi mund të lëshohet duke zgjedhur ikonat e instaluara.
+ClickFinish=Klikoni Përfundo për të dalë nga Ndërtimi.
+FinishedRestartLabel=Për të plotësuar instalimin e [name], Ndërtimi duhet të rinisë kompjuterin. A doni të rinisni tani?
+FinishedRestartMessage=Për të plotësuar instalimin e [name], Ndërtimi duhet të rinisë kompjuterin.%n%nA doni të rinisni tani?
+ShowReadmeCheck=Po, dua të shikoj skedën README
+YesRadio=&Po, rinise kompjuterin tani
+NoRadio=&Jo, do e nis kompjuterin më vonë
 ; used for example as 'Run MyProg.exe'
-RunEntryExec=Lësho %1
+RunEntryExec=Vepro %1
 ; used for example as 'View Readme.txt'
 RunEntryShellExec=Shiko %1
 
 ; *** "Setup Needs the Next Disk" stuff
-ChangeDiskTitle=Instalimit i duhet disku tjetër
-SelectDiskLabel2=Ju lutem futeni diskun %1 dhe klikoni Mirë.%n%nNëse fajllat në këtë disk mund të gjenden në një follder tjetër që nuk është paraqitur këtu, shkruane shtegun ose klikoni Lokalizo.
+ChangeDiskTitle=Ndërtimit i Nevojitet Disku Tjetër
+SelectDiskLabel2=Ju lutemi vendosni Diskun %1 dhe klikoni OK.%n%nNëse skedat në këtë disk mund të gjenden në një dosje ndryshe nga ajo që shfaqet më poshtë, shkruani shtegun korrekt ose klikoni Shfleto.
 PathLabel=&Shtegu:
-FileNotInDir2=Fajlli "%1" nuk është gjetur në "%2". Ju lutem futeni diskun e duhur ose zgjedhne një follder tjetër.
-SelectDirectoryLabel=Ju lutem specifikone lokaconin e diskut tjetër.
+FileNotInDir2=Skeda "%1" nuk mund të gjendej në "%2". Ju lutemi vendosni diskun korrekt ose zgjidhni një dosje tjetër.
+SelectDirectoryLabel=Ju lutemi përcaktoni vendin e diskut tjetër.
 
 ; *** Installation phase messages
-SetupAborted=Instalimi nuk është përfunduar.%n%nJu lutem rregullone problemin dhe lëshone Instalimin përsëri.
-EntryAbortRetryIgnore=Kliko Riprovo që të provosh përsëri, Injoro që të vazhdosh edhe ashtu, ose Ndërpreje që ta ndalësh instalimin.
+SetupAborted=Ndërtimi nuk përfundoi.%n%nJu lutemi korrigjoni problemin dhe ngarkoni përsëri Ndërtimin.
+EntryAbortRetryIgnore=Klikoni Riprovo për të provuar përsëri, Përbuze që gjithsesi të vijoni, ose Ndërprite që të anuloni instalimin.
 
 ; *** Installation status messages
-StatusCreateDirs=Duke i krujuar direktoriumet...
-StatusExtractFiles=Duke i ekstraktuar fajllat...
-StatusCreateIcons=Duke i krijuar shkrutesat...
-StatusCreateIniEntries=Duke i krijuar hyrjet INI...
-StatusCreateRegistryEntries=Duke i krjuar hyrjet e regjistrit...
-StatusRegisterFiles=Duke i regjistruar fajllat...
-StatusSavingUninstall=Duke ruajtur informacione të uninstalimit...
-StatusRunProgram=Duke e përfunduar instalimin...
-StatusRollback=Duke e rikthyer gjendjen para instalimit...
+StatusCreateDirs=Po krijoj direktoritë...
+StatusExtractFiles=Po nxjerr skedat...
+StatusCreateIcons=Po krijoj shkurtesat...
+StatusCreateIniEntries=Po krijoj hyrjet INI...
+StatusCreateRegistryEntries=Po krijoj hyrjet e regjistrit...
+StatusRegisterFiles=Po regjistroj skedat...
+StatusSavingUninstall=Po ruaj informacionin e çinstalimit...
+StatusRunProgram=Po përfundoj instalimin...
+StatusRollback=Po kthej ndryshimet e bëra...
 
 ; *** Misc. errors
 ErrorInternal2=Gabim i brendshëm: %1
 ErrorFunctionFailedNoCode=%1 dështoi
 ErrorFunctionFailed=%1 dështoi; kodi %2
 ErrorFunctionFailedWithMessage=%1 dështoi; kodi %2.%n%3
-ErrorExecutingProgram=Nuk mund të ekzekutohej fajlli:%n%1
+ErrorExecutingProgram=Nuk mund të ekzekutoj skedën:%n%1
 
 ; *** Registry errors
-ErrorRegOpenKey=Gabim gjatë hapjes së qelësit të regjistrit:%n%1\%2
-ErrorRegCreateKey=Gabim gjatë krijimit të qelësit të regjistrit:%n%1\%2
-ErrorRegWriteKey=Gabim gjatë shkruarjes së qelësit të regjistrit:%n%1\%2
+ErrorRegOpenKey=Gabim gjatë hapjes së kodit në regjistër:%n%1\%2
+ErrorRegCreateKey=Gabim gjatë krijimit të kodit në regjistër:%n%1\%2
+ErrorRegWriteKey=Gabim gjatë krijimit të kodit në regjistër:%n%1\%2
 
 ; *** INI errors
-ErrorIniEntry=Gabim duke krijuar hyrje INI në fajllin "%1".
+ErrorIniEntry=Gabim gjatë krijimit të hyrjes INI në skedën "%1".
 
 ; *** File copying errors
-FileAbortRetryIgnore=Kliko Riprovo që të provosh përsëri, Injoro që të kalosh këtë fajll (nuk është e rekomanduar), ose Ndërpreje që ta ndalësh instalimin.
-FileAbortRetryIgnore2=Kliko Riprovo që të provosh përsëri, Injoro që të vazhdosh edhe ashtu (nuk është e rekomanduar), ose Ndërpreje që ta ndalësh instalimin.
-SourceIsCorrupted=Fajlli burimor është i korruptuar
-SourceDoesntExist=Fajlli burimor "%1" nuk ekziston
-ExistingFileReadOnly=Fajlli ekzistues është i shënuar si read-only.%n%nKliko Riprovo që ta largosh atributin read-only dhe të provosh përsëri, Injoro që ta kalosh këtë fajll, ose Ndërpreje që ta ndalësh instalimin.
-ErrorReadingExistingDest=Një gabim ndodhi gjatë leximit të fajllit ekzistues:
-FileExists=Fajlli tashmë ekziston.%n%nA dëshiron që Instalimi ta mbishkruaj?
-ExistingFileNewer=Fajlli ekzistues është më i ri sesa ai që dëshiron Instalimi ta instaloj. Është e rekomanduar që ta mbani fajllin ekzistues.%n%nA dëshironi që ta mbani fajllin ekzistues?
-ErrorChangingAttr=Një gabim ndodhi gjatë ndrrimit të atributeve të fajllit ekzistues:
-ErrorCreatingTemp=Një gabim ndodhi gajtë krijimit të një fajlli në direktoriumin destinues:
-ErrorReadingSource=Një gabim ndodhi gjatë leximit të fajllit burimor:
-ErrorCopying=Një gabim ndodhi gjatë kopjimit të një fajlli:
-ErrorReplacingExistingFile=Një gabim ndodhi gjatë zëvendësimit të fajllit ekzistues:
-ErrorRestartReplace=RistartoZëvendëso dështoi:
-ErrorRenamingTemp=Një gabim ndodhi gjatë ndërrimit të emrit të një fajlli në direktoriumin destinues:
-ErrorRegisterServer=Nuk mund të regjistrohej DLL/OCX: %1
-ErrorRegisterServerMissingExport=DllRegisterServer eksportimi nuk u gjet
-ErrorRegisterTypeLib=Nuk mund të regjistrohej libraria: %1
+FileAbortRetryIgnore=Klikoni Riprovo që të provoni përsëri, Përbuze që të kaloni skedën (nuk rekomandohet), ose Ndërprite që të anuloni instalimin.
+FileAbortRetryIgnore2=Klikoni Riprovo për të provuar përsëri, Përbuze që gjithsesi të vijoni (nuk rekomandohet), ose Ndërprite që të anuloni instalimin.
+SourceIsCorrupted=Skeda burimore është korruptuar
+SourceDoesntExist=Skeda burimore "%1" nuk ekziston
+ExistingFileReadOnly=Skeda ekzistuese është e shenjuar vetëm për lexim.%n%nKlikoni Riprovo që të hiqni atributin vetëm për lexim dhe provoni përsëri, Përbuze që të kaloni skedën, ose Ndërprite që të anuloni instalimin.
+ErrorReadingExistingDest=Ndodhi një gabim gjatë provës për të lexuar skedën ekzistuese:
+FileExists=Skeda ekziston që më parë.%n%nA doni që Ndërtimi të mbishkruajë atë?
+ExistingFileNewer=Skeda ekzistuese është më e re sesa ajo që Ndërtimi po provon të instalojë. Rekomandohet që të mbani skedën ekzistuese.%n%nA doni të mbani skedën ekzistuese?
+ErrorChangingAttr=Ndodhi një gabim gjatë provës për të ndryshuar atributet e skedës ekzistuese:
+ErrorCreatingTemp=Ndodhi një gabim gjatë provës për të krijuar një skedë në direktorinë destinacion:
+ErrorReadingSource=Ndodhi një gabim gjatë provës për të lexuar skedën burimore:
+ErrorCopying=Ndodhi një gabim gjatë provës për të kopjuar skedën:
+ErrorReplacingExistingFile=Ndodhi një gabim gjatë provës për të zëvendësuar skedën ekzistuese:
+ErrorRestartReplace=RinisjeZëvendësimo dështoi:
+ErrorRenamingTemp=Ndodhi një gabim gjatë provës për të riemërtuar skedën në direktorinë destinacion:
+ErrorRegisterServer=Nuk mund të regjistroj DLL/OCX: %1
+ErrorRegSvr32Failed=RegSvr32 dështoi me kod dalje %1
+ErrorRegisterTypeLib=Nuk mund të regjistroj librarinë e llojit: %1
 
 ; *** Post-installation errors
-ErrorOpeningReadme=Një gabim ndodhi gajtë hapjes së fajllit MËLEXO.
-ErrorRestartingComputer=Instalimi nuk mundi ta ristartoj kompjuterin. Ju lutem bëne këtë manualisht.
+ErrorOpeningReadme=Ndodhi një gabim gjatë provës për të hapur skedën README.
+ErrorRestartingComputer=Ndërtimi nuk mundi të rinisë kompjuterin. Ju lutemi bëjeni vetë.
 
 ; *** Uninstaller messages
-UninstallNotFound=Fajlli "%1" nuk ekziston. Nuk mund të uninstaloj.
-UninstallOpenError=Fajlli "%1" nuk mund të hapej. Nuk mund të uninstaloj
-UninstallUnsupportedVer=Fajlli log i uninstalimit "%1" është në format që nuk e njeh ky verzion i uninstalimit. Nuk mund të uninstaloj
-UninstallUnknownEntry=Një hyrje e panjohur (%1) është gjetur në log të uninstalimit
-ConfirmUninstall=A jeni i sigurt që dëshironi kompletisht ta largoni %1 dhe të gjitha komponentet e tij?
-UninstallOnlyOnWin64=Ky instalim mundet vetëm të uninstalohet në verzionet 64 bit të Windows.
-OnlyAdminCanUninstall=Ky instalim mund të uninstalohet vetëm nga përdoruesit me privilegje të administruese.
-UninstallStatusLabel=Ju lutem prtini deri sa %1 të largohet nga kompjuteri juaj.
-UninstalledAll=%1 është larguar me sukses nga kompjuteri juaj.
-UninstalledMost=%1 uninstalimi u kompletua.%n%nDisa elemente nuk mund të largohen. Ato mund të largohen manualisht.
-UninstalledAndNeedsRestart=Që të kompletohet uninstalimi i %1, kompjuteri juaj duhet të ristartohet.%n%nA dëshironi ta ristartoni tani?
-UninstallDataCorrupted="%1" fajlli është korruptuar. Nuk mund të uninstaloj
+UninstallNotFound=Skeda "%1" nuk ekziston. Nuk mund të çinstaloj.
+UninstallOpenError=Skeda "%1" nuk mund të hapet. Nuk mund të çinstaloj
+UninstallUnsupportedVer=Skedë-ditari i çinstalimit "%1" është në format të panjohur nga ky version i çinstaluesit. Nuk mund të çinstaloj
+UninstallUnknownEntry=Një hyrje e panjohur (%1) u ndesh në ditarin e çinstalimit
+ConfirmUninstall=A jeni i sigurt se doni të hiqni plotësisht %1 dhe gjithë përbërësit e tij?
+UninstallOnlyOnWin64=Ky instalim mund të çinstalohet vetëm në Windows 64-bit.
+OnlyAdminCanUninstall=Ky instalim mund të çinstalohet vetëm nga një përdorues me privilegje administrimi.
+UninstallStatusLabel=Ju lutemi prisni ndërkohë që %1 hiqet nga kompjuteri.
+UninstalledAll=%1 u hoq me sukses nga kompjuteri.
+UninstalledMost=%1 përfundoi së çinstaluari.%n%nDisa elemente nuk mund të hiqeshin. Këto mund të hiqen nga ju.
+UninstalledAndNeedsRestart=Që të plotësoni çinstalimin e %1, kompjuteri duhet të rinisë.%n%nA doni të rinisni tani?
+UninstallDataCorrupted="%1" është skedë e korruptuar. Nuk mund të çinstaloj
 
 ; *** Uninstallation phase messages
-ConfirmDeleteSharedFileTitle=A të largohet Fajlli i Ndarë?
-ConfirmDeleteSharedFile2=Sistemi tregon që fajlli i ndarë nuk është në përdorim nga asnjë program. A dëshironi që Uninstalimi ta largoj këtë Fajll të Ndarë?%n%nNëse ka programe që e përdorin dhe fajlli largohet, programet nuk do të funksionojn si duhet. Nëse nuk jeni i sigurt, kliko Jo. Që ta leni fajllin në sistemin tuaj nuk do ta dëmtoj sistemin.
-SharedFileNameLabel=Emri i fajllit:
+ConfirmDeleteSharedFileTitle=Doni të Hiqni Skedat e Shpërndara?
+ConfirmDeleteSharedFile2=Sistemi tregon se kjo skedë e shpërndarë nuk përdoret më nga asnjë program. A doni që Çinstalimi të heqë këtë skedë të shpërndarë?%n%nNëse ndonjë program ende po përdor skedën, kur ajo të hiqet programi mund të mos punojë siç duhet. Nëse jeni i pasigurt, zgjidhni Jo. Lënia e skedën në sistem nuk do të shkaktojë dëme.
+SharedFileNameLabel=Emri i skedës:
 SharedFileLocationLabel=Vendi:
-WizardUninstalling=Statusi i uninstalimit
-StatusUninstalling=Duke uninstaluar %1...
+WizardUninstalling=Statusi i Çinstalimit
+StatusUninstalling=Po çinstaloj %1...
 
 ; The custom messages below aren't used by Setup itself, but if you make
 ; use of them in your scripts, you'll want to translate them.
 
 [CustomMessages]
 
-NameAndVersion=%1 verzioni %2
-AdditionalIcons=Ikonat shtesë:
-CreateDesktopIcon=Krijo një &ikon në dektop
-CreateQuickLaunchIcon=Krijo një ikon në &Quick Launch
-ProgramOnTheWeb=%1 në internet
-UninstallProgram=Uninstalo %1
+NameAndVersion=%1 version %2
+AdditionalIcons=Ikona shtesë:
+CreateDesktopIcon=Krijo ikonë në &desktop
+CreateQuickLaunchIcon=Krijo ikonë në &Quick Launch
+ProgramOnTheWeb=%1 në Rrjet
+UninstallProgram=Çinstalo %1
 LaunchProgram=Lësho %1
-AssocFileExtension=&Lidhe %1 me %2 ekstensionet e fajllave
-AssocingFileExtension=Duke e lidhur %1 me %2 ekstensionet e fajllave...
+AssocFileExtension=&Shoqëro %1 me shtojcën e skedës %2
+AssocingFileExtension=Po shoqëroj %1 me shtojcën e skedës %2...

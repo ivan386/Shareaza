@@ -1,9 +1,11 @@
-; *** Inno Setup version 4.2.5+ Afrikaans messages ***
+; Translation made with Translator 1.32 (http://www2.arnes.si/~sopjsimo/translator.html)
+; $Translator:NL=%n:TB=%t
 ;
-; Translated by Johann van der Walt (Thesage)
-; jvdwalt AT tuks DOT co DOT za
+; *** Inno Setup version 5.1.0+ Afrikaans messages ***
 ;
-; $jrsoftware: issrc/Files/Languages/Afrikaans.isl,v 1.01 2004/09/15 19:57:28 jr Exp $
+; Created by: Hermien Brits
+; E-mail:     hermien@hmk.co.za
+;
 
 [LangOptions]
 LanguageName=Afrikaans
@@ -20,13 +22,14 @@ LanguageCodePage=0
 ;CopyrightFontName=Arial
 ;CopyrightFontSize=8
 
+DialogFontName=
 [Messages]
 
 ; *** Application titles
-SetupAppTitle=Opsteller
-SetupWindowTitle=Opstelling - %1
-UninstallAppTitle=Deïnstallasie
-UninstallAppFullTitle=%1 deïnstallasie
+SetupAppTitle=Installasie
+SetupWindowTitle=Installasie - %1
+UninstallAppTitle=Verwyder
+UninstallAppFullTitle=Verwyder %1
 
 ; *** Misc. common
 InformationTitle=Inligting
@@ -34,36 +37,36 @@ ConfirmTitle=Bevestig
 ErrorTitle=Fout
 
 ; *** SetupLdr messages
-SetupLdrStartupMessage=Hierdie program sal %1 installeer. Wil jy graag voortgaan?
-LdrCannotCreateTemp=Nie in staat om 'n tydelike lêer te skep nie. Opstelling gestaak
-LdrCannotExecTemp=Nie in staat om lêer in die tydelike gids uit te voer nie. Opstelling gestaak
+SetupLdrStartupMessage=Hierdie program sal %1 installeer. Wil u voortgaan?
+LdrCannotCreateTemp=Onmoontlik om 'n tydelike leêr te skep. Installasie gestaak
+LdrCannotExecTemp=Onmoontlik om 'n uitvoerbare leêr in die tydelike gids te skep. Installasie gestaak
 
 ; *** Startup error messages
 LastErrorMessage=%1.%n%nFout %2: %3
-SetupFileMissing=Die lêer %1 word vermis van die installasie-gids. Korrigeer asseblief die probleem of verkry 'n nuwe kopie van die program.
-SetupFileCorrupt=Die opstellingslêers is korrup. Verkry asseblief 'n nuwe kopie van die program.
-SetupFileCorruptOrWrongVer=Die opstellingslêers is korrup, of is nie aanpasbaar vir hierdie weergawe van die Opsteller nie. Korrigeer asseblief die probleem, of verkry 'n nuwe kopie van die program.
-NotOnThisPlatform=Hierdie program sal nie uitvoer op %1 nie.
-OnlyOnThisPlatform=Hierdie program moet uitgevoer word op %1.
+SetupFileMissing=Die leêr %1 word vermis in die installasie gids. Korrigeer die fout of verkry 'n nuwe weergawe van die program.
+SetupFileCorrupt=Die installasie leêrs is korrup. Verkry 'n nuwe weergawe van die program.
+SetupFileCorruptOrWrongVer=Die installasie leêrs is korrup, of onversoenbaar met hierdie weergawe van Installeerder. Korrigeer die problem of verkry 'n nuwe weergawe van die program.
+NotOnThisPlatform=Hierdie program sal nie loop op %1 nie.
+OnlyOnThisPlatform=Hierdie program moet geloop word op %1.
 OnlyOnTheseArchitectures=Hierdie program kan net geinstalleer word op weergawes van Windows ontwerp vir die volgende verwerker argitekture:%n%n%1
 MissingWOW64APIs=Die weergawe van Windows wat u gebruik sluit nie die funksionaliteit in wat die Installeerder vereis vir 'n 64-bis installasie nie. Om hierdie probleem te korrigeer, installeer asb. Service Pack %1.
-WinVersionTooLowError=Hierdie program benodig %1 weergawe %2 of later.
-WinVersionTooHighError=Hierdie program kan nie geïnstalleer word op %1 weergawe %2 of later nie.
-AdminPrivilegesRequired=Jy moet as 'n administrateur ingeteken wees om hierdie program te installeer.
-PowerUserPrivilegesRequired=Jy moet as 'n administrateur ingeteken wees, of as 'n lid van die Kragtige Gebruikers groep om hierdie program te installeer.
-SetupAppRunningError=Die Opsteller het gesien dat %1 tans loop..%n%nSluit asseblief alle kopieë van die program, en kliek OK om voort te gaan, of Kanselleer om uit te gaan.
-UninstallAppRunningError=Die Deïnstalleerder het raakgesien dat %1 tans loop.%n%nSluit asseblief alle kopieë van die program, kliek OK om voort te gaan, of Kanselleer om uit te gaan.
+WinVersionTooLowError=Hierdie program vereis %1 weergawe %2 of nuuter.
+WinVersionTooHighError=Hierdie program kan nie geinstalleer word op %1 weergawe %2 of nuuter nie.
+AdminPrivilegesRequired=U moet ingeteken wees as 'n administreerder om hierdie program te installeer.
+PowerUserPrivilegesRequired=U moet aangeteken wees as 'n administreerder of as 'n lid van die Power Users groep om hierdie program te installeer.
+SetupAppRunningError=Die installeerder het opgetel dat %1 op die oomblik loop.%n%nMaak asb. nou alle kopieë daarvan toe, en kliek dan Aanvaar om voort te gaan, of Kanselleer om die installasie te verlaat.
+UninstallAppRunningError=Verwyder het opgetel dat %1 op die oomblik oop is.%n%nMaak asb. alle kopieë daarvan toe, en kliek dan op Aanvaar om voort te gaan, of Kanselleer om die verwyderaar te verlaat.
 
 ; *** Misc. errors
-ErrorCreatingDir=Die Opsteller was nie in staat om die gids "%1" te skep nie
-ErrorTooManyFilesInDir=Nie in staat om 'n lêer in die gids "%1" te skep nie, aangesien dit alreeds te veel lêers bevat
+ErrorCreatingDir=Die installeerder kon nie die gids %1 skep nie
+ErrorTooManyFilesInDir=Onmoontlik om 'n leêr in die gids "%1" te skep omdat dit te veel leêrs bevat
 
 ; *** Setup common messages
-ExitSetupTitle=Verlaat die Opsteller
-ExitSetupMessage=Opstelling is nie voltooi nie. As jy nou stop, sal die program nie geïnstalleer word nie.%n%nJy kan die Opsteller weer op 'n later stadium uitvoer om die installasie te voltooi.%n%nVerlaat die Opsteller?
-AboutSetupMenuItem=&Oor die Opsteller...
-AboutSetupTitle=Oor die Opsteller
-AboutSetupMessage=%1 weergawe %2%n%3%n%n%1 tuisblad:%n%4
+ExitSetupTitle=Verlaat Installeerder
+ExitSetupMessage=Installasie is nog nie voltooi nie. Indien u dit nou verlaat, sal die program nie geinstalleer wees nie.%n%nU kan die Installeerder later weer uitvoer om die installasie te voltooi.%n%nVerlaat die Installeerder?
+AboutSetupMenuItem=&Meer oor die Installeerder...
+AboutSetupTitle=Meer oor die Installeerder
+AboutSetupMessage=%1 weergawe %2%n%3%n%n%1 tuisblad: %n%4
 AboutSetupNote=
 
 ; *** Buttons
@@ -71,242 +74,238 @@ TranslatorNote=
 ButtonBack=< &Terug
 ButtonNext=&Volgende >
 ButtonInstall=&Installeer
-ButtonOK=OK
+ButtonOK=Aanvaar
 ButtonCancel=Kanselleer
-ButtonYes=&Ja
+ButtonYes=Ja
 ButtonYesToAll=Ja vir &Almal
 ButtonNo=&Nee
 ButtonNoToAll=N&ee vir Almal
 ButtonFinish=&Voltooi
-ButtonBrowse=&Blaai...
-ButtonWizardBrowse=B&laai...
+ButtonBrowse=&Rondblaai...
+ButtonWizardBrowse=R&ondblaai...
 ButtonNewFolder=&Skep Nuwe Gids
 
 ; *** "Select Language" dialog messages
-SelectLanguageTitle=Selekteer Opstellertaal
-SelectLanguageLabel=Selekteer die taal wat tydens installasie gebruik word:
+SelectLanguageTitle=Kies Installeerder Taal
+SelectLanguageLabel=Kies die taal om te gebruik gedurende die installasie:
 
 ; *** Common wizard text
-ClickNext=Kliek Volgende om voort te gaan, of Kanselleer om die Opsteller te verlaat.
+ClickNext=Kliek Volgende om voort te gaan, of Kanselleer om die installeerder te verlaat.
 BeveledLabel=
-BrowseDialogTitle=Blaai Na Gids
-BrowseDialogLabel=Selekteer 'n gids in die lys hieronder en kliek dan OK.
+BrowseDialogTitle=Blaai Rond Vir Gids
+BrowseDialogLabel=Kies 'n gids in die lys hieronder, en kliek Aanvaar.
 NewFolderName=Nuwe Gids
 
 ; *** "Welcome" wizard page
-WelcomeLabel1=Welkom by die [name] Opstellingsassistent
-WelcomeLabel2=Hierdie program sal [name/ver] op jou rekenaar installeer.%n%nDaar word voorgestel dat jy alle ander programme sluit voor jy voortgaan.
+WelcomeLabel1=Welkom by die [name] Installasie Guru
+WelcomeLabel2=Hierdie program sal [name/ver] installeer op u rekenaar.%n%nDit word aanbeveel dat u alle ander programme toemaak voor dat u voortgaan.
 
 ; *** "Password" wizard page
 WizardPassword=Wagwoord
-PasswordLabel1=Hierdie installasie word beskerm deur 'n wagwoord.
-PasswordLabel3=Verskaf asseblief die wagwoord en kliek Volgende om voort te gaan. Wagwoorde is kassensitief.
+PasswordLabel1=Hierdie installasie word deur 'n wagwoord beskerm.
+PasswordLabel3=Verskaf asb. die wagwoord, en kliek Volgende om voor te gaan. Wagwoorde is sensitief vir hoofletters.
 PasswordEditLabel=&Wagwoord:
-IncorrectPassword=Die wagwoord wat jy ingesleutel het is nie korrek nie. Probeer asseblief weer.
+IncorrectPassword=Die wagwoord wat u ingesleutel het is nie korrek nie. Probeer asb. weer.
 
 ; *** "License Agreement" wizard page
-WizardLicense=Lisensie-ooreenkoms
-LicenseLabel=Lees asseblief die volgende belangrike inligting voor jy voortgaan.
-LicenseLabel3=Lees asseblief die volgende Lisensie-ooreenkoms. Jy moet die terme van hierdie ooreenkoms aanvaar voor jy met die installasie voortgaan.
+WizardLicense=Lisensie Ooreenkoms
+LicenseLabel=Lees asb. die volgende belangrike inligting voordat u voortgaan.
+LicenseLabel3=Lees asb. die volgende Lisensie Ooreenkoms. U moet die terme van hierdie ooreenkoms aanvaar voordat u voortgaan met die installasie.
 LicenseAccepted=Ek &aanvaar die ooreenkoms
-LicenseNotAccepted=Ek aanvaar &nie die ooreenkoms nie
+LicenseNotAccepted=Ek aan&vaar nie die ooreenkoms nie.
 
 ; *** "Information" wizard pages
 WizardInfoBefore=Inligting
-InfoBeforeLabel=Lees asseblief die volgende belangrike inligting voor jy voortgaan.
-InfoBeforeClickLabel=Wanneer jy gereed is om met die Opstelling voort te gaan, kliek Volgende.
+InfoBeforeLabel=Lees asb. die volgende belangrike inligting voordat u voortgaan.
+InfoBeforeClickLabel=Wanneer u gereed is op voort te gaan met die Installasie, kliek Volgende.
 WizardInfoAfter=Inligting
-InfoAfterLabel=Lees asseblief die volgende belangrike inligting voor jy voortgaan.
-InfoAfterClickLabel=Wanneer jy gereed is om met die Opstelling voort te gaan, kliek Volgende.
+InfoAfterLabel=Lees asb. die volgende belangrike inligting voordat u voortgaan.
+InfoAfterClickLabel=Wanneer u gereed is op voort te gaan met die Installasie, kliek Volgende.
 
 ; *** "User Information" wizard page
-WizardUserInfo=Gebruikersinligting
-UserInfoDesc=Vul asseblief jou inligting in.
-UserInfoName=&Gebruikersnaam:
+WizardUserInfo=Gebruiker Inligting
+UserInfoDesc=Sleutel asb. u inligting in.
+UserInfoName=&Gebruiker Naam:
 UserInfoOrg=&Organisasie:
-UserInfoSerial=&Serienommer:
-UserInfoNameRequired=Jy moet 'n naam invul.
+UserInfoSerial=&Registrasie Nommer:
+UserInfoNameRequired=U moet 'n naam insleutel.
 
 ; *** "Select Destination Location" wizard page
-WizardSelectDir=Selekteer Bestemming
-SelectDirDesc=Waar moet [name] geïnstalleer word?
-SelectDirLabel3=Die Opsteller sal [name] na die volgende gids installeer.
-SelectDirBrowseLabel=Om voort te gaan, kliek Volgende. As jy 'n ander gids wil selekteer, kliek Blaai.
-DiskSpaceMBLabel=Ten minste [mb] MB se vrye skyfspasie word benodig.
-ToUNCPathname=Die Opsteller kan nie na 'n UNC padnaam installeer nie. As jy probeer om na 'n netwerk te installeer, sal jy 'n netwerkbinding moet skep.
-InvalidPath=Jy moet 'n volle pad met aandrywerletter invoer; byvoorbeeld:%n%nC:\APP%n%nof 'n UNC pad in die vorm:%n%n\\server\share
-InvalidDrive=Die skyf of UNC adres wat jy geselekteer het bestaan nie, of is nie beskikbaar nie. Selekteer asseblief 'n ander een.
-DiskSpaceWarningTitle=Onvoldoende Skyfspasie
-DiskSpaceWarning=Die Opsteller benodig ten minste %1 KB vrye skyfspasie om te installeer, maar die geselekteerde skyf het net %2 KB beskikbaar.%n%nWil jy in elk geval voortgaan?
-DirNameTooLong=Die gidsnaam of pad is te lank.
-InvalidDirName=Die gidsnaam is nie geldig nie.
-BadDirName32=Gidsname kan nie enige van die volgende karakters bevat nie:%n%n%1
-DirExistsTitle=Gids Bestaan Reeds
-DirExists=Die gids:%n%n%1%n%nbestaan reeds. Wil jy in elk geval na daardie gids installeer?
+WizardSelectDir=Kies Bestemming Ligging
+SelectDirDesc=Waar moet [naam] geinstalleer word?
+SelectDirLabel3=Die installeerder sal [name] installeer in die volgende gids.
+SelectDirBrowseLabel=Om voort te gaan, kliek Volgende. Indien u 'n ander gids wil kies, click Rondblaai.
+DiskSpaceMBLabel=Ten minste [mb] MB oop hardeskyf spasie word benodig.
+ToUNCPathname=Die installeerder kan nie installeer na 'n UNC gidsnaam nie. Indien u probeer om te installeer op 'n netwerk, sal u 'n netwerk aandrywer moet afbeeld.
+InvalidPath=U moet 'n volledige pad insleutel met 'n aandrywer letter; bv.:%n%nC:\APP%n%nof 'n UNC pad in die vorm:%n%n\\server\share
+InvalidDrive=Die aandrywer of UNC netwerk gids wat u gekies het bestaan nie of is nie toeganklik nie. Kies asb. 'n ander een.
+DiskSpaceWarningTitle=Onvoldoende Aandrywer Spasie
+DiskSpaceWarning=Die installasie vereis ten minste %1 KB oop spasie, maar die gekose aandrywer het slegs %2 KB spasie beskikbaar.%n%nWil u voortgaan ten spyte daarvan?
+DirNameTooLong=Die gids naam of pad is te lank.
+InvalidDirName=Die gidsnaam is ongeldig.
+BadDirName32=Gidsname mag nie een van die volgende karakters bevat nie:%n%n%1
+DirExistsTitle=Gids Bestaan
+DirExists=Die gids:%n%n%1%n%nbestaan alreeds. Wil u ten spyte daarvan steeds daarheen installeer?
 DirDoesntExistTitle=Gids Bestaan Nie
-DirDoesntExist=Die gids:%n%n%1%n%nbestaan nie. Wil jy die gids skep?
+DirDoesntExist=Die gids:%n%n%1%n%n bestaan nie. Wil u die gids skep?
 
 ; *** "Select Components" wizard page
-WizardSelectComponents=Selekteer Komponente
-SelectComponentsDesc=Watter komponente moet geïnstalleer word?
-SelectComponentsLabel2=Selekteer die komponente wat jy wil installeer; deselekteer die komponente wat jy nie wil installeer nie. Kliek Volgende as jy gereed is om voort te gaan.
-FullInstallation=Volle installasie
+WizardSelectComponents=Kies Komponente
+SelectComponentsDesc=Watter komponente moet geinstalleer word?
+SelectComponentsLabel2=Kies die komponente wat u wil installeer; deselekteer die komponente wat u nie wil installeer nie. Kliek Volgende wanneer u gereed is om voort te gaan.
+FullInstallation=Volledige Installasie
 ; if possible don't translate 'Compact' as 'Minimal' (I mean 'Minimal' in your language)
-CompactInstallation=Kompakte installasie
-CustomInstallation=Doelgemaakte installasie
-NoUninstallWarningTitle=Komponente Bestaan Reeds
-NoUninstallWarning=Die Opsteller het raakgesien dat die volgende komponente alreeds geïnstalleer is op jou rekenaar:%n%n%1%n%nDeur hierdie komponente te deselekteer sal hulle nie gedeïnstalleer word nie.%n%nWil jy in elk geval voortgaan?
+CompactInstallation=Kompakte Installasie
+CustomInstallation=Pasgemaakte Installasie
+NoUninstallWarningTitle=Komponente Bestaan
+NoUninstallWarning=Die installeerder het opgetel dat die volgende komponente reeds op u rekenaar geinstaleer is:%n%n%1%n%nOm die komponente te deselekteer sal hulle nie verwyder nie.%n%nWil u ten spyte daarvan voortgaan?
 ComponentSize1=%1 KB
 ComponentSize2=%1 MB
-ComponentsDiskSpaceMBLabel=Die huidige seleksie benodig ten minste [mb] MB se vrye skyfspasie.
+ComponentsDiskSpaceMBLabel=Huidige seleksie vereis ten minste [mb] MB aandrywer spasie.
 
 ; *** "Select Additional Tasks" wizard page
-WizardSelectTasks=Selekteer Addisionele Take
-SelectTasksDesc=Watter addisionele take moet uitgevoer word?
-SelectTasksLabel2=Selekteer die addisionele take wat jy wil hê die Opsteller moet uitvoer terwyl [name] geïnstalleer word en kliek dan Volgende.
+WizardSelectTasks=Kies Bykomende Take
+SelectTasksDesc=Watter bykomente take moet uigevoer word?
+SelectTasksLabel2=Kies die bykomende take wat u wil hê die Installeerder moet uitvoer tydens die [name] installasie, en kliek dan Volgende.
 
 ; *** "Select Start Menu Folder" wizard page
-WizardSelectProgramGroup=Selekteer Start Kieslys Gids
-SelectStartMenuFolderDesc=Waar moet die Opsteller die program se kortpaaie plaas?
-SelectStartMenuFolderLabel3=Die Opsteller sal die program se kortpaaie in die volgende Start Kieslys gids skep.
-SelectStartMenuFolderBrowseLabel=Om voort te gaan, kliek Volgende. As jy 'n ander gids wil selekteer, kliek Blaai.
-MustEnterGroupName=Jy moet 'n gidsnaam invul.
+WizardSelectProgramGroup=Kies Start Menu Gids
+SelectStartMenuFolderDesc=Waar moet die Installeerder die program se kortpaaie plaas?
+SelectStartMenuFolderLabel3=Die installeerder sal die program se kortpaaie in die volgende Start Menu gids plaas.
+SelectStartMenuFolderBrowseLabel=Om voort te gaan, kliek Volgende. Indien u 'n ander gids wil kies, kliek Rondblaai.
+MustEnterGroupName=U moet 'n gidsnaam insleutel.
 GroupNameTooLong=Die gidsnaam of pad is te lank.
-InvalidGroupName=Die gidsnaam is nie geldig nie.
-BadGroupName=Die gidsnaam kan nie enige van die volgende karakters bevat nie:%n%n%1
-NoProgramGroupCheck2=&Moenie 'n Start Kieslys gids skep nie
+InvalidGroupName=Die gidsnaam is ongeldig.
+BadGroupName=Die gidsnaam mag nie enige van die volgende karakters bevat nie:%n%n%1
+NoProgramGroupCheck2=&Moenie 'n Start Menu gids skep nie
 
 ; *** "Ready to Install" wizard page
-WizardReady=Gereed om te installeer
-ReadyLabel1=Die Opsteller is nou gereed om [name] op jou rekenaar te begin installeer.
-ReadyLabel2a=Kliek Installeer om met die installasie voort te gaan, of kliek Terug om enige instellings te verander.
-ReadyLabel2b=Kliek Installeer om met die installasie voort te gaan.
-ReadyMemoUserInfo=Gebruikersinligting:
-ReadyMemoDir=Bestemming:
-ReadyMemoType=Opstellingstipe:
-ReadyMemoComponents=Geselekteerde komponente:
-ReadyMemoGroup=Start Kieslys gids:
-ReadyMemoTasks=Addisionele take:
+WizardReady=Gereed om te Installeer
+ReadyLabel1=Die installeerder is nou gereed om [name] te begin installeer op u rekenaar.
+ReadyLabel2a=Kliek Installeer om voort te gaan met die installasie, of kliek Terug indien u enige keuses wil hersien of verander.
+ReadyLabel2b=Kliek Installeer om voort te gaan met die installasie.
+ReadyMemoUserInfo=Gebruiker inligting:
+ReadyMemoDir=Bestemming ligging:
+ReadyMemoType=Installasie tipe:
+ReadyMemoComponents=Geselekteerder komponente:
+ReadyMemoGroup=Start Menu gids:
+ReadyMemoTasks=Bykomende take:
 
 ; *** "Preparing to Install" wizard page
-WizardPreparing=Berei voor om te Installeer
-PreparingDesc=Die Opsteller berei voor om [name] op jou rekenaar te installeer.
-PreviousInstallNotCompleted=Die installasie/deïnstallasie van 'n vorige program was nie voltooi nie. Jy sal jou rekenaar moet oorbegin om daardie installasie te voltooi.%n%nNadat jou rekenaar oorbegin is, voer die Opsteller weer uit om die installasie van [name] te voltooi.
-CannotContinue=Die Opsteller kan nie voortgaan nie. Kliek asseblief Kanselleer om uit te gaan.
+WizardPreparing=Voorbereiding om te Installeer
+PreparingDesc=Die installeerder is besig om voor te berei om [name] op u rekenaar te installeer.
+PreviousInstallNotCompleted=Die installasie/verwydering van 'n vorige program is nie voltooi nie. U moet u rekenaar restart om daardie installasie te voltooi.%n%nNadat u die rekenaar restart het, kan u die instaleerder weer uitvoer om die installasie van [name] te voltooi.
+CannotContinue=Die installeerder kan nie voortgaan nie. Kliek asb. Kanselleer om dit te verlaat.
 
 ; *** "Installing" wizard page
 WizardInstalling=Besig om te Installeer
-InstallingLabel=Wag asseblief terwyl die Opsteller [name] op jou rekenaar installeer.
+InstallingLabel=Wag asb. terwyl [name] op u rekenaar geinstalleer word.
 
 ; *** "Setup Completed" wizard page
-FinishedHeadingLabel=Voltooiing van die [name] Opstellersassistent
-FinishedLabelNoIcons=Die Opsteller het die installasie van [name] op jou rekenaar voltooi.
-FinishedLabel=Die Opsteller het die installasie van [name] op jou rekenaar voltooi. Die program kan uitgevoer word deur die geïnstalleerde ikone te selekteer.
-ClickFinish=Kliek Voltooi om die Opsteller te verlaat.
-FinishedRestartLabel=Om die installasie van [name] te voltooi, moet die Opsteller jou rekenaar oorbegin. Wil jy nou oorbegin?
-FinishedRestartMessage=Om die installasie van [name] te voltooi, moet die Opsteller jou rekenaar oorbegin. %n%nWil jy nou oorbegin?
-ShowReadmeCheck=Ja, ek wil graag die README-lêer lees
-YesRadio=&Ja, begin die rekenaar nou oor
-NoRadio=&Nee, ek sal die rekenaar later oorbegin
+FinishedHeadingLabel=Voltooi die [name] Installasie Guru
+FinishedLabelNoIcons=Die [name] installasie is voltooi.
+FinishedLabel=Die [name] installasie is voltooi. Die program kan uitgevoer word deur die geinstalleerde ikone te gebruik.
+ClickFinish=Kliek Voltooi om die installeerder te verlaat.
+FinishedRestartLabel=Om die [name] installasie te voltooi, moet u rekenaar restart word. Wil u die rekenaar nou restart?
+FinishedRestartMessage=Om die [name] installasie te voltooi, moet u rekenaar restart word.%n%nWil u die rekenaar nou restart?
+ShowReadmeCheck=Ja, ek wil die README leêr besigtig
+YesRadio=&Ja, restart die rekenaar nou
+NoRadio=&Nee, ek sal die rekenaar later restart
 ; used for example as 'Run MyProg.exe'
-RunEntryExec=Loop %1
+RunEntryExec=Voer %1 uit
 ; used for example as 'View Readme.txt'
-RunEntryShellExec=Vertoon %1
+RunEntryShellExec=Besigtig %1
 
 ; *** "Setup Needs the Next Disk" stuff
-ChangeDiskTitle=Die Opsteller Benodig die Volgende Skyf
-SelectDiskLabel2=Voer asseblief Skyf %1 in en kliek OK.%n%nAs die lêers op die skyf in 'n ander gids as die een hieronder gevind kan word, vul die korrekte pad in of kliek Blaai.
+ChangeDiskTitle=Installeerder Benodig Volgende Disket
+SelectDiskLabel2=Plaas asb. Disket %1 in die aandrywer en kliek Aanvaar.%n%nIndien die leêrs in 'n ander gids gevind kan word as die een hieronder, sleutel die korrekte pad in of kliek Rondblaai.
 PathLabel=&Pad:
-FileNotInDir2=Die lêer "%1" kon nie gevind word in "%2" nie. Voer asseblief die korrekte skyf in, of selekteer 'n ander gids.
-SelectDirectoryLabel=Spesifiseer asseblief die posisie van die volgende skyf.
+FileNotInDir2=Die leêr "%1" kan nie gevind word in "%2" nie. Plaas asb. die korrekte disket in die aandrywer of kies 'n ander gids.
+SelectDirectoryLabel=Spesifiseer asb. die ligging van die volgende disket.
 
 ; *** Installation phase messages
-SetupAborted=Opstelling is nie voltooi nie.%n%nKorrigeer asseblief die probleem en voer die Opstelling weer uit.
-EntryAbortRetryIgnore=Kliek Probeer Weer om weer te probeer, Ignoreer om in elk geval voort te gaan, of Staak om die installasie te kanselleer.
+SetupAborted=Die installasie was nie voltooi nie.%n%nKorrigeer asb. die probleem en voer die installeerder weer uit.
+EntryAbortRetryIgnore=Kliek Probeer Weer om weer te probeer, Ignoreer om ten spyte hiervan voort te gaan, of Stop om die installasie te kanselleer.
 
 ; *** Installation status messages
-StatusCreateDirs=Gidse word geskep...
-StatusExtractFiles=Ontpak lêers...
-StatusCreateIcons=Skep kortpaaie...
-StatusCreateIniEntries=Skryf INI inskrywings...
-StatusCreateRegistryEntries=Skep register inskrywings...
-StatusRegisterFiles=Registreer lêers...
-StatusSavingUninstall=Stoor deïnstallasie inligting...
+StatusCreateDirs=Skepping van gidse...
+StatusExtractFiles=Uithaal van leêrs...
+StatusCreateIcons=Skepping van kortpaaie...
+StatusCreateIniEntries=Skepping van INI inskrywings...
+StatusCreateRegistryEntries=Skepping van registrasie inskrywings...
+StatusRegisterFiles=Registrering van leêrs...
+StatusSavingUninstall=Stoor van verwyderingsinligting...
 StatusRunProgram=Voltooiing van installasie...
-StatusRollback=Rol veranderinge terug...
+StatusRollback=Terugdraai van veranderinge...
 
 ; *** Misc. errors
 ErrorInternal2=Interne fout: %1
-ErrorFunctionFailedNoCode=%1 het gefaal
-ErrorFunctionFailed=%1 het gefaal; kode %2
-ErrorFunctionFailedWithMessage=%1 het gefaal; kode %2.%n%3
-ErrorExecutingProgram=Nie in staat om uit te voer nie:%n%1
+ErrorFunctionFailedNoCode=%1 gefaal
+ErrorFunctionFailed=%1 gefaal; kode %2
+ErrorFunctionFailedWithMessage=%1 gefaal; kode %2.%n%3
+ErrorExecutingProgram=Onmoontlik om die volgende leêr uit te voer:%n%1
 
 ; *** Registry errors
-ErrorRegOpenKey=Fout met oopmaak van registersleutel:%n%1\%2
-ErrorRegCreateKey=Fout met skep van registersleutel:%n%1\%2
-ErrorRegWriteKey=Fout met skryf na registersleutel:%n%1\%2
+ErrorRegOpenKey=Fout terwyl register sleutel oopgemaak word:%n%1\%2
+ErrorRegCreateKey=Fout terwyl register sleutel geskep word:%n%1\%2
+ErrorRegWriteKey=Fout terwyl geskryf word na register sleutel:%n%1\%2
 
 ; *** INI errors
-ErrorIniEntry=Fout met skep van INI  inskrywing in lêer "%1".
+ErrorIniEntry=Fout terwyl INI inskrywing in die leêr "%1" gemaak word.
 
 ; *** File copying errors
-FileAbortRetryIgnore=Kliek Probeer Weer om weer te probeer, Ignoreer om die lêer oor te slaan (word nie aanbeveel), of Staak om die installasie te kanselleer.
-FileAbortRetryIgnore2=Kliek Probeer Weer om weer te probeer, Ignoreer om in elk geval voort te gaan (word nie aanbeveel), of Staak om die installasie te kanselleer.
-SourceIsCorrupted=Die bronlêer is korrup
-SourceDoesntExist=Die bronlêer "%1" bestaan nie
-ExistingFileReadOnly=Die bestaande lêer is gemerk as lees-alleen.%n%nKliek Probeer Weer om die lees-alleen eienskap te verwyder en weer te probeer, Ignoreer om die lêer oor te slaan, of Staak om die installasie te kanselleer.
-ErrorReadingExistingDest='n Fout het plaasgevind met die lees van die bestaande lêer:
-FileExists=Die lêer bestaan reeds.%n%nMoet die Opsteller dit oorskryf?
-ExistingFileNewer=Die bestaande lêer is nuwer as die een wat die Opsteller wil installeer. Dit word aanbeveel dat jy die bestaande lêer behou.%n%nWil jy die bestaande lêer behou?
-ErrorChangingAttr='n Fout het plaasgevind met die verandering van eienskappe van die bestaande lêer:
-ErrorCreatingTemp='n Fout het plaasgevind met die skep van 'n lêer in die bestemmingsgids:
-ErrorReadingSource='n Fout het plaasgevind met die lees van die bronlêer:
-ErrorCopying='n Fout het plaasgevind met die kopiëring van 'n lêer:
-ErrorReplacingExistingFile='n Fout het plaasgevind met die vervanging van die bestaande lêer:
-ErrorRestartReplace=OorbeginVervanging het gefaal:
-ErrorRenamingTemp='n Fout het plaasgevind met die herbenoem van 'n lêer in die bestemmingsgids:
-ErrorRegisterServer='n Fout het plaasgevind met die registrasie van die DLL/OCX: %1
-ErrorRegisterServerMissingExport=DllRegisterServer uitvoerder kan nie gevind word nie
-ErrorRegisterTypeLib='n Fout het plaasgevind met die registrasie van die tipe biblioteek: %1
+FileAbortRetryIgnore=Kliek Probeer Weer om weer te probeer, Ignoreer om hierdie leêr oor te slaap (nie aanbeveel nie), of Stop om die installasie te verlaat.
+FileAbortRetryIgnore2=Kliek Probeer Weer om weer te probeer, Ignoreer om voort te gaan ten spyte hiervan (nie aanbeveel nie), of Stop om die installasie te verlaat.
+SourceIsCorrupted=Die bron leêr is korrup
+SourceDoesntExist=Die bron leêr "%1" bestaan nie
+ExistingFileReadOnly=Die bestaande leêr is gemerl as lees-alleenlik.%n%nKliek Probeer Weer om die lees-alleenlik attribuut te verwyder en weer te probeer, Ignoreer om hierdie leêr oor te slaan, of Stop om die installasie te verlaat.
+ErrorReadingExistingDest='n Fout het gebeur terwyl die bestaande leêr gelees is:
+FileExists=Die leêr bestaan alreeds.%n%nWil u die leêr oorskryf?
+ExistingFileNewer=Die bestaande leêr is nuuter as die een wat die Installeerder probeer installeer. Dit word aanbeveel dat u die bestaande leêr hou.%n%nWil u die bestaande leêr hou?
+ErrorChangingAttr='n Fout het gebeur terwyl die attribute van die bestaande leêr verander is:
+ErrorCreatingTemp='n Fout het gebeur toe 'n leêr in die bestaande gids geskep is:
+ErrorReadingSource='n Fout het gebeur terwyl die bronleêr gelees is:
+ErrorCopying='n Fout het gebeur terwyl 'n leêr gekopieer is:
+ErrorReplacingExistingFile='n Fout het gebeur toe die bestaande leêr oorskryf is:
+ErrorRestartReplace=HerbeginVerander gefaal:
+ErrorRenamingTemp='n Fout het gebeur terwyl 'n leêr in die bestemmingsgids van naam verander is:
+ErrorRegisterServer=Onmoontlik om die DLL/OCX te registreer: %1
+ErrorRegisterServerMissingExport=DllRegisterServer nie gevind
+ErrorRegisterTypeLib=Onmoontlik om die biblioteek tipe te registreer: %1
 
 ; *** Post-installation errors
-ErrorOpeningReadme='n Fout het plaasgevind met die oopmaak van die README-lêer.
-ErrorRestartingComputer=Die Opsteller was nie in staat om die rekenaar oor te begin nie. Doen dit asseblief met die hand.
+ErrorOpeningReadme='n Fout het gebeur terwyl die README leêr oopgemaak is.
+ErrorRestartingComputer=Die installeerder kon nie die rekenaar restart nie. Doen dit asb. manueel.
 
 ; *** Uninstaller messages
-UninstallNotFound=Lêer "%1" bestaan nie. Kan nie deïnstalleer nie.
-UninstallOpenError=Lêer "%1" kan nie oopgemaak word nie. Kan nie deïnstalleer nie
-UninstallUnsupportedVer=Die deïnstallasie-loglêer "%1" is in 'n formaat wat nie herken word deur hierdie weergawe van die deïnstalleerder nie. Kan nie deïnstalleer nie
-UninstallUnknownEntry='n Onbekende inskrywing (%1) is teëgekom in die deïnstallasie-log
-ConfirmUninstall=Is jy seker jy wil %1 en al sy komponente ten volle verwyder?
+UninstallNotFound=Leêr "%1" bestaan nie. Kan nie installeer nie.
+UninstallOpenError=Leêr "%1" kan nie oopgemaak word nie. Onmoontlik om te verwyder.
+UninstallUnsupportedVer=Die verwyder logboek leêr "%1" se formaat word nie herken deur hierdie weergawe van die verwyderaar nie. Onmoontlik om te verwyder
+UninstallUnknownEntry='n Onbekende inskrywing (%1) is teëgekom in die verwyder logboek
+ConfirmUninstall=Is u seker dat u %1 en al die komponente daarvan heeltemal wil verwyder?
 UninstallOnlyOnWin64=Hierdie installasie kan slegs verwyder word op 64-bis Windows.
-OnlyAdminCanUninstall=Hierdie installasie kan slegs gedeïnstalleer word deur 'n gebruiker met administratiewe voorregte.
-UninstallStatusLabel=Wag asseblief 'n oomblik terwyl %1 verwyder word vanaf jou rekenaar.
-UninstalledAll=%1 is suksesvol verwyder vanaf jou rekenaar.
-UninstalledMost=%1 deïnstallasie voltooi.%n%nSommige elemente kon nie verwyder word nie. Hulle kan met die hand verwyder word.
-UninstalledAndNeedsRestart=Om die deïnstallasie van %1 te voltooi moet jou rekenaar oorbegin word.%n%nWil jy nou jou rekenaar oorbegin?
-UninstallDataCorrupted="%1" lêer is korrup. Kan nie deïnstalleer nie
+OnlyAdminCanUninstall=Hierdie installasie kan slegs verwyder word deur 'n gebruiker met administratiewe regte.
+UninstallStatusLabel=Wag asb. terwyl %1 van u rekenaar verwyder word.
+UninstalledAll=%1 is suksesvol verwyder vanaf u rekenaar.
+UninstalledMost=%1 verwydering voltooi.%n%nSommige elemente kan nie verwyder word nie. Hierdie elemente kan manueel verwyder word.
+UninstalledAndNeedsRestart=Om die verwydering van %1 te voltooi, moet u rekenaar restart word.%n%nWil u nou restart?
+UninstallDataCorrupted="%1" leêr is korrup. Onmoontlik om te verwyder
 
 ; *** Uninstallation phase messages
-ConfirmDeleteSharedFileTitle=Verwyder Gedeelde Lêer?
-ConfirmDeleteSharedFile2=Volgens die stelsel is die volgende gedeelde lêer nie langer in gebruik deur enige programme nie. Wil jy hê dat die Deïnstalleerder hierdie gedeelde lêer verwyder?%n%nAs enige programme steeds hierdie lêer gebruik en dit verwyder word, sal daardie programme nie meer behoorlik funksioneer nie. As jy onseker is, selekteer Nee. Dit sal nie nadelig wees om die lêer op jou stelsel te laat nie.
-SharedFileNameLabel=Lêernaam:
+ConfirmDeleteSharedFileTitle=Verwyder Gedeelde Leêr?
+ConfirmDeleteSharedFile2=Die stelsel dui aan dat die volgende gedeelde leêrs nie meer deur enige programme gebruik word nie. Moet die verwyderaar die gedeelde leêr verwyder?%n%nIndien enige programme hierdie leêr steeds gebruik en dit verwyder is, sal daardie programme nie meer reg funksioneer nie. Indien u onseker is, kies Nee. Indien die leêr op u stelsel gelaat word, sal dit geen skade doen nie.
+SharedFileNameLabel=Leêrnaam:
 SharedFileLocationLabel=Ligging:
-WizardUninstalling=Deïnstallasie Status
-StatusUninstalling=Deïnstalleer %1...
-
-; The custom messages below aren't used by Setup itself, but if you make
-; use of them in your scripts, you'll want to translate them.
-
+WizardUninstalling=Verwyderingstatus
+StatusUninstalling=Verwyder %1...
 [CustomMessages]
 
 NameAndVersion=%1 weergawe %2
-AdditionalIcons=Addisionele ikone:
-CreateDesktopIcon=Vertoon 'n &werkskerm ikoon
+AdditionalIcons=Bykomende ikone:
+CreateDesktopIcon=Vertoon 'n &werksblad ikoon
 CreateQuickLaunchIcon=Vertoon 'n &Quick Launch ikoon
 ProgramOnTheWeb=%1 op die Web
-UninstallProgram=Deïnstalleer %1
-LaunchProgram=Loop %1
-AssocFileExtension=&Assosieer %1 met die %2 lêeruitbreiding
-AssocingFileExtension=Assosieer %1 met die %2 lêeruitbreiding...
+UninstallProgram=Verwyder %1
+LaunchProgram=Voer %1 uit
+AssocFileExtension=&Assosieer %1 met die %2 leêr uitbreiding
+AssocingFileExtension=Assosieer %1 met die %2 lêer uitbreiding...

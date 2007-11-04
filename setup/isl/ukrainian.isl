@@ -1,7 +1,7 @@
 ; *** Inno Setup version 5.1.0+ Ukrainian messages ***
 ;
-; Translation was made by Oleh Malyy
-; mals@dreamsoft.ssft.net
+; Translation was made by Oleh Malyy 
+; mals@dreamsoft.ssft.net 
 ; http://www.dreamsoft-sg.com/
 ;
 ; Based on translation by Vitaliy Levchenko v.4.0.5
@@ -304,4 +304,4 @@ UninstallProgram=Деінсталювати %1
 LaunchProgram=Запустити %1
 AssocFileExtension=Звязати %1 з файлами, котрі мають розширення %2
 AssocingFileExtension=Звязування %1 з файлами %2
-
+ 

@@ -1,9 +1,9 @@
-; *** Inno Setup version 5.1.0+ Finnish messages ***
+; *** Inno Setup version 5.1.11+ Finnish messages ***
 ;
 ; Finnish translation by Antti Karttunen
 ; E-mail: antti.karttunen@joensuu.fi
 ; Translation home page: http://cc.joensuu.fi/~ankarttu/innosetup/
-; Last modification date: 2005-03-06
+; Last modification date: 2007-02-27
 
 [LangOptions]
 LanguageName=Suomi
@@ -117,7 +117,7 @@ UserInfoOrg=&Yritys:
 UserInfoSerial=&Tunnuskoodi:
 UserInfoNameRequired=Sinun täytyy antaa nimi.
 
-; *** "Select Destination Location" wizard page
+; *** "Select Destination Location" wizard page	
 WizardSelectDir=Valitse kohdekansio
 SelectDirDesc=Mihin [name] asennetaan?
 SelectDirLabel3=[name] asennetaan tähän kansioon.
@@ -254,7 +254,7 @@ ErrorReplacingExistingFile=Virhe korvattaessa nykyistä tiedostoa:
 ErrorRestartReplace=RestartReplace-komento epäonnistui:
 ErrorRenamingTemp=Virhe uudelleennimettäessä tiedostoa kohdehakemistossa:
 ErrorRegisterServer=DLL/OCX -laajennuksen rekisteröinti epäonnistui: %1
-ErrorRegisterServerMissingExport=DllRegisterServer-funktiota ei löytynyt
+ErrorRegSvr32Failed=RegSvr32-toiminto epäonnistui. Virhekoodi: %1
 ErrorRegisterTypeLib=Tyyppikirjaston rekisteröiminen epäonnistui: %1
 
 ; *** Post-installation errors
@@ -287,10 +287,10 @@ StatusUninstalling=Poistetaan %1...
 
 NameAndVersion=%1 versio %2
 AdditionalIcons=Lisäkuvakkeet:
-CreateDesktopIcon=Luo kuvake työpöydälle
-CreateQuickLaunchIcon=Luo kuvake pikakäynnistyspalkkiin
+CreateDesktopIcon=Luo kuvake &työpöydälle
+CreateQuickLaunchIcon=Luo kuvake &pikakäynnistyspalkkiin
 ProgramOnTheWeb=%1 Internetissä
 UninstallProgram=Poista %1
 LaunchProgram=Käynnistä %1
-AssocFileExtension=Yhdistä %1 tiedostopäätteeseen %2
-AssocingFileExtension=Yhdistä %1 tiedostopäätteeseen %2 ...
+AssocFileExtension=&Yhdistä %1 tiedostopäätteeseen %2
+AssocingFileExtension=Yhdistetään %1 tiedostopäätteeseen %2 ...

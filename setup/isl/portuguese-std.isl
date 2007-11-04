@@ -1,11 +1,11 @@
-; *** Inno Setup version 5.1.0+ Portuguese (Standard) messages ***
+; *** Inno Setup version 5.1.11+ Portuguese (Portugal) messages ***
 ;
-; Maintained by NARS (nars@gmx.net)
+; Maintained by NARS (nars AT gmx.net)
 ;
-; $jrsoftware: issrc/Files/Languages/PortugueseStd.isl,v 1.7 2005/03/01 05:16:13 nars Exp $
+; $jrsoftware: issrc/Files/Languages/Portuguese.isl,v 1.4 2007/02/26 23:46:46 nars Exp $
 
 [LangOptions]
-LanguageName=Portugu<00EA>s (Standard)
+LanguageName=Portugu<00EA>s (Portugal)
 LanguageID=$0816
 LanguageCodePage=1252
 
@@ -253,11 +253,11 @@ ErrorCreatingTemp=Ocorreu um erro ao tentar criar um ficheiro na directoria de d
 ErrorReadingSource=Ocorreu um erro ao tentar ler o ficheiro de origem:
 ErrorCopying=Ocorreu um erro ao tentar copiar um ficheiro:
 ErrorReplacingExistingFile=Ocorreu um erro ao tentar substituir o ficheiro existente:
-ErrorRestartReplace=RestartReplace failed:
+ErrorRestartReplace=RestartReplace falhou:
 ErrorRenamingTemp=Ocorreu um erro ao tentar mudar o nome de um ficheiro na directoria de destino:
 ErrorRegisterServer=Não é possível registar o DLL/OCX: %1
-ErrorRegisterServerMissingExport=DllRegisterServer export not found
-ErrorRegisterTypeLib=Unable to register the type library: %1
+ErrorRegSvr32Failed=O RegSvr32 falhou com o código de saída %1
+ErrorRegisterTypeLib=Não foi possível registar a livraria de tipos: %1
 
 ; *** Post-installation errors
 ErrorOpeningReadme=Ocorreu um erro ao tentar abrir o ficheiro LEIAME.

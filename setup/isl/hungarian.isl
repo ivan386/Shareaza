@@ -1,16 +1,22 @@
-; *** Inno Setup version 5.1.0+ Hungarian messages with "a(z)" definite articles ***
-; Copyright (C) 1999-2005 Kornél Pál
+; *** Inno Setup version 5.1.11+ Hungarian messages with "a(z)" definite articles ***
+; Copyright (C) 1999-2007 Kornél Pál
 ; All rights reserved.
-; E-mail: kornelpal@hotmail.com
-; Hungarian Inno Setup home page: http://www.kornelpal.hu/innosetup
+; E-mail: kornelpal<at>gmail<dot>com
+; Hungarian Inno Setup translation home page: http://www.kornelpal.hu/ishu
+;
+; The translation home page is available in English and Hungarian.
 ; You can download the versions with "a" and "az" definite articles and read
 ; about the usage of different Hungarian definite articles on this page.
 ;
-; *** Inno Setup 5.1.0+ verzió magyar üzenetek "a(z)" határozott névelõkkel ***
-; Copyright (C) 1999-2005 Pál Kornél
+; For conditions of use and distribution see Readme.htm file contained in the
+; Hungarian Inno Setup translation package available on the above home page.
+;
+; *** Inno Setup 5.1.11+ verzió magyar üzenetek "a(z)" határozott névelõkkel ***
+; Copyright (C) 1999-2007 Pál Kornél
 ; Minden jog fenntartva.
-; E-mail: kornelpal@hotmail.com
+; E-mail: kornelpal<kukac>gmail<pont>com
 ; Magyar Inno Setup oldal: http://www.palkornel.hu/innosetup
+;
 ; Az oldalról letölthetõ az "a" és az "az" névelõket tartalmazó változat, és
 ; olvashatsz a különbözõ magyar határozott névelõk használatáról is.
 ;
@@ -21,10 +27,10 @@
 ; messages that didn't have them already, because on those messages Inno
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
-;
-; $jrsoftware: issrc/Files/Default.isl,v 1.66 2005/02/25 20:23:48 mlaan Exp $
 
 [LangOptions]
+; The following three entries are very important. Be sure to read and 
+; understand the '[LangOptions] section' topic in the help file.
 LanguageName=Magyar
 LanguageID=$040E
 LanguageCodePage=1250
@@ -84,7 +90,7 @@ AboutSetupMenuItem=&Névjegy...
 AboutSetupTitle=Telepítõ névjegye
 AboutSetupMessage=%1 %2 verzió%n%3%n%nAz %1 honlapja:%n%4
 AboutSetupNote=
-TranslatorNote=Magyar változat:%nCopyright (C) 1999-2005 Pál Kornél%nMinden jog fenntartva.%n%nMagyar Inno Setup oldal:%nhttp://www.palkornel.hu/innosetup
+TranslatorNote=Magyar változat:%nCopyright (C) 1999-2007 Pál Kornél%nMinden jog fenntartva.%n%nMagyar Inno Setup oldal:%nhttp://www.palkornel.hu/innosetup
 
 ; *** Buttons
 ButtonBack=< &Vissza
@@ -270,11 +276,11 @@ ErrorRegWriteKey=Nem módosítható a rendszerleíró kulcs:%n%1\%2
 ErrorIniEntry=Hiba az INI bejegyzés létrehozása közben a(z) "%1" fájlban.
 
 ; *** File copying errors
-FileAbortRetryIgnore=Kilépés: megszakítás, Ismét: megismétlés, Tovább: a fájl átlépése (nem ajánlott)
+FileAbortRetryIgnore=Kilépés: megszakítás, Ismét: megismétlés, Tovább: fájl átlépése (nem ajánlott)
 FileAbortRetryIgnore2=Kilépés: megszakítás, Ismét: megismétlés, Tovább: folytatás (nem ajánlott)
 SourceIsCorrupted=A forrásfájl megsérült
 SourceDoesntExist=A(z) "%1" forrásfájl nem létezik
-ExistingFileReadOnly=A fájl csak olvashatóként van jelölve.%n%nKilépés: megszakítás, Ismét: csak olvasható jelölés megszüntetése, és megismétlés, Tovább: a fájl átlépése (nem ajánlott)
+ExistingFileReadOnly=A fájl csak olvashatóként van jelölve.%n%nKilépés: megszakítás, Ismét: csak olvasható jelölés megszüntetése, és megismétlés, Tovább: fájl átlépése (nem ajánlott)
 ErrorReadingExistingDest=Hiba lépett fel a fájl olvasása közben:
 FileExists=A fájl már létezik.%n%nFelül kívánja írni?
 ExistingFileNewer=A létezõ fájl újabb a telepítésre kerülõnél. Ajánlott a létezõ fájl megtartása.%n%nMeg kívánja tartani a létezõ fájlt?
@@ -286,7 +292,7 @@ ErrorReplacingExistingFile=Hiba lépett fel a létezõ fájl cseréje közben:
 ErrorRestartReplace=A fájl cseréje az újraindítás után sikertelen volt:
 ErrorRenamingTemp=Hiba lépett fel fájl célkönyvtárban történõ átnevezése közben:
 ErrorRegisterServer=Nem lehet regisztrálni a DLL-t/OCX-et: %1
-ErrorRegisterServerMissingExport=A DllRegisterServer export nem található
+ErrorRegSvr32Failed=A RegSvr32 sikertelen. A visszaadott kód: %1
 ErrorRegisterTypeLib=Nem lehet regisztrálni a típustárat: %1
 
 ; *** Post-installation errors
