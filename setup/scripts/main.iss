@@ -804,6 +804,8 @@ End;
 
 Function GetRelFilePath(LangCode: String): String;
 Begin
+  StringChangeEx(LangCode, '_', '-', True);
+
   if ( (LangCode = 'br') or (LangCode = 'pt') ) then
     Result := 'Languages\default-pt-br.xml'
   else if ( LangCode = 'sl' ) then
