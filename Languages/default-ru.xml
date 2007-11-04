@@ -3115,6 +3115,7 @@
 	<string id="20009" value="Пользовательский"/>
 	<string id="20010" value="&amp;Назад"/>
 	<string id="20011" value="&amp;Далее"/>
+	<string id="20012" value="Закончить"/>
 	<string id="20100" value="Соединение"/>
 	<string id="20101" value="Запрос"/>
 	<string id="20102" value="Ответ"/>
