@@ -4750,6 +4750,7 @@ BEGIN
     IDS_GENERAL_CUSTOM      "Custom"
     IDS_GENERAL_BACK        "&Back"
     IDS_GENERAL_NEXT        "&Next"
+    IDS_GENERAL_FINISH      "Finish"
 END
 
 STRINGTABLE 

@@ -143,7 +143,10 @@ BOOL CWizardSheet::OnInitDialog()
 	ScreenToClient( &rc );
 	rc.OffsetRect( 95 + 88 - rc.left, 0 );
 	GetDlgItem( ID_WIZNEXT )->MoveWindow( &rc );
+
+	LoadString( strMessage, IDS_GENERAL_FINISH );
 	GetDlgItem( ID_WIZFINISH )->MoveWindow( &rc );
+	GetDlgItem( ID_WIZFINISH )->SetWindowText( strMessage );
 
 	LoadString( strMessage, IDS_GENERAL_BACK );
 	if ( GetDlgItem( ID_WIZBACK ) )
