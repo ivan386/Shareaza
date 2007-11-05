@@ -18,3 +18,4 @@
 			#filters{text-align: left;}
 			#functions{float: right;}
 			.active	{ background: #fff; border: 1px solid #000;border-bottom-color: #fff;}
+			.tabs a {color:blue;}
