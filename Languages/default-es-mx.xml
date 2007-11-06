@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Spanish Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Shareaza Default Mexican Spanish Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -14,7 +14,7 @@
 <manifest	name="Español"
 		author="dague12"
 		updatedBy="help"
-		description="Shareaza Default Spanish Skin File"
+		description="Shareaza Default Mexican Spanish Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="luis.help(at)gmail(dot)com"
 		version="2.2.3.3"
