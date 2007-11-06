@@ -425,9 +425,13 @@ Type: files; Name: "{app}\Skins\Languages\default-en.xml"
 Type: files; Name: "{app}\unicows.dll"
 Type: files; Name: "{app}\Plugins\unicows.dll"
 
-; Old japanese Translation code used to be "jp" but now it is "ja"
+; Delete renamed translations
+; "jp" to "ja"
 Type: files; Name: "{app}\Skins\Languages\default-jp.ico"
 Type: files; Name: "{app}\Skins\Languages\default-jp.xml"
+; "es" to "es-mx"
+Type: files; Name: "{app}\Skins\Languages\default-es.ico"
+Type: files; Name: "{app}\Skins\Languages\default-es.xml"
 
 ; Clean up old Shareaza icons
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"; Check: NSISUsed
