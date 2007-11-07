@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -487,10 +487,12 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 	}
 	else if ( IsPaused() )
 		return 0;
-			
+
 	CString strURLs( pszURLs );
+	strURLs.Replace( _T("`"), _T("%60") );
+	strURLs.Replace( _T(","), _T("%2C") );
 	BOOL bQuote = FALSE;
-	
+
 	for ( int nScan = 0 ; nScan < strURLs.GetLength() ; nScan++ )
 	{
 		if ( strURLs[ nScan ] == '\"' )
@@ -498,27 +500,23 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 			bQuote = ! bQuote;
 			strURLs.SetAt( nScan, ' ' );
 		}
-		else if ( strURLs[ nScan ] == ',' && bQuote )
-		{
-			strURLs.SetAt( nScan, '`' );
-		}
 	}
-	
+
 	strURLs += ',';
-	
-    int nCount = 0;
+
+	int nCount = 0;
 	for ( ; ; )
 	{
 		int nPos = strURLs.Find( ',' );
 		if ( nPos < 0 ) break;
-		
+
 		CString strURL	= strURLs.Left( nPos );
 		strURLs			= strURLs.Mid( nPos + 1 );
 		strURL.TrimLeft();
-		
+
 		FILETIME tSeen = { 0, 0 };
 		BOOL bSeen = FALSE;
-		
+
 		if ( _tcsistr( strURL, _T("://") ) != NULL )
 		{
 			nPos = strURL.ReverseFind( ' ' );
@@ -530,15 +528,11 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 				strURL.TrimRight();
 				bSeen = TimeFromString( strTime, &tSeen );
 			}
-			
-			for ( int nScan = 0 ; nScan < strURL.GetLength() ; nScan++ )
-			{
-				if ( strURL[ nScan ] == '`' ) strURL.SetAt( nScan, ',' );
-			}
 		}
 		else
 		{
 			nPos = strURL.Find( ':' );
+
 			if ( nPos < 1 ) continue;
 			
 			int nPort = 0;
