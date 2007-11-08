@@ -16,8 +16,8 @@
 			IntermediateDirectory="Debug"
 			ConfigurationType="2"
 			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="TRUE"
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -84,7 +84,7 @@
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
 			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="1"
 			WholeProgramOptimization="TRUE">
 			<Tool
@@ -233,8 +233,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Generated Files"
-			SourceControlFiles="FALSE">
+			Name="Generated Files">
 			<File
 				RelativePath=".\#PROJECT#_i.c">
 				<FileConfiguration
