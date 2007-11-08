@@ -158,12 +158,12 @@ STDMETHODIMP CZIPBuilder::Process (
 		bool bFolder = false;
 
 		CString sName( szFile );
-		int n = sName.ReverseFind( _T('//') );
+		int n = sName.ReverseFind( _T('/') );
 		if ( n == sName.GetLength() - 1 )
 		{
 			bFolder = true;
 			sName = sName.Left( n );
-			n = sName.ReverseFind( _T('//') );
+			n = sName.ReverseFind( _T('/') );
 		}
 		if ( n >= 0 )
 			sName = sName.Mid( n + 1 );

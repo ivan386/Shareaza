@@ -43,5 +43,4 @@
 using namespace ATL;
 
 #define ZLIB_WINAPI
-#include <zlib/unzip.h>
-#pragma comment(lib, "../../shareaza/zlib/zlibwapi.lib")
+#include <unzip.h>
