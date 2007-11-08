@@ -63,5 +63,5 @@
 using namespace ATL;
 
 #include <string>
-#include <zlib/unzip.h>
-#include <zlib/iowin32.h>
+#include <unzip.h>
+#include <iowin32.h>
