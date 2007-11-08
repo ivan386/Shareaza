@@ -14,6 +14,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
+			UseOfMFC="1"
 			UseOfATL="0"
 			CharacterSet="1"
 			ManagedExtensions="FALSE">
@@ -25,7 +26,7 @@
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				TreatWChar_tAsBuiltInType="TRUE"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
@@ -252,6 +253,21 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\debug\plugins\gflimageservices\GFLImageServices_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\release\plugins\gflimageservices\GFLImageServices_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -266,21 +282,6 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\plugins\gflimageservices\GFLImageServices_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

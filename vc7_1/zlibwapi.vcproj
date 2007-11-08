@@ -23,7 +23,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;ZLIB_WINAPI"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				ProgramDataBaseFileName="$(IntDir)/"
 				WarningLevel="3"
 				DebugInformationFormat="3"/>
