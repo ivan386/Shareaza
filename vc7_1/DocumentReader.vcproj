@@ -3,7 +3,9 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="DocumentReader"
-	ProjectGUID="{FF8DE974-0784-45C3-8776-744E41A9E84B}">
+	ProjectGUID="{0B9C08B4-0C49-4473-B46A-A0291FA844E8}"
+	RootNamespace="DocumentReader"
+	Keyword="AtlProj">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -14,31 +16,31 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
+			UseOfMFC="0"
 			UseOfATL="1"
-			CharacterSet="2"
-			ManagedExtensions="FALSE">
+			ATLMinimizesCRunTimeLibraryUsage="TRUE"
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
+				AdditionalIncludeDirectories="$(IntDir);../shareaza"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
-				StringPooling="TRUE"
+				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				TreatWChar_tAsBuiltInType="TRUE"
-				ForceConformanceInForLoopScope="TRUE"
-				RuntimeTypeInfo="TRUE"
+				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="3"
 				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="3"
-				DebugInformationFormat="3"/>
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"
+				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="TRUE"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
 				GenerateDebugInformation="TRUE"
@@ -46,6 +48,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
+				AdditionalIncludeDirectories="../shareaza"
 				TypeLibraryName="$(IntDir)/$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)/$(InputName).h"
@@ -81,26 +84,23 @@
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="2"
-			ManagedExtensions="FALSE"
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="1"
+				Optimization="3"
 				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
-				OptimizeForProcessor="2"
-				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
+				OmitFramePointers="TRUE"
+				AdditionalIncludeDirectories="$(IntDir);../shareaza"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
 				StringPooling="TRUE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="0"
-				DefaultCharIsUnsigned="TRUE"
-				TreatWChar_tAsBuiltInType="TRUE"
-				ForceConformanceInForLoopScope="TRUE"
 				UsePrecompiledHeader="3"
 				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="3"
+				WarningLevel="4"
 				DebugInformationFormat="3"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -117,12 +117,12 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				BaseAddress="0x22000000"
-				MergeSections=".rdata=.text"
-				TargetMachine="1"/>
+				SetChecksum="TRUE"
+				BaseAddress="0x22000000"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
+				AdditionalIncludeDirectories="../shareaza"
 				TypeLibraryName="$(IntDir)/$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)/$(InputName).h"
@@ -248,6 +248,21 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\debug\plugins\documentreader\DocumentReader_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\release\plugins\documentreader\DocumentReader_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -262,21 +277,6 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debug\plugins\documentreader\DocumentReader_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

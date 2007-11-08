@@ -28,8 +28,6 @@
 #include "resource.h"       // main symbols
 #include "globals.h"
 #include "DocumentReader.h"
-#include <string>
-#include "..\unzip\Unzip.h"
 
 using namespace std;
 
@@ -48,23 +46,11 @@ public:
 	~CDocReader();
 
 	DECLARE_REGISTRY_RESOURCEID(IDR_DOCREADER)
-	DECLARE_NOT_AGGREGATABLE(CDocReader)
 
 	BEGIN_COM_MAP(CDocReader)
 		COM_INTERFACE_ENTRY(IImageServicePlugin)
 		COM_INTERFACE_ENTRY(ILibraryBuilderPlugin)
 	END_COM_MAP()
-
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
-
-	HRESULT FinalConstruct()
-	{
-		return S_OK;
-	}
-
-	void FinalRelease() 
-	{
-	}
 
 protected:
 	class CDocumentProperties

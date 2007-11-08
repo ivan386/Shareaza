@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="windows-1257"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="DocumentReader"
 	ProjectGUID="{0B9C08B4-0C49-4473-B46A-A0291FA844E8}"
+	RootNamespace="DocumentReader"
 	Keyword="AtlProj">
 	<Platforms>
 		<Platform
@@ -15,16 +16,14 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="2"
-			UseOfMFC="0"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\shareaza\zlib;..\..\shareaza"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
-				MinimalRebuild="FALSE"
+				AdditionalIncludeDirectories="..\..\shareaza\zlib;..\..\shareaza;..\..\vc7_1\debug\shareaza"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
 				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -37,33 +36,27 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
 				AdditionalDependencies="zlibwapi.lib"
 				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="2"
+				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
 				ModuleDefinitionFile=".\DocumentReader.def"
 				GenerateDebugInformation="TRUE"
-				GenerateMapFile="FALSE"
-				MapFileName="$(OutDir)/$(ProjectName).map"
-				SubSystem="2"
-				BaseAddress="0x22000000"
-				ImportLibrary="$(OutDir)/DocumentReader.lib"
-				TargetMachine="1"/>
+				BaseAddress="0x22000000"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="FALSE"
-				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
+				CommandLine="copy &quot;..\..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y
+regsvr32 /s /c &quot;$(TargetPath)&quot;
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -71,7 +64,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="0"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -101,46 +93,34 @@
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="..\..\shareaza\zlib;..\..\shareaza"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
+				AdditionalIncludeDirectories="..\..\shareaza\zlib;..\..\shareaza;..\..\vc7_1\release\shareaza"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
 				StringPooling="TRUE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="TRUE"
-				EnableFunctionLevelLinking="FALSE"
 				UsePrecompiledHeader="3"
-				WarningLevel="4"
-				Detect64BitPortabilityProblems="TRUE"/>
+				WarningLevel="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
 				AdditionalDependencies="Libcmt.lib zlibwapi.lib"
 				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
-				IgnoreAllDefaultLibraries="FALSE"
 				IgnoreDefaultLibraryNames="User32.lib;GDI32.lib;ComDlg32.lib;WinSpool.lib;shell32.lib;version.lib"
 				ModuleDefinitionFile=".\DocumentReader.def"
-				GenerateDebugInformation="FALSE"
-				GenerateMapFile="FALSE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				SetChecksum="TRUE"
-				BaseAddress="0x22000000"
-				ImportLibrary=""
-				MergeSections=""
-				TargetMachine="1"/>
+				BaseAddress="0x22000000"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="FALSE"
-				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -148,7 +128,9 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
+				CommandLine="copy &quot;..\..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y
+regsvr32 /s /c &quot;$(TargetPath)&quot;
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -156,7 +138,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="0"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -249,8 +230,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Generated Files"
-			SourceControlFiles="FALSE">
+			Name="Generated Files">
 			<File
 				RelativePath=".\DocumentReader_i.c">
 				<FileConfiguration

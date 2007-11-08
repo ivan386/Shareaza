@@ -27,8 +27,6 @@
 #include "stdafx.h"
 #include "DocReader.h"
 #include "Palette.h"
-#include "zlib.h"
-#include "..\unzip\iowin32.h"
 
 LPCWSTR	CDocReader::uriBook			= L"http://www.limewire.com/schemas/book.xsd";
 LPCWSTR	CDocReader::uriDocument		= L"http://www.shareaza.com/schemas/wordProcessing.xsd";
@@ -495,49 +493,56 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 
 CComBSTR CDocReader::GetMetadataXML(unzFile pFile)
 {
-	string sXML;
+	CComBSTR sUnicode;
 
 	CHAR szFile[256] = "meta.xml";
-	if ( unzLocateFile( pFile, szFile, 0 ) != UNZ_OK ) return "";
-
-	// Open the metadata.xml
-	int nError = UNZ_OK;
-	nError = unzOpenCurrentFilePassword( pFile, 0 );
-	if ( nError != UNZ_OK ) return "";
-
-	unz_file_info pInfo;
-	if ( unzGetCurrentFileInfo( pFile, &pInfo, szFile, sizeof(szFile), NULL, 0, NULL, 0 ) != UNZ_OK )
-		return "";
-    
-	// Prepare a buffer to read into
-	UINT nBufferSize = pInfo.uncompressed_size;
-	if ( nBufferSize > 8192 ) nBufferSize = 8192;
-
-    CHAR* pBuffer = new CHAR[ nBufferSize ];
-	if ( ! pBuffer ) return "";
-
-	// Extract the file into buffer
-	do
+	int nError = unzLocateFile( pFile, szFile, 0 );
+	if ( nError == UNZ_OK )
 	{
-		nError = unzReadCurrentFile( pFile, pBuffer, nBufferSize );
-		if ( nError < 0 ) 
-			break;
-		else if ( nError > 0 )
-			sXML.append( pBuffer, nBufferSize ); 
-	} while ( nError > 0 );
-
-	delete [] pBuffer;
-	if ( nError != UNZ_OK ) return "";
-
-	// Just make a buffer enough to fit string
-	WCHAR* pszUnicode = new WCHAR[ sXML.length() + 1 ];
-	if ( ! pszUnicode ) return "";
-
-	ConvertToUnicodeEx( sXML.c_str(), (DWORD)sXML.length(), pszUnicode, (DWORD)sXML.length(), CP_UTF8 );
-	CComBSTR sUnicode( pszUnicode );
-	
-	delete [] pszUnicode;
-
+		// Open the metadata.xml
+		nError = unzOpenCurrentFilePassword( pFile, 0 );
+		if ( nError == UNZ_OK )
+		{
+			unz_file_info pInfo = {};
+			nError = unzGetCurrentFileInfo( pFile, &pInfo, szFile,
+				sizeof(szFile), NULL, 0, NULL, 0 );
+			if ( nError == UNZ_OK )
+			{
+				// Prepare a buffer to read into
+				UINT nBufferSize = pInfo.uncompressed_size;
+				if ( nBufferSize > 8192 ) nBufferSize = 8192;
+				CHAR* pBuffer = new CHAR[ nBufferSize ];
+				if ( pBuffer )
+				{
+					// Extract the file into buffer
+					string sXML;
+					do
+					{
+						nError = unzReadCurrentFile( pFile, pBuffer, nBufferSize );
+						if ( nError < 0 ) 
+							break;
+						else if ( nError > 0 )
+							sXML.append( pBuffer, nBufferSize ); 
+					}
+					while ( nError > 0 );
+					if ( nError == UNZ_OK )
+					{
+						// Just make a buffer enough to fit string
+						WCHAR* pszUnicode = new WCHAR[ sXML.length() + 1 ];
+						if ( pszUnicode )
+						{
+							ConvertToUnicodeEx( sXML.c_str(), (DWORD)sXML.length(),
+								pszUnicode, (DWORD)sXML.length(), CP_UTF8 );
+							sUnicode = pszUnicode;				
+							delete [] pszUnicode;
+						}
+					}
+					delete [] pBuffer;
+				}
+			}
+			unzCloseCurrentFile( pFile );
+		}
+	}
 	return sUnicode; 
 }
 
@@ -842,102 +847,106 @@ STDMETHODIMP CDocReader::GetOOThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 		if ( GetShortPathNameW( bsFile, pszName, MAX_PATH ) )
 		{
 			pFile = unzOpen2( CW2A(pszName), &FileFunc );
-			if ( ! pFile ) return STG_E_INVALIDNAME;
+			if ( ! pFile )
+				return STG_E_INVALIDNAME;
 		}
-		else return E_FAIL; // system doesn't support 8.3 filenames
+		else
+			return E_FAIL; // system doesn't support 8.3 filenames
 	}
+
+	HRESULT hr;
 
 	// Load thumbnail.png file to memory. The thumbnail is 24-bit with alpha channel
 	// and located in Thumbnails folder.
 	CHAR szFile[256] = "Thumbnails/thumbnail.png";
-	if ( unzLocateFile( pFile, szFile, 0 ) != UNZ_OK ) return S_FALSE;
-
-	// Open the metadata.xml
-	int nError = UNZ_OK;
-	nError = unzOpenCurrentFilePassword( pFile, 0 );
-	if ( nError != UNZ_OK ) return E_FAIL;
-
-	// Prepare a buffer to read into
-	UINT nBufferSize = 8192;
-    CHAR* pBuffer = new CHAR[ nBufferSize ];
-	if ( ! pBuffer ) return E_OUTOFMEMORY;
-
-	ILockBytes*	pLockBuffer = NULL;
-	IStorage*	pStorage = NULL;
-	IStream*	FileStream = NULL;
-	UINT		nBytesWritten = 0;
-
-	// Prepare stream to transfer the buffer
-	CreateILockBytesOnHGlobal( NULL, TRUE, &pLockBuffer ); // Create ILockBytes Buffer
-
-	HRESULT hr = StgCreateDocfileOnILockBytes( pLockBuffer,
-		STGM_SHARE_EXCLUSIVE | STGM_CREATE | STGM_READWRITE, 0, &pStorage );
-
-	hr = pStorage->CreateStream( L"PICTURE",
-		STGM_SHARE_EXCLUSIVE | STGM_CREATE | STGM_READWRITE, 0, 0, &FileStream );
-
-	// Extract the file into buffer and transfer to stream (buffered reading)
-	do
+	int nError = unzLocateFile( pFile, szFile, 0 );
+	if ( nError == UNZ_OK )
 	{
-		nError = unzReadCurrentFile( pFile, pBuffer, nBufferSize );
-		if ( nError < 0 ) 
-			break;
-		else if ( nError > 0 )
+		// Open the metadata.xml
+		nError = unzOpenCurrentFilePassword( pFile, 0 );
+		if ( nError == UNZ_OK )
 		{
-			hr = FileStream->Write( (void*)pBuffer, nBufferSize, (ULONG*)&nBytesWritten );
-			if ( FAILED(hr) || nBufferSize != nBytesWritten ) break;
-			pLockBuffer->Flush();
+			// Prepare a buffer to read into
+			UINT nBufferSize = 8192;
+			CHAR* pBuffer = new CHAR[ nBufferSize ];
+			if ( pBuffer )
+			{
+				CComPtr< ILockBytes > pLockBuffer;
+				CComPtr< IStorage > pStorage;
+				CComPtr< IStream > FileStream;
+				UINT nBytesWritten = 0;
+
+				// Prepare stream to transfer the buffer
+				if ( SUCCEEDED( hr = CreateILockBytesOnHGlobal( NULL, TRUE, &pLockBuffer ) ) &&
+					 SUCCEEDED( hr = StgCreateDocfileOnILockBytes( pLockBuffer,
+						STGM_SHARE_EXCLUSIVE | STGM_CREATE | STGM_READWRITE, 0, &pStorage ) ) &&
+					 SUCCEEDED( hr = pStorage->CreateStream( L"PICTURE",
+						STGM_SHARE_EXCLUSIVE | STGM_CREATE | STGM_READWRITE, 0, 0, &FileStream ) ) )
+				{
+					// Extract the file into buffer and transfer to stream (buffered reading)
+					do
+					{
+						nError = unzReadCurrentFile( pFile, pBuffer, nBufferSize );
+						if ( nError < 0 ) 
+							break;
+						else if ( nError > 0 )
+						{
+							hr = FileStream->Write( (void*)pBuffer, nBufferSize, (ULONG*)&nBytesWritten );
+							if ( FAILED(hr) || nBufferSize != nBytesWritten ) break;
+							pLockBuffer->Flush();
+						}
+					}
+					while ( nError > 0 );
+
+					if ( nError == UNZ_OK ) 
+					{
+						// Get statistics for the final size of byte array
+						STATSTG  BytesStatistics = {};
+						pLockBuffer->Stat( &BytesStatistics, STATFLAG_NONAME );
+						ULONG nArray = static_cast<ULONG>(BytesStatistics.cbSize.QuadPart);
+
+						// Create 1-dimensional safearray 
+						SAFEARRAY* psa = SafeArrayCreateVector( VT_UI1, 0, nArray );
+						ULONG nRead = 0;
+						LARGE_INTEGER llMove;
+						llMove.QuadPart = 0;
+
+						// Go to the beginning of the stream
+						hr = FileStream->Seek( llMove, STREAM_SEEK_SET, NULL );
+						
+						// Read byte array from the stream
+						BYTE* pData = NULL;
+						SafeArrayAccessData( psa, (VOID**)&pData );
+						hr = FileStream->Read( (VOID*)pData, nArray, &nRead );
+						SafeArrayUnaccessData( psa );
+						if ( SUCCEEDED( hr ) )
+						{
+							CComPtr<IImageServicePlugin> pPNGReader;
+							hr = pPNGReader.CoCreateInstance( CLSID_PNGReader,
+								NULL, CLSCTX_ALL );
+							if ( SUCCEEDED( hr ) )
+							{
+								hr = pPNGReader->LoadFromMemory( bsFile, psa,
+									pParams, ppImage );
+							}
+						}
+					}
+					else
+						hr = E_FAIL;
+				}
+				delete [] pBuffer;
+			}
+			else
+				hr = E_OUTOFMEMORY;
+			unzCloseCurrentFile( pFile );
 		}
-	} while ( nError > 0 );
-
-	// Close the file
-	unzClose( pFile );
-	delete [] pBuffer;
-
-	if ( nError != UNZ_OK ) 
-	{
-		FileStream->Release();
-		pStorage->Release();
-		pLockBuffer->Release();
-		return E_FAIL;
+		else
+			hr = E_FAIL;
 	}
+	else
+		hr = S_FALSE;
 
-	// Get statistics for the final size of byte array
-	STATSTG  BytesStatistics;
-	pLockBuffer->Stat( &BytesStatistics, STATFLAG_NONAME );
-	ULONG nArray = static_cast<ULONG>(BytesStatistics.cbSize.QuadPart);
-
-	// Create 1-dimensional safearray 
-
-	SAFEARRAY* psa = SafeArrayCreateVector( VT_UI1, 0, nArray );
-	ULONG nRead = 0;
-    LARGE_INTEGER llMove;
-    llMove.QuadPart = 0;
-
-	// Go to the beginning of the stream
-	hr = FileStream->Seek( llMove, STREAM_SEEK_SET, NULL );
-	// Read byte array from the stream
-	BYTE* pData = NULL;
-    SafeArrayAccessData( psa, (VOID**)&pData );
-	hr = FileStream->Read( (VOID*)pData, nArray, &nRead );
-    SafeArrayUnaccessData( psa );
-
-	FileStream->Release();
-	pStorage->Release();
-	pLockBuffer->Release();
-	if ( FAILED(hr) ) return E_FAIL;
-
-	// Initialize COM
-	HRESULT hr_coinit = CoInitialize( NULL );
-	if ( FAILED(hr_coinit) && hr_coinit != RPC_E_CHANGED_MODE ) return E_FAIL;
-
-	CComPtr<IImageServicePlugin> pPNGReader;
-	hr = pPNGReader.CoCreateInstance( CLSID_PNGReader, NULL, CLSCTX_ALL );
-	if ( FAILED(hr) ) return E_FAIL;
-
-	hr = pPNGReader->LoadFromMemory( bsFile, psa, pParams, ppImage );
-
-	if ( SUCCEEDED(hr_coinit) ) CoUninitialize();
+	unzClose( pFile );
 
 	return hr;
 }

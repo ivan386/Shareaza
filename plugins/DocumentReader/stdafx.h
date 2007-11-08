@@ -61,3 +61,7 @@
 #include <atlcom.h>
 
 using namespace ATL;
+
+#include <string>
+#include <zlib/unzip.h>
+#include <zlib/iowin32.h>

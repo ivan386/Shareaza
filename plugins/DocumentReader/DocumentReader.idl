@@ -5,17 +5,8 @@
 // produce the type library (DocumentReader.tlb) and marshalling code.
 
 import "oaidl.idl";
-
-cpp_quote("#include <ShareazaOM.h>")
-
-[
-	object, 
-	uuid(2285F261-F049-4944-A4AA-C93168D01231),
-	helpstring("IDocReader Interface"),
-	pointer_default(unique), hidden
-]
-[hidden] interface IDocReader : IUnknown{
-};
+import "ocidl.idl";
+import "Shareaza.idl";
 
 [
 	uuid(607C3F69-850D-4413-A81A-CF1C849BF387),
@@ -30,7 +21,7 @@ library DocumentReaderLib
 	]
 	coclass DocReader
 	{
-		[default] interface IUnknown;
-		interface IDocReader;
+		[default] interface ILibraryBuilderPlugin;
+		interface IImageServicePlugin;
 	};
 };
