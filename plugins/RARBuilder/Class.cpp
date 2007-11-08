@@ -22,7 +22,8 @@
 #include "StdAfx.h"
 #include "Class.h"
 
-#define MAX_SIZE_FILES		60
+#define MAX_SIZE_FILES		80
+#define MAX_SIZE_FOLDERS	80
 #define MAX_SIZE_COMMENTS	256
 
 class ATL_NO_VTABLE CRarHandler
@@ -95,10 +96,12 @@ STDMETHODIMP CRARBuilder::Process (
 		return hr;
 
 	CString sFiles;					// Plain list of archive files
+	bool bMoreFiles = false;		// More files than listed in sFiles
+	CString sFolders;				// Plain list of archive folders
+	bool bMoreFolders = false;		// More folders than listed in sFolders
 	CString sComment;				// Archive comments
 	bool bEncrypted = false;		// Archive itself or selective files are encrypted
 	ULONGLONG nUnpackedSize = 0;	// Total size of unpacked files
-	bool bMore = false;				// More files than listed in sFiles
 
 	char szCmtBuf[ MAX_SIZE_COMMENTS ] = {};
 	RAROpenArchiveDataEx oad = {};
@@ -106,6 +109,7 @@ STDMETHODIMP CRARBuilder::Process (
 	oad.CmtBuf = szCmtBuf;
 	oad.CmtBufSize = sizeof( szCmtBuf );
 	oad.OpenMode = RAR_OM_LIST;
+
 	CRarHandler oArchive( &oad );
 
 	switch( oad.OpenResult )
@@ -159,30 +163,42 @@ STDMETHODIMP CRARBuilder::Process (
 			{
 			// Success
 			case 0:
-				// Check if its not a directory
-				if ( ( hd.Flags & 0xe0 ) != 0xe0 )
+			{
+				CString sName( hd.FileNameW );
+				int n = sName.ReverseFind( _T('\\') );
+				if ( n >= 0 )
+					sName = sName.Mid( n + 1 );
+
+				if ( ( hd.Flags & 0xe0 ) == 0xe0 )
 				{
-					CString sFilename( hd.FileNameW );
-					int n = sFilename.ReverseFind( _T('\\') );
-					if ( n >= 0 )
-						sFilename = sFilename.Mid( n + 1 );
-					if ( sFiles.GetLength() + sFilename.GetLength() <= MAX_SIZE_FILES - 5 )
+					if ( sFolders.GetLength() + sName.GetLength() <= MAX_SIZE_FOLDERS - 5 )
+					{
+						if ( sFolders.GetLength() )
+							sFolders += _T(", ");
+						sFolders += sName;
+					}
+					else
+						bMoreFolders = true;
+				}
+				else
+				{
+					if ( sFiles.GetLength() + sName.GetLength() <= MAX_SIZE_FILES - 5 )
 					{
 						if ( sFiles.GetLength() )
 							sFiles += _T(", ");
-						sFiles += sFilename;
+						sFiles += sName;
 					}
 					else
-						bMore = true;
+						bMoreFiles = true;
 
 					nUnpackedSize += hd.UnpSize;
 
 					if ( ( hd.Flags & 0x04 ) )
 						// File encrypted with password
 						bEncrypted = true;
-
 				}
 				break;
+			}
 
 			// End of archive
 			case ERAR_END_ARCHIVE:
@@ -239,9 +255,16 @@ STDMETHODIMP CRARBuilder::Process (
 
 		if ( sFiles.GetLength() )
 		{
-			if ( bMore )
+			if ( bMoreFiles )
 				sFiles += _T(", ...");
 			pISXMLAttributes->Add( CComBSTR( "files" ), CComBSTR( sFiles ) );
+		}
+
+		if ( sFolders.GetLength() )
+		{
+			if ( bMoreFolders )
+				sFolders += _T(", ...");
+			pISXMLAttributes->Add( CComBSTR( "folders" ), CComBSTR( sFolders ) );
 		}
 	
 		if ( sComment.GetLength() )
