@@ -151,7 +151,7 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	ISXMLElement* pSingular;
 	pPlural->get_Elements( &pElements );
 
-	sTemp.Left( sTemp.GetLength() - 1 );
+	sTemp = sTemp.Left( sTemp.GetLength() - 1 );
 	bsName = CComBSTR( sTemp );
 	pElements->Create( bsName, &pSingular );
 	pElements->Release();
@@ -358,7 +358,7 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	ISXMLElement* pSingular;
 	pPlural->get_Elements( &pDestElements );
 
-	sTemp.Left( sTemp.GetLength() - 1 );
+	sTemp = sTemp.Left( sTemp.GetLength() - 1 );
 	bsName = CComBSTR( sTemp );
 	pDestElements->Create( bsName, &pSingular );
 	pDestElements->Release();
