@@ -4,6 +4,7 @@
 	Version="7.10"
 	Name="RARBuilder"
 	ProjectGUID="{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
+	RootNamespace="RARBuilder"
 	Keyword="AtlProj">
 	<Platforms>
 		<Platform
@@ -21,7 +22,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\debug\shareaza"
+				AdditionalIncludeDirectories="$(InputDir)"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
@@ -29,8 +30,7 @@
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="4"
-				DisableSpecificWarnings="4995"/>
+				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -44,8 +44,7 @@
 				SubSystem="2"
 				SetChecksum="FALSE"
 				BaseAddress="0x1aea0000"
-				ImportLibrary=""
-				TargetMachine="1"/>
+				ImportLibrary=""/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
@@ -94,15 +93,14 @@
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\release\shareaza"
+				AdditionalIncludeDirectories="$(InputDir)"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="TRUE"
-				DisableSpecificWarnings="4995"/>
+				Detect64BitPortabilityProblems="TRUE"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -118,8 +116,7 @@
 				OptimizeForWindows98="1"
 				SetChecksum="TRUE"
 				BaseAddress="0x1aea0000"
-				ImportLibrary=""
-				TargetMachine="1"/>
+				ImportLibrary=""/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
@@ -181,6 +178,25 @@
 					<Tool
 						Name="VCMIDLTool"
 						AdditionalIncludeDirectories="..\..\shareaza"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\shareaza\Shareaza.idl">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						OutputDirectory=""
+						HeaderFileName="ShareazaOM.h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						OutputDirectory=""
+						HeaderFileName="ShareazaOM.h"/>
 				</FileConfiguration>
 			</File>
 			<File

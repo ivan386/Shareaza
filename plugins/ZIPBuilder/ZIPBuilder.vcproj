@@ -22,7 +22,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../shareaza/zlib;../../vc7_1/$(ConfigurationName)/shareaza"
+				AdditionalIncludeDirectories="$(InputDir);../../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
@@ -30,8 +30,7 @@
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="4"
-				DisableSpecificWarnings="4995"/>
+				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -52,7 +51,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\debug\shareaza"
+				AdditionalIncludeDirectories=""
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -100,15 +99,14 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../../shareaza/zlib;../../vc7_1/$(ConfigurationName)/shareaza"
+				AdditionalIncludeDirectories="$(InputDir);../../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="TRUE"
-				DisableSpecificWarnings="4995"/>
+				Detect64BitPortabilityProblems="TRUE"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -131,7 +129,7 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\release\shareaza"
+				AdditionalIncludeDirectories=""
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -172,6 +170,23 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
 				RelativePath=".\Class.cpp">
+			</File>
+			<File
+				RelativePath="..\..\shareaza\Shareaza.idl">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="ShareazaOM.h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="ShareazaOM.h"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\StdAfx.cpp">
