@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
@@ -29,7 +29,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <object type="file" availability="default"/>
        <titles>
                <title language="en">Archive</title>
-			   <title language="nl">Archief</title>
+               <title language="nl">Archief</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -58,9 +58,12 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sr">Naslov</title>
                        <title language="tr">Başlık</title>
               </member>
+              <member name="folders" search="generic">
+                       <title language="en">Folders</title>
+              </member>
               <member name="files" search="generic">
                        <title language="en">Files</title>
-					   <title language="nl">Bestanden</title>
+                       <title language="nl">Bestanden</title>
               </member>
               <member name="comments" search="generic">
                        <title language="en">Comments</title>
@@ -86,83 +89,6 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
                        <title language="tr">Yorumlar</title>
-               </member>
-               <member name="type">
-                       <display defaultColumn="true"/>
-                       <title language="en">Type</title>
-                       <title language="af">Tipe</title>
-                       <title language="ca">Art</title>
-                       <title language="chs">类型</title>
-                       <title language="cht">類型</title>
-                       <title language="de">Art</title>
-                       <title language="ee">Tüüp</title>
-                       <title language="es">Arte</title>
-                       <title language="fr">Type</title>
-                       <title language="heb">סוג</title>
-                       <title language="hr">Vrsta</title>
-                       <title language="hu">Típus</title>
-                       <title language="it">Tipo</title>
-                       <title language="ja">種類</title>
-                       <title language="lt">Tipas</title>
-                       <title language="nl">Type</title>
-                       <title language="no">Type</title>
-                       <title language="pt-br">Tipo</title>
-                       <title language="ru">Тип</title>
-                       <title language="sl-SI">Tip</title>
-                       <title language="sq">Lloji</title>
-                       <title language="sr">Vrsta</title>
-                       <title language="tr">Tip</title>
-               </member>
-               <member name="archive" search="indexed">
-                       <title language="en">Archive Type</title>
-                       <title language="af">Argieftipe</title>
-                       <title language="ca">Tipus d'arxiu</title>
-                       <title language="chs">文件类型</title>
-                       <title language="cht">檔案類型</title>
-                       <title language="de">Archivtyp</title>
-                       <title language="ee">Arhiivi Tüüp</title>
-                       <title language="es">Tipo de archivo</title>
-                       <title language="fr">Type d'archive</title>
-                       <title language="heb">סוג אכיון</title>
-                       <title language="hr">Vrsta Arhive</title>
-                       <title language="hu">Archívum típusa</title>
-                       <title language="it">Tipo di archivio</title>
-                       <title language="ja">圧縮種類</title>
-                       <title language="lt">Archyvo tipas</title>
-                       <title language="nl">Archieftypes</title>
-                       <title language="no">Arkivtype</title>
-                       <title language="pt-br">Tipo de Arquivo</title>
-                       <title language="ru">Тип архива</title>
-                       <title language="sl-SI">Arhivski tip</title>
-                       <title language="sq">Lloj Arkivi</title>
-                       <title language="sr">Vrsta Arhive</title>
-                       <title language="tr">Arşiv Tipi</title>
-               </member>
-               <member name="os">
-                       <display defaultColumn="true"/>
-                       <title language="en">OS</title>
-                       <title language="af">OS</title>
-                       <title language="ca">Sistema Operatiu</title>
-                       <title language="chs">操作系统</title>
-                       <title language="cht">OS</title>
-                       <title language="de">Betriebssystem</title>
-                       <title language="ee">OS</title>
-                       <title language="es">OS</title>
-                       <title language="fr">OS</title>
-                       <title language="heb">מערכת הפעלה</title>
-                       <title language="hr">OS</title>
-                       <title language="hu">OS</title>
-                       <title language="it">SO</title>
-                       <title language="ja">OS</title>
-                       <title language="lt">OS</title>
-                       <title language="nl">OS</title>
-                       <title language="no">OS</title>
-                       <title language="pt-br">Sistema</title>
-                       <title language="ru">ОС</title>
-                       <title language="sl-SI">Operac. sistem</title>
-                       <title language="sq">Sistemi Operativ</title>
-                       <title language="sr">OS</title>
-                       <title language="tr">İşletim Sistemi</title>
                </member>
                <member name="keywords">
                        <title language="en">Keywords</title>
@@ -190,14 +116,14 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="tr">Anahtar Kelimeler</title>
                </member>
                <member name="encrypted">
-                       <display defaultColumn="true" columnAlign="center"/>
+                       <display columnAlign="center"/>
                        <title language="en">Encrypted</title>
-					   <title language="nl">Beveiligd</title>
+                       <title language="nl">Beveiligd</title>
                </member>
                <member name="unpackedsize">
-                       <display defaultColumn="true" columnAlign="center"/>
+                       <display columnAlign="center"/>
                        <title language="en">Unpacked Size</title>
-					   <title language="nl">Echte grootte</title>
+                       <title language="nl">Echte grootte</title>
                </member>
       </members>
        <typeFilter>

@@ -11,45 +11,11 @@
 	<complexType name="archiveType">
 		<all>
 			<attribute name="title" type="string"/>
+			<attribute name="folders" type="string"/>
 			<attribute name="files" type="string"/>
 			<attribute name="comments">
 				<simpleType base="string">
 					<maxInclusive value="256"/>
-				</simpleType>
-			</attribute>
-			<attribute name="type">
-				<simpleType base="string">
-					<enumeration value="Development"/>
-					<enumeration value="Entertainment"/>
-					<enumeration value="Game"/>
-					<enumeration value="Internet"/>
-					<enumeration value="Operating System"/>
-					<enumeration value="Productivity"/>
-					<enumeration value="System Tool"/>
-					<enumeration value="Utility"/>
-				</simpleType>
-			</attribute>
-			<attribute name="archive">
-				<simpleType base="string">
-					<enumeration value="ZIP"/>
-					<enumeration value="RAR"/>
-					<enumeration value="ACE"/>
-				</simpleType>
-			</attribute>
-			<attribute name="OS">
-				<simpleType base="string">
-					<enumeration value="Windows"/>
-					<enumeration value="Windows 95/98/Me"/>
-					<enumeration value="Windows NT/2000/XP"/>
-					<enumeration value="Windows CE"/>
-					<enumeration value="Windows Mobile"/>
-					<enumeration value="MacOS"/>
-					<enumeration value="Linux/FreeBSD"/>
-					<enumeration value="UNIX"/>
-					<enumeration value="Palm OS"/>
-					<enumeration value="Symbian OS"/>
-					<enumeration value="EPOC"/>
-					<enumeration value="OSE"/>
 				</simpleType>
 			</attribute>
 			<attribute name="keywords" type="string"/>
@@ -57,6 +23,5 @@
 			<attribute name="unpackedsize" type="string"/>
 		</all>
 	</complexType>
-
 
 </schema>
