@@ -91,7 +91,7 @@ inline void BGRA_DU2RGBA_UD (char* dest, int width, int height, int components) 
 class CMainWindow : public CWindowImpl<CMainWindow, CWindow, CFrameWinTraits>
 {
 public:
-	DECLARE_MAINFRAME_WND_CLASS("CSWFReaderWindow", CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS, COLOR_WINDOW, 0)
+	DECLARE_MAINFRAME_WND_CLASS(_T("CSWFReaderWindow"), CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS, COLOR_WINDOW, 0)
 
 	BEGIN_MSG_MAP(CMainWindow)
 	END_MSG_MAP()
