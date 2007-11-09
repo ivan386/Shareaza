@@ -105,7 +105,7 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	BSTR bsValue = NULL;
 	BSTR bsName = NULL;
 	LPCWSTR pszSingular = NULL;
-	string sTemp;
+	CString sTemp;
 	LONG nCount = 0;
 
 	hr = m_pDocProps->Open( bsFile, VARIANT_TRUE, dsoOptionOpenReadOnlyIfNoWriteAccess );
@@ -124,12 +124,12 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 		return E_FAIL;
 	}
 
-	pszSingular = wcsrchr( pszSchema, '/' ) + 1;
+	pszSingular = wcsrchr( pszSchema, _T('/') ) + 1;
 
 	USES_CONVERSION;
-	sTemp.assign( CW2T(pszSingular), wcslen( pszSingular ) - 4 );
-	sTemp.append( "s" );
-	bsName = CComBSTR( sTemp.c_str() );
+	sTemp.Append( CW2T(pszSingular), wcslen( pszSingular ) - 4 );
+	sTemp.Append( _T("s") );
+	bsName = CComBSTR( sTemp );
 
 	// Get a pointer to elements node and create a root element
 	ISXMLElement* pPlural;
@@ -151,8 +151,8 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	ISXMLElement* pSingular;
 	pPlural->get_Elements( &pElements );
 
-	sTemp.resize( sTemp.length() - 1 );
-	bsName = CComBSTR( sTemp.c_str() );
+	sTemp.Left( sTemp.GetLength() - 1 );
+	bsName = CComBSTR( sTemp );
 	pElements->Create( bsName, &pSingular );
 	pElements->Release();
 	SysFreeString( bsName );
@@ -231,8 +231,8 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 
 	// Now add some internal data
 
-	sTemp.assign( CW2T(pszFormat) );
-	bsName = CComBSTR( sTemp.c_str() );
+	sTemp = pszFormat;
+	bsName = CComBSTR( sTemp );
 	pAttributes->Add( L"format", bsName );
 	SysFreeString( bsName );
 
@@ -329,14 +329,14 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	BSTR bsValue = NULL;
 	BSTR bsName = NULL;
 	LPCWSTR pszSingular = NULL;
-	string sTemp;
+	CString sTemp;
 
-	pszSingular = wcsrchr( pszSchema, '/' ) + 1;
+	pszSingular = wcsrchr( pszSchema, _T('/') ) + 1;
 
 	USES_CONVERSION;
-	sTemp.assign( CW2T(pszSingular), wcslen( pszSingular ) - 4 );
-	sTemp.append( "s" );
-	bsName = CComBSTR( sTemp.c_str() );
+	sTemp.Append( CW2T(pszSingular), wcslen( pszSingular ) - 4 );
+	sTemp.Append( _T("s") );
+	bsName = CComBSTR( sTemp );
 
 	// Get a pointer to elements node and create a root element
 	ISXMLElement* pPlural;
@@ -358,8 +358,8 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	ISXMLElement* pSingular;
 	pPlural->get_Elements( &pDestElements );
 
-	sTemp.resize( sTemp.length() - 1 );
-	bsName = CComBSTR( sTemp.c_str() );
+	sTemp.Left( sTemp.GetLength() - 1 );
+	bsName = CComBSTR( sTemp );
 	pDestElements->Create( bsName, &pSingular );
 	pDestElements->Release();
 	SysFreeString( bsName );
@@ -465,8 +465,8 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 
 	// Now add some internal data
 
-	sTemp.assign( CW2T(pszFormat) );
-	bsName = CComBSTR( sTemp.c_str() );
+	sTemp = pszFormat;
+	bsName = CComBSTR( sTemp );
 	pAttributes->Add( L"format", bsName );
 	SysFreeString( bsName );
 
@@ -515,24 +515,24 @@ CComBSTR CDocReader::GetMetadataXML(unzFile pFile)
 				if ( pBuffer )
 				{
 					// Extract the file into buffer
-					string sXML;
+					CStringA sXML;
 					do
 					{
 						nError = unzReadCurrentFile( pFile, pBuffer, nBufferSize );
 						if ( nError < 0 ) 
 							break;
 						else if ( nError > 0 )
-							sXML.append( pBuffer, nBufferSize ); 
+							sXML.Append( pBuffer, nBufferSize ); 
 					}
 					while ( nError > 0 );
 					if ( nError == UNZ_OK )
 					{
 						// Just make a buffer enough to fit string
-						WCHAR* pszUnicode = new WCHAR[ sXML.length() + 1 ];
+						WCHAR* pszUnicode = new WCHAR[ sXML.GetLength() + 1 ];
 						if ( pszUnicode )
 						{
-							ConvertToUnicodeEx( sXML.c_str(), (DWORD)sXML.length(),
-								pszUnicode, (DWORD)sXML.length(), CP_UTF8 );
+							ConvertToUnicodeEx( sXML, (DWORD)sXML.GetLength(),
+								pszUnicode, (DWORD)sXML.GetLength(), CP_UTF8 );
 							sUnicode = pszUnicode;				
 							delete [] pszUnicode;
 						}
@@ -1650,16 +1650,15 @@ HRESULT CDocReader::
 
     if (SUCCEEDED(ReadFmtUserTypeStg(m_pStorage, &cf, NULL)) == TRUE)
     {
-        int i;
-        CHAR szName[MAX_PATH] = {0};
-
-        if ((i = GetClipboardFormatName(cf, szName, MAX_PATH)) > 0)
+        TCHAR szName[ MAX_PATH ] = {};
+		int i = GetClipboardFormatName( cf, szName, MAX_PATH );
+        if ( i > 0)
         {
             szName[i] = '\0';
         }
         else
         {
-            wsprintf(szName, "ClipFormat 0x%X (%d)", cf, cf);
+            wsprintf(szName, _T("ClipFormat 0x%X (%d)"), cf, cf);
         }
         *pbstrFormat = ConvertToBSTR(szName, CP_ACP);
         hr = ((*pbstrFormat) ? S_OK : E_OUTOFMEMORY);
@@ -2057,7 +2056,7 @@ HRESULT CDocReader::CDocumentProperties::
     if (SUCCEEDED(ReadProperty(m_pDocPropList, PID_VERSION, VT_I4, (void**)&ul)))
     {
         CHAR szVersion[128];
-        wsprintf(szVersion, "%d.%d", (LONG)(HIWORD(ul)), (LONG)(LOWORD(ul)));
+        wsprintf(szVersion, _T("%d.%d"), (LONG)(HIWORD(ul)), (LONG)(LOWORD(ul)));
         *pbstrVersion = ConvertToBSTR(szVersion, CP_ACP);
     }
     return S_OK;
