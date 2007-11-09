@@ -70,6 +70,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Installer", "Installer.vcpr
 		{E99CA8F9-D6F6-440C-B6EF-47F02DFAD891} = {E99CA8F9-D6F6-440C-B6EF-47F02DFAD891}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RARBuilder", "..\plugins\RARBuilder\RARBuilder.vcproj", "{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZIPBuilder", "..\plugins\ZIPBuilder\ZIPBuilder.vcproj", "{2F74AA28-2498-4805-911A-04C39858D529}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
@@ -82,9 +90,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
 		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Debug.ActiveCfg = Debug|Win32
-		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Debug.Build.0 = Debug|Win32
 		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Release.ActiveCfg = Release|Win32
-		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Release.Build.0 = Release|Win32
 		{FF8DE974-0784-45C3-8776-744E41A9E84B}.Debug.ActiveCfg = Debug|Win32
 		{FF8DE974-0784-45C3-8776-744E41A9E84B}.Debug.Build.0 = Debug|Win32
 		{FF8DE974-0784-45C3-8776-744E41A9E84B}.Release.ActiveCfg = Release|Win32
@@ -141,6 +147,14 @@ Global
 		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Debug.Build.0 = Debug|Win32
 		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.ActiveCfg = Release|Win32
 		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.Build.0 = Release|Win32
+		{F801DAD7-F08D-48EF-B0DF-6B120377E835}.Debug.ActiveCfg = Debug|Win32
+		{F801DAD7-F08D-48EF-B0DF-6B120377E835}.Debug.Build.0 = Debug|Win32
+		{F801DAD7-F08D-48EF-B0DF-6B120377E835}.Release.ActiveCfg = Release|Win32
+		{F801DAD7-F08D-48EF-B0DF-6B120377E835}.Release.Build.0 = Release|Win32
+		{2F74AA28-2498-4805-911A-04C39858D529}.Debug.ActiveCfg = Debug|Win32
+		{2F74AA28-2498-4805-911A-04C39858D529}.Debug.Build.0 = Debug|Win32
+		{2F74AA28-2498-4805-911A-04C39858D529}.Release.ActiveCfg = Release|Win32
+		{2F74AA28-2498-4805-911A-04C39858D529}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
