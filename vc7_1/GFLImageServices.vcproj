@@ -45,16 +45,17 @@
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories=""
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				GenerateDebugInformation="TRUE"/>
+				GenerateDebugInformation="TRUE"
+				BaseAddress="0x181a0000"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="../shareaza"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
+				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -98,7 +99,6 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				OptimizeForProcessor="2"
 				AdditionalIncludeDirectories="$(IntDir)"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
@@ -126,16 +126,18 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				MergeSections=".rdata=.text"/>
+				SetChecksum="TRUE"
+				BaseAddress="0x181a0000"
+				MergeSections=""/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="../shareaza"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
+				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -187,12 +189,14 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 					Name="Debug|Win32">
 					<Tool
 						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
 						HeaderFileName="$(IntDir)/ShareazaOM.h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
 						HeaderFileName="$(IntDir)/ShareazaOM.h"/>
 				</FileConfiguration>
 			</File>
@@ -253,21 +257,6 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath=".\debug\plugins\gflimageservices\GFLImageServices_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\release\plugins\gflimageservices\GFLImageServices_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -282,6 +271,21 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debug\plugins\gflimageservices\GFLImageServices_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

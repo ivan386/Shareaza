@@ -90,7 +90,7 @@
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="TRUE"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2"
 			WholeProgramOptimization="TRUE">
 			<Tool
@@ -101,8 +101,6 @@
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				OptimizeForProcessor="2"
-				OptimizeForWindowsApplication="TRUE"
 				AdditionalIncludeDirectories="$(IntDir)"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
@@ -114,27 +112,26 @@
 				UsePrecompiledHeader="3"
 				ProgramDataBaseFileName="$(IntDir)/"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"/>
+				Detect64BitPortabilityProblems="TRUE"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="TRUE"
-				AdditionalDependencies="unicows.lib Libcmt.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
-				IgnoreDefaultLibraryNames="User32.lib;GDI32.lib;ComDlg32.lib;WinSpool.lib;shell32.lib;version.lib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="../plugins/RatDVDPlugin/$(ProjectName).def"
 				MapFileName=""
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
+				SetChecksum="TRUE"
 				BaseAddress="0x25000000"
 				ImportLibrary=""
-				MergeSections=".rdata=.text"
-				TargetMachine="1"/>
+				MergeSections=""/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
@@ -267,6 +264,22 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\Debug\plugins\RatDVDReader\RatDVDReader_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\Release\plugins\RatDVDReader\RatDVDReader_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -281,22 +294,6 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Debug\plugins\RatDVDReader\RatDVDReader_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

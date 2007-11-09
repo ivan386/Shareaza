@@ -13,7 +13,10 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
-			ConfigurationType="2">
+			ConfigurationType="2"
+			UseOfATL="1"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -42,6 +45,7 @@
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
+				BaseAddress="0x190a0000"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -49,9 +53,9 @@
 				AdditionalIncludeDirectories="../shareaza"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
+				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -79,7 +83,8 @@
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="TRUE"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="1"
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
@@ -89,8 +94,6 @@
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				OptimizeForProcessor="2"
-				OptimizeForWindowsApplication="FALSE"
 				AdditionalIncludeDirectories="$(IntDir)"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
@@ -108,26 +111,28 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="TRUE"
-				AdditionalDependencies="libcmt.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				MergeSections=".rdata=.text"
-				TargetMachine="1"/>
+				SetChecksum="TRUE"
+				BaseAddress="0x190a0000"
+				MergeSections=""/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="../shareaza"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
+				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -163,13 +168,19 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"/>
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						DLLDataFileName=""
+						ProxyFileName=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"/>
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						DLLDataFileName=""
+						ProxyFileName=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -244,6 +255,21 @@
 			Name="Generated Files"
 			Filter="">
 			<File
+				RelativePath=".\release\plugins\swfplugin\SWFPlugin_i.c">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\debug\plugins\swfplugin\SWFPlugin_i.c">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -258,21 +284,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\release\plugins\swfplugin\SWFPlugin_i.c">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
