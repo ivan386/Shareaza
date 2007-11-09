@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'SkinScanSKS'
+		'SkinScanSKS.dll'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

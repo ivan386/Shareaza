@@ -1,37 +1,91 @@
-//
-// SkinScanSKS.h
-//
-//	Date:			"$Date: 2005/05/11 17:22:56 $"
-//	Revision:		"$Revision: 1.1 $"
-//  Last change by:	"$Author: spooky23 $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
-// This file is part of SHAREAZA (www.shareaza.com)
-//
-// Shareaza is free software; you can redistribute it
-// and/or modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2 of
-// the License, or (at your option) any later version.
-//
-// Shareaza is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Shareaza; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
 
-//
-// Include the Shareaza Object Model
-//
+#pragma warning( disable: 4049 )  /* more than 64k source lines */
 
-#include <ShareazaOM.h>
+/* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
-//
-// Define the CLSID for our plugin
-//
 
-DEFINE_GUID(CLSID_SkinInfoExtractor, 0xA4F1E383, 0xB493, 0x4580, 0x8D, 0xB6, 0x5C, 0xC8, 0x9C, 0xBA, 0xAC, 0x53);
+ /* File created by MIDL compiler version 6.00.0347 */
+/* at Thu Nov 08 17:04:26 2007
+ */
+/* Compiler settings for .\SkinScanSKS.idl:
+    Os, W1, Zp8, env=Win32 (32b run)
+    protocol : dce , ms_ext, c_ext
+    error checks: allocation ref bounds_check enum stub_data 
+    VC __declspec() decoration level: 
+         __declspec(uuid()), __declspec(selectany), __declspec(novtable)
+         DECLSPEC_UUID(), MIDL_INTERFACE()
+*/
+//@@MIDL_FILE_HEADING(  )
+
+
+/* verify that the <rpcndr.h> version is high enough to compile this file*/
+#ifndef __REQUIRED_RPCNDR_H_VERSION__
+#define __REQUIRED_RPCNDR_H_VERSION__ 440
+#endif
+
+#include "rpc.h"
+#include "rpcndr.h"
+
+#ifndef __SkinScanSKS_h__
+#define __SkinScanSKS_h__
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#pragma once
+#endif
+
+/* Forward Declarations */ 
+
+#ifndef __SkinScanSKS_FWD_DEFINED__
+#define __SkinScanSKS_FWD_DEFINED__
+
+#ifdef __cplusplus
+typedef class SkinScanSKS SkinScanSKS;
+#else
+typedef struct SkinScanSKS SkinScanSKS;
+#endif /* __cplusplus */
+
+#endif 	/* __SkinScanSKS_FWD_DEFINED__ */
+
+
+/* header files for imported files */
+#include "oaidl.h"
+#include "ocidl.h"
+#include "Shareaza.h"
+
+#ifdef __cplusplus
+extern "C"{
+#endif 
+
+void * __RPC_USER MIDL_user_allocate(size_t);
+void __RPC_USER MIDL_user_free( void * ); 
+
+
+#ifndef __SkinScanSKSLib_LIBRARY_DEFINED__
+#define __SkinScanSKSLib_LIBRARY_DEFINED__
+
+/* library SkinScanSKSLib */
+/* [helpstring][version][uuid] */ 
+
+
+EXTERN_C const IID LIBID_SkinScanSKSLib;
+
+EXTERN_C const CLSID CLSID_SkinScanSKS;
+
+#ifdef __cplusplus
+
+class DECLSPEC_UUID("A4F1E383-B493-4580-8DB6-5CC89CBAAC53")
+SkinScanSKS;
+#endif
+#endif /* __SkinScanSKSLib_LIBRARY_DEFINED__ */
+
+/* Additional Prototypes for ALL interfaces */
+
+/* end of Additional Prototypes */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+
 

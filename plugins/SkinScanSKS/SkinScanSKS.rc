@@ -13,49 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// Neutral resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
 #ifdef _WIN32
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-#endif //_WIN32
-
-#ifdef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// TEXTINCLUDE
-//
-
-1 TEXTINCLUDE 
-BEGIN
-    "resource.h\0"
-END
-
-2 TEXTINCLUDE 
-BEGIN
-    "#include ""winres.h""\r\n"
-    "\0"
-END
-
-3 TEXTINCLUDE 
-BEGIN
-    "\r\n"
-    "\0"
-END
-
-#endif    // APSTUDIO_INVOKED
-
-#endif    // English (U.S.) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// Neutral (Default) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
-#ifdef _WIN32
-LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 #pragma code_page(1257)
 #endif //_WIN32
 
@@ -65,7 +27,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,5
+ FILEVERSION 1,0,0,1
  PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -81,14 +43,12 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "Comments", "Shareaza Skin (SKS) File Support"
-            VALUE "CompanyName", "Shareaza Development Team"
-            VALUE "FileDescription", "Shareaza Skin (SKS) File Support"
-            VALUE "FileVersion", "1, 0, 0, 5"
-            VALUE "InternalName", "SkinScanSKS"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2006."
+            VALUE "FileDescription", "Shareaza Skin Metadata Extractor"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "SkinScanSKS.dll"
+            VALUE "LegalCopyright", "Copyright (c) Shareaza Development Team, 2007."
             VALUE "OriginalFilename", "SkinScanSKS.dll"
-            VALUE "ProductName", "Shareaza"
+            VALUE "ProductName", "Shareaza P2P"
             VALUE "ProductVersion", "2, 3, 0, 0"
         END
     END
@@ -104,7 +64,8 @@ END
 // REGISTRY
 //
 
-IDR_SKININFOEXTRACTOR   REGISTRY                "SkinInfoExtractor.rgs"
+IDR_APP         REGISTRY                "SkinScanSKS.rgs"
+IDR_CLASS       REGISTRY                "Class.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -113,21 +74,18 @@ IDR_SKININFOEXTRACTOR   REGISTRY                "SkinInfoExtractor.rgs"
 
 STRINGTABLE 
 BEGIN
-    IDS_PROJNAME            "Shareaza Skin Scanner (SKS)"
+    IDS_PROJNAME            "SkinScanSKS"
 END
 
-#endif    // Neutral (Default) resources
+#endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
-
-
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-
+1 TYPELIB "SkinScanSKS.tlb"
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

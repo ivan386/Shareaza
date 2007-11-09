@@ -1,11 +1,7 @@
 //
-// SkinScanSKS.cpp
+// SkinScanSKS.cpp : Implementation of DLL Exports.
 //
-//	Date:			"$Date: 2005/05/11 17:22:56 $"
-//	Revision:		"$Revision: 1.1 $"
-//  Last change by:	"$Author: spooky23 $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,67 +19,40 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#include "StdAfx.h"
-#include "Resource.h"
-#include <initguid.h>
+#include "stdafx.h"
+#include "resource.h"
 #include "SkinScanSKS.h"
-#include "SkinInfoExtractor.h"
 
-CComModule _Module;
-
-BEGIN_OBJECT_MAP(ObjectMap)
-	OBJECT_ENTRY(CLSID_SkinInfoExtractor, CSkinInfoExtractor)
-END_OBJECT_MAP()
-
-
-/////////////////////////////////////////////////////////////////////////////
-// DLL Entry Point
-
-extern "C"
-BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID)
+class CModule : public CAtlDllModuleT< CModule >
 {
-	if ( dwReason == DLL_PROCESS_ATTACH )
-	{
-		_Module.Init( ObjectMap, hInstance );
-		DisableThreadLibraryCalls( hInstance );
-	}
-	else if ( dwReason == DLL_PROCESS_DETACH )
-	{
-		_Module.Term();
-	}
+public :
+	DECLARE_LIBID( LIBID_SkinScanSKSLib )
+	DECLARE_REGISTRY_APPID_RESOURCEID( IDR_APP, "{A4F1E383-B493-4580-8DB6-5CC89CBAAC53}" )
+};
 
-	return TRUE;
+CModule _AtlModule;
+
+extern "C" BOOL WINAPI DllMain(HINSTANCE /*hInstance*/, DWORD dwReason, LPVOID lpReserved)
+{
+    return _AtlModule.DllMain( dwReason, lpReserved ); 
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// Used to determine whether the DLL can be unloaded by OLE
-
-STDAPI DllCanUnloadNow()
+STDAPI DllCanUnloadNow(void)
 {
-	return ( _Module.GetLockCount() == 0 ) ? S_OK : S_FALSE;
+    return _AtlModule.DllCanUnloadNow();
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// Returns a class factory to create an object of the requested type
 
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
-	return _Module.GetClassObject(rclsid, riid, ppv);
+    return _AtlModule.DllGetClassObject( rclsid, riid, ppv );
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// DllRegisterServer - Adds entries to the system registry
-
-STDAPI DllRegisterServer()
+STDAPI DllRegisterServer(void)
 {
-	return _Module.RegisterServer();
+    return _AtlModule.DllRegisterServer();
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// DllUnregisterServer - Removes entries from the system registry
-
-STDAPI DllUnregisterServer()
+STDAPI DllUnregisterServer(void)
 {
-	_Module.UnregisterServer();
-	return S_OK;
+	return _AtlModule.DllUnregisterServer();
 }

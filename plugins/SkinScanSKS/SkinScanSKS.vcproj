@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="SkinScanSKS"
-	RootNamespace="SkinScanSKS"
+	ProjectGUID="{A4F1E383-B493-4580-8DB6-5CC89CBAAC53}"
 	Keyword="AtlProj">
 	<Platforms>
 		<Platform
@@ -11,136 +11,54 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Release MinSize|Win32"
-			OutputDirectory=".\ReleaseMinSize"
-			IntermediateDirectory=".\ReleaseMinSize"
+			Name="Debug|Win32"
+			OutputDirectory="Debug"
+			IntermediateDirectory="Debug"
 			ConfigurationType="2"
-			UseOfMFC="0"
-			UseOfATL="2"
+			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\shareaza\zlib;..\..\shareaza"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
-				StringPooling="TRUE"
-				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="TRUE"
-				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\ReleaseMinSize\SkinScanSKS.pch"
-				AssemblerListingLocation=".\ReleaseMinSize/"
-				ObjectFile=".\ReleaseMinSize/"
-				ProgramDataBaseFileName=".\ReleaseMinSize/"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"/>
-			<Tool
-				Name="VCCustomBuildTool"
-				Description="Registering ActiveX Control..."
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;
-echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
-"
-				Outputs="$(OutDir)\regsvr32.trg"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib zlibwapi.lib libcmt.lib"
-				OutputFile=".\ReleaseMinSize\SkinScanSKS.dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\shareaza\zlib"
-				ModuleDefinitionFile=".\SkinScanSKS.def"
-				ProgramDatabaseFile=".\ReleaseMinSize\SkinScanSKS.pdb"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				OptimizeForWindows98="1"
-				ImportLibrary=".\ReleaseMinSize\SkinScanSKS.lib"
-				TargetMachine="1"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\ReleaseUMinSize/SkinScanSKS.tlb"
-				HeaderFileName=""/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="3081"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
-		</Configuration>
-		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory=".\Debug"
-			IntermediateDirectory=".\Debug"
-			ConfigurationType="2"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="1">
-			<Tool
-				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\shareaza\zlib;..\..\shareaza"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
+				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\debug\shareaza"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				ExceptionHandling="FALSE"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Debug\SkinScanSKS.pch"
-				AssemblerListingLocation=".\Debug\"
-				ObjectFile=".\Debug\"
-				ProgramDataBaseFileName=".\Debug\"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="4"/>
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"
+				DebugInformationFormat="4"
+				DisableSpecificWarnings="4995"/>
 			<Tool
-				Name="VCCustomBuildTool"
-				Description="Registering ActiveX Control..."
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;
-echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
-"
-				Outputs="$(OutDir)\regsvr32.trg"/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib zlibwapi.lib"
-				OutputFile=".\Debug\SkinScanSKS.dll"
+				IgnoreImportLibrary="TRUE"
+				AdditionalDependencies=""
 				LinkIncremental="2"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\shareaza\zlib"
-				ModuleDefinitionFile=".\SkinScanSKS.def"
+				ModuleDefinitionFile=".\$(ProjectName).def"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\Debug\SkinScanSKS.pdb"
+				GenerateMapFile="FALSE"
 				SubSystem="2"
-				OptimizeForWindows98="0"
-				ImportLibrary=".\Debug\SkinScanSKS.lib"
+				SetChecksum="FALSE"
+				BaseAddress="0x1afa0000"
+				ImportLibrary=""
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\DebugU/SkinScanSKS.tlb"
-				HeaderFileName=""/>
+				AdditionalIncludeDirectories="..\shareaza;debug\shareaza"
+				HeaderFileName="$(InputName).h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName=""/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Performing registration"
+				CommandLine="copy &quot;..\..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y
+regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -148,7 +66,8 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="3081"/>
+				Culture="1049"
+				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -161,64 +80,61 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release MinDependency|Win32"
-			OutputDirectory=".\ReleaseMinDependency"
-			IntermediateDirectory=".\ReleaseMinDependency"
+			Name="Release|Win32"
+			OutputDirectory="Release"
+			IntermediateDirectory="Release"
 			ConfigurationType="2"
-			UseOfMFC="0"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="1"
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\shareaza\zlib;..\..\shareaza"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
+				Optimization="3"
+				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="TRUE"
+				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\release\shareaza"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
+				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\ReleaseMinDependency\SkinScanSKS.pch"
-				AssemblerListingLocation=".\ReleaseMinDependency/"
-				ObjectFile=".\ReleaseMinDependency/"
-				ProgramDataBaseFileName=".\ReleaseMinDependency/"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"/>
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"
+				DisableSpecificWarnings="4995"/>
 			<Tool
-				Name="VCCustomBuildTool"
-				Description="Registering ActiveX Control..."
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;
-echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
-"
-				Outputs="$(OutDir)\regsvr32.trg"/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Unicows.lib zlibwapi.lib libcmt.lib"
-				OutputFile=".\ReleaseMinDependency\SkinScanSKS.dll"
+				IgnoreImportLibrary="TRUE"
+				AdditionalDependencies=""
 				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\shareaza\zlib"
-				ModuleDefinitionFile=".\SkinScanSKS.def"
-				ProgramDatabaseFile=".\ReleaseMinDependency\SkinScanSKS.pdb"
+				ModuleDefinitionFile=".\$(ProjectName).def"
+				GenerateDebugInformation="FALSE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				ImportLibrary=".\ReleaseMinDependency\SkinScanSKS.lib"
+				SetChecksum="TRUE"
+				BaseAddress="0x1afa0000"
+				ImportLibrary=""
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\ReleaseUMinDependency/SkinScanSKS.tlb"
-				HeaderFileName=""/>
+				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\release\shareaza"
+				HeaderFileName="$(InputName).h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName=""/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Performing registration"
+				CommandLine="copy &quot;..\..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y
+regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -226,7 +142,8 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="3081"/>
+				Culture="1049"
+				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -244,204 +161,97 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="SkinInfoExtractor.cpp">
+				RelativePath=".\Class.cpp">
+			</File>
+			<File
+				RelativePath=".\SkinScanSKS.cpp">
+			</File>
+			<File
+				RelativePath=".\SkinScanSKS.def">
+			</File>
+			<File
+				RelativePath=".\SkinScanSKS.idl">
 				<FileConfiguration
-					Name="Release MinSize|Win32">
+					Name="Debug|Win32">
 					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"/>
+						Name="VCMIDLTool"
+						AdditionalIncludeDirectories="..\..\shareaza"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						AdditionalIncludeDirectories="..\..\shareaza"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\StdAfx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release MinDependency|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="SkinScanSKS.cpp">
-				<FileConfiguration
-					Name="Release MinSize|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release MinDependency|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="SkinScanSKS.def">
-			</File>
-			<File
-				RelativePath="SkinScanSKS.rc">
-				<FileConfiguration
-					Name="Release MinSize|Win32">
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions="NDEBUG;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions="_DEBUG;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release MinDependency|Win32">
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions="NDEBUG;$(NoInherit)"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="StdAfx.cpp">
-				<FileConfiguration
-					Name="Release MinSize|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release MinDependency|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
-			<Filter
-				Name="unzip"
-				Filter="">
-				<File
-					RelativePath="..\unzip\ioapi.c">
-					<FileConfiguration
-						Name="Release MinSize|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release MinDependency|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\unzip\iowin32.c">
-					<FileConfiguration
-						Name="Release MinSize|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release MinDependency|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\unzip\Unzip.c">
-					<FileConfiguration
-						Name="Release MinSize|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release MinDependency|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="0"/>
-					</FileConfiguration>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl">
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="Resource.h">
+				RelativePath=".\Class.h">
 			</File>
 			<File
-				RelativePath="SkinInfoExtractor.h">
+				RelativePath=".\Shareaza.h">
 			</File>
 			<File
 				RelativePath=".\SkinScanSKS.h">
 			</File>
 			<File
-				RelativePath="StdAfx.h">
+				RelativePath=".\StdAfx.h">
 			</File>
-			<Filter
-				Name="unzip"
-				Filter="">
-				<File
-					RelativePath="..\unzip\crypt.h">
-				</File>
-				<File
-					RelativePath="..\unzip\ioapi.h">
-				</File>
-				<File
-					RelativePath="..\unzip\iowin32.h">
-				</File>
-				<File
-					RelativePath="..\unzip\Unzip.h">
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe">
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			<File
+				RelativePath=".\Class.rgs">
+			</File>
+			<File
+				RelativePath=".\SkinScanSKS.rc">
+			</File>
+			<File
+				RelativePath=".\SkinScanSKS.rgs">
+			</File>
 		</Filter>
-		<File
-			RelativePath="SkinInfoExtractor.rgs">
-		</File>
+		<Filter
+			Name="Generated Files">
+			<File
+				RelativePath=".\SkinScanSKS_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

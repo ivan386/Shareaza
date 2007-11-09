@@ -3,7 +3,9 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="SkinScanSKS"
-	ProjectGUID="{4D17C24E-FBE5-4872-9CB5-817089282EC5}">
+	ProjectGUID="{4D17C24E-FBE5-4872-9CB5-817089282EC5}"
+	RootNamespace="SkinScanSKS"
+	Keyword="AtlProj">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -14,53 +16,59 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
+			UseOfATL="1"
+			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
+				AdditionalIncludeDirectories="$(IntDir);../shareaza;../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
-				StringPooling="TRUE"
+				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				TreatWChar_tAsBuiltInType="TRUE"
-				ForceConformanceInForLoopScope="TRUE"
-				RuntimeTypeInfo="TRUE"
+				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="3"
 				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="3"
-				DebugInformationFormat="3"/>
+				WarningLevel="4"
+				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="TRUE"
-				AdditionalDependencies="Unicows.lib libcmtd.lib"
+				IgnoreImportLibrary="TRUE"
+				AdditionalDependencies="zlibwapi.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\shareaza\zlib"
+				AdditionalLibraryDirectories="../shareaza/zlib"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
 				GenerateDebugInformation="TRUE"
-				SubSystem="2"
-				TargetMachine="1"/>
+				BaseAddress="0x1a0a0000"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
+				AdditionalIncludeDirectories="../shareaza"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
+				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				Description="Copying zlibwapi.dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\setup\builds\zlibwapi.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /b /y
+copy &quot;$(SolutionDir)..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"/>
+				PreprocessorDefinitions="_DEBUG"
+				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -77,64 +85,68 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)/plugins"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)/plugins/$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="0"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE"
 			CharacterSet="1"
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="1"
-				InlineFunctionExpansion="1"
+				Optimization="3"
+				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
-				OptimizeForProcessor="2"
-				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
+				OmitFramePointers="TRUE"
+				AdditionalIncludeDirectories="$(IntDir);../shareaza;../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
 				StringPooling="TRUE"
+				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="TRUE"
-				TreatWChar_tAsBuiltInType="TRUE"
-				ForceConformanceInForLoopScope="TRUE"
-				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="3"/>
+				WarningLevel="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="TRUE"
-				AdditionalDependencies="unicows.lib libcmt.lib"
+				IgnoreImportLibrary="TRUE"
+				AdditionalDependencies="unicows.lib zlibwapi.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName).dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories=""
-				IgnoreDefaultLibraryNames=""
+				AdditionalLibraryDirectories="../shareaza/zlib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				MergeSections=".rdata=.text"
-				TargetMachine="1"/>
+				SetChecksum="TRUE"
+				BaseAddress="0x1a0a0000"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
+				AdditionalIncludeDirectories="../shareaza"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
+				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"/>
+				ProxyFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				Description="Copying zlibwapi.dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\setup\builds\zlibwapi.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /b /y
+copy &quot;$(SolutionDir)..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"/>
+				PreprocessorDefinitions="NDEBUG"
+				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -155,28 +167,33 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath="..\plugins\SkinScanSKS\Class.cpp">
+			</File>
+			<File
 				RelativePath="..\shareaza\Shareaza.idl">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
 						HeaderFileName="$(IntDir)/ShareazaOM.h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
 						HeaderFileName="$(IntDir)/ShareazaOM.h"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\plugins\SkinScanSKS\SkinInfoExtractor.cpp">
 			</File>
 			<File
 				RelativePath="..\plugins\SkinScanSKS\SkinScanSKS.cpp">
 			</File>
 			<File
 				RelativePath="..\plugins\SkinScanSKS\SkinScanSKS.def">
+			</File>
+			<File
+				RelativePath="..\plugins\SkinScanSKS\SkinScanSKS.idl">
 			</File>
 			<File
 				RelativePath="..\plugins\SkinScanSKS\StdAfx.cpp">
@@ -199,10 +216,13 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath="..\plugins\SkinScanSKS\Class.h">
+			</File>
+			<File
 				RelativePath="..\plugins\SkinScanSKS\Resource.h">
 			</File>
 			<File
-				RelativePath="..\plugins\SkinScanSKS\SkinInfoExtractor.h">
+				RelativePath="..\plugins\SkinScanSKS\Shareaza.h">
 			</File>
 			<File
 				RelativePath="..\plugins\SkinScanSKS\SkinScanSKS.h">
@@ -216,10 +236,48 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
-				RelativePath="..\plugins\SkinScanSKS\SkinInfoExtractor.rgs">
+				RelativePath="..\plugins\SkinScanSKS\Class.rgs">
 			</File>
 			<File
 				RelativePath="..\plugins\SkinScanSKS\SkinScanSKS.rc">
+			</File>
+			<File
+				RelativePath="..\plugins\SkinScanSKS\SkinScanSKS.rgs">
+			</File>
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			Filter="">
+			<File
+				RelativePath=".\release\plugins\skinscansks\SkinScanSKS_i.c">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debug\plugins\skinscansks\SkinScanSKS_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>

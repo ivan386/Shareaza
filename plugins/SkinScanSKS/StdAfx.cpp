@@ -1,11 +1,9 @@
 //
-// StdAfx.cpp
+// stdafx.cpp : source file that includes just the standard includes
+// SkinScanSKS.pch will be the pre-compiled header
+// stdafx.obj will contain the pre-compiled type information
 //
-//	Date:			"$Date: 2005/05/11 17:22:56 $"
-//	Revision:		"$Revision: 1.1 $"
-//  Last change by:	"$Author: spooky23 $"
-//
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,14 +21,4 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#include "StdAfx.h"
-
-/*
-#ifdef _ATL_STATIC_REGISTRY
-#include <statreg.h>
-#include <statreg.cpp>
-#endif
-
-#include <atlimpl.cpp>
-*/
-
+#include "stdafx.h"
