@@ -43,10 +43,12 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
+            VALUE "Comments", "RAR Builder"
+            VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "RAR Builder"
             VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "RARBuilder.dll"
-            VALUE "LegalCopyright", "Copyright (c) Shareaza Development Team, 2007."
+            VALUE "InternalName", "RARBuilder"
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2007. All rights reserved."
             VALUE "OriginalFilename", "RARBuilder.dll"
             VALUE "ProductName", "Shareaza P2P"
             VALUE "ProductVersion", "2, 3, 0, 0"

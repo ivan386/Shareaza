@@ -66,7 +66,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,3,0,2
- PRODUCTVERSION 2,2,0,0
+ PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -83,13 +83,13 @@ BEGIN
         BEGIN
             VALUE "Comments", "Shareaza ImageServices Plugin"
             VALUE "CompanyName", "Shareaza Development Team"
-            VALUE "FileDescription", "Shareaza ImageServices"
+            VALUE "FileDescription", "Shareaza ImageServices Plugin"
             VALUE "FileVersion", "1, 3, 0, 2"
             VALUE "InternalName", "ImageServices"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2007. All rights reserved."
             VALUE "OriginalFilename", "ImageServices.dll"
-            VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 0, 0"
+            VALUE "ProductName", "Shareaza P2P"
+            VALUE "ProductVersion", "2, 3, 0, 0"
         END
     END
     BLOCK "VarFileInfo"

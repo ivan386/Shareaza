@@ -94,11 +94,14 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "Shareaza"
+            VALUE "Comments", "Shareaza Skin Installer"
+            VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Skin Installer"
             VALUE "FileVersion", "1, 0, 12, 4"
+			VALUE "InternalName", "skin-installer"
+			VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2007. All rights reserved."
             VALUE "OriginalFilename", "skin.exe"
-            VALUE "ProductName", "Shareaza Skin Installer"
+            VALUE "ProductName", "Shareaza P2P"
             VALUE "ProductVersion", "2, 3, 0, 0"
         END
     END

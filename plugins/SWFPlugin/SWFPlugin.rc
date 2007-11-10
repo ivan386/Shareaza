@@ -81,10 +81,12 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "FileDescription", "SWF Library Builder & Image Service plugins"
+            VALUE "Comments", "SWF Library Builder & Image Service Plugins"
+            VALUE "CompanyName", "Shareaza Development Team"
+            VALUE "FileDescription", "SWF Library Builder & Image Service Plugins"
             VALUE "FileVersion", "1, 0, 0, 2"
-            VALUE "InternalName", "SWFPlugin.dll"
-            VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005-2006"
+            VALUE "InternalName", "SWFPlugin"
+            VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005-2007."
             VALUE "OriginalFilename", "SWFPlugin.dll"
             VALUE "ProductName", "Shareaza P2P"
             VALUE "ProductVersion", "2, 3, 0, 0"

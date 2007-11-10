@@ -43,10 +43,12 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
+            VALUE "Comments", "ZIP Builder"
+            VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "ZIP Builder"
             VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "ZIPBuilder.dll"
-            VALUE "LegalCopyright", "Copyright (c) Shareaza Development Team, 2007."
+            VALUE "InternalName", "ZIPBuilder"
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2007. All rights reserved."
             VALUE "OriginalFilename", "ZIPBuilder.dll"
             VALUE "ProductName", "Shareaza P2P"
             VALUE "ProductVersion", "2, 3, 0, 0"

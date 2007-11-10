@@ -27,7 +27,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
+ FILEVERSION 1,0,0,6
  PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -43,10 +43,12 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
+            VALUE "Comments", "Shareaza Skin Metadata Extractor"
+            VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Skin Metadata Extractor"
-            VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "SkinScanSKS.dll"
-            VALUE "LegalCopyright", "Copyright (c) Shareaza Development Team, 2007."
+            VALUE "FileVersion", "1, 0, 0, 6"
+            VALUE "InternalName", "SkinScanSKS"
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2007. All rights reserved."
             VALUE "OriginalFilename", "SkinScanSKS.dll"
             VALUE "ProductName", "Shareaza P2P"
             VALUE "ProductVersion", "2, 3, 0, 0"

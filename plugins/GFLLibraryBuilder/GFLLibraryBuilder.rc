@@ -81,10 +81,12 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "FileDescription", "GFL Library Builder plugin"
+            VALUE "Comments", "GFL Library Builder Plugin"
+            VALUE "CompanyName", "Shareaza Development Team"
+            VALUE "FileDescription", "GFL Library Builder Plugin"
             VALUE "FileVersion", "1, 0, 0, 7"
-            VALUE "InternalName", "GFLLibraryBuilder.dll"
-            VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005-2006"
+            VALUE "InternalName", "GFLLibraryBuilder"
+            VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005-2007."
             VALUE "OriginalFilename", "GFLLibraryBuilder.dll"
             VALUE "ProductName", "Shareaza P2P"
             VALUE "ProductVersion", "2, 3, 0, 0"

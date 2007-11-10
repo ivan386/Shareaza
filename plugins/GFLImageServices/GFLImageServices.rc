@@ -81,10 +81,12 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "FileDescription", "GFL Image Service plugin"
+            VALUE "Comments", "GFL Image Service Plugin"
+            VALUE "CompanyName", "Shareaza Development Team"
+            VALUE "FileDescription", "GFL Image Service Plugin"
             VALUE "FileVersion", "1, 0, 0, 7"
-            VALUE "InternalName", "GFLImageServices.dll"
-            VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005-2006"
+            VALUE "InternalName", "GFLImageServices"
+            VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005-2007."
             VALUE "OriginalFilename", "GFLImageServices.dll"
             VALUE "ProductName", "Shareaza P2P"
             VALUE "ProductVersion", "2, 3, 0, 0"

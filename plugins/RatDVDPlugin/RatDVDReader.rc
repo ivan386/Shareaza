@@ -13,12 +13,12 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (Australia) resources
+// Neutral resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENA)
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
 #ifdef _WIN32
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
-#pragma code_page(1252)
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1257)
 #endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
@@ -67,22 +67,22 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "0c090000"
+        BLOCK "00000000"
         BEGIN
             VALUE "Comments", "Shareaza RatDVD Reader Plugin"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza RatDVD Reader Plugin"
-            VALUE "FileVersion", "1.0.0.3"
+            VALUE "FileVersion", "1, 0, 0, 3"
             VALUE "InternalName", "RatDVDReader"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2006. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2006-2007. All rights reserved."
             VALUE "OriginalFilename", "RatDVDReader.dll"
-            VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2.3.0.0"
+            VALUE "ProductName", "Shareaza P2P"
+            VALUE "ProductVersion", "2, 3, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0xc09, 0
+        VALUE "Translation", 0x0, 1200
     END
 END
 
@@ -105,10 +105,8 @@ BEGIN
     IDS_PROJNAME            "RatDVDReader"
 END
 
-#endif    // English (Australia) resources
+#endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
-
-
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -119,4 +117,3 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-
