@@ -39,7 +39,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="zlibwapi.lib"
+				AdditionalDependencies="zlibwapi.lib comctl32.lib"
 				OutputFile="$(SolutionDir)$(ConfigurationName)/Skin.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
