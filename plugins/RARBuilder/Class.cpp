@@ -95,11 +95,11 @@ STDMETHODIMP CRARBuilder::Process (
 	if ( FAILED( hr ) )
 		return hr;
 
-	CString sFiles;					// Plain list of archive files
+	CString strFiles;					// Plain list of archive files
 	bool bMoreFiles = false;		// More files than listed in sFiles
-	CString sFolders;				// Plain list of archive folders
+	CString strFolders;				// Plain list of archive folders
 	bool bMoreFolders = false;		// More folders than listed in sFolders
-	CString sComment;				// Archive comments
+	CString strComment;				// Archive comments
 	bool bEncrypted = false;		// Archive itself or selective files are encrypted
 	ULONGLONG nUnpackedSize = 0;	// Total size of unpacked files
 
@@ -128,10 +128,10 @@ STDMETHODIMP CRARBuilder::Process (
 		// Buffer too small, comments not completely read
 		case ERAR_SMALL_BUF:
 			szCmtBuf[ MAX_SIZE_COMMENTS - 1 ] = '\0';
-			sComment = szCmtBuf;
-			sComment.Replace( _T('\r'), _T(' ') );
-			sComment.Replace( _T('\n'), _T(' ') );
-			sComment.Replace( _T("  "), _T(" ") );
+			strComment = szCmtBuf;
+			strComment.Replace( _T('\r'), _T(' ') );
+			strComment.Replace( _T('\n'), _T(' ') );
+			strComment.Replace( _T("  "), _T(" ") );
 			break;
 
 		// Not enough memory to extract comments
@@ -164,29 +164,29 @@ STDMETHODIMP CRARBuilder::Process (
 			// Success
 			case 0:
 			{
-				CString sName( hd.FileNameW );
-				int n = sName.ReverseFind( _T('\\') );
-				if ( n >= 0 )
-					sName = sName.Mid( n + 1 );
+				CString strName( hd.FileNameW );
+				int nBackSlashPos = strName.ReverseFind( _T('\\') );
+				if ( nBackSlashPos >= 0 )
+					strName = strName.Mid( nBackSlashPos + 1 );
 
 				if ( ( hd.Flags & 0xe0 ) == 0xe0 )
 				{
-					if ( sFolders.GetLength() + sName.GetLength() <= MAX_SIZE_FOLDERS - 5 )
+					if ( strFolders.GetLength() + strName.GetLength() <= MAX_SIZE_FOLDERS - 5 )
 					{
-						if ( sFolders.GetLength() )
-							sFolders += _T(", ");
-						sFolders += sName;
+						if ( strFolders.GetLength() )
+							strFolders += _T(", ");
+						strFolders += strName;
 					}
 					else
 						bMoreFolders = true;
 				}
 				else
 				{
-					if ( sFiles.GetLength() + sName.GetLength() <= MAX_SIZE_FILES - 5 )
+					if ( strFiles.GetLength() + strName.GetLength() <= MAX_SIZE_FILES - 5 )
 					{
-						if ( sFiles.GetLength() )
-							sFiles += _T(", ");
-						sFiles += sName;
+						if ( strFiles.GetLength() )
+							strFiles += _T(", ");
+						strFiles += strName;
 					}
 					else
 						bMoreFiles = true;
@@ -253,31 +253,31 @@ STDMETHODIMP CRARBuilder::Process (
 			}
 		}
 
-		if ( sFiles.GetLength() )
+		if ( strFiles.GetLength() )
 		{
 			if ( bMoreFiles )
-				sFiles += _T(", ...");
-			pISXMLAttributes->Add( CComBSTR( "files" ), CComBSTR( sFiles ) );
+				strFiles += _T(", ...");
+			pISXMLAttributes->Add( CComBSTR( "files" ), CComBSTR( strFiles ) );
 		}
 
-		if ( sFolders.GetLength() )
+		if ( strFolders.GetLength() )
 		{
 			if ( bMoreFolders )
-				sFolders += _T(", ...");
-			pISXMLAttributes->Add( CComBSTR( "folders" ), CComBSTR( sFolders ) );
+				strFolders += _T(", ...");
+			pISXMLAttributes->Add( CComBSTR( "folders" ), CComBSTR( strFolders ) );
 		}
 	
-		if ( sComment.GetLength() )
-			pISXMLAttributes->Add( CComBSTR( "comments" ), CComBSTR( sComment ) );
+		if ( strComment.GetLength() )
+			pISXMLAttributes->Add( CComBSTR( "comments" ), CComBSTR( strComment ) );
 	
 		if ( bEncrypted )
 			pISXMLAttributes->Add( CComBSTR( "encrypted" ), CComBSTR( "true" ) );
 
 		if ( nUnpackedSize )
 		{
-			CString sTmp;
-			sTmp.Format( _T("%I64u"), nUnpackedSize );
-			pISXMLAttributes->Add( CComBSTR( "unpackedsize" ), CComBSTR( sTmp ) );
+			CString strUnpackedSize;
+			strUnpackedSize.Format( _T("%I64u"), nUnpackedSize );
+			pISXMLAttributes->Add( CComBSTR( "unpackedsize" ), CComBSTR( strUnpackedSize ) );
 		}
 
 		return S_OK;
