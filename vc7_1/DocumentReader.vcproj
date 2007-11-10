@@ -23,7 +23,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza;../shareaza/zlib"
+				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
@@ -98,7 +98,7 @@ copy &quot;$(SolutionDir)..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&q
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza;../shareaza/zlib"
+				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
@@ -259,21 +259,6 @@ copy &quot;$(SolutionDir)..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&q
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath=".\debug\plugins\documentreader\DocumentReader_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\release\plugins\documentreader\DocumentReader_i.c">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -287,6 +272,21 @@ copy &quot;$(SolutionDir)..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&q
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debug\plugins\documentreader\DocumentReader_i.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
