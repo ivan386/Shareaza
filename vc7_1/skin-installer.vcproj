@@ -46,7 +46,7 @@
 				AdditionalLibraryDirectories="../shareaza/zlib"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(SolutionDir)$(ConfigurationName)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(SolutionDir)$(ConfigurationName)/skin.pdb"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -114,7 +114,7 @@
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="../shareaza/zlib"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;secur32.lib;oleacc.lib"
-				ProgramDatabaseFile="$(SolutionDir)$(ConfigurationName)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(SolutionDir)$(ConfigurationName)/skin.pdb"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
