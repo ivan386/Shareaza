@@ -243,7 +243,7 @@ HBITMAP CImage::Resample(int nNewWidth, int nNewHeight)
 		BYTE* pOut = pLine;
 		pColPtr = pColInfo;
 		
-		for ( nX = 0 ; nX < nNewWidth ; nX++, pColPtr++ )
+		for ( int nX = 0 ; nX < nNewWidth ; nX++, pColPtr++ )
 		{
 			BYTE* pIn = pRow + *pColPtr++;
 			
@@ -470,7 +470,6 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 	CLSID pCLSID;
 
 	szCLSID[ 37 ] = 0;
-	#ifdef _UNICODE
 	USES_CONVERSION;
 	if ( UuidFromString( &szCLSID[1], (GUID*)&pCLSID ) != RPC_S_OK )
 	{
@@ -479,9 +478,6 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 		// on Win NT/2k/XP, because a GUID always consists of numbers, but just to be sure...
 		if ( UuidFromStringA( (LPBYTE)&W2A(szCLSID)[1], (GUID*)&pCLSID ) != RPC_S_OK ) return NULL;
 	}
-	#else
-	if ( UuidFromString( (LPBYTE)&szCLSID[1], (GUID*)&pCLSID ) != RPC_S_OK ) return NULL;
-	#endif
 
 	IImageServicePlugin* pService = NULL;
 	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER,
