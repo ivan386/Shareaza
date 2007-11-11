@@ -311,11 +311,12 @@ BOOL CImageViewerPlugin::OpenNewWindow(LPCTSTR pszFilePath)
 {
 	// This is a helper function which opens a new window, or activates an existing window, for the
 	// file name it is passed.
-	
+
 	// First, we check through the linked list of CImageWindow windows, to see if the file is
 	// already open.
-	
-	for ( CImageWindow* pWindow = m_pWindow ; pWindow ; pWindow = pWindow->m_pNext )
+
+	CImageWindow* pWindow;
+	for ( pWindow = m_pWindow ; pWindow ; pWindow = pWindow->m_pNext )
 	{
 		if ( lstrcmpi( pWindow->m_pszFile, pszFilePath ) == 0 )
 		{
