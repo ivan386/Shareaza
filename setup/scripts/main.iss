@@ -16,10 +16,10 @@
 
 #ifdef debug
   #define name "Shareaza debug build"
-  #define type "debug"
+  #define type "Debug"
 #else
   #define name "Shareaza"
-  #define type "release"
+  #define type "Release"
 #endif
 
 ; Select file source root
