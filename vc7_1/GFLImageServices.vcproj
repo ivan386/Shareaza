@@ -60,9 +60,9 @@
 				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll..."
-				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
-copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y
+				Description="Copying the LibGFL dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
+copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(TargetDir)&quot; /y
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -142,9 +142,9 @@ copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267
 				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copying libgfl267.dll..."
-				CommandLine="copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
-copy &quot;$(SolutionDir)..\plugins\$(TargetName)\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(TargetDir)&quot; /y
+				Description="Copying the LibGFL dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\&quot; /y
+copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(TargetDir)&quot; /y
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
