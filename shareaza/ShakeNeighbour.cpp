@@ -1889,7 +1889,8 @@ BOOL CShakeNeighbour::IsClientObsolete()
 			( _tcsistr( m_sUserAgent, _T("Shareaza 3.3"  ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 3.4"  ) ) ) ||
 			( _tcsistr( m_sUserAgent, _T("Shareaza 6."   ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 7."   ) ) ) )
+			( _tcsistr( m_sUserAgent, _T("Shareaza 7."   ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("Shareaza pro"  ) ) ) )
 			return TRUE;
 
 		// Check for old version and betas
@@ -1947,6 +1948,7 @@ BOOL CShakeNeighbour::IsClientBad()
 	// Really obsolete versions of Shareaza should be blocked. (they may have bad settings)
 	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )	
 	{
+		if ( _tcsistr( m_sUserAgent, _T("shareaza pro") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 0.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 1.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.0") ) )	return TRUE;
