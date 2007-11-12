@@ -422,8 +422,6 @@ Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Shareaza Downloads}\Thumbs.db"; Tasks: multiuser
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\Thumbs.db"
 Type: files; Name: "{userappdata}\Shareaza\Data\DefaultAvatar.png"
-Type: files; Name: "{app}\Skins\Languages\default-es-mx.xml"
-Type: files; Name: "{app}\Skins\Languages\default-es-mx.ico"
 Type: files; Name: "{app}\Skins\Languages\default-en.xml"
 Type: files; Name: "{app}\unicows.dll"
 Type: files; Name: "{app}\Plugins\unicows.dll"
@@ -432,9 +430,6 @@ Type: files; Name: "{app}\Plugins\unicows.dll"
 ; "jp" to "ja"
 Type: files; Name: "{app}\Skins\Languages\default-jp.ico"
 Type: files; Name: "{app}\Skins\Languages\default-jp.xml"
-; "es" to "es-mx"
-Type: files; Name: "{app}\Skins\Languages\default-es.ico"
-Type: files; Name: "{app}\Skins\Languages\default-es.xml"
 
 ; Clean up old Shareaza icons
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"; Check: NSISUsed
