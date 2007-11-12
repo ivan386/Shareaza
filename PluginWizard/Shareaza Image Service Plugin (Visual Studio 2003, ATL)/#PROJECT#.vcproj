@@ -4,6 +4,7 @@
 	Version="7.10"
 	Name="#PROJECT#"
 	ProjectGUID="{#GUID#}"
+	RootNamespace="#PROJECT#"
 	Keyword="AtlProj">
 	<Platforms>
 		<Platform
@@ -21,7 +22,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\debug\shareaza"
+				AdditionalIncludeDirectories="$(InputDir)"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
@@ -29,27 +30,26 @@
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="4"
-				DisableSpecificWarnings="4995"/>
+				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies=""
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				LinkIncremental="2"
-				ModuleDefinitionFile=".\$(ProjectName).def"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="TRUE"
 				GenerateMapFile="FALSE"
 				SubSystem="2"
 				SetChecksum="FALSE"
-				BaseAddress="0x1afa0000"
 				ImportLibrary=""
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\debug\shareaza"
+				AdditionalIncludeDirectories=""
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -95,36 +95,34 @@
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\release\shareaza"
+				AdditionalIncludeDirectories="$(InputDir)"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="TRUE"
-				DisableSpecificWarnings="4995"/>
+				Detect64BitPortabilityProblems="TRUE"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies=""
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				LinkIncremental="1"
-				ModuleDefinitionFile=".\$(ProjectName).def"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="FALSE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				SetChecksum="TRUE"
-				BaseAddress="0x1afa0000"
 				ImportLibrary=""
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories="..\..\shareaza;..\..\vc7_1\release\shareaza"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -165,6 +163,38 @@
 				RelativePath=".\Class.cpp">
 			</File>
 			<File
+				RelativePath="..\..\shareaza\Shareaza.idl">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="ShareazaOM.h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="ShareazaOM.h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\StdAfx.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\#PROJECT#.cpp">
 			</File>
 			<File
@@ -185,21 +215,6 @@
 						AdditionalIncludeDirectories="..\..\shareaza"/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\StdAfx.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -209,13 +224,13 @@
 				RelativePath=".\Class.h">
 			</File>
 			<File
-				RelativePath=".\#PROJECT#.h">
-			</File>
-			<File
 				RelativePath=".\Shareaza.h">
 			</File>
 			<File
 				RelativePath=".\StdAfx.h">
+			</File>
+			<File
+				RelativePath=".\#PROJECT#.h">
 			</File>
 		</Filter>
 		<Filter

@@ -27,8 +27,7 @@ STDMETHODIMP C#PROJECT#::Process (
 	/* [in] */ BSTR sFile,
 	/* [in] */ ISXMLElement* pXML)
 {
-	CString tmp;
-
+/*
 	if ( ! pXML )
 		return E_POINTER;
 
@@ -62,7 +61,8 @@ STDMETHODIMP C#PROJECT#::Process (
 	if ( FAILED( hr ) )
 		return hr;
 
-	pISXMLAttributes->Add (CComBSTR ("Sample1"), CComBSTR (tmp));
-
-	return hr;
+	pISXMLAttributes->Add (CComBSTR ("width"), CComBSTR ("320"));
+	pISXMLAttributes->Add (CComBSTR ("height"), CComBSTR ("240"));
+*/
+	ATLTRACENOTIMPL ("C#PROJECT#::Process");
 }
