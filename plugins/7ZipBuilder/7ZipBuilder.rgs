@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s '7ZipBuilder'
+		'7ZipBuilder.dll'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

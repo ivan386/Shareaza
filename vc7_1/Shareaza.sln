@@ -78,6 +78,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZIPBuilder", "..\plugins\ZI
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ZipBuilder", "..\plugins\7ZipBuilder\7ZipBuilder.vcproj", "{B69F80CD-FB15-45E8-B359-92A41CC571A7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
@@ -155,6 +159,10 @@ Global
 		{2F74AA28-2498-4805-911A-04C39858D529}.Debug.Build.0 = Debug|Win32
 		{2F74AA28-2498-4805-911A-04C39858D529}.Release.ActiveCfg = Release|Win32
 		{2F74AA28-2498-4805-911A-04C39858D529}.Release.Build.0 = Release|Win32
+		{B69F80CD-FB15-45E8-B359-92A41CC571A7}.Debug.ActiveCfg = Debug|Win32
+		{B69F80CD-FB15-45E8-B359-92A41CC571A7}.Debug.Build.0 = Debug|Win32
+		{B69F80CD-FB15-45E8-B359-92A41CC571A7}.Release.ActiveCfg = Release|Win32
+		{B69F80CD-FB15-45E8-B359-92A41CC571A7}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

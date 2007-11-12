@@ -1,0 +1,45 @@
+HKCR
+{
+	ForceRemove 7ZipBuilder.7ZipBuilder.1 = s '7-Zip Builder'
+	{
+		CLSID = s '{B69F80CD-FB15-45E8-B359-92A41CC571A7}'
+	}
+	ForceRemove 7ZipBuilder.7ZipBuilder = s '7-Zip Builder'
+	{
+		CLSID = s '{B69F80CD-FB15-45E8-B359-92A41CC571A7}'
+		CurVer = s '7ZipBuilder.7ZipBuilder.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B69F80CD-FB15-45E8-B359-92A41CC571A7} = s '7-Zip Builder'
+		{
+			ProgID = s '7ZipBuilder.7ZipBuilder.1'
+			VersionIndependentProgID = s '7ZipBuilder.7ZipBuilder'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{2975FA55-CDD5-41AE-8120-EB82E1BF9826}'
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove LibraryBuilder
+					{
+						ForceRemove val '.7z' = s '{B69F80CD-FB15-45E8-B359-92A41CC571A7}'
+					}
+				}
+			}
+		}
+	}
+}
