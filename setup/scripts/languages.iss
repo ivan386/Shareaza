@@ -48,7 +48,7 @@ Source: "Remote\lt\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 ; German
 Source: "Remote\de\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: de; Tasks: language
 ; Portuguese std
-Source: "Remote\pt\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: pt; Tasks: language
+Source: "Remote\pt-br\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: pt; Tasks: language
 ; Italian
 Source: "Remote\it\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: it; Tasks: language
 ; Norwegian
@@ -56,7 +56,7 @@ Source: "Remote\no\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 ; Afrikaans
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: af; Tasks: language
 ; Portuguese braz
-Source: "Remote\pt\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: pt_br; Tasks: language
+Source: "Remote\pt-br\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: pt_br; Tasks: language
 ; French
 Source: "Remote\fr\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: fr; Tasks: language
 ; Spanish
