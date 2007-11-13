@@ -95,7 +95,7 @@ STDMETHODIMP CRARBuilder::Process (
 	if ( FAILED( hr ) )
 		return hr;
 
-	CString strFiles;					// Plain list of archive files
+	CString strFiles;				// Plain list of archive files
 	bool bMoreFiles = false;		// More files than listed in sFiles
 	CString strFolders;				// Plain list of archive folders
 	bool bMoreFolders = false;		// More folders than listed in sFolders
@@ -209,7 +209,7 @@ STDMETHODIMP CRARBuilder::Process (
 				// Bad format. Call CLibraryBuilder::SubmitCorrupted()
 				return E_UNEXPECTED;
 
-			// Decryption errors
+			// Decryption errors (wrong password)
 			case ERAR_UNKNOWN:
 				break;
 
@@ -237,8 +237,10 @@ STDMETHODIMP CRARBuilder::Process (
 				// Bad format. Call CLibraryBuilder::SubmitCorrupted()
 				return E_UNEXPECTED;
 			
-			// Volume open error
+			// Volume open error (volume missing)
 			case ERAR_EOPEN:
+				break;
+
 			// File create error
 			case ERAR_ECREATE:
 			// File close error
