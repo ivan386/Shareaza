@@ -1,74 +1,57 @@
-<table width="95%" align="center" cellspacing="0" cellpadding="0">
-	<tr>
-		<td align="center">
-			<table width="100%" cellspacing="0">
-				<tr>
-					<td class="tabedg">&nbsp;</td>
-					<td class="tabsel">首页</td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="search">搜索</a></td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="downloads">下载</a></td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="uploads">上传</a></td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="network">网络</a></td>
-					<td class="tabedg">&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td class="frame">
-			<p>
-				欢迎来到 <b>Shareaza 远程访问</b>。
-			</p>
-			<p>
-				此网页控制台为您提供了对搜索，下载，上传以及网络连接的控制。
-			</p>
-			<br>
-			<table cellspacing="8">
-				<tr>
-					<td width="4" />
-					<td><a href="search"><b>搜索</b></a> - 搜索文件，对于搜索的结果，您可以选择文件进行下载。</td>
-				</tr>
-				<tr>
-					<td width="4" />
-					<td><a href="downloads"><b>下载</b></a> - 管理您的下载，您可以暂停和续传，也可以清除已完成的下载。</td>
-				</tr>
-				<tr>
-					<td width="4" />
-					<td><a href="uploads"><b>上传</b></a> - 查看上传的状态。</td>
-				</tr>
-				<tr>
-					<td width="4" />
-					<td><a href="network"><b>网络</b></a> - 浏览和管理网络连接，连接或断开不同的 P2P 网络，或者关闭 Shareaza。</td>
-				</tr>
-			</table>
-			<br>
-			<form method="get" action="newsearch" ID="Form1">
-				<table align="center">
-					<tr>
-						<td>快速搜索:</td>
-						<td><input type="text" name="search" size="30"></td>
-						<td>
-							<input type="submit" value="开始">
-						</td>
-					</tr>
-				</table>
-			</form>
-			<br>
-			<form method="get" action="newdownload" ID="Form2">
-				<table align="center">
-					<tr>
-						<td>下载 Magnet:</td>
-						<td><input type="text" name="uri" size="50"></td>
-						<td>
-							<input type="submit" value="开始">
-						</td>
-					</tr>
-				</table>
-			</form>
-		</td>
-	</tr>
-</table>
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">首页</a></li>
+				<li class="inactive"><a href="search" class="noline">搜索</a></li>
+				<li class="inactive"><a href="downloads" class="noline">下载</a></li>
+				<li class="inactive"><a href="uploads" class="noline">上传</a></li>
+				<li class="inactive"><a href="network" class="noline">网络</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>欢迎来到 <b>Shareaza 远程访问</b>。</p>
+      <p>æ­¤ç½‘é¡µæŽ§åˆ¶å°ä¸ºæ‚¨æä¾›äº†å¯¹æœç´¢ï¼Œä¸‹è½½ï¼Œä¸Šä¼ ä»¥åŠç½‘ç»œè¿žæŽ¥çš„æŽ§åˆ¶ã€‚</p>
+			<div style="float: right; width: 40em;">
+				<h3>Start downloading:</h3>
+				<div style="text-align: right;">
+				<form method="get" action="newsearch" ID="Form1">
+					<label>快速搜索:</label>
+					<input type="text" name="search" size="20">
+					<select name="schema">
+						<option value="">任何文件类型</option>
+						<option value="http://www.shareaza.com/schemas/application.xsd">程序</option>
+						<option value="http://www.limewire.com/schemas/audio.xsd">音频</option>
+						<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+						<option value="http://www.limewire.com/schemas/book.xsd">书籍</option>
+						<option value="http://www.shareaza.com/schemas/collection.xsd">Collection</option>
+						<option value="http://www.shareaza.com/schemas/image.xsd">图片</option>
+						<option value="http://www.shareaza.com/schemas/presentation.xsd">介绍</option>
+						<option value="http://www.shareaza.com/schemas/rom.xsd">ROM 镜像</option>
+						<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">皮肤</option>
+						<option value="http://www.shareaza.com/schemas/sourceCode.xsd">源代码</option>
+						<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">电子表格</option>
+						<option value="http://www.shareaza.com/schemas/subtitle.xsd">Subtitle</option>
+						<option value="http://www.limewire.com/schemas/video.xsd">视频</option>
+						<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">字符处理</option>
+					</select>
+					<input type="submit" value="Pirmyn">
+				</form><br />
+				<form method="get" action="newdownload" ID="Form2">
+					<label>下载 Magnet:</label>
+					<input type="text" name="uri" size="35">
+					<input type="submit" value="Pirmyn">
+				</form>
+				</div>
+			</div>
+			<h3>Useful Links:</h3>
+			<ul>
+				<li><a href="http://www.peerweb.org/">Peerweb.org</a></li>
+				<li><a href="http://www.freebase.be/">Freebase.be</a></li>
+				<li><a href="http://www.g24u.net/">g24u.net</a></li>
+				<li><a href="http://www.bittorrent.com/">Bittorrent.com</a></li>
+				<li><a href="http://www.legaltorrents.com/">LegalTorrents.com</a></li>
+				<li><a href="http://content.emule-project.net/">eMule content DB</a></li>
+			</ul>
+		</div>

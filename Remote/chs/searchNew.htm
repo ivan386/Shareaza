@@ -1,33 +1,20 @@
-<td class="tabsel">新建搜索</td>
-<td class="tabedg">&nbsp;</td>
-</tr> </table> </td> </tr>
-<tr>
-	<td class="frame">
-		<div>
-			要开始一个新的搜索，请将您要搜索的关键词输入到下面的输入框中并单击<b>开始搜索</b>。如果您想要限制您搜索的文件类型，请在下面的列表中选择。
-		</div>
+﻿										<li class="active"><a class="noline" href="?id=0">新建搜索</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+			<p>要开始一个新的搜索，请将您要搜索的关键词输入到下面的输入框中并单击<strong>开始搜索</strong>。如果您想要限制您搜索的文件类型，请在下面的列表中选择。.</p>
+	
+	<div style="text-align:right; width: 30em;">		
 		<form method="get" action="newsearch">
-			<table align="center">
-				<tr>
-					<td>搜索:</td>
-					<td><input type="text" name="search" size="30"></td>
-				</tr>
-				<tr>
-					<td>类型:</td>
-					<td>
-						<select name="schema">
+
+			<label>搜索:</label>
+					<input type="text" name="search" class="regularinput" /><br />
+			<label>类型:</label>
+					
+						<select name="schema" class="regularinput">
 							<option value="">任何文件类型</option>
 							<%= schema_option_list %>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
+				<br />
 						<input type="submit" value="开始搜索">
-					</td>
-				</tr>
-			</table>
 		</form>
+	</div>

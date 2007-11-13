@@ -1,24 +1,25 @@
-					<h4><%= network_caption %></h4>
+﻿					<h4><%= network_caption %></h4>
 <%? !network_connected %>
-					<p style="font-size: 8pt;">
-					此网络<b>未</b>启用 -
-					<a href="?connect=<%= network_id %>"><b>连接到 <%= network_caption %></b></a>
+					<p>
+					此网络<strong>未</strong>启用
+					<a href="?connect=<%= network_id %>"><strong>连接到 <%= network_caption %></strong></a>
 					</p>
 <%?%><%? network_connected %>
-					<p style="font-size: 8pt;">
+					<p>
 					此网络已启用 -
-					<a href="?disconnect=<%= network_id %>"><b>禁用 <%= network_caption %></b></a>
+					<a href="?disconnect=<%= network_id %>"><strong>禁用 <%= network_caption %></strong></a>
 					</p>
-					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+				<div class="centertable">
+					<table>
 						<tr>
-							<td class="viewheader">地址</td>
-							<td class="viewheader" align="center">时间</td>
-							<td class="viewheader" align="center">数据包</td>
-							<td class="viewheader" align="center">带宽</td>
-							<td class="viewheader" align="center">总计</td>
-							<td class="viewheader" align="center">模式</td>
-							<td class="viewheader" align="center">Leaf</td>
-							<td class="viewheader">用户代理</td>
-							<td class="viewheader"></td>
+							<th>地址</th>
+							<th>时间</th>
+							<th>数据包</th>
+							<th>带宽</th>
+							<th>总计</th>
+							<th>模式</th>
+							<th>Leaf</th>
+							<th>用户代理</th>
+							<th></th>
 						</tr>
 <%?%>

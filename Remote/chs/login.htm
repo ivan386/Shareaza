@@ -1,55 +1,34 @@
-		<table width="95%" align="center" cellspacing="0" cellpadding="0">
-			<tr>
-				<td align="center">
-					<table width="100%" cellspacing="0">
-						<tr>
-							<td class="tabedg">&nbsp;</td>
-							<td class="tab">首页</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">搜索</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">下载</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">上传</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">网络</td>
-							<td class="tabedg">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td class="frame">
-					<div>
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">首页</li>
+				<li class="inactive">搜索</li>
+				<li class="inactive">下载</li>
+				<li class="inactive">上传</li>
+				<li class="inactive">网络</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+					<div class="padding left">
 						欢迎来到 <b>Shareaza 远程访问。</b>
-						如果此 Shareaza 的副本正在您的计算机上运行，请输入您的远程访问用户名和密码，然后单击<b>登录</b>。
 					</div>
-					<%? failure %>
-					<div align="center" style="color: red; font-weight: bold;">
-						<br>
-						您输入的用户名和密码不正确。
-						<br>
-						请重试。
+					
+					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+					<%? failure %>	您输入的用户名和密码不正确。
+                    						请重试。.<%?%>
 					</div>
-					<%?%>
+					
+					<div style="text-align: right; width: 24em; margin: 0 auto;">
 					<form method="get" action="">
 					<input type="hidden" name="submit" value="1">
-					<table align="center">
-						<tr>
-							<td>用户:</td>
-							<td><input type="text" name="username" size="20"></td>
-						</tr>
-						<tr>
-							<td>密码:</td>
-							<td><input type="password" name="password" size="20" ID="Text1"></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center">
+						<label>用户:</label>
+						<input type="text" name="username" size="20" /><br />
+						<label>密码:</label>
+						<input type="password" name="password" size="20" ID="Text1" /><br />
 								<input type="submit" value="登录">
-							</td>
-						</tr>
-					</table>
 					</form>
-				</td>
-			</tr>
-		</table>
+					</div>
+	</div>
+<!-- /main body -->

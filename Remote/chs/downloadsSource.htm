@@ -1,11 +1,11 @@
-									<tr>
-										<td nowrap class="viewrow">&nbsp;&nbsp;&nbsp;&nbsp;<%= source_caption %></td>
-										<td nowrap class="viewrow" align="center"><%= source_volume %></td>
-										<td nowrap class="viewrow" align="center"></td>
-										<td nowrap class="viewrow" align="center"><%= source_speed %></td>
-										<td nowrap class="viewrow" align="center"><%= source_agent %></td>
-										<td nowrap class="viewrow" align="center"><%= source_status %></td>
-										<td nowrap class="viewrow" align="center">
+﻿									<tr>
+										<td class="filename"><div style="margin-left: 1em;"><%= source_caption %></div></td>
+										<td><%= source_volume %></td>
+										<td></td>
+										<td><%= source_speed %></td>
+										<td><%= source_agent %></td>
+										<td><%= source_status %></td>
+										<td>
 											<a href="?modify_id=<%= source_id %>&modify_action=access">访问</a> -
 											<a href="?modify_id=<%= source_id %>&modify_action=forget">退出</a>
 										</td>
