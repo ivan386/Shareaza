@@ -13,7 +13,7 @@ Name: "pt"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "set
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl"; LicenseFile: "setup/license/italian.rtf"
 Name: "no"; MessagesFile: "compiler:Languages\Norwegian.isl"; LicenseFile: "setup/license/default.rtf"
 Name: "af"; MessagesFile: "setup\isl\afrikaans.isl"; LicenseFile: "setup/license/afrikaans.rtf"
-Name: "br"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
+Name: "pt_br"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
 Name: "fr"; MessagesFile: "compiler:Languages\french.isl"; LicenseFile: "setup/license/default.rtf"
 Name: "es_mx"; MessagesFile: "setup\isl\spanish-mexican.isl"; LicenseFile: "setup/license/spanish-mexican.rtf"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "setup/license/russian.rtf"
@@ -56,7 +56,7 @@ Source: "Remote\no\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 ; Afrikaans
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: af; Tasks: language
 ; Portuguese braz
-Source: "Remote\pt\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: br; Tasks: language
+Source: "Remote\pt\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: pt_br; Tasks: language
 ; French
 Source: "Remote\fr\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: fr; Tasks: language
 ; Spanish
@@ -118,7 +118,7 @@ Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 ; Afrikaans
 Source: "setup\license\afrikaans.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: af; Tasks: language
 ; Portuguese braz
-Source: "setup\license\portuguese-braz.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: br; Tasks: language
+Source: "setup\license\portuguese-braz.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt_br; Tasks: language
 ; French
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fr; Tasks: language
 ; Spanish
@@ -180,7 +180,7 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 ; Afrikaans
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: af; Tasks: language
 ; Portuguese braz
-Source: "setup\filter\portuguese-br.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: br; Tasks: language
+Source: "setup\filter\portuguese-br.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt_br; Tasks: language
 ; French
 Source: "setup\filter\french.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fr; Tasks: language
 ; Spanish
@@ -465,34 +465,34 @@ af.page_viruswarning_subtitle=Het jy 'n Anti-Virus program geïnstalleer?
 af.CreateDesktopIcon=Vertoon 'n &werkskerm ikoon
 af.CreateQuickLaunchIcon=Vertoon 'n &Quick Launch ikoon
 ; Portuguese braz
-br.components_plugins=Plugins
-br.components_skins=Skins
-br.tasks_languages=Linguagens
-br.tasks_allusers=Todos os Usuários
-br.tasks_selectusers=Instalar %1 para:
-br.tasks_currentuser=%1 apenas
-br.tasks_multisetup=Ativar suporte para vários usuários
-br.tasks_firewall=Adicionar exceção ao Firewall do Windows
-br.tasks_upnp=Ativar descobrimento de dispositivos UPnP
-br.tasks_deleteoldsetup=Apagar os instaladores antigos
-br.tasks_resetdiscoveryhostcache=Resetar Descobrimento e Cache de Hosts
-br.run_skinexe=Instalando as Skins...
-br.reg_incomingchat=Nova mensagem no chat
-br.reg_apptitle=Shareaza o Compartilhador de Arquivos Definitivo
-br.icons_license=Licença
-br.icons_uninstall=Desinstalar
-br.icons_downloads=Downloads
-br.icons_basicmode=Modo Simples
-br.icons_tabbedmode=Modo Avançado
-br.icons_windowedmode=Modo de Janelas
-br.dialog_shutdown=Você quer fechar o %1?
-br.dialog_firewall=A instalação falhou ao tentar adicionar o Shareaza à lista de exceções do Firewall do Windows.%nPor favor adicione manualmente o Shareaza a lista.
-br.dialog_malwaredetected=Um malware foi detectado no seu sistema as %1, por favor remova-o com um scanner contra vírus/malware antes de instalar o Shareaza. Você quer sair agora?
-br.page_viruswarning_text=Ao usar a Internet você deve sempre manter seu Anti-Vírus atualizado, para proteger contra vírus, worms, cavalos-de-tróia e outros programas perigosos. Você encontra uma lista de bons anti-vírus e dicas de segurança entrando no seguinte endereço:
-br.page_viruswarning_title=Aviso sobre Vírus
-br.page_viruswarning_subtitle=Você tem um programa anti-vírus instalado?
-br.CreateDesktopIcon=Mostrar um ícone na &área de trabalho
-br.CreateQuickLaunchIcon=Mostrar um ícone na barra de &Inicialização Rápida
+pt_br.components_plugins=Plugins
+pt_br.components_skins=Skins
+pt_br.tasks_languages=Linguagens
+pt_br.tasks_allusers=Todos os Usuários
+pt_br.tasks_selectusers=Instalar %1 para:
+pt_br.tasks_currentuser=%1 apenas
+pt_br.tasks_multisetup=Ativar suporte para vários usuários
+pt_br.tasks_firewall=Adicionar exceção ao Firewall do Windows
+pt_br.tasks_upnp=Ativar descopt_brimento de dispositivos UPnP
+pt_br.tasks_deleteoldsetup=Apagar os instaladores antigos
+pt_br.tasks_resetdiscoveryhostcache=Resetar Descopt_brimento e Cache de Hosts
+pt_br.run_skinexe=Instalando as Skins...
+pt_br.reg_incomingchat=Nova mensagem no chat
+pt_br.reg_apptitle=Shareaza o Compartilhador de Arquivos Definitivo
+pt_br.icons_license=Licença
+pt_br.icons_uninstall=Desinstalar
+pt_br.icons_downloads=Downloads
+pt_br.icons_basicmode=Modo Simples
+pt_br.icons_tabbedmode=Modo Avançado
+pt_br.icons_windowedmode=Modo de Janelas
+pt_br.dialog_shutdown=Você quer fechar o %1?
+pt_br.dialog_firewall=A instalação falhou ao tentar adicionar o Shareaza à lista de exceções do Firewall do Windows.%nPor favor adicione manualmente o Shareaza a lista.
+pt_br.dialog_malwaredetected=Um malware foi detectado no seu sistema as %1, por favor remova-o com um scanner contra vírus/malware antes de instalar o Shareaza. Você quer sair agora?
+pt_br.page_viruswarning_text=Ao usar a Internet você deve sempre manter seu Anti-Vírus atualizado, para proteger contra vírus, worms, cavalos-de-tróia e outros programas perigosos. Você encontra uma lista de bons anti-vírus e dicas de segurança entrando no seguinte endereço:
+pt_br.page_viruswarning_title=Aviso sopt_bre Vírus
+pt_br.page_viruswarning_subtitle=Você tem um programa anti-vírus instalado?
+pt_br.CreateDesktopIcon=Mostrar um ícone na &área de trabalho
+pt_br.CreateQuickLaunchIcon=Mostrar um ícone na barra de &Inicialização Rápida
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
