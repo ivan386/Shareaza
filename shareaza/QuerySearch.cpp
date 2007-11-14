@@ -1354,13 +1354,19 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 		{
 			int nFirstSpace = m_sSearch.Find( _T(" ") );
 			if ( nFirstSpace != -1 )
+			{
 				m_sSearch = m_sSearch.Mid( nFirstSpace + 1 );
+				m_sSearch.Trim();
+			}
 			else
 				m_sSearch.Empty();
 		}
 	}
 
-	if ( !bHash )
+	if ( m_sKeywords.IsEmpty() )
+		m_sKeywords = m_sSearch;
+
+	if ( ! bHash )
 	{
 		MakeKeywords( m_sKeywords, bExpression );
 	}
