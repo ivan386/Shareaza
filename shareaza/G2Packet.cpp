@@ -80,35 +80,25 @@ CG2Packet* CG2Packet::New(BYTE* pSource)
 
 	DWORD nLength = 0;
 
-	if ( nLenLen > 0 )
+	if ( pPacket->m_bBigEndian )
 	{
-		if ( pPacket->m_bBigEndian )
+		for ( nLength = 0 ; nLenLen-- ; )
 		{
-			for ( nLength = 0 ; nLenLen-- ; )
-			{
-				nLength <<= 8;
-				nLength |= *pSource++;
-			}
+			nLength <<= 8;
+			nLength |= *pSource++;
 		}
-		else
-		{
-			BYTE* pLenOut = (BYTE*)&nLength;
-			while ( nLenLen-- ) *pLenOut++ = *pSource++;
-		}
-
-		nTypeLen++;
-		CopyMemory( &pPacket->m_nType, pSource, nTypeLen );
-		pSource += nTypeLen;
-
-		pPacket->Write( pSource, nLength );
 	}
 	else
 	{
-		ASSERT( nLenLen == 0 );
-		ASSERT( !pPacket->m_bCompound ); // How come this packet can be compound?
-		nTypeLen++;
-		CopyMemory( &pPacket->m_nType, pSource, nTypeLen );
+		BYTE* pLenOut = (BYTE*)&nLength;
+		while ( nLenLen-- ) *pLenOut++ = *pSource++;
 	}
+
+	nTypeLen++;
+	CopyMemory( &pPacket->m_nType, pSource, nTypeLen );
+	pSource += nTypeLen;
+
+	pPacket->Write( pSource, nLength );
 
 	return pPacket;
 }
@@ -151,10 +141,7 @@ void CG2Packet::WritePacket(CG2Packet* pPacket)
 {
 	if ( pPacket == NULL ) return;
 	WritePacket( pPacket->m_nType, pPacket->m_nLength, pPacket->m_bCompound );
-	if ( pPacket->m_nLength > 0 )
-		Write( pPacket->m_pBuffer, pPacket->m_nLength );
-	else
-		ASSERT( !pPacket->m_bCompound );	// Why the hell it can be compound when it hasn't the payload?
+	Write( pPacket->m_pBuffer, pPacket->m_nLength );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -166,40 +153,30 @@ void CG2Packet::WritePacket(G2_PACKET nType, DWORD nLength, BOOL bCompound)
 	ASSERT( nLength <= 0xFFFFFF );
 
 	BYTE nTypeLen	= (BYTE)( G2_TYPE_LEN( nType ) - 1 ) & 0x07;
-	BYTE nLenLen	= 0;
-	BYTE nFlags		= nTypeLen << 3;
+	BYTE nLenLen	= 1;
 
-	if ( m_bBigEndian ) nFlags |= G2_FLAG_BIG_ENDIAN;
-
-	if ( nLength > 0 )
+	if ( nLength > 0xFF )
 	{
 		nLenLen++;
-		if ( nLength > 0xFF )
-		{
-			nLenLen++;
-			if ( nLength > 0xFFFF ) nLenLen++;
-		}
+		if ( nLength > 0xFFFF ) nLenLen++;
+	}
 
-		nFlags |= nLenLen << 6;
-		if ( bCompound ) nFlags |= G2_FLAG_COMPOUND;
+	BYTE nFlags = ( nLenLen << 6 ) + ( nTypeLen << 3 );
 
-		WriteByte( nFlags );
+	if ( bCompound ) nFlags |= G2_FLAG_COMPOUND;
+	if ( m_bBigEndian ) nFlags |= G2_FLAG_BIG_ENDIAN;
 
-		if ( m_bBigEndian )
-		{
-			if ( nLenLen >= 3 ) WriteByte( (BYTE)( ( nLength >> 16 ) & 0xFF ) );
-			if ( nLenLen >= 2 ) WriteByte( (BYTE)( ( nLength >> 8 ) & 0xFF ) );
-			WriteByte( (BYTE)( nLength & 0xFF ) );
-		}
-		else
-		{
-			Write( &nLength, nLenLen );
-		}
+	WriteByte( nFlags );
+
+	if ( m_bBigEndian )
+	{
+		if ( nLenLen >= 3 ) WriteByte( (BYTE)( ( nLength >> 16 ) & 0xFF ) );
+		if ( nLenLen >= 2 ) WriteByte( (BYTE)( ( nLength >> 8 ) & 0xFF ) );
+		WriteByte( (BYTE)( nLength & 0xFF ) );
 	}
 	else
 	{
-		ASSERT( !bCompound );   // Can not be compound.
-		WriteByte( nFlags );
+		Write( &nLength, nLenLen );
 	}
 
 	Write( &nType, nTypeLen + 1 );
@@ -441,58 +418,43 @@ void CG2Packet::ToBuffer(CBuffer* pBuffer) const
 {
 	ASSERT( G2_TYPE_LEN( m_nType ) > 0 );
 
-	BYTE nLenLen	= 0;
+	BYTE nLenLen	= 1;
 	BYTE nTypeLen	= (BYTE)( G2_TYPE_LEN( m_nType ) - 1 ) & 0x07;
-	BYTE nFlags		= nTypeLen << 3;
 
-	if ( m_bBigEndian ) nFlags |= G2_FLAG_BIG_ENDIAN;
-
-	if ( m_nLength > 0 )
+	if ( m_nLength > 0xFF )
 	{
 		nLenLen++;
-		if ( m_nLength > 0xFF )
-		{
-			nLenLen++;
-			if ( m_nLength > 0xFFFF ) nLenLen++;
-		}
+		if ( m_nLength > 0xFFFF ) nLenLen++;
+	}
 
-		nFlags |= nLenLen << 6;
-		if ( m_bCompound ) nFlags |= G2_FLAG_COMPOUND;
+	BYTE nFlags = ( nLenLen << 6 ) + ( nTypeLen << 3 );
 
-		// Abort if the buffer isn't big enough for the packet
-		if ( !pBuffer->EnsureBuffer( 1 + nLenLen + nTypeLen + 1 + m_nLength ) )
-			return;
+	if ( m_bCompound ) nFlags |= G2_FLAG_COMPOUND;
+	if ( m_bBigEndian ) nFlags |= G2_FLAG_BIG_ENDIAN;
 
-		pBuffer->Add( &nFlags, 1 );
+	// Abort if the buffer isn't big enough for the packet
+	if ( !pBuffer->EnsureBuffer( 1 + nLenLen + nTypeLen + 1 + m_nLength ) )
+		return;
 
-		if ( m_bBigEndian )
-		{
-			BYTE* pOut = pBuffer->m_pBuffer + pBuffer->m_nLength;
-			pBuffer->m_nLength += nLenLen;
+	pBuffer->Add( &nFlags, 1 );
 
-			if ( nLenLen >= 3 ) *pOut++ = (BYTE)( ( m_nLength >> 16 ) & 0xFF );
-			if ( nLenLen >= 2 ) *pOut++ = (BYTE)( ( m_nLength >> 8 ) & 0xFF );
-			*pOut++ = (BYTE)( m_nLength & 0xFF );
-		}
-		else
-		{
-			pBuffer->Add( &m_nLength, nLenLen );
-		}
+	if ( m_bBigEndian )
+	{
+		BYTE* pOut = pBuffer->m_pBuffer + pBuffer->m_nLength;
+		pBuffer->m_nLength += nLenLen;
 
-		pBuffer->Add( &m_nType, nTypeLen + 1 );
-		pBuffer->Add( m_pBuffer, m_nLength );
+		if ( nLenLen >= 3 ) *pOut++ = (BYTE)( ( m_nLength >> 16 ) & 0xFF );
+		if ( nLenLen >= 2 ) *pOut++ = (BYTE)( ( m_nLength >> 8 ) & 0xFF );
+		*pOut++ = (BYTE)( m_nLength & 0xFF );
 	}
 	else
 	{
-		ASSERT( !m_bCompound ); // No nLenLen must not have any byte in payload, but compound. something must be wrong.
-
-		// Abort if the buffer isn't big enough for the packet
-		if ( !pBuffer->EnsureBuffer( 1 + nTypeLen + 1 ) )
-			return;
-
-		pBuffer->Add( &nFlags, 1 );
-		pBuffer->Add( &m_nType, nTypeLen + 1 );
+		pBuffer->Add( &m_nLength, nLenLen );
 	}
+
+	pBuffer->Add( &m_nType, nTypeLen + 1 );
+
+	pBuffer->Add( m_pBuffer, m_nLength );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -519,27 +481,25 @@ CG2Packet* CG2Packet::ReadBuffer(CBuffer* pBuffer)
 
 	DWORD nLength = 0;
 
-	if ( nLenLen > 0 )
+	if ( nFlags & G2_FLAG_BIG_ENDIAN )
 	{
-		if ( nFlags & G2_FLAG_BIG_ENDIAN )
-		{
-			BYTE* pLenIn = pBuffer->m_pBuffer + 1;
+		BYTE* pLenIn = pBuffer->m_pBuffer + 1;
 
-			for ( BYTE nIt = nLenLen ; nIt ; nIt-- )
-			{
-				nLength <<= 8;
-				nLength |= *pLenIn++;
-			}
-		}
-		else
+		for ( BYTE nIt = nLenLen ; nIt ; nIt-- )
 		{
-			BYTE* pLenIn	= pBuffer->m_pBuffer + 1;
-			BYTE* pLenOut	= (BYTE*)&nLength;
-			for ( BYTE nLenCnt = nLenLen ; nLenCnt-- ; ) *pLenOut++ = *pLenIn++;
+			nLength <<= 8;
+			nLength |= *pLenIn++;
 		}
-
-		if ( (DWORD)pBuffer->m_nLength < (DWORD)nLength + nLenLen + nTypeLen + 2 ) return NULL;
 	}
+	else
+	{
+		BYTE* pLenIn	= pBuffer->m_pBuffer + 1;
+		BYTE* pLenOut	= (BYTE*)&nLength;
+		for ( BYTE nLenCnt = nLenLen ; nLenCnt-- ; ) *pLenOut++ = *pLenIn++;
+	}
+
+	if ( (DWORD)pBuffer->m_nLength < (DWORD)nLength + nLenLen + nTypeLen + 2 )
+		return NULL;
 
 	CG2Packet* pPacket = CG2Packet::New( pBuffer->m_pBuffer );
 	pBuffer->Remove( nLength + nLenLen + nTypeLen + 2 );
