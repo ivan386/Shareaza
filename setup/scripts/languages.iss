@@ -9,12 +9,13 @@ Name: "en"; MessagesFile: "compiler:Default.isl"; LicenseFile: "setup/license/de
 Name: "nl"; MessagesFile: "compiler:Languages\dutch.isl"; LicenseFile: "setup/license/dutch.rtf"
 Name: "lt"; MessagesFile: "setup\isl\lithuanian.isl"; LicenseFile: "setup/license/lithuanian.rtf"
 Name: "de"; MessagesFile: "compiler:Languages\German.isl"; LicenseFile: "setup/license/German.rtf"
-Name: "pt"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl"; LicenseFile: "setup/license/italian.rtf"
 Name: "no"; MessagesFile: "compiler:Languages\Norwegian.isl"; LicenseFile: "setup/license/default.rtf"
 Name: "af"; MessagesFile: "setup\isl\afrikaans.isl"; LicenseFile: "setup/license/afrikaans.rtf"
+Name: "pt"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
 Name: "pt_br"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
 Name: "fr"; MessagesFile: "compiler:Languages\french.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl"; LicenseFile: "setup/license/spanish-mexican.rtf"
 Name: "es_mx"; MessagesFile: "setup\isl\spanish-mexican.isl"; LicenseFile: "setup/license/spanish-mexican.rtf"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "setup/license/russian.rtf"
 Name: "gr"; MessagesFile: "setup\isl\greek.isl"; LicenseFile: "setup/license/greek.rtf"
@@ -47,19 +48,21 @@ Source: "Remote\nl\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 Source: "Remote\lt\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: lt; Tasks: language
 ; German
 Source: "Remote\de\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: de; Tasks: language
-; Portuguese std
-Source: "Remote\pt-br\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: pt; Tasks: language
 ; Italian
 Source: "Remote\it\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: it; Tasks: language
 ; Norwegian
 Source: "Remote\no\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: no; Tasks: language
 ; Afrikaans
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: af; Tasks: language
-; Portuguese braz
+; Portuguese std
+Source: "Remote\pt-br\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: pt; Tasks: language
+; Portuguese Braz
 Source: "Remote\pt-br\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: pt_br; Tasks: language
 ; French
 Source: "Remote\fr\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: fr; Tasks: language
-; Spanish
+; Spanish std
+Source: "Remote\es-mx\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: es; Tasks: language
+; Spanish Mexican
 Source: "Remote\es-mx\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: es_mx; Tasks: language
 ; Russian
 Source: "Remote\ru\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"; Languages: ru; Tasks: language
@@ -109,19 +112,21 @@ Source: "setup\license\dutch.rtf"; DestDir: "{app}\Uninstall"; DestName: "licens
 Source: "setup\license\lithuanian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Tasks: language
 ; German
 Source: "setup\license\german.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Tasks: language
-; Portuguese std
-Source: "setup\license\portuguese-braz.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Tasks: language
 ; Italian
 Source: "setup\license\italian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: it; Tasks: language
 ; Norwegian
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: no; Tasks: language
 ; Afrikaans
 Source: "setup\license\afrikaans.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: af; Tasks: language
-; Portuguese braz
+; Portuguese std
+Source: "setup\license\portuguese-braz.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Tasks: language
+; Portuguese Braz
 Source: "setup\license\portuguese-braz.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt_br; Tasks: language
 ; French
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fr; Tasks: language
-; Spanish
+; Spanish std
+Source: "setup\license\spanish-mexican.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es; Tasks: language
+; Spanish Mexican
 Source: "setup\license\spanish-mexican.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es_mx; Tasks: language
 ; Russian
 Source: "setup\license\russian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ru; Tasks: language
@@ -171,20 +176,22 @@ Source: "setup\filter\dutch.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.
 Source: "setup\filter\lithuanian.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Tasks: language
 ; German
 Source: "setup\filter\german.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Tasks: language
-; Portuguese std
-Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Tasks: language
 ; Italian
 Source: "setup\filter\italian.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: it; Tasks: language
 ; Norwegian
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: no; Tasks: language
 ; Afrikaans
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: af; Tasks: language
-; Portuguese braz
+; Portuguese std
+Source: "setup\filter\portuguese-br.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Tasks: language
+; Portuguese Braz
 Source: "setup\filter\portuguese-br.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt_br; Tasks: language
 ; French
 Source: "setup\filter\french.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fr; Tasks: language
-; Spanish
-Source: "setup\filter\spanish.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es_mx; Tasks: language
+; Spanish std
+Source: "setup\filter\spanish-mexican.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es; Tasks: language
+; Spanish Mexican
+Source: "setup\filter\spanish-mexican.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es_mx; Tasks: language
 ; Russian
 Source: "setup\filter\russian.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ru; Tasks: language
 ; Greek
@@ -347,35 +354,6 @@ de.page_viruswarning_title=Virenwarnung
 de.page_viruswarning_subtitle=Haben Sie ein Antivirenprogramm installiert?
 de.CreateDesktopIcon=&Symbol auf dem Desktop anzeigen
 de.CreateQuickLaunchIcon=&Quick Launch Symbol anzeigen
-; Portuguese std
-pt.components_plugins=Plugins
-pt.components_skins=Skins
-pt.tasks_languages=Linguagens
-pt.tasks_allusers=Todos os usuários
-pt.tasks_selectusers=Instalar %1 para:
-pt.tasks_currentuser=somente %1
-pt.tasks_multisetup=Ativar o suporte a vários usuários
-pt.tasks_firewall=Adicionar exceção ao Firewall do Windows
-pt.tasks_upnp=Ativar a descoberta de dispositivos UPnP
-pt.tasks_deleteoldsetup=Apagar os instaladores antigos
-pt.tasks_resetdiscoveryhostcache=Resetar o Cache de Armazenamento e Descoberta
-pt.run_skinexe=Instalando a Skin...
-pt.reg_incomingchat=Mensagem de chat
-pt.reg_apptitle=Shareaza Compartilhamento de Arquivos Incomparável
-pt.icons_license=Licença
-pt.icons_uninstall=Desinstalar
-pt.icons_downloads=Downloads
-pt.icons_basicmode=Modo Normal
-pt.icons_tabbedmode=Modo de Abas
-pt.icons_windowedmode=Modo de Janelas
-pt.dialog_shutdown=O %1 está sendo executado. Você gostaria que o %1 fosse fechado para que a instalação continue?
-pt.dialog_firewall=O Setup falhou em adicionar o Shareaza no Firewall do Windows.%nPor favor adicione o Shareaza a lista de exceções manualmente.
-pt.dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
-pt.page_viruswarning_text=Quando usando a internet, você deve sempre garantir que você tenha um scanner contra vírus atualizado para proteger você de trojans, worms e outros programas maliciosos. Você pode achar uma lista de bons scanners contra vírus e outras dicas de segurança para proteger o seu computador seguindo este link:
-pt.page_viruswarning_title=Alerta contra Vírus
-pt.page_viruswarning_subtitle=Você tem um programa Anti-Vírus instalado?
-pt.CreateDesktopIcon=Criar ícone no &Ambiente de Trabalho
-pt.CreateQuickLaunchIcon=Criar ícone na barra de Inicialização &Rápida
 ; Italian
 it.components_plugins=Plugin
 it.components_skins=Skin
@@ -464,7 +442,36 @@ af.page_viruswarning_title=Virus Waarskuwing
 af.page_viruswarning_subtitle=Het jy 'n Anti-Virus program geïnstalleer?
 af.CreateDesktopIcon=Vertoon 'n &werkskerm ikoon
 af.CreateQuickLaunchIcon=Vertoon 'n &Quick Launch ikoon
-; Portuguese braz
+; Portuguese std
+pt.components_plugins=Plugins
+pt.components_skins=Skins
+pt.tasks_languages=Linguagens
+pt.tasks_allusers=Todos os usuários
+pt.tasks_selectusers=Instalar %1 para:
+pt.tasks_currentuser=somente %1
+pt.tasks_multisetup=Ativar o suporte a vários usuários
+pt.tasks_firewall=Adicionar exceção ao Firewall do Windows
+pt.tasks_upnp=Ativar a descoberta de dispositivos UPnP
+pt.tasks_deleteoldsetup=Apagar os instaladores antigos
+pt.tasks_resetdiscoveryhostcache=Resetar o Cache de Armazenamento e Descoberta
+pt.run_skinexe=Instalando a Skin...
+pt.reg_incomingchat=Mensagem de chat
+pt.reg_apptitle=Shareaza Compartilhamento de Arquivos Incomparável
+pt.icons_license=Licença
+pt.icons_uninstall=Desinstalar
+pt.icons_downloads=Downloads
+pt.icons_basicmode=Modo Normal
+pt.icons_tabbedmode=Modo de Abas
+pt.icons_windowedmode=Modo de Janelas
+pt.dialog_shutdown=O %1 está sendo executado. Você gostaria que o %1 fosse fechado para que a instalação continue?
+pt.dialog_firewall=O Setup falhou em adicionar o Shareaza no Firewall do Windows.%nPor favor adicione o Shareaza a lista de exceções manualmente.
+pt.dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+pt.page_viruswarning_text=Quando usando a internet, você deve sempre garantir que você tenha um scanner contra vírus atualizado para proteger você de trojans, worms e outros programas maliciosos. Você pode achar uma lista de bons scanners contra vírus e outras dicas de segurança para proteger o seu computador seguindo este link:
+pt.page_viruswarning_title=Alerta contra Vírus
+pt.page_viruswarning_subtitle=Você tem um programa Anti-Vírus instalado?
+pt.CreateDesktopIcon=Criar ícone no &Ambiente de Trabalho
+pt.CreateQuickLaunchIcon=Criar ícone na barra de Inicialização &Rápida
+; Portuguese Braz
 pt_br.components_plugins=Plugins
 pt_br.components_skins=Skins
 pt_br.tasks_languages=Linguagens
@@ -522,7 +529,36 @@ fr.page_viruswarning_title=Avertissement sur les virus
 fr.page_viruswarning_subtitle=Avez-vous un antivirus installé?
 fr.CreateDesktopIcon=Afficher un raccourci sur le &Bureau
 fr.CreateQuickLaunchIcon=Afficher un raccouri dans la barre de &Lancement rapide
-; Spanish
+; Spanish std
+es.components_plugins=Plugins
+es.components_skins=Skins
+es.tasks_languages=Idiomas
+es.tasks_allusers=Todos los usuarios
+es.tasks_selectusers=Instalar %1 para:
+es.tasks_currentuser=%1 solamente
+es.tasks_multisetup=Habilitar soporte multi-usuario
+es.tasks_firewall=Agregar una excepción al Firewall de Windows
+es.tasks_upnp=Enable discovery of UPnP devices
+es.tasks_deleteoldsetup=Borrar archivos de instaladores viejos
+es.tasks_resetdiscoveryhostcache=Reset Discovery and Hostcache
+es.run_skinexe=Instalando Skin...
+es.reg_incomingchat=Hay un mensaje de chat entrante
+es.reg_apptitle=Shareaza Ultimate File Sharing
+es.icons_license=Licencia
+es.icons_uninstall=Desinstalar
+es.icons_downloads=Descargas
+es.icons_basicmode=Modo Normal
+es.icons_tabbedmode=Modo Avanzado
+es.icons_windowedmode=Modo Ventanas
+es.dialog_shutdown=%1 se encuentra ejecutándose. ¿Deseas que %1 sea cerrado para que la instalación pueda continuar?
+es.dialog_firewall=La instalación fallo al agregar la excepción de Shareaza al cortafuego Firewall.%n Por favor hágalo manualmente.
+es.dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+es.page_viruswarning_text=Cuando estas usando Internet, debes siempre asegurarte que tienes un antivirus actualizado hasta la fecha para protegerte de troyanos, gusanos, y otros programas maliciosos. Puedes encontrar una lista de buenos antivirus y sugerencias de seguridad para proteger tu computadora en la siguiente dirección:
+es.page_viruswarning_title=Peligro de Virus
+es.page_viruswarning_subtitle=¿Tienes un programa antivirus instalado?
+es.CreateDesktopIcon=Mostrar/Quitar icono de &Escritorio
+es.CreateQuickLaunchIcon=Mostrar/Quitar icono de &Inicio Rápido
+; Spanish Mexican
 es_mx.components_plugins=Plugins
 es_mx.components_skins=Skins
 es_mx.tasks_languages=Idiomas

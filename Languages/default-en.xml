@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.6090 + ~1 -->
+<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.6092 + ~1 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2640,7 +2640,7 @@
 	<string id="8335" value="Sources for this file are firewalled"/>
 	<string id="8336" value="Sources for this file may be unstable"/>
 	<string id="8337" value="Untrusted"/>
-	<string id="13000" value="Are you sure you want to delete the selected security rules?  This cannot be undone."/>
+	<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 	<string id="13001" value="Files shared over the Internet"/>
 	<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
 	<string id="16064" value="Starting Shareaza network core..."/>
