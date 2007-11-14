@@ -1,35 +1,22 @@
-<td class="tabsel">Nuova Ricerca</td>
-<td class="tabedg">&nbsp;</td>
-</tr> </table> </td> </tr>
-<tr>
-	<td class="frame">
-		<div>
-			Per iniziare una nuova ricerca, immetti i dati nella casella <b>Ricerca</b> e clicca su <b>Inizia 
-				Ricerca</b>. Se desideri restringere la tua ricerca a un tipo particolare di file, 
-			selezionalo dall'elenco.
-		</div>
+﻿										<li class="active"><a class="noline" href="?id=0">Nuova ricerca</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+			<p>Per iniziare una nuova ricerca, immetti i dati nella casella <strong>Ricerca</strong> e clicca su <strong>Inizia 
+      				Ricerca</strong>. Se desideri restringere la tua ricerca a un tipo particolare di file, 
+      			selezionalo dall'elenco.</p>
+	
+	<div style="text-align:right; width: 30em;">		
 		<form method="get" action="newsearch">
-			<table align="center">
-				<tr>
-					<td>Ricerca:</td>
-					<td><input type="text" name="search" size="30"></td>
-				</tr>
-				<tr>
-					<td>Tipo di File:</td>
-					<td>
-						<select name="schema">
-							<option value="">Qualsiasi tipo di File</option>
+
+			<label>Ricerca:</label>
+					<input type="text" name="search" class="regularinput" /><br />
+			<label>Tipo di file:</label>
+					
+						<select name="schema" class="regularinput">
+							<option value="">Qualsiasi tipo di file</option>
 							<%= schema_option_list %>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="Inizia Ricerca">
-					</td>
-				</tr>
-			</table>
+				<br />
+						<input type="submit" value="Inizia ricerca">
 		</form>
+	</div>
