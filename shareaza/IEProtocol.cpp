@@ -464,7 +464,10 @@ BOOL CIEProtocol::SetCollection(const Hashes::Sha1Hash& oSHA1, LPCTSTR pszPath, 
 	
 	if ( m_pCollZIP->Open( pszPath ) )
 	{
-		if ( CZIPFile::File* pFile = m_pCollZIP->GetFile( _T("index.htm"), TRUE ) )
+		CZIPFile::File* pFile = m_pCollZIP->GetFile( _T("index.htm"), TRUE );
+		if ( ! pFile )
+			pFile = m_pCollZIP->GetFile( _T("Collection.xml"), TRUE );
+		if ( pFile )
 		{
 			if ( psIndex != NULL ) *psIndex = pFile->m_sName;
 		}
