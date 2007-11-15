@@ -55,7 +55,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GeoIP", "GeoIP.vcproj", "{1
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Installer", "Installer.vcproj", "{13C7CBBC-B681-4D81-8878-E2EA1F47022D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RARBuilder", "..\plugins\RARBuilder\RARBuilder.vcproj", "{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZIPBuilder", "..\plugins\ZIPBuilder\ZIPBuilder.vcproj", "{2F74AA28-2498-4805-911A-04C39858D529}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ZipBuilder", "..\plugins\7ZipBuilder\7ZipBuilder.vcproj", "{B69F80CD-FB15-45E8-B359-92A41CC571A7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Installer", "Installer.vcproj", "{9CFCA9C0-5F08-40F6-947B-63661B91A95A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9FD49A08-2D98-4CF1-AEEB-0D42EA382331} = {9FD49A08-2D98-4CF1-AEEB-0D42EA382331}
 		{5D001F1C-729C-48EA-B4BF-F98B95AE2A47} = {5D001F1C-729C-48EA-B4BF-F98B95AE2A47}
@@ -71,18 +83,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Installer", "Installer.vcpr
 		{F801DAD7-F08D-48EF-B0DF-6B120377E835} = {F801DAD7-F08D-48EF-B0DF-6B120377E835}
 		{2F74AA28-2498-4805-911A-04C39858D529} = {2F74AA28-2498-4805-911A-04C39858D529}
 		{B69F80CD-FB15-45E8-B359-92A41CC571A7} = {B69F80CD-FB15-45E8-B359-92A41CC571A7}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RARBuilder", "..\plugins\RARBuilder\RARBuilder.vcproj", "{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZIPBuilder", "..\plugins\ZIPBuilder\ZIPBuilder.vcproj", "{2F74AA28-2498-4805-911A-04C39858D529}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ZipBuilder", "..\plugins\7ZipBuilder\7ZipBuilder.vcproj", "{B69F80CD-FB15-45E8-B359-92A41CC571A7}"
-	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
 Global
@@ -151,10 +151,6 @@ Global
 		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Debug.Build.0 = Debug|Win32
 		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.ActiveCfg = Release|Win32
 		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.Build.0 = Release|Win32
-		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Debug.ActiveCfg = Debug|Win32
-		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Debug.Build.0 = Debug|Win32
-		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.ActiveCfg = Release|Win32
-		{13C7CBBC-B681-4D81-8878-E2EA1F47022D}.Release.Build.0 = Release|Win32
 		{F801DAD7-F08D-48EF-B0DF-6B120377E835}.Debug.ActiveCfg = Debug|Win32
 		{F801DAD7-F08D-48EF-B0DF-6B120377E835}.Debug.Build.0 = Debug|Win32
 		{F801DAD7-F08D-48EF-B0DF-6B120377E835}.Release.ActiveCfg = Release|Win32
@@ -167,6 +163,8 @@ Global
 		{B69F80CD-FB15-45E8-B359-92A41CC571A7}.Debug.Build.0 = Debug|Win32
 		{B69F80CD-FB15-45E8-B359-92A41CC571A7}.Release.ActiveCfg = Release|Win32
 		{B69F80CD-FB15-45E8-B359-92A41CC571A7}.Release.Build.0 = Release|Win32
+		{9CFCA9C0-5F08-40F6-947B-63661B91A95A}.Debug.ActiveCfg = Debug|Win32
+		{9CFCA9C0-5F08-40F6-947B-63661B91A95A}.Release.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
