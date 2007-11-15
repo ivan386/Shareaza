@@ -11,6 +11,11 @@
   #error PreProcessor version 5.2.0.0 or higher is needed for this script
 #endif
 
+; Debug build of the installer compiled inside Visual Studio
+#ifexist "..\..\setup\builds\Debug"
+  #define debug
+#endif
+
 ; Not supported by ISPP 5.1.2
 #define date GetDateTimeString('yyyy/mm/dd', '-', '')
 
