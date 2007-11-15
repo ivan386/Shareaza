@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="Installer"
-	ProjectGUID="{13C7CBBC-B681-4D81-8878-E2EA1F47022D}">
+	ProjectGUID="{13C7CBBC-B681-4D81-8878-E2EA1F47022D}"
+	RootNamespace="Installer">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -19,8 +20,8 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Making Installer..."
-				CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &gt; nul
-"/>
+				CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot;"
+				Outputs="$(SolutionDir)..\setup\builds\Shareaza_Debug_*.exe"/>
 			<Tool
 				Name="VCLinkerTool"/>
 			<Tool
