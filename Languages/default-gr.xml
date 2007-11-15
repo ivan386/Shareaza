@@ -508,7 +508,7 @@
 			<menu text="Επιλογή _Δικτύων">
 				<item id="ID_NETWORK_G2" text="Σύνδεση στο Gnutella_2"/>
 				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
-				<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella1"/>
+				<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Σύνδεση _ με..." shortcut="Ctrl+T"/>
@@ -1577,18 +1577,18 @@
 		<newline gap="12" indent="42"/>
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Θέματα</link>
-		<text align="middle">&#160;- Αλλάξτε την όψη και την αισθητική του Shareaza</text>
+		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Φλοιοί</link>
+		<text align="middle">&#160;- Αλλαγή της όψης και της αισθητικής του Shareaza</text>
 		<newline gap="8"/>
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Οδηγός Ρυθμίσεων</link>
-		<text align="middle">&#160;- Αλλάξτε τις Ρυθμίσεις του Shareaza</text>
+		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Οδηγός Σύντομης Εκκίνησης</link>
+		<text align="middle">&#160;- Βασική ρύθμιση του Shareaza</text>
 		<newline gap="8"/>
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Γρήγορη Βοήθεια</link>
-		<text align="middle">&#160;- Λάβετε τη στοιχειώδη βοήθεια για τη χρήση του Shareaza</text>
+		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Βοήθεια</link>
+		<text align="middle">&#160;- Ιστοσελίδα βοήθειας στη χρήση του Shareaza</text>
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
@@ -1742,7 +1742,7 @@
 		<text format="b">Καλώς ήρθατε στον Διαχειριστή Ρυθμίσεων του Shareaza</text>
 		<newline gap="16"/>
 		<text>
-		Ο Διαχειριστής Ρυθμίσεων του Shareaza επιτρέπει στους προχωρημένους χρήστες να προσαρμόσουν ολοκληρωτικά το πώς
+		Ο Διαχειριστής Ρυθμίσεων επιτρέπει στους προχωρημένους χρήστες να προσαρμόσουν ολοκληρωτικά το πώς
 		δουλεύει το Shareaza. Οι ρυθμίσεις στον τομέα
 		</text>
 		<text format="b">Γενικά </text>
@@ -1752,15 +1752,15 @@
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Γενικά:</link>
 		<gap size="4"/>
-		<text>Κοινες ρυθμίσεις περιβάλλοντος όπως tooltips, minimise behaviour, number formats, prompts, κτλ.</text>
+		<text>Ρυθμίσεις περιβάλλοντος, όπως αιωρούμενες επεξηγήσεις, συμπεριφορά σμίκρυνσης, μορφές αριθμών, προτροπές κτλ.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CLibrarySettingsPage" format="b">Βιβλιοθήκη:</link>
 		<gap size="4"/>
-		<text>Παρουσίαση και διαχείριση της βιβλιοθήκης αρχείων και του ανοίγματος αρχείων.</text>
+		<text>Παρουσίαση και διαχείριση της Βιβλιοθήκης και του ανοίγματος αρχείων.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CMediaSettingsPage" format="b">Media Player:</link>
+		<link target="raza:page:CMediaSettingsPage" format="b">Πολυμέσα:</link>
 		<gap size="4"/>
-		<text>Πότε και πού θα χρησιμοποιήται η ενσωματωμένη Αναπαραγωγή Πολυμέσων του Shareaza.</text>
+		<text>Πότε και πού θα χρησιμοποιείται η ενσωματωμένη Αναπαραγωγή Πολυμέσων του Shareaza.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CCommunitySettingsPage" format="b">Κοινότητα:</link>
 		<gap size="4"/>
@@ -1768,10 +1768,10 @@
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Ιστός:</link>
 		<gap size="4"/>
-		<text>Κάντε ικανό το πρόγραμμα περιήγησής σας να αναθέτει στο Shareaza τους συνδέσμους peer-to-peer και τη λήψη αρχείων.</text>
+		<text>Κάντε το πρόγραμμα περιήγησής σας να αναθέτει στο Shareaza τους συνδέσμους peer-to-peer και τη λήψη αρχείων.</text>
 		<newline gap="10"/>
 	</document>
-	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
+	<document name="CInternetSettingsGroup" title="Διαδίκτυο" leftMargin="8" topMargin="8">
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
@@ -1780,12 +1780,12 @@
 		<text format="b">Καλώς ήρθατε στον Διαχειριστή Ρυθμίσεων του Shareaza</text>
 		<newline gap="16"/>
 		<text>
-		Ο Διαχειριστής Ρυθμίσεων του Shareaza επιτρέπει στους προχωρημένους χρήστες να προσαρμόσουν ολοκληρωτικά το πώς
+		Ο Διαχειριστής Ρυθμίσεων επιτρέπει στους προχωρημένους χρήστες να προσαρμόσουν ολοκληρωτικά το πώς
 		δουλεύει το Shareaza. Οι ρυθμίσεις στον τομέα
 		</text>
 		<text format="b">Διαδίκτυο </text>
 		<text>
-			ελέγχουν το πώς το Shareaza αλληλεπιδρά με άλλα nodes μέσα στο κατανεμημένα peer-to-peer
+			ελέγχουν το πώς το Shareaza αλληλεπιδρά με τα άλλα peers μέσα στα peer-to-peer
 			δίκτυα.
 		</text>
 		<newline gap="16" indent="16"/>
@@ -1795,13 +1795,13 @@
 		<newline gap="10"/>
 		<link target="raza:page:CDownloadsSettingsPage" format="b">Λήψεις Αρχείων:</link>
 		<gap size="4"/>
-		<text>Όγκος λήψης, προγραμματισμός, επαλήθευση, timeouts και διαχείριση.</text>
+		<text>Όγκος λήψης, χρονοδιάγραμμα, επαλήθευση, προθεσμίες και διαχείριση.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CUploadsSettingsPage" format="b">Αποστολές Αρχείων:</link>
 		<gap size="4"/>
-		<text>Χωρητικότητα αποστολών, ουρές, αποκλεισμοί, timeouts και ειδικές αιτίσεις.</text>
+		<text>Χωρητικότητα αποστολών, ουρές, αποκλεισμοί, προθεσμίες και ειδικές αιτήσεις.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CRemoteSettingsPage" format="b">Remote:</link>
+		<link target="raza:page:CRemoteSettingsPage" format="b">Απομακρυσμένη Πρόσβαση:</link>
 		<gap size="4"/>
 		<text>Ρυθμίστε τη δυνατότητα να χειρίζεστε το Shareaza από απομακρυσμένα προγράμματα περιήγησης.</text>
 		<newline gap="10"/>
@@ -2028,14 +2028,14 @@
 		τοποθεσία των προσωρινών αρχείων.</text>
 	</document>
 	<document name="GeneralHelp.ConnectionFail">
-		<text format="b">Η Σύνδεση στο Διαδίκτυο έχει Χαθεί</text>
+		<text format="b">Η Σύνδεση με το Διαδίκτυο έχει Χαθεί</text>
 		<newline gap="8"/>
 		<text>Τα Windows αναφέρουν ότι δεν υπάρχει σύνδεση με το Διαδίκτυο.</text>
 		<newline gap="8"/>
-		<text>Είναι πιθανόν ότι ένα modem ή router έχει πέσει, εννοώντας ότι δεν υπάρχει πρόσβαση
+		<text>Είναι πιθανόν ότι ένα modem ή router έχει πέσει, δηλαδή έχει χαθεί η πρόσβαση
 		στο Διαδίκτυο. Ίσως χρειάζεται να επανεκκινήσετε τη σύνδεσή σας χειροκίνητα.</text>
 		<newline gap="8"/>
-		<text>Το Shareaza έχει σταματήσει τις προσπάθειες σύνδεσης για να αποφευχθεί την απώλεια όλων των cached hosts.</text>
+		<text>Το Shareaza έχει σταματήσει τις προσπάθειες σύνδεσης, ώστε να αποφευχθεί η απώλεια όλων των cached hosts.</text>
 	</document>
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Ενεργό φίλτρο περιεχομένου για ενήλικες</text>
@@ -2148,8 +2148,8 @@
 		θα βρίσκονται μεσα σε υποφακέλους </text><text format="i"> εντός </text>
 		<text> αυτών των φακέλων. Παρακαλώ κοινοποιείστε μάλλον αυτούς τους υποφακέλους.</text>
 		<newline gap="8"/>
-		<text>Ο φάκελος 'incomplete' (ημιτελών) του Shareaza επίσης δεν πρέπει να μην κοινοποιείται μέσω της
-		βιβλιοθήκης, επειδή η επαναλαμβανόμενη σάρωση των λήψεων σε εξέλιξη θα μειώσει τις επιδόσεις του συστήματος.</text>
+		<text>Ο φάκελος 'incomplete' (ημιτελών) του Shareaza επίσης δεν πρέπει να κοινοποιείται μέσω της
+		Βιβλιοθήκης, επειδή η επαναλαμβανόμενη σάρωση των λήψεων σε εξέλιξη θα μειώσει τις επιδόσεις του συστήματος.</text>
 	</document>
 </documents>
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
@@ -2255,14 +2255,14 @@
 	<tip id="ID_HOSTCACHE_IMPORT" message="Εισαγωγή μιας λίστας γνωστών hosts, όπως ένα &quot;server.met&quot; αρχείο..."/>
 	<tip id="ID_HOSTCACHE_PRIORITY" message="Προσπάθεια σύνδεσης σε αυτόν το server προτού στους άλλους."/>
 	<tip id="ID_HOSTCACHE_REMOVE" message="Αφαίρεση επιλεγμένων hosts από τη host cache."/>
-	<tip id="ID_LIBRARY_ADD" message="Προσθήκη νέου φακέλου στη βιβλιοθήκη..."/>
+	<tip id="ID_LIBRARY_ADD" message="Προσθήκη νέου φακέλου στη Βιβλιοθήκη..."/>
 	<tip id="ID_LIBRARY_ALBUM_DELETE" message="Διαγραφή επιλεγμένου album."/>
 	<tip id="ID_LIBRARY_ALBUM_OPEN" message="Άνοιγμα επιλεγμένου album."/>
 	<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Προβολή και επεξεργασία ιδιοτήτων επιλεγμένου album..."/>
 	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Λήψη metadata για τα επιλεγμένα αρχεία από το Bitzi(TM)..."/>
 	<tip id="ID_LIBRARY_BITZI_WEB" message="Προβολή Bitzi(TM) ticket για το επιλεγμένο αρχείο."/>
 	<tip id="ID_LIBRARY_COLUMNS" message="Επιλογή στηλών metadata που θα εμφανίζονται..."/>
-	<tip id="ID_LIBRARY_COPY" message="Αντιγραφή επιλεγμένων αρχείων σε άλλο φάκελο της βιβλιοθήκης..."/>
+	<tip id="ID_LIBRARY_COPY" message="Αντιγραφή επιλεγμένων αρχείων σε άλλο φάκελο της Βιβλιοθήκης..."/>
 	<tip id="ID_LIBRARY_CREATETORRENT" message="Δημιουργία .torrent αυτού του αρχείου για αποστολή σε έναν ιστότοπο."/>
 	<tip id="ID_LIBRARY_DELETE" message="Μόνιμη διαγραφή επιλεγμένων αρχείων!"/>
 	<tip id="ID_LIBRARY_ENQUEUE" message="Προσθήκη επιλεγμένων αρχείων στη Λίστα Αναπαραγωγής."/>
@@ -2274,30 +2274,30 @@
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Εφαρμογή κοινών metadata από το album σε όλα τα αρχεία του."/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="Δημιουργία νέου album..."/>
 	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Προβολή και επεξεργασία ιδιοτήτων επιλεγμένου album..."/>
-	<tip id="ID_LIBRARY_FOLDERS" message="Διαχείριση φυσικών φακέλων στη βιβλιοθήκη..."/>
+	<tip id="ID_LIBRARY_FOLDERS" message="Προσθαφαίρεση φυσικών φακέλων στη Βιβλιοθήκη..."/>
 	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Ενίσχυση ταχύτητας σάρωσης αρχείων."/>
 	<tip id="ID_LIBRARY_LAUNCH" message="Άνοιγμα επιλεγμένων αρχείων."/>
-	<tip id="ID_LIBRARY_MOVE" message="Μετακίνηση επιλεγμένων αρχείων σε άλλο φάκελο της βιβλιοθήκης..."/>
-	<tip id="ID_LIBRARY_PANEL" message="Εμφάνιση ή απόκρυψη πεδίου λεπτομερειών της βιβλιοθήκης."/>
+	<tip id="ID_LIBRARY_MOVE" message="Μετακίνηση επιλεγμένων αρχείων σε άλλο φάκελο της Βιβλιοθήκης..."/>
+	<tip id="ID_LIBRARY_PANEL" message="Εμφάνιση ή απόκρυψη πεδίου λεπτομερειών της Βιβλιοθήκης."/>
 	<tip id="ID_LIBRARY_PARENT" message="Άνωδος στον γονικό φάκελο."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Προβολή και επεξεργασία ιδιοτήτων επιλεγμένων αρχείων..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Αναδόμηση των metadata και των hashes των επιλεγμένων φακέλων και αρχείων."/>
 	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Αναδόμηση metadata με χρήση άλλης γλώσσας."/>
-	<tip id="ID_LIBRARY_REFRESH" message="Ανανέωση προβολής βιβλιοθήκης."/>
+	<tip id="ID_LIBRARY_REFRESH" message="Ανανέωση προβολής Βιβλιοθήκης."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Αφαίρεση επιλεγμένων κοινοποιημένων φακέλων."/>
 	<tip id="ID_LIBRARY_RENAME" message="Μετονομασία επιλεγμένου αρχείου επιτόπου."/>
 	<tip id="ID_LIBRARY_SCAN" message="Σάρωση επιλεγμένων φακέλων ή αρχείων για αλλαγές."/>
-	<tip id="ID_LIBRARY_SEARCH" message="Αναζήτηση στη βιβλιοθήκη αρχείων..."/>
-	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Γρήγορη αναζήτηση στη βιβλιοθήκη αρχείων..."/>
+	<tip id="ID_LIBRARY_SEARCH" message="Αναζήτηση στη Βιβλιοθήκη αρχείων..."/>
+	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Γρήγορη αναζήτηση στη Βιβλιοθήκη αρχείων..."/>
 	<tip id="ID_LIBRARY_SEED_TORRENT" message="Seed το επιλεγμένο Torrent στο BitTorrent."/>
-	<tip id="ID_LIBRARY_SELECT_ALL" message="Επιλογή και προβολή όλων των φακέλων στη βιβλιοθήκη."/>
+	<tip id="ID_LIBRARY_SELECT_ALL" message="Επιλογή και προβολή όλων των φακέλων στη Βιβλιοθήκη."/>
 	<tip id="ID_LIBRARY_SHARED_FILE" message="(Απο)κοινοποίηση επιλεγμένων αρχείων."/>
 	<tip id="ID_LIBRARY_SHARED_FOLDER" message="(Απο)κοινοποίηση επιλεγμένων φακέλων."/>
-	<tip id="ID_LIBRARY_TREE_PHYSICAL" message="Προβολή των φυσικών φακέλων στη βιβλιοθήκη."/>
-	<tip id="ID_LIBRARY_TREE_VIRTUAL" message="Οργάνωση της βιβλιοθήκης."/>
+	<tip id="ID_LIBRARY_TREE_PHYSICAL" message="Προβολή των φυσικών φακέλων στη Βιβλιοθήκη."/>
+	<tip id="ID_LIBRARY_TREE_VIRTUAL" message="Οργάνωση της Βιβλιοθήκης."/>
 	<tip id="ID_LIBRARY_UNLINK" message="Αφαίρεση των επιλεγμένων αρχείων από το τρέχον album."/>
 	<tip id="ID_LIBRARY_URL" message="Αντιγραφή των URI των επιλεγμένων αρχείων."/>
-	<tip id="ID_LIBRARY_VIEW" message="Επιλογή διάταξης βιβλιοθήκης..."/>
+	<tip id="ID_LIBRARY_VIEW" message="Επιλογή διάταξης Βιβλιοθήκης..."/>
 	<tip id="ID_LIBRARY_VIEW_ALBUM" message="Προβολή διάταξης album" tip="Προβολή Album"/>
 	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Προβολή διάταξης πλούσιας-συλλογής" tip="Προβολή Συλλογής"/>
 	<tip id="ID_LIBRARY_VIEW_DETAIL" message="Προβολή ονόματος αρχείου, λεπτομερειών και metadata" tip="Προβολή Λεπτομερειών"/>
@@ -2321,12 +2321,12 @@
 	<tip id="ID_MEDIA_PAUSE" message="Παύση αναπαραγωγής αρχείου." tip="Παύση"/>
 	<tip id="ID_MEDIA_PLAY" message="Εκκίνηση αναπαραγωγής τρέχοντος αρχείου." tip="Αναπαραγωγή"/>
 	<tip id="ID_MEDIA_PLAYLIST" message="Εναλλαγή προβολής Λίστας Αναπαραγωγής."/>
-	<tip id="ID_MEDIA_PREVIOUS" message="Μετάβαση στο επόμενο αρχείο στη Λίστα Αναπαραγωγής." tip="Προηγούμενο Αρχείο"/>
+	<tip id="ID_MEDIA_PREVIOUS" message="Μετάβαση στο προηγούμενο αρχείο στη Λίστα Αναπαραγωγής." tip="Προηγούμενο Αρχείο"/>
 	<tip id="ID_MEDIA_PROPERTIES" message="Προβολή και διόρθωση ιδιοτήτων επιλεγμένων αρχείων."/>
-	<tip id="ID_MEDIA_RANDOM" message="Εναλλαγή  τυχαίας σειράς στη Λίστα Αναπαραγωγής."/>
+	<tip id="ID_MEDIA_RANDOM" message="Εναλλαγή τυχαίας σειράς στη Λίστα Αναπαραγωγής."/>
 	<tip id="ID_MEDIA_RATE" message="Κριτική επιλεγμένων αρχείων."/>
 	<tip id="ID_MEDIA_REMOVE" message="Αφαίρεση επιλεγμένου αρχείου από τη Λίστα Αναπαραγωγής."/>
-	<tip id="ID_MEDIA_REPEAT" message="Επανάληψη τρέχοντος αρχείου."/>
+	<tip id="ID_MEDIA_REPEAT" message="Εναλλαγή επανάληψης τρέχουσας Λίστας."/>
 	<tip id="ID_MEDIA_SAVE" message="Αποθήκευση Λίστας Αναπαραγωγής σε αρχείο..."/>
 	<tip id="ID_MEDIA_SELECT" message="Επιλογή και άνοιγμα αρχείου."/>
 	<tip id="ID_MEDIA_SETTINGS" message="Εμφάνιση σελίδας ρυθμίσεων πολυμέσων..."/>
@@ -2335,10 +2335,10 @@
 	<tip id="ID_MEDIA_SIZE_ONE" message="Προβολή video στο αρχικό του μέγεθος."/>
 	<tip id="ID_MEDIA_SIZE_THREE" message="Προβολή video σε μέγεθος τριπλάσιο του αρχικού."/>
 	<tip id="ID_MEDIA_SIZE_TWO" message="Προβολή video σε μέγεθος διπλάσιο του αρχικού."/>
-	<tip id="ID_MEDIA_STATUS" message="Εναλλαγή γραμμής κατάστασης πολυμέσων."/>
+	<tip id="ID_MEDIA_STATUS" message="Εναλλαγή προβολής γραμμής κατάστασης πολυμέσων."/>
 	<tip id="ID_MEDIA_STOP" message="Διακοπή αναπαραγωγής αρχείου." tip="Διακοπή"/>
 	<tip id="ID_MEDIA_VIS" message="Επιλογή plugin ηχητικής απεικόνισης..."/>
-	<tip id="ID_MEDIA_ZOOM" message="Αυξομοίωση μεγέθυνσης και αναλογιών video."/>
+	<tip id="ID_MEDIA_ZOOM" message="Επιλογή μεγέθυνσης και αναλογιών video."/>
 	<tip id="ID_MONITOR_CLOSE" message="Κλείσιμο παραθύρου εποπτείας."/>
 	<tip id="ID_NEIGHBOURS_CHAT" message="Έναρξη συνομιλίας με τον επιλεγμένο χρήστη."/>
 	<tip id="ID_NEIGHBOURS_COPY" message="Αντιγραφή ενός URI για πρόσβαση στον επιλεγμένο host."/>
@@ -2445,10 +2445,10 @@
 	<tip id="ID_VIEW_SEARCH_MONITOR" message="Εναλλαγή παραθύρου Εποπτείας Αναζητήσεων."/>
 	<tip id="ID_VIEW_SECURITY" message="Εναλλαγή παραθύρου Ασφαλείας."/>
 	<tip id="ID_VIEW_SYSTEM" message="Εναλλαγή παραθύρου Συστήματος."/>
-	<tip id="ID_VIEW_TABBED" message="Εμφάνιση του Shareaza υπό μορφή Καρτελών."/>
+	<tip id="ID_VIEW_TABBED" message="Εμφάνιση του Shareaza σε μορφή Καρτελών."/>
 	<tip id="ID_VIEW_TRAFFIC" message="Εναλλαγή παραθύρου Γραφημάτων."/>
 	<tip id="ID_VIEW_UPLOADS" message="Εναλλαγή παραθύρου Αποστολών."/>
-	<tip id="ID_VIEW_WINDOWED" message="Εμφάνιση του Shareaza υπό μορφή Παραθύρων."/>
+	<tip id="ID_VIEW_WINDOWED" message="Εμφάνιση του Shareaza σε μορφή Παραθύρων."/>
 	<tip id="ID_WINDOW_CASCADE" message="Παράθεση όλων τα ανοικτών παραθύρων αλληλοεπικαλυπτόμενων, το ένα ελαφρώς κάτω και δεξιά από το άλλο."/>
 	<tip id="ID_WINDOW_MONITOR" message="Εναλλαγή παραθύρου εποπτείας εύρους ζώνης."/>
 	<tip id="ID_WINDOW_NAVBAR" message="Εναλλαγή μπάρας πλοήγησης."/>
@@ -2487,7 +2487,7 @@
 	<string id="WINDOW_DISCOVERY" value="Υπηρεσίες Ανακάλυψης"/>
 	<string id="WINDOW_BROWSEHOST" value="Περιήγηση"/>
 	<string id="WINDOW_HOME" value="Αρχική οθόνη Shareaza"/>
-	<string id="WINDOW_MEDIA" value="Αναπαραγωγή Πολυμέσων"/>
+	<string id="WINDOW_MEDIA" value="Πολυμέσα"/>
 	<string id="WINDOW_SEARCHPAD" value="Αναζήτηση"/>
 	<string id="WINDOW_HELP" value="Βοήθεια Shareaza"/>
 	<string id="7000" value="Θέλετε σίγουρα να διαγράψετε αυτό το φίλτρο;"/>
@@ -2512,11 +2512,11 @@
 	<string id="8010" value="Αυτή είναι μία έκδοση προδημοσίευσης του Shareaza και η περίοδος δοκιμών έληξε. Παρακαλώ λέβετ την πλήρη επίσημη έκδοση από το http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Η αλλαγή της προβολής θα κλείσει ό,τι παράθυρα έχετε ανοιχτά. Θέλετε να γίνει τώρα;"/>
 	<string id="8012" value="Πληροφορίες Torrent"/>
-	<string id="8060" value="Λειτουργία Κόμβου/Ultrapeer με %lu γείτονες. %s στην τοπική βιβλιοθήκη."/>
-	<string id="8061" value="Λειτουργία Ultrapeer με %lu γείτονες. %s στην τοπική βιβλιοθήκη."/>
-	<string id="8062" value="Λειτουργία Κόμβου με %lu γείτονες. %s στην τοπική βιβλιοθήκη."/>
-	<string id="8063" value="Ενωμένο. %s στην τοπική βιβλιοθήκη."/>
-	<string id="8064" value="Ενωμένο σε %lu γείτονες. %s στην τοπική βιβλιοθήκη."/>
+	<string id="8060" value="Λειτουργία Κόμβου/Ultrapeer με %lu γείτονες. %s στην τοπική Βιβλιοθήκη."/>
+	<string id="8061" value="Λειτουργία Ultrapeer με %lu γείτονες. %s στην τοπική Βιβλιοθήκη."/>
+	<string id="8062" value="Λειτουργία Κόμβου με %lu γείτονες. %s στην τοπική Βιβλιοθήκη."/>
+	<string id="8063" value="Ενωμένο. %s στην τοπική Βιβλιοθήκη."/>
+	<string id="8064" value="Ενωμένο σε %lu γείτονες. %s στην τοπική Βιβλιοθήκη."/>
 	<string id="8065" value="Σύνδεση με το δίκτυο..."/>
 	<string id="8066" value="Μη ενωμένο στο δίκτυο."/>
 	<string id="8067" value="%s μέσα : %s έξω [D:%I64i/U:%I64i]"/>
@@ -2551,7 +2551,7 @@
 	<string id="8144" value="Έναρξη Αναζ."/>
 	<string id="8145" value="Αναζήτηση Περισσοτέρων"/>
 	<string id="8146" value="Διακοπή"/>
-	<string id="8147" value="Ό,τι Τύπο Αρχείου"/>
+	<string id="8147" value="Οτιδήποτε"/>
 	<string id="8148" value="Όροι αναζήτησης:"/>
 	<string id="8149" value="Αναζήτηση αρχείων τύπου:"/>
 	<string id="8150" value="Αναζήτηση:"/>
@@ -2613,7 +2613,7 @@
 	<string id="8308" value="Μέγεθος"/>
 	<string id="8309" value="Μερική Πηγή (%.2f%% διαθέσιμο)"/>
 	<string id="8310" value="%i υποδοχές αποστολής, %i σε αναμονή στην ουρά"/>
-	<string id="8311" value="Έχετε ήδη αυτό το αρχείο στη βιβλιοθήκη."/>
+	<string id="8311" value="Έχετε ήδη αυτό το αρχείο στη Βιβλιοθήκη."/>
 	<string id="8312" value="Έχετε ήδη αυτό το αρχείο στη λίστα λήψεων."/>
 	<string id="8313" value="Αυτό το αρχείο φαίνετε να είναι βρόμα."/>
 	<string id="8314" value="Έχετε λάβει και διαγράψει αυτό το αρχείο παλαιότερα."/>
@@ -2631,7 +2631,7 @@
 	<string id="8326" value="Επόμενο στη Σειρά"/>
 	<string id="8327" value="Σύνολο Αρχείων:"/>
 	<string id="8328" value="Συνολική Ποσότητα:"/>
-	<string id="8329" value="της βιβλιοθήκης"/>
+	<string id="8329" value="της Βιβλιοθήκης"/>
 	<string id="8330" value="Φάκελος"/>
 	<string id="8331" value="Αυτή η πηγή είναι απασχολημένη"/>
 	<string id="8332" value="Αυτή η πηγή είναι πίσω από firewall"/>
@@ -2844,7 +2844,7 @@
 	<string id="16392" value="Κλικ στο κουμπί Σύνδεση για να αρχίσετε."/>
 	<string id="16393" value="Το αρχείο &quot;%s&quot; απέτυχε στη δοκιμή επαλήθευσης με hash και ίσως δεν είναι το αρχείο που σκοπεύατε να λάβετε! Θέλετε σίγουρα να το ανοίξετε;"/>
 	<string id="16394" value="Θέλετε να αφαιρέσετε την &quot;εν δυνάμει επικίνδυνη&quot; ιδιότητα από αυτό το αρχείο;"/>
-	<string id="16395" value="Ο Φάκελος Ληφθέντων &quot;%s&quot; δεν περιλαμβάνεται ακόμη στη Βιβλιοθήκη.\n\nΗ συμπερίληψή του κάνει ευκολότερη την προβολή και οργάνωση νέων αρχείων και σας επιτρέπει να αξιοποιήσετε τις προχωρημένες δυνατότητες του Shareaza, όπως την επαλήθευση αρχείων και την αυτόματη αναβάθμιση. Η τοποθέτηση αρχείων στη βιβλιοθήκη δεν σας υποχρεώνει να τα κοινοποιείτε: μπορείτε να διαλέξετε αν θα κοινοποιείται ή όχι ένα ή περισσότερα αρχεία, συγκεκριμένα και ανεξάρτητα.\n\nΘέλετε να προσθέσετε τον Φάκελο Ληφθέντων στη Βιβλιοθήκη τώρα;"/>
+	<string id="16395" value="Ο Φάκελος Ληφθέντων &quot;%s&quot; δεν περιλαμβάνεται ακόμη στη Βιβλιοθήκη.\n\nΗ συμπερίληψή του κάνει ευκολότερη την προβολή και οργάνωση νέων αρχείων και σας επιτρέπει να αξιοποιήσετε τις προχωρημένες δυνατότητες του Shareaza, όπως την επαλήθευση αρχείων και την αυτόματη αναβάθμιση. Η τοποθέτηση αρχείων στη Βιβλιοθήκη δεν σας υποχρεώνει να τα κοινοποιείτε: μπορείτε να διαλέξετε αν θα κοινοποιείται ή όχι ένα ή περισσότερα αρχεία, συγκεκριμένα και ανεξάρτητα.\n\nΘέλετε να προσθέσετε τον Φάκελο Ληφθέντων στη Βιβλιοθήκη τώρα;"/>
 	<string id="16396" value="Ο Φάκελος Ληφθέντων προστέθηκε στη Βιβλιοθήκη. Θέλετε επίσης να τον κοινοποιήσετε;"/>
 	<string id="16397" value="Θέλετε σίγουρα να διαγράψετε τα %i επιλεγμένα albums ;\n\nΣημειώστε ότι αυτή η πράξη δεν διαγράφει τα αρχεία μέσα στα albums, παρά μόνο τα ίδια τα albums."/>
 	<string id="16398" value="Αποτυχία μετονομασίας αρχείου:\n\n%s\nto\n%s"/>
@@ -2852,14 +2852,14 @@
 	<string id="16400" value="Το αρχείο προορισμού προϋπάρχει:\n\n%s\n\nΘέλετε να το αντικαταστήσετε;"/>
 	<string id="16401" value="Προβολή Όλων των Τύπων Αρχείων"/>
 	<string id="16402" value="Το ληφθέν ως αρχείο συλλογής:\n\n&quot;%s&quot;\n\nδεν φαίνεται να είναι ένα έγκυρο αρχείο συλλογής."/>
-	<string id="16403" value="Προσθήκη αρχείου συλλογής &quot;%s&quot; στη βιβλιοθήκη."/>
+	<string id="16403" value="Προσθήκη αρχείου συλλογής &quot;%s&quot; στη Βιβλιοθήκη."/>
 	<string id="16404" value="Αδυναμία εγκατάστασης αρχείου συλλογής &quot;%s&quot;, μέσω αντιγρφής του στον φακελο &quot;%s&quot;."/>
 	<string id="16405" value="Θέλετε να λάβετε αυτό το αρχείο;\n\n&quot;%s&quot;\n\nΠατήστε Άκυρο για να σταματήσετε περαιτέρω προτροπές."/>
 	<string id="16406" value="Θέλετε να λάβετε όλα τα αρχεία αυτής της συλλογής;\n\nΠατήστε Άκυρο για να σταματήσετε περαιτέρω προτροπές."/>
 	<string id="16407" value="Θέλετε να εμποδίσετε αυτήν τη συλλογή από το να σας προτρέπει να λάβετε οτιδήποτε άλλο;"/>
 	<string id="16408" value="Αντιγραφή &amp;URI"/>
 	<string id="16409" value="Εξαγωγή &amp;URIs..."/>
-	<string id="16410" value="Ένας υποφάκελος του επιλεγμένου φακέλου &quot;%s&quot; είναι ήδη μέρος της βιβλιοθήκης.\nΠροσθέτοντας αυτόν τον φάκελο θα προκαλέσει επανασάρωση μερικών αρχείων.\n\nΘέλετε να συνεχίσετε;"/>
+	<string id="16410" value="Ένας υποφάκελος του επιλεγμένου φακέλου &quot;%s&quot; είναι ήδη μέρος της Βιβλιοθήκης.\nΠροσθέτοντας αυτόν τον φάκελο θα προκαλέσει επανασάρωση μερικών αρχείων.\n\nΘέλετε να συνεχίσετε;"/>
 	<string id="16411" value="Αδυναμία μετακίνησης του αρχείου %s. Το αρχείο ίσως χρησιμοποιείται απο άλλη εφαρμογή.\n\nΘέλετε εναλλακτικά να δοκιμάσετε να το αντιγράψετε;"/>
 	<string id="16412" value="Αρχείο Φάντασμα"/>
 	<string id="16448" value="Ενωμένο στο %s, χειραψία..."/>
@@ -2901,7 +2901,7 @@
 	<string id="16768" value="Ληφθέντες URL &quot;%s&quot;"/>
 	<string id="16769" value="Αδυναμία ανάλυσης URL: Μη κατανοητό URL."/>
 	<string id="16770" value="Αδυναμία εμφάνισης URL action dialog, λόγω φόρτου."/>
-	<string id="16771" value="Έχετε ήδη το αρχείο &quot;%s&quot; στη βιβλιοθήκη. Επιμένετε να το ξαναλάβετε;"/>
+	<string id="16771" value="Έχετε ήδη το αρχείο &quot;%s&quot; στη Βιβλιοθήκη. Επιμένετε να το ξαναλάβετε;"/>
 	<string id="16772" value="Host:"/>
 	<string id="16773" value="Θύρα:"/>
 	<string id="16774" value="&amp;Σύνδεση"/>
@@ -2957,14 +2957,14 @@
 	<string id="16941" value="Κλείσιμο σύνδεσης περιήγησης χρήστη με %s, λόγω έλλειψης δραστηριότητας."/>
 	<string id="16942" value="Κλείσιμο σύνδεσης περιήγησης χρήστη με %s."/>
 	<string id="16943" value="Περιήγηση %s"/>
-	<string id="16944" value="%i κοινοποιημένα αρχεία στη βιβλιοθήκη του %s."/>
+	<string id="16944" value="%i κοινοποιημένα αρχεία στη Βιβλιοθήκη του %s."/>
 	<string id="16991" value="Αναπαραγωγή Πολυμέσων"/>
 	<string id="16992" value="Αδυναμία εκκίνησης των πρόσθετων Υπηρεσιών Πολυμέσων (MediaServices plugin). Παρακαλώ επανεγκαταστήστε το Shareaza και επιβεβαιώστε ότι έχετε εγκατεστημένους τους αναγκαίους media codecs και output drivers."/>
 	<string id="16993" value="Όλα τα Αρχεία Πολυμέσων|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Λίστες|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Αρχεία Ήχου|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Αρχεία Video|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Κομμάτια CD Audio|*.cda|Αρχεία MIDI|*.mid;*.rmi;*.midi|Όλα τα Αρχεία|*.*||"/>
 	<string id="16994" value="Αδυναμία φόρτωσης αρχείου &quot;%s&quot;"/>
 	<string id="16995" value="Το αρχείο ίσως είναι κατεστραμμένο ή ίσως δεν έχετε τους αναγκαίους codecs για την αναπαραγωγή."/>
 	<string id="16996" value="Αδυναμία αναπαραγωγής τμήματος αυτού του αρχείου, ίσως να χρειάζεται να λάβετε επιπλέον codecs."/>
-	<string id="16997" value="Κανένα αρχείο υπό αναπαραγωγή. Για αναπαραγωγή, διπλό κλικ σε ένα αρχείο στη βιβλιοθήκη."/>
+	<string id="16997" value="Κανένα αρχείο υπό αναπαραγωγή. Για αναπαραγωγή, διπλό κλικ σε ένα αρχείο στη Βιβλιοθήκη."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 	<string id="16999" value="Λ Ι Σ Τ Α &#160; Α Ν Α Π Α Ρ Α Γ Ω Γ Η Σ"/>
 	<string id="17024" value="Εγκαινίαση σύνδεσης με %s..."/>
@@ -3003,7 +3003,7 @@
 	<string id="17113" value="Συμπίεση:"/>
 	<string id="17114" value="Αναλογία:"/>
 	<string id="17115" value="Deflate"/>
-	<string id="17116" value="Κανένα"/>
+	<string id="17116" value="Καμία"/>
 	<string id="17117" value="Σύνδεση..."/>
 	<string id="17118" value="Χειραψία..."/>
 	<string id="17119" value="Απορριμένο"/>
@@ -3071,7 +3071,7 @@
 	<string id="17491" value="Το torrent &quot;%s&quot; βρίσκεται ήδη στη λίστα λήψεων και δεν μπορεί να γίνει seed."/>
 	<string id="17492" value="Σφάλμα κατά τη φόρτωση του torrent &quot;%s&quot;. Ίσως δεν είναι έγκυρο."/>
 	<string id="17493" value="Αδυναμία δημιουργίας BitTorrent share αρχείου &quot;%s&quot;."/>
-	<string id="17494" value="Αδυναμία εύρεσης στη βιβλιοθήκη του αρχείο &quot;%s&quot; που περιλαμβάνεται σε αυτό το torrent. Μετακινήστε το αρχείο στον ίδιο φάκελο με το torrent και ξαναπροσπαθείστε."/>
+	<string id="17494" value="Αδυναμία εύρεσης στη Βιβλιοθήκη του αρχείο &quot;%s&quot; που περιλαμβάνεται σε αυτό το torrent. Μετακινήστε το αρχείο στον ίδιο φάκελο με το torrent και ξαναπροσπαθείστε."/>
 	<string id="17495" value="Ασυμφωνία του αρχείου &quot;%s&quot; που αναφέρεται σε αυτό το torrent ως %s, ενώ το ίδιο δηλώνεται ως %s."/>
 	<string id="17496" value="Σφάλμα κατά την αντιγραφή από &quot;%s&quot; σε ένα BitTorrent share αρχείο."/>
 	<string id="17497" value="Άγνωστο σφάλμα κατά την προσπάθεια seeding του &quot;%s&quot;."/>
@@ -3164,7 +3164,7 @@
 	<string id="20205" value="Παρασκευή"/>
 	<string id="20206" value="Σάββατο"/>
 	<string id="20210" value="(Χωρίς Βαθμολόγηση)"/>
-	<string id="20211" value="Ψεύτικο/Φθαρμένο/Αποπροσανατολιστικό"/>
+	<string id="20211" value="Ψεύτικο/Φθαρμένο/Παραπλαν."/>
 	<string id="20212" value="Φτωχό"/>
 	<string id="20213" value="Μέτριο"/>
 	<string id="20214" value="Καλό"/>
@@ -3192,44 +3192,44 @@
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Γενικά"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Γενικά">
 		<control caption="_Γενικά:"/>
-		<control caption="Αυτόματη σύνδεση κατά την έναρξη."/>
+		<control caption="Αυτόματη σύνδεση κατά την έναρξη"/>
 		<control caption="Εκκίνηση κατά την έναρξη των Windows"/>
 		<control caption="Προβολή προτροπής πριν το άνοιγμα URIs"/>
-		<control caption="Μονάδα μέτρησης:"/>
+		<control caption="Μονάδα μέτρησ.:"/>
 		<control caption="bits/δευτερόλεπτο|Bytes/δευτερόλεπτο|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Λήψεις:"/>
 		<control caption="Προεπιλεγμένη επέκταση νέων λήψεων"/>
 		<control caption="Εμφάνιση απλής μπάρας προόδου"/>
 		<control caption="Ανα_ζήτηση:"/>
-		<control caption="Προεπιλεγμένη επέκταση λήψεων πολλών πηγών"/>
-		<control caption="Μετά την εντολή λήψης, μετάβαση στο παράθυρο Μεταφορών"/>
-		<control caption="Μετά την έναρξη αναζήτησης, απόκρυψη πλαϊνής μπάρας"/>
-		<control caption="Φιλτράρισμα περιεχομένου για ενήλικους στις αναζητήσεις"/>
-		<control caption="Εμφάνιση αιωρούμενων _Επεξηγήσεων:"/>
+		<control caption="Επέκταση λήψεων πολλών πηγών"/>
+		<control caption="Με εντολή λήψης, προβολή Μεταφορών"/>
+		<control caption="Με έναρξη αναζήτησης, απόκρυψη μπάρας"/>
+		<control caption="Φιλτράρισμα για ανήλικους σε αναζητήσεις"/>
+		<control caption="Αιωρούμενες _Επεξηγήσεις:"/>
 		<control/>
-		<control caption="Καθυστέρηση (ms):"/>
+		<control caption="Διάρκεια ms:"/>
 		<control/><control/>
-		<control caption="Αδιαφάνεια:"/>
+		<control caption="Αδιαφάν.:"/>
 		<control/>
 		<control caption="_Γραμμή Συστήματος:"/>
-		<control caption="Μετά από εντολή κλεισίματος:"/>
-		<control caption="Ερώτηση|Άμεσο Κλείσιμο|Ελαχιστοποίηση στη Γραμμή Συστήματος|Κλείσιμο Μετά τις Μεταφορές"/>
-		<control caption="Μετά από εντολή ελαχιστοποίησης:"/>
-		<control caption="Ελαχιστοποίηση στην Μπάρα Έναρξης|Ελαχιστοποίηση στη Γραμμή Συστήματος"/>
+		<control caption="Με εντολή κλεισίματος:"/>
+		<control caption="Ερώτηση|Άμεσο Κλείσιμο|Ελαχιστ. στη Γραμμή Συστήματος|Κλείσιμο Μετά τις Μεταφορές"/>
+		<control caption="Με εντολή ελαχιστοποίησης:"/>
+		<control caption="Ελαχιστ. στην Μπάρα Έναρξης|Ελαχιστ. στη Γραμμή Συστήματος"/>
 	</dialog>
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Βιβλιοθήκη">
 		<control caption="_Επιλογές:"/>
-		<control caption="Απομνημόνευση προβολών φακέλων"/>
-		<control caption="Παρακολούθηση φακέλων βιβλιοθήκης"/>
-		<control caption="Γρήγορη σάρωση (Αυξημένη χρήση CPU)"/>
-		<control caption="Επίτρεψη περιήγησης κοινοποιημένων από άλλους"/>
-		<control caption="_Πρόσφατα Αρχεία:"/>
-		<control caption="Απομνημόνευση:"/>
+		<control caption="Απομνημόν. προβολών φακέλων"/>
+		<control caption="Παρακολούθ. φακέλων Βιβλιοθήκης"/>
+		<control caption="Γρήγορη σάρωση (Αυξημένη CPU)"/>
+		<control caption="Επίτρεψη περιήγησης κοινοποιημέν."/>
+		<control caption="Εμφάνιση _Πρόσφατων:"/>
+		<control caption="Τελευταίων"/>
 		<control/><control/>
 		<control caption="αρχείων"/>
-		<control caption="Για μέχρι:"/>
+		<control caption="τελευταίων"/>
 		<control/><control/>
-		<control caption="μέρες"/>
+		<control caption="ημερών"/>
 		<control caption="Καθαρισμός Ιστορικού"/>
 		<control caption="Ά_φοβο Άνοιγμα:"/>
 		<control/>
@@ -3241,26 +3241,26 @@
 		<control caption="_Αφαίρεση"/>
 		<control caption="Αποθήκευση Συλλογών σε:"/>
 		<control/><control/>
-		<control caption="Δημιουργία αρχείων φαντασμάτων κατά τις διαγραφές"/>
+		<control caption="Δημιουργία αρχείων φαντασμάτων"/>
 	</dialog>
-	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Πολυμέσα">
 		<control caption="_Επιλογές:"/>
 		<control/>
-		<control caption="Χρήση Αναπαραγωγής Πολυμέσων για ΑΝΑΠΑΡΑΓΩΓΗ αρχείων των παρακάτω τύπων"/>
-		<control caption="Χρήση Αναπαραγωγής Πολυμέσων για ΑΝΑΡΤΗΣΗ αρχείων των παρακάτω τύπων"/>
+		<control caption="Χρήση Αναπαρ. Πολυμέσων για ΑΝΑΠΑΡΑΓΩΓΗ αρχείων των εξής τύπων"/>
+		<control caption="Χρήση Αναπαρ. Πολυμέσων για ΑΝΑΡΤΗΣΗ αρχείων των εξής τύπων"/>
 		<control caption="_Τύποι Αρχείων:"/>
 		<control/>
 		<control caption="_Προσθήκη"/>
 		<control caption="_Αφαίρεση."/>
 		<control caption="Πρόσθετο (plugin) _Ηχητικής Απεικόνισης:"/>
-		<control caption="_Επιλογή Πρόσθετου (plugin)..."/>
+		<control caption="_Επιλογή..."/>
 		<control caption="_Χειρισμός Πολυμέσων"/>
 		<control caption="Επιλογή Χειρισμού Πολυμέσων:"/>
 		<control caption="Προειδοποίηση: Η επιλογή εξωτερικού Χειρισμού Πολυμέσων αυτομάτως θα απενεργοποιήσει όλα τα Πρόσθετα (plugins) Πολυμέσων και Απεικόνισης!"/>
 	</dialog>
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Κοινότητα">
 		<control caption="_Προφίλ:"/>
-		<control caption="Μπορείτε να χρησιμοποιήσετε το Προφίλ Χρήστη Gnutella για να κοινοποιήσετε πληροφορίες για τον εαυτό σας, τα ενδιαφέροντά σας, και να συστήσετε αρχεία και ιστοσελίδες σε άλλους."/>
+		<control caption="Χρησιμοποιήστε το Προφίλ για να κοινοποιήσετε πληροφορίες για τον εαυτό σας και τα ενδιαφέροντά σας, και να συστήσετε αρχεία και ιστοσελίδες."/>
 		<control caption="Επεξεργασία Προφίλ"/>
 		<control caption="_Συνομιλία:"/>
 		<control caption="Ενεργοποίηση συνομιλίας peer to peer με συμβατά προγράμματα"/>
@@ -3277,11 +3277,11 @@
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="Διαχειριστής _Λήψεων:"/>
-		<control caption="Χρηση του Shareaza για διχείριση όλων των λήψεων από τον ιστό:"/>
+		<control caption="Χρήση του Shareaza για διχείριση των εξής λήψεων από τον Ιστό:"/>
 		<control/>
 		<control caption="_Προσθήκη"/>
 		<control caption="_Αφαίρεση"/>
-		<control caption="Το πρόσθετο (plugin) διαχείρισης λήψεων θα επιχειρεί να λάβει τύπους αρχείων αυτής της λίστας. Ο χηρισμός των υπόλοιπων τύπων παραμένει στο πρόγραμμα περιήγησής σας. Για να διαχειρίζετε τις λήψεις, το Shareaza πρέπει να τρέχει!"/>
+		<control caption="Το πρόσθετο (plugin) διαχείρισης λήψεων θα επιχειρεί να λάβει τύπους αρχείων αυτής της λίστας. Ο χηρισμός των υπόλοιπων τύπων παραμένει στο πρόγραμμα περιήγησής σας. Για να διαχειρίζεται τις λήψεις, το Shareaza πρέπει να τρέχει!"/>
 	</dialog>
 	<dialog name="CInternetSettingsGroup" caption="Διαδίκτυο"/>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Σύνδεση">
@@ -3292,18 +3292,18 @@
 		<control/>
 		<control caption="Θύρα:"/>
 		<control/>
-		<control caption="Τυχαίο"/>
-		<control caption="Επιβολή ένωσης σε αυτήν τη διεύθυνση"/>
+		<control caption="Τυχαία"/>
+		<control caption="Επιβολή διεύθυνσης ένωσης"/>
 		<control caption="Ε_ξερχόμενη Διεύθυνση:"/>
-		<control caption="Διεύθυνση:"/>
+		<control caption="Διεύθυν.:"/>
 		<control caption="Αυτόματο"/>
 		<control caption="Ταχύτητα:"/>
 		<control/>
 		<control caption="_Επιλογές:"/>
-		<control caption="Ικανότητα αποδοχής εισερχομένων συνδέσεων"/>
+		<control caption="Ικανότητα εισερχομένων συνδέσεων"/>
 		<control/>
 		<control caption="Αγνόηση ιδιωτικών/τοπικών IP διευθύνσεων"/>
-		<control caption="Ενεργοποίηση ρύθμισης συσκευών σύνδεσης UPnP"/>
+		<control caption="Ενεργοπ. ρύθμισης συσκευών σύνδεσης UPnP"/>
 		<control caption="_Προθεσμίες:"/>
 		<control caption="Σύνδεση:"/>
 		<control/><control/>
@@ -3315,10 +3315,10 @@
 		<control/><control/>
 		<control caption="Αποθήκευση Προσωρινών _Ημιτελών Αρχείων Σε:"/>
 		<control/><control/>
-		<control caption="_Αριθμός Λήψεων:"/>
-		<control caption="Μέγιστος Αριθμός Αρχείων:"/>
+		<control caption="_Μέγιστοι Αριθμοί Παράλληλων Λήψεων:"/>
+		<control caption="Ημιτελή Αρχεία:"/>
 		<control/><control/>
-		<control caption="Μέγιστος Αριθμός Λήψεων:"/>
+		<control caption="Ενεργές Λήψεις:"/>
 		<control/><control/>
 		<control caption="Πηγές ανά αρχείο:"/>
 		<control/><control/>
@@ -3327,13 +3327,13 @@
 		<control/>
 		<control caption="Μέγιστη Θέση Αναμονής σε Ουρά:"/>
 		<control/><control/>
-		<control caption="Μόνο λήψεις και αποστολές σε ενωμένα δίκτυα."/>
+		<control caption="Λήψεις και αποστολές μόνο σε ενωμένα δίκτυα."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Αποστολές">
 		<control caption="_Επιλογές:"/>
-		<control caption="Κοινοποίηση ΝΕΩΝ ημιτελών λήψεων"/>
-		<control caption="Περιορισμός κοινοποίησης κατά τη λειτουργία κόμβου"/>
-		<control caption="Κοινοποίηση προεπισκοπήσεων αρχείων"/>
+		<control caption="Κοινοποίηση ημιτελών λήψεων"/>
+		<control caption="Περιορισμοί σε λειτουργία κόμβου"/>
+		<control caption="Κοινοποίηση αρχείων προεπισκόπ."/>
 		<control caption="Όριο για κάθε host:"/>
 		<control/><control/>
 		<control caption="Φίλτρο _Προγραμμάτων:"/>
@@ -3348,28 +3348,28 @@
 		<control caption="_Ουρές:"/>
 		<control/>
 		<control caption="_Νέα..."/>
-		<control caption="_Διόρθωση..."/>
+		<control caption="_Αλλαγές..."/>
 		<control caption="_Διαγραφή"/>
-		<control caption="(Οι αλλάγες αποθηκεύονται και επιδρούν αμέσως!)"/>
+		<control caption="(Οι αλλαγές επιδρούν αμέσως!)"/>
 	</dialog>
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Απομακρυσμένη Πρόσβαση">
-		<control caption="_Οδηγός:"/>
+		<control caption="_Περιγραφή:"/>
 		<control caption="Η Απομακρυσμένη Πρόσβαση επιτρέπει, κατά την εκτέλεση του Shareaza στον υπολογιστή σας, τον χειρισμό του από απομακρυσμένα προγράμματα περιήγησης. Για να χρησιμοποιήσετε αυτήν τη δυνατότητα, πρέπει να δέχεστε εισερχόμενες συνδέσεις (π.χ. κατάλληλα ρυθμισμένο router κτλ)."/>
 		<control caption="_Ενεργοποίηση:"/>
-		<control caption="Ενεργοποίηση Απομακρυσμένη Πρόσβασης Shareaza:"/>
+		<control caption="Ενεργοποίηση Απομακρυσμένης Πρόσβασης Shareaza:"/>
 		<control/>
-		<control caption="_Διαπιστευτήρια:"/>
-		<control caption="Επιλογή Ονόματος:"/>
+		<control caption="_Στοιχεία Εισόδου:"/>
+		<control caption="Όνομα (username):"/>
 		<control/>
-		<control caption="Επιλογή Κωδικού:"/>
+		<control caption="Κωδικός (password):"/>
 		<control/>
 	</dialog>
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Χρονοδιάγραμμα">
-		<control caption="_Επιλογές:"/>
+		<control caption="_Ενεργοποίηση και Επιλογές ΠΣ:"/>
 		<control caption="_Ενεργοποίηση Χρονοδιαγράμματος"/>
 		<control/><control/>
-		<control caption="Σύνδεση μόνο στο G2, κατά τη σύνδεση περιορισμένης ταχύτητας."/>
-		<control caption="Κλειδί:"/>
+		<control caption="Σε ώρα ΠΣ, σύνδεση μόνο στο G2"/>
+		<control caption="Υπόμνημα:"/>
 		<control caption="Κυρ"/>
 		<control caption="Δευ"/>
 		<control caption="Τρί"/>
@@ -3378,35 +3378,35 @@
 		<control caption="Παρ"/>
 		<control caption="Σάβ"/>
 		<control caption="Μη σύνδεση"/>
-		<control caption="Σύνδεση περιορισμένης ταχύτητας"/>
-		<control caption="Σύνδεση πλήρους ταχύτητας"/>
-		<control caption="% του εύρους _ζώνης, κατά τη σύνδεση περιορισμένης ταχύτητας."/>
+		<control caption="Περιορισμένη Σύνδεση (ΠΣ)"/>
+		<control caption="Φυσιολογική Σύνδεση"/>
+		<control caption="% εύρους ζώνης, σε ώρα ΠΣ"/>
 		<control/>
-		<control caption="Βοήθεια"/>
-		<control caption="Το Χρονοδιάγραμμα σχεδιάστηκε για να σας επιτρέπει να ορίζεται τις ώρες που το Shareaza θα συνδέεται και θα λαμβάνει αρχεία. {n}{n}{n}Σημείωση: Όταν το Χρονοδιάγραμμα είναι ενεργό, ίσως το δείτε να αλλάζει τις ρυθμίσεις. Αυτό είναι κανονικό!"/>
+		<control caption="Περιγραφή:"/>
+		<control caption="Το Χρονοδιάγραμμα σχεδιάστηκε για να σας επιτρέπει να ορίζεται τις ώρες που το Shareaza θα συνδέεται και θα λαμβάνει αρχεία.{n}Σημείωση: Όταν είναι ενεργό και κατά την είσοδο σε/έξοδο από ώρες ΠΣ, ίσως το δείτε να αλλάζει τις ρυθμίσεις (σύμφωνα με τις Επιλογές ΠΣ). Αυτό είναι φυσιολογικό!"/>
 	</dialog>
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Δίκτυα">
 		<control caption="Το Shareaza είναι ένα γενικού σκοπού πρόγραμμα ανταλλαγής αρχείων που συνδέεται σε πολλά P2P δίκτυα ταυτόχρονα. Σε αυτήν τη σελίδα μπορείτε να επιλέξετε σε ποια δίκτυα θέλετε να συνδέεστε και με τι ρυθμίσεις στο καθένα."/>
 		<control caption="Δίκτυο Gnutella2:"/>
-		<control caption="Το δίκτυο Gnutella2 είναι το πρωτεύον δίκτυο του Shareaza, που προσφέρει τις περισσότερα χαρακτηριστικά και επιδόσεις από κάθε άλλο P2P δίκτυο. Συστείνεται ανεπιφύλακτα."/>
+		<control caption="Το πρωτεύον δίκτυο του Shareaza, που προσφέρει τα περισσότερα χαρακτηριστικά και επιδόσεις από κάθε άλλο. Συστείνεται ανεπιφύλακτα."/>
 		<control caption="Σύνδεση στο Gnutella2 (G2)"/>
 		<control caption="Παραμετροποίηση Gnutella2"/>
 		<control caption="Δίκτυο ED2K:"/>
-		<control caption="Το δίκτυο ED2K είναι ένα δημοφιλές δίκτυο βασισμένο σε server. Δεν είναι τόσο προχωρημένο όσο το Gnutella2, αλλά διαθέτει τα περισσότερα αρχεία."/>
+		<control caption="Δημοφιλές δίκτυο, βασισμένο σε server. Δεν είναι τόσο προχωρημένο όσο το Gnutella2, αλλά διαθέτει τα περισσότερα αρχεία."/>
 		<control caption="Σύνδεση στο ED2K"/>
 		<control caption="Παραμετροποίηση ED2K"/>
 		<control caption="Δίκτυο Gnutella:"/>
-		<control caption="Το δίκτυο Gnutella δεν είναι τόσο προχωρημένο όσο το Gnutella2 και διαθέτει λιγότερα αρχεία από το ED2K, αλλά παραμένει μια πολύτιμη πηγή, κυρίως μουσικής."/>
+		<control caption="Όχι τόσο προχωρημένο όσο το Gnutella2 και με λιγότερα αρχεία από το ED2K, αλλά παραμένει μια πολύτιμη πηγή, κυρίως μουσικής."/>
 		<control caption="Σύνδεση στο Gnutella (G1)"/>
 		<control caption="Παραμετροποίηση Gnutella"/>
 	</dialog>
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="G2 &amp; G1">
 		<control caption="Δίκτυο Gnutella2:"/>
 		<control caption="Πάντα σύνδεση στο Gnutella2"/>
 		<control caption="Σύνδεση στο Gnutella2 σήμερα"/>
 		<control caption="Λειτουργία:"/>
 		<control caption="Βέλτιστη|Φύλλου|Κόμβου"/>
-		<control caption="Συνδέσεις G_2:"/>
+		<control caption="Όριο αριθμού συνδέσεων G_2:"/>
 		<control caption="Φύλλου σε Κόμβο:"/>
 		<control/><control/>
 		<control caption="Κόμβου σε Φύλλο:"/>
@@ -3418,17 +3418,17 @@
 		<control caption="Σύνδεση στο Gnutella σήμερα"/>
 		<control caption="Λειτουργία:"/>
 		<control caption="Βέλτιστη|Φύλλου|Ultrapeer"/>
-		<control caption="Συνδέσεις G_1:"/>
-		<control caption="Φύλλου σε Ultrapeer:"/>
+		<control caption="Όριο αριθμού συνδέσεων G_1:"/>
+		<control caption="Φύλ. σε Ultrapeer:"/>
 		<control/><control/>
 		<control caption="Ultrapeer σε Φύλλο:"/>
 		<control/><control/>
-		<control caption="Peer to Peer:"/>
+		<control caption="Peer σε Peer:"/>
 		<control/><control/>
-		<control caption="Συμπίεση _Συνδέσμου:"/>
-		<control caption="Hub σε Φύλλο"/>
-		<control caption="Φύλλου σε  Hub"/>
-		<control caption="Hub σε Hub"/>
+		<control caption="Συμπίεση _Επικοινωνίας:"/>
+		<control caption="Κόμβου σε Φύλλο"/>
+		<control caption="Φύλλου σε  Κόμβο"/>
+		<control caption="Κόμβου σε Κόμβο"/>
 	</dialog>
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="ED2K">
 		<control caption="Δίκτυο _ED2K:"/>
@@ -3436,12 +3436,12 @@
 		<control caption="Σύνδεση στο ED2K σήμερα"/>
 		<control caption="_Παγκόσμια Αναζήτηση:"/>
 		<control caption="Αναζήτηση στους γνωστούς απομακρυσμένους servers στη server cache:"/>
-		<control caption="Διακοπή αναζήτησης μετά από:"/>
+		<control caption="Διακοπή αναζήτ. μετά από:"/>
 		<control/><control/>
 		<control caption="αποτελέσματα αναζήτησης."/>
 		<control caption="Παραλαβή και ενημέρωση λίστας servers από τον ενωμένο server"/>
 		<control caption="_Client Link Συνδέσεις:"/>
-		<control caption="Σύνδεση σε όχι περισσότερους από:"/>
+		<control caption="Σύνδεση σε έως:"/>
 		<control/><control/>
 		<control caption="ED2K clients."/>
 		<control caption="_Εργαλεία ED2K:"/>
@@ -3456,20 +3456,20 @@
 		<control caption="Ταυτόχρονα Torrents"/>
 		<control/><control/>
 		<control caption="Συνδέσεις Client"/>
-		<control caption="&#160;Καθαρισμός ληφθέντων torrents&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Όταν η αναλογία ανταλλαγής φτάσει σε"/>
+		<control caption="&#160;Απόσυρση ληφθέντων torrents με αναλογία ανταλλαγής &gt;"/>
 		<control/><control/><control/>
 		<control caption="&#160;Προτίμηση πηγών torrent"/>
 		<control caption="_Παιχνίδι Τέλους:"/>
-		<control caption="Μετά την ολοκλήρωση ενός torrent, ενεργοποίηση λειτουργίας Παιχνιδιού Τέλους"/>
+		<control caption="Με την ολοκλήρωση ενός torrent, ενεργ. λειτουργίας Παιχνιδιού Τέλους"/>
 		<control caption="_Αποθήκευση Torrents σε:"/>
 		<control/><control/>
 		<control caption="_Δημιουργία Torrent"/>
 		<control/><control/>
-		<control caption="Προεπιλεγμένος Tracker: "/>
+		<control caption="Προεπιλογή Tracker: "/>
 		<control/>
 	</dialog>
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Πρωτόκολλα">
-		<control caption="Εξερεύνηση Κοινών Πρωτοκόλλων και Αρχιτεκτονικών του Shareaza:"/>
+		<control caption="Παράθεση Πρωτοκόλλων και Αρχιτεκτονικών του Shareaza:"/>
 		<control/>
 	</dialog>
 	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Φλοιοί">
@@ -3477,27 +3477,27 @@
 		<control caption="Πληροφορίες Φλοιού:"/>
 		<control caption="Όνομα:"/>
 		<control caption="..."/>
-		<control caption="Δημιουργός:"/>
+		<control caption="Από:"/>
 		<control caption="..."/>
 		<control caption="Περιγραφή:"/>
 		<control/>
 		<control caption="Διαγραφή"/>
 		<control caption="Εγκατάσταση..."/>
-		<control caption="Λήψη περισσοτέρων"/>
+		<control caption="Λήψη επιπλέων"/>
 	</dialog>
 	<dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="Πρόσθετα">
 		<control/>
-		<control caption="Πληρφορίες Πρόσθετου:"/>
+		<control caption="Πληρφορίες Πρόσθετου (plugin):"/>
 		<control caption="Όνομα:"/>
 		<control caption="..."/>
 		<control caption="Περιγραφή:"/>
 		<control/>
 		<control caption="_Εγκατάσταση..."/>
-		<control caption="Λήψη περισσοτέρων"/>
+		<control caption="Λήψη επιπλέων"/>
 	</dialog>
 	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Προχωρημένα">
 		<control/>
-		<control caption="Ρύθμιση Ιδιοτήτων:"/>
+		<control caption="Εφαρμογή Τιμής:"/>
 		<control caption="Τιμή:"/>
 		<control/><control/>
 		<control caption="Περιγραφή:"/>
@@ -3506,7 +3506,7 @@
 	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Ιδιότητες Ουράς Αποστολών">
 		<control caption="_Όνομα:"/>
 		<control/>
-		<control caption="Κριτήρια _Εισόδου:"/>
+		<control caption="Κριτήρια _Αρχείων:"/>
 		<control caption="Μόνο ημιτελή αρχεία"/>
 		<control caption="Μόνο κοινοποιημένα αρχεία της Βιβλιοθήκης"/>
 		<control caption="Αμφότερα ημιτελή και αρχεία Βιβλιοθήκης"/>
@@ -3514,9 +3514,9 @@
 		<control/>
 		<control caption="Μέγιστο μέγεθος αρχείου:"/>
 		<control/>
-		<control caption="Σημαδεμένα αρχεία:"/>
+		<control caption="Επισήμανση:"/>
 		<control/>
-		<control caption="Ταίριασμα ονόματος αρχείου:"/>
+		<control caption="Ταίριασμα ονόμ.:"/>
 		<control/>
 		<control caption="Πρωτόκολλα:"/>
 		<control/>
@@ -3529,11 +3529,11 @@
 		<control caption="Μέγιστος αριθμός αναμενόντων:"/>
 		<control/><control/>
 		<control caption="Παράμετροι _Υπηρεσίας:"/>
-		<control caption="Ποσοστιαίο εύρος ζώνης αποστολών:"/>
+		<control caption="Ποσοστιαίο εύρος ζώνης αποστολ.:"/>
 		<control/>
 		<control caption="Απόλυτο εύρος ζώνης αποστολών:"/>
 		<control/><control/>
-		<control caption="Περιστροφή μετά από N δευτερόλεπτα:"/>
+		<control caption="Περιστροφή μετά από δευτερόλ.:"/>
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
@@ -3543,15 +3543,15 @@
 		<control caption="Καλώς ήρθατε στο Shareaza!"/>
 		<control caption="Αν δεν έχετε προηγούμενη εμπειρία με το Shareaza ή άλλο πρόγραμμα P2P, αυτός ο οδηγός θα σας βοηθήσει να το ρυθμίσετε σε λίγα απλά βήματα."/>
 		<control caption="Αν είστε πιο προχωρημένοι, μπορείτε να ρυθμίσετε κάθε λεπτομέρεια από το μενού Εργαλεία. Για κλείσιμο του οδηγού ανά πάσα στιγμή, κλικ στο Exit."/>
-		<control caption="Αυτός ο οδηγός θα σας βοηθήσει να:"/>
+		<control caption="Αυτός ο οδηγός θα σας βοηθήσει στην:"/>
 		<control/>
-		<control caption="Αναφέρετε τη σύνδεσή σας στο Διαδίκτυο"/>
+		<control caption="Αναφορά της σύνδεσής σας στο Διαδίκτυο."/>
 		<control/>
-		<control caption="Διαλέξετε ποια αρχεία θα κοινοποιείτε"/>
+		<control caption="Επιλογή αρχείων που θα κοινοποιείτε."/>
 		<control/>
-		<control caption="Διαλέξετε σε ποια δίκτυα P2P θα συνδέεστε"/>
+		<control caption="Επιλογή δικτύων P2P που θα συνδέεστε."/>
 		<control/>
-		<control caption="Αρχίσετε τη χρήση του Shareaza."/>
+		<control caption="Εκκίνηση της χρήσης του Shareaza."/>
 	</dialog>
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Επιλογή Μορφής [2 από 6]">
 		<control caption="Το Shareaza υποστηρίζει ένα ευέλικτο περιβάλλον, όπου επιλέγετε ό,τι σας βολεύει περισσότερο. Μπορείτε να αλλάξετε αυτές τις επιλογές ανά πάσα στιγμή."/>
@@ -3607,11 +3607,11 @@
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Επιλογή Δικτύων [6 από 6]">
 		<control caption="Το Shareaza είναι ένα γενικού σκοπού πρόγραμμα ανταλλαγής αρχείων που συνδέεται σε πολλά P2P δίκτυα ταυτόχρονα. Εδώ μπορείτε να επιλέξετε σε ποια δίκτυα θέλετε να συνδέεστε. Σημειώστε ότι μπορείτε να επιλέξετε διαφορετικά δίκτυα αργότερα."/>
 		<control caption="Σύνδεση στο Gnutella2 (Συστείνεται Ανεπιφύλακτα)"/>
-		<control caption="Το δίκτυο Gnutella2 είναι το πρωτεύον δίκτυο του Shareaza, που προσφέρει τις περισσότερα χαρακτηριστικά και επιδόσεις από κάθε άλλο P2P δίκτυο."/>
+		<control caption="Το πρωτεύον δίκτυο του Shareaza, που προσφέρει τα περισσότερα χαρακτηριστικά και επιδόσεις από κάθε άλλο."/>
 		<control caption="Σύνδεση στο ED2K"/>
-		<control caption="Το δίκτυο ED2K είναι ένα δημοφιλές δίκτυο βασισμένο σε server. Δεν είναι τόσο προχωρημένο όσο το Gnutella2, αλλά διαθέτει τα περισσότερα αρχεία."/>
+		<control caption="Δημοφιλές δίκτυο, βασισμένο σε server. Δεν είναι τόσο προχωρημένο όσο το Gnutella2, αλλά διαθέτει τα περισσότερα αρχεία."/>
 		<control caption="Σύνδεση στο Gnutella"/>
-		<control caption="Το δίκτυο Gnutella δεν είναι τόσο προχωρημένο όσο το Gnutella2 και διαθέτει λιγότερα αρχεία από το ED2K, αλλά παραμένει μια πολύτιμη πηγή."/>
+		<control caption="Όχι τόσο προχωρημένο όσο το Gnutella2 και με λιγότερα αρχεία από το ED2K, αλλά παραμένει μια πολύτιμη πηγή, κυρίως μουσικής."/>
 	</dialog>
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Εισαγωγή Ημιτελών Αρχείων του eDonkey">
 		<control/>
@@ -3624,7 +3624,7 @@
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Ολοκλήρωση Οδηγού Σύντομης Εκκίνησης">
 		<control caption="Αυτό ήταν! Το Shareaza έχει ρυθμιστεί να δουλεύει με τον υπολογιστή σας."/>
 		<control caption="Αν ποτέ χρειαστεί να αλλάξετε τις ρυθμίσεις σας, μπορείτε να ξανατρέξετε αυτόν τον οδηγό επιλέγοντάς τον από το μενού Εργαλεία."/>
-		<control caption="Μετά το κλείσιμο του οδηγού με κλικ στο Τέλος, μπορείτε να συνδεθείτε στα δίκτυα που επιλέξατε και να αρχίσετε αναζητήσεις και λήψεις."/>
+		<control caption="Μετά το κλείσιμο του οδηγού με κλικ στο Finish, μπορείτε να συνδεθείτε στα δίκτυα που επιλέξατε και να αρχίσετε αναζητήσεις και λήψεις."/>
 		<control caption="Σύνδεση στο δίκτυο μετά το κλείσιμο του οδηγού."/>
 		<control caption="Σύνδεση στο δίκτυο σε κάθε εκκίνηση του Shareaza."/>
 		<control caption="Εκκίνηση του Shareaza σε κάθε έναρξη των Windows"/>
@@ -3641,18 +3641,18 @@
 		<control caption="_Όνομα:"/>
 		<control caption="Ορατό Όνομα:"/>
 		<control/>
-		<control caption="Αληθινό Όνομα:"/>
+		<control caption="Ονομ/νυμο:"/>
 		<control/><control/>
 		<control caption="_Δημογραφικά:"/>
 		<control caption="|Άνδρας|Γυναίκα"/>
-		<control caption="Γένος:"/>
+		<control caption="Φύλλο:"/>
 		<control/>
 		<control caption="Ηλικία:"/>
 		<control caption="Επίτρεψη περιήγησης στο προφίλ από άλλους"/>
 	</dialog>
 	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Επαφή">
 		<control caption="_Ηλεκτρονική Διεύθυνση (email):"/>
-		<control caption="Πρωτεύον:"/>
+		<control caption="Κύρια:"/>
 		<control/>
 		<control caption="Άμεσα _Μηνύματα:"/>
 		<control caption="Διαβατήριο MSN/.NET:"/>
@@ -3672,7 +3672,7 @@
 		<control/>
 		<control caption="Πόλη:"/>
 		<control/>
-		<control caption="_Χαρτογράφιση:"/>
+		<control caption="_Χαρτογράφηση:"/>
 		<control caption="Γ. Πλάτος:"/>
 		<control/>
 		<control caption="Γ. Μήκος:"/>
@@ -3690,7 +3690,7 @@
 		<control caption="_Προεπισκόπηση:"/>
 		<control/>
 		<control caption="_Επιλογή:"/>
-		<control caption="Το πορτραίτο σας θα εμφανίζεται σε όσους χρήστες του Gnutella περιηγούνται το προφίλ σας και τα κοινοποιημένα αρχεία σας, και μπορεί να είναι οποιοδήποτε υποστηριζόμενο αρχείο εικόνας μέγεθους 128x128."/>
+		<control caption="Το πορτραίτο σας θα εμφανίζεται σε όσους χρήστες περιηγούνται το προφίλ σας και τα κοινοποιημένα αρχεία σας, και μπορεί να είναι οποιοδήποτε υποστηριζόμενο αρχείο εικόνας μέγεθους 128x128 εικονοστοιχείων."/>
 		<control caption="_Άνοιγμα..."/>
 		<control caption="_Αφαίρεση"/>
 	</dialog>
@@ -3706,7 +3706,7 @@
 	</dialog>
 	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Αρχεία">
 		<control caption="_Αγαπημένα Αρχεία:"/>
-		<control caption="Τα αγαπημένα αρχεία συστείνονται στους περιηγητές του προφίλ σας. Μπορείτε να τα ορίσετε προσθέτοντάς τα στον φάκελο &quot;Αγαπημένα&quot; της βιβλιοθήκης."/>
+		<control caption="Τα αγαπημένα αρχεία συστείνονται στους περιηγητές του προφίλ σας. Μπορείτε να τα ορίσετε στον φάκελο &quot;Αγαπημένα&quot; της Βιβλιοθήκης."/>
 		<control/>
 	</dialog>
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Πιστοποιητικά">
@@ -3823,17 +3823,17 @@
 	</dialog>
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Κριτική">
 		<control caption="Βαθμολόγηση"/>
-		<control caption="Βαθμολόγηση αρχείου ως:"/>
-		<control caption="(Χωρίς Βαθμολόγηση)|Ψεύτικο/Φθαρμένο/Αποπροσανατολιστικό|Φτωχό|Μέτριο|Καλό|Πολύ Καλό|Έξοχο"/>
+		<control caption="Χαρακτηρισμός ως:"/>
+		<control caption="(Χωρίς Βαθμολόγηση)|Ψεύτικο/Φθαρμένο/Παραπλαν.|Φτωχό|Μέτριο|Καλό|Πολύ Καλό|Έξοχο"/>
 		<control caption="Κριτική και Σχόλια"/>
 		<control/><control/>
 	</dialog>
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Κοινοποίηση">
 		<control caption="Απλή Κοινοποίηση"/>
-		<control caption="Κοινοποίηση αυτού του αρχείου εφόσον κοινοποιείται ο γονικός φάκελος"/>
-		<control caption="Παραμέριση ρυθμίσεων κοινοποίησης για αυτό το αρχείο:"/>
-		<control caption="Διαθέστε αυτό το αρχείο σε άλλους χρήστες"/>
-		<control caption="Ετικέρες Επιλογής από Ουρές Αποστολών"/>
+		<control caption="Εφόσον κοινοποιείται ο γονικός φάκελος"/>
+		<control caption="Ανεξάρτητα από τον γονικό φάκελο:"/>
+		<control caption="Κοινοποίηση αυτού του αρχείου σε άλλους χρήστες"/>
+		<control caption="Ετικέτες Επιλογής από Ουρές Αποστολών"/>
 		<control/>
 		<control caption="-Δίκτυα Κοινοποίησης"/>
 		<control/><control/>
@@ -3861,7 +3861,7 @@
 		<control caption="Τύπος Φακέλου:"/>
 		<control/>
 		<control caption="Όλα"/>
-		<control caption="Αντιγραφή αυτών των κοινών ιδιοτήτων σε κάθε αρχείου του φακέλου"/>
+		<control caption="Αντιγραφή κοινών ιδιοτήτων σε κάθε αρχείο του φακέλου"/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
 	</dialog>
@@ -3934,7 +3934,7 @@
 	</dialog>
 	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Διαχειριστής Κοινοποίησης Φακέλων">
 		<control/>
-		<control caption="Αυτή η λίστα περιέχει τους φακέλους της βιβλιοθήκης. Μπορείτε να προσθαφαιρέσετε φακέλους χρησιμοποιώντας τα κουμπιά. Κάθε νέος φάκελος αρχικά κοινοποιείται, όμως μπορείτε αν θέλετε να τον αποκοινοποιήσετε στις επιλογές της βιβλιοθήκης."/>
+		<control caption="Αυτή η λίστα περιέχει τους φακέλους της Βιβλιοθήκης. Μπορείτε να προσθαφαιρέσετε φακέλους χρησιμοποιώντας τα κουμπιά. Κάθε νέος φάκελος αρχικά κοινοποιείται, όμως μπορείτε αν θέλετε να τον αποκοινοποιήσετε στις επιλογές της Βιβλιοθήκης."/>
 		<control/>
 		<control caption="_Προσθήκη..."/>
 		<control caption="_Αφαίρεση"/>
@@ -4012,14 +4012,14 @@
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Προϋπάρχοντα Αρχεία">
 		<control/><control/><control/><control/>
-		<control caption="Έχετε ήδη αυτό το αρχείο στη βιβλιοθήκη. Τι θέλετε να κάνετε;"/>
-		<control caption="Μετάβαση στο αρχείο στη βιβλιοθήκης"/>
+		<control caption="Έχετε ήδη αυτό το αρχείο στη Βιβλιοθήκη. Τι θέλετε να κάνετε;"/>
+		<control caption="Μετάβαση στο αρχείο στη Βιβλιοθήκης"/>
 		<control caption="Λήψη του αρχείου ξανά"/>
 		<control caption="Μη λήψη του αρχείου"/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
 		<control caption="Έχετε λάβει και διαγράψει αυτό το αρχείο παλαιότερα. Τι θέλετε να κάνετε;"/>
-		<control caption="Προειδοποίηση!!! Εντοπισμός πανομοιότυπου αρχείου. Κάποιο κακόβουλο λογισμικό ίσως μολύνει τη βιβλιοθήκη. Εξετάστε μήπως εσείς λάβατε αυτό το αρχείο ή το προσθέσατε χειροκίνητα. Αν όχι, τερματίστε το Shareaza και σαρώστε τον υπολογιστή σας με ένα αντιβιοτικό πρόγραμμα."/>
+		<control caption="Προειδοποίηση!!! Εντοπισμός πανομοιότυπου αρχείου. Κάποιο κακόβουλο λογισμικό ίσως μολύνει τη Βιβλιοθήκη. Εξετάστε μήπως εσείς λάβατε αυτό το αρχείο ή το προσθέσατε χειροκίνητα. Αν όχι, τερματίστε το Shareaza και σαρώστε τον υπολογιστή σας με ένα αντιβιοτικό πρόγραμμα."/>
 	</dialog>
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Κουμπί Κλεισίματος">
 		<control/>
@@ -4052,14 +4052,14 @@
 		<control caption="Το Shareaza μπορεί να απομνημονεύσει αυτό το αρχείο και να σας προειδοποιήσει αν το ξανασυναντήσετε σε αναζήτηση. Θα δημιουργήσει ένα αρχείο φάντασμα με τα παρακάτω σχόλια και τη βαθμολογία σας."/>
 		<control caption="Δημιουργία αρχείου φαντάσματος"/>
 		<control caption="Ο λόγος της διαγραφής:"/>
-		<control caption="Διαγραφή, αλλά διατήρηση σχολίων|Αυτό το αρχείο έχει λάθος όνομα που αποπροσανατολίζει|Αυτό το αρχείο είναι πολύ χαμηλής ποιότητας|Αυτό το αρχείο είναι ψεύτικο ή φθαρμένο ή για άλλον λόγο μη χρησιμοποιήσιμο|Αντικατάσταση των σχολίων με τα νέα"/>
+		<control caption="Διαγραφή, αλλά διατήρηση σχολίων|Αυτό το αρχείο έχει λάθος όνομα που παραπλανά|Αυτό το αρχείο είναι πολύ χαμηλής ποιότητας|Αυτό το αρχείο είναι ψεύτικο ή φθαρμένο ή για άλλον λόγο μη χρησιμοποιήσιμο|Αντικατάσταση των σχολίων με τα νέα"/>
 		<control caption="Βαθμολόγηση αρχείου:"/>
-		<control caption="(Χωρίς Βαθμολόγηση)|Ψεύτικο/Φθαρμένο/Αποπροσανατολιστικό|Φτωχό|Μέτριο|Καλό|Πολύ Καλό|Έξοχο"/>
+		<control caption="(Χωρίς Βαθμολόγηση)|Ψεύτικο/Φθαρμένο/Παραπλαν.|Φτωχό|Μέτριο|Καλό|Πολύ Καλό|Έξοχο"/>
 		<control caption="Μπορείτε να εξηγήσετε σύντομα γιατί διαγράφετε αυτό το αρχείο:"/>
 		<control/>
 	</dialog>
 	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Εξαγωγή Συλλογής">
-		<control caption="Εξαγωγή των περιεχομένων ενός album υπό μορφή αρχείου πλούσιας συλλογής. Παρακαλώ επιλέξτε ένα πρότυπο και πατήστε Επόμενο για συνέχεια.|Προσαρμογή συλλογής με εισαγωγή δεδομένων παρακάτω."/>
+		<control caption="Εξαγωγή των περιεχομένων ενός album σε μορφή αρχείου πλούσιας συλλογής. Παρακαλώ επιλέξτε ένα πρότυπο και πατήστε Επόμενο για συνέχεια.|Προσαρμογή συλλογής με εισαγωγή δεδομένων παρακάτω."/>
 		<control/>
 		<control caption="Πληροφορίες Προτύπου:"/>
 		<control caption="Όνομα:"/>
@@ -4170,7 +4170,7 @@
 		<control caption="Επιλογή ηχητικής απεικόνισης από τη λίστα:"/>
 		<control/>
 		<control caption="Εμφάνιση στο Υποσέλιδο|Εμφάνιση Πλήρους Μεγέθους|Μεγάλη Εμφάνιση|Μέτρια Εμφάνιση|Μικρή Εμφάνιση"/>
-		<control caption="_Παραμετροποίηση..."/>
+		<control caption="_Ρυθμίσεις..."/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
 	</dialog>
