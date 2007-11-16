@@ -2310,7 +2310,7 @@
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Gebruik de basis breedte-hoogte verhouding van de video."/>
 	<tip id="ID_MEDIA_CLEAR" message="De afspeellijst compleet wissen."/>
 	<tip id="ID_MEDIA_CLOSE" message="Het huidige mediabestand afsluiten, waardoor geheugen vrijgemaakt wordt."/>
-
+	<tip id="ID_MEDIA_EXPORT_COLLECTION" message="Sla de afspeellijst op als een collectie..."/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="In- of uitschakelen van het afspelen van de video in het volledige beeldscherm."/>
 	<tip id="ID_MEDIA_MUTE" message="Het geluid stilzetten"/>
 	<tip id="ID_MEDIA_NEXT" message="Ga naar het volgende bestand van de afspeellijst."/>
@@ -2454,11 +2454,11 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Rangschik geopende vensters horizontaal, zonder elkaar te overlappen."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Rangschik geopende vensters verticaal, zonder elkaar te overlappen."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Toon of verberg de knoppenbalk."/>
-
-
-
-
-
+	<!-- PLUGIN TIPS -->
+	<tip id="ImageViewer_BestFit" message="Verander de grootte van de afbeelding zodat deze in het scherm past."/>
+	<tip id="ImageViewer_ActualSize" message="Toon de afbeelding met zijn oorspronkelijke grootte."/>
+	<tip id="ImageViewer_Refresh" message="Vernieuw de afbeelding."/>
+	<tip id="ImageViewer_Close" message="Sluit de afbeelding bekijker ."/>
 </commandTips>
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
@@ -2493,9 +2493,9 @@
 	<string id="7003" value="Meerdere"/>
 	<string id="7004" value="Er is al een filter met de bestandsnaam &quot;%s&quot;, wil je deze vervangen?"/>
 	<string id="7005" value="Geef je filter een naam."/>
-
-
-
+	<string id="7100" value="Deze sjabloon is ongeldig."/>
+	<string id="7101" value="Deze sjabloon is niet aanpasbaar."/>
+	<string id="7102" value="Ben je zeker dat je de &quot;%s&quot; sjabloon wil verwijderen?\nDit kan niet ongedaan gemaakt worden.."/>
 	<string id="8000" value="Shareaza instellingen"/>
 	<string id="8001" value="Welkom bij Shareaza"/>
 	<string id="8002" value="Bestandseigenschappen"/>
@@ -2508,7 +2508,7 @@
 	<string id="8009" value="Weet je zeker dat je de skin &quot;%s&quot; wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
 	<string id="8010" value="Dit is een voor-distributie versie van Shareaza en de beta periode is afgelopen. Download alsjeblieft de volledige, officiële distributie vanaf http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Als je van stijl verandert, worden alle geopende vensters gesloten. Wil je nu veranderen?"/>
-
+	<string id="8012" value="Torrent Informatie"/>
 	<string id="8060" value="Hub/Ultrapeer Modus met %lu buurman(nen).  %s in lokale bibliotheek."/>
 	<string id="8061" value="Ultrapeer Modus met %lu buurman(nen). %s in lokale bibliotheek."/>
 	<string id="8062" value="Hub Modus met %lu buurmannen. %s in lokale bibliotheek."/>
@@ -2541,7 +2541,7 @@
 	<string id="8134" value="Je staat op het punt om een nieuwe zoekopdracht uit te voeren. Wil je de resultaten van je vorige zoekopdracht wissen?"/>
 	<string id="8135" value="Geen metadata"/>
 	<string id="8136" value="Platte tekst zoeken"/>
-
+	<string id="8137" value="Geen Schema Kolommen"/>
 	<string id="8141" value="Toon het zoekpaneel"/>
 	<string id="8142" value="Verberg het zoekpaneel"/>
 	<string id="8143" value="Zoekend..."/>
@@ -2639,7 +2639,7 @@
 	<string id="8337" value="Niet betrouwbaar"/>
 	<string id="13000" value="Ben je zeker dat je deze veiligheidsregels wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
 	<string id="13001" value="Bestanden gedeeld over het internet"/>
-
+	<string id="16063" value="Je router automatisch instellen mislukte na 10 pogingen."/>
 	<string id="16064" value="Opstarten van het netwerkcentrum van Shareaza..."/>
 	<string id="16065" value="Kan geen contact maken met %s poort %i voor binnenkomende verbindingen. Binnenkomende verbindingen zijn niet mogelijk."/>
 	<string id="16066" value="Afsluiten van Shareaza's netwerkcentrum..."/>
@@ -2828,8 +2828,8 @@
 	<string id="16374" value="Nieuwe wachtrij"/>
 	<string id="16375" value="Gedeeltelijke"/>
 	<string id="16376" value="Alle bestanden"/>
-	<string id="16377" value="HTTP bescherming"/> 
-
+	<string id="16377" value="HTTP bescherming"/>
+	<string id="16379" value="Bibliotheek bestanden"/>
 	<string id="16384" value="Weet je zeker dat je het bestand &quot;%s&quot; wilt openen?\n\nSommige bestanden kunnen kunnen je computer beschadigen. Ga eerst na wat voor soort bestand het is voordat je het opent."/>
 	<string id="16385" value="Je staat op het punt om de metadata van %i bestanden te wijzigen, weet je zeker dat je door wilt gaan?"/>
 	<string id="16386" value="Metadata van %i bestanden worden gewijzigd."/>
@@ -2924,10 +2924,10 @@
 	<string id="16809" value="&amp;Sluiten"/>
 	<string id="16810" value="jaar oude"/>
 	<string id="16811" value="Automatisch"/>
-
-
-
-
+	<string id="16812" value="Even wachten: Aan het proberen om je router automatisch in te stellen ..."/>
+	<string id="16813" value="Even wachten: Discovery services aan het vernieuwen..."/>
+	<string id="16814" value="Even wachten: De eDonkey server lijst aan het vernieuwen..."/>
+	<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>
 	<string id="16816" value="Het eDonkey netwerk gebruikt grote wachtrijen met grote wachttijden. Door de maximum rijpositie te beperken zal u zo strikt goedkeuren, dat u problemen kunt ondervinden bij downloads om te beginnen.\nWeet u zeker dat u de maximale rijpositie die u wilt goedkeuren, beperken?"/>
 	<string id="16817" value="Windows ondersteund geen locaties met meer dan 256 karakters.\nSelecteer een map met een kortere locatie."/>
 	<string id="16818" value="De incomplete map mag niet in de bibliotheek omdat dit de prestaties nadelig beïnvloed. Incomplete bestanden deel je rechtstreeks in het downloadvenster."/>
@@ -2955,7 +2955,7 @@
 	<string id="16942" value="De verbinding met %s voor het bekijken van de gebruiker is gesloten."/>
 	<string id="16943" value="Bezig met het bekijken van %s"/>
 	<string id="16944" value="%i gedeelde bestanden gevonden in %s's bibliotheek."/>
-
+	<string id="16991" value="Shareaza Media Speler"/>
 	<string id="16992" value="Shareaza kon de MediaServices plugin niet opstarten. Installeer Shareaza alsjeblieft opnieuw en kijk na of je de benodigde mediacodecs en outputdrivers hebt geïnstalleerd."/>
 	<string id="16993" value="Alle mediabestanden|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Afspeellijsten|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audiobestanden|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Videobestanden|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD audiobestanden|*.cda|MIDI bestanden|*.mid;*.rmi;*.midi|Alle bestanden|*.*||"/>
 	<string id="16994" value="Niet mogelijk om mediabestand &quot;%s&quot; te laden"/>
@@ -3075,14 +3075,15 @@
 	<string id="17498" value="Er is een fout ontdekt in het bestand &quot;%s&quot;."/>
 	<string id="17500" value="Tracker reageerde niet - Aankondiging opnieuw proberen (%i van %i)"/>
 	<string id="17501" value="Communicatie met tracker is onmogelijk"/>
-
-
-
-
-
-
-
-
+	<string id="17500" value="Tracker reageerde niet- Announce opnieuw aan het proberen (%i van %i)"/>
+	<string id="17503" value="Tracker mislukte- Volgende tracker aan het proberen (%i van %i)"/>
+	<string id="17505" value="BitTorrent verbinding met %s is verbroken."/>
+	<string id="17506" value="BitTorrent handdruk met %s is verbroken."/>
+	<string id="17507" value="BitTorrent paren met %s is verbroken."/>
+	<string id="17510" value="BitTorrent paren met %s is niet geaccepteerd want een verbinding met deze cliënt ."/>
+	<string id="17511" value="BitTorrent paren met %s is niet geaccepteerd want de maximum verbindingen zijn bereikt."/>
+	<string id="17512" value="Privé torrent"/>
+	<string id="17513" value="Encodeerings fout"/>
 	<string id="18496" value="Je hebt de bestandsnaam aangepast. Weet je zeker dat je deze download wilt hernoemen?"/>
 	<string id="18497" value="Je hebt een SHA1 waarde ingevoerd, maar het is ongeldig. Controleer het en probeer het nog een keer."/>
 	<string id="18498" value="Je hebt een root tiger-tree waarde ingevoerd, maar het is ongeldig. Controleer het en probeer het nog een keer."/>
@@ -3098,7 +3099,7 @@
 	<string id="18508" value="De downloadbron %s voor &quot;%s&quot; is genegeerd, omdat de wachtrijpositie %i te hoog is."/>
 	<string id="18509" value="Je kunt deze download niet als volledig beschouwen en opnieuw controleren want je hebt nog geen gedeeltelijke verificatie data, zoals het tiger-tree volume, de eDonkey hashset of de BitTorrent hashset.  Zonder deze verificatiegegevens kan de download niet opnieuw worden gecontroleerd."/>
 	<string id="18510" value="Weet je zeker dat je deze download als volledig wilt beschouwen en het opnieuw controleren?  Het gehele bestand zal worden beschouwd, en Shareaza zal delen accepteren die de controle zullen doorstaan.  Delen die de controle niet doorstaan zullen opnieuw worden gedownload."/>
-
+	<string id="18510" value="Ben je zeker dat dit bestand compleet is en je het wilt laten hercontroleren? Het hele bestand zal worden overwogen, en Shareaza zal de succesvol gecontroleerde delen behouden en de mislukte delen opnieuw downloaden."/>
 	<string id="19000" value="Web Interface is uitgeschakeld."/>
 	<string id="19001" value="Je moet een gebruikersnaam en wachtwoord kiezen."/>
 	<string id="19002" value="Niet mogelijk om verbindingen te accepteren, de URL is niet beschikbaar."/>
@@ -3152,7 +3153,7 @@
 	<string id="20134" value="Versperd"/>
 	<string id="20135" value="Volgende"/>
 	<string id="20136" value="Q"/>
-
+	<string id="20137" value="bronnen"/><!-- 3/10 sources, for e.g. -->
 	<string id="20200" value="Zondag"/>
 	<string id="20201" value="Maandag"/>
 	<string id="20202" value="Dinsdag"/>
