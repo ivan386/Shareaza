@@ -3075,7 +3075,6 @@
 	<string id="17498" value="Er is een fout ontdekt in het bestand &quot;%s&quot;."/>
 	<string id="17500" value="Tracker reageerde niet - Aankondiging opnieuw proberen (%i van %i)"/>
 	<string id="17501" value="Communicatie met tracker is onmogelijk"/>
-	<string id="17500" value="Tracker reageerde niet- Announce opnieuw aan het proberen (%i van %i)"/>
 	<string id="17503" value="Tracker mislukte- Volgende tracker aan het proberen (%i van %i)"/>
 	<string id="17505" value="BitTorrent verbinding met %s is verbroken."/>
 	<string id="17506" value="BitTorrent handdruk met %s is verbroken."/>
