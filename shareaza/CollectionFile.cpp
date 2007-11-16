@@ -1,7 +1,7 @@
 //
 // ColletionFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -172,13 +172,11 @@ BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
 	CZIPFile::File* pFile = pZIP.GetFile( _T("Collection.xml"), TRUE );
 	if ( pFile == NULL ) return FALSE;
 
-	CBuffer* pBuffer = pFile->Decompress();
-	if ( pBuffer == NULL ) return FALSE;
+	auto_ptr< CBuffer > pBuffer ( pFile->Decompress() );
+	if ( ! pBuffer.get() ) return FALSE;
 
-	CXMLElement* pXML = CXMLElement::FromString( pBuffer->ReadString( pBuffer->m_nLength, CP_UTF8 ), TRUE );
-	delete pBuffer;
-
-	if ( pXML == NULL ) return FALSE;
+	auto_ptr< CXMLElement > pXML ( CXMLElement::FromString( pBuffer->ReadString( pBuffer->m_nLength, CP_UTF8 ), TRUE ) );
+	if ( ! pXML.get() ) return FALSE;
 	if ( ! pXML->IsNamed( _T("collection") ) ) return FALSE;
 
 	CXMLElement* pProperties = pXML->GetElementByName( _T("properties") );
@@ -190,7 +188,7 @@ BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
 	{
 		File* pFile = new File( this );
 
-		if ( pFile->Parse( pContents->GetNextElement( pos ) ) )
+		if ( pFile && pFile->Parse( pContents->GetNextElement( pos ) ) )
 		{
 			m_pFiles.AddTail( pFile );
 		}
@@ -205,7 +203,8 @@ BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
 	if ( CXMLElement* pMetadata = pProperties->GetElementByName( _T("metadata") ) )
 	{
 		m_pMetadata = CloneMetadata( pMetadata );
-		if ( m_pMetadata != NULL ) m_sThisURI = m_pMetadata->GetAttributeValue( CXMLAttribute::schemaName );
+		if ( m_pMetadata )
+			m_sThisURI = m_pMetadata->GetAttributeValue( CXMLAttribute::schemaName );
 	}
 
 	if ( CXMLElement* pTitle = pProperties->GetElementByName( _T("title") ) )
@@ -225,7 +224,12 @@ BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
 		}
 	}
 
-	delete pXML;
+	if ( m_sThisURI.IsEmpty() )
+	{
+		Close();
+		return FALSE;
+	}
+
 	return TRUE;
 }
 

@@ -152,20 +152,24 @@ BOOL CLibraryCollectionView::ShowCollection(CLibraryFile* pFile)
 {
 	if ( pFile != NULL )
 	{
-		if ( m_pCollection->IsOpen() && validAndEqual( m_oSHA1, pFile->m_oSHA1 ) ) return TRUE;
-		
+		if ( m_pCollection->IsOpen() && validAndEqual( m_oSHA1, pFile->m_oSHA1 ) )
+			// Already opened
+			return TRUE;
+
 		if ( m_pCollection->Open( pFile->GetPath() ) )
 		{
 			CString strIndex, strURL;
-			IEProtocol.SetCollection( pFile->m_oSHA1, pFile->GetPath(), &strIndex );
-			
-			strURL.Format( _T("p2p-col://%s/%s"),
-				(LPCTSTR)pFile->m_oSHA1.toString(),
-				(LPCTSTR)strIndex );
-			m_pWebCtrl->Navigate( strURL );
-			
-			m_oSHA1 = pFile->m_oSHA1;
-			return TRUE;
+			if ( IEProtocol.SetCollection( pFile->m_oSHA1, pFile->GetPath(), &strIndex ) )
+			{
+				strURL.Format( _T("p2p-col://%s/%s"),
+					(LPCTSTR)pFile->m_oSHA1.toString(),
+					(LPCTSTR)strIndex );
+				if ( SUCCEEDED( m_pWebCtrl->Navigate( strURL ) ) )
+				{
+					m_oSHA1 = pFile->m_oSHA1;
+					return TRUE;
+				}
+			}
 		}
 	}
 
