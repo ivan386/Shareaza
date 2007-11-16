@@ -1,7 +1,7 @@
 //
 // IEProtocol.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -417,29 +417,39 @@ HRESULT CIEProtocol::OnRequest(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMime
 
 HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL /*bParseOnly*/)
 {
-	if ( _tcslen( pszURL ) < 32 + 1 ) return INET_E_INVALID_URL;
-	if ( pszURL[32] != '/' ) return INET_E_INVALID_URL;
+	if ( _tcslen( pszURL ) < 32 + 1 )
+		return INET_E_INVALID_URL;
+	if ( pszURL[32] != '/' )
+		return INET_E_INVALID_URL;
 	
     Hashes::Sha1Hash oSHA1;
-	if ( !oSHA1.fromString( pszURL ) ) return INET_E_INVALID_URL;
+	if ( !oSHA1.fromString( pszURL ) )
+		return INET_E_INVALID_URL;
 	
-	if ( m_pCollZIP == NULL || ! m_pCollZIP->IsOpen() ) return INET_E_OBJECT_NOT_FOUND;
-	if ( validAndUnequal( m_oCollSHA1, oSHA1 ) ) return INET_E_OBJECT_NOT_FOUND;
+	if ( m_pCollZIP == NULL || ! m_pCollZIP->IsOpen() )
+		return INET_E_OBJECT_NOT_FOUND;
+	if ( validAndUnequal( m_oCollSHA1, oSHA1 ) )
+		return INET_E_OBJECT_NOT_FOUND;
 	
 	CString strPath( pszURL + 32 );
 	strPath = URLDecode( strPath );
-	if ( strPath.Right( 1 ) == _T("/") ) strPath += _T("index.htm");
+	if ( strPath.Right( 1 ) == _T("/") )
+		strPath += _T("index.htm");
 
 	CZIPFile::File* pFile = m_pCollZIP->GetFile( strPath.Mid( 1 ) );
-	if ( pFile == NULL ) return INET_E_OBJECT_NOT_FOUND;
+	if ( pFile == NULL )
+		return INET_E_OBJECT_NOT_FOUND;
 
 	CBuffer* pSource = pFile->Decompress();
-	if ( pSource == NULL ) return INET_E_OBJECT_NOT_FOUND;
+	if ( pSource == NULL )
+		return INET_E_OBJECT_NOT_FOUND;
 
 	pBuffer->AddBuffer( pSource );
 	delete pSource;
 
-	ShellIcons.Lookup( strPath, NULL, NULL, NULL, psMimeType );
+	int nPeriod = strPath.ReverseFind( _T('.') );
+	if ( nPeriod >= 0 )
+		ShellIcons.Lookup( strPath.Mid( nPeriod ), NULL, NULL, NULL, psMimeType );
 
 	return S_OK;
 }
@@ -469,7 +479,8 @@ BOOL CIEProtocol::SetCollection(const Hashes::Sha1Hash& oSHA1, LPCTSTR pszPath, 
 			pFile = m_pCollZIP->GetFile( _T("Collection.xml"), TRUE );
 		if ( pFile )
 		{
-			if ( psIndex != NULL ) *psIndex = pFile->m_sName;
+			if ( psIndex != NULL )
+				*psIndex = pFile->m_sName;
 		}
 
 		return TRUE;
