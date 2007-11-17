@@ -903,75 +903,95 @@ CMainWnd* CShareazaApp::SafeMainWnd() const
 
 void CShareazaApp::Message(int nType, UINT nID, ...) const
 {
+	// Return early if it's a debug message and debug isn't turned on
 	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
+
+	// Return early if it's a temp message and debug logging isn't turned on
 #ifdef NDEBUG
 	if ( nType == MSG_TEMP ) return;
 #endif
 	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
-	
-	CString strFormat;
-	va_list pArgs;
-	
+
+	// Setup local strings
+	CString strFormat, strTemp;
+
+	// Load the format string from the resource file
 	LoadString( strFormat, nID );
+
+	// Initialise variable arguments list
+	va_list pArgs;
 	va_start( pArgs, nID );
-	
+
+	// Work out the type of format string and call the appropriate function
 	if ( strFormat.Find( _T("%1") ) >= 0 )
-	{
-		LPTSTR lpszTemp;
-		if ( ::FormatMessage( FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ALLOCATE_BUFFER,
-			strFormat, 0, 0, (LPTSTR)&lpszTemp, 0, &pArgs ) != 0 && lpszTemp != NULL )
-		{
-			if ( Settings.General.DebugLog ) LogMessage( lpszTemp );
-			PrintMessage( nType, _tcsdup( lpszTemp ) );
-
-			LocalFree( lpszTemp );
-		}
-	}
+		strTemp.FormatMessageV( strFormat, &pArgs );
 	else
-	{
-		int nLength = _vsctprintf( strFormat, pArgs ) + 1;
-		TCHAR* szMessageBuffer = (TCHAR*)malloc( sizeof( TCHAR ) * nLength );
-		_vsntprintf( szMessageBuffer, nLength, strFormat, pArgs );
+		strTemp.FormatV( strFormat, pArgs );
 
-		if ( Settings.General.DebugLog ) LogMessage( szMessageBuffer );
-		PrintMessage( nType, szMessageBuffer );
-	}
+	// Print the message if there still is one
+	if ( !strTemp.IsEmpty() )
+		PrintMessage( nType, strTemp );
 
+	// Null the argument list pointer
 	va_end( pArgs );
+
+	return;
 }
 
-void CShareazaApp::Message(int nType, LPCTSTR pszFormat, ...) const
+void CShareazaApp::Message(int nType, CString strFormat, ...) const
 {
+	// Return early if it's a debug message and debug isn't turned on
 	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
+
+	// Return early if it's a temp message and debug logging isn't turned on
 #ifdef NDEBUG
 	if ( nType == MSG_TEMP ) return;
 #endif
 	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
-	
+
+	// Setup local strings
+	CString strTemp;
+
+	// Initialise variable arguments list
 	va_list pArgs;
-	va_start( pArgs, pszFormat );
+	va_start( pArgs, strFormat );
 
-	int nLength = _vsctprintf( pszFormat, pArgs ) + 1;
-	TCHAR* szMessageBuffer = (TCHAR*)malloc( sizeof( TCHAR ) * nLength );
-	_vsntprintf( szMessageBuffer, nLength, pszFormat, pArgs );
+	// Format the message
+	strTemp.FormatV( strFormat, pArgs );
 
-	if ( Settings.General.DebugLog ) LogMessage( szMessageBuffer );
-	PrintMessage( nType, szMessageBuffer );
+	// Print the message if there still is one
+	if ( !strTemp.IsEmpty() )
+		PrintMessage( nType, strTemp );
 
+	// Null the argument list pointer
 	va_end( pArgs );
+
+	return;
 }
 
-void CShareazaApp::PrintMessage(int nType, LPCTSTR pszLog) const
+void CShareazaApp::PrintMessage(int nType, CString& strLog) const
 {
-	if ( m_pMainWnd && IsWindow( m_pMainWnd->m_hWnd ) && 
-		! ((CMainWnd*)m_pMainWnd)->m_pWindows.m_bClosing )
+	// Check if there is a valid pointer to the main window
+	// and we are not shutting down
+	if ( m_pMainWnd && IsWindow( m_pMainWnd->m_hWnd )
+		&& !static_cast< CMainWnd* >( m_pMainWnd )->m_pWindows.m_bClosing )
 	{
+		// Allocate a new character array on the heap (including null terminator)
+		LPTSTR pszLog = new TCHAR[ strLog.GetLength() + 1 ];	// Released by CMainWnd::OnLog()
+
+		// Make a copy of the log message into the heap array
+		_tcscpy( pszLog, strLog );
+
+		// Send to the message pump for processing
 		m_pMainWnd->PostMessage( WM_LOG, nType, (LPARAM)pszLog );
 	}
-	else
+	else if ( Settings.General.DebugLog )
 	{
-		free( (void*)pszLog );
+		// We are shutting down and logging to file
+		LogMessage( _T("ShutDown: ") + strLog );
 	}
+
+	return;
 }
 
 void CShareazaApp::LogMessage(LPCTSTR pszLog) const

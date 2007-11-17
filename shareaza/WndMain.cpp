@@ -828,14 +828,27 @@ void CMainWnd::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 
 LRESULT CMainWnd::OnLog(WPARAM wParam, LPARAM lParam)
 {
-	LPTSTR pszLog = (LPTSTR)lParam;
-	
-	if ( CSystemWnd* pWnd = (CSystemWnd*)m_pWindows.Find( RUNTIME_CLASS(CSystemWnd) ) )
+	// Convert low parameter back to log message
+	LPTSTR pszLog = reinterpret_cast< LPTSTR >( lParam );
+
+	// Check if the windows are being closed
+	if ( !m_pWindows.m_bClosing )
 	{
-		pWnd->Add( (int)wParam, pszLog );
+		// Try to find the log window
+		CSystemWnd* pWnd = static_cast< CSystemWnd* >( m_pWindows.Find( RUNTIME_CLASS(CSystemWnd) ) );
+
+		// Add log message to log window if it was found
+		if ( pWnd )
+			pWnd->Add( static_cast< int >( wParam ), pszLog );
 	}
-	
-	free( pszLog );
+
+	// Add log message to log file if required
+	if ( Settings.General.DebugLog )
+		theApp.LogMessage( pszLog );
+
+	// Release memory from the heap
+	delete [] pszLog;	// Allocated by CShareazaApp::PrintMessage()
+
 	return 0;
 }
 

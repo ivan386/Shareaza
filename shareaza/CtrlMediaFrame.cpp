@@ -1663,12 +1663,12 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 HRESULT CMediaFrame::PluginPlay(BSTR bsFilePath)
 {
 	HRESULT hr = E_FAIL;
-	__try
+	try
 	{
 		hr = m_pPlayer->Stop();
 		hr = m_pPlayer->Open( bsFilePath );
 	} 
-	__except( GetExceptionCode() != EXCEPTION_CONTINUE_EXECUTION )
+	catch(...)
 	{ 
 		theApp.Message( MSG_ERROR, _T("Media Player failed to open file: %s"), bsFilePath );
 		Cleanup(); 

@@ -130,11 +130,11 @@ public:
 	HINSTANCE			CustomLoadLibrary(LPCTSTR);
 	CMainWnd*			SafeMainWnd() const;
 	void				Message(int nType, UINT nID, ...) const;
-	void				Message(int nType, LPCTSTR pszFormat, ...) const;
+	void				Message(int nType, CString strFormat, ...) const;
 	CString				GetErrorString() const;
 	BOOL				InternalURI(LPCTSTR pszURI);
-	void				PrintMessage(int nType, LPCTSTR pszLog) const;
-	void				LogMessage(LPCTSTR pszLog) const;
+	void				PrintMessage(int nType, CString& strLog) const;
+	void				LogMessage(LPCTSTR strLog) const;
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
