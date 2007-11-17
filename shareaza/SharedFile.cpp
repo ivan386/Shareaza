@@ -197,7 +197,8 @@ BOOL CLibraryFile::IsShared() const
 		 m_pMetadata != NULL )
 	{
 		CString str = m_pMetadata->GetAttributeValue( L"privateflag", L"true" );
-		return str != L"true" && m_bShared != TS_FALSE;
+		return str != L"true" && m_bShared != TS_FALSE &&
+			m_pFolder && m_pFolder->IsShared();
 	}
 
 	if ( m_bShared )
