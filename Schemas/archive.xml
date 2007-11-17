@@ -15,7 +15,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
@@ -40,7 +40,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="heb">Archive</title>
                <title language="hr">Archive</title>
                <title language="hu">Archive</title>
-               <title language="it">Archive</title>
+               <title language="it">Archivio</title>
                <title language="ja">Archive</title>
                <title language="lt">Archyvas</title>
                <title language="nl">Archief</title>
@@ -92,7 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Folders</title>
                        <title language="hr">Folders</title>
                        <title language="hu">Folders</title>
-                       <title language="it">Folders</title>
+                       <title language="it">Cartelle</title>
                        <title language="ja">Folders</title>
                        <title language="lt">Aplankai</title>
                        <title language="nl">Folders</title>
@@ -117,7 +117,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Files</title>
                        <title language="hr">Files</title>
                        <title language="hu">Files</title>
-                       <title language="it">Files</title>
+                       <title language="it">File</title>
                        <title language="ja">Files</title>
                        <title language="lt">Failai</title>
                        <title language="nl">Bestanden</title>
@@ -153,6 +153,31 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
                        <title language="tr">Yorumlar</title>
+               </member>
+              <member name="archive" search="indexed">
+                       <title language="en">Archive Type</title>
+                       <title language="af">Argieftipe</title>
+                       <title language="ca">Tipus d'arxiu</title>
+                       <title language="chs">文件类型</title>
+                       <title language="cht">檔案類型</title>
+                       <title language="de">Archivtyp</title>
+                       <title language="ee">Arhiivi Tüüp</title>
+                       <title language="es">Tipo de archivo</title>
+                       <title language="fr">Type d'archive</title>
+                       <title language="heb">סוג אכיון</title>
+                       <title language="hr">Vrsta Arhive</title>
+                       <title language="hu">Archívum típusa</title>
+                       <title language="it">Tipo di archivio</title>
+                       <title language="ja">圧縮種類</title>
+                       <title language="lt">Archyvo tipas</title>
+                       <title language="nl">Archieftypes</title>
+                       <title language="no">Arkivtype</title>
+                       <title language="pt-br">Tipo de Arquivo</title>
+                       <title language="ru">Тип архива</title>
+                       <title language="sl-SI">Arhivski tip</title>
+                       <title language="sq">Lloj Arkivi</title>
+                       <title language="sr">Vrsta Arhive</title>
+                       <title language="tr">Arşiv Tipi</title>
                </member>
                <member name="keywords">
                        <title language="en">Keywords</title>
@@ -193,7 +218,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Encrypted</title>
                        <title language="hr">Encrypted</title>
                        <title language="hu">Encrypted</title>
-                       <title language="it">Encrypted</title>
+                       <title language="it">Crittografato</title>
                        <title language="ja">Encrypted</title>
                        <title language="lt">Užšifruota</title>
                        <title language="nl">Beveiligd</title>
@@ -219,7 +244,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="heb">Unpacked Size</title>
                        <title language="hr">Unpacked Size</title>
                        <title language="hu">Unpacked Size</title>
-                       <title language="it">Unpacked Size</title>
+                       <title language="it">Dimensione non compresso</title>
                        <title language="ja">Unpacked Size</title>
                        <title language="lt">Dydis išglaudinus</title>
                        <title language="nl">Echte grootte</title>
