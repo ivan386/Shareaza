@@ -20,6 +20,9 @@
 					<maxInclusive value="1024"/>
 				</simpleType>
 			</attribute>
+			<attribute name="privateflag">
+				<simpleType base="boolean"/>
+			</attribute>
 		</all>
 	</complexType>
 

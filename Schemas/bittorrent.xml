@@ -207,6 +207,9 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sr">Komentari</title>
                        <title language="tr">Yorumlar</title>
                </member>
+               <member name="privateflag" search="none">
+                       <display hidden="true"/>
+               </member>
        </members>
        <typeFilter>
                <type extension="torrent"/>
