@@ -1,12 +1,9 @@
 //
 // DocReader.cpp
 //
-//	Date:			"$Date: 2005/11/20 18:03:53 $"
-//	Revision:		"$Revision: 1.10 $"
-//  Last change by:	"$Author: thetruecamper $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -126,8 +123,7 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 
 	pszSingular = wcsrchr( pszSchema, _T('/') ) + 1;
 
-	USES_CONVERSION;
-	sTemp.Append( CW2T(pszSingular), wcslen( pszSingular ) - 4 );
+	sTemp.Append( CW2T(pszSingular), static_cast< int >( wcslen( pszSingular ) - 4 ) );
 	sTemp.Append( _T("s") );
 	bsName = CComBSTR( sTemp );
 
@@ -333,8 +329,7 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 
 	pszSingular = wcsrchr( pszSchema, _T('/') ) + 1;
 
-	USES_CONVERSION;
-	sTemp.Append( CW2T(pszSingular), wcslen( pszSingular ) - 4 );
+	sTemp.Append( CW2T(pszSingular), static_cast< int>( wcslen( pszSingular ) - 4 ) );
 	sTemp.Append( _T("s") );
 	bsName = CComBSTR( sTemp );
 
@@ -990,7 +985,7 @@ HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, WORD wB
 	nInfoSize = sizeof( BITMAPINFOHEADER );
 	int nColorTableSize = 0;
 	if ( wBitsPerSample <= 8 )
-		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample );
+		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample && 0xffff );
 	nInfoSize += nColorTableSize;
 
 	BITMAPINFO* bmInfo = (LPBITMAPINFO) new BYTE[ nInfoSize ];
@@ -1089,7 +1084,7 @@ HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, WORD
 	nInfoSize = sizeof( BITMAPINFOHEADER );
 	int nColorTableSize = 0;
 	if ( wBitsPerSample <= 8 )
-		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample );
+		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample && 0xffff );
 	nInfoSize += nColorTableSize;
 
 	BITMAPINFO* bmInfo = (LPBITMAPINFO) new BYTE[ nInfoSize ];
