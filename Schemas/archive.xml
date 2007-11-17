@@ -15,7 +15,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
@@ -29,7 +29,28 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <object type="file" availability="default"/>
        <titles>
                <title language="en">Archive</title>
+               <title language="af">Archive</title>
+               <title language="ca">Archive</title>
+               <title language="chs">Archive</title>
+               <title language="cht">Archive</title>
+               <title language="de">Archive</title>
+               <title language="ee">Archive</title>
+               <title language="es">Archive</title>
+               <title language="fr">Archive</title>
+               <title language="heb">Archive</title>
+               <title language="hr">Archive</title>
+               <title language="hu">Archive</title>
+               <title language="it">Archive</title>
+               <title language="ja">Archive</title>
+               <title language="lt">Archyvas</title>
                <title language="nl">Archief</title>
+               <title language="no">Archive</title>
+               <title language="pt-br">Archive</title>
+               <title language="ru">Архив</title>
+               <title language="sl-SI">Archive</title>
+               <title language="sq">Archive</title>
+               <title language="sr">Archive</title>
+               <title language="tr">Archive</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -60,10 +81,53 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               </member>
               <member name="folders" search="generic">
                        <title language="en">Folders</title>
+                       <title language="af">Folders</title>
+                       <title language="ca">Folders</title>
+                       <title language="chs">Folders</title>
+                       <title language="cht">Folders</title>
+                       <title language="de">Folders</title>
+                       <title language="ee">Folders</title>
+                       <title language="es">Folders</title>
+                       <title language="fr">Folders</title>
+                       <title language="heb">Folders</title>
+                       <title language="hr">Folders</title>
+                       <title language="hu">Folders</title>
+                       <title language="it">Folders</title>
+                       <title language="ja">Folders</title>
+                       <title language="lt">Aplankai</title>
+                       <title language="nl">Folders</title>
+                       <title language="no">Folders</title>
+                       <title language="pt-br">Folders</title>
+                       <title language="ru">Папки</title>
+                       <title language="sl-SI">Folders</title>
+                       <title language="sq">Folders</title>
+                       <title language="sr">Folders</title>
+                       <title language="tr">Folders</title>
               </member>
               <member name="files" search="generic">
                        <title language="en">Files</title>
+                       <title language="af">Files</title>
+                       <title language="ca">Files</title>
+                       <title language="chs">Files</title>
+                       <title language="cht">Files</title>
+                       <title language="de">Files</title>
+                       <title language="ee">Files</title>
+                       <title language="es">Files</title>
+                       <title language="fr">Files</title>
+                       <title language="heb">Files</title>
+                       <title language="hr">Files</title>
+                       <title language="hu">Files</title>
+                       <title language="it">Files</title>
+                       <title language="ja">Files</title>
+                       <title language="lt">Failai</title>
                        <title language="nl">Bestanden</title>
+                       <title language="no">Files</title>
+                       <title language="pt-br">Files</title>
+                       <title language="ru">Файлы</title>
+                       <title language="sl-SI">Files</title>
+                       <title language="sq">Files</title>
+                       <title language="sr">Files</title>
+                       <title language="tr">Files</title>
               </member>
               <member name="comments" search="generic">
                        <title language="en">Comments</title>
@@ -118,12 +182,54 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="encrypted">
                        <display columnAlign="center"/>
                        <title language="en">Encrypted</title>
+                       <title language="af">Encrypted</title>
+                       <title language="ca">Encrypted</title>
+                       <title language="chs">Encrypted</title>
+                       <title language="cht">Encrypted</title>
+                       <title language="de">Encrypted</title>
+                       <title language="ee">Encrypted</title>
+                       <title language="es">Encrypted</title>
+                       <title language="fr">Encrypted</title>
+                       <title language="heb">Encrypted</title>
+                       <title language="hr">Encrypted</title>
+                       <title language="hu">Encrypted</title>
+                       <title language="it">Encrypted</title>
+                       <title language="ja">Encrypted</title>
+                       <title language="lt">Užšifruota</title>
                        <title language="nl">Beveiligd</title>
+                       <title language="no">Encrypted</title>
+                       <title language="pt-br">Encrypted</title>
+                       <title language="ru">Зашифровано</title>
+                       <title language="sl-SI">Encrypted</title>
+                       <title language="sq">Encrypted</title>
+                       <title language="sr">Encrypted</title>
+                       <title language="tr">Encrypted</title>
                </member>
                <member name="unpackedsize">
                        <display columnAlign="center"/>
                        <title language="en">Unpacked Size</title>
+                       <title language="af">Unpacked Size</title>
+                       <title language="ca">Unpacked Size</title>
+                       <title language="chs">Unpacked Size</title>
+                       <title language="cht">Unpacked Size</title>
+                       <title language="de">Unpacked Size</title>
+                       <title language="ee">Unpacked Size</title>
+                       <title language="es">Unpacked Size</title>
+                       <title language="fr">Unpacked Size</title>
+                       <title language="heb">Unpacked Size</title>
+                       <title language="hr">Unpacked Size</title>
+                       <title language="hu">Unpacked Size</title>
+                       <title language="it">Unpacked Size</title>
+                       <title language="ja">Unpacked Size</title>
+                       <title language="lt">Dydis išglaudinus</title>
                        <title language="nl">Echte grootte</title>
+                       <title language="no">Unpacked Size</title>
+                       <title language="pt-br">Unpacked Size</title>
+                       <title language="ru">Размер без сжатия</title>
+                       <title language="sl-SI">Unpacked Size</title>
+                       <title language="sq">Unpacked Size</title>
+                       <title language="sr">Unpacked Size</title>
+                       <title language="tr">Unpacked Size</title>
                </member>
       </members>
        <typeFilter>
