@@ -10,7 +10,7 @@
 [LangOptions]
 LanguageName=Afrikaans
 LanguageID=$0436
-LanguageCodePage=0
+LanguageCodePage=1252
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
 ;DialogFontName=
@@ -302,8 +302,8 @@ StatusUninstalling=Verwyder %1...
 
 NameAndVersion=%1 weergawe %2
 AdditionalIcons=Bykomende ikone:
-CreateDesktopIcon=Vertoon 'n &werksblad ikoon
-CreateQuickLaunchIcon=Vertoon 'n &Quick Launch ikoon
+CreateDesktopIcon=Skep 'n &werksblad ikoon
+CreateQuickLaunchIcon=Skep 'n &Quick Launch ikoon
 ProgramOnTheWeb=%1 op die Web
 UninstallProgram=Verwyder %1
 LaunchProgram=Voer %1 uit
