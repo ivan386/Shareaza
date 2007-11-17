@@ -4,6 +4,7 @@
 	Version="8,00"
 	Name="DocumentReader"
 	ProjectGUID="{FF8DE974-0784-45C3-8776-744E41A9E84B}"
+	RootNamespace="DocumentReader"
 	>
 	<Platforms>
 		<Platform
@@ -18,18 +19,20 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfATL="1"
 			CharacterSet="2"
-			ManagedExtensions="0"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
+				Name="VCCustomBuildTool"
+				Description="Copying zlibwapi.dll..."
+				CommandLine="xcopy $(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll $(OutDir) /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)zlibwapi.dll"
+				ExecutionBucket="1"
 			/>
 			<Tool
-				Name="VCCustomBuildTool"
+				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -40,29 +43,28 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				TypeLibraryName="$(IntDir)/$(InputName).tlb"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
+				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_WINAPI;ZLIB_DLL"
+				MinimalRebuild="true"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
+				SmallerTypeCheck="true"
+				RuntimeLibrary="1"
+				DefaultCharIsUnsigned="true"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -78,12 +80,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="../shareaza/zlib"
-				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				GenerateDebugInformation="true"
+				BaseAddress="0x22000000"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -112,18 +114,20 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfATL="1"
 			CharacterSet="2"
-			ManagedExtensions="0"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
+				Name="VCCustomBuildTool"
+				Description="Copying zlibwapi.dll..."
+				CommandLine="xcopy $(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll $(OutDir) /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)zlibwapi.dll"
+				ExecutionBucket="1"
 			/>
 			<Tool
-				Name="VCCustomBuildTool"
+				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -134,29 +138,26 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
 				TargetEnvironment="3"
-				TypeLibraryName="$(IntDir)/$(InputName).tlb"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
+				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_USRDLL;ZLIB_WINAPI;ZLIB_DLL"
+				MinimalRebuild="true"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
+				SmallerTypeCheck="true"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -173,12 +174,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="../shareaza/zlib"
-				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				GenerateDebugInformation="true"
+				BaseAddress="0x22000000"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -208,20 +207,23 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="true"
+			UseOfMFC="2"
+			UseOfATL="2"
 			CharacterSet="2"
-			ManagedExtensions="0"
 			WholeProgramOptimization="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
+				Name="VCCustomBuildTool"
+				Description="Copying zlibwapi.dll..."
+				CommandLine="xcopy $(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll $(OutDir) /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)zlibwapi.dll"
+				ExecutionBucket="1"
 			/>
 			<Tool
-				Name="VCCustomBuildTool"
+				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -232,31 +234,25 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				TypeLibraryName="$(IntDir)/$(InputName).tlb"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
-				RuntimeLibrary="0"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
+				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_WINAPI;ZLIB_DLL"
+				MinimalRebuild="true"
+				ExceptionHandling="0"
+				RuntimeLibrary="2"
+				DefaultCharIsUnsigned="true"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -272,20 +268,15 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="Libcmt.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="../shareaza/zlib"
-				IgnoreDefaultLibraryNames="User32.lib;GDI32.lib;ComDlg32.lib;WinSpool.lib;shell32.lib;version.lib"
-				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				SubSystem="2"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
+				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				BaseAddress="0x22000000"
-				MergeSections=".rdata=.text"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -314,20 +305,22 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="false"
+			UseOfATL="2"
 			CharacterSet="2"
-			ManagedExtensions="0"
 			WholeProgramOptimization="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
+				Name="VCCustomBuildTool"
+				Description="Copying zlibwapi.dll..."
+				CommandLine="xcopy $(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll $(OutDir) /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)zlibwapi.dll"
+				ExecutionBucket="1"
 			/>
 			<Tool
-				Name="VCCustomBuildTool"
+				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -338,32 +331,25 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
 				TargetEnvironment="3"
-				TypeLibraryName="$(IntDir)/$(InputName).tlb"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
+				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_USRDLL;ZLIB_WINAPI;ZLIB_DLL"
+				MinimalRebuild="true"
+				ExceptionHandling="0"
 				RuntimeLibrary="2"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
+				DefaultCharIsUnsigned="true"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -379,18 +365,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=""
-				IgnoreDefaultLibraryNames=""
-				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				SubSystem="2"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
+				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				BaseAddress="0x22000000"
-				MergeSections=".rdata=.text"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -425,7 +406,6 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
 				RelativePath="..\plugins\DocumentReader\ClassFactory.cpp"
@@ -463,7 +443,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -471,7 +451,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -479,7 +459,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -487,7 +467,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -531,7 +511,6 @@
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
 				RelativePath="..\plugins\DocumentReader\DocReader.h"
@@ -557,7 +536,6 @@
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
 				RelativePath="..\plugins\DocumentReader\DocReader.rgs"
@@ -576,7 +554,7 @@
 			Name="Generated Fíles"
 			>
 			<File
-				RelativePath=".\releasewin32\plugins\documentreader\DocumentReader_i.c"
+				RelativePath=".\Debugx64\plugins\DocumentReader\DocumentReader_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -584,56 +562,10 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\debugwin32\plugins\documentreader\DocumentReader_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -658,7 +590,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\debugx64\plugins\documentreader\DocumentReader_i.c"
+				RelativePath=".\Releasex64\plugins\DocumentReader\DocumentReader_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -666,18 +598,14 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -686,23 +614,19 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\releasex64\plugins\documentreader\DocumentReader_i.c"
+				RelativePath=".\ReleaseWin32\plugins\DocumentReader\DocumentReader_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -710,8 +634,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -720,8 +642,42 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\DebugWin32\plugins\DocumentReader\DocumentReader_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -730,18 +686,14 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 			</File>
