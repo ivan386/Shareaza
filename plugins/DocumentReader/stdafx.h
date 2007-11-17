@@ -1,12 +1,9 @@
 //
 // stdafx.h
 //
-//	Date:			"$Date: 2005/10/29 03:54:57 $"
-//	Revision:		"$Revision: 1.3 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,6 +36,8 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
+#pragma warning( push, 0 )
+
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
@@ -49,3 +48,5 @@ using namespace ATL;
 
 #include <unzip.h>
 #include <iowin32.h>
+
+#pragma warning( pop )
