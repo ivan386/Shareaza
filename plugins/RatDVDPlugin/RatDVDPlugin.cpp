@@ -1,12 +1,9 @@
 //
 // DocReader.cpp
 //
-//	Date:			"$Date: $"
-//	Revision:		"$Revision: 1.0 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -96,7 +93,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 				if ( SetFilePointer( hFile, -5, NULL, FILE_CURRENT ) == 0 ) break;
 				CHAR szExt[4];
 				ReadFile( hFile, &szExt, 4, &nRead, NULL );
-				if ( strnicmp( szExt, ".xml", 4 ) == 0 )
+				if ( _strnicmp( szExt, ".xml", 4 ) == 0 )
 				{
 					str.clear();
 					// version.xml offset is always 0, so it would be harder to find it
@@ -121,7 +118,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 						ReadFile( hFile, &szExt, 4, &nRead, NULL );
 						nTotalRead += 4;
 					}
-					if ( strnicmp( szExt, "INFO", 4 ) == 0 || szByte == 0 )
+					if ( _strnicmp( szExt, "INFO", 4 ) == 0 || szByte == 0 )
 					{
 						DWORD nOffset = 0;
 						if ( szByte != 0 )
@@ -133,12 +130,12 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 							if ( SetFilePointer( hFile, -4, NULL, FILE_CURRENT ) == 0 ) break;
 						}
 						ReadFile( hFile, &nOffset, 4, &nRead, NULL );
-						if ( wcsnicmp( str.c_str(), L"\\content.xm", 11 ) == 0 )
+						if ( _wcsnicmp( str.c_str(), L"\\content.xm", 11 ) == 0 )
 						{
 							nContentOffset = nOffset;
 							bContentFound = true;
 						}
-						else if ( wcsnicmp( str.c_str(), L"version.xm", 11 ) == 0 )
+						else if ( _wcsnicmp( str.c_str(), L"version.xm", 11 ) == 0 )
 						{
 							nVesionOffset = nOffset;
 							bVersionFound = true;
@@ -172,7 +169,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 		{
 			CHAR szPath[15] = {};
 			ReadFile( hFile, &szPath, 15, &nRead, NULL );
-			if ( nRead != 15 || strnicmp( szPath, "NFO\\content.xml", 15 ) ) return S_FALSE;
+			if ( nRead != 15 || _strnicmp( szPath, "NFO\\content.xml", 15 ) ) return S_FALSE;
 
 			// Ok, the chunk is valid, remember the position and read the content length
 			DWORD nPos = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
@@ -472,7 +469,7 @@ STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pP
 				if ( SetFilePointer( hFile, -5, NULL, FILE_CURRENT ) == 0 ) break;
 				CHAR szExt[4];
 				ReadFile( hFile, &szExt, 4, &nRead, NULL );
-				if ( strnicmp( szExt, ".xml", 4 ) ) // check all other extensions having INFO\ path
+				if ( _strnicmp( szExt, ".xml", 4 ) ) // check all other extensions having INFO\ path
 				{
 					str.clear();
 					while ( strncmp( &szByte, "\\", 1 ) && nTotalRead <= MAX_LENGTH_ALLOWED )
@@ -496,7 +493,7 @@ STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pP
 					ReadFile( hFile, &szExt, 4, &nRead, NULL );
 					nTotalRead += 4;
 
-					if ( strnicmp( szExt, "INFO", 4 ) == 0 )
+					if ( _strnicmp( szExt, "INFO", 4 ) == 0 )
 					{
 						if ( SetFilePointer( hFile, -8, NULL, FILE_CURRENT ) == 0 ) break;
 						ReadFile( hFile, &nContentOffset, 4, &nRead, NULL );
