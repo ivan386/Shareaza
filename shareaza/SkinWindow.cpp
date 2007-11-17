@@ -1199,7 +1199,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 
 		rcItem.left		= m_rcCaption.left + ( m_rcCaption.left >= 0 ? rc.left : rc.right );
 		if ( m_rcPart[ SKINPART_TOP_RIGHT ] )
-			rcItem.right = rc.right - m_rcPart[ SKINPART_TOP_RIGHT ].left;
+			rcItem.right = rc.right - m_rcPart[ SKINPART_TOP_RIGHT ].Width();
 		else
 			rcItem.right = m_rcCaption.Width() + ( m_rcCaption.Width() >= 0 ? rc.left : rc.right );
 		rcItem.top		= rc.top + m_rcCaption.top;
