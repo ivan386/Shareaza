@@ -37,7 +37,7 @@ CUPnPFinder::CUPnPFinder()
 	m_nAsyncFindHandle( 0 ),
 	m_bAsyncFindRunning( false ),
 	m_bADSL( false ),
-	m_ADSLFailed( false ),
+	m_bADSLFailed( false ),
 	m_bPortIsFree( true ),
 	m_sLocalIP(),
 	m_sExternalIP(),
@@ -484,19 +484,26 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 			Settings.Connection.SkipWANIPSetup  = FALSE;
 			Settings.Connection.SkipWANPPPSetup = FALSE;
 			m_bADSL = false;
-			m_ADSLFailed = false;
+			m_bADSLFailed = false;
 		}
-		else if ( !m_ADSLFailed )
+		else if ( !m_bADSLFailed )
 		{
-			theApp.Message( MSG_DEBUG, L"ADSL device detected. Disabling WANIPConn setup..." );
+			theApp.Message( MSG_DEBUG, L"WANEthLinkC service detected. Disabling WANIPConn setup..." );
 			Settings.Connection.SkipWANIPSetup  = TRUE;
 			Settings.Connection.SkipWANPPPSetup = FALSE;
 		}
 	}
 	
-	// We expect that the first device in ADSL routers is WANEthLinkC.
+	// ADSL routers have WANEthernetLinkConfig and WANPPPConnection services.
+	// They may have WANIPConnection service too. Seems the right way to forward
+	// ports is to use WANPPPConnection. If we hadn't skipped WANIPConnection,
+	// some routers could remove the previously forwarded ports as if WANIPConnection
+	// and WANPPPConnection are mutually exclusive.
 	// The problem is that it's unclear if the order of services is always the same...
 	// But looks like it is.
+	// WANEthernetLinkConfig is not a good criterion to detect an ADSL device. Thus,
+	// we first skip WANIPConnection service and if we fail afterwards, we would try
+	// to use it as a last resort.
 	if ( !m_bADSL )
 	{
 		m_bADSL = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANEthLinkC" ) == -1 ) ||
@@ -505,6 +512,8 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 
 	bool bPPP = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANPPPConn" ) == -1 );
 	bool bIP  = !( strServiceId.Find( L"urn:upnp-org:serviceId:WANIPConn" ) == -1 );
+
+	if ( bIP ) m_pWANIPService = service;
 
 	if ( ( Settings.Connection.SkipWANPPPSetup || m_bDisableWANPPPSetup ) && bPPP ||
 		 ( Settings.Connection.SkipWANIPSetup || m_bDisableWANIPSetup ) && bIP ||
@@ -552,14 +561,14 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 		theApp.Message( MSG_DEBUG, L"Disconnected PPP service in ADSL device..." );
 		Settings.Connection.SkipWANIPSetup  = FALSE;
 		Settings.Connection.SkipWANPPPSetup = TRUE;
-		m_ADSLFailed = true;
+		m_bADSLFailed = true;
 	}
 	else if ( _tcsistr( strResult, L"|VT_BSTR=Disconnected|" ) != NULL && m_bADSL && bIP )
 	{
 		theApp.Message( MSG_DEBUG, L"Disconnected IP service in ADSL device..." );
 		Settings.Connection.SkipWANIPSetup  = TRUE;
 		Settings.Connection.SkipWANPPPSetup = FALSE;
-		m_ADSLFailed = true;
+		m_bADSLFailed = true;
 	}
 	return S_OK;
 }
@@ -567,14 +576,14 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 void CUPnPFinder::StartPortMapping()
 {
 	std::for_each( m_pServices.begin(), m_pServices.end(), boost::bind( &CUPnPFinder::MapPort, this, _1 ) );
-	if ( m_bADSL && !m_ADSLFailed && theApp.m_bUPnPPortsForwarded == TS_UNKNOWN &&
-		!Settings.Connection.SkipWANIPSetup )
+	if ( m_bADSL && !Settings.Connection.SkipWANIPSetup &&
+		( theApp.m_bUPnPPortsForwarded == TS_UNKNOWN || m_bADSLFailed ) && m_pWANIPService != NULL )
 	{
-		m_ADSLFailed = true;
-		theApp.Message( MSG_DEBUG, L"ADSL device configuration failed. Retrying with WANIPConn setup..." );
+		m_bADSLFailed = true;
+		theApp.Message( MSG_DEBUG, L"Configuration failed or it wasn't an ADSL device. Retrying with WANIPConn setup..." );
 		m_bDisableWANIPSetup = false;
 		m_bDisableWANPPPSetup = true;
-		std::for_each( m_pServices.begin(), m_pServices.end(), boost::bind( &CUPnPFinder::MapPort, this, _1 ) );
+		MapPort( m_pWANIPService );
 	}
 }
 

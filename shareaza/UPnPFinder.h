@@ -150,14 +150,14 @@ private:
 	CString m_sLocalIP;
 	CString m_sExternalIP;
 	bool	m_bADSL;		// Is the device ADSL?
-	bool	m_ADSLFailed;	// Did port mapping failed for the ADSL device?
+	bool	m_bADSLFailed;	// Did port mapping failed for the ADSL device?
 	bool	m_bInited;
 	HMODULE m_hADVAPI32_DLL;
 	HMODULE	m_hIPHLPAPI_DLL;
 	bool	m_bSecondTry;
 	bool	m_bDisableWANIPSetup;
 	bool	m_bDisableWANPPPSetup;
-
+	ServicePointer m_pWANIPService;
 };
 
 // DeviceFinder Callback
