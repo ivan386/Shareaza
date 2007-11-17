@@ -516,6 +516,8 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	CRect rc;
 	CLibraryTreeItem* pHit = HitTest( point, &rc );
 	BOOL bChanged = FALSE;
+	bool bGetTime = false;
+	m_tClickTime = 0;
 
 	SetFocus();
 
@@ -538,7 +540,7 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 		if ( ( nFlags & MK_RBUTTON ) == 0 || ( pHit && pHit->m_bSelected == FALSE ) )
 		{
 			bChanged = DeselectAll( pHit );
-			m_tClickTime = GetTickCount();
+			bGetTime = true;
 		}
 		if ( pHit ) bChanged |= Select( pHit );
 	}
@@ -555,6 +557,7 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 
 	if ( bChanged ) NotifySelection();
+	if ( bGetTime ) m_tClickTime = GetTickCount();
 
 	CWnd::OnLButtonDown( nFlags, point );
 }
