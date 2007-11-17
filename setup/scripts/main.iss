@@ -473,14 +473,18 @@ Type: filesandordirs; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,Comp
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Shareaza Downloads}\Thumbs.db"; Tasks: multiuser
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Shareaza Downloads}\SThumbs.dat"; Tasks: multiuser
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Shareaza Downloads}\desktop.ini"; Tasks: multiuser
+Type: filesandordirs; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}\Metadata"; Tasks: multiuser
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}\desktop.ini"; Tasks: multiuser
+Type: filesandordirs; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}\Metadata"; Tasks: multiuser
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}\desktop.ini"; Tasks: multiuser
 
 Type: filesandordirs; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\Metadata"
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\Thumbs.db"
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\SThumbs.dat"
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}\desktop.ini"
+Type: filesandordirs; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}\Metadata"
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}\desktop.ini"
+Type: filesandordirs; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}\Metadata"
 Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}\desktop.ini"
 
 ; Pull in languages and localized files
