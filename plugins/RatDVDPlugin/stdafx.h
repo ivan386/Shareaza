@@ -1,12 +1,9 @@
 //
 // stdafx.h
 //
-//	Date:			"$Date: $"
-//	Revision:		"$Revision: 1.0 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,6 +25,10 @@
 
 #ifndef STRICT
 #define STRICT
+#endif
+
+#if _MSC_VER > 1310
+#define _CRT_SECURE_NO_DEPRECATE	// Disable VC8 deprecation warnings
 #endif
 
 // Modify the following defines if you have to target a platform prior to the ones specified below.
@@ -56,8 +57,12 @@
 // turns off ATL's hiding of some common and often safely ignored warning messages
 #define _ATL_ALL_WARNINGS
 
+#pragma warning( push, 0 )
+
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
 
 using namespace ATL;
+
+#pragma warning( pop )
