@@ -51,6 +51,7 @@ CSchemaMember::CSchemaMember(CSchema* pSchema)
 , m_nColumnWidth(60)
 , m_nColumnAlign(LVCFMT_LEFT)
 , m_bHidden(FALSE)
+, m_bBoolean(FALSE)
 {
 }
 
@@ -115,10 +116,19 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 		if ( !( Hashes::fromGuid( strValue, &tmp[ 0 ] ) && tmp.validate() ) )
 			strValue.Empty();
 	}
+	else if ( m_bBoolean )
+	{
+		if ( strValue == L"1" || strValue.CompareNoCase( L"true" ) == 0 )
+			strValue = L"true";
+		else if ( strValue == L"0" || strValue.CompareNoCase( L"false" ) == 0 )
+			strValue = L"false";
+		else
+			strValue.Empty();
+	}
 
 	if ( strValue.IsEmpty() ) return strValue;
 	
-	if ( bFormat && m_bNumeric )
+	if ( bFormat && m_bNumeric ) 
 	{
 		if ( m_nFormat == smfTimeMMSS )
 		{
@@ -199,6 +209,7 @@ BOOL CSchemaMember::LoadSchema(CXMLElement* pRoot, CXMLElement* pElement)
 	ToLower( m_sType );
 
 	m_bNumeric = ( m_sType == L"short" || m_sType == L"int" || m_sType == L"decimal" );
+	m_bBoolean = m_sType == L"boolean";
 	m_bYear = m_sType == L"year";
 	m_bGUID = m_sType == L"guidtype";
 
@@ -233,6 +244,7 @@ BOOL CSchemaMember::LoadType(CXMLElement* pType)
 	ToLower( m_sType );
 
 	m_bNumeric = ( m_sType == L"short" || m_sType == L"int" || m_sType == L"decimal" );
+	m_bBoolean = m_sType == L"boolean";
 	m_bYear = m_sType == L"year";
 	m_bGUID = m_sType == L"guidtype";
 	

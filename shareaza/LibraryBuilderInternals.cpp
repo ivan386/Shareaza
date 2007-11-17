@@ -3669,6 +3669,8 @@ BOOL CLibraryBuilderInternals::ReadTorrent(DWORD nIndex, HANDLE /*hFile*/, LPCTS
 			pXML->AddAttribute( L"createdby", oTorrent.m_sCreatedBy );
 		if ( oTorrent.m_sComment.GetLength() )
 			pXML->AddAttribute( L"comments", oTorrent.m_sComment );
+		pXML->AddAttribute( L"privateflag", oTorrent.m_bPrivate ? L"true" : L"false" );
+
 		return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriBitTorrent, pXML );
 	}
 	return FALSE;

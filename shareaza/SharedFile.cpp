@@ -193,6 +193,13 @@ BOOL CLibraryFile::IsShared() const
 	if ( m_pFolder && m_pFolder->IsOffline() )
 		return FALSE;
 
+	if ( m_pSchema != NULL && m_pSchema->m_sURI == CSchema::uriBitTorrent &&
+		 m_pMetadata != NULL )
+	{
+		CString str = m_pMetadata->GetAttributeValue( L"privateflag", L"true" );
+		return str != L"true" && m_bShared != TS_FALSE;
+	}
+
 	if ( m_bShared )
 	{
 		if ( m_bShared == TS_TRUE ) return TRUE;

@@ -47,6 +47,8 @@
 #include "DlgDecodeMetadata.h"
 #include "RelatedSearch.h"
 #include "Security.h"
+#include "Schema.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -735,10 +737,21 @@ void CLibraryFileView::OnLibraryShared()
 			// Don't share not verified files
 			if ( pFile->m_bVerify != TS_FALSE )
 			{
-				if ( pFile->IsShared() )
+				bool bPrivate = false;
+				if ( pFile->m_pSchema != NULL && 
+					pFile->m_pSchema->m_sURI == CSchema::uriBitTorrent &&
+					pFile->m_pMetadata != NULL )
+				{
+					CString str = pFile->m_pMetadata->GetAttributeValue( L"privateflag", L"true" );
+					bPrivate = str == L"true";
+				}
+				if ( bPrivate )
+					pFile->m_bShared = TS_FALSE;
+				else if ( pFile->IsShared() )
 					pFile->m_bShared = pFile->m_pFolder->IsShared() ? TS_FALSE : TS_UNKNOWN;
 				else
 					pFile->m_bShared = pFile->m_pFolder->IsShared() ? TS_UNKNOWN : TS_TRUE;
+
 				pFile->m_nUpdateCookie++;
 			}
 		}

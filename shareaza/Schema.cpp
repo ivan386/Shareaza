@@ -699,6 +699,15 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix)
 				pMember->SetValueTo( pBody, str );
 			}
 		}
+		else if ( pMember->m_bBoolean )
+		{
+			if ( str == L"1" || str.CompareNoCase( L"true" ) == 0 )
+				str = L"true";
+			else if ( str == L"0" || str.CompareNoCase( L"false" ) == 0 )
+				str = L"false";
+			else if ( !bFix ) return FALSE;
+			pMember->SetValueTo( pBody, L"" );
+		}
 	}
 	
 	return TRUE;
