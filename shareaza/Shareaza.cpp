@@ -603,7 +603,7 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 	delete pTorrent;
 
 	if ( bDoIt )
-		theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, lpszFileName );
+		theApp.Message( MSG_DISPLAYED_ERROR, IDS_BT_PREFETCH_ERROR, lpszFileName );
 
 	return bResult;
 }
