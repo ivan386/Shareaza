@@ -5,7 +5,6 @@
 	Name="RatDVDReader"
 	ProjectGUID="{C5D62C61-870F-4111-BBC3-44E776412519}"
 	RootNamespace="RatDVDReader"
-	Keyword="AtlProj"
 	>
 	<Platforms>
 		<Platform
@@ -20,12 +19,9 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="0"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			>
 			<Tool
@@ -43,33 +39,25 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories=""
-				TypeLibraryName="$(IntDir)/$(InputName).tlb"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
-				EnableFunctionLevelLinking="true"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="4"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4127"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -77,7 +65,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="0"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -86,17 +73,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="unicows.lib Libcmtd.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="2"
-				IgnoreDefaultLibraryNames="User32.lib;GDI32.lib;ComDlg32.lib;WinSpool.lib;shell32.lib;version.lib"
-				ModuleDefinitionFile="../plugins/RatDVDPlugin/$(ProjectName).def"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\RatDVDPlugin\$(ProjectName).def&quot;"
 				GenerateDebugInformation="true"
-				MapFileName=""
-				SubSystem="2"
 				BaseAddress="0x25000000"
-				ImportLibrary=""
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -125,12 +107,9 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="0"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			>
 			<Tool
@@ -148,34 +127,25 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories=""
 				TargetEnvironment="3"
-				TypeLibraryName="$(IntDir)/$(InputName).tlb"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
+				PreprocessorDefinitions="WIN64;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
-				EnableFunctionLevelLinking="true"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4127"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -183,7 +153,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="0"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -191,15 +160,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="2"
-				ModuleDefinitionFile="../plugins/RatDVDPlugin/$(ProjectName).def"
+				RegisterOutput="true"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\RatDVDPlugin\$(ProjectName).def&quot;"
 				GenerateDebugInformation="true"
-				MapFileName=""
-				SubSystem="2"
 				BaseAddress="0x25000000"
-				ImportLibrary=""
 				TargetMachine="17"
 			/>
 			<Tool
@@ -229,11 +194,11 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="true"
+			UseOfMFC="2"
+			UseOfATL="2"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -252,36 +217,22 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
-				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/$(InputName).tlb"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
-				ExceptionHandling="1"
-				RuntimeLibrary="0"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				MinimalRebuild="true"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="4"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4127"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -289,7 +240,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="0"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -298,20 +248,15 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="unicows.lib Libcmt.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				IgnoreDefaultLibraryNames="User32.lib;GDI32.lib;ComDlg32.lib;WinSpool.lib;shell32.lib;version.lib"
-				ModuleDefinitionFile="../plugins/RatDVDPlugin/$(ProjectName).def"
-				MapFileName=""
-				SubSystem="2"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\RatDVDPlugin\$(ProjectName).def&quot;"
+				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				BaseAddress="0x25000000"
-				ImportLibrary=""
-				MergeSections=".rdata=.text"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -340,11 +285,11 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="true"
+			UseOfMFC="2"
+			UseOfATL="2"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -363,37 +308,22 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
 				TargetEnvironment="3"
-				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/$(InputName).tlb"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
-				ExceptionHandling="1"
+				PreprocessorDefinitions="WIN64;_WINDOWS;NDEBUG;_USRDLL"
+				MinimalRebuild="true"
 				RuntimeLibrary="0"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4127"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -401,7 +331,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="0"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -409,20 +338,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalDependencies="libcmt.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				IgnoreDefaultLibraryNames=""
-				ModuleDefinitionFile="../plugins/RatDVDPlugin/$(ProjectName).def"
-				MapFileName=""
-				SubSystem="2"
+				RegisterOutput="true"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\RatDVDPlugin\$(ProjectName).def&quot;"
+				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				BaseAddress="0x25000000"
-				ImportLibrary=""
-				MergeSections=".rdata=.text"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -477,34 +400,6 @@
 			<File
 				RelativePath="..\plugins\RatDVDPlugin\RatDVDReader.def"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\plugins\RatDVDPlugin\RatDVDReader.idl"
@@ -518,7 +413,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -526,7 +421,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -534,7 +429,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -542,7 +437,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -625,7 +520,7 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\debugx64\plugins\ratdvdreader\RatDVDReader_i.c"
+				RelativePath=".\ReleaseWin32\plugins\RatDVDReader\RatDVDReader_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -633,53 +528,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\releasewin32\plugins\ratdvdreader\RatDVDReader_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -688,8 +536,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -698,8 +544,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -708,13 +552,11 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\releasex64\plugins\ratdvdreader\RatDVDReader_i.c"
+				RelativePath=".\Releasex64\plugins\RatDVDReader\RatDVDReader_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -730,7 +572,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -751,7 +592,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\debugwin32\plugins\ratdvdreader\RatDVDReader_i.c"
+				RelativePath=".\DebugWin32\plugins\RatDVDReader\RatDVDReader_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -759,8 +600,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -769,8 +608,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -779,8 +616,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -789,8 +624,42 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Debugx64\plugins\RatDVDReader\RatDVDReader_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>
