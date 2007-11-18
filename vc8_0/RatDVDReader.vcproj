@@ -77,7 +77,6 @@
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\RatDVDPlugin\$(ProjectName).def&quot;"
-				GenerateDebugInformation="true"
 				BaseAddress="0x25000000"
 			/>
 			<Tool
@@ -163,7 +162,6 @@
 				RegisterOutput="true"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\RatDVDPlugin\$(ProjectName).def&quot;"
-				GenerateDebugInformation="true"
 				BaseAddress="0x25000000"
 				TargetMachine="17"
 			/>
@@ -380,6 +378,7 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
 				RelativePath="..\plugins\RatDVDPlugin\ClassFactory.cpp"
@@ -481,6 +480,7 @@
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
 				RelativePath="..\plugins\RatDVDPlugin\Globals.h"
@@ -502,6 +502,7 @@
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
 				RelativePath="..\plugins\RatDVDPlugin\RatDVDPlugin.rgs"
@@ -519,42 +520,6 @@
 		<Filter
 			Name="Generated Files"
 			>
-			<File
-				RelativePath=".\ReleaseWin32\plugins\RatDVDReader\RatDVDReader_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
 			<File
 				RelativePath=".\Releasex64\plugins\RatDVDReader\RatDVDReader_i.c"
 				>
@@ -652,6 +617,42 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\ReleaseWin32\plugins\RatDVDReader\RatDVDReader_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
