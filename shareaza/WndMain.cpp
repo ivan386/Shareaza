@@ -1198,7 +1198,7 @@ LRESULT CMainWnd::OnOpenChat(WPARAM wParam, LPARAM /*lParam*/)
 	return 0;
 }
 
-// Not used function ?
+// Used from Remote pages when the search is performed. Receives WM_OPENSEARCH message
 LRESULT CMainWnd::OnOpenSearch(WPARAM wParam, LPARAM /*lParam*/)
 {
 	CQuerySearch::OpenWindow( auto_ptr< CQuerySearch >( (CQuerySearch*)wParam ) );
