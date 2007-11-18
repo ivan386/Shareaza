@@ -38,6 +38,8 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
+#pragma warning( push, 0 )
+
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
@@ -52,3 +54,5 @@ HRESULT SAFEgflSaveBitmap (char *filename, const GFL_BITMAP *bitmap, const GFL_S
 int GetFormatIndexByExt (LPCTSTR ext);
 
 using namespace ATL;
+
+#pragma warning( pop )
