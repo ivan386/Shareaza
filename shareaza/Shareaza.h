@@ -346,19 +346,20 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 #define MSG_TEMP			4
 #define MSG_DISPLAYED_ERROR	5	// It behave as MSG_ERROR but it is displayed also when VerboseMode is off
 
-#define WM_WINSOCK		(WM_USER+101)
-#define WM_VERSIONCHECK	(WM_USER+102)
-#define WM_OPENCHAT		(WM_USER+103)
-#define WM_TRAY			(WM_USER+104)
-#define WM_URL			(WM_USER+105)
-#define WM_SKINCHANGED	(WM_USER+106)
-#define WM_COLLECTION	(WM_USER+107)
-#define WM_OPENSEARCH	(WM_USER+108)
-#define WM_LOG			(WM_USER+109)
-#define WM_LIBRARYSEARCH (WM_USER+110)
-#define WM_PLAYFILE		(WM_USER+111)
-#define WM_ENQUEUEFILE	(WM_USER+112)
-#define WM_SETALPHA		(WM_USER+113)
+#define WM_WINSOCK		(WM_APP+101)
+#define WM_VERSIONCHECK	(WM_APP+102)
+#define WM_OPENCHAT		(WM_APP+103)
+#define WM_TRAY			(WM_APP+104)
+#define WM_URL			(WM_APP+105)
+#define WM_SKINCHANGED	(WM_APP+106)
+#define WM_COLLECTION	(WM_APP+107)
+#define WM_OPENSEARCH	(WM_APP+108)
+#define WM_LOG			(WM_APP+109)
+#define WM_LIBRARYSEARCH (WM_APP+110)
+#define WM_PLAYFILE		(WM_APP+111)
+#define WM_ENQUEUEFILE	(WM_APP+112)
+#define WM_SETALPHA		(WM_APP+113)
+#define WM_SETSPINVALUES (WM_APP+114)
 
 #define WM_AFX_SETMESSAGESTRING 0x0362
 #define WM_AFX_POPMESSAGESTRING 0x0375
