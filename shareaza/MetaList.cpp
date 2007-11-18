@@ -308,10 +308,12 @@ BOOL CMetaList::OnSetCursor(CWnd* pWnd)
 
 CMetaItem::CMetaItem(CSchemaMember* pMember)
 : m_rect( 0, 0, 0, 0 )
-, m_pMember(pMember)
-, m_bLink(FALSE)
-, m_bValueDefined(FALSE)
-, m_sKey(pMember ? m_pMember->m_sTitle : L"")
+, m_pMember( pMember )
+, m_bLink( FALSE )
+, m_bValueDefined( FALSE )
+, m_sKey( pMember ? m_pMember->m_sTitle : L"" )
+, m_bFullWidth( FALSE )
+, m_nHeight( 0 )
 {
 }
 
