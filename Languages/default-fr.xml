@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- Shareaza Default French Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
-
+<!-- Shareaza Default French Skin File --> <!-- This translation is based on default-en.xml SVN rev.6170 -->
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
 <!-- which you changed! Including sections you did not edit will reduce performance and limit -->
 <!-- compatibility with future versions and other skins. -->
-
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
-
 <!-- Manifest -->
 <manifest	name="Français"
 		author="Antoine Martin-Lalande (Sensi)"
-		updateBy="CRF"
+		updatedBy="ceceboy"
 		description="Shareaza Default French Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="shareaza.fr(at)gmail(dot)com"
-		version="2.2.5.1"
+		version="2.3.0.0"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
 />
-
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->
@@ -406,6 +401,7 @@
 		<button id="ID_CHAT_CONNECT" text="Se connecter" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Se déconnecter"/>
 	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_BestFit" text="Meilleur Ajustement"/>
 		<button id="ImageViewer_ActualSize" text="Taille Réelle"/>
@@ -553,6 +549,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="_Partager des fichiers..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Ajouter un téléchargement/torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importer des téléchargements incomplet eDonkey/eMule (.part)..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Ouvre mon dossier de fichiers terminés"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Choisir un thème..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Choisir la _langue..."/>
@@ -637,6 +634,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="_Partager des fichiers..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Ajouter un téléchargement/torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importer des téléchargements incomplet eDonkey/eMule (.part)..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Ouvre mon dossier de fichiers terminés"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Choisir un _thème..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Choisir la _langue..."/>
@@ -1363,6 +1361,8 @@
 		<item id="ID_SYSTEM_VERBOSE" text="Mode _bavard"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="_Horodateur"/>
 		<separator/>
+		<item id="ID_SYSTEM_COPY" text="_Copier" shortcut="Ctrl+C"/>
+		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="Netto_yer le tampon"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
@@ -1472,6 +1472,7 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Horodateur"/>
 		<item id="ID_CHAT_CLEAR" text="Netto_yer la fenêtre"/>
 	</menu>
+	<!-- PLUGIN MENUS -->
 	<menu name="ImageViewer_Context">
 		<item id="ImageViewer_BestFit" text="_Meilleur ajustement"/>
 		<item id="ImageViewer_ActualSize" text="_Taille réelle"/>
@@ -1502,15 +1503,23 @@
 		<newline gap="0"/>
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">C&#160;O&#160;N&#160;N&#160;E&#160;C&#160;T&#160;E&#160;Z&#160;-&#160;V&#160;O&#160;U&#160;S</heading>
+			<heading align="middle">C O N N E C T E Z - V O U S</heading>
 			<newline gap="8" indent="42"/>
-			<text>Shareaza vous souhaite la bienvenue!  Vous n'êtes actuellement connecté à aucun réseau p2p.  </text>
+			<text>Shareaza vous souhaite la bienvenue!</text>
+			<newline gap="8" indent="42"/>
+			<text>Vous n'êtes actuellement connecté à aucun réseau p2p. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Cliquez ici pour commencer!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">R&#160;E&#160;C&#160;H&#160;E&#160;R&#160;C&#160;H&#160;E&#160;Z&#160;&#160;&#160;D&#160;A&#160;N&#160;S&#160;&#160;&#160;S&#160;H&#160;A&#160;R&#160;E&#160;A&#160;Z&#160;A</heading>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">R E C H E R C H E Z &#160; D A N S &#160; S H A R E A Z A</heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Cliquez ici pour commencer</link>
+			<text align="middle">&#160; téléchargement en cours d'un nouveau fichier ou torrent.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
+			<heading align="middle">C H E R C H E Z &#160; U N &#160; F I C H I E R</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
@@ -1575,14 +1584,6 @@
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Aide Rapide</link>
 		<text align="middle"> &#160;- Obtenez de l'aide dans l'utilisation de Shareaza.</text>
 		<newline gap="18" indent="0"/>
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">M&#160;E&#160;S&#160;&#160;&#160;T&#160;É&#160;L&#160;É&#160;C&#160;H&#160;A&#160;R&#160;G&#160;E&#160;M&#160;E&#160;N&#160;T&#160;S</heading>
-		<newline gap="8" indent="42"/>
-		<text>Pour ouvrir le dossier de vos telechargements </text>
-		<link target="raza:shell:downloads">cliquez ici</link>
-		<text>.</text>
-		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">L'&#160;A&#160;C&#160;C&#160;È&#160;S&#160;&#160;&#160;À&#160;&#160;&#160;D&#160;I&#160;S&#160;T&#160;A&#160;N&#160;C&#160;E&#160;&#160;&#160;E&#160;S&#160;T&#160;&#160;&#160;A&#160;C&#160;T&#160;I&#160;V&#160;É</heading>
@@ -1627,6 +1628,8 @@
 			<text id="LibraryVolume" format="b">%s</text>
 			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Aller dans ma bibliothèque</link>
+			<newline gap="4"/>
+			<link format="bu" target="raza:shell:downloads">Ouvrir le dossier de vos telechargements</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>Shareaza effectue l'indexation et le hachage de </text>
@@ -2151,7 +2154,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Remonter la priorité de cette sélection de téléchargements."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Mettre en pause cette sélection de téléchargements."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Noter le téléchargement sélectionné."/>
-	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download preview image for the selected download."/>
+	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Télécharger la prévisualisation du téléchargement."/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Reprendre cette sélection de téléchargements."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Configurer les réglages des téléchargements..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Partager ce téléchargement partiel avec les autres utilisateurs."/>
@@ -2169,6 +2172,7 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Visiter le site web Shareaza.com."/>
 	<tip id="ID_HELP_SECURITY" message="Aide pour protéger son système des programmes hostiles"/>
 	<tip id="ID_HELP_UPDATE" message="Vérifier le présence d'informations et de mises à jour."/>
+	<tip id="ID_HELP_TEST" message="Fais le test de connexion."/>
 	<tip id="ID_HELP_WEB_1" message="Visiter ce site web"/>
 	<tip id="ID_HELP_WEB_2" message="Visiter ce site web"/>
 	<tip id="ID_HELP_WEB_3" message="Visiter ce site web"/>
@@ -2396,6 +2400,11 @@
 	<tip id="ImageViewer_Refresh" message="Rafraîchir l'image."/>
 	<tip id="ImageViewer_Close" message="Fermer cette image."/>
 </commandTips>
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="Sur maximum, la bande passante ne dépassera la limite. Sur moyen, elle se varie autour la limite."/>
+	<tip id="IDC_SHARE_PARTIALS" message="Cette configuration n'a pas d'effet sur téléchargements commencés antérieuremment; en plus cette configuration est ignorée si le fichier a le hash eDonkey et le reseau eDonkey est activé, ou si c'est un torrent.{n}Cette configuration n'est pas ignoré si le téléchargement est en pause.{n}{n}ATTENTION: N'utilisez pas cette option qu'en cas de vraie nécessité, si vous abusez de cette option c'est possible que vous serez banni."/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
@@ -2604,14 +2613,12 @@
 	<string id="16137" value="Refuse une connexion supplémentaire avec %s."/>
 	<string id="16138" value="Déja connecté à %s, n'établira pas de seconde connexion..."/>
 	<string id="16139" value="Le voisin %s a fermé la connexion (%i : %s)."/>
-	<string id="16140" value="Le voisin %s a une connexion lente et problématique."/>
 	<string id="16141" value="Connexion fermée avec le voisin %s : ce n'est pas un hub."/>
 	<string id="16144" value="Temps mort pour la poignée de main avec %s."/>
 	<string id="16145" value="La connexion Gnutella est établie avec succès avec le voisin %s (G%i.%i : %s)."/>
 	<string id="16146" value="Échec de la poignée de main avec %s causé par une donnée invalide."/>
 	<string id="16147" value="Fermeture du surplus de connexion avec %s, sur le conseil de l'hôte (%s port %i)."/>
 	<string id="16148" value="La connexion à %s est rejetée (%s)."/>
-	<string id="16149" value="Échec de la poignée de main Gnutella 0.6 avec %s, essaye avec 0.4."/>
 	<string id="16150" value="Fermeture du surplus de connexions avec %s."/>
 	<string id="16151" value="Refus de connexion avec %s car c'est une &quot;node&quot; en mode &quot;leaf&quot; protégé."/>
 	<string id="16152" value="Le &quot;hub&quot; voisin %s ne veut pas pous accepter comme &quot;hub&quot;, fermeture de la connexion."/>
@@ -2791,6 +2798,7 @@
 	<string id="16409" value="Exporter les &amp;URIs..."/>
 	<string id="16410" value="Un sous-dossier du dossier sélectionné &quot;%s&quot; fait déjà partie de votre bibliothèque.\nAjouter ce dossier entraînera le re-hachement de certains fichiers.\n\nVoulez-vous continuer?"/>
 	<string id="16411" value="Incapable de déplacer le fichier %s. Le fichier est peut-être utilisé par une autre application.\n\nVoulez-vous à la place essayer de copier ce fichier?"/>
+	<string id="16412" value="Fichier ghost"/>
 	<string id="16448" value="Connecté à %s, liaison..."/>
 	<string id="16449" value="Discussion avec %s (%s)."/>
 	<string id="16450" value="Connexion à %s fermée."/>
@@ -2825,7 +2833,8 @@
 	<string id="16534" value="Bande passante TCP reçue"/>
 	<string id="16535" value="Bande passante UDP totale"/>
 	<string id="16536" value="Gnutella Ratio Pings reçue/transmise"/>
-	<string id="16537" value="Gnutella Ratio Pongs reçue/transmise"/>
+	<string id="16537" value="Gnutella Ratio Pongs reçue/transmise"/>		
+	<string id="16538" value="Erreur de connexion (%)"/>
 	<string id="16768" value="Adresse reçue &quot;%s&quot;"/>
 	<string id="16769" value="Incapable d'analyser cette URL: Shareaza ne reconnaît pas cette URL."/>
 	<string id="16770" value="Incapable d'afficher le dialogue d'action de l'URL, Shareaza est occupé."/>
@@ -3045,6 +3054,7 @@
 	<string id="20009" value="Custom"/>
 	<string id="20010" value="&amp;Précédent"/>
 	<string id="20011" value="&amp;Prochain"/>
+	<string id="20012" value="Finir"/>
 	<string id="20100" value="Se connecte"/>
 	<string id="20101" value="Requiert"/>
 	<string id="20102" value="Réponse"/>
@@ -3811,12 +3821,13 @@
 		<control caption="Valider"/>
 		<control caption="Annuler"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Propriétés du graphique">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStStEdBuBuStBu" caption="Propriétés du graphique">
 		<control caption="Valider"/>
 		<control caption="Annuler"/>
 		<control caption="_Source:"/>
-		<control/><control/>
+		<control/>
 		<control caption="Paramètre:"/>
+		<control/>
 		<control caption="Unités:"/>
 		<control/>
 		<control caption="Affichage:"/>
@@ -4259,23 +4270,4 @@
 		<column from="Order" to="Ordre"/>
 	</list>
 </listColumns>
-<!-- Tips displayed when mouse is moved over controls in the dialogs  -->
-<tipMap>
-	<control code="1050" id="IDC_MAX_TRANSFERS"/>
-	<control code="1228" id="IDC_AGENT_LIST"/>
-	<!--1374, idc_throttle_mode is already included in Shareaza-->
-	<control code="1389" id="IDC_TORRENT_CLIENTLINKS"/>
-	<control code="1394" id="IDC_TORRENT_AUTOCLEAR"/>
-	<control code="1397" id="IDC_G2_CLIENTMODE"/>
-	<control code="1409" id="IDC_G2_ALWAYS"/>
-</tipMap>
-<controlTips>
-	<tip id="IDC_MAX_TRANSFERS" message="20 à 60 devra être suffissant: c'est rarement le cas qu'une connexion peut soutenir un nombre trop haussé."/>
-	<tip id="IDC_AGENT_LIST" message="Liste d'agents que vous ne voulez jamais connecter."/>
-	<tip id="IDC_THROTTLE_MODE" message="Sur maximum, la bande passante ne dépassera la limite. Sur moyen, elle se varie autour la limite."/>
-	<tip id="IDC_TORRENT_CLIENTLINKS" message="15 à 40 connexions devra être suffissante."/>
-	<tip id="IDC_TORRENT_AUTOCLEAR" message="Quand le ratio d'envoi est dépasser pour un torrent en seed, Shareaza va terminer les envois pour ce torrent."/>
-	<tip id="IDC_G2_CLIENTMODE" message="Sur Auto, Shareaza peut decider si votre noeud sera un hub. Si vous ne voulez jamais être un hub, choisissez leaf"/>
-	<tip id="IDC_G2_ALWAYS" message="G2 va connecter de façon automatique. On peut le prévenir avec la règle avancée: Gnutella2.EnableAlways=false."/>
-</controlTips>
 </skin>
