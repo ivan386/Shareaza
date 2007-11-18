@@ -1,13 +1,13 @@
 ﻿					<h4><%= network_caption %></h4>
 <%? !network_connected %>
 					<p>
-					This network is <strong>not</strong> enabled -
-					<a href="?connect=<%= network_id %>"><strong>Connect to <%= network_caption %></strong></a>
+					Questa rete <strong>non</strong> è attivata -
+					<a href="?connect=<%= network_id %>"><strong>Connetti a <%= network_caption %></strong></a>
 					</p>
 <%?%><%? network_connected %>
 					<p>
-					This network is enabled -
-					<a href="?disconnect=<%= network_id %>"><strong>Disable <%= network_caption %></strong></a>
+					Questa rete è attivata -
+					<a href="?disconnect=<%= network_id %>"><strong>Disabilita <%= network_caption %></strong></a>
 					</p>
 				<div class="centertable">
 					<table>
@@ -18,7 +18,7 @@
 							<th>Larghezza di banda</th>
 							<th>Totale</th>
 							<th>Modalità</th>
-							<th>This network is enabled -</th>
+							<th>Leaf</th>
 							<th>User-agent</th>
 							<th></th>
 						</tr>

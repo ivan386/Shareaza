@@ -19,7 +19,7 @@
 										<td><%= download_status %></td>
 										<td>
 <%? download_is_complete %>
-											<a href="?modify_id=<%= download_id %>&amp;modify_action=clear" title="Chiaro il download dalla lista (questo non cancellare il file)">Azzera</a>
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=clear" title="rimuovi il download dalla lista (questo non cancellerà il file)">Azzera</a>
 <%?%><%? !download_is_complete %>
 <%? download_is_paused %>
 											<a href="?modify_id=<%= download_id %>&amp;modify_action=resume">Riprendi</a> -
