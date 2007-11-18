@@ -25,7 +25,7 @@
 class CSplashDlg : public CDialog
 {
 public:
-	CSplashDlg(int nMax = 0);
+	CSplashDlg(int nMax, bool bClosing);
 	virtual ~CSplashDlg();
 
 	enum { IDD = IDD_SPLASH };
@@ -33,14 +33,14 @@ public:
 	DECLARE_DYNAMIC(CSplashDlg)
 
 public:
-	void	IncrMax() { m_nMax++; };
-	void	Step(LPCTSTR pszText, bool bClosing = false);
+	void	Step(LPCTSTR pszText);
 	void	Topmost();
 	void	Hide();
 
 protected:
 	int			m_nPos;
 	int			m_nMax;
+	bool		m_bClosing;
 	CString		m_sState;
 	CBitmap		m_bmSplash;
 	CBitmap		m_bmBuffer;
@@ -58,3 +58,9 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
+
+inline void SplashStep(CSplashDlg* dlg, LPCTSTR pszMessage)
+{
+	if ( dlg != NULL )
+		dlg->Step( pszMessage );
+}

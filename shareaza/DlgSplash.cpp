@@ -52,10 +52,11 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSplashDlg construction
 
-CSplashDlg::CSplashDlg(int nMax) :
+CSplashDlg::CSplashDlg(int nMax, bool bClosing) :
 	CDialog( CSplashDlg::IDD, NULL ),
 	m_nPos( 0 ),
 	m_nMax( nMax ),
+	m_bClosing( bClosing ),
 	m_sState( theApp.m_sSmartAgent ),
 	m_pfnAnimateWindow( NULL )
 {
@@ -108,10 +109,10 @@ BOOL CSplashDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CSplashDlg::Step(LPCTSTR pszText, bool bClosing)
+void CSplashDlg::Step(LPCTSTR pszText)
 {
 	m_nPos ++;
-	m_sState.Format( bClosing ? _T("%s...") : _T("Starting %s..."), pszText );
+	m_sState.Format( m_bClosing ? _T("%s...") : _T("Starting %s..."), pszText );
 	SetWindowText( m_sState );
 
 	CClientDC dc( this );

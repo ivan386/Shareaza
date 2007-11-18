@@ -40,7 +40,6 @@
 #include "ChatCore.h"
 #include "ChatSession.h"
 #include "Statistics.h"
-#include "Plugins.h"
 #include "BTInfo.h"
 #include "Skin.h"
 #include "SkinWindow.h"
@@ -504,7 +503,6 @@ void CMainWnd::OnClose()
 	Transfers.StopThread();
 	Library.StopThread();
 	ChatCore.StopThread();
-	Plugins.Clear();
 	
 	CMDIFrameWnd::OnClose();
 }

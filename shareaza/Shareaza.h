@@ -166,7 +166,6 @@ protected:
 
 	void				GetVersionNumber();
 	void				InitResources();
-	void				SplashStep(CSplashDlg* dlg, LPCTSTR pszMessage, bool bClosing = false);
 
 	DECLARE_MESSAGE_MAP()
 };
