@@ -154,31 +154,6 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sr">Komentari</title>
                        <title language="tr">Yorumlar</title>
                </member>
-              <member name="archive" search="indexed">
-                       <title language="en">Archive Type</title>
-                       <title language="af">Argieftipe</title>
-                       <title language="ca">Tipus d'arxiu</title>
-                       <title language="chs">文件类型</title>
-                       <title language="cht">檔案類型</title>
-                       <title language="de">Archivtyp</title>
-                       <title language="ee">Arhiivi Tüüp</title>
-                       <title language="es">Tipo de archivo</title>
-                       <title language="fr">Type d'archive</title>
-                       <title language="heb">סוג אכיון</title>
-                       <title language="hr">Vrsta Arhive</title>
-                       <title language="hu">Archívum típusa</title>
-                       <title language="it">Tipo di archivio</title>
-                       <title language="ja">圧縮種類</title>
-                       <title language="lt">Archyvo tipas</title>
-                       <title language="nl">Archieftypes</title>
-                       <title language="no">Arkivtype</title>
-                       <title language="pt-br">Tipo de Arquivo</title>
-                       <title language="ru">Тип архива</title>
-                       <title language="sl-SI">Arhivski tip</title>
-                       <title language="sq">Lloj Arkivi</title>
-                       <title language="sr">Vrsta Arhive</title>
-                       <title language="tr">Arşiv Tipi</title>
-               </member>
                <member name="keywords">
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>

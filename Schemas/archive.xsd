@@ -18,14 +18,6 @@
 					<maxInclusive value="256"/>
 				</simpleType>
 			</attribute>
-			<attribute name="archive">
-				<simpleType base="string">
-					<enumeration value="7Z"/>
-					<enumeration value="RAR"/>
-					<enumeration value="ZIP"/>
-					<enumeration value="ACE"/>
-				</simpleType>
-			</attribute>
 			<attribute name="keywords" type="string"/>
 			<attribute name="encrypted" type="boolean"/>
 			<attribute name="unpackedsize" type="string"/>
