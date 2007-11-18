@@ -18,6 +18,7 @@
 					<maxInclusive value="256"/>
 				</simpleType>
 			</attribute>
+			<attribute name="archive" type="string"/>
 			<attribute name="keywords" type="string"/>
 			<attribute name="encrypted" type="boolean"/>
 			<attribute name="unpackedsize" type="string"/>
