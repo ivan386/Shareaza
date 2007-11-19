@@ -11,23 +11,25 @@
 <!-- /tabs -->
 <!-- main body -->
 		<div class="poetry" id="frame">
-					<div class="padding left">
-						Sveiki! Čia <b>„Shareaza“ nuotolinė prieiga.</b> Jei ši „Shareaza“ kopija veikia jūsų kompiuteryje, įveskite savo nuotolinės prieigos naudotojo vardą bei slaptažodį ir paspauskite <b>Įėjimas</b>.
-					</div>
-					
-					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
-					<%? failure %>	Suvestas naudotojo vardas ar slaptažodis yra neteisingas. Bandykite dar kartą.<%?%>
-					</div>
-					
-					<div style="text-align: right; width: 24em; margin: 0 auto;">
-					<form method="get" action="">
-					<input type="hidden" name="submit" value="1">
+			<div class="padding left">
+				Sveiki! Čia <b>„Shareaza“ nuotolinė prieiga.</b> Jei ši „Shareaza“ kopija veikia jūsų kompiuteryje, įveskite savo nuotolinės prieigos naudotojo vardą bei slaptažodį ir paspauskite <b>Įėjimas</b>.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	Suvestas naudotojo vardas ar slaptažodis yra neteisingas. Bandykite dar kartą.<%?%>
+			</div>
+
+			<div style="text-align: right; width: 24em; margin: 0 auto;">
+				<form method="get" action="">
+					<table><tr><td>
+						<input type="hidden" name="submit" value="1" />
 						<label>Naudotojo vardas:</label>
 						<input type="text" name="username" size="20" /><br />
 						<label>Slaptažodis:</label>
-						<input type="password" name="password" size="20" ID="Text1" /><br />
-								<input type="submit" value="Įvesti">
-					</form>
-					</div>
-	</div>
+						<input type="password" name="password" size="20" /><br />
+						<input type="submit" value="Įvesti" />
+					</td></tr></table>
+				</form>
+			</div>
+		</div>
 <!-- /main body -->

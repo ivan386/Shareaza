@@ -11,23 +11,25 @@
 <!-- /tabs -->
 <!-- main body -->
 		<div class="poetry" id="frame">
-					<div class="padding left">
-						欢迎来到 <b>Shareaza 远程访问。</b>
-					</div>
-					
-					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
-					<%? failure %>	您输入的用户名和密码不正确。请重试。.<%?%>
-					</div>
-					
-					<div style="text-align: right; width: 24em; margin: 0 auto;">
-					<form method="get" action="">
-					<input type="hidden" name="submit" value="1">
+			<div class="padding left">
+				欢迎来到 <b>Shareaza 远程访问。</b>
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	您输入的用户名和密码不正确。请重试。.<%?%>
+			</div>
+
+			<div style="text-align: right; width: 24em; margin: 0 auto;">
+				<form method="get" action="">
+					<table><tr><td>
+						<input type="hidden" name="submit" value="1" />
 						<label>用户:</label>
 						<input type="text" name="username" size="20" /><br />
 						<label>密码:</label>
-						<input type="password" name="password" size="20" ID="Text1" /><br />
-								<input type="submit" value="登录">
-					</form>
-					</div>
-	</div>
+						<input type="password" name="password" size="20" /><br />
+						<input type="submit" value="登录" />
+					</td></tr></table>
+				</form>
+			</div>
+		</div>
 <!-- /main body -->

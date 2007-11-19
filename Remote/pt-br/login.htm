@@ -11,23 +11,25 @@
 <!-- /tabs -->
 <!-- main body -->
 		<div class="poetry" id="frame">
-					<div class="padding left">
-						Bem-Vindo a <b>Interface Web do Shareaza.</b> se este é o endereço do seu cliente Shareaza, por favor insira o seu nome de usuário e senha, e clique em <b>Login</b>.
-					</div>
-					
-					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
-					<%? failure %>	O nome de usuário ou senha estava incorreto, Por favor tente de novo.<%?%>
-					</div>
-					
-					<div style="text-align: right; width: 24em; margin: 0 auto;">
-					<form method="get" action="">
-					<input type="hidden" name="submit" value="1">
+			<div class="padding left">
+				Bem-Vindo a <b>Interface Web do Shareaza.</b> se este é o endereço do seu cliente Shareaza, por favor insira o seu nome de usuário e senha, e clique em <b>Login</b>.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	O nome de usuário ou senha estava incorreto, Por favor tente de novo.<%?%>
+			</div>
+
+			<div style="text-align: right; width: 24em; margin: 0 auto;">
+				<form method="get" action="">
+					<table><tr><td>
+						<input type="hidden" name="submit" value="1" />
 						<label>Nome de usuário:</label>
 						<input type="text" name="username" size="20" /><br />
 						<label>Senha:</label>
-						<input type="password" name="password" size="20" ID="Text1" /><br />
-								<input type="submit" value="Login">
-					</form>
-					</div>
-	</div>
+						<input type="password" name="password" size="20" /><br />
+						<input type="submit" value="Login" />
+					</td></tr></table>
+				</form>
+			</div>
+		</div>
 <!-- /main body -->
