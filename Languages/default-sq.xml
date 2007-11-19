@@ -466,7 +466,7 @@
 			<item id="ID_VIEW_TABBED" text="Mënyrë e _Avancuar"/>
 		</menu>
 		<menu text="_Mjete">
-			<item id="ID_LIBRARY_FOLDERS" text="Shpërnda _Skedat..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="_Skedat e Shpërndara..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Shkarko një _Skedë/Torrent..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Zgjidhe L_ëvoren..."/>
@@ -488,8 +488,8 @@
 				<item id="ID_HELP_CODEC" text="Ndihmë mbi _Koduesin"/>
 			</menu>
 			<separator/>
-			<menu text="_Truajt">
-				<item id="ID_HELP_HOMEPAGE" text="Trualli _Shareaza"/>
+			<menu text="_Trojet">
+				<item id="ID_HELP_HOMEPAGE" text="Trualli i _Shareaza-s"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forumet e Shareaza-s"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -537,24 +537,24 @@
 				<item id="ID_VIEW_MEDIA" text="_Media" shortcut="F6"/>
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Si_guri" shortcut="F7"/>
-				<item id="ID_VIEW_HOSTS" text="Depo H_osti" shortcut="F8"/>
+				<item id="ID_VIEW_HOSTS" text="_Depot" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="Zbu_limi" shortcut="F9"/>
-				<item id="ID_VIEW_TRAFFIC" text="_Grafikë" shortcut="F10"/>
+				<item id="ID_VIEW_TRAFFIC" text="_Grafikët" shortcut="F10"/>
 				<separator/>
-				<item id="ID_VIEW_PACKETS" text="Skuta _Pakete" shortcut="Ctrl+F1"/>
+				<item id="ID_VIEW_PACKETS" text="_Paketat" shortcut="Ctrl+F1"/>
 				<item id="ID_VIEW_SEARCH_MONITOR" text="Monitori i Kër_kimeve" shortcut="Ctrl+F2"/>
 				<item id="ID_VIEW_RESULTS_MONITOR" text="Monitori i H_iteve" shortcut="Ctrl+F3"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Mënyrë e T_hjeshtë"/>
 			<item id="ID_VIEW_TABBED" text="Mënyrë e L_idhur"/>
-			<item id="ID_VIEW_WINDOWED" text="Mënyrë e _Ndarë"/>
+			<item id="ID_VIEW_WINDOWED" text="Mënyrë e _Hapur"/>
 		</menu>
 		<menu text="_Mjete">
-			<item id="ID_LIBRARY_FOLDERS" text="Shpërnda _Skedat..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="_Skedat e Shpërndara..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Shkarko një _Skedë/Torrent..."/>
-			<item id="IDC_IMPORT_DOWNLOADS" text="_Importo shkarkesat e pjesshme të eMule..."/>
-			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Hape dosjen time të Shkarkesave të përfunduara"/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="_Importo Shkarkesat e Pjesshme të eMule..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Hape Dosjen me të Përfunduarit"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Zgjidhe L_ëvoren..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Zgjidhe _Gjuhën..."/>
@@ -583,8 +583,8 @@
 				<item id="ID_HELP_CODEC" text="Ndihmë mbi _Koduesin"/>
 			</menu>
 			<separator/>
-			<menu text="_Truajt">
-				<item id="ID_HELP_HOMEPAGE" text="Trualli _Shareaza"/>
+			<menu text="_Trojet">
+				<item id="ID_HELP_HOMEPAGE" text="Trualli i _Shareaza-s"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forumet e Shareaza-s"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
@@ -623,23 +623,23 @@
 			<item id="ID_VIEW_MEDIA" text="_Media" shortcut="F6"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Si_guri" shortcut="F7"/>
-			<item id="ID_VIEW_HOSTS" text="Depo H_osti" shortcut="F8"/>
+			<item id="ID_VIEW_HOSTS" text="_Depot" shortcut="F8"/>
 			<item id="ID_VIEW_DISCOVERY" text="Zbu_limi" shortcut="F9"/>
-			<item id="ID_VIEW_TRAFFIC" text="_Grafikë" shortcut="F10"/>
+			<item id="ID_VIEW_TRAFFIC" text="_Grafikët" shortcut="F10"/>
 			<separator/>
-			<item id="ID_VIEW_PACKETS" text="Skuta _Pakete" shortcut="Ctrl+F1"/>
+			<item id="ID_VIEW_PACKETS" text="_Paketat" shortcut="Ctrl+F1"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Monitori i Kë_rkimeve" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="Monitori i H_iteve" shortcut="Ctrl+F3"/>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Mënyrë e Thjeshtë"/>
 			<item id="ID_VIEW_TABBED" text="Mënyrë e Lidhur"/>
-			<item id="ID_VIEW_WINDOWED" text="Mënyrë e Ndarë"/>
+			<item id="ID_VIEW_WINDOWED" text="Mënyrë e Hapur"/>
 		</menu>
 		<menu text="_Mjete">
-			<item id="ID_LIBRARY_FOLDERS" text="Shpërnda _Skedat..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="_Skedat e Shpërndara..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Shkarko një _Skedë/Torrent..."/>
-			<item id="IDC_IMPORT_DOWNLOADS" text="_Importo shkarkesat e pjesshme të eMule..."/>
-			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Hape dosjen time të Shkarkesave të përfunduara"/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="_Importo Shkarkesat e Pjesshme të eMule..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Hape Dosjen me të Përfunduarit"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Zgjidhe L_ëvoren..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Zgjidhe _Gjuhën..."/>
@@ -672,8 +672,8 @@
 				<item id="ID_HELP_CODEC" text="Ndihmë mbi _Koduesin"/>
 			</menu>
 			<separator/>
-			<menu text="_Truajt">
-				<item id="ID_HELP_HOMEPAGE" text="Trualli _Shareaza"/>
+			<menu text="_Trojet">
+				<item id="ID_HELP_HOMEPAGE" text="Trualli i _Shareaza-s"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forumet e Shareaza-s"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Lajme të Reja"/>
@@ -696,7 +696,7 @@
 			<item id="ID_VIEW_NEIGHBOURS" text="_Hostet"/>
 			<item id="ID_VIEW_UPLOADS" text="_Ngarkimi"/>
 			<item id="ID_VIEW_SECURITY" text="_Siguri"/>
-			<item id="ID_VIEW_HOSTS" text="Depo _Hosti"/>
+			<item id="ID_VIEW_HOSTS" text="_Depot"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.View.Tabbed">
@@ -710,9 +710,9 @@
 		<item id="ID_VIEW_SECURITY" text="Si_guri"/>
 		<item id="ID_VIEW_HOSTS" text="Depo _Hosti"/>
 		<item id="ID_VIEW_DISCOVERY" text="Zbu_limi"/>
-		<item id="ID_VIEW_TRAFFIC" text="_Grafikë"/>
+		<item id="ID_VIEW_TRAFFIC" text="_Grafikët"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="Skuta _Pakete"/>
+		<item id="ID_VIEW_PACKETS" text="_Paketat"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Monitori i Kë_rkimeve"/>
 		<item id="ID_VIEW_RESULTS_MONITOR" text="Monitori i H_iteve"/>
 	</menu>
@@ -727,11 +727,11 @@
 		<item id="ID_VIEW_MEDIA" text="_Media"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Si_guri"/>
-		<item id="ID_VIEW_HOSTS" text="Depo _Hosti"/>
+		<item id="ID_VIEW_HOSTS" text="_Depot"/>
 		<item id="ID_VIEW_DISCOVERY" text="Zbu_limi"/>
-		<item id="ID_VIEW_TRAFFIC" text="_Grafikë"/>
+		<item id="ID_VIEW_TRAFFIC" text="_Grafikët"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="Skuta _Pakete"/>
+		<item id="ID_VIEW_PACKETS" text="_Paketat"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Monitori i Kë_rkimeve"/>
 		<item id="ID_VIEW_RESULTS_MONITOR" text="Monitori i H_iteve"/>
 	</menu>
@@ -752,7 +752,7 @@
 		<item id="ID_NETWORK_AUTO_CLOSE" text="Dil Kur _Përfundon"/>
 		<item id="ID_NETWORK_EXIT" text="D_il"/>
 	</menu>
-	<!-- REMOTE MENU -->
+	<!--  REMOTE MENU -->
 	<menu name="CRemoteWnd">
 		<item id="ID_TRAY_OPEN" text="_Hape Shareaza-n"/>
 		<separator/>
@@ -793,11 +793,11 @@
 		<item id="ID_TAB_NETWORK" text="_Rrjeti"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Si_guri"/>
-		<item id="ID_VIEW_HOSTS" text="Depo _Hosti"/>
+		<item id="ID_VIEW_HOSTS" text="_Depot"/>
 		<item id="ID_VIEW_DISCOVERY" text="Zbu_limi"/>
-		<item id="ID_VIEW_TRAFFIC" text="_Grafikë"/>
+		<item id="ID_VIEW_TRAFFIC" text="_Grafikët"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="Skuta _Pakete"/>
+		<item id="ID_VIEW_PACKETS" text="_Paketat"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Monitori i Kë_rkimeve"/>
 		<item id="ID_VIEW_RESULTS_MONITOR" text="Monitori i H_iteve"/>
 	</menu>
@@ -1018,7 +1018,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Ndihmë..."/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="P_astroji të Përfunduarit"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="P_astro të Përfunduarit"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Auto_pastro"/>
 	</menu>
 	<menu name="CDownloadTabBar">
@@ -1368,7 +1368,7 @@
 		<separator/>
 		<item id="ID_SYSTEM_COPY" text="_Kopjo" shortcut="Ctrl+C"/>
 		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Pastro _Skutën"/>
+		<item id="ID_SYSTEM_CLEAR" text="Pastro _Depon"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
@@ -1434,7 +1434,7 @@
 		<item id="ID_SECURITY_IMPORT" text="_Importo..."/>
 		<item id="ID_SECURITY_EXPORT" text="E_ksporto..."/>
 		<separator/>
-		<menu text="Sjell_ja Tipike">
+		<menu text="Sjell_je Tipike">
 			<item id="ID_SECURITY_POLICY_ACCEPT" text="_Pranoje"/>
 			<item id="ID_SECURITY_POLICY_DENY" text="_Mohoje"/>
 		</menu>
@@ -1514,12 +1514,12 @@
 			<text>Mirë se erdhët në Shareaza!</text>
 			<newline gap="8" indent="42"/>
 			<text>Ju nuk jeni i lidhur te asnjë rrjet pikë më pikë. &#160;</text>
-			<link target="raza:command:ID_NETWORK_CONNECT">Nisuni Tani!</link>
+			<link target="raza:command:ID_NETWORK_CONNECT">Lidhuni Tani!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
 			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
-			<heading align="middle">N I S E &#160; S H K A R K I M I N</heading>
+			<heading align="middle">N I S N I &#160; T Ë &#160; S H K A R K O N I</heading>
 			<newline gap="8" indent="42"/>
 			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Klikoni që të nisni</link>
 			<text align="middle">&#160; të shkarkoni një skedë ose torrent të ri.</text>
@@ -1544,7 +1544,7 @@
 			<heading align="middle">K U J D E S &#160; - &#160; K E N I &#160; N J Ë &#160; F A J R U O L L</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza diktoi se ndodheni pas një routeri NAT ose fajruolli,
-			dhe nuk mund të merrni lidhje nga Interneti.&#160;</text>
+			  dhe nuk mund të merrni lidhje nga Interneti.&#160;</text>
 			<text colour="FF0000" format="b">Kjo shkakton dobësi tek rendimenti i shkarkimit.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Mësoni rreth konfigurimit të routerit ose fajruollit</link>
@@ -1555,7 +1555,7 @@
 			<heading align="middle">K U J D E S &#160; - &#160; P O R T I &#160; T C P &#160; B L L O K O H E T &#160; N G A &#160; F A J R U O L L I</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza diktoi se ndodheni pas një routeri NAT ose fajruolli,
-			dhe nuk mund të merrni lidhje TCP nga Interneti.&#160;</text>
+			  dhe nuk mund të merrni lidhje TCP nga Interneti.&#160;</text>
 			<text colour="FF0000" format="b">Kjo shkakton dobësi tek rendimenti i shkarkimit.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Mësoni rreth konfigurimit të routerit ose fajruollit</link>
@@ -1566,7 +1566,7 @@
 			<heading align="middle">K U J D E S &#160; - &#160; P O R T I &#160; U D P &#160; B L L O K O H E T &#160; N G A &#160; F A J R U O L L I</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza diktoi se ndodheni pas një routeri NAT ose fajruolli,
-			dhe nuk mund të merrni lidhje UDP nga Interneti.&#160;</text>
+			  dhe nuk mund të merrni lidhje UDP nga Interneti.&#160;</text>
 			<text colour="FF0000" format="b">Kjo shkakton dobësi tek rendimenti i shkarkimit.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Mësoni rreth konfigurimit të routerit ose fajruollit</link>
@@ -1594,7 +1594,7 @@
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">H Y R J A &#160; E &#160; L A R G Ë T &#160; Ë S H T Ë &#160; A K T I V I Z U A R</heading>
 			<newline gap="8" indent="42"/>
-			<text>Hyrja e Largët në Shareaza është aktivizuar. Kontrollojeni atë duke përdorur shfletuesin e rrjetit në:</text>
+			<text>Hyrja në Largësi e Shareaza-s është aktivizuar. Kontrolloni atë duke përdorur shfletuesin e rrjetit në:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
 			<text>&#160;- or -&#160;</text>
@@ -1739,32 +1739,32 @@
 				<colours link="000080"/>
 			</style>
 		</styles>
-		<text format="b">Mirë se erdhët te Menaxheri i Kuadrove në Shareaza</text>
+		<text format="b">Mirë se erdhët te Menaxheri për Kuadrot e Shareaza-s</text>
 		<newline gap="16"/>
 		<text>
-			Menaxheri i Kuadrove në Shareaza bën që përdoruesit e përparuar të porosisin tërësisht mënyrën si
-			Shareaza punon. Kuadrot në seksionin
+			Menaxheri për Kuadrot e Shareaza-s bën që përdoruesit e përparuar të porositin tërësisht mënyrën si
+			Shareaza funksionon.  Kuadrot e seksionit
 		</text>
-		<text format="b">General </text>
+		<text format="b">Përgjithësi </text>
 		<text>
-			kërkojnë përvojën e përdoruesit.
+			kërkojnë një përdorues me përvojë.
 		</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Përgjithësi:</link>
 		<gap size="4"/>
-		<text>Kuadro të ndërfaqes së zakontë të përdoruesit me këshilla, sjellje minimizuese, formate të numrave, lajmërime etj.</text>
+		<text>Kuadro për ndërfaqen e zakontë të përdoruesit: me këshilla, sjellje minimizuese, formatet e numrave, lajmërime etj.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CLibrarySettingsPage" format="b">Librari:</link>
 		<gap size="4"/>
-		<text>Paraqitja dhe menaxhimi i skedës në librari dhe hapja e skedave.</text>
+		<text>Paraqet dhe menaxhon librarinë dhe hapjen e skedës.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CMediaSettingsPage" format="b">Media-Lexuesi:</link>
+		<link target="raza:page:CMediaSettingsPage" format="b">Lexuesi:</link>
 		<gap size="4"/>
-		<text>Ku/kur përdoret media-qendra si pjesë e Shareaza-s.</text>
+		<text>Ku/kur përdoret qendra mediatike si pjesë e Shareaza-s.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CCommunitySettingsPage" format="b">Komuniteti:</link>
 		<gap size="4"/>
-		<text>Kuadro të profilit, chat-it dhe mesazheve tuaja të çastit.</text>
+		<text>Kuadrot e profilit, chat-it dhe e mesazheve tuaja të çastit.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Rrjeti:</link>
 		<gap size="4"/>
@@ -1777,15 +1777,15 @@
 				<colours link="000080"/>
 			</style>
 		</styles>
-		<text format="b">Mirë se erdhët te Menaxheri i Kuadrove në Shareaza</text>
+		<text format="b">Mirë se erdhët te Menaxheri për Kuadrot e Shareaza-s</text>
 		<newline gap="16"/>
 		<text>
-			Menaxheri i Kuadrove në Shareaza bën që përdoruesit e përparuar të porosisin tërësisht mënyrën si
-			Shareaza punon. Kuadrot në seksionin
+			Menaxheri për Kuadrot e Shareaza-s bën që përdoruesit e përparuar të porositin tërësisht mënyrën si
+			Shareaza funksionon.  Kuadrot e seksionit
 		</text>
 		<text format="b">Interneti </text>
 		<text>
-			tregojnë si Shareaza ndërvepron me nyje të tjera brenda rrjeteve pikë-më-pikë
+			tregojnë si Shareaza ndërvepron me nyjet e tjera në rrjetet pikë-më-pikë
 			të klasifikuara.
 		</text>
 		<newline gap="16" indent="16"/>
@@ -1793,17 +1793,17 @@
 		<gap size="4"/>
 		<text>Shpejtësitë dhe aftësitë e lidhjes tuaj me Internetin.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CDownloadsSettingsPage" format="b">Shkarkesa:</link>
+		<link target="raza:page:CDownloadsSettingsPage" format="b">Shkarkesat:</link>
 		<gap size="4"/>
 		<text>Avitja, planifikimi, verifikimi, jashtëkoha dhe menaxhimi i shkarkesave.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CUploadsSettingsPage" format="b">Ngarkesa:</link>
+		<link target="raza:page:CUploadsSettingsPage" format="b">Ngarkesat:</link>
 		<gap size="4"/>
-		<text>Kapaciteti, pritja, dëbimi, jashtëkoha dhe kërkesa të tjera të ngarkesave.</text>
+		<text>Kapaciteti, pritja, dëbimi, jashtëkoha dhe kërkesat e tjera për ngarkesat.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CRemoteSettingsPage" format="b">Hyrja në Largësi:</link>
 		<gap size="4"/>
-		<text>Aftësi për kontrollin e Shareaza-s me pult nga një shfletues rrjeti.</text>
+		<text>Aftësi për të kontrolluar Shareaza-n me pult nga një shfletues rrjeti.</text>
 		<newline gap="10"/>
 	</document>
 	<!-- Browse User Profile -->
@@ -1915,13 +1915,13 @@
 		<text format="b">Kjo Shkarkesë Përfundoi</text>
 		<newline gap="8"/>
 		<text>Shareaza e përfundoi shkarkimin e kësaj skede, dhe verifikoi se ajo
-		është 100% korrekte. Skeda gjithashtu ka lëvizur në dosjen e shkarkesave tuaja.</text>
+		është 100% korrekte.  Skeda gjithashtu ka lëvizur në dosjen e shkarkesave tuaja.</text>
 	</document>
 	<document name="DownloadHelp.Moving">
 		<text format="b">Kjo Shkarkesë po Lëviz</text>
 		<newline gap="8"/>
 		<text>Shareaza e përfundoi shkarkimin e kësaj skede, dhe verifikoi se ajo
-		është korrekte. Aktualisht po lëviz dhe/ose çpaketohet në dosjen e shkarkesave tuaja.</text>
+		është korrekte.  Aktualisht po lëviz dhe/ose çpaketohet në dosjen e shkarkesave tuaja.</text>
 	</document>
 	<document name="DownloadHelp.Paused">
 		<text format="b">Kjo Shkarkesë Pushoi</text>
@@ -1933,7 +1933,7 @@
 		<text format="b">Disku është Plot</text>
 		<newline gap="8"/>
 		<text>Shareaza e pushoi automatikisht këtë shkarkesë sepse disku i ngurtë
-		duket se është plot, ose skeda në shkarkim nuk mund të shkruhet. Nëse dëshironi
+		duket se është plot, ose skeda në shkarkim nuk mund të shkruhet.  Nëse dëshironi
 		të vijoni me shkarkimin, ju lutemi lironi pak hapësirën në disk dhe/ose sigurohuni
 		që dosja e skedës së paplotë të jetë e hapshme, pastaj rimerrni
 		shkarkimin.</text>
@@ -1942,17 +1942,17 @@
 		<text format="b">Kjo Shkarkesë po Verifikohet</text>
 		<newline gap="8"/>
 		<text>Shkarkimi përfundoi! Tani Shareaza po e verifikon atë për t'u siguruar
-		që jetë pikërisht e njëjtë me skedën origjinale. Nëse gjendet ndonjë pjesë e
+		që jetë pikërisht e njëjtë me skedën origjinale.  Nëse gjendet ndonjë pjesë e
 		dëmtuar, Shareaza do ta riparojë automatikisht.</text>
 	</document>
 	<document name="DownloadHelp.Downloading">
 		<text format="b">Kjo Shkarkesë është Aktive!</text>
 		<newline gap="8"/>
-		<text>Kjo shkarkesë është aktualisht në progres. Nëse po shkarkohet shumë ngadalë,
+		<text>Kjo shkarkesë është aktualisht në progres.  Nëse po shkarkohet shumë ngadalë,
 		mund të provoni të kërkoni në rrjet për më tepër burime me komandën '</text>
 		<text format="b">Gjej më Tepër Burime</text><text>'. Nëse shpejtësia nuk përmirësohet,
 		shkaku mund të jetë shpejtësia e kufizuar në ngarkim e përdoruesve nga të cilët po
-		shkarkoni. Shpejtësia e shkarkimit zakonisht rritet me kohë.</text>
+		shkarkoni.  Shpejtësia e shkarkimit zakonisht rritet me kohë.</text>
 	</document>
 	<document name="DownloadHelp.Pending">
 		<text format="b">Kjo Shkarkesë po Varet</text>
@@ -1970,20 +1970,20 @@
 		<text>Kjo shkarkesë po pret që disa nga shkarkesat e tjera të përfundojnë.
 		Kuadrot e shkarkimit e kufizojnë numrin e shkarkesave që mund të jenë aktive
 		në një kohë të dhënë, për t'u siguruar që secila shkarkesë të marrë një masë të mirë
-		të shtrirjes së vlefshme të bandës. Këta kuadro mund të ndryshoni tek Mjete, Kuadrot e Shareaza-s.
+		të shtrirjes së vlefshme të bandës.  Këta kuadro mund të ndryshoni tek Mjete, Kuadrot e Shareaza-s.
 		Si alternativë, këtë shkarkesë mund ta nisni edhe me dorë sipas komandës 'Rimerre'.</text>
 	</document>
 	<document name="DownloadHelp.Searching">
 		<text format="b">Kjo Shkarkesë po Kërkon</text>
 		<newline gap="8"/>
 		<text>Për këtë shkarkesë ka burime të njohura, ndaj edhe Shareaza po kërkon në
-		gjithë rrjet e lidhura P2P për burime të reja. Sapo burimet të gjenden, shkarkimi
-		do të nisë automatikisht. Shareaza kërkon automatikisht për burime, gjithsesi
+		gjithë rrjet e lidhura P2P për burime të reja.  Sapo burimet të gjenden, shkarkimi
+		do të nisë automatikisht.  Shareaza kërkon automatikisht për burime, gjithsesi
 		mund ta shpejtoni procesin duke përdorur komandën </text>
 		<text format="b">Gjej më Tepër Burime </text><text>.</text>
 		<newline gap="8"/>
 		<text>Për fat të keq, në linjë mundet të mos ketë përdorues për skedën
-		që po kërkoni. I vetmi rend veprimi në këtë rast, është të prisni që
+		që po kërkoni.  I vetmi rend veprimi në këtë rast, është të prisni që
 		dikush të vijë në linjë, ose ta anuloni atë dhe të provoni të gjeni një skedë
 		të ngjashme pak më të vlefshme.</text>
 	</document>
@@ -1997,7 +1997,7 @@
 		<text format="b">Gjurmuesi BitTorrent Ra</text>
 		<newline gap="8"/>
 		<text>Serveri gjurmues BitTorrent për këtë shkarkesë duket se është prishur ose
-		po keqfunksionon. Shareaza nuk mund të kontaktojë me të për të marrë
+		po keqfunksionon.  Shareaza nuk mund të kontaktojë me të për të marrë
 		listën e pikave.</text>
 	</document>
 	<!-- Upload help documents -->
@@ -2058,7 +2058,7 @@
 		<newline gap="8"/>
 		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klikoni për ndihmë shtesë</link>
 		<text>, ose për të shkarkuar softuere për riparimin e torrenteve.</text>
-	</document>
+  </document>
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Lista e serverit eDonkey është bosh</text>
 		<newline gap="8"/>
@@ -2212,7 +2212,7 @@
 	<tip id="ID_DOWNLOADS_LAUNCH" message="Parashikon në vend skedën e zgjedhur."/>
 	<tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Hap ose luan skedën e zgjedhur."/>
 	<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Parashikon aty për aty shkarkesën e zgjedhur."/>
-	<tip id="ID_DOWNLOADS_MONITOR" message="Hap një dritare për monitorimin e shkarkesës..."/>
+	<tip id="ID_DOWNLOADS_MONITOR" message="Hap dritaren për monitorimin e shkarkesës..."/>
 	<tip id="ID_DOWNLOADS_MOVE_DOWN" message="Lëviz poshtë në listën e përparësisë shkarkesën e zgjedhur."/>
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Lëviz lart në listën e përparësisë shkarkesën e zgjedhur."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Pushon shkarkesën e zgjedhur."/>
@@ -2242,7 +2242,7 @@
 	<tip id="ID_HELP_WEB_4" message="Viziton truallin"/>
 	<tip id="ID_HELP_WEB_5" message="Viziton truallin"/>
 	<tip id="ID_HELP_WEB_6" message="Viziton truallin"/>
-	<tip id="ID_HITMONITOR_CLEAR" message="Pastron zbutësin e monitorit të hiteve."/>
+	<tip id="ID_HITMONITOR_CLEAR" message="Pastron zbutësin e monitorimit të hiteve."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Pushon monitorimin e hiteve."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Kërkon në rrjet për termin e zgjedhur."/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="Lidhet te hosti i zgjedhur."/>
@@ -2253,7 +2253,7 @@
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="Tregon hostet në depot e Gnutella2."/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Tregon nyjet në horizont të Gnutella2."/>
 	<tip id="ID_HOSTCACHE_IMPORT" message="Importon listën me hostet e njohura, p.sh. skedën &quot;server.met&quot;..."/>
-	<tip id="ID_HOSTCACHE_PRIORITY" message="Provon të lidhet me serverin përpara serverave të tjerë."/>
+	<tip id="ID_HOSTCACHE_PRIORITY" message="Provon të lidhet me një server para të tjerëve."/>
 	<tip id="ID_HOSTCACHE_REMOVE" message="Fshin hostin e zgjedhur nga depoja e hosteve."/>
 	<tip id="ID_LIBRARY_ADD" message="Shton një dosje të re në librari..."/>
 	<tip id="ID_LIBRARY_ALBUM_DELETE" message="Fshin dosjen e zgjedhur me albume."/>
@@ -2344,9 +2344,9 @@
 	<tip id="ID_NEIGHBOURS_COPY" message="Kopjon një URI që të hapet hosti i zgjedhur."/>
 	<tip id="ID_NEIGHBOURS_DISCONNECT" message="Shkëput fqinjët e zgjedhur."/>
 	<tip id="ID_NEIGHBOURS_SETTINGS" message="Konfiguron kuadrot e rrjetit..."/>
-	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Hap një dritare të re Skuta Pakete për monitorimin e fqinjit."/>
-	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Hap një dritare të re Skuta Pakete për monitorimin e trafikut hyrës nga fqinji."/>
-	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Hap një dritare të re Skuta Pakete për monitorimin e trafikut dalës nga fqinji."/>
+	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Hap dritaren e re Skuta Pakete për monitorimin e fqinjit."/>
+	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Hap dritaren e re Skuta Pakete për monitorimin e trafikut hyrës nga fqinji."/>
+	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Hap dritaren e re Skuta Pakete për monitorimin e trafikut dalës nga fqinji."/>
 	<tip id="ID_NETWORK_AUTO_CLOSE" message="Shareaza do të mbyllet automatikisht kur transferimi të përfundojë."/>
 	<tip id="ID_NETWORK_BROWSE_TO" message="Shfleton një përdorues, duke shfaqur profilin dhe skedat që shpërndan..."/>
 	<tip id="ID_NETWORK_CONNECT" message="Lidhet në rrjet."/>
@@ -2390,7 +2390,7 @@
 	<tip id="ID_SECURITY_RESET" message="Rivendos numërimin e hiteve në rregullin e zgjedhur."/>
 	<tip id="ID_SYSTEM_CLEAR" message="Pastron ditarin e statusit."/>
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Regjistron shtypjen e kohës për secilën vijë."/>
-	<tip id="ID_SYSTEM_VERBOSE" message="Tregon një ditar me detaje të aktivititetit të sistemit."/>
+	<tip id="ID_SYSTEM_VERBOSE" message="Tregon një ditar me detaje për aktivitetet e sistemit."/>
 	<tip id="ID_TAB_CONNECT" message="Lidh ose shkëput rrjetin."/>
 	<tip id="ID_TAB_HELP" message="Jep ndihmë në përdorimin e Shareaza-s."/>
 	<tip id="ID_TAB_HOME" message="Rikthen faqen zyrtare të Shareaza-s"/>
@@ -2438,7 +2438,7 @@
 	<tip id="ID_VIEW_HELP" message="Tregon ose fsheh dritaren NDIHMË."/>
 	<tip id="ID_VIEW_HOSTS" message="Tregon ose fsheh dritaren DEPO HOSTI."/>
 	<tip id="ID_VIEW_LIBRARY" message="Tregon ose fsheh dritaren LIBRARI."/>
-	<tip id="ID_VIEW_MEDIA" message="Tregon ose fsheh dritaren MEDIA-LEXUESI."/>
+	<tip id="ID_VIEW_MEDIA" message="Tregon ose fsheh dritaren MEDIALEXUESI."/>
 	<tip id="ID_VIEW_NEIGHBOURS" message="Tregon ose fsheh dritaren HOSTET."/>
 	<tip id="ID_VIEW_PACKETS" message="Tregon ose fsheh dritaren SKUTA PAKETE."/>
 	<tip id="ID_VIEW_RESULTS_MONITOR" message="Tregon ose fsheh dritaren MONITORI I HITEVE."/>
@@ -2446,7 +2446,7 @@
 	<tip id="ID_VIEW_SECURITY" message="Tregon ose fsheh dritaren SIGURI."/>
 	<tip id="ID_VIEW_SYSTEM" message="Tregon ose fsheh dritaren SISTEMI."/>
 	<tip id="ID_VIEW_TABBED" message="Përdor Shareaza-n në mënyrë të avancuar të Lidhur (Shtëpi, Librari, Media, Transferoni, Rrjeti)."/>
-	<tip id="ID_VIEW_TRAFFIC" message="Tregon ose fsheh dritaren GRAFIKË."/>
+	<tip id="ID_VIEW_TRAFFIC" message="Tregon ose fsheh dritaren GRAFIKËT."/>
 	<tip id="ID_VIEW_UPLOADS" message="Tregon ose fsheh dritaren NGARKIMI."/>
 	<tip id="ID_VIEW_WINDOWED" message="Përdor Shareaza-n në mënyrë të avancuar me Dritare."/>
 	<tip id="ID_WINDOW_CASCADE" message="Zgjeron gjithë dritaret e hapura që ekrani të mbushet."/>
@@ -2465,7 +2465,7 @@
 </commandTips>
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
-	<tip id="IDC_THROTTLE_MODE" message="Në mënyrën maksimale shtrirja e bandës nuk do e kalojë vlerën e përcaktuar. Në mënyrën mesatare do të luhatet midis vlerës në të dyja anët."/>
+	<tip id="IDC_THROTTLE_MODE" message="Në mënyrën maksimale shtrirja e bandës nuk do e kalojë vlerën e përcaktuar. Në mënyrën mesatare ka një luhatje midis vlerës në të dyja anët."/>
 	<tip id="IDC_SHARE_PARTIALS" message="Ky kuadro nuk ka efekt në shkarkesat që kanë nisur më parë, gjithashtu përbuzet nëse skeda ka hash eDonkey dhe nëse aktivizohet rrjeti eDonkey ose nëse është një torrent.{n}Gjithsesi, ky kuadro nuk përbuzet nëse shkarkesa pushon.{n}{n}KUJDES: Përdoreni këtë mundësi vetëm në rast nevoje të vërtetë. Nëse abuzoni me mundësinë, mund të dëboheni."/>
 </controlTips>
 <!-- Localised Strings -->
@@ -2473,21 +2473,21 @@
 	<string id="WINDOW_MAIN" value="Shareaza"/>
 	<string id="WINDOW_SYSTEM" value="Sistemi"/>
 	<string id="WINDOW_NEIGHBOURS" value="Hostet"/>
-	<string id="WINDOW_PACKET" value="Skuta Pakete"/>
-	<string id="WINDOW_HOSTCACHE" value="Depo Hosti"/>
+	<string id="WINDOW_PACKET" value="Paketat"/>
+	<string id="WINDOW_HOSTCACHE" value="Depot"/>
 	<string id="WINDOW_SEARCHMONITOR" value="Monitori i Kërkimeve"/>
 	<string id="WINDOW_SEARCH" value="Kërkoni"/>
 	<string id="WINDOW_HITMONITOR" value="Monitori i Hiteve"/>
 	<string id="WINDOW_DOWNLOADS" value="Shkarkimi"/>
 	<string id="WINDOW_LIBRARY" value="Librari"/>
 	<string id="WINDOW_UPLOADS" value="Ngarkimi"/>
-	<string id="WINDOW_TRAFFIC" value="Grafikë"/>
+	<string id="WINDOW_TRAFFIC" value="Grafikët"/>
 	<string id="WINDOW_CHAT" value="Chat"/>
 	<string id="WINDOW_SECURITY" value="Siguri"/>
-	<string id="WINDOW_DISCOVERY" value="Shërbime Zbulimi"/>
+	<string id="WINDOW_DISCOVERY" value="Shërbimet Zbuluese"/>
 	<string id="WINDOW_BROWSEHOST" value="Shfleto"/>
 	<string id="WINDOW_HOME" value="Qendra Shareaza"/>
-	<string id="WINDOW_MEDIA" value="Media-Lexuesi"/>
+	<string id="WINDOW_MEDIA" value="Lexuesi"/>
 	<string id="WINDOW_SEARCHPAD" value="Kërko"/>
 	<string id="WINDOW_HELP" value="Ndihmë në Shareaza"/>
 	<string id="7000" value="A jeni i sigurt që ky filtër të fshihet?"/>
@@ -2512,11 +2512,11 @@
 	<string id="8010" value="Ky është një version i paralëshuar i Shareaza dhe periudha beta e testimit ka përfunduar. Ju lutemi shkarkoni lëshimin e plotë, zyrtar, në http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Ndryshimi i pamjes do të mbyllë gjithë dritaret e hapura. A jeni i sigurt për këtë?"/>
 	<string id="8012" value="Informacion mbi Torrentin"/>
-	<string id="8060" value="Mënyrë Nyje/Ultrapikë me %lu hoste. %s në librarinë lokale."/>
-	<string id="8061" value="Mënyrë Ultrapikë me %lu hoste. %s në librarinë lokale."/>
-	<string id="8062" value="Mënyrë Nyje me %lu hoste. %s në librarinë lokale."/>
+	<string id="8060" value="Mënyrë Nyje/Ultrapikë me %lu hoste.  %s në librarinë lokale."/>
+	<string id="8061" value="Mënyrë Ultrapikë me %lu hoste.  %s në librarinë lokale."/>
+	<string id="8062" value="Mënyrë Nyje me %lu hoste.  %s në librarinë lokale."/>
 	<string id="8063" value="I Lidhur. %s në librarinë lokale."/>
-	<string id="8064" value="I Lidhur në %lu hoste. %s në librarinë lokale."/>
+	<string id="8064" value="I Lidhur në %lu hoste.  %s në librarinë lokale."/>
 	<string id="8065" value="Po lidhem në rrjet..."/>
 	<string id="8066" value="Nuk jeni i Lidhur në Rrjet."/>
 	<string id="8067" value="%s brenda : %s jashtë [S:%I64i/N:%I64i]"/>
@@ -2575,7 +2575,7 @@
 	<string id="8176" value="Kërkoni në Shareaza"/>
 	<string id="8177" value="Shkruani fjalët kyçe që doni të kërkoni:"/>
 	<string id="8178" value="Çfarë lloj skede është?"/>
-	<string id="8179" value="(Pastroje Historinë Kërkimore)"/>
+	<string id="8179" value="(Pastro Historinë Kërkimore)"/>
 	<string id="8180" value="Përmasa e skedës të jetë nga"/>
 	<string id="8181" value="&#160;në"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza po krijon hashe për %i skeda:"/>
@@ -2640,7 +2640,7 @@
 	<string id="8335" value="Burimet për këtë skedë kanë fajruoll"/>
 	<string id="8336" value="Burimet për këtë skedë mund të jenë të paqëndrueshme"/>
 	<string id="8337" value="I pabesë"/>
-	<string id="13000" value="A jeni i sigurt se doni të fshini rregullat e zgjedhur të sigurisë? Kjo nuk mund të çbëhet."/>
+	<string id="13000" value="A jeni i sigurt se doni të fshini rregullat e zgjedhur të sigurisë?  Kjo nuk mund të çbëhet."/>
 	<string id="13001" value="Skedat që shpërndahen në Internet"/>
 	<string id="16063" value="Përparimi UPnP i portit dështoi pas 10 orvatjesh."/>
 	<string id="16064" value="Po niset bërthama e rrjetit Shareaza..."/>
@@ -2746,14 +2746,14 @@
 	<string id="16289" value="Sending push request for download &quot;%s&quot;..."/>
 	<string id="16290" value="Download host %s responded with a different, but useful range (%I64i-%I64i) of &quot;%s&quot;."/>
 	<string id="16291" value="Moved &quot;%s&quot; to &quot;%s&quot;, download complete."/>
-	<string id="16292" value="Couldn't move download &quot;%s&quot; to &quot;%s&quot;. Check that the incomplete file is not in use, and that your downloads folder exists and is writable."/>
+	<string id="16292" value="Couldn't move download &quot;%s&quot; to &quot;%s&quot;.  Check that the incomplete file is not in use, and that your downloads folder exists and is writable."/>
 	<string id="16293" value="Resolving &quot;%s&quot; to download &quot;%s&quot;..."/>
 	<string id="16294" value="Unable to resolve &quot;%s&quot;."/>
 	<string id="16295" value="Boosting download &quot;%s&quot; by removing bandwidth caps."/>
 	<string id="16296" value="Successfully verified download &quot;%s&quot;."/>
 	<string id="16297" value="WARNING: Download &quot;%s&quot; failed verification, it may not be the file you intended to download!"/>
 	<string id="16298" value="Download host %s is busy, waiting in queue at position #%i of %i (&quot;%s&quot;)."/>
-	<string id="16299" value="Are you sure you want to clear all paused downloads? Once a download has been cleared from the Downloads window, it cannot be resumed."/>
+	<string id="16299" value="Are you sure you want to clear all paused downloads?  Once a download has been cleared from the Downloads window, it cannot be resumed."/>
 	<string id="16300" value="Are you sure you want to delete the download &quot;%s&quot;?"/>
 	<string id="16301" value="Requesting tiger-tree volume for &quot;%s&quot; from %s..."/>
 	<string id="16302" value="Download host %s could not satisfy the tiger-tree request."/>
@@ -2816,7 +2816,7 @@
 	<string id="16359" value="Offline queued upload host %s expired, removing."/>
 	<string id="16360" value="Refusing upload of &quot;%s&quot; to %s (%s), all matching queues are full."/>
 	<string id="16361" value="Refusing upload to %s (%s), network disabled."/>
-	<string id="16362" value="eDonkey uploads should not be cancelled. Are you sure you want to cancel this upload?"/>
+	<string id="16362" value="eDonkey uploads should not be cancelled.  Are you sure you want to cancel this upload?"/>
 	<string id="16363" value="Torrent Uploads"/>
 	<string id="16364" value="Completed Uploads"/>
 	<string id="16365" value="Are you sure you want to cancel/abort every download in this group?"/>
@@ -2833,19 +2833,19 @@
 	<string id="16376" value="All Files"/>
 	<string id="16377" value="HTTP Guard"/>
 	<string id="16379" value="Library Files"/>
-	<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."/>
+	<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer.  Ensure you know what the file is before launching it."/>
 	<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
 	<string id="16386" value="Editing metadata of %i files."/>
-	<string id="16387" value="The file &quot;%s&quot; has not yet been hashed. Please wait for the file to be hashed, and then try again."/>
-	<string id="16388" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
+	<string id="16387" value="The file &quot;%s&quot; has not yet been hashed.  Please wait for the file to be hashed, and then try again."/>
+	<string id="16388" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 	<string id="16389" value="Are you sure you want to permenantly delete the %i selected file(s) ?\n\nThe files will be moved to your &quot;recycle bin&quot; if it is enabled."/>
-	<string id="16390" value="You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the &quot;/ADD&quot; argument."/>
-	<string id="16391" value="You're not connected to the network."/>
-	<string id="16392" value="Click the Connect button to get started."/>
-	<string id="16393" value="The file &quot;%s&quot; failed a hash verification test, and might not be the file you intended to download. Are you sure you want to open it?"/>
+	<string id="16390" value="You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp.  Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the &quot;/ADD&quot; argument."/>
+	<string id="16391" value="Ju nuk jeni i lidhur në rrjet."/>
+	<string id="16392" value="Shtypni butonin Lidhu që të nisni."/>
+	<string id="16393" value="The file &quot;%s&quot; failed a hash verification test, and might not be the file you intended to download.  Are you sure you want to open it?"/>
 	<string id="16394" value="Would you like to remove the &quot;potentially unsafe&quot; attribute from this file?"/>
-	<string id="16395" value="Your downloaded files folder &quot;%s&quot; is not yet in your library.\n\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\n\nWould you like to add your downloaded files folder to your library now?"/>
-	<string id="16396" value="Your downloads folder has been added to your library. Would you like to share it too?"/>
+	<string id="16395" value="Your downloaded files folder &quot;%s&quot; is not yet in your library.\n\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading.  Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\n\nWould you like to add your downloaded files folder to your library now?"/>
+	<string id="16396" value="Your downloads folder has been added to your library.  Would you like to share it too?"/>
 	<string id="16397" value="Are you sure you want to delete the %i selected album folder(s) ?\n\nNote that this action does not delete the files within the album folders, only the folders themselves."/>
 	<string id="16398" value="Shareaza could not rename:\n\n%s\nto\n%s"/>
 	<string id="16399" value="Shareaza could not delete the file:\n\n%s"/>
@@ -2901,7 +2901,7 @@
 	<string id="16768" value="Received URL &quot;%s&quot;"/>
 	<string id="16769" value="Unable to parse URL: Shareaza does not understand this URL."/>
 	<string id="16770" value="Unable to display URL action dialog because Shareaza is busy."/>
-	<string id="16771" value="You already have the file &quot;%s&quot; in your library. Do you want to download it anyway?"/>
+	<string id="16771" value="You already have the file &quot;%s&quot; in your library.  Do you want to download it anyway?"/>
 	<string id="16772" value="Hosti:"/>
 	<string id="16773" value="Porti:"/>
 	<string id="16774" value="&amp;Lidhu"/>
@@ -2920,14 +2920,14 @@
 	<string id="16802" value="Ju nuk keni përcaktuar asnjë dosje për shpërndarje. A jeni i sigurt?"/>
 	<string id="16803" value="Dosja që po shpërndani shpërndahet që më parë si pjesë e një tjetër dosje të shpërndarë:\n\n%s"/>
 	<string id="16804" value="Në profilin e përdoruesit nuk keni shkruar asnjë emër."/>
-	<string id="16805" value="Në profilin e përdoruesit nuk keni shkruar vendin tuaj.\n\nËshtë mirë që ta shkruani atë që përdoruesit e tjerë ta shohin se nga cili vend jeni. Vëreni se hyrja e vendit nuk zbulon ndonjë informacion me rrezik.\n\nA jeni i sigurt se doni të vijoni pa shkruar vendin nga jeni?"/>
+	<string id="16805" value="Në profilin e përdoruesit nuk keni shkruar vendin tuaj.\n\nËshtë mirë që ta shkruani atë që përdoruesit e tjerë ta shohin se nga cili vend jeni.  Vëreni se hyrja e vendit nuk zbulon ndonjë informacion me rrezik.\n\nA jeni i sigurt se doni të vijoni pa shkruar vendin nga jeni?"/>
 	<string id="16806" value="You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP and UDP ports %i to your local PC."/>
 	<string id="16807" value="Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
-	<string id="16808" value="You have not selected your age and gender. Are you sure you want to continue without doing this?"/>
+	<string id="16808" value="You have not selected your age and gender.  Are you sure you want to continue without doing this?"/>
 	<string id="16809" value="D&amp;il"/>
 	<string id="16810" value="vjeç"/>
 	<string id="16811" value="Automatike"/>
-	<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
+		<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
 	<string id="16813" value="Please wait: Updating discovery services..."/>
 	<string id="16814" value="Please wait: Updating eDonkey server list..."/>
 	<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>
@@ -2935,8 +2935,8 @@
 	<string id="16817" value="Windows doesn't support paths longer than 256 characters.\nPlease select a folder with a shorter path."/>
 	<string id="16818" value="The complete and incomplete folders should not be the same"/>
 	<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
-	<string id="16864" value="Querying host discovery services..."/>
-	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
+	<string id="16864" value="Po hetohet shërbimi zbulues i hostit..."/>
+	<string id="16865" value="Po hetohet shërbimi zbulues &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
 	<string id="16867" value="Discovery service &quot;%s&quot; failed, fail count %i."/>
 	<string id="16868" value="Discovery service &quot;%s&quot; has failed %i times, removing."/>
@@ -2958,13 +2958,13 @@
 	<string id="16942" value="Closing browse user connection to %s."/>
 	<string id="16943" value="Po shfletoj %s"/>
 	<string id="16944" value="U gjetën %i skeda të shpërndara në librarinë e %s."/>
-	<string id="16991" value="Media-Lexuesi Shareaza"/>
-	<string id="16992" value="Shareaza could not instantiate its MediaServices plugin. Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."/>
+	<string id="16991" value="Medialexuesi Shareaza"/>
+	<string id="16992" value="Shareaza could not instantiate its MediaServices plugin.  Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."/>
 	<string id="16993" value="Gjithë Skedat Mediatike|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Listë|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Skedë Zanore|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Skedë Filmike|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Kolonë Zanore në CD|*.cda|Skedë MIDI|*.mid;*.rmi;*.midi|Gjithë Skedat|*.*||"/>
 	<string id="16994" value="Nuk mund të ngarkohet kjo skedë mediatike &quot;%s&quot;"/>
 	<string id="16995" value="The file may be damaged, or you may not have the necessary codecs to play it."/>
 	<string id="16996" value="Part of this file could not be played, you may need to download additional codecs."/>
-	<string id="16997" value="There is no file playing. Double-click a media file in your library to play it."/>
+	<string id="16997" value="There is no file playing.  Double-click a media file in your library to play it."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 	<string id="16999" value="L I S T A"/>
 	<string id="17024" value="Initiating a connection to %s..."/>
@@ -2983,9 +2983,9 @@
 	<string id="17037" value="The chat connection was lost."/>
 	<string id="17038" value="Lidhja u mbyll."/>
 	<string id="17039" value="Unable to request a push connection from %s, no route available."/>
-	<string id="17040" value="Cannot send message, you are not connected. Shareaza is trying to connect..."/>
+	<string id="17040" value="Cannot send message, you are not connected.  Shareaza is trying to connect..."/>
 	<string id="17041" value="Cannot send message, a connection has not been established yet."/>
-	<string id="17042" value="You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"/>
+	<string id="17042" value="You have not yet filled in your user profile.  You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"/>
 	<string id="17043" value="Granted upload priority to host %s."/>
 	<string id="17100" value="Gnutella: Peer-to-Peer Connection"/>
 	<string id="17101" value="Gnutella: Leaf-to-Ultrapeer Connection"/>
@@ -3065,13 +3065,13 @@
 	<string id="17485" value="Received BitTorrent tracker response for &quot;%s&quot;, %i new sources."/>
 	<string id="17486" value="Initiating BitTorrent client coupling with %s..."/>
 	<string id="17487" value="Established BitTorrent coupling with %s, handshaking..."/>
-	<string id="17488" value="You have changed the tracker URL for this torrent. Are you sure you want to save this change?\n\nAn invalid tracker URL may prevent further downloading."/>
+	<string id="17488" value="You have changed the tracker URL for this torrent.  Are you sure you want to save this change?\n\nAn invalid tracker URL may prevent further downloading."/>
 	<string id="17489" value="BitTorrent coupling with %s is extended protocol, identified &quot;%s&quot;."/>
 	<string id="17490" value="Received %i new BitTorrent sources from %s."/>
 	<string id="17491" value="The torrent &quot;%s&quot; is already on your download list, and cannot be seeded."/>
-	<string id="17492" value="Error loading the torrent file &quot;%s&quot;. This may not be a valid torrent."/>
+	<string id="17492" value="Error loading the torrent file &quot;%s&quot;.  This may not be a valid torrent."/>
 	<string id="17493" value="Unable to create BitTorrent share file &quot;%s&quot;."/>
-	<string id="17494" value="Ky torrent përfshin skedën &quot;%s&quot;, të cilën Shareaza nuk e gjen dot në librarinë tuaj. Nëse mundeni, lëvizeni skedën në të njëjtën dosje me torrentin dhe provoni përsëri."/>
+	<string id="17494" value="Ky torrent përfshin skedën &quot;%s&quot;, të cilën Shareaza nuk e gjen dot në librarinë tuaj.  Nëse mundeni, lëvizeni skedën në të njëjtën dosje me torrentin dhe provoni përsëri."/>
 	<string id="17495" value="This torrent includes the file &quot;%s&quot; which should be %s, however your version of the file is %s."/>
 	<string id="17496" value="An error occurred while copying from &quot;%s&quot; to a BitTorrent share file."/>
 	<string id="17497" value="An unknown error occurred while trying to seed &quot;%s&quot;."/>
@@ -3086,23 +3086,23 @@
 	<string id="17511" value="Çiftëzimi BitTorrent me %s nuk u pranua, u arritën lidhjet maksimale."/>
 	<string id="17512" value="Torrent privat"/>
 	<string id="17513" value="Gabim kodimi"/>
-	<string id="18496" value="Ju kryet ndryshime në fushën e emrit. A jeni i sigurt se doni të riemërtoni shkarkesën?"/>
-	<string id="18497" value="Ju shkruat një vlerë SHA1, gjithsesi nuk ka vlerë. Ju lutemi rishikoni dhe provoni përsëri."/>
-	<string id="18498" value="Ju shkruat një vlerë-rrënjë tiger-tree, gjithsesi nuk ka vlerë. Ju lutemi rishikoni dhe provoni përsëri."/>
-	<string id="18499" value="Ju shkruat një vlerë hashi për eDonkey, gjithsesi nuk ka vlerë. Ju lutemi rishikoni dhe provoni përsëri."/>
-	<string id="18500" value="Ju dhatë një vlerë hashi SHA1 që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë. A jeni i sigurt se tani doni të ndryshoni hashin SHA1?"/>
-	<string id="18501" value="Ju dhatë një vlerë-rrënjë hashi tiger-tree që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë. A jeni i sigurt se tani doni të ndryshoni hash-rrënjën tiger-tree?"/>
-	<string id="18502" value="Ju dhatë një vlerë hashi eDonkey që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë. A jeni i sigurt se tani doni të ndryshoni hashin eDonkey?"/>
-	<string id="18503" value="A jeni i sigurt se doni të harroni statusin aktual të verifikimit? Gjithë të dhënat e shkarkuara do të trajtohen si të pabesueshme, dhe hash-pemët e depozituara do të shpërbëhen."/>
+	<string id="18496" value="Ju kryet ndryshime në fushën e emrit.  A jeni i sigurt se doni të riemërtoni shkarkesën?"/>
+	<string id="18497" value="Ju shkruat një vlerë SHA1, gjithsesi nuk ka vlerë.  Ju lutemi rishikoni dhe provoni përsëri."/>
+	<string id="18498" value="Ju shkruat një vlerë-rrënjë tiger-tree, gjithsesi nuk ka vlerë.  Ju lutemi rishikoni dhe provoni përsëri."/>
+	<string id="18499" value="Ju shkruat një vlerë hashi për eDonkey, gjithsesi nuk ka vlerë.  Ju lutemi rishikoni dhe provoni përsëri."/>
+	<string id="18500" value="Ju dhatë një vlerë hashi SHA1 që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  A jeni i sigurt se tani doni të ndryshoni hashin SHA1?"/>
+	<string id="18501" value="Ju dhatë një vlerë-rrënjë hashi tiger-tree që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  A jeni i sigurt se tani doni të ndryshoni hash-rrënjën tiger-tree?"/>
+	<string id="18502" value="Ju dhatë një vlerë hashi eDonkey që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  A jeni i sigurt se tani doni të ndryshoni hashin eDonkey?"/>
+	<string id="18503" value="A jeni i sigurt se doni të harroni statusin aktual të verifikimit?  Gjithë të dhënat e shkarkuara do të trajtohen si të pabesueshme, dhe hash-pemët e depozituara do të shpërbëhen."/>
 	<string id="18504" value="A jeni i sigurt se doni të harroni gjithë burimet për shkarkesën e zgjedhur?"/>
-	<string id="18505" value="Ju lutemi shkruani një kufi të vlefshëm për të fshirë. Fusha &quot;nga&quot; është bajti i parë për t'u fshirë, fusha &quot;fundit&quot; është bajti i fundit për t'u fshirë."/>
+	<string id="18505" value="Ju lutemi shkruani një kufi të vlefshëm për të fshirë.  Fusha &quot;nga&quot; është bajti i parë për t'u fshirë, fusha &quot;fundit&quot; është bajti i fundit për t'u fshirë."/>
 	<string id="18506" value="Nuk mund të fshij nga shkarkesa kufirin e zgjedhur sepse asnjë pjesë e kufirit nuk është e pranishme."/>
 	<string id="18507" value="Fshiva %I64i bajte nga shkarkesa."/>
 	<string id="18508" value="Po këpus burimin e shkarkesës %s për &quot;%s&quot; sepse pozicioni në radhë %i është mjaft i lartë."/>
-	<string id="18509" value="Nuk mund të supozoni se kjo shkarkesë ka përfunduar dhe ta riverifikoni atë, pasi nuk keni akoma ndonjë të dhënë të pjesshme verifikuese, si vëllimin tiger-tree, hashsetin eDonkey ose atë BitTorrent. Pa informacion verifikues shkarkesa nuk mund të riverifikohet."/>
-	<string id="18510" value="A jeni i sigurt se doni të supozoni se kjo shkarkesë ka përfunduar dhe do e riverifikoni atë? E tërë skeda do të merret parasysh dhe Shareaza do të pranojë pjesë të cilat e kalojnë verifikimin dhe do të rishkarkojë pjesët që nuk e kalojnë atë."/>
+	<string id="18509" value="Nuk mund të supozoni se kjo shkarkesë ka përfunduar dhe ta riverifikoni atë, pasi nuk keni akoma ndonjë të dhënë të pjesshme verifikuese, si vëllimin tiger-tree, hashsetin eDonkey ose atë BitTorrent.  Pa informacion verifikues shkarkesa nuk mund të riverifikohet."/>
+	<string id="18510" value="A jeni i sigurt se doni të supozoni se kjo shkarkesë ka përfunduar dhe do e riverifikoni atë?  E tërë skeda do të merret parasysh dhe Shareaza do të pranojë pjesë të cilat e kalojnë verifikimin dhe do të rishkarkojë pjesët që nuk e kalojnë atë."/>
 	<string id="18511" value="Ju kryet ndryshime në përmasën e skedës. A jeni i sigurt se doni të ndryshoni përmasën për këtë shkarkesë?"/>
-	<string id="19000" value="Hyrja e largët është çaktivizuar."/>
+	<string id="19000" value="Hyrja në largësi është çaktivizuar."/>
 	<string id="19001" value="Duhet të zgjidhni një emër përdoruesi dhe fjalëkalimin."/>
 	<string id="19002" value="Nuk mund të pranoj lidhjet, URLi pa vlerë."/>
 	<string id="20000" value="Asnjë URN me vlerë"/>
@@ -3198,14 +3198,14 @@
 		<control caption="Raporto në:"/>
 		<control caption="bajt/sekondë|bajte/sekondë|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Shkarkimi:"/>
-		<control caption="Zgjeroji automatikisht shkarkesat e reja"/>
+		<control caption="Zgjero automatikisht shkarkesat e reja"/>
 		<control caption="Shfaqe të thjeshtë shufrën e progresit"/>
 		<control caption="_Kërkimi:"/>
-		<control caption="Zgjeroji skedat me shumë burime"/>
+		<control caption="Zgjero skedat me shumë burime"/>
 		<control caption="Kalo tek pamja Transferimi kur shkarkon"/>
 		<control caption="Fshehe shufrën anësore sapo kërkimi nis"/>
-		<control caption="Filtroji përmbajtjet për të rritur"/>
-		<control caption="K_ëshilla:"/>
+		<control caption="Filtro përmbajtjet për të rritur"/>
+		<control caption="K_ëshillat:"/>
 		<control/>
 		<control caption="Vonesa (ms):"/>
 		<control/><control/>
@@ -3220,40 +3220,40 @@
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Librari">
 		<control caption="_Mundësi:"/>
 		<control caption="Mbaje mend pamjen e dosjes"/>
-		<control caption="Shikoji dosjet në librari"/>
+		<control caption="Shiko dosjet në librari"/>
 		<control caption="Grirje e shpejtë (përdor mjaft CPU)"/>
 		<control caption="Të tjerët i shfletojnë shpërndarjet"/>
-		<control caption="_Skeda të Fundit:"/>
+		<control caption="_Skedat e Fundit:"/>
 		<control caption="Mbaj mend:"/>
 		<control/><control/>
 		<control caption="skeda"/>
 		<control caption="Deri në:"/>
 		<control/><control/>
 		<control caption="ditë"/>
-		<control caption="Pastroje Historinë"/>
-		<control caption="_Hapi pa Rrezik:"/>
+		<control caption="Pastro Historinë"/>
+		<control caption="_Nuk Rrezikojnë:"/>
 		<control/>
 		<control caption="_Shto"/>
 		<control caption="_Fshije"/>
-		<control caption="_Kurrë Mos Shpërnda:"/>
+		<control caption="_Nuk Shpërndahen:"/>
 		<control/>
 		<control caption="_Shto"/>
 		<control caption="_Fshije"/>
-		<control caption="Depozitimi i _Koleksioneve:"/>
+		<control caption="Depozitimi për _Koleksionet:"/>
 		<control/><control/>
 		<control caption="Krijo skeda fantazmë kur fshin"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Lexuesi">
 		<control caption="_Mundësi:"/>
 		<control/>
-		<control caption="Media-Lexuesi në Shareaza do të LEXOJË llojet e skedave më poshtë"/>
-		<control caption="Media-Lexuesi në Shareaza do të vë në radhë llojet e skedave më poshtë"/>
+		<control caption="Medialexuesi në Shareaza do të LEXOJË llojet e skedave më poshtë"/>
+		<control caption="Medialexuesi në Shareaza do të vë në radhë llojet e skedave më poshtë"/>
 		<control caption="_Lloji i Skedave:"/>
 		<control/>
 		<control caption="_Shto"/>
 		<control caption="_Fshije"/>
-		<control caption="Priza e _Vegimit Audio:"/>
-		<control caption="_Zgjidhni Prizën..."/>
+		<control caption="Prizat e _Vegimit Zanor:"/>
+		<control caption="_Zgjidhi Prizat..."/>
 		<control caption="Trajtimi i _Medias"/>
 		<control caption="Zgjidhni Trajtuesin e Medias:"/>
 		<control caption="Kujdes: Nëse zgjidhni një Trajtues të Medias të jashtëm do të çaktivizoni automatikisht gjithë Prizat e Medias dhe të Vegimit!"/>
@@ -3261,15 +3261,15 @@
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Komuniteti">
 		<control caption="_Profili Im:"/>
 		<control caption="Profili si Përdorues i Gnutella-s mund të përdoret që të ndani me të tjerët informacione rreth vetes, interesave dhe skedave/trojeve që rekomandoni."/>
-		<control caption="Editoni Profilin"/>
+		<control caption="Edito Profilin"/>
 		<control caption="_Chat-i:"/>
-		<control caption="Lejoje chat-in pikë më pikë me klientët e pajtueshëm"/>
-		<control caption="Lejoje chat-in në të gjitha rrjetet"/>
-		<control caption="Filtroji mesazhet me spame"/>
-		<control caption="Censuroje blasfeminë"/>
+		<control caption="Lejo chat-in pikë më pikë me klientët e pajtueshëm"/>
+		<control caption="Lejo chat-in në të gjitha rrjetet"/>
+		<control caption="Filtro mesazhet me spame"/>
+		<control caption="Censuro blasfeminë"/>
 	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Rrjeti">
-		<control caption="Trajtimi i Linkeve _Pikë më Pikë:"/>
+		<control caption="Trajtimi për Linket _Pikë më Pikë:"/>
 		<control caption="Shareaza do të hapë këto lloje linkesh:"/>
 		<control caption="Magnet ( magnet: )"/>
 		<control caption="Gnutella ( gnutella: )"/>
@@ -3281,11 +3281,11 @@
 		<control/>
 		<control caption="_Shto"/>
 		<control caption="_Fshije"/>
-		<control caption="Priza e menaxherit shkarkues do të orvatet të shkarkojë vetëm llojet e skedave në listë. Llojet e tjera do të trajtohen nga shfletuesi juaj i rrjetit. Shareaza duhet të jetë në veprim që shkarkesat të menaxhohen."/>
+		<control caption="Priza e menaxherit shkarkues do të orvatet të shkarkojë vetëm llojet e skedave në listë. Llojet e tjera do të trajtohen nga shfletuesi juaj i rrjetit. Shareaza duhet të veprojë për të menaxhuar shkarkesat."/>
 	</dialog>
 	<dialog name="CInternetSettingsGroup" caption="Interneti"/>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Lidhja">
-		<control caption="Adresa _Përbrenda:"/>
+		<control caption="Adresë _Përbrenda:"/>
 		<control caption="Adresa:"/>
 		<control caption="Auto"/>
 		<control caption="Shpejtësi:"/>
@@ -3293,46 +3293,46 @@
 		<control caption="Porti:"/>
 		<control/>
 		<control caption="Rastësi"/>
-		<control caption="Forcoje lidhjen tek kjo adresë"/>
-		<control caption="Adresa _Përjashtë:"/>
+		<control caption="Forco lidhjen tek kjo adresë"/>
+		<control caption="Adresë _Përjashtë:"/>
 		<control caption="Adresa:"/>
 		<control caption="Auto"/>
 		<control caption="Shpejtësi:"/>
 		<control/>
 		<control caption="M_undësi:"/>
-		<control caption="Mund t'i pranojë lidhjet e ardhura"/>
+		<control caption="Prano lidhjet që vijnë"/>
 		<control/>
-		<control caption="Përbuzi adresat me IP private/lokale "/>
-		<control caption="Lejoje ndërtimin e mjeteve lidhëse UPnP"/>
-		<control caption="_Jashtëkoha:"/>
+		<control caption="Përbuze adresën me IP private/lokale "/>
+		<control caption="Lejo ndërtimin e mjeteve lidhëse UPnP "/>
+		<control caption="_Jashtëkohë:"/>
 		<control caption="Lidhja:"/>
 		<control/><control/>
-		<control caption="Shtrëngimi i Dorës:"/>
+		<control caption="Takimi i Dorës:"/>
 		<control/><control/>
 	</dialog>
-	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Shkarkesa">
-		<control caption="Depozitimi i Skedave të _Përfunduara:"/>
+	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Shkarkesat">
+		<control caption="Depozitimi për Skedat e _Përfunduara:"/>
 		<control/><control/>
-		<control caption="Depozitimi i Skedave të Përkohshme të _Papërfunduara:"/>
+		<control caption="Depozitimi për Skedat e Përkohshme të _Papërfunduara:"/>
 		<control/><control/>
 		<control caption="_Numri i Shkarkesave:"/>
 		<control caption="Skedat Maks.:"/>
 		<control/><control/>
 		<control caption="Shkarkesat Maks.:"/>
 		<control/><control/>
-		<control caption="Burimet për skedë:"/>
+		<control caption="Burimet për Skedë:"/>
 		<control/><control/>
 		<control caption="_Kufiri:"/>
 		<control caption="Banda Totale e Shkarkimit:"/>
 		<control/>
-		<control caption="Gjatësia Maks. e Pritjes në Radhë:"/>
+		<control caption="Gjatësi Maks. e Pritjes në Radhë:"/>
 		<control/><control/>
 		<control caption="Shkarko e ngarko vetëm nga rrjetet e lidhura."/>
 	</dialog>
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Ngarkesa">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Ngarkesat">
 		<control caption="_Mundësi:"/>
 		<control caption="Shpërndaji shkarkesat e REJA"/>
-		<control caption="Kufizoje shpërndarjen si 'nyje'"/>
+		<control caption="Kufizo shpërndarjen si 'nyje'"/>
 		<control caption="Shpërndaji skedat e parashikimit"/>
 		<control caption="Kufiri për hostin unik:"/>
 		<control/><control/>
@@ -3353,23 +3353,23 @@
 		<control caption="(ndryshimet kanë efekt menjëherë)"/>
 	</dialog>
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Largësi">
-		<control caption="_Guida:"/>
-		<control caption="Hyrja në Largësi ju lejon që ta lini Shareaza-n të veprojë në PC-në tuaj duke e kontrolluar me një shfletues rrjeti të jashtëm. Që të përdorni këtë veçori duhet të jeni të aftë të pranoni lidhje hyrëse (d.m.th. konfiguroni routerin siç duhet etj.)."/>
-		<control caption="_Leja:"/>
-		<control caption="Lejoje Hyrjen në Largësi në Shareaza:"/>
+		<control caption="_Guidë:"/>
+		<control caption="Hyrja në Largësi bën që Shareaza të lihet të veprojë në PC e të kontrollohet me një shfletues rrjeti të jashtëm. Që kjo veçori të përdoret, duhet të jeni i aftë të pranoni lidhjet hyrëse (d.m.th. konfiguroni routerin si duhet etj.)."/>
+		<control caption="_Leje:"/>
+		<control caption="Lejo Hyrjen në Largësi të Shareaza-s:"/>
 		<control/>
-		<control caption="_Kredenciale:"/>
+		<control caption="_Kredencialet:"/>
 		<control caption="Përdoruesi:"/>
 		<control/>
 		<control caption="Fjalëkalimi:"/>
 		<control/>
 	</dialog>
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Planifikuesi">
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Planifikimi">
 		<control caption="_Mundësi:"/>
-		<control caption="_Lejoje Planifikuesin"/>
+		<control caption="_Lejo Planifikuesin"/>
 		<control/><control/>
 		<control caption="Kur ka kufizime _Lidhu vetëm tek G2"/>
-		<control caption="Legjenda:"/>
+		<control caption="Legjendë:"/>
 		<control caption="Die"/>
 		<control caption="Hën"/>
 		<control caption="Mar"/>
@@ -3383,20 +3383,20 @@
 		<control caption="% e _shtrirjes së bandës nën kufi"/>
 		<control/>
 		<control caption="Ndihmë"/>
-		<control caption="Planifikuesi është projektuar që të lejojë vendosjen e kohës kur Shareaza do të lidhet e do të shkarkojë skeda. {n}{n}{n}Shënim: Nëse Shareaza hapet kur planifikuesi është aktiv, mund të shikoni që kuadrot ndryshojnë - Kjo është normale!-"/>
+		<control caption="Planifikuesi është projektuar që të lejojë vendosjen e kohës kur Shareaza do të lidhet dhe do të shkarkojë skeda. {n}{n}{n}Shënim: Nëse Shareaza hapet me planifikuesin si aktiv, mund t'i shikoni kuadrot të ndryshuar - Kjo është normale!-"/>
 	</dialog>
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Rrjeti">
-		<control caption="Shareaza është një aplikim skedë-shpërndarës me synim të përgjithshëm hapjen e sa më shumë rrjeteve P2P në një kohë. Në këtë faqe mund të zgjidhni në cilat rrjete P2P doni të lidheni, pastaj mund të rregulloni kuadro të caktuar për secilin rrjet."/>
+		<control caption="Shareaza është një aplikim skedëshpërndarës me synim të përgjithshëm hapjen e sa më shumë rrjeteve P2P në një kohë. Në këtë faqe mund të zgjidhni rrjetet P2P te të cilat doni të lidheni, pastaj mund të rregulloni kuadrot e caktuar për secilin rrjet."/>
 		<control caption="Rrjeti Gnutella2:"/>
-		<control caption="Rrjeti Gnutella2 është rrjeti parësor i Shareaza-s, i cili ofron shumë më tepër veçori dhe rendiment sesa çdo rrjet tjetër P2P (Rekomandohet fort)"/>
+		<control caption="Rrjeti Gnutella2 është rrjeti parësor i Shareaza-s, i cili ofron shumë më tepër veçori dhe rendiment se çdo rrjet tjetër P2P (Rekomandohet fort)"/>
 		<control caption="Lidhu tek Gnutella2 (G2)"/>
 		<control caption="Konfiguro Gnutella2"/>
 		<control caption="Rrjeti eDonkey:"/>
-		<control caption="Rrjeti eDonkey është një rrjet i famshëm me bazë serverin. Ndonëse nuk ka aq veçori sa Gnutella2, eDonkey ka një koleksion skedash mahnitës."/>
+		<control caption="Rrjeti eDonkey është rrjeti i famshëm me bazë një server. Ndonëse nuk ka aq veçori sa Gnutella2, eDonkey ka një koleksion mahnitës me skeda."/>
 		<control caption="Lidhu tek eDonkey"/>
 		<control caption="Konfiguro eDonkey"/>
 		<control caption="Rrjeti Origjinal Gnutella:"/>
-		<control caption="Edhe pse rrjeti origjinal Gnutella ka më pak veçori se Gnutella2, dhe ka më pak skeda se eDonkey, ai mbetet një burim me vlerë."/>
+		<control caption="Ndonëse rrjeti origjinal Gnutella ka më pak veçori se Gnutella2, dhe ka më pak skeda se eDonkey, ai mbetet një burim me vlerë."/>
 		<control caption="Lidhu tek Gnutella Origjinal"/>
 		<control caption="Konfiguro Gnutella1"/>
 	</dialog>
@@ -3425,7 +3425,7 @@
 		<control/><control/>
 		<control caption="Pikë në Pikë:"/>
 		<control/><control/>
-		<control caption="Ngjeshje _Linku:"/>
+		<control caption="Ngjeshjet e _Linkut:"/>
 		<control caption="Nyje në Gjethe"/>
 		<control caption="Gjethe në Nyje"/>
 		<control caption="Nyje në Nyje"/>
@@ -3435,46 +3435,46 @@
 		<control caption="Lidhu përherë te eDonkey"/>
 		<control caption="Lidhu sot te eDonkey"/>
 		<control caption="Kërkimi _Global:"/>
-		<control caption="Kërko servera të njohur të largët në depon e serverit:"/>
+		<control caption="Kërko serverat e njohur të largët në depon e serverave:"/>
 		<control caption="Ndale kërkimin pas:"/>
 		<control/><control/>
-		<control caption="rezultateve."/>
+		<control caption="rezultatesh."/>
 		<control caption="Merre dhe ridato server-listën nga serveri i lidhur"/>
-		<control caption="Linku i Lidhjeve të _Klientit:"/>
+		<control caption="Linku për Lidhjet e _Klientit:"/>
 		<control caption="Mos u lidh në më tepër se:"/>
 		<control/><control/>
 		<control caption="klientë të tjerë në eDonkey."/>
 		<control caption="_Mjetet e eDonkey:"/>
-		<control caption="Shkarko server-listën e eDonkey nga rrjeti:"/>
+		<control caption="Shkarko server-listën e eDonkey në rrjet:"/>
 		<control caption="Shkarko..."/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-		<control caption="_Ndërfaqja:"/>
-		<control caption="Shfaq elemente shtesë në ndërfaqen BitTorrent"/>
-		<control caption="Lidhje për _Shkarkim:"/>
+		<control caption="_Ndërfaqe:"/>
+		<control caption="Shfaqi elementet shtesë në ndërfaqen BitTorrent"/>
+		<control caption="Lidhjet për _Shkarkim:"/>
 		<control/><control/>
 		<control caption="torrente përnjëherë"/>
 		<control/><control/>
 		<control caption="lidhje me klientë"/>
-		<control caption="&#160;Pastroji torrentet e shkarkuara&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kur shpërndarja arrin"/>
+		<control caption="&#160;Pastro torrentet e shkarkuara&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kur shpërndarja arrin"/>
 		<control/><control/><control/>
 		<control caption="&#160;Parapëlqe burime nga torrenti"/>
-		<control caption="_FundLoja:"/>
-		<control caption="Lejoje mënyrën FundLojë kur torrentet përfundojnë"/>
-		<control caption="_Depozitimi i Torrenteve:"/>
+		<control caption="_FundLojë:"/>
+		<control caption="Lejo mënyrën FundLojë kur torrentet përfundojnë"/>
+		<control caption="_Depozitimi për Torrentet:"/>
 		<control/><control/>
 		<control caption="Krijuesi i _Torrenteve"/>
 		<control/><control/>
 		<control caption="Gjurmuesi Tipik:"/>
 		<control/>
 	</dialog>
-	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokolle">
-		<control caption="Eksploruesi i Protokollit Arkitekturor të Zakonshëm në Shareaza:"/>
+	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokollet">
+		<control caption="Eksploruesi i Protokollit Arkitekturor të Zakontë i Shareaza-s:"/>
 		<control/>
 	</dialog>
-	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Lëvore">
+	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Lëvoret">
 		<control/>
-		<control caption="Informacion mbi lëvoren:"/>
+		<control caption="Informacioni i lëvores:"/>
 		<control caption="Emri:"/>
 		<control caption="..."/>
 		<control caption="Autori:"/>
@@ -3485,9 +3485,9 @@
 		<control caption="Instalo..."/>
 		<control caption="Gjej më Tepër"/>
 	</dialog>
-	<dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="Priza">
+	<dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="Prizat">
 		<control/>
-		<control caption="Informacion mbi prizën:"/>
+		<control caption="Informacioni i prizës:"/>
 		<control caption="Emri:"/>
 		<control caption="..."/>
 		<control caption="Përshkrimi:"/>
@@ -3497,7 +3497,7 @@
 	</dialog>
 	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Përparime">
 		<control/>
-		<control caption="Veti të Kuadros:"/>
+		<control caption="Vetitë e Kuadros:"/>
 		<control caption="Vlera:"/>
 		<control/><control/>
 		<control caption="Përshkrimi:"/>
@@ -3510,18 +3510,18 @@
 		<control caption="Vetëm skeda të shkarkuara pjesërisht"/>
 		<control caption="Vetëm skeda të shpërndara në Librari"/>
 		<control caption="Edhe skeda të pjesshme, edhe të librarisë"/>
-		<control caption="Përmasa min. e skedë-burimit:"/>
+		<control caption="Përmasa min. e skedëburimit:"/>
 		<control/>
-		<control caption="Përmasa maks. e skedë-burimit:"/>
+		<control caption="Përmasa maks. e skedëburimit:"/>
 		<control/>
-		<control caption="Shenjoje skedën:"/>
+		<control caption="Shenjo skedën:"/>
 		<control/>
-		<control caption="Krahasoje emrin:"/>
+		<control caption="Krahaso emrin:"/>
 		<control/>
 		<control caption="Protokolli:"/>
 		<control/>
 		<control caption="_Kapaciteti:"/>
-		<control caption="Lejoje punën në radhë"/>
+		<control caption="Lejo punën në radhë"/>
 		<control caption="Numri minimal i transfertave:"/>
 		<control/><control/>
 		<control caption="Numri maksimal i transfertave:"/>
@@ -3529,11 +3529,11 @@
 		<control caption="Numri maks. i pritjeve në radhë:"/>
 		<control/><control/>
 		<control caption="Parametra të _Shërbimit:"/>
-		<control caption="Pjesa e ngopur e shtrirjes së bandës:"/>
+		<control caption="Pjesa e ngopur e shtri. së bandës:"/>
 		<control/>
-		<control caption="Shtrirja e bandës për punë në radhë:"/>
+		<control caption="Shtri. e bandës për punët në radhë:"/>
 		<control/><control/>
-		<control caption="Rrotulloje pas N sekondash:"/>
+		<control caption="Rrotullo pas N sekondash:"/>
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>
@@ -3831,7 +3831,7 @@
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Shpërndarja">
 		<control caption="Shpërndarje e Thjeshtë"/>
 		<control caption="Shpërndaje skedën nëse dosja mëmë shpërndahet"/>
-		<control caption="Refuzoji kuadrot për shpërndarjen e skedës:"/>
+		<control caption="Refuzo kuadrot për shpërndarjen e skedës:"/>
 		<control caption="Bëje skedën të vlefshme për përdoruesit e tjerë"/>
 		<control caption="Ngarko Etiketat për të Zgjedhur Punët në Radhë"/>
 		<control/>
@@ -4014,7 +4014,7 @@
 		<control/><control/><control/><control/>
 		<control caption="Kjo skedë ndodhet që më parë në librarinë tuaj të skedave. Çfarë mendoni të bëni?"/>
 		<control caption="Më trego skedën në librarinë time"/>
-		<control caption="Shkarkoje skedën përsëri"/>
+		<control caption="Shkarko skedën përsëri"/>
 		<control caption="Mos e shkarko skedën"/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>
@@ -4032,7 +4032,7 @@
 	</dialog>
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Shkarkoni Skedën Server.met">
 		<control/>
-		<control caption="Skedën server.met të eDonkey mund ta shkarkoni nga ky rrjet që të rifreskoni listën lokale të serverave tuaj."/>
+		<control caption="Skeda server.met e eDonkey mund të shkarkohet nga ky rrjet për të rifreskuar listën lokale me serverat tuaj."/>
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>
@@ -4088,9 +4088,9 @@
 		<control caption="ED2K:"/>
 		<control/><control/>
 		<control caption="_Veprime:"/>
-		<control caption="Harroje statusin aktual të verifikimit dhe riverifiko"/>
+		<control caption="Harro statusin aktual të verifikimit dhe riverifiko"/>
 		<control caption="Supozo që skeda ka përfunduar 100% dhe riverifiko"/>
-		<control caption="Harroji gjithë burimet e njohura"/>
+		<control caption="Harro gjithë burimet e njohura"/>
 		<control caption="Bashkoje me skedën lokale dhe riverifiko"/>
 		<control caption="_Fshirësi i të Dhënave:"/>
 		<control caption="Caku i bajtit:"/>
@@ -4206,19 +4206,19 @@
 		<column from="Modified" to="Modifikimi"/>
 	</list>
 	<list name="CDownloadCtrl">
-		<column from="Downloaded File" to="Skeda e Shkarkuar"/>
+		<column from="Downloaded File" to="Skedë në Shkarkim"/>
 		<column from="Size" to="Përmasa"/>
 		<column from="Progress" to="Progresi"/>
 		<column from="Speed" to="Shpejtësi"/>
 		<column from="Status" to="Statusi"/>
 		<column from="Client" to="Klienti"/>
 		<column from="Downloaded" to="u Shkarkua"/>
-		<column from="Complete" to="Përfundoi"/>
+		<column from="Complete" to="Përfundimi"/>
 		<column from="Country" to="Shteti"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Përdoruesi i Largët"/>
-		<column from="Uploaded File" to="Skeda e Ngarkuar"/>
+		<column from="Uploaded File" to="Skedë në Ngarkim"/>
 		<column from="Size" to="Përmasa"/>
 		<column from="Progress" to="Progresi"/>
 		<column from="Speed" to="Shpejtësi"/>
@@ -4245,7 +4245,7 @@
 		<column from="Action" to="Veprimi"/>
 		<column from="Expires" to="Skadimi"/>
 		<column from="Precedence" to="Paraprirja"/>
-		<column from="Hits" to="Hite"/>
+		<column from="Hits" to="Hitet"/>
 		<column from="Comment" to="Komenti"/>
 	</list>
 	<list name="CHostCacheWnd">
@@ -4265,10 +4265,10 @@
 		<column from="Address" to="Adresa"/>
 		<column from="Type" to="Lloji"/>
 		<column from="Last Access" to="Hyrja e Fundit"/>
-		<column from="Hosts" to="Hoste"/>
-		<column from="Accesses" to="Hyrje"/>
-		<column from="Updates" to="Ridatime"/>
-		<column from="Failures" to="Dështime"/>
+		<column from="Hosts" to="Hostet"/>
+		<column from="Accesses" to="Hyrjet"/>
+		<column from="Updates" to="Ridatimet"/>
+		<column from="Failures" to="Dështimet"/>
 	</list>
 	<list name="CPacketWnd">
 		<column from="Address" to="Adresa"/>
@@ -4280,9 +4280,9 @@
 		<column from="G1-ID" to="GI-ID"/>
 	</list>
 	<list name="CSearchMonitorWnd">
-		<column from="Search" to="Kërkim"/>
+		<column from="Search" to="Kërkimi"/>
 		<column from="URN" to="URN"/>
-		<column from="Schema" to="Skema"/>
+		<column from="Schema" to="Skemat"/>
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="Skeda"/>
