@@ -19,7 +19,7 @@
 										<td><%= download_status %></td>
 										<td>
 <%? download_is_complete %>
-											<a href="?modify_id=<%= download_id %>&amp;modify_action=clear" title="clear the download from the list (this will not delete your file)">清除</a>
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=clear" title="从列表中清除下载 (这将会删除您的文件)">清除</a>
 <%?%><%? !download_is_complete %>
 <%? download_is_paused %>
 											<a href="?modify_id=<%= download_id %>&amp;modify_action=resume">续传</a> -
