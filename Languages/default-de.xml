@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default German Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Shareaza Default German Skin File --> <!-- This translation is based on default-en.xml SVN rev.6170 + ~1 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -13,11 +13,11 @@
 <!-- Manifest -->
 <manifest	name="Deutsch"
 		author="Jann Röder"
-		updatedBy="ZeRO, Frontier, Jann Röder"
+		updatedBy="ZeRO, Frontier, Jann Röder, Daisuke"
 		description="Shareaza Default German Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email=""
-		version="2.2.3.3"
+		version="2.3.0.0"
 		type="Language"
 		language="de"
 		prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
@@ -406,6 +406,15 @@
 		<button id="ID_CHAT_CONNECT" text="Verbinden" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Verbindung trennen"/>
 	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="Fenstergröße"/>
+		<button id="ImageViewer_ActualSize" text="Originalgröße"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Aktualisieren"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Schließen"/>
+	</toolbar>
 </toolbars>
 <!-- Menu Definitions -->
 <menus>
@@ -470,6 +479,7 @@
 		</menu>
 		<menu text="_Hilfe">
 			<item id="ID_HELP_FAQ" text="Shareaza-_FAQ"/>
+			<item id="ID_HELP_TEST" text="Verbindungstest"/>
 			<separator/>
 			<menu text="_Anleitungen">
 				<item id="ID_HELP_GUIDE" text="Shareaza-A_nleitung"/>
@@ -479,7 +489,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza's Homepage"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
@@ -543,6 +553,8 @@
 		<menu text="_Extras">
 			<item id="ID_LIBRARY_FOLDERS" text="Ordner _freigeben..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Datei / Torrent herunterladen..." shortcut="Strg+D"/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="Laufende eMule-Downloads _importieren..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Downloadordner öffnen"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="_Skin(s) wählen..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="S_prache wählen..."/>
@@ -555,12 +567,14 @@
 		<menu text="_Fenster">
 			<item id="ID_WINDOW_NAVBAR" text="_Navigationsleiste"/>
 			<item id="ID_WINDOW_TOOLBAR" text="_Werkzeugleiste"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="_Tableiste"/>
 			<item id="ID_WINDOW_MONITOR" text="_Monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="_Fernbedienung"/>
 		</menu>
 		<menu text="_Hilfe">
 			<item id="ID_HELP_FAQ" text="Shareaza-_FAQ"/>
+			<item id="ID_HELP_TEST" text="_Verbindungstest"/>
 			<separator/>
 			<menu text="_Anleitungen">
 				<item id="ID_HELP_GUIDE" text="Shareaza-A_nleitung"/>
@@ -570,7 +584,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza's Homepage"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
@@ -624,6 +638,8 @@
 		<menu text="_Extras">
 			<item id="ID_LIBRARY_FOLDERS" text="Ordner _freigeben..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Datei/Torrent herunterladen..." shortcut="Strg+D"/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="Laufende eMule-Downloads _importieren..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="D_ownloadordner öffnen"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="_Skin(s) wählen..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="S_prache wählen..."/>
@@ -640,12 +656,14 @@
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="_Navigationsleiste"/>
 			<item id="ID_WINDOW_TOOLBAR" text="_Werkzeugleiste"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="_Tableiste"/>
 			<item id="ID_WINDOW_MONITOR" text="_Monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="_Fernbedienung"/>
 		</menu>
 		<menu text="_Hilfe">
 			<item id="ID_HELP_FAQ" text="Shareaza-_FAQ"/>
+			<item id="ID_HELP_TEST" text="_Verbindungstest"/>
 			<separator/>
 			<menu text="_Anleitungen">
 				<item id="ID_HELP_GUIDE" text="Shareaza-A_nleitung"/>
@@ -655,7 +673,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza's Homepage"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
@@ -787,6 +805,7 @@
 	<menu name="CHostCacheWnd">
 		<item id="ID_HOSTCACHE_CONNECT" text="Jetzt _verbinden"/>
 		<item id="ID_HOSTCACHE_DISCONNECT" text="Verbindung _trennen"/>
+		<item id="ID_NEIGHBOURS_COPY" text="_URI kopieren"/>
 		<item id="ID_HOSTCACHE_PRIORITY" text="Hohe _Priorität"/>
 		<separator/>
 		<item id="ID_HOSTCACHE_REMOVE" text="_Host(s) entfernen"/>
@@ -821,8 +840,8 @@
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
-		<item id="ID_SEARCH_DOWNLOAD" text="_Herunterladen"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Jetzt herunterladen"/>
+		<item id="ID_SEARCH_DOWNLOAD" text="Herunterla_den"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Jetzt herunterlade_n"/>
 		<item id="ID_SEARCH_COPY" text="_URI kopieren"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Benutzer _durchsuchen"/>
@@ -830,12 +849,12 @@
 		<item id="ID_SECURITY_BAN" text="Host _bannen"/>
 		<separator/>
 		<menu text="_Suchen nach">
-			<item id="ID_SEARCH_FOR_THIS" text="Dieser Datei"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Ähnlichen Dateien"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Dieser Da_tei"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Ä_hnlichen Dateien"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musik vom selben Künstler"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musik vom selben Künstler"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Folg_en der gleichen Serie"/>
 		</menu>
 		<menu text="_Web Dienste">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
@@ -855,11 +874,11 @@
 		<item id="ID_SEARCH_CHAT" text="Mit Benutzer _chatten"/>
 		<separator/>
 		<menu text="_Suchen nach">
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Ähnlichen Dateien"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Ä_hnlichen Dateien"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musik vom selben Künstler"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musik vom selben Künstler"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Folg_en der gleichen Serie"/>
 		</menu>
 		<menu text="_Web Datei Info">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
@@ -874,12 +893,12 @@
 		<item id="ID_SEARCH_CHAT" text="Mit Benutzer _chatten"/>
 		<separator/>
 		<menu text="_Suchen nach">
-			<item id="ID_SEARCH_FOR_THIS" text="Dieser Datei"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Ähnlichen Dateien"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Dieser Da_tei"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Ä_hnlichen Dateien"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musik vom selben Künstler"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musik vom selben Künstler"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Folg_en der gleichen Serie"/>
 		</menu>
 		<menu text="_Web Dienste">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
@@ -899,12 +918,12 @@
 		<item id="ID_SEARCH_CHAT" text="Mit Benutzer _chatten"/>
 		<separator/>
 		<menu text="_Suchen nach">
-			<item id="ID_SEARCH_FOR_THIS" text="Dieser Datei"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Ähnlichen Dateien"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Dieser Da_tei"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Ä_hnlichen Dateien"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musik vom selben Künstler"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musik vom selben Künstler"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Folg_en der gleichen Serie"/>
 		</menu>
 		<menu text="_Web Dienste">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
@@ -944,14 +963,14 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Wiederaufnehmen"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="_Anhalten"/>
-		<item id="ID_DOWNLOADS_CLEAR" text="_Entfernen"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Entfernen"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Zusätzliche Quellen suchen"/>
 		<separator/>
 		<menu text="E_rweitert">
 			<item id="ID_DOWNLOADS_SHARE" text="Datei _freigeben"/>
 			<separator/>
-			<item id="ID_DOWNLOADS_COPY" text="URI _kopieren"/>
+			<item id="ID_DOWNLOADS_COPY" text="_URI _kopieren"/>
 			<item id="ID_DOWNLOADS_URL" text="_Quelle hinzufügen..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="_Monitor Fenster"/>
@@ -969,21 +988,22 @@
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Benutzer _durchsuchen"/>
 		<item id="ID_TRANSFERS_CHAT" text="Mit Benutzer _chattten"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Transfer abbrechen"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Quelle entfernen"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Öffnen"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Öffnen"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_In Wiedergabeliste aufnehmen"/>
-		<item id="ID_DOWNLOADS_CLEAR" text="Download _entfernen"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Download _entfernen"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Datei löschen"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Öffnen"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Öffnen"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_In Wiedergabeliste aufnehmen"/>
-		<item id="ID_DOWNLOADS_CLEAR" text="_Entfernen"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Entfernen"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="U_RI kopieren"/>
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent-Info"/>
@@ -1048,19 +1068,19 @@
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Automatisch entfernen"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
-		<item id="ID_UPLOADS_FILTER_ALL" text="Alle Uploads/Clients anzeigen"/>
+		<item id="ID_UPLOADS_FILTER_ALL" text="_Alle Uploads/Clients anzeigen"/>
 		<separator/>
-		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Aktive Uploads anzeigen"/>
-		<item id="ID_UPLOADS_FILTER_QUEUED" text="Warteschlange anzeigen"/>
-		<item id="ID_UPLOADS_FILTER_TORRENT" text="Torrent-Uploads anzeigen"/>
-		<item id="ID_UPLOADS_FILTER_HISTORY" text="Uploadverlauf anzeigen"/>
+		<item id="ID_UPLOADS_FILTER_ACTIVE" text="A_ktive Uploads anzeigen"/>
+		<item id="ID_UPLOADS_FILTER_QUEUED" text="_Warteschlange anzeigen"/>
+		<item id="ID_UPLOADS_FILTER_TORRENT" text="_BitTorrent-Uploads anzeigen"/>
+		<item id="ID_UPLOADS_FILTER_HISTORY" text="_Uploadverlauf anzeigen"/>
 	</menu>
 	<!-- LIBRARY FRAME -->
 	<menu name="CLibraryTree.Physical.Basic">
 		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Freigegeben"/>
 		<item id="ID_LIBRARY_REMOVE" text="_Entfernen"/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDERS" text="Dateien freigeben..."/>
+		<item id="ID_LIBRARY_FOLDERS" text="Dateien _freigeben..."/>
 	</menu>
 	<menu name="CLibraryTree.Physical">
 		<item id="ID_LIBRARY_EXPLORE" text="Im Explorer _öffnen"/>
@@ -1070,7 +1090,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SCAN" text="S_cannen"/>
 		<item id="ID_LIBRARY_REBUILD" text="Ne_u einlesen"/>
-		<item id="ID_LIBRARY_FOLDERS" text="Ordner freigeben"/>
+		<item id="ID_LIBRARY_FOLDERS" text="Ordner _freigeben"/>
 		<separator/>
 		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Eigenschaften"/>
 	</menu>
@@ -1109,16 +1129,16 @@
 		<item id="ID_LIBRARY_DELETE" text="_Löschen"/>
 		<separator/>
 		<menu text="_Suchen nach">
-			<item id="ID_SEARCH_FOR_THIS" text="Dieser Datei"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Ähnlichen Dateien"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Dieser Da_tei"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Ä_hnlichen Dateien"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musik vom selben Künstler"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musik vom selben Künstler"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Folg_en der gleichen Serie"/>
 		</menu>
 		<menu text="_Web Dienste">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi-Ticket anzeigen"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadaten suchen"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="_URI kopieren"/>
 		</menu>
@@ -1141,25 +1161,25 @@
 		<item id="ID_LIBRARY_DELETE" text="Datei(en) _löschen"/>
 		<separator/>
 		<menu text="_Suchen nach">
-			<item id="ID_SEARCH_FOR_THIS" text="Dieser Datei"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Ähnlichen Dateien"/>
+			<item id="ID_SEARCH_FOR_THIS" text="_Dieser Datei"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Ä_hnlichen Dateien"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musik vom selben Künstler"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musik vom selben Künstler"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Folg_en der gleichen Serie"/>
 		</menu>
 		<menu text="_Web Dienste">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi-Ticket anzeigen"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadaten suchen"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text=".torrent Datei erstellen"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent-Datei erstellen"/>
 		</menu>
 		<menu text="_Verwalten">
 			<item id="ID_LIBRARY_RENAME" text="Datei _umbenennen"/>
 			<item id="ID_LIBRARY_MOVE" text="Datei(en) _verschieben..."/>
 			<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Metadaten lokalisieren"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadaten _lokalisieren"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="S_palteneinstellungen..."/>
 		<separator/>
@@ -1175,16 +1195,16 @@
 		<item id="ID_LIBRARY_DELETE" text="_Löschen"/>
 		<separator/>
 		<menu text="_Suchen nach">
-			<item id="ID_SEARCH_FOR_THIS" text="Dieser Datei"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Ähnlichen Dateien"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Dieser Da_tei"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Ä_hnlichen Dateien"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musik vom selben Künstler"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musik vom selben Künstler"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Folg_en der gleichen Serie"/>
 		</menu>
 		<menu text="_Web Dienste">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi-Ticket anzeigen"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadaten suchen"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Met_adaten suchen"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="_URI kopieren"/>
 		</menu>
@@ -1195,7 +1215,7 @@
 			<item id="ID_LIBRARY_MOVE" text="Datei(en) _verschieben..."/>
 			<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Metadaten lokalisieren"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadaten _lokalisieren"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Eigenschaften"/>
 	</menu>
@@ -1209,18 +1229,18 @@
 		<item id="ID_LIBRARY_DELETE" text="_Löschen"/>
 		<separator/>
 		<menu text="_Suchen nach">
-			<item id="ID_SEARCH_FOR_THIS" text="Dieser Datei"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Ähnlichen Dateien"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Dieser Da_tei"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Ä_hnlichen Dateien"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Musik vom selben Künstler"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Folgen der gleichen Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="_Musik vom selben Künstler"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musik aus dem gleichen _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Folg_en der gleichen Serie"/>
 		</menu>
 		<menu text="_Web Dienste">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi-Ticket anzeigen"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadaten suchen"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Met_adaten suchen"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text=".torrent-Datei erstellen"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent-Datei erstellen"/>
 		</menu>
 		<menu text="_Verwalten">
 			<item id="ID_LIBRARY_UNLINK" text="Datei(en) _entfernen"/>
@@ -1229,7 +1249,7 @@
 			<item id="ID_LIBRARY_MOVE" text="Datei(en) _verschieben..."/>
 			<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Metadaten lokalisieren"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadaten _lokalisieren"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="S_palteneinstellungen..."/>
 		<separator/>
@@ -1243,7 +1263,7 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="Datei _öffnen..."/>
 		<separator/>
-		<menu text="Wiedergabeliste">
+		<menu text="Wiedergabe_liste">
 			<item id="ID_MEDIA_PREVIOUS" text="_Vorheriges"/>
 			<item id="ID_MEDIA_NEXT" text="_Nächstes"/>
 			<item id="ID_MEDIA_RANDOM" text="_Zufällig"/>
@@ -1264,7 +1284,7 @@
 			<separator/>
 			<item id="ID_MEDIA_FULLSCREEN" text="V_ollbild"/>
 		</menu>
-		<menu text="_Optionen...">
+		<menu text="Optio_nen...">
 			<item id="ID_MEDIA_VIS" text="_Visualisierung..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Wiedergabeliste _anzeigen"/>
@@ -1281,7 +1301,7 @@
 		<item id="ID_MEDIA_OPEN" text="Datei _öffnen..."/>
 		<item id="ID_MEDIA_CLOSE" text="_Datei schließen"/>
 		<separator/>
-		<menu text="Wiedergabeliste">
+		<menu text="Wiedergabe_liste">
 			<item id="ID_MEDIA_PREVIOUS" text="_Vorheriges"/>
 			<item id="ID_MEDIA_NEXT" text="_Nächstes"/>
 			<item id="ID_MEDIA_RANDOM" text="_Zufällig"/>
@@ -1302,7 +1322,7 @@
 			<separator/>
 			<item id="ID_MEDIA_FULLSCREEN" text="V_ollbild"/>
 		</menu>
-		<menu text="_Optionen...">
+		<menu text="Optio_nen...">
 			<item id="ID_MEDIA_VIS" text="_Visualisierung..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Wiedergabeliste _anzeigen"/>
@@ -1324,13 +1344,15 @@
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Wiedergabe"/>
+		<item id="ID_MEDIA_RATE" text="Datei Bewer_ten..."/>
+		<item id="ID_MEDIA_PROPERTIES" text="_Eigenschaften..."/>
 		<separator/>
 		<item id="ID_MEDIA_ADD" text="Datei _Hinzufügen..."/>
 		<item id="ID_MEDIA_ADD_FOLDER" text="_Ordner Hinzufügen..."/>
 		<item id="ID_MEDIA_REMOVE" text="_Entfernen"/>
 		<separator/>
-		<item id="ID_MEDIA_RANDOM" text="_Zufällige Reihenfolge"/>
-		<item id="ID_MEDIA_REPEAT" text="_Wiederholen"/>
+		<item id="ID_MEDIA_RANDOM" text="Zufällige Reihe_nfolge"/>
+		<item id="ID_MEDIA_REPEAT" text="Wi_ederholen"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="Wiedergabeliste _öffnen..."/>
 		<item id="ID_MEDIA_SAVE" text="Wiedergabeliste _Speichern..."/>
@@ -1343,6 +1365,8 @@
 	<menu name="CSystemWnd">
 		<item id="ID_SYSTEM_VERBOSE" text="_Ausführlicher Modus"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Zeitstem_pel"/>
+		<separator/>
+		<item id="ID_SYSTEM_COPY" text="_Kopieren" shortcut="Ctrl+C"/>
 		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="Anzeige _löschen"/>
 	</menu>
@@ -1410,7 +1434,7 @@
 		<item id="ID_SECURITY_IMPORT" text="_Importieren..."/>
 		<item id="ID_SECURITY_EXPORT" text="E_xportieren..."/>
 		<separator/>
-		<menu text="Default _Policy">
+		<menu text="_Standardregel">
 			<item id="ID_SECURITY_POLICY_ACCEPT" text="_Erlaubt"/>
 			<item id="ID_SECURITY_POLICY_DENY" text="_Verweigert"/>
 		</menu>
@@ -1453,7 +1477,17 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Zeitstempel"/>
 		<item id="ID_CHAT_CLEAR" text="Anzeige _löschen"/>
 	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="_Fenstergröße"/>
+		<item id="ImageViewer_ActualSize" text="_Originalgröße"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="Aktualisie_ren"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="_Schließen"/>
+	</menu>
 </menus>
+
 <!-- Watermarks -->
 <watermarks>
 	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
@@ -1474,44 +1508,72 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">V E R B I N D E N</heading>
 			<newline gap="8" indent="42"/>
-			<text>Willkommen bei Shareaza.  Sie sind zur Zeit mit keinem Netzwerk verbunden.  </text>
-			<newline/>
-			<link target="raza:command:ID_NETWORK_CONNECT">Klicken Sie hier um sich mit den ausgewählten Netzwerken zu verbinden</link>
-			<text>.  </text>
-			<newline gap="32" indent="0"/>
+			<text>Willkommen bei Shareaza!</text>
+			<newline gap="8" indent="42"/>
+			<text>Sie sind zur Zeit mit keinem Netzwerk verbunden. &#160;</text>
+			<link target="raza:command:ID_NETWORK_CONNECT">Klicken Sie hier um sich mit den ausgewählten Netzwerken zu verbinden.</link>
+			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
-			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">S U C H E N</heading>
+			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
+			<heading align="middle">D O W N L O A D &#160; S T A R T E N </heading>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Klicken Sie hier</link>
+			<text align="middle">&#160; um eine neue Datei oder einen Torrent herunterzuladen.</text>
+			<newline gap="24" indent="0"/>
+			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
+			<heading align="middle">N A C H &#160; E I N E R &#160; D A T E I &#160; S U C H E N</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
 		</group>
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">U P D A T E   H I N W E I S</heading>
+			<heading align="middle">U P D A T E - H I N W E I S</heading>
 			<newline gap="8" indent="42"/>
 			<text id="Upgrade"/>
 			<newline gap="6"/>
 			<link target="raza:upgrade">Zum Aktualisieren hier klicken</link>
-			<newline gap="26" indent="0"/>
+			<newline gap="18" indent="0"/>
 		</group>
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">W A R N U N G   -   KEINE EINGEHENDEN VERBINDUNGEN MÖGLICH</heading>
+			<heading align="middle">W A R N U N G &#160; - &#160; K E I N E &#160; E I N G E H E N D E N &#160; V E R B I N D U N G E N &#160; M Ö G L I C H</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
 				und keine Verbindungen aus dem Internet empfangen kann.  </text>
 			<text colour="FF0000" format="b">Das kann ihre Suchergebnisse und Downloads verschlechtern.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihren Router für Shareaza konfigurieren müssen</link>
+			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren müssen</link>
+			<newline gap="18" indent="0"/>
+		</group>
+		<group id="6">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">W A R N U N G &#160; - &#160; I H R &#160; T C P - P O R T &#160; I S T &#160; N I C H T &#160; E R R E I C H B A R</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">Shareaza hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
+				und keine TCP-Verbindungen aus dem Internet empfangen kann. &#160;</text>
+			<text colour="FF0000" format="b">Das kann ihre Suchergebnisse und Downloads verschlechtern.</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren müssen</link>
+			<newline gap="18" indent="0"/>
+		</group>
+		<group id="7">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">W A R N U N G &#160; - &#160; I H R &#160; UDP - PORT &#160; I S T &#160; N I C H T &#160; E R R E I C H B A R</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">Shareaza hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
+				und keine UDP-Daten aus dem Internet empfangen kann. &#160;</text>
+			<text colour="FF0000" format="b">Das kann ihre Suchergebnisse verschlechtern.</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren müssen</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">S H A R E A Z A   A N P A S S E N</heading>
+		<heading align="middle">S H A R E A Z A  &#160; A N P A S S E N</heading>
 		<newline gap="12" indent="42"/>
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
@@ -1528,16 +1590,9 @@
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Hilfe</link>
 		<text align="middle"> - Shareaza-Anleitung und FAQ</text>
 		<newline gap="18" indent="0"/>
-		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
-		<gap size="8"/>
-		<heading align="middle">M E I N E   D O W N L O A D S</heading>
-		<newline gap="8" indent="42"/>
-		<text>Um den Ordner mit den Downloads zu öffnen, </text>
-		<link target="raza:shell:downloads">hier klicken!</link>
-		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">R E M O T E   A C C E S S   I S T   A K T I V I E R T</heading>
+			<heading align="middle">R E M O T E  &#160; A C C E S S &#160; I S T &#160; A K T I V I E R T</heading>
 			<newline gap="8" indent="42"/>
 			<text>Shareaza-Remote-Access ist aktiviert.  Sie können Shareaza über ihren Webbrowser steuern:</text>
 			<newline gap="6"/>
@@ -1577,8 +1632,10 @@
 			<text id="LibraryFiles" format="b">%lu </text>
 			<text>Dateien, </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Bibliothek anzeigen</link>
+			<newline gap="4"/>
+			<link format="bu" target="raza:shell:downloads">Meinen Downloadordner öffnen</link>
 			<group id="1">
 				<newline gap="8"/>
 				<text>Shareaza scannt </text>
@@ -1728,7 +1785,8 @@
 		</text>
 		<text format="b">Internet </text>
 		<text>
-				können Sie festlegen, wie sich Shareaza in P2P-Netzen verhält.
+				können Sie festlegen, wie sich Shareaza in
+				P2P-Netzen verhält.
 		</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Verbindung:</link>
@@ -1868,18 +1926,17 @@
 	<document name="DownloadHelp.Paused">
 		<text format="b">Dieser Download ist angehalten</text>
 		<newline gap="8"/>
-		<text>Sie haben diesen Download angehalten.  Wenn Sie das Herunterladen fortsetzen möchten, können
-		Sie den </text>
-		<text format="b">Wiederaufnehmen </text>
-		<text>-Befehl benutzen.</text>
+		<text>Sie haben diesen Download angehalten.  Wenn Sie das Herunterladen fortsetzen möchten, können Sie den </text>
+		<text format="b">Wiederaufnehmen </text><text>-Befehl benutzen.</text>
 	</document>
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Die Festplatte ist voll</text>
 		<newline gap="8"/>
 		<text>Shareaza hat diesen Download automatisch angehalten, weil die Festplatte voll zu sein scheint
 		oder die Datei nicht geschrieben werden kann.  Wenn Sie den Download fortsetzen möchten,
-		machen Sie bitte etwas Platz auf ihrer Festplatte und / oder prüfen Sie, ob auf das Verzeichnis für unvollständige Dateien
-		zugegriffen werden kann und nehmen Sie dann den Download wieder auf.</text>
+		machen Sie bitte etwas Platz auf ihrer Festplatte und / oder prüfen Sie, ob auf das Verzeichnis
+		für unvollständige Dateien zugegriffen werden kann und nehmen Sie dann den
+		Download wieder auf.</text>
 	</document>
 	<document name="DownloadHelp.Verifying">
 		<text format="b">Dieser Download wird überprüft</text>
@@ -1893,12 +1950,9 @@
 		<newline gap="8"/>
 		<text>Diese Datei wird gerade heruntergeladen.  Wenn der Download zu langsam ist,
 		können Sie versuchen das Netzwerk mit dem </text>
-		<text format="b">Zusätzliche Quellen suchen </text>
-		<text>
-		-Befehl nach zusätzlichen Quellen durchsuchen.
+		<text format="b">Zusätzliche Quellen suchen </text><text>-Befehl nach zusätzlichen Quellen durchsuchen.
 		Wenn sich die Downloadgeschwindigkeit nicht verbessert, liegt das wahrscheinlich an der begrenzten Uploadgeschwindigkeit
-		der Benutzer, von denen Sie die Datei herunterladen.
-		Normalerweise erhöht sich die Downloadgeschwindigkeit mit der Zeit.</text>
+		der Benutzer, von denen Sie die Datei herunterladen. Normalerweise erhöht sich die Downloadgeschwindigkeit mit der Zeit.</text>
 	</document>
 	<document name="DownloadHelp.Pending">
 		<text format="b">Dieser Download wartet auf Transfers</text>
@@ -1936,13 +1990,15 @@
 	<document name="DownloadHelp.Creating">
 		<text format="b">Dieser Download wird erstellt</text>
 		<newline gap="8"/>
-		<text>Shareaza reserviert Speicherplatz, um den Download später abzuspeichern.</text>
+		<text>Shareaza reserviert Speicherplatz,
+		um den Download später abzuspeichern.</text>
 	</document>
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent-Tracker nicht erreichbar</text>
 		<newline gap="8"/>
 		<text>Der BitTorrent-Tracker für diesen Download ist nicht erreichbar oder funktioniert nicht richtig.
-		Shareaza kann ihn nicht kontaktieren, um eine Liste mit Downloadquellen zu erhalten.</text>
+		Shareaza kann ihn nicht kontaktieren,
+		um eine Liste mit Downloadquellen zu erhalten.</text>
 	</document>
 	<!-- Upload help documents -->
 	<document name="UploadHelp">
@@ -1958,10 +2014,9 @@
 		<newline gap="8"/>
 		<text>Der freie Speicherplatz auf einem oder mehreren der Datenträger, die Shareaza benutzt ist gering.</text>
 		<newline gap="8"/>
-		<text>Sie sollten stets genügend Speicherplatz frei haben.
-		Programme können instabil werden, wenn die Datenträger voll sind und temporäre Dateien könnten verloren gehen.
-		Sie sollten das "Datenträger bereinigen"-Dienstprogramm ausführen, nicht benötigte Dateien löschen,
-		oder nicht mehr benötigte Anwendungen deinstallieren.</text>
+		<text>Sie sollten stets genügend Speicherplatz frei haben. Programme können instabil werden, wenn die Datenträger voll
+		sind und temporäre Dateien könnten verloren gehen. Sie sollten das "Datenträger bereinigen"-Dienstprogramm ausführen,
+		nicht benötigte Dateien löschen, oder nicht mehr benötigte Anwendungen deinstallieren.</text>
 	</document>
 	<document name="GeneralHelp.DiskWriteFail">
 		<text format="b">In ein benötigtes Verzeichnis kann nicht geschrieben werden</text>
@@ -1986,7 +2041,8 @@
 		<text format="b">Erotikfitler aktiviert</text>
 		<newline gap="8"/>
 		<text>Bitte beachten Sie, dass dieser Filter (wie jeder automatische Filter) nicht mit 100%iger Genauigkeit arbeiten kann.
-		Er wurde entwickelt, um übermäßige, ungewollte Suchergebnisse herauszufiltern und nicht als eine 100%ig sichere Blockade.</text>
+		Er wurde entwickelt, um übermäßige, ungewollte Suchergebnisse herauszufiltern und nicht als eine
+		100%ig sichere Blockade.</text>
 		<newline gap="8"/>
 		<text> Wenn Kinder das Internet nutzen (inklusive P2P), sollte dies immer von den Eltern überwacht werden.</text>
 	</document>
@@ -2001,6 +2057,7 @@
 		allen BitTorrent-Programmen richtig funktionieren.</text>
 		<newline gap="8"/>
 		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klicken Sie hier für weitere Informationen.</link>
+		<text>, or to download software to repair the torrent.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Ihre eDonkey2000-Serverliste ist leer</text>
@@ -2030,8 +2087,11 @@
 		<text format="b">Bitte formulieren Sie die Suche neu!</text>
 		<newline gap="8"/>
 		<text>Die Suche ist schlecht formuliert und wird nicht richtig funktionieren.
-		Die Suche sollte, falls möglich, mehrere Wörter und ein Schema beinhalten. So sollten sie nicht nur aus
-		Zahlen bestehen oder zu Allgemein sein. Die meisten Clients im Netzwerk
+		Die Suche sollte, falls möglich, mehrere Wörter und ein Schema beinhalten.
+		So sollten sie nicht nur aus
+		Zahlen bestehen oder zu Allgemein sein.</text>
+		<newline gap="8"/>
+		<text>Die meisten Clients im Netzwerk
 		ignorieren zum Beispiel die Suche nach allen MP3-Dateien.</text>
 	</document>
 	<document name="SearchHelp.BadSearch2">
@@ -2066,7 +2126,8 @@
 		Dies wurde in den Einstellungen deaktiviert. Sie sollten die Suche entweder neu formulieren,
 		oder den Filter deaktivieren.</text>
 		<newline gap="8"/>
-		<text>Um den Filter zu deaktivieren, wählen Sie Extras &gt; Einstellungen &gt; Allgemein und deaktivieren Sie den Erotikfilter.</text>
+		<text>Um den Filter zu deaktivieren, wählen Sie Extras &gt; Einstellungen &gt; Allgemein und
+		deaktivieren Sie den Erotikfilter.</text>
 	</document>
 	<!-- Share help documents -->
 	<document name="ShareHelp.AlreadyShared">
@@ -2084,14 +2145,11 @@
 		<newline gap="8"/>
 		<text>Ordner, wie das Windowsverzeichnis, Programme und ähnliche Ordner
 		enthalten normalerweise keine zur Freigabe geeigneten Dateien. Interessante Dateien befinden sich stets
-		</text>
-		<text format="i"> innerhalb </text>
-		<text> dieser
-		Ordner. Bitte geben Sie diese Ordner frei.</text>
+		</text><text format="i"> innerhalb </text>
+		<text> dieser Ordner. Bitte geben Sie diese Ordner frei.</text>
 		<newline gap="8"/>
 		<text>Der Shareaza "incomplete"-Ordner sollte auch nicht über die Bibliothek freigegeben werden.
-		Der Versuch, Dateien zu hashen, die gerade heruntergeladen werden, wirkt sich negativ auf die Geschwindigkeit aus.
-		</text>
+		Der Versuch, Dateien zu hashen, die gerade heruntergeladen werden, wirkt sich negativ auf die Geschwindigkeit aus.</text>
 	</document>
 </documents>
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
@@ -2174,9 +2232,10 @@
 	<tip id="ID_HELP_ROUTER" message="Finden Sie Hilfe Ihren Router / Ihre Firewall zu konfigurieren."/>
 	<tip id="ID_HELP_FORUMS" message="Das Shareaza-Forum besuchen."/>
 	<tip id="ID_HELP_GUIDE" message="Das Shareaza-Handbuch anzeigen."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Shareaza site besuchen." tip="Shareaza site"/>
+	<tip id="ID_HELP_HOMEPAGE" message="Shareaza's Homepage besuchen." tip="Shareaza's Homepage"/>
 	<tip id="ID_HELP_SECURITY" message="Hinweise, wie Sie ihren Computer vor schädlichen Programmen (Viren, Spyware) schützen können."/>
 	<tip id="ID_HELP_UPDATE" message="Neueste Nachrichten und Updates."/>
+	<tip id="ID_HELP_TEST" message="Prüfen, ob ihre Konfiguration eingehende Verbindungen zulässt."/>
 	<tip id="ID_HELP_WEB_1" message="Webseite1 besuchen"/>
 	<tip id="ID_HELP_WEB_2" message="Webseite2 besuchen"/>
 	<tip id="ID_HELP_WEB_3" message="Webseite3 besuchen"/>
@@ -2263,7 +2322,9 @@
 	<tip id="ID_MEDIA_PLAY" message="Die aktuelle Datei wiedergeben." tip="Wiedergeben"/>
 	<tip id="ID_MEDIA_PLAYLIST" message="Die Wiedergabeliste ein- oder ausblenden."/>
 	<tip id="ID_MEDIA_PREVIOUS" message="Zur vorherigen Datei der Wiedergabeliste zurückspringen." tip="Vorherige Datei"/>
+	<tip id="ID_MEDIA_PROPERTIES" message="Die Eigenschaften der ausgewählten Dateien anzeigen bzw. ändern."/>
 	<tip id="ID_MEDIA_RANDOM" message="Zufallswiedergabe ein- oder ausschalten."/>
+	<tip id="ID_MEDIA_RATE" message="Die ausgewählten Dateien bewerten."/>
 	<tip id="ID_MEDIA_REMOVE" message="Die markierte Datei aus der Wiedergabeliste entfernen."/>
 	<tip id="ID_MEDIA_REPEAT" message="Die aktuelle Datei wiederholen."/>
 	<tip id="ID_MEDIA_SAVE" message="Die Wiedergabeliste abspeichern..."/>
@@ -2396,7 +2457,17 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Die geöffneten Fenster übereinander anordnen." tip="Übereinander"/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Die geöffneten Fenster nebeneinander anordnen." tip="Nebeneinander"/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Die Werkzeugleiste ein- oder ausblenden." tip="Werkzeugleiste anzeigen"/>
+	<!-- PLUGIN TIPS -->
+	<tip id="ImageViewer_BestFit" message="Das Bild auf Fenstergröße skalieren."/>
+	<tip id="ImageViewer_ActualSize" message="Das Bild in Originalgröße anzeigen."/>
+	<tip id="ImageViewer_Refresh" message="Das Bild neu laden."/>
+	<tip id="ImageViewer_Close" message="Das Bildbetrachterfenster schließen."/>
 </commandTips>
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="Im Maximum-Modus wird die genutzte Bandbreite nie den eingegebenen Wert überschreiten. Im Durchschnitts-Modus fluktuiert die genutzte Bandbreite um den eingegebenen Richtwert."/>
+	<tip id="IDC_SHARE_PARTIALS" message="Diese Einstellung hat keinen Einfluss auf bereits gestartete Downloads. In den eD2k- und BitTorrent-Netzwerken kann mit diese Option lediglich der Upload von pausierten Downloads verhindert werden.{n}{n}ACHTUNG: Benutzen Sie diese Option nur wenn unbedingt nötig - der Missbrauch kann zur Verbannung führen."/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
@@ -2473,6 +2544,7 @@
 	<string id="8134" value="Sie sind dabei eine neue Suche zu starten. Möchten Sie die Ergebnisse ihrer vorherigen Suche entfernen?"/>
 	<string id="8135" value="Keine Metadaten"/>
 	<string id="8136" value="Textsuche"/>
+	<string id="8137" value="No Schema Columns"/>
 	<string id="8141" value="Suchleiste einblenden"/>
 	<string id="8142" value="Suchleiste ausblenden"/>
 	<string id="8143" value="Suchen..."/>
@@ -2568,6 +2640,9 @@
 	<string id="8335" value="Quellen für diese Datei sind hinter einer Firewall"/>
 	<string id="8336" value="Quellen für diese Datei können instabil sein"/>
 	<string id="8337" value="nicht vertraut"/>
+	<string id="13000" value="Sind Sie sicher, dass Sie die ausgewählten Sicherheitsregeln löschen möchten? Dieser Schritt kann nicht rückgängig gemacht werden."/>
+	<string id="13001" value="Über das Internet freigegebene Dateien"/>
+	<string id="16063" value="UPnP-Portfreigabe nach 10 Versuchen fehlgeschlagen."/>
 	<string id="16064" value="Der Shareaza-Netzwerkkern wird gestartet..."/>
 	<string id="16065" value="Kann nicht an %s Port %i für eingehende Verbindungen binden. Eingehende Verbindungen nicht möglich."/>
 	<string id="16066" value="Der Shareaza-Netzwerkkern wird heruntergefahren..."/>
@@ -2757,6 +2832,7 @@
 	<string id="16375" value="Unvollständig"/>
 	<string id="16376" value="Alle Dateien"/>
 	<string id="16377" value="HTTP-Guard"/>
+	<string id="16379" value="Library Files"/>
 	<string id="16384" value="Sind Sie sicher, dass Sie die Datei &quot;%s&quot; ausführen möchten?\n\nManche Dateien können ihren Computer beschädigen. Stellen Sie die Echtheit der Datei sicher, bevor Sie sie ausführen (Virenscan)."/>
 	<string id="16385" value="Sie sind dabei die Metadaten von %i Dateien zu ändern. Wollen Sie fortfahren?"/>
 	<string id="16386" value="Metadaten von %i bearbeiten."/>
@@ -2785,6 +2861,7 @@
 	<string id="16409" value="&amp;URIs exportieren..."/>
 	<string id="16410" value="Ein Unterordner des ausgewählten Ordners &quot;%s&quot; befindet sich schon in ihrer Bibliothek.\nDas Hinzufügen dieses Ordners hat zur Folge, dass einige Dateien neu verifiziert werden müssen.\n\nMöchten Sie fortfahren?"/>
 	<string id="16411" value="Kann Datei %s nicht verschieben. Es ist möglich, dass eine andere Anwendung die Datei gerade verwendet.\n\nMöchten Sie stattdessen versuchen, die Datei zu kopieren?"/>
+	<string id="16412" value="Ghost-Datei"/>
 	<string id="16448" value="Verbunden mit %s, handshaking..."/>
 	<string id="16449" value="Chatten mit %s (%s)."/>
 	<string id="16450" value="Verbindung mit %s getrennt."/>
@@ -2820,6 +2897,7 @@
 	<string id="16535" value="Gesamte UDP-Sendegeschwindigkeit"/>
 	<string id="16536" value="Gnutella-Ratio empfangener / gesendeter Pings"/>
 	<string id="16537" value="Gnutella-Ratio empfangener / gesendeter Pongs"/>
+	<string id="16538" value="Verbindungsfehler (%)"/>
 	<string id="16768" value="URL &quot;%s&quot; empfangen"/>
 	<string id="16769" value="Auswertung der URL nicht möglich: Shareaza versteht die URL nicht."/>
 	<string id="16770" value="Der URL-Aktionsdialog kann nicht angezeigt werden, weil Shareaza beschäftigt ist."/>
@@ -2839,7 +2917,6 @@
 	<string id="16784" value="&amp;Schließen"/>
 	<string id="16785" value="(Keine Visualisierung)"/>
 	<string id="16800" value="Sie haben Ihre Verbindungsgeschwindigkeit noch nicht angegeben. Bevor Sie fortfahren stellen Sie bitte ihre Verbindungsart oder Geschwindigkeit ein."/>
-	<string id="16801" value="Sie haben noch nicht angegeben, ob Sie eine Firewall benutzen. Bitte wählen Sie eine Firewalloption bevor Sie fortfahren."/>
 	<string id="16802" value="Sie haben keine Ordner freigegeben.  Sind Sie sicher?"/>
 	<string id="16803" value="Der Ordner, den Sie freigegeben möchten, ist bereits als Teil eines anderen Ordners freigegeben:\n\n%s"/>
 	<string id="16804" value="Sie haben in ihrem Benutzerprofil keinen Nicknamen angegeben."/>
@@ -2888,6 +2965,8 @@
 	<string id="16995" value="Die Datei ist möglicherweise beschädigt, oder die Datei benutzt einen Codec, den Sie nicht installiert haben."/>
 	<string id="16996" value="Ein Teil dieser Datei kann nicht abgespielt werden. Möglicherweise mûssen Sie zusätzliche Decoder herunterladen."/>
 	<string id="16997" value="Es wird keine Datei wiedergegeben. Doppelklicken Sie eine Datei in Ihrer Bibliothek an, um sie abzuspielen."/>
+	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
+	<string id="16999" value="P L A Y L I S T"/>
 	<string id="17024" value="Verbindung herstellen mit %s..."/>
 	<string id="17025" value="Verbindungsversuch mit %s fehlgeschlagen."/>
 	<string id="17026" value="Push-Verbindung von %s anfordern..."/>
@@ -3038,6 +3117,7 @@
 	<string id="20009" value="Benutzerdefiniert"/>
 	<string id="20010" value="&amp;Zurück"/>
 	<string id="20011" value="&amp;Weiter"/>
+	<string id="20012" value="Abschließen"/>
 	<string id="20100" value="Verbinden"/>
 	<string id="20101" value="Anfordern"/>
 	<string id="20102" value="Antwort"/>
@@ -3090,6 +3170,15 @@
 	<string id="20214" value="Gut"/>
 	<string id="20215" value="Sehr Gut"/>
 	<string id="20216" value="Exzellent"/>
+	<string id="20217" value="Wählen sie den temporären Ordner von eDonkey/eMule:"/>
+	<!-- Column headers in Library Album View -->
+	<string id="20230" value="#"/><!-- Track number -->
+	<string id="20231" value="Titel"/>
+	<string id="20232" value="Dauer"/>
+	<string id="20233" value="Bitrate"/>
+	<string id="20234" value="Album"/>
+	<string id="20235" value="Interpret"/>
+	<string id="20236" value="Bewertung"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
@@ -3152,7 +3241,7 @@
 		<control caption="_Entfernen"/>
 		<control caption="_Kollektionen hier speichern:"/>
 		<control/><control/>
-		<control caption="Erstelle Ghost-Dateien beim Löschen"/>
+		<control caption="Erst. Ghost-Dateien beim Löschen"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Medienwiedergabe">
 		<control caption="_Optionen:"/>
@@ -3229,14 +3318,14 @@
 		<control caption="_Anzahl Downloads:"/>
 		<control caption="Dateien maximal:"/>
 		<control/><control/>
-		<control caption="Max. Verbindungen:"/>
+		<control caption="Max. Downloads:"/>
 		<control/><control/>
-		<control caption="Verbind. pro Datei:"/>
+		<control caption="Quellen pro Datei:"/>
 		<control/><control/>
 		<control caption="_Limits:"/>
 		<control caption="Downloadgeschwindigkeit:"/>
 		<control/>
-		<control caption="Maximale Warteschlangenlänge:"/>
+		<control caption="Max. Warteschlangenlänge:"/>
 		<control/><control/>
 		<control caption="Nur in verbundenen Netzwerken hoch- und herunterladen."/>
 	</dialog>
@@ -3261,7 +3350,7 @@
 		<control caption="_Neu..."/>
 		<control caption="B_earbeiten"/>
 		<control caption="_Löschen"/>
-		<control caption="(Änderungen treten sofort in Kraft)"/>
+		<control caption="Änderungen treten sofort in Kraft"/>
 	</dialog>
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Remote-Access">
 		<control caption="_Erklärung:"/>
@@ -3279,7 +3368,7 @@
 		<control caption="_Optionen:"/>
 		<control caption="Zeitsteuerung _aktivieren"/>
 		<control/><control/>
-		<control caption="_Nur G2-Netz, wenn Zeitsteuerung aktiv"/>
+		<control caption="_Nur G2, wenn Zeitsteuerung aktiv"/>
 		<control caption="Legende:"/>
 		<control caption="So"/>
 		<control caption="Mo"/>
@@ -3341,24 +3430,23 @@
 		<control caption="Leaf zu Hub"/>
 		<control caption="Hub zu Hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000-Netzwerk:"/>
-		<control caption="Heute zu eD2k verbinden"/>
 		<control caption="Immer zu eD2k verbinden"/>
+		<control caption="Heute zu eD2k verbinden"/>
 		<control caption="_Globale Suche:"/>
 		<control caption="Auf bekannten Servern aus dem Server-Cache suchen."/>
 		<control caption="Suche stoppen nach:"/>
 		<control/><control/>
 		<control caption="Suchergebnissen."/>
-		<control caption="_Verbindungen:"/>
+		<control caption="Serverlisten-Aktualisierungen vom verbundenem eD2k-Server erhalten"/>
+		<control caption="Client-_Verbindungen:"/>
 		<control caption="Mit maximal"/>
 		<control/><control/>
 		<control caption="anderen Clients verbinden."/>
 		<control caption="eDonkey-_Tools:"/>
-		<control caption="Unvollständige eDonkey2000/eMule-Downloads importieren:"/>
-		<control caption="Importieren..."/>
-		<control caption="Server.met aus dem Internet herunterladen:"/>
-		<control caption="Herunterladen"/>
+		<control caption="Serverliste aus dem Internet herunterladen:"/>
+		<control caption="Herunterladen..."/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="_Benutzeroberfläche:"/>
@@ -3368,14 +3456,14 @@
 		<control caption="Torrents gleichzeitig"/>
 		<control/><control/>
 		<control caption="Client-Verbindungen"/>
-		<control caption=" Torrents entfernen bei einem Up- / Downloadverhältnis von"/>
+		<control caption=" Torrents entfernen bei Up- / Downloadverhältnis von"/>
 		<control/><control/><control/>
 		<control caption=" Torrentquellen bevorzugen"/>
 		<control caption="_End-Game:"/>
 		<control caption="End-Game-Modus am Ende von Torrent-Downloads aktivieren"/>
 		<control caption="Torrents hier _speichern:"/>
 		<control/><control/>
-		<control caption="_.torrent-Erstellungsprogramm"/>
+		<control caption="._torrent-Erstellungsprogramm"/>
 		<control/><control/>
 		<control caption="St_andardtracker:"/>
 		<control/>
@@ -3465,7 +3553,7 @@
 		<control/>
 		<control caption="Shareaza zu benutzen"/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Willkommen bei Shareaza [Schritt 2 von 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Willkommen bei Shareaza [Schritt 2 von 7]">
 		<control caption="Shareaza bietet eine flexible Benutzeroberfläche. Sie können also wählen, was Ihnen am angenehmsten ist. Sie können diese Optionen jederzeit ändern."/>
 		<control caption="Bitte wählen Sie eine Benutzeroberfläche:"/>
 		<control caption="Normalmodus"/>
@@ -3473,21 +3561,19 @@
 		<control caption="Simple, einfach zu bedienende Menüs und Buttons."/>
 		<control caption="Der Powermodus bietet viele zusätzliche Befehle, Fenster, usw."/>
 		<control caption="Einfache Download-Fortschrittsanzeigen verwenden. (Verringert CPU-Last)"/>
-		<control caption="Zusätzliche BitTorrent-Bedienelemente anzeigen."/>
 		<control caption="Shareaza mit .torrent-Dateien verknüpfen."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Willkommen bei Shareaza [Schritt 3 von 7]">
-		<control caption="Um richtig zu funktionieren, benötigt Shareaza Informationen über ihre Internetverbindung."/>
-		<control caption=" ( Bitte wählen )| Ich benutze das Internet zu Hause| Ich benutze das Internet in einem Universitätsnetzwerk| Ich benutze das Internet in einem Büronetzwerk| Ich benutze das Internet in einem Hotel oder Flughafen"/>
-		<control caption="Ist ihr Netzwerk oder Campus durch eine Firewall oder einen NAT Router geschützt?"/>
-		<control caption=" Nein, eingehende Verbindungen sind möglich| Ja, eingehende Verbindungen aus dem Internet sind NICHT möglich| Ich weiß es nicht, bitte AUTOMATISCH erkennen"/>
-		<control caption="Ist ihr Computer durch eine Firewall oder einen NAT-Router geschützt?"/>
-		<control caption=" Nein, ich habe vollen Zugriff auf das Internet| Ja, aber ich werde einen Port für Shareaza weiterleiten| Ja, eingehende Verbindungen aus dem Internet sind NICHT möglich| Ich weiß es nicht, bitte AUTOMATISCH erkennen"/>
-		<control caption="Falls Sie wissen, wie schnell ihre Internetverbindung ist, wählen Sie bitte die passendste Geschwindigkeit:"/>
-		<control caption="| Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Kabelmodem/SDSL| T1| T3| LAN| OC3"/>
-		<control caption="Benutzerdefiniert:"/>
+		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Willkommen bei Shareaza [Schritt 3 von 7]">
+		<control caption="Shareaza benötigt nun einige Informationen über ihre Internetverbinung um bestmöglich zu funktionieren."/>
+		<control caption="Wählen Sie den Typ ihrer Internetverbindung:"/>
+		<control caption="Modem (56k)|ISDN (64k)|DSL light (256K)|DSL light (512K)|DSL (768K)|DSL (1.5M)|DSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|SDSL|T1|T3|LAN|OC3"/>
+		<control caption="Oder wählen Sie ihre max. Downloadgeschwindigkeit:"/>
 		<control/>
-		<control caption="Status:"/>
+		<control caption="und die max. Uploadgeschwindigkeit:"/>
+		<control/>
+		<control caption="Soll Shareaza die benötigten Portfreigaben mit Hilfe von UPnP automatisch einrichten?"/>
+		<control/>
+		<control caption="Fortschritt:"/>
 		<control/>
 	</dialog>
 	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Willkommen bei Shareaza [Schritt 4 von 7]">
@@ -3697,7 +3783,7 @@
 		<control caption="Service _Adresse:"/>
 		<control/>
 		<control caption="Service Typ:"/>
-		<control caption="Gnutella-Bootstrap|GWebCache|Server.met-URL"/>
+		<control caption="Gnutella-Bootstrap|GWebCache|Server.met-URL|Blockiert"/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 	</dialog>
@@ -3797,12 +3883,13 @@
 		<control caption="OK"/>
 		<control caption="Schließen"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Eigenschaften">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Eigenschaften von Graph-Element">
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 		<control caption="_Quelle:"/>
-		<control/><control/>
-		<control caption="Parameter:"/>
+		<control/>
+		<control caption="Faktor:"/>
+		<control/>
 		<control caption="Einheiten:"/>
 		<control/>
 		<control caption="_Anzeige:"/>
@@ -4127,6 +4214,7 @@
 		<column from="Client" to="Client"/>
 		<column from="Downloaded" to="Heruntergeladen"/>
 		<column from="Complete" to="Fertig"/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Adresse"/>
@@ -4136,6 +4224,7 @@
 		<column from="Speed" to="Geschwindigkeit"/>
 		<column from="Client" to="Client"/>
 		<column from="Rating" to="Bewertung"/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adresse"/>
@@ -4149,6 +4238,7 @@
 		<column from="Mode" to="Modus"/>
 		<column from="Client" to="Client"/>
 		<column from="Name" to="Name"/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Adresse/Inhalt"/>
@@ -4163,9 +4253,13 @@
 		<column from="Port" to="Port"/>
 		<column from="Client" to="Client"/>
 		<column from="Last Seen" to="Zuletzt gesehen"/>
+		<column from="Daily Uptime" to="Tägliche Verfügbarkeit"/>
+		<column from="Name" to=""/>
 		<column from="Description" to="Beschreibung"/>
 		<column from="CurUsers" to="Benutzer"/>
 		<column from="MaxUsers" to="Benutzer max."/>
+		<column from="Failures" to="Fehler"/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Adresse"/>
@@ -4175,6 +4269,15 @@
 		<column from="Accesses" to="Zugriffe"/>
 		<column from="Updates" to="Updates"/>
 		<column from="Failures" to="Fehler"/>
+	</list>
+	<list name="CPacketWnd">
+		<column from="Address" to=""/>
+		<column from="Protocol" to=""/>
+		<column from="Type" to=""/>
+		<column from="T/H" to=""/>
+		<column from="Hex" to=""/>
+		<column from="ASCII" to=""/>
+		<column from="G1-ID" to=""/>
 	</list>
 	<list name="CSearchMonitorWnd">
 		<column from="Search" to="Suche"/>
@@ -4186,15 +4289,19 @@
 		<column from="Extension" to="Typ"/>
 		<column from="Size" to="Größe"/>
 		<column from="Rating" to="Bewertung"/>
+		<column from="Status" to=""/>
 		<column from="Host/Count" to="Adresse/Quellen"/>
 		<column from="Speed" to="Geschwindigkeit"/>
 		<column from="Client" to="Client"/>
+		<column from="Time" to="Zeit"/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Name"/>
 		<column from="Criteria" to="Kriterien"/>
 		<column from="Bandwidth" to="Bandbreite"/>
 		<column from="Transfers" to="Transfer"/>
+		<column from="Order" to=""/>
 	</list>
 	<list name="CAdvancedSettingsList">
 		<column from="Setting" to="Einstellung"/>
