@@ -337,9 +337,18 @@ void CRemote::Output(LPCTSTR pszName)
 	hFile.Read( pBytes, nBytes );
 	hFile.Close();
 	
+	bool bBOM = false;
+	if ( nBytes > 3 && pBytes[0] == 0xEF && pBytes[1] == 0xBB && pBytes[2] == 0xBF )
+	{
+		pBytes += 3;
+		nBytes -= 3;
+		bBOM = true;
+	}
+
 	int nWide = MultiByteToWideChar( CP_UTF8, 0, pBytes, nBytes, NULL, 0 );
 	MultiByteToWideChar( CP_UTF8, 0, pBytes, nBytes, strBody.GetBuffer( nWide ), nWide );
 	strBody.ReleaseBuffer( nWide );
+	if ( bBOM ) pBytes -= 3;
 	delete [] pBytes;
 	
 	CList<BOOL> pDisplayStack;
