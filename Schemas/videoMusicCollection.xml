@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Video:Musikvideos</title>
                <title language="ee">Video:Muusika Videod</title>
                <title language="es">Video: Videos de Música</title>
+               <title language="es-mx">Video: Videos de Música</title>
                <title language="fr">Vidéo:Clips vidéos</title>
                <title language="heb">&#160;וידאו:קליפים</title>
                <title language="hr">Film:Spotovi</title>
@@ -67,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Musikvideos</title>
                <title language="ee">Muusikavideod</title>
                <title language="es">Videos de Música</title>
+               <title language="es-mx">Videos de Música</title>
                <title language="fr">Clips vidéos</title>
                <title language="heb">וידאו קליפים</title>
                <title language="hr">Spotovi</title>
@@ -119,6 +123,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Dieser Ordner enthält Musikvideos.</subtitle>
                <subtitle language="ee">See kaust sisaldab muusika videosid.</subtitle>
                <subtitle language="es">Esta carpeta contiene videos de música</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene videos de música</subtitle>
                <subtitle language="fr">Ce dossier contient tous les clips vidéos de votre bibliothèque.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה קליפים</subtitle>
                <subtitle language="hr">Ova mapa sadrži vaše spotove.</subtitle>

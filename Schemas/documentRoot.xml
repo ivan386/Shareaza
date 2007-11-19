@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Dokumente:Eigene Dokumente</title>
                <title language="ee">Dokument:Minu Dokumendid</title>
                <title language="es">Documento:Mis Documentos</title>
+               <title language="es-mx">Documento:Mis Documentos</title>
                <title language="fr">Document:Mes Documents</title>
                <title language="heb">&#160;מסמך:המסמכים שלי</title>
                <title language="hr">Dokument:Moji Dokumenti</title>
@@ -67,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Willkommen zu Meine Dokumente!</title>
                <title language="ee">Teretulemast   Minu Dokumentidesse!</title>
                <title language="es">¡Bienvenido a Mis documentos!</title>
+               <title language="es-mx">¡Bienvenido a Mis documentos!</title>
                <title language="fr">Bienvenue dans Mes Documents!</title>
                <title language="heb">ברוך הבא למסמכים שלי!</title>
                <title language="hr">Dobrodošli Među Vaše Dokumente!</title>
@@ -119,6 +123,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Diese Ordner enthalten alle ihre Dokumente.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Dokumente</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
+               <subtitle language="es-mx">Estas carpetas contienen todos tus documentos.</subtitle>
                <subtitle language="fr">Ces dossiers contiennent tous vos documents.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל המסמכים שלך</subtitle>
                <subtitle language="hr">Ove mape sadrže sve vaše dokumente.</subtitle>

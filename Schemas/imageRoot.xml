@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Bild:Eigene Bilder</title>
                <title language="ee">Pilt:Minu Pildid</title>
                <title language="es">Imagen: Mis imágenes</title>
+               <title language="es-mx">Imagen: Mis imágenes</title>
                <title language="fr">Image:Mes images</title>
                <title language="heb">&#160;תמונה:התמונות שלי</title>
                <title language="hr">Slike:Moje Slike</title>
@@ -67,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Willkommen bei Eigene Bilder!</title>
                <title language="ee">Teretulemast  Minu Piltidesse!</title>
                <title language="es">¡Bienvenido a Mis Imágenes!</title>
+               <title language="es-mx">¡Bienvenido a Mis Imágenes!</title>
                <title language="fr">Bienvenue dans Mes images!</title>
                <title language="heb">ברוך הבא לתמונות שלי!</title>
                <title language="hr">Dobrodošli Među Vaše Slike!</title>
@@ -119,6 +123,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Diese Ordner enthalten alle Bilder Ihrer Bibliothek, geordnet nach Album. Öffnen Sie einen Ordner, um fortzufahren.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu raamatukogus asuvaid pilte. Jätkamiseks ava allolev kaust.</subtitle>
                <subtitle language="es">Estas carpetas contienen todas tus imágenes de tu librería, organizadas por album. Abre una carpeta para continuar</subtitle>
+               <subtitle language="es-mx">Estas carpetas contienen todas tus imágenes de tu librería, organizadas por album. Abre una carpeta para continuar</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque, organisées par album.  Ouvrez un sous-dossier pour continuer.</subtitle>
                <subtitle language="heb">הספריות הללו מכילות את כל התמונות בספרייה שלך, מאורגנים לפי אלבום, פתח ספרייה מתחת כדי להמשיך</subtitle>
                <subtitle language="hr">Ove mape sadrže sve slike iz vaše kolekcije posložene u albume. Otvorite željenu mapu.</subtitle>

@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Video:Filme</title>
                <title language="ee">Video:Filmid</title>
                <title language="es">Vvideo: Filmes</title>
+               <title language="es-mx">Vvideo: Filmes</title>
                <title language="fr">Vidéo:Films</title>
                <title language="heb">&#160;וידאו:סרטים</title>
                <title language="hr">Film:Dugometražni</title>
@@ -67,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Filme</title>
                <title language="ee">Filmid</title>
                <title language="es">Filmes</title>
+               <title language="es-mx">Filmes</title>
                <title language="fr">Filmes</title>
                <title language="heb">סרטים</title>
                <title language="hr">Film</title>
@@ -119,6 +123,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Dieser Ordner enthält eine Liste aller Filme in ihrer Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab nimekirja filmidest sinu raamatukogus.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los filmes que tienes en tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene todos los filmes que tienes en tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les films de votre bibliothèque.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה רשימה של הסרטים שבספרייה שלך</subtitle>
                <subtitle language="hr">Ova mapa sadrži popis filmova koje imate u kolekciji.</subtitle>

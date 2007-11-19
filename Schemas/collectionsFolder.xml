@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="de">Kollektionen:Eigene Kollektionen</title>
               <title language="ee">Kollektsioon:Minu Kollektsioonid</title>
               <title language="es">Colecciones: Mis Colecciones</title>
+              <title language="es-mx">Colecciones: Mis Colecciones</title>
               <title language="fr">Collections:Mes collections</title>
               <title language="heb">&#160;אוספים:האוספים שלי</title>
               <title language="hr">Kolekcija:Moja Kolekcija</title>
@@ -67,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -93,6 +96,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Eigene Kollektionen</title>
                <title language="ee">Minu Kollektsioonid</title>
                <title language="es">Mis Colecciones</title>
+               <title language="es-mx">Mis Colecciones</title>
                <title language="fr">Mes collections</title>
                <title language="heb">האוספים שלי</title>
                <title language="hr">Moja Kolekcija</title>
@@ -116,6 +120,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Dieser Ordner enthält alle Kollektionen in ihrer Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab kõiki sinu raamatukogus olevaid Failide Kollektsioone.</subtitle>
                <subtitle language="es">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichier de collection de votre bibliothèque.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל האוספים שבספרייה שלך</subtitle>
                <subtitle language="hr">Ove mapa sadrži sve vaše rich File datoteke u vašoj kolekciji</subtitle>

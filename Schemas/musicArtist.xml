@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Musiker</title>
                <title language="ee">Muusika Artist</title>
                <title language="es">Artista de Música</title>
+               <title language="es-mx">Artista de Música</title>
                <title language="fr">Artiste Musical</title>
                <title language="heb">&#160;אמן מוזיקה</title>
                <title language="hr">Muzika Izvođač</title>
@@ -67,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Name</title>
                        <title language="ee">Nimi</title>
                        <title language="es">Nombre</title>
+                       <title language="es-mx">Nombre</title>
                        <title language="fr">Nom</title>
                        <title language="heb">שם</title>
                        <title language="hr">Ime</title>
@@ -92,6 +95,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Beschreibung</title>
                        <title language="ee">Kirjeldus</title>
                        <title language="es">Descripción</title>
+                       <title language="es-mx">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="heb">תיאור</title>
                        <title language="hr">Opis</title>
@@ -117,6 +121,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Sammler</title>
                        <title language="ee">Koguja</title>
                        <title language="es">Colector</title>
+                       <title language="es-mx">Colector</title>
                        <title language="fr">Collecteur</title>
                        <title language="heb">שם יוצר האוסף</title>
                        <title language="hr">Sakupio</title>
@@ -142,6 +147,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Kommentar</title>
                        <title language="ee">Arvamused</title>
                        <title language="es">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="heb">הערות</title>
                        <title language="hr">Komentari</title>
@@ -182,6 +188,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">{name} - Diskographie</title>
                <title language="ee">{name} - Diskograafia</title>
                <title language="es">{name}</title>
+               <title language="es-mx">{name}</title>
                <title language="fr">{name} - Discographie</title>
                <title language="heb">דיסקוגרפיה של {name}</title>
                <title language="hr">{name} - Diskografija</title>
@@ -205,6 +212,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>
                <subtitle language="ee">See kaust sisaldab {name} muusikat .</subtitle>
                <subtitle language="es">Esta carpeta contiene tu música por {name}</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene tu música por {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה רשימה של המוזיקה שלך לפי {name}</subtitle>
                <subtitle language="hr">Ova mapa sadrži popis vaših pjesama od {name}.</subtitle>

@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Allgemein:Shareaza Bibliothek</title>
                <title language="ee">Üldine:Minu Shareaza Raamatukogu</title>
                <title language="es">General: Mi Librería Shareaza de Archivos</title>
+               <title language="es-mx">General: Mi Librería Shareaza de Archivos</title>
                <title language="fr">Général:Ma bibliothèque Shareaza</title>
                <title language="heb">&#160;כללי:ספריית שרזה שלי</title>
                <title language="hr">Općenito:Moja Kolekcija</title>
@@ -64,6 +66,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -89,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Besitzer</title>
                        <title language="ee">Omanik</title>
                        <title language="es">Dueño</title>
+                       <title language="es-mx">Dueño</title>
                        <title language="fr">Propriétaire</title>
                        <title language="heb">בעל הזכויות</title>
                        <title language="hr">Vlasnik</title>
@@ -114,6 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Kommentar</title>
                        <title language="ee">Arvamused</title>
                        <title language="es">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="heb">הערות</title>
                        <title language="hr">Komentari</title>
@@ -143,6 +148,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Willkommen in ihrer Bibliothek!</title>
                <title language="ee">Teretulemast  Minu Raamatukokku!</title>
                <title language="es">¡Bienvenido a Mi Librería!</title>
+               <title language="es-mx">¡Bienvenido a Mi Librería!</title>
                <title language="fr">Bienvenue dans votre bibliothèque!</title>
                <title language="heb">ברוך הבא לספרייה שלי!</title>
                <title language="hr">Dobrodošli U Vašu Kolekciju!</title>
@@ -166,6 +172,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
                <subtitle language="ee">Sul on {totalFiles} faili, kokku {totalVolume} sinu raamatukogus.</subtitle>
                <subtitle language="es">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
+               <subtitle language="es-mx">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
                <subtitle language="heb">יש לך בספרייה ‎{totalVolume} בתוך {totalFiles} קבצים</subtitle>
                <subtitle language="hr">Imate {totalFiles} datoteka Tj {totalVolume} koje djelite sa svijetom.</subtitle>

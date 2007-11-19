@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Anwendung:Alle Anwendungen</title>
                <title language="ee">Programm:Kõik Programmid</title>
                <title language="es">Aplicación: Todas los programas</title>
+               <title language="es-mx">Aplicación: Todas los programas</title>
                <title language="fr">Application:Toutes les applications</title>
                <title language="heb">&#160;תוכנה:כל התוכניות</title>
                <title language="hr">Program:Svi Programi</title>
@@ -67,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Alle Anwendungen</title>
                <title language="ee">Kõik Programmid</title>
                <title language="es">Todas las aplicaciones</title>
+               <title language="es-mx">Todas las aplicaciones</title>
                <title language="fr">Toutes les applications</title>
                <title language="heb">כל התוכניות</title>
                <title language="hr">Svi Programi</title>
@@ -119,6 +123,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Dieser Ordner enthält alle Anwendungen in ihrer Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab sinu raamatukogus olevaid programme.</subtitle>
                <subtitle language="es">Esta carpeta tiene todas las aplicaciones de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta tiene todas las aplicaciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications de votre bibliothèque.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל התוכניות שבספרייה שלך</subtitle>
                <subtitle language="hr">Ova mapa sadrži sve programe u vašoj kolekciji.</subtitle>

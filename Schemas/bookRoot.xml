@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Buch:Eigene Bücher</title>
                <title language="ee">Raamat:Minu Raamatud</title>
                <title language="es">Libro: Todos mis libros</title>
+               <title language="es-mx">Libro: Todos mis libros</title>
                <title language="fr">Livres:Mes livres</title>
                <title language="heb">&#160;ספר:הספרים שלי</title>
                <title language="hr">Knjiga:Moje Knjige</title>
@@ -67,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Willkommen bei Eigene Bücher!</title>
                <title language="ee">Teretulemast  Minu Raamatutesse!</title>
                <title language="es">¡Bienvenido a Mis Libros!</title>
+               <title language="es-mx">¡Bienvenido a Mis Libros!</title>
                <title language="fr">Bienvenue dans Mes livres!</title>
                <title language="heb">ברוך הבא לספרים שלי!</title>
                <title language="hr">Dobrodošli Među Vaše Knjige!</title>
@@ -119,6 +123,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Diese Ordner enthalten alle ihre Bücher.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Raamatuid</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus libros</subtitle>
+               <subtitle language="es-mx">Estas carpetas contienen todos tus libros</subtitle>
                <subtitle language="fr">Ce dossier contient tous vos livres.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל הספרים שלך</subtitle>
                <subtitle language="hr">Ove mape sadrže sve vaše knjige.</subtitle>

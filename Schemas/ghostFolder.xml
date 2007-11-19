@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -37,6 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="de">Allgemein:Geister-Dateien</title>
               <title language="ee">Üldine:Varifailid</title>
               <title language="es">General:Ghost Files</title>
+              <title language="es-mx">General:Ghost Files</title>
               <title language="fr">Général:Fichiers ghost</title>
               <title language="heb">General:Ghost Files</title>
               <title language="hr">General:Ghost Files</title>
@@ -67,6 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -93,6 +96,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Verwalten der Geister-Dateien</title>
                <title language="ee">Varifailid</title>
                <title language="es">Ghost Files</title>
+               <title language="es-mx">Ghost Files</title>
                <title language="fr">Fichiers ghost</title>
                <title language="heb">Ghost Files</title>
                <title language="hr">Ghost Files</title>
@@ -116,6 +120,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="de">Dieser Ordner enthält Informationen über alle aus der Bibliothek gelöschten Dateien, die Sie kommentiert oder bewertet haben.</subtitle>
                <subtitle language="ee">See kaust sisaldab kõiki faile, mis sa oled oma Raamatukogust ära kustutanud.</subtitle>
                <subtitle language="es">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="es-mx">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="fr">Ce dossier contient des informations pour les fichiers supprimer de votre bibliothèque</subtitle>
                <subtitle language="heb">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="hr">This folder contains every file which you've deleted from the Library.</subtitle>

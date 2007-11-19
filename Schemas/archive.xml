@@ -7,7 +7,8 @@ Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
-Shareaza Spanish Schemas File translated by Help
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -15,9 +16,9 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Japanese Schemas File translated by DukeDog; CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne; Neglacio
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
@@ -36,6 +37,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="de">Archive</title>
                <title language="ee">Archive</title>
                <title language="es">Archive</title>
+               <title language="es-mx">Archive</title>
                <title language="fr">Archive</title>
                <title language="heb">Archive</title>
                <title language="hr">Archive</title>
@@ -63,6 +65,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
@@ -88,6 +91,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Folders</title>
                        <title language="ee">Folders</title>
                        <title language="es">Folders</title>
+                       <title language="es-mx">Folders</title>
                        <title language="fr">Folders</title>
                        <title language="heb">Folders</title>
                        <title language="hr">Folders</title>
@@ -113,6 +117,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Files</title>
                        <title language="ee">Files</title>
                        <title language="es">Files</title>
+                       <title language="es-mx">Files</title>
                        <title language="fr">Files</title>
                        <title language="heb">Files</title>
                        <title language="hr">Files</title>
@@ -138,6 +143,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Kommentar</title>
                        <title language="ee">Arvamused</title>
                        <title language="es">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="heb">הערות</title>
                        <title language="hr">Komentari</title>
@@ -163,6 +169,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Archivtyp</title>
                        <title language="ee">Arhiivi Tüüp</title>
                        <title language="es">Tipo de archivo</title>
+                       <title language="es-mx">Tipo de archivo</title>
                        <title language="fr">Type d'archive</title>
                        <title language="heb">סוג אכיון</title>
                        <title language="hr">Vrsta Arhive</title>
@@ -188,6 +195,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Schlüsselwörter</title>
                        <title language="ee">Võtmesõnad</title>
                        <title language="es">Palabras Clave</title>
+                       <title language="es-mx">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
                        <title language="heb">מילים לזיהוי</title>
                        <title language="hr">Ključne Riječi</title>
@@ -214,6 +222,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Encrypted</title>
                        <title language="ee">Encrypted</title>
                        <title language="es">Encrypted</title>
+                       <title language="es-mx">Encrypted</title>
                        <title language="fr">Encrypted</title>
                        <title language="heb">Encrypted</title>
                        <title language="hr">Encrypted</title>
@@ -240,6 +249,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="de">Unpacked Size</title>
                        <title language="ee">Unpacked Size</title>
                        <title language="es">Unpacked Size</title>
+                       <title language="es-mx">Unpacked Size</title>
                        <title language="fr">Unpacked Size</title>
                        <title language="heb">Unpacked Size</title>
                        <title language="hr">Unpacked Size</title>
