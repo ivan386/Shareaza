@@ -1988,7 +1988,7 @@
 		screening content. It is designed simply to filter out excess unwanted results, rather than 
 		as a 100% safe block.</text>
 		<newline gap="8"/>
-		<text>Children's Internet use (including P2P file sharing) should always be under parental 				supervision.</text>
+		<text>Children's Internet use (including P2P file sharing) should always be under parental supervision.</text>
 	</document>
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">This torrent appears to have an encoding error</text>
