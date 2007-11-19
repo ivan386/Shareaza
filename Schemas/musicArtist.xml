@@ -3,7 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
@@ -34,7 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">Music Artist</title>
                <title language="af">Musiek Kunstenaar</title>
                <title language="ca">Artista</title>
-               <title language="chs">音乐艺人</title>
+               <title language="chs">音乐艺术家</title>
                <title language="cht">音樂-藝人</title>
                <title language="cz">Autor hudby</title>
                <title language="de">Musiker</title>
@@ -120,7 +120,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
                        <title language="ca">Col·lector</title>
-                       <title language="chs">收集人</title>
+                       <title language="chs">收藏者</title>
                        <title language="cht">美術品收藏者</title>
                        <title language="cz">Sběratel</title>
                        <title language="de">Sammler</title>
@@ -214,7 +214,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="en">This folder contains all of your music by {name}.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek volgens {name} .</subtitle>
                <subtitle language="ca">Aquesta carpeta conté la teua música per {name}</subtitle>
-               <subtitle language="chs">此文件夹包含了艺人为 {name} 的音乐。</subtitle>
+               <subtitle language="chs">此文件夹包含了艺术家为 {name} 的音乐。</subtitle>
                <subtitle language="cht">這個資料夾包含了您所有以 {name} 的音樂.</subtitle>
                <subtitle language="cz">Tato složka obsahuje všechnu hudbu od {name}.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>

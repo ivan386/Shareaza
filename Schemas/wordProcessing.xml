@@ -5,7 +5,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
@@ -35,7 +35,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">Word Processing</title>
                <title language="af">Woordverwerking</title>
                <title language="ca">Document de Text</title>
-               <title language="chs">&#160;字符处理</title>
+               <title language="chs">字符处理</title>
                <title language="cht">文件:文字加工</title>
                <title language="cz">Textový editor</title>
                <title language="de">Textverarbeitung</title>

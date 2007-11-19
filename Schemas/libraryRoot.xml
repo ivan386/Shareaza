@@ -3,7 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
@@ -34,7 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">General:My Shareaza Library</title>
                <title language="af">Algemeen:My Shareaza Biblioteek</title>
                <title language="ca">General: La meua Col·lecció</title>
-               <title language="chs">&#160;常规:我的 Shareaza 收藏</title>
+               <title language="chs">&#160;常规:我的 Shareaza 库</title>
                <title language="cht">一般:我的 Shareaza 收藏</title>
                <title language="cz">Obecné:Knihovna</title>
                <title language="de">Allgemein:Shareaza Bibliothek</title>
@@ -148,7 +148,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">Welcome to Your Library!</title>
                <title language="af">Welkom by Jou Biblioteek!</title>
                <title language="ca">Benvingut a La meua col·lecció!</title>
-               <title language="chs">欢迎来到您的收藏！</title>
+               <title language="chs">欢迎来到您的库！</title>
                <title language="cht">歡迎來到您的收藏!</title>
                <title language="cz">Vítejte v knihovně!</title>
                <title language="de">Willkommen in ihrer Bibliothek!</title>
@@ -173,7 +173,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="en">You have {totalFiles} files totalling {totalVolume} in your library.</subtitle>
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
                <subtitle language="ca">Tens {totalFiles} arxius a la teva col·lecció i {totalVolume} d'espai.</subtitle>
-               <subtitle language="chs">您总计有 {totalFiles} 个文件，共计 {totalVolume} 位于您的收藏中。</subtitle>
+               <subtitle language="chs">您总计有 {totalFiles} 个文件，共计 {totalVolume} 位于您的库中。</subtitle>
                <subtitle language="cht">您有 {totalFiles} 個檔案，總計大小 {totalVolume} 在您的收藏.</subtitle>
                <subtitle language="cz">V knihovně máte celkem {totalFiles} souborů o celkové velikosti {totalVolume}.</subtitle>
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>

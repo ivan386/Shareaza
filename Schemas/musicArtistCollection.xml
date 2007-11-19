@@ -3,7 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
@@ -97,7 +97,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">Music By Artist</title>
                <title language="af">Musiek Volgens Kunstenaar</title>
                <title language="ca">Música per Artista</title>
-               <title language="chs">音乐 按艺人</title>
+               <title language="chs">音乐 按艺术家</title>
                <title language="cht">音樂-由-藝人</title>
                <title language="cz">Hudba podle autora</title>
                <title language="de">Musik nach Künstler</title>
@@ -122,7 +122,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="en">This folder contains a list of the artists in your music library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die kunstenaars wat jy in jou biblioteek het.</subtitle>
                <subtitle language="ca">Aquesta carpeta conté una llista d'artistes de la teua col·lecció de música.</subtitle>
-               <subtitle language="chs">此文件夹包含您收藏中艺人的清单。</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中艺术家的清单。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的音樂收藏中一個藝人清單.</subtitle>
                <subtitle language="cz">Tato složka obsahuje seznam autorů, jejichž díla máte v knihovně.</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste der Künstler in ihrer Musikbibliothek.</subtitle>

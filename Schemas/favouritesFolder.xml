@@ -3,7 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
@@ -146,7 +146,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="en">This folder contains favourite files which Shareaza will recommend to other users who browse your collection.</subtitle>
                <subtitle language="af">Hierdie gids bevat gunsteling lêers wat Shareaza aan ander gebruikers sal aanbeveel wat deur jou versameling blaai.</subtitle>
                <subtitle language="ca">Aquesta carpeta conté arxius favorits que Shareaza recomana a altres usuaris que naveguen per la teua Col·lecció</subtitle>
-               <subtitle language="chs">此文件夹中包含了您向浏览您的收集的用户所推荐的您最喜欢的文件。</subtitle>
+               <subtitle language="chs">此文件夹中包含了您向浏览您的收藏那个的用户所推荐的您最喜欢的文件。</subtitle>
                <subtitle language="cht">這個資料夾包含了最愛的檔案 Shareaza 將推薦給其他瀏覽您收藏的使用者.</subtitle>
                <subtitle language="cz">Tato složka obsahuje vaše oblíbené položky, které bude Shareaza doporučovat ostatním uživatelům, kteří si prohlíží vaše sdílené soubory.</subtitle>
                <subtitle language="de">Dieser Ordner enthält empfohlene Dateien, die Benutzer sehen können, die ihre Freigaben durchsuchen.</subtitle>

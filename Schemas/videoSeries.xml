@@ -3,7 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
@@ -285,7 +285,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Synopsis</title>
                        <title language="af">Oorsig</title>
                        <title language="ca">Sinòpsi</title>
-                       <title language="chs">摘要</title>
+                       <title language="chs">大纲</title>
                        <title language="cht">摘要</title>
                        <title language="cz">Osnova</title>
                        <title language="de">Zusammenfassung</title>
@@ -366,7 +366,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Distributer</title>
                        <title language="af">Verspreider</title>
                        <title language="ca">Distribuïdor</title>
-                       <title language="chs">发行商</title>
+                       <title language="chs">内容提供商</title>
                        <title language="cht">經銷商</title>
                        <title language="cz">Distributor</title>
                        <title language="de">Herausgeber</title>
@@ -393,7 +393,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Distributer Link</title>
                        <title language="af">Verspreider Skakel</title>
                        <title language="ca">Enllaç del distribuïdor</title>
-                       <title language="chs">发行商链接</title>
+                       <title language="chs">促销链接</title>
                        <title language="cht">經銷商連結</title>
                        <title language="cz">Odkaz na distributora</title>
                        <title language="de">Link zum Herausgeber</title>
@@ -555,7 +555,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
                        <title language="ca">Col·lector</title>
-                       <title language="chs">收集人</title>
+                       <title language="chs">收藏者</title>
                        <title language="cht">美術品收藏者</title>
                        <title language="cz">Sběratel</title>
                        <title language="de">Sammler</title>
@@ -631,7 +631,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="en">This folder contains episodes of {name}.</subtitle>
                <subtitle language="af">Hierdie gids bevat episodes van {name} .</subtitle>
                <subtitle language="ca">Aquesta carpeta conté episodis de {name}.</subtitle>
-               <subtitle language="chs">此文件夹包含以下情节 {name}。</subtitle>
+               <subtitle language="chs">此文件夹包含以下章节 {name}。</subtitle>
                <subtitle language="cht">這個資料夾包含了 {name} 插曲.</subtitle>
                <subtitle language="cz">Tato složka obsahuje všechny díly {name}.</subtitle>
                <subtitle language="de">Dieser Ordner enthält {name} Folgen.</subtitle>

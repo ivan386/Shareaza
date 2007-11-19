@@ -3,7 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
@@ -33,7 +33,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="en">Archive</title>
                <title language="af">Archive</title>
                <title language="ca">Archive</title>
-               <title language="chs">Archive</title>
+               <title language="chs">档案</title>
                <title language="cht">Archive</title>
                <title language="cz">Archive</title>
                <title language="de">Archive</title>
@@ -89,7 +89,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Folders</title>
                        <title language="af">Folders</title>
                        <title language="ca">Folders</title>
-                       <title language="chs">Folders</title>
+                       <title language="chs">文件夹</title>
                        <title language="cht">Folders</title>
                        <title language="cz">Folders</title>
                        <title language="de">Folders</title>
@@ -116,7 +116,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Files</title>
                        <title language="af">Files</title>
                        <title language="ca">Files</title>
-                       <title language="chs">Files</title>
+                       <title language="chs">文件</title>
                        <title language="cht">Files</title>
                        <title language="cz">Files</title>
                        <title language="de">Files</title>
@@ -225,7 +225,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Encrypted</title>
                        <title language="af">Encrypted</title>
                        <title language="ca">Encrypted</title>
-                       <title language="chs">Encrypted</title>
+                       <title language="chs">加密</title>
                        <title language="cht">Encrypted</title>
                        <title language="cz">Encrypted</title>
                        <title language="de">Encrypted</title>
@@ -253,7 +253,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Unpacked Size</title>
                        <title language="af">Unpacked Size</title>
                        <title language="ca">Unpacked Size</title>
-                       <title language="chs">Unpacked Size</title>
+                       <title language="chs">解包大小</title>
                        <title language="cht">Unpacked Size</title>
                        <title language="cz">Unpacked Size</title>
                        <title language="de">Unpacked Size</title>

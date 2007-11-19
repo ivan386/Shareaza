@@ -3,7 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
@@ -337,7 +337,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Distributer</title>
                        <title language="af">Verspreider</title>
                        <title language="ca">Distribuïdor</title>
-                       <title language="chs">发行商</title>
+                       <title language="chs">内容提供商</title>
                        <title language="cht">經銷商</title>
                        <title language="cz">Distributor</title>
                        <title language="de">Herausgeber</title>
@@ -364,7 +364,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="en">Distributer Link</title>
                        <title language="af">Verspreider Skakel</title>
                        <title language="ca">Enllaç del distribuïdor</title>
-                       <title language="chs">发行商链接</title>
+                       <title language="chs">促销链接</title>
                        <title language="cht">經銷商連結</title>
                        <title language="cz">Odkaz na distributora</title>
                        <title language="de">Link zum Herausgeber</title>
