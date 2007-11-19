@@ -32,7 +32,7 @@ LanguageID=$0425
 ;CopyrightFontName=Arial
 ;CopyrightFontSize=8
 
-LanguageCodePage=0
+LanguageCodePage=1257
 DialogFontName=
 DialogFontSize=8
 WelcomeFontName=Verdana

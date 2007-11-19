@@ -21,7 +21,7 @@
 ; understand the '[LangOptions] section' topic in the help file.
 LanguageName=Albanian
 LanguageID=$041C
-LanguageCodePage=1252
+LanguageCodePage=1250
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
 ;DialogFontName=
