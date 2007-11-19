@@ -372,7 +372,7 @@ void CAdvancedSettingsPage::OnItemChangedProperties(NMHDR* /*pNMHDR*/, LRESULT* 
 		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
 		CString strValue;
 		
-		m_wndValueSpin.SendMessage( WM_SETSPINVALUES, pItem->m_nMin, pItem->m_nMax );
+		m_wndValueSpin.SendMessage( UDM_SETRANGE32, pItem->m_nMin, pItem->m_nMax );
 		
 		strValue.Format( _T("%lu"), pItem->m_nValue / pItem->m_nScale );
 		

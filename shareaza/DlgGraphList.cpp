@@ -93,7 +93,7 @@ BOOL CGraphListDlg::OnInitDialog()
 	m_gdiImageList.Create( IDB_COLOURDOT, 16, 0, RGB(0,255,0) );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
-	m_wndSpeed.SendMessage( WM_SETSPINVALUES, 10, 120000 );
+	m_wndSpeed.SendMessage( UDM_SETRANGE32, 10, 120000 );
 
 	m_bShowAxis		= m_pGraph->m_bShowAxis;
 	m_bShowGrid		= m_pGraph->m_bShowGrid;
