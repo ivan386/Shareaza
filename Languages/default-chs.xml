@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Chinese (Simplified) Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Shareaza Default Chinese (Simplified) Skin File --> <!-- This translation is based on default-en.xml SVN rev.6092 + ~1 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -19,11 +19,11 @@
 <!-- Manifest -->
 <manifest	name="简体中文"
 		author="STC"
-		updatedBy="Sanly"
+		updatedBy="John"
 		description="Shareaza Chinese (Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(at)gmail(dot)com"
-		version="2.2.2.27 (EN3706)"
+		version="2.3.0.0"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -350,7 +350,7 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="与用户聊天"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="设置"/>
@@ -364,7 +364,7 @@
 		<button id="ID_SECURITY_BAN" text="禁止用户"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="设置"/>
@@ -412,6 +412,15 @@
 		<button id="ID_CHAT_CONNECT" text="连接" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="断开"/>
 	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+		<toolbar name="ImageViewer_Toolbar">
+			<button id="ImageViewer_BestFit" text="最佳适合"/>
+			<button id="ImageViewer_ActualSize" text="实际大小"/>
+			<separator/>
+			<button id="ImageViewer_Refresh" text="刷新"/>
+			<separator/>
+			<button id="ImageViewer_Close" text="关闭"/>
+		</toolbar>
 </toolbars>
 
 <!-- Menu Definitions -->
@@ -436,7 +445,7 @@
 			<separator/>
 			<menu text="选择网络(_N)">
 				<item id="ID_NETWORK_G2" text="连接到 Gnutella2(_G)"/>
-				<item id="ID_NETWORK_ED2K" text="连接到 eDonkey2000(_E)"/>
+				<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 				<item id="ID_NETWORK_G1" text="连接到 Gnutella1(_1)"/>
 			</menu>
 			<separator/>
@@ -504,7 +513,7 @@
 			<separator/>
 			<menu text="选择网络(_N)">
 				<item id="ID_NETWORK_G2" text="连接到 Gnutella2(_G)"/>
-				<item id="ID_NETWORK_ED2K" text="连接到 eDonkey2000(_E)"/>
+				<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 				<item id="ID_NETWORK_G1" text="连接到 Gnutella1(_1)"/>
 			</menu>
 			<separator/>
@@ -600,7 +609,7 @@
 			<separator/>
 			<menu text="选择网络(_N)">
 				<item id="ID_NETWORK_G2" text="连接到 Gnutella2(_G)"/>
-				<item id="ID_NETWORK_ED2K" text="连接到 eDonkey2000(_E)"/>
+				<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 				<item id="ID_NETWORK_G1" text="连接到 Gnutella1(_1)"/>
 			</menu>
 			<separator/>
@@ -1376,7 +1385,7 @@
 			<item id="ID_NETWORK_DISCONNECT" text="断开(_D)"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="Gnutella2(_G)"/>
-			<item id="ID_NETWORK_ED2K" text="eDonkey2000(_E)"/>
+			<item id="ID_NETWORK_ED2K" text="edonkey(_E)"/>
 			<item id="ID_NETWORK_G1" text="Gnutella1(_1)"/>
 		</menu>
 		<menu text="监视器(_M)">
@@ -2081,7 +2090,7 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">您的 eDonkey 服务器列表没有内容</text>
 		<newline gap="8"/>
-		<text>您的 eDonkey2000 服务器列表中没有服务器。
+		<text>您的 edonkey 服务器列表中没有服务器。
 		您需要下载一个较新的服务器列表 (met 文件) 以连接到 ED2K。</text>
 		<newline gap="8"/>
 		<text>您可以从 ED2K 设置页面或发现服务窗口下载服务器列表。</text>
@@ -2204,7 +2213,7 @@
 	<tip id="ID_DISCOVERY_GNUTELLA" message="显示引导服务于探索服务窗口。"/>
 	<tip id="ID_DISCOVERY_QUERY" message="马上查询选定的探索服务。"/>
 	<tip id="ID_DISCOVERY_REMOVE" message="移除选定的探索服务。"/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="在探索窗口中显示 eDonkey2000 服务器服务。"/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="在探索窗口中显示 edonkey 服务器服务。"/>
 	<tip id="ID_DISCOVERY_WEBCACHE" message="显示 G网缓存 服务于探索服务窗口。"/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="取消和移除此群组中的下载。"/>
 	<tip id="ID_DOWNLOAD_GROUP_NEW" message="创建新的下载组..."/>
@@ -2268,8 +2277,8 @@
 	<tip id="ID_HITMONITOR_SEARCH" message="在网络上搜索选定的条件。"/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="连接到选定的主机。"/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="断开选定邻居的连接。"/>
-	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="显示 eDonkey2000 服务器。"/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="下载 eDonkey2000 &quot;server.met&quot; 文件..."/>
+	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="显示 edonkey 服务器。"/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="下载 edonkey &quot;server.met&quot; 文件..."/>
 	<tip id="ID_HOSTCACHE_G1_CACHE" message="显示 Gnutella1 缓存中的主机。"/>
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="显示 Gnutella2 缓存缓存中的主机。"/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="显示 Gnutella2 同级集端。"/>
@@ -2371,7 +2380,7 @@
 	<tip id="ID_NETWORK_CONNECT" message="连接到网络。"/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="手动连接到主机..."/>
 	<tip id="ID_NETWORK_DISCONNECT" message="从网络断开。"/>
-	<tip id="ID_NETWORK_ED2K" message="连接到 eDonkey2000 网络。"/>
+	<tip id="ID_NETWORK_ED2K" message="连接到 edonkey 网络。"/>
 	<tip id="ID_NETWORK_EXIT" message="退出 Shareaza"/>
 	<tip id="ID_NETWORK_G1" message="连接到原始的 Gnutella 网络。"/>
 	<tip id="ID_NETWORK_G2" message="连接到 Gnutella2 网络(强力推荐)。"/>
@@ -2771,12 +2780,12 @@
 	<string id="16308" value="下载主机 %s 发送未经同意的数据，关闭连接。"/>
 	<string id="16309" value="为 &quot;%s&quot; 从 %s 请求元数据..."/>
 	<string id="16310" value="正在从 %s (%s) 接收 tiger-tree 数据..."/>
-	<string id="16311" value="为 &quot;%s&quot; 从 %s 请求 eDonkey2000 Hashset..."/>
-	<string id="16312" value="已经从 %s 接收了一个无效的 eDonkey2000 Hashset，丢失资源。"/>
-	<string id="16313" value="已经为 &quot;%s&quot;接收了 eDonkey2000 Hashset，最小可验证区块 %s。"/>
-	<string id="16314" value="下载主机的 eDonkey2000 Hashset 已损坏的或不符合，丢失资源。"/>
+	<string id="16311" value="为 &quot;%s&quot; 从 %s 请求 edonkey Hashset..."/>
+	<string id="16312" value="已经从 %s 接收了一个无效的 edonkey Hashset，丢失资源。"/>
+	<string id="16313" value="已经为 &quot;%s&quot;接收了 edonkey Hashset，最小可验证区块 %s。"/>
+	<string id="16314" value="下载主机的 edonkey Hashset 已损坏的或不符合，丢失资源。"/>
 	<string id="16315" value="未能为下载 &quot;%s&quot; 初始化 inflate。"/>
-	<string id="16316" value="队列中等待从 eDonkey2000 主机 %s 下载 &quot;%s&quot; 超时。"/>
+	<string id="16316" value="队列中等待从 edonkey 主机 %s 下载 &quot;%s&quot; 超时。"/>
 	<string id="16317" value="正在队列中等待 &quot;%s&quot;。"/>
 	<string id="16318" value="磁盘空间不够，无法下载 &quot;%s&quot; (%s)。"/>
 	<string id="16319" value="丢失资源 %s (%s)，因为发送 &quot;%s&quot; 损坏的部分(%I64i-%I64i)。"/>
@@ -2822,7 +2831,7 @@
 	<string id="16359" value="离线排队上传主机 %s 过期，移除中。"/>
 	<string id="16360" value="拒绝上传 &quot;%s&quot; 到 %s (%s)，所有匹配队列已满。"/>
 	<string id="16361" value="刷新上传到 %s (%s)，网络失效。"/>
-	<string id="16362" value="eDonkey2000 的上传不能被取消。您确定您要取消此上传吗？"/>
+	<string id="16362" value="edonkey 的上传不能被取消。您确定您要取消此上传吗？"/>
 	<string id="16363" value="Torrent 上传"/>
 	<string id="16364" value="已完成上传"/>
 	<string id="16365" value="您确定要取消/放弃此组中的每个下载项吗？"/>
@@ -2933,7 +2942,7 @@
 	<string id="16811" value="自动"/>
 	<string id="16812" value="请稍候: 查找 UPnP 驱动器并进行设置..."/>
 	<string id="16813" value="请稍候: 更新发现服务器..."/>
-	<string id="16814" value="请稍候: 更新 eDonkey2000 服务器列表..."/>
+	<string id="16814" value="请稍候: 更新 edonkey 服务器列表..."/>
 	<string id="16815" value="UPnP Device Host 服务未运行。请重新设置该服务。\n您需要将该服务的启动类型设置为&quot;自动&quot;。"/>
 	<string id="16816" value="eDonkey 网络使用需要等待很长时间的队列。限制最大可接受的队列位置如果非常严格的话，您可能难以开始下载。\n您确定要限制您能接受的队列位置吗？"/>
 	<string id="16817" value="Windows 系统不支持超过 256 个字符的文件路径。\n请选择一个较短路径的文件夹。"/>
@@ -2998,7 +3007,7 @@
 	<string id="17104" value="Gnutella 2:子端到集端连接"/>
 	<string id="17105" value="Gnutella 2:集端到子端连接"/>
 	<string id="17106" value="eDonkey 服务器连接(LOWID: %lu)"/>
-	<string id="17107" value="eDonkey2000 服务器连接"/>
+	<string id="17107" value="edonkey 服务器连接"/>
 	<string id="17108" value="握手"/>
 	<string id="17109" value="传入"/>
 	<string id="17110" value="传出"/>
@@ -3019,29 +3028,29 @@
 	<string id="17125" value="G2 对等"/>
 	<string id="17126" value="G2 集端"/>
 	<string id="17127" value="G2 子端"/>
-	<string id="17128" value="eDonkey2000 服务器"/>
-	<string id="17129" value="eDonkey2000 (LowID)"/>
-	<string id="17130" value="eDonkey2000 (HighID)"/>
-	<string id="17216" value="初始化连接到 eDonkey2000 服务器 %s..."/>
-	<string id="17217" value="连接到 eDonkey2000 服务器 %s，握手中..."/>
+	<string id="17128" value="edonkey 服务器"/>
+	<string id="17129" value="edonkey (LowID)"/>
+	<string id="17130" value="edonkey (HighID)"/>
+	<string id="17216" value="初始化连接到 edonkey 服务器 %s..."/>
+	<string id="17217" value="连接到 edonkey 服务器 %s，握手中..."/>
 	<string id="17218" value="ED2K[%s] %s"/>
-	<string id="17219" value="eDonkey2000 服务器 %s 拒绝连接。"/>
-	<string id="17220" value="eDonkey2000 服务器 %s 在线，客户端 ID 为 %lu。"/>
-	<string id="17221" value="eDonkey2000 服务器 %s 将客户端 ID %lu 改为 %lu。"/>
-	<string id="17222" value="eDonkey2000 服务器 %s 将其更名为 &quot;%s&quot;。"/>
-	<string id="17223" value="eDonkey2000 服务器 %s 已拒绝此连接。"/>
-	<string id="17224" value="和 eDonkey2000 客户 %s 的握手发生错误。"/>
-	<string id="17225" value="连接到 %s 的 eDonkey2000 客户端已关闭。"/>
-	<string id="17226" value="从 %s (id=%x) 接收到畸形的 eDonkey2000 数据包"/>
-	<string id="17227" value="从 %s 的传入连接是一个 eDonkey2000 客户端链接。"/>
-	<string id="17228" value="为 &quot;%s&quot; 发送 eDonkey2000 Hashset 到 %s..."/>
-	<string id="17229" value="连接到 %s 的 eDonkey2000 客户端处于空闲状态，已关闭。"/>
-	<string id="17230" value="初始化 eDonkey2000 客户端连接到 %s..."/>
-	<string id="17231" value="eDonkey2000 客户 %s 使用了错误的 GUID，中断握手。"/>
-	<string id="17232" value="连接到 eDonkey2000 客户端 %s 超时。"/>
-	<string id="17233" value="与 eDonkey2000 客户端 %s 握手超时。"/>
-	<string id="17234" value="拒绝来自 %s 的 eDonkey2000 客户端链接，因为 eDonkey2000 被禁用。"/>
-	<string id="17248" value="开始 eDonkey2000 局部下载导入进程..."/>
+	<string id="17219" value="edonkey 服务器 %s 拒绝连接。"/>
+	<string id="17220" value="edonkey 服务器 %s 在线，客户端 ID 为 %lu。"/>
+	<string id="17221" value="edonkey 服务器 %s 将客户端 ID %lu 改为 %lu。"/>
+	<string id="17222" value="edonkey 服务器 %s 将其更名为 &quot;%s&quot;。"/>
+	<string id="17223" value="edonkey 服务器 %s 已拒绝此连接。"/>
+	<string id="17224" value="和 edonkey 客户 %s 的握手发生错误。"/>
+	<string id="17225" value="连接到 %s 的 edonkey 客户端已关闭。"/>
+	<string id="17226" value="从 %s (id=%x) 接收到畸形的 edonkey 数据包"/>
+	<string id="17227" value="从 %s 的传入连接是一个 edonkey 客户端链接。"/>
+	<string id="17228" value="为 &quot;%s&quot; 发送 edonkey Hashset 到 %s..."/>
+	<string id="17229" value="连接到 %s 的 edonkey 客户端处于空闲状态，已关闭。"/>
+	<string id="17230" value="初始化 edonkey 客户端连接到 %s..."/>
+	<string id="17231" value="edonkey 客户 %s 使用了错误的 GUID，中断握手。"/>
+	<string id="17232" value="连接到 edonkey 客户端 %s 超时。"/>
+	<string id="17233" value="与 edonkey 客户端 %s 握手超时。"/>
+	<string id="17234" value="拒绝来自 %s 的 edonkey 客户端链接，因为 edonkey 被禁用。"/>
+	<string id="17248" value="开始 edonkey 局部下载导入进程..."/>
 	<string id="17249" value="处理完毕，%i 个局部下载导入成功。"/>
 	<string id="17250" value="扫描文件夹: &quot;%s&quot;..."/>
 	<string id="17251" value="未能导入文件。"/>
@@ -3093,10 +3102,10 @@
 	<string id="18496" value="您在名称区域进行了变动。您确定要重命名下载吗？"/>
 	<string id="18497" value="您已经输入了一个 SHA1 值，但它是无效的。请检查并重试。"/>
 	<string id="18498" value="您已经输入了一个根 tiger-tree 值，但它是无效的。请检查并重试。"/>
-	<string id="18499" value="您已经输入了一个 eDonkey2000 Hash 值，但它是无效的。请检查并重试。"/>
+	<string id="18499" value="您已经输入了一个 edonkey Hash 值，但它是无效的。请检查并重试。"/>
 	<string id="18500" value="您已经提供了一个 SHA1 Hash 值，但它与当前关联与此下载的值不同。您确定要立即变更此 SHA1 Hash 吗？"/>
 	<string id="18501" value="您已经提供了一个 根 tiger-tree 值，但它与当前关联与此下载的值不同。您确定要立即变更此 tiger-tree Hash 吗？"/>
-	<string id="18502" value="您已经提供了一个 eDonkey2000 Hash 值，但它与当前关联与此下载的值不同。您确定要立即变更此 eDonkey2000 Hash 吗？"/>
+	<string id="18502" value="您已经提供了一个 edonkey Hash 值，但它与当前关联与此下载的值不同。您确定要立即变更此 edonkey Hash 吗？"/>
 	<string id="18503" value="您确定要忽略当前的验证状态吗？所有的已下载数据都将被认为未被信任的，并且缓存的 Hash 树和 Hash 设置都将被刷新。"/>
 	<string id="18504" value="您确定要忽略选定下载的所有资源吗？"/>
 	<string id="18505" value="请输入一个擦除的有效范围。&quot;从&quot; 区域是要擦除的第一个 byte，&quot;到&quot; 区域是要擦除的最后一个 byte。"/>
@@ -3238,7 +3247,7 @@
 		<control caption="移除(_R)"/>
 		<control caption="在这里储存收集(_C):"/>
 		<control/><control/>
-		<control caption="Create ghost files when deleting"/>
+		<control caption="当删除时建立回收文件"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="媒体">
@@ -3273,7 +3282,7 @@
 		<control caption="使用 Shareaza 打开下列类型的链接:"/>
 		<control caption="Magnet ( magnet: )"/>
 		<control caption="Gnutella ( gnutella: )"/>
-		<control caption="eDonkey2000 ( ed2k: )"/>
+		<control caption="edonkey ( ed2k: )"/>
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="下载管理器(_D):"/>
@@ -3398,10 +3407,10 @@
 		<control caption="Gnutella2 网络是 Shareaza 的主网络，相对其他 P2P 网提供了更多的特性和更具优点。强烈推荐。"/>
 		<control caption="连接到 Gnutella2(G2)"/>
 		<control caption="配置 Gnutella2"/>
-		<control caption="eDonkey2000 网络:"/>
-		<control caption="eDonkey2000 网络是广泛使用的基于服务器的网络。虽不像 Gnutella2 特性极多，eDonkey2000 的文件搜集方式令人印象深刻。"/>
-		<control caption="连接到 eDonkey2000"/>
-		<control caption="配置 eDonkey2000"/>
+		<control caption="edonkey 网络:"/>
+		<control caption="edonkey 网络是广泛使用的基于服务器的网络。虽不像 Gnutella2 特性极多，edonkey 的文件搜集方式令人印象深刻。"/>
+		<control caption="连接到 edonkey"/>
+		<control caption="配置 edonkey"/>
 		<control caption="原始的 Gnutella 网络:"/>
 		<control caption="尽管原始 Gnutella 网络比 Gnutella2 特性少，但依旧保留了可观的资源。"/>
 		<control caption="连接到原始 Gnutella"/>
@@ -3439,23 +3448,24 @@
 		<control caption="集端到集端"/>
 	</dialog>
 
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
-		<control caption="eDonkey2000 网络(_E):"/>
-		<control caption="连接到 eDonkey2000 今天"/>
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
+		<control caption="eDonkey 网络(_E):"/>
+		<control caption="连接到 eDonkey 今天"/>
 		<control caption="自动连接到每个会话"/>
 		<control caption="全局搜索(_G):"/>
 		<control caption="在服务器缓存中搜索已知远程服务器:"/>
 		<control caption="搜索停止于:"/>
 		<control/><control/>
 		<control caption="个搜索结果。"/>
+        <control caption="从连接接收和更新服务器列表"/>
 		<control caption="客户端链接连接(_C):"/>
 		<control caption="连接不多于:"/>
 		<control/><control/>
 		<control caption="其他 eDonkey 客户端。"/>
-		<control caption="eDonkey2000 工具(_T):"/>
+		<control caption="eDonkey 工具(_T):"/>
 		<control caption="导入 eDonkey/eMule 未完成下载 (.part):"/>
 		<control caption="导入..."/>
-		<control caption="从网络上下载 eDonkey2000 服务器列表:"/>
+		<control caption="从网络上下载 eDonkey 服务器列表:"/>
 		<control caption="下载..."/>
 	</dialog>
 
@@ -3518,12 +3528,13 @@
 		<control caption="描述:"/>
 		<control/>
 	</dialog>
-
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="上传队列属性">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="上传队列属性">
 		<control caption="名称(_N):"/>
 		<control/>
 		<control caption="项目条件(_E):"/>
 		<control caption="只部分下载的文件"/>
+        <control caption="只共享库中的文件"/>
+        <control caption="部分和库中的文件"/>
 		<control caption="最小资源文件大小:"/>
 		<control/>
 		<control caption="最大资源文件大小:"/>
@@ -3631,15 +3642,15 @@
 		<control caption="Shareaza 是能够同时连接多个 P2P 网络的多用途的文件共享软件。在此您可以选择想要连接的网络。您总是可以在以后选择不同的网络。"/>
 		<control caption="连接到 Gnutella2(强烈推荐)"/>
 		<control caption="Gnutella2 网络是 Shareaza 的主网络，相对其他 P2P 网提供了更多的特性和更具优点。强烈推荐。"/>
-		<control caption="连接到 eDonkey2000"/>
-		<control caption="eDonkey2000 网络是广泛使用的基于服务器的网络。虽不像 Gnutella2 特性极多，eDonkey2000 的文件搜集方式令人印象深刻。"/>
+		<control caption="连接到 eDonkey"/>
+		<control caption="eDonkey 网络是广泛使用的基于服务器的网络。虽不像 Gnutella2 特性极多，eDonkey 的文件搜集方式令人印象深刻。"/>
 		<control caption="连接到原始的 Gnutella"/>
-		<control caption="尽管原始 Gnutella 网络比 Gnutella2 特性少，文件比 eDonkey2000 要少，但依旧保留了可观的资源。"/>
+		<control caption="尽管原始 Gnutella 网络比 Gnutella2 特性少，文件比 edonkey 要少，但依旧保留了可观的资源。"/>
 	</dialog>
 
-	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="导入 eDonkey2000 下载">
+	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="导入 edonkey 下载">
 		<control/>
-		<control caption="Shareaza 发现您的电脑上安装了 eDonkey2000 程序。您想要导入未完成的下载到 Shareaza 吗？"/>
+		<control caption="Shareaza 发现您的电脑上安装了 edonkey 程序。您想要导入未完成的下载到 Shareaza 吗？"/>
 		<control caption="是"/>
 		<control caption="否|取消"/>
 		<control/>
@@ -3759,7 +3770,7 @@
 		<control caption="初始化新的连接到主机或服务器:|浏览该用户:"/>
 		<control/><control/>
 		<control caption="网络协议(_P):"/>
-		<control caption="Gnutella1 (自动)|Gnutella2 (自动)|eDonkey2000"/>
+		<control caption="Gnutella1 (自动)|Gnutella2 (自动)|edonkey"/>
 		<control caption="抑制超对等(_S)"/>
 		<control caption="连接"/>
 		<control caption="取消"/>
@@ -3771,7 +3782,7 @@
 		<control/>
 		<control caption="下载"/>
 		<control caption="取消"/>
-		<control caption="Shareaza 可以从 web (HTTP) 下载文件，并且支持自动搜索和下载以下类型的 P2P 链接 (Magnet，Gnutella，eDonkey2000，mP2P)。"/>
+		<control caption="Shareaza 可以从 web (HTTP) 下载文件，并且支持自动搜索和下载以下类型的 P2P 链接 (Magnet，Gnutella，edonkey，mP2P)。"/>
 		<control caption="Shareaza 也可以下载 BitTorrent 文件。Torrent 可以被描述成 xyz.torrent 文件，或者到 .torrent 文件的 HTTP 链接。只需粘贴 Torrent 的 HTTP 的地址到上面的方框就可以进行下载。如果已经拥有 .torrent 文件，点击打开 Torrent:"/>
 		<control caption="打开 Torrent(_T)..."/>
 	</dialog>
@@ -4095,7 +4106,7 @@
 
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="下载 Server.met 文件">
 		<control/>
-		<control caption="您能从网络上下载 eDonkey2000 server.met 文件来刷新您的本地服务器列表。"/>
+		<control caption="您能从网络上下载 edonkey server.met 文件来刷新您的本地服务器列表。"/>
 		<control/><control/>
 		<control caption="确定"/>
 		<control caption="取消"/>
@@ -4290,6 +4301,7 @@
 		<column from="Client" to="客户端"/>
 		<column from="Downloaded" to="已下载"/>
 		<column from="Complete" to="完成"/>
+        <column from="Country" to="国家"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="远程用户"/>
@@ -4299,6 +4311,7 @@
 		<column from="Speed" to="速度"/>
 		<column from="Client" to="客户端"/>
 		<column from="Rating" to="比率"/>
+        <column from="Country" to="国家"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="地址"/>
@@ -4312,6 +4325,7 @@
 		<column from="Mode" to="模式"/>
 		<column from="Client" to="客户端"/>
 		<column from="Name" to="名称"/>
+        <column from="Country" to="国家"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="地址 / 内容"/>
@@ -4330,6 +4344,8 @@
 		<column from="Description" to="描述"/>
 		<column from="CurUsers" to="当前用户"/>
 		<column from="MaxUsers" to="最大用户数"/>
+        <column from="Failures" to="失败"/>
+		<column from="Country" to="国家"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="地址"/>
@@ -4363,6 +4379,8 @@
 		<column from="Host/Count" to="主机/计数"/>
 		<column from="Speed" to="速度"/>
 		<column from="Client" to="客户端"/>
+		<column from="Time" to="时间"/>
+		<column from="Country" to="国家"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="名称"/>
