@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Musica: La meua Música</title>
                <title language="chs">&#160;音乐:我的音乐</title>
                <title language="cht">音樂:我的音樂</title>
+               <title language="cz">Hudba:Moje hudba</title>
                <title language="de">Musik:Eigene Musik</title>
                <title language="ee">Muusika:Minu Muusika</title>
                <title language="es">Musica: Mi Música</title>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -98,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Benvingut a La meva Música</title>
                <title language="chs">欢迎来到我的音乐！</title>
                <title language="cht">歡迎來到我的音樂!</title>
+               <title language="cz">Moje hudba</title>
                <title language="de">Willkommen bei Eigene Musik!</title>
                <title language="ee">Teretulemast  Minu Muusikasse!</title>
                <title language="es">¡Bienvenido a Mi Música</title>
@@ -114,7 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Bem-vindo as Minhas Músicas!</title>
                <title language="ru">Добро пожаловать в Вашу музыку!</title>
                <title language="sl-SI">Dobrodošli v moji glasbi!</title>
-               <title language="sq">Mirë se erdhët në Muzika Ime!</title>
+               <title language="sq">Mirë se erdhët në Muzikën Tuaj!</title>
                <title language="sr">Dobrodošli Među Vaše Pesme</title>
                <title language="tr">Müziklerime Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of the music in your library, organised by album, by artist and by genre.  Open a folder below to continue.</subtitle>
@@ -122,6 +126,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquestes carpetes contenen tota la teua música de la teua Col·lecció, organitzades per album, per artista i per gènere. Òbriga una carpeta per a continuar</subtitle>
                <subtitle language="chs">这些文件夹包括您收藏中的所有音乐，按专辑，艺人和流派进行编制。打开下面的文件夹可进行查看。</subtitle>
                <subtitle language="cht">這些資料夾包含了在您的收藏中所有的音樂, 由專輯, 藝人和流派組織.  在下面開啟一個資料夾來繼續.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechnu hudubu v knihovně roztříděnou podle alba, autora a žánru. Pokračujte kliknutím na složku</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Musik in ihrer Bibliothek, geordnet nach Album, Künstler und Genre. Öffnen Sie einen Ordner, um fortzufahren.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu raamatukogus asuvaid laule, albumi, artisti ja stiilide järgi organiseeritult. Jätkamiseks ava allolev kaust.</subtitle>
                <subtitle language="es">Estas carpetas contienen toda tu música de tu librería, organizadas por album, por artista y por género. Abra una carpeta para continuar</subtitle>
@@ -138,7 +143,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Estas pastas contém todas as músicas da sua biblioteca, organizadas por álbum, artista e gênero. Abra uma pasta abaixo para continuar.</subtitle>
                <subtitle language="ru">Эти папки отображают всю музыку организованную по альбомам, артистам и стилям.</subtitle>
                <subtitle language="sl-SI">Te mape vsebujejo vso glasbo v vaši knjižnici, urejeno po albumu, izvajalcu in žanru. Odprite mapo spodaj za nadaljevanje.</subtitle>
-               <subtitle language="sq">Këto dosje përmbajnë gjithë muzikën në librarinë tuaj, organizuar sipas albumeve, artistit dhe gjinisë.  Hapni një dosje më poshtë që të vijoni.</subtitle>
+               <subtitle language="sq">Këto dosje përmbajnë gjithë muzikën në librarinë tuaj, organizuar sipas albumeve, artistëve dhe gjinisë.  Hapni një nga dosjet më poshtë.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže svu muziku iz vaše kolekcije složenu po albumima, izvođaču i žanru.</subtitle>
                <subtitle language="tr">Bu klasörler arşivinizdeki albüme, sanatçıya ve tarza  göre düzenlenmiş tüm müzikleri içermektedir. Devam etmek için aşağıdan bir klasörü açınız.</subtitle>
        </headerContent>

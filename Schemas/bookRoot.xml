@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Llibre: Tots els meus llibres</title>
                <title language="chs">&#160;书籍:我的书籍</title>
                <title language="cht">書籍:我的書籍</title>
+               <title language="cz">Knihy:Moje knihy</title>
                <title language="de">Buch:Eigene Bücher</title>
                <title language="ee">Raamat:Minu Raamatud</title>
                <title language="es">Libro: Todos mis libros</title>
@@ -51,7 +53,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Livro: Meus Livros</title>
                <title language="ru">&#160;Книга: Мои книги</title>
                <title language="sl-SI">Knjiga:Moje knjige</title>
-               <title language="sq">Libri:Librat e Mi</title>
+               <title language="sq">Libri:Libri Im</title>
                <title language="sr">Knjiga:Moje Knjige</title>
                <title language="tr">Kitap: Kitaplarım</title>
        </titles>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Benvingut als meus Llibres!</title>
                <title language="chs">欢迎来到我的书籍！</title>
                <title language="cht">歡迎來到我的書籍!</title>
+               <title language="cz">Moje knihy</title>
                <title language="de">Willkommen bei Eigene Bücher!</title>
                <title language="ee">Teretulemast  Minu Raamatutesse!</title>
                <title language="es">¡Bienvenido a Mis Libros!</title>
@@ -112,7 +116,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Bem-vindo aos Meus Livros!</title>
                <title language="ru">Добро пожаловать в Ваши книги!</title>
                <title language="sl-SI">Dobrodošli v mojih knjigah!</title>
-               <title language="sq">Mirë se erdhët në Librat e Mi!</title>
+               <title language="sq">Mirë se erdhët në Librat Tuaj!</title>
                <title language="sr">Dobrodošli Među Vaše Knjige!</title>
                <title language="tr">Kitaplarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of your books.</subtitle>
@@ -120,6 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquestes carpetes contenen tots els teus llibres</subtitle>
                <subtitle language="chs">这些文件夹包含您所有的书籍。</subtitle>
                <subtitle language="cht">這些資料夾包含了您所有的書籍.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny knihy v knihovně.</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Bücher.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Raamatuid</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus libros</subtitle>

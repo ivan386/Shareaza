@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Llibre: Tots els llibres</title>
                <title language="chs">&#160;书籍:所有书籍</title>
                <title language="cht">書籍:所有書籍</title>
+               <title language="cz">Knihy:Všechny knihy</title>
                <title language="de">Buch:Alle Bücher</title>
                <title language="ee">Raamat:Kõik Raamatud</title>
                <title language="es">Libro: Todos los libros</title>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Tots els llibres</title>
                <title language="chs">所有书籍</title>
                <title language="cht">所有書籍</title>
+               <title language="cz">Všechny knihy</title>
                <title language="de">Alle Bücher</title>
                <title language="ee">Kõik Raamatud</title>
                <title language="es">Todos los libros</title>
@@ -120,6 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquesta carpeta conté tots els teus llibres en la teua Col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有书籍。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中所有的書籍.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje všechny knihy v knihovně.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Bücher in ihrer Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab sinu raamatukogus olevaid raamatuid.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos tus libros en tu librería.</subtitle>
@@ -136,7 +141,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém todos os livros na sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждую книгу в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vse knjige v vaši knjižnici.</subtitle>
-               <subtitle language="sq">Kjo dosje përmban çdo libër të librarisë tuaj.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban librat në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve vaše knjige u kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her kitabı içerir.</subtitle>
        </headerContent>

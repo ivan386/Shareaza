@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Vídeo: Els meus vídeos</title>
                <title language="chs">&#160;视频:我的视频</title>
                <title language="cht">影像:我的影像</title>
+               <title language="cz">Videa:Moje videa</title>
                <title language="de">Video:Eigene Videos</title>
                <title language="ee">Video:Minu Videod</title>
                <title language="es">Video:Mis Videos</title>
@@ -51,7 +53,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Vídeo: Meus Vídeos</title>
                <title language="ru">&#160;Видео: Мои видео</title>
                <title language="sl-SI">Video:Moj video</title>
-               <title language="sq">Video:Videot e Mia</title>
+               <title language="sq">Video:Video Ime</title>
                <title language="sr">Film:Moji Filmovi</title>
                <title language="tr">Video: Videolarım</title>
        </titles>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -98,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Benvingut als meus Vídeos!</title>
                <title language="chs">欢迎来到我的视频！</title>
                <title language="cht">歡迎來到我的影像!</title>
+               <title language="cz">Moje videa</title>
                <title language="de">Willkommen bei Eigene Videos!</title>
                <title language="ee">Teretulemast  Minu Videotesse!</title>
                <title language="es">¡Bienvenido a Mis Videos!</title>
@@ -114,7 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Bem-vindo aos Meus Vídeos!</title>
                <title language="ru">Добро пожаловать в Ваши видео!</title>
                <title language="sl-SI">Dobrodošli v mojem videu!</title>
-               <title language="sq">Mirë se erdhët në Video Ime!</title>
+               <title language="sq">Mirë se erdhët në Videot Tuaja!</title>
                <title language="sr">Dobrodošli Među Vaše Filmove</title>
                <title language="tr">Videolarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of the video files in your library, divided into films, TV shows and music videos.  Open a folder below to continue.</subtitle>
@@ -122,6 +126,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquestes carpetes contenen tots els arxius de vídeo de la teua Col·lecció, dividit en films, Xous de TV i vídeos de música. Òbriga una carpeta per a continuar</subtitle>
                <subtitle language="chs">这些文件夹包括您收藏中的所有视频，分成电影，电视演出和电视音乐。打开下面的文件夹可进行查看。</subtitle>
                <subtitle language="cht">這些資料夾包含了在您的收藏中所有的影像檔案, 分割的電影, TV 演出和音樂影像.  在下面開啟一個資料夾來繼續.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny videa v knihovně roztříděné na filmy, hudební videa a TV seriály. Pokračujte kliknutím na složku.</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Videodateien in ihrer Bibliothek, aufgeteilt in Filme, Fernsehserien und Musikvideos. Öffnen Sie einen Ordner, um fortzufahren.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu raamatukogus asuvaid videofaile. Need on jagatud filmideks, tv šoudeks ja muusika videodeks. Jätkamiseks ava allolev kaust</subtitle>
                <subtitle language="es">Estas carpetas contienen todos los archivos de video de tu librería, dividido en filmes, Shows de TV y videos de música. Abra una carpeta para continuar</subtitle>
@@ -138,7 +143,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Estas pastas contém todas os vídeos da sua biblioteca, divididos em filmes, Shows de TV, e clipes musicais. Abra uma pasta abaixo para continuar.</subtitle>
                <subtitle language="ru">Эти папки отображают все видео подразделенные на фильмы, ТВ шоу и музыкальные видео.</subtitle>
                <subtitle language="sl-SI">Te mape vsebujejo vse video datoteke v vaši knjižnici razdeljene v filme, TV oddaje in glasbene videje. Odprite mapo spodaj za nadaljevanje.</subtitle>
-               <subtitle language="sq">Këto dosje përmbajnë gjithë videot në librarinë tuaj, ndarë në filma, shfaqje TV dhe video muzikore.  Hapni një dosje më poshtë që të vijoni.</subtitle>
+               <subtitle language="sq">Këto dosje përmbajnë gjithë videot në librarinë tuaj, ndarë në filma, shfaqje TV dhe video muzikore.  Që të vijoni, hapni një dosje më poshtë.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže sve video zapise iz vaše kolekcije složene kao celovečernji filmovi, Tv emisije i spotovi.</subtitle>
                <subtitle language="tr">Bu klasörler arşivinizdeki tüm video dosyalarını, filmlerden bölümleri, TV şovları ve klipleri içermektedir. Devam etmek için bir klasör açınız.</subtitle>
        </headerContent>

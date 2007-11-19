@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Aplicacions: Totes</title>
                <title language="chs">&#160;程序:我的程序</title>
                <title language="cht">應用程式:我的應用程式</title>
+               <title language="cz">Aplikace:Moje aplikace</title>
                <title language="de">Anwendung:Eigene Anwendungen</title>
                <title language="ee">Programm:Minu Programmid</title>
                <title language="es">Aplicación: Todas mis aplicaciones</title>
@@ -51,7 +53,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Aplicativo: Meus Aplicativos</title>
                <title language="ru">&#160;Приложение: Мои приложения</title>
                <title language="sl-SI">Program:Moji programi</title>
-               <title language="sq">Aplikm:Aplikimi Im</title>
+               <title language="sq">Aplikm:Aplikimet e Mia</title>
                <title language="sr">Program:Svi Programi</title>
                <title language="tr">Uygulama: Uygulamalarım</title>
        </titles>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Benvingut a Les meves Aplicacions!</title>
                <title language="chs">欢迎来到我的程序！</title>
                <title language="cht">歡迎來到我的應用程式!</title>
+               <title language="cz">Moje aplikace</title>
                <title language="de">Willkommen bei Eigene Anwendungen!</title>
                <title language="ee">Teretulemast  Minu Programmidesse!</title>
                <title language="es">¡Bienvenido a Mis Aplicaciones!</title>
@@ -112,7 +116,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Bem-vindo aos Meus Aplicativos!</title>
                <title language="ru">Добро пожаловать в Ваши приложения!</title>
                <title language="sl-SI">Dobrodošli v mojih programih!</title>
-               <title language="sq">Mirë se erdhët në Aplikimet e Mia!</title>
+               <title language="sq">Mirë se erdhët në Aplikimet Tuaja!</title>
                <title language="sr">Dobrodošli Među Vaše Programe!</title>
                <title language="tr">Uygulamalarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of your application files.</subtitle>
@@ -120,6 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquesta carpeta conté tots els arxius de programes</subtitle>
                <subtitle language="chs">这些文件夹包含您所有的程序。</subtitle>
                <subtitle language="cht">這些資料夾包含了您所有的應用程式檔案.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny aplikace v knihovně.</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Anwendungen.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Programme</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de programas</subtitle>

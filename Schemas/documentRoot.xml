@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Documents: Els meus documents</title>
                <title language="chs">&#160;文档:我的文档</title>
                <title language="cht">文件: 我的文件</title>
+               <title language="cz">Dokumenty:Moje dokumenty</title>
                <title language="de">Dokumente:Eigene Dokumente</title>
                <title language="ee">Dokument:Minu Dokumendid</title>
                <title language="es">Documento:Mis Documentos</title>
@@ -51,7 +53,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Documento: Meus Documentos</title>
                <title language="ru">&#160;Документ:&#160;Мои документы</title>
                <title language="sl-SI">Dokument:Moji dokumenti</title>
-               <title language="sq">Dokumenti:Dokumentet e Mia</title>
+               <title language="sq">Dokumenti:Dokumenti Im</title>
                <title language="sr">Dokument:Moji Dokumenti</title>
                <title language="tr">Doküman: Dokümanlarım</title>
        </titles>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Benvingut als meus Documents!</title>
                <title language="chs">欢迎来到我的文档！</title>
                <title language="cht">歡迎來到我的文件!</title>
+               <title language="cz">Moje dokumenty</title>
                <title language="de">Willkommen zu Meine Dokumente!</title>
                <title language="ee">Teretulemast   Minu Dokumentidesse!</title>
                <title language="es">¡Bienvenido a Mis documentos!</title>
@@ -112,7 +116,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Bem-Vindo aos Meus Documentos!</title>
                <title language="ru">Добро пожаловать в Ваши документы!</title>
                <title language="sl-SI">Dobrodošli v mojih dokumentih!</title>
-               <title language="sq">Mirë se erdhët në Dokumentet e Mia!</title>
+               <title language="sq">Mirë se erdhët në Dokumentet Tuaja!</title>
                <title language="sr">Dobrodošli Među Vaše Dokumente!</title>
                <title language="tr">Dokümanlarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of your documents.</subtitle>
@@ -120,6 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquestes carpetes contenen tots els teus documents.</subtitle>
                <subtitle language="chs">这些文件夹包含您所有的文档。</subtitle>
                <subtitle language="cht">這些文件夾包含您所有的文件</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny dokumenty v knihovně.</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Dokumente.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Dokumente</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>

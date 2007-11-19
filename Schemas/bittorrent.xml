@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -34,6 +35,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">BitTorrent</title>
                <title language="chs">BitTorrent</title>
                <title language="cht">BitTorrent</title>
+               <title language="cz">BitTorrent</title>
                <title language="de">BitTorrent</title>
                <title language="ee">BitTorrent</title>
                <title language="es">BitTorrent</title>
@@ -62,6 +64,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Info Hash</title>
                        <title language="chs">Info Hash</title>
                        <title language="cht">Info Hash</title>
+                       <title language="cz">Hash</title>
                        <title language="de">Info Hash</title>
                        <title language="ee">Info Hash</title>
                        <title language="es">Info Hash</title>
@@ -78,7 +81,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Info Hash</title>
                        <title language="ru">Инфохеш</title>
                        <title language="sl-SI">Info Hash</title>
-                       <title language="sq">Info Hash</title>
+                       <title language="sq">Hashi Informues</title>
                        <title language="sr">Info Hash</title>
                        <title language="tr">Info Hash</title>
               </member>
@@ -89,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Tracker</title>
                        <title language="chs">Tracker</title>
                        <title language="cht">Tracker</title>
+                       <title language="cz">Tracker</title>
                        <title language="de">Tracker</title>
                        <title language="ee">Tracker</title>
                        <title language="es">Tracker</title>
@@ -105,7 +109,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Tracker</title>
                        <title language="ru">Трекер</title>
                        <title language="sl-SI">Tracker</title>
-                       <title language="sq">Tracker</title>
+                       <title language="sq">Gjurmuesi</title>
                        <title language="sr">Tracker</title>
                        <title language="tr">Tracker</title>
               </member>
@@ -116,6 +120,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Encoding</title>
                        <title language="chs">Encoding</title>
                        <title language="cht">Encoding</title>
+                       <title language="cz">Kódování</title>
                        <title language="de">Encoding</title>
                        <title language="ee">Encoding</title>
                        <title language="es">Encoding</title>
@@ -132,7 +137,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Codificação</title>
                        <title language="ru">Кодировка</title>
                        <title language="sl-SI">Encoding</title>
-                       <title language="sq">Encoding</title>
+                       <title language="sq">Kodimi</title>
                        <title language="sr">Encoding</title>
                        <title language="tr">Encoding</title>
               </member>
@@ -143,6 +148,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Creation Date</title>
                        <title language="chs">Creation Date</title>
                        <title language="cht">Creation Date</title>
+                       <title language="cz">Datum vytvoření:</title>
                        <title language="de">Creation Date</title>
                        <title language="ee">Creation Date</title>
                        <title language="es">Creation Date</title>
@@ -159,7 +165,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Data de Criação</title>
                        <title language="ru">Дата создания</title>
                        <title language="sl-SI">Creation Date</title>
-                       <title language="sq">Creation Date</title>
+                       <title language="sq">Datëkrijimi</title>
                        <title language="sr">Creation Date</title>
                        <title language="tr">Creation Date</title>
               </member>
@@ -169,6 +175,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Created By</title>
                        <title language="chs">Created By</title>
                        <title language="cht">Created By</title>
+                       <title language="cz">Vytvořil:</title>
                        <title language="de">Created By</title>
                        <title language="ee">Created By</title>
                        <title language="es">Created By</title>
@@ -185,7 +192,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Criado(a) por</title>
                        <title language="ru">Программа</title>
                        <title language="sl-SI">Created By</title>
-                       <title language="sq">Created By</title>
+                       <title language="sq">Krijuar Nga</title>
                        <title language="sr">Created By</title>
                        <title language="tr">Created By</title>
               </member>
@@ -195,6 +202,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Comentaris</title>
                        <title language="chs">注释</title>
                        <title language="cht">注釋</title>
+                       <title language="cz">Komentáře</title>
                        <title language="de">Kommentar</title>
                        <title language="ee">Arvamused</title>
                        <title language="es">Comentarios</title>

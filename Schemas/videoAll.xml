@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Vídeo:Tots els vídeos</title>
                <title language="chs">&#160;视频:所有视频</title>
                <title language="cht">影像:所有影像</title>
+               <title language="cz">Videa:Všechna videa</title>
                <title language="de">Video:Alle Videos</title>
                <title language="ee">Video:Kõik Videod</title>
                <title language="es">Video:Todos los videos</title>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Tots els vídeos</title>
                <title language="chs">所有视频</title>
                <title language="cht">所有影像</title>
+               <title language="cz">Všechny videa</title>
                <title language="de">Alle Videos</title>
                <title language="ee">Kõik Videod</title>
                <title language="es">Todos los videos</title>
@@ -120,6 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquesta carpeta conté tots els arxius de vídeo de la teva Col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有视频。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中所有的影像檔案.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje všechna videa v knihovně.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Videos in ihrer Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab kõiki sinu raamatukogus asuvaid videoid.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de video de tu librería.</subtitle>
@@ -136,7 +141,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém cada arquivo de vídeo na sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый видео файл в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vsako video datoteko v vaši knjižnici.</subtitle>
-               <subtitle language="sq">Kjo dosje përmban çdo skedë filmike të librarisë tuaj.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat filmike në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve video snimke u vašoj kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her video dosyasını içerir.</subtitle>
        </headerContent>

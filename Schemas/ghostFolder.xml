@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="ca">General: Arxius fantasmes</title>
               <title language="chs">&#160;常规:回收文件</title>
               <title language="cht">General:Ghost Files</title>
+              <title language="cz">Obecné:Smazané soubory</title>
               <title language="de">Allgemein:Geister-Dateien</title>
               <title language="ee">Üldine:Varifailid</title>
               <title language="es">General:Ghost Files</title>
@@ -51,7 +53,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="pt-br">Geral: Arquivos Ghost</title>
               <title language="ru">&#160;Основное: Теневые файлы</title>
               <title language="sl-SI">Splošno:Navidezne datoteke</title>
-              <title language="sq">Përgjithësi:Skeda Fantazmë</title>
+              <title language="sq">Përgjithësi:Skedat Fantazmë</title>
               <title language="sr">General:Ghost Files</title>
               <title language="tr">Genel: Niteliksiz Dosyalar</title>
         </titles>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -93,6 +96,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Arxius fantasma</title>
                <title language="chs">回收文件</title>
                <title language="cht">鬼檔案</title>
+               <title language="cz">Smazané soubory</title>
                <title language="de">Verwalten der Geister-Dateien</title>
                <title language="ee">Varifailid</title>
                <title language="es">Ghost Files</title>
@@ -109,7 +113,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Arquivos Ghost</title>
                <title language="ru">Теневые файлы</title>
                <title language="sl-SI">Navidezne datoteke</title>
-               <title language="sq">Skeda Fantazmë</title>
+               <title language="sq">Skedat Fantazmë</title>
                <title language="sr">Ghost Files</title>
                <title language="tr">Niteliksiz Dosyalar</title>
                <subtitle language="en">This folder contains every file which you've deleted from the Library.</subtitle>
@@ -117,6 +121,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquesta carpeta conté els arxius esborrats de la teva col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含了所有您从收藏夹删除的文件。</subtitle>
                <subtitle language="cht">這個資料夾包含所有您從收藏刪除的檔案</subtitle>
+               <subtitle language="cz">Tato složka obsahuje seznam souborů vymazaných z knihovny.</subtitle>
                <subtitle language="de">Dieser Ordner enthält Informationen über alle aus der Bibliothek gelöschten Dateien, die Sie kommentiert oder bewertet haben.</subtitle>
                <subtitle language="ee">See kaust sisaldab kõiki faile, mis sa oled oma Raamatukogust ära kustutanud.</subtitle>
                <subtitle language="es">This folder contains every file which you've deleted from the Library.</subtitle>
@@ -133,7 +138,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém cada arquivo o qual você apagou da Biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый файл, который Вы удалили с хранилища.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vse datoteke, ki ste jih brisali iz vaše knjižnice.</subtitle>
-               <subtitle language="sq">Kjo dosje përmban çdo skedë që keni fshirë nga Libraria.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat që janë fshirë nga Libraria.</subtitle>
                <subtitle language="sr">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="tr">Bu klasör kütüphaneden sildiğiniz tüm dosyaları içerir.</subtitle>
      </headerContent>

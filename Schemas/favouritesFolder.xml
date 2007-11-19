@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Favorits: Favorits</title>
                <title language="chs">&#160;最爱:我的最爱</title>
                <title language="cht">喜愛的:喜愛的</title>
+               <title language="cz">Oblíbené:Oblíbené</title>
                <title language="de">Favoriten:Favoriten</title>
                <title language="ee">Lemmik:Lemmikud</title>
                <title language="es">Favoritos: Favoritos</title>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -92,6 +95,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Descripció</title>
                        <title language="chs">描述</title>
                        <title language="cht">描述</title>
+                       <title language="cz">Popis</title>
                        <title language="de">Beschreibung</title>
                        <title language="ee">Kirjeldus</title>
                        <title language="es">Descripción</title>
@@ -119,6 +123,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Els meus Arxius Favorits</title>
                <title language="chs">我最喜欢的文件</title>
                <title language="cht">我的最愛檔案</title>
+               <title language="cz">Moje oblíbené</title>
                <title language="de">Favoriten</title>
                <title language="ee">Minu Lemmikfailid</title>
                <title language="es">Mis Archivos Favoritos</title>
@@ -143,6 +148,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquesta carpeta conté arxius favorits que Shareaza recomana a altres usuaris que naveguen per la teua Col·lecció</subtitle>
                <subtitle language="chs">此文件夹中包含了您向浏览您的收集的用户所推荐的您最喜欢的文件。</subtitle>
                <subtitle language="cht">這個資料夾包含了最愛的檔案 Shareaza 將推薦給其他瀏覽您收藏的使用者.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje vaše oblíbené položky, které bude Shareaza doporučovat ostatním uživatelům, kteří si prohlíží vaše sdílené soubory.</subtitle>
                <subtitle language="de">Dieser Ordner enthält empfohlene Dateien, die Benutzer sehen können, die ihre Freigaben durchsuchen.</subtitle>
                <subtitle language="ee">See kaust sisaldab sinu Lemmik faile, mida Shareaza soovitab sinu profiili vaatajatele.</subtitle>
                <subtitle language="es">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
@@ -159,7 +165,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém os arquivos favoritos os quais o Shareaza recomendará para os outros usuários que navegarem pela sua coleção.</subtitle>
                <subtitle language="ru">Эта папка отображает избранные файлы, они также видны смотрящим Ваш профиль.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje priljubljene datoteke, ki jih bo Shareaza priporočila drugim uporabnikom, ki brskajo po vaši kolekciji.</subtitle>
-               <subtitle language="sq">Kjo dosje përmban skeda favorite të cilat Shareaza do t'i rekomandojë tek përdoruesit që shfletojnë koleksionin tuaj.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat favorite që Shareaza i rekomandon te përdoruesit që shfletojnë koleksionin tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži vaše favorite koje preporučujete ostalima.</subtitle>
                <subtitle language="tr">Bu klasör Sheraza'nın senin koleksiyonunu inceleyen diğer kullanıcılara önereceği favori dosyaları içerir.</subtitle>
        </headerContent>

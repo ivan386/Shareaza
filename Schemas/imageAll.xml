@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Imatge: Totes les Imatges</title>
                <title language="chs">&#160;图片:所有图片</title>
                <title language="cht">圖片:所有圖片</title>
+               <title language="cz">Obrázky:Všechny obrázky</title>
                <title language="de">Bild:Alle Bilder</title>
                <title language="ee">Pilt:Kõik Pildid</title>
                <title language="es">Imagen: Todas las Imágenes</title>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Totes les imatges</title>
                <title language="chs">所有图片</title>
                <title language="cht">所有圖片</title>
+               <title language="cz">Všechny obrázky</title>
                <title language="de">Alle Bilder</title>
                <title language="ee">Kõik Pildid</title>
                <title language="es">Todas las imágenes</title>
@@ -120,6 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquesta carpeta conté totes les imatges de la teua Col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有图片。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中所有的圖片檔案.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje všechny obrázky v knihovně.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Bilder in ihrer Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab kõiki sinu raamatukogus olevaid pilte.</subtitle>
                <subtitle language="es">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
@@ -136,7 +141,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém cada arquivo de imagem na sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждую картинку в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vse podobe (datoteke) v vaši knjižnici.</subtitle>
-               <subtitle language="sq">Kjo dosje përmban çdo skedë imazh të librarisë tuaj.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat imazhe në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve slike u vašoj kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her görüntü dosyasını içerir.</subtitle>
        </headerContent>

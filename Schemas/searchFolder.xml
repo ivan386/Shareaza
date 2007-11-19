@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Cercar: Resultats de recerca</title>
                <title language="chs">&#160;搜索:搜索结果</title>
                <title language="cht">搜尋:搜尋結果</title>
+               <title language="cz">Hledání:Výsledky hledání</title>
                <title language="de">Suche:Suchergebnisse</title>
                <title language="ee">Otsi:Otsingu Tulemused</title>
                <title language="es">Buscar: Resultados de busqueda</title>
@@ -62,6 +64,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -88,6 +91,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Temps</title>
                        <title language="chs">时间</title>
                        <title language="cht">時間</title>
+                       <title language="cz">Čas</title>
                        <title language="de">Zeit</title>
                        <title language="ee">Aeg</title>
                        <title language="es">Tiempo</title>
@@ -104,7 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Tempo</title>
                        <title language="ru">Время</title>
                        <title language="sl-SI">Čas</title>
-                       <title language="sq">Koha</title>
+                       <title language="sq">Ora</title>
                        <title language="sr">Vreme</title>
                        <title language="tr">Süre</title>
                </member>
@@ -114,6 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Data</title>
                        <title language="chs">日期</title>
                        <title language="cht">日期</title>
+                       <title language="cz">Datum</title>
                        <title language="de">Datum</title>
                        <title language="ee">Kuupäev</title>
                        <title language="es">Fecha</title>
@@ -130,7 +135,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="pt-br">Data</title>
                        <title language="ru">Дата</title>
                        <title language="sl-SI">Datum</title>
-                       <title language="sq">Data</title>
+                       <title language="sq">Të dhënat</title>
                        <title language="sr">Datum</title>
                        <title language="tr">Tarih</title>
                </member>
@@ -140,6 +145,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Contingut</title>
                        <title language="chs">内容</title>
                        <title language="cht">內容</title>
+                       <title language="cz">Obsah</title>
                        <title language="de">Inhalt</title>
                        <title language="ee">Sisu</title>
                        <title language="es">Contenido</title>
@@ -170,6 +176,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Cerca per "{content}"</title>
                <title language="chs">搜索 "{content}"</title>
                <title language="cht">搜尋於 "{content}"</title>
+               <title language="cz">Hledat "{content}"</title>
                <title language="de">Suche nach "{content}"</title>
                <title language="ee">Otsi "{content}"</title>
                <title language="es">Busca por "{content}"</title>
@@ -194,6 +201,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquesta carpeta conté arxius que varen coincidir amb la recerca "{content}"</subtitle>
                <subtitle language="chs">此文件夹包含了匹配搜索 "{content}" 的文件</subtitle>
                <subtitle language="cht">這個資料夾包含了符合您搜尋 "{content}" 的檔案</subtitle>
+               <subtitle language="cz">Tato složka obsahuje soubory, které vyhovují hledání "{content}".</subtitle>
                <subtitle language="de">Dieser Ordner enthält die Dateien, die ihrer Suche nach "{content}" entsprachen.</subtitle>
                <subtitle language="ee">See kaust sisaldab faile, mis vastavad sinu  "{content}" otsingule.</subtitle>
                <subtitle language="es">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
@@ -210,7 +218,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém os arquivos que combinaram na sua busca por "{content}".</subtitle>
                <subtitle language="ru">Эта папка отображает результаты поиска для {content}.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje datoteke, ki so se ujemale vašemu iskanju po "{content}"</subtitle>
-               <subtitle language="sq">Kjo dosje përmban skedat të cilat ngjanin me kërkimin tuaj për "{content}"</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat që i ngjajnë kërkimit tuaj, "{content}"</subtitle>
                <subtitle language="sr">Ova fascikla sadrži nađene datoteke po izrazu "{content}"</subtitle>
                <subtitle language="tr">Bu klasör "{content}" aramanıza benzer içeriğe sahip dosyaları içerir.</subtitle>
        </headerContent>

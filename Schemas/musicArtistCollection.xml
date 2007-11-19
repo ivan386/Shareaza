@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Música: per Artista</title>
                <title language="chs">&#160;音乐:按 - 艺人</title>
                <title language="cht">音樂:由-藝人</title>
+               <title language="cz">Hudba:Podle autora</title>
                <title language="de">Musik:Nach Künstler</title>
                <title language="ee">Muusika:Artistid</title>
                <title language="es">Música: Por Artista</title>
@@ -63,6 +65,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Música per Artista</title>
                <title language="chs">音乐 按艺人</title>
                <title language="cht">音樂-由-藝人</title>
+               <title language="cz">Hudba podle autora</title>
                <title language="de">Musik nach Künstler</title>
                <title language="ee">Muusika Artistid</title>
                <title language="es">Música por Artista</title>
@@ -120,6 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquesta carpeta conté una llista d'artistes de la teua col·lecció de música.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中艺人的清单。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的音樂收藏中一個藝人清單.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje seznam autorů, jejichž díla máte v knihovně.</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste der Künstler in ihrer Musikbibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab nimekirja Esitajatest sinu raamatukogus</subtitle>
                <subtitle language="es">Esta carpeta contiene una lista de artistas de tu librería de música.</subtitle>
@@ -136,7 +141,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém uma lista dos artistas na sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает список артистов найденных в музыкальных файлах Вашего хранилища.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje seznam izvajalcev v vaši glasbeni knjižnici.</subtitle>
-               <subtitle language="sq">Kjo dosje përmban një listë me artistët në librarinë tuaj muzikore.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban një listë me artistët në librarinë tuaj me muzikë.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži popis izvođača koje imate u muzičkoj kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör müzik arşivinizdeki sanatçıların bir listesini içerir.</subtitle>
        </headerContent>

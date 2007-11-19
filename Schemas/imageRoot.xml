@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Imatge: Les meves imatges</title>
                <title language="chs">&#160;图片:我的图片</title>
                <title language="cht">圖片:我的圖片</title>
+               <title language="cz">Obrázky:Moje obrázky</title>
                <title language="de">Bild:Eigene Bilder</title>
                <title language="ee">Pilt:Minu Pildid</title>
                <title language="es">Imagen: Mis imágenes</title>
@@ -51,7 +53,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Imagem: Minhas Imagens</title>
                <title language="ru">&#160;Картинка: Мои картинки</title>
                <title language="sl-SI">Podoba:Moje podobe</title>
-               <title language="sq">Figurë:Figurat e Mia</title>
+               <title language="sq">Figurë:Figura Ime</title>
                <title language="sr">Slike:Moje Slike</title>
                <title language="tr">Görüntü: Görüntülerim</title>
        </titles>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -96,6 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Benvingut a Les meves Imatges!</title>
                <title language="chs">欢迎来到我的图片！</title>
                <title language="cht">歡迎來到我的圖片!</title>
+               <title language="cz">Moje obrázky</title>
                <title language="de">Willkommen bei Eigene Bilder!</title>
                <title language="ee">Teretulemast  Minu Piltidesse!</title>
                <title language="es">¡Bienvenido a Mis Imágenes!</title>
@@ -112,7 +116,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="pt-br">Bem-vindo as Minhas Imagens!</title>
                <title language="ru">Добро пожаловать в Ваши картинки!</title>
                <title language="sl-SI">Dobrodošli v mojih podobah!</title>
-               <title language="sq">Mirë se erdhët në Dokumentet e Mia!</title>
+               <title language="sq">Mirë se erdhët në Figurat Tuaja!</title>
                <title language="sr">Dobrodošli Među Vaše Slike!</title>
                <title language="tr">Görüntülerime Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of the images in your library, organised by album.  Open a folder below to continue.</subtitle>
@@ -120,6 +124,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquestes carpetes contenen totes les teues imatges de la teua Col·lecció, organitzades per album. Obri una carpeta per a continuar</subtitle>
                <subtitle language="chs">这些文件夹包括您收藏中的所有图片，按相册进行编制。打开下面的文件夹可进行查看。</subtitle>
                <subtitle language="cht">這些資料夾包含了在您的收藏中所有的圖片, 由相簿組織.  在下面開啟一個資料夾來繼續.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny obrázky v knihovně roztříděné podle alba. Pokračujte kliknutím na složku .</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Bilder Ihrer Bibliothek, geordnet nach Album. Öffnen Sie einen Ordner, um fortzufahren.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu raamatukogus asuvaid pilte. Jätkamiseks ava allolev kaust.</subtitle>
                <subtitle language="es">Estas carpetas contienen todas tus imágenes de tu librería, organizadas por album. Abre una carpeta para continuar</subtitle>
@@ -136,7 +141,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Estas pastas contém todas as imagens da sua biblioteca, organizadas por álbum. Abra uma pasta abaixo para continuar.</subtitle>
                <subtitle language="ru">Эти папки отображают все картинки в Вашем хранилище организовнные по альбомам.</subtitle>
                <subtitle language="sl-SI">Te mape vsebujejo vse podobe v vaši knjižnici, urejene po albumu. Odprite mapo spodaj za nadaljevanje.</subtitle>
-               <subtitle language="sq">Kjo dosje përmban gjithë figurat në librarinë tuaj, organizuar sipas albumeve.  Hapni një dosje më poshtë që të vijoni.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban gjithë figurat në librarinë tuaj, organizuar sipas albumeve. Që të vijoni, hapni një dosje më poshtë.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže sve slike iz vaše kolekcije složene u albume. Otvorite željenu fasciklu.</subtitle>
                <subtitle language="tr">Bu klasörler arşivinizdeki albümden düzenlenen tüm görüntüleri içermektedir. Devam etmek için bir klasör açınız.</subtitle>
        </headerContent>

@@ -5,6 +5,7 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
@@ -35,6 +36,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">General: Tots els arxius</title>
                <title language="chs">&#160;常规:所有文件</title>
                <title language="cht">一般:所有檔案</title>
+               <title language="cz">Obecné:Všechny soubory</title>
                <title language="de">Allgemein:Alle Dateien</title>
                <title language="ee">Üldine:Kõik Failid</title>
                <title language="es">General: Todos los archivos</title>
@@ -66,6 +68,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ca">Títol</title>
                        <title language="chs">标题</title>
                        <title language="cht">標題</title>
+                       <title language="cz">Název</title>
                        <title language="de">Titel</title>
                        <title language="ee">Pealkiri</title>
                        <title language="es">Título</title>
@@ -93,6 +96,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="ca">Tots els arxius</title>
                <title language="chs">所有文件</title>
                <title language="cht">所有檔案</title>
+               <title language="cz">Všechny soubory</title>
                <title language="de">Alle Dateien</title>
                <title language="ee">Kõik Failid</title>
                <title language="es">Todos los archivos</title>
@@ -117,6 +121,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="ca">Aquesta carpeta conté tots els arxius de la teua Col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有文件。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中所有的檔案.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje úplně všechny soubory v knihovně.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dateien in ihrer Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab kõiki sinu raamatukogus olevaid faile.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
@@ -133,7 +138,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="pt-br">Esta pasta contém todos os arquivos na sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый файл в Вашем хранилище.</subtitle>
                <subtitle language="sl-SI">Ta mapa vsebuje vse datoteke v vaši knjižnici.</subtitle>
-               <subtitle language="sq">Kjo dosje përmban çdo skedë të librarisë tuaj.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve datoteke u vašoj kolekciji.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her dosyayı içerir.</subtitle>
      </headerContent>
