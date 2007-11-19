@@ -4,23 +4,24 @@
 <div  id="content">
 	<div id="functions"><a href="?refresh=<%= random %>">Atnaujinti pateiktį</a></div>
 		<div id="filters">	
-			<form method="get" action="" ID="Form1">
-						<input type="hidden" name="filter_set" value="1" ID="Hidden1" />
-						<b>Filtras:</b>
-						<input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %> />
-						<label for="filter_active">Aktyvūs</label>
-						<input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %> />
-						<label for="filter_queued">Eilėje</label>
-						<input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %> />
-						<label for="filter_sources">Be šaltinių</label>
-						<input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %> />
-						<label for="filter_paused">Pristabdyta</label>
-						<input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %> />
-						<label for="filter_show_all">Rodyti viską</label>
-						<input type="submit" value=" Set " /><br />
+			<form method="get" action="">
+				<table><tr><td>
+					<input type="hidden" name="filter_set" value="1" />
+					<b>Filtras:</b>
+					<input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %> />
+					<label for="filter_active">Aktyvūs</label>
+					<input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %> />
+					<label for="filter_queued">Eilėje</label>
+					<input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %> />
+					<label for="filter_sources">Be šaltinių</label>
+					<input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %> />
+					<label for="filter_paused">Pristabdyta</label>
+					<input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %> />
+					<label for="filter_show_all">Rodyti viską</label>
+					<input type="submit" value=" Set " /><br/>
+				</td></tr></table>
 			</form>
-		</div>
-		<br/>
+		</div><br/>
 <table>
 	<tr>
 				<th>Failas</th>

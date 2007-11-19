@@ -4,23 +4,24 @@
 <div  id="content">
 	<div id="functions"><a href="?refresh=<%= random %>">Atualizar a página</a></div>
 		<div id="filters">	
-			<form method="get" action="" ID="Form1">
-						<input type="hidden" name="filter_set" value="1" ID="Hidden1" />
-						<b>Filtro:</b>
-						<input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %> />
-						<label for="filter_active">Ativo</label>
-						<input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %> />
-						<label for="filter_queued">Na fila</label>
-						<input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %> />
-						<label for="filter_sources">Sem Fontes</label>
-						<input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %> />
-						<label for="filter_paused">Pausado</label>
-						<input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %> />
-						<label for="filter_show_all">Mostrar todas as fontes</label>
-						<input type="submit" value=" Definir " /><br />
+			<form method="get" action="">
+				<table><tr><td>
+					<input type="hidden" name="filter_set" value="1" />
+					<b>Filtro:</b>
+					<input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %> />
+					<label for="filter_active">Ativo</label>
+					<input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %> />
+					<label for="filter_queued">Na fila</label>
+					<input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %> />
+					<label for="filter_sources">Sem Fontes</label>
+					<input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %> />
+					<label for="filter_paused">Pausado</label>
+					<input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %> />
+					<label for="filter_show_all">Mostrar todas as fontes</label>
+					<input type="submit" value=" Definir " /><br/>
+				</td></tr></table>
 			</form>
-		</div>
-		<br/>
+		</div><br/>
 <table>
 	<tr>
 				<th>Nome de arquivo</th>
