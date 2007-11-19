@@ -11,17 +11,28 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)\Installer\"
+			IntermediateDirectory="$(SolutionDir)\Installer\"
+			ConfigurationType="10">
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+		</Configuration>
+		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\Installer\"
+			IntermediateDirectory="$(SolutionDir)\Installer\"
 			ConfigurationType="1">
 			<Tool
 				Name="VCCLCompilerTool"/>
 			<Tool
-				Name="VCCustomBuildTool"
-				Description="Making Installer..."
-				CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot;"
-				Outputs="$(SolutionDir)..\setup\builds\Shareaza_Debug_*.exe"/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"/>
 			<Tool
@@ -45,20 +56,6 @@
 			<Tool
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)"
-			ConfigurationType="10">
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCMIDLTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-		</Configuration>
 	</Configurations>
 	<References>
 	</References>
@@ -69,23 +66,20 @@
 		<File
 			RelativePath=".\MakeInstaller.bat">
 			<FileConfiguration
-				Name="Debug|Win32"
-				ExcludedFromBuild="TRUE">
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Making Installer..."
-					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &gt; nul
-"
-					Outputs="&quot;$(SolutionDir)$(ConfigurationName)\geoip.dll&quot;"/>
-			</FileConfiguration>
-			<FileConfiguration
 				Name="Release|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Making Installer..."
-					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &gt; nul
-"
-					Outputs="&quot;$(SolutionDir)$(ConfigurationName)\geoip.dll&quot;"/>
+					Description="Making Release Installer..."
+					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;&quot;"
+					Outputs="$(SolutionDir)\Installer\Shareaza_*.exe"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Making Debug Installer..."
+					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;&quot;"
+					Outputs="$(SolutionDir)\Installer\Shareaza_Debug_*.exe"/>
 			</FileConfiguration>
 		</File>
 	</Files>

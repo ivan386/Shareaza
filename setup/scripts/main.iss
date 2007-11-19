@@ -2,7 +2,7 @@
 #define alpha
 
 ; Uncomment the next line to compile the setup with the debug version of shareaza (It is no longer used to debug the setup).
-;#define debug
+;#define Debug
 
 #if VER < 0x05010700
   #error Inno Setup version 5.1.7 or higher is needed for this script
@@ -11,36 +11,46 @@
   #error PreProcessor version 5.2.0.0 or higher is needed for this script
 #endif
 
-; Debug build of the installer compiled inside Visual Studio
-#ifexist "..\..\setup\builds\Debug"
-  #define debug
+; Release build of the installer compiled inside Visual Studio
+#ifdef Release
+  #undef Debug
 #endif
 
-; Not supported by ISPP 5.1.2
-#define date GetDateTimeString('yyyy/mm/dd', '-', '')
-
-#ifdef debug
-  #define name "Shareaza debug build"
+; This decide if it is a debug build or not
+#ifdef Debug
   #define type "Debug"
 #else
-  #define name "Shareaza"
   #define type "Release"
 #endif
 
-; Select file source root
-#ifexist "..\..\vc7_1\" + type + "\Shareaza.exe"
-  #define root "vc7_1\" + type
-  #define version GetFileVersion("..\..\vc7_1\" + type + "\Shareaza.exe")
+; This is defined externally only when compiled inside Visual Studio
+#ifndef PlatformName
+  #define PlatformName ""
 #endif
 
-#ifexist "..\..\vc8_0\" + type + "\Shareaza.exe"
-  #define root "vc8_0\" + type
-  #define version GetFileVersion("..\..\vc8_0\" + type + "\Shareaza.exe")
+; Select file source root
+#ifexist "..\..\vc7_1\" + type + PlatformName + "\Shareaza.exe"
+  #define root "vc7_1\" + type + PlatformName
+#endif
+
+#ifexist "..\..\vc8_0\" + type + PlatformName + "\Shareaza.exe"
+  #define root "vc8_0\" + type + PlatformName
+#endif
+
+#define version GetFileVersion("..\..\" + root + "\Shareaza.exe")
+#define internal_name GetStringFileInfo("..\..\" + root + "\Shareaza.exe", INTERNAL_NAME);
+#ifdef Debug
+  #define name internal_name + " Debug build"
+#else
+  #define name internal_name
 #endif
 
 #ifndef root
   #error You must compile Shareaza, skin-installer and all plugins before compile the setup
 #endif
+
+; Not supported by ISPP 5.1.2
+#define date GetDateTimeString('yyyy/mm/dd', '-', '')
 
 [Setup]
 AppComments=Shareaza Ultimate File Sharing
@@ -56,7 +66,7 @@ DirExistsWarning=no
 DefaultGroupName=Shareaza
 AllowNoIcons=yes
 OutputDir=setup\builds
-#ifndef debug
+#ifndef Debug
 OutputBaseFilename=Shareaza_{#version}
 #else
 OutputBaseFilename=Shareaza_Debug_{#date}
@@ -106,12 +116,12 @@ Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache
 [Files]
 ; Install unicows.dll on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension sharedfile uninsnosharedfileprompt; MinVersion: 4.0,0
-#ifdef debug
+#ifdef Debug
 Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
 #endif
 
 ; Main files
-#ifndef debug
+#ifndef Debug
 Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #else
@@ -123,7 +133,7 @@ Source: "{#root}\libgfl267.dll"; DestDir: "{app}"; Flags: overwritereadonly repl
 Source: "{#root}\sqlite3.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#ifdef debug
+#ifdef Debug
 Source: "{#root}\Shareaza\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\skin.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\zlibwapi.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension

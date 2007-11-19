@@ -15,9 +15,9 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)../setup/builds"
-			IntermediateDirectory="$(SolutionDir)../setup/builds"
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)\Installer\"
+			IntermediateDirectory="$(SolutionDir)\Installer\"
 			ConfigurationType="10"
 			BuildLogFile=""
 			>
@@ -38,9 +38,9 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)../setup/builds"
-			IntermediateDirectory="$(SolutionDir)../setup/builds"
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)\Installer\"
+			IntermediateDirectory="$(SolutionDir)\Installer\"
 			ConfigurationType="10"
 			BuildLogFile=""
 			>
@@ -72,25 +72,23 @@
 			RelativePath=".\MakeInstaller.bat"
 			>
 			<FileConfiguration
-				Name="Debug|Win32"
-				ExcludedFromBuild="true"
+				Name="Release|Win32"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Making Installer..."
-					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)$(PlatformName)&quot; &gt; nul"
-					Outputs="$(SolutionDir)../setup/builds/Shareaza.exe"
+					Description="Making Release Installer..."
+					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;"
+					Outputs="$(SolutionDir)\Installer\Shareaza_*.exe"
 				/>
 			</FileConfiguration>
 			<FileConfiguration
-				Name="Release|Win32"
-				ExcludedFromBuild="true"
+				Name="Debug|Win32"
 				>
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Making Installer..."
-					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)$(PlatformName)&quot; &gt; nul"
-					Outputs="$(SolutionDir)../setup/builds/Shareaza.exe"
+					Description="Making Debug Installer..."
+					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;"
+					Outputs="$(SolutionDir)\Installer\Shareaza_Debug_*.exe"
 				/>
 			</FileConfiguration>
 		</File>
