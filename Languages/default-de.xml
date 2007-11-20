@@ -13,10 +13,10 @@
 <!-- Manifest -->
 <manifest	name="Deutsch"
 		author="Jann Röder"
-		updatedBy="ZeRO, Frontier, Jann Röder, Daisuke"
+		updatedBy="ZeRO, Frontier, Jann Röder"
 		description="Shareaza Default German Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email=""
+		email="zero9999@gmail.com"
 		version="2.3.0.0"
 		type="Language"
 		language="de"
@@ -988,7 +988,7 @@
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Benutzer _durchsuchen"/>
 		<item id="ID_TRANSFERS_CHAT" text="Mit Benutzer _chattten"/>
-		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
+		<item id="ID_DOWNLOADS_COPY" text="_URI kopieren"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Transfer abbrechen"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Quelle entfernen"/>
@@ -2056,8 +2056,8 @@
 		<text>Die meisten .torrent-Erstellungsprogramme erlauben es, Torrents zu reparieren, sodass sie in
 		allen BitTorrent-Programmen richtig funktionieren.</text>
 		<newline gap="8"/>
-		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klicken Sie hier für weitere Informationen.</link>
-		<text>, or to download software to repair the torrent.</text>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Klicken Sie hier für weitere Informationen</link>
+		<text>, oder um die für die Reperatur benötigte Software herunterzuladen.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Ihre eDonkey2000-Serverliste ist leer</text>
@@ -2544,7 +2544,7 @@
 	<string id="8134" value="Sie sind dabei eine neue Suche zu starten. Möchten Sie die Ergebnisse ihrer vorherigen Suche entfernen?"/>
 	<string id="8135" value="Keine Metadaten"/>
 	<string id="8136" value="Textsuche"/>
-	<string id="8137" value="No Schema Columns"/>
+	<string id="8137" value="Keine Schema-Spalten"/>
 	<string id="8141" value="Suchleiste einblenden"/>
 	<string id="8142" value="Suchleiste ausblenden"/>
 	<string id="8143" value="Suchen..."/>
@@ -2832,7 +2832,7 @@
 	<string id="16375" value="Unvollständig"/>
 	<string id="16376" value="Alle Dateien"/>
 	<string id="16377" value="HTTP-Guard"/>
-	<string id="16379" value="Library Files"/>
+	<string id="16379" value="Dateien in der Bibliothek"/>
 	<string id="16384" value="Sind Sie sicher, dass Sie die Datei &quot;%s&quot; ausführen möchten?\n\nManche Dateien können ihren Computer beschädigen. Stellen Sie die Echtheit der Datei sicher, bevor Sie sie ausführen (Virenscan)."/>
 	<string id="16385" value="Sie sind dabei die Metadaten von %i Dateien zu ändern. Wollen Sie fortfahren?"/>
 	<string id="16386" value="Metadaten von %i bearbeiten."/>
@@ -2965,7 +2965,7 @@
 	<string id="16995" value="Die Datei ist möglicherweise beschädigt, oder die Datei benutzt einen Codec, den Sie nicht installiert haben."/>
 	<string id="16996" value="Ein Teil dieser Datei kann nicht abgespielt werden. Möglicherweise mûssen Sie zusätzliche Decoder herunterladen."/>
 	<string id="16997" value="Es wird keine Datei wiedergegeben. Doppelklicken Sie eine Datei in Ihrer Bibliothek an, um sie abzuspielen."/>
-	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
+	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; P &#160; &#160; L &#160; &#160; A &#160; &#160; Y &#160; &#160; E &#160; &#160; R"/><!-- on one line -->
 	<string id="16999" value="P L A Y L I S T"/>
 	<string id="17024" value="Verbindung herstellen mit %s..."/>
 	<string id="17025" value="Verbindungsversuch mit %s fehlgeschlagen."/>
@@ -4271,13 +4271,13 @@
 		<column from="Failures" to="Fehler"/>
 	</list>
 	<list name="CPacketWnd">
-		<column from="Address" to=""/>
-		<column from="Protocol" to=""/>
-		<column from="Type" to=""/>
-		<column from="T/H" to=""/>
-		<column from="Hex" to=""/>
-		<column from="ASCII" to=""/>
-		<column from="G1-ID" to=""/>
+		<column from="Address" to="Adresse"/>
+		<column from="Protocol" to="Protokoll"/>
+		<column from="Type" to="Typ"/>
+		<column from="T/H" to="TTL/Hops"/>
+		<column from="Hex" to="Hex"/>
+		<column from="ASCII" to="ASCII"/>
+		<column from="G1-ID" to="G1-ID"/>
 	</list>
 	<list name="CSearchMonitorWnd">
 		<column from="Search" to="Suche"/>
@@ -4289,7 +4289,7 @@
 		<column from="Extension" to="Typ"/>
 		<column from="Size" to="Größe"/>
 		<column from="Rating" to="Bewertung"/>
-		<column from="Status" to=""/>
+		<column from="Status" to="Status"/>
 		<column from="Host/Count" to="Adresse/Quellen"/>
 		<column from="Speed" to="Geschwindigkeit"/>
 		<column from="Client" to="Client"/>
@@ -4301,7 +4301,7 @@
 		<column from="Criteria" to="Kriterien"/>
 		<column from="Bandwidth" to="Bandbreite"/>
 		<column from="Transfers" to="Transfer"/>
-		<column from="Order" to=""/>
+		<column from="Order" to="#"/>
 	</list>
 	<list name="CAdvancedSettingsList">
 		<column from="Setting" to="Einstellung"/>
