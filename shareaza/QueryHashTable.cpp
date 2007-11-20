@@ -1053,6 +1053,7 @@ DWORD CQueryHashTable::HashWord(LPCTSTR pszString, size_t nStart, size_t nLength
 
 	for ( pszString += nStart; nLength ; nLength--, pszString++ )
 	{
+		// A known bad using of tolower() with unicode chars but as is...
 		int nValue = tolower( *pszString ) & 0xFF;
 
 		nValue = nValue << ( nByte * 8 );
