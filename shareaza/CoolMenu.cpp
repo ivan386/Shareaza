@@ -89,7 +89,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 		mii.dwTypeData	= szBuffer;
 		mii.cch			= sizeof(szBuffer) / sizeof(TCHAR);
 
-		GetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+		GetMenuItemInfo( pMenu->GetSafeHmenu(), i, TRUE, &mii );
 
 		// In Win98 the custom filter string can not be read with the mask set above.
 		// In WinXP subsequent GetMenuItemInfo calls do not work.
@@ -120,7 +120,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 					mii.wID = ID_SEARCH_FILTER;
 
 					m_sFilterString = m_sOldFilterString;
-					SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+					SetMenuItemInfo( pMenu->GetSafeHmenu(), i, TRUE, &mii );
 				}
 
 				if ( pResultFilters->m_nFilters )
@@ -156,7 +156,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 		{
 			mii.fType |= MF_OWNERDRAW;
 			if ( mii.fType & MF_SEPARATOR ) mii.dwItemData = 0;
-			SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+			SetMenuItemInfo( pMenu->GetSafeHmenu(), i, TRUE, &mii );
 			continue;
 		}
 
@@ -168,7 +168,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 
 		m_pStrings.SetAt( mii.dwItemData, strText );
 
-		if ( bChild ) SetMenuItemInfo( pMenu->GetSafeHmenu(), i, MF_BYPOSITION, &mii );
+		if ( bChild ) SetMenuItemInfo( pMenu->GetSafeHmenu(), i, TRUE, &mii );
 
 		if ( mii.hSubMenu != NULL ) 
 			AddMenu( pMenu->GetSubMenu( i ), TRUE );
@@ -195,7 +195,7 @@ BOOL CCoolMenu::ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* m
 	mii->fMask = MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING;
 
 	// We modified menu, retrieve a new MII (validates and changes data)
-	if ( !GetMenuItemInfo( pMenu->GetSafeHmenu(), nPosition, MF_BYPOSITION, mii ) )
+	if ( !GetMenuItemInfo( pMenu->GetSafeHmenu(), nPosition, TRUE, mii ) )
 		return FALSE;
 
 	// Replace the corresponding value in the collection
