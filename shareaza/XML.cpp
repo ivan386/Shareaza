@@ -455,7 +455,7 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 			pszXML = pszElement + 3;
 		}
 
-		while ( ParseMatch( pszXML, _T("<?xml-stylesheet") ) )
+		while ( ParseMatch( pszXML, _T("<?xml") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T("?>") );
 			if ( ! pszElement ) return FALSE;
