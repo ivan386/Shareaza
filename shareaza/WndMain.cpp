@@ -268,16 +268,21 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd construction
 
-CMainWnd::CMainWnd()
+CMainWnd::CMainWnd() :
+	m_hInstance ( AfxGetResourceHandle() ),
+	m_bTrayHide ( FALSE ),
+	m_bTrayIcon ( FALSE ),
+	m_bTimer ( FALSE ),
+	m_pSkin ( NULL ),
+	m_pURLDialog ( NULL ),
+	m_tURLTime ( 0 ),
+	m_nAlpha ( 255 ),
+	m_bNoNetWarningShowed ( FALSE )
 {
-	theApp.m_pMainWnd = this;
+	ZeroMemory( &m_pTray, sizeof( NOTIFYICONDATA ) );
+	m_pTray.cbSize = sizeof( NOTIFYICONDATA );
 
-	m_hInstance		= AfxGetResourceHandle();
-	m_pSkin			= NULL;
-	m_pURLDialog	= NULL;
-	m_tURLTime		= 0;
-	m_bNoNetWarningShowed = FALSE;
-	m_nAlpha		= 255;
+	theApp.m_pMainWnd = this;
 
 	LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS );
 
@@ -317,17 +322,19 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lpCreateStruct->dwExStyle |= WS_EX_LAYERED;
 
 	if ( theApp.m_bRTL )
-	{
 		lpCreateStruct->dwExStyle |= WS_EX_LAYOUTRTL;
-		SetWindowLongPtr( GetSafeHwnd(), GWL_EXSTYLE, lpCreateStruct->dwExStyle );
-	}
+
+	SetWindowLongPtr( GetSafeHwnd(), GWL_EXSTYLE, lpCreateStruct->dwExStyle );
 
 	if ( CMDIFrameWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	if ( theApp.m_pfnSetLayeredWindowAttributes != NULL )
-	{
-		theApp.m_pfnSetLayeredWindowAttributes( GetSafeHwnd(), 0, 255, LWA_ALPHA );
-	}
+	if ( theApp.m_pfnSetLayeredWindowAttributes )
+		VERIFY( theApp.m_pfnSetLayeredWindowAttributes( GetSafeHwnd(),
+			0, 255, LWA_ALPHA ) );
+
+	// Tray
+
+	m_pTray.hWnd				= GetSafeHwnd();
 
 	// Icon
 	
@@ -752,8 +759,6 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 		// Delete existing tray icon (if any), windows can't create a new icon with same uID
 		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
 
-		m_pTray.cbSize				= sizeof(m_pTray);
-		m_pTray.hWnd				= GetSafeHwnd();
 		m_pTray.uID					= 0;
 		m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
 		m_pTray.uCallbackMessage	= WM_TRAY;
