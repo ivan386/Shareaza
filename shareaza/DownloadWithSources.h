@@ -30,7 +30,6 @@ class CDownloadSource;
 class CQueryHit;
 class CXMLElement;
 
-#pragma pack(1)
 class CFailedSource
 {
 public:
@@ -44,14 +43,13 @@ public:
 
 	virtual ~CFailedSource() { };
 
-	DWORD_PTR	m_nTimeAdded;
-	INT_PTR		m_nPositiveVotes;
-	INT_PTR		m_nNegativeVotes;
-	CString		m_sURL;
-	bool		m_bLocal;
-	bool		m_bOffline;
+	DWORD	m_nTimeAdded;
+	int		m_nPositiveVotes;
+	int		m_nNegativeVotes;
+	CString	m_sURL;
+	bool	m_bLocal;
+	bool	m_bOffline;
 };
-#pragma pack()
 
 class CDownloadWithSources : public CDownloadBase
 {
