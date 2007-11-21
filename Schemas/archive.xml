@@ -49,7 +49,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="lt">Archyvas</title>
                <title language="nl">Archief</title>
                <title language="no">Archive</title>
-               <title language="pt-br">Archive</title>
+               <title language="pt-br">Arquivo</title>
                <title language="ru">Архив</title>
                <title language="sl-SI">Archive</title>
                <title language="sq">Archive</title>
@@ -105,7 +105,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Aplankai</title>
                        <title language="nl">Mappen</title>
                        <title language="no">Folders</title>
-                       <title language="pt-br">Folders</title>
+                       <title language="pt-br">Pastas</title>
                        <title language="ru">Папки</title>
                        <title language="sl-SI">Folders</title>
                        <title language="sq">Folders</title>
@@ -132,7 +132,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Failai</title>
                        <title language="nl">Bestanden</title>
                        <title language="no">Files</title>
-                       <title language="pt-br">Files</title>
+                       <title language="pt-br">Arquivos</title>
                        <title language="ru">Файлы</title>
                        <title language="sl-SI">Files</title>
                        <title language="sq">Files</title>
@@ -241,7 +241,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Užšifruota</title>
                        <title language="nl">Beveiligd</title>
                        <title language="no">Encrypted</title>
-                       <title language="pt-br">Encrypted</title>
+                       <title language="pt-br">Encriptado</title>
                        <title language="ru">Зашифровано</title>
                        <title language="sl-SI">Encrypted</title>
                        <title language="sq">Encrypted</title>
@@ -269,7 +269,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="lt">Dydis išglaudinus</title>
                        <title language="nl">Echte grootte</title>
                        <title language="no">Unpacked Size</title>
-                       <title language="pt-br">Unpacked Size</title>
+                       <title language="pt-br">Tamanho Descomprimido</title>
                        <title language="ru">Размер без сжатия</title>
                        <title language="sl-SI">Unpacked Size</title>
                        <title language="sq">Unpacked Size</title>
