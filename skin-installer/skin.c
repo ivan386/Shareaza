@@ -18,7 +18,7 @@ TCHAR* szXML;
 TCHAR prefix[MAX_PATH];
 BOOL  bRunningOnNT;
 
-int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPCTSTR cmdParam, int cmdShow) {
+int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR cmdParam, int cmdShow) {
 	InitCommonControls();
 
 	// globals
