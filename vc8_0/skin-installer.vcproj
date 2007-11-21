@@ -19,8 +19,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
@@ -41,19 +41,19 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;_DEBUG;ZLIB_DLL;ZLIB_WINAPI;NOCRYPT;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="true"
-				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="4"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="skin.h"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
-				DisableSpecificWarnings="4100;4201;4255;4619;4668;4820;4826"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -67,16 +67,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib comctl32.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=""
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;secur32.lib;oleacc.lib"
-				DelayLoadDLLs="$(NOINHERIT)"
+				AdditionalDependencies="comctl32.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)Skin.exe"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				GenerateDebugInformation="true"
-				SubSystem="2"
-				EnableCOMDATFolding="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -102,13 +96,13 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe&quot; /install"
+				CommandLine="&quot;$(OutDir)Skin.exe&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
@@ -126,23 +120,21 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;_DEBUG;ZLIB_DLL;ZLIB_WINAPI;NOCRYPT;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="true"
-				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="skin.h"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4100;4201;4255;4619;4668;4820;4826"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -157,12 +149,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=""
-				IgnoreDefaultLibraryNames=""
-				DelayLoadDLLs="$(NOINHERIT)"
+				OutputFile="$(OutDir)Skin.exe"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
 			/>
@@ -190,16 +177,17 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe&quot; /install"
+				CommandLine="&quot;$(OutDir)Skin.exe&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="1"
-			UseOfMFC="1"
+			UseOfMFC="2"
 			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -218,22 +206,16 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Wall"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;NDEBUG;ZLIB_DLL;ZLIB_WINAPI;NOCRYPT;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
-				RuntimeLibrary="0"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN32;NDEBUG;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				MinimalRebuild="true"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="skin.h"
-				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="4"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DisableSpecificWarnings="4100;4201;4255;4619;4668;4820;4826"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -247,19 +229,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib comctl32.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=""
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;secur32.lib;oleacc.lib"
-				DelayLoadDLLs="$(NOINHERIT)"
-				SubSystem="2"
+				AdditionalDependencies="comctl32.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)Skin.exe"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				MergeSections=".rdata=.text"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -285,15 +260,16 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe&quot; /install"
+				CommandLine="&quot;$(OutDir)\Skin.exe&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="1"
 			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -309,26 +285,18 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Wall"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;NDEBUG;ZLIB_DLL;ZLIB_WINAPI;NOCRYPT;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
-				RuntimeLibrary="0"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN64;NDEBUG;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				MinimalRebuild="true"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="skin.h"
-				ProgramDataBaseFileName="$(IntDir)/"
-				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
-				DisableSpecificWarnings="4100;4201;4255;4619;4668;4820;4826"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				WarningLevel="3"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -343,11 +311,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				IgnoreDefaultLibraryNames=""
-				DelayLoadDLLs="$(NOINHERIT)"
+				OutputFile="$(OutDir)Skin.exe"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -374,7 +341,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)/Skin.exe&quot; /install"
+				CommandLine="&quot;$(OutDir)\Skin.exe&quot; /install"
 			/>
 		</Configuration>
 	</Configurations>
@@ -403,7 +370,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="skin.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -412,7 +378,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="skin.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -421,7 +386,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="skin.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -430,7 +394,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="skin.h"
 					/>
 				</FileConfiguration>
 			</File>
