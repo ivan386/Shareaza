@@ -168,6 +168,7 @@ CShareazaApp::CShareazaApp()
 : m_pMutex( NULL )
 , m_pSafeWnd( NULL )
 , m_bLive( FALSE )
+, m_bInteractive( FALSE )
 , m_bMultiUserInstallation( FALSE )
 , m_bNT( FALSE )
 , m_bServer( FALSE )
@@ -275,6 +276,8 @@ BOOL CShareazaApp::InitInstance()
 		// Probably mutex created in another user's session
 		return FALSE;
 	}
+
+	m_bInteractive = TRUE;
 
 	DDEServer.Create();
 	IEProtocol.Create();
@@ -435,74 +438,77 @@ BOOL CShareazaApp::InitInstance()
 
 int CShareazaApp::ExitInstance() 
 {
-	CWaitCursor pCursor;
-	
-	CSplashDlg* dlgSplash = new CSplashDlg( 6 +
-		( ( Settings.Connection.DeleteFirewallException ) ? 1 : 0 ) +
-		( ( m_pUPnPFinder ) ? 1 : 0 ) +
-		( ( m_bLive ) ? 1 : 0 ),
-		true );
-	SplashStep( dlgSplash, L"Closing Server Processes" );
-	DDEServer.Close();
-	IEProtocol.Close();
-	SplashStep( dlgSplash, L"Disconnecting" );
-	VersionChecker.Stop();
-	DiscoveryServices.Stop();
-	Network.Disconnect();
-	SplashStep( dlgSplash, L"Stopping Library Tasks" );
-	Library.StopThread();
-	SplashStep( dlgSplash, L"Stopping Transfers" );	
-	Transfers.StopThread();
-	Downloads.CloseTransfers();
-	SplashStep( dlgSplash, L"Clearing Clients" );	
-	Uploads.Clear( FALSE );
-	EDClients.Clear();
-
-	if ( Settings.Connection.DeleteFirewallException )
+	if ( m_bInteractive )
 	{
-		SplashStep( dlgSplash, L"Closing Windows Firewall Access" );	
-		CFirewall firewall;
-		if ( firewall.AccessWindowsFirewall() )
+		CWaitCursor pCursor;
+		
+		CSplashDlg* dlgSplash = new CSplashDlg( 6 +
+			( ( Settings.Connection.DeleteFirewallException ) ? 1 : 0 ) +
+			( ( m_pUPnPFinder ) ? 1 : 0 ) +
+			( ( m_bLive ) ? 1 : 0 ),
+			true );
+		SplashStep( dlgSplash, L"Closing Server Processes" );
+		DDEServer.Close();
+		IEProtocol.Close();
+		SplashStep( dlgSplash, L"Disconnecting" );
+		VersionChecker.Stop();
+		DiscoveryServices.Stop();
+		Network.Disconnect();
+		SplashStep( dlgSplash, L"Stopping Library Tasks" );
+		Library.StopThread();
+		SplashStep( dlgSplash, L"Stopping Transfers" );	
+		Transfers.StopThread();
+		Downloads.CloseTransfers();
+		SplashStep( dlgSplash, L"Clearing Clients" );	
+		Uploads.Clear( FALSE );
+		EDClients.Clear();
+
+		if ( Settings.Connection.DeleteFirewallException )
 		{
-			// Remove application from the firewall exception list
-			CString strBinaryPath;
-			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
-			strBinaryPath.ReleaseBuffer( MAX_PATH );
-			firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
+			SplashStep( dlgSplash, L"Closing Windows Firewall Access" );	
+			CFirewall firewall;
+			if ( firewall.AccessWindowsFirewall() )
+			{
+				// Remove application from the firewall exception list
+				CString strBinaryPath;
+				GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
+				strBinaryPath.ReleaseBuffer( MAX_PATH );
+				firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
+			}
 		}
+
+		if ( m_pUPnPFinder )
+		{
+			SplashStep( dlgSplash, L"Closing Firewall/Router Access" );
+			m_pUPnPFinder->StopAsyncFind();
+			if ( Settings.Connection.DeleteUPnPPorts )
+				m_pUPnPFinder->DeletePorts();
+			m_pUPnPFinder.reset();
+		}
+
+		if ( m_bLive )
+		{
+			SplashStep( dlgSplash, L"Saving" );
+			Downloads.Save();
+			DownloadGroups.Save();
+			Library.Save();
+			Security.Save();
+			HostCache.Save();
+			UploadQueues.Save();
+			DiscoveryServices.Save();
+			Settings.Save( TRUE );
+		}
+		SplashStep( dlgSplash, L"Finalizing" );
+		Downloads.Clear( TRUE );
+		BTClients.Clear();
+		Library.Clear();
+		Skin.Clear();
+
+		if ( dlgSplash )
+			dlgSplash->Hide();
+
+		Plugins.Clear();
 	}
-
-	if ( m_pUPnPFinder )
-	{
-		SplashStep( dlgSplash, L"Closing Firewall/Router Access" );
-		m_pUPnPFinder->StopAsyncFind();
-		if ( Settings.Connection.DeleteUPnPPorts )
-			m_pUPnPFinder->DeletePorts();
-		m_pUPnPFinder.reset();
-	}
-
-	if ( m_bLive )
-	{
-		SplashStep( dlgSplash, L"Saving" );
-		Downloads.Save();
-		DownloadGroups.Save();
-		Library.Save();
-		Security.Save();
-		HostCache.Save();
-		UploadQueues.Save();
-		DiscoveryServices.Save();
-		Settings.Save( TRUE );
-	}
-	SplashStep( dlgSplash, L"Finalizing" );
-	Downloads.Clear( TRUE );
-	BTClients.Clear();
-	Library.Clear();
-	Skin.Clear();
-
-	if ( dlgSplash )
-		dlgSplash->Hide();
-
-	Plugins.Clear();
 
 	if ( m_hUser32 != NULL ) FreeLibrary( m_hUser32 );
 

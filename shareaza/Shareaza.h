@@ -68,6 +68,7 @@ public:
 	CFont				m_gdiFontLine;
 	CWnd*				m_pSafeWnd;
 	BOOL				m_bLive;
+	BOOL				m_bInteractive;
 	BOOL				m_bMultiUserInstallation;
 	BOOL				m_bNT;						// NT based core. (NT, 2000, XP, etc)
 	BOOL				m_bServer;					// Server version
@@ -200,11 +201,17 @@ int		AddIcon(HICON hIcon, CImageList& gdiImageList);
 HICON	CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal = TRUE);
 HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 
+#ifdef _DEBUG
+	#define ALMOST_INFINITE	INFINITE
+#else
+	#define ALMOST_INFINITE	20000
+#endif
+
 inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName);
 HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 	LPVOID pParam, int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
 	DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
-void CloseThread(HANDLE* phThread, DWORD dwTimeout = 5000);
+void CloseThread(HANDLE* phThread, DWORD dwTimeout = ALMOST_INFINITE);
 
 LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);

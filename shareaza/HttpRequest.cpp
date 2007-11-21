@@ -271,7 +271,7 @@ void CHttpRequest::Cancel()
 
 	if ( hInternet != NULL ) InternetCloseHandle( hInternet );
 
-	CloseThread( &m_hThread, 10000 );
+	CloseThread( &m_hThread );
 
 	m_bCancel = FALSE;
 }
