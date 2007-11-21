@@ -96,7 +96,7 @@ POSITION CLibraryMaps::GetFileIterator() const
 
 CLibraryFile* CLibraryMaps::GetNextFile(POSITION& pos) const
 {
-	DWORD pIndex;
+	DWORD_PTR pIndex;
 	CLibraryFile* pFile = NULL;
 	m_pIndexMap.GetNextAssoc( pos, pIndex, pFile );
 	return pFile;
