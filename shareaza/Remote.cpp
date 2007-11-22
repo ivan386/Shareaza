@@ -888,11 +888,11 @@ void CRemote::PageDownloads()
 		Settings.Downloads.ShowSources = ( GetKey( _T("filter_show_all") ) == _T("1") );
 	}
 	
-	Add( _T("filter_active"), ( Settings.Downloads.FilterMask & DLF_ACTIVE ) ? _T("checked") : _T("") );
-	Add( _T("filter_queued"), ( Settings.Downloads.FilterMask & DLF_QUEUED ) ? _T("checked") : _T("") );
-	Add( _T("filter_sources"), ( Settings.Downloads.FilterMask & DLF_SOURCES ) ? _T("checked") : _T("") );
-	Add( _T("filter_paused"), ( Settings.Downloads.FilterMask & DLF_PAUSED ) ? _T("checked") : _T("") );
-	Add( _T("filter_show_all"), Settings.Downloads.ShowSources ? _T("checked") : _T("") );
+	Add( _T("filter_active"), ( Settings.Downloads.FilterMask & DLF_ACTIVE ) ? _T("checked=\"checked\"") : _T("") );
+	Add( _T("filter_queued"), ( Settings.Downloads.FilterMask & DLF_QUEUED ) ? _T("checked=\"checked\"") : _T("") );
+	Add( _T("filter_sources"), ( Settings.Downloads.FilterMask & DLF_SOURCES ) ? _T("checked=\"checked\"") : _T("") );
+	Add( _T("filter_paused"), ( Settings.Downloads.FilterMask & DLF_PAUSED ) ? _T("checked=\"checked\"") : _T("") );
+	Add( _T("filter_show_all"), Settings.Downloads.ShowSources ? _T("checked=\"checked\"") : _T("") );
 	Output( _T("downloadsTop") );
 	
 	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload != NULL ; )
