@@ -677,7 +677,7 @@ void CBaseMatchWnd::OnLibraryBitziWeb()
 	if ( strURN.IsEmpty() ) return;
 
 	CString strURL = Settings.Library.BitziWebView;
-	Replace( strURL, _T("(URN)"), strURN );
+	strURL.Replace( _T("(URN)"), strURN );
 	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
 }
 

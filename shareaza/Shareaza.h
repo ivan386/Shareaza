@@ -182,7 +182,6 @@ CRuntimeClass* AfxClassForName(LPCTSTR pszClass);
 BOOL LoadString(CString& str, UINT nID);
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern);
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen);
-void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace);
 void Split(CString strSource, LPCTSTR strDelimiter, CArray< CString >& pAddIt, BOOL bAddFirstEmpty);
 BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction=false);
 

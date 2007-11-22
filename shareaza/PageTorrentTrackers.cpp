@@ -284,7 +284,7 @@ void CTorrentTrackersPage::OnRun()
 	m_pRequest.AddHeader( _T("Accept-Encoding"), _T("deflate, gzip") );
 	
 	CString strURL = m_sTracker;
-	Replace( strURL, _T("/announce"), _T("/scrape") );
+	strURL.Replace( _T("/announce"), _T("/scrape") );
 
 	if ( ( strURL.Find( _T("http") ) == 0 ) && ( strURL.Find( _T("/scrape") ) != -1 ) )
 	{

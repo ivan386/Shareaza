@@ -128,7 +128,7 @@ void CWizardNetworksPage::DoDonkeyImport()
 	for ( int nFolder = 0 ; pszFolders[ nFolder ] ; nFolder++ )
 	{
 		strFolder = pszFolders[ nFolder ];
-		Replace( strFolder, _T("<%PROGRAMFILES%>"), strPrograms );
+		strFolder.Replace( _T("<%PROGRAMFILES%>"), strPrograms );
 		
 		if ( GetFileAttributes( strFolder ) != 0xFFFFFFFF )
 		{

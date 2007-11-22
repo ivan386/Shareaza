@@ -893,7 +893,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			if ( strValue[ 0 ] == _T('/') )
 			{
 				m_sTigerTree = strValue.SpanExcluding( _T("; ") );
-				Replace( m_sTigerTree, _T("ed2k=0"), _T("ed2k=1") );
+				m_sTigerTree.Replace( _T("ed2k=0"), _T("ed2k=1") );
 			}
 		}
 		m_pSource->SetGnutella( 1 );

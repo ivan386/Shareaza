@@ -454,7 +454,7 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 				strComment += _T("</comment>");
 			}
 
-			Replace( strComment, _T("\r\n"), _T("{n}") );
+			strComment.Replace( _T("\r\n"), _T("{n}") );
 			int nComment = pPacket->GetStringLen( strComment );
 			nGroup += 5 + nComment;
 			if ( nComment > 0xFF )

@@ -42,6 +42,7 @@
 #include "TigerTree.h"
 #include "QueryHashMaster.h"
 #include "VendorCache.h"
+#include "HostCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -808,7 +809,7 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 			else
 			{
 				strURL = pSource->m_sURL;
-				Replace( strURL, _T(","), _T("%2C") );
+				strURL.Replace( _T(","), _T("%2C") );
 
 				if ( strSources.GetLength() > 0 ) strSources += _T(", ");
 				strSources += strURL;

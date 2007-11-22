@@ -757,7 +757,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 		CString strArtist = pFile->m_pMetadata->GetAttributeValue( _T("artist") );
 		CXMLNode::UniformString( strArtist );
 
-		Replace( strArtist, _T(" (www.mp3sfinder.com)"), _T("") );
+		strArtist.Replace( _T(" (www.mp3sfinder.com)"), _T("") );
 		if ( strArtist.IsEmpty() ) return FALSE;
 
 		for ( POSITION pos = GetFolderIterator() ; pos ; )

@@ -92,9 +92,9 @@ int CLibraryHeaderPanel::Update()
 
 		LibraryMaps.GetStatistics( &nTotalFiles, &nTotalVolume );
 		str.Format( _T("%lu"), nTotalFiles );
-		Replace( m_sSubtitle, _T("{totalFiles}"), str );
+		m_sSubtitle.Replace( _T("{totalFiles}"), str );
 		str = Settings.SmartVolume( nTotalVolume, KiloBytes );
-		Replace( m_sSubtitle, _T("{totalVolume}"), str );
+		m_sSubtitle.Replace( _T("{totalVolume}"), str );
 	}
 
 	pFolder->m_pSchema->ResolveTokens( m_sTitle, pFolder->m_pXML );

@@ -410,7 +410,7 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 					 nID == IDS_UPLOAD_CONTENT || nID == IDS_UPLOAD_PARTIAL_CONTENT ||
 					 nID == IDS_DOWNLOAD_VERIFY_DROP )
 				{
-					Replace( strValue, _T("%lu"), _T("%I64i") );
+					strValue.Replace( _T("%lu"), _T("%I64i") );
 				}
 				
 				m_pStrings.SetAt( nID, strValue );
@@ -458,7 +458,7 @@ BOOL CSkin::LoadControlTips(CXMLElement* pBase)
 			if ( UINT nID = LookupCommandID( pXML ) )
 			{
 				CString strMessage = pXML->GetAttributeValue( _T("message") );
-				Replace( strMessage, _T("{n}"), _T("\r\n") );
+				strMessage.Replace( _T("{n}"), _T("\r\n") );
 				m_pControlTips.SetAt( nID, strMessage );
 			}
 		}
@@ -1021,8 +1021,8 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 			
 			if ( strCaption.GetLength() )
 			{
-				Replace( strCaption, _T("&"), _T("_") );
-				Replace( strCaption, _T("\""), _T("&quot;") );
+				strCaption.Replace( _T("&"), _T("_") );
+				strCaption.Replace( _T("\""), _T("&quot;") );
 				pFile.Write( "\t<control caption=\"", 19 );
 
 				//pszOutput = T2A(strCaption);
@@ -1077,7 +1077,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 				pWndTooltips->AddTool( pWnd, strTip );
 			}
 
-			Replace( strCaption, _T("{n}"), _T("\r\n") );
+			strCaption.Replace( _T("{n}"), _T("\r\n") );
 			
 			if ( strCaption.GetLength() )
 			{	

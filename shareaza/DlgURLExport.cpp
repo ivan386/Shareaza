@@ -225,71 +225,71 @@ void CURLExportDlg::MakeURL(const CShareazaFile* pFile, CString& strLine)
 {
 	CString strItem;
 
-	Replace( strLine, _T("[Name]"), pFile->m_sName );
-	Replace( strLine, _T("[NameURI]"), URLEncode( pFile->m_sName ) );
+	strLine.Replace( _T("[Name]"), pFile->m_sName );
+	strLine.Replace( _T("[NameURI]"), URLEncode( pFile->m_sName ) );
 	
 	if ( pFile->m_sURL.GetLength() )
 	{
-		Replace( strLine, _T("[Link]"), pFile->m_sURL );
-		Replace( strLine, _T("[LinkURI]"), URLEncode( pFile->m_sURL ) );
+		strLine.Replace( _T("[Link]"), pFile->m_sURL );
+		strLine.Replace( _T("[LinkURI]"), URLEncode( pFile->m_sURL ) );
 	}
 	else
 	{
-		Replace( strLine, _T("[Link]"), _T("") );
-		Replace( strLine, _T("[LinkURI]"), _T("") );
+		strLine.Replace( _T("[Link]"), _T("") );
+		strLine.Replace( _T("[LinkURI]"), _T("") );
 	}
 
 	if ( pFile->m_sPath.GetLength() )
 	{
-		Replace( strLine, _T("[Path]"), pFile->m_sPath );
+		strLine.Replace( _T("[Path]"), pFile->m_sPath );
 	}
 	else
 	{
-		Replace( strLine, _T("[Path]"), _T("") );
+		strLine.Replace( _T("[Path]"), _T("") );
 	}
 
 	if ( pFile->m_nSize != 0 && pFile->m_nSize != SIZE_UNKNOWN )
 	{
-		Replace( strLine, _T("[Size]"), Settings.SmartVolume( pFile->m_nSize ) );
+		strLine.Replace( _T("[Size]"), Settings.SmartVolume( pFile->m_nSize ) );
 		strItem.Format( _T("%I64i"), pFile->m_nSize );
-		Replace( strLine, _T("[ByteSize]"), strItem );
+		strLine.Replace( _T("[ByteSize]"), strItem );
 	}
 	else
 	{
-		Replace( strLine, _T("[Size]"), _T("") );
-		Replace( strLine, _T("[ByteSize]"), _T("") );
+		strLine.Replace( _T("[Size]"), _T("") );
+		strLine.Replace( _T("[ByteSize]"), _T("") );
 	}
 
 	strItem = pFile->m_oTiger.toString();
-	Replace( strLine, _T("[TIGER]"), strItem );
+	strLine.Replace( _T("[TIGER]"), strItem );
 	strItem = pFile->m_oSHA1.toString();
-	Replace( strLine, _T("[SHA1]"), strItem );
+	strLine.Replace( _T("[SHA1]"), strItem );
 	strItem = pFile->m_oMD5.toString();
-	Replace( strLine, _T("[MD5]"), strItem );
+	strLine.Replace( _T("[MD5]"), strItem );
 	strItem = pFile->m_oED2K.toString();
-	Replace( strLine, _T("[ED2K]"), strItem );
+	strLine.Replace( _T("[ED2K]"), strItem );
 	strItem = pFile->m_oBTH.toString();
-	Replace( strLine, _T("[BTH]"), strItem );
+	strLine.Replace( _T("[BTH]"), strItem );
 
 	int nDot = pFile->m_sName.ReverseFind( '.' );
 
 	if ( nDot > 0 )
 	{
-		Replace( strLine, _T("[FileBase]"), pFile->m_sName.Left( nDot ) );
-		Replace( strLine, _T("[FileExt]"), pFile->m_sName.Mid( nDot + 1 ) );
+		strLine.Replace( _T("[FileBase]"), pFile->m_sName.Left( nDot ) );
+		strLine.Replace( _T("[FileExt]"), pFile->m_sName.Mid( nDot + 1 ) );
 	}
 	else
 	{
-		Replace( strLine, _T("[FileBase]"), pFile->m_sName );
-		Replace( strLine, _T("[FileExt]"), _T("") );
+		strLine.Replace( _T("[FileBase]"), pFile->m_sName );
+		strLine.Replace( _T("[FileExt]"), _T("") );
 	}
 
 	if ( Network.IsListening() )
 	{
 		strItem = inet_ntoa( Network.m_pHost.sin_addr );
-		Replace( strLine, _T("[LocalHost]"), strItem );
+		strLine.Replace( _T("[LocalHost]"), strItem );
 		strItem.Format( _T("%lu"), htons( Network.m_pHost.sin_port ) );
-		Replace( strLine, _T("[LocalPort]"), strItem );
+		strLine.Replace( _T("[LocalPort]"), strItem );
 	}
 
 	strLine += _T("\r\n");

@@ -104,7 +104,7 @@ void CSystemWnd::ShowStartupText()
 	CString strBody;
 	Skin.LoadString( strBody, IDS_SYSTEM_MESSAGE );
 
-	Replace( strBody, _T("(version)"), (LPCTSTR)(theApp.m_sVersion + _T(" (") + theApp.m_sBuildDate + _T(")")) );
+	strBody.Replace( _T("(version)"), (LPCTSTR)(theApp.m_sVersion + _T(" (") + theApp.m_sBuildDate + _T(")")) );
 
 	for ( strBody += '\n' ; strBody.GetLength() ; )
 	{

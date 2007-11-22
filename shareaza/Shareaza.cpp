@@ -1284,17 +1284,6 @@ BOOL LoadString(CString& str, UINT nID)
 	return Skin.LoadString( str, nID );
 }
 
-void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace)
-{
-	for (;;)
-	{
-		int nPos = strBuffer.Find( pszFind );
-		if ( nPos < 0 ) break;
-
-		strBuffer = strBuffer.Left( nPos ) + pszReplace + strBuffer.Mid( nPos + static_cast< int >( _tcslen( pszFind ) ) );
-	}
-}
-
 BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction)
 {
 	if ( bFraction )

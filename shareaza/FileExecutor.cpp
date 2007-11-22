@@ -356,13 +356,13 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 				str += pszHex[ (BYTE)nBuffer[ nByte ] & 15 ];
 			}
 
-			Replace( strURL, _T("(FIRST20)"), str );
+			strURL.Replace( _T("(FIRST20)"), str );
 		}
 		else 
-			Replace( strURL, _T("(FIRST20)"), _T("0") );
+			strURL.Replace( _T("(FIRST20)"), _T("0") );
 	}
 	else
-		Replace( strURL, _T("(URN)"), pFile->m_oSHA1.toString() + _T(".") + pFile->m_oTiger.toString() );
+		strURL.Replace( _T("(URN)"), pFile->m_oSHA1.toString() + _T(".") + pFile->m_oTiger.toString() );
 
 	CString strName = pFile->m_sName;
 	LPCTSTR pszExt = _tcsrchr( strName, '.' );
@@ -370,14 +370,14 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	CString strExt = strName.Right( nExtLen );
 	strExt.Trim().MakeUpper();
 
-	Replace( strURL, _T("(NAME)"), URLEncode( strName ) );
-	Replace( strURL, _T("(SHA1)"), pFile->m_oSHA1.toString() );
-	Replace( strURL, _T("(TTH)"), pFile->m_oTiger.toString() );
-	Replace( strURL, _T("(ED2K)"), pFile->m_oED2K.toString() );
-	Replace( strURL, _T("(AGENT)"), URLEncode( Settings.SmartAgent() ) );
+	strURL.Replace( _T("(NAME)"), URLEncode( strName ) );
+	strURL.Replace( _T("(SHA1)"), pFile->m_oSHA1.toString() );
+	strURL.Replace( _T("(TTH)"), pFile->m_oTiger.toString() );
+	strURL.Replace( _T("(ED2K)"), pFile->m_oED2K.toString() );
+	strURL.Replace( _T("(AGENT)"), URLEncode( Settings.SmartAgent() ) );
 
 	str.Format( _T("%I64i"), pFile->GetSize() );
-	Replace( strURL, _T("(SIZE)"), str );
+	strURL.Replace( _T("(SIZE)"), str );
 
 
 	CString strINFO = _T("&tag.tiger.tree=") + pFile->m_oTiger.toString();
@@ -701,7 +701,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	else if ( pFile->m_pSchema != NULL && pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriVideo ) == 0 && strExt.GetLength() )
 		strINFO += _T("&tag.video.format=") + URLEncode( strExt );
 
-	Replace( strURL, _T("&(INFO)"), strINFO );
+	strURL.Replace( _T("&(INFO)"), strINFO );
 
 	pLock.Unlock();
 

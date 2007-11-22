@@ -1115,7 +1115,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 				_stscanf( pComment->GetAttributeValue( _T("rating") ), _T("%i"), &m_nRating );
 				m_nRating = max( 0, min( 6, m_nRating + 1 ) );
 				m_sComments = pComment->GetValue();
-				Replace( m_sComments, _T("{n}"), _T("\r\n") );
+				m_sComments.Replace( _T("{n}"), _T("\r\n") );
 				delete pComment;
 			}
 		}

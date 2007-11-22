@@ -896,7 +896,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 		if ( UploadQueues.Check( m_pQueue ) )
 		{
 			strName = m_pQueue->m_sName;
-			Replace( strName, _T("\""), _T("'") );
+			strName.Replace( _T("\""), _T("'") );
 			
 			strHeader.Format( _T("X-Queue: position=%i,length=%i,limit=%i,pollMin=%lu,pollMax=%lu,id=\"%s\"\r\n"),
 				nPosition,

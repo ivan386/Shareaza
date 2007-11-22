@@ -620,7 +620,7 @@ CString CLibraryFile::GetAlternateSources(CList< CString >* pState, int nMaximum
 				continue;
 			
 			CString strURL = pSource->m_sURL;
-			Replace( strURL, _T(","), _T("%2C") );
+			strURL.Replace( _T(","), _T("%2C") );
 
 			if ( strSources.GetLength() ) strSources += _T(", ");
 			strSources += strURL;
@@ -1022,7 +1022,7 @@ BOOL CLibraryFile::LoadMetadata(HANDLE hFile)
 		_stscanf( strRating, _T("%i"), &m_nRating );
 		m_nRating	= max( 0, min( 6, m_nRating + 1 ) );
 		m_sComments	= pComment->GetValue();
-		Replace( m_sComments, _T("{n}"), _T("\r\n") );
+		m_sComments.Replace( _T("{n}"), _T("\r\n") );
 		pComment->Delete();
 	}
 	
@@ -1082,7 +1082,7 @@ BOOL CLibraryFile::SaveMetadata()
 		if ( m_sComments.GetLength() > 0 )
 		{
 			CString strComments( m_sComments );
-			Replace( strComments, _T("\r\n"), _T("{n}") );
+			strComments.Replace( _T("\r\n"), _T("{n}") );
 			pComment->SetValue( strComments );
 		}
 	}

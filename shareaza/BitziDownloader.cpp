@@ -230,8 +230,8 @@ BOOL CBitziDownloader::BuildRequest()
 	if ( m_sFileSHA1.IsEmpty() || m_sFileTiger.IsEmpty() ) return FALSE;
 
 	m_sURL = Settings.Library.BitziXML;
-	Replace( m_sURL, _T("(SHA1)"), m_sFileSHA1 );
-	Replace( m_sURL, _T("(TTH)"), m_sFileTiger );
+	m_sURL.Replace( _T("(SHA1)"), m_sFileSHA1 );
+	m_sURL.Replace( _T("(TTH)"), m_sFileTiger );
 
 	return TRUE;
 }

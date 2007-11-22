@@ -732,7 +732,7 @@ void CSettings::SmartUpgrade()
 		Uploads.ShareTiger				= TRUE;
 
 		Library.PrivateTypes.erase( _T("nfo") );
-		Replace( Library.SafeExecute, _T("|."), _T("|") );
+		Library.SafeExecute.Replace( _T("|."), _T("|") );
 	}
 
 	if ( nVersion < 21 )

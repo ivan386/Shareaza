@@ -553,8 +553,8 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 						_tcsnicmp( strValue, _T("ftp://"), 6 ) == 0 ||
 						_tcsnicmp( strValue, _T("ftp%3A//"), 8 ) == 0 )
 			{
-				Replace( strValue, _T(" "), _T("%20") );
-				Replace( strValue, _T("p%3A//"), _T("p://") );
+				strValue.Replace( _T(" "), _T("%20") );
+				strValue.Replace( _T("p%3A//"), _T("p://") );
 				
 				if ( _tcsicmp( strKey, _T("xt") ) == 0 )
 				{
@@ -757,8 +757,8 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 	{
 		if ( m_sName.GetLength() )
 		{
-			Replace( m_sURL, _T("(^name^)"), URLEncode( m_sName ) );
-			Replace( m_sURL, _T("\\"), _T("/") );
+			m_sURL.Replace( _T("(^name^)"), URLEncode( m_sName ) );
+			m_sURL.Replace( _T("\\"), _T("/") );
 		}
 		else
 		{

@@ -509,8 +509,8 @@ BOOL CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 					strGenre = strGenre.Left( nPos1 ) + strValue + strGenre.Mid( nPos2 + 1 );
 				}
 				
-				Replace( strGenre, _T("["), _T("(") );
-				Replace( strGenre, _T("]"), _T(")") );
+				strGenre.Replace( _T("["), _T("(") );
+				strGenre.Replace( _T("]"), _T(")") );
 				
 				pXML->AddAttribute( _T("genre"), strGenre );
 			}
