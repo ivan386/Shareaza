@@ -66,6 +66,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ws2_32.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateManifest="false"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				GenerateDebugInformation="true"
 			/>
@@ -143,6 +144,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ws2_32.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
 			/>
