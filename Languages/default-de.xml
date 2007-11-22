@@ -13,10 +13,10 @@
 <!-- Manifest -->
 <manifest	name="Deutsch"
 		author="Jann Röder"
-		updatedBy="ZeRO, Frontier, Jann Röder"
+		updatedBy="Frontier, Jann Röder, ZeRO (Daisuke)"
 		description="Shareaza Default German Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email="zero9999@gmail.com"
+		email="zero9999(at)gmail(dot)com"
 		version="2.3.0.0"
 		type="Language"
 		language="de"
