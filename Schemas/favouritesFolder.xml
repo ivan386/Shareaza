@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Favoritos: Favoritos</title>
                <title language="es-mx">Favoritos: Favoritos</title>
                <title language="fr">Favoris:Favoris</title>
+               <title language="gr">Αγαπημένα:Αγαπημένα</title>
                <title language="heb">&#160;מועדפים:מועדפים</title>
                <title language="hr">Favoriti:Favoriti</title>
                <title language="hu">Kedvencek: Kedvencek</title>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -101,6 +104,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Descripción</title>
                        <title language="es-mx">Descripción</title>
                        <title language="fr">Description</title>
+                       <title language="gr">Περιγραφή</title>
                        <title language="heb">תיאור</title>
                        <title language="hr">Opis</title>
                        <title language="hu">Leírás</title>
@@ -129,6 +133,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Mis Archivos Favoritos</title>
                <title language="es-mx">Mis Archivos Favoritos</title>
                <title language="fr">Mes fichiers favoris</title>
+               <title language="gr">Αγαπημένα Αρχεία</title>
                <title language="heb">הקבצים המועדפים שלי</title>
                <title language="hr">Moje Omiljene Datateke</title>
                <title language="hu">Kedvenc fájlok</title>
@@ -154,6 +159,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient les fichiers que Shareaza va recommander aux autres utilisateurs.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει τα αγαπημένα αρχεία, τα οποία και συστείνονται σε όσους χρήστες περιηγούνται τα αρχεία σας.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה קבצים מועדפים ששרזה תמליץ עליהם למשתמשים שיצפו בפרופיל שלך</subtitle>
                <subtitle language="hr">Ova mapa sadrži vaše favorite koje preporučate ostalima.</subtitle>
                <subtitle language="hu">Ez a mappa a kedvenc fájlokat tartalmazza, amit a Shareaza a fájllistát lekérőknek ajánlani fog.</subtitle>

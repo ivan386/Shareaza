@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Video: Videos de Música</title>
                <title language="es-mx">Video: Videos de Música</title>
                <title language="fr">Vidéo:Clips vidéos</title>
+               <title language="gr">Video:Video-clips</title>
                <title language="heb">&#160;וידאו:קליפים</title>
                <title language="hr">Film:Spotovi</title>
                <title language="hu">Videó: Klipek</title>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Videos de Música</title>
                <title language="es-mx">Videos de Música</title>
                <title language="fr">Clips vidéos</title>
+               <title language="gr">Video-clips</title>
                <title language="heb">וידאו קליפים</title>
                <title language="hr">Spotovi</title>
                <title language="hu">Zene videó</title>
@@ -130,6 +134,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Esta carpeta contiene videos de música</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene videos de música</subtitle>
                <subtitle language="fr">Ce dossier contient tous les clips vidéos de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όσα αρχεία video μπορούν να οργανωθούν ανά video-clip.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה קליפים</subtitle>
                <subtitle language="hr">Ova mapa sadrži vaše spotove.</subtitle>
                <subtitle language="hu">Ez a mappa zenei fájlokat tartalmaz.</subtitle>

@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Buscar: Resultados de busqueda</title>
                <title language="es-mx">Buscar: Resultados de busqueda</title>
                <title language="fr">Recherche:Résultats de recherche</title>
+               <title language="gr">Αναζήτηση:Αποτελέσματα Αναζήτησης</title>
                <title language="heb">&#160;חפש:חפש בתוצאות</title>
                <title language="hr">Traži:Rezultati Potrage</title>
                <title language="hu">Keresési eredmények</title>
@@ -70,6 +72,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -97,6 +100,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Tiempo</title>
                        <title language="es-mx">Tiempo</title>
                        <title language="fr">Temps</title>
+                       <title language="gr">Χρόνος</title>
                        <title language="heb">זמן</title>
                        <title language="hr">Vrijeme</title>
                        <title language="hu">Idő</title>
@@ -124,6 +128,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Fecha</title>
                        <title language="es-mx">Fecha</title>
                        <title language="fr">Date</title>
+                       <title language="gr">Ημ/νία</title>
                        <title language="heb">תאריך</title>
                        <title language="hr">Datum</title>
                        <title language="hu">Dátum</title>
@@ -151,6 +156,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Contenido</title>
                        <title language="es-mx">Contenido</title>
                        <title language="fr">Contenu</title>
+                       <title language="gr">Περιεχόμενο</title>
                        <title language="heb">תוכן</title>
                        <title language="hr">Sadržaj</title>
                        <title language="hu">Tartalom</title>
@@ -182,6 +188,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Busca por "{content}"</title>
                <title language="es-mx">Busca por "{content}"</title>
                <title language="fr">Recherche de "{content}"</title>
+               <title language="gr">Αναζήτηση για "{content}"</title>
                <title language="heb">חפש תוכן "{content}"</title>
                <title language="hr">Traži "{content}"</title>
                <title language="hu">Keresés: "{content}"</title>
@@ -207,6 +214,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichiers correspondants à votre recherche de "{content}"</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει τα αποτελέσματα της αναζήτησης αρχείων "{content}".</subtitle>
                <subtitle language="heb">ספרייה זו מכילה קבצים שהתאימו לחיפוש עבור "{content}"</subtitle>
                <subtitle language="hr">Ova mapa sadrži nađene datoteke po izrazu "{content}"</subtitle>
                <subtitle language="hu">Ebben a mappában lévő fájlok egyeznek a keresési feltétellel, ami {content} volt.</subtitle>

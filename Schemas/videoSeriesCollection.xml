@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Video: Shows de TV</title>
                <title language="es-mx">Video: Shows de TV</title>
                <title language="fr">Vidéo:Séries TV</title>
+               <title language="gr">Video:Τηλεοπτικές Σειρές</title>
                <title language="heb">&#160;וידאו:תוכניות טלוויזיה</title>
                <title language="hr">Film:TV Emisije</title>
                <title language="hu">Videó: TV műsorok</title>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Shows de TV</title>
                <title language="es-mx">Shows de TV</title>
                <title language="fr">Séries TV</title>
+               <title language="gr">Τηλεοπτική Σειρά</title>
                <title language="heb">סדרות טלוויזיה</title>
                <title language="hr">TV Emisija</title>
                <title language="hu">TV műsorok</title>
@@ -130,6 +134,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Esta carpeta contiene una lista de Series de TV que tienes en tu librería</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene una lista de Series de TV que tienes en tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient la liste des séries de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όσα αρχεία video μπορούν να οργανωθούν ανά τηλεοπτική σειρά.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה רשימה של התוכניות טלוויזיה שבספרייה שלך</subtitle>
                <subtitle language="hr">Ova mapa sadrži popis Tv serija koje imate u kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa TV sorozatokat tartalmaz.</subtitle>

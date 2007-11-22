@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="es">Colecciones: Mis Colecciones</title>
               <title language="es-mx">Colecciones: Mis Colecciones</title>
               <title language="fr">Collections:Mes collections</title>
+              <title language="gr">Συλλογές:Συλλογές μου</title>
               <title language="heb">&#160;אוספים:האוספים שלי</title>
               <title language="hr">Kolekcija:Moja Kolekcija</title>
               <title language="hu">Gyűjtemény: Gyűjtemények</title>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -102,6 +105,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Mis Colecciones</title>
                <title language="es-mx">Mis Colecciones</title>
                <title language="fr">Mes collections</title>
+               <title language="gr">Συλλογές μου</title>
                <title language="heb">האוספים שלי</title>
                <title language="hr">Moja Kolekcija</title>
                <title language="hu">Saját gyűjtemény</title>
@@ -127,6 +131,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichier de collection de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει τις Συλλογές Αρχείων.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל האוספים שבספרייה שלך</subtitle>
                <subtitle language="hr">Ove mapa sadrži sve vaše rich File datoteke u vašoj kolekciji</subtitle>
                <subtitle language="hu">Ez a mappa gyűjteményfájlokat tartalmaz.</subtitle>

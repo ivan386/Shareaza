@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Aplicación: Todas mis aplicaciones</title>
                <title language="es-mx">Aplicación: Todas mis aplicaciones</title>
                <title language="fr">Application:Mes applications</title>
+               <title language="gr">Εφαρμογή:Εφαρμογές μου</title>
                <title language="heb">&#160;תוכנה:התוכניות שלי</title>
                <title language="hr">Program:Svi Programi</title>
                <title language="hu">Program: Programok</title>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">¡Bienvenido a Mis Aplicaciones!</title>
                <title language="es-mx">¡Bienvenido a Mis Aplicaciones!</title>
                <title language="fr">Bienvenue dans Mes applications!</title>
+               <title language="gr">Καλώς ήρθατε στις Εφαρμογές!</title>
                <title language="heb">ברוך הבא לתוכניות שלי!</title>
                <title language="hr">Dobrodošli Među Vaše Programe!</title>
                <title language="hu">Üdvözöllek a Programok mappában!</title>
@@ -130,6 +134,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Esta carpeta contiene todos los archivos de programas</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene todos los archivos de programas</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία εφαρμογών.</subtitle>
                <subtitle language="heb">הספריות הללו מכילות את כל קבצי התוכניות שלך</subtitle>
                <subtitle language="hr">Ove mape sadrže sve vaše programe.</subtitle>
                <subtitle language="hu">Ez a mappa programokat tartalmaz.</subtitle>

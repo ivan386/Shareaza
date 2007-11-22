@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Documento:Mis Documentos</title>
                <title language="es-mx">Documento:Mis Documentos</title>
                <title language="fr">Document:Mes Documents</title>
+               <title language="gr">Έγγραφα:Έγγραφά μου</title>
                <title language="heb">&#160;מסמך:המסמכים שלי</title>
                <title language="hr">Dokument:Moji Dokumenti</title>
                <title language="hu">Dokumentum: Dokumentumok</title>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">¡Bienvenido a Mis documentos!</title>
                <title language="es-mx">¡Bienvenido a Mis documentos!</title>
                <title language="fr">Bienvenue dans Mes Documents!</title>
+               <title language="gr">Καλώς ήρθατε στα Έγγραφα!</title>
                <title language="heb">ברוך הבא למסמכים שלי!</title>
                <title language="hr">Dobrodošli Među Vaše Dokumente!</title>
                <title language="hu">Üdvözöllek a Dokumentumok mappában!</title>
@@ -130,6 +134,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
                <subtitle language="es-mx">Estas carpetas contienen todos tus documentos.</subtitle>
                <subtitle language="fr">Ces dossiers contiennent tous vos documents.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα έγγραφα.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל המסמכים שלך</subtitle>
                <subtitle language="hr">Ove mape sadrže sve vaše dokumente.</subtitle>
                <subtitle language="hu">Ez a mappa dokumentumokat tartalmaz.</subtitle>

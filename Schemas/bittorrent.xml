@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -41,6 +42,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">BitTorrent</title>
                <title language="es-mx">BitTorrent</title>
                <title language="fr">BitTorrent</title>
+               <title language="gr">BitTorrent</title>
                <title language="heb">BitTorrent</title>
                <title language="hr">BitTorrent</title>
                <title language="hu">BitTorrent</title>
@@ -70,6 +72,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Info Hash</title>
                        <title language="es-mx">Info Hash</title>
                        <title language="fr">Info Hash</title>
+                       <title language="gr">Info Hash</title>
                        <title language="heb">Info Hash</title>
                        <title language="hr">Info Hash</title>
                        <title language="hu">Info Hash</title>
@@ -98,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Tracker</title>
                        <title language="es-mx">Tracker</title>
                        <title language="fr">Tracker</title>
+                       <title language="gr">Tracker</title>
                        <title language="heb">Tracker</title>
                        <title language="hr">Tracker</title>
                        <title language="hu">Tracker</title>
@@ -126,6 +130,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Encoding</title>
                        <title language="es-mx">Encoding</title>
                        <title language="fr">Encoding</title>
+                       <title language="gr">Κωδικοποίηση</title>
                        <title language="heb">Encoding</title>
                        <title language="hr">Encoding</title>
                        <title language="hu">Kódolás</title>
@@ -154,6 +159,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Creation Date</title>
                        <title language="es-mx">Creation Date</title>
                        <title language="fr">Creation Date</title>
+                       <title language="gr">Ημ/νία Δημιουργίας</title>
                        <title language="heb">Creation Date</title>
                        <title language="hr">Creation Date</title>
                        <title language="hu">Creation Date</title>
@@ -181,6 +187,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Created By</title>
                        <title language="es-mx">Created By</title>
                        <title language="fr">Created By</title>
+                       <title language="gr">Δημιουργός</title>
                        <title language="heb">Created By</title>
                        <title language="hr">Created By</title>
                        <title language="hu">Created By</title>
@@ -208,6 +215,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Comentarios</title>
                        <title language="es-mx">Comentarios</title>
                        <title language="fr">Commentaires</title>
+                       <title language="gr">Σχόλια</title>
                        <title language="heb">הערות</title>
                        <title language="hr">Komentari</title>
                        <title language="hu">Megjegyzés</title>

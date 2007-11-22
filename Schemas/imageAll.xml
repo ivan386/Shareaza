@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Imagen: Todas las Imágenes</title>
                <title language="es-mx">Imagen: Todas las Imágenes</title>
                <title language="fr">Image:Toutes les images</title>
+               <title language="gr">Εικόνα:Όλες οι Εικόνες</title>
                <title language="heb">&#160;תמונה:כל התמונות</title>
                <title language="hr">Slike:Sve Slike</title>
                <title language="hu">Kép: Minden kép</title>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Todas las imágenes</title>
                <title language="es-mx">Todas las imágenes</title>
                <title language="fr">Toutes les images</title>
+               <title language="gr">Όλες οι Εικόνες</title>
                <title language="heb">כל התמונות</title>
                <title language="hr">Sve Slike</title>
                <title language="hu">Minden kép</title>
@@ -130,6 +134,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία εικόνων.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל קבצי התמונה שבספרייה שלך</subtitle>
                <subtitle language="hr">Ova mapa sadrži sve slike u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden képfájlt tartalmaz.</subtitle>

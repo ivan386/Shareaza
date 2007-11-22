@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Libro: Todos mis libros</title>
                <title language="es-mx">Libro: Todos mis libros</title>
                <title language="fr">Livres:Mes livres</title>
+               <title language="gr">Βιβλίο:Βιβλία μου</title>
                <title language="heb">&#160;ספר:הספרים שלי</title>
                <title language="hr">Knjiga:Moje Knjige</title>
                <title language="hu">Könyv: Könyvek</title>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">¡Bienvenido a Mis Libros!</title>
                <title language="es-mx">¡Bienvenido a Mis Libros!</title>
                <title language="fr">Bienvenue dans Mes livres!</title>
+               <title language="gr">Καλώς ήρθατε στα Βιβλία!</title>
                <title language="heb">ברוך הבא לספרים שלי!</title>
                <title language="hr">Dobrodošli Među Vaše Knjige!</title>
                <title language="hu">Üdvözöllek a Könyvek mappában!</title>
@@ -130,6 +134,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Estas carpetas contienen todos tus libros</subtitle>
                <subtitle language="es-mx">Estas carpetas contienen todos tus libros</subtitle>
                <subtitle language="fr">Ce dossier contient tous vos livres.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία βιβλίων.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל הספרים שלך</subtitle>
                <subtitle language="hr">Ove mape sadrže sve vaše knjige.</subtitle>
                <subtitle language="hu">Ez a mappa könyveket tartalmaz.</subtitle>

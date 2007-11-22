@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -41,6 +42,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Subtitulos</title>
                <title language="es-mx">Subtitulos</title>
                <title language="fr">Sous-titres</title>
+               <title language="gr">Υπότιτλοι</title>
                <title language="heb">כתוביות</title>
                <title language="hr">Prijevod(Subtitles)</title>
                <title language="hu">Feliratok</title>
@@ -70,6 +72,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -98,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Número de Episodio</title>
                        <title language="es-mx">Número de Episodio</title>
                        <title language="fr">Numéro d'épisode</title>
+                       <title language="gr">Αριθμός Επεισοδίου</title>
                        <title language="heb">מספר הפרק</title>
                        <title language="hr">Epizoda Broj</title>
                        <title language="hu">Epizódszám</title>
@@ -126,6 +130,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Temporada/Series</title>
                        <title language="es-mx">Temporada/Series</title>
                        <title language="fr">Saison/Séries</title>
+                       <title language="gr">Περίοδος/Σειρά</title>
                        <title language="heb">סדרה/עונה</title>
                        <title language="hr">Sezona/Serija</title>
                        <title language="hu">Szezon/Sorozat</title>
@@ -153,6 +158,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Sipnosis</title>
                        <title language="es-mx">Sipnosis</title>
                        <title language="fr">Synopsis</title>
+                       <title language="gr">Σύνοψη</title>
                        <title language="heb">Synopsis</title>
                        <title language="hr">Prognoza</title>
                        <title language="hu">Ismertető</title>
@@ -180,6 +186,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Descripción</title>
                        <title language="es-mx">Descripción</title>
                        <title language="fr">Description</title>
+                       <title language="gr">Περιγραφή</title>
                        <title language="heb">תיאור</title>
                        <title language="hr">Opis</title>
                        <title language="hu">Leírás</title>
@@ -208,6 +215,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Lenguaje</title>
                        <title language="es-mx">Lenguaje</title>
                        <title language="fr">Langue</title>
+                       <title language="gr">Γλώσσα</title>
                        <title language="heb">שפה</title>
                        <title language="hr">Jezik</title>
                        <title language="hu">Nyelv</title>
@@ -235,6 +243,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">IMDB Link</title>
                        <title language="es-mx">IMDB Link</title>
                        <title language="fr">Lien IMDB</title>
+                       <title language="gr">Ιστοσελίδα IMDB</title>
                        <title language="heb">לינק לפרטי הסרט</title>
                        <title language="hr">IMBD Link</title>
                        <title language="hu">IMDB link</title>
@@ -262,6 +271,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Duración</title>
                        <title language="es-mx">Duración</title>
                        <title language="fr">Durée</title>
+                       <title language="gr">Διάρκεια</title>
                        <title language="heb">אורך</title>
                        <title language="hr">Trajanje</title>
                        <title language="hu">Időtartam</title>
@@ -290,6 +300,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Año</title>
                        <title language="es-mx">Año</title>
                        <title language="fr">Année</title>
+                       <title language="gr">Έτος</title>
                        <title language="heb">שנה</title>
                        <title language="hr">Godina</title>
                        <title language="hu">Év</title>
@@ -317,6 +328,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Número de Parte</title>
                        <title language="es-mx">Número de Parte</title>
                        <title language="fr">Partie numéro</title>
+                       <title language="gr">Αριθμός Τμημάτων</title>
                        <title language="heb">מספר חלק</title>
                        <title language="hr">Trenutni Dio</title>
                        <title language="hu">Rész</title>
@@ -344,6 +356,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Parte de Cuenta</title>
                        <title language="es-mx">Parte de Cuenta</title>
                        <title language="fr">Nombre de partie</title>
+                       <title language="gr">Μετρητής Τμημάτων</title>
                        <title language="heb">כמות חלקים</title>
                        <title language="hr">Broj Djelova</title>
                        <title language="hu">Összes rész</title>
@@ -371,6 +384,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Calidad</title>
                        <title language="es-mx">Calidad</title>
                        <title language="fr">Qualité</title>
+                       <title language="gr">Ποιότητα</title>
                        <title language="heb">איכות</title>
                        <title language="hr">Kvaliteta</title>
                        <title language="hu">Minőség</title>
@@ -398,6 +412,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Notas de Calidad</title>
                        <title language="es-mx">Notas de Calidad</title>
                        <title language="fr">Notes sur la qualité</title>
+                       <title language="gr">Σημειώσεις περί Ποιότητας</title>
                        <title language="heb">הערות לגבי איכות</title>
                        <title language="hr">O Kvaliteti</title>
                        <title language="hu">Megjegyzés</title>
@@ -425,6 +440,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Fecha de Lanzamiento en P2P</title>
                        <title language="es-mx">Fecha de Lanzamiento en P2P</title>
                        <title language="fr">Date de diffusion P2P</title>
+                       <title language="gr">Ημ/νία Δημοσίευσης σε P2P</title>
                        <title language="heb">תאריך יציאה ברשתות שיתוף</title>
                        <title language="hr">Datum Objave na P2P</title>
                        <title language="hu">P2P kiadási dátum</title>
@@ -452,6 +468,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Distribuidor</title>
                        <title language="es-mx">Distribuidor</title>
                        <title language="fr">Distributeur</title>
+                       <title language="gr">Διανομέας</title>
                        <title language="heb">מפיץ</title>
                        <title language="hr">Distributer</title>
                        <title language="hu">Árusító</title>
@@ -479,6 +496,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Link del Distribuidor</title>
                        <title language="es-mx">Link del Distribuidor</title>
                        <title language="fr">Lien du distributeur</title>
+                       <title language="gr">Ιστοσελίδα Διανομέα</title>
                        <title language="heb">קישור למפיץ</title>
                        <title language="hr">Link na Distributera</title>
                        <title language="hu">Árusító linkje</title>
@@ -506,6 +524,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Release Group</title>
                        <title language="es-mx">Release Group</title>
                        <title language="fr">Groupe de diffusion</title>
+                       <title language="gr">Ομάδα Δημοσίευσης</title>
                        <title language="heb">קבוצת שחרור</title>
                        <title language="hr">Grupa Objavljivača</title>
                        <title language="hu">Kiadó csapat</title>
@@ -533,6 +552,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Release Group Link</title>
                        <title language="es-mx">Release Group Link</title>
                        <title language="fr">Lien du gr. de diffusion</title>
+                       <title language="gr">Ιστοσελίδα Ομάδας Δημοσίευσης</title>
                        <title language="heb">קישור לקבוצת שחרור</title>
                        <title language="hr">Link na Grupu Objavljivača</title>
                        <title language="hu">Kiadó csapat linkje</title>
@@ -560,6 +580,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Palabras Clave</title>
                        <title language="es-mx">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
+                       <title language="gr">Λέξεις Κλειδιά</title>
                        <title language="heb">מילים לזיהוי</title>
                        <title language="hr">Ključne Riječi</title>
                        <title language="hu">Kulcsszavak</title>
@@ -587,6 +608,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Link</title>
                        <title language="es-mx">Link</title>
                        <title language="fr">Lien</title>
+                       <title language="gr">Σύνδεσμος</title>
                        <title language="heb">קישור</title>
                        <title language="hr">Link</title>
                        <title language="hu">Link</title>

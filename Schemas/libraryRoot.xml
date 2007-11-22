@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">General: Mi Librería Shareaza de Archivos</title>
                <title language="es-mx">General: Mi Librería Shareaza de Archivos</title>
                <title language="fr">Général:Ma bibliothèque Shareaza</title>
+               <title language="gr">Γενικά:Βιβλιοθήκη</title>
                <title language="heb">&#160;כללי:ספריית שרזה שלי</title>
                <title language="hr">Općenito:Moja Kolekcija</title>
                <title language="hu">Általános: Shareaza könyvtár</title>
@@ -71,6 +73,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -98,6 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Dueño</title>
                        <title language="es-mx">Dueño</title>
                        <title language="fr">Propriétaire</title>
+                       <title language="gr">Ιδιοκτήτης</title>
                        <title language="heb">בעל הזכויות</title>
                        <title language="hr">Vlasnik</title>
                        <title language="hu">Tulajdonos</title>
@@ -125,6 +129,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Comentarios</title>
                        <title language="es-mx">Comentarios</title>
                        <title language="fr">Commentaires</title>
+                       <title language="gr">Σχόλια</title>
                        <title language="heb">הערות</title>
                        <title language="hr">Komentari</title>
                        <title language="hu">Megjegyzés</title>
@@ -156,6 +161,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">¡Bienvenido a Mi Librería!</title>
                <title language="es-mx">¡Bienvenido a Mi Librería!</title>
                <title language="fr">Bienvenue dans votre bibliothèque!</title>
+               <title language="gr">Καλώς ήρθατε στη Βιβλιοθήκη!</title>
                <title language="heb">ברוך הבא לספרייה שלי!</title>
                <title language="hr">Dobrodošli U Vašu Kolekciju!</title>
                <title language="hu">Üdvözöllek a Könyvtárban!</title>
@@ -181,6 +187,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="es-mx">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
+               <subtitle language="gr">Η Βιβλιοθήκη περιέχει {totalFiles} αρχεία συνολικού όγκου {totalVolume}.</subtitle>
                <subtitle language="heb">יש לך בספרייה ‎{totalVolume} בתוך {totalFiles} קבצים</subtitle>
                <subtitle language="hr">Imate {totalFiles} datoteka Tj {totalVolume} koje djelite sa svijetom.</subtitle>
                <subtitle language="hu">Jelenleg {totoalFiles} fájl van a könyvtárban. Méret: {totalVolume}.</subtitle>

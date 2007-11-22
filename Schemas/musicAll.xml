@@ -11,6 +11,7 @@ Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
@@ -42,6 +43,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Música: Toda la Música</title>
                <title language="es-mx">Música: Toda la Música</title>
                <title language="fr">Musique:Toutes les musiques</title>
+               <title language="gr">Μουσική:Όλη η Μουσική</title>
                <title language="heb">&#160;שירים:כל השירים</title>
                <title language="hr">Muzika:Sva Muzika</title>
                <title language="hu">Zene: Minden zene</title>
@@ -74,6 +76,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="es">Título</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
                        <title language="heb">כותרת</title>
                        <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
@@ -105,6 +108,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="es">Toda la música</title>
                <title language="es-mx">Toda la música</title>
                <title language="fr">Toutes les musiques</title>
+               <title language="gr">Όλη η Μουσική</title>
                <title language="heb">כל השירים</title>
                <title language="hr">Sva Muzika</title>
                <title language="hu">Minden zene</title>
@@ -130,6 +134,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="es">Esta carpeta contiene toda la música de tu librería.</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene toda la música de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία μουσικής.</subtitle>
                <subtitle language="heb">ספרייה זו מכילה את כל קבצי המוזיקה שבספרייה שלך</subtitle>
                <subtitle language="hr">Ova mapa sadrži sve pjesme u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden zenei fájlt tartalmaz.</subtitle>
