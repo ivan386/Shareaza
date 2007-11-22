@@ -863,9 +863,7 @@ void CLibraryThumbView::StopThread()
 
 	m_bThread = FALSE;
 
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	CloseThread( &m_hThread, 10000 );
+	CloseThread( &m_hThread );
 }
 
 UINT CLibraryThumbView::ThreadStart(LPVOID pParam)
