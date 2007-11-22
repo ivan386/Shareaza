@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="zlibwapi"
 	ProjectGUID="{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}"
 	RootNamespace="zlibwapi"
@@ -52,7 +52,6 @@
 				MinimalRebuild="true"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
@@ -72,6 +71,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateManifest="false"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\shareaza\zlib\zlib.def&quot;"
 				GenerateDebugInformation="true"
@@ -133,7 +133,6 @@
 				MinimalRebuild="true"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="3"
@@ -152,6 +151,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateManifest="false"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\shareaza\zlib\zlib.def&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
