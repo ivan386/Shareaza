@@ -319,18 +319,12 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 
 int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	lpCreateStruct->dwExStyle |= WS_EX_LAYERED;
-
 	if ( theApp.m_bRTL )
 		lpCreateStruct->dwExStyle |= WS_EX_LAYOUTRTL;
 
 	SetWindowLongPtr( GetSafeHwnd(), GWL_EXSTYLE, lpCreateStruct->dwExStyle );
 
 	if ( CMDIFrameWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-
-	if ( theApp.m_pfnSetLayeredWindowAttributes )
-		VERIFY( theApp.m_pfnSetLayeredWindowAttributes( GetSafeHwnd(),
-			0, 255, LWA_ALPHA ) );
 
 	// Tray
 
