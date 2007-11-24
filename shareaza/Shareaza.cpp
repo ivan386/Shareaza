@@ -1763,8 +1763,13 @@ public:
 
 			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating '%hs' thread (0x%08x)."),
 				( tag.pszName ? tag.pszName : "unnamed" ), hThread );
-			TRACE( _T("WARNING: Terminating '%hs' thread (0x%08x)."),
+			TRACE( _T("WARNING: Terminating '%hs' thread (0x%08x).\n"),
 				( tag.pszName ? tag.pszName : "unnamed" ), hThread );
+		}
+		else
+		{
+			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating thread (0x%08x) failed."), hThread );
+			TRACE( _T("WARNING: Terminating thread (0x%08x) failed.\n"), hThread );
 		}
 	}
 
