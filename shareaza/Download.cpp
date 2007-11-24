@@ -703,7 +703,20 @@ BOOL CDownload::Save(BOOL bFlush)
 	{
 		BYTE pBuffer[ 65536 ];
 		CArchive ar( &pFile, CArchive::store, sizeof( pBuffer ), pBuffer );
-		Serialize( ar, 0 );
+		try
+		{
+			Serialize( ar, 0 );
+		}
+		catch ( CFileException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			theApp.Message( MSG_ERROR, _T("Serialize Error: %s"), pException->m_strFileName );
+			pException->ReportError();
+			pException->Delete();
+			return FALSE;
+		}
+
 		ar.Close();
 	}
 	
