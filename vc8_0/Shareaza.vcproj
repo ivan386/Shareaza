@@ -15,12 +15,15 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<DefaultToolFile
+			FileName="masm.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
 			CharacterSet="1"
@@ -32,6 +35,10 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
+				Name="MASM"
+				WarningLevel="2"
+			/>
+			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -40,29 +47,24 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;../shareaza/zlib"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;SHAREAZA_USE_ASM"
-				StringPooling="true"
+				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="true"
-				EnableFunctionLevelLinking="true"
 				DefaultCharIsUnsigned="true"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
@@ -73,21 +75,18 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib msi.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
-				LinkIncremental="2"
-				SuppressStartupBanner="true"
+				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)$(ProjectName).exe"
 				GenerateManifest="false"
-				ManifestFile=""
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib;msi.lib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				GenerateDebugInformation="true"
+				GenerateMapFile="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -116,8 +115,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
 			CharacterSet="1"
@@ -129,6 +128,9 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
+				Name="MASM"
+			/>
+			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -138,31 +140,25 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				TargetEnvironment="3"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
-				StringPooling="true"
+				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="true"
-				EnableFunctionLevelLinking="true"
 				DefaultCharIsUnsigned="true"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -171,18 +167,15 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib winmm.lib wininet.lib Iphlpapi.lib msi.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
-				LinkIncremental="2"
-				SuppressStartupBanner="true"
-				IgnoreDefaultLibraryNames=""
+				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib"
+				OutputFile="$(OutDir)$(ProjectName).exe"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
 			/>
@@ -213,10 +206,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="1"
-			UseOfMFC="1"
+			UseOfMFC="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -227,6 +220,10 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
+				Name="MASM"
+				WarningLevel="2"
+			/>
+			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -235,32 +232,24 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;SHAREAZA_USE_ASM"
-				StringPooling="true"
-				RuntimeLibrary="0"
+				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL"
+				MinimalRebuild="true"
+				RuntimeLibrary="2"
 				DefaultCharIsUnsigned="true"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -268,23 +257,18 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib winspool.lib oleacc.lib Iphlpapi.lib msi.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				GenerateManifest="false"
-				ManifestFile=""
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;vfw32.lib;Iphlpapi.lib;msi.lib"
+				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)$(ProjectName).exe"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				OptimizeReferences="2"
-				LinkTimeCodeGeneration="2"
-				ProfileGuidedDatabase="$(SolutionDir)$(ConfigurationName)$(PlatformName)\$(TargetName).pgd"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -313,10 +297,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="1"
-			UseOfMFC="1"
+			UseOfMFC="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -325,6 +309,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="MASM"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -336,32 +323,23 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				TargetEnvironment="3"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(IntDir);../shareaza/zlib"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
-				StringPooling="true"
-				RuntimeLibrary="0"
+				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL"
+				MinimalRebuild="true"
+				RuntimeLibrary="2"
 				DefaultCharIsUnsigned="true"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -369,19 +347,17 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib winmm.lib wininet.lib Iphlpapi.lib msi.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)/$(ProjectName).exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				IgnoreDefaultLibraryNames=""
+				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib"
+				OutputFile="$(OutDir)$(ProjectName).exe"
 				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -415,7 +391,8 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
 				RelativePath="..\shareaza\AlbumFolder.cpp"
@@ -953,7 +930,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -961,7 +938,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -969,7 +946,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -977,7 +954,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -1141,670 +1118,6 @@
 				RelativePath="..\shareaza\ZLib.cpp"
 				>
 			</File>
-			<Filter
-				Name="zlib"
-				>
-				<File
-					RelativePath="..\shareaza\zlib\adler32.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\compress.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\crc32.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\deflate.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\infback.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\inffast.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\inflate.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\inftrees.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\trees.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\uncompr.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\zutil.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							Detect64BitPortabilityProblems="false"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4619;4668;4711;4820;4826"
-						/>
-					</FileConfiguration>
-				</File>
-			</Filter>
 			<Filter
 				Name="Controls"
 				>
@@ -2388,31 +1701,11 @@
 					RelativePath="..\shareaza\asm\MD4_asm.asm"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						ExcludedFromBuild="true"
 						>
 						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
+							Name="MASM"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -2420,9 +1713,7 @@
 						ExcludedFromBuild="true"
 						>
 						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
+							Name="MASM"
 						/>
 					</FileConfiguration>
 				</File>
@@ -2434,31 +1725,11 @@
 					RelativePath="..\shareaza\asm\MD5_asm.asm"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						ExcludedFromBuild="true"
 						>
 						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
+							Name="MASM"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -2466,9 +1737,7 @@
 						ExcludedFromBuild="true"
 						>
 						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
+							Name="MASM"
 						/>
 					</FileConfiguration>
 				</File>
@@ -2480,31 +1749,11 @@
 					RelativePath="..\shareaza\asm\SHA_asm.asm"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						ExcludedFromBuild="true"
 						>
 						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
+							Name="MASM"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -2512,9 +1761,7 @@
 						ExcludedFromBuild="true"
 						>
 						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
+							Name="MASM"
 						/>
 					</FileConfiguration>
 				</File>
@@ -2522,31 +1769,11 @@
 					RelativePath="..\shareaza\asm\Tiger_asm.asm"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|x64"
 						ExcludedFromBuild="true"
 						>
 						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
+							Name="MASM"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -2554,9 +1781,7 @@
 						ExcludedFromBuild="true"
 						>
 						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
+							Name="MASM"
 						/>
 					</FileConfiguration>
 				</File>
@@ -2575,7 +1800,6 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="..\StdAfx.h"
 							/>
 						</FileConfiguration>
@@ -2584,7 +1808,6 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="..\StdAfx.h"
 							/>
 						</FileConfiguration>
@@ -2593,7 +1816,6 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="..\StdAfx.h"
 							/>
 						</FileConfiguration>
@@ -2602,7 +1824,6 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="..\StdAfx.h"
 							/>
 						</FileConfiguration>
@@ -2615,7 +1836,6 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="..\StdAfx.h"
 							/>
 						</FileConfiguration>
@@ -2624,7 +1844,6 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="..\StdAfx.h"
 							/>
 						</FileConfiguration>
@@ -2633,7 +1852,6 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="..\StdAfx.h"
 							/>
 						</FileConfiguration>
@@ -2642,7 +1860,6 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="..\StdAfx.h"
 							/>
 						</FileConfiguration>
@@ -2816,7 +2033,8 @@
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
 				RelativePath="..\shareaza\AlbumFolder.h"
@@ -3498,50 +2716,6 @@
 				RelativePath="..\shareaza\ZLib.h"
 				>
 			</File>
-			<Filter
-				Name="zlib"
-				>
-				<File
-					RelativePath="..\shareaza\zlib\crc32.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\deflate.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\inffast.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\inffixed.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\inflate.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\inftrees.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\trees.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\zconf.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\zlib.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\zlib\zutil.h"
-					>
-				</File>
-			</Filter>
 			<Filter
 				Name="Controls"
 				>
@@ -4414,6 +3588,7 @@
 		<Filter
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe;htm;xml;png"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
 				RelativePath="..\shareaza\Res\About.htm"
@@ -4424,6 +3599,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4433,6 +3609,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4442,6 +3619,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4451,25 +3629,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
 				</FileConfiguration>
@@ -4500,6 +3661,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4509,6 +3671,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4518,6 +3681,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4527,25 +3691,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
 				</FileConfiguration>
@@ -4627,6 +3774,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4636,6 +3784,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4645,6 +3794,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4654,28 +3804,15 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\DefaultServices.dat"
+				>
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Definitions.xml"
@@ -4685,6 +3822,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4694,6 +3832,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4703,6 +3842,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4712,25 +3852,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
 				</FileConfiguration>
@@ -4938,6 +4061,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4947,6 +4071,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4956,6 +4081,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
@@ -4965,25 +4091,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
+						Description="Gzip compressing $(InputFileName)..."
 						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
-						Outputs="$(InputDir)$(InputFileName).gz"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release x64|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
 				</FileConfiguration>
@@ -5117,7 +4226,7 @@
 				>
 			</File>
 			<File
-				RelativePath="releasewin32\shareaza\Shareaza_i.c"
+				RelativePath="Releasex64\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -5125,9 +4234,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -5136,37 +4242,28 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
 					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="releasex64\shareaza\Shareaza_i.c"
+				RelativePath="Debugx64\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -5174,19 +4271,14 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						UsePrecompiledHeader="0"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
@@ -5196,46 +4288,35 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="debugx64\shareaza\Shareaza_i.c"
+				RelativePath="DebugWin32\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+						UsePrecompiledHeader="0"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -5244,9 +4325,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -5255,22 +4333,18 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="debugwin32\shareaza\Shareaza_i.c"
+				RelativePath="ReleaseWin32\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -5279,16 +4353,14 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
@@ -5298,7 +4370,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 			</File>

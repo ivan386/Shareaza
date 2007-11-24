@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="zlibwapi"
 	ProjectGUID="{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}"
 	RootNamespace="zlibwapi"
