@@ -1522,7 +1522,7 @@
 			<heading align="middle">Z A Č N Ě T E &#160; S T A H O V A T</heading>
 			<newline gap="8" indent="42"/>
 			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Klikněte sem pro</link>
-			<text align="middle">&#160; stažení souboru nebo torrentu.</text>
+			<text align="middle">&#160;stažení souboru nebo torrentu.</text>
 			<newline gap="24" indent="0"/>
 			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
 			<heading align="middle">H L E D Á N Í &#160; V &#160; S H A R E A Z E</heading>
@@ -1626,7 +1626,7 @@
 		</styles>
 		<para align="center">
 			<group id="2">
-				<text>V poslední době jste nestahovali žádné nové soubory.</text>
+				<text>V poslední době jste nestáhli žádné nové soubory.</text>
 				<newline gap="8"/>
 			</group>
 			<text id="LibraryFiles" format="b">%lu </text>
@@ -1687,7 +1687,7 @@
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
-				<text>Již jste připojeni </text>
+				<text>Jste připojeni </text>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>hodin a </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
@@ -1704,11 +1704,11 @@
 		<para align="center">
 			<text id="UploadsNone" format="b">Nikdo od vás nestahuje</text>
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 aktivní odesílání</link>
-			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i aktivní odesílání</link>
+			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i aktivních odesílání</link>
 			<newline gap="4"/>
 			<text id="UploadedNone">Zatím jste neodeslali žádný soubor.</text>
 			<text id="UploadedOne">Odeslali jste 1 soubor (%s).</text>
-			<text id="UploadedMany">Již jste odeslali %i souborů (%s).</text>
+			<text id="UploadedMany">Odeslali jste %i souborů (%s).</text>
 		</para>
 	</document>
 	<document name="CHomeTorrentsBox" title="Torrenty" leftMargin="6" topMargin="6">
@@ -2548,7 +2548,7 @@
 	<string id="8141" value="Zobrazit panel hledání"/>
 	<string id="8142" value="Skrýt panel hledání"/>
 	<string id="8143" value="Vyhledávám..."/>
-	<string id="8144" value="Hledat"/>
+	<string id="8144" value="Vyhledat"/>
 	<string id="8145" value="Hledat znovu"/>
 	<string id="8146" value="Stop"/>
 	<string id="8147" value="Jakýkoliv soubor"/>
@@ -2564,18 +2564,18 @@
 	<string id="8157" value="Výsledky"/>
 	<string id="8158" value="Smazat"/>
 	<string id="8159" value="Pokročilé..."/>
-	<string id="8160" value="Připojuji se k hostiteli..."/>
+	<string id="8160" value="Připojuji se k uživateli..."/>
 	<string id="8161" value="Odesílám žádost, čekám na spojení..."/>
 	<string id="8162" value="Připojeno, žádám o prohlížení..."/>
 	<string id="8163" value="Přijímám odezvu prohlížeče (%2.f%%)..."/>
-	<string id="8164" value="Nelze se připojit k hostiteli a prohlížet uživatele."/>
-	<string id="8165" value="Nelze stáhnout seznam souborů. Tento hostitel nepodporuje prohledávání."/>
+	<string id="8164" value="Nelze se připojit k uživateli a prohlížet profil nebo soubory."/>
+	<string id="8165" value="Nelze stáhnout seznam souborů. Uživatel neumožňuje zobrazení sdílených souborů."/>
 	<string id="8166" value="Prohledávat sítě:"/>
 	<string id="8167" value="Všechny sítě"/>
 	<string id="8176" value="Hledat v Shareaze"/>
-	<string id="8177" value="Pro hledání zadejte nějaké klíčové slovo:"/>
-	<string id="8178" value="Jaký je to typ souboru?"/>
-	<string id="8179" value="(Vymazat Historii hledání)"/>
+	<string id="8177" value="Zadejte klíčová slova pro hledání:"/>
+	<string id="8178" value="Jaký typ souboru hledáte?"/>
+	<string id="8179" value="(Vymazat historii hledání)"/>
 	<string id="8180" value="Velikost souboru:"/>
 	<string id="8181" value="&#160;do"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza vytvoří rozdělený soubor pro %i soubor(y):"/>
@@ -2616,7 +2616,7 @@
 	<string id="8311" value="Tento soubor již máte ve vaší knihovně."/>
 	<string id="8312" value="Tento soubor již máte na vašem seznamu stahování."/>
 	<string id="8313" value="Tento soubor se zdá být spamem."/>
-	<string id="8314" value="Již jste stahovali a potom vymazali tento soubor."/>
+	<string id="8314" value="Tento soubor jste již jednou stáhli a vymazali."/>
 	<string id="8315" value="Černá listina: "/>
 	<string id="8316" value="Výsledky"/>
 	<string id="8317" value="Odesílání"/>
@@ -3221,9 +3221,9 @@
 		<control caption="_Nastavení:"/>
 		<control caption="Pamatovat si vzhled složky"/>
 		<control caption="Sledovat složky knihovny"/>
-		<control caption="Rychlý hashing (Používá více CPU)"/>
+		<control caption="Rychlý hashing (používá více CPU)"/>
 		<control caption="Povolit ostatním prohlížet sdílené"/>
-		<control caption="_Poslední soubory"/>
+		<control caption="_Poslední soubory:"/>
 		<control caption="Pamatuj si:"/>
 		<control/><control/>
 		<control caption="souborů"/>
@@ -3231,7 +3231,7 @@
 		<control/><control/>
 		<control caption="dnů"/>
 		<control caption="Vymazat historii"/>
-		<control caption="Bezpečně otevřít:"/>
+		<control caption="Bezpečné soubory:"/>
 		<control/>
 		<control caption="Přid_at"/>
 		<control caption="Odst_ranit"/>
@@ -3239,49 +3239,49 @@
 		<control/>
 		<control caption="Přid_at"/>
 		<control caption="Odst_ranit"/>
-		<control caption="Sbírku _uložit zde:"/>
+		<control caption="Sbírky _ukládat do adresáře:"/>
 		<control/><control/>
-		<control caption="Create ghost files when deleting"/>
+		<control caption="Ukládat informace o smazaných souborech"/>
 	</dialog>
-	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Přehrávač">
 		<control caption="_Nastavení:"/>
 		<control/>
-		<control caption="Použít přehrávač Shareazy pro PŘEHRÁVÁNÍ souborů podle přípon dole"/>
-		<control caption="Použít přehrávač Shareazy pro frontu souborů podle přípon dole"/>
+		<control caption="Použít přehrávač Shareazy pro PŘEHRÁVÁNÍ souborů podle přípon níže"/>
+		<control caption="Použít přehrávač Shareazy pro frontu souborů podle přípon níže"/>
 		<control caption="_Typy souborů:"/>
 		<control/>
-		<control caption="_Add"/>
-		<control caption="_Remove"/>
-		<control caption="Audio _Visualisation Plugin:"/>
-		<control caption="_Select Plugin..."/>
-		<control caption="_Media Handling"/>
-		<control caption="Choose Media Handler:"/>
-		<control caption="Warning: Choosing an external Media Handler will automatically disable all Media and Visualisation Plugins!"/>
+		<control caption="_Přidat"/>
+		<control caption="_Odebrat"/>
+		<control caption="Vizualiazace:"/>
+		<control caption="_Vybrat vizualizaci..."/>
+		<control caption="_Přehrávač multimédií"/>
+		<control caption="Zvolte přehrávač:"/>
+		<control caption="Pozor: Pokud je vybraný externí přehrávač multimédii nebudou dostupné rozšíření a vizualiazace Shareazy."/>
 	</dialog>
-	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Společenství">
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Komunita">
 		<control caption="Můj _profil:"/>
-		<control caption="Můžete použít váš profil uživatele Gnutella ke sdělení informací o vás, vašich zájmech, doporučit zajímavé soubory a dobré webové stránky."/>
-		<control caption="Upravit vlastní profil"/>
-		<control caption="_Pokec:"/>
-		<control caption="Umožnit přímý pokec s kompatibilními klienty"/>
-		<control caption="Umožnit pokec na všech sítích"/>
+		<control caption="Můžete použít profil uživatele Gnutella ke sdělení informací o vás a vašich zájmech, a k doporučení zajímavých souborů a webových stránek."/>
+		<control caption="Upravit profil"/>
+		<control caption="_Chat:"/>
+		<control caption="Umožnit přímý chat s kompatibilními klienty"/>
+		<control caption="Umožnit chatování na všech sítích"/>
 		<control caption="Filtrovat zprávy chatu na spam"/>
 		<control caption="Cenzurovat vulgárnost v chatu"/>
 	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
-		<control caption="Umožnit spojení _Peer to Peer:"/>
-		<control caption="Použít Shareazu k otevření těchto spojů:"/>
-		<control caption="Magnet ( magnet: )"/>
-		<control caption="Gnutella ( gnutella: )"/>
-		<control caption="eDonkey ( ed2k: )"/>
-		<control caption="Piolet ( mp2p: )"/>
-		<control caption="BitTorrent ( .torrent )"/>
+		<control caption="Odkazy _Peer to Peer (P2P):"/>
+		<control caption="Použít Shareazu k otevření těchto odkazů:"/>
+		<control caption="Magnet (magnet:)"/>
+		<control caption="Gnutella (gnutella:)"/>
+		<control caption="eDonkey (ed2k:)"/>
+		<control caption="Piolet (mp2p:)"/>
+		<control caption="BitTorrent (.torrent)"/>
 		<control caption="_Správce stahování:"/>
-		<control caption="Používat Shareazy pro všechna má stahování z webu:"/>
+		<control caption="Používat Shareazu pro všechna stahování z webu:"/>
 		<control/>
 		<control caption="Přid_at"/>
 		<control caption="Odst_ranit"/>
-		<control caption="Plugin správce stahování se bude pokoušet stahovat jen soubory ze seznamu vlevo. Další typy souborů budou spravovány vaším webovým prohlížečem. Pro správu stahování souborů musíte mít spuštěnou Shareazu."/>
+		<control caption="Plugin správce stahování se bude pokoušet stahovat jen soubory ze seznamu vlevo. Ostatní typy souborů budou stahovány webovým prohlížečem. Správce stahování je aktivní pouze pokud je Shareaza spuštěna."/>
 	</dialog>
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Připojení">
@@ -3293,7 +3293,7 @@
 		<control caption="Port:"/>
 		<control/>
 		<control caption="Náhodně"/>
-		<control caption="Násilím spojit tuto adresu"/>
+		<control caption="Povolit pouze tuto adresu"/>
 		<control caption="_Odchozí adresa:"/>
 		<control caption="Adresa:"/>
 		<control caption="Automaticky"/>
@@ -3302,7 +3302,7 @@
 		<control caption="_Nastavení:"/>
 		<control caption="Přijímat příchozí spojení"/>
 		<control/>
-		<control caption="Ignoruj soukromé/ místní IP adresy "/>
+		<control caption="Ignoruj soukromé/lokální IP adresy "/>
 		<control caption="Povolit nastavení UPnP zařízení"/>
 		<control caption="_Maximální čas pro:"/>
 		<control caption="Spojení:"/>
@@ -3311,9 +3311,9 @@
 		<control/><control/>
 	</dialog>
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Stahování">
-		<control caption="Zde uložit _dokončené soubory:"/>
+		<control caption="Ukládat _dokončené soubory do:"/>
 		<control/><control/>
-		<control caption="Zde ukládat _neúplné soubory:"/>
+		<control caption="Ukládat _neúplné soubory do:"/>
 		<control/><control/>
 		<control caption="Počet _stahovaných souborů:"/>
 		<control caption="Maximálně souborů:"/>
@@ -3327,16 +3327,16 @@
 		<control/>
 		<control caption="Maximální délka fronty:"/>
 		<control/><control/>
-		<control caption="Stahování a odesílání pouze ze sítí které jsou připojené."/>
+		<control caption="Stahovat a odesílat pouze ze sítí, které jsou připojené."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Odesílání">
 		<control caption="_Nastavení:"/>
 		<control caption="Sdílet NOVÉ neúplné soubory"/>
 		<control caption="Limit sdílení v režimu uzel"/>
 		<control caption="Sdílet náhledy souborů"/>
-		<control caption="Limit na jednoho hosta:"/>
+		<control caption="Limit na jednoho uživatele:"/>
 		<control/><control/>
-		<control caption="Filtr _uživatele-Agent:"/>
+		<control caption="Filtr _user-Agent:"/>
 		<control/>
 		<control caption="+"/>
 		<control caption="-"/>
@@ -3354,14 +3354,14 @@
 	</dialog>
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Vzdálený přístup">
 		<control caption="_Rádce:"/>
-		<control caption="Během vaší nepřítomnosti vám Shareaza umožnuje vzdáleně ovládat spuštěný počítač, a mít na něj přístup. Aby jste mohli používat tuto možnost a přijmout příchozí spojení, musíte především správně nastavit router (směrovač), heslo, atd."/>
-		<control caption="_Aktivace:"/>
-		<control caption="Umožnit Shareaze vzdálený přístup:"/>
+		<control caption="Pokud zrovna nejste u svého počítače, mužete Shareazu ovládat vzdáleně po internetu. Abyste mohli používat tuto možnost a přijímat příchozí spojení, musíte především správně nastavit router (směrovač), dále musíte nastavit heslo a povolit vzdálený přístup."/>
+		<control caption="_Povolit přístup:"/>
+		<control caption="Povolit vzdálený přístup k Shareaze:"/>
 		<control/>
 		<control caption="_Osobní data:"/>
-		<control caption="Zadejte uživat.jméno:"/>
+		<control caption="Zadejte login:"/>
 		<control/>
-		<control caption="Zvolte si heslo:"/>
+		<control caption="Zadejte heslo:"/>
 		<control/>
 	</dialog>
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Plánovač">
@@ -3369,7 +3369,7 @@
 		<control caption="_Zapnout plánovač"/>
 		<control/><control/>
 		<control caption="_Připojit ke G2 jen když je limitována"/>
-		<control caption="Označení:"/>
+		<control caption="Legenda:"/>
 		<control caption="Ne"/>
 		<control caption="Po"/>
 		<control caption="Út"/>
@@ -3377,13 +3377,13 @@
 		<control caption="Čt"/>
 		<control caption="Pá"/>
 		<control caption="So"/>
-		<control caption="Nejste připojeni"/>
+		<control caption="Zakázat připojeni"/>
 		<control caption="Omezené připojení"/>
 		<control caption="Připojit se plnou rychlostí"/>
 		<control caption="% _šířky pásma pod limitem"/>
 		<control/>
-		<control caption="Nápověda"/>
-		<control caption="Plánovač je navržený k tomu, aby vám umožnil nastavit si čas, kdy se Shareaza spojí a bude stahovat soubory. {n}{n}{n}Poznámka: Když máte Shareazu otevřenou zatímco plánovací záznamník je aktivní, můžete vidět změnu nastavení- to je normální!"/>
+		<control caption="Nápověda:"/>
+		<control caption="Plánovač umožňuje nastavit období, kdy Shareaza smí stahovat soubory. Plán nastavíte kliknutím na rozvrh nahoře. {n}{n}{n}Poznámka: pokud máte Shareazu otevřenou a je plánovač aktivní, může se měnit nastavení rychlosti - to je normální."/>
 	</dialog>
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Sítě">
 		<control caption="Shareaza je aplikace pro víceúčelové sdílení souborů, která může zároveň zpřístupnit více P2P sítí. Na této kartě si můžete vybrat kterou síť P2P chcete připojit, a pak nastavit specifické nastavení pro každou síť."/>
@@ -3403,39 +3403,39 @@
 	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Síť Gnutella2:"/>
 		<control caption="Vždy připojit ke Gnutella2"/>
-		<control caption="Současně připojit ke Gnutella2"/>
+		<control caption="Připojit se teď ke Gnutella2"/>
 		<control caption="Režim:"/>
 		<control caption="Optimální|Leaf|Uzel"/>
 		<control caption="Připojení G_2:"/>
-		<control caption="Leaf do Hubu:"/>
+		<control caption="Leaf to Hub:"/>
 		<control/><control/>
-		<control caption="Hub do Leaf:"/>
+		<control caption="Hub to Leaf:"/>
 		<control/><control/>
-		<control caption="Hub do Hubu:"/>
+		<control caption="Hub to Hub:"/>
 		<control/><control/>
 		<control caption="Síť Gnutella1:"/>
 		<control caption="Vždy připojit ke Gnutella1"/>
-		<control caption="Současně připojit ke Gnutella1"/>
+		<control caption="Připojit se teď ke Gnutella1"/>
 		<control caption="Režim:"/>
 		<control caption="Optimal|Leaf|Ultrapeer"/>
 		<control caption="Připojení G_1:"/>
-		<control caption="Leaf do Ultrapeer:"/>
+		<control caption="Leaf to Ultrapeer:"/>
 		<control/><control/>
-		<control caption="Ultrapeer do Leaf:"/>
+		<control caption="Ultrapeer to Leaf:"/>
 		<control/><control/>
-		<control caption="Peer do Peer:"/>
+		<control caption="Peer to Peer:"/>
 		<control/><control/>
-		<control caption="_Odkazy komprese:"/>
-		<control caption="Hub do Leaf"/>
-		<control caption="Leaf do Hubu"/>
-		<control caption="Hub do Hubu"/>
+		<control caption="_Komprimace spojení:"/>
+		<control caption="Hub to Leaf"/>
+		<control caption="Leaf to Hub"/>
+		<control caption="Hub to Hub"/>
 	</dialog>
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
 		<control caption="Síť _eDonkey:"/>
-		<control caption="Současně připojit k eDonkey"/>
-		<control caption="Automat. připojit při spuštění"/>
-		<control caption="_Celkové hledání:"/>
-		<control caption="Vyhledat známé vzdálené servery u cache serveru:"/>
+		<control caption="Připojit se teď k eDonkey"/>
+		<control caption="Automaticky se připojit při spuštění"/>
+		<control caption="_Vyhledávací servery:"/>
+		<control caption="Vyhledat známé vzdálené servery v cache:"/>
 		<control caption="Zastav hledání po:"/>
 		<control/><control/>
 		<control caption="nalezených výsledcích."/>
@@ -3445,7 +3445,7 @@
 		<control/><control/>
 		<control caption="ostatním klientům eDonkey."/>
 		<control caption="Nás_troje eDonkey:"/>
-		<control caption="Stáhnout seznam ze serveru eDonkey na webu:"/>
+		<control caption="Stáhnout seznam serverů eDonkey z webu:"/>
 		<control caption="Stáhnout..."/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
@@ -3469,7 +3469,7 @@
 		<control/>
 	</dialog>
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokoly">
-		<control caption="Běžná architektura protokolu Průzkumníka Shareazy:"/>
+		<control caption="Shareaza Common Architecture Protocol Explorer:"/>
 		<control/>
 	</dialog>
 	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Skiny">
@@ -3719,8 +3719,8 @@
 		<control caption="Generovat nový"/>
 	</dialog>
 	<dialog name="CLanguageDlg" cookie="" caption="Zvolte si jazyk"/>
-	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Připojit k|Prohlížet hosta">
-		<control caption="Otevřít nové připojení k hostiteli nebo serveru:|Prohlížet tohoto hosta:"/>
+	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Připojit k|Prohlížet počítač">
+		<control caption="Otevřít nové připojení k uživateli nebo serveru:|Prohlížet tento počítač:"/>
 		<control/><control/>
 		<control caption="_Protokol sítě:"/>
 		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey"/>
@@ -3728,14 +3728,14 @@
 		<control caption="Připojit"/>
 		<control caption="Zrušit"/>
 	</dialog>
-	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Stažení souboru/Torrent">
+	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Stažení souboru/Torrentu">
 		<control/><control/>
-		<control caption="Stahování jakéhokoliv souboru programem Shareaza je snadné. Označte nebo vložte URL nebo popis URI souboru do schránky dole a stiskněte Enter."/>
+		<control caption="Stahování jakéhokoliv souboru programem Shareaza je snadné. Do následujícího pole napište neob vložte ze schránky URL nebo URI souboru a stiskněte Enter."/>
 		<control/>
 		<control caption="Stáhnout"/>
 		<control caption="Zrušit"/>
-		<control caption="Shareaza může z webu ( HTTP ) stahovat soubory, automaticky vyhledá a stáhne linky P2P (Magnet, Gnutella, eDonkey, mP2P)."/>
-	<control caption="Shareaza umí také stahovat soubory BitTorrent. Torrent může být např. soubor xyz.torrent, nebo odkaz v HTTP na torrent soubor. Pro stažení odkazu torrent z HTTP, jej zkopírujte a vložte do schránky nahoře. Stažený soubor torrent spustíte stisknutím na:"/>
+		<control caption="Shareaza může stahovat soubory také z webu (HTTP) tak, že automaticky vyhledá a stáhne linky P2P (Magnet, Gnutella, eDonkey, mP2P)."/>
+		<control caption="Shareaza umí také stahovat soubory BitTorrent. Torrent může být např. soubor s příponou torrent (xyz.torrent), nebo HTTP odkaz na torrent soubor. Pokud máte HTTP odkaz na torrent soubor vložte jej do pole nahoře a stiskněte Enter. Pokud již máte torrent soubor otevřte jej kliknutím na tlačítko Otevřít Torrent."/>
 		<control caption="Otevřít _Torrent..."/>
 	</dialog>
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Nové hledání|Hledat znovu|Hledat v Knihovně">
@@ -3769,9 +3769,9 @@
 		<control caption="_Uložit jako"/>
 		<control caption="_Vymazat"/>
 		<control caption="_Filtry:"/>
-		<control caption="DRM files"/>
-		<control caption="Suspicious files"/>
-		<control caption="Adult results"/>
+		<control caption="Soubory s DRM"/>
+		<control caption="Podezřelé soubory"/>
+		<control caption="Obsah pro dospělé"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Uložit filtr jako">
 		<control/>
