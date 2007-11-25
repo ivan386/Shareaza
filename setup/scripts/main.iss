@@ -37,51 +37,52 @@
   #define root "vc8_0\" + type + PlatformName
 #endif
 
-#define version GetFileVersion("..\..\" + root + "\Shareaza.exe")
+#ifndef root
+  #error You must compile Shareaza, skin-installer and all plugins before compile the setup
+#endif
+
+
 #define internal_name GetStringFileInfo("..\..\" + root + "\Shareaza.exe", INTERNAL_NAME);
 #ifdef Debug
   #define name internal_name + " Debug build"
 #else
   #define name internal_name
 #endif
+#define version GetFileVersion("..\..\" + root + "\Shareaza.exe")
 
-#ifndef root
-  #error You must compile Shareaza, skin-installer and all plugins before compile the setup
-#endif
+#define Publisher "Shareaza Development Team"
+#define Description internal_name + " Ultimate File Sharing"
 
 ; Not supported by ISPP 5.1.2
 #define date GetDateTimeString('yyyy/mm/dd', '-', '')
 
 [Setup]
-AppComments=Shareaza Ultimate File Sharing
-AppId=Shareaza
+AppComments={#internal_name} Ultimate File Sharing
+AppId={#internal_name}
 AppName={#name}
-AppPublisher=Shareaza Development Team
+AppPublisher={#Publisher}
 AppVersion={#version}
 AppVerName={#name} {#version}
 AppMutex=Shareaza
-VersionInfoVersion={#version}
-DefaultDirName={ini:{param:SETTINGS|},Locations,Path|{reg:HKLM\SOFTWARE\Shareaza,|{pf}\Shareaza}}
+DefaultDirName={ini:{param:SETTINGS|},Locations,Path|{reg:HKLM\SOFTWARE\{#internal_name},|{pf}\{#internal_name}}}
 DirExistsWarning=no
-DefaultGroupName=Shareaza
+DefaultGroupName={#internal_name}
 AllowNoIcons=yes
 OutputDir=setup\builds
 #ifndef Debug
-OutputBaseFilename=Shareaza_{#version}
+OutputBaseFilename={#internal_name}_{#version}
 #else
-OutputBaseFilename=Shareaza_Debug_{#date}
+OutputBaseFilename={#internal_name}_Debug_{#date}
 #endif
 SolidCompression=yes
 Compression=lzma/max
 InternalCompressLevel=max
-VersionInfoCompany=Shareaza Development Team
-VersionInfoDescription=Shareaza Ultimate File Sharing
 PrivilegesRequired=poweruser
 ShowLanguageDialog=yes
 ShowUndisplayableLanguages=yes
 LanguageDetectionMethod=locale
 UninstallDisplayIcon={app}\Uninstall\setup.exe
-UninstallDisplayName={cm:NameAndVersion,Shareaza,{#version}}
+UninstallDisplayName={cm:NameAndVersion,{#internal_name},{#version}}
 UninstallFilesDir={app}\Uninstall
 SetupIconFile=setup\misc\install.ico
 ShowComponentSizes=no
@@ -96,7 +97,11 @@ MinVersion=4.0,4.0sp6
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
 
-; links to website for software panel
+VersionInfoVersion={#version}
+VersionInfoDescription={#Description}
+VersionInfoCopyright=© {#Publisher}. All rights reserved.
+
+; Links to website for software panel
 AppPublisherURL=http://shareaza.sourceforge.net/
 AppSupportURL=http://shareaza.sourceforge.net/?id=support
 AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
