@@ -1,0 +1,19 @@
+﻿										<li class="active"><a class="noline" href="?id=0">Νέα Αναζήτηση</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+	<p>Για νέα αναζήτηση, εισάγετε τους όρους στο παρακάτω πεδίο και κάντε κλικ στο <strong>Έναρξη αναζήτησης</strong>. Αν επιθυμείτε να περιορίσετε την αναζήτηση σε έναν συγκεκριμένο τύπο αρχείου, επιλέξτε τον από τη λίστα (συστείνεται).</p>
+
+	<form method="get" action="newsearch">
+		<div style="text-align:right; width: 30em;">
+			<label>Αναζήτηση για:</label>
+				<input type="text" name="search" class="regularinput" /><br/>
+				<label>Τύπος αρχείου:</label>
+
+				<select name="schema" class="regularinput">
+					<option value="">Οποιοσδήποτε Τύπος Αρχείου</option>
+					<%= schema_option_list %>
+				</select><br />
+
+				<input type="submit" value="Έναρξη Αναζήτησης" />
+		</div>
+	</form>

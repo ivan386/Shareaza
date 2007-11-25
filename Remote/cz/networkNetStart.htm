@@ -1,0 +1,25 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					Tato síť <strong>není</strong> povolena -
+					<a href="?connect=<%= network_id %>"><strong>Připojit se k <%= network_caption %></strong></a>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					Tato síť je povolena -
+					<a href="?disconnect=<%= network_id %>"><strong>Zakázat <%= network_caption %></strong></a>
+					</p>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Adresa</th>
+							<th>Čas</th>
+							<th>Pakety</th>
+							<th>Rychlost</th>
+							<th>Celkem</th>
+							<th>Mód</th>
+							<th>Uživatelů</th>
+							<th>Klient</th>
+							<th></th>
+						</tr>
+<%?%>

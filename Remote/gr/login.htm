@@ -1,0 +1,33 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Αρχική</li>
+				<li class="inactive">Αναζήτηση</li>
+				<li class="inactive">Λήψεις</li>
+				<li class="inactive">Αποστολές</li>
+				<li class="inactive">Δίκτυα</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+			<div class="padding left">
+				Καλώς ήρθατε στο <b>Περιβάλλον Ιστού του Shareaza.</b> Αν αυτή η διεύθυνση είναι του δικού σας Shareaza, παρακαλώ εισάγετε όνομα χρήστη (username) και κωδικό (password), και κάντε κλικ στο κουμπί <b>Είσοδος</b>.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	Λάθος όνομα χρήστη ή κωδικός. Παρακαλώ ξαναδοκιμάστε.<%?%>
+			</div>
+
+			<form method="get" action="">
+				<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<input type="hidden" name="submit" value="1" />
+					<label>Όνομα Χρήστη:</label>
+					<input type="text" name="username" size="20" /><br />
+					<label>Κωδικός:</label>
+					<input type="password" name="password" size="20" /><br />
+					<input type="submit" value="Είσοδος" />
+				</div>
+			</form>
+		</div>
+<!-- /main body -->
