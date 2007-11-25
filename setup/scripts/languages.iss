@@ -10,12 +10,12 @@ Name: "nl"; MessagesFile: "compiler:Languages\dutch.isl"; LicenseFile: "setup/li
 Name: "lt"; MessagesFile: "setup\isl\lithuanian.isl"; LicenseFile: "setup/license/lithuanian.rtf"
 Name: "de"; MessagesFile: "compiler:Languages\German.isl"; LicenseFile: "setup/license/German.rtf"
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl"; LicenseFile: "setup/license/italian.rtf"
-Name: "no"; MessagesFile: "compiler:Languages\Norwegian.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "no"; MessagesFile: "compiler:Languages\Norwegian.isl"; LicenseFile: "setup/license/norwegian.rtf"
 Name: "af"; MessagesFile: "setup\isl\afrikaans.isl"; LicenseFile: "setup/license/afrikaans.rtf"
-Name: "pt"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
+Name: "pt"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "setup/license/portuguese.rtf"
 Name: "pt_br"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
-Name: "fr"; MessagesFile: "compiler:Languages\french.isl"; LicenseFile: "setup/license/default.rtf"
-Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl"; LicenseFile: "setup/license/spanish-mexican.rtf"
+Name: "fr"; MessagesFile: "compiler:Languages\french.isl"; LicenseFile: "setup/license/french.rtf"
+Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl"; LicenseFile: "setup/license/spanish.rtf"
 Name: "es_mx"; MessagesFile: "setup\isl\spanish-mexican.isl"; LicenseFile: "setup/license/spanish-mexican.rtf"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "setup/license/russian.rtf"
 Name: "gr"; MessagesFile: "setup\isl\greek.isl"; LicenseFile: "setup/license/greek.rtf"
@@ -28,7 +28,7 @@ Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl"; LicenseFile: "setup/l
 Name: "sr"; MessagesFile: "setup\isl\Serbian.isl"; LicenseFile: "setup/license/serbian.rtf"
 Name: "tr"; MessagesFile: "setup\isl\turkish.isl"; LicenseFile: "setup/license/turkish.rtf"
 Name: "ja"; MessagesFile: "setup\isl\japanese.isl"; LicenseFile: "setup/license/japanese.rtf"
-Name: "ar"; MessagesFile: "setup\isl\arabic.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "ar"; MessagesFile: "setup\isl\arabic.isl"; LicenseFile: "setup/license/arabic.rtf"
 Name: "ee"; MessagesFile: "setup\isl\estonian.isl"; LicenseFile: "setup/license/estonian.rtf"
 Name: "tw"; MessagesFile: "setup\isl\chinese-trad.isl"; LicenseFile: "setup/license/chinese-trad.rtf"
 Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
@@ -104,6 +104,10 @@ Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 ; Albanian
 Source: "Remote\sq\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Excludes: ".svn"; Languages: sq; Tasks: language
 
+
+; Common files
+Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "Official license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not language
 ; Install localized license
@@ -167,6 +171,7 @@ Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\catalan.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ca; Tasks: language
 ; Catalan
 Source: "setup\license\albanian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sq; Tasks: language
+
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not language
