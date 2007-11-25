@@ -225,7 +225,7 @@
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Δημιουργία Album..."/>
-		<button id="ID_LIBRARY_ALBUM_DELETE" text="Διαγραφή Album!"/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Διαγραφή Album"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -233,7 +233,7 @@
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Δημιουργία Album..."/>
-		<button id="ID_LIBRARY_ALBUM_DELETE" text="Διαγραφή Album!"/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Διαγραφή Album"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -475,7 +475,7 @@
 			<item id="ID_TOOLS_PROFILE" text="Επεξεργασία _Προφίλ..."/>
 			<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης _Εκκίνησης..."/>
 			<separator/>
-			<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις του Shareaza..."/>
+			<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..."/>
 		</menu>
 		<menu text="_Βοήθεια">
 			<item id="ID_HELP_FAQ" text="Συχνές _Ερωτήσεις"/>
@@ -489,7 +489,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Ιστοσελίδες">
-				<item id="ID_HELP_HOMEPAGE" text="_Ιστοσελίδα_Shareaza"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Ιστοσελίδα Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Τελευταία νέα"/>
@@ -562,11 +562,11 @@
 			<item id="ID_TOOLS_PROFILE" text="Επεξεργασία _Προφίλ..."/>
 			<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης _Εκκίνησης..."/>
 			<separator/>
-			<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις του Shareaza..."/>
+			<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..."/>
 		</menu>
 		<menu text="_Window">
-			<item id="ID_WINDOW_NAVBAR" text="Προβολή Μπάρας _Πλοήγησης"/>
-			<item id="ID_WINDOW_TOOLBAR" text="Προβολή _Μπάρας Εργαλείων"/>
+			<item id="ID_WINDOW_NAVBAR" text="Μεγάλη Μπάρα _Πλοήγησης"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Μικρή _Μπάρα Πλοήγησης"/>
 			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="Προβολή Μπάρας _Καρτελών"/>
 			<item id="ID_WINDOW_MONITOR" text="Προβολή _Εποπτείας"/>
@@ -647,15 +647,15 @@
 			<item id="ID_TOOLS_PROFILE" text="Επεξεργασία _Προφίλ..."/>
 			<separator/>
 			<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης _Εκκίνησης..."/>
-			<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις του Shareaza..."/>
+			<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..."/>
 		</menu>
 		<menu text="_Window">
 			<item id="ID_WINDOW_CASCADE" text="_Παράθεση Κατα_ρράκτη"/>
 			<item id="ID_WINDOW_TILE_HORZ" text="_Οριζόντια Παράθεση"/>
 			<item id="ID_WINDOW_TILE_VERT" text="_Κάθετη Παράθεση"/>
 			<separator/>
-			<item id="ID_WINDOW_NAVBAR" text="Προβολή Μπάρας _Πλοήγησης"/>
-			<item id="ID_WINDOW_TOOLBAR" text="Προβολή _Μπάρας Εργαλείων"/>
+			<item id="ID_WINDOW_NAVBAR" text="Μεγάλη Μπάρα _Πλοήγησης"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Μικρή _Μπάρα Πλοήγησης"/>
 			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="Προβολή Μπάρας _Καρτελών"/>
 			<item id="ID_WINDOW_MONITOR" text="Προβολή _Εποπτείας"/>
@@ -1026,10 +1026,10 @@
 		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="_Παύση Όλων"/>
 		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="_Απόσυρση Όλων"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_NEW" text="_Νέο Group..."/>
-		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="_Αφαίρεση Group"/>
+		<item id="ID_DOWNLOAD_GROUP_NEW" text="_Νέα Ομάδα..."/>
+		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="_Αφαίρεση Ομάδας"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Προβολή Groups"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Προβολή Ομάδων"/>
 		<separator/>
 		<item id="ID_DOWNLOAD_GROUP_PROPERTIES" text="_Ιδιότητες"/>
 	</menu>
@@ -1042,7 +1042,7 @@
 		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Προβολή _Σταματημένων"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Προβολή _Όλων των Πηγών"/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Προβολή Groups"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Προβολή Ομάδων"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
 	<menu name="CUploadsWnd.Upload.Basic">
@@ -1970,7 +1970,7 @@
 		<text>Αυτή η λήψη περιμένει από κάποια από τις υπόλοιπες λήψεις σας να ολοκληρωθεί.
 		Οι ρυθμίσεις λήψης σας περιορίζουν τον αριθμό των λήψεων που μπορούν να είναι ενεργές ανά
 		πάσα στιγμή, για να εγγυηθεί βεβαιωθεί ότι κάθε λήψη παίρνει ένα καλό μερίδιο του διαθέσιμου
-		εύρους ζώνης.  Μπορείτε να αλλάξετε αυτές τις ρυθμίσεις από τα Εργαλεία, Ρυθμίσεις του Shareaza.
+		εύρους ζώνης.  Μπορείτε να αλλάξετε αυτές τις ρυθμίσεις από τα Εργαλεία &gt; Ρυθμίσεις Shareaza.
 		Εναλλακτικά, μπορείτε να αρχίσετε αυτήν τη λήψη χειροκίνητα με την εντολή συνέχισης.</text>
 	</document>
 	<document name="DownloadHelp.Searching">
@@ -2114,7 +2114,7 @@
 		με μια αναζήτηση στον ιστό. Συγκεκριμένοι όροι ή φράσεις είναι καλύτερα
 		(μοναδικά ονόματα, τίτλοι και λέξεις κλειδιά).</text>
 		<newline gap="8"/>
-		<text>Οι γνικευμένοι όροι δεν μπορούν να αναζητηθούν αποτελεσματικά και
+		<text>Οι γενικευμένοι όροι δεν μπορούν να αναζητηθούν αποτελεσματικά και
 		ίσως προκαλέσουν φτωχές επιδόσεις αναζήτησης με βαριά χρήση του εύρους ζώνης.</text>
 		<newline gap="8"/>
 		<text>Επιπλέον βοήθεια είναι διαθέσιμη στον ιστοχώρο του Shareaza.</text>
@@ -2126,7 +2126,7 @@
 		για ενήλικες και αυτό έχει αποκλειστεί απο τις ρυθμίσεις. Θα πρέπει να επαναδιατυπώσετε την
 		αναζήτηση ή να απενεργοποιήσετε το φίλτρο.</text>
 		<newline gap="8"/>
-		<text>Για να απενεργοποιήσετε το φίλτρο, πηγαίντε στα Εργαλεία &gt; Οι Ρυθμίσεις του Shareaza &gt; Γενικά
+		<text>Για να απενεργοποιήσετε το φίλτρο, πηγαίντε στα Εργαλεία &gt; Ρυθμίσεις Shareaza &gt; Γενικά
 		και αφαιρέστε το τικ από το φίλτρο περιεχομένων για ενήλικες.</text>
 	</document>
 	<!-- Share help documents -->
@@ -2184,13 +2184,13 @@
 	<tip id="ID_DISCOVERY_REMOVE" message="Αφαίρεση επιλεγμένων υπηρεσιών ανακάλυψης."/>
 	<tip id="ID_DISCOVERY_SERVERMET" message="Προβολή υπηρεσιών Server.met του ED2K στο παράθυρο ανακάλυψης."/>
 	<tip id="ID_DISCOVERY_WEBCACHE" message="Προβολή υπηρεσιών GWebCache στο παράθυρο ανακάλυψης."/>
-	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Ακύρωση και αφαίρεση όλων των λήψεων σε αυτό το group."/>
-	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Δημιουργία νέου group λήψεων..."/>
-	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Παύση όλων των λήψεων σε αυτό το group."/>
-	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Επεξεργασία ιδιοτήτων επιλεγμένου group λήψεων."/>
-	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Αφαίρεση επιλεγμένου group λήψεων."/>
-	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Συνέχιση όλων των λήψεων σε αυτό το group."/>
-	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Εμφάνιση ή απόκρυψη της μπάρας group λήψεων."/>
+	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Διαγραφή όλων των λήψεων σε αυτήν την ομάδα!"/>
+	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Δημιουργία νέας ομάδας λήψεων..."/>
+	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Παύση όλων των λήψεων σε αυτήν την ομάδα."/>
+	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Επεξεργασία ιδιοτήτων επιλεγμένης ομάδας λήψεων."/>
+	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Αφαίρεση επιλεγμένης ομάδας λήψεων."/>
+	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Συνέχιση όλων των λήψεων σε αυτήν την ομάδα."/>
+	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Εμφάνιση ή απόκρυψη της μπάρας ομάδας λήψεων."/>
 	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Αυτόματη απόσυρση ολοκληρωμένων λήψεων."/>
 	<tip id="ID_DOWNLOADS_BOOST" message="Αύξηση επίδοσης επιλεγμένων λήψεων αφαιρώντας τους περιορισμούς ταχύτητας."/>
 	<tip id="ID_DOWNLOADS_CLEAR" message="Απόσυρση/αφαίρεση επιλεγμένων λήψεων."/>
@@ -2287,8 +2287,8 @@
 	<tip id="ID_LIBRARY_REMOVE" message="Αφαίρεση επιλεγμένων κοινοποιημένων φακέλων."/>
 	<tip id="ID_LIBRARY_RENAME" message="Μετονομασία επιλεγμένου αρχείου επιτόπου."/>
 	<tip id="ID_LIBRARY_SCAN" message="Σάρωση επιλεγμένων φακέλων ή αρχείων για αλλαγές."/>
-	<tip id="ID_LIBRARY_SEARCH" message="Αναζήτηση στη Βιβλιοθήκη αρχείων..."/>
-	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Γρήγορη αναζήτηση στη Βιβλιοθήκη αρχείων..."/>
+	<tip id="ID_LIBRARY_SEARCH" message="Αναζήτηση στα αρχεία της Βιβλιοθήκης..."/>
+	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Αναζήτηση στα αρχεία της Βιβλιοθήκης..."/>
 	<tip id="ID_LIBRARY_SEED_TORRENT" message="Seed το επιλεγμένο Torrent στο BitTorrent."/>
 	<tip id="ID_LIBRARY_SELECT_ALL" message="Επιλογή και προβολή όλων των φακέλων στη Βιβλιοθήκη."/>
 	<tip id="ID_LIBRARY_SHARED_FILE" message="(Απο)κοινοποίηση επιλεγμένων αρχείων."/>
@@ -2451,12 +2451,12 @@
 	<tip id="ID_VIEW_WINDOWED" message="Εμφάνιση του Shareaza σε μορφή Παραθύρων."/>
 	<tip id="ID_WINDOW_CASCADE" message="Παράθεση όλων τα ανοικτών παραθύρων αλληλοεπικαλυπτόμενων, το ένα ελαφρώς κάτω και δεξιά από το άλλο."/>
 	<tip id="ID_WINDOW_MONITOR" message="Εναλλαγή παραθύρου εποπτείας εύρους ζώνης."/>
-	<tip id="ID_WINDOW_NAVBAR" message="Εναλλαγή μπάρας πλοήγησης."/>
+	<tip id="ID_WINDOW_NAVBAR" message="Προβολή της μεγάλης μπάρας πλοήγησης."/>
 	<tip id="ID_WINDOW_REMOTE" message="Εναλλαγή Χειριστηρίου Shareaza."/>
 	<tip id="ID_WINDOW_TABBAR" message="Εναλλαγή μπάρας καρτελών."/>
 	<tip id="ID_WINDOW_TILE_HORZ" message="Οριζόντια παράθεση όλων τα ανοικτών παραθύρων ως μη αλληλοεπικαλυπτόμενα πλακίδια."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Κάθετη παράθεση όλων τα ανοικτών παραθύρων ως μη αλληλοεπικαλυπτόμενα πλακίδια."/>
-	<tip id="ID_WINDOW_TOOLBAR" message="Εναλλαγή μπάρας εργαλείων."/>
+	<tip id="ID_WINDOW_TOOLBAR" message="Προβολή της μικρής μπάρας πλοήγησης."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Προσαρμογή του μεγέθους της εικόνας ώστε να χωρέσει στο παράθυρο."/>
 	<tip id="ImageViewer_ActualSize" message="Προβολή της εικόνας στο φυσικό της μέγεθος."/>
@@ -2600,7 +2600,7 @@
 	<string id="8243" value="Αποσταλθήσα ποσότητα:"/>
 	<string id="8244" value="Αριθμός κριτικών:"/>
 	<string id="8288" value="Εξερεύνηση της Βιβλιοθήκης"/>
-	<string id="8289" value="Exploring "/>
+	<string id="8289" value="Θέση: "/>
 	<string id="8290" value="Εξερεύνηση των περιεχομένων %i φακέλων"/>
 	<string id="8291" value="Πολλαπλοί φάκελοι"/>
 	<string id="8292" value="%i αρχεία επιλεγμένα"/>
@@ -2608,7 +2608,7 @@
 	<string id="8294" value="Πρόσφατες Προσθήκες"/>
 	<string id="8295" value="Βαθμολόγηση αυτού του αρχείου"/>
 	<string id="8304" value="Μ/Δ"/>
-	<string id="8306" value="Τοποθεσία"/>
+	<string id="8306" value="Θέση"/>
 	<string id="8307" value="Τύπος"/>
 	<string id="8308" value="Μέγεθος"/>
 	<string id="8309" value="Μερική Πηγή (%.2f%% διαθέσιμο)"/>
@@ -2819,7 +2819,7 @@
 	<string id="16362" value="Οι αποστολές προς το ED2K δεν πρέπει να ακυρώνονται! Θέλετε σίγουρα να ακυρώσετε αυτήν την αποστολή;"/>
 	<string id="16363" value="Αποστολές Torrent"/>
 	<string id="16364" value="Ολοκληρωμένες Αποστολές"/>
-	<string id="16365" value="Θέλετε σίγουρα να διαγράψετε κάθε λήψη σε αυτό το group;"/>
+	<string id="16365" value="Θέλετε σίγουρα να διαγράψετε όλες τις λήψεις σε αυτήν την ομάδα;"/>
 	<string id="16366" value="Ουρά"/>
 	<string id="16367" value="ED2K Κύρια"/>
 	<string id="16368" value="ED2K Ημιτελών"/>
@@ -3239,7 +3239,7 @@
 		<control/>
 		<control caption="_Προσθήκη"/>
 		<control caption="_Αφαίρεση"/>
-		<control caption="Αποθήκευση Συλλογών σε:"/>
+		<control caption="Αποθήκευση Συλλογών Σε:"/>
 		<control/><control/>
 		<control caption="Δημιουργία αρχείων φαντασμάτων"/>
 	</dialog>
@@ -3251,7 +3251,7 @@
 		<control caption="_Τύποι Αρχείων:"/>
 		<control/>
 		<control caption="_Προσθήκη"/>
-		<control caption="_Αφαίρεση."/>
+		<control caption="_Αφαίρεση"/>
 		<control caption="Πρόσθετο (plugin) _Ηχητικής Απεικόνισης:"/>
 		<control caption="_Επιλογή..."/>
 		<control caption="_Χειρισμός Πολυμέσων"/>
@@ -3277,11 +3277,11 @@
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="Διαχειριστής _Λήψεων:"/>
-		<control caption="Χρήση του Shareaza για διχείριση των εξής λήψεων από τον Ιστό:"/>
+		<control caption="Χρήση του Shareaza για διαχείριση των εξής λήψεων από τον Ιστό:"/>
 		<control/>
 		<control caption="_Προσθήκη"/>
 		<control caption="_Αφαίρεση"/>
-		<control caption="Το πρόσθετο (plugin) διαχείρισης λήψεων θα επιχειρεί να λάβει τύπους αρχείων αυτής της λίστας. Ο χηρισμός των υπόλοιπων τύπων παραμένει στο πρόγραμμα περιήγησής σας. Για να διαχειρίζεται τις λήψεις, το Shareaza πρέπει να τρέχει!"/>
+		<control caption="Το πρόσθετο (plugin) διαχείρισης λήψεων θα επιχειρεί να λάβει τύπους αρχείων αυτής της λίστας. Ο χειρισμός των υπόλοιπων τύπων παραμένει στο πρόγραμμα περιήγησής σας. Για να διαχειρίζεται τις λήψεις, το Shareaza πρέπει να είναι ανοιγμένο!"/>
 	</dialog>
 	<dialog name="CInternetSettingsGroup" caption="Διαδίκτυο"/>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Σύνδεση">
@@ -3333,18 +3333,18 @@
 		<control caption="_Επιλογές:"/>
 		<control caption="Κοινοποίηση ημιτελών λήψεων"/>
 		<control caption="Περιορισμοί σε λειτουργία κόμβου"/>
-		<control caption="Κοινοποίηση αρχείων προεπισκόπ."/>
-		<control caption="Όριο για κάθε host:"/>
+		<control caption="Κοινοπ. αρχείων προεπισκόπησης"/>
+		<control caption="Όριο ανά παραλήπτη:"/>
 		<control/><control/>
-		<control caption="Φίλτρο _Προγραμμάτων:"/>
+		<control caption="Φραγή _Προγραμμάτων:"/>
 		<control/>
 		<control caption="+"/>
 		<control caption="-"/>
-		<control caption="_Εύρος Ζώνης:"/>
+		<control caption="Συνολικό Εύρος _Ζώνης Αποστολής:"/>
 		<control caption="Όριο:"/>
 		<control/>
 		<control caption="Λειτουργία:"/>
-		<control caption="Μέγιστη|Μέσου Όρου"/>
+		<control caption="Μέγιστου|Μέσου Όρου"/>
 		<control caption="_Ουρές:"/>
 		<control/>
 		<control caption="_Νέα..."/>
@@ -3365,10 +3365,10 @@
 		<control/>
 	</dialog>
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Χρονοδιάγραμμα">
-		<control caption="_Ενεργοποίηση και Επιλογές ΠΣ:"/>
+		<control caption="_Ενεργοποίηση και Επιλογές ΔΛ:"/>
 		<control caption="_Ενεργοποίηση Χρονοδιαγράμματος"/>
 		<control/><control/>
-		<control caption="Σε ώρα ΠΣ, σύνδεση μόνο στο G2"/>
+		<control caption="Σε ώρα ΔΛ, σύνδεση μόνο στο G2"/>
 		<control caption="Υπόμνημα:"/>
 		<control caption="Κυρ"/>
 		<control caption="Δευ"/>
@@ -3378,12 +3378,12 @@
 		<control caption="Παρ"/>
 		<control caption="Σάβ"/>
 		<control caption="Μη σύνδεση"/>
-		<control caption="Περιορισμένη Σύνδεση (ΠΣ)"/>
-		<control caption="Φυσιολογική Σύνδεση"/>
-		<control caption="% εύρους ζώνης, σε ώρα ΠΣ"/>
+		<control caption="Διακριτική Λειτουργία (ΔΛ)"/>
+		<control caption="Πλήρης Λειτουργία"/>
+		<control caption="% εύρους ζώνης, σε ώρα ΔΛ"/>
 		<control/>
 		<control caption="Περιγραφή:"/>
-		<control caption="Το Χρονοδιάγραμμα σχεδιάστηκε για να σας επιτρέπει να ορίζεται τις ώρες που το Shareaza θα συνδέεται και θα λαμβάνει αρχεία.{n}Σημείωση: Όταν είναι ενεργό και κατά την είσοδο σε/έξοδο από ώρες ΠΣ, ίσως το δείτε να αλλάζει τις ρυθμίσεις (σύμφωνα με τις Επιλογές ΠΣ). Αυτό είναι φυσιολογικό!"/>
+		<control caption="Το Χρονοδιάγραμμα σχεδιάστηκε για να σας επιτρέπει να ορίζεται τις ώρες που το Shareaza θα συνδέεται και θα λαμβάνει αρχεία.{n}Σημείωση: Όταν είναι ενεργό και κατά την είσοδο σε/έξοδο από ώρες ΔΛ, ίσως το δείτε να αλλάζει τις ρυθμίσεις (σύμφωνα με τις Επιλογές ΔΛ). Αυτό είναι φυσιολογικό!"/>
 	</dialog>
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Δίκτυα">
 		<control caption="Το Shareaza είναι ένα γενικού σκοπού πρόγραμμα ανταλλαγής αρχείων που συνδέεται σε πολλά P2P δίκτυα ταυτόχρονα. Σε αυτήν τη σελίδα μπορείτε να επιλέξετε σε ποια δίκτυα θέλετε να συνδέεστε και με τι ρυθμίσεις στο καθένα."/>
@@ -3419,7 +3419,7 @@
 		<control caption="Λειτουργία:"/>
 		<control caption="Βέλτιστη|Φύλλου|Ultrapeer"/>
 		<control caption="Όριο αριθμού συνδέσεων G_1:"/>
-		<control caption="Φύλ. σε Ultrapeer:"/>
+		<control caption="Φύλλο σε Ultrapeer:"/>
 		<control/><control/>
 		<control caption="Ultrapeer σε Φύλλο:"/>
 		<control/><control/>
@@ -3461,7 +3461,7 @@
 		<control caption="&#160;Προτίμηση πηγών torrent"/>
 		<control caption="_Παιχνίδι Τέλους:"/>
 		<control caption="Με την ολοκλήρωση ενός torrent, ενεργ. λειτουργίας Παιχνιδιού Τέλους"/>
-		<control caption="_Αποθήκευση Torrents σε:"/>
+		<control caption="_Αποθήκευση Torrents Σε:"/>
 		<control/><control/>
 		<control caption="_Δημιουργία Torrent"/>
 		<control/><control/>
@@ -3469,7 +3469,7 @@
 		<control/>
 	</dialog>
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Πρωτόκολλα">
-		<control caption="Παράθεση Πρωτοκόλλων και Αρχιτεκτονικών του Shareaza:"/>
+		<control caption="Παράθεση Πρωτοκόλλων του Shareaza:"/>
 		<control/>
 	</dialog>
 	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Φλοιοί">
@@ -3495,7 +3495,7 @@
 		<control caption="_Εγκατάσταση..."/>
 		<control caption="Λήψη επιπλέων"/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Προχωρημένα">
+	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Προχωρημένες">
 		<control/>
 		<control caption="Εφαρμογή Τιμής:"/>
 		<control caption="Τιμή:"/>
@@ -3520,7 +3520,7 @@
 		<control/>
 		<control caption="Πρωτόκολλα:"/>
 		<control/>
-		<control caption="_Χωρητικότητα:"/>
+		<control caption="Ενεργοποίηση και _Χωρητικότητα:"/>
 		<control caption="Ενεργοποίηση αυτής της ουράς"/>
 		<control caption="Ελάχιστος αριθμός μεταφορών:"/>
 		<control/><control/>
@@ -3528,7 +3528,7 @@
 		<control/><control/>
 		<control caption="Μέγιστος αριθμός αναμενόντων:"/>
 		<control/><control/>
-		<control caption="Παράμετροι _Υπηρεσίας:"/>
+		<control caption="Παράμετροι _Εξυπηρέτησης:"/>
 		<control caption="Ποσοστιαίο εύρος ζώνης αποστολ.:"/>
 		<control/>
 		<control caption="Απόλυτο εύρος ζώνης αποστολών:"/>
@@ -3624,7 +3624,7 @@
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Ολοκλήρωση Οδηγού Σύντομης Εκκίνησης">
 		<control caption="Αυτό ήταν! Το Shareaza έχει ρυθμιστεί να δουλεύει με τον υπολογιστή σας."/>
 		<control caption="Αν ποτέ χρειαστεί να αλλάξετε τις ρυθμίσεις σας, μπορείτε να ξανατρέξετε αυτόν τον οδηγό επιλέγοντάς τον από το μενού Εργαλεία."/>
-		<control caption="Μετά το κλείσιμο του οδηγού με κλικ στο Finish, μπορείτε να συνδεθείτε στα δίκτυα που επιλέξατε και να αρχίσετε αναζητήσεις και λήψεις."/>
+		<control caption="Μετά το κλείσιμο του οδηγού με κλικ στο Τέλος, μπορείτε να συνδεθείτε στα δίκτυα που επιλέξατε και να αρχίσετε αναζητήσεις και λήψεις."/>
 		<control caption="Σύνδεση στο δίκτυο μετά το κλείσιμο του οδηγού."/>
 		<control caption="Σύνδεση στο δίκτυο σε κάθε εκκίνηση του Shareaza."/>
 		<control caption="Εκκίνηση του Shareaza σε κάθε έναρξη των Windows"/>
@@ -3696,12 +3696,12 @@
 	</dialog>
 	<dialog name="CFavouritesProfilePage" cookie="SyBuStEdStEdBuBu" caption="Αγαπημένα">
 		<control/>
-		<control caption="_Επεξεργασία:"/>
+		<control caption="Αγαπημένη _Ιστοσελίδα:"/>
 		<control caption="Τίτλος:"/>
 		<control/>
 		<control caption="URL:"/>
 		<control/>
-		<control caption="Νέο"/>
+		<control caption="Προσθήκη"/>
 		<control caption="Αφαίρεση"/>
 	</dialog>
 	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Αρχεία">
@@ -3709,9 +3709,9 @@
 		<control caption="Τα αγαπημένα αρχεία συστείνονται στους περιηγητές του προφίλ σας. Μπορείτε να τα ορίσετε στον φάκελο &quot;Αγαπημένα&quot; της Βιβλιοθήκης."/>
 		<control/>
 	</dialog>
-	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Πιστοποιητικά">
-		<control caption="Οι χρήστες Gnutella ταυτοποιούνται από ένα παγκόσμια μοναδικό αναγνωριστικό και το αντίστοιχο ζεύγος δημόσιου και ιδιωτικού κλειδιού. Κανονικά, δεν χρειάζεται να παράγετε ένα νέο αναγνωριστικό, πάντως το Shareaza παρέχει αυτήν την επιλογή για τους προχωρημένους χρήστες."/>
-		<control caption="_Πιστοποίηση παγκόσμια μοναδικού αναγνωριστικού Gnutella:"/>
+	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Πιστοποιητικό">
+		<control caption="Οι χρήστες Gnutella ταυτοποιούνται από ένα παγκόσμια μοναδικό αναγνωριστικό, και το αντίστοιχο ζεύγος δημόσιου και ιδιωτικού κλειδιού. Κανονικά, δεν χρειάζεται να παράγετε ένα νέο αναγνωριστικό, πάντως το Shareaza παρέχει αυτήν την επιλογή για τους προχωρημένους χρήστες."/>
+		<control caption="_Παγκόσμια μοναδικό πιστοποιητικό αναγνώρισης Gnutella:"/>
 		<control caption="GUID:"/>
 		<control/>
 		<control caption="Δημιουργημένο:"/>
@@ -3757,11 +3757,11 @@
 		<control caption="πηγές."/>
 		<control caption="_Απόκρυψη:"/>
 		<control caption="Απασχολημένων hosts"/>
-		<control caption="Hosts προωθημένων πίσω από Firewall"/>
+		<control caption="Hosts οπίσω Firewall"/>
 		<control caption="Ασταθών hosts"/>
-		<control caption="Μη ταιριαχτών αρχείων"/>
-		<control caption="Προϋπάρχοντων αρχείων"/>
-		<control caption="Πλαστών αποτελεσμάτων"/>
+		<control caption="Αταίριαχτων αρχείων"/>
+		<control caption="Υπάρχοντων αρχείων"/>
+		<control caption="Πλαστών αποτελεσμάτ."/>
 		<control caption="Φιλτράρισμα"/>
 		<control caption="Άκυρο"/>
 		<control/>
@@ -3769,9 +3769,9 @@
 		<control caption="_Αποθήκευση ως"/>
 		<control caption="_Διαγραφή"/>
 		<control caption="Φίλτρα:"/>
-		<control caption="Αρχεία DRM"/>
-		<control caption="Ύποπτα αρχεία"/>
-		<control caption="Αποτελέσματα για Ενήλικες"/>
+		<control caption="Αρχείων DRM"/>
+		<control caption="Ύποπτων αρχείων"/>
+		<control caption="Αρχείων για Ενήλικες"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Αποθήκευση φίλτρου ως">
 		<control/>
@@ -3809,7 +3809,7 @@
 		<control caption="Universal Resource Names (URNs)"/>
 		<control/><control/><control/><control/>
 		<control caption="Ιδιότητες Αρχείου"/>
-		<control caption="Τοποθεσία:"/>
+		<control caption="Θέση:"/>
 		<control/>
 		<control caption="Τύπος:"/>
 		<control/>
@@ -4006,14 +4006,14 @@
 		<control caption="Ελπίζουμε να απολαμβάνετε τη χρήση του Shareaza. Πιστεύουμε ότι αποτελεί το καλύτερο πρόγραμμα ανταλλαγής αρχείων."/>
 		<control caption="Δυστυχώς, πολλοί χρήστες δεν ξέρουν τι χάνουν!"/>
 		<control caption="Αν ξέρετε κάποιον που θα του άρεσε το Shareaza, είτε είναι νέος χρήστης, είτε κάποιος που ακόμα παιδεύεται με ένα κατώτερο προϊόν, γιατί να μην τον ενημερώσετε ότι υπάρχει μια καλύτερη εναλλακτική;"/>
-		<control caption="Πιθανόν να σας ευγνωμονούν που τους σώσατε!"/>
+		<control caption="Πιθανόν να σας ευγνωμονεί που τον σώσατε!"/>
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Προϋπάρχοντα Αρχεία">
 		<control/><control/><control/><control/>
 		<control caption="Έχετε ήδη αυτό το αρχείο στη Βιβλιοθήκη. Τι θέλετε να κάνετε;"/>
-		<control caption="Μετάβαση στο αρχείο στη Βιβλιοθήκης"/>
+		<control caption="Μετάβαση στο αρχείο στη Βιβλιοθήκη"/>
 		<control caption="Λήψη του αρχείου ξανά"/>
 		<control caption="Μη λήψη του αρχείου"/>
 		<control caption="OK"/>
@@ -4117,7 +4117,7 @@
 		<control/>
 		<control caption="Δημιουργημένο:"/>
 		<control/>
-		<control caption="Δημιουργός:"/>
+		<control caption="Από:"/>
 		<control/>
 		<control caption="Σχόλια:"/>
 		<control/>
@@ -4153,7 +4153,7 @@
 		<control caption="Κατάσταση Tracker:"/>
 		<control caption="Απενεργοποιημένος|Προσαρμοσμένος|Μονός Tracker|Πολλαπλός Tracker|Πολλαπλός Tracker (κλειδωμένος)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Λήψη Ιδιοτήτων Group">
+	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Ιδιότητες Ομάδας Λήψεων">
 		<control caption="_Όνομα:"/>
 		<control/><control/>
 		<control caption="_Φίλτρα:"/>
@@ -4304,7 +4304,7 @@
 		<column from="Order" to="Σειρά"/>
 	</list>
 	<list name="CAdvancedSettingsList">
-		<column from="Setting" to="Ρυθμίσεις"/>
+		<column from="Setting" to="Ρύθμιση"/>
 		<column from="Value" to="Τιμή"/>
 	</list>
 	<list name="CFavouritesProfileList">
