@@ -60,7 +60,6 @@
 AppComments={#internal_name} Ultimate File Sharing
 AppId={#internal_name}
 AppName={#name}
-AppPublisher={#Publisher}
 AppVersion={#version}
 AppVerName={#name} {#version}
 AppMutex=Shareaza
@@ -99,7 +98,8 @@ SourceDir=..\..
 
 VersionInfoVersion={#version}
 VersionInfoDescription={#Description}
-VersionInfoCopyright=© {#Publisher}. All rights reserved.
+AppPublisher={#Publisher}
+AppCopyright=© {#Publisher}. All rights reserved.
 
 ; Links to website for software panel
 AppPublisherURL=http://shareaza.sourceforge.net/
