@@ -34,13 +34,14 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
+#pragma warning( push, 0 )
+
 #include "resource.h"
 
 #include <atlbase.h>
 #include <atlwin.h>
 #include <atlcom.h>
 #include <atlstr.h>
-#include <atlcoll.h>
 
 using namespace ATL;
 
@@ -54,3 +55,5 @@ typedef struct {
 
 extern MY_DATA*			_Data;
 extern CRITICAL_SECTION	_CS;
+
+#pragma warning( pop )
