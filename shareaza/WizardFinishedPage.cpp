@@ -47,11 +47,11 @@ END_MESSAGE_MAP()
 // CWizardFinishedPage property page
 
 CWizardFinishedPage::CWizardFinishedPage() : CWizardPage(CWizardFinishedPage::IDD)
+, m_bAutoConnect( FALSE )
+, m_bConnect( FALSE )
+, m_bStartup( FALSE )
 {
 	//{{AFX_DATA_INIT(CWizardFinishedPage)
-	m_bAutoConnect = Settings.Connection.AutoConnect;
-	m_bConnect = FALSE;
-	m_bStartup = Settings.CheckStartup();
 	//}}AFX_DATA_INIT
 }
 
@@ -78,9 +78,12 @@ BOOL CWizardFinishedPage::OnInitDialog()
 
 	Skin.Apply( _T("CWizardFinishedPage"), this );
 
-	m_bConnect		= TRUE;
 	m_bAutoConnect	= Settings.Connection.AutoConnect;
-	m_bStartup		= Settings.CheckStartup();
+	m_bConnect		= TRUE;
+	if ( Settings.Live.FirstRun )
+		m_bStartup = TRUE;
+	else
+		m_bStartup = Settings.CheckStartup();
 
 	UpdateData( FALSE );
 
@@ -118,6 +121,7 @@ BOOL CWizardFinishedPage::OnWizardFinish()
 	}
 
 	if ( m_bConnect && !Network.IsConnected() ) Network.Connect( TRUE );
+	else if ( !m_bConnect && Network.IsConnected() ) Network.Disconnect();
 	Settings.SetStartup( m_bStartup );
 
 	return CWizardPage::OnWizardFinish();

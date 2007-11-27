@@ -436,11 +436,8 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Boot
 
-	if ( theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
+	if ( Settings.Live.FirstRun || theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
 	{
-		// Turn this on for the first run and allow it to be disabled during the wizard.
-		if ( Settings.Live.FirstRun )
-			Settings.SetStartup( TRUE );
 		PostMessage( WM_COMMAND, ID_TOOLS_WIZARD );
 	}
 	else if ( theApp.GetProfileInt( _T("Windows"), _T("RunWarnings"), FALSE ) == FALSE )

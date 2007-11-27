@@ -172,8 +172,8 @@ void CSettings::Setup()
 	Add( _T("Connection.InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT );
 	Add( _T("Connection.InBind"), &Connection.InBind, FALSE );
 	Add( _T("Connection.RandomPort"), &Connection.RandomPort, FALSE );
-	Add( _T("Connection.InSpeed"), &Connection.InSpeed, 56 );
-	Add( _T("Connection.OutSpeed"), &Connection.OutSpeed, 56 );
+	Add( _T("Connection.InSpeed"), &Connection.InSpeed, 2048 );
+	Add( _T("Connection.OutSpeed"), &Connection.OutSpeed, 256 );
 	Add( _T("Connection.IgnoreLocalIP"), &Connection.IgnoreLocalIP, TRUE );
 	Add( _T("Connection.IgnoreOwnIP"), &Connection.IgnoreOwnIP, TRUE );
 	Add( _T("Connection.TimeoutConnect"), &Connection.TimeoutConnect, 16000 );
@@ -488,6 +488,7 @@ CSettings::CSettings()
 
 	// Add all settings
 	Setup();
+	if ( Settings.Live.FirstRun ) OnChangeConnectionSpeed();	// This helps if the QuickStart Wizard is skipped.
 }
 
 CSettings::~CSettings()
@@ -1443,12 +1444,10 @@ QWORD CSettings::ParseVolume(CString& strVolume, int nReturnUnits) const
 	// Return early if there is no number in the string
 	if ( _stscanf( strSize, _T("%lf"), &val ) != 1 ) return 0ul;
 
-	if ( _tcsstr( strSize, _T("B") ) )
+	if ( _tcsstr( strSize, _T("B") )
+		|| !_tcsstr( strSize, _T("b") ) )	// Consider as Bytes if not specified
 		// Convert to bits if Bytes were passed in
 		val *= 8.0f;
-	else if ( !_tcsstr( strSize, _T("b") ) )
-		// If bits or Bytes are not indicated return 0
-		return 0ul;
 
 	// Work out what units are represented in the string
 	if ( _tcsstr( strSize, _T("K") ) || _tcsstr( strSize, _T("k") ) )		// Kilo

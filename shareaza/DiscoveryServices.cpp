@@ -692,7 +692,7 @@ BOOL CDiscoveryServices::Update()
 // You should never query server.met files, because of the load it would create.
 // This is public, and will be called quite regularly.
 
-BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, BOOL bForceDiscovery)
+BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT nForceDiscovery)
 {
 	/*
 		bDiscovery:
@@ -702,7 +702,11 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, BOOL bFo
 			PROTOCOL_NULL	- Auto Detection
 			PROTOCOL_G1		- Execute entry for G1
 			PROTOCOL_G2		- Execute entry for G2
-			PROTOCOL_GED2K	- Execute entry for ED2K
+			PROTOCOL_ED2K	- Execute entry for ED2K
+		nForceDiscovery:
+			FALSE - Normal discovery. There is a time limit and a check if it is needed
+			1 - Forced discovery. Partial time limit and withOUT check if it is needed ( Used inside CNeighboursWithConnect::Maintain() )
+			2 - Unlimited discovery. No time limit but there is the check if it is needed ( Only from QuickStart Wizard )
 	*/
 
 	CSingleLock pLock( &Network.m_pSection );
@@ -712,14 +716,14 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, BOOL bFo
 	if ( bDiscovery ) // If this is a user-initiated manual query, or AutoStart with Cache empty
 	{
 		if ( m_hInternet ) return FALSE;
-		if ( m_tExecute != 0 && tNow - m_tExecute < 5 ) return FALSE;
-		if ( m_tQueried != 0 && tNow - m_tQueried < 60 && !bForceDiscovery ) return FALSE;
-		if ( bForceDiscovery && nProtocol == PROTOCOL_NULL ) return FALSE;
+		if ( m_tExecute != 0 && tNow - m_tExecute < 5 && nForceDiscovery < 2 ) return FALSE;
+		if ( m_tQueried != 0 && tNow - m_tQueried < 60 && nForceDiscovery == 0 ) return FALSE;
+		if ( nForceDiscovery > 0 && nProtocol == PROTOCOL_NULL ) return FALSE;
 
 		m_tExecute = tNow;
-		BOOL	bG1Required = Settings.Gnutella1.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1) && ( bForceDiscovery || HostCache.Gnutella1.CountHosts(TRUE) < 15 );
-		BOOL	bG2Required = Settings.Gnutella2.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2) && ( bForceDiscovery || HostCache.Gnutella2.CountHosts(TRUE) < 25 );
-		BOOL	bEdRequired = Settings.eDonkey.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) && Settings.eDonkey.MetAutoQuery && ( m_tMetQueried == 0 || tNow - m_tMetQueried >= 60 * 60 ) && ( bForceDiscovery || !HostCache.eDonkey.EnoughED2KServers() );
+		BOOL	bG1Required = Settings.Gnutella1.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1) && ( nForceDiscovery == 1 || HostCache.Gnutella1.CountHosts(TRUE) < 20 );
+		BOOL	bG2Required = Settings.Gnutella2.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2) && ( nForceDiscovery == 1 || HostCache.Gnutella2.CountHosts(TRUE) < 25 );
+		BOOL	bEdRequired = Settings.eDonkey.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) && Settings.eDonkey.MetAutoQuery && ( m_tMetQueried == 0 || tNow - m_tMetQueried >= 60 * 60 ) && ( nForceDiscovery == 1 || !HostCache.eDonkey.EnoughED2KServers() );
 
 		// Broadcast dicovery
 		if ( bG2Required && Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
@@ -731,7 +735,7 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, BOOL bFo
 			Datagrams.Send( &addr, CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
 		}
 
-		if ( nProtocol == PROTOCOL_NULL )								// G1 + G2 + Ed hosts are wanted
+		if ( nProtocol == PROTOCOL_NULL )	// G1 + G2 + Ed hosts are wanted
 		{
 			BOOL bOK = TRUE;
 
@@ -745,20 +749,19 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, BOOL bFo
 				bOK = bOK && RequestRandomService( PROTOCOL_ED2K );
 			}
 
-			return bOK;
+			return bOK;		// TRUE if the Discovery is executed correctly or no Discovery needed
 		}
-		else if ( bG1Required && RequestRandomService( PROTOCOL_G1 ) )	// Only G1
-			return TRUE;
-		else if ( bG2Required && RequestRandomService( PROTOCOL_G2 ) )	// Only G2
-			return TRUE;
-		else if ( bEdRequired )											// Only Ed
+		else if ( bG1Required )	// Only G1
+			return RequestRandomService( PROTOCOL_G1 );
+		else if ( bG2Required )	// Only G2
+			return RequestRandomService( PROTOCOL_G2 );
+		else if ( bEdRequired )	// Only Ed
 		{
-			m_tMetQueried = tNow;		// Execute this maximum one time each 60 min only when the number of eDonkey servers is too low (Very important).
-			if ( RequestRandomService( PROTOCOL_ED2K ) )
-				return TRUE;
+			m_tMetQueried = tNow;	// Execute this maximum one time each 60 min only when the number of eDonkey servers is too low (Very important).
+			return RequestRandomService( PROTOCOL_ED2K );
 		}
 		else
-			return TRUE;
+			return TRUE;	// No Discovery needed
 	}
 	else
 	{
