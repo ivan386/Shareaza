@@ -436,7 +436,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Boot
 
-	if ( Settings.Live.FirstRun || theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
+	if ( theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
 	{
 		PostMessage( WM_COMMAND, ID_TOOLS_WIZARD );
 	}
