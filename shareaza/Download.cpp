@@ -712,7 +712,7 @@ BOOL CDownload::Save(BOOL bFlush)
 			ar.Abort();
 			pFile.Abort();
 			theApp.Message( MSG_ERROR, _T("Serialize Error: %s"), pException->m_strFileName );
-			pException->ReportError();
+//			pException->ReportError(); // Currently causes deadlock in GUI with Transfers mutex
 			pException->Delete();
 			return FALSE;
 		}
