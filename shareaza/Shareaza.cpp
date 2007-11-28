@@ -882,10 +882,13 @@ void CShareazaApp::InitResources()
 
 HINSTANCE CShareazaApp::CustomLoadLibrary(LPCTSTR pszFileName)
 {
-	if ( HINSTANCE hLibrary = LoadLibrary( pszFileName ) )
-		return hLibrary;
+	HINSTANCE hLibrary = NULL;
+
+	if ( ( hLibrary = LoadLibrary( pszFileName ) ) != NULL || ( hLibrary = LoadLibrary( Settings.General.Path + _T("\\") + pszFileName ) ) != NULL );
 	else
-		return LoadLibrary( Settings.General.Path + _T("\\") + pszFileName );
+		TRACE( _T("DLL not found: %s\r\n"), pszFileName );
+
+	return hLibrary;
 }
 
 /////////////////////////////////////////////////////////////////////////////
