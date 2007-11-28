@@ -253,20 +253,22 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	m_bQueryDiscoveries = true;
 	m_nProgressSteps += 30;
 
+	CWaitCursor pCursor;
 	if ( m_bUPnPForward )
+	{
 		m_nProgressSteps += 30;	// UPnP device detection
 
-	CWaitCursor pCursor;
-	// Create UPnP finder object if it doesn't exist
-	try
-	{
-		if ( !theApp.m_pUPnPFinder )
-			theApp.m_pUPnPFinder.reset( new CUPnPFinder );
-		if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
-			theApp.m_pUPnPFinder->StartDiscovery();
+		// Create UPnP finder object if it doesn't exist
+		try
+		{
+			if ( !theApp.m_pUPnPFinder )
+				theApp.m_pUPnPFinder.reset( new CUPnPFinder );
+			if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
+				theApp.m_pUPnPFinder->StartDiscovery();
+		}
+		catch ( CUPnPFinder::UPnPError& ) {}
+		catch ( CException* e ) { e->Delete(); }
 	}
-	catch ( CUPnPFinder::UPnPError& ) {}
-	catch ( CException* e ) { e->Delete(); }
 
 	m_hThread = BeginThread( "WizardConnectionPage", ThreadStart, this, THREAD_PRIORITY_NORMAL );
 
@@ -388,7 +390,7 @@ void CWizardConnectionPage::OnTimer(UINT_PTR nIDEvent)
 
 	CloseThread( &m_hThread );
 
-	if ( theApp.m_bUPnPPortsForwarded != TS_TRUE && m_bUPnPForward )
+	if ( m_bUPnPForward && theApp.m_bUPnPPortsForwarded != TS_TRUE )
 	{
 		CString strFormat, strMessage;
 		LoadString( strFormat, IDS_WIZARD_PORT_FORWARD );

@@ -662,13 +662,22 @@ void CSettings::Load()
 
 	// UPnP is not supported in servers and Win9x
 	if ( theApp.m_bServer || theApp.m_dwWindowsVersion < 5 && !theApp.m_bWinME )
+	{
 		Connection.EnableUPnP = FALSE;
+		Connection.DeleteUPnPPorts = FALSE;
+	}
 
 	// UPnP will setup a random port, so we need to reset values after it sets Connection.InPort
 	if ( Connection.RandomPort )
 		Connection.InPort = 0;
 	else if ( Connection.InPort == 0 )
 		Connection.RandomPort = TRUE;
+
+	if ( !theApp.m_bNT )
+	{
+		Connection.EnableFirewallException = FALSE;
+		Connection.DeleteFirewallException = FALSE;
+	}
 }
 
 void CSettings::Save(BOOL bShutdown)
