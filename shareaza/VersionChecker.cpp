@@ -167,18 +167,22 @@ void CVersionChecker::BuildRequest(CString& strRequest)
 
 BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 {
-	m_pRequest.SetURL( _T("http://update.trillinux.org/version/beta.php?") + strPost );
-	//Remember to set the update server for final releases.
-	
+	CString strVendorCode(VENDOR_CODE);
+
+	if ( strVendorCode == _T("RA")_T("ZA") )
+		m_pRequest.SetURL( _T("http://update.shareaza.com/version/update.php?") + strPost );
+	else
+		m_pRequest.SetURL( _T("http://update.trillinux.org/version/beta.php?") + strPost );
+
 	if ( ! m_pRequest.Execute( FALSE ) ) return FALSE;
-	
+
 	int nStatusCode = m_pRequest.GetStatusCode();
 	if ( nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
-	
+
 	CString strResponse = m_pRequest.GetResponseString();
 	CString strHack = theApp.GetProfileString( _T("VersionCheck"), _T("TestResponse"), _T("") );
 	if ( strHack.GetLength() ) strResponse = strHack;
-	
+
 	for ( strResponse += '&' ; strResponse.GetLength() ; )
 	{
 		CString strItem	= strResponse.SpanExcluding( _T("&") );
