@@ -159,8 +159,8 @@ Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion o
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
 Source: "{#root}\plugins\*.dll";                     DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl*.dll,zlibwapi.dll"
-Source: "setup\plugins\MediaPlayer.dll";             DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "setup\plugins\RazaWebHook.dll";             DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\MediaPlayer.dll";                   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\RazaWebHook.dll";                   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "plugins\ZIPBuilder\{#type}\ZIPBuilder.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\RARBuilder\unrar.dll";              DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "plugins\RARBuilder\{#type}\RARBuilder.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
