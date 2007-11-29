@@ -43,8 +43,8 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-			VALUE "Comments", "#PROJECTNAME#"
-			VALUE "CompanyName", "Shareaza Development Team"
+            VALUE "Comments", "#PROJECTNAME#"
+            VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "#PROJECTNAME#"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "#PROJECT#"
