@@ -706,6 +706,7 @@ BOOL CDownload::Save(BOOL bFlush)
 		try
 		{
 			Serialize( ar, 0 );
+			ar.Close();
 		}
 		catch ( CFileException* pException )
 		{
@@ -716,8 +717,6 @@ BOOL CDownload::Save(BOOL bFlush)
 			pException->Delete();
 			return FALSE;
 		}
-
-		ar.Close();
 	}
 	
 	if ( Settings.Downloads.FlushSD || bFlush ) pFile.Flush();
