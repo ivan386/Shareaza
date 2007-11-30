@@ -255,7 +255,7 @@ void CLibraryFileView::OnLibraryLaunch()
 	{
 		CString strPath = pFile->GetPath();
 
-		if ( pFile->m_bVerify == TS_FALSE && 
+		if ( pFile->m_bVerify == TRI_FALSE && 
 			 ( ! Settings.Search.AdultFilter || ! AdultFilter.IsChildPornography( strPath ) ) )
 		{
 			DWORD nIndex = pFile->m_nIndex;
@@ -279,7 +279,7 @@ void CLibraryFileView::OnLibraryLaunch()
 			{
 				pFile = Library.LookupFile( nIndex );
 				if ( NULL == pFile ) continue;
-				pFile->m_bVerify = TS_UNKNOWN;
+				pFile->m_bVerify = TRI_UNKNOWN;
 				Library.Update();
 			}
 		}
@@ -699,7 +699,7 @@ void CLibraryFileView::OnLibraryProperties()
 void CLibraryFileView::OnUpdateLibraryShared(CCmdUI* pCmdUI) 
 {
 	CSingleLock pLock( &Library.m_pSection );
-	TRISTATE bShared = TS_UNKNOWN;
+	TRISTATE bShared = TRI_UNKNOWN;
 	
 	if ( GetSelectedCount() > 0 && pLock.Lock( 100 ) )
 	{
@@ -708,11 +708,11 @@ void CLibraryFileView::OnUpdateLibraryShared(CCmdUI* pCmdUI)
 		{
 			if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) ) )
 			{
-				if ( bShared == TS_UNKNOWN )
+				if ( bShared == TRI_UNKNOWN )
 				{
-					bShared = pFile->IsShared() ? TS_TRUE : TS_FALSE;
+					bShared = pFile->IsShared() ? TRI_TRUE : TRI_FALSE;
 				}
-				else if ( ( bShared == TS_TRUE ) != pFile->IsShared() )
+				else if ( ( bShared == TRI_TRUE ) != pFile->IsShared() )
 				{
 					pCmdUI->Enable( FALSE );
 					return;
@@ -721,7 +721,7 @@ void CLibraryFileView::OnUpdateLibraryShared(CCmdUI* pCmdUI)
 		}
 	}
 	pCmdUI->Enable( GetSelectedCount() > 0 );
-	pCmdUI->SetCheck( bShared == TS_TRUE );
+	pCmdUI->SetCheck( bShared == TRI_TRUE );
 }
 
 void CLibraryFileView::OnLibraryShared() 
@@ -735,7 +735,7 @@ void CLibraryFileView::OnLibraryShared()
 		if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) ) )
 		{
 			// Don't share not verified files
-			if ( pFile->m_bVerify != TS_FALSE )
+			if ( pFile->m_bVerify != TRI_FALSE )
 			{
 				bool bPrivate = false;
 				if ( pFile->m_pSchema != NULL && 
@@ -746,11 +746,11 @@ void CLibraryFileView::OnLibraryShared()
 					bPrivate = str == L"true";
 				}
 				if ( bPrivate )
-					pFile->m_bShared = TS_FALSE;
+					pFile->m_bShared = TRI_FALSE;
 				else if ( pFile->IsShared() )
-					pFile->m_bShared = pFile->m_pFolder->IsShared() ? TS_FALSE : TS_UNKNOWN;
+					pFile->m_bShared = pFile->m_pFolder->IsShared() ? TRI_FALSE : TRI_UNKNOWN;
 				else
-					pFile->m_bShared = pFile->m_pFolder->IsShared() ? TS_UNKNOWN : TS_TRUE;
+					pFile->m_bShared = pFile->m_pFolder->IsShared() ? TRI_UNKNOWN : TRI_TRUE;
 
 				pFile->m_nUpdateCookie++;
 			}

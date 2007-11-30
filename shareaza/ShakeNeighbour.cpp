@@ -59,9 +59,9 @@ m_bG2Accept(FALSE),				// The remote computer hasn't said "Accept: application/x
 m_bDeflateSend(FALSE),			// The remote computer hasn't said "Content-Encoding: deflate" yet
 m_bDeflateAccept(FALSE),		// The remote computer hasn't said "Accept-Encoding: deflate" yet
 // Start out ultrapeer settings as unknown
-m_bUltraPeerSet(TS_UNKNOWN),	// The remote computer hasn't told us if it's ultra or not yet
-m_bUltraPeerNeeded(TS_UNKNOWN),	// The remote computer hasn't told us if it needs more ultra connections yet
-m_bUltraPeerLoaded(TS_UNKNOWN),	// May not be in use (do)
+m_bUltraPeerSet(TRI_UNKNOWN),	// The remote computer hasn't told us if it's ultra or not yet
+m_bUltraPeerNeeded(TRI_UNKNOWN),	// The remote computer hasn't told us if it needs more ultra connections yet
+m_bUltraPeerLoaded(TRI_UNKNOWN),	// May not be in use (do)
 m_nDelayCloseReason(0),
 	//ToDo: Check this - G1 setting?
 	// Set m_bCanDeflate to true if the checkboxes in Shareaza Settings allow us to send and receive compressed data
@@ -110,7 +110,7 @@ BOOL CShakeNeighbour::ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic, 
 	// Initialize more member variables
 	m_nState		= nrsConnecting;                        // We've connected the socket, and are waiting for the connection to be made
 	m_bAutomatic	= bAutomatic;                           // Copy the given automatic setting into the member variable (do)
-	m_bUltraPeerSet	= bNoUltraPeer ? TS_FALSE : TS_UNKNOWN; // Set m_bUltraPeerSet to false or unknown (do)
+	m_bUltraPeerSet	= bNoUltraPeer ? TRI_FALSE : TRI_UNKNOWN; // Set m_bUltraPeerSet to false or unknown (do)
 
 	// Add this CShakeNeighbour object to the list of them
 	Neighbours.Add( this );
@@ -1000,21 +1000,21 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 				strHeader.CompareNoCase( _T("X-Hub") ) == 0 )
 	{
 		// If the value is the text "True", set m_bUltraPeerSet to true, otherwise set it to false
-		m_bUltraPeerSet = ( strValue.CompareNoCase( _T("True") ) == 0 ) ? TS_TRUE : TS_FALSE;
+		m_bUltraPeerSet = ( strValue.CompareNoCase( _T("True") ) == 0 ) ? TRI_TRUE : TRI_FALSE;
 
 	} // The remote computer is telling us if it needs more connections to ultrapeers or not
 	else if (	strHeader.CompareNoCase( _T("X-Ultrapeer-Needed") ) == 0 ||
 				strHeader.CompareNoCase( _T("X-Hub-Needed") ) == 0 )
 	{
 		// If the value is the text "True", set m_bUltraPeerNeeded to true, otherwise set it to false
-		m_bUltraPeerNeeded = ( strValue.CompareNoCase( _T("True") ) == 0 ) ? TS_TRUE : TS_FALSE;
+		m_bUltraPeerNeeded = ( strValue.CompareNoCase( _T("True") ) == 0 ) ? TRI_TRUE : TRI_FALSE;
 
 	} // The remote computer is telling us the "X-Ultrapeer-Loaded" header, which may not be in use (do)
 	else if (	strHeader.CompareNoCase( _T("X-Ultrapeer-Loaded") ) == 0 ||
 				strHeader.CompareNoCase( _T("X-Hub-Loaded") ) == 0 )
 	{
 		// If the value is the text "True", set m_bUltraPeerLoaded to true, otherwise set it to false
-		m_bUltraPeerLoaded = ( strValue.CompareNoCase( _T("True") ) == 0 ) ? TS_TRUE : TS_FALSE;
+		m_bUltraPeerLoaded = ( strValue.CompareNoCase( _T("True") ) == 0 ) ? TRI_TRUE : TRI_FALSE;
 
 	} // The remote computer is telling us it understands GGEP blocks
 	else if ( strHeader.CompareNoCase( _T("GGEP") ) == 0 )
@@ -1231,10 +1231,10 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 	}
 
 	// The remote computer called us and it hasn't said Ultrapeer or not.
-	if ( !m_bInitiated && m_bUltraPeerSet == TS_UNKNOWN )
+	if ( !m_bInitiated && m_bUltraPeerSet == TRI_UNKNOWN )
 	{
 		// Really, we don't know if it's an ultrapeer or not, so assume remote client is leaf.
-		m_bUltraPeerSet = TS_FALSE;
+		m_bUltraPeerSet = TRI_FALSE;
 	}
 
 	if ( ( ( ! m_bInitiated && m_bG2Accept ) || ( m_bInitiated && m_bG2Send ) ) &&
@@ -1277,7 +1277,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 	else if ( m_nState == nrsHandshake3 ) // We were reading the final header group from the remote computer
 	{
 		// (do)
-		if ( m_bUltraPeerSet == TS_FALSE                                 // The remote computer told us it's a leaf
+		if ( m_bUltraPeerSet == TRI_FALSE                                 // The remote computer told us it's a leaf
 			&& ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) ) // And we're either a hub or capable of becoming one
 		{
 			// Report this case
@@ -1301,19 +1301,19 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
 		{
 			// The remote computer sent us a header like "X-Ultrapeer: False"
-			if ( m_bUltraPeerSet == TS_FALSE )
+			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				// This connection is to a leaf below us
 				m_nNodeType = ntLeaf;
 
 			} // The remote computer sent us headers like "X-Ultrapeer: True" and "X-Ultrapeer-Needed: True"
-			else if ( m_bUltraPeerSet == TS_TRUE && m_bUltraPeerNeeded != TS_FALSE )
+			else if ( m_bUltraPeerSet == TRI_TRUE && m_bUltraPeerNeeded != TRI_FALSE )
 			{// seems like GnucDNA type node do not give "X-Ultrapeer-needed:" header
 				// Record that we are both hubs
 				m_nNodeType = ntNode;
 
 			} // The remote computer is an hub that doesn't need connections to more hubs
-			else if ( m_bUltraPeerSet == TS_TRUE && m_bUltraPeerNeeded == TS_FALSE )
+			else if ( m_bUltraPeerSet == TRI_TRUE && m_bUltraPeerNeeded == TRI_FALSE )
 			{
 				// If we are connected to any leaves
 				if ( Neighbours.GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) > 0 )
@@ -1339,7 +1339,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			}
 
 		} // The remote computer is a hub
-		else if ( m_bUltraPeerSet == TS_TRUE )
+		else if ( m_bUltraPeerSet == TRI_TRUE )
 		{
 			// And so are we
 			if ( Settings.Gnutella2.ClientMode == MODE_HUB )
@@ -1354,7 +1354,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			m_nNodeType = ntHub;
 
 		} // The remote computer is a leaf
-		else if ( m_bUltraPeerSet == TS_FALSE )
+		else if ( m_bUltraPeerSet == TRI_FALSE )
 		{
 			m_nNodeType = ntLeaf;
 			if ( Settings.Gnutella2.ClientMode == MODE_LEAF )
@@ -1365,7 +1365,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 				return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 			}
 		}
-		else if ( m_bUltraPeerSet == TS_UNKNOWN )
+		else if ( m_bUltraPeerSet == TRI_UNKNOWN )
 		{
 			// We are a leaf
 			if ( Settings.Gnutella2.ClientMode == MODE_LEAF )
@@ -1395,7 +1395,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		if ( Neighbours.IsG2Leaf() )
 		{
 			// The remote computer sent us the header "X-Ultrapeer: False"
-			if ( m_bUltraPeerSet == TS_FALSE )
+			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				HostCache.Gnutella2.Remove( &m_pHost.sin_addr );
 			}
@@ -1408,25 +1408,25 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		else if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
 		{
 			// The remote computer sent us the header "X-Ultrapeer: False"
-			if ( m_bUltraPeerSet == TS_FALSE )
+			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				// This connection is to a leaf below us
 				m_nNodeType = ntLeaf;
 
 			} // The remote computer sent us the header "X-Ultrapeer: True"
-			else if ( m_bUltraPeerSet == TS_TRUE )
+			else if ( m_bUltraPeerSet == TRI_TRUE )
 			{
 				// Record that we are both hubs
 				m_nNodeType = ntNode;
 			}
-			else if ( m_bUltraPeerSet == TS_UNKNOWN )
+			else if ( m_bUltraPeerSet == TRI_UNKNOWN )
 			{
 				// Record that remote Node type is Unknown
 				m_nNodeType = ntLeaf;
 			}
 
 		} // The remote computer is an ultrapeer, and we are not running in hub mode
-		else if ( m_bUltraPeerSet == TS_TRUE && ( Settings.Gnutella2.ClientMode != MODE_HUB ) )
+		else if ( m_bUltraPeerSet == TRI_TRUE && ( Settings.Gnutella2.ClientMode != MODE_HUB ) )
 		{
 			// This connection is to a hub above us
 			m_nNodeType = ntHub;
@@ -1564,7 +1564,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 	else if ( m_nState == nrsHandshake3 ) // We're reading the final header group from the remote computer
 	{
 		// If we're both leaves, and yet somehow we're also either an ultrapeer or can become one (do)
-		if ( m_bUltraPeerSet == TS_FALSE && m_nNodeType == ntNode &&               // The remote computer is a hub and so are we
+		if ( m_bUltraPeerSet == TRI_FALSE && m_nNodeType == ntNode &&               // The remote computer is a hub and so are we
 			 ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() ) ) // And, we're either a Gnutella ultrapeer or we could become one
 		{
 			// Report that the handshake is back to a leaf (do), and consider this connection to be to a leaf below us
@@ -1586,19 +1586,19 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
 		{
 			// The remote computer told us "X-Ultrapeer: False"
-			if ( m_bUltraPeerSet == TS_FALSE )
+			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				// This connection is to a leaf below us
 				m_nNodeType = ntLeaf;
 
 			} // The remote computer told us it's an ultrapeer and that it needs connections to more ultrapeers
-			else if ( m_bUltraPeerSet == TS_TRUE && m_bUltraPeerNeeded != TS_FALSE )
+			else if ( m_bUltraPeerSet == TRI_TRUE && m_bUltraPeerNeeded != TRI_FALSE )
 			{// seems like GnucDNA type node do not give "X-Ultrapeer-needed:" header
 				// Record that we are both ultrapeers
 				m_nNodeType = ntNode;
 
 			} // The remote computer is an ultrapeer that doesn't need any more ultrapeer connections
-			else if ( m_bUltraPeerSet == TS_TRUE && m_bUltraPeerNeeded == TS_FALSE )
+			else if ( m_bUltraPeerSet == TRI_TRUE && m_bUltraPeerNeeded == TRI_FALSE )
 			{
 				// (do)
 				if ( Neighbours.GetCount( PROTOCOL_G1, nrsConnected, ntLeaf ) > 0 )
@@ -1624,7 +1624,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			}
 
 		} // We're a leaf, and the remote computer is an ultrapeer
-		else if ( m_bUltraPeerSet == TS_TRUE )
+		else if ( m_bUltraPeerSet == TRI_TRUE )
 		{
 			// We are an ultrapeer
 			if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
@@ -1639,7 +1639,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			m_nNodeType = ntHub;
 
 		} // The remote computer is a leaf
-		else if ( m_bUltraPeerSet != TS_TRUE )
+		else if ( m_bUltraPeerSet != TRI_TRUE )
 		{
 			// And so are we
 			if ( Settings.Gnutella1.ClientMode == MODE_LEAF )
@@ -1672,7 +1672,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		if ( Neighbours.IsG1Leaf() )
 		{
 			// The remote computer told us it is a leaf
-			if ( m_bUltraPeerSet == TS_FALSE )
+			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				HostCache.Gnutella1.Remove( &m_pHost.sin_addr );
 			}
@@ -1685,20 +1685,20 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		else if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
 		{
 			// The remote computer told us it is a leaf
-			if ( m_bUltraPeerSet == TS_FALSE )
+			if ( m_bUltraPeerSet == TRI_FALSE )
 			{
 				// This connection is to a leaf below us
 				m_nNodeType = ntLeaf;
 
 			} // The remote computer told us it is an ultrapeer
-			else if ( m_bUltraPeerSet == TS_TRUE )
+			else if ( m_bUltraPeerSet == TRI_TRUE )
 			{
 				// Record that we are both ultrapeers
 				m_nNodeType = ntNode;
 			}
 
 		} // The remote computer is an ultrapeer, but we are just a leaf
-		else if ( m_bUltraPeerSet == TS_TRUE && ( Settings.Gnutella1.ClientMode != MODE_ULTRAPEER ) )
+		else if ( m_bUltraPeerSet == TRI_TRUE && ( Settings.Gnutella1.ClientMode != MODE_ULTRAPEER ) )
 		{
 			// This connection is to a hub above us
 			m_nNodeType = ntHub;

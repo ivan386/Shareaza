@@ -415,7 +415,7 @@ void CLibraryDetailView::CacheItem(int nItem)
 	pItem->nState &= LDVI_SELECTED;
 	if ( ! pFile->IsShared() ) pItem->nState |= LDVI_PRIVATE;
 	if ( ! pFile->m_oSHA1 && pFile->IsAvailable() ) pItem->nState |= LDVI_UNSCANNED;
-	if ( pFile->m_bVerify == TS_FALSE ) pItem->nState |= LDVI_UNSAFE;
+	if ( pFile->m_bVerify == TRI_FALSE ) pItem->nState |= LDVI_UNSAFE;
 	
 	if ( m_nStyle != LVS_REPORT ) return;
 	

@@ -184,7 +184,7 @@ void CLibraryTileView::Update()
 		}
 		else
 		{
-			if ( pTile->m_bSelected ) Select( pTile, TS_FALSE );
+			if ( pTile->m_bSelected ) Select( pTile, TRI_FALSE );
 			if ( pTile == m_pFocus ) m_pFocus = end();
 			if ( pTile == m_pFirst ) m_pFirst = end();
 
@@ -261,14 +261,14 @@ bool CLibraryTileView::Select(iterator pTile, TRISTATE bSelect)
 
 	switch ( bSelect )
 	{
-	case TS_UNKNOWN:
+	case TRI_UNKNOWN:
 		pTile->m_bSelected = ! pTile->m_bSelected;
 		break;
-	case TS_FALSE:
+	case TRI_FALSE:
 		if ( pTile->m_bSelected == FALSE ) return FALSE;
 		pTile->m_bSelected = FALSE;
 		break;
-	case TS_TRUE:
+	case TRI_TRUE:
 		if ( pTile->m_bSelected == TRUE ) return FALSE;
 		pTile->m_bSelected = TRUE;
 		break;
@@ -300,7 +300,7 @@ bool CLibraryTileView::DeselectAll(iterator pTile)
 	{
 		if ( pItem != pTile )
 		{
-			if ( pItem->m_bSelected ) bChanged = Select( pItem, TS_FALSE );
+			if ( pItem->m_bSelected ) bChanged = Select( pItem, TRI_FALSE );
 		}
 	}
 
@@ -325,7 +325,7 @@ bool CLibraryTileView::SelectTo(iterator pTile)
 
 		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
 		{
-			bChanged = Select( m_pFocus, TS_UNKNOWN );
+			bChanged = Select( m_pFocus, TRI_UNKNOWN );
 		}
 		else if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
@@ -338,19 +338,19 @@ bool CLibraryTileView::SelectTo(iterator pTile)
 				if ( i == pFocus )
 				{
 					++i;
-					for ( ; pFirst != i; ++pFirst ) Select( pFirst, TS_TRUE );
+					for ( ; pFirst != i; ++pFirst ) Select( pFirst, TRI_TRUE );
 				}
 				else
 				{
 					++pFirst;
-					for ( ; pFocus != pFirst; ++pFocus ) Select( pFocus, TS_TRUE );
+					for ( ; pFocus != pFirst; ++pFocus ) Select( pFocus, TRI_TRUE );
 				}
 
 				bChanged = true;
 			}
 			else
 			{
-				bChanged = Select( m_pFocus, TS_TRUE ) || bChanged;
+				bChanged = Select( m_pFocus, TRI_TRUE ) || bChanged;
 			}
 		}
 		else
@@ -771,7 +771,7 @@ void CLibraryTileView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 				else if ( toupper( pChild->m_sTitle.GetAt( 0 ) ) == toupper( (int)nChar ) )
 				{
 					DeselectAll( m_pFocus = pChild );
-					Select( m_pFocus, TS_TRUE );
+					Select( m_pFocus, TRI_TRUE );
 					Highlight( m_pFocus );
 					Invalidate();
 					return;

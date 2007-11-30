@@ -485,7 +485,7 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& o
 			( AdultFilter.IsChildPornography( pFile->GetSearchName() ) ||
 			  AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) ) )
 		{
-			pFile->m_bVerify = pFile->m_bShared = TS_FALSE;
+			pFile->m_bVerify = pFile->m_bShared = TRI_FALSE;
 		}
 
 		theApp.Message( MSG_DEBUG, _T("Hashing completed: %s"), szPath );

@@ -50,7 +50,7 @@ CLibraryFolder::CLibraryFolder(CLibraryFolder* pParent, LPCTSTR pszPath) :
 	m_nSelectCookie( 0 ),
 	m_pParent( pParent ),
 	m_sPath( pszPath ),
-	m_bShared( pParent ? TS_UNKNOWN : TS_TRUE ),
+	m_bShared( pParent ? TRI_UNKNOWN : TRI_TRUE ),
 	m_bExpanded( pParent ? FALSE : TRUE ),
 	m_nFiles( 0 ),
 	m_nVolume( 0 ),
@@ -278,7 +278,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 		{
 			BYTE bShared;
 			ar >> bShared;
-			m_bShared = bShared ? TS_UNKNOWN : TS_FALSE;
+			m_bShared = bShared ? TRI_UNKNOWN : TRI_FALSE;
 		}
 		
 		if ( nVersion >= 3 ) ar >> m_bExpanded;
@@ -586,9 +586,9 @@ BOOL CLibraryFolder::IsShared() const
 	{
 		if ( pFolder->m_bShared )
 		{
-			if ( pFolder->m_bShared == TS_TRUE )
+			if ( pFolder->m_bShared == TRI_TRUE )
 				return TRUE;
-			if ( pFolder->m_bShared == TS_FALSE )
+			if ( pFolder->m_bShared == TRI_FALSE )
 				return FALSE;
 		}
 	}
@@ -600,9 +600,9 @@ void CLibraryFolder::GetShared(BOOL& bShared) const
 {
 	if ( m_bOffline )
 		bShared = FALSE;
-	else if ( m_bShared == TS_TRUE )
+	else if ( m_bShared == TRI_TRUE )
 		bShared = TRUE;
-	else if ( m_bShared == TS_FALSE )
+	else if ( m_bShared == TRI_FALSE )
 		bShared = FALSE;
 }
 
@@ -734,14 +734,14 @@ STDMETHODIMP CLibraryFolder::XLibraryFolder::get_Name(BSTR FAR* psPath)
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryFolder::XLibraryFolder::get_Shared(STRISTATE FAR* pnValue)
+STDMETHODIMP CLibraryFolder::XLibraryFolder::get_Shared(TRISTATE FAR* pnValue)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolder )
-	*pnValue = (STRISTATE)pThis->m_bShared;
+	*pnValue = pThis->m_bShared;
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryFolder::XLibraryFolder::put_Shared(STRISTATE nValue)
+STDMETHODIMP CLibraryFolder::XLibraryFolder::put_Shared(TRISTATE nValue)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolder )
 	pThis->m_bShared = nValue;

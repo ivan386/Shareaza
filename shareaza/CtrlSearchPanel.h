@@ -29,10 +29,7 @@
 #include "CtrlNetworkCombo.h"
 #include "CtrlSchema.h"
 #include "CtrlIconButton.h"
-
-class CManagedSearch;
-class CQuerySearch;
-
+#include "ManagedSearch.h"
 
 class CSearchInputBox : public CTaskBox
 {

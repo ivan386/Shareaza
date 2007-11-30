@@ -149,8 +149,8 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 
 		if ( nThis >= nOffset && pBlockPtr[ nBlock ] )
 		{
-			TRISTATE nBase	= pBlockPtr[ nBlock ];
-			bSuccess		= nBase == TS_TRUE;
+			TRISTATE nBase	= static_cast< TRISTATE >( pBlockPtr[ nBlock ] );
+			bSuccess		= nBase == TRI_TRUE;
 			nOffset			= nThis;
 			nLength			= 0;
 
@@ -414,18 +414,24 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 
 	if ( m_pFile == NULL )
 	{
-		for ( TRISTATE nState = TS_UNKNOWN ; nState < TS_TRUE ; nState++ )
+		for ( DWORD nBlock = 0 ; nBlock < nBlockCount ; nBlock ++ )
+		{
+			if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_UNKNOWN )
+			{
+				nTarget = nBlock;
+				break;
+			}
+		}
+		if ( nTarget == 0xFFFFFFFF )
 		{
 			for ( DWORD nBlock = 0 ; nBlock < nBlockCount ; nBlock ++ )
 			{
-				if ( pBlockPtr[ nBlock ] == nState )
+				if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_FALSE )
 				{
 					nTarget = nBlock;
 					break;
 				}
 			}
-
-			if ( nTarget != 0xFFFFFFFF ) break;
 		}
 	}
 	else
@@ -445,12 +451,13 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 				QWORD nFragmentBegin = pFragment->begin();
 				for ( ; nPrevious <= nFragmentBegin ; nBlock ++, nPrevious += nBlockSize )
 				{
-					if ( pBlockPtr[ nBlock ] == TS_UNKNOWN )
+					if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_UNKNOWN )
 					{
 						nTarget = nBlock;
 						break;
 					}
-					else if ( pBlockPtr[ nBlock ] == TS_FALSE && nRetry == 0xFFFFFFFF )
+					else if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_FALSE &&
+						nRetry == 0xFFFFFFFF )
 					{
 						nRetry = nBlock;
 					}
@@ -469,12 +476,13 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 
 			for ( ; nPrevious < m_nSize ; nBlock ++, nPrevious += nBlockSize )
 			{
-				if ( pBlockPtr[ nBlock ] == TS_UNKNOWN )
+				if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_UNKNOWN )
 				{
 					nTarget = nBlock;
 					break;
 				}
-				else if ( pBlockPtr[ nBlock ] == TS_FALSE && nRetry == 0xFFFFFFFF )
+				else if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_FALSE &&
+					nRetry == 0xFFFFFFFF )
 				{
 					nRetry = nBlock;
 				}
@@ -570,12 +578,12 @@ void CDownloadWithTiger::FinishValidation()
 	{
 		if ( m_pTigerTree.FinishBlockTest( m_nVerifyBlock ) )
 		{
-			m_pTigerBlock[ m_nVerifyBlock ] = TS_TRUE;
+			m_pTigerBlock[ m_nVerifyBlock ] = TRI_TRUE;
 			m_nTigerSuccess ++;
 		}
 		else
 		{
-			m_pTigerBlock[ m_nVerifyBlock ] = TS_FALSE;
+			m_pTigerBlock[ m_nVerifyBlock ] = TRI_FALSE;
 
 			QWORD nOffset = QWORD(m_nVerifyBlock) * QWORD(m_nTigerSize);
 			oCorrupted.insert( oCorrupted.end(), Fragments::Fragment( nOffset,
@@ -586,12 +594,12 @@ void CDownloadWithTiger::FinishValidation()
 	{
 		if ( m_pHashset.FinishBlockTest( m_nVerifyBlock ) )
 		{
-			m_pHashsetBlock[ m_nVerifyBlock ] = TS_TRUE;
+			m_pHashsetBlock[ m_nVerifyBlock ] = TRI_TRUE;
 			m_nHashsetSuccess ++;
 		}
 		else
 		{
-			m_pHashsetBlock[ m_nVerifyBlock ] = TS_FALSE;
+			m_pHashsetBlock[ m_nVerifyBlock ] = TRI_FALSE;
 			
 			QWORD nOffset = QWORD(m_nVerifyBlock) * QWORD(ED2K_PART_SIZE);
 			oCorrupted.insert( oCorrupted.end(), Fragments::Fragment( nOffset,
@@ -602,14 +610,14 @@ void CDownloadWithTiger::FinishValidation()
 	{
 		if ( m_pTorrent.FinishBlockTest( m_nVerifyBlock ) )
 		{
-			m_pTorrentBlock[ m_nVerifyBlock ] = TS_TRUE;
+			m_pTorrentBlock[ m_nVerifyBlock ] = TRI_TRUE;
 			m_nTorrentSuccess ++;
 
 			OnFinishedTorrentBlock( m_nVerifyBlock );
 		}
 		else
 		{
-			m_pTorrentBlock[ m_nVerifyBlock ] = TS_FALSE;
+			m_pTorrentBlock[ m_nVerifyBlock ] = TRI_FALSE;
 			
 			QWORD nOffset = QWORD(m_nVerifyBlock) * QWORD(m_nTorrentSize);
 			oCorrupted.insert( oCorrupted.end(), Fragments::Fragment( nOffset,
@@ -649,7 +657,7 @@ void CDownloadWithTiger::SubtractHelper(Fragments::List& ppCorrupted, BYTE* pBlo
 
 	while ( nBlock-- && !ppCorrupted.empty() )
 	{
-		if ( *pBlock++ == TS_TRUE )
+		if ( *pBlock++ == TRI_TRUE )
 		{
 			ppCorrupted.erase( Fragments::Fragment( nOffset, min( nOffset + nSize, m_nSize ) ) );
 		}

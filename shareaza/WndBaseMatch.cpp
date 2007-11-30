@@ -533,7 +533,7 @@ void CBaseMatchWnd::OnSearchChat()
 	if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
 		ChatWindows.OpenPrivate( pHit->m_oClientID,
-			&pHit->m_pAddress, pHit->m_nPort, pHit->m_bPush == TS_TRUE,
+			&pHit->m_pAddress, pHit->m_nPort, pHit->m_bPush == TRI_TRUE,
 			pHit->m_nProtocol, (IN_ADDR*)pHit->m_oClientID.begin(), (WORD)pHit->m_oClientID.begin()[1] );
 	}
 }
@@ -596,7 +596,7 @@ void CBaseMatchWnd::OnBrowseLaunch()
 	if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
 		new CBrowseHostWnd( &pHit->m_pAddress, pHit->m_nPort,
-			pHit->m_bPush == TS_TRUE, pHit->m_oClientID );
+			pHit->m_bPush == TRI_TRUE, pHit->m_oClientID );
 	}
 }
 

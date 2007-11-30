@@ -199,9 +199,9 @@ void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
 {
 	TRISTATE bConnected = m_pSession->GetConnectedState();
 
-	if ( bConnected != TS_TRUE )
+	if ( bConnected != TRI_TRUE )
 	{
-		if ( ( m_pSession->m_nProtocol == PROTOCOL_ED2K ) || ( bConnected != TS_FALSE ) )
+		if ( ( m_pSession->m_nProtocol == PROTOCOL_ED2K ) || ( bConnected != TRI_FALSE ) )
 		{
 			m_pSession->StatusMessage( 1, IDS_CHAT_NOT_CONNECTED_2 );
 		}
@@ -250,7 +250,7 @@ void CPrivateChatFrame::OnChatBrowse()
 
 void CPrivateChatFrame::OnUpdateChatPriority(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( m_pSession != NULL && m_pSession->GetConnectedState() == TS_TRUE );
+	pCmdUI->Enable( m_pSession != NULL && m_pSession->GetConnectedState() == TRI_TRUE );
 }
 
 void CPrivateChatFrame::OnChatPriority()

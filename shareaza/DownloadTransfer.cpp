@@ -77,10 +77,10 @@ CDownloadTransfer::~CDownloadTransfer()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransfer close
 // bKeepSource parameter:
-// TS_FALSE   - the source will be added to m_pFailedSources in CDownloadWithSources,
+// TRI_FALSE   - the source will be added to m_pFailedSources in CDownloadWithSources,
 //			    removed from the sources and can be distributed in the Source Mesh as X-Nalt
-// TS_TRUE    - keeps the source and will be distributed as X-Alt
-// TS_UNKNOWN - keeps the source and will be dropped after several retries, will be
+// TRI_TRUE    - keeps the source and will be distributed as X-Alt
+// TRI_UNKNOWN - keeps the source and will be dropped after several retries, will be
 //            - added to m_pFailedSources when removed
 
 void CDownloadTransfer::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
@@ -93,7 +93,7 @@ void CDownloadTransfer::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 	{
 		switch ( bKeepSource )
 		{
-		case TS_TRUE:
+		case TRI_TRUE:
 			if ( m_pSource->m_bCloseConn && m_pSource->m_nGnutella )
 			{
 				m_pSource->OnResumeClosed();
@@ -103,10 +103,10 @@ void CDownloadTransfer::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 				m_pSource->OnFailure( TRUE, nRetryAfter );
 			}
 			break;
-		case TS_UNKNOWN:
+		case TRI_UNKNOWN:
 			m_pSource->OnFailure( FALSE );
 			break;
-		case TS_FALSE:
+		case TRI_FALSE:
 			m_pSource->Remove( FALSE, TRUE );
 			break;
 		}

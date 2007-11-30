@@ -957,7 +957,7 @@ void CDownloadsWnd::OnDownloadsLaunch()
 					}
 				}
 				
-				if ( pDownload->m_bVerify == TS_FALSE )
+				if ( pDownload->m_bVerify == TRI_FALSE )
 				{
 					CString strFormat, strMessage;
 					
@@ -1506,7 +1506,7 @@ void CDownloadsWnd::OnTransfersDisconnect()
 			
 			if ( pSource->m_bSelected && pSource->m_pTransfer != NULL )
 			{
-				pSource->m_pTransfer->Close( TS_TRUE );
+				pSource->m_pTransfer->Close( TRI_TRUE );
 			}
 			
 			pSource = pNext;

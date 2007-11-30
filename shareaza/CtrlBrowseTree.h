@@ -55,8 +55,8 @@ protected:
 public:
 	virtual BOOL		Create(CWnd* pParentWnd);
 	void				Clear(BOOL bGUI = TRUE);
-	BOOL				Expand(CBrowseTreeItem* pItem, TRISTATE bExpand = TS_TRUE, BOOL bInvalidate = TRUE);
-	BOOL				Select(CBrowseTreeItem* pItem, TRISTATE bSelect = TS_TRUE, BOOL bInvalidate = TRUE);
+	BOOL				Expand(CBrowseTreeItem* pItem, TRISTATE bExpand = TRI_TRUE, BOOL bInvalidate = TRUE);
+	BOOL				Select(CBrowseTreeItem* pItem, TRISTATE bSelect = TRI_TRUE, BOOL bInvalidate = TRUE);
 	BOOL				DeselectAll(CBrowseTreeItem* pExcept = NULL, CBrowseTreeItem* pParent = NULL, BOOL bInvalidate = TRUE);
 	BOOL				Highlight(CBrowseTreeItem* pItem);
 	int					GetSelectedCount() const;

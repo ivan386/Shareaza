@@ -94,7 +94,7 @@ BOOL CDownloadTransferED2K::Initiate()
 	
     if ( ! m_pDownload->m_oED2K || m_pDownload->m_nSize == SIZE_UNKNOWN )
 	{
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	
@@ -107,7 +107,7 @@ BOOL CDownloadTransferED2K::Initiate()
 	
 	if ( m_pClient == NULL )
 	{
-		Close( EDClients.IsFull() ? TS_TRUE : TS_FALSE );
+		Close( EDClients.IsFull() ? TRI_TRUE : TRI_FALSE );
 		return FALSE;
 	}
 	
@@ -118,7 +118,7 @@ BOOL CDownloadTransferED2K::Initiate()
 	{
 		SetState( dtsNull );
 		m_pClient = NULL;
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
 		return FALSE;
 	}
 	
@@ -186,7 +186,7 @@ BOOL CDownloadTransferED2K::OnRunEx(DWORD tNow)
 {
 	if ( !Network.IsConnected() || ( !Settings.eDonkey.EnableToday && Settings.Connection.RequireForTransfers ) )
 	{
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
 		return FALSE;
 	}
 
@@ -196,7 +196,7 @@ BOOL CDownloadTransferED2K::OnRunEx(DWORD tNow)
 		if ( tNow > m_tConnected && tNow - m_tConnected > Settings.Connection.TimeoutConnect * 2 )
 		{
 			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_CONNECT_TIMEOUT, m_sAddress );
-			Close( TS_UNKNOWN );
+			Close( TRI_UNKNOWN );
 			return FALSE;
 		}
 		break;
@@ -205,7 +205,7 @@ BOOL CDownloadTransferED2K::OnRunEx(DWORD tNow)
 		if ( tNow > m_tRequest && tNow - m_tRequest > Settings.Connection.TimeoutHandshake * 2 )
 		{
 			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_HANDSHAKE_TIMEOUT, m_sAddress );
-			Close( TS_UNKNOWN );
+			Close( TRI_UNKNOWN );
 			return FALSE;
 		}
 		break;
@@ -217,7 +217,7 @@ BOOL CDownloadTransferED2K::OnRunEx(DWORD tNow)
 			 tNow - m_pClient->m_mInput.tLast > Settings.Connection.TimeoutTraffic * 2 )
 		{
 			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_CLOSED, m_sAddress );
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
 		}
 		break;
@@ -261,7 +261,7 @@ void CDownloadTransferED2K::OnDropped(BOOL /*bError*/)
 	else
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DROPPED, (LPCTSTR)m_sAddress );
-		Close( TS_UNKNOWN );
+		Close( TRI_UNKNOWN );
 	}
 }
 
@@ -288,7 +288,7 @@ BOOL CDownloadTransferED2K::OnFileNotFound(CEDPacket* /*pPacket*/)
 	theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILENOTFOUND,
 		(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
 	
-	Close( TS_FALSE );
+	Close( TRI_FALSE );
 	return FALSE;
 }
 
@@ -299,7 +299,7 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
     if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount + 2 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	
@@ -352,7 +352,7 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 	else
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	
@@ -368,7 +368,7 @@ BOOL CDownloadTransferED2K::OnHashsetAnswer(CEDPacket* pPacket)
     if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount + 2 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -379,7 +379,7 @@ BOOL CDownloadTransferED2K::OnHashsetAnswer(CEDPacket* pPacket)
 	{
 		return TRUE;	// Hack
 //		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_HASHSET_ERROR, (LPCTSTR)m_sAddress );
-//		Close( TS_FALSE );
+//		Close( TRI_FALSE );
 //		return FALSE;
 	}
 	
@@ -404,7 +404,7 @@ BOOL CDownloadTransferED2K::OnHashsetAnswer(CEDPacket* pPacket)
 		return SendSecondaryRequest();
 	}
 	
-	Close( TS_FALSE );
+	Close( TRI_FALSE );
 	return FALSE;
 }
 
@@ -415,7 +415,7 @@ BOOL CDownloadTransferED2K::OnQueueRank(CEDPacket* pPacket)
 	if ( pPacket->GetRemaining() < 4 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	
@@ -428,7 +428,7 @@ BOOL CDownloadTransferED2K::OnQueueRank(CEDPacket* pPacket)
 	else
 	{
 		m_pSource->m_tAttempt = GetTickCount() + Settings.eDonkey.ReAskTime * 1000;
-		Close( TS_UNKNOWN );
+		Close( TRI_UNKNOWN );
 	}
 	
 	return TRUE;
@@ -441,7 +441,7 @@ BOOL CDownloadTransferED2K::OnRankingInfo(CEDPacket* pPacket)
 	if ( pPacket->GetRemaining() < 12 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	
@@ -502,7 +502,7 @@ BOOL CDownloadTransferED2K::OnSendingPart(CEDPacket* pPacket)
     if ( pPacket->GetRemaining() <= Hashes::Ed2kHash::byteCount + 8 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -513,7 +513,7 @@ BOOL CDownloadTransferED2K::OnSendingPart(CEDPacket* pPacket)
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
-		// Close( TS_FALSE );
+		// Close( TRI_FALSE );
 		// return FALSE;
 		return TRUE;
 	}
@@ -525,7 +525,7 @@ BOOL CDownloadTransferED2K::OnSendingPart(CEDPacket* pPacket)
 	{
 		if ( nLength == nOffset ) return TRUE;
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -534,7 +534,7 @@ BOOL CDownloadTransferED2K::OnSendingPart(CEDPacket* pPacket)
 	if ( nLength > (QWORD)pPacket->GetRemaining() )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -556,7 +556,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
     if ( pPacket->GetRemaining() <= Hashes::Ed2kHash::byteCount + 8 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -567,7 +567,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
-		// Close( TS_FALSE );
+		// Close( TRI_FALSE );
 		// return FALSE;
 		return TRUE;
 	}
@@ -603,7 +603,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_INFLATE_ERROR,
 				(LPCTSTR)m_pDownload->GetDisplayName() );
 
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 	}
@@ -684,7 +684,7 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	if ( m_pDownload->GetVolumeRemaining() == 0 )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
 		return FALSE;
 	}
 	*/
@@ -749,7 +749,7 @@ BOOL CDownloadTransferED2K::SendSecondaryRequest()
 	
 	if ( ! m_pDownload->PrepareFile() )
 	{
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
 		return FALSE;
 	}
 	
@@ -776,7 +776,7 @@ BOOL CDownloadTransferED2K::SendSecondaryRequest()
 		m_pSource->m_tAttempt = GetTickCount() + Settings.eDonkey.ReAskTime * 500;
 		m_pSource->SetAvailableRanges( NULL );
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
 		return FALSE;
 	}
 	
@@ -940,7 +940,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 	Send( CEDPacket::New( ED2K_C2C_QUEUERELEASE ) );
 	
 	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
-	Close( TS_TRUE );
+	Close( TRI_TRUE );
 	
 	return FALSE;
 }
@@ -995,14 +995,14 @@ BOOL CDownloadTransferED2K::RunQueued(DWORD tNow)
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_QUEUE_HUGE,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName(), m_nQueuePos );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	else if ( m_pClient->m_bConnected == FALSE && tNow > m_tRanking && tNow - m_tRanking > Settings.eDonkey.ReAskTime * 1000 + 20000 )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_QUEUE_TIMEOUT,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
-		Close( TS_UNKNOWN );
+		Close( TRI_UNKNOWN );
 		return FALSE;
 	}
 	else if ( !( CEDPacket::IsLowID( m_pSource->m_pAddress.S_un.S_addr ) || m_pSource->m_bPushOnly ) &&
@@ -1060,7 +1060,7 @@ BOOL CDownloadTransferED2K::OnSendingPart64(CEDPacket* pPacket)
 	if ( pPacket->GetRemaining() <= Hashes::Ed2kHash::byteCount + 16 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -1071,7 +1071,7 @@ BOOL CDownloadTransferED2K::OnSendingPart64(CEDPacket* pPacket)
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
-		// Close( TS_FALSE );
+		// Close( TRI_FALSE );
 		// return FALSE;
 		return TRUE;
 	}
@@ -1086,7 +1086,7 @@ BOOL CDownloadTransferED2K::OnSendingPart64(CEDPacket* pPacket)
 	{
 		if ( nLength == nOffset ) return TRUE;
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -1095,7 +1095,7 @@ BOOL CDownloadTransferED2K::OnSendingPart64(CEDPacket* pPacket)
 	if ( nLength > (QWORD)pPacket->GetRemaining() )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -1119,7 +1119,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 	if ( pPacket->GetRemaining() <= Hashes::Ed2kHash::byteCount + 16 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -1130,7 +1130,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
-		// Close( TS_FALSE );
+		// Close( TRI_FALSE );
 		// return FALSE;
 		return TRUE;
 	}
@@ -1169,7 +1169,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_INFLATE_ERROR,
 				(LPCTSTR)m_pDownload->GetDisplayName() );
 
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 	}

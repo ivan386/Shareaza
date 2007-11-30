@@ -723,13 +723,13 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		else crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 255, 255, 0 ), 20 );
 	}
 
-	if ( pFile->GetLibraryStatus() == TS_FALSE )
+	if ( pFile->GetLibraryStatus() == TRI_FALSE )
 	{
 		// Green if already in the library
 		crText = pHit ? CoolInterface.m_crSearchExistsHit : CoolInterface.m_crSearchExists;
 		if ( bSelected ) crText = CoolInterface.m_crSearchExistsSelected;
 	}
-	else if ( pFile->GetLibraryStatus() == TS_TRUE )
+	else if ( pFile->GetLibraryStatus() == TRI_TRUE )
 	{
 		// Brown/Orange if a ghost rating is in the library
 		crText = CoolInterface.m_crSearchGhostrated;
@@ -747,10 +747,10 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	}
 	else if ( ( pHit && ( pHit->m_bBogus || pHit->m_sURL.IsEmpty() || ! pHit->m_bMatched ) ) ||
 			  ( ! pHit && ! pFile->m_bOneValid ) ||
-			  ( pHit && pHit->m_bPush == TS_TRUE && Network.IsStable() == FALSE ) )
+			  ( pHit && pHit->m_bPush == TRI_TRUE && Network.IsStable() == FALSE ) )
 	{
 		// Greyed Out if Unstable (or Brown if also Ghostrated)
-		crText = pFile->GetLibraryStatus() == TS_TRUE ? CoolInterface.m_crSearchGhostrated : CoolInterface.m_crSearchNull;
+		crText = pFile->GetLibraryStatus() == TRI_TRUE ? CoolInterface.m_crSearchGhostrated : CoolInterface.m_crSearchNull;
 		bGrayed = TRUE;
 	}
 	
@@ -902,7 +902,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), strTemp );
 					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 				}
-				else if ( ( ppHit->m_nProtocol == PROTOCOL_ED2K ) && ( ppHit->m_bPush == TS_TRUE ) )
+				else if ( ( ppHit->m_nProtocol == PROTOCOL_ED2K ) && ( ppHit->m_bPush == TRI_TRUE ) )
 				{
 					/* strText.Format( _T("%lu@%s"), ppHit->m_oClientID.begin()[2], (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ) ); */
 					strTemp.Format( _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ) );
@@ -959,12 +959,12 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		case MATCH_COL_SPEED:
 			if ( pHit )
 			{
-				if ( ! bSelected && pHit->m_bMeasured == TS_TRUE ) dc.SetTextColor( CoolInterface.m_crTextStatus );
+				if ( ! bSelected && pHit->m_bMeasured == TRI_TRUE ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pHit->m_sSpeed;
 			}
 			else
 			{
-				if ( ! bSelected && pFile->GetBestMeasured() == TS_TRUE ) dc.SetTextColor( CoolInterface.m_crTextStatus );
+				if ( ! bSelected && pFile->GetBestMeasured() == TRI_TRUE ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pFile->m_sSpeed;
 			}
 			break;
@@ -1075,7 +1075,7 @@ void CMatchCtrl::DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit*
 	if ( ( bState = pHit ? pHit->m_bBusy : pFile->m_bBusy ) != FALSE )
 	{
 		ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-			bState == TS_TRUE ? SHI_BUSY : SHI_TICK, dc.GetSafeHdc(), nPos,
+			bState == TRI_TRUE ? SHI_BUSY : SHI_TICK, dc.GetSafeHdc(), nPos,
 			rcCol.top, 16, 16, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
 	}
 	else
@@ -1088,7 +1088,7 @@ void CMatchCtrl::DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit*
 	if ( ( bState = pHit ? pHit->m_bPush : pFile->m_bPush ) != FALSE )
 	{
 		ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-			bState == TS_TRUE ? SHI_FIREWALL : SHI_TICK, dc.GetSafeHdc(), nPos,
+			bState == TRI_TRUE ? SHI_FIREWALL : SHI_TICK, dc.GetSafeHdc(), nPos,
 			rcCol.top, 16, 16, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
 	}
 	else
@@ -1101,7 +1101,7 @@ void CMatchCtrl::DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit*
 	if ( ( bState = pHit ? pHit->m_bStable : pFile->m_bStable ) != FALSE )
 	{
 		ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-			bState == TS_TRUE ? SHI_TICK : SHI_UNSTABLE, dc.GetSafeHdc(), nPos,
+			bState == TRI_TRUE ? SHI_TICK : SHI_UNSTABLE, dc.GetSafeHdc(), nPos,
 			rcCol.top, 16, 16, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
 	}
 	else

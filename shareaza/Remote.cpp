@@ -715,9 +715,9 @@ void CRemote::PageSearch()
 		PageSearchRowColumn( MATCH_COL_RATING, pFile, str );
 		
 		str.Empty();
-		if ( pFile->m_bBusy == TS_TRUE ) str += 'B'; else str += '-';
-		if ( pFile->m_bPush == TS_TRUE ) str += 'F'; else str += '-';
-		if ( pFile->m_bStable == TS_FALSE ) str += 'U'; else str += '-';
+		if ( pFile->m_bBusy == TRI_TRUE ) str += 'B'; else str += '-';
+		if ( pFile->m_bPush == TRI_TRUE ) str += 'F'; else str += '-';
+		if ( pFile->m_bStable == TRI_FALSE ) str += 'U'; else str += '-';
 		PageSearchRowColumn( MATCH_COL_STATUS, pFile, str );
 		
 		if ( pFile->GetFilteredCount() > 1 )
@@ -754,9 +754,9 @@ void CRemote::PageSearch()
 				for ( int nStar = pHit->m_nRating ; nStar > 1 ; nStar -- ) str += _T("*");
 				PageSearchRowColumn( MATCH_COL_RATING, pFile, str );
 				str.Empty();
-				if ( pHit->m_bBusy == TS_TRUE ) str += 'B'; else str += '-';
-				if ( pHit->m_bPush == TS_TRUE ) str += 'F'; else str += '-';
-				if ( pHit->m_bStable == TS_FALSE ) str += 'U'; else str += '-';
+				if ( pHit->m_bBusy == TRI_TRUE ) str += 'B'; else str += '-';
+				if ( pHit->m_bPush == TRI_TRUE ) str += 'F'; else str += '-';
+				if ( pHit->m_bStable == TRI_FALSE ) str += 'U'; else str += '-';
 				PageSearchRowColumn( MATCH_COL_STATUS, pFile, str );
 				PageSearchRowColumn( MATCH_COL_COUNT, pFile,
 					CString( inet_ntoa( pHit->m_pAddress ) ) );
@@ -1028,9 +1028,9 @@ void CRemote::PageDownloads()
 		Add( _T("download_status"), str );
 		if ( pDownload->IsCompleted() )
 		{
-			if ( pDownload->m_bVerify == TS_TRUE )
+			if ( pDownload->m_bVerify == TRI_TRUE )
 				LoadString( str, IDS_STATUS_VERIFIED );
-			else if ( pDownload->m_bVerify == TS_FALSE )
+			else if ( pDownload->m_bVerify == TRI_FALSE )
 				LoadString( str, IDS_STATUS_UNVERIFIED );
 		}
 		else if ( nTotalSources == 0 )

@@ -117,7 +117,7 @@ protected:
 	void			Serialize(CArchive& ar, int nVersion);
 	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime, LPCTSTR pszMetaData);
 	BOOL			LoadMetadata(HANDLE hFile);
-	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TS_UNKNOWN);
+	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TRI_UNKNOWN);
 	void			Ghost();
     BOOL			OnVerifyDownload(
 						const Hashes::Sha1ManagedHash& oSHA1,
@@ -157,8 +157,8 @@ protected:
 		STDMETHOD(get_Folder)(ILibraryFolder FAR* FAR* ppFolder);
 		STDMETHOD(get_Path)(BSTR FAR* psPath);
 		STDMETHOD(get_Name)(BSTR FAR* psPath);
-		STDMETHOD(get_Shared)(STRISTATE FAR* pnValue);
-		STDMETHOD(put_Shared)(STRISTATE nValue);
+		STDMETHOD(get_Shared)(TRISTATE FAR* pnValue);
+		STDMETHOD(put_Shared)(TRISTATE nValue);
 		STDMETHOD(get_EffectiveShared)(VARIANT_BOOL FAR* pbValue);
 		STDMETHOD(get_Size)(LONG FAR* pnSize);
 		STDMETHOD(get_Index)(LONG FAR* pnIndex);

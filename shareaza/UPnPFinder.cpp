@@ -258,7 +258,7 @@ void CUPnPFinder::StartDiscovery(bool bSecondTry)
 	m_bSecondTry = bSecondTry;
 
 	m_bPortIsFree = true;
-	theApp.m_bUPnPPortsForwarded = TS_UNKNOWN;
+	theApp.m_bUPnPPortsForwarded = TRI_UNKNOWN;
 
 	// We have to process the AsyncFind
 	ProcessAsyncFind( CComBSTR( bSecondTry ? strDeviceType2 : strDeviceType1 ) );
@@ -369,8 +369,8 @@ bool CUPnPFinder::OnSearchComplete()
 		{
 			theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices" );
 			Settings.Connection.EnableUPnP = FALSE;
-			theApp.m_bUPnPPortsForwarded = TS_FALSE;
-			theApp.m_bUPnPDeviceConnected = TS_FALSE;
+			theApp.m_bUPnPPortsForwarded = TRI_FALSE;
+			theApp.m_bUPnPDeviceConnected = TRI_FALSE;
 		}
 		else
 			theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices - will retry with different parameters" );
@@ -478,7 +478,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 
 	if ( m_bADSL ) // not a very reliable way to detect ADSL, since WANEthLinkC* is optional
 	{
-		if ( theApp.m_bUPnPPortsForwarded == TS_TRUE ) // another physical device or the setup was ran again manually
+		if ( theApp.m_bUPnPPortsForwarded == TRI_TRUE ) // another physical device or the setup was ran again manually
 		{
 			// Reset settings and recheck ( is there a better solution? )
 			Settings.Connection.SkipWANIPSetup  = FALSE;
@@ -553,7 +553,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 		{
 			DeleteExistingPortMappings( service );
 			CreatePortMappings( service );
-			theApp.m_bUPnPDeviceConnected = TS_TRUE;
+			theApp.m_bUPnPDeviceConnected = TRI_TRUE;
 		}
 	}
 	else if ( _tcsistr( strResult, L"|VT_BSTR=Disconnected|" ) != NULL && m_bADSL && bPPP )
@@ -577,7 +577,7 @@ void CUPnPFinder::StartPortMapping()
 {
 	std::for_each( m_pServices.begin(), m_pServices.end(), boost::bind( &CUPnPFinder::MapPort, this, _1 ) );
 	if ( m_bADSL && !Settings.Connection.SkipWANIPSetup &&
-		( theApp.m_bUPnPPortsForwarded == TS_UNKNOWN || m_bADSLFailed ) && m_pWANIPService != NULL )
+		( theApp.m_bUPnPPortsForwarded == TRI_UNKNOWN || m_bADSLFailed ) && m_pWANIPService != NULL )
 	{
 		m_bADSLFailed = true;
 		theApp.Message( MSG_DEBUG, L"Configuration failed or it wasn't an ADSL device. Retrying with WANIPConn setup..." );
@@ -829,7 +829,7 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 	if ( FAILED( hr ) )
 		return (void)UPnPMessage( hr );
 
-	theApp.m_bUPnPPortsForwarded = TS_TRUE;
+	theApp.m_bUPnPPortsForwarded = TRI_TRUE;
 	theApp.Message( MSG_DEFAULT, L"Ports successfully forwarded using UPnP service." );
 	
 	// Leave the message loop, since events may take more time.
@@ -1204,10 +1204,10 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 		if ( _wcsicmp( pszStateVarName, L"ConnectionStatus" ) == 0 )
 		{
 			theApp.m_bUPnPDeviceConnected = strValue.CompareNoCase( L"Disconnected" ) == 0
-					? TS_FALSE
+					? TRI_FALSE
 					: ( strValue.CompareNoCase( L"Connected" ) == 0 )
-						? TS_TRUE
-						: TS_UNKNOWN;
+						? TRI_TRUE
+						: TRI_UNKNOWN;
 		}
 		else if ( _wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
 		{

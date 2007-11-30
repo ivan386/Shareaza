@@ -937,7 +937,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	{
 		if ( pDownload->m_bSelected )
 		{
- 			if ( pDownload->m_bVerify == TS_FALSE )
+ 			if ( pDownload->m_bVerify == TRI_FALSE )
  				crText = CoolInterface.m_crTransferVerifyFailSelected;
 			else if ( pDownload->IsSeeding() && ( pDownload->m_nSize > pDownload->m_nTorrentUploaded ) )
 	 			crText = CoolInterface.m_crTransferVerifyPassSelected;
@@ -946,7 +946,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		}
 		else
 		{
- 			if ( pDownload->m_bVerify == TS_FALSE )
+ 			if ( pDownload->m_bVerify == TRI_FALSE )
  				crText = CoolInterface.m_crTransferVerifyFail;
 	 		else if ( pDownload->IsSeeding() && ( pDownload->m_nSize > pDownload->m_nTorrentUploaded ) )
 	 			crText = CoolInterface.m_crTransferVerifyPass;
@@ -1087,9 +1087,9 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		case DOWNLOAD_COLUMN_CLIENT:
 			if ( pDownload->IsCompleted() )
 			{
-				if ( pDownload->m_bVerify == TS_TRUE )
+				if ( pDownload->m_bVerify == TRI_TRUE )
 					LoadString( strText, IDS_STATUS_VERIFIED );
-				else if ( pDownload->m_bVerify == TS_FALSE )
+				else if ( pDownload->m_bVerify == TRI_FALSE )
 					LoadString( strText, IDS_STATUS_UNVERIFIED );
 			}
 			else if ( nTotalSources == 0 )

@@ -148,9 +148,9 @@ BOOL CChatSession::Connect()
 
 TRISTATE CChatSession::GetConnectedState() const
 {
-	if ( m_nState == cssNull ) return TS_FALSE;
-	if ( m_nState == cssActive ) return TS_TRUE;
-	return TS_UNKNOWN;
+	if ( m_nState == cssNull ) return TRI_FALSE;
+	if ( m_nState == cssActive ) return TRI_TRUE;
+	return TRI_UNKNOWN;
 }
 
 //////////////////////////////////////////////////////////////////////

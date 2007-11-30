@@ -72,7 +72,7 @@ public:
 protected:
 	void				Clear();
 	int					GetThumbIndex(CLibraryThumbItem* pThumb) const;
-	BOOL				Select(CLibraryThumbItem* pThumb, TRISTATE bSelect = TS_TRUE);
+	BOOL				Select(CLibraryThumbItem* pThumb, TRISTATE bSelect = TRI_TRUE);
 	BOOL				DeselectAll(CLibraryThumbItem* pThumb = NULL);
 	BOOL				SelectTo(CLibraryThumbItem* pThumb);
 	void				SelectTo(int nDelta);

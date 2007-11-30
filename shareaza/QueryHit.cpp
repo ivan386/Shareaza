@@ -64,10 +64,10 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID)
 	m_nSpeed		= 0;
 	m_pVendor		= VendorCache.m_pNull;
 	
-	m_bPush			= TS_UNKNOWN;
-	m_bBusy			= TS_UNKNOWN;
-	m_bStable		= TS_UNKNOWN;
-	m_bMeasured		= TS_UNKNOWN;
+	m_bPush			= TRI_UNKNOWN;
+	m_bBusy			= TRI_UNKNOWN;
+	m_bStable		= TRI_UNKNOWN;
+	m_bMeasured		= TRI_UNKNOWN;
 	m_bChat			= FALSE;
 	m_bBrowseHost	= FALSE;
 	
@@ -506,20 +506,20 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			pLastHit->m_nPort		= nPort;
 			pLastHit->m_pVendor		= pVendor;
 			pLastHit->m_nSpeed		= nGroupState[ pLastHit->m_nGroup ][3];
-			pLastHit->m_bBusy		= bBusy   ? TS_TRUE : TS_FALSE;
-			pLastHit->m_bPush		= bPush   ? TS_TRUE : TS_FALSE;
-			pLastHit->m_bStable		= bStable ? TS_TRUE : TS_FALSE;
+			pLastHit->m_bBusy		= bBusy   ? TRI_TRUE : TRI_FALSE;
+			pLastHit->m_bPush		= bPush   ? TRI_TRUE : TRI_FALSE;
+			pLastHit->m_bStable		= bStable ? TRI_TRUE : TRI_FALSE;
 			pLastHit->m_bMeasured	= pLastHit->m_bStable;
 			pLastHit->m_nUpSlots	= nGroupState[ pLastHit->m_nGroup ][2];
 			pLastHit->m_nUpQueue	= nGroupState[ pLastHit->m_nGroup ][1];
 			pLastHit->m_bChat		= bPeerChat;
 			pLastHit->m_bBrowseHost	= bBrowseHost;
 			pLastHit->m_sNick		= strNick;
-			pLastHit->m_bPreview	&= pLastHit->m_bPush == TS_FALSE;
+			pLastHit->m_bPreview	&= pLastHit->m_bPush == TRI_FALSE;
 			
 			if ( pLastHit->m_nUpSlots > 0 )
 			{
-				pLastHit->m_bBusy = ( pLastHit->m_nUpSlots <= pLastHit->m_nUpQueue ) ? TS_TRUE : TS_FALSE;
+				pLastHit->m_bBusy = ( pLastHit->m_nUpSlots <= pLastHit->m_nUpQueue ) ? TRI_TRUE : TRI_FALSE;
 			}
 			
 			pLastHit->Resolve();
@@ -601,7 +601,7 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD
 			if ( ! pHit->ReadEDPacket( pPacket, pServer, m_nServerFlags ) ) break;
 			pHit->Resolve();
 
-			if ( pHit->m_bPush == TS_TRUE )
+			if ( pHit->m_bPush == TRI_TRUE )
 			{
 				//pHit->m_sNick		= _T("(Low ID)");
 				pHit->m_nPort		= 0;
@@ -958,13 +958,13 @@ void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendor* pVendor,
 	m_bBrowseHost	= bBrowseHost;
 	
 	if ( nFlags[1] & G1_QHD_PUSH )
-		m_bPush		= ( nFlags[0] & G1_QHD_PUSH ) ? TS_TRUE : TS_FALSE;
+		m_bPush		= ( nFlags[0] & G1_QHD_PUSH ) ? TRI_TRUE : TRI_FALSE;
 	if ( nFlags[0] & G1_QHD_BUSY )
-		m_bBusy		= ( nFlags[1] & G1_QHD_BUSY ) ? TS_TRUE : TS_FALSE;
+		m_bBusy		= ( nFlags[1] & G1_QHD_BUSY ) ? TRI_TRUE : TRI_FALSE;
 	if ( nFlags[0] & G1_QHD_STABLE )
-		m_bStable	= ( nFlags[1] & G1_QHD_STABLE ) ? TS_TRUE : TS_FALSE;
+		m_bStable	= ( nFlags[1] & G1_QHD_STABLE ) ? TRI_TRUE : TRI_FALSE;
 	if ( nFlags[0] & G1_QHD_SPEED )
-		m_bMeasured	= ( nFlags[1] & G1_QHD_SPEED ) ? TS_TRUE : TS_FALSE;
+		m_bMeasured	= ( nFlags[1] & G1_QHD_SPEED ) ? TRI_TRUE : TRI_FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1429,15 +1429,15 @@ void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 	if ( nAddress == 0 )
 	{
 		m_bResolveURL = FALSE;
-		m_bPush = TS_UNKNOWN;
+		m_bPush = TRI_UNKNOWN;
 	}
 	else if ( CEDPacket::IsLowID( nAddress ) || Network.IsFirewalledAddress( &nAddress ) || ! m_nPort )
 	{
-		m_bPush = TS_TRUE;
+		m_bPush = TRI_TRUE;
 	}
 	else
 	{
-		m_bPush = TS_FALSE;
+		m_bPush = TRI_FALSE;
 	}
 }
 
@@ -1465,7 +1465,7 @@ void CQueryHit::Resolve()
 
 	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
-		if ( m_bPush == TS_TRUE )
+		if ( m_bPush == TRI_TRUE )
 		{
 			m_sURL.Format( _T("ed2kftp://%lu@%s:%i/%s/%I64i/"),
 				m_oClientID.begin()[2],
@@ -1683,9 +1683,9 @@ int CQueryHit::GetRating()
 {
 	int nRating = 0;
 	
-	if ( m_bPush != TS_TRUE ) nRating += 4;
-	if ( m_bBusy != TS_TRUE ) nRating += 2;
-	if ( m_bStable == TS_TRUE ) nRating ++;
+	if ( m_bPush != TRI_TRUE ) nRating += 4;
+	if ( m_bBusy != TRI_TRUE ) nRating += 2;
+	if ( m_bStable == TRI_TRUE ) nRating ++;
 
 	return nRating;
 }

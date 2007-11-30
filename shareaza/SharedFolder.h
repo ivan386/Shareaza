@@ -87,7 +87,7 @@ public:
 	BOOL			ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie = 0);
 	// Manage filesystem change notification. Returns TRUE if changes detected.
 	BOOL			IsChanged();
-	void			OnDelete(TRISTATE bCreateGhost = TS_UNKNOWN);
+	void			OnDelete(TRISTATE bCreateGhost = TRI_UNKNOWN);
 	void			OnFileRename(CLibraryFile* pFile);
 
 protected:
@@ -107,8 +107,8 @@ protected:
 		STDMETHOD(get_Parent)(ILibraryFolder FAR* FAR* ppFolder);
 		STDMETHOD(get_Path)(BSTR FAR* psPath);
 		STDMETHOD(get_Name)(BSTR FAR* psPath);
-		STDMETHOD(get_Shared)(STRISTATE FAR* pnValue);
-		STDMETHOD(put_Shared)(STRISTATE nValue);
+		STDMETHOD(get_Shared)(TRISTATE FAR* pnValue);
+		STDMETHOD(put_Shared)(TRISTATE nValue);
 		STDMETHOD(get_EffectiveShared)(VARIANT_BOOL FAR* pbValue);
 		STDMETHOD(get_Folders)(ILibraryFolders FAR* FAR* ppFolders);
 		STDMETHOD(get_Files)(ILibraryFiles FAR* FAR* ppFiles);

@@ -556,7 +556,7 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 	{
 		CString strName = pDownload->m_sDiskName;
 		
-		if ( pDownload->m_bVerify == TS_FALSE )
+		if ( pDownload->m_bVerify == TRI_FALSE )
 		{
 			CString strFormat, strMessage;
 			

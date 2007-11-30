@@ -204,14 +204,14 @@ BOOL CLibraryTreeView::Expand(CLibraryTreeItem* pItem, TRISTATE bExpand, BOOL bI
 
 	switch ( bExpand )
 	{
-	case TS_UNKNOWN:
+	case TRI_UNKNOWN:
 		pItem->m_bExpanded = ! pItem->m_bExpanded;
 		break;
-	case TS_TRUE:
+	case TRI_TRUE:
 		if ( pItem->m_bExpanded ) return FALSE;
 		pItem->m_bExpanded = TRUE;
 		break;
-	case TS_FALSE:
+	case TRI_FALSE:
 		if ( ! pItem->m_bExpanded ) return FALSE;
 		pItem->m_bExpanded = FALSE;
 		break;
@@ -238,7 +238,7 @@ BOOL CLibraryTreeView::Expand(CLibraryTreeItem* pItem, TRISTATE bExpand, BOOL bI
 		DeselectAll( NULL, pItem, FALSE );
 	}
 
-	pItem->m_bContract1 = pItem->m_bExpanded == TRUE && bExpand == TS_TRUE && bInvalidate == FALSE;
+	pItem->m_bContract1 = pItem->m_bExpanded == TRUE && bExpand == TRI_TRUE && bInvalidate == FALSE;
 
 	if ( pItem->m_bContract1 == FALSE )
 	{
@@ -261,7 +261,7 @@ BOOL CLibraryTreeView::CollapseRecursive(CLibraryTreeItem* pItem)
 
 	if ( pItem != m_pRoot && pItem->m_bExpanded && pItem->m_bContract1 )
 	{
-		bChanged |= Expand( pItem, TS_FALSE, FALSE );
+		bChanged |= Expand( pItem, TRI_FALSE, FALSE );
 	}
 
 	for ( CLibraryTreeItem::iterator pChild = pItem->begin(); pChild != pItem->end(); ++pChild )
@@ -281,14 +281,14 @@ BOOL CLibraryTreeView::Select(CLibraryTreeItem* pItem, TRISTATE bSelect, BOOL bI
 
 	switch ( bSelect )
 	{
-	case TS_UNKNOWN:
+	case TRI_UNKNOWN:
 		pItem->m_bSelected = ! pItem->m_bSelected;
 		break;
-	case TS_TRUE:
+	case TRI_TRUE:
 		if ( pItem->m_bSelected ) return FALSE;
 		pItem->m_bSelected = TRUE;
 		break;
-	case TS_FALSE:
+	case TRI_FALSE:
 		if ( ! pItem->m_bSelected ) return FALSE;
 		pItem->m_bSelected = FALSE;
 		break;
@@ -348,7 +348,7 @@ BOOL CLibraryTreeView::SelectAll(CLibraryTreeItem* pParent, BOOL bInvalidate)
 	{
 		if ( pChild->m_bSelected == FALSE )
 		{
-			Select( &*pChild, TS_TRUE, FALSE );
+			Select( &*pChild, TRI_TRUE, FALSE );
 			bChanged = TRUE;
 		}
 
@@ -373,7 +373,7 @@ BOOL CLibraryTreeView::DeselectAll(CLibraryTreeItem* pExcept, CLibraryTreeItem* 
 	{
 		if ( &*pChild != pExcept && pChild->m_bSelected )
 		{
-			Select( &*pChild, TS_FALSE, FALSE );
+			Select( &*pChild, TRI_FALSE, FALSE );
 			bChanged = TRUE;
 		}
 
@@ -406,7 +406,7 @@ BOOL CLibraryTreeView::Highlight(CLibraryTreeItem* pItem)
 
 	for ( CLibraryTreeItem* pParent = m_pFocus->parent() ; pParent ; pParent = pParent->parent() )
 	{
-		Expand( pParent, TS_TRUE, FALSE );
+		Expand( pParent, TRI_TRUE, FALSE );
 
 		pParent->m_bContract2 = pParent->m_bContract1;
 		pParent->m_bContract1 = FALSE;
@@ -451,7 +451,7 @@ BOOL CLibraryTreeView::CleanItems(CLibraryTreeItem* pItem, DWORD nCookie, BOOL b
 		{
 			if ( m_pFocus == &*pChild ) m_pFocus = NULL;
 
-			if ( pChild->m_bSelected ) Select( &*pChild, TS_FALSE, FALSE );
+			if ( pChild->m_bSelected ) Select( &*pChild, TRI_FALSE, FALSE );
 			bChanged |= DeselectAll( NULL, &*pChild, FALSE );
 
 			if ( bVisible )
@@ -525,11 +525,11 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if ( pHit && !pHit->empty() && point.x >= rc.left && point.x < rc.left + 16 )
 	{
-		bChanged = Expand( pHit, TS_UNKNOWN );
+		bChanged = Expand( pHit, TRI_UNKNOWN );
 	}
 	else if ( nFlags & MK_CONTROL )
 	{
-		if ( pHit ) bChanged = Select( pHit, TS_UNKNOWN );
+		if ( pHit ) bChanged = Select( pHit, TRI_UNKNOWN );
 	}
 	else if ( nFlags & MK_SHIFT )
 	{
@@ -569,7 +569,7 @@ void CLibraryTreeView::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 	if ( !m_bVirtual ) 
 		OnLibraryExplore();
-	else if ( m_pFocus != NULL && !m_pFocus->empty() && Expand( m_pFocus, TS_UNKNOWN ) )
+	else if ( m_pFocus != NULL && !m_pFocus->empty() && Expand( m_pFocus, TRI_UNKNOWN ) )
 		NotifySelection();
 }
 
@@ -619,7 +619,7 @@ void CLibraryTreeView::OnLButtonUp(UINT nFlags, CPoint point)
 	{
 		if ( m_pFocus != NULL && !m_pFocus->empty() )
 		{
-			if ( Expand( m_pFocus, TS_UNKNOWN ) )
+			if ( Expand( m_pFocus, TRI_UNKNOWN ) )
 				NotifySelection();
 		}
 		if ( m_pFocus == NULL )
@@ -673,7 +673,7 @@ void CLibraryTreeView::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
 		{
 			if ( m_pFocus->m_bExpanded && !m_pFocus->empty() )
 			{
-				Expand( m_pFocus, TS_FALSE );
+				Expand( m_pFocus, TRI_FALSE );
 				break;
 			}
 
@@ -690,7 +690,7 @@ void CLibraryTreeView::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
 	{
 		if ( ! m_pFocus->m_bExpanded && !m_pFocus->empty() )
 		{
-			bChanged |= Expand( m_pFocus, TS_TRUE );
+			bChanged |= Expand( m_pFocus, TRI_TRUE );
 		}
 	}
 	else if ( _istalnum( TCHAR( nChar ) ) )
@@ -709,7 +709,7 @@ void CLibraryTreeView::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
 				else if ( toupper( pChild->m_sText.GetAt( 0 ) ) == (int)nChar )
 				{
 					DeselectAll( m_pFocus = &*pChild, NULL, FALSE );
-					Select( m_pFocus, TS_TRUE, FALSE );
+					Select( m_pFocus, TRI_TRUE, FALSE );
 					Highlight( m_pFocus );
 					NotifySelection();
 					return;
@@ -1518,7 +1518,7 @@ BOOL CLibraryTreeView::SelectFolder(LPVOID pSearch)
 	}
 
 	DeselectAll( pItem, NULL, FALSE );
-	Select( pItem, TS_TRUE, FALSE );
+	Select( pItem, TRI_TRUE, FALSE );
 	Highlight( pItem );
 	NotifySelection();
 
@@ -1661,17 +1661,17 @@ void CLibraryTreeView::OnUpdateLibraryShared(CCmdUI* pCmdUI)
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return;
 
-	TRISTATE bShared = TS_UNKNOWN;
+	TRISTATE bShared = TRI_UNKNOWN;
 
 	for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
 		if ( LibraryFolders.CheckFolder( pItem->m_pPhysical, TRUE ) )
 		{
-			if ( bShared == TS_UNKNOWN )
+			if ( bShared == TRI_UNKNOWN )
 			{
-				bShared = pItem->m_pPhysical->IsShared() ? TS_TRUE : TS_FALSE;
+				bShared = pItem->m_pPhysical->IsShared() ? TRI_TRUE : TRI_FALSE;
 			}
-			else if ( ( bShared == TS_TRUE ) != pItem->m_pPhysical->IsShared() )
+			else if ( ( bShared == TRI_TRUE ) != pItem->m_pPhysical->IsShared() )
 			{
 				pCmdUI->Enable( FALSE );
 				return;
@@ -1680,7 +1680,7 @@ void CLibraryTreeView::OnUpdateLibraryShared(CCmdUI* pCmdUI)
 	}
 
 	pCmdUI->Enable( m_nSelected > 0 );
-	pCmdUI->SetCheck( bShared == TS_TRUE );
+	pCmdUI->SetCheck( bShared == TRI_TRUE );
 }
 
 void CLibraryTreeView::OnLibraryShared()
@@ -1693,12 +1693,12 @@ void CLibraryTreeView::OnLibraryShared()
 			if ( LibraryFolders.CheckFolder( pItem->m_pPhysical, TRUE ) )
 			{
 				BOOL bShared = pItem->m_pPhysical->IsShared();
-				pItem->m_pPhysical->SetShared( TS_UNKNOWN );
+				pItem->m_pPhysical->SetShared( TRI_UNKNOWN );
 
 				if ( bShared )
-					pItem->m_pPhysical->SetShared( pItem->m_pPhysical->IsShared() ? TS_FALSE : TS_UNKNOWN );
+					pItem->m_pPhysical->SetShared( pItem->m_pPhysical->IsShared() ? TRI_FALSE : TRI_UNKNOWN );
 				else
-					pItem->m_pPhysical->SetShared( pItem->m_pPhysical->IsShared() ? TS_UNKNOWN : TS_TRUE );
+					pItem->m_pPhysical->SetShared( pItem->m_pPhysical->IsShared() ? TRI_UNKNOWN : TRI_TRUE );
 				pItem->m_pPhysical->m_nUpdateCookie++;
 			}
 		}
@@ -1887,13 +1887,13 @@ void CLibraryTreeView::OnLibraryFolderNew()
 
 		pFolder = pFolder->AddFolder( NULL, _T("New Folder") );
 
-		if ( m_pSelFirst ) Expand( m_pSelFirst, TS_TRUE, FALSE );
+		if ( m_pSelFirst ) Expand( m_pSelFirst, TRI_TRUE, FALSE );
 
 		NotifySelection();
 
 		if ( CLibraryTreeItem* pItem = GetFolderItem( pFolder ) )
 		{
-			Select( pItem, TS_TRUE, FALSE );
+			Select( pItem, TRI_TRUE, FALSE );
 			DeselectAll( pItem, NULL, FALSE );
 		}
 	}
@@ -1950,7 +1950,7 @@ void CLibraryTreeView::OnLibraryFolderProperties()
 
 		if ( CLibraryTreeItem* pItem = GetFolderItem( pFolder ) )
 		{
-			Select( pItem, TS_TRUE, FALSE );
+			Select( pItem, TRI_TRUE, FALSE );
 			DeselectAll( pItem, NULL, FALSE );
 			Invalidate();
 			NotifySelection();

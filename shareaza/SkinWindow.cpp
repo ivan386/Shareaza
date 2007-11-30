@@ -636,7 +636,7 @@ BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
 {
 	CWindowDC dc( pWnd );
 	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
-	Paint( pWnd, dc, TRUE, bActive ? TS_TRUE : TS_FALSE );
+	Paint( pWnd, dc, TRUE, bActive ? TRI_TRUE : TRI_FALSE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 	return FALSE;
 }
@@ -857,16 +857,16 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 	pWnd->GetWindowRect( &rc );
 	rc.OffsetRect( -rc.left, -rc.top );
 
-	if ( bActive == TS_UNKNOWN )
+	if ( bActive == TRI_UNKNOWN )
 	{
 		if ( pWnd->IsKindOf( RUNTIME_CLASS(CMDIChildWnd) ) )
 		{
 			CMDIFrameWnd* pFrame = ((CMDIChildWnd*)pWnd)->GetMDIFrame();
-			bActive = pFrame->MDIGetActive() == pWnd ? TS_TRUE : TS_FALSE;
+			bActive = pFrame->MDIGetActive() == pWnd ? TRI_TRUE : TRI_FALSE;
 		}
 		else
 		{
-			bActive = CWnd::GetForegroundWindow() == pWnd ? TS_TRUE : TS_FALSE;
+			bActive = CWnd::GetForegroundWindow() == pWnd ? TRI_TRUE : TRI_FALSE;
 		}
 	}
 
@@ -938,7 +938,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 	nSystemOffset = m_rcMirror.right - m_rcMirror.left;
 	nSystemWidth = m_rcMirror.bottom - m_rcMirror.top;
 
-	if ( bActive == TS_FALSE && m_bPart[ SKINPART_IA_TOP_LEFT ] )
+	if ( bActive == TRI_FALSE && m_bPart[ SKINPART_IA_TOP_LEFT ] )
 	{
 		pDC->BitBlt( 0, 0, m_rcPart[ SKINPART_IA_TOP_LEFT ].Width(),
 			m_rcPart[ SKINPART_IA_TOP_LEFT ].Height(), &m_dcSkin,
@@ -994,7 +994,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcTop.left += m_rcPart[ SKINPART_TOP_LEFT ].Width();
 	}
 
-	if ( bActive == TS_FALSE && m_bPart[ SKINPART_IA_TOP_RIGHT ] )
+	if ( bActive == TRI_FALSE && m_bPart[ SKINPART_IA_TOP_RIGHT ] )
 	{
 		pDC->BitBlt( rc.Width() - m_rcPart[ SKINPART_IA_TOP_RIGHT ].Width(), 0,
 			m_rcPart[ SKINPART_IA_TOP_RIGHT ].Width(),
@@ -1099,7 +1099,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		}
 	}
 
-	if ( bActive == TS_FALSE && m_bPart[ SKINPART_IA_TOP ] && rcTop.left < rcTop.right )
+	if ( bActive == TRI_FALSE && m_bPart[ SKINPART_IA_TOP ] && rcTop.left < rcTop.right )
 	{
 		CRect* pRect = &m_rcPart[ SKINPART_IA_TOP ];
 
@@ -1243,7 +1243,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			pDC->ExtTextOut( ptCap.x + 1, ptCap.y + 1, ETO_CLIPPED, &rcItem, strCaption, NULL );
 		}
 
-		pDC->SetTextColor( bActive == TS_TRUE ? m_crCaptionText : m_crCaptionInactive );
+		pDC->SetTextColor( bActive == TRI_TRUE ? m_crCaptionText : m_crCaptionInactive );
 		pDC->ExtTextOut( ptCap.x, ptCap.y, ETO_CLIPPED, &rcItem, strCaption, NULL );
 		pDC->SelectObject( pOldFont );
 	}

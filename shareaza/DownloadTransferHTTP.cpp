@@ -106,7 +106,7 @@ BOOL CDownloadTransferHTTP::Initiate()
 		// Mark it as an offline source, it might be good later...
 		m_pDownload->AddFailedSource( m_pSource, true, true );
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CONNECT_ERROR, (LPCTSTR)m_sAddress );
-		Close( TS_UNKNOWN );
+		Close( TRI_UNKNOWN );
 		return FALSE;
 	}
 }
@@ -199,7 +199,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 		 m_pDownload->GetTransferCount( dtsDownloading ) >= Settings.Downloads.MaxFileTransfers */ )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CLOSING_EXTRA, (LPCTSTR)m_sAddress );
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
 		return FALSE;
 	}
 	
@@ -208,7 +208,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	if ( m_pInput->m_nLength > 0 && m_nRequests > 0 )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CLOSING_OVERFLOW, (LPCTSTR)m_sAddress );
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
 		return FALSE;
 	}
 	
@@ -251,7 +251,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 		if ( m_pSource != NULL ) m_pSource->SetAvailableRanges( NULL );
 		
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
 		
 		return FALSE;
 	}
@@ -506,7 +506,7 @@ BOOL CDownloadTransferHTTP::OnRun()
 		{
 			theApp.Message( MSG_ERROR, IDS_CONNECTION_TIMEOUT_CONNECT, (LPCTSTR)m_sAddress );
 			if ( m_pSource != NULL ) m_pSource->PushRequest();
-			Close( TS_UNKNOWN );
+			Close( TRI_UNKNOWN );
 			return FALSE;
 		}
 		break;
@@ -516,7 +516,7 @@ BOOL CDownloadTransferHTTP::OnRun()
 		if ( tNow - m_tRequest > Settings.Connection.TimeoutHandshake )
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_REQUEST_TIMEOUT, (LPCTSTR)m_sAddress );
-			Close( m_bBusyFault || m_bQueueFlag ? TS_TRUE : TS_UNKNOWN );
+			Close( m_bBusyFault || m_bQueueFlag ? TRI_TRUE : TRI_UNKNOWN );
 			return FALSE;
 		}
 		break;
@@ -528,7 +528,7 @@ BOOL CDownloadTransferHTTP::OnRun()
 		if ( tNow - m_mInput.tLast > Settings.Connection.TimeoutTraffic * 2 )
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_TRAFFIC_TIMEOUT, (LPCTSTR)m_sAddress );
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
 		}
 		break;
@@ -537,7 +537,7 @@ BOOL CDownloadTransferHTTP::OnRun()
 		if ( tNow - m_tRequest > 1000 )
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
 		}
 		break;
@@ -624,7 +624,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 	else
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_NOHTTP, (LPCTSTR)m_sAddress );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 
@@ -688,7 +688,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		
 		if ( IsAgentBlocked() )
 		{
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 
@@ -732,13 +732,13 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			{
 				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE, (LPCTSTR)m_sAddress,
 					(LPCTSTR)m_pDownload->GetDisplayName() );
-				Close( TS_FALSE );
+				Close( TRI_FALSE );
 				return FALSE;
 			}
 			
 			if ( m_nOffset == SIZE_UNKNOWN && ! m_pDownload->GetFragment( this ) )
 			{
-				Close( TS_TRUE );
+				Close( TRI_TRUE );
 				return FALSE;
 			}
 			
@@ -761,7 +761,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			{
 				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_RANGE, (LPCTSTR)m_sAddress,
 					(LPCTSTR)m_pDownload->GetDisplayName() );
-				Close( TS_TRUE );
+				Close( TRI_TRUE );
 				
 				return FALSE;
 			}
@@ -782,7 +782,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			if ( ! Settings.Downloads.AllowBackwards )
 			{
 				theApp.Message( MSG_DEBUG, _T( "Backwards encoding disabled" ) );
-				Close( TS_FALSE );
+				Close( TRI_FALSE );
 				return FALSE;
 			}
 		}
@@ -790,21 +790,21 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			m_bGzip = TRUE;
 			theApp.Message( MSG_DEBUG, _T( "Gzip encoding not supported" ) );
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 		if ( _tcsistr( strValue, _T("compress") ) )	// compress or x-compress
 		{
 			m_bCompress = TRUE;
 			theApp.Message( MSG_DEBUG, _T( "Compress encoding not supported" ) );
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 		if ( _tcsistr( strValue, _T("deflate") ) )	// deflate
 		{
 			m_bDeflate = TRUE;
 			theApp.Message( MSG_DEBUG, _T( "Deflate encoding not supported" ) );
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 	}
@@ -823,7 +823,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		else
 		{
 			theApp.Message( MSG_DEBUG, _T( "Unknown transfer encoding: %s" ), strValue );
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 	}
@@ -866,7 +866,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			}
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH, (LPCTSTR)m_sAddress,
 				(LPCTSTR)m_pDownload->GetDisplayName() );
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 		m_pSource->SetGnutella( 1 );
@@ -919,7 +919,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		if ( m_pSource->m_oAvailable.empty() )
 		{
 			theApp.Message( MSG_DEBUG, _T( "header did not include valid ranges, dropping source..." ) );
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 	}
@@ -1079,29 +1079,29 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 BOOL CDownloadTransferHTTP::OnHeadersComplete()
 {
 	// Close parameters:
-	// TS_FALSE   - the source will be added to m_pFailedSources in CDownloadWithSources,
+	// TRI_FALSE   - the source will be added to m_pFailedSources in CDownloadWithSources,
 	//			    removed from the sources and can be distributed in the Source Mesh as X-Nalt
-	// TS_TRUE    - keeps the source and will be distributed as X-Alt
-	// TS_UNKNOWN - keeps the source and will be dropped after several retries, will be
+	// TRI_TRUE    - keeps the source and will be distributed as X-Alt
+	// TRI_UNKNOWN - keeps the source and will be dropped after several retries, will be
 	//            - added to m_pFailedSources when removed
 
 	if ( m_bBadResponse )
 	{
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	else if ( m_bRedirect )
 	{
 		int nRedirectionCount = m_pSource->m_nRedirectionCount;
 		m_pDownload->AddSourceURL( m_sRedirectionURL, m_bHashMatch, NULL, nRedirectionCount + 1 );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	else if ( ! m_pSource->CanInitiate( TRUE, TRUE ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DISABLED,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-		Close( m_pSource->m_bED2K ? TS_FALSE : TS_UNKNOWN );
+		Close( m_pSource->m_bED2K ? TRI_FALSE : TRI_UNKNOWN );
 		return FALSE;
 	}
 	else if ( m_bBusyFault )
@@ -1112,7 +1112,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_QUEUE_HUGE,
 				(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName(), m_nQueuePos );
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 		else if ( m_bQueueFlag && m_nRetryDelay >= 600000 )
@@ -1144,7 +1144,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	{
 		if ( Network.IsSelfIP( m_pHost.sin_addr ) )
 		{
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
 		}
 		
@@ -1173,7 +1173,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		else if ( m_nOffset > 0 )
 		{
 			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_RANGE, (LPCTSTR)m_sAddress );
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 		
@@ -1182,7 +1182,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 				m_sContentType.CompareNoCase( _T("application/binary") ) ) // Content Type used by Phex 
 		{
 			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_RANGE, (LPCTSTR)m_sAddress );
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
 		}
 		
@@ -1222,13 +1222,13 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 			{
 				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE, (LPCTSTR)m_sAddress,
 					(LPCTSTR)m_pDownload->GetDisplayName() );
-				Close( TS_FALSE );
+				Close( TRI_FALSE );
 				return FALSE;
 			}
 		}
 		if ( m_nOffset == SIZE_UNKNOWN && ! m_pDownload->GetFragment( this ) )
 		{
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
 		}
 		
@@ -1236,7 +1236,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_RANGE, (LPCTSTR)m_sAddress,
 				(LPCTSTR)m_pDownload->GetDisplayName() );
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
 		}
 		
@@ -1254,7 +1254,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		{
 			// Extend the period of keeping it in the failed sources list
 			pBadSource->m_nTimeAdded = GetTickCount();
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 	}
@@ -1263,7 +1263,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_RANGE, (LPCTSTR)m_sAddress,
 			(LPCTSTR)m_pDownload->GetDisplayName() );
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	
@@ -1341,7 +1341,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 						{
 							// Bad format
 							m_pInput->Clear();
-							Close( TS_FALSE );
+							Close( TRI_FALSE );
 							return FALSE;
 						}
 						break;
@@ -1388,7 +1388,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 					{
 						// Bad Format
 						m_pInput->Clear();
-						Close( TS_FALSE );
+						Close( TRI_FALSE );
 						return FALSE;
 					}
 				}
@@ -1437,7 +1437,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 			if ( /* m_bInitiated || */ ! bUseful )
 			{
 				theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_OVERLAP, (LPCTSTR)m_sAddress );
-				Close( TS_TRUE );
+				Close( TRI_TRUE );
 				return FALSE;
 			}
 		}
@@ -1602,7 +1602,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 			/* we got a "requested range unavailable" error but the source doesn't
 			advertise available ranges; don't start to guess, try again later */
 			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_416_WITHOUT_RANGE, (LPCTSTR)m_sAddress );
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
         }
 		else if ( m_bRangeFault && m_bGotRanges && m_nRequests >= 2 )
@@ -1611,7 +1611,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
             ranges, but we still managed to request a wrong one */
 			// TODO: find the reason why this is happening
 			theApp.Message( MSG_ERROR, _T("BUG: Shareaza requested a fragment from host %s, although it knew that the host doesn't have that fragment") , (LPCTSTR)m_sAddress );
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
 		}
 		else
@@ -1632,12 +1632,12 @@ void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CONNECT_ERROR, (LPCTSTR)m_sAddress );
 		if ( m_pSource != NULL ) m_pSource->PushRequest();
-		Close( TS_UNKNOWN );
+		Close( TRI_UNKNOWN );
 	}
 	else if ( m_nState == dtsBusy )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
-		Close( TS_TRUE, m_nRetryAfter );
+		Close( TRI_TRUE, m_nRetryAfter );
 	}
 	else if ( m_nState == dtsTiger )
     {
@@ -1651,12 +1651,12 @@ void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 		ReadTiger();
 		// CDownloadTransfer::Close will resume the closed connection
         m_pSource->m_bCloseConn = TRUE;
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
     }
 	else if ( m_bBusyFault || m_bQueueFlag )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY, (LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
-		Close( TS_TRUE, m_nRetryAfter );
+		Close( TRI_TRUE, m_nRetryAfter );
 	}
 	else if ( m_nState == dtsDownloading && m_nContentLength == SIZE_UNKNOWN &&
 		m_pDownload->m_nSize == SIZE_UNKNOWN )
@@ -1664,12 +1664,12 @@ void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 		// Set file size as is
 		m_pDownload->m_nSize = m_nDownloaded;
 		m_pDownload->MakeComplete();
-		Close( TS_TRUE );
+		Close( TRI_TRUE );
 	}
 	else
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DROPPED, (LPCTSTR)m_sAddress );
-		Close( m_nState >= dtsDownloading ? TS_TRUE : TS_UNKNOWN );
+		Close( m_nState >= dtsDownloading ? TRI_TRUE : TRI_UNKNOWN );
 	}
 }
 

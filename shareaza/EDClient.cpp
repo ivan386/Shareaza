@@ -362,7 +362,7 @@ BOOL CEDClient::SeekNewDownload(CDownloadSource* /*pExcept*/)
 void CEDClient::DetachDownload()
 {
 	m_bSeeking = TRUE;
-	if ( m_pDownload != NULL ) m_pDownload->Close( TS_UNKNOWN );
+	if ( m_pDownload != NULL ) m_pDownload->Close( TRI_UNKNOWN );
 	ASSERT( m_pDownload == NULL );
 	m_bSeeking = FALSE;
 }
@@ -1923,7 +1923,7 @@ void CEDClient::WritePartStatus(CEDPacket* pPacket, CDownload* pDownload)
 			
 			for ( DWORD nBit = 0 ; nBit < 8 && nPart < nParts ; nBit++, nPart++ )
 			{
-				if ( pDownload->m_pHashsetBlock[ nPart ] == TS_TRUE )
+				if ( pDownload->m_pHashsetBlock[ nPart ] == TRI_TRUE )
 				{
 					nByte |= ( 1 << nBit );
 				}
@@ -1985,7 +1985,7 @@ BOOL CEDClient::OnUdpQueueFull(CEDPacket* /*pPacket*/)
 	if ( m_pDownload != NULL )
 	{
 		m_pDownload->m_pSource->m_tAttempt = GetTickCount() + Settings.eDonkey.ReAskTime * 1000;
-		m_pDownload->Close( TS_UNKNOWN );
+		m_pDownload->Close( TRI_UNKNOWN );
 	}
 	
 	return TRUE;
@@ -1993,6 +1993,6 @@ BOOL CEDClient::OnUdpQueueFull(CEDPacket* /*pPacket*/)
 
 BOOL CEDClient::OnUdpFileNotFound(CEDPacket* /*pPacket*/)
 {
-	if ( m_pDownload != NULL ) m_pDownload->Close( TS_FALSE );
+	if ( m_pDownload != NULL ) m_pDownload->Close( TRI_FALSE );
 	return TRUE;
 }

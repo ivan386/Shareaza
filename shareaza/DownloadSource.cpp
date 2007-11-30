@@ -116,12 +116,12 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, CQueryHit* pHit)
 {
 	Construct( pDownload );
 	
-	m_bPushOnly	= pHit->m_bPush == TS_TRUE ? TRUE : FALSE;
+	m_bPushOnly	= pHit->m_bPush == TRI_TRUE ? TRUE : FALSE;
 	
 	m_sURL		= pHit->m_sURL;
 	m_pAddress	= pHit->m_pAddress;	// Not needed? , m_pAddress is set in ResolveURL() again
 	m_nPort		= pHit->m_nPort;	// Not needed?
-	m_nSpeed	= pHit->m_bMeasured == TS_TRUE ? ( pHit->m_nSpeed * 128 ) : 0;
+	m_nSpeed	= pHit->m_bMeasured == TRI_TRUE ? ( pHit->m_nSpeed * 128 ) : 0;
 	m_sServer	= pHit->m_pVendor->m_sName;
 	m_sName		= pHit->m_sName;
 	m_sNick		= pHit->m_sNick;
@@ -528,7 +528,7 @@ void CDownloadSource::Remove(BOOL bCloseTransfer, BOOL bBan)
 	{
 		if ( bCloseTransfer )
 		{
-			m_pTransfer->Close( TS_TRUE );
+			m_pTransfer->Close( TRI_TRUE );
 			ASSERT( m_pTransfer == NULL );
 		}
 		else

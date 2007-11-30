@@ -1200,7 +1200,7 @@ void CDownloads::Load()
 						continue;
 					}
 					pDownload->m_bComplete = TRUE;
-					pDownload->m_bVerify = TS_TRUE;
+					pDownload->m_bVerify = TRI_TRUE;
 				}
 				m_pList.AddTail( pDownload );
 			}

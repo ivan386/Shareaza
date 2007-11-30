@@ -252,7 +252,7 @@ void CDownloadGroupDlg::OnOK()
 
 					CQuickLock oLock( Library.m_pSection );
 					if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
-						pFolder->SetShared( bShare ? TS_TRUE : TS_FALSE );
+						pFolder->SetShared( bShare ? TRI_TRUE : TRI_FALSE );
 					Library.Update();
 				}
 			}

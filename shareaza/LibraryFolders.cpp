@@ -150,7 +150,7 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath, BOOL bShared)
 	CLibraryFolder* pFolder = AddFolder( pszPath );
 
 	if( pFolder )
-		pFolder->SetShared( bShared ? TS_TRUE : TS_FALSE );
+		pFolder->SetShared( bShared ? TRI_TRUE : TRI_FALSE );
 
 	return pFolder;
 }
@@ -168,7 +168,7 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 
 	Maintain( pFolder, FALSE );
 
-	pFolder->OnDelete( Settings.Library.CreateGhosts ? TS_TRUE : TS_FALSE );
+	pFolder->OnDelete( Settings.Library.CreateGhosts ? TRI_TRUE : TRI_FALSE );
 	m_pFolders.RemoveAt( pos );
 	
 	Library.Update();

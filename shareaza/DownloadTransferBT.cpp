@@ -83,7 +83,7 @@ BOOL CDownloadTransferBT::Initiate()
 	{
 		delete m_pClient;
 		m_pClient = NULL;
-		Close( TS_FALSE );
+		Close( TRI_FALSE );
 		return FALSE;
 	}
 	SetState( dtsConnecting );
@@ -218,7 +218,7 @@ BOOL CDownloadTransferBT::OnConnected()
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
 		if ( ! m_pDownload->PrepareFile() )
 		{
-			Close( TS_TRUE );
+			Close( TRI_TRUE );
 			return FALSE;
 		}
 		m_pClient->m_mInput.pLimit = &m_nBandwidth;

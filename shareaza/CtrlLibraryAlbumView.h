@@ -69,7 +69,7 @@ public:
 	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
 protected:
 	void				Clear();
-	BOOL				Select(CLibraryAlbumTrack* pItem, TRISTATE bSelect = TS_TRUE);
+	BOOL				Select(CLibraryAlbumTrack* pItem, TRISTATE bSelect = TRI_TRUE);
 	BOOL				DeselectAll(CLibraryAlbumTrack* pItem = NULL);
 	BOOL				SelectTo(CLibraryAlbumTrack* pItem);
 	void				SelectTo(int nDelta);

@@ -838,10 +838,10 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 {
 	pHit->m_bFiltered = FALSE;
 	
-	if ( m_bFilterBusy && pHit->m_bBusy == TS_TRUE ) return FALSE;
-	//if ( m_bFilterPush && pHit->m_bPush == TS_TRUE && pHit->m_nProtocol != PROTOCOL_ED2K ) return FALSE;
-	if ( m_bFilterPush && pHit->m_bPush == TS_TRUE ) return FALSE;
-	if ( m_bFilterUnstable && pHit->m_bStable == TS_FALSE ) return FALSE;
+	if ( m_bFilterBusy && pHit->m_bBusy == TRI_TRUE ) return FALSE;
+	//if ( m_bFilterPush && pHit->m_bPush == TRI_TRUE && pHit->m_nProtocol != PROTOCOL_ED2K ) return FALSE;
+	if ( m_bFilterPush && pHit->m_bPush == TRI_TRUE ) return FALSE;
+	if ( m_bFilterUnstable && pHit->m_bStable == TRI_FALSE ) return FALSE;
 	if ( m_bFilterReject && pHit->m_bMatched == FALSE ) return FALSE;
 	if ( m_bFilterBogus && pHit->m_bBogus ) return FALSE;
 	
@@ -1250,9 +1250,9 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit) :
 	m_pNextED2K		( NULL ),
 	m_pNextBTH		( NULL ),
 	m_pNextMD5		( NULL ),
-	m_bBusy			( TS_UNKNOWN ),
-	m_bPush			( TS_UNKNOWN ),
-	m_bStable		( TS_UNKNOWN ),
+	m_bBusy			( TRI_UNKNOWN ),
+	m_bPush			( TRI_UNKNOWN ),
+	m_bStable		( TRI_UNKNOWN ),
 	m_bPreview		( FALSE ),
 	m_nSpeed		( 0 ),
 	m_nRating		( 0 ),
@@ -1263,7 +1263,7 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit) :
 	m_bTorrent		( FALSE ),	
 	m_bExpanded		( Settings.Search.ExpandMatches ),
 	m_bSelected		( FALSE ),
-	m_bExisting		( TS_UNKNOWN ),
+	m_bExisting		( TRI_UNKNOWN ),
 	m_bDownload		( FALSE ),
 	m_bNew			( FALSE ),
 	m_bOneValid		( FALSE ),
@@ -1406,7 +1406,7 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 		m_oMD5 = pHit->m_oMD5;
 	}
 	
-	if ( ! m_bDownload && GetLibraryStatus() == TS_UNKNOWN && ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 ) )
+	if ( ! m_bDownload && GetLibraryStatus() == TRI_UNKNOWN && ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 ) )
 	{
 		CSingleLock pLock2( &Transfers.m_pSection );
 		
@@ -1486,9 +1486,9 @@ BOOL CMatchFile::Expand(BOOL bExpand)
 
 DWORD CMatchFile::Filter()
 {
-	m_bBusy			= TS_UNKNOWN;
-	m_bPush			= TS_UNKNOWN;
-	m_bStable		= TS_UNKNOWN;
+	m_bBusy			= TRI_UNKNOWN;
+	m_bPush			= TRI_UNKNOWN;
+	m_bStable		= TRI_UNKNOWN;
 	m_bPreview		= FALSE;
 	m_nSpeed		= 0;
 	m_nRating		= 0;
@@ -1515,7 +1515,7 @@ DWORD CMatchFile::Filter()
 	}
 
 	if ( m_pBest == NULL ) return 0;	// If we filtered all hits, don't try to display
-	if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TS_FALSE ) return 0;
+	if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE ) return 0;
 	if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
 	if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 
@@ -1546,20 +1546,20 @@ void CMatchFile::Added(CQueryHit* pHit)
 	
 	if ( pHit->GetSources() > 0 )
 	{
-		if ( pHit->m_bPush == TS_FALSE )
-			m_bPush = TS_FALSE;
-		else if ( pHit->m_bPush == TS_TRUE && m_bPush == TS_UNKNOWN )
-			m_bPush = TS_TRUE;
+		if ( pHit->m_bPush == TRI_FALSE )
+			m_bPush = TRI_FALSE;
+		else if ( pHit->m_bPush == TRI_TRUE && m_bPush == TRI_UNKNOWN )
+			m_bPush = TRI_TRUE;
 		
-		if ( pHit->m_bBusy == TS_FALSE )
-			m_bBusy = TS_FALSE;
-		else if ( pHit->m_bBusy == TS_TRUE && m_bBusy == TS_UNKNOWN )
-			m_bBusy = TS_TRUE;
+		if ( pHit->m_bBusy == TRI_FALSE )
+			m_bBusy = TRI_FALSE;
+		else if ( pHit->m_bBusy == TRI_TRUE && m_bBusy == TRI_UNKNOWN )
+			m_bBusy = TRI_TRUE;
 		
-		if ( pHit->m_bStable == TS_TRUE )
-			m_bStable = TS_TRUE;
-		else if ( pHit->m_bStable == TS_FALSE && m_bStable == TS_UNKNOWN )
-			m_bStable = TS_FALSE;
+		if ( pHit->m_bStable == TRI_TRUE )
+			m_bStable = TRI_TRUE;
+		else if ( pHit->m_bStable == TRI_FALSE && m_bStable == TRI_UNKNOWN )
+			m_bStable = TRI_FALSE;
 		
 		m_bPreview |= pHit->m_bPreview;
 	}
@@ -1754,12 +1754,12 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 		
 	case MATCH_COL_STATUS:
 		x = y = 0;
-		if ( m_bPush != TS_TRUE ) x += 4;
-		if ( m_bBusy != TS_TRUE ) x += 2;
-		if ( m_bStable == TS_TRUE ) x ++;
-		if ( pFile->m_bPush != TS_TRUE ) y += 4;
-		if ( pFile->m_bBusy != TS_TRUE ) y += 2;
-		if ( pFile->m_bStable == TS_TRUE ) y ++;
+		if ( m_bPush != TRI_TRUE ) x += 4;
+		if ( m_bBusy != TRI_TRUE ) x += 2;
+		if ( m_bStable == TRI_TRUE ) x ++;
+		if ( pFile->m_bPush != TRI_TRUE ) y += 4;
+		if ( pFile->m_bBusy != TRI_TRUE ) y += 2;
+		if ( pFile->m_bStable == TRI_TRUE ) y ++;
 		return x == y ? 0 : ( x > y ? 1 : -1 );
 		
 	case MATCH_COL_COUNT:
@@ -1984,9 +1984,9 @@ CQueryHit*	CMatchFile::GetBest() const
 {
 	int nRating = 0;
 
-	if ( m_bPush != TS_TRUE ) nRating += 4;
-	if ( m_bBusy != TS_TRUE ) nRating += 2;
-	if ( m_bStable == TS_TRUE ) nRating ++;
+	if ( m_bPush != TRI_TRUE ) nRating += 4;
+	if ( m_bBusy != TRI_TRUE ) nRating += 2;
+	if ( m_bStable == TRI_TRUE ) nRating ++;
 
 	return nRating;
 }*/
@@ -2099,7 +2099,7 @@ BOOL CMatchFile::AddHitsToPreviewURLs(CList<CString>& oPreviewURLs) const
 	BOOL bCanPreview = FALSE;
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
 	{
-		if ( pHit->m_oSHA1 && pHit->m_bPush == TS_FALSE )
+		if ( pHit->m_oSHA1 && pHit->m_bPush == TRI_FALSE )
 		{
 			if ( pHit->m_bPreview )
 			{
@@ -2203,7 +2203,7 @@ LPCTSTR CMatchFile::GetBestSchemaURI() const
 
 TRISTATE CMatchFile::GetBestMeasured() const
 {
-	return ( m_pBest ? m_pBest->m_bMeasured : TS_UNKNOWN );
+	return ( m_pBest ? m_pBest->m_bMeasured : TRI_UNKNOWN );
 }
 
 BOOL CMatchFile::GetBestBrowseHost() const
@@ -2253,7 +2253,7 @@ void CMatchFile::GetUser(CString& sUser) const
 		}
 		else
 		{
-			if ( ( m_pBest->m_nProtocol == PROTOCOL_ED2K ) && ( m_pBest->m_bPush == TS_TRUE ) )
+			if ( ( m_pBest->m_nProtocol == PROTOCOL_ED2K ) && ( m_pBest->m_bPush == TRI_TRUE ) )
 			{
 				sUser.Format( _T("%lu@%s - %s"), m_pBest->m_oClientID.begin()[2], 
 					(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*m_pBest->m_oClientID.begin() ) ),
@@ -2277,7 +2277,7 @@ void CMatchFile::GetStatusTip( CString& sStatus, COLORREF& crStatus)
 {
 	sStatus.Empty();
 
-	if ( GetLibraryStatus() != TS_UNKNOWN )
+	if ( GetLibraryStatus() != TRI_UNKNOWN )
 	{
 		CLibraryFile* pExisting = NULL;
 
@@ -2356,12 +2356,12 @@ TRISTATE CMatchFile::GetLibraryStatus()
 			 ( m_oBTH && ( pExisting = LibraryMaps.LookupFileByBTH( m_oBTH ) ) != NULL ) ||
 			 ( m_oMD5 && ( pExisting = LibraryMaps.LookupFileByMD5( m_oMD5 ) ) != NULL ) )
 		{
-			m_bExisting = pExisting->IsAvailable() ? TS_FALSE : TS_TRUE;
+			m_bExisting = pExisting->IsAvailable() ? TRI_FALSE : TRI_TRUE;
 		}
 		else
 		{
-			if ( m_bExisting == TS_FALSE )
-				m_bExisting = TS_TRUE;
+			if ( m_bExisting == TRI_FALSE )
+				m_bExisting = TRI_TRUE;
 		}
 		pLock.Unlock();
 	}

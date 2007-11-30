@@ -511,17 +511,17 @@ BOOL CAlbumFolder::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFil
 	// Otherwise, if the validation succeeds we will mount it at the exact parent.
 	// If parent can not hold object like this we will mount at the collection root only.
 	CString strParentURI = pCollection->GetParentURI();
-	TRISTATE bMountHere = TS_UNKNOWN;
+	TRISTATE bMountHere = TRI_UNKNOWN;
 
 	if ( strParentURI.GetLength() )
-		bMountHere = m_sSchemaURI == strParentURI ? TS_TRUE : TS_FALSE;
+		bMountHere = m_sSchemaURI == strParentURI ? TRI_TRUE : TRI_FALSE;
 
 	// If this folder is a collection or simple folder don't mount it
 	// (some collections are folder types which in turn can hold folders)
 	if ( m_oCollSHA1 || m_sSchemaURI == CSchema::uriFolder )
-		bMountHere = TS_FALSE;
+		bMountHere = TRI_FALSE;
 
-	if ( bMountHere != TS_FALSE &&
+	if ( bMountHere != TRI_FALSE &&
 	// If the folder schema allows to hold objects having URIs of the collection
 		 m_pSchema->GetContained( pCollection->GetThisURI() ) != NULL ||
 	// or when the folder URI is the root collection folder

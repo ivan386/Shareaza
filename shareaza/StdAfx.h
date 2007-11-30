@@ -32,6 +32,7 @@
 //
 // Configuration
 //
+
 #if 1
 #if _MSC_VER > 1310
 // Warnings that are normally ON by default
@@ -80,7 +81,9 @@
 #define _SCL_SECURE_NO_DEPRECATE
 #define _CRT_SECURE_NO_DEPRECATE
 #define _CRT_NON_CONFORMING_SWPRINTFS
-#else
+
+#else	// VS 2003
+
 // 64bit related - need to be fixed
 #pragma warning ( disable : 4302 4311 4312 )
 // general - fix where feasable then move to useless
@@ -93,16 +96,18 @@
 #pragma warning ( disable : 4820 )
 // useless
 #pragma warning ( disable : 4217 4514 4619 4702 4710 4711 )
+
 #endif
+
 #endif
 
 const bool SHAREAZA_RESTRICT_WP64 = true;
 // allow min to return the smaller type if called with unsigned arguments ?
 const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 
-#define WINVER			0x0500		// Windows 95,98,ME,NT,2000
+#define WINVER			0x0501		// Windows 95,98,ME,NT,2000,XP
 #define _WIN32_WINDOWS	0x0400		// Windows 95
-#define _WIN32_WINNT	0x0500		// Windows NT,2000
+#define _WIN32_WINNT	0x0501		// Windows NT,2000,XP
 #define _WIN32_IE		0x0500		// Internet Explorer 5.0
 #define _WIN32_DCOM					// Windows 95,98,ME DCOM
 
@@ -164,6 +169,8 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 
 #include "Resource.h"
 
+#include "ShareazaOM.h"
+
 #pragma warning( pop )
 
 
@@ -205,15 +212,19 @@ typedef unsigned __int64 QWORD;
 #define	MAKEDWORD(a,b)	((DWORD) (((a)) | ((DWORD) ((b))) << 16))
 #define	MAKEQWORD(a,b)	((QWORD) (((a)) | ((QWORD) ((b))) << 32))
 
-//
-// Tristate type
-//
+inline CArchive& AFXAPI operator<<(CArchive& ar, const TRISTATE& n)
+{
+	int tmp = static_cast< int >( n );
+	return ar << tmp;
+}
 
-typedef int TRISTATE;
-
-const TRISTATE TS_UNKNOWN = 0;
-const TRISTATE TS_FALSE   = 1;
-const TRISTATE TS_TRUE    = 2;
+inline CArchive& AFXAPI operator>>(CArchive& ar, TRISTATE& n)
+{
+	int tmp;
+	ar >> tmp;
+	n = static_cast< TRISTATE >( tmp );
+	return ar;
+}
 
 // Typedefs from powrprof.h
 typedef struct _GLOBAL_MACHINE_POWER_POLICY

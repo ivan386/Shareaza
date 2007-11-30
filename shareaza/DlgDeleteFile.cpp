@@ -177,7 +177,7 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 		{
 			pFile->m_sComments	= m_sComments = strTransl + L" (" + strUntransl + L")";
 		}
-		pFile->m_bShared = TS_FALSE;
+		pFile->m_bShared = TRI_FALSE;
 		pFile->SaveMetadata();
 	}
 }
@@ -213,7 +213,7 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 		pFile->m_oMD5		= pDownload->m_oMD5;
 		pFile->m_oED2K		= pDownload->m_oED2K;
 		pFile->m_oBTH		= pDownload->m_oBTH;
-		pFile->m_bShared	= bShare ? TS_TRUE : TS_FALSE;
+		pFile->m_bShared	= bShare ? TRI_TRUE : TRI_FALSE;
 		pFile->Ghost();
 	}
 

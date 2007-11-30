@@ -390,7 +390,7 @@ void CWizardConnectionPage::OnTimer(UINT_PTR nIDEvent)
 
 	CloseThread( &m_hThread );
 
-	if ( m_bUPnPForward && theApp.m_bUPnPPortsForwarded != TS_TRUE )
+	if ( m_bUPnPForward && theApp.m_bUPnPPortsForwarded != TRI_TRUE )
 	{
 		CString strFormat, strMessage;
 		LoadString( strFormat, IDS_WIZARD_PORT_FORWARD );

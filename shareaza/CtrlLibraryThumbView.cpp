@@ -150,7 +150,7 @@ void CLibraryThumbView::Update()
 		}
 		else
 		{
-			if ( pThumb->m_bSelected ) Select( pThumb, TS_FALSE );
+			if ( pThumb->m_bSelected ) Select( pThumb, TRI_FALSE );
 			if ( pThumb == m_pFocus ) m_pFocus = NULL;
 			if ( pThumb == m_pFirst ) m_pFirst = NULL;
 
@@ -293,14 +293,14 @@ BOOL CLibraryThumbView::Select(CLibraryThumbItem* pThumb, TRISTATE bSelect)
 {
 	switch ( bSelect )
 	{
-	case TS_UNKNOWN:
+	case TRI_UNKNOWN:
 		pThumb->m_bSelected = ! pThumb->m_bSelected;
 		break;
-	case TS_FALSE:
+	case TRI_FALSE:
 		if ( pThumb->m_bSelected == FALSE ) return FALSE;
 		pThumb->m_bSelected = FALSE;
 		break;
-	case TS_TRUE:
+	case TRI_TRUE:
 		if ( pThumb->m_bSelected == TRUE ) return FALSE;
 		pThumb->m_bSelected = TRUE;
 		break;
@@ -334,7 +334,7 @@ BOOL CLibraryThumbView::DeselectAll(CLibraryThumbItem* pThumb)
 	{
 		if ( *pList != pThumb )
 		{
-			if ( (*pList)->m_bSelected ) bChanged = Select( *pList, TS_FALSE );
+			if ( (*pList)->m_bSelected ) bChanged = Select( *pList, TRI_FALSE );
 		}
 	}
 
@@ -354,7 +354,7 @@ BOOL CLibraryThumbView::SelectTo(CLibraryThumbItem* pThumb)
 
 		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
 		{
-			bChanged = Select( m_pFocus, TS_UNKNOWN );
+			bChanged = Select( m_pFocus, TRI_UNKNOWN );
 		}
 		else if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
@@ -364,18 +364,18 @@ BOOL CLibraryThumbView::SelectTo(CLibraryThumbItem* pThumb)
 			{
 				if ( nFirst <= nFocus )
 				{
-					for ( ; nFirst <= nFocus ; nFirst++ ) Select( m_pList[ nFirst ], TS_TRUE );
+					for ( ; nFirst <= nFocus ; nFirst++ ) Select( m_pList[ nFirst ], TRI_TRUE );
 				}
 				else
 				{
-					for ( ; nFocus <= nFirst ; nFocus++ ) Select( m_pList[ nFocus ], TS_TRUE );
+					for ( ; nFocus <= nFirst ; nFocus++ ) Select( m_pList[ nFocus ], TRI_TRUE );
 				}
 
 				bChanged = TRUE;
 			}
 			else
 			{
-				bChanged |= Select( m_pFocus, TS_TRUE );
+				bChanged |= Select( m_pFocus, TRI_TRUE );
 			}
 		}
 		else

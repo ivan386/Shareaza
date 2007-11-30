@@ -237,9 +237,9 @@ UINT CPlugins::GetCommandID()
 BOOL CPlugins::OnUpdate(CChildWnd* pActiveWnd, CCmdUI* pCmdUI)
 {
 	UINT nCommandID		= pCmdUI->m_nID;
-	STRISTATE bVisible	= TSTRUE;
-	STRISTATE bEnabled	= TSTRUE;
-	STRISTATE bChecked	= TSUNKNOWN;
+	TRISTATE bVisible	= TRI_TRUE;
+	TRISTATE bEnabled	= TRI_TRUE;
+	TRISTATE bChecked	= TRI_UNKNOWN;
 
 	CCoolBarItem* pCoolUI = CCoolBarItem::FromCmdUI( pCmdUI );
 
@@ -251,12 +251,12 @@ BOOL CPlugins::OnUpdate(CChildWnd* pActiveWnd, CCmdUI* pCmdUI)
 		{
 			if ( pPluginWnd->m_pOwner->OnUpdate( nCommandID, &bVisible, &bEnabled, &bChecked ) == S_OK )
 			{
-				if ( bVisible != TSUNKNOWN && pCoolUI != NULL )
-					pCoolUI->Show( bVisible == TSTRUE );
-				if ( bEnabled != TSUNKNOWN )
-					pCmdUI->Enable( bEnabled == TSTRUE );
-				if ( bChecked != TSUNKNOWN )
-					pCmdUI->SetCheck( bChecked == TSTRUE );
+				if ( bVisible != TRI_UNKNOWN && pCoolUI != NULL )
+					pCoolUI->Show( bVisible == TRI_TRUE );
+				if ( bEnabled != TRI_UNKNOWN )
+					pCmdUI->Enable( bEnabled == TRI_TRUE );
+				if ( bChecked != TRI_UNKNOWN )
+					pCmdUI->SetCheck( bChecked == TRI_TRUE );
 
 				return TRUE;
 			}
@@ -271,12 +271,12 @@ BOOL CPlugins::OnUpdate(CChildWnd* pActiveWnd, CCmdUI* pCmdUI)
 		{
 			if ( pPlugin->m_pCommand->OnUpdate( nCommandID, &bVisible, &bEnabled, &bChecked ) == S_OK )
 			{
-				if ( bVisible != TSUNKNOWN && pCoolUI != NULL )
-					pCoolUI->Show( bVisible == TSTRUE );
-				if ( bEnabled != TSUNKNOWN )
-					pCmdUI->Enable( bEnabled == TSTRUE );
-				if ( bChecked != TSUNKNOWN )
-					pCmdUI->SetCheck( bChecked == TSTRUE );
+				if ( bVisible != TRI_UNKNOWN && pCoolUI != NULL )
+					pCoolUI->Show( bVisible == TRI_TRUE );
+				if ( bEnabled != TRI_UNKNOWN )
+					pCmdUI->Enable( bEnabled == TRI_TRUE );
+				if ( bChecked != TRI_UNKNOWN )
+					pCmdUI->SetCheck( bChecked == TRI_TRUE );
 
 				return TRUE;
 			}

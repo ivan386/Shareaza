@@ -96,9 +96,9 @@ BOOL CPluginExtSetupDlg::OnInitDialog()
 			nChecked++;
 		}
 	}
-	if ( nChecked == nTotal ) m_bParentState = TS_TRUE;
-	else if ( nChecked == 0 ) m_bParentState = TS_FALSE;
-	else m_bParentState = TS_UNKNOWN;
+	if ( nChecked == nTotal ) m_bParentState = TRI_TRUE;
+	else if ( nChecked == 0 ) m_bParentState = TRI_FALSE;
+	else m_bParentState = TRI_UNKNOWN;
 
 	m_bRunning = TRUE;
 
@@ -130,9 +130,10 @@ void CPluginExtSetupDlg::OnOK()
 
 	for ( int nItem = 0 ; nItem < nTotal ; nItem++ )
 	{
-		TRISTATE bEnabled = m_wndList.GetItemState( nItem, LVIS_STATEIMAGEMASK ) >> 12;
+		TRISTATE bEnabled = static_cast< TRISTATE >(
+			m_wndList.GetItemState( nItem, LVIS_STATEIMAGEMASK ) >> 12 );
 
-		if ( bEnabled == TS_TRUE )
+		if ( bEnabled == TRI_TRUE )
 		{
 			nChecked++;
 			strExt = m_wndList.GetItemText( nItem, 0 );
@@ -146,9 +147,9 @@ void CPluginExtSetupDlg::OnOK()
 		strCurrExt.Insert( 0, _T("|") );
 	}
 
-	if ( nChecked == nTotal ) bCurrState = TS_TRUE;
-	else if ( nChecked == 0 ) bCurrState = TS_FALSE;
-	else bCurrState = TS_UNKNOWN;
+	if ( nChecked == nTotal ) bCurrState = TRI_TRUE;
+	else if ( nChecked == 0 ) bCurrState = TRI_FALSE;
+	else bCurrState = TRI_UNKNOWN;
 
 	if ( strCurrExt != m_sExtensions )
 	{
@@ -156,7 +157,7 @@ void CPluginExtSetupDlg::OnOK()
 		m_pParent->SetItemText( nItem, 2, strCurrExt );
 		if ( bCurrState != m_bParentState )
 		{
-			if ( bCurrState != TS_UNKNOWN ) // 0 state removes checkbox, we don't need that
+			if ( bCurrState != TRI_UNKNOWN ) // 0 state removes checkbox, we don't need that
 				m_pParent->SetItemState( nItem, bCurrState << 12, LVIS_STATEIMAGEMASK );
 			else
 				m_pParent->SetItemState( nItem, 2 << 12, LVIS_STATEIMAGEMASK );

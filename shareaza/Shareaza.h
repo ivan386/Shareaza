@@ -23,7 +23,6 @@
 
 #include "Resource.h"
 #include "ComObject.h"
-#include "ShareazaOM.h"
 #include "Buffer.h"
 
 #ifndef WIN64

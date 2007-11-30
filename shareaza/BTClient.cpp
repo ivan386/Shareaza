@@ -142,9 +142,9 @@ void CBTClient::Close()
 	if ( m_pDownloadTransfer != NULL )
 	{
 		if ( ( m_pDownload == NULL ) || ( m_pDownload->IsCompleted() ) )
-			m_pDownloadTransfer->Close( TS_FALSE );
+			m_pDownloadTransfer->Close( TRI_FALSE );
 		else
-			m_pDownloadTransfer->Close( TS_UNKNOWN );
+			m_pDownloadTransfer->Close( TRI_UNKNOWN );
 	}
 	ASSERT( m_pDownloadTransfer == NULL );
 
@@ -416,7 +416,7 @@ BOOL CBTClient::OnHandshake1()
 			return FALSE;
 		}
 		// The file isn't verified yet, close the connection
-		else if ( m_pDownload->m_bVerify != TS_TRUE
+		else if ( m_pDownload->m_bVerify != TRI_TRUE
 			&& ( m_pDownload->IsMoving() ||  m_pDownload->IsCompleted() ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );

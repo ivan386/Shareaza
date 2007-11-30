@@ -232,18 +232,19 @@ void CPluginsSettingsPage::OnOK()
 		CPlugin* pPlugin = (CPlugin*)m_wndList.GetItemData( nItem );
 		CString strCLSID = m_wndList.GetItemText( nItem, 1 );
 
-		TRISTATE bEnabled = m_wndList.GetItemState( nItem, LVIS_STATEIMAGEMASK ) >> 12;
+		TRISTATE bEnabled = static_cast< TRISTATE >(
+			m_wndList.GetItemState( nItem, LVIS_STATEIMAGEMASK ) >> 12 );
 
-		if ( bEnabled != TS_UNKNOWN && IsWindowVisible() )
+		if ( bEnabled != TRI_UNKNOWN && IsWindowVisible() )
 		{
 			theApp.WriteProfileString( _T("Plugins"), strCLSID, m_wndList.GetItemText( nItem, 2 ) );
 		}
 
-		if ( pPlugin != NULL && ( bEnabled == TS_TRUE ) != ( pPlugin->m_pPlugin != NULL ) )
+		if ( pPlugin != NULL && ( bEnabled == TRI_TRUE ) != ( pPlugin->m_pPlugin != NULL ) )
 		{
 			bChanged = TRUE;
 
-			if ( bEnabled == TS_TRUE )
+			if ( bEnabled == TRI_TRUE )
 				pPlugin->Start();
 			else
 				pPlugin->Stop();
@@ -299,9 +300,9 @@ void CPluginsSettingsPage::InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName, int n
 		strAssocAdd.Format( _T("|%s|"), pszExtension );
 		m_wndList.SetItemText( nItem, 2, strAssocAdd );
 	}
-	else m_wndList.SetItemText( nItem, 2, bEnabled < TS_TRUE ? _T("-") : _T("") );
+	else m_wndList.SetItemText( nItem, 2, bEnabled < TRI_TRUE ? _T("-") : _T("") );
 
-	if ( bEnabled != TS_UNKNOWN )
+	if ( bEnabled != TRI_UNKNOWN )
 	{
 		m_wndList.SetItemState( nItem, bEnabled << 12, LVIS_STATEIMAGEMASK );
 	}
@@ -321,7 +322,7 @@ void CPluginsSettingsPage::EnumerateGenericPlugins()
 
 			InsertPlugin( pPlugin->GetStringCLSID(), pPlugin->m_sName,
 				( ( nImage == -1 ) ? 0 : nImage ),
-				pPlugin->m_pPlugin != NULL ? TS_TRUE : TS_FALSE, pPlugin );
+				pPlugin->m_pPlugin != NULL ? TRI_TRUE : TRI_FALSE, pPlugin );
 		}
 	}
 }
@@ -450,8 +451,8 @@ void CPluginsSettingsPage::AddMiscPlugin(LPCTSTR /*pszType*/, LPCTSTR pszCLSID, 
 		{
 			if ( Hashes::fromGuid( pszCLSID, &pCLSID ) )
 			{
-				TRISTATE bEnabled = TS_UNKNOWN;
-				bEnabled = Plugins.LookupEnable( pCLSID, TRUE ) ? TS_TRUE : TS_FALSE;
+				TRISTATE bEnabled = TRI_UNKNOWN;
+				bEnabled = Plugins.LookupEnable( pCLSID, TRUE ) ? TRI_TRUE : TRI_FALSE;
 				InsertPlugin( pszCLSID, szValue, 1, bEnabled, NULL, pszExtension );
 			}
 		}

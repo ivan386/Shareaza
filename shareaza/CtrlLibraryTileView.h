@@ -110,7 +110,7 @@ public:
 private:
 	void				clear();
 //	int					GetTileIndex(CLibraryTileItem* pTile) const;
-	bool				Select(iterator pTile, TRISTATE bSelect = TS_TRUE);
+	bool				Select(iterator pTile, TRISTATE bSelect = TRI_TRUE);
 	bool				DeselectAll(iterator pTile);
 	bool				DeselectAll();
 	bool				SelectTo(iterator pTile);

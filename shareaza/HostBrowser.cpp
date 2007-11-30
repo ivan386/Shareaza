@@ -813,7 +813,7 @@ BOOL CHostBrowser::StreamHTML()
 			pHit->m_pAddress	= m_pHost.sin_addr;
 			pHit->m_nPort		= htons( m_pHost.sin_port );
 			pHit->m_pVendor		= m_pVendor ? m_pVendor : VendorCache.m_pNull;
-			pHit->m_bPush		= ( m_tPushed ) ? TS_TRUE : TS_FALSE;
+			pHit->m_bPush		= ( m_tPushed ) ? TRI_TRUE : TRI_FALSE;
 			pHit->m_bBrowseHost	= TRUE;
 			pHit->m_nSize		= nSize;
 			pHit->m_bSize		= TRUE;

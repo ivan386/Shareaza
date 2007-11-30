@@ -188,7 +188,7 @@ public:
 	
 	inline DWORD GetFilteredCount()
 	{
-		if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TS_FALSE ) return 0;
+		if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE ) return 0;
 		if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
 		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
@@ -199,7 +199,7 @@ public:
 	
 	inline DWORD GetItemCount()
 	{
-		if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TS_FALSE )return 0;
+		if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE )return 0;
 		if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
 		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
@@ -273,9 +273,9 @@ public:
 	BOOL		GetBestBrowseHost() const;
 	
 	// Is this file known (i.e. exist in Library)?
-	// TS_UNKNOWN	- Not
-	// TS_FALSE		- Yes
-	// TS_TRUE		- Yes, Ghost
+	// TRI_UNKNOWN	- Not
+	// TRI_FALSE		- Yes
+	// TRI_TRUE		- Yes, Ghost
 	TRISTATE	GetLibraryStatus();
 
 	// Get some data for interface

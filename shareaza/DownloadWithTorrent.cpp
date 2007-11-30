@@ -498,7 +498,7 @@ CBTPacket* CDownloadWithTorrent::CreateBitfieldPacket()
 		
 		for ( int nBit = 7 ; nBit >= 0 && nBlock < m_nTorrentBlock ; nBit--, nBlock++ )
 		{
-			if ( m_pTorrentBlock[ nBlock ] == TS_TRUE )
+			if ( m_pTorrentBlock[ nBlock ] == TRI_TRUE )
 			{
 				nByte |= ( 1 << nBit );
 				nCount++;
@@ -711,9 +711,9 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	pDownload->m_bSeeding	= TRUE;
 	pDownload->m_bComplete	= TRUE;
 	pDownload->m_tCompleted	= GetTickCount();
-	pDownload->m_bVerify	= TS_TRUE;
+	pDownload->m_bVerify	= TRI_TRUE;
 	
-	memset( m_pTorrentBlock, TS_TRUE, m_nTorrentBlock );
+	memset( m_pTorrentBlock, TRI_TRUE, m_nTorrentBlock );
 	m_nTorrentSuccess = m_nTorrentBlock;
 	
 	if ( m_sDiskName.GetLength() > 0 )

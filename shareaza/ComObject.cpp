@@ -22,7 +22,6 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "ComObject.h"
-#include "ShareazaOM.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

@@ -268,7 +268,7 @@ void CConnectionSettingsPage::OnOK()
 	Settings.Connection.InHost				= m_sInHost;
 
 	bool bRandomForwarded = ( m_nInPort == 0 && 
-		theApp.m_bUPnPPortsForwarded == TS_TRUE );
+		theApp.m_bUPnPPortsForwarded == TRI_TRUE );
 
 	if ( !bRandomForwarded || m_nInPort != 0 || !m_bInRandom )
 	{

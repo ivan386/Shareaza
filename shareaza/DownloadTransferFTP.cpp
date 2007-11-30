@@ -413,7 +413,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 			if ( IsAgentBlocked() )
 			{
 				// Ban
-				Close( TS_FALSE );
+				Close( TRI_FALSE );
 				return FALSE;
 			}
 			// Sending login
@@ -472,7 +472,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 				// Wrong SIZE reply format
 				ASSERT( FALSE );
 				// Ban
-				Close( TS_FALSE );
+				Close( TRI_FALSE );
 				return FALSE;
 			}
 			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
@@ -485,7 +485,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE,
 						(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
 					// Ban
-					Close( TS_FALSE );
+					Close( TRI_FALSE );
 					return FALSE;
 				}
 			}
@@ -506,7 +506,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILENOTFOUND,
 				(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
 			// Ban
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 		break;
@@ -537,7 +537,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 				{
 					// Wrong PASV reply format
 					ASSERT( FALSE );
-					Close( TS_FALSE );
+					Close( TRI_FALSE );
 					return FALSE;
 				}
 				if ( !m_LIST.ConnectTo( &host ) )
@@ -574,7 +574,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 				// Wrong LIST reply format
 				ASSERT( FALSE );
 				// Ban
-				Close( TS_FALSE );
+				Close( TRI_FALSE );
 				return FALSE;
 			}
 			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
@@ -587,7 +587,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE,
 						(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
 					// Ban
-					Close( TS_FALSE );
+					Close( TRI_FALSE );
 					return FALSE;
 				}
 			}
@@ -604,7 +604,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILENOTFOUND,
 				(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
 			// Ban
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 		break;
@@ -634,7 +634,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 				{
 					// Wrong PASV reply format
 					ASSERT( FALSE );
-					Close( TS_FALSE );
+					Close( TRI_FALSE );
 					return FALSE;
 				}
 				if ( ! m_RETR.ConnectTo( &host ) )
@@ -690,7 +690,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILENOTFOUND,
 				(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
 			// Ban
-			Close( TS_FALSE );
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 		break;

@@ -372,7 +372,7 @@ void CDownloadWithTransfers::CloseTransfers()
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; )
 	{
 		CDownloadTransfer* pNext = pTransfer->m_pDlNext;
-		pTransfer->Close( TS_TRUE );
+		pTransfer->Close( TRI_TRUE );
 		pTransfer = pNext;
 	}
 	
@@ -432,7 +432,7 @@ BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnec
 	if ( pSource->m_pTransfer != NULL )
 	{
 		if ( pSource->m_pTransfer->m_nState > dtsConnecting ) return FALSE;
-		pSource->m_pTransfer->Close( TS_TRUE );
+		pSource->m_pTransfer->Close( TRI_TRUE );
 	}
 	
 	if ( pConnection->m_hSocket == INVALID_SOCKET ) return FALSE;
@@ -463,7 +463,7 @@ BOOL CDownloadWithTransfers::OnDonkeyCallback(CEDClient* pClient, CDownloadSourc
 	if ( pSource->m_pTransfer != NULL )
 	{
 		if ( pSource->m_pTransfer->m_nState > dtsConnecting ) return FALSE;
-		pSource->m_pTransfer->Close( TS_TRUE );
+		pSource->m_pTransfer->Close( TRI_TRUE );
 	}
 	
 	CDownloadTransferED2K* pTransfer = (CDownloadTransferED2K*)pSource->CreateTransfer();

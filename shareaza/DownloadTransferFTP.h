@@ -33,7 +33,7 @@ public:
 	CDownloadTransferFTP(CDownloadSource* pSource);
 	virtual ~CDownloadTransferFTP() {}
 	virtual BOOL	Initiate();
-	virtual void	Close(TRISTATE bKeepSource = TS_TRUE, DWORD nRetryAfter = FTP_RETRY_DELAY);
+	virtual void	Close(TRISTATE bKeepSource = TRI_TRUE, DWORD nRetryAfter = FTP_RETRY_DELAY);
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();

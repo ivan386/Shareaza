@@ -437,7 +437,7 @@ void CMatchTipCtrl::LoadFromHit()
 
 	m_sStatus.Empty();
 
-	if ( m_pFile->GetLibraryStatus() == TS_FALSE )
+	if ( m_pFile->GetLibraryStatus() == TRI_FALSE )
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_LIBRARY );
 		m_crStatus = CoolInterface.m_crTextStatus ;
@@ -459,14 +459,14 @@ void CMatchTipCtrl::LoadFromHit()
 		m_sStatus += m_pHit->m_sComments;
 		m_crStatus = CoolInterface.m_crTextAlert ;
 	}
-	else if ( m_pFile->GetLibraryStatus() == TS_TRUE )  // ghost rated
+	else if ( m_pFile->GetLibraryStatus() == TRI_TRUE )  // ghost rated
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_DELETED );
 		m_crStatus = CoolInterface.m_crTextAlert ;
 	}
 
 	// Is this a firewalled eDonkey client
-	if ( ( m_pHit->m_nProtocol == PROTOCOL_ED2K ) && ( m_pHit->m_bPush == TS_TRUE ) )
+	if ( ( m_pHit->m_nProtocol == PROTOCOL_ED2K ) && ( m_pHit->m_bPush == TRI_TRUE ) )
 	{
 		m_sUser.Format( _T("%lu@%s - %s"),
 			m_pHit->m_oClientID.begin()[2], 

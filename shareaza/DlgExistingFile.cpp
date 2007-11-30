@@ -77,22 +77,22 @@ CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent, bool bDup
 		}
 
 		m_sComments		= pFile->m_sComments;
-		m_bAvailable	= pFile->IsAvailable();
+		m_bAvailable	= pFile->IsAvailable() ? TRI_FALSE : TRI_UNKNOWN;
 	}
 	else if ( pFile->m_oED2K )
 	{
 		m_sURN = pFile->m_oED2K.toUrn();
-		m_bAvailable	= 2;
+		m_bAvailable	= TRI_TRUE;
 	}
 	else if ( pFile->m_oBTH )
 	{
 		m_sURN = pFile->m_oBTH.toUrn();
-		m_bAvailable	= 2;
+		m_bAvailable	= TRI_TRUE;
 	}
 	else if ( pFile->m_oMD5 )
 	{
 		m_sURN = pFile->m_oMD5.toUrn();
-		m_bAvailable	= 2;
+		m_bAvailable	= TRI_TRUE;
 	}
 }
 
@@ -125,20 +125,20 @@ BOOL CExistingFileDlg::OnInitDialog()
 
 	SkinMe( NULL, IDR_DOWNLOADSFRAME );
 
-	if ( m_bAvailable == 0 ) 
+	if ( m_bAvailable == TRI_UNKNOWN ) 
 		m_nAction = 1;
-	else if ( m_bAvailable == 2 )
+	else if ( m_bAvailable == TRI_TRUE )
 		m_nAction = 0;
 
 	UpdateData( FALSE );
 
 	m_wndComments.ShowWindow( m_sComments.GetLength() > 0 ? SW_SHOW : SW_HIDE );
-	m_wndMessageAvailable.ShowWindow( m_bAvailable == 1 ? SW_SHOW : SW_HIDE );
-	m_wndMessageDeleted.ShowWindow( m_bAvailable > 0 ? SW_HIDE : SW_SHOW );
-	m_wndMessageDuplicates.ShowWindow( m_bAvailable == 2 ? SW_SHOW : SW_HIDE );
-	m_wndDownload.ShowWindow( m_bAvailable == 2 ? SW_HIDE : SW_SHOW );
-	m_wndDontDownload.ShowWindow( m_bAvailable == 2 ? SW_HIDE : SW_SHOW );
-	m_wndLocate.EnableWindow( m_bAvailable );
+	m_wndMessageAvailable.ShowWindow( m_bAvailable == TRI_FALSE ? SW_SHOW : SW_HIDE );
+	m_wndMessageDeleted.ShowWindow( m_bAvailable != TRI_UNKNOWN ? SW_HIDE : SW_SHOW );
+	m_wndMessageDuplicates.ShowWindow( m_bAvailable == TRI_TRUE ? SW_SHOW : SW_HIDE );
+	m_wndDownload.ShowWindow( m_bAvailable == TRI_TRUE ? SW_HIDE : SW_SHOW );
+	m_wndDontDownload.ShowWindow( m_bAvailable == TRI_TRUE ? SW_HIDE : SW_SHOW );
+	m_wndLocate.EnableWindow( m_bAvailable != TRI_UNKNOWN );
 
 	return TRUE;
 }
@@ -149,7 +149,7 @@ HBRUSH CExistingFileDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 	if ( pWnd == &m_wndName || pWnd == &m_wndMessageAvailable || pWnd == &m_wndMessageDeleted )
 		pDC->SelectObject( &theApp.m_gdiFontBold );
-	if ( pWnd == &m_wndComments && ! m_bAvailable )
+	if ( pWnd == &m_wndComments && m_bAvailable == TRI_UNKNOWN )
 		pDC->SetTextColor( CoolInterface.m_crTextAlert );
 	if ( pWnd == &m_wndMessageDuplicates )
 		pDC->SetTextColor( CoolInterface.m_crTextAlert );
@@ -175,6 +175,6 @@ void CExistingFileDlg::OnAction2()
 void CExistingFileDlg::OnOK()
 {
 	UpdateData();
-	if ( ! m_bAvailable && m_nAction == 0 ) return;
+	if ( m_bAvailable == TRI_UNKNOWN && m_nAction == 0 ) return;
 	CSkinDialog::OnOK();
 }

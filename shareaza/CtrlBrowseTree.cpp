@@ -120,14 +120,14 @@ BOOL CBrowseTreeCtrl::Expand(CBrowseTreeItem* pItem, TRISTATE bExpand, BOOL bInv
 
 	switch ( bExpand )
 	{
-	case TS_UNKNOWN:
+	case TRI_UNKNOWN:
 		pItem->m_bExpanded = ! pItem->m_bExpanded;
 		break;
-	case TS_TRUE:
+	case TRI_TRUE:
 		if ( pItem->m_bExpanded ) return FALSE;
 		pItem->m_bExpanded = TRUE;
 		break;
-	case TS_FALSE:
+	case TRI_FALSE:
 		if ( ! pItem->m_bExpanded ) return FALSE;
 		pItem->m_bExpanded = FALSE;
 		break;
@@ -145,7 +145,7 @@ BOOL CBrowseTreeCtrl::Expand(CBrowseTreeItem* pItem, TRISTATE bExpand, BOOL bInv
 		DeselectAll( NULL, pItem, FALSE );
 	}
 
-	pItem->m_bContract1 = pItem->m_bExpanded == TRUE && bExpand == TS_TRUE && bInvalidate == FALSE;
+	pItem->m_bContract1 = pItem->m_bExpanded == TRUE && bExpand == TRI_TRUE && bInvalidate == FALSE;
 
 	if ( pItem->m_bContract1 == FALSE )
 	{
@@ -168,7 +168,7 @@ BOOL CBrowseTreeCtrl::CollapseRecursive(CBrowseTreeItem* pItem)
 
 	if ( pItem != m_pRoot && pItem->m_bExpanded && pItem->m_bContract1 )
 	{
-		bChanged |= Expand( pItem, TS_FALSE, FALSE );
+		bChanged |= Expand( pItem, TRI_FALSE, FALSE );
 	}
 
 	CBrowseTreeItem** pChild = pItem->m_pList;
@@ -192,14 +192,14 @@ BOOL CBrowseTreeCtrl::Select(CBrowseTreeItem* pItem, TRISTATE bSelect, BOOL bInv
 
 	switch ( bSelect )
 	{
-	case TS_UNKNOWN:
+	case TRI_UNKNOWN:
 		pItem->m_bSelected = ! pItem->m_bSelected;
 		break;
-	case TS_TRUE:
+	case TRI_TRUE:
 		if ( pItem->m_bSelected ) return FALSE;
 		pItem->m_bSelected = TRUE;
 		break;
-	case TS_FALSE:
+	case TRI_FALSE:
 		if ( ! pItem->m_bSelected ) return FALSE;
 		pItem->m_bSelected = FALSE;
 		break;
@@ -261,7 +261,7 @@ BOOL CBrowseTreeCtrl::DeselectAll(CBrowseTreeItem* pExcept, CBrowseTreeItem* pPa
 	{
 		if ( *pChild != pExcept && (*pChild)->m_bSelected )
 		{
-			Select( *pChild, TS_FALSE, FALSE );
+			Select( *pChild, TRI_FALSE, FALSE );
 			bChanged = TRUE;
 		}
 
@@ -296,7 +296,7 @@ BOOL CBrowseTreeCtrl::Highlight(CBrowseTreeItem* pItem)
 
 	for ( CBrowseTreeItem* pParent = m_pFocus->m_pParent ; pParent ; pParent = pParent->m_pParent )
 	{
-		Expand( pParent, TS_TRUE, FALSE );
+		Expand( pParent, TRI_TRUE, FALSE );
 
 		pParent->m_bContract2 = pParent->m_bContract1;
 		pParent->m_bContract1 = FALSE;
@@ -342,7 +342,7 @@ BOOL CBrowseTreeCtrl::CleanItems(CBrowseTreeItem* pItem, DWORD nCookie, BOOL bVi
 		{
 			if ( m_pFocus == *pChild ) m_pFocus = NULL;
 
-			if ( (*pChild)->m_bSelected ) Select( *pChild, TS_FALSE, FALSE );
+			if ( (*pChild)->m_bSelected ) Select( *pChild, TRI_FALSE, FALSE );
 			bChanged |= DeselectAll( NULL, *pChild, FALSE );
 
 			if ( bVisible )
@@ -388,11 +388,11 @@ void CBrowseTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if ( pHit && pHit->m_nCount && point.x >= rc.left && point.x < rc.left + 16 )
 	{
-		bChanged = Expand( pHit, TS_UNKNOWN );
+		bChanged = Expand( pHit, TRI_UNKNOWN );
 	}
 	else if ( nFlags & MK_CONTROL )
 	{
-		if ( pHit ) bChanged = Select( pHit, TS_UNKNOWN );
+		if ( pHit ) bChanged = Select( pHit, TRI_UNKNOWN );
 	}
 	else if ( nFlags & MK_SHIFT )
 	{
@@ -422,7 +422,7 @@ void CBrowseTreeCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 	if ( m_pFocus != NULL && m_pFocus->m_nCount )
 	{
-		if ( Expand( m_pFocus, TS_UNKNOWN ) )
+		if ( Expand( m_pFocus, TRI_UNKNOWN ) )
 		{
 			lRoot.Unlock();
 			NotifySelection();
@@ -487,7 +487,7 @@ void CBrowseTreeCtrl::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
 		{
 			if ( m_pFocus->m_bExpanded && m_pFocus->m_nCount )
 			{
-				Expand( m_pFocus, TS_FALSE );
+				Expand( m_pFocus, TRI_FALSE );
 				break;
 			}
 
@@ -504,7 +504,7 @@ void CBrowseTreeCtrl::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
 	{
 		if ( ! m_pFocus->m_bExpanded && m_pFocus->m_nCount )
 		{
-			bChanged |= Expand( m_pFocus, TS_TRUE );
+			bChanged |= Expand( m_pFocus, TRI_TRUE );
 		}
 	}
 	else if ( _istalnum( TCHAR( nChar ) ) )
@@ -525,7 +525,7 @@ void CBrowseTreeCtrl::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
 				else if ( toupper( (*pChild)->m_sText.GetAt( 0 ) ) == (int)nChar )
 				{
 					DeselectAll( m_pFocus = *pChild, NULL, FALSE );
-					Select( m_pFocus, TS_TRUE, FALSE );
+					Select( m_pFocus, TRI_TRUE, FALSE );
 					Highlight( m_pFocus );
 					lRoot.Unlock();
 					NotifySelection();

@@ -76,7 +76,7 @@ protected:
 public:
 	BOOL		Parse(CXMLElement* pXML, const CString& strPath);
 	void		Prepare(CDC* pDC);
-	void		Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive = TS_UNKNOWN);
+	void		Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive = TRI_UNKNOWN);
 	void		CalcWindowRect(RECT* pRect, BOOL bToClient = FALSE, BOOL bZoomed = FALSE);
 	BOOL		GetPart(LPCTSTR pszName, CRect& rcPart);
 	BOOL		GetAnchor(LPCTSTR pszName, CRect& rcAnchor);

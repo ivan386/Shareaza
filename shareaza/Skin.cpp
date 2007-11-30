@@ -1774,7 +1774,7 @@ UINT CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID
 
 int CSkin::GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL)
 {
-	TRISTATE bTextIsRTL = TS_UNKNOWN;
+	TRISTATE bTextIsRTL = TRI_UNKNOWN;
 	BOOL bChangeFound   = FALSE;
 	LPCTSTR pszWord = pszText;
 	LPCTSTR pszScan = pszText;
@@ -1801,12 +1801,12 @@ int CSkin::GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL)
 			{
 				if ( nCharType[ i ] == C2_LEFTTORIGHT )
 				{
-					if ( bTextIsRTL == TS_UNKNOWN )
+					if ( bTextIsRTL == TRI_UNKNOWN )
 					{
-						bTextIsRTL = TS_FALSE;
+						bTextIsRTL = TRI_FALSE;
 						*bIsRTL = FALSE;
 					}
-					else if ( bTextIsRTL == TS_TRUE )
+					else if ( bTextIsRTL == TRI_TRUE )
 					{
 						bChangeFound = TRUE;
 						break;
@@ -1814,12 +1814,12 @@ int CSkin::GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL)
 				}
 				else if ( nCharType[ i ] == C2_RIGHTTOLEFT )
 				{
-					if ( bTextIsRTL == TS_UNKNOWN )
+					if ( bTextIsRTL == TRI_UNKNOWN )
 					{
-						bTextIsRTL = TS_TRUE;
+						bTextIsRTL = TRI_TRUE;
 						*bIsRTL = TRUE;
 					}
-					else if ( bTextIsRTL == TS_FALSE )
+					else if ( bTextIsRTL == TRI_FALSE )
 					{
 						bChangeFound = TRUE;
 						break;

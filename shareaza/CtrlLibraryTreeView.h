@@ -63,8 +63,8 @@ private:
 public:
 	void				SetToolTip(CCoolTipCtrl* pTip);
 	void				Clear();
-	BOOL				Expand(CLibraryTreeItem* pItem, TRISTATE bExpand = TS_TRUE, BOOL bInvalidate = TRUE);
-	BOOL				Select(CLibraryTreeItem* pItem, TRISTATE bSelect = TS_TRUE, BOOL bInvalidate = TRUE);
+	BOOL				Expand(CLibraryTreeItem* pItem, TRISTATE bExpand = TRI_TRUE, BOOL bInvalidate = TRUE);
+	BOOL				Select(CLibraryTreeItem* pItem, TRISTATE bSelect = TRI_TRUE, BOOL bInvalidate = TRUE);
 	BOOL				SelectAll(CLibraryTreeItem* pParent = NULL, BOOL bInvalidate = TRUE);
 	BOOL				DeselectAll(CLibraryTreeItem* pExcept = NULL, CLibraryTreeItem* pParent = NULL, BOOL bInvalidate = TRUE);
 	BOOL				Highlight(CLibraryTreeItem* pItem);

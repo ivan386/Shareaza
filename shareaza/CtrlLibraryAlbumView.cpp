@@ -172,7 +172,7 @@ void CLibraryAlbumView::Update()
 		{
 			if ( pTrack == m_pFocus ) m_pFocus = NULL;
 			if ( pTrack == m_pFirst ) m_pFirst = NULL;
-			if ( pTrack->m_bSelected ) Select( pTrack, TS_FALSE );
+			if ( pTrack->m_bSelected ) Select( pTrack, TRI_FALSE );
 			delete pTrack;
 			MoveMemory( pList, pList + 1, ( m_nCount - nItem ) * sizeof *pList );
 			m_nCount--;
@@ -352,14 +352,14 @@ BOOL CLibraryAlbumView::Select(CLibraryAlbumTrack* pTrack, TRISTATE bSelect)
 {
 	switch ( bSelect )
 	{
-	case TS_UNKNOWN:
+	case TRI_UNKNOWN:
 		pTrack->m_bSelected = ! pTrack->m_bSelected;
 		break;
-	case TS_FALSE:
+	case TRI_FALSE:
 		if ( pTrack->m_bSelected == FALSE ) return FALSE;
 		pTrack->m_bSelected = FALSE;
 		break;
-	case TS_TRUE:
+	case TRI_TRUE:
 		if ( pTrack->m_bSelected == TRUE ) return FALSE;
 		pTrack->m_bSelected = TRUE;
 		break;
@@ -396,7 +396,7 @@ BOOL CLibraryAlbumView::DeselectAll(CLibraryAlbumTrack* pTrack)
 	{
 		if ( *pList != pTrack )
 		{
-			if ( (*pList)->m_bSelected ) bChanged = Select( *pList, TS_FALSE );
+			if ( (*pList)->m_bSelected ) bChanged = Select( *pList, TRI_FALSE );
 		}
 	}
 	
@@ -416,7 +416,7 @@ BOOL CLibraryAlbumView::SelectTo(CLibraryAlbumTrack* pTrack)
 		
 		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
 		{
-			bChanged = Select( m_pFocus, TS_UNKNOWN );
+			bChanged = Select( m_pFocus, TRI_UNKNOWN );
 		}
 		else if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
@@ -426,18 +426,18 @@ BOOL CLibraryAlbumView::SelectTo(CLibraryAlbumTrack* pTrack)
 			{
 				if ( nFirst <= nFocus )
 				{
-					for ( ; nFirst <= nFocus ; nFirst++ ) Select( m_pList[ nFirst ], TS_TRUE );
+					for ( ; nFirst <= nFocus ; nFirst++ ) Select( m_pList[ nFirst ], TRI_TRUE );
 				}
 				else
 				{
-					for ( ; nFocus <= nFirst ; nFocus++ ) Select( m_pList[ nFocus ], TS_TRUE );
+					for ( ; nFocus <= nFirst ; nFocus++ ) Select( m_pList[ nFocus ], TRI_TRUE );
 				}
 				
 				bChanged = TRUE;
 			}
 			else
 			{
-				bChanged |= Select( m_pFocus, TS_TRUE );
+				bChanged |= Select( m_pFocus, TRI_TRUE );
 			}
 		}
 		else

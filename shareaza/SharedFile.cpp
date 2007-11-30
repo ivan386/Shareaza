@@ -77,10 +77,10 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 	m_nListCookie( 0 ),
 	m_pFolder( pFolder ),
 	m_nIndex( 0 ),
-	m_bShared( TS_UNKNOWN ),
+	m_bShared( TRI_UNKNOWN ),
 	m_nVirtualBase( 0 ),
 	m_nVirtualSize( 0 ),
-	m_bVerify( TS_UNKNOWN ),
+	m_bVerify( TRI_UNKNOWN ),
 	m_pSchema( NULL ),
 	m_pMetadata( NULL ),
 	m_bMetadataAuto( FALSE ),
@@ -197,14 +197,14 @@ BOOL CLibraryFile::IsShared() const
 		 m_pMetadata != NULL )
 	{
 		CString str = m_pMetadata->GetAttributeValue( L"privateflag", L"true" );
-		return str != L"true" && m_bShared != TS_FALSE &&
+		return str != L"true" && m_bShared != TRI_FALSE &&
 			m_pFolder && m_pFolder->IsShared();
 	}
 
 	if ( m_bShared )
 	{
-		if ( m_bShared == TS_TRUE ) return TRUE;
-		if ( m_bShared == TS_FALSE ) return FALSE;
+		if ( m_bShared == TRI_TRUE ) return TRUE;
+		if ( m_bShared == TRI_FALSE ) return FALSE;
 	}
 
 	if ( m_pFolder && ! m_pFolder->IsShared() )
@@ -721,7 +721,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		{
 			BYTE bShared;
 			ar >> bShared;
-			m_bShared = bShared ? TS_UNKNOWN : TS_FALSE;
+			m_bShared = bShared ? TRI_UNKNOWN : TRI_FALSE;
 		}
 		
 		if ( nVersion >= 21 )
@@ -1138,11 +1138,11 @@ void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 {
 	if ( m_pFolder != NULL )
 	{
-		if ( bCreateGhost == TS_TRUE )
+		if ( bCreateGhost == TRI_TRUE )
 		{
 			if ( ! IsRated() )
 			{
-				m_bShared = TS_FALSE;
+				m_bShared = TRI_FALSE;
 
 				CString strTransl;
 				CString strUntransl = L"Ghost File";
@@ -1159,7 +1159,7 @@ void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 			Ghost();
 			return;
 		}
-		else if ( IsRated() && bCreateGhost != TS_FALSE )
+		else if ( IsRated() && bCreateGhost != TRI_FALSE )
 		{
 			Ghost();
 			return;
@@ -1195,33 +1195,33 @@ BOOL CLibraryFile::OnVerifyDownload(
 {
 	if ( m_pFolder == NULL ) return FALSE;
 	
-	if ( Settings.Downloads.VerifyFiles && m_bVerify == TS_UNKNOWN && m_nVirtualSize == 0 )
+	if ( Settings.Downloads.VerifyFiles && m_bVerify == TRI_UNKNOWN && m_nVirtualSize == 0 )
 	{
 		if ( (bool)m_oSHA1 && (bool)oSHA1 && oSHA1.isTrusted() )
 		{
-			m_bVerify = ( m_oSHA1 == oSHA1 ) ? TS_TRUE : TS_FALSE;
+			m_bVerify = ( m_oSHA1 == oSHA1 ) ? TRI_TRUE : TRI_FALSE;
 		}
 		if ( (bool)m_oED2K && (bool)oED2K && oED2K.isTrusted() )
 		{
-			m_bVerify = ( m_oED2K == oED2K ) ? TS_TRUE : TS_FALSE;
+			m_bVerify = ( m_oED2K == oED2K ) ? TRI_TRUE : TRI_FALSE;
 		}
 		if ( (bool)m_oMD5 && (bool)oMD5 && oMD5.isTrusted() )
 		{
-			m_bVerify = ( m_oMD5 == oMD5 ) ? TS_TRUE : TS_FALSE;
+			m_bVerify = ( m_oMD5 == oMD5 ) ? TRI_TRUE : TRI_FALSE;
 		}
 		if ( (bool)m_oBTH && (bool)oBTH && oBTH.isTrusted() )
 		{
-			m_bVerify = ( m_oBTH == oBTH ) ? TS_TRUE : TS_FALSE;
+			m_bVerify = ( m_oBTH == oBTH ) ? TRI_TRUE : TRI_FALSE;
 		}
 		
-		if ( m_bVerify == TS_TRUE )
+		if ( m_bVerify == TRI_TRUE )
 		{
 			theApp.Message( MSG_SYSTEM, IDS_DOWNLOAD_VERIFY_SUCCESS, (LPCTSTR)m_sName );
 			Downloads.OnVerify( GetPath(), TRUE );
 		}
-		else if ( m_bVerify == TS_FALSE )
+		else if ( m_bVerify == TRI_FALSE )
 		{
-			m_bShared = TS_FALSE;
+			m_bShared = TRI_FALSE;
 			
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_VERIFY_FAIL, (LPCTSTR)m_sName );
 			Downloads.OnVerify( GetPath(), FALSE );
@@ -1357,14 +1357,14 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_Name(BSTR FAR* psPath)
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryFile::XLibraryFile::get_Shared(STRISTATE FAR* pnValue)
+STDMETHODIMP CLibraryFile::XLibraryFile::get_Shared(TRISTATE FAR* pnValue)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
-	*pnValue = (STRISTATE)pThis->m_bShared;
+	*pnValue = pThis->m_bShared;
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryFile::XLibraryFile::put_Shared(STRISTATE nValue)
+STDMETHODIMP CLibraryFile::XLibraryFile::put_Shared(TRISTATE nValue)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
 	pThis->m_bShared = nValue;

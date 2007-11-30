@@ -1053,8 +1053,8 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 	if ( pszSchemaURI && *pszSchemaURI && pXML )
 	{
 		TRISTATE bResult = MatchMetadata( pszSchemaURI, pXML );
-		if ( bResult != TS_UNKNOWN && !Settings.Search.SchemaTypes )
-			return ( bResult == TS_TRUE );
+		if ( bResult != TRI_UNKNOWN && !Settings.Search.SchemaTypes )
+			return ( bResult == TRI_TRUE );
 
 		if ( m_sKeywords.GetLength() > 0 )
 		{
@@ -1095,9 +1095,9 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 
 TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML)
 {
-	if ( ! m_pSchema || ! m_pXML ) return TS_UNKNOWN;
-	if ( ! pszSchemaURI || ! *pszSchemaURI || ! pXML ) return TS_UNKNOWN;
-	if ( ! m_pSchema->CheckURI( pszSchemaURI ) ) return TS_FALSE;
+	if ( ! m_pSchema || ! m_pXML ) return TRI_UNKNOWN;
+	if ( ! pszSchemaURI || ! *pszSchemaURI || ! pXML ) return TRI_UNKNOWN;
+	if ( ! m_pSchema->CheckURI( pszSchemaURI ) ) return TRI_FALSE;
 	
 	CXMLElement* pRoot = m_pXML->GetFirstElement();
 	int nCount = 0;
@@ -1115,23 +1115,23 @@ TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML)
 			{
 				if ( pMember->m_bNumeric )
 				{
-					if ( ! NumberMatch( strTarget, strSearch ) ) return TS_FALSE;
+					if ( ! NumberMatch( strTarget, strSearch ) ) return TRI_FALSE;
 				}
 				else
 				{
-					if ( ! WordMatch( strTarget, strSearch ) ) return TS_FALSE;
+					if ( ! WordMatch( strTarget, strSearch ) ) return TRI_FALSE;
 				}
 				
 				nCount++;
 			}
 			else
 			{
-				return TS_FALSE;
+				return TRI_FALSE;
 			}
 		}
 	}
 	
-	return ( nCount > 0 ) ? TS_TRUE : TS_UNKNOWN;
+	return ( nCount > 0 ) ? TRI_TRUE : TRI_UNKNOWN;
 }
 
 BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML, bool* bReject)

@@ -52,7 +52,7 @@ CDownload::CDownload() :
 	m_nSerID		( Downloads.GetFreeSID() )
 ,	m_bExpanded		( Settings.Downloads.AutoExpand )
 ,	m_bSelected		( FALSE )
-,	m_bVerify		( TS_UNKNOWN )
+,	m_bVerify		( TRI_UNKNOWN )
 ,	m_nRunCookie	( 0 )
 ,	m_nSaveCookie	( 0 )
 ,	m_nGroupCookie	( 0 )
@@ -421,7 +421,7 @@ void CDownload::OnRun()
 			if( HasActiveTransfers() ) bDownloading = TRUE;
 
 		}
-		else if ( ! m_bComplete && m_bVerify != TS_TRUE )
+		else if ( ! m_bComplete && m_bVerify != TRI_TRUE )
 		{	//If this download isn't trying to download, see if it can try
 			if ( IsDownloading() )
 			{	// This download was probably started by a push/etc
@@ -603,13 +603,13 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 
 BOOL CDownload::OnVerify(LPCTSTR pszPath, BOOL bVerified)
 {
-	if ( m_bVerify != TS_UNKNOWN ) return FALSE;
+	if ( m_bVerify != TRI_UNKNOWN ) return FALSE;
 	if ( m_pFile != NULL ) return FALSE;
 	
 	if ( pszPath != (LPCTSTR)m_sDiskName &&
 		 m_sDiskName.CompareNoCase( pszPath ) != 0 ) return FALSE;
 	
-	m_bVerify = bVerified ? TS_TRUE : TS_FALSE;
+	m_bVerify = bVerified ? TRI_TRUE : TRI_FALSE;
 	SetModified();
 	
 	return TRUE;
