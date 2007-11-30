@@ -126,7 +126,7 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 {
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
-	LPMALLOC pMalloc;
+	CComPtr< IMalloc > pMalloc;
 		
 	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
@@ -139,9 +139,8 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 	if ( pPath == NULL ) return;
 
 	SHGetPathFromIDList( pPath, szPath );
-	SHGetMalloc( &pMalloc );
-	pMalloc->Free( pPath );
-	pMalloc->Release();
+	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
+		pMalloc->Free( pPath );
 	
 	// Warn user about a path that's too long
 	if ( _tcslen( szPath ) > 256 - 33 )
@@ -171,7 +170,7 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 {
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
-	LPMALLOC pMalloc;
+	CComPtr< IMalloc > pMalloc;
 		
 	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
@@ -184,9 +183,8 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 	if ( pPath == NULL ) return;
 
 	SHGetPathFromIDList( pPath, szPath );
-	SHGetMalloc( &pMalloc );
-	pMalloc->Free( pPath );
-	pMalloc->Release();
+	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
+		pMalloc->Free( pPath );
 
 	// Warn user about a path that's too long
 	if ( _tcslen( szPath ) > MAX_PATH - 60 )

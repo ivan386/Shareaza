@@ -683,7 +683,7 @@ void CMediaListCtrl::OnMediaAddFolder()
 	
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
-	LPMALLOC pMalloc;
+	CComPtr< IMalloc > pMalloc;
 	BROWSEINFO pBI = {};
 		
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
@@ -696,8 +696,8 @@ void CMediaListCtrl::OnMediaAddFolder()
 	if ( pPath == NULL ) return;
 
 	SHGetPathFromIDList( pPath, szPath );
-	SHGetMalloc( &pMalloc );
-	pMalloc->Free( pPath );
+	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
+		pMalloc->Free( pPath );
 	
 	BOOL bWasEmpty = ( GetItemCount() == 0 );
 	

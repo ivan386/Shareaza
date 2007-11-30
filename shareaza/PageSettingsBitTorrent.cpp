@@ -148,7 +148,7 @@ void CBitTorrentSettingsPage::OnTorrentsBrowse()
 {
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
-	LPMALLOC pMalloc;
+	CComPtr< IMalloc > pMalloc;
 		
 	BROWSEINFO pBI = {};
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
@@ -161,9 +161,8 @@ void CBitTorrentSettingsPage::OnTorrentsBrowse()
 	if ( pPath == NULL ) return;
 
 	SHGetPathFromIDList( pPath, szPath );
-	SHGetMalloc( &pMalloc );
-	pMalloc->Free( pPath );
-	pMalloc->Release();
+	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
+		pMalloc->Free( pPath );
 	
 	UpdateData( TRUE );
 	m_sTorrentPath = szPath;

@@ -601,7 +601,7 @@ CString CCollectionExportDlg::BrowseForFolder()
 {
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
-	LPMALLOC pMalloc;
+	CComPtr< IMalloc > pMalloc;
 	CString str;
 
 	BROWSEINFO pBI = {};
@@ -615,8 +615,8 @@ CString CCollectionExportDlg::BrowseForFolder()
 	if ( pPath == NULL ) return str;
 
 	SHGetPathFromIDList( pPath, szPath );
-	SHGetMalloc( &pMalloc );
-	pMalloc->Free( pPath );
+	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
+		pMalloc->Free( pPath );
 
 	str = szPath;
 	return str;

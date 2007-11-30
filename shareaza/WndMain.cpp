@@ -2162,7 +2162,7 @@ void CMainWnd::OnToolsImportDownloads()
 {
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
-	LPMALLOC pMalloc;
+	CComPtr< IMalloc > pMalloc;
 
 	CString strMessage;
 	LoadString( strMessage, IDS_SELECT_ED2K_TEMP_FOLDER );
@@ -2177,9 +2177,8 @@ void CMainWnd::OnToolsImportDownloads()
 	if ( pPath == NULL ) return;
 
 	SHGetPathFromIDList( pPath, szPath );
-	SHGetMalloc( &pMalloc );
-	pMalloc->Free( pPath );
-	pMalloc->Release();
+	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
+		pMalloc->Free( pPath );
 
 	CDonkeyImportDlg dlg;
 	dlg.m_pImporter.AddFolder( szPath );
