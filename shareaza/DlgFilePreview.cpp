@@ -415,17 +415,13 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 		{
 			DWORD nChunk = min( BUFFER_SIZE, nLength );
 			
-			ReadFile( hFile, pData, nChunk, &nChunk, NULL );
-			
-			if ( nChunk == 0 )
+			if ( ! ReadFile( hFile, pData, nChunk, &nChunk, NULL ) || nChunk == 0 )
 			{
 				theApp.Message( MSG_DEBUG, _T("Preview: read error.") );
 				m_bCancel = TRUE;
 			}
 			
-			WriteFile( hTarget, pData, nChunk, &nChunk, NULL );
-			
-			if ( nChunk == 0 )
+			if ( ! WriteFile( hTarget, pData, nChunk, &nChunk, NULL ) || nChunk == 0 )
 			{
 				theApp.Message( MSG_DEBUG, _T("Preview: write error.") );
 				m_bCancel = TRUE;
