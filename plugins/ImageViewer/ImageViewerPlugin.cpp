@@ -256,7 +256,7 @@ HRESULT STDMETHODCALLTYPE CImageViewerPlugin::InsertCommands()
 	return S_OK;
 }
 
-HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnUpdate(UINT /*nCommandID*/, STRISTATE __RPC_FAR* /*pbVisible*/, STRISTATE __RPC_FAR* /*pbEnabled*/, STRISTATE __RPC_FAR* /*pbChecked*/)
+HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnUpdate(UINT /*nCommandID*/, TRISTATE __RPC_FAR* /*pbVisible*/, TRISTATE __RPC_FAR* /*pbEnabled*/, TRISTATE __RPC_FAR* /*pbChecked*/)
 {
 	// The OnUpdate() method is invoked when Shareaza needs to update the state of a command in its
 	// user interface.  This provides an opportunity to show or hide, enable or disable, and check or

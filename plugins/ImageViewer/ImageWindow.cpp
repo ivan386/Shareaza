@@ -620,7 +620,7 @@ LRESULT CImageWindow::OnTimer(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, B
 //////////////////////////////////////////////////////////////////////
 // CImageWindow IPluginWindowOwner command implementation
 
-HRESULT STDMETHODCALLTYPE CImageWindow::OnUpdate(UINT nCommandID, STRISTATE __RPC_FAR* /*pbVisible*/, STRISTATE __RPC_FAR* /*pbEnabled*/, STRISTATE __RPC_FAR* pbChecked)
+HRESULT STDMETHODCALLTYPE CImageWindow::OnUpdate(UINT nCommandID, TRISTATE __RPC_FAR* /*pbVisible*/, TRISTATE __RPC_FAR* /*pbEnabled*/, TRISTATE __RPC_FAR* pbChecked)
 {
 	// The OnUpdate() method is invoked when Shareaza needs to update the state of a command in its
 	// user interface.  This provides an opportunity to show or hide, enable or disable, and check or
@@ -649,13 +649,13 @@ HRESULT STDMETHODCALLTYPE CImageWindow::OnUpdate(UINT nCommandID, STRISTATE __RP
 	if ( nCommandID == m_pPlugin->m_nCmdBestFit )
 	{
 		// Check this option if full size mode is off (i.e. best fit mode is on)
-		if ( pbChecked ) *pbChecked = ( m_bFullSize == FALSE ) ? TSTRUE : TSFALSE;
+		if ( pbChecked ) *pbChecked = ( m_bFullSize == FALSE ) ? TRI_TRUE : TRI_FALSE;
 		return S_OK;
 	}
 	else if ( nCommandID == m_pPlugin->m_nCmdActualSize )
 	{
 		// Check this option if full size mode is on (i.e. actual size mode is on)
-		if ( pbChecked ) *pbChecked = ( m_bFullSize == TRUE ) ? TSTRUE : TSFALSE;
+		if ( pbChecked ) *pbChecked = ( m_bFullSize == TRUE ) ? TRI_TRUE : TRI_FALSE;
 		return S_OK;
 	}
 	else if ( nCommandID == m_pPlugin->m_nCmdRefresh || nCommandID == m_pPlugin->m_nCmdClose )

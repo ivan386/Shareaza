@@ -74,9 +74,9 @@ protected:
 	virtual HRESULT STDMETHODCALLTYPE InsertCommands();
     virtual HRESULT STDMETHODCALLTYPE OnUpdate( 
         /* [in] */ UINT nCommandID,
-        /* [out][in] */ STRISTATE __RPC_FAR *pbVisible,
-        /* [out][in] */ STRISTATE __RPC_FAR *pbEnabled,
-        /* [out][in] */ STRISTATE __RPC_FAR *pbChecked);
+        /* [out][in] */ TRISTATE __RPC_FAR *pbVisible,
+        /* [out][in] */ TRISTATE __RPC_FAR *pbEnabled,
+        /* [out][in] */ TRISTATE __RPC_FAR *pbChecked);
 	virtual HRESULT STDMETHODCALLTYPE OnCommand( 
 		/* [in] */ UINT nCommandID);
 

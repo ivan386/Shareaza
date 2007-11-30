@@ -63,7 +63,7 @@ public:
 protected:
     virtual HRESULT STDMETHODCALLTYPE OnTranslate(MSG __RPC_FAR *pMessage);
 	virtual HRESULT STDMETHODCALLTYPE OnMessage(UINT nMessage, WPARAM wParam, LPARAM lParam, LRESULT __RPC_FAR *plResult);
-    virtual HRESULT STDMETHODCALLTYPE OnUpdate(UINT nCommandID, STRISTATE __RPC_FAR *pbVisible, STRISTATE __RPC_FAR *pbEnabled, STRISTATE __RPC_FAR *pbChecked);
+    virtual HRESULT STDMETHODCALLTYPE OnUpdate(UINT nCommandID, TRISTATE __RPC_FAR *pbVisible, TRISTATE __RPC_FAR *pbEnabled, TRISTATE __RPC_FAR *pbChecked);
 	virtual HRESULT STDMETHODCALLTYPE OnCommand(UINT nCommandID);
 	
 // Message Map
