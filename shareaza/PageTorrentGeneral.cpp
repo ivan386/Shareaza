@@ -113,7 +113,7 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 
 	m_wndStartDownloads.SetCurSel( m_pInfo->m_nStartDownloads );
 
-	m_sUploadTotal.Format( _T(" %s"), Settings.SmartVolume( m_pInfo->m_nTotalUpload ) );
+	m_sUploadTotal.Format( _T(" %s"), (LPCTSTR)Settings.SmartVolume( m_pInfo->m_nTotalUpload ) );
 
 	UpdateData( FALSE );
 	

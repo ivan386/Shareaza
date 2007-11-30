@@ -940,7 +940,7 @@ void CRichViewCtrl::CopySelection()
 			LPCSTR pszASCII = T2CA( (LPCTSTR)str );
 			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strlen(pszASCII) + 1 );
 			LPVOID pMem = GlobalLock( hMem );
-			strcpy( (char*)pMem, pszASCII );
+			CopyMemory( pMem, pszASCII, strlen(pszASCII) + 1 );
 			GlobalUnlock( hMem );
 			SetClipboardData( CF_TEXT, hMem );
 		}
