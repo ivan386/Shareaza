@@ -122,8 +122,8 @@ void CMediaVisDlg::Enumerate()
 
 	for ( DWORD nKey = 0 ; ; nKey++ )
 	{
-		DWORD dwType, dwName = sizeof(TCHAR) * 128, dwCLSID = 64 * sizeof(TCHAR);
-		TCHAR szName[128], szCLSID[64];
+		DWORD dwType, dwName = 256, dwCLSID = 64 * sizeof(TCHAR);
+		TCHAR szName[256], szCLSID[64];
 
 		if ( RegEnumValue( hKey, nKey, szName, &dwName, NULL, &dwType, (LPBYTE)szCLSID, &dwCLSID )
 			 != ERROR_SUCCESS ) break;
