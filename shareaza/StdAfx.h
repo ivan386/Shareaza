@@ -361,25 +361,6 @@ typedef GeoIP* (*GeoIP_newFunc)(int);
 typedef const char * (*GeoIP_country_code_by_addrFunc) (GeoIP*, const char *);
 typedef const char * (*GeoIP_country_name_by_addrFunc) (GeoIP*, const char *);
 
-// CArchive operators to help replacing TRISTATE with safer and more convenient tribools
-inline CArchive& operator<<(CArchive& ar, const boost::logic::tribool& rhs)
-{
-	TRISTATE value = rhs ? TS_TRUE : !rhs ? TS_FALSE : TS_UNKNOWN;
-	return ar << value;
-};
-inline CArchive& operator>>(CArchive& ar, boost::logic::tribool& rhs)
-{
-	using boost::logic::tribool;
-	TRISTATE value;
-	ar >> value;
-	rhs = value == TS_TRUE
-		? tribool( true )
-		: value == TS_FALSE
-			? tribool( false )
-			: boost::logic::indeterminate;
-	return ar;
-};
-
 const uint64 SIZE_UNKNOWN = ~0ull;
 
 //

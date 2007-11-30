@@ -73,7 +73,6 @@
 #include <boost/bind.hpp>
 #include <boost/bind/placeholders.hpp>
 #include <boost/type_traits.hpp>
-#include <boost/logic/tribool.hpp>
 #include <boost/smart_ptr.hpp>
 #include <boost/utility.hpp>
 #include <boost/array.hpp>
