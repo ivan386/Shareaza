@@ -398,14 +398,22 @@ auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 			if ( strWindowValue.IsEmpty() || ( _tcsicmp( strWindowValue, _T("any") ) == 0 ) )
 				pSearch->m_pSearch->m_nMinSize = 0;
 			else
+			{
+				if ( !_tcsstr( strWindowValue, _T("B") ) && !_tcsstr( strWindowValue, _T("b") ) )
+					strWindowValue += _T("B");
 				pSearch->m_pSearch->m_nMinSize = Settings.ParseVolume( strWindowValue );
+			}
 
 
 			m_boxAdvanced.m_wndSizeMax.GetWindowText( strWindowValue );
 			if ( strWindowValue.IsEmpty() || ( _tcsicmp( strWindowValue, _T("any") ) == 0 )  || ( _tcsicmp( strWindowValue, _T("max") ) == 0 ) )
 				pSearch->m_pSearch->m_nMaxSize = SIZE_UNKNOWN;
 			else
+			{
+				if ( !_tcsstr( strWindowValue, _T("B") ) && !_tcsstr( strWindowValue, _T("b") ) )
+					strWindowValue += _T("B");
 				pSearch->m_pSearch->m_nMaxSize = Settings.ParseVolume( strWindowValue );
+			}
 
 			// Check it wasn't invalid
 			if ( pSearch->m_pSearch->m_nMinSize > pSearch->m_pSearch->m_nMaxSize )

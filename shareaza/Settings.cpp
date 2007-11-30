@@ -74,7 +74,6 @@ void CSettings::Setup()
 	Add( _T("Interface.TipNeighbours"), &Interface.TipNeighbours, TRUE );
 	Add( _T("Interface.TipMedia"), &Interface.TipMedia, TRUE );
 	Add( _T("Interface.LowResMode"), &Interface.LowResMode, FALSE );
-	Add( _T("Interface.AssumeAsBytes"), &Interface.AssumeAsBytes, FALSE );
 
 	Add( _T("Library.WatchFolders"), &Library.WatchFolders, TRUE );
 	Add( _T("Library.WatchFoldersTimeout"), &Library.WatchFoldersTimeout, 5 );
@@ -1454,18 +1453,12 @@ QWORD CSettings::ParseVolume(CString& strVolume, int nReturnUnits) const
 	// Return early if there is no number in the string
 	if ( _stscanf( strSize, _T("%lf"), &val ) != 1 ) return 0ul;
 
+	// Return early if the number is negative
+	if ( val < 0 ) return 0ul;
+
 	if ( _tcsstr( strSize, _T("B") ) )
 		// Convert to bits if Bytes were passed in
 		val *= 8.0f;
-	else if ( !_tcsstr( strSize, _T("b") ) )
-	{
-		if ( !Interface.AssumeAsBytes )
-			// If bits or Bytes are not indicated return 0
-			return 0ul;
-		else
-			// Consider as Bytes if not specified
-			val *= 8.0f;
-	}
 
 	// Work out what units are represented in the string
 	if ( _tcsstr( strSize, _T("K") ) || _tcsstr( strSize, _T("k") ) )		// Kilo

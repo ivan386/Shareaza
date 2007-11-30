@@ -281,7 +281,6 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Uploads.RewardQueuePercentage, 1, 0, 99, _T("%") );
 
 	AddSetting( &Settings.Interface.LowResMode, 1, 0, 1 );
-	AddSetting( &Settings.Interface.AssumeAsBytes, 1, 0, 1 );
 
 	AddSetting( &Settings.Library.SourceExpire, 60, 60, 604800, _T(" m") );
 	AddSetting( &Settings.Library.WatchFoldersTimeout, 1, 1, 60, _T(" s") );

@@ -76,7 +76,6 @@ public:
 		BOOL		TipNeighbours;
 		BOOL		TipMedia;
 		BOOL		LowResMode;
-		BOOL		AssumeAsBytes;
 	} Interface;
 	
 	struct sLibrary
