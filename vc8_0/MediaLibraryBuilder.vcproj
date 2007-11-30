@@ -19,8 +19,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -39,30 +39,26 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories="../shareaza"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
-				StringPooling="true"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
+				SmallerTypeCheck="true"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
-				DisableSpecificWarnings="4127"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -78,15 +74,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib Strmiids.lib Quartz.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
+				AdditionalDependencies="strmiids.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateManifest="false"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
-				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				DelayLoadDLLs="$(NOINHERIT)"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				GenerateDebugInformation="true"
-				SubSystem="2"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -115,8 +108,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -135,29 +128,25 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories="../shareaza"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
 				TargetEnvironment="3"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
-				StringPooling="true"
+				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_USRDLL"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
+				SmallerTypeCheck="true"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -174,15 +163,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="Strmiids.lib Quartz.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				IgnoreDefaultLibraryNames=""
-				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				DelayLoadDLLs="$(NOINHERIT)"
+				AdditionalDependencies="strmiids.lib"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateManifest="false"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				GenerateDebugInformation="true"
-				SubSystem="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -212,10 +197,11 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="1"
+			UseOfMFC="2"
+			UseOfATL="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -234,32 +220,23 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories="../shareaza"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
-				StringPooling="true"
-				RuntimeLibrary="0"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
+				MinimalRebuild="true"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="true"
-				DisableSpecificWarnings="4127"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -275,19 +252,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib Strmiids.lib Quartz.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
+				AdditionalDependencies="strmiids.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)$(ProjectName).dll"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
-				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				DelayLoadDLLs="$(NOINHERIT)"
-				SubSystem="2"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				MergeSections=".rdata=.text"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -316,10 +287,11 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)/plugins/$(ProjectName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
+			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="1"
+			UseOfMFC="2"
+			UseOfATL="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -338,32 +310,23 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories="../shareaza"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
 				TargetEnvironment="3"
-				OutputDirectory="$(IntDir)"
-				HeaderFileName="$(IntDir)/$(InputName).h"
-				DLLDataFileName="$(IntDir)/$(InputName)_c.c"
-				InterfaceIdentifierFileName="$(IntDir)/$(InputName)_i.c"
-				ProxyFileName="$(IntDir)/$(InputName)_p.c"
+				HeaderFileName="$(IntDir)\$(InputName).h"
+				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
+				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				ProxyFileName="$(IntDir)\$(InputName)_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="true"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
-				StringPooling="true"
-				RuntimeLibrary="0"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
+				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_USRDLL"
+				MinimalRebuild="true"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(IntDir)/"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -379,14 +342,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="Strmiids.lib Quartz.lib"
-				OutputFile="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\$(ProjectName).dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				IgnoreDefaultLibraryNames=""
-				ModuleDefinitionFile="../plugins/$(ProjectName)/$(ProjectName).def"
-				DelayLoadDLLs="$(NOINHERIT)"
-				SubSystem="2"
+				AdditionalDependencies="strmiids.lib"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
@@ -450,7 +408,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -458,7 +416,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -466,7 +424,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -474,7 +432,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						HeaderFileName="$(IntDir)/ShareazaOM.h"
+						HeaderFileName="$(IntDir)\ShareazaOM.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -559,7 +517,7 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\debugx64\plugins\medialibrarybuilder\MediaLibraryBuilder_i.c"
+				RelativePath=".\ReleaseWin32\plugins\MediaLibraryBuilder\MediaLibraryBuilder_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -567,28 +525,22 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -597,22 +549,18 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\releasex64\plugins\medialibrarybuilder\MediaLibraryBuilder_i.c"
+				RelativePath=".\DebugWin32\plugins\MediaLibraryBuilder\MediaLibraryBuilder_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
+						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -621,8 +569,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -631,23 +577,19 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\releasewin32\plugins\medialibrarybuilder\MediaLibraryBuilder_i.c"
+				RelativePath=".\Debugx64\plugins\MediaLibraryBuilder\MediaLibraryBuilder_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -655,28 +597,22 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -685,21 +621,18 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\debugwin32\plugins\medialibrarybuilder\MediaLibraryBuilder_i.c"
+				RelativePath=".\Releasex64\plugins\MediaLibraryBuilder\MediaLibraryBuilder_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -708,7 +641,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -721,10 +653,10 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 			</File>
