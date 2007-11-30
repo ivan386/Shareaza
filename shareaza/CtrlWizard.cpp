@@ -863,8 +863,8 @@ BOOL CWizardCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 			COLORREF crColor = sscanf( pszDest, "#%2x%2x%2x", &r, &g, &b ) != 3 ? 
 								RGB(0, 0, 0) : RGB(r, g, b);
 
-			delete pszSource;
-			delete pszDest;
+			delete [] pszSource;
+			delete [] pszDest;
 
 			CColorDialog dlg( crColor, CC_ANYCOLOR|CC_FULLOPEN|CC_RGBINIT, this );
 			if ( dlg.DoModal() == IDOK )
