@@ -37,6 +37,8 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
+#pragma warning( push, 0 )
+
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
@@ -46,3 +48,5 @@
 #include <amvideo.h>
 
 using namespace ATL;
+
+#pragma warning( pop )
