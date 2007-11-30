@@ -1106,6 +1106,7 @@
 #define IDS_LIBRARY_SUBFOLDER_IN_LIBRARY 16410
 #define IDS_LIBRARY_MOVE_FAIL           16411
 #define IDS_LIBRARY_GHOST_FILE          16412
+#define IDS_LIBRARY_ADD_FOLDER          16413
 #define IDS_CHAT_CONNECTED_X            16448
 #define IDS_CHAT_ONLINE_X               16449
 #define IDS_CHAT_CLOSED_X               16450

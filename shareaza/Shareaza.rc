@@ -8,7 +8,7 @@
 // Generated from the TEXTINCLUDE 2 resource.
 //
 #include "afxres.h"
-
+#include "res_hack_def.h"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -35,6 +35,7 @@ END
 2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
+    "#include ""res_hack_def.h""\r\n"
     "\0"
 END
 
@@ -44,6 +45,7 @@ BEGIN
     "#define _AFX_NO_OLE_RESOURCES\r\n"
     "#define _AFX_NO_TRACKER_RESOURCES\r\n"
     "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "#define _AFX_NO_NEWTYPEDLG_RESOURCES\r\n"
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
     "#ifdef _WIN32\r\n"
@@ -52,6 +54,9 @@ BEGIN
     "#endif\r\n"
     "#include ""Res\\Shareaza.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""afxres.rc""         // Standard components\r\n"
+    "\r\n"
+    "// undefine DDV parse errors, we will redefine them ;)\r\n"
+    "#include ""res_hack_def.h""\r\n"
     "#endif\r\n"
     "\r\n"
     "1 TYPELIB ""Shareaza.tlb""\r\n"
@@ -216,7 +221,8 @@ BEGIN
         MENUITEM "&Download URL...\tCtrl+D",    ID_TOOLS_DOWNLOAD
         MENUITEM "Seed Torrent...",             ID_TOOLS_SEEDTORRENT
         MENUITEM "Import eMule partial downloads...", IDC_IMPORT_DOWNLOADS
-        MENUITEM "&Open my folder of completed Downloads", ID_OPEN_DOWNLOADS_FOLDER
+        MENUITEM "&Open my folder of completed Downloads", 
+                                                ID_OPEN_DOWNLOADS_FOLDER
         MENUITEM SEPARATOR
         MENUITEM "My &Profile...",              ID_TOOLS_PROFILE
         MENUITEM "S&kin Shareaza...",           ID_TOOLS_SKIN
@@ -381,7 +387,8 @@ BEGIN
 END
 
 IDD_NEW_SEARCH DIALOGEX 0, 0, 238, 60
-STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | 
+    WS_THICKFRAME
 CAPTION "New Search|Search Again|Find in Library"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
@@ -4341,6 +4348,7 @@ BEGIN
                             "A subfolder of the selected folder ""%s"" is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"
     IDS_LIBRARY_MOVE_FAIL   "Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"
     IDS_LIBRARY_GHOST_FILE  "Ghost File"
+    IDS_LIBRARY_ADD_FOLDER  "Add Folder"
 END
 
 STRINGTABLE 
@@ -5268,6 +5276,25 @@ BEGIN
     IDS_LIBRARY_ALBUM_RATING "Rating"
 END
 
+STRINGTABLE 
+BEGIN
+	// Parsing error prompts
+	AFX_IDP_PARSE_INT,              "Please enter an integer."
+	AFX_IDP_PARSE_REAL,             "Please enter a number."
+	AFX_IDP_PARSE_INT_RANGE,        "Please enter an integer between %1 and %2."
+	AFX_IDP_PARSE_REAL_RANGE,       "Please enter a number between %1 and %2."
+	AFX_IDP_PARSE_STRING_SIZE,      "Please enter no more than %1 characters."
+	AFX_IDP_PARSE_RADIO_BUTTON,     "Please select a button."
+	AFX_IDP_PARSE_BYTE,             "Please enter an integer between 0 and 255."
+	AFX_IDP_PARSE_UINT,             "Please enter a positive integer."
+	AFX_IDP_PARSE_DATETIME,         "Please enter a date and/or time."
+	AFX_IDP_PARSE_CURRENCY,         "Please enter a currency."
+	AFX_IDP_PARSE_GUID,             "Please enter a GUID."
+	AFX_IDP_PARSE_TIME,             "Please enter a time."
+	AFX_IDP_PARSE_DATE,             "Please enter a date."
+END
+
+
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -5282,6 +5309,7 @@ END
 #define _AFX_NO_OLE_RESOURCES
 #define _AFX_NO_TRACKER_RESOURCES
 #define _AFX_NO_PROPERTY_RESOURCES
+#define _AFX_NO_NEWTYPEDLG_RESOURCES
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
@@ -5290,6 +5318,9 @@ LANGUAGE 9, 1
 #endif
 #include "Res\Shareaza.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"         // Standard components
+
+// undefine DDV parse errors, we will redefine them ;)
+#include "res_hack_def.h"
 #endif
 
 1 TYPELIB "Shareaza.tlb"
