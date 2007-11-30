@@ -40,6 +40,7 @@ BEGIN_MESSAGE_MAP(CPluginsSettingsPage, CSettingsPage)
 	ON_WM_TIMER()
 	ON_NOTIFY(LVN_ITEMCHANGING, IDC_PLUGINS, OnItemChangingPlugins)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_PLUGINS, OnItemChangedPlugins)
+	ON_NOTIFY(NM_DBLCLK, IDC_PLUGINS, OnNMDblclkPlugins)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_PLUGINS, OnCustomDrawPlugins)
 	ON_BN_CLICKED(IDC_PLUGINS_SETUP, OnPluginsSetup)
 	ON_BN_CLICKED(IDC_PLUGINS_WEB, OnPluginsWeb)
@@ -544,4 +545,10 @@ void CPluginsSettingsPage::OnTimer(UINT_PTR /*nIDEvent*/)
 		KillTimer( 1 );
 		UpdateList();
 	}
+}
+
+void CPluginsSettingsPage::OnNMDblclkPlugins(NMHDR* /*pNMHDR*/, LRESULT* pResult)
+{
+	OnPluginsSetup();
+	*pResult = 0;
 }

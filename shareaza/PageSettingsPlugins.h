@@ -75,6 +75,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnItemChangingPlugins(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnNMDblclkPlugins(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnCustomDrawPlugins(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnPluginsSetup();
 	afx_msg void OnPluginsWeb();
