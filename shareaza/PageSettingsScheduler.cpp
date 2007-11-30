@@ -155,17 +155,17 @@ void CSchedulerSettingsPage::OnMouseMove(UINT /*nFlags*/, CPoint point)
 
 			if ( m_nHoverHour < 24 && m_nHoverDay == 7 )
 			{
-				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
+				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), (LPCTSTR)m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
 				::SetCursor( AfxGetApp()->LoadCursor( IDC_DOWN ) );
 			}
 			else if ( m_nHoverHour == 24 && m_nHoverDay < 7 )
 			{
-				strSliceDisplay.Format(_T("%s, 0:00 - 23:59"), m_sDayName[m_nHoverDay] );
+				strSliceDisplay.Format(_T("%s, 0:00 - 23:59"), (LPCTSTR)m_sDayName[m_nHoverDay] );
 				::SetCursor( AfxGetApp()->LoadCursor( theApp.m_bRTL ? IDC_LEFT : IDC_RIGHT ) );
 			}
 			else if ( m_nHoverHour < 24 && m_nHoverDay < 7 )
 			{
-				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
+				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), (LPCTSTR)m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
 				::SetCursor( AfxGetApp()->LoadStandardCursor( IDC_ARROW ) );
 			}
 			else
