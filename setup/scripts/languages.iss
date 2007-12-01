@@ -233,7 +233,7 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 ; Slovenian
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sl; Tasks: language
 ; Catalan
-Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ca; Tasks: language
+Source: "setup\filter\catalan.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ca; Tasks: language
 ; Albanian
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sq; Tasks: language
 
@@ -1068,11 +1068,11 @@ ca.tasks_languages=Idiomes
 ca.tasks_allusers=Tots els usuaris
 ca.tasks_selectusers=Instal·lar %1 per a:
 ca.tasks_currentuser=%1 únicament
-ca.tasks_multisetup=Habilitar el suport multi-usuari
-ca.tasks_firewall=Afegeix una excepció al tallafocs de Windows
-ca.tasks_upnp=Habilitar el descobriment de dispositius UPnP
-ca.tasks_deleteoldsetup=Esborrar instal·ladors antics
-ca.tasks_resetdiscoveryhostcache=Reset Discovery and Hostcache
+ca.tasks_multisetup=Habilita el suport multi-usuari
+ca.tasks_firewall=Afegeix una excepció al tallafocs del Windows
+ca.tasks_upnp=Habilita el descobriment de dispositius UPnP
+ca.tasks_deleteoldsetup=Esborra instal·lacions antigues
+ca.tasks_resetdiscoveryhostcache=Reestableix els serveis de descobriment i caxè de servidors
 ca.run_skinexe=Executant la instal·lació de la pell (skin)...
 ca.reg_incomingchat=Missatge de xat entrant
 ca.reg_apptitle=Shareaza: compartició d'arxius d'última generació
@@ -1081,15 +1081,16 @@ ca.icons_uninstall=Desinstal·lació
 ca.icons_downloads=Descàrregues
 ca.icons_basicmode=Mode normal
 ca.icons_tabbedmode=Mode en pestanyes
-ca.icons_windowedmode=Mode de finestra
+ca.icons_windowedmode=Mode de finestres
 ca.dialog_shutdown=%1 està sent executat. Dessitja que %1 siga aturat per que la instal·lació puga continuar?
-ca.dialog_firewall=La instal·lació ha fallat mentre s'afegia una exepció al tallafocs del Windows.%nSi us plau, afegeixi Shareaza al llistat d'excepcions manualment.
-ca.dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
-ca.page_viruswarning_text=Mentre utilitzes Internet, has d'assegurar-te que tens un antivirus actualitzat per protegir-te de troians, cucs, virus i altres programes maliciosos. Pots consultar un llistat de programari antivirus i consells de seguretat fent clic a la següent drecera:
+ca.dialog_firewall=La instal·lació ha fallat mentre s'afegia una exepció al tallafocs del Windows.%nSi us plau, afegeix Shareaza al llistat d'excepcions manualment.
+ca.dialog_malwaredetected=Shareaza ha detectat un arxiu maliciós (malware) a %1. Si us plau, elimine'l amb un antivirus abans d'instal·lar. Vol sortir de la instal·lació?
+ca.page_viruswarning_text=Mentre utilitzes Internet, has d'assegurar-te que tens un antivirus actualitzat per a protegir-te de troians, cucs, virus i altres programes maliciosos. Pots consultar un llistat de programari antivirus i consells de seguretat fent clic a la següent drecera:
 ca.page_viruswarning_title=Advertència de virus
 ca.page_viruswarning_subtitle=Tens un programa antivíric instal·lat?
 ca.CreateDesktopIcon=Afegeix una icona a l'&escriptori
-ca.CreateQuickLaunchIcon=Afegeix una icona a l’&escriptori
+ca.CreateQuickLaunchIcon=Afegeix una icona a la barra d'Accés Ràpid
+ca.PathNotExist=Error: la carpeta %1 no existeix.
 ; Albanian
 sq.components_plugins=Prizat
 sq.components_skins=Lëvoret
