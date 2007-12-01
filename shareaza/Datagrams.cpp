@@ -1382,19 +1382,11 @@ BOOL CDatagrams::OnCommonHit(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		return FALSE;
 	}
 
-	if ( nHops > (int)Settings.Gnutella1.MaximumTTL )
-	{
-		pPacket->Debug( _T("Hit with excessive TTL") );
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
-			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
-		Statistics.Current.Gnutella2.Dropped++;
-		pHits->Delete();
-		return FALSE;
-	}
-	
 	Network.NodeRoute->Add( pHits->m_oClientID, pHost );
-	
-	if ( SearchManager.OnQueryHits( pHits ) )
+
+	// Don't route exceeded hits
+	if ( nHops <= (int)Settings.Gnutella1.MaximumTTL &&
+		SearchManager.OnQueryHits( pHits ) )
 	{
 		Network.RouteHits( pHits, pPacket );
 	}

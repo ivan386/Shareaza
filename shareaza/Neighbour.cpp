@@ -561,28 +561,17 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 		return FALSE;
 	}
 
-	if ( nHops > (int)Settings.Gnutella1.MaximumTTL )
-	{
-		pPacket->Debug( _T("Hit with excessive TTL") );
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)m_sAddress );
-		m_nDropCount++;
-		if ( m_nProtocol == PROTOCOL_G1 )
-			Statistics.Current.Gnutella1.Dropped++;
-		else if ( m_nProtocol == PROTOCOL_G2 )
-			Statistics.Current.Gnutella2.Dropped++;
-		pHits->Delete();
-		return TRUE;
-	}
-	
 	Network.NodeRoute->Add( pHits->m_oClientID, this );
-	
-	if ( SearchManager.OnQueryHits( pHits ) )
+
+	// Don't route exceeded hits
+	if ( nHops <= (int)Settings.Gnutella1.MaximumTTL &&
+		SearchManager.OnQueryHits( pHits ) )
 	{
 		Network.RouteHits( pHits, pPacket );
 	}
-	
+
 	Network.OnQueryHits( pHits );
-	
+
 	return TRUE;
 }
 
