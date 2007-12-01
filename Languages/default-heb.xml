@@ -1542,6 +1542,13 @@
 		<heading align="middle" colour="6060FF">&#160; ל מ י ד ע &#160; מ ו מ ל ץ </heading>
 		<newline gap="20" indent="16"/>
 
+		<group id="6">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; T C P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+			and are unable to receive TCP connections from the Internet. &#160;</text>
+			<text colour="FF0000" format="b">This may cause poor download performance.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
 			<newline gap="18" indent="0"/>
@@ -2933,7 +2940,7 @@
 	<string id="16401" value="הצג את כל סוגי הקבצים"/>
 	<string id="16402" value="שרזה קיבל קובץ אוסף:\n\n&quot;%s&quot;\n\nקובץ זה אינו נראה כקובץ אוסף חוקי."/>
 	<string id="16403" value="שרזה הוסיף את קובץ האוסף &quot;%s&quot; לספרייה שלך."/>
-	<string id="16404" value="שרזה לא הצליח להתקין את קובץ האוסף &quot;%s&quot; ע"י העתקתו לספריה &quot;%s&quot;."/>
+	<string id="16404" value="שרזה לא הצליח להתקין את קובץ האוסף &quot;%s&quot; ע&quot;י העתקתו לספריה &quot;%s&quot;."/>
 	<string id="16405" value="ברצונך להוריד את הקובץ הזה?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
 	<string id="16406" value="ברצונך להוריד את כל הקבצים באוסף הזה?\n\nChoose Cancel to stop any further prompts."/>
 	<string id="16407" value="ברצונך למנוע מהאוסף הזה להציע לך להוריד משהו נוסף?"/>
@@ -3648,7 +3655,7 @@
 		<control/>
 		<control caption="ומהירות ההעלאה:"/>
 		<control/>
-		<control caption="ברצונך להגדיר פתחה (פורט) אוטומטית ע"י שימוש ב UPnP?"/>
+		<control caption="ברצונך להגדיר פתחה (פורט) אוטומטית ע&quot;י שימוש ב UPnP?"/>
 		<control/>
 		<control caption="מצב:"/>
 		<control/>
@@ -4183,7 +4190,7 @@
 	</dialog>
 
 	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="ייצא ספריה">
-		<control caption="אפשרות זו נועדה לייצא את התכנים של תיקיית האלבום כקובץ אוסף מתקדם. אנא בחר תבנית ולחץ "הבא" כדי להמשיך. |התאם אישית את האוסף שלך ע"י הכנסת המידע מטה."/>
+		<control caption="אפשרות זו נועדה לייצא את התכנים של תיקיית האלבום כקובץ אוסף מתקדם. אנא בחר תבנית ולחץ &quot;הבא&quot; כדי להמשיך. |התאם אישית את האוסף שלך ע&quot;י הכנסת המידע מטה."/>
 		<control/>
 		<control caption="מידע התבנית:"/>
 		<control caption="שם:"/>
