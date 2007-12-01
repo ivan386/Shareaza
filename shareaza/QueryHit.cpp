@@ -827,8 +827,8 @@ BOOL CQueryHit::ReadGGEP(CG1Packet* pPacket, BOOL* pbBrowseHost, BOOL* pbChat)
 	
 	if ( ! pGGEP.ReadFromPacket( pPacket ) ) return FALSE;
 	
-	if ( pGGEP.Find( _T("BH") ) ) *pbBrowseHost = TRUE;
-	if ( pGGEP.Find( _T("CHAT") ) ) *pbChat = TRUE;
+	if ( pGGEP.Find( GGEP_HEADER_BROWSE_HOST ) ) *pbBrowseHost = TRUE;
+	if ( pGGEP.Find( GGEP_HEADER_CHAT ) ) *pbChat = TRUE;
 	
 	return TRUE;
 }
@@ -891,7 +891,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 			CGGEPBlock pGGEP;
 			pGGEP.ReadFromString( pszData );
 			
-			if ( CGGEPItem* pItem = pGGEP.Find( _T("H"), 21 ) )
+			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_HASH, 21 ) )
 			{
 				if ( pItem->m_pBuffer[0] > 0 && pItem->m_pBuffer[0] < 3 )
 				{
@@ -904,7 +904,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
                     m_oTiger.validate();
 				}
 			}
-			else if ( CGGEPItem* pItem = pGGEP.Find( _T("u"), 5 + 32 ) )
+			else if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_URN, 5 + 32 ) )
 			{
 				strData = pItem->ToString();
 				
@@ -915,7 +915,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 				if ( !m_oMD5 ) m_oMD5.fromUrn( pszData );
 			}
 			
-			if ( CGGEPItem* pItem = pGGEP.Find( _T("ALT"), 6 ) )
+			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_ALTS, 6 ) )
 			{
 				// the ip-addresses need not be stored, as they are sent upon the download request in the ALT-loc header
 				m_nSources = pItem->m_nLength / 6;	// 6 bytes per source (see ALT GGEP extension specification)

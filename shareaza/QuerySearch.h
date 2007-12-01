@@ -68,7 +68,8 @@ public:
 	SOCKADDR_IN			m_pEndpoint;
 	DWORD				m_nKey;
 	BOOL				m_bFirewall;
-
+	BOOL				m_bOOBv3;		// OOB v3 Security Token support
+	BYTE				m_nMeta;		// MetaType query mask
 
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.

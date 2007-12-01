@@ -1007,7 +1007,7 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
-			if ( CGGEPItem* pItem = pGGEP.Find( _T("SCP") ) )
+			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
 			{
 				bSCP = TRUE;
 			}
@@ -1019,7 +1019,7 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 	// Since we do not provide leaves, ignore the preference data
 	if ( bSCP )
 	{
-		CGGEPItem* pItem = pGGEP.Add( _T("IPP") );
+		CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS );
 		DWORD nCount = min( DWORD(50), HostCache.Gnutella1.CountHosts() );
 		WORD nPos = 0;
 		pItem->UnsetCOBS();
@@ -1140,8 +1140,8 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
 
-			CGGEPItem* pUP = pGGEP.Find( L"UP" );
-			CGGEPItem* pVC = pGGEP.Find( L"VC", 4 );
+			CGGEPItem* pUP = pGGEP.Find( GGEP_HEADER_UP_SUPPORT );
+			CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 );
 			CString sVendorCode;
 			if ( pVC != NULL )
 			{
@@ -1160,7 +1160,7 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 
 
 			int nCount = 0;
-			CGGEPItem* pIPPs = pGGEP.Find( L"IPP", 6 );
+			CGGEPItem* pIPPs = pGGEP.Find( GGEP_HEADER_PACKED_IPPORTS, 6 );
 
 			// We got a response to SCP extension, add hosts to cache if IPP extension exists
 			if ( pIPPs != NULL )

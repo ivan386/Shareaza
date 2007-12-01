@@ -282,7 +282,7 @@ void CLocalSearch::AddHitG1(CLibraryFile const * const pFile, int nIndex)
 		/*
 		CGGEPBlock pBlock;
 
-		CGGEPItem* pItem = pBlock.Add( _T("H") );
+		CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
 		pItem->WriteByte( 1 );
 		pItem->Write( &pFile->m_pSHA1, 20 );
 

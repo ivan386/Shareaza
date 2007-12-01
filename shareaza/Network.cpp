@@ -1022,7 +1022,7 @@ void CNetwork::UDPHostCache(IN_ADDR* pAddress, WORD nPort)
 	CGGEPBlock pBlock;
 	CGGEPItem* pItem;
 	
-	pItem = pBlock.Add( L"SCP" );
+	pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS );
 	pItem->UnsetCOBS();
 	pItem->UnsetSmall();
 	pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? 1 : 0 );

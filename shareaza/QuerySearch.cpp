@@ -55,8 +55,8 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch construction
 
-CQuerySearch::CQuerySearch(BOOL bGUID)
-: m_oWords()
+CQuerySearch::CQuerySearch(BOOL bGUID) :
+	m_oWords()
 {
 	if ( bGUID ) Network.CreateID( m_oGUID );
 	
@@ -75,38 +75,40 @@ CQuerySearch::CQuerySearch(BOOL bGUID)
 	m_bUDP		= FALSE;
 	m_nKey		= 0;
 	m_bFirewall	= FALSE;
-	
+	m_bOOBv3	= FALSE;
+	m_nMeta		= 0;
+
 //	m_nWords	= 0;
 //	m_pWordPtr	= NULL;
 //	m_pWordLen	= NULL;
 }
 
-CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin)
-: m_oGUID( pOrigin->m_oGUID ),
-  m_sSearch( pOrigin->m_sSearch ),
-  m_sKeywords( pOrigin->m_sKeywords ),
-  m_sPosKeywords( pOrigin->m_sPosKeywords ),
-  m_sG2Keywords( pOrigin->m_sG2Keywords ),
-  m_pSchema( pOrigin->m_pSchema ),
-  m_pXML( pOrigin->m_pXML ? pOrigin->m_pXML->Clone() : NULL ),
-  m_nMinSize( pOrigin->m_nMinSize ),
-  m_nMaxSize( pOrigin->m_nMaxSize ),
-
-  m_oSimilarED2K(),         //! \todo verify this
-
-  m_bWantURL( pOrigin->m_bWantURL ),
-  m_bWantDN( pOrigin->m_bWantDN ),
-  m_bWantXML( pOrigin->m_bWantXML ),
-  m_bWantCOM( pOrigin->m_bWantCOM ),
-  m_bWantPFS( pOrigin->m_bWantPFS ),
-  m_bAndG1( pOrigin->m_bAndG1 ),
-
-  m_bUDP( pOrigin->m_bUDP ),
-  m_pEndpoint( pOrigin->m_pEndpoint ),
-  m_nKey( pOrigin->m_nKey ),
-  m_oURNs( pOrigin->m_oURNs ),
-  m_oKeywordHashList( pOrigin->m_oKeywordHashList )
-  //m_oWords()                //! \todo comment this - we copy the search string but not the word list
+CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin) :
+	m_oGUID( pOrigin->m_oGUID ),
+	m_sSearch( pOrigin->m_sSearch ),
+	m_sKeywords( pOrigin->m_sKeywords ),
+	m_sPosKeywords( pOrigin->m_sPosKeywords ),
+	m_sG2Keywords( pOrigin->m_sG2Keywords ),
+	m_pSchema( pOrigin->m_pSchema ),
+	m_pXML( pOrigin->m_pXML ? pOrigin->m_pXML->Clone() : NULL ),
+	m_nMinSize( pOrigin->m_nMinSize ),
+	m_nMaxSize( pOrigin->m_nMaxSize ),
+	m_oSimilarED2K(),         //! \todo verify this
+	m_bWantURL( pOrigin->m_bWantURL ),
+	m_bWantDN( pOrigin->m_bWantDN ),
+	m_bWantXML( pOrigin->m_bWantXML ),
+	m_bWantCOM( pOrigin->m_bWantCOM ),
+	m_bWantPFS( pOrigin->m_bWantPFS ),
+	m_bAndG1( pOrigin->m_bAndG1 ),
+	m_bUDP( pOrigin->m_bUDP ),
+	m_nKey( pOrigin->m_nKey ),
+	m_bFirewall( pOrigin->m_bFirewall ),
+	m_bOOBv3( pOrigin->m_bOOBv3 ),
+	m_nMeta( pOrigin->m_nMeta ),
+	m_pEndpoint( pOrigin->m_pEndpoint ),
+	m_oURNs( pOrigin->m_oURNs ),
+	m_oKeywordHashList( pOrigin->m_oKeywordHashList )
+	//m_oWords()                //! \todo comment this - we copy the search string but not the word list
 {
 	m_oSHA1		= pOrigin->m_oSHA1;
 	m_oTiger	= pOrigin->m_oTiger;
@@ -652,7 +654,15 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 
 					// TODO: Add multiple GGEP items handling
 
-					if ( CGGEPItem* pItem = pGGEP.Find( _T("H"), 21 ) )
+					if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SECURE_OOB ) )
+					{
+						m_bOOBv3 = TRUE;
+					}
+					if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_META, 1 ) )
+					{
+						m_nMeta = pItem->m_pBuffer[0];
+					}
+					if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_HASH, 21 ) )
 					{
 						if ( pItem->m_pBuffer[0] == GGEP_H_SHA1 ||
 							pItem->m_pBuffer[0] == GGEP_H_BITPRINT )
@@ -670,7 +680,7 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 						// TODO: Add GGEP_H_MD5, GGEP_H_UUID, GGEP_H_MD4 handling
 
 					}
-					else if ( CGGEPItem* pItem = pGGEP.Find( _T("u") ) )
+					if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_URN ) )
 					{
 						CString strURN( pItem->ToString() );
 						if (      oSHA1.fromUrn(  strURN ) );	// Got SHA1

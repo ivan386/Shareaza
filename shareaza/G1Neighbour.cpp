@@ -1,7 +1,7 @@
 //
 // G1Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -380,9 +380,9 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	if ( Settings.Gnutella1.EnableGGEP && bNeedPeers )
 	{
 		CGGEPBlock pBlock;
-		CGGEPItem* pItem = pBlock.Add( L"SCP" );
+		CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS );
 		pItem->WriteByte( ! bNeedHubs );
-		pItem = pBlock.Add( L"DNA" );
+		pItem = pBlock.Add( GGEP_HEADER_SUPPORT_GDNA );
 		pItem->WriteByte( ! bNeedHubs );
 		pBlock.Write( pPacket );
 	}
@@ -452,11 +452,11 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 			// If the neighbour sent
 			if ( Settings.Experimental.EnableDIPPSupport )
 			{
-				if ( CGGEPItem* pItem = pGGEP.Find( _T("SCP") ) )
+				if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
 				{
 					bSCP = true;
 				}
-				if ( CGGEPItem* pItem = pGGEP.Find( _T("DNA") ) )
+				if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_GDNA ) )
 				{
 					bDNA = true;
 				}
@@ -492,11 +492,11 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	{
 		if ( bSCP )
 		{
-			WriteRandomCache( pGGEP.Add( L"IPP" ) );
+			WriteRandomCache( pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS ) );
 		}
 		if ( bDNA )
 		{
-			WriteRandomCache( pGGEP.Add( L"DIPP" ) );
+			WriteRandomCache( pGGEP.Add( GGEP_HEADER_GDNA_PACKED_IPPORTS ) );
 		}
 	}
 
@@ -622,9 +622,10 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 	if ( !pItem ) return 0;
 
 	bool bIPP = false;
-	if ( pItem->IsNamed( L"IPP" ) )
+	if ( pItem->IsNamed( GGEP_HEADER_PACKED_IPPORTS ) )
 		bIPP = true;
-	else if ( !pItem->IsNamed( L"DIPP" ) && !pItem->IsNamed( L"DIP" ) )
+	else if ( !pItem->IsNamed( GGEP_HEADER_GDNA_PACKED_IPPORTS ) &&
+		!pItem->IsNamed( GGEP_HEADER_GDNA_PACKED_IPPORTS_x ) )
 	return 0;
 
 	DWORD nCount = min( DWORD(50), bIPP ? HostCache.Gnutella1.CountHosts() : HostCache.G1DNA.CountHosts() );
@@ -719,12 +720,12 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
-			CGGEPItem* pUP = pGGEP.Find( L"UP" );
+			CGGEPItem* pUP = pGGEP.Find( GGEP_HEADER_UP_SUPPORT );
 
 			if ( pUP ) // Catch pongs and update host cache only from ultrapeers
 			{
 				// Read vendor code
-				if ( CGGEPItem* pVC = pGGEP.Find( L"VC", 4 ) )
+				if ( CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 ) )
 				{
 					CHAR szaVendor[ 4 ];
 					pVC->Read( szaVendor, 4 );
@@ -733,7 +734,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 				}
 
 				// Read daily uptime
-				if ( CGGEPItem* pDU = pGGEP.Find( L"DU", 1 ) )
+				if ( CGGEPItem* pDU = pGGEP.Find( GGEP_HEADER_DAILY_AVERAGE_UPTIME, 1 ) )
 				{
 					pDU->Read( (void*)&nUptime, 4 );
 				}
@@ -742,10 +743,11 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 				CGGEPItem* pGDNAs = NULL;
 				if ( Settings.Experimental.EnableDIPPSupport )
 				{
-					pIPPs = pGGEP.Find( L"IPP", 6 );
+					pIPPs = pGGEP.Find( GGEP_HEADER_PACKED_IPPORTS, 6 );
 					// GDNA has a bug in their code; they send DIP but receive DIPP (fixed in the latest versions)
-					pGDNAs = pGGEP.Find( L"DIPP", 6 );
-					if ( !pGDNAs ) pGDNAs = pGGEP.Find( L"DIP", 6 );
+					pGDNAs = pGGEP.Find( GGEP_HEADER_GDNA_PACKED_IPPORTS, 6 );
+					if ( ! pGDNAs )
+						pGDNAs = pGGEP.Find( GGEP_HEADER_GDNA_PACKED_IPPORTS_x, 6 );
 				}
 
 				// We got a response to SCP extension, add hosts to cache if IPP extension exists
