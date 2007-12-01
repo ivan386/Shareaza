@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -267,7 +267,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="type" search="indexed">
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
-                       <title language="ca">Art</title>
+                       <title language="ca">Tipus</title>
                        <title language="chs">类型</title>
                        <title language="cht">類型</title>
                        <title language="cz">Typ</title>
@@ -324,7 +324,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
-                       <title language="ca">Llengua</title>
+                       <title language="ca">Idioma</title>
                        <title language="chs">语言</title>
                        <title language="cht">語言</title>
                        <title language="cz">Jazyk</title>
@@ -436,7 +436,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="SampleRate" search="indexed">
                        <title language="en">Sample Rate</title>
                        <title language="af">Klanktempo</title>
-                       <title language="ca">Tasa de mostra (Rate)</title>
+                       <title language="ca">Tasa de mostra (rate)</title>
                        <title language="chs">采样率</title>
                        <title language="cht">取樣率</title>
                        <title language="cz">Vzorkovací frekvence</title>

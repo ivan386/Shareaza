@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -34,7 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">Music:My Music</title>
                <title language="af">Musiek:My Musiek</title>
-               <title language="ca">Musica: La meua Música</title>
+               <title language="ca">Musica: La meva música</title>
                <title language="chs">&#160;音乐:我的音乐</title>
                <title language="cht">音樂:我的音樂</title>
                <title language="cz">Hudba:Moje hudba</title>
@@ -101,7 +101,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <headerContent version="1.0">
                <title language="en">Welcome to My Music!</title>
                <title language="af">Welkom by My Musiek!</title>
-               <title language="ca">Benvingut a La meva Música</title>
+               <title language="ca">Benvingut/da a la meva música</title>
                <title language="chs">欢迎来到我的音乐！</title>
                <title language="cht">歡迎來到我的音樂!</title>
                <title language="cz">Moje hudba</title>
@@ -127,7 +127,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Müziklerime Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of the music in your library, organised by album, by artist and by genre.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die musiek in jou biblioteek, georganiseer volgens album, kunstenaar en genre. Open 'n gids hieronder om voort te gaan.</subtitle>
-               <subtitle language="ca">Aquestes carpetes contenen tota la teua música de la teua Col·lecció, organitzades per album, per artista i per gènere. Òbriga una carpeta per a continuar</subtitle>
+               <subtitle language="ca">Aquestes carpetes contenen tota la música de la teva col·lecció, organitzada per àlbum, per artista i per gènere. Obre una carpeta per a continuar.</subtitle>
                <subtitle language="chs">这些文件夹包括您收藏中的所有音乐，按专辑，艺术家和流派进行排列。打开下面的文件夹可进行查看。</subtitle>
                <subtitle language="cht">這些資料夾包含了在您的收藏中所有的音樂, 由專輯, 藝人和流派組織.  在下面開啟一個資料夾來繼續.</subtitle>
                <subtitle language="cz">Tyto složky obsahují všechnu hudubu v knihovně roztříděnou podle alba, autora a žánru. Pokračujte kliknutím na složku</subtitle>

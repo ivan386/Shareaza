@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -96,7 +96,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <headerContent version="1.0">
                <title language="en">My Collections</title>
                <title language="af">My Versamelings</title>
-               <title language="ca">Les meues Col·leccions</title>
+               <title language="ca">Les meves col·leccions</title>
                <title language="chs">我的收集</title>
                <title language="cht">我的收藏</title>
                <title language="cz">Moje sbírky</title>
@@ -122,7 +122,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Koleksiyonlarım</title>
                <subtitle language="en">This folder contains any rich File Collections in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat enige ryk Versamelingslêers in jou biblioteek.</subtitle>
-               <subtitle language="ca">Aquesta carpeta conté qualsevol arxiu de col·leccions de la teua Col·lecció.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté qualsevol arxiu de col·leccions de la teva col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您库中的任何文件收藏。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中何任的豐富檔案收藏.</subtitle>
                <subtitle language="cz">Tato složka obsahuje všechny sbírky v knihovně.</subtitle>

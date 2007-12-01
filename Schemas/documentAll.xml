@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -127,7 +127,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Tüm Dokümanlar</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle dokumente in jou biblioteek.</subtitle>
-               <subtitle language="ca">Aquesta carpeta conté tots els documents en la teua Col·lecció.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté tots els documents de la teva col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有文档。</subtitle>
                <subtitle language="cht">這個資料夾包含您收藏中所有的文件</subtitle>
                <subtitle language="cz">Tato složka obsahuje všechny dokumenty v knihovně.</subtitle>

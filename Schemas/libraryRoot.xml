@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -34,7 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">General:My Shareaza Library</title>
                <title language="af">Algemeen:My Shareaza Biblioteek</title>
-               <title language="ca">General: La meua Col·lecció</title>
+               <title language="ca">General: La meua col·lecció</title>
                <title language="chs">&#160;常规:我的 Shareaza 库</title>
                <title language="cht">一般:我的 Shareaza 收藏</title>
                <title language="cz">Obecné:Knihovna</title>
@@ -152,7 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <headerContent version="1.0">
                <title language="en">Welcome to Your Library!</title>
                <title language="af">Welkom by Jou Biblioteek!</title>
-               <title language="ca">Benvingut a La meua col·lecció!</title>
+               <title language="ca">Benvingut/da a la meva col·lecció!</title>
                <title language="chs">欢迎来到您的库！</title>
                <title language="cht">歡迎來到您的收藏!</title>
                <title language="cz">Vítejte v knihovně!</title>

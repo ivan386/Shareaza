@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -125,7 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Tüm Uygulamalar</title>
                <subtitle language="en">This folder contains every application file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle programlêers in jou biblioteek.</subtitle>
-               <subtitle language="ca">Aquesta carpeta té totes les aplicacions de la teua Col·lecció.</subtitle>
+               <subtitle language="ca">Aquesta carpeta té totes les aplicacions de la teva col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有程序。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中所有的應用程式檔案.</subtitle>
                <subtitle language="cz">Tato složka obsahuje všechny aplikace v knihovně.</subtitle>

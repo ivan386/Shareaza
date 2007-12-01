@@ -4,7 +4,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -35,7 +35,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">Word Processing</title>
                <title language="af">Woordverwerking</title>
-               <title language="ca">Document de Text</title>
+               <title language="ca">Document de text</title>
                <title language="chs">字符处理</title>
                <title language="cht">文件:文字加工</title>
                <title language="cz">Textový editor</title>
@@ -151,7 +151,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
-                       <title language="ca">Llengua</title>
+                       <title language="ca">Idioma</title>
                        <title language="chs">语言</title>
                        <title language="cht">語言</title>
                        <title language="cz">Jazyk</title>
@@ -180,7 +180,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <display defaultColumn="true"/>
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>
-                       <title language="ca">Paraules Clau</title>
+                       <title language="ca">Paraules clau</title>
                        <title language="chs">关键词</title>
                        <title language="cht">關鍵字</title>
                        <title language="cz">Klíčová slova</title>
@@ -350,7 +350,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="type">
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
-                       <title language="ca">Art</title>
+                       <title language="ca">Tipus</title>
                        <title language="chs">类型</title>
                        <title language="cht">類型</title>
                        <title language="cz">Typ</title>
@@ -407,7 +407,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <member name="formatversion">
                        <title language="en">Format Version</title>
                        <title language="af">Formaat Weerg.</title>
-                       <title language="ca">Versió del Format</title>
+                       <title language="ca">Versió del format</title>
                        <title language="chs">格式版本</title>
                        <title language="cht">格式版本</title>
                        <title language="cz">Verze formátu</title>

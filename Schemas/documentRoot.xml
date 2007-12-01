@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -99,7 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <headerContent version="1.0">
                <title language="en">Welcome to My Documents!</title>
                <title language="af">Welkom by My Dokumente!</title>
-               <title language="ca">Benvingut als meus Documents!</title>
+               <title language="ca">Benvingut/da als meus documents!</title>
                <title language="chs">欢迎来到我的文档！</title>
                <title language="cht">歡迎來到我的文件!</title>
                <title language="cz">Moje dokumenty</title>

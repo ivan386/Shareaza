@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -34,7 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">Search:Search Results</title>
                <title language="af">Soek:Soekresultate</title>
-               <title language="ca">Cercar: Resultats de recerca</title>
+               <title language="ca">Cercar: Resultats de cerca</title>
                <title language="chs">&#160;搜索:搜索结果</title>
                <title language="cht">搜尋:搜尋結果</title>
                <title language="cz">Hledání:Výsledky hledání</title>
@@ -205,7 +205,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Ara "{content}"</title>
                <subtitle language="en">This folder contains the files which matched your search for "{content}"</subtitle>
                <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
-               <subtitle language="ca">Aquesta carpeta conté arxius que varen coincidir amb la recerca "{content}"</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté arxius que varen coincidir amb la cerca "{content}"</subtitle>
                <subtitle language="chs">此文件夹包含了匹配搜索 "{content}" 的文件</subtitle>
                <subtitle language="cht">這個資料夾包含了符合您搜尋 "{content}" 的檔案</subtitle>
                <subtitle language="cz">Tato složka obsahuje soubory, které vyhovují hledání "{content}".</subtitle>

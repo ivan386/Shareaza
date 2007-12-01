@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -125,7 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Filmler</title>
                <subtitle language="en">This folder contains a list films you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die films wat jy die jou biblioteek het.</subtitle>
-               <subtitle language="ca">Aquesta carpeta conté tots els films que tens en la teva Col·lecció.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté tots els films que tens en la teva col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中电影的清单。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中一個電影清單.</subtitle>
                <subtitle language="cz">Tyto složky obsahují všechny filmy  v knihovně.</subtitle>

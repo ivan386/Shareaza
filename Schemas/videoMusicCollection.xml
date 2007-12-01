@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -34,7 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">Video:Music Videos</title>
                <title language="af">Video:Musiek Video's</title>
-               <title language="ca">Vídeo: Vídeos Musicals</title>
+               <title language="ca">Vídeo: Vídeos musicals</title>
                <title language="chs">&#160;视频:音乐视频</title>
                <title language="cht">影像:音樂影像</title>
                <title language="cz">Videa:Hudební filmy</title>
@@ -125,7 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Klipler</title>
                <subtitle language="en">This folder contains music videos.</subtitle>
                <subtitle language="af">Hierdie gids bevat musiek video's.</subtitle>
-               <subtitle language="ca">Aquesta carpeta conté vídeos de música</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté vídeos musicals.</subtitle>
                <subtitle language="chs">此文件夹包括音乐电视。</subtitle>
                <subtitle language="cht">這個資料夾包含了音樂影像.</subtitle>
                <subtitle language="cz">Tato složka obsahuje hudební videa.</subtitle>

@@ -2,7 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Catalan Schemas File translated by Daniel Olivares Giménez
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
@@ -34,7 +34,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <titles>
                <title language="en">Application:My Applications</title>
                <title language="af">Program:My Programme</title>
-               <title language="ca">Aplicacions: Totes</title>
+               <title language="ca">Aplicacions: Les meves aplicacions</title>
                <title language="chs">&#160;程序:我的程序</title>
                <title language="cht">應用程式:我的應用程式</title>
                <title language="cz">Aplikace:Moje aplikace</title>
@@ -99,7 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <headerContent version="1.0">
                <title language="en">Welcome to My Applications!</title>
                <title language="af">Welkom by My Programme!</title>
-               <title language="ca">Benvingut a Les meves Aplicacions!</title>
+               <title language="ca">Benvingut/da a les meves aplicacions!</title>
                <title language="chs">欢迎来到我的程序！</title>
                <title language="cht">歡迎來到我的應用程式!</title>
                <title language="cz">Moje aplikace</title>
@@ -125,7 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="tr">Uygulamalarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of your application files.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou programlêers.</subtitle>
-               <subtitle language="ca">Aquesta carpeta conté tots els arxius de programes</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté totes les aplicacions.</subtitle>
                <subtitle language="chs">这些文件夹包含您所有的程序。</subtitle>
                <subtitle language="cht">這些資料夾包含了您所有的應用程式檔案.</subtitle>
                <subtitle language="cz">Tyto složky obsahují všechny aplikace v knihovně.</subtitle>
