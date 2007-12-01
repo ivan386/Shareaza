@@ -13,7 +13,7 @@
 <!-- Manifest -->
 <manifest	name="עברית"
 		author="David Aravon"
-		updatedBy="_peer_ (la. Han)"
+		updatedBy="_peer_ (la. Han), Omega"
 		description="Shareaza Default Hebrew Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="peer_l_(at)hotmail(dot)com"
@@ -327,8 +327,8 @@
 		<button id="ID_MEDIA_ZOOM"/>
 		<button id="ID_MEDIA_VIS"/>
 		<rightAlign/>
-		<button id="ID_MEDIA_NEXT"/>
 		<button id="ID_MEDIA_PREVIOUS"/>
+		<button id="ID_MEDIA_NEXT"/>
 		<separator/>
 		<button id="ID_MEDIA_PLAYLIST" text="‪רשימת השמעה"/>
 	</toolbar>
@@ -339,7 +339,6 @@
 		<button id="ID_MEDIA_CLEAR" text="‪נקה"/>
 		<button id="ID_MEDIA_SAVE" text="‪שמור"/>
 	</toolbar>
-
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="‪הצג מידע משתמש"/>
@@ -407,6 +406,15 @@
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="‪התחבר" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="‪התנתק"/>
+	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="התאמה מיטבית"/>
+		<button id="ImageViewer_ActualSize" text="גודל מקורי"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="רענן"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="סגור"/>
 	</toolbar>
 </toolbars>
 
@@ -1455,6 +1463,15 @@
 		<item id="ID_CHAT_TIMESTAMP" text="‪הראה זמנים בכל שורה"/>
 		<item id="ID_CHAT_CLEAR" text="‪נקה חלון"/>
 	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="התאמה מיטבית"/>
+		<item id="ImageViewer_ActualSize" text="גודל מקורי"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="רענן"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="סגור"/>
+	</menu>
 </menus>
 
 <!-- Watermarks -->
@@ -1511,9 +1528,8 @@
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">א ז ה ר ה &#160; - &#160; א ת ה &#160; ח ס ו ם &#160; ב ח ו מ ת  א ש</heading>
 			<newline gap="8" indent="42"/>
-			<text colour="FF0000"> (NAT) שרזה זיהה שאתה מאחורי חומת-אש או ראוטר</text>
-			<newline gap="8" indent="42"/>
-			<text colour="FF0000"> ואיננו מצליח לקבל חיבורים מהאינטרנט &#160;</text>
+			<text colour="FF0000"> (NAT) שרזה זיהה שאתה מאחורי חומת-אש או ראוטר,	
+			ואינך מצליח לקבל מסרי UDP מהאינטרנט. &#160;</text>
 			<text colour="FF0000" format="b">זה עלול לגרום לביצועי הורדה נמוכים</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">לחץ כאן כדי ללמוד איך להגדיר את הראוטר וחומת האש</link>
@@ -1526,6 +1542,21 @@
 		<heading align="middle" colour="6060FF">&#160; ל מ י ד ע &#160; מ ו מ ל ץ </heading>
 		<newline gap="20" indent="16"/>
 
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
+			<newline gap="18" indent="0"/>
+		</group>
+		<group id="7">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">א ז ה ר ה &#160; - &#160; א ת ה &#160; ח ס ו ם &#160; ב ח ו מ ת  א ש</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000"> (NAT) שרזה זיהה שאתה מאחורי חומת-אש או ראוטר,
+			ואינך מצליח לקבל מסרי UDP מהאינטרנט. &#160;</text>
+			<text colour="FF0000" format="b">זה עלול לגרום לביצועי הורדה נמוכים.</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">לחץ כאן כדי ללמוד איך להגדיר את הראוטר וחומת האש</link>
+			<newline gap="18" indent="0"/>
+		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">ה ת א מ ת &#160; ש ר ז ה&#160;&#160;&#160;</heading>
 		<newline gap="12" indent="42"/>
@@ -1914,12 +1945,10 @@
 		<text format="b">אזור הורדות</text>
 		<newline gap="8"/>
 		<text>כאן יוצגו הקבצים שכרגע בהורדה. תוכל/י לראות
-		כל מקור בנפרד ע"י הרחבת כל קובץ בעזרת ה-'+' שמימינו
-		.</text>
+		כל מקור בנפרד ע"י הרחבת כל קובץ בעזרת ה-'+' שמימינו.</text>
 		<newline gap="8"/>
 		<text>תוכל להשתמש בפקודה זו לקבלת עזרה לגבי הורדה ספציפית
-		פשוט לחץ על ההורדה ובחר את פקודה זו שנית
-		.</text>
+		פשוט לחץ על ההורדה ובחר את פקודה זו שנית.</text>
 	</document>
 
 	<document name="DownloadHelp.Completed">
@@ -1933,16 +1962,14 @@
 		<text format="b">הורדה זו מועברת</text>
 		<newline gap="8"/>
 		<text>שרזה סיים להוריד את קובץ זה ווידא שהוא
-		&#8234;‏שלך‎. ‏ההורדות‎ ‏לספריית‎ ‏הקובץ‎ ‏את‎ ‏העביר‎ ‏גם‎ ‏שרזה‎ ‏ב‎-100%, ‏תקין
-		.</text>
+		&#8234;‏שלך‎. ‏ההורדות‎ ‏לספריית‎ ‏הקובץ‎ ‏את‎ ‏העביר‎ ‏גם‎ ‏שרזה‎ ‏ב‎-100%, ‏תקין.</text>
 	</document>
 
 	<document name="DownloadHelp.Paused">
 		<text format="b">הורדה זו מושהת</text>
 		<newline gap="8"/>
 		<text>השהת את ההורדה. אם אתה מעוניין שזה ימשיך הוריד אתה
-		פקודת</text><text format="b"> המשך הורדה</text><text>יכול ללחוץ על
-		.</text>
+		פקודת</text><text format="b"> המשך הורדה</text><text>יכול ללחוץ על.</text>
 	</document>
 
 	<document name="DownloadHelp.DiskFull">
@@ -1960,8 +1987,7 @@
 		<newline gap="8"/>
 		<text>ההורדה הסתיימה, שרזה כרגע בודק אותה בכדי להבטיח
 		שהיא בדיוק כמו הקובץ המקורי. אם חלק כלשהו נמצא פגום
-		שרזה יתקנו באופן אוטמטי
-		.</text>
+		שרזה יתקנו באופן אוטמטי.</text>
 	</document>
 
 	<document name="DownloadHelp.Downloading">
@@ -1971,8 +1997,7 @@
 		.תוכל לנסות לחפש את הרשת עבור עוד מקורות בעזרת פקודת
 		'מצא עוד מקורות'
 		.אם המהירות לא משתפרת, ייתכן שזה נובע ממהירות העלאה מוגבלת
-		של המשתמשים מהם אתה מוריד, מהירות ההורדה בד"כ משתפרת עם הזמן
-		.</text>
+		של המשתמשים מהם אתה מוריד, מהירות ההורדה בד"כ משתפרת עם הזמן.</text>
 	</document>
 
 	<document name="DownloadHelp.Pending">
@@ -1993,8 +2018,7 @@
 		.הגדרות ההורדה מגבילות את כמות ההורדות שניתן לבצע בו זמנית
 		.זאת בכדי לוודא שכל הורדה תקבל כמות סבירה של רוחב-פס
 		.תוכל לשנות את ההגדרות הללו דרך כלים, הגדרות שרזה
-		.'לחילופין אתה יכול להתחיל ידנית את ההורדה על ידי פקודת 'המשך
-		.</text>
+		.'לחילופין אתה יכול להתחיל ידנית את ההורדה על ידי פקודת 'המשך.</text>
 	</document>
 
 	<document name="DownloadHelp.Searching">
@@ -2097,8 +2121,8 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Your eDonkey server list is empty</text>
 		<newline gap="8"/>
-		<text>There are no servers in your eDonkey2000 server list. You need to download an
-		up to date server list (met file) to connect to ED2K.</text>
+		<text>אין שרתים חדשים ברשימת השרתים של אידונקי שלך. יתכן ותצטרך להוריד רשימת שרתים מעודכנת
+		(קובץ met) כדי להתחבר לאידונקי.</text>
 		<newline gap="8"/>
 		<text>You can download a server list from the ed2k setting page, or the discovery
 		services window. (Press F9 to open the discovery services window)</text>
@@ -2281,7 +2305,8 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Shareaza בקר באתר של שרזה"/>
 	<tip id="ID_HELP_SECURITY" message="עזרה בהגנה על קבצי המערכת שלך מתוכניות זדוניות"/>
 	<tip id="ID_HELP_UPDATE" message="בדוק אם יש חדשות ועדכונים"/>
-	<tip id="ID_HELP_WEB_1" message="בקר את אתר זה"/>
+	<tip id="ID_HELP_TEST" message="הרץ את בדיקת החיבור."/>
+    <tip id="ID_HELP_WEB_1" message="בקר את אתר זה"/>
 	<tip id="ID_HELP_WEB_2" message="בקר את אתר זה"/>
 	<tip id="ID_HELP_WEB_3" message="בקר את אתר זה"/>
 	<tip id="ID_HELP_WEB_4" message="בקר את אתר זה"/>
@@ -2359,7 +2384,8 @@
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="השתמש ביחס תמונה אשר קבוע כברירת המחדל בקובץ הוידאו"/>
 	<tip id="ID_MEDIA_CLEAR" message="נקה את רשימת ההשמעה"/>
 	<tip id="ID_MEDIA_CLOSE" message="סגור את קובץ המדיה, לפינוי הזיכרון"/>
-	<tip id="ID_MEDIA_FULLSCREEN" message="עבור למצב תצוגת וידאו במסך מלא"/>
+	<tip id="ID_MEDIA_EXPORT_COLLECTION" message="שמור את רשימת ההשמעה כקובץ אוסף..."/>
+    <tip id="ID_MEDIA_FULLSCREEN" message="עבור למצב תצוגת וידאו במסך מלא"/>
 	<tip id="ID_MEDIA_MUTE" message="השתק את הקול"/>
 	<tip id="ID_MEDIA_NEXT" message="דלג לקובץ הבא ברשימת ההשמעה הנוכחית" tip="הקובץ הבא"/>
 	<tip id="ID_MEDIA_OPEN" message="פתח ונגן את קובץ המדיה או את רשימת ההשמעה"/>
@@ -2367,8 +2393,10 @@
 	<tip id="ID_MEDIA_PLAY" message="התחל לנגן את קובץ המדיה הנוכחי" tip="נגן"/>
 	<tip id="ID_MEDIA_PLAYLIST" message="הצג או הסתר את עורך רשימת ההשמעה"/>
 	<tip id="ID_MEDIA_PREVIOUS" message="דלג לקובץ הקודם ברשימת ההשמעה הנוכחית" tip="הקובץ הקודם"/>
-	<tip id="ID_MEDIA_RANDOM" message="קבע מצב בחירה רנדומלית ברשימת ההשמעה הנוכחית"/>
-	<tip id="ID_MEDIA_REMOVE" message="הסר את קובץ המדיה הנבחר מרשימת ההשמעה"/>
+	<tip id="ID_MEDIA_PROPERTIES" message="הצג וערוך את המאפיינים של הקבצים שנבחרו."/>
+    <tip id="ID_MEDIA_RANDOM" message="קבע מצב בחירה רנדומלית ברשימת ההשמעה הנוכחית"/>
+	<tip id="ID_MEDIA_RATE" message="דרג את הקבצים שנבחרו."/>
+    <tip id="ID_MEDIA_REMOVE" message="הסר את קובץ המדיה הנבחר מרשימת ההשמעה"/>
 	<tip id="ID_MEDIA_REPEAT" message="נגן שנית את קובץ המדיה הנוכחי"/>
 	<tip id="ID_MEDIA_SAVE" message="שמור את רשימת ההשמעה הנוכחית"/>
 	<tip id="ID_MEDIA_SELECT" message="בחר ונגן את קובץ המדיה"/>
@@ -2500,8 +2528,17 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Arrange open windows as horizontal, non-overlapping tiles."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Arrange open windows as vertical, non-overlapping tiles."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="הראה או הסתר את סרגל הכלים"/>
+	<!-- PLUGIN TIPS -->
+	<tip id="ImageViewer_BestFit" message="Resize the image to fit within the window."/>
+	<tip id="ImageViewer_ActualSize" message="Show the image at its natural size."/>
+	<tip id="ImageViewer_Refresh" message="Refresh the image."/>
+	<tip id="ImageViewer_Close" message="Close the image viewer window."/>
 </commandTips>
-
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message="In the maximum mode the bandwidth won't exceed the specified value. In the average mode it will fluctuate around the value to both sides."/>
+	<tip id="IDC_SHARE_PARTIALS" message="This setting has no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned."/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="‪‪שרזה"/>
@@ -2527,10 +2564,13 @@
 	<string id="7000" value="‪‪?האם הינך בטוח שברצונך למחוק את המסנן"/>
 	<string id="7001" value="‪‪&amp;סכמות"/>
 	<string id="7002" value="‪‪ערכים כפולים"/>
-	<string id="7003" value="‪‪כפוך"/>
+	<string id="7003" value="‪‪כפול"/>
 	<string id="7004" value="There already is a filter called &quot;%s&quot;, do you want to replace it?"/>
 	<string id="7005" value="Please give your filter a name."/>
-	<string id="8000" value="‪‪הגדרות שרזה"/>
+	<string id="7100" value="This template is invalid."/>
+	<string id="7101" value="This template does not have any customizations."/>
+	<string id="7102" value="Are you sure you want to delete the &quot;%s&quot; template?\nThis cannot be undone."/>
+    <string id="8000" value="‪‪הגדרות שרזה"/>
 	<string id="8001" value="‪ברוכים הבאים לשרזה"/>
 	<string id="8002" value="‪מאפייני קובץ"/>
 	<string id="8003" value="‪ערוך את הפרופיל שלי"/>
@@ -2542,7 +2582,8 @@
 	<string id="8009" value="‪.המעטפת תימחק לקיבעון &quot;%s&quot; האם אתה בטוח שברצונך למחוק את המעטפת"/>
 	<string id="8010" value="‪&#8234;‏הסתיימה‎ ‏הנסיון‎ תקופת‎ ‏שרזה‎ ‏של‎ ‏נסיונית‎ ‏גרסה‎ ‏&#13;&#10;זוהי http://shareaza.sourceforge.net/ ‏מהאתר‎ ‏והרשמית‎ ‏המלאה‎ ‏הגרסא‎ ‏את‎ ‏הורד‎ ‏אנא‎"/>
 	<string id="8011" value="‪שינוי התצוגה יסגור את כל החלונות הפתוחים, אתה רוצה לשנות את התצוגה כעת?"/>
-	<string id="8060" value="‪‏&#8234;‏מצב‎ ULTRAPEER/‏מוקד‎ ‏עם‎ %lu ‏שכנים‎: , %s ‏מקומית‎ ‏בספריה"/>
+	<string id="8012" value="Torrent Information"/>
+    <string id="8060" value="‪‏&#8234;‏מצב‎ ULTRAPEER/‏מוקד‎ ‏עם‎ %lu ‏שכנים‎: , %s ‏מקומית‎ ‏בספריה"/>
 	<string id="8061" value="‪‏&#8234;ULTRAPEER ‏עם‎ %lu ‏שכנים‎: , %s ‏מקומית‎ ‏בספריה"/>
 	<string id="8062" value="‪&#8234;%lu ‏מצב‎: ‏מוקד‎ ‏עם‎ ‏שכנים‎ , %s ‏מקומית‎ ‏בספריה"/>
 	<string id="8063" value="‪&#8234;‏מחובר‎ , %s ‏מקומית‎ ‏בספריה"/>
@@ -2574,7 +2615,8 @@
 	<string id="8134" value="‪?הינך עומד/ת להתחיל חיפוש חדש, האם הינך מעוניינ/ת למחוק את התוצאות של החיפוש הקודם"/>
 	<string id="8135" value="‪Metadata ללא"/>
 	<string id="8136" value="‪חיפוש טקסט פשוט"/>
-	<string id="8141" value="‪הצג את פאנל החיפוש"/>
+	<string id="8137" value="No Schema Columns"/>
+    <string id="8141" value="‪הצג את פאנל החיפוש"/>
 	<string id="8142" value="‪הסתר את פאנל החיפוש"/>
 	<string id="8143" value="‪...מחפש"/>
 	<string id="8144" value="‪החל חיפוש"/>
@@ -2627,7 +2669,8 @@
 	<string id="8240" value="‪:שרזה מעביר את ההורדה"/>
 	<string id="8241" value="‪:שרזה בודקת אם יש שגיאות בהורדה"/>
 	<string id="8243" value="‪:העותק התעדכן"/>
-	<string id="8288" value="‪סייר בספריית השיתוף שלך בשרזה"/>
+	<string id="8244" value="Number of reviews:"/>
+    <string id="8288" value="‪סייר בספריית השיתוף שלך בשרזה"/>
 	<string id="8289" value="‪סיור"/>
 	<string id="8290" value="תיקיות ‪%i סייר בתכנים של"/>
 	<string id="8291" value="‪מספר ספריות"/>
@@ -2649,7 +2692,8 @@
 	<string id="8316" value="‪‫תוצאות"/>
 	<string id="8317" value="‪‫העלאות"/>
 	<string id="8318" value="‪.היום %lu , בסך הכל %lu"/>
-	<string id="8320" value="‪‪:מצב"/>
+	<string id="8319" value="No Hashset"/>
+    <string id="8320" value="‪‪:מצב"/>
 	<string id="8321" value="‪‪:מהירות"/>
 	<string id="8322" value="‪‪:URL כתובת"/>
 	<string id="8323" value="‪‪:‪סוכן משתמש"/>
@@ -2666,6 +2710,10 @@
 	<string id="8334" value="‪ה‪מקורות לקובץ כרגע עסוקים"/>
 	<string id="8335" value="‪המקורות לקובץ כרגע מוגנים בחומת אש"/>
 	<string id="8336" value="‪המקורות לקובץ כרגע במצב לא יציב"/>
+	<string id="8337" value="Untrusted"/>
+	<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
+	<string id="13001" value="Files shared over the Internet"/>
+	<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
 	<string id="16064" value="‪מאתחל את בסיס הרשת של שרזה..."/>
 	<string id="16065" value="‪&#8234;‏נכנסים‎ ‏לחיבורים‎ ‏תמיכה‎ ‏תיהיה‎ ‏לא‎ ‏לכן‎ ‏נכנסים‎. ‏לחיבורים‎ %s ‏של‎ %i ‏פורט‎ ‏את‎ ‏לקבוע‎ ‏ניתן‎ ‏לא"/>
 	<string id="16066" value="‪‪...סוגר את בסיס הרשת של שרזה"/>
@@ -2699,14 +2747,12 @@
 	<string id="16137" value="‪Refusing duplicate connection from %s."/>
 	<string id="16138" value="‪Already connected to %s, will not establish a second connection."/>
 	<string id="16139" value="‪Neighbour %s closed connection (%i : %s)."/>
-	<string id="16140" value="‪Neighbour %s is crawling connections."/>
 	<string id="16141" value="‪Closed connection with neighbour %s because it is not a hub."/>
 	<string id="16144" value="‪Timed out handshaking with %s."/>
 	<string id="16145" value="‪Gnutella connection with neighbour %s established successfully (G%i.%i : %s)."/>
 	<string id="16146" value="‪Handshake with %s failed due to invalid data on the wire."/>
 	<string id="16147" value="‪Closing surplus connection from %s with host hint (%s port %i)."/>
 	<string id="16148" value="‪Connection to %s rejected (%s)."/>
-	<string id="16149" value="‪Gnutella 0.6 handshake with %s failed, retrying with 0.4."/>
 	<string id="16150" value="‪Closing surplus connection from %s."/>
 	<string id="16151" value="‪Refusing connection from %s because this is a shielded leaf node."/>
 	<string id="16152" value="‪Hub neighbour %s won't accept us as a hub, closing connection."/>
@@ -2883,6 +2929,16 @@
 	<string id="16407" value="‪Would you like to prevent this collection from prompting you to download anything else?"/>
 	<string id="16408" value="‪העתק &amp;URI"/>
 	<string id="16409" value="‪ייצא &amp;URI..."/>
+	<string id="16400" value="קובץ היעד כבר קיים:\n\n%s\n\nברצונך לכתוב עליו?"/>
+	<string id="16401" value="הצג את כל סוגי הקבצים"/>
+	<string id="16402" value="שרזה קיבל קובץ אוסף:\n\n&quot;%s&quot;\n\nקובץ זה אינו נראה כקובץ אוסף חוקי."/>
+	<string id="16403" value="שרזה הוסיף את קובץ האוסף &quot;%s&quot; לספרייה שלך."/>
+	<string id="16404" value="שרזה לא הצליח להתקין את קובץ האוסף &quot;%s&quot; ע"י העתקתו לספריה &quot;%s&quot;."/>
+	<string id="16405" value="ברצונך להוריד את הקובץ הזה?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
+	<string id="16406" value="ברצונך להוריד את כל הקבצים באוסף הזה?\n\nChoose Cancel to stop any further prompts."/>
+	<string id="16407" value="ברצונך למנוע מהאוסף הזה להציע לך להוריד משהו נוסף?"/>
+	<string id="16408" value="העתק &amp;URI"/>
+	<string id="16409" value="יצא &amp;URIs..."/>
 	<string id="16410" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"/>
 	<string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
 	<string id="16448" value="‪...לוחץ ידיים ,%s מחובר אל"/>
@@ -3590,6 +3646,12 @@
 		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="או בחר:"/>
 		<control/>
+		<control caption="ומהירות ההעלאה:"/>
+		<control/>
+		<control caption="ברצונך להגדיר פתחה (פורט) אוטומטית ע"י שימוש ב UPnP?"/>
+		<control/>
+		<control caption="מצב:"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="[4/7] ברוכים הבאים לשרזה">
@@ -4051,7 +4113,7 @@
 		<control caption="?הידעת ששרזה היא תוכנה חינמית לחלוטין"/>
 		<control caption="שרזה לא מכילה רוגלות, תוספי פרסומות או תוכנה כלשהי נוספת בתוכה. שרזה לא מציגה פרסומות קופצות אף פעם {n}{n} אם אי פעם תראי פרסומות &quot;פרסומות קופצות&quot; בעת שאתה משתמש בשרזה, .הינך יכול להיות בטוח שהם אינם מגיעים משרזה"/>
 		<control caption="לצערנו הרבה תוכנות אחרות כן מגיעות עם תוספי פרסומות ורוגלות, לכן אם הינך רואה משהו חשוד כדאי שתבדוק את המחשב עם תוכנה לניקוי רוגלות ותוספי פרסומות"/>
-		<control caption="אינך אמור לשלם כלום בכדי לקבל את שרזה. שרזה ניתנת להורדה בחינם על ידי כל אחד מהאתר  http://shareaza.sourceforge.net/.  אם נדרשת לשלם למישהו תמורת שרזה.עלייך לבקש החזר מלא לכספך באופן מיידי"/>
+		<control caption="אינך אמור לשלם כלל כדי לקבל את שרזה. שרזה ניתנת להורדה בחינם על ידי כל אחד מהאתר  http://shareaza.sourceforge.net/.  אם נדרשת לשלם למישהו תמורת שרזה.עלייך לבקש החזר מלא לכספך באופן מיידי."/>
 		<control caption="!שרזה מכבדת את משתמשיה"/>
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="סגור"/>
@@ -4077,6 +4139,7 @@
 		<control caption="אישור"/>
 		<control caption="ביטול"/>
 		<control caption="?הורדת ומחקת את קובץ זה בעבר. מה תרצה לעשות"/>
+		<control caption="אזהרה!!! התגלו קבצים משוכפלים. ייתכן ותוכנה זדונית תפגע בספרייה שלך. וודא שהורגת את הקובץ הזה או שמת אותו באופן ידני. אחרת, סגור את שרזה וסרוק את מחשבך עם תוכנת אנטי-וירוס."/>
 	</dialog>
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="כפתור סגירה">
@@ -4120,28 +4183,41 @@
 	</dialog>
 
 	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="ייצא ספריה">
-		<control caption="אפשרות זו נועדה לייצא את התכנים של תיקיית האלבום כקובץ אוסף מתקדם"/>
-		<control caption="ייצא"/>
-		<control caption="ביטול"/>
+		<control caption="אפשרות זו נועדה לייצא את התכנים של תיקיית האלבום כקובץ אוסף מתקדם. אנא בחר תבנית ולחץ "הבא" כדי להמשיך. |התאם אישית את האוסף שלך ע"י הכנסת המידע מטה."/>
+		<control/>
+		<control caption="מידע התבנית:"/>
+		<control caption="שם:"/>
+		<control/>
+		<control caption="מחבר:"/>
+		<control/>
+		<control caption="תיאור:"/>
+		<control/>
+		<control caption="מחק|_הקודם"/>
+		<control caption="_הבא|יצא..."/>
+		<control caption="_בטל"/>
 	</dialog>
-
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="ערוך הורדה - מתקדם">
-		<control caption="אזהרה: תיבת דו-שיח זו מעניקה אפשרויות מתקדמות לעריכה למשתמשים מתקדמים, אם יעשה בה שימוש באופן שגוי עלולה לגרום לנזק"/>
-		<control caption=":שם קובץ"/>
+	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="ערוך הורדה">
+		<control caption="אזהרה: תיבת דו-שיח זו מעניקה אפשרויות מתקדמות לעריכה למשתמשים כבדים אשר ים, אם יעשה בה שימוש באופן שגוי עלולה לגרום לנזק."/>
+		<control caption="שם קובץ וגודל:"/>
+		<control caption="שם קובץ:"/>
+		<control/><control/>
+		<control caption="גודל קובץ (בתים):"/>
 		<control/>
-		<control caption=":URNs"/>
-		<control caption=":SHA1"/>
-		<control/>
-		<control caption=":Tiger-Root"/>
-		<control/>
-		<control caption=":ED2K"/>
-		<control/>
-		<control caption=":פעולות"/>
+		<control caption="_URNs:"/>
+		<control caption="אמין"/>
+		<control caption="SHA1:"/>
+		<control/><control/>
+		<control caption="Tiger-Root:"/>
+		<control/><control/>
+		<control caption="ED2K:"/>
+		<control/><control/>
+		<control caption="_פעולות:"/>
 		<control caption="שכח את מצב האימות הנוכחי ואמת מחדש"/>
 		<control caption="הנח שהקובץ שלם ב-100% ואמת את הקובץ מחדש"/>
 		<control caption="שכח את כל המקורות הידועים"/>
-		<control caption=":מחק מידע"/>
-		<control caption=":מחק בתים"/>
+		<control caption="מזג עם קובץ מקומי וודא"/>
+		<control caption="מוחק _מידע:"/>
+		<control caption="טווח בתים:"/>
 		<control/>
 		<control caption="עד"/>
 		<control/>
