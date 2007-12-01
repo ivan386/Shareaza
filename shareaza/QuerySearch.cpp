@@ -598,6 +598,19 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 			else if ( nLength >= 4 && *pszData == '<' )
 			{
 				CString strXML( pszData, nLength );
+
+				// Fix embedded zeroes
+				int nPos = strXML.Find( _T('\0') );
+				if ( nPos >= 0 && nPos + 3 < nLength )
+				{
+					// Fix <tag attribute="valueZ/> -> <tag attribute="value"/>
+					if ( strXML[ nPos + 1 ] == _T('/') &&
+						 strXML[ nPos + 2 ] == _T('>') )
+					{
+						strXML.SetAt( nPos, _T('"') );
+					}
+				}
+
 				ASSERT( m_pXML == NULL );
 				m_pXML = CXMLElement::FromString( strXML, FALSE );
 				if ( m_pXML == NULL )
