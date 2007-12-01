@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.6225 + ~1 -->
+<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.6238 + ~1 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -21,6 +21,7 @@
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
+		dir="ltr"
 />
 
 <!-- Toolbar Definitions -->
