@@ -41,10 +41,6 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-// Buffers that hold 128 ASCII and 128 wide characters, used so MultiByteToWideChar can convert short text quickly
-CHAR  CPacket::m_szSCHAR[PACKET_BUF_SCHAR + 1];
-WCHAR CPacket::m_szWCHAR[PACKET_BUF_WCHAR + 1];
-
 //////////////////////////////////////////////////////////////////////
 // CPacket construction
 
@@ -191,40 +187,20 @@ CString CPacket::ReadStringASCII(DWORD nMaximum)
 void CPacket::WriteString(LPCTSTR pszString, BOOL bNull)
 {
 	// Find out how many ANSI bytes the wide characters will become when converted
-	int nByte = WideCharToMultiByte(
-		CP_ACP,    // Use the ANSI code page
-		0,         // No special flags
-		pszString, // Wide characters to convert
-		-1,        // The wide character text is null terminated, and the null terminator will be converted into a wide null terminator
-		NULL,      // No buffer given, we just want to know how big one would need to be
-		0,         // No buffer size given
-		NULL,      // No special options for unmappable characters
-		NULL );
+	int nByte = WideCharToMultiByte( CP_ACP, 0, pszString, -1, NULL, 0, NULL, NULL );
 
-	// If our buffer of 128 ASCII characters is big enough, use it, otherwise allocate a new bigger buffer
-	LPSTR pszByte = nByte <= PACKET_BUF_SCHAR ? m_szSCHAR : new CHAR[ nByte ];
-	if ( pszByte == NULL )
+	auto_array< CHAR > pszByte( new CHAR[ nByte ] );
+	if ( pszByte.get() == NULL )
 	{
 		theApp.Message( MSG_ERROR, _T("Memory allocation error in CPacket::WriteString") );
 		return;
 	}
 
 	// Convert the wide characters into bytes of ANSI text
-	WideCharToMultiByte(
-		CP_ACP,    // Use the ANSI code page
-		0,         // No special flags
-		pszString, // Wide characters to convert
-		-1,        // The wide character text is null terminated
-		pszByte,   // Have WideCharToMultiByte write the ANSI bytes in our static or just allocated buffer
-		nByte,     // This is how much space it has
-		NULL,      // No special options for unmappable characters
-		NULL );
+	WideCharToMultiByte( CP_ACP, 0, pszString, -1, pszByte.get(), nByte, NULL, NULL );
 
 	// Write the ANSI text into the end of the packet
-	Write( pszByte, nByte - ( bNull ? 0 : 1 ) ); // If bNull is true, also write the null terminator which got converted
-
-	// If we needed a bigger buffer and allocated one, we have to remember to delete it
-	if ( pszByte != m_szSCHAR ) delete [] pszByte;
+	Write( pszByte.get(), nByte - ( bNull ? 0 : 1 ) ); // If bNull is true, also write the null terminator which got converted
 }
 
 // Takes text
@@ -259,40 +235,20 @@ CString CPacket::ReadStringUTF8(DWORD nMaximum)
 void CPacket::WriteStringUTF8(LPCTSTR pszString, BOOL bNull)
 {
 	// Find out how many bytes of ASCII text the wide characters will become when converted with the UTF8 code page
-	int nByte = WideCharToMultiByte(
-		CP_UTF8,   // Use the UTF8 code page
-		0,         // No special performance and mapping flags
-		pszString, // Wide characters to convert
-		-1,        // The given text in null terminated, and we want the text and the null terminator converted
-		NULL,      // No buffer given, we just want to know how many bytes the converted ASCII text will take up
-		0,
-		NULL,      // No special options for unmappable characters
-		NULL );
+	int nByte = WideCharToMultiByte( CP_UTF8, 0, pszString, -1, NULL, 0, NULL, NULL );
 
-	// If our buffer of 128 ASCII characters is big enough, use it, otherwise allocate a new bigger buffer
-	LPSTR pszByte = nByte <= PACKET_BUF_SCHAR ? m_szSCHAR : new CHAR[ nByte ];
-	if ( pszByte == NULL )
+	auto_array< CHAR > pszByte( new CHAR[ nByte ] );
+	if ( pszByte.get() == NULL )
 	{
 		theApp.Message( MSG_ERROR, _T("Memory allocation error in CPacket::WriteStringUTF8") );
 		return;
 	}
 
 	// Convert the wide characters into bytes of ASCII text
-	WideCharToMultiByte(
-		CP_UTF8,   // Use the UTF8 code page
-		0,         // No special performance and mapping flags
-		pszString, // Wide characters to convert
-		-1,        // The given text in null terminated, and we want the text and the null terminator converted
-		pszByte,   // Have WideCharToMultiByte write the ASCII bytes in our static or just allocated buffer
-		nByte,     // This is how much space it has
-		NULL,      // No special options for unmappable characters
-		NULL );
+	WideCharToMultiByte( CP_UTF8, 0, pszString, -1, pszByte.get(), nByte, NULL, NULL );
 
 	// Write the ASCII text into the end of the packet
-	Write( pszByte, nByte - ( bNull ? 0 : 1 ) ); // If bNull is true, also write the null terminator which got converted
-
-	// If we needed a bigger buffer and allocated one, we have to remember to delete it
-	if ( pszByte != m_szSCHAR ) delete [] pszByte;
+	Write( pszByte.get(), nByte - ( bNull ? 0 : 1 ) ); // If bNull is true, also write the null terminator which got converted
 }
 
 // Takes text

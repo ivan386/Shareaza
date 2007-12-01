@@ -32,10 +32,6 @@
 // When the allocated block of memory needs to be bigger, make it 128 bytes bigger
 const uchar PACKET_GROW = 128u;
 
-// Sizes of buffers that hold 128 ASCII and 128 wide characters so MultiByteToWideChar can convert short text quickly
-#define PACKET_BUF_SCHAR 127
-#define PACKET_BUF_WCHAR 127
-
 // Shareaza's vendor code is "RAZA", here is that text in ASCII and wide characters
 #define SHAREAZA_VENDOR_A VENDOR_CODE
 #define SHAREAZA_VENDOR_T _T( VENDOR_CODE )
@@ -74,12 +70,6 @@ public:
 
 	// Set the position a given distance forwards from the start, or backwards from the end
 	enum { seekStart, seekEnd };
-
-protected:
-
-	// Buffers that hold 128 ASCII and 128 wide characters, used so MultiByteToWideChar can convert short text quickly
-	static CHAR  m_szSCHAR[PACKET_BUF_SCHAR + 1]; // Static means these are separate from all the CPacket objects this class will make
-	static WCHAR m_szWCHAR[PACKET_BUF_WCHAR + 1];
 
 public:
 

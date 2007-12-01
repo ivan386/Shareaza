@@ -361,25 +361,23 @@ void CG2Packet::WriteString(LPCTSTR pszString, BOOL bNull)
 
 	int nWide		= static_cast< int >( _tcslen(pszString) );
 	int nByte		= WideCharToMultiByte( CP_UTF8, 0, pszString, nWide, NULL, 0, NULL, NULL );
-	LPSTR pszByte	= ( nByte <= PACKET_BUF_SCHAR ) ? m_szSCHAR : new CHAR[ nByte + 1 ];
 
-	if ( pszByte == NULL )
+	auto_array< CHAR > pszByte( new CHAR[ nByte + 1 ] );
+	if ( pszByte.get() == NULL )
 	{
 		theApp.Message( MSG_ERROR, _T("Memory allocation error in CG2Packet::WriteString()") );
 		return;
 	}
 
-	WideCharToMultiByte( CP_UTF8, 0, pszString, nWide, pszByte, nByte, NULL, NULL );
+	WideCharToMultiByte( CP_UTF8, 0, pszString, nWide, pszByte.get(), nByte, NULL, NULL );
 
 	if ( bNull )
 	{
 		pszByte[ nByte ] = 0;
-		Write( pszByte, nByte + 1 );
+		Write( pszByte.get(), nByte + 1 );
 	}
 	else
-		Write( pszByte, nByte );
-
-	if ( pszByte != m_szSCHAR ) delete [] pszByte;
+		Write( pszByte.get(), nByte );
 }
 
 void CG2Packet::WriteString(LPCSTR pszString, BOOL bNull)
