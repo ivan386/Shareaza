@@ -286,8 +286,9 @@ BOOL CShareazaApp::InitInstance()
 	COleDateTime tCompileTime; 
 	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
 	m_sBuildDate = tCompileTime.Format( _T("%Y%m%d") );
-	
+
 	// ***********
+	/*
 	// Beta expiry. Remember to re-compile to update the time, and remove this 
 	// section for final releases and public betas.
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
@@ -299,7 +300,9 @@ BOOL CShareazaApp::InitInstance()
 		AfxMessageBox( strMessage, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_OK );
 		//return FALSE;
 	}
-/*
+	*/
+
+	/*
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( ! m_ocmdInfo.m_bNoAlphaWarning )
 	if ( AfxMessageBox( 
@@ -312,9 +315,8 @@ BOOL CShareazaApp::InitInstance()
 		L"or corrupt system files. Corrupted downloads/files may not be recoverable. "
 		L"Do you wish to continue?", MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
 		return FALSE;
-
-	// ***********
 	*/
+	// ***********
 
 	Settings.Load();
 
