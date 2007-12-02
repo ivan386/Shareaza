@@ -520,90 +520,114 @@ BOOL CBTClient::OnHandshake2()
 //////////////////////////////////////////////////////////////////////
 // CBTClient online handler
 
+CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
+{
+	//Azureus style
+	struct azureusStyleEntry
+	{
+		uchar signature[ 2 ];
+		LPCTSTR client;
+	};
+	static const azureusStyleEntry azureusStyleClients[] =
+	{
+		{ 'A', 'G', L"Ares" },
+		{ 'A', 'R', L"Arctic" },
+		{ 'A', 'V', L"Avicora" },
+		{ 'A', 'X', L"BitPump" },
+		{ 'A', 'Z', L"Azureus" },
+		{ 'A', '~', L"Ares" },
+		{ 'B', 'B', L"BitBuddy" },
+		{ 'B', 'C', L"BitComet" },
+		{ 'B', 'F', L"Bitflu" },
+		{ 'B', 'G', L"BTG" },
+		{ 'b', 'k', L"BitKitten" },
+		{ 'B', 'O', L"BO" },
+		{ 'B', 'R', L"BitRocket" },
+		{ 'B', 'S', L"BitSlave" },
+		{ 'B', 'X', L"Bittorrent X" },
+		{ 'C', 'B', L"ShareazaPlus" },		// ShareazaPlus with RazaCB core
+		{ 'C', 'D', L"Enhanced CTorrent" },
+		{ 'C', 'T', L"CTorrent" },
+		{ 'D', 'E', L"DelugeTorrent" },
+		{ 'E', 'B', L"EBit" },
+		{ 'E', 'S', L"Electric Sheep" },
+		{ 'F', 'C', L"FileCroc" },
+		{ 'G', 'R', L"GetRight" },
+		{ 'H', 'L', L"Halite" },
+		{ 'H', 'N', L"Hydranode" },
+		{ 'K', 'T', L"KTorrent" },
+		{ 'L', 'H', L"LH-ABC" },
+		{ 'L', 'P', L"Lphant" },
+		{ 'L', 'T', L"libtorrent" },
+		{ 'l', 't', L"rTorrent" },
+		{ 'M', 'O', L"Mono Torrent" },
+		{ 'M', 'P', L"MooPolice" },
+		{ 'M', 'T', L"MoonlightTorrent" },
+		{ 'P', 'C', L"CacheLogic" },
+		{ 'P', 'D', L"Pando" },
+		{ 'p', 'X', L"pHoeniX" },
+		{ 'q', 'B', L"qBittorrent" },
+		{ 'Q', 'T', L"QT4" },
+		{ 'R', 'T', L"Retriever" },
+		{ 'S', 'B', L"SwiftBit" },
+		{ 'S', 'N', L"ShareNet" },
+		{ 'S', 'S', L"Swarmscope" },
+		{ 's', 't', L"Sharktorrent" },
+		{ 'S', 'T', L"SymTorrent" },
+		{ 'S', 'Z', L"Shareaza" },
+		{ 'S', '~', L"ShareazaBeta" },		// Shareaza alpha/beta versions
+		{ 'T', 'N', L"Torrent.NET" },
+		{ 'T', 'R', L"Transmission" },
+		{ 'T', 'S', L"TorrentStorm" },
+		{ 'T', 'T', L"TuoTu" },
+		{ 'U', 'L', L"uLeecher!" },
+		{ 'U', 'T', L"\x00B5Torrent" },
+		{ 'X', 'L', L"Xunlei" },
+		{ 'X', 'T', L"XanTorrent" },
+		{ 'X', 'X', L"xTorrent" },
+		{ 'Z', 'T', L"ZipTorrent" }
+	};
+	static const size_t azureusClients =
+		sizeof azureusStyleClients / sizeof azureusStyleEntry;
+
+	CString sUserAgent;
+	if ( pVendor && nVendor >= 2 )
+	{
+		for ( size_t i = 0; i < azureusClients; ++i )
+		{
+			if ( pVendor[ 0 ] == azureusStyleClients[ i ].signature[ 0 ] &&
+				 pVendor[ 1 ] == azureusStyleClients[ i ].signature[ 1 ] )
+			{
+				if ( nVendor == 4 )
+					sUserAgent.Format( _T( "%s %i.%i" ),
+						azureusStyleClients[ i ].client, pVendor[ 2 ], pVendor[ 3 ] );
+				else if ( nVendor == 6 )
+					sUserAgent.Format( _T( "%s %i.%i.%i.%i" ),
+						azureusStyleClients[ i ].client,
+						( pVendor[ 2 ] - '0' ), ( pVendor[ 3 ] - '0' ),
+						( pVendor[ 4 ] - '0' ), ( pVendor[ 5 ] - '0' ) );
+				else if ( nVendor >= 2 )
+					sUserAgent = azureusStyleClients[ i ].client;
+				break;
+			}
+			if ( sUserAgent.IsEmpty() ) 
+			{
+				// If we don't want the version, etc.
+				sUserAgent.Format( _T("BitTorrent (%c%c)"), pVendor[ 0 ], pVendor[ 1 ] );
+			}
+		}
+	}
+	return sUserAgent;
+}
+
 void CBTClient::DetermineUserAgent()
 {
 	int nNickStart = 0, nNickEnd = 13;
 	CString strVer, strNick;
 
 	if ( m_oGUID[ 0 ] == '-' && m_oGUID[ 7 ] == '-' )	
-	{	//Azureus style
-		struct azureusStyleEntry
-		{
-			uchar signature[ 2 ];
-			LPCTSTR client;
-		};
-		static const azureusStyleEntry azureusStyleClients[] =
-		{
-			{ 'A', 'G', L"Ares" },
-			{ 'A', '~', L"Ares" },
-			{ 'A', 'R', L"Arctic" },
-			{ 'A', 'X', L"BitPump" },
-			{ 'A', 'Z', L"Azureus" },
-			{ 'B', 'B', L"BitBuddy" },
-			{ 'B', 'C', L"BitComet" },
-			{ 'B', 'F', L"Bitflu" },
-			{ 'B', 'G', L"BTG" },
-			{ 'b', 'k', L"BitKitten" },
-			{ 'B', 'O', L"BO" },
-			{ 'B', 'R', L"BitRocket" },
-			{ 'B', 'S', L"BitSlave" },
-			{ 'B', 'X', L"Bittorrent X" },
-			{ 'C', 'B', L"ShareazaPlus" },		// ShareazaPlus with RazaCB core
-			{ 'C', 'D', L"Enhanced CTorrent" },
-			{ 'C', 'T', L"CTorrent" },
-			{ 'D', 'E', L"DelugeTorrent" },
-			{ 'E', 'B', L"EBit" },
-			{ 'E', 'S', L"Electric Sheep" },
-			{ 'F', 'C', L"FileCroc" },
-			{ 'H', 'L', L"Halite" },
-			{ 'K', 'T', L"KTorrent" },
-			{ 'L', 'H', L"LH-ABC" },
-			{ 'L', 'P', L"Lphant" },
-			{ 'L', 'T', L"libtorrent" },
-			{ 'l', 't', L"rTorrent" },
-			{ 'M', 'T', L"MoonlightTorrent" },
-			{ 'M', 'P', L"MooPolice" },
-			{ 'P', 'C', L"CacheLogic" },
-			{ 'q', 'B', L"qBittorrent" },
-			{ 'Q', 'T', L"QT4" },
-			{ 'R', 'T', L"Retriever" },
-			{ 'S', 'B', L"SwiftBit" },
-			{ 'S', 'N', L"ShareNet" },
-			{ 'S', 'S', L"Swarmscope" },
-			{ 's', 't', L"Sharktorrent" },
-			{ 'S', 'T', L"SymTorrent" },
-		// Shareaza versions don't always 'fit' into the BT numbering, so skip that for now
-		//	{ 'S', 'Z', L"Shareaza" },
-			{ 'S', '~', L"ShareazaBeta" },		// Shareaza alpha/beta versions
-			{ 'T', 'N', L"TorrentDotNET" },
-			{ 'T', 'R', L"Transmission" },
-			{ 'T', 'S', L"Torrentstorm" },
-			{ 'U', 'L', L"uLeecher!" },
-			{ 'U', 'T', L"\x00B5Torrent" },
-			{ 'X', 'L', L"Xunlei" },
-			{ 'X', 'T', L"XanTorrent" },
-			{ 'X', 'X', L"xTorrent" },
-			{ 'Z', 'T', L"ZipTorrent" }
-		};
-		static const size_t azureusClients = sizeof azureusStyleClients / sizeof azureusStyleEntry;
-
-		m_sUserAgent.Empty();
-		for ( size_t i = 0; i < azureusClients; ++i )
-		{
-			if ( m_oGUID[ 1 ] == azureusStyleClients[ i ].signature[ 0 ]
-				&& m_oGUID[ 2 ] == azureusStyleClients[ i ].signature[ 1 ] )
-			{
-				m_sUserAgent.Format( _T( "%s %i.%i.%i.%i" ), azureusStyleClients[ i ].client,
-					( m_oGUID[ 3 ] - '0' ), ( m_oGUID[ 4 ] - '0' ),
-					( m_oGUID[ 5 ] - '0' ), ( m_oGUID[ 6 ] - '0' ) );
-				break;
-			}
-		}
-		if ( m_sUserAgent.IsEmpty() ) 
-		{
-			// If we don't want the version, etc.
-			m_sUserAgent.Format( _T("BitTorrent (%c%c)"), m_oGUID[1], m_oGUID[2] );
-		}
+	{
+		m_sUserAgent = GetAzureusStyleUserAgent( &(m_oGUID[ 1 ]), 6 );
 	}
 	else if ( m_oGUID[4] == '-' && m_oGUID[5] == '-' && m_oGUID[6] == '-' && m_oGUID[7] == '-' )
 	{	// Shadow style
