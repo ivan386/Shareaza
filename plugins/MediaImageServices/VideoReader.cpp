@@ -106,6 +106,7 @@ HRESULT LoadFrame(IMediaDet* pDet, double total_time,
 
 # pragma warning( push )
 # pragma warning( disable : 4509 )
+# pragma warning( disable : 4127 )	// conditional expression is constant
 
 STDMETHODIMP CVideoReader::LoadFromFile (
 	/* [in] */ BSTR sFile,
@@ -260,8 +261,6 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 	return hr;
 }
 
-# pragma warning( pop )
-
 STDMETHODIMP CVideoReader::LoadFromMemory (
 	/* [in] */ BSTR /*sType*/,
 	/* [in] */ SAFEARRAY* /*pMemory*/,
@@ -287,3 +286,5 @@ STDMETHODIMP CVideoReader::SaveToMemory (
 {
 	ATLTRACENOTIMPL ("SaveToMemory");
 }
+
+# pragma warning( pop )
