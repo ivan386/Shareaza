@@ -153,9 +153,9 @@ BOOL CUploadTransferHTTP::ReadRequest()
 		Close();
 		return FALSE;
 	}
-	
+
 	ClearRequest();
-	
+
 	m_bHead			= ( strLine.Left( 5 ) == _T("HEAD ") );
 	m_bConnectHdr	= FALSE;
 	m_bKeepAlive	= TRUE;
@@ -213,6 +213,7 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 
 	if ( strHeader.CompareNoCase( _T("Connection") ) == 0 )
 	{
+		if ( strValue.CompareNoCase( _T("Keep-Alive") ) == 0 ) m_bKeepAlive = TRUE;
 		if ( strValue.CompareNoCase( _T("close") ) == 0 ) m_bKeepAlive = FALSE;
 		m_bConnectHdr = TRUE;
 	}
@@ -950,7 +951,7 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 			(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
 		Write( strLine );
 	}
-	
+
 	if ( IsNetworkDisabled() )
 	{
 		// Ask to retry after some delay in seconds
@@ -960,9 +961,13 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 	{
 		Write( _P("Connection: Keep-Alive\r\n") );
 	}
-	
+	else
+	{
+		Write( _P("Connection: close\r\n") );
+	}
+
 	Write( _P("Accept-Ranges: bytes\r\n") );
-	
+
 	if ( m_nRequests <= 1 )
 	{
 		if ( m_bInitiated ) SendMyAddress();
