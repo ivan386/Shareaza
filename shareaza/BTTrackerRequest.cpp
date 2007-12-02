@@ -292,11 +292,13 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 
 	CBENode* pRoot = CBENode::Decode( pBuffer );
 	
-	if ( pRoot->IsType( CBENode::beDict ) )
+	if ( pRoot && pRoot->IsType( CBENode::beDict ) )
 	{
+		theApp.Message( MSG_DEBUG, _T("Recieved BitTorrent tracker response: %s"),
+			(LPCTSTR)pRoot->Encode() );
 		Process( pRoot );
 	}
-	else if ( pRoot->IsType( CBENode::beString ) )
+	else if ( pRoot && pRoot->IsType( CBENode::beString ) )
 	{
 		CString str = pRoot->GetString();
 		theApp.Message( MSG_ERROR, IDS_BT_TRACK_ERROR,
