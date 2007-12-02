@@ -384,16 +384,16 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 
 // 4 Character vendor code (used on G1, G2)
 // BEAR, LIME, RAZA, RAZB, etc
-#define VENDOR_CODE			"RAZA"
+#define VENDOR_CODE			"RAZB"
 
 // ed2k client ID number.
 // 0 = eMule, 1 = cDonkey, 4 = Shareaza alpha/beta/mod/fork, 0x28 (40) = Shareaza, 0xcb (203) = ShareazaPlus with RazaCB core, etc
-#define ED2K_CLIENT_ID		40
+#define ED2K_CLIENT_ID		4
 
 // 2 Character BT peer-id code
 // SZ = Shareaza, S~ = Shareaza alpha/beta , CB = ShareazaPlus with RazaCB core, AZ = Azureus, etc
 #define BT_ID1				'S'
-#define BT_ID2				'Z'
+#define BT_ID2				'~'
 
 // Drag-n-drop stuff
 

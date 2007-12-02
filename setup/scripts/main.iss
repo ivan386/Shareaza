@@ -1,5 +1,5 @@
 ; Comment the next line if you don't compile an alpha build
-;#define alpha
+#define alpha
 
 ; Uncomment the next line to compile the setup with the debug version of shareaza (It is no longer used to debug the setup).
 ;#define Debug
