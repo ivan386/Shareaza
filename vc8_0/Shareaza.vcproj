@@ -29,10 +29,14 @@
 			CharacterSet="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
+				Name="VCCustomBuildTool"
+				Description="Copying LibGFL267 dll..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl267.dll"
+				ExecutionBucket="1"
 			/>
 			<Tool
-				Name="VCCustomBuildTool"
+				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="MASM"
@@ -123,10 +127,14 @@
 			CharacterSet="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
+				Name="VCCustomBuildTool"
+				Description="Copying LibGFL267 dll..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl267.dll"
+				ExecutionBucket="1"
 			/>
 			<Tool
-				Name="VCCustomBuildTool"
+				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="MASM"
@@ -216,10 +224,14 @@
 			WholeProgramOptimization="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
+				Name="VCCustomBuildTool"
+				Description="Copying LibGFL267 dll..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl267.dll"
+				ExecutionBucket="1"
 			/>
 			<Tool
-				Name="VCCustomBuildTool"
+				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="MASM"
@@ -308,10 +320,14 @@
 			WholeProgramOptimization="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
+				Name="VCCustomBuildTool"
+				Description="Copying LibGFL267 dll..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl267.dll"
+				ExecutionBucket="1"
 			/>
 			<Tool
-				Name="VCCustomBuildTool"
+				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="MASM"
