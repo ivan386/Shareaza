@@ -134,8 +134,8 @@ IDI_HASH                ICON                    "Res\\Hash.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,5,7
- PRODUCTVERSION 2,2,5,7
+ FILEVERSION 2,3,0,0
+ PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -153,12 +153,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 5, 7"
+            VALUE "FileVersion", "2, 3, 0, 0"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2007. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza P2P"
-            VALUE "ProductVersion", "2, 2, 5, 7"
+            VALUE "ProductVersion", "2, 3, 0, 0"
         END
     END
     BLOCK "VarFileInfo"

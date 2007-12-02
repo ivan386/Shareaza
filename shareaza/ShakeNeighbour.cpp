@@ -1896,7 +1896,7 @@ BOOL CShakeNeighbour::IsClientObsolete()
 		// Check for old version and betas
 		if (( _tcsistr( m_sUserAgent, _T("Shareaza 2.0"  ) ) ) ||	// Old versions
 			( _tcsistr( m_sUserAgent, _T("Shareaza 2.1"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 2.2.0") ) ) )
+			( _tcsistr( m_sUserAgent, _T("Shareaza 2.2") ) ) )
 			return TRUE;
 
 		// Assumed to be reasonably current
