@@ -102,7 +102,7 @@ void CSettings::Setup()
 	Add( _T("Library.BitziXML"), &Library.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)") );
 	Add( _T("Library.BitziOkay"), &Library.BitziOkay, FALSE );
 	Add( _T("Library.HighPriorityHash"), &Library.HighPriorityHash, FALSE );
-	Add( _T("Library.HashWindow"), &Library.HashWindow, FALSE );
+	Add( _T("Library.HashWindow"), &Library.HashWindow, TRUE );
 	Add( _T("Library.CreateGhosts"), &Library.CreateGhosts, TRUE );
 //	Add( _T("Library.BufferSize"), &Library.BufferSize, 0 );
 //	Add( _T("Library.Parallel"), &Library.Parallel, 0 );
@@ -264,7 +264,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella1.RequeryDelay"), &Gnutella1.RequeryDelay, 30 );
 	Add( _T("Gnutella1.HostExpire"), &Gnutella1.HostExpire, 2 * 24 * 60 * 60 );
 	Add( _T("Gnutella1.PingFlood"), &Gnutella1.PingFlood, 3000 );
-	Add( _T("Gnutella1.PingRate"), &Gnutella1.PingRate, 15000 );
+	Add( _T("Gnutella1.PingRate"), &Gnutella1.PingRate, 30000 );
 	Add( _T("Gnutella1.PongCache"), &Gnutella1.PongCache, 10000 );
 	Add( _T("Gnutella1.PongCount"), &Gnutella1.PongCount, 10 );
 	Add( _T("Gnutella1.PongUpdate"), &Gnutella1.PongUpdate, 10000 );
@@ -623,6 +623,7 @@ void CSettings::Load()
 	Downloads.ConnectThrottle	= max( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
 	Downloads.MaxFiles			= min( Downloads.MaxFiles, 100 );
 	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000u );
+	Gnutella1.PingRate			= max( min( Gnutella1.PingRate, 180000u ), 15000u );
 	Gnutella1.RequeryDelay		= max( min( Gnutella1.RequeryDelay, 60u ), 5u );
 	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, 60*60u );
 	Gnutella1.SearchTTL			= max( min( Gnutella1.SearchTTL, 3u ), 1u );

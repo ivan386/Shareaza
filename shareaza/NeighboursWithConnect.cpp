@@ -820,7 +820,7 @@ BOOL CNeighboursWithConnect::NeedMoreHubs(PROTOCOLID nProtocol)
 		if ( Settings.Gnutella1.EnableToday == FALSE ) return FALSE;
 
 		// If we're a leaf, compare our hub count to NumHubs from settings, return true if we don't have enough
-		return ( nConnected[1] ) < ( IsG1Leaf() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers ); // 2 and 0 defaults
+		return ( nConnected[1] ) < ( ! IsG1UltrapeerCapable() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers ); // 2 and 0 defaults
 
 	// Return true if we need more Gnutella2 hub connections
 	case PROTOCOL_G2:
@@ -829,7 +829,7 @@ BOOL CNeighboursWithConnect::NeedMoreHubs(PROTOCOLID nProtocol)
 		if ( Settings.Gnutella2.EnableToday == FALSE ) return FALSE;
 
 		// If we're a leaf, compare our hub count to NumHubs from settings, return true if we don't have enough
-		return ( nConnected[2] ) < ( IsG2Leaf() ? Settings.Gnutella2.NumHubs : Settings.Gnutella2.NumPeers ); // 2 and 6 defaults
+		return ( nConnected[2] ) < ( ! IsG2HubCapable() ? Settings.Gnutella2.NumHubs : Settings.Gnutella2.NumPeers ); // 2 and 6 defaults
 
 	// The caller specified some other network
 	default:
@@ -882,7 +882,8 @@ BOOL CNeighboursWithConnect::NeedMoreLeafs(PROTOCOLID nProtocol)
 		if ( Settings.Gnutella1.EnableToday == FALSE ) return FALSE;
 
 		// Compare our leaf count to NumLeafs from settings, return true if we don't have enough
-		return ( nConnected[1] ) < Settings.Gnutella1.NumLeafs; // Gnutella NumLeafs is 0 by default, we always have enough leaves
+		return IsG1UltrapeerCapable() &&
+			( nConnected[1] ) < Settings.Gnutella1.NumLeafs; // Gnutella NumLeafs is 0 by default, we always have enough leaves
 
 	// Return true if we need more Gnutella2 hub connections
 	case PROTOCOL_G2:
@@ -891,7 +892,8 @@ BOOL CNeighboursWithConnect::NeedMoreLeafs(PROTOCOLID nProtocol)
 		if ( Settings.Gnutella2.EnableToday == FALSE ) return FALSE;
 
 		// Compare our leaf count to NumLeafs from settings, return true if we don't have enough
-		return ( nConnected[2] ) < Settings.Gnutella2.NumLeafs; // Gnutella2 NumLeafs is 1024 by default
+		return IsG2HubCapable() &&
+			( nConnected[2] ) < Settings.Gnutella2.NumLeafs; // Gnutella2 NumLeafs is 1024 by default
 
 	// The caller specified some other network
 	default:

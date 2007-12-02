@@ -367,7 +367,7 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	if ( ! dwNow ) dwNow = GetTickCount();
 
 	// If we last sent a ping twice as long ago as the ping rate in Gnutella settings allow, report error
-	if ( dwNow - m_tLastOutPing < Settings.Gnutella1.PingRate * 2 ) return FALSE;
+	if ( dwNow - m_tLastOutPing < Settings.Gnutella1.PingRate ) return FALSE;
 
 	// Record that we most recently sent a ping now
 	m_tLastOutPing = dwNow;
@@ -377,13 +377,11 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 		( bool( oGUID ) || bNeedPeers ) ? 0 : 1, oGUID );
 
 	// Send "Supports Cached Pongs" extension along with a packet, to receive G1 hosts for cache
-	if ( Settings.Gnutella1.EnableGGEP && bNeedPeers )
+	if ( Settings.Gnutella1.EnableGGEP )
 	{
 		CGGEPBlock pBlock;
 		CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS );
-		pItem->WriteByte( ! bNeedHubs );
 		pItem = pBlock.Add( GGEP_HEADER_SUPPORT_GDNA );
-		pItem->WriteByte( ! bNeedHubs );
 		pBlock.Write( pPacket );
 	}
 	
@@ -398,6 +396,7 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 {
 	Statistics.Current.Gnutella1.PingsReceived++;
+
 	// Add the ping's GUID to the neighbours route cache, and if it returns false
 	if ( ! Neighbours.m_pPingRoute->Add( pPacket->m_oGUID, this ) )
 	{
@@ -450,18 +449,14 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
 			// If the neighbour sent
-			if ( Settings.Experimental.EnableDIPPSupport )
+			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
 			{
-				if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
-				{
-					bSCP = true;
-				}
-				if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_GDNA ) )
-				{
-					bDNA = true;
-				}
+				bSCP = true;
 			}
-
+			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_GDNA ) )
+			{
+				bDNA = true;
+			}
 			if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
 			{
 				// Broadcast the packet to the computers we are connected to
@@ -500,6 +495,11 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		}
 	}
 
+	// Get statistics about how many files we are sharing
+	QWORD nMyVolume = 0;
+	DWORD nMyFiles = 0;
+	LibraryMaps.GetStatistics( &nMyFiles, &nMyVolume );
+
 	// Save information from this ping packet in the CG1Neighbour object
 	m_tLastInPing   = dwNow;                // Record that we last got a ping packet from this remote computer right now
 	m_nLastPingHops = pPacket->m_nHops + 1; // Save the hop count from the packet, making it one more (do)
@@ -521,11 +521,6 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 				m_nLastPingHops,               // Give it the same hops count and GUID as the ping
 				m_pLastPingID );
 
-			// Get statistics about how many files we are sharing
-			QWORD nMyVolume;
-			DWORD nMyFiles;
-			LibraryMaps.GetStatistics( &nMyFiles, &nMyVolume );
-
 			// Tell the remote computer it's IP address and port number in the payload bytes of the pong packet
 			pPong->WriteShortLE( htons( pConnection->m_pHost.sin_port ) );   // Port number, 2 bytes reversed
 			pPong->WriteLongLE( pConnection->m_pHost.sin_addr.S_un.S_addr ); // IP address, 4 bytes
@@ -533,7 +528,8 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 			pPong->WriteLongLE( nMyFiles );
 			pPong->WriteLongLE( (DWORD)nMyVolume );
 
-			if ( bSCP || bDNA ) pGGEP.Write( pPong ); // write GGEP stuff
+			if ( ! pGGEP.IsEmpty() )
+				pGGEP.Write( pPong ); // write GGEP stuff
 
 			// Send the pong packet to the remote computer we are currently looping on
 			Send( pPong );
@@ -554,11 +550,6 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 			m_nLastPingHops,               // Give it the same hops count and GUID as the ping
 			m_pLastPingID );
 
-		// Get statistics about how many files we are sharing
-		QWORD nMyVolume;
-		DWORD nMyFiles;
-		LibraryMaps.GetStatistics( &nMyFiles, &nMyVolume );
-
 		// Start the pong's payload with the IP address and port number from the Network object (do)
 		pPong->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 		pPong->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
@@ -567,10 +558,12 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		pPong->WriteLongLE( nMyFiles );
 		pPong->WriteLongLE( (DWORD)nMyVolume );
 
-		if ( bSCP || bDNA ) pGGEP.Write( pPong ); // write GGEP stuff
+		if ( ! pGGEP.IsEmpty() )
+			pGGEP.Write( pPong ); // write GGEP stuff
 
 		// Send the pong packet to the remote computer we are currently looping on
 		Send( pPong );
+		Statistics.Current.Gnutella1.PongsSent++;
 	}
 
 	// Hop the packet, or determine that we are done and leave returning true
