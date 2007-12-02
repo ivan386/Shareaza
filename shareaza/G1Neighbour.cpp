@@ -372,7 +372,7 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	// If the caller didn't give us the time, get it now
 	if ( ! dwNow ) dwNow = GetTickCount();
 
-	// If we last sent a ping twice as long ago as the ping rate in Gnutella settings allow, report error
+	// If we last sent a ping in less time than the ping rate in Gnutella settings allow, report error
 	if ( dwNow - m_tLastOutPing < Settings.Gnutella1.PingRate ) return FALSE;
 
 	// Record that we most recently sent a ping now

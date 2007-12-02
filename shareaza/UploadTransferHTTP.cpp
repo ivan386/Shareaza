@@ -413,7 +413,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		
 		if ( Settings.Remote.Enable )
 		{
-			Prefix( _P("GET /remote/ HTTP/1.0\r\n\r\n") );
+			Prefix( _P("GET /remote/ HTTP/1.1\r\n\r\n") );
 			new CRemote( this );
 			Remove( FALSE );
 			return FALSE;
