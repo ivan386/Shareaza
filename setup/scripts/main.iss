@@ -99,7 +99,7 @@ SourceDir=..\..
 VersionInfoVersion={#version}
 VersionInfoDescription={#Description}
 AppPublisher={#Publisher}
-AppCopyright=© {#Publisher}. All rights reserved.
+AppCopyright=Copyright © {#Publisher}. All rights reserved.
 
 ; Links to website for software panel
 AppPublisherURL=http://shareaza.sourceforge.net/
