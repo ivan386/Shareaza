@@ -1,7 +1,7 @@
 //
 // VideoReader.cpp : Implementation of CVideoReader
 //
-// Copyright (c) Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -263,27 +263,27 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 # pragma warning( pop )
 
 STDMETHODIMP CVideoReader::LoadFromMemory (
-	/* [in] */ BSTR sType,
-	/* [in] */ SAFEARRAY* pMemory,
-	/* [in,out] */ IMAGESERVICEDATA* pParams,
-	/* [out] */ SAFEARRAY** ppImage )
+	/* [in] */ BSTR /*sType*/,
+	/* [in] */ SAFEARRAY* /*pMemory*/,
+	/* [in,out] */ IMAGESERVICEDATA* /*pParams*/,
+	/* [out] */ SAFEARRAY** /*ppImage*/ )
 {
 	ATLTRACENOTIMPL ("LoadFromMemory");
 }
 
 STDMETHODIMP CVideoReader::SaveToFile (
-	/* [in] */ BSTR sFile,
-	/* [in,out] */ IMAGESERVICEDATA* pParams,
-	/* [in] */ SAFEARRAY* pImage)
+	/* [in] */ BSTR /*sFile*/,
+	/* [in,out] */ IMAGESERVICEDATA* /*pParams*/,
+	/* [in] */ SAFEARRAY* /*pImage*/)
 {
 	ATLTRACENOTIMPL ("SaveToFile");
 }
 
 STDMETHODIMP CVideoReader::SaveToMemory (
-	/* [in] */ BSTR sType,
-	/* [out] */ SAFEARRAY** ppMemory,
-	/* [in,out] */ IMAGESERVICEDATA* pParams,
-	/* [in] */ SAFEARRAY* pImage)
+	/* [in] */ BSTR /*sType*/,
+	/* [out] */ SAFEARRAY** /*ppMemory*/,
+	/* [in,out] */ IMAGESERVICEDATA* /*pParams*/,
+	/* [in] */ SAFEARRAY* /*pImage*/)
 {
 	ATLTRACENOTIMPL ("SaveToMemory");
 }
