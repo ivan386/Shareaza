@@ -67,7 +67,6 @@ CLibraryBuilder::CLibraryBuilder() :
 CLibraryBuilder::~CLibraryBuilder()
 {
 	StopThread();
-	Clear();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -75,141 +74,243 @@ CLibraryBuilder::~CLibraryBuilder()
 
 void CLibraryBuilder::Add(CLibraryFile* pFile)
 {
-	CQuickLock pLock( m_pSection );
+	ASSERT( pFile );
+	ASSERT( pFile->m_nIndex );
 
+	CQuickLock pLock( m_pSection );
 	if ( std::find( m_pFiles.begin(), m_pFiles.end(), pFile->m_nIndex ) == m_pFiles.end() )
+	{
 		m_pFiles.push_back( pFile->m_nIndex );
 
-	if ( ! m_bThread ) StartThread();
+		StartThread();
+	}
 }
 
-int CLibraryBuilder::GetRemaining()
+void CLibraryBuilder::Remove(DWORD nIndex)
 {
+	ASSERT( nIndex );
+
 	CQuickLock oLock( m_pSection );
-
-	return (int)m_pFiles.size();
+	CFileInfoList::iterator i = std::find( m_pFiles.begin(), m_pFiles.end(), nIndex );
+	if ( i != m_pFiles.end() )
+	{
+		m_pFiles.erase( i );
+	}
 }
-
-CString CLibraryBuilder::GetCurrent()
-{
-	CQuickLock oLock( m_pSection );
-
-	return m_sPath;
-}
-
-void CLibraryBuilder::RequestPriority(LPCTSTR pszPath)
-{
-	CQuickLock oLock( m_pPrioritySection );
-
-	m_pPriority.remove( pszPath );
-	m_pPriority.push_front( pszPath );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilder remove file from processing queue
 
 void CLibraryBuilder::Remove(CLibraryFile* pFile)
 {
-	{
-		CQuickLock oLock( m_pSection );
+	ASSERT( pFile );
 
-		m_pFiles.remove( pFile->m_nIndex );
-	}
-	{
-		CQuickLock oLock( m_pPrioritySection );
-
-		m_pPriority.remove( pFile->GetPath() );
-	}
+	Remove( pFile->m_nIndex );
 }
 
 void CLibraryBuilder::Remove(LPCTSTR szPath)
 {
 	ASSERT( szPath );
 
-	CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath );
-	if ( pFile )
+	DWORD nIndex = 0;
+	{
+		CQuickLock oLibraryLock( Library.m_pSection );
+		CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath );
+		if ( pFile )
+			nIndex = pFile->m_nIndex;
+	}
+	if ( nIndex )
+	{
+		Remove( nIndex );
+	}
+}
+
+int CLibraryBuilder::GetRemaining() const
+{
+	CQuickLock oLock( m_pSection );
+	return (int)m_pFiles.size();
+}
+
+CString CLibraryBuilder::GetCurrent() const
+{
+	CQuickLock oLock( m_pSection );
+	return m_sPath;
+}
+
+void CLibraryBuilder::RequestPriority(LPCTSTR pszPath)
+{
+	ASSERT( pszPath );
+
+	DWORD nIndex = 0;
+	{
+		CQuickLock oLibraryLock( Library.m_pSection );
+		CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath );
+		if ( pFile )
+			nIndex = pFile->m_nIndex;
+	}
+	if ( nIndex )
 	{
 		CQuickLock oLock( m_pSection );
-		m_pFiles.remove( pFile->m_nIndex );
-	}
-	{
-		CQuickLock oLock( m_pPrioritySection );
-		m_pPriority.remove( szPath );
+		CFileInfoList::iterator i = std::find( m_pFiles.begin(), m_pFiles.end(), nIndex );
+		if ( i != m_pFiles.end() )
+		{
+			m_pFiles.erase( i );
+
+			m_pFiles.push_front( nIndex );
+		}
 	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder rotate queue
 
-void CLibraryBuilder::Skip()
+void CLibraryBuilder::Skip(DWORD nIndex)
 {
-	// Put first file to end
-	DWORD index;
-	{
-		CQuickLock oLock( m_pSection );
-		index = *m_pFiles.begin();
-		if ( m_pFiles.size() > 1 )
-		{
-			m_pFiles.pop_front();
-			m_pFiles.push_back( index );
-		}
-	}
+	ASSERT( nIndex );
 
-	// Remove it from priority list
-	CLibraryFile* pFile = LibraryMaps.LookupFile( index );
-	if ( pFile )
+	CQuickLock oLock( m_pSection );
+	CFileInfoList::iterator i = std::find( m_pFiles.begin(), m_pFiles.end(), nIndex );
+	if ( i != m_pFiles.end() )
 	{
-		CQuickLock oLock( m_pPrioritySection );
-		m_pPriority.remove( pFile->GetPath() );
+		CFileInfo fi( *i );
+
+		m_pFiles.erase( i );
+
+		FILETIME ftCurrentTime;
+		GetSystemTimeAsFileTime( &ftCurrentTime );
+		fi.nNextAccessTime = MAKEQWORD( ftCurrentTime.dwLowDateTime,
+			ftCurrentTime.dwHighDateTime ) + 50000000;	// + 5 sec
+
+		m_pFiles.push_back( fi );
 	}
 }
 
 //////////////////////////////////////////////////////////////////////
-// CLibraryBuilder clear
+// CLibraryBuilder get best file to hash
 
-void CLibraryBuilder::Clear()
+DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 {
+	DWORD nIndex = 0;
+	sPath.Empty();
+
+	CSingleLock oLock( &m_pSection );
+	if ( oLock.Lock( 100 ) )
 	{
-		CQuickLock oLock( m_pSection );
-		m_pFiles.clear();
-		m_sPath.Empty();
+		if ( m_pFiles.empty() )
+		{
+			// No files left
+			m_bThread = FALSE;
+		}
+		else
+		{
+			// Get next candidate
+			FILETIME ftCurrentTime;
+			GetSystemTimeAsFileTime( &ftCurrentTime );
+			QWORD nCurrentTime = MAKEQWORD( ftCurrentTime.dwLowDateTime,
+				ftCurrentTime.dwHighDateTime );
+			for ( CFileInfoList::iterator i = m_pFiles.begin(); i != m_pFiles.end(); i++ )
+			{
+				if ( (*i).nNextAccessTime < nCurrentTime )
+				{
+					nIndex = (*i).nIndex;
+					break;
+				}
+			}
+		}
+		oLock.Unlock();
 	}
+
+	if ( nIndex )
 	{
-		CQuickLock oLock( m_pPrioritySection );
-		m_pPriority.clear();
+		CSingleLock oLibraryLock( &Library.m_pSection );
+		if ( oLibraryLock.Lock( 100 ) )
+		{
+			CLibraryFile* pFile = LibraryMaps.LookupFile( nIndex );
+			if ( pFile )
+			{
+				sPath = pFile->GetPath();
+			}
+			oLibraryLock.Unlock();
+
+			if ( ! pFile )
+			{
+				// Unknown file
+				Remove( nIndex );
+				nIndex = 0;
+			}
+		}
+		else
+			// Library locked
+			nIndex = 0;
+
+		if ( nIndex )
+		{
+			WIN32_FILE_ATTRIBUTE_DATA wfad;
+			if ( GetFileAttributesEx( sPath, GetFileExInfoStandard, &wfad ) )
+			{
+				int nSlash = sPath.ReverseFind( _T('\\') );
+				if ( CLibrary::IsBadFile( sPath.Mid( nSlash + 1 ), sPath.Left( nSlash ),
+					wfad.dwFileAttributes ) )
+				{
+					// Remove bad file
+					Remove( nIndex );
+					nIndex = 0;
+				}
+			}
+			else
+			{
+				DWORD err = GetLastError();
+				if ( err == ERROR_FILE_NOT_FOUND || err == ERROR_PATH_NOT_FOUND )
+				{
+					// Remove if error is fatal
+					Remove( nIndex );
+				}
+				else
+				{
+					// Ignore if error is not fatal (for example access violation)
+					Skip( nIndex );
+				}
+				nIndex = 0;
+			}
+		}
 	}
+
+	return nIndex;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder thread control
 
-BOOL CLibraryBuilder::StartThread()
+void CLibraryBuilder::StartThread()
 {
-	if ( m_hThread || m_bThread ) return TRUE;
+	CQuickLock pLock( m_pSection );
 
-	CQuickLock oLock( m_pSection );
-
-	if ( m_pFiles.empty() ) return FALSE;
-
-	m_bThread	= TRUE;
-
-	m_hThread = BeginThread( "LibraryBuilder", ThreadStart, this, m_bPriority ?
-		THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
-
-	return TRUE;
+	if ( ! m_bThread && ! m_pFiles.empty() )
+	{
+		m_bThread = TRUE;
+		m_hThread = BeginThread( "LibraryBuilder", ThreadStart, this, m_bPriority ?
+			THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
+	}
 }
 
 void CLibraryBuilder::StopThread()
 {
-	if ( m_hThread == NULL || ! m_bThread ) return;
+	{
+		CQuickLock pLock( m_pSection );
 
-	m_bThread = FALSE;
+		if ( m_hThread == NULL )
+			// Already stopped
+			return;
 
+		// Request termination
+		m_bThread = FALSE;
+	}
+
+	// Wait
 	CloseThread( &m_hThread );
 }
 
 BOOL CLibraryBuilder::IsAlive() const
 {
+	CQuickLock pLock( m_pSection );
+
 	return m_bThread;
 }
 
@@ -218,66 +319,23 @@ BOOL CLibraryBuilder::IsAlive() const
 
 void CLibraryBuilder::BoostPriority(BOOL bPriority)
 {
+	CQuickLock pLock( m_pSection );
+
 	if ( m_bPriority == bPriority ) return;
 	m_bPriority = bPriority;
 
-	if ( m_bThread && m_hThread != NULL )
+	if ( m_bThread && m_hThread )
 	{
 		SetThreadPriority( m_hThread, m_bPriority ?
 			THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
 	}
 }
 
-BOOL CLibraryBuilder::GetBoostPriority()
+BOOL CLibraryBuilder::GetBoostPriority() const
 {
+	CQuickLock pLock( m_pSection );
+
 	return m_bPriority;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilder read file with speed limits
-
-BOOL CLibraryBuilder::ReadFileWithPriority(
-	HANDLE hFile,
-	LPVOID lpBuffer,
-	DWORD nNumberOfBytesToRead,
-	LPDWORD lpNumberOfBytesRead,
-	BOOL bPriority /* = TRUE */ )
-{
-	BOOL ret = ::ReadFile ( hFile, lpBuffer, nNumberOfBytesToRead,
-		lpNumberOfBytesRead, NULL );
-
-	CQuickLock oLock( m_pDelaySection );
-
-	LARGE_INTEGER count;
-	QueryPerformanceCounter( &count );
-	m_nElapsed += ((( count.QuadPart - m_nLastCall.QuadPart ) * 1000000 ) /
-		m_nFreq.QuadPart);
-	m_nLastCall.QuadPart = count.QuadPart;
-
-	if ( ret ) m_nReaded += (QWORD) *lpNumberOfBytesRead;
-
-	// Check speed every...
-	if ( m_nElapsed > 0 && m_nReaded > 0 )
-	{
-		// Calculation of compensation delay
-		QWORD nSpeed = ( m_nReaded * 1000000 ) / m_nElapsed;	// B/s
-		QWORD nMaxSpeed = 1024 * 1024 * ( bPriority ? Settings.Library.HighPriorityHashing :
-			Settings.Library.LowPriorityHashing);				// B/s
-		if ( nMaxSpeed > 0 && nSpeed > nMaxSpeed )
-		{
-			QWORD nDelay = ( ( nSpeed * m_nElapsed ) / nMaxSpeed ) - m_nElapsed;
-			if ( nDelay > 1000000 )
-				// Dont do overcompensation, max 1 sec
-				nDelay = 1000000;
-			if ( nDelay > 1000 )
-			{
-				// Compensation
-				Sleep( (DWORD) ( nDelay / 1000 ) );
-			}
-		}
-	}
-
-	return ret;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -296,66 +354,19 @@ void CLibraryBuilder::OnRun()
 	
 	Internals.LoadSettings();
 
-	while ( m_bThread )
+	while ( IsAlive() )
 	{
-		Sleep( 100 );
+		Sleep( 100 );	// Max 10 files per second
 
-		DWORD nIndex = 0;
 		CString sPath;
-
-		CSingleLock oLock0( &Library.m_pSection );
-		if ( oLock0.Lock( 100 ) )
-		{
-			CSingleLock oLock1( &m_pSection );
-			if ( oLock1.Lock( 100 ) )
-			{
-				if ( m_pFiles.empty() )
-					// No files left
-					break;
-
-				std::list< DWORD >::iterator i = m_pFiles.begin();
-
-				CSingleLock oLock2( &m_pPrioritySection );
-				if ( oLock2.Lock( 100 ) )
-				{
-					if ( ! m_pPriority.empty() )
-					{
-						CString sFoo( *m_pPriority.begin() );
-						m_pPriority.pop_front();
-						CLibraryFile* pFile = LibraryMaps.LookupFileByPath( sFoo );
-						if ( pFile )
-						{
-							i = std::find( m_pFiles.begin(), m_pFiles.end(), pFile->m_nIndex );
-						}
-					}
-					oLock2.Unlock();
-				}
-
-				CLibraryFile* pFile = LibraryMaps.LookupFile( (*i) );
-				if ( pFile )
-				{
-					sPath = pFile->GetPath();
-
-					// Remove private type
-					if ( int nExt = sPath.ReverseFind( _T('.') ) + 1 )
-					{
-						if ( IsIn( Settings.Library.PrivateTypes, (LPCTSTR)sPath + nExt ) )
-						{
-							Remove( sPath );
-							continue;
-						}
-					}
-
-					// Ready to hash
-					nIndex = (*i);
-					m_sPath = sPath;
-				}
-				oLock1.Unlock();
-			}
-			oLock0.Unlock();
-		}
+		DWORD nIndex = GetNextFileToHash( sPath );
 		if ( nIndex )
 		{
+			{
+				CQuickLock pLock( m_pSection );
+				m_sPath = sPath;
+			}
+
 			HANDLE hFile = CreateFile( sPath, GENERIC_READ,
 				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL,
 				OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
@@ -379,10 +390,10 @@ void CLibraryBuilder::OnRun()
 					CThumbCache::Cache( sPath, &Size, nIndex );
 
 					// Done
-					Remove( sPath );
+					Remove( nIndex );
 				}
 				else
-					Skip();
+					Skip( nIndex );
 
 				CloseHandle( hFile );
 			}
@@ -391,30 +402,32 @@ void CLibraryBuilder::OnRun()
 				DWORD err = GetLastError();
 				if ( err == ERROR_FILE_NOT_FOUND || err == ERROR_PATH_NOT_FOUND )
 					// Fatal error
-					Remove( sPath );
+					Remove( nIndex );
 				else
-					Skip();
+					Skip( nIndex );
+			}
+
+			{
+				CQuickLock pLock( m_pSection );
+				m_sPath.Empty();
 			}
 		}
-		m_sPath.Empty();
 	}
 
 	Settings.Live.NewFile = FALSE;
-	m_bThread	= FALSE;
-	m_hThread	= NULL;
 
-	theApp.Message( MSG_DEBUG, _T("CLibraryBuilder shutting down.") );
+	CQuickLock pLock( m_pSection );
+	m_bThread = FALSE;
+	m_hThread = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder file hashing (threaded)
 
-#define MAX_HASH_BUFFER_SIZE	262144ul	// 256 Kb
+#define MAX_HASH_BUFFER_SIZE	1024ul*256ul	// 256 Kb
 
 BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& oOutSHA1, Hashes::Md5Hash& oOutMD5, DWORD nIndex)
 {
-	char pBuffer [MAX_HASH_BUFFER_SIZE];
-
 	DWORD nSizeHigh	= 0;
 	DWORD nSizeLow	= GetFileSize( hFile, &nSizeHigh );
 	QWORD nFileSize	= (QWORD)nSizeLow | ( (QWORD)nSizeHigh << 32 );
@@ -437,26 +450,76 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& o
 	pTiger.BeginFile( Settings.Library.TigerHeight, nFileSize );
 	pED2K.BeginFile( nFileSize );
 
-	// Reset statistics
-	m_nElapsed = 0;
-	m_nReaded = 0;
+	// Reset statistics if passed more than 10 seconds
+	LARGE_INTEGER count1;
+	QueryPerformanceCounter( &count1 );
+	if ( ( ( ( count1.QuadPart - m_nLastCall.QuadPart ) * 1000000ull ) /
+		m_nFreq.QuadPart) > 10000 )
+	{
+		m_nLastCall.QuadPart = count1.QuadPart;
+		m_nElapsed = 0;
+		m_nReaded = 0;
+	}
 
+	void* pBuffer = VirtualAlloc( NULL, MAX_HASH_BUFFER_SIZE, MEM_COMMIT, PAGE_READWRITE );
 	DWORD nBlock;
-	for ( QWORD nLength = nFileSize ; nLength > 0 ; nLength -= nBlock )
+	QWORD nLength = nFileSize;
+	for ( ; nLength > 0 ; nLength -= nBlock )
 	{
 		nBlock	= min( nLength, MAX_HASH_BUFFER_SIZE );
 
-		if ( ! m_bThread ) return FALSE;
+		if ( ! m_bThread )
+			// Termination request
+			break;
 
-		if ( ! ReadFileWithPriority( hFile, pBuffer, nBlock, &nBlock, m_bPriority ) ) return FALSE;
+		if( ! ::ReadFile( hFile, pBuffer, nBlock, &nBlock, NULL ) )
+			// Read error
+			break;
 
-		if ( ! nBlock ) return FALSE;
+		QueryPerformanceCounter( &count1 );
+		m_nElapsed += ( ( ( count1.QuadPart - m_nLastCall.QuadPart ) * 1000000ull ) /
+			m_nFreq.QuadPart);	// mks
+		m_nLastCall.QuadPart = count1.QuadPart;
+		m_nReaded += nBlock;
+
+		if ( m_nElapsed > 0 && m_nReaded > 0 )
+		{
+			// Calculation of compensation delay
+			QWORD nSpeed = ( m_nReaded * 1000000ull ) / m_nElapsed;	// B/s
+			QWORD nMaxSpeed = 1024 * 1024 * (  m_bPriority ?
+				Settings.Library.HighPriorityHashing :
+				Settings.Library.LowPriorityHashing );				// B/s
+			if ( nMaxSpeed > 0 && nSpeed > nMaxSpeed )
+			{
+				DWORD nDelay = (DWORD) ( ( ( ( nSpeed * m_nElapsed ) / nMaxSpeed ) -
+					m_nElapsed ) / 1000ull );	// ms
+				if ( nDelay > 1000 )
+					nDelay = 1000;	// 1 s
+				else if ( nDelay < 1 )
+					nDelay = 1;		// 1 ms
+
+				// Compensation
+				Sleep( nDelay );
+			}
+
+			m_nElapsed = 0;	// mks
+			m_nReaded = 0;	
+		}
+
+		if ( ! nBlock )
+			// EOF
+			break;
 
 		pSHA1.Add( pBuffer, nBlock );
 		pMD5.Add( pBuffer, nBlock );
 		pTiger.AddToFile( pBuffer, nBlock );
 		pED2K.AddToFile( pBuffer, nBlock );
 	}
+
+	VirtualFree( pBuffer, 0, MEM_RELEASE );
+
+	if ( nLength != 0 )
+		return FALSE;
 
 	pSHA1.Finish();
 	pMD5.Finish();

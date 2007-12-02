@@ -34,40 +34,58 @@ public:
 	CLibraryBuilder();
 	virtual ~CLibraryBuilder();
 
-	void		Add(CLibraryFile* pFile);
-	void		Remove(CLibraryFile* pFile);
-	int			GetRemaining();
-	void		RequestPriority(LPCTSTR pszPath);
-	BOOL		StartThread();
+	void		Add(CLibraryFile* pFile);			// Add file to list
+	void		Remove(DWORD nIndex);				// Remove file from list
+	void		Remove(LPCTSTR szPath);				// Remove file from list
+	void		Remove(CLibraryFile* pFile);		// Remove file from list
+	int			GetRemaining() const;
+	void		RequestPriority(LPCTSTR pszPath);	// Place file to the begin of list
+	void		Skip(DWORD nIndex);					// Move file to the end of list
 	BOOL		IsAlive() const;
+	void		StartThread();
 	void		StopThread();
 	void		BoostPriority(BOOL bPriority);
-	BOOL		GetBoostPriority();
-	CString		GetCurrent();
+	BOOL		GetBoostPriority() const;
+	CString		GetCurrent() const;
 
 	static int	SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);
 	static BOOL	SubmitCorrupted(DWORD nIndex);
 
 protected:
-	CMutex						m_pSection;			// Common guarding
-	std::list< DWORD >			m_pFiles;
-	CMutex						m_pPrioritySection;	// m_pPriority guarding
-	std::list< CString >		m_pPriority;
+	class __declspec(novtable) CFileInfo
+	{
+	public:
+		inline CFileInfo(DWORD n = 0) throw() :
+			nIndex( n ), nNextAccessTime( 0 )
+		{
+		}
+		inline CFileInfo(const CFileInfo& i) throw() :
+			nIndex( i.nIndex ), nNextAccessTime( i.nNextAccessTime)
+		{
+		}
+		inline bool operator==(const CFileInfo& i) const throw()
+		{
+			return ( nIndex == i.nIndex );
+		}
+		DWORD		nIndex;							// Library file index
+		QWORD		nNextAccessTime;				// Next access time
+	};
+	typedef std::list< CFileInfo > CFileInfoList;
+
+	mutable CMutex				m_pSection;			// Guarding
+	CFileInfoList				m_pFiles;			// File list
 	HANDLE						m_hThread;
 	BOOL						m_bThread;			// FALSE - termination request
 	BOOL						m_bPriority;
 	CString						m_sPath;			// Hashing filename
-	CMutex						m_pDelaySection;	// m_nLastCall, m_nFreq, m_nReaded, m_nElapsed guarding
 	LARGE_INTEGER				m_nLastCall;		// (ticks)
 	LARGE_INTEGER				m_nFreq;			// (Hz)
 	QWORD						m_nReaded;			// (bytes)
-	QWORD						m_nElapsed;			// (mks)
+	__int64						m_nElapsed;			// (mks)
 
-	void		Remove(LPCTSTR szPath);
-	void		Skip();
-	UINT		GetNextFileToHash();
-	void		Clear();
-	BOOL		ReadFileWithPriority(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD lpNumberOfBytesRead, BOOL bPriority = TRUE);
+	// Get next file from list doing all possible tests
+	// Returns 0 if no file avaliable, sets m_bThread = FALSE if no files left.
+	DWORD		GetNextFileToHash(CString& sPath);
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	BOOL		HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1, Hashes::Md5Hash& oMD5, DWORD nIndex);
