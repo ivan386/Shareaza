@@ -225,7 +225,7 @@ void CFileCopyDlg::StopOperation()
 
 	m_bThread = FALSE;
 
-	CloseThread( &m_hThread, 25000 );
+	CloseThread( &m_hThread );
 
 	//m_wndCancel.SetWindowText( _T("&Close") );
 	CString sText;

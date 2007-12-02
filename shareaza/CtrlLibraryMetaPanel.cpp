@@ -284,7 +284,7 @@ void CLibraryMetaPanel::OnDestroy()
 	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
 	
-	CloseThread( &m_hThread, 10000 );
+	CloseThread( &m_hThread );
 	
 	CLibraryPanel::OnDestroy();
 }
