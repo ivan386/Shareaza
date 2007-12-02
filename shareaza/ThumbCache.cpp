@@ -374,3 +374,42 @@ BOOL CThumbCache::GetFileTime(LPCTSTR pszPath, FILETIME* pTime)
 
 	return bSuccess;
 }
+
+//////////////////////////////////////////////////////////////////////
+// CThumbCache cache
+
+BOOL CThumbCache::Cache(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFile* pImage)
+{
+	ASSERT( pszPath );
+
+	CImageFile pFile;
+	if ( ! pImage )
+		pImage = &pFile;
+
+	CThumbCache pCache;
+
+	// Load from cache
+	if ( pCache.Load( pszPath, pszThumb, nIndex, pImage ) )
+		return TRUE;
+
+	// Load from file
+	if ( ! pImage->LoadFromFile( pszPath ) || ! pFile.EnsureRGB() ) 
+		return FALSE;
+
+	// Resample to desired size
+	int nSize = pszThumb->cx * pFile.m_nWidth / pFile.m_nHeight;
+	if ( nSize > (int)pszThumb->cx )
+	{
+		nSize = pszThumb->cy * pFile.m_nHeight / pFile.m_nWidth;
+		if ( ! pImage->Resample( pszThumb->cx, nSize ) )
+			return  FALSE;
+	}
+	else
+	{
+		if ( ! pImage->Resample( nSize, pszThumb->cy ) )
+		return  FALSE;
+	}
+
+	// Save to cache
+	return pCache.Store( pszPath, pszThumb, nIndex, pImage );
+}

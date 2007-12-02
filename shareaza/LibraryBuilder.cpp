@@ -29,6 +29,7 @@
 #include "LibraryBuilderPlugins.h"
 #include "HashDatabase.h"
 #include "Security.h"
+#include "ThumbCache.h"
 
 #include "XML.h"
 #include "Schema.h"
@@ -373,6 +374,9 @@ void CLibraryBuilder::OnRun()
 
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 					Plugins.ExtractMetadata( nIndex, sPath, hFile );
+
+					CSize Size( Settings.Library.ThumbSize, Settings.Library.ThumbSize );
+					CThumbCache::Cache( sPath, &Size, nIndex );
 
 					// Done
 					Remove( sPath );
